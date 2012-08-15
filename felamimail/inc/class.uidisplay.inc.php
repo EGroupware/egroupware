@@ -490,6 +490,7 @@
 			//echo 'Envelope:'.preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']).'#0<br>';
 			$subject = felamimail_bo::htmlspecialchars($this->bofelamimail->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false),
                 $this->displayCharset);
+			if (empty($subject)) $subject = lang('no subject');
 			$this->t->set_var("subject_data",$subject);
 
 			$this->t->parse("header","message_header",True);

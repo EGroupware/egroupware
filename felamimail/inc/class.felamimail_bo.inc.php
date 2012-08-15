@@ -384,31 +384,45 @@ class felamimail_bo
 		$GLOBALS['egw']->session->appsession('session_data','emailadmin',serialize(array()));
 	}
 
+	function _getNameSpaces()
+	{
+		static $nameSpace;
+		$foldersNameSpace = array();
+		$delimiter = $this->getHierarchyDelimiter();
+		// TODO: cache by $this->icServer->ImapServerId
+		if (is_null($nameSpace)) $nameSpace = $this->icServer->getNameSpaces();
+		if (is_array($nameSpace)) {
+			foreach($nameSpace as $type => $singleNameSpace) {
+				$prefix_present = false;
+				if($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && ($this->folderExists('Mail')||$this->folderExists('INBOX')))
+				{
+					$foldersNameSpace[$type]['prefix_present'] = 'forced';
+					// uw-imap server with mailbox prefix or dovecot maybe
+					$foldersNameSpace[$type]['prefix'] = ($this->folderExists('Mail')?'Mail':'');
+				}
+				elseif($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && $this->folderExists('mail'))
+				{
+					$foldersNameSpace[$type]['prefix_present'] = 'forced';
+					// uw-imap server with mailbox prefix or dovecot maybe
+					$foldersNameSpace[$type]['prefix'] = 'mail';
+				} else {
+					$foldersNameSpace[$type]['prefix_present'] = true;
+					$foldersNameSpace[$type]['prefix'] = $singleNameSpace[0]['name'];
+				}
+				$foldersNameSpace[$type]['delimiter'] = $delimiter;
+				//echo "############## $type->".print_r($foldersNameSpace[$type],true)." ###################<br>";
+			}
+		}
+		return $foldersNameSpace;
+	}
+
 	function getFolderPrefixFromNamespace($nameSpace, $folderName)
 	{
 		foreach($nameSpace as $type => $singleNameSpace)
 		{
-/*
-				if($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && ($this->icServer->mailboxExist('Mail')||$this->icServer->mailboxExist('INBOX'))) {
-					// uw-imap server with mailbox prefix or dovecot maybe
-					return ($this->icServer->mailboxExist('Mail')?'Mail':'');
-				} elseif($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && $this->icServer->mailboxExist('mail')) {
-					// uw-imap server with mailbox prefix or dovecot maybe
-					return 'mail';
-				} else {
-					return $singleNameSpace[0]['name'];
-				}
-*/
-			if($type == 'personal' && substr($singleNameSpace[2]['name'],0,strlen($folderName))==$folderName && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && $this->icServer->mailboxExist('Mail')) {
-				// uw-imap server with mailbox prefix or dovecot maybe
-				return 'Mail';
-			} elseif($type == 'personal' && substr($singleNameSpace[2]['name'],0,strlen($folderName))==$folderName && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && $this->icServer->mailboxExist('mail')) {
-				// uw-imap server with mailbox prefix or dovecot maybe
-				return 'mail';
-			} else {
-				return (substr($singleNameSpace[0]['name'],0,strlen($folderName))==$folderName ? $singleNameSpace[0]['name'] : '');
-			}
+			if (substr($singleNameSpace['prefix'],0,strlen($folderName))==$folderName) return $singleNameSpace['prefix'];
 		}
+		return "";
 	}
 
 	function setACL($_folderName, $_accountName, $_acl, $_recursive=false)
@@ -421,7 +435,7 @@ class felamimail_bo
 		if ($_recursive)
 		{
 			$delimiter = $this->getHierarchyDelimiter();
-			$nameSpace = $this->icServer->getNameSpaces();
+			$nameSpace = $this->_getNameSpaces();
 			$prefix = $this->getFolderPrefixFromNamespace($nameSpace, $_folderName);
 			//error_log(__METHOD__.__LINE__.'->'."$_folderName, $delimiter, $prefix");
 
@@ -446,7 +460,7 @@ class felamimail_bo
 		if ($_recursive)
 		{
 			$delimiter = $this->getHierarchyDelimiter();
-			$nameSpace = $this->icServer->getNameSpaces();
+			$nameSpace = $this->_getNameSpaces();
 			$prefix = $this->getFolderPrefixFromNamespace($nameSpace, $_folderName);
 			//error_log(__METHOD__.__LINE__.'->'."$_folderName, $delimiter, $prefix");
 
@@ -1718,7 +1732,7 @@ class felamimail_bo
 			if (isset($folders2return[$this->icServer->ImapServerId]) && !empty($folders2return[$this->icServer->ImapServerId]))
 			{
 				//error_log(__METHOD__.__LINE__.' using Cached folderObjects');
-				return $folders2return[$this->icServer->ImapServerId];
+				//return $folders2return[$this->icServer->ImapServerId];
 			}
 		}
 		$isUWIMAP = false;
@@ -1747,7 +1761,8 @@ class felamimail_bo
 		$inboxFolderObject = array('INBOX' => $inboxData);
 		#_debug_array($folders);
 
-		$nameSpace = $this->icServer->getNameSpaces();
+		//$nameSpace = $this->icServer->getNameSpaces();
+		$nameSpace = $this->_getNameSpaces();
 		//_debug_array($nameSpace);
 		//_debug_array($delimiter);
 		if(isset($nameSpace['#mh/'])) {
@@ -1758,24 +1773,10 @@ class felamimail_bo
 		} else {
 			if (is_array($nameSpace)) {
 			  foreach($nameSpace as $type => $singleNameSpace) {
-				$prefix_present = false;
-				if($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && ($this->icServer->mailboxExist('Mail')||$this->icServer->mailboxExist('INBOX'))) {
-					$prefix_present = 'forced';
-					// uw-imap server with mailbox prefix or dovecot maybe
-					$foldersNameSpace[$type]['prefix'] = ($this->icServer->mailboxExist('Mail')?'Mail':'');
-				} elseif($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && $this->icServer->mailboxExist('mail')) {
-					$prefix_present = 'forced';
-					// uw-imap server with mailbox prefix or dovecot maybe
-					$foldersNameSpace[$type]['prefix'] = 'mail';
-				} else {
-					$prefix_present = true;
-					$foldersNameSpace[$type]['prefix'] = $singleNameSpace[0]['name'];
-				}
-				//echo "############## ".print_r($singleNameSpace,true)." ###################<br>";
-				//echo "############## ".print_r($foldersNameSpace,true)." ###################<br>";
-				$foldersNameSpace[$type]['delimiter'] = $delimiter;
+				$prefix_present = $nameSpace[$type]['prefix_present'];
+				$foldersNameSpace[$type] = $nameSpace[$type];
 
-				if(is_array($singleNameSpace[0])) {
+				if(is_array($singleNameSpace)) {
 					// fetch and sort the subscribed folders
 					$subscribedMailboxes = $this->icServer->listsubscribedMailboxes($foldersNameSpace[$type]['prefix']);
 					if (empty($subscribedMailboxes) && $type == 'shared')
@@ -2010,7 +2011,6 @@ class felamimail_bo
 					if($_getCounters == true) {
 						$folderObject->counter = $this->bofelamimail->getMailBoxCounters($folderName);
 					}
-
 					if(strtoupper($folderName) == 'INBOX') {
 						$folderName = 'INBOX';
 						$folderObject->folderName	= 'INBOX';
@@ -2596,13 +2596,13 @@ class felamimail_bo
 				return false;
 			}
 
-			#_debug_array($headers);
+			//_debug_array($headers);
 			$newData = array(
 				'DATE'		=> $headers['DATE'],
 				'SUBJECT'	=> ($decode ? self::decode_header($headers['SUBJECT']):$headers['SUBJECT']),
 				'MESSAGE_ID'	=> $headers['MESSAGE-ID']
 			);
-
+			//_debug_array($newData);
 			$recepientList = array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY_TO');
 			foreach($recepientList as $recepientType) {
 				if(isset($headers[$recepientType])) {

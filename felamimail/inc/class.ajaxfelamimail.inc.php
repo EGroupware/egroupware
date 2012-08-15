@@ -1102,8 +1102,9 @@ class ajaxfelamimail
 						<TR class=\"th\" style=\"width:100%;\">
 							<TD nowrap valign=\"top\">
 								".'<b><br> '.
-								"<center><font color='red'>".(!($_folderType == 2 || $_folderType == 3)?lang("Select a message to switch on its preview (click on subject)"):lang("Preview disabled for Folder: ").$_folderName)."</font></center><br>
-								</b>"."
+								//"<center><font color='red'>".(!($_folderType == 2 || $_folderType == 3)?lang("Select a message to switch on its preview (click on subject)"):lang("Preview disabled for Folder:").' '.$_folderName)."</font></center><br>".
+								"<center><font color='red'>".lang("Select a message to switch on its preview (click on subject)")."</font></center><br>".
+								"</b>"."
 							</TD>
 						</TR>
 						<TR>

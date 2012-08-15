@@ -473,6 +473,8 @@ sent folder	felamimail	en	Sent folder
 server supports mailfilter(sieve)	felamimail	en	Server supports mail filter (sieve)
 set as default	felamimail	en	Set as default
 set label	felamimail	en	Set keywords
+shared folders	felamimail	en	shared folders
+shared user folders	felamimail	en	shared user folders
 show all folders (subscribed and unsubscribed) in main screen folder pane	felamimail	en	Show all folders, subscribed AND unsubscribed, in main screen folder pane.
 show all messages	felamimail	en	Show all messages
 show header	felamimail	en	Show header

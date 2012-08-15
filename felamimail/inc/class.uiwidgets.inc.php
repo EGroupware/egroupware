@@ -95,6 +95,8 @@ class uiwidgets
 		function createHTMLFolder($_folders, $_selected, $_selectedFolderCount, $_topFolderName, $_topFolderDescription, $_divName, $_displayCheckBox, $_useDisplayCharset = false) {
 			$preferences = $this->bofelamimail->mailPreferences;
 			//_debug_array(felamimail_bo::$autoFolders);
+			$nameSpace = $this->bofelamimail->_getNameSpaces();
+
 			$userDefinedFunctionFolders = array();
 			if (isset($preferences->preferences['trashFolder']) &&
 				$preferences->preferences['trashFolder'] != 'none') $userDefinedFunctionFolders['Trash'] = $preferences->preferences['trashFolder'];
@@ -106,6 +108,7 @@ class uiwidgets
 				$preferences->preferences['templateFolder'] != 'none') $userDefinedFunctionFolders['Templates'] = $preferences->preferences['templateFolder'];
 			// create a list of all folders, also the ones which are not subscribed
  			foreach($_folders as $key => $obj) {
+				//error_log('->'.array2string($key));
 				$folderParts = explode($obj->delimiter,$key);
 				if(is_array($folderParts)) {
 					$partCount = count($folderParts);
@@ -119,10 +122,17 @@ class uiwidgets
 							$allFolders[$string]->shortFolderName = array_pop(explode($obj->delimiter, $string));
 							$allFolders[$string]->displayName = $this->encodeFolderName($allFolders[$string]->folderName);
 							$allFolders[$string]->shortDisplayName = $this->encodeFolderName($allFolders[$string]->shortFolderName);
+							//$prefix = array_shift(explode($obj->delimiter, $nameSpace['others']['prefix']));
+							//error_log('->'.$obj->delimiter.':'.$prefix.'<->'.$allFolders[$string]->shortFolderName);
+							if (array_shift(explode($obj->delimiter, $nameSpace['shared']['prefix'])) == $allFolders[$string]->shortFolderName) $allFolders[$string]->shortDisplayName = $this->encodeFolderName(lang('shared folders'));
+							if (array_shift(explode($obj->delimiter, $nameSpace['others']['prefix'])) == $allFolders[$string]->shortFolderName) $allFolders[$string]->shortDisplayName = $this->encodeFolderName(lang('shared user folders'));
 						}
 					}
 				}
 				$allFolders[$key] = $obj;
+				if (array_shift(explode($obj->delimiter, $nameSpace['shared']['prefix'])) == $obj->shortFolderName) $allFolders[$key]->shortDisplayName = $this->encodeFolderName(lang('shared folders'));
+				if (array_shift(explode($obj->delimiter, $nameSpace['others']['prefix'])) == $obj->shortFolderName) $allFolders[$key]->shortDisplayName = $this->encodeFolderName(lang('shared user folders'));
+
 			}
 
 			$folderImageDir = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/templates/default/images';
@@ -1428,8 +1438,9 @@ $j(document).ready(function() {
 								<TR class=\"th\" style=\"width:100%;\">
 									<TD nowrap valign=\"top\">
 										".'<b><br> '.
-										"<center><font color='red'>".(!($_folderType == 2 || $_folderType == 3)?lang("Select a message to switch on its preview (click on subject)"):lang("Preview disabled for Folder: ").$_folderName)."</font></center><br>
-										</b>"."
+										//"<center><font color='red'>".(!($_folderType == 2 || $_folderType == 3)?lang("Select a message to switch on its preview (click on subject)"):lang("Preview disabled for Folder:").' '.$_folderName)."</font></center><br>".
+										"<center><font color='red'>".lang("Select a message to switch on its preview (click on subject)")."</font></center><br>".
+										"</b>"."
 									</TD>
 								</TR>
 								<TR>
@@ -1600,6 +1611,7 @@ $j(document).ready(function() {
 				} else {
 					$image = '';
 				}
+				if (empty($headerData['subject'])) $headerData['subject']=lang('no subject');
 				$subject = "<a name=\"subject_url\" href=\"#\"
 						onclick=\"fm_readMessage('".$GLOBALS['egw']->link('/index.php',$linkData)."', '".$windowName."', this); return false;\"
 						title=\"".$headerData['subject']."\">".$headerData['subject']."</a>";

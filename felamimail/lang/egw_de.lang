@@ -473,6 +473,8 @@ sent folder	felamimail	de	Ordner für gesendete Nachrichten
 server supports mailfilter(sieve)	felamimail	de	Server unterstützt Mailfilter(Sieve)
 set as default	felamimail	de	Als Vorgabe setzen
 set label	felamimail	de	Schlagwort setzen
+shared folders	felamimail	de	Freigaben
+shared user folders	felamimail	de	Benutzerfreigaben
 show all folders (subscribed and unsubscribed) in main screen folder pane	felamimail	de	zeige alle Ordner (subscribed UND unsubscribed) in der Ordnerleiste des Hauptfensters
 show all messages	felamimail	de	Zeige alle Nachrichten
 show header	felamimail	de	Kopfzeilen anzeigen
