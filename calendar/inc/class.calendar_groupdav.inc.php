@@ -617,32 +617,60 @@ class calendar_groupdav extends groupdav_handler
 				if (!(count($oldEvent['participants']) == 1 && isset($oldEvent['participants'][$user])) &&
 					($events = $handler->icaltoegw($vCalendar)))
 				{
-					// todo check behavior for recuring events
-					foreach($events as $event)
+					$modified = 0;
+					foreach($events as $n => $event)
 					{
-						if ($this->debug) error_log(__METHOD__."(, $id, $user, '$prefix') eventId=$eventId, user=$user, old-status='{$oldEvent['participants'][$user]}', new-status='{$event['participants'][$user]}', event=".array2string($event));
+						// for recurrances of event series, we need to read correct recurrence (or if series master is no first event)
+						if ($event['recurrence'] || $n && !$event['recurrence'])
+						{
+							// first try reading (virtual and real) exceptions
+							if (!isset($series))
+							{
+								$series = self::get_series($event['uid'], $this->bo);
+								//foreach($series as $s => $sEvent) error_log("series[$s]: ".array2string($sEvent));
+							}
+							foreach($series as $oldEvent)
+							{
+								if ($oldEvent['recurrence'] == $event['recurrence']) break;
+							}
+							// if no exception found, check if it might be just a recurrence (no exception)
+							if ($oldEvent['recurrence'] != $event['recurrence'])
+							{
+								if (!($oldEvent = $this->bo->read($eventId, $event['recurrence'], true)) ||
+									// virtual exceptions have recurrence=0 and recur_date=recurrence (series master or real exceptions have recurence=0)
+									!($oldEvent['recur_date'] == $event['recurrence'] || !$event['recurrence'] && !$oldEvent['recurrence']))
+								{
+									// if recurrence not found --> log it and continue with other recurrence
+									$this->groupdav->log(__METHOD__."(,,$user) could NOT find recurrence=$event[recurrence]=".egw_time::to($event['recurrence']).' of event series! event='.array2string($event));
+									continue;
+								}
+							}
+						}
+						if ($this->debug) error_log(__METHOD__."(, $id, $user, '$prefix') eventId=$eventId ($oldEvent[id]), user=$user, old-status='{$oldEvent['participants'][$user]}', new-status='{$event['participants'][$user]}', recurrence=$event[recurrence]=".egw_time::to($event['recurrence']).", event=".array2string($event));
 						if (isset($event['participants']) && $event['participants'][$user] !== $oldEvent['participants'][$user])
 						{
-							if (!$this->bo->set_status($eventId, $user, $event['participants'][$user], $event['recurrence']))
+							if (!$this->bo->set_status($oldEvent['id'], $user, $event['participants'][$user],
+								// real (not virtual) exceptions use recurrence 0 in egw_cal_user.cal_recurrence!
+								$recurrence = $eventId == $oldEvent['id'] ? $event['recurrence'] : 0))
 							{
-								if ($this->debug) error_log(__METHOD__."(,,$user) failed to set_status($eventId, $user, '{$event['participants'][$user]}')");
+								if ($this->debug) error_log(__METHOD__."(,,$user) failed to set_status($oldEvent[id], $user, '{$event['participants'][$user]}', $recurrence=".egw_time::to($recurrence).')');
 								return '403 Forbidden';
 							}
 							else
 							{
-								if ($this->debug) error_log(__METHOD__."() set_status($eventId, $user, ".array2string($event['participants'][$user])." , $event[recurrence])");
+								++$modified;
+								if ($this->debug) error_log(__METHOD__."() set_status($oldEvent[id], $user, {$event['participants'][$user]} , $recurrence=".egw_time::to($recurrence).')');
 							}
 						}
 						// import alarms, if given and changed
 						if ((array)$event['alarm'] !== (array)$oldEvent['alarm'])
 						{
-							$this->sync_alarms($eventId, (array)$event['alarm'], (array)$oldEvent['alarm'], $user, $event['start']);
+							$modified += $this->sync_alarms($oldEvent['id'], (array)$event['alarm'], (array)$oldEvent['alarm'], $user, $event['start']);
 						}
-						elseif (!isset($event['participants']) || $event['participants'][$user] === $oldEvent['participants'][$user])
-						{
-							$this->groupdav->log(__METHOD__."(,,$user) schedule-tag given, but NO change for current user event=".array2string($event).', old-event='.array2string($oldEvent));
-							return '412 Precondition Failed';
-						}
+					}
+					if (!$modified)	// NO modififictions, or none we understood --> log it and return Ok: "204 No Content"
+					{
+						$this->groupdav->log(__METHOD__."(,,$user) schedule-tag given, but NO changes for current user events=".array2string($events).', old-event='.array2string($oldEvent));
 					}
 					// we should not return an etag here, as we never store the PUT ical byte-by-byte
 					//header('ETag: "'.$etag.'"');
@@ -721,11 +749,12 @@ class calendar_groupdav extends groupdav_handler
 	 * @param int $user account_id of user to create alarm for
 	 * @param int $start start-time of event
 	 * @ToDo store other alarm properties like: ACTION, DESCRIPTION, X-WR-ALARMUID
+	 * @return int number of modified alarms
 	 */
 	private function sync_alarms($cal_id, array $alarms, array $old_alarms, $user, $start)
 	{
 		if ($this->debug) error_log(__METHOD__."($cal_id, ".array2string($alarms).', '.array2string($old_alarms).", $user, $start)");
-		// todo import alarms
+		$modified = 0;
 		foreach($alarms as $alarm)
 		{
 			if ($alarm['owner'] != $this->user) continue;	// only import alarms of current user
@@ -745,6 +774,7 @@ class calendar_groupdav extends groupdav_handler
 				$alarm['time'] = $start - $alarm['offset'];
 				if ($this->debug) error_log(__METHOD__."() adding new alarm from client ".array2string($alarm));
 				$this->bo->save_alarm($cal_id, $alarm);
+				++$modified;
 			}
 		}
 		// remove all old alarms left from current user
@@ -752,7 +782,9 @@ class calendar_groupdav extends groupdav_handler
 		{
 			if ($this->debug) error_log(__METHOD__."() deleting alarm '$id' deleted on client ".array2string($old_alarm));
 			$this->bo->delete_alarm($id);
+			++$modified;
 		}
+		return $modified;
 	}
 
 	/**
