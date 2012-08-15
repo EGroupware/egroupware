@@ -184,7 +184,7 @@
 
 <!-- BEGIN simple_text -->
 <div id="editorArea">
-	<TEXTAREA class="input_text" name="body" style="width:99%; height:100%" wrap="virtual" wrap="soft">{body}</TEXTAREA>
+	<TEXTAREA class="input_text" name="body" style="width:99%; height:100%; border:1px solid gray; margin:1px" wrap="virtual" wrap="soft">{body}</TEXTAREA>
 </div>
 <!-- END simple_text -->
 

@@ -596,9 +596,9 @@
 				$this->t->set_var('mimeType', 'html');
 				$ishtml=1;
 			} else {
-				$style="border:0px; width:100%; height:400px;";
+				$border="1px solid gray; margin:1px";
 				// initalize the CKEditor Object to enable switching back and force
-				$editor = html::fckEditorQuick('body', 'ascii', $sessionData['body'],'400px','99%');
+				$editor = html::fckEditorQuick('body', 'ascii', $sessionData['body'],'400px','99%',false,$border);
 				$this->t->set_var('tinymce', $editor); //html::fckEditorQuick('body', 'ascii', $sessionData['body'],'400px','99%'));
 				$this->t->set_var('mimeType', 'text');
 				$ishtml=0;

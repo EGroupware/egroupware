@@ -883,7 +883,6 @@ function setupPlainEditor(plaineditor, height)
 	{
 		//Do some presets on the new editor
 		plaineditor.style.width = "99%";
-		plaineditor.style.borderWidth = 0;
 		plaineditor.style.height = height;	
 		plaineditor.style.borderWidth = "1px";
 		plaineditor.style.borderStyle = "solid";

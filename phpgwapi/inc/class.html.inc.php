@@ -170,7 +170,8 @@ class html
 		$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';	// only http:// gets removed, other protocolls are shown
 		$Domain = '([\w-]+\.[\w-.]+)';
 		$Subdir = '([\w\-\.,@?^=%&;:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
-		$Expr = '/' . $NotAnchor . $Protocol . $Domain . $Subdir . '/i';
+		$optBracket = '';
+		$Expr = '/' . $NotAnchor . $Protocol . $Domain . $Subdir . $optBracket . '/i';
 
 		$result = preg_replace( $Expr, "<a href=\"$0\" target=\"_blank\">$2$3$4</a>", $result );
 
@@ -552,13 +553,15 @@ class html
 	* @param string $_height='400px'
 	* @param string $_width='100%'
 	* @param boolean $_purify=true
+	* @param string $_border='0px' NOT used for CKEditor
 	* @return string the necessary html for the textarea
 	*/
-	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%',$_purify=true)
+	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%',$_purify=true, $_border='0px')
 	{
 		if (!self::htmlarea_availible() || $_mode == 'ascii')
 		{
-			return "<textarea name=\"$_name\" style=\"width:100%; height:400px; border:0px;\">$_content</textarea>";
+			//TODO: use self::textarea
+			return "<textarea name=\"$_name\" style=\"".($_width?" width:".$_width.';':" width:100%;").($_height?" height:".$_height.';':" height:400px;").($_border?" border:".$_border.';':" border:0px;")."\">$_content</textarea>";
 		}
 		else
 		{
