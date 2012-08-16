@@ -15,14 +15,21 @@
 %1 successful uploaded.	filemanager	es-es	%1 subidos correctamente.
 %1 the following files into current directory	filemanager	es-es	%1 los siguientes ficheros en el directorio actual
 %1 urls %2 to clipboard.	filemanager	es-es	%1 URLs %2 al portapapeles
+%d errors while copying, %d files successfully copied.	filemanager	es-es	%d errores al copiar, %d ficheros se han copiado correctamente.
+%d errors while moving, %d files successfully moved.	filemanager	es-es	%d errores al mover, %d ficheros movidos correctamente.
+%d erros while copying, %d files successfully copied.	filemanager	es-es	%d errores al copiar, %d ficheros se han copiado correctamente.
+%d erros while moving, %d files successfully moved.	filemanager	es-es	%d errores al mover, %d ficheros movidos correctamente.
+%d files successfully copied.	filemanager	es-es	%d ficheros copiados correctamente.
+%d files successfully moved.	filemanager	es-es	%d ficheros movidos correctamente.
 accessrights	filemanager	es-es	Derechos de acceso
 acl added.	filemanager	es-es	Se ha añadido la ACL
 acl deleted.	filemanager	es-es	Se ha borrado la ACL
 actions	filemanager	es-es	Acciones
-add to current clipboard	filemanager	es-es	Añadir al portapapeles actual
+add to clipboard	filemanager	es-es	Añadir al portapapeles
 all files	common	es-es	Todos los ficheros
 allow a maximum of the above configured folderlinks to be configured in settings	admin	es-es	permitir un máximo de los enlaces configurados arriba para configurarse en las preferencias
 and all it's childeren	filemanager	es-es	y todos los subdirectorios
+application fields	filemanager	es-es	Campos de la aplicación
 applications	common	es-es	Aplicaciones
 basedirectory	filemanager	es-es	Directorio base
 can't open directory %1!	filemanager	es-es	¡No se puede abrir el directorio %1!
@@ -30,7 +37,9 @@ cancel editing %1 without saving	filemanager	es-es	Cancelar la edición %1 sin g
 cannot create directory because it begins or ends in a space	filemanager	es-es	No se puede crear el directorio porque empieza o acaba en un espacio
 cautiously rejecting to remove folder '%1'!	filemanager	es-es	Por precaución, se rechaza el borrado de la carpeta '%1'
 check all	filemanager	es-es	Comprobar todo
+check virtual filesystem	filemanager	es-es	Comprobar el sistema de ficheros virtual
 clear search	filemanager	es-es	Limpiar búsqueda
+clipboard is empty!	filemanager	es-es	¡El portapapeles está vacío!
 comment	filemanager	es-es	Comentario
 copied	filemanager	es-es	copiado
 copied %1 to %2	filemanager	es-es	Se ha copiado "%1" a "%2"
@@ -54,6 +63,8 @@ custom fields	filemanager	es-es	Campos personalizados
 cut	filemanager	es-es	cortar
 cut to clipboard	filemanager	es-es	Cortar al portapapeles
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	es-es	El comportamiento predeterminado es NO. El enlace no se mostrará, pero se podrá examinar la ubicación, o configurar esta ubicación en particular como carpeta de inicio o enlace.
+default document to insert entries	filemanager	es-es	Documento predeterminado para insertar entradas
+delete these files or directories?	filemanager	es-es	¿Borrar estos ficheros o directorios?
 delete this file or directory	filemanager	es-es	Borrar este fichero o directorio
 deleted %1	filemanager	es-es	Se ha borrado %1
 directories sorted in	filemanager	es-es	Directorios ordenados en
@@ -61,6 +72,8 @@ directory	filemanager	es-es	Directorio
 directory %1 already exists	filemanager	es-es	El directorio %1 ya existe
 directory %1 does not exist	filemanager	es-es	El directorio %1 no existe
 directory not found or no permission to access it!	filemanager	es-es	No se encontró el directorio, o no tiene permiso para acceder a él
+directory successfully created.	filemanager	es-es	El directorio se ha creado correctamente.
+directory with documents to insert entries	filemanager	es-es	Directorio con documentos para insertar entradas
 display and modification of content	filemanager	es-es	Mostrar y modificar el contenido
 display of content	filemanager	es-es	Mostar el contenido
 do you want to overwrite the existing file %1?	filemanager	es-es	¿Desea sobreescribir el fichero existente %1?
@@ -75,7 +88,14 @@ error adding the acl!	filemanager	es-es	¡Error al añadir la ACL!
 error creating symlink to target %1!	filemanager	es-es	¡Error al crear el enlace simbólico al destino %1!
 error deleting the acl entry!	filemanager	es-es	¡Error al borrar la entrada de la ACL!
 error uploading file!	filemanager	es-es	¡Error al subir el fichero!
+error while creating directory.	filemanager	es-es	Error al crear el directorio
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	es-es	Ejemplo {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - buscar el campo "n_prefix", para "Mr", si se encuentra, escribir  Hello Mr., si no, escribir Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	es-es	Ejemplo {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Ejemplo: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	es-es	Ejemplo {{NELF role}} - si el rol del campo no está vacío, obtendrá una línea nueva con el valor del rol del campo
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	es-es	Ejemplo {{NELFNV role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
 executable	filemanager	es-es	Ejecutable
+export definition to use for nextmatch export	filemanager	es-es	Exportar la definición a usar para exportar nextmatch
+export definitition to use for nextmatch export	filemanager	es-es	Exportar la definición a usar para exportar nextmatch
 extended access control list	filemanager	es-es	Listas de control de acceso extendidas
 extended acl	filemanager	es-es	ACL extendida
 failed to change permissions of %1!	filemanager	es-es	Fallo al cambiar los permisos de %1
@@ -90,21 +110,35 @@ file or directory not found!	filemanager	es-es	¡No se ha encontrado el fichero 
 file successful uploaded.	filemanager	es-es	El fichero se ha subido correctamente
 filemanager	common	es-es	Administrador de archivos
 filemanager configuration	admin	es-es	configuración del administrador de archivos
+filemanager fields:	filemanager	es-es	Campos del administrador de archivos:
+filename must not be empty!	filemanager	es-es	¡El nombre del fichero no debe estar vacío!
 files from subdirectories	filemanager	es-es	Ficheros de subdirectorios
 files in this directory	filemanager	es-es	Ficheros en este directorio
+filesystem check reported no problems.	filemanager	es-es	La comprobación del sistema de archivos no ha encontrado problemas
+fix reported problems	filemanager	es-es	Corregir los problemas encontrados
 folder up	filemanager	es-es	Subir un directorio
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	es-es	Para los ficheros vinculados a una entrada de aplicación (dentro de /apps/appname/id/) los marcadores para esa aplicación también están disponibles. Vea la aplicación específica para una lista de marcadores disponibles.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	es-es	Para los ficheros vinculados a una entrada de aplicación (dentro de /apps/appname/id/) los marcadores para esa aplicación también están disponibles. Vea la aplicación específica para una lista de marcadores.
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	es-es	Para cartas en serie use esta etiqueta. Ponga el contenido que desee repetir entre dos etiquetas
 general	filemanager	es-es	General
+general fields:	filemanager	es-es	Campos generales:
 go home	filemanager	es-es	ir al inicio
 go to	filemanager	es-es	Ir A
 go to your home directory	filemanager	es-es	Ir al directorio personal
 go up	filemanager	es-es	Subir
 id	filemanager	es-es	Id
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra una acción para cada documento. Esa acción permite descargar el documento especificado con los datos %1 insertados.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra un icono extra de documento para cada entrada. Ese icono permite descargar el documento especificado con los datos insertados.
+if you specify an export definition, it will be used when you export	filemanager	es-es	Si especifica una definición de exportación, se usará al exportar
+if you specify an export definition, it will be used when you export*	filemanager	es-es	Si especifica una definición de exportación, se usará al exportar
 inherited	filemanager	es-es	heredado
 link	filemanager	es-es	Enlace
 link %1: %2	filemanager	es-es	Enlace %1: %2
+link target	filemanager	es-es	Vincular destino
 link target %1 not found!	filemanager	es-es	¡No se ha encontrado el enlace de destino %1!
 location	filemanager	es-es	Ubicación
 log out as superuser	filemanager	es-es	Cerrar sesión como superusuario
+mail files	filemanager	es-es	Enviar ficheros por correo
 max folderlinks	admin	es-es	Número máximo de enlaces a carpetas
 mime type	filemanager	es-es	Tipo MIME
 modified	filemanager	es-es	Modificado
@@ -113,6 +147,8 @@ modify all subdirectories and their content	filemanager	es-es	Modificar todos lo
 move	filemanager	es-es	Mover
 move to	filemanager	es-es	Mover a
 moved %1 to %2	filemanager	es-es	Se ha movido %1 a %2
+name of current user, all other contact fields are valid too	filemanager	es-es	Nombre del usuario actual, los demás campos del contacto también son válidos
+new directory	filemanager	es-es	Nuevo directorio
 no access	filemanager	es-es	Sin acceso
 no files in this directory.	filemanager	es-es	No hay ficheros en este directorio.
 no preview available	filemanager	es-es	No hay vista previa disponible
@@ -138,12 +174,14 @@ rename, change permissions or ownership	filemanager	es-es	Renombrar, cambiar los
 renamed %1 to %2	filemanager	es-es	Se ha renombrado %1 a %2
 renamed %1 to %2.	filemanager	es-es	Se ha renombrado %1 a %2.
 replaced %1	filemanager	es-es	Se ha sustituido %1
+replacements for inserting entries into documents	filemanager	es-es	Sustituciones para insertar entradas en los documentos
 rights	filemanager	es-es	Derechos
 root	filemanager	es-es	raíz
 root access granted.	filemanager	es-es	Permiso de administrador concedido.
 root access stopped.	filemanager	es-es	Acceso de administrador detenido.
 save %1	filemanager	es-es	Guardar %1
 save %1, and go back to file listing	filemanager	es-es	Guardar %1, y volver al listado
+save as	filemanager	es-es	Guardar como
 save changes	filemanager	es-es	Guardar cambios
 saved %1	filemanager	es-es	Guardado %1
 saving properties failed!	filemanager	es-es	¡Fallo al guardar las propiedades!
@@ -153,13 +191,19 @@ select action...	filemanager	es-es	Seleccionar acción...
 select file to upload in current directory	filemanager	es-es	Seleccionar el fichero a subir al directorio actual
 show	filemanager	es-es	Mostrar
 show hidden files	filemanager	es-es	Mostrar los ficheros ocultos
+show link "%1" in side box menu?	filemanager	es-es	Mostrar el enlace "%1" en el menú lateral
+show link "users and groups*" in side box menu?*	filemanager	es-es	¿Mostrar el enlace "Usuarios y grupos" en el menú del recuadro lateral?
+show link "your home directory*" in side box menu?*	filemanager	es-es	¿Mostrar el enlace "Directorio personal" en el menú del recuadro lateral?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	es-es	¿Mostrar enlace al directorio base del administrador de archivos (/) en el menú lateral?
 size	filemanager	es-es	Tamaño
 start search	filemanager	es-es	comenzar la búsqueda
 startfolder	filemanager	es-es	Carpeta de inicio
 superuser	filemanager	es-es	Superusuario
 symlink to %1 created.	filemanager	es-es	Se ha creado el enlace simbólico a %1.
+tag to mark positions for address labels	filemanager	es-es	Etiqueta para marcar posiciones para etiquetas de dirección
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	es-es	La carpeta predeterminada es su carpeta personal. Si se deja en blanco, no existe la ruta o no tiene los permisos necesarios, se usa la predeterminada.
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	es-es	El documento puede contener un marcador como {{%3}}, para sustituirlo con los datos (%1lista completa de nombres de marcadores%2).
+the following document-types are supported:	filemanager	es-es	Los siguientes tipos de documentos están soportados:
 the requested path %1 is not available.	filemanager	es-es	La ruta solicitada %1 no está disponible.
 there's already a directory with that name!	filemanager	es-es	¡Ya existe un directorio con ese nombre!
 there's already a file with that name!	filemanager	es-es	¡Ya existe un fichero con ese nombre!
@@ -168,7 +212,9 @@ total files	filemanager	es-es	Total ficheros
 unused space	filemanager	es-es	Espacio sin utilizar
 up	filemanager	es-es	Arriba
 updated comment for %1	filemanager	es-es	Comentario actualizado para %1
+upload fields	filemanager	es-es	Subir campos
 upload files	filemanager	es-es	Subir ficheros
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	es-es	Use esta estiqueta para etiquetas de direcciones. Ponga el contenido que desee repetir entre dos etiquetas.
 used space	filemanager	es-es	Espacio utilizado
 users and groups	filemanager	es-es	Usuarios y grupos
 versioning	filemanager	es-es	Versionado
