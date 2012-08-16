@@ -15,14 +15,21 @@
 %1 successful uploaded.	filemanager	de	%1 erfolgreich hochgeladen.
 %1 the following files into current directory	filemanager	de	Die folgenden Dateien in das aktuelle Verzeichnis %1
 %1 urls %2 to clipboard.	filemanager	de	%1 Adressen in die Zwischenablage %2.
+%d errors while copying, %d files successfully copied.	filemanager	de	%d Fehler beim Kopieren (%d Dateien erfolgreich kopiert)!
+%d errors while moving, %d files successfully moved.	filemanager	de	%d Fehler beim Verschieben (%d Dateien erfolgreich verschoben)!
+%d erros while copying, %d files successfully copied.	filemanager	de	%d Fehler beim Kopieren (%d Dateien erfolgreich kopiert)!
+%d erros while moving, %d files successfully moved.	filemanager	de	%d Fehler beim Verschieben (%d Dateien erfolgreich verschoben)!
+%d files successfully copied.	filemanager	de	%d Dateien erfolgreich kopiert
+%d files successfully moved.	filemanager	de	%d Dateien erfolgreich verschoben
 accessrights	filemanager	de	Zugangsberechtigungen
 acl added.	filemanager	de	Zugriffsrecht hinzugefügt.
 acl deleted.	filemanager	de	Zugriffsrecht gelöscht.
 actions	filemanager	de	Befehle
-add to clipboard	filemanager	de	Anhängen an Zwischenablage
+add to clipboard	filemanager	de	Anhängen an die Zwischenablage
 all files	common	de	Alle Dateien
 allow a maximum of the above configured folderlinks to be configured in settings	admin	de	erlaube das oben eingestellte Maximum an Einstellungen für Verzeichnisverweise
-and all it's childeren	filemanager	de	und alle seine Kinder
+and all it's childeren	filemanager	de	und alle seine Kinderelemente
+application fields	filemanager	de	Anwendungsfelder
 applications	common	de	Anwendungen
 basedirectory	filemanager	de	Basisverzeichnis
 can't open directory %1!	filemanager	de	Kann Verzeichnis %1 nicht öffnen!
@@ -32,6 +39,7 @@ cautiously rejecting to remove folder '%1'!	filemanager	de	Löschen des Verzeich
 check all	filemanager	de	Alle auswählen
 check virtual filesystem	filemanager	de	Virtuelles Dateisystem überprüfen
 clear search	filemanager	de	Suchfelder zurücksetzen
+clipboard is empty!	filemanager	de	Zwischenablage ist leer!
 comment	filemanager	de	Kommentar
 copied	filemanager	de	kopiert
 copied %1 to %2	filemanager	de	%1 nach %2 kopiert
@@ -55,6 +63,7 @@ custom fields	filemanager	de	Benutzerdefinierte Felder
 cut	filemanager	de	Ausschneiden
 cut to clipboard	filemanager	de	Ausschneiden in die Zwischenablage
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	de	Vorgabe ist NEIN. Der Verweis wird nicht angezeigt, Sie können aber immer zu diesem Verzeichnis navigieren, Sie können aber das Verzeichnis als Startverzeichnis oder als Verzeichnisverweis konfigurieren.
+default document to insert entries	filemanager	de	Standarddokument zum Einfügen von Daten
 delete these files or directories?	filemanager	de	Diese Dateien oder Verzeichnisse löschen?
 delete this file or directory	filemanager	de	Datei oder Verzeichnis löschen
 deleted %1	filemanager	de	%1 gelöscht
@@ -64,6 +73,7 @@ directory %1 already exists	filemanager	de	Verzeichnis %1 existiert bereits
 directory %1 does not exist	filemanager	de	Verzeichnis %1 existiert nicht
 directory not found or no permission to access it!	filemanager	de	Verzeichnis wurde nicht gefunden oder Sie haben keine Rechte um darauf zuzugreifen!
 directory successfully created.	filemanager	de	Verzeichnis erfolgreich angelegt.
+directory with documents to insert entries	filemanager	de	Verzeichnis mit Dokumenten zum Einfügen von Daten
 display and modification of content	filemanager	de	Anzeigen und Verändern des Inhaltes
 display of content	filemanager	de	Anzeigen des Inhaltes
 do you want to overwrite the existing file %1?	filemanager	de	Wollen Sie die existierende Datei %1 überschreiben?
@@ -79,6 +89,9 @@ error creating symlink to target %1!	filemanager	de	Fehler beim Anlegen einer Ve
 error deleting the acl entry!	filemanager	de	Fehler beim Löschen des Zugriffsrechts!
 error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
 error while creating directory.	filemanager	de	Fehler beim Anlegen des Verzeichnisses
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	de	Beispiel: {{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}} - Suche im Feld "n_prefix", wenn es "Herr" enthält, dann schreibe "Sehr geehrter", wenn nicht schreibe "Sehr geehrte".
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	de	Beispiel: {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Beispiel: Herr Dr. Hans Müller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	de	Beispiel: {{NELF role}} - Wenn das Feld "role" nicht leer ist, dann wird der Inhalt des Feldes "role" in eine neue Zeile geschrieben.
 executable	filemanager	de	Ausführbar
 extended access control list	filemanager	de	Erweiterte Zugriffsrechte
 extended acl	filemanager	de	Erweiterte ACL
@@ -94,14 +107,18 @@ file or directory not found!	filemanager	de	Datei oder Verzeichnis nicht gefunde
 file successful uploaded.	filemanager	de	Datei erfolgreich hochgeladen.
 filemanager	common	de	Dateimanager
 filemanager configuration	admin	de	Dateimanager Konfiguration
+filemanager fields:	filemanager	de	Dateimanager Felder:
 filename must not be empty!	filemanager	de	Dateinamen darf nicht leer sein!
 files from subdirectories	filemanager	de	Dateien aus Unterverzeichnissen
 files in this directory	filemanager	de	Dateien in diesem Verzeichnis
 filesystem check reported no problems.	filemanager	de	Überprüfung des Dateisystem ergab keine Probleme.
 fix reported problems	filemanager	de	Gefundene Probleme beheben
 folder up	filemanager	de	darüberliegendes Verzeichnis
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	de	Die Platzhalter für Verknüpfte Eintrage bzw. Dateien (unter /apps/appname/id) der entsprechenden Anwendung stehen Ihnen hier auch zur Verfügung. Sie können die Platzhalter auch unter der Liste der Platzhalter der entsprechenden Anwendung einsehen.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	de	Die Platzhalter für Verknüpfte Eintrage bzw. Dateien (unter /apps/appname/id) der entsprechenden Anwendung stehen Ihnen hier auch zur Verfügung. Sie können die Platzhalter auch unter der Liste der Platzhalter der entsprechenden Anwendung einsehen.
 general	filemanager	de	Allgemein
-go home	filemanager	de	Heimatverzeichnis
+general fields:	filemanager	de	Allgemeine Platzhalter
+go home	filemanager	de	Heimverzeichnis
 go to	filemanager	de	Gehe zu
 go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
 go up	filemanager	de	in das darüber liegende Verzeichnis wechseln
@@ -122,6 +139,7 @@ modify all subdirectories and their content	filemanager	de	Änderungen auf alle 
 move	filemanager	de	verschieben
 move to	filemanager	de	Verschieben nach
 moved %1 to %2	filemanager	de	%1 nach %2 verschoben
+name of current user, all other contact fields are valid too	filemanager	de	Name des aktuellen Benutzers, alle anderen Kontakt Felder können Sie hier auch verwenden.
 new directory	filemanager	de	Neues Verzeichnis
 no access	filemanager	de	Kein Zugriff
 no files in this directory.	filemanager	de	Keine Dateien in diesem Verzeichnis.
@@ -148,12 +166,14 @@ rename, change permissions or ownership	filemanager	de	Umbennen, Zugriffsrechte 
 renamed %1 to %2	filemanager	de	%1 nach %2 umbenannt
 renamed %1 to %2.	filemanager	de	%1 nach %2 umbenannt.
 replaced %1	filemanager	de	%1 ersetzt
+replacements for inserting entries into documents	filemanager	de	Platzhalter zum Einfügen in ein Dokument.
 rights	filemanager	de	Rechte
 root	filemanager	de	root
 root access granted.	filemanager	de	Root Zugriff gewährt.
 root access stopped.	filemanager	de	Root Zugriff gestoppt.
 save %1	filemanager	de	%1 speichern
 save %1, and go back to file listing	filemanager	de	%1 speichern und zurück zur Verzeichnisansicht
+save as	filemanager	de	Speichern als
 save changes	filemanager	de	Änderungen speichern
 saved %1	filemanager	de	%1 gespeichert
 saving properties failed!	filemanager	de	Speichern der Eigenschaften fehlgeschlagen!
@@ -164,6 +184,8 @@ select file to upload in current directory	filemanager	de	Datei zum hochladen in
 show	filemanager	de	Zeige
 show hidden files	filemanager	de	Zeige versteckte Dateien
 show link "%1" in side box menu?	filemanager	de	Zeige die Verknüpfung "%1" im Seitenmenü?
+show link "users and groups*" in side box menu?*	filemanager	de	Möchten Sie die Verknüpfung "Benutzer und Gruppen" innerhalb des Seitenmenüs anzeigen?
+show link "your home directory*" in side box menu?*	filemanager	de	Möchten Sie den Verknüpfung  "Ihr Home Verzeichnis" innerhalb des Seitenmenüs angezeigt bekommen?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenü?
 size	filemanager	de	Größe
 start search	filemanager	de	Suche starten

@@ -241,10 +241,6 @@ home zip code	addressbook	en	Home ZIP code
 how many contacts should non-admins be able to export	admin	en	How many contacts should non-admins be able to export.
 icon	addressbook	en	Icon
 if accounts are already in ldap	admin	en	If accounts are already in LDAP
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	addressbook	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	addressbook	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
-if you specify an export definition, it will be used when you export	addressbook	en	If you specify an export definition, it will be used when you export
-if you specify an export definition, it will be used when you export*	addressbook	en	If you specify an export definition, it will be used when you export*
 ignore first line	addressbook	en	Ignore first line
 import	addressbook	en	Import
 import contacts	addressbook	en	Import contacts
@@ -317,7 +313,6 @@ no fallback	addressbook	en	No fallback
 no vcard	addressbook	en	No vCard
 number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
-old fixed definition	addressbook	en	Old fixed definition
 open email addresses in external mail program	addressbook	en	Open EMail addresses in external mail program
 options for type	admin	en	Options for type
 organisation	addressbook	en	Organisation
@@ -404,8 +399,6 @@ that field name has been used already !	addressbook	en	The field name has been u
 the anonymous user has probably no add rights for this addressbook.	addressbook	en	The anonymous user has no add rights for this address book.
 the anonymous user needs add rights for it!	addressbook	en	The anonymous user needs add rights!
 the anonymous user needs read it!	addressbook	en	The anonymous user needs read rights!
-the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	addressbook	en	The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).
-the following document-types are supported:	addressbook	en	The following document-types are supported:
 the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	en	The zip extension is needed, to insert contact data in OpenOffice or MSOffice documents.
 there was an error saving your data :-(	addressbook	en	ERROR saving data!
 this module displays a contactform, that stores direct into the addressbook.	addressbook	en	This module displays a contact form, that stores directly into the address book.

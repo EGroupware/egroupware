@@ -77,6 +77,7 @@ business zip code	addressbook	de	PLZ geschäftl.
 calendar fields:	addressbook	de	Kalender Felder:
 calendar uri	addressbook	de	Kalender URI
 can be changed via setup >> configuration	admin	de	Kann über Setup >> Konfiguration geändert werden
+can't create dn %1	addressbook	de	dn %1 kann nicht erstellt werden
 car phone	addressbook	de	Autotelefon
 categorie	addressbook	de	Kategorie
 categorie added	addressbook	de	Kategorie (n) hinzugefügt
@@ -183,12 +184,16 @@ enter the path to the exported file here	addressbook	de	Bitte geben Sie den Pfad
 error deleting the contact !!!	addressbook	de	Fehler beim Löschen des Kontakts !!!
 error saving the contact !!!	addressbook	de	Fehler beim Speichern des Kontakts !!!
 error: the entry has been updated since you opened it for editing!	addressbook	de	Fehler: der Eintrag wurde geändert, seit Sie ihn zum Bearbeiten geöffnet haben!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	de	Beispiel: "{{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}}" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel (Land wird nur dann angezeigt, denn es nicht DEUTSCHLAND ist: }
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	de	Beispiel für {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Beispiel: Herr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	de	Beispiel {{NELF role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role (Funktion) wird nach dem Zeilenumbruch ausgegeben.
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	addressbook	de	Beispiel {{NELFNV role}} -Erzeugt einen Zeilenumbruch, wenn das Feld role (Funktion) einen Wert besitzt. Der Wert role (Funktion) wird auch bei Vorhandensein des Feldes role nicht ausgegeben.
 existing links	addressbook	de	Bestehende Verknüpfungen
 exists	addressbook	de	besteht bereits
 export as csv	addressbook	de	Exportieren als CSV
 export as vcard	addressbook	de	Exportieren als VCard
 export contacts	addressbook	de	Kontakte exportieren
+export definition to use for nextmatch export	addressbook	de	Export Profil der Listenansicht  (Disketten Symbol)
 export definitition to use for nextmatch export	addressbook	de	Export Profil der Listenansicht  (Disketten Symbol)
 export file name	addressbook	de	Dateiname zum Exportieren
 export from addressbook	addressbook	de	Export vom Adressbuch
@@ -208,10 +213,13 @@ fields for the csv export	addressbook	de	Felder für den CSV Export
 fields the user is allowed to edit himself	admin	de	Felder, die der Benutzer selbst bearbeiten darf
 fields to copy when copying an address?	admin	de	Welche Felder sollen beim Kopieren berücksichtigt werden?
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
+fieldseparator	addressbook	de	Feldtrenner
 for read only ldap	admin	de	für nur lesendes LDAP
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	de	Wenn Sie Serienbriefe erzeugen möchten, dann benutzen Sie dieses 'Markierungszeichen'. Setzen Sie den Inhalt, der wiederholt werden soll (Anschriftstags und Briefinhalt) zwischen zwei 'Seiten-Wiederholungs-Zeichen'.
 freebusy uri	addressbook	de	Freebusy URI
 full name	addressbook	de	vollständiger Name
+general	admin	de	Allgemein
+general fields:	addressbook	de	Allgemeine Felder:
 geo	addressbook	de	GEO
 global categories	addressbook	de	Globale Kategorien
 grant addressbook access	common	de	Berechtigungen
@@ -234,6 +242,7 @@ how many contacts should non-admins be able to export	admin	de	Wieviele Kontakte
 icon	addressbook	de	Icon
 if accounts are already in ldap	admin	de	wenn die Benutzer bereits im LDAP sind
 ignore first line	addressbook	de	Erste Zeile ignorieren
+import	addressbook	de	Importieren
 import contacts	addressbook	de	Kontakte importieren
 import csv-file into addressbook	addressbook	de	Import CSV-Datei ins Adressbuch
 import file	addressbook	de	Datei importieren
@@ -243,6 +252,7 @@ import from outlook	addressbook	de	Aus Outlook importieren
 import multiple vcard	addressbook	de	Import mehrere VCards
 import next set	addressbook	de	Nächsten Satz importieren
 import_instructions	addressbook	de	In Netscape: Öffnen Sie das Adressbuch und wählen Sie <b>Exportieren</b> aus dem Datei Menü aus. Die Dateien werden im LDIF Format exportiert.<p> In Outlook wählen Sie den Ordner Kontakte aus, wählen Sie <b>Importieren und Exportieren...</p> aus dem <b>Datei</b> Menü aus und Exportieren Sie die Kontakte als eine CSV Datei.<p> In Palm Desktop 4.0 oder größer, öffnen Sie Ihr Adressbuch und wählen Sie <b>Export</b> aus dem Datei-Menü aus. Die Datei wird im VCard-Format exportiert.
+importer's personal	addressbook	de	Persönliche Adressbuch des Importierenden
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	de	Importiert Kontakte aus einer CSV Datei in Ihr Adressbuch. CSV bedeutet Komma getrennte Werte. Sie können in dem Reiter Einstellungen auch ein anderes Trennzeichen wählen.
 in %1 days (%2) is %3's birthday.	addressbook	de	In %1 Tagen (%2) ist der Geburtstag von %3.
 income	addressbook	de	Einkommen
@@ -262,15 +272,20 @@ ldif	addressbook	de	LDIF
 line 2	addressbook	de	Zeile 2
 link title for contacts show	addressbook	de	Titel der Verknüpfung für Kontakte zeigt
 links	addressbook	de	Verknüpfungen
+links and attached files	addressbook	de	Verknüpfungen zu anderen Datensätzen und angefügten Dateien
+links to specified application.  example: {{links/infolog}}	addressbook	de	Verknüpfungen zu bestimmten Anwendungen. Beispiel: {{links/infolog}}
 list all categories	addressbook	de	Liste alle Kategorien
 list all customfields	addressbook	de	Liste alle benutzerdefinierten Felder
 list already exists!	addressbook	de	Die Liste existiert bereits!
 list created	addressbook	de	Verteiler erzeugt
 list creation failed, no rights!	addressbook	de	Verteiler erzeugen fehlgeschlagen, keine Rechte!
+list of files linked to the current record	addressbook	de	Liste der Dokumente, die zu dem aktuellen Datensatz gehören.
 load vcard	addressbook	de	VCard laden
 location	addressbook	de	Standort
 locations	addressbook	de	Standorte
+mail vcard	addressbook	de	VCard per E-Mail zusenden.
 main categories in their own field	addressbook	de	Haupkategorien in einem eigenen Feld
+manage mapping	addressbook	de	Feldzuordnungen verwalten
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
 merge contacts	addressbook	de	Kontakte vereinigen
 merge into first or account, deletes all other!	addressbook	de	Vereinige im ersten oder Benutzerkonto, löscht alle anderen !
@@ -392,9 +407,11 @@ this person's first name was not in the address book.	addressbook	de	Der Vorname
 this person's last name was not in the address book.	addressbook	de	Der Nachname dieser Person ist nicht im Adressbuch vorhanden.
 timezone	addressbook	de	Zeitzone
 title	addressbook	de	Position
+titles of any entries linked to the current record, excluding attached files	addressbook	de	Titel der Verknüpften zu dem aktuellem Eintrag ohne Dateien.
 to many might exceed your execution-time-limit	addressbook	de	Zu viele können Ihre Laufzeitbeschränkung überschreiten
 today is %1's birthday!	common	de	Heute ist der Geburtstag von %1!
 tomorrow is %1's birthday.	common	de	Morgen ist der Geburtstag von %1.
+translation	addressbook	de	Übersetzung
 two of: %1	addressbook	de	Zwei von: %1
 type	addressbook	de	Typ
 un-delete	addressbook	de	Gelöschte Adressen wieder  herstellen
@@ -406,6 +423,7 @@ update fields by edited organisations?	admin	de	Welche Felder sollen  beim Bearb
 updated	addressbook	de	Aktualisiert
 upload or delete the photo	addressbook	de	Foto hochladen oder löschen
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	de	URL mit denen Telefonnummern verlinkt werden sollen (verwenden Sie %1 = anzurufende Nummer, %u = Benutzernamen, %t = Telefon des Benutzers)
+use addressbooks "own sorting" attribute	addressbook	de	Verwende die Einstellung "eigene Sortierung"
 use an extra category tab?	addressbook	de	Separaten Reiter für Kategorien verwenden?
 use an extra tab for private custom fields?	admin	de	Separaten Reiter für private benutzerdefinierte Felder verwenden?
 use country list	addressbook	de	Länderliste benutzen
