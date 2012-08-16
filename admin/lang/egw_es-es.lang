@@ -1,24 +1,32 @@
 %1 - %2 of %3 user accounts	admin	es-es	%1 - %2 de %3 cuentas de usuarios
 %1 - %2 of %3 user groups	admin	es-es	%1 - %2 de %3 grupos de usuarios
 %1 acl records of not (longer) existing accounts deleted.	admin	es-es	Se han borrado %1 registros de cuentas inexistentes.
+%1 categories of not (longer) existing accounts deleted.	admin	es-es	Se han borrado %1 categorías de cuentas que ya no existen.
+%1 category(s) %2	admin	es-es	%1 categorías %2
+%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	es-es	%1 categorías %2, %3 fallaron por permisos insuficiente
 %1 class not instanciated	admin	es-es	La clase %1 no está instanciada
 %1 group %2	admin	es-es	%1 grupo %2
 %1 is no command!	admin	es-es	¡%1 no es un comando!
 %1 log entries deleted.	admin	es-es	Se han borrado %1 entradas del log.
 %1 not found or not executable !!!	admin	es-es	No se encontró %1 o no es un ejecutable
+%1 phrases saved.	admin	es-es	Se han guardado %1 frases.
 %1 rights for %2 and applications %3	admin	es-es	Derechos de %1 para %2 y aplicaciones %3
+%1 sessions killed	admin	es-es	Se han matado %1 sesiones
 %1 user %2	admin	es-es	%1 usuario %2
 (default no, leave it off if you dont use it)	admin	es-es	(por defecto, No, desactivar si no se usa)
 (stored password will not be shown here)	admin	es-es	(las claves guardadas no se mostrarán aquí)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	es-es	(Para instalar nuevas aplicaciones, utilice <br><a href="setup/" target="setup">Instalación</a> [Administrar Aplicaciones])
 -  type	admin	es-es	- tipo
 accesslog and bruteforce defense	admin	es-es	Defensa de acceso al registro y fuerza bruta
+account "%1" has no email address --> not notified!	admin	es-es	La cuenta "%1" no tiene correo --> ¡no se notifica!
+account "%1" has no plaintext password!	admin	es-es	¡La cuenta "%1" NO tiene la contraseña en texto claro!
 account %1 %2	admin	es-es	Cuenta %1 %2
 account '%1' deleted.	admin	es-es	Se ha borrado la cuenta '%1'.
 account active	admin	es-es	Cuenta activa
 account has been created	common	es-es	La cuenta ha sido creada
 account has been deleted	common	es-es	La cuenta ha sido borrada
 account has been updated	common	es-es	La cuenta ha sido actualizada
+account id	admin	es-es	ID de la cuenta
 account list	admin	es-es	Lista de cuentas
 account permissions	admin	es-es	Permisos de la cuenta
 account preferences	admin	es-es	Preferencias de la cuenta
@@ -54,6 +62,8 @@ advanced options	admin	es-es	opciones avanzadas
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	es-es	¿Después de cuántos intentos fallidos de conexión debe bloquearse una cuenta? (por defecto, 3)
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	es-es	¿Después de cuántos intentos fallidos de conexión debe bloquearse una IP? (por defecto, 3)
 aliases	admin	es-es	Alias
+all applications	admin	es-es	Todas las aplicaciones
+all categories	admin	es-es	Todas las categorías
 all records and account information will be lost!	admin	es-es	¡Se perderán todos los registros y la información de las cuentas!
 all users	admin	es-es	Todos los usuarios
 allow anonymous access to this app	admin	es-es	Permitir acceso anónimo a esta aplicación
@@ -92,10 +102,13 @@ attribute mailalternateaddress explained	admin	es-es	Esto maneja el atributo <b>
 attribute mailforwardingaddress explained	admin	es-es	Esto maneja el atributo <b><i>-mailForwardingAddress-</i></b> del esquema de QMAIL y no debe estar vacío si está asignado.
 authentication / accounts	admin	es-es	Identificación / Cuentas
 auto create account records for authenticated users	admin	es-es	Crear cuentas automáticamente para usuarios identificados
+available placeholders	admin	es-es	Marcadores disponibles
 back to the list	admin	es-es	volver a la lista
+backup directory %1 mounted as %2	admin	es-es	El directorio de copias de seguridad %1 está montado como %2
 bi-dir passthrough	admin	es-es	bidireccional passthrough
 bi-directional	admin	es-es	bidireccional
 bottom	admin	es-es	parte inferior
+bulk password reset	admin	es-es	Restablecimiento de contraseña en bruto
 calculate next run	admin	es-es	Calcular la siguiente ejecución
 calendar recurrence horizont in days (default 1000)	admin	es-es	Horizonte de recurrencia del calendario en días (predeterminado: 1000)
 can change password	admin	es-es	Puede cambiar la contraseña
@@ -110,8 +123,12 @@ change account_id	admin	es-es	Cambiar el campo account_id
 change acl rights	admin	es-es	cambiar permisos de ACL
 change config settings	admin	es-es	Cambiar opciones de configuración
 change main screen message	admin	es-es	Cambiar mensaje de la pantalla principal
+change owner	admin	es-es	Cambiar el propietario
 change password for %1	admin	es-es	cambiar la contraseña para %1
+change password hash to	admin	es-es	Cambiar el hash de la contraseña a
+changed password hash for %1 to %2.	admin	es-es	Se ha cambiado el hash de la contraseña de %1 a %2.
 check acl for entries of not (longer) existing accounts	admin	es-es	Comprobar las ACL para las entradas de cuentas que no existen
+check categories for not (longer) existing accounts	admin	es-es	Comprobar las categorías para las cuentas que ya no existen
 check ip address of all sessions	admin	es-es	Comprobar  la IP de todas las sesiones
 check items to <b>%1</b> to %2 for %3	admin	es-es	Seleccionar los elementos para <b>%1</b> a %2 para %3
 children	admin	es-es	Hijos
@@ -128,9 +145,13 @@ country selection	admin	es-es	Selección de país
 create group	admin	es-es	Crear grupo
 created	admin	es-es	Creado
 created with id #%1	admin	es-es	Creado con id nº %1
+creates / updates user accounts from csv file	admin	es-es	Crea o actualiza las cuentas de usuario desde un fichero CSV
+creates / updates user groups from csv file	admin	es-es	Crea o actualiza los grupos de usuarios desde un fichero CSV
 creates a new field	admin	es-es	crea un campo nuevo
 crontab only (recomended)	admin	es-es	Sólo mediante crontab (recomendado)
+current hash	admin	es-es	Hash actual
 custom fields	admin	es-es	Campos personalizados
+custom translation	admin	es-es	Traducción personalizada
 cyrus imap server	admin	es-es	Servidor IMAP Cyrus
 data	admin	es-es	Datos
 day	admin	es-es	Día
@@ -150,10 +171,12 @@ delete peer server	admin	es-es	Borrar servidor 'peer'
 delete selected entries	admin	es-es	Borrar las entradas seleccionadas
 delete the category	admin	es-es	borrar la categoría
 delete the group	admin	es-es	borrar el grupo
+delete the selected entries	admin	es-es	Borrar las entradas seleccionadas
 delete this category	admin	es-es	borrar esta categoría
 delete this group	admin	es-es	borrar este grupo
 delete this log entry	admin	es-es	Borrar esta entrada del log
 delete this user	admin	es-es	borrar este usuario
+deleted	admin	es-es	borradas
 deletes this field	admin	es-es	borra este campo
 deliver extern	admin	es-es	entrega externa
 deny access to access log	admin	es-es	Denegar acceso al registro de accesos
@@ -175,6 +198,7 @@ deny all users access to grant other users access to their entries ?	admin	es-es
 deny all users access to preferences ?	admin	es-es	¿Denegar a todos los usuarios el acceso a las preferencias?
 description can not exceed 255 characters in length !	admin	es-es	¡La descripción no puede exceder de 255 caracteres de longitud!
 determines the order the fields are displayed	admin	es-es	determina el orden en que se muestran los campos
+disable	admin	es-es	Desactivar
 disable "auto completion" of the login form	admin	es-es	Desactivar completado automático en el formulario de inicio de sesión
 disable wysiwyg-editor	admin	es-es	desactivar editor WYSIWYG
 disabled (not recomended)	admin	es-es	desactivado (no se recomienda)
@@ -184,6 +208,8 @@ do you also want to delete all global subcategories ?	admin	es-es	¿Desea elimin
 do you want to delete all global subcategories ?	admin	es-es	¿Desea borrar todas las subcategorías globales?
 do you want to move all global subcategories one level down ?	admin	es-es	¿Desea mover todas las subcategorías globales un nivel hacia abajo?
 document root (default)	admin	es-es	Raíz de los documentos (Document root) (predeterminado)
+down	admin	es-es	Abajo
+download csv	admin	es-es	Descargar CSV
 each value is a line like <id>[=<label>]	admin	es-es	cada valor es una línea como <id>[=<etiqueta>]
 each value is a line like id[=label]	admin	es-es	cada valor es una línea como id[=label]
 edit account	admin	es-es	Editar cuenta
@@ -208,6 +234,7 @@ egroupware version	admin	es-es	Versión de EGroupware
 either install id and config password needed or the remote hash!	admin	es-es	¡Tanto el ID de la instalación como la contraseña de configuración necesitan el hash remoto!
 email account active	admin	es-es	cuenta de correo activa
 email address	admin	es-es	dirección de correo electrónico
+enable	admin	es-es	Activar
 enable debug-messages	admin	es-es	Activar mensajes de depuración
 enable the soap service	admin	es-es	Activar el servicio soap
 enable the spellcheck in the ritch text editor ?	admin	es-es	¿Activar la corrección ortográfica en el editor de texto enriquecido?
@@ -250,8 +277,12 @@ error saving to db:	admin	es-es	Error al guardar a la base de datos:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	es-es	Error al configurar el temporizador. La sintaxis es incorrecta o puede que haya uno que ya se esté ejecutándo.
 error! no appname found	admin	es-es	¡Error! No se encontró el nombre de la aplicación
 error: %1 not found or other error !!!	admin	es-es	Error: no se encontró %1 u otro error
+exists	admin	es-es	Existe
 expires	admin	es-es	Expira
 explanation of ldapman	admin	es-es	Este módulo ha sido probado en POSTFIX, LDAP, Courier-IMAP y necesita los esquemas CORE y QMAIL (OID7914). Más detalles sobre el uso y configuración de este sistema puede encontrarse en el fichero README.ldapman en el directorio doc de ADMIN.
+exports groups into a csv file.	admin	es-es	Exportar los grupos en un fichero CSV.
+exports users into a csv file.	admin	es-es	Exporta los usuarios en un fichero CSV.
+failed to change password for account "%1"!	admin	es-es	¡Fallo al cambiar la contraseña para la cuenta "%1"!
 fallback (after each pageview)	admin	es-es	retardo (después de ver cada página)
 false	admin	es-es	falso
 field '%1' already exists !!!	admin	es-es	¡El campo '%1' ya existe!
@@ -266,11 +297,15 @@ force users to change their password regularily?(empty for no,number for after t
 forward also to	admin	es-es	reenviar también a
 forward emails to	admin	es-es	reenviar correos a
 forward only	admin	es-es	reenviar solamente
+full name	admin	es-es	Nombre completo
 global categories	common	es-es	Categorías globales
 go directly to admin menu, returning here the next time you click on administration.	admin	es-es	Ir directamente al menú de administración, volviendo aquí la próxima vez que pulse en administración.
 governmental: incl. state or municipal authorities or services	admin	es-es	Gubernamental: incluye estado o autoridades municipales o servicios
 grant	admin	es-es	Conceder acceso
 group ?	admin	es-es	¿Grupo?
+group csv export	admin	es-es	Exportar grupo a CSV
+group csv import	admin	es-es	Importar grupo CSV
+group excepted from above export limit (admins are always excepted)	admin	es-es	Grupo exceptuado del límite de exportación anterior (los admins siempre se exceptúan)
 group has been added	common	es-es	El grupo ha sido añadido
 group has been deleted	common	es-es	El grupo ha sido eliminado
 group has been updated	common	es-es	El grupo ha sido actualizado
@@ -303,6 +338,7 @@ installed crontab	admin	es-es	Crontab instalado
 instance	admin	es-es	Instancia
 interface	admin	es-es	Interfaz
 international use	admin	es-es	Uso internacional
+invalid argument '%1' !!!	admin	es-es	¡El argumento '%1' no es válido!
 invalid formated date "%1"!	admin	es-es	¡La fecha %1 no tiene un formato válido!
 invalid remote id or name "%1"!	admin	es-es	¡El nombre o id remoto %1 no es válido!
 invalid value "%1" use yes or no!	admin	es-es	El valor "%1" no es válido. Use "sí" o "no"
@@ -312,8 +348,10 @@ kill	admin	es-es	Matar
 kill session	admin	es-es	Matar sesión
 last %1 logins	admin	es-es	Ultimos %1 inicios de sesión
 last %1 logins for %2	admin	es-es	Ultimos %1 inicios de sesión de %2
+last action	admin	es-es	Última acción
 last login	admin	es-es	Ultimo inicio de sesión
 last login from	admin	es-es	Ultimo inicio de sesión desde
+last password change	admin	es-es	Último cambio de contraseña
 last submission:	admin	es-es	Último envío:
 last time read	admin	es-es	Ultima lectura
 ldap accounts context	admin	es-es	Contexto de las cuentas LDAP
@@ -327,6 +365,7 @@ ldap rootdn	admin	es-es	rootdn LDAP
 leave empty for no quota	admin	es-es	dejar en blanco si no hay cuota
 leave the category untouched and return back to the list	admin	es-es	dejar la categoría intacta y volver a la lista
 leave the group untouched and return back to the list	admin	es-es	Dejar el grupo intacto y volver a la lista
+leave unchanged	admin	es-es	Dejar sin cambios
 leave without saveing the entry	admin	es-es	salir sin guardar la entrada
 leaves without saveing	admin	es-es	sale sin guardar
 length<br>rows	admin	es-es	Longitud<br>Filas
@@ -348,10 +387,12 @@ logoutime	admin	es-es	Hora de fin de sesión
 mail settings	admin	es-es	Configuración del correo electrónico
 main email-address	admin	es-es	Dirección de correo principal
 main screen message	admin	es-es	Mensaje de la pantalla principal
+manage mapping	admin	es-es	Gestión de mapeos
 manager	admin	es-es	Administrador
 max length of the input [, length of the inputfield (optional)]	admin	es-es	longitud máxima de la entrada [, longitud del campo de entrada (opcional)]
 maximum account id (e.g. 65535 or 1000000)	admin	es-es	Id máximo de cuenta (ej. 65535 o 1000000)
 maximum entries in click path history	admin	es-es	Número máximo de entradas en la ruta del historial de pulsar con el ratón
+members	admin	es-es	Miembros
 message has been updated	admin	es-es	el mensaje ha sido actualizado
 method	admin	es-es	Método
 minimum account id (e.g. 500 or 100, etc.)	admin	es-es	Id mínimo de cuenta (ej. 500 o 100, etc.)
@@ -360,11 +401,13 @@ mode	admin	es-es	Modo
 modified	admin	es-es	Modificado
 month	admin	es-es	Mes
 more secure	admin	es-es	más seguro
+mount backup directory to %1	admin	es-es	Montar el directorio de la copia de seguridad en %1
 must change password upon next login	admin	es-es	Debe cambiar la contraseña la próxima vez que inicie la sesión
 name must not be empty !!!	admin	es-es	El nombre no debe estar vacío
 name of the egroupware instance, eg. default	admin	es-es	Nombre de la instancia de eGroupWare, p. ej., default
 new group name	admin	es-es	Nuevo nombre de grupo
 new name	admin	es-es	nuevo nombre
+new password	admin	es-es	Contraseña nueva
 new password [ leave blank for no change ]	admin	es-es	Nueva contraseña [ Dejar en blanco para no cambiar ]
 next run	admin	es-es	Siguiente ejecución
 no algorithms available	admin	es-es	no hay algoritmos disponibles
@@ -378,10 +421,16 @@ no permission to add users	admin	es-es	no tiene permiso para añadir usuarios
 no permission to create groups	admin	es-es	no tiene permiso para crear grupos
 non profit: clubs, associations, ...	admin	es-es	Sin ánimo de lucro: clubs, asociaciones...
 note: ssl available only if php is compiled with curl support	admin	es-es	Nota: SSL está disponible sólo si PHP está compilado con soporte curl
+notification mail	admin	es-es	Correo de notificación
+notify user by email	admin	es-es	Notificar al usuario por correo
+notifying account "%1" %2 failed!	admin	es-es	¡Falló la notificación a la cuenta "%1" %2!
+number applications serially	admin	es-es	Numerar las aplicaciones en serie
 number of active users	admin	es-es	número de usuarios activos
 number of row for a multiline inputfield or line of a multi-select-box	admin	es-es	número de filas para un campo multilínea or línea de una lista multiselección
 number of sessions / egroupware logins in the last 30 days	admin	es-es	Número de sesiones / sesiones de EGroupware en los últimos 30 días
 number of users	admin	es-es	Número de usuarios
+number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	es-es	Numerar las aplicaciones en serie. Si no se numeran en serie, podría no funcionar al ordenarlas. Esto no cambiará el orden de las aplicaciones.
+nummeric account id	admin	es-es	ID de cuenta numérico
 official egroupware usage statistic	admin	es-es	Estadística oficial de uso de EGroupware
 one day	admin	es-es	un día
 one hour	admin	es-es	una hora
@@ -391,10 +440,13 @@ only below displayed information is directly submitted to %s.	admin	es-es	Sólo 
 operating system	admin	es-es	Sistema operativo
 order	admin	es-es	Orden
 outbound	admin	es-es	De salida
+own categories	admin	es-es	Categorías propias
 own install id:	admin	es-es	ID de instalación propio:
+owner "%1" removed, please select group-owner	admin	es-es	Se ha eliminado el propietario "%1", por favor, seleccione el propietario del grupo
 passthrough	admin	es-es	pasage
 password for smtp-authentication	admin	es-es	Contraseña para identificación SMTP
 password updated	admin	es-es	Se ha actualizado la contraseña
+passwords and/or attributes of %1 accounts changed	admin	es-es	Las contraseñas y atributos de %1 cuentas se han cambiado
 path information	admin	es-es	Información de ruta
 peer server list	admin	es-es	Lista de servidores 'peer'
 peer servers	admin	es-es	Servidores 'peer'
@@ -407,6 +459,8 @@ permissions this group has	admin	es-es	Permisos que tiene este grupo
 personal: eg. within a family	admin	es-es	Personal: p.ej. uso familiar
 php version	admin	es-es	Versión de PHP
 phpinfo	admin	es-es	Información de PHP
+phrase	admin	es-es	Frase
+phrase deleted	admin	es-es	Se ha borrado la frase
 please enter a name	admin	es-es	Por favor introduzca un nombre
 please enter a name for that server !	admin	es-es	Por favor, introduzca un nombre para  ese sevidor
 please run setup to become current	admin	es-es	Por favor ejecute setup para estar al día
@@ -427,6 +481,7 @@ remote instance saved	admin	es-es	Se ha guardado la instancia remota
 remove	admin	es-es	borrar
 remove all users from this group	admin	es-es	Borrar todos los usuarios de este grupo
 remove all users from this group ?	admin	es-es	¿Borrar todos los usuarios de este grupo?
+removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	es-es	Eliminar el acceso a grupos puede causar problemas para los datos en esta categoría. ¿Está seguro? Los usuarios de estos grupos puede que ya no tengan acceso:
 requested	admin	es-es	Requerido
 return to admin mainscreen	admin	es-es	volver a la pantalla principal de administración
 return to view account	admin	es-es	Volver a ver cuenta
@@ -447,6 +502,7 @@ select accounts for which the custom field should be visible	admin	es-es	Selecci
 select group managers	admin	es-es	Seleccionar administradores de grupo
 select permissions this group will have	admin	es-es	Seleccione los permisos que tendrá este grupo
 select the parent category. if this is a main category select no category	admin	es-es	Seleccione la categoría superior. Si ésta es una categoría principal seleccione SIN CATEGORIA
+select users	admin	es-es	Seleccionar usuarios
 select users for inclusion	admin	es-es	Seleccionar usuarios para inclusión
 select where you want to store/retrieve filesystem information	admin	es-es	Seleccione dónde desea almacenar la informacion del sistema de archivos
 select where you want to store/retrieve user accounts	admin	es-es	Seleccione dónde desea almacenar la información de las cuentas de usuario
@@ -459,6 +515,7 @@ server type(mode)	admin	es-es	Tipo (modo) del servidor
 server url	admin	es-es	URL del servidor
 server username	admin	es-es	Usuario del servidor
 sessions last 30 days	admin	es-es	Sesiones en los últimos 30 días
+set a random password	admin	es-es	Establecer una contraseña aleatoria.
 set preference values.	admin	es-es	Establecer valores para las preferencias
 should exceptions contain a trace (including function arguments)	admin	es-es	Las excepciones deben contener una traza (incluyendo argumentos de funciones)
 should the login page include a language selectbox (useful for demo-sites) ?	admin	es-es	¿Debe incluir la página de inicio de sesión un cuadro de selección de idioma (útil para sitios de demostración)?
@@ -480,6 +537,7 @@ standard	admin	es-es	estándar
 standard imap server	admin	es-es	servidor IMAP estándar
 standard pop3 server	admin	es-es	servidor POP3 estándar
 standard smtp-server	admin	es-es	servidor SMTP estándar
+start	admin	es-es	Inicio
 start testjob!	admin	es-es	Iniciar el trabajo de prueba
 submit changes	admin	es-es	Enviar cambios
 submit displayed information?	admin	es-es	¿Enviar la información mostrada?
@@ -514,6 +572,7 @@ they must be removed before you can continue	admin	es-es	Deben ser eliminados pa
 this application is current	admin	es-es	Esta aplicación está al día
 this application requires an upgrade	admin	es-es	Esta aplicación necesita ser actualizada
 this category is currently being used by applications as a parent category	admin	es-es	Esta categoría está siendo usada por aplicaciones como categoría padre.
+this controls exports and merging.	admin	es-es	Esto controla las impresiones de exportar y mezclar.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	es-es	Tiempo límite para los datos de la sesión de la aplicación en segundos (por defecto 86400 = 1 día)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	es-es	Tiempo límite para las sesiones en segundos (por defecto 14400 = 4 horas)
 times	admin	es-es	Horas
@@ -521,6 +580,7 @@ to allow us to track the growth of your individual installation use this submit 
 top	admin	es-es	Superior
 total of %1 id's changed.	admin	es-es	Se han cambiado en total %1 ids
 total records	admin	es-es	Total de registros
+translation	admin	es-es	Traducción
 true	admin	es-es	verdadero
 trust level	admin	es-es	Nivel de confianza
 trust relationship	admin	es-es	Relaciones de confianza
@@ -534,6 +594,8 @@ under windows you need to install the asyncservice %1manually%2 or use the fallb
 unknown account: %1 !!!	admin	es-es	¡¡La cuenta es desconocida: %1!!
 unknown command %1!	admin	es-es	Comando desconocido: %1
 unknown option %1	admin	es-es	Opción desconocida: %1
+unwilling to save category with current settings. check for inconsistency:	admin	es-es	No se pudo guardar la categoría con la configuración actual. Compruebe la inconsistencia:
+up	admin	es-es	Arriba
 updated	admin	es-es	actualizado
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	es-es	La URL de la instalación de eGroupWare, p. ej. http://dominio.com/egroupware
 usage	admin	es-es	Uso
@@ -541,12 +603,15 @@ use cookies to pass sessionid	admin	es-es	Usar cookies para almacenar sesiones
 use pure html compliant code (not fully working yet)	admin	es-es	Usar codigo HTML puro (todavía no funciona completamente)
 use theme	admin	es-es	Usar tema
 user accounts	admin	es-es	Cuentas de usuario
+user csv export	admin	es-es	Exportación CSV de usuarios
+user csv import	admin	es-es	Importación CSV de usuarios
 user data	common	es-es	Datos del usuario
 user for smtp-authentication (leave it empty if no auth required)	admin	es-es	Usuario para identificación SMTP (dejar en blanco si no se necesita)
 user groups	admin	es-es	Grupos de usuarios
 userdata	admin	es-es	Datos del usuario
 users choice	admin	es-es	A elegir por el usuario
 value for column %1 is not unique!	admin	es-es	¡El valor para la columna %1 no es única!
+vfs directory "%1" not found!	admin	es-es	¡No se ha encontrado el directorio VFS "%1"!
 view access log	admin	es-es	Ver registro de acceso
 view account	admin	es-es	Ver cuenta
 view category	admin	es-es	Ver categoría
@@ -554,6 +619,7 @@ view error log	admin	es-es	Ver registro de errores
 view sessions	admin	es-es	Ver sesiones
 view this user	admin	es-es	ver este usuario
 view user account	admin	es-es	Ver cuenta de usuario
+warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	es-es	Establecer el número de días para informar a los usuarios por adelantado sobre el próximo cambio forzado de contraseña. Vacío = sin información
 we ask for the data to improve our profile in the press and to get a better understanding of egroupware's user base and it's needs.	admin	es-es	Solicitamos los datos para mejorar nuestro perfil en la prensa y para obtener una mejor comprensión del usuario base de EGroupware y sus necesidades
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	es-es	Esperamos que comprenda la importancia de esta estadística voluntaria y no denegarla a la ligera.
 who would you like to transfer all records owned by the deleted user to?	admin	es-es	¿A quién desea transferirle todos los registros del usuario eliminado?
@@ -565,6 +631,9 @@ would you like to show each application's upgrade status ?	admin	es-es	¿Desea m
 wrong account type: %1 is no %2 !!!	admin	es-es	Tipo de cuenta incorrecta: ¡%1 no es %2!
 wrong admin-account or -password !!!	admin	es-es	¡La cuenta de administración o la contraseña son incorrectas!
 xml-rpc	admin	es-es	XML-RPC
+yes, but no scayt	admin	es-es	Sí, pero no se comprueba la ortografía mientras se escribe (en línea)
+yes, use webspellchecker	admin	es-es	Sí, usar WebSpellChecker en linea
+you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	es-es	¡Sólo puede cambiar el hash si establece una contraseña aleatoria o está usando contraseñas en texto claro!
 you have entered an invalid expiration date	admin	es-es	Ha introducido una fecha de expiración que no es válida
 you have no email address for your user set !!!	admin	es-es	¡No se ha establecido todavía una dirección de correo para su usuario!
 you have to enter a name, to create a new field!!!	admin	es-es	Tiene que introducir un nombre para crear un nuevo campo
@@ -579,6 +648,8 @@ you must enter an application title.	admin	es-es	Debe introducir un título para
 you must select a file type	admin	es-es	Debe seleccionar un tipo de archivo
 you must select at least one group member.	admin	es-es	Debe seleccionar al menos un miembro del grupo.
 you need to enter install id and password!	admin	es-es	¡Necesita introducir el ID de instalación o la contraseña!
+you need to select as least one action!	admin	es-es	¡Necesita seleccionar al menos una acción!
+you need to select some users first!	admin	es-es	¡Necesita seleccionar antes algunos usuarios!
 you will need to remove the subcategories before you can delete this category	admin	es-es	Deberá eliminar las subcategorías antes de poder borrar esta categoría
 your last submission was less then %1 days ago!	admin	es-es	¡Su último envío fue hace menos de %1 días!
 your session could not be verified.	admin	es-es	Su sesión no pudo ser verificada.
