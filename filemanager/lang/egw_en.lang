@@ -15,6 +15,8 @@
 %1 successful uploaded.	filemanager	en	%1 successfully uploaded.
 %1 the following files into current directory	filemanager	en	%1 the following files into current directory
 %1 urls %2 to clipboard.	filemanager	en	%1 URLs %2 to clipboard
+%d errors while copying, %d files successfully copied.	filemanager	en	%d errors while copying, %d files successfully copied.
+%d errors while moving, %d files successfully moved.	filemanager	en	%d errors while moving, %d files successfully moved.
 %d erros while copying, %d files successfully copied.	filemanager	en	%d errors while copying, %d files successfully copied.
 %d erros while moving, %d files successfully moved.	filemanager	en	%d errors while moving, %d files successfully moved.
 %d files successfully copied.	filemanager	en	%d files successfully copied.
@@ -27,6 +29,7 @@ add to clipboard	filemanager	en	Add to clipboard
 all files	common	en	All files
 allow a maximum of the above configured folderlinks to be configured in settings	admin	en	Maximum number of folder links to be configured in preferences.
 and all it's childeren	filemanager	en	and all it's children
+application fields	filemanager	en	Application fields
 applications	common	en	Applications
 basedirectory	filemanager	en	Base directory
 can't open directory %1!	filemanager	en	Can't open directory %1!
@@ -36,6 +39,7 @@ cautiously rejecting to remove folder '%1'!	filemanager	en	Cautiously rejecting 
 check all	filemanager	en	Check all
 check virtual filesystem	filemanager	en	Check virtual filesystem
 clear search	filemanager	en	Clear search
+clipboard is empty!	filemanager	en	Clipboard is empty!
 comment	filemanager	en	Comment
 copied	filemanager	en	Copied
 copied %1 to %2	filemanager	en	Copied %1 to %2
@@ -59,6 +63,7 @@ custom fields	filemanager	en	Custom fields
 cut	filemanager	en	Cut
 cut to clipboard	filemanager	en	Cut to clipboard
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	en	Default = No. The link will not be shown, but you are still able to navigate to this location, or configure this particular location as start folder or folder link.
+default document to insert entries	filemanager	en	Default document to insert entries
 delete these files or directories?	filemanager	en	Delete these files or directories?
 delete this file or directory	filemanager	en	Delete this file or directory
 deleted %1	filemanager	en	Deleted %1
@@ -68,6 +73,7 @@ directory %1 already exists	filemanager	en	Directory %1 already exists.
 directory %1 does not exist	filemanager	en	Directory %1 does not exist.
 directory not found or no permission to access it!	filemanager	en	Directory not found or no permission to access it!
 directory successfully created.	filemanager	en	Directory successfully created.
+directory with documents to insert entries	filemanager	en	Directory with documents to insert entries
 display and modification of content	filemanager	en	Display and modification of content
 display of content	filemanager	en	Display of content
 do you want to overwrite the existing file %1?	filemanager	en	Do you want to overwrite the existing file %1?
@@ -83,8 +89,10 @@ error creating symlink to target %1!	filemanager	en	Error creating symlink to ta
 error deleting the acl entry!	filemanager	en	Error deleting the ACL entry!
 error uploading file!	filemanager	en	Error uploading file!
 error while creating directory.	filemanager	en	Error while creating directory
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
 executable	filemanager	en	Executable
-export definitition to use for nextmatch export	filemanager	en	Export definition to use for nextmatch export
 extended access control list	filemanager	en	Extended access control list
 extended acl	filemanager	en	Extended ACL
 failed to change permissions of %1!	filemanager	en	Failed to change permissions of %1!
@@ -99,20 +107,22 @@ file or directory not found!	filemanager	en	File or directory not found!
 file successful uploaded.	filemanager	en	File successfully uploaded.
 filemanager	common	en	File Manager
 filemanager configuration	admin	en	File Manager configuration
+filemanager fields:	filemanager	en	Filemanager fields:
 filename must not be empty!	filemanager	en	File name must not be empty!
 files from subdirectories	filemanager	en	Files from sub directories
 files in this directory	filemanager	en	Files in this directory
 filesystem check reported no problems.	filemanager	en	Filesystem check reported no problems.
 fix reported problems	filemanager	en	Fix reported problems
 folder up	filemanager	en	Folder up
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	en	For files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  See the specific application for a list of available placeholders.
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	en	For files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. See the specific application for a list of placeholders
 general	filemanager	en	General
+general fields:	filemanager	en	General fields:
 go home	filemanager	en	Go home
 go to	filemanager	en	Go to
 go to your home directory	filemanager	en	Go to your home directory
 go up	filemanager	en	Go up
 id	filemanager	en	ID
-if you specify an export definition, it will be used when you export	filemanager	en	If you specify an export definition, it will be used when you export
 inherited	filemanager	en	Inherited
 link	filemanager	en	Link
 link %1: %2	filemanager	en	Link %1: %2
@@ -129,6 +139,7 @@ modify all subdirectories and their content	filemanager	en	Modify all sub direct
 move	filemanager	en	Move
 move to	filemanager	en	Move to
 moved %1 to %2	filemanager	en	Moved %1 to %2
+name of current user, all other contact fields are valid too	filemanager	en	Name of current user, all other contact fields are valid too
 new directory	filemanager	en	New directory
 no access	filemanager	en	No access
 no files in this directory.	filemanager	en	No files in this directory.
@@ -155,12 +166,14 @@ rename, change permissions or ownership	filemanager	en	Rename, change permission
 renamed %1 to %2	filemanager	en	Renamed %1 to %2
 renamed %1 to %2.	filemanager	en	Renamed %1 to %2
 replaced %1	filemanager	en	Replaced %1
+replacements for inserting entries into documents	filemanager	en	Replacements for inserting entries into documents
 rights	filemanager	en	Rights
 root	filemanager	en	Root
 root access granted.	filemanager	en	Root access granted.
 root access stopped.	filemanager	en	Root access stopped.
 save %1	filemanager	en	Save %1
 save %1, and go back to file listing	filemanager	en	Save %1, and go back to file listing.
+save as	filemanager	en	Save as
 save changes	filemanager	en	Save changes
 saved %1	filemanager	en	Saved %1
 saving properties failed!	filemanager	en	Saving properties failed!
@@ -171,6 +184,8 @@ select file to upload in current directory	filemanager	en	Select file to upload 
 show	filemanager	en	Show
 show hidden files	filemanager	en	Show hidden files
 show link "%1" in side box menu?	filemanager	en	Show link "%1" in side menu
+show link "users and groups*" in side box menu?*	filemanager	en	Show link "Users and groups*" in side box menu?*
+show link "your home directory*" in side box menu?*	filemanager	en	Show link "Your home directory*" in side box menu?*
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	en	Show link to File Manager's base directory (/) in side menu?
 size	filemanager	en	Size
 start search	filemanager	en	Start search
