@@ -1913,10 +1913,11 @@ class felamimail_bo
 				//error_log(__METHOD__.__LINE__." foldersToCheck:".array2string($foldersToCheck));
 				//error_log(__METHOD__.__LINE__." foldersToCheck:".array2string( $this->mailPreferences->preferences['sentFolder']));
 				foreach($foldersToCheck as $personalFolderName) {
-					$folderName = (!empty($personalPrefix)) ? $folderPrefix.$personalFolderName : $personalFolderName;
+					$folderName = (!empty($personalPrefix) ? $folderPrefix.$personalFolderName : $personalFolderName);
+					//error_log(__METHOD__.__LINE__." foldersToCheck: $personalFolderName / $folderName");
 					if(!is_array($foldersNameSpace['personal']['all']) || !in_array($folderName, $foldersNameSpace['personal']['all'])) {
 						$createfolder = true;
-						switch($folderName)
+						switch($personalFolderName)
 						{
 							case 'Drafts': // => Entwürfe
 								if ($this->mailPreferences->preferences['draftFolder'] && $this->mailPreferences->preferences['draftFolder']=='none')
