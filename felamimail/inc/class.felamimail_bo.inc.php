@@ -2291,7 +2291,7 @@ class felamimail_bo
 
 	function getTextPart($_uid, $_structure, $_htmlMode = '', $_preserveSeen = false)
 	{
-		//error_log(__METHOD__.__LINE__.'->'.$_uid.array2string($_structure).' '.function_backtrace());
+		//error_log(__METHOD__.__LINE__.'->'.$_uid.':'.array2string($_structure).' '.function_backtrace());
 		$bodyPart = array();
 		if (self::$debug) _debug_array(array($_structure,function_backtrace()));
 		$partID = $_structure->partID;
@@ -2595,7 +2595,6 @@ class felamimail_bo
 			if( PEAR::isError($headers = $this->icServer->getParsedHeaders($_uid, true, $_partID, true)) ) {
 				return false;
 			}
-
 			//_debug_array($headers);
 			$newData = array(
 				'DATE'		=> $headers['DATE'],
@@ -2993,7 +2992,7 @@ class felamimail_bo
 		}
 		// outlook sometimes sends a TEXT/CALENDAR;REQUEST as plain ics, nothing more.
 		if ($structure->type == 'TEXT' && $structure->subType == 'CALENDAR' &&
-			isset($structure->parameters['METHOD'] ) && $structure->parameters['METHOD'] == 'REQUEST')
+			isset($structure->parameters['METHOD'] ) && strtoupper($structure->parameters['METHOD']) == 'REQUEST')
 		{
 			$newAttachment = array();
 			$newAttachment['name']      = 'event.ics';
