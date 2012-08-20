@@ -691,7 +691,7 @@
 			if (!empty($_GET['mailbox'])) $this->mailbox  = base64_decode($_GET['mailbox']);
 
 			$this->bofelamimail->reopen($this->mailbox);
-			$bodyParts	= $this->bofelamimail->getMessageBody($this->uid,'',$partID);
+			$bodyParts	= $this->bofelamimail->getMessageBody($this->uid,'',$partID, '', false, $this->mailbox);
 			$this->bofelamimail->closeConnection();
 
 			$this->display_app_header();
@@ -1072,7 +1072,7 @@ blockquote[type=cite] {
 			// located in a different folder, we experience: could not parse message
 			$this->bofelamimail->reopen($this->mailbox);
 
-			$bodyParts	= $this->bofelamimail->getMessageBody($uid, '', $partID);
+			$bodyParts	= $this->bofelamimail->getMessageBody($uid, '', $partID, '', false, $this->mailbox);
 			//error_log(__METHOD__.__LINE__.array2string($bodyParts));
 			$meetingRequest = false;
 			$fetchEmbeddedImages = false;

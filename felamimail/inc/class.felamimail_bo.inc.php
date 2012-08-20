@@ -1154,11 +1154,11 @@ class felamimail_bo
 		return $folderStatus[$this->icServer->ImapServerId][$folderName];
 	}
 
-	function _getStructure($_uid, $byUid=true, $_ignoreCache=false)
+	function _getStructure($_uid, $byUid=true, $_ignoreCache=false, $_folder = '')
 	{
 		static $structure;
-		$_folder = $this->sessionData['mailbox'];
-		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		//error_log(__METHOD__.__LINE__." UID: $_uid, ".$this->icServer->ImapServerId.','.$_folder);
 		if (is_null($structure)) $structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 		if (isset($structure[$this->icServer->ImapServerId]) && !empty($structure[$this->icServer->ImapServerId]) &&
 			isset($structure[$this->icServer->ImapServerId][$_folder]) && !empty($structure[$this->icServer->ImapServerId][$_folder]) &&
@@ -3140,7 +3140,7 @@ class felamimail_bo
 		}
 	}
 
-	function getMessageBody($_uid, $_htmlOptions='', $_partID='', $_structure = '', $_preserveSeen = false)
+	function getMessageBody($_uid, $_htmlOptions='', $_partID='', $_structure = '', $_preserveSeen = false, $_folder = '')
 	{
 		if (self::$debug) echo __METHOD__."$_uid, $_htmlOptions, $_partID<br>";
 		if($_htmlOptions != '') {
@@ -3149,7 +3149,8 @@ class felamimail_bo
 		if(is_object($_structure)) {
 			$structure = $_structure;
 		} else {
-			$structure = $this->_getStructure($_uid, true, true);
+			$this->icServer->_cmd_counter = rand($this->icServer->_cmd_counter+1,$this->icServer->_cmd_counter+100);
+			$structure = $this->_getStructure($_uid, true, false, $_folder);
 			if($_partID != '') {
 				$structure = $this->_getSubStructure($structure, $_partID);
 			}
@@ -3275,7 +3276,7 @@ class felamimail_bo
 	{
 		//TODO: caching einbauen static!
 		static $rawBody;
-		$_folder = $this->icServer->getCurrentMailbox();
+		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		if (isset($rawBody[$_folder][$_uid][($_partID==''?'NIL':$_partID)]))
 		{
 			error_log(__METHOD__.__LINE__." Using Cache for raw Body $_uid, $_partID in Folder $_folder");
@@ -3298,7 +3299,7 @@ class felamimail_bo
 	function getMessageRawHeader($_uid, $_partID = '')
 	{
 		static $rawHeaders;
-		$_folder = $this->icServer->getCurrentMailbox();
+		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		//error_log(__METHOD__.__LINE__." Try Using Cache for raw Header $_uid, $_partID in Folder $_folder");
 
 		if (is_null($rawHeaders)) $rawHeaders = egw_cache::getCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
@@ -3711,14 +3712,21 @@ class felamimail_bo
 
 	function reopen($_foldername)
 	{
-		//error_log( "------------------------reopen-<br>");
-		//error_log(__METHOD__.__LINE__.' Connected with icServer for Profile:'.$this->profileID.'?'.print_r($this->icServer->_connected,true));
-		if ($this->icServer->_connected == 1) {
-			$tretval = $this->icServer->selectMailbox($_foldername);
-		} else {
-			$tretval = $this->icServer->openConnection(false);
-			$tretval = $this->icServer->selectMailbox($_foldername);
-		}
+		// TODO: trying to reduce traffic to the IMAP Server here, introduces problems with fetching the bodies of
+		// eMails when not in "current-Folder" (folder that is selected by UI)
+		//static $folderOpened;
+		//if (empty($folderOpened) || $folderOpened!=$_foldername)
+		//{
+			//error_log( "------------------------reopen-<br>");
+			//error_log(__METHOD__.__LINE__.' Connected with icServer for Profile:'.$this->profileID.'?'.print_r($this->icServer->_connected,true));
+			if ($this->icServer->_connected == 1) {
+				$tretval = $this->icServer->selectMailbox($_foldername);
+			} else {
+				$tretval = $this->icServer->openConnection(false);
+				$tretval = $this->icServer->selectMailbox($_foldername);
+			}
+			$folderOpened = $_foldername;
+		//}
 	}
 
 	function restoreSessionData()
@@ -5028,14 +5036,19 @@ class felamimail_bo
 			$mailObject->AddReplyto($emailAddress, $addressObject->personal);
 */
 			$result ='';
+			$contenttypecalendar = '';
 			foreach((array)$structure->headers as $key => $val)
 			{
-				//error_log(__METHOD__.__LINE__.$key);
+				//error_log(__METHOD__.__LINE__.$key.'->'.$val);
 				foreach((array)$val as $i => $v)
 				{
-//						if ($key!='content-type' && $key !='content-transfer-encoding') // the omitted values to that will be set at the end
 					if ($key!='content-type' && $key !='content-transfer-encoding' &&
 						$key != 'message-id'  &&
+						$key != 'subject' &&
+						$key != 'from' &&
+						$key != 'to' &&
+						$key != 'cc' &&
+						$key != 'bcc' &&
 						$key != 'x-priority') // the omitted values to that will be set at the end
 					{
 						$Header .= $mailObject->HeaderLine($key, trim($v));
@@ -5052,18 +5065,36 @@ class felamimail_bo
 					case 'sender':
 						$mailObject->Sender  = $val;
 						break;
+					case 'to':
+					case 'cc':
+					case 'bcc':
 					case 'from':
 						$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($val):$val),'');
-						foreach((array)$address_array as $addressObject) {
-							$mailObject->From = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
-							$mailObject->FromName = $addressObject->personal;
+						$i = 0;
+						foreach((array)$address_array as $addressObject)
+						{
+							$mb = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+							$pName = $addressObject->personal;
+							if ($key=='from')
+							{
+								$mailObject->From = $mb;
+								$mailObject->FromName = $pName;
+							}
+							${$key}[$i] = array($mb,$pName);
+							$i++;
 						}
+						$Header .= $mailObject->TextLine(trim($mailObject->AddrAppend($key,${$key})));
 						break;
 					case 'content-transfer-encoding':
 						$mailObject->Encoding = $val;
 						break;
+					case 'content-type':
+						//error_log(__METHOD__.__LINE__.' '.$key.'->'.$val);
+						if (stripos($val,'calendar')) $contenttypecalendar = $val;
+						break;
 					case 'subject':
-						$mailObject->Subject = $val;
+						$mailObject->Subject = $mailObject->EncodeHeader($mailObject->SecureHeader($val));
+						$Header .= $mailObject->HeaderLine('Subject',$mailObject->Subject);
 						break;
 					default:
 						// stuff like X- ...
@@ -5078,10 +5109,12 @@ class felamimail_bo
 						break;
 				}
 			}
+			$seemsToBePlainMessage = false;
 			if ($structure->ctype_primary=='text' && $structure->body)
 			{
 				$mailObject->IsHTML($structure->ctype_secondary=='html'?true:false);
 				$mailObject->Body = $structure->body;
+				$seemsToBePlainMessage = true;
 			}
 			$this->createBodyFromStructure($mailObject, $structure, $parenttype=null);
 			$mailObject->SetMessageType();
@@ -5089,8 +5122,15 @@ class felamimail_bo
 			//echo "Boundary:".$mailObject->FetchBoundary(1).'<br>';
 			//$boundary ='';
 			//if (isset($structure->ctype_parameters['boundary'])) $boundary = ' boundary="'.$mailObject->FetchBoundary(1).'";';
-			//if (isset($structure->headers['content-type'])) $Header .= $mailObject->HeaderLine('Content-type', $structure->ctype_primary.'/'.$structure->ctype_secondary.';'.$boundary);
-			$Header .= $mailObject->GetMailMIME();
+			if ($seemsToBePlainMessage && !empty($contenttypecalendar) && $mailObject->ContentType=='text/plain')
+			{
+				$Header .= $mailObject->HeaderLine('Content-Transfer-Encoding', $mailObject->Encoding);
+				$Header .= $mailObject->HeaderLine('Content-type', $contenttypecalendar);
+			}
+			else
+			{
+				$Header .= $mailObject->GetMailMIME();
+			}
 			$Body = $mailObject->getMessageBody(); // this is a method of the egw_mailer/phpmailer class
 			//_debug_array($Header);
 			//_debug_array($Body);
