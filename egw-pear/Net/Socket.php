@@ -231,7 +231,7 @@ class Net_Socket extends PEAR {
             return $this->raiseError('not connected');
         }
 
-        $returned = stream_set_write_buffer($this->fp, $code);
+        $returned = stream_set_write_buffer($this->fp, $size);
         if ($returned == 0) {
             return true;
         }
