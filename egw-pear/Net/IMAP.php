@@ -561,6 +561,7 @@ class Net_IMAP extends Net_IMAPProtocol {
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
         $found = 0;
+        if (!isset($ret["PARSED"])) return '';
         foreach($ret["PARSED"] as $key => $value)
         {
             if (isset($ret["PARSED"][$key]["EXT"]["BODY[TEXT]"]["CONTENT"])) {$found = $key; break;}
@@ -598,6 +599,8 @@ class Net_IMAP extends Net_IMAPProtocol {
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
         $found = 0;
+
+        if (!isset($ret["PARSED"])) return '';
         foreach($ret["PARSED"] as $key => $value)
         {
             if (isset($ret["PARSED"][$key]["EXT"]["BODY[$partId]"]["CONTENT"])) {$found = $key; break;}
@@ -629,34 +632,27 @@ class Net_IMAP extends Net_IMAPProtocol {
         } else {
           $ret=$this->cmdFetch($msg_id,"BODYSTRUCTURE");
         }
-        #_debug_array($ret);
+
         if (PEAR::isError($ret)) {
             return $ret;
         }
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
-        $found = 0;
-        foreach($ret["PARSED"] as $key => $value)
-        {
-            if (isset($ret["PARSED"][$key]["EXT"]["BODYSTRUCTURE"][0])) {$found = $key; break;}
-        }
-        $ret2=$ret["PARSED"][$found]["EXT"]["BODYSTRUCTURE"][0];
         // sometimes we get an [COMMAND] => OK with $ret["PARSED"][0] and no $ret["PARSED"][0]["EXT"]["BODYSTRUCTURE"]
-        // should not happen anymore
-        if (is_array($ret) && empty($ret2) && isset($ret["PARSED"])) {
-            foreach($ret["PARSED"] as $substruct) {
-                if ($substruct["COMMAND"] == "FETCH") {
-                    $ret2=$substruct["EXT"]["BODYSTRUCTURE"][0];
-                    break;
-                }
+        if (is_array($ret) && isset($ret["PARSED"])) {
+            $found = 0;
+            foreach($ret["PARSED"] as $key => $value)
+            {
+                if (isset($ret["PARSED"][$key]["EXT"]["BODYSTRUCTURE"][0])) {$found = $key; break;}
             }
+            $ret2=$ret["PARSED"][$found]["EXT"]["BODYSTRUCTURE"][0];
         }
         $structure = array();
 
         $mimeParts = array();
-        $this->_parseStructureArray($ret2, $mimeParts);
-        #_debug_array($ret);
+        if (is_array($ret2)) $this->_parseStructureArray($ret2, $mimeParts);
+
         return array_shift($mimeParts);
     }
 
