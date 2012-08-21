@@ -1,3 +1,27 @@
+egroupware-epl (11.1.20120821-1) hardy; urgency=low
+
+  * Calendar: fixed issue of deleted first recurrence shortens event and causes it not to be find in CalDAV or eSync ("event has exceptions before startdate"), REQUIRES SCHEMA UPDATE (visit setup)!
+  * Calendar: if deleting next recurrance of an event series containing alarms, move alarms to next recurrance, to not alarm for deleted recurance
+  * Calendar/CalDAV: fixed not working accepting or rejecting recurrences of event series via CalDAV scheduling (eg. iOS devices)
+  * Calendar: fixed since last update missing event details, notification iCal adds description with (required) *~*~*~*~*~*~*~*~*~* separator, extended has description before event details and links
+  * Calendar/InfoLog: fixed not working category filter for displayed InfoLog entries
+  * Calendar: fixed not working deleting of favorites containing url-special chars like a "+"
+  * eMail: allow to set connection timeout via preferences;
+  * eMail: added translations for SIEVE notifications
+  * eMail: adding missing translations, enabled preview for drafts and templates, some library changes regarding the fetch of the namespace(s)
+  * eMail: fix for ->no initial border on plaintext editor textarea<-
+  * eMail: fix problem with not recognized Kolab Invitations
+  * eMailAdmin: use connection timeout preference in openConnection calls, and increase defaulttimeout if applicable;
+  * eSync: calendar/infolog/contacts fix for dropped items on device due to sending mail flags in classes other than mail after first change on eGroupware for an item initially created on the device.
+  * eSync: fix for latest Android, iOS6 and probably other AS 14.1 devices requesting a picture in global addresslist and recurring tasks
+  * API/accounts/preferences: instance-wide cache of account and preference data, so changes from other sessions have immediate effect
+  * Addressbook/InfoLog/Filemanager/Tracker: added or fixed formatting of certain custom field types using a single shared method
+  * API/Setup/MySQL: fixed backup to correctly report boolean columns and support MySQL 5.0+ varchar(>255)
+  * WebDAV/GroupDAV/CalDAV/CardDAV: removed option only used for old KDE GroupDAV resource and unknown WebDAV clients producing invalid XML, fix for community bug #3152
+  * Filemanager/WebDAV: fixed not working Subscribtions (Notifications) when using WebDAV, caused by PHPs internal stat-cache
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 21 Aug 2012 17:40:38 +0200
+
 egroupware-epl (11.1.20120801-1) hardy; urgency=low
 
   * eSyncPro: new app to manage and provision eSync devices: (security) policies, remote wipe, logging (need to be explicitly installed!)
