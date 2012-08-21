@@ -1788,6 +1788,7 @@ class felamimail_bo
 						if ($prefix_present=='forced') // you cannot trust dovecots assumed prefix
 						{
 							$subscribedMailboxesAll = $this->icServer->listsubscribedMailboxes('',0);
+							if( PEAR::isError($subscribedMailboxesAll) ) continue;
 							foreach ($subscribedMailboxesAll as $ksMA => $sMA) if (!in_array($sMA,$subscribedMailboxes)) $subscribedMailboxes[] = $sMA;
 						}
 					}

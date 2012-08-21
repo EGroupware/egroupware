@@ -191,6 +191,7 @@ class uifelamimail
 			echo "<hr /><h3 style='color:red'>".lang('IMAP Server')."</h3>";
 			if($imapServer->_connectionErrorObject) $eO = $imapServer->_connectionErrorObject;
 			unset($imapServer->_connectionErrorObject);
+			$sieveServer = clone $imapServer;
 			if (!empty($imapServer->adminPassword)) $imapServer->adminPassword='**********************';
 			if ($preferences->preferences['prefcontroltestconnection'] == 'nopasswords' || $preferences->preferences['prefcontroltestconnection'] == 'nocredentials')
 			{
@@ -229,15 +230,21 @@ class uifelamimail
 
 			_debug_array(($lE?'':lang('Successfully connected')));
 
-			if(($imapServer instanceof defaultimap) && $imapServer->enableSieve) {
+			if(($sieveServer instanceof defaultimap) && $sieveServer->enableSieve) {
 				$scriptName = (!empty($GLOBALS['egw_info']['user']['preferences']['felamimail']['sieveScriptName'])) ? $GLOBALS['egw_info']['user']['preferences']['felamimail']['sieveScriptName'] : 'felamimail';
-				$imapServer->getScript($scriptName);
-				$imapServer->retrieveRules($imapServer->scriptName);
-				$vacation = $imapServer->getVacation($imapServer->scriptName);
+				$sieveServer->getScript($scriptName);
+				$rules = $sieveServer->retrieveRules($sieveServer->scriptName,true);
+				$vacation = $sieveServer->getVacation($sieveServer->scriptName);
 				echo "<h4 style='color:red'>".lang('Sieve Connection Status')."</h4>";
 				$isSieveError = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*15);
-				if ($isSieveError[self::$icServerID]) _debug_array($isSieveError[self::$icServerID]);
-				else _debug_array($imapServer->rules);
+				if ($isSieveError[self::$icServerID])
+				{
+					_debug_array($isSieveError[self::$icServerID]);
+				}
+				else
+				{
+					_debug_array(array(lang('Successfully connected'),$rules));
+				}
 			}
 			echo "<hr /><h3 style='color:red'>".lang('Preferences')."</h3>";
 			_debug_array($preferences->preferences);
