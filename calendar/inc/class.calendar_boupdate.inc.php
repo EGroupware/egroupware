@@ -845,7 +845,7 @@ class calendar_boupdate extends calendar_bo
 					$details['olddate'] = $olddate->format($timeformat);
 				}
 
-				list($subject,$body) = explode("\n",$GLOBALS['egw']->preferences->parse_notify($notify_msg,$details),2);
+				list($subject,$notify_body) = explode("\n",$GLOBALS['egw']->preferences->parse_notify($notify_msg,$details),2);
 				$popup = '';
 				switch($part_prefs['calendar']['update_format'])
 				{
@@ -868,7 +868,8 @@ class calendar_boupdate extends calendar_bo
 						$subject = $event['title'];
 						// fall through
 					case 'extended':
-						$body .= "\n\n".lang('Event Details follow').":\n";
+
+						$details_body = lang('Event Details follow').":\n";
 						foreach($event_arr as $key => $val)
 						{
 							if(!empty($details[$key]))
@@ -879,15 +880,14 @@ class calendar_boupdate extends calendar_bo
 									case 'priority':
 									case 'link':
 									case 'description':
+									case 'title':
 										break;
 									default:
-										$popup .= sprintf("%-20s %s\n",$val['field'].':',$details[$key]);
+										$details_body .= sprintf("%-20s %s\n",$val['field'].':',$details[$key]);
 										break;
 							 	}
 							}
 						}
-						// description need to be separated from body by fancy separator
-						$body .= "\n*~*~*~*~*~*~*~*~*~*\n\n".$details['description'];
 						break;
 				}
 				// send via notification_app
@@ -897,13 +897,21 @@ class calendar_boupdate extends calendar_bo
 						//error_log(__METHOD__."() notifying $userid from $senderid: $subject");
 						$notification = new notifications();
 						$notification->set_receivers(array($userid));
-						$notification->set_message($body);
 						$notification->set_sender($senderid);
 						$notification->set_subject($subject);
 						// as we want ical body to be just describtion, we can NOT set links, as they get appended to body
 						if ($part_prefs['calendar']['update_format'] != 'ical')
 						{
+							$notification->set_message($notify_body."\n\n".$details['description']."\n\n".$details_body);
 							$notification->set_links(array($details['link_arr']));
+						}
+						else
+						{
+							// set message (without separator) for popup notifications
+							$notification->set_popupmessage($notify_body."\n\n".$details['description']."\n\n".$details_body);
+
+							// iCal: description need to be separated from body by fancy separator
+							$notification->set_message($notify_body."\n\n".$details_body."\n*~*~*~*~*~*~*~*~*~*\n\n".$details['description']);
 						}
 						if(is_array($attachment)) { $notification->set_attachments(array($attachment)); }
 						$notification->send();
