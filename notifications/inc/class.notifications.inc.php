@@ -290,7 +290,7 @@ final class notifications {
 	 */
 	public function set_popupmessage($_message) {
 		//popup requires html
-		if(strlen($_message) == strlen(strip_tags($_message))) $_message=nl2br($_message);
+		if(strlen($_message) == strlen(strip_tags($_message))) $_message = self::plain2html($_message);
 		$this->message_popup = $_message;
 		return true;
 	}
@@ -518,10 +518,21 @@ final class notifications {
 		if(!empty($_message_html)) {
 			$messages['html'] = $_message_html;
 		} else {
-			$messages['html'] = nl2br($_message_plain);
+			$messages['html'] = self::plain2html($_message_plain);
 		}
 		if (!empty($_message_popup)) $messages['popup']=$_message_popup;
 		return $messages;
+	}
+
+	/**
+	 * Create html from plaintext message
+	 *
+	 * @param string $_plain
+	 * @return string html message
+	 */
+	public static function plain2html($_plain)
+	{
+		return nl2br(html::htmlspecialchars($_plain, true));
 	}
 
 	/**
