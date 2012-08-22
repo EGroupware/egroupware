@@ -221,7 +221,8 @@ class Net_IMAP extends Net_IMAPProtocol {
     function selectMailbox($mailbox)
     {
         static $mailboxSelected;
-        if (!empty($mailboxSelected) && $mailboxSelected==$mailbox) return true;
+        // does not work as expected
+        //if (!empty($mailboxSelected) && $mailboxSelected==$mailbox) return true;
 
         if (PEAR::isError($ret=$this->cmdSelect($mailbox))) {
             return $ret;
