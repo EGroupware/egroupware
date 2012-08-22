@@ -1,3 +1,9 @@
+egroupware-epl (11.1.20120822-1) hardy; urgency=low
+
+  * email/IMAP: revert the static caching of the selected mailbox, as the selecting of the mailbox seems not to live through the request
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 22 Aug 2012 10:10:11 +0200
+
 egroupware-epl (11.1.20120821-1) hardy; urgency=low
 
   * Calendar: fixed issue of deleted first recurrence shortens event and causes it not to be find in CalDAV or eSync ("event has exceptions before startdate"), REQUIRES SCHEMA UPDATE (visit setup)!
