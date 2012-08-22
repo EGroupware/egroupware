@@ -382,9 +382,9 @@ class preferences
 
 		// now use (primary) group defaults if needed (user-value unset or empty)
 		//
-		foreach($this->group as $app => $values)
+		foreach((array)$this->group as $app => $values)
 		{
-			foreach($values as $var => $value)
+			foreach((array)$values as $var => $value)
 			{
 				if (!isset($this->data[$app][$var]) || $this->data[$app][$var] === '')
 				{
@@ -394,9 +394,9 @@ class preferences
 		}
 		// now use defaults if needed (user-value unset or empty)
 		//
-		foreach($this->default as $app => $values)
+		foreach((array)$this->default as $app => $values)
 		{
-			foreach($values as $var => $value)
+			foreach((array)$values as $var => $value)
 			{
 				if (!isset($this->data[$app][$var]) || $this->data[$app][$var] === '')
 				{
@@ -407,9 +407,9 @@ class preferences
 		}
 		// now set/force forced values
 		//
-		foreach($this->forced as $app => $values)
+		foreach((array)$this->forced as $app => $values)
 		{
-			foreach($values as $var => $value)
+			foreach((array)$values as $var => $value)
 			{
 				$this->data[$app][$var] = $value;
 			}
