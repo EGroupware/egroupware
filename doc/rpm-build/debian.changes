@@ -1,3 +1,23 @@
+egroupware (1.8.004.20120822) hardy; urgency=low
+
+  * Filemanager: support for ownCloud WebDAV clients which keep a local directory in sync with server (by default users home-dir with local ownCloud dir, thought other dirs can be configured as well)
+  * eMail: handle attaching eml files; handle no subject when forwarding as attachment
+  * Calendar: if deleting next recurrance of an event series containing alarms, move alarms to next recurrance, to not alarm for deleted recurance
+  * Calendar/CalDAV: fixed not working accepting or rejecting recurrences of event series via CalDAV scheduling (eg. iOS devices)
+  * Calendar/CalDAV: not searching addressbook for CN, as match can be not unique or without an email address, causing notification to fail --> store as email address
+  * Calendar/CalDAV: meeting requests contain again nice body followed by a separator and description
+  * Chat: if no translation for user language available fall back to english, for slovenian language use croation language for now
+  * LDAP authentication: if changing password fails bind as user, try changing is with given admin-dn, to cater for all sorts of ldap configurations
+  * Addressbook/CardDAV: fixed lost cell-phone numbers, caused by SyncML update
+  * Admin/Preferences: fixed not removable ACL rights for apps using NO group-acl, eg. Addressbook or InfoLog
+  * Addressbook/InfoLog/Tracker: added or fixed formatting of certain custom field types in notifications using a single shared method
+  * API/Setup/MySQL: fixed backup to correctly report boolean columns and support MySQL 5.0+ varchar(>255)
+  * egw-pear: improve connection handling (targeting failed connects), apply connection timeout on data retrieval as well. (reapply r36751)
+  * SyncML: fix Funambol vCard issues (community bug #1999)
+  * InfoLog: remove accidently backported preferences, not used in 1.8
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 22 Aug 2012 08:49:40 +0200
+
 egroupware (1.8.004.20120718) hardy; urgency=low
 
   * Backup: fix sometimes not working restore (seems like an internal error in preg_match, causing Apache to run at 100% CPU never finishing) for php 5.3+
