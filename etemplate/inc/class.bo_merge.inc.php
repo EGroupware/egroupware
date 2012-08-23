@@ -1158,7 +1158,7 @@ abstract class bo_merge
 
 		foreach($cf as $index => $field)
 		{
-			if($cfs[$field] && in_array($cfs[$field]['type'],$GLOBALS['egw_info']['apps']) )
+			if($cfs[$field] && in_array($cfs[$field]['type'],array_keys($GLOBALS['egw_info']['apps'])) )
 			{
 				// Get replacements for that application
 				$field_app = $cfs[$field]['type'];
@@ -1172,6 +1172,10 @@ abstract class bo_merge
 					$app_replacements[$field_app] = $class->get_replacements($values['#'.$field], $content);
 				}
 				$replacements[$placeholders[$index]] = $app_replacements[$field_app]['$$'.$sub[$index].'$$'];
+			}
+			else
+			{
+				if ($cfs[$field]['type'] == 'date' || $cfs[$field]['type'] == 'date-time') $this->date_fields[] = '#'.$field;
 			}
 		}
 	}
