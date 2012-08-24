@@ -49,6 +49,10 @@ class timesheet_merge extends bo_merge
 	{
 		parent::__construct();
 		$this->bo = new timesheet_bo();
+		$this->date_fields += array(
+			'ts_start',
+			'ts_modified',
+		);
 	}
 
 	/**
