@@ -19,6 +19,7 @@
 	jquery.jquery;
 	et2_core_inputWidget;
 	et2_core_valueWidget;
+	egw_action.egw_action_common;
 */
 
 /**
@@ -27,6 +28,12 @@
 var et2_itempicker = et2_inputWidget.extend({
 
 	attributes: {
+		"action": {
+			"name": "Action callback",
+			"type": "string",
+			"default": false,
+			"description": "Callback for action.  Must be a function(context, data)"
+		},
 		"action_label": {
 			"name": "Action label",
 			"type": "string",
@@ -57,6 +64,7 @@ var et2_itempicker = et2_inputWidget.extend({
 	search_timeout: 200, //ms after change to send query
 	minimum_characters: 2, // Don't send query unless there's at least this many chars
 	last_search: "",	// Remember last search value
+	action: null,		// Action function for button
 	current_app: "",	// Remember currently chosen application
 
 	init: function() {
@@ -70,6 +78,15 @@ var et2_itempicker = et2_inputWidget.extend({
 		this.search = null;
 		this.button_action = null;
 		this.itemlist = null;
+		
+		if(this.options.action !== null && typeof this.options.action == "string")
+		{
+			this.action = new egwFnct(this, "javaScript:" + this.options.action);
+		}
+		else
+		{
+			console.log("itempicker widget: no action provided for button");
+		}
 
 		this.createInputWidget();
 	},
@@ -112,15 +129,11 @@ var et2_itempicker = et2_inputWidget.extend({
 			var item = $j(document.createElement("li"))
 			item.attr("id", key)
 				.click(function() {
-					_self.clearSearchResults();
-					$j(".et2_itempicker_app_select li").removeClass("selected");
-					$j(this).addClass("selected");
-					_self.current_app = $j(this).attr("id");
+					_self.selectApplication($j(this));
 				})
 				.append(img);
 			if(item_count == 0) {
-				item.addClass("selected"); // select first item by default
-				this.current_app = key;
+				this.selectApplication(item); // select first item by default
 			}
 			this.app_select.append(item);
 			item_count++;
@@ -147,10 +160,7 @@ var et2_itempicker = et2_inputWidget.extend({
 		this.button_action = et2_createWidget("button");
 		$j(this.button_action.getDOMNode()).addClass("et2_itempicker_button_action");
 		this.button_action.set_label(this.egw().lang(this.options.action_label));
-		this.button_action.click = function() {
-			// ToDo: execute defined action
-			console.log("Button action clicked!");
-		};
+		this.button_action.click = function() { _self.doAction(); };
 		
 		// Itemlist
 		this.itemlist.attr("id", "itempicker_itemlist");
@@ -168,11 +178,27 @@ var et2_itempicker = et2_inputWidget.extend({
 
 		this.setDOMNode(this.div[0]);
 	},
-
-	getValue: function()
+	
+	doAction: function()
 	{
-		if(this.options.blur && this.input.val() == this.options.blur) return "";
-		return this._super.apply(this, arguments);
+		if(this.action !== null)
+		{
+			var data = {};
+			data.app = this.current_app;
+			data.items = this.getSelectedItems();
+			return this.action.exec(this, data);
+		}
+		
+		return false;
+	},
+	
+	getSelectedItems: function()
+	{
+		var items = {};
+		$j(this.itemlist).children("ul").children("li.selected").each(function(index) {
+			items[index] = $j(this).attr("id");	
+		});
+		return items;
 	},
 	
 	/**
@@ -202,15 +228,23 @@ var et2_itempicker = et2_inputWidget.extend({
 			this
 		);
 		
-		request.sendRequest(true, this._results, this);
+		request.sendRequest(true, this.queryResults, this);
 	},
 	
 	/**
-	 * Server found some results
+	 * Server found some results for query
 	 */
-	_results: function(data) {
+	queryResults: function(data) {
 		this.itemlist.removeClass("loading");
 		this.updateItemList(data);
+	},
+	
+	selectApplication: function(app) {
+		this.clearSearchResults();
+		$j(".et2_itempicker_app_select li").removeClass("selected");
+		app.addClass("selected");
+		this.current_app = app.attr("id");
+		return true;
 	},
 	
 	set_blur: function(_value, input) {
@@ -318,3 +352,4 @@ var et2_itempicker = et2_inputWidget.extend({
 });
 
 et2_register_widget(et2_itempicker, ["itempicker"]);
+
