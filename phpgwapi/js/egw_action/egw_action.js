@@ -159,6 +159,10 @@ function egwAction(_parent, _id, _caption, _iconUrl, _onExecute, _allowOnMultipl
 	this.children = [];
 
 	this.onExecute = new egwFnct(this, null, []);
+	if(_onExecute !== null)
+	{
+		this.set_onExecute(_onExecute);
+	}
 }
 
 /**
