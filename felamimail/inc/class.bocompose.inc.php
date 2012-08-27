@@ -799,37 +799,59 @@
 
 			// add the attachments
 			$bofelamimail->openConnection();
-			foreach((array)$this->sessionData['attachments'] as $attachment) {
-				if(!empty($attachment['uid']) && !empty($attachment['folder'])) {
-					switch($attachment['type']) {
-						case 'MESSAGE/RFC822':
-							$rawHeader='';
-							$bofelamimail->reopen($attachment['folder']);
-							if (isset($attachment['partID'])) {
-								$rawHeader      = $bofelamimail->getMessageRawHeader($attachment['uid'], $attachment['partID']);
-							}
-							$rawBody        = $bofelamimail->getMessageRawBody($attachment['uid'], $attachment['partID']);
-							$_mailObject->AddStringAttachment($rawHeader.$rawBody, $_mailObject->EncodeHeader($attachment['name']), '7bit', 'message/rfc822');
-							break;
-						default:
-							$bofelamimail->reopen($attachment['folder']);
-							$attachmentData	= $bofelamimail->getAttachment($attachment['uid'], $attachment['partID']);
-
-							$_mailObject->AddStringAttachment($attachmentData['attachment'], $_mailObject->EncodeHeader($attachment['name']), 'base64', $attachment['type']);
-							break;
-
-					}
-				} else {
-					if (parse_url($attachment['file'],PHP_URL_SCHEME) == 'vfs')
+			if (is_array($this->sessionData) && isset($this->sessionData['attachments']))
+			{
+				$tnfattachments = null;
+				foreach((array)$this->sessionData['attachments'] as $attachment) {
+					if(is_array($attachment))
 					{
-						egw_vfs::load_wrapper('vfs');
+						if (!empty($attachment['uid']) && !empty($attachment['folder'])) {
+							$bofelamimail->reopen($attachment['folder']);
+							switch($attachment['type']) {
+								case 'MESSAGE/RFC822':
+									$rawHeader='';
+									if (isset($attachment['partID'])) {
+										$rawHeader      = $bofelamimail->getMessageRawHeader($attachment['uid'], $attachment['partID']);
+									}
+									$rawBody        = $bofelamimail->getMessageRawBody($attachment['uid'], $attachment['partID']);
+									$_mailObject->AddStringAttachment($rawHeader.$rawBody, $_mailObject->EncodeHeader($attachment['name']), '7bit', 'message/rfc822');
+									break;
+								default:
+									$attachmentData	= $bofelamimail->getAttachment($attachment['uid'], $attachment['partID']);
+									if ($attachmentData['type'] == 'APPLICATION/MS-TNEF')
+									{
+										if (!is_array($tnfattachments)) $tnfattachments = $bofelamimail->decode_winmail($attachment['uid'], $attachment['partID']);
+										foreach ($tnfattachments as $k)
+										{
+											if ($k['name'] == $attachment['name'])
+											{
+												$tnfpart = $bofelamimail->decode_winmail($attachment['uid'], $attachment['partID'],$k['is_winmail']);
+												$attachmentData['attachment'] = $tnfpart['attachment'];
+												//error_log(__METHOD__.__LINE__.$k['name'].'<->'.$attachment['name'].':'.array2string($attachmentData['attachment']));
+												break;
+											}
+										}
+									}
+									$_mailObject->AddStringAttachment($attachmentData['attachment'], $_mailObject->EncodeHeader($attachment['name']), 'base64', $attachment['type']);
+									break;
+
+							}
+						} else {
+							if (isset($attachment['file']) && parse_url($attachment['file'],PHP_URL_SCHEME) == 'vfs')
+							{
+								egw_vfs::load_wrapper('vfs');
+							}
+							else
+							{
+								$_mailObject->AddAttachment (
+									$attachment['file'],
+									$_mailObject->EncodeHeader($attachment['name']),
+									(strtoupper($attachment['type'])=='MESSAGE/RFC822'?'7bit':'base64'),
+									$attachment['type']
+								);
+							}
+						}
 					}
-					$_mailObject->AddAttachment (
-						$attachment['file'],
-						$_mailObject->EncodeHeader($attachment['name']),
-						(strtoupper($attachment['type'])=='MESSAGE/RFC822'?'7bit':'base64'),
-						$attachment['type']
-					);
 				}
 			}
 			$bofelamimail->closeConnection();
