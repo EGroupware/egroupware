@@ -1381,6 +1381,9 @@ blockquote[type=cite] {
 				if (strtoupper($attachment['type']) == 'TEXT/X-VCARD' || strtoupper($attachment['type']) == 'TEXT/VCARD')
 				{
 					$addressbook_vcal = new addressbook_vcal();
+					// double \r\r\n seems to end a vcard prematurely, so we set them to \r\n
+					//error_log(__METHOD__.__LINE__.$attachment['attachment']);
+					$attachment['attachment'] = str_replace("\r\r\n", "\r\n", $attachment['attachment']);
 					$vcard = $addressbook_vcal->vcardtoegw($attachment['attachment']);
 					if ($vcard['uid'])
 					{
