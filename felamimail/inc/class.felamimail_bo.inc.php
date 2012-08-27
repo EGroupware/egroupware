@@ -82,6 +82,13 @@ class felamimail_bo
 	// what type of mimeTypes do we want from the body(text/html, text/plain)
 	var $htmlOptions;
 
+	/**
+	 * Active mimeType
+	 *
+	 * @var string
+	 */
+	var $activeMimeType;
+
 	var $sessionData;
 
 	// the current selected user profile
@@ -4295,7 +4302,8 @@ class felamimail_bo
 			//echo __METHOD__." called for $uid,$partid <br>";
 			$headers = $bofelamimail->getMessageHeader($uid,$partid,true);
 			// dont force retrieval of the textpart, let felamimail preferences decide
-			$bodyParts = $bofelamimail->getMessageBody($uid,'',$partid);
+			$bodyParts = $bofelamimail->getMessageBody($uid,($preserveHTML?'always_display':'only_if_no_text'),$partid);
+			//error_log(array2string($bodyParts));
 			$attachments = $bofelamimail->getMessageAttachments($uid,$partid);
 
 			if ($bofelamimail->isSentFolder($mailbox)) $mailaddress = $headers['TO'];
@@ -4306,6 +4314,7 @@ class felamimail_bo
 			$subject = $headers['SUBJECT'];
 
 			$message = self::getdisplayableBody($bofelamimail, $bodyParts, $preserveHTML);
+			if ($preserveHTML && $bofelamimail->activeMimeType == 'text/plain') $message = '<pre>'.$message.'</pre>';
 			$headdata = self::createHeaderInfoSection($headers, '',$preserveHTML);
 			$message = $headdata.$message;
 			//echo __METHOD__.'<br>';
@@ -4578,7 +4587,9 @@ class felamimail_bo
 			}
 			*/
 			//error_log(__METHOD__.__LINE__.' before purify:'.$newBody);
+			$bofelamimail->activeMimeType = 'text/plain';
 			if ($bodyParts[$i]['mimeType'] == 'text/html') {
+				$bofelamimail->activeMimeType = $bodyParts[$i]['mimeType'];
 				// as translation::convert reduces \r\n to \n and purifier eats \n -> peplace it with a single space
 				$newBody = str_replace("\n"," ",$newBody);
 				// convert HTML to text, as we dont want HTML in infologs
