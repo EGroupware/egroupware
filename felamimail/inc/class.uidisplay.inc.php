@@ -1193,6 +1193,9 @@
 				if (strtoupper($attachment['type']) == 'TEXT/X-VCARD')
 				{
 					$addressbook_vcal = new addressbook_vcal();
+					// double \r\r\n seems to end a vcard prematurely, so we set them to \r\n
+					//error_log(__METHOD__.__LINE__.$attachment['attachment']);
+					$attachment['attachment'] = str_replace("\r\r\n", "\r\n", $attachment['attachment']);
 					$vcard = $addressbook_vcal->vcardtoegw($attachment['attachment']);
 					//error_log(print_r($vcard,true));
 					if ($vcard['uid']) $contact = $addressbook_vcal->find_contact($vcard,false);
