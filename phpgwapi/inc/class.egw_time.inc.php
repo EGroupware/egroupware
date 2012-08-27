@@ -557,6 +557,33 @@ class egw_time extends DateTime
 		//_debug_array($user_tzs);
 		return $user_tzs;
 	}
+
+	/**
+	 * Create new egw_time|DateTime object from string $time in format $format (php < 5.3 compatibility)
+	 *
+	 * @param string $format
+	 * @param string $time
+	 * @param DateTimeZone $timezone
+	 * @return egw_time
+	 */
+	public static function createFromFormat($format, $time, DateTimeZone $timezone=null)
+	{
+		if (PHP_VERSION >= 5.3)	// php < 5.3 gives fatal error
+		{
+			return is_null($timezone) ? parent::createFromFormat($format, $time) : parent::createFromFormat($format, $time, $timezone);
+		}
+		// simple implementation for php 5.2, far from complete, but definitly better then fatal erros
+		$parsed = array_combine(split('[./: T-]', $format), split('[./: T-]', $time));
+		if (!isset($parsed['Y']) && isset($parsed['y'])) $parsed['Y'] = ($parsed['y'] > 30 ? 1900 : 2000) + $parsed['y'];
+		if (!isset($parsed['s'])) $parsed['s'] = '00';
+
+		$str = $parsed['Y'].'-'.$parsed['m'].'-'.$parsed['d'].
+			(count($parsed) >= 6 ? ' '.$parsed['H'].':'.$parsed['i'].':'.$parsed['s'] : '');
+		//error_log(__METHOD__."('$format', '$time') parsed=".print_r($parsed, true)." --> '$str'");
+		$ret = new egw_time($str, $timezone);
+		//error_log(__METHOD__."('$format', '$time') returning new egw_time('$str')=".$ret->format($format));
+		return $ret;
+	}
 }
 egw_time::init();
 
@@ -589,5 +616,19 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 
 	$ts = egw_time::to(array('full' => '20090627', 'hour' => 10, 'minute' => 0),'ts');
 	echo "<p>2009-06-27 10h UTC timestamp=$ts --> server time = ".egw_time::user2server($ts,'')." --> user time = ".egw_time::server2user(egw_time::user2server($ts),'')."</p>\n";
+
+	// createFromFormat tests
+	foreach(array(
+		'22.03.1966' => 'd.m.Y',
+		'22.03.66' => 'd.m.y',
+		'03/22/66' => 'm/d/y',
+		'2000-01-01 12:00:00' => 'Y-m-d H:i:s',
+		'2000-01-01 12:00' => 'Y-m-d H:i',
+		//todo: '20000101T120000' => 'YmdTHis',
+	) as $time => $format)
+	{
+		$date = egw_time::createFromFormat($format, $time);
+		echo "<p>egw_time::createFromFormat('$format', '$time') returns '".$date->format(egw_time::DATABASE)."'</p>\n";
+	}
 }
 */
