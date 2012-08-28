@@ -585,6 +585,20 @@ class egw_time extends DateTime
 		//error_log(__METHOD__."('$format', '$time') returning new egw_time('$str')=".$ret->format($format));
 		return $ret;
 	}
+
+	/**
+	 * Returns warnings and errors (dummy for php < 5.3 compatibility)
+	 *
+	 * @return array
+	 */
+	public static function getLastErrors()
+	{
+		if (PHP_VERSION >= 5.3)	// php < 5.3 gives fatal error
+		{
+			return parent::getLastErrors();
+		}
+		return array();
+	}
 }
 egw_time::init();
 
