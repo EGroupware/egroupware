@@ -573,6 +573,7 @@ class egw_time extends DateTime
 			return is_null($timezone) ? parent::createFromFormat($format, $time) : parent::createFromFormat($format, $time, $timezone);
 		}
 		// simple implementation for php 5.2, far from complete, but definitly better then fatal erros
+		if ($format[0] == '!') $format = substr($format, 1);	// ignore leading ! (reset all fields to 0, as we do anyway)
 		$parsed = array_combine(split('[./: T-]', $format), split('[./: T-]', $time));
 		if (!isset($parsed['Y']) && isset($parsed['y'])) $parsed['Y'] = ($parsed['y'] > 30 ? 1900 : 2000) + $parsed['y'];
 		if (!isset($parsed['s'])) $parsed['s'] = '00';
@@ -620,6 +621,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 	// createFromFormat tests
 	foreach(array(
 		'22.03.1966' => 'd.m.Y',
+		'22.03.1966' => '!d.m.Y',
 		'22.03.66' => 'd.m.y',
 		'03/22/66' => 'm/d/y',
 		'2000-01-01 12:00:00' => 'Y-m-d H:i:s',
