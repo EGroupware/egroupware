@@ -1067,7 +1067,7 @@ class ajaxfelamimail
 				);
 				$headerData = $headerData['header'][0];
 				//error_log(__METHOD__.__LINE__.print_r($headerData,true));
-				foreach ($headerData as $key => $val)
+				foreach ((array)$headerData as $key => $val)
 				{
 					if (is_array($val))
 					{

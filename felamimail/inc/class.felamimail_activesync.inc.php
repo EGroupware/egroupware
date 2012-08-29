@@ -277,7 +277,11 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			//error_log(__METHOD__.__LINE__.' create object with ProfileID:'.array2string(self::$profileID));
 			if (!$this->mail->openConnection(self::$profileID,false))
 			{
-				error_log(__METHOD__.__LINE__."($account) can not open connection!".$this->mail->getErrorMessage());
+				error_log(date('Y-m-d H:i:s').' '.__METHOD__.__LINE__."($account) can not open connection!".$this->mail->getErrorMessage()."\n",3,'/var/lib/egroupware/esync-imap.log');
+				error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
+					($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\n\n",3,'/var/lib/egroupware/esync-imap.log');
+				header("HTTP/1.1 500 Internal Server Error");
+				//die('Mail not or mis-configured!');
 				throw new egw_exception_not_found(__METHOD__."($account) can not open connection!");
 			}
 		}
@@ -288,7 +292,11 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			{
 				if (!$this->mail->openConnection(self::$profileID,false))
 				{
-					error_log(__METHOD__.__LINE__."($account) can not open connection!".$this->mail->getErrorMessage());
+					error_log(date('Y-m-d H:i:s').' '.__METHOD__.__LINE__."($account) can not open connection!".$this->mail->getErrorMessage()."\n",3,'/var/lib/egroupware/esync-imap.log');
+					error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
+						($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\n\n",3,'/var/lib/egroupware/esync-imap.log');
+				        header("HTTP/1.1 500 Internal Server Error");
+					//die('Mail not or mis-configured!');
 					throw new egw_exception_not_found(__METHOD__."($account) can not open connection!");
 				}
 			}

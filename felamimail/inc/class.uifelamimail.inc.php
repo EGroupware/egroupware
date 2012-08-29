@@ -181,13 +181,17 @@ class uifelamimail
 			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
 				self::$icServerID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
 			//_debug_array(self::$icServerID);
+			if (is_object($preferences)) $imapServer        = $preferences->getIncomingServer(self::$icServerID);
+			if (isset($imapServer->ImapServerId) && !empty($imapServer->ImapServerId))
+			{
+				self::$icServerID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $imapServer->ImapServerId;
+			}
 			echo "<h2>".lang('Test Connection and display basic information about the selected profile')."</h2>";
 			_debug_array('Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.self::$icServerID);
 			emailadmin_bo::unsetCachedObjects(self::$icServerID);
 
 			if ($preferences->preferences['prefcontroltestconnection'] == 'reset') exit;
 
-			if (is_object($preferences)) $imapServer 	= $preferences->getIncomingServer(self::$icServerID);
 			echo "<hr /><h3 style='color:red'>".lang('IMAP Server')."</h3>";
 			if($imapServer->_connectionErrorObject) $eO = $imapServer->_connectionErrorObject;
 			unset($imapServer->_connectionErrorObject);
@@ -209,7 +213,7 @@ class uifelamimail
 			}
 			else
 			{
-				_debug_array(array('ImapServerID' =>$imapServer->ImapServerId,
+				_debug_array(array('ImapServerId' =>$imapServer->ImapServerId,
 					'host'=>$imapServer->host,
 					'port'=>$imapServer->port,
 					'validatecert'=>$imapServer->validatecert));
