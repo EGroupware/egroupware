@@ -72,7 +72,7 @@
 		function addAttachment($_formData,$eliminateDoubleAttachments=false)
 		{
 			$attachfailed = false;
-			// to gard against exploits the file must be either uploaded or be in the temp_dir
+			// to guard against exploits the file must be either uploaded or be in the temp_dir
 			// check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
 			try
 			{
@@ -98,7 +98,7 @@
 					'file'	=> $tmpFileName,
 					'size'	=> $_formData['size']
 				);
-				// trying diiferent ID-ing Method, as getRandomString seems to produce non Random String on certain systems.
+				// trying different ID-ing Method, as getRandomString seems to produce non Random String on certain systems.
 				$attachmentID = md5(time().serialize($buffer));
 				//error_log(__METHOD__." add Attachment with ID:".$attachmentID." (md5 of serialized array)");
 				if (!is_array($this->sessionData['attachments'])) $this->sessionData['attachments']=array();
