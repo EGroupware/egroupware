@@ -344,8 +344,8 @@ class common
 		if (! $lid && ! $firstname && ! $lastname)
 		{
 			$lid       = $GLOBALS['egw_info']['user']['account_lid'];
-			$firstname = $GLOBALS['egw_info']['user']['firstname'];
-			$lastname  = $GLOBALS['egw_info']['user']['lastname'];
+			$firstname = $GLOBALS['egw_info']['user']['account_firstname'];
+			$lastname  = $GLOBALS['egw_info']['user']['account_lastname'];
 		}
 		$is_group = $GLOBALS['egw']->accounts->get_type($accountid ? $accountid : $lid) == 'g';
 
