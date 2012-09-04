@@ -55,7 +55,7 @@ class calendar_uiforms extends calendar_ui
 	{
 		parent::__construct(true);	// call the parent's constructor
 
-		for ($n=15; $n <= 8*60; $n+=($n < 60 ? 15 : ($n < 240 ? 30 : 60)))
+		for ($n=15; $n <= 16*60; $n+=($n < 60 ? 15 : ($n < 240 ? 30 : ($n < 480 ? 60 : 120))))
 		{
 			$this->durations[$n*60] = sprintf('%d:%02d',$n/60,$n%60);
 		}
