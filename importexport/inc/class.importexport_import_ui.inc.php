@@ -50,15 +50,29 @@
 						// Set this so plugin doesn't do any data changes
 						$definition_obj->plugin_options = (array)$definition_obj->plugin_options + array('dry_run' => true);
 					}
+					$options =& $definition_obj->plugin_options;
 					if($content['delimiter']) {
-						$options =& $definition_obj->plugin_options;
 						$options['fieldsep'] =
 							$content['delimiter'] == 'other' ? $content['other_delimiter'] : $content['delimiter'];
 						$definition_obj->plugin_options = $options;
 					}
 
 					$plugin = new $definition_obj->plugin;
+
+					// Check file encoding matches import
+					$sample = file_get_contents($content['file']['tmp_name'],false, null, 0, 1024);
+					$required = $options['charset'] == 'user' || !$options['charset'] ? $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'] : $options['charset'];
+					$encoding = mb_detect_encoding($sample,$required,true);
+					if($encoding && $required != $encoding)
+					{
+						$this->message = lang("Encoding mismatch.  Expected %1 file, you uploaded %2.\n",
+							$required,
+							$encoding
+						);
+					}
+					
 					$file = fopen($content['file']['tmp_name'], 'r');
+
 
 					// Some of the translation, conversion, etc look here
 					$GLOBALS['egw_info']['flags']['currentapp'] = $appname;
@@ -85,7 +99,7 @@
 					
 					$count = $plugin->import($file, $definition_obj);
 
-					$this->message = lang('%1 records processed', $count);
+					$this->message .= lang('%1 records processed', $count);
 
 					// Refresh opening window
 					if(!$content['dry-run']) $GLOBALS['egw']->js->set_onload("window.opener.egw_refresh('{$this->message}','$appname');");
