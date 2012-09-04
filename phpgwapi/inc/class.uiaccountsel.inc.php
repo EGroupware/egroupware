@@ -342,7 +342,7 @@ function addOption(id,label,value,do_onchange)
 
 		$app = get_var('app',array('POST','GET'));
 		$use = get_var('use',array('POST','GET'));
-		$group_id = get_var('group_id',array('POST','GET'),$GLOBALS['egw']->accounts->data['account_primary_group']);
+		$group_id = get_var('group_id',array('POST','GET'), $GLOBALS['egw_info']['user']['account_primary_group']);
 		$element_id = get_var('element_id',array('POST','GET'));
 		$multiple = get_var('multiple',array('POST','GET'));
 
@@ -466,7 +466,8 @@ function addOption(id,label,value,do_onchange)
 			{
 				$GLOBALS['egw']->template->set_var('tr_color',$tr_color_app_groups=$nextmatchs->alternate_row_color($tr_color_app_groups,True));
 				$GLOBALS['egw']->template->set_var('link_user_group',egw::link('/index.php',$link_data));
-				$GLOBALS['egw']->template->set_var('name_user_group',common::grab_owner_name($group['account_id']));
+				$GLOBALS['egw']->template->set_var('name_user_group', ($group['account_id'] == $group_id ? '<b>' : '').
+					common::grab_owner_name($group['account_id']).($group['account_id'] == $group_id ? '</b>' : ''));
 
 				if($use == 'both')	// allow selection of groups
 				{
