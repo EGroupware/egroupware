@@ -151,6 +151,12 @@ final class notifications {
 	private $links = array();
 
 	/**
+	 * array with objects of links
+	 * @var array
+	 */
+	private $popup_links = array();
+
+	/**
 	 * array with objects of attachments
 	 * @var array
 	 */
@@ -298,13 +304,28 @@ final class notifications {
 	/**
 	 * sets the notification links
 	 *
-   * @param array $_links link array (like defined in $this->add_link)
-   */
+	 * @param array $_links link array (like defined in $this->add_link)
+	 */
 	public function set_links(array $_links) {
 		$this->links = array(); // clear array if set
 		foreach($_links as $link) {
 			if(is_array($link)) {
 				$this->add_link($link['text'], $link['view'], $link['popup']);
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * sets the notification links for popups
+	 *
+	 * @param array $_links link array (like defined in $this->add_link)
+	 */
+	public function set_popuplinks(array $_links) {
+		$this->popup_links = array(); // clear array if set
+		foreach($_links as $link) {
+			if(is_array($link)) {
+				$this->add_popuplink($link['text'], $link['view'], $link['popup']);
 			}
 		}
 		return true;
@@ -320,6 +341,22 @@ final class notifications {
 	public function add_link($_text, $_view, $_popup = false) {
 		if(!$_view || !$_text) { return false; }
 		$this->links[] = (object)array(	'text'	=> $_text,
+										'view'	=> $_view,
+										'popup'	=> $_popup,
+										);
+		return true;
+	}
+
+	/**
+	 * adds a notification link for popups
+	 *
+	 * @param string $_text a descriptive text for the link
+	 * @param array $_view all params needed to view the link (name => value pairs)
+	 * @param string $_popup if link can be viewed in a popup something like '300x200' otherwise false
+	 */
+	public function add_popuplink($_text, $_view, $_popup = false) {
+		if(!$_view || !$_text) { return false; }
+		$this->popup_links[] = (object)array(	'text'	=> $_text,
 										'view'	=> $_view,
 										'popup'	=> $_popup,
 										);
@@ -466,8 +503,13 @@ final class notifications {
 					 		throw new Exception($notification_backend. ' is no implementation of notifications_iface');
 						}
 						$lsubject = $this->subject;
-						if ($backend=='popup' && isset($this->popupsubject) && !empty($this->popupsubject)) $lsubject = $this->popupsubject;
-						$obj->send($this->prepend_message($messages, $prepend_message), $lsubject, $this->links, $this->attachments);
+						$llinks = $this->links;
+						if ($backend == 'popup')
+						{
+							if (!empty($this->popupsubject)) $lsubject = $this->popupsubject;
+							if ($this->popup_links) $llinks = $this->popup_links;
+						}
+						$obj->send($this->prepend_message($messages, $prepend_message), $lsubject, $llinks, $this->attachments);
 					}
 					catch (Exception $exception) {
 						$backend_errors[] = $notification_backend.' failed: '.$exception->getMessage();

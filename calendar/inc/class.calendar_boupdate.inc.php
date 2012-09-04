@@ -907,12 +907,14 @@ class calendar_boupdate extends calendar_bo
 						}
 						else
 						{
-							// set message (without separator) for popup notifications
-							$notification->set_popupmessage($notify_body."\n\n".$details['description']."\n\n".$details_body);
-
 							// iCal: description need to be separated from body by fancy separator
 							$notification->set_message($notify_body."\n\n".$details_body."\n*~*~*~*~*~*~*~*~*~*\n\n".$details['description']);
 						}
+						// popup notifiactions: set subject, different message (without separator) and (always) links
+						$notification->set_popupsubject($subject);
+						$notification->set_popupmessage($notify_body."\n\n".$details['description']."\n\n".$details_body);
+						$notification->set_popuplinks(array($details['link_arr']));
+
 						if(is_array($attachment)) { $notification->set_attachments(array($attachment)); }
 						$notification->send();
 					}
