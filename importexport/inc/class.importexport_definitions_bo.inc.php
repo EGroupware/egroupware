@@ -47,7 +47,7 @@ class importexport_definitions_bo {
 			$this_membership = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true);
 			$this_membership[] = $GLOBALS['egw_info']['user']['account_id'];
 			$sql .= ' (';
-			$read = array('all');
+			$read = array();
 			foreach($this_membership as $id)
 			{
 				$read[] = 'allowed_users '.

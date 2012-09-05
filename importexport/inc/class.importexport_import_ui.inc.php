@@ -63,9 +63,9 @@
 					$sample = file_get_contents($content['file']['tmp_name'],false, null, 0, 1024);
 					$required = $options['charset'] == 'user' || !$options['charset'] ? $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'] : $options['charset'];
 					$encoding = mb_detect_encoding($sample,$required,true);
-					if($encoding && $required != $encoding)
+					if($encoding && strtoupper($required) != strtoupper($encoding))
 					{
-						$this->message = lang("Encoding mismatch.  Expected %1 file, you uploaded %2.\n",
+						$this->message = lang("Encoding mismatch.  Expected %1 file, you uploaded %2.<br />\n",
 							$required,
 							$encoding
 						);
@@ -105,27 +105,60 @@
 					if(!$content['dry-run']) $GLOBALS['egw']->js->set_onload("window.opener.egw_refresh('{$this->message}','$appname');");
 					$total_processed = 0;
 					foreach($plugin->get_results() as $action => $a_count) {
-						$this->message .= "\n" . lang($action) . ": $a_count";
+						$this->message .= "<br />\n" . lang($action) . ": $a_count";
 						$total_processed += $a_count;
 					}
 					if(count($plugin->get_warnings())) {
-						$this->message .= "\n".lang('Warnings').':';
+						$this->message .= "<br />\n".lang('Warnings').':';
 						foreach($plugin->get_warnings() as $record => $message) {
 							$this->message .= "\n$record: $message";
 						}
 					}
 					if(count($plugin->get_errors())) {
-						$this->message .= "\n".lang('Problems during import:');
+						$this->message .= "<br />\n".lang('Problems during import:');
 						foreach($plugin->get_errors() as $record => $message) {
-							$this->message .= "\n$record: $message";
+							$this->message .= "<br />\n$record: $message";
 						}
-						if($count != $total_processed) $this->message .= "\n".lang('Some records may not have been imported');
+						if($count != $total_processed) $this->message .= "<br />\n".lang('Some records may not have been imported');
 					}
 				} catch (Exception $e) {
 					$this->message = $e->getMessage();
+
+					// Add links for new / edit definition
+					$config = config::read('importexport');
+					if($GLOBALS['egw_info']['user']['apps']['admin'] || $config['users_create_definitions'])
+					{
+						// New definition
+						$add_link = egw::link('/index.php',array(
+							'menuaction' => 'importexport.importexport_definitions_ui.edit'
+						));
+						$this->message .= "<br />\n" . lang('Create a <a href="%1">new definition</a> for this file.', $add_link);
+
+						// Edit selected definition, if allowed
+						if($definition_obj->owner == $GLOBALS['egw_info']['user']['account_id'] ||
+							!$definition_obj->owner && $GLOBALS['egw_info']['user']['apps']['admin'])
+						{
+							$edit_link = egw::link('/index.php',array(
+								'menuaction' => 'importexport.importexport_definitions_ui.edit',
+								'definition' => $definition
+							));
+							$this->message .= "<br />\n" . lang('<a href="%1">Edit definition %2</a>',
+								$edit_link, $definition_obj->name );
+						}
+					}
 				}
-			} elseif($content['cancel']) {
+			}
+			elseif($content['cancel'])
+			{
 				$GLOBALS['egw']->js->set_onload('window.close();');
+			}
+			elseif ($GLOBALS['egw_info']['user']['apps']['admin'])
+			{
+				$this->message .= lang('You may want to <a href="%1" target="_new">backup</a> first.',
+					egw::link('/index.php',
+						array('menuaction' => 'admin.admin_db_backup.index')
+					)
+				);
 			}
 
 			$data['appname'] = $preserve['appname'] = $appname ? $appname : ($definition_obj ? $definition_obj->application : '');
