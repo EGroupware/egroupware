@@ -99,25 +99,39 @@ function getElement(form,pattern)
 	}
 }
 
-function setName(input)
+function check_value(input, own_id)
 {
-	var prefix = document.getElementById("exec[n_prefix]").value;
-	var given  = document.getElementById("exec[n_given]").value;
-	var middle = document.getElementById("exec[n_middle]").value;
-	var family = document.getElementById("exec[n_family]").value;
-	var suffix = document.getElementById("exec[n_suffix]").value;
-	var org    = document.getElementById("exec[org_name]").value;
-
-	var name = document.getElementById("exec[n_fn]");
-
-	name.value = "";
-	if (prefix) name.value += prefix+" ";
-	if (given) name.value += given+" ";
-	if (middle) name.value += middle+" ";
-	if (family) name.value += family+" ";
-	if (suffix) name.value += suffix;
-
-	xajax_doXMLHTTP("addressbook.addressbook_ui.ajax_setFileasOptions",prefix,given,middle,family,suffix,org);
+	var values = egw_json_getFormValues(input.form).exec;	// todo use eT2 method, if running under et2
+	
+	if (input.name.match(/n_/))
+	{
+		var name = document.getElementById("exec[n_fn]");
+		name.value = "";
+		if (values.n_prefix) name.value += values.n_prefix+" ";
+		if (values.n_given)  name.value += values.n_given+" ";
+		if (values.n_middle) name.value += values.n_middle+" ";
+		if (values.n_family) name.value += values.n_family+" ";
+		if (values.n_suffix) name.value += values.n_suffix;
+	}
+	var req = new egw_json_request('addressbook.addressbook_ui.ajax_check_values', [values, input.name, own_id]);
+	req.sendRequest(true, function(data) {
+		if (data.msg && confirm(data.msg))
+		{
+			for(var id in data.doublicates)
+			{
+				//egw.open(id, 'addressbook');
+				opener.egw_openWindowCentered2(egw_webserverUrl+'/index.php?menuaction=addressbook.addressbook_ui.edit&contact_id='+id, '_blank', 870, 480, 'yes', 'addressbook');
+			}
+		}
+		if (typeof data.fileas_options == 'object')
+		{
+			var selbox = document.getElementById("exec[fileas_type]");
+			for (var i=0; i < data.fileas_options.length; i++)
+			{
+				selbox.options[i].text = data.fileas_options[i];
+			}
+		}
+	});
 }
 
 function add_whole_list(list)
@@ -131,17 +145,6 @@ function add_whole_list(list)
 		email_type = "email";
 	}
 	xajax_doXMLHTTP("addressbook.addressbook_ui.ajax_add_whole_list",list,email_type);
-}
-
-function setOptions(options_str)
-{
-	var options = options_str.split("\\b");
-	var selbox = document.getElementById("exec[fileas_type]");
-	var i;
-	for (i=0; i < options.length; i++)
-	{
-		selbox.options[i].text = options[i];
-	}
 }
 
 function show_custom_country(selectbox)

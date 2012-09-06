@@ -14,7 +14,7 @@
 					<file statustext="Select a portrait format jpeg photo. It will be resized to 60 pixel width." id="upload_photo" class="photo"/>
 				</row>
 				<row>
-					<button align="center" label="Ok" onclick="set_style_by_class('table','uploadphoto','display','none'); return false;"/>
+					<button align="center" label="Ok" onclick="jQuery('table.uploadphoto').css('display','none'); return false;"/>
 				</row>
 			</rows>
 		</grid>
@@ -28,33 +28,33 @@
 			<rows>
 				<row>
 					<description value="prefix" for="n_prefix"/>
-					<textbox id="n_prefix" onchange="setName(this);" size="35" maxlength="64"/>
+					<textbox id="n_prefix" onchange="check_value(this,'$cont[id]');" size="35" maxlength="64"/>
 				</row>
 				<row>
 					<description value="first name" for="n_given"/>
-					<textbox id="n_given" onchange="setName(this);" size="35" maxlength="64"/>
+					<textbox id="n_given" onchange="check_value(this,'$cont[id]');" size="35" maxlength="64"/>
 				</row>
 				<row>
 					<description value="middle name" for="n_middle"/>
-					<textbox id="n_middle" onchange="setName(this);" size="35" maxlength="64"/>
+					<textbox id="n_middle" onchange="check_value(this,'$cont[id]');" size="35" maxlength="64"/>
 				</row>
 				<row>
 					<description value="last name" for="n_family"/>
-					<textbox id="n_family" onchange="setName(this);" size="35" maxlength="64"/>
+					<textbox id="n_family" onchange="check_value(this,'$cont[id]');" size="35" maxlength="64"/>
 				</row>
 				<row>
 					<description value="suffix" for="n_suffix"/>
-					<textbox id="n_suffix" onchange="setName(this);" size="35" maxlength="64"/>
+					<textbox id="n_suffix" onchange="check_value(this,'$cont[id]');" size="35" maxlength="64"/>
 				</row>
 				<row>
 					<description/>
-					<button label="Ok" id="button[ok]" onclick="set_style_by_class('table','editname','display','none'); if(document.getElementById(form::name('title'))){document.getElementById(form::name('title')).focus();} return false;"/>
+					<button label="Ok" id="button[ok]" onclick="jQuery('table.editname').css('display','none'); if(document.getElementById(form::name('title'))){document.getElementById(form::name('title')).focus();} return false;"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.9.003">
-		<grid height="286">
+		<grid width="100%" height="286">
 			<columns>
 				<column/>
 				<column/>
@@ -64,7 +64,7 @@
 				<row valign="top">
 					<image src="accounts"/>
 					<vbox>
-						<image src="photo" onclick="set_style_by_class('table','uploadphoto','display','inline'); return false;" class="photo"/>
+						<image src="photo" onclick="jQuery('table.uploadphoto').css('display','inline'); return false;" class="photo"/>
 						<template id="addressbook.edit.upload"/>
 					</vbox>
 					<grid>
@@ -77,7 +77,7 @@
 						<rows>
 							<row>
 								<description value="Name"/>
-								<textbox cols="3" id="n_fn" no_lang="1" onclick="set_style_by_class('table','editname','display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" readonly="true" rows="1" size="-36" span="2" class="cursorHand"/>
+								<textbox cols="3" id="n_fn" no_lang="1" onclick="jQuery('table.editname').css('display','inline'); var focElem = document.getElementById(form::name('n_prefix')); if (!(typeof(focElem) == 'undefined') &amp;&amp; typeof(focElem.focus)=='function') document.getElementById(form::name('n_prefix')).focus();" readonly="true" rows="1" size="-36" span="2" class="cursorHand"/>
 							</row>
 							<row>
 								<description/>
@@ -102,12 +102,12 @@
 				<row>
 					<image src="home"/>
 					<description value="Organisation"/>
-					<textbox id="org_name" onchange="setName(this);" size="45" maxlength="128"/>
+					<textbox id="org_name" onchange="check_value(this,'$cont[id]');" size="45" maxlength="128"/>
 				</row>
 				<row>
 					<description/>
 					<description value="department" for="org_unit"/>
-					<textbox id="org_unit" size="45" maxlength="64"/>
+					<textbox id="org_unit" onchange="check_value(this,'$cont[id]');" size="45" maxlength="64"/>
 				</row>
 				<row>
 					<image src="gohome"/>
@@ -382,7 +382,7 @@
 					<description value="Custom fields"/>
 				</row>
 				<row height="100%">
-					<customfields options="$cont[tid],1"/>
+					<customfields id="private" options="$cont[tid],1"/>
 				</row>
 			</rows>
 		</grid>
@@ -481,12 +481,12 @@
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_other,&amp;hearts;"/>
 				</row>
 				<row>
-					<button align="center" label="Ok" id="button[ok]" onclick="set_style_by_class('table','editphones','display','none'); if (window.hidephones) hidephones(this.form); return false;" span="all"/>
+					<button align="center" label="Ok" id="button[ok]" onclick="jQuery('table.editphones').css('display','none'); if (window.hidephones) hidephones(this.form); return false;" span="all"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.002">
+	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.004">
 		<grid>
 			<columns>
 				<column width="450"/>
@@ -580,7 +580,7 @@
 									<row>
 										<description/>
 										<description/>
-										<button accesskey="m" label="More ..." id="button[more]" onclick="set_style_by_class('table','editphones','display','inline'); if (window.showphones) showphones(this.form); return false;"/>
+										<button accesskey="m" label="More ..." id="button[more]" onclick="jQuery('table.editphones').css('display','inline'); if (window.showphones) showphones(this.form); return false;"/>
 										<description/>
 									</row>
 								</rows>
@@ -608,12 +608,12 @@
 									<row>
 										<image src="email.png"/>
 										<description value="email" for="email"/>
-										<url-email id="email" options="28,128"/>
+										<url-email id="email" onchange="check_value(this,'$cont[id]');" options="28,128"/>
 									</row>
 									<row>
 										<description/>
 										<description value="Private" for="email_home"/>
-										<url-email id="email_home" options="28,128"/>
+										<url-email id="email_home" onchange="check_value(this,'$cont[id]');" options="28,128"/>
 									</row>
 								</rows>
 							</grid>

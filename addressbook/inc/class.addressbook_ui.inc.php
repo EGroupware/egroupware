@@ -1928,20 +1928,72 @@ class addressbook_ui extends addressbook_bo
 		}
 	}
 
-	function ajax_setFileasOptions($n_prefix,$n_given,$n_middle,$n_family,$n_suffix,$org_name)
+	/**
+	 * Doublicate check: returns similar contacts: same email or 2 of name, firstname, org
+	 *
+	 * Also update/return fileas options, if necessary.
+	 *
+	 * @param array $values contact values from form
+	 * @param string $name name of changed value, eg. "email"
+	 * @param int $own_id=0 own contact id, to not check against it
+	 * @return array with keys 'msg' => "EMail address exists, do you want to open contact?" (or null if not existing)
+	 * 	'data' => array of id => "full name (addressbook)" pairs
+	 *  'fileas_options'
+	 */
+	public function ajax_check_values($values, $name, $own_id=0)
 	{
-		$names = array(
-			'n_prefix' => $n_prefix,
-			'n_given'  => $n_given,
-			'n_middle' => $n_middle,
-			'n_family' => $n_family,
-			'n_suffix' => $n_suffix,
-			'org_name' => $org_name,
-		);
-		$response = new xajaxResponse();
-		$response->addScript("setOptions('".addslashes(implode("\b",$this->fileas_options($names)))."');");
+		if (preg_match('/^exec\[([^\]]+)\]$/', $name, $matches)) $name = $matches[1];	// remove exec[ ]
 
-		return $response->getXML();
+		$ret = array('doublicates' => array(), 'msg' => null);
+
+		// if email changed, check for doublicates
+		if (in_array($name, array('email', 'email_home')))
+		{
+			if (preg_match('/^'.url_widget::EMAIL_PREG.'$/i', $values[$name]))	// only search for real email addresses, to not return to many contacts
+			{
+				$contacts = parent::search(array(
+					'email' => $values[$name],
+					'email_home' => $values[$name],
+				),$only_keys=false, $order_by='', $extra_cols='', $wildcard='', $empty=False, $op='OR');
+			}
+		}
+		else
+		{
+			// only set fileas-options if other then email changed
+			$ret['fileas_options'] = array_values($this->fileas_options($values));
+
+			// if name, firstname or org changed and at least 2 are specified, check for doublicates
+			if (in_array($name, array('n_given', 'n_family', 'org_name')) &&
+				!empty($values['n_given'])+!empty($values['n_family'])+!empty($values['org_name']) >= 2)
+			{
+				$filter = array();
+				foreach(array('email', 'n_given', 'n_family', 'org_name') as $n)	// use email too, to exclude obvious false positives
+				{
+					if (!empty($values[$n])) $filter[$n] = $values[$n];
+				}
+				$contacts = parent::search($criteria='', $only_keys=false, $order_by='', $extra_cols='', $wildcard='',
+					$empty=False, $op='AND', $start=false, $filter);
+			}
+		}
+		if ($contacts)
+		{
+			foreach($contacts as $contact)
+			{
+				if ($own_id && $contact['id'] == $own_id) continue;
+
+				$ret['doublicates'][$contact['id']] = $this->fileas($contact).' ('.
+					(!$contact['owner'] ? lang('Accounts') : ($contact['owner'] == $this->user ?
+					($contact['private'] ? lang('Private') : lang('Personal')) : common::grab_owner_name($contact['owner']))).')';
+			}
+			if ($ret['doublicates'])
+			{
+				$ret['msg'] = lang('Similar contacts found:').
+					"\n\n".implode("\n", $ret['doublicates'])."\n\n".
+					lang('Open for editing?');
+			}
+		}
+		error_log(__METHOD__.'('.array2string($values).", '$name', $own_id) doublicates found ".array2string($ret['doublicates']));
+		egw_json_response::get()->data($ret);
 	}
 
 	function view($content=null)
