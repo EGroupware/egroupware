@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="importexport.wizard_basic_import_csv.conditions" template="" lang="" group="0" version="1.9.001">
+	<template id="importexport.wizard_basic_import_csv.conditions" template="" lang="" group="0" version="1.9.002">
 		<vbox cols="4" rows="1">
+			<description value="How to merge with existing data?  For each record, all conditions are evaluated from top to bottom, or stop.  For blind insert, leave blank.  "/>
 			<grid id="conditions">
 				<columns>
 					<column/>
@@ -33,20 +34,20 @@
 					</row>
 					<row>
 						<menulist>
-							<menupopup id="${row}[string]" options="Select"/>
+							<menupopup id="${row}[string]" no_lang="1" options="Select"/>
 						</menulist>
 						<hbox options="0,0">
 							<menulist>
-								<menupopup id="${row}[type]"/>
+								<menupopup id="${row}[type]" no_lang="1"/>
 							</menulist>
-							<textbox id="${row}[op_2]"/>
+							<textbox id="${row}[op_2]" no_lang="1"/>
 						</hbox>
 						<menulist>
-							<menupopup id="${row}[true][action]" options="Select"/>
+							<menupopup id="${row}[true][action]" no_lang="1" options="Select"/>
 						</menulist>
 						<checkbox align="center" id="${row}[true][stop]"/>
 						<menulist>
-							<menupopup id="${row}[false][action]" options="Select"/>
+							<menupopup id="${row}[false][action]" no_lang="1" options="Select"/>
 						</menulist>
 						<checkbox align="center" id="${row}[false][stop]"/>
 					</row>
