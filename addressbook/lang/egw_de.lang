@@ -314,6 +314,7 @@ no vcard	addressbook	de	Keine VCard
 number	addressbook	de	Nummer
 number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensätze (%1)
 open email addresses in external mail program	addressbook	de	Öffne E-Mail Adressen in externem Mail Programm
+open for editing?	addressbook	de	Zum Bearbeiten öffnen?
 options for type	admin	de	Optionen für Typ
 organisation	addressbook	de	Organisation
 organisations	addressbook	de	Organisationen
@@ -381,6 +382,7 @@ show	addressbook	de	Anzeigen
 show birthday reminders on main screen	addressbook	de	Geburtstagserinnerungen auf der Startseite anzeigen
 show infolog entries for this organisation	addressbook	de	InfoLog Einträge dieser Organisation anzeigen
 show the contacts of this organisation	addressbook	de	Kontakte dieser Organisation anzeigen
+similar contacts found:	addressbook	de	Ähnliche Kontakte gefunden:
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	de	Größe des Popup (WxH, zB. 400x300, falls ein Popup verwendet werden soll)
 stadt	addressbook	de	Stadt
 start	admin	de	Starten

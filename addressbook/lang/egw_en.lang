@@ -314,6 +314,7 @@ no vcard	addressbook	en	No vCard
 number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
 open email addresses in external mail program	addressbook	en	Open EMail addresses in external mail program
+open for editing?	addressbook	en	Open for editing?
 options for type	admin	en	Options for type
 organisation	addressbook	en	Organisation
 organisations	addressbook	en	Organisations
@@ -381,6 +382,7 @@ show	addressbook	en	Show
 show birthday reminders on main screen	addressbook	en	Birthday reminders
 show infolog entries for this organisation	addressbook	en	Show InfoLog entries for this organisation
 show the contacts of this organisation	addressbook	en	Show contacts of this organisation
+similar contacts found:	addressbook	en	Similar contacts found:
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	en	Size of popup. Width x Height e.g. 400x300
 stadt	addressbook	en	City
 start	admin	en	Start

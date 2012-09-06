@@ -28,23 +28,23 @@
 			<rows>
 				<row>
 					<description value="prefix" for="n_prefix"/>
-					<textbox id="n_prefix" onchange="setName(this);" size="35" maxlength="64"/>
+					<textbox id="n_prefix" onchange="check_value(this,'$cont[id]');" size="35" maxlength="64"/>
 				</row>
 				<row>
 					<description value="first name" for="n_given"/>
-					<textbox id="n_given" onchange="setName(this);" size="35" maxlength="64"/>
+					<textbox id="n_given" onchange="check_value(this,'$cont[id]');" size="35" maxlength="64"/>
 				</row>
 				<row>
 					<description value="middle name" for="n_middle"/>
-					<textbox id="n_middle" onchange="setName(this);" size="35" maxlength="64"/>
+					<textbox id="n_middle" onchange="check_value(this,'$cont[id]');" size="35" maxlength="64"/>
 				</row>
 				<row>
 					<description value="last name" for="n_family"/>
-					<textbox id="n_family" onchange="setName(this);" size="35" maxlength="64"/>
+					<textbox id="n_family" onchange="check_value(this,'$cont[id]');" size="35" maxlength="64"/>
 				</row>
 				<row>
 					<description value="suffix" for="n_suffix"/>
-					<textbox id="n_suffix" onchange="setName(this);" size="35" maxlength="64"/>
+					<textbox id="n_suffix" onchange="check_value(this,'$cont[id]');" size="35" maxlength="64"/>
 				</row>
 				<row>
 					<description/>
@@ -102,12 +102,12 @@
 				<row>
 					<image src="home"/>
 					<description value="Organisation"/>
-					<textbox id="org_name" onchange="setName(this);" size="45" maxlength="128"/>
+					<textbox id="org_name" onchange="check_value(this,'$cont[id]');" size="45" maxlength="128"/>
 				</row>
 				<row>
 					<description/>
 					<description value="department" for="org_unit"/>
-					<textbox id="org_unit" size="45" maxlength="64"/>
+					<textbox id="org_unit" onchange="check_value(this,'$cont[id]');" size="45" maxlength="64"/>
 				</row>
 				<row>
 					<image src="gohome"/>
@@ -486,7 +486,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.003">
+	<template id="addressbook.edit" template="" lang="" group="0" version="1.9.004">
 		<grid>
 			<columns>
 				<column width="450"/>
@@ -608,12 +608,12 @@
 									<row>
 										<image src="email.png"/>
 										<description value="email" for="email"/>
-										<url-email id="email" options="28,128"/>
+										<url-email id="email" onchange="check_value(this,'$cont[id]');" options="28,128"/>
 									</row>
 									<row>
 										<description/>
 										<description value="Private" for="email_home"/>
-										<url-email id="email_home" options="28,128"/>
+										<url-email id="email_home" onchange="check_value(this,'$cont[id]');" options="28,128"/>
 									</row>
 								</rows>
 							</grid>
