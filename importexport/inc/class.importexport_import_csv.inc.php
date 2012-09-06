@@ -230,13 +230,6 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 	protected function do_fieldmapping( ) {
 		$record = $this->record;
 		$this->record = array();
-		if(count($this->mapping) !== count($record))
-		{
-			throw new egw_exception_wrong_userinput(lang("Column mismatch.  Expected %1 columns, your file has %2.",
-				count($this->mapping),
-				count($record)
-			));
-		}
 		foreach ($this->mapping as $cvs_idx => $new_idx)
 		{
 			if( $new_idx == '' ) continue;

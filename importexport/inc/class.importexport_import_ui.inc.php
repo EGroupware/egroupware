@@ -78,26 +78,34 @@
 					$GLOBALS['egw_info']['flags']['currentapp'] = $appname;
 
 					// Destination if we need to hold the file
-					$cachefile = new egw_cache_files(array());
-					$dst_file = $cachefile->filename(egw_cache::keys(egw_cache::INSTANCE, 'importexport',
-						'import_'.md5($content['file']['name'].$GLOBALS['egw_info']['user']['account_id']), true),true);
-					if($content['dry-run'])
+					if($file)
 					{
-						echo $this->preview($file, $definition_obj);
+						$cachefile = new egw_cache_files(array());
+						$dst_file = $cachefile->filename(egw_cache::keys(egw_cache::INSTANCE, 'importexport',
+							'import_'.md5($content['file']['name'].$GLOBALS['egw_info']['user']['account_id']), true),true);
 						// Keep file
 						if($dst_file)
 						{
-							if(copy($content['file']['tmp_name'],$dst_file)) {
+							if($content['file']['name'] && copy($content['file']['tmp_name'],$dst_file)) {
 								$preserve['file']['tmp_name'] = $dst_file;
 							}
 						}
-					} elseif ($dst_file && $content['file']['tmp_name'] == $dst_file) {
-						// Remove file
-						$cachefile->delete(egw_cache::keys(egw_cache::INSTANCE, 'importexport',
-							'import_'.md5($content['file']['name'].$GLOBALS['egw_info']['user']['account_id'])));
+
+						// Check on matching columns
+						$check_message = array();
+						if(!self::check_file($file, $definition_obj, $check_message, $dst_file))
+						{
+							// Set this so plugin doesn't do any data changes
+							$content['dry-run'] = true;
+							$definition_obj->plugin_options = (array)$definition_obj->plugin_options + array('dry_run' => true);
+						}
+						$this->message .= implode($check_message, "<br />\n") . "<br />\n";
+						if($content['dry-run'])
+						{
+							echo $this->preview($file, $definition_obj);
+						}
+						$count = $plugin->import($file, $definition_obj);
 					}
-					
-					$count = $plugin->import($file, $definition_obj);
 
 					$this->message .= lang('%1 records processed', $count);
 
@@ -121,31 +129,15 @@
 						}
 						if($count != $total_processed) $this->message .= "<br />\n".lang('Some records may not have been imported');
 					}
-				} catch (Exception $e) {
-					$this->message = $e->getMessage();
-
-					// Add links for new / edit definition
-					$config = config::read('importexport');
-					if($GLOBALS['egw_info']['user']['apps']['admin'] || $config['users_create_definitions'])
-					{
-						// New definition
-						$add_link = egw::link('/index.php',array(
-							'menuaction' => 'importexport.importexport_definitions_ui.edit'
-						));
-						$this->message .= "<br />\n" . lang('Create a <a href="%1">new definition</a> for this file.', $add_link);
-
-						// Edit selected definition, if allowed
-						if($definition_obj->owner == $GLOBALS['egw_info']['user']['account_id'] ||
-							!$definition_obj->owner && $GLOBALS['egw_info']['user']['apps']['admin'])
-						{
-							$edit_link = egw::link('/index.php',array(
-								'menuaction' => 'importexport.importexport_definitions_ui.edit',
-								'definition' => $definition
-							));
-							$this->message .= "<br />\n" . lang('<a href="%1">Edit definition %2</a>',
-								$edit_link, $definition_obj->name );
-						}
+					if ($dst_file && $content['file']['tmp_name'] == $dst_file) {
+						// Remove file
+						$cachefile->delete(egw_cache::keys(egw_cache::INSTANCE, 'importexport',
+							'import_'.md5($content['file']['name'].$GLOBALS['egw_info']['user']['account_id'])));
+						unset($dst_file);
 					}
+					
+				} catch (Exception $e) {
+					$this->message .= $e->getMessage();
 				}
 			}
 			elseif($content['cancel'])
@@ -159,6 +151,11 @@
 						array('menuaction' => 'admin.admin_db_backup.index')
 					)
 				);
+			}
+
+			if(!array_key_exists('dry-run',$content))
+			{
+				$data['dry-run'] = true;
 			}
 
 			$data['appname'] = $preserve['appname'] = $appname ? $appname : ($definition_obj ? $definition_obj->application : '');
@@ -264,7 +261,91 @@
 
 			// Rewind
 			rewind($_stream);
-			return html::table($rows);
+			return '<h2>' . lang('Preview') . '</h2>' . html::table($rows);
+		}
+
+		/**
+		 * Simple check to see if the file at least matches the definition
+		 *
+		 * Checks that column headers match
+		 */
+		public static function check_file(&$file, &$definition, &$message = array(), $dst_file = false)
+		{
+			$options =& $definition->plugin_options;
+			$data = fgetcsv($file, 8000, $options['fieldsep']);
+			rewind($file);
+			$data = translation::convert($data,$options['charset']);
+
+			$ok = true;
+			if(max(array_keys($data)) != max(array_keys($options['csv_fields'])))
+			{
+				$message[] = lang("Column mismatch.  Expected %1 columns, your file has %2.",
+					max(array_keys($options['csv_fields'])),
+					max(array_keys($data))
+				);
+				$ok = false;
+			}
+			foreach($data as $index => $header)
+			{
+				if($index < count($options['csv_fields']) && !$options['field_mapping'][$index])
+				{
+					// Skipped column in definition
+					continue;
+				}
+				elseif($index < count($options['csv_fields']) && $options['csv_fields'][$index] != $header)
+				{
+					// Problem
+					$message[] = lang("Column mismatch: %1 should be %2, not %3",
+						$index,$options['csv_fields'][$index], $header);
+					// But can still continue
+					// $ok = false;
+				}
+			}
+			if(!$ok)
+			{
+				// Add links for new / edit definition
+				$config = config::read('importexport');
+				if($GLOBALS['egw_info']['user']['apps']['admin'] || $config['users_create_definitions'])
+				{
+					$actions = '';
+					// New definition
+					$add_link = egw::link('/index.php',array(
+						'menuaction' => 'importexport.importexport_definitions_ui.edit',
+						'application' => $definition->application,
+						'plugin' => $definition->plugin,
+						// Jump to name step
+						'step' => 'wizard_step21'
+					));
+					$add_link = "javascript:egw_openWindowCentered2('$add_link','_blank',500,500,'yes')";
+					$actions[] = lang('Create a <a href="%1">new definition</a> for this file', $add_link);
+
+					// Edit selected definition, if allowed
+					if($definition->owner == $GLOBALS['egw_info']['user']['account_id'] ||
+						!$definition->owner && $GLOBALS['egw_info']['user']['apps']['admin'])
+					{
+						$edit_link = array(
+							'menuaction' => 'importexport.importexport_definitions_ui.edit',
+							'definition' => $definition->name,
+							// Jump to file step
+							'step' => 'wizard_step21'
+						);
+						if($dst_file)
+						{
+							// Still have uploaded file, jump there
+							$GLOBALS['egw']->session->appsession('csvfile','',$dst_file);
+							$edit_link['step'] = 'wizard_step30';
+						}
+						$edit_link = egw::link('/index.php',$edit_link);
+						$edit_link = "javascript:egw_openWindowCentered2('$edit_link','_blank',500,500,'yes')";
+						$actions[] = lang('Edit definition <a href="%1">%2</a> to match your file',
+							$edit_link, $definition->name );
+					}
+					$actions[] = lang('Edit your file to match the definition: ')
+					. implode(array_intersect_key($options['csv_fields'],$options['field_mapping']),', ');
+					$message[] = "\n<li>".implode($actions,"\n<li>");
+				}
+			}
+			return $ok;
 		}
 	}
 ?>

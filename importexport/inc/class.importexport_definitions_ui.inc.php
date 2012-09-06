@@ -425,11 +425,37 @@ class importexport_definitions_ui
 		return $bodefinitions->get_rows($query, $rows, $readonlys);
 	}
 
+	/**
+	 * Edit a definition
+	 *
+	 * To jump to a certain step, pass the previous step in the URL step=wizard_stepXX
+	 * The wizard will validate that step, then display the _next_ step..
+	 */
 	function edit()
 	{
 		if(!$_definition = $_GET['definition'])
 		{
-			//close window
+			$content = array(
+				'edit'		=> true,
+				'application'	=> $_GET['application'],
+				'plugin'	=> $_GET['plugin']
+			);
+
+			// Jump to a step
+			if($_GET['step'])
+			{
+				$content['edit'] = false;
+				// Wizard will process previous step, then advance
+				$content['step'] = $this->get_step($_GET['step'],-1);
+				$content['button']['next'] = 'pressed';
+				$this->wizard($content);
+			}
+			else
+			{
+				// Initial form
+				$this->wizard($content);
+			}
+			return;
 		}
 		if(is_numeric($_GET['definition']))
 		{
@@ -442,6 +468,14 @@ class importexport_definitions_ui
 		$bodefinitions = new importexport_definitions_bo();
 		$definition = $bodefinitions->read($definition);
 		$definition['edit'] = true;
+		// Jump to a step
+		if($_GET['step'])
+		{
+			$definition['edit'] = false;
+			// Wizard will process previous step, then advance
+			$definition['step'] = $_GET['step'];;
+			$definition['button'] = array('next' => 'pressed');
+		}
 		$this->wizard($definition);
 	}
 
@@ -572,7 +606,7 @@ class importexport_definitions_ui
 			if ($content['closewindow'])
 			{
 				$this->response->addScript("window.close();");
-				$this->response->addScript("opener.location = '" . egw::link('/index.php', array('menuaction' => 'importexport.importexport_definitions_ui.index')) . "';");
+				//$this->response->addScript("opener.location = '" . egw::link('/index.php', array('menuaction' => 'importexport.importexport_definitions_ui.index')) . "';");
 				// If Browser can't close window we display a "close" buuton and
 				// need to disable normal buttons
 				$this->response->addAssign('exec[button][previous]','style.display', 'none');

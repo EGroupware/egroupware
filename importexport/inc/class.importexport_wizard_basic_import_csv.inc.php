@@ -1,12 +1,12 @@
 <?php
 /**
  * eGroupWare - A basic implementation of a wizard to go with the basic CSV plugin.
- * 
+ *
  * To add or remove steps, change $this->steps appropriately.  The key is the function, the value is the title.
  * Don't go past 80, as that's where the wizard picks it back up again to finish it off.
- * 
+ *
  * For the mapping to work properly, you will have to fill $mapping_fields with the target fields for your application.
- * 
+ *
  * NB: Your wizard class must be in <appname>/inc/class.appname_wizard_<plugin_name>.inc.php
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -15,7 +15,7 @@
  * @author Nathan Gray
  */
 
-class importexport_wizard_basic_import_csv 
+class importexport_wizard_basic_import_csv
 {
 
 	const TEMPLATE_MARKER = '-eTemplate-';
@@ -81,7 +81,7 @@ class importexport_wizard_basic_import_csv
 					if($content['file']['tmp_name']) {
 						$csvfile = tempnam($GLOBALS['egw_info']['server']['temp_dir'],$content['plugin']."_");
 						move_uploaded_file($content['file']['tmp_name'], $csvfile);
-						$GLOBALS['egw']->session->appsession('csvfile','',$csvfile);
+						$GLOBALS['egw']->session->appsession('csvfile',$content['application'],$csvfile);
 					}
 					unset($content['file']);
 					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],1);
@@ -124,20 +124,22 @@ class importexport_wizard_basic_import_csv
 			{
 				case 'next':
 					// Process sample file for fields
-					if (($handle = fopen($GLOBALS['egw']->session->appsession('csvfile'), "rb")) !== FALSE) {
+					if (($handle = fopen($GLOBALS['egw']->session->appsession('csvfile',$content['application']), "rb")) !== FALSE) {
 						$data = fgetcsv($handle, 8000, $content['fieldsep']);
 						fclose($handle);
-						unlink($GLOBALS['egw']->session->appsession('csvfile'));
+
+						// Remove & forget file
+						unlink($GLOBALS['egw']->session->appsession('csvfile',$content['application']));
+						egw_cache::setSession($content['application'], 'csvfile', '');
 						$content['csv_fields'] = translation::convert($data,$content['charset']);
+
+						// Reset field mapping for new file
+						$content['field_mapping'] = array();
 
 						// Try to match automatically
 						$english = array();
 						foreach($content['csv_fields'] as $index => $field) {
 							if($content['field_mapping'][$index]) continue;
-							if(is_array($content['plugin_options']['field_mapping']) && $content['plugin_options']['field_mapping'][$index]) {
-								# Copy already set, but allow new file to update
-								$content['field_mapping'][$index] = $content['plugin_options']['field_mapping'][$index];
-							}
 							$best_match = '';
 							$best_match_value = 0;
 							foreach($this->mapping_fields as $key => $field_name) {
@@ -162,7 +164,7 @@ class importexport_wizard_basic_import_csv
 
 								// Check for similar but slightly different
 								$match = 0;
-								if(similar_text(strtolower($field), strtolower($field_name), $match) && 
+								if(similar_text(strtolower($field), strtolower($field_name), $match) &&
 										$match > 85 &&
 										$match > $best_match_value
 								) {
@@ -208,11 +210,21 @@ class importexport_wizard_basic_import_csv
 			if(!$content['num_header_lines'] && $content['plugin_options']['num_header_lines']) {
 				$content['num_header_lines'] = $content['plugin_options']['num_header_lines'];
 			}
+			else
+			{
+				// Default to 1 line
+				$content['num_header_lines'] = 1;
+			}
 			if(!$content['update_cats'] && $content['plugin_options']['update_cats']) {
 				$content['update_cats'] = $content['plugin_options']['update_cats'];
 			}
 			if(!array_key_exists('convert', $content) && array_key_exists('convert', $content['plugin_options'])) {
 				$content['convert'] = $content['plugin_options']['convert'];
+			}
+			else
+			{
+				// Default to human
+				$content['convert'] = 1;
 			}
 
 			$sel_options['charset'] = $GLOBALS['egw']->translation->get_installed_charsets()+
@@ -247,10 +259,10 @@ class importexport_wizard_basic_import_csv
 	}
 	
 	/**
-	* Process the sample file, get the fields out of it, then allow them to be mapped onto 
+	* Process the sample file, get the fields out of it, then allow them to be mapped onto
 	* the fields the destination understands.  Also, set any translations to be done to the field.
-	* 
-	* You can use the eTemplate 
+	*
+	* You can use the eTemplate
 	*/
 	function wizard_step50(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
@@ -328,7 +340,7 @@ class importexport_wizard_basic_import_csv
 				$content[++$i]['index'] = $i - 1;
 				if(strstr($field,'no_csv_')) $j++;
 			}
-			while ($j <= 3) 
+			while ($j <= 3)
 			{
 				$content['csv_fields'][] = 'no_csv_'.$j;
 				$content['field_mapping'][] = $content['field_conversion'][] = '';
@@ -395,7 +407,7 @@ class importexport_wizard_basic_import_csv
 
 		// Make at least 1 (empty) conditions
 		$j = count($content['conditions']);
-		while ($j < 1) 
+		while ($j < 1)
 		{
 			$content['conditions'][] = array(
 				'string' => '',
