@@ -347,7 +347,7 @@ class importexport_wizard_basic_import_csv
 				$j++;
 			}
 			$sel_options['field_mapping'] = array('--NONE--' => lang('none')) + $this->mapping_fields;
-			$GLOBALS['egw']->js->set_onload('$j("option[value=\'--NONE--\']:selected").closest("tr").effect("highlight",{},10000);');
+			$GLOBALS['egw']->js->set_onload('$j("option[value=\'--NONE--\']:selected").closest("tr").animate({backgroundColor: "#ffff99"}, 1000);');
 			unset ($preserv['button']);
 			return $this->step_templates[$content['step']];
 		}

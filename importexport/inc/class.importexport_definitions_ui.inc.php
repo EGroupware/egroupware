@@ -529,10 +529,6 @@ class importexport_definitions_ui
 				$button = array_keys($content['button']);
 				$content['button'] = array($button[0] => 'pressed');
 			}
-			// Override next button on step 21, to do a regular submit for the file upload
-			if($content['step'] == 'wizard_step21') {
-				$this->etpl->set_cell_attribute('button[next]', 'onclick', '');
-			}
 
 			// post process submitted step
 			if($content['step']) {
@@ -555,6 +551,12 @@ class importexport_definitions_ui
 
 			// pre precess next step
 			$sel_options = $readonlys = $preserv = array();
+
+			// Override next button on step 30, to do a regular submit for the file upload
+			if($next_step == 'wizard_step30')
+			{
+				$this->etpl->set_cell_attribute('button[next]', 'onclick', '');
+			}
 
 			// Disable finish button if required fields are missing
 			if(!$content['name'] || !$content['type'] || !$content['plugin']) {
