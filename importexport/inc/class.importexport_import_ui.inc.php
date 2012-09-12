@@ -72,7 +72,7 @@
 					}
 					
 					$file = fopen($content['file']['tmp_name'], 'r');
-
+					$count = 0;
 
 					// Some of the translation, conversion, etc look here
 					$GLOBALS['egw_info']['flags']['currentapp'] = $appname;
@@ -97,6 +97,7 @@
 						{
 							// Set this so plugin doesn't do any data changes
 							$content['dry-run'] = true;
+							$this->message .= '<b>' . lang('Import aborted').":</b><br />\n";
 							$definition_obj->plugin_options = (array)$definition_obj->plugin_options + array('dry_run' => true);
 						}
 						$this->message .= implode($check_message, "<br />\n") . "<br />\n";
@@ -106,7 +107,15 @@
 						}
 						$count = $plugin->import($file, $definition_obj);
 					}
+					else
+					{
+						$this->message .= lang('please select file to import'."<br />\n");
+					}
 
+					if($content['dry-run'])
+					{
+						$this->message .= '<b>' . lang('test only').":</b><br />\n";
+					}
 					$this->message .= lang('%1 records processed', $count);
 
 					// Refresh opening window

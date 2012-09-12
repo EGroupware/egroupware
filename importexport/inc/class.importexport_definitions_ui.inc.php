@@ -607,8 +607,8 @@ class importexport_definitions_ui
 
 			if ($content['closewindow'])
 			{
+				$this->response->addScript("opener.location.reload();");
 				$this->response->addScript("window.close();");
-				//$this->response->addScript("opener.location = '" . egw::link('/index.php', array('menuaction' => 'importexport.importexport_definitions_ui.index')) . "';");
 				// If Browser can't close window we display a "close" buuton and
 				// need to disable normal buttons
 				$this->response->addAssign('exec[button][previous]','style.display', 'none');
