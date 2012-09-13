@@ -119,7 +119,7 @@
 					$this->message .= lang('%1 records processed', $count);
 
 					// Refresh opening window
-					if(!$content['dry-run']) $GLOBALS['egw']->js->set_onload("window.opener.egw_refresh('{$this->message}','$appname');");
+					if(!$content['dry-run']) $GLOBALS['egw']->js->set_onload("window.opener.egw_refresh('".lang('%1 records processed',$count) . "','$appname',null,null,'$appname');");
 					$total_processed = 0;
 					foreach($plugin->get_results() as $action => $a_count) {
 						$this->message .= "<br />\n" . lang($action) . ": $a_count";
