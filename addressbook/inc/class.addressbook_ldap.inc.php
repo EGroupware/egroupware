@@ -692,7 +692,7 @@ class addressbook_ldap
 		{
 			list($start,$offset) = $start;
 		}
-		if(is_numeric($start) && is_numeric($offset))
+		if(is_numeric($start) && is_numeric($offset) && $offset >= 0)
 		{
 			return array_slice($rows, $start, $offset);
 		}
