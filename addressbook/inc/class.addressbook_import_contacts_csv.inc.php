@@ -187,6 +187,23 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 				$record['owner'] = $contact_owner;
 			}
 
+			// Check that owner (addressbook) is allowed
+			if(!in_array($record['owner'], $this->bocontacts->get_addressbooks()))
+			{
+				$this->errors[$import_csv->get_current_position()] = lang("Unable to import into %1, using %2",
+					common::grab_owner_name($record['owner']),
+					common::grab_owner_name($this->user)
+				);
+				$record['owner'] = $this->user;
+			}
+
+			// Do not allow owner == 0 (accounts) without an account_id
+			// It causes the contact to be filed as an account, and can't delete
+			if(!$record['owner'] && !$record['account_id'])
+			{
+				$record['owner'] = $this->user;
+			}
+
 			// Also handle categories in their own field
 			$more_categories = array();
 			foreach($_definition->plugin_options['field_mapping'] as $number => $field_name) {
@@ -318,6 +335,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 					// org_name is a trigger to update n_fileas
 					$_data['org_name'] = '';
 				}
+
 				if ( $this->dry_run ) {
 					//print_r($_data);
 					$this->results[$_action]++;
@@ -332,7 +350,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 					return $result;
 				}
 			default:
-				throw new egw_exception('Unsupported action');
+				throw new egw_exception('Unsupported action: '. $_action);
 			
 		}
 	}
