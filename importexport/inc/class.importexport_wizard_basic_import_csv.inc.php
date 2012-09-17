@@ -366,10 +366,20 @@ class importexport_wizard_basic_import_csv
 		{
 
 			// Clear conditions that don't do anything
-			foreach($content['conditions'] as $key => $condition) {
+			foreach($content['conditions'] as $key => &$condition) {
 				if(($condition['true']['action'] == 'none' || !$condition['true']['action'])  && !$condition['true']['stop']
 					&& ($condition['false']['action'] == 'none' || !$condition['false']['action']) && !$condition['false']['stop']) {
 					unset($content['conditions'][$key]);
+					continue;
+				}
+
+				// Check for true without false, or false without true - set to 'none'
+				elseif($condition['true']['action'] == '' && $condition['false']['action'] != '' ||
+					$condition['true']['action'] != '' && $condition['false']['action'] == '' ||
+					!$condition['true'] || !$condition['false']
+				)
+				{
+					$condition[$condition['true']['action'] == '' ? 'true' : 'false']['action'] = "none";
 				}
 			}
 
