@@ -188,7 +188,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 			}
 
 			// Check that owner (addressbook) is allowed
-			if(!in_array($record['owner'], $this->bocontacts->get_addressbooks()))
+			if(!array_key_exists($record['owner'], $this->bocontacts->get_addressbooks()))
 			{
 				$this->errors[$import_csv->get_current_position()] = lang("Unable to import into %1, using %2",
 					common::grab_owner_name($record['owner']),
