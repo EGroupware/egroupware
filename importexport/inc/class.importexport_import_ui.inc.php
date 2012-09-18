@@ -249,9 +249,13 @@
 
 		/**
 		 * Display the contents of the file for dry runs
+		 *
+		 * CSV files only
 		 */
 		protected function preview(&$_stream, &$definition_obj)
 		{
+			if(!$definition_obj->plugin_options['csv_fields']) return;
+
 			$import_csv = new importexport_import_csv( $_stream, array(
 				'fieldsep' => $definition_obj->plugin_options['fieldsep'],
 				'charset' => $definition_obj->plugin_options['charset'],
@@ -281,6 +285,10 @@
 		public static function check_file(&$file, &$definition, &$message = array(), $dst_file = false)
 		{
 			$options =& $definition->plugin_options;
+
+			// Only CSV files
+			if(!$options['csv_fields']) return true;
+
 			$data = fgetcsv($file, 8000, $options['fieldsep']);
 			rewind($file);
 			$data = translation::convert($data,$options['charset']);

@@ -394,7 +394,7 @@ class importexport_helper_functions {
 				$file = $appdir. '/'. $entry;
 
 				foreach ($types as $type) {
-					if( !is_file($file) || strpos($entry, $type) === false) continue;
+					if( !is_file($file) || strpos($entry, $type) === false || strpos($entry,'wizard') !== false) continue;
 					require_once($file);
 					$reflectionClass = new ReflectionClass($classname);
 					if($reflectionClass->IsInstantiable() &&
