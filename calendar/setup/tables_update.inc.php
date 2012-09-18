@@ -2157,3 +2157,72 @@ function calendar_upgrade1_9_005()
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.006';
 }
 
+/**
+ * Add range_start and range_end columns, drop egw_cal_repeats.recur_enddate columnd
+ */
+function calendar_upgrade1_9_006()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','range_start',array(
+		'type' => 'int',
+		'precision' => '8',
+		'nullable' => False,
+		'comment' => 'startdate (of range)'
+	));
+	$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET range_start = (SELECT MIN(cal_start) FROM egw_cal_dates WHERE egw_cal_dates.cal_id=egw_cal.cal_id)', __LINE__, __FILE__);
+
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','range_end',array(
+		'type' => 'int',
+		'precision' => '8',
+		'comment' => 'enddate (of range, UNTIL of RRULE)'
+	));
+	$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET range_end = (SELECT MIN(cal_end) FROM egw_cal_dates WHERE egw_cal_dates.cal_id=egw_cal.cal_id)', __LINE__, __FILE__);
+	$GLOBALS['egw_setup']->db->query('UPDATE egw_cal_repeats SET recur_enddate=null WHERE recur_enddate=0', __LINE__, __FILE__);
+	$GLOBALS['egw_setup']->db->query('UPDATE egw_cal,egw_cal_repeats SET egw_cal.range_end=egw_cal_repeats.recur_enddate WHERE egw_cal.cal_id=egw_cal_repeats.cal_id', __LINE__, __FILE__);
+
+	$GLOBALS['egw_setup']->oProc->DropColumn('egw_cal_repeats',array(
+		'fd' => array(
+			'cal_id' => array('type' => 'int','precision' => '4','nullable' => False),
+			'recur_type' => array('type' => 'int','precision' => '2','nullable' => False),
+			'recur_interval' => array('type' => 'int','precision' => '2','default' => '1'),
+			'recur_data' => array('type' => 'int','precision' => '2','default' => '1')
+		),
+		'pk' => array('cal_id'),
+		'fk' => array(),
+		'ix' => array(),
+		'uc' => array()
+	),'recur_enddate');
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.007';
+}
+
+/**
+ * Add cal_rrule columns, drop egw_cal_repeats table
+ */
+/*function calendar_upgrade1_9_007()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_rrule',array(
+		'type' => 'varchar',
+		'precision' => '255',
+		'comment' => 'RRULE for recuring events or NULL'
+	));
+	foreach($GLOBALS['egw_setup']->db->query('SELECT egw_cal.cal_id AS cal_id,range_start AS start,tz_tzid AS tzid,recur_type,recur_interval,recur_data FROM egw_cal_repeats JOIN egw_cal ON egw_cal.cal_id=egw_cal_repeats.cal_id LEFT JOIN egw_cal_timezones ON egw_cal.tz_id=egw_cal_timezones.tz_id', __LINE__, __FILE__) as $event)
+	{
+		if (!$event['tzid']) $event['tzid'] = egw_time::$server_timezone->getName();
+		$rrule = calendar_rrule::event2rrule($event);
+		$rrule_str = '';
+		foreach($rrule->generate_rrule('2.0') as $name => $value)
+		{
+			$rrule_str .= ($rrule_str ? ';' : '').$name.'='.$value;
+		}
+		//error_log($rrule_str.' '.array2string($event));
+		$GLOBALS['egw_setup']->db->update('egw_cal', array(
+			'cal_rrule' => $rrule_str,
+		), array(
+			'cal_id' => $event['cal_id'],
+		), __LINE__, __FILE__, 'calendar');
+	}
+	$GLOBALS['egw_setup']->oProc->DropTable('egw_cal_repeats');
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.008';
+}
+*/
