@@ -475,7 +475,10 @@ class calendar_so
 					if ($type == 'u' && $filter == 'owner')
 					{
 						$cal_table_def = $this->db->get_table_definitions('calendar',$this->cal_table);
-						$owner_or = $this->db->expression($cal_table_def,array('cal_owner' => $ids));
+						// only users can be owners, no need to add groups
+						$user_ids = array();
+						foreach($ids as $user_id) if ($GLOBALS['egw']->accounts->get_type($user_id) === 'u') $user_ids[] = $user_id;
+						$owner_or = $this->db->expression($cal_table_def,array('cal_owner' => $user_ids));
 					}
 				}
 				else
