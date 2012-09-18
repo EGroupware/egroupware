@@ -10,7 +10,7 @@
  */
 
 $setup_info['calendar']['name']    = 'calendar';
-$setup_info['calendar']['version'] = '1.9.006';
+$setup_info['calendar']['version'] = '1.9.007';
 $setup_info['calendar']['app_order'] = 3;
 $setup_info['calendar']['enable']  = 1;
 $setup_info['calendar']['index']   = 'calendar.calendar_uiviews.index';

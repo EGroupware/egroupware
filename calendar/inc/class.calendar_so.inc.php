@@ -53,11 +53,11 @@ define('WEEK_s',7*DAY_s);
 /**
  * Class to store all calendar data (storage object)
  *
- * Tables used by socal:
- *	- egw_cal: general calendar data: cal_id, title, describtion, locations, ...
- *	- egw_cal_dates: start- and enddates (multiple entry per cal_id for recuring events!)
+ * Tables used by calendar_so:
+ *	- egw_cal: general calendar data: cal_id, title, describtion, locations, range-start and -end dates
+ *	- egw_cal_dates: start- and enddates (multiple entry per cal_id for recuring events!), recur_exception flag
  *	- egw_cal_user: participant info including status (multiple entries per cal_id AND startdate for recuring events)
- * 	- egw_cal_repeats: recur-data: type, optional enddate, etc.
+ * 	- egw_cal_repeats: recur-data: type, interval, days etc.
  *  - egw_cal_extra: custom fields (multiple entries per cal_id possible)
  *
  * The new UI, BO and SO classes have a strict definition, in which timezone they operate:
@@ -67,6 +67,14 @@ define('WEEK_s',7*DAY_s);
  *
  * DB-model uses egw_cal_user.cal_status='X' for participants who got deleted. They never get returned by
  * read or search methods, but influence the ctag of the deleted users calendar!
+ *
+ * range_start/_end in main-table contains start and end of whole event series (range_end is NULL for unlimited recuring events),
+ * saving the need to always join dates table, to query non-enumerating recuring events (like CalDAV or ActiveSync does).
+ * This effectivly stores MIN(cal_start) and MAX(cal_end) permanently as column in main-table and improves speed tremendiously
+ * (few milisecs instead of more then 2 minutes on huge installations)!
+ * It's set in calendar_so::save from start and end or recur_enddate, so nothing changes for higher level classes.
+ *
+ * @ToDo drop egw_cal_repeats table in favor of a rrule colum in main table (saves always used left join and allows to store all sorts of rrules)
  */
 class calendar_so
 {
@@ -139,10 +147,10 @@ class calendar_so
 
 		//echo "<p>socal::read(".print_r($ids,true).",$recur_date)<br />\n".function_backtrace()."<p>\n";
 
-		$table_def = $this->db->get_table_definitions('calendar',$this->cal_table);
-		$group_by_cols = $this->cal_table.'.'.implode(','.$this->cal_table.'.',array_keys($table_def['fd']));
-		$table_def = $this->db->get_table_definitions('calendar',$this->repeats_table);
-		$group_by_cols .= ','.$this->repeats_table.'.'.implode(','.$this->repeats_table.'.',array_keys($table_def['fd']));
+		$cols = self::get_columns('calendar', $this->cal_table);
+		$cols[0] = $this->db->to_varchar($this->cal_table.'.cal_id');
+		$cols = "$this->repeats_table.recur_type,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,".implode(',',$cols);
+		$join = "LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id";
 
 		$where = array();
 		if (is_scalar($ids) && !is_numeric($ids))	// a single uid
@@ -171,14 +179,24 @@ class calendar_so
 		if ((int) $recur_date)
 		{
 			$where[] = 'cal_start >= '.(int)$recur_date;
+			$group_by = 'GROUP BY '.$cols;
+			$cols .= ',MIN(cal_start) AS cal_start,MIN(cal_end) AS cal_end';
+			$join = "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id $join";
 		}
-		$events = array();
-		foreach($this->db->select($this->cal_table,"$this->repeats_table.*,$this->cal_table.*,MIN(cal_start) AS cal_start,MIN(cal_end) AS cal_end",
-			$where,__LINE__,__FILE__,false,'GROUP BY '.$group_by_cols,'calendar',0,
-			",$this->dates_table LEFT JOIN $this->repeats_table ON $this->dates_table.cal_id=$this->repeats_table.cal_id".
-			" WHERE $this->cal_table.cal_id=$this->dates_table.cal_id") as $row)
+		else
 		{
-			if (!$row['recur_type']) $row['recur_type'] = MCAL_RECUR_NONE;
+			$cols .= ',range_start AS cal_start,(SELECT MIN(cal_end) FROM egw_cal_dates WHERE egw_cal.cal_id=egw_cal_dates.cal_id) AS cal_end';
+		}
+		$cols .= ',range_end AS recur_enddate';
+
+		$events = array();
+		foreach($this->db->select($this->cal_table, $cols, $where, __LINE__, __FILE__, false, $group_by, 'calendar', 0, $join) as $row)
+		{
+			if (!$row['recur_type'])
+			{
+				$row['recur_type'] = MCAL_RECUR_NONE;
+				unset($row['recur_enddate']);
+			}
 			$row['recur_exception'] = $row['alarm'] = array();
 			$events[$row['cal_id']] = egw_db::strip_array_keys($row,'cal_');
 
@@ -416,7 +434,7 @@ class calendar_so
 
 		$cols = self::get_columns('calendar', $this->cal_table);
 		$cols[0] = $this->db->to_varchar($this->cal_table.'.cal_id');
-		$cols = isset($params['cols']) ? $params['cols'] : "$this->repeats_table.recur_type,$this->repeats_table.recur_enddate,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,".implode(',',$cols).",cal_start,cal_end,$this->user_table.cal_recur_date";
+		$cols = isset($params['cols']) ? $params['cols'] : "$this->repeats_table.recur_type,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,range_end AS recur_enddate,".implode(',',$cols).",cal_start,cal_end,$this->user_table.cal_recur_date";
 
 		$where = array();
 		if (is_array($params['query']))
@@ -539,18 +557,17 @@ class calendar_so
 			}
 			else
 			{
-				// we check recur_endate!=0, because it can be NULL, 0 or !=0 !!!
-				$where[] = (int)$start.' < (CASE WHEN recur_type IS NULL THEN cal_end ELSE (CASE WHEN recur_enddate!=0 THEN recur_enddate ELSE 9999999999 END) END)';
+				$where[] = '('.((int)$start).' < range_end OR range_end IS NULL)';
 			}
 		}
 		// if not enum recuring events, we have to use minimum start- AND end-dates, otherwise we get more then one event per cal_id!
 		if (!$params['enum_recuring'])
 		{
 			$where[] = "$this->user_table.cal_recur_date=0";
-			$group_by = 'GROUP BY '.str_replace(array('cal_start,','cal_end,'),'',implode(', ',(array)$cols));
-			$cols = str_replace(array('cal_start','cal_end'),array('MIN(cal_start) AS cal_start','MIN(cal_end) AS cal_end'),$cols);
-		}
-		if ($end)   $where[] = 'cal_start < '.(int)$end;
+			$cols = str_replace(array('cal_start','cal_end'),array('range_start AS cal_start','(SELECT MIN(cal_end) FROM egw_cal_dates WHERE egw_cal.cal_id=egw_cal_dates.cal_id) AS cal_end'),$cols);
+			if ($end) $where[] = (int)$end.' > range_start';
+  		}
+		elseif ($end) $where[] = (int)$end.' > cal_start';
 
 		if (!preg_match('/^[a-z_ ,c]+$/i',$params['order'])) $params['order'] = 'cal_start';		// gard against SQL injection
 
@@ -560,7 +577,8 @@ class calendar_so
 				" ON $this->cal_table.cal_id=rejected_by_user.cal_id".
 				" AND rejected_by_user.cal_user_type='u'".
 				" AND rejected_by_user.cal_user_id=".$this->db->quote($remove_rejected_by_user).
-				" AND (recur_type IS NULL AND rejected_by_user.cal_recur_date=0 OR cal_start=rejected_by_user.cal_recur_date)";
+				" AND (recur_type IS NULL AND rejected_by_user.cal_recur_date=0".
+				($params['enum_recuring'] ? " OR cal_start=rejected_by_user.cal_recur_date" : '').')';
 			$or_required = array(
 				'rejected_by_user.cal_status IS NULL',
 				"rejected_by_user.cal_status NOT IN ('R','X')",
@@ -577,12 +595,16 @@ class calendar_so
 			// changed the original OR in the query into a union, to speed up the query execution under MySQL 5
 			$select = array(
 				'table' => $this->cal_table,
-				'join'  => "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id $rejected_by_user_join",
+				'join'  => "JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id $rejected_by_user_join",
 				'cols'  => $cols,
 				'where' => $where,
 				'app'   => 'calendar',
 				'append'=> $params['append'].' '.$group_by,
 			);
+			if ($params['enum_recuring'])	// dates table join only needed to enum recuring events
+			{
+				$select['join'] = "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id ".$select['join'];
+			}
 			$selects = array();
 			// we check if there are parts to use for the construction of our UNION query,
 			// as replace the OR by construction of a suitable UNION for performance reasons
@@ -650,15 +672,17 @@ class calendar_so
 		}
 		else	// MsSQL oder MySQL 3.23
 		{
-			$where[] = "(recur_type IS NULL AND $this->user_table.cal_recur_date=0 OR $this->user_table.cal_recur_date=cal_start)";
+			$where[] = "(recur_type IS NULL AND $this->user_table.cal_recur_date=0)";// OR $this->user_table.cal_recur_date=cal_start)";
 
 			//_debug_array($where);
 			if (is_numeric($offset))	// get the total too
 			{
 				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
-				$this->total = $this->db->select($this->cal_table,"DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date",
+				$this->total = $this->db->select($this->cal_table,"DISTINCT ".$cols,//$this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date",
 					$where,__LINE__,__FILE__,false,'','calendar',0,
-					"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id $rejected_by_user_join LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id")->NumRows();
+					// dates table join only needed to enum recuring events
+					($params['enum_recuring'] ? "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id " : '').
+					"JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id $rejected_by_user_join LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id")->NumRows();
 			}
 			$rs = $this->db->select($this->cal_table,($this->db->capabilities['distinct_on_text'] ? 'DISTINCT ' : '').$cols,
 				$where,__LINE__,__FILE__,$offset,$params['append'].' ORDER BY '.$params['order'],'calendar',$num_rows,
@@ -684,7 +708,7 @@ class calendar_so
 			{
 				$row['participants'] = explode(',',$row['participants']);
 				$row['participants'] = array_combine($row['participants'],
-				array_fill(0,count($row['participants']),''));
+					array_fill(0,count($row['participants']),''));
 			}
 			else
 			{
@@ -1016,12 +1040,16 @@ ORDER BY cal_user_type, cal_usre_id
 		// add colum prefix 'cal_' if there's not already a 'recur_' prefix
 		foreach($event as $col => $val)
 		{
-			if ($col[0] != '#' && substr($col,0,6) != 'recur_' && $col != 'alarm' && $col != 'tz_id' && $col != 'caldav_name')
+			if ($col[0] != '#' && substr($col,0,6) != 'recur_' && substr($col,0,6) != 'range_' && $col != 'alarm' && $col != 'tz_id' && $col != 'caldav_name')
 			{
 				$event['cal_'.$col] = $val;
 				unset($event[$col]);
 			}
 		}
+		// set range_start/_end
+		$event['range_start'] = $event['cal_start'];
+		$event['range_end'] = $event['recur_type'] == MCAL_RECUR_NONE ? $event['cal_end'] : $event['recur_enddate'];
+
 		// ensure that we find mathing entries later on
 		if (!is_array($event['cal_category']))
 		{
