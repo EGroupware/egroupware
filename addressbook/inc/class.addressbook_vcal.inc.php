@@ -553,12 +553,17 @@ class addressbook_vcal extends addressbook_bo
 
 		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php');
 
-		$container = false;
-		$vCard = Horde_iCalendar::newComponent('vcard', $container);
-
-		if (!$vCard->parsevCalendar($_vcard, 'VCARD', $charset))
+		if(!($_vcard instanceof Horde_iCalendar))
 		{
-			return False;
+			$container = false;
+			$vCard = Horde_iCalendar::newComponent('vcard', $container);
+
+			if (!$vCard->parsevCalendar($_vcard, 'VCARD', $charset))
+			{
+				return False;
+			}
+		} else {
+			$vCard = $_vcard;
 		}
 		$vcardValues = $vCard->getAllAttributes();
 
