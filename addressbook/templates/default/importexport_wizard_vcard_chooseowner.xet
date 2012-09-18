@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="addressbook.importexport_wizard_vcard_chooseowner" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description id="msg" no_lang="1"/>
+				</row>
+				<row>
+					<menulist>
+						<menupopup id="contact_owner"/>
+					</menulist>
+				</row>
+				<row>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
