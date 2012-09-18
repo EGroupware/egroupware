@@ -541,7 +541,7 @@ class calendar_rrule implements Iterator
 	 *
 	 * $return array	vCalendar RRULE
 	 */
-	public function generate_rrule($version='1.0')
+	public function generate_rrule($version='2.0')
 	{
 		$repeat_days = array();
 		$rrule = array();
@@ -601,7 +601,7 @@ class calendar_rrule implements Iterator
 					$rrule['BYMONTHDAY'] = $this->monthly_bymonthday;
 					break;
 
-				case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
+				case self::MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
 					$rrule['BYDAY'] = $this->monthly_byday_num .
 						strtoupper(substr($this->time->format('l'),0,2));
 					break;
@@ -697,7 +697,7 @@ class calendar_rrule implements Iterator
 
 		if (!is_array($event) ||
 			!isset($event['recur_type']) ||
-			$event['recur_type'] == MCAL_RECUR_NONE ||
+			$event['recur_type'] == self::NONE ||
 			empty($event['recur_data']) || $event['recur_data'] == ALLDAYS ||
 			empty($event['tzid']) || empty($to_tz) ||
 			$event['tzid'] == $to_tz) return;
