@@ -195,7 +195,7 @@ class felamimail_bo
 			}
 		}
 		self::$instances[$_profileID]->profileID = $_profileID;
-		//error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID);
+		//if ($_profileID==0); error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID);
 		return self::$instances[$_profileID];
 	}
 
@@ -308,6 +308,10 @@ class felamimail_bo
 			$this->ogServer = $this->mailPreferences->getOutgoingServer($this->profileID);
 			if ($this->profileID != 0) $this->mailPreferences->setOutgoingServer($this->ogServer,0);
 			$this->htmlOptions  = $this->mailPreferences->preferences['htmlOptions'];
+			if (isset($this->icServer->ImapServerId) && !empty($this->icServer->ImapServerId))
+			{
+				$_profileID = $this->profileID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $this->icServer->ImapServerId;
+			}
 		}
 		//_debug_array($this->mailPreferences->preferences);
 		$this->imapBaseDir	= '';
@@ -405,7 +409,7 @@ class felamimail_bo
 				{
 					$foldersNameSpace[$type]['prefix_present'] = 'forced';
 					// uw-imap server with mailbox prefix or dovecot maybe
-					$foldersNameSpace[$type]['prefix'] = ($this->folderExists('Mail')?'Mail':'');
+					$foldersNameSpace[$type]['prefix'] = ($this->folderExists('Mail')?'Mail':(!empty($singleNameSpace[0]['name'])?$singleNameSpace[0]['name']:''));
 				}
 				elseif($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && $this->folderExists('mail'))
 				{
@@ -420,6 +424,7 @@ class felamimail_bo
 				//echo "############## $type->".print_r($foldersNameSpace[$type],true)." ###################<br>";
 			}
 		}
+		//error_log(__METHOD__.__LINE__.array2string($foldersNameSpace));
 		return $foldersNameSpace;
 	}
 
@@ -427,7 +432,8 @@ class felamimail_bo
 	{
 		foreach($nameSpace as $type => $singleNameSpace)
 		{
-			if (substr($singleNameSpace['prefix'],0,strlen($folderName))==$folderName) return $singleNameSpace['prefix'];
+			//if (substr($singleNameSpace['prefix'],0,strlen($folderName))==$folderName) return $singleNameSpace['prefix'];
+			if (substr($folderName,0,strlen($singleNameSpace['prefix']))==$singleNameSpace['prefix']) return $singleNameSpace['prefix'];
 		}
 		return "";
 	}
@@ -1167,6 +1173,7 @@ class felamimail_bo
 		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		//error_log(__METHOD__.__LINE__.'User:'.trim($GLOBALS['egw_info']['user']['account_id'])." UID: $_uid, ".$this->icServer->ImapServerId.','.$_folder);
 		if (is_null($structure)) $structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+		//error_log(__METHOD__.__LINE__." UID: $_uid, ".$this->icServer->ImapServerId.','.$_folder.'->'.array2string(array_keys($structure)));
 		if (isset($structure[$this->icServer->ImapServerId]) && !empty($structure[$this->icServer->ImapServerId]) &&
 			isset($structure[$this->icServer->ImapServerId][$_folder]) && !empty($structure[$this->icServer->ImapServerId][$_folder]) &&
 			isset($structure[$this->icServer->ImapServerId][$_folder][$_uid]) && !empty($structure[$this->icServer->ImapServerId][$_folder][$_uid]))
@@ -1608,8 +1615,14 @@ class felamimail_bo
 		$folderInfo = $this->icServer->getMailboxes('', $_folderName, true);
 
 		if(($folderInfo instanceof PEAR_Error) || !is_array($folderInfo[0])) {
-			if (self::$debug) error_log(__METHOD__." returned Info for folder $_folderName:".print_r($folderInfo->message,true));
-			return false;
+			if (self::$debug||$folderInfo instanceof PEAR_Error) error_log(__METHOD__." returned Info for folder $_folderName:".print_r($folderInfo->message,true));
+			if ( ($folderInfo instanceof PEAR_Error) || PEAR::isError($r = $this->_getStatus($_folderName)) || $r == 0) return false;
+			if (!is_array($folderInfo[0]))
+			{
+				// no folder info, but there is a status returned for the folder: something is wrong, try to cope with it
+				$folderInfo = array(0 => array('HIERACHY_DELIMITER'=>$this->getHierarchyDelimiter(),
+					'ATTRIBUTES' => ''));
+			}
 		}
 		#if(!is_array($folderInfo[0])) {
 		#	return false;
@@ -1639,15 +1652,23 @@ class felamimail_bo
 		if ( PEAR::isError($folderStatus = $this->_getStatus($_folderName,$ignoreStatusCache)) ) {
 			if (self::$debug) error_log(__METHOD__." returned folderStatus for Folder $_folderName:".print_r($folderStatus->message,true));
 		} else {
+			$nameSpace = $this->_getNameSpaces();
+			if (isset($nameSpace['personal'])) unset($nameSpace['personal']);
+			$prefix = $this->getFolderPrefixFromNamespace($nameSpace, $_folderName);
 			$retValue['messages']		= $folderStatus['MESSAGES'];
 			$retValue['recent']		= $folderStatus['RECENT'];
 			$retValue['uidnext']		= $folderStatus['UIDNEXT'];
 			$retValue['uidvalidity']	= $folderStatus['UIDVALIDITY'];
 			$retValue['unseen']		= $folderStatus['UNSEEN'];
 			if (//$retValue['unseen']==0 &&
-				isset($this->mailPreferences->preferences['trustServersUnseenInfo']) && // some servers dont serve the UNSEEN information
-				$this->mailPreferences->preferences['trustServersUnseenInfo']==false)
+				(isset($this->mailPreferences->preferences['trustServersUnseenInfo']) && // some servers dont serve the UNSEEN information
+				$this->mailPreferences->preferences['trustServersUnseenInfo']==false) ||
+				(isset($this->mailPreferences->preferences['trustServersUnseenInfo']) &&
+				$this->mailPreferences->preferences['trustServersUnseenInfo']==2 &&
+				$prefix != '' && stripos($_folderName,$prefix) !== false)
+			)
 			{
+				//error_log(__METHOD__." returned folderStatus for Folder $_folderName:".print_r($prefix,true).' TS:'.$this->mailPreferences->preferences['trustServersUnseenInfo']);
 				// we filter for the combined status of unseen and undeleted, as this is what we show in list
 				$sortResult = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, $_filter=array('status'=>array('UNSEEN','UNDELETED')),$byUid=true,false);
 				$retValue['unseen'] = count($sortResult);
@@ -3059,6 +3080,7 @@ class felamimail_bo
 				$newAttachment['encoding']	= $subPart->encoding;
 				$newAttachment['method']    = $subPart->parameters['METHOD'];
 				$newAttachment['charset']   = $subPart->parameters['CHARSET'];
+				if (isset($subPart->disposition) && !empty($subPart->disposition)) $newAttachment['disposition'] = $subPart->disposition;
 				// try guessing the mimetype, if we get the application/octet-stream
 				if (strtolower($newAttachment['mimeType']) == 'application/octet-stream') $newAttachment['mimeType'] = mime_magic::filename2mime($newAttachment['name']);
 
@@ -3078,7 +3100,21 @@ class felamimail_bo
 				} else {
 					if ( ($fetchEmbeddedImages && isset($newAttachment['cid']) && strlen($newAttachment['cid'])>0) ||
 						!isset($newAttachment['cid']) ||
-						empty($newAttachment['cid']) || $newAttachment['cid'] == 'NIL') $attachments[] = $newAttachment;
+						empty($newAttachment['cid']) || $newAttachment['cid'] == 'NIL')
+					{
+						$attachments[] = $newAttachment;
+					}
+					else
+					{
+						// embedded images should be INLINE, so we check this too, 'cause we want to show/list non embedded images
+						if ($fetchEmbeddedImages==false &&
+							isset($newAttachment['mimeType']) &&
+							!empty($newAttachment['mimeType']) &&
+							stripos($newAttachment['mimeType'],'IMAGE') !== false &&
+							isset($newAttachment['disposition']) &&
+							!empty($newAttachment['disposition']) &&
+							trim(strtoupper($newAttachment['disposition']))!='INLINE') $attachments[] = $newAttachment;
+					}
 				}
 				//$attachments[] = $newAttachment;
 			}
@@ -3520,7 +3556,29 @@ class felamimail_bo
 			//try to connect
 			if (!$this->icServer->_connected) $this->openConnection($this->profileID,false);
 		}
-		if(($this->icServer instanceof defaultimap)) $folderInfo[$this->profileID][$_folder] = $this->icServer->mailboxExist($_folder);
+		if(($this->icServer instanceof defaultimap))
+		{
+			$folderInfo[$this->profileID][$_folder] = $this->icServer->mailboxExist($_folder); //LIST Command, may return OK, but no attributes
+			if ($folderInfo[$this->profileID][$_folder]==false)
+			{
+				// some servers dont serve the LIST command in certain cases; this is a ServerBUG and
+				// we try to work around it here.
+				if ((isset($this->mailPreferences->preferences['trustServersUnseenInfo']) &&
+					$this->mailPreferences->preferences['trustServersUnseenInfo']==false) ||
+					(isset($this->mailPreferences->preferences['trustServersUnseenInfo']) &&
+					$this->mailPreferences->preferences['trustServersUnseenInfo']==2)
+				)
+				{
+					$nameSpace = $this->_getNameSpaces();
+					if (isset($nameSpace['personal'])) unset($nameSpace['personal']);
+					$prefix = $this->getFolderPrefixFromNamespace($nameSpace, $_folder);
+					if ($prefix != '' && stripos($_folder,$prefix) !== false)
+					{
+						if(!PEAR::isError($r = $this->_getStatus($_folder)) && is_array($r)) $folderInfo[$this->profileID][$_folder] = true;
+					}
+				}
+			}
+		}
 		//error_log(__METHOD__.__LINE__.' Folder Exists:'.$folderInfo[$this->profileID][$_folder].function_backtrace());
 
 		if(!empty($folderInfo) && isset($folderInfo[$this->profileID][$_folder]) &&
@@ -3722,15 +3780,15 @@ class felamimail_bo
 	{
 		// TODO: trying to reduce traffic to the IMAP Server here, introduces problems with fetching the bodies of
 		// eMails when not in "current-Folder" (folder that is selected by UI)
-		//static $folderOpened;
+		static $folderOpened;
 		//if (empty($folderOpened) || $folderOpened!=$_foldername)
 		//{
-			//error_log( "------------------------reopen-<br>");
+			//error_log( "------------------------reopen- $_foldername <br>");
 			//error_log(__METHOD__.__LINE__.' Connected with icServer for Profile:'.$this->profileID.'?'.print_r($this->icServer->_connected,true));
 			if ($this->icServer->_connected == 1) {
 				$tretval = $this->icServer->selectMailbox($_foldername);
 			} else {
-				$tretval = $this->icServer->openConnection(false);
+				$tretval = $this->openConnection($this->profileID,false);
 				$tretval = $this->icServer->selectMailbox($_foldername);
 			}
 			$folderOpened = $_foldername;
@@ -4665,17 +4723,19 @@ class felamimail_bo
 	 */
 	static function processURL2InlineImages(&$_mailObject, &$_html2parse)
 	{
+		$imageC = 0;
 		preg_match_all("/(src|background)=\"(.*)\"/Ui", $_html2parse, $images);
 		if(isset($images[2])) {
 			foreach($images[2] as $i => $url) {
+				//$isData = false;
 				$basedir = '';
 				$needTempFile = true;
 				//error_log(__METHOD__.__LINE__.$url);
 				//error_log(__METHOD__.__LINE__.$GLOBALS['egw_info']['server']['webserver_url']);
 				//error_log(__METHOD__.__LINE__.array2string($GLOBALS['egw_info']['user']));
 				// do not change urls for absolute images (thanks to corvuscorax)
-				//if (!preg_match('#^[A-z]+://#',$url)) {
-					//error_log(__METHOD__.__LINE__.' -> '.$i.': '.array2string($images));
+				if (!(substr($url,0,strlen('data:'))=='data:')) {
+					//error_log(__METHOD__.__LINE__.' -> '.$i.': '.array2string($images[$i]));
 					$filename = basename($url);
 					$directory = dirname($url);
 					($directory == '.')?$directory='':'';
@@ -4684,7 +4744,7 @@ class felamimail_bo
 					$mimeType  = $_mailObject->_mime_types($ext);
 					if ( strlen($directory) > 1 && substr($directory,-1) != '/') { $directory .= '/'; }
 					$myUrl = $directory.$filename;
-					if ($myUrl[0]=='/') // local path -> we only path's that are available via http/https (or vfs)
+					if ($myUrl[0]=='/') // local path -> we only allow path's that are available via http/https (or vfs)
 					{
 						$basedir = ($_SERVER['HTTPS']?'https://':'http://'.$_SERVER['HTTP_HOST']);
 					}
@@ -4702,25 +4762,40 @@ class felamimail_bo
 					if ( strlen($basedir) > 1 && substr($basedir,-1) != '/' && $myUrl[0]!='/') { $basedir .= '/'; }
 					//error_log(__METHOD__.__LINE__.$basedir.$myUrl);
 					if ($needTempFile) $data = file_get_contents($basedir.urldecode($myUrl));
-					if ($data || $needTempFile === false)
+				}
+				if (substr($url,0,strlen('data:'))=='data:')
+				{
+					//error_log(__METHOD__.__LINE__.' -> '.$i.': '.array2string($images[$i]));
+					// we only support base64 encoded data
+					$tmp = substr($url,strlen('data:'));
+					list($mimeType,$data) = explode(';base64,',$tmp);
+					list($what,$exactly) = explode('/',$mimeType);
+					$needTempFile = true;
+					$filename = ($what?$what:'data').$imageC++.'.'.$exactly;
+					$cid = 'cid:' . md5($filename);
+					$data = base64_decode($data);
+					//$isData = true;
+				}
+				if ($data || $needTempFile === false)
+				{
+					if ($needTempFile)
 					{
-						if ($needTempFile)
-						{
-							$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
-							$tmpfile = fopen($attachment_file,'w');
-							fwrite($tmpfile,$data);
-							fclose($tmpfile);
-						}
-						else
-						{
-							$attachment_file = $basedir.urldecode($myUrl);
-						}
-						//error_log(__METHOD__.__LINE__.' '.$url.' -> '.$basedir.$myUrl. ' TmpFile:'.$tmpfile);
-						if ( $_mailObject->AddEmbeddedImage($attachment_file, md5($filename), $filename, 'base64',$mimeType) ) {
-							$_html2parse = preg_replace("/".$images[1][$i]."=\"".preg_quote($url, '/')."\"/Ui", $images[1][$i]."=\"".$cid."\"", $_html2parse);
-						}
+						$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+						$tmpfile = fopen($attachment_file,'w');
+						fwrite($tmpfile,$data);
+						fclose($tmpfile);
 					}
-				//}
+					else
+					{
+						$attachment_file = $basedir.urldecode($myUrl);
+					}
+					//error_log(__METHOD__.__LINE__.' '.$url.' -> '.$basedir.$myUrl. ' TmpFile:'.$tmpfile);
+					//error_log(__METHOD__.__LINE__.' '.$url.' -> '.$mimeType. ' TmpFile:'.$attachment_file);
+					if ( $_mailObject->AddEmbeddedImage($attachment_file, md5($filename), $filename, 'base64',$mimeType) )
+					{
+						$_html2parse = preg_replace("/".$images[1][$i]."=\"".preg_quote($url, '/')."\"/Ui", $images[1][$i]."=\"".$cid."\"", $_html2parse);
+					}
+				}
 			}
 		}
 	}
@@ -5049,6 +5124,7 @@ class felamimail_bo
 */
 			$result ='';
 			$contenttypecalendar = '';
+			$myReplyTo = '';
 			foreach((array)$structure->headers as $key => $val)
 			{
 				//error_log(__METHOD__.__LINE__.$key.'->'.$val);
@@ -5061,6 +5137,7 @@ class felamimail_bo
 						$key != 'to' &&
 						$key != 'cc' &&
 						$key != 'bcc' &&
+						$key != 'reply-to' &&
 						$key != 'x-priority') // the omitted values to that will be set at the end
 					{
 						$Header .= $mailObject->HeaderLine($key, trim($v));
@@ -5081,6 +5158,7 @@ class felamimail_bo
 					case 'cc':
 					case 'bcc':
 					case 'from':
+					case 'reply-to':
 						$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($val):$val),'');
 						$i = 0;
 						foreach((array)$address_array as $addressObject)
@@ -5094,6 +5172,10 @@ class felamimail_bo
 							}
 							${$key}[$i] = array($mb,$pName);
 							$i++;
+						}
+						if ($key=='reply-to')
+						{
+							$myReplyTo = ${$key};
 						}
 						$Header .= $mailObject->TextLine(trim($mailObject->AddrAppend($key,${$key})));
 						break;
@@ -5121,6 +5203,13 @@ class felamimail_bo
 						break;
 				}
 			}
+			// handle reply-to, wich may be set, set the first one found
+			if (!empty($myReplyTo))
+			{
+				$mailObject->ClearReplyTos();
+				$mailObject->AddReplyTo($myReplyTo[0][0],$myReplyTo[0][1]);
+			}
+
 			$seemsToBePlainMessage = false;
 			if ($structure->ctype_primary=='text' && $structure->body)
 			{

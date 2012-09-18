@@ -202,6 +202,11 @@ class felamimail_hooks
 			'6' => lang('size(...->0)')
 		);
 
+		$trustServersUnseenOptions = array_merge(
+			$no_yes,
+			array('2' => lang('yes') . ' - ' . lang('but check shared folders'))
+		);
+
 		$selectOptions = array_merge(
 			$no_yes,
 			array('2' => lang('yes') . ' - ' . lang('small view'))
@@ -569,7 +574,7 @@ class felamimail_hooks
 				'type'   => 'select',
 				'label'  => 'trust servers SEEN / UNSEEN info when retrieving the folder status. (if you select no, we will search for the UNSEEN messages and count them ourselves)',
 				'name'   => 'trustServersUnseenInfo',
-				'values' => $no_yes,
+				'values' => $trustServersUnseenOptions,
 				'xmlrpc' => True,
 				'default'=> 1,
 				'admin'  => False,

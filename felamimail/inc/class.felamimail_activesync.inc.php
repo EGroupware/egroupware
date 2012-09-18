@@ -274,6 +274,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			$this->account = $account;
 			// todo: tell fmail which account to use
 			$this->mail = felamimail_bo::getInstance(false,self::$profileID);
+			if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
 			//error_log(__METHOD__.__LINE__.' create object with ProfileID:'.array2string(self::$profileID));
 			if (!$this->mail->openConnection(self::$profileID,false))
 			{
@@ -289,6 +290,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		else
 		{
 			//error_log(__METHOD__.__LINE__." connect with profileID: ".self::$profileID);
+			if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
 			if (!$this->mail->icServer->_connected)
 			{
 				if (!$this->mail->openConnection(self::$profileID,false))

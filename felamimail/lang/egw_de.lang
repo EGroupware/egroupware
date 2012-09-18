@@ -51,6 +51,7 @@ bcc	felamimail	de	Blindkopie
 before headers	felamimail	de	vor den Kopfzeilen
 between headers and message body	felamimail	de	zwischen Kopfzeilen und Editorfenster
 body part	felamimail	de	Hauptteil
+but check shared folders	felamimail	de	aber explizite Überprüfung der Ordner unterhalb der (Benutzer-)Freigaben
 by date	felamimail	de	nach Datum
 can not open imap connection	felamimail	de	keine Verbindung zum IMAP-Server möglich
 can not send message. no recipient defined!	felamimail	de	Kann Nachricht nicht senden. Kein Empfänger angegeben!

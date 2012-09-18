@@ -95,6 +95,10 @@ class uifelamimail
 						'msg'   => lang("There is no IMAP Server configured.")." - ".lang("Please configure access to an existing individual IMAP account."),
 					));
 				}
+				if (isset($this->bofelamimail->icServer->ImapServerId) && !empty($this->bofelamimail->icServer->ImapServerId))
+				{
+					self::$icServerID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $this->bofelamimail->icServer->ImapServerId;
+				}
 			}
 			else
 			{

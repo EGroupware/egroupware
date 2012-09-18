@@ -103,6 +103,10 @@
 			$this->bofelamimail		= felamimail_bo::getInstance(true,$this->icServerID);
 			$this->icServerID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $this->bofelamimail->profileID;
 			$this->bopreferences	=& $this->bofelamimail->bopreferences;
+			if (isset($this->bofelamimail->icServer->ImapServerId) && !empty($this->bofelamimail->icServer->ImapServerId))
+			{
+				$this->icServerID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $this->bofelamimail->icServer->ImapServerId;
+			}
 
 			$this->mailPreferences	=& $this->bofelamimail->mailPreferences;//bopreferences->getPreferences();
 

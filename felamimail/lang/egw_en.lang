@@ -51,6 +51,7 @@ bcc	felamimail	en	BCC
 before headers	felamimail	en	Before headers
 between headers and message body	felamimail	en	Between headers and message body
 body part	felamimail	en	Body part
+but check shared folders	felamimail	en	but check shared folders
 by date	felamimail	en	By date
 can not open imap connection	felamimail	en	Can not open IMAP connection
 can not send message. no recipient defined!	felamimail	en	Can't send a message. No recipient defined!
