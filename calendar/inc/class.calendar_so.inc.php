@@ -656,7 +656,7 @@ class calendar_so
 				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
 				foreach(array_keys($selects) as $key)
 				{
-					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.recur_type,$this->repeats_table.recur_enddate,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,".$this->db->to_varchar($this->cal_table.'.cal_id').",cal_start,cal_end,$this->user_table.cal_recur_date";
+					$selects[$key]['cols'] = "DISTINCT $this->repeats_table.recur_type,range_end AS recur_enddate,$this->repeats_table.recur_interval,$this->repeats_table.recur_data,".$this->db->to_varchar($this->cal_table.'.cal_id').",cal_start,cal_end,$this->user_table.cal_recur_date";
 					if (!$params['enum_recuring'])
 					{
 						$selects[$key]['cols'] = str_replace('cal_start','MIN(cal_start) AS cal_start',$selects[$key]['cols']);
@@ -1707,13 +1707,15 @@ ORDER BY cal_user_type, cal_usre_id
 	function unfinished_recuring($time)
 	{
 		$ids = array();
-		foreach($this->db->select($this->repeats_table,"$this->repeats_table.cal_id,MAX(cal_start) AS cal_start",array(
-			"$this->repeats_table.cal_id = $this->dates_table.cal_id",
-			'(recur_enddate = 0 OR recur_enddate IS NULL OR recur_enddate > '.(int)$time.')',
-		),__LINE__,__FILE__,false,"GROUP BY $this->repeats_table.cal_id",'calendar',0,','.$this->dates_table) as $row)
+		foreach($rs=$this->db->select($this->repeats_table, "$this->repeats_table.cal_id,MAX(cal_start) AS cal_start",
+			'(range_end IS NULL OR range_end > '.(int)$time.')',
+			__LINE__, __FILE__, false, "GROUP BY $this->repeats_table.cal_id,range_end", 'calendar', 0,
+			" JOIN $this->cal_table ON $this->repeats_table.cal_id=$this->cal_table.cal_id".
+			" JOIN $this->dates_table ON $this->repeats_table.cal_id=$this->dates_table.cal_id") as $row)
 		{
 			$ids[$row['cal_id']] = $row['cal_start'];
 		}
+		//error_log(__METHOD__."($time) query='$rs->sql' --> ids=".array2string($ids));
 		return $ids;
 	}
 
@@ -1745,21 +1747,8 @@ ORDER BY cal_user_type, cal_usre_id
 	 */
 	function purge($date)
 	{
-		// Start with egw_cal, it's the easiest
-		$sql = "(SELECT egw_cal.cal_id FROM egw_cal
-			LEFT JOIN egw_cal_repeats ON
-				egw_cal_repeats.cal_id = egw_cal.cal_id
-			JOIN egw_cal_dates ON
-				egw_cal.cal_id = egw_cal_dates.cal_id
-			WHERE cal_end < $date AND (egw_cal_repeats.cal_id IS NULL OR (recur_enddate < $date AND recur_enddate != 0))) AS TOPROCESS";
-
-		// Get what we want to delete for all tables and links
-		foreach($this->db->select(
-			$sql,
-			array('cal_id'),
-			null,
-			__LINE__, __FILE__, false
-			) as $row)
+		// with new range_end we simple delete all with range_end < $date (range_end NULL is never returned)
+		foreach($this->db->select($this->cal_table, 'cal_id', 'range_end < '.(int)$date, __LINE__, __FILE__, false, '', 'calendar') as $row)
 		{
 			//echo __METHOD__." About to delete".$row['cal_id']."\r\n";
 			foreach($this->all_tables as $table)
