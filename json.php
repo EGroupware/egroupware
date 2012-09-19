@@ -89,7 +89,7 @@ if (isset($_GET['menuaction']))
 	{
 		$GLOBALS['egw_info']['flags']['no_dla_update']=true;
 	}
-	include('./header.inc.php');
+	include_once('./header.inc.php');
 
 
 	//Create a new json handler
