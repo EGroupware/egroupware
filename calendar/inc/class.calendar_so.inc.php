@@ -1051,7 +1051,8 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 		// set range_start/_end
 		$event['range_start'] = $event['cal_start'];
-		$event['range_end'] = $event['recur_type'] == MCAL_RECUR_NONE ? $event['cal_end'] : $event['recur_enddate'];
+		$event['range_end'] = $event['recur_type'] == MCAL_RECUR_NONE ? $event['cal_end'] :
+			($event['recur_enddate'] ? $event['recur_enddate'] : null);
 
 		// ensure that we find mathing entries later on
 		if (!is_array($event['cal_category']))
