@@ -2,92 +2,36 @@
 <entry type="array" name="importExportDefinitions">
   <entry type="array" name="metainfo">
     <entry type="string" name="type">importexport definitions</entry>
-    <entry type="string" name="charset">user</entry>
-    <entry type="integer" name="entries">2</entry>
+    <entry type="string" name="charset">utf-8</entry>
+    <entry type="integer" name="entries">4</entry>
   </entry>
   <entry type="array" name="definitions">
-    <entry type="array" name="export-addressbook">
-      <entry type="string" name="name">export-addressbook</entry>
+    <entry type="array" name="import-addressbook-vcard">
+      <entry type="string" name="name">import-addressbook-vcard</entry>
       <entry type="string" name="application">addressbook</entry>
-      <entry type="string" name="plugin">addressbook_export_contacts_csv</entry>
-      <entry type="string" name="type">export</entry>
+      <entry type="string" name="plugin">addressbook_import_vcard</entry>
+      <entry type="string" name="type">import</entry>
       <entry type="array" name="allowed_users">
         <entry type="string" name="0">Default</entry>
       </entry>
       <entry type="array" name="plugin_options">
-        <entry type="array" name="mapping">
-          <entry type="string" name="id">Contact ID</entry>
-          <entry type="string" name="tid">Type</entry>
-          <entry type="string" name="owner">Addressbook</entry>
-          <entry type="string" name="private">Private</entry>
-          <entry type="string" name="cat_id">Category</entry>
-          <entry type="string" name="n_prefix">Prefix</entry>
-          <entry type="string" name="n_given">First name</entry>
-          <entry type="string" name="n_middle">Middle Name</entry>
-          <entry type="string" name="n_family">Last name</entry>
-          <entry type="string" name="n_suffix">Suffix</entry>
-          <entry type="string" name="n_fn">Full Name</entry>
-          <entry type="string" name="n_fileas">Own sorting</entry>
-          <entry type="string" name="bday">Birthday</entry>
-          <entry type="string" name="org_name">Company</entry>
-          <entry type="string" name="org_unit">Department</entry>
-          <entry type="string" name="title">title</entry>
-          <entry type="string" name="role">Role</entry>
-          <entry type="string" name="assistent">Assistent</entry>
-          <entry type="string" name="room">Room</entry>
-          <entry type="string" name="adr_one_street">Street (Business)</entry>
-          <entry type="string" name="adr_one_street2">Address Line 2 (Business)</entry>
-          <entry type="string" name="adr_one_locality">City (Business)</entry>
-          <entry type="string" name="adr_one_region">State (Business)</entry>
-          <entry type="string" name="adr_one_postalcode">ZIP Code (Business)</entry>
-          <entry type="string" name="adr_one_countryname">Country (Business)</entry>
-          <entry type="string" name="adr_one_countrycode">country code (Business)</entry>
-          <entry type="string" name="label">Label</entry>
-          <entry type="string" name="adr_two_street">Street (Private)</entry>
-          <entry type="string" name="adr_two_street2">Address Line 2 (Private)</entry>
-          <entry type="string" name="adr_two_locality">City (Private)</entry>
-          <entry type="string" name="adr_two_region">State (Private)</entry>
-          <entry type="string" name="adr_two_postalcode">ZIP Code (Private)</entry>
-          <entry type="string" name="adr_two_countryname">Country (Private)</entry>
-          <entry type="string" name="adr_two_countrycode">country code (Private)</entry>
-          <entry type="string" name="tel_work">Work Phone</entry>
-          <entry type="string" name="tel_cell">Mobile Phone</entry>
-          <entry type="string" name="tel_fax">Fax (Business)</entry>
-          <entry type="string" name="tel_assistent">Assistent phone</entry>
-          <entry type="string" name="tel_car">Car Phone</entry>
-          <entry type="string" name="tel_pager">Pager</entry>
-          <entry type="string" name="tel_home">Home Phone</entry>
-          <entry type="string" name="tel_fax_home">Fax (Private)</entry>
-          <entry type="string" name="tel_cell_private">Mobile Phone (Private)</entry>
-          <entry type="string" name="tel_other">Other Phone</entry>
-          <entry type="string" name="tel_prefer">preferred phone</entry>
-          <entry type="string" name="email">E-Mail (Business)</entry>
-          <entry type="string" name="email_home">E-Mail (Private)</entry>
-          <entry type="string" name="url">URL (Business)</entry>
-          <entry type="string" name="url_home">URL (Private)</entry>
-          <entry type="string" name="freebusy_uri">Freebusy URI</entry>
-          <entry type="string" name="calendar_uri">Calendar URI</entry>
-          <entry type="string" name="note">Note</entry>
-          <entry type="string" name="tz">Timezone</entry>
-          <entry type="string" name="geo">GEO</entry>
-          <entry type="string" name="pubkey">Public Key</entry>
-          <entry type="string" name="created">Created</entry>
-          <entry type="string" name="creator">Created By</entry>
-          <entry type="string" name="modified">last modified</entry>
-          <entry type="string" name="modifier">last modified by</entry>
-          <entry type="string" name="account_id">Account ID</entry>
-          <entry type="string" name="all_custom_fields">addressbook</entry>
-        </entry>
-        <entry type="string" name="delimiter">;</entry>
-        <entry type="string" name="charset">user</entry>
-        <entry type="string" name="begin_with_fieldnames">label</entry>
-        <entry type="string" name="convert">1</entry>
-        <entry type="string" name="explode_multiselects"/>
+        <entry type="string" name="contact_owner">personal</entry>
       </entry>
-      <entry type="string" name="modified">2011-05-24 10:00:00</entry>
+      <entry type="string" name="modified">2012-09-18 12:58:42</entry>
     </entry>
-    <entry type="array" name="import-addressbook">
-      <entry type="string" name="name">import-addressbook</entry>
+    <entry type="array" name="export-addressbook-vcard">
+      <entry type="string" name="name">export-addressbook-vcard</entry>
+      <entry type="string" name="application">addressbook</entry>
+      <entry type="string" name="plugin">addressbook_export_vcard</entry>
+      <entry type="string" name="type">export</entry>
+      <entry type="array" name="allowed_users">
+        <entry type="string" name="0">Default</entry>
+      </entry>
+      <entry type="array" name="plugin_options"/>
+      <entry type="string" name="modified">2012-09-18 12:59:11</entry>
+    </entry>
+    <entry type="array" name="import-addressbook-csv">
+      <entry type="string" name="name">import-addressbook-csv</entry>
       <entry type="string" name="application">addressbook</entry>
       <entry type="string" name="plugin">addressbook_import_contacts_csv</entry>
       <entry type="string" name="type">import</entry>
@@ -246,7 +190,87 @@
         <entry type="string" name="change_owner">0</entry>
         <entry type="string" name="convert">1</entry>
       </entry>
-      <entry type="string" name="modified">2012-05-29 16:00:00</entry>
+      <entry type="string" name="modified">2012-09-18 13:11:48</entry>
+    </entry>
+    <entry type="array" name="export-addressbook-csv">
+      <entry type="string" name="name">export-addressbook-csv</entry>
+      <entry type="string" name="application">addressbook</entry>
+      <entry type="string" name="plugin">addressbook_export_contacts_csv</entry>
+      <entry type="string" name="type">export</entry>
+      <entry type="array" name="allowed_users">
+        <entry type="string" name="0">Default</entry>
+      </entry>
+      <entry type="array" name="plugin_options">
+        <entry type="array" name="mapping">
+          <entry type="string" name="id">Contact ID</entry>
+          <entry type="string" name="tid">Type</entry>
+          <entry type="string" name="owner">Addressbook</entry>
+          <entry type="string" name="private">Private</entry>
+          <entry type="string" name="cat_id">Category</entry>
+          <entry type="string" name="n_prefix">Prefix</entry>
+          <entry type="string" name="n_given">First name</entry>
+          <entry type="string" name="n_middle">Middle Name</entry>
+          <entry type="string" name="n_family">Last name</entry>
+          <entry type="string" name="n_suffix">Suffix</entry>
+          <entry type="string" name="n_fn">Full Name</entry>
+          <entry type="string" name="n_fileas">Own sorting</entry>
+          <entry type="string" name="bday">Birthday</entry>
+          <entry type="string" name="org_name">Company</entry>
+          <entry type="string" name="org_unit">Department</entry>
+          <entry type="string" name="title">title</entry>
+          <entry type="string" name="role">Role</entry>
+          <entry type="string" name="assistent">Assistent</entry>
+          <entry type="string" name="room">Room</entry>
+          <entry type="string" name="adr_one_street">Street (Business)</entry>
+          <entry type="string" name="adr_one_street2">Address Line 2 (Business)</entry>
+          <entry type="string" name="adr_one_locality">City (Business)</entry>
+          <entry type="string" name="adr_one_region">State (Business)</entry>
+          <entry type="string" name="adr_one_postalcode">ZIP Code (Business)</entry>
+          <entry type="string" name="adr_one_countryname">Country (Business)</entry>
+          <entry type="string" name="adr_one_countrycode">country code (Business)</entry>
+          <entry type="string" name="label">Label</entry>
+          <entry type="string" name="adr_two_street">Street (Private)</entry>
+          <entry type="string" name="adr_two_street2">Address Line 2 (Private)</entry>
+          <entry type="string" name="adr_two_locality">City (Private)</entry>
+          <entry type="string" name="adr_two_region">State (Private)</entry>
+          <entry type="string" name="adr_two_postalcode">ZIP Code (Private)</entry>
+          <entry type="string" name="adr_two_countryname">Country (Private)</entry>
+          <entry type="string" name="adr_two_countrycode">country code (Private)</entry>
+          <entry type="string" name="tel_work">Work Phone</entry>
+          <entry type="string" name="tel_cell">Mobile Phone</entry>
+          <entry type="string" name="tel_fax">Fax (Business)</entry>
+          <entry type="string" name="tel_assistent">Assistent phone</entry>
+          <entry type="string" name="tel_car">Car Phone</entry>
+          <entry type="string" name="tel_pager">Pager</entry>
+          <entry type="string" name="tel_home">Home Phone</entry>
+          <entry type="string" name="tel_fax_home">Fax (Private)</entry>
+          <entry type="string" name="tel_cell_private">Mobile Phone (Private)</entry>
+          <entry type="string" name="tel_other">Other Phone</entry>
+          <entry type="string" name="tel_prefer">preferred phone</entry>
+          <entry type="string" name="email">E-Mail (Business)</entry>
+          <entry type="string" name="email_home">E-Mail (Private)</entry>
+          <entry type="string" name="url">URL (Business)</entry>
+          <entry type="string" name="url_home">URL (Private)</entry>
+          <entry type="string" name="freebusy_uri">Freebusy URI</entry>
+          <entry type="string" name="calendar_uri">Calendar URI</entry>
+          <entry type="string" name="note">Note</entry>
+          <entry type="string" name="tz">Timezone</entry>
+          <entry type="string" name="geo">GEO</entry>
+          <entry type="string" name="pubkey">Public Key</entry>
+          <entry type="string" name="created">Created</entry>
+          <entry type="string" name="creator">Created By</entry>
+          <entry type="string" name="modified">last modified</entry>
+          <entry type="string" name="modifier">last modified by</entry>
+          <entry type="string" name="account_id">Account ID</entry>
+          <entry type="string" name="all_custom_fields">addressbook</entry>
+        </entry>
+        <entry type="string" name="delimiter">;</entry>
+        <entry type="string" name="charset">user</entry>
+        <entry type="string" name="begin_with_fieldnames">label</entry>
+        <entry type="string" name="convert">1</entry>
+        <entry type="string" name="explode_multiselects"/>
+      </entry>
+      <entry type="string" name="modified">2012-09-18 13:12:01</entry>
     </entry>
   </entry>
 </entry>
