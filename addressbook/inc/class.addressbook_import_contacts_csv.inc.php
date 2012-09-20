@@ -166,7 +166,9 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 			// don't import empty contacts
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
-			importexport_import_csv::convert($record, addressbook_egw_record::$types, 'addressbook', $_lookups, $_definition->plugin_options['convert']);
+			$warning = importexport_import_csv::convert($record, addressbook_egw_record::$types, 'addressbook', $_lookups, $_definition->plugin_options['convert']);
+			if($warning) $this->warnings[$import_csv->get_current_position()] = $warning;
+
 			// Set owner, unless it's supposed to come from CSV file
 			if($_definition->plugin_options['owner_from_csv'] && $record['owner']) {
 				if(!is_numeric($record['owner'])) {
