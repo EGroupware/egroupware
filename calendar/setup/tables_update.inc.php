@@ -2166,6 +2166,14 @@ function calendar_upgrade1_9_006()
 		'type' => 'int',
 		'precision' => '8',
 		'nullable' => False,
+		'default' => '0',	// PostgreSQL needs a temporary default, to create a nullable column!
+		'comment' => 'startdate (of range)'
+	));
+	// now we can remove temporary default of 0 from range_start
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','range_start',array(
+		'type' => 'int',
+		'precision' => '8',
+		'nullable' => False,
 		'comment' => 'startdate (of range)'
 	));
 	$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET range_start = (SELECT MIN(cal_start) FROM egw_cal_dates WHERE egw_cal_dates.cal_id=egw_cal.cal_id)', __LINE__, __FILE__);
@@ -2177,8 +2185,15 @@ function calendar_upgrade1_9_006()
 	));
 	$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET range_end = (SELECT MIN(cal_end) FROM egw_cal_dates WHERE egw_cal_dates.cal_id=egw_cal.cal_id)', __LINE__, __FILE__);
 	$GLOBALS['egw_setup']->db->query('UPDATE egw_cal_repeats SET recur_enddate=null WHERE recur_enddate=0', __LINE__, __FILE__);
-	$GLOBALS['egw_setup']->db->query('UPDATE egw_cal,egw_cal_repeats SET egw_cal.range_end=egw_cal_repeats.recur_enddate WHERE egw_cal.cal_id=egw_cal_repeats.cal_id', __LINE__, __FILE__);
-
+	// MySQL has different syntax for updates using values from other tables ...
+	if ($GLOBALS['egw_setup']->db->Type == 'mysql')
+	{
+		$GLOBALS['egw_setup']->db->query('UPDATE egw_cal,egw_cal_repeats SET egw_cal.range_end=egw_cal_repeats.recur_enddate WHERE egw_cal.cal_id=egw_cal_repeats.cal_id', __LINE__, __FILE__);
+	}
+	else	// PostgreSQL, MsSQL, ...
+	{
+		$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET range_end=recur_enddate FROM egw_cal_repeats WHERE egw_cal.cal_id=egw_cal_repeats.cal_id)', __LINE__, __FILE__);
+	}
 	$GLOBALS['egw_setup']->oProc->DropColumn('egw_cal_repeats',array(
 		'fd' => array(
 			'cal_id' => array('type' => 'int','precision' => '4','nullable' => False),
@@ -2196,9 +2211,25 @@ function calendar_upgrade1_9_006()
 }
 
 /**
+ * Delete all broken events having range_start=0 (not a single recurrence or a broken one with cal_start=0)
+ *
+ * They are not displayed in regular calendar anyway, but might be synced to CalDAV or eSync clients.
+ */
+function calendar_upgrade1_9_007()
+{
+	foreach(array('egw_cal_repeats','egw_cal_dates','egw_cal_user','egw_cal_extra') as $table)
+	{
+		$GLOBALS['egw_setup']->db->query("DELETE FROM $table WHERE cal_id IN (SELECT cal_id FROM egw_cal WHERE range_start=0)");
+	}
+	$GLOBALS['egw_setup']->db->query("DELETE FROM egw_cal WHERE range_start=0");
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.008';
+}
+
+/**
  * Add cal_rrule columns, drop egw_cal_repeats table
  */
-/*function calendar_upgrade1_9_007()
+/*function calendar_upgrade1_9_008()
 {
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_rrule',array(
 		'type' => 'varchar',
@@ -2223,6 +2254,6 @@ function calendar_upgrade1_9_006()
 	}
 	$GLOBALS['egw_setup']->oProc->DropTable('egw_cal_repeats');
 
-	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.008';
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.009';
 }
 */
