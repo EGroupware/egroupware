@@ -333,7 +333,14 @@
 						// Jump to name step
 						'step' => 'wizard_step21'
 					));
-					$add_link = "javascript:egw_openWindowCentered2('$add_link','_blank',500,500,'yes')";
+					$add_link = "
+						javascript:this.window.location = '" . egw::link('/index.php', array(
+							'menuaction' => 'importexport.importexport_import_ui.import_dialog',
+							// Don't set appname, or user won't be able to select & see their new definition
+							//'appname' => $definition->application,
+						)) . "';
+						egw_openWindowCentered2('$add_link','_blank',500,500,'yes');
+					";
 					$actions[] = lang('Create a <a href="%1">new definition</a> for this file', $add_link);
 
 					// Edit selected definition, if allowed
