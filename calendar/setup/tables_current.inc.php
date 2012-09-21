@@ -12,16 +12,16 @@
 $phpgw_baseline = array(
 	'egw_cal' => array(
 		'fd' => array(
-			'cal_id' => array('type' => 'auto','nullable' => False),
+			'cal_id' => array('type' => 'auto','nullable' => False,'comment' => 'calendar id'),
 			'cal_uid' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'unique id of event(-series)'),
 			'cal_owner' => array('type' => 'int','precision' => '4','nullable' => False,'comment' => 'event owner / calendar'),
 			'cal_category' => array('type' => 'varchar','precision' => '64','comment' => 'category id(s)'),
 			'cal_modified' => array('type' => 'int','precision' => '8','comment' => 'ts of last modification'),
-			'cal_priority' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '2'),
+			'cal_priority' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '2','comment' => 'priority: 1=Low, 2=Normal, 3=High'),
 			'cal_public' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '1','comment' => '1=public, 0=private event'),
-			'cal_title' => array('type' => 'varchar','precision' => '255','nullable' => False),
-			'cal_description' => array('type' => 'varchar','precision' => '16384'),
-			'cal_location' => array('type' => 'varchar','precision' => '255'),
+			'cal_title' => array('type' => 'varchar','precision' => '255','nullable' => False,'comment' => 'title of event'),
+			'cal_description' => array('type' => 'varchar','precision' => '16384','comment' => 'description'),
+			'cal_location' => array('type' => 'varchar','precision' => '255','comment' => 'location'),
 			'cal_reference' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0','comment' => 'cal_id of series for exception'),
 			'cal_modifier' => array('type' => 'int','precision' => '4','comment' => 'user who last modified event'),
 			'cal_non_blocking' => array('type' => 'int','precision' => '2','default' => '0','comment' => '1 for non-blocking events'),
