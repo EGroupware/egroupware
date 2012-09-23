@@ -146,9 +146,22 @@ class addressbook_groupdav extends groupdav_handler
 				}
 			}
 		}
+		// rfc 6578 sync-collection report: filter for sync-token is already set in _report_filters
+		if ($options['root']['name'] == 'sync-collection')
+		{
+			// query sync-token before result, so changed happening while result get queried are not lost
+			$files['sync-token'] = $this->get_sync_token($path, $user);
+		}
+
 		if (isset($nresults))
 		{
 			$files['files'] = $this->propfind_callback($path, $filter, array(0, (int)$nresults));
+
+			if ($options['root']['name'] == 'sync-collection' && isset($files['files']['sync-token']))
+			{
+				$files['sync-token'] = $this->get_sync_token($path, $user, $files['files']['sync-token']);
+				unset($files['files']['sync-token']);
+			}
 		}
 		else
 		{
@@ -189,10 +202,18 @@ class addressbook_groupdav extends groupdav_handler
 		// we query etag and modified, as LDAP does not have the strong sql etag
 		$cols = array('id','uid','etag','modified','n_fn');
 		if (!in_array(self::$path_attr,$cols)) $cols[] = self::$path_attr;
+		// we need tid for sync-collection report
+		if (array_key_exists('tid', $filter) && !isset($filter['tid']) && !in_array('tid', $cols)) $cols[] = 'tid';
 		if (($contacts =& $this->bo->search(array(),$cols,$order,'','',False,'AND',$start,$filter)))
 		{
 			foreach($contacts as &$contact)
 			{
+				// sync-collection report: deleted entry need to be reported without properties
+				if ($contact['tid'] == addressbook_bo::DELETED_TYPE && array_key_exists('tid', $filter) && !isset($filter['tid']))
+				{
+					$files[] = array('path' => $path.urldecode($this->get_path($contact)));
+					continue;
+				}
 				$props = array(
 					'getcontenttype' => HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/vcard'),
 					'getlastmodified' => $contact['modified'],
@@ -207,12 +228,26 @@ class addressbook_groupdav extends groupdav_handler
 				$files[] = $this->add_resource($path, $contact, $props);
 			}
 		}
+		// hack to support limit with sync-collection report: contacts are returned in modified ASC order (oldest first)
+		// if limit is smaller then full result, return modified-1 as sync-token, so client requests next chunk incl. modified
+		// (which might contain further entries with identical modification time)
+		if ($contact['tid'] == addressbook_bo::DELETED_TYPE && array_key_exists('tid', $filter) &&
+			$start[0] == 0 && $start[1] != groupdav_propfind_iterator::CHUNK_SIZE && $this->bo->total > $start[1])
+		{
+			$files['sync-token'] = $contact['modified']-1;
+		}
 		// add groups after contacts, but only if enabled and NOT for '/addressbook/' (!isset($filter['owner'])
 		if (in_array('D',$this->home_set_pref) && (!$start || count($contacts) < $start[1]) && isset($filter['owner']))
 		{
 			$where = array(
 				'list_owner' => isset($filter['owner'])?$filter['owner']:array_keys($this->bo->grants)
 			);
+			// add sync-token to support sync-collection report
+			if (isset($filter[0]) && strpos($filter[0], 'contact_modified>') === 0)
+			{
+				list(,$sync_token) = explode('>', $filter[0]);
+				$where[] = 'list_modified>FROM_UNIXTIME('.(int)$sync_token.')';
+			}
 			if (isset($filter[self::$path_attr]))	// multiget report?
 			{
 				$where['list_'.self::$path_attr] = $filter[self::$path_attr];
@@ -383,8 +418,22 @@ class addressbook_groupdav extends groupdav_handler
 					break;
 				case 'href':
 					break;	// from addressbook-multiget, handled below
+				// rfc 6578 sync-report
+				case 'sync-token':
+					if (!empty($option['data']))
+					{
+						$parts = explode('/', $option['data']);
+						$sync_token = array_pop($parts);
+						$filters[] = 'contact_modified>'.(int)$sync_token;
+						$filters['tid'] = null;	// to return deleted entries too
+						$filters['order'] = 'contact_modified ASC';	// return oldest modifications first
+					}
+					break;
+				case 'sync-level':
+					// ignored for now
+					break;
 				default:
-					$this->groupdav->log(__METHOD__."(...) unknown xml: options[other]=".array2string($options['other']));
+					$this->groupdav->log(__METHOD__."(...) unknown xml tag '{$option['name']}': options[other]=".array2string($options['other']));
 					break;
 			}
 		}
@@ -410,6 +459,7 @@ class addressbook_groupdav extends groupdav_handler
 		{
 			$filters[self::$path_attr] = groupdav_handler::$path_extension ? basename($id,groupdav_handler::$path_extension) : $id;
 		}
+		//error_log(__METHOD__."() options[other]=".array2string($options['other'])." --> filters=".array2string($filters));
 		return true;
 	}
 
@@ -651,6 +701,10 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	public function getctag($path,$user)
 	{
+		static $ctags = array();	// a little per request caching, in case ctag and sync-token is both requested
+
+		if (isset($ctags[$path])) return $ctags[$path];
+
 		// not showing addressbook of a single user?
 		if (is_null($user) || $user === '' || $path == '/addressbook/') $user = null;
 
@@ -666,7 +720,24 @@ class addressbook_groupdav extends groupdav_handler
 			$lists_ctag = $this->bo->lists_ctag($user);
 		}
 		//error_log(__METHOD__."('$path', ".array2string($user).") ctag=$ctag=".date('Y-m-d H:i:s',$ctag).", lists_ctag=".($lists_ctag ? $lists_ctag.'='.date('Y-m-d H:i:s',$lists_ctag) : '').' returning '.max($ctag,$lists_ctag));
-		return max($ctag,$lists_ctag);
+		return $ctags[$path] = max($ctag,$lists_ctag);
+	}
+
+	/**
+	 * Query sync-token for addressbook
+	 *
+	 * @param string $path
+	 * @param int $user
+	 * @param int $modified=null default getctag
+	 * @return string
+	 */
+	public function get_sync_token($path, $user, $modified=null)
+	{
+		if (!isset($modified)) $modified = $this->getctag($path, $user);
+
+		return (strpos($this->base_uri, 'http') === 0 ? '' :	// need a full uri, not just a path
+				($_SERVER["HTTPS"] === "on" ? "https:" : "http:") .'//' . $_SERVER['HTTP_HOST']).
+			$this->base_uri.$path.$modified;
 	}
 
 	/**
@@ -711,6 +782,10 @@ class addressbook_groupdav extends groupdav_handler
 			HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
 					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-multiget',''))))),
+			// rfc 6578 sync-collection report
+			HTTP_WebDAV_Server::mkprop('supported-report',array(
+				HTTP_WebDAV_Server::mkprop('report',array(
+					HTTP_WebDAV_Server::mkprop('sync-collection',''))))),
 		));
 		return $props;
 	}
