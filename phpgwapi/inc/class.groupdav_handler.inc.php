@@ -579,6 +579,29 @@ abstract class groupdav_handler
 		}
 		return $full_uri ? $uri : $path;
 	}
+
+	/**
+	 * Query sync-token
+	 *
+	 * We use ctag / max. modification time as sync-token. As garnularity is 1sec, we can never be sure,
+	 * if there are more modifications to come in the current second.
+	 *
+	 * Therefor we are never returning current time, but 1sec less!
+	 *
+	 * @param string $path
+	 * @param int $user
+	 * @param int $modified=null default getctag
+	 * @return string
+	 */
+	public function get_sync_token($path, $user, $modified=null)
+	{
+		if (!isset($modified)) $modified = $this->getctag($path, $user);
+
+		// never return current time, as more modifications might happen --> decrement it by 1sec
+		if ($modified == time()) --$modified;
+
+		return $this->base_uri().$path.$modified;
+	}
 }
 
 /**

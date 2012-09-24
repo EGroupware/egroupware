@@ -849,10 +849,10 @@ class groupdav extends HTTP_WebDAV_Server
 				$props['getctag'] = self::mkprop(
 					groupdav::CALENDARSERVER,'getctag',$handler->getctag($path,$user));
 			}
-			// add sync-token url if handler implements it
-			if (method_exists($handler,'get_sync_token') && $this->prop_requested('sync-token') === true)
+			// add sync-token url if handler supports sync-collection report
+			if (isset($props['supported-report-set']['sync-collection']) && $this->prop_requested('sync-token') === true)
 			{
-				$props['sync-token'] = self::mkprop('sync-token', $handler->get_sync_token($path,$user));
+				$props['sync-token'] = $handler->get_sync_token($path,$user);
 			}
 		}
 		if ($handler && $user)

@@ -430,7 +430,10 @@ class addressbook_groupdav extends groupdav_handler
 					}
 					break;
 				case 'sync-level':
-					// ignored for now
+					if ($option['data'] != '1')
+					{
+						$this->groupdav->log(__METHOD__."(...) only sync-level {$option['data']} requested, but only 1 supported! options[other]=".array2string($options['other']));
+					}
 					break;
 				default:
 					$this->groupdav->log(__METHOD__."(...) unknown xml tag '{$option['name']}': options[other]=".array2string($options['other']));
@@ -724,21 +727,6 @@ class addressbook_groupdav extends groupdav_handler
 	}
 
 	/**
-	 * Query sync-token for addressbook
-	 *
-	 * @param string $path
-	 * @param int $user
-	 * @param int $modified=null default getctag
-	 * @return string
-	 */
-	public function get_sync_token($path, $user, $modified=null)
-	{
-		if (!isset($modified)) $modified = $this->getctag($path, $user);
-
-		return $this->base_uri().$path.$modified;
-	}
-
-	/**
 	 * Add extra properties for addressbook collections
 	 *
 	 * Example for supported-report-set syntax from Apples Calendarserver:
@@ -773,18 +761,18 @@ class addressbook_groupdav extends groupdav_handler
 		$props['max-image-size'] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'max-image-size',4096);
 
 		// supported reports (required property for CardDAV)
-		$props['supported-report-set'] =	HTTP_WebDAV_Server::mkprop('supported-report-set',array(
-			HTTP_WebDAV_Server::mkprop('supported-report',array(
+		$props['supported-report-set'] = array(
+			'addressbook-query' => HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
 					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-query',''))))),
-			HTTP_WebDAV_Server::mkprop('supported-report',array(
+			'addressbook-multiget' => HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
 					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-multiget',''))))),
 			// rfc 6578 sync-collection report
-			HTTP_WebDAV_Server::mkprop('supported-report',array(
+			'sync-collection' => HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
 					HTTP_WebDAV_Server::mkprop('sync-collection',''))))),
-		));
+		);
 		return $props;
 	}
 
