@@ -117,7 +117,10 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 		// Failures
 		$this->errors = array();
 
-		$contacts = new egw_ical_iterator($_stream, '', $charset, array($this, '_vcard'),array(
+		 // Fix for Apple Addressbook
+                $vCard = preg_replace('/item\d\.(ADR|TEL|EMAIL|URL)/', '\1', stream_get_contents($_stream));
+
+		$contacts = new egw_ical_iterator($vCard, '', $charset, array($this, '_vcard'),array(
 			// Owner (addressbook)
 			$contact_owner
 		));
