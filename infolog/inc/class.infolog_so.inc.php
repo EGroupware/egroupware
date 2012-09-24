@@ -278,7 +278,7 @@ class infolog_so
 	 */
 	function statusFilter($filter = '',$prefix_and=true)
 	{
-		preg_match('/(done|open|offer|deleted)/',$filter,$vars);
+		preg_match('/(done|open|offer|deleted|\+deleted)/',$filter,$vars);
 		$filter = $vars[1];
 
 		switch ($filter)
@@ -287,6 +287,7 @@ class infolog_so
 			case 'open':	$filter = "NOT (info_status IN ('done','billed','cancelled','deleted','template','nonactive','archive'))"; break;
 			case 'offer':	$filter = "info_status = 'offer'";    break;
 			case 'deleted': $filter = "info_status = 'deleted'";  break;
+			case '+deleted':$filter = "NOT (info_status IN ('template','nonactive','archive'))"; break;
 			default:        $filter = "NOT (info_status IN ('deleted','template','nonactive','archive'))"; break;
 		}
 		return ($prefix_and ? ' AND ' : '').$filter;
