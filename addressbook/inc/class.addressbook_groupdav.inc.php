@@ -735,9 +735,7 @@ class addressbook_groupdav extends groupdav_handler
 	{
 		if (!isset($modified)) $modified = $this->getctag($path, $user);
 
-		return (strpos($this->base_uri, 'http') === 0 ? '' :	// need a full uri, not just a path
-				($_SERVER["HTTPS"] === "on" ? "https:" : "http:") .'//' . $_SERVER['HTTP_HOST']).
-			$this->base_uri.$path.$modified;
+		return $this->base_uri().$path.$modified;
 	}
 
 	/**

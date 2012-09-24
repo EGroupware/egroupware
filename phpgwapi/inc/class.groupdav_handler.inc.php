@@ -551,6 +551,34 @@ abstract class groupdav_handler
 		// we urldecode here, as HTTP_WebDAV_Server uses a minimal (#?%) urlencoding for incomming pathes and urlencodes pathes in propfind
 		return $this->groupdav->add_resource($path.urldecode($this->get_path($entry)), $props, $privileges);
 	}
+
+	/**
+	 * Return base uri, making sure it's either a full uri (incl. protocoll and host) or just a path
+	 *
+	 * base_uri of WebDAV class can be both, depending on EGroupware config
+	 *
+	 * @param boolean $full_uri=true
+	 * @return string eg. https://domain.com/egroupware/groupdav.php
+	 */
+	public function base_uri($full_uri=true)
+	{
+		static $uri;
+		static $path;
+
+		if (!isset($uri))
+		{
+			$uri = $path = $this->groupdav->base_uri;
+			if ($uri[0] == '/')
+			{
+				$uri = ($_SERVER["HTTPS"] === "on" ? "https:" : "http:") .'//' . $_SERVER['HTTP_HOST'] . $uri;
+			}
+			else
+			{
+				$path = parse_url($uri, PHP_URL_PATH);
+			}
+		}
+		return $full_uri ? $uri : $path;
+	}
 }
 
 /**
