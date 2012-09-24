@@ -1081,6 +1081,8 @@ class infolog_bo
 			'start'			=> 0,
 			'num_rows'		=> 1,
 		);
+		// we need to query deleted entries too for a ctag!
+		$filter['filter'] .= '+deleted';
 
 		$result =& $this->search($filter);
 
