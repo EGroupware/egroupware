@@ -382,7 +382,7 @@
 					<description value="Custom fields"/>
 				</row>
 				<row height="100%">
-					<customfields id="private" options="$cont[tid],1"/>
+					<customfields options="$cont[tid],1"/>
 				</row>
 			</rows>
 		</grid>
