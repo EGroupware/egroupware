@@ -14,7 +14,7 @@
 .planned { font-style:italic; }
 table.fullWidth { width: 100%; }
 td.infoId:before { content:"#" }
-.fixedHeight { line-height: 12px; }
+.fixedHeight { height: 12px; }
 .noWrap { white-space: nowrap; }
 .user_filter select { width: 100px; }
 .inputFullWidth input { width: 100%; }
