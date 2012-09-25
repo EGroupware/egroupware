@@ -2212,7 +2212,7 @@ function calendar_upgrade1_9_007()
 {
 	foreach(array('egw_cal_repeats','egw_cal_dates','egw_cal_user','egw_cal_extra') as $table)
 	{
-		$GLOBALS['egw_setup']->db->query("DELETE FROM $table WHERE cal_id IN (SELECT cal_id FROM egw_cal WHERE range_start=0)");
+		$GLOBALS['egw_setup']->db->query("DELETE FROM $table WHERE cal_id IN (SELECT cal_id FROM egw_cal WHERE range_start=0 OR range_start IS NULL)");
 	}
 	$GLOBALS['egw_setup']->db->query("DELETE FROM egw_cal WHERE range_start=0 OR range_start IS NULL");
 
