@@ -24,6 +24,7 @@ choose a plugin	importexport	en	Choose a plugin
 choose an application	importexport	en	Choose an application
 choose fields to export	importexport	en	Choose fields to export
 choose seperator and charset	importexport	en	Choose separator and charset
+column mismatch.  expected %1 columns, your file has %2.	importexport	en	Column mismatch.  Expected %1 columns, your file has %2.
 condition	importexport	en	Condition
 copied	importexport	en	Copied.
 csv field	importexport	en	CSV field

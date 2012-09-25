@@ -230,7 +230,8 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 	protected function do_fieldmapping( ) {
 		$record = $this->record;
 		$this->record = array();
-		foreach ($this->mapping as $cvs_idx => $new_idx) {
+		foreach ($this->mapping as $cvs_idx => $new_idx)
+		{
 			if( $new_idx == '' ) continue;
 			$this->record[$new_idx] = $record[$cvs_idx];
 		}

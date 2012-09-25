@@ -166,7 +166,9 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 			// don't import empty contacts
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
-			importexport_import_csv::convert($record, addressbook_egw_record::$types, 'addressbook', $_lookups, $_definition->plugin_options['convert']);
+			$warning = importexport_import_csv::convert($record, addressbook_egw_record::$types, 'addressbook', $_lookups, $_definition->plugin_options['convert']);
+			if($warning) $this->warnings[$import_csv->get_current_position()] = $warning;
+
 			// Set owner, unless it's supposed to come from CSV file
 			if($_definition->plugin_options['owner_from_csv']) {
 				if($record['owner'] && !is_numeric($record['owner'])) {
@@ -185,6 +187,23 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 				}
 			} else {
 				$record['owner'] = $contact_owner;
+			}
+
+			// Check that owner (addressbook) is allowed
+			if(!in_array($record['owner'], $this->bocontacts->get_addressbooks()))
+			{
+				$this->errors[$import_csv->get_current_position()] = lang("Unable to import into %1, using %2",
+					common::grab_owner_name($record['owner']),
+					common::grab_owner_name($this->user)
+				);
+				$record['owner'] = $this->user;
+			}
+
+			// Do not allow owner == 0 (accounts) without an account_id
+			// It causes the contact to be filed as an account, and can't delete
+			if(!$record['owner'] && !$record['account_id'])
+			{
+				$record['owner'] = $this->user;
 			}
 
 			// Also handle categories in their own field
@@ -318,6 +337,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 					// org_name is a trigger to update n_fileas
 					$_data['org_name'] = '';
 				}
+
 				if ( $this->dry_run ) {
 					//print_r($_data);
 					$this->results[$_action]++;
@@ -332,7 +352,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 					return $result;
 				}
 			default:
-				throw new egw_exception('Unsupported action');
+				throw new egw_exception('Unsupported action: '. $_action);
 			
 		}
 	}

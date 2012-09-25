@@ -174,7 +174,8 @@ class timesheet_import_csv implements importexport_iface_import_plugin  {
 			// don't import empty records
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
-			importexport_import_csv::convert($record, timesheet_egw_record::$types, 'timesheet', $lookups);
+			$result = importexport_import_csv::convert($record, timesheet_egw_record::$types, 'timesheet', $lookups);
+			if($result) $this->warnings[$import_csv->get_current_position()] = $result;
 
 			// Automatically handle text categories without explicit translation
 			foreach(array('ts_status','cat_id') as $field) {
