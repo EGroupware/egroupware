@@ -275,7 +275,7 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 				'fs_dir'  => $row['fs_dir'],
 				'fs_name' => $row['fs_name'],
 			));
-			foreach($stmt as $entry)
+			foreach($stmt as $n => $entry)
 			{
 				if ($entry['fs_mime'] == 'httpd/unix-directory')
 				{
