@@ -631,7 +631,6 @@ class calendar_bo
 			'owner'		=> $event['owner'],
 			'recur_type' => MCAL_RECUR_NONE,
 			'etag'	=> $event['etag'],
-			'max_user_modified' => $event['max_user_modified'],
 			'participants' => array_intersect_key($event['participants'],array_flip($allowed_participants)),
 			'public'=> 0,
 			'category' => $event['category'],	// category is visible anyway, eg. by using planner by cat
@@ -803,11 +802,11 @@ class calendar_bo
 					$time->setTime(23, 59, 59);
 					$event['recur_enddate'] = egw_time::to($time, $date_format);
 				}
-				$timestamps = array('modified','created','max_user_modified');
+				$timestamps = array('modified','created');
 			}
 			else
 			{
-				$timestamps = array('start','end','modified','created','recur_enddate','recurrence','max_user_modified');
+				$timestamps = array('start','end','modified','created','recur_enddate','recurrence');
 			}
 			// we convert here from the server-time timestamps to user-time and (optional) to a different date-format!
 			foreach ($timestamps as $ts)
@@ -1931,18 +1930,8 @@ class calendar_bo
 			if (!$this->check_perms(EGW_ACL_FREEBUSY, $entry, 0, 'server')) return false;
 			$entry = $this->read($entry, $recur_date, true, 'server');
 		}
-		$etag = $schedule_tag = $entry['id'].':'.$entry['etag'];
+		$etag = $schedule_tag = $entry['id'].':'.$entry['etag'].':'.$entry['modified'];
 
-		// use new MAX(modification date) of egw_cal_user table (deals with virtual exceptions too)
-		if (isset($entry['max_user_modified']))
-		{
-			$modified = max($entry['max_user_modified'], $entry['modified']);
-		}
-		else
-		{
-			$modified = max($this->so->max_user_modified($entry['id'],false,$master_only), $entry['modified']);
-		}
-		$etag .= ':' . $modified;
 		// include exception etags into our own etag, if exceptions are included
 		if ($client_share_uid_excpetions && !empty($entry['uid']) &&
 			$entry['recur_type'] != MCAL_RECUR_NONE && $entry['recur_exception'])

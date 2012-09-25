@@ -241,7 +241,6 @@ class calendar_so
 			}
 		}
 
-		$need_max_user_modified = array();
 		// participants, if a recur_date give, we read that recurance, plus the one users from the default entry with recur_date=0
 		// sorting by cal_recur_date ASC makes sure recurence status always overwrites series status
 		foreach($this->db->select($this->user_table,'*',array(
@@ -256,23 +255,6 @@ class calendar_so
 
 			$events[$row['cal_id']]['participants'][$uid] = $status;
 			$events[$row['cal_id']]['participant_types'][$row['cal_user_type']][$row['cal_user_id']] = $status;
-
-			if ($events[$row['cal_id']]['recur_type'])
-			{
-				$need_max_user_modified[$row['cal_id']] = $row['cal_id'];
-			}
-			elseif (($modified = $this->db->from_timestamp($row['cal_user_modified'])) > $events[$row['cal_id']]['max_user_modified'])
-			{
-				$events[$row['cal_id']]['max_user_modified'] = $modified;
-			}
-		}
-		// max_user_modified for recurring events has to include all recurrences, above code only querys $recur_date!
-		if ($need_max_user_modified)
-		{
-			foreach($this->max_user_modified($need_max_user_modified) as $id => $modified)
-			{
-				$events[$id]['max_user_modified'] = $modified;
-			}
 		}
 
 		// custom fields
@@ -298,44 +280,6 @@ class calendar_so
 	}
 
 	/**
-	 * Get maximum modification time of participant data of given event(s)
-	 *
-	 * This includes ALL recurences of an event series
-	 *
-	 * @param int|array $ids one or multiple cal_id's
-	 * @param boolean $return_maximum=false if true return only the maximum, even for multiple ids
-	 * @param boolean $master_only=false only check recurance master (egw_cal_user.recur_date=0)
-	 * @return int|array (array of) modification timestamp(s)
-	 */
-	function max_user_modified($ids, $return_maximum=false, $master_only=false)
-	{
-		if (!is_array($ids)) $return_maximum = true;
-
-		$where = array('cal_id' => $ids);
-		if ($master_only) $where['cal_recur_date'] = 0;
-
-		if ($return_maximum)
-		{
-			if (($etags = $this->db->select($this->user_table,'MAX(cal_user_modified)',$where,
-				__LINE__,__FILE__,false,'','calendar')->fetchColumn()))
-			{
-				$etags = $this->db->from_timestamp($etags);
-			}
-		}
-		else
-		{
-			$etags = array();
-			foreach($this->db->select($this->user_table,'cal_id,MAX(cal_user_modified) AS user_etag',$where,
-				__LINE__,__FILE__,false,'GROUP BY cal_id','calendar') as $row)
-			{
-				$etags[$row['cal_id']] = $this->db->from_timestamp($row['user_etag']);
-			}
-		}
-		//error_log(__METHOD__.'('.array2string($ids).', '.array2string($return_maximum).', '.array2string($master_only).') = '.array2string($etags).' '.function_backtrace());
-		return $etags;
-	}
-
-	/**
 	 * Get maximum modification time of events for given participants and optional owned by them
 	 *
 	 * This includes ALL recurences of an event series
@@ -347,6 +291,10 @@ class calendar_so
 	 */
 	function get_ctag($users, $owner_too=false,$master_only=false)
 	{
+		static $ctags = array();	// some per-request caching
+		$signature = serialize(func_get_args());
+		if (isset($ctags[$signature])) return $ctags[$signature];
+
 		$where = array(
 			'cal_user_type' => 'u',
 			'cal_user_id' => $users,
@@ -367,14 +315,8 @@ class calendar_so
 					'cal_owner' => $users,
 				),')');
 		}
-		if (($data = $this->db->select($this->user_table,array(
-			'MAX(cal_user_modified) AS max_user_modified',
-			'MAX(cal_modified) AS max_modified',
-		),$where,__LINE__,__FILE__,false,'','calendar',0,'JOIN egw_cal ON egw_cal.cal_id=egw_cal_user.cal_id')->fetch()))
-		{
-			$data = max($this->db->from_timestamp($data['max_user_modified']),$data['max_modified']);
-		}
-		return $data;
+		return $ctags[$signature] = $this->db->select($this->user_table,'MAX(cal_modified) AS max_modified',
+			$where,__LINE__,__FILE__,false,'','calendar',0,'JOIN egw_cal ON egw_cal.cal_id=egw_cal_user.cal_id')->fetchColumn();
 	}
 
 	/**
@@ -729,7 +671,6 @@ class calendar_so
 		{
 			$ids = array_unique($ids);
 
-			$need_max_user_modified = array();
 			// now ready all users with the given cal_id AND (cal_recur_date=0 or the fitting recur-date)
 			// This will always read the first entry of each recuring event too, we eliminate it later
 			$recur_dates[] = 0;
@@ -762,16 +703,6 @@ class calendar_so
 
 				// set data, if recurrence is requested
 				if (isset($events[$id])) $events[$id]['participants'][$uid] = $status;
-
-				// fill max_user_modified:
-				if (!$params['master_only'] && $events[$id]['recur_type'])
-				{
-					$need_max_user_modified[$id] = $id;
-				}
-				elseif (isset($events[$id]) && ($modified = $this->db->from_timestamp($row['cal_user_modified'])) > $events[$id]['max_user_modified'])
-				{
-					$events[$id]['max_user_modified'] = $modified;
-				}
 			}
 			// query recurrance exceptions, if needed
 			if (!$params['enum_recuring'])
@@ -785,14 +716,6 @@ class calendar_so
 					{
 						$events[$i]['recurce_id'][] = $row['cal_start'];
 					}
-				}
-			}
-			// max_user_modified for recurring events has to include all recurrences, above code only querys $recur_date!
-			if (!$params['enum_recuring'] && $need_max_user_modified)
-			{
-				foreach($this->max_user_modified($need_max_user_modified) as $id => $modified)
-				{
-					$events[$id]['max_user_modified'] = $modified;
 				}
 			}
 			//custom fields are not shown in the regular views, so we only query them, if explicitly required
@@ -1651,7 +1574,11 @@ ORDER BY cal_user_type, cal_usre_id
 			if (!is_null($role) && $role != 'REQ-PARTICIPANT') $set['cal_role'] = $role;
 			$this->db->insert($this->user_table,$set,$where,__LINE__,__FILE__,'calendar');
 		}
-		$ret = $this->db->affected_rows();
+		// update modified and modifier in main table
+		if (($ret = $this->db->affected_rows()))
+		{
+			$this->updateModified($cal_id, time(), $GLOBALS['egw_info']['user']['account_id']);
+		}
 		//error_log(__METHOD__."($cal_id,$user_type,$user_id,$status,$recur_date) = $ret");
 		return $ret;
 	}
