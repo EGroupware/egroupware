@@ -2212,9 +2212,9 @@ function calendar_upgrade1_9_007()
 {
 	foreach(array('egw_cal_repeats','egw_cal_dates','egw_cal_user','egw_cal_extra') as $table)
 	{
-		$GLOBALS['egw_setup']->db->query("DELETE FROM $table WHERE cal_id IN (SELECT cal_id FROM egw_cal WHERE range_start=0 OR range_start IS NULL)");
+		$GLOBALS['egw_setup']->db->query("DELETE FROM $table WHERE cal_id IN (SELECT cal_id FROM egw_cal WHERE range_start=0 OR range_start IS NULL)", __LINE__, __FILE__);
 	}
-	$GLOBALS['egw_setup']->db->query("DELETE FROM egw_cal WHERE range_start=0 OR range_start IS NULL");
+	$GLOBALS['egw_setup']->db->query("DELETE FROM egw_cal WHERE range_start=0 OR range_start IS NULL", __LINE__, __FILE__);
 
 	// now we can remove temporary default of 0 from range_start and set it NOT NULL
 	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','range_start',array(
@@ -2228,9 +2228,20 @@ function calendar_upgrade1_9_007()
 }
 
 /**
+ * UPDATE cal_modified to contain maximum of cal_user_modified and current cal_modified, to get a single modification date per calendar-entry
+ */
+function calendar_upgrade1_9_008()
+{
+	$max_user_modified = 'SELECT '.$GLOBALS['egw_setup']->db->unix_timestamp('MAX(cal_user_modified)').' FROM egw_cal_user WHERE egw_cal.cal_id=egw_cal_user.cal_id';
+	$GLOBALS['egw_setup']->db->query("UPDATE egw_cal SET cal_modified=($max_user_modified) WHERE cal_modified < ($max_user_modified)", __LINE__, __FILE__);
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.009';
+}
+
+/**
  * Add cal_rrule columns, drop egw_cal_repeats table
  */
-/*function calendar_upgrade1_9_008()
+/*function calendar_upgrade1_9_009()
 {
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_rrule',array(
 		'type' => 'varchar',
@@ -2255,6 +2266,6 @@ function calendar_upgrade1_9_007()
 	}
 	$GLOBALS['egw_setup']->oProc->DropTable('egw_cal_repeats');
 
-	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.009';
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.010';
 }
 */

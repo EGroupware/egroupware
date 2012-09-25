@@ -232,7 +232,7 @@ class calendar_groupdav extends groupdav_handler
 				$props = array(
 					'getcontenttype' => $this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar',
 					'getetag' => '"'.$etag.'"',
-					'getlastmodified' => max($event['modified'], $event['max_user_modified']),
+					'getlastmodified' => $event['modified'],
 				);
 				if ($this->use_schedule_tag)
 				{
@@ -1215,15 +1215,17 @@ class calendar_groupdav extends groupdav_handler
 		}
 		$props['supported-calendar-component-set'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,
 			'supported-calendar-component-set',$supported_components);
-		$props['supported-report-set'] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
-			HTTP_WebDAV_Server::mkprop('supported-report',array(
+		$props['supported-report-set'] = array(
+			'calendar-query' => HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-query',''))),
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-query',''))))),
+			'calendar-multiget' => HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget',''))),
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget',''))))),
+			'free-busy-query' => HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'free-busy-query',''))),
-		))));
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'free-busy-query',''))))),
+		);
 		$props['supported-calendar-data'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'supported-calendar-data',array(
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/calendar', 'version'=> '2.0')),
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data', array('content-type' => 'text/x-calendar', 'version'=> '1.0'))));
