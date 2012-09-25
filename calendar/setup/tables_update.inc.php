@@ -2169,13 +2169,6 @@ function calendar_upgrade1_9_006()
 		'default' => '0',	// PostgreSQL needs a temporary default, to create a nullable column!
 		'comment' => 'startdate (of range)'
 	));
-	// now we can remove temporary default of 0 from range_start
-	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','range_start',array(
-		'type' => 'int',
-		'precision' => '8',
-		'nullable' => False,
-		'comment' => 'startdate (of range)'
-	));
 	$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET range_start = (SELECT MIN(cal_start) FROM egw_cal_dates WHERE egw_cal_dates.cal_id=egw_cal.cal_id)', __LINE__, __FILE__);
 
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','range_end',array(
@@ -2192,7 +2185,7 @@ function calendar_upgrade1_9_006()
 	}
 	else	// PostgreSQL, MsSQL, ...
 	{
-		$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET range_end=recur_enddate FROM egw_cal_repeats WHERE egw_cal.cal_id=egw_cal_repeats.cal_id)', __LINE__, __FILE__);
+		$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET range_end=recur_enddate FROM egw_cal_repeats WHERE egw_cal.cal_id=egw_cal_repeats.cal_id', __LINE__, __FILE__);
 	}
 	$GLOBALS['egw_setup']->oProc->DropColumn('egw_cal_repeats',array(
 		'fd' => array(
@@ -2211,7 +2204,7 @@ function calendar_upgrade1_9_006()
 }
 
 /**
- * Delete all broken events having range_start=0 (not a single recurrence or a broken one with cal_start=0)
+ * Delete all broken events having range_start=0 or NULL (not a single recurrence or a broken one with cal_start=0)
  *
  * They are not displayed in regular calendar anyway, but might be synced to CalDAV or eSync clients.
  */
@@ -2219,9 +2212,17 @@ function calendar_upgrade1_9_007()
 {
 	foreach(array('egw_cal_repeats','egw_cal_dates','egw_cal_user','egw_cal_extra') as $table)
 	{
-		$GLOBALS['egw_setup']->db->query("DELETE FROM $table WHERE cal_id IN (SELECT cal_id FROM egw_cal WHERE range_start=0)");
+		$GLOBALS['egw_setup']->db->query("DELETE FROM $table WHERE cal_id IN (SELECT cal_id FROM egw_cal WHERE range_start=0 OR range_start IS NULL)");
 	}
-	$GLOBALS['egw_setup']->db->query("DELETE FROM egw_cal WHERE range_start=0");
+	$GLOBALS['egw_setup']->db->query("DELETE FROM egw_cal WHERE range_start=0 OR range_start IS NULL");
+
+	// now we can remove temporary default of 0 from range_start and set it NOT NULL
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','range_start',array(
+		'type' => 'int',
+		'precision' => '8',
+		'nullable' => False,
+		'comment' => 'startdate (of range)'
+	));
 
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.008';
 }
