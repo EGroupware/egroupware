@@ -938,7 +938,7 @@ class felamimail_hooks
 			}
 			display_sidebox($appname,$menu_title,$file);
 			unset($file);
-			$menu_title = 'Sieve';
+			$menu_title = lang('Sieve');
 			if (is_object($preferences)) $icServer = $preferences->getIncomingServer($profileID);
 			if(($icServer instanceof defaultimap)) {
 				if($icServer->enableSieve)
