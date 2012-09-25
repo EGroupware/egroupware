@@ -327,7 +327,7 @@
 						$bodyParts[$i]['body'] = "<pre>".$bodyParts[$i]['body']."</pre>";
 					}
 					if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = felamimail_bo::detect_encoding($bodyParts[$i]['body']);
-					$bodyParts[$i]['body'] = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+					$bodyParts[$i]['body'] = translation::convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 					#error_log( "GetDraftData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 					$this->sessionData['body'] .= ($i>0?"<br>":""). $bodyParts[$i]['body'] ;
 				}
@@ -340,7 +340,7 @@
 						$this->sessionData['body'] .= "<hr>";
 					}
 					if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = felamimail_bo::detect_encoding($bodyParts[$i]['body']);
-					$bodyParts[$i]['body'] = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+					$bodyParts[$i]['body'] = translation::convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 					#error_log( "GetDraftData (Plain) CharSet".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 					$this->sessionData['body'] .= ($i>0?"\r\n":""). $bodyParts[$i]['body'] ;
 				}
@@ -612,7 +612,8 @@
 						$bodyParts[$i]['body'] = "<pre>".$bodyParts[$i]['body']."</pre>";
 					}
 					if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = felamimail_bo::detect_encoding($bodyParts[$i]['body']);
-					$this->sessionData['body'] .= "<br>".self::_getCleanHTML($GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']));
+
+					$this->sessionData['body'] .= "<br>".self::_getCleanHTML(translation::convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']));
 					#error_log( "GetReplyData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 
 				}
@@ -635,7 +636,7 @@
 
 					// add line breaks to $bodyParts
 					if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = felamimail_bo::detect_encoding($bodyParts[$i]['body']);
-					$newBody	= $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+					$newBody	= translation::convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
 					#error_log( "GetReplyData (Plain) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 
 					$newBody        = explode("\n",$newBody);

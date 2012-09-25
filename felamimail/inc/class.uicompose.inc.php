@@ -587,6 +587,20 @@
 				$sessionData['body'] = $before.($sessionData['mimeType'] == 'html'?$sigText:$this->bocompose->convertHTMLToText($sigText)).$inbetween.$sessionData['body'];
 			}
 			// prepare body
+			// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
+			if (strtoupper($this->displayCharset) == 'UTF-8')
+			{
+				$test = @json_encode($sessionData['body']);
+				//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
+				//if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0)
+				if ($test=="null" && strlen($sessionData['body'])>0)
+				{
+					// this should not be needed, unless something fails with charset detection/ wrong charset passed
+					error_log(__METHOD__.__LINE__.' Charset problem detected; Charset Detected:'.felamimail_bo::detect_encoding($sessionData['body']));
+					$sessionData['body'] = utf8_encode($sessionData['body']);
+				}
+			}
+
 			if($sessionData['mimeType'] == 'html') {
 				$mode = 'simple-withimage';
 				#if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck'])) $mode = 'egw_simple_spellcheck';
