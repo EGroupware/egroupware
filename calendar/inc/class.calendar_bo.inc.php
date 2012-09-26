@@ -1930,7 +1930,8 @@ class calendar_bo
 			if (!$this->check_perms(EGW_ACL_FREEBUSY, $entry, 0, 'server')) return false;
 			$entry = $this->read($entry, $recur_date, true, 'server');
 		}
-		$etag = $schedule_tag = $entry['id'].':'.$entry['etag'].':'.$entry['modified'];
+		$etag = $schedule_tag = $entry['id'].':'.$entry['etag'];
+		$etag .= ':'.$entry['modified'];
 
 		// include exception etags into our own etag, if exceptions are included
 		if ($client_share_uid_excpetions && !empty($entry['uid']) &&
