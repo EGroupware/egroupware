@@ -386,7 +386,7 @@ class calendar_bo
 	 *	end   date enddate of the search/list, defaults to start + one day
 	 *	users  int|array integer user-id or array of user-id's to use, defaults to the current user
 	 *  cat_id int|array category-id or array of cat-id's (incl. all sub-categories), default 0 = all
-	 *	filter string all (not rejected), accepted, unknown, tentative, rejected or hideprivate
+	 *	filter string all (not rejected), accepted, unknown, tentative, rejected, hideprivate or everything (incl. rejected, deleted)
 	 *	query string pattern so search for, if unset or empty all matching entries are returned (no search)
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
 	 *	daywise boolean on True it returns an array with YYYYMMDD strings as keys and an array with events
@@ -469,7 +469,7 @@ class calendar_bo
 		// socal::search() returns rejected group-invitations, as only the user not also the group is rejected
 		// as we cant remove them efficiantly in SQL, we kick them out here, but only if just one user is displayed
 		$users_in = (array)$params_in['users'];
-		$remove_rejected_by_user = !in_array($filter,array('all','rejected')) &&
+		$remove_rejected_by_user = !in_array($filter,array('all','rejected','everything')) &&
 			count($users_in) == 1 && $users_in[0] > 0 ? $users_in[0] : null;
 		//error_log(__METHOD__.'('.array2string($params_in).", $sql_filter) params[users]=".array2string($params['users']).' --> remove_rejected_by_user='.array2string($remove_rejected_by_user));
 
