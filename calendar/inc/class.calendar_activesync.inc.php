@@ -388,12 +388,12 @@ return array();	// temporary disabling meeting requests from calendar
 	 * Process response to meeting request
 	 *
 	 * @see BackendDiff::MeetingResponse()
-	 * @param int|string $requestid uid of mail with meeting request, or < 0 for cal_id, or string with iCal from fmail plugin
 	 * @param string $folderid folder of meeting request mail
+	 * @param int|string $requestid cal_id, or string with iCal from fmail plugin
 	 * @param int $response 1=accepted, 2=tentative, 3=decline
 	 * @return int|boolean id of calendar item, false on error
 	 */
-	function MeetingResponse($requestid, $folderid, $response)
+	function MeetingResponse($folderid, $requestid, $response)
 	{
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
 
@@ -431,11 +431,6 @@ return array();	// temporary disabling meeting requests from calendar
 				debugLog(__METHOD__.'('.array2string($requestid).", $folderid, $response) event ($uid) deleted on server --> return false");
 				return false;
 			}
-		}
-		elseif($requestid > 0)	// uid from mail --> let fmail plugin call us
-		{
-			debugLog(__METHOD__."('$requestid', '$folderid', $response) returning NULL (fmail uid)");
-			return null;
 		}
 		elseif (!($event = $this->calendar->read(abs($requestid), 0, false, 'server')))
 		{

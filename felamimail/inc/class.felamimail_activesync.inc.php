@@ -1353,21 +1353,19 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 	 * fmail plugin only extracts the iCal attachment and let's calendar plugin deal with adding it
 	 *
 	 * @see BackendDiff::MeetingResponse()
-	 * @param int|string $requestid uid of mail with meeting request, or < 0 for cal_id or string with iCal
 	 * @param string $folderid folder of meeting request mail
+	 * @param int|string $requestid uid of mail with meeting request
 	 * @param int $response 1=accepted, 2=tentative, 3=decline
 	 * @return int|boolean id of calendar item, false on error
 	 */
-	function MeetingResponse($requestid, $folderid, $response)
+	function MeetingResponse($folderid, $requestid, $response)
 	{
-		if (!($requestid > 0)) return null;	// let calendar plugin handle it's own meeting requests
-
 		if (!class_exists('calendar_activesync'))
 		{
 			debugLog(__METHOD__."(...) no EGroupware calendar installed!");
 			return null;
 		}
-		if (!($requestid > 0) || !($stat = $this->StatMessage($folderid, $requestid)))
+		if (!($stat = $this->StatMessage($folderid, $requestid)))
 		{
 			debugLog(__METHOD__."($requestid, '$folderid', $response) returning FALSE (can NOT stat message)");
 			return false;
@@ -1381,7 +1379,9 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 				debugLog(__METHOD__."($requestid, '$folderid', $response) iCal found, calling now backend->MeetingResponse('$attachment[attachment]')");
 
 				// calling backend again with iCal attachment, to let calendar add the event
-				if (($ret = $this->backend->MeetingResponse($attachment['attachment'], $folderid, $response, $calendarid)))
+				if (($ret = $this->backend->MeetingResponse($attachment['attachment'],
+					$this->backend->createID('calendar',$GLOBALS['egw_info']['user']['account_id']),
+					$response, $calendarid)))
 				{
 					$ret = $calendarid;
 				}
