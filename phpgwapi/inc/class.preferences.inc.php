@@ -160,7 +160,8 @@ class preferences
 		foreach((array)$ids as $id)
 		{
 			$prefs[$id] = egw_cache::getInstance(__CLASS__, $id);
-			if (!isset($prefs[$id])) $db_read[] = $id;
+			// if prefs are not returned (null) or not an array, read them from db
+			if (!isset($prefs[$id]) && !is_array($prefs[$id])) $db_read[] = $id;
 		}
 		if ($db_read)
 		{
