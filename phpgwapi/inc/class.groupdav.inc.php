@@ -619,7 +619,8 @@ class groupdav extends HTTP_WebDAV_Server
 			foreach((array)$GLOBALS['egw_info']['user']['preferences']['groupdav'] as $name => $value)
 			{
 				list($prop,$prop4path,$ns) = explode(':', $name, 3);
-				if ($prop4path == $path && !in_array($ns,self::$ns_needs_explicit_named_props))
+				if ($prop4path == $path && (!in_array($ns,self::$ns_needs_explicit_named_props) ||
+					isset(self::$proppatch_props[$prop]) && self::$proppatch_props[$prop] === $ns))
 				{
 					$props[] = self::mkprop($ns, $prop, $value);
 					//error_log(__METHOD__."() arbitrary $ns:$prop=".array2string($value));
@@ -956,6 +957,7 @@ class groupdav extends HTTP_WebDAV_Server
 			//'DAV:owner'            => 'Owner',
 			//'DAV:current-user-privilege-set' => 'current-user-privilege-set',
 			//'DAV:getcontentlength' => 'Size',
+			//'DAV:sync-token' => 'sync-token',
 		);
 		$n = 0;
 		foreach($files['files'] as $file)
@@ -1166,6 +1168,8 @@ class groupdav extends HTTP_WebDAV_Server
 		'addressbook-description' => self::CARDDAV,
 		'calendar-color' => self::ICAL,	// only mentioned that old prefs still work
 		'calendar-order' => self::ICAL,
+		'default-alarm-vevent-date' => self::CALDAV,
+		'default-alarm-vevent-datetime' => self::CALDAV,
 	);
 
 	/**
