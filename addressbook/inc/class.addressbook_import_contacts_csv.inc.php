@@ -170,8 +170,8 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 			if($warning) $this->warnings[$import_csv->get_current_position()] = $warning;
 
 			// Set owner, unless it's supposed to come from CSV file
-			if($_definition->plugin_options['owner_from_csv']) {
-				if($record['owner'] && !is_numeric($record['owner'])) {
+			if($_definition->plugin_options['owner_from_csv'] && $record['owner']) {
+				if(!is_numeric($record['owner'])) {
 					// Automatically handle text owner without explicit translation
 					$new_owner = importexport_helper_functions::account_name2id($record['owner']);
 					if($new_owner == '') {
@@ -190,7 +190,7 @@ class addressbook_import_contacts_csv implements importexport_iface_import_plugi
 			}
 
 			// Check that owner (addressbook) is allowed
-			if(!in_array($record['owner'], $this->bocontacts->get_addressbooks()))
+			if(!array_key_exists($record['owner'], $this->bocontacts->get_addressbooks()))
 			{
 				$this->errors[$import_csv->get_current_position()] = lang("Unable to import into %1, using %2",
 					common::grab_owner_name($record['owner']),
