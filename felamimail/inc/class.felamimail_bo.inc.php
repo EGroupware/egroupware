@@ -1693,6 +1693,7 @@ class felamimail_bo
 		{
 			$buff = array();
 			$isConError = array();
+			$waitOnFailure = array();
 		}
 		else
 		{
@@ -1706,9 +1707,15 @@ class felamimail_bo
 			{
 				unset($isConError[$_ImapServerId]);
 			}
+			$waitOnFailure = egw_cache::getCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*2);
+			if (isset($waitOnFailure[$_ImapServerId]))
+			{
+				unset($waitOnFailure[$_ImapServerId]);
+			}
 		}
 		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($account_id),$buff,$expiration=60*15);
 		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerSIEVE_connectionError'.trim($account_id),$isConError,$expiration=60*15);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
 	}
 
 	static function resetFolderObjectCache($_ImapServerId=null)
@@ -4537,7 +4544,7 @@ class felamimail_bo
 				continue;
 			}
 			if ($singleBodyPart['charSet']===false) $singleBodyPart['charSet'] = felamimail_bo::detect_encoding($singleBodyPart['body']);
-			$singleBodyPart['body'] = $GLOBALS['egw']->translation->convert(
+			$singleBodyPart['body'] = translation::convert(
 				$singleBodyPart['body'],
 				strtolower($singleBodyPart['charSet'])
 			);
