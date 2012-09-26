@@ -1,3 +1,31 @@
+egroupware-epl (11.1.20120926-1) hardy; urgency=low
+
+  * Mergeprint: fix problem with not replaced app-links like #contact/nfn; fix problem with not replaced date only option on date/datetime customfields
+  * Timesheet/Mergeprint: add missing datefield definition
+  * eMail: fix problem when forwarding inline some mails containing winmail.dat attachments (HelpDesk Ticket 3810) (all original attachments are probably part of the winmail.dat, so we resolve the data/attachments contained in winmail.dat)
+  * eMail/Tracker: fix bug regarding the manual transformation of emails to tracker, if tracker is set to htmledit
+  * ImportExport: fix for fatal error in PHP 5.2 not having egw_time::createFromFormat()
+  * Calendar: popup notifications now include a link again
+  * phpFreeChat: fixed error: max_nick_len must be a postive number, given if a max. nick lengths was specified
+  * Calendar: add duration intervalls 10, 12, 14 and 16 hours
+  * API/all apps: fixed account-selection popup started with all users, not primary group, also displaying shown group in bold
+  * Addressbook: doublicate check while adding/editing contacts, based on email or match of 2 out of name, first name, organisation
+  * Calendar/CalDAV/eSync: tremendious speed improvment for sync-queries on huge installations (few milisecs instead of more then 2 minutes) *** REQUIRES SCHEMA UPDATE ***
+  * eMail: improve namespace/prefix detection and handling; work-around for dovecot bug/problem regarding the counters in shared folders; fix problem regarding the recognition of INLINE images (only INLINE images should NOT be listed as attachments in  windowed message display); support firefox drag and drop feature for inserting images (as data url) into html edit area in compose window; handle Reply-To as intended in creating eMails from .eml files; improving profile handling, regarding the ID of the activeProfile;
+  * eSync: fixed not displayed logfile for user-names with mixed case (not all lowercase)
+  * InfoLog/CalDAV/eSync: deleted entries where not taken into account for ctag generation, causing deletes only to sync after other modifications
+  * Addressbook: fixed not stored private custom-fields, if extra private tab was used
+  * Tracker: if just a new comment was added (no other changes), no notifications where sent (bug introduced mid July)
+  * Filemanager: fixed not working repair of doublicate directories
+  * Calendar/CalDAV/eSync: tracking participant status changes now in modified date and user of calendar entry (main table), fixes sometimes not synced status changes and simplifies code a lot
+  * Import/Export: improvements to import - file checking, more warnings, destination addressbook checking
+  * CalDAV/CardDAV: Max OS X 10.8 (Mountain Lion) support: automatic sync of all addressbooks in one
+  * eMail/eSync: on failed connection with the mail-server return 503 Service Unavailable; Retry After; if the client supports this, he should wait until retrying; if we experience consecutive connection failure over a defined limit, return 500 internal Server Error
+  * Calendar/eSync/eMail: fix not working accept/reject on calendar items (mails was working before)
+  * EPL feature: view generator for addressbook, calendar, infolog, timesheet, tracker and projectmanager
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 26 Sep 2012 12:25:12 +0200
+
 egroupware-epl (11.1.20120822-1) hardy; urgency=low
 
   * email/IMAP: revert the static caching of the selected mailbox, as the selecting of the mailbox seems not to live through the request
