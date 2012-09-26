@@ -359,8 +359,10 @@ abstract class groupdav_handler
 				'davkit'            => 'davkit',	// Apple iCal 10.6
 				'coredav'           => 'coredav',	// Apple iCal 10.7
 				'calendarstore'     => 'calendarstore',	// Apple iCal 5.0.1 under OS X 10.7.2
+				'calendaragent/'    => 'calendaragent',	// Apple iCal OS X 10.8*: Mac OS X/10.8.2 (12C54) CalendarAgent/55
 				'dataaccess'        => 'dataaccess',	// Apple addressbook iPhone
 				'cfnetwork'         => 'cfnetwork',	// Apple Addressbook 10.6/7
+				'addressbook/'      => 'cfnetwork',	// Apple Addressbook OS X 10.8*: Mac OS X/10.8.2 (12C54) AddressBook/1167
 				'bionicmessage.net' => 'funambol',	// funambol GroupDAV connector from bionicmessage.net
 				'zideone'           => 'zideone',	// zideone outlook plugin
 				'lightning'         => 'lightning',	// Lighting (incl. SOGo connector for addressbook)
