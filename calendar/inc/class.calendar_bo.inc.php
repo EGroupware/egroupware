@@ -1970,7 +1970,7 @@ class calendar_bo
 	/**
 	 * Query ctag for calendar
 	 *
-	 * @param int|array $user integer user-id or array of user-id's to use, defaults to the current user
+	 * @param int|string|array $user integer user-id or array of user-id's to use, defaults to the current user
 	 * @param string $filter='owner' all (not rejected), accepted, unknown, tentative, rejected or hideprivate
 	 * @param boolean $master_only=false only check recurance master (egw_cal_user.recur_date=0)
 	 * @return integer

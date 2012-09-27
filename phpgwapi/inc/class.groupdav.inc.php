@@ -26,10 +26,10 @@ require_once('HTTP/WebDAV/Server.php');
  * - /principals/groups/<groupname>/
  * - /<username>/             users home-set with
  * - /<username>/addressbook/ addressbook of user or group <username> given the user has rights to view it
- * - /<username>/addressbook-<other-username>/ shared addressbooks from other user or group
- * - /<username>/addressbook-accounts/ all accounts current user has rights to see
+ * - /<current-username>/addressbook-<other-username>/ shared addressbooks from other user or group
+ * - /<current-username>/addressbook-accounts/ all accounts current user has rights to see
  * - /<username>/calendar/    calendar of user <username> given the user has rights to view it
- * - /<username>/calendar-<other-username>/ shared calendar from other user or group
+ * - /<current-username>/calendar-<other-username>/ shared calendar from other user or group (only current <username>!)
  * - /<username>/inbox/       scheduling inbox of user <username>
  * - /<username>/outbox/      scheduling outbox of user <username>
  * - /<username>/infolog/     InfoLog's of user <username> given the user has rights to view it
@@ -37,6 +37,10 @@ require_once('HTTP/WebDAV/Server.php');
  * - /addressbook-accounts/ all accounts current user has rights to see
  * - /calendar/    calendar of current user
  * - /infolog/     infologs of current user
+ * - /(resources|locations)/<resource-name>/calendar calendar of a resource/location, if user has rights to view
+ * - /<current-username>/(resource|location)-<resource-name> shared calendar from a resource/location
+ *
+ * Shared addressbooks or calendars are only shown in in users home-set, if he subscribed to it via his CalDAV preferences!
  *
  * Calling one of the above collections with a GET request / regular browser generates an automatic index
  * from the data of a allprop PROPFIND, allow to browse CalDAV/CardDAV/GroupDAV tree with a regular browser.
@@ -347,7 +351,7 @@ class groupdav extends HTTP_WebDAV_Server
 			if ($this->debug > 1) error_log(__CLASS__."::$method: user='$user', app='$app', id='$id': 404 not found!");
 			return '404 Not Found';
 		}
-		if ($this->debug > 1) error_log(__CLASS__."::$method: user='$user', app='$app', id='$id'");
+		if ($this->debug > 1) error_log(__CLASS__."::$method(path='$options[path]'): user='$user', user_prefix='$user_prefix', app='$app', id='$id'");
 
 		$files = array('files' => array());
 		$path = $user_prefix = $this->_slashify($user_prefix);
@@ -364,13 +368,16 @@ class groupdav extends HTTP_WebDAV_Server
 				$files['files'][] = $this->add_collection('/principals/', array(
 					'displayname' => lang('Accounts'),
 				));
-				// todo: account_selection owngroups and none!!!
 				foreach($this->accounts->search(array('type' => 'both','order'=>'account_lid')) as $account)
 				{
 					$this->add_home($files, $path.$account['account_lid'].'/', $account['account_id'], $options['depth'] == 'infinity' ? 'infinity' : $options['depth']-1);
 				}
 			}
 			return true;
+		}
+		if ($path == '/' && ($app == 'resources' || $app == 'locations'))
+		{
+			return $this->add_resources_collection($files, '/'.$app.'/', $options['depth']);
 		}
 		if ($app != 'principals' && !isset($GLOBALS['egw_info']['user']['apps'][$this->root[$app]['app'] ? $this->root[$app]['app'] : $app]))
 		{
@@ -639,6 +646,49 @@ class groupdav extends HTTP_WebDAV_Server
 				// added shared calendars or addressbooks
 				$this->add_shared($files['files'], $path, $app, $user);
 			}
+			if ($path == '/' && $GLOBALS['egw_info']['user']['apps']['resources'])
+			{
+				$this->add_resources_collection($files, $path.'resources/');
+				$this->add_resources_collection($files, $path.'locations/');
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Add collection with available resources or locations calendar-home-sets
+	 *
+	 * @param array &$files
+	 * @param string $path / or /<username>/
+	 * @param int $depth=0
+	 * @return string|boolean http status or true|false
+	 */
+	protected function add_resources_collection(array &$files, $path, $depth=0)
+	{
+		if (!isset($GLOBALS['egw_info']['user']['apps']['resources']))
+		{
+			if ($this->debug) error_log(__CLASS__."::$method(path=$path) 403 Forbidden: no app rights for 'resources'");
+			return "403 Forbidden: no app rights for 'resources'";	// no rights for the given app
+		}
+		list(,$what) = explode('/', $path);
+		if (($is_location = ($what == 'locations')))
+		{
+			$files['files'][] = $this->add_collection('/locations/', array('displayname' => lang('Location calendars')));
+		}
+		else
+		{
+			$files['files'][] = $this->add_collection('/resources/', array('displayname' => lang('Resource calendars')));
+		}
+		if ($depth)
+		{
+			foreach(groupdav_principals::get_resources() as $res_id => $resource)
+			{
+				if ($is_location == groupdav_principals::resource_is_location($resource))
+				{
+					$files['files'][] = $this->add_app('calendar', false, 'r'.$resource['res_id'],
+						'/'.groupdav_principals::resource2name($resource, $is_location).'/');
+				}
+			}
 		}
 		return true;
 	}
@@ -665,7 +715,7 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			foreach($shared as $id => $owner)
 			{
-				$file = $this->add_app($app,false,$id,$path.$app.'-'.$owner.'/');
+				$file = $this->add_app($app,false,$id,$path.$owner.'/');
 				// mark other users calendar as shared (iOS 5.0.1 AB does NOT display AB marked as shared!)
 				if ($app == 'calendar') $file['props']['resourcetype']['val'][] = self::mkprop(self::CALENDARSERVER,'shared','');
 				$files[] = $file;
@@ -721,7 +771,12 @@ class groupdav extends HTTP_WebDAV_Server
 	{
 		if ($this->debug) error_log(__METHOD__."(app='$app', no_extra_types=$no_extra_types, user='$user', path='$path')");
 		$user_preferences = $GLOBALS['egw_info']['user']['preferences'];
-		if ($user)
+		if (is_string($user) && $user[0] == 'r' && ($resource = groupdav_principals::read_resource(substr($user, 1))))
+		{
+			$is_location = groupdav_principals::resource_is_location($resource);
+			list($principalType, $account_lid) = explode('/', groupdav_principals::resource2name($resource, $is_location, $displayname));
+		}
+		elseif ($user)
 		{
 			$account_lid = $this->accounts->id2name($user);
 			if ($user >= 0 && $GLOBALS['egw']->preferences->account_id != $user)
@@ -730,22 +785,14 @@ class groupdav extends HTTP_WebDAV_Server
 				$user_preferences = $GLOBALS['egw']->preferences->read_repository();
 				$GLOBALS['egw']->preferences->__construct($GLOBALS['egw_info']['user']['account_lid']);
 			}
+			$principalType = $user < 0 ? 'groups' : 'users';
 		}
 		else
 		{
 			$account_lid = $GLOBALS['egw_info']['user']['account_lid'];
-		}
-
-		$account = $this->accounts->read($account_lid);
-
-		if ($user < 0)
-		{
-			$principalType = 'groups';
-		}
-		else
-		{
 			$principalType = 'users';
 		}
+		if (!isset($displayname)) $displayname = $this->account_name($user);
 
 		$props = array(
 			'owner' => array(self::mkprop('href',$this->base_uri.'/principals/'.$principalType.'/'.$account_lid.'/')),
@@ -754,10 +801,10 @@ class groupdav extends HTTP_WebDAV_Server
 		switch ($app)
 		{
 			case 'inbox':
-				$props['displayname'] = lang('Scheduling inbox').' '.$this->account_name($user);
+				$props['displayname'] = lang('Scheduling inbox').' '.$displayname;
 				break;
 			case 'outbox':
-				$props['displayname'] = lang('Scheduling outbox').' '.$this->account_name($user);
+				$props['displayname'] = lang('Scheduling outbox').' '.$displayname;
 				break;
 			case 'addressbook':
 				if ($path == '/addressbook/')
@@ -773,7 +820,7 @@ class groupdav extends HTTP_WebDAV_Server
 				}
 				// fall through
 			default:
-				$props['displayname'] = translation::convert(lang($app).' '.$this->account_name($user),$this->egw_charset,'utf-8');
+				$props['displayname'] = translation::convert(lang($app).' '.$displayname, $this->egw_charset, 'utf-8');
 		}
 
 		// rfc 5995 (Use POST to add members to WebDAV collections): we use collection path with add-member query param
@@ -842,7 +889,7 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			if (method_exists($handler,'extra_properties'))
 			{
-				$props = $handler->extra_properties($props,$this->account_name($account),$this->base_uri,$user,$path);
+				$props = $handler->extra_properties($props, $displayname, $this->base_uri, $user, $path);
 			}
 			// add ctag if handler implements it
 			if (method_exists($handler,'getctag') && $this->prop_requested('getctag') === true)
@@ -1433,14 +1480,30 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		$parts = explode('/', $this->_unslashify($path));
 
-		if (($account_id = $this->accounts->name2id($parts[0], 'account_lid')) ||
+		// /(resources|locations)/<resource-id>-<resource-name>/calendar
+		if ($parts[0] == 'resources' || $parts[0] == 'locations')
+		{
+			if (!empty($parts[1]))
+			{
+				$user = $parts[0].'/'.$parts[1];
+				array_shift($parts);
+				$res_id = (int)array_shift($parts);
+				if (!groupdav_principals::read_resource($res_id))
+				{
+					return false;
+				}
+				$account_id = 'r'.$res_id;
+				$app = 'calendar';
+			}
+		}
+		elseif (($account_id = $this->accounts->name2id($parts[0], 'account_lid')) ||
 			($account_id = $this->accounts->name2id($parts[0]=urldecode($parts[0]))))
 		{
 			// /$user/$app/...
 			$user = array_shift($parts);
 		}
 
-		$app = array_shift($parts);
+		if (!isset($app)) $app = array_shift($parts);
 
 		// /addressbook-accounts/
 		if (!$account_id && $app == 'addressbook-accounts')
@@ -1449,13 +1512,23 @@ class groupdav extends HTTP_WebDAV_Server
 			$user = 0;
 			$user_prefix = '/';
 		}
-		// shared calendars/addressbooks at /<currentuser>/(calendar|addressbook|infolog)-<username>
+		// shared calendars/addressbooks at /<currentuser>/(calendar|addressbook|infolog|resource|location)-<username>
 		elseif ($account_id == $GLOBALS['egw_info']['user']['account_id'] && strpos($app, '-') !== false)
 		{
+			$user_prefix = '/'.$GLOBALS['egw_info']['user']['account_lid'].'/'.$app;
 			list($app, $username) = explode('-', $app, 2);
 			if ($username == 'accounts' && !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
 			{
 				$account_id = 0;
+			}
+			elseif($app == 'resource' || $app == 'location')
+			{
+				if (!groupdav_principals::read_resource($res_id = (int)$username))
+				{
+					return false;
+				}
+				$account_id = 'r'.$res_id;
+				$app = 'calendar';
 			}
 			elseif (!($account_id = $this->accounts->name2id($username, 'account_lid')) &&
 					!($account_id = $this->accounts->name2id($username=urldecode($username))))
@@ -1463,7 +1536,6 @@ class groupdav extends HTTP_WebDAV_Server
 				return false;
 			}
 			$user = $account_id;
-			$user_prefix = '/'.$GLOBALS['egw_info']['user']['account_lid'].'/'.$app.'-'.$username;
 		}
 		elseif ($user)
 		{

@@ -284,7 +284,7 @@ class calendar_so
 	 *
 	 * This includes ALL recurences of an event series
 	 *
-	 * @param int|array $users one or mulitple calendar users
+	 * @param int|string|array $users one or mulitple calendar users
 	 * @param booelan $owner_too=false if true return also events owned by given users
 	 * @param boolean $master_only=false only check recurance master (egw_cal_user.recur_date=0)
 	 * @return int maximum modification timestamp
@@ -295,27 +295,44 @@ class calendar_so
 		$signature = serialize(func_get_args());
 		if (isset($ctags[$signature])) return $ctags[$signature];
 
-		$where = array(
-			'cal_user_type' => 'u',
-			'cal_user_id' => $users,
-		);
+		$types = array();
+		foreach((array)$users as $uid)
+		{
+			self::split_user($uid, $type, $id);
+			$types[$type][] = $id;
+		}
+		foreach($types as $type => $ids)
+		{
+			$where = array(
+				'cal_user_type' => $type,
+				'cal_user_id' => $ids,
+			);
+			if (count($types) > 1)
+			{
+				$types[$type] = $this->db->expression($this->user_table, $where);
+			}
+		}
+		if (count($types) > 1)
+		{
+			$where[] = '('.explode(' OR ', $types).')';
+		}
 		if ($master_only)
 		{
 			$where['cal_recur_date'] = 0;
 		}
 		if ($owner_too)
 		{
-			// owner can only by users, no groups
+			// owner can only by users, no groups or resources
 			foreach($users as $key => $user)
 			{
-				if ($user < 0) unset($users[$key]);
+				if (!($user > 0)) unset($users[$key]);
 			}
 			$where = $this->db->expression($this->user_table, '(', $where, ' OR ').
 				$this->db->expression($this->cal_table, array(
 					'cal_owner' => $users,
 				),')');
 		}
-		return $ctags[$signature] = $this->db->select($this->user_table,'MAX(cal_modified) AS max_modified',
+		return $ctags[$signature] = $this->db->select($this->user_table,'MAX(cal_modified)',
 			$where,__LINE__,__FILE__,false,'','calendar',0,'JOIN egw_cal ON egw_cal.cal_id=egw_cal_user.cal_id')->fetchColumn();
 	}
 

@@ -1,6 +1,7 @@
 %1 email addresses inserted	common	de	%1 E-Mail-Adressen eingefügt
 %1 file	common	de	%1 Datei
 %1 is not executable by the webserver !!!	common	de	%1 ist nicht ausführbar durch den Webserver !!!
+%1 to sync	groupdav	de	%1 zum synchronisieren
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	de	%1Anderes Verzeichnis auswählen%2<br />oder %3 geben Sie dem Webserver Schreibrechte für dieses Verzeichnis.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	de	%1EGroupware%2 ist eine, in %3PHP%4 programmierte, webbasierte, Mehrbenutzer Groupware Suite.
 (session restored in %1 seconds)	common	de	(Sitzung in %1 Sekunden wiederhergestellt)
@@ -418,6 +419,8 @@ list	common	de	Liste
 list members	common	de	Mitglieder anzeigen
 lithuania	common	de	LITAUEN
 local	common	de	lokal
+location calendars	groupdav	de	Kalender von Räumen
+locations	common	de	Räume
 logging / debuging	groupdav	de	Logging / Fehlersuche
 login	common	de	Anmelden
 loginid	common	de	Benutzerkennung
@@ -596,6 +599,7 @@ replace	common	de	Ersetzen
 replace with	common	de	Ersetzen durch
 requests and full responses to files directory	common	de	Anfragen und komplette Antworten in das Dateiverzeichnis
 requests and truncated responses to apache error-log	groupdav	de	Anfragen und gekürzte Antworten ins Apache error-log
+resource calendars	groupdav	de	Kalender von Ressourcen
 resource type	common	de	Ressource Typ
 restore failed	common	de	Wiederherstellung fehlgeschlagen
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollständige Lister der Benutzerkonten auf diesem System. Warnung: Die Rückgabe kann sehr gross sein

@@ -756,7 +756,7 @@ class groupdav_principals extends groupdav_handler
 		{
 			$files = array();
 			// add /pricipals/users/ entry
-			$files[] = $this->add_collection('/principals/users/');
+			$files[] = $this->add_collection('/principals/users/', array('displayname' => lang('Users')));
 
 			if ($options['depth'])
 			{
@@ -822,7 +822,7 @@ class groupdav_principals extends groupdav_handler
 		{
 			$files = array();
 			// add /pricipals/users/ entry
-			$files[] = $this->add_collection('/principals/groups/');
+			$files[] = $this->add_collection('/principals/groups/', array('displayname' => lang('Groups')));
 
 			if ($options['depth'])
 			{
@@ -1130,19 +1130,25 @@ class groupdav_principals extends groupdav_handler
 			'resource-id' => array(HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('resources', $resource['res_id']))),
 			// Calendarserver also reports empty email-address-set, thought iCal still does not show resources (only locations)
 			'email-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'email-address-set',''),
+			'calendar-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-home-set',array(
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$name.'/'))),
 		));
 	}
 
 	/**
 	 * Get path of a resource-principal (relative to principal collection)
 	 *
-	 * @param array $resource
-	 * @param boolean $is_location=null
+	 * @param array|int $resource
+	 * @param boolean &$is_location=null
 	 * @param string &$displayname=null on return displayname of resource
 	 * @return string eg. "locations/123-some-room" or "resouces/345-some-device"
 	 */
-	protected function resource2name(array $resource, &$is_location=null, &$displayname=null)
+	public static function resource2name($resource, &$is_location=null, &$displayname=null)
 	{
+		if (!is_array($resource) && !($resource = self::read_resource($resource)))
+		{
+			return null;
+		}
 		if (is_null($is_location)) $is_location = self::resource_is_location($resource);
 
 		$displayname = translation::convert($resource['name'],	translation::charset(), 'utf-8');
@@ -1165,7 +1171,7 @@ class groupdav_principals extends groupdav_handler
 		$str = htmlentities($str,ENT_QUOTES,translation::charset());
 		$str = str_replace(array_keys($extra),array_values($extra),$str);
 		$str = preg_replace('/&([aAuUoO])uml;/','\\1e',$str);	// replace german umlauts with the letter plus one 'e'
-		$str = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1',$str);	// remove all types of acents
+		$str = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1',$str);	// remove all types of accents
 		$str = preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','',$str);	// remove all other entities
 
 		return $str;
@@ -1186,16 +1192,38 @@ class groupdav_principals extends groupdav_handler
 			$config = config::read('resources');
 			$location_cats = $config['location_cats'] ? explode(',', $config['location_cats']) : array();
 		}
-		if (!isset(self::$resources)) self::$resources = new resources_bo();
-
-		if (!is_array($resource))
+		if (!is_array($resource) && !($resource = self::read_resource($resource)))
 		{
-			if (!($resource = self::$resources->read($resource)))
+			return null;
+		}
+		return $resource['cat_id'] && in_array($resource['cat_id'], $location_cats);
+	}
+
+	/**
+	 * Read a resource
+	 *
+	 * @param int $res_id resource-id
+	 * @return array with values for res_id, cat_id and name
+	 */
+	public static function read_resource($res_id)
+	{
+		static $cache;	// some per-request caching
+
+		if (isset(self::$all_resources) && isset(self::$all_resources[$res_id]))
+		{
+			return self::$all_resources[$res_id];
+		}
+
+		if (!isset($cache[$res_id]))
+		{
+			if (!isset(self::$resources)) self::$resources = new resources_bo();
+
+			if (!($cache[$res_id] = self::$resources->read($res_id)))
 			{
 				return null;
 			}
 		}
-		return $resource['cat_id'] && in_array($resource['cat_id'], $location_cats);
+		return $cache[$res_id];
 	}
 
 	/**
@@ -1220,10 +1248,12 @@ class groupdav_principals extends groupdav_handler
 	 *
 	 * @return array of array with values for res_id, cat_id and name (no other values1)
 	 */
-	protected function get_resources()
+	public static function get_resources()
 	{
 		if (!isset(self::$all_resources))
 		{
+			if (!isset(self::$resources)) self::$resources = new resources_bo();
+
 			self::$all_resources = array();
 			$query = array(
 				'show_bookable' => true,	// ignore non-bookable resources
@@ -1331,7 +1361,7 @@ class groupdav_principals extends groupdav_handler
 				$app = 'resources';
 				if (!is_array($resource) || $resource['res_id'] == (int)$account)
 				{
-					$resource = self::$resources->read((int)$account);
+					$resource = self::read_resource((int)$account);
 				}
 				$location = 'L'.$resource['cat_id'];
 				$right = $what == 'write' ? EGW_ACL_DIRECT_BOOKING : EGW_ACL_CALREAD;
@@ -1502,7 +1532,8 @@ class groupdav_principals extends groupdav_handler
 		{
 			$files = array();
 			// add /pricipals/users/ entry
-			$files[] = $this->add_collection('/principals/'.($do_locations ? 'locations/' : 'resources/'));
+			$files[] = $this->add_collection('/principals/'.($do_locations ? 'locations/' : 'resources/'),
+				array('displayname' => $do_locations ? lang('Locations') : lang('Resources')));
 
 			if ($options['depth'])
 			{
@@ -1524,7 +1555,7 @@ class groupdav_principals extends groupdav_handler
 		}
 		else
 		{
-			if (!($resource = self::$resources->read((int)$name)) || ($is_location = self::resource_is_location($resource)) != $do_locations)
+			if (!($resource = self::read_resource((int)$name)) || ($is_location = self::resource_is_location($resource)) != $do_locations)
 			{
 				return '404 Not Found';
 			}

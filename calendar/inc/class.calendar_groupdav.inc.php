@@ -1366,7 +1366,22 @@ class calendar_groupdav extends groupdav_handler
 				(in_array('A',$calendar_home_set) || in_array((string)$id,$calendar_home_set)) &&
 				is_numeric($id) && ($owner = $this->accounts->id2name($id)))
 			{
-				$shared[$id] = $owner;
+				$shared[$id] = 'calendar-'.$owner;
+			}
+		}
+		// shared locations and resources
+		if ($GLOBALS['egw_info']['user']['apps']['resources'])
+		{
+			foreach(array('locations','resources') as $res)
+			{
+				if (($pref = $GLOBALS['egw_info']['user']['preferences']['groupdav']['calendar-home-set-'.$res]))
+				{
+					foreach(explode(',', $pref) as $res_id)
+					{
+						$is_location = $res == 'locations';
+						$shared['r'.$res_id] = str_replace('s/', '-', groupdav_principals::resource2name($res_id, $is_location));
+					}
+				}
 			}
 		}
 		return $shared;
@@ -1406,6 +1421,43 @@ class calendar_groupdav extends groupdav_handler
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
+
+		// allow to subscribe to resources
+		if ($GLOBALS['egw_info']['user']['apps']['resources'] && ($all_resources = groupdav_principals::get_resources()))
+		{
+			$resources = $locations = array();
+			foreach($all_resources as $resource)
+			{
+				if (groupdav_principals::resource_is_location($resource))
+				{
+					$locations[$resource['res_id']] = $resource['name'];
+				}
+				else
+				{
+					$resources[$resource['res_id']] = $resource['name'];
+				}
+			}
+			foreach(array(
+				'locations' => $locations,
+				'resources' => $resources,
+			) as $name => $options)
+			{
+				if ($options)
+				{
+					natcasesort($options);
+					$settings['calendar-home-set-'.$name] = array(
+						'type'   => 'multiselect',
+						'label'  => lang('%1 to sync', lang($name == 'locations' ? 'Location calendars' : 'Resource calendars')),
+						'no_lang'=> true,
+						'name'   => 'calendar-home-set-'.$name,
+						'help'   => lang('Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!').'<br/>'.lang('They will be sub-folders in users home (%1 attribute).','CalDAV "calendar-home-set"'),
+						'values' => $options,
+						'xmlrpc' => True,
+						'admin'  => False,
+					);
+				}
+			}
+		}
 		return $settings;
 	}
 }
