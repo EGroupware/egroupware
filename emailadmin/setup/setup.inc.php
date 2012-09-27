@@ -39,6 +39,11 @@ $setup_info['emailadmin']['hooks']['edit_group'] = 'emailadmin_hooks::edit_group
 $setup_info['emailadmin']['hooks']['group_manager'] = 'emailadmin_hooks::edit_group';
 $setup_info['emailadmin']['hooks']['deleteaccount'] = 'emailadmin_hooks::deleteaccount';
 $setup_info['emailadmin']['hooks']['deletegroup'] = 'emailadmin_hooks::deletegroup';
+
+// SMTP and IMAP support
+$setup_info['emailadmin']['hooks']['smtp_server_types'] = 'emailadmin_hooks::server_types';
+$setup_info['emailadmin']['hooks']['imap_server_types'] = 'emailadmin_hooks::server_types';
+
 /* Dependencies for this app to work */
 $setup_info['emailadmin']['depends'][] = array(
 	'appname'  => 'phpgwapi',

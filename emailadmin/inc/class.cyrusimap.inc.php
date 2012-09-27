@@ -10,7 +10,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-	
+
 include_once(EGW_SERVER_ROOT."/emailadmin/inc/class.defaultimap.inc.php");
 
 /**
@@ -21,8 +21,8 @@ class cyrusimap extends defaultimap
 	/**
 	 * Capabilities of this class (pipe-separated): default, sieve, admin, logintypeemail
 	 */
-	const CAPABILITIES = 'default|sieve|admin|logintypeemail';
-	
+	const CAPABILITIES = 'default|sieve|timedsieve|admin|logintypeemail';
+
 	// mailbox delimiter
 	var $mailboxDelimiter = '.';
 
@@ -30,24 +30,24 @@ class cyrusimap extends defaultimap
 	var $mailboxPrefix = '';
 
 	var $enableCyrusAdmin = false;
-	
+
 	var $cyrusAdminUsername;
-	
+
 	var $cyrusAdminPassword;
-	
+
 	/**
 	 * Updates an account
-	 * 
+	 *
 	 * @param array $_hookValues only value for key 'account_lid' and 'new_passwd' is used
 	 */
-	function addAccount($_hookValues) 
+	function addAccount($_hookValues)
 	{
 		return $this->updateAccount($_hookValues);
 	}
-	
+
 	/**
 	 * Delete an account
-	 * 
+	 *
 	 * @param array $_hookValues only value for key 'account_lid' is used
 	 */
 	function deleteAccount($_hookValues)
@@ -63,9 +63,9 @@ class cyrusimap extends defaultimap
 
 	/**
 	 * Delete multiple (user-)mailboxes via a wildcard, eg. '%' for whole domain
-	 * 
+	 *
 	 * Domain is the configured domain and it uses the Cyrus admin user
-	 * 
+	 *
 	 * @return string $username='%' username containing wildcards, default '%' for all users of a domain
 	 * @return int|boolean number of deleted mailboxes on success or false on error
 	 */
@@ -86,14 +86,14 @@ class cyrusimap extends defaultimap
 		list($reference,$restriction) = explode($username,$mailboxName,2);
 		$mboxes = $this->getMailboxes($reference,$username.$restriction);
 		//error_log(__METHOD__."('$username') getMailboxes('$reference','$username$restriction') = ".array2string($mboxes));
-		
+
 		foreach($mboxes as $mbox) {
 			// give the admin account the rights to delete this mailbox
 			if(PEAR::isError($this->setACL($mbox, $this->adminUsername, 'lrswipcda'))) {
 				$this->disconnect();
 				return false;
 			}
-	
+
 			if(PEAR::isError($this->deleteMailbox($mbox))) {
 				$this->disconnect();
 				return false;
@@ -111,7 +111,7 @@ class cyrusimap extends defaultimap
 	 * @param string $_username
 	 * @return array userdata
 	 */
-	function getUserData($_username) 
+	function getUserData($_username)
 	{
 		if($this->_connected === true) {
 			//error_log(__METHOD__."try to disconnect");
@@ -124,20 +124,20 @@ class cyrusimap extends defaultimap
 		if($quota = $this->getQuotaByUser($_username)) {
 			$userData['quotaLimit'] = $quota / 1024;
 		}
-		
+
 		$this->disconnect();
-		
+
 		return $userData;
 	}
-	
+
 	/**
 	 * Set information about a user
 	 * currently only supported information is the current quota
-	 * 
+	 *
 	 * @param string $_username
 	 * @param int $_quota
 	 */
-	function setUserData($_username, $_quota) 
+	function setUserData($_username, $_quota)
 	{
 		if(!$this->enableCyrusAdmin) {
 			return false;
@@ -146,7 +146,7 @@ class cyrusimap extends defaultimap
 		if($this->_connected === true) {
 			$this->disconnect();
 		}
-	
+
 		// create a admin connection
 		if(!$this->openConnection(true)) {
 			return false;
@@ -169,12 +169,12 @@ class cyrusimap extends defaultimap
 
 	/**
 	 * Updates an account
-	 * 
+	 *
 	 * @param array $_hookValues only value for key 'account_lid' and 'new_passwd' is used
 	 */
-	function updateAccount($_hookValues) 
+	function updateAccount($_hookValues)
 	{
-		if(!$this->enableCyrusAdmin) { 
+		if(!$this->enableCyrusAdmin) {
 			return false;
 		}
 		#_debug_array($_hookValues);
@@ -186,7 +186,7 @@ class cyrusimap extends defaultimap
 		if($this->_connected === true) {
 			$this->disconnect();
 		}
-		
+
 		// we need a admin connection
 		if(!$this->openConnection(true)) {
 			return false;

@@ -89,7 +89,11 @@
 
 			if(($icServer instanceof defaultimap) && $icServer->enableSieve) {
 				$this->bosieve		=& $icServer;
-				$this->timed_vacation = ($icServer instanceof cyrusimap) && $icServer->enableCyrusAdmin &&
+				$serverclass = get_class($icServer);
+				$classsupportstimedsieve = false;
+				if (!empty($serverclass) && stripos(constant($serverclass.'::CAPABILITIES'),'timedsieve') !== false) $classsupportstimedsieve = true;
+				
+				$this->timed_vacation = $classsupportstimedsieve && $icServer->enableCyrusAdmin &&
 					$icServer->adminUsername && $icServer->adminPassword;
 			} else {
 				die('Sieve not activated');

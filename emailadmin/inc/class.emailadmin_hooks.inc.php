@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * eGroupWare - eMailAdmin hooks
  *
  * @link http://www.egroupware.org
@@ -118,4 +118,29 @@ class emailadmin_hooks
 		}
 	}
 
+	/**
+	 * Add further imap and smtp server plugins to emailadmin
+	 *
+	 * @param string|array $data location string or array with key 'location' and other params
+	 * @return array
+	 */
+	public static function server_types($data)
+	{
+		$location = is_array($data) ? $data['location'] : $data;
+		$extended = is_array($data) ? $data['extended'] : false;
+
+		switch($location)
+		{
+			case 'imap_server_types':
+				return array(
+					'emailadmin_dovecot' => $extended ? array(
+						'description' => 'Dovecot',
+						'protocol' => 'imap',
+					) : 'Dovecot',
+				);
+
+			case 'smtp_server_type':	// nothing yet
+				break;
+		}
+	}
 }
