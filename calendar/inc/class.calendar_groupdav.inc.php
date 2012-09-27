@@ -416,8 +416,9 @@ class calendar_groupdav extends groupdav_handler
 						$cal_filters['order'] = 'cal_modified ASC';	// return oldest modifications first
 						// no standard time-range!
 						unset($cal_filters['start']);
-						unset($cal_filters['end']);
 					}
+					// no end-date / limit into the future, as unchanged entries would never be transferted later on
+					unset($cal_filters['end']);
 					break;
 				case 'sync-level':
 					if ($option['data'] != '1')
