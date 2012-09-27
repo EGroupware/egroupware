@@ -6,7 +6,7 @@
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2004-11 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-12 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -635,6 +635,7 @@ class calendar_bo
 			'public'=> 0,
 			'category' => $event['category'],	// category is visible anyway, eg. by using planner by cat
 			'non_blocking' => $event['non_blocking'],
+			'caldav_name' => $event['caldav_name'],
 		);
 	}
 
