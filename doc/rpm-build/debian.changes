@@ -1,3 +1,9 @@
+egroupware-epl (11.1.20120927-1) hardy; urgency=low
+
+  * CalDAV: fixed broken URL of private events in shared calendar user has no right to view
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 27 Sep 2012 11:04:07 +0200
+
 egroupware-epl (11.1.20120926-1) hardy; urgency=low
 
   * Mergeprint: fix problem with not replaced app-links like #contact/nfn; fix problem with not replaced date only option on date/datetime customfields
