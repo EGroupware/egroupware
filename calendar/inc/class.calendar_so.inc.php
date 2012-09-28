@@ -1255,6 +1255,12 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			$etag = $this->db->select($this->cal_table,'cal_etag',array('cal_id' => $cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
 		}
+
+		// if event is an exception: update modified of master, to force etag, ctag and sync-token change
+		if ($event['cal_reference'])
+		{
+			$this->updateModified($event['cal_reference']);
+		}
 		return $cal_id;
 	}
 
@@ -1577,7 +1583,13 @@ ORDER BY cal_user_type, cal_usre_id
 		// update modified and modifier in main table
 		if (($ret = $this->db->affected_rows()))
 		{
-			$this->updateModified($cal_id, time(), $GLOBALS['egw_info']['user']['account_id']);
+			$this->updateModified($cal_id);
+
+			// if event is an exception: update modified of master, to force etag, ctag and sync-token change
+			if (($master_id = $this->select($this->cal_table, 'cal_reference', array('cal_id' => $cal_id), __LINE__, __FILE__)->fetchColumn()))
+			{
+				$this->updateModified($master_id);
+			}
 		}
 		//error_log(__METHOD__."($cal_id,$user_type,$user_id,$status,$recur_date) = $ret");
 		return $ret;
@@ -2344,12 +2356,14 @@ ORDER BY cal_user_type, cal_usre_id
 	 * Udates the modification timestamp
 	 *
 	 * @param id		event id
-	 * @param time		new timestamp
-	 * @param modifier	uid of the modifier
-	 *
+	 * @param time		new timestamp, default current (server-)time
+	 * @param modifier	uid of the modifier, default current user
 	 */
-	function updateModified($id, $time, $modifier)
+	function updateModified($id, $time=null, $modifier=null)
 	{
+		if (is_null($time)) $time = time();
+		if (is_null($modifier)) $modifier = $GLOBALS['egw_info']['user']['account_id'];
+
 		$this->db->update($this->cal_table,
 			array('cal_modified' => $time, 'cal_modifier' => $modifier),
 			array('cal_id' => $id), __LINE__,__FILE__, 'calendar');
