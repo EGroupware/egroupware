@@ -511,6 +511,10 @@ class Net_IMAP extends Net_IMAPProtocol {
                     if(preg_match('/content-type: (.*);/iU', $ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)]']['CONTENT'], $matches)) {
                       $a['MIMETYPE']=strtolower($matches[1]);
                     }
+                    // some clients mess with the content-type and omit the space between keyword and mimetype
+                    if(!isset($a['MIMETYPE']) && preg_match('/content-type:(.*);/iU', $ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)]']['CONTENT'], $matches)) {
+                      $a['MIMETYPE']=strtolower($matches[1]);
+                    }
 					// fetch the priority [CONTENT] => X-Priority: 5\r\nContent-Type: multipart/alternative;\r\n\tboundary="b1_61838a67749ca51b425e42489adced98"\r\n\r\n\n
                     if(preg_match('/x-priority: ([0-9])/iU', $ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)]']['CONTENT'], $matches)) {
                       $a['PRIORITY']=strtolower($matches[1]);
@@ -519,6 +523,10 @@ class Net_IMAP extends Net_IMAPProtocol {
                     // some versions of cyrus send "CONTENT-TYPE" and CONTENT-TYPE only
                     if (preg_match('/content-type: (.*);/iU', $ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS ("CONTENT-TYPE" "X-PRIORITY")]']['CONTENT'], $matches)) {
                         $a['MIMETYPE']=strtolower($matches[1]);
+                    }
+                    // some clients mess with the content-type and omit the space between keyword and mimetype
+                    if(!isset($a['MIMETYPE']) && preg_match('/content-type:(.*);/iU', $ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)]']['CONTENT'], $matches)) {
+                      $a['MIMETYPE']=strtolower($matches[1]);
                     }
 					//  fetch the priority [CONTENT] => X-Priority: 5\r\nContent-Type: multipart/alternative;\r\n\tboundary="b1_61838a67749ca51b425e42489adced98"\r\n\r\n\n
                     if (preg_match('/x-priority: ([0-9])/iU', $ret["PARSED"][$i]['EXT']['BODY[HEADER.FIELDS ("CONTENT-TYPE" "X-PRIORITY")]']['CONTENT'], $matches)) {
