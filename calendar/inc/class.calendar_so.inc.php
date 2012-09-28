@@ -1620,7 +1620,7 @@ ORDER BY cal_user_type, cal_usre_id
 			$this->updateModified($cal_id);
 
 			// if event is an exception: update modified of master, to force etag, ctag and sync-token change
-			if (($master_id = $this->select($this->cal_table, 'cal_reference', array('cal_id' => $cal_id), __LINE__, __FILE__)->fetchColumn()))
+			if (($master_id = $this->db->select($this->cal_table, 'cal_reference', array('cal_id' => $cal_id), __LINE__, __FILE__)->fetchColumn()))
 			{
 				$this->updateModified($master_id);
 			}
