@@ -505,16 +505,19 @@ class calendar_so
 				$where[] = '('.((int)$start).' < range_end OR range_end IS NULL)';
 			}
 		}
+		if (!preg_match('/^[a-z_ ,c]+$/i',$params['order'])) $params['order'] = 'cal_start';		// gard against SQL injection
+
 		// if not enum recuring events, we have to use minimum start- AND end-dates, otherwise we get more then one event per cal_id!
 		if (!$params['enum_recuring'])
 		{
 			$where[] = "$this->user_table.cal_recur_date=0";
 			$cols = str_replace(array('cal_start','cal_end'),array('range_start AS cal_start','(SELECT MIN(cal_end) FROM egw_cal_dates WHERE egw_cal.cal_id=egw_cal_dates.cal_id) AS cal_end'),$cols);
+			// in case cal_start is used in a query, eg. calendar_ical::find_event
+			$where = str_replace(array('cal_start','cal_end'), array('range_start','(SELECT MIN(cal_end) FROM egw_cal_dates WHERE egw_cal.cal_id=egw_cal_dates.cal_id)'), $where);
+			$params['order'] = str_replace('cal_start', 'range_start', $params['order']);
 			if ($end) $where[] = (int)$end.' > range_start';
   		}
 		elseif ($end) $where[] = (int)$end.' > cal_start';
-
-		if (!preg_match('/^[a-z_ ,c]+$/i',$params['order'])) $params['order'] = 'cal_start';		// gard against SQL injection
 
 		if ($remove_rejected_by_user)
 		{
