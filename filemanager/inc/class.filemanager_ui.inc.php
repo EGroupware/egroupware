@@ -967,8 +967,8 @@ function force_download(_action, _senders)
 			else
 			{
 				$content = $stat;
-				$content['name'] = egw_vfs::basename($path);
-				$content['dir'] = egw_vfs::decodePath(egw_vfs::dirname($path));
+				$content['name'] = $content['itempicker_merge']['name'] = egw_vfs::basename($path);
+				$content['dir'] = $content['itempicker_merge']['dir'] = egw_vfs::decodePath(egw_vfs::dirname($path));
 				$content['path'] = $path;
 				$content['hsize'] = egw_vfs::hsize($stat['size']);
 				$content['mime'] = egw_vfs::mime_content_type($path);
@@ -1223,6 +1223,7 @@ function force_download(_action, _senders)
 				0 => lang('No access'),
 			);
 		}
+		$sel_options['mergeapp']= egw_link::app_list('merge');
 		$preserve = $content;
 		if (!isset($preserve['old']))
 		{
