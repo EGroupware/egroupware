@@ -19,6 +19,7 @@
 	jquery.jquery;
 	et2_core_inputWidget;
 	et2_core_valueWidget;
+	et2_extension_itempicker_actions;
 	egw_action.egw_action_common;
 */
 
@@ -51,6 +52,12 @@ var et2_itempicker = et2_inputWidget.extend({
 			"type": "string",
 			"default": et2_no_init,
 			"description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text."
+		},
+		"value": {
+			"name": "value",
+			"type": "any",
+			"default": "",
+			"description": "Optional itempicker value(s) - can be used for e.g. environmental information"
 		},
 		"query": {
 			"name": "Query callback",
@@ -185,7 +192,8 @@ var et2_itempicker = et2_inputWidget.extend({
 		{
 			var data = {};
 			data.app = this.current_app;
-			data.items = this.getSelectedItems();
+			data.value = this.options.value;
+			data.checked = this.getSelectedItems();
 			return this.action.exec(this, data);
 		}
 		
@@ -194,7 +202,7 @@ var et2_itempicker = et2_inputWidget.extend({
 	
 	getSelectedItems: function()
 	{
-		var items = {};
+		var items = [];
 		$j(this.itemlist).children("ul").children("li.selected").each(function(index) {
 			items[index] = $j(this).attr("id");	
 		});
