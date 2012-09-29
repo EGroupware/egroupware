@@ -1452,6 +1452,30 @@ abstract class bo_merge
 		}
 		common::egw_exit();
 	}
+	
+	/**
+	 * Download document merged with contact(s)
+	 * frontend for HTTP POST requests
+	 * accepts POST vars and calls internal function download()
+	 *   string data_document_name: the document name
+	 *   string data_document_dir: the document vfs directory
+	 *   string data_checked: contact id(s) to merge with (can be comma separated)
+	 *
+	 * @return string with error-message on error, otherwise it does NOT return
+	 */
+	public function download_by_request()
+	{
+		if(empty($_POST['data_document_name'])) return false;
+		if(empty($_POST['data_document_dir'])) return false;
+		if(empty($_POST['data_checked'])) return false;
+		
+		return $this->download(
+			$_POST['data_document_name'],
+			explode(',',$_POST['data_checked']),
+			'',
+			$_POST['data_document_dir']
+		);
+	}
 
 	/**
 	 * Get a list of document actions / files from the given directory

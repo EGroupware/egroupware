@@ -23,7 +23,8 @@ class calendar_merge extends bo_merge
 	 * @var array
 	 */
 	var $public_functions = array(
-		'show_replacements'	=> true,
+		'download_by_request'	=> true,
+		'show_replacements'		=> true,
 	);
 
 	// Object for getting calendar info
