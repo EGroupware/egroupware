@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="addressbook.importexport_wizard_vcard_charset" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+				<column width="180px"/>
+			</columns>
+			<rows>
+				<row>
+					<description id="msg" no_lang="1" span="all"/>
+				</row>
+				<row>
+					<description value="Charset of file"/>
+					<menulist class="width180">
+						<menupopup id="charset" no_lang="1"/>
+					</menulist>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.width180 select { width:150px;}
+		</styles>
+	</template>
+</overlay>

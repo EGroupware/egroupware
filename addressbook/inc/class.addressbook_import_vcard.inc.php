@@ -109,6 +109,8 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 		// fetch the addressbook bo
 		$this->bocontacts = new addressbook_vcal();
 
+		$charset = $_definition->plugin_options['charset'];
+
 		// Start counting successes
 		$this->current = 0;
 		$count = 0;
