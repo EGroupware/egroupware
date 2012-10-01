@@ -956,8 +956,8 @@ class groupdav_principals extends groupdav_handler
 			// CardDAV
 			'addressbook-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',$addressbooks),
 			'principal-address' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'principal-address',
-				$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] ? '' :
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/addressbook-accounts/'.$account['person_id'].'.vcf')),
+				$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'] ? '' : array(
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/addressbook-accounts/'.$account['person_id'].'.vcf'))),
 			// CardDAV directory
 			'directory-gateway' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV, 'directory-gateway',array(
 				HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/addressbook/'))),
