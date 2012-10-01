@@ -340,7 +340,8 @@ class config
 		{
 			config::$db = $GLOBALS['egw_setup']->db;
 		}
-		if (!(self::$configs = egw_cache::getInstance(__CLASS__, 'configs')))
+		// if item is not cached or cache is not looking alright --> query config from database
+		if (!(self::$configs = egw_cache::getInstance(__CLASS__, 'configs')) || !is_array(self::$configs['phpgwapi']))
 		{
 			self::$configs = array();
 			foreach(self::$db->select(config::TABLE,'*',false,__LINE__,__FILE__) as $row)
