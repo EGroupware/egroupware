@@ -52,6 +52,24 @@ class ischedule_server
 		}
 	}
 
+	static $supported_components = array('VEVENT', 'VFREEBUSY', 'VTODO');
+	/**
+	 * Requiremnt for originator to match depending on method
+	 *
+	 * @var array method => array('ORGANIZER','ATTENDEE')
+	 * @link https://tools.ietf.org/html/draft-desruisseaux-ischedule-01#section-6.1
+	 */
+	static $supported_method2origin_requirement = array(
+		//'PUBLISH' => null,	// no requirement
+		'REQUEST' => array('ORGANIZER', 'ATTENDEE'),
+		'REPLY'   => array('ATTENDEE'),
+		'ADD'     => array('ORGANIZER'),
+		'CANCEL'  => array('ORGANIZER'),
+		//'REFRESH' => null,
+		//'COUNTER' => array('ATTENDEE'),
+		//'DECLINECOUNTER' => array('ORGANIZER'),
+	);
+
 	/**
 	 * Serve an iSchedule POST request
 	 */
@@ -67,16 +85,152 @@ class ischedule_server
 		}
 		if (($missing = array_diff($required_headers, array_keys($headers))))
 		{
-			throw new Exception ('Bad Request: missing '.implode(', ', $missing).' header(s)', 403);
+			throw new Exception ('Bad Request: missing '.implode(', ', $missing).' header(s)', 400);
 		}
 		if (!$this->dkim_validate($headers))
 		{
-			throw new Exception('Bad Request: DKIM signature invalid', 403);
+			throw new Exception('Bad Request: DKIM signature invalid', 400);
+		}
+		// check if recipient is a user
+		// ToDo: multiple recipients
+		if (!($account_id = $GLOBALS['egw']->accounts->name2id($headers['Recipient'], 'account_email')))
+		{
+			throw new Exception('Bad Request: unknown recipient', 400);
+		}
+		// create enviroment for recipient user, as we act on his behalf
+		$GLOBALS['egw']->session->account_id = $account_id;
+		$GLOBALS['egw']->session->account_lid = $GLOBALS['egw']->accounts->id2name($account_id);
+		//$GLOBALS['egw']->session->account_domain = $domain;
+		$GLOBALS['egw_info']['user']  = $GLOBALS['egw']->session->read_repositories();
+		translation::init();
+
+		// check originator is allowed to iSchedule with recipient
+		// ToDo: preference for user/admin to specify with whom to iSchedule: $allowed_origins
+		$allowed_origins = preg_split('/, ?/', $GLOBALS['egw_info']['user']['groupdav']['ischedule_allowed_origins']);
+		/* disabled 'til UI is ready to specifiy
+		list(,$originator_domain) = explode('@', $headers['Originator']);
+		if (!in_array($headers['Originator'], $allowed_orgins) && !in_array($originator_domain, $allowed_origins))
+		{
+			throw new Exception('Forbidden', 403);
+		}*/
+
+		// check method and component of Content-Type are valid
+		if (!preg_match('/component=([^;]+)/i', $headers['Content-Type'], $matches) ||
+			(!in_array($component=strtoupper($matches[1]), self::$supported_components)))
+		{
+			throw new Exception ('Bad Request: missing or unsupported component in Content-Type header', 400);
+		}
+		if (!preg_match('/method=([^;]+)/i', $headers['Content-Type'], $matches) ||
+			(!isset(self::$supported_method2origin_requirement[$method=strtoupper($matches[1])])) ||
+			$component == 'VFREEBUSY' && $method != 'REQUEST')
+		{
+			throw new Exception ('Bad Request: missing or unsupported method in Content-Type header', 400);
 		}
 		// parse iCal
+		$ical = file_get_contents('php://input');
+		// code copied from calendar_groupdav::outbox_freebusy_request for now
+		include_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
+		$vcal = new Horde_iCalendar();
+		if (!$vcal->parsevCalendar($ical, 'VCALENDAR', 'utf-8'))
+		{
+			throw new Exception('Bad Request: Failed parsing iCal', 400);
+		}
+		$version = $vcal->getAttribute('VERSION');
+		$handler = new calendar_ical();
+		$handler->setSupportedFields('GroupDAV',$this->agent);
+		$handler->calendarOwner = $handler->user = 0;	// to NOT default owner/organizer to something
+		if (!($vcal_comp = $vcal->getComponent(0)) ||
+			!($event = $handler->vevent2egw($vcal_comp, $version, $handler->supportedFields,
+				$principalURL='', $check_component='Horde_iCalendar_'.strtolower($component))))
+		{
+			throw new Exception('Bad Request: Failed converting iCal', 400);
+		}
 
 		// validate originator matches organizer or attendee
-		throw new exception('Not yet implemented!');
+		$originator_requirement = self::$supported_method2origin_requirement[$method];
+		if (isset($originator_requirement))
+		{
+			$matches = false;
+			foreach($originator_requirement as $requirement)
+			{
+				if ($requirement == 'ORGANIZER' &&
+					($event['organizer'] == $headers['Originator'] || strpos($event['organizer'], '<'.$headers['Originator'].'>') !== false) ||
+					$requirement == 'ATTENDEE' &&
+					(in_array('e'.$headers['Originator'], $event['participants']) ||
+					// ToDO: Participant could have CN, need to check that too
+					 $originator_account_id = $GLOBALS['egw']->accounts->name2id($headers['Originator'], 'account_email') &&
+					 	in_array($originator_account_id, $event['participants'])))
+			 	{
+			 		$matches = true;
+			 		break;	// no need to try further as we OR
+			 	}
+			}
+			if (!$matches)
+			{
+				throw new Exception('Bad Request: originator invalid for given '.$component.'!', 400);
+			}
+		}
+
+		$xml = new XMLWriter;
+		$xml->openMemory();
+		$xml->setIndent(true);
+		$xml->startDocument('1.0', 'UTF-8');
+		$xml->startElementNs(null, 'schedule-response', self::ISCHEDULE);	// null = no prefix
+
+		switch($component)
+		{
+			case 'VFREEBUSY':
+				$this->vfreebusy($event, $handler, $vcal_comp, $xml);
+				break;
+
+			default:
+				throw new exception('Not yet implemented!');
+		}
+
+		$xml->endElement();	// schedule-response
+		$xml->endDocument();
+
+		header('Content-type: text/xml; charset=UTF-8');
+		header('iSchedule-Version: '.self::VERSION);
+
+		echo $xml->outputMemory();
+	}
+
+	/**
+	 * Handle VFREEBUSY component
+	 *
+	 * @param array $event
+	 * @param calendar_ical $handler
+	 * @param Horde_iCalendar_vfreebusy $component
+	 * @param XMLWriter $xml
+	 */
+	function vfreebusy(array $event, calendar_ical $handler, Horde_iCalendar_vfreebusy $component, XMLWriter $xml)
+	{
+		$organizer = $component->getAttribute('ORGANIZER');
+		$attendees = (array)$component->getAttribute('ATTENDEE');
+
+		foreach($event['participants'] as $uid => $status)
+		{
+			$xml->startElement('response');
+
+			$xml->writeElement('recipient', $attendee=array_shift($attendees));	// iSchedule has not DAV:href!
+
+			if (is_numeric($uid))
+			{
+				$xml->writeElement('request-status', '2.0;Success');
+				$xml->writeElement('calendar-data',
+					$handler->freebusy($uid, $event['end'], true, 'utf-8', $event['start'], 'REPLY', array(
+						'UID' => $event['uid'],
+						'ORGANIZER' => $organizer,
+						'ATTENDEE' => $attendee,
+					)));
+			}
+			else
+			{
+				$xml->writeElement('request-status', '3.7;Invalid Calendar User');
+			}
+			$xml->endElement();	// response
+		}
 	}
 
 	/**
@@ -239,7 +393,7 @@ class ischedule_server
 		header('HTTP/1.1 '.$code.' '.$msg);
 
 		// if our groupdav logging is active, log the request plus a trace, if enabled in server-config
-		if (self::$request_starttime && isset($GLOBALS['groupdav']) && is_a($GLOBALS['groupdav'],'groupdav'))
+		/*if (groupdav::$request_starttime && isset($GLOBALS['groupdav']) && is_a($GLOBALS['groupdav'],'groupdav'))
 		{
 			$GLOBALS['groupdav']->_http_status = '401 Unauthorized';	// to correctly log it
 			if ($GLOBALS['egw_info']['server']['exception_show_trace'])
@@ -250,7 +404,7 @@ class ischedule_server
 			{
 				$GLOBALS['groupdav']->log_request();
 			}
-		}
+		}*/
 		if (is_object($GLOBALS['egw']))
 		{
 			common::egw_exit();
