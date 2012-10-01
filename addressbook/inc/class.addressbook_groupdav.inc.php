@@ -851,12 +851,15 @@ class addressbook_groupdav extends groupdav_handler
 		{
 			return $contact;
 		}
-		if (($Ok = isset($contact['list_id']) ? $this->bo->delete_list($contact['list_id']) !== false :
-			$this->bo->delete($contact['id'],self::etag2value($this->http_if_match))) === 0)
+		if (isset($contact['list_id']))
+		{
+			$ok = $this->bo->delete_list($contact['list_id']) !== false;
+		}
+		elseif (($ok = $this->bo->delete($contact['id'],self::etag2value($this->http_if_match))) === 0)
 		{
 			return '412 Precondition Failed';
 		}
-		return $Ok;
+		return $ok;
 	}
 
 	/**

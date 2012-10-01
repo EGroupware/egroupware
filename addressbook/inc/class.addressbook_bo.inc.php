@@ -752,7 +752,8 @@ class addressbook_bo extends addressbook_so
 				{
 					$delete = $old;
 					$delete['tid'] = addressbook_so::DELETED_TYPE;
-					$ok = $this->save($delete);
+					if ($check_etag) $delete['etag'] = $check_etag;
+					if (($ok = $this->save($delete))) $ok = true;	// we have to return true or false
 					egw_link::unlink(0,'addressbook',$id,'','','',true);
 				}
 				elseif (($ok = parent::delete($id,$check_etag)))
