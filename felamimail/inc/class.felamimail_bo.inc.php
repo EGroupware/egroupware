@@ -1820,7 +1820,7 @@ class felamimail_bo
 					}
 					else
 					{
-						if ($prefix_present=='forced') // you cannot trust dovecots assumed prefix
+						if ($prefix_present=='forced' && $type=='personal') // you cannot trust dovecots assumed prefix
 						{
 							$subscribedMailboxesAll = $this->icServer->listsubscribedMailboxes('',0);
 							if( PEAR::isError($subscribedMailboxesAll) ) continue;
@@ -1872,7 +1872,7 @@ class felamimail_bo
 					}
 					else
 					{
-						if ($prefix_present=='forced') // you cannot trust dovecots assumed prefix
+						if ($prefix_present=='forced' && $type=='personal') // you cannot trust dovecots assumed prefix
 						{
 							$allMailboxesExtAll = $this->icServer->getMailboxes('',0,true);
 							foreach ($allMailboxesExtAll as $kaMEA => $aMEA)
