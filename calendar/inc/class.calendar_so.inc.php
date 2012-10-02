@@ -525,8 +525,8 @@ class calendar_so
 				" ON $this->cal_table.cal_id=rejected_by_user.cal_id".
 				" AND rejected_by_user.cal_user_type='u'".
 				" AND rejected_by_user.cal_user_id=".$this->db->quote($remove_rejected_by_user).
-				" AND (recur_type IS NULL AND rejected_by_user.cal_recur_date=0".
-				($params['enum_recuring'] ? " OR cal_start=rejected_by_user.cal_recur_date" : '').')';
+				" AND ".(!$params['enum_recuring'] ? 'rejected_by_user.cal_recur_date=0' :
+					'(recur_type IS NULL AND rejected_by_user.cal_recur_date=0 OR cal_start=rejected_by_user.cal_recur_date)');
 			$or_required = array(
 				'rejected_by_user.cal_status IS NULL',
 				"rejected_by_user.cal_status NOT IN ('R','X')",
