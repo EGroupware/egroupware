@@ -1,5 +1,5 @@
 Name: eGroupware
-Version: 1.8.002.20111111
+Version: 1.8.004.20120405
 Release: 1
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database

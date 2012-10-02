@@ -1,0 +1,112 @@
+#!/usr/bin/make -f
+
+SHELL = /bin/sh -e
+
+
+PACKAGES := $(shell dh_listpackages)
+MODULES = $(filter-out core,$(patsubst egroupware-%,%,$(filter egroupware-%,$(PACKAGES))))
+COREDIR = debian/egroupware-core/usr/share/egroupware
+COREDOC = debian/egroupware-core/usr/share/doc/egroupware-core
+PACKAGEDIR = debian/egroupware-$${APP}/usr/share/egroupware/$${APPDIR}
+PACKAGEDOC = debian/egroupware-$${APP}/usr/share/doc/egroupware-$${APPDIR}
+
+COPYRIGHT = -iname 'copyright*' -or -iname 'copying*' -or -iname '*license*'
+CHANGELOG = -iname 'changelog*'
+EXTRADOC = -iname readme -or -iname todo
+
+FINDOPT = -type f
+APPFILES = -not \( -path '*/doc/*' -or -path '.' -or -name '*.pl' -or $(COPYRIGHT) -or $(CHANGELOG) -or -iname install -or $(EXTRADOC) \)
+SPECIALDOC = -size 0 -or -iname install -or $(CHANGELOG) -or $(COPYRIGHT) -or \
+	-name '*.sgml' -or -name '*.lyx' -or -name '*.ps' -or -name '*.dvi' -or -name '*.rtf'
+DOCFILES = -not \( $(SPECIALDOC) \)
+
+INSTALL = install -D -m 644
+
+
+clean:
+	dh_testdir
+	dh_testroot
+	debconf-updatepo
+	dh_clean
+
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+	# apply the patch
+	cat ./doc/rpm-build/class.uiasyncservice.inc.php.patch | patch -p1
+
+	# customize apache config
+	mkdir -p $(CURDIR)/debian/egroupware-core/etc/egroupware
+	sed 's/\/usr\/share\/pear/\/usr\/share\/php:\/usr\/local\/zend\/share\/pear/' $(CURDIR)/doc/rpm-build/apache.conf > $(CURDIR)/debian/egroupware-core/etc/egroupware/apache.conf
+
+
+	# install core modules
+
+	for DIR in admin home phpgwapi preferences setup syncml doc; do \
+	  cd $(CURDIR)/$${DIR}; \
+	  find $(FINDOPT) $(APPFILES) \
+	    -exec $(INSTALL) {} $(CURDIR)/$(COREDIR)/$${DIR}/{} \; ; \
+	done
+
+	# install applications
+
+	for APP in $(MODULES) ; do \
+	  APPDIR=$$(echo $${APP} | sed 's/-/_/g') ; \
+	  if [ -d $(CURDIR)/$${APPDIR} ] ; then \
+	    cd $(CURDIR)/$${APPDIR}; \
+	    find $(FINDOPT) $(APPFILES) \
+	      -exec $(INSTALL) {} $(CURDIR)/$(PACKAGEDIR)/{} \; ; \
+	    if [ -d $(CURDIR)/$${APPDIR}/doc ] ; then \
+	      cd $(CURDIR)/$${APPDIR}/doc; \
+	      find $(FINDOPT) $(DOCFILES) \
+	        -exec $(INSTALL) {} $(CURDIR)/$(PACKAGEDOC)/{} \; ;\
+	    fi ; \
+	  else \
+	    echo "PACKAGING ERROR: directory $${APP} not found" 1>&2; exit 1 ; \
+	  fi ; \
+	done
+
+	# install cron-file
+	mkdir -p debian/egroupware-core/etc/cron.d
+	sed 's/apache/www-data/' doc/rpm-build/egroupware.cron > debian/egroupware-core/etc/cron.d/egroupware
+
+	dh_install
+
+	# delete some stuff
+	for APKG in $(PACKAGES) ; do \
+	  if [ -f debian/$${APKG}.remove ] ; then \
+	    perl -l0 -p -e '' debian/$${APKG}.remove | xargs -0ri /bin/sh -c "rm -rf debian/$${APKG}/{}" ; \
+	  fi ; \
+	done
+
+	# remove executable bit from php files
+	find debian/egroupware*/ -type f -and -perm +111 -and -name '*.php' -print0 | xargs -0ri chmod a-x '{}'
+	# make files starting with #! executable
+	find debian/egroupware*/ -type f -exec grep -q '^#!' '{}' \; -print0 | xargs -0ri chmod a+x '{}'
+
+
+binary-indep: build install
+	dh_testdir -i
+	dh_testroot -i
+	dh_installdebconf -i
+	dh_installdocs -i
+	dh_installexamples -i
+	dh_installchangelogs  -i
+	dh_link -i
+	dh_compress -i -X .php
+	dh_fixperms -i
+	dh_installdeb -i
+	(echo -n "egw:Modules="; for x in $(MODULES); do echo -n "egroupware-$$x,"; done; echo) >>debian/substvars
+	perl -l0 -p -e 's/^/-V/' debian/substvars | xargs -0 dh_gencontrol -i --
+	dh_md5sums -i
+	dh_builddeb -i
+
+
+binary: binary-indep binary-arch
+
+
+.PHONY: build binary binary-arch binary-indep clean install

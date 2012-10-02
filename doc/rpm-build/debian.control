@@ -1,0 +1,295 @@
+Source: egroupware
+Section: web
+Priority: optional
+Maintainer: Lars Volker <lv@stylite.de>
+Build-Depends: debhelper (>= 5), po-debconf
+Standards-Version: 3.8.0
+Homepage: http://www.egroupware.org
+
+Package: egroupware
+Architecture: all
+Depends: egroupware-core, ${egw:Modules}, ${misc:Depends}
+Description: web-based groupware suite - metapackage
+ ${commondesc}
+ .
+ This package is a metapackage containing dependencies on all the
+ eGroupWare applications.  It can be used to conveniently install
+ eGroupWare with all available applications.
+
+Package: egroupware-core
+Architecture: all
+Depends: apache2,
+ libapache2-mod-php5,
+ php5-cli,
+ php5-sqlite,
+ php5-mysql | php5-pgsql | php5-odbc,
+ php5-gd, php-log, php-pear,
+ egroupware-egw-pear, egroupware-addressbook, egroupware-etemplate,
+ perl,
+ php5-mcrypt,
+ ${misc:Depends}
+Recommends: mysql-server, php-apc, mysql-client | postgresql-client
+Suggests: egroupware,
+ php5-ldap,
+ php5-mhash,
+ php5-auth-pam
+Description: web-based groupware suite - core modules
+ ${commondesc}
+ .
+ The core package provides the modules for initial setup, global
+ administration, and preferences, and the API for the applications.  It
+ does not, by itself, provide any groupware functionality.  The actual
+ eGroupWare applications are shipped separately in packages named
+ "egroupware-<name>".
+
+Package: egroupware-addressbook
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}), egroupware-etemplate (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - addressbook management application
+ ${commondesc}
+ .
+ This eGroupWare application provides a contact manager with vCard
+ support.  It can store and retrieve contact information via SQL, LDAP,
+ or Active Directory.
+
+Package: egroupware-bookmarks
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - bookmark management application
+ ${commondesc}
+ .
+ This eGroupWare application provides a bookmark management facility.
+
+Package: egroupware-calendar
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}), egroupware-etemplate (>= ${binary:Version}), egroupware-infolog (>= ${binary:Version}),
+ egroupware-notifications (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - calendar management application
+ ${commondesc}
+ .
+ This eGroupWare application provides a powerful calendar with a meeting
+ request system, alarms, iCal and e-Mail support, and ACL security.
+
+Package: egroupware-developer-tools
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - developer tools
+ ${commondesc}
+ .
+ This eGroupWare application contains tools for eGroupWare developers
+ and translators.  The translation tools allow creating and extending
+ translation files for eGroupWare.  They can search the sources for new
+ or added phrases and show the ones missing in a given language.
+
+Package: egroupware-emailadmin
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}),
+ ${misc:Depends}, php5-imap
+Description: web-based groupware suite - e-mail user administration application
+ ${commondesc}
+ .
+ This eGroupWare application allows the administration of e-mail user
+ accounts.  It is intended to be used with the package
+ egroupware-felamimail.
+
+Package: egroupware-etemplate
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - widget-based template system
+ ${commondesc}
+ .
+ This eGroupWare application contains a widget-based template system for
+ eGroupWare with an interactive editor and a database-table editor
+ (creates tables_current.inc.php and automatically updates
+ tables_update.inc.php).
+
+Package: egroupware-felamimail
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}), egroupware-emailadmin (>= ${binary:Version}), tnef,
+ php5-imap,
+ ${misc:Depends}
+Provides: mail-reader, imap-client
+Description: web-based groupware suite - e-mail application
+ ${commondesc}
+ .
+ FeLaMiMail is an e-mail application for eGroupWare.
+
+Package: egroupware-filemanager
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}),
+ ${misc:Depends}
+Suggests: php5-cli
+Description: web-based groupware suite - file manager application
+ ${commondesc}
+ .
+ This eGroupWare application provides a web-based file manager.
+ Abilities include all common file actions (upload, mkdir, rename,
+ delete, copy, move), creating, and editing text files, and syncing with
+ the file system.  Per file/directory comments are stored, and version
+ history is tracked.  Group sharing and ACLs are fully supported.
+
+Package: egroupware-importexport
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}), egroupware-etemplate (>= ${binary:Version}),
+ ${misc:Depends}
+Replaces: egroupware-importexport
+Description: web-based groupware suite - importexport application
+ ${commondesc}
+ .
+ This eGroupWare application is a framework for egroupware to handle
+ imports and exports.
+
+Package: egroupware-infolog
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}), egroupware-etemplate (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - infolog application
+ ${commondesc}
+ .
+ This eGroupWare application allows tracking on-going and previous support
+ requests, phone calls, and other customer relations.
+
+Package: egroupware-manual
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}), egroupware-wiki (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - manual
+ ${commondesc}
+ .
+ This package contains the eGroupWare manual, provided as an
+ eGroupWare application.
+
+Package: egroupware-news-admin
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - news administration interface
+ ${commondesc}
+ .
+ This eGroupWare application provides an interface to handle a simple
+ web-based news system.
+
+Package: egroupware-notifications
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - notifications
+ ${commondesc}
+ .
+ This package contains the eGroupWare notifications, provided as an
+ eGroupWare application.
+    
+Package: egroupware-phpbrain
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - phpbrain application
+ ${commondesc}
+ .
+ This eGroupWare application provides a knowledge base system.
+
+Package: egroupware-phpsysinfo
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}),
+ php5-gd,
+ ${misc:Depends}
+Description: web-based groupware suite - phpSysInfo application
+ ${commondesc}
+ .
+ This application displays information about the host being accessed, such as
+ uptime, lm-sensors readings, CPU, memory, SCSI, IDE, PCI, Ethernet, floppy,
+ and video information.
+
+Package: egroupware-polls
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - polling application
+ ${commondesc}
+ .
+ This eGroupWare application provides a simple polling system.
+
+Package: egroupware-projectmanager
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}), egroupware-etemplate (>= ${binary:Version}),
+ php5-gd, ${misc:Depends}, jpgraph
+Description: web-based groupware suite - project management application
+ ${commondesc}
+ .
+ This eGroupWare application provides a project workflow tracker.
+
+Package: egroupware-registration
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - registration application
+ ${commondesc}
+ .
+ This eGroupWare application allows users to create eGroupWare accounts
+ through a web interface.  Site administrators can decide what pieces of
+ information are requested and whether each is required or not.
+
+Package: egroupware-resources
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}), egroupware-etemplate (>= ${binary:Version}), egroupware-filemanager (>= ${binary:Version}),
+ ${misc:Depends}
+Suggests: egroupware-calendar
+Description: web-based groupware suite - resource manager application
+ ${commondesc}
+ .
+ This eGroupWare application provides a resource management and booking
+ system, which integrates into eGroupWare's calendar.
+
+Package: egroupware-sambaadmin
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}),
+ php5-ldap,
+ ${misc:Depends}
+Description: web-based groupware suite - Samba administration application
+ ${commondesc}
+ .
+ This eGroupWare application allows managing LDAP-based Samba servers.
+
+Package: egroupware-sitemgr
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}), egroupware-etemplate (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - site manager application
+ ${commondesc}
+ .
+ This is a content management system application for eGroupWare.
+
+Package: egroupware-timesheet
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}), egroupware-etemplate (>= ${binary:Version}),
+ ${misc:Depends}
+Suggests: egroupware-projectmanager
+Description: web-based groupware suite - timesheet application
+ ${commondesc}
+ .
+ This eGroupWare application allows tracking times and other activities
+ for the project manager.
+
+Package: egroupware-tracker
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}), egroupware-etemplate (>= ${binary:Version}), egroupware-notifications (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - tracker application
+ ${commondesc}
+ .
+ This eGroupWare application is a universal tracker for bugs, feature
+ requests, etc. with voting and bounties.
+
+Package: egroupware-wiki
+Architecture: all
+Depends: egroupware-core (>= ${binary:Version}), egroupware-etemplate (>= ${binary:Version}),
+ ${misc:Depends}
+Description: web-based groupware suite - wiki application
+ ${commondesc}
+ .
+ This eGroupWare application provides a wiki.
