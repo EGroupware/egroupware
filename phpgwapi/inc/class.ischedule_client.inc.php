@@ -55,6 +55,34 @@ class ischedule_client
 		{
 			$this->url = $url;
 		}
+
+		$this->dkim_private_key = $GLOBALS['egw_info']['server']['dkim_private_key'];
+	}
+
+	/**
+	 * Generate private/public key pair
+	 *
+	 * Private and public key are stored in api config as dkim_private_key / dkim_public_key and loaded automatic by constructor.
+	 *
+	 * @return string public key
+	 */
+	public static function generateKeyPair()
+	{
+		// Create the keypair
+		$res = openssl_pkey_new();
+
+		// Get private key
+		openssl_pkey_export($res, $dkim_private_key);
+
+		// Get public key
+		$details = openssl_pkey_get_details($res);
+		$dkim_public_key = $details['key'];
+
+		// store both in config
+		config::save_value('dkim_private_key', $dkim_private_key, 'phpgwapi');
+		config::save_value('dkim_public_key', $dkim_public_key, 'phpgwapi');
+
+		return $dkim_public_key;
 	}
 
 	const EMAIL_PREG = '/^([a-z0-9][a-z0-9._-]*)?[a-z0-9]@([a-z0-9](|[a-z0-9_-]*[a-z0-9])\.)+[a-z]{2,6}$/i';
@@ -131,11 +159,16 @@ class ischedule_client
 	 *
 	 * @param string $content
 	 * @param string $content_type
+	 * @param boolean $debug=false true echo request before posting
 	 * @return string
 	 * @throws Exception with http status code and message, if server responds other then 2xx
 	 */
-	public function post_msg($content, $content_type)
+	public function post_msg($content, $content_type, $debug=false)
 	{
+		if (empty($this->dkim_private_key))
+		{
+			throw new Exception('You need to generate a key pair first!');
+		}
 		$url_parts = parse_url($this->url);
 		$headers = array(
 			'Host' => $url_parts['host'].($url_parts['port'] ? ':'.$url_parts['port'] : ''),
@@ -145,12 +178,13 @@ class ischedule_client
 			'Recipient' => $this->recipient,
 			'Content-Length' => bytes($content),
 		);
-		$headers['DKIM-Signature'] = $this->dkim_sign($headers, $content);
 		$header_string = '';
 		foreach($headers as $name => $value)
 		{
 			$header_string .= $name.': '.$value."\r\n";
 		}
+		$header_string .= $this->dkim_sign($headers, $content)."\r\n";
+
 		$opts = array('http' =>
 		    array(
 		        'method'  => 'POST',
@@ -159,6 +193,8 @@ class ischedule_client
 		        'content' => $content,
 		    )
 		);
+
+		if ($debug) echo "POST $this->url HTTP/1.1\n$header_string\n$content\n";
 
 		// need to suppress warning, if http-status not 2xx
 		if (($response = @file_get_contents($this->url, false, stream_context_create($opts))) === false)
@@ -172,13 +208,29 @@ class ischedule_client
 	/**
 	 * Calculate DKIM signature for headers and body using originators domains private key
 	 *
-	 * @param array $headers
+	 * @param array $headers name => value pairs, names as in $sign_headers
 	 * @param string $body
-	 * @param string $type dkim-type
+	 * @param string $selector='calendar'
+	 * @param string $sign_headers='Content-Type:Host:Originator:Recipient'
+	 * @return string DKIM-Signature: ...
 	 */
-	public function dkim_sign(array $headers, $body, $type='calendar')
+	public function dkim_sign(array $headers, $body, $selector='calendar', $sign_headers='Content-Type:Host:Originator:Recipient')
 	{
-		return 'dummy';
+		include_once EGW_API_INC.'/php-mail-domain-signer/lib/class.mailDomainSigner.php';
+		list(,$domain) = explode('@', $this->originator);
+		$mds = new mailDomainSigner($this->dkim_private_key, $domain, $selector);
+
+		$dkim_headers = array();
+		foreach(explode(':', $sign_headers) as $header)
+		{
+			$dkim_headers[] = $header.': '.$headers[$header];
+		}
+		$dkim = $mds->getDKIM(strtolower($sign_headers), $dkim_headers, $body);
+
+		// as we do http, no need to fold dkim, in fact recommendation is not to
+		$dkim = str_replace(array(";\r\n\t", "\r\n\t"), array('; ', ''), $dkim);
+
+		return $dkim;
 	}
 
 	/**
