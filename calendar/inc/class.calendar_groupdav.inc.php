@@ -988,6 +988,7 @@ class calendar_groupdav extends groupdav_handler
 
 		$xml = new XMLWriter;
 		$xml->openMemory();
+		$xml->setIndent(true);
 		$xml->startDocument('1.0', 'UTF-8');
 		$xml->startElementNs('C', 'schedule-response', groupdav::CALDAV);
 
@@ -1058,22 +1059,24 @@ class calendar_groupdav extends groupdav_handler
 	 */
 	public function current_user_privileges($path, $user=null)
 	{
-		$priviledes = parent::current_user_privileges($user);
+		$privileges = parent::current_user_privileges($path, $user);
+		//error_log(__METHOD__."('$path', $user) parent gave ".array2string($privileges));
 
 		if ($this->bo->check_perms(EGW_ACL_FREEBUSY, 0, $user))
 		{
-			$priviledes['read-free-busy'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'read-free-busy', '');
+			$privileges['read-free-busy'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'read-free-busy', '');
 
 			if (substr($path, -8) == '/outbox/' && $this->bo->check_acl_invite($user))
 			{
-				$priviledes['schedule-send'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'schedule-send', '');
+				$privileges['schedule-send'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'schedule-send', '');
 			}
 		}
 		if (substr($path, -7) == '/inbox/' && $this->bo->check_acl_invite($user))
 		{
-			$priviledes['schedule-deliver'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'schedule-deliver', '');
+			$privileges['schedule-deliver'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'schedule-deliver', '');
 		}
-		return $priviledes;
+		//error_log(__METHOD__."('$path', $user) returning ".array2string($privileges));
+		return $privileges;
 	}
 
 	/**
