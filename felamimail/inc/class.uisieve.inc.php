@@ -238,12 +238,12 @@
 
 			if (!$_vacation['text'])
 			{
-				$this->errorStack['text'] = lang('Please supply the message to send with auto-responses'.'!	');
+				$this->errorStack['text'] = lang('Please supply the message to send with auto-responses').'!	';
 			}
 
 			if (!$_vacation['days'])
 			{
-				$this->errorStack['days'] = lang('Please select the number of days to wait between responses'.'!');
+				$this->errorStack['days'] = lang('Please select the number of days to wait between responses').'!';
 			}
 
 			if(is_array($_vacation['addresses']))
@@ -253,13 +253,13 @@
 				{
 					if (!preg_match($regexp,$addr) && $_checkAddresses)
 					{
-						$this->errorStack['addresses'] = lang('One address is not valid'.'!');
+						$this->errorStack['addresses'] = lang('One address is not valid').'!';
 					}
 				}
 			}
 			else
 			{
-				$this->errorStack['addresses'] = lang('Please select a address'.'!');
+				$this->errorStack['addresses'] = lang('Please select a address').'!';
 			}
 
 			if ($_vacation['status'] == 'by_date')
