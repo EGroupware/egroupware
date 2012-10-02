@@ -1177,7 +1177,8 @@ class calendar_groupdav extends groupdav_handler
 				{
 					if ($this->bo->user == $uid || in_array($uid, $memberships))
 					{
-						if ($this->bo->set_status($event,$this->bo->user, 'R')) $ret = true;
+						$this->bo->set_status($event,$this->bo->user, 'R');
+						$ret = true;
 						break;
 					}
 				}
