@@ -1,3 +1,15 @@
+egroupware-epl (11.1.20121002-1) hardy; urgency=low
+
+  * IMPORTANT UPDATE FIXING A BUG IN LAST PACKAGE DESTROYING RECURRING EVENTS, IF EXCEPTIONS ARE CREATED, PLEASE ASAP!
+  * Calendar: fixed recuring event lost start-date, if single recurrence got deleted, also installed save-guard in case other code triggers that too
+  * eMailAdmin/Sieve: classes and adaptions to provide timed-sieve for dovecot. this is only the stuff needed on egroupware side of the issue, there is quite some stuff to be configured on dovecot side for this to work
+  * Calendar/eMail: fixed sql error when clicking on iCal attachment and probably other iCal imports
+  * CalDAV: privileges in other users calendar where reported wrong, leading clients to believe they have write rights here
+  * CalDAV: deleting an already declined invitation returned 403 Forbidden, instead 204 No Content
+  * Calendar/CalDAV/eSync: fixed recuring events were returned in sync, even if user rejected (after recent database schema changes)
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 02 Oct 2012 19:18:08 +0200
+
 egroupware-epl (11.1.20120927-1) hardy; urgency=low
 
   * CalDAV: fixed broken URL of private events in shared calendar user has no right to view
