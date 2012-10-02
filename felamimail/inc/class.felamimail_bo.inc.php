@@ -3019,7 +3019,9 @@ class felamimail_bo
 			{
 				$attachments[] = $newAttachment;
 			} else {
-				if ( ($fetchEmbeddedImages && isset($newAttachment['cid']) && strlen($newAttachment['cid'])>0) ||
+				$fetchit = $fetchEmbeddedImages;
+				if ($fetchEmbeddedImages === false && (!in_array(strtoupper($structure->subtype),array('JPG','JPEG','GIF','PNG')))) $fetchit = true;
+				if ( ($fetchit && isset($newAttachment['cid']) && strlen($newAttachment['cid'])>0) ||
 					!isset($newAttachment['cid']) ||
 					empty($newAttachment['cid'])) $attachments[] = $newAttachment;
 			}
@@ -3105,7 +3107,9 @@ class felamimail_bo
 				{
 					$attachments[] = $newAttachment;
 				} else {
-					if ( ($fetchEmbeddedImages && isset($newAttachment['cid']) && strlen($newAttachment['cid'])>0) ||
+					$fetchit = $fetchEmbeddedImages;
+					if ($fetchEmbeddedImages === false && (!in_array(strtoupper($structure->subtype),array('JPG','JPEG','GIF','PNG')))) $fetchit = true;
+					if ( ($fetchit && isset($newAttachment['cid']) && strlen($newAttachment['cid'])>0) ||
 						!isset($newAttachment['cid']) ||
 						empty($newAttachment['cid']) || $newAttachment['cid'] == 'NIL')
 					{
