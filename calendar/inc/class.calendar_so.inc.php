@@ -975,11 +975,13 @@ ORDER BY cal_user_type, cal_usre_id
 				unset($event[$col]);
 			}
 		}
-		// set range_start/_end
-		$event['range_start'] = $event['cal_start'];
-		$event['range_end'] = $event['recur_type'] == MCAL_RECUR_NONE ? $event['cal_end'] :
-			($event['recur_enddate'] ? $event['recur_enddate'] : null);
-
+		// set range_start/_end, but only if we have cal_start/_end, as otherwise we destroy present values!
+		if (isset($event['cal_start'])) $event['range_start'] = $event['cal_start'];
+		if (isset($event['cal_end']))
+		{
+			$event['range_end'] = $event['recur_type'] == MCAL_RECUR_NONE ? $event['cal_end'] :
+				($event['recur_enddate'] ? $event['recur_enddate'] : null);
+		}
 		// ensure that we find mathing entries later on
 		if (!is_array($event['cal_category']))
 		{

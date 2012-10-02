@@ -1481,8 +1481,6 @@ class calendar_boupdate extends calendar_bo
 			$recur_date = $this->date2ts($event['start']);
 			$event = $this->read($cal_id);
 			$event['recur_exception'][] = $recur_date;
-			unset($event['start']);
-			unset($event['end']);
 			$this->save($event);	// updates the content-history
 		}
 		if ($event['reference'])
