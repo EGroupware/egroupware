@@ -391,27 +391,27 @@ class ischedule_server
 	 *
 	 * <?xml version="1.0" encoding="utf-8" ?>
 	 * <query-result xmlns="urn:ietf:params:xml:ns:ischedule">
-	 *   <capability-set>
-	 *     <supported-version-set>
+	 *   <capabilities>
+	 *     <versions>
 	 *       <version>1.0</version>
-	 *     </supported-version-set>
-	 *     <supported-scheduling-message-set>
-	 *       <comp name="VEVENT">
+	 *     </versions>
+	 *     <scheduling-messages>
+	 *       <component name="VEVENT">
 	 *         <method name="REQUEST"/>
 	 *         <method name="ADD"/>
 	 *         <method name="REPLY"/>
 	 *         <method name="CANCEL"/>
-	 *       </comp>
-	 *       <comp name="VTODO"/>
-	 *       <comp name="VFREEBUSY"/>
-	 *     </supported-scheduling-message-set>
-	 *     <supported-calendar-data-type>
+	 *       </component>
+	 *       <component name="VTODO"/>
+	 *       <component name="VFREEBUSY"/>
+	 *     </scheduling-messages>
+	 *     <calendar-data-types>
 	 *       <calendar-data-type content-type="text/calendar" version="2.0"/>
-	 *     </supported-calendar-data-type>
-	 *     <supported-attachment-values>
-	 *       <inline-attachment/>
-	 *       <external-attachment/>
-	 *     </supported-attachment-values>
+	 *     </calendar-data-types>
+	 *     <attachmens>
+	 *       <inline/>
+	 *       <external/>
+	 *     </attachments>
 	 *     <supported-recipient-uri-scheme-set>
 	 *       <scheme>mailto</scheme>
 	 *     </supported-recipient-uri-scheme-set>
@@ -421,7 +421,7 @@ class ischedule_server
 	 *     <max-instances>150</max-instances>
 	 *     <max-recipients>250</max-recipients>
 	 *     <administrator>mailto:ischedule-admin@example.com</administrator>
-	 *   </capability-set>
+	 *   </capabilities>
 	 * </query-result>
 	 */
 	protected function get()
@@ -442,9 +442,9 @@ class ischedule_server
 		$xml->startElement('capability-set');
 
 		foreach(array(
-			'supported-version-set' => array('version' => array('1.0')),
-			'supported-scheduling-message-set' => array(
-				'comp' => array('.name' => array(
+			'versions' => array('version' => array('1.0')),
+			'scheduling-messages' => array(
+				'component' => array('.name' => array(
 					'VEVENT' => array('method' => array('REQUEST', 'ADD', 'REPLY', 'CANCEL')),
 					'VTODO' => '',
 					'VFREEBUSY' => '',
@@ -462,27 +462,27 @@ class ischedule_server
 
 		$capabilities = '<?xml version="1.0" encoding="utf-8" ?>
   <query-result xmlns="urn:ietf:params:xml:ns:ischedule">
-    <capability-set>
-      <supported-version-set>
+    <capabilities>
+      <versions>
         <version>1.0</version>
-      </supported-version-set>
-      <supported-scheduling-message-set>
-        <comp name="VEVENT">
+      </versions>
+      <scheduling-messages>
+        <component name="VEVENT">
           <method name="REQUEST"/>
           <method name="ADD"/>
           <method name="REPLY"/>
           <method name="CANCEL"/>
-        </comp>
-        <comp name="VTODO"/>
-        <comp name="VFREEBUSY"/>
-      </supported-scheduling-message-set>
-      <supported-calendar-data-type>
+        </component>
+        <component name="VTODO"/>
+        <component name="VFREEBUSY"/>
+      </scheduling-messages>
+      <calendar-data-types>
         <calendar-data-type content-type="text/calendar" version="2.0"/>
-      </supported-calendar-data-type>
-      <supported-attachment-values>
-        <inline-attachment/>
-        <external-attachment/>
-      </supported-attachment-values>
+      </calendar-data-types>
+      <attachments>
+        <inline/>
+        <external/>
+      </attachments>
       <supported-recipient-uri-scheme-set>
         <scheme>mailto</scheme>
       </supported-recipient-uri-scheme-set>
@@ -492,7 +492,7 @@ class ischedule_server
       <max-instances>150</max-instances>
       <max-recipients>250</max-recipients>
       <administrator>mailto:ischedule-admin@example.com</administrator>
-    </capability-set>
+    </capabilities>
   </query-result>';
 
 		// returning capabilities
