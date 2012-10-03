@@ -426,7 +426,7 @@ class ischedule_server
 	 */
 	protected function get()
 	{
-		if (!isset($_GET['query']) || $_GET['action'] !== 'capabilities')
+		if (!isset($_GET['action']) || $_GET['action'] !== 'capabilities')
 		{
 			error_log(__METHOD__."() invalid iSchedule request using GET without action=capabilities!");
 			header("HTTP/1.1 400 Bad Request");
