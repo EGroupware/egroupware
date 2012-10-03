@@ -75,6 +75,7 @@ class ischedule_server
 	 */
 	protected function post()
 	{
+		// get and verify required headers
 		static $required_headers = array('Host','Recipient','Originator','Content-Type','DKIM-Signature');
 		$headers = array();
 		foreach($required_headers as $header)
@@ -83,13 +84,18 @@ class ischedule_server
 			if (strpos($server_name, 'CONTENT_') !== 0) $server_name = 'HTTP_'.$server_name;
 			if (!empty($_SERVER[$server_name])) $headers[$header] = $_SERVER[$server_name];
 		}
-		if (($missing = array_diff($required_headers, array_keys($headers))))
+		if (($missing = array_diff(array_keys($headers), $required_headers)))
 		{
 			throw new Exception ('Bad Request: missing '.implode(', ', $missing).' header(s)', 400);
 		}
-		if (!$this->dkim_validate($headers))
+
+		// get raw request body
+		$ical = file_get_contents('php://input');
+
+		// validate dkim signature
+		if (!self::dkim_validate($headers, $ical, $error))
 		{
-			throw new Exception('Bad Request: DKIM signature invalid', 400);
+			throw new Exception('Bad Request: DKIM signature invalid: '.$error, 400);
 		}
 		// check if recipient is a user
 		// ToDo: multiple recipients
@@ -127,7 +133,6 @@ class ischedule_server
 			throw new Exception ('Bad Request: missing or unsupported method in Content-Type header', 400);
 		}
 		// parse iCal
-		$ical = file_get_contents('php://input');
 		// code copied from calendar_groupdav::outbox_freebusy_request for now
 		include_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
 		$vcal = new Horde_iCalendar();
@@ -183,6 +188,10 @@ class ischedule_server
 				$this->vfreebusy($event, $handler, $vcal_comp, $xml);
 				break;
 
+			case 'VEVENT':
+				$this->vevent($event, $handler, $component, $xml);
+				break;
+
 			default:
 				throw new exception('Not yet implemented!');
 		}
@@ -194,6 +203,42 @@ class ischedule_server
 		header('iSchedule-Version: '.self::VERSION);
 
 		echo $xml->outputMemory();
+	}
+
+	/**
+	 * Handle VEVENT component
+	 *
+	 * @param array $event
+	 * @param calendar_ical $handler
+	 * @param string $ical
+	 * @param XMLWriter $xml
+	 */
+	function vevent(array $event, calendar_ical $handler, Horde_iCalendar_vevent $component, XMLWriter $xml)
+	{
+		$organizer = $component->getAttribute('ORGANIZER');
+		$attendees = (array)$component->getAttribute('ATTENDEE');
+
+		$handler->importVCal($vCalendar, $eventId,
+			self::etag2value($this->http_if_match), false, 0, $this->groupdav->current_user_principal, $user, $charset, $id);
+
+		foreach($event['participants'] as $uid => $status)
+		{
+			$xml->startElement('response');
+
+			$xml->writeElement('recipient', $attendee=array_shift($attendees));	// iSchedule has not DAV:href!
+
+			if (is_numeric($uid))
+			{
+				$xml->writeElement('request-status', '2.0;Success');
+				$xml->writeElement('responsedescription', 'Delivered to recipient');
+			}
+			else
+			{
+				$xml->writeElement('request-status', '3.7;Invalid Calendar User');
+				$xml->writeElement('responsedescription', 'Recipient not a local user');
+			}
+			$xml->endElement();	// response
+		}
 	}
 
 	/**
@@ -233,16 +278,102 @@ class ischedule_server
 		}
 	}
 
+	const DKIM_HEADERS = 'content-type:host:originator:recipient';
+
 	/**
 	 * Validate DKIM signature
 	 *
 	 * @param array $headers
+	 * @param string $body
+	 * @param string &$error=null error if false returned
 	 * @return boolean true if signature could be validated, false otherwise
 	 * @todo
 	 */
-	public function dkim_validate(array $headers)
+	public static function dkim_validate(array $headers, $body, &$error=null, $verify_headers='Content-Type:Host:Originator:Recipient')
 	{
-		return isset($headers['DKIM-Signature']);
+		// parse dkim siginature
+		if (!isset($headers['DKIM-Signature']) ||
+			!preg_match_all('/[\t\s]*([a-z]+)=([^;]+);?/i', $headers['DKIM-Signature'], $matches))
+		{
+			$error = "Can't parse DKIM signature";
+			return false;
+		}
+		$dkim = array_combine($matches[1], $matches[2]);
+
+		if (array_diff(explode(':', $dkim['h']), explode(':', strtolower($verify_headers))))
+		{
+			$error = "Missing required headers h=$dkim[h]";
+			return false;
+		}
+
+		// fetch public key
+		if (!($dns = self::fetch_dns($dkim['d'], $dkim['s'])))
+		{
+			$error = "No public key for d='$dkim[d]' and s='$dkim[s]'";
+			return false;
+		}
+		$public_key = "-----BEGIN PUBLIC KEY-----\n".chunk_split($dns['p'], 64, "\n")."-----END PUBLIC KEY-----\n";
+
+		// create headers array
+		$dkim_headers = array();
+		foreach(explode(':', $verify_headers) as $header)
+		{
+			$dkim_headers[] = $header.': '.$headers[$header];
+		}
+		list($dkim_unsigned) = explode('b=', 'DKIM-Signature: '.$headers['DKIM-Signature']);
+		$dkim_unsigned .= 'b=';
+
+		// Canonicalization Header Data
+		require_once EGW_API_INC.'/php-mail-domain-signer/lib/class.mailDomainSigner.php';
+		$_unsigned  = mailDomainSigner::headRelaxCanon(implode("\r\n", $dkim_headers). "\r\n".$dkim_unsigned);
+
+		$ok = openssl_verify($_unsigned, base64_decode($dkim['b']), $public_key);
+
+		switch($ok)
+		{
+			case -1:
+				$error = 'Error while verifying DKIM';
+				return false;
+
+			case 0:
+				$error = 'DKIM signature does NOT verify';
+				error_log(__METHOD__."() unsigned='$_unsigned' $error");
+				return false;
+		}
+
+		// Relax Canonicalization for Body
+		$_b = mailDomainSigner::bodyRelaxCanon($body);
+		// Hash of the canonicalized body [tag:bh]
+		$_bh= base64_encode(sha1($_b,true));
+
+		// check body hash
+		if ($_bh != $dkim['bh'])
+		{
+			$error = 'Body hash does NOT verify';
+			error_log(__METHOD__."() body-hash='$_bh' != '$dkim[bh]'=dkim-bh $error");
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Fetch dns record and return parsed array
+	 *
+	 * @param string $domain
+	 * @param string $selector
+	 * @return array with values for keys parsed from eg. "v=DKIM1\;k=rsa\;h=sha1\;s=calendar\;t=s\;p=..."
+	 */
+	public static function fetch_dns($domain, $selector='calendar')
+	{
+		if (!($records = dns_get_record($host=$selector.'._domainkey.'.$domain, DNS_TXT))) return false;
+
+		if (!isset($records[0]['text']) &&
+			!preg_match_all('/[\t\s]*([a-z]+)=([^;]+);?/i', $records[0]['txt'], $matches))
+		{
+			return false;
+		}
+		return array_combine($matches[1], $matches[2]);
 	}
 
 	/**
