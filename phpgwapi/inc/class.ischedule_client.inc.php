@@ -189,7 +189,9 @@ class ischedule_client
 		    array(
 		        'method'  => 'POST',
 		        'header'  => $header_string,
-		        //'timeout' => $timeout,	// max timeout in seconds
+		    	'user_agent' => 'EGroupware iSchedule client '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'].' $Id$',
+		    	//'follow_location' => 1,	// default 1=follow
+		        //'timeout' => $timeout,	// max timeout in seconds (float)
 		        'content' => $content,
 		    )
 		);
@@ -252,7 +254,7 @@ class ischedule_client
 		if (!isset($this->capabilities))
 		{
 			$reader = new XMLReader();
-			if (!$reader->open($this->url.'?query=capabilities'))
+			if (!$reader->open($this->url.'?action=capabilities'))
 			{
 				throw new Exception("Could not read iSchedule server capabilities $this->url!");
 			}

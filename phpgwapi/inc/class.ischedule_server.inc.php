@@ -377,9 +377,9 @@ class ischedule_server
 	}
 
 	/**
-	 * Serve an iSchedule GET request, currently only query=capabilities
+	 * Serve an iSchedule GET request, currently only action=capabilities
 	 *
-	 * GET /.well-known/ischedule?query=capabilities HTTP/1.1
+	 * GET /.well-known/ischedule?action=capabilities HTTP/1.1
 	 * Host: cal.example.com
 	 *
 	 * HTTP/1.1 200 OK
@@ -426,9 +426,9 @@ class ischedule_server
 	 */
 	protected function get()
 	{
-		if (!isset($_GET['query']) || $_GET['query'] !== 'capabilities')
+		if (!isset($_GET['query']) || $_GET['action'] !== 'capabilities')
 		{
-			error_log(__METHOD__."() invalid iSchedule request using GET without query=capabilities!");
+			error_log(__METHOD__."() invalid iSchedule request using GET without action=capabilities!");
 			header("HTTP/1.1 400 Bad Request");
 			return;
 		}
