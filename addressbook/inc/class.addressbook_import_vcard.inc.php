@@ -222,7 +222,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 				}
 
 				if ( $this->dry_run ) {
-					//print_r($_data);
+					print_r($_data);
 					$this->results[$_action]++;
 					return true;
 				} else {
