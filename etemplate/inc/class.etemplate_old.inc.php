@@ -524,6 +524,13 @@ class etemplate_old extends boetemplate
 			{
 				self::$hook_content = self::$request->hooked;
 				$GLOBALS['egw_info']['flags']['currentapp'] = self::$hook_app = self::$request->hook_app;
+
+				// Prevent previous content form names from being used again in exec()
+				preg_match_all('/<form .+name="('. self::$name_form . '[\d]*)"/',self::$request->hooked, $used);
+				if(is_array($used[1]) && count($used[1]))
+				{
+					self::$name_forms += $used[1];
+				}
 			}
 			if(self::$request->include_xajax) $GLOBALS['egw_info']['flags']['include_xajax'] = true;
 
