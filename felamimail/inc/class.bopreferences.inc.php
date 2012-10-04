@@ -33,7 +33,7 @@
 			parent::sopreferences();
 			$this->boemailadmin = new emailadmin_bo(false,$_restoreSession); // does read all profiles, no profile?
 			if ($_restoreSession && !(is_array($this->sessionData) && (count($this->sessionData)>0))  ) $this->restoreSessionData();
-			if ($_restoreSession===false && (is_array($this->sessionData) && (count($this->sessionData)>0))  ) 
+			if ($_restoreSession===false && (is_array($this->sessionData) && (count($this->sessionData)>0))  )
 			{
 				//error_log(__METHOD__." Unset Session ".function_backtrace());
 				//make sure session data will be reset
@@ -42,7 +42,7 @@
 				self::saveSessionData();
 			}
 			//error_log(__METHOD__.print_r($this->sessionData,true));
-			if (isset($this->sessionData['profileData']) && ($this->sessionData['profileData'] instanceof ea_preferences)) 
+			if (isset($this->sessionData['profileData']) && ($this->sessionData['profileData'] instanceof ea_preferences))
 			{
 				//error_log(__METHOD__." Restore Session ".function_backtrace());
 				$this->profileData = $this->sessionData['profileData'];
@@ -198,11 +198,11 @@
 			if(!($profileData instanceof ea_preferences) || !($profileData->ic_server[0] instanceof defaultimap)) {
 				return false;
 			}
-			if($profileData->userDefinedAccounts || $profileData->userDefinedIdentities) 
+			if($profileData->userDefinedAccounts || $profileData->userDefinedIdentities)
 			{
 				// get user defined accounts
 				$allAccountData = $this->getAllAccountData($profileData);
-				if ($allAccountData) 
+				if ($allAccountData)
 				{
 					foreach ($allAccountData as $tmpkey => $accountData)
 					{
@@ -216,31 +216,39 @@
 		/**
 		 * getPreferences - fetches the active profile for a user
 		 *
-		 * @param boolean $getUserDefinedProfiles 
-		 * @param int $_profileID - use this profile to be set its prefs as active profile (0) 
+		 * @param boolean $getUserDefinedProfiles
+		 * @param int $_profileID - use this profile to be set its prefs as active profile (0)
 		 * @param string $_appName - the app the profile is fetched for
-		 * @return object ea_preferences object with the active emailprofile set to ID = 0 
+		 * @return object ea_preferences object with the active emailprofile set to ID = 0
 		 */
 		function getPreferences($getUserDefinedProfiles=true,$_profileID=0,$_appName='felamimail')
 		{
-			if (isset($this->sessionData['profileData']) && ($this->sessionData['profileData'] instanceof ea_preferences)) 
+			if (isset($this->sessionData['profileData']) && ($this->sessionData['profileData'] instanceof ea_preferences))
 			{
 				$this->profileData = $this->sessionData['profileData'];
 			}
-			if(!($this->profileData instanceof ea_preferences)) 
+			if(!($this->profileData instanceof ea_preferences))
 			{
 				$GLOBALS['egw']->preferences->read_repository();
 				$userPreferences = $GLOBALS['egw_info']['user']['preferences']['felamimail'];
 
 				$imapServerTypes	= $this->boemailadmin->getIMAPServerTypes();
 				$profileData		= $this->boemailadmin->getUserProfile($_appName); // by now we assume only one profile to be returned
-				$icServerKeys = array_keys((array)$profileData->ic_server); 
+				$icServerKeys = array_keys((array)$profileData->ic_server);
 				$icProfileID = array_shift($icServerKeys);
-				$ogServerKeys = array_keys((array)$profileData->og_server); 
+				$ogServerKeys = array_keys((array)$profileData->og_server);
 				$ogProfileID = array_shift($ogServerKeys);
-
 				//error_log(__METHOD__.__LINE__.array2string($profileData));
-				if(!($profileData instanceof ea_preferences) || !($profileData->ic_server[$icProfileID] instanceof defaultimap)) 
+				//may be needed later on, as it may hold users Identities connected to MailAlternateAdresses
+				$IdIsDefault = 0;
+				$rememberIdentities = $profileData->identities;
+				foreach ($rememberIdentities as $adkey => $ident)
+				{
+					if ($ident->default) $IdIsDefault = $ident->id;
+					$profileData->identities[$adkey]->default = false;
+				}
+
+				if(!($profileData instanceof ea_preferences) || !($profileData->ic_server[$icProfileID] instanceof defaultimap))
 				{
 					return false;
 				}
@@ -250,8 +258,11 @@
 				$profileData->setOutgoingServer($profileData->og_server[$ogProfileID],0);
 				$profileData->setIdentity($profileData->identities[$icProfileID],0);
 				$userPrefs = $this->mergeUserAndProfilePrefs($userPreferences,$profileData,$icProfileID);
+				$rememberID = array(); // there may be more ids to be rememered
+				$maxId = $icProfileID>0?$icProfileID:0;
+				$minId = $icProfileID<0?$icProfileID:0;
 				//$profileData->setPreferences($userPrefs,0);
-				if($profileData->userDefinedAccounts && $GLOBALS['egw_info']['user']['apps']['felamimail'] && $getUserDefinedProfiles) 
+				if($profileData->userDefinedAccounts && $GLOBALS['egw_info']['user']['apps']['felamimail'] && $getUserDefinedProfiles)
 				{
 					// get user defined accounts (only fetch the active one(s), as we call it without second parameter)
 					// we assume only one account may be active at once
@@ -269,8 +280,14 @@
 						if(($accountData['ogServer'] instanceof defaultsmtp))
 							$profileData->setOutgoingServer($accountData['ogServer'],$k);
 
-						if(($accountData['identity'] instanceof ea_identity)) 
-							$profileData->setIdentity($profileData->identities[$icProfileID],$k);
+						if(($accountData['identity'] instanceof ea_identity))
+						{
+							$profileData->setIdentity($accountData['identity'],$k);
+							$rememberID[] = $k; // remember Identity as already added
+							if ($k>0 && $k>$maxId) $maxId = $k;
+							if ($k<0 && $k<$minId) $minId = $k;
+						}
+
 						if (empty($_profileID))
 						{
 							$setAsActive = $accountData['active'];
@@ -281,7 +298,7 @@
 							$setAsActive = ($_profileID==$k);
 							//if($setAsActive) error_log(__METHOD__.__LINE__." Setting Profile with ID=$_profileID for ActiveProfile");
 						}
-						if($setAsActive) 
+						if($setAsActive)
 						{
 							// replace the global defined IMAP Server
 							if(($accountData['icServer'] instanceof defaultimap))
@@ -299,41 +316,36 @@
 							// replace the global defined identity
 							if(($accountData['identity'] instanceof ea_identity)) {
 								//_debug_array($profileData);
-								$rememberIdentities = $profileData->identities;
 								$profileData->setIdentity($accountData['identity'],0);
-								$rememberID = $accountData['identity']->id;
+								$profileData->identities[0]->default = true;
+								$rememberID[] = $IdIsDefault = $accountData['identity']->id;
 							}
 						}
 					}
 				}
-				if($profileData->userDefinedIdentities && $GLOBALS['egw_info']['user']['apps']['felamimail']) 
+
+				if($profileData->userDefinedIdentities && $GLOBALS['egw_info']['user']['apps']['felamimail'])
 				{
 					$allUserIdentities = $this->getUserDefinedIdentities();
-					if (is_array($allUserIdentities)) 
+					if (is_array($allUserIdentities))
 					{
-						$i=count($allUserIdentities);
-						$y=-1;
+						$i=$maxId+1;
+						$y=$minId-1;
 						foreach ($allUserIdentities as $tmpkey => $id)
 						{
-							if ($id->id != $rememberID) 
+							if (!in_array($id->id,$rememberID))
 							{
 								$profileData->setIdentity($id,$i);
 								$i++;
 							}
 							else
-							{	
-								foreach ($rememberIdentities as $adkey => $ident)
-								{
-									$profileData->setIdentity($ident,$i);
-									$profileData->identities[$i]->default = false;
-									$profileData->identities[$i]->id = $y;
-									$i++;
-									$y--;
-								}
+							{
+								if ($IdIsDefault==$id->id) $profileData->identities[$id->id]->default = true;
 							}
 						}
 					}
 				}
+
 				$userPrefs = $this->mergeUserAndProfilePrefs($userPreferences,$profileData,$profileID);
 				$profileData->setPreferences($userPrefs);
 
@@ -348,7 +360,7 @@
 		function mergeUserAndProfilePrefs($userPrefs, &$profileData, $profileID)
 		{
 			// echo "<p>backtrace: ".function_backtrace()."</p>\n";
-			if (is_array($profileData->ic_server[$profileID]->folderstoshowinhome) && !empty($profileData->ic_server[$profileID]->folderstoshowinhome[0])) 
+			if (is_array($profileData->ic_server[$profileID]->folderstoshowinhome) && !empty($profileData->ic_server[$profileID]->folderstoshowinhome[0]))
 			{
 				$userPrefs['mainscreen_showfolders'] = implode(',',$profileData->ic_server[$profileID]->folderstoshowinhome);
 			}

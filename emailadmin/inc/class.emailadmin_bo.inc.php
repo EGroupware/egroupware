@@ -729,22 +729,28 @@ class emailadmin_bo extends so_sql
 			if (method_exists($ogServer,'init')) $ogServer->init();
 			$eaPreferences->setOutgoingServer($ogServer,(int)$ogServer->SmtpServerId);
 
-			$i=0;
-			foreach($ogServer->getAccountEmailAddress($GLOBALS['egw_info']['user']['account_lid']) as $emailAddresses)
+			/*
+			 //may be used for debugging mailAlternateAdresses
+			 $emailAddresseses[] = array('address'=>$GLOBALS['egw_info']['user']['account_email'],'name'=>$GLOBALS['egw_info']['user']['account_lid'],'type'=>'default');
+			 $emailAddresseses[] = array('address'=>'ich@du.de','name'=>'ikke','type'=>'nix');
+			 $emailAddresseses[] = array('address'=>'du@ich.de','name'=>'du-wie-ikke','type'=>'nix');
+			*/
+			$i=$data['profileID']*-1;
+			foreach($ogServer->getAccountEmailAddress($GLOBALS['egw_info']['user']['account_lid'])/*$emailAddresseses*/ as $emailAddresses)
 			{
 				// as we map the identities to ids, and use the first one to idetify the identity of the mainProfile
 				// we should take care that our mapping index does not interfere with the profileID
-				if ($i==$data['profileID']) $i++;
+				//if ($i==$data['profileID']) $i--;
 				$identity = CreateObject('emailadmin.ea_identity');
 				$identity->emailAddress	= $emailAddresses['address'];
 				$identity->realName	= $emailAddresses['name'];
 				$identity->default	= ($emailAddresses['type'] == 'default');
 				$identity->organization	= $data['organisationName'];
-				$identity->id = ($i==0?$data['profileID']*-1:$i*-1);
+				$identity->id = $i;
 				// first identity found will be associated with the profileID,
 				// others will be set to a negative value, to indicate that they belong to the account
-				$eaPreferences->setIdentity($identity,($i==0?$data['profileID']*-1:$i*-1));
-				$i++;
+				$eaPreferences->setIdentity($identity,$i);
+				$i--;
 			}
 
 			$eaPreferences->userDefinedAccounts		= ($data['userDefinedAccounts'] == 'yes');

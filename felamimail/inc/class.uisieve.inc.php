@@ -702,8 +702,9 @@
 
 
 			$allIdentities = $preferences->getIdentity();
+			//_debug_array($allIdentities);
 			foreach($allIdentities as $key => $singleIdentity) {
-				if(empty($vacation) && $singleIdentity->default === true) {
+				if((empty($vacation) || empty($selectedAddresses))&& $singleIdentity->default === true) {
 					$selectedAddresses[$singleIdentity->emailAddress] = $singleIdentity->emailAddress;
 				}
 				$predefinedAddresses[$singleIdentity->emailAddress] = $singleIdentity->emailAddress;
