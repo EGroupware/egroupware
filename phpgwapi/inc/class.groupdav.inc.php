@@ -203,6 +203,13 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	var $propfind_options;
 
+	/**
+	 * Reference to active instance, used by exception handler
+	 *
+	 * @var groupdav
+	 */
+	protected static $instance;
+
 	function __construct()
 	{
 		if (!$this->debug) $this->debug = (int)$GLOBALS['egw_info']['user']['preferences']['groupdav']['debug_level'];
@@ -269,6 +276,8 @@ class groupdav extends HTTP_WebDAV_Server
 			$this->current_user_principal = parse_url($this->current_user_principal,PHP_URL_PATH);
 		}
 		$this->accounts = $GLOBALS['egw']->accounts;
+
+		self::$instance = $this;
 	}
 
 	/**
@@ -1560,7 +1569,15 @@ class groupdav extends HTTP_WebDAV_Server
 		return $ok;
 	}
 
-	private static $request_starttime;
+	protected static $request_starttime;
+	/**
+	 * Log level from user prefs: $GLOBALS['egw_info']['user']['preferences']['groupdav']['debug_level'])
+	 * - 'f' files directory
+	 * - 'r' to error-log, but only shortend requests
+	 *
+	 * @var string
+	 */
+	protected static $log_level;
 
 	/**
 	 * Serve WebDAV HTTP request
@@ -1569,8 +1586,8 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	function ServeRequest()
 	{
-		if (($debug_level=$GLOBALS['egw_info']['user']['preferences']['groupdav']['debug_level']) === 'r' ||
-			$debug_level === 'f' || $this->debug)
+		if ((self::$log_level=$GLOBALS['egw_info']['user']['preferences']['groupdav']['debug_level']) === 'r' ||
+			self::$log_level === 'f' || $this->debug)
 		{
 			self::$request_starttime = microtime(true);
 			$this->store_request = true;
@@ -1586,11 +1603,11 @@ class groupdav extends HTTP_WebDAV_Server
 	 *
 	 * @param string $extra='' extra text to add below request-log, eg. exception thrown
 	 */
-	private function log_request($extra='')
+	protected function log_request($extra='')
 	{
 		if (self::$request_starttime)
 		{
-			if (($debug_level=$GLOBALS['egw_info']['user']['preferences']['groupdav']['debug_level']) === 'f')
+			if (self::$log_level === 'f')
 			{
 				$msg_file = $GLOBALS['egw_info']['server']['files_dir'];
 				$msg_file .= '/groupdav';
@@ -1683,16 +1700,16 @@ class groupdav extends HTTP_WebDAV_Server
 		header('X-WebDAV-Status: 401 Unauthorized', true);
 
 		// if our own logging is active, log the request plus a trace, if enabled in server-config
-		if (self::$request_starttime && isset($GLOBALS['groupdav']) && is_a($GLOBALS['groupdav'],__CLASS__))
+		if (self::$request_starttime && isset(self::$instance))
 		{
-			$GLOBALS['groupdav']->_http_status = '401 Unauthorized';	// to correctly log it
+			self::$instance->_http_status = '401 Unauthorized';	// to correctly log it
 			if ($GLOBALS['egw_info']['server']['exception_show_trace'])
 			{
-				$GLOBALS['groupdav']->log_request("\n".$e->getTraceAsString()."\n");
+				self::$instance->log_request("\n".$e->getTraceAsString()."\n");
 			}
 			else
 			{
-				$GLOBALS['groupdav']->log_request();
+				self::$instance->log_request();
 			}
 		}
 		if (is_object($GLOBALS['egw']))
