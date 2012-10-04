@@ -160,10 +160,11 @@ class ischedule_client
 	 * @param string $content
 	 * @param string $content_type
 	 * @param boolean $debug=false true echo request before posting
+	 * @param int $max_redirect=3 maximum number of redirect before failing
 	 * @return string
 	 * @throws Exception with http status code and message, if server responds other then 2xx
 	 */
-	public function post_msg($content, $content_type, $debug=false)
+	public function post_msg($content, $content_type, $debug=false, $max_redirect=3)
 	{
 		if (empty($this->dkim_private_key))
 		{
@@ -173,6 +174,7 @@ class ischedule_client
 		$headers = array(
 			'Host' => $url_parts['host'].($url_parts['port'] ? ':'.$url_parts['port'] : ''),
 			'iSchedule-Version' => self::VERSION,
+			'iSchedule-Message-ID' => uniqid(),
 			'Content-Type' => $content_type,
 			'Originator' => $this->originator,
 			'Recipient' => $this->recipient,
@@ -190,7 +192,7 @@ class ischedule_client
 		        'method'  => 'POST',
 		        'header'  => $header_string,
 		    	'user_agent' => 'EGroupware iSchedule client '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'].' $Id$',
-		    	//'follow_location' => 1,	// default 1=follow
+		    	//'follow_location' => 1,	// default 1=follow, but only for POST!
 		        //'timeout' => $timeout,	// max timeout in seconds (float)
 		        'content' => $content,
 		    )
@@ -202,6 +204,24 @@ class ischedule_client
 		if (($response = @file_get_contents($this->url, false, stream_context_create($opts))) === false)
 		{
 			list(, $code, $message) = explode(' ', $http_response_header[0], 3);
+			if ($max_redirect && $code[0] === '3')
+			{
+				foreach($http_response_header as $header)
+				{
+					if (stripos($header, 'location:') === 0)
+					{
+						list(,$location) = preg_split('/: ?/', $header, 2);
+						if ($location[0] == '/')
+						{
+							$parts = parse_url($this->url);
+							$location = $parts['scheme'].'://'.$parts['host'].($parts['port'] ? ':'.$parts['port'] : '').$location;
+						}
+						$this->url = $location;
+						// follow redirect
+						return $this->post_msg($content, $content_type, $debug, $max_redirect-1);
+					}
+				}
+			}
 			throw new Exception($message, $code);
 		}
 		return $response;
@@ -216,18 +236,32 @@ class ischedule_client
 	 * @param string $sign_headers='Content-Type:Host:Originator:Recipient'
 	 * @return string DKIM-Signature: ...
 	 */
-	public function dkim_sign(array $headers, $body, $selector='calendar', $sign_headers='Content-Type:Host:Originator:Recipient')
+	public function dkim_sign(array $headers, $body, $selector='calendar')
 	{
+		$dkim_headers = array();
+		foreach($headers as $header => $value)
+		{
+			$dkim_headers[] = $header.': '.$value;
+		}
 		include_once EGW_API_INC.'/php-mail-domain-signer/lib/class.mailDomainSigner.php';
 		list(,$domain) = explode('@', $this->originator);
 		$mds = new mailDomainSigner($this->dkim_private_key, $domain, $selector);
-
-		$dkim_headers = array();
-		foreach(explode(':', $sign_headers) as $header)
-		{
-			$dkim_headers[] = $header.': '.$headers[$header];
-		}
-		$dkim = $mds->getDKIM(strtolower($sign_headers), $dkim_headers, $body);
+		// generate DKIM signature according to iSchedule spec
+		$dkim = $mds->getDKIM(implode(':', array_keys($headers)), $dkim_headers, $body, 'relaxed/simple', 'rsa/sha256',
+			"DKIM-Signature: ".
+	                "v=1; ".          // DKIM Version
+	                "a=\$a; ".        // The algorithm used to generate the signature "rsa-sha1"
+					"q=dns/txt:http/well-known; ".	// how to fetch public key: dns/txt, http/well-known or private-exchange
+					"x=300; ".        // how long request will be valid in sec
+					// end iSchedule specific
+	                "s=\$s; ".        // The selector subdividing the namespace for the "d=" (domain) tag
+	                "d=\$d; ".        // The domain of the signing entity
+	                "l=\$l; ".        // Canonicalizated Body length count
+	                "t=\$t; ".        // Signature Timestamp
+	                "c=\$c; ".        // Message (Headers/Body) Canonicalization "relaxed/relaxed"
+	                "h=\$h; ".        // Signed header fields
+	                "bh=\$bh;\r\n\t". // The hash of the canonicalized body part of the message
+	                "b=");             // The signature data (Empty because we will calculate it later));
 
 		// as we do http, no need to fold dkim, in fact recommendation is not to
 		$dkim = str_replace(array(";\r\n\t", "\r\n\t"), array('; ', ''), $dkim);

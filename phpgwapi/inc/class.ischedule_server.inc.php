@@ -29,6 +29,11 @@ class ischedule_server
 	const VERSION = '1.0';
 
 	/**
+	 * Required headers in DKIM signature (DKIM-Signature is always a required header!)
+	 */
+	const REQUIRED_DKIM_HEADERS = 'Content-Type:Host:Originator:Recipient';
+
+	/**
 	 * Serve an iSchedule request
 	 */
 	public function ServeRequest()
@@ -76,17 +81,25 @@ class ischedule_server
 	protected function post()
 	{
 		// get and verify required headers
-		static $required_headers = array('Host','Recipient','Originator','Content-Type','DKIM-Signature');
 		$headers = array();
-		foreach($required_headers as $header)
+		foreach($_SERVER as $name => $value)
 		{
-			$server_name = strtoupper(str_replace('-', '_', $header));
-			if (strpos($server_name, 'CONTENT_') !== 0) $server_name = 'HTTP_'.$server_name;
-			if (!empty($_SERVER[$server_name])) $headers[$header] = $_SERVER[$server_name];
+			$name = strtolower(str_replace('_', '-', $name));
+			list($first, $rest) = explode('-', $name, 2);
+			switch($first)
+			{
+				case 'content':
+					$headers[$name] = $value;
+					break;
+				case 'http':
+					$headers[$rest] = $value;
+					break;
+			}
 		}
-		if (($missing = array_diff(array_keys($headers), $required_headers)))
+		if (($missing = array_diff(explode(':', strtolower(self::REQUIRED_DKIM_HEADERS.':DKIM-Signature')), array_keys($headers))))
 		{
-			throw new Exception ('Bad Request: missing '.implode(', ', $missing).' header(s)', 400);
+error_log(array2string(array_keys($headers)));
+			throw new Exception ('Bad Request: missing required headers: '.implode(', ', $missing), 400);
 		}
 
 		// get raw request body
@@ -99,7 +112,7 @@ class ischedule_server
 		}
 		// check if recipient is a user
 		// ToDo: multiple recipients
-		if (!($account_id = $GLOBALS['egw']->accounts->name2id($headers['Recipient'], 'account_email')))
+		if (!($account_id = $GLOBALS['egw']->accounts->name2id($headers['recipient'], 'account_email')))
 		{
 			throw new Exception('Bad Request: unknown recipient', 400);
 		}
@@ -121,12 +134,12 @@ class ischedule_server
 		}*/
 
 		// check method and component of Content-Type are valid
-		if (!preg_match('/component=([^;]+)/i', $headers['Content-Type'], $matches) ||
+		if (!preg_match('/component=([^;]+)/i', $headers['content-type'], $matches) ||
 			(!in_array($component=strtoupper($matches[1]), self::$supported_components)))
 		{
 			throw new Exception ('Bad Request: missing or unsupported component in Content-Type header', 400);
 		}
-		if (!preg_match('/method=([^;]+)/i', $headers['Content-Type'], $matches) ||
+		if (!preg_match('/method=([^;]+)/i', $headers['content-type'], $matches) ||
 			(!isset(self::$supported_method2origin_requirement[$method=strtoupper($matches[1])])) ||
 			$component == 'VFREEBUSY' && $method != 'REQUEST')
 		{
@@ -159,11 +172,11 @@ class ischedule_server
 			foreach($originator_requirement as $requirement)
 			{
 				if ($requirement == 'ORGANIZER' &&
-					($event['organizer'] == $headers['Originator'] || strpos($event['organizer'], '<'.$headers['Originator'].'>') !== false) ||
+					($event['organizer'] == $headers['originator'] || strpos($event['organizer'], '<'.$headers['originator'].'>') !== false) ||
 					$requirement == 'ATTENDEE' &&
-					(in_array('e'.$headers['Originator'], $event['participants']) ||
+					(in_array('e'.$headers['originator'], $event['participants']) ||
 					// ToDO: Participant could have CN, need to check that too
-					 $originator_account_id = $GLOBALS['egw']->accounts->name2id($headers['Originator'], 'account_email') &&
+					 $originator_account_id = $GLOBALS['egw']->accounts->name2id($headers['originator'], 'account_email') &&
 					 	in_array($originator_account_id, $event['participants'])))
 			 	{
 			 		$matches = true;
@@ -278,54 +291,97 @@ class ischedule_server
 		}
 	}
 
-	const DKIM_HEADERS = 'content-type:host:originator:recipient';
-
 	/**
 	 * Validate DKIM signature
 	 *
-	 * @param array $headers
+	 * @param array $headers header-name in lowercase(!) as key
 	 * @param string $body
 	 * @param string &$error=null error if false returned
 	 * @return boolean true if signature could be validated, false otherwise
-	 * @todo
+	 * @todo other dkim q= methods: http/well-known bzw private-exchange
 	 */
-	public static function dkim_validate(array $headers, $body, &$error=null, $verify_headers='Content-Type:Host:Originator:Recipient')
+	public static function dkim_validate(array $headers, $body, &$error=null, $required_headers=self::REQUIRED_DKIM_HEADERS)
 	{
 		// parse dkim siginature
-		if (!isset($headers['DKIM-Signature']) ||
-			!preg_match_all('/[\t\s]*([a-z]+)=([^;]+);?/i', $headers['DKIM-Signature'], $matches))
+		if (!isset($headers['dkim-signature']) ||
+			!preg_match_all('/[\t\s]*([a-z]+)=([^;]+);?/i', $headers['dkim-signature'], $matches))
 		{
 			$error = "Can't parse DKIM signature";
 			return false;
 		}
 		$dkim = array_combine($matches[1], $matches[2]);
 
-		if (array_diff(explode(':', $dkim['h']), explode(':', strtolower($verify_headers))))
+		if (($missing=array_diff(explode(':', strtolower($required_headers)), explode(':', strtolower($dkim['h'])))))
 		{
-			$error = "Missing required headers h=$dkim[h]";
+			$error = "Missing required headers: ".implode(', ', $missing);
 			return false;
 		}
 
-		// fetch public key
+		// create headers array
+		$dkim_headers = array();
+		foreach(explode(':', strtolower($dkim['h'])) as $header)
+		{
+			$dkim_headers[] = $header.': '.$headers[$header];
+		}
+		list($dkim_unsigned) = explode('b='.$dkim['b'], 'DKIM-Signature: '.$headers['dkim-signature']);
+		$dkim_unsigned .= 'b=';
+
+		list($header_canon, $body_canon) = explode('/', $dkim['c']);
+		require_once EGW_API_INC.'/php-mail-domain-signer/lib/class.mailDomainSigner.php';
+
+		// Canonicalization for Body
+		switch($body_canon)
+		{
+			case 'relaxed':
+				$_b = mailDomainSigner::bodyRelaxCanon($body);
+				break;
+
+			case 'simple':
+				$_b = mailDomainSigner::bodySimpleCanon($body);
+				break;
+
+			default:
+				$error = "Unknown body canonicalization '$body_canon'";
+				return false;
+		}
+
+		// Hash of the canonicalized body [tag:bh]
+		list(,$hash_algo) = explode('/', $dkim['a']);
+		$_bh= base64_encode(hash($hash_algo, $_b, true));
+
+		// check body hash
+		if ($_bh != $dkim['bh'])
+		{
+			$error = 'Body hash does NOT verify';
+			error_log(__METHOD__."() body-hash='$_bh' != '$dkim[bh]'=dkim-bh $error");
+			return false;
+		}
+
+		// Canonicalization Header Data
+		switch($header_canon)
+		{
+			case 'relaxed':
+				$_unsigned  = mailDomainSigner::headRelaxCanon(implode("\r\n", $dkim_headers). "\r\n".$dkim_unsigned);
+				break;
+
+			case 'simple':
+				$_unsigned  = mailDomainSigner::headSimpleCanon(implode("\r\n", $dkim_headers). "\r\n".$dkim_unsigned);
+				break;
+
+			default:
+				$error = "Unknown header canonicalization '$header_canon'";
+				return false;
+		}
+error_log(__METHOD__."() unsigned='$_unsigned'");
+
+		// fetch public key q=dns/txt method
+		// ToDo other $dkim[q] methods: http/well-known bzw private-exchange
 		if (!($dns = self::fetch_dns($dkim['d'], $dkim['s'])))
 		{
 			$error = "No public key for d='$dkim[d]' and s='$dkim[s]'";
 			return false;
 		}
 		$public_key = "-----BEGIN PUBLIC KEY-----\n".chunk_split($dns['p'], 64, "\n")."-----END PUBLIC KEY-----\n";
-
-		// create headers array
-		$dkim_headers = array();
-		foreach(explode(':', $verify_headers) as $header)
-		{
-			$dkim_headers[] = $header.': '.$headers[$header];
-		}
-		list($dkim_unsigned) = explode('b=', 'DKIM-Signature: '.$headers['DKIM-Signature']);
-		$dkim_unsigned .= 'b=';
-
-		// Canonicalization Header Data
-		require_once EGW_API_INC.'/php-mail-domain-signer/lib/class.mailDomainSigner.php';
-		$_unsigned  = mailDomainSigner::headRelaxCanon(implode("\r\n", $dkim_headers). "\r\n".$dkim_unsigned);
 
 		$ok = openssl_verify($_unsigned, base64_decode($dkim['b']), $public_key);
 
@@ -339,19 +395,6 @@ class ischedule_server
 				$error = 'DKIM signature does NOT verify';
 				error_log(__METHOD__."() unsigned='$_unsigned' $error");
 				return false;
-		}
-
-		// Relax Canonicalization for Body
-		$_b = mailDomainSigner::bodyRelaxCanon($body);
-		// Hash of the canonicalized body [tag:bh]
-		$_bh= base64_encode(sha1($_b,true));
-
-		// check body hash
-		if ($_bh != $dkim['bh'])
-		{
-			$error = 'Body hash does NOT verify';
-			error_log(__METHOD__."() body-hash='$_bh' != '$dkim[bh]'=dkim-bh $error");
-			return false;
 		}
 
 		return true;
