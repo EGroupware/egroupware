@@ -291,7 +291,7 @@ class calendar_uilist extends calendar_ui
 			case 'custom':
 				$GLOBALS['egw']->js->set_onload("set_style_by_class('table','custom_hide','visibility','visible');");
 				$this->first = $search_params['start'] = $params['startdate'];
-				$this->last  = $search_params['end'] = $params['enddate'];
+				$this->last  = $search_params['end'] = strtotime('+1 day', $params['enddate'])-1;
 				$label = $this->bo->long_date($this->first,$this->last);
 				break;
 			case 'fixed':

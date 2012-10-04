@@ -36,7 +36,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 		if($options['selection']['select'] == 'criteria') {
 			$query = array(
 				'start' => $options['selection']['start'],
-				'end'   => $options['selection']['end'],
+				'end'   => strtotime('+1 day',$options['selection']['end'])-1,
 				'categories'	=> $options['categories'] ? $options['categories'] : $options['selection']['categories'],
 				//'enum_recuring' => false, // we want the recurring events enumerated for csv export
 				'daywise'       => false,
