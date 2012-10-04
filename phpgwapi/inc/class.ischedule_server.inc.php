@@ -31,7 +31,7 @@ class ischedule_server
 	/**
 	 * Required headers in DKIM signature (DKIM-Signature is always a required header!)
 	 */
-	const REQUIRED_DKIM_HEADERS = 'Content-Type:Host:Originator:Recipient';
+	const REQUIRED_DKIM_HEADERS = 'iSchedule-Version:iSchedule-Message-ID:Content-Type:Originator:Recipient';
 
 	/**
 	 * Serve an iSchedule request
