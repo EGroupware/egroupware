@@ -15,8 +15,10 @@
  * iSchedule server: serverside of iSchedule
  *
  * @link https://tools.ietf.org/html/draft-desruisseaux-ischedule-01 iSchedule draft from 2010
+ *
+ * groupdav get's extended here to get it's logging, should separate that out ...
  */
-class ischedule_server
+class ischedule_server extends groupdav
 {
 	/**
 	 * iSchedule xml namespace
@@ -33,13 +35,30 @@ class ischedule_server
 	 */
 	const REQUIRED_DKIM_HEADERS = 'iSchedule-Version:iSchedule-Message-ID:Content-Type:Originator:Recipient';
 
+	public function __construct()
+	{
+		// install our own exception handler sending exceptions as http status
+		set_exception_handler(array(__CLASS__, 'exception_handler'));
+
+		self::$instance = $this;
+	}
+
 	/**
 	 * Serve an iSchedule request
 	 */
 	public function ServeRequest()
 	{
-		// install our own exception handler sending exceptions as http status
-		set_exception_handler(array(__CLASS__, 'exception_handler'));
+		self::$log_level = $GLOBALS['egw_info']['user']['preferences']['groupdav']['debug_level'];
+		self::$log_level = 'f';
+		if (self::$log_level === 'r' || self::$log_level === 'f' || $this->debug)
+		{
+			self::$request_starttime = microtime(true);
+			$this->store_request = true;
+			ob_start();
+		}
+		// get raw request body
+		$this->request = file_get_contents('php://input');
+
 
 		switch($_SERVER['REQUEST_METHOD'])
 		{
@@ -55,6 +74,8 @@ class ischedule_server
 				error_log(__METHOD__."() invalid iSchedule request using {$_SERVER['REQUEST_METHOD']}!");
 				header("HTTP/1.1 400 Bad Request");
 		}
+
+		if (self::$request_starttime) self::log_request();
 	}
 
 	static $supported_components = array('VEVENT', 'VFREEBUSY', 'VTODO');
@@ -78,7 +99,7 @@ class ischedule_server
 	/**
 	 * Serve an iSchedule POST request
 	 */
-	protected function post()
+	public function post()
 	{
 		// get and verify required headers
 		$headers = array();
@@ -102,11 +123,8 @@ error_log(array2string(array_keys($headers)));
 			throw new Exception ('Bad Request: missing required headers: '.implode(', ', $missing), 400);
 		}
 
-		// get raw request body
-		$ical = file_get_contents('php://input');
-
 		// validate dkim signature
-		if (!self::dkim_validate($headers, $ical, $error))
+		if (!self::dkim_validate($headers, $this->request, $error))
 		{
 			throw new Exception('Bad Request: DKIM signature invalid: '.$error, 400);
 		}
@@ -149,7 +167,7 @@ error_log(array2string(array_keys($headers)));
 		// code copied from calendar_groupdav::outbox_freebusy_request for now
 		include_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
 		$vcal = new Horde_iCalendar();
-		if (!$vcal->parsevCalendar($ical, 'VCALENDAR', 'utf-8'))
+		if (!$vcal->parsevCalendar($this->request, 'VCALENDAR', 'utf-8'))
 		{
 			throw new Exception('Bad Request: Failed parsing iCal', 400);
 		}
@@ -212,7 +230,7 @@ error_log(array2string(array_keys($headers)));
 		$xml->endElement();	// schedule-response
 		$xml->endDocument();
 
-		header('Content-type: text/xml; charset=UTF-8');
+		header('Content-Type: text/xml; charset=UTF-8');
 		header('iSchedule-Version: '.self::VERSION);
 
 		echo $xml->outputMemory();
@@ -223,7 +241,7 @@ error_log(array2string(array_keys($headers)));
 	 *
 	 * @param array $event
 	 * @param calendar_ical $handler
-	 * @param string $ical
+	 * @param string $component
 	 * @param XMLWriter $xml
 	 */
 	function vevent(array $event, calendar_ical $handler, Horde_iCalendar_vevent $component, XMLWriter $xml)
@@ -467,7 +485,7 @@ error_log(__METHOD__."() unsigned='$_unsigned'");
 	 *   </capabilities>
 	 * </query-result>
 	 */
-	protected function get()
+	public function get()
 	{
 		if (!isset($_GET['action']) || $_GET['action'] !== 'capabilities')
 		{
@@ -567,18 +585,17 @@ error_log(__METHOD__."() unsigned='$_unsigned'");
 		header('HTTP/1.1 '.$code.' '.$msg);
 
 		// if our groupdav logging is active, log the request plus a trace, if enabled in server-config
-		/*if (groupdav::$request_starttime && isset($GLOBALS['groupdav']) && is_a($GLOBALS['groupdav'],'groupdav'))
+		if (groupdav::$request_starttime && isset(self::$instance))
 		{
-			$GLOBALS['groupdav']->_http_status = '401 Unauthorized';	// to correctly log it
 			if ($GLOBALS['egw_info']['server']['exception_show_trace'])
 			{
-				$GLOBALS['groupdav']->log_request("\n".$e->getTraceAsString()."\n");
+				self::$instance->log_request("\n".$e->getTraceAsString()."\n");
 			}
 			else
 			{
-				$GLOBALS['groupdav']->log_request();
+				self::$instance->log_request();
 			}
-		}*/
+		}
 		if (is_object($GLOBALS['egw']))
 		{
 			common::egw_exit();
