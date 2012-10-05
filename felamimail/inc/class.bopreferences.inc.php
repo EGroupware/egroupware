@@ -323,7 +323,6 @@
 						}
 					}
 				}
-
 				if($profileData->userDefinedIdentities && $GLOBALS['egw_info']['user']['apps']['felamimail'])
 				{
 					$allUserIdentities = $this->getUserDefinedIdentities();
@@ -338,13 +337,11 @@
 								$profileData->setIdentity($id,$i);
 								$i++;
 							}
-							else
-							{
-								if ($IdIsDefault==$id->id) $profileData->identities[$id->id]->default = true;
-							}
 						}
 					}
 				}
+				// make sure there is one profile marked as default (either 0 or the one found)
+				$profileData->identities[$IdIsDefault]->default = true;
 
 				$userPrefs = $this->mergeUserAndProfilePrefs($userPreferences,$profileData,$profileID);
 				$profileData->setPreferences($userPrefs);
