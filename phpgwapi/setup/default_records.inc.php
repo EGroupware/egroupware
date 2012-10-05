@@ -227,7 +227,12 @@ foreach(array('','addressbook', 'calendar', 'infolog', 'tracker', 'timesheet', '
 	if (!$app) continue;
 
 	// set default preference for app (preserving a maybe already set document-directory)
-	if ($prefs->default[$app]['document_dir']) $dir .= ' '.$prefs->default[$app]['document_dir'];
+	if ($prefs->default[$app]['document_dir'])
+	{
+		$existing = explode(' ',$prefs->default[$app]['document_dir']);
+		$existing[] = $dir;
+		$dir = implode(' ', array_unique($existing));
+	}
 	$prefs->add($app, 'document_dir', $dir, 'default');
 }
 $prefs->save_repository(false, 'default');
