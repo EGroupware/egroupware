@@ -35,6 +35,9 @@ class ischedule_server extends groupdav
 	 */
 	const REQUIRED_DKIM_HEADERS = 'iSchedule-Version:iSchedule-Message-ID:Content-Type:Originator:Recipient';
 
+	/**
+	 * Constructor
+	 */
 	public function __construct()
 	{
 		// install our own exception handler sending exceptions as http status
@@ -119,12 +122,16 @@ class ischedule_server extends groupdav
 		}
 		if (($missing = array_diff(explode(':', strtolower(self::REQUIRED_DKIM_HEADERS.':DKIM-Signature')), array_keys($headers))))
 		{
-error_log(array2string(array_keys($headers)));
+			//error_log('headers='.array2string(array_keys($headers)).', required='.self::REQUIRED_DKIM_HEADERS.', missing='.array($missing));
 			throw new Exception ('Bad Request: missing required headers: '.implode(', ', $missing), 400);
 		}
 
 		// validate dkim signature
-		if (!self::dkim_validate($headers, $this->request, $error))
+		// for multivalued Recipient header: as PHP engine agregates them ", " separated,
+		// we cant tell it apart from ", " separated recipients in one header, therefore we try to validate both.
+		// It will fail if multiple recipients in a single header are also ", " separated (just comma works fine)
+		if (!self::dkim_validate($headers, $this->request, $error, true) &&
+			!self::dkim_validate($headers, $this->request, $error, false))
 		{
 			throw new Exception('Bad Request: DKIM signature invalid: '.$error, 400);
 		}
@@ -312,15 +319,23 @@ error_log(array2string(array_keys($headers)));
 	/**
 	 * Validate DKIM signature
 	 *
+	 * For multivalued Recipient header(s): as PHP engine agregates them ", " separated,
+	 * we can not tell these apart from ", " separated recipients in one header!
+	 *
+	 * Therefore we can only try to validate both situations.
+	 *
+	 * It will fail if multiple recipients in a single header are also ", " separated (just comma works fine).
+	 *
 	 * @param array $headers header-name in lowercase(!) as key
 	 * @param string $body
 	 * @param string &$error=null error if false returned
+	 * @param boolean $split_recipients=null true=split recpients in multiple headers, false dont, default null try both
 	 * @return boolean true if signature could be validated, false otherwise
 	 * @todo other dkim q= methods: http/well-known bzw private-exchange
 	 */
-	public static function dkim_validate(array $headers, $body, &$error=null, $required_headers=self::REQUIRED_DKIM_HEADERS)
+	public static function dkim_validate(array $headers, $body, &$error=null, $split_recipients=null)
 	{
-		// parse dkim siginature
+		// parse dkim signature
 		if (!isset($headers['dkim-signature']) ||
 			!preg_match_all('/[\t\s]*([a-z]+)=([^;]+);?/i', $headers['dkim-signature'], $matches))
 		{
@@ -329,17 +344,26 @@ error_log(array2string(array_keys($headers)));
 		}
 		$dkim = array_combine($matches[1], $matches[2]);
 
-		if (($missing=array_diff(explode(':', strtolower($required_headers)), explode(':', strtolower($dkim['h'])))))
-		{
-			$error = "Missing required headers: ".implode(', ', $missing);
-			return false;
-		}
-
 		// create headers array
 		$dkim_headers = array();
+		$check = $headers;
 		foreach(explode(':', strtolower($dkim['h'])) as $header)
 		{
-			$dkim_headers[] = $header.': '.$headers[$header];
+			// dkim oversigning: ommit not existing headers in signing
+			if (!isset($check[$header])) continue;
+
+			$value = $check[$header];
+			unset($check[$header]);
+
+			// special handling of multivalued recipient header
+			if ($header == 'recipient' && (!isset($split_recipients) || $split_recipients))
+			{
+				if (!is_array($value)) $value = explode(', ', $value);
+				$v = array_pop($value);	// dkim uses reverse order!
+				if ($value) $check[$header] = $value;
+				$value = $v;
+			}
+			$dkim_headers[] = $header.': '.$value;
 		}
 		list($dkim_unsigned) = explode('b='.$dkim['b'], 'DKIM-Signature: '.$headers['dkim-signature']);
 		$dkim_unsigned .= 'b=';
@@ -364,8 +388,8 @@ error_log(array2string(array_keys($headers)));
 		}
 
 		// Hash of the canonicalized body [tag:bh]
-		list(,$hash_algo) = explode('/', $dkim['a']);
-		$_bh= base64_encode(hash($hash_algo, $_b, true));
+		list(,$hash_algo) = explode('-', $dkim['a']);
+		$_bh = base64_encode(hash($hash_algo, $_b, true));
 
 		// check body hash
 		if ($_bh != $dkim['bh'])
@@ -386,22 +410,40 @@ error_log(array2string(array_keys($headers)));
 				$_unsigned  = mailDomainSigner::headSimpleCanon(implode("\r\n", $dkim_headers). "\r\n".$dkim_unsigned);
 				break;
 
+			case 'http/well-known':
+				// todo
+
 			default:
 				$error = "Unknown header canonicalization '$header_canon'";
 				return false;
 		}
-error_log(__METHOD__."() unsigned='$_unsigned'");
 
-		// fetch public key q=dns/txt method
-		// ToDo other $dkim[q] methods: http/well-known bzw private-exchange
-		if (!($dns = self::fetch_dns($dkim['d'], $dkim['s'])))
+		// fetch public key using method in dkim q
+		foreach(explode(':', $dkim['q']) as $method)
 		{
-			$error = "No public key for d='$dkim[d]' and s='$dkim[s]'";
+			switch($method)
+			{
+				case 'dns/txt':
+					$public_key = self::dns_txt_pubkey($dkim['d'], $dkim['s']);
+					break;
+
+				case 'private-exchange':
+					$public_key = self::private_exchange_pubkey($dkim['d'], $dkim['s']);
+					break;
+
+				default:	// not understood q method
+					$public_key = false;
+					break;
+			}
+			if ($public_key) break;
+		}
+		if (!$public_key)
+		{
+			$error = "No public key for d='$dkim[d]' and s='$dkim[s]' using methods q='$dkim[q]'";
 			return false;
 		}
-		$public_key = "-----BEGIN PUBLIC KEY-----\n".chunk_split($dns['p'], 64, "\n")."-----END PUBLIC KEY-----\n";
-
-		$ok = openssl_verify($_unsigned, base64_decode($dkim['b']), $public_key);
+		$ok = openssl_verify($_unsigned, base64_decode($dkim['b']), $public_key, $hash_algo);
+		//error_log(__METHOD__."() openssl_verify('$_unsigned', ..., '$public_key', '$hash_algo') returned ".array2string($ok));
 
 		switch($ok)
 		{
@@ -411,11 +453,71 @@ error_log(__METHOD__."() unsigned='$_unsigned'");
 
 			case 0:
 				$error = 'DKIM signature does NOT verify';
-				error_log(__METHOD__."() unsigned='$_unsigned' $error");
+				// if dkim did not validate, try not splitting Recipient header
+				if (!isset($split_recipients))
+				{
+					return $this->dkim_validate($headers, $body, $error, $required_headers, false);
+				}
 				return false;
 		}
 
 		return true;
+	}
+
+	/**
+	 * Provisional private-exchange public keys
+	 *
+	 * @var array domain => selector => public key
+	 */
+	static $private_exchange = array(
+		'example.com' => array(
+			'ischedule' => '-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDtocSHvSS1Nn0uIL4Sg+0wp6Kc
+W31WRC4Fww8P+jvsVAazVOxvxkShNSd18EvApiNa55P8WgKVEu02OQePjnjKNqfg
+JPeajkWy/0CJn+d6rX/ncPMGX2EYzqXy/CyVqpcnVAosToymo6VHL6ufhzlyLJFD
+znLtV121CZLUZlAySQIDAQAB
+-----END PUBLIC KEY-----',
+		),
+		'bedework.org' => array(
+			'selector' => '-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCuv+6UtGUdPerJ3s0HCng2sv3c
+R3ttma0JB6rMFfOTi1oHgk+h328MfGzhZK+SA9tsRPBcrJE/3uxs4SS2XNG9qRCG
+0YMmNFOmubht4RhQhS9drSNyMZbhy2MPVbl9lHAJULFdaDdLj1hc3xTMWy8sDa8s
+M8r0gHvp/sPSe9CQQQIDAQAB
+-----END PUBLIC KEY-----',
+		),
+	);
+
+	/**
+	 * Fetch public key from dns txt recored dkim q=dns/txt
+	 *
+	 * @param string $d domain
+	 * @param string $s selector
+	 * @return string|boolean string with (full) public key or false if not found or other error retrieving it
+	 */
+	public static function private_exchange_pubkey($d, $s)
+	{
+		if (!isset(self::$private_exchange[$d]) || !isset(self::$private_exchange[$d][$s]))
+		{
+			return false;
+		}
+		return self::$private_exchange[$d][$s];
+	}
+
+	/**
+	 * Fetch public key from dns txt recored dkim q=dns/txt
+	 *
+	 * @param string $d domain
+	 * @param string $s selector
+	 * @return string|boolean string with (full) public key or false if not found or other error retrieving it
+	 */
+	public function dns_txt_pubkey($d, $s)
+	{
+		if (!($dns = self::fetch_dns($d, $s)))
+		{
+			return false;
+		}
+		return "-----BEGIN PUBLIC KEY-----\n".chunk_split($dns['p'], 64, "\n")."-----END PUBLIC KEY-----\n";
 	}
 
 	/**
