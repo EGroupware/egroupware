@@ -33,7 +33,8 @@ class ischedule_server extends groupdav
 	/**
 	 * Required headers in DKIM signature (DKIM-Signature is always a required header!)
 	 */
-	const REQUIRED_DKIM_HEADERS = 'iSchedule-Version:iSchedule-Message-ID:Content-Type:Originator:Recipient';
+	const REQUIRED_DKIM_HEADERS = 'iSchedule-Version:Content-Type:Originator:Recipient';
+	//const REQUIRED_DKIM_HEADERS = 'iSchedule-Version:iSchedule-Message-ID:Content-Type:Originator:Recipient';
 
 	/**
 	 * Constructor
@@ -130,8 +131,7 @@ class ischedule_server extends groupdav
 		// for multivalued Recipient header: as PHP engine agregates them ", " separated,
 		// we cant tell it apart from ", " separated recipients in one header, therefore we try to validate both.
 		// It will fail if multiple recipients in a single header are also ", " separated (just comma works fine)
-		if (!self::dkim_validate($headers, $this->request, $error, true) &&
-			!self::dkim_validate($headers, $this->request, $error, false))
+		if (!self::dkim_validate($headers, $this->request, $error))
 		{
 			throw new Exception('Bad Request: DKIM signature invalid: '.$error, 400);
 		}
@@ -315,6 +315,14 @@ class ischedule_server extends groupdav
 			$xml->endElement();	// response
 		}
 	}
+	/**
+	 * Required DKIM tags
+	 *
+	 * @link https://tools.ietf.org/html/rfc6376#section-3.5
+	 *
+	 * @var array
+	 */
+	public static $required_dkim_tags = array('v', 'a', 'b', 'bh', 'd', 'h', 's');
 
 	/**
 	 * Validate DKIM signature
@@ -344,6 +352,20 @@ class ischedule_server extends groupdav
 		}
 		$dkim = array_combine($matches[1], $matches[2]);
 
+		// check required DKIM tags
+		if (($missing = array_diff(self::$required_dkim_tags, array_keys($dkim))))
+		{
+			$error = 'missing required DKIM tags: '.implode(', ', $missing);
+			return false;
+		}
+
+		// check dkim version, have to fail if it's not 1
+		if ($dkim['v'] !== '1')
+		{
+			$error = "Wrong DKIM version '$dkim[v]'";
+			return false;
+		}
+
 		// create headers array
 		$dkim_headers = array();
 		$check = $headers;
@@ -365,10 +387,11 @@ class ischedule_server extends groupdav
 			}
 			$dkim_headers[] = $header.': '.$value;
 		}
-		list($dkim_unsigned) = explode('b='.$dkim['b'], 'DKIM-Signature: '.$headers['dkim-signature']);
-		$dkim_unsigned .= 'b=';
+		// dkim signature is obvious without content of signature, but must not necessarly be last tag
+		$dkim_unsigned = 'DKIM-Signature: '.str_replace($dkim['b'], '', $headers['dkim-signature']);
 
-		list($header_canon, $body_canon) = explode('/', $dkim['c']);
+		// c defaults to 'simple/simple', check on valid canonicalization methods is performed further down
+		list($header_canon, $body_canon) = explode('/', isset($dkim['c']) ? $dkim['c'] : 'simple/simple');
 		require_once EGW_API_INC.'/php-mail-domain-signer/lib/class.mailDomainSigner.php';
 
 		// Canonicalization for Body
@@ -387,8 +410,15 @@ class ischedule_server extends groupdav
 				return false;
 		}
 
+		// check signing and hashing algorithms
+		list($sign_algo, $hash_algo) = explode('-', $dkim['a']);
+		if ($sign_algo != 'rsa' || !in_array($hash_algo, array('sha1', 'sha256', 'sha384', 'sha512')))
+		{
+			$error = "Unknown or unimplemented algorithm a='$dkim[a]'";
+			return false;
+		}
+
 		// Hash of the canonicalized body [tag:bh]
-		list(,$hash_algo) = explode('-', $dkim['a']);
 		$_bh = base64_encode(hash($hash_algo, $_b, true));
 
 		// check body hash
@@ -410,9 +440,6 @@ class ischedule_server extends groupdav
 				$_unsigned  = mailDomainSigner::headSimpleCanon(implode("\r\n", $dkim_headers). "\r\n".$dkim_unsigned);
 				break;
 
-			case 'http/well-known':
-				// todo
-
 			default:
 				$error = "Unknown header canonicalization '$header_canon'";
 				return false;
@@ -427,6 +454,10 @@ class ischedule_server extends groupdav
 					$public_key = self::dns_txt_pubkey($dkim['d'], $dkim['s']);
 					break;
 
+				case 'http/well-known':
+					$public_key = self::well_known_pubkey($dkim['d'], $dkim['s']);
+					break;
+
 				case 'private-exchange':
 					$public_key = self::private_exchange_pubkey($dkim['d'], $dkim['s']);
 					break;
@@ -437,13 +468,16 @@ class ischedule_server extends groupdav
 			}
 			if ($public_key) break;
 		}
+		// for testing purpose allways try private-exchange, if none other match
+		if (!$public_key) $public_key = self::private_exchange_pubkey($dkim['d'], $dkim['s']);
+
 		if (!$public_key)
 		{
 			$error = "No public key for d='$dkim[d]' and s='$dkim[s]' using methods q='$dkim[q]'";
 			return false;
 		}
 		$ok = openssl_verify($_unsigned, base64_decode($dkim['b']), $public_key, $hash_algo);
-		//error_log(__METHOD__."() openssl_verify('$_unsigned', ..., '$public_key', '$hash_algo') returned ".array2string($ok));
+		error_log(__METHOD__."() openssl_verify('$_unsigned', ..., '$public_key', '$hash_algo') returned ".array2string($ok));
 
 		switch($ok)
 		{
@@ -456,7 +490,7 @@ class ischedule_server extends groupdav
 				// if dkim did not validate, try not splitting Recipient header
 				if (!isset($split_recipients))
 				{
-					return $this->dkim_validate($headers, $body, $error, $required_headers, false);
+					return self::dkim_validate($headers, $body, $error, false);
 				}
 				return false;
 		}
@@ -478,7 +512,7 @@ JPeajkWy/0CJn+d6rX/ncPMGX2EYzqXy/CyVqpcnVAosToymo6VHL6ufhzlyLJFD
 znLtV121CZLUZlAySQIDAQAB
 -----END PUBLIC KEY-----',
 		),
-		'bedework.org' => array(
+		'mysite.edu' => array(
 			'selector' => '-----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCuv+6UtGUdPerJ3s0HCng2sv3c
 R3ttma0JB6rMFfOTi1oHgk+h328MfGzhZK+SA9tsRPBcrJE/3uxs4SS2XNG9qRCG
@@ -486,10 +520,18 @@ R3ttma0JB6rMFfOTi1oHgk+h328MfGzhZK+SA9tsRPBcrJE/3uxs4SS2XNG9qRCG
 M8r0gHvp/sPSe9CQQQIDAQAB
 -----END PUBLIC KEY-----',
 		),
+		'caldav.egroupware.net' => array(
+			'calendar' => '-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCiawhLuTSVhnl1zz5pXs1A748y
+N3aNE181dni8nsYqIQB1h4H32J4dZurEiAnP9nflQRjCmmg1NTvFcNz11Bem4zo1
+K4r4mcfbjlheorK2Mwoh445HR3fo/pP7uV6CcXTNboBJLTxs6ZHswmQjxyuKBKmx
+yXUKsIQVi3qPyPdB3QIDAQAB
+-----END PUBLIC KEY-----',
+		),
 	);
 
 	/**
-	 * Fetch public key from dns txt recored dkim q=dns/txt
+	 * Fetch public key from dns txt recored dkim q=private-exchange
 	 *
 	 * @param string $d domain
 	 * @param string $s selector
@@ -502,6 +544,26 @@ M8r0gHvp/sPSe9CQQQIDAQAB
 			return false;
 		}
 		return self::$private_exchange[$d][$s];
+	}
+
+	/**
+	 * Fetch public key via http for q=http/well-known
+	 *
+	 * GET request to https://$domain/.well-known/domainkey/$selector
+	 * Content should be identical to txt record for dns/txt.
+	 *
+	 * @param string $d domain
+	 * @param string $s selector
+	 * @return string|boolean string with (full) public key or false if not found or other error retrieving it
+	 */
+	public static function well_known_pubkey($d, $s)
+	{
+		if (!($keys = @file_get_contents('https://'.$d.'/.well-known/domainkey/'.$s)) ||
+			preg_match('/p=([^;]+)/i', $keys, $matches))
+		{
+			return false;
+		}
+		return "-----BEGIN PUBLIC KEY-----\n".chunk_split($matches[1], 64, "\n")."-----END PUBLIC KEY-----\n";
 	}
 
 	/**
@@ -684,7 +746,7 @@ M8r0gHvp/sPSe9CQQQIDAQAB
 		$code = $e->getCode();
 		$msg = $e->getMessage();
 		if (!in_array($code, array(400, 403, 407, 503))) $code = 500;
-		header('HTTP/1.1 '.$code.' '.$msg);
+		header('HTTP/1.1 '.$code.' '.$msg, true, $code);
 
 		// if our groupdav logging is active, log the request plus a trace, if enabled in server-config
 		if (groupdav::$request_starttime && isset(self::$instance))

@@ -23,27 +23,49 @@ class ischedule_client
 	 */
 	const VERSION = '1.0';
 
+	/**
+	 * Required headers in DKIM signature (DKIM-Signature is always a required header!)
+	 */
+	const REQUIRED_DKIM_HEADERS = 'Host:iSchedule-Version:iSchedule-Message-ID:Content-Type:Originator:Recipient';
+
+	/**
+	 * URL to use to contact iSchedule receiver
+	 *
+	 * @var string
+	 */
 	private $url;
 
-	private $recipient;
+	/**
+	 * Recipient email addresses
+	 *
+	 * @param array
+	 */
+	private $recipients;
 
+	/**
+	 * Originator email address
+	 *
+	 * @var string
+	 */
 	private $originator;
 
 	/**
 	 * Private key of originators domain
+	 *
+	 * @var string
 	 */
 	private $dkim_private_key;
 
 	/**
 	 * Constructor
 	 *
-	 * @param string $recipient=null recipient email-address
+	 * @param string|array $recipients=null recipient email-address(es)
 	 * @param string $url=null ischedule url, if it should NOT be discovered
 	 * @throws Exception in case of an error or discovery failure
 	 */
-	public function __construct($recipient, $url=null)
+	public function __construct($recipients, $url=null)
 	{
-		$this->recipient = $recipient;
+		$this->recipients = (array)$recipients;
 		$this->originator = $GLOBALS['egw_info']['user']['account_email'];
 
 		if (is_null($url))
@@ -177,13 +199,17 @@ class ischedule_client
 			'iSchedule-Message-ID' => uniqid(),
 			'Content-Type' => $content_type,
 			'Originator' => $this->originator,
-			'Recipient' => $this->recipient,
+			'Recipient' => $this->recipients,
+			'Cache-Control' => 'no-cache, no-transform',	// required by iSchedule spec
 			'Content-Length' => bytes($content),
 		);
 		$header_string = '';
 		foreach($headers as $name => $value)
 		{
-			$header_string .= $name.': '.$value."\r\n";
+			foreach((array)$value as $val)
+			{
+				$header_string .= $name.': '.$val."\r\n";
+			}
 		}
 		$header_string .= $this->dkim_sign($headers, $content)."\r\n";
 
@@ -192,7 +218,7 @@ class ischedule_client
 		        'method'  => 'POST',
 		        'header'  => $header_string,
 		    	'user_agent' => 'EGroupware iSchedule client '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'].' $Id$',
-		    	//'follow_location' => 1,	// default 1=follow, but only for POST!
+		    	//'follow_location' => 1,	// default 1=follow, but only for GET, not POST!
 		        //'timeout' => $timeout,	// max timeout in seconds (float)
 		        'content' => $content,
 		    )
@@ -233,21 +259,30 @@ class ischedule_client
 	 * @param array $headers name => value pairs, names as in $sign_headers
 	 * @param string $body
 	 * @param string $selector='calendar'
-	 * @param string $sign_headers='Content-Type:Host:Originator:Recipient'
+	 * @param string $sign_headers='iSchedule-Version:Content-Type:Originator:Recipient'
 	 * @return string DKIM-Signature: ...
 	 */
-	public function dkim_sign(array $headers, $body, $selector='calendar')
+	public function dkim_sign(array $headers, $body, $selector='calendar',$sign_headers=self::REQUIRED_DKIM_HEADERS)
 	{
-		$dkim_headers = array();
-		foreach($headers as $header => $value)
+		$header_values = $header_names = array();
+		foreach(explode(':', $sign_headers) as $header)
 		{
-			$dkim_headers[] = $header.': '.$value;
+			foreach((array)$headers[$header] as $value)
+			{
+				$header_values[] = $header.': '.$value;
+				$header_names[] = $header;
+			}
+			// oversign multiple value header Recipient
+			if ($header == 'Recipient')
+			{
+				$header_names[] = $header;
+			}
 		}
 		include_once EGW_API_INC.'/php-mail-domain-signer/lib/class.mailDomainSigner.php';
 		list(,$domain) = explode('@', $this->originator);
 		$mds = new mailDomainSigner($this->dkim_private_key, $domain, $selector);
 		// generate DKIM signature according to iSchedule spec
-		$dkim = $mds->getDKIM(implode(':', array_keys($headers)), $dkim_headers, $body, 'relaxed/simple', 'rsa/sha256',
+		$dkim = $mds->getDKIM(implode(':', $header_names), $header_values, $body, 'relaxed/simple', 'rsa-sha256',
 			"DKIM-Signature: ".
 	                "v=1; ".          // DKIM Version
 	                "a=\$a; ".        // The algorithm used to generate the signature "rsa-sha1"
