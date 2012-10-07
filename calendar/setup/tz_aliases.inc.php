@@ -1,14 +1,22 @@
 <?php
 /**
- * EGroupware - Windows timezone aliases
+ * EGroupware - timezone aliases
  *
- * @link http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/windows_tzid.html
  * @link http://www.egroupware.org
  * @package calendar
  * @version $Id$
  */
 
+/**
+ * Contains timezone aliases from various sources
+ *
+ * @link http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/windows_tzid.html
+ * @link https://github.com/evert/sabre-vobject/blob/master/lib/Sabre/VObject/TimeZoneUtil.php#L23
+ * @todo http://www.timdavis.com.au/data/olson-time-zone-database-to-standard-windows-time-zone-v01/
+ */
 $tz_aliases = array(
+	// Mappings for Windows from http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/windows_tzid.html as of 2012-03-01
+	// as mappings are to more then one Olson tzid, we always pick first one
 	'AUS Central Standard Time' => 'Australia/Darwin',
 	'AUS Eastern Standard Time' => 'Australia/Sydney',
 	'Afghanistan Standard Time' => 'Asia/Kabul',
@@ -17,19 +25,18 @@ $tz_aliases = array(
 	'Arabian Standard Time' => 'Asia/Dubai',
 	'Arabic Standard Time' => 'Asia/Baghdad',
 	'Argentina Standard Time' => 'America/Argentina/Buenos_Aires',	// was 'America/Buenos_Aires',
-	'Armenian Standard Time' => 'Asia/Yerevan',
-	'Asia/Katmandu' => 'Asia/Kathmandu',
-	'Asia/Calcutta' => 'Asia/Kolkata',
 	'Atlantic Standard Time' => 'America/Halifax',
 	'Azerbaijan Standard Time' => 'Asia/Baku',
 	'Azores Standard Time' => 'Atlantic/Azores',
+	'Bahia Standard Time' => 'America/Bahia',
+	'Bangladesh Standard Time' => 'Asia/Dhaka',
 	'Canada Central Standard Time' => 'America/Regina',
 	'Cape Verde Standard Time' => 'Atlantic/Cape_Verde',
 	'Caucasus Standard Time' => 'Asia/Yerevan',
 	'Cen. Australia Standard Time' => 'Australia/Adelaide',
 	'Central America Standard Time' => 'America/Guatemala',
-	'Central Asia Standard Time' => 'Asia/Dhaka',
-	'Central Brazilian Standard Time' => 'America/Manaus',
+	'Central Asia Standard Time' => 'Asia/Almaty',
+	'Central Brazilian Standard Time' => 'America/Cuiaba',
 	'Central Europe Standard Time' => 'Europe/Budapest',
 	'Central European Standard Time' => 'Europe/Warsaw',
 	'Central Pacific Standard Time' => 'Pacific/Guadalcanal',
@@ -39,7 +46,7 @@ $tz_aliases = array(
 	'Dateline Standard Time' => 'Etc/GMT+12',
 	'E. Africa Standard Time' => 'Africa/Nairobi',
 	'E. Australia Standard Time' => 'Australia/Brisbane',
-	'E. Europe Standard Time' => 'Europe/Minsk',
+	'E. Europe Standard Time' => 'Asia/Nicosia',
 	'E. South America Standard Time' => 'America/Sao_Paulo',
 	'Eastern Standard Time' => 'America/New_York',
 	'Egypt Standard Time' => 'Africa/Cairo',
@@ -47,20 +54,19 @@ $tz_aliases = array(
 	'FLE Standard Time' => 'Europe/Kiev',
 	'Fiji Standard Time' => 'Pacific/Fiji',
 	'GMT Standard Time' => 'Europe/London',
-	'GTB Standard Time' => 'Europe/Istanbul',
+	'GTB Standard Time' => 'Europe/Bucharest',
 	'Georgian Standard Time' => 'Asia/Tbilisi',
 	'Greenland Standard Time' => 'America/Godthab',
-	'Greenwich Standard Time' => 'Atlantic/Reykjavik',	// was 'Africa/Reykjavik',
+	'Greenwich Standard Time' => 'Atlantic/Reykjavik',
 	'Hawaiian Standard Time' => 'Pacific/Honolulu',
-	'India Standard Time' => 'Asia/Kolkata',
+	'India Standard Time' => 'Asia/Kolkata',	// Asia/Calcutta is an alias to Asia/Kolkata
 	'Iran Standard Time' => 'Asia/Tehran',
 	'Israel Standard Time' => 'Asia/Jerusalem',
 	'Jordan Standard Time' => 'Asia/Amman',
+	'Kaliningrad Standard Time' => 'Europe/Kaliningrad',
 	'Korea Standard Time' => 'Asia/Seoul',
+	'Magadan Standard Time' => 'Asia/Magadan',
 	'Mauritius Standard Time' => 'Indian/Mauritius',
-	'Mexico Standard Time' => 'America/Mexico_City',
-	'Mexico Standard Time 2' => 'America/Chihuahua',
-	'Mid-Atlantic Standard Time' => 'Atlantic/South_Georgia',
 	'Middle East Standard Time' => 'Asia/Beirut',
 	'Montevideo Standard Time' => 'America/Montevideo',
 	'Morocco Standard Time' => 'Africa/Casablanca',
@@ -76,11 +82,12 @@ $tz_aliases = array(
 	'North Asia Standard Time' => 'Asia/Krasnoyarsk',
 	'Pacific SA Standard Time' => 'America/Santiago',
 	'Pacific Standard Time' => 'America/Los_Angeles',
-	'Pacific Standard Time (Mexico)' => 'America/Tijuana',
+	'Pacific Standard Time (Mexico)' => 'America/Santa_Isabel',
 	'Pakistan Standard Time' => 'Asia/Karachi',
+	'Paraguay Standard Time' => 'America/Asuncion',
 	'Romance Standard Time' => 'Europe/Paris',
 	'Russian Standard Time' => 'Europe/Moscow',
-	'SA Eastern Standard Time' => 'America/Argentina/Buenos_Aires',
+	'SA Eastern Standard Time' => 'America/Cayenne',
 	'SA Pacific Standard Time' => 'America/Bogota',
 	'SA Western Standard Time' => 'America/La_Paz',
 	'SE Asia Standard Time' => 'Asia/Bangkok',
@@ -88,12 +95,15 @@ $tz_aliases = array(
 	'Singapore Standard Time' => 'Asia/Singapore',
 	'South Africa Standard Time' => 'Africa/Johannesburg',
 	'Sri Lanka Standard Time' => 'Asia/Colombo',
+	'Syria Standard Time' => 'Asia/Damascus',
 	'Taipei Standard Time' => 'Asia/Taipei',
 	'Tasmania Standard Time' => 'Australia/Hobart',
 	'Tokyo Standard Time' => 'Asia/Tokyo',
 	'Tonga Standard Time' => 'Pacific/Tongatapu',
-	'US Eastern Standard Time' => 'America/New_York',
+	'Turkey Standard Time' => 'Europe/Istanbul',
+	'US Eastern Standard Time' => 'America/Indianapolis',
 	'US Mountain Standard Time' => 'America/Phoenix',
+	'Ulaanbaatar Standard Time' => 'Asia/Ulaanbaatar',
 	'Venezuela Standard Time' => 'America/Caracas',
 	'Vladivostok Standard Time' => 'Asia/Vladivostok',
 	'W. Australia Standard Time' => 'Australia/Perth',
@@ -102,4 +112,97 @@ $tz_aliases = array(
 	'West Asia Standard Time' => 'Asia/Tashkent',
 	'West Pacific Standard Time' => 'Pacific/Port_Moresby',
 	'Yakutsk Standard Time' => 'Asia/Yakutsk',
+
+	// from SabreDAV https://github.com/evert/sabre-vobject/blob/master/lib/Sabre/VObject/TimeZoneUtil.php#L125
+	// Microsoft exchange timezones
+	// http://msdn.microsoft.com/en-us/library/ms988620%28v=exchg.65%29.aspx
+	// Correct timezones deduced with help from:
+	// http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+	'Universal Coordinated Time' => 'UTC',
+	'Casablanca, Monrovia' => 'Africa/Casablanca',
+	'Greenwich Mean Time: Dublin, Edinburgh, Lisbon, London' => 'Europe/Lisbon',
+	'Greenwich Mean Time; Dublin, Edinburgh, London' =>  'Europe/London',
+	'Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna' => 'Europe/Berlin',
+	'Belgrade, Pozsony, Budapest, Ljubljana, Prague' => 'Europe/Prague',
+	'Brussels, Copenhagen, Madrid, Paris' => 'Europe/Paris',
+	'Paris, Madrid, Brussels, Copenhagen' => 'Europe/Paris',
+	'Prague, Central Europe' => 'Europe/Prague',
+	'Sarajevo, Skopje, Sofija, Vilnius, Warsaw, Zagreb' => 'Europe/Sarajevo',
+	'West Central Africa' => 'Africa/Luanda', // This was a best guess
+	'Athens, Istanbul, Minsk' => 'Europe/Athens',
+	'Bucharest' => 'Europe/Bucharest',
+	'Cairo' => 'Africa/Cairo',
+	'Harare, Pretoria' => 'Africa/Harare',
+	'Helsinki, Riga, Tallinn' => 'Europe/Helsinki',
+	'Israel, Jerusalem Standard Time' => 'Asia/Jerusalem',
+	'Baghdad' => 'Asia/Baghdad',
+	'Arab, Kuwait, Riyadh' => 'Asia/Kuwait',
+	'Moscow, St. Petersburg, Volgograd' => 'Europe/Moscow',
+	'East Africa, Nairobi' => 'Africa/Nairobi',
+	'Tehran' => 'Asia/Tehran',
+	'Abu Dhabi, Muscat' => 'Asia/Muscat', // Best guess
+	'Baku, Tbilisi, Yerevan' => 'Asia/Baku',
+	'Kabul' => 'Asia/Kabul',
+	'Ekaterinburg' => 'Asia/Yekaterinburg',
+	'Islamabad, Karachi, Tashkent' => 'Asia/Karachi',
+	'Kolkata, Chennai, Mumbai, New Delhi, India Standard Time' => 'Asia/Calcutta',
+	'Kathmandu, Nepal' => 'Asia/Kathmandu',
+	'Almaty, Novosibirsk, North Central Asia' => 'Asia/Almaty',
+	'Astana, Dhaka' => 'Asia/Dhaka',
+	'Sri Jayawardenepura, Sri Lanka' => 'Asia/Colombo',
+	'Rangoon' => 'Asia/Rangoon',
+	'Bangkok, Hanoi, Jakarta' => 'Asia/Bangkok',
+	'Krasnoyarsk' => 'Asia/Krasnoyarsk',
+	'Beijing, Chongqing, Hong Kong SAR, Urumqi' => 'Asia/Shanghai',
+	'Irkutsk, Ulaan Bataar' => 'Asia/Irkutsk',
+	'Kuala Lumpur, Singapore' => 'Asia/Singapore',
+	'Perth, Western Australia' => 'Australia/Perth',
+	'Taipei' => 'Asia/Taipei',
+	'Osaka, Sapporo, Tokyo' => 'Asia/Tokyo',
+	'Seoul, Korea Standard time' => 'Asia/Seoul',
+	'Yakutsk' => 'Asia/Yakutsk',
+	'Adelaide, Central Australia' => 'Australia/Adelaide',
+	'Darwin' => 'Australia/Darwin',
+	'Brisbane, East Australia' => 'Australia/Brisbane',
+	'Canberra, Melbourne, Sydney, Hobart (year 2000 only)' => 'Australia/Sydney',
+	'Guam, Port Moresby' => 'Pacific/Guam',
+	'Hobart, Tasmania' => 'Australia/Hobart',
+	'Vladivostok' => 'Asia/Vladivostok',
+	'Magadan, Solomon Is., New Caledonia' => 'Asia/Magadan',
+	'Auckland, Wellington' => 'Pacific/Auckland',
+	'Fiji Islands, Kamchatka, Marshall Is.' => 'Pacific/Fiji',
+	'Nuku\'alofa, Tonga' => 'Pacific/Tongatapu',
+	'Azores' => 'Atlantic/Azores',
+	'Cape Verde Is.' => 'Atlantic/Cape_Verde',
+	'Mid-Atlantic' => 'America/Noronha',
+	'Brasilia' => 'America/Sao_Paulo', // Best guess
+	'Buenos Aires' => 'America/Argentina/Buenos_Aires',
+	'Greenland' => 'America/Godthab',
+	'Newfoundland' => 'America/St_Johns',
+	'Atlantic Time (Canada)' => 'America/Halifax',
+	'Caracas, La Paz' => 'America/Caracas',
+	'Santiago' => 'America/Santiago',
+	'Bogota, Lima, Quito' => 'America/Bogota',
+	'Eastern Time (US & Canada)' => 'America/New_York',
+	'Indiana (East)' => 'America/Indiana/Indianapolis',
+	'Central America' => 'America/Guatemala',
+	'Central Time (US & Canada)' => 'America/Chicago',
+	'Mexico City, Tegucigalpa' => 'America/Mexico_City',
+	'Saskatchewan' => 'America/Edmonton',
+	'Arizona' => 'America/Phoenix',
+	'Mountain Time (US & Canada)' => 'America/Denver', // Best guess
+	'Pacific Time (US & Canada); Tijuana' => 'America/Los_Angeles', // Best guess
+	'Alaska' => 'America/Anchorage',
+	'Hawaii' => 'Pacific/Honolulu',
+	'Midway Island, Samoa' => 'Pacific/Midway',
+	'Eniwetok, Kwajalein, Dateline Time' => 'Pacific/Kwajalein',
+
+	// various aliases collected over time
+	'America/Creston' => 'America/Dawson_Creek',	// not in sqlight DB of Thunderbird version 1.2011n, Dawson Creek is also UTC-7 without DS
+	'Armenian Standard Time' => 'Asia/Yerevan',
+	'Asia/Katmandu' => 'Asia/Kathmandu',
+	'Asia/Calcutta' => 'Asia/Kolkata',
+	'Mexico Standard Time' => 'America/Mexico_City',
+	'Mexico Standard Time 2' => 'America/Chihuahua',
+	'Mid-Atlantic Standard Time' => 'Atlantic/South_Georgia',
 );
