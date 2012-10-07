@@ -101,6 +101,17 @@ class calendar_timezones
 				self::$tz_cache[$id] = egw_db::strip_array_keys($data,'tz_');
 			}
 		}
+		// check if we can find a 3-part America timezone eg. check 'America/Argentina/Buenos_Aires' for 'America/Buenos_Aires'
+		if (!isset($id) && stripos($tzid, 'America/') === 0 && count($parts = explode('/', $tzid)) == 2)
+		{
+			if (($data = $GLOBALS['egw']->db->select(self::TABLE,'*',array(
+				'tz_tzid LIKE '.$GLOBALS['egw']->db->quote($parts[0].'/%/'.$part[1]),
+			),__LINE__,__FILE__,false,'','calendar')->fetch()))
+			{
+				$id = $data['tz_id'];
+				self::$tz_cache[$id] = egw_db::strip_array_keys($data,'tz_');
+			}
+		}
 		if (isset($id) && $what != 'id')
 		{
 			return self::id2tz($id,$what);
@@ -415,7 +426,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE_
 {
 	$GLOBALS['egw_info'] = array(
 		'flags' => array(
-			'currentapp' => 'calendar',
+			'currentapp' => 'login',
 		)
 	);
 	include('../../header.inc.php');
