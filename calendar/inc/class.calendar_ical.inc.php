@@ -1485,6 +1485,19 @@ class calendar_ical extends calendar_boupdate
 					. array2string($event)."\n",3,$this->logfile);
 			}
 
+			// Android (any maybe others) delete recurrences by setting STATUS: CANCELLED
+			// as we ignore STATUS we have to delete the recurrence by calling delete
+			if (in_array($event_info['type'], array('SERIES-EXCEPTION', 'SERIES-EXCEPTION-PROPAGATE', 'SERIES-PSEUDO-EXCEPTION')) &&
+				$event['status'] == 'CANCELLED')
+			{
+				if (!$this->delete($event['id'] ? $event['id'] : $cal_id, $event['recurrence']))
+				{
+					// delete fails (because no rights), reject recurrence
+					$this->set_status($event['id'] ? $event['id'] : $cal_id, $this->user, 'R', $event['recurrence']);
+				}
+				continue;
+			}
+
 			// save event depending on the given event type
 			switch ($event_info['type'])
 			{
@@ -2919,6 +2932,10 @@ class calendar_ical extends calendar_boupdate
 					// fall through
 				case 'LAST-MODIFIED':	// will be written direct to the event
 					$event['modified'] = $attributes['value'];
+					break;
+				case 'STATUS':	// currently no EGroupware event column, but needed as Android uses it to delete single recurrences
+					$event['status'] = $attributes['value'];
+					break;
 			}
 		}
 		// check if the entry is a birthday
