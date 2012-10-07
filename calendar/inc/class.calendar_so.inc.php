@@ -735,10 +735,7 @@ class calendar_so
 					'recur_exception' => true,
 				), __LINE__, __FILE__, false, 'ORDER BY cal_id,cal_start', 'calendar') as $row)
 				{
-					foreach((array)$recur_ids[$row['cal_id']] as $i)
-					{
-						$events[$i]['recurce_id'][] = $row['cal_start'];
-					}
+					$events[$row['cal_id']]['recur_exception'][] = $row['cal_start'];
 				}
 			}
 			//custom fields are not shown in the regular views, so we only query them, if explicitly required
