@@ -2009,6 +2009,15 @@ class calendar_bo
 			$set['ts_quantity'] = ($event['end'] - $event['start']) / 3600;
 			$set['end_time'] = null;	// unset end-time
 			$set['cat_id'] = (int)$event['category'];
+
+			foreach(egw_link::get_links('calendar',$id,'','link_lastmod DESC',true) as $link)
+			{
+				if ($link['app'] != 'timesheet' && $link['app'] != egw_link::VFS_APPNAME)
+				{
+					$set['link_app'][] = $link['app'];
+					$set['link_id'][]  = $link['id'];
+				}
+			}
 		}
 		return $set;
 	}
