@@ -18,6 +18,10 @@ require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
  *
  * Permanent error_log() calls should use $this->groupdav->log($str) instead, to be send to PHP error_log()
  * and our request-log (prefixed with "### " after request and response, like exceptions).
+ *
+ * @ToDo: new properties on calendars and it's ressources specially from sharing:
+ * - for the invite property: 5.2.2 in https://trac.calendarserver.org/browser/CalendarServer/trunk/doc/Extensions/caldav-sharing.txt
+ * - https://trac.calendarserver.org/browser/CalendarServer/trunk/doc/Extensions/caldav-schedulingchanges.txt
  */
 class calendar_groupdav extends groupdav_handler
 {
@@ -261,11 +265,17 @@ class calendar_groupdav extends groupdav_handler
 					continue;
 				}
 				$etag = $this->get_etag($event, $schedule_tag);
+
 				//header('X-EGROUPWARE-EVENT-'.$event['id'].': '.$event['title'].': '.date('Y-m-d H:i:s',$event['start']).' - '.date('Y-m-d H:i:s',$event['end']));
 				$props = array(
 					'getcontenttype' => $this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VEVENT' : 'text/calendar',
 					'getetag' => '"'.$etag.'"',
 					'getlastmodified' => $event['modified'],
+					// user and timestamp of creation or last modification of event, used in calendarserver only for shared calendars
+					'created-by' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER, 'created-by',
+						$this->_created_updated_by_prop($event['creator'], $event['created'])),
+					'updated-by' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER, 'updated-by',
+						$this->_created_updated_by_prop($event['modifier'], $event['modified'])),
 				);
 				if ($this->use_schedule_tag)
 				{
@@ -306,6 +316,48 @@ class calendar_groupdav extends groupdav_handler
 				' to return '.count($files['files']).' items');
 		}
 		return $files;
+	}
+
+	/**
+	 * Return Calendarserver:(created|updated)-by sub-properties for a given user and time
+	 *
+	 * <created-by xmlns='http://calendarserver.org/ns/'>
+	 *  <first-name>Ralf</first-name>
+	 *  <last-name>Becker</last-name>
+	 *  <dtstamp>20121002T092006Z</dtstamp>
+	 *  <href xmlns='DAV:'>mailto:farktronix@me.com</href>
+	 * </created-by>
+	 *
+	 * @param int $user
+	 * @param int $time
+	 * @return array with subprops
+	 */
+	private function _created_updated_by_prop($user, $time)
+	{
+		$props = array();
+		foreach(array(
+			'first-name' => 'account_firstname',
+			'last-name' => 'account_lastname',
+			'href' => 'account_email',
+		) as $prop => $name)
+		{
+			if ($user && ($val = $this->accounts->id2name($user, $name)))
+			{
+				$ns = groupdav::CALENDARSERVER;
+				if ($prop == 'href')
+				{
+					$ns = '';
+					$val = 'mailto:'.$val;
+				}
+				$props[$prop] = $ns ? HTTP_WebDAV_Server::mkprop($ns, $prop, $val) : HTTP_WebDAV_Server::mkprop($prop, $val);
+			}
+		}
+		if ($time)
+		{
+			$props['dtstamp'] = HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER, 'dtstamp', gmdate('Ymd\\This\\Z', $time));
+		}
+		//error_log(__METHOD__."($user, $time) returning ".array2string($props));
+		return $props ? $props : '';
 	}
 
 	/**
