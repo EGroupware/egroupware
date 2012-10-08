@@ -270,7 +270,7 @@ class calendar_ui
 		foreach(array(
 			'date'       => $this->bo->date2string($this->bo->now_su),
 			'cat_id'     => 0,
-			'filter'     => 'all',
+			'filter'     => 'default',
 			'owner'      => $this->user,
 			'save_owner' => 0,
 			'sortby'     => 'category',
