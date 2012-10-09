@@ -172,10 +172,13 @@ function hl_my_tag_transform($element, $attribute_array=0)
 	}
 	*/
 
+	// unwanted javascript
+	static $pregFindScript = '/\b(on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mousedown|mousemove|mouseout|mouseover|mouseup|reset|select|submit|unload))\b/i';
 	// Build the attributes string
 	$attributes = '';
 	foreach($attribute_array as $k=>$v){
-		$attributes .= " {$k}=\"{$v}\"";
+		//error_log(__METHOD__.__LINE__.' '.$k.'->'.preg_match($preg,$k));
+		if (!preg_match($pregFindScript,$k)) $attributes .= " {$k}=\"{$v}\"";
 	}
 
 	// Return the opening tag with attributes
@@ -259,6 +262,8 @@ function hl_email_tag_transform($element, $attribute_array=0)
 	}
 	if($element == 'a')
 	{
+		//error_log(array2string($attribute_array));
+		if (strpos($attribute_array['href'],'denied:javascript')===0) $attribute_array['href']='';
 		if (isset($attribute_array['name']) && isset($attribute_array['id'])) $attribute_array['id'] = $attribute_array['name'];
 		if (strpos($attribute_array['href'],'@')!==false) $attribute_array['href'] = str_replace('@','%40',$attribute_array['href']);
 		if (strpos($attribute_array['href'],'#')===0)
@@ -268,10 +273,13 @@ function hl_email_tag_transform($element, $attribute_array=0)
 
 	}
 
+	// unwanted javascript
+	static $pregFindScript = '/\b(on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mousedown|mousemove|mouseout|mouseover|mouseup|reset|select|submit|unload))\b/i';
 	// Build the attributes string
 	$attributes = '';
 	foreach($attribute_array as $k=>$v){
-		$attributes .= " {$k}=\"{$v}\"";
+		//error_log(__METHOD__.__LINE__.' '.$k.'->'.preg_match($preg,$k));
+		if (!preg_match($pregFindScript,$k)) $attributes .= " {$k}=\"{$v}\"";
 	}
 
 	// Return the opening tag with attributes
