@@ -294,7 +294,7 @@
 			$data = translation::convert($data,$options['charset']);
 
 			$ok = true;
-			if(count($data) != count($options['field_mapping']))
+			if(count($data) != count($options['field_mapping']) && max(array_keys($data)) != max(array_keys($options['csv_fields'])))
 			{
 				$message[] = lang("Column mismatch.  Expected %1 columns, your file has %2.",
 					count($options['field_mapping']),
