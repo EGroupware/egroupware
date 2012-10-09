@@ -38,9 +38,8 @@ class calendar_export_ical extends calendar_export_csv {
 		if($options['selection']['select'] == 'criteria') {
 			$query = array(
 				'start' => $options['selection']['start'],
-				'end'   => $options['selection']['end'],
+				'end'   => strtotime('+1 day',$options['selection']['end'])-1,
 				'categories'	=> $options['categories'] ? $options['categories'] : $options['selection']['categories'],
-				'enum_recuring' => false,
 				'daywise'       => false,
 				'users'         => $options['selection']['owner'],
 				'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
