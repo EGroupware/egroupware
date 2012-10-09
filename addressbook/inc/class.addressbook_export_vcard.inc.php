@@ -24,6 +24,7 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 	 */
 	public function export( $_stream, importexport_definition $_definition) {
 
+		$options = $_definition->plugin_options;
 		$uicontacts = new addressbook_ui();
 		$selection = array();
 
