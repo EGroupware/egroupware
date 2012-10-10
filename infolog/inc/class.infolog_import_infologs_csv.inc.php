@@ -152,7 +152,9 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 
 		$_lookups = array(
 			'info_type'	=>	$this->boinfolog->enums['type'],
-			'info_status'	=>	$this->boinfolog->status['task']
+			'info_status'	=>	$this->boinfolog->status['task'],
+			'info_priority'	=>	$this->boinfolog->enums['priority'],
+			'info_confirm'	=>	$this->boinfolog->enums['confirm']
 		);
 
 		// Start counting successes
