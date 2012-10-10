@@ -26,15 +26,15 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 		$options = $_definition->plugin_options;
 
 		translation::add_app('infolog');
-		$bo = new infolog_bo();
+		$this->bo = new infolog_bo();
 		$selection = array();
 		$query = array();
 		$cf_links = array();
 
 		if(!$this->selects)
 		{
-			$this->selects['info_type'] = $bo->enums['type'];
-			$this->selects['info_priority'] = $bo->enums['priority'];
+			$this->selects['info_type'] = $this->bo->enums['type'];
+			$this->selects['info_priority'] = $this->bo->enums['priority'];
 		}
 
 		$export_object = new importexport_export_csv($_stream, (array)$options);
@@ -45,9 +45,9 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 			if($field[0] == '#') {
 				$query['custom_fields'][] = $field;
 
-				if($GLOBALS['egw_info']['user']['apps'][$bo->customfields[substr($field,1)]['type']])
+				if($GLOBALS['egw_info']['user']['apps'][$this->bo->customfields[substr($field,1)]['type']])
 				{
-					$cf_links[$field] = $bo->customfields[substr($field,1)]['type'];
+					$cf_links[$field] = $this->bo->customfields[substr($field,1)]['type'];
 				}
 			}
 		}
@@ -62,7 +62,7 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 				$query['num_rows'] = 500;
 				$query['start'] = 0;
 				do {
-					$selection = $bo->search($query);
+					$selection = $this->bo->search($query);
 					$ids = array_keys($selection);
 
 					// Pre-load any cfs that are links
@@ -131,7 +131,7 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 			}
 			// Some conversion
 			if($options['convert']) {
-				$this->selects['info_status'] = $bo->status[$record->info_type];
+				$this->selects['info_status'] = $this->bo->get_status($record->info_type);
 				importexport_export_csv::convert($record, infolog_egw_record::$types, 'infolog', $this->selects);
 				$this->convert($record);
 
