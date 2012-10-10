@@ -128,6 +128,9 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 		// Get the tracker for changes
 		$this->tracking = new infolog_tracking($this->boinfolog);
 
+		// Need translations for some human stuff (early type detection)
+		translation::add_app('infolog');
+
 		// set FieldMapping.
 		$import_csv->mapping = $_definition->plugin_options['field_mapping'];
 
@@ -172,9 +175,15 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
 			$lookups = $_lookups;
-			if($record['info_type'] && $this->boinfolog->status[$record['info_type']])
+
+			// Early detection of type, to load appropriate statuses
+			foreach(array($lookups['info_type'], array_map('strtolower',array_map('lang',$lookups['info_type']))) as $types)
 			{
-				$lookups['info_status'] = $this->boinfolog->status[$record['info_type']];
+				if($record['info_type'] && $key = array_search(strtolower($record['info_type']),$types))
+				{
+					$lookups['info_status'] = $this->boinfolog->status[$key];
+					break;
+				}
 			}
 
 			$result = importexport_import_csv::convert($record, infolog_egw_record::$types, 'infolog', $lookups, $_definition->plugin_options['convert']);
