@@ -2011,6 +2011,7 @@ else
 					// PM fields, ToDo: access control!!!
 					'pT' => 'date-duration',
 					'uT' => 'date-duration',
+					'replanned' => 'date-duration',
 //					'pL' => 'projectmanager-pricelist',
 					'pr' => 'float',
 				),

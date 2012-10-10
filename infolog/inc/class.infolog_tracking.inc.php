@@ -67,6 +67,7 @@ class infolog_tracking extends bo_tracking
 		'info_location'      => 'Lo',
 		// PM fields
 		'info_planned_time'  => 'pT',
+		'info_replanned_time'  => 'replanned',
 		'info_used_time'     => 'uT',
 		'pl_id'              => 'pL',
 		'info_price'         => 'pr',
@@ -102,6 +103,7 @@ class infolog_tracking extends bo_tracking
 		'info_cc'        => 'Cc',
 		// PM fields
 		'info_planned_time'  => 'planned time',
+		'info_replanned_time'  => 're-planned time',
 		'info_used_time'     => 'used time',
 		'pl_id'              => 'pricelist',
 		'info_price'         => 'price',
