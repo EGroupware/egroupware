@@ -266,6 +266,10 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 
 		// Automatic conversions
 		if($appname) {
+
+			// Load translations
+			translation::add_app($appname);
+
 			if(!self::$cf_parse_cache[$appname]) {
 				$c_fields = importexport_export_csv::convert_parse_custom_fields($appname, $selects, $links, $methods);
 				self::$cf_parse_cache[$appname] = array($c_fields, $selects, $links, $methods);
@@ -285,7 +289,15 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 			foreach((array)$fields['select'] as $name) {
 				if($record[$name] != null && is_array($selects) && $selects[$name]) {
 					$key = array_search(strtolower($record[$name]), array_map('strtolower',$selects[$name]));
-					if($key !== false) $record[$name] = $key;
+					if($key !== false)
+					{
+						$record[$name] = $key;
+					}
+					else
+					{
+						$key = array_search(strtolower($record[$name]), array_map('strtolower',array_map('lang',$selects[$name])));
+						if($key !== false) $record[$name] = $key;
+					}
 				}
 			}
 			foreach((array)$fields['links'] as $name) {
