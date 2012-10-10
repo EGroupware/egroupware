@@ -2,7 +2,7 @@
 <entry type="array" name="importExportDefinitions">
   <entry type="array" name="metainfo">
     <entry type="string" name="type">importexport definitions</entry>
-    <entry type="string" name="charset">user</entry>
+    <entry type="string" name="charset">utf-8</entry>
     <entry type="integer" name="entries">2</entry>
   </entry>
   <entry type="array" name="definitions">
@@ -32,11 +32,12 @@
           <entry type="string" name="info_datecompleted">Date completed</entry>
           <entry type="string" name="info_datemodified">Last changed</entry>
           <entry type="string" name="info_location">Location</entry>
-          <entry type="string" name="info_startdate">Startdate</entry>
-          <entry type="string" name="info_enddate">Enddate</entry>
+          <entry type="string" name="info_startdate">Start date</entry>
+          <entry type="string" name="info_enddate">Due date</entry>
           <entry type="string" name="info_responsible">Responsible</entry>
           <entry type="string" name="info_cc">Cc</entry>
           <entry type="string" name="info_planned_time">planned time</entry>
+          <entry type="string" name="info_replanned_time">re-planned time</entry>
           <entry type="string" name="info_used_time">used time</entry>
           <entry type="string" name="pl_id">pricelist</entry>
           <entry type="string" name="info_price">price</entry>
@@ -47,7 +48,7 @@
         <entry type="string" name="begin_with_fieldnames">label</entry>
         <entry type="string" name="convert">1</entry>
       </entry>
-      <entry type="string" name="modified">2011-05-24 10:00:00</entry>
+      <entry type="string" name="modified">2012-10-10 10:00:00</entry>
     </entry>
     <entry type="array" name="import-infolog">
       <entry type="string" name="name">import-infolog</entry>
@@ -78,14 +79,15 @@
           <entry type="string" name="13">Date completed</entry>
           <entry type="string" name="14">Last changed</entry>
           <entry type="string" name="15">Location</entry>
-          <entry type="string" name="16">Start Date</entry>
+          <entry type="string" name="16">Start date</entry>
           <entry type="string" name="17">Due date</entry>
-          <entry type="string" name="18">responsible</entry>
+          <entry type="string" name="18">Responsible</entry>
           <entry type="string" name="19">Cc</entry>
           <entry type="string" name="20">planned time</entry>
-          <entry type="string" name="21">used time</entry>
-          <entry type="string" name="22">Pricelist</entry>
-          <entry type="string" name="23">Price</entry>
+          <entry type="string" name="21">re-planned time</entry>
+          <entry type="string" name="22">used time</entry>
+          <entry type="string" name="23">pricelist</entry>
+          <entry type="string" name="24">price</entry>
         </entry>
         <entry type="array" name="field_mapping">
           <entry type="string" name="0">info_id</entry>
@@ -104,14 +106,15 @@
           <entry type="string" name="13">info_datecompleted</entry>
           <entry type="string" name="14">info_datemodified</entry>
           <entry type="string" name="15">info_location</entry>
-          <entry type="string" name="16">info_enddate</entry>
-          <entry type="string" name="17">info_responsible</entry>
+          <entry type="string" name="16">info_startdate</entry>
+          <entry type="string" name="17">info_enddate</entry>
           <entry type="string" name="18">info_responsible</entry>
           <entry type="string" name="19">info_cc</entry>
           <entry type="string" name="20">info_planned_time</entry>
-          <entry type="string" name="21">info_used_time</entry>
-          <entry type="string" name="22">pl_id</entry>
-          <entry type="string" name="23">info_price</entry>
+          <entry type="string" name="21">info_replanned_time</entry>
+          <entry type="string" name="22">info_used_time</entry>
+          <entry type="string" name="23">pl_id</entry>
+          <entry type="string" name="24">info_price</entry>
         </entry>
         <entry type="string" name="field_conversion"/>
         <entry type="array" name="conditions">
@@ -126,8 +129,9 @@
             </entry>
           </entry>
         </entry>
+        <entry type="string" name="convert">1</entry>
       </entry>
-      <entry type="string" name="modified">2012-10-09 10:00:00</entry>
+      <entry type="string" name="modified">2012-10-10 10:00:00</entry>
     </entry>
   </entry>
 </entry>
