@@ -83,6 +83,7 @@ class egw_htmLawed
 			'balance'=>0,//turn off tag-balancing (config['balance']=>0). That will not introduce any security risk; only standards-compliant tag nesting check/filtering will be turned off (basic tag-balance will remain; i.e., there won't be any unclosed tag, etc., after filtering)
 			'tidy'=>1,
 			'elements' => "* -script",
+			'deny_attribute' => 'on*',
 			'schemes'=>'href: file, ftp, http, https, mailto; src: cid, data, file, ftp, http, https; *:file, http, https',
 			'hook_tag' =>"hl_my_tag_transform",
 		);
@@ -172,13 +173,10 @@ function hl_my_tag_transform($element, $attribute_array=0)
 	}
 	*/
 
-	// unwanted javascript
-	static $pregFindScript = '/\b(on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mousedown|mousemove|mouseout|mouseover|mouseup|reset|select|submit|unload))\b/i';
 	// Build the attributes string
 	$attributes = '';
 	foreach($attribute_array as $k=>$v){
-		//error_log(__METHOD__.__LINE__.' '.$k.'->'.preg_match($preg,$k));
-		if (!preg_match($pregFindScript,$k)) $attributes .= " {$k}=\"{$v}\"";
+		$attributes .= " {$k}=\"{$v}\"";
 	}
 
 	// Return the opening tag with attributes
@@ -273,13 +271,10 @@ function hl_email_tag_transform($element, $attribute_array=0)
 
 	}
 
-	// unwanted javascript
-	static $pregFindScript = '/\b(on(before)?(abort|blur|change|click|dblclick|error|focus|keydown|keypress|keyup|load|mousedown|mousemove|mouseout|mouseover|mouseup|reset|select|submit|unload))\b/i';
 	// Build the attributes string
 	$attributes = '';
 	foreach($attribute_array as $k=>$v){
-		//error_log(__METHOD__.__LINE__.' '.$k.'->'.preg_match($preg,$k));
-		if (!preg_match($pregFindScript,$k)) $attributes .= " {$k}=\"{$v}\"";
+		$attributes .= " {$k}=\"{$v}\"";
 	}
 
 	// Return the opening tag with attributes

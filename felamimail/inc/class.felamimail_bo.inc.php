@@ -48,6 +48,7 @@ class felamimail_bo
 				'balance'=>1,//turn off tag-balancing (config['balance']=>0). That will not introduce any security risk; only standards-compliant tag nesting check/filtering will be turned off (basic tag-balance will remain; i.e., there won't be any unclosed tag, etc., after filtering)
 				'tidy'=>1,
 				'elements' => "* -script",
+				'deny_attribute' => 'on*',
 				'schemes'=>'href: file, ftp, http, https, mailto; src: cid, data, file, ftp, http, https; *:file, http, https',
 				'hook_tag' =>"hl_email_tag_transform",
 			);
@@ -5337,7 +5338,48 @@ class felamimail_bo
 					//error_log(__METHOD__.__LINE__.$structure->ctype_secondary.'=>'.$part->ctype_primary.'/'.$part->ctype_secondary.'->'.array2string($part));
 					$attachmentnumber++;
 					$filename = trim(($part->ctype_parameters['name']?$part->ctype_parameters['name']:$part->d_parameters['filename']));
+					if (strlen($filename)==0)
+					{
+						//error_log(__METHOD__.__LINE__.$structure->ctype_secondary.'=>'.$part->ctype_primary.'/'.$part->ctype_secondary.'->'.array2string($part));
+						foreach(array('content-type','content-disposition') as $k => $v)
+						{
+							foreach(array('filename','name') as $sk => $n)
+							{
+								if (stripos($part->headers[$v],$n)!== false)
+								{
+									$buff = explode($n,$part->headers[$v]);
+									error_log(__METHOD__.__LINE__.array2string($buff));
+									$namepart = array_pop($buff);
+									//$disposition = array_pop($buff);
+									//error_log(__METHOD__.__LINE__.$namepart);
+									$fp = strpos($namepart,'"');
+									//error_log(__METHOD__.__LINE__.' Start:'.$fp);
+									if ($fp !== false)
+									{
+										$np = strpos($namepart,'"', $fp+1);
+										//error_log(__METHOD__.__LINE__.' End:'.$np);
+										if ($np !== false)
+										{
+											$filename = trim(substr($namepart,$fp+1,$np-$fp-1));
+											$filename = $mailObject->EncodeHeader($filename);
+											if (!empty($filename))
+											{
+												if (strpos($part->disposition,';')!==false)
+												{
+													//chance is, disposition is broken too
+													$dbuff = explode(';',$part->disposition);
+													$part->disposition = trim($dbuff[0]);
+												}
+												break 2;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
 					if (strlen($filename)==0) $filename = 'noname_'.$attachmentnumber;
+					//error_log(__METHOD__.__LINE__.' '.$filename);
 					//echo $part->headers['content-transfer-encoding'].'#<br>';
 					if ($decode) $part->body = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'));
 					if ((trim($part->disposition)=='attachment' || trim($part->disposition) == 'inline') && $partFetched==false)
