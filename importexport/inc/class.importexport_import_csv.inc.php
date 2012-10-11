@@ -284,7 +284,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 		if($fields) {
 			foreach((array)$fields['select'] as $name) {
 				if($record[$name] != null && is_array($selects) && $selects[$name]) {
-					$key = array_search($record[$name], $selects[$name]);
+					$key = array_search(strtolower($record[$name]), array_map('strtolower',$selects[$name]));
 					if($key !== false) $record[$name] = $key;
 				}
 			}
