@@ -151,7 +151,7 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 		$_definition->plugin_options['record_owner'] = $this->user;
 
 		$_lookups = array(
-			'info_type'	=>	$this->boinfolog->enums['types'],
+			'info_type'	=>	$this->boinfolog->enums['type'],
 			'info_status'	=>	$this->boinfolog->status['task']
 		);
 
@@ -181,8 +181,17 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			// Make sure type is valid
 			if(!$record['info_type'] || $record['info_type'] && !$this->boinfolog->enums['type'][$record['info_type']])
 			{
-				$this->errors[$import_csv->get_current_position()] .= ($this->errors[$import_csv->get_current_position()] ? "\n":'').
-					lang('Unknown type: %1', $record['info_type']);
+				// Check for translated type
+				$un_trans = translation::get_message_id($record['info_type'],'infolog');
+				if($record['info_type'] && $this->boinfolog->enums['type'][$un_trans])
+				{
+					$record['info_type'] = $un_trans;
+				}
+				else
+				{
+					$this->errors[$import_csv->get_current_position()] .= ($this->errors[$import_csv->get_current_position()] ? "\n":'').
+						lang('Unknown type: %1', $record['info_type']);
+				}
 			}
 
 			// Set default status for type, if not specified

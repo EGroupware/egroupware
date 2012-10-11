@@ -286,11 +286,11 @@
 			$data = translation::convert($data,$options['charset']);
 
 			$ok = true;
-			if(max(array_keys($data)) != max(array_keys($options['csv_fields'])))
+			if(count($data) != count($options['field_mapping']) && max(array_keys($data)) != max(array_keys($options['csv_fields'])))
 			{
 				$message[] = lang("Column mismatch.  Expected %1 columns, your file has %2.",
-					max(array_keys($options['csv_fields'])),
-					max(array_keys($data))
+					count($options['field_mapping']),
+					count($data)
 				);
 				$ok = false;
 			}
@@ -301,7 +301,7 @@
 					// Skipped column in definition
 					continue;
 				}
-				elseif($index < count($options['csv_fields']) && $options['csv_fields'][$index] != $header)
+				elseif($index < count($options['csv_fields']) && strtoupper($options['csv_fields'][$index]) != strtoupper($header))
 				{
 					// Problem
 					$message[] = lang("Column mismatch: %1 should be %2, not %3",

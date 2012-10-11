@@ -86,10 +86,6 @@
           <entry type="string" name="21">used time</entry>
           <entry type="string" name="22">Pricelist</entry>
           <entry type="string" name="23">Price</entry>
-          <entry type="string" name="24">Search test</entry>
-          <entry type="string" name="25">Options from file</entry>
-          <entry type="string" name="26">Supplier from ajax select</entry>
-          <entry type="string" name="27">Number</entry>
         </entry>
         <entry type="array" name="field_mapping">
           <entry type="string" name="0">info_id</entry>
@@ -131,7 +127,7 @@
           </entry>
         </entry>
       </entry>
-      <entry type="string" name="modified">2011-05-24 10:00:00</entry>
+      <entry type="string" name="modified">2012-10-09 10:00:00</entry>
     </entry>
   </entry>
 </entry>
