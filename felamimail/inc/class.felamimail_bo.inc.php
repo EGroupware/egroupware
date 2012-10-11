@@ -5348,7 +5348,7 @@ class felamimail_bo
 								if (stripos($part->headers[$v],$n)!== false)
 								{
 									$buff = explode($n,$part->headers[$v]);
-									error_log(__METHOD__.__LINE__.array2string($buff));
+									//error_log(__METHOD__.__LINE__.array2string($buff));
 									$namepart = array_pop($buff);
 									//$disposition = array_pop($buff);
 									//error_log(__METHOD__.__LINE__.$namepart);
