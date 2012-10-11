@@ -503,19 +503,21 @@ class defaultimap extends Net_IMAP
 	 * opens a connection to a imap server
 	 *
 	 * @param bool $_adminConnection create admin connection if true
-	 *
-	 * @return resource the imap connection
+	 * @param int $_timeout=null timeout in secs, if none given fmail pref or default of 20 is used
+	 * @return boolean|PEAR_Error true on success, PEAR_Error of false on failure
 	 */
-	function openConnection($_adminConnection=false, $_timeout=20)
+	function openConnection($_adminConnection=false, $_timeout=null)
 	{
 		static $supportedAuthMethods;
 		//error_log(__METHOD__.function_backtrace());
 		//error_log(__METHOD__.__LINE__.($_adminConnection?' Adminconnection':' ').array2string($this));
-		$timeout = felamimail_bo::getTimeOut();
-		// either there is a $_timeout given with the openConnection call, or not, if there is a timeout
-		// set in prefs greater then the timeout given, use this one
-		// basically this means you may increase timeouts, but cannot decrease it below 20
-		if ($timeout>$_timeout) $_timeout = $timeout;
+
+		// if no explicit $_timeout given with the openConnection call, check fmail preferences, or use default of 20
+		if (is_null($_timeout))
+		{
+			$timeout = felamimail_bo::getTimeOut();
+			$_timeout = $timeout > 0 ? $timeout : 20;
+		}
 
 		unset($this->_connectionErrorObject);
 

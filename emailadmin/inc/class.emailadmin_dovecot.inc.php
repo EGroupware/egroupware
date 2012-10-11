@@ -69,10 +69,6 @@ class emailadmin_dovecot extends defaultimap
 			}
 			$this->adminUsername = $this->username.'*'.$this->adminUsername;
 		}
-		// timeout is set according to prefs, within parents openConnection call
-		//$timeout = felamimail_bo::getTimeOut();
-		//if ($timeout>$_timeout) $_timeout = $timeout;
-
 		return parent::openConnection($_adminConnection, $_timeout);
 	}
 
