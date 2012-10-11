@@ -194,11 +194,10 @@ class emailadmin_dovecot extends defaultimap
 			$this->disconnect();
 		}
 
-		$this->openConnection(true);
 		$userData = array();
 
 		// we are authenticated with master but for current user
-		if(($quota = $this->getStorageQuotaRoot('INBOX')) && !PEAR::isError($quota))
+		if($this->openConnection(true) === true && ($quota = $this->getStorageQuotaRoot('INBOX')) && !PEAR::isError($quota))
 		{
 			$userData['quotaLimit'] = $quota['QMAX'] / 1024;
 		}
