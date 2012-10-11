@@ -769,26 +769,32 @@ class emailadmin_bo extends so_sql
 		return false;
 	}
 
+	/**
+	 * Query user data from incomming (IMAP) and outgoing (SMTP) mail-server
+	 *
+	 * @param int $_accountID
+	 * @return array
+	 */
 	function getUserData($_accountID)
 	{
-
 		if($userProfile = $this->getUserProfile('felamimail')) {
-			$icServerKeys = array_keys((array)$userProfile->ic_server);
-			$profileID = array_shift($icServerKeys);
-			$icServer = $userProfile->getIncomingServer($profileID);
-			if(($icServer instanceof defaultimap) && $username = $GLOBALS['egw']->accounts->id2name($_accountID)) {
-				$icUserData = $icServer->getUserData($username);
-			}
-
 			$ogServerKeys = array_keys((array)$userProfile->og_server);
 			$profileID = array_shift($ogServerKeys);
 			$ogServer = $userProfile->getOutgoingServer($profileID);
 			if(($ogServer instanceof defaultsmtp)) {
 				$ogUserData = $ogServer->getUserData($_accountID);
 			}
-
+			// query imap server only, if account is active (or no smtp server configured)
+			if (!isset($ogUserData) || $ogUserData['accountStatus'] == 'active')
+			{
+				$icServerKeys = array_keys((array)$userProfile->ic_server);
+				$profileID = array_shift($icServerKeys);
+				$icServer = $userProfile->getIncomingServer($profileID);
+				if(($icServer instanceof defaultimap) && $username = $GLOBALS['egw']->accounts->id2name($_accountID)) {
+					$icUserData = $icServer->getUserData($username);
+				}
+			}
 			return (array)$icUserData + (array)$ogUserData;
-
 		}
 
 		return false;
