@@ -366,8 +366,7 @@ class importexport_wizard_basic_import_csv
 		{
 
 			// Clear conditions that don't do anything
-			$content['conditions'] = array_unique($content['conditions']);
-error_log(array2string($content['conditions']));
+			array_shift($content['conditions']);
 			foreach($content['conditions'] as $key => &$condition) {
 				if(($condition['true']['action'] == 'none' || !$condition['true']['action'])  && !$condition['true']['stop']
 					&& ($condition['false']['action'] == 'none' || !$condition['false']['action']) && !$condition['false']['stop']) {
@@ -432,6 +431,7 @@ error_log(array2string($content['conditions']));
 
 		// Leave room for heading
 		array_unshift($content['conditions'], false);
+		$preserv['conditions'] = $content['conditions'];
 
 		unset ($preserv['button']);
 		return $this->step_templates[$content['step']];
