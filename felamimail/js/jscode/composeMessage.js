@@ -107,11 +107,13 @@ function fm_compose_saveAsDraftBG(autoSave)
 	if (typeof autoSave == 'undefined') autoSave = true;
 	var htmlFlag = document.getElementsByName('_is_html')[0];
 	var mimeType = document.getElementById('mimeType');
+	var sendButton = document.getElementById('send');
+	if (autoSave) {sendButton.disabled=sendButton.hidden=true;}
 	var currentEditor = htmlFlag.value;
 	var currentMode ='';
 	var data = {};
 	if (currentEditor == 1)
-	{fm_startTimerSaveAsDraft(_refreshTimeOut)
+	{
 		data['mimeType']=currentMode='html';
 	}
 	else
@@ -140,6 +142,7 @@ function fm_compose_saveAsDraftBG(autoSave)
 	fm_startTimerSaveAsDraft(_refreshTimeOut);
 	if (autoSave)
 	{
+		sendButton.disabled=sendButton.hidden=false;
 		draftsMayExist = true;
 		do_onunload=true;
 		justSavedAsDraftManually = false;
@@ -768,7 +771,7 @@ function fm_compose_sendEMail() {
 		do_onunload=false; 
 		document.doit.submit();
 	} else {
-		alert(fm_compose_langNoAddressSet);
+		//alert(fm_compose_langNoAddressSet);
 	}
 }
 

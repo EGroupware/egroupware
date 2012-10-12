@@ -63,7 +63,7 @@
 	<tr class="navbarBackground">
 		<td align="left" width="270px">
 			<div class="parentDIV">
-				<button class="menuButton" type="submit" value="{lang_send}" name="send" style="width: 110px; color: black;">
+				<button class="menuButton" type="submit" value="{lang_send}" name="send" id="send" onclick="fm_compose_sendEMail();" style="width: 110px; color: black;">
 					<img src="{img_mail_send}" style="vertical-align: middle;"> <b>{lang_send}</b>
 				</button>
 				<button class="menuButton" type="button" onclick="fm_compose_saveAsDraft();" title="{lang_save_as_draft}">
