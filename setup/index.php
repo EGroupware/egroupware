@@ -290,7 +290,8 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		switch ($GLOBALS['egw_info']['setup']['currentver']['phpgwapi'])
 		{
 			case 'dbcreate':
-				$GLOBALS['egw_setup']->db->create_database($_POST['db_root'], $_POST['db_pass'],'utf8');	// create all new db's with utf8
+				$GLOBALS['egw_setup']->db->create_database($_POST['db_root'], $_POST['db_pass'], 'utf8',	// create all new db's with utf8
+					!preg_match('/^[0-9.a-z_]+$/i', $_POST['db_grant_host']) ? 'localhost' : $_POST['db_grant_host']);
 				break;
 			case 'drop':
 				$setup_info = $GLOBALS['egw_setup']->detection->get_versions($setup_info);
