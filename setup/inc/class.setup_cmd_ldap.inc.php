@@ -159,6 +159,9 @@ class setup_cmd_ldap extends setup_cmd
 			$what = ($account['account_type'] == 'u' ? lang('User') : lang('Group')).' '.
 				$account_id.' ('.$account['account_lid'].')';
 
+			// invalidate cache: otherwise no migration takes place, if cached results says account already exists
+			accounts::cache_invalidate($account_id);
+
 			if ($account['account_type'] == 'u')
 			{
 				if ($accounts_obj->exists($account_id))
