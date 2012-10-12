@@ -25,6 +25,18 @@
     </td>
 <!-- END group_list -->
 
+<!-- BEGIN ldap_admin -->
+   <tr bgcolor="#e6e6e6">
+    <td colspan="2" align="center">{ldap_admin_message}:</td>
+   </tr>
+   <tr bgcolor="#e6e6e6">
+    <td align="right">{ldap_admin_label}: </td><td><input name="ldap_admin" value="" /></td>
+   </tr>
+   <tr bgcolor="#e6e6e6">
+    <td align="right">{ldap_admin_pw_label}: </td><td><input type="password" name="ldap_admin_pw" value="" /></td>
+   </tr>
+<!-- END ldap_admin -->
+
 <!-- BEGIN submit -->
    </tr>
    <tr bgcolor="#e6e6e6">

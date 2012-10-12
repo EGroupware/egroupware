@@ -60,9 +60,9 @@ array_shift($base_parts);
 $cmd = new setup_cmd_ldap(array(
 	'domain' => $GLOBALS['egw_setup']->ConfigDomain,
 	'sub_command' => 'migrate_to_'.$to,
-	// in regular setup we only support one ldap root user, setting him as admin user too
-	'ldap_admin' => $GLOBALS['egw_info']['server']['ldap_root_dn'],
-	'ldap_admin_pw' => $GLOBALS['egw_info']['server']['ldap_root_pw'],
+	// allow to set ldap root DN (ldap_admin) to create instance specific admin DN and structure
+	'ldap_admin' => !empty($_POST['ldap_admin']) ? $_POST['ldap_admin'] : $GLOBALS['egw_info']['server']['ldap_root_dn'],
+	'ldap_admin_pw' => !empty($_POST['ldap_admin']) ? $_POST['ldap_admin_pw'] : $GLOBALS['egw_info']['server']['ldap_root_pw'],
 	'ldap_base' => implode(',',$base_parts),
 )+$GLOBALS['egw_info']['server']);
 
@@ -74,6 +74,7 @@ if (!$_POST['migrate'])
 	$setup_tpl->set_block('migration','header','header');
 	$setup_tpl->set_block('migration','user_list','user_list');
 	$setup_tpl->set_block('migration','group_list','group_list');
+	$setup_tpl->set_block('migration','ldap_admin','ldap_admin');
 	$setup_tpl->set_block('migration','submit','submit');
 	$setup_tpl->set_block('migration','footer','footer');
 
@@ -98,6 +99,9 @@ if (!$_POST['migrate'])
 	$setup_tpl->set_var('select_users',lang('Select which user(s) will be exported'));
 	$setup_tpl->set_var('select_groups',lang('Select which group(s) will be exported'));
 	$setup_tpl->set_var('memberships',lang('Group memberships will be migrated too.'));
+	$setup_tpl->set_var('ldap_admin_message', lang('Give LDAP root DN and password, if you need to create an instance specific admin user, user- or group-context'));
+	$setup_tpl->set_var('ldap_admin_label', lang('Root DN'));
+	$setup_tpl->set_var('ldap_admin_pw_label', lang('Root DN password'));
 	$setup_tpl->set_var('migrate',$direction);
 	$setup_tpl->set_var('cancel',lang('Cancel'));
 
@@ -109,6 +113,10 @@ if (!$_POST['migrate'])
 	if($group_list)
 	{
 		$setup_tpl->pfp('out','group_list');
+	}
+	if ($to == 'ldap')
+	{
+		$setup_tpl->pfp('out','ldap_admin');
 	}
 	$setup_tpl->pfp('out','submit');
 	$setup_tpl->pfp('out','footer');
