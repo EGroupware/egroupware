@@ -253,25 +253,30 @@
 		 */
 		protected function preview(importexport_iface_import_plugin &$plugin, &$stream, importexport_definition &$definition_obj)
 		{
-			$preview = $plugin->preview($stream, $definition_obj);
-/*
-			$import_csv = new importexport_import_csv( $stream, array(
-				'fieldsep' => $definition_obj->plugin_options['fieldsep'],
-				'charset' => $definition_obj->plugin_options['charset'],
-			));
-			// set FieldMapping.
-			$import_csv->mapping = $definition_obj->plugin_options['field_mapping'];
-
-			$rows = array('h1'=>array(),'f1'=>array(),'.h1'=>'class=th');
-			for($row = 0; $row < $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']; $row++)
+			if(method_exists($plugin, 'preview'))
 			{
-				$row_data = $import_csv->get_record();
-				if($row_data === false) break;
-				$rows[$import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines'] ? 'h1' : $row] = $row_data;
-				if($import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines']) $row--;
+				$preview = $plugin->preview($stream, $definition_obj);
 			}
-			$preview = html::table($rows);
-*/
+			elseif($definition_obj->plugin_options['csv_fields'])
+			{
+				$import_csv = new importexport_import_csv( $stream, array(
+					'fieldsep' => $definition_obj->plugin_options['fieldsep'],
+					'charset' => $definition_obj->plugin_options['charset'],
+				));
+				// set FieldMapping.
+				$import_csv->mapping = $definition_obj->plugin_options['field_mapping'];
+
+				$rows = array('h1'=>array(),'f1'=>array(),'.h1'=>'class=th');
+				for($row = 0; $row < $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']; $row++)
+				{
+					$row_data = $import_csv->get_record();
+					if($row_data === false) break;
+					$rows[$import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines'] ? 'h1' : $row] = $row_data;
+					if($import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines']) $row--;
+				}
+				$preview = html::table($rows);
+				rewind($stream);
+			}
 			return '<h2>' . lang('Preview') . ' - ' . $plugin->get_name() . '</h2>' . $preview;
 		}
 
