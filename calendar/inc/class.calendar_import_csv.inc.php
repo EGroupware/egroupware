@@ -47,7 +47,7 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 	/**
 	 * actions wich could be done to data entries
 	 */
-	protected static $actions = array( 'none', 'update', 'insert' );
+	protected static $actions = array( 'none', 'insert' );
 
 	/**
 	 * conditions for actions
@@ -143,8 +143,8 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 		}
 
 		// set eventOwner
-		$_definition->plugin_options['owner'] = isset( $_definition->plugin_options['owner'] ) ?
-			$_definition->plugin_options['owner'] : $this->user;
+		$options =& $_definition->plugin_options;
+		$options['owner'] = $options['owner'] ? $options['owner'] : $this->user;
 
 		// Start counting successes
 		$count = 0;
@@ -163,7 +163,8 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 				1 => lang('Low'),
 				2 => lang('Normal'),
 				3 => lang('High')
-			),
+	 		),
+			'recurrence' => $this->bo->recur_types
 		);
 
 		while ( $record = $import_csv->get_record() ) {
@@ -183,12 +184,12 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 					$this->errors[$import_csv->get_current_position()] = lang(
 						'Invalid owner ID: %1.  Might be a bad field translation.  Used %2 instead.',
 						$record['owner'],
-						$_definition->plugin_options['owner']
+						$options['owner']
 					);
-					$record['owner'] = $_definition->plugin_options['owner'];
+					$record['owner'] = $options['owner'];
 				}
 			} else {
-				$record['owner'] = $_definition->plugin_options['owner'];
+				$record['owner'] = $options['owner'];
 			}
 
 			if ($record['participants'] && !is_array($record['participants'])) {
@@ -211,6 +212,15 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 					}
 				}
 			}
+
+			if($record['recurrence'])
+			{
+				list($record['recur_type'], $record['recur_interval']) = explode('/',$record['recurrence'],2);
+				$record['recur_interval'] = trim($record['recur_interval']);
+				$record['recur_type'] = array_search(strtolower(trim($record['recur_type'])), array_map('strtolower',$lookups['recurrence']));
+				unset($record['recurrence']);
+			}
+			$record['tzid'] = calendar_timezones::id2tz($record['tz_id']);
 
 			// Calendar doesn't actually support conditional importing
 			if ( $_definition->plugin_options['conditions'] ) {
