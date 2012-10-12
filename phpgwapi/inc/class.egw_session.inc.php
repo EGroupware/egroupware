@@ -1336,37 +1336,43 @@ class egw_session
 	 * @param string $login on login $_POST['login'], $_SERVER['PHP_AUTH_USER'] or $_SERVER['REMOTE_USER']
 	 * @param string $domain_requested usually self::get_request('domain')
 	 * @param string &$default_domain usually $default_domain get's set eg. by sitemgr
-	 * @param string $server_name usually $_SERVER['SERVER_NAME']
+	 * @param string|array $server_name usually array($_SERVER['HTTP_HOST'], $_SERVER['SERVER_NAME'])
 	 * @param array $domains=null defaults to $GLOBALS['egw_domain'] from the header
 	 * @return string $GLOBALS['egw_info']['user']['domain'] set with the domain/instance to use
 	 */
-	public static function search_instance($login,$domain_requested,&$default_domain,$server_name,array $domains=null)
+	public static function search_instance($login,$domain_requested,&$default_domain,$server_names,array $domains=null)
 	{
-		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$login','$domain_requested',".array2string($default_domain).".'$server_name'.".array2string($domains).")");
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."('$login','$domain_requested',".array2string($default_domain).".".array2string($server_names).".".array2string($domains).")");
 
 		if (is_null($domains)) $domains = $GLOBALS['egw_domain'];
 
 		if (!isset($default_domain) || !isset($domains[$default_domain]))	// allow to overwrite the default domain
 		{
-			if(isset($domains[$server_name]))
+			foreach((array)$server_names as $server_name)
 			{
-				$default_domain = $server_name;
-			}
-			else
-			{
-				$domain_part = explode('.',$server_name);
-				array_shift($domain_part);
-				$domain_part = implode('.',$domain_part);
-				if(isset($domains[$domain_part]))
+				list($server_name) = explode(':', $server_name);	// remove port from HTTP_HOST
+				if(isset($domains[$server_name]))
 				{
-					$default_domain = $domain_part;
+					$default_domain = $server_name;
+					break;
 				}
 				else
 				{
-					reset($domains);
-					list($default_domain) = each($domains);
+					$domain_part = explode('.',$server_name);
+					array_shift($domain_part);
+					$domain_part = implode('.',$domain_part);
+					if(isset($domains[$domain_part]))
+					{
+						$default_domain = $domain_part;
+						break;
+					}
+					else
+					{
+						reset($domains);
+						list($default_domain) = each($domains);
+					}
+					unset($domain_part);
 				}
-				unset($domain_part);
 			}
 		}
 		if (isset($login))	// on login
