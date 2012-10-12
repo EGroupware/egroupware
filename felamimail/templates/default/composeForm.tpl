@@ -63,7 +63,7 @@
 	<tr class="navbarBackground">
 		<td align="left" width="270px">
 			<div class="parentDIV">
-				<button class="menuButton" type="submit" value="{lang_send}" name="send" id="send" onclick="fm_compose_sendEMail();" style="width: 110px; color: black;">
+				<button class="menuButton" type="submit" value="{lang_send}" id="send" name="send" onclick="fm_compose_sendEMail();" style="width: 110px; color: black;">
 					<img src="{img_mail_send}" style="vertical-align: middle;"> <b>{lang_send}</b>
 				</button>
 				<button class="menuButton" type="button" onclick="fm_compose_saveAsDraft();" title="{lang_save_as_draft}">
@@ -190,10 +190,84 @@
 
 <!-- BEGIN attachment -->
 <script language="javascript1.2">
-// position cursor in top form field
-///////////////////////////////////////////////////////////////////////document.doit.{focusElement}.focus();
-//sString = document.doit.{focusElement}.innerHTML;
-//document.doit.{focusElement}.innerHTML = sString;
+// position cursor in top form field of focusElement
+toFocus = "{focusElement}";
+if (toFocus=='subject')
+{
+	sString = document.doit.fm_compose_subject.value;
+	document.doit.fm_compose_subject.selectionStart = document.doit.fm_compose_subject.selectionEnd = sString.length;
+	document.doit.fm_compose_subject.focus();
+}
+if (toFocus=='to')
+{
+	sString = document.doit.elements["address[]"][0].value;
+	document.doit.elements["address[]"][0].selectionStart = document.doit.elements["address[]"][0].selectionEnd = sString.length;
+	document.doit.elements["address[]"][0].focus();
+}
+if (toFocus=='body')
+{
+	var htmlFlag = document.getElementsByName('_is_html')[0];
+
+	// textmode
+	if (htmlFlag.value==0)
+	{
+		document.doit.body.selectionStart = document.doit.body.selectionEnd = 0;
+		document.doit.body.focus();
+	}
+	//htmlMode
+	if (htmlFlag.value==1) 
+	{
+		// focus on subject as I could not figure out jet how to focus on htmlTextArea of CKEditor
+		sString = document.doit.fm_compose_subject.value;
+		document.doit.fm_compose_subject.selectionStart = document.doit.fm_compose_subject.selectionEnd = sString.length;
+		document.doit.fm_compose_subject.focus();
+
+		//var ckeditor = CKEDITOR.instances['body'];
+
+		CKEDITOR.appendTo('body',
+		{
+			on:
+			{
+				'instanceReady': function (ev) {
+					CKEDITOR.instances.body.focus();
+					var ckeditor = CKEDITOR.instances['body'];
+					var s = ckeditor.getSelection();
+					if (typeof s != 'undefined')
+					{
+						var selected_ranges = s.getRanges(); // save selected range
+						// do something
+						s.selectRanges(selected_ranges); // restore it
+					}
+					else
+					{
+						document.doit.fm_compose_subject.focus();
+					}
+				}
+			}
+		});
+		CKEDITOR.appendTo('body',
+		{
+			on:
+			{
+				'pluginsLoaded': function (ev) {
+					CKEDITOR.instances.body.focus();
+					var ckeditor = CKEDITOR.instances['body'];
+					var s = ckeditor.getSelection();
+					if (typeof s != 'undefined')
+					{
+						var selected_ranges = s.getRanges(); // save selected range
+						// do something
+						s.selectRanges(selected_ranges); // restore it
+					}
+					else
+					{
+						document.doit.fm_compose_subject.focus();
+					}
+				}
+			}
+		});
+	}
+}
 </script>
 
 <fieldset class="bordertop"><legend>{lang_attachments}</legend>
