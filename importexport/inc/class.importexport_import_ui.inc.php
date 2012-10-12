@@ -285,6 +285,7 @@
 		public static function check_file(&$file, &$definition, &$message = array(), $dst_file = false)
 		{
 			$options =& $definition->plugin_options;
+			$message_count = count($message);
 
 			// Only CSV files
 			if(!$options['csv_fields']) return true;
@@ -318,7 +319,7 @@
 					// $ok = false;
 				}
 			}
-			if(!$ok)
+			if(!$ok || count($message != $message_count))
 			{
 				// Add links for new / edit definition
 				$config = config::read('importexport');
