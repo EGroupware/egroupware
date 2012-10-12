@@ -28,6 +28,7 @@ class addressbook_egw_record implements importexport_iface_egw_record
 		'date-time' => array('modified','created','last_event','next_event'),
 		'date' => array('bday'),
 		'select-cat' => array('cat_id'),
+		'select' => array('tid')
 	);
 
 

@@ -436,4 +436,12 @@ class importexport_wizard_basic_import_csv
 		unset ($preserv['button']);
 		return $this->step_templates[$content['step']];
 	}
+
+	/**
+	 * Expose import fields for use elsewhere
+	 */
+	public function get_import_fields()
+	{
+		return $this->mapping_fields;
+	}
 }

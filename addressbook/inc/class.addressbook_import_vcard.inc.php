@@ -52,6 +52,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 	 * @var bool
 	 */
 	private $dry_run = false;
+	private $preview_records = array();
 
 	/**
 	 * @var bool is current user admin?
@@ -132,6 +133,16 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 			$contact = $contacts->current();
 
 			$this->action('insert', $contact, $this->current);
+
+			// Stop if we have enough records for a preview
+			if($this->dry_run)
+			{
+				$egw_record = new addressbook_egw_record();
+				$egw_record->set_record($contact);
+				$this->preview_records[] = $egw_record;
+				if($count >= $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']) break;
+			}
+
 			$count++;
 			$contacts->next();
 		}
@@ -222,7 +233,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 				}
 
 				if ( $this->dry_run ) {
-					print_r($_data);
+					//print_r($_data);
 					$this->results[$_action]++;
 					return true;
 				} else {
@@ -238,6 +249,38 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 				throw new egw_exception('Unsupported action: '. $_action);
 			
 		}
+	}
+
+	public function preview( $_stream, importexport_definition $_definition )
+	{
+		$rows = array('h1'=>array(),'f1'=>array(),'.h1'=>'class=th');
+
+		// Set this so plugin doesn't do any data changes
+		$_definition->plugin_options = (array)$_definition->plugin_options + array('dry_run' => true);
+
+		$this->import($_stream, $_definition);
+		rewind($_stream);
+
+		// Get field labels
+		$rows['h1'] = $labels = $this->bocontacts->contact_fields;
+
+		$record_class = get_class($this->preview_records[0]);
+
+		foreach($this->preview_records as $i => $record)
+		{
+			// Convert to human-friendly
+                        importexport_export_csv::convert($record,$record_class::$types,$_definition->application);
+			$record = $record->get_record_array();
+			$row = array();
+			foreach($labels as $field => $label)
+			{
+				$row[$field] = $record[$field];
+				unset($record[$field]);
+			}
+			$row += $record;
+			$rows[] = $row;
+		}
+		return html::table($rows);
 	}
 
 	/**

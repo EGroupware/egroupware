@@ -103,7 +103,7 @@
 						$this->message .= implode($check_message, "<br />\n") . "<br />\n";
 						if($content['dry-run'])
 						{
-							echo $this->preview($file, $definition_obj);
+							echo $this->preview($plugin, $file, $definition_obj);
 						}
 						$count = $plugin->import($file, $definition_obj);
 					}
@@ -248,15 +248,14 @@
 		}
 
 		/**
-		 * Display the contents of the file for dry runs
+		 * Display the interpretation of the file for dry runs
 		 *
-		 * CSV files only
 		 */
-		protected function preview(&$_stream, &$definition_obj)
+		protected function preview(importexport_iface_import_plugin &$plugin, &$stream, importexport_definition &$definition_obj)
 		{
-			if(!$definition_obj->plugin_options['csv_fields']) return;
-
-			$import_csv = new importexport_import_csv( $_stream, array(
+			$preview = $plugin->preview($stream, $definition_obj);
+/*
+			$import_csv = new importexport_import_csv( $stream, array(
 				'fieldsep' => $definition_obj->plugin_options['fieldsep'],
 				'charset' => $definition_obj->plugin_options['charset'],
 			));
@@ -271,10 +270,9 @@
 				$rows[$import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines'] ? 'h1' : $row] = $row_data;
 				if($import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines']) $row--;
 			}
-
-			// Rewind
-			rewind($_stream);
-			return '<h2>' . lang('Preview') . '</h2>' . html::table($rows);
+			$preview = html::table($rows);
+*/
+			return '<h2>' . lang('Preview') . ' - ' . $plugin->get_name() . '</h2>' . $preview;
 		}
 
 		/**

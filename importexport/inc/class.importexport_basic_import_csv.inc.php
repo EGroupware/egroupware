@@ -11,17 +11,17 @@
 
 /**
  * A basic CSV import plugin.
- * 
- * You should extend this class to implement the various bits, but combined with the basic wizard 
+ *
+ * You should extend this class to implement the various bits, but combined with the basic wizard
  * should get you started on building a CSV plugin for an application fairly quickly.
- * 
+ *
  */
 abstract class importexport_basic_import_csv implements importexport_iface_import_plugin  {
 
 	protected static $plugin_options = array(
 		'fieldsep', 		// char
 		'charset', 			// string
-		'contact_owner', 	// int
+		'record_owner', 	// int
 		'update_cats', 			// string {override|add} overides record
 								// with cat(s) from csv OR add the cat from
 								// csv file to exeisting cat(s) of record
@@ -66,6 +66,11 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	 * @var bool
 	 */
 	protected $dry_run = false;
+
+	/**
+	 * If doing a dry_run, instead of altering the DB, store the records here
+	 */
+	protected $preview_records = array();
 
 	/**
 	 * @var bool is current user admin?
@@ -122,10 +127,6 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 			$import_csv->skip_records(1);
 		}
 
-		// set eventOwner
-		$_definition->plugin_options['contact_owner'] = isset( $_definition->plugin_options['contact_owner'] ) ?
-			$_definition->plugin_options['contact_owner'] : $this->user;
-
 		// Start counting successes
 		$count = 0;
 		$this->results = array();
@@ -134,28 +135,59 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 		$this->warnings = array();
 		$this->errors = array();
 
+		// Record class name
+		$app = $_definition->application;
+		$record_class = isset(static::$record_class) ? static::$record_class : "{$app}_egw_record";
+
+		// Needed for categories to work right
+                $GLOBALS['egw_info']['flags']['currentapp'] = $app;
+
+		$this->init($_definition);
+
 		while ( $record = $import_csv->get_record() ) {
 			$success = false;
 
 			// don't import empty records
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
-			$record['owner'] = $this->_definition->plugin_options['contact_owner'];
 
-			$success = $this->import_record($record, $import_csv);
+			$warning = importexport_import_csv::convert($record, $record_class::$types, $app, $this->lookups, $_definition->plugin_options['convert']);
+                        if($warning) $this->warnings[$import_csv->get_current_position()] = $warning;
+
+			$egw_record = new $record_class();
+			$egw_record->set_record($record);
+			$success = $this->import_record($egw_record, $import_csv);
+
 			if($success) $count++;
+
+			// Stop if we have enough records for a preview
+			if($this->dry_run)
+			{
+				$this->preview_records[] = $egw_record;
+				if($import_csv->get_current_position() >= $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']) break;
+			}
 		}
 		return $count;
 	}
 
 	/**
-	*	Import a single record
-	*	
-	*	You don't need to worry about mappings or translations, they've been done already.
-	*	You do need to handle the conditions and the actions taken.
+	 * Stub to hook into import initialization - set lookups, etc.
+	 */
+	protected function init(importexport_definition &$definition)
+	{
+	}
+
+	/**
+	*Import a single record
+	*
+	* You don't need to worry about mappings or translations, they've been done already.
+	* You do need to handle the conditions and the actions taken.
+	*
+	* Updates the count of actions taken
+	*
+	* @return boolean success
 	*/
-	protected abstract function import_record(&$record, &$import_csv);
-	/* Example stub:
+	protected function import_record(importexport_iface_egw_record &$record, &$import_csv)
 	{
 		if ( $this->_definition->plugin_options['conditions'] ) {
 			foreach ( $this->_definition->plugin_options['conditions'] as $condition ) {
@@ -163,12 +195,19 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 					// exists
 					case 'exists' :
 						// Check for that record
+						$result = $this->exists($record, array($contition['string']), $matches);
+						if($result)
+						{
 						// Apply true action to any matching records found
 							$action = $condition['true'];
 							$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
+						}
+						else
+						{
 						// Apply false action if no matching records found
 							$action = $condition['false'];
 							$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
+						}
 						break;
 
 				// not supported action
@@ -176,7 +215,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 						die('condition / action not supported!!!');
 						break;
 				}
-				if ($action['last']) break;
+				if ($action['stop']) break;
 			}
 		} else {
 			// unconditional insert
@@ -185,11 +224,23 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 
 		return $success;
 	}
-	*/
+
+	/**
+	 * Search for matching records, based on the the given condition
+	 *
+	 * @param record
+	 * @param condition array = array('string' => field name)
+	 * @param matches - On return, will be filled with matching records
+	 *
+	 * @return boolean
+	 */
+	protected function exists(iface_egw_record &$record, Array &$condition, &$matches = array())
+	{
+	}
 
 	/**
 	 * perform the required action
-	 * 
+	 *
 	 * Make sure you record any errors you encounter here:
 	 * $this->errors[$record_num] = error message;
 	 *
@@ -199,6 +250,59 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	 * @return bool success or not
 	 */
 	protected abstract function action ( $_action, Array $_data, $record_num = 0 );
+
+	/**
+	 * Reads entries, and presents them back as they will be understood
+	 * with no changes to the system.
+	 *
+	 * Uses information from the egw_record and the associated import wizard
+	 * to parse, normalize and export a human-friendly version of the data as
+	 * a HTML table.
+	 *
+	 * @param stream $stream
+	 * @param importexport_definition $definition
+	 * @return String HTML for preview
+         */
+	public function preview( $stream, importexport_definition $definition )
+	{
+		$this->import($stream, $definition);
+		rewind($stream);
+
+		// Set up result
+		$rows = array('h1'=>array(),'f1'=>array(),'.h1'=>'class=th');
+
+		// Load labels for app
+		$record_class = get_class($this->preview_records[0]);
+
+		// Get labels from wizard, if possible
+		$labels = array_combine($definition->plugin_options['field_mapping'], $definition->plugin_options['field_mapping']);
+		$plugin = get_called_class();
+		$wizard_name = $definition->application . '_wizard_' . str_replace($definition->application . '_', '', $plugin);
+		try {
+			$wizard = new $wizard_name;
+			$fields = $wizard->get_import_fields();
+			foreach($labels as $field => &$label)
+			{
+				if($fields[$field]) $label = $fields[$field];
+			}
+		} catch (Exception $e) {
+			translation::add_app($definition->application);
+			foreach($labels as $field => &$label) {
+				$label = lang($label);
+			}
+		}
+
+		// Set up HTML
+		$rows['h1'] = $labels;
+		foreach($this->preview_records as $i => $row_data)
+		{
+			// Convert to human-friendly
+			importexport_export_csv::convert($row_data,$record_class::$types,$definition->application,$this->lookups);
+			$rows[] = $row_data->get_record_array();
+		}
+
+		return html::table($rows);
+	}
 
 	/**
 	 * returns translated name of plugin

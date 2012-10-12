@@ -13,13 +13,13 @@
 /**
  * class iface_import_plugin
  * This a the abstract interface for an import plugin of importexport
- * 
- * You need to implement this class in 
- * EGW_INCLUDE_ROOT/appname/inc/importexport/class.import_<type>.inc.php
+ *
+ * You need to implement this class in
+ * EGW_INCLUDE_ROOT/appname/inc/class.<appname>_import_<type>.inc.php
  * to attend the importexport framwork with your export.
- * 
- * NOTE: This is an easy interface, cause plugins live in theire own 
- * space. Means that they are responsible for generating a defintion AND 
+ *
+ * NOTE: This is an easy interface, cause plugins live in theire own
+ * space. Means that they are responsible for generating a defintion AND
  * working on that definition.
  * So this interface just garanties the interaction with userinterfaces. It
  * has nothing to do with datatypes.
@@ -34,6 +34,16 @@ interface importexport_iface_import_plugin {
 	 * @return int number of successful imports
 	 */
 	public function import( $_stream, importexport_definition $_definition );
+
+	/**
+	 * Reads entries, and presents them back as they will be understood
+	 * with no changes to the system.
+	 *
+	 * @param stream $_stream
+	 * @param definition $_definition
+	 * @return String HTML preview
+	 */
+//	public function preview( $_stream, importexport_definition $_definition );
 	
 	/**
 	 * returns translated name of plugin
@@ -60,7 +70,7 @@ interface importexport_iface_import_plugin {
 	 * return etemplate components for options.
 	 * @abstract We can't deal with etemplate objects here, as an uietemplate
 	 * objects itself are scipt orientated and not "dialog objects"
-	 * 
+	 *
 	 * @return array (
 	 * 		name 		=> string,
 	 * 		content		=> array,
