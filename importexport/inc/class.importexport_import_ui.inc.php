@@ -319,7 +319,7 @@
 					// $ok = false;
 				}
 			}
-			if(!$ok || count($message != $message_count))
+			if(!$ok || count($message) != $message_count)
 			{
 				// Add links for new / edit definition
 				$config = config::read('importexport');
