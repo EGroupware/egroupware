@@ -315,13 +315,7 @@ class etemplate_old extends boetemplate
 
 				if ($GLOBALS['egw_info']['flags']['currentapp'] != 'etemplate')
 				{
-					$css_file = '/etemplate/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/app.css';
-					if (!file_exists(EGW_SERVER_ROOT.$css_file))
-					{
-						$css_file = '/etemplate/templates/default/app.css';
-					}
-					$GLOBALS['egw_info']['flags']['css'] .= "\n\t\t</style>\n\t\t".'<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].
-						$css_file.'?'.filemtime(EGW_SERVER_ROOT.$css_file).'" type="text/css" rel="StyleSheet" />'."\n\t\t<style>\n\t\t\t";
+					egw_framework::includeCSS('etemplate', 'app');
 				}
 			}
 			elseif (!isset(self::$previous_content))

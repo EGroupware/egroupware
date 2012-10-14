@@ -13,14 +13,12 @@
 		{meta_robots}
 		<link rel="icon" href="{img_icon}" type="image/x-ico" />
 		<link rel="shortcut icon" href="{img_shortcut}" />
-		<link href="{theme_css}" type="text/css" rel="StyleSheet" />
-		<link href="{print_css}" type="text/css" media="print" rel="StyleSheet" />
 		{slider_effects}
 		{simple_show_hide}
+		{css_file}
 		<style type="text/css">
 			{app_css}
 		</style>
-		{css_file}
 		{java_script}
 	</head>
 	<body {body_tags}>

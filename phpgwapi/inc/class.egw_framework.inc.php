@@ -716,37 +716,84 @@ abstract class egw_framework
 			$app_css .= $GLOBALS['egw_info']['flags']['css'];
 		}
 
-		// search for app specific css file
-		self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app');
-
-		// add all css files from self::includeCSS
-		if (empty($css_file)) $css_file = '';
-		foreach(self::$css_include_files as $path)
-		{
-			$css_file .= '<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].
-				$path.'?'.filemtime(EGW_SERVER_ROOT.$path).'" type="text/css" rel="StyleSheet" />'."\n";
-		}
-		#_debug_array($GLOBALS['egw_info']['user']['preferences']['common']);
 		$theme_css = $this->template_dir.'/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
 		if(!file_exists(EGW_SERVER_ROOT.$theme_css))
 		{
 			$theme_css = $this->template_dir.'/css/'.$this->template.'.css';
 		}
-		$theme_css = $GLOBALS['egw_info']['server']['webserver_url'] . $theme_css .'?'.filemtime(EGW_SERVER_ROOT.$theme_css);
-
 		$print_css = $this->template_dir.'/print.css';
 		if(!file_exists(EGW_SERVER_ROOT.$print_css))
 		{
 			$print_css = '/phpgwapi/templates/idots/print.css';
 		}
-		$print_css = $GLOBALS['egw_info']['server']['webserver_url'] . $print_css .'?'.filemtime(EGW_SERVER_ROOT.$print_css);
+		self::includeCSS($print_css, null, false);	// false = prepend (add as first) file
+		self::includeCSS($theme_css, null, false);
 
+		// search for app specific css file
+		self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app');
+
+		// add all css files from self::includeCSS
+		$max_modified = 0;
+		$debug_minify = (bool)$GLOBALS['egw_info']['server']['debug_minify'];
+		$base_path = $GLOBALS['egw_info']['server']['webserver_url'];
+		if ($base_path[0] != '/') $base_path = path_url($base_path, PHP_URL_PATH);
+		$css_file = '';
+		foreach(self::$css_include_files as $n => $path)
+		{
+			foreach(self::resolve_css_includes($path) as $path)
+			{
+				if (($mod = filemtime(EGW_SERVER_ROOT.$path)) > $max_modified) $max_modified = $mod;
+
+				if ($debug_minify)
+				{
+					$css_file .= '<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].$path.'?'.$mod.'" type="text/css" rel="StyleSheet" />'."\n";
+				}
+				else
+				{
+					$css_file .= ($css_file ? ',' : '').substr($path, 1);
+				}
+			}
+		}
+		if (!$debug_minify)
+		{
+			$css_file = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/inc/min/?b='.substr($base_path, 1).'&f='.$css_file . '&'.$max_modified;
+			$css_file = '<link href="'.$css_file.'" type="text/css" rel="StyleSheet" />'."\n";
+		}
 		return array(
 			'app_css'   => $app_css,
 			'css_file'  => $css_file,
-			'theme_css' => $theme_css,
-			'print_css' => $print_css,
 		);
+	}
+
+	/**
+	 * Parse beginning of given CSS file for /*@import url("...") statements
+	 *
+	 * @param string $path EGroupware relative path eg. /phpgwapi/templates/default/some.css
+	 * @return array parsed pathes (EGroupware relative) including $path itself
+	 */
+	protected static function resolve_css_includes($path, &$pathes=array())
+	{
+		if (($to_check = file_get_contents (EGW_SERVER_ROOT.$path, false, null, -1, 1024)) &&
+			stripos($to_check, '/*@import') !== false && preg_match_all('|/\*@import url\("([^"]+)"|i', $to_check, $matches))
+		{
+			foreach($matches[1] as $import_path)
+			{
+				if ($import_path[0] != '/')
+				{
+					$dir = dirname($path);
+					while(substr($import_path,0,3) == '../')
+					{
+						$dir = dirname($dir);
+						$import_path = substr($import_path, 3);
+					}
+					$import_path = ($dir != '/' ? $dir : '').'/'.$import_path;
+				}
+				self::resolve_css_includes($import_path, $pathes);
+			}
+		}
+		$pathes[] = $path;
+
+		return $pathes;
 	}
 
 	/**
@@ -1234,9 +1281,10 @@ abstract class egw_framework
 	 *
 	 * @param string $app path (relative to EGW_SERVER_ROOT) or appname (if !is_null($name))
 	 * @param string $name=null name of css file in $app/templates/{default|$this->template}/$name.css
+	 * @param boolean $append=true true append file, false prepend (add as first) file used eg. for template itself
 	 * @return boolean false: css file not found, true: file found
 	 */
-	public static function includeCSS($app,$name=null)
+	public static function includeCSS($app, $name=null, $append=true)
 	{
 		if (!is_null($name))
 		{
@@ -1257,7 +1305,14 @@ abstract class egw_framework
 		}
 		if (!in_array($path,self::$css_include_files))
 		{
-			self::$css_include_files[] = $path;
+			if ($append)
+			{
+				self::$css_include_files[] = $path;
+			}
+			else
+			{
+				self::$css_include_files = array_merge(array($path), self::$css_include_files);
+			}
 		}
 		return true;
 	}

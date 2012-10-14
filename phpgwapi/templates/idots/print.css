@@ -5,6 +5,8 @@
 */
 /* $Id$ */
 
+@media print {
+
 #divLogo,#divAppIconBar,#tdSidebox,#divStatusBar,#sideboxdragarea,.noPrint,#topmenu {
 	display:none;
 }
@@ -79,3 +81,5 @@ input, select, textarea {
 	border: none;
 	color: black;
 }
+
+} /* @media print */
