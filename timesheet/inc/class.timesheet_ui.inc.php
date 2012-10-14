@@ -656,14 +656,13 @@ class timesheet_ui extends timesheet_bo
 			$rows = $ids;
 			return $this->total;	// no need to set other fields or $readonlys
 		}
+		$links = array();
 		$links3 = egw_link::get_links_multiple(TIMESHEET_APP,$ids,true,'projectmanager');	// only check for pm links!
-		#_debug_array($links);
 		//as the full array is expected, we must supply the missing but needed (since expected further down) information
 		if (is_array($links3))
 		{
 			foreach ($links3 as $likey => $liarray)
 			{
-				#echo "$likey";_debug_array($liarray);echo"<br>";
 				if (is_array($liarray))
 				{
 					foreach ($liarray as $li2key => $lival)
@@ -673,13 +672,7 @@ class timesheet_ui extends timesheet_bo
 					}
 				}
 			}
-			if (!is_array($links)) $links = array();
 		}
-		else
-		{
-			$links = array();
-		}
-		#_debug_array($links);
 		unset($query['col_filter'][0]);
 
 		$readonlys = array();
