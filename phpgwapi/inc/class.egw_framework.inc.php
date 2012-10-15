@@ -1257,14 +1257,33 @@ abstract class egw_framework
 	*/
 	static protected function get_script_links()
 	{
-		$links  = "\n";
-		$files = self::$js_include_mgr->get_included_files();
-		foreach($files as $path)
+		$debug_minify = (bool)$GLOBALS['egw_info']['server']['debug_minify'];
+		$links = "\n";
+		$files = '';
+		$max_modified = 0;
+		foreach(self::$js_include_mgr->get_included_files() as $path)
 		{
 			$query = '';
 			list($path,$query) = explode('?',$path,2);
-			$path .= '?'. filectime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
-			$links .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $path.'">'."</script>\n";
+			if (($mod = filemtime(EGW_SERVER_ROOT.$path)) > $max_modified) $max_modified = $mod;
+
+			// for now minify does NOT support query parameters, nor php files generating javascript
+			if ($debug_minify || $query || substr($path, -3) != '.js')
+			{
+				$path .= '?'. $mod.($query ? '&'.$query : '');
+				$links .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $path.'">'."</script>\n";
+			}
+			else
+			{
+				$files .= ($files ? ',' : '').substr($path,1);
+			}
+		}
+		if (!$debug_minify && $files)
+		{
+			$base_path = $GLOBALS['egw_info']['server']['webserver_url'];
+			if ($base_path[0] != '/') $base_path = parse_url($base_path, PHP_URL_PATH);
+			$files = '/phpgwapi/inc/min/?b='.substr($base_path, 1).'&f='.$files . '&'.$max_modified;
+			$links .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $files.'">'."</script>\n";
 		}
 		return $links."\n";
 	}
