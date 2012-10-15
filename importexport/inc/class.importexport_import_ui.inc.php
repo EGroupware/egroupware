@@ -310,7 +310,7 @@
 					// $ok = false;
 				}
 			}
-			if(!$ok)
+			if(!$ok || count($message) != $message_count)
 			{
 				// Add links for new / edit definition
 				$config = config::read('importexport');
