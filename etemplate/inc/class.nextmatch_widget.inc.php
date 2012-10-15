@@ -776,13 +776,22 @@ class nextmatch_widget
 	 * @param boolean $globals=true application global categories too
 	 * @param int $parent_id=0 only returns cats of a certain parent
 	 * @param int $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH use hierarchical display if more cats
+	 * @param boolean $none_option = true Include an option 'None' to clear category
 	 * @return array like self::egw_actions
 	 */
 	public static function category_action($app, $group=0, $caption='Change category',
-		$prefix='cat_', $globals=true, $parent_id=0, $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH)
+		$prefix='cat_', $globals=true, $parent_id=0, $max_cats_flat=self::DEFAULT_MAX_MENU_LENGTH, $none_option = true)
 	{
 		$cat = new categories(null,$app);
 		$cats = $cat->return_sorted_array($start=0, $limit=false, $query='', $sort='ASC', $order='cat_name', $globals, $parent_id, $unserialize_data=true);
+
+		if($none_option)
+		{
+			array_unshift($cats, array(
+				'id'	=> '',
+				'name'	=> 'None'
+			));
+		}
 
 		// if more than max_length cats, switch automatically to hierarchical display
 		if (count($cats) > $max_cats_flat)
