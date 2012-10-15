@@ -1,126 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<entry type="array" name="importExportDefinitions">
-  <entry type="array" name="metainfo">
-    <entry type="string" name="type">importexport definitions</entry>
-    <entry type="string" name="charset">utf-8</entry>
-    <entry type="integer" name="entries">2</entry>
-  </entry>
-  <entry type="array" name="definitions">
-    <entry type="array" name="outlook_csv_import_german">
-      <entry type="string" name="name">outlook_csv_import_german</entry>
-      <entry type="string" name="application">addressbook</entry>
-      <entry type="string" name="plugin">addressbook_import_contacts_csv</entry>
-      <entry type="string" name="type">import</entry>
-      <entry type="array" name="allowed_users">
-        <entry type="string" name="0">Default</entry>
-      </entry>
-      <entry type="array" name="plugin_options">
-        <entry type="string" name="fieldsep">,</entry>
-        <entry type="string" name="charset">iso-8859-1</entry>
-        <entry type="string" name="update_cats">add</entry>
-        <entry type="int" name="num_header_lines">1</entry>
-        <entry type="array" name="field_mapping">
-          <entry type="string" name="0">n_prefix</entry>                <!-- Anrede -->          <entry type="string" name="1">n_given</entry>                 <!-- Vorname -->          <entry type="string" name="2">n_middle</entry>                <!-- Weitere Vornamen -->          <entry type="string" name="3">n_family</entry>                <!-- Nachname -->          <entry type="string" name="4">n_suffix</entry>                <!-- Suffix -->
-          <entry type="string" name="5">org_name</entry>                <!-- Firma -->          <entry type="string" name="6">org_unit</entry>                <!-- Abteilung -->          <entry type="string" name="7">title</entry>                   <!-- Position -->          <entry type="string" name="8">adr_one_street</entry>          <!-- Straße geschäftlich -->          <entry type="string" name="9">adr_one_street2</entry>         <!-- Straße geschäftlich 2 -->          <entry type="string" name="10">nc0</entry>                    <!-- Straße geschäftlich 3 -->          <entry type="string" name="11">adr_one_locality</entry>       <!-- Ort geschäftlich -->          <entry type="string" name="12">adr_one_region</entry>         <!-- Region geschäftlich -->          <entry type="string" name="13">adr_one_postalcode</entry>     <!-- Postleitzahl geschäftlich -->          <entry type="string" name="14">adr_one_countryname</entry>    <!-- Land geschäftlich -->          <entry type="string" name="15">adr_two_street</entry>         <!-- Straße privat -->          <entry type="string" name="16">adr_two_street2</entry>        <!-- Straße privat 2 -->          <entry type="string" name="17">nc1</entry>                    <!-- Straße privat 3 -->          <entry type="string" name="18">adr_two_locality</entry>       <!-- Ort privat -->          <entry type="string" name="19">adr_two_region</entry>         <!-- Region privat -->          <entry type="string" name="20">adr_two_postalcode</entry>     <!-- Postleitzahl privat -->          <entry type="string" name="21">adr_two_countryname</entry>    <!-- Land privat -->          <entry type="string" name="22">nc2</entry>                    <!-- Weitere Straße -->          <entry type="string" name="23">nc3</entry>                    <!-- Weitere Straße 2 -->          <entry type="string" name="24">nc4</entry>                    <!-- Weitere Straße 3 -->          <entry type="string" name="25">nc5</entry>                    <!-- Weiterer Ort -->          <entry type="string" name="26">nc6</entry>                    <!-- Weitere Region -->          <entry type="string" name="27">nc7</entry>                    <!-- Weitere Postleitzahl -->          <entry type="string" name="28">nc8</entry>                    <!-- Weiteres Land -->          <entry type="string" name="29">tel_assistent</entry>          <!-- Telefon Assistent -->          <entry type="string" name="30">tel_fax</entry>                <!-- Fax geschäftlich -->          <entry type="string" name="31">tel_work</entry>               <!-- Telefon geschäftlich -->          <entry type="string" name="32">tel_other</entry>              <!-- Telefon geschäftlich 2 -->          <entry type="string" name="33">nc9</entry>                    <!-- Rückmeldung -->          <entry type="string" name="34">tel_car</entry>                <!-- Autotelefon -->          <entry type="string" name="35">nc10</entry>                   <!-- Telefon Firma -->          <entry type="string" name="36">tel_fax_home</entry>           <!-- Fax privat -->          <entry type="string" name="37">tel_home</entry>               <!-- Telefon privat -->          <entry type="string" name="38">nc11</entry>                   <!-- Telefon privat 2 -->          <entry type="string" name="39">nc12</entry>                   <!-- ISDN -->          <entry type="string" name="40">tel_cell</entry>               <!-- Mobiltelefon -->          <entry type="string" name="41">nc13</entry>                   <!-- Weiteres Fax -->          <entry type="string" name="42">nc14</entry>                   <!-- Weiteres Telefon -->          <entry type="string" name="43">tel_pager</entry>              <!-- Pager -->          <entry type="string" name="44">tel_prefer</entry>             <!-- Haupttelefon -->          <entry type="string" name="45">tel_cell_private</entry>       <!-- Mobiltelefon 2 -->          <entry type="string" name="46">nc15</entry>                   <!-- Telefon für Hörbehinderte -->          <entry type="string" name="47">nc16</entry>                   <!-- Telex -->          <entry type="string" name="48">nc17</entry>                   <!-- Abrechnungsinformation -->          <entry type="string" name="49">nc18</entry>                   <!-- Benutzer 1 -->          <entry type="string" name="50">nc19</entry>                   <!-- Benutzer 2 -->          <entry type="string" name="51">nc20</entry>                   <!-- Benutzer 3 -->          <entry type="string" name="52">nc21</entry>                   <!-- Benutzer 4 -->          <entry type="string" name="53">role</entry>                   <!-- Beruf -->          <entry type="string" name="54">room</entry>                   <!-- Büro -->          <entry type="string" name="55">email</entry>                  <!-- E-Mail-Adresse -->          <entry type="string" name="56">nc22</entry>                   <!-- E-Mail: Angezeigter Name -->          <entry type="string" name="57">email_home</entry>             <!-- E-Mail 2: Adresse -->          <entry type="string" name="58">nc23</entry>                   <!-- E-Mail 2: Angezeigter Name -->          <entry type="string" name="59">nc24</entry>                   <!-- E-Mail 3: Adresse -->          <entry type="string" name="60">nc25</entry>                   <!-- E-Mail 3: Angezeigter Name -->          <entry type="string" name="61">nc26</entry>                   <!-- Empfohlen von -->          <entry type="string" name="62">bday</entry>                   <!-- Geburtstag -->          <entry type="string" name="63">nc27</entry>                   <!-- Geschlecht -->          <entry type="string" name="64">nc28</entry>                   <!-- Hobby -->          <entry type="string" name="65">nc29</entry>                   <!-- Initialen -->          <entry type="string" name="66">freebusy_uri</entry>           <!-- Internet-Frei/Gebucht -->          <entry type="string" name="67">nc30</entry>                   <!-- Jahrestag -->          <entry type="string" name="68">cat_id</entry>                 <!-- Kategorien -->          <entry type="string" name="69">nc37</entry>                   <!-- Kinder -->          <entry type="string" name="70">nc38</entry>                   <!-- Konto -->          <entry type="string" name="71">assistent</entry>              <!-- Name Assistent -->          <entry type="string" name="72">nc39</entry>                   <!-- Name des/der Vorgesetzten -->          <entry type="string" name="73">note</entry>                   <!-- Notizen -->          <entry type="string" name="74">nc40</entry>                   <!-- Organisations-Nr. -->          <entry type="string" name="75">nc41</entry>                   <!-- Ort -->          <entry type="string" name="76">nc42</entry>                   <!-- Partner -->          <entry type="string" name="77">nc43</entry>                   <!-- Postfach -->          <entry type="string" name="78">nc44</entry>                   <!-- Priorität -->          <entry type="string" name="79">nc45</entry>                   <!-- Privat -->          <entry type="string" name="80">nc46</entry>                   <!-- Regierungs-Nr. -->          <entry type="string" name="81">nc47</entry>                   <!-- Reisekilometer -->          <entry type="string" name="82">nc48</entry>                   <!-- Sprache -->          <entry type="string" name="83">nc49</entry>                   <!-- Stichwörter -->          <entry type="string" name="84">nc50</entry>                   <!-- Vertraulichkeit -->          <entry type="string" name="85">nc51</entry>                   <!-- Verzeichnisserver -->          <entry type="string" name="86">url</entry>                    <!-- Webseite -->
-        </entry>
-        <entry type="string" name="num_header_lines">0</entry>
-        <entry type="boolean" name="max">FALSE</entry>
-        <entry type="array" name="field_conversion">
-          <entry type="string" name="0"/>          <entry type="string" name="1"/>          <entry type="string" name="2"/>          <entry type="string" name="3"/>          <entry type="string" name="4"/>          <entry type="string" name="5"/>          <entry type="string" name="6"/>          <entry type="string" name="7"/>          <entry type="string" name="8"/>          <entry type="string" name="9">|[9] |[10]</entry>          <entry type="string" name="10"/>          <entry type="string" name="11"/>          <entry type="string" name="12"/>          <entry type="string" name="13"/>          <entry type="string" name="14"/>          <entry type="string" name="15"/>          <entry type="string" name="16"/>          <entry type="string" name="17"/>          <entry type="string" name="18"/>          <entry type="string" name="19"/>          <entry type="string" name="20"/>          <entry type="string" name="21"/>          <entry type="string" name="22"/>          <entry type="string" name="23"/>          <entry type="string" name="24"/>          <entry type="string" name="25"/>          <entry type="string" name="26"/>          <entry type="string" name="27"/>          <entry type="string" name="28"/>          <entry type="string" name="29"/>          <entry type="string" name="30"/>          <entry type="string" name="31"/>          <entry type="string" name="32"/>          <entry type="string" name="33"/>          <entry type="string" name="34"/>          <entry type="string" name="35"/>          <entry type="string" name="36"/>          <entry type="string" name="37"/>          <entry type="string" name="38"/>          <entry type="string" name="39"/>          <entry type="string" name="40"/>          <entry type="string" name="41"/>          <entry type="string" name="42"/>          <entry type="string" name="43"/>          <entry type="string" name="44"/>          <entry type="string" name="45"/>          <entry type="string" name="46"/>          <entry type="string" name="47"/>          <entry type="string" name="48"/>          <entry type="string" name="49"/>          <entry type="string" name="50"/>          <entry type="string" name="51"/>          <entry type="string" name="52"/>          <entry type="string" name="53"/>          <entry type="string" name="54"/>          <entry type="string" name="55"/>          <entry type="string" name="56"/>          <entry type="string" name="57"/>          <entry type="string" name="58"/>          <entry type="string" name="59"/>          <entry type="string" name="60"/>          <entry type="string" name="61"/>          <entry type="string" name="62"/>          <entry type="string" name="63"/>          <entry type="string" name="64"/>          <entry type="string" name="65"/>          <entry type="string" name="66"/>          <entry type="string" name="67"/>          <entry type="string" name="68">cat(|[68])</entry>          <entry type="string" name="69"/>          <entry type="string" name="70"/>          <entry type="string" name="71"/>          <entry type="string" name="72"/>          <entry type="string" name="73">|[73]</entry>
-
-<!-- |INE{Weitere Straße             : ^|[22]^} --> 
-<!-- |INE{Weitere Straße 2           : ^|[23]^} -->
-<!-- |INE{Weitere Straße 3           : ^|[24]^} --><!-- |INE{Weiterer Ort               : ^|[25]^} --><!-- |INE{Weitere Region             : ^|[26]^} --><!-- |INE{Weitere Postleitzahl       : ^|[27]^} --><!-- |INE{Weiteres Land              : ^|[28]^} -->
-<!-- |INE{Rückmeldung                : ^|[33]^} -->
-<!-- |INE{Telefon Firma              : ^|[35]^} --><!-- |INE{Telefon privat 2           : ^|[38]^} --><!-- |INE{ISDN                       : ^|[39]^} -->
-<!-- |INE{Weiteres Fax               : ^|[41]^} -->
-<!-- |INE{Weiteres Telefon           : ^|[42]^} -->
-<!-- |INE{Telefon für Hörbehinderte  : ^|[46]^} -->
-<!-- |INE{Telex                      : ^|[47]^} -->
-<!-- |INE{Abrechnungsinformation     : ^|[48]^} -->
-<!-- |INE{Benutzer 1                 : ^|[49]^} -->
-<!-- |INE{Benutzer 2                 : ^|[50]^} -->
-<!-- |INE{Benutzer 3                 : ^|[51]^} -->
-<!-- |INE{Benutzer 4                 : ^|[52]^} -->
-<!-- |INE{E-Mail: Angezeigter Name   : ^|[56]^} --><!-- |INE{E-Mail 2: Angezeigter Name : ^|[58]^} -->
-<!-- |INE{E-Mail 3: Adresse          : ^|[59]^} -->
-<!-- |INE{E-Mail 3: Angezeigter Name : ^|[60]^} -->
-<!-- |INE{Empfohlen von              : ^|[61]^} -->
-<!-- |INE{Geschlecht                 : ^|[63]^} -->
-<!-- |INE{Hobby                      : ^|[64]^} -->
-<!-- |INE{Initialen                  : ^|[65]^} -->
-<!-- |INE{Jahrestag                  : ^|[67]^} -->
-<!-- |INE{Kinder                     : ^|[69]^} -->
-<!-- |INE{Konto                      : ^|[70]^} -->
-<!-- |INE{Name des/der Vorgesetzten  : ^|[72]^} -->
-<!-- |INE{Organisations-Nr.          : ^|[74]^} -->
-<!-- |INE{Ort                        : ^|[75]^} -->
-<!-- |INE{Partner                    : ^|[76]^} -->
-<!-- |INE{Postfach                   : ^|[77]^} -->
-<!-- |INE{Priorität                  : ^|[78]^} -->
-<!-- |INE{Privat                     : ^|[79]^} -->
-<!-- |INE{Regierungs-Nr.             : ^|[80]^} -->
-<!-- |INE{Reisekilometer             : ^|[81]^} -->
-<!-- |INE{Sprache                    : ^|[82]^} -->
-<!-- |INE{Stichwörter                : ^|[83]^} -->
-<!-- |INE{Vertraulichkeit            : ^|[84]^} -->
-<!-- |INE{Verzeichnisserver          : ^|[85]^} -->
-          <entry type="string" name="74"/>          <entry type="string" name="75"/>          <entry type="string" name="76"/>          <entry type="string" name="77"/>          <entry type="string" name="78"/>          <entry type="string" name="79"/>          <entry type="string" name="80"/>          <entry type="string" name="81"/>          <entry type="string" name="82"/>          <entry type="string" name="83"/>          <entry type="string" name="84"/>          <entry type="string" name="85"/>          <entry type="string" name="86"/>
-        </entry>
-      </entry>
-      <entry type="string" name="owner">admin</entry>
-      <entry type="NULL" name="description">Importiert Kontakte von Microsoft Outlook</entry>
-    </entry>
-    <entry type="array" name="outlook_csv_export_german">
-      <entry type="string" name="name">outlook_csv_export_german</entry>
-      <entry type="string" name="application">addressbook</entry>
-      <entry type="string" name="plugin">addressbook_export_contacts_csv</entry>
-      <entry type="string" name="type">export</entry>
-      <entry type="array" name="allowed_users">
-        <entry type="string" name="0">Default</entry>
-      </entry>
-      <entry type="array" name="plugin_options">
-        <entry type="boolean" name="begin_with_fieldnames">TRUE</entry>
-        <entry type="string" name="charset">iso-8859-15</entry>
-        <entry type="array" name="mapping">
-          <entry type="string" name="n_prefix">Anrede</entry>
-          <entry type="string" name="n_given">Vorname</entry>
-          <entry type="string" name="n_middle">Weitere Vornamen</entry>
-          <entry type="string" name="n_family">Nachname</entry>
-          <entry type="string" name="n_suffix">Suffix</entry>
-          <entry type="string" name="org_name">Firma</entry>
-          <entry type="string" name="org_unit">Abteilung</entry>
-          <entry type="string" name="title">Position</entry>
-          <entry type="string" name="adr_one_street">Straße geschäftlich</entry>
-          <entry type="string" name="address2">Straße geschäftlich 2</entry>
-          <entry type="string" name="address3">Straße geschäftlich 3</entry>
-          <entry type="string" name="adr_one_locality">Ort geschäftlich</entry>
-          <entry type="string" name="adr_one_region">Region geschäftlich</entry>
-          <entry type="string" name="adr_one_postalcode">Postleitzahl geschäftlich</entry>
-          <entry type="string" name="adr_one_countryname">Land geschäftlich</entry>
-          <entry type="string" name="adr_two_street">Straße privat</entry>
-          <entry type="string" name="adr_two_locality">Ort privat</entry>
-          <entry type="string" name="adr_two_region">Region privat</entry>
-          <entry type="string" name="adr_two_postalcode">Postleitzahl privat</entry>
-          <entry type="string" name="adr_two_countryname">Land privat</entry>
-          <entry type="string" name="tel_fax">Fax geschäftlich</entry>
-          <entry type="string" name="tel_work">Telefon geschäftlich</entry>
-          <entry type="string" name="tel_msg">Telefon Assistent</entry>
-          <entry type="string" name="tel_car">Autotelefon</entry>
-          <entry type="string" name="tel_isdn">ISDN</entry>
-          <entry type="string" name="tel_home">Telefon privat</entry>
-          <entry type="string" name="tel_cell">Mobiltelefon</entry>
-          <entry type="string" name="tel_pager">Pager</entry>
-          <entry type="string" name="ophone">Telefon geschäftlich 2</entry>
-          <entry type="string" name="bday">Geburtstag</entry>
-          <entry type="string" name="email">E-Mail-Adresse</entry>
-          <entry type="string" name="email_home">E-Mail 2: Adresse</entry>
-          <entry type="string" name="url">Webseite</entry>
-          <entry type="string" name="note">Notizen</entry>
-        </entry>
-      </entry>
-      <entry type="string" name="owner">admin</entry>
-      <entry type="string" name="description">Exportiert ausgewählte Kontakte zur Datenübernahme in die deutsche Version von MS Outlook</entry>
-    </entry>
-  </entry>
-</entry>
