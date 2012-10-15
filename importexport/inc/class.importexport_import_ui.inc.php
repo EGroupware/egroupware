@@ -103,7 +103,7 @@
 						$this->message .= implode($check_message, "<br />\n") . "<br />\n";
 						if($content['dry-run'])
 						{
-							echo $this->preview($file, $definition_obj);
+							echo $this->preview($plugin, $file, $definition_obj);
 						}
 						$count = $plugin->import($file, $definition_obj);
 					}
@@ -248,29 +248,36 @@
 		}
 
 		/**
-		 * Display the contents of the file for dry runs
+		 * Display the interpretation of the file for dry runs
+		 *
 		 */
-		protected function preview(&$_stream, &$definition_obj)
+		protected function preview(importexport_iface_import_plugin &$plugin, &$stream, importexport_definition &$definition_obj)
 		{
-			$import_csv = new importexport_import_csv( $_stream, array(
-				'fieldsep' => $definition_obj->plugin_options['fieldsep'],
-				'charset' => $definition_obj->plugin_options['charset'],
-			));
-			// set FieldMapping.
-			$import_csv->mapping = $definition_obj->plugin_options['field_mapping'];
-
-			$rows = array('h1'=>array(),'f1'=>array(),'.h1'=>'class=th');
-			for($row = 0; $row < $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']; $row++)
+			if(method_exists($plugin, 'preview'))
 			{
-				$row_data = $import_csv->get_record();
-				if($row_data === false) break;
-				$rows[$import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines'] ? 'h1' : $row] = $row_data;
-				if($import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines']) $row--;
+				$preview = $plugin->preview($stream, $definition_obj);
 			}
+			elseif($definition_obj->plugin_options['csv_fields'])
+			{
+				$import_csv = new importexport_import_csv( $stream, array(
+					'fieldsep' => $definition_obj->plugin_options['fieldsep'],
+					'charset' => $definition_obj->plugin_options['charset'],
+				));
+				// set FieldMapping.
+				$import_csv->mapping = $definition_obj->plugin_options['field_mapping'];
 
-			// Rewind
-			rewind($_stream);
-			return '<h2>' . lang('Preview') . '</h2>' . html::table($rows);
+				$rows = array('h1'=>array(),'f1'=>array(),'.h1'=>'class=th');
+				for($row = 0; $row < $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']; $row++)
+				{
+					$row_data = $import_csv->get_record();
+					if($row_data === false) break;
+					$rows[$import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines'] ? 'h1' : $row] = $row_data;
+					if($import_csv->get_current_position() <= $definition_obj->plugin_options['num_header_lines']) $row--;
+				}
+				$preview = html::table($rows);
+				rewind($stream);
+			}
+			return '<h2>' . lang('Preview') . ' - ' . $plugin->get_name() . '</h2>' . $preview;
 		}
 
 		/**
@@ -281,6 +288,10 @@
 		public static function check_file(&$file, &$definition, &$message = array(), $dst_file = false)
 		{
 			$options =& $definition->plugin_options;
+
+			// Only CSV files
+			if(!$options['csv_fields']) return true;
+
 			$data = fgetcsv($file, 8000, $options['fieldsep']);
 			rewind($file);
 			$data = translation::convert($data,$options['charset']);
