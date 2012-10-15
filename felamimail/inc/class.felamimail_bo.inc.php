@@ -44,8 +44,9 @@ class felamimail_bo
 	 * @array
 	 */
 	static $htmLawed_config = array('comment'=>1, //remove comments
-				'keep_bad'=>6,
+				'keep_bad'=>2, //remove tags but keep element content (4 and 6 keep element content only if text (pcdata) is valid in parent element as per specs, this may lead to textloss if balance is switched on)
 				'balance'=>1,//turn off tag-balancing (config['balance']=>0). That will not introduce any security risk; only standards-compliant tag nesting check/filtering will be turned off (basic tag-balance will remain; i.e., there won't be any unclosed tag, etc., after filtering)
+				'direct_list_nest' => 1,
 				'tidy'=>1,
 				'elements' => "* -script",
 				'deny_attribute' => 'on*',
