@@ -136,10 +136,18 @@ class Minify_Controller_MinApp extends Minify_Controller_Base {
             foreach ((array)$cOptions['allowDirs'] as $allowDir) {
                 $allowDirs[] = realpath(str_replace('//', $_SERVER['DOCUMENT_ROOT'] . '/', $allowDir));
             }
+            $base_path = $_SERVER['DOCUMENT_ROOT'].$base;
+            // check base against symlinks to support aliases configured via symlinks
+            if (!(file_exists($base_path) && is_dir($base_path) && realpath($base_path) !== false) &&
+            	isset($options['minifierOptions']['text/css']['symlinks'][$t='//'.trim($base, '/')]) &&
+          		($base_path = realpath($options['minifierOptions']['text/css']['symlinks'][$t]))) {
+          		$base_path .= '/';
+          		$allowDirs[] = $base_path;
+            }
             $basenames = array(); // just for cache id
             foreach ($files as $file) {
                 $uri = $base . $file;
-                $path = $_SERVER['DOCUMENT_ROOT'] . $uri;
+                $path = $base_path . $file;
                 $realpath = realpath($path);
                 if (false === $realpath || ! is_file($realpath)) {
                     $this->log("The path \"{$path}\" (realpath \"{$realpath}\") could not be found (or was not a file)");

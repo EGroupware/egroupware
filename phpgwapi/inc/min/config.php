@@ -152,6 +152,13 @@ $min_serveOptions['minApp']['groupsOnly'] = false;
  */
 $min_symlinks = array();
 
+/**
+ * Configure an alias for EGroupware, as it is common setup
+ *
+ * Requires patched lib/Minify/Controller/MinApp.php, to understand aliases defined as symlink!
+ */
+list($sitePrefix) = explode('/phpgwapi/inc/min/', $_SERVER['REQUEST_URI']);
+$min_symlinks['//'.ltrim($sitePrefix, '/')] = dirname(dirname(dirname(__DIR__)));
 
 /**
  * If you upload files from Windows to a non-Windows server, Windows may report
