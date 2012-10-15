@@ -1,6 +1,6 @@
 /*
-htmLawed_TESTCASE.txt, 22 July 2012
-htmLawed 1.1.13, 22 July 2012
+htmLawed_TESTCASE.txt, 14 August 2012
+htmLawed 1.1.14, 8 August 2012
 Copyright Santosh Patnaik
 Dual licensed with LGPL 3 and GPL 2+
 A PHP Labware internal utility - http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed
@@ -47,6 +47,11 @@ character encoding to Unicode/UTF-8
 <blockquote><div>abc</div>def</blockquote><br />
 <blockquote>abc<div>def</div>ghi</blockquote><br />
 abc<div>def</div>ghi<br />
+<blockquote>QQQ<div>x</div><!-- comment --></blockquote><br />
+<blockquote><div>x</div><!-- comment -->QQQ</blockquote><br />
+<blockquote><!-- comment --><div>x</div>QQQ<div>x</div></blockquote><br />
+<blockquote><div>x<!-- comment --></div>QQQ</blockquote><p>x</p><br />
+<br />
 (try with blockquote parent)
 
 <h6>CDATA sections</h6>
@@ -129,8 +134,9 @@ Disallowed tag p
 <strong>Invalid:</strong> <image src="s" alt="a" /><br />
 <strong>Empty:</strong> <img src="s" alt="a" />, <img src="s" alt="a"></img>, <img src="s" alt="a">text</img><br />
 <strong>Content invalid:</strong> <a href="h">1<a>2</a></a><br />
-<strong>Content invalid?:</strong> <form></form><br /> (try setting 'form' as parent)
-<strong>Casing:</strong> <A href=""></a>
+<strong>Content invalid?:</strong> <form></form><br /> (try setting 'form' as parent)<br />
+<strong>Casing:</strong> <A href=""></a><br />
+<strong>Check for tidy:</strong> <br /><hr /></div><hr /></div><hr /></div><div>hi</div>
 
 <h6>Entities</h6>
 
@@ -346,6 +352,11 @@ na Alemanha.
 <tr><td>r2c1<td>r2c2
 </table><br />
 
+<h6>Tag transformation</h6>
+<strong>Font element intended as 'inline' element:</strong> <p><font color='red'>hi</font></p><br />
+<strong>Font element intended as 'block' element:</strong> <div><font color='red'><div>hi</div></font></div><br />
+<strong>Font element intended as 'block' element:</strong> <center><font color='red'><div>hi</div><div>QQQ</div></font></center><br />
+
 <h6>URLs</h6>
 
 <strong>Relative and absolute:</strong> <a href="mailto:x"></a>, <a href="http://a.com/b/c/d.f"></a>, <a href="./../d.f"></a>, <a href="./d.f"></a>, <a href="d.f"></a>, <a href="#s"></a>, <a href="./../../d.f#s"></a><br />
@@ -403,6 +414,10 @@ script:eval(document.all.mycode.expr)')">hi</a><br />
   > 3 <br />
 <._.> hi! <br />
 <<< ALERT >>> <br />
+<![if !vml]> some stuff <![endif]> <br />
+<?xml:namespace prefix = o ns = "urn:schemas-microsoft-com:office:office" /> <br />
+<uml:ns ns = "urn:www"> <br />
+<uml:ns ns = 'urn:www'> <br />
 if(13<age AND 21>age){say 'teen'} <br />
 age >51 and a smoking history of >51 pack-years <b>was</b> <br />
 age > 51 and a smoking history of >51 pack-years <b>was</b> <br />
