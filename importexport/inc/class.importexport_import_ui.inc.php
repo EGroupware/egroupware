@@ -248,8 +248,14 @@
 		}
 
 		/**
-		 * Display the interpretation of the file for dry runs
+		 * Return an interpretation of the file for dry runs
 		 *
+		 * If the plugin has a preview, use that.  Otherwise, try a simple CSV => HTML table
+		 *
+		 * @param importexport_iface_import_plugin $plugin Instance of plugin to be used
+		 * @param resource $stream
+		 * @param importexport_definition $definition
+		 * @return String HTML fragment illustrating how the data will be understood by egw
 		 */
 		protected function preview(importexport_iface_import_plugin &$plugin, &$stream, importexport_definition &$definition_obj)
 		{
@@ -284,6 +290,14 @@
 		 * Simple check to see if the file at least matches the definition
 		 *
 		 * Checks that column headers match
+		 * @note Currently only works for CSV
+		 *
+		 * @param resource $file
+		 * @param importexport_definition $definition
+		 * @param Array message Will be filled with any warnings or errors detected
+		 * @param String Temporary file location, so user doesn't have to keep uploading
+		 *
+		 * @return boolean Ok to import
 		 */
 		public static function check_file(&$file, &$definition, &$message = array(), $dst_file = false)
 		{
