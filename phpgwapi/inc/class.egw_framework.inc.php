@@ -736,7 +736,7 @@ abstract class egw_framework
 		$max_modified = 0;
 		$debug_minify = (bool)$GLOBALS['egw_info']['server']['debug_minify'];
 		$base_path = $GLOBALS['egw_info']['server']['webserver_url'];
-		if ($base_path[0] != '/') $base_path = path_url($base_path, PHP_URL_PATH);
+		if ($base_path[0] != '/') $base_path = parse_url($base_path, PHP_URL_PATH);
 		$css_file = '';
 		foreach(self::$css_include_files as $n => $path)
 		{
