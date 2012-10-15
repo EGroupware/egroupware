@@ -1125,6 +1125,13 @@ class calendar_uiforms extends calendar_ui
 				'template' => isset($_GET['template']) ? $_GET['template'] : (isset($_REQUEST['print']) ? 'calendar.print' : 'calendar.edit'),
 			);
 			$cal_id = (int) $_GET['cal_id'];
+			if($_GET['action'])
+			{
+				$event = $this->bo->read($cal_id);
+				$event['action'] = $_GET['action'];
+				unset($event['participants']);
+				return $this->process_edit($event);
+			}
 			if (!empty($_GET['ical']) || !empty($_GET['ical_vfs']) && egw_vfs::file_exists($_GET['ical_vfs']))
 			{
 				$ical = new calendar_ical();
