@@ -971,7 +971,7 @@ class addressbook_groupdav extends groupdav_handler
 				(in_array('A',$this->home_set_pref) || in_array((string)$id,$this->home_set_pref)) &&
 				is_numeric($id) && ($owner = $id ? $this->accounts->id2name($id) : 'accounts'))
 			{
-				$shared[$id] = $owner;
+				$shared[$id] = 'addressbook-'.$owner;
 			}
 		}
 		return $shared;
