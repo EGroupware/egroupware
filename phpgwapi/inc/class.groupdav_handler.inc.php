@@ -16,6 +16,8 @@
  *
  * Permanent error_log() calls should use $this->groupdav->log($str) instead, to be send to PHP error_log()
  * and our request-log (prefixed with "### " after request and response, like exceptions).
+ *
+ * @ToDo: If precondition for PUT, see https://tools.ietf.org/html/rfc6578#section-5
  */
 abstract class groupdav_handler
 {
@@ -555,6 +557,25 @@ abstract class groupdav_handler
 	}
 
 	/**
+	 * sync-token to be filled by propfind_callback and returned by get_sync_token method
+	 */
+	protected $sync_collection_token;
+
+	/**
+	 * Query sync-token from a just run sync-collection report
+	 *
+	 * Modified time is taken from value filled by propfind_callback in sync_collection_token.
+	 *
+	 * @param string $path
+	 * @param int $user parameter necessary to call getctag, if no $token specified
+	 * @return string
+	 */
+	public function get_sync_collection_token($path, $user=null)
+	{
+		return $this->get_sync_token($path, $user, $this->sync_collection_token);
+	}
+
+	/**
 	 * Query sync-token
 	 *
 	 * We use ctag / max. modification time as sync-token. As garnularity is 1sec, we can never be sure,
@@ -562,19 +583,24 @@ abstract class groupdav_handler
 	 *
 	 * Therefor we are never returning current time, but 1sec less!
 	 *
+	 * Modified time is either taken from value filled by propfind_callback in $this->sync_token or
+	 * by call to getctag();
+	 *
 	 * @param string $path
-	 * @param int $user
-	 * @param int $modified=null default getctag
+	 * @param int $user parameter necessary to call getctag, if no $token specified
+	 * @param int $token=null modification time, default call getctag($path, $user) to fetch it
 	 * @return string
 	 */
-	public function get_sync_token($path, $user, $modified=null)
+	public function get_sync_token($path, $user, $token=null)
 	{
-		if (!isset($modified)) $modified = $this->getctag($path, $user);
+		if (!isset($token)) $token = $this->getctag($path, $user);
 
-		// never return current time, as more modifications might happen --> decrement it by 1sec
-		if ($modified == time()) --$modified;
-
-		return $this->base_uri().$path.$modified;
+		// never return current time, as more modifications might happen due to second granularity --> return 1sec less
+		if ($token >= (int)$GLOBALS['egw_info']['flags']['page_start_time'])
+		{
+			$token = (int)$GLOBALS['egw_info']['flags']['page_start_time'] - 1;
+		}
+		return $this->base_uri().$path.$token;
 	}
 }
 

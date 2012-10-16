@@ -182,19 +182,17 @@ class infolog_groupdav extends groupdav_handler
 		// rfc 6578 sync-collection report: filter for sync-token is already set in _report_filters
 		if ($options['root']['name'] == 'sync-collection')
 		{
-			// query sync-token before result, so changed happening while result get queried are not lost
-			$files['sync-token'] = $this->get_sync_token($path, $user);
+			// callback to query sync-token, after propfind_callbacks / iterator is run and
+			// stored max. modification-time in $this->sync_collection_token
+			$files['sync-token'] = array($this, 'get_sync_collection_token');
+			$files['sync-token-params'] = array($path, $user);
+
+			$this->sync_collection_token = null;
 		}
 
 		if (isset($nresults))
 		{
 			$files['files'] = $this->propfind_callback($path, $filter, array(0, (int)$nresults));
-
-			if ($options['root']['name'] == 'sync-collection' && isset($files['files']['sync-token']))
-			{
-				$files['sync-token'] = $this->get_sync_token($path, $user, $files['files']['sync-token']);
-				unset($files['files']['sync-token']);
-			}
 		}
 		else
 		{
@@ -232,7 +230,6 @@ class infolog_groupdav extends groupdav_handler
 			if ($matches[2]) $sort = $matches[2];
 			unset($filter['order']);
 		}
-
 		$query = array(
 			'order'			=> $order,
 			'sort'			=> $sort,
@@ -265,7 +262,7 @@ class infolog_groupdav extends groupdav_handler
 			foreach($tasks as $task)
 			{
 				// sync-collection report: deleted entry need to be reported without properties
-				if ($task['info_status'] == 'deleted' && strpos($task_filter, '+deleted') !== false)
+				if ($task['info_status'] == 'deleted')
 				{
 					$files[] = array('path' => $path.urldecode($this->get_path($task)));
 					continue;
@@ -284,13 +281,19 @@ class infolog_groupdav extends groupdav_handler
 				$files[] = $this->add_resource($path, $task, $props);
 			}
 		}
-		// hack to support limit with sync-collection report: tasks are returned in modified ASC order (oldest first)
-		// if limit is smaller then full result, return modified-1 as sync-token, so client requests next chunk incl. modified
-		// (which might contain further entries with identical modification time)
-		if (strpos($task_filter, '+deleted') !== false &&
-			$start[0] == 0 && $start[1] != groupdav_propfind_iterator::CHUNK_SIZE && $query['total'] > $start[1])
+		// sync-collection report --> return modified of last contact as sync-token
+		$sync_collection_report =  strpos($task_filter, '+deleted') !== false;
+		if ($sync_collection_report)
 		{
-			$files['sync-token'] = $task['info_datemodified']-1;
+			$this->sync_collection_token = $info['date_modified'];
+
+			// hack to support limit with sync-collection report: tasks are returned in modified ASC order (oldest first)
+			// if limit is smaller then full result, return modified-1 as sync-token, so client requests next chunk incl. modified
+			// (which might contain further entries with identical modification time)
+			if ($start[0] == 0 && $start[1] != groupdav_propfind_iterator::CHUNK_SIZE && $query['total'] > $start[1])
+			{
+				--$this->sync_collection_token;
+			}
 		}
 		if ($this->debug) error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).' to return '.count($files).' items');
 		return $files;
@@ -739,7 +742,7 @@ class infolog_groupdav extends groupdav_handler
 					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-query',''))))),
 			'calendar-multiget' => HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'calendar-multiget',''))))),
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget',''))))),
 			// rfc 6578 sync-collection report
 			'sync-collection' => HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(

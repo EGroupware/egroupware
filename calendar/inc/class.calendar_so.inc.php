@@ -350,7 +350,7 @@ class calendar_so
 	 * @param int $end enddate of the search/list (servertime)
 	 * @param int|array $users user-id or array of user-id's, !$users means all entries regardless of users
 	 * @param int|array $cat_id=0 mixed category-id or array of cat-id's (incl. all sub-categories), default 0 = all
-	 * @param string $filter='all' string filter-name: all (not rejected), accepted, unknown, tentative, rejected or hideprivate (handled elsewhere!)
+	 * @param string $filter='all' string filter-name: all (not rejected), accepted, unknown, tentative, rejected or everything (incl. rejected, deleted)
 	 * @param int|boolean $offset=False offset for a limited query or False (default)
 	 * @param int $num_rows=0 number of rows to return if offset set, default 0 = use default in user prefs
 	 * @param array $params=array()
@@ -458,12 +458,14 @@ class calendar_so
 			// this is only used, when we cannot use UNIONS
 			if (!$useUnionQuery) $where[] = '('.implode(' OR ',$to_or).')';
 
-			if($filter != 'deleted')
+			if($filter != 'deleted' && $filter != 'everything')
 			{
 				$where[] = 'cal_deleted IS NULL';
 			}
 			switch($filter)
 			{
+				case 'everything':	// no filter at all
+					break;
 				case 'showonlypublic':
 					$where['cal_public'] = 1;
 					$where[] = "$this->user_table.cal_status NOT IN ('R','X')"; break;
@@ -519,7 +521,7 @@ class calendar_so
   		}
 		elseif ($end) $where[] = (int)$end.' > cal_start';
 
-		if ($remove_rejected_by_user)
+		if ($remove_rejected_by_user && $filter != 'everything')
 		{
 			$rejected_by_user_join = "LEFT JOIN $this->user_table rejected_by_user".
 				" ON $this->cal_table.cal_id=rejected_by_user.cal_id".
@@ -677,7 +679,8 @@ class calendar_so
 			// now ready all users with the given cal_id AND (cal_recur_date=0 or the fitting recur-date)
 			// This will always read the first entry of each recuring event too, we eliminate it later
 			$recur_dates[] = 0;
-			$utcal_id_view = " (SELECT * FROM ".$this->user_table." WHERE cal_id IN (".implode(',',$ids).") AND cal_status!='X') utcalid ";
+			$utcal_id_view = " (SELECT * FROM ".$this->user_table." WHERE cal_id IN (".implode(',',$ids).")".
+				($filter != 'everything' ? " AND cal_status!='X'" : '').") utcalid ";
 			//$utrecurdate_view = " (select * from ".$this->user_table." where cal_recur_date in (".implode(',',array_unique($recur_dates)).")) utrecurdates ";
 			foreach($this->db->select($utcal_id_view,'*',array(
 					//'cal_id' => array_unique($ids),

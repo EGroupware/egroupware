@@ -742,11 +742,12 @@ class HTTP_WebDAV_Server
 
         $this->multistatus_responses($files['files'], $options['props']);
 
-        // WebDAV sync report sync-token
+        // WebDAV sync report sync-token, can be either the sync-token or a callback (called with params in $files['sync-token-params'])
         if (isset($files['sync-token']))
         {
             echo ($this->crrnd ? " <" : " <D:")."sync-token>".
-            	htmlspecialchars($files['sync-token']).
+            	htmlspecialchars(!is_callable($files['sync-token']) ? $files['sync-token'] :
+            		call_user_func_array($files['sync-token'], (array)$files['sync-token-params'])).
             	($this->crrnd ? "</" : "</D:")."sync-token>\n";
         }
 
