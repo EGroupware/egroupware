@@ -172,7 +172,11 @@ class timesheet_bo extends so_sql_cf
 	protected function load_statuses()
 	{
 		$this->status_labels =&  $this->config_data['status_labels'];
-		if (!is_array($this->status_labels)) $this->status_labels= array($this->status_labels);
+		if (!is_array($this->status_labels))
+		{
+			$this->status_labels = (@unserialize($this->status_labels) === false) ?
+				array($this->status_labels) : @unserialize($this->status_labels);
+		}
 
 		foreach ($this->status_labels as $status_id => $label)
 		{
