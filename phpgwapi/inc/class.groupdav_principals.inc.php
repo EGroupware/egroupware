@@ -937,8 +937,10 @@ class groupdav_principals extends groupdav_handler
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/inbox/'))),
 			'calendar-user-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
 				HTTP_WebDAV_Server::mkprop('href','MAILTO:'.$account['account_email']),
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri(true).'/principals/users/'.$account['account_lid'].'/'),
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri(false).'/principals/users/'.$account['account_lid'].'/'),
 				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('accounts', $account['account_id'])),
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/users/'.$account['account_lid'].'/'))),
+			)),
 			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','INDIVIDUAL'),
 			// Calendarserver
 			'email-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'email-address-set',array(
@@ -1093,8 +1095,10 @@ class groupdav_principals extends groupdav_handler
 			'addressbook-home-set' => HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'addressbook-home-set',array(
 				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/'.$account['account_lid'].'/'))),
 			'calendar-user-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri(true).'/principals/groups/'.$account['account_lid'].'/'),
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri(false).'/principals/groups/'.$account['account_lid'].'/'),
 				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('accounts', $account['account_id'])),
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/groups/'.$account['account_lid'].'/'))),
+			)),
 			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type','groups'),
 			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type','GROUP'),
 			'group-member-set' => $this->principal_set('group-member-set', $groupmembers),
@@ -1117,8 +1121,10 @@ class groupdav_principals extends groupdav_handler
 			'getetag' => $this->get_resource_etag($resource),
 			'displayname' => $displayname,
 			'calendar-user-address-set' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-address-set',array(
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri(true).'/principals/'.$name.'/'),
+				HTTP_WebDAV_Server::mkprop('href',$this->base_uri(false).'/principals/'.$name.'/'),
 				HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('resources', $resource['res_id'])),
-				HTTP_WebDAV_Server::mkprop('href',$this->base_uri.'/principals/'.$name.'/'))),
+			)),
 			'record-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALENDARSERVER,'record-type',$is_location ? 'locations' : 'resources'),
 			'calendar-user-type' => HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-user-type',$is_location ? 'ROOM' : 'RESOURCE'),
 			'resource-id' => array(HTTP_WebDAV_Server::mkprop('href','urn:uuid:'.common::generate_uid('resources', $resource['res_id']))),

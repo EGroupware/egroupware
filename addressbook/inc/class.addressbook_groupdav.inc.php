@@ -739,6 +739,21 @@ class addressbook_groupdav extends groupdav_handler
 	}
 
 	/**
+	 * Query sync-token for addressbook
+	 *
+	 * @param string $path
+	 * @param int $user
+	 * @param int $modified=null default getctag
+	 * @return string
+	 */
+	public function get_sync_token($path, $user, $modified=null)
+	{
+		if (!isset($modified)) $modified = $this->getctag($path, $user);
+
+		return $this->base_uri().$path.$modified;
+	}
+
+	/**
 	 * Add extra properties for addressbook collections
 	 *
 	 * Example for supported-report-set syntax from Apples Calendarserver:
