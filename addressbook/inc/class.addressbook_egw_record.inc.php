@@ -83,10 +83,7 @@ class addressbook_egw_record implements importexport_iface_egw_record
 	 *@return string tiltle
 	 */
 	public function get_title() {
-		if (empty($this->contact)) {
-			$this->get_record();
-		}
-		return $this->contact['fn'];
+		return $this->bocontacts->link_title(empty($this->contact) ? $this->identifier : $this->contact);
 	}
 
 	/**

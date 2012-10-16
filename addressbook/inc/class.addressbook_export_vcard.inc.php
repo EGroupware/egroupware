@@ -25,8 +25,8 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 	public function export( $_stream, importexport_definition $_definition) {
 
 		$options = $_definition->plugin_options;
-		$uicontacts = new addressbook_ui();
-		$selection = array();
+		$this->uicontacts = new addressbook_ui();
+		$this->selection = array();
 
 		// Addressbook defines its own export imits
 		$limit_exception = bo_merge::is_export_limit_excepted();
@@ -46,24 +46,24 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 			$query['num_rows'] = -1;	// all
 			$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 			if(!array_key_exists('filter',$query)) $query['filter'] = $GLOBALS['egw_info']['user']['account_id'];
-			$uicontacts->get_rows($query,$selection,$readonlys, true);	// only return the ids
+			$this->uicontacts->get_rows($query,$this->selection,$readonlys, true);	// only return the ids
 		}
 		elseif ( $options['selection'] == 'all_contacts' ) {
 			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) {
 				$col_filter['account_id'] = null;
 			}
-			$selection = ExecMethod2('addressbook.addressbook_bo.search', array(), true, '', '','',false,'AND',false,$col_filter);
-			//$uicontacts->get_rows($query,$selection,$readonlys,true);
+			$this->selection = ExecMethod2('addressbook.addressbook_bo.search', array(), true, '', '','',false,'AND',false,$col_filter);
+			//$this->uicontacts->get_rows($query,$this->selection,$readonlys,true);
 		} else {
-			$selection = explode(',',$options['selection']);
+			$this->selection = explode(',',$options['selection']);
 		}
 		$GLOBALS['egw_info']['flags']['currentapp'] = $old_app;
 
 		if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
-			$selection = array_slice($selection, 0, $export_limit);
+			$this->selection = array_slice($this->selection, 0, $export_limit);
 		}
 
-		foreach ($selection as &$_contact) {
+		foreach ($this->selection as &$_contact) {
 			if(is_array($_contact) && ($_contact['id'] || $_contact['contact_id']))
 			{
 				$_contact = $_contact[$_contact['id'] ? 'id' : 'contact_id'];
@@ -74,7 +74,7 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 		$meta = stream_get_meta_data($_stream);
 
 		$vcard = new addressbook_vcal();
-		$vcard->export($selection, $meta['uri']);
+		$vcard->export($this->selection, $meta['uri']);
 	}
 
 	/**
@@ -106,6 +106,19 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 
 	public static function get_mimetype() {
 		return 'text/x-vcard';
+	}
+
+	/**
+	 * Suggest a file name for the downloaded file
+	 * No suffix
+	 */
+	public function get_filename()
+	{
+		if(is_array($this->selection) && count($this->selection) == 1)
+		{
+			return $this->uicontacts->link_title($this->selection[0]);
+		}
+		return false;
 	}
 
 	/**

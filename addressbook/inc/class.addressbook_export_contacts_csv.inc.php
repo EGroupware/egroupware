@@ -33,7 +33,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 	public function export( $_stream, importexport_definition $_definition) {
 
 		$options = $_definition->plugin_options;
-		$export_object = new importexport_export_csv($_stream, (array)$options);
+		$this->export_object = $export_object = new importexport_export_csv($_stream, (array)$options);
 
 		$uicontacts = new addressbook_ui();
 		$selection = array();
@@ -247,6 +247,19 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 
 	public static function get_mimetype() {
 		return 'text/csv';
+	}
+
+	/**
+	 * Suggest a file name for the downloaded file
+	 * No suffix
+	 */
+	public function get_filename()
+	{
+		if(is_object($this->export_object) && $this->export_object->get_num_of_records() == 1)
+		{
+			return $this->export_object->record->get_title();
+		}
+		return false;
 	}
 
 	/**

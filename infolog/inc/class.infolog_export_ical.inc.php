@@ -38,16 +38,16 @@ class infolog_export_ical extends infolog_export_csv {
 			case 'all':
 				$query['num_rows'] = $export_limit ? $export_limit : -1;
 				$query['start'] = 0;
-				$selection = $this->bo->search($query);
+				$this->selection = $this->bo->search($query);
 
 				break;
 			default:
-				$ids = $selection = explode(',',$options['selection']);
+				$ids = $this->selection = explode(',',$options['selection']);
 				break;
 		}
 
 		$boical = new infolog_ical();
-		fwrite($_stream, $boical->exportvCalendar($selection));
+		fwrite($_stream, $boical->exportvCalendar($this->selection));
 	}
 
 	/**
@@ -79,6 +79,19 @@ class infolog_export_ical extends infolog_export_csv {
 
 	public static function get_mimetype() {
 		return 'text/infolog';
+	}
+
+	/**
+	 * Suggest a file name for the downloaded file
+	 * No suffix
+	 */
+	public function get_filename()
+	{
+		if(is_array($this->selection) && count($this->selection) == 1)
+		{
+			return $this->bo->link_title(current($this->selection));
+		}
+		return false;
 	}
 
 	/**

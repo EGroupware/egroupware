@@ -37,8 +37,8 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 			$this->selects['info_priority'] = $this->bo->enums['priority'];
 		}
 
-		$export_object = new importexport_export_csv($_stream, (array)$options);
-		$export_object->set_mapping($options['mapping']);
+		$this->export_object = new importexport_export_csv($_stream, (array)$options);
+		$this->export_object->set_mapping($options['mapping']);
 
 		// do we need to query the cf's
 		foreach($options['mapping'] as $field => $map) {
@@ -77,18 +77,18 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 						}
 					}
 
-					$this->export_records($export_object, $options, $selection, $ids);
+					$this->export_records($this->export_object, $options, $selection, $ids);
 					$query['start'] += $query['num_rows'];
 				} while($query['start'] < $query['total']);
 
-				return $export_object;
+				return $this->export_object;
 				break;
 			default:
 				$ids = $selection = explode(',',$options['selection']);
-				$this->export_records($export_object, $options, $selection, $ids);
+				$this->export_records($this->export_object, $options, $selection, $ids);
 				break;
 		}
-		return $export_object;
+		return $this->export_object;
 	}
 
 	protected function export_records(&$export_object, $options, &$selection, $ids = array())
@@ -180,6 +180,19 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 
 	public static function get_mimetype() {
 		return 'text/csv';
+	}
+
+	/**
+	 * Suggest a file name for the downloaded file
+	 * No suffix
+	 */
+	public function get_filename()
+	{
+		if(is_object($this->export_object) && $this->export_object->get_num_of_records() == 1)
+		{
+			return $this->export_object->record->get_title();
+		}
+		return false;
 	}
 
 	/**

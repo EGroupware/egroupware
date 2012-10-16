@@ -85,7 +85,7 @@ class infolog_egw_record implements importexport_iface_egw_record
 		if (empty($this->record)) {
 			$this->get_record();
 		}
-		return $this->record['title'];
+		return self::$bo->link_title($this->record);
 	}
 
 	/**
