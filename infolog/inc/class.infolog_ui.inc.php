@@ -1316,8 +1316,15 @@ class infolog_ui
 					break;
 
 				case 'cat':
-					$cat_name = categories::id2name($settings);
-					$action_msg = lang('changed category to %1', $cat_name);
+					if($settings)
+					{
+						$cat_name = categories::id2name($settings);
+						$action_msg = lang('changed category to %1', $cat_name);
+					}
+					else
+					{
+						$action_msg = lang('removed category');
+					}
 					$entry['info_cat'] = $settings;
 					if($this->bo->write($entry, true,true,true,$skip_notifications))
 					{

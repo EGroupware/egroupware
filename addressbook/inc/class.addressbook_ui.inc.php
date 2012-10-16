@@ -436,13 +436,15 @@ class addressbook_ui extends addressbook_bo
 			'group' => $group,
 			'children' => array(
 				'cat_add' => nextmatch_widget::category_action(
-					'addressbook',$group,'Add category', 'cat_add_'
+					'addressbook',$group,'Add category', 'cat_add_',
+					true, 0,nextmatch_widget::DEFAULT_MAX_MENU_LENGTH,false
 				)+array(
 					'icon' => 'foldertree_nolines_plus',
 					'disableClass' => 'rowNoEdit',
 				),
 				'cat_del' => nextmatch_widget::category_action(
-					'addressbook',$group,'Delete category', 'cat_del_'
+					'addressbook',$group,'Delete category', 'cat_del_',
+					true, 0,nextmatch_widget::DEFAULT_MAX_MENU_LENGTH,false
 				)+array(
 					'icon' => 'foldertree_nolines_minus',
 					'disableClass' => 'rowNoEdit',
