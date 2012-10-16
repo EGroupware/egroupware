@@ -154,16 +154,6 @@ class addressbook_hooks
 			'admin'  => false,
 			'default'=> 'business',
 		);
-		$settings['csv_charset'] = array(
-			'type'   => 'select',
-			'label'  => 'Charset for the CSV export',
-			'name'   => 'csv_charset',
-			'values' => translation::get_installed_charsets(),
-			'help'   => 'Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.',
-			'xmlrpc' => True,
-			'admin'  => false,
-			'default'=> 'iso-8859-1',
-		);
 
 		$settings['vcard_charset'] = array(
 			'type'   => 'select',

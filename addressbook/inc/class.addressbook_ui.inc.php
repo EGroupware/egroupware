@@ -841,14 +841,6 @@ class addressbook_ui extends addressbook_bo
 		}
 		switch($action)
 		{
-			case 'csv':
-				$action_msg = lang('exported');
-				$csv_export = new addressbook_csv($this,$this->prefs['csv_charset']);
-				$csv_export->export($checked,$csv_export->csv_fields($this->prefs['csv_fields']));
-				// does not return!
-				$Ok = true;
-				break;
-
 			case 'vcard':
 				$action_msg = lang('exported');
 				$vcard = new addressbook_vcal('addressbook','text/vcard');
