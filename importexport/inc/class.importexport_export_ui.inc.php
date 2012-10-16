@@ -277,7 +277,7 @@ class importexport_export_ui {
 			}
 			if($charset == 'user') $charset = $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'];
 			$plugin_object = new $definition->plugin;
-			$plugin_object->export( $file, $definition );
+			$result = $plugin_object->export( $file, $definition );
 
 			// Keep settings
 			$keep = array_diff_key($_content, array_flip(array('appname', 'definition', 'plugin', 'preview', 'export', $tabs)));
@@ -292,7 +292,20 @@ class importexport_export_ui {
 				fclose($file);
 				$filename = pathinfo($tmpfname, PATHINFO_FILENAME);
 				$response->addScript("xajax_eT_wrapper();");
-				$response->addScript("opener.location.href='". $GLOBALS['egw']->link('/index.php','menuaction=importexport.importexport_export_ui.download&_filename='. $filename.'&_appname='. $definition->application). "&_suffix=". $plugin_object->get_filesuffix(). "&_type=".$plugin_object->get_mimetype() ."';");
+				$link_query = array(
+					'menuaction'	=> 'importexport.importexport_export_ui.download',
+					'_filename'	=> $filename,
+					'_appname'	=> $definition->application,
+					'_suffix'	=> $plugin_object->get_filesuffix(),
+					'_type'		=> $plugin_object->get_mimetype()
+				);
+
+				// Allow plugins to suggest a file name - return false if they have no suggestion
+				if(method_exists($plugin_object, 'get_filename') && $plugin_filename = $plugin_object->get_filename())
+				{
+					$link_query['filename'] = $plugin_filename;
+				}
+				$response->addScript("opener.location.href='". $GLOBALS['egw']->link('/index.php',$link_query)."'");
 				$response->addScript('window.setTimeout("window.close();", 100);');
 				return $response->getXML();
 			}
@@ -484,7 +497,7 @@ class importexport_export_ui {
 		if (!is_readable($tmpfname)) die();
 
 		$appname = $_GET['_appname'];
-		$nicefname = 'egw_export_'.$appname.'-'.date('Y-m-d');
+		$nicefname = $_GET['filename'] ? $_GET['filename'] : 'egw_export_'.$appname.'-'.date('Y-m-d');
 
 		// Turn off all output buffering
 		while (@ob_end_clean());
