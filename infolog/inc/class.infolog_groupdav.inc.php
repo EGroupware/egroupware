@@ -148,7 +148,7 @@ class infolog_groupdav extends groupdav_handler
 		$filter = $this->get_infolog_filter($path, $user);
 
 		// process REPORT filters or multiget href's
-		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options,$filter,$id))
+		if (($id || $options['root']['name'] != 'propfind') && !$this->_report_filters($options, $filter, $id, $nresults))
 		{
 			// return empty collection, as iCal under iOS 5 had problems with returning "404 Not found" status
 			// when trying to request not supported components, eg. VTODO on a calendar collection
@@ -179,9 +179,28 @@ class infolog_groupdav extends groupdav_handler
 			}
 		}
 
-		// return iterator, calling ourself to return result in chunks
-		$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
+		// rfc 6578 sync-collection report: filter for sync-token is already set in _report_filters
+		if ($options['root']['name'] == 'sync-collection')
+		{
+			// query sync-token before result, so changed happening while result get queried are not lost
+			$files['sync-token'] = $this->get_sync_token($path, $user);
+		}
 
+		if (isset($nresults))
+		{
+			$files['files'] = $this->propfind_callback($path, $filter, array(0, (int)$nresults));
+
+			if ($options['root']['name'] == 'sync-collection' && isset($files['files']['sync-token']))
+			{
+				$files['sync-token'] = $this->get_sync_token($path, $user, $files['files']['sync-token']);
+				unset($files['files']['sync-token']);
+			}
+		}
+		else
+		{
+			// return iterator, calling ourself to return result in chunks
+			$files['files'] = new groupdav_propfind_iterator($this,$path,$filter,$files['files']);
+		}
 		return true;
 	}
 
@@ -205,9 +224,18 @@ class infolog_groupdav extends groupdav_handler
 		$task_filter = $filter['filter'];
 		unset($filter['filter']);
 
+		$order = 'info_datemodified';
+		$sort = 'DESC';
+		if (preg_match('/^([a-z0-9_]+)( DESC| ASC)?$/i', $filter['order'], $matches))
+		{
+			$order = $matches[1];
+			if ($matches[2]) $sort = $matches[2];
+			unset($filter['order']);
+		}
+
 		$query = array(
-			'order'			=> 'info_datemodified',
-			'sort'			=> 'DESC',
+			'order'			=> $order,
+			'sort'			=> $sort,
 			'filter'    	=> $task_filter,
 			'date_format'	=> 'server',
 			'col_filter'	=> $filter,
@@ -216,7 +244,7 @@ class infolog_groupdav extends groupdav_handler
 
 		if (!$calendar_data)
 		{
-			$query['cols'] = array('info_id', 'info_datemodified', 'info_uid', 'caldav_name', 'info_subject');
+			$query['cols'] = array('info_id', 'info_datemodified', 'info_uid', 'caldav_name', 'info_subject', 'info_status');
 		}
 
 		if (is_array($start))
@@ -236,6 +264,12 @@ class infolog_groupdav extends groupdav_handler
 		{
 			foreach($tasks as $task)
 			{
+				// sync-collection report: deleted entry need to be reported without properties
+				if ($task['info_status'] == 'deleted' && strpos($task_filter, '+deleted') !== false)
+				{
+					$files[] = array('path' => $path.urldecode($this->get_path($task)));
+					continue;
+				}
 				$props = array(
 					'getcontenttype' => $this->agent != 'kde' ? 'text/calendar; charset=utf-8; component=VTODO' : 'text/calendar',	// Konqueror (3.5) dont understand it otherwise
 					'getlastmodified' => $task['info_datemodified'],
@@ -250,6 +284,14 @@ class infolog_groupdav extends groupdav_handler
 				$files[] = $this->add_resource($path, $task, $props);
 			}
 		}
+		// hack to support limit with sync-collection report: tasks are returned in modified ASC order (oldest first)
+		// if limit is smaller then full result, return modified-1 as sync-token, so client requests next chunk incl. modified
+		// (which might contain further entries with identical modification time)
+		if (strpos($task_filter, '+deleted') !== false &&
+			$start[0] == 0 && $start[1] != groupdav_propfind_iterator::CHUNK_SIZE && $query['total'] > $start[1])
+		{
+			$files['sync-token'] = $task['info_datemodified']-1;
+		}
 		if ($this->debug) error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).' to return '.count($files).' items');
 		return $files;
 	}
@@ -260,9 +302,10 @@ class infolog_groupdav extends groupdav_handler
 	 * @param array $options
 	 * @param array &$cal_filters
 	 * @param string $id
-	 * @return boolean true if filter could be processed, false for requesting not here supported VTODO items
+	 * @param int &$nresult on return limit for number or results or unchanged/null
+	 * @return boolean true if filter could be processed
 	 */
-	function _report_filters($options,&$cal_filters,$id)
+	function _report_filters($options,&$filters,$id, &$nresults)
 	{
 		if ($options['filters'])
 		{
@@ -311,12 +354,46 @@ class infolog_groupdav extends groupdav_handler
 						break;
 				}
 			}
-			// if client set an own filter, reset the open-standard filter
-			/* not longer necessary, as we use now own and user anyway
-			if ($cal_filters != $cal_filters_in)
+		}
+		// parse limit from $options['other']
+		/* Example limit
+		  <B:limit>
+		    <B:nresults>10</B:nresults>
+		  </B:limit>
+		*/
+		foreach((array)$options['other'] as $option)
+		{
+			switch($option['name'])
 			{
-				$cal_filters['filter'] = str_replace(array('open', 'open-user'), array('own', 'user'), $cal_filters['filter']);
-			}*/
+				case 'nresults':
+					$nresults = (int)$option['data'];
+					//error_log(__METHOD__."(...) options[other]=".array2string($options['other'])." --> nresults=$nresults");
+					break;
+				case 'limit':
+					break;
+				case 'href':
+					break;	// from addressbook-multiget, handled below
+				// rfc 6578 sync-report
+				case 'sync-token':
+					if (!empty($option['data']))
+					{
+						$parts = explode('/', $option['data']);
+						$sync_token = array_pop($parts);
+						$filters[] = 'info_datemodified>'.(int)$sync_token;
+						$filters['filter'] .= '+deleted';	// to return deleted entries too
+						$filters['order'] = 'info_datemodified ASC';	// return oldest modifications first
+					}
+					break;
+				case 'sync-level':
+					if ($option['data'] != '1')
+					{
+						$this->groupdav->log(__METHOD__."(...) only sync-level {$option['data']} requested, but only 1 supported! options[other]=".array2string($options['other']));
+					}
+					break;
+				default:
+					$this->groupdav->log(__METHOD__."(...) unknown xml tag '{$option['name']}': options[other]=".array2string($options['other']));
+					break;
+			}
 		}
 		// multiget or propfind on a given id
 		//error_log(__FILE__ . __METHOD__ . "multiget of propfind:");
@@ -618,7 +695,7 @@ class infolog_groupdav extends groupdav_handler
 	/**
 	 * Get the etag for an infolog entry
 	 *
-	 * etag currently uses the modifcation time (info_modified), 1.9.002 adds etag column, but it's not yet used!
+	 * etag currently uses the modifcation time (info_datemodified), 1.9.002 adds etag column, but it's not yet used!
 	 *
 	 * @param array|int $info array with infolog entry or info_id
 	 * @return string|boolean string with etag or false
@@ -656,12 +733,18 @@ class infolog_groupdav extends groupdav_handler
 			HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'comp',array('name' => 'VTODO')),
 		));
 		// supported reports
-		$props['supported-report-set'] = HTTP_WebDAV_Server::mkprop('supported-report-set',array(
-			HTTP_WebDAV_Server::mkprop('supported-report',array(
+		$props['supported-report-set'] = array(
+			'calendar-query' => HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-query',''))),
+					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-query',''))))),
+			'calendar-multiget' => HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
-					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-multiget','')))))));
+					HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'calendar-multiget',''))))),
+			// rfc 6578 sync-collection report
+			'sync-collection' => HTTP_WebDAV_Server::mkprop('supported-report',array(
+				HTTP_WebDAV_Server::mkprop('report',array(
+					HTTP_WebDAV_Server::mkprop('sync-collection',''))))),
+		);
 
 		// get timezone of calendar
 		if ($this->groupdav->prop_requested('calendar-timezone'))
