@@ -1005,6 +1005,8 @@ class groupdav extends HTTP_WebDAV_Server
 			'DAV:getetag'          => 'ETag',
 			'DAV:getcontenttype'   => 'Content type',
 			'DAV:resourcetype'     => 'Resource type',
+			//'http://calendarserver.org/ns/:created-by' => 'Created by',
+			//'http://calendarserver.org/ns/:updated-by' => 'Updated by',
 			//'DAV:owner'            => 'Owner',
 			//'DAV:current-user-privilege-set' => 'current-user-privilege-set',
 			//'DAV:getcontentlength' => 'Size',
@@ -1108,13 +1110,16 @@ class groupdav extends HTTP_WebDAV_Server
 				'wrap'            => 0,
 			));
 		}
-		if (preg_match('/\<(D:)?href\>[^<]+\<\/(D:)?href\>/i',$value))
+		if (($href=preg_match('/\<(D:)?href\>[^<]+\<\/(D:)?href\>/i',$value)))
 		{
-			$value = '<pre>'.preg_replace('/\<(D:)?href\>('.preg_quote($this->base_uri.'/','/').')?([^<]+)\<\/(D:)?href\>/i','&lt;\\1href&gt;<a href="\\2\\3">\\3</a>&lt;/\\4href&gt;',$value).'</pre>';
+			$value = preg_replace('/\<(D:)?href\>('.preg_quote($this->base_uri.'/','/').')?([^<]+)\<\/(D:)?href\>/i','<\\1href><a href="\\2\\3">\\3</a></\\4href>',$value);
 		}
-		else
+		$value = $value[0] == '<'  || strpos($value, "\n") !== false ? '<pre>'.htmlspecialchars($value).'</pre>' : htmlspecialchars($value);
+
+		if ($href)
 		{
-			$value = $value[0] == '<'  || strpos($value, "\n") !== false ? '<pre>'.htmlspecialchars($value).'</pre>' : htmlspecialchars($value);
+			$value = preg_replace('/&lt;a href=&quot;(.+)&quot;&gt;/', '<a href="\\1">', $value);
+			$value = str_replace('&lt;/a&gt;', '</a>', $value);
 		}
 		return $value;
 	}
@@ -1640,7 +1645,7 @@ class groupdav extends HTTP_WebDAV_Server
 			$content .= 'HTTP/1.1 '.$this->_http_status."\n";
 			foreach(headers_list() as $line) $content .= $line."\n";
 			if (($c = ob_get_flush())) $content .= "\n";
-			if ($debug_level !== 'f' && strlen($c) > 1536) $c = substr($c,0,1536)."\n*** LOG TRUNKATED\n";
+			if (self::$log_level !== 'f' && strlen($c) > 1536) $c = substr($c,0,1536)."\n*** LOG TRUNKATED\n";
 			$content .= $c;
 			if ($extra) $content .= $extra;
 			if ($this->to_log) $content .= "\n### ".implode("\n### ", $this->to_log)."\n";
