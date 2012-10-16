@@ -858,8 +858,9 @@ class HTTP_WebDAV_Server
 	                                = $this->mkprop("DAV:",
 	                                                "lockdiscovery",
 	                                                $this->lockdiscovery($file['path']));
-	                        // only collect $file['noprops'] if we have NO Brief: t HTTP Header
-	                        } elseif (!isset($this->_SERVER['HTTP_BRIEF']) || $this->_SERVER['HTTP_BRIEF'] != 't') {
+	                        // only collect $file['noprops'] if we have NO Brief: t and NO Prefer: return-minimal HTTP Header
+	                        } elseif ((!isset($this->_SERVER['HTTP_BRIEF']) || $this->_SERVER['HTTP_BRIEF'] != 't') &&
+	                        	(!isset($this->_SERVER['HTTP_PREFER']) || $this->_SERVER['HTTP_PREFER'] != 'return-minimal')) {
 	                            // add empty value for this property
 	                            $file["noprops"][] =
 	                                $this->mkprop($reqprop["xmlns"], $reqprop["name"], "");
