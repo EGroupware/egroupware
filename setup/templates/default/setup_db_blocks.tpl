@@ -1,6 +1,6 @@
 <!-- begin setup_db_blocks.tpl -->
 
-&nbsp; <!-- ================================== --> &nbsp; 
+&nbsp; <!-- ================================== --> &nbsp;
 
 <!-- BEGIN B_db_stage_1 -->
 <tr>
@@ -15,6 +15,7 @@
 			<p>{createdb}<br />
 		    DB root username: <input type="text" name="db_root" value="root" /><br />
 		    DB root password: <input type="password" name="db_pass" /><br />
+		    DB grant host: <input type="text" name="db_grant_host" value="localhost" /><br />
 		    <input type="hidden" name="action" value="Create Database" />
 		    <input type="submit" name="label" value="{create_database}" /></p>
 		</form>
@@ -40,7 +41,7 @@
 </tr>
 <!-- END B_db_stage_1a -->
 
-&nbsp; <!-- ================================== --> &nbsp; 
+&nbsp; <!-- ================================== --> &nbsp;
 
 <!-- BEGIN B_db_stage_2 -->
 
@@ -54,7 +55,7 @@
 </tr>
 <!-- END B_db_stage_2 -->
 
-&nbsp; <!-- ================================== --> &nbsp; 
+&nbsp; <!-- ================================== --> &nbsp;
 
 <!-- BEGIN B_db_stage_3 -->
 <tr>
@@ -79,7 +80,7 @@
 </tr>
 <!-- END B_db_stage_3 -->
 
-&nbsp; <!-- ================================== --> &nbsp; 
+&nbsp; <!-- ================================== --> &nbsp;
 
 <!-- BEGIN B_db_stage_4 -->
 <tr>
@@ -152,7 +153,7 @@
 </tr>
 <!-- END B_db_stage_5 -->
 
-&nbsp; <!-- ================================== --> &nbsp; 
+&nbsp; <!-- ================================== --> &nbsp;
 
 <!-- BEGIN B_db_stage_6_pre -->
 <tr>
@@ -180,7 +181,7 @@
 -->
 <!-- END B_db_stage_6_pre -->
 
-&nbsp; <!-- ================================== --> &nbsp; 
+&nbsp; <!-- ================================== --> &nbsp;
 
 <!-- BEGIN B_db_stage_6_post -->
 		<tr bgcolor="#486591">
@@ -201,7 +202,7 @@
 </tr>
 <!-- END B_db_stage_6_post -->
 
-&nbsp; <!-- ================================== --> &nbsp; 
+&nbsp; <!-- ================================== --> &nbsp;
 
 <!-- BEGIN B_db_stage_10 -->
 <tr>
@@ -219,7 +220,7 @@
 </tr>
 <!-- END B_db_stage_10 -->
 
-&nbsp; <!-- ================================== --> &nbsp; 
+&nbsp; <!-- ================================== --> &nbsp;
 
 <!-- BEGIN B_db_stage_default -->
 <tr>
@@ -235,7 +236,7 @@
 </tr>
 <!-- END B_db_stage_default -->
 
-&nbsp; <!-- ================================== --> &nbsp; 
+&nbsp; <!-- ================================== --> &nbsp;
 
 
 <!-- end setup_db_blocks.tpl -->
