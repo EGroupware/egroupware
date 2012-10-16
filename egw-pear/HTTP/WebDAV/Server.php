@@ -742,6 +742,14 @@ class HTTP_WebDAV_Server
 
         $this->multistatus_responses($files['files'], $options['props']);
 
+        // WebDAV sync report sync-token
+        if (isset($files['sync-token']))
+        {
+            echo ($this->crrnd ? " <" : " <D:")."sync-token>".
+            	htmlspecialchars($files['sync-token']).
+            	($this->crrnd ? "</" : "</D:")."sync-token>\n";
+        }
+
         echo '</'.($this->crrnd?'':'D:')."multistatus>\n";
     }
 
@@ -1095,6 +1103,19 @@ class HTTP_WebDAV_Server
 	                echo "   </D:prop>\n";
 	                echo "   <D:status>HTTP/1.1 404 Not Found</D:status>\n";
 	                echo "  </D:propstat>\n";
+                }
+            }
+
+            // 404 Not Found status element for WebDAV sync report
+            if (!isset($file['props']) && !isset($file['noprops']))
+            {
+                if ($this->crrnd)
+                {
+	                echo "  <status>HTTP/1.1 404 Not Found</status>\n";
+                }
+                else
+                {
+	                echo "  <D:status>HTTP/1.1 404 Not Found</D:status>\n";
                 }
             }
 
