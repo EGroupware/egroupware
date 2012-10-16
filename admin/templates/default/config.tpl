@@ -303,6 +303,14 @@
        </select>
     </td>
    </tr>
+   <tr class="row_off">
+    <td>{lang_Disable_minifying_of_javascript_and_CSS_files}:</td>
+    <td>
+      <select name="newsettings[debug_minify]">
+         <option value="">{lang_No} - {lang_Default}</option>
+         <option value="True"{selected_debug_minify_True}>{lang_Yes}</option>
+       </select>
+    </td>
    </tr>
 
 <!-- END body -->
