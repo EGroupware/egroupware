@@ -37,6 +37,19 @@
 </select>
 </td>
 </tr>
+<tr class="th">
+<td colspan="2">&nbsp;<b>{lang_History_logging}</b></td>
+</tr>
+<tr class="row_on">
+<td>&nbsp;{lang_Prevent_deleting}</td>
+<td>
+<select name="newsettings[history]">
+<option value="">{lang_No}</option>
+<option value="history"{selected_history_history}>{lang_Yes,_only_admins_can_purge_deleted_items}</option>
+<option value="userpurge"{selected_history_userpurge}>{lang_Yes,_users_can_purge_their_deleted_items}</option>
+</select>
+</td>
+</tr>
 <!-- END body -->
 
 <!-- BEGIN footer -->

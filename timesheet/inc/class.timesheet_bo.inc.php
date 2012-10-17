@@ -15,6 +15,7 @@ if (!defined('TIMESHEET_APP'))
 	define('TIMESHEET_APP','timesheet');
 }
 
+
 /**
  * Business object of the TimeSheet
  *
@@ -22,6 +23,11 @@ if (!defined('TIMESHEET_APP'))
  */
 class timesheet_bo extends so_sql_cf
 {
+	/**
+	 * Flag for timesheets deleted, but preserved
+	 */
+	const DELETED_STATUS = -1;
+
 	/**
 	 * Timesheets config data
 	 *
@@ -214,6 +220,10 @@ class timesheet_bo extends so_sql_cf
 			//$sorted[$status_id]['name'] = $label;
 			unset($sorted[$status_id]['substatus']);
 		}
+		if($this->config_data['history'])
+		{
+			$this->status_labels[self::DELETED_STATUS] = 'Deleted';
+		}
 		$this->status_labels_config = $sorted;
 	}
 
@@ -349,6 +359,11 @@ class timesheet_bo extends so_sql_cf
 		}
 		$ret = $data && !!($grants[$data['ts_owner']] & $required);
 
+		if(($required & EGW_ACL_DELETE) && $this->config_data['history'] == 'history' &&
+			$data['ts_status'] == self::DELETED_STATUS)
+		{
+			$ret = !!($GLOBALS['egw_info']['user']['apps']['admin']);
+		}
 		//error_log(__METHOD__."($required,$data[ts_id],$user) returning ".array2string($ret));
 		return $ret;
 	}
@@ -480,9 +495,14 @@ class timesheet_bo extends so_sql_cf
 				}
 			}
 		}
-		if (isset($filter['ts_status']) && $filter['ts_status'])
+		if (isset($filter['ts_status']) && $filter['ts_status'] && $filter['ts_status'] != self::DELETED_STATUS)
 		{
 			$filter['ts_status'] = $this->get_sub_status($filter['ts_status']);
+		}
+		else
+		{
+			$filter[] = '(ts_status ' . ($filter['ts_status'] == self::DELETED_STATUS ? '=':'!= ') . self::DELETED_STATUS .
+				($filter['ts_status'] == self::DELETED_STATUS ? '':' OR ts_status IS NULL') . ')';
 		}
 		if (!count($filter['ts_owner']))
 		{
@@ -602,6 +622,12 @@ class timesheet_bo extends so_sql_cf
 			return false;
 		}
 
+		// Check for restore of deleted contact, restore held links
+		if($old && $old['ts_status'] == self::DELETED_STATUS && $new['ts_status'] != self::DELETED_STATUS)
+		{
+			egw_link::restore(TIMESHEET_APP, $new['ts_id']);
+		}
+
 		if (!is_object($this->tracking))
 		{
 			$this->tracking = new timesheet_tracking($this);
@@ -637,11 +663,20 @@ class timesheet_bo extends so_sql_cf
 		}
 		$ts_id = is_null($keys) ? $this->data['ts_id'] : $keys['ts_id'];
 
-		if (!$this->check_acl(EGW_ACL_DELETE,$ts_id))
+		if (!$this->check_acl(EGW_ACL_DELETE,$ts_id) || !($old = $this->read($ts_id)))
 		{
 			return false;
 		}
-		if (($ret = parent::delete($keys)) && $ts_id)
+
+		// check if we only mark timesheets as deleted, or really delete them
+		if ($old['ts_owner'] && $this->config_data['history'] != '' && $old['ts_status'] != self::DELETED_STATUS)
+		{
+			$delete = $old;
+			$delete['ts_status'] = self::DELETED_STATUS;
+			$ret = !($this->save($delete));
+			egw_link::unlink(0,TIMESHEET_APP,$ts_id,'','','',true);
+		}
+		elseif (($ret = parent::delete($keys)) && $ts_id)
 		{
 			// delete all links to timesheet entry $ts_id
 			egw_link::unlink(0,TIMESHEET_APP,$ts_id);
