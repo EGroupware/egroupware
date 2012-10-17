@@ -1032,7 +1032,11 @@ function edit_series(id,date)
 	calendar_edit_id = id;
 	calendar_edit_date = date;
 
-	document.getElementById("edit_series").style.display = "inline";
+	var popup = jQuery("#edit_series").show();
+	popup.css({
+		top: $j(window).height()/2-popup.height()/2,
+		left: $j(window).width()/2-popup.width()/2
+	});
 }
 function open_edit(series)
 {
