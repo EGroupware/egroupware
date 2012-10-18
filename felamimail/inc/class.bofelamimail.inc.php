@@ -281,6 +281,17 @@
 				if (self::$debug) error_log("Could not append Message:".print_r($messageid->message,true));
 				return false;
 			}
+			//error_log(__METHOD__.__LINE__.' appended UID:'.$messageid);
+			$messageid = true; // for debug reasons only
+			if ($messageid === true) // try to figure out the message uid
+			{
+				$list = $this->getHeaders($_folderName, $_startMessage=1, $_numberOfMessages=1, $_sort='INTERNALDATE', $_reverse=true, $_filter=array(),$_thisUIDOnly=null);
+				if ($list)
+				{
+					if (self::$debug) error_log(__METHOD__.__LINE__.' MessageUid:'.$messageid.' but found:'.array2string($list));
+					$messageid = $list['header'][0]['uid'];
+				}
+			}
 			return $messageid;
 		}
 
@@ -2103,9 +2114,9 @@
 				}
 
 				$total = count($sortResult);
-				#_debug_array($sortResult);
+				//_debug_array($sortResult);
 				#_debug_array(array_slice($sortResult, -5, -2));
-				#error_log("REVERSE: $reverse");
+				//error_log("REVERSE: $reverse".count($sortResult));
 				if($reverse === true) {
 					$startMessage = $_startMessage-1;
 					if($startMessage > 0) {
@@ -2146,7 +2157,7 @@
 
 					$retValue['header'][$sortOrder[$uid]]['subject']	= $this->decode_subject($headerObject['SUBJECT']);
 					$retValue['header'][$sortOrder[$uid]]['size'] 		= $headerObject['SIZE'];
-					$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime($headerObject['DATE'],'ts',true);
+					$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime(($headerObject['DATE']?$headerObject['DATE']:$headerObject['INTERNALDATE']),'ts',true);
 					$retValue['header'][$sortOrder[$uid]]['mimetype']	= $headerObject['MIMETYPE'];
 					$retValue['header'][$sortOrder[$uid]]['id']		= $headerObject['MSG_NUM'];
 					$retValue['header'][$sortOrder[$uid]]['uid']		= $headerObject['UID'];
@@ -2970,28 +2981,51 @@
 		/**
 		* convert the sort value from the gui(integer) into a string
 		*
-		* @param int _sort the integer sort order
+		* @param mixed _sort the integer sort order / or a valid and handeled SORTSTRING (right now: UID/ARRIVAL/INTERNALDATE (->ARRIVAL))
+		* @param bool _reverse wether to add REVERSE to the Sort String or not
 		* @returns the ascii sort string
 		*/
-		function _getSortString($_sort)
+		function _getSortString($_sort, $_reverse=false)
 		{
-			switch($_sort) {
-				case 2:
-					$retValue = 'FROM';
-					break;
-				case 3:
-					$retValue = 'SUBJECT';
-					break;
-				case 6:
-					$retValue = 'SIZE';
-					break;
-				case 0:
-				default:
-					$retValue = 'DATE';
-					break;
+			$_reverse=false;
+			if (is_numeric($_sort))
+			{
+				switch($_sort) {
+					case 2:
+						$retValue = 'FROM';
+						break;
+					case 4:
+						$retValue = 'TO';
+						break;
+					case 3:
+						$retValue = 'SUBJECT';
+						break;
+					case 6:
+						$retValue = 'SIZE';
+						break;
+					case 0:
+					default:
+						$retValue = 'DATE';
+						//$retValue = 'ARRIVAL';
+						break;
+				}
 			}
-
-			return $retValue;
+			else
+			{
+				switch($_sort) {
+					case 'UID': // should be equivalent to INTERNALDATE, which is ARRIVAL, which should be highest (latest) uid should be newest date
+					case 'ARRIVAL':
+					case 'INTERNALDATE':
+						$retValue = 'ARRIVAL';
+						break;
+					default:
+						$retValue = 'DATE';
+						//$retValue = 'ARRIVAL';
+						break;
+				}
+			}
+			//error_log(__METHOD__.__LINE__.' '.($_reverse?'REVERSE ':'').$_sort.'->'.$retValue);
+			return ($_reverse?'REVERSE ':'').$retValue;
 		}
 
 		function sendMDN($uid) {
