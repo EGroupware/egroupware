@@ -177,7 +177,7 @@ class importexport_wizard_basic_import_csv
 								$content['field_mapping'][$index] = $best_match;
 							}
 						}
-					} elseif($content['plugin_options']['csv_fields']) {
+					} elseif(!$content['csv_fields'] && $content['plugin_options']['csv_fields']) {
 						$content['csv_fields'] = $content['plugin_options']['csv_fields'];
 					}
 					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],1);
