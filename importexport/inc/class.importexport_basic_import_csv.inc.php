@@ -160,11 +160,10 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 
 			if($success) $count++;
 
-			// Stop if we have enough records for a preview
-			if($this->dry_run)
+			// Keep a few records for preview, but process the whole file
+			if($this->dry_run && $import_csv->get_current_position() < $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])
 			{
 				$this->preview_records[] = $egw_record;
-				if($import_csv->get_current_position() >= $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']) break;
 			}
 		}
 		return $count;
