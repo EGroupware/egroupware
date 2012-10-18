@@ -538,9 +538,11 @@ class felamimail_bo
 			throw new egw_exception_wrong_userinput(lang("Could not append Message:".array2string($messageid->message)));
 			//return false;
 		}
+		//error_log(__METHOD__.__LINE__.' appended UID:'.$messageid);
+		//$messageid = true; // for debug reasons only
 		if ($messageid === true) // try to figure out the message uid
 		{
-			$list = $this->getHeaders($_folderName, $_startMessage=1, $_numberOfMessages=1, $_sort=0, $_reverse=true, $_filter=array());
+			$list = $this->getHeaders($_folderName, $_startMessage=1, $_numberOfMessages=1, $_sort='INTERNALDATE', $_reverse=true, $_filter=array(),$_thisUIDOnly=null, $_cacheResult=false);
 			if ($list)
 			{
 				if (self::$debug) error_log(__METHOD__.__LINE__.' MessageUid:'.$messageid.' but found:'.array2string($list));
@@ -2797,7 +2799,7 @@ class felamimail_bo
 				//error_log(__METHOD__.__LINE__.' '.$this->decode_subject($headerObject['SUBJECT']).'->'.$headerObject['DATE']);
 				$retValue['header'][$sortOrder[$uid]]['subject']	= $this->decode_subject($headerObject['SUBJECT']);
 				$retValue['header'][$sortOrder[$uid]]['size'] 		= $headerObject['SIZE'];
-				$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime($headerObject['DATE'],'ts',true);
+				$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime(($headerObject['DATE']?$headerObject['DATE']:$headerObject['INTERNALDATE']),'ts',true);
 				$retValue['header'][$sortOrder[$uid]]['internaldate']= self::_strtotime($headerObject['INTERNALDATE'],'ts',true);
 				$retValue['header'][$sortOrder[$uid]]['mimetype']	= $headerObject['MIMETYPE'];
 				$retValue['header'][$sortOrder[$uid]]['id']		= $headerObject['MSG_NUM'];
@@ -3986,32 +3988,49 @@ class felamimail_bo
 	/**
 	* convert the sort value from the gui(integer) into a string
 	*
-	* @param int _sort the integer sort order
+	* @param mixed _sort the integer sort order / or a valid and handeled SORTSTRING (right now: UID/ARRIVAL/INTERNALDATE (->ARRIVAL))
+	* @param bool _reverse wether to add REVERSE to the Sort String or not
 	* @return the ascii sort string
 	*/
 	function _getSortString($_sort, $_reverse=false)
 	{
 		$_reverse=false;
-		switch($_sort) {
-			case 2:
-				$retValue = 'FROM';
-				break;
-			case 4:
-				$retValue = 'TO';
-				break;
-			case 3:
-				$retValue = 'SUBJECT';
-				break;
-			case 6:
-				$retValue = 'SIZE';
-				break;
-			case 0:
-			default:
-				$retValue = 'DATE';
-				//$retValue = 'ARRIVAL';
-				break;
+		if (is_numeric($_sort))
+		{
+			switch($_sort) {
+				case 2:
+					$retValue = 'FROM';
+					break;
+				case 4:
+					$retValue = 'TO';
+					break;
+				case 3:
+					$retValue = 'SUBJECT';
+					break;
+				case 6:
+					$retValue = 'SIZE';
+					break;
+				case 0:
+				default:
+					$retValue = 'DATE';
+					//$retValue = 'ARRIVAL';
+					break;
+			}
 		}
-
+		else
+		{
+			switch($_sort) {
+				case 'UID': // should be equivalent to INTERNALDATE, which is ARRIVAL, which should be highest (latest) uid should be newest date
+				case 'ARRIVAL':
+				case 'INTERNALDATE':
+					$retValue = 'ARRIVAL';
+					break;
+				default:
+					$retValue = 'DATE';
+					break;
+			}
+		}
+		//error_log(__METHOD__.__LINE__.' '.($_reverse?'REVERSE ':'').$_sort.'->'.$retValue);
 		return ($_reverse?'REVERSE ':'').$retValue;
 	}
 
