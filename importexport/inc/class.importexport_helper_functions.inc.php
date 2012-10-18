@@ -22,6 +22,11 @@ class importexport_helper_functions {
 	const CACHE_EXPIRATION = 3600;
 
 	/**
+	 * Make no changes (automatic category creation)
+	 */
+	public static $dry_run = false;
+
+	/**
 	* Files known to cause problems, and will be skipped in a plugin scan
 	* If you put appname => true, the whole app will be skipped.
 	*/
@@ -187,7 +192,7 @@ class importexport_helper_functions {
 		foreach ( $cat_names as $cat_name ) {
 			$cat_name = trim($cat_name);
 			if ( $cat_name == '' ) continue;
-			if ( ( $cat_id = $cats->name2id( $cat_name ) ) == 0 ) {
+			if ( ( $cat_id = $cats->name2id( $cat_name ) ) == 0 && !self::$dry_run) {
 				$cat_id = $cats->add( array(
 					'name' => $cat_name,
 					'parent' => $parent,
