@@ -282,7 +282,7 @@
 				return false;
 			}
 			//error_log(__METHOD__.__LINE__.' appended UID:'.$messageid);
-			$messageid = true; // for debug reasons only
+			//$messageid = true; // for debug reasons only
 			if ($messageid === true) // try to figure out the message uid
 			{
 				$list = $this->getHeaders($_folderName, $_startMessage=1, $_numberOfMessages=1, $_sort='INTERNALDATE', $_reverse=true, $_filter=array(),$_thisUIDOnly=null);
