@@ -309,7 +309,7 @@ class timesheet_ui extends timesheet_bo
 			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
 			'start_time' => egw_time::to($this->data['ts_start'],'H:i'),
 			'pm_integration' => $this->pm_integration,
-			'no_ts_status' => !$this->status_labels,
+			'no_ts_status' => !$this->status_labels && ($this->data['ts_status'] != self::DELETED_STATUS),
 		));
 		$links = array();
 		// create links specified in the REQUEST (URL)
@@ -422,6 +422,10 @@ class timesheet_ui extends timesheet_bo
 		}
 		$sel_options['ts_owner']  = $edit_grants;
 		$sel_options['ts_status']  = $this->status_labels;
+		if($this->config_data['history'])
+		{
+			$sel_options['ts_status'][self::DELETED_STATUS] = 'Deleted';
+		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('timesheet').' - '.
 			($view ? lang('View') : ($this->data['ts_id'] ? lang('Edit') : lang('Add')));
 
