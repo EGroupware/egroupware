@@ -986,6 +986,9 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function _create_exception(&$event,&$preserv)
 	{
+		// In some cases where the user makes the first day an exception, actual_date may be missing
+		$preserv['actual_date'] = $preserv['acutal_date'] ? $preserv['actual_date'] : $event['start'];
+
 		$event['end'] += $preserv['actual_date'] - $event['start'];
 		$event['reference'] = $preserv['reference'] = $event['id'];
 		$event['recurrence'] = $preserv['recurrence'] = $preserv['actual_date'];
@@ -1541,9 +1544,9 @@ function replace_eTemplate_onsubmit()
 		{
 			$readonlys['action'] = true;
 		}
-		if (!($readonlys['button[exception]'] = !$this->bo->check_perms(EGW_ACL_EDIT,$event) || $event['recur_type'] == MCAL_RECUR_NONE))
+		if (!($readonlys['button[exception]'] = !$this->bo->check_perms(EGW_ACL_EDIT,$event) || $event['recur_type'] == MCAL_RECUR_NONE || ($event['recur_enddate'] &&$event['start'] > $event['recur_enddate'])))
 		{
-			$content['exception_label'] = $this->bo->long_date($preserv['actual_date']);
+			$content['exception_label'] = $this->bo->long_date(max($preserv['actual_date'], $event['start']));
 		}
 		$readonlys['button[delete]'] = !$event['id'] || $preserv['hide_delete'] || !$this->bo->check_perms(EGW_ACL_DELETE,$event);
 
