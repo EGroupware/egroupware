@@ -312,6 +312,36 @@ class calendar_rrule implements Iterator
 	}
 
 	/**
+	 * Get recurrence interval duration in seconds
+	 *
+	 * @param int $type self::(DAILY|WEEKLY|MONTHLY_(M|W)DAY|YEARLY)
+	 * @param int $interval=1
+	 * @return int
+	 */
+	public static function recurrence_interval($type, $interval=1)
+	{
+		switch($type)
+		{
+			case self::DAILY:
+				$duration = 24*3600;
+				break;
+			case self::WEEKLY:
+				$duration = 7*24*3600;
+				break;
+			case self::MONTHLY_MDAY:
+			case self::MONTHLY_WDAY:
+				$duration = 31*24*3600;
+				break;
+			case self::YEARLY:
+				$duration = 366*24*3600;
+				break;
+		}
+		if ($interval > 1) $duration *= $interval;
+
+		return $duration;
+	}
+
+	/**
 	 * Get number of days in month of given date
 	 *
 	 * @param DateTime $time

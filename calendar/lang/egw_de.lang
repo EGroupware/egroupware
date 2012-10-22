@@ -167,6 +167,7 @@ enddate of the export	calendar	de	Enddatum des Exports
 ends	calendar	de	endet
 error adding the alarm	calendar	de	Fehler beim Zufügen des Alarms
 error: can't delete original series!	calendar	de	Fehler beim Löschen der bestehenden Serie
+error: duration of event longer then recurrence interval!	calendar	de	Fehler: Termindauer ist länger als das Intervall der Wiederholung!
 error: importing the ical	calendar	de	Fehler beim Importieren des iCal
 error: no participants selected !!!	calendar	de	Fehler: Keine Teilnehmer ausgewählt !!!
 error: ressources reservation in private events is not allowed!!!	calendar	de	Fehler: Die Reservierung von Ressourcen für private Termine ist nicht erlaubt !!!
