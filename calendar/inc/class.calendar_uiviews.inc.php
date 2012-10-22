@@ -1034,6 +1034,7 @@ function edit_series(id,date)
 
 	var popup = jQuery("#edit_series").show();
 	popup.css({
+		position: "absolute",
 		top: $j(window).height()/2-popup.height()/2,
 		left: $j(window).width()/2-popup.width()/2
 	});
