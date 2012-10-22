@@ -220,10 +220,6 @@ class timesheet_bo extends so_sql_cf
 			//$sorted[$status_id]['name'] = $label;
 			unset($sorted[$status_id]['substatus']);
 		}
-		if($this->config_data['history'])
-		{
-			$this->status_labels[self::DELETED_STATUS] = 'Deleted';
-		}
 		$this->status_labels_config = $sorted;
 	}
 

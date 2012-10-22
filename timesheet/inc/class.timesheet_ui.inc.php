@@ -157,6 +157,10 @@ class timesheet_ui extends timesheet_bo
 					if ($this->check_acl(EGW_ACL_EDIT) && !$only_admin_edit) $view = false;
 					break;
 
+				case 'undelete':
+					if($content['ts_status'] == self::DELETED_STATUS) unset($content['ts_status']);
+					$button = 'apply';
+					// fall through
 				case 'save':
 				case 'save_new':
 				case 'apply':
@@ -375,18 +379,23 @@ class timesheet_ui extends timesheet_bo
 				'id'  => $this->data['ts_id'],
 				'app' => 'timesheet',
 				'status-widgets' => array(
-					'ts_status' => $this->status_labels,
+					'ts_status' => $this->status_labels + array(self::DELETED_STATUS => 'Deleted'),
 					'ts_modifier' => 'select-account',
 					'cat_id' => 'select-cat',
 				),
 		);
 		$sel_options['status'] = $this->field2label;
+		if($this->config_data['history'])
+		{
+			$sel_options['status'][self::DELETED_STATUS] = 'Deleted';
+		}
 
 		// the actual title-blur is either the preserved title blur (if we are called from infolog entry),
 		// or the preserved project-blur comming from the current selected project
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
 		$readonlys = array(
-			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(EGW_ACL_DELETE),
+			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(EGW_ACL_DELETE) || $this->data['ts_status'] == self::DELETED_STATUS,
+			'button[undelete]' => $this->data['ts_status'] != self::DELETED_STATUS,
 			'button[edit]'     => !$view || !$this->check_acl(EGW_ACL_EDIT),
 			'button[save]'     => $view,
 			'button[save_new]' => $view,
@@ -870,6 +879,10 @@ class timesheet_ui extends timesheet_bo
 			'cat_id'     => array(lang('None')),
 			'ts_status'  => $this->status_labels+array(lang('No status')),
 		);
+		if($this->config_data['history'])
+		{
+			$sel_options['ts_status'][self::DELETED_STATUS] = 'Deleted';
+		}
 		$content['nm']['no_status'] = count($sel_options['ts_status']) <= 1;	// 1 because of 'No status'
 
 		if ($this->pm_integration != 'full')

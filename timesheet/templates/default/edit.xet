@@ -111,7 +111,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.edit" template="" lang="" group="0" version="1.9.001">
+	<template id="timesheet.edit" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -197,6 +197,7 @@
 							<html id="js"/>
 						</hbox>
 						<button align="right" statustext="Delete this entry" label="Delete" id="button[delete]" onclick="return confirm('Delete this entry');"/>
+						<button align="right" statustext="Restore this entry" label="Undelete" id="button[undelete]"/>
 					</hbox>
 				</row>
 			</rows>
