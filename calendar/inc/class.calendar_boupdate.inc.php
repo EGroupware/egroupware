@@ -1410,9 +1410,13 @@ class calendar_boupdate extends calendar_bo
 	 * @param int $cal_id id of the event to delete
 	 * @param int $recur_date=0 if a single event from a series should be deleted, its date
 	 * @param boolean $ignore_acl=false true for no ACL check, default do ACL check
+	 * @param boolean $skip_notification=false
+	 * @param boolean $delete_exceptions=true true: delete, false: keep exceptions (with new UID)
+	 * @param int &$exceptions_kept=null on return number of kept exceptions
 	 * @return boolean true on success, false on error (usually permission denied)
 	 */
-	function delete($cal_id,$recur_date=0,$ignore_acl=false,$skip_notification=false)
+	function delete($cal_id, $recur_date=0, $ignore_acl=false, $skip_notification=false,
+		$delete_exceptions=true, &$exceptions_kept=null)
 	{
 		//error_log(__METHOD__."(cal_id=$cal_id, recur_date=$recur_date, ignore_acl=$ignore_acl, skip_notifications=$skip_notification)");
 		if (!($event = $this->read($cal_id,$recur_date)) ||
@@ -1454,6 +1458,27 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'delete', $this->now);
+
+			// delete or keep (with new uid) exceptions of a recurring event
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$exceptions_kept = 0;
+				foreach ($this->so->get_related($event['uid']) as $id)
+				{
+					if ($delete_exceptions)
+					{
+						$this->delete($id, 0, $ignore_acl, true);
+					}
+					else
+					{
+						if (!($exception = $this->read($id))) continue;
+						$exception['uid'] = common::generate_uid('calendar', $id);
+						$exception['reference'] = $exception['recurrence'] = 0;
+						$this->update($exception, true, true, false, true, $msg=null, true);
+						++$exceptions_kept;
+					}
+				}
+			}
 		}
 		else	// delete an exception
 		{
