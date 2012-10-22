@@ -562,6 +562,10 @@ class calendar_uilist extends calendar_ui
 		foreach($checked as $id)
 		{
 			$recur_date = $app = $app_id = null;
+			if(is_array($id) && $id['id'])
+			{
+				$id = $id['id'];
+			}
 			if(!(int)$id && preg_match('/^([a-z_-]+)([0-9]+)$/i',$id,$matches))
 			{
 				$app = $matches[1];
