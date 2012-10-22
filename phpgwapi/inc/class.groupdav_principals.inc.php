@@ -972,7 +972,7 @@ class groupdav_principals extends groupdav_handler
 	 */
 	static public function url2uid($url, $only_type=null)
 	{
-		if (!$only_type) $only_type = array('accounts', 'groups', 'resources', 'locations', 'mailto');
+		if (!$only_type) $only_type = array('users', 'groups', 'resources', 'locations', 'mailto');
 
 		if ($url[0] == '/')
 		{
@@ -988,7 +988,7 @@ class groupdav_principals extends groupdav_handler
 		{
 			case 'http':
 			case 'https':
-				list(,$rest) = explode($GLOBALS['egw_info']['server']['webserver_url'].'/groupdav.php/principals/', $url);
+				list(,$rest) = explode('/groupdav.php/principals/', $url);
 				list($type, $name) = explode('/', $rest);
 				switch($type)
 				{
@@ -1006,7 +1006,7 @@ class groupdav_principals extends groupdav_handler
 			case 'mailto':
 				if (($uid = $GLOBALS['egw']->accounts->name2id($rest, 'account_email')))
 				{
-					$type = $uid > 0 ? 'accounts' : 'groups';
+					$type = $uid > 0 ? 'users' : 'groups';
 					break;
 				}
 				// search contacts for email
@@ -1037,6 +1037,7 @@ class groupdav_principals extends groupdav_handler
 				{
 					if ($type == 'accounts')
 					{
+						$type = $id > 0 ? 'users' : 'groups';
 						$uid = $id;
 					}
 					else
@@ -1062,6 +1063,7 @@ class groupdav_principals extends groupdav_handler
 				}
 				return false;
 		}
+		//error_log(__METHOD__."('$url', ".array2string($only_type).") uid='$uid', type='$type' --> returning ".array2string($uid && in_array($type, $only_type) ? $uid : false));
 		return $uid && in_array($type, $only_type) ? $uid : false;
 	}
 
