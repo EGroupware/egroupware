@@ -499,6 +499,24 @@ class calendar_uiforms extends calendar_ui
 					$response = calendar_so::combine_status($status,$quantity,$role);
 				}
 			}
+			// Get links to be copied
+			// With no ID, $content['link_to']['to_id'] is used
+			$content['link_to']['to_id'] = array('to_app' => 'calendar', 'to_id' => 0);
+			foreach(egw_link::get_links('calendar', $content['id']) as $link_id => $link)
+			{
+				if ($link['app'] != egw_link::VFS_APPNAME)
+				{
+					egw_link::link('calendar', $content['link_to']['to_id'], $link['app'], $link['id'], $link['remark']);
+				}
+				elseif ($link['app'] == egw_link::VFS_APPNAME)
+				{
+					egw_link::link('calendar', $content['link_to']['to_id'], egw_link::VFS_APPNAME, array(
+						'tmp_name' => egw_link::vfs_path($link['app2'], $link['id2']).'/'.$link['id'],
+						'name' => $link['id'],
+					), $link['remark']);
+				}
+			}
+			unset($link);
 			$preserv['view'] = $preserv['edit_single'] = false;
 			$msg = lang('Event copied - the copy can now be edited');
 			$event['title'] = lang('Copy of:').' '.$event['title'];
