@@ -128,10 +128,12 @@ enddate / -time of the meeting, eg. for more then one day	calendar	de	Enddatum u
 enddate of the export	calendar	de	Enddatum des Exports
 ends	calendar	de	endet
 error adding the alarm	calendar	de	Fehler beim Zufügen des Alarms
-error: importing the ical	calendar	de	Fehler: beim Importieren des iCal
-error: no participants selected !!!	calendar	de	Fehler: keine Teilnehmer ausgewählt !!!
-error: ressources reservation in private events is not allowed!!!	calendar	de	Fehler: die Reservierung von Ressourcen für private Termine ist nicht erlaubt !!!
-error: saving the event !!!	calendar	de	Fehler: beim Speichern des Termins !!!
+error: can't delete original series!	calendar	de	Fehler beim Löschen der bestehenden Serie
+error: duration of event longer then recurrence interval!	calendar	de	Fehler: Termindauer ist länger als das Intervall der Wiederholung!
+error: importing the ical	calendar	de	Fehler beim Importieren des iCal
+error: no participants selected !!!	calendar	de	Fehler: Keine Teilnehmer ausgewählt !!!
+error: ressources reservation in private events is not allowed!!!	calendar	de	Fehler: Die Reservierung von Ressourcen für private Termine ist nicht erlaubt !!!
+error: saving the event !!!	calendar	de	Fehler beim Speichern des Termins !!!
 error: starttime has to be before the endtime !!!	calendar	de	Fehler: Startzeit muss vor Endzeit liegen !!!
 error: the entry has been updated since you opened it for editing!	calendar	de	Fehler: der Eintrag wurde geändert seit Sie ihn zum Bearbeiten geöffnet haben!
 event copied - the copy can now be edited	calendar	de	Termin kopiert - die Kopie kann jetzt bearbeitet werden

@@ -507,6 +507,12 @@ class calendar_uiforms extends calendar_ui
 				$button = '';
 				break;
 			}
+			if ($event['recur_type'] != MCAL_RECUR_NONE && $event['end']-$event['start'] > calendar_rrule::recurrence_interval($event['recur_type'], $event['recur_interval']))
+			{
+				$msg = lang('Error: Duration of event longer then recurrence interval!');
+				$button = '';
+				break;
+			}
 			if (!$event['participants'])
 			{
 				$msg = lang('Error: no participants selected !!!');
