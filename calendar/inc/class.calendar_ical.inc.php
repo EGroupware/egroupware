@@ -1354,24 +1354,27 @@ class calendar_ical extends calendar_boupdate
 
 				if (!is_null($user))
 				{
-					if (($user >= 0 ) && $this->check_perms(EGW_ACL_ADD, 0, $user))
+					if ($user > 0 && $this->check_perms(EGW_ACL_ADD, 0, $user))
 					{
 						$event['owner'] = $user;
 					}
-					elseif ($user >= 0)
+					elseif ($user > 0)
 					{
 						date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 						return 0; // no permission
 					}
 					else
 					{
-						// Add Group a invitation
+						// add group or resource invitation
 						$event['owner'] = $this->user;
 						if (!isset($event['participants'][$this->user]))
 						{
 							$event['participants'][$this->user] = calendar_so::combine_status('A', 1, 'CHAIR');
 						}
-						$event['participants'][$user] = calendar_so::combine_status('U');
+						// for resources check which new-status to give (eg. with direct booking permision 'A' instead 'U')
+						$event['participants'][$user] = calendar_so::combine_status(
+							$user < 0 || !isset($this->resources[$user[0]]['new_status']) ? 'U' :
+							ExecMethod($this->resources[$user[0]]['new_status'], substr($user, 1)));
 					}
 				}
 				// check if an owner is set and the current user has add rights
