@@ -97,6 +97,7 @@
 						{
 							// Set this so plugin doesn't do any data changes
 							$content['dry-run'] = true;
+							importexport_helper_functions::$dry_run = true;
 							$this->message .= '<b>' . lang('Import aborted').":</b><br />\n";
 							$definition_obj->plugin_options = (array)$definition_obj->plugin_options + array('dry_run' => true);
 						}
@@ -104,6 +105,10 @@
 						if($content['dry-run'])
 						{
 							echo $this->preview($plugin, $file, $definition_obj);
+						}
+						else
+						{
+							importexport_helper_functions::$dry_run = false;
 						}
 						$count = $plugin->import($file, $definition_obj);
 					}
