@@ -1027,7 +1027,7 @@ class calendar_uiviews extends calendar_ui
 		return $tpl->show(array()).'<script type="text/javascript">
 var calendar_edit_id;
 var calendar_edit_date;
-function edit_series(id,date)
+function edit_series(event,id,date)
 {
 	calendar_edit_id = id;
 	calendar_edit_date = date;
@@ -1035,8 +1035,8 @@ function edit_series(id,date)
 	var popup = jQuery("#edit_series").show();
 	popup.css({
 		position: "absolute",
-		top: $j(window).height()/2-popup.height()/2,
-		left: $j(window).width()/2-popup.width()/2
+		top: event.pageY,
+		left: (event.pageX + popup.width() > $j(window).width() ? $j(window).width() - popup.width() : event.pageX)
 	});
 }
 function open_edit(series)
@@ -1842,7 +1842,7 @@ function open_edit(series)
 		{
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
-				$popup = ' onclick="edit_series('.$event['id'].','.$this->bo->date2string($event['start']).');"';
+				$popup = ' onclick="edit_series(event,'.$event['id'].','.$this->bo->date2string($event['start']).');"';
 			}
 			else
 			{
