@@ -41,6 +41,39 @@ class egw_cache_apc extends egw_cache_provider_check implements egw_cache_provid
 	}
 
 	/**
+	 * Check if APC is available for caching user data
+	 *
+	 * Default shared memory size of 32M is just enough for the byte code cache,
+	 * but not for caching user data, we only use APC by default if we have at least 64M.
+	 *
+	 * @return boolean true: apc available, false: not
+	 */
+	public static function available()
+	{
+		$available = false;
+		if (function_exists('apc_fetch') && (PHP_SAPI != 'cli' || ini_get('apc.enable_cli')))
+		{
+			$size = ini_get('apc.shm_size');
+
+			switch(strtoupper(substr($size, -1)))
+			{
+				case 'G':
+					$size *= 1024;
+				case 'M':
+					$size *= 1024;
+				case 'K':
+					$size *= 1024;
+			}
+			$size *= ini_get('apc.shm_segments');
+
+			// only cache in APC, if we have at least 64M available (default is 32M)
+			$available = $size >= 64*1024*1024;
+		}
+		//error_log(__METHOD__."() size=$size returning ".array2string($available));
+		return $available;
+	}
+
+	/**
 	 * Stores some data in the cache
 	 *
 	 * @param array $keys eg. array($level,$app,$location)
