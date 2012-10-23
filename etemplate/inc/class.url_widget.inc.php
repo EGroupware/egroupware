@@ -118,11 +118,14 @@ class url_widget
 					$value = $matches[1];
 					$email = $matches[2];
 				}
-				elseif (strpos($email=$value,'@') !== false)
+				elseif (($at_pos = strpos($email=$value,'@')) !== false)
 				{
-					if (strpos($email=$value,'&') !== false)
+					if (($amp_pos = strpos(substr($value,$at_pos),'&')) !== false)
 					{
-						list($email,$addoptions) = explode('&',$value,2);
+						//list($email,$addoptions) = explode('&',$value,2);
+						$email = substr($value,0,$amp_pos+$at_pos);
+						$addoptions = substr($value, $amp_pos+$at_pos+1);
+						//error_log(__METHOD__.__LINE__.$email.' '.$addoptions);
 						$rfc822 = $value = $email;
 					}
 					if (strlen($value) > $size)		// shorten the name to size-2 plus '...'
