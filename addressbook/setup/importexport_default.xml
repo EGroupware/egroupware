@@ -17,7 +17,7 @@
       <entry type="array" name="plugin_options">
         <entry type="string" name="contact_owner">personal</entry>
       </entry>
-      <entry type="string" name="modified">2012-09-18 12:58:42</entry>
+      <entry type="string" name="modified">2012-10-23 09:46:56</entry>
     </entry>
     <entry type="array" name="export-addressbook-vcard">
       <entry type="string" name="name">export-addressbook-vcard</entry>
@@ -27,8 +27,8 @@
       <entry type="array" name="allowed_users">
         <entry type="string" name="0">Default</entry>
       </entry>
-      <entry type="array" name="plugin_options"/>
-      <entry type="string" name="modified">2012-09-18 12:59:11</entry>
+      <entry type="string" name="plugin_options"/>
+      <entry type="string" name="modified">2012-10-23 09:46:56</entry>
     </entry>
     <entry type="array" name="import-addressbook-csv">
       <entry type="string" name="name">import-addressbook-csv</entry>
@@ -44,69 +44,66 @@
         <entry type="string" name="num_header_lines">1</entry>
         <entry type="string" name="update_cats">add</entry>
         <entry type="array" name="csv_fields">
-          <entry type="string" name="0">id</entry>
-          <entry type="string" name="1">tid</entry>
-          <entry type="string" name="2">owner</entry>
-          <entry type="string" name="3">private</entry>
-          <entry type="string" name="4">cat_id</entry>
-          <entry type="string" name="5">n_prefix</entry>
-          <entry type="string" name="6">n_given</entry>
-          <entry type="string" name="7">n_middle</entry>
-          <entry type="string" name="8">n_family</entry>
-          <entry type="string" name="9">n_suffix</entry>
-          <entry type="string" name="10">n_fn</entry>
-          <entry type="string" name="11">n_fileas</entry>
-          <entry type="string" name="12">bday</entry>
-          <entry type="string" name="13">org_name</entry>
-          <entry type="string" name="14">org_unit</entry>
-          <entry type="string" name="15">title</entry>
-          <entry type="string" name="16">role</entry>
-          <entry type="string" name="17">assistent</entry>
-          <entry type="string" name="18">room</entry>
-          <entry type="string" name="19">adr_one_street</entry>
-          <entry type="string" name="20">adr_one_street2</entry>
-          <entry type="string" name="21">adr_one_locality</entry>
-          <entry type="string" name="22">adr_one_region</entry>
-          <entry type="string" name="23">adr_one_postalcode</entry>
-          <entry type="string" name="24">adr_one_countryname</entry>
-          <entry type="string" name="25">adr_one_countrycode</entry>
-          <entry type="string" name="26">label</entry>
-          <entry type="string" name="27">adr_two_street</entry>
-          <entry type="string" name="28">adr_two_street2</entry>
-          <entry type="string" name="29">adr_two_locality</entry>
-          <entry type="string" name="30">adr_two_region</entry>
-          <entry type="string" name="31">adr_two_postalcode</entry>
-          <entry type="string" name="32">adr_two_countryname</entry>
-          <entry type="string" name="33">adr_two_countrycode</entry>
-          <entry type="string" name="34">tel_work</entry>
-          <entry type="string" name="35">tel_cell</entry>
-          <entry type="string" name="36">tel_fax</entry>
-          <entry type="string" name="37">tel_assistent</entry>
-          <entry type="string" name="38">tel_car</entry>
-          <entry type="string" name="39">tel_pager</entry>
-          <entry type="string" name="40">tel_home</entry>
-          <entry type="string" name="41">tel_fax_home</entry>
-          <entry type="string" name="42">tel_cell_private</entry>
-          <entry type="string" name="43">tel_other</entry>
-          <entry type="string" name="44">tel_prefer</entry>
-          <entry type="string" name="45">email</entry>
-          <entry type="string" name="46">email_home</entry>
-          <entry type="string" name="47">url</entry>
-          <entry type="string" name="48">url_home</entry>
-          <entry type="string" name="49">freebusy_uri</entry>
-          <entry type="string" name="50">calendar_uri</entry>
-          <entry type="string" name="51">note</entry>
-          <entry type="string" name="52">tz</entry>
-          <entry type="string" name="53">geo</entry>
-          <entry type="string" name="54">pubkey</entry>
-          <entry type="string" name="55">created</entry>
-          <entry type="string" name="56">creator</entry>
-          <entry type="string" name="57">modified</entry>
-          <entry type="string" name="58">modifier</entry>
-          <entry type="string" name="59">account_id</entry>
-          <entry type="string" name="60">no_csv_1</entry>
-          <entry type="string" name="61">no_csv_2</entry>
-          <entry type="string" name="62">no_csv_3</entry>
+          <entry type="string" name="0">Contact ID</entry>
+          <entry type="string" name="1">Type</entry>
+          <entry type="string" name="2">Address Book</entry>
+          <entry type="string" name="3">Private</entry>
+          <entry type="string" name="4">Category</entry>
+          <entry type="string" name="5">Prefix</entry>
+          <entry type="string" name="6">First name</entry>
+          <entry type="string" name="7">Middle name</entry>
+          <entry type="string" name="8">Last name</entry>
+          <entry type="string" name="9">Suffix</entry>
+          <entry type="string" name="10">Full name</entry>
+          <entry type="string" name="11">Own sorting</entry>
+          <entry type="string" name="12">Birthday</entry>
+          <entry type="string" name="13">Organisation</entry>
+          <entry type="string" name="14">Department</entry>
+          <entry type="string" name="15">Job title</entry>
+          <entry type="string" name="16">Occupation</entry>
+          <entry type="string" name="17">Assistent</entry>
+          <entry type="string" name="18">Room</entry>
+          <entry type="string" name="19">Street (Business)</entry>
+          <entry type="string" name="20">Address line 2 (Business)</entry>
+          <entry type="string" name="21">City (Business)</entry>
+          <entry type="string" name="22">State (Business)</entry>
+          <entry type="string" name="23">ZIP code (Business)</entry>
+          <entry type="string" name="24">Country (Business)</entry>
+          <entry type="string" name="25">Country code (Business)</entry>
+          <entry type="string" name="26">Label</entry>
+          <entry type="string" name="27">Street (Private)</entry>
+          <entry type="string" name="28">Address line 2 (Private)</entry>
+          <entry type="string" name="29">City (Private)</entry>
+          <entry type="string" name="30">State (Private)</entry>
+          <entry type="string" name="31">ZIP code (Private)</entry>
+          <entry type="string" name="32">Country (Private)</entry>
+          <entry type="string" name="33">Country code (Private)</entry>
+          <entry type="string" name="34">Work phone</entry>
+          <entry type="string" name="35">Mobile phone</entry>
+          <entry type="string" name="36">Fax (Business)</entry>
+          <entry type="string" name="37">Assistent phone</entry>
+          <entry type="string" name="38">Car phone</entry>
+          <entry type="string" name="39">Pager</entry>
+          <entry type="string" name="40">Home phone</entry>
+          <entry type="string" name="41">Fax (Private)</entry>
+          <entry type="string" name="42">Mobile phone (Private)</entry>
+          <entry type="string" name="43">Other phone</entry>
+          <entry type="string" name="44">Preferred phone</entry>
+          <entry type="string" name="45">Email (Business)</entry>
+          <entry type="string" name="46">Email (Private)</entry>
+          <entry type="string" name="47">URL (Business)</entry>
+          <entry type="string" name="48">URL (Private)</entry>
+          <entry type="string" name="49">FreeBusy URI</entry>
+          <entry type="string" name="50">Calendar URI</entry>
+          <entry type="string" name="51">Note</entry>
+          <entry type="string" name="52">Time zone</entry>
+          <entry type="string" name="53">GEO</entry>
+          <entry type="string" name="54">Public key</entry>
+          <entry type="string" name="55">Created</entry>
+          <entry type="string" name="56">Created by</entry>
+          <entry type="string" name="57">Last modified</entry>
+          <entry type="string" name="58">Last modified by</entry>
+          <entry type="string" name="59">Account ID</entry>
         </entry>
         <entry type="array" name="field_mapping">
           <entry type="string" name="0">id</entry>
@@ -190,7 +187,7 @@
         <entry type="string" name="change_owner">0</entry>
         <entry type="string" name="convert">1</entry>
       </entry>
-      <entry type="string" name="modified">2012-09-18 13:11:48</entry>
+      <entry type="string" name="modified">2012-10-23 09:49:04</entry>
     </entry>
     <entry type="array" name="export-addressbook-csv">
       <entry type="string" name="name">export-addressbook-csv</entry>
@@ -270,7 +267,7 @@
         <entry type="string" name="convert">1</entry>
         <entry type="string" name="explode_multiselects"/>
       </entry>
-      <entry type="string" name="modified">2012-09-18 13:12:01</entry>
+      <entry type="string" name="modified">2012-10-23 09:46:56</entry>
     </entry>
   </entry>
 </entry>
