@@ -158,7 +158,11 @@ class timesheet_ui extends timesheet_bo
 					break;
 
 				case 'undelete':
-					if($content['ts_status'] == self::DELETED_STATUS) unset($content['ts_status']);
+					if($content['ts_status'] == self::DELETED_STATUS)
+					{
+						unset($content['ts_status']);
+						$this->data['ts_status'] = '';
+					}
 					$button = 'apply';
 					// fall through
 				case 'save':
@@ -385,10 +389,6 @@ class timesheet_ui extends timesheet_bo
 				),
 		);
 		$sel_options['status'] = $this->field2label;
-		if($this->config_data['history'])
-		{
-			$sel_options['status'][self::DELETED_STATUS] = 'Deleted';
-		}
 
 		// the actual title-blur is either the preserved title blur (if we are called from infolog entry),
 		// or the preserved project-blur comming from the current selected project
@@ -422,7 +422,7 @@ class timesheet_ui extends timesheet_bo
 		}
 		$sel_options['ts_owner']  = $edit_grants;
 		$sel_options['ts_status']  = $this->status_labels;
-		if($this->config_data['history'])
+		if($this->config_data['history'] && $content['ts_status'] == self::DELETED_STATUS)
 		{
 			$sel_options['ts_status'][self::DELETED_STATUS] = 'Deleted';
 		}
@@ -786,7 +786,8 @@ class timesheet_ui extends timesheet_bo
 			if ($query['selectcols'] && strpos($query['selectcols'],'ts_unitprice')===false) $rows['no_ts_unitprice'] = 1;
 			if ($query['selectcols'] && strpos($query['selectcols'],'ts_total')===false) $rows['no_ts_total'] = 1;
 		}
-		$rows['no_ts_status'] = strpos($query['selectcols'], 'ts_status') === false || $query['no_status'];
+		$rows['no_ts_status'] = strpos($query['selectcols'], 'ts_status') === false && !$this->config_data['history'] ||
+			$query['no_status'];
 
 		return $total;
 	}
