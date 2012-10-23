@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="calendar.edit.general" template="" lang="" group="0" version="1.7.002">
+	<template id="calendar.edit.general" template="" lang="" group="0" version="1.9.001">
 		<hbox options="0,0">
 			<grid width="100%" height="210">
 				<columns>
@@ -10,14 +10,14 @@
 				</columns>
 				<rows>
 					<row class="row">
-						<description value="Start" for="start" width="95"/>
+						<description for="start" value="Start" width="95"/>
 						<hbox options="0,0">
 							<date-time id="start" needed="1"/>
 							<checkbox align="center" statustext="Event will occupy the whole day" label="whole day" id="whole_day" options=",, ,disable"/>
 						</hbox>
 					</row>
 					<row class="row">
-						<description value="Duration" for="duration" width="0"/>
+						<description for="duration" value="Duration" width="0"/>
 						<hbox options="0,0">
 							<menulist>
 								<menupopup statustext="Duration of the meeting" id="duration" no_lang="1" onchange="set_style_by_class('table','end_hide','display',this.value == '' ? 'block' : 'none'); if (this.value == '') document.getElementById(form::name('end[str]')).value = document.getElementById(form::name('start[str]')).value;" options="Use end date"/>
@@ -27,14 +27,14 @@
 					</row>
 					<row>
 						<description/>
-						<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="ajax_submit(this.form,'calendar.calendar_uiforms.ajax_freetimesearch'); return false;" width="0"/>
+						<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="ajax_submit(this.form,'calendar.calendar_uiforms.ajax_freetimesearch'); return false;"/>
 					</row>
 					<row class="row">
-						<description value="Location" for="location" width="0"/>
+						<description for="location" value="Location" width="0"/>
 						<textbox id="location" maxlength="255" class="inputFullWidth"/>
 					</row>
 					<row class="row_off">
-						<description value="Priority" for="priority" width="0"/>
+						<description for="priority" value="Priority" width="0"/>
 						<menulist>
 							<menupopup type="select-priority" id="priority"/>
 						</menulist>
@@ -49,8 +49,8 @@
 					</row>
 				</rows>
 			</grid>
-			<vbox align="right" class="row_on" options="0,0">
-				<description value="Categories" for="category" class="row_on"/>
+			<vbox align="right" options="0,0" class="row_on">
+				<description for="category" value="Categories" class="row_on"/>
 				<listbox type="select-cat" id="category" rows="9"/>
 			</vbox>
 		</hbox>
@@ -119,7 +119,7 @@
 			.selectRole select { width: 100%; }
 		</styles>
 	</template>
-	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.7.003">
+	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" height="210">
 			<columns>
 				<column width="95"/>
@@ -152,7 +152,7 @@
 				</row>
 				<row class="row" height="12">
 					<description value="End date" for="recur_enddate"/>
-					<date statustext="repeat the event until which date (empty means unlimited)" id="recur_enddate"/>
+					<date statustext="repeat the event until which date (empty means unlimited)" id="recur_enddate" onclick="if(window.calendar.params.inputField.value == '') window.calendar.parseDate(document.getElementById(form::name('start')+'[str]').value);"/>
 					<description value="Timezone" for="tzid"/>
 					<menulist>
 						<menupopup type="select-timezone" statustext="Timezone in which recurrences have identical time" id="tzid"/>
