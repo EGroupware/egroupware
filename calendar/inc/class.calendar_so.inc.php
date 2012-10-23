@@ -1015,6 +1015,13 @@ ORDER BY cal_user_type, cal_usre_id
 
 		if ($cal_id)
 		{
+			// query old recurrance information, before updating main table, where recur_endate is now stored
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$old_repeats = $this->db->select($this->repeats_table, "$this->repeats_table.*,range_end AS recur_enddate",
+					"$this->repeats_table.cal_id=".(int)$cal_id, __LINE__, __FILE__,
+					false, '', 'calendar', 0, "JOIN $this->cal_table ON $this->repeats_table.cal_id=$this->cal_table.cal_id")->fetch();
+			}
 			$where = array('cal_id' => $cal_id);
 			// read only timezone id, to check if it is changed
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
@@ -1084,7 +1091,6 @@ ORDER BY cal_user_type, cal_usre_id
 			// fetch information about the currently saved (old) event
 			$old_min = (int) $this->db->select($this->dates_table,'MIN(cal_start)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
 			$old_duration = (int) $this->db->select($this->dates_table,'MIN(cal_end)',array('cal_id'=>$cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn() - $old_min;
-			$old_repeats = $this->db->select($this->repeats_table,'*',array('cal_id' => $cal_id),__LINE__,__FILE__,false,'','calendar')->fetch();
 			$old_exceptions = array();
 			foreach($this->db->select($this->dates_table, 'cal_start', array(
 				'cal_id' => $cal_id,
@@ -1178,6 +1184,7 @@ ORDER BY cal_user_type, cal_usre_id
 						$set_recurrences = true;
 						$set_recurrences_start = ($old_repeats['recur_enddate'] + 1*DAY_s);
 					}
+					//error_log(__METHOD__."() event[recur_enddate]=$event[recur_enddate], old_repeats[recur_enddate]=$old_repeats[recur_enddate] --> set_recurrences=".array2string($set_recurrences).", set_recurrences_start=$set_recurrences_start");
 				}
 
 				// truncate recurrences by given exceptions
