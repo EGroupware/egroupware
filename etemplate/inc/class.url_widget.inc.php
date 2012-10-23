@@ -62,7 +62,7 @@ class url_widget
 	 * has to be used case insensitive: /i
 	 */
 	//const EMAIL_PREG = '([a-z0-9][a-z0-9._-]*)?[a-z0-9]@([a-z0-9](|[a-z0-9_-]*[a-z0-9])\.)+[a-z]{2,6}';
-	const EMAIL_PREG = '([a-z0-9][a-z0-9._-]*)?[a-z0-9_-]@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}';
+	const EMAIL_PREG = '([a-z0-9][a-z0-9._\&\+-]*)?[a-z0-9_]@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}';
 
 	/**
 	 * pre-processing of the extension
