@@ -144,7 +144,7 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 		if(array_key_exists('private', $record_array) && (!isset($record_array['private']) || $record_array['private'] == '')) unset($record->private);
 
 		// Format birthday as backend requires - converter should give timestamp
-		if(isset($record->bday) && is_numeric($record->bday))
+		if($record->bday && is_numeric($record->bday))
 		{
 			$time = new egw_time($record->bday);
 			$record->bday = $time->format('Y-m-d');

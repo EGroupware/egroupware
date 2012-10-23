@@ -217,7 +217,7 @@
           <entry type="string" name="bday">Birthday</entry>
           <entry type="string" name="org_name">Company</entry>
           <entry type="string" name="org_unit">Department</entry>
-          <entry type="string" name="title">title</entry>
+          <entry type="string" name="title">Job Title</entry>
           <entry type="string" name="role">Role</entry>
           <entry type="string" name="assistent">Assistent</entry>
           <entry type="string" name="room">Room</entry>
