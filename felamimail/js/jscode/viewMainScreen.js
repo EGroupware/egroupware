@@ -59,7 +59,11 @@ function mailGridGetSelected()
 	if (allSelected.length>0) messages['msg'] = [];
 	for (var i=0; i<allSelected.length; i++) 
 	{
-		if (allSelected[i].id.length>0) messages['msg'][i] = allSelected[i].id;
+		if (allSelected[i].id.length>0)
+		{
+			messages['msg'][i] = allSelected[i].id;
+			//alert(i+': ID->'+messages['msg'][i]);
+		}
 	}
 	// mailGrid.dataRoot.actionObject.getFocused()
 	return messages;
@@ -108,6 +112,10 @@ function setStatusMessage(_message,_setPlain) {
 	if (typeof _setPlain == 'undefined') _setPlain=false;
 	if (_setPlain == false)	document.getElementById('messageCounter').innerHTML = '<table cellpadding="0" cellspacing="0"><tr><td><img src="'+ activityImagePath +'"></td><td>&nbsp;' + _message + '</td></tr></table>';
 	else document.getElementById('messageCounter').innerHTML = _message;
+}
+
+function getStatusMessage() {
+	return document.getElementById('messageCounter').innerHTML;
 }
 
 function sendNotifyMS (uid) {
@@ -407,6 +415,7 @@ function mail_deleteMessages(_messageList) {
 	{
 		_messageList = 'all';
 	}
+	var curStatus = egw_appWindow('felamimail').getStatusMessage();
 	if (Check == true) {
 		egw_appWindow('felamimail').setStatusMessage('<span style="font-weight: bold;">' + egw_appWindow('felamimail').lang_deleting_messages + '</span>');
 		//mail_cleanup();
@@ -414,6 +423,7 @@ function mail_deleteMessages(_messageList) {
 		//divMessageList.innerHTML = '';
 		for(var i=0;i<_messageList['msg'].length;i++) {
 			_id = _messageList['msg'][i];
+			//alert(i+'->'+_id+': ID->'+messageList['msg'][i]);
 			var dataElem = egw_appWindow('felamimail').mailGrid.dataRoot.getElementById(_id);
 			if (dataElem)
 			{
@@ -428,6 +438,7 @@ function mail_deleteMessages(_messageList) {
 			}
 		}
 		egw_appWindow('felamimail').xajax_doXMLHTTPsync("felamimail.ajaxfelamimail.deleteMessages",_messageList,false);
+		egw_appWindow('felamimail').setStatusMessage(curStatus,true);
 		egw_appWindow('felamimail').refresh();
 	} else {
 		mailGrid.dataRoot.actionObject.setAllSelected(false);
@@ -570,66 +581,70 @@ function onNodeSelect(_nodeID) {
 	var actionPending = false;
 //	var formData = new Array();
 	if(top.tree.getUserData(_nodeID, 'folderName')) {
-/*
-		if(document.getElementsByName("folderAction")[0].value == "moveMessage") {
-			if (prefAskForMove == 1 || prefAskForMove == 2) 
-			{
-				//Check = confirm(egw_appWindow('felamimail').lang_askformove + top.tree.getUserData(_nodeID, 'folderName'));
-				title = egw_appWindow('felamimail').lang_MoveCopyTitle;
-				node2call = _nodeID.replace(/&amp;/g,'#ampersand#');
-				message = egw_appWindow('felamimail').lang_askformove + top.tree.getUserData(_nodeID, 'folderName');
-				message = message + "<p><button onclick=\"callNodeSelect('"+node2call+"', 1);hideDialog();\">"+egw_appWindow('felamimail').lang_move+"</button>";
-				if (prefAskForMove == 2) message = message + "&nbsp;<button onclick=\"callNodeSelect('"+node2call+"', 2);hideDialog();\">"+egw_appWindow('felamimail').lang_copy+"</button>";
-				message = message + "&nbsp;<button onclick=\"callNodeSelect('"+node2call+"', 0);hideDialog();\">"+egw_appWindow('felamimail').lang_cancel+"</button>";
-				type = 'prompt';
-				autohide = 0;
-				showDialog(title,message,type,autohide);
-				Check = false;
-				actionPending = true;
-			}
-			if (prefAskForMove==99) actionPending = 'copy';
-			if (Check == true && document.getElementById('selectAllMessagesCheckBox').checked == true) Check = confirm(egw_appWindow('felamimail').lang_confirm_all_messages);
-			if (Check == true)
-			{
-				if (document.getElementById('messageCounter').innerHTML.search(eval('/'+egw_appWindow('felamimail').lang_updating_view+'/'))<0 ) {MessageBuffer = document.getElementById('messageCounter').innerHTML;}
-				if (document.getElementById('selectAllMessagesCheckBox').checked == true) {
-					mail_resetMessageSelect();
-					formData = 'all';
+		if(CopyOrMoveCalled) {
+			//alert('Called onNodeSelect');
+			/*
+			if(document.getElementsByName("folderAction")[0].value == "moveMessage") {
+				if (prefAskForMove == 1 || prefAskForMove == 2) 
+				{
+					//Check = confirm(egw_appWindow('felamimail').lang_askformove + top.tree.getUserData(_nodeID, 'folderName'));
+					title = egw_appWindow('felamimail').lang_MoveCopyTitle;
+					node2call = _nodeID.replace(/&amp;/g,'#ampersand#');
+					message = egw_appWindow('felamimail').lang_askformove + top.tree.getUserData(_nodeID, 'folderName');
+					message = message + "<p><button onclick=\"callNodeSelect('"+node2call+"', 1);hideDialog();\">"+egw_appWindow('felamimail').lang_move+"</button>";
+					if (prefAskForMove == 2) message = message + "&nbsp;<button onclick=\"callNodeSelect('"+node2call+"', 2);hideDialog();\">"+egw_appWindow('felamimail').lang_copy+"</button>";
+					message = message + "&nbsp;<button onclick=\"callNodeSelect('"+node2call+"', 0);hideDialog();\">"+egw_appWindow('felamimail').lang_cancel+"</button>";
+					type = 'prompt';
+					autohide = 0;
+					showDialog(title,message,type,autohide);
+					Check = false;
+					actionPending = true;
+				}
+				if (prefAskForMove==99) actionPending = 'copy';
+				if (Check == true && document.getElementById('selectAllMessagesCheckBox').checked == true) Check = confirm(egw_appWindow('felamimail').lang_confirm_all_messages);
+				if (Check == true)
+				{
+					if (document.getElementById('messageCounter').innerHTML.search(eval('/'+egw_appWindow('felamimail').lang_updating_view+'/'))<0 ) {MessageBuffer = document.getElementById('messageCounter').innerHTML;}
+					if (document.getElementById('selectAllMessagesCheckBox').checked == true) {
+						mail_resetMessageSelect();
+						formData = 'all';
+					} else {
+						mail_resetMessageSelect();
+						formData = egw_appWindow('felamimail').mailGridGetSelected();
+					}
+					if (actionPending == 'copy') 
+					{
+						egw_appWindow('felamimail').setStatusMessage(egw_appWindow('felamimail').copyingMessages +' <span style="font-weight: bold;">'+ top.tree.getUserData(_nodeID, 'folderName') +'</span>');
+						mail_cleanup();
+						document.getElementById('divMessageList').innerHTML = '';
+						egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.copyMessages", _nodeID, formData);
+					}
+					else
+					{
+						// default: move messages
+						egw_appWindow('felamimail').setStatusMessage(egw_appWindow('felamimail').movingMessages +' <span style="font-weight: bold;">'+ top.tree.getUserData(_nodeID, 'folderName') +'</span>');
+						mail_cleanup();
+						document.getElementById('divMessageList').innerHTML = '';
+						egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.moveMessages", _nodeID, formData);
+					}
 				} else {
-					mail_resetMessageSelect();
-					formData = egw_appWindow('felamimail').mailGridGetSelected();
+					if (actionPending == false)
+					{
+						mail_resetMessageSelect();
+						mailGrid.dataRoot.actionObject.setAllSelected(false);
+					}
 				}
-				if (actionPending == 'copy') 
-				{
-					egw_appWindow('felamimail').setStatusMessage(egw_appWindow('felamimail').copyingMessages +' <span style="font-weight: bold;">'+ top.tree.getUserData(_nodeID, 'folderName') +'</span>');
-					mail_cleanup();
-					document.getElementById('divMessageList').innerHTML = '';
-					egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.copyMessages", _nodeID, formData);
-				}
-				else
-				{
-					// default: move messages
-					egw_appWindow('felamimail').setStatusMessage(egw_appWindow('felamimail').movingMessages +' <span style="font-weight: bold;">'+ top.tree.getUserData(_nodeID, 'folderName') +'</span>');
-					mail_cleanup();
-					document.getElementById('divMessageList').innerHTML = '';
-					egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.moveMessages", _nodeID, formData);
-				}
-			} else {
-				if (actionPending == false)
-				{
-					mail_resetMessageSelect();
-					mailGrid.dataRoot.actionObject.setAllSelected(false);
-				}
-			}
+			*/
+			CopyOrMoveCalled = false;
 		} else {
-*/
+
 			mail_resetMessageSelect();
 			egw_appWindow('felamimail').setStatusMessage('<span style="font-weight: bold;">' + egw_appWindow('felamimail').lang_loading + ' ' + top.tree.getUserData(_nodeID, 'folderName') + '</span>');
 			mail_cleanup();
 			document.getElementById('divMessageList').innerHTML = '';
 			egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.updateMessageView",_nodeID);
 			egw_appWindow('felamimail').refreshFolderStatus(_nodeID);
-//		}
+		}
 	}
 	CopyOrMove = true;
 }
@@ -1526,6 +1541,19 @@ function mail_getFormData(_actionObjects) {
 	}
 
 	return messages;
+}
+
+/**
+ * Move (multiple) messages to a folder to be selected onClick
+ * 
+ * @param _action _action.id is 'drop_move_mail' or 'move_'+folder
+ * @param _senders selected messages
+ * @param _target drop-target, if _action.id = 'drop_move_mail'
+ */
+var CopyOrMoveCalled = false;
+function mail_CopyOrMove(_action, _elems) {
+//alert('Copy or Move Called:'+_action.id);
+CopyOrMoveCalled = true;
 }
 
 /**

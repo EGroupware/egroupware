@@ -486,7 +486,6 @@ class ajaxfelamimail
 				$response = new xajaxResponse();
 				return $response->getXML();
 			}
-
 			return $this->generateMessageList($this->sessionData['mailbox'],($_messageList=='all'?0:(-1*$messageCount)));
 		}
 
@@ -743,6 +742,8 @@ class ajaxfelamimail
 					$foldestatus = $this->bofelamimail->getMailBoxCounters($_folderName);
 					$headers['info']['total'] = $foldestatus->messages;
 				}
+				//error_log(__METHOD__.__LINE__.' Cached FolderInfo:'.array2string($this->sessionData['folderStatus'][$this->imapServerID][$_folderName]['messages']).' WillUse:'.$headers['info']['total']);
+				if ($offset>$headers['info']['total']) $offset = $headers['info']['total']+1-$rowsFetched['rowsFetched'];
 				$headers['info']['first']	= $offset;
 				$headers['info']['last']	= $offset+$rowsFetched['rowsFetched']-1;
 			}
@@ -1117,7 +1118,7 @@ class ajaxfelamimail
 			$response = new xajaxResponse();
 			$response->addScript("document.getElementById('messageCounter').innerHTML =MessageBuffer;");
 			//$response->addScript("document.getElementById('messageCounter').innerHTML ='';");
-			$response->addScript("fm_previewMessageID=".(empty($_messageID)?'':$headerData['uid']).";");
+			$response->addScript("fm_previewMessageID=".(empty($_messageID)?'null':$headerData['uid']).";");
 			$response->addAssign('spanMessagePreview', 'innerHTML', (empty($_messageID)?$IFRAMEBody:$this->uiwidgets->updateMessagePreview($headerData,$_folderType, $this->sessionData['mailbox'],$this->imapServerID)));
 			$response->addScript('if (typeof handleResize != "undefined") handleResize();');
 

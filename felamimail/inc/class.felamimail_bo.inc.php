@@ -2731,16 +2731,44 @@ class felamimail_bo
 			#_debug_array(array_slice($sortResult, -5, -2));
 			//error_log("REVERSE: $reverse");
 			if($reverse === true) {
-				$startMessage = $_startMessage-1;
+				if  ($_startMessage<=$total)
+				{
+					$startMessage = $_startMessage-1;
+				}
+				else
+				{
+//error_log(__METHOD__.__LINE__.' Start:'.$_startMessage.' NumberOfMessages:'.$_numberOfMessages.' Total:'.$total);
+					if ($_startMessage+$_numberOfMessages>$total)
+					{
+						$numberOfMessages = $total%$_numberOfMessages;
+						//$numberOfMessages = abs($_startMessage-$total-1);
+						if ($numberOfMessages>0 && $numberOfMessages<=$_numberOfMessages) $_numberOfMessages = $numberOfMessages;
+//error_log(__METHOD__.__LINE__.' Start:'.$_startMessage.' NumberOfMessages:'.$_numberOfMessages.' Total:'.$total);
+					}
+					$startMessage=($total-$_numberOfMessages)-1;					
+					//$retValue['info']['first'] = $startMessage;
+					//$retValue['info']['last'] = $total;
+
+				}
+				if ($startMessage+$_numberOfMessages>$total)
+				{
+					$_numberOfMessages = $_numberOfMessages-($total-($startMessage+$_numberOfMessages));
+					//$retValue['info']['first'] = $startMessage;
+					//$retValue['info']['last'] = $total;
+				}
 				if($startMessage > 0) {
+					if (self::$debug) error_log(__METHOD__.__LINE__.' StartMessage:'.(-($_numberOfMessages+$startMessage)).', '.-$startMessage.' Number of Messages:'.count($sortResult));	
 					$sortResult = array_slice($sortResult, -($_numberOfMessages+$startMessage), -$startMessage);
 				} else {
+					if (self::$debug) error_log(__METHOD__.__LINE__.' StartMessage:'.(-($_numberOfMessages+($_startMessage-1))).', AllTheRest, Number of Messages:'.count($sortResult));
 					$sortResult = array_slice($sortResult, -($_numberOfMessages+($_startMessage-1)));
 				}
 				$sortResult = array_reverse($sortResult);
 			} else {
+				if (self::$debug) error_log(__METHOD__.__LINE__.' StartMessage:'.($_startMessage-1).', '.$_numberOfMessages.' Number of Messages:'.count($sortResult));
 				$sortResult = array_slice($sortResult, $_startMessage-1, $_numberOfMessages);
 			}
+			if (self::$debug) error_log(__METHOD__.__LINE__.array2string($sortResult));
 		}
 		else
 		{
@@ -2799,7 +2827,7 @@ class felamimail_bo
 				//error_log(__METHOD__.__LINE__.' '.$this->decode_subject($headerObject['SUBJECT']).'->'.$headerObject['DATE']);
 				$retValue['header'][$sortOrder[$uid]]['subject']	= $this->decode_subject($headerObject['SUBJECT']);
 				$retValue['header'][$sortOrder[$uid]]['size'] 		= $headerObject['SIZE'];
-				$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime(($headerObject['DATE']?$headerObject['DATE']:$headerObject['INTERNALDATE']),'ts',true);
+				$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime(($headerObject['DATE']&&!($headerObject['DATE']=='NIL')?$headerObject['DATE']:$headerObject['INTERNALDATE']),'ts',true);
 				$retValue['header'][$sortOrder[$uid]]['internaldate']= self::_strtotime($headerObject['INTERNALDATE'],'ts',true);
 				$retValue['header'][$sortOrder[$uid]]['mimetype']	= $headerObject['MIMETYPE'];
 				$retValue['header'][$sortOrder[$uid]]['id']		= $headerObject['MSG_NUM'];
@@ -2881,10 +2909,11 @@ class felamimail_bo
 			//self::$debug=false;
 			// sort the messages to the requested displayorder
 			if(is_array($retValue['header'])) {
-				$countMessages = false;
+				$countMessages = $total;
 				if (isset($_filter['range'])) $countMessages = $this->sessionData['folderStatus'][$this->profileID][$_folderName]['messages'];
 				ksort($retValue['header']);
-				$retValue['info']['total']	= $countMessages ? $countMessages : $total;
+				$retValue['info']['total']	= $total;
+				//if ($_startMessage>$total) $_startMessage = $total-($count-1);
 				$retValue['info']['first']	= $_startMessage;
 				$retValue['info']['last']	= $_startMessage + $count - 1 ;
 				return $retValue;
