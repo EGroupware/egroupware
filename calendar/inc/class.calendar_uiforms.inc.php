@@ -374,6 +374,7 @@ class calendar_uiforms extends calendar_ui
 							break;
 
 						default:		// existing participant row
+							if (!is_array($data)) continue;	// widgets in participant tab, above participant list
 							foreach(array('uid','status','quantity','role') as $name)
 							{
 								$$name = $data[$name];
