@@ -527,13 +527,6 @@ class egw_cache
 	}
 }
 
-// setting apc as default provide, if apc_fetch function exists AND not cli or apc enabled for cli
-if (is_null(egw_cache::$default_provider))
-{
-	egw_cache::$default_provider = function_exists('apc_fetch') && (PHP_SAPI != 'cli' || ini_get('apc.enable_cli')) ?
-		'egw_cache_apc' : 'egw_cache_files';
-}
-
 /**
  * Interface for a caching provider for tree and instance level
  *
@@ -630,6 +623,12 @@ abstract class egw_cache_provider_check implements egw_cache_provider
 
 		return $failed;
 	}
+}
+
+// setting apc as default provider, if apc_fetch function exists AND further checks in egw_cache_apc recommed it
+if (is_null(egw_cache::$default_provider))
+{
+	egw_cache::$default_provider = function_exists('apc_fetch') && egw_cache_apc::available() ? 'egw_cache_apc' : 'egw_cache_files';
 }
 
 // some testcode, if this file is called via it's URL
