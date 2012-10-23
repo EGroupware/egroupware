@@ -478,7 +478,6 @@ class calendar_uiforms extends calendar_ui
 		case 'copy':	// create new event with copied content, some content need to be unset to make a "new" event
 			unset($event['id']);
 			unset($event['uid']);
-			unset($event['alarm']);
 			unset($event['reference']);
 			unset($event['recurrence']);
 			unset($event['recur_exception']);
@@ -500,6 +499,14 @@ class calendar_uiforms extends calendar_ui
 					$response = calendar_so::combine_status($status,$quantity,$role);
 				}
 			}
+
+			// Copy alarms
+			foreach($event['alarm'] as $n => &$alarm)
+			{
+				unset($alarm['id']);
+				unset($alarm['cal_id']);
+			}
+
 			// Get links to be copied
 			// With no ID, $content['link_to']['to_id'] is used
 			$content['link_to']['to_id'] = array('to_app' => 'calendar', 'to_id' => 0);
