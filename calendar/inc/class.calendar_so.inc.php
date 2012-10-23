@@ -1180,8 +1180,8 @@ ORDER BY cal_user_type, cal_usre_id
 						((int)$old_repeats['recur_enddate'] == 0 || (int)$old_repeats['recur_enddate'] > (int)$event['recur_enddate'])
 					)
 					{
-						$this->db->delete($this->user_table,array('cal_id' => $cal_id,'cal_recur_date > '.($event['recur_enddate'] + 1*DAY_s)),__LINE__,__FILE__,'calendar');
-						$this->db->delete($this->dates_table,array('cal_id' => $cal_id,'cal_start > '.($event['recur_enddate'] + 1*DAY_s)),__LINE__,__FILE__,'calendar');
+						$this->db->delete($this->user_table,array('cal_id' => $cal_id,'cal_recur_date >= '.($event['recur_enddate'] + 1*DAY_s)),__LINE__,__FILE__,'calendar');
+						$this->db->delete($this->dates_table,array('cal_id' => $cal_id,'cal_start >= '.($event['recur_enddate'] + 1*DAY_s)),__LINE__,__FILE__,'calendar');
 					}
 
 					// recurrences need to be expanded
