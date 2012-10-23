@@ -2305,8 +2305,11 @@ class calendar_ical extends calendar_boupdate
 			'recur_type'		=> MCAL_RECUR_NONE,
 			'recur_exception'	=> array(),
 		);
-		// we parse DTSTART and DTEND first
-		foreach ($component->_attributes as $attributes)
+		// we need to parse DTSTART, DTEND or DURATION (in that order!) first
+		foreach (array_merge(
+			$component->getAllAttributes('DTSTART'),
+			$component->getAllAttributes('DTEND'),
+			$component->getAllAttributes('DURATION')) as $attributes)
 		{
 			switch ($attributes['name'])
 			{
@@ -2366,6 +2369,18 @@ class calendar_ical extends calendar_boupdate
 						$dtend_ts -= 1;
 					}
 					$vcardData['end']	= $dtend_ts;
+					break;
+
+				case 'DURATION':	// clients can use DTSTART+DURATION, instead of DTSTART+DTEND
+					if (!isset($vcardData['end']))
+					{
+						$vcardData['end'] = $vcardData['start'] + $attributes['value'];
+					}
+					else
+					{
+						error_log(__METHOD__."() find DTEND AND DURATION --> ignoring DURATION");
+					}
+					break;
 			}
 		}
 		if (!isset($vcardData['start']))
@@ -2382,16 +2397,6 @@ class calendar_ical extends calendar_boupdate
 		{
 			switch ($attributes['name'])
 			{
-				case 'DURATION':	// clients can use DTSTART+DURATION, instead of DTSTART+DTEND
-					if (!isset($vcardData['end']))
-					{
-						$vcardData['end'] = $vcardData['start'] + $attributes['value'];
-					}
-					else
-					{
-						error_log(__METHOD__."() find DTEND AND DURATION --> ignoring DURATION");
-					}
-					break;
 				case 'X-MICROSOFT-CDO-ALLDAYEVENT':
 					$event['whole_day'] = (isset($attributes['value'])?strtoupper($attributes['value'])=='TRUE':true);
 					break;
