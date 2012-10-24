@@ -742,6 +742,10 @@ class timesheet_ui extends timesheet_bo
 				$readonlys["delete[$row[ts_id]]"] = true;
 				$row['class'] .= ' rowNoDelete ';
 			}
+			if($row['ts_status'] != self::DELETED_STATUS)
+			{
+				$row['class'] .= ' rowNoUndelete ';
+			}
 			if ($query['col_filter']['ts_project'] || !$query['filter2'])
 			{
 				unset($row['ts_project']);	// dont need or want to show it
@@ -976,6 +980,13 @@ class timesheet_ui extends timesheet_bo
 				'group' => ++$group,
 				'disableClass' => 'rowNoDelete',
 			),
+			'undelete' => array(
+				'caption' => 'Un-Delete',
+				'confirm' => 'Recover this entry',
+				'confirm_multiple' => 'Recover these entries',
+				'group' => $group,
+				'disableClass' => 'rowNoUndelete',
+			)
 		);
 		// enable additonal edit check for following actions, if they are generally available
 		foreach(array('cat','status') as $action)
@@ -1037,6 +1048,20 @@ class timesheet_ui extends timesheet_bo
 				foreach((array)$checked as $n => $id)
 				{
 					if ($this->delete($id))
+					{
+						$success++;
+					}
+					else
+					{
+						$failed++;
+					}
+				}
+				break;
+			case 'undelete':
+				$action_msg =lang('recovered');
+				foreach((array)$checked as $n => $id)
+				{
+					if ($this->set_status($id,''))
 					{
 						$success++;
 					}
