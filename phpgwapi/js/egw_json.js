@@ -354,7 +354,7 @@ function _egw_json_debug_log(_msg, _e)
 /* Displays an json error message */
 egw_json_request.prototype.jsonError = function(_msg, _e)
 {
-	var msg = 'EGW JSON Error: '._msg;
+	var msg = 'EGW JSON Error: '+_msg;
 
 	//Log and show the error message
 	_egw_json_debug_log(msg, _e);
