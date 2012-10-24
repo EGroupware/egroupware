@@ -756,7 +756,9 @@ abstract class egw_framework
 		}
 		if (!$debug_minify)
 		{
-			$css_file = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/inc/min/?b='.substr($base_path, 1).'&f='.$css_file . '&'.$max_modified;
+			$css_file = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/inc/min/?';
+			if ($base_path && $base_path != '/') $css_file .= 'b='.substr($base_path, 1).'&';
+			$css_file .= 'f='.$css_file . '&'.$max_modified;
 			$css_file = '<link href="'.$css_file.'" type="text/css" rel="StyleSheet" />'."\n";
 		}
 		return array(
@@ -1282,7 +1284,8 @@ abstract class egw_framework
 		{
 			$base_path = $GLOBALS['egw_info']['server']['webserver_url'];
 			if ($base_path[0] != '/') $base_path = parse_url($base_path, PHP_URL_PATH);
-			$files = '/phpgwapi/inc/min/?b='.substr($base_path, 1).'&f='.$files . '&'.$max_modified;
+			$files = '/phpgwapi/inc/min/?'.($base_path && $base_path != '/' ? 'b='.substr($base_path, 1).'&' : '').
+				'f='.$files . '&'.$max_modified;
 			$links .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $files.'">'."</script>\n";
 		}
 		return $links."\n";
