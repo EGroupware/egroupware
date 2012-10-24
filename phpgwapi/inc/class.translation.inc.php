@@ -1030,6 +1030,25 @@ class translation
 	}
 
 	/**
+	 * detect_encoding - try to detect the encoding
+	 *    only to be used if the string in question has no structure that determines his encoding
+	 * @param string - to be evaluated
+	 * @return string - encoding
+	 */
+	static function detect_encoding($string) {
+		static $list = array('utf-8', 'iso-8859-1', 'windows-1251'); // list may be extended
+		if (function_exists('iconv'))
+		{
+			foreach ($list as $item) {
+				$sample = iconv($item, $item, $string);
+				if (md5($sample) == md5($string))
+					return $item;
+			}
+		}
+		return self::$mbstring ? strtolower(mb_detect_encoding($string)) : 'iso-8859-1'; // we choose to return iso-8859-1 as default
+	}
+
+	/**
 	 * Return the decoded string meeting some additional requirements for mailheaders
 	 *
 	 * @param string $_string -> part of an mailheader
@@ -1066,7 +1085,7 @@ class translation
 			$convertAtEnd = false;
 			foreach((array)$elements as $element)
 			{
-				if ($element->charset == 'default') $element->charset = 'iso-8859-1';
+				if ($element->charset == 'default') $element->charset = self::detect_encoding($element->text);
 				if ($element->charset != 'x-unknown')
 				{
 					if( strtoupper($element->charset) != 'UTF-8') $element->text = preg_replace($sar,$rar,$element->text);
