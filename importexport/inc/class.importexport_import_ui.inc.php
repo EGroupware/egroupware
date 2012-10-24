@@ -62,7 +62,7 @@
 					// Check file encoding matches import
 					$sample = file_get_contents($content['file']['tmp_name'],false, null, 0, 1024);
 					$required = $options['charset'] == 'user' || !$options['charset'] ? $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'] : $options['charset'];
-					$encoding = mb_detect_encoding($sample,$required,true);
+					$encoding = translation::detect_encoding($sample);
 					if($encoding && strtoupper($required) != strtoupper($encoding))
 					{
 						$this->message = lang("Encoding mismatch.  Expected %1 file, you uploaded %2.<br />\n",
