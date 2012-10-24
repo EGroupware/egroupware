@@ -210,7 +210,8 @@
 				#echo $text."#<br>";
 				#echo $link."#<br>\n";
 				$link = str_replace("\n","",$link);
-				$comp_uri = "<a href=\"$webserverURL/redirect.php?go=".$link;
+				//$comp_uri = "<a href=\"$webserverURL/redirect.php?go=".$link;
+				$comp_uri = "<a target=\"_blank\" href=\"".$link;
 				$body = str_replace('<a href="'.$link, $comp_uri, $body);
 				$llink=$link;
 			}
