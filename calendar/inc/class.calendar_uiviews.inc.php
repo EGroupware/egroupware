@@ -1029,15 +1029,34 @@ var calendar_edit_id;
 var calendar_edit_date;
 function edit_series(event,id,date)
 {
+	// Coming from list, there is no event
+	if(arguments.length == 2)
+	{
+		date = id;
+		id = event;
+		event = null;
+	}
 	calendar_edit_id = id;
 	calendar_edit_date = date;
 
 	var popup = jQuery("#edit_series").show();
-	popup.css({
-		position: "absolute",
-		top: event.pageY,
-		left: (event.pageX + popup.width() > $j(window).width() ? $j(window).width() - popup.width() : event.pageX)
-	});
+
+	if(event)
+	{
+		// If there is a mouse event, open the popup there
+		popup.css({
+			position: "absolute",
+			top: event.pageY,
+			left: (event.pageX + popup.width() > $j(window).width() ? $j(window).width() - popup.width() : event.pageX)
+		});
+	} else {
+		// Open popup in the middle
+		popup.css({
+			position: "absolute",
+			top: $j(window).height()/2-popup.height()/2,
+			left: $j(window).width()/2-popup.width()/2
+		});
+	}
 }
 function open_edit(series)
 {
