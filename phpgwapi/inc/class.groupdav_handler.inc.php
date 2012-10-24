@@ -249,9 +249,10 @@ abstract class groupdav_handler
 	 * @param int|string &$id on return self::$path_extension got removed
 	 * @param boolean &$return_no_access=false if set to true on call, instead of '403 Forbidden' the entry is returned and $return_no_access===false
 	 * @param boolean $ignore_if_match=false if true, ignore If-Match precondition
+	 * @param string &$etag on return of array with entry, as calculating etag is expensive for recurring events (extra DB query)
 	 * @return array|string entry on success, string with http-error-code on failure, null for PUT on an unknown id
 	 */
-	function _common_get_put_delete($method,&$options,&$id,&$return_no_access=false,$ignore_if_match=false)
+	function _common_get_put_delete($method,&$options,&$id,&$return_no_access=false,$ignore_if_match=false,&$etag=null)
 	{
 		if (self::$path_extension) $id = basename($id,self::$path_extension);
 
@@ -552,6 +553,34 @@ abstract class groupdav_handler
 		}
 		// we urldecode here, as HTTP_WebDAV_Server uses a minimal (#?%) urlencoding for incomming pathes and urlencodes pathes in propfind
 		return $this->groupdav->add_resource($path.urldecode($this->get_path($entry)), $props, $privileges);
+	}
+
+	/**
+	 * Return base uri, making sure it's either a full uri (incl. protocoll and host) or just a path
+	 *
+	 * base_uri of WebDAV class can be both, depending on EGroupware config
+	 *
+	 * @param boolean $full_uri=true
+	 * @return string eg. https://domain.com/egroupware/groupdav.php
+	 */
+	public function base_uri($full_uri=true)
+	{
+		static $uri;
+		static $path;
+
+		if (!isset($uri))
+		{
+			$uri = $path = $this->groupdav->base_uri;
+			if ($uri[0] == '/')
+			{
+				$uri = ($_SERVER["HTTPS"] === "on" ? "https:" : "http:") .'//' . $_SERVER['HTTP_HOST'] . $uri;
+			}
+			else
+			{
+				$path = parse_url($uri, PHP_URL_PATH);
+			}
+		}
+		return $full_uri ? $uri : $path;
 	}
 }
 
