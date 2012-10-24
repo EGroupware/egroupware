@@ -755,6 +755,14 @@ class calendar_uilist extends calendar_ui
 				'onExecute' => 'javaScript:cal_open',
 				'disableClass' => 'rowNoView',
 			),
+			'copy' => array(
+				'caption' => 'Copy',
+				'group' => $group,
+				'disableClass' => 'rowNoView',
+				'url' => 'menuaction=calendar.calendar_uiforms.edit&cal_id=$id&action=copy',
+				'popup' => egw_link::get_registry('calendar', 'view_popup'),
+				'allowOnMultiple' => false,
+			),
 			'select_all' => array(
 				'caption' => 'Whole query',
 				'checkbox' => true,

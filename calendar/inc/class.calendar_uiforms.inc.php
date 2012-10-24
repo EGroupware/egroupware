@@ -478,7 +478,6 @@ class calendar_uiforms extends calendar_ui
 		case 'copy':	// create new event with copied content, some content need to be unset to make a "new" event
 			unset($event['id']);
 			unset($event['uid']);
-			unset($event['alarm']);
 			unset($event['reference']);
 			unset($event['recurrence']);
 			unset($event['recur_exception']);
@@ -500,6 +499,32 @@ class calendar_uiforms extends calendar_ui
 					$response = calendar_so::combine_status($status,$quantity,$role);
 				}
 			}
+
+			// Copy alarms
+			foreach($event['alarm'] as $n => &$alarm)
+			{
+				unset($alarm['id']);
+				unset($alarm['cal_id']);
+			}
+
+			// Get links to be copied
+			// With no ID, $content['link_to']['to_id'] is used
+			$content['link_to']['to_id'] = array('to_app' => 'calendar', 'to_id' => 0);
+			foreach(egw_link::get_links('calendar', $content['id']) as $link_id => $link)
+			{
+				if ($link['app'] != egw_link::VFS_APPNAME)
+				{
+					egw_link::link('calendar', $content['link_to']['to_id'], $link['app'], $link['id'], $link['remark']);
+				}
+				elseif ($link['app'] == egw_link::VFS_APPNAME)
+				{
+					egw_link::link('calendar', $content['link_to']['to_id'], egw_link::VFS_APPNAME, array(
+						'tmp_name' => egw_link::vfs_path($link['app2'], $link['id2']).'/'.$link['id'],
+						'name' => $link['id'],
+					), $link['remark']);
+				}
+			}
+			unset($link);
 			$preserv['view'] = $preserv['edit_single'] = false;
 			$msg = lang('Event copied - the copy can now be edited');
 			$event['title'] = lang('Copy of:').' '.$event['title'];
@@ -1114,6 +1139,13 @@ class calendar_uiforms extends calendar_ui
 				'template' => isset($_GET['template']) ? $_GET['template'] : (isset($_REQUEST['print']) ? 'calendar.print' : 'calendar.edit'),
 			);
 			$cal_id = (int) $_GET['cal_id'];
+			if($_GET['action'])
+			{
+				$event = $this->bo->read($cal_id);
+				$event['action'] = $_GET['action'];
+				unset($event['participants']);
+				return $this->process_edit($event);
+			}
 			if (!empty($_GET['ical']) || !empty($_GET['ical_vfs']) && egw_vfs::file_exists($_GET['ical_vfs']))
 			{
 				$ical = new calendar_ical();
