@@ -1,3 +1,40 @@
+egroupware-epl (11.1.20121024-1) hardy; urgency=low
+
+  * eMail: rework of handling and providing identities; usability for setting up SIEVE Vacation rules -> preselected default mail address
+  * Tracker: cope with not existing name for attachments (use filename instead)
+  * Calendar/CalDAV: fixed not working update/delete of recurring event containing exceptions (always gave 412 Precondition Failed)
+  * Calendar/CalDAV: deleting of recurrences under Android (eg. CalDAV Sync app) did not work
+  * Calendar/CalDAV: updated windows aliases from Unicode site and Exchange names from Sabre DAV
+  * Calendar: changed default filter for new users/instances from "all" to "default" (not showing rejected invitations)
+  * Calendar: passing links to timesheet, when creating a timesheet on an event
+  * KnowledgeBase: Split out delete permission seperate from edit permission
+  * eSync: fix for multiple issues with AS 14.1 devices like iOS6 when working with recurring appointments
+  * Addressbook/ImportExport: add vCard import/export plugins 
+  * CardDAV: rfc 6578 sync-collection report (more efficient way to sync contacts)
+  * InfoLog/CalDAV: sync-collection report, thought reminder app on OS X 10.8.2 does not use it, moved logic for sync-token to baseclass and determine availablity on supported-report-set
+  * CalDAV/CardDAV: sync-collection report for calendar allowing a more efficient sync
+  * CalDAV/Calendar/Resources: calendars of resources can now be accessed or subscribed via CalDAV, to subscribe use CalDAV preferences
+  * CalDAV/CardDAV: fixed wrong encoded url of group with name containing spaces in CalDAV:calendar-user-address-set
+  * CalDAV: show created and updated by user and date in iOS 6: new CalendarServer:(created|updated)-by properties
+  * CalDAV/CardDAV: return urn:uuid as last record in calendar-user-address-set, as according to iCal4OL developer, some clients might have problems with it, also adding both full uri and just path of principal url, as calendarserver does it
+  * Calendar/CalDAV: fixed event created in calendar of a resource, was not editable (no owner set, now creating user is owner)
+  * Calendar/CalDAV/eSync: fixed exceptions get not deleted with series via CalDAV or eSync
+  * Calendar: deny creating of recurring events, if duration of a single recurrence is longer then the recurrence interval
+  * CalDAV: fixed parsing of principal urls used by iOS6 for users
+  * API: only cache in APC by default, if it has at least 64M of shared memory, otherwise use filesystem
+  * Addressbook/API: allow ampersand and plus in local part of emailaddress for email validation
+  * Calendar/CalDAV/eSync: fixed truncating an existing daily event left it one day to long
+  * CalDAV: allow organizer (edit-rights) update with If-Schedule-Tag-Match eg. from iOS or OS X iCal when event series was changed with "this and future" semantics
+  * CalDAV: fix recurring event one day short, if number of recurence specified together with event-length, after rrule in iCal
+  * Calendar: fixed not working extending of an event series (latter recurrence end-date), after schema update in last package
+  * eMail: fix problem regarding the deletion of the last message in list if pagination is switched on
+  * eMail: by handling links while displaying emails, always add a target _blank to force the opening in a new window (instead of redirecting)
+  * Addressbook: fixed error in extended search
+  * Addressbook: call doublicate check when creating a new contact from eMail
+  * EPL functions: conversation to resolve selectbox or radiobutton values to labels
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 24 Oct 2012 12:22:26 +0200
+
 egroupware-epl (11.1.20121002-1) hardy; urgency=low
 
   * IMPORTANT UPDATE FIXING A BUG IN LAST PACKAGE DESTROYING RECURRING EVENTS, IF EXCEPTIONS ARE CREATED, PLEASE ASAP!
