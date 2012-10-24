@@ -186,6 +186,13 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 
 		$export_object->set_mapping($options['mapping']);
 
+		$selects = array(
+			'tid' => array('n' => 'Contact')
+		);
+		foreach($this->content_types as $tid => $data)
+		{
+			$selects['tid'][$tid] = $data['name'];
+		}
 		// $options['selection'] is array of identifiers as this plugin doesn't
 		// support other selectors atm.
 		foreach ($selection as $_contact) {
@@ -204,7 +211,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			// Some conversion
 			$this->convert($contact, $options);
 			if($options['convert']) {
-				importexport_export_csv::convert($contact, addressbook_egw_record::$types, 'addressbook');
+				importexport_export_csv::convert($contact, addressbook_egw_record::$types, 'addressbook',$selects);
 			} else {
 				// Implode arrays, so they don't say 'Array'
 				foreach($contact->get_record_array() as $key => $value) {
