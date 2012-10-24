@@ -126,9 +126,12 @@ function check_value(input, own_id)
 		if (typeof data.fileas_options == 'object')
 		{
 			var selbox = document.getElementById("exec[fileas_type]");
-			for (var i=0; i < data.fileas_options.length; i++)
+			if (selbox)
 			{
-				selbox.options[i].text = data.fileas_options[i];
+				for (var i=0; i < data.fileas_options.length; i++)
+				{
+					selbox.options[i].text = data.fileas_options[i];
+				}
 			}
 		}
 	});
