@@ -55,9 +55,9 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	* Reimplemented to not check our vfs base path with realpath and connect to mysql DB
 	*
 	* @access public
-	* @param  string
+    * @param  $prefix=null prefix filesystem path with given path, eg. "/webdav" for owncloud 4.5 remote.php
 	*/
-	function ServeRequest($base = false)
+	function ServeRequest($prefix=null)
 	{
 		// special treatment for litmus compliance test
 		// reply on its identifier header
@@ -67,7 +67,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 			header("X-Litmus-reply: ".$this->_SERVER['HTTP_X_LITMUS']);
 		}
 		// let the base class do all the work
-		HTTP_WebDAV_Server::ServeRequest();
+		HTTP_WebDAV_Server::ServeRequest($prefix);
 	}
 
 	/**
@@ -296,6 +296,9 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 				$info['props'][] = HTTP_WebDAV_Server::mkprop	('getcontenttype', 'application/x-non-readable');
 			}
 			$info['props'][] = HTTP_WebDAV_Server::mkprop	('getcontentlength', filesize($fspath));
+			// for files generate etag from inode (sqlfs: fs_id), modification time and size
+			$stat = stat($fspath);
+			$info['props'][] = HTTP_WebDAV_Server::mkprop('getetag', '"'.$stat['ino'].':'.$stat['mtime'].':'.$stat['size'].'"');
 		}
 /*		returning the supportedlock property causes Windows DAV provider and Konqueror to not longer work
 		ToDo: return it only if explicitly requested ($options['props'])
@@ -310,8 +313,6 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
        <D:locktype><D:write/></D:lockscope>
       </D:lockentry>');
 */
-		// ToDo: etag from inode and modification time
-
 		//error_log(__METHOD__."($path) info=".array2string($info));
 		return $info;
 	}
@@ -622,6 +623,10 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	 */
 	function GET(&$options)
 	{
+		if (is_dir($this->base . $options["path"]))
+		{
+			return $this->autoindex($options);
+		}
 		if (($ok = parent::GET($options)) && $this->force_download)
 		{
 			if(html::$user_agent == 'msie' && self::$ua_version < 9.0)
@@ -635,5 +640,197 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 			header('Content-disposition:'.$attachment.' filename="'.egw_vfs::basename($options['path']).'"');
 		}
 		return $ok;
+	}
+
+	/**
+	 * Display an automatic index (listing and properties) for a collection
+	 *
+	 * @param array $options parameter passing array, index "path" contains requested path
+	 */
+	protected function autoindex($options)
+	{
+		$propfind_options = array(
+			'path'  => $options['path'],
+			'depth' => 1,
+		);
+		$files = array();
+		if (($ret = $this->PROPFIND($propfind_options,$files)) !== true)
+		{
+			return $ret;	// no collection
+		}
+		header('Content-type: text/html; charset='.translation::charset());
+		echo "<html>\n<head>\n\t<title>".'EGroupware WebDAV server '.htmlspecialchars($options['path'])."</title>\n";
+		echo "\t<meta http-equiv='content-type' content='text/html; charset=utf-8' />\n";
+		echo "\t<style type='text/css'>\n.th { background-color: #e0e0e0; }\n.row_on { background-color: #F1F1F1; vertical-align: top; }\n".
+			".row_off { background-color: #ffffff; vertical-align: top; }\ntd { padding-left: 5px; }\nth { padding-left: 5px; text-align: left; }\n\t</style>\n";
+		echo "</head>\n<body>\n";
+
+		echo '<h1>WebDAV ';
+		list(,$base) = explode(parse_url($GLOBALS['egw_info']['server']['webserver_url'], PHP_URL_PATH), $this->base_uri, 2);
+		$path = $base;
+		foreach(explode('/',$this->_unslashify($options['path'])) as $n => $name)
+		{
+			$path .= ($n != 1 ? '/' : '').$name;
+			echo html::a_href(htmlspecialchars($name.'/'),$path);
+		}
+		echo "</h1>\n";
+
+		static $props2show = array(
+			'DAV:displayname'      => 'Displayname',
+			'DAV:getlastmodified'  => 'Last modified',
+			'DAV:getetag'          => 'ETag',
+			'DAV:getcontenttype'   => 'Content type',
+			'DAV:resourcetype'     => 'Resource type',
+			//'DAV:owner'            => 'Owner',
+			//'DAV:current-user-privilege-set' => 'current-user-privilege-set',
+			//'DAV:getcontentlength' => 'Size',
+			//'DAV:sync-token' => 'sync-token',
+		);
+		$n = 0;
+		foreach($files['files'] as $file)
+		{
+			if (!isset($collection_props))
+			{
+				$collection_props = $this->props2array($file['props']);
+				echo '<h3>'.lang('Collection listing').': '.htmlspecialchars($collection_props['DAV:displayname'])."</h3>\n";
+				continue;	// own entry --> displaying properies later
+			}
+			if(!$n++)
+			{
+				echo "<table>\n\t<tr class='th'>\n\t\t<th>#</th>\n\t\t<th>".lang('Name')."</th>";
+				foreach($props2show as $label) echo "\t\t<th>".lang($label)."</th>\n";
+				echo "\t</tr>\n";
+			}
+			$props = $this->props2array($file['props']);
+			//echo $file['path']; _debug_array($props);
+			$class = $class == 'row_on' ? 'row_off' : 'row_on';
+
+			if (substr($file['path'],-1) == '/')
+			{
+				$name = basename(substr($file['path'],0,-1)).'/';
+			}
+			else
+			{
+				$name = basename($file['path']);
+			}
+
+			echo "\t<tr class='$class'>\n\t\t<td>$n</td>\n\t\t<td>".
+				html::a_href(htmlspecialchars($name),$base.strtr($file['path'], array(
+					'%' => '%25',
+					'#' => '%23',
+					'?' => '%3F',
+				)))."</td>\n";
+			foreach($props2show as $prop => $label)
+			{
+				echo "\t\t<td>".($prop=='DAV:getlastmodified'&&!empty($props[$prop])?date('Y-m-d H:i:s',$props[$prop]):$props[$prop])."</td>\n";
+			}
+			echo "\t</tr>\n";
+		}
+		if (!$n)
+		{
+			echo '<p>'.lang('Collection empty.')."</p>\n";
+		}
+		else
+		{
+			echo "</table>\n";
+		}
+		echo '<h3>'.lang('Properties')."</h3>\n";
+		echo "<table>\n\t<tr class='th'><th>".lang('Namespace')."</th><th>".lang('Name')."</th><th>".lang('Value')."</th></tr>\n";
+		foreach($collection_props as $name => $value)
+		{
+			$class = $class == 'row_on' ? 'row_off' : 'row_on';
+			$ns = explode(':',$name);
+			$name = array_pop($ns);
+			$ns = implode(':',$ns);
+			echo "\t<tr class='$class'>\n\t\t<td>".htmlspecialchars($ns)."</td><td style='white-space: nowrap'>".htmlspecialchars($name)."</td>\n";
+			echo "\t\t<td>".$value."</td>\n\t</tr>\n";
+		}
+		echo "</table>\n";
+		/*$dav = array(1);
+		$allow = false;
+		$this->OPTIONS($options['path'], $dav, $allow);
+		echo "<p>DAV: ".implode(', ', $dav)."</p>\n";*/
+
+		echo "</body>\n</html>\n";
+
+		common::egw_exit();
+	}
+
+	/**
+	 * Format a property value for output
+	 *
+	 * @param mixed $value
+	 * @return string
+	 */
+	protected function prop_value($value)
+	{
+		if (is_array($value))
+		{
+			if (isset($value[0]['ns']))
+			{
+				$value = $this->_hierarchical_prop_encode($value);
+			}
+			$value = array2string($value);
+		}
+		if ($value[0] == '<' && function_exists('tidy_repair_string'))
+		{
+			$value = tidy_repair_string($value, array(
+				'indent'          => true,
+				'show-body-only'  => true,
+				'output-encoding' => 'utf-8',
+				'input-encoding'  => 'utf-8',
+				'input-xml'       => true,
+				'output-xml'      => true,
+				'wrap'            => 0,
+			));
+		}
+		if (($href=preg_match('/\<(D:)?href\>[^<]+\<\/(D:)?href\>/i',$value)))
+		{
+			$value = preg_replace('/\<(D:)?href\>('.preg_quote($this->base_uri.'/','/').')?([^<]+)\<\/(D:)?href\>/i','<\\1href><a href="\\2\\3">\\3</a></\\4href>',$value);
+		}
+		$value = $value[0] == '<'  || strpos($value, "\n") !== false ? '<pre>'.htmlspecialchars($value).'</pre>' : htmlspecialchars($value);
+
+		if ($href)
+		{
+			$value = preg_replace('/&lt;a href=&quot;(.+)&quot;&gt;/', '<a href="\\1">', $value);
+			$value = str_replace('&lt;/a&gt;', '</a>', $value);
+		}
+		return $value;
+	}
+
+	/**
+	 * Return numeric indexed array with values for keys 'ns', 'name' and 'val' as array 'ns:name' => 'val'
+	 *
+	 * @param array $props
+	 * @return array
+	 */
+	protected function props2array(array $props)
+	{
+		$arr = array();
+		foreach($props as $prop)
+		{
+			$ns_hash = array('DAV:' => 'D');
+			switch($prop['ns'])
+			{
+				case 'DAV:';
+					$ns = 'DAV';
+					break;
+				default:
+					$ns = $prop['ns'];
+			}
+			if (is_array($prop['val']))
+			{
+				$prop['val'] = $this->_hierarchical_prop_encode($prop['val'], $prop['ns'], $ns_defs='', $ns_hash);
+				// hack to show real namespaces instead of not (visibly) defined shortcuts
+				unset($ns_hash['DAV:']);
+				$value = strtr($v=$this->prop_value($prop['val']),array_flip($ns_hash));
+			}
+			else
+			{
+				$value = $this->prop_value($prop['val']);
+			}
+			$arr[$ns.':'.$prop['name']] = $value;
+		}
+		return $arr;
 	}
 }
