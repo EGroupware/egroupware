@@ -960,7 +960,7 @@ class HTTP_WebDAV_Server
                   			$vals = $extra_ns = '';
                     		foreach($prop['val'] as $subprop)
                     		{
-	                    		if ($subprop['ns'] && $subprop['ns'] != 'DAV:') {
+                    			if ($subprop['ns'] && $subprop['ns'] != 'DAV:') {
 		                    		// register property namespace if not known yet
 		                    		if (!isset($ns_hash[$subprop['ns']])) {
 			                    		$ns_name = "ns".(count($ns_hash) + 1);
@@ -1001,6 +1001,7 @@ class HTTP_WebDAV_Server
 	                    			if (isset($subprop['raw'])) {
 	                    				$vals .= '<![CDATA['.$subprop['val'].']]>';
 	                    			} else {
+	                    				if($subprop['name'] == 'href') $subprop['val'] = $this->_urlencode($subprop['val']);
 		                    			$vals .= htmlspecialchars($subprop['val'], ENT_NOQUOTES, 'utf-8');
 	                    			}
 	                    			$vals .= "</$ns_name$subprop[name]>";
