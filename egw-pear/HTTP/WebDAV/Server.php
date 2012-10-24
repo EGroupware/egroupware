@@ -190,10 +190,10 @@ class HTTP_WebDAV_Server
      *
      * dispatch WebDAV HTTP request to the apropriate method handler
      *
-     * @param  void
+     * @param  $prefix=null prefix filesystem path with given path, eg. "/webdav" for owncloud 4.5 remote.php
      * @return void
      */
-    function ServeRequest()
+    function ServeRequest($prefix=null)
     {
         // prevent warning in litmus check 'delete_fragment'
         if (strstr($this->_SERVER["REQUEST_URI"], '#')) {
@@ -225,6 +225,12 @@ class HTTP_WebDAV_Server
         }
 
         $path_info = $this->_urldecode($path_info);
+
+        if ($prefix && strpos($path_info, $prefix) === 0)
+        {
+        	$uri .= $prefix;
+        	list(,$path_info) = explode($prefix, $path_info, 2);
+        }
 
         $this->base_uri = $uri;
         $this->uri      = $uri . $path_info;
