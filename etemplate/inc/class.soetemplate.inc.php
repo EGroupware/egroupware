@@ -1173,17 +1173,18 @@ class soetemplate
 				for($n = 1; is_array($widget[$n]); ++$n)
 				{
 					$child = &$widget[$n];
+					$_path = $path.'/'.$n;
 					if (isset(soetemplate::$widgets_with_children[$child['type']]))
 					{
-						$result =& $this->tree_walk($child,$func,$extra,$path.'/'.$n);
+						$result =& $this->tree_walk($child,$func,$extra,$_path);
 					}
 					elseif(is_array($func))
 					{
-						$result =& call_user_func_array($func,array(&$child,&$extra,$path.'/'.$n));
+						$result =& call_user_func_array($func,array(&$child,&$extra,$_path));
 					}
 					else
 					{
-						$result =& $func($child,$extra,$path.'/'.$n);
+						$result =& $func($child,$extra,$_path);
 					}
 					if (!is_null($result) || is_array($extra) && isset($extra['__RETURN__NOW__'])) return $result;
 				}
@@ -1200,17 +1201,18 @@ class soetemplate
 					foreach($row as $c => $col)
 					{
 						$child = &$data[$r][$c];
+						$_path = $path.'/'.$r.$c;
 						if (isset(soetemplate::$widgets_with_children[$child['type']]))
 						{
-							$result =& $this->tree_walk($child,$func,$extra,$path.'/'.$r.$c);
+							$result =& $this->tree_walk($child,$func,$extra,$_path);
 						}
 						elseif(is_array($func))
 						{
-							$result =& call_user_func_array($func,array(&$child,&$extra,$path.'/'.$r.$c));
+							$result =& call_user_func_array($func,array(&$child,&$extra,$_path));
 						}
 						else
 						{
-							$result =& $func($child,$extra,$path.'/'.$r.$c);
+							$result =& $func($child,$extra,$_path);
 						}
 						if (!is_null($result) || is_array($extra) && isset($extra['__RETURN__NOW__'])) return $result;
 						unset($child);
@@ -1225,8 +1227,8 @@ class soetemplate
 					if (!$widget['obj']->read($widget['name'])) $widget['obj'] = false;
 				}
 				if (!is_object($widget['obj'])) break;	// cant descent into template
-
-				$result =& $widget['obj']->widget_tree_walk($func,$extra,$path.'/');
+				$_path = $path.'/';
+				$result =& $widget['obj']->widget_tree_walk($func,$extra,$_path);
 				break;
 		}
 		return $result;
