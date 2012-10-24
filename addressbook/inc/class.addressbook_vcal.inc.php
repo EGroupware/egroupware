@@ -1021,7 +1021,8 @@ class addressbook_vcal extends addressbook_bo
 	{
 		if (!$file)
 		{
-			html::content_header('addressbook.vcf','text/x-vcard');
+			$filename = count($ids) == 1 ? egw_link::title('addressbook',$ids[0]): 'egw_addressbook_'.date('Y-m-d');
+			html::content_header(($filename ? $filename : 'addressbook').'.vcf','text/x-vcard');
 		}
 		if (!($fp = fopen($file ? $file : 'php://output','w')))
 		{
