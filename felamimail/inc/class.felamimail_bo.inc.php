@@ -4220,19 +4220,10 @@ class felamimail_bo
 	 * detect_encoding - try to detect the encoding
 	 *    only to be used if the string in question has no structure that determines his encoding
 	 * @param string - to be evaluated
-	 * @return mixed string/boolean (encoding or false
+	 * @return string - encoding (iso-8859-1 as default)
 	 */
 	static function detect_encoding($string) {
-		static $list = array('utf-8', 'iso-8859-1', 'windows-1251'); // list may be extended
-		if (function_exists('iconv'))
-		{
-			foreach ($list as $item) {
-				$sample = iconv($item, $item, $string);
-				if (md5($sample) == md5($string))
-					return $item;
-			}
-		}
-		return false; // we may choose to return iso-8859-1 as default at some point
+		return translation::detect_encoding($string);
 	}
 
 	static function detect_qp(&$sting) {
