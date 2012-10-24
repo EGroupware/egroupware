@@ -1,3 +1,28 @@
+egroupware (1.8.004.20121024) hardy; urgency=low
+
+  * eMail: fix problem when forwarding inline some mails containing winmail.dat attachments (HelpDesk Ticket 3810) (all original attachments are probably part of the winmail.dat, so we resolve the data/attachments contained in winmail.dat)
+  * InfoLog/CalDAV: deleted entries where not taken into account for ctag generation, causing deletes only to sync after other modifications
+  * Filemanager: fixed not working repair of doublicate directories
+  * CalDAV/CardDAV: Max OS X 10.8 (Mountain Lion) support: automatic sync of all addressbooks in one
+  * CalDAV: fixed broken URL of private events in shared calendar user has no right to view
+  * CalDAV: privileges in other users calendar where reported wrong, leading clients to believe they have write rights here
+  * CalDAV: deleting an already declined invitation returned 403 Forbidden, instead 204 No Content
+  * Calendar/CalDAV: updated windows aliases from Unicode site and Exchange names from Sabre DAV
+  * Calendar: changed default filter for new users/instances from "all" to "default" (not showing rejected invitations)
+  * Calendar/CalDAV: fixed exceptions get not deleted with series via CalDAV
+  * Calendar: deny creating of recurring events, if duration of a single recurrence is longer then the recurrence interval
+  * CalDAV: fixed parsing of principal urls used by iOS6 for users
+  * API: only cache in APC by default, if it has at least 64M of shared memory, otherwise use filesystem
+  * Addressbook/API: allow ampersand and plus in local part of emailaddress for email validation
+  * Calendar/CalDAV: fixed truncating an existing daily event left it one day to long
+  * CalDAV: fix recurring event one day short, if number of recurence specified together with event-length, after rrule in iCal
+  * Calendar/CalDAV: deleting of recurrences under Android (eg. CalDAV Sync app) did not work
+  * CalDAV/CardDAV: fixed wrong encoded url of group with name containing spaces in CalDAV:calendar-user-address-set
+  * CalDAV: show created and updated by user and date in iOS 6: new CalendarServer:(created|updated)-by properties
+  * CalDAV/CardDAV: return urn:uuid as last record in calendar-user-address-set, as according to iCal4OL developer, some clients might have problems with it, also adding both full uri and just path of principal url, as calendarserver does it
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 24 Oct 2012 09:26:01 +0200
+
 egroupware (1.8.004.20120822) hardy; urgency=low
 
   * Filemanager: support for ownCloud WebDAV clients which keep a local directory in sync with server (by default users home-dir with local ownCloud dir, thought other dirs can be configured as well)
