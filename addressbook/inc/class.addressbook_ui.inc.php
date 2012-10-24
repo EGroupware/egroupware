@@ -1729,13 +1729,16 @@ class addressbook_ui extends addressbook_bo
 				$content['tid'] = $_GET['typeid'] ? $_GET['typeid'] : ($active_tid?$active_tid:$new_type[0]);
 				foreach($this->get_contact_columns() as $field)
 				{
-					if ($_GET['presets'][$field])
+					if ($_GET['presets'][$field]) $content[$field] = $_GET['presets'][$field];
+				}
+				if (isset($_GET['presets']))
+				{
+					foreach(array('email','email_home','n_family','n_given','org_name') as $field)
 					{
-						$content[$field] = $_GET['presets'][$field];
-						if (substr($field, 0, 2) == 'n_' && !isset($onload_check_value))
+						if (!empty($content[$field]))
 						{
-							egw_framework::set_onload("check_value(document.getElementById('exec[$field]'), 'exec[$field]');");
-							$onload_check_value = true;
+							egw_framework::set_onload("check_value(document.getElementById('exec[$field]'),0);");
+							break;
 						}
 					}
 				}
