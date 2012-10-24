@@ -1994,7 +1994,7 @@ class addressbook_ui extends addressbook_bo
 					lang('Open for editing?');
 			}
 		}
-		error_log(__METHOD__.'('.array2string($values).", '$name', $own_id) doublicates found ".array2string($ret['doublicates']));
+		//error_log(__METHOD__.'('.array2string($values).", '$name', $own_id) doublicates found ".array2string($ret['doublicates']));
 		egw_json_response::get()->data($ret);
 	}
 
