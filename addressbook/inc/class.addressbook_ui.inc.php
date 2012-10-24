@@ -5,7 +5,7 @@
  * @link www.egroupware.org
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @package addressbook
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -1729,7 +1729,15 @@ class addressbook_ui extends addressbook_bo
 				$content['tid'] = $_GET['typeid'] ? $_GET['typeid'] : ($active_tid?$active_tid:$new_type[0]);
 				foreach($this->get_contact_columns() as $field)
 				{
-					if ($_GET['presets'][$field]) $content[$field] = $_GET['presets'][$field];
+					if ($_GET['presets'][$field])
+					{
+						$content[$field] = $_GET['presets'][$field];
+						if (substr($field, 0, 2) == 'n_' && !isset($onload_check_value))
+						{
+							egw_framework::set_onload("check_value(document.getElementById('exec[$field]'), 'exec[$field]');");
+							$onload_check_value = true;
+						}
+					}
 				}
 				$content['creator'] = $this->user;
 				$content['created'] = $this->now_su;
