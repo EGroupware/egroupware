@@ -137,7 +137,8 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 
 		// Record class name
 		$app = $_definition->application;
-		$record_class = isset(static::$record_class) ? static::$record_class : "{$app}_egw_record";
+		// RB: changed from static::$record_class to self::$record_class to still be able to support PHP 5.2, it seems not to be used anyway
+		$record_class = isset(self::$record_class) ? self::$record_class : "{$app}_egw_record";
 
 		// Needed for categories to work right
                 $GLOBALS['egw_info']['flags']['currentapp'] = $app;
