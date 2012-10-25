@@ -514,6 +514,10 @@ class timesheet_ui extends timesheet_bo
 		}
 		//echo "<p align=right>show_sums=".print_r($this->show_sums,true)."</p>\n";
 		if (!$id_only) $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP,$query_in);
+
+		// Refresh actions (undelete needs this)
+		$query_in['actions'] = $this->get_actions($query_in);
+
 		$query = $query_in;	// keep the original query
 
 		if($this->ts_viewtype == 'short') $query_in['options-selectcols'] = array('ts_quantity'=>false,'ts_unitprice'=>false,'ts_total'=>false);
@@ -873,7 +877,7 @@ class timesheet_ui extends timesheet_bo
 				'default_cols'   => '!legacy_actions',	// switch legacy actions column and row off by default
 			);
 		}
-		$content['nm']['actions'] = $this->get_actions();
+		$content['nm']['actions'] = $this->get_actions($content['nm']);
 
 		if($_GET['search'])
 		{
@@ -916,7 +920,7 @@ class timesheet_ui extends timesheet_bo
 	 *
 	 * @return array see nextmatch_widget::egw_actions()
 	 */
-	private function get_actions()
+	private function get_actions(Array $query)
 	{
 		$actions = array(
 			'open' => array(	// does edit if allowed, otherwise view
@@ -980,14 +984,18 @@ class timesheet_ui extends timesheet_bo
 				'group' => ++$group,
 				'disableClass' => 'rowNoDelete',
 			),
-			'undelete' => array(
+		);
+		if ($query['col_filter']['ts_status'] == self::DELETED_STATUS)
+		{
+			$actions['undelete'] = array(
 				'caption' => 'Un-Delete',
 				'confirm' => 'Recover this entry',
 				'confirm_multiple' => 'Recover these entries',
+				'icon' => 'revert',
 				'group' => $group,
 				'disableClass' => 'rowNoUndelete',
-			)
-		);
+			);
+		}
 		// enable additonal edit check for following actions, if they are generally available
 		foreach(array('cat','status') as $action)
 		{
