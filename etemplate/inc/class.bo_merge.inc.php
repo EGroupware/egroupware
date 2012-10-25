@@ -585,9 +585,10 @@ abstract class bo_merge
 	 * @param string &$err error-message on error
 	 * @param string $mimetype mimetype of complete document, eg. text/*, application/vnd.oasis.opendocument.text, application/rtf
 	 * @param array $fix=null regular expression => replacement pairs eg. to fix garbled placeholders
+	 * @param string $charset=null charset to override default set by mimetype or export charset
 	 * @return string|boolean merged document or false on error
 	 */
-	public function &merge_string($content,$ids,&$err,$mimetype,array $fix=null)
+	public function &merge_string($content,$ids,&$err,$mimetype,array $fix=null,$charset=null)
 	{
 		if ($mimetype == 'application/xml' &&
 			preg_match('/'.preg_quote('<?mso-application progid="').'([^"]+)'.preg_quote('"?>').'/',substr($content,0,200),$matches))
@@ -716,7 +717,7 @@ abstract class bo_merge
 					$content = str_replace($match[0],$repeats,$content);
 				}
 			}
-			$content = $this->replace($content,$replacements,$mimetype,$mso_application_progid);
+			$content = $this->replace($content,$replacements,$mimetype,$mso_application_progid,$charset);
 
 			$content = $this->process_commands($content, $replacements);
 
@@ -795,9 +796,10 @@ abstract class bo_merge
 	 * @param array $replacements name => replacement pairs
 	 * @param string $mimetype mimetype of content
 	 * @param string $mso_application_progid='' MS Office 2003: 'Excel.Sheet' or 'Word.Document'
+	 * @param string $charset=null charset to override default set by mimetype or export charset
 	 * @return string
 	 */
-	protected function replace($content,array $replacements,$mimetype,$mso_application_progid='')
+	protected function replace($content,array $replacements,$mimetype,$mso_application_progid='',$charset=null)
 	{
 		switch($mimetype)
 		{
@@ -807,13 +809,24 @@ abstract class bo_merge
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 			case 'application/xml':
 			case 'text/xml':
-			case 'text/html':
 				$is_xml = true;
 				$charset = 'utf-8';	// xml files --> always use utf-8
 				break;
 
+			case 'text/html':
+				$is_xml = true;
+				if (preg_match('/<meta http-equiv="content-type".*charset=([^;"]+)/i',$content,$matches))
+				{
+					$charset = $matches[1];
+				}
+				elseif (empty($charset))
+				{
+					$charset = 'utf-8';
+				}
+				break;
+
 			default:	// div. text files --> use our export-charset, defined in addressbook prefs
-				$charset = $this->contacts->prefs['csv_charset'];
+				if (empty($charset)) $charset = $this->contacts->prefs['csv_charset'];
 				break;
 		}
 		//error_log(__METHOD__."('$document', ... ,$mimetype) --> $charset (egw=".translation::charset().', export='.$this->contacts->prefs['csv_charset'].')');
@@ -1452,7 +1465,7 @@ abstract class bo_merge
 		}
 		common::egw_exit();
 	}
-	
+
 	/**
 	 * Download document merged with contact(s)
 	 * frontend for HTTP POST requests
@@ -1468,7 +1481,7 @@ abstract class bo_merge
 		if(empty($_POST['data_document_name'])) return false;
 		if(empty($_POST['data_document_dir'])) return false;
 		if(empty($_POST['data_checked'])) return false;
-		
+
 		return $this->download(
 			$_POST['data_document_name'],
 			explode(',',$_POST['data_checked']),
