@@ -783,7 +783,7 @@ class egw_session
 		// for WebDAV and GroupDAV we use a pseudo sessionid created from md5(user:passwd)
 		// --> allows this stateless protocolls which use basic auth to use sessions!
 		if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) &&
-			in_array(basename($_SERVER['SCRIPT_NAME']),array('webdav.php','groupdav.php')))
+			in_array(basename($_SERVER['SCRIPT_NAME']),array('webdav.php','groupdav.php','remote.php')))
 		{
 			// we generate a pseudo-sessionid from the basic auth credentials
 			$sessionid = md5($_SERVER['PHP_AUTH_USER'].':'.$_SERVER['PHP_AUTH_PW'].':'.$_SERVER['HTTP_HOST'].':'.
@@ -791,7 +791,7 @@ class egw_session
 		}
 		// same for digest auth
 		elseif (isset($_SERVER['PHP_AUTH_DIGEST']) &&
-			in_array(basename($_SERVER['SCRIPT_NAME']),array('webdav.php','groupdav.php')))
+			in_array(basename($_SERVER['SCRIPT_NAME']),array('webdav.php','groupdav.php','remote.php')))
 		{
 			// we generate a pseudo-sessionid from the digest username, realm and nounce
 			// can't use full $_SERVER['PHP_AUTH_DIGEST'], as it changes (contains eg. the url)
