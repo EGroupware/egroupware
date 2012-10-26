@@ -6,12 +6,13 @@
 		<meta name="keywords" content="egroupware" />
 		<meta name="description" content="egroupware" />
 		<meta name="keywords" content="egroupware" />
-		<meta name="copyright" content="egroupware http://www.egroupware.org (c) 2003" />
+		<meta name="copyright" content="egroupware http://www.egroupware.org (c) 2012" />
 		<meta name="language" content="{lang_code}" />
 		<meta name="author" content="egroupware http://www.egroupware.org" />
 		<meta name="robots" content="none" />
 		<link rel="icon" href="../phpgwapi/templates/default/images/favicon.ico" type="image/x-ico" />
 		<link rel="shortcut icon" href="../phpgwapi/templates/default/images/favicon.ico" />
+		<link href="../phpgwapi/templates/idots/css/traditional.css" type="text/css" rel="stylesheet" />
 		<link href="../phpgwapi/templates/idots/css/idots.css" type="text/css" rel="stylesheet" />
 
 		<!--{java_script}-->
