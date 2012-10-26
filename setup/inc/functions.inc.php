@@ -32,13 +32,6 @@ if(file_exists('../header.inc.php'))
 // for an old header we need to setup a reference for the domains
 if (!is_array($GLOBALS['egw_domain'])) $GLOBALS['egw_domain'] =& $GLOBALS['phpgw_domain'];
 
-if (!function_exists('version_compare'))//version_compare() is only available in PHP4.1+
-{
-	echo 'eGroupWare now requires PHP 4.1 or greater.<br>';
-	echo 'Please contact your System Administrator';
-	exit;
-}
-
 /*  If we included the header.inc.php, but it is somehow broken, cover ourselves... */
 if(!defined('EGW_SERVER_ROOT') && !defined('EGW_INCLUDE_ROOT'))
 {
@@ -97,3 +90,11 @@ $GLOBALS['egw_info']['server']['app_images'] = 'templates/default/images';
 
 CreateObject('setup.setup',True,True);	// setup constuctor assigns itself to $GLOBALS['egw_setup'], doing it twice fails on some php4
 $GLOBALS['phpgw_setup'] =& $GLOBALS['egw_setup'];
+
+if (!function_exists('version_compare') || version_compare(PHP_VERSION,$GLOBALS['egw_setup']->required_php_version,'<'))
+{
+	if (isset($_SERVER['HTTP_HOST'])) echo "<pre>\n";
+	echo "EGroupware now requires PHP {$GLOBALS['egw_setup']->required_php_version} or greater.\nYour PHP version is: ".PHP_VERSION."\n";
+	echo 'Please contact your System Administrator.';
+	exit;
+}
