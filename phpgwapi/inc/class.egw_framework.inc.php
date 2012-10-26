@@ -1270,7 +1270,7 @@ abstract class egw_framework
 			if (($mod = filemtime(EGW_SERVER_ROOT.$path)) > $max_modified) $max_modified = $mod;
 
 			// for now minify does NOT support query parameters, nor php files generating javascript
-			if ($debug_minify || $query || substr($path, -3) != '.js')
+			if ($debug_minify || $query || substr($path, -3) != '.js' || strpos($path,'ckeditor') !== false)
 			{
 				$path .= '?'. $mod.($query ? '&'.$query : '');
 				$links .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $path.'">'."</script>\n";
