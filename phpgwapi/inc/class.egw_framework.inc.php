@@ -756,10 +756,10 @@ abstract class egw_framework
 		}
 		if (!$debug_minify)
 		{
-			$css_file = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/inc/min/?';
-			if ($base_path && $base_path != '/') $css_file .= 'b='.substr($base_path, 1).'&';
-			$css_file .= 'f='.$css_file . '&'.$max_modified;
-			$css_file = '<link href="'.$css_file.'" type="text/css" rel="StyleSheet" />'."\n";
+			$css = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/inc/min/?';
+			if ($base_path && $base_path != '/') $css .= 'b='.substr($base_path, 1).'&';
+			$css .= 'f='.$css_file . '&'.$max_modified;
+			$css_file = '<link href="'.$css.'" type="text/css" rel="StyleSheet" />'."\n";
 		}
 		return array(
 			'app_css'   => $app_css,
@@ -1286,7 +1286,8 @@ abstract class egw_framework
 			if ($base_path[0] != '/') $base_path = parse_url($base_path, PHP_URL_PATH);
 			$files = '/phpgwapi/inc/min/?'.($base_path && $base_path != '/' ? 'b='.substr($base_path, 1).'&' : '').
 				'f='.$files . '&'.$max_modified;
-			$links .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $files.'">'."</script>\n";
+			// need to include minified javascript before not minified stuff like jscalendar-setup, as it might depend on it
+			$links = '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $files.'">'."</script>".$links;
 		}
 		return $links."\n";
 	}
