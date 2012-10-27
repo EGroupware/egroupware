@@ -209,9 +209,9 @@
 				<column/>
 			</columns>
 			<rows>
-				<row>
+				<row disabled="@mergeapp_itempicker_disabled">
 					<hbox>
-						<itempicker id="itempicker_merge" application="calendar,infolog,projectmanager" action="itempickerDocumentAction" action_label="Merge"/>
+						<itempicker id="itempicker_merge" application="@mergeapp_effective" action="itempickerDocumentAction" action_label="Merge"/>
 					</hbox>
 				</row>
 				<row>
@@ -226,13 +226,13 @@
 								<row disabled="@is_dir">
 									<description value="Items of the selected application can be inserted into this document"/>
 									<menulist>
-										<menupopup id="merge[mergeapp]"/>
+										<menupopup id="mergeapp"/>
 									</menulist>
 								</row>
 								<row disabled="!@is_dir">
 									<description value="Items of the selected application can be inserted into files of this directory"/>
 									<menulist>
-										<menupopup id="merge[mergeapp]"/>
+										<menupopup id="mergeapp"/>
 									</menulist>
 								</row>
 							</rows>

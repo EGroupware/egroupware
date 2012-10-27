@@ -34,6 +34,12 @@ class filemanager_ui
 		'filemanager_ui::listview' => 'Listview',
 	);
 	public static $views_init = false;
+	
+	/**
+	 * vfs namespace for document merge properties
+	 *
+	 */
+	public static $merge_prop_namespace = '';
 
 	/**
 	 * Constructor
@@ -53,6 +59,7 @@ class filemanager_ui
 		}
 
 		self::init_views();
+		self::$merge_prop_namespace = egw_vfs::DEFAULT_PROP_NAMESPACE.$GLOBALS['egw_info']['flags']['currentapp'];
 	}
 
 	/**
@@ -168,6 +175,44 @@ class filemanager_ui
 			unset($actions['mail']);
 		}
 		return $actions;
+	}
+	
+	/**
+	 * Get mergeapp property for given path
+	 *
+	 * @param string $path
+	 * @param string $scope='self' (default) or 'parents'
+	 *    $scope == 'self' query only the given path
+	 *    $scope == 'parents' query only path parents for property (first parent in hierarchy upwards wins)
+	 *
+	 * @return string merge application or NULL if no property found
+	 */
+	private static function get_mergeapp($path, $scope='self')
+	{
+		$app = null;
+		switch($scope)
+		{
+			case 'self':
+				$props = egw_vfs::propfind($path, self::$merge_prop_namespace);
+				$app = empty($props) ? null : $props[0]['val'];
+				break;
+			case 'parents':
+				// search for props in parent directories
+				$currentpath = $path;
+				while($dir = egw_vfs::dirname($currentpath))
+				{
+					$props = egw_vfs::propfind($dir, self::$merge_prop_namespace);
+					if(!empty($props))
+					{
+						// found prop in parent directory
+						return $app = $props[0]['val'];
+					}
+					$currentpath = $dir;
+				}
+				break;
+		}
+		
+		return $app;
 	}
 
 	/**
@@ -1060,6 +1105,25 @@ function force_download(_action, _senders)
 						{
 							$props[] = array('name' => $name, 'val' => $content[$name] ? $content[$name] : null);
 						}
+						elseif ($name == 'mergeapp')
+						{
+							$mergeprop = array(
+								array(
+									'ns'	=> self::$merge_prop_namespace,
+									'name'	=> 'mergeapp',
+									'val'	=> (!empty($content[$name]) ? $content[$name] : null),
+								),
+							);
+							if (egw_vfs::proppatch($path,$mergeprop))
+							{
+								$content['old'][$name] = $content[$name];
+								$msg .= lang('Setting for document merge saved.');
+							}
+							else
+							{
+								$msg .= lang('Saving setting for document merge failed!');
+							}
+						}
 						else
 						{
 							static $name2cmd = array('uid' => 'chown','gid' => 'chgrp','perms' => 'chmod');
@@ -1223,7 +1287,31 @@ function force_download(_action, _senders)
 				0 => lang('No access'),
 			);
 		}
-		$sel_options['mergeapp']= egw_link::app_list('merge');
+		
+		// mergeapp
+		$content['mergeapp'] = self::get_mergeapp($path, 'self');
+		$content['mergeapp_parent'] = self::get_mergeapp($path, 'parents');
+		if(!empty($content['mergeapp']))
+		{
+			$content['mergeapp_effective'] = $content['mergeapp'];
+		}
+		elseif(!empty($content['mergeapp_parent']))
+		{
+			$content['mergeapp_effective'] = $content['mergeapp_parent'];
+		}
+		else
+		{
+			$content['mergeapp_effective'] = null;
+		}
+		// mergeapp select options
+		$mergeapp_list = egw_link::app_list('merge');
+		$mergeapp_empty = !empty($content['mergeapp_parent'])
+			? $mergeapp_list[$content['mergeapp_parent']] . ' (parent setting)' : '';
+		$sel_options['mergeapp'] = array(''	=> $mergeapp_empty);
+		$sel_options['mergeapp'] = $sel_options['mergeapp'] + $mergeapp_list;
+		// mergeapp other gui options
+		$content['mergeapp_itempicker_disabled'] = $content['is_dir'] || empty($content['mergeapp_effective']);
+		
 		$preserve = $content;
 		if (!isset($preserve['old']))
 		{
@@ -1233,6 +1321,7 @@ function force_download(_action, _senders)
 				'uid'   => $content['uid'],
 				'gid'   => $content['gid'],
 				'comment' => (string)$content['comment'],
+				'mergeapp' => $content['mergeapp']
 			);
 			if ($cfs) foreach($cfs as $name => $data)
 			{
