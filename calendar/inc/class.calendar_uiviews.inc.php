@@ -1040,6 +1040,7 @@ function edit_series(event,id,date)
 	calendar_edit_date = date;
 
 	var popup = jQuery("#edit_series").show();
+	var row = null;
 
 	if(event)
 	{
@@ -1048,6 +1049,13 @@ function edit_series(event,id,date)
 			position: "absolute",
 			top: event.pageY,
 			left: (event.pageX + popup.width() > $j(window).width() ? $j(window).width() - popup.width() : event.pageX)
+		});
+	} else if (row = jQuery("#"+id+"\\\:"+date)) {
+		// Open at row
+		popup.css({
+			position: "absolute",
+			top: row.position().top + row.height() -popup.height()/2,
+			left: $j(window).width()/2-popup.width()/2
 		});
 	} else {
 		// Open popup in the middle
