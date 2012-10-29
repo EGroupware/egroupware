@@ -813,9 +813,8 @@ class calendar_groupdav extends groupdav_handler
 					{
 						$this->groupdav->log(__METHOD__."(,,$user) schedule-tag given, but NO changes for current user events=".array2string($events).', old-event='.array2string($oldEvent));
 					}
-					// we should not return an etag here, as we never store the PUT ical byte-by-byte
-					//header('ETag: "'.$etag.'"');
-					header('Schedule-Tag: "'.$schedule_tag.'"');
+					$this->put_response_headers($eventId, $options['path'], '204 No Content', self::$path_attr == 'caldav_name');
+
 					return '204 No Content';
 				}
 				if ($this->debug && !isset($events)) error_log(__METHOD__."(,,$user) only schedule-tag given for event without participants (only calendar owner) --> handle as regular PUT");
@@ -865,14 +864,6 @@ class calendar_groupdav extends groupdav_handler
 			{
 				return '403 Forbidden';
 			}
-		}
-
-		if ($this->use_schedule_tag)
-		{
-			$etag = $this->get_etag($cal_id, $schedule_tag);
-			// we should not return an etag here, as we never store the PUT ical byte-by-byte
-			//header('ETag: "'.$etag.'"');
-			header('Schedule-Tag: "'.$schedule_tag.'"');
 		}
 
 		// send evtl. necessary respose headers: Location, etag, ...
@@ -1313,6 +1304,27 @@ class calendar_groupdav extends groupdav_handler
 
 		//error_log(__METHOD__ . "($entry[id] ($entry[etag]): $entry[title] --> etag=$etag");
 		return $etag;
+	}
+
+	/**
+	 * Send response-headers for a PUT (or POST with add-member query parameter)
+	 *
+	 * Reimplemented to send
+	 *
+	 * @param int|array $entry id or array of new created entry
+	 * @param string $path
+	 * @param int|string $retval
+	 * @param boolean $path_attr_is_name=true true: path_attr is ca(l|rd)dav_name, false: id (GroupDAV needs Location header)
+	 */
+	function put_response_headers($entry, $path, $retval, $path_attr_is_name=true)
+	{
+		$etag = $this->get_etag($entry, $schedule_tag);
+
+		if ($this->use_schedule_tag)
+		{
+			header('Schedule-Tag: "'.$schedule_tag.'"');
+		}
+		parent::put_response_headers($entry, $path, $retval, $path_attr_is_name, $etag);
 	}
 
 	/**

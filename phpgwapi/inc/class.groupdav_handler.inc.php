@@ -474,18 +474,20 @@ abstract class groupdav_handler
 	 * @param string $path
 	 * @param int|string $retval
 	 * @param boolean $path_attr_is_name=true true: path_attr is ca(l|rd)dav_name, false: id (GroupDAV needs Location header)
+	 * @param string $etag=null etag, to not calculate it again (if != null)
 	 */
-	function put_response_headers($entry, $path, $retval, $path_attr_is_name=true)
+	function put_response_headers($entry, $path, $retval, $path_attr_is_name=true, $etag=null)
 	{
 		// we should not return an etag here, as EGroupware never stores ical/vcard byte-by-byte
 		// as SOGO Connector requires ETag header to recognice as successful PUT, we are sending them again for it
 		// --> as all clients dislike not getting an ETag for a PUT, we sending it again even not storing byte-by-byte
 		//if (get_class($this) == 'addressbook_groupdav' && in_array(self::get_agent(),array('thunderbird','lightning')))
 		{
-			header('ETag: "'.$this->get_etag($entry).'"');
+			if (is_null($etag)) $etag = $this->get_etag($entry);
+			header('ETag: "'.$etag.'"');
 		}
-		// send Location header only if we dont use caldav_name as path-attribute or
-		if ($retval !== true && (!$path_attr_is_name ||
+		// send Location header only on success AND if we dont use caldav_name as path-attribute or
+		if (!(is_bool($retval) ? $retval : $retval[0] === '2') && (!$path_attr_is_name ||
 			// POST with add-member query parameter
 			$_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['add-member'])))
 		{
