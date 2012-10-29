@@ -80,6 +80,9 @@ $C['style_pass'] = empty($C['style_pass']) ? 0 : 1;
 $C['tidy'] = empty($C['tidy']) ? 0 : $C['tidy'];
 $C['unique_ids'] = isset($C['unique_ids']) ? $C['unique_ids'] : 1;
 $C['xml:lang'] = isset($C['xml:lang']) ? $C['xml:lang'] : 0;
+// own config options
+// block elements allowed for nesting when only inline is allowed; Example span does not allow block elements as table; table is the only element tested so far
+$C['allow_for_inline'] = isset($C['allow_for_inline'])?$C['allow_for_inline']:0;
 
 if(isset($GLOBALS['C'])){$reC = $GLOBALS['C'];}
 $GLOBALS['C'] = $C;
@@ -157,6 +160,7 @@ $cT = array('colgroup'=>1, 'dd'=>1, 'dt'=>1, 'li'=>1, 'option'=>1, 'p'=>1, 'td'=
 // block/inline type; ins & del both type; #pcdata: text
 $eB = array('address'=>1, 'blockquote'=>1, 'center'=>1, 'del'=>1, 'dir'=>1, 'dl'=>1, 'div'=>1, 'fieldset'=>1, 'form'=>1, 'ins'=>1, 'h1'=>1, 'h2'=>1, 'h3'=>1, 'h4'=>1, 'h5'=>1, 'h6'=>1, 'hr'=>1, 'isindex'=>1, 'menu'=>1, 'noscript'=>1, 'ol'=>1, 'p'=>1, 'pre'=>1, 'table'=>1, 'ul'=>1);
 $eI = array('#pcdata'=>1, 'a'=>1, 'abbr'=>1, 'acronym'=>1, 'applet'=>1, 'b'=>1, 'bdo'=>1, 'big'=>1, 'br'=>1, 'button'=>1, 'cite'=>1, 'code'=>1, 'del'=>1, 'dfn'=>1, 'em'=>1, 'embed'=>1, 'font'=>1, 'i'=>1, 'iframe'=>1, 'img'=>1, 'input'=>1, 'ins'=>1, 'kbd'=>1, 'label'=>1, 'map'=>1, 'object'=>1, 'q'=>1, 'ruby'=>1, 's'=>1, 'samp'=>1, 'select'=>1, 'script'=>1, 'small'=>1, 'span'=>1, 'strike'=>1, 'strong'=>1, 'sub'=>1, 'sup'=>1, 'textarea'=>1, 'tt'=>1, 'u'=>1, 'var'=>1);
+if($GLOBALS['C']['allow_for_inline'] && is_array($GLOBALS['C']['allow_for_inline'])) foreach($GLOBALS['C']['allow_for_inline'] as $khai => $vhai) {$eI[$vhai]=1;}//allow table as if it was an inline element as <span> some Text <table>...</table> more text</span> is quite common
 $eN = array('a'=>1, 'big'=>1, 'button'=>1, 'fieldset'=>1, 'font'=>1, 'form'=>1, 'iframe'=>1, 'img'=>1, 'input'=>1, 'label'=>1, 'object'=>1, 'ruby'=>1, 'script'=>1, 'select'=>1, 'small'=>1, 'sub'=>1, 'sup'=>1, 'textarea'=>1); // Exclude from specific ele; $cN values
 $eO = array('area'=>1, 'caption'=>1, 'col'=>1, 'colgroup'=>1, 'dd'=>1, 'dt'=>1, 'legend'=>1, 'li'=>1, 'optgroup'=>1, 'option'=>1, 'param'=>1, 'rb'=>1, 'rbc'=>1, 'rp'=>1, 'rt'=>1, 'rtc'=>1, 'script'=>1, 'tbody'=>1, 'td'=>1, 'tfoot'=>1, 'thead'=>1, 'th'=>1, 'tr'=>1); // Missing in $eB & $eI
 $eF = $eB + $eI;
