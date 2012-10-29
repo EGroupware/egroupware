@@ -952,6 +952,7 @@ class groupdav extends HTTP_WebDAV_Server
 			'DAV:displayname'      => 'Displayname',
 			'DAV:getlastmodified'  => 'Last modified',
 			'DAV:getetag'          => 'ETag',
+			//'CalDAV:schedule-tag'  => 'Schedule-Tag',
 			'DAV:getcontenttype'   => 'Content type',
 			'DAV:resourcetype'     => 'Resource type',
 			//'DAV:owner'            => 'Owner',
