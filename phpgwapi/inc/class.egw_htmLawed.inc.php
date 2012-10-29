@@ -76,6 +76,7 @@ class egw_htmLawed
 			'unique_ids'=>array('2', '1', 'unique <em>id</em> values', '0', '8', 'my_', 'prefix'),
 			'valid_xhtml'=>array('2', 'nil', 'auto-set various parameters for most valid XHTML', 'nil'),
 			'xml:lang'=>array('3', 'nil', 'auto-add <em>xml:lang</em> attribute', '0'),
+			'allow_for_inline' => array('table'),//block elements allowed for nesting when only inline is allowed; Example span does not allow block elements as table; table is the only element tested so far
 		);
 		*/
 

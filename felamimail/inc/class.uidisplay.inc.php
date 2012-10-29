@@ -715,6 +715,7 @@ body,html {
 .td_display {
     font-family: Verdana, Arial, Helvetica, sans-serif;
     font-size: 110%;
+    color: black;
     background-color: #FFFFFF;
 }
 pre {
