@@ -1592,7 +1592,7 @@ class groupdav extends HTTP_WebDAV_Server
 	 */
 	public function log($str)
 	{
-		$to_log[] = $str;
+		$this->to_log[] = $str;
 
 		error_log($str);
 	}
