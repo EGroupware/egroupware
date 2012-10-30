@@ -64,7 +64,7 @@ class egw_htmLawed
 			'hook_tag'=>array('', '', 'name of custom function to further check attribute values', '25'),
 			'keep_bad'=>array('7', '6', 'keep, or remove <em>bad</em> tag content', '0'),
 			'lc_std_val'=>array('2', '1', 'lower-case std. attribute values like <em>radio</em>', '0'),
-			'make_tag_strict'=>array('3', 'nil', 'transform deprecated elements', 'nil'),
+			'make_tag_strict'=>array('3', 'nil', 'transform deprecated elements', 'nil'), 3 is a new own config value, to indicate that transformation is to be performed, but don't transform font as size transformation of numeric sizes to keywords alters the intended result too much
 			'named_entity'=>array('2', '1', 'allow named entities, or convert numeric ones', '0'),
 			'no_deprecated_attr'=>array('3', '1', 'allow deprecated attributes, or transform them', '0'),
 			'parent'=>array('', 'div', 'name of parent element', '25'),
@@ -81,6 +81,7 @@ class egw_htmLawed
 		*/
 
 		$this->Configuration = array('comment'=>1, //remove comments
+			'make_tag_strict'=>3,//3 is a new own config value, to indicate that transformation is to be performed, but don't transform font, as size transformation of numeric sizes to keywords alters the intended result too much
 			'balance'=>0,//turn off tag-balancing (config['balance']=>0). That will not introduce any security risk; only standards-compliant tag nesting check/filtering will be turned off (basic tag-balance will remain; i.e., there won't be any unclosed tag, etc., after filtering)
 			'tidy'=>1,
 			'elements' => "* -script",

@@ -631,7 +631,7 @@ if($e == 'dir' or $e == 'menu'){$e = 'ul'; return '';}
 if($e == 's' or $e == 'strike'){$e = 'span'; return 'text-decoration: line-through;';}
 if($e == 'u'){$e = 'span'; return 'text-decoration: underline;';}
 static $fs = array('0'=>'xx-small', '1'=>'xx-small', '2'=>'small', '3'=>'medium', '4'=>'large', '5'=>'x-large', '6'=>'xx-large', '7'=>'300%', '-1'=>'smaller', '-2'=>'60%', '+1'=>'larger', '+2'=>'150%', '+3'=>'200%', '+4'=>'300%');
-if($e == 'font'){
+if($e == 'font' && $t !=3){//3 is a new make_tag_strict config value, to indicate that transformation is to be performed, but don't transform font, as size transformation of numeric sizes to keywords alters the intended result too much
  $a2 = '';
  if(preg_match('`face\s*=\s*(\'|")([^=]+?)\\1`i', $a, $m) or preg_match('`face\s*=(\s*)(\S+)`i', $a, $m)){
   $a2 .= ' font-family: '. str_replace('"', '\'', trim($m[2])). ';';
