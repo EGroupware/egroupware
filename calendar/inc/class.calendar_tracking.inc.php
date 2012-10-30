@@ -54,7 +54,6 @@ class calendar_tracking extends bo_tracking
 		'reference'	=>	'reference',
 		'non_blocking'	=>	'non_blocking',
 		'special'	=>	'special',
-		'creator'	=>	'creator',
 		'recurrence'	=>	'recurrence',
 		'tz_id'		=>	'tz_id',
 
@@ -82,7 +81,6 @@ class calendar_tracking extends bo_tracking
 		'reference'	=>	'reference',
 		'non_blocking'	=>	'non blocking',
 		'special'	=>	'special',
-		'creator'	=>	'creator',
 		'recurrence'=>	'recurrence',
 		'tz_id'		=>	'timezone',
 
