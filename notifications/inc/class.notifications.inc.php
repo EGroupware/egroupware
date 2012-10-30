@@ -454,16 +454,27 @@ final class notifications {
 		if(!empty($_message_plain)) {
 			$messages['plain'] = $_message_plain;
 		} else {
-			$messages['plain'] = strip_tags($_message_html);
+			$messages['plain'] = translation::convertHTMLToText($_message_html, false, true);
 		}
 
 		if(!empty($_message_html)) {
 			$messages['html'] = $_message_html;
 		} else {
-			$messages['html'] = nl2br($_message_plain);
+			$messages['html'] = self::plain2html($_message_plain);
 		}
 
 		return $messages;
+	}
+
+	/**
+	 * Create html from plaintext message
+	 *
+	 * @param string $_plain
+	 * @return string html message
+	 */
+	public static function plain2html($_plain)
+	{
+		return html::activate_links(nl2br(html::htmlspecialchars($_plain, true)));
 	}
 
 	/**
