@@ -18,7 +18,7 @@
  * the prefs are read into 5 arrays:
  * 	 $data the effective prefs used everywhere in phpgw, they are merged from the other 3 arrays
  * 	 $user the stored user prefs, only used for manipulating and storeing the user prefs
- *   $group the stored prefs of users primary groupd, only used for manipulating and storeing the user prefs
+ *   $group the stored prefs of all group-memberships of current user, can NOT be deleted or stored directly!
  * 	 $default the default preferences, always used when the user has no own preference set
  * 	 $forced forced preferences set by the admin, they take precedence over user or default prefs
  *
@@ -155,12 +155,11 @@ class preferences
 	 */
 	function cache_read($ids)
 	{
-		$prefs = $db_read = array();
-
+		$prefs = egw_cache::getInstance(__CLASS__, $ids);
+		$db_read = array();
 		foreach((array)$ids as $id)
 		{
-			$prefs[$id] = egw_cache::getInstance(__CLASS__, $id);
-			// if prefs are not returned (null) or not an array, read them from db
+			// if prefs are not returned, null or not an array, read them from db
 			if (!isset($prefs[$id]) && !is_array($prefs[$id])) $db_read[] = $id;
 		}
 		if ($db_read)
@@ -345,13 +344,17 @@ class preferences
 			$this->session = array();
 		}
 		$this->forced = $this->default = $this->user = $this->group = array();
-		$primary_group = accounts::id2name($this->account_id, 'account_primary_group');
-		foreach($this->cache_read(array(
-			self::DEFAULT_ID,
-			self::FORCED_ID,
-			$this->account_id,
-			$primary_group+self::DEFAULT_ID,	// need to offset it with DEFAULT_ID = -2!
-		)) as $id => $values)
+		$to_read = array(self::DEFAULT_ID,self::FORCED_ID,$this->account_id);
+		if ($this->account_id > 0)
+		{
+			$primary_group = accounts::id2name($this->account_id, 'account_primary_group');
+			foreach($GLOBALS['egw']->accounts->memberships($this->account_id, true) as $gid)
+			{
+				if ($gid != $primary_group) $to_read[] = $gid + self::DEFAULT_ID;	// need to offset it with DEFAULT_ID = -2!
+			}
+			$to_read[] = $primary_group + self::DEFAULT_ID;
+		}
+		foreach($this->cache_read($to_read) as $id => $values)
 		{
 			switch($id)
 			{
@@ -365,7 +368,10 @@ class preferences
 					$this->user = $values;
 					break;
 				default:
-					$this->group = $values;
+					foreach($values as $app => $vals)
+					{
+						$this->group[$app] = $vals + (array)$this->group[$app];
+					}
 					break;
 			}
 		}
@@ -750,8 +756,7 @@ class preferences
 				$prefs = &$this->default;
 				break;
 			case 'group':
-				$account_id = $GLOBALS['egw']->accounts->id2name($this->account_id,'account_primary_group')+self::DEFAULT_ID;
-				$prefs = &$this->group;
+				throw new egw_exception_wrong_parameter("Can NOT save group preferences, as they are from multiple groups!");
 				break;
 			default:
 				$account_id = (int)$this->account_id;
