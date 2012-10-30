@@ -118,7 +118,7 @@ class egw_cache_memcache extends egw_cache_provider_check implements egw_cache_p
 		foreach($multiple as $location => $data)
 		{
 			$key = substr($location,$prefix_len);
-			error_log(__METHOD__."(".array2string($locations).") key='$key' found ".bytes($data)." bytes).");
+			//error_log(__METHOD__."(".array2string($locations).") key='$key' found ".bytes($data)." bytes).");
 			$ret[$key] = unserialize($data);
 		}
 		return $ret;
