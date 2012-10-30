@@ -67,7 +67,7 @@ function check_access(&$account)
 		}
 		else
 		{
-			header('Location: ../../login.php'.(isset($_REQUEST['phpgw_forward']) ? '?phpgw_forward='.$_REQUEST['phpgw_forward'] : ''));
+			header('Location: ../../login.php'.(isset($_REQUEST['phpgw_forward']) ? '?phpgw_forward='.urlencode($_REQUEST['phpgw_forward']) : ''));
 		}
 		exit;
 	}
