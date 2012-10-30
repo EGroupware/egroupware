@@ -554,7 +554,7 @@ final class notifications {
 		if(!empty($_message_plain)) {
 			$messages['plain'] = $_message_plain;
 		} else {
-			$messages['plain'] = strip_tags($_message_html);
+			$messages['plain'] = translation::convertHTMLToText($_message_html, false, true);
 		}
 
 		if(!empty($_message_html)) {
@@ -574,7 +574,7 @@ final class notifications {
 	 */
 	public static function plain2html($_plain)
 	{
-		return nl2br(html::htmlspecialchars($_plain, true));
+		return html::activate_links(nl2br(html::htmlspecialchars($_plain, true)));
 	}
 
 	/**
