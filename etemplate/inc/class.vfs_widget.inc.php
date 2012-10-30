@@ -323,7 +323,7 @@ class vfs_widget
 					(string)$GLOBALS['egw_info']['server']['link_list_thumbnail'] != '0' &&
 					(string)$GLOBALS['egw_info']['user']['preferences']['common']['link_list_thumbnail'] != '0' &&
 					// check the size of the image, as too big images get no icon, but a PHP Fatal error:  Allowed memory size exhausted
-					(!is_array($value) && ($stat = egw_vfs::stat($path)) ? $stat['size'] : $value['size']) < 600000)
+					(!is_array($value) && ($stat = egw_vfs::stat($path)) ? $stat['size'] : $value['size']) < 1600000)
 				{
 					if (substr($path,0,6) == '/apps/')
 					{
