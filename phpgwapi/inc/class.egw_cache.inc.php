@@ -108,11 +108,12 @@ class egw_cache
 	 *
 	 * @param string $level use egw_cache::(TREE|INSTANCE|SESSION|REQUEST)
 	 * @param string $app application storing data
-	 * @param string $location location name for data
+	 * @param string|array $location location(s) name for data
 	 * @param callback $callback=null callback to get/create the value, if it's not cache
 	 * @param array $callback_params=array() array with parameters for the callback
 	 * @param int $expiration=0 expiration time in seconds, default 0 = never
-	 * @return mixed NULL if data not found in cache (and no callback specified)
+	 * @return mixed NULL if data not found in cache (and no callback specified) or
+	 * 	if $location is an array: location => data pairs for existing location-data, non-existing is not returned
 	 */
 	static public function getCache($level,$app,$location,$callback=null,array $callback_params=array(),$expiration=0)
 	{
@@ -120,7 +121,11 @@ class egw_cache
 		{
 			case self::SESSION:
 			case self::REQUEST:
-				return call_user_func(array(__CLASS__,'get'.$level),$app,$location,$callback,$callback_params,$expiration);
+				foreach((array)$location as $l)
+				{
+					$data[$l] = call_user_func(array(__CLASS__,'get'.$level),$app,$l,$callback,$callback_params,$expiration);
+				}
+				return is_array($location) ? $data : $data[$l];
 
 			case self::INSTANCE:
 			case self::TREE:
@@ -129,16 +134,38 @@ class egw_cache
 					return null;
 				}
 				try {
-					$data = $provider->get($keys=self::keys($level,$app,$location));
+					if (is_array($location))
+					{
+						if (!is_null($callback))
+						{
+							throw new egw_exception_wrong_parameter(__METHOD__."() you can NOT use multiple locations (\$location parameter is an array) together with a callback!");
+						}
+						if (is_a($provider, 'egw_cache_provider_multiple'))
+						{
+							$data = $provider->mget($keys=self::keys($level,$app,$location));
+						}
+						else	// default implementation calls get multiple times
+						{
+							$data = array();
+							foreach($location as $l)
+							{
+								$data[$l] = $provider->get($keys=self::keys($level,$app,$l));
+								if (!isset($data[$l])) unset($data[$l]);
+							}
+						}
+					}
+					else
+					{
+						$data = $provider->get($keys=self::keys($level,$app,$location));
+						if (is_null($data) && !is_null($callback))
+						{
+							$data = call_user_func_array($callback,$callback_params);
+							$provider->set($keys,$data,$expiration);
+						}
+					}
 				}
 				catch(Exception $e) {
 					$data = null;
-				}
-				if (is_null($data) && !is_null($callback))
-				{
-					//error_log(__METHOD__."($level,$app,$location,".array2string($callback).','.array2string($callback_params).",$expiration) calling calback to create data.");
-					$data = call_user_func_array($callback,$callback_params);
-					$provider->set($keys,$data,$expiration);
 				}
 				return $data;
 		}
@@ -571,6 +598,24 @@ interface egw_cache_provider
 	function delete(array $keys);
 }
 
+/**
+ * Interface for a caching provider for tree and instance level
+ *
+ * The provider can eg. create subdirs under /tmp for each key
+ * to store data as a file or concat them with a separator to
+ * get a single string key to eg. store data in memcached
+ */
+interface egw_cache_provider_multiple
+{
+	/**
+	 * Get multiple data from the cache
+	 *
+	 * @param array $keys eg. array of array($level,$app,array $locations)
+	 * @return array key => data stored, not found keys are NOT returned
+	 */
+	function mget(array $keys);
+}
+
 abstract class egw_cache_provider_check implements egw_cache_provider
 {
 	/**
@@ -581,12 +626,17 @@ abstract class egw_cache_provider_check implements egw_cache_provider
 	 */
 	function check($verbose=false)
 	{
+		// set us up as provider for egw_cache class
+		$GLOBALS['egw_info']['server']['install_id'] = md5(microtime(true));
+		egw_cache::$default_provider = $this;
+
 		$failed = 0;
 		foreach(array(
 			egw_cache::TREE => 'tree',
 			egw_cache::INSTANCE => 'instance',
 		) as $level => $label)
 		{
+			$locations = array();
 			foreach(array('string',123,true,false,null,array(),array(1,2,3)) as $data)
 			{
 				$location = md5(microtime(true).$label.serialize($data));
@@ -607,6 +657,15 @@ abstract class egw_cache_provider_check implements egw_cache_provider
 					if ($verbose) echo "$label: get_after_set=".array2string($get_after_set)." !== ".array2string($data)."\n";
 					++$failed;
 				}
+				if (is_a($this, 'egw_cache_provider_multiple'))
+				{
+					$mget_after_set = $this->mget(array($level,__CLASS__,array($location)));
+					if ($mget_after_set[$location] !== $data)
+					{
+						if ($verbose) echo "$label: mget_after_set['$location']=".array2string($mget_after_set[$location])." !== ".array2string($data)."\n";
+						++$failed;
+					}
+				}
 				if (($delete = $this->delete(array($level,__CLASS__,$location))) !== true)
 				{
 					if ($verbose) echo "$label: delete returned ".array2string($delete)." !== TRUE\n";
@@ -618,6 +677,46 @@ abstract class egw_cache_provider_check implements egw_cache_provider
 					if ($verbose) echo "$label: get_after_delete=".array2string($get_after_delete)." != NULL\n";
 					++$failed;
 				}
+				// prepare for mget of everything
+				if (is_a($this, 'egw_cache_provider_multiple'))
+				{
+					$locations[$location] = $data;
+					$mget_after_delete = $this->mget(array($level,__CLASS__,array($location)));
+					if (isset($mget_after_delete[$location]))
+					{
+						if ($verbose) echo "$label: mget_after_delete['$location']=".array2string($mget_after_delete[$location])." != NULL\n";
+						++$failed;
+					}
+					$this->set(array($level,__CLASS__,$location), $data, 10);
+				}
+				elseif (!is_null($data))	// emulation can NOT distinquish between null and not set
+				{
+					$locations[$location] = $data;
+					egw_cache::setCache($level, __CLASS__, $location, $data);
+				}
+			}
+			// get all above in one request
+			$keys = array_keys($locations);
+			$keys_bogus = array_merge(array('not-set'),array_keys($locations),array('not-set-too'));
+			if (is_a($this, 'egw_cache_provider_multiple'))
+			{
+				$mget = $this->mget(array($level,__CLASS__,$keys));
+				$mget_bogus = $this->mget(array($level,__CLASS__,$keys_bogus));
+			}
+			else
+			{
+				$mget = egw_cache::getCache($level, __CLASS__, $keys);
+				$mget_bogus = egw_cache::getCache($level, __CLASS__, $keys_bogus);
+			}
+			if ($mget !== $locations)
+			{
+				if ($verbose) echo "$label: mget=<br/>".array2string($mget)." !==<br/>".array2string($locations)."\n";
+				++$failed;
+			}
+			if ($mget_bogus !== $locations)
+			{
+				if ($verbose) echo "$label: mget(".array2string($keys_bogus).")=<br/>".array2string($mget_bogus)." !==<br/>".array2string($locations)."\n";
+				++$failed;
 			}
 		}
 
@@ -625,15 +724,9 @@ abstract class egw_cache_provider_check implements egw_cache_provider
 	}
 }
 
-// setting apc as default provider, if apc_fetch function exists AND further checks in egw_cache_apc recommed it
-if (is_null(egw_cache::$default_provider))
-{
-	egw_cache::$default_provider = function_exists('apc_fetch') && egw_cache_apc::available() ? 'egw_cache_apc' : 'egw_cache_files';
-}
-
 // some testcode, if this file is called via it's URL
 // can be run on command-line: sudo php -d apc.enable_cli=1 -f phpgwapi/inc/class.egw_cache.inc.php
-/*if (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) == __FILE__)
+if (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) == __FILE__)
 {
 	if (!isset($_SERVER['HTTP_HOST']))
 	{
@@ -670,4 +763,10 @@ if (is_null(egw_cache::$default_provider))
 			printf($e->getMessage()."\n\n");
 		}
 	}
-}*/
+}
+
+// setting apc as default provider, if apc_fetch function exists AND further checks in egw_cache_apc recommed it
+if (is_null(egw_cache::$default_provider))
+{
+	egw_cache::$default_provider = function_exists('apc_fetch') && egw_cache_apc::available() ? 'egw_cache_apc' : 'egw_cache_files';
+}

@@ -22,7 +22,7 @@
  *
  * You can set more then one server and specify a port, if it's not the default one 11211.
  */
-class egw_cache_memcache extends egw_cache_provider_check implements egw_cache_provider
+class egw_cache_memcache extends egw_cache_provider_check implements egw_cache_provider_multiple
 {
 	/**
 	 * Instance of Memcache
@@ -93,6 +93,35 @@ class egw_cache_memcache extends egw_cache_provider_check implements egw_cache_p
 		}
 		//error_log(__METHOD__."(".array2string($keys).") key='$key' found ".bytes($data)." bytes).");
 		return unserialize($data);
+	}
+
+	/**
+	 * Get multiple data from the cache
+	 *
+	 * @param array $keys eg. array of array($level,$app,array $locations)
+	 * @return array key => data stored, not found keys are NOT returned
+	 */
+	function mget(array $keys)
+	{
+		$locations = array_pop($keys);
+		$prefix = self::key($keys);
+		foreach($locations as &$location)
+		{
+			$location = $prefix.'::'.$location;
+		}
+		if (($multiple = $this->memcache->get($locations)) === false)
+		{
+			return array();
+		}
+		$ret = array();
+		$prefix_len = strlen($prefix)+2;
+		foreach($multiple as $location => $data)
+		{
+			$key = substr($location,$prefix_len);
+			error_log(__METHOD__."(".array2string($locations).") key='$key' found ".bytes($data)." bytes).");
+			$ret[$key] = unserialize($data);
+		}
+		return $ret;
 	}
 
 	/**
