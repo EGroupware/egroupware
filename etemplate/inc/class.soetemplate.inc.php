@@ -875,19 +875,23 @@ class soetemplate
 		$dir = EGW_SERVER_ROOT . "/$app/setup";
 		if (!is_writeable($dir))
 		{
-			return lang("Error: webserver is not allowed to write into '%1' !!!",$dir);
+			// if dir is not writable, download file
+			html::content_header('etemplates.inc.php','application/octet-stream');
+			$file = 'php://stdout';
 		}
-		$file = "$dir/etemplates.inc.php";
-		if (file_exists($file))
+		else
 		{
-			$old_file = "$dir/etemplates.old.inc.php";
-			if (file_exists($old_file))
+			$file = "$dir/etemplates.inc.php";
+			if (file_exists($file))
 			{
-				unlink($old_file);
+				$old_file = "$dir/etemplates.old.inc.php";
+				if (file_exists($old_file))
+				{
+					unlink($old_file);
+				}
+				rename($file,$old_file);
 			}
-			rename($file,$old_file);
 		}
-
 		if (!($f = fopen($file,'w')))
 		{
 			return 0;
@@ -929,6 +933,8 @@ class soetemplate
 			++$n;
 		}
 		fclose($f);
+
+		if ($file == 'php://stdout') common::egw_exit();
 
 		return lang("%1 eTemplates for Application '%2' dumped to '%3'",$n,$app,$file);
 	}
