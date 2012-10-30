@@ -1027,12 +1027,44 @@ class calendar_uiviews extends calendar_ui
 		return $tpl->show(array()).'<script type="text/javascript">
 var calendar_edit_id;
 var calendar_edit_date;
-function edit_series(id,date)
+function edit_series(event,id,date)
 {
+	// Coming from list, there is no event
+	if(arguments.length == 2)
+	{
+		date = id;
+		id = event;
+		event = null;
+	}
 	calendar_edit_id = id;
 	calendar_edit_date = date;
 
-	document.getElementById("edit_series").style.display = "inline";
+	var popup = jQuery("#edit_series").show();
+	var row = null;
+
+	if(event)
+	{
+		// If there is a mouse event, open the popup there
+		popup.css({
+			position: "absolute",
+			top: event.pageY,
+			left: (event.pageX + popup.width() > $j(window).width() ? $j(window).width() - popup.width() : event.pageX)
+		});
+	} else if (row = jQuery("#"+id+"\\\:"+date)) {
+		// Open at row
+		popup.css({
+			position: "absolute",
+			top: row.position().top + row.height() -popup.height()/2,
+			left: $j(window).width()/2-popup.width()/2
+		});
+	} else {
+		// Open popup in the middle
+		popup.css({
+			position: "absolute",
+			top: $j(window).height()/2-popup.height()/2,
+			left: $j(window).width()/2-popup.width()/2
+		});
+	}
 }
 function open_edit(series)
 {
@@ -1837,7 +1869,7 @@ function open_edit(series)
 		{
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
-				$popup = ' onclick="edit_series('.$event['id'].','.$this->bo->date2string($event['start']).');"';
+				$popup = ' onclick="edit_series(event,'.$event['id'].','.$this->bo->date2string($event['start']).');"';
 			}
 			else
 			{
