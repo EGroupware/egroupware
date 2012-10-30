@@ -726,7 +726,7 @@ abstract class egw_cache_provider_check implements egw_cache_provider
 
 // some testcode, if this file is called via it's URL
 // can be run on command-line: sudo php -d apc.enable_cli=1 -f phpgwapi/inc/class.egw_cache.inc.php
-if (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) == __FILE__)
+/*if (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) == __FILE__)
 {
 	if (!isset($_SERVER['HTTP_HOST']))
 	{
@@ -763,7 +763,7 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) 
 			printf($e->getMessage()."\n\n");
 		}
 	}
-}
+}*/
 
 // setting apc as default provider, if apc_fetch function exists AND further checks in egw_cache_apc recommed it
 if (is_null(egw_cache::$default_provider))
