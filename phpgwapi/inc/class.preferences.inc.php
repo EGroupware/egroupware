@@ -702,8 +702,6 @@ class preferences
 		if (!$GLOBALS['egw']->acl->check('session_only_preferences',1,'preferences'))
 		{
 			$this->db->transaction_begin();
-			$this->db->delete($this->table,array('preference_owner' => $account_id),__LINE__,__FILE__);
-
 			foreach($prefs as $app => $value)
 			{
 				if (!is_array($value))
