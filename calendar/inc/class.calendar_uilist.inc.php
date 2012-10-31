@@ -364,6 +364,13 @@ class calendar_uilist extends calendar_ui
 			{
 				$event['class'] .= 'rowDeleted ';
 			}
+			// Disable everything for 'deleted' exceptions - there's nothing
+			// logical to do except undelete it
+			if($search_params['filter'] == 'deleted' && $event['recur_type'])
+			{
+				$event['class'] .= ' rowNoView rowNoDelete rowDeleted';
+			}
+
 			// Filemanager disabled for other applications
 			$readonlys['filemanager['.$event['id'].']'] = !is_numeric($event['id']);
 
@@ -591,14 +598,28 @@ class calendar_uilist extends calendar_ui
 					break;
 				case 'undelete':
 					$action_msg = lang('recovered');
-					if ($id && ($event = $this->bo->read($id, $recur_date)) && $this->bo->check_perms(EGW_ACL_EDIT,$id) &&
-						is_array($event) && $event['deleted'])
+					if ($id && ($event = $this->bo->read($id, $recur_date)) && $this->bo->check_perms(EGW_ACL_EDIT,$id))
 					{
-						$event['deleted'] = null;
-						if($this->bo->save($event))
+						if(is_array($event) && $event['deleted'])
 						{
-							$success++;
-							break;
+							$event['deleted'] = null;
+							if($this->bo->save($event))
+							{
+								$success++;
+								break;
+							}
+						}
+						// Undelete an exception by removing it
+						else if (is_array($event) && $event['recur_type'])
+						{
+							$original = $this->bo->read($id);
+							$key = array_search($recur_date, $original['recur_exception']);
+							if($key !== false) unset($original['recur_exception'][$key]);
+							if($key !== false && $this->bo->save($original))
+							{
+								$success++;
+								break;
+							}
 						}
 					}
 					$failed++;
@@ -843,6 +864,7 @@ class calendar_uilist extends calendar_ui
 			$actions['undelete'] = array(
 				'caption' => 'Un-delete',
 				'hint' => 'Recover this event',
+				'icon' => 'revert',
 				'group' => $group,
 				'enabled' => 'javaScript:nm_enableClass',
 				'enableClass' => 'rowDeleted',
