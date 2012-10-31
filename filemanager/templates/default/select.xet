@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="filemanager.select" template="" lang="" group="0" version="1.9.001">
+	<template id="filemanager.select" template="" lang="" group="0" version="1.9.002">
 		<description align="center" id="msg" class="error"/>
 		<grid width="600">
 			<columns>
@@ -36,7 +36,8 @@
 									<box class="selectPathContainer">
 										<vfs id="path" onclick="path=document.getElementById(form::name('path')); path.value=$path; path.form.submit();" class="selectPath"/>
 									</box>
-									<textbox id="path" class="displayNone"/>
+									<hidden id="path"/>
+									<button label="Create directory" id="button[createdir]" onclick="var dir = prompt(egw::lang('New directory')); if (!dir) return false; document.getElementById(form::name('path')).value+='/'+dir;" image="button_createdir" ro_image="createdir_disabled" class="createDir"/>
 								</hbox>
 							</row>
 							<row class="selectFiles">
@@ -83,6 +84,7 @@
 		</grid>
 		<styles>
 			.error{color:red; font-style:italic;}
+.createDir img {padding-right:30px;}
 		</styles>
 	</template>
 </overlay>
