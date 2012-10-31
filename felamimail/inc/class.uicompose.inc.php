@@ -216,6 +216,14 @@
 			$this->compose($_focusElement);
 		}
 
+		/**
+		 * function compose
+		 * 	this function is used to fill the compose dialog with the content provided by session data
+		 *
+		 * @var _focusElement		varchar subject, to, body supported
+		 * @var suppressSigOnTop	boolean
+		 * @var isReply				boolean
+		 */
 		function compose($_focusElement='to',$suppressSigOnTop=false, $isReply=false)
 		{
 			// read the data from session
@@ -314,6 +322,40 @@
 			if (!empty($_REQUEST['send_to']))
 			{
 				$sessionData['to'] = base64_decode($_REQUEST['send_to']);
+				// first check if there is a questionmark or ampersand
+				if (strpos($sessionData['to'],'?')!== false) list($sessionData['to'],$rest) = explode('?',$sessionData['to'],2);
+				if (($at_pos = strpos($sessionData['to'],'@')) !== false)
+				{
+					if (($amp_pos = strpos(substr($sessionData['to'],$at_pos),'&')) !== false)
+					{
+						//list($email,$addoptions) = explode('&',$value,2);
+						$email = substr($sessionData['to'],0,$amp_pos+$at_pos);
+						$rest = substr($sessionData['to'], $amp_pos+$at_pos+1);
+						//error_log(__METHOD__.__LINE__.$email.' '.$rest);
+						$sessionData['to'] = $email;
+					}
+				}
+				if (strpos($sessionData['to'],'%40')!== false) $sessionData['to'] = html::purify(str_replace('%40','@',$sessionData['to']));
+				$rarr = array(html::purify($rest));
+				if (isset($rest)&&!empty($rest) && strpos($rest,'&')!== false) $rarr = explode('&',$rest);
+				//error_log(__METHOD__.__LINE__.$sessionData['to'].'->'.array2string($rarr));
+				$karr = array();
+				foreach ($rarr as $ri => $rval)
+				{
+					//must contain =
+					if (strpos($rval,'=')!== false)
+					{
+						$k = $v = '';
+						list($k,$v) = explode('=',$rval,2);
+						$karr[$k] = $v;
+					}
+				}
+				//error_log(__METHOD__.__LINE__.$sessionData['to'].'->'.array2string($karr));
+				foreach(array('cc','bcc','subject','body') as $name)
+				{
+					if ($karr[$name]) $sessionData[$name] = $karr[$name];
+				}
+				if (!empty($_REQUEST['subject'])) $sessionData['subject'] = html::purify(trim(html_entity_decode($_REQUEST['subject'])));
 			}
 
 			//is the MimeType set/requested
@@ -345,7 +387,14 @@
 				$sessionData['mimeType'] = 'plain';
 				$sessionData['body'] = $this->bocompose->convertHTMLToText($sessionData['body']);
 			}
-
+			// removal of possible script elements in HTML; getCleanHTML is the choice here, if not only for consistence
+			// we use the preg of common_functions (slightly altered) to meet eGroupwares behavior on posted variables
+			if ($sessionData['mimeType'] == 'html')
+			{
+				// this is now moved to egw_htmLawed (triggered by default config) which is called with ckeditor anyway
+				//felamimail_bo::getCleanHTML($sessionData['body'],true);
+			}
+			
 			// is a certain signature requested?
 			// only the following values are supported (and make sense)
 			// no => means -2
@@ -603,6 +652,7 @@
 
 			if($sessionData['mimeType'] == 'html') {
 				$mode = 'simple-withimage';
+				//$mode ='advanced';// most helpful for debuging
 				#if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck'])) $mode = 'egw_simple_spellcheck';
 				$style="border:0px; width:100%; height:400px;";
 				// dont run purify, as we already did that (getCleanHTML).
@@ -694,9 +744,9 @@
 			egw_framework::validate_file('ckeditor3','ckeditor','phpgwapi');
 
 			$GLOBALS['egw']->js->set_onload('javascript:initAll();');
-			$GLOBALS['egw']->js->set_onbeforeunload("if (do_onunload) if (draftsMayExist) {a = checkunload(browserSupportsOnUnloadConfirm?'".addslashes(lang("Please choose:"))."'+'\\n'+'".addslashes(lang("1) keep drafted message (press OK)"))."'+'\\n'+'".addslashes(lang("2) discard the message completely (press Cancel)"))."':'".addslashes(lang("if you leave this page without saving to draft, the message will be discarded completely"))."');".' if (!browserSupportsOnUnloadConfirm) return a;}');
+			$GLOBALS['egw']->js->set_onbeforeunload("if (do_onunload && justClickedSend==false) if (draftsMayExist) {a = checkunload(browserSupportsOnUnloadConfirm?'".addslashes(lang("Please choose:"))."'+'\\n'+'".addslashes(lang("1) keep drafted message (press OK)"))."'+'\\n'+'".addslashes(lang("2) discard the message completely (press Cancel)"))."':'".addslashes(lang("if you leave this page without saving to draft, the message will be discarded completely"))."');".' if (!browserSupportsOnUnloadConfirm) return a;}');
 			//$GLOBALS['egw']->js->set_onbeforeunload("if (do_onunload) if (draftsMayExist) return '".addslashes(lang("Please choose:"))."'+'\\n'+'".addslashes(lang("1) keep drafted message (press OK)"))."'+'\\n'+'".addslashes(lang("2) discard the message completely (press Cancel)"))."';");
-			$GLOBALS['egw']->js->set_onunload("if (do_onunload) checkunload();");
+			$GLOBALS['egw']->js->set_onunload("if (do_onunload && justClickedSend==false) checkunload();");
 			//$GLOBALS['egw']->js->set_onunload("if (do_onunload) egw_appWindow('felamimail').xajax_doXMLHTTPsync('felamimail.ajaxfelamimail.removeLastDraftedVersion','".$this->composeID."');");
 
 			$GLOBALS['egw_info']['flags']['include_xajax'] = True;

@@ -40,6 +40,7 @@ var browserSupportsOnUnloadConfirm = true;
 var do_onunload=false;
 var draftsMayExist=false;
 var justSavedAsDraftManually; // no value yet, as it should indicate that the message was just saved, before another autosave kicked in
+var justClickedSend=false;
 
 function initAll()
 {
@@ -81,7 +82,7 @@ function checkunload(checkBrowser)
 {
 	if (typeof checkBrowser != 'undefined' && justSavedAsDraftManually == false)
 	{
-		if (browserSupportsOnUnloadConfirm && do_onunload) do_onunload=!confirm(checkBrowser);
+		if (browserSupportsOnUnloadConfirm && do_onunload && justClickedSend==false) do_onunload=!confirm(checkBrowser);
 		if (!browserSupportsOnUnloadConfirm)
 		{
 		//	window.setTimeout('checkunload();',1000);
@@ -761,7 +762,7 @@ function fm_compose_sendEMail() {
 	var addressSet = false;
 	var subjectSet = true;
 	var doubleCheck = false;
-
+	justClickedSend = true;
 	for (i=0; i<addressTable.length; i++) {
 		if(addressTable.item(i).cells[2].firstChild.value != '') {
 			addressSet = true;
@@ -785,7 +786,7 @@ function fm_compose_sendEMail() {
 		do_onunload=false; 
 		document.doit.submit();
 	} else {
-		//alert(fm_compose_langNoAddressSet);
+		justClickedSend = false; // since we did not send at all,....
 	}
 }
 
