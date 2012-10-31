@@ -769,8 +769,6 @@ class preferences
 			(!($old_prefs = $this->cache_read($account_id)) || $old_prefs[$account_id] != $prefs))
 		{
 			$this->db->transaction_begin();
-			$this->db->delete($this->table,array('preference_owner' => $account_id),__LINE__,__FILE__);
-
 			foreach($prefs as $app => $value)
 			{
 				if (!is_array($value) || !$value)
