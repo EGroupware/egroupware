@@ -1986,6 +1986,11 @@ class etemplate_old extends boetemplate
 	/**
 	 * Format a number according to user prefs with decimal and thousands separator (later only for readonly)
 	 *
+	 * HTML5 input type=number requires a float value with a dot, not comma!
+	 * Chrome 22 and Safari 6 shows no value if a comma is used,
+	 * while FF 16, IE 9 and 10 have no support for input type=number :-(
+	 * --> use . as decimal separator for browser supporting html5 input type=number
+	 *
 	 * @param int|float|string $number
 	 * @param int $num_decimal_places=2
 	 * @param boolean $readonly=true
@@ -2002,7 +2007,13 @@ class etemplate_old extends boetemplate
 		}
 		if ((string)$number === '') return '';
 
-		return number_format(str_replace(' ','',$number),$num_decimal_places,$dec_separator,$readonly ? $thousands_separator : '');
+		$ret = number_format(str_replace(' ','',$number), $num_decimal_places,
+			// need to use '.' as decimal separator for all browser supporting html5 input type=number
+			$dec_sep_used=$readonly || !in_array(html::$user_agent, array('chrome', 'safari', 'opera')) ?
+				$dec_separator : '.',
+			$readonly ? $thousands_separator : '');
+		//error_log(__METHOD__."($number, $num_decimal_places, $readonly) html::user_agent=".html::$user_agent.", dec_sep='$dec_separator' --> '$dec_sep_used', thousands_sep='$thousands_separator' returning '$ret'");
+		return $ret;
 	}
 
 	/**
