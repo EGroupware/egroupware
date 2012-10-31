@@ -151,6 +151,7 @@ checking php.ini	setup	de	Überprüfe die php.ini Datei
 checking required php version %1 (recommended %2)	setup	de	Überprüfe benötigte PHP Version %1 (empfohlen %2)
 checking the egroupware installation	setup	de	Überprüfe die EGroupware-Installation
 checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	de	Überprüft ob EGroupware installiert ist, die Version und notwendige Aktualisierungen (Rückgabewerte siehe --exit-codes)
+clear cache and register hooks	setup	de	Cache löschen und Hooks registrieren
 click <a href="index.php">here</a> to return to setup.	setup	de	<a href="index.php">Hier klicken</a> um zu Setup zurück zu kehren.
 click here	setup	de	Hier klicken
 click here to re-run the installation tests	setup	de	zum Wiederholen der Installationstests hier klicken
@@ -294,7 +295,6 @@ file uploads are switched off: you can not use any of the filemanagers, nor can 
 filename	setup	de	Dateiname
 filesystem	setup	de	Dateisystem
 filesystem (default)	setup	de	Dateisystem (Vorgabe)
-find and register all application hooks	setup	de	Suchen und registrieren der "Hooks" aller Anwendungen
 force selectbox	setup	de	Auswahl erzwingen
 give admin access to all installed apps	setup	de	Admin Zugang zu allen installierten Anwendungen geben
 gives further options	setup	de	gibt zusätzliche Optionen
