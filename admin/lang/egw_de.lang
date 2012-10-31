@@ -132,6 +132,7 @@ check categories for not (longer) existing accounts	admin	de	Prüfe Kategorien a
 check ip address of all sessions	admin	de	IP-Adresse für alle Sessions überprüfen
 check items to <b>%1</b> to %2 for %3	admin	de	Durch Abhaken %3 in %2 <b>%1</b>
 children	admin	de	Kinder
+clear cache and register hooks	admin	de	Cache löschen und Hooks registrieren
 click to select a color	admin	de	Anklicken um eine Farbe auszuwählen
 color	admin	de	Farbe
 command scheduled to run at %1	admin	de	Ausführung des Befehls eingeplant am/um %1
@@ -289,7 +290,6 @@ false	admin	de	Falsch
 field '%1' already exists !!!	admin	de	Feld '%1' existiert bereits !!!
 file space	admin	de	Speicherplatz
 file space must be an integer	admin	de	Speicherplatz muss eine Zahl sein
-find and register all application hooks	admin	de	Suchen und registrieren der "Hooks" aller Anwendungen
 for the times above	admin	de	für die oben angegebenen Zeiten
 for the times below (empty values count as '*', all empty = every minute)	admin	de	für die darunter angegebenen Zeiten (leere Felder zählen als "*", alles leer = jede Minute)
 force password strength (1-5, default empty: no check against rules for a strong password)?	admin	de	Erzwinge eine gewisse Qualität der Passwörter im Passwort-Ändern Dialog (1-5, 1:gering, 5=stark; Default=leer kein Check gegen Regeln zur Passwortqualität)

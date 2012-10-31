@@ -132,6 +132,7 @@ check categories for not (longer) existing accounts	admin	en	Check categories fo
 check ip address of all sessions	admin	en	Check IP address of all sessions
 check items to <b>%1</b> to %2 for %3	admin	en	Check items to <b>%1</b> to %2 for %3
 children	admin	en	Children
+clear cache and register hooks	admin	en	Clear cache and register hooks
 click to select a color	admin	en	Click to select a color
 color	admin	en	Color
 command scheduled to run at %1	admin	en	Command scheduled to run at %1
@@ -289,7 +290,6 @@ false	admin	en	False
 field '%1' already exists !!!	admin	en	Field '%1' already exists!
 file space	admin	en	File space
 file space must be an integer	admin	en	File space must be an integer
-find and register all application hooks	admin	en	Find and register all application hooks
 for the times above	admin	en	For the times above
 for the times below (empty values count as '*', all empty = every minute)	admin	en	For the times below: empty values count as '*', all empty = every minute.
 force password strength (1-5, default empty: no check against rules for a strong password)?	admin	en	Set required password strength. 1 = weak, up to 5 = very strong. Default = empty, no password strength checked

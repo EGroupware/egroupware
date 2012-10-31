@@ -620,11 +620,11 @@ class db_backup
 		{
 			return lang('Restore failed');
 		}
+		// flush instance cache
+		egw_cache::flush(egw_cache::INSTANCE);
+
 		// search-and-register-hooks
 		$GLOBALS['egw']->hooks->register_all_hooks();
-
-		// invalidate categories cache, it's instance wide
-		categories::invalidate_cache();
 
 		return '';
 	}

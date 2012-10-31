@@ -98,7 +98,7 @@ class admin_prefs_sidebox_hooks
 
 			if (! $GLOBALS['egw']->acl->check('applications_access',16,'admin'))
 			{
-				$file['Find and Register all Application Hooks'] = egw::link('/index.php','menuaction=admin.admin_prefs_sidebox_hooks.register_all_hooks');
+				$file['Clear cache and register hooks'] = egw::link('/index.php','menuaction=admin.admin_prefs_sidebox_hooks.register_all_hooks');
 			}
 
 			if (! $GLOBALS['egw']->acl->check('asyncservice_access',1,'admin'))
@@ -141,6 +141,8 @@ class admin_prefs_sidebox_hooks
 		{
 			$GLOBALS['egw']->redirect_link('/index.php');
 		}
+		egw_cache::flush(egw_cache::INSTANCE);
+
 		$GLOBALS['egw']->hooks->register_all_hooks();
 
 		common::delete_image_map();
