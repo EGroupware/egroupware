@@ -128,6 +128,15 @@ class url_widget
 						//error_log(__METHOD__.__LINE__.$email.' '.$addoptions);
 						$rfc822 = $value = $email;
 					}
+					else
+					{
+						if (($q_pos = strpos(substr($value,$at_pos),'?')) !== false)
+						{
+							$email = substr($value,0,$q_pos+$at_pos);
+							$addoptions = substr($value, $q_pos+$at_pos+1);
+							$rfc822 = $value = $email;
+						}
+					}
 					if (strlen($value) > $size)		// shorten the name to size-2 plus '...'
 					{
 						$value = substr($value,0,$size-2).'...';
