@@ -115,6 +115,49 @@ class egw_cache_files extends egw_cache_provider_check implements egw_cache_prov
 	}
 
 	/**
+	 * Delete all data under given keys
+	 *
+	 * @param array $keys eg. array($level,$app,$location)
+	 * @return boolean true on success, false on error (eg. $key not set)
+	 */
+	function flush(array $keys)
+	{
+		$dir = $this->filename($keys, false);
+
+		return file_exists($dir) ? self::rm_recursive($dir) : true;
+	}
+
+	/**
+	 * Recursive delete a path
+	 *
+	 * @param string $path
+	 * @return boolean true on success, false otherwise
+	 */
+	private static function rm_recursive($path)
+	{
+		if (!is_dir($path))
+		{
+			return unlink($path);
+		}
+		foreach(scandir($path) as $file)
+		{
+			if ($file == '.' || $file == '..') continue;
+
+			$file = $path.'/'.$file;
+
+			if (is_dir($file))
+			{
+				if (!self::rm_recursive($file)) return false;
+			}
+			else
+			{
+				if (!unlink($path.'/'.$file)) return false;
+			}
+		}
+		return rmdir($path);
+	}
+
+	/**
 	 * Create a path from $keys and $basepath
 	 *
 	 * @param array $keys
