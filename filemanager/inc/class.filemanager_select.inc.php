@@ -126,6 +126,14 @@ class filemanager_select
 				case 'home':
 					$content['path'] = filemanager_ui::get_home_dir();
 					break;
+				case 'createdir':
+					if (!@egw_vfs::mkdir($content['path'],null,STREAM_MKDIR_RECURSIVE))
+					{
+						$content['msg'] = !egw_vfs::is_writable(dirname($content['path'])) ?
+							lang('Permission denied!') : lang('Failed to create directory!');
+						$content['path'] = $content['old_path'];
+					}
+					break;
 				case 'ok':
 					$copy_result = null;
 					if (isset($content['file_upload']['name']) && is_uploaded_file($content['file_upload']['tmp_name']))
@@ -258,6 +266,7 @@ class filemanager_select
 			}
 			if (!$n) $readonlys['selected[]'] = true;	// remove checkbox from empty line
 		}
+		$readonlys['button[createdir]'] = !egw_vfs::is_writable($content['path']);
 
 		$content['js'] = '<script type="text/javascript">
 function select_goto(to)
@@ -294,6 +303,7 @@ function select_toggle(file)
 			'label'  => $content['label'],
 			'mime'   => $content['mime'],
 			'options-mime' => $content['options-mime'],
+			'old_path' => $content['path'],
 		);
 
 		if (isset($content['ckeditorfuncnum']))
