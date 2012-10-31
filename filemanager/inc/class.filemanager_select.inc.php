@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-2012 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -220,6 +220,9 @@ class filemanager_select
 		{
 			$content['path'] = filemanager_ui::get_home_dir();
 		}
+		$tpl = new etemplate('filemanager.select');
+		$et2 = class_exists('etemplate_widget', false) && is_a($tpl, 'etemplate_widget');
+
 		if (!($files = egw_vfs::find($content['path'],array(
 			'dirsontop' => true,
 			'order' => 'name',
@@ -248,7 +251,7 @@ class filemanager_select
 					'name' => $name,
 					'path' => $path,
 					'mime' => $mime,
-					'onclick' => $is_dir ? "return select_goto('".addslashes($path)."',widget);" :
+					'onclick' => $is_dir ? "return select_goto('".addslashes($path)."'".($et2?',widget':'').");" :
 						($content['mode'] != 'open-multiple' ? "return select_show('".addslashes($name)."');" :
 						"return select_toggle('".addslashes($name)."');"),
 				);
@@ -301,11 +304,10 @@ function select_toggle(file)
 </script>
 ';
 		// scroll to end of path
-		$GLOBALS['egw']->js->set_onload("var p = document.getElementById('exec[path][c". (count(explode('/',$content['path']))-1) ."]'); if (p) scrollIntoView();");
+		$GLOBALS['egw']->js->set_onload("var p = document.getElementById('exec[path][c". (count(explode('/',$content['path']))-1) ."]'); if (p) p.scrollIntoView();");
 
 		//_debug_array($readonlys);
 		egw_session::appsession('select_path','filemanger',$content['path']);
-		$tpl = new etemplate('filemanager.select');
 		$preserve = array(
 			'mode'   => $content['mode'],
 			'method' => $content['method'],
