@@ -1654,7 +1654,7 @@ class Horde_iCalendar {
     function _quotedPrintableEncode($input = '', $withFolding=true)
     {
         $output = $line = '';
-        $len = strlen($input);
+        $len = bytes($input);
 
         for ($i = 0; $i < $len; ++$i) {
             $ord = ord($input[$i]);
