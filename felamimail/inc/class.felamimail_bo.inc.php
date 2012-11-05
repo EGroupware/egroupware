@@ -4919,6 +4919,15 @@ class felamimail_bo
 				//error_log(__METHOD__.__LINE__.' BodyContentType:'.$mailObject->BodyContentType);
 				$AltBody = $mailObject->AltBody;
 				//error_log(__METHOD__.__LINE__.' AltBody:'.$AltBody);
+				//error_log(__METHOD__.__LINE__.array2string($mailObject->GetReplyTo()));
+				// Fetch ReplyTo - Address if existing to check if we are to replace it
+				$replyTo = $mailObject->GetReplyTo();
+				if (isset($replyTo['replace@import.action']))
+				{
+					$mailObject->ClearReplyTos();
+					$activeMailProfile = $this->mailPreferences->getIdentity($this->profileID, true);
+					$mailObject->AddReplyTo($activeMailProfile->emailAddress,$activeMailProfile->realName);
+				}
 				foreach ($SendAndMergeTocontacts as $k => $val)
 				{
 					$sendOK = $openComposeWindow = $openAsDraft = false;
@@ -5230,8 +5239,9 @@ class felamimail_bo
 						if ($key=='reply-to')
 						{
 							$myReplyTo = ${$key};
+							//break; // break early as we add that later
 						}
-						$Header .= $mailObject->TextLine(trim($mailObject->AddrAppend($key,${$key})));
+						$Header .= $mailObject->TextLine(trim($mailObject->AddrAppend(ucfirst($key),${$key})));
 						break;
 					case 'content-transfer-encoding':
 						$mailObject->Encoding = $val;
