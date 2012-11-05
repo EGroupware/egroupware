@@ -200,6 +200,18 @@ class egw_mailer extends PHPMailer
 	}
 
 	/**
+	 * Gets the "ReplyTo" addresses.
+	 *
+	 * Function to retrieve the ReplyTo Addresses of the SMT Mailobject
+	 *
+	 * @return array with the reply-to mail addresse(s))
+	 */
+	public function GetReplyTo()
+	{
+		return $this->ReplyTo;
+	}
+
+	/**
 	 * Adds a string or binary attachment (non-filesystem) to the list.
 	 * This method can be used to attach ascii or binary data,
 	 * such as a BLOB record from a database.
@@ -214,7 +226,7 @@ class egw_mailer extends PHPMailer
 		// Append to $attachment array
 		//already encoded?
 		//TODO: maybe add an parameter to AddStringAttachment to avoid using the basename
-		$x += preg_match_all('/[\000-\010\013\014\016-\037\177-\377]/', $filename, $matches);
+		$x += preg_match('/\?=.+=\?/', $filename);
 		$this->attachment[] = array(
 			0 => $string,
 			1 => $filename,
@@ -226,5 +238,4 @@ class egw_mailer extends PHPMailer
 			7 => 0
 		);
 	}
-
 }
