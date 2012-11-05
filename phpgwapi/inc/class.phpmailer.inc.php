@@ -343,7 +343,7 @@ class PHPMailer {
   private   $to             = array();
   private   $cc             = array();
   private   $bcc            = array();
-  private   $ReplyTo        = array();
+  protected $ReplyTo        = array(); //this way extended classes may use this variable
   private   $all_recipients = array();
   protected $attachment     = array(); //this way extended classes may use this variable
   private   $CustomHeader   = array();
