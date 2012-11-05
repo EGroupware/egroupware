@@ -319,10 +319,9 @@ else
 				$GLOBALS['egw']->preferences->add('common','lang',$_POST['lang'],'session');
 			}
 
-			if(!$GLOBALS['egw_info']['server']['disable_autoload_langfiles'])
-			{
-				translation::autoload_changed_langfiles();
-			}
+			// check if new translations are available
+			translation::check_invalidate_cache();
+
 			$forward = isset($_GET['phpgw_forward']) ? urldecode($_GET['phpgw_forward']) : @$_POST['phpgw_forward'];
 			if (!$forward)
 			{

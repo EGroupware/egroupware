@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - TranslationTools
+ * EGroupware - TranslationTools
  *
  * @link http://www.egroupware.org
  * @author Miles Lott <milos(at)groupwhere.org>
@@ -384,6 +384,8 @@ class solangfile
 		}
 		fclose($fp);
 
+		translation::invalidate_lang_file($app_name, $userlang);
+
 		if ($which == 'source')
 		{
 			$this->src_file = $fn;
@@ -393,17 +395,6 @@ class solangfile
 			$this->tgt_file = $fn;
 		}
 		return $fn;
-	}
-
-	function loaddb($app_name,$userlangs)
-	{
-		if (!is_array($userlangs))
-		{
-			$userlangs = array($userslangs => $userlangs);
-		}
-		translation::install_langs($userlangs,'addmissing',$app_name);
-
-		return lang('done');
 	}
 }
 

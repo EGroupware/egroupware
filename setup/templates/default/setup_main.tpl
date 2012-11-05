@@ -34,19 +34,6 @@
 	</td>
 </tr>
 <!-- end the admin section -->
-<!-- begin the lang section -->
-<tr class="th">
-	<td align="left" colspan="2">{lang_step_text}</td>
-</tr>
-<tr>
-	<td align="center">
-		<img src="{lang_status_img}" alt="{lang_status_alt}" border="0" />
-	</td>
-	<td>
-		{lang_table_data}
-	</td>
-</tr>
-<!-- end the lang section -->
 <!-- begin the apps section -->
 <tr class="th">
 	<td align="left" colspan="2">{apps_step_text}</td>

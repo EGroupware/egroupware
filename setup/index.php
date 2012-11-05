@@ -169,7 +169,7 @@ $completed  = $GLOBALS['egw_info']['server']['app_images'] . '/completed.png';
 $setup_tpl->set_var('img_incomplete',$incomplete);
 $setup_tpl->set_var('img_completed',$completed);
 
-$setup_tpl->set_var('db_step_text',lang('Step %1 - Simple Application Management',1));
+$setup_tpl->set_var('db_step_text',lang('Step %1 - Simple Application Management', ++$num));
 $setup_tpl->set_var('lang_system_charset',lang('<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):'));
 $setup_tpl->set_var('system_charset',str_replace('&amp;','&',
 	$GLOBALS['egw_setup']->translation->get_charsets('system_charset',$GLOBALS['egw_setup']->system_charset)));
@@ -393,7 +393,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 }
 
 // Config Section
-$setup_tpl->set_var('config_step_text',lang('Step %1 - Configuration',2));
+$setup_tpl->set_var('config_step_text',lang('Step %1 - Configuration', ++$num));
 $GLOBALS['egw_info']['setup']['stage']['config'] = $GLOBALS['egw_setup']->detection->check_config();
 
 // begin DEBUG code
@@ -436,7 +436,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['config'])
 		break;
 }
 // Admin Account Section
-$setup_tpl->set_var('admin_step_text',lang('Step %1 - Admin Account',3));
+$setup_tpl->set_var('admin_step_text',lang('Step %1 - Admin Account', ++$num));
 
 switch($GLOBALS['egw_info']['setup']['stage']['config'])
 {
@@ -458,9 +458,9 @@ switch($GLOBALS['egw_info']['setup']['stage']['config'])
 		$setup_tpl->set_var('admin_table_data',lang('Not ready for this stage yet'));
 		break;
 }
-
+/*
 // Lang Section
-$setup_tpl->set_var('lang_step_text',lang('Step %1 - Language Management',4));
+$setup_tpl->set_var('lang_step_text',lang('Step %1 - Language Management', ++$num));
 $GLOBALS['egw_info']['setup']['stage']['lang'] = $GLOBALS['egw_setup']->detection->check_lang();
 
 // begin DEBUG code
@@ -505,8 +505,8 @@ switch($GLOBALS['egw_info']['setup']['stage']['lang'])
 		$setup_tpl->set_var('lang_table_data',lang('Not ready for this stage yet'));
 		break;
 }
-
-$setup_tpl->set_var('apps_step_text',lang('Step %1 - Advanced Application Management',5));
+*/
+$setup_tpl->set_var('apps_step_text',lang('Step %1 - Advanced Application Management', ++$num));
 //	$GLOBALS['egw_info']['setup']['stage']['apps'] = $GLOBALS['egw_setup']->check_apps();
 switch($GLOBALS['egw_info']['setup']['stage']['db'])
 {
@@ -552,7 +552,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		break;
 }
 // Backup and restore section
-$setup_tpl->set_var('backup_step_text',lang('Step %1 - DB backup and restore',6));
+$setup_tpl->set_var('backup_step_text',lang('Step %1 - DB backup and restore', ++$num));
 if ($GLOBALS['egw_info']['setup']['stage']['db'] == 10 && !$no_backup_dir)
 {
 	$setup_tpl->set_var('backup_status_img',$completed);

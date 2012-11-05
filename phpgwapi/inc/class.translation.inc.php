@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare API - Translations
+ * EGroupware API - Translations
  *
  * @link http://www.egroupware.org
  * @author Joseph Engo <jengo@phpgroupware.org>
@@ -12,11 +12,14 @@
  */
 
 /**
- * eGroupWare API - Translations
+ * EGroupware API - Translations
  *
  * All methods of this class can now be called static.
  *
  * Translations are cached tree-wide via egw_cache class.
+ *
+ * Translations are no longer stored in database, but load directly from *.lang files into cache.
+ * Only exception as instance specific translations: mainscreen, loginscreen and custom (see $instance_specific_translations)
  */
 class translation
 {
@@ -48,17 +51,19 @@ class translation
 	const LANGUAGES_TABLE = 'egw_languages';
 
 	/**
-	 * Prefix of language files (historically 'phpgw_')
+	 * Directory for language files
 	 */
-	const LANGFILE_PREFIX = 'egw_';
-	const OLD_LANGFILE_PREFIX = 'phpgw_';
+	const LANG_DIR = 'lang';
 
 	/**
-	 * Maximal length of a message_id, all message_ids have to be unique in this length,
-	 * our column is varchar 128
+	 * Prefix of language files
 	 */
-	const MAX_MESSAGE_ID_LENGTH = 128;
+	const LANGFILE_PREFIX = 'egw_';
 
+	/**
+	 * Prefix of language files
+	 */
+	const LANGFILE_EXTENSION = '.lang';
 
 	/**
 	 * Reference to global db-class
@@ -174,6 +179,12 @@ class translation
 		}
 		self::$markuntranslated = (boolean) $GLOBALS['egw_info']['server']['markuntranslated'];
 
+		if (isset($GLOBALS['egw_info']['server']['translation_load_via']))
+		{
+			self::$load_via = $GLOBALS['egw_info']['server']['translation_load_via'];
+			//error_log(__METHOD__."() load_via set from config to ".array2string(self::$load_via));
+		}
+
 		if ($load_translations)
 		{
 			self::$lang_arr = self::$loaded_apps = array();
@@ -216,12 +227,11 @@ class translation
 		}
 		else
 		{
-			$new_key = strtolower(substr($key,0,self::MAX_MESSAGE_ID_LENGTH));
+			$new_key = strtolower($key);
 
 			if (isset(self::$lang_arr[$new_key]))
 			{
-				// we save the original key for performance
-				$ret = self::$lang_arr[$key] =& self::$lang_arr[$new_key];
+				$ret = self::$lang_arr[$new_key];
 			}
 		}
 		if (is_array($vars) && count($vars))
@@ -248,18 +258,35 @@ class translation
 	 *
 	 * By default the translations are read from the tree-wide cache
 	 *
-	 * @param string $app name of the application to add (or 'common' for the general translations)
-	 * @param string|boolean $lang=false 2 or 5 char lang-code or false for the users language
+	 * @param string|array $apps name(s) of application(s) to add (or 'common' for the general translations)
+	 * 	if multiple names given, they are requested in one request from cache and loaded in given order
+	 * @param string $lang=false 2 or 5 char lang-code or false for the users language
 	 */
-	static function add_app($app,$lang=False)
+	static function add_app($apps,$lang=null)
 	{
 		$lang = $lang ? $lang : self::$userlang;
+		$tree_level = $instance_level = array();
+		foreach((array)$apps as $app)
+		{
+			if (!isset(self::$loaded_apps[$app]) || self::$loaded_apps[$app] != $lang && $app != 'common')
+			{
+				if (in_array($app, self::$instance_specific_translations))
+				{
+					$instance_level[] = $app;
+				}
+				else
+				{
+					$tree_level[] = $app;
+				}
+			}
+		}
+
 		if ($app == 'custom') $lang = 'en';	// custom translations use only 'en'
 		if (!isset(self::$loaded_apps[$app]) || self::$loaded_apps[$app] != $lang)
 		{
 			//$start = microtime(true);
 			// for loginscreen we have to use a instance specific cache!
-			$instance_specific = in_array($app,self::$instance_specific_translations);
+			$instance_specific = in_array($app, self::$instance_specific_translations);
 			$loaded = egw_cache::getCache($instance_specific ? egw_cache::INSTANCE : egw_cache::TREE,
 				__CLASS__,$app.':'.$lang);
 
@@ -269,19 +296,28 @@ class translation
 			//error_log(__METHOD__."('$app', '$lang') egw_cache::getCache() returned ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
 			if (!$loaded && (!$instance_specific || is_null($loaded)))
 			{
-				//error_log(__METHOD__."('$app', '$lang') egw_cache::getCache() returned ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
-				$loaded =& self::load_app($app,$lang);
+				//error_log(__METHOD__."('$app', '$lang') instance_specific=$instance_specific, egw_cache::getCache() returned ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
+				if ($instance_specific)
+				{
+					$loaded =& self::load_app($app, $lang);
+				}
+				else
+				{
+					$loaded =& self::load_app_files($app, $lang);
+				}
+				//error_log(__METHOD__."('$app', '$lang') instance_specific=$instance_specific, load_app(_files)() returned ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
 				if ($loaded || $instance_specific)
 				{
-					//error_log(__METHOD__."('$app', '$lang') caching now ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
-					egw_cache::setCache($instance_specific ? egw_cache::INSTANCE : egw_cache::TREE,
+					$ok=egw_cache::setCache($instance_specific ? egw_cache::INSTANCE : egw_cache::TREE,
 						__CLASS__,$app.':'.$lang,$loaded);
+					//error_log(__METHOD__."('$app', '$lang') caching now ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded))." egw_cache::setCache() returned ".array2string($ok));
 				}
 			}
+			//error_log(__METHOD__."('$app', '$lang') loaded = ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
 
 			// we have to use array_merge! (+= does not overwrite common translations with different ones in an app)
 			// array_merge messes up translations of numbers, which make no sense and should be avoided anyway.
-			self::$lang_arr = array_merge(self::$lang_arr,$loaded);
+			if ($loaded) self::$lang_arr = array_merge(self::$lang_arr, $loaded);
 			self::$loaded_apps[$app] = $lang;
 			//error_log(__METHOD__."($app,$lang) took ".(1000*(microtime(true)-$start))." ms, loaded ".count($loaded)." phrases -> total=".count(self::$lang_arr).": ".function_backtrace());
 		}
@@ -299,56 +335,139 @@ class translation
 	static function &load_app($app,$lang)
 	{
 		//$start = microtime(true);
-		if ($app == 'setup')
+		if (is_null(self::$db)) self::init(false);
+		$loaded = array();
+		foreach(self::$db->select(self::LANG_TABLE,'message_id,content',array(
+			'lang'		=> $lang,
+			'app_name'	=> $app,
+		),__LINE__,__FILE__) as $row)
 		{
-			$loaded =& self::load_setup($lang);
-		}
-		else
-		{
-			if (is_null(self::$db)) self::init(false);
-			$loaded = array();
-			foreach(self::$db->select(self::LANG_TABLE,'message_id,content',array(
-				'lang'		=> $lang,
-				'app_name'	=> $app,
-			),__LINE__,__FILE__) as $row)
-			{
-				$loaded[strtolower($row['message_id'])] = $row['content'];
-			}
+			$loaded[strtolower($row['message_id'])] = $row['content'];
 		}
 		//error_log(__METHOD__."($app,$lang) took ".(1000*(microtime(true)-$start))." ms to load ".count($loaded)." phrases");
 		return $loaded;
 	}
 
 	/**
-	 * Adds setup's translations, they are not in the DB!
+	 * How to load translations for a given app
 	 *
-	 * @param string $lang 2 or 5 char lang-code
-	 * @return array with loaded phrases
+	 * Translations for common, preferences or admin are in spread over all applications.
+	 * API has translations for some pseudo-apps.
+	 *
+	 * @var array app => app(s) or string 'all-apps'
 	 */
-	static protected function &load_setup($lang)
-	{
-		foreach(array(
-			EGW_SERVER_ROOT.'/setup/lang/' . self::LANGFILE_PREFIX . $lang . '.lang',
-			EGW_SERVER_ROOT.'/setup/lang/' . self::OLD_LANGFILE_PREFIX . $lang . '.lang',
-			EGW_SERVER_ROOT.'/setup/lang/' . self::LANGFILE_PREFIX . 'en.lang',
-			EGW_SERVER_ROOT.'/setup/lang/' . self::OLD_LANGFILE_PREFIX . 'en.lang',
-		) as $fn)
-		{
-			if (file_exists($fn) && ($fp = fopen($fn,'r')))
-			{
-				$phrases = array();
-				while ($data = fgets($fp,8000))
-				{
-					// explode with "\t" and removing "\n" with str_replace, needed to work with mbstring.overload=7
-					list($message_id,,,$content) = explode("\t",$data);
-					$phrases[strtolower(trim($message_id))] = str_replace("\n",'',$content);
-				}
-				fclose($fp);
+	static $load_via = array(
+		'common' => 'all-apps',
+		'preferences' => 'all-apps',
+		'admin' => 'all-apps',
+		'jscalendar' => 'phpgwapi',
+		'sitemgr-link' => 'sitemgr',
+		'groupdav' => 'phpgwapi',
+		'login' => 'phpgwapi',
+	);
 
-				return self::convert($phrases,$phrases['charset']);
+	/**
+	 * Check if cached translations are up to date or invalidate cache if not
+	 *
+	 * Called via login.php for each interactive login.
+	 */
+	static function check_invalidate_cache()
+	{
+		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
+		$apps = array_keys($GLOBALS['egw_info']['user']['apps']);
+		$apps[] = 'phpgwapi';	// check the api too
+		foreach($apps as $app)
+		{
+			$file = self::get_lang_file($app, $lang);
+			// check if file has changed compared to what's cached
+			if (file_exists($file) && egw_cache::getTree(__CLASS__, $file) != filectime($file))
+			{
+				//error_log(__METHOD__."() $file modified");
+				self::invalidate_lang_file($app, $lang);
 			}
 		}
-		return array(); // nothing found (should never happen, as the en translations always exist)
+
+	}
+
+	/**
+	 * Invalidate cache for lang-file of $app and $lang
+	 *
+	 * @param string $app
+	 * @param string $lang
+	 */
+	static function invalidate_lang_file($app, $lang)
+	{
+		//error_log(__METHOD__."('$app', '$lang') invalidate translations $app:$lang");
+		egw_cache::unsetTree(__CLASS__, $app.':'.$lang);
+
+		foreach(self::$load_via as $load => $via)
+		{
+			if ($via == 'all-apps' || $via == $app)
+			{
+				//error_log(__METHOD__."('$app', '$lang') additional invalidate translations $load:$lang");
+				egw_cache::unsetTree(__CLASS__, $load.':'.$lang);
+			}
+		}
+	}
+
+	/**
+	 * Loads translations for an application direct from the lang-file(s)
+	 *
+	 * Never use directly, use add_app(), which employes caching (it has to be public, to act as callback for the cache!).
+	 *
+	 * @param string $app name of the application to add (or 'common' for the general translations)
+	 * @param string $lang=false 2 or 5 char lang-code or false for the users language
+	 * @return array the loaded strings
+	 */
+	static function &load_app_files($app,$lang)
+	{
+		$start = microtime(true);
+		$load_app = isset(self::$load_via[$app]) ? self::$load_via[$app] : $app;
+		$loaded = array();
+		foreach($load_app == 'all-apps' ? scandir(EGW_SERVER_ROOT) : (array)$load_app as $app_dir)
+		{
+			if (!is_dir(EGW_SERVER_ROOT.'/'.$app_dir) ||
+				!@file_exists($file=self::get_lang_file($app_dir, $lang)) ||
+				!($f = fopen($file, 'r')))
+			{
+				continue;
+			}
+			// store ctime of file we parse
+			egw_cache::setTree(__CLASS__, $file, filectime($file));
+
+			$line_nr = 0;
+			while(($line = fgetcsv($f, 1024, "\t")))
+			{
+				++$line_nr;
+				if (count($line) != 4) continue;
+				list($l_id,$l_app,$l_lang,$l_translation) = $line;
+				if ($l_lang != $lang) continue;
+				if ($l_app != $app)
+				{
+					// check if $l_app contained in file in $app_dir is mentioned in $load_via
+					if ($l_app != $app_dir && (!isset(self::$load_via[$l_app]) ||
+						!array_intersect((array)self::$load_via[$l_app], array('all-apps', $app_dir))))
+					{
+						if (!in_array($l_app,array('common','login')) && !file_exists(EGW_SERVER_ROOT.'/'.$l_app))
+						{
+							error_log(__METHOD__."() lang file $file contains invalid app '$l_app' on line $line_nr --> ignored");
+							continue;
+						}
+						// if not update load_via accordingly and store it as config
+						//error_log(__METHOD__."() load_via does not contain $l_app => $app_dir");
+						if (!isset(self::$load_via[$l_app])) self::$load_via[$l_app] = array($l_app);
+						if (!is_array(self::$load_via[$l_app])) self::$load_via[$l_app] = array(self::$load_via[$l_app]);
+						self::$load_via[$l_app][] = $app_dir;
+						config::save_value('translation_load_via', self::$load_via, 'phpgwapi');
+					}
+					continue;
+				}
+				$loaded[$l_id] = $l_translation;
+			}
+			fclose($f);
+		}
+		//error_log(__METHOD__."('$app', '$lang') returning ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded))." in ".number_format(microtime(true)-$start,3)." secs".' '.function_backtrace());
+		return $loaded;
 	}
 
 	/**
@@ -359,27 +478,34 @@ class translation
 	static $langs;
 
 	/**
-	 * returns a list of installed langs
+	 * Returns a list of available languages / translations
 	 *
+	 * @param boolean $translate=true translate language-names
 	 * @param boolean $force_read=false force a re-read of the languages
 	 * @return array with lang-code => descriptiv lang-name pairs
 	 */
-	static function get_installed_langs($force_read=false)
+	static function get_available_langs($translate=true, $force_read=false)
 	{
 		if (!is_array(self::$langs) || $force_read)
 		{
-			if (is_null(self::$db)) self::init(false);
-
-			// we only cache the translation installed for the instance, not the return of this method, which is user-language dependent
-			self::$langs = egw_cache::getInstance(__CLASS__,'installed_langs',array(__CLASS__,'read_installed_langs'));
-
-			if (!self::$langs)
+			if (!($f = fopen($file=EGW_SERVER_ROOT.'/setup/lang/languages','rb')))
 			{
-				return false;
+				throw new egw_exception("List of available languages (%1) missing!", $file);
 			}
-			foreach(self::$langs as $lang => $name)
+			while(($line = fgetcsv($f, null, "\t")))
 			{
-				self::$langs[$lang] = self::translate($name,False,'');
+				self::$langs[$line[0]] = $line[1];
+			}
+			fclose($f);
+
+			if ($translate)
+			{
+				if (is_null(self::$db)) self::init(false);
+
+				foreach(self::$langs as $lang => $name)
+				{
+					self::$langs[$lang] = self::translate($name,False,'');
+				}
 			}
 			uasort(self::$langs,'strcasecmp');
 		}
@@ -387,21 +513,16 @@ class translation
 	}
 
 	/**
-	 * Read the installed languages from the db
+	 * Returns a list of installed languages / translations
 	 *
-	 * Never use directly, use get_installed_langs(), which employes caching (it has to be public, to act as callback for the cache!).
+	 * Translations no longer need to be installed, therefore all available translations are returned here.
 	 *
-	 * @return array
+	 * @param boolean $force_read=false force a re-read of the languages
+	 * @return array with lang-code => descriptiv lang-name pairs
 	 */
-	static function &read_installed_langs()
+	static function get_installed_langs($force_read=false)
 	{
-		$langs = array();
-		foreach(self::$db->select(self::LANG_TABLE,'DISTINCT lang,lang_name','lang = lang_id',__LINE__,__FILE__,
-			false,'',false,0,','.self::LANGUAGES_TABLE) as $row)
-		{
-			$langs[$row['lang']] = $row['lang_name'];
-		}
-		return $langs;
+		return self::get_available_langs($force_read=false);
 	}
 
 	/**
@@ -420,7 +541,7 @@ class translation
 	}
 
 	/**
-	 * List all languages, first the installed ones, then the available ones and last the rest
+	 * List all languages, first available ones, then the rest
 	 *
 	 * @param boolean $force_read=false
 	 * @return array with lang_id => lang_name pairs
@@ -431,17 +552,8 @@ class translation
 		{
 			return egw_cache::getInstance(__CLASS__,'list_langs',array(__CLASS__,'list_langs'),array(true));
 		}
-		$languages = self::get_installed_langs();	// used translated installed languages
-
-		$availible = array();
-		$f = fopen(EGW_SERVER_ROOT.'/setup/lang/languages','rb');
-		while($line = fgets($f,200))
-		{
-			list($id,$name) = explode("\t",$line);
-			$availible[] = trim($id);
-		}
-		fclose($f);
-		$availible = "('".implode("','",$availible)."')";
+		$languages = self::get_installed_langs();	// available languages
+		$availible = "('".implode("','",array_keys($languages))."')";
 
 		// this shows first the installed, then the available and then the rest
 		foreach(self::$db->select(self::LANGUAGES_TABLE,array(
@@ -454,7 +566,7 @@ class translation
 		return $languages;
 	}
 
-	/**
+ 	/**
 	 * provides centralization and compatibility to locate the lang files
 	 *
 	 * @param string $app application name
@@ -463,27 +575,7 @@ class translation
 	 */
 	static function get_lang_file($app,$lang)
 	{
-		// Visit each lang file dir, look for a corresponding ${prefix}_lang file
-		$langprefix=EGW_SERVER_ROOT . SEP ;
-		$langsuffix=strtolower($lang) . '.lang';
-		$new_appfile = $langprefix . $app . SEP . 'lang' . SEP . self::LANGFILE_PREFIX . $langsuffix;
-		$cur_appfile = $langprefix . $app . SEP . 'setup' . SEP . self::LANGFILE_PREFIX . $langsuffix;
-		$old_appfile = $langprefix . $app . SEP . 'setup' . SEP . self::OLD_LANGFILE_PREFIX . $langsuffix;
-		// Note there's no chance for 'lang/phpgw_' files
-		$appfile = $new_appfile;	// set as default
-		if (file_exists($new_appfile))
-		{
-			// nothing to do, already default
-		}
-		elseif (file_exists($cur_appfile))
-		{
-			$appfile=$cur_appfile;
-		}
-		elseif (file_exists($old_appfile))
-		{
-			$appfile=$old_appfile;
-		}
-		return $appfile;
+		return EGW_SERVER_ROOT.'/'.$app.'/'.self::LANG_DIR.'/'.self::LANGFILE_PREFIX.$lang.self::LANGFILE_EXTENSION;
 	}
 
 	/**
@@ -641,319 +733,6 @@ class translation
 	}
 
 	/**
-	 * rejected lines from install_langs()
-	 *
-	 * @var array
-	 */
-	static $line_rejected = array();
-
-	/**
-	 * installs translations for the selected langs into the database
-	 *
-	 * @param array $langs langs to install (as data NOT keys (!))
-	 * @param string $upgrademethod='dumpold' 'dumpold' (recommended & fastest), 'addonlynew' languages, 'addmissing' phrases
-	 * @param string/boolean $only_app=false app-name to install only one app or default false for all
-	 */
-	static function install_langs($langs,$upgrademethod='dumpold',$only_app=False)
-	{
-		//error_log(__METHOD__.'('.array2string($langs).", $upgrademethod, $only_app)");
-		if (is_null(self::$db)) self::init(false);
-
-		@set_time_limit(0);	// we might need some time
-		if (!isset($GLOBALS['egw_info']['server']) && $upgrademethod != 'dumpold')
-		{
-			if (($ctimes = self::$db->select(config::TABLE,'config_value',array(
-				'config_app'	=> 'phpgwapi',
-				'config_name'	=> 'lang_ctimes',
-			),__LINE__,__FILE__)->fetchColumn()))
-			{
-				$GLOBALS['egw_info']['server']['lang_ctimes'] = unserialize(stripslashes($ctimes));
-			}
-		}
-		if (!is_array($langs) || !count($langs))
-		{
-			return;	// nothing to do
-		}
-		if ($upgrademethod == 'dumpold')
-		{
-			// dont delete the custom main- & loginscreen messages every time
-			self::$db->delete(self::LANG_TABLE,self::$db->expression(self::LANG_TABLE,
-				'NOT ',array('app_name'=>self::$instance_specific_translations)),__LINE__,__FILE__);
-			//echo '<br>Test: dumpold';
-			$GLOBALS['egw_info']['server']['lang_ctimes'] = array();
-		}
-		foreach($langs as $lang)
-		{
-			// run the update of each lang in a transaction
-			self::$db->transaction_begin();
-
-			$addlang = False;
-			if ($upgrademethod == 'addonlynew')
-			{
-				//echo "<br>Test: addonlynew - select count(*) from egw_lang where lang='".$lang."'";
-				if (!self::$db->select(self::LANG_TABLE,'COUNT(*)',array(
-					'lang' => $lang,
-				),__LINE__,__FILE__)->fetchColumn())
-				{
-					//echo '<br>Test: addonlynew - True';
-					$addlang = True;
-				}
-			}
-			if ($addlang && $upgrademethod == 'addonlynew' || $upgrademethod != 'addonlynew')
-			{
-				//echo '<br>Test: loop above file()';
-				if (!is_object($GLOBALS['egw_setup']))
-				{
-					$GLOBALS['egw_setup'] = CreateObject('setup.setup');
-					$GLOBALS['egw_setup']->db = clone(self::$db);
-				}
-				if (!isset($setup_info) && !$only_app)
-				{
-					$setup_info = $GLOBALS['egw_setup']->detection->get_versions();
-					$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions($setup_info);
-				}
-				$raw = array();
-				$apps = $only_app ? array($only_app) : array_keys($setup_info);
-				foreach($apps as $app)
-				{
-					$appfile=self::get_lang_file($app,$lang);
-					//echo '<br>Checking in: ' . $app;
-					if($GLOBALS['egw_setup']->app_registered($app) && (file_exists($appfile)))
-					{
-						//echo '<br>Including: ' . $appfile;
-						$lines = file($appfile);
-						foreach($lines as $line)
-						{
-							// explode with "\t" and removing "\n" with str_replace, needed to work with mbstring.overload=7
-							list($message_id,$app_name,,$content) = $_f_buffer = explode("\t",$line);
-							$content=str_replace(array("\n","\r"),'',$content);
-							if( count($_f_buffer) != 4 )
-							{
-								$line_display = str_replace(array("\t","\n"),
-									array("<font color='red'><b>\\t</b></font>","<font color='red'><b>\\n</b></font>"), $line);
-								self::$line_rejected[] = array(
-									'appfile' => $appfile,
-									'line'    => $line_display,
-								);
-							}
-							$message_id = substr(strtolower(chop($message_id)),0,self::MAX_MESSAGE_ID_LENGTH);
-							$app_name = chop($app_name);
-							$raw[$app_name][$message_id] = $content;
-						}
-						if ($GLOBALS['egw_info']['server']['lang_ctimes'] && !is_array($GLOBALS['egw_info']['server']['lang_ctimes']))
-						{
-							$GLOBALS['egw_info']['server']['lang_ctimes'] = unserialize($GLOBALS['egw_info']['server']['lang_ctimes']);
-						}
-						$GLOBALS['egw_info']['server']['lang_ctimes'][$lang][$app] = filectime($appfile);
-					}
-				}
-				$charset = strtolower(@$raw['common']['charset'] ? $raw['common']['charset'] : self::charset($lang));
-				//echo "<p>lang='$lang', charset='$charset', system_charset='self::$system_charset')</p>\n";
-				//echo "<p>raw($lang)=<pre>".print_r($raw,True)."</pre>\n";
-				foreach($raw as $app_name => $ids)
-				{
-					foreach($ids as $message_id => $content)
-					{
-						if (self::$system_charset)
-						{
-							$content = self::convert($content,$charset,self::$system_charset);
-						}
-						$addit = False;
-						//echo '<br>APPNAME:' . $app_name . ' PHRASE:' . $message_id;
-						if ($upgrademethod == 'addmissing')
-						{
-							//echo '<br>Test: addmissing';
-							$rs = self::$db->select(self::LANG_TABLE,"content,CASE WHEN app_name IN ('common') THEN 1 ELSE 0 END AS in_api",array(
-								'message_id' 	=> $message_id,
-								'lang'			=> $lang,
-								self::$db->expression(self::LANG_TABLE,'(',array(
-									'app_name' => $app_name
-								)," OR app_name='common') ORDER BY in_api DESC")),__LINE__,__FILE__);
-
-							if (!($row = $rs->fetch()))
-							{
-								$addit = True;
-							}
-							else
-							{
-								if ($row['in_api'])		// same phrase is in the api
-								{
-									$addit = $row['content'] != $content;	// only add if not identical
-								}
-								$row2 = $rs->fetch();
-								if (!$row['in_api'] || $app_name=='common' || $row2)	// phrase is alread in the db
-								{
-									$addit = $content != ($row2 ? $row2['content'] : $row['content']);
-									if ($addit)	// if we want to add/update it ==> delete it
-									{
-										self::$db->delete(self::LANG_TABLE,array(
-											'message_id'	=> $message_id,
-											'lang'			=> $lang,
-											'app_name'		=> $app_name,
-										),__LINE__,__FILE__);
-									}
-								}
-							}
-						}
-
-						if ($addit || $upgrademethod == 'addonlynew' || $upgrademethod == 'dumpold')
-						{
-							if($message_id && $content)
-							{
-								// echo "<br>adding - insert into egw_lang values ('$message_id','$app_name','$lang','$content')";
-								$result = self::$db->insert(self::LANG_TABLE,array(
-									'message_id'	=> $message_id,
-									'app_name'		=> $app_name,
-									'lang'			=> $lang,
-									'content'		=> $content,
-								),False,__LINE__,__FILE__);
-
-								if ((int)$result <= 0)
-								{
-									echo "<br>Error inserting record: egw_lang values ('$message_id','$app_name','$lang','$content')";
-								}
-							}
-						}
-					}
-				}
-			}
-			// commit now the update of $lang, before we fill the cache again
-			self::$db->transaction_commit();
-
-			$apps = array_keys($raw);
-			unset($raw);
-
-			foreach($apps as $app_name)
-			{
-				// update the tree-level cache, as we can not effectivly unset it in a multiuser enviroment,
-				// as users from other - not yet updated - instances update it again with an old version!
-				egw_cache::setTree(__CLASS__,$app_name.':'.$lang,($phrases=&self::load_app($app_name,$lang)));
-				//error_log(__METHOD__.'('.array2string($langs).",$upgrademethod,$only_app) updating tree-level cache for app=$app_name and lang=$lang: ".count($phrases)." phrases");
-			}
-		}
-		// delete the cache
-		egw_cache::unsetInstance(__CLASS__,'installed_langs');
-		egw_cache::unsetInstance(__CLASS__,'list_langs');
-
-		// update the ctimes of the installed langsfiles for the autoloading of the lang-files
-		//error_log(__METHOD__.'('.array2string($langs).",$upgrademethod,$only_app) storing lang_ctimes=".array2string($GLOBALS['egw_info']['server']['lang_ctimes']));
-		config::save_value('lang_ctimes',$GLOBALS['egw_info']['server']['lang_ctimes'],'phpgwapi');
-	}
-
-	/**
-	 * re-loads all (!) langfiles if one langfile for the an app and the language of the user has changed
-	 */
-	static function autoload_changed_langfiles()
-	{
-		//echo "<h1>check_langs()</h1>\n";
-		if ($GLOBALS['egw_info']['server']['lang_ctimes'] && !is_array($GLOBALS['egw_info']['server']['lang_ctimes']))
-		{
-			$GLOBALS['egw_info']['server']['lang_ctimes'] = unserialize($GLOBALS['egw_info']['server']['lang_ctimes']);
-		}
-		//error_log(__METHOD__."(): ling_ctimes=".array2string($GLOBALS['egw_info']['server']['lang_ctimes']));
-
-		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
-		$apps = $GLOBALS['egw_info']['user']['apps'];
-		$apps['phpgwapi'] = True;	// check the api too
-		foreach($apps as $app => $data)
-		{
-			$fname=self::get_lang_file($app,$lang);
-			$old_fname = EGW_SERVER_ROOT . "/$app/setup/" . self::OLD_LANGFILE_PREFIX . "$lang.lang";
-
-			if (file_exists($fname) || file_exists($fname = $old_fname))
-			{
-				if (!isset($GLOBALS['egw_info']['server']['lang_ctimes'][$lang]) ||
-					$GLOBALS['egw_info']['server']['lang_ctimes'][$lang][$app] != filectime($fname))
-				{
-					// update all langs
-					$installed = self::get_installed_langs();
-					//error_log(__METHOD__."(): self::install_langs(".array2string($installed).')');
-					self::install_langs($installed ? array_keys($installed) : array('en'));
-					break;
-				}
-			}
-		}
-	}
-
-	/* Following functions are called for app (un)install */
-
-	/**
-	 * gets array of installed languages, e.g. array('de','en')
-	 *
-	 * @param boolean $DEBUG=false debug messages or not, default not
-	 * @return array with installed langs
-	 */
-	static function get_langs($DEBUG=False)
-	{
-		if($DEBUG)
-		{
-			echo '<br>get_langs(): checking db...' . "\n";
-		}
-		if (!self::$langs)
-		{
-			self::get_installed_langs();
-		}
-		return self::$langs ? array_keys(self::$langs) : array();
-	}
-
-	/**
-	 * delete all lang entries for an application, return True if langs were found
-	 *
-	 * @param $appname app_name whose translations you want to delete
-	 * @param boolean $DEBUG=false debug messages or not, default not
-	 * @return boolean true if $appname had translations installed, false otherwise
-	 */
-	static function drop_langs($appname,$DEBUG=False)
-	{
-		if($DEBUG)
-		{
-			echo '<br>drop_langs(): Working on: ' . $appname;
-		}
-		if (is_null(self::$db)) self::init(false);
-
-		if (self::$db->select(self::LANG_TABLE,'COUNT(*)',array(
-			'app_name' => $appname
-		),__LINE__,__FILE__)->fetchColumn())
-		{
-			self::$db->delete(self::LANG_TABLE,array(
-				'app_name' => $appname
-			),__LINE__,__FILE__);
-			return True;
-		}
-		return False;
-	}
-
-	/**
-	 * process an application's lang files, calling get_langs() to see what langs the admin installed already
-	 *
-	 * @param string $appname app_name of application to process
-	 * @param boolean $DEBUG=false debug messages or not, default not
-	 * @param array/boolean $force_langs=false array with langs to install anyway (beside the allready installed ones), or false for none
-	 */
-	static function add_langs($appname,$DEBUG=False,$force_langs=False)
-	{
-		$langs = self::get_langs($DEBUG);
-		if(is_array($force_langs))
-		{
-			foreach($force_langs as $lang)
-			{
-				if (!in_array($lang,$langs))
-				{
-					$langs[] = $lang;
-				}
-			}
-		}
-
-		if($DEBUG)
-		{
-			echo '<br>add_langs(): chose these langs: ';
-			_debug_array($langs);
-		}
-
-		self::install_langs($langs,'addmissing',$appname);
-	}
-
-	/**
 	 * insert/update/delete one phrase in the lang-table
 	 *
 	 * @param string $lang
@@ -993,7 +772,7 @@ class translation
 				egw_cache::unsetCache(egw_cache::INSTANCE,__CLASS__,$app.':'.$key);
 			}
 		}
-	}
+ 	}
 
 	/**
 	 * read one phrase from the lang-table
@@ -1029,7 +808,7 @@ class translation
 		return self::$db->select(self::LANG_TABLE,'message_id',$where,__LINE__,__FILE__)->fetchColumn();
 	}
 
-	/**
+ 	/**
 	 * detect_encoding - try to detect the encoding
 	 *    only to be used if the string in question has no structure that determines his encoding
 	 * @param string - to be evaluated
