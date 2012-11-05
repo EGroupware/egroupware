@@ -192,15 +192,19 @@ class translation
 			{
 				self::$userlang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 			}
-			self::add_app('common');
+			$apps = array('common');
+			// for eTemplate apps, load etemplate before app itself (allowing app to overwrite etemplate translations)
+			if (class_exists('etemplate', false)) $apps[] = 'etemplate';
+			if ($GLOBALS['egw_info']['flags']['currentapp']) $apps[] = $GLOBALS['egw_info']['flags']['currentapp'];
+			// load instance specific translations last, so they can overwrite everything
+			$apps[] = 'custom';
+			self::add_app($apps);
+
 			if (!count(self::$lang_arr))
 			{
 				self::$userlang = 'en';
-				self::add_app('common');
+				self::add_app($apps);
 			}
-			self::add_app($GLOBALS['egw_info']['flags']['currentapp']);
-			// load instance specific translations
-			self::add_app('custom');
 		}
 	}
 
@@ -254,7 +258,7 @@ class translation
 	}
 
 	/**
-	 * Adds translations for an application
+	 * Adds translations for (multiple) application(s)
 	 *
 	 * By default the translations are read from the tree-wide cache
 	 *
@@ -262,65 +266,68 @@ class translation
 	 * 	if multiple names given, they are requested in one request from cache and loaded in given order
 	 * @param string $lang=false 2 or 5 char lang-code or false for the users language
 	 */
-	static function add_app($apps,$lang=null)
+	static function add_app($apps, $lang=null)
 	{
-		$lang = $lang ? $lang : self::$userlang;
+		//$start = microtime(true);
+		if (!$lang) $lang = self::$userlang;
 		$tree_level = $instance_level = array();
-		foreach((array)$apps as $app)
+		$apps = (array)$apps;
+		foreach($apps as $key => $app)
 		{
 			if (!isset(self::$loaded_apps[$app]) || self::$loaded_apps[$app] != $lang && $app != 'common')
 			{
 				if (in_array($app, self::$instance_specific_translations))
 				{
-					$instance_level[] = $app;
+					$instance_level[] = $app.':'.($app == 'custom' ? 'en' : $lang);
 				}
 				else
 				{
-					$tree_level[] = $app;
+					$tree_level[] = $app.':'.$lang;
 				}
 			}
-		}
-
-		if ($app == 'custom') $lang = 'en';	// custom translations use only 'en'
-		if (!isset(self::$loaded_apps[$app]) || self::$loaded_apps[$app] != $lang)
-		{
-			//$start = microtime(true);
-			// for loginscreen we have to use a instance specific cache!
-			$instance_specific = in_array($app, self::$instance_specific_translations);
-			$loaded = egw_cache::getCache($instance_specific ? egw_cache::INSTANCE : egw_cache::TREE,
-				__CLASS__,$app.':'.$lang);
-
-			// do NOT use automatic callback to cache result, as installing languages in setup can create
-			// a racecondition, therefore only cache existing non-instance-specific translations,
-			// never cache nothing found === array(), instance-specific translations can and should always be cached!
-			//error_log(__METHOD__."('$app', '$lang') egw_cache::getCache() returned ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
-			if (!$loaded && (!$instance_specific || is_null($loaded)))
+			else
 			{
-				//error_log(__METHOD__."('$app', '$lang') instance_specific=$instance_specific, egw_cache::getCache() returned ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
-				if ($instance_specific)
+				unset($apps[$key]);
+			}
+		}
+		// load all translations from cache at once
+		if ($tree_level) $tree_level = egw_cache::getTree(__CLASS__, $tree_level);
+		if ($instance_level) $instance_level = egw_cache::getInstance(__CLASS__, $instance_level);
+
+		// merging loaded translations together
+		foreach((array)$apps as $app)
+		{
+			$l = $app == 'custom' ? 'en' : $lang;
+			if (isset($tree_level[$app.':'.$l]))
+			{
+				$loaded =& $tree_level[$app.':'.$l];
+			}
+			elseif (isset($instance_level[$app.':'.$l]))
+			{
+				$loaded =& $instance_level[$app.':'.$l];
+			}
+			else
+			{
+				if (($instance_specific = in_array($app, self::$instance_specific_translations)))
 				{
-					$loaded =& self::load_app($app, $lang);
+					$loaded =& self::load_app($app, $l);
 				}
 				else
 				{
-					$loaded =& self::load_app_files($app, $lang);
+					$loaded =& self::load_app_files($app, $l);
 				}
 				//error_log(__METHOD__."('$app', '$lang') instance_specific=$instance_specific, load_app(_files)() returned ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
 				if ($loaded || $instance_specific)
 				{
 					$ok=egw_cache::setCache($instance_specific ? egw_cache::INSTANCE : egw_cache::TREE,
-						__CLASS__,$app.':'.$lang,$loaded);
+						__CLASS__, $app.':'.$l, $loaded);
 					//error_log(__METHOD__."('$app', '$lang') caching now ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded))." egw_cache::setCache() returned ".array2string($ok));
 				}
 			}
-			//error_log(__METHOD__."('$app', '$lang') loaded = ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded)));
-
-			// we have to use array_merge! (+= does not overwrite common translations with different ones in an app)
-			// array_merge messes up translations of numbers, which make no sense and should be avoided anyway.
 			if ($loaded) self::$lang_arr = array_merge(self::$lang_arr, $loaded);
-			self::$loaded_apps[$app] = $lang;
-			//error_log(__METHOD__."($app,$lang) took ".(1000*(microtime(true)-$start))." ms, loaded ".count($loaded)." phrases -> total=".count(self::$lang_arr).": ".function_backtrace());
+			self::$loaded_apps[$app] = $l;
 		}
+		//error_log(__METHOD__.'('.array2string($apps).", '$lang') took ".(1000*(microtime(true)-$start))." ms, loaded ".count($loaded)." phrases -> total=".count(self::$lang_arr));//.": ".function_backtrace());
 	}
 
 	/**
