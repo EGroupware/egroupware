@@ -200,7 +200,7 @@
 				$replyID = $_GET['reply_id'];
 				$replyIds = explode(',',$replyID);
 				$icServer = $this->bofelamimail->profileID;
-				$folder = base64_decode($_GET['folder']);
+				$folder = (isset($_GET['folder'])?base64_decode($_GET['folder']):base64_decode($_GET['mailbox']));
 				//_debug_array(array('reply_id'=>$replyIds,'folder'=>$folder));
 				if (!empty($folder) && !empty($replyID) ) {
 					// this fill the session data with the values from the original email
@@ -728,7 +728,7 @@
 
 		function composeFromDraft() {
 			$icServer = (int)$_GET['icServer'];
-			$folder = base64_decode($_GET['folder']);
+			$folder = (isset($_GET['folder'])?base64_decode($_GET['folder']):base64_decode($_GET['mailbox']));
 			$replyID = $_GET['uid'];
 
 			if (!empty($folder) && !empty($replyID) ) {
@@ -933,7 +933,7 @@
 
 		function composeAsNew() {
 			$icServer = (int)$_GET['icServer'];
-			$folder = base64_decode($_GET['folder']);
+			$folder = (isset($_GET['folder'])?base64_decode($_GET['folder']):base64_decode($_GET['mailbox']));
 			$replyID = $_GET['reply_id'];
 			$partID  = $_GET['part_id'];
 			if (!empty($folder) && !empty($replyID) ) {
