@@ -232,6 +232,8 @@ else
 
 if(@get_var('hooks', Array('GET')))
 {
+	egw_cache::flush(egw_cache::INSTANCE);
+
 	// Find & register all application hooks
 	foreach($setup_info as $appname => $info)
 	{

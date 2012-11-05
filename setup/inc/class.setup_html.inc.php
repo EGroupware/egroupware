@@ -69,7 +69,7 @@ class setup_html
 		}
 
 		$GLOBALS['header_template']->set_var('domain','');
-		
+
 		$setting = get_var('setting',Array('POST'));
 		while($setting && list($k,$v) = @each($setting))
 		{
@@ -135,7 +135,7 @@ class setup_html
 		{
 			$btn_logout = '<a href="index.php?FormLogout=' . $logoutfrom . '" class="link">' . lang('Logout').'</a>';
 			$check_install = '<a class="textsidebox" href="check_install.php">'.lang('Check installation').'</a>';
-			$register_hooks = '<a class="textsidebox" href="applications.php?hooks=1">'.lang('Find and Register all Application Hooks').'</a>';
+			$register_hooks = '<a class="textsidebox" href="applications.php?hooks=1">'.lang('Clear cache and register hooks').'</a>';
 		}
 
 		$GLOBALS['setup_tpl']->set_var('lang_setup', lang('setup'));
@@ -305,7 +305,7 @@ class setup_html
 			}
 		}
 		$select .= '</select>' . "\n";
-	
+
 		return $select;
 	}
 

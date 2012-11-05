@@ -513,6 +513,62 @@ class egw_cache
 	}
 
 	/**
+	 * Flush (delete) whole (instance) cache or application/class specific part of it
+	 *
+	 * @param $string $level=self::INSTANCE
+	 * @param string $app=null
+	 */
+	static public function flush($level=self::INSTANCE, $app=null)
+	{
+		$ret = true;
+		if (!($provider = self::get_provider($level)))
+		{
+			$ret = false;
+		}
+		else
+		{
+			$keys = array($level);
+			if ($app) $keys[] = $app;
+			if (!$provider->flush($keys))
+			{
+				if ($level == self::INSTANCE)
+				{
+					self::generate_instance_key();
+				}
+				else
+				{
+					$ret = false;
+				}
+			}
+		}
+		//error_log(__METHOD__."('$level', '$app') returning ".array2string($ret));
+		return $ret;
+	}
+
+	/**
+	 * Key used for instance specific data
+	 *
+	 * @var string
+	 */
+	private static $instance_key;
+
+	/**
+	 * Generate a new instance key and by doing so effectivly flushes whole instance cache
+	 *
+	 * @return string new key also stored in self::$instance_key
+	 */
+	static public function generate_instance_key()
+	{
+		$install_id = self::get_system_config('install_id');
+
+		self::$instance_key = self::INSTANCE.'-'.$install_id.'-'.microtime(true);
+		self::setTree(__CLASS__, $install_id, self::$instance_key);
+
+		//error_log(__METHOD__."() install_id='$install_id' returning '".self::$instance_key."'");
+		return self::$instance_key;
+	}
+
+	/**
 	 * Get keys array from $level, $app and $location
 	 *
 	 * @param string $level egw_cache::(TREE|INSTANCE)
@@ -537,7 +593,13 @@ class egw_cache
 					}
 					break;
 				case self::INSTANCE:
-					$bases[$level] = $level.'-'.self::get_system_config('install_id');
+					if (!isset(self::$instance_key))
+					{
+						self::$instance_key = self::getTree(__CLASS__, self::get_system_config('install_id'));
+						//error_log(__METHOD__."('$level',...) instance_key read from tree-cache=".array2string(self::$instance_key));
+						if (!isset(self::$instance_key)) self::generate_instance_key();
+					}
+					$bases[$level] = self::$instance_key;
 					break;
 			}
 		}
@@ -596,6 +658,16 @@ interface egw_cache_provider
 	 * @return boolean true on success, false on error (eg. $key not set)
 	 */
 	function delete(array $keys);
+
+	/**
+	 * Delete all data under given keys
+	 *
+	 * Providers can return false, if they do not support flushing part of the cache (eg. memcache)
+	 *
+	 * @param array $keys eg. array($level,$app,$location)
+	 * @return boolean true on success, false on error (eg. $key not set)
+	 */
+	function flush(array $keys);
 }
 
 /**
@@ -721,6 +793,19 @@ abstract class egw_cache_provider_check implements egw_cache_provider
 		}
 
 		return $failed;
+	}
+
+	/**
+	 * Delete all data under given keys
+	 *
+	 * Providers can return false, if they do not support flushing part of the cache (eg. memcache)
+	 *
+	 * @param array $keys eg. array($level,$app,$location)
+	 * @return boolean true on success, false on error (eg. $key not set)
+	 */
+	function flush(array $keys)
+	{
+		return false;
 	}
 }
 

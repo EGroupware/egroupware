@@ -117,12 +117,29 @@ class egw_cache_apc extends egw_cache_provider_check implements egw_cache_provid
 	}
 
 	/**
+	 * Delete all data under given keys
+	 *
+	 * @param array $keys eg. array($level,$app,$location)
+	 * @return boolean true on success, false on error (eg. $key not set)
+	 */
+	function flush(array $keys)
+	{
+		//error_log(__METHOD__."(".array2string($keys).")");
+		foreach(new APCIterator('user', $preg='/^'.preg_quote(self::key($keys).'/')) as $item)
+		{
+			//error_log(__METHOD__."(".array2string($keys).") preg='$preg': calling apc_delete('$item[key]')");
+			apc_delete($item['key']);
+		}
+		return true;
+	}
+
+	/**
 	 * Create a single key from $keys
 	 *
 	 * @param array $keys
 	 * @return string
 	 */
-	private function key(array $keys)
+	private static function key(array $keys)
 	{
 		return implode('::',$keys);
 	}
