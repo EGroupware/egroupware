@@ -333,7 +333,10 @@ class categories
 		//error_log(__METHOD__."($start,$limit,$query,$sort,$order,globals=$globals,parent=$parent_id,$unserialize_data) account_id=$this->account_id, appname=$this->app_name: ".function_backtrace());
 
 		$parents = $cats = array();
-		if (!($cats = $this->return_array('all',0,false,$query,$sort,$order,$globals,(array)$parent_id,-1,'',$filter,$unserialize_data)))
+
+		// Cast parent_id to array, but only if there is one
+		if($parent_id !== false && $parent_id !== null) $parent_id = (array)$parent_id;
+		if (!($cats = $this->return_array('all',0,false,$query,$sort,$order,$globals,$parent_id,-1,'',$filter,$unserialize_data)))
 		{
 			$cats = array();
 		}
@@ -341,31 +344,36 @@ class categories
 		{
 			$parents[] = $cat['id'];
 		}
-		while (count($parents))
+		
+		if($parent_id || !$cats) // Avoid wiping search results
 		{
-			if (!($subs = $this->return_array('all',0,false,$query,$sort,$order,$globals,$parents,-1,'',$filter,$unserialize_data)))
+			// Go find the children
+			while (count($parents))
 			{
-				break;
-			}
-			$parents = $children = array();
-			foreach($subs as $cat)
-			{
-				$parents[] = $cat['id'];
-				$children[$cat['parent']][] = $cat;
-			}
-			// sort the cats into the mains
-			if (count($children))
-			{
-				$cats2 = $cats;
-				$cats = array();
-				foreach($cats2 as $cat)
+				if (!($subs = $this->return_array('all',0,false,$query,$sort,$order,$globals,$parents,-1,'',$filter,$unserialize_data)))
 				{
-					$cats[] = $cat;
-					if (isset($children[$cat['id']]))
+					break;
+				}
+				$parents = $children = array();
+				foreach($subs as $cat)
+				{
+					$parents[] = $cat['id'];
+					$children[$cat['parent']][] = $cat;
+				}
+				// sort the cats into the mains
+				if (count($children))
+				{
+					$cats2 = $cats;
+					$cats = array();
+					foreach($cats2 as $cat)
 					{
-						foreach($children[$cat['id']] as $child)
+						$cats[] = $cat;
+						if (isset($children[$cat['id']]))
 						{
-							$cats[] = $child;
+							foreach($children[$cat['id']] as $child)
+							{
+								$cats[] = $child;
+							}
 						}
 					}
 				}
