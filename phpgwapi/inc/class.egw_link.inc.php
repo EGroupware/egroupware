@@ -979,7 +979,7 @@ class egw_link extends solink
 			}
 			else
 			{
-				throw egw_exception_assertion_failed("Missing 'mime_id' or 'mime_url' for mime-type '$type'!");
+				throw new egw_exception_assertion_failed("Missing 'mime_id' or 'mime_url' for mime-type '$type'!");
 			}
 			$popup = $data['mime_popup'];
 			unset($data['mime_popup']);
