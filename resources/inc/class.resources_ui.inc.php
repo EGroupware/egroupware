@@ -264,10 +264,9 @@ class resources_ui
 */
 			'delete' => array(
 				'caption' => 'Delete',
-				'confirm' => 'Delete this entry',
-				'confirm_multiple' => 'Delete these entries',
 				'group' => ++$group,
 				'disableClass' => 'no_delete',
+				'nm_action' => 'open_popup'
 			),
 		);
 		return $actions;
@@ -342,6 +341,17 @@ class resources_ui
 				$action_msg = lang('deleted');
 				foreach((array)$checked as $n => $id)
 				{
+					if($settings == 'promote')
+					{
+						// Make accessories into resources
+						$accessories = $this->bo->get_acc_list($id);
+						foreach($accessories as $acc_id => $name)
+						{
+							$acc = $this->bo->read($acc_id);
+							$acc['accessory_of'] = -1;
+							$this->bo->save($acc);
+						}
+					}
 					$error = $this->bo->delete($id);
 					if (!$error)
 					{

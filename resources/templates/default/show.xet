@@ -100,7 +100,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.show" template="" lang="" group="0" version="1.9.002">
+	<template id="resources.show" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
 			<columns>
 				<column width="100%"/>
@@ -128,12 +128,35 @@
 						<button label="Back" id="back"/>
 					</hbox>
 				</row>
+				<row>
+					<box class="action_popup prompt" id="delete_popup">
+						<vbox class="prompt">
+							<description value="Delete" class="promptheader"/>
+							<description value="Delete accessories?"/>
+							<hbox>
+								<button label="Yes - Delete" id="delete" onclick="nm_submit_popup(this); return false;"/>
+								<button label="No - Make them resources" id="delete_promote" onclick="nm_popup_action.id = 'delete_promote'; nm_submit_popup(this); return false;"/>
+								<buttononly label="No - Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
+							</hbox>
+						</vbox>
+					</box>
+				</row>
 			</rows>
 		</grid>
 		<styles>
 			.image16 img {
  max-width: 16px;
  max-height: 16px;
+}
+div.action_popup[id] {
+	position: fixed;
+	top: 200px;
+	left: 450px;
+	width: 76ex;
+	z-index: 20000;
+	display: none;
+	border-collapse:collapse;
+	border-spacing:0px
 }
 		</styles>
 	</template>

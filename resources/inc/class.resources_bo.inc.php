@@ -291,6 +291,16 @@ class resources_bo
 
 		if ($this->so->delete(array('res_id'=>$res_id)))
 		{
+			$accessories = $this->get_acc_list($res_id);
+			foreach($accessories as $acc_id => $name)
+			{
+				if($this->delete($acc_id))
+				{
+					$acc = $this->read($acc_id);
+					$acc['accessory_of'] = -1;
+					$this->save($acc);
+				}
+			};
 			$this->remove_picture($res_id);
 	 		egw_link::unlink(0,'resources',$res_id);
 	 		// delete the resource from the calendar
