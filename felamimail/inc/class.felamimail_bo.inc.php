@@ -1610,6 +1610,10 @@ class felamimail_bo
 	function getFolderStatus($_folderName,$ignoreStatusCache=false)
 	{
 		if (self::$debug) error_log(__METHOD__." called with:".$_folderName);
+		if (!is_string($_folderName) || empty($_folderName)) // something is wrong. Do not proceed
+		{
+			return false;
+		}
 		$retValue = array();
 		$retValue['subscribed'] = false;
 		if(!$icServer = $this->mailPreferences->getIncomingServer($this->profileID)) {
