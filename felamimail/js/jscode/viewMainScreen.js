@@ -580,8 +580,8 @@ function onNodeSelect(_nodeID) {
 	var Check = CopyOrMove;
 	var actionPending = false;
 //	var formData = new Array();
-	if(top.tree.getUserData(_nodeID, 'folderName')) {
-		if(CopyOrMoveCalled) {
+//-	if(top.tree.getUserData(_nodeID, 'folderName')) {
+//-		if(CopyOrMoveCalled) {
 			//alert('Called onNodeSelect');
 			/*
 			if(document.getElementsByName("folderAction")[0].value == "moveMessage") {
@@ -636,7 +636,7 @@ function onNodeSelect(_nodeID) {
 				}
 			*/
 			CopyOrMoveCalled = false;
-		} else {
+//-		} else {
 
 			mail_resetMessageSelect();
 			egw_appWindow('felamimail').setStatusMessage('<span style="font-weight: bold;">' + egw_appWindow('felamimail').lang_loading + ' ' + top.tree.getUserData(_nodeID, 'folderName') + '</span>');
@@ -644,8 +644,8 @@ function onNodeSelect(_nodeID) {
 			document.getElementById('divMessageList').innerHTML = '';
 			egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.updateMessageView",_nodeID);
 			egw_appWindow('felamimail').refreshFolderStatus(_nodeID);
-		}
-	}
+//-		}
+//-	}
 	CopyOrMove = true;
 }
 
