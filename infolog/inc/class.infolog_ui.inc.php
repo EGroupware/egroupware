@@ -1747,25 +1747,38 @@ else
 				{
 					continue;
 				}
-				$cont = explode(' ', $content[$key]);
-				$ckarray = array();
-				foreach($cont as &$word)
+				$contlines = explode("\n", $content[$key]);
+				$clarray = array();
+				foreach ($contlines as &$line)
 				{
-					// set blank behind all , and . if words are too long, apply wordwrap afterwards to make sure we get
-					if (strlen($word)>75)
+					if(strlen($line) < 75)
 					{
-						$buff = html::activate_links($word);
-						if (strlen($buff) == strlen($word)) // no links -> try to break overlong words
-						{
-							if (!(strpos($word,',')===false) && strpos($word,', ')===false) $word = str_replace(',',', ',$word);
-							if (!(strpos($word,'.')===false) && strpos($word,'. ')===false) $word = str_replace('.','. ',$word);
-							$word = wordwrap($word, 75, ' ', true);
-						}
+						$clarray[] = $line;
+						continue;
 					}
-					$ckarray[] =$word;
+					$cont = explode(' ', $line);
+					$ckarray = array();
+					foreach($cont as &$word)
+					{
+						// set blank behind all , and . if words are too long, apply wordwrap afterwards to make sure we get
+						if (strlen($word)>75)
+						{
+							$buff = html::activate_links($word);
+							if (strlen($buff) == strlen($word)) // no links -> try to break overlong words
+							{
+								if (!(strpos($word,',')===false) && strpos($word,', ')===false) $word = str_replace(',',', ',$word);
+								if (!(strpos($word,'.')===false) && strpos($word,'. ')===false) $word = str_replace('.','. ',$word);
+								$word = wordwrap($word, 75, ' ', true);
+							}
+						}
+						$ckarray[] =$word;
+					}
+					$line = join(' ',$ckarray);
+					unset($ckarray);
+					$clarray[] = $line;
 				}
-				$content[$key] = join(' ',$ckarray);
-				unset($ckarray);
+				$content[$key] = join("\n",$clarray);
+				unset($clarray);
 			}
 			if (is_numeric($_REQUEST['cat_id']))
 			{
