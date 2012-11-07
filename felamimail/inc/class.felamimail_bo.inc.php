@@ -48,7 +48,7 @@ class felamimail_bo
 				'keep_bad'=>2, //remove tags but keep element content (4 and 6 keep element content only if text (pcdata) is valid in parent element as per specs, this may lead to textloss if balance is switched on)
 				'balance'=>1,//turn off tag-balancing (config['balance']=>0). That will not introduce any security risk; only standards-compliant tag nesting check/filtering will be turned off (basic tag-balance will remain; i.e., there won't be any unclosed tag, etc., after filtering)
 				'direct_list_nest' => 1,
-				'allow_for_inline' => array('table'),//block elements allowed for nesting when only inline is allowed; Example span does not allow block elements as table; table is the only element tested so far
+				'allow_for_inline' => array('table','li'),//block elements allowed for nesting when only inline is allowed; Example span does not allow block elements as table; table is the only element tested so far
 				'tidy'=>1,
 				'elements' => "* -script",
 				'deny_attribute' => 'on*',
