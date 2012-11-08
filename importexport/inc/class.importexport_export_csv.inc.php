@@ -371,13 +371,18 @@ class importexport_export_csv implements importexport_iface_export_record
 			if($record->$name) $record->$name = ExecMethod($method, $record->$name);
 		}
 
+		static $cat_object;
+		if(is_null($cat_object)) $cat_object = new categories(false,$appname);
 		foreach((array)$fields['select-cat'] as $name) {
 			if($record->$name) {
 				$cats = array();
 				$ids = is_array($record->$name) ? $record->$name : explode(',', $record->$name);
 				foreach($ids as $n => $cat_id) {
-					if ($cat_id && $GLOBALS['egw']->categories->check_perms(EGW_ACL_READ,$cat_id))
-						$cats[] = $GLOBALS['egw']->categories->id2name($cat_id);
+
+					if ($cat_id && $cat_object->check_perms(EGW_ACL_READ,$cat_id))
+					{
+						$cats[] = $cat_object->id2name($cat_id);
+					}
 				}
 				$record->$name = implode(', ',$cats);
 			}
