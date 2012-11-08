@@ -1641,23 +1641,22 @@ class addressbook_ui extends addressbook_bo
 					{
 						egw_link::link('addressbook',$content['id'],$links);
 					}
+					$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','addressbook',{$content['id']});";
 					if ($button == 'save')
 					{
-						echo "<html><body><script>var referer = opener.location;opener.location.href = referer+(referer.search?'&':'?')+'msg=".
-							addslashes(urlencode($content['msg']))."'; window.close();</script></body></html>\n";
+						$content['js'] .= ' window.close();';
+						echo '<html><body onload="'.$content['js'].'"></body></html>';
 						common::egw_exit();
 					}
 					$content['link_to']['to_id'] = $content['id'];
-					$GLOBALS['egw_info']['flags']['java_script'] .= "<script language=\"JavaScript\">
-						var referer = opener.location;
-						opener.location.href = referer+(referer.search?'&':'?')+'msg=".addslashes(urlencode($content['msg']))."';</script>";
+					$GLOBALS['egw_info']['flags']['java_script'] .= "<script>{$content['js']}</script>";
 					break;
 
 				case 'delete':
 					if($this->action('delete',array($content['id']),false,$success,$failed,$action_msg,'',$content['msg']))
 					{
-						echo "<html><body><script>var referer = opener.location; opener.location.href = referer+(referer.search?'&':'?')+'msg=".
-							addslashes(urlencode(lang('Contact deleted')))."';window.close();</script></body></html>\n";
+						$js = "opener.egw_refresh('".str_replace("'","\\'",lang('Contact deleted'))."','addressbook',{$content['id']},'delete'); window.close();";
+						echo '<html><body onload="'.$js.'"></body></html>';
 						common::egw_exit();
 					}
 					else
