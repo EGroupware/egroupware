@@ -116,8 +116,6 @@ if(@get_var('submit',Array('POST')))
 	$install = get_var('install',Array('POST'));
 	$upgrade = get_var('upgrade',Array('POST'));
 
-	$do_langs = false;
-
 	if(!empty($remove) && is_array($remove))
 	{
 		$historylog = CreateObject('phpgwapi.historylog');
@@ -142,7 +140,6 @@ if(@get_var('submit',Array('POST')))
 			{
 				echo '<br />' . $app_title . ' ' . lang('hooks deregistered') . '.';
 			}
-			$do_langs = true;
 
 			if ($historylog->delete($appname))
 			{
@@ -190,7 +187,6 @@ if(@get_var('submit',Array('POST')))
 					echo '<br />' . $app_title . ' ' . lang('hooks registered') . '.';
 				}
 			}
-			$do_langs = true;
 		}
 	}
 
@@ -212,12 +208,7 @@ if(@get_var('submit',Array('POST')))
 			{
 				echo '<br />' . $app_title . ' ' . lang('upgraded') . '.';
 			}
-			$do_langs = true;
 		}
-	}
-	if ($do_langs)
-	{
-		$GLOBALS['egw_setup']->process->translation->drop_add_all_langs();
 	}
 	//$setup_tpl->set_var('goback',
 	echo '<br /><a href="applications.php?debug='.$DEBUG.'">' . lang('Go back') . '</a>';
