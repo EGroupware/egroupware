@@ -357,10 +357,13 @@
 
 		function createIMAPFilter($_folder, $_criterias)
 		{
+			$all = 'ALL UNDELETED'; //'ALL'
+			//_debug_array($_criterias);
+			if (self::$debug) error_log(__METHOD__.__LINE__.' Criterias:'.(!is_array($_criterias)?" none -> returning $all":array2string($_criterias)));
 			if(!is_array($_criterias)) {
-				return 'ALL';
+				return $all;
 			}
-		#	error_log(print_r($_criterias, true));
+			#error_log(print_r($_criterias, true));
 			$imapFilter = '';
 
 			#foreach($_criterias as $criteria => $parameter) {
@@ -384,11 +387,16 @@
 					case 'TO':
 						$imapFilter .= $criteria .' "'. $_criterias['string'] .'" ';
 						break;
+					case 'SINCE':
+					case 'BEFORE':
+					case 'ON':
+						$imapFilter .= $criteria .' '. $_criterias['string'].' ';
+						break;
 				}
 			}
 
-			#foreach($_criterias as $criteria => $parameter) {
-				$criteria = strtoupper($_criterias['status']);
+			foreach((array)$_criterias['status'] as $k => $criteria) {
+				$criteria = strtoupper($criteria);
 				switch ($criteria) {
 					case 'ANSWERED':
 					case 'DELETED':
@@ -403,17 +411,23 @@
 					case 'UNSEEN':
 						$imapFilter .= $criteria .' ';
 						break;
-
-					case 'BEFORE':
-					case 'ON':
-					case 'SINCE':
-						$imapFilter .= $criteria .' '. $_criterias['string'].' ';
+					case 'KEYWORD1':
+					case 'KEYWORD2':
+					case 'KEYWORD3':
+					case 'KEYWORD4':
+					case 'KEYWORD5':
+						$imapFilter .= "KEYWORD ".'$label'.substr(trim($criteria),strlen('KEYWORD')).' ';
 						break;
 				}
-			#}
-		#	error_log("Filter: $imapFilter");
+			}
+			if (isset($_criterias['range']) && !empty($_criterias['range']))
+			{
+				$imapFilter .= $_criterias['range'].' ';
+			}
+			if (self::$debug) error_log(__METHOD__.__LINE__." Filter: ".($imapFilter?$imapFilter:$all));
 			if($imapFilter == '') {
-				return 'ALL';
+				return $all;
+
 			} else {
 				return trim($imapFilter);
 				#return 'CHARSET '. strtoupper(self::$displayCharset) .' '. trim($imapFilter);
@@ -2015,8 +2029,23 @@
 				} else {
 					if (self::$debug) error_log(__METHOD__." Mailserver has NO SORT Capability");
 					$advFilter = 'CHARSET '. strtoupper(self::$displayCharset) .' '.$filter;
-					$sortResult = $this->icServer->search($advFilter, true);
-					if (PEAR::isError($sortResult)) $sortResult = $this->icServer->search($filter, true);
+					$resultByUid = true;
+					$sortResult = $this->icServer->search($advFilter, $resultByUid);
+					if (PEAR::isError($sortResult))
+					{
+						$sortResult = $this->icServer->search($filter, $resultByUid);
+						if (PEAR::isError($sortResult))
+						{
+							// some servers are not replying on a search for uids, so try this one
+							$resultByUid = false;
+							$sortResult = $this->icServer->search('*', $resultByUid);
+							if (PEAR::isError($sortResult))
+							{
+								error_log(__METHOD__.__LINE__.' PEAR_Error:'.array2string($sortResult->message));
+								$sortResult = null;
+							}
+						}
+					}
 					if(is_array($sortResult)) {
 							sort($sortResult, SORT_NUMERIC);
 					}
