@@ -368,7 +368,7 @@ class calendar_uilist extends calendar_ui
 			// would put it back, which you do from the series, not purge it
 			if($search_params['filter'] == 'deleted' && $event['recur_type'])
 			{
-				$event['class'] .= ' rowDeleted rowNoDelete';
+				$event['class'] .= ' rowSeriesDeleted rowDeleted rowNoDelete';
 			}
 
 			// Filemanager disabled for other applications
@@ -585,6 +585,12 @@ class calendar_uilist extends calendar_ui
 			}
 			switch($action)
 			{
+				case 'purgeseries':
+					// Delete an already deleted series
+					$recur_date = null;
+					// Make sure entire series is gone
+					$this->bo->delete($id, $recur_date,false,$skip_notification);
+					// fall through
 				case 'delete':
 					$action_msg = lang('deleted');
 					if ($id && $this->bo->delete($id, $recur_date,false,$skip_notification))
@@ -857,16 +863,25 @@ class calendar_uilist extends calendar_ui
 			'confirm_multiple' => 'Delete these entries',
 			'group' => $group,
 			'disableClass' => 'rowNoDelete',
+			'hideOnDisabled' => true,
 		);
 		// Add in deleted for admins
 		if($GLOBALS['egw_info']['server']['calendar_delete_history'])
 		{
+			$actions['purgeseries'] = array(
+				'caption' => 'Delete series',
+				'confirm' => 'Delete series',
+				'icon' => 'delete',
+				'group' => $group,
+				'enableClass' => 'rowSeriesDeleted',
+				'disableClass' => 'rowNoDelete',
+				'hideOnDisabled' => true,
+			);
 			$actions['undelete'] = array(
 				'caption' => 'Un-delete',
 				'hint' => 'Recover this event',
 				'icon' => 'revert',
 				'group' => $group,
-				'enabled' => 'javaScript:nm_enableClass',
 				'enableClass' => 'rowDeleted',
 				'hideOnDisabled' => true,
 			);
