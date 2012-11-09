@@ -2162,11 +2162,11 @@ function calendar_upgrade1_9_005()
  */
 function calendar_upgrade1_9_006()
 {
+	// PostgreSQL needs temporary a nullable column, to not stall on broken events without dates!
+	// We add that constrain in 1.9.007, after deleting all rows with range_start=0 OR range_start IS NULL
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','range_start',array(
 		'type' => 'int',
 		'precision' => '8',
-		'nullable' => False,
-		'default' => '0',	// PostgreSQL needs a temporary default, to create a nullable column!
 		'comment' => 'startdate (of range)'
 	));
 	$GLOBALS['egw_setup']->db->query('UPDATE egw_cal SET range_start = (SELECT MIN(cal_start) FROM egw_cal_dates WHERE egw_cal_dates.cal_id=egw_cal.cal_id)', __LINE__, __FILE__);
