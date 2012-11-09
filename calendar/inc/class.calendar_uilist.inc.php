@@ -364,11 +364,11 @@ class calendar_uilist extends calendar_ui
 			{
 				$event['class'] .= 'rowDeleted ';
 			}
-			// Disable everything for 'deleted' exceptions - there's nothing
-			// logical to do except undelete it
+			// Disable delete for 'deleted' exceptions - deleting the exception
+			// would put it back, which you do from the series, not purge it
 			if($search_params['filter'] == 'deleted' && $event['recur_type'])
 			{
-				$event['class'] .= ' rowNoView rowNoDelete rowDeleted';
+				$event['class'] .= ' rowDeleted rowNoDelete';
 			}
 
 			// Filemanager disabled for other applications
