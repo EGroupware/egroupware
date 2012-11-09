@@ -109,9 +109,15 @@
 				</tr>
 				<tr>
 					<td align="left" colspan="3">
-						<button type="button" onclick="javascript:egw_openWindowCentered('{url_addACL}','felamiMailACL','400','200');">{lang_add_acl}</button>
-						<button type="button" onClick="javascript:xajax_doXMLHTTP('felamimail.ajaxfelamimail.deleteACL', xajax.getFormValues('editACL'),document.getElementById('recursive').checked);document.getElementById('recursive').checked=false;">{lang_delete}</button>
 						<input type="checkbox" name="recursive" value="1" id="recursive"> {lang_setrecursively}
+					</td>
+				</tr>
+				<tr>
+					<td align="left" colspan="2">
+						<button type="button" onclick="javascript:egw_openWindowCentered('{url_addACL}','felamiMailACL','400','200');">{lang_add_acl}</button>
+					</td>
+					<td align="right">
+						<button type="button" onClick="javascript:xajax_doXMLHTTP('felamimail.ajaxfelamimail.deleteACL', xajax.getFormValues('editACL'),document.getElementById('recursive').checked);document.getElementById('recursive').checked=false;">{lang_delete}</button>
 						</form>
 					</td>
 				</tr>
