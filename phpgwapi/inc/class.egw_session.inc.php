@@ -256,7 +256,7 @@ class egw_session
 	 */
 	function commit_session()
 	{
-		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() sessionid=$this->sessionid, _SESSION[".self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]));
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() sessionid=$this->sessionid, _SESSION[".self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]).' '.function_backtrace());
 		self::encrypt($this->kp3);
 
 		session_write_close();
@@ -811,7 +811,7 @@ class egw_session
 		{
 			$sessionid = false;
 		}
-		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__.'() returning '.print_r($sessionid,true));
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() _SERVER[REQUEST_URI]='$_SERVER[REQUEST_URI]' returning ".print_r($sessionid,true));
 		return $sessionid;
 	}
 
@@ -1023,6 +1023,19 @@ class egw_session
 			),__LINE__,__FILE__)->fetchColumn();
 			//error_log(__METHOD__."() sessionid=$this->sessionid --> sessionid_access_log=$this->sessionid_access_log");
 		}
+
+		// check if we use cookies for the session, but no cookie set
+		// happens eg. in sitemgr (when redirecting to a different domain) or with new java notification app
+		if ($GLOBALS['egw_info']['server']['usecookies'] && isset($_REQUEST[self::EGW_SESSION_NAME]) &&
+			$_REQUEST[self::EGW_SESSION_NAME] === $this->sessionid &&
+			(!isset($_COOKIE[self::EGW_SESSION_NAME]) || $_COOKIE[self::EGW_SESSION_NAME] !== $_REQUEST[self::EGW_SESSION_NAME]))
+		{
+			if (self::ERROR_LOG_DEBUG) error_log("--> session::verify($sessionid) SUCCESS, but NO required cookies set --> setting them now");
+			self::egw_setcookie(self::EGW_SESSION_NAME,$this->sessionid);
+			self::egw_setcookie('kp3',$this->kp3);
+			self::egw_setcookie('domain',$this->account_domain);
+		}
+
 		if (self::ERROR_LOG_DEBUG) error_log("--> session::verify($sessionid) SUCCESS");
 
 		return true;
