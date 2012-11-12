@@ -103,7 +103,6 @@ class select_widget
 	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
 		list($rows,$type,$type2,$type3,$type4,$type5,$type6,$enhance) = explode(',',$cell['size']);
-echo "$name ($rows,$type,$type2,$type3,$type4,$type5,$type6,$enhance)<br />";
 
 		$extension_data['type'] = $cell['type'];
 
