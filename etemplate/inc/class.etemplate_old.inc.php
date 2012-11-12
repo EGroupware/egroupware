@@ -1576,9 +1576,21 @@ class etemplate_old extends boetemplate
 
 				if ($set_readonlys_all) unset($readonlys['__ALL__']);
 				break;
-			case 'select':	// size:[linesOnMultiselect|emptyLabel,extraStyleMulitselect]
+			case 'select':	// size:[linesOnMultiselect|emptyLabel,extraStyleMulitselect, [<varies>,]{5} enhance]
 				$sels = array();
 				list($multiple,$extraStyleMultiselect) = explode(',',$cell_options,2);
+
+				// Allow widget to specify using enhanced select or not
+				$c_options = explode(',',$cell_options);
+				if(array_key_exists('enhance', $cell))
+				{
+					$enhance = $cell['enhance'];
+				}
+				else if (count($c_options >= 8))
+				{
+					$enhance = ($c_options[7] == '1' || $c_options[7] == 'true');
+				}
+
 				if (!empty($multiple) && 0+$multiple <= 0)
 				{
 					$sels[''] = $multiple < 0 ? 'all' : $multiple;
@@ -1634,7 +1646,7 @@ class etemplate_old extends boetemplate
 					else
 					{
 						$html .= html::select($form_name.($multiple > 1 ? '[]' : ''),$value,$sels,
-							$cell['no_lang'],$options,$multiple);
+							$cell['no_lang'],$options,$multiple,$enhance);
 					}
 					if (!self::$request->isset_to_process($form_name))
 					{

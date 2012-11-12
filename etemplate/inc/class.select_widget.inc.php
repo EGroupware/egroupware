@@ -102,7 +102,8 @@ class select_widget
 	 */
 	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
-		list($rows,$type,$type2,$type3,$type4,$type5,$type6) = explode(',',$cell['size']);
+		list($rows,$type,$type2,$type3,$type4,$type5,$type6,$enhance) = explode(',',$cell['size']);
+echo "$name ($rows,$type,$type2,$type3,$type4,$type5,$type6,$enhance)<br />";
 
 		$extension_data['type'] = $cell['type'];
 
@@ -416,6 +417,7 @@ class select_widget
 					$cell['sel_options'][$n] = sprintf($format,$n);
 				}
 				$cell['no_lang'] = True;
+				$cell['enhance'] = false;
 				break;
 
 			case 'select-hour':
@@ -426,6 +428,7 @@ class select_widget
 						sprintf('%02d',$h);
 				}
 				$cell['no_lang'] = True;
+				$cell['enhance'] = false;
 				break;
 
 			case 'select-app':	// type2: ''=users enabled apps, 'installed', 'all' = not installed ones too
@@ -481,6 +484,10 @@ class select_widget
 					$cell['sel_options'] = $type ? egw_time::getTimezones() : egw_time::getUserTimezones($value);
 				}
 				break;
+		}
+		if(!array_key_exists('enhance', $cell) && !is_null($enhance))
+		{
+			$cell['enhance'] = $enhance;
 		}
 		if ($rows > 1)
 		{

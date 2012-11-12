@@ -219,10 +219,13 @@ class html
 	 * @param boolean $no_lang NOT run the labels of the options through lang(), default false=use lang()
 	 * @param string $options additional options (e.g. 'width')
 	 * @param int $multiple number of lines for a multiselect, default 0 = no multiselect, < 0 sets size without multiple
+	 * @param boolean $enhanced Use enhanced selectbox with search.  Null for default yes if more than 12 options.
 	 * @return string to set for a template or to echo into html page
 	 */
-	static function select($name, $key, $arr=0,$no_lang=false,$options='',$multiple=0)
+	static function select($name, $key, $arr=0,$no_lang=false,$options='',$multiple=0,$enhanced=null)
 	{
+		if(is_null($enhanced)) $enhanced = (count($arr) > 12);
+
 		if (!is_array($arr))
 		{
 			$arr = array('no','yes');
@@ -284,6 +287,11 @@ class html
 		}
 		$out .= "</select>\n";
 
+		if($enhanced) {
+			egw_framework::validate_file('/phpgwapi/js/jquery/chosen/chosen.jquery.min.js');
+			egw_framework::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css',null,false);
+			$out .= "<script>\$j(function() {\$j('select[name=\"$name\"]').chosen();});</script>\n";
+		}
 		return $out;
 	}
 

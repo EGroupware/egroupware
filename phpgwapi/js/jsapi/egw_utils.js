@@ -204,6 +204,47 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 		*/
 		encodePathComponent: function(_comp) {
 			return _comp.replace(/#/g,'%23').replace(/\?/g,'%3F').replace(/\//g,'');
+		},
+
+		/**
+		 * If an element has display: none (or a parent like that), it has no size.
+		 * Use this to get its dimensions anyway.
+		 *
+		 * @param element HTML element
+		 * @param boolOuter Pass true to get outerWidth() / outerHeight() instead of width() / height()
+		 *
+		 * @return Object [w: width, h: height]
+		 * 
+		 * @author Ryan Wheale
+		 * @see http://www.foliotek.com/devblog/getting-the-width-of-a-hidden-element-with-jquery-using-width/
+		 */
+		getHiddenDimensions: function(element, boolOuter) {
+			var $item = $j(element);
+			var props = { position: "absolute", visibility: "hidden", display: "block" };
+			var dim = { "w":0, "h":0 };
+			var $hiddenParents = $item.parents().andSelf().not(":visible");
+
+			var oldProps = [];
+			$hiddenParents.each(function() {
+				var old = {};
+				for ( var name in props ) {
+					old[ name ] = this.style[ name ];
+					this.style[ name ] = props[ name ];
+				}
+				oldProps.push(old);
+			});
+
+			dim.w = (boolOuter === true) ? $item.outerWidth() : $item.width();
+			dim.h = (boolOuter === true) ? $item.outerHeight() : $item.height();
+
+			$hiddenParents.each(function(i) {
+				var old = oldProps[i];
+				for ( var name in props ) {
+					this.style[ name ] = old[ name ];
+				}
+			});
+			//$.log(”w: ” + dim.w + ”, h:” + dim.h)
+			return dim;
 		}
 	};
 
