@@ -116,7 +116,7 @@ class uiuserdata
 				"style='width: 100%;' id='mailRoutingAddress'",
 				5)
 			);
-			
+			if (isset($userData["quotaUsed"]) && $userData["quotaUsed"]>0) $this->t->set_var('lang_qoutainmbyte',lang('qouta size in MByte').'<br><b><i>('.(int)$userData["quotaUsed"].' '.lang('MB used').')</i></b>');	
 			$this->t->set_var("quotaLimit",$userData["quotaLimit"]);
 		
 			$this->t->set_var("mailLocalAddress",$userData["mailLocalAddress"]);

@@ -469,18 +469,18 @@ class defaultimap extends Net_IMAP
 	 * used by admin connections only
 	 *
 	 * @param string $_username
-	 * @return string the quota for specified user
+	 * @param string $_what - what to retrieve either QMAX, USED or ALL is supported
+	 * @returnmixed the quota for specified user (by what) or array with all available Quota Information, or false
 	 */
-	function getQuotaByUser($_username)
+	function getQuotaByUser($_username, $_what='QMAX')
 	{
 		$mailboxName = $this->getUserMailboxString($_username);
-		//error_log(__METHOD__.$mailboxName);
 		$storageQuota = $this->getStorageQuota($mailboxName);
-		//error_log(__METHOD__.$_username);
-		//error_log(__METHOD__.$mailboxName);
+		//error_log(__METHOD__.' Username:'.$_username.' Mailbox:'.$mailboxName.' Quota('.$_what.'):'.array2string($storageQuota));
 		if ( PEAR::isError($storageQuota)) error_log(__METHOD__.$storageQuota->message);
-		if(is_array($storageQuota) && isset($storageQuota['QMAX'])) {
-			return (int)$storageQuota['QMAX'];
+		if(is_array($storageQuota) && (isset($storageQuota[$_what])||($_what=='ALL' && (isset($storageQuota['QMAX'])||isset($storageQuota['USED']))))) {
+			//error_log(__METHOD__.' '.array2string($storageQuota).' '.$_what.' => '.(int)$storageQuota[$_what]);
+			return ($_what=='ALL'?$storageQuota:(int)$storageQuota[$_what]);
 		}
 
 		return false;

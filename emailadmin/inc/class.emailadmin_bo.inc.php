@@ -783,6 +783,7 @@ class emailadmin_bo extends so_sql
 			$ogServer = $userProfile->getOutgoingServer($profileID);
 			if(($ogServer instanceof defaultsmtp)) {
 				$ogUserData = $ogServer->getUserData($_accountID);
+				//_debug_array($ogUserData);
 			}
 			// query imap server only, if account is active (or no smtp server configured)
 			if (!isset($ogUserData) || $ogUserData['accountStatus'] == 'active')
@@ -792,9 +793,11 @@ class emailadmin_bo extends so_sql
 				$icServer = $userProfile->getIncomingServer($profileID);
 				if(($icServer instanceof defaultimap) && $username = $GLOBALS['egw']->accounts->id2name($_accountID)) {
 					$icUserData = $icServer->getUserData($username);
+					//_debug_array($icUserData);
 				}
 			}
-			return (array)$icUserData + (array)$ogUserData;
+			// we consider ogServer Data as more recent, assuming ldap is the leading system here (being in control of the attributes it is managing)
+			return (array)$ogUserData + (array)$icUserData;
 		}
 
 		return false;

@@ -77,6 +77,7 @@ ldap settings	emailadmin	en	LDAP settings
 leave empty for no quota	emailadmin	en	Leave empty for no quota
 mail settings	admin	en	Mail settings
 manage stationery templates	emailadmin	en	Manage stationery templates
+mb used	emailadmin	en	MB used
 name of organisation	emailadmin	en	Name of organization
 no alternate email address	emailadmin	en	No alternate email address
 no encryption	emailadmin	en	No encryption

@@ -67,7 +67,7 @@ class emailadmin_dovecot extends defaultimap
 			{
 				$this->adminUsername = substr($this->adminUsername, $pos+1);
 			}
-			$this->adminUsername = $this->username.'*'.$this->adminUsername;
+			$this->adminUsername = $this->loginName.'*'.$this->adminUsername;
 		}
 		return parent::openConnection($_adminConnection, $_timeout);
 	}
@@ -188,6 +188,15 @@ class emailadmin_dovecot extends defaultimap
 	 */
 	function getUserData($_username)
 	{
+		// we need a connection to fetch the namespace to get the users mailbox string
+		if($this->_connected === false) $this->openConnection();
+		$bufferUsername = $this->username;
+		$bufferLoginName = $this->loginName;
+		$this->username = $_username;
+		$nameSpaces = $this->getNameSpaces();
+		$mailBoxName = $this->getUserMailboxString($this->username);
+		$this->loginName = str_replace((is_array($nameSpaces)?$nameSpaces['others'][0]['name']:'user/'),'',$mailBoxName); // we need to strip the namespacepart
+		// now disconnect to be able to reestablish the connection with the targetUser while we go on
 		if($this->_connected === true)
 		{
 			//error_log(__METHOD__."try to disconnect");
@@ -195,13 +204,14 @@ class emailadmin_dovecot extends defaultimap
 		}
 
 		$userData = array();
-
 		// we are authenticated with master but for current user
 		if($this->openConnection(true) === true && ($quota = $this->getStorageQuotaRoot('INBOX')) && !PEAR::isError($quota))
 		{
-			$userData['quotaLimit'] = $quota['QMAX'] / 1024;
+			$userData['quotaLimit'] = (int) ($quota['QMAX'] / 1024);
+			$userData['quotaUsed'] = (int) ($quota['USED'] / 1024);
 		}
-
+		$this->username = $bufferUsername;
+		$this->loginName = $bufferLoginName;
 		$this->disconnect();
 
 		return $userData;

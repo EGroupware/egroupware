@@ -77,6 +77,7 @@ ldap settings	emailadmin	de	LDAP-Einstellungen
 leave empty for no quota	emailadmin	de	leer lassen um Quota zu deaktivieren
 mail settings	admin	de	E-Mail-Einstellungen
 manage stationery templates	emailadmin	de	Briefpapiervorlagen verwalten
+mb used	emailadmin	de	MB belegt
 name of organisation	emailadmin	de	Name der Organisation
 no alternate email address	emailadmin	de	keine zusätzlichen E-Mail-Adressen
 no encryption	emailadmin	de	keine Verschlüsselung
