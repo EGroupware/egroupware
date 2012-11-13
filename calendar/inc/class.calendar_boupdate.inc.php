@@ -723,7 +723,6 @@ class calendar_boupdate extends calendar_bo
 		{
 			$notify_msg = $this->cal_prefs['notifyAdded'];	// use a default
 		}
-		$details = $this->_get_event_details($event,$action,$event_arr,$disinvited);
 
 		// add all group-members to the notification, unless they are already participants
 		foreach($to_notify as $userid => $statusid)
@@ -755,7 +754,18 @@ class calendar_boupdate extends calendar_bo
 			if (!is_numeric($userid))
 			{
 				$res_info = $this->resource_info($userid);
+
+				// check if responsible of a resource has read rights on event (might be private!)
+				if ($res_info['app'] == 'resources' && $res_info['responsible'] &&
+					!$this->check_perms(EGW_ACL_READ, $event, 0, 'ts', null, $res_info['responsible']))
+				{
+					// --> use only details from (private-)cleared event only containing resource ($userid)
+					// reading server timezone, to be able to use cleared event for iCal generation further down
+					$cleared_event = $this->read($event['id'], null, true, 'server');
+					$this->clear_private_infos($cleared_event, array($userid));
+				}
 				$userid = $res_info['responsible'];
+
 				if (!isset($userid))
 				{
 					if (empty($res_info['email'])) continue;	// no way to notify
@@ -791,7 +801,7 @@ class calendar_boupdate extends calendar_bo
 					$GLOBALS['egw_info']['user']['preferences'] = $part_prefs = $preferences->read_repository();
 
 					$GLOBALS['egw']->accounts->get_account_name($userid,$lid,$details['to-firstname'],$details['to-lastname']);
-					$details['to-fullname'] = common::display_fullname('',$details['to-firstname'],$details['to-lastname']);
+					$fullname = common::display_fullname('',$details['to-firstname'],$details['to-lastname']);
 				}
 				else	// external email address: use preferences of event-owner, plus some hardcoded settings (eg. ical notification)
 				{
@@ -803,18 +813,22 @@ class calendar_boupdate extends calendar_bo
 					$part_prefs = $owner_prefs;
 					$part_prefs['calendar']['receive_updates'] = $owner_prefs['calendar']['notify_externals'];
 					$part_prefs['calendar']['update_format'] = 'ical';	// use ical format
-					$details['to-fullname'] = $res_info && !empty($res_info['name']) ? $res_info['name'] : $userid;
+					$fullname = $res_info && !empty($res_info['name']) ? $res_info['name'] : $userid;
 				}
 				if (!self::update_requested($userid,$part_prefs,$msg_type,$old_event,$new_event,$role))
 				{
 					continue;
 				}
+
 				if ($lang !== $part_prefs['common']['lang'])
 				{
 					translation::init();
-					$details = $this->_get_event_details($event,$action,$event_arr,$disinvited);
 					$lang = $part_prefs['common']['lang'];
 				}
+				$details = $this->_get_event_details(isset($cleared_event) ? $cleared_event : $event,
+					$action, $event_arr, $disinvited);
+				$details['to-fullname'] = $fullname;
+
 				// event is in user-time of current user, now we need to calculate the tz-difference to the notified user and take it into account
 				if (!isset($part_prefs['common']['tz'])) $part_prefs['common']['tz'] = $GLOBALS['egw_info']['server']['server_timezone'];
 				$timezone = new DateTimeZone($part_prefs['common']['tz']);
@@ -856,7 +870,7 @@ class calendar_boupdate extends calendar_bo
 							$calendar_ical->setSupportedFields('full');	// full iCal fields+event TZ
 							// we need to pass $event[id] so iCal class reads event again,
 							// as event is in user TZ, but iCal class expects server TZ!
-							$ics = $calendar_ical->exportVCal(array($event['id']),'2.0',$method);
+							$ics = $calendar_ical->exportVCal(array(isset($cleared_event) ? $cleared_event : $event['id']),'2.0',$method);
 							unset($calendar_ical);
 						}
 						$attachment = array(
@@ -865,7 +879,7 @@ class calendar_boupdate extends calendar_bo
 							'encoding' => '8bit',
 							'type' => 'text/calendar; method='.$method,
 						);
-						$subject = $event['title'];
+						$subject = isset($cleared_event) ? $cleared_event['title'] : $event['title'];
 						// fall through
 					case 'extended':
 
