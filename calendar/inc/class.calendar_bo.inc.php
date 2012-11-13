@@ -1550,6 +1550,8 @@ class calendar_bo
 				$names[$id] .= ' '.$role;
 			}
 		}
+		natcasesort($names);
+
 		return $names;
 	}
 
