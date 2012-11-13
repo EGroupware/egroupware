@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-10 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-12 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -1759,6 +1759,8 @@ function open_edit(series)
 		$status_class = 'calEventAllAccepted';
 		foreach($event['participants'] as $id => $status)
 		{
+			if ($id < 0) continue;	// as we cant accept/reject groups, we dont care about them here
+
 			calendar_so::split_status($status,$quantity,$role);
 
 			switch ($status)
