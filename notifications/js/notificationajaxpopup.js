@@ -133,14 +133,42 @@ function append_notification_message(_id, _message, _browser_notify) {
 	// Notification API
 	if(_browser_notify)
 	{
-		var notice = webkitNotifications.createHTMLNotification(_browser_notify);
-		notice.ondisplay = function() {
-			// Confirm when user gets to see it - no close needed
-			// Wait a bit to let it load first, or it might not be there when requested.  
-			window.setTimeout( function() {
-				xajax_doXMLHTTP("notifications.notifications_ajax.confirm_message", _id);
-			}, 2000);
-		};
-		notice.show();
+		var notice;
+		if(webkitNotifications.createHTMLNotification)
+		{
+			notice = webkitNotifications.createHTMLNotification(_browser_notify);
+		}
+		else if (webkitNotifications.createNotification)
+		{
+			// Pull the subject of the messasge, if possible
+			var message = /<b>(.*?)<\/b>/.exec(_message);
+			if(message && message[1])
+			{
+				_message = message[1];
+			}
+			else
+			{
+				_message = _message.replace(/<(?:.|\n)*?>/gm, '');
+			}
+			notice = webkitNotifications.createNotification('', "Egroupware",_message);
+
+			// When they click, bring up the popup for full info
+			notice.onclick = function() {
+				window.focus();
+				egwpopup_display();
+				this.close();
+			}
+		}
+		if(notice)
+		{
+			notice.ondisplay = function() {
+				// Confirm when user gets to see it - no close needed
+				// Wait a bit to let it load first, or it might not be there when requested.  
+				window.setTimeout( function() {
+					xajax_doXMLHTTP("notifications.notifications_ajax.confirm_message", _id);
+				}, 2000);
+			};
+			notice.show();
+		}
 	}
 }
