@@ -57,6 +57,20 @@ class felamimail_bo
 			);
 
 	/**
+	 * static used define abbrevations for common access rights
+	 *
+	 * @array
+	 */
+	static $aclShortCuts = array('' => array('label'=>'none','title'=>'The user has no rights whatsoever.'),
+						'lrs'		=> array('label'=>'readable','title'=>'Allows a user to read the contents of the mailbox.'),
+						'lprs'		=> array('label'=>'post','title'=>'Allows a user to read the mailbox and post to it through the delivery system by sending mail to the submission address of the mailbox.'),
+						'ilprs'		=> array('label'=>'append','title'=>'Allows a user to read the mailbox and append messages to it, either via IMAP or through the delivery system.'),
+						'cdilprsw'	=> array('label'=>'write','title'=>'Allows a user to read the maibox, post to it, append messages to it, and delete messages or the mailbox itself. The only right not given is the right to change the ACL of the mailbox.'),
+						'acdilprsw'	=> array('label'=>'all','title'=>'The user has all possible rights on the mailbox. This is usually granted to users only on the mailboxes they own.'),
+						'custom'	=> array('label'=>'custom','title'=>'User defined combination of rights for the ACL'),
+					);
+
+	/**
 	 * errorMessage
 	 *
 	 * @var string $errorMessage

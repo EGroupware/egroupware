@@ -72,7 +72,7 @@ class ajaxfelamimail
 			$response = new xajaxResponse();
 			//$_recursive=false;
 			if(!empty($_accountName)) {
-				$acl = implode('',(array)$_aclData['acl']);
+				$acl = implode('',(array)$_aclData['aclSelection']);
 				$data = $this->bofelamimail->setACL($this->sessionDataAjax['folderName'], $_accountName, $acl, $_recursive);
 			}
 
@@ -221,39 +221,50 @@ class ajaxfelamimail
 		 */
 		function createACLTable($_acl)
 		{
+			if($this->_debug) error_log(__METHOD__.__LINE__.array2string($_acl));
 			$aclList = array('l','r','s','w','i','p','c','d','a');
-			$aclShortCuts = array(	'custom'	=> 'custom',
-									'lrs'		=> 'readable',
-									'lrsp'		=> 'post',
-									'lrsip'		=> 'append',
-									'lrswipcd'	=> 'write',
-									'lrswipcda'	=>	'all'
-								);
+			
+			$lang["lang_acl_l"] = "Look up the name of the mailbox (but not its contents).";
+			$lang["lang_acl_r"] = "Read the contents of the mailbox.";
+			$lang["lang_acl_s"] = "Preserve the 'seen' and 'recent' status of messages across IMAP sessions.";
+			$lang["lang_acl_w"] = "Write (change message flags such as 'recent', 'answered', and 'draft').";
+			$lang["lang_acl_i"] = "Insert (move or copy) a message into the mailbox.";
+			$lang["lang_acl_p"] = "Post a message in the mailbox by sending the message to the mailbox's submission address (for example, post a message in the 'cyrushelp' mailbox by sending a message to 'sysadmin+cyrushelp@somewhere.net').";
+			$lang["lang_acl_c"] = "Create a new mailbox below the top-level mailbox (ordinary users cannot create top-level mailboxes).";
+			$lang["lang_acl_d"] = "Delete a message and/or the mailbox itself.";
+			$lang["lang_acl_a"] = "Administer the mailbox (change the mailbox's ACL).";
+
 
 			ksort($_acl);
 
 			foreach($_acl as $accountAcl) {
 				$accountName = $accountAcl['USER'];
+				$accountAcl['RIGHTS'] = str_split($accountAcl['RIGHTS']);
+				sort($accountAcl['RIGHTS'],SORT_STRING);
+				$accountAcl['RIGHTS'] =join("",$accountAcl['RIGHTS']);
+				$accountAcl['RIGHTSSELECTED'] = str_replace(array('e','k','t','x'),'',$accountAcl['RIGHTS']);
+
 				$row .= '<tr class="row_on">';
 
 				$row .= "<td><input type=\"checkbox\" name=\"accountName[]\" id=\"accountName\" value=\"$accountName\"></td>";
 
 				$row .= "<td>$accountName</td>";
 
+				$selectFrom = html::select('identity', $accountAcl['RIGHTSSELECTED'], felamimail_bo::$aclShortCuts, false, "id=\"predefinedFor_$accountName\" style='width: 100px;' onChange=\"xajax_doXMLHTTP('felamimail.ajaxfelamimail.updateACL','$accountName',this.value)\"");
+
+				$row .= "<td align='center'>$selectFrom</td>";
+
 				foreach($aclList as $acl) {
-					$row .= "<td><input type=\"checkbox\" name=\"acl[$accountName][$acl]\" id=\"acl_$accountName_$acl\"".
+					$row .= "<td><input type=\"checkbox\" name=\"acl[$accountName][$acl]\" id=\"acl_".$accountName."_"."$acl\" title=\"".lang($lang['lang_acl_'.trim($acl)])."\"".
 						(strpos($accountAcl['RIGHTS'],$acl) !== false ? 'checked' : '') .
-						" onclick=\"xajax_doXMLHTTP('felamimail.ajaxfelamimail.updateSingleACL','$accountName','$acl',this.checked,document.getElementById('recursive').checked); document.getElementById('recursive').checked=false; document.getElementById('predefinedFor_$accountName').options[0].selected=true\"</td>";
+						" onclick=\"xajax_doXMLHTTP('felamimail.ajaxfelamimail.updateSingleACL','$accountName','$acl',this.checked,document.getElementById('recursive').checked); document.getElementById('recursive').checked=false; document.getElementById('predefinedFor_$accountName').options[0].selected=true;adaptPresetSelection('$accountName');\"</td>";
 				}
 
-				$selectFrom = html::select('identity', $accountAcl['RIGHTS'], $aclShortCuts, false, "id=\"predefinedFor_$accountName\" style='width: 100px;' onChange=\"xajax_doXMLHTTP('felamimail.ajaxfelamimail.updateACL','$accountName',this.value)\"");
-
-				$row .= "<td>$selectFrom</td>";
 
 				$row .= "</tr>";
 			}
 
-			return "<table border=\"0\" style=\"width: 100%;\"><tr class=\"th\"><th>&nbsp;</th><th style=\"width:100px;\">Name</th><th>L</th><th>R</th><th>S</th><th>W</th><th>I</th><th>P</th><th>C</th><th>D</th><th>A</th><th>&nbsp;</th></tr>$row</table>";
+			return "<table border=\"0\" style=\"width: 100%;\"><tr class=\"th\"><th>&nbsp;</th><th style=\"width:100px;\">Name</th><th>".lang('Common ACL')."</th><th>L</th><th>R</th><th>S</th><th>W</th><th>I</th><th>P</th><th>C</th><th>D</th><th>A</th></tr>$row</table>";
 		}
 
 		function deleteACL($_aclData,$_recursive=false)
@@ -1644,6 +1655,7 @@ class ajaxfelamimail
 		 */
 		function updateACLView()
 		{
+			//error_log(__METHOD__.__LINE__);
 			$response = new xajaxResponse();
 			if($folderACL = $this->bofelamimail->getIMAPACL($this->sessionDataAjax['folderName'])) {
 				$response->addAssign("aclTable", "innerHTML", $this->createACLTable($folderACL));

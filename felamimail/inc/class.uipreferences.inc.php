@@ -72,7 +72,12 @@
 			$this->t->set_file(array("body" => "preferences_manage_folder.tpl"));
 			$this->t->set_block('body','main');
 			$this->t->set_block('body','add_acl');
-
+			//$accountSelection = html::select('accountName',0,array(0=>'ich'),true, "id=\"accountName\"");
+			$accountSelection ='<input type="text" name="accountName" id="accountName" style="width:100%;">';
+			$this->t->set_var('accountSelection',$accountSelection);
+			$aclShortCuts = felamimail_bo::$aclShortCuts;
+			unset($aclShortCuts['custom']);
+			$this->t->set_var('aclSelection',html::select('aclSelection',0,$aclShortCuts,false,'id="aclSelection" style="width:100%"'));
 			$this->translate();
 
 			$this->t->pparse("out","add_acl");
@@ -105,11 +110,10 @@
 				case 'felamimail.uipreferences.listFolder':
 				case 'felamimail.uipreferences.addACL':
 				case 'felamimail.uipreferences.listSelectFolder':
-					egw_framework::validate_file('tabs','tabs');
 					// this call loads js and css for the treeobject
 					html::tree(false,false,false,null,'foldertree','','',false,'/',null,false);
 					egw_framework::validate_file('jscode','listFolder','felamimail');
-					$GLOBALS['egw']->js->set_onload('javascript:initAll();');
+					$GLOBALS['egw']->js->set_onload('javascript:updateACLView();');
 					break;
 			}
 
@@ -818,6 +822,15 @@
 			$this->t->set_var("bg01",$GLOBALS['egw_info']["theme"]["bg01"]);
 			$this->t->set_var("bg02",$GLOBALS['egw_info']["theme"]["bg02"]);
 			$this->t->set_var("bg03",$GLOBALS['egw_info']["theme"]["bg03"]);
+			$this->t->set_var("lang_acl_l",lang("Look up the name of the mailbox (but not its contents)."));
+			$this->t->set_var("lang_acl_r",lang("Read the contents of the mailbox."));
+			$this->t->set_var("lang_acl_s",lang("Preserve the 'seen' and 'recent' status of messages across IMAP sessions."));
+			$this->t->set_var("lang_acl_w",lang("Write (change message flags such as 'recent', 'answered', and 'draft')."));
+			$this->t->set_var("lang_acl_i",lang("Insert (move or copy) a message into the mailbox."));
+			$this->t->set_var("lang_acl_p",lang("Post a message in the mailbox by sending the message to the mailbox's submission address (for example, post a message in the 'cyrushelp' mailbox by sending a message to 'sysadmin+cyrushelp@somewhere.net')."));
+			$this->t->set_var("lang_acl_c",lang("Create a new mailbox below the top-level mailbox (ordinary users cannot create top-level mailboxes)."));
+			$this->t->set_var("lang_acl_d",lang("Delete a message and/or the mailbox itself."));
+			$this->t->set_var("lang_acl_a",lang("Administer the mailbox (change the mailbox's ACL)."));
 		}
 	}
 
