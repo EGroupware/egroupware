@@ -823,6 +823,36 @@ class calendar_uiforms extends calendar_ui
 		return "window.open('".egw::link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
 	}
 
+	/**
+	 * Get title of a uid / calendar participant
+	 *
+	 * @param int|string $uid
+	 * @return string
+	 */
+	public function get_title($uid)
+	{
+		if (is_numeric($uid))
+		{
+			return common::grab_owner_name($uid);
+		}
+		elseif (($info = $this->bo->resource_info($uid)))
+		{
+			return $info['name'] ? $info['name'] : $info['email'];
+		}
+		return '#'.$uid;
+	}
+
+	/**
+	 * Compare two uid by there title
+	 *
+	 * @param int|string $uid1
+	 * @param int|string $uid2
+	 * @return int see strnatcasecmp
+	 */
+	public function uid_title_cmp($uid1, $uid2)
+	{
+		return strnatcasecmp($this->get_title($uid1), $this->get_title($uid2));
+	}
 
 	/**
 	 * Edit a calendar event
@@ -1000,6 +1030,8 @@ function replace_eTemplate_onsubmit()
 			{
 				$name = $this->bo->resources[$type]['app'];
 			}
+			// sort participants (in there group/app) by title
+			uksort($participants, array($this, 'uid_title_cmp'));
 			foreach($participants as $id => $status)
 			{
 				$uid = $type == 'u' ? $id : $type.$id;
@@ -1031,23 +1063,14 @@ function replace_eTemplate_onsubmit()
 				$readonlys[$row.'[status]'] = !$this->bo->check_status_perms($uid,$event);
 				$readonlys["delete[$uid]"] = $preserv['hide_delete'] || !$this->bo->check_perms(EGW_ACL_EDIT,$event);
 				// todo: make the participants available as links with email as title
-				if ($name == 'accounts')
-				{
-					$content['participants'][$row++]['title'] = common::grab_owner_name($id);
-				}
-				elseif (($info = $this->bo->resource_info($uid)))
-				{
-					$content['participants'][$row++]['title'] = $info['name'] ? $info['name'] : $info['email'];
-				}
-				else
-				{
-					$content['participants'][$row++]['title'] = '#'.$uid;
-				}
+				$content['participants'][$row++]['title'] = $this->get_title($uid);
 				// enumerate group-invitations, so people can accept/reject them
 				if ($name == 'accounts' && $GLOBALS['egw']->accounts->get_type($id) == 'g' &&
 					($members = $GLOBALS['egw']->accounts->members($id,true)))
 				{
 					$sel_options['status']['G'] = lang('Select one');
+					// sort members by title
+					usort($members, array($this, 'uid_title_cmp'));
 					foreach($members as $member)
 					{
 						if (!isset($participants[$member]) && $this->bo->check_perms(EGW_ACL_READ,0,$member))
