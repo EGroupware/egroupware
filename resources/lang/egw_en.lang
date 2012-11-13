@@ -1,4 +1,5 @@
 accessories of	resources	en	Accessories of
+accessories	resources	en	Accessories
 accessories:	resources	en	Accessories:
 actions	resources	en	Actions
 add accessory	resources	en	Add accessory
@@ -82,6 +83,7 @@ read permissions	resources	en	Read permissions
 related links	resources	en	Related links
 resource id	resources	en	Resource ID
 resources	common	en	Resources
+resources and accessories	resources	en	Resources and Accessories
 resources csv export	resources	en	Resources CSV export
 resources csv import	resources	en	Resources CSV import
 resources list	resources	en	Resources list

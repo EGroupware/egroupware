@@ -58,6 +58,7 @@ class resources_ui
 			{
 				unset($sessiondata['view_accs_of']);
 				unset($sessiondata['no_filter']);
+				unset($sessiondata['filter2']);
 				$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
 				return $this->index();
 			}
@@ -120,8 +121,7 @@ class resources_ui
 		$content['nm']['get_rows'] 	= 'resources.resources_bo.get_rows';
 		$content['nm']['no_filter'] 	= False;
 		$content['nm']['filter_label']	= lang('Category');
-		$content['nm']['filter_help']	= lang('Select a category'); // is this used???
-		$content['nm']['no_filter2']	= true;
+		$content['nm']['filter2_label']	= 'Display';
 		$content['nm']['filter_no_lang'] = true;
 		$content['nm']['no_cat']	= true;
 		$content['nm']['bottom_too']	= true;
@@ -136,8 +136,14 @@ class resources_ui
 			$content['nm'] = $nm_session_data;
 		}
 		$content['nm']['options-filter']= array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ);
+		$content['nm']['options-filter2'] = resources_bo::$filter_options;
+
 		if($_GET['search']) {
 			$content['nm']['search'] = $_GET['search'];
+		}
+		if($_GET['view_accs_of'])
+		{
+			$content['nm']['view_accs_of'] = (int)$_GET['view_accs_of'];
 		}
 		$content['nm']['actions']	= $this->get_actions();
 
@@ -181,10 +187,10 @@ class resources_ui
 		if($content['nm']['view_accs_of'])
 		{
 			$master = $this->bo->so->read(array('res_id' => $content['nm']['view_accs_of']));
-			$content['view_accs_of'] = $content['nm']['view_accs_of'];
+			$content['view_accs_of'] = $content['nm']['filter2'] = $content['nm']['view_accs_of'];
+			$content['nm']['options-filter2'] = array($master['res_id'] => lang('accessories of') . ' ' . $master['name']);
 			$content['nm']['get_rows'] 	= 'resources.resources_bo.get_rows';
 			$content['nm']['no_filter'] 	= true;
-			$content['nm']['no_filter2'] 	= true;
 			$no_button['back'] = false;
 			$no_button['add'] = true;
 			$no_button['add_sub'] = false;
@@ -222,6 +228,16 @@ class resources_ui
 				'popup' => egw_link::get_registry('resources', 'view_popup'),
 				'group' => $group,
 			),
+			'view-acc' => array(
+				'caption' => 'View accessories',
+				'icon' => 'view_acc',
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=resources.resources_ui.index&view_accs_of=$id',
+				'group' => $group,
+				'enableClass' => 'hasAccessories'
+			),
+
+
 			'add' => array(
 				'caption' => 'Add',
 				'url' => 'menuaction=resources.resources_ui.edit',

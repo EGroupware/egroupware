@@ -38,6 +38,16 @@ class resources_bo
 	 */
 	var $cats;
 
+	/**
+	 * List of filter options
+	 */
+	public static $filter_options = array(
+		-1 => 'resources',
+		-2 => 'accessories',
+		-3 => 'resources and accessories'
+		// Accessories of a resource added when resource selected
+	);
+
 	function __construct()
 	{
 		$this->so = new resources_so();
@@ -71,8 +81,34 @@ class resources_bo
 		if ($this->debug) _debug_array($query);
 		$read_onlys = 'res_id,name,short_description,quantity,useable,bookable,buyable,cat_id,location,storage_info';
 
-		$accessory_of = $query['view_accs_of'] ? $query['view_accs_of'] : -1;
- 		$filter = array('accessory_of' => $accessory_of);
+		$filter = array();
+		$join = '';
+		$extra_cols = array();
+
+		// Sub-query to get the count of accessories
+		$acc_join = "LEFT JOIN (SELECT accessory_of AS accessory_id, count(res_id) as acc_count FROM {$this->so->table_name} GROUP BY accessory_of) AS acc ON acc.accessory_id = {$this->so->table_name}.res_id ";
+
+		switch($query['filter2'])
+		{
+			case -1:
+				// Resources only
+				$filter['accessory_of'] = -1;
+				$join = $acc_join;
+				$extra_cols[] = 'acc_count';
+				break;
+			case -2:
+				// Accessories only
+				$filter[] = 'accessory_of != -1';
+				break;
+			case -3:
+				// All
+				$join = $acc_join;
+				$extra_cols[] = 'acc_count';
+				break;
+			default:
+				$filter['accessory_of'] = $query['view_accs_of'];
+		}
+		
 		if ($query['filter'])
 		{
 			if (($children = $this->acl->get_cats(EGW_ACL_READ,$query['filter'])))
@@ -102,7 +138,7 @@ class resources_bo
 		$start = (int)$query['start'];
 
 		foreach ($filter as $k => $v) $query['col_filter'][$k] = $v;
-		$this->so->get_rows($query, $rows, $readonlys);
+		$this->so->get_rows($query, $rows, $readonlys, $join, false, false, $extra_cols);
 		$nr = $this->so->total;
 
 		// we are called to serve bookable resources (e.g. calendar-dialog)
@@ -150,21 +186,12 @@ class resources_bo
 				$readonlys["buyable[$resource[res_id]]"] = true;
 				$resource['class'] .= 'no_buy ';
 			}
-			$readonlys["view_acc[$resource[res_id]]"] = true;
-			$links = egw_link::get_links('resources',$resource['res_id']);
-			if(count($links) != 0 && $accessory_of == -1)
+			$readonlys["view_acc[{$resource['res_id']}]"] = ($resource['acc_count'] == 0);
+			if($resource['acc_count'])
 			{
-				foreach ($links as $link_num => $link)
-				{
-					if($link['app'] == 'resources')
-					{
-						if($this->so->get_value('accessory_of',$link['res_id']) != -1)
-						{
-							$readonlys["view_acc[$resource[res_id]]"] = false;
-						}
-					}
-				}
+				$resource['class'] .= 'hasAccessories ';
 			}
+
 			$rows[$num]['picture_thumb'] = $this->get_picture($resource);
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}
