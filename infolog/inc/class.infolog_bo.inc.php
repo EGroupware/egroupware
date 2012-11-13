@@ -841,6 +841,7 @@ class infolog_bo
 					return false;	// no edit rights from the group-owner and no implicit rights (delegated and sufficient rights)
 				}
 			}
+			$values['info_access'] = 'public';	// group-owners are allways public
 		}
 		elseif (!$values['info_id'] && !$values['info_owner'] || $GLOBALS['egw']->accounts->get_type($values['info_owner']) == 'g')
 		{
