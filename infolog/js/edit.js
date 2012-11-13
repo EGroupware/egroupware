@@ -8,7 +8,7 @@ function add_email_from_ab(ab_id,info_cc)
 	
 	if (!ab || !ab.value)
 	{
-		jQuery("tr.hiddenRow").css("display", "block");
+		jQuery("tr.hiddenRow").css("display", "table-row");
 	}
 	else
 	{
