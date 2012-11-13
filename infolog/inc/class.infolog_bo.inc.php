@@ -853,6 +853,7 @@ class infolog_bo
 					return false;
 				}
 			}
+			$values['info_access'] = 'public';	// group-owners are allways public
 		}
 		elseif (!$values['info_id'] && !$values['info_owner'] || $GLOBALS['egw']->accounts->get_type($values['info_owner']) == 'g')
 		{
