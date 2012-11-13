@@ -52,6 +52,11 @@ class html
 	static $api_js_url;
 
 	/**
+	 * Automatically turn on enhanced selectboxes if there's more than this many options
+	 */
+	const SELECT_ENHANCED_ROW_COUNT = 12;
+
+	/**
 	 * initialise our static vars
 	 */
 	static function _init_static()
@@ -224,7 +229,7 @@ class html
 	 */
 	static function select($name, $key, $arr=0,$no_lang=false,$options='',$multiple=0,$enhanced=null)
 	{
-		if(is_null($enhanced)) $enhanced = (count($arr) > 12);
+		if(is_null($enhanced)) $enhanced = (count($arr) > self::SELECT_ENHANCED_ROW_COUNT);
 
 		if (!is_array($arr))
 		{
@@ -288,7 +293,7 @@ class html
 		$out .= "</select>\n";
 
 		if($enhanced) {
-			egw_framework::validate_file('/phpgwapi/js/jquery/chosen/chosen.jquery.min.js');
+			egw_framework::validate_file('/phpgwapi/js/jquery/chosen/chosen.jquery.js');
 			egw_framework::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css',null,false);
 			$out .= "<script>\$j(function() {\$j('select[name=\"$name\"]').chosen();});</script>\n";
 		}
@@ -311,9 +316,11 @@ class html
 	 * @param string $style='' extra style settings like "width: 100%", default '' none
 	 * @return string to set for a template or to echo into html page
 	 */
-	static function checkbox_multiselect($name, $key, $arr=0,$no_lang=false,$options='',$multiple=3,$selected_first=true,$style='')
+	static function checkbox_multiselect($name, $key, $arr=0,$no_lang=false,$options='',$multiple=3,$selected_first=true,$style='',$enhanced = null)
 	{
 		//echo "<p align=right>checkbox_multiselect('$name',".array2string($key).",".array2string($arr).",$no_lang,'$options',$multiple,$selected_first,'$style')</p>\n";
+		if(is_null($enhanced)) $enhanced = (count($arr) > self::SELECT_ENHANCED_ROW_COUNT);
+
 		if (!is_array($arr))
 		{
 			$arr = array('no','yes');
@@ -325,6 +332,8 @@ class html
 			$name .= '[]';
 		}
 		$base_name = substr($name,0,-2);
+
+		if($enhanced) return self::select($name, $key, $arr,$no_lang,$options,$multiple,$enhanced);
 
 		if (!is_array($key))
 		{

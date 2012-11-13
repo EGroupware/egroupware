@@ -52,6 +52,10 @@ class uiaccountsel
 		{
 			$this->account_selection = 'primary_group';
 		}
+
+		// Include these here, framework may have already sent header by the time the account select is made
+		egw_framework::validate_file('/phpgwapi/js/jquery/chosen/chosen.jquery.js');
+		egw_framework::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css',null,false);
 	}
 
 	/**
@@ -292,7 +296,11 @@ class uiaccountsel
 		}
 		elseif (!$only_groups && ($lines == 1 || $lines > 0 && $this->account_selection == 'primary_group'))
 		{
-			$js = "if (selectBox = document.getElementById('$element_id')) if (!selectBox.multiple) {selectBox.size=$multi_size; selectBox.multiple=true; if (selectBox.options[0].value=='') selectBox.options[0] = null;";
+			$js = "if (selectBox = document.getElementById('$element_id')) if (!selectBox.multiple) { if(\$j(selectBox).unchosen) \$j(selectBox).unchosen(); selectBox.size=$multi_size; selectBox.multiple=true; if (selectBox.options[0].value=='') selectBox.options[0] = null;";
+			if(count($select) > html::SELECT_ENHANCED_ROW_COUNT)
+			{
+				$js .= "\$j(selectBox).css('width','100%').chosen({placeholder_text: '".lang('Select multiple accounts')."'}); ";
+			}
 			if (!in_array($this->account_selection,array('groupmembers','selectbox')))	// no popup!
 			{
 				$js .= " this.src='".common::image('phpgwapi','search')."'; this.title='".
@@ -301,7 +309,7 @@ class uiaccountsel
 			}
 			else
 			{
-				$js .= " this.style.display='none'; selectBox.style.width='100%';";
+				$js .= "this.style.display='none'; selectBox.style.width='100%';";
 			}
 			$js .= "} return false;";
 			$html .= html::submit_button('search','Select multiple accounts',$js,false,
@@ -329,6 +337,7 @@ function addOption(id,label,value,do_onchange)
 		selectBox.options[selectBox.length] = new Option(label,value,false,true);
 	}
 	if (selectBox.onchange && do_onchange) selectBox.onchange();
+	$j(selectBox).trigger("liszt:updated");
 }
 </script>';
 			$GLOBALS['egw_info']['flags']['uiaccountsel']['addOption_installed'] = True;

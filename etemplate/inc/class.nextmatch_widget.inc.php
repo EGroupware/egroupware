@@ -484,6 +484,8 @@ class nextmatch_widget
 				if (is_object($nextmatch))
 				{
 					$size =& $nextmatch->get_cell_attribute('selectcols','size');
+					// Don't change to fancy multi-select here
+					$nextmatch->set_cell_attribute('selectcols','enhance',false);
 					if ($size > count($value['options-selectcols'])) $size = '0'.count($value['options-selectcols']);
 					if (!$GLOBALS['egw_info']['user']['apps']['admin'])
 					{

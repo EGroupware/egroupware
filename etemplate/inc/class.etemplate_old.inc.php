@@ -1586,8 +1586,9 @@ class etemplate_old extends boetemplate
 				{
 					$enhance = $cell['enhance'];
 				}
-				else if (count($c_options >= 8))
+				else if (count($c_options) >= 8)
 				{
+					// 8 or more optionsu - #7 is enhance flag
 					$enhance = ($c_options[7] == '1' || $c_options[7] == 'true');
 				}
 
@@ -1641,7 +1642,8 @@ class etemplate_old extends boetemplate
 					if ($multiple && is_numeric($multiple))	// eg. "3+" would give a regular multiselectbox
 					{
 						$html .= html::checkbox_multiselect($form_name.($multiple > 1 ? '[]' : ''),$value,$sels,
-							$cell['no_lang'],$options,$multiple,$multiple[0]!=='0',$extraStyleMultiselect);
+							$cell['no_lang'],$options,$multiple,$multiple[0]!=='0',
+							$extraStyleMultiselect,$enhance);
 					}
 					else
 					{
