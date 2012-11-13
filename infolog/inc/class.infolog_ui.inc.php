@@ -1323,7 +1323,9 @@ else
 					$entry['info_type'] = $settings;
 					try {
 						$this->bo->write($entry, true,true,true,$skip_notifications,true); // Throw exceptions
-					} catch (egw_exception_wrong_userinput $e) {
+					}
+					catch (egw_exception_wrong_userinput $e)
+					{
 						$msg .= "\n".$e->getMessage();
 						$failed++;
 						break;
@@ -1946,6 +1948,8 @@ else
 					//echo "<p>setting type to r/o as user has no delete rights from group #$group</p>\n";
 					$readonlys['info_type'] = true;
 				}
+				// disable info_access for group-owners
+				$readonlys['info_access'] = true;
 			}
 			elseif($GLOBALS['egw']->accounts->get_type($content['info_owner']) == 'g')
 			{
