@@ -1525,8 +1525,8 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		debugLog (__METHOD__.' for Folder:'.$folderid.' SINCE:'.$cutdate.'/'.date("d-M-Y", $cutdate));
 		if (empty($cutdate))
 		{
-			$cutdate = egw_time::to('now','ts')-(3600*24*28);
-			debugLog(__METHOD__.' Client set no truncationdate. Using 4 weeks.'.date("d-M-Y", $cutdate));
+			$cutdate = egw_time::to('now','ts')-(3600*24*28*3);
+			debugLog(__METHOD__.' Client set no truncationdate. Using 12 weeks.'.date("d-M-Y", $cutdate));
 		}
 		return $this->fetchMessages($folderid, $cutdate);
 	}
