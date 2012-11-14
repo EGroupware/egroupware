@@ -285,7 +285,7 @@ class uiaccountsel
 			);
 		}
 		//echo "<p>html::select('$name',".print_r($selected,True).",".print_r($select,True).",True,'$options')</p>\n";
-		$html = html::select($name,$selected,$select,True,$options.' id="'.$element_id.'"',$lines > 1 ? $lines : 0);
+		$html = html::select($name,$selected,$select,True,$options.' id="'.$element_id.'"',$lines > 1 ? $lines : 0,true);
 
 		if (!$only_groups && ($lines > 0 && $this->account_selection == 'popup' || $lines > 1 && $this->account_selection == 'primary_group'))
 		{
@@ -297,9 +297,9 @@ class uiaccountsel
 		elseif (!$only_groups && ($lines == 1 || $lines > 0 && $this->account_selection == 'primary_group'))
 		{
 			$js = "if (selectBox = document.getElementById('$element_id')) if (!selectBox.multiple) { if(\$j(selectBox).unchosen) \$j(selectBox).unchosen(); selectBox.size=$multi_size; selectBox.multiple=true; if (selectBox.options[0].value=='') selectBox.options[0] = null;";
-			if(count($select) > html::SELECT_ENHANCED_ROW_COUNT)
+			if(count($select) > html::SELECT_ENHANCED_ROW_COUNT || true)
 			{
-				$js .= "\$j(selectBox).css('width','100%').chosen({placeholder_text: '".lang('Select multiple accounts')."'}); ";
+				$js .= "\$j(selectBox).css('width','100%'); ";
 			}
 			if (!in_array($this->account_selection,array('groupmembers','selectbox')))	// no popup!
 			{
@@ -315,6 +315,8 @@ class uiaccountsel
 			$html .= html::submit_button('search','Select multiple accounts',$js,false,
 				' title="'.html::htmlspecialchars(lang('Select multiple accounts')).'"','users','phpgwapi');
 		}
+		// jDots needs a little re-do, since it plays with the layout
+		$html .= "<script>window.setTimeout(function() {console.log(\$j('#$element_id').unchosen().chosen({placeholder_text: '".lang('Select multiple accounts')."'}));},200); </script>";
 		if($need_js_popup && !$GLOBALS['egw_info']['flags']['uiaccountsel']['addOption_installed'])
 		{
 			$html .= '<script language="JavaScript">

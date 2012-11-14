@@ -81,7 +81,7 @@
 				</row>
 				<row class="row" valign="top">
 					<description value="Responsible" for="info_responsible"/>
-					<listbox type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" options="both"/>
+					<listbox type="select-account" statustext="select a responsible user: a person you want to delegate this task" id="info_responsible" rows="6" options="both" class="responsible"/>
 				</row>
 				<row class="row" disabled="1">
 					<description value="Confirm" for="info_confirm"/>
@@ -310,6 +310,7 @@ select.et2_selectbox, #info_contact &gt; select { width: 117px; }
 #info_from {width: 253px;}
 #info_cat {width: 255px;}
 #info_subject {width: 100%;}
+.responsible &gt; select {width: 550px;}
 		</styles>
 	</template>
 </overlay>

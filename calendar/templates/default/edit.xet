@@ -20,7 +20,7 @@
 						<description for="duration" value="Duration" width="0"/>
 						<hbox options="0,0">
 							<menulist>
-								<menupopup statustext="Duration of the meeting" id="duration" no_lang="1" onchange="set_style_by_class('table','end_hide','display',this.value == '' ? 'block' : 'none'); if (this.value == '') document.getElementById(form::name('end[str]')).value = document.getElementById(form::name('start[str]')).value;" options="Use end date"/>
+								<menupopup statustext="Duration of the meeting" id="duration" no_lang="1" onchange="set_style_by_class('table','end_hide','display',this.value == '' ? 'block' : 'none'); if (this.value == '') document.getElementById(form::name('end[str]')).value = document.getElementById(form::name('start[str]')).value;" options="Use end date,,,,,,,false"/>
 							</menulist>
 							<date-time id="end" class="end_hide"/>
 						</hbox>
@@ -69,7 +69,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.7.001">
+	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" height="210" overflow="auto" id="participants">
 			<columns>
 				<column width="95"/>
