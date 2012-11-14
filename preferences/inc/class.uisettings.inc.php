@@ -290,7 +290,8 @@ class uisettings
 						$valarray['default'],
 						$valarray['run_lang'],
 						$valarray['type'] == 'multiselect',
-						$valarray['onchange']
+						$valarray['onchange'],
+						$valarray['style']
 					);
 					break;
 				case 'check':
@@ -555,7 +556,7 @@ class uisettings
 		$this->t->fp('rows','section_row',True);
 	}
 
-	function create_select_box($label,$name,$values,$help='',$default='',$run_lang=True,$multiple=false,$onchange=null)
+	function create_select_box($label,$name,$values,$help='',$default='',$run_lang=True,$multiple=false,$onchange=null,$style='')
 	{
 		$_appname = $this->check_app();
 		if($this->is_forced_value($_appname,$name))
@@ -586,13 +587,14 @@ class uisettings
 			if (is_array($extra)) $values = $extra + (is_array($values)?$values:array($values));
 
 			$select = html::select($GLOBALS['type'].'['.$name.']',$default,$values,true,
-				$onchange?'onchange="'.str_replace('"','\\"',htmlspecialchars($onchange)).'"':'');
+				$onchange?'onchange="'.str_replace('"','\\"',htmlspecialchars($onchange)).'"':''." style=\"$style\"");
 		}
 		else
 		{
 			if (!is_array($default)) $default = explode(',',$default);
 			$select = html::input_hidden($GLOBALS['type'].'['.$name.']','',false);	// causes bosettings not to ignore unsetting all
-			$select .= html::checkbox_multiselect($GLOBALS['type'].'['.$name.']',$default,$values,true,'',min(5,count($values)));
+			$select .= html::checkbox_multiselect($GLOBALS['type'].'['.$name.']',$default,$values,true,'',min(5,count($values)),
+				true, $style);
 		}
 		if($GLOBALS['type'] == 'user' && (string)$GLOBALS['egw']->preferences->default[$_appname][$name] !== '')
 		{

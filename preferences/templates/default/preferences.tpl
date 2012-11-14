@@ -1,5 +1,11 @@
 <center style="color: red; font-style: italic">{messages}</center>
 
+<style>
+select[multiple] {
+	min-width: 50%;
+}
+</style>
+
 <!-- BEGIN form -->
 <form method="POST" action="{action_url}">
 
