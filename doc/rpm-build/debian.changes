@@ -1,3 +1,30 @@
+egroupware-epl (11.1.20121114-1) hardy; urgency=low
+
+  * Filemanager/WebDAV: support for newer ownCloud clients: getetag attribute (eg. version 1.1.1)
+  * Addressbook/eMail: fixed wrong characterset when merge printing into eMail
+  * CalDAV/CardDAV: fix not working logging of errors into traffic log
+  * eMail: allow table as inline element while balancing tags (new internal config option); try to correct common errors/problems in html-code which caused display/layout problems
+  * eMail: fix misbehavior regarding the unwanted sending of a mail with no subject (despite the warning was given)
+  * eMail/HTMLawed: introduce and use new make_tag_strict option 3, to exclude font from applying strict measures to it
+  * Knowledgebase: fixed filemanger only showed first N entries
+  * Notifications: activate links when creating a html mail from a plain-text one
+  * eTemplate/all apps: fixed not working display of floating point values in input fields for Chrome or Safarie (browsers supporting html5 input type="number")
+  * eMail: attempt to fix problem regarding pop up of draft-message-dialog regarding do-you-want-to-keep-draft on send; allow additional parameters in send_to, which might be base64 encoded
+  * Filemanager: ability to create a directory in open or save-as dialog
+  * eMail/merge: allow to replace reply-to adresses with senders own active address when special address ->replace@import@action<- is used within the email-template
+  * Admin: new function "Clear cache and register hooks", also called automatic when restoring a backup
+  * Calendar: fix for failed 1.9.006 update: PostgreSQL needs temporary a nullable range_start column, to not stall on broken events without dates
+  * EMailAdmin: display quota used (if available) in eMail-Account Management of User Data Administration
+  * Calendar: ignore (unchangeable) status of groups for setting line-type of events: all users of a group-invitation accepted --> solid line for all accepted
+  * eMail/eSync: when no truncation date is set, use 12 weeks as hard coded limit (as some clients die, when confronted with too many mails)
+  * Calendar: sort participants by their name
+  * InfoLog: switching to a group-type resets access to "public" and disables access in edit
+  * Calendar: notify responsible for a resource "participating" in a private event only with privacy-cleared details
+  * Tracker: fixed group selected as responsible in list results in last member selected after next login (same is true for category with subcategories)
+  * eMail: restructuring of manage folder section (ACL area, no tabs, different layout)
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 14 Nov 2012 08:51:35 +0100
+
 egroupware-epl (11.1.20121024-1) hardy; urgency=low
 
   * eMail: rework of handling and providing identities; usability for setting up SIEVE Vacation rules -> preselected default mail address
