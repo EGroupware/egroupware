@@ -27,6 +27,7 @@ egroupware-epl (11.1.20121114-1) hardy; urgency=low
 
 egroupware-epl (11.1.20121024-1) hardy; urgency=low
 
+  * requires PHP 5.3 from now on!
   * eMail: rework of handling and providing identities; usability for setting up SIEVE Vacation rules -> preselected default mail address
   * Tracker: cope with not existing name for attachments (use filename instead)
   * Calendar/CalDAV: fixed not working update/delete of recurring event containing exceptions (always gave 412 Precondition Failed)
