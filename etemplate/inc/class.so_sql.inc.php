@@ -1033,6 +1033,7 @@ class so_sql
 				}
 			}
 			$rs = $this->db->union($union,__LINE__,__FILE__,$order_by,$start,$num_rows);
+			if ($this->debug) error_log(__METHOD__."() ".$this->db->Query_ID->sql);
 
 			$cols = $union_cols;
 			$union = $union_cols = array();
@@ -1056,6 +1057,7 @@ class so_sql
 			}
 			$rs = $this->db->select($this->table_name,$mysql_calc_rows.$colums,$query,__LINE__,__FILE__,
 				$start,$order_by,$this->app,$num_rows,$join);
+			if ($this->debug) error_log(__METHOD__."() ".$this->db->Query_ID->sql);
 			$cols = $this->_get_columns($only_keys,$extra_cols);
 		}
 		if ((int) $this->debug >= 4) echo "<p>sql='{$this->db->Query_ID->sql}'</p>\n";
