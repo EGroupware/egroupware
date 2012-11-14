@@ -1,60 +1,162 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="resources.edit.general" template="" lang="" group="0" version="">
-		<grid>
+	<template id="resources.edit_tabs.general" template="" lang="" group="0" version="">
+		<grid width="700" height="380">
 			<columns>
+				<column/>
+				<column/>
+				<column width="10"/>
 				<column/>
 			</columns>
 			<rows>
 				<row>
+					<description value="Description (short)"/>
+					<textbox statustext="Short description of resource" id="short_description" size="50" maxlength="100"/>
+					<description/>
+					<description value="Short description of resource"/>
+				</row>
+				<row>
+					<description value="Location"/>
+					<textbox statustext="Location of resource" id="location" size="50" maxlength="100"/>
+					<description/>
+					<description value="Where to find this resource?"/>
+				</row>
+				<row>
+					<description value="Storage information"/>
+					<textbox statustext="Information about storage" id="storage_info" size="50" maxlength="100"/>
+					<description/>
+					<description value="Information about storage"/>
+				</row>
+				<row>
+					<description value="Quantity"/>
+					<textbox statustext="Quantity of resource" id="quantity" size="5" maxlength="10"/>
+					<description/>
+					<description value="Quantity of resource"/>
+				</row>
+				<row>
+					<description value="Useable"/>
+					<textbox statustext="How many of them are useable?" id="useable" size="5" maxlength="10"/>
+					<description/>
+					<description value="How many of the resources are useable?"/>
+				</row>
+				<row>
+					<description value="Bookable"/>
+					<checkbox statustext="Is resource bookable?" id="bookable"/>
+					<description/>
+					<description value="Is this resource bookable?"/>
+				</row>
+				<row>
+					<description disabled="true" value="Buyable"/>
+					<checkbox disabled="true" statustext="Is resource buyable?" id="buyable"/>
+					<description/>
+					<description disabled="true" value="Is this resource buyable?"/>
+				</row>
+				<row height="100%">
+					<description/>
+					<description/>
+					<description/>
 					<description/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.edit.page" template="" lang="" group="0" version="">
-		<grid>
+	<template id="resources.edit_tabs.page" template="" lang="" group="0" version="">
+		<grid width="100%" height="380">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
-				<row>
+				<row valign="top">
+					<htmlarea statustext="Web-Site for this resource" id="long_description" mode="simple" height="350px" width="700px" toolbar="true"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="resources.edit_tabs.pictures" template="" lang="" group="0" version="">
+		<grid width="700" height="380">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="top">
+					<hbox>
+						<vbox>
+							<image src="resource_picture"/>
+							<description/>
+						</vbox>
+						<groupbox>
+							<caption label="picture source"/>
+							<grid>
+								<columns>
+									<column/>
+									<column/>
+									<column/>
+								</columns>
+								<rows>
+									<row>
+										<description align="right" value="Use general resources icon"/>
+										<radio id="picture_src" options="gen_src"/>
+										<menulist>
+											<menupopup id="gen_src_list" no_lang="1"/>
+										</menulist>
+									</row>
+									<row>
+										<description align="right" value="Use the category's icon"/>
+										<radio id="picture_src" options="cat_src"/>
+										<description/>
+									</row>
+									<row>
+										<description align="right" value="Use own picture"/>
+										<radio id="picture_src" options="own_src"/>
+										<file id="own_file"/>
+									</row>
+								</rows>
+							</grid>
+						</groupbox>
+					</hbox>
+				</row>
+				<row height="100%">
 					<description/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.edit.pictures" template="" lang="" group="0" version="">
-		<grid>
+	<template id="resources.edit_tabs.links" template="" lang="" group="0" version="">
+		<grid width="700" height="380">
 			<columns>
+				<column width="100"/>
 				<column/>
 			</columns>
 			<rows>
-				<row>
+				<row class="th">
+					<description value="Create new links" span="all"/>
+				</row>
+				<row class="row">
+					<link-to id="link_to" span="all"/>
+				</row>
+				<row class="th">
+					<description value="Existing links" span="all"/>
+				</row>
+				<row class="row_off" valign="top" height="164">
+					<link-list id="link_to" span="all"/>
+				</row>
+				<row height="100%">
+					<description/>
 					<description/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.edit.links" template="" lang="" group="0" version="">
-		<grid>
+	<template id="resources.edit_tabs.custom" template="" lang="" group="0" version="">
+		<grid width="700" height="380">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
-				<row>
-					<description/>
+				<row valign="top">
+					<customfields/>
 				</row>
-			</rows>
-		</grid>
-	</template>
-	<template id="resources.edit.custom" template="" lang="" group="0" version="">
-		<grid>
-			<columns>
-				<column/>
-			</columns>
-			<rows>
 				<row>
 					<description/>
 				</row>
@@ -70,20 +172,20 @@
 			</columns>
 			<rows>
 				<row class="row_off">
-					<tabbox span="all">
+					<tabbox id="general|page|pictures|links|custom" span="all">
 						<tabs>
-							<tab label="General" statustext="General informations about resource"/>
-							<tab label="Description" statustext="Informations about the location of resource"/>
-							<tab label="Picture" statustext="Prizeing information for booking or buying"/>
-							<tab label="Links" statustext="Web-Page of resource"/>
-							<tab label="Custom" statustext="Pictures or resource"/>
+							<tab id="general" label="General" statustext="General informations about resource"/>
+							<tab id="page" label="Description" statustext="Informations about the location of resource"/>
+							<tab id="pictures" label="Picture" statustext="Prizeing information for booking or buying"/>
+							<tab id="links" label="Links" statustext="Web-Page of resource"/>
+							<tab id="custom" label="Custom" statustext="Pictures or resource"/>
 						</tabs>
 						<tabpanels>
-							<template id="resources.edit.general"/>
-							<template id="resources.edit.page"/>
-							<template id="resources.edit.pictures"/>
-							<template id="resources.edit.links"/>
-							<template id="resources.edit.custom"/>
+							<template id="resources.edit_tabs.general"/>
+							<template id="resources.edit_tabs.page"/>
+							<template id="resources.edit_tabs.pictures"/>
+							<template id="resources.edit_tabs.links"/>
+							<template id="resources.edit_tabs.custom"/>
 						</tabpanels>
 					</tabbox>
 				</row>
@@ -102,9 +204,9 @@
 			</columns>
 			<rows>
 				<row>
-					<button label="Save" id="save" statustext="Saves entry and exits"/>
+					<button statustext="Saves entry and exits" label="Save" id="save"/>
 					<button label="Cancel" onclick="window.close();"/>
-					<button label="Delete" align="right" id="delete" onclick="return confirm('Do you really want do delte this resource?');"/>
+					<button align="right" label="Delete" id="delete" onclick="return confirm('Do you really want do delte this resource?');"/>
 				</row>
 			</rows>
 		</grid>
@@ -116,14 +218,14 @@
 			</columns>
 			<rows>
 				<row>
-					<description no_lang="1" id="msg"/>
+					<description id="msg" no_lang="1"/>
 				</row>
 				<row>
 					<hbox>
-						<textbox label="Name" id="name" statustext="Name of resource" needed="1"/>
+						<textbox statustext="Name of resource" label="Name" id="name" needed="1"/>
 						<textbox label="Inventory number" id="inventory_number"/>
 						<menulist>
-							<menupopup label="Category" no_lang="1" id="cat_id" needed="1" statustext="Which category does this resource belong to?" align="right"/>
+							<menupopup align="right" statustext="Which category does this resource belong to?" label="Category" id="cat_id" needed="1" no_lang="1"/>
 						</menulist>
 					</hbox>
 				</row>

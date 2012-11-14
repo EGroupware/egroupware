@@ -68,6 +68,7 @@ class resources_bo
 	 */
 	function get_rows($query,&$rows,&$readonlys)
 	{
+		$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$query);
 		if ($query['store_state'])	// request to store state in session and filter in prefs?
 		{
 			egw_cache::setSession('resources',$query['store_state'],$query);
@@ -106,7 +107,7 @@ class resources_bo
 				$extra_cols[] = 'acc_count';
 				break;
 			default:
-				$filter['accessory_of'] = $query['view_accs_of'];
+				$filter['accessory_of'] = $query['filter2'];
 		}
 		
 		if ($query['filter'])
@@ -164,7 +165,7 @@ class resources_bo
 				$readonlys["delete[$resource[res_id]]"] = true;
 				$resource['class'] .= 'no_delete ';
 			}
-			if ((!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_ADD)) || $accessory_of != -1)
+			if ((!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_ADD)) || $resource['accessory_of'] != -1)
 			{
 				$readonlys["new_acc[$resource[res_id]]"] = true;
 				$resource['class'] .= 'no_new_accessory ';
@@ -437,6 +438,10 @@ class resources_bo
 		$limit = false;
 		if($options['start'] || $options['num_rows']) {
 			$limit = array($options['start'], $options['num_rows']);
+		}
+		if($options['accessory_of'])
+		{
+			$filter['accessory_of'] = $options['accessory_of'];
 		}
 		$data = $this->so->search($criteria,$only_keys,$order_by='name',$extra_cols='',$wildcard='%',$empty,$op='OR',$limit,$filter);
 		// maybe we need to check disponibility of the searched resources in the calendar if $pattern ['exec'] contains some extra args
