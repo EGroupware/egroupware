@@ -585,7 +585,10 @@
 						#$bodyParts[$i]['body'] = nl2br($bodyParts[$i]['body'])."<br>";
 						$bodyParts[$i]['body'] = "<pre>".$bodyParts[$i]['body']."</pre>";
 					}
-					$this->sessionData['body'] .= "<br>".self::_getCleanHTML($GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']));
+					$tempBody = "<br>".self::_getCleanHTML($GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']));
+					bofelamimail::replaceTagsCompletley($tempBody,'head'); // Strip out stuff in head
+                        		$this->sessionData['body'] .= str_replace(array('<body>','</body>'),'',$tempBody);
+
 					#error_log( "GetReplyData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 
 				}
