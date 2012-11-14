@@ -1519,7 +1519,7 @@ function replace_eTemplate_onsubmit()
 		{
 			$content['alarm'] = false;
 		}
-		$content['msg'] = $msg ? $msg : $_GET['msg'];
+		$content['msg'] = $msg;
 
 		if ($view)
 		{

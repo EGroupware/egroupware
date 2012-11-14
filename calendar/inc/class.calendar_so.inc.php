@@ -487,11 +487,7 @@ class calendar_so
 					$where['cal_public'] = 1;
 					$where[] = "$this->user_table.cal_status NOT IN ('R','X')"; break;
 				case 'deleted':
-					// Change source of recur date to get deleted recurrence exceptions
-					$cols = str_replace("{$this->user_table}.cal_recur_date","{$this->dates_table}.cal_start AS cal_recur_date",$cols);
-					$remove_rejected_by_user = false;
-					$where[] = "$this->user_table.cal_recur_date=0";
-					$where[] = "($this->cal_table.cal_deleted IS NOT NULL OR (recur_exception=1 AND $this->user_table.cal_recur_date = 0))"; break;
+					$where[] = 'cal_deleted IS NOT NULL'; break;
 				case 'unknown':
 					$where[] = "$this->user_table.cal_status='U'"; break;
 				case 'not-unknown':
@@ -575,11 +571,6 @@ class calendar_so
 			if ($params['enum_recuring'])	// dates table join only needed to enum recuring events
 			{
 				$select['join'] = "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id ".$select['join'];
-				// Add in deleted exceptions to recurring
-				if($filter == 'deleted')
-				{
-					$select['join'] .= "LEFT JOIN (SELECT egw_cal.cal_reference AS ref, egw_cal.cal_recurrence AS rec FROM $this->cal_table) AS cal_exception ON $this->cal_table.cal_id = cal_exception.ref AND $this->dates_table.cal_start = cal_exception.rec ";
-				}
 			}
 			$selects = array();
 			// we check if there are parts to use for the construction of our UNION query,
@@ -592,10 +583,7 @@ class calendar_so
 					$selects[count($selects)-1]['where'][] = $user_sql;
 					if ($params['enum_recuring'])
 					{
-						if($filter != 'deleted')
-						{
-							$selects[count($selects)-1]['where'][] = "recur_type IS NULL AND $this->user_table.cal_recur_date=0";
-						}
+						$selects[count($selects)-1]['where'][] = "recur_type IS NULL AND $this->user_table.cal_recur_date=0";
 						$selects[] = $select;
 						$selects[count($selects)-1]['where'][] = $user_sql;
 						$selects[count($selects)-1]['where'][] = "$this->user_table.cal_recur_date=cal_start";
@@ -608,10 +596,7 @@ class calendar_so
 					$selects[count($selects)-1]['where'][] = $owner_or;
 					if ($params['enum_recuring'])
 					{
-						if($filter != 'deleted')
-						{
-							$selects[count($selects)-1]['where'][] = "recur_type IS NULL AND $this->user_table.cal_recur_date=0";
-						}
+						$selects[count($selects)-1]['where'][] = "recur_type IS NULL AND $this->user_table.cal_recur_date=0";
 						$selects[] = $select;
 						$selects[count($selects)-1]['where'][] = $owner_or;
 						$selects[count($selects)-1]['where'][] = "$this->user_table.cal_recur_date=cal_start";
@@ -624,10 +609,7 @@ class calendar_so
 				$selects[] = $select;
 				if ($params['enum_recuring'])
 				{
-					if($filter != 'deleted')
-					{
-						$selects[count($selects)-1]['where'][] = "recur_type IS NULL AND $this->user_table.cal_recur_date=0";
-					}
+					$selects[count($selects)-1]['where'][] = "recur_type IS NULL AND $this->user_table.cal_recur_date=0";
 					$selects[] = $select;
 					$selects[count($selects)-1]['where'][] = "$this->user_table.cal_recur_date=cal_start";
 				}
@@ -642,10 +624,6 @@ class calendar_so
 					if (!$params['enum_recuring'])
 					{
 						$selects[$key]['cols'] = str_replace('cal_start','MIN(cal_start) AS cal_start',$selects[$key]['cols']);
-					}
-					if($filter == 'deleted')
-					{
-						$selects[$key]['cols'] = str_replace("{$this->user_table}.cal_recur_date","{$this->dates_table}.cal_start AS cal_recur_date",$selects[$key]['cols']);
 					}
 				}
 				if (!isset($param['cols'])) self::get_union_selects($selects,$start,$end,$users,$cat_id,$filter,$params['query'],$params['users']);

@@ -53,18 +53,10 @@ function cal_open(_action, _senders)
 	var id = _senders[0].id;
 	var matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
 	var backup = _action.data;
-	var row = _senders[0].iface.node;
-
-	if (matches && !$j(row).hasClass("rowDeleted"))
+	if (matches)
 	{
 		edit_series(matches[1],matches[2]);
 		return;
-	}
-	else if (matches && $j(row).hasClass("rowDeleted") && _action.data.url)
-	{
-		// Trying to edit a deleted exception, use original event & add a message
-		_senders[0].id = matches[1];
-		_action.data.url += '&msg='+encodeURIComponent(egw.lang('Editing series'));
 	}
 	else if (matches = id.match(/^([a-z_-]+)([0-9]+)/i))
 	{

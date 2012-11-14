@@ -364,13 +364,6 @@ class calendar_uilist extends calendar_ui
 			{
 				$event['class'] .= 'rowDeleted ';
 			}
-			// Disable delete for 'deleted' exceptions - deleting the exception
-			// would put it back, which you do from the series, not purge it
-			if($search_params['filter'] == 'deleted' && $event['recur_type'])
-			{
-				$event['class'] .= ' rowSeriesDeleted rowDeleted rowNoDelete';
-			}
-
 			// Filemanager disabled for other applications
 			$readonlys['filemanager['.$event['id'].']'] = !is_numeric($event['id']);
 
@@ -585,12 +578,6 @@ class calendar_uilist extends calendar_ui
 			}
 			switch($action)
 			{
-				case 'purgeseries':
-					// Delete an already deleted series
-					$recur_date = null;
-					// Make sure entire series is gone
-					$this->bo->delete($id, $recur_date,false,$skip_notification);
-					// fall through
 				case 'delete':
 					$action_msg = lang('deleted');
 					if ($id && $this->bo->delete($id, $recur_date,false,$skip_notification))
@@ -604,28 +591,14 @@ class calendar_uilist extends calendar_ui
 					break;
 				case 'undelete':
 					$action_msg = lang('recovered');
-					if ($id && ($event = $this->bo->read($id, $recur_date)) && $this->bo->check_perms(EGW_ACL_EDIT,$id))
+					if ($id && ($event = $this->bo->read($id, $recur_date)) && $this->bo->check_perms(EGW_ACL_EDIT,$id) &&
+						is_array($event) && $event['deleted'])
 					{
-						if(is_array($event) && $event['deleted'])
+						$event['deleted'] = null;
+						if($this->bo->save($event))
 						{
-							$event['deleted'] = null;
-							if($this->bo->save($event))
-							{
-								$success++;
-								break;
-							}
-						}
-						// Undelete an exception by removing it
-						else if (is_array($event) && $event['recur_type'])
-						{
-							$original = $this->bo->read($id);
-							$key = array_search($recur_date, $original['recur_exception']);
-							if($key !== false) unset($original['recur_exception'][$key]);
-							if($key !== false && $this->bo->save($original))
-							{
-								$success++;
-								break;
-							}
+							$success++;
+							break;
 						}
 					}
 					$failed++;
@@ -863,25 +836,15 @@ class calendar_uilist extends calendar_ui
 			'confirm_multiple' => 'Delete these entries',
 			'group' => $group,
 			'disableClass' => 'rowNoDelete',
-			'hideOnDisabled' => true,
 		);
 		// Add in deleted for admins
 		if($GLOBALS['egw_info']['server']['calendar_delete_history'])
 		{
-			$actions['purgeseries'] = array(
-				'caption' => 'Delete series',
-				'confirm' => 'Delete series',
-				'icon' => 'delete',
-				'group' => $group,
-				'enableClass' => 'rowSeriesDeleted',
-				'disableClass' => 'rowNoDelete',
-				'hideOnDisabled' => true,
-			);
 			$actions['undelete'] = array(
 				'caption' => 'Un-delete',
 				'hint' => 'Recover this event',
-				'icon' => 'revert',
 				'group' => $group,
+				'enabled' => 'javaScript:nm_enableClass',
 				'enableClass' => 'rowDeleted',
 				'hideOnDisabled' => true,
 			);
