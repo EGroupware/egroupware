@@ -1443,6 +1443,7 @@ class ajaxfelamimail
 			$signature = $boSignatures->getSignature($_signatureID);
 			$sigText = $signature->fm_signature;
 			//error_log(__METHOD__.'Old:'.$oldSigText.'#');
+			//error_log(__METHOD__.'New:'.$sigText.'#');
 			if ($_currentMode == 'plain')
 			{
 				$oldSigText = utf8_decode($bocompose->convertHTMLToText($oldSigText));
@@ -1465,7 +1466,7 @@ class ajaxfelamimail
 				$_content = str_replace("\n",'\n',$_content);	// dont know why, but \n screws up preg_replace
 				$_content = preg_replace($reg='|'.preg_quote('<!-- HTMLSIGBEGIN -->','|').'.*'.preg_quote('<!-- HTMLSIGEND -->','|').'|u',
 					$rep='<!-- HTMLSIGBEGIN -->'.$sigText.'<!-- HTMLSIGEND -->', $in=$_content, -1, $replaced);
-				$_content = str_replace('\n',"\n",$_content);
+				$_content = str_replace(array('\n',"\xe2\x80\x93","\xe2\x80\x94"),array("\n",'&ndash;','&mdash;'),$_content);
 				//error_log(__METHOD__."() preg_replace('$reg', '$rep', '$in', -1)='$_content', replaced=$replaced");
 				if ($replaced)
 				{
