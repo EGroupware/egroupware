@@ -4,6 +4,7 @@
   display: inline-block;
   zoom: 1;
   *display: inline;
+  text-align: left;
 }
 .chzn-container .chzn-drop {
   background: #fff;
@@ -44,6 +45,7 @@
   line-height: 17px;
   padding: 0 0 0 8px;
   text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif
 }
 .chzn-container-single .chzn-default {
   color: #999;
