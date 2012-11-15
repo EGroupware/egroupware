@@ -202,6 +202,7 @@ function hl_email_tag_transform($element, $attribute_array=0)
 {
 	static $lastelement;
 	static $throwawaycounter;
+	if (is_null($lastelement)) $lastelement='';
 	if (is_null($throwawaycounter)) $throwawaycounter = 0;
 	//if ($throwawaycounter>250) error_log(__METHOD__.__LINE__.' '.$throwawaycounter);
 	if ($element=='div' && $element==$lastelement && ($attribute_array==0 || empty($attribute_array)))
@@ -210,16 +211,18 @@ function hl_email_tag_transform($element, $attribute_array=0)
 		if ($attribute_array==0 && $throwawaycounter>0) $throwawaycounter--;
 		if ($throwawaycounter>0) return '';
 	}
+	if ($lastelement=='div' && $element!=$lastelement && is_array($attribute_array)) $throwawaycounter = 0;
 	if (is_array($attribute_array) && !empty($attribute_array) && $element=='div')
 	{
 		$lastelement = 'div_with_attr';
 	}
 	else
 	{
-		$lastelement = $element;
+		if (is_array($attribute_array)) $lastelement = $element;
 	}
 	// If second argument is not received, it means a closing tag is being handled
 	if(is_numeric($attribute_array)){
+		if($element==$lastelement) $lastelement='';
 		return "</$element>";
 	}
 
