@@ -174,6 +174,7 @@ function hl_my_tag_transform($element, $attribute_array=0)
 		$attribute_array['style'] = implode('; ', $style);
 	}
 	*/
+	if (isset($attribute_array['style']) && stripos($attribute_array['style'],'script')!==false) $attribute_array['style'] = str_ireplace('script','',$attribute_array['style']);
 
 	// Build the attributes string
 	$attributes = '';
@@ -249,6 +250,7 @@ function hl_email_tag_transform($element, $attribute_array=0)
 			}
 		}
 	}
+	if (isset($attribute_array['style']) && stripos($attribute_array['style'],'script')!==false) $attribute_array['style'] = str_ireplace('script','',$attribute_array['style']);
 	if (isset($attribute_array['title']))
 	{
 		if (strpos($attribute_array['title'],'@')!==false) $attribute_array['title']=str_replace('@','(at)',$attribute_array['title']);
