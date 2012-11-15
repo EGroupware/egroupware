@@ -38,21 +38,6 @@ class setup_process
 	var $api_version_target;
 
 	/**
-	 * instance of setup's translation class
-	 *
-	 * @var setup_translation
-	 */
-	var $translation;
-
-	/**
-	 * Constructor
-	 */
-	function __construct()
-	{
-		$this->translation = new setup_translation();
-	}
-
-	/**
 	 * create schema_proc object
 	 *
 	 * @param none
@@ -95,7 +80,6 @@ class setup_process
 		$passing = array();
 		$pass_string = implode (':', $pass);
 		$passing_string = implode (':', $passing);
-		$do_langs = false;
 		while($pass_string != $passing_string)
 		{
 			$passing = array();
@@ -133,12 +117,10 @@ class setup_process
 					$passing = $this->current($pass,$DEBUG);
 					$this->save_minimal_config($preset_config);
 					$passing = $this->default_records($passing,$DEBUG);
-					$do_langs = true;	// just do it once at the end of all passes
 					break;
 				case 'upgrade':
 					/* Run upgrade scripts on each app in the list */
 					$passing = $this->upgrade($pass,$DEBUG);
-					$do_langs = true;	// just do it once at the end of all passes
 					//_debug_array($pass);exit;
 					break;
 				default:
@@ -184,16 +166,6 @@ class setup_process
 			}
 			$pass_string = implode (':', $pass);
 			$passing_string = implode (':', $passing);
-		}
-		if ($do_langs)	// just do it once at the end of all passes
-		{
-			$langs = false;
-			if ($method == 'new')
-			{
-				$langs[] = ($own_lang = setup::get_lang());
-				if ($own_lang != 'en') $langs[] = 'en';
-			}
-			$this->translation->drop_add_all_langs($langs);
 		}
 		/* now return the list */
 		return $setup_info = array_merge($setup_info,$passed);

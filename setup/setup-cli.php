@@ -81,10 +81,6 @@ switch($action)
 		do_admin($arguments[0]);
 		break;
 
-	case '--language':
-		do_lang($arguments[0]);
-		break;
-
 	case '--update':
 		do_update($arguments[0]);
 		break;
@@ -324,57 +320,6 @@ function do_update($arg)
 }
 
 /**
- * Install / update languages
- *
- * @param string $arg domain(all),[config user(admin)],password,[+][lang1][,lang2,...]
- */
-function do_lang($arg)
-{
-	global $setup_info;
-
-	list($domain) = $options = explode(',',$arg);
-
-	$domains = $GLOBALS['egw_domain'];
-	if ($domain && $domain != 'all')
-	{
-		$domains = array($domain => $GLOBALS['egw_domain'][$domain]);
-	}
-	foreach($domains as $domain => $data)
-	{
-		$options[0] = $domain;
-		$arg = implode(',',$options);
-
-		$langs = _check_auth_config($arg,15,false);		// false = leave eGW's charset, dont set ours!!!
-
-		$GLOBALS['egw_setup']->translation->setup_translation_sql();
-
-		if ($langs[0]{0} === '+' || !count($langs))	// update / add to existing languages
-		{
-			if ($langs[0]{0} === '+')
-			{
-				if ($langs[0] === '+')
-				{
-					array_shift($langs);
-				}
-				else
-				{
-					$langs[0] = substr($langs[0],1);
-				}
-			}
-			$installed_langs = $GLOBALS['egw_setup']->translation->sql->get_installed_langs(true);
-			if (is_array($installed_langs))
-			{
-				$langs = array_merge($langs,array_keys($installed_langs));
-			}
-		}
-		$langs = array_unique($langs);
-		echo lang('Start updating languages %1 ...',implode(',',$langs))."\n";
-		$GLOBALS['egw_setup']->translation->sql->install_langs($langs);
-		echo lang('Languages updated.')."\n";
-	}
-}
-
-/**
  * Check if eGW is installed according to $stop and we have the necessary authorization for config
  *
  * The password can be specified as parameter, via the enviroment variable EGW_CLI_PASSWORD or
@@ -539,7 +484,6 @@ function do_usage($what='')
 	if (!$what)
 	{
 		echo '--admin '.lang('creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]')."\n";
-		echo '--language '.lang('install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones')."\n";
 		echo '--backup '.lang('domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-YYYYMMDDHHii)]')."\n";
 		echo '--update '.lang('run a database schema update (if necessary): domain(all),[config user(admin)],password').'[,[no = no backup][,app to install]]'."\n";
 		echo '--register-hooks '.lang('Find and Register all Application Hooks').": domain(all),[config user(admin)],password\n";

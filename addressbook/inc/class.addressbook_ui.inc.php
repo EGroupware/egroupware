@@ -91,7 +91,8 @@ class addressbook_ui extends addressbook_bo
 		// check if a contact specific export limit is set, if yes use it also for etemplate's csv export
 		$this->config['export_limit'] = $this->config['contact_export_limit'] = bo_merge::getExportLimit($app='addressbook');
 
-		if ($this->config['copy_fields'] && ($fields = unserialize($this->config['copy_fields'])))
+		if ($this->config['copy_fields'] && ($fields = is_array($this->config['copy_fields']) ?
+			$this->config['copy_fields'] : unserialize($this->config['copy_fields'])))
 		{
 			// Set country code if country name is selected
 			$supported_fields = $this->get_fields('supported',null,0);

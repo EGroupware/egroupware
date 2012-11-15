@@ -282,31 +282,13 @@ class setup_html
 
 	static function lang_select($onChange=False,$ConfigLang='')
 	{
-		if (!$ConfigLang)
+		if (empty($ConfigLang))
 		{
 			$ConfigLang = setup::get_lang();
+			if (empty($ConfigLang)) $ConfigLang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2);
 		}
-		$select = '<select name="ConfigLang"'.($onChange ? ' onchange="this.form.submit();"' : '').'>' . "\n";
-		$languages = setup_translation::get_supported_langs();
-		foreach($languages as $data)
-		{
-			if($data['available'] && !empty($data['lang']))
-			{
-				$short = substr($data['lang'],0,2);
-				if ($short == $ConfigLang || $data['lang'] == $ConfigLang || empty($ConfigLang) && $short == substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2))
-				{
-					$selected = ' selected';
-				}
-				else
-				{
-					$selected = '';
-				}
-				$select .= '<option value="' . $data['lang'] . '"' . $selected . '>' . $data['descr'] . '</option>' . "\n";
-			}
-		}
-		$select .= '</select>' . "\n";
-
-		return $select;
+		return html::select('ConfigLang', $ConfigLang, translation::get_available_langs(false), true,
+			$onChange ? ' onchange="this.form.submit();"' : '');
 	}
 
 	static function get_template_list()

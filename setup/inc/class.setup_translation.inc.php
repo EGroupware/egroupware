@@ -101,36 +101,6 @@ class setup_translation
 		return $ret;
 	}
 
-	static function get_langs($DEBUG=False)
-	{
-		return translation::get_langs($DEBUG);
-	}
-
-	static function drop_langs($appname,$DEBUG=False)
-	{
-		return translation::drop_langs($appname,$DEBUG);
-	}
-
-	static function add_langs($appname,$DEBUG=False,$force_langs=False)
-	{
-		return translation::add_langs($appname,$DEBUG,$force_langs);
-	}
-
-	/**
-	 * installs translations for the selected langs into the database
-	 *
-	 * @param array|boolean $langs langs to install (as data NOT keys (!))
-	 * @param string|boolean $only_app=false app-name to install only one app or default false for all
-	 */
-	static function drop_add_all_langs($langs=false,$only_app=false)
-	{
-		if (!$langs && !count($langs = translation::get_langs()))
-		{
-			$langs[] = 'en';
-		}
-		return translation::install_langs($langs,'dumpold',$only_app);
-	}
-
 	/**
 	 * Languages we support (alphabetically sorted)
 	 *
