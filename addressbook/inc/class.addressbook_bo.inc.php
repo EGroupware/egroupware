@@ -283,7 +283,8 @@ class addressbook_bo extends addressbook_so
 			'adr_two_countryname'  => lang('country').' ('.lang('business').')',
 		);
 		//_debug_array($this->contact_fields);
-		$this->own_account_acl = unserialize($GLOBALS['egw_info']['server']['own_account_acl']);
+		$this->own_account_acl = $GLOBALS['egw_info']['server']['own_account_acl'];
+		if (!is_array($this->own_account_acl)) $this->own_account_acl = unserialize($this->own_account_acl);
 		// we have only one acl (n_fn) for the whole name, as not all backends store every part in an own field
 		if ($this->own_account_acl && in_array('n_fn',$this->own_account_acl))
 		{
