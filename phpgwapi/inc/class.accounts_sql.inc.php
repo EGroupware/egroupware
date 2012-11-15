@@ -118,6 +118,11 @@ class accounts_sql
 				$this->contacts_table.'.tel_work AS account_phone,';
 				$join = 'LEFT JOIN '.$this->contacts_table.' ON '.$this->table.'.account_id='.$this->contacts_table.'.account_id';
 		}
+		else//if ($GLOBALS['egw_info']['apps']['emailadmin'])
+		{
+			$extra_cols = emailadmin_smtp_sql::TABLE.'.mail_value AS account_email,';
+			$join = 'LEFT JOIN '.emailadmin_smtp_sql::TABLE.' ON '.$this->table.'.account_id=-'.emailadmin_smtp_sql::TABLE.'.account_id AND mail_type='.emailadmin_smtp_sql::TYPE_ALIAS;
+		}
 		if (!($data = $this->db->select($this->table,$extra_cols.$this->table.'.*',$this->table.'.account_id='.abs($account_id),
 			__LINE__,__FILE__,false,'',false,0,$join)->fetch()))
 		{
@@ -126,6 +131,7 @@ class accounts_sql
 		if ($data['account_type'] == 'g')
 		{
 			$data['account_id'] = -$data['account_id'];
+			$data['mailAllowed'] = true;
 		}
 		if (!$data['account_firstname']) $data['account_firstname'] = $data['account_lid'];
 		if (!$data['account_lastname'])
@@ -195,6 +201,26 @@ class accounts_sql
 			if (!$this->db->update($this->table,$to_write,array('account_id' => abs($data['account_id'])),__LINE__,__FILE__))
 			{
 				return false;
+			}
+		}
+		// store group-email in mailaccounts table
+		if ($data['account_id'] < 0 && $GLOBALS['egw_info']['apps']['emailadmin'])
+		{
+			if (empty($data['account_email']))
+			{
+				$this->db->delete(emailadmin_smtp_sql::TABLE, array(
+					'account_id' => $data['account_id'],
+					'mail_type' => emailadmin_smtp_sql::TYPE_ALIAS,
+				), __LINE__, __FILE__, emailadmin_smtp_sql::APP);
+			}
+			else
+			{
+				$this->db->insert(emailadmin_smtp_sql::TABLE, array(
+					'mail_value' => $data['account_email'],
+				), array(
+					'account_id' => $data['account_id'],
+					'mail_type' => emailadmin_smtp_sql::TYPE_ALIAS,
+				), __LINE__, __FILE__, emailadmin_smtp_sql::APP);
 			}
 		}
 		return $data['account_id'];
