@@ -61,7 +61,15 @@
 
 					// Check file encoding matches import
 					$sample = file_get_contents($content['file']['tmp_name'],false, null, 0, 1024);
-					$required = $options['charset'] == 'user' || !$options['charset'] ? $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'] : $options['charset'];
+					if($appname == 'addressbook' && $definition_obj->plugin == 'addressbook_import_vcard')
+					{
+						$preference = $GLOBALS['egw_info']['user']['preferences']['addressbook']['vcard_charset'];
+					}
+					else
+					{
+						$preference = $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'];
+					}
+					$required = $options['charset'] == 'user' || !$options['charset'] ? $preference : $options['charset'];
 					$encoding = translation::detect_encoding($sample);
 					if($encoding && strtoupper($required) != strtoupper($encoding))
 					{
@@ -71,7 +79,7 @@
 						);
 					}
 					
-					$file = fopen($content['file']['tmp_name'], 'r');
+					$file = fopen($content['file']['tmp_name'], 'rb');
 					$count = 0;
 
 					// Some of the translation, conversion, etc look here
