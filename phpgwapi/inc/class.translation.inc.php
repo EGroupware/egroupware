@@ -179,9 +179,23 @@ class translation
 		}
 		self::$markuntranslated = (boolean) $GLOBALS['egw_info']['server']['markuntranslated'];
 
-		if (isset($GLOBALS['egw_info']['server']['translation_load_via']))
+		// try loading load_via from tree-wide cache and check if it contains more rules
+		if (($load_via = egw_cache::getTree(__CLASS__, 'load_via')) &&
+			$load_via > $GLOBALS['egw_info']['server']['translation_load_via'])	// > for array --> contains more elements
+		{
+			self::$load_via = $load_via;
+			config::save_value('translation_load_via', self::$load_via, 'phpgwapi');
+			//error_log(__METHOD__."() load_via set from tree-wide cache to ".array2string(self::$load_via));
+		}
+		// if not check our config for load-via information
+		elseif (isset($GLOBALS['egw_info']['server']['translation_load_via']))
 		{
 			self::$load_via = $GLOBALS['egw_info']['server']['translation_load_via'];
+			// if different from tree-wide value, update that
+			if ($GLOBALS['egw_info']['server']['translation_load_via'] != $load_via)
+			{
+				egw_cache::setTree(__CLASS__, 'load_via', self::$load_via);
+			}
 			//error_log(__METHOD__."() load_via set from config to ".array2string(self::$load_via));
 		}
 
@@ -409,7 +423,8 @@ class translation
 
 		foreach(self::$load_via as $load => $via)
 		{
-			if ($via == 'all-apps' || $via == $app)
+			//error_log("load_via[load='$load'] = via = ".array2string($via));
+			if ($via === 'all-apps' || in_array($app, (array)$via))
 			{
 				//error_log(__METHOD__."('$app', '$lang') additional invalidate translations $load:$lang");
 				egw_cache::unsetTree(__CLASS__, $load.':'.$lang);
@@ -466,6 +481,7 @@ class translation
 						if (!is_array(self::$load_via[$l_app])) self::$load_via[$l_app] = array(self::$load_via[$l_app]);
 						self::$load_via[$l_app][] = $app_dir;
 						config::save_value('translation_load_via', self::$load_via, 'phpgwapi');
+						egw_cache::setTree(__CLASS__, 'load_via', self::$load_via);
 					}
 					continue;
 				}
