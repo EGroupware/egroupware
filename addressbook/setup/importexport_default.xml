@@ -15,9 +15,10 @@
         <entry type="string" name="0">Default</entry>
       </entry>
       <entry type="array" name="plugin_options">
+        <entry type="string" name="charset">user</entry>
         <entry type="string" name="contact_owner">personal</entry>
       </entry>
-      <entry type="string" name="modified">2012-10-23 09:46:56</entry>
+      <entry type="string" name="modified">2012-11-14 09:10:11</entry>
     </entry>
     <entry type="array" name="export-addressbook-vcard">
       <entry type="string" name="name">export-addressbook-vcard</entry>
@@ -27,7 +28,9 @@
       <entry type="array" name="allowed_users">
         <entry type="string" name="0">Default</entry>
       </entry>
-      <entry type="string" name="plugin_options"/>
+      <entry type="string" name="plugin_options">
+        <entry type="string" name="charset">user</entry>
+      </entry>
       <entry type="string" name="modified">2012-10-23 09:46:56</entry>
     </entry>
     <entry type="array" name="import-addressbook-csv">

@@ -157,10 +157,10 @@ class addressbook_hooks
 
 		$settings['vcard_charset'] = array(
 			'type'   => 'select',
-			'label'  => 'Charset for the vCard export',
+			'label'  => 'Charset for the vCard import and export',
 			'name'   => 'vcard_charset',
 			'values' => translation::get_installed_charsets(),
-			'help'   => 'Which charset should be used for the vCard export.',
+			'help'   => 'Which charset should be used for the vCard import and export.',
 			'xmlrpc' => True,
 			'admin'  => false,
 			'default'=> 'iso-8859-1',

@@ -73,7 +73,7 @@ class addressbook_export_vcard implements importexport_iface_export_plugin {
 		// vCard opens & closes the resource itself, but this doesn't seem to matter
 		$meta = stream_get_meta_data($_stream);
 
-		$vcard = new addressbook_vcal();
+		$vcard = new addressbook_vcal('addressbook','text/vcard');
 		$vcard->export($selection, $meta['uri']);
 	}
 

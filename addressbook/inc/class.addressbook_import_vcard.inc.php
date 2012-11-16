@@ -111,6 +111,7 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 		$this->bocontacts = new addressbook_vcal();
 
 		$charset = $_definition->plugin_options['charset'];
+		if($charset == 'user') $charset = $GLOBALS['egw_info']['user']['preferences']['addressbook']['vcard_charset'];
 
 		// Start counting successes
 		$this->current = 0;
@@ -155,7 +156,9 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 	 */
 	public function _vcard($_vcard, $owner)
 	{
-		$record = $this->bocontacts->vcardtoegw($_vcard,$this->definition->plugin_options['charset']);
+		$charset = $_definition->plugin_options['charset'];
+		if($charset == 'user') $charset = $GLOBALS['egw_info']['user']['preferences']['addressbook']['vcard_charset'];
+		$record = $this->bocontacts->vcardtoegw($_vcard,$charset);
 
 		$record['owner'] = $owner;
 

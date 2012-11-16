@@ -542,7 +542,9 @@ class importexport_definitions_ui
 				if(!key_exists($content['step'],$this->steps))
 					$next_step = $this->plugin->$content['step']($content);
 				else
+				{
 					$next_step = $this->$content['step']($content);
+				}
 			} else {
 				die('Cannot find next step');
 			}
@@ -728,9 +730,9 @@ class importexport_definitions_ui
 			{
 				case 'next':
 					// There's no real reason the plugin has to come from any of these, as long as it has a $steps variable
-					if($this->plugin instanceof importexport_iface_import_plugin || $this->plugin instanceof importexport_wizard_basic_import_csv) {
+					if($this->plugin instanceof importexport_iface_import_plugin || $this->plugin instanceof importexport_wizard_basic_import_csv || strpos(get_class($this->plugin), 'import') !== false) {
 						$content['type'] = 'import';
-					} elseif($this->plugin instanceof importexport_iface_export_plugin || $this->plugin instanceof importexport_wizard_basic_export_csv) {
+					} elseif($this->plugin instanceof importexport_iface_export_plugin || $this->plugin instanceof importexport_wizard_basic_export_csv || strpos(get_class($this->plugin),'export') !== false) {
 						$content['type'] = 'export';
 					} else {
 						throw new egw_exception('Invalid plugin');

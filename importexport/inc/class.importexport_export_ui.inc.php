@@ -275,7 +275,17 @@ class importexport_export_ui {
 			if (! $charset = $definition->plugin_options['charset']) {
 				$charset = $GLOBALS['egw']->translation->charset();
 			}
-			if($charset == 'user') $charset = $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'];
+			if($charset == 'user')
+			{
+				switch($definition->plugin)
+				{
+					case 'addressbook_export_vcard':
+						$charset = $GLOBALS['egw_info']['user']['preferences']['addressbook']['vcard_charset'];
+						break;
+					default:
+						$charset = $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'];
+				}
+			}
 			$plugin_object = new $definition->plugin;
 			$plugin_object->export( $file, $definition );
 
