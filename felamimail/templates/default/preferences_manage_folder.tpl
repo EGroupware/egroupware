@@ -98,6 +98,10 @@
 			</table>
 </p>
 <p>
+<div style="width:650px; text-align:left;">
+<input type="checkbox" id="active" name="active" value="1" onclick="onchange_active(this)" {checked_active}>{lang_activateACLManagement}
+</div>
+
 			<table border="0" width="100%" cellpadding=2 cellspacing=0>
 				<tr bgcolor='lightgrey'>
 					<td colspan="3" align="center">
@@ -117,10 +121,10 @@
 				</tr>
 				<tr>
 					<td align="left" colspan="2">
-						<button type="button" onclick="javascript:egw_openWindowCentered('{url_addACL}','felamiMailACL','400','150');">{lang_add_acl}</button>
+						<button type="button" name="addACL" id="addACL" onclick="javascript:egw_openWindowCentered('{url_addACL}','felamiMailACL','400','150');">{lang_add_acl}</button>
 					</td>
 					<td align="right">
-						<button type="button" onClick="javascript:xajax_doXMLHTTP('felamimail.ajaxfelamimail.deleteACL', xajax.getFormValues('editACL'),document.getElementById('recursive').checked);document.getElementById('recursive').checked=false;">{lang_delete}</button>
+						<button type="button" name="removeACL" id="removeACL" onClick="javascript:xajax_doXMLHTTP('felamimail.ajaxfelamimail.deleteACL', xajax.getFormValues('editACL'),document.getElementById('recursive').checked);document.getElementById('recursive').checked=false;">{lang_delete}</button>
 						</form>
 					</td>
 				</tr>

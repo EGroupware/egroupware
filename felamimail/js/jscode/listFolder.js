@@ -20,9 +20,47 @@ function resetACLAddView()
 	opener.updateACLView();
 }
 
-function updateACLView()
+function updateACLView(activateACL)
 {
-	xajax_doXMLHTTP('felamimail.ajaxfelamimail.updateACLView');
+	xajax_doXMLHTTPsync('felamimail.ajaxfelamimail.updateACLView');
+
+	var active = document.getElementById('active');
+	if (activateACL=='disableACL') active.checked = false;
+	else active.checked = false;
+	onchange_active(active);
+
+}
+
+function onchange_active(_checkbox) 
+{
+	var selectBoxes = document.getElementsByName('identity');
+	var checkBoxes = document.getElementById('aclTable').getElementsByTagName('input');
+
+	if(_checkbox != null && _checkbox.checked)
+	{
+		document.getElementById('recursive').disabled =false;
+		document.getElementById('addACL').disabled =false;
+		document.getElementById('removeACL').disabled =false;
+		for(i=0; i<selectBoxes.length; i++) {
+			selectBoxes[i].disabled = false;
+		}
+		for(i=0; i<checkBoxes.length; i++) {
+			checkBoxes[i].disabled = false;
+		}
+
+	}
+	else
+	{
+		document.getElementById('recursive').disabled =true;
+		document.getElementById('addACL').disabled =true;
+		document.getElementById('removeACL').disabled =true;
+		for(i=0; i<selectBoxes.length; i++) {
+			selectBoxes[i].disabled = true;
+		}
+		for(i=0; i<checkBoxes.length; i++) {
+			checkBoxes[i].disabled = true;
+		}
+	}
 }
 
 function adaptPresetSelection(_accountid) {

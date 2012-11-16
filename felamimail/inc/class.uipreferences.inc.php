@@ -113,7 +113,7 @@
 					// this call loads js and css for the treeobject
 					html::tree(false,false,false,null,'foldertree','','',false,'/',null,false);
 					egw_framework::validate_file('jscode','listFolder','felamimail');
-					$GLOBALS['egw']->js->set_onload('javascript:updateACLView();');
+					$GLOBALS['egw']->js->set_onload("javascript:updateACLView('disableACL');");
 					break;
 			}
 
@@ -822,6 +822,7 @@
 			$this->t->set_var("bg01",$GLOBALS['egw_info']["theme"]["bg01"]);
 			$this->t->set_var("bg02",$GLOBALS['egw_info']["theme"]["bg02"]);
 			$this->t->set_var("bg03",$GLOBALS['egw_info']["theme"]["bg03"]);
+			$this->t->set_var("lang_activateACLManagement",lang("Activate ACL Management"));
 			$this->t->set_var("lang_acl_l",lang("Look up the name of the mailbox (but not its contents)."));
 			$this->t->set_var("lang_acl_r",lang("Read the contents of the mailbox."));
 			$this->t->set_var("lang_acl_s",lang("Preserve the 'seen' and 'recent' status of messages across IMAP sessions."));
