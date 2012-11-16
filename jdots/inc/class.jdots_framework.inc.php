@@ -136,10 +136,10 @@ class jdots_framework extends egw_framework
 		{
 			return $matches[1];
 		}
-		if (strlen($GLOBALS['egw_info']['server']['webserver_url']) > 1)
+		if ($GLOBALS['egw_info']['server']['webserver_url'] &&
+			($webserver_path = parse_url($GLOBALS['egw_info']['server']['webserver_url'],PHP_URL_PATH)))
 		{
-			list(,$url) = explode(parse_url($GLOBALS['egw_info']['server']['webserver_url'],PHP_URL_PATH),
-				parse_url($url,PHP_URL_PATH),2);
+			list(,$url) = explode($webserver_path, parse_url($url,PHP_URL_PATH),2);
 		}
 		if (preg_match('/\/([^\/]+)\/([^\/]+\.php)?(\?|\/|$)/',$url,$matches))
 		{
