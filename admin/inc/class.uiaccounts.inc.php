@@ -1205,13 +1205,24 @@
 			$p->set_var ('account_file_space', '<input type=text name="account_file_space_number" value="'.trim($file_space_array[0]).'" size="7">');
 			$p->set_var ('account_file_space_select','<select name="account_file_space_type">'."\n".$account_file_space_select.'</select>'."\n");
 	*/
-
-			if ($group_repository['mailAllowed'])
+			// if EGroupware manages a mail server, allow setting an email address for groups
+			if ($group_repository['mailAllowed'] && $GLOBALS['egw_info']['apps']['emailadmin'] &&
+				$GLOBALS['egw_info']['apps']['felamimail'])
 			{
-				$p->set_var(array(
-					'lang_email' => lang('Email'),
-					'email' => html::input('account_email',$group_repository['account_email'],'',' style="width: 100%;"'),
-				));
+				$emailadmin = new emailadmin_bo();
+				if (($default_profile_id = $emailadmin->getDefaultProfileID()))
+				{
+					$bofelamimail = felamimail_bo::getInstance(true, $default_profile_id);
+					$ogServer = $bofelamimail->mailPreferences->getOutgoingServer($default_profile_id);
+					//error_log(__METHOD__."() default_profile_id = $default_profile_id, get_class(ogServer)=".get_class($ogServer));
+					if (!in_array(get_class($ogServer), array('defaultsmtp', 'emailadmin_smtp')))
+					{
+						$p->set_var(array(
+							'lang_email' => lang('Email'),
+							'email' => html::input('account_email',$group_repository['account_email'],'',' style="width: 100%;"'),
+						));
+					}
+				}
 			}
 			$availableApps = $GLOBALS['egw_info']['apps'];
 			foreach($availableApps as $app => $data)
