@@ -418,7 +418,7 @@ class felamimail_bo
 	 * @param int $_profile_id must be a value lower than 0 (emailadmin profile)
 	 * @return object instance of felamimail_bo (by reference)
 	 */
-	public static function forceEAProfileLoad($_profile_id)
+	public static function &forceEAProfileLoad($_profile_id)
 	{
 		$bofelamimail = felamimail_bo::getInstance(false, $_profile_id,false);
 		//_debug_array( $_profile_id);
