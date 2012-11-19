@@ -195,6 +195,31 @@ class setup_cmd_ldap extends setup_cmd
 				$msg[] = lang('%1 created in %2.',$what,$target);
 				$accounts_created++;
 
+				// check if we need to migrate mail-account
+				// todo sql --> ldap and other schemas
+				if (!$to_ldap && in_array('qmailUser', $account['objectclass']))
+				{
+					if (!isset($emailadmin_ldap))
+					{
+						include_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.postfixldap.inc.php');
+						$emailadmin_ldap = new postfixldap();
+					}
+					if (($mailaccount = $emailadmin_ldap->getUserData($account_id)))
+					{
+						echo "<p>".array2string($mailaccount).': ';
+						if (!isset($emailadmin_sql))
+						{
+							$emailadmin_sql = new emailadmin_smtp_sql();
+						}
+						$emailadmin_sql->setUserData($account_id, (array)$mailaccount['mailAlternateAddress'],
+							(array)$mailaccount['mailForwardingAddress'], $mailaccount['deliveryMode'],
+							$mailaccount['accountStatus'], $mailaccount['mailLocalAddress'],
+							$mailaccount['quotaLimit']);
+						echo "mail account migraged<br/>\n";
+					}
+					else echo "<p>No mail account data found for #$account_id $account[account_lid]!</p>\n";
+				}
+
 				// should we run any or some addAccount hooks
 				if ($this->add_account_hook)
 				{
@@ -334,7 +359,7 @@ class setup_cmd_ldap extends setup_cmd
 		$accounts_obj = $this->accounts_obj($from_ldap);
 		//error_log(__METHOD__."(from_ldap=".array2string($from_ldap).') get_class(accounts_obj->backend)='.get_class($accounts_obj->backend));
 
-		$accounts = $accounts_obj->search(array('type' => 'both'));
+		$accounts = $accounts_obj->search(array('type' => 'both', 'objectclass' => true));
 
 		foreach($accounts as $account_id => &$account)
 		{
@@ -343,7 +368,7 @@ class setup_cmd_ldap extends setup_cmd
 				unset($account);
 				$account_id = $account['account_id'];
 			}
-			$account = $accounts_obj->read($account_id);
+			$account += $accounts_obj->read($account_id);
 
 			if ($account['account_type'] == 'g')
 			{

@@ -245,7 +245,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 
 		if (is_numeric($user))
 		{
-			$filter = '(uidnumber='.(int)$_uidnumber.')';
+			$filter = '(uidnumber='.(int)$user.')';
 		}
 		elseif (strpos($user, '@') === false)
 		{
