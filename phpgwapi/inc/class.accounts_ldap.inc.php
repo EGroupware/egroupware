@@ -631,6 +631,7 @@ class accounts_ldap
 	 *	'exact' - query all fields for exact $param[query]
 	 *	'lid','firstname','lastname','email' - query only the given field for containing $param[query]
 	 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
+	 * @param $param['objectclass'] boolean return objectclass(es) under key 'objectclass' in each account
 	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */
@@ -742,7 +743,7 @@ class accounts_ldap
 					$filter = '(&(objectclass=posixaccount)(|(uid='.implode(')(uid=',$relevantAccounts).'))' . $this->account_filter.')';
 					$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
 				}
-				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn','mail','shadowExpire','createtimestamp','modifytimestamp'));
+				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn','mail','shadowExpire','createtimestamp','modifytimestamp','objectclass'));
 				//echo "<p>ldap_search(,$this->user_context,'$filter',) ".($sri ? '' : ldap_error($this->ds)).microtime()."</p>\n";
 
 				$utc_diff = date('Z');
@@ -764,6 +765,12 @@ class accounts_ldap
 							'account_modified' => isset($allVals['modifytimestamp'][0]) ? self::accounts_ldap2ts($allVals['modifytimestamp'][0]) : null,
 						);
 						$account['account_fullname'] = common::display_fullname($account['account_lid'],$account['account_firstname'],$account['account_lastname']);
+						// return objectclass(es)
+						if ($param['objectclass'])
+						{
+							$account['objectclass'] = $allVals['objectclass'];
+							unset($account['objectclass']['count']);
+						}
 						$accounts[$account['account_id']] = $account;
 					}
 				}
