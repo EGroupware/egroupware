@@ -997,10 +997,9 @@ class setup
 			if (!$config)
 			{
 				// load the configuration from the database
-				$this->db->select($this->config_table,'config_name,config_value',
-					"config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%' OR config_name='auth_type'",__LINE__,__FILE__);
-
-				while(($row = $this->db->row(true)))
+				foreach($this->db->select($this->config_table,'config_name,config_value',
+					"config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%' OR config_name='auth_type'",
+					__LINE__,__FILE__) as $row)
 				{
 					$GLOBALS['egw_info']['server'][$row['config_name']] = $config[$row['config_name']] = $row['config_value'];
 				}

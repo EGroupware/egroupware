@@ -257,6 +257,18 @@ class setup_cmd_ldap extends setup_cmd
 				$accounts_obj->set_members($account['members'],$account_id);
 			}
 		}
+		// migrate addressbook data
+		$GLOBALS['egw_info']['user']['apps']['admin'] = true;	// otherwise migration will not run in setup!
+		$addressbook = new addressbook_so();
+		foreach($this->as_array() as $name => $value)
+		{
+			if (substr($name, 5) == 'ldap_')
+			{
+				$GLOBALS['egw_info']['server'][$name] = $value;
+			}
+		}
+		$addressbook->migrate2ldap($to_ldap ? 'accounts' : 'accounts-back');
+
 		$this->restore_db();
 
 		return lang('%1 users and %2 groups created, %3 errors',$accounts_created,$groups_created,$errors).
@@ -397,7 +409,7 @@ class setup_cmd_ldap extends setup_cmd
 		$this->test_ldap = new ldap();
 
 		$error_rep = error_reporting();
-		//error_reporting($error_rep & ~E_WARNING);	// switch warnings of, in case they are on
+		error_reporting($error_rep & ~E_WARNING);	// switch warnings of, in case they are on
 		ob_start();
 		$ds = $this->test_ldap->ldapConnect($this->ldap_host,$dn,$pw);
 		ob_end_clean();

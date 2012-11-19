@@ -203,18 +203,43 @@ class addressbook_ldap
 	var  $all_attributes = array();
 
 	/**
-	 * constructor of the class
+	 * LDAP configuration
+	 *
+	 * @var array values for keys "ldap_contact_context", "ldap_host", "ldap_context"
 	 */
-	function __construct()
+	private $ldap_config;
+
+	/**
+	 * constructor of the class
+	 *
+	 * @param array $ldap_config=null default use from $GLOBALS['egw_info']['server']
+	 * @param resource $ds=null ldap connection to use
+	 */
+	function __construct(array $ldap_config=null, $ds=null)
 	{
 		//$this->db_data_cols 	= $this->stock_contact_fields + $this->non_contact_fields;
 		$this->accountName 		= $GLOBALS['egw_info']['user']['account_lid'];
 
-		$this->personalContactsDN	= 'ou=personal,ou=contacts,'. $GLOBALS['egw_info']['server']['ldap_contact_context'];
-		$this->sharedContactsDN		= 'ou=shared,ou=contacts,'. $GLOBALS['egw_info']['server']['ldap_contact_context'];
+		if ($ldap_config)
+		{
+			$this->ldap_config = $ldap_config;
+		}
+		else
+		{
+			$this->ldap_config =& $GLOBALS['egw_info']['server'];
+		}
+		$this->personalContactsDN	= 'ou=personal,ou=contacts,'. $this->ldap_config['ldap_contact_context'];
+		$this->sharedContactsDN		= 'ou=shared,ou=contacts,'. $this->ldap_config['ldap_contact_context'];
 
-		$this->connect();
-		$this->ldapServerInfo = $GLOBALS['egw']->ldap->getLDAPServerInfo($GLOBALS['egw_info']['server']['ldap_contact_host']);
+		if ($ds)
+		{
+			$this->ds = $ds;
+		}
+		else
+		{
+			$this->connect();
+		}
+		$this->ldapServerInfo = $GLOBALS['egw']->ldap->getLDAPServerInfo($this->ldap_config['ldap_contact_host']);
 
 		foreach($this->schema2egw as $schema => $attributes)
 		{
@@ -241,14 +266,14 @@ class addressbook_ldap
 		// if ldap is NOT the contact repository, we only do accounts and need to use the account-data
 		if (substr($GLOBALS['egw_info']['server']['contact_repository'],-4) != 'ldap')	// not (ldap or sql-ldap)
 		{
-			$GLOBALS['egw_info']['server']['ldap_contact_host'] = $GLOBALS['egw_info']['server']['ldap_host'];
-			$GLOBALS['egw_info']['server']['ldap_contact_context'] = $GLOBALS['egw_info']['server']['ldap_context'];
+			$this->ldap_config['ldap_contact_host'] = $this->ldap_config['ldap_host'];
+			$this->ldap_config['ldap_contact_context'] = $this->ldap_config['ldap_context'];
 			$this->ds = $GLOBALS['egw']->ldap->ldapConnect();
 		}
 		else
 		{
 			$this->ds = $GLOBALS['egw']->ldap->ldapConnect(
-				$GLOBALS['egw_info']['server']['ldap_contact_host'],
+				$this->ldap_config['ldap_contact_host'],
 				$GLOBALS['egw_info']['user']['account_dn'],
 				$GLOBALS['egw_info']['user']['passwd']
 			);
@@ -298,7 +323,7 @@ class addressbook_ldap
 				(isset ($contact_id['id']) ? $contact_id['id'] : $contact_id['uid']));
 			$filter = "(|(entryUUID=$contact_id)(uid=$contact_id))";
 		}
-		$rows = $this->_searchLDAP($GLOBALS['egw_info']['server']['ldap_contact_context'],
+		$rows = $this->_searchLDAP($this->ldap_config['ldap_contact_context'],
 			$filter, $this->all_attributes, ADDRESSBOOK_ALL);
 
 		return $rows ? $rows[0] : false;
@@ -339,7 +364,7 @@ class addressbook_ldap
 			$data['account_id'] == $GLOBALS['egw_info']['user']['account_id']))
 		{
 			// account
-			$baseDN = $GLOBALS['egw_info']['server']['ldap_context'];
+			$baseDN = $this->ldap_config['ldap_context'];
 			$cn	= false;
 			// we need an admin connection
 			$this->ds = $GLOBALS['egw']->ldap->ldapConnect();
@@ -366,7 +391,7 @@ class addressbook_ldap
 		$attributes = array('dn','cn','objectClass','uid','mail');
 		$contactUID	= $this->data[$this->contacts_id];
 		if(!empty($contactUID) &&
-			($result = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_contact_context'],
+			($result = ldap_search($this->ds, $this->ldap_config['ldap_contact_context'],
 				'(|(entryUUID='.ldap::quote($contactUID).')(uid='.ldap::quote($contactUID).'))', $attributes)) &&
 			($oldContactInfo = ldap_get_entries($this->ds, $result)) && $oldContactInfo['count'])
 		{
@@ -547,7 +572,7 @@ class addressbook_ldap
 		foreach($keys as $entry)
 		{
 			$entry = ldap::quote(is_array($entry) ? $entry['id'] : $entry);
-			if($result = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_contact_context'],
+			if($result = ldap_search($this->ds, $this->ldap_config['ldap_contact_context'],
 				"(|(entryUUID=$entry)(uid=$entry))", $attributes))
 			{
 				$contactInfo = ldap_get_entries($this->ds, $result);
@@ -610,12 +635,12 @@ class addressbook_ldap
 		}
 		elseif (!isset($filter['owner']))
 		{
-			$searchDN = $GLOBALS['egw_info']['server']['ldap_contact_context'];
+			$searchDN = $this->ldap_config['ldap_contact_context'];
 			$addressbookType = ADDRESSBOOK_ALL;
 		}
 		else
 		{
-			$searchDN = $GLOBALS['egw_info']['server']['ldap_context'];
+			$searchDN = $this->ldap_config['ldap_context'];
 			$addressbookType = ADDRESSBOOK_ACCOUNTS;
 		}
 
@@ -928,7 +953,7 @@ class addressbook_ldap
 	/**
 	 * check if $baseDN exists. If not create it
 	 *
-	 * @param string $baseDN cn=xxx,ou=yyy,ou=contacts,$GLOBALS['egw_info']['server']['ldap_contact_context']
+	 * @param string $baseDN cn=xxx,ou=yyy,ou=contacts,$this->ldap_config['ldap_contact_context']
 	 * @return boolean/string false on success or string with error-message
 	 */
 	function _check_create_dn($baseDN)
@@ -948,8 +973,8 @@ class addressbook_ldap
 
 		list(,$ou) = explode(',',$baseDN);
 		foreach(array(
-			'ou=contacts,'.$GLOBALS['egw_info']['server']['ldap_contact_context'],
-			$ou.',ou=contacts,'.$GLOBALS['egw_info']['server']['ldap_contact_context'],
+			'ou=contacts,'.$this->ldap_config['ldap_contact_context'],
+			$ou.',ou=contacts,'.$this->ldap_config['ldap_contact_context'],
 			$baseDN,
 		) as $dn)
 		{

@@ -868,58 +868,72 @@ class addressbook_so
 	}
 
 	/**
-	 * Migrates an SQL contact storage to LDAP or SQL-LDAP
+	 * Migrates an SQL contact storage to LDAP, SQL-LDAP or back to SQL
 	 *
-	 * @param string $type "contacts" (default), "contacts+accounts" or "contacts+accounts-back" (sql-ldap!)
+	 * @param string|array $type comma-separated list or array of:
+	 *  - "contacts" contacts to ldap
+	 *  - "accounts" accounts to ldap
+	 *  - "accounts-back" accounts back to sql (for sql-ldap!)
+	 *  - "sql" contacts and accounts to sql
 	 */
 	function migrate2ldap($type)
 	{
+		//error_log(__METHOD__."(".array2string($type).")");
 		$sql_contacts  = new addressbook_sql();
-		$ldap_contacts = new addressbook_ldap();
+		// we need an admin connection
+		$ds = $GLOBALS['egw']->ldap->ldapConnect();
+		$ldap_contacts = new addressbook_ldap(null, $ds);
+
+		if (!is_array($type)) $type = explode(',', $type);
 
 		$start = $n = 0;
 		$num = 100;
-		while ($type != 'sql' && ($contacts = $sql_contacts->search(false,false,'n_family,n_given','','',false,'AND',
-			array($start,$num),$type != 'contacts,accounts' ? array('contact_owner != 0') : false)))
-		{
-			// very worse hack, until Ralf finds a better solution
-			// when migrating data, we need to bind as global ldap admin account
-			// and not as currently logged in user
-			$ldap_contacts->ds = $GLOBALS['egw']->ldap->ldapConnect();
-			foreach($contacts as $contact)
-			{
-				if ($contact['account_id']) $contact['id'] = $GLOBALS['egw']->accounts->id2name($contact['account_id']);
 
-				$ldap_contacts->data = $contact;
-				$n++;
-				if (!($err = $ldap_contacts->save()))
-				{
-					echo '<p style="margin: 0px;">'.$n.': '.$contact['n_fn'].
-						($contact['org_name'] ? ' ('.$contact['org_name'].')' : '')." --> LDAP</p>\n";
-				}
-				else
-				{
-					echo '<p style="margin: 0px; color: red;">'.$n.': '.$contact['n_fn'].
-						($contact['org_name'] ? ' ('.$contact['org_name'].')' : '').': '.$err."</p>\n";
-				}
-			}
-			$start += $num;
-		}
-		if ($type == 'contacts,accounts-back' || $type == 'sql')  // migrate the accounts to sql
+		// direction SQL --> LDAP, either only accounts, or only contacts or both
+		if (($do = array_intersect($type, array('contacts', 'accounts'))))
 		{
-			// very worse hack, until Ralf finds a better solution
-			// when migrating data, we need to bind as global ldap admin account
-			// and not as currently logged in user
-			$ldap_contacts->ds = $GLOBALS['egw']->ldap->ldapConnect();
-			foreach($ldap_contacts->search(false,false,'n_family,n_given','','',false,'AND',
-				false,$type == 'sql'?null:array('owner' => 0)) as $contact)
+			$filter = count($do) == 2 ? null :
+				array($do[0] == 'contacts' ? 'contact_owner != 0' : 'contact_owner = 0');
+
+			while (($contacts = $sql_contacts->search(false,false,'n_family,n_given','','',false,'AND',
+				array($start,$num),$filter)))
 			{
+				foreach($contacts as $contact)
+				{
+					if ($contact['account_id']) $contact['id'] = $GLOBALS['egw']->accounts->id2name($contact['account_id']);
+
+					$ldap_contacts->data = $contact;
+					$n++;
+					if (!($err = $ldap_contacts->save()))
+					{
+						echo '<p style="margin: 0px;">'.$n.': '.$contact['n_fn'].
+							($contact['org_name'] ? ' ('.$contact['org_name'].')' : '')." --> LDAP</p>\n";
+					}
+					else
+					{
+						echo '<p style="margin: 0px; color: red;">'.$n.': '.$contact['n_fn'].
+							($contact['org_name'] ? ' ('.$contact['org_name'].')' : '').': '.$err."</p>\n";
+					}
+				}
+				$start += $num;
+			}
+		}
+		// direction LDAP --> SQL: either "sql" (contacts and accounts) or "accounts-back" (only accounts)
+		if (($do = array_intersect(array('accounts-back','sql'), $type)))
+		{
+			//error_log(__METHOD__."(".array2string($type).") do=".array2string($type));
+			$filter = in_array('sql', $do) ? null : array('owner' => 0);
+
+			foreach($ldap_contacts->search(false,false,'n_family,n_given','','',false,'AND',
+				false, $filter) as $contact)
+			{
+				//error_log(__METHOD__."(".array2string($type).") do=".array2string($type)." migrating ".array2string($contact));
 				if ($contact['jpegphoto'])	// photo is NOT read by LDAP backend on search, need to do an extra read
 				{
 					$contact = $ldap_contacts->read($contact['id']);
 				}
 				unset($contact['id']);	// ldap uid/account_lid
-				if ($type != 'sql' && $contact['account_id'] && ($old = $sql_contacts->read(array('account_id' => $contact['account_id']))))
+				if ($contact['account_id'] && ($old = $sql_contacts->read(array('account_id' => $contact['account_id']))))
 				{
 					$contact['id'] = $old['id'];
 				}
