@@ -130,7 +130,7 @@ class emailadmin_smtp_sql extends emailadmin_smtp
 				$account_id[] = $id;
 			}
 			foreach($this->db->select(self::TABLE, 'account_id', array(
-				'mail_type' => array(self::TYPE_ALIAS, self::TYPE_FORWARD),
+				'mail_type' => self::TYPE_ALIAS,
 				'mail_value' => $user,
 			), __LINE__, __FILE__, false, '', self::APP) as $row)
 			{
