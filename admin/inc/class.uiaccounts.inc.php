@@ -1209,10 +1209,9 @@
 			if ($group_repository['mailAllowed'] && $GLOBALS['egw_info']['apps']['emailadmin'] &&
 				$GLOBALS['egw_info']['apps']['felamimail'])
 			{
-				$emailadmin = new emailadmin_bo();
-				if (($default_profile_id = $emailadmin->getDefaultProfileID()))
+				if (($default_profile_id = emailadmin_bo::getDefaultProfileID()))
 				{
-					$bofelamimail = felamimail_bo::getInstance(true, $default_profile_id);
+					$bofelamimail = felamimail_bo::forceEAProfileLoad($default_profile_id);
 					$ogServer = $bofelamimail->mailPreferences->getOutgoingServer($default_profile_id);
 					//error_log(__METHOD__."() default_profile_id = $default_profile_id, get_class(ogServer)=".get_class($ogServer));
 					if (!in_array(get_class($ogServer), array('defaultsmtp', 'emailadmin_smtp')))
