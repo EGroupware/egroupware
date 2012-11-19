@@ -59,5 +59,17 @@ $phpgw_baseline = array(
 		'fk' => array(),
 		'ix' => array('ea_appname','ea_group'),
 		'uc' => array()
+	),
+	'egw_mailaccounts' => array(
+		'fd' => array(
+			'mail_id' => array('type' => 'auto','nullable' => False),
+			'account_id' => array('type' => 'int','precision' => '4','nullable' => False),
+			'mail_type' => array('type' => 'int','precision' => '1','nullable' => False,'comment' => '0=active, 1=alias, 2=forward, 3=forwardOnly, 4=quota'),
+			'mail_value' => array('type' => 'varchar','precision' => '128','nullable' => False)
+		),
+		'pk' => array('mail_id'),
+		'fk' => array(),
+		'ix' => array('mail_value',array('account_id','mail_type')),
+		'uc' => array()
 	)
 );

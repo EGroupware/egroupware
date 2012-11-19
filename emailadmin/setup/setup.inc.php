@@ -12,7 +12,7 @@
 
 $setup_info['emailadmin']['name']      = 'emailadmin';
 $setup_info['emailadmin']['title']     = 'EMailAdmin';
-$setup_info['emailadmin']['version']   = '1.9.003';
+$setup_info['emailadmin']['version']   = '1.9.006';
 $setup_info['emailadmin']['app_order'] = 10;
 $setup_info['emailadmin']['enable']    = 2;
 $setup_info['emailadmin']['index']     = 'emailadmin.emailadmin_ui.listProfiles';
@@ -29,6 +29,7 @@ $setup_info['emailadmin']['maintainer'] = array(
 );
 
 $setup_info['emailadmin']['tables'][]	= 'egw_emailadmin';
+$setup_info['emailadmin']['tables'][]	= 'egw_mailaccounts';
 
 /* The hooks this app includes, needed for hooks registration */
 #$setup_info['emailadmin']['hooks'][] = 'preferences';
@@ -72,3 +73,4 @@ $setup_info['emailadmin']['check_install'] = array(
 		'from' => 'EMailAdmin',
 	),
 );
+

@@ -27,7 +27,7 @@ class emailadmin_hooks
 		//Do not modify below this line
 		display_section($appname,$title,$file);
 	}
-	
+
     /**
      * Hook called if account emailadim settings has to be modified
      *
@@ -93,7 +93,7 @@ class emailadmin_hooks
 				}
 			}
 		}
-		
+
 	}
 
     /**
@@ -139,7 +139,8 @@ class emailadmin_hooks
 					) : 'Dovecot',
 				);
 
-			case 'smtp_server_type':	// nothing yet
+			case 'smtp_server_types':	// nothing yet
+				return array('emailadmin_smtp_sql' => 'Postfix (SQL)');
 				break;
 		}
 	}

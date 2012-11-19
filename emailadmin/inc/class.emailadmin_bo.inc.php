@@ -995,4 +995,21 @@ class emailadmin_bo extends so_sql
 		self::$sessionData = array();
 		$this->saveSessionData();
 	}
+
+	/**
+	 * Get ID of default profile
+	 *
+	 * ID is negative for FMail, which used positive ID's for user profiles!
+	 *
+	 * @return int
+	 */
+	function getDefaultProfileID()
+	{
+		if (($profiles = $this->soemailadmin->getProfileList(0, true)))
+		{
+			$default_profile = array_shift($profiles);
+
+			return -$default_profile['profileID'];
+		}
+	}
 }

@@ -20,24 +20,23 @@ class felamimail_hooks
  */
 	static public function accountHooks($hookData)
 	{
-		$profileID = 0;
-		if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
-			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
-
-		$bofelamimail = felamimail_bo::getInstance(true,$profileID);
-		$profileID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $bofelamimail->profileID;
-
-		switch(is_array($hookData) ? $hookData['location'] : $hookData)
+		$emailadmin = new emailadmin_bo();
+		if (($default_profile_id = $emailadmin->getDefaultProfileID()))
 		{
-			case 'addaccount':
-				$bofelamimail->addAccount($hookData);
-				break;
-			case 'deleteaccount':
-				$bofelamimail->deleteAccount($hookData);
-				break;
-			case 'editaccount':
-				$bofelamimail->updateAccount($hookData);
-				break;
+			$bofelamimail = felamimail_bo::getInstance(true, $default_profile_id);
+
+			switch(is_array($hookData) ? $hookData['location'] : $hookData)
+			{
+				case 'addaccount':
+					$bofelamimail->addAccount($hookData);
+					break;
+				case 'deleteaccount':
+					$bofelamimail->deleteAccount($hookData);
+					break;
+				case 'editaccount':
+					$bofelamimail->updateAccount($hookData);
+					break;
+			}
 		}
 	}
 
@@ -46,19 +45,25 @@ class felamimail_hooks
 	 */
 	static public function adminMenu()
 	{
-		if ($GLOBALS['egw_info']['server']['account_repository'] == "ldap")
+		$emailadmin = new emailadmin_bo();
+		if (($default_profile_id = $emailadmin->getDefaultProfileID()))
 		{
-			$data = Array
-			(
-				'description'   => 'email settings',
-				'url'           => '/index.php',
-				'extradata'     => 'menuaction=emailadmin.uiuserdata.editUserData'
-			);
+			$bofelamimail = felamimail_bo::getInstance(true, $default_profile_id);
 
-			//Do not modify below this line
-			global $menuData;
+			$ogServer = $bofelamimail->mailPreferences->getOutgoingServer($default_profile_id);
+			//error_log(__METHOD__."() default_profile_id = $default_profile_id, get_class(ogServer)=".get_class($ogServer));
 
-			$menuData[] = $data;
+			if (get_class($ogServer) != 'defaultsmtp')
+			{
+				global $menuData;
+
+				$menuData[] = Array
+				(
+					'description'   => 'email settings',
+					'url'           => '/index.php',
+					'extradata'     => 'menuaction=emailadmin.uiuserdata.editUserData'
+				);
+			}
 		}
 	}
 
