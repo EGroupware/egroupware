@@ -263,6 +263,7 @@ class emailadmin_bo extends so_sql
 				}
 				$this->imapClass	= new $class;
 			}
+			if ($this->profileData['smtpType']=='defaultsmtp') $this->profileData['smtpType']='emailadmin_smtp';
 			$class = self::$SMTPServerType[$this->profileData['smtpType']]['classname'];
 			if (!empty($class))
 			{
@@ -386,6 +387,7 @@ class emailadmin_bo extends so_sql
 		$profileData	= $this->getProfile($_profileID);
 
 		#$smtpClass	= self::$SMTPServerType[$profileData['smtpType']]['classname'];
+		if ($profileData['smtpType']=='defaultsmtp') $profileData['smtpType']='emailadmin_smtp';
 		$smtpClass	= CreateObject('emailadmin.'.self::$SMTPServerType[$profileData['smtpType']]['classname']);
 
 		#return empty($smtpClass) ? False : ExecMethod("emailadmin.$smtpClass.getAccountEmailAddress",$_accountName,3,$profileData);
@@ -400,6 +402,7 @@ class emailadmin_bo extends so_sql
 				return self::$IMAPServerType[$_serverTypeID]['fieldNames'];
 				break;
 			case 'smtp':
+				if ($_serverTypeID=='defaultsmtp') $_serverTypeID='emailadmin_smtp';
 				return self::$SMTPServerType[$_serverTypeID]['fieldNames'];
 				break;
 		}
@@ -475,6 +478,7 @@ class emailadmin_bo extends so_sql
 		$fieldNames = array();
 		if (isset($profileData[$found]))
 		{
+			if ($profileData[$found]['smtpType']=='defaultsmtp') $profileData[$found]['smtpType'] = 'emailadmin_smtp';
 			$fieldNames = array_merge(self::$SMTPServerType[$profileData[$found]['smtpType']]['fieldNames'],
 				self::$IMAPServerType[$profileData[$found]['imapType']]['fieldNames']);
 		}
@@ -623,12 +627,13 @@ class emailadmin_bo extends so_sql
 	 * @param int|array $_groups=''
 	 * @return ea_preferences
 	 */
-	function getUserProfile($_appName='', $_groups='')
+	function getUserProfile($_appName='', $_groups='', $_profileID='')
 	{
 		if (!(is_array(self::$sessionData) && (count(self::$sessionData)>0))) $this->restoreSessionData();
-		if (is_array(self::$sessionData) && count(self::$sessionData)>0 && self::$sessionData['ea_preferences'])
+		if (is_array(self::$sessionData) && count(self::$sessionData)>0 && self::$sessionData['ea_preferences'] &&
+			($_profileID=='' && count(self::$sessionData['ea_preferences']->icServer) || $_profileID && isset(self::$sessionData['ea_preferences']->icServer[$_profileID])))
 		{
-			//error_log("sessionData Restored for UserProfile<br>");
+			//error_log("sessionData Restored for UserProfile<br>".array2string(self::$sessionData['ea_preferences']));
 			return self::$sessionData['ea_preferences'];
 		}
 		$appName	= ($_appName != '' ? $_appName : $GLOBALS['egw_info']['flags']['currentapp']);
@@ -645,7 +650,17 @@ class emailadmin_bo extends so_sql
 			$groups = $_groups;
 		}
 
-		if($data = $this->soemailadmin->getUserProfile($appName, $groups,$GLOBALS['egw_info']['user']['account_id']))
+		if (!empty($_profileID))
+		{
+			//error_log(__METHOD__.__LINE__.'#'.$appName.','.array2string($groups).','. $_profileID);
+			$data = $this->getProfile($_profileID);
+		}
+		else
+		{
+			//error_log(__METHOD__.__LINE__.'#'.$appName.','.array2string($groups).','. $_profileID);
+			$data = $this->soemailadmin->getUserProfile($appName, $groups,$GLOBALS['egw_info']['user']['account_id']);
+		}
+		if($data)
 		{
 			//error_log(__METHOD__.__LINE__.array2string($data));
 			$eaPreferences = CreateObject('emailadmin.ea_preferences');
@@ -1003,9 +1018,10 @@ class emailadmin_bo extends so_sql
 	 *
 	 * @return int
 	 */
-	function getDefaultProfileID()
+	static function getDefaultProfileID()
 	{
-		if (($profiles = $this->soemailadmin->getProfileList(0, true)))
+		$soemailadmin = new emailadmin_so();
+		if (($profiles = $soemailadmin->getProfileList(0, true)))
 		{
 			$default_profile = array_shift($profiles);
 
