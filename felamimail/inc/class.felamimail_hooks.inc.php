@@ -20,10 +20,9 @@ class felamimail_hooks
  */
 	static public function accountHooks($hookData)
 	{
-		$emailadmin = new emailadmin_bo();
-		if (($default_profile_id = $emailadmin->getDefaultProfileID()))
+		if (($default_profile_id = emailadmin_bo::getDefaultProfileID()))
 		{
-			$bofelamimail = felamimail_bo::getInstance(true, $default_profile_id);
+			$bofelamimail = felamimail_bo::forceEAProfileLoad($default_profile_id);
 
 			switch(is_array($hookData) ? $hookData['location'] : $hookData)
 			{
@@ -45,10 +44,9 @@ class felamimail_hooks
 	 */
 	static public function adminMenu()
 	{
-		$emailadmin = new emailadmin_bo();
-		if (($default_profile_id = $emailadmin->getDefaultProfileID()))
+		if (($default_profile_id = emailadmin_bo::getDefaultProfileID()))
 		{
-			$bofelamimail = felamimail_bo::getInstance(true, $default_profile_id);
+			$bofelamimail = felamimail_bo::forceEAProfileLoad($default_profile_id);
 
 			$ogServer = $bofelamimail->mailPreferences->getOutgoingServer($default_profile_id);
 			//error_log(__METHOD__."() default_profile_id = $default_profile_id, get_class(ogServer)=".get_class($ogServer));
@@ -76,22 +74,29 @@ class felamimail_hooks
     static function search_link($location)
     {
         return array(
-            'view'  => array(
-                'menuaction' => 'felamimail.uidisplay.display',
-            ),
-            'view_popup' => '850xegw_getWindowOuterHeight()',
-            'add'        => array(
-                'menuaction' => 'felamimail.uicompose.compose',
-            ),
-            'add_popup'  => '850xegw_getWindowOuterHeight()',
-            // register fmail as handler for .eml files
-            'mime' => array(
-            	'message/rfc822' => array(
-            		'menuaction' => 'felamimail.uifelamimail.importMessageFromVFS2DraftAndDisplay',
-            		'mime_popup' => '850xegw_getWindowOuterHeight()',
-            		'mime_url'   => 'formData[file]',
-            	),
-            ),
+			'view'  => array(
+				'menuaction' => 'felamimail.uidisplay.display',
+			),
+			'view_popup' => '850xegw_getWindowOuterHeight()',
+			'add'        => array(
+				'menuaction' => 'felamimail.uicompose.compose',
+			),
+			'add_popup'  => '850xegw_getWindowOuterHeight()',
+			// register fmail as handler for .eml files
+			'mime' => array(
+				'message/rfc822' => array(
+//					'view' => array(
+						'menuaction' => 'felamimail.uifelamimail.importMessageFromVFS2DraftAndDisplay',
+						'mime_popup' => '850xegw_getWindowOuterHeight()',
+						'mime_url'   => 'formData[file]',
+/*					),
+					'edit' => array(
+						'menuaction' => 'felamimail.uifelamimail.importMessageFromVFS2DraftAndEdit',
+						'mime_popup' => '850xegw_getWindowOuterHeight()',
+						'mime_url'   => 'formData[file]',
+					),
+*/				),				
+			),
         );
     }
 
