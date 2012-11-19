@@ -36,6 +36,7 @@ class felamimail_hooks
 					$bofelamimail->updateAccount($hookData);
 					break;
 			}
+			emailadmin_bo::unsetCachedObjects($default_profile_id);
 		}
 	}
 
