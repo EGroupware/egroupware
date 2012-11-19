@@ -188,6 +188,24 @@ class emailadmin_smtp_sql extends emailadmin_smtp
 						break;
 				}
 			}
+			// if query by email-address (not a regular call from fmail)
+			if (is_array($account_id))
+			{
+				// add group-members for groups as forward (that way we dont need to store&update them)
+				foreach($account_id as $id)
+				{
+					if ($id < 0 && ($members = $this->accounts->members($id, true)))
+					{
+						foreach($members as $member)
+						{
+							if (($email = $this->accounts->id2name($member, 'account_email')) && !in_array($email, $userData['forward']))
+							{
+								$userData['forward'][] = $email;
+							}
+						}
+					}
+				}
+			}
 		}
 		if ($this->debug) error_log(__METHOD__."('$user') returning ".array2string($userData));
 
