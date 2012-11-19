@@ -1016,7 +1016,7 @@ class accounts
 
 		$account =& self::$request_cache[$account_id];
 
-		if (!isset($account))	// not in request cache --> try intance cache
+		if (!isset($account))	// not in request cache --> try instance cache
 		{
 			$account = egw_cache::getInstance(__CLASS__, 'account-'.$account_id);
 
