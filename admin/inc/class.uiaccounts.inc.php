@@ -1221,6 +1221,7 @@
 							'email' => html::input('account_email',$group_repository['account_email'],'',' style="width: 100%;"'),
 						));
 					}
+					emailadmin_bo::unsetCachedObjects($default_profile_id);
 				}
 			}
 			$availableApps = $GLOBALS['egw_info']['apps'];
