@@ -406,6 +406,22 @@ class felamimail_bo
 
 	}
 
+	/**
+	 * forceEAProfileLoad
+	 * used to force the load of a specific emailadmin profile; we assume administrative use only (as of now)
+	 * @param int $_profile_id must be a value lower than 0 (emailadmin profile)
+	 * @return object instance of felamimail_bo (by reference)
+	 */
+	public static function &forceEAProfileLoad($_profile_id)
+	{
+		$bofelamimail = felamimail_bo::getInstance(false, $_profile_id,false);
+		//_debug_array( $_profile_id);
+		$bofelamimail->mailPreferences = $bofelamimail->bopreferences->getPreferences(false,$_profile_id,'felamimail',$_profile_id);
+		$bofelamimail->icServer = $bofelamimail->mailPreferences->getIncomingServer($_profile_id);
+		$bofelamimail->ogServer = $bofelamimail->mailPreferences->getOutgoingServer($_profile_id);
+		return $bofelamimail;
+	}
+
 	public static function forcePrefReload()
 	{
 		// unset the fm_preferences session object, to force the reload/rebuild

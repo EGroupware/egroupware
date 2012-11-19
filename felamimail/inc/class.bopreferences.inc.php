@@ -219,26 +219,28 @@
 		 * @param boolean $getUserDefinedProfiles
 		 * @param int $_profileID - use this profile to be set its prefs as active profile (0)
 		 * @param string $_appName - the app the profile is fetched for
+		 * @param int $_singleProfileToFetch - single Profile to fetch no merging of profileData; emailadminprofiles only; for Administrative use only (by now)
 		 * @return object ea_preferences object with the active emailprofile set to ID = 0
 		 */
-		function getPreferences($getUserDefinedProfiles=true,$_profileID=0,$_appName='felamimail')
+		function getPreferences($getUserDefinedProfiles=true,$_profileID=0,$_appName='felamimail',$_singleProfileToFetch=0)
 		{
 			if (isset($this->sessionData['profileData']) && ($this->sessionData['profileData'] instanceof ea_preferences))
 			{
 				$this->profileData = $this->sessionData['profileData'];
 			}
-			if(!($this->profileData instanceof ea_preferences))
+
+			if((!($this->profileData instanceof ea_preferences) && $_singleProfileToFetch==0) || ($_singleProfileToFetch!=0 && !isset($this->profileData->icServer[$_singleProfileToFetch])))
 			{
 				$GLOBALS['egw']->preferences->read_repository();
 				$userPreferences = $GLOBALS['egw_info']['user']['preferences']['felamimail'];
 
 				$imapServerTypes	= $this->boemailadmin->getIMAPServerTypes();
-				$profileData		= $this->boemailadmin->getUserProfile($_appName); // by now we assume only one profile to be returned
+				$profileData = $this->boemailadmin->getUserProfile($_appName,'',($_singleProfileToFetch<0?-$_singleProfileToFetch:'')); // by now we assume only one profile to be returned
 				$icServerKeys = array_keys((array)$profileData->ic_server);
 				$icProfileID = array_shift($icServerKeys);
 				$ogServerKeys = array_keys((array)$profileData->og_server);
 				$ogProfileID = array_shift($ogServerKeys);
-				//error_log(__METHOD__.__LINE__.array2string($profileData));
+				//error_log(__METHOD__.__LINE__.' ServerProfile(s)Fetched->'.array2string(count($profileData->ic_server)));
 				//may be needed later on, as it may hold users Identities connected to MailAlternateAdresses
 				$IdIsDefault = 0;
 				$rememberIdentities = $profileData->identities;

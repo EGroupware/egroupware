@@ -68,7 +68,14 @@
 		function addACL()
 		{
 			$this->display_app_header(FALSE);
-
+			if (isset($this->bofelamimail->profileID)) $lprofileID = $this->bofelamimail->profileID;
+			
+			if (($default_profile_id = emailadmin_bo::getDefaultProfileID()))
+			{
+				$bofelamimail = felamimail_bo::forceEAProfileLoad($default_profile_id);
+				//_debug_array($bofelamimail->icServer);
+				//_debug_array($bofelamimail->ogServer);
+			}
 			$this->t->set_file(array("body" => "preferences_manage_folder.tpl"));
 			$this->t->set_block('body','main');
 			$this->t->set_block('body','add_acl');
@@ -79,7 +86,7 @@
 			unset($aclShortCuts['custom']);
 			$this->t->set_var('aclSelection',html::select('aclSelection',0,$aclShortCuts,false,'id="aclSelection" style="width:100%"'));
 			$this->translate();
-
+			if (isset($lprofileID)) $this->bofelamimail = felamimail_bo::getInstance(true, $lprofileID);
 			$this->t->pparse("out","add_acl");
 
 		}
