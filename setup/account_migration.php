@@ -37,7 +37,7 @@ if (!is_object($GLOBALS['egw_setup']->db))
 }
 // Load configuration values account_repository and auth_type, as setup has not yet done so
 foreach($GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',
-	"config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%' OR config_name='auth_type'",
+	"config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%' OR config_name='auth_type' OR config_name='mail_suffix'",
 	__LINE__,__FILE__) as $row)
 {
 	$GLOBALS['egw_info']['server'][$row['config_name']] = $row['config_value'];
