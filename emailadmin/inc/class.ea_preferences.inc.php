@@ -14,22 +14,22 @@
 	{
 		// users identities
 		var $identities = array();
-		
+
 		// users incoming server(imap)
 		var $ic_server = array();
-		
+
 		// users outgoing server(smtp)
 		var $og_server = array();
-		
+
 		// users preferences
 		var $preferences = array();
-		
+
 		// enable userdefined accounts
 		var $userDefinedAccounts = false;
-		
+
 		// enable userdefined signatures
 		var $ea_user_defined_signatures = false;
-		
+
 		function getIdentity($_id = false, $_byProfileID=false)
 		{
 			if($_id !== false)
@@ -46,7 +46,7 @@
 				return $this->identities;
 			}
 		}
-		
+
 		function getIncomingServer($_id = false)
 		{
 			if($_id !== false)
@@ -60,7 +60,7 @@
 				return $this->ic_server;
 			}
 		}
-		
+
 		function getOutgoingServer($_id = false)
 		{
 			if($_id !== false )
@@ -73,24 +73,24 @@
 				return $this->og_server;
 			}
 		}
-		
+
 		function getPreferences() {
 			return $this->preferences;
 		}
-		
+
 		function getUserEMailAddresses() {
 			$identities = $this->getIdentity();
 
 			if(count($identities) == 0) {
 				return false;
 			}
-			
+
 			$userEMailAdresses = array();
-			
+
 			foreach($identities as $identity) {
 				$userEMailAdresses[$identity->emailAddress] = $identity->realName;
 			}
-			
+
 			return $userEMailAdresses;
 		}
 
@@ -118,10 +118,10 @@
 
 				return true;
 			}
-			
+
 			return false;
 		}
-		
+
 		function setIncomingServer($_serverObject, $_id = false)
 		{
 			if(($_serverObject instanceof defaultimap))
@@ -135,16 +135,16 @@
 					//error_log(__METHOD__.__LINE__.' called with $_id=false ->'.function_backtrace());
 					$this->ic_server[] = $_serverObject;
 				}
-				
+
 				return true;
 			}
-			
+
 			return false;
 		}
 
 		function setOutgoingServer($_serverObject, $_id = false)
 		{
-			if(($_serverObject instanceof defaultsmtp))
+			if(($_serverObject instanceof emailadmin_smtp))
 			{
 				if($_id !== false)
 				{
@@ -155,17 +155,17 @@
 					//error_log(__METHOD__.__LINE__.' called with $_id=false ->'.function_backtrace());
 					$this->og_server[] = $_serverObject;
 				}
-				
+
 				return true;
 			}
-			
+
 			return false;
 		}
 
 		function setPreferences($_preferences)
 		{
 			$this->preferences = $_preferences;
-			
+
 			return true;
 		}
 	}

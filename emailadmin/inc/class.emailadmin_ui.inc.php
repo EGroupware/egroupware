@@ -383,7 +383,7 @@ class emailadmin_ui extends emailadmin_bo
 		}
 		if ($rowfound) $content = array_merge($this->data,array());
 		$preserv['smtpcapabilities'] = $content['smtpcapabilities'] =
-			constant((!empty($content['ea_smtp_type'])?$content['ea_smtp_type']:'defaultsmtp').'::CAPABILITIES');
+			constant((!empty($content['ea_smtp_type'])?$content['ea_smtp_type']:'emailadmin_smtp').'::CAPABILITIES');
 		$preserv['imapcapabilities'] = $content['imapcapabilities'] =
 			constant((!empty($content['ea_imap_type'])?$content['ea_imap_type']:'defaultimap').'::CAPABILITIES');
 		if (!empty($msg)) $content['msg'] = $msg;

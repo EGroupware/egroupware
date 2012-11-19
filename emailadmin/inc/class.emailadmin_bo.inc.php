@@ -55,7 +55,7 @@ class emailadmin_bo extends so_sql
 
 	//var $SMTPServerType = array();		// holds a list of config options
 	static $SMTPServerType = array(
-		'defaultsmtp' 	=> array(
+		'emailadmin_smtp' 	=> array(
 			'fieldNames'	=> array(
 				'smtpServer',
 				'smtpPort',
@@ -65,7 +65,7 @@ class emailadmin_bo extends so_sql
 				'smtpType'
 			),
 			'description'	=> 'standard SMTP-Server',
-			'classname'	=> 'defaultsmtp'
+			'classname'	=> 'emailadmin_smtp'
 		),
 		'postfixldap' 	=> array(
 			'fieldNames'	=> array(
@@ -234,7 +234,7 @@ class emailadmin_bo extends so_sql
 		}
 		$this->soemailadmin = new emailadmin_so();
 		//translate the standard entry description
-		self::$SMTPServerType['defaultsmtp']['description'] = lang('standard SMTP-Server');
+		self::$SMTPServerType['emailadmin_smtp']['description'] = lang('standard SMTP-Server');
 		self::$IMAPServerType['defaultimap']['description'] = lang('standard IMAP Server');
 		if ($_restoreSesssion) // &&  !(is_array(self::$sessionData) && (count(self::$sessionData)>0))  )
 		{
@@ -467,7 +467,7 @@ class emailadmin_bo extends so_sql
 						$GLOBALS['egw_info']['server']['mail_login_type'] : 'standard',
 				));
 				$profileData[$found = 0] = array(
-					'smtpType' => 'defaultsmtp',
+					'smtpType' => 'emailadmin_smtp',
 					'imapType' => 'defaultimap',
 				);
 			}
@@ -697,7 +697,7 @@ class emailadmin_bo extends so_sql
 			{
 				if (!file_exists($file=EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$ogClass.'.inc.php'))
 				{
-					$file = EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.($ogClass='defaultsmtp').'.inc.php';
+					$file = EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.($ogClass='emailadmin_smtp').'.inc.php';
 				}
 				include_once($file);
 			}
@@ -781,7 +781,7 @@ class emailadmin_bo extends so_sql
 			$ogServerKeys = array_keys((array)$userProfile->og_server);
 			$profileID = array_shift($ogServerKeys);
 			$ogServer = $userProfile->getOutgoingServer($profileID);
-			if(($ogServer instanceof defaultsmtp)) {
+			if(($ogServer instanceof emailadmin_smtp)) {
 				$ogUserData = $ogServer->getUserData($_accountID);
 				//_debug_array($ogUserData);
 			}
@@ -856,7 +856,7 @@ class emailadmin_bo extends so_sql
 		{
 			//error_log(__METHOD__.__LINE__.' Create profile 4 merge');
 			$profile = array(
-				'smtpType' => 'defaultsmtp',
+				'smtpType' => 'emailadmin_smtp',
 				'description' => 'default profile (created by setup)',
 				//'ea_appname' => '', // default is null, and expected to be null if empty
 				//'ea_group' => 0,
@@ -943,7 +943,7 @@ class emailadmin_bo extends so_sql
 			$ogServerKeys = array_keys((array)$userProfile->og_server);
 			$profileID = array_shift($ogServerKeys);
 			$ogServer = $userProfile->getOutgoingServer($profileID);
-			if(($ogServer instanceof defaultsmtp)) {
+			if(($ogServer instanceof emailadmin_smtp)) {
 				$ogServer->setUserData($_accountID,
 					(array)$_formData['mailAlternateAddress'],
 					(array)$_formData['mailForwardingAddress'],

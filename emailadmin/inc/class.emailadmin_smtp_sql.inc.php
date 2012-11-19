@@ -10,12 +10,10 @@
  * @version $Id$
  */
 
-include_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.defaultsmtp.inc.php');
-
 /**
  * SMTP configuration / mail accounts via SQL
  */
-class emailadmin_smtp_sql extends defaultsmtp
+class emailadmin_smtp_sql extends emailadmin_smtp
 {
 	/**
 	 * Capabilities of this class (pipe-separated): default, forward
@@ -28,13 +26,6 @@ class emailadmin_smtp_sql extends defaultsmtp
 	 * @var egw_db
 	 */
 	protected $db;
-
-	/**
-	 * Reference to global account object
-	 *
-	 * @var accounts
-	 */
-	protected $accounts;
 
 	/**
 	 * Name of table
@@ -50,9 +41,7 @@ class emailadmin_smtp_sql extends defaultsmtp
 	 * enabled and delivery must have smaller values then alias, forward or mailbox (getUserData depend on it)!
 	 */
 	const TYPE_ENABLED = 0;
-	const ENABLED = 'active';
 	const TYPE_DELIVERY = 1;
-	const FORWARD_ONLY = 'forwardOnly';
 	const TYPE_QUOTA = 2;
 	const TYPE_ALIAS = 3;
 	const TYPE_FORWARD = 4;
@@ -68,29 +57,6 @@ class emailadmin_smtp_sql extends defaultsmtp
 		parent::__construct($defaultDomain);
 
 		$this->db = $GLOBALS['egw']->db;
-		$this->accounts = $GLOBALS['egw']->accounts;
-	}
-
-	/**
-	 * Hook called on account creation
-	 *
-	 * @param array $_hookValues values for keys 'account_email', 'account_firstname', 'account_lastname', 'account_lid'
-	 * @return boolean true on success, false on error writing to ldap
-	 */
-	function addAccount($_hookValues)
-	{
-		$mailLocalAddress = $_hookValues['account_email'] ? $_hookValues['account_email'] :
-			common::email_address($_hookValues['account_firstname'],
-				$_hookValues['account_lastname'],$_hookValues['account_lid'],$this->defaultDomain);
-
-		$account_id = !empty($_hookValues['account_id']) ? $_hookValues['account_id'] :
-			$this->accounts->name2id($_hookValues['account_lid'], 'account_lid', 'u');
-
-		if ($this->accounts->exists($account_id) != 1)
-		{
-			throw new egw_exception_assertion_failed("Account #$account_id ({$_hookValues['account_lid']}) does NOT exist!");
-		}
-		return $this->setUserData($account_id, array(), array(), null, self::ENABLED, $mailLocalAddress, null);
 	}
 
 	/**
@@ -101,23 +67,17 @@ class emailadmin_smtp_sql extends defaultsmtp
 	 */
 	function getAccountEmailAddress($_accountName)
 	{
-		$emailAddresses	= array();
+		$emailAddresses	= parent::getAccountEmailAddress($_accountName);
 
 		if (($account_id = $this->accounts->name2id($_accountName, 'account_lid', 'u')))
 		{
-			$realName = trim($GLOBALS['egw_info']['user']['account_firstname'] . (!empty($GLOBALS['egw_info']['user']['account_firstname']) ? ' ' : '') . $GLOBALS['egw_info']['user']['account_lastname']);
-			$emailAddresses[] = $emailAddresses[] = array (
-				'name'		=> $realName,
-				'address'	=> $this->accounts->id2name($account_id, 'account_email'),
-				'type'		=> 'default',
-			);
 			foreach($this->db->select(self::TABLE, 'mail_value', array(
 				'account_id' => $account_id,
 				'mail_type' => self::TYPE_ALIAS,
 			), __LINE__, __FILE__, false, 'ORDER BY mail_value', self::APP) as $row)
 			{
-				$emailAddresses[] = $emailAddresses[] = array (
-					'name'		=> $realName,
+				$emailAddresses[] = array (
+					'name'		=> $emailAddresses[0]['name'],
 					'address'	=> $row['mail_value'],
 					'type'		=> 'alternate',
 				);
@@ -136,10 +96,11 @@ class emailadmin_smtp_sql extends defaultsmtp
 	 * from all accounts!
 	 *
 	 * @param int|string $user numerical account-id, account-name or email address
+	 * @param boolean $match_uid_at_domain=true true: uid@domain matches, false only an email or alias address matches
 	 * @return array with values for keys 'mailLocalAddress', 'mailAlternateAddress' (array), 'mailForwardingAddress' (array),
 	 * 	'accountStatus' ("active"), 'quotaLimit' and 'deliveryMode' ("forwardOnly")
 	 */
-	function getUserData($user)
+	function getUserData($user, $match_uid_at_domain=false)
 	{
 		$userData = array();
 
@@ -164,7 +125,7 @@ class emailadmin_smtp_sql extends defaultsmtp
 			}
 			// always allow username@domain
 			list($account_lid) = explode('@', $user);
-			if (($id = $this->accounts->name2id($account_lid, 'account_lid')) && !in_array($id, $account_id))
+			if ($match_uid_at_domain && ($id = $this->accounts->name2id($account_lid, 'account_lid')) && !in_array($id, $account_id))
 			{
 				$account_id[] = $id;
 			}
@@ -192,7 +153,7 @@ class emailadmin_smtp_sql extends defaultsmtp
 				{
 					case self::TYPE_ENABLED:
 						$userData['accountStatus'] = $row['mail_value'];
-						$enabled[$row['account_id']] = $row['mail_value'] == self::ENABLED;
+						$enabled[$row['account_id']] = $row['mail_value'] == self::MAIL_ENABLED;
 						break;
 
 					case self::TYPE_DELIVERY:
@@ -344,19 +305,5 @@ class emailadmin_smtp_sql extends defaultsmtp
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * Saves the forwarding information
-	 *
-	 * @param int $_accountID
-	 * @param string $_forwardingAddress
-	 * @param string $_keepLocalCopy 'yes'
-	 * @return boolean true on success, false on error writing
-	 */
-	function saveSMTPForwarding($_accountID, $_forwardingAddress, $_keepLocalCopy)
-	{
-		return $this->setUserData($_accountID, array(), $_forwardingAddress,
-			$_keepLocalCopy != 'yes' ? self::FORWARD_ONLY : null, null, null, null, true);
 	}
 }

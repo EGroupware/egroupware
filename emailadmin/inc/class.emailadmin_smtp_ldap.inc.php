@@ -5,12 +5,10 @@
  * @link http://www.stylite.de
  * @package emailadmin
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2010 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2010-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-
-include_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.defaultsmtp.inc.php');
 
 /**
  * Generic base class for SMTP configuration via LDAP
@@ -23,7 +21,7 @@ include_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.defaultsmtp.inc.php');
  * Please do NOT copy this class! Extend it and set the constants different
  * (incl. protected config var as long as we can not require PHP5.3 for LSB).
  */
-class emailadmin_smtp_ldap extends defaultsmtp
+class emailadmin_smtp_ldap extends emailadmin_smtp
 {
 	/**
 	 * Name of schema, has to be in the right case!
@@ -34,10 +32,6 @@ class emailadmin_smtp_ldap extends defaultsmtp
 	 * Attribute to enable mail for an account, OR false if existence of ALIAS_ATTR is enough for mail delivery
 	 */
 	const MAIL_ENABLE_ATTR = false;
-	/**
-	 * Attribute value to enable mail for an account, OR false if existense of attribute is enough to enable account
-	 */
-	const MAIL_ENABLED = false;
 
 	/**
 	 * Attribute for aliases OR false to use mail
@@ -58,10 +52,6 @@ class emailadmin_smtp_ldap extends defaultsmtp
 	 * Attribute to only forward mail, OR false if not available
 	 */
 	const FORWARD_ONLY_ATTR = false;
-	/**
-	 * Attribute value to only forward mail
-	 */
-	const FORWARD_ONLY = false;
 
 	/**
 	 * Attribute for mailbox, to which mail gets delivered OR false if not supported
@@ -96,11 +86,33 @@ class emailadmin_smtp_ldap extends defaultsmtp
 		'forward_only' => self::FORWARD_ONLY,
 		'mailbox_attr' => self::MAILBOX_ATTR,
 		'quota_attr' => self::QUOTA_ATTR,
+		'search_filter' => null,
+		'search_base' => null,
 	);
 
 	/**
 	 * from here on implementation, please do NOT copy but extend it!
 	 */
+
+	/**
+	 * Set ldap search filter for aliases and forwards
+	 *
+	 * @param string $filter
+	 */
+	function setFilter($filter)
+	{
+		$this->config['search_filter'] = $filter;
+	}
+
+	/**
+	 * Set ldap search base for aliases and forwards
+	 *
+	 * @param string $base
+	 */
+	function setBase($base)
+	{
+		$this->config['search_base'] = $base;
+	}
 
 	/**
 	 * Hook called on account creation
@@ -216,56 +228,149 @@ class emailadmin_smtp_ldap extends defaultsmtp
 	/**
 	 * Get the data of a given user
 	 *
-	 * @param int $_uidnumber numerical user-id
-	 * @return array
+	 * Multiple accounts may match, if an email address is specified.
+	 * In that case only mail routing fields "uid", "mailbox" and "forward" contain values
+	 * from all accounts!
+	 *
+	 * @param int|string $user numerical account-id, account-name or email address
+	 * @param boolean $match_uid_at_domain=true true: uid@domain matches, false only an email or alias address matches
+	 * @return array with values for keys 'mailLocalAddress', 'mailAlternateAddress' (array), 'mailForwardingAddress' (array),
+	 * 	'accountStatus' ("active"), 'quotaLimit' and 'deliveryMode' ("forwardOnly")
 	 */
-	function getUserData($_uidnumber)
+	function getUserData($user, $match_uid_at_domain=false)
 	{
 		$userData = array();
 
 		$ldap = $GLOBALS['egw']->ldap->ldapConnect();
 
-		if (($sri = @ldap_search($ldap,$GLOBALS['egw_info']['server']['ldap_context'],'(uidnumber='.(int)$_uidnumber.')',array($this->config['schema']))))
+		if (is_numeric($user))
 		{
-			$allValues = ldap_get_entries($ldap, $sri);
-			if ($this->debug) error_log(__METHOD__."($_uidnumber) --> ldap_search(,{$GLOBALS['egw_info']['server']['ldap_context']},'(uidnumber=$_uidnumber)') --> ldap_get_entries=".array2string($allValues[0]));
-
-			if ($allValues['count'] > 0)
+			$filter = '(uidnumber='.(int)$_uidnumber.')';
+		}
+		elseif (strpos($user, '@') === false)
+		{
+			$filter = '(uid='.ldap::quote($user).')';
+		}
+		else	// email address --> build filter by attributes defined in config
+		{
+			list($namepart, $domain) = explode('@', $user);
+			if (!empty($this->config['search_filter']))
 			{
-				$userData['mailLocalAddress']		= $allValues[0]['mail'][0];
+				$filter = strtr($this->config['search_filter'], array(
+					'%s' => ldap::quote($user),
+					'%u' => ldap::quote($namepart),
+					'%d' => ldap::quote($domain),
+				));
+			}
+			else
+			{
+				$filter = array('(mail='.ldap::quote($user).')');
+				if ($match_uid_at_domain) $filter[] = '(uid='.ldap::quote($namepart).')';
 				if ($this->config['alias_attr'])
 				{
-					$userData['mailAlternateAddress']	= (array)$allValues[0][$this->config['alias_attr']];
+					$filter[] = '('.$this->config['alias_attr'].'='.ldap::quote($user).')';
+				}
+				$filter = count($filter) > 1 ? '(|'.explode('', $filter).')' : $filter[0];
+
+				// if an enable attribute is set, only return enabled accounts
+				if ($this->config['mail_enable_attr'])
+				{
+					$filter = '(&('.$this->config['mail_enable_attr'].'='.
+						($this->config['mail_enabled'] ? $this->config['mail_enabled'] : '*').")$filter)";
+				}
+			}
+		}
+		$base = empty($this->config['search_base']) ?
+			$GLOBALS['egw_info']['server']['ldap_context'] : $this->config['search_base'];
+		$sri = ldap_search($ldap, $base, $filter, array($this->config['schema']));
+
+		if ($sri)
+		{
+			$allValues = ldap_get_entries($ldap, $sri);
+			if ($this->debug) error_log(__METHOD__."('$user') --> ldap_search(, '$base', '$filter') --> ldap_get_entries=".array2string($allValues[0]));
+
+			foreach($allValues as $key => $values)
+			{
+				if ($key === 'count') continue;
+
+				// groups are always active (if they have an email) and allways forwardOnly
+				if (in_array('posixGroup', $values['objectclass']))
+				{
+					$accountStatus = 'active';
+					$deliveryMode = 'forwardOnly';
+				}
+				else	// for users we have to check the attributes
+				{
+					if ($this->config['mail_enable_attr'])
+					{
+						$accountStatus = isset($values[$this->config['mail_enable_attr']]) &&
+							($this->config['mail_enabled'] && $values[$this->config['mail_enable_attr']][0] == $this->config['mail_enabled'] ||
+							!$this->config['mail_enabled'] && $values[$this->config['alias_attr']]['count'] > 0) ? 'active' : '';
+					}
+					else
+					{
+						$accountStatus = $values[$this->config['alias_attr']]['count'] > 0 ? 'active' : '';
+					}
+					if ($this->config['forward_only_attr'])
+					{
+						$deliveryMode = isset($values[$this->config['forward_only_attr']]) &&
+							($this->config['forward_only'] && $values[$this->config['forward_only_attr']][0] == $this->config['forward_only'] ||
+							!$this->config['forward_only'] && $values[$this->config['forward_only_attr']]['count'] > 0) ? 'forwardOnly' : '';
+					}
+					else
+					{
+						$deliveryMode = '';
+					}
+				}
+
+				// collect mail routing data (can be from multiple (active) accounts and groups!)
+				if ($accountStatus)
+				{
+					// groups never have a mailbox, accounts can have a deliveryMode of "forwardOnly"
+					if ($deliveryMode != 'forwardOnly')
+					{
+						$userData['uid'][] = $values['uid'][0];
+						if ($this->config['mailbox_attr'] && isset($values[$this->config['mailbox_attr']]))
+						{
+							$userData['mailbox'][] = $values[$this->config['mailbox_attr']][0];
+						}
+					}
+					if ($this->config['forward_attr'] && $values[$this->config['forward_attr']])
+					{
+						$userData['forward'] = array_merge((array)$userData['forward'], $values[$this->config['forward_attr']]);
+						unset($userData['forward']['count']);
+					}
+				}
+
+				// regular user-data can only be from users, NOT groups
+				if (in_array('posixGroup', $values['objectclass'])) continue;
+
+				$userData['mailLocalAddress'] = $values['mail'][0];
+				$userData['accountStatus'] = $accountStatus;
+
+				if ($this->config['alias_attr'])
+				{
+					$userData['mailAlternateAddress']	= (array)$values[$this->config['alias_attr']];
 					unset($userData['mailAlternateAddress']['count']);
 				}
 				else
 				{
-					$userData['mailAlternateAddress']	= (array)$allValues[0]['mail'];
+					$userData['mailAlternateAddress']	= (array)$values['mail'];
 					unset($userData['mailAlternateAddress']['count']);
 					unset($userData['mailAlternateAddress'][0]);
 					$userData['mailAlternateAddress']	= array_values($userData['mailAlternateAddress']);
 				}
-				if ($this->config['mail_enable_attr'])
-				{
-					$userData['accountStatus'] = isset($allValues[0][$this->config['mail_enable_attr']]) &&
-						($this->config['mail_enabled'] && $allValues[0][$this->config['mail_enable_attr']][0] == $this->config['mail_enabled'] ||
-						!$this->config['mail_enabled'] && $allValues[0][$this->config['alias_attr']]['count'] > 0) ? 'active' : '';
-				}
-				else
-				{
-					$userData['accountStatus']			= $allValues[0][$this->config['alias_attr']]['count'] > 0 ? 'active' : '';
-				}
-				$userData['mailForwardingAddress']	= $this->config['forward_attr'] ? $allValues[0][$this->config['forward_attr']] : array();
+
+				$userData['mailForwardingAddress']	= $this->config['forward_attr'] ? $values[$this->config['forward_attr']] : array();
 				unset($userData['mailForwardingAddress']['count']);
 
-				//$userData['deliveryProgramPath']	= $allValues[0][$this->config['mailbox_attr']][0];
-				if ($this->config['mailbox_attr']) $userData[$this->config['mailbox_attr']]	= $allValues[0][$this->config['mailbox_attr']][0];
+				if ($this->config['mailbox_attr']) $userData[$this->config['mailbox_attr']]	= $values[$this->config['mailbox_attr']][0];
 
 				if ($this->config['forward_only_attr'])
 				{
-					$userData['deliveryMode'] = isset($allValues[0][$this->config['forward_only_attr']]) &&
-						($this->config['forward_only'] && $allValues[0][$this->config['forward_only_attr']][0] == $this->config['forward_only'] ||
-						!$this->config['forward_only'] && $allValues[0][$this->config['forward_only_attr']]['count'] > 0) ? 'forwardOnly' : '';
+					$userData['deliveryMode'] = isset($values[$this->config['forward_only_attr']]) &&
+						($this->config['forward_only'] && $values[$this->config['forward_only_attr']][0] == $this->config['forward_only'] ||
+						!$this->config['forward_only'] && $values[$this->config['forward_only_attr']]['count'] > 0) ? 'forwardOnly' : '';
 				}
 				else
 				{
@@ -278,13 +383,13 @@ class emailadmin_smtp_ldap extends defaultsmtp
 					unset($userData['mailAlternateAddress'][$k]);
 				}
 
-				if ($this->config['quota_attr'] && isset($allValues[0][$this->config['quota_attr']]))
+				if ($this->config['quota_attr'] && isset($values[$this->config['quota_attr']]))
 				{
-					$userData['quotaLimit'] = $allValues[0][$this->config['quota_attr']][0] / 1048576;
+					$userData['quotaLimit'] = $values[$this->config['quota_attr']][0] / 1048576;
 				}
 			}
 		}
-		if ($this->debug) error_log(__METHOD__."('$_uidnumber') returning ".array2string($userData));
+		if ($this->debug) error_log(__METHOD__."('$user') returning ".array2string($userData));
 
 		return $userData;
 	}
@@ -301,7 +406,7 @@ class emailadmin_smtp_ldap extends defaultsmtp
 	 * @param int $_quota in MB
 	 * @return boolean true on success, false on error writing to ldap
 	 */
-	function setUserData($_uidnumber, $_mailAlternateAddress, $_mailForwardingAddress, $_deliveryMode, $_accountStatus, $_mailLocalAddress, $_quota)
+	function setUserData($_uidnumber, array $_mailAlternateAddress, array $_mailForwardingAddress, $_deliveryMode, $_accountStatus, $_mailLocalAddress, $_quota)
 	{
 		$filter = 'uidnumber='.(int)$_uidnumber;
 
@@ -361,7 +466,7 @@ class emailadmin_smtp_ldap extends defaultsmtp
 			$newData[$this->config['mail_enable_attr']]	= $_accountStatus ? $this->config['mail_enabled'] : array();
 		}
 		// does schema support an explicit mailbox name --> set it with $uid@$domain
-		if ($this->config['mailbox_attr'])
+		if ($this->config['mailbox_attr'] && empty($allValues[0][$this->config['mailbox_attr']][0]))
 		{
 			$newData[$this->config['mailbox_attr']] = $this->mailbox_addr(array(
 				'account_id' => $_uidnumber,
