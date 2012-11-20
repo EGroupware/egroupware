@@ -145,6 +145,12 @@ class setup_cmd_ldap extends setup_cmd
 		// read accounts from old store
 		$accounts = $this->accounts(!$to_ldap);
 
+		/* uncomment if you want to have SQL cleaned up before migration
+		if (!$to_ldap)
+		{
+		        $GLOBALS['egw']->db->query('TRUNCATE TABLE egw_accounts', __LINE__, __FILE__);
+		        $GLOBALS['egw']->db->query('DELETE FROM egw_addressbook WHERE account_id IS NOT NULL', __LINE__, __FILE__);
+		}*/
 		// instanciate accounts obj for new store
 		$accounts_obj = $this->accounts_obj($to_ldap);
 
@@ -196,28 +202,51 @@ class setup_cmd_ldap extends setup_cmd
 				$accounts_created++;
 
 				// check if we need to migrate mail-account
-				// todo sql --> ldap and other schemas
-				if (!$to_ldap && in_array('qmailUser', $account['objectclass']))
+				if (!isset($ldap_class))
 				{
-					if (!isset($emailadmin_ldap))
+					$ldap_class = false;
+					$ldap = new ldap();
+					$ldap->ldapConnect();
+					foreach(array(	// todo: have these enumerated by emailadmin ...
+						'qmailUser' => 'postfixldap',
+						'dbMailUser' => 'postfixdbmailuser',
+						// nothing to migrate for inetOrgPerson ...
+					) as $object_class => $class)
 					{
-						include_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.postfixldap.inc.php');
-						$emailadmin_ldap = new postfixldap();
-					}
-					if (($mailaccount = $emailadmin_ldap->getUserData($account_id)))
-					{
-						echo "<p>".array2string($mailaccount).': ';
-						if (!isset($emailadmin_sql))
+						if ($ldap->getLDAPServerInfo()->supportsObjectClass($object_class))
 						{
-							$emailadmin_sql = new emailadmin_smtp_sql();
+							$ldap_class = $class;
+							break;
 						}
-						$emailadmin_sql->setUserData($account_id, (array)$mailaccount['mailAlternateAddress'],
+					}
+				}
+				if ($ldap_class)
+				{
+					if (!isset($emailadmin_src))
+					{
+						include_once(EGW_INCLUDE_ROOT.'/emailadmin/inc/class.'.$ldap_class.'.inc.php');
+						if ($to_ldap)
+						{
+							$emailadmin_src = new emailadmin_smtp_sql();
+							$emailadmin_dst = new $ldap_class();
+						}
+						else
+						{
+							$emailadmin_src = new $ldap_class();
+							$emailadmin_dst = new emailadmin_smtp_sql();
+						}
+					}
+					if (($mailaccount = $emailadmin_src->getUserData($account_id)))
+					{
+						//echo "<p>".array2string($mailaccount).': ';
+						$emailadmin_dst->setUserData($account_id, (array)$mailaccount['mailAlternateAddress'],
 							(array)$mailaccount['mailForwardingAddress'], $mailaccount['deliveryMode'],
 							$mailaccount['accountStatus'], $mailaccount['mailLocalAddress'],
 							$mailaccount['quotaLimit']);
-						echo "mail account migraged<br/>\n";
+
+						$msg[] = lang("Mail account of %1 migraged", $account['account_lid']);
 					}
-					else echo "<p>No mail account data found for #$account_id $account[account_lid]!</p>\n";
+					//else echo "<p>No mail account data found for #$account_id $account[account_lid]!</p>\n";
 				}
 
 				// should we run any or some addAccount hooks
@@ -292,7 +321,9 @@ class setup_cmd_ldap extends setup_cmd
 				$GLOBALS['egw_info']['server'][$name] = $value;
 			}
 		}
+		ob_start();
 		$addressbook->migrate2ldap($to_ldap ? 'accounts' : 'accounts-back');
+		$msg = array_merge($msg, explode("\n", strip_tags(ob_get_clean())));
 
 		$this->restore_db();
 
