@@ -208,6 +208,12 @@ class resources_ui
 				'group' => $group=1,
 				'disableClass' => 'rowNoEdit',
 			),
+			'add' => array(
+				'caption' => 'New resource',
+				'url' => 'menuaction=resources.resources_ui.edit',
+				'popup' => egw_link::get_registry('resources', 'add_popup'),
+				'group' => $group,
+			),
 			'view-acc' => array(
 				'caption' => 'View accessories',
 				'icon' => 'view_acc',
@@ -216,14 +222,17 @@ class resources_ui
 				'group' => $group,
 				'enableClass' => 'hasAccessories'
 			),
-
-
-			'add' => array(
-				'caption' => 'New resource',
-				'url' => 'menuaction=resources.resources_ui.edit',
-				'popup' => egw_link::get_registry('resources', 'add_popup'),
+			'new_accessory' => array(
+				'caption' => 'New accessory',
+				'icon' => 'new',
 				'group' => $group,
+				'url' => 'menuaction=resources.resources_ui.edit&res_id=0&accessory_of=$id',
+				'popup' => egw_link::get_registry('resources', 'add_popup'),
+				'disableClass' => 'no_new_accessory',
+				'allowOnMultiple' => false
 			),
+
+
 			'select_all' => array(
 				'caption' => 'Whole query',
 				'checkbox' => true,
@@ -243,15 +252,6 @@ class resources_ui
 				'group' => $group,
 				'allowOnMultiple' => true,
 				'disableClass' => 'no_book',
-			),
-			'new_accessory' => array(
-				'caption' => 'New accessory',
-				'icon' => 'new',
-				'group' => $group,
-				'url' => 'menuaction=resources.resources_ui.edit&res_id=0&accessory_of=$id',
-				'popup' => egw_link::get_registry('resources', 'add_popup'),
-				'disableClass' => 'no_new_accessory',
-				'allowOnMultiple' => false
 			),
 /*
 			'documents' => resources_merge::document_action(

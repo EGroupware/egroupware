@@ -47,6 +47,14 @@
 					<description value="Is this resource bookable?"/>
 				</row>
 				<row>
+					<description value="Accessory of"/>
+					<menulist>
+						<menupopup id="accessory_of" no_lang="1" options="None"/>
+					</menulist>
+					<description/>
+					<description/>
+				</row>
+				<row>
 					<description disabled="true" value="Buyable"/>
 					<checkbox disabled="true" statustext="Is resource buyable?" id="buyable"/>
 					<description/>
@@ -211,7 +219,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.edit" template="" lang="" group="0" version="1.5.001">
+	<template id="resources.edit" template="" lang="" group="0" version="1.9.001">
 		<grid>
 			<columns>
 				<column width="700"/>
