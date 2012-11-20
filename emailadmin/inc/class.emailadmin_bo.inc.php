@@ -233,7 +233,9 @@ class emailadmin_bo extends so_sql
 			$GLOBALS['emailadmin_bo'] = $this;
 		}
 		$this->soemailadmin = new emailadmin_so();
-		//translate the standard entry description
+		//init with all servertypes and translate the standard entry description
+		self::$SMTPServerType = self::getSMTPServerTypes();
+		self::$IMAPServerType = self::getIMAPServerTypes();
 		self::$SMTPServerType['emailadmin_smtp']['description'] = lang('standard SMTP-Server');
 		self::$IMAPServerType['defaultimap']['description'] = lang('standard IMAP Server');
 		if ($_restoreSesssion) // &&  !(is_array(self::$sessionData) && (count(self::$sessionData)>0))  )
@@ -399,11 +401,11 @@ class emailadmin_bo extends so_sql
 		switch($_class)
 		{
 			case 'imap':
-				return self::$IMAPServerType[$_serverTypeID]['fieldNames'];
+				return (isset(self::$IMAPServerType[$_serverTypeID]['fieldNames'])?self::$IMAPServerType[$_serverTypeID]['fieldNames']:array());
 				break;
 			case 'smtp':
 				if ($_serverTypeID=='defaultsmtp') $_serverTypeID='emailadmin_smtp';
-				return self::$SMTPServerType[$_serverTypeID]['fieldNames'];
+				return (isset(self::$SMTPServerType[$_serverTypeID]['fieldNames'])?self::$SMTPServerType[$_serverTypeID]['fieldNames']:array());
 				break;
 		}
 	}
@@ -479,8 +481,11 @@ class emailadmin_bo extends so_sql
 		if (isset($profileData[$found]))
 		{
 			if ($profileData[$found]['smtpType']=='defaultsmtp') $profileData[$found]['smtpType'] = 'emailadmin_smtp';
-			$fieldNames = array_merge(self::$SMTPServerType[$profileData[$found]['smtpType']]['fieldNames'],
-				self::$IMAPServerType[$profileData[$found]['imapType']]['fieldNames']);
+			$smtpFields = array();
+			$imapFields = array();
+			if (isset(self::$SMTPServerType[$profileData[$found]['smtpType']]['fieldNames'])) $smtpFields = self::$SMTPServerType[$profileData[$found]['smtpType']]['fieldNames'];
+			if (isset(self::$IMAPServerType[$profileData[$found]['imapType']]['fieldNames'])) $imapFields = self::$IMAPServerType[$profileData[$found]['imapType']]['fieldNames'];
+			$fieldNames = array_merge($smtpFields,$imapFields);
 		}
 		$fieldNames[] = 'description';
 		$fieldNames[] = 'defaultDomain';
@@ -523,14 +528,22 @@ class emailadmin_bo extends so_sql
 	 *
 	 * @return array classname => label pairs
 	 */
-	static public function getSMTPServerTypes()
+	static public function getSMTPServerTypes($extended=true)
 	{
 		$retData = array();
 		foreach(self::$SMTPServerType as $key => $value)
 		{
-			$retData[$key] = $value['description'];
+			if ($extended)
+			{
+				$retData[$key]['fieldNames']	= isset($value['fieldNames'])?$value['fieldNames']:array();
+				$retData[$key]['description']	= isset($value['description'])?$value['description']:$key;
+				$retData[$key]['classname']	= isset($value['classname'])?$value['classname']:$key;
+			}
 		}
-		foreach($GLOBALS['egw']->hooks->process('smtp_server_types',array(),true) as $app => $data)
+		foreach($GLOBALS['egw']->hooks->process(array(
+			'location' => 'smtp_server_types',
+			'extended' => $extended,
+		),array(),true) as $app => $data)
 		{
 			if ($data) $retData += $data;
 		}
@@ -552,8 +565,10 @@ class emailadmin_bo extends so_sql
 		{
 			if ($extended)
 			{
-				$retData[$key]['description']	= $value['description'];
-				$retData[$key]['protocol']	= $value['protocol'];
+				$retData[$key]['fieldNames']	= isset($value['fieldNames'])?$value['fieldNames']:array();
+				$retData[$key]['description']	= isset($value['description'])?$value['description']:$key;
+				$retData[$key]['protocol']	= isset($value['protocol'])?$value['protocol']:'imap';
+				$retData[$key]['classname']	= isset($value['classname'])?$value['classname']:$key;
 			}
 			else
 			{
@@ -1026,6 +1041,31 @@ class emailadmin_bo extends so_sql
 			$default_profile = array_shift($profiles);
 
 			return -$default_profile['profileID'];
+		}
+	}
+
+	/**
+	 * Get ID of User specific default profile
+	 *
+	 * ID is negative for FMail, which used positive ID's for user profiles!
+	 *
+	 * @return int
+	 */
+	static function getUserDefaultProfileID()
+	{
+		$groups = array(0);
+		// set the second entry to the users primary group
+		$groups[] = $GLOBALS['egw_info']['user']['account_primary_group'];
+		$userGroups = $GLOBALS['egw']->accounts->membership($GLOBALS['egw_info']['user']['account_id']);
+		foreach((array)$userGroups as $groupInfo) {
+			$groups[] = $groupInfo['account_id'];
+		}
+		$soemailadmin = new emailadmin_so();
+		if (($profile = $soemailadmin->getUserProfile('felamimail',$groups,$GLOBALS['egw_info']['user']['account_id'])))
+		{
+			$default_profile = $profile['profileID']*-1;;
+
+			return $default_profile;
 		}
 	}
 }

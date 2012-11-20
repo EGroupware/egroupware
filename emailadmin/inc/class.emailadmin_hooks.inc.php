@@ -135,12 +135,16 @@ class emailadmin_hooks
 				return array(
 					'emailadmin_dovecot' => $extended ? array(
 						'description' => 'Dovecot',
+						'classname' => 'emailadmin_dovecot',
 						'protocol' => 'imap',
 					) : 'Dovecot',
 				);
 
 			case 'smtp_server_types':	// nothing yet
-				return array('emailadmin_smtp_sql' => 'Postfix (SQL)');
+				return array('emailadmin_smtp_sql' => $extended ? array(
+						'description' => 'Postfix (SQL)',
+						'classname' => 'emailadmin_smtp_sql',
+					) : 'Postfix (SQL)');
 				break;
 		}
 	}

@@ -180,7 +180,7 @@ class emailadmin_ui extends emailadmin_bo
 					break;
 			}
 		}
-		$sel_options['ea_smtp_type']=parent::getSMTPServerTypes();
+		$sel_options['ea_smtp_type']=parent::getSMTPServerTypes(false);
 		$sel_options['ea_imap_type']=parent::getIMAPServerTypes(false);
 		$sel_options['ea_appname']	=self::getAllowedApps();
 		// setting for the top of the app, etc.
@@ -390,7 +390,7 @@ class emailadmin_ui extends emailadmin_bo
 		list($content['ea_smtp_auth_username'],$content['smtp_senders_email']) = explode(';',$content['ea_smtp_auth_username']);
 		$preserv['ea_profile_id'] = $content['ea_profile_id'];
 		//$preserv['ea_stationery_active_templates'] = $content['ea_stationery_active_templates'];
-		$sel_options['ea_smtp_type']=parent::getSMTPServerTypes();
+		$sel_options['ea_smtp_type']=parent::getSMTPServerTypes(false);
 		$sel_options['ea_imap_type']=parent::getIMAPServerTypes(false);
 		$sel_options['ea_appname']	=self::getAllowedApps();
 		$sel_options['ea_imap_login_type'] = self::getIMAPLoginTypes($content['ea_imap_type']);
