@@ -181,8 +181,8 @@
 					return;
 				}
 			} else {
-				$cachedComposeID = egw_cache::getCache(egw_cache::INSTANCE,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=5);
-				egw_cache::setCache(egw_cache::INSTANCE,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']),$this->composeID,$expiration=5);
+				$cachedComposeID = egw_cache::getCache(egw_cache::INSTANCE,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=10);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']),$this->composeID,$expiration=10);
 				//error_log(__METHOD__.__LINE__.' '.$formData['subject'].' '.$cachedComposeID.'<->'.$this->composeID);
 				if (!empty($cachedComposeID) && $cachedComposeID != $this->composeID) return;
 				if(!$this->bocompose->send($formData)) {
@@ -253,7 +253,7 @@
 					// mailto:larry,dan?cc=mike&bcc=sue&subject=test&body=type+your&body=message+here
 					// the above string may be htmlentyty encoded, then multiple body tags are supported
 					// first, strip the mailto: string out of the mailto URL
-					$tmp_send_to = trim(substr(html_entity_decode($_REQUEST['preset']['mailto']),7));
+					$tmp_send_to = (stripos($_REQUEST['preset']['mailto'],'mailto')===false?$_REQUEST['preset']['mailto']:trim(substr(html_entity_decode($_REQUEST['preset']['mailto']),7)));
 					// check if there is more than the to address
 					$mailtoArray = explode('?',$tmp_send_to,2);
 					if ($mailtoArray[1]) {
@@ -315,7 +315,16 @@
 						}
 						$this->bocompose->addAttachment($formData,($alwaysAttachVCardAtCompose?true:false));
 					}
+					$remember = array();
+					if (isset($_REQUEST['preset']['mailto']))
+					{
+						foreach(array_keys($sessionData) as $k)
+						{
+							if (in_array($k,array('to','cc','bcc','subject','body'))) $remember[$k] = $sessionData[$k];
+						}
+					}
 					$sessionData = $this->bocompose->getSessionData();
+					$sessionData = array_merge($sessionData,$remember);
 				}
 				foreach(array('to','cc','bcc','subject','body') as $name)
 				{
