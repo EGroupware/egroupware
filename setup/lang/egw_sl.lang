@@ -20,7 +20,6 @@
 [header-password],[header-user],[new-password],[new-user]	setup	sl	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	sl	Dostop zavrnjen: napačno uporabniško ime ali geslo za upravljanje glave!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	sl	Dostop zavrnjen: napačno uporabniško ime ali geslo za konfiguracijo domene '%1(%2)'!
-account repository need to be set to the one you migrate to!	setup	sl	Repozitorij računov mora biti nastavljan na tistega, na katerega prehajate.
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	sl	Repozitorij računov {sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]
 accounts existing	setup	sl	Račun obstaja
 actions	setup	sl	Akcije
@@ -649,7 +648,6 @@ you must enter a username for the admin	setup	sl	Vnesti morate upravljačevo upo
 you need to add at least one egroupware domain / database instance.	setup	sl	Dodati morate najmanj eno instanco domene/zbirke podatkov eGroupWare.
 you need to configure egroupware:	setup	sl	eGroupWare morate konfigurirati.
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	sl	Preden zapišete header.inc.php, morate odpraviti zgornje napake.
-you need to save the settings you made here first!	setup	sl	Najprej morate shraniti tukaj opravljene spremembe!
 you need to select your current charset!	setup	sl	Izbrati morate vaš trenutni nabor znakov.
 you need to specify a password!	setup	sl	Določiti morate geslo!
 you should either install the sources or uninstall it, to get rid of the tables	setup	sl	Da se znebite tabel, morate namestiti izvor ali pa ga odstraniti.

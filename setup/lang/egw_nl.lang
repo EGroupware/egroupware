@@ -20,7 +20,6 @@
 [header-password],[header-user],[new-password],[new-user]	setup	nl	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	nl	Toegang geweigerd: verkeerde gebruikersnaam of wachtwoord voor header beheer !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	nl	Toegang geweigerd: verkeerde gebruikersnaam of wachtwoord voor het configureren van het domein '%1(%2)' !!!
-account repository need to be set to the one you migrate to!	setup	nl	Account repository moet ingesteld worden op die waar u naar toe migreert!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	nl	account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]
 accounts existing	setup	nl	Bestaande accounts
 actions	setup	nl	Acties
@@ -648,7 +647,6 @@ you must enter a username for the admin	setup	nl	U moet een gebruikersnaam geven
 you need to add at least one egroupware domain / database instance.	setup	nl	U moet minstens 1 eGroupWare domein / database instantie toevoegen.
 you need to configure egroupware:	setup	nl	U moet eGroupWare configureren:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	nl	U moet de bovenvermelde fouten herstellen voordat het configuratiebestand header.inc.php weggeschreven kan worden!
-you need to save the settings you made here first!	setup	nl	U moet de instellingen die u heeft aangemaakt eerst opslaan!
 you need to select your current charset!	setup	nl	U moet een huidige karakterset kiezen!
 you need to specify a password!	setup	nl	U moet een wachtwoord opgeven!
 you should either install the sources or uninstall it, to get rid of the tables	setup	nl	U moet de bronbestanden installeren of de-installeren om van de tabellen af te komen

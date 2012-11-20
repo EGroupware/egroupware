@@ -20,7 +20,6 @@
 [header-password],[header-user],[new-password],[new-user]	setup	es-es	[contraseña del encabezado],[usuario del encabezado],[nueva contraseña],[nuevo usuario]
 access denied: wrong username or password for manage-header !!!	setup	es-es	Acceso denegado: ¡usuario o contraseña incorrectas para el administrador de encabezados!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	es-es	Acceso denegado: ¡usuario o contraseña incorrectas para configurar el dominio '%1 (%2)'!
-account repository need to be set to the one you migrate to!	setup	es-es	El repositorio de las cuentas tiene que ser el cual al que se desea migrar
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	es-es	repositorio para cuentas {sql(predeterminado) | ldap},[identificación{sql | ldap | mail | ads | http | ...}],[cifrado sql {md5 | blowfish_crypt | md5_crypt | crypt}],[marcar guardar contraseña{ (predeterminado)|True}],[permitir identificación por cookies{ (predeterminado)|True}]
 accounts existing	setup	es-es	Existen cuentas
 actions	setup	es-es	Acciones
@@ -649,7 +648,6 @@ you must enter a username for the admin	setup	es-es	Debe introducir un nombre de
 you need to add at least one egroupware domain / database instance.	setup	es-es	Necesita añadir al menos una instancia o dominio de la base de datos de eGroupWare.
 you need to configure egroupware:	setup	es-es	Necesita configurar eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	es-es	¡Necesita corregir los errores de arriba, antes de que se pueda escribir el fichero de configuración header.inc.php!
-you need to save the settings you made here first!	setup	es-es	¡Necesita guardar la configuración que ha hecho primero!
 you need to select your current charset!	setup	es-es	¡Necesita seleccionar el juego de caracteres!
 you need to specify a password!	setup	es-es	¡Necesita especificar una contraseña!
 you should either install the sources or uninstall it, to get rid of the tables	setup	es-es	Tiene que instalar el código fuente o desinstalarlo para deshacerse de las tablas

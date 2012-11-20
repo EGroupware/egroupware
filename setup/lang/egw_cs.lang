@@ -25,7 +25,6 @@
 [header-password],[header-user],[new-password],[new-user]	setup	cs	[hlavička-heslo],[hlavička-uživatel],[nové heslo],[nový uživatel]
 access denied: wrong username or password for manage-header !!!	setup	cs	Přístup odepřen: špatné uživatelské jméno nebo heslo pro správu hlaviček !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	cs	Přístup odepřen: špatné uživatelské jméno nebo heslo pro konfiguraci domény '%1(%2)' !!!
-account repository need to be set to the one you migrate to!	setup	cs	Databáze účtů musí být nastavena na tu, do které migrujete!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	cs	databáze účtů{sql(výchozí) | ldap},[autentikace{sql | ldap | mail | ads | http | ...}],[sql šifrování{md5 | blowfish_crypt | md5_crypt | crypt}],[zaškrtnout uložení hesla{ (výchozí)|True}],[povolit autentikaci přes cookies{ (výchozí)|True}]
 accounts existing	setup	cs	Stávající účty
 actions	setup	cs	Akce
@@ -680,7 +679,6 @@ you must enter a username for the admin	setup	cs	Musíte zadat uživatelské jm�
 you need to add at least one egroupware domain / database instance.	setup	cs	Musíte přidat alespoň jednu eGroupWare doménu / instanci databáze.
 you need to configure egroupware:	setup	cs	Musíte nakonfigurovat eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	cs	Než bude konfigurační soubor header.inc.php zapsán, musíte opravit výše uvedené chyby!
-you need to save the settings you made here first!	setup	cs	Nejprve musíte uložit zde provedená nastavení!
 you need to select your current charset!	setup	cs	Musíte vybrat svou aktuální znakovou sadu!
 you need to specify a password!	setup	cs	Musíte zadat heslo!
 you should %1log out%2 and in again, to update your current session!	setup	cs	Měl(a) byste se %1odhlásit%2 a pak znovu přihlásit, abyste zaktualizoval(a) svou aktuální relaci!

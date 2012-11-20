@@ -12,7 +12,6 @@
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	pl	<b>zestaw znaków do użycia</b> (wybierz UTF8 jeżeli planujesz używać różnych języków z różnymi zestawami znaków)
 access denied: wrong username or password for manage-header !!!	setup	pl	Dostęp zabroniony: nieprawidłowa nazwa użytkownika lub hasło do zarządzania domenami eGW!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	pl	Dostęp zabroniony: nieprawidłowa nazwa użytkownika lub hasło do konfigurowania domeny '%1(%2)'!
-account repository need to be set to the one you migrate to!	setup	pl	Repozytorium kont powinno być ustawione na takie, do którego wykonywana jest migracja!
 actions	setup	pl	Akcje
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	pl	Dodawaj automatycznie tworzonych użytkowników do tej grupy ('Domyślna' będzie wybierana jeżeli zostawisz puste.)
 add new database instance (egw domain)	setup	pl	Dodaj nową instancję bazy danych (domenę eGroupWare)
@@ -313,7 +312,6 @@ you need to add at least one egroupware domain / database instance.	setup	pl	Nal
 you need to add some domains to your header.inc.php.	setup	pl	Należy dodać przynajmniej jedną domenę eGroupWare (instancję bazy danych) w pliku 'header.inc.php'
 you need to configure egroupware:	setup	pl	Musisz przeprowadzić konfigurację eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	pl	Należy poprawić poniższe błędy zanim plik konfiguracyjny 'header.inc.php' zostanie zapisany!
-you need to save the settings you made here first!	setup	pl	Należy wpierw zapisać zmiany, które zostały wykonane!
 you need to select your current charset!	setup	pl	Należy wybrać bieżący zestaw znaków!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	pl	Możesz odinstalować ją i zainstalować ponownie lub podjąć próbę ręcznej naprawy.
 you're using an old configuration file format...	setup	pl	Używasz starego formatu pliku konfiguracyjnego

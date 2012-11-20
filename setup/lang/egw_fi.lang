@@ -566,7 +566,6 @@ you have successfully logged out	setup	fi	Olet poistunut järjestelmästä
 you must enter a username for the admin	setup	fi	Anna ylläpidon käyttäjätunnus
 you need to configure egroupware:	setup	fi	Konfiguroi EGroupware:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	fi	Konfigurointitiedostoa header.inc.php ei voida kirjoittaa ennenkuin korjaat virheet!
-you need to save the settings you made here first!	setup	fi	Tallenna ensin tekemäsi asetukset!
 you need to select your current charset!	setup	fi	Määrittele nykyinen merkistö!
 you need to specify a password!	setup	fi	Määrittele salasana!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	fi	Se täytyy poistaa ja asentaa uudelleen, tai korjata käsin

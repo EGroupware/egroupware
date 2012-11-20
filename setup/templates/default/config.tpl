@@ -474,12 +474,8 @@
     </tr>
 
    <tr class="row_off" valign="top">
-    <td>
+    <td colspan="2">
      <a href="account_migration.php"><b>{lang_Migration_between_eGroupWare_account_repositories}:</b></a>
-    </td>
-    <td>
-      <li>{lang_Account_repository_need_to_be_set_to_the_one_you_migrate_to!}</li>
-      <li>{lang_You_need_to_save_the_settings_you_made_here_first!}</li>
     </td>
    </tr>
 

@@ -15,7 +15,6 @@
 [header-password],[header-user],[new-password],[new-user]	setup	zh-tw	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	zh-tw	登入失敗：頁首管理的帳號或密碼有誤！
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	zh-tw	登入失敗：設定網域 '%1(%2)' 的帳號或密碼有誤！
-account repository need to be set to the one you migrate to!	setup	zh-tw	帳號資料庫必須設定為您希望轉換的標的！
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	zh-tw	帳號資料庫{sql(預設) | ldap},[認證{sql | ldap | mail | ads | http | ...}],[sql 加密方式{md5 | blowfish_crypt | md5_crypt | crypt}],[檢查儲存的密碼{ (預設)|True}],[允許使用 cookie 認證{ (預設)|True}]
 accounts existing	setup	zh-tw	帳號已經存在
 actions	setup	zh-tw	動作
@@ -606,7 +605,6 @@ you need to add at least one egroupware domain / database instance.	setup	zh-tw	
 you need to add some domains to your header.inc.php.	setup	zh-tw	您必須在header.inc.php新增一些網域的設定
 you need to configure egroupware:	setup	zh-tw	您必須設定 eGroupWare ：
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	zh-tw	您必須修正上面的錯誤來寫入設定檔案 header.inc.php ！
-you need to save the settings you made here first!	setup	zh-tw	您必須先儲存剛剛設定的資料！
 you need to select your current charset!	setup	zh-tw	您必須選擇目前的字元編碼
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	zh-tw	您應該要移除並重新安裝應用程式或試著手動安裝
 you're using an old configuration file format...	setup	zh-tw	您正在使用舊版的設定檔案...
