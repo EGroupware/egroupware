@@ -82,6 +82,10 @@ if (!$_POST['migrate'])
 	{
 		if ($account['account_type'] == 'g')
 		{
+			if (isset($accounts[abs($account_id)]))
+			{
+				$identical_account_id_warning .= lang('Group %1 uses identical ID %2 as user %3!', $account['account_lid'], abs($account_id), $accounts[abs($account_id)]['account_lid']);
+			}
 			$group_list .= '<option value="' . $account_id . '" selected="1">'. $account['account_lid'] . "</option>\n";
 		}
 		else
@@ -98,7 +102,9 @@ if (!$_POST['migrate'])
 	$setup_tpl->set_var('description',lang('Migration between eGroupWare account repositories').': '.$direction);
 	$setup_tpl->set_var('select_users',lang('Select which user(s) will be exported'));
 	$setup_tpl->set_var('select_groups',lang('Select which group(s) will be exported'));
-	$setup_tpl->set_var('memberships',lang('Group memberships will be migrated too.'));
+	$setup_tpl->set_var('memberships',$identical_account_id_warning ?
+		'<p style="color: red">'.$identical_account_id_warning.'<br/>'.lang('Migration of group will fail, as SQL does NOT allow identical IDs.').'</p>' :
+		lang('Group memberships will be migrated too.'));
 	$setup_tpl->set_var('ldap_admin_message', lang('Give LDAP root DN and password, if you need to create an instance specific admin user, user- or group-context'));
 	$setup_tpl->set_var('ldap_admin_label', lang('Root DN'));
 	$setup_tpl->set_var('ldap_admin_pw_label', lang('Root DN password'));
