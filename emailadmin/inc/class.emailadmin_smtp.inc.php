@@ -22,13 +22,17 @@ class emailadmin_smtp
 
 	/**
 	 * Attribute value to enable mail for an account, OR false if existense of attribute is enough to enable account
+	 *
+	 * Logical values uses inside EGroupware, different classes might store different values internally
 	 */
 	const MAIL_ENABLED = 'active';
 
 	/**
 	 * Attribute value to only forward mail
+	 *
+	 * Logical values uses inside EGroupware, different classes might store different values internally
 	 */
-	const FORWARD_ONLY = 'forwardonly';
+	const FORWARD_ONLY = 'forwardOnly';
 
 	/**
 	 * Reference to global account object

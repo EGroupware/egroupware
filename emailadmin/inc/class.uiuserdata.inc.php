@@ -25,7 +25,7 @@ class uiuserdata
 	 * @var Template
 	 */
 	var $t;
-	
+
 	/**
 	 * @var emailadmin_bo
 	 */
@@ -51,7 +51,7 @@ class uiuserdata
 
 	function editUserData($_useCache='0')
 	{
-		$accountID = $_GET['account_id'];			
+		$accountID = $_GET['account_id'];
 		$GLOBALS['account_id'] = $accountID;
 
 		$this->display_app_header();
@@ -88,7 +88,7 @@ class uiuserdata
 		$this->t->set_var('url_image_add',$GLOBALS['egw']->common->image('phpgwapi','new'));
 		$this->t->set_var('url_image_edit',$GLOBALS['egw']->common->image('phpgwapi','edit'));
 		$this->t->set_var('url_image_delete',$GLOBALS['egw']->common->image('phpgwapi','delete'));
-		
+
 		// only when we show a existing user
 		if($userData = $this->boemailadmin->getUserData($accountID)) {
 			$addresses = array();
@@ -103,7 +103,7 @@ class uiuserdata
 				"style='width: 100%;' id='mailAlternateAddress'",
 				5)
 			);
-		
+
 			$addresses = array();
 			foreach((array)$userData['mailForwardingAddress'] as $data) {
 				$addresses[$data] = $data;
@@ -116,21 +116,21 @@ class uiuserdata
 				"style='width: 100%;' id='mailRoutingAddress'",
 				5)
 			);
-			if (isset($userData["quotaUsed"]) && $userData["quotaUsed"]>0) $this->t->set_var('lang_qoutainmbyte',lang('qouta size in MByte').'<br><b><i>('.(int)$userData["quotaUsed"].' '.lang('MB used').')</i></b>');	
+			if (isset($userData["quotaUsed"]) && $userData["quotaUsed"]>0) $this->t->set_var('lang_qoutainmbyte',lang('qouta size in MByte').'<br><b><i>('.(int)$userData["quotaUsed"].' '.lang('MB used').')</i></b>');
 			$this->t->set_var("quotaLimit",$userData["quotaLimit"]);
-		
+
 			$this->t->set_var("mailLocalAddress",$userData["mailLocalAddress"]);
 			$this->t->set_var("mailAlternateAddress",'');
 			$this->t->set_var("mailRoutingAddress",'');
 			$this->t->set_var("selected_".$userData["qmailDotMode"],'selected');
 			$this->t->set_var("deliveryProgramPath",$userData["deliveryProgramPath"]);
-			
+
 			$this->t->set_var("uid",rawurlencode($_accountData["dn"]));
-			if ($userData["accountStatus"] == "active")
+			if ($userData["accountStatus"] == emailadmin_smtp::MAIL_ENABLED)
 				$this->t->set_var("account_checked","checked");
-			if ($userData["deliveryMode"] == "forwardOnly")
+			if ($userData["deliveryMode"] == emailadmin_smtp::FORWARD_ONLY)
 				$this->t->set_var("forwardOnly_checked","checked");
-			if ($_accountData["deliverExtern"] == "active")
+			if ($_accountData["deliverExtern"] == emailadmin_smtp::MAIL_ENABLED)
 				$this->t->set_var("deliver_checked","checked");
 		} else {
 			$this->t->set_var("mailLocalAddress",'');
@@ -149,7 +149,7 @@ class uiuserdata
 				"style='width: 100%;' id='mailAlternateAddress'",
 				5)
 			);
-		
+
 			$this->t->set_var('selectbox_mailRoutingAddress', html::select(
 				'mailForwardingAddress',
 				'',
@@ -158,26 +158,26 @@ class uiuserdata
 				"style='width: 100%;' id='mailRoutingAddress'",
 				5)
 			);
-			
+
 			$this->t->set_var('quotaLimit','');
 		}
-	
-		// create the menu on the left, if needed		
+
+		// create the menu on the left, if needed
 		$menuClass =& CreateObject('admin.uimenuclass');
 		$this->t->set_var('rows',$menuClass->createHTMLCode('edit_user'));
 
 		$this->t->pparse("out","form");
 
 	}
-	
+
 	function saveUserData()
 	{
 		if($_POST["accountStatus"] == "on") {
-			$accountStatus = "active";
+			$accountStatus = emailadmin_smtp::MAIL_ENABLED;
 		}
-		
+
 		if($_POST["forwardOnly"] == "on") {
-			$deliveryMode = "forwardOnly";
+			$deliveryMode = emailadmin_smtp::FORWARD_ONLY;
 		}
 
 		$formData = array (
@@ -196,7 +196,7 @@ class uiuserdata
 		// read date fresh from ldap storage
 		$this->editUserData();
 	}
-	
+
 	function translate()
 	{
 		$this->t->set_var('th_bg',$GLOBALS['egw_info']['theme']['th_bg']);

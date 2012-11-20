@@ -57,7 +57,7 @@ class postfixldap extends emailadmin_smtp_ldap
 	/**
 	 * Attribute value to only forward mail
 	 */
-	const FORWARD_ONLY = 'forwardonly';
+	const FORWARD_ONLY = 'forwardOnly';
 
 	/**
 	 * Attribute for mailbox, to which mail gets delivered OR false if not supported

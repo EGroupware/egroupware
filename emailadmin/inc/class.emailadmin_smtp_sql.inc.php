@@ -157,8 +157,8 @@ class emailadmin_smtp_sql extends emailadmin_smtp
 						break;
 
 					case self::TYPE_DELIVERY:
-						$userData['deliveryMode'] = $row['mail_value'];
-						$forwardOnly[$row['account_id']] = $row['mail_value'] == self::FORWARD_ONLY;
+						$userData['deliveryMode'] = !strcasecmp($row['mail_value'], self::FORWARD_ONLY) ? emailadmin_smtp::FORWARD_ONLY : '';
+						$forwardOnly[$row['account_id']] = !strcasecmp($row['mail_value'], self::FORWARD_ONLY);
 						break;
 
 					case self::TYPE_QUOTA:

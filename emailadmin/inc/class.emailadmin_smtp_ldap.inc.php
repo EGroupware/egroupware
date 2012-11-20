@@ -296,26 +296,26 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 				// groups are always active (if they have an email) and allways forwardOnly
 				if (in_array('posixGroup', $values['objectclass']))
 				{
-					$accountStatus = 'active';
-					$deliveryMode = 'forwardOnly';
+					$accountStatus = emailadmin_smtp::MAIL_ENABLED;
+					$deliveryMode = emailadmin_smtp::FORWARD_ONLY;
 				}
 				else	// for users we have to check the attributes
 				{
 					if ($this->config['mail_enable_attr'])
 					{
 						$accountStatus = isset($values[$this->config['mail_enable_attr']]) &&
-							($this->config['mail_enabled'] && $values[$this->config['mail_enable_attr']][0] == $this->config['mail_enabled'] ||
-							!$this->config['mail_enabled'] && $values[$this->config['alias_attr']]['count'] > 0) ? 'active' : '';
+							($this->config['mail_enabled'] && !strcasecmp($values[$this->config['mail_enable_attr']][0], $this->config['mail_enabled']) ||
+							!$this->config['mail_enabled'] && $values[$this->config['alias_attr']]['count'] > 0) ? emailadmin_smtp::MAIL_ENABLED : '';
 					}
 					else
 					{
-						$accountStatus = $values[$this->config['alias_attr']]['count'] > 0 ? 'active' : '';
+						$accountStatus = $values[$this->config['alias_attr']]['count'] > 0 ? emailadmin_smtp::MAIL_ENABLED : '';
 					}
 					if ($this->config['forward_only_attr'])
 					{
 						$deliveryMode = isset($values[$this->config['forward_only_attr']]) &&
-							($this->config['forward_only'] && $values[$this->config['forward_only_attr']][0] == $this->config['forward_only'] ||
-							!$this->config['forward_only'] && $values[$this->config['forward_only_attr']]['count'] > 0) ? 'forwardOnly' : '';
+							($this->config['forward_only'] && !strcasecmp($values[$this->config['forward_only_attr']][0], $this->config['forward_only']) ||
+							!$this->config['forward_only'] && $values[$this->config['forward_only_attr']]['count'] > 0) ? emailadmin_smtp::FORWARD_ONLY : '';
 					}
 					else
 					{
@@ -327,7 +327,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 				if ($accountStatus)
 				{
 					// groups never have a mailbox, accounts can have a deliveryMode of "forwardOnly"
-					if ($deliveryMode != 'forwardOnly')
+					if ($deliveryMode != emailadmin_smtp::FORWARD_ONLY)
 					{
 						$userData['uid'][] = $values['uid'][0];
 						if ($this->config['mailbox_attr'] && isset($values[$this->config['mailbox_attr']]))
@@ -369,8 +369,8 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 				if ($this->config['forward_only_attr'])
 				{
 					$userData['deliveryMode'] = isset($values[$this->config['forward_only_attr']]) &&
-						($this->config['forward_only'] && $values[$this->config['forward_only_attr']][0] == $this->config['forward_only'] ||
-						!$this->config['forward_only'] && $values[$this->config['forward_only_attr']]['count'] > 0) ? 'forwardOnly' : '';
+						($this->config['forward_only'] && !strcasecmp($values[$this->config['forward_only_attr']][0], $this->config['forward_only']) ||
+						!$this->config['forward_only'] && $values[$this->config['forward_only_attr']]['count'] > 0) ? emailadmin_smtp::FORWARD_ONLY : '';
 				}
 				else
 				{
