@@ -133,18 +133,65 @@ class emailadmin_hooks
 		{
 			case 'imap_server_types':
 				return array(
+					'defaultimap' 	=> $extended ? array(
+						'description'	=> 'standard IMAP server',
+						'protocol'	=> 'imap',
+						'classname'	=> 'defaultimap'
+					) : 'standard IMAP server',
 					'emailadmin_dovecot' => $extended ? array(
 						'description' => 'Dovecot',
 						'classname' => 'emailadmin_dovecot',
 						'protocol' => 'imap',
 					) : 'Dovecot',
+					'cyrusimap' 	=> $extended ? array(
+						'description'	=> 'Cyrus IMAP Server',
+						'protocol'	=> 'imap',
+						'classname'	=> 'cyrusimap'
+					) : 'Cyrus IMAP Server',
+					'dbmailqmailuser' 	=> $extended ? array(
+						'description'	=> 'DBMail (qmailUser schema)',
+						'protocol'	=> 'imap',
+						'classname'	=> 'dbmailqmailuser'
+					) : 'DBMail (qmailUser schema)',
+					'pleskimap'     => $extended ? array(
+						'description'   => 'Plesk IMAP Server (Courier)',
+						'protocol'      => 'imap',
+						'classname'     => 'pleskimap'
+					) : 'Plesk IMAP Server (Courier)',
+					'dbmaildbmailuser' 	=> $extended ? array(
+						'description'	=> 'DBMail (dbmailUser schema)',
+						'protocol'	=> 'imap',
+						'classname'	=> 'dbmaildbmailuser'
+					) : 'DBMail (dbmailUser schema)',
 				);
 
 			case 'smtp_server_types':	// nothing yet
-				return array('emailadmin_smtp_sql' => $extended ? array(
+				return array(
+					'emailadmin_smtp' 	=> $extended ? array(
+						'description'	=> 'standard SMTP-Server',
+						'classname'	=> 'emailadmin_smtp'
+					) : 'standard SMTP-Server',
+					'emailadmin_smtp_sql' => $extended ? array(
 						'description' => 'Postfix (SQL)',
 						'classname' => 'emailadmin_smtp_sql',
-					) : 'Postfix (SQL)');
+					) : 'Postfix (SQL)',
+					'postfixldap' 	=> $extended ? array(
+						'description'	=> 'Postfix (qmail Schema)',
+						'classname'	=> 'postfixldap'
+					) : 'Postfix (qmail Schema)',
+					'postfixinetorgperson'     => $extended ? array(
+						'description'   => 'Postfix (inetOrgPerson Schema)',
+						'classname'     => 'postfixinetorgperson'
+					) : 'Postfix (inetOrgPerson Schema)',
+					'smtpplesk'     => $extended ? array(
+						'description'   => 'Plesk SMTP-Server (Qmail)',
+						'classname'     => 'smtpplesk'
+					) : 'Plesk SMTP-Server (Qmail)',
+					'postfixdbmailuser' 	=> $extended ? array(
+						'description'   => 'Postfix (dbmail Schema)',
+						'classname'     => 'postfixdbmailuser'
+					) : 'Postfix (dbmail Schema)',
+				);
 				break;
 		}
 	}

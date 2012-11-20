@@ -54,100 +54,23 @@ class emailadmin_bo extends so_sql
 	var $LDAPData;
 
 	//var $SMTPServerType = array();		// holds a list of config options
-	static $SMTPServerType = array(
-		'emailadmin_smtp' 	=> array(
-			'fieldNames'	=> array(
+	static $supportedSMTPFields = array(
 				'smtpServer',
 				'smtpPort',
 				'smtpAuth',
 				'ea_smtp_auth_username',
 				'ea_smtp_auth_password',
-				'smtpType'
-			),
+				'smtpType',
+				'editforwardingaddress',
+			);
+	static $SMTPServerType = array(
+		'emailadmin_smtp' 	=> array(
 			'description'	=> 'standard SMTP-Server',
 			'classname'	=> 'emailadmin_smtp'
 		),
-		'postfixldap' 	=> array(
-			'fieldNames'	=> array(
-				'smtpServer',
-				'smtpPort',
-				'smtpAuth',
-				'ea_smtp_auth_username',
-				'ea_smtp_auth_password',
-				'smtpType',
-				'editforwardingaddress',
-				'smtpLDAPServer',
-				'smtpLDAPAdminDN',
-				'smtpLDAPAdminPW',
-				'smtpLDAPBaseDN',
-				'smtpLDAPUseDefault'
-			),
-			'description'	=> 'Postfix (qmail Schema)',
-			'classname'	=> 'postfixldap'
-		),
-		'postfixinetorgperson'     => array(
-			'fieldNames'    => array(
-				'smtpServer',
-				'smtpPort',
-				'smtpAuth',
-				'ea_smtp_auth_username',
-				'ea_smtp_auth_password',
-				'smtpType',
-			),
-			'description'   => 'Postfix (inetOrgPerson Schema)',
-			'classname'     => 'postfixinetorgperson'
-		),
-		'smtpplesk'     => array(
-			'fieldNames'    => array(
-				'smtpServer',
-				'smtpPort',
-				'smtpAuth',
-				'ea_smtp_auth_username',
-				'ea_smtp_auth_password',
-				'smtpType',
-				'editforwardingaddress',
-			),
-			'description'   => 'Plesk SMTP-Server (Qmail)',
-			'classname'     => 'smtpplesk'
-		),
-		'postfixdbmailuser' 	=> array(
-			'fieldNames'	=> array(
-				'smtpServer',
-				'smtpPort',
-				'smtpAuth',
-				'ea_smtp_auth_username',
-				'ea_smtp_auth_password',
-				'smtpType',
-				'editforwardingaddress',
-				'smtpLDAPServer',
-				'smtpLDAPAdminDN',
-				'smtpLDAPAdminPW',
-				'smtpLDAPBaseDN',
-				'smtpLDAPUseDefault'
-			),
-			'description'   => 'Postfix (dbmail Schema)',
-			'classname'     => 'postfixdbmailuser'
-		),
 	);
 	//var $IMAPServerType = array();		// holds a list of config options
-	static $IMAPServerType = array(
-		'defaultimap' 	=> array(
-			'fieldNames'	=> array(
-				'imapServer',
-				'imapPort',
-				'imapType',
-				'imapLoginType',
-				'imapTLSEncryption',
-				'imapTLSAuthentication',
-				'imapAuthUsername',
-				'imapAuthPassword'
-			),
-			'description'	=> 'standard IMAP server',
-			'protocol'	=> 'imap',
-			'classname'	=> 'defaultimap'
-		),
-		'cyrusimap' 	=> array(
-			'fieldNames'	=> array(
+	static $supportedIMAPFields = array(
 				'imapServer',
 				'imapPort',
 				'imapType',
@@ -162,62 +85,13 @@ class emailadmin_bo extends so_sql
 				'imapSievePort',
 				'imapAuthUsername',
 				'imapAuthPassword'
-			),
-			'description'	=> 'Cyrus IMAP Server',
+			);
+	static $IMAPServerType = array(
+		'defaultimap' 	=> array(
+			'description'	=> 'standard IMAP server',
 			'protocol'	=> 'imap',
-			'classname'	=> 'cyrusimap'
-		),
-		'dbmailqmailuser' 	=> array(
-			'fieldNames'	=> array(
-				'imapServer',
-				'imapPort',
-				'imapType',
-				'imapLoginType',
-				'imapTLSEncryption',
-				'imapTLSAuthentication',
-				'imapEnableSieve',
-				'imapSieveServer',
-				'imapSievePort',
-				'imapAuthUsername',
-				'imapAuthPassword',
-			),
-			'description'	=> 'DBMail (qmailUser schema)',
-			'protocol'	=> 'imap',
-			'classname'	=> 'dbmailqmailuser'
-		),
-		'pleskimap'     => array(
-			'fieldNames'    => array(
-				'imapServer',
-				'imapPort',
-				'imapType',
-				'imapLoginType',
-				'imapTLSEncryption',
-				'imapTLSAuthentication',
-				'imapAuthUsername',
-				'imapAuthPassword'
-			),
-			'description'   => 'Plesk IMAP Server (Courier)',
-			'protocol'      => 'imap',
-			'classname'     => 'pleskimap'
-		),
-		'dbmaildbmailuser' 	=> array(
-			'fieldNames'	=> array(
-				'imapServer',
-				'imapPort',
-				'imapType',
-				'imapLoginType',
-				'imapTLSEncryption',
-				'imapTLSAuthentication',
-				'imapEnableSieve',
-				'imapSieveServer',
-				'imapSievePort',
-				'imapAuthUsername',
-				'imapAuthPassword'
-			),
-			'description'	=> 'DBMail (dbmailUser schema)',
-			'protocol'	=> 'imap',
-			'classname'	=> 'dbmaildbmailuser'
-		),
+			'classname'	=> 'defaultimap'
+		)
 	);
 
 	var $imapClass;				// holds the imap/pop3 class
@@ -401,11 +275,11 @@ class emailadmin_bo extends so_sql
 		switch($_class)
 		{
 			case 'imap':
-				return (isset(self::$IMAPServerType[$_serverTypeID]['fieldNames'])?self::$IMAPServerType[$_serverTypeID]['fieldNames']:array());
+				return (isset(self::$IMAPServerType[$_serverTypeID]['fieldNames'])?self::$IMAPServerType[$_serverTypeID]['fieldNames']:self::$supportedIMAPFields);
 				break;
 			case 'smtp':
 				if ($_serverTypeID=='defaultsmtp') $_serverTypeID='emailadmin_smtp';
-				return (isset(self::$SMTPServerType[$_serverTypeID]['fieldNames'])?self::$SMTPServerType[$_serverTypeID]['fieldNames']:array());
+				return (isset(self::$SMTPServerType[$_serverTypeID]['fieldNames'])?self::$SMTPServerType[$_serverTypeID]['fieldNames']:self::$supportedSMTPFields);
 				break;
 		}
 	}
@@ -481,8 +355,8 @@ class emailadmin_bo extends so_sql
 		if (isset($profileData[$found]))
 		{
 			if ($profileData[$found]['smtpType']=='defaultsmtp') $profileData[$found]['smtpType'] = 'emailadmin_smtp';
-			$smtpFields = array();
-			$imapFields = array();
+			$smtpFields = self::$supportedSMTPFields;
+			$imapFields = self::$supportedIMAPFields;
 			if (isset(self::$SMTPServerType[$profileData[$found]['smtpType']]['fieldNames'])) $smtpFields = self::$SMTPServerType[$profileData[$found]['smtpType']]['fieldNames'];
 			if (isset(self::$IMAPServerType[$profileData[$found]['imapType']]['fieldNames'])) $imapFields = self::$IMAPServerType[$profileData[$found]['imapType']]['fieldNames'];
 			$fieldNames = array_merge($smtpFields,$imapFields);
@@ -535,7 +409,7 @@ class emailadmin_bo extends so_sql
 		{
 			if ($extended)
 			{
-				$retData[$key]['fieldNames']	= isset($value['fieldNames'])?$value['fieldNames']:array();
+				$retData[$key]['fieldNames']	= isset($value['fieldNames'])?$value['fieldNames']:self::$supportedSMTPFields;
 				$retData[$key]['description']	= isset($value['description'])?$value['description']:$key;
 				$retData[$key]['classname']	= isset($value['classname'])?$value['classname']:$key;
 			}
@@ -565,7 +439,7 @@ class emailadmin_bo extends so_sql
 		{
 			if ($extended)
 			{
-				$retData[$key]['fieldNames']	= isset($value['fieldNames'])?$value['fieldNames']:array();
+				$retData[$key]['fieldNames']	= isset($value['fieldNames'])?$value['fieldNames']:self::$supportedIMAPFields;
 				$retData[$key]['description']	= isset($value['description'])?$value['description']:$key;
 				$retData[$key]['protocol']	= isset($value['protocol'])?$value['protocol']:'imap';
 				$retData[$key]['classname']	= isset($value['classname'])?$value['classname']:$key;

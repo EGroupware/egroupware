@@ -286,6 +286,7 @@ class emailadmin_ui extends emailadmin_bo
 				$content['ea_active'] = 'yes';
 				$content['ea_imap_login_type'] = 'admin';
 				$content['ea_description'] = common::display_fullname($lid,$fname,$lname,intval($_GET['account_id']));
+				$content['ea_smtp_type'] = 'emailadmin_smtp';
 			}
 			if (!empty($_GET['profileid']))
 			{
@@ -296,6 +297,7 @@ class emailadmin_ui extends emailadmin_bo
 			else
 			{
 				$content['ea_user_defined_accounts'] = "yes";
+				$content['ea_smtp_type'] = 'emailadmin_smtp';
 			}
 		}
 		else
@@ -382,6 +384,7 @@ class emailadmin_ui extends emailadmin_bo
 			}
 		}
 		if ($rowfound) $content = array_merge($this->data,array());
+		$content['ea_smtp_type'] = ($content['ea_smtp_type']=='defaultsmtp'?'emailadmin_smtp':$content['ea_smtp_type']);
 		$preserv['smtpcapabilities'] = $content['smtpcapabilities'] =
 			constant((!empty($content['ea_smtp_type'])?$content['ea_smtp_type']:'emailadmin_smtp').'::CAPABILITIES');
 		$preserv['imapcapabilities'] = $content['imapcapabilities'] =
