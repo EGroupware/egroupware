@@ -158,11 +158,11 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		$identities = array();
 		if (!isset($params['setup']))
 		{
-			if (!$this->mail) $this->mail = felamimail_bo::getInstance(true,(self::$profileID=='G'?0:self::$profileID));
+			if (!$this->mail) $this->mail = felamimail_bo::getInstance(true,(self::$profileID=='G'?emailadmin_bo::getUserDefaultProfileID():self::$profileID));
 			$selectedID = $this->mail->getIdentitiesWithAccounts($identities);
 			if (self::$profileID=='G')
 			{
-				if (is_object($this->mail->mailPreferences)) $activeIdentity =& $this->mail->mailPreferences->getIdentity(0);
+				if (is_object($this->mail->mailPreferences)) $activeIdentity =& $this->mail->mailPreferences->getIdentity(emailadmin_bo::getUserDefaultProfileID());
 			}
 			else
 			{
