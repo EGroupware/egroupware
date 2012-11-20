@@ -42,12 +42,12 @@ foreach($GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'c
 {
 	$GLOBALS['egw_info']['server'][$row['config_name']] = $row['config_value'];
 }
-$to = $GLOBALS['egw_info']['server']['account_repository'];
-if (!$to && !($to = $GLOBALS['egw_info']['server']['auth_type']))
+$from = $GLOBALS['egw_info']['server']['account_repository'];
+if (!$from && !($from = $GLOBALS['egw_info']['server']['auth_type']))
 {
-	$to = 'sql';
+	$from = 'sql';
 }
-$from = $to == 'sql' ? 'ldap' : 'sql';
+$to = $from == 'sql' ? 'ldap' : 'sql';
 $direction = strtoupper($from).' --> '.strtoupper($to);
 
 $GLOBALS['egw_setup']->html->show_header($direction,False,'config',$GLOBALS['egw_setup']->ConfigDomain .
@@ -126,6 +126,12 @@ else	// do the migration
 	$cmd->only = array_merge((array)$_POST['users'],(array)$_POST['groups']);
 	$cmd->verbose = true;
 	echo '<p align="center">'.str_replace("\n","</p>\n<p align='center'>",$cmd->run())."</p>\n";
+	// store new repostory (and auth_type), as we are migrated now
+	config::save_value('account_repository', $GLOBALS['egw_info']['server']['account_repository']=$to, 'phpgwapi');
+	if (empty($GLOBALS['egw_info']['server']['auth_type']) || $GLOBALS['egw_info']['server']['auth_type'] == $from)
+	{
+		config::save_value('auth_type', $GLOBALS['egw_info']['server']['auth_type']=$to, 'phpgwapi');
+	}
 	echo '<p align="center">'.lang('Click <a href="index.php">here</a> to return to setup.')."</p>\n";
 }
 

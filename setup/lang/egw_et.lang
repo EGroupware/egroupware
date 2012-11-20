@@ -234,7 +234,6 @@ year	setup	et	Aasta
 yes	setup	et	Jah
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	et	Sa pole veel teinud oma header.inc.php!<br /> sa saad teha selle nüüd.
 you have successfully logged out	setup	et	Oled täielikult välja loginud
-you need to save the settings you made here first!	setup	et	Pead salvestama esmalt seadistused mida sa tegid siin!
 you're using an old configuration file format...	setup	et	Sa kasutad vana konfiguratsiooni faili formaati...
 you're using an old header.inc.php version...	setup	et	Sa kasutad vana header.inc.php versiooni...
 your applications are current	setup	et	Sinu rakendused on kaasaegsed
