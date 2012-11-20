@@ -43,8 +43,8 @@
 		{
 			$this->t = $GLOBALS['egw']->template;
 			$this->charset = translation::charset();
-
-			$this->bofelamimail	= felamimail_bo::getInstance();
+			$icServerID =& egw_cache::getSession('felamimail','activeProfileID');
+			$this->bofelamimail	= felamimail_bo::getInstance(true,$icServerID);
 			$this->bopreferences	= $this->bofelamimail->bopreferences;
 			$this->uiwidgets	= CreateObject('felamimail.uiwidgets');
 
