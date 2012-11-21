@@ -278,6 +278,12 @@ class addressbook_import_vcard implements importexport_iface_import_plugin  {
 			foreach($labels as $field => $label)
 			{
 				$row[$field] = $record[$field];
+
+				// Don't scare users, do something with jpeg
+				if($field == 'jpegphoto' && $row[$field])
+				{
+					$row[$field] = '<span style="white-space: nowrap;">-ENCODED IMAGE-</span>';
+				}
 				unset($record[$field]);
 			}
 			$row += $record;
