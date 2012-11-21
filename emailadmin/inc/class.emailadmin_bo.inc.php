@@ -572,7 +572,9 @@ class emailadmin_bo extends so_sql
 			$icServer->username 	= $GLOBALS['egw_info']['user']['account_lid'];
 			$icServer->password	= $GLOBALS['egw_info']['user']['passwd'];
 			// restore the default loginType and check if there are forced/predefined user access Data ($imapAuthType may be set to admin)
+			//error_log(__METHOD__.__LINE__.' ServerID:'.$icServer->ImapServerId.' Logintype:'.array2string($data['imapLoginType']));
 			list($data['imapLoginType'],$imapAuthType) = explode('#',$data['imapLoginType'],2);
+			//error_log(__METHOD__.__LINE__.' ServerID:'.$icServer->ImapServerId.' Logintype:'.array2string($data['imapLoginType']).' AuthType:'.$imapAuthType);
 			$icServer->loginType	= $data['imapLoginType'];
 			$icServer->domainName	= $data['defaultDomain'];
 //			$icServer->loginName 	= $data['imapLoginType'] == 'standard' ? $GLOBALS['egw_info']['user']['account_lid'] : $GLOBALS['egw_info']['user']['account_lid'].'@'.$data['defaultDomain'];
@@ -661,6 +663,7 @@ class emailadmin_bo extends so_sql
 			$eaPreferences->userDefinedIdentities     = ($data['userDefinedIdentities'] == 'yes' || $data['userDefinedAccounts']=='yes');
 			$eaPreferences->ea_user_defined_signatures	= ($data['ea_user_defined_signatures'] == 'yes');
 			$eaPreferences->ea_default_signature		= $data['ea_default_signature'];
+			if (is_array($data['ea_stationery_active_templates'])) $data['ea_stationery_active_templates'] = implode(',',$data['ea_stationery_active_templates']);
 			if(strlen($data['ea_stationery_active_templates']) > 0)
 			{
 				$eaPreferences->ea_stationery_active_templates = explode(',',$data['ea_stationery_active_templates']);
