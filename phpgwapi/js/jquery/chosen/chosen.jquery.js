@@ -353,6 +353,7 @@ Copyright (c) 2011 by Harvest
       });
       this.search_field = this.container.find('input').first();
       this.search_results = this.container.find('ul.chzn-results').first();
+      this.search_results.data('initialMaxHeight', this.search_results.css('max-height'));
       this.search_field_scale();
       this.search_no_results = this.container.find('li.no-results').first();
       if (this.is_multiple) {
@@ -608,6 +609,29 @@ Copyright (c) 2011 by Harvest
         "top": dd_top + "px",
         "left": 0
       });
+
+      // Check to see if there's enough space below
+      // Thanks, corryworrell https://github.com/harvesthq/chosen/issues/155
+      this.search_results.css('max-height', 'none');
+
+      var windowHeight = $(window).height() + $('html').scrollTop(),
+          dropdownHeight = this.dropdown.height(),
+          dropdownTop    = Math.ceil(this.dropdown.offset().top),
+          totalHeight    = dropdownHeight + dropdownTop;
+
+      if (totalHeight > windowHeight) {
+        var difference = totalHeight - windowHeight,
+            height     = dropdownHeight - difference;
+
+        if (height > 100) {
+          this.search_results.css('max-height', height);
+        } else {
+          this.dropdown.addClass('chzn-above');
+          this.search_results.css('max-height', this.search_results.data('initialMaxHeight'));
+        }
+      } else {
+        this.search_results.css('max-height', this.search_results.data('initialMaxHeight'));
+      }
       this.results_showing = true;
       this.search_field.focus();
       this.search_field.val(this.search_field.val());

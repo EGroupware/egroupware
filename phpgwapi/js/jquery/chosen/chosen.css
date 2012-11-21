@@ -9,7 +9,7 @@
 .chzn-container .chzn-drop {
   background: #fff;
   border: 1px solid #aaa;
-  border-top: 0;
+  border-top-width: 0px;
   position: absolute;
   top: 29px;
   left: 0;
@@ -18,6 +18,12 @@
   box-shadow        : 0 4px 5px rgba(0,0,0,.15);
   min-width: 4ex;
   z-index: 1010;
+}
+.chzn-container .chzn-drop.chzn-above {
+  top:auto !important;
+  bottom: 18px;
+  border-top-width: 1px;
+  border-bottom-width: 0;
 }
 /* @end */
 
