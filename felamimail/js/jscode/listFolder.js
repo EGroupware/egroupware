@@ -20,6 +20,13 @@ function resetACLAddView()
 	opener.updateACLView();
 }
 
+function disableACLEdit()
+{
+	var active = document.getElementById('active');
+	active.checked = false;
+	active.disabled = true;
+}
+
 function updateACLView(activateACL)
 {
 	xajax_doXMLHTTPsync('felamimail.ajaxfelamimail.updateACLView');

@@ -27,6 +27,11 @@ class emailadmin_dovecot extends defaultimap
 	 */
 	const CAPABILITIES = 'default|sieve|timedsieve|admin|logintypeemail';
 
+	/**
+	 * prefix for groupnames, when using groups in ACL Management
+	 */
+	const ACL_GROUP_PREFIX = '$';
+
 	// mailbox delimiter
 	var $mailboxDelimiter = '.';
 

@@ -23,6 +23,11 @@ class cyrusimap extends defaultimap
 	 */
 	const CAPABILITIES = 'default|sieve|timedsieve|admin|logintypeemail';
 
+	/**
+	 * prefix for groupnames, when using groups in ACL Management
+	 */
+	const ACL_GROUP_PREFIX = 'group:';
+
 	// mailbox delimiter
 	var $mailboxDelimiter = '.';
 

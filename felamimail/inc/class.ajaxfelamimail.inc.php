@@ -51,6 +51,7 @@ class ajaxfelamimail
 			//error_log("ajaxfelamimail::ajaxfelamimail ActiveProfile:".$this->imapServerID );
 			$this->charset		=  translation::charset();
 			$this->bofelamimail	= felamimail_bo::getInstance(true,$this->imapServerID);
+
 			$this->imapServerID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $this->bofelamimail->profileID;
 			$this->uiwidgets	= CreateObject('felamimail.uiwidgets');
 			$this->icServer = $this->bofelamimail->mailPreferences->getIncomingServer($this->imapServerID);
@@ -206,7 +207,8 @@ class ajaxfelamimail
 		{
 			$response = new xajaxResponse();
 			if ($folderACL = $this->bofelamimail->getIMAPACL($_folder)) {
-				$response->addAssign("aclTable", "innerHTML", $this->createACLTable($folderACL));
+				$aclSupported = in_array('ACL',$this->bofelamimail->icServer->_serverSupportedCapabilities);
+				$response->addAssign("aclTable", "innerHTML", ($aclSupported?$this->createACLTable($folderACL):''));
 			}
 			return $response->getXML();
 		}
@@ -868,7 +870,8 @@ class ajaxfelamimail
 				}
 				$response->addAssign("folderName", "innerHTML", htmlspecialchars($folderStatus['displayName'], ENT_QUOTES, $this->charset));
 				//error_log(__METHOD__.__LINE__.' Folder:'.$folderName.' ACL:'.array2string($this->bofelamimail->getIMAPACL($folderName)));
-				if($folderACL = $this->bofelamimail->getIMAPACL($folderName)) {
+				$aclSupported = in_array('ACL',$this->bofelamimail->icServer->_serverSupportedCapabilities);
+				if($aclSupported && ($folderACL = $this->bofelamimail->getIMAPACL($folderName))) {
 					$response->addAssign("aclTable", "innerHTML", $this->createACLTable($folderACL));
 				}
 				else
@@ -891,7 +894,8 @@ class ajaxfelamimail
 				// we should not need this, but dovecot does not report the correct folderstatus for all folders that he is listing
 				//error_log(__METHOD__.__LINE__.' Folder:'.$folderName.' ACL:'.array2string($this->bofelamimail->getIMAPACL($folderName)));
 				if($folderName != '--topfolder--' && $folderName != 'user' && ($folderACL = $this->bofelamimail->getIMAPACL($folderName))) {
-					$response->addAssign("aclTable", "innerHTML", $this->createACLTable($folderACL));
+					$aclSupported = in_array('ACL',$this->bofelamimail->icServer->_serverSupportedCapabilities);
+					$response->addAssign("aclTable", "innerHTML", ($aclSupported?$this->createACLTable($folderACL):''));
 				}
 				else
 				{
@@ -1659,7 +1663,8 @@ class ajaxfelamimail
 			//error_log(__METHOD__.__LINE__);
 			$response = new xajaxResponse();
 			if($folderACL = $this->bofelamimail->getIMAPACL($this->sessionDataAjax['folderName'])) {
-				$response->addAssign("aclTable", "innerHTML", $this->createACLTable($folderACL));
+				$aclSupported = in_array('ACL',$this->bofelamimail->icServer->_serverSupportedCapabilities);
+				$response->addAssign("aclTable", "innerHTML", ($aclSupported?$this->createACLTable($folderACL):''));
 			}
 			return $response->getXML();
 		}
