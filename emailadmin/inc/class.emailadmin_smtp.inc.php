@@ -173,7 +173,7 @@ class emailadmin_smtp
 	 * @param boolean $_forwarding_only=false true: store only forwarding info, used internally by saveSMTPForwarding
 	 * @return boolean true on success, false on error writing to ldap
 	 */
-	function setUserData($_uidnumber, $_mailAlternateAddress, $_mailForwardingAddress, $_deliveryMode, $_accountStatus, $_mailLocalAddress, $_quota, $_forwarding_only=false)
+	function setUserData($_uidnumber, array $_mailAlternateAddress, array $_mailForwardingAddress, $_deliveryMode, $_accountStatus, $_mailLocalAddress, $_quota, $_forwarding_only=false)
 	{
 		return true;
 	}
