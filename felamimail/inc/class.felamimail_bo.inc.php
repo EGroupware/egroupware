@@ -172,7 +172,7 @@ class felamimail_bo
 			$profileID = emailadmin_bo::getUserDefaultProfileID();
 			if ($profileID!=$_profileID) $_restoreSession==false;
 			$_profileID=$profileID;
-			error_log(__METHOD__.__LINE__.' called with profileID==0 using '.$profileID.' instead->'.function_backtrace());
+			if (self::$debug) error_log(__METHOD__.__LINE__.' called with profileID==0 using '.$profileID.' instead->'.function_backtrace());
 		}
 		if ($_profileID != 0 && $_validate)
 		{
@@ -5374,6 +5374,7 @@ class felamimail_bo
 				if (isset($part->ctype_parameters['charset'])) $mailObject->CharSet = trim($part->ctype_parameters['charset']);
 				if (($structure->ctype_secondary=='alternative'||
 					 $structure->ctype_secondary=='mixed' ||
+					// $structure->ctype_secondary=='related' || // may hold text/plain directly ?? I doubt it ??
 					 $structure->ctype_secondary=='signed') && $part->ctype_primary=='text' && $part->ctype_secondary=='plain' && $part->body)
 				{
 					//echo __METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.'<br>';
@@ -5386,6 +5387,7 @@ class felamimail_bo
 				}
 				if (($structure->ctype_secondary=='alternative'||
 					 $structure->ctype_secondary=='mixed' ||
+					 $structure->ctype_secondary=='related' || // may hold text/html directly
 					 $structure->ctype_secondary=='signed' ) &&
 					$part->ctype_primary=='text' && $part->ctype_secondary=='html' && $part->body)
 				{
