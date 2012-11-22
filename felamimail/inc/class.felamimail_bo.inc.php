@@ -5428,7 +5428,8 @@ class felamimail_bo
 				//error_log(__METHOD__.__LINE__.$structure->ctype_primary.'/'.$structure->ctype_secondary.' => '.$part->ctype_primary.'/'.$part->ctype_secondary.' Part:'.array2string($part));
 				if ($part->body && (($structure->ctype_secondary=='mixed' && $part->ctype_primary!='multipart') ||
 					trim($part->disposition) == 'attachment' ||
-					trim($part->disposition) == 'inline'))
+					trim($part->disposition) == 'inline' ||
+					isset($part->headers['content-id'])))
 				{
 					//error_log(__METHOD__.__LINE__.$structure->ctype_secondary.'=>'.$part->ctype_primary.'/'.$part->ctype_secondary.'->'.array2string($part));
 					$attachmentnumber++;
@@ -5477,16 +5478,35 @@ class felamimail_bo
 					//error_log(__METHOD__.__LINE__.' '.$filename);
 					//echo $part->headers['content-transfer-encoding'].'#<br>';
 					if ($decode) $part->body = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'));
-					if ((trim($part->disposition)=='attachment' || trim($part->disposition) == 'inline') && $partFetched==false)
+					if ((trim($part->disposition)=='attachment' || trim($part->disposition) == 'inline' || isset($part->headers['content-id'])) && $partFetched==false)
 					{
-						//error_log(__METHOD__.__LINE__.' Add String '.($part->disposition=='attachment'?'Attachment':'Part').' of type:'.$part->ctype_primary.'/'.$part->ctype_secondary);
-						$mailObject->AddStringAttachment($part->body, //($part->headers['content-transfer-encoding']?base64_decode($part->body):$part->body),
+						if (trim($part->disposition) == 'inline' || $part->headers['content-id'])
+						{
+							$part->headers['content-id'] = str_replace(array('<','>'),'',$part->headers['content-id']);
+							$dirname = $this->accountid.'_'.$this->profileID.'_'.$this->sessionData['mailbox'].$part->headers['content-id'];
+							if (self::$debug) error_log(__METHOD__.__LINE__.' Dirname:'.$dirname);
+							$dirname = md5($dirname);
+							$dir = $GLOBALS['egw_info']['server']['temp_dir']."/fmail_import/$dirname";
+							if (self::$debug) error_log(__METHOD__.__LINE__.' Dir to save attachment to:'.$dir);
+							if ( !file_exists( "$dir/$filename") )
+							{
+								@mkdir( $dir, 0700, true );
+								file_put_contents( "$dir/$filename", $part->body);
+							}
+							$path = "$dir/$filename";
+							$mailObject->AddEmbeddedImage($path, $part->headers['content-id'], $filename, ($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'), $part->ctype_primary.'/'.$part->ctype_secondary);
+						}
+						else
+						{
+							//error_log(__METHOD__.__LINE__.' Add String '.($part->disposition=='attachment'?'Attachment':'Part').' of type:'.$part->ctype_primary.'/'.$part->ctype_secondary);
+							$mailObject->AddStringAttachment($part->body, //($part->headers['content-transfer-encoding']?base64_decode($part->body):$part->body),
 													 $filename,
 													 ($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'),
 													 $part->ctype_primary.'/'.$part->ctype_secondary
 													);
+						}
 					}
-					if (!(trim($part->disposition)=='attachment' || trim($part->disposition) == 'inline') && $partFetched==false)
+					if (!(trim($part->disposition)=='attachment' || trim($part->disposition) == 'inline' || isset($part->headers['content-id'])) && $partFetched==false)
 					{
 						//error_log(__METHOD__.__LINE__.' Add String '.($part->disposition=='attachment'?'Attachment':'Part').' of type:'.$part->ctype_primary.'/'.$part->ctype_secondary.' Body:'.$part->body);
 						$mailObject->AddStringPart($part->body, //($part->headers['content-transfer-encoding']?base64_decode($part->body):$part->body),
