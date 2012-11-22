@@ -214,24 +214,28 @@ class accounts_sql
 			}
 		}
 		// store group-email in mailaccounts table
-		if ($data['account_id'] < 0 && $GLOBALS['egw_info']['apps']['emailadmin'])
+		if ($data['account_id'] < 0 && class_exists('emailadmin_smtp_sql', false))
 		{
-			if (empty($data['account_email']))
-			{
-				$this->db->delete(emailadmin_smtp_sql::TABLE, array(
-					'account_id' => $data['account_id'],
-					'mail_type' => emailadmin_smtp_sql::TYPE_ALIAS,
-				), __LINE__, __FILE__, emailadmin_smtp_sql::APP);
+			try {
+				if (empty($data['account_email']))
+				{
+					$this->db->delete(emailadmin_smtp_sql::TABLE, array(
+						'account_id' => $data['account_id'],
+						'mail_type' => emailadmin_smtp_sql::TYPE_ALIAS,
+					), __LINE__, __FILE__, emailadmin_smtp_sql::APP);
+				}
+				else
+				{
+					$this->db->insert(emailadmin_smtp_sql::TABLE, array(
+						'mail_value' => $data['account_email'],
+					), array(
+						'account_id' => $data['account_id'],
+						'mail_type' => emailadmin_smtp_sql::TYPE_ALIAS,
+					), __LINE__, __FILE__, emailadmin_smtp_sql::APP);
+				}
 			}
-			else
-			{
-				$this->db->insert(emailadmin_smtp_sql::TABLE, array(
-					'mail_value' => $data['account_email'],
-				), array(
-					'account_id' => $data['account_id'],
-					'mail_type' => emailadmin_smtp_sql::TYPE_ALIAS,
-				), __LINE__, __FILE__, emailadmin_smtp_sql::APP);
-			}
+			// ignore not (yet) existing mailaccounts table
+			catch (egw_exception_db $e) { }
 		}
 		return $data['account_id'];
 	}
