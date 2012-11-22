@@ -118,7 +118,7 @@
 			if ($accountData['ic_draftfolder']) $icServer->draftfolder = $accountData['ic_draftfolder'];
 			if ($accountData['ic_templatefolder']) $icServer->templatefolder = $accountData['ic_templatefolder'];
 
-			$ogServer = CreateObject('emailadmin.defaultsmtp');
+			$ogServer = new emailadmin_smtp();
 			$ogServer->SmtpServerId	= $accountData['id'];
 			$ogServer->host		= $accountData['og_hostname'];
 			$ogServer->port		= isset($accountData['og_port']) ? $accountData['og_port'] : 25;
@@ -168,7 +168,7 @@
 				if ($accountData['ic_draftfolder']) $icServer->draftfolder = $accountData['ic_draftfolder'];
 				if ($accountData['ic_templatefolder']) $icServer->templatefolder = $accountData['ic_templatefolder'];
 
-				$ogServer = CreateObject('emailadmin.defaultsmtp');
+				$ogServer = new emailadmin_smtp();
 				$ogServer->SmtpServerId	= $accountData['id'];
 				$ogServer->host		= $accountData['og_hostname'];
 				$ogServer->port		= isset($accountData['og_port']) ? $accountData['og_port'] : 25;
@@ -279,7 +279,7 @@
 							//$profileData->setPreferences($userPrefs,$k);
 						}
 						// set defined SMTP Server
-						if(($accountData['ogServer'] instanceof defaultsmtp))
+						if(($accountData['ogServer'] instanceof emailadmin_smtp))
 							$profileData->setOutgoingServer($accountData['ogServer'],$k);
 
 						if(($accountData['identity'] instanceof ea_identity))
@@ -312,7 +312,7 @@
 							}
 
 							// replace the global defined SMTP Server
-							if(($accountData['ogServer'] instanceof defaultsmtp))
+							if(($accountData['ogServer'] instanceof emailadmin_smtp))
 								$profileData->setOutgoingServer($accountData['ogServer'],0);
 
 							// replace the global defined identity

@@ -92,7 +92,7 @@
 				$serverclass = get_class($icServer);
 				$classsupportstimedsieve = false;
 				if (!empty($serverclass) && stripos(constant($serverclass.'::CAPABILITIES'),'timedsieve') !== false) $classsupportstimedsieve = true;
-				
+
 				$this->timed_vacation = $classsupportstimedsieve && $icServer->enableCyrusAdmin &&
 					$icServer->adminUsername && $icServer->adminPassword;
 			} else {
@@ -588,7 +588,7 @@
 				$newVacation['status']		= get_var('vacationStatus',array('POST'));
 				if (empty($preferences->preferences['prefpreventforwarding']) ||
 					$preferences->preferences['prefpreventforwarding'] == 0 ) # ||
-					#($ogServer instanceof defaultsmtp) || $ogServer->editForwardingAddress)
+					#($ogServer instanceof emailadmin_smtp) || $ogServer->editForwardingAddress)
 				{
 					$newVacation['forwards']    = get_var('vacation_forwards',array('POST'));
 				}

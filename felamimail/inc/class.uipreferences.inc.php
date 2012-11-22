@@ -191,7 +191,7 @@
 			$mailPrefs	= $this->bofelamimail->getMailPreferences();
 			$ogServer	= $mailPrefs->getOutgoingServer(0);
 
-			if(!($ogServer instanceof defaultsmtp) || !$ogServer->editForwardingAddress) {
+			if(!($ogServer instanceof emailadmin_smtp) || !$ogServer->editForwardingAddress) {
 				die('You should not be here!');
 			}
 
@@ -315,7 +315,7 @@
 					$icServer = NULL;
 				}
 				// SMTP connection settings
-				$ogServer = CreateObject('emailadmin.defaultsmtp');
+				$ogServer = new emailadmin_smtp();
 				if(is_array($_POST['og']) && (int)$_POST['active']) {
 					foreach($_POST['og'] as $key => $value) {
 						$ogServer->$key = $value;

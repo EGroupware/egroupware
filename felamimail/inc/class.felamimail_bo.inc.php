@@ -549,7 +549,7 @@ class felamimail_bo
 			}
 
 			$ogServer = $this->mailPreferences->getOutgoingServer($this->profileID);
-			if(($ogServer instanceof defaultsmtp)) {
+			if(($ogServer instanceof emailadmin_smtp)) {
 				$ogServer->addAccount($_hookValues);
 			}
 		}
@@ -884,7 +884,7 @@ class felamimail_bo
 			}
 
 			$ogServer = $this->mailPreferences->getOutgoingServer($this->profileID);
-			if(($ogServer instanceof defaultsmtp)) {
+			if(($ogServer instanceof emailadmin_smtp)) {
 				$ogServer->deleteAccount($_hookValues);
 			}
 		}
@@ -3963,7 +3963,7 @@ class felamimail_bo
 		}
 
 		if (is_object($this->mailPreferences)) $ogServer = $this->mailPreferences->getOutgoingServer(0);
-		if(($ogServer instanceof defaultsmtp)) {
+		if(($ogServer instanceof emailadmin_smtp)) {
 			$ogServer->updateAccount($_hookValues);
 		}
 	}
