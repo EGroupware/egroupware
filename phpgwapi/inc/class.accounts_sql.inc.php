@@ -105,7 +105,6 @@ class accounts_sql
 	{
 		if (!(int)$account_id) return false;
 
-		$join = $extra_cols = '';
 		if ($account_id > 0)
 		{
 			$extra_cols = $this->contacts_table.'.n_given AS account_firstname,'.
@@ -118,13 +117,24 @@ class accounts_sql
 				$this->contacts_table.'.tel_work AS account_phone,';
 				$join = 'LEFT JOIN '.$this->contacts_table.' ON '.$this->table.'.account_id='.$this->contacts_table.'.account_id';
 		}
-		else//if ($GLOBALS['egw_info']['apps']['emailadmin'])
+		else
 		{
 			$extra_cols = emailadmin_smtp_sql::TABLE.'.mail_value AS account_email,';
 			$join = 'LEFT JOIN '.emailadmin_smtp_sql::TABLE.' ON '.$this->table.'.account_id=-'.emailadmin_smtp_sql::TABLE.'.account_id AND mail_type='.emailadmin_smtp_sql::TYPE_ALIAS;
 		}
-		if (!($data = $this->db->select($this->table,$extra_cols.$this->table.'.*',$this->table.'.account_id='.abs($account_id),
-			__LINE__,__FILE__,false,'',false,0,$join)->fetch()))
+		try {
+			$rs = $this->db->select($this->table, $extra_cols.$this->table.'.*',
+				$this->table.'.account_id='.abs($account_id),
+				__LINE__, __FILE__, false, '', false, 0, $join);
+		}
+		catch (egw_exception_db $e) { }
+
+		if (!$rs)	// handle not (yet) existing mailaccounts table
+		{
+			$rs = $this->db->select($this->table, $this->table.'.*',
+				$this->table.'.account_id='.abs($account_id), __LINE__, __FILE__);
+		}
+		if (!$rs || !($data = $rs->fetch()))
 		{
 			return false;
 		}
