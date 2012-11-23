@@ -178,7 +178,7 @@ class emailadmin_smtp_sql extends emailadmin_smtp
 						break;
 
 					case self::TYPE_MAILBOX:
-						$userData['mailmessagestore'] = $row['mail_value'];
+						$userData['mailMessageStore'] = $row['mail_value'];
 						//error_log(__METHOD__."('$user') row=".array2string($row).', enabled[$row[account_id]]='.array2string($enabled[$row['account_id']]).', forwardOnly[$row[account_id]]='.array2string($forwardOnly[$row['account_id']]));
 						if ($row['account_id'] > 0 && $enabled[$row['account_id']] && !$forwardOnly[$row['account_id']])
 						{
@@ -223,10 +223,11 @@ class emailadmin_smtp_sql extends emailadmin_smtp
 	 * @param string $_mailLocalAddress
 	 * @param int $_quota in MB
 	 * @param boolean $_forwarding_only=false true: store only forwarding info, used internally by saveSMTPForwarding
+	 * @param string $_setMailbox=null used only for account migration
 	 * @return boolean true on success, false on error writing to ldap
 	 */
 	function setUserData($_uidnumber, array $_mailAlternateAddress, array $_mailForwardingAddress, $_deliveryMode,
-		$_accountStatus, $_mailLocalAddress, $_quota, $_forwarding_only=false)
+		$_accountStatus, $_mailLocalAddress, $_quota, $_forwarding_only=false, $_setMailbox=null)
 	{
 		if ($this->debug) error_log(__METHOD__."($_uidnumber, ".array2string($_mailAlternateAddress).', '.array2string($_mailForwardingAddress).", '$_deliveryMode', '$_accountStatus', '$_mailLocalAddress', $_quota, forwarding_only=".array2string($_forwarding_only).') '.function_backtrace());
 
@@ -295,8 +296,13 @@ class emailadmin_smtp_sql extends emailadmin_smtp
 		{
 			$this->db->delete(self::TABLE, array('mail_id' => $delete_ids), __LINE__, __FILE__, self::APP);
 		}
+		// set mailbox address, if explicitly requested by $_setMailbox parameter
+		if ($_setMailbox)
+		{
+			$flags[self::TYPE_MAILBOX] = $_setMailbox;
+		}
 		// set mailbox address, if not yet set
-		if (!$_forwarding_only && empty($mailbox))
+		elseif (!$_forwarding_only && empty($mailbox))
 		{
 			$flags[self::TYPE_MAILBOX] = $this->mailbox_addr(array(
 				'account_id' => $_uidnumber,

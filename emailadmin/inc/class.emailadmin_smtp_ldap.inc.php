@@ -364,7 +364,7 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 				$userData['mailForwardingAddress']	= $this->config['forward_attr'] ? $values[$this->config['forward_attr']] : array();
 				unset($userData['mailForwardingAddress']['count']);
 
-				if ($this->config['mailbox_attr']) $userData[$this->config['mailbox_attr']]	= $values[$this->config['mailbox_attr']][0];
+				if ($this->config['mailbox_attr']) $userData['mailMessageStore']	= $values[$this->config['mailbox_attr']][0];
 
 				if ($this->config['forward_only_attr'])
 				{
@@ -404,9 +404,12 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	 * @param string $_accountStatus
 	 * @param string $_mailLocalAddress
 	 * @param int $_quota in MB
+	 * @param boolean $_forwarding_only=false not used as we have our own addAccount method
+	 * @param string $_setMailbox=null used only for account migration
 	 * @return boolean true on success, false on error writing to ldap
 	 */
-	function setUserData($_uidnumber, array $_mailAlternateAddress, array $_mailForwardingAddress, $_deliveryMode, $_accountStatus, $_mailLocalAddress, $_quota)
+	function setUserData($_uidnumber, array $_mailAlternateAddress, array $_mailForwardingAddress, $_deliveryMode,
+		$_accountStatus, $_mailLocalAddress, $_quota, $_forwarding_only=false, $_setMailbox=null)
 	{
 		$filter = 'uidnumber='.(int)$_uidnumber;
 
@@ -477,6 +480,11 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 		if ($this->config['quota_attr'])
 		{
 			$newData[$this->config['quota_attr']]	= (int)$_quota >= 0 ? (int)$_quota*1048576 : array();
+		}
+		// does schema support an explicit mailbox name --> set it, $_setMailbox is given
+		if ($this->config['mailbox_attr'] && $_setMailbox)
+		{
+			$newData[$this->config['mailbox_attr']] = $_setMailbox;
 		}
 		if ($this->debug) error_log(__METHOD__.'('.array2string(func_get_args()).") --> ldap_mod_replace(,'$accountDN',".array2string($newData).')');
 

@@ -171,9 +171,11 @@ class emailadmin_smtp
 	 * @param string $_mailLocalAddress
 	 * @param int $_quota in MB
 	 * @param boolean $_forwarding_only=false true: store only forwarding info, used internally by saveSMTPForwarding
+	 * @param string $_setMailbox=null used only for account migration
 	 * @return boolean true on success, false on error writing to ldap
 	 */
-	function setUserData($_uidnumber, array $_mailAlternateAddress, array $_mailForwardingAddress, $_deliveryMode, $_accountStatus, $_mailLocalAddress, $_quota, $_forwarding_only=false)
+	function setUserData($_uidnumber, array $_mailAlternateAddress, array $_mailForwardingAddress, $_deliveryMode,
+		$_accountStatus, $_mailLocalAddress, $_quota, $_forwarding_only=false, $_setMailbox=null)
 	{
 		return true;
 	}

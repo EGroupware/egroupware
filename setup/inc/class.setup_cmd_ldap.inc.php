@@ -242,7 +242,7 @@ class setup_cmd_ldap extends setup_cmd
 						$emailadmin_dst->setUserData($account_id, (array)$mailaccount['mailAlternateAddress'],
 							(array)$mailaccount['mailForwardingAddress'], $mailaccount['deliveryMode'],
 							$mailaccount['accountStatus'], $mailaccount['mailLocalAddress'],
-							$mailaccount['quotaLimit']);
+							$mailaccount['quotaLimit'], false, $mailaccount['mailMessageStore']);
 
 						$msg[] = lang("Mail account of %1 migraged", $account['account_lid']);
 					}
