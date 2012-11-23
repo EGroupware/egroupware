@@ -1,4 +1,5 @@
 %1 entries deleted.	emailadmin	en	%1 entries deleted.
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	emailadmin	en	(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)
 account '%1' not found !!!	emailadmin	en	Account '%1' not found!
 active templates	emailadmin	en	Active templates
 add new email address:	emailadmin	en	Add new email address:

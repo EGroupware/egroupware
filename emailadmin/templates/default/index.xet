@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="emailadmin.index.rows" template="" lang="" group="0" version="1.7.003">
+	<template id="emailadmin.index.rows" template="" lang="" group="0" version="1.7.004">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -43,7 +43,7 @@
 						<buttononly label="Select All" onclick="toggle_all(this.form,form::name('selected[]')); return false;" options="check"/>
 					</hbox>
 				</row>
-				<row class="row">
+				<row class="$row_cont[class] row">
 					<description id="${row}[ea_profile_id]"/>
 					<description id="${row}[ea_description]"/>
 					<description id="${row}[ea_default_domain]"/>

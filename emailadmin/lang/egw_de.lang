@@ -1,4 +1,5 @@
 %1 entries deleted.	emailadmin	de	%1 Einträge gelöscht
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	emailadmin	de	(Die IMAP Klasse muss dieses Verfahren unterstützen indem es den entsprechenden Konfig Wert der Instanz ausliest und als Default Quota an den IMAP Server meldet.)
 account '%1' not found !!!	emailadmin	de	Benutzerkonto '%1' nicht gefunden !!!
 active templates	emailadmin	de	Aktive Vorlagen
 add new email address:	emailadmin	de	Neue E-Mailadresse hinzufügen
@@ -99,8 +100,8 @@ profile is active	emailadmin	de	Profil ist aktiv
 profile list	emailadmin	de	Profilliste
 profile name	emailadmin	de	Profilname
 qmaildotmode	emailadmin	de	qmaildotmode
-qouta size in mbyte	emailadmin	de	Quota Größe in MByte
 quota settings	emailadmin	de	Quota Einstellungen
+quota size in mbyte	emailadmin	de	Quota Größe in MByte
 remove	emailadmin	de	Entfernen
 reset filter	emailadmin	de	Filter zurücksetzen
 select type of imap server	emailadmin	de	IMAP-Server Typ auswählen

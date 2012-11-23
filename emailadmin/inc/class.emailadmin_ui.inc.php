@@ -207,6 +207,7 @@ class emailadmin_ui extends emailadmin_bo
 	{
 		$query = $query_in;
 		$filteredby = '';
+		$defaultID = emailadmin_bo::getDefaultProfileID();
 		if ($query['searchletter']) // only show rows if the order-criteria starts with the given letter
 		{
 			$query['col_filter'][] = (in_array($query['order'],parent::$numericfields) || (is_string($query['order']) && !(strpos($query['order'],',')===false)) ? 'ea_description' : $query['order']).' '.
@@ -216,6 +217,10 @@ class emailadmin_ui extends emailadmin_bo
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('emailadmin').($filteredby? ' - '.$filteredby:'');
 		$total = parent::get_rows($query,$rows,$readonlys);
+		foreach($rows as &$row)
+		{
+			if (-$row['ea_profile_id']==$defaultID) $row['class'] = 'defaultProfile';
+		}
 		return $total;
 	}
 
@@ -287,6 +292,7 @@ class emailadmin_ui extends emailadmin_bo
 				$content['ea_imap_login_type'] = 'admin';
 				$content['ea_description'] = common::display_fullname($lid,$fname,$lname,intval($_GET['account_id']));
 				$content['ea_smtp_type'] = 'emailadmin_smtp';
+				if (empty($content['defaultQuota'])) unset($content['defaultQuota']);
 			}
 			if (!empty($_GET['profileid']))
 			{
@@ -360,6 +366,13 @@ class emailadmin_ui extends emailadmin_bo
 				case 'save':
 					if ($etpl->validation_errors()) break;  // the user need to fix the error, before we can save the entry
 					//_debug_array($this->data);
+					if ((!empty($this->data['ea_imap_type'])&&
+								$this->data['defaultQuota'] &&
+								stripos($this->data['imapcapabilities'],'providedefaultquota')!==false))
+					{
+						$classname = $this->data['ea_imap_type'];
+						$classname::setDefaultQuota($this->data['defaultQuota']);
+					}
 					if (parent::save() != 0)
 					{
 						$msg = lang('Error saving the entry!!!');
@@ -380,15 +393,23 @@ class emailadmin_ui extends emailadmin_bo
 						$GLOBALS['egw']->common->egw_exit();
 						break;
 					}
-					$row;
+					$rowfound=true;
 			}
 		}
+		$defaultID = emailadmin_bo::getDefaultProfileID();
 		if ($rowfound) $content = array_merge($this->data,array());
 		$content['ea_smtp_type'] = ($content['ea_smtp_type']=='defaultsmtp'?'emailadmin_smtp':$content['ea_smtp_type']);
 		$preserv['smtpcapabilities'] = $content['smtpcapabilities'] =
 			constant((!empty($content['ea_smtp_type'])?$content['ea_smtp_type']:'emailadmin_smtp').'::CAPABILITIES');
 		$preserv['imapcapabilities'] = $content['imapcapabilities'] =
 			constant((!empty($content['ea_imap_type'])?$content['ea_imap_type']:'defaultimap').'::CAPABILITIES');
+		if (-$content['ea_profile_id']!=$defaultID && stripos($preserv['imapcapabilities'],'providedefaultquota')!==false)
+		{
+			$preserv['imapcapabilities'] = $content['imapcapabilities'] = str_ireplace(array('providedefaultquota|','|providedefaultquota','providedefaultquota'),'',$preserv['imapcapabilities']);
+		}
+		$content['defaultQuota'] = ((!empty($content['ea_imap_type']) && stripos($content['imapcapabilities'],'providedefaultquota')!==false)?$content['ea_imap_type']::getDefaultQuota():0);
+		if (empty($content['defaultQuota'])) unset($content['defaultQuota']);
+		//_debug_array(array(-$content['ea_profile_id']!=$defaultID,$defaultID,-$content['ea_profile_id'],$preserv,$readonlys));
 		if (!empty($msg)) $content['msg'] = $msg;
 		list($content['ea_smtp_auth_username'],$content['smtp_senders_email']) = explode(';',$content['ea_smtp_auth_username']);
 		$preserv['ea_profile_id'] = $content['ea_profile_id'];
