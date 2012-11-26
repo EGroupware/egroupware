@@ -549,7 +549,7 @@ class addressbook_sql extends so_sql_cf
 			}
 			if (!isset($data['list_carddav_name']))
 			{
-				$update['list_name'] = $data['list_carddav_name'] = $data['list_uid'].'.vcf';
+				$update['list_carddav_name'] = $data['list_carddav_name'] = $data['list_uid'].'.vcf';
 			}
 			$this->db->update($this->lists_table,$update,array('list_id'=>$list_id),__LINE__,__FILE__);
 
