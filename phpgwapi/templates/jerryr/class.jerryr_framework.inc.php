@@ -60,36 +60,10 @@ class jerryr_framework extends idots_framework
 		$this->tplsav2->menuitems = array();
 		$this->tplsav2->menuinfoitems = array();
 
-		if($GLOBALS['egw_info']['user']['apps']['home'] && isset($apps['home']))
-		{
-			$this->_add_topmenu_item($apps['home']);
-		}
-		/*if($GLOBALS['egw_info']['user']['apps']['manual'])
-		{
-			$this->_add_topmenu_item('manual');
-		}
-		*/
-		if($GLOBALS['egw_info']['user']['apps']['preferences'])
-		{
-			$this->_add_topmenu_item($apps['preferences']);
-		}
-		if($GLOBALS['egw_info']['user']['apps']['manual'] && isset($apps['manual']))
-		{
-			$this->_add_topmenu_item($apps['manual']);
-		}
-		//$this->_add_topmenu_item('about',lang('About %1',$GLOBALS['egw_info']['apps'][$GLOBALS['egw_info']['flags']['currentapp']]['title']));
-		$this->_add_topmenu_item($apps['logout']);
+		parent::topmenu($vars,$apps);
 
 		$this->tplsav2->assign('info_icons',$this->topmenu_icon_arr);
 
-		if($GLOBALS['egw_info']['user']['apps']['notifications'])
-		{
-			$this->_add_topmenu_info_item($this->_get_notification_bell());
-		}
-		$this->_add_topmenu_info_item($vars['user_info']);
-		$this->_add_topmenu_info_item($vars['current_users']);
-		$this->_add_topmenu_info_item($vars['quick_add']);
-
-		$this->tplsav2->display('topmenu.tpl.php');
+		return $this->tplsav2->fetch('topmenu.tpl.php');
 	}
 }
