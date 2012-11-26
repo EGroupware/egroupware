@@ -188,9 +188,17 @@ class resources_bo
 				$resource['class'] .= 'no_buy ';
 			}
 			$readonlys["view_acc[{$resource['res_id']}]"] = ($resource['acc_count'] == 0);
+			$resource['class'] .= ($resource['accessory_of']==-1 ? 'resource ' : 'accessory ');
 			if($resource['acc_count'])
 			{
 				$resource['class'] .= 'hasAccessories ';
+				$accessories = $this->get_acc_list($resource['res_id']);
+				foreach($accessories as $acc_id => $acc_name)
+				{
+					$resource['accessories'][] = array('acc_id' => $acc_id, 'name' => $acc_name);
+				}
+			} elseif ($resource['accessory_of'] > 0) {
+				$resource['accessory_of_label'] = $this->link_title($resource['accessory_of']);
 			}
 
 			$rows[$num]['picture_thumb'] = $this->get_picture($resource);
@@ -232,10 +240,15 @@ class resources_bo
 		{
 			return lang('You are not permitted to edit this resource!');
 		}
+		$old = array();
 		// we need an id to save pictures and make links...
 		if(!$resource['res_id'])
 		{
 			$resource['res_id'] = $this->so->save($resource);
+		}
+		else
+		{
+			$old = $this->read($resource['res_id']);
 		}
 
 		switch ($resource['picture_src'])
@@ -279,10 +292,16 @@ class resources_bo
 			$this->remove_picture($resource['res_id']);
 		}
 
+		// Update link title
+		egw_link::notify_update('resources',$resource['res_id'], $resource);
 		// save links
 		if(is_array($resource['link_to']['to_id']))
 		{
 			egw_link::link('resources',$resource['res_id'],$resource['link_to']['to_id']);
+		}
+		if($resource['accessory_of'] != $old['accessory_of'])
+		{
+			egw_link::unlink(0,'resources',$resource['res_id'],'','resources',$old['accessory_of']);
 		}
 		if($resource['accessory_of'] != -1)
 		{

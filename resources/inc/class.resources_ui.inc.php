@@ -186,6 +186,8 @@ class resources_ui
 		}
 		$preserv = $content;
 
+		$options = array();
+
 		$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$content['nm']);
 		$this->tmpl->read('resources.show');
 		return $this->tmpl->exec('resources.resources_ui.index',$content,$sel_options,$no_button,$preserv);
@@ -264,8 +266,20 @@ class resources_ui
 				'caption' => 'Delete',
 				'group' => ++$group,
 				'disableClass' => 'no_delete',
-				'nm_action' => 'open_popup'
+				'enableClass' => 'resource',
+				'nm_action' => 'open_popup',
+				'hideOnDisabled' => true
 			),
+			'delete-acc' => array(
+				'caption' => 'Delete',
+				'icon' => 'delete',
+				'group' => ++$group,
+				'disableClass' => 'no_delete',
+				'confirm' => 'Delete this accessory',
+                                'confirm_multiple' => 'Delete these accessories',
+				'enableClass' => 'accessory',
+				'hideOnDisabled' => true
+			)
 		);
 		return $actions;
 	}
@@ -376,10 +390,12 @@ class resources_ui
 	{
 		if (is_array($content))
 		{
-			if(isset($content['save']) || isset($content['delete']))
+			list($button) = @each($content['button']);
+			unset($content['button']);
+			switch($button)
 			{
-				if(isset($content['save']))
-				{
+				case 'save':
+				case 'apply':
 					unset($content['save']);
 // 					if($content['id'] != 0)
 // 					{
@@ -387,17 +403,15 @@ class resources_ui
 // 						unset($resource['link_to']['to_id']);
 // 					}
 					$content['msg'] = $this->bo->save($content);
-				}
-				if(isset($content['delete']))
-				{
+					break;
+				case 'delete':
 					unset($content['delete']);
 					$content['msg'] = $this->bo->delete($content['res_id']);
-				}
-
-				if($content['msg'])
-				{
-					return $this->edit($content);
-				}
+					break;
+			}
+				
+			if($button != 'apply' && !$content['msg'])
+			{
 				$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',
 					array('menuaction' => 'resources.resources_ui.index'))."';";
 				$js .= 'window.close();';
@@ -405,25 +419,24 @@ class resources_ui
 				$GLOBALS['egw']->common->egw_exit();
 			}
 		}
-		else
-		{
-			$res_id = $content;
-			if (isset($_GET['res_id'])) $res_id = $_GET['res_id'];
-			if (isset($_GET['accessory_of'])) $accessory_of = $_GET['accessory_of'];
-			$content = array('res_id' => $res_id);
 
-			if ($res_id > 0)
-			{
-				$content = $this->bo->read($res_id);
-				$content['gen_src_list'] = strpos($content['picture_src'],'.') !== false ? $content['picture_src'] : false;
-				$content['picture_src'] = strpos($content['picture_src'],'.') !== false ? 'gen_src' : $content['picture_src'];
-				$content['link_to'] = array(
-					'to_id' => $res_id,
-					'to_app' => 'resources'
-				);
-			}
-			if ($_GET['msg']) $content['msg'] = strip_tags($_GET['msg']);
+		$res_id = is_numeric($content) ? (int)$content : $content['res_id'];
+		if (isset($_GET['res_id'])) $res_id = $_GET['res_id'];
+		if (isset($_GET['accessory_of'])) $accessory_of = $_GET['accessory_of'];
+		$content = array('res_id' => $res_id);
+
+		if ($res_id > 0)
+		{
+			$content = $this->bo->read($res_id);
+			$content['gen_src_list'] = strpos($content['picture_src'],'.') !== false ? $content['picture_src'] : false;
+			$content['picture_src'] = strpos($content['picture_src'],'.') !== false ? 'gen_src' : $content['picture_src'];
+			$content['link_to'] = array(
+				'to_id' => $res_id,
+				'to_app' => 'resources'
+			);
 		}
+		if ($_GET['msg']) $content['msg'] = strip_tags($_GET['msg']);
+	
 		// some presetes
 		$content['resource_picture'] = $this->bo->get_picture($content['res_id'],$content['picture_src'],$size=true);
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
@@ -433,15 +446,13 @@ class resources_ui
 		$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
 		$sel_options['cat_id'] =  $this->bo->acl->get_cats(EGW_ACL_ADD);
 		$sel_options['cat_id'] = count($sel_options['cat_id']) == 1 ? $sel_options['cat_id'] :
-			$content['cat_id'] ? $sel_options['cat_id'] : array('' => lang('select one')) + $sel_options['cat_id'];
+			array('' => lang('select one')) + $sel_options['cat_id'];
 		if($accessory_of > 0 || $content['accessory_of'] > 0)
 		{
 			$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : $accessory_of;
-			$catofmaster = $this->bo->so->get_value('cat_id',$content['accessory_of']);
-			$sel_options['cat_id'] = array($catofmaster => $sel_options['cat_id'][$catofmaster]);
 		}
 		$search_options = array('accessory_of' => -1);
-		$sel_options['accessory_of'] = $this->bo->link_query('',$search_options);
+		$sel_options['accessory_of'] = array(-1 => lang('none')) + $this->bo->link_query('',$search_options);
 		if($res_id) unset($sel_options['accessory_of'][$res_id]);
 
 // 		$content['general|page|pictures|links'] = 'resources.edit_tabs.page';  //debug

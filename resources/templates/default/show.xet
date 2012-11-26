@@ -22,6 +22,7 @@
 				<column/>
 				<column/>
 				<column/>
+				<column/>
 				<column width="5%"/>
 			</columns>
 			<rows>
@@ -43,6 +44,7 @@
 						<nextmatch-sortheader label="Location" id="location"/>
 						<description value="Storage information"/>
 					</vbox>
+					<nextmatch-header label="Resource / Accessories"/>
 					<nextmatch-customfields id="customfields"/>
 					<hbox align="right">
 						<nextmatch-header label="Actions" id="legacy_actions"/>
@@ -72,6 +74,19 @@
 					<vbox>
 						<description id="${row}[location]" no_lang="1"/>
 						<description id="${row}[storage_info]" no_lang="1"/>
+					</vbox>
+					<vbox no_lang="1">
+						<description id="${row}[accessory_of_label]" no_lang="1" href="resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of]" extra_link_popup="850x600"/>
+						<grid width="100%" id="${row}[accessories]">
+							<columns>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description id="${row}[name]" no_lang="1" href="resources.resources_ui.edit&amp;res_id=$row_cont[acc_id]" extra_link_popup="850x600"/>
+								</row>
+							</rows>
+						</grid>
 					</vbox>
 					<customfields-list id="$row"/>
 					<grid id="${row}">
@@ -124,8 +139,6 @@
 				<row>
 					<hbox>
 						<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;"/>
-						<button label="Add accessory" id="add_sub" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit&amp;content=0&amp;accessory_of=$cont[view_accs_of]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"/>
-						<button label="Back" id="back"/>
 					</hbox>
 				</row>
 				<row>
