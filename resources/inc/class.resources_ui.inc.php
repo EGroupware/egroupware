@@ -306,7 +306,6 @@ class resources_ui
 		// Dialogs to get options
 		list($action, $settings) = explode('_', $action, 2);
 
-echo "$action(".print_r($checked,true).")<br />";
 		switch($action)
 		{
 			case 'view-calendar':
