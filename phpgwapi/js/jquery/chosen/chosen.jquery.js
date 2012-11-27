@@ -699,7 +699,7 @@ console.log("Distance to top: %d Distance to bottom %d", to_top, to_bottom, this
     Chosen.prototype.show_search_field_default = function() {
       if (this.is_multiple && this.choices < 1 && !this.active_field) {
         this.search_field.val(this.default_text);
-        return this.search_field.addClass("default");
+        return this.search_field.addClass("default").css('width','100%').blur();
       } else {
         this.search_field.val("");
         return this.search_field.removeClass("default");
