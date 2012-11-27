@@ -252,7 +252,7 @@ class ajaxfelamimail
 
 				$row .= "<td>$accountName</td>";
 
-				$selectFrom = html::select('identity', $accountAcl['RIGHTSSELECTED'], felamimail_bo::$aclShortCuts, false, "id=\"predefinedFor_$accountName\" style='width: 100px;' onChange=\"xajax_doXMLHTTP('felamimail.ajaxfelamimail.updateACL','$accountName',this.value)\"");
+				$selectFrom = html::select('identity', ($accountAcl['RIGHTSSELECTED']?(array_key_exists($accountAcl['RIGHTSSELECTED'],felamimail_bo::$aclShortCuts)?$accountAcl['RIGHTSSELECTED']:'custom'):''), felamimail_bo::$aclShortCuts, false, "id=\"predefinedFor_$accountName\" style='width: 100px;' onChange=\"xajax_doXMLHTTP('felamimail.ajaxfelamimail.updateACL','$accountName',this.value)\"");
 
 				$row .= "<td align='center'>$selectFrom</td>";
 
