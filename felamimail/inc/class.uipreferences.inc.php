@@ -72,6 +72,7 @@
 			if (isset($this->bofelamimail->icServer->domainName)) $ldomainName = $this->bofelamimail->icServer->domainName;
 			if (isset($this->bofelamimail->bopreferences->profileData->identities[$lprofileID]->emailAddress)) $lemailAddress = $this->bofelamimail->bopreferences->profileData->identities[$lprofileID]->emailAddress;
 			$accountList = array();
+			$groupList = array();
 			// we initialize the box for use with ($imapClassName == 'defaultimap' || $imapClassName == 'emailadmin_imap')
 			$accountSelection = '<input type="text" name="accountName" id="accountName" style="width:100%;">';
 			if (($default_profile_id = emailadmin_bo::getDefaultProfileID()))
@@ -101,8 +102,9 @@
 				if (!($imapClassName == 'defaultimap' || $imapClassName == 'emailadmin_imap'))
 				{
 					//$smtpClass='emailadmin_smtp_sql';
-					$accounts = $GLOBALS['egw']->accounts->search(array('type'=>($imapClassName=='managementserver_imap'?'both':'accounts')));
-					//_debug_array($accounts);
+					$accounts = $GLOBALS['egw']->accounts->search(array('type'=>'accounts'));
+					$groups = array();
+					if ($imapClassName=='managementserver_imap') $groups = $GLOBALS['egw']->accounts->search(array('type'=>'groups'));
 					foreach ($accounts as $k => $v)
 					{
 						$isgroup=$v['account_id']<0?constant("$imapClassName::ACL_GROUP_PREFIX"):'';
@@ -124,8 +126,31 @@
 							$accountList[$isgroup.trim($v['account_id'].'@'.$bofelamimail->icServer->domainName)] = $dfn;
 						}
 					}
-					//sort($accountList,SORT_STRING);
-					if (count($accountList)>=1) $accountList = array(''=>lang('Select one'))+$accountList;
+					natcasesort($accountList);
+					foreach ($groups as $k => $v)
+					{
+						$isgroup=$v['account_id']<0?constant("$imapClassName::ACL_GROUP_PREFIX"):'';
+						$dfn = common::display_fullname($v['account_lid']);
+						if ($bofelamimail->icServer->loginType=='standard') // means username
+						{
+							$groupList[$isgroup.$v['account_lid']] = $dfn;
+						}
+						elseif ($bofelamimail->icServer->loginType=='email')
+						{
+							if (!empty($v['account_email'])) $groupList[$isgroup.$v['account_email']] = $dfn;
+						}
+						elseif ($bofelamimail->icServer->loginType=='vmailmgr') // means username + domainname
+						{
+							$groupList[$isgroup.trim($v['account_lid'].'@'.$bofelamimail->icServer->domainName)] = $dfn;
+						}
+						elseif ($bofelamimail->icServer->loginType=='uidNumber') // userid + domain
+						{
+							$groupList[$isgroup.trim($v['account_id'].'@'.$bofelamimail->icServer->domainName)] = $dfn;
+						}
+					}
+					natcasesort($groupList);
+
+					if (count($accountList)>=1) $accountList = array(''=>lang('Select one'))+$accountList+$groupList;
 				}
 				if (!empty($accountList)) $accountSelection = html::select('accountName','',$accountList,true, "id=\"accountName\"");
 			}
