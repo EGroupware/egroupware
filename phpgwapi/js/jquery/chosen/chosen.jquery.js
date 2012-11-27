@@ -373,17 +373,21 @@ Copyright (c) 2011 by Harvest
       this.search_results.css('max-height', 'none');
 
       var windowHeight = $(window).height() + $('html').scrollTop(),
-          dropdownHeight = this.dropdown.height(),
-          dropdownTop    = Math.ceil(this.dropdown.offset().top),
+          dropdownHeight = egw.getHiddenDimensions ? egw.getHiddenDimensions(this.dropdown,true)['h'] : this.dropdown.height(),
+          dropdownTop    = egw.getHiddenDimensions ? egw.getHiddenDimensions(this.dropdown,true)['top'] : Math.ceil(this.dropdown.offset().top),
           totalHeight    = dropdownHeight + dropdownTop;
 
       if (totalHeight > windowHeight) {
         var difference = totalHeight - windowHeight,
-            height     = dropdownHeight - difference;
+            height     = dropdownHeight - difference - this.search_container.height();
+console.log("windowHeight:" + windowHeight + " Total height: " + totalHeight + ' height: ' + height, this.container);
 
         if (height > 100) {
           this.search_results.css('max-height', height);
         } else {
+          var to_top = egw.getHiddenDimensions ? egw.getHiddenDimensions(this.container,true)['top'] : this.container.offset().top;
+          var to_bottom = windowHeight - to_top;
+console.log("Distance to top: %d Distance to bottom %d", to_top, to_bottom, this.container.offset());
           this.dropdown.addClass('chzn-above');
           this.search_results.css('max-height', this.search_results.data('initialMaxHeight'));
         }
@@ -631,7 +635,31 @@ Copyright (c) 2011 by Harvest
         "top": dd_top + "px",
         "left": 0
       });
-
+      // Check to see if there's enough space below	 
+      // Thanks, corryworrell https://github.com/harvesthq/chosen/issues/155	 
+      this.search_results.css('max-height', 'none');	 
+      this.dropdown.removeClass('chzn-above');
+ 	 
+      var windowHeight = $(window).height() + $('html').scrollTop(),	 
+          dropdownHeight = this.dropdown.height(),	 
+          dropdownTop    = Math.ceil(this.dropdown.offset().top),	 
+          totalHeight    = dropdownHeight + dropdownTop;	 
+ 	 
+      if (totalHeight > windowHeight) {	 
+        var difference = totalHeight - windowHeight,	 
+            height     = dropdownHeight - difference - (this.is_multiple ? 0: this.search_container.height());
+  
+        if (height > 100) {
+	  if(!this.is_multiple) height -= this.search_container.height();
+	  height = Math.min(parseInt(this.search_results.data('initialMaxHeight')), height);
+        } else {	 
+          this.dropdown.addClass('chzn-above');	 
+	  height = Math.min(parseInt(this.search_results.data('initialMaxHeight')), this.container.offset().top+this.search_container.height());
+        }	 
+        this.search_results.css('max-height', height);
+      } else {
+          this.search_results.css('max-height', this.search_results.data('initialMaxHeight'));
+      }
       this.results_showing = true;
       this.search_field.focus();
       this.search_field.val(this.search_field.val());

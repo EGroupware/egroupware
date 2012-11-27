@@ -221,7 +221,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 		getHiddenDimensions: function(element, boolOuter) {
 			var $item = $j(element);
 			var props = { position: "absolute", visibility: "hidden", display: "block" };
-			var dim = { "w":0, "h":0 };
+			var dim = { "w":0, "h":0 , "left":0, "top":0};
 			var $hiddenParents = $item.parents().andSelf().not(":visible");
 
 			var oldProps = [];
@@ -229,13 +229,15 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 				var old = {};
 				for ( var name in props ) {
 					old[ name ] = this.style[ name ];
-					this.style[ name ] = props[ name ];
 				}
+				$j(this).show();
 				oldProps.push(old);
 			});
 
 			dim.w = (boolOuter === true) ? $item.outerWidth() : $item.width();
 			dim.h = (boolOuter === true) ? $item.outerHeight() : $item.height();
+			dim.top = $item.offset().top;
+			dim.left = $item.offset().left;
 
 			$hiddenParents.each(function(i) {
 				var old = oldProps[i];
