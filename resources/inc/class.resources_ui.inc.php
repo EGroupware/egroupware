@@ -350,6 +350,7 @@ class resources_ui
 				$action_msg = lang('booked');
 				break;
 			case 'delete':
+			case 'delete-acc':
 				$action_msg = lang('deleted');
 				foreach((array)$checked as $n => $id)
 				{
@@ -397,26 +398,37 @@ class resources_ui
 				case 'save':
 				case 'apply':
 					unset($content['save']);
+					unset($content['apply']);
 // 					if($content['id'] != 0)
 // 					{
 // 						// links are already saved by eTemplate
 // 						unset($resource['link_to']['to_id']);
 // 					}
-					$content['msg'] = $this->bo->save($content);
+					$result = $this->bo->save($content);
+					if(is_numeric($result))
+					{
+						$content['res_id'] = $result;
+					}
+					else
+					{
+						$content['msg'] = $result;
+					}
 					break;
 				case 'delete':
 					unset($content['delete']);
 					$content['msg'] = $this->bo->delete($content['res_id']);
 					break;
 			}
-				
+			$js = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','addressbook',{$content['res_id']});";
 			if($button != 'apply' && !$content['msg'])
 			{
-				$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',
-					array('menuaction' => 'resources.resources_ui.index'))."';";
 				$js .= 'window.close();';
 				echo "<html><body><script>$js</script></body></html>\n";
 				$GLOBALS['egw']->common->egw_exit();
+			}
+			else
+			{
+				$GLOBALS['egw_info']['flags']['java_script'] .= "<script>$js</script>";
 			}
 		}
 

@@ -320,7 +320,8 @@ class resources_bo
 			}
 		}
 
-		return $this->so->save($resource) ? false : lang('Something went wrong by saving resource');
+		$res_id = $this->so->save($resource);
+		return $res_id ? $res_id : lang('Something went wrong by saving resource');
 	}
 
 	/**
