@@ -145,11 +145,11 @@
 					<box class="action_popup prompt" id="delete_popup">
 						<vbox class="prompt">
 							<description value="Delete" class="promptheader"/>
-							<description value="Delete accessories?"/>
+							<description value="Delete accessories of selected resources too?"/>
 							<hbox>
-								<button label="Yes - Delete" id="delete" onclick="nm_submit_popup(this); return false;"/>
+								<button label="Yes - Delete accessories too" id="delete" onclick="nm_submit_popup(this); return false;"/>
 								<button label="No - Make them resources" id="delete_promote" onclick="nm_popup_action.id = 'delete_promote'; nm_submit_popup(this); return false;"/>
-								<buttononly label="No - Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
+								<buttononly label="Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
 							</hbox>
 						</vbox>
 					</box>

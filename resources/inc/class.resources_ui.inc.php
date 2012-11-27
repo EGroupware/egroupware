@@ -266,20 +266,9 @@ class resources_ui
 				'caption' => 'Delete',
 				'group' => ++$group,
 				'disableClass' => 'no_delete',
-				'enableClass' => 'resource',
 				'nm_action' => 'open_popup',
 				'hideOnDisabled' => true
 			),
-			'delete-acc' => array(
-				'caption' => 'Delete',
-				'icon' => 'delete',
-				'group' => ++$group,
-				'disableClass' => 'no_delete',
-				'confirm' => 'Delete this accessory',
-                                'confirm_multiple' => 'Delete these accessories',
-				'enableClass' => 'accessory',
-				'hideOnDisabled' => true
-			)
 		);
 		return $actions;
 	}
@@ -317,6 +306,7 @@ class resources_ui
 		// Dialogs to get options
 		list($action, $settings) = explode('_', $action, 2);
 
+echo "$action(".print_r($checked,true).")<br />";
 		switch($action)
 		{
 			case 'view-calendar':
@@ -350,19 +340,34 @@ class resources_ui
 				$action_msg = lang('booked');
 				break;
 			case 'delete':
-			case 'delete-acc':
 				$action_msg = lang('deleted');
-				foreach((array)$checked as $n => $id)
+				$promoted_accessories = 0;
+				foreach($checked as $n => &$id)
 				{
 					if($settings == 'promote')
 					{
-						// Make accessories into resources
+						// Handle a selected accessory
+						$resource = $this->bo->read($id);
+						if($resource['accessory_of'] > 0)
+						{
+							$resource['accessory_of'] = -1;
+							$this->bo->save($acc);
+							$promoted_accessories++;
+							continue;
+						}
+						
+						// Make associated accessories into resources
 						$accessories = $this->bo->get_acc_list($id);
 						foreach($accessories as $acc_id => $name)
 						{
 							$acc = $this->bo->read($acc_id);
 							$acc['accessory_of'] = -1;
 							$this->bo->save($acc);
+							$promoted_accessories++;
+
+							// Don't need to process these ones now
+							$checked_key = array_search($acc_id, $checked);
+							if($checked_key !== false) unset($checked[$checked_key]);
 						}
 					}
 					$error = $this->bo->delete($id);
@@ -376,6 +381,7 @@ class resources_ui
 						$failed++;
 					}
 				}
+				if($promoted_accessories) $action_msg .= ", " . lang('%1 accessories now resources',$promoted_accessories);
 				break;
 		}
 		return $failed == 0;
