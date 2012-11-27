@@ -367,7 +367,7 @@ class emailadmin_ui extends emailadmin_bo
 					if ($etpl->validation_errors()) break;  // the user need to fix the error, before we can save the entry
 					//_debug_array($this->data);
 					if ((!empty($this->data['ea_imap_type'])&&
-								$this->data['defaultQuota'] &&
+								($this->data['defaultQuota'] || $this->data['defaultQuota']===0) &&
 								stripos($this->data['imapcapabilities'],'providedefaultquota')!==false))
 					{
 						$classname = $this->data['ea_imap_type'];
