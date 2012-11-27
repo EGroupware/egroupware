@@ -373,6 +373,10 @@ class addressbook_hooks
 			'additional' => array(
 				'addressbook-email' => array(
 					'query' => 'addressbook.addressbook_bo.link_query_email',
+					'view' => array(
+						'menuaction' => 'addressbook.addressbook_ui.view'
+					),
+					'view_id' => 'contact_id',
 				),
 			),
 			'merge' => true,
