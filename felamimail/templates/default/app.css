@@ -13,7 +13,9 @@ th.inactivetab
 	background-color:#E8F0F0;
 	border-bottom : 1px solid Silver;
 }
-			
+
+.defaultProfile { color:#000000; font-weight:bold !important; }
+	
 .td_left 
 {
    border-left : 1px solid Gray; 
