@@ -783,7 +783,8 @@ function fm_compose_sendEMail() {
 
 	if(addressSet == true && subjectSet == true && doubleCheck == false) {
 		// if we submit the form, we do not want to execute the onunload stuff
-		do_onunload=false; 
+		justSavedAsDraftManually = false;
+		do_onunload=false;
 		document.doit.submit();
 	} else {
 		justClickedSend = false; // since we did not send at all,....
