@@ -786,6 +786,7 @@ function fm_compose_sendEMail() {
 		justSavedAsDraftManually = false;
 		do_onunload=false;
 		document.doit.submit();
+		return true;
 	} else {
 		justClickedSend = false; // since we did not send at all,....
 	}
