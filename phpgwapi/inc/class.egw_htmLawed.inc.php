@@ -248,7 +248,12 @@ function hl_email_tag_transform($element, $attribute_array=0)
 				{
 					$attribute_array['alt']= $attribute_array['alt'].' [blocked external image:'.$attribute_array['src'].']';
 					if (!isset($attribute_array['title'])) $attribute_array['title']=$attribute_array['alt'];
-					$attribute_array['src']=common::image('phpgwapi','dialog_error');
+					$attribute_array['src']=common::image('felamimail','no-image-shown');
+					$attribute_array['border'] = 1;
+					if ($attribute_array['style'])
+					{
+						if (stripos($attribute_array['style'],'border')!==false) $attribute_array['style'] = preg_replace('~border(:|-left:|-right:|-bottom:|-top:)+ (0px)+ (none)+;~si','',$attribute_array['style']);
+					}
 				}
 			}
 		}
