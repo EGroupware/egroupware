@@ -186,7 +186,7 @@ class egw_session
 			}
 			if (!isset($GLOBALS['egw_info']['server']['block_time']))
 			{
-				$GLOBALS['egw_info']['server']['block_time'] = 5;	// default 5min
+				$GLOBALS['egw_info']['server']['block_time'] = 1;	// default 1min, its enough to slow down brute force attacks
 				$save_rep = true;
 			}
 			if (!isset($GLOBALS['egw_info']['server']['num_unsuccessful_id']))
@@ -196,7 +196,7 @@ class egw_session
 			}
 			if (!isset($GLOBALS['egw_info']['server']['num_unsuccessful_ip']))
 			{
-				$GLOBALS['egw_info']['server']['num_unsuccessful_ip']  = $GLOBALS['egw_info']['server']['num_unsuccessful_id'];	// default same as for id
+				$GLOBALS['egw_info']['server']['num_unsuccessful_ip']  = $GLOBALS['egw_info']['server']['num_unsuccessful_id'] * 5;	// default is 5 times as high as the id default; since accessing via proxy is quite common
 				$save_rep = true;
 			}
 			if (!isset($GLOBALS['egw_info']['server']['install_id']))
@@ -246,6 +246,10 @@ class egw_session
 	 */
 	function __destruct()
 	{
+		//if (empty($GLOBALS['egw_info']['user']['passwd']) )//|| empty($this->appsession('password','phpgwapi'))
+		//{
+		//	error_log('__destruct'.'~252'.'->'." REQUEST_URI".$_SERVER['REQUEST_URI']);
+		//}
 		self::encrypt($this->kp3);
 	}
 
