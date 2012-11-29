@@ -230,8 +230,10 @@
 		 */
 		function compose($_focusElement='to',$suppressSigOnTop=false, $isReply=false)
 		{
+			//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
 			// read the data from session
 			// all values are empty for a new compose window
+			$insertSigOnTop = false;
 			$sessionData = $this->bocompose->getSessionData();
 			$alwaysAttachVCardAtCompose = false; // we use this to eliminate double attachments, if users VCard is already present/attached
 			if ( isset($GLOBALS['egw_info']['apps']['stylite']) && (isset($this->bocompose->preferencesArray['attachVCardAtCompose']) &&
@@ -275,6 +277,15 @@
 				{
 					$names = (array)$_REQUEST['preset']['name'];
 					$types = (array)$_REQUEST['preset']['type'];
+					//if (!empty($types) && in_array('text/calendar; method=request',$types))
+					if (!empty($types) && in_array('text/calendar',$types))
+					{
+						$insertSigOnTop = 'below';
+					}
+					else
+					{
+						//$insertSigOnTop = 'top'; // more complicated
+					}
 					$files = (array)$_REQUEST['preset']['file'];
 					foreach($files as $k => $path)
 					{
@@ -629,14 +640,14 @@
 			{
 				$disableRuler = true;
 			}
-			$insertSigOnTop = false;
+			
 			//error_log(__METHOD__.__LINE__.array2string($this->bocompose->preferencesArray));
 			if (isset($this->bocompose->preferencesArray['insertSignatureAtTopOfMessage']) &&
 				$this->bocompose->preferencesArray['insertSignatureAtTopOfMessage'] &&
 				!(isset($_POST['mySigID']) && !empty($_POST['mySigID']) ) && !$suppressSigOnTop
 			)
 			{
-				$insertSigOnTop = true;
+				$insertSigOnTop = ($insertSigOnTop?$insertSigOnTop:true);
 				if($sessionData['mimeType'] == 'html') {
 					$before = ($disableRuler ?'&nbsp;<br>':'&nbsp;<br><hr style="border:1px dotted silver; width:90%;">');
 					$inbetween = '&nbsp;<br>';
@@ -646,7 +657,15 @@
 				}
 				$sigText = felamimail_bo::merge($signature->fm_signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 				if ($sessionData['mimeType'] == 'html') $sigText = "<!-- HTMLSIGBEGIN -->".$sigText."<!-- HTMLSIGEND -->";
-				$sessionData['body'] = $before.($sessionData['mimeType'] == 'html'?$sigText:$this->bocompose->convertHTMLToText($sigText)).$inbetween.$sessionData['body'];
+
+				if ($insertSigOnTop === 'below')
+				{
+					$sessionData['body'] = $sessionData['body'].$before.($sessionData['mimeType'] == 'html'?$sigText:$this->bocompose->convertHTMLToText($sigText));
+				}
+				else
+				{
+					$sessionData['body'] = $before.($sessionData['mimeType'] == 'html'?$sigText:$this->bocompose->convertHTMLToText($sigText)).$inbetween.$sessionData['body'];
+				}
 			}
 			// prepare body
 			// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
