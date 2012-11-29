@@ -587,7 +587,7 @@ class felamimail_hooks
 				'name'   => 'trustServersUnseenInfo',
 				'values' => $trustServersUnseenOptions,
 				'xmlrpc' => True,
-				'default'=> 1,
+				'default'=> 2,
 				'admin'  => False,
 			),
 			'showAllFoldersInFolderPane' => array(
