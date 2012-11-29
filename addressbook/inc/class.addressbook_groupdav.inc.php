@@ -242,6 +242,8 @@ class addressbook_groupdav extends groupdav_handler
 				$this->sync_collection_token = $contact['modified'];
 			}
 		}
+/*
+distribution list stuff disabled for epl-11.1
 		// add groups after contacts, but only if enabled and NOT for '/addressbook/' (!isset($filter['owner'])
 		if (in_array('D',$this->home_set_pref) && (!$start || count($contacts) < $start[1]) && isset($filter['owner']))
 		{
@@ -291,6 +293,7 @@ class addressbook_groupdav extends groupdav_handler
 				}
 			}
 		}
+*/
 		if ($this->debug) error_log(__METHOD__."($path,".array2string($filter).','.array2string($start).") took ".(microtime(true) - $starttime).' to return '.count($files).' items');
 		return $files;
 	}
@@ -729,13 +732,16 @@ class addressbook_groupdav extends groupdav_handler
 			$user = array_merge((array)$user,array_keys($this->get_shared(true)));	// true: ignore all-in-one pref
 		}
 		$ctag = $this->bo->get_ctag($user);
+/*
+disabled for epl-11.1
 		// include lists-ctag, if enabled and NOT in /addressbook/ (we dont sync distribution-lists/groups there)
 		if (in_array('D',$this->home_set_pref) && $path != '/addressbook/')
 		{
 			$lists_ctag = $this->bo->lists_ctag($user);
 		}
+*/
 		//error_log(__METHOD__."('$path', ".array2string($user_in).") --> user=".array2string($user)." --> ctag=$ctag=".date('Y-m-d H:i:s',$ctag).", lists_ctag=".($lists_ctag ? $lists_ctag.'='.date('Y-m-d H:i:s',$lists_ctag) : '').' returning '.max($ctag,$lists_ctag));
-		return $ctags[$path] = max($ctag,$lists_ctag);
+		return $ctags[$path] = $ctag; //max($ctag,$lists_ctag); // distribution list stuff disabled for epl-11.1
 	}
 
 	/**
@@ -1014,7 +1020,8 @@ class addressbook_groupdav extends groupdav_handler
 			'G'	=> lang('Primary Group'),
 			'U' => lang('Accounts'),
 			'O' => lang('Sync all selected into one'),
-			'D' => lang('Distribution lists as groups')
+// distribution list stuff disabled for epl-11.1
+//			'D' => lang('Distribution lists as groups')
 		) + $addressbooks;
 
 		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
