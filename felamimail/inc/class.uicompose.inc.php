@@ -278,17 +278,13 @@
 					$names = (array)$_REQUEST['preset']['name'];
 					$types = (array)$_REQUEST['preset']['type'];
 					//if (!empty($types) && in_array('text/calendar; method=request',$types))
-					if (!empty($types) && in_array('text/calendar',$types))
-					{
-						$insertSigOnTop = 'below';
-					}
-					else
-					{
-						//$insertSigOnTop = 'top'; // more complicated
-					}
 					$files = (array)$_REQUEST['preset']['file'];
 					foreach($files as $k => $path)
 					{
+						if (!empty($types[$k]) && stripos($types[$k],'text/calendar')!==false)
+						{
+							$insertSigOnTop = 'below';
+						}
 						if (parse_url($path,PHP_URL_SCHEME == 'vfs'))
 						{
 							$type = egw_vfs::mime_content_type($path);
