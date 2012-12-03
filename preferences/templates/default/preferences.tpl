@@ -1,6 +1,9 @@
 <center style="color: red; font-style: italic">{messages}</center>
 
 <style>
+select {
+	min-width: 120px;
+}
 select[multiple] {
 	min-width: 50%;
 }
