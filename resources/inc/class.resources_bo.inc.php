@@ -195,7 +195,7 @@ class resources_bo
 				$accessories = $this->get_acc_list($resource['res_id']);
 				foreach($accessories as $acc_id => $acc_name)
 				{
-					$resource['accessories'][] = array('acc_id' => $acc_id, 'name' => $acc_name);
+					$resource['accessories'][] = array('acc_id' => $acc_id, 'name' => $this->link_title($acc_id));
 				}
 			} elseif ($resource['accessory_of'] > 0) {
 				$resource['accessory_of_label'] = $this->link_title($resource['accessory_of']);

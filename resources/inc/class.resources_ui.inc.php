@@ -43,7 +43,6 @@ class resources_ui
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param array $content content from eTemplate callback
 	 *
-	 * FIXME don't translate cats in nextmach
 	 */
 	function index($content='')
 	{
@@ -350,7 +349,7 @@ class resources_ui
 						if($resource['accessory_of'] > 0)
 						{
 							$resource['accessory_of'] = -1;
-							$this->bo->save($acc);
+							$this->bo->save($resource);
 							$promoted_accessories++;
 							continue;
 						}
@@ -451,6 +450,16 @@ class resources_ui
 				'to_id' => $res_id,
 				'to_app' => 'resources'
 			);
+		} elseif ($accessory_of) {
+			// Pre-set according to parent
+			$owner = $this->bo->read($accessory_of);
+			$content['cat_id'] = $owner['cat_id'];
+			$content['bookable'] = true;
+		} else {
+			// New resource
+			$nm_session_data = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
+			$content['cat_id'] = $nm_session_data['filter'];
+			$content['bookable'] = true;
 		}
 		if ($_GET['msg']) $content['msg'] = strip_tags($_GET['msg']);
 	
@@ -469,7 +478,7 @@ class resources_ui
 			$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : $accessory_of;
 		}
 		$search_options = array('accessory_of' => -1);
-		$sel_options['accessory_of'] = array(-1 => lang('none')) + $this->bo->link_query('',$search_options);
+		$sel_options['accessory_of'] = array(-1 => lang('none')) + (array)$this->bo->link_query('',$search_options);
 		if($res_id) unset($sel_options['accessory_of'][$res_id]);
 
 // 		$content['general|page|pictures|links'] = 'resources.edit_tabs.page';  //debug
@@ -484,8 +493,9 @@ class resources_ui
 		{
 			$read_only['delete'] = true;
 		}
-		// Disable accessories tab for accessories
-		$readonly['tabs']['accessories'] = ($content['accessory_of'] != -1);
+
+		// Disable custom tab if there are no custom fields defined
+		$read_only['tabs']['custom'] = !(config::get_customfields('resources',true));
 
 		$preserv = $content;
 		$this->tmpl->read('resources.edit');

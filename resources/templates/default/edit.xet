@@ -49,7 +49,7 @@
 				<row>
 					<description value="Accessory of"/>
 					<menulist>
-						<menupopup id="accessory_of" no_lang="1" options="None"/>
+						<menupopup id="accessory_of" no_lang="1"/>
 					</menulist>
 					<description/>
 					<description/>
@@ -180,7 +180,7 @@
 			</columns>
 			<rows>
 				<row class="row_off">
-					<tabbox id="general|page|pictures|links|custom" span="all">
+					<tabbox id="tabs" span="all">
 						<tabs>
 							<tab id="general" label="General" statustext="General informations about resource"/>
 							<tab id="page" label="Description" statustext="Informations about the location of resource"/>
@@ -204,16 +204,20 @@
 		</grid>
 	</template>
 	<template id="resources.edit_buttons" template="" lang="" group="0" version="">
-		<grid width="100%">
+		<grid width="100%" id="button">
 			<columns>
+				<column/>
 				<column/>
 				<column/>
 				<column width="100%"/>
 			</columns>
 			<rows>
 				<row>
-					<button statustext="Saves entry and exits" label="Save" id="save"/>
-					<button label="Cancel" onclick="window.close();"/>
+					<hbox span="3">
+						<button statustext="Saves entry and exits" label="Save" id="save"/>
+						<button label="Apply" id="apply"/>
+						<button label="Cancel" onclick="window.close();"/>
+					</hbox>
 					<button align="right" label="Delete" id="delete" onclick="return confirm('Do you really want do delte this resource?');"/>
 				</row>
 			</rows>
