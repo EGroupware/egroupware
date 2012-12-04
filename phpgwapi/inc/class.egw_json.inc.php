@@ -17,7 +17,7 @@ class egw_json_request
 {
 
 	private static $_hadJSONRequest = false;
-	
+
 	public static function isJSONRequest()
 	{
 		return self::$_hadJSONRequest;
@@ -34,7 +34,7 @@ class egw_json_request
 	{
 		// Remember that we currently are in a JSON request - e.g. used in the redirect code
 		self::$_hadJSONRequest = true;
-		
+
 		if (empty($input_data))
 		{
 			$this->handleRequest($menuaction, array());
@@ -133,7 +133,7 @@ class egw_json_request
 			$ajaxClass = CreateObject($appName.'.'.$className);
 		}
 
-		// for Ajax: no need to load the "standard" javascript files, 
+		// for Ajax: no need to load the "standard" javascript files,
 		// they are already loaded, in fact jquery has a problem if loaded twice
 		egw_framework::js_files(array());
 
@@ -189,7 +189,7 @@ class egw_json_response
 		}
 		return self::$response;
 	}
-	
+
 	public static function isJSONResponse()
 	{
 		return isset(self::$response);
@@ -200,6 +200,11 @@ class egw_json_response
 	 */
 	private function sendHeader()
 	{
+		if (headers_sent($file, $line))
+		{
+			error_log(__METHOD__."() header already sent by $file line $line: ".function_backtrace());
+		}
+		else
 		//Send the character encoding header
 		header('content-type: application/json; charset='.translation::charset());
 	}
@@ -213,9 +218,25 @@ class egw_json_response
 
 		//Call each attached before send data proc
 		foreach ($inst->beforeSendDataProcs as $proc)
+		{
 			call_user_func_array($proc['proc'], $proc['params']);
+		}
 
-		$inst->sendHeader();
+		//$inst->sendHeader();
+
+		// check if application made some direct output
+		if (($output = ob_get_clean()))
+		{
+			if (!$inst->haveJSONResponse())
+			{
+				error_log(__METHOD__."() adding output with inst->addGeneric('output', '$output')");
+				$inst->addGeneric('html', $output);
+			}
+			else
+			{
+				$inst->alert('Application echoed something', $output);
+			}
+		}
 
 		echo $inst->getJSON();
 	}
@@ -449,7 +470,7 @@ class egw_json_response
 			'params' => $params
 		);
 	}
-	
+
 	/**
 	 * Destructor
 	 */
