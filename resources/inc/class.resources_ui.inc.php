@@ -450,7 +450,7 @@ class resources_ui
 				'to_id' => $res_id,
 				'to_app' => 'resources'
 			);
-		} elseif ($accessory_of) {
+		} elseif ($accessory_of > 0) {
 			// Pre-set according to parent
 			$owner = $this->bo->read($accessory_of);
 			$content['cat_id'] = $owner['cat_id'];
