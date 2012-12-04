@@ -96,7 +96,7 @@ class felamimail_hooks
 						'mime_popup' => '850xegw_getWindowOuterHeight()',
 						'mime_url'   => 'formData[file]',
 					),
-*/				),				
+*/				),
 			),
         );
     }
@@ -1005,7 +1005,7 @@ class felamimail_hooks
 		{
 			$file = Array(
 				'Site Configuration' => egw::link('/index.php','menuaction=felamimail.uifelamimail.redirectToConfig'), //'menuaction=admin.uiconfig.index&appname=felamimail'),
-				'eMmailAdmin: Profilemanagement' => egw::link('/index.php','menuaction=felamimail.uifelamimail.redirectToEmailadmin'),
+				'eMailAdmin: Profilemanagement' => egw::link('/index.php','menuaction=felamimail.uifelamimail.redirectToEmailadmin'),
 			);
 			display_sidebox($appname,lang('Admin'),$file);
 		}
