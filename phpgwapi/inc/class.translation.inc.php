@@ -983,7 +983,8 @@ class translation
 		if ($_body) {
 			if ($singleton)
 			{
-				$_body = preg_replace('~<'.$tag.'[^>].*? '.$endtag.'~simU','',$_body);
+				//$_body = preg_replace('~<'.$tag.'[^>].*? '.$endtag.'~simU','',$_body);
+				$_body = preg_replace('~<?'.$tag.'[^>].* '.$endtag.'~simU','',$_body); // we are in Ungreedy mode, so we expect * to be ungreedy without specifying ?
 			}
 			else
 			{
