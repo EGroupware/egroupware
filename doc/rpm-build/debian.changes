@@ -1,3 +1,16 @@
+egroupware-epl (11.1.20121204-1) hardy; urgency=low
+
+  * Setup/API: translations are no longer installed in database, but loaded directly from lang-files into tree-level cache
+  * Setup: when migrating accounts from SQL to LDAP or back, also migrate addressbook data
+  * eMail:  improved control of ACL edit (by checking capabilities first); offer selectbox with user (and group) selection depending on the loginmethod of the defaultprofile, group selection is bound to imapClass managmentserver_cyrusimap (as of now)
+  * eMail: improve import of mails; improve parsing of mailstructures of activesync send rfc-messages (reply on complex html-messages)
+  * eMail: use different image to show that a image was not loaded (due to allowExternalIMGs=no)
+  * addressbook/carddav: disable not supported distribution list capability (due to missing table schema)
+  * eMail: set preset signature below the preconfigured mailbody (if sig was configured on top), when sending meeting requests
+  * eMail: add classical admin section to eMailModule; config to control the users ability to manage acl (in fact deny it), even if the server supports it
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 04 Dec 2012 17:18:28 +0100
+
 egroupware-epl (11.1.20121114-1) hardy; urgency=low
 
   * Filemanager/WebDAV: support for newer ownCloud clients: getetag attribute (eg. version 1.1.1)
