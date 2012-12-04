@@ -165,7 +165,9 @@ class resources_bo
 				$readonlys["delete[$resource[res_id]]"] = true;
 				$resource['class'] .= 'no_delete ';
 			}
-			if ((!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_ADD)) || $resource['accessory_of'] != -1)
+			if ((!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_ADD)) ||
+				// Allow new accessory action when viewing accessories of a certain resource
+				$query['filter2'] <= 0 && $resource['accessory_of'] != -1)
 			{
 				$readonlys["new_acc[$resource[res_id]]"] = true;
 				$resource['class'] .= 'no_new_accessory ';

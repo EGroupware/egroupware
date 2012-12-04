@@ -436,8 +436,10 @@ class resources_ui
 			}
 		}
 
+		$nm_session_data = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
 		$res_id = is_numeric($content) ? (int)$content : $content['res_id'];
 		if (isset($_GET['res_id'])) $res_id = $_GET['res_id'];
+		if (isset($nm_session_data['filter2']) && $nm_session_data['filter2'] > 0) $accessory_of = $nm_session_data['filter2'];
 		if (isset($_GET['accessory_of'])) $accessory_of = $_GET['accessory_of'];
 		$content = array('res_id' => $res_id);
 
@@ -453,11 +455,16 @@ class resources_ui
 		} elseif ($accessory_of > 0) {
 			// Pre-set according to parent
 			$owner = $this->bo->read($accessory_of);
+			if($owner['accessory_of'] > 0)
+			{
+				// Accessory of accessory not allowed, grab parent resource
+				$accessory_of = $owner['accessory_of'];
+				$owner = $this->bo->read($accessory_of);
+			}
 			$content['cat_id'] = $owner['cat_id'];
 			$content['bookable'] = true;
 		} else {
 			// New resource
-			$nm_session_data = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
 			$content['cat_id'] = $nm_session_data['filter'];
 			$content['bookable'] = true;
 		}
