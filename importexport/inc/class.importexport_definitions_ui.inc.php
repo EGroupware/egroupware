@@ -161,6 +161,7 @@ class importexport_definitions_ui
 				'default_cols'  => '!actions',  // switch legacy actions column and row off by default
 				'row_id'	=> 'definition_id',
 			);
+			if($_GET['application']) $content['nm']['col_filter']['application'] = $_GET['application'];
 		}
 		if(egw_session::appsession('index', 'importexport')) {
 			$content['nm'] = array_merge($content['nm'], egw_session::appsession('index', 'importexport'));
