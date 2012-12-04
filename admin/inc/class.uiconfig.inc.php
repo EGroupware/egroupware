@@ -16,8 +16,17 @@ class uiconfig
 {
 	var $public_functions = array('index' => True);
 
-	function index()
+	function index($params=null)
 	{
+		if (empty($_GET['appname']) && isset($params['appname']))
+		{
+			$_appname = $params['appname'];
+		}
+		else
+		{
+			//_debug_array($params);
+			$_appname = $_GET['appname'];
+		}
 		if ($GLOBALS['egw']->acl->check('site_config_access',1,'admin'))
 		{
 			egw::redirect_link('/index.php');
@@ -28,9 +37,9 @@ class uiconfig
 		if (!$show_app) $show_app = 'admin';
 
 		// load the translations of the app we show too, so they dont need to be in admin!
-		if ($_GET['appname'] != 'admin')
+		if ($_appname != 'admin')
 		{
-			translation::add_app($_GET['appname']);
+			translation::add_app($_appname);
 		}
 
 		if(get_magic_quotes_gpc() && is_array($_POST['newsettings']))
@@ -38,7 +47,7 @@ class uiconfig
 			$_POST['newsettings'] = array_stripslashes($_POST['newsettings']);
 		}
 
-		switch($_GET['appname'])
+		switch($_appname)
 		{
 			case 'admin':
 			case 'addressbook':
@@ -49,7 +58,7 @@ class uiconfig
 				Other special apps can go here for now, e.g.:
 				case 'bogusappname':
 				*/
-				$appname = $_GET['appname'];
+				$appname = $_appname;
 				$config_appname = 'phpgwapi';
 				break;
 			case 'phpgwapi':
@@ -58,10 +67,11 @@ class uiconfig
 				egw::redirect_link('/admin/index.php');
 				break;
 			default:
-				$appname = $_GET['appname'];
+				$appname = $_appname;
 				$config_appname = $appname;
 				break;
 		}
+		if (ob_get_contents()) ob_end_flush(); // if there is output in buffer, flush it now.
 		$t = new Template(common::get_tpl_dir($appname));
 		$t->set_unknowns('keep');
 		$t->set_file(array('config' => 'config.tpl'));
