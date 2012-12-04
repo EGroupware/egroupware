@@ -10,6 +10,7 @@
 3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	felamimail	en	3PaneView: If you want to see a preview of a mail by single click onto the subject, set the height for the message list and the preview area e.g. 300. You may specify the minimum height of the message list too, by adding it after the specified IFrame Preview height, separated by comma (e.g.: 300,190)
 aborted	felamimail	en	Aborted
 activate	felamimail	en	Activate
+activate acl management	felamimail	en	Activate ACL Management
 activate script	felamimail	en	Activate script
 activating by date requires a start- and end-date!	felamimail	en	Activating by date requires a start AND end date!
 add acl	felamimail	en	Add ACL
@@ -176,6 +177,7 @@ email notification settings	felamimail	en	email notification settings
 email notification update failed	felamimail	en	Email notification update failed
 email signature	felamimail	en	Email signature
 emailaddress	felamimail	en	Email address
+emailadmin: profilemanagement	felamimail	en	eMailAdmin: Profilemanagement
 empty trash	felamimail	en	Empty trash
 enable	felamimail	en	Enable
 encrypted connection	felamimail	en	Encrypted connection
@@ -414,6 +416,7 @@ print it	felamimail	en	Print
 print this page	felamimail	en	Print this page
 printview	felamimail	en	Print view
 processing of file %1 failed. failed to meet basic restrictions.	felamimail	en	Processing of file %1 failed. Failed to meet basic restrictions.
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	felamimail	en	provide a default vacation text, (used on new vacation messages when there was no message set up previously)
 quicksearch	felamimail	en	Quick search
 read	felamimail	en	Read
 reading	felamimail	en	Reading
@@ -436,6 +439,7 @@ replyto	felamimail	en	Reply To
 required pear class mail/mimedecode.php not found.	felamimail	en	Required PEAR class Mail / mimeDecode.php not found.
 respond	felamimail	en	Respond
 respond to mail sent to	felamimail	en	Respond to mail sent to
+restrict acl management	felamimail	en	Restrict ACL management
 return	felamimail	en	Return
 return to options page	felamimail	en	Return to options page
 right	felamimail	en	Right

@@ -10,6 +10,7 @@
 3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	felamimail	de	Vorschauansicht: Wenn Sie eine Vorschauansicht von E-Mails wünschen, müssen Sie hier die Höhe des Vorschaubereichs und der Nachrichtenliste festlegen. (300 hat sich als zufriedenstellender Wert erwiesen). Sie können ebenfalls die Mindesthöhe der E-Mail Liste festlegen, indem Sie die gewünschte Mindesthöhe, durch Komma getrennt, an den Wert für die Höhe des Vorschaubereiches anhängen (Bsp.: 300,190). Die Vorschau wird durch einen einfachen Klick auf den Betreff der anzuzeigenden Nachricht aktiviert.
 aborted	felamimail	de	abgebrochen
 activate	felamimail	de	aktivieren
+activate acl management	de	Zugriffskontrolllisten (ACL) - Verwaltung aktivieren
 activate script	felamimail	de	Script aktivieren
 activating by date requires a start- and end-date!	felamimail	de	Aktivieren nach Datum benötigt ein Start- UND Ende-Datum!
 add acl	felamimail	de	ACL zufügen
@@ -176,6 +177,7 @@ email notification settings	felamimail	de	Einstellungen: eMail Benachrichtigung
 email notification update failed	felamimail	de	Die Benachrichtigung über den Gelesen-Status der E-Mail ist fehlgeschlagen.
 email signature	felamimail	de	E-Mail-Signatur
 emailaddress	felamimail	de	E-Mail-Adresse
+emailadmin: profilemanagement   felamimail  en  eMailAdmin: Profil-Management
 empty trash	felamimail	de	Papierkorb leeren
 enable	felamimail	de	Aktivieren
 encrypted connection	felamimail	de	verschlüsselte Verbindung
@@ -414,6 +416,7 @@ print it	felamimail	de	E-Mail drucken
 print this page	felamimail	de	Diese Seite drucken
 printview	felamimail	de	Druckansicht
 processing of file %1 failed. failed to meet basic restrictions.	felamimail	de	Das Verarbeiten der Datei %1 ist fehlgeschlagen. Grundlegende Voraussetzungen wurden nicht erfüllt.
+provide a default vacation text, (used on new vacation messages when there was no message set up previously)	felamimail	de	Vorschlagstext für eine Abwesendheitsnotiz (wenn noch kein Abwesendheitsbenachrichtigungstext vorhanden ist)
 quicksearch	felamimail	de	Schnellsuche
 read	felamimail	de	gelesen
 reading	felamimail	de	lese
@@ -436,6 +439,7 @@ replyto	felamimail	de	Antwort an
 required pear class mail/mimedecode.php not found.	felamimail	de	Die benötigte PEAR Klasse Mail/mimeDecode.php konnte nicht gefunden werden.
 respond	felamimail	de	Antworte
 respond to mail sent to	felamimail	de	Antworte auf E-Mails die gesendet werden an
+restrict acl management	felamimail	de	ACL Verwaltung beschränken
 return	felamimail	de	Zurück
 return to options page	felamimail	de	zurück zu Einstellungen
 right	felamimail	de	Rechts

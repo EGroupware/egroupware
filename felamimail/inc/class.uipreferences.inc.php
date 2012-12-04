@@ -194,11 +194,13 @@
 				case 'felamimail.uipreferences.listFolder':
 				case 'felamimail.uipreferences.addACL':
 				case 'felamimail.uipreferences.listSelectFolder':
+					$felamimailConfig	= config::read('felamimail');
 					// this call loads js and css for the treeobject
 					html::tree(false,false,false,null,'foldertree','','',false,'/',null,false);
 					egw_framework::validate_file('jscode','listFolder','felamimail');
 					$GLOBALS['egw']->js->set_onload("javascript:updateACLView('disableACL');");
 					$aclSupported = in_array('ACL',$this->bofelamimail->icServer->_serverSupportedCapabilities);
+					if ($aclSupported && isset($felamimailConfig['restrict_acl_management'])) $aclSupported = false;
 					if (!$aclSupported) $GLOBALS['egw']->js->set_onload("javascript:disableACLEdit();");
 					break;
 			}

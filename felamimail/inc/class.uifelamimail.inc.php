@@ -25,9 +25,11 @@ class uifelamimail
 			'compressFolder'	=> True,
 			'importMessage'		=> True,
 			'importMessageFromVFS2DraftAndDisplay' => True,
+			'importMessageFromVFS2DraftAndEdit' => True,
 			'hookAdmin'		=> True,
 			'toggleFilter'		=> True,
 			'viewMainScreen'	=> True,
+			'redirectToConfig' => True,
 			'redirectToPreferences' => True,
 			'redirectToEmailadmin' => True,
 			'TestConnection' => True,
@@ -145,6 +147,17 @@ class uifelamimail
 			$this->dataRowColor[0] = $GLOBALS['egw_info']["theme"]["bg01"];
 			$this->dataRowColor[1] = $GLOBALS['egw_info']["theme"]["bg02"];
 			#print __LINE__ . ': ' . (microtime(true) - $this->timeCounter) . '<br>';
+		}
+
+
+		function redirectToConfig ()
+		{
+			ob_start();
+			$this->display_app_header(false);
+			//appname is a $_GET parameter, so the passing as function parameter does not work
+			//egw::redirect(egw::link('/index.php',array('menuaction'=>'admin.uiconfig.index','appname'=>'felamimail')));
+			ExecMethod('admin.uiconfig.index',array('appname'=>'felamimail'));
+			exit;
 		}
 
 		function redirectToPreferences ()
@@ -637,6 +650,22 @@ class uifelamimail
 		}
 
 		/**
+		 * importMessageFromVFS2DraftAndEdit
+		 *
+		 * @param array $formData Array with information of name, type, file and size; file is required,
+		 *                               name, type and size may be set here to meet the requirements
+		 *						Example: $formData['name']	= 'a_email.eml';
+		 *								 $formData['type']	= 'message/rfc822';
+		 *								 $formData['file']	= 'vfs://default/home/leithoff/a_email.eml';
+		 *								 $formData['size']	= 2136;
+		 * @return void
+		 */
+		function importMessageFromVFS2DraftAndEdit($formData='')
+		{
+			$this->importMessageFromVFS2DraftAndDisplay($formData,'edit');
+		}
+
+		/**
 		 * importMessageFromVFS2DraftAndDisplay
 		 *
 		 * @param array $formData Array with information of name, type, file and size; file is required,
@@ -645,9 +674,10 @@ class uifelamimail
 		 *								 $formData['type']	= 'message/rfc822';
 		 *								 $formData['file']	= 'vfs://default/home/leithoff/a_email.eml';
 		 *								 $formData['size']	= 2136;
-		 * @return mixed $messageUID or exception
+		 * @param string $mode mode to open ImportedMessage display and edit are supported
+		 * @return void
 		 */
-		function importMessageFromVFS2DraftAndDisplay($formData='')
+		function importMessageFromVFS2DraftAndDisplay($formData='',$mode='display')
 		{
 			if (empty($formData)) if (isset($_REQUEST['formData'])) $formData = $_REQUEST['formData'];
 			//error_log(array2string($formData));
@@ -676,13 +706,19 @@ class uifelamimail
 			try
 			{
 				$messageUid = $this->importMessageToFolder($formData,$draftFolder,$importID);
-			    $linkData = array
-			    (
-			        'menuaction'    => 'felamimail.uidisplay.display',
+				$linkData = array
+				(
+			        'menuaction'    => ($mode=='display'?'felamimail.uidisplay.display':'felamimail.uicompose.composeFromDraft'),
 					'uid'		=> $messageUid,
-					'mailbox'    => base64_encode($draftFolder),
+					'mailbox'	=> base64_encode($draftFolder),
+					'icServer'	=> self::$icServerID,
 					'deleteDraftOnClose' => 1,
-			    );
+				);
+				if ($mode!='display')
+				{
+					unset($linkData['deleteDraftOnClose']);
+					$linkData['method']	='importMessageToMergeAndSend';
+				}
 			}
 			catch (egw_exception_wrong_userinput $e)
 			{

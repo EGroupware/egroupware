@@ -640,6 +640,27 @@ class felamimail_hooks
 	}
 
 	/**
+	 * Admin hook
+	 *
+	 * @param array|string $hook_data
+	 */
+	static function admin($hook_data)
+	{
+		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
+		// Only Modify the $file and $title variables.....
+		$title = $appname = 'felamimail';
+		$profileID = 0;
+		if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
+			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
+
+		$file = Array(
+			'Site Configuration' => egw::link('/index.php',array('menuaction'=>'admin.uiconfig.index','appname'=>'felamimail')),
+			'eMailAdmin: Profilemanagement' => egw::link('/index.php','menuaction=felamimail.uifelamimail.redirectToEmailadmin'),
+		);
+		display_section($appname,$title,$file);
+	}
+
+	/**
 	 * Preferences hook
 	 *
 	 * @param array|string $hook_data
@@ -710,6 +731,7 @@ class felamimail_hooks
 			stripos($_GET['menuaction'],'ajax_sidebox') !== false) &&
 			$_GET['menuaction'] != 'felamimail.uipreferences.editAccountData' &&
 			$_GET['menuaction'] != 'felamimail.uifelamimail.redirectToPreferences' &&
+			$_GET['menuaction'] != 'felamimail.uifelamimail.redirectToConfig' &&
 			$_GET['menuaction'] != 'felamimail.uifelamimail.redirectToEmailadmin') {
 			if (isset($_GET["mailbox"]))
 			{
@@ -982,8 +1004,8 @@ class felamimail_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
-				//'Site Configuration' => egw::link('/index.php','menuaction=emailadmin.emailadmin_ui.index'),
-				'Site Configuration' => egw::link('/index.php','menuaction=felamimail.uifelamimail.redirectToEmailadmin'),
+				'Site Configuration' => egw::link('/index.php','menuaction=felamimail.uifelamimail.redirectToConfig'), //'menuaction=admin.uiconfig.index&appname=felamimail'),
+				'eMmailAdmin: Profilemanagement' => egw::link('/index.php','menuaction=felamimail.uifelamimail.redirectToEmailadmin'),
 			);
 			display_sidebox($appname,lang('Admin'),$file);
 		}

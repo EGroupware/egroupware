@@ -25,6 +25,7 @@ $setup_info['felamimail']['maintainer_email'] 	= 'kl@stylite.de';
 $setup_info['felamimail']['tables']    = array('egw_felamimail_displayfilter','egw_felamimail_accounts','egw_felamimail_signatures');
 
 /* The hooks this app includes, needed for hooks registration */
+$setup_info['felamimail']['hooks']['admin'] = 'felamimail_hooks::admin';
 $setup_info['felamimail']['hooks']['preferences'] = 'felamimail_hooks::preferences';
 $setup_info['felamimail']['hooks']['settings'] = 'felamimail_hooks::settings';
 $setup_info['felamimail']['hooks'][] = 'home';
