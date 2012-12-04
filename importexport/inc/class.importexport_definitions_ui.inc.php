@@ -138,6 +138,8 @@ class importexport_definitions_ui
 						}
 						$content['nm']['action'] .= '_' . $content[$content['nm']['action']];
 						unset($content[$action]);
+						unset($content['all_users']);
+						unset($content['allowed_private']);
 					}
 					if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
 						$success,$failed,$action_msg,'index',$msg))
