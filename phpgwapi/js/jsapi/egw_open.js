@@ -122,7 +122,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 				}
 				popup = app_registry[type+'_popup'];
 			}
-			this.open_link(this.link(url, params), target, popup);
+			return this.open_link(this.link(url, params), target, popup);
 		},
 		
 		/**
@@ -155,11 +155,11 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			{
 				var w_h = _popup.split('x');
 				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = egw_getWindowOuterHeight();
-				_wnd.egw_openWindowCentered2(url, _target, w_h[0], w_h[1]);
+				return _wnd.egw_openWindowCentered2(url, _target, w_h[0], w_h[1],false,false,true);
 			}
 			else
 			{
-				_wnd.open(url, _target);
+				return _wnd.open(url, _target);
 			}
 		}
 	};
