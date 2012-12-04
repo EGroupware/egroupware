@@ -295,7 +295,7 @@ class html
 		if($enhanced) {
 			egw_framework::validate_file('/phpgwapi/js/jquery/chosen/chosen.jquery.js');
 			egw_framework::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css',null,false);
-			$out .= "<script>\$j(function() {\$j('select[name=\"$name\"]').chosen();});</script>\n";
+			$out .= "<script>\$j(function() {if(\$j().chosen) \$j('select[name=\"$name\"]').chosen();});</script>\n";
 		}
 		return $out;
 	}
@@ -333,7 +333,7 @@ class html
 		}
 		$base_name = substr($name,0,-2);
 
-		if($enhanced) return self::select($name, $key, $arr,$no_lang,$options,$multiple,$enhanced);
+		if($enhanced) return self::select($name, $key, $arr,$no_lang,$options." style=\"$style\" ",$multiple,$enhanced);
 
 		if (!is_array($key))
 		{
@@ -544,6 +544,10 @@ class html
 		$pxheight = (strpos('px', $_height) === false) ?
 			(empty($_height) ? 400 : $_height) : str_replace('px', '', $_height);
 
+		// User preferences
+		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
++		$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
+
 		// we need to enable double encoding here, as ckEditor has to undo one level of encoding
 		// otherwise < and > chars eg. from html markup entered in regular (not source) input, will turn into html!
 		return self::textarea($_name,$_content,'id="'.htmlspecialchars($_name).'"',true).	// true = double encoding
@@ -558,7 +562,8 @@ class html
 		{
 			ev.editor.resize("100%", '.str_replace('px', '', $pxheight).');
 		}
-	);
+	);'.
+	(trim($_content) == '' ? 'CKEDITOR.instances["'.$_name.'"].setData("<span style=\"font-family:'.$font.';font-size:'.$font_size.';\">&#8203;</span>");' : '').'
 </script>
 ';
 	}

@@ -18,6 +18,38 @@ class egw_ckeditor_config
 	private static $enterMode = null;
 	private static $skin = null;
 
+	// Defaults, defined in phpgwapi/js/ckeditor3/_source/plugins/font/plugin.js
+	public static $font_options = array(
+		'arial, helvetica, sans-serif' => 'Arial',
+		'Comic Sans MS, cursive' => 'Comic Sans MS',
+		'Courier New, Courier, monospace' => 'Courier New',
+		'Georgia, serif' => 'Georgia',
+		'Lucida Sans Unicode, Lucida Grande, sans-serif' => 'Lucida Sans Unicode',
+		'Tahoma, Geneva, sans-serif' => 'Tahoma',
+		'times new roman, times, serif' => 'Times New Roman',
+		'Trebuchet MS, Helvetica, sans-serif' => 'Trebuchet MS',
+		'Verdana, Geneva, sans-serif' => 'Verdana'
+	);
+	public static $font_size_options = array(
+		'8px'  => '8',
+		'9px'  => '9',
+		'10px' => '10',
+		'11px' => '11',
+		'12px' => '12',
+		'14px' => '14',
+		'16px' => '16',
+		'18px' => '18',
+		'20px' => '20',
+		'22px' => '22',
+		'24px' => '24',
+		'26px' => '26',
+		'28px' => '28',
+		'36px' => '36',
+		'48px' => '48',
+		'72px' => '72'
+	);
+
+
 	/**
 	 * Read language and country settings for the ckeditor and store them in static
 	 * variables
