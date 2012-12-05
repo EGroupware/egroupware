@@ -2102,12 +2102,12 @@ class etemplate_old extends boetemplate
 	{
 		if (strpos($on,'::') !== false)	// avoid the expensive regular expresions, for performance reasons
 		{
-			if (preg_match_all("/egw::link\\('([^']+)','(.+?)'\\)/",$on,$matches))	// the ? alters the expression to shortest match
+			if (preg_match_all("/egw::link\\('([^']+)','(.+?)'(?:,'(.+?)')?\\)/",$on,$matches))	// the ? alters the expression to shortest match
 			{
 				foreach(array_keys($matches[1]) as $n)                         	// this way we can correctly parse ' in the 2. argument
 				{
-					$url = $GLOBALS['egw']->link($matches[1][$n],$matches[2][$n]);
-					$on = str_replace($matches[0][$n],'\''.$url.'\'',$on);
+					$url = $GLOBALS['egw']->link($matches[1][$n],$matches[2][$n],$matches[3][$n]);
+					$on = str_replace($matches[0][$n],'\''.addslashes($url).'\'',$on);
 				}
 			}
 
