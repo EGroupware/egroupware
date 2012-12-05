@@ -34,6 +34,7 @@ class resources_hooks
 			{
 				$file['Add resource'] = "javascript:egw_openWindowCentered2('".egw::link('/index.php',array(
 						'menuaction' => 'resources.resources_ui.edit',
+						'accessory_of' => -1
 					),false)."','_blank',800,600,'yes')";
 			}
 			display_sidebox($appname,$title,$file);

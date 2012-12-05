@@ -104,7 +104,7 @@
 								<description/>
 							</row>
 							<row>
-								<button align="center" statustext="Show calendar of resource" label="Show calendar of resource" id="calendar[$cont[res_id]]" onclick="location=egw::link('/index.php','menuaction=calendar.calendar_uiviews.planner&amp;sortby=user&amp;owner=0,r$cont[res_id]'); return false;" image="calendar/planner" ro_image="trans16x16"/>
+								<button align="center" statustext="Show calendar of resource" label="Show calendar of resource" id="calendar[$cont[res_id]]" onclick="location=egw::link('/index.php','menuaction=calendar.calendar_uiviews.planner&amp;sortby=user&amp;owner=0,r$cont[res_id]','calendar'); return false;" image="calendar/planner" ro_image="trans16x16"/>
 								<button align="center" statustext="Delete this entry" label="Delete" id="delete[$cont[res_id]]" onclick="return confirm('Delete this entry');" image="delete" ro_image="trans16x16"/>
 								<button align="center" statustext="View accessories for this resource" label="View accessories for this resource" id="view_acc[$cont[res_id]]" image="view_acc" ro_image="trans16x16"/>
 								<checkbox align="right" id="checkbox[]" options="$cont[res_id]"/>

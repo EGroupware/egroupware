@@ -211,7 +211,7 @@ class resources_ui
 			),
 			'add' => array(
 				'caption' => 'New resource',
-				'url' => 'menuaction=resources.resources_ui.edit',
+				'url' => 'menuaction=resources.resources_ui.edit&accessory_of=-1',
 				'popup' => egw_link::get_registry('resources', 'add_popup'),
 				'group' => $group,
 			),
@@ -308,7 +308,6 @@ class resources_ui
 		switch($action)
 		{
 			case 'view-calendar':
-				echo "window.location = '".egw::link('/index.php',$url_params);
 				$resource_ids = array(0);
 				$url_params = array(
 					'menuaction' => 'calendar.calendar_uiviews.planner',
@@ -320,7 +319,7 @@ class resources_ui
 				}
 				$url_params['owner'] = implode(',',$resource_ids);
 				$success = count($resource_ids);
-				egw_framework::set_onload("window.location = '".egw::link('/index.php',$url_params).'\';');
+				egw_framework::set_onload('window.location.href = "'.egw::link('/index.php',$url_params,'calendar').'"');
 				$action_msg = lang('view calendar');
 				break;
 			case 'book':
@@ -693,7 +692,7 @@ class resources_ui
 			}
 		}
 		// add already selected single resources to the selectbox, eg. call of the resource-calendar from the resources app
-		$resources = array('r0' => lang('none'));
+		$resources = array();
 		$res_ids = array();
 		foreach($owners as $key => $owner)
 		{
@@ -703,6 +702,7 @@ class resources_ui
 				$selected[] = $owner;
 			}
 		}
+
 		// Take out resources not allowed by perms, above
 		$res_ids = array_intersect($res_ids,$allowed_list);
 		if (count($res_ids))
@@ -719,13 +719,15 @@ class resources_ui
 				$selected,
 				array_merge($resources,$res_cats),
 				$no_lang=true,
-				$options='style="width: 100%;" onchange="load_cal(\''.
+				$options='data-placeholder="'.lang('select resources').'" style="width: 100%;" onchange="load_cal(\''.
 					egw::link('/index.php',$param,false).'\',\'uical_select_resource\',true);" id="uical_select_resource"',
-				$multiple=count($selected) ? 4 : 0
+				$multiple=4,
+				true
 			);
 			return array(
 				array(
-					'text' => $selectbox,
+					// Add some jQuery to make sure dropdown is displayed
+					'text' => $selectbox . "<script>\$j('select[name=\"owner\[\]\"]').parent('td').css('overflow','visible').parents('div.divSidebox').css('overflow','visible');</script>",
 					'no_lang' => True,
 					'link' => False
 				)
