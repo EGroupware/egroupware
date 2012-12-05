@@ -505,7 +505,7 @@ class html
 		{
 			return self::textarea($name,$content,'style="'.$style.'"');
 		}*/
-		return self::fckEditor($name, $content, ($style ? $style : 'extended'), array('toolbar_expanded' =>'true'), '400px', '100%', $base_href);
+		return self::fckEditor($name, $content, ($style ? $style : $GLOBALS['egw_info']['user']['preferences']['common']['rte_features']), array('toolbar_expanded' =>'true'), '400px', '100%', $base_href);
 	}
 
 	/**

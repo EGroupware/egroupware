@@ -304,8 +304,10 @@ class egw_ckeditor_config
 	/**
 	 * @see get_ckeditor_config
 	 */
-	public static function get_ckeditor_config_array($mode = 'simple', $height = 400, $expanded_toolbar = true, $start_path = '')
+	public static function get_ckeditor_config_array($mode = '', $height = 400, $expanded_toolbar = true, $start_path = '')
 	{
+		// If not explicitly set, use preference for toolbar mode
+		if(!$mode || trim($mode) == '') $mode = $GLOBALS['egw_info']['user']['preferences']['common']['rte_features'];
 		$config = array();
 		$spellchecker_button = null;
 
