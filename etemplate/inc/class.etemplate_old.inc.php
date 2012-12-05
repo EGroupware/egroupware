@@ -1339,7 +1339,6 @@ class etemplate_old extends boetemplate
 				}
 				if (!$readonly)
 				{
-					$mode = $mode ? $mode : 'simple';
 					$height = $height ? $height : '400px';
 					$width = $width ? $width : '100%';
 					$fckoptions = array(

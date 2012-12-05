@@ -326,7 +326,7 @@ class egw_ckeditor_config
 	 * @param boolean $expanded_toolbar specifies whether the ckeditor should start with an expanded toolbar or not
 	 * @param string $start_path specifies
 	 */
-	public static function get_ckeditor_config($mode = 'simple', $height = 400, $expanded_toolbar = true, $start_path = '')
+	public static function get_ckeditor_config($mode = '', $height = 400, $expanded_toolbar = true, $start_path = '')
 	{
 		return json_encode(self::get_ckeditor_config_array($mode, $height, $expanded_toolbar, $start_path));
 	}
