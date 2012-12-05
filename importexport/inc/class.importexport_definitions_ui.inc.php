@@ -127,6 +127,7 @@ class importexport_definitions_ui
 					// Action has an additional parameter
 					if(in_array($content['nm']['action'], array('owner', 'allowed')))
 					{
+						$action = $content['nm']['action'];
 						if($content['nm']['action'] == 'allowed')
 						{
 							$content['allowed'] = $content['allowed_private'] ? null : ($content['all_users'] ? 'all' : implode(',',$content['allowed']));
@@ -136,6 +137,9 @@ class importexport_definitions_ui
 							$content[$content['nm']['action']] = implode(',',$content[$content['nm']['action']]);
 						}
 						$content['nm']['action'] .= '_' . $content[$content['nm']['action']];
+						unset($content[$action]);
+						unset($content['all_users']);
+						unset($content['allowed_private']);
 					}
 					if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
 						$success,$failed,$action_msg,'index',$msg))
