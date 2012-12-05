@@ -404,7 +404,7 @@ class preferences_hooks
 				'label'  => 'Features of the editor',
 				'name'   => 'rte_features',
 				'values' => array('simple'=>'simple','extended'=>'regular','advanced'=>'everything'),
-				'help'   => '',
+				'help'   => 'How many toolbar buttons are available',
 				'admin'  => false,
 				'default'=> 'simple'
 			),
