@@ -406,7 +406,7 @@ class preferences_hooks
 				'values' => array('simple'=>'simple','extended'=>'regular','advanced'=>'everything'),
 				'help'   => 'How many toolbar buttons are available',
 				'admin'  => false,
-				'default'=> 'simple'
+				'default'=> 'extended'
 			),
 			'default_app' => array(
 				'type'   => 'select',
