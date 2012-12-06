@@ -795,13 +795,13 @@ class calendar_boupdate extends calendar_bo
 					$user_prefs['calendar']['receive_own_updates']==1) ||
 				$msg_type == MSG_ALARM)
 			{
+				unset($tfn); unset($tln); //cleanup of lastname and fullname (in case they are set in a previous loop)
 				if (is_numeric($userid))
 				{
 					$preferences = new preferences($userid);
 					$GLOBALS['egw_info']['user']['preferences'] = $part_prefs = $preferences->read_repository();
-
-					$GLOBALS['egw']->accounts->get_account_name($userid,$lid,$details['to-firstname'],$details['to-lastname']);
-					$fullname = common::display_fullname('',$details['to-firstname'],$details['to-lastname']);
+					$GLOBALS['egw']->accounts->get_account_name($userid,$lid,$tfn,$tln);
+					$fullname = common::display_fullname('',$tfn,$tln);
 				}
 				else	// external email address: use preferences of event-owner, plus some hardcoded settings (eg. ical notification)
 				{
@@ -828,6 +828,8 @@ class calendar_boupdate extends calendar_bo
 				$details = $this->_get_event_details(isset($cleared_event) ? $cleared_event : $event,
 					$action, $event_arr, $disinvited);
 				$details['to-fullname'] = $fullname;
+				if (isset($tfn)) $details['to-firstname'] = $tfn;
+				if (isset($tln)) $details['to-lastname'] = $tln;
 
 				// event is in user-time of current user, now we need to calculate the tz-difference to the notified user and take it into account
 				if (!isset($part_prefs['common']['tz'])) $part_prefs['common']['tz'] = $GLOBALS['egw_info']['server']['server_timezone'];
