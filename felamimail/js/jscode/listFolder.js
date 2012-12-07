@@ -25,6 +25,7 @@ function disableACLEdit()
 	var active = document.getElementById('active');
 	active.checked = false;
 	active.disabled = true;
+	updateACLView('disableACL');
 }
 
 function updateACLView(activateACL)
@@ -33,7 +34,10 @@ function updateACLView(activateACL)
 
 	var active = document.getElementById('active');
 	if (activateACL=='disableACL') active.checked = false;
-	else active.checked = false;
+	else
+	{
+		if (activateACL!='useCurrentActiveState') active.checked = false;
+	}
 	onchange_active(active);
 
 }

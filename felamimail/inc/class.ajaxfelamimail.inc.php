@@ -223,7 +223,7 @@ class ajaxfelamimail
 		 */
 		function createACLTable($_acl)
 		{
-			if($this->_debug) error_log(__METHOD__.__LINE__.array2string($_acl));
+			if($this->_debug) error_log(__METHOD__.__LINE__.array2string($_acl).function_backtrace());
 			$aclList = array('l','r','s','w','i','p','c','d','a');
 			
 			$lang["lang_acl_l"] = "Look up the name of the mailbox (but not its contents).";
@@ -873,6 +873,7 @@ class ajaxfelamimail
 				$aclSupported = in_array('ACL',$this->bofelamimail->icServer->_serverSupportedCapabilities);
 				if($aclSupported && ($folderACL = $this->bofelamimail->getIMAPACL($folderName))) {
 					$response->addAssign("aclTable", "innerHTML", $this->createACLTable($folderACL));
+					$response->addScript("updateACLView('useCurrentActiveState');");
 				}
 				else
 				{
@@ -896,6 +897,7 @@ class ajaxfelamimail
 				if($folderName != '--topfolder--' && $folderName != 'user' && ($folderACL = $this->bofelamimail->getIMAPACL($folderName))) {
 					$aclSupported = in_array('ACL',$this->bofelamimail->icServer->_serverSupportedCapabilities);
 					$response->addAssign("aclTable", "innerHTML", ($aclSupported?$this->createACLTable($folderACL):''));
+					$response->addScript("updateACLView('useCurrentActiveState');");
 				}
 				else
 				{
