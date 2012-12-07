@@ -136,6 +136,7 @@ class calendar_so
 	 */
 	function read($ids,$recur_date=0)
 	{
+		//_debug_array(__METHOD__.__LINE__.'#'.$recur_date.'#'.function_backtrace());
 		if (isset($GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length']))
 		{
 			$minimum_uid_length = $GLOBALS['egw_info']['user']['preferences']['syncml']['minimum_uid_length'];
@@ -224,6 +225,39 @@ class calendar_so
 					$events[$row['cal_id']]['recur_exception'][] = $row['cal_start'];
 				}
 				break;	// as above select read all exceptions (and I dont think too short uid problem still exists)
+			}
+			// make sure we fetch only real exceptions (deleted occurrences of a series should not show up)
+			if (($recur_date &&	$event['recur_type'] != MCAL_RECUR_NONE))
+			{
+				//_debug_array(__METHOD__.__LINE__.' recur_date:'.$recur_date.' check cal_start:'.$event['start']);
+				foreach(($i=$this->db->select($this->dates_table, 'cal_id,cal_start', array(
+					'cal_id' => $event['id'],
+					'cal_start' => $event['start'],
+					'recur_exception' => true,
+				), __LINE__, __FILE__, false, '', 'calendar')) as $row)
+				{
+					$isException[$row['cal_id']] = true;
+				}
+				//_debug_array($i->sql.'-> found Rows:'.$i->_numOfRows);
+				if ($isException[$event['id']])
+				{
+					$x = $this->db->select($this->cal_table, 'cal_id', array(
+						'cal_uid' => $event['uid'],
+						'cal_recurrence' => $event['start'],
+						'cal_deleted' => NULL
+					), __LINE__, __FILE__, false, '', 'calendar');
+					//_debug_array(__METHOD__.__LINE__.$x->sql.'-> found Rows:'.$x->_numOfRows);
+					if (empty($x->_numOfRows))
+					{
+						$e = $this->read($event['id'],$event['start']+1);
+						$event = $e[$event['id']];
+						break;
+					}
+					else
+					{
+						//real exception -> should we return it? probably not, so we live with the result of the next occurrence of the series
+					}
+				}
 			}
 		}
 
@@ -1825,7 +1859,7 @@ ORDER BY cal_user_type, cal_usre_id
 			$this->async->cancel_timer($id);
 		}
 		$alarm['cal_id'] = $cal_id;		// we need the back-reference
-
+		//error_log(__METHOD__.__LINE__.' Save Alarm for CalID:'.$cal_id.'->'.array2string($alarm).'-->'.$id.'#'.function_backtrace());
 		// allways store job with the alarm owner as job-owner to get eg. the correct from address
 		if (!$this->async->set_timer($alarm['time'],$id,'calendar.calendar_boupdate.send_alarm',$alarm,$alarm['owner']))
 		{
