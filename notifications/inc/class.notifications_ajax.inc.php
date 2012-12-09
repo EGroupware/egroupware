@@ -33,6 +33,11 @@ class notifications_ajax {
 	const _notification_table = 'egw_notificationpopup';
 
 	/**
+	 * Notification type
+	 */
+	const _type = 'base';
+
+	/**
 	 * holds account object for user to notify
 	 *
 	 * @var object
@@ -145,6 +150,7 @@ class notifications_ajax {
 			$this->db->delete(self::_notification_table,array(
 				'notify_id' => $notify_id,
 				'account_id' => $this->recipient->account_id,
+				'notify_type' => self::_type
 			),__LINE__,__FILE__,self::_appname);
 		}
 	}
@@ -258,6 +264,7 @@ class notifications_ajax {
 		$message = '';
 		$rs = $this->db->select(self::_notification_table, '*', array(
 				'account_id' => $this->recipient->account_id,
+				'notify_type' => self::_type
 			),
 			__LINE__,__FILE__,false,'',self::_appname);
 		if ($rs->NumRows() > 0)	{

@@ -89,3 +89,15 @@ function notifications_upgrade1_9_002()
 	return $GLOBALS['setup_info']['notifications']['currentver'] = '1.9.003';
 }
 
+
+function notifications_upgrade1_9_003()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_notificationpopup','notify_type',array(
+		'type' => 'varchar',
+		'precision' => '32',
+		'comment' => 'notification type'
+	));
+
+	return $GLOBALS['setup_info']['notifications']['currentver'] = '1.9.004';
+}
+
