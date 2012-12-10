@@ -54,6 +54,7 @@ apply the action on the whole query, not only the shown entries!!!	infolog	de	We
 apply the changes	infolog	de	Übernimmt die Änderungen
 archive	infolog	de	Archiviert
 are you shure you want to close this entry ?	infolog	de	Wollen Sie wirklich den Infolog schliessen?
+are you shure you want to delete this entry ?	infolog	de	Wollen Sie diesen Infolog wirklich löschen?
 attach a file	infolog	de	Datei anhängen
 attach file	infolog	de	Datei anhängen
 attachments	infolog	de	angehangene Dateien
