@@ -224,6 +224,7 @@ class emailadmin_script {
 		$activerules = 0;
 		$regexused = 0;
 		$rejectused = 0;
+		$vacation_active = false;
 
 		$username	= $GLOBALS['egw_info']['user']['account_lid'];
 		$version	= $GLOBALS['egw_info']['apps']['felamimail']['version'];

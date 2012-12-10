@@ -11,7 +11,7 @@
 
 /**
  * Class containing callback to set/reset vacation notice in future (timed vacation)
- * 
+ *
  * Rest of class is moved to emailadmin_sieve and accessible via incomming server object (IMAP).
  */
 class bosieve
@@ -34,8 +34,17 @@ class bosieve
 		$icServer = $mailPreferences->getIncomingServer(0);
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.'->LoginName:'.$icServer->loginName);
 		//error_log(__METHOD__.__LINE__.array2string($_vacation));
-		$ret = $icServer->setVacationUser($icServer->loginName,$_vacation['scriptName'],$_vacation);
+		try
+		{
+			$ret = $icServer->setVacationUser($icServer->loginName,$_vacation['scriptName'],$_vacation);
+		}
+		catch (Exception $e) {
+			error_log(__METHOD__.'::'.__LINE__.' call for '.$icServer->loginName.','.$_vacation['scriptName'].' failed for reason:'.$e->getMessage());
+			$ret = false;
+		}
 		if ($ret) $icServer->setAsyncJob($_vacation);
+		if ($ret===false) $icServer->setAsyncJob($_vacation,null,true); //reschedule
+		return $ret;
 	}
 
 }
