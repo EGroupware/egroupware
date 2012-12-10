@@ -243,6 +243,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  font-family: Arial, Helvetica, sans-serif;
 }
 .chzn-container-multi .chzn-results {
   margin: -1px 0 0;

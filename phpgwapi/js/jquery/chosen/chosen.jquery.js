@@ -380,14 +380,12 @@ Copyright (c) 2011 by Harvest
       if (totalHeight > windowHeight) {
         var difference = totalHeight - windowHeight,
             height     = dropdownHeight - difference - this.search_container.height();
-console.log("windowHeight:" + windowHeight + " Total height: " + totalHeight + ' height: ' + height, this.container);
 
         if (height > 100) {
           this.search_results.css('max-height', height);
         } else {
           var to_top = egw.getHiddenDimensions ? egw.getHiddenDimensions(this.container,true)['top'] : this.container.offset().top;
           var to_bottom = windowHeight - to_top;
-console.log("Distance to top: %d Distance to bottom %d", to_top, to_bottom, this.container.offset());
           this.dropdown.addClass('chzn-above');
           this.search_results.css('max-height', this.search_results.data('initialMaxHeight'));
         }
