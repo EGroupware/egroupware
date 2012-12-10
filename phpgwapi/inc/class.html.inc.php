@@ -1336,7 +1336,19 @@ class html
 	static function purify($html,$config=null,$spec=array(),$_force=false)
 	{
 		$defaultConfig = array('valid_xhtml'=>1,'safe'=>1);
+
 		if (empty($html)) return $html;	// no need to process further
+
+		// User preferences
+		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
+		$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
+		
+		// Check for "blank" = just user preference span - for some reason we can't match on the entity, so approximate
+		$regex = '/^<span style="font-family:'.$font.';font-size:'.$font_size.';">/';//&#8203</span>/';
+		if(strlen($html) == 75 && preg_match($regex,$html))
+		{
+			return '';
+		}
 		$htmLawed = new egw_htmLawed();
 		if (is_array($config) && $_force===false) $config = array_merge($defaultConfig, $config);
 		if (empty($config)) $config = $defaultConfig;
