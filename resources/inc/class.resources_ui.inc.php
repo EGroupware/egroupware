@@ -295,6 +295,7 @@ class resources_ui
 			@set_time_limit(0);                     // switch off the execution time limit, as it's for big selections to small
 			$query['num_rows'] = -1;        // all
 			$this->bo->get_rows($query,$resources,$readonlys);
+			$checked = array();
 			foreach($resources as $resource)
 			{
 				$checked[] = $resource['res_id'];
