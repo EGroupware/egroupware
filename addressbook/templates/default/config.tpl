@@ -1,4 +1,7 @@
 <!-- BEGIN header -->
+<style>
+select[multiple] { width:100%;}
+</style>
 <form method="POST" action="{action_url}">
 {hidden_vars}
 <table border="0" align="center">
