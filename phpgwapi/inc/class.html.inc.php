@@ -1344,8 +1344,8 @@ class html
 		$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
 		
 		// Check for "blank" = just user preference span - for some reason we can't match on the entity, so approximate
-		$regex = '/^<span style="font-family:'.$font.';font-size:'.$font_size.';">/';//&#8203</span>/';
-		if(strlen($html) == 75 && preg_match($regex,$html))
+		$regex = '#^<span style="font-family:'.$font.';font-size:'.$font_size.';">.?</span>$#us';
+		if(preg_match($regex,$html))
 		{
 			return '';
 		}
