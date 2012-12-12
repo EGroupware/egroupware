@@ -1004,10 +1004,11 @@ class calendar_boupdate extends calendar_bo
 		$ret = $this->send_update(MSG_ALARM,$to_notify,$event,False,$alarm['owner']);
 
 		// create a new alarm for recuring events for the next event, if one exists
-		if ($event['recur_type'] && ($event = $this->read($alarm['cal_id'],$event_time_user+1)))
+		if ($event['recur_type'] != MCAL_RECUR_NONE && ($event = $this->read($alarm['cal_id'],$event_time_user+1)))
 		{
 			$alarm['time'] = $this->date2ts($event['start']) - $alarm['offset'];
-
+			unset($alarm['times']);
+			unset($alarm['next']);
 			$this->save_alarm($alarm['cal_id'],$alarm);
 		}
 		return $ret;
@@ -1503,26 +1504,43 @@ class calendar_boupdate extends calendar_bo
 			{
 				foreach($event['alarm'] as &$alarm)
 				{
-					if ($alarm['time'] == $recur_date)
+					if (($alarm['time'] == $recur_date) || ($alarm['time']+$alarm['offset'] == $recur_date))
 					{
+						//error_log(__METHOD__.__LINE__.'->'.array2string($recur_date));
+						//error_log(__METHOD__.__LINE__.array2string($event));
 						if (is_null($next_recurrance))
 						{
+							$checkdate = $recur_date;
+							//if ($alarm['time']+$alarm['offset'] == $recur_date) $checkdate = $recur_date + $alarm['offset'];
+							if ($e = $this->read($cal_id,$checkdate+1))
+							{
+								$next_recurrance = $this->date2ts($e['start']);
+							}
+							/*
 							foreach(calendar_rrule::event2rrule($event, true) as $time)
 							{
 								$time->setUser();	// $time is in timezone of event, convert it to usertime used here
-								if (($next_recurrance = $this->date2ts($time)) > $recur_date) break;
+								$next_recurrance = $this->date2ts($time);
+								if ($next_recurrance > $checkdate) break;
 							}
+							*/
+							//error_log(__METHOD__.__LINE__." $next_recurrance > $checkdate");
 						}
 						$alarm['time'] = $this->date2ts($next_recurrance, true);	// user to server-time
+						$alarm['cal_id'] = $cal_id;
+						unset($alarm['times']);
+						unset($alarm['next']);
 						$this->so->save_alarm($event['id'], $alarm);
 					}
 				}
 			}
 			// need to read series master, as otherwise existing exceptions will be lost!
 			$recur_date = $this->date2ts($event['start']);
+			//if ($event['alarm']) $alarmbuffer = $event['alarm'];
 			$event = $this->read($cal_id);
+			//if (isset($alarmbuffer)) $event['alarm'] = $alarmbuffer;
 			$event['recur_exception'][] = $recur_date;
-			$this->save($event);	// updates the content-history
+			$this->save($event);// updates the content-history
 		}
 		if ($event['reference'])
 		{
