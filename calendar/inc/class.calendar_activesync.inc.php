@@ -1241,7 +1241,8 @@ return array();	// temporary disabling meeting requests from calendar
 		if ($type != 'calendar') return false;
 
 		if (!isset($this->calendar)) $this->calendar = new calendar_boupdate();
-		$ctag = $this->calendar->get_ctag($owner,'owner',true);	// true only consider recurrence master
+		//$ctag = $this->calendar->get_ctag($owner,'owner',true);	// true only consider recurrence master
+		$ctag = $this->calendar->get_ctag($owner,false,true); // we only want to fetch the owners events, where he is a participant too
 		// workaround for syncstate = 0 when calendar is empty causes synctate to not return 0 but array resulting in foldersync loop
 		if ($ctag == 0) $ctag = 1;
 		$changes = array();	// no change
