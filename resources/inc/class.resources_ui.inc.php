@@ -368,6 +368,21 @@ class resources_ui
 							if($checked_key !== false) unset($checked[$checked_key]);
 						}
 					}
+					else
+					{
+						// Remove checked accessories, deleting resource will remove them
+						// We get an error if we try to delete them after they're gone
+						$accessories = $this->bo->get_acc_list($id);
+						foreach($accessories as $acc_id => $name)
+						{
+							$checked_key = array_search($acc_id, $checked);
+							if($checked_key !== false)
+							{
+								$success++;
+								unset($checked[$checked_key]);
+							}
+						}
+					}
 					$error = $this->bo->delete($id);
 					if (!$error)
 					{
