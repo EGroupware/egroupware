@@ -20,6 +20,8 @@ $GLOBALS['egw_info'] = array(
 
 include('../header.inc.php');
 
+ob_start();
+
 check_load_extension('zip', true);
 
 $document = EGW_SERVER_ROOT.'/notifications/java/full-eGwNotifier.jar';
@@ -73,7 +75,19 @@ function replace_callback($matches)
 			}*/
 			break;
 	}
-	return '<'.$matches[1].'>'.htmlspecialchars($replacement, ENT_XML1, translation::charset()).'</'.$matches[1].'>';
+
+	/**
+	 * workaround
+	 * Warning: htmlspecialchars() expects parameter 2 to be long, string given
+	 */
+	$htmlscflags = ENT_XML1;
+
+	if (is_string($htmlscflags))
+	{
+		$htmlscflags = 16;	// #define ENT_XML1		16
+	}
+
+	return '<'.$matches[1].'>'.htmlspecialchars($replacement, $htmlscflags, translation::charset()).'</'.$matches[1].'>';
 }
 
 $xml = preg_replace_callback('/<((egw_|MI_)[^>]+)>(.*)<\/[a-z0-9_-]+>/iU', 'replace_callback', $xml);
@@ -94,6 +108,7 @@ check_load_extension('phar', true);
 $zip = new PharData($archive);
 $zip->addFromString($config_file, $xml);
 unset($zip);
+ob_end_clean();
 
 html::content_header('egroupware-notifier-'.$GLOBALS['egw_info']['user']['account_lid'].'.jar', 'application/x-java-archive', filesize($archive));
 readfile($archive,'r');
