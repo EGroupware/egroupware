@@ -1,3 +1,11 @@
+egroupware-epl (11.1.20121212-1) hardy; urgency=low
+
+  * Calendar: fix for missing to-firstname and to-lastname replacements
+  * eMail/async vacation; if failed by exception or returnvalue is false, reschedule
+  * API/Translation: fix bug with missing german umlauts as first letter of words; ( as php5.3.3 with squeeze does not support splitting lines with fgetcsv while reading properly if the first letter after the delimiter is a german umlaut (UTF8 representation thereoff))
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 12 Dec 2012 13:56:14 +0100
+
 egroupware-epl (11.1.20121204-1) hardy; urgency=low
 
   * Setup/API: translations are no longer installed in database, but loaded directly from lang-files into tree-level cache
