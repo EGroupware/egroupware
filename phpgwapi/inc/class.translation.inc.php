@@ -463,7 +463,7 @@ class translation
 			//while(($line = fgetcsv($f, 1024, "\t")))
 			while($line = fgets($f))
 			{
-				$line = explode("\t", $line);
+				$line = explode("\t", trim($line));
 				++$line_nr;
 				if (count($line) != 4) continue;
 				list($l_id,$l_app,$l_lang,$l_translation) = $line;
