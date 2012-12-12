@@ -20,7 +20,6 @@ class resources_ui
 	var $public_functions = array(
 		'index'		=> True,
 		'edit'		=> True,
-		'show'		=> True,
 		'select'	=> True,
 		'writeLangFile'	=> True
 	);
@@ -44,7 +43,6 @@ class resources_ui
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param array $content content from eTemplate callback
 	 *
-	 * FIXME don't translate cats in nextmach
 	 */
 	function index($content='')
 	{
@@ -54,13 +52,6 @@ class resources_ui
 			unset($sessiondata['rows']);
 			$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
 
-			if (isset($content['back']))
-			{
-				unset($sessiondata['view_accs_of']);
-				unset($sessiondata['no_filter']);
-				$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
-				return $this->index();
-			}
 			if (isset($content['btn_delete_selected']))
 			{
 				foreach($content['nm']['rows'] as $row)
@@ -81,7 +72,7 @@ class resources_ui
 				}
 				if(isset($row['view_acc']))
 				{
-					$sessiondata['view_accs_of'] = array_search('pressed',$row['view_acc']);
+					$sessiondata['filter2'] = array_search('pressed',$row['view_acc']);
 					$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
 					return $this->index();
 				}
@@ -120,8 +111,7 @@ class resources_ui
 		$content['nm']['get_rows'] 	= 'resources.resources_bo.get_rows';
 		$content['nm']['no_filter'] 	= False;
 		$content['nm']['filter_label']	= lang('Category');
-		$content['nm']['filter_help']	= lang('Select a category'); // is this used???
-		$content['nm']['no_filter2']	= true;
+		$content['nm']['filter2_label']	= 'Display';
 		$content['nm']['filter_no_lang'] = true;
 		$content['nm']['no_cat']	= true;
 		$content['nm']['bottom_too']	= true;
@@ -136,8 +126,14 @@ class resources_ui
 			$content['nm'] = $nm_session_data;
 		}
 		$content['nm']['options-filter']= array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ);
+		$content['nm']['options-filter2'] = resources_bo::$filter_options;
+
 		if($_GET['search']) {
 			$content['nm']['search'] = $_GET['search'];
+		}
+		if($_GET['view_accs_of'])
+		{
+			$content['nm']['filter2'] = (int)$_GET['view_accs_of'];
 		}
 		$content['nm']['actions']	= $this->get_actions();
 
@@ -147,7 +143,6 @@ class resources_ui
 			$no_button['add'] = true;
 		}
 		$no_button['back'] = true;
-		$no_button['add_sub'] = true;
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('resources');
 
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script LANGUAGE=\"JavaScript\">
@@ -178,20 +173,19 @@ class resources_ui
 
 		egw_framework::validate_file('.','resources','resources');
 
-		if($content['nm']['view_accs_of'])
+		if($content['nm']['filter2'] > 0)
 		{
-			$master = $this->bo->so->read(array('res_id' => $content['nm']['view_accs_of']));
-			$content['view_accs_of'] = $content['nm']['view_accs_of'];
+			$master = $this->bo->so->read(array('res_id' => $content['nm']['filter2']));
+			$content['nm']['options-filter2'] = resources_bo::$filter_options + array(
+				$master['res_id'] => lang('accessories of') . ' ' . $master['name']
+			);
 			$content['nm']['get_rows'] 	= 'resources.resources_bo.get_rows';
-			$content['nm']['no_filter'] 	= true;
-			$content['nm']['no_filter2'] 	= true;
-			$no_button['back'] = false;
-			$no_button['add'] = true;
-			$no_button['add_sub'] = false;
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('resources') . ' - ' . lang('accessories of '). ' '. $master['name'] .
 				($master['short_description'] ? ' [' . $master['short_description'] . ']' : '');
 		}
 		$preserv = $content;
+
+		$options = array();
 
 		$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$content['nm']);
 		$this->tmpl->read('resources.show');
@@ -215,19 +209,31 @@ class resources_ui
 				'group' => $group=1,
 				'disableClass' => 'rowNoEdit',
 			),
-			'view' => array(
-				'caption' => 'View',
-				'allowOnMultiple' => false,
-				'url' => 'menuaction=resources.resources_ui.show&res_id=$id',
-				'popup' => egw_link::get_registry('resources', 'view_popup'),
-				'group' => $group,
-			),
 			'add' => array(
-				'caption' => 'Add',
-				'url' => 'menuaction=resources.resources_ui.edit',
+				'caption' => 'New resource',
+				'url' => 'menuaction=resources.resources_ui.edit&accessory_of=-1',
 				'popup' => egw_link::get_registry('resources', 'add_popup'),
 				'group' => $group,
 			),
+			'view-acc' => array(
+				'caption' => 'View accessories',
+				'icon' => 'view_acc',
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=resources.resources_ui.index&view_accs_of=$id',
+				'group' => $group,
+				'enableClass' => 'hasAccessories'
+			),
+			'new_accessory' => array(
+				'caption' => 'New accessory',
+				'icon' => 'new',
+				'group' => $group,
+				'url' => 'menuaction=resources.resources_ui.edit&res_id=0&accessory_of=$id',
+				'popup' => egw_link::get_registry('resources', 'add_popup'),
+				'disableClass' => 'no_new_accessory',
+				'allowOnMultiple' => false
+			),
+
+
 			'select_all' => array(
 				'caption' => 'Whole query',
 				'checkbox' => true,
@@ -248,13 +254,6 @@ class resources_ui
 				'allowOnMultiple' => true,
 				'disableClass' => 'no_book',
 			),
-			'new_accessory' => array(
-				'caption' => 'New accessory',
-				'group' => $group,
-				'url' => 'menuaction=resources.resources_ui.edit&res_id=0&accessory_of=$id',
-				'popup' => egw_link::get_registry('resources', 'add_popup'),
-				'disableClass' => 'no_new_accessory',
-			),
 /*
 			'documents' => resources_merge::document_action(
 				$GLOBALS['egw_info']['user']['preferences']['resources']['document_dir'],
@@ -264,10 +263,10 @@ class resources_ui
 */
 			'delete' => array(
 				'caption' => 'Delete',
-				'confirm' => 'Delete this entry',
-				'confirm_multiple' => 'Delete these entries',
 				'group' => ++$group,
 				'disableClass' => 'no_delete',
+				'nm_action' => 'open_popup',
+				'hideOnDisabled' => true
 			),
 		);
 		return $actions;
@@ -296,6 +295,7 @@ class resources_ui
 			@set_time_limit(0);                     // switch off the execution time limit, as it's for big selections to small
 			$query['num_rows'] = -1;        // all
 			$this->bo->get_rows($query,$resources,$readonlys);
+			$checked = array();
 			foreach($resources as $resource)
 			{
 				$checked[] = $resource['res_id'];
@@ -309,7 +309,6 @@ class resources_ui
 		switch($action)
 		{
 			case 'view-calendar':
-				echo "window.location = '".egw::link('/index.php',$url_params);
 				$resource_ids = array(0);
 				$url_params = array(
 					'menuaction' => 'calendar.calendar_uiviews.planner',
@@ -321,7 +320,7 @@ class resources_ui
 				}
 				$url_params['owner'] = implode(',',$resource_ids);
 				$success = count($resource_ids);
-				egw_framework::set_onload("window.location = '".egw::link('/index.php',$url_params).'\';');
+				egw_framework::set_onload('window.location.href = "'.egw::link('/index.php',$url_params,'calendar').'"');
 				$action_msg = lang('view calendar');
 				break;
 			case 'book':
@@ -340,8 +339,50 @@ class resources_ui
 				break;
 			case 'delete':
 				$action_msg = lang('deleted');
-				foreach((array)$checked as $n => $id)
+				$promoted_accessories = 0;
+				foreach($checked as $n => &$id)
 				{
+					if($settings == 'promote')
+					{
+						// Handle a selected accessory
+						$resource = $this->bo->read($id);
+						if($resource['accessory_of'] > 0)
+						{
+							$resource['accessory_of'] = -1;
+							$this->bo->save($resource);
+							$promoted_accessories++;
+							continue;
+						}
+						
+						// Make associated accessories into resources
+						$accessories = $this->bo->get_acc_list($id);
+						foreach($accessories as $acc_id => $name)
+						{
+							$acc = $this->bo->read($acc_id);
+							$acc['accessory_of'] = -1;
+							$this->bo->save($acc);
+							$promoted_accessories++;
+
+							// Don't need to process these ones now
+							$checked_key = array_search($acc_id, $checked);
+							if($checked_key !== false) unset($checked[$checked_key]);
+						}
+					}
+					else
+					{
+						// Remove checked accessories, deleting resource will remove them
+						// We get an error if we try to delete them after they're gone
+						$accessories = $this->bo->get_acc_list($id);
+						foreach($accessories as $acc_id => $name)
+						{
+							$checked_key = array_search($acc_id, $checked);
+							if($checked_key !== false)
+							{
+								$success++;
+								unset($checked[$checked_key]);
+							}
+						}
+					}
 					$error = $this->bo->delete($id);
 					if (!$error)
 					{
@@ -353,6 +394,7 @@ class resources_ui
 						$failed++;
 					}
 				}
+				if($promoted_accessories) $action_msg .= ", " . lang('%1 accessories now resources',$promoted_accessories);
 				break;
 		}
 		return $failed == 0;
@@ -368,54 +410,81 @@ class resources_ui
 	{
 		if (is_array($content))
 		{
-			if(isset($content['save']) || isset($content['delete']))
+			list($button) = @each($content['button']);
+			unset($content['button']);
+			switch($button)
 			{
-				if(isset($content['save']))
-				{
+				case 'save':
+				case 'apply':
 					unset($content['save']);
+					unset($content['apply']);
 // 					if($content['id'] != 0)
 // 					{
 // 						// links are already saved by eTemplate
 // 						unset($resource['link_to']['to_id']);
 // 					}
-					$content['msg'] = $this->bo->save($content);
-				}
-				if(isset($content['delete']))
-				{
+					$result = $this->bo->save($content);
+					if(is_numeric($result))
+					{
+						$content['res_id'] = $result;
+					}
+					else
+					{
+						$content['msg'] = $result;
+					}
+					break;
+				case 'delete':
 					unset($content['delete']);
 					$content['msg'] = $this->bo->delete($content['res_id']);
-				}
-
-				if($content['msg'])
-				{
-					return $this->edit($content);
-				}
-				$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',
-					array('menuaction' => 'resources.resources_ui.index'))."';";
+					break;
+			}
+			$js = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','addressbook',{$content['res_id']});";
+			if($button != 'apply' && !$content['msg'])
+			{
 				$js .= 'window.close();';
 				echo "<html><body><script>$js</script></body></html>\n";
 				$GLOBALS['egw']->common->egw_exit();
 			}
-		}
-		else
-		{
-			$res_id = $content;
-			if (isset($_GET['res_id'])) $res_id = $_GET['res_id'];
-			if (isset($_GET['accessory_of'])) $accessory_of = $_GET['accessory_of'];
-			$content = array('res_id' => $res_id);
-
-			if ($res_id > 0)
+			else
 			{
-				$content = $this->bo->read($res_id);
-				$content['gen_src_list'] = strpos($content['picture_src'],'.') !== false ? $content['picture_src'] : false;
-				$content['picture_src'] = strpos($content['picture_src'],'.') !== false ? 'gen_src' : $content['picture_src'];
-				$content['link_to'] = array(
-					'to_id' => $res_id,
-					'to_app' => 'resources'
-				);
+				$GLOBALS['egw_info']['flags']['java_script'] .= "<script>$js</script>";
 			}
-			if ($_GET['msg']) $content['msg'] = strip_tags($_GET['msg']);
 		}
+
+		$nm_session_data = $GLOBALS['egw']->session->appsession('session_data','resources_index_nm');
+		$res_id = is_numeric($content) ? (int)$content : $content['res_id'];
+		if (isset($_GET['res_id'])) $res_id = $_GET['res_id'];
+		if (isset($nm_session_data['filter2']) && $nm_session_data['filter2'] > 0) $accessory_of = $nm_session_data['filter2'];
+		if (isset($_GET['accessory_of'])) $accessory_of = $_GET['accessory_of'];
+		$content = array('res_id' => $res_id);
+
+		if ($res_id > 0)
+		{
+			$content = $this->bo->read($res_id);
+			$content['gen_src_list'] = strpos($content['picture_src'],'.') !== false ? $content['picture_src'] : false;
+			$content['picture_src'] = strpos($content['picture_src'],'.') !== false ? 'gen_src' : $content['picture_src'];
+			$content['link_to'] = array(
+				'to_id' => $res_id,
+				'to_app' => 'resources'
+			);
+		} elseif ($accessory_of > 0) {
+			// Pre-set according to parent
+			$owner = $this->bo->read($accessory_of);
+			if($owner['accessory_of'] > 0)
+			{
+				// Accessory of accessory not allowed, grab parent resource
+				$accessory_of = $owner['accessory_of'];
+				$owner = $this->bo->read($accessory_of);
+			}
+			$content['cat_id'] = $owner['cat_id'];
+			$content['bookable'] = true;
+		} else {
+			// New resource
+			$content['cat_id'] = $nm_session_data['filter'];
+			$content['bookable'] = true;
+		}
+		if ($_GET['msg']) $content['msg'] = strip_tags($_GET['msg']);
+	
 		// some presetes
 		$content['resource_picture'] = $this->bo->get_picture($content['res_id'],$content['picture_src'],$size=true);
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
@@ -425,97 +494,34 @@ class resources_ui
 		$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
 		$sel_options['cat_id'] =  $this->bo->acl->get_cats(EGW_ACL_ADD);
 		$sel_options['cat_id'] = count($sel_options['cat_id']) == 1 ? $sel_options['cat_id'] :
-			$content['cat_id'] ? $sel_options['cat_id'] : array('' => lang('select one')) + $sel_options['cat_id'];
+			array('' => lang('select one')) + $sel_options['cat_id'];
 		if($accessory_of > 0 || $content['accessory_of'] > 0)
 		{
 			$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : $accessory_of;
-			$catofmaster = $this->bo->so->get_value('cat_id',$content['accessory_of']);
-			$sel_options['cat_id'] = array($catofmaster => $sel_options['cat_id'][$catofmaster]);
 		}
+		$search_options = array('accessory_of' => -1);
+		$sel_options['accessory_of'] = array(-1 => lang('none')) + (array)$this->bo->link_query('',$search_options);
+		if($res_id) unset($sel_options['accessory_of'][$res_id]);
 
 // 		$content['general|page|pictures|links'] = 'resources.edit_tabs.page';  //debug
-		$no_button = array(); // TODO: show delete button only if allowed to delete resource
+
+		// Permissions
+		$read_only = array();
+		if($res_id && !$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_EDIT))
+		{
+			$read_only['__ALL__'] = true;
+		}
+		if(!$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_DELETE))
+		{
+			$read_only['delete'] = true;
+		}
+
+		// Disable custom tab if there are no custom fields defined
+		$read_only['tabs']['custom'] = !(config::get_customfields('resources',true));
+
 		$preserv = $content;
 		$this->tmpl->read('resources.edit');
-		return $this->tmpl->exec('resources.resources_ui.edit',$content,$sel_options,$no_button,$preserv,2);
-
-	}
-
-	/**
-	 * showes a single resource
-	 *
-	 * @param int $res_id resource id
-	 * @author Lukas Weiss <wnz.gh05t@users.sourceforge.net>
-	 */
-	function show($res_id=0)
-	{
-		if (is_array($content = $res_id))
-		{
-			if(isset($content['btn_delete']))
-			{
-				$content['msg'] = $this->bo->delete($content['res_id']);
-				if($content['msg'])
-				{
-					return $this->show($content);
-				}
-				$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',
-					array('menuaction' => 'resources.resources_ui.index'))."';";
-				$js .= 'window.close();';
-				echo "<html><body><script>$js</script></body></html>\n";
-				$GLOBALS['egw']->common->egw_exit();
-			}
-			if(isset($content['btn_edit']))
-			{
-				return $this->edit($content['res_id']);
-			}
-
-		}
-		if (isset($_GET['res_id'])) $res_id = $_GET['res_id'];
-
-		$content = array('res_id' => $res_id);
-		$content = $this->bo->read($res_id);
-		$content['gen_src_list'] = strpos($content['picture_src'],'.') !== false ? $content['picture_src'] : false;
-		$content['picture_src'] = strpos($content['picture_src'],'.') !== false ? 'gen_src' : $content['picture_src'];
-		$content['link_to'] = array(
-				'to_id' => $res_id,
-				'to_app' => 'resources'
-		);
-
-		$content['resource_picture'] = $this->bo->get_picture($content['res_id'],$content['picture_src'],$size=true);
-		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
-		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
-
-		$content['quantity'] = ($content['useable'] == $content['quantity']) ? $content['quantity'] : $content['quantity'].' ('.lang('useable').' '.$content['useable'].')';
-
-		//$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
-
-		$content['cat_name'] =  $this->bo->acl->get_cat_name($content['cat_id']);
-		$content['cat_admin'] = $this->bo->acl->get_cat_admin($content['cat_id']);
-
-/*		if($content['accessory_of'] > 0)
-		{
-			$catofmaster = $this->bo->so->get_value('cat_id',$content['accessory_of']);
-			$sel_options['cat_id'] = array($catofmaster => $sel_options['cat_id'][$catofmaster]);
-		}
-*/
-		$content['description'] = chop($content['long_description']) ? $content['long_description'] : (chop($content['short_description']) ? $content['short_description'] : lang("no description available"));
-		$content['description'] = $content['description'] ? $content['description'] : lang('no description available');
-		$content['link_to'] = array(
-					'to_id' => $res_id,
-					'to_app' => 'resources'
-				);
-		$sel_options = array();
-		$no_button = array(
-			'btn_buy' => !$content['buyable'],
-			'btn_book' => !$content['bookable'],
-			'btn_calendar' => !$content['bookable'],
-			'btn_edit' => !$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_EDIT),
-			'btn_delete' => !$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_DELETE)
-			);
-		$preserv = $content;
-		$this->tmpl->read('resources.showdetails');
-		return $this->tmpl->exec('resources.resources_ui.show',$content,$sel_options,$no_button,$preserv,2);
-
+		return $this->tmpl->exec('resources.resources_ui.edit',$content,$sel_options,$read_only,$preserv,2);
 	}
 
 	/**
@@ -702,7 +708,7 @@ class resources_ui
 			}
 		}
 		// add already selected single resources to the selectbox, eg. call of the resource-calendar from the resources app
-		$resources = array('r0' => lang('none'));
+		$resources = array();
 		$res_ids = array();
 		foreach($owners as $key => $owner)
 		{
@@ -712,6 +718,7 @@ class resources_ui
 				$selected[] = $owner;
 			}
 		}
+
 		// Take out resources not allowed by perms, above
 		$res_ids = array_intersect($res_ids,$allowed_list);
 		if (count($res_ids))
@@ -728,13 +735,15 @@ class resources_ui
 				$selected,
 				array_merge($resources,$res_cats),
 				$no_lang=true,
-				$options='style="width: 100%;" onchange="load_cal(\''.
+				$options='data-placeholder="'.lang('select resources').'" style="width: 100%;" onchange="load_cal(\''.
 					egw::link('/index.php',$param,false).'\',\'uical_select_resource\',true);" id="uical_select_resource"',
-				$multiple=count($selected) ? 4 : 0
+				$multiple=4,
+				true
 			);
 			return array(
 				array(
-					'text' => $selectbox,
+					// Add some jQuery to make sure dropdown is displayed
+					'text' => $selectbox . "<script>\$j('select[name=\"owner\[\]\"]').parent('td').css('overflow','visible').parents('div.divSidebox').css('overflow','visible');</script>",
 					'no_lang' => True,
 					'link' => False
 				)

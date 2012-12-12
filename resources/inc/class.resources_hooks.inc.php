@@ -34,6 +34,7 @@ class resources_hooks
 			{
 				$file['Add resource'] = "javascript:egw_openWindowCentered2('".egw::link('/index.php',array(
 						'menuaction' => 'resources.resources_ui.edit',
+						'accessory_of' => -1
 					),false)."','_blank',800,600,'yes')";
 			}
 			display_sidebox($appname,$title,$file);
@@ -88,7 +89,7 @@ class resources_hooks
 			'title'      => 'resources.resources_bo.link_title',
 			'titles'     => 'resources.resources_bo.link_titles',
 			'view'       => array(
-				'menuaction' => 'resources.resources_ui.show'
+				'menuaction' => 'resources.resources_ui.edit'
 			),
 			'view_id'    => 'res_id',
 			'view_popup' => '850x600',
@@ -126,7 +127,7 @@ class resources_hooks
 	 * Resources' ACL _requires_ a category.
 	 * Moves all resources to parent, if it exists.  If it doesn't, another category is created.
 	 */
-	function delete_category($args) 
+	function delete_category($args)
 	{
 		$cat = categories::read($args['cat_id']);
 

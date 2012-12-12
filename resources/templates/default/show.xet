@@ -13,12 +13,13 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.001">
+	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column/>
 				<column/>
 				<column width="3%"/>
+				<column/>
 				<column/>
 				<column/>
 				<column/>
@@ -43,6 +44,7 @@
 						<nextmatch-sortheader label="Location" id="location"/>
 						<description value="Storage information"/>
 					</vbox>
+					<nextmatch-header label="Resource / Accessories"/>
 					<nextmatch-customfields id="customfields"/>
 					<hbox align="right">
 						<nextmatch-header label="Actions" id="legacy_actions"/>
@@ -73,6 +75,19 @@
 						<description id="${row}[location]" no_lang="1"/>
 						<description id="${row}[storage_info]" no_lang="1"/>
 					</vbox>
+					<vbox no_lang="1">
+						<description id="${row}[accessory_of_label]" no_lang="1" href="resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of]" extra_link_popup="850x600"/>
+						<grid width="100%" id="${row}[accessories]">
+							<columns>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description id="${row}[name]" no_lang="1" href="resources.resources_ui.edit&amp;res_id=$row_cont[acc_id]" extra_link_popup="850x600"/>
+								</row>
+							</rows>
+						</grid>
+					</vbox>
 					<customfields-list id="$row"/>
 					<grid id="${row}">
 						<columns>
@@ -86,10 +101,10 @@
 								<button align="center" statustext="Book this resource" label="Book this resource" id="bookable[$cont[res_id]]" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;participants=r$cont[res_id]'),'','dependent=yes,width=750,height=400,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;" image="navbar" ro_image="trams16x16" class="image16"/>
 								<button align="center" statustext="Edit this entry" label="Edit" id="edit[$cont[res_id]]" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit&amp;res_id=$cont[res_id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;" image="edit" ro_image="trans16x16"/>
 								<button align="center" statustext="Create new accessory for this resource" label="Create new accessory for this resource" id="new_acc[$cont[res_id]]" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit&amp;res_id=0&amp;accessory_of=$cont[res_id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;" image="new" ro_image="trans16x16"/>
-								<button align="right" statustext="View this entry" label="View" id="view[$cont[res_id]]" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.show&amp;res_id=$cont[res_id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;" image="view" ro_image="trans16x16"/>
+								<description/>
 							</row>
 							<row>
-								<button align="center" statustext="Show calendar of resource" label="Show calendar of resource" id="calendar[$cont[res_id]]" onclick="location=egw::link('/index.php','menuaction=calendar.calendar_uiviews.planner&amp;sortby=user&amp;owner=0,r$cont[res_id]'); return false;" image="calendar/planner" ro_image="trans16x16"/>
+								<button align="center" statustext="Show calendar of resource" label="Show calendar of resource" id="calendar[$cont[res_id]]" onclick="location=egw::link('/index.php','menuaction=calendar.calendar_uiviews.planner&amp;sortby=user&amp;owner=0,r$cont[res_id]','calendar'); return false;" image="calendar/planner" ro_image="trans16x16"/>
 								<button align="center" statustext="Delete this entry" label="Delete" id="delete[$cont[res_id]]" onclick="return confirm('Delete this entry');" image="delete" ro_image="trans16x16"/>
 								<button align="center" statustext="View accessories for this resource" label="View accessories for this resource" id="view_acc[$cont[res_id]]" image="view_acc" ro_image="trans16x16"/>
 								<checkbox align="right" id="checkbox[]" options="$cont[res_id]"/>
@@ -100,7 +115,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.show" template="" lang="" group="0" version="1.9.002">
+	<template id="resources.show" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
 			<columns>
 				<column width="100%"/>
@@ -124,9 +139,20 @@
 				<row>
 					<hbox>
 						<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false; return false;"/>
-						<button label="Add accessory" id="add_sub" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.edit&amp;content=0&amp;accessory_of=$cont[view_accs_of]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;"/>
-						<button label="Back" id="back"/>
 					</hbox>
+				</row>
+				<row>
+					<box class="action_popup prompt" id="delete_popup">
+						<vbox class="prompt">
+							<description value="Delete" class="promptheader"/>
+							<description value="Delete accessories of selected resources too?"/>
+							<hbox>
+								<button label="Yes - Delete accessories too" id="delete" onclick="nm_submit_popup(this); return false;"/>
+								<button label="No - Make them resources" id="delete_promote" onclick="nm_popup_action.id = 'delete_promote'; nm_submit_popup(this); return false;"/>
+								<buttononly label="Cancel" onclick="nm_hide_popup(this,'delete_popup');"/>
+							</hbox>
+						</vbox>
+					</box>
 				</row>
 			</rows>
 		</grid>
@@ -134,6 +160,16 @@
 			.image16 img {
  max-width: 16px;
  max-height: 16px;
+}
+div.action_popup[id] {
+	position: fixed;
+	top: 200px;
+	left: 450px;
+	width: 76ex;
+	z-index: 20000;
+	display: none;
+	border-collapse:collapse;
+	border-spacing:0px
 }
 		</styles>
 	</template>

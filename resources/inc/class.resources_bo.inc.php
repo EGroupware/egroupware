@@ -38,6 +38,16 @@ class resources_bo
 	 */
 	var $cats;
 
+	/**
+	 * List of filter options
+	 */
+	public static $filter_options = array(
+		-1 => 'resources',
+		-2 => 'accessories',
+		-3 => 'resources and accessories'
+		// Accessories of a resource added when resource selected
+	);
+
 	function __construct()
 	{
 		$this->so = new resources_so();
@@ -58,6 +68,7 @@ class resources_bo
 	 */
 	function get_rows($query,&$rows,&$readonlys)
 	{
+		$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$query);
 		if ($query['store_state'])	// request to store state in session and filter in prefs?
 		{
 			egw_cache::setSession('resources',$query['store_state'],$query);
@@ -71,8 +82,34 @@ class resources_bo
 		if ($this->debug) _debug_array($query);
 		$read_onlys = 'res_id,name,short_description,quantity,useable,bookable,buyable,cat_id,location,storage_info';
 
-		$accessory_of = $query['view_accs_of'] ? $query['view_accs_of'] : -1;
- 		$filter = array('accessory_of' => $accessory_of);
+		$filter = array();
+		$join = '';
+		$extra_cols = array();
+
+		// Sub-query to get the count of accessories
+		$acc_join = "LEFT JOIN (SELECT accessory_of AS accessory_id, count(res_id) as acc_count FROM {$this->so->table_name} GROUP BY accessory_of) AS acc ON acc.accessory_id = {$this->so->table_name}.res_id ";
+
+		switch($query['filter2'])
+		{
+			case -1:
+				// Resources only
+				$filter['accessory_of'] = -1;
+				$join = $acc_join;
+				$extra_cols[] = 'acc_count';
+				break;
+			case -2:
+				// Accessories only
+				$filter[] = 'accessory_of != -1';
+				break;
+			case -3:
+				// All
+				$join = $acc_join;
+				$extra_cols[] = 'acc_count';
+				break;
+			default:
+				$filter['accessory_of'] = $query['filter2'];
+		}
+		
 		if ($query['filter'])
 		{
 			if (($children = $this->acl->get_cats(EGW_ACL_READ,$query['filter'])))
@@ -102,7 +139,7 @@ class resources_bo
 		$start = (int)$query['start'];
 
 		foreach ($filter as $k => $v) $query['col_filter'][$k] = $v;
-		$this->so->get_rows($query, $rows, $readonlys);
+		$this->so->get_rows($query, $rows, $readonlys, $join, false, false, $extra_cols);
 		$nr = $this->so->total;
 
 		// we are called to serve bookable resources (e.g. calendar-dialog)
@@ -128,7 +165,9 @@ class resources_bo
 				$readonlys["delete[$resource[res_id]]"] = true;
 				$resource['class'] .= 'no_delete ';
 			}
-			if ((!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_ADD)) || $accessory_of != -1)
+			if ((!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_ADD)) ||
+				// Allow new accessory action when viewing accessories of a certain resource
+				$query['filter2'] <= 0 && $resource['accessory_of'] != -1)
 			{
 				$readonlys["new_acc[$resource[res_id]]"] = true;
 				$resource['class'] .= 'no_new_accessory ';
@@ -150,21 +189,20 @@ class resources_bo
 				$readonlys["buyable[$resource[res_id]]"] = true;
 				$resource['class'] .= 'no_buy ';
 			}
-			$readonlys["view_acc[$resource[res_id]]"] = true;
-			$links = egw_link::get_links('resources',$resource['res_id']);
-			if(count($links) != 0 && $accessory_of == -1)
+			$readonlys["view_acc[{$resource['res_id']}]"] = ($resource['acc_count'] == 0);
+			$resource['class'] .= ($resource['accessory_of']==-1 ? 'resource ' : 'accessory ');
+			if($resource['acc_count'])
 			{
-				foreach ($links as $link_num => $link)
+				$resource['class'] .= 'hasAccessories ';
+				$accessories = $this->get_acc_list($resource['res_id']);
+				foreach($accessories as $acc_id => $acc_name)
 				{
-					if($link['app'] == 'resources')
-					{
-						if($this->so->get_value('accessory_of',$link['res_id']) != -1)
-						{
-							$readonlys["view_acc[$resource[res_id]]"] = false;
-						}
-					}
+					$resource['accessories'][] = array('acc_id' => $acc_id, 'name' => $this->link_title($acc_id));
 				}
+			} elseif ($resource['accessory_of'] > 0) {
+				$resource['accessory_of_label'] = $this->link_title($resource['accessory_of']);
 			}
+
 			$rows[$num]['picture_thumb'] = $this->get_picture($resource);
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}
@@ -204,10 +242,15 @@ class resources_bo
 		{
 			return lang('You are not permitted to edit this resource!');
 		}
+		$old = array();
 		// we need an id to save pictures and make links...
 		if(!$resource['res_id'])
 		{
 			$resource['res_id'] = $this->so->save($resource);
+		}
+		else
+		{
+			$old = $this->read($resource['res_id']);
 		}
 
 		switch ($resource['picture_src'])
@@ -251,10 +294,16 @@ class resources_bo
 			$this->remove_picture($resource['res_id']);
 		}
 
+		// Update link title
+		egw_link::notify_update('resources',$resource['res_id'], $resource);
 		// save links
 		if(is_array($resource['link_to']['to_id']))
 		{
 			egw_link::link('resources',$resource['res_id'],$resource['link_to']['to_id']);
+		}
+		if($resource['accessory_of'] != $old['accessory_of'])
+		{
+			egw_link::unlink(0,'resources',$resource['res_id'],'','resources',$old['accessory_of']);
 		}
 		if($resource['accessory_of'] != -1)
 		{
@@ -273,7 +322,8 @@ class resources_bo
 			}
 		}
 
-		return $this->so->save($resource) ? false : lang('Something went wrong by saving resource');
+		$res_id = $this->so->save($resource);
+		return $res_id ? $res_id : lang('Something went wrong by saving resource');
 	}
 
 	/**
@@ -291,6 +341,16 @@ class resources_bo
 
 		if ($this->so->delete(array('res_id'=>$res_id)))
 		{
+			$accessories = $this->get_acc_list($res_id);
+			foreach($accessories as $acc_id => $name)
+			{
+				if($this->delete($acc_id))
+				{
+					$acc = $this->read($acc_id);
+					$acc['accessory_of'] = -1;
+					$this->save($acc);
+				}
+			};
 			$this->remove_picture($res_id);
 	 		egw_link::unlink(0,'resources',$res_id);
 	 		// delete the resource from the calendar
@@ -397,6 +457,10 @@ class resources_bo
 		$limit = false;
 		if($options['start'] || $options['num_rows']) {
 			$limit = array($options['start'], $options['num_rows']);
+		}
+		if($options['accessory_of'])
+		{
+			$filter['accessory_of'] = $options['accessory_of'];
 		}
 		$data = $this->so->search($criteria,$only_keys,$order_by='name',$extra_cols='',$wildcard='%',$empty,$op='OR',$limit,$filter);
 		// maybe we need to check disponibility of the searched resources in the calendar if $pattern ['exec'] contains some extra args
