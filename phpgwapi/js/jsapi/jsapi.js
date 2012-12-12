@@ -174,6 +174,8 @@ function egw_topWindow()
  */
 function egw_appWindow(_app)
 {
+	var framework = egw_getFramework();
+	if(framework && framework.egw_appWindow) return framework.egw_appWindow(_app);
 	return window;
 }
 
@@ -284,7 +286,7 @@ window.egw_getFramework = function()
 	{
 		return framework;
 	}
-	else if (typeof window.parent.egw_getFramework != "undefined")
+	else if (typeof window.parent.egw_getFramework != "undefined" && window !== window.parent)
 	{
 		return window.parent.egw_getFramework();
 	}
