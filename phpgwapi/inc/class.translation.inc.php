@@ -458,8 +458,12 @@ class translation
 			egw_cache::setTree(__CLASS__, $file, filectime($file));
 
 			$line_nr = 0;
-			while(($line = fgetcsv($f, 1024, "\t")))
+			//use fgets and split the line, as php5.3.3 with squeeze does not support splitting lines with fgetcsv while reading properly
+			//if the first letter after the delimiter is a german umlaut (UTF8 representation thereoff)
+			//while(($line = fgetcsv($f, 1024, "\t")))
+			while($line = fgets($f))
 			{
+				$line = explode("\t", $line);
 				++$line_nr;
 				if (count($line) != 4) continue;
 				list($l_id,$l_app,$l_lang,$l_translation) = $line;
