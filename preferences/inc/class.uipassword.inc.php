@@ -55,8 +55,16 @@ class uipassword
 
 		if($GLOBALS['egw_info']['server']['auth_type'] != 'ldap')
 		{
-			$GLOBALS['egw']->template->set_var('sql_message',lang('note: This feature does *not* change your email password. This will '
-				. 'need to be done manually.'));
+			$smtpClassName = 'defaultsmtp';
+			if (($default_profile_id = emailadmin_bo::getDefaultProfileID()))
+			{
+				$bofelamimail = felamimail_bo::forceEAProfileLoad($default_profile_id);
+				//fetch the smtpClass
+				//_debug_array($bofelamimail->ogServer);
+				$smtpClassName = get_class($bofelamimail->ogServer);
+			}
+			$GLOBALS['egw']->template->set_var('sql_message',($smtpClassName!='emailadmin_smtp_sql'?lang('note: This feature does *not* change your email password. This will '
+				. 'need to be done manually.'):''));
 		}
 
 		if($_POST['change'])
@@ -86,7 +94,7 @@ class uipassword
 			//error_log(__METHOD__.__LINE__.' Strength:'.$strength);
 
 			if ($strength && $strength>5) $strength =5;
-			if ($strength && $strength<0) $strength = false; 
+			if ($strength && $strength<0) $strength = false;
 			if($GLOBALS['egw_info']['server']['check_save_passwd'] && $strength==false) $strength=5;//old behavior
 			//error_log(__METHOD__.__LINE__.' Strength:'.$strength);
 			if(($GLOBALS['egw_info']['server']['check_save_passwd'] || $strength) && $error_msg = $GLOBALS['egw']->auth->crackcheck($n_passwd,$strength))
