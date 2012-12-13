@@ -196,6 +196,16 @@ class egw_json_response
 	}
 
 	/**
+	 * Do we have a JSON response to send back
+	 *
+	 * @return boolean
+	 */
+	public function haveJSONResponse()
+	{
+		return (boolean) $this->responseArray;
+	}
+
+	/**
 	 * Private function used to send the HTTP header of the JSON response
 	 */
 	private function sendHeader()
@@ -258,6 +268,20 @@ class egw_json_response
 			'type' => $key,
 			'data' => $data,
 		);
+	}
+
+	/**
+	 * Init responseArray
+	 *
+	 * @param array $arr
+	 * @return array previous content
+	 */
+	public function initResponseArray()
+	{
+		$return = $this->responseArray;
+		$this->responseArray = array();
+		$this->hasData = false;
+		return $return;
 	}
 
 	/**
