@@ -693,13 +693,16 @@ class emailadmin_bo extends so_sql
 				//_debug_array($ogUserData);
 			}
 			// query imap server only, if account is active (or no smtp server configured)
+			// imap server tells us stuff about quota only, so we should not query, if the account is forward only
 			if (!isset($ogUserData) || $ogUserData['accountStatus'] == 'active')
 			{
+				$queryIMAP = true;
+				if (isset($ogUserData['deliveryMode']) && $ogUserData['deliveryMode']==emailadmin_smtp::FORWARD_ONLY) $queryIMAP=false;
 				$icServerKeys = array_keys((array)$userProfile->ic_server);
 				$profileID = array_shift($icServerKeys);
 				$icServer = $userProfile->getIncomingServer($profileID);
 				if(($icServer instanceof defaultimap) && $username = $GLOBALS['egw']->accounts->id2name($_accountID)) {
-					$icUserData = $icServer->getUserData($username);
+					$icUserData = ($queryIMAP?$icServer->getUserData($username):array());
 					//_debug_array($icUserData);
 				}
 			}
