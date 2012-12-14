@@ -194,8 +194,9 @@
 
 		function getUserDefinedIdentities()
 		{
+			$profileID = emailadmin_bo::getUserDefaultProfileID();
 			$profileData        = $this->boemailadmin->getUserProfile('felamimail');
-			if(!($profileData instanceof ea_preferences) || !($profileData->ic_server[0] instanceof defaultimap)) {
+			if(!($profileData instanceof ea_preferences) || !($profileData->ic_server[$profileID] instanceof defaultimap)) {
 				return false;
 			}
 			if($profileData->userDefinedAccounts || $profileData->userDefinedIdentities)
