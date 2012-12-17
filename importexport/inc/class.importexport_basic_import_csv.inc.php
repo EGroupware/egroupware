@@ -78,6 +78,11 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 	protected $is_admin = false;
 
 	/**
+	 * Select box values for human conversion
+	 */
+	protected $lookups = array();
+
+	/**
 	 * @var int
 	 */
 	protected $user = null;

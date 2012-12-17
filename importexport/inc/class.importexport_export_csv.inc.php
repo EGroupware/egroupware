@@ -282,6 +282,16 @@ class importexport_export_csv implements importexport_iface_export_record
 		if($appname) {
 			if(!self::$cf_parse_cache[$appname]) {
 				$c_fields = self::convert_parse_custom_fields($appname, $selects, $links, $methods);
+
+				// Add in any fields that are keys to another app
+				foreach((array)$fields['links'] as $link_field => $app)
+				{
+					if(is_numeric($link_field)) continue;
+					$links[$link_field] = $app;
+					// Set it as a normal link field
+					$fields['links'][] = $link_field;
+					unset($fields['links'][$link_field]);
+				}
 				self::$cf_parse_cache[$appname] = array($c_fields, $selects, $links, $methods);
 			}
 			list($c_fields, $c_selects, $links, $methods) = self::$cf_parse_cache[$appname];
@@ -294,6 +304,7 @@ class importexport_export_csv implements importexport_iface_export_record
 			}
 			$fields += $c_fields;
 			$selects += $c_selects;
+
 		}
 		foreach((array)$fields['select'] as $name) {
 			if($record->$name != null && is_array($selects) && $selects[$name]) {

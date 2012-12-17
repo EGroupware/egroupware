@@ -296,6 +296,21 @@
 				$preview = html::table($rows);
 				rewind($stream);
 			}
+			if(count($plugin->get_warnings())) {
+				$this->message .= "<br />\n".lang('Warnings').':';
+				foreach($plugin->get_warnings() as $record => $message) {
+					$this->message .= "\n$record: $message";
+				}
+				$this->message .= "<br />\n";
+			};
+			if(count($plugin->get_errors())) {
+				$this->message .= "<br />\n".lang('Problems during import:');
+				foreach($plugin->get_errors() as $record => $message) {
+					$this->message .= "<br />\n$record: $message";
+				}
+				if($count != $total_processed) $this->message .= "<br />\n".lang('Some records may not have been imported');
+				$this->message .= "<br />\n";
+			}
 			return '<h2>' . lang('Preview') . ' - ' . $plugin->get_name() . '</h2>' . $preview;
 		}
 

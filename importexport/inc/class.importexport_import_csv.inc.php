@@ -272,13 +272,23 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 
 			if(!self::$cf_parse_cache[$appname]) {
 				$c_fields = importexport_export_csv::convert_parse_custom_fields($appname, $selects, $links, $methods);
+				// Add in any fields that are keys to another app
+				foreach((array)$fields['links'] as $link_field => $app)
+				{
+					if(is_numeric($link_field)) continue;
+					$links[$link_field] = $app;
+					// Set it as a normal link field
+					$fields['links'][] = $link_field;
+					unset($fields['links'][$link_field]);
+				}
 				self::$cf_parse_cache[$appname] = array($c_fields, $selects, $links, $methods);
 			}
 			list($c_fields, $c_selects, $links, $methods) = self::$cf_parse_cache[$appname];
 			// Not quite a recursive merge, since only one level
-			foreach($fields as $type => &$list) {
+			foreach($fields as $type => &$list)
+			{
 				if($c_fields[$type]) {
-					$list = array_merge($c_fields[$type], $list);;
+					$list = array_merge($c_fields[$type], $list);
 					unset($c_fields[$type]);
 				}
 			}
@@ -301,8 +311,46 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 				}
 			}
 			foreach((array)$fields['links'] as $name) {
-				if($record[$name]) {
-					// TODO
+				if($record[$name] && $links[$name])
+				{
+					// Primary key to another app, not a link
+					// Text - search for a matching record
+					if(!is_numeric($record[$name]))
+					{
+						$results = egw_link::query($links[$name], $record[$name]);
+						if(count($results) > 1)
+						{
+							// More than 1 result.  Check for exact match
+							$exact_count = 0;
+							foreach($results as $id => $title)
+							{
+								if($title == $record[$name])
+								{
+									$exact_count++;
+									$app_id = $id;
+								}
+							}
+							if($exact_count != 1)
+							{
+								$warnings[] = lang('Unable to link to %1 "%2"',
+									lang($links[$name]), $record[$name]).
+ 									' - ' .lang('too many matches');
+								$record[$name] = null;
+								continue;
+							}
+							$record[$name] = $app_id;
+						}
+						else if (count($results) == 0)
+						{
+							$warnings[] = lang('Unable to link to %1 "%2"',
+								lang($links[$name]), $record[$name]).
+ 								' - ' . lang('no matches');
+							$record[$name] = null;
+							continue;
+						} else {
+							$record[$name] = key($results);
+						}
+					}
 				}
 			}
 			foreach((array)$fields['select-account'] as $name) {
