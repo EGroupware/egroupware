@@ -16,22 +16,7 @@ class resources_wizard_export_csv extends importexport_wizard_basic_export_csv
 		parent::__construct();
 
 		// Field mapping
-		$this->export_fields = array(
-			'res_id'	=> lang('Resource ID'),
-			'name'		=> lang('name'),
-			'short_description'	=> lang('short description'),
-			'cat_id'	=> lang('Category'),
-			'quantity'	=> lang('Quantity'),
-			'useable'	=> lang('Useable'),
-			'location'	=> lang('Location'),
-			'storage_info'	=> lang('Storage'),
-			'bookable'	=> lang('Bookable'),
-			'buyable'	=> lang('Buyable'),
-			'prize'		=> lang('Prize'),
-			'long_description'	=> lang('Long description'),
-			'inventory_number'	=> lang('inventory number'),
-			'accessory_of'	=> lang('Accessory of')
-		);
+		$this->export_fields = resources_bo::$field2label;
 
 		// Custom fields
 		$custom = config::get_customfields('resources', true);

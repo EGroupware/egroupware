@@ -128,6 +128,12 @@ class resources_ui
 		$content['nm']['options-filter']= array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ);
 		$content['nm']['options-filter2'] = resources_bo::$filter_options;
 
+		$config = config::read('resources');
+		if($config['history'])
+		{
+			$content['nm']['options-filter2'][resources_bo::DELETED] = lang('Deleted');
+		}
+
 		if($_GET['search']) {
 			$content['nm']['search'] = $_GET['search'];
 		}
@@ -268,6 +274,12 @@ class resources_ui
 				'nm_action' => 'open_popup',
 				'hideOnDisabled' => true
 			),
+			'restore' => array(
+				'caption' => 'Un-delete',
+				'enableClass' => 'deleted',
+				'hideOnDisabled' => true,
+				'group' => $group,
+			)
 		);
 		return $actions;
 	}
@@ -336,6 +348,15 @@ class resources_ui
 				$success = count($resource_ids);
 				egw_framework::set_onload("egw_openWindowCentered2('".egw::link('/index.php',$url_params) ."','_blank');");
 				$action_msg = lang('booked');
+				break;
+			case 'restore':
+				$action_msg = lang('restored');
+				foreach($checked as $n=>$id)
+				{
+					$resource = $this->bo->read($id);
+					$resource['deleted'] = null;
+					$this->bo->save($resource);
+				}
 				break;
 			case 'delete':
 				$action_msg = lang('deleted');
@@ -491,6 +512,15 @@ class resources_ui
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
 		$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : $accessory_of;
 
+		$content['history'] = array(
+			'id' => $res_id,
+			'app' => 'resources',
+			'status-widgets' => array(
+				'accessory_of' => 'link-entry:resources'
+			)
+		);
+		$sel_options['status'] = resources_bo::$field2label;
+
 		$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
 		$sel_options['cat_id'] =  $this->bo->acl->get_cats(EGW_ACL_ADD);
 		$sel_options['cat_id'] = count($sel_options['cat_id']) == 1 ? $sel_options['cat_id'] :
@@ -511,7 +541,9 @@ class resources_ui
 		{
 			$read_only['__ALL__'] = true;
 		}
-		if(!$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_DELETE))
+		$config = config::read('resources');
+		if(!$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_DELETE) ||
+			($content['deleted'] && !$GLOBALS['egw_info']['user']['apps']['admin'] && $config['history'] == 'history'))
 		{
 			$read_only['delete'] = true;
 		}

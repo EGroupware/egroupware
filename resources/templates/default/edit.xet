@@ -171,6 +171,9 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="resources.edit_tabs.history" template="" lang="" group="0" version="">
+		<historylog cols="1" id="history" rows="1"/>
+	</template>
 	<template id="resources.edit_tabs" template="" lang="" group="0" version="">
 		<grid height="380">
 			<columns>
@@ -187,6 +190,7 @@
 							<tab id="pictures" label="Picture" statustext="Prizeing information for booking or buying"/>
 							<tab id="links" label="Links" statustext="Web-Page of resource"/>
 							<tab id="custom" label="Custom" statustext="Pictures or resource"/>
+							<tab id="history" label="History"/>
 						</tabs>
 						<tabpanels>
 							<template id="resources.edit_tabs.general"/>
@@ -194,6 +198,7 @@
 							<template id="resources.edit_tabs.pictures"/>
 							<template id="resources.edit_tabs.links"/>
 							<template id="resources.edit_tabs.custom"/>
+							<template id="resources.edit_tabs.history"/>
 						</tabpanels>
 					</tabbox>
 				</row>

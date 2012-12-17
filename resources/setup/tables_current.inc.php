@@ -14,7 +14,7 @@
 $phpgw_baseline = array(
 	'egw_resources' => array(
 		'fd' => array(
-			'res_id' => array('type' => 'auto'),
+			'res_id' => array('type' => 'auto','nullable' => False),
 			'name' => array('type' => 'varchar','precision' => '100'),
 			'short_description' => array('type' => 'varchar','precision' => '100'),
 			'cat_id' => array('type' => 'int','precision' => '11','nullable' => False),
@@ -28,7 +28,8 @@ $phpgw_baseline = array(
 			'picture_src' => array('type' => 'varchar','precision' => '20'),
 			'accessory_of' => array('type' => 'int','precision' => '11','default' => '-1'),
 			'storage_info' => array('type' => 'varchar','precision' => '200'),
-			'inventory_number' => array('type' => 'varchar','precision' => '20')
+			'inventory_number' => array('type' => 'varchar','precision' => '20'),
+			'deleted' => array('type' => 'int','precision' => '8')
 		),
 		'pk' => array('res_id'),
 		'fk' => array(),

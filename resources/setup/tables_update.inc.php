@@ -335,3 +335,14 @@ function resources_upgrade1_8()
 
 	return $GLOBALS['setup_info']['resources']['currentver'] = '1.9.001';
 }
+
+function resources_upgrade1_9_001()
+{
+	$GLOBALS['egw_setup']->oProc->AddColumn('egw_resources','deleted',array(
+		'type' => 'int',
+		'precision' => '8'
+	));
+
+	return $GLOBALS['setup_info']['resources']['currentver'] = '1.9.002';
+}
+

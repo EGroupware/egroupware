@@ -18,6 +18,7 @@
  */
 class resources_bo
 {
+	const DELETED = 'deleted';
 	const PICTURE_NAME = '.picture.jpg';
 	var $resource_icons = '/resources/templates/default/images/resource_icons/';
 	var $debug = 0;
@@ -46,6 +47,23 @@ class resources_bo
 		-2 => 'accessories',
 		-3 => 'resources and accessories'
 		// Accessories of a resource added when resource selected
+	);
+
+	public static $field2label = array(
+		'res_id'	=> 'Resource ID',
+		'name'		=> 'name',
+		'short_description'	=> 'short description',
+		'cat_id'	=> 'Category',
+		'quantity'	=> 'Quantity',
+		'useable'	=> 'Useable',
+		'location'	=> 'Location',
+		'storage_info'	=> 'Storage',
+		'bookable'	=> 'Bookable',
+		'buyable'	=> 'Buyable',
+		'prize'		=> 'Prize',
+		'long_description'	=> 'Long description',
+		'inventory_number'	=> 'inventory number',
+		'accessory_of'	=> 'Accessory of'
 	);
 
 	function __construct()
@@ -106,8 +124,15 @@ class resources_bo
 				$join = $acc_join;
 				$extra_cols[] = 'acc_count';
 				break;
+			case self::DELETED:
+				$filter[] = 'deleted IS NOT NULL';
+				break;
 			default:
 				$filter['accessory_of'] = $query['filter2'];
+		}
+		if($query['filter2'] != self::DELETED)
+		{
+			$filter['deleted'] = null;
 		}
 		
 		if ($query['filter'])
@@ -154,13 +179,20 @@ class resources_bo
 			return $nr;
 		}
 
+		$config = config::read('resources');
 		foreach($rows as $num => &$resource)
 		{
 			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_EDIT))
 			{
 				$readonlys["edit[$resource[res_id]]"] = true;
 			}
-			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_DELETE))
+			elseif($resource['deleted'])
+			{
+				$resource['class'] .= 'deleted ';
+			}
+			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_DELETE) ||
+				($resource['deleted'] && !$GLOBALS['egw_info']['user']['apps']['admin'] && $config['history'] == 'history')
+			)
 			{
 				$readonlys["delete[$resource[res_id]]"] = true;
 				$resource['class'] .= 'no_delete ';
@@ -288,6 +320,12 @@ class resources_bo
 			return $msg;
 		}
 
+		// Check for restore of deleted, restore held links
+                if($old && $old['deleted'] && !$resource['deleted'])
+                {
+                        egw_link::restore('resources', $resource['res_id']);
+                }
+
 		// delete old pictures
 		if($resource['picture_src'] != 'own_src')
 		{
@@ -323,6 +361,17 @@ class resources_bo
 		}
 
 		$res_id = $this->so->save($resource);
+
+		// History & notifications
+		if (!is_object($this->tracking))
+		{
+			$this->tracking = new resources_tracking();
+		}
+		if ($this->tracking->track($resource,$old,$this->user) === false)
+		{
+			return implode(', ',$this->tracking->errors);
+		}
+
 		return $res_id ? $res_id : lang('Something went wrong by saving resource');
 	}
 
@@ -339,7 +388,17 @@ class resources_bo
 			return lang('You are not permitted to delete this resource!');
 		}
 
-		if ($this->so->delete(array('res_id'=>$res_id)))
+		// check if we only mark timesheets as deleted, or really delete them
+		$old = $this->read($res_id);
+		$config = config::read('resources');
+		if ($config['history'] != '' && $old['deleted'] == null)
+		{
+			$old['deleted'] = time();
+			$this->save($old);
+			egw_link::unlink(0,'resources',$res_id,'','','',true);
+			return false;
+		}
+		elseif ($this->so->delete(array('res_id'=>$res_id)))
 		{
 			$accessories = $this->get_acc_list($res_id);
 			foreach($accessories as $acc_id => $name)
