@@ -1068,7 +1068,7 @@ class calendar_ical extends calendar_boupdate
 	 * @param string $caldav_name=null name from CalDAV client or null (to use default)
 	 * @return int|boolean cal_id > 0 on success, false on failure or 0 for a failed etag|permission denied
 	 */
-	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0, $principalURL='', $user=null, $charset=null, $caldav_name=null)
+	function importVCal($_vcalData, $cal_id=-1, $etag=null, $merge=false, $recur_date=0, $principalURL='', $user=null, $charset=null, $caldav_name=null,$skip_notification=false)
 	{
 		//error_log(__METHOD__."(, $cal_id, $etag, $merge, $recur_date, $principalURL, $user, $charset, $caldav_name)");
 		$this->events_imported = 0;
@@ -1162,14 +1162,14 @@ class calendar_ical extends calendar_boupdate
 					{
 						if ($delete_exceptions)
 						{
-							$this->delete($id);
+							$this->delete($id,0,false,$skip_notification);
 						}
 						else
 						{
 							if (!($exception = $this->read($id))) continue;
 							$exception['uid'] = common::generate_uid('calendar', $id);
 							$exception['reference'] = $exception['recurrence'] = 0;
-							$this->update($exception, true);
+							$this->update($exception, true,true,false,true,$msg,$skip_notification);
 						}
 					}
 				}
@@ -1499,10 +1499,10 @@ class calendar_ical extends calendar_boupdate
 			if (in_array($event_info['type'], array('SERIES-EXCEPTION', 'SERIES-EXCEPTION-PROPAGATE', 'SERIES-PSEUDO-EXCEPTION')) &&
 				$event['status'] == 'CANCELLED')
 			{
-				if (!$this->delete($event['id'] ? $event['id'] : $cal_id, $event['recurrence']))
+				if (!$this->delete($event['id'] ? $event['id'] : $cal_id, $event['recurrence'],false,$skip_notification))
 				{
 					// delete fails (because no rights), reject recurrence
-					$this->set_status($event['id'] ? $event['id'] : $cal_id, $this->user, 'R', $event['recurrence']);
+					$this->set_status($event['id'] ? $event['id'] : $cal_id, $this->user, 'R', $event['recurrence'],false,true,$skip_notification);
 				}
 				continue;
 			}
@@ -1524,7 +1524,7 @@ class calendar_ical extends calendar_boupdate
 						$event['reference'] = 0;
 						$event_to_store = $event; // prevent $event from being changed by the update method
 						$this->server2usertime($event_to_store);
-						$updated_id = $this->update($event_to_store, true);
+						$updated_id = $this->update($event_to_store, true,true,false,true,$msg,$skip_notification);
 						unset($event_to_store);
 					}
 					break;
@@ -1562,7 +1562,7 @@ class calendar_ical extends calendar_boupdate
 
 						$event_to_store = $event; // prevent $event from being changed by the update method
 						$this->server2usertime($event_to_store);
-						$updated_id = $this->update($event_to_store, true);
+						$updated_id = $this->update($event_to_store, true,true,false,true,$msg,$skip_notification);
 						unset($event_to_store);
 					}
 					break;
@@ -1628,13 +1628,13 @@ class calendar_ical extends calendar_boupdate
 							$event['owner'] = $event_info['master_event']['owner'];
 							$event_to_store = $event_info['master_event']; // prevent the master_event from being changed by the update method
 							$this->server2usertime($event_to_store);
-							$this->update($event_to_store, true);
+							$this->update($event_to_store, true,true,false,true,$msg,$skip_notification);
 							unset($event_to_store);
 						}
 
 						$event_to_store = $event; // prevent $event from being changed by update method
 						$this->server2usertime($event_to_store);
-						$updated_id = $this->update($event_to_store, true);
+						$updated_id = $this->update($event_to_store, true,true,false,true,$msg,$skip_notification);
 						unset($event_to_store);
 					}
 					break;
@@ -1664,7 +1664,7 @@ class calendar_ical extends calendar_boupdate
 						// save the series master with the adjusted exceptions
 						$event_to_store = $event_info['master_event']; // prevent the master_event from being changed by the update method
 						$this->server2usertime($event_to_store);
-						$updated_id = $this->update($event_to_store, true, true, false, false);
+						$updated_id = $this->update($event_to_store, true, true, false, false,$msg,$skip_notification);
 						unset($event_to_store);
 					}
 
@@ -1697,7 +1697,7 @@ class calendar_ical extends calendar_boupdate
 							{
 								// update the users status only
 								$this->set_status($event_info['stored_event']['id'], $this->user,
-									($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), 0, true);
+									($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), 0, true,true,$skip_notification);
 							}
 						}
 						break;
@@ -1715,7 +1715,7 @@ class calendar_ical extends calendar_boupdate
 							{
 								// update the users status only
 								$this->set_status($event_info['master_event']['id'], $this->user,
-									($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), $recurrence, true);
+									($event['participants'][$this->user] ? $event['participants'][$this->user] : 'R'), $recurrence, true,true,$skip_notification);
 							}
 						}
 						break;

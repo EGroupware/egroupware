@@ -56,6 +56,7 @@
 							$content['delimiter'] == 'other' ? $content['other_delimiter'] : $content['delimiter'];
 						$definition_obj->plugin_options = $options;
 					}
+					$options['no_notification'] = $content['no_notifications'];
 
 					$plugin = new $definition_obj->plugin;
 
