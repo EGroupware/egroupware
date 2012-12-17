@@ -404,9 +404,11 @@ class emailadmin_script {
 				$message = $vacation['text'];
 				if ($vacation['start_date'] || $vacation['end_date'])
 				{
+					$format_date = 'd M Y'; // see to it, that there is always a format, because if it is missing - no date will be output
+					if (!empty($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'])) $format_date = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 					$message = str_replace(array('$$start$$','$$end$$'),array(
-							date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$vacation['start_date']),
-							date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$vacation['end_date']),
+							date($format_date,$vacation['start_date']),
+							date($format_date,$vacation['end_date']),
 						),$message);
 				}
 				$newscriptbody .= "] text:\n" . $message . "\n.\n;\n\n";
