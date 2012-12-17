@@ -127,6 +127,19 @@ function hl_my_tag_transform($element, $attribute_array=0)
 	}
 
 	//if ($element=='img') error_log(__METHOD__.__LINE__." ".$element.'->'.array2string($attribute_array));
+	if ($element=='td' && isset($attribute_array['background']))
+	{
+		if (stripos($attribute_array['background'],$GLOBALS['egw']->link('/index.php'))!==false)
+		{
+			//error_log(__METHOD__.__LINE__.array2string($attribute_array));
+			//$attribute_array['background'] = 'url('.$attribute_array['background'].');';
+		}
+		else
+		{
+			// $attribute_array['background']='denied:'.$attribute_array['background'];
+			unset($attribute_array['background']);// only cid style background images are allowed
+		}
+	}
 	// Elements other than 'img' or 'img' without a 'img' attribute are returned unchanged
 	if($element == 'img')
 	{
@@ -227,6 +240,19 @@ function hl_email_tag_transform($element, $attribute_array=0)
 	}
 
 	//if ($element=='a') error_log(__METHOD__.__LINE__." ".$element.'->'.array2string($attribute_array));
+	if ($element=='td' && isset($attribute_array['background']))
+	{
+		if (stripos($attribute_array['background'],'cid:')!==false)
+		{
+			//error_log(__METHOD__.__LINE__.array2string($attribute_array));
+			//$attribute_array['background'] = 'url('.$attribute_array['background'].');';
+		}
+		else
+		{
+			// $attribute_array['background']='denied:'.$attribute_array['background'];
+			unset($attribute_array['background']);// only cid style background images are allowed
+		}
+	}
 	// Elements other than 'img' or 'img' without a 'img' attribute are returned unchanged
 	if($element == 'img')
 	{
