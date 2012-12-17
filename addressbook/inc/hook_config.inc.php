@@ -112,8 +112,16 @@ function org_fileds_to_update($config)
 	unset($fields['adr_one_countrycode']);
 	unset($fields['adr_two_countrycode']);
 
-	return html::checkbox_multiselect('newsettings[org_fileds_to_update]',
-		$config['org_fileds_to_update'] ? $config['org_fileds_to_update'] : $bocontacts->org_fields,$fields,true,'',4);
+	return html::table(array(array(
+		html::checkbox_multiselect('newsettings[org_fileds_to_update]',
+			$config['org_fileds_to_update'] ? $config['org_fileds_to_update'] : $bocontacts->org_fields,$fields,true,'',6,
+			true,'',false
+		),
+		html::submit_button(
+			'','',"var boxen = \$j('[name^=\'newsettings\[org_fileds_to_update\]\']'); boxen.prop('checked', !boxen.prop('checked')); return false;",
+			true,'style="float:left;"','check','phpgwapi','button'
+		)
+	)));
 }
 
 /**
@@ -150,8 +158,14 @@ function copy_fields($config)
 		unset($fields['adr_two_countrycode']);
 	}
 
-	return html::checkbox_multiselect('newsettings[copy_fields]',
-		$config['copy_fields'] ? $config['copy_fields'] : addressbook_ui::$copy_fields,
-		$fields,true,'',4
-	);
+	return html::table(array(array(
+		html::checkbox_multiselect('newsettings[copy_fields]',
+			$config['copy_fields'] ? $config['copy_fields'] : addressbook_ui::$copy_fields,
+			$fields,true,'',6,true,'',false
+		),
+		html::submit_button(
+			'','',"var boxen = \$j('[name^=\'newsettings\[copy_fields\]\']'); boxen.prop('checked', !boxen.prop('checked')); return false;",
+			true,'style="float:left;"','check','phpgwapi','button'
+		)
+	)));
 }
