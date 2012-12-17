@@ -40,6 +40,7 @@ class resources_wizard_import_csv extends importexport_wizard_basic_import_csv
 			'prize'		=> lang('Prize'),
 			'long_description'      => lang('Long description'),
 			'inventory_number'      => lang('inventory number'),
+			'accessory_of'	=> lang('Accessory of')
                 );
 
 		$custom = config::get_customfields('resources', true);

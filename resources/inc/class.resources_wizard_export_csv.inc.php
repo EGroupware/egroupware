@@ -30,6 +30,7 @@ class resources_wizard_export_csv extends importexport_wizard_basic_export_csv
 			'prize'		=> lang('Prize'),
 			'long_description'	=> lang('Long description'),
 			'inventory_number'	=> lang('inventory number'),
+			'accessory_of'	=> lang('Accessory of')
 		);
 
 		// Custom fields
@@ -41,7 +42,7 @@ class resources_wizard_export_csv extends importexport_wizard_basic_export_csv
 
 	public function wizard_step50(&$content, &$sel_options, &$readonlys, &$preserv) {
 		if($this->debug || true) error_log(get_class($this) . '::wizard_step50->$content '.print_r($content,true));
-		// return 
+		// return
 		if ($content['step'] == 'wizard_step50')
 		{
 			switch (array_search('pressed', $content['button']))

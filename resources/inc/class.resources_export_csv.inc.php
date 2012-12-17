@@ -55,7 +55,7 @@ class resources_export_csv implements importexport_iface_export_plugin {
 				break;
 			}
 		}
-		$types = importexport_export_csv::$types;
+		$types = resources_egw_record::$types;
 		$types['select-bool'] = array('bookable');
 
 		foreach ($selection as $record) {
