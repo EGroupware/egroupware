@@ -137,7 +137,7 @@ function hl_my_tag_transform($element, $attribute_array=0)
 		else
 		{
 			// $attribute_array['background']='denied:'.$attribute_array['background'];
-			unset($attribute_array['background']);// only cid style background images are allowed
+			unset($attribute_array['background']);// only internal background images are allowed
 		}
 	}
 	// Elements other than 'img' or 'img' without a 'img' attribute are returned unchanged
