@@ -69,6 +69,13 @@
      </select>
     </td>
    </tr>
+   <tr class="th">
+     <td colspan="2">{lang_Signature}</td>
+   </tr>
+   <tr class = "row_off">
+    <td>{lang_Signature_added_to_every_change_notification}<br />{lang_You_can_also_use} <a href="index.php?menuaction=addressbook.addressbook_merge.show_replacements">{lang_addressbook}</a> {lang_placeholders_with_user/_prefix}<br />{lang_{{user/n_fn}}}</td>
+    <td><textarea rows="7" cols="50" name="newsettings[signature]">{value_signature}</textarea></td>
+   </tr>
    <!-- END body -->
 <!-- BEGIN footer -->
   <tr valign="bottom" style="height: 30px;">

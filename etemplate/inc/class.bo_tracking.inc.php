@@ -144,6 +144,7 @@ abstract class bo_tracking
 	 * @var int;
 	 */
 	var $user;
+
 	/**
 	 * Saved user preferences, if send_notifications need to set an other language
 	 *
@@ -269,6 +270,7 @@ abstract class bo_tracking
 	 *  - 'subject' string subject line for the notification of $data,$old, defaults to link-title
 	 *  - 'link' string of link to view $data
 	 *  - 'sender' sender of email
+	 *  - 'skip_notify' array of email addresses that should _not_ be notified
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @return mixed
@@ -521,6 +523,11 @@ abstract class bo_tracking
 		{
 			//error_log("do_notificaton() adding user=$this->user to email_sent, to not notify him");
 			$email_sent[] = $GLOBALS['egw']->accounts->id2name($this->user,'account_email');
+		}
+		$skip_notify = $this->get_config('skip_notify',$data,$old);
+		if($skip_notify && is_array($skip_notify))
+		{
+			$email_sent = array_merge($email_sent, $skip_notify);
 		}
 
 		// entry creator
@@ -923,6 +930,10 @@ abstract class bo_tracking
 		{
 			$body .= "</table>\n";
 		}
+		if($sig = $this->get_signature($data,$old,$receiver))
+		{
+			$body .= ($html_email ? '<br />':'') . "\n$sig";
+		}
 		return $body;
 	}
 
@@ -1028,5 +1039,27 @@ abstract class bo_tracking
 	protected function get_attachments($data,$old,$receiver=null)
 	{
 	 	return array();
+	}
+
+	/**
+	 * Get a (global) signature to append to the change notificaiton
+	 */
+	protected function get_signature($data, $old, $receiver)
+	{
+		$config = config::read('notifications');
+		
+		if(class_exists($this->app. '_merge'))
+		{
+			$merge_class = $this->app.'_merge';
+			$merge = new $merge_class();
+			$sig = $merge->merge_string($config['signature'], array($data[$this->id_field]), $error, 'text/html');
+			if($error)
+			{
+				error_log($error);
+				return $config['signature'];
+			}
+			return $sig;
+		}
+		return $config['signature'];
 	}
 }
