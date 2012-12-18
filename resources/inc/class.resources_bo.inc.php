@@ -600,7 +600,7 @@ class resources_bo
 								if (!isset($res_info_cache[$resource_id]['useable'])) {
 									$res_info_cache[$resource_id]['useable'] = 1;
 								}
-								// now decrement this quantity usable
+								// now decrement this quantity useable
 								// TODO : decrement with real event quantity, not 1
 								// but this quantity is not given by calendar search, we should re-use a cal object
 								// to load specific cal infos, like quantity... lot of requests

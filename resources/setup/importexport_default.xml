@@ -21,7 +21,7 @@
           <entry type="string" name="short_description">Short description</entry>
           <entry type="string" name="cat_id">Category</entry>
           <entry type="string" name="quantity">Quantity</entry>
-          <entry type="string" name="useable">Usable</entry>
+          <entry type="string" name="useable">Useable</entry>
           <entry type="string" name="location">Location</entry>
           <entry type="string" name="storage_info">Storage</entry>
           <entry type="string" name="bookable">Bookable</entry>
@@ -37,7 +37,7 @@
         <entry type="string" name="begin_with_fieldnames">label</entry>
         <entry type="string" name="convert">1</entry>
       </entry>
-      <entry type="string" name="modified">2012-12-17 11:56:59</entry>
+      <entry type="string" name="modified">2012-12-18 09:00:00</entry>
     </entry>
     <entry type="array" name="import-resources">
       <entry type="string" name="name">import-resources</entry>
@@ -58,7 +58,7 @@
           <entry type="string" name="2">Short description</entry>
           <entry type="string" name="3">Category</entry>
           <entry type="string" name="4">Quantity</entry>
-          <entry type="string" name="5">Usable</entry>
+          <entry type="string" name="5">Useable</entry>
           <entry type="string" name="6">Location</entry>
           <entry type="string" name="7">Storage</entry>
           <entry type="string" name="8">Bookable</entry>
@@ -101,7 +101,7 @@
         </entry>
         <entry type="string" name="convert">1</entry>
       </entry>
-      <entry type="string" name="modified">2012-12-17 11:58:15</entry>
+      <entry type="string" name="modified">2012-12-18 09:00:00</entry>
     </entry>
   </entry>
 </entry>

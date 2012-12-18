@@ -37,6 +37,7 @@ class resources_export_csv implements importexport_iface_export_plugin {
 		elseif ( $options['selection'] == 'all' ) {
 			$query = array(
 				'num_rows'	=> -1,
+				'filter2'	=> -3,  // Accessories & resources
 				'csv_export' => true,	// so get_rows method _can_ produce different content or not store state in the session
 			);	// all
 			$bo->get_rows($query,$selection,$readonlys);
