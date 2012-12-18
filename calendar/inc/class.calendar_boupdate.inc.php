@@ -1396,8 +1396,9 @@ class calendar_boupdate extends calendar_bo
 	 * @param array $new_event event-array with the new stati
 	 * @param array $old_event event-array with the old stati
 	 * @param int $recur_date=0 date to change, or 0 = all since now
+	 * @param boolean $skip_notification Do not send notifications.  Parameter passed on to set_status().
 	 */
-	function update_status($new_event, $old_event , $recur_date=0)
+	function update_status($new_event, $old_event , $recur_date=0, $skip_notification=false)
 	{
 		if (!isset($new_event['participants'])) return;
 
@@ -1417,7 +1418,7 @@ class calendar_boupdate extends calendar_bo
 		// write the changes
 		foreach ($new_event['participants'] as $userid => $status)
 		{
-			$this->set_status($old_event, $userid, $status, $recur_date, true, false);
+			$this->set_status($old_event, $userid, $status, $recur_date, true, false,$skip_notification);
 		}
     }
 

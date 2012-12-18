@@ -1691,7 +1691,7 @@ class calendar_ical extends calendar_boupdate
 							if ($event_info['acl_edit'])
 							{
 								// update all participants if we have the right to do that
-								$this->update_status($event, $event_info['stored_event']);
+								$this->update_status($event, $event_info['stored_event'],0,$skip_notification);
 							}
 							elseif (isset($event['participants'][$this->user]) || isset($event_info['stored_event']['participants'][$this->user]))
 							{
@@ -1709,7 +1709,7 @@ class calendar_ical extends calendar_boupdate
 							if ($event_info['acl_edit'])
 							{
 								// update all participants if we have the right to do that
-								$this->update_status($event, $event_info['stored_event'], $recurrence);
+								$this->update_status($event, $event_info['stored_event'], $recurrence,$skip_notification);
 							}
 							elseif (isset($event['participants'][$this->user]) || isset($event_info['master_event']['participants'][$this->user]))
 							{
