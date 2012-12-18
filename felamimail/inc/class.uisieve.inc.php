@@ -63,7 +63,11 @@
 			$this->t 		=& CreateObject('phpgwapi.Template',EGW_APP_TPL);
  			$this->botranslation	=& $GLOBALS['egw']->translation;
 
-			$this->bofelamimail	= felamimail_bo::getInstance();
+			$profileID = 0;
+			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
+					$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
+
+			$this->bofelamimail	= felamimail_bo::getInstance(true, $profileID);
 			if (is_object($this->bofelamimail->mailPreferences))
 			{
 				// account select box

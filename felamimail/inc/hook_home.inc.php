@@ -58,7 +58,10 @@
 		}
 
 		$this->displayCharset	= translation::charset();
-		$this->bofelamimail	= felamimail_bo::getInstance();
+		$profileID = 0;
+		if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
+				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
+		$this->bofelamimail	= felamimail_bo::getInstance(true, $profileID);
 
 		if(!$this->bofelamimail->openConnection()) {
 			$extra_data = lang("can't connect to INBOX!!");
