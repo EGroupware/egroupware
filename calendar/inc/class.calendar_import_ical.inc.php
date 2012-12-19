@@ -125,6 +125,12 @@ class calendar_import_ical implements importexport_iface_import_plugin  {
 
 		$calendar_ical = new calendar_ical;
 		$calendar_ical->setSupportedFields('file', '');
+		if($this->dry_run)
+		{
+			// No real dry run for iCal
+			echo lang("No preview for iCal");
+			return;
+		}
 		if (!$calendar_ical->importVCal(stream_get_contents($_stream), -1,null,false,0,'',null,null,null,$_definition->plugin_options['no_notification']))
 		{
 			$this->errors[] = lang('Error: importing the iCal');
