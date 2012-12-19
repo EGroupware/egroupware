@@ -57,6 +57,7 @@ class uiwidgets
 
 			$this->_connectionStatus = $this->bofelamimail->openConnection($this->profileID);
 			$this->sessionData	=& $GLOBALS['egw']->session->appsession('session_data','felamimail');
+			$this->bofelamimail->reopen($this->sessionData['mailbox']);
 			$this->sessionData['folderStatus'] = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 			$previewFrameHeight = -1;
 			if ($GLOBALS['egw_info']['user']['preferences']['felamimail']['PreViewFrameHeight'] &&
@@ -316,7 +317,23 @@ class uiwidgets
 				'Drafts' => 'Drafts',
 				'Sent' => 'Sent',
 			);
+			$lastFolderUsedForMove = null;
+			$moveaction = 'move_';
+			$lastFolderUsedForMoveCont = egw_cache::getCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
+			if (isset($lastFolderUsedForMoveCont[$this->profileID]))
+			{
+				$_folder = $this->bofelamimail->icServer->getCurrentMailbox();
+				//error_log(__METHOD__.__LINE__.' '.$_folder."<->".$lastFolderUsedForMoveCont[$this->profileID].function_backtrace());
+				//if ($_folder!=$lastFolderUsedForMoveCont[$this->profileID]) $this->bofelamimail->icServer->selectMailbox($lastFolderUsedForMoveCont[$this->profileID]);
+				if ($_folder!=$lastFolderUsedForMoveCont[$this->profileID])
+				{
+					$lastFolderUsedForMove = $this->bofelamimail->getFolderStatus($lastFolderUsedForMoveCont[$this->profileID]);
+					//error_log(array2string($lastFolderUsedForMove));
+					$moveaction .= $lastFolderUsedForMoveCont[$this->profileID];
+				}
+				//if ($_folder!=$lastFolderUsedForMoveCont[$this->profileID]) $this->bofelamimail->icServer->selectMailbox($_folder);
 
+			}
 			$actions =  array(
 				'open' => array(
 					'caption' => lang('Open'),
@@ -373,6 +390,13 @@ class uiwidgets
 					'group' => $group,
 					'onExecute' => 'javaScript:mail_compose',
 					'allowOnMultiple' => false,
+				),
+				$moveaction => array(
+					'caption' => lang('Move to Folder').' '.(isset($lastFolderUsedForMove['shortDisplayName'])?$lastFolderUsedForMove['shortDisplayName']:''),
+					'icon' => 'move',
+					'group' => ++$group,
+					'onExecute' => 'javaScript:mail_move2folder',
+					'allowOnMultiple' => true,
 				),
 				'infolog' => array(
 					'caption' => 'InfoLog',
@@ -629,6 +653,10 @@ class uiwidgets
 			if (!isset($GLOBALS['egw_info']['user']['apps']['tracker']))
 			{
 				unset($actions['tracker']);
+			}
+			if (empty($lastFolderUsedForMove))
+			{
+				unset($actions[$moveaction]);
 			}
 			// note this one is NOT a real CAPABILITY reported by the server, but added by selectMailbox
 			if (!$this->bofelamimail->icServer->hasCapability('SUPPORTS_KEYWORDS'))

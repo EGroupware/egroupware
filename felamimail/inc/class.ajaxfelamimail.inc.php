@@ -46,6 +46,14 @@ class ajaxfelamimail
 		function ajaxfelamimail()
 		{
 			if($this->_debug) error_log("ajaxfelamimail::ajaxfelamimail");
+			$folderToSelect = null; // attempt to select the right folder at initialization
+			if (isset($_GET['menuaction']) && $_GET['menuaction']=='felamimail.ajaxfelamimail.updateMessageView')
+			{
+				//error_log("ajaxfelamimail::ajaxfelamimail".array2string(json_decode($_POST['json_data'])));
+				if (isset($_POST['json_data'])) $r = json_decode($_POST['json_data']);
+				if (isset($r->request->parameters[0])) $folderToSelect = $r->request->parameters[0];
+				if ($folderToSelect=="--topfolder--") $folderToSelect = null;
+			}
 			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
 					$this->imapServerID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
 			//error_log("ajaxfelamimail::ajaxfelamimail ActiveProfile:".$this->imapServerID );
@@ -64,6 +72,7 @@ class ajaxfelamimail
 			if(!isset($this->sessionDataAjax['folderName'])) {
 				$this->sessionDataAjax['folderName'] = $this->sessionData['mailbox']?$this->sessionData['mailbox']:'INBOX';
 			}
+			if(isset($this->sessionDataAjax['folderName'])) $this->bofelamimail->reopen((isset($folderToSelect)?$folderToSelect:$this->sessionDataAjax['folderName']));
 			//error_log("ajaxfelamimail::ajaxfelamimail ActiveProfile:".$this->imapServerID.' activeFolder:'.$this->sessionDataAjax['folderName'].'./.'.$this->sessionData['mailbox'].' ConnectionStatus:'.array2string($this->_connectionStatus));
 		}
 
@@ -982,6 +991,9 @@ class ajaxfelamimail
 						$response->addScript('onNodeSelect("'.$this->sessionData['mailbox'].'");');
 						return $response->getXML();
 					}
+					$lastFolderUsedForMove = egw_cache::getCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
+					$lastFolderUsedForMove[$this->imapServerID] = $folderName;
+					egw_cache::setCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),$lastFolderUsedForMove,$expiration=60*60*1);
 				} else {
 					  if($this->_debug) error_log("ajaxfelamimail::moveMessages-> same folder than current selected");
 				}
@@ -1704,7 +1716,7 @@ class ajaxfelamimail
 			// unset the previewID, as the Message will not be available on another folder
 			if ($folderName != $this->sessionData['mailbox']) unset($this->sessionData['previewMessage']);
 
-			$this->sessionData['mailbox'] 		= $folderName;
+			$this->sessionData['mailbox'] 	= $this->sessionDataAjax['folderName']	= $folderName;
 			$this->sessionData['startMessage']	= 1;
 			$this->saveSessionData();
 
