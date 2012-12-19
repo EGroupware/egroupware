@@ -951,15 +951,15 @@ class felamimail_bo
 					// copy messages
 					$retValue = $this->icServer->copyMessages($trashFolder, $_messageUID, $_folder, true);
 					if ( PEAR::isError($retValue) ) {
-						if (self::$debug) error_log(__METHOD__." failed to copy Message(s) to $trashFolder: ".implode(',',$_messageUID));
-						throw new egw_exception("failed to copy Message(s) to $trashFolder: ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
+						if (self::$debug) error_log(__METHOD__." failed to copy Message(s) from $_folder to $trashFolder: ".implode(',',$_messageUID));
+						throw new egw_exception("failed to copy Message(s) from $_folder to $trashFolder: ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
 						return false;
 					}
 					// mark messages as deleted
 					$retValue = $this->icServer->deleteMessages($_messageUID, true);
 					if ( PEAR::isError($retValue)) {
-						if (self::$debug) error_log(__METHOD__." failed to delete Message(s): ".implode(',',$_messageUID).' due to:'.$retValue->message);
-						throw new egw_exception("failed to delete Message(s): ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
+						if (self::$debug) error_log(__METHOD__." failed to delete Message(s) from $_folder: ".implode(',',$_messageUID)." due to:".$retValue->message);
+						throw new egw_exception("failed to delete Message(s) from $_folder: ".implode(',',$_messageUID)." due to:".array2string($retValue->message));
 						return false;
 					}
 					// delete the messages finaly
@@ -985,8 +985,8 @@ class felamimail_bo
 					$this->flagMessages('undelete', $uid, $_folder);
 				}
 				if ( PEAR::isError($retValue)) {
-					if (self::$debug) error_log(__METHOD__." failed to mark as deleted for Message(s): ".implode(',',$_messageUID));
-					throw new egw_exception("failed to mark as deleted for Message(s): ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
+					if (self::$debug) error_log(__METHOD__." failed to mark as deleted for Message(s) from $_folder: ".implode(',',$_messageUID));
+					throw new egw_exception("failed to mark as deleted for Message(s) from $_folder: ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
 					return false;
 				}
 				break;
@@ -996,8 +996,8 @@ class felamimail_bo
 				// mark messages as deleted
 				$retValue = $this->icServer->deleteMessages($_messageUID, true);
 				if ( PEAR::isError($retValue)) {
-					if (self::$debug) error_log(__METHOD__." failed to remove immediately Message(s): ".implode(',',$_messageUID));
-					throw new egw_exception("failed to remove immediately Message(s): ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
+					if (self::$debug) error_log(__METHOD__." failed to remove immediately Message(s) from $_folder: ".implode(',',$_messageUID));
+					throw new egw_exception("failed to remove immediately Message(s) from $_folder: ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
 					return false;
 				}
 				// delete the messages finaly
@@ -1786,9 +1786,15 @@ class felamimail_bo
 			{
 				unset($folderInfo[$_ImapServerId]);
 			}
+			$lastFolderUsedForMove = egw_cache::getCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
+			if (isset($lastFolderUsedForMove[$_ImapServerId]))
+			{
+				unset($lastFolderUsedForMove[$_ImapServerId]);
+			}
 		}
 		egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return, $expiration=60*60*1);
 		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,$expiration=60*5);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),$lastFolderUsedForMove,$expiration=60*60*1);
 	}
 
 	/**
@@ -2735,7 +2741,8 @@ class felamimail_bo
 			$endtime = microtime(true) - $starttime;
 			error_log(__METHOD__. " time used for reopen: ".$endtime.' for Folder:'.$_folderName);
 		}
-		//$this->icServer->selectMailbox($_folderName);
+		//$currentFolder = $this->icServer->getCurrentMailbox();
+		//if ($currentFolder != $_folderName); $this->icServer->selectMailbox($_folderName);
 		$rByUid = true; // try searching by uid. this var will be passed by reference to getSortedList, and may be set to false, if UID retrieval fails
 		#print "<pre>";
 		#$this->icServer->setDebug(true);
@@ -3808,6 +3815,7 @@ class felamimail_bo
 					error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
 				}
 			}
+			if (isset($this->sessionData['mailbox'])) $smretval = $this->icServer->selectMailbox($this->sessionData['mailbox']);//may fail silently
 		}
 		if ( PEAR::isError($tretval) ) egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
 		//error_log(print_r($this->icServer->_connected,true));
