@@ -1213,7 +1213,7 @@
 				// unless your templatefolder is a subfolder of your draftfolder, and the message is in there
 				if ($bofelamimail->isDraftFolder($this->sessionData['messageFolder']) && !$bofelamimail->isTemplateFolder($this->sessionData['messageFolder']))
 				{
-					$bofelamimail->deleteMessages(array($this->sessionData['uid']));
+					$bofelamimail->deleteMessages(array($this->sessionData['uid']),$this->sessionData['messageFolder']);
 				} else {
 					$bofelamimail->flagMessages("answered", array($this->sessionData['uid']));
 					if (array_key_exists('forwardFlag',$this->sessionData) && $this->sessionData['forwardFlag']=='forwarded')
