@@ -51,12 +51,12 @@
 						$definition_obj->plugin_options = (array)$definition_obj->plugin_options + array('dry_run' => true);
 					}
 					$options =& $definition_obj->plugin_options;
+					$options['no_notification'] = $content['no_notifications'];
 					if($content['delimiter']) {
 						$options['fieldsep'] =
 							$content['delimiter'] == 'other' ? $content['other_delimiter'] : $content['delimiter'];
-						$definition_obj->plugin_options = $options;
 					}
-					$options['no_notification'] = $content['no_notifications'];
+					$definition_obj->plugin_options = $options;
 
 					$plugin = new $definition_obj->plugin;
 
