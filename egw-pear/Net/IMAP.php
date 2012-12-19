@@ -457,6 +457,10 @@ class Net_IMAP extends Net_IMAPProtocol {
         }else{
             $message_set="1:*";
         }
+        // mailbox needs to be selected immediately before a Fetch
+        $mailbox = $this->getCurrentMailbox();
+        if (!empty($mailbox)) $m = $this->cmdSelect($mailbox,false);
+        //error_log(__METHOD__.__LINE__.' Folder:'.array2string($mailbox).' Response:'.array2string($m));
         if($uidFetch) {
 		  #error_log("egw-pear::NET::IMAP:getSummary->fetch by UID ".$message_set);
           $ret=$this->cmdUidFetch($message_set,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY.PEEK[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)])");
@@ -464,34 +468,34 @@ class Net_IMAP extends Net_IMAPProtocol {
 		  #error_log("egw-pear::NET::IMAP:getSummary->fetch message ".$message_set);
           $ret=$this->cmdFetch($message_set,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY.PEEK[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)])");
         }
-		#error_log(print_r($ret['PARSED'][0],true));
+        #error_log(print_r($ret['PARSED'][0],true));
         #$ret=$this->cmdFetch($message_set,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY[1.MIME])");
         if ((PEAR::isError($ret) || (strtoupper($ret["RESPONSE"]["CODE"]) == "BAD" && stripos($ret["RESPONSE"]["STR_CODE"], "NO MAILBOX SELECTED")!==false) && $message_set=="1:*")) return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         if (PEAR::isError($ret) || strtoupper($ret["RESPONSE"]["CODE"]) != "OK") {
-			error_log("egw-pear::NET::IMAP:getSummary->error after Fetch for message(s):".$message_set.' Result retrieved:->'.(PEAR::isError($ret)?$ret->message:array2string($ret))." Trying to retrieve single messages.");
-			unset($ret);
-			# if there is an error, while retrieving the information for the whole list, try to retrieve the info one by one, to be more error tolerant
-			foreach (explode(',',$message_set) as $msgid) {
-				$retloop=$this->cmdUidFetch($msgid,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY.PEEK[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)])");
-				if (PEAR::isError($retloop)|| strtoupper($retloop["RESPONSE"]["CODE"]) != "OK") {
-					# log the error, and create a dummy-message as placeholder, this may hold the possibility to read the message anyway
-					//error_log("egw-pear::NET::IMAP:getSummary->error after Fetch for message with id:".$msgid);
-					error_log(__METHOD__.__LINE__."error after Fetch for message with id:".$msgid.' Error:'.$retloop["RESPONSE"]["CODE"] . ", " . $retloop["RESPONSE"]["STR_CODE"]);
-					$ret['PARSED'][]=array('COMMAND'=>"FETCH",'EXT'=>array('UID'=>$msgid,'ENVELOPE'=>array('SUBJECT'=>"[FELAMIMAIL:ERROR]can not parse this message(header).",)));
-				} else {
-					#error_log(print_r($retloop['PARSED'][0],true));
-					# renew the response for every message retrieved, since the returnvalue is structured that way
-					$ret['RESPONSE']=$retloop['RESPONSE'];
-					$ret['PARSED'][]=$retloop['PARSED'][0];
-				}
-				unset($retloop);
-			}
+            error_log(__METHOD__."::".__LINE__."->error after Fetch for message(s):".$message_set.' Result retrieved:->'.(PEAR::isError($ret)?$ret->message:array2string($ret))." Trying to retrieve single messages.");
+            unset($ret);
+            # if there is an error, while retrieving the information for the whole list, try to retrieve the info one by one, to be more error tolerant
+            foreach (explode(',',$message_set) as $msgid) {
+                $retloop=$this->cmdUidFetch($msgid,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY.PEEK[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)])");
+                if (PEAR::isError($retloop)|| strtoupper($retloop["RESPONSE"]["CODE"]) != "OK") {
+                    # log the error, and create a dummy-message as placeholder, this may hold the possibility to read the message anyway
+                    //error_log("egw-pear::NET::IMAP:getSummary->error after Fetch for message with id:".$msgid);
+                    error_log(__METHOD__.__LINE__."error after Fetch for message with id:".$msgid.' Error:'.$retloop["RESPONSE"]["CODE"] . ", " . $retloop["RESPONSE"]["STR_CODE"]);
+                    $ret['PARSED'][]=array('COMMAND'=>"FETCH",'EXT'=>array('UID'=>$msgid,'ENVELOPE'=>array('SUBJECT'=>"[FELAMIMAIL:ERROR]can not parse this message(header).",)));
+                } else {
+                    #error_log(print_r($retloop['PARSED'][0],true));
+                    # renew the response for every message retrieved, since the returnvalue is structured that way
+                    $ret['RESPONSE']=$retloop['RESPONSE'];
+                    $ret['PARSED'][]=$retloop['PARSED'][0];
+                }
+                unset($retloop);
+            }
             #return $ret;
         }
         // this seems to be obsolet, since errors while retrieving header informations are 'covered' above
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK")
         {
-            error_log("egw-pear::NET::IMAP:getSummary->ResponseCode not OK ->".function_backtrace());
+            error_log(__METHOD__."::".__LINE__."->ResponseCode not OK ->".$ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"].function_backtrace());
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
 

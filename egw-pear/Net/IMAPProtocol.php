@@ -56,6 +56,12 @@ class Net_IMAPProtocol {
      */
     var $currentMailbox = "INBOX" ;
 
+    /**
+     * Buffer for the selectedMailbox
+     * @var string
+     */
+    static $mailboxSelected;
+
 
     /**
      * The socket resource being used to connect to the IMAP server.
@@ -134,7 +140,6 @@ class Net_IMAPProtocol {
      * @var boolean
      */
     var $_useUTF_7 = true;
-
 
 
     /**
@@ -353,7 +358,8 @@ class Net_IMAPProtocol {
      */
     function _putCMD($commandId , $command, $args = '')
     {
-        //error_log(__METHOD__.__LINE__.'->'.$commandId . " " . $command . " " . $args);//.'->'.function_backtrace());
+        //if ($command=='SELECT' || $command=='STATUS' || $command=='EXAMINE'); error_log(__METHOD__.__LINE__.'->'.$commandId . " " . $command . " " . $args.'->'.function_backtrace());
+        //if ($command=='SELECT' || $command=='STATUS' || $command=='EXAMINE'); error_log(__METHOD__.__LINE__.'->'.$commandId . " " . $command . " " . $args);
         if ( !empty( $args ) ) {
             return $this->_send( $commandId . " " . $command . " " . $args . "\r\n" );
         }
@@ -897,17 +903,21 @@ class Net_IMAPProtocol {
      * @access public
      * @since  1.0
      */
-    function cmdSelect($mailbox)
+    function cmdSelect($mailbox, $usecache=true)
     {
-        static $mailboxSelected;
         static $ret;
-        if (!empty($mailboxSelected) && $mailboxSelected==$mailbox) return $ret;
+        if ($usecache && !empty(self::$mailboxSelected) && self::$mailboxSelected==$mailbox && $this->currentMailbox == $mailbox && !empty($ret) && !PEAR::isError( $ret )) return $ret;
 
         $mailbox_name=$this->_createQuotedString($mailbox);
         if( !PEAR::isError( $ret= $this->_genericCommand('SELECT', $mailbox_name) ) ){
             $this->currentMailbox  = $mailbox;
+            self::$mailboxSelected = $mailbox;
         }
-        $mailboxSelected=$mailbox;
+        else
+        {
+            $this->currentMailbox = self::$mailboxSelected = null;
+        }
+		
         return $ret;
     }
 
@@ -948,6 +958,7 @@ class Net_IMAPProtocol {
 				}
             }
         }
+        self::$mailboxSelected=$mailbox;
         return array("PARSED"=>$parsed,"RESPONSE"=>$ret["RESPONSE"]);
     }
 
@@ -972,6 +983,7 @@ class Net_IMAPProtocol {
         $args = "";
         $mailbox_name=$this->_createQuotedString($mailbox);
         $args = $this->_getCreateParams($options);
+        self::$mailboxSelected=$mailbox;
         return $this->_genericCommand('CREATE', $mailbox_name.$args);
     }
 
@@ -992,6 +1004,7 @@ class Net_IMAPProtocol {
         $mailbox_name=$this->_createQuotedString($mailbox);
         $new_mailbox_name=$this->_createQuotedString($new_mailbox);
         $args = $this->_getCreateParams($options);
+        self::$mailboxSelected=$new_mailbox;
         return $this->_genericCommand('RENAME', "$mailbox_name $new_mailbox_name".$args );
     }
 
@@ -1008,6 +1021,7 @@ class Net_IMAPProtocol {
     function cmdDelete($mailbox)
     {
         $mailbox_name=$this->_createQuotedString($mailbox);
+        self::$mailboxSelected=null;
         return $this->_genericCommand('DELETE', $mailbox_name);
     }
 
@@ -1204,6 +1218,7 @@ class Net_IMAPProtocol {
     {
         $mailbox_name=$this->_createQuotedString($mailbox);
         $mailbox_base=$this->_createQuotedString($mailbox_base);
+        self::$mailboxSelected=$mailbox;
         return $this->_genericCommand('LIST', "$mailbox_base $mailbox_name" );
     }
 
@@ -1225,6 +1240,7 @@ class Net_IMAPProtocol {
         $mailbox_name=$this->_createQuotedString($mailbox);
         $mailbox_base=$this->_createQuotedString($mailbox_base);
 		//error_log(__METHOD__.__LINE__."(SPECIAL-USE) $mailbox_base $mailbox_name");
+        self::$mailboxSelected=$mailbox;
         return $this->_genericCommand('LIST', "(SPECIAL-USE) $mailbox_base $mailbox_name" );
     }
 
@@ -1245,6 +1261,7 @@ class Net_IMAPProtocol {
     {
         $mailbox_name=$this->_createQuotedString($mailbox);
         $mailbox_base=$this->_createQuotedString($mailbox_base);
+        self::$mailboxSelected=$mailbox;
         return $this->_genericCommand('LSUB', "$mailbox_base $mailbox_name" );
     }
 
@@ -1299,6 +1316,7 @@ class Net_IMAPProtocol {
 
         $args=$this->_getRawResponse($cmdid);
         $ret = $this->_genericImapResponseParser($args,$cmdid);
+        self::$mailboxSelected=$mailbox;
         return $ret;
     }
 
@@ -1314,6 +1332,7 @@ class Net_IMAPProtocol {
      */
     function cmdClose()
     {
+        self::$mailboxSelected=null;
         return $this->_genericCommand('CLOSE');
     }
 
@@ -3334,6 +3353,7 @@ class Net_IMAPProtocol {
         $this->_putCMD( $cmdid , $command , $params );
         $args=$this->_getRawResponse( $cmdid );
         //error_log("egw-pear::NET::IMAPProtocoll:_genericCommand:".$command.' '.$params);
+        //error_log("egw-pear::NET::IMAPProtocoll:_genericCommand: ->result:".print_r($args,TRUE));
         //error_log("egw-pear::NET::IMAPProtocoll:_genericCommand: ->result:".print_r($args,TRUE).function_backtrace());
         return $this->_genericImapResponseParser( $args , $cmdid );
     }
