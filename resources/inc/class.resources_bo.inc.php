@@ -522,6 +522,7 @@ class resources_bo
 		$filter = array(
 			'cat_id' => array_flip((array)$this->acl->get_cats(EGW_ACL_READ)),
 			//'accessory_of' => '-1'
+			'deleted' => null
 		);
 		$limit = false;
 		if($options['start'] || $options['num_rows']) {

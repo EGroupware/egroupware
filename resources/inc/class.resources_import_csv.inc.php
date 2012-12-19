@@ -70,6 +70,7 @@ class resources_import_csv extends importexport_basic_import_csv  {
 			// Refresh ACL
 			//$GLOBALS['egw']->acl->read_repository();
 		}
+		if(!$record->accessory_of) $record->accessory_of = -1;
 		//error_log(__METHOD__.__LINE__.array2string($_definition->plugin_options['conditions']));
 		if ($this->definition->plugin_options['conditions']) {
 		
