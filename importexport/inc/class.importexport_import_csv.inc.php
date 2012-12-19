@@ -330,9 +330,11 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 								{
 									$exact_count++;
 									$app_id = $id;
+									continue;
 								}
+								unset($results[$id]);
 							}
-							if($exact_count != 1)
+							if($exact_count > 1)
 							{
 								$warnings[] = lang('Unable to link to %1 "%2"',
 									lang($links[$name]), $record[$name]).
@@ -340,9 +342,12 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 								$record[$name] = null;
 								continue;
 							}
-							$record[$name] = $app_id;
+							elseif ($exact_count == 1)
+							{
+								$record[$name] = $app_id;
+							}
 						}
-						else if (count($results) == 0)
+						if (count($results) == 0)
 						{
 							$warnings[] = lang('Unable to link to %1 "%2"',
 								lang($links[$name]), $record[$name]).
