@@ -235,7 +235,14 @@ class resources_bo
 				$resource['accessory_of_label'] = $this->link_title($resource['accessory_of']);
 			}
 
-			$rows[$num]['picture_thumb'] = $this->get_picture($resource);
+			if($resource['deleted'])
+			{
+				$rows[$num]['picture_thumb'] = 'deleted';
+			}
+			else
+			{
+				$rows[$num]['picture_thumb'] = $this->get_picture($resource);
+			}
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}
 		return $nr;

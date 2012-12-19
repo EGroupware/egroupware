@@ -276,6 +276,7 @@ class resources_ui
 			),
 			'restore' => array(
 				'caption' => 'Un-delete',
+				'icon' => 'revert',
 				'enableClass' => 'deleted',
 				'hideOnDisabled' => true,
 				'group' => $group,
@@ -356,6 +357,7 @@ class resources_ui
 					$resource = $this->bo->read($id);
 					$resource['deleted'] = null;
 					$this->bo->save($resource);
+					$success++;
 				}
 				break;
 			case 'delete':
