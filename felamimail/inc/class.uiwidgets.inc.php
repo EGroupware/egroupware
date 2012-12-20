@@ -392,7 +392,7 @@ class uiwidgets
 					'allowOnMultiple' => false,
 				),
 				$moveaction => array(
-					'caption' => lang('Move to Folder').' '.(isset($lastFolderUsedForMove['shortDisplayName'])?$lastFolderUsedForMove['shortDisplayName']:''),
+					'caption' => lang('Move selected to').': '.(isset($lastFolderUsedForMove['shortDisplayName'])?$lastFolderUsedForMove['shortDisplayName']:''),
 					'icon' => 'move',
 					'group' => ++$group,
 					'onExecute' => 'javaScript:mail_move2folder',
