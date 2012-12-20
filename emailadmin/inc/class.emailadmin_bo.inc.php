@@ -310,6 +310,12 @@ class emailadmin_bo extends so_sql
 			//error_log("sessionData Restored for Profile $_profileID <br>");
 			return self::$sessionData['profile'][$_profileID];
 		}
+		$EAuserProfileData= egw_cache::getCache(egw_cache::INSTANCE,'email','EAuserProfileData'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*1);
+		if (isset($EAuserProfileData[$_profileID]) && is_array($EAuserProfileData[$_profileID]) && !empty($EAuserProfileData[$_profileID]))
+		{
+			return $EAuserProfileData[$_profileID];
+		}
+
 		$profileData = $this->soemailadmin->getProfileList($_profileID);
 		$found = false;
 		if (is_array($profileData) && count($profileData))
@@ -381,7 +387,8 @@ class emailadmin_bo extends so_sql
 		{
 			$profileData['ea_stationery_active_templates'] = explode(',',$profileData['ea_stationery_active_templates']);
 		}
-		self::$sessionData['profile'][$_profileID] = $profileData;
+		self::$sessionData['profile'][$_profileID] = $EAuserProfileData[$_profileID] = $profileData;
+		egw_cache::setCache(egw_cache::INSTANCE,'email','EAuserProfileData'.trim($GLOBALS['egw_info']['user']['account_id']),$EAuserProfileData, $expiration=60*1);
 		$this->saveSessionData();
 		return $profileData;
 	}
@@ -497,6 +504,15 @@ class emailadmin_bo extends so_sql
 				unset($eMailListContainsDeletedMessages[$_profileID]);
 				egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$eMailListContainsDeletedMessages, $expiration=60*60*1);
 			}
+			//resetSessionCache['ea_preferences'], and cache to reduce database traffic
+			unset(self::$sessionData['ea_preferences']);
+			egw_cache::setCache(egw_cache::INSTANCE,'email','EASessionEAPrefs'.trim($GLOBALS['egw_info']['user']['account_id']),array(), $expiration=60*1);
+			$EAuserProfileData= egw_cache::getCache(egw_cache::INSTANCE,'email','EAuserProfileData'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*1);
+			if (isset($EAuserProfileData[$_profileID]))
+			{
+				unset($EAuserProfileData[$_profileID]);
+			}
+			egw_cache::setCache(egw_cache::INSTANCE,'email','EAuserProfileData'.trim($GLOBALS['egw_info']['user']['account_id']),$EAuserProfileData, $expiration=60*1);
 
 			$nameSpace = egw_cache::getSession('email','defaultimap_nameSpace');
 			if (isset($nameSpace[$_profileID]))
@@ -518,12 +534,19 @@ class emailadmin_bo extends so_sql
 	 */
 	function getUserProfile($_appName='', $_groups='', $_profileID='')
 	{
+		//error_log(__METHOD__.__LINE__." $_appName, $_groups, $_profileID".function_backtrace());
 		if (!(is_array(self::$sessionData) && (count(self::$sessionData)>0))) $this->restoreSessionData();
 		if (is_array(self::$sessionData) && count(self::$sessionData)>0 && self::$sessionData['ea_preferences'] &&
 			($_profileID=='' && count(self::$sessionData['ea_preferences']->icServer) || $_profileID && isset(self::$sessionData['ea_preferences']->icServer[$_profileID])))
 		{
 			//error_log("sessionData Restored for UserProfile<br>".array2string(self::$sessionData['ea_preferences']));
 			return self::$sessionData['ea_preferences'];
+		}
+		if (empty($_profileID))
+		{
+			$EAPrefCache = egw_cache::getCache(egw_cache::INSTANCE,'email','EASessionEAPrefs'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*1);
+			//error_log(__METHOD__.__LINE__.array2string($EAPrefCache));
+			if (!empty($EAPrefCache) && $EAPrefCache instanceof ea_preferences) return $EAPrefCache;
 		}
 		$appName	= ($_appName != '' ? $_appName : $GLOBALS['egw_info']['flags']['currentapp']);
 		if(!is_array($_groups)) {
@@ -582,6 +605,13 @@ class emailadmin_bo extends so_sql
 			$icServer->enableCyrusAdmin = ($data['imapEnableCyrusAdmin'] == 'yes');
 			$icServer->adminUsername = $data['imapAdminUsername'];
 			$icServer->adminPassword = $data['imapAdminPW'];
+			if ( $data['imapEnableCyrusAdmin'] == 'yes' &&
+				isset($GLOBALS['egw_info']['server']['cyrus_admin_user']) && isset($GLOBALS['egw_info']['server']['cyrus_admin_password']) &&
+				!empty($GLOBALS['egw_info']['server']['cyrus_admin_user']) && !empty($GLOBALS['egw_info']['server']['cyrus_admin_password']) )
+			{
+				$icServer->adminUsername = $GLOBALS['egw_info']['server']['cyrus_admin_user'];
+				$icServer->adminPassword = $GLOBALS['egw_info']['server']['cyrus_admin_password'];
+			}
 			$icServer->enableSieve	= ($data['imapEnableSieve'] == 'yes');
 			if (!empty($data['imapSieveServer']))
 			{
@@ -669,6 +699,7 @@ class emailadmin_bo extends so_sql
 				$eaPreferences->ea_stationery_active_templates = explode(',',$data['ea_stationery_active_templates']);
 			}
 			self::$sessionData['ea_preferences'] = $eaPreferences;
+			if (empty($_profileID)) egw_cache::setCache(egw_cache::INSTANCE,'email','EASessionEAPrefs'.trim($GLOBALS['egw_info']['user']['account_id']),$eaPreferences, $expiration=60*1);
 			$this->saveSessionData();
 			return $eaPreferences;
 		}

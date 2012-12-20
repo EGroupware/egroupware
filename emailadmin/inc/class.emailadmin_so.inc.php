@@ -230,7 +230,7 @@
 					} else {
 						if (array_key_exists($key, $toMerge) && !empty($toMerge[$key]))
 						{
-							#error_log($key.'->'.$toMerge[$key]);
+							//error_log($key.'->'.$toMerge[$key]);
 							switch ($key) {
 								case 'imapLoginType':
 									// if the logintype is admin, it will be added to the default value
@@ -249,7 +249,10 @@
 								case 'imapEnableCyrusAdmin':
 								case 'imapAdminUsername':
 								case 'imapAdminPW':
-									if (strlen($toMerge['imapServer'])>0) $mergeInTo[$key]=$toMerge[$key];
+									if (strlen($toMerge['imapServer'])>0 && $toMerge[$key]!='no')
+									{
+										$mergeInTo[$key]=$toMerge[$key];
+									}
 									break;
 								case 'smtpPort':
 								case 'smtpType':
@@ -270,7 +273,9 @@
 									if (strlen($testVal)>10 || $testVal != '<br>' || $testVal != '<br />') $mergeInTo[$key]=$toMerge[$key];
 									break;
 								default:
-									$mergeInTo[$key]=$toMerge[$key];
+									//you may allow stuff, but you should not be able to remove an already granted right
+									//error_log($key.'->'.$toMerge[$key].' '.function_backtrace());
+									if ($toMerge[$key]!='no') $mergeInTo[$key]=$toMerge[$key];
 							}
 						}
 					}
