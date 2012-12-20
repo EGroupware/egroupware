@@ -1,3 +1,19 @@
+egroupware-epl (11.1.20121220-1) hardy; urgency=low
+
+  * Calendar: fix for problem with moving alarms on series when next occurrence is an exception in the way that it is deleted for that time; we use a different method to read the next occurrence of a series now; (as old method also fetched deleted exceptions as next occurrence)
+  * Calendar/eSync: performance optimization: we only want to fetch the owners events, where he is a participant to, as we assume, events feature the user as the organizer only, are of no use in a users calendar on a mobile device
+  * eMailAdministration: if account is forward only; do not query IMAP Server for Quota; as there is no real mailbox
+  * Password: when using accounts stored in sql, and smtp is of emailadmin_smtp_sql (server must support this, and must be implemented that way) we do change passwords for mailaccounts as well, even the account is stored in sql, as the egroupware database is auth base for the mailserver
+  * eMail: fix bug regarding the failed fetch of user defined identities; (as identities have not been fetched unless user defined accounts right was granted);
+  * eMail: absent-notice via timed sieve; if using timed sieve and 6933start_date6933 and/or 6933end_date6933 and common dateformat could not be retrieved as runtime, replacement resulted in a empty string, causing the intended from/to information to be lost
+  * eMail: allow to retrieve and show inline background images
+  * email: allow cid as overall url schema; handle background url in htmLawed, as background is not allowed except for body, but commonly used with other tags (e.g. in td); control schema for background in hook_tag
+  * eMail/Sieve: fix bug regarding the failed login to SIEVE on userDefined-Accounts
+  * eMail: resolve problem with failed deletion of draftedMessages on send
+  * eMail: offer last moveTo folder as direct menuaction; try to avoid to access --topfolder--
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 20 Dec 2012 10:07:59 +0100
+
 egroupware-epl (11.1.20121212-1) hardy; urgency=low
 
   * Calendar: fix for missing to-firstname and to-lastname replacements
