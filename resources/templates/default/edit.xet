@@ -76,7 +76,7 @@
 			</columns>
 			<rows>
 				<row valign="top">
-					<htmlarea statustext="Web-Site for this resource" id="long_description" mode="simple" height="350px" width="700px" toolbar="true"/>
+					<htmlarea statustext="Web-Site for this resource" id="long_description" height="350px" width="700px" toolbar="true"/>
 				</row>
 			</rows>
 		</grid>

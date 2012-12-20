@@ -484,7 +484,7 @@ class html
 		{
 			return self::textarea($name,$content,'style="'.$style.'"');
 		}*/
-		return self::fckEditor($name, $content, ($style ? $style : 'extended'), array('toolbar_expanded' =>'true'), '400px', '100%', $base_href);
+		return self::fckEditor($name, $content, $style, array('toolbar_expanded' =>'true'), '400px', '100%', $base_href);
 	}
 
 	/**
@@ -523,6 +523,10 @@ class html
 		$pxheight = (strpos('px', $_height) === false) ?
 			(empty($_height) ? 400 : $_height) : str_replace('px', '', $_height);
 
+		// User preferences
+		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
++		$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
+
 		// we need to enable double encoding here, as ckEditor has to undo one level of encoding
 		// otherwise < and > chars eg. from html markup entered in regular (not source) input, will turn into html!
 		return self::textarea($_name,$_content,'id="'.htmlspecialchars($_name).'"',true).	// true = double encoding
@@ -537,7 +541,8 @@ class html
 		{
 			ev.editor.resize("100%", '.str_replace('px', '', $pxheight).');
 		}
-	);
+	);'.
+	(trim($_content) == '' ? 'CKEDITOR.instances["'.$_name.'"].setData("<span style=\"font-family:'.$font.';font-size:'.$font_size.';\">&#8203;</span>");' : '').'
 </script>
 ';
 	}
@@ -1310,7 +1315,19 @@ class html
 	static function purify($html,$config=null,$spec=array(),$_force=false)
 	{
 		$defaultConfig = array('valid_xhtml'=>1,'safe'=>1);
+
 		if (empty($html)) return $html;	// no need to process further
+
+		// User preferences
+		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
+		$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
+		
+		// Check for "blank" = just user preference span - for some reason we can't match on the entity, so approximate
+		$regex = '#^<span style="font-family:'.$font.';font-size:'.$font_size.';">.?</span>$#us';
+		if(preg_match($regex,$html))
+		{
+			return '';
+		}
 		$htmLawed = new egw_htmLawed();
 		if (is_array($config) && $_force===false) $config = array_merge($defaultConfig, $config);
 		if (empty($config)) $config = $defaultConfig;
