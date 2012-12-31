@@ -52,19 +52,44 @@
 		</grid>
 	</template>
 	<template id="importexport.export_dialog.selection_tab" template="" lang="" group="0" version="">
-		<grid height="200px">
+		<grid width="100%" height="200px">
 			<columns>
-				<column/>
+				<column width="150"/>
+				<column width="300" disabled="@no_filter"/>
 			</columns>
 			<rows>
+				<row class="th" height="20" disabled="@plugin_selectors_template">
+					<description/>
+					<description value="Definition filter"/>
+				</row>
 				<row valign="top" disabled="@plugin_selectors_template">
 					<html id="plugin_selectors_html" no_lang="1"/>
+					<box class="filters">
+						<filter id="filter"/>
+					</box>
 				</row>
-				<row>
+				<row class="th" height="20" disabled="!@plugin_selectors_template">
+					<description/>
+					<description value="Definition filter"/>
+				</row>
+				<row valign="top" disabled="!@plugin_selectors_template">
 					<template id="@plugin_selectors_template"/>
+					<box onclick="\$j('input[value=\'filter\']').not(':checked').attr('checked',true).parent().effect('highlight',{},2000);" class="filters">
+						<filter id="filter"/>
+					</box>
 				</row>
 			</rows>
 		</grid>
+		<styles>
+			select[multiple] {
+  width: 400px;
+}
+.filters {
+  max-height: 300px;
+  min-height: 150px;
+  overflow-y: auto;
+}
+		</styles>
 	</template>
 	<template id="importexport.export_dialog.options_tab" template="" lang="" group="0" version="">
 		<grid height="200px">

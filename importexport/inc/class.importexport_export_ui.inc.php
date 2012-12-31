@@ -173,13 +173,31 @@ class importexport_export_ui {
 					$content['plugin_options_template'] = $options;
 				}
 			}
+			$content['filter'] = $definition->filter;
+			$content['filter']['fields'] = importexport_helper_functions::get_filter_fields($_appname, $selected_plugin);
+			if(!$content['filter']['fields'])
+			{
+				$this->js->set_onload("\$j('input[value=\"filter\"]').parent().hide();");
+				$content['no_filter'] = true;
+			}
+			else
+			{
+				// Process relative dates into the current absolute date
+				foreach($content['filter']['fields'] as $field => $settings)
+				{
+					if($content['filter'][$field] && strpos($settings['type'],'date') === 0)
+					{
+						$content['filter'][$field] = importexport_helper_functions::date_rel2abs($content['filter'][$field]);
+					}
+				}
+			}
 		}
 
 		// fill selection tab
 		if($definition && $definition->plugin_options['selection'] && !$content['selection_passed']) {
 			$_selection = $definition->plugin_options['selection'];
 		}
-
+		
 		if ($_selection && ($content['old_definition'] == $content['definition'] || $content['selection_passed'])) {
 			$readonlys[$tabs]['selection_tab'] = true;
 			$content['selection'] = $_selection;
@@ -209,9 +227,18 @@ class importexport_export_ui {
 				disable_button('exec[export]');
 			");
 		}
+
+		// Disable / hide definition filter if not selected
+		if($content['selection'] !== 'filter')
+		{
+			$this->js->set_onload("
+				\$j('div.filters').hide();
+			");
+		}
+
 		$preserv['old_definition'] = $content['definition'];
 		if (($prefs = $GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]) &&
-			($prefs = unserialize($prefs)) && !$content['selection']['plugin_override'])
+			($prefs = unserialize($prefs)) && is_array($content['selection']) && !$content['selection']['plugin_override'])
 		{
 			$selection = $content['selection'];
 			$content = array_merge_recursive($content,$prefs);
@@ -260,6 +287,26 @@ class importexport_export_ui {
 					'mapping'	=>	array()
 				);
 			}
+
+			// Set filter
+			// Note that because not all dates are DB dates, the plugin has to handle them
+			$filter = $definition->filter;
+			foreach($_content['filter'] as $key => $value)
+			{
+				// Handle multiple values
+				if(!is_array($value) && strpos($value,',') !== false) $value = explode(',',$value);
+
+				$filter[$key] = $value;
+
+				// Skip empty values or empty ranges
+				if(!$value || is_array($value) && array_key_exists('from',$value) && !$value['from'] && !$value['to'] )
+				{
+					unset($filter[$key]);
+				}
+			}
+			unset($_content['filter']);
+			$definition->filter = $filter;
+
 			$definition->plugin_options = array_merge(
 				$definition->plugin_options,
 				$_content

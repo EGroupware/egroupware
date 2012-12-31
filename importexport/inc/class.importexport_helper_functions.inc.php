@@ -27,6 +27,25 @@ class importexport_helper_functions {
 	public static $dry_run = false;
 
 	/**
+	 * Relative date ranges for filtering
+	 */
+	public static $relative_dates = array(      // Start: year,month,day,week, End: year,month,day,week
+                'Today'       => array(0,0,0,0,  0,0,1,0),
+                'Yesterday'   => array(0,0,-1,0, 0,0,0,0),
+                'This week'   => array(0,0,0,0,  0,0,0,1),
+                'Last week'   => array(0,0,0,-1, 0,0,0,0),
+                'This month'  => array(0,0,0,0,  0,1,0,0),
+                'Last month'  => array(0,-1,0,0, 0,0,0,0),
+                'Last 3 months' => array(0,-3,0,0, 0,1,0,0),
+                'This quarter'=> array(0,0,0,0,  0,0,0,0),      // Just a marker, needs special handling
+                'Last quarter'=> array(0,-4,0,0, 0,-4,0,0),     // Just a marker
+                'This year'   => array(0,0,0,0,  1,0,0,0),
+                'Last year'   => array(-1,0,0,0, 0,0,0,0),
+                '2 years ago' => array(-2,0,0,0, -1,0,0,0),
+                '3 years ago' => array(-3,0,0,0, -2,0,0,0),
+        );
+
+	/**
 	* Files known to cause problems, and will be skipped in a plugin scan
 	* If you put appname => true, the whole app will be skipped.
 	*/
@@ -514,5 +533,182 @@ class importexport_helper_functions {
 			$definition = null;
 		}
 		return $list;
+	}
+
+	/**
+	 * Get a list of filterable fields, and options for those fields
+	 *
+	 * It tries to automatically pull filterable fields from the list of fields in the wizard,
+	 * and sets widget properties.  The plugin can edit / set the fields by implementing
+	 * get_filter_fields(Array &$fields).
+	 *
+	 * Currently only supports select,select-cat,select-account,date,date-time
+	 *
+	 * @param $app_name String name of app
+	 * @param $plugin_name Name of the plugin
+	 *
+	 * @return Array ([fieldname] => array(widget settings), ...)
+	 */
+	public static function get_filter_fields($app_name, $plugin_name, $wizard_plugin = null, $record_classname = null)
+	{
+		$fields = array();
+		try {
+			if($record_classname == null) $record_classname = $app_name . '_egw_record';
+			if(!class_exists($record_classname)) throw new Exception('Bad class name ' . $record_classname);
+
+			$plugin = is_object($plugin_name) ? $plugin_name : new $plugin_name();
+			$plugin_name = get_class($plugin);
+
+			if(!$wizard_plugin)
+			{
+				$wizard_name = $app_name . '_wizard_' . str_replace($app_name . '_', '', $plugin_name);
+				if(!class_exists($wizard_name)) throw new Exception('Bad wizard name ' . $wizard_name);
+				$wizard_plugin = new $wizard_name;
+			}
+		}
+		catch (Exception $e)
+		{
+			error_log($e->getMessage());
+			return array();
+		}
+
+		// Get field -> label map and initialize fields using wizard field order
+		$fields = $export_fields = $wizard_plugin->get_export_fields();
+
+		foreach($record_classname::$types as $type => $type_fields)
+		{
+			// Only these for now, until filter methods for others are figured out
+			if(!in_array($type, array('select','select-cat','select-account','date','date-time'))) continue;
+			foreach($type_fields as $field_name)
+			{
+				$fields[$field_name] = array(
+					'name' => $field_name,
+					'label'	=> $export_fields[$field_name] ? $export_fields[$field_name] : $field_name,
+					'type' => $type
+				);
+			}
+		}
+		// Add custom fields
+		$custom = config::get_customfields($app_name);
+		foreach($custom as $field_name => $settings)
+		{
+			$settings['name'] = '#'.$field_name;
+			$fields['#'.$field_name] = $settings;
+		}
+
+		foreach($fields as $field_name => &$settings) {
+			// Can't really filter on these (or at least no generic, sane way figured out yet)
+			if(!is_array($settings) || in_array($settings['type'], array('text','button', 'label','url','url-email','url-phone','htmlarea')))
+			{
+				unset($fields[$field_name]);
+				continue;
+			}
+			if($settings['type'] == 'radio') $settings['type'] = 'select';
+			switch($settings['type'])
+			{
+				case 'checkbox':
+					// This isn't quite right - there's only 2 options and you can select both
+					$settings['type'] = 'select-bool';
+					$settings['rows'] = 1;
+					$settings['enhance'] = true;
+					break;
+				case 'select-cat':
+					$settings['rows'] = "5,,,$app_name";
+					$settings['enhance'] = true;
+					break;
+				case 'select-account':
+					$settings['rows'] = '5,both';
+					$settings['enhance'] = true;
+					break;
+				case 'select':
+					$settings['rows'] = 5;
+					$settings['enhance'] = true;
+					break;
+			}
+		}
+
+		if(method_exists($plugin, 'get_filter_fields'))
+		{
+			$plugin->get_filter_fields($fields);
+		}
+		return $fields;
+	}
+
+	/**
+	 * Parse a relative date (Yesterday) into absolute (2012-12-31) date
+	 *
+	 * @param $value String description of date matching $relative_dates
+	 *
+	 * @return Array([from] => timestamp, [to]=> timestamp), inclusive
+	 */
+	public static function date_rel2abs($value)
+	{
+		if(is_array($value))
+		{
+			$abs = array();
+			foreach($value as $key => $val)
+			{
+				$abs[$key] = self::date_rel2abs($val);
+			}
+			return $abs;
+		}
+		if($date = self::$relative_dates[$value])
+		{
+			$year  = (int) date('Y');
+			$month = (int) date('m');
+			$day   = (int) date('d');
+			$today = mktime(0,0,0,date('m'),date('d'),date('Y'));
+
+			list($syear,$smonth,$sday,$sweek,$eyear,$emonth,$eday,$eweek) = $date;
+
+			if(stripos($value, 'quarter') !== false)
+			{
+				// Handle quarters
+				$start = mktime(0,0,0,((int)floor(($smonth+$month) / 3.1)) * 3 + 1, 1, $year);
+				$end = mktime(0,0,0,((int)floor(($emonth+$month) / 3.1)+1) * 3 + 1, 1, $year);
+			}
+			elseif ($syear || $eyear)
+			{
+				$start = mktime(0,0,0,1,1,$syear+$year);
+				$end   = mktime(0,0,0,1,1,$eyear+$year);
+			}
+			elseif ($smonth || $emonth)
+			{
+				$start = mktime(0,0,0,$smonth+$month,1,$year);
+				$end   = mktime(0,0,0,$emonth+$month,1,$year);
+			}
+			elseif ($sday || $eday)
+			{
+				$start = mktime(0,0,0,$month,$sday+$day,$year);
+				$end   = mktime(0,0,0,$month,$eday+$day,$year);
+			}
+			elseif ($sweek || $eweek)
+			{
+				$wday = (int) date('w'); // 0=sun, ..., 6=sat
+				switch($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'])
+				{
+					case 'Sunday':
+						$weekstart = $today - $wday * 24*60*60;
+						break;
+					case 'Saturday':
+						$weekstart = $today - (6-$wday) * 24*60*60;
+						break;
+					case 'Moday':
+					default:
+						$weekstart = $today - ($wday ? $wday-1 : 6) * 24*60*60;
+						break;
+				}
+				$start = $weekstart + $sweek*7*24*60*60;
+				$end   = $weekstart + $eweek*7*24*60*60;
+			}
+			$end_param = $end - 24*60*60;
+		
+			// Take 1 second off end to provide an inclusive range.for filtering
+			$end -= 1;
+		
+			//echo __METHOD__."($value,$start,$end) today=".date('l, Y-m-d H:i',$today)." ==> <br />".date('l, Y-m-d H:i:s',$start)." <= date <= ".date('l, Y-m-d H:i:s',$end)."</p>\n";
+			return array('from' => $start, 'to' => $end);
+		}
+		return null;
 	}
 } // end of importexport_helper_functions

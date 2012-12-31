@@ -25,7 +25,8 @@ $phpgw_baseline = array(
 			'plugin_options' => array('type' => 'longtext'),
 			'owner' => array('type' => 'int','precision' => '20'),
 			'description' => array('type' => 'varchar','precision' => '255'),
-			'modified' => array('type' => 'timestamp')
+			'modified' => array('type' => 'timestamp'),
+			'filter' => array('type' => 'longtext')
 		),
 		'pk' => array('definition_id'),
 		'fk' => array(),

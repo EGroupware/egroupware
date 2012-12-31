@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="importexport.wizard_basic_export_csv.choose_fields" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description id="msg" span="all"/>
+				</row>
+				<row>
+					<grid overflow="auto" id="fields">
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description value="Field"/>
+								<hbox>
+									<description value="Export"/>
+									<buttononly statustext="Check all" label="Check all" id="check_all" needed="1" onclick="jQuery('input:checkbox').attr('checked', !jQuery('input:checkbox').attr('checked')); return false;" options="check"/>
+								</hbox>
+							</row>
+							<row>
+								<description id="${row}[name]" no_lang="1"/>
+								<checkbox id="export[${row}]" no_lang="1" options="{$row_cont[field]}"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

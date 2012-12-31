@@ -10,5 +10,8 @@ function clear_options(id) {
 	for(var count = list.options.length - 1; count >= 0; count--)	{
 		list.options[count] = null;
 	}
+	if($j().chosen && list) {
+		$j(list).trigger("liszt:updated");
+	}
 }
 

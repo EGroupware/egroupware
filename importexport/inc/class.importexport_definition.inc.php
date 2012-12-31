@@ -31,6 +31,7 @@ class importexport_definition implements importexport_iface_egw_record {
 		'type' => 'string',
 		'allowed_users' => 'array',
 		'plugin_options' => 'array',
+		'filter' => 'array',
 		'owner' => 'int',
 		'description' => 'string',
 		'modified' => 'timestamp'
@@ -79,6 +80,8 @@ class importexport_definition implements importexport_iface_egw_record {
 			}
 			$options_data = importexport_arrayxml::xml2array( $this->definition['plugin_options'] );
 			$this->definition['plugin_options'] = $options_data['root'];
+			if($this->definition['filter']) $filter = importexport_arrayxml::xml2array( $this->definition['filter']  );
+			$this->definition['filter'] = $filter['root'];
 		}
 	}
 
@@ -110,6 +113,8 @@ class importexport_definition implements importexport_iface_egw_record {
 				return $this->get_allowed_users();
 			case 'plugin_options' :
 				return $this->get_options();
+			case 'filter':
+				return $this->get_filter();
 			default :
 				return $this->definition[$_attribute_name];
 		}
@@ -124,6 +129,8 @@ class importexport_definition implements importexport_iface_egw_record {
 				return $this->set_allowed_users($_data);
 			case 'plugin_options' :
 				return $this->set_options($_data);
+			case 'filter':
+				return $this->set_filter($_data);
 			default :
 				$this->definition[$_attribute_name] = $_data;
 				return;
@@ -167,6 +174,24 @@ class importexport_definition implements importexport_iface_egw_record {
 	}
 
 	/**
+	 * Get stored data filter
+	 *
+	 * @return array
+	 */
+	private function get_filter() {
+		return $this->definition['filter'];
+	}
+
+	/**
+	 * Set stored data filter
+	 *
+	 * @param filter array of field => settings
+	 */
+	private function set_filter(Array $filter) {
+		$this->definition['filter'] = $filter;
+	}
+
+	/**
 	 * converts this object to array.
 	 * @abstract We need such a function cause PHP5
 	 * dosn't allow objects do define it's own casts :-(
@@ -178,6 +203,7 @@ class importexport_definition implements importexport_iface_egw_record {
 		$definition = $this->definition;
 		$definition['allowed_users'] = $this->get_allowed_users();
 		$definition['plugin_options'] = $this->get_options();
+		$definition['filter'] = $this->get_filter();
 		return $definition;
 	}
 
@@ -211,6 +237,7 @@ class importexport_definition implements importexport_iface_egw_record {
 		// convert plugin_options into internal representation
 		$this->set_allowed_users( $this->definition['allowed_users'] );
 		$this->set_options( $this->definition['plugin_options'] ? $this->definition['plugin_options'] : array());
+		$this->set_filter( $this->definition['filter'] ? $this->definition['filter'] : array());
 	}
 
 	/**
@@ -235,6 +262,7 @@ class importexport_definition implements importexport_iface_egw_record {
 
 		$this->so_sql->data = $this->definition;
 		$this->so_sql->data['plugin_options'] = importexport_arrayxml::array2xml( $this->definition['plugin_options'] );
+		$this->so_sql->data['filter'] = importexport_arrayxml::array2xml( $this->definition['filter'] );
 		$this->so_sql->data['modified'] = time();
 		if ($this->so_sql->save( array( 'definition_id' => $_dst_identifier ))) {
 			throw new Exception('Error: so_sql was not able to save definition: '.$this->get_identifier());
