@@ -303,6 +303,12 @@ class importexport_export_ui {
 				{
 					unset($filter[$key]);
 				}
+				// If user selects an end date, they most likely want entries including that date
+				if(is_array($value) && array_key_exists('to',$value) && $value['to'] )
+				{
+					// Adjust time to 23:59:59
+					$filter[$key]['to'] = mktime(23,59,59,date('n',$value['to']),date('j',$value['to']),date('Y',$value['to']));
+				}
 			}
 			unset($_content['filter']);
 			$definition->filter = $filter;

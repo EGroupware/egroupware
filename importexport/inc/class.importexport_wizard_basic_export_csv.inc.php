@@ -31,7 +31,7 @@ class importexport_wizard_basic_export_csv
 	protected $step_templates = array(
 		'wizard_step30' => 'importexport.wizard_basic_export_csv.choose_fields',
 		'wizard_step40' => 'importexport.wizard_basic_export_csv.choosesepncharset',
-		'wizard_step50' => 'importexport.wizard_basic_export_csv.filter',
+		'wizard_step80' => 'importexport.wizard_basic_export_csv.filter',
 	);
 		
 
@@ -59,7 +59,7 @@ class importexport_wizard_basic_export_csv
 		$this->steps = array(
 			'wizard_step30' => lang('Choose fields to export'),
 			'wizard_step40' => lang('Choose seperator and charset'),
-			'wizard_step50' => lang('Filters'),
+			'wizard_step80' => lang('Filters'),
 		);
 		list($appname, $part2) = explode('_', get_class($this));
 		if(!$GLOBALS['egw_info']['apps'][$appname]) $appname .= '_'.$part2; // Handle apps with _ in the name
@@ -233,11 +233,11 @@ class importexport_wizard_basic_export_csv
 	 * @param array $preserv
 	 * @return string template name
 	 */
-	function wizard_step50(&$content, &$sel_options, &$readonlys, &$preserv)
+	function wizard_step80(&$content, &$sel_options, &$readonlys, &$preserv)
 	{
 		if($this->debug) error_log(get_class($this) . '::' . __METHOD__ .'->$content '.print_r($content,true));
 		// return from submit
-		if ($content['step'] == 'wizard_step50') {
+		if ($content['step'] == 'wizard_step80') {
 			// Process submitted
 			unset($content['filter']);
 			unset($content['set_filter']['fields']);
@@ -259,13 +259,13 @@ class importexport_wizard_basic_export_csv
 				case 'finish':
 					return 'wizard_finish';
 				default :
-					return $this->wizard_step50($content,$sel_options,$readonlys,$preserv);
+					return $this->wizard_step80($content,$sel_options,$readonlys,$preserv);
 			}
 		} else {
 
 			// Step 50 - filters
-			$content['msg'] = $this->steps['wizard_step50'];
-			$content['step'] = 'wizard_step50';
+			$content['msg'] = $this->steps['wizard_step80'];
+			$content['step'] = 'wizard_step80';
 
 			// Find filterable fields
 			if(!$content['set_filter'] && $content['filter']) {
