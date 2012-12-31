@@ -395,7 +395,7 @@ class resources_bo
 			return lang('You are not permitted to delete this resource!');
 		}
 
-		// check if we only mark timesheets as deleted, or really delete them
+		// check if we only mark resources as deleted, or really delete them
 		$old = $this->read($res_id);
 		$config = config::read('resources');
 		if ($config['history'] != '' && $old['deleted'] == null)
@@ -403,6 +403,11 @@ class resources_bo
 			$old['deleted'] = time();
 			$this->save($old);
 			egw_link::unlink(0,'resources',$res_id,'','','',true);
+			$accessories = $this->get_acc_list($res_id);
+			foreach($accessories as $acc_id => $name)
+			{
+				$this->delete($acc_id);
+			}
 			return false;
 		}
 		elseif ($this->so->delete(array('res_id'=>$res_id)))
