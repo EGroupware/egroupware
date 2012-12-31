@@ -150,7 +150,7 @@ class customfields_widget
 			}
 		}
 		// check if name refers to a single custom field --> show only that
-		if (($pos=strpos($cell['name'],$this->prefix)) !== false && // allow the prefixed name to be an array index too
+		if (($pos=@strpos($cell['name'],$this->prefix)) !== false && // allow the prefixed name to be an array index too
 			preg_match("/$this->prefix([^\]]+)/",$cell['name'],$matches) && isset($fields[$name=$matches[1]]))
 		{
 			$fields = array($name => $fields[$name]);
@@ -258,6 +258,7 @@ class customfields_widget
 						$input =& boetemplate::empty_cell('select',$this->prefix.$lname,array(
 							'sel_options' => $field['values'],
 							'size'        => $field['rows'],
+							'enhance'     => $field['enhance'],
 							'no_lang'     => True,
 						));
 						if($this->advanced_search)
