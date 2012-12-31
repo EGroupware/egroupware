@@ -124,6 +124,11 @@ function selectbox_add_option(id,label,value,do_onchange)
 		selectBox.options[selectBox.length] = new Option(label,value,false,true);
 	}
 	if (selectBox.onchange && do_onchange) selectBox.onchange();
+
+	// If chosen is loaded, trigger update
+	if(selectBox && $j().chosen) {
+		$j(selectBox).trigger("liszt:updated");
+	}
 }
 
 /* toggles all checkboxes named name in form form, to be used as custom javascript in onclick of a button/image */
