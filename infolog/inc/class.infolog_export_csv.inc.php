@@ -17,6 +17,12 @@
 class infolog_export_csv implements importexport_iface_export_plugin {
 
 
+	public function __construct() {
+		translation::add_app('infolog');
+		$this->bo = new infolog_bo();
+		$this->get_selects();
+	}
+
 	/**
 	 * Exports records as defined in $_definition
 	 *
@@ -25,23 +31,15 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 	public function export( $_stream, importexport_definition $_definition) {
 		$options = $_definition->plugin_options;
 
-		translation::add_app('infolog');
-		$this->bo = new infolog_bo();
 		$selection = array();
 		$query = array();
 		$cf_links = array();
-
-		if(!$this->selects)
-		{
-			$this->selects['info_type'] = $this->bo->enums['type'];
-			$this->selects['info_priority'] = $this->bo->enums['priority'];
-		}
 
 		$this->export_object = new importexport_export_csv($_stream, (array)$options);
 		$this->export_object->set_mapping($options['mapping']);
 
 		// do we need to query the cf's
-		foreach($options['mapping'] as $field => $map) {
+		foreach($options['mapping'] + (array)$_definition->filter as $field => $map) {
 			if($field[0] == '#') {
 				$query['custom_fields'][] = $field;
 
@@ -56,9 +54,26 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 		switch($options['selection'])
 		{
 			case 'search':
-				$query = array_merge($GLOBALS['egw']->session->appsession('session_data','infolog'), $query);
+				$query = array_merge((array)$GLOBALS['egw']->session->appsession('session_data','infolog'), $query);
 				// Fall through
+			case 'filter':
 			case 'all':
+				if($options['selection'] == 'filter')
+				{
+					$fields = importexport_helper_functions::get_filter_fields($_definition->application, $this);
+					$query['col_filter'] = $_definition->filter;
+
+					// Handle ranges
+					foreach($query['col_filter'] as $field => $value)
+					{
+						if(!is_array($value) || (!$value['from'] && !$value['to'])) continue;
+
+						// Ranges are inclusive, so should be provided that way (from 2 to 10 includes 2 and 10)
+						if($value['from']) $query['col_filter'][] = "$field >= " . (int)$value['from'];
+						if($value['to']) $query['col_filter'][] = "$field <= " . (int)$value['to'];
+						unset($query['col_filter'][$field]);
+					}
+				}
 				$query['num_rows'] = 500;
 				$query['start'] = 0;
 				do {
@@ -213,6 +228,25 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 			'name'	=> 'infolog.export_csv_selectors',
 			'content'	=> 'search'
 		);
+	}
+
+	protected function get_selects()
+	{
+		$this->selects['info_type'] = $this->bo->enums['type'];
+		$this->selects['info_priority'] = $this->bo->enums['priority'];
+		$this->selects['info_pricelist'] = ExecMethod('projectmanager.projectmanager_pricelist_bo.pricelist',false);
+		$this->selects['info_status'] = $this->bo->get_status();
+	}
+
+	public function get_filter_fields(Array &$filters)
+	{
+		foreach($filters as $field_name => &$settings)
+		{
+			if($this->selects[$field_name]) $settings['values'] = $this->selects[$field_name];
+			
+			// Infolog can't handle ranges in custom fields due to the way searching is done.
+			if(strpos($field_name, '#') === 0 && strpos($settings['type'],'date') === 0) unset($filters[$field_name]);
+		}
 	}
 
 	/**
