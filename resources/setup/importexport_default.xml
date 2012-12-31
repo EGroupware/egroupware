@@ -25,8 +25,6 @@
           <entry type="string" name="location">Location</entry>
           <entry type="string" name="storage_info">Storage</entry>
           <entry type="string" name="bookable">Bookable</entry>
-          <entry type="string" name="buyable">Buyable</entry>
-          <entry type="string" name="prize">Prize</entry>
           <entry type="string" name="long_description">Long description</entry>
           <entry type="string" name="inventory_number">Inventory number</entry>
           <entry type="string" name="accessory_of">Accessory of</entry>
@@ -37,7 +35,7 @@
         <entry type="string" name="begin_with_fieldnames">label</entry>
         <entry type="string" name="convert">1</entry>
       </entry>
-      <entry type="string" name="modified">2012-12-18 09:00:00</entry>
+      <entry type="string" name="modified">2012-12-31 09:00:00</entry>
     </entry>
     <entry type="array" name="import-resources">
       <entry type="string" name="name">import-resources</entry>
@@ -62,11 +60,9 @@
           <entry type="string" name="6">Location</entry>
           <entry type="string" name="7">Storage</entry>
           <entry type="string" name="8">Bookable</entry>
-          <entry type="string" name="9">Buyable</entry>
-          <entry type="string" name="10">Prize</entry>
-          <entry type="string" name="11">Long description</entry>
-          <entry type="string" name="12">Inventory number</entry>
-          <entry type="string" name="13">Accessory of</entry>
+          <entry type="string" name="9">Long description</entry>
+          <entry type="string" name="10">Inventory number</entry>
+          <entry type="string" name="11">Accessory of</entry>
         </entry>
         <entry type="array" name="field_mapping">
           <entry type="string" name="0">res_id</entry>
@@ -78,11 +74,9 @@
           <entry type="string" name="6">location</entry>
           <entry type="string" name="7">storage_info</entry>
           <entry type="string" name="8">bookable</entry>
-          <entry type="string" name="9">buyable</entry>
-          <entry type="string" name="10">prize</entry>
-          <entry type="string" name="11">long_description</entry>
-          <entry type="string" name="12">inventory_number</entry>
-          <entry type="string" name="13">accessory_of</entry>
+          <entry type="string" name="9">long_description</entry>
+          <entry type="string" name="10">inventory_number</entry>
+          <entry type="string" name="11">accessory_of</entry>
         </entry>
         <entry type="string" name="field_conversion"/>
         <entry type="array" name="conditions">
@@ -101,7 +95,7 @@
         </entry>
         <entry type="string" name="convert">1</entry>
       </entry>
-      <entry type="string" name="modified">2012-12-18 09:00:00</entry>
+      <entry type="string" name="modified">2012-12-31 09:00:00</entry>
     </entry>
   </entry>
 </entry>
