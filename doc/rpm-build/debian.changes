@@ -1,3 +1,10 @@
+egroupware-epl (11.1.20130101-1) hardy; urgency=low
+
+  * Filemanager/Versioning: fix for Office (2010), which renames old version before deleting it, now they got stored again under original name to show up as versions
+  * Tracker: in case there is no pref setting for show_sum_timesheet anymore, check for selected column tr_sum_timesheets to decide about gathering timesheet sums
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 01 Jan 2013 01:39:31 +0100
+
 egroupware-epl (11.1.20121220-1) hardy; urgency=low
 
   * Calendar: fix for problem with moving alarms on series when next occurrence is an exception in the way that it is deleted for that time; we use a different method to read the next occurrence of a series now; (as old method also fetched deleted exceptions as next occurrence)
