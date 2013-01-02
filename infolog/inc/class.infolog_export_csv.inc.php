@@ -63,6 +63,12 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 					$fields = importexport_helper_functions::get_filter_fields($_definition->application, $this);
 					$query['col_filter'] = $_definition->filter;
 
+					// Backend expects a string
+					if($query['col_filter']['info_responsible'])
+					{
+						$query['col_filter']['info_responsible'] = implode(',',$query['col_filter']['info_responsible']);
+					}
+
 					// Handle ranges
 					foreach($query['col_filter'] as $field => $value)
 					{
@@ -127,7 +133,7 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 				if(!is_array($selection[$id])) break;
 				$selection[$id]['pm_id'] = current($links);
 				$selection[$id]['project'] = egw_link::title('projectmanager', $selection[$id]['pm_id']);
-				$this->selects['info_pricelist'] = ExecMethod('projectmanager.projectmanager_pricelist_bo.pricelist',$selection[$id]['pm_id']);
+				$this->selects['pl_id'] = ExecMethod('projectmanager.projectmanager_pricelist_bo.pricelist',$selection[$id]['pm_id']);
 			}
 		}
 
@@ -234,7 +240,7 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 	{
 		$this->selects['info_type'] = $this->bo->enums['type'];
 		$this->selects['info_priority'] = $this->bo->enums['priority'];
-		$this->selects['info_pricelist'] = ExecMethod('projectmanager.projectmanager_pricelist_bo.pricelist',false);
+		$this->selects['pl_id'] = ExecMethod('projectmanager.projectmanager_pricelist_bo.pricelist',false);
 		$this->selects['info_status'] = $this->bo->get_status();
 	}
 
