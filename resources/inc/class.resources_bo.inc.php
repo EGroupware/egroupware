@@ -128,6 +128,8 @@ class resources_bo
 				$extra_cols[] = 'acc_count';
 				break;
 			case self::DELETED:
+				$join = $acc_join;
+				$extra_cols[] = 'acc_count';
 				$filter[] = 'deleted IS NOT NULL';
 				break;
 			default:
@@ -229,7 +231,7 @@ class resources_bo
 			if($resource['acc_count'])
 			{
 				$resource['class'] .= 'hasAccessories ';
-				$accessories = $this->get_acc_list($resource['res_id']);
+				$accessories = $this->get_acc_list($resource['res_id'],$query['filter2']==self::DELETED);
 				foreach($accessories as $acc_id => $acc_name)
 				{
 					$resource['accessories'][] = array('acc_id' => $acc_id, 'name' => $this->link_title($acc_id));
@@ -414,7 +416,14 @@ class resources_bo
 			$accessories = $this->get_acc_list($res_id);
 			foreach($accessories as $acc_id => $name)
 			{
-				$this->delete($acc_id);
+				// Don't purge already deleted accessories
+				$acc = $this->read($acc_id);
+				if(!$acc['deleted'])
+				{
+					$acc['deleted'] = time();
+					$this->save($acc);
+					egw_link::unlink(0,'resources',$acc_id,'','','',true);
+				}
 			}
 			return false;
 		}
@@ -444,16 +453,18 @@ class resources_bo
 	 *
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param int $res_id id of resource
+	 * @param boolean $deleted Include deleted accessories
 	 * @return array
 	 */
-	function get_acc_list($res_id)
+	function get_acc_list($res_id,$deleted=false)
 	{
 		if($res_id < 1){return;}
-		$data = $this->so->search('','res_id,name','','','','','',$start,array('accessory_of' => $res_id),'',$need_full_no_count=true);
+		$data = $this->so->search('','res_id,name,deleted','','','','','',$start,array('accessory_of' => $res_id),'',$need_full_no_count=true);
 		$acc_list = array();
 		if($data) {
 			foreach($data as $num => $resource)
 			{
+				if($resource['deleted'] && !$deleted) continue;
 				$acc_list[$resource['res_id']] = $resource['name'];
 			}
 		}

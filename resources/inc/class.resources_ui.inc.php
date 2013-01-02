@@ -354,6 +354,8 @@ class resources_ui
 				$action_msg = lang('restored');
 				foreach($checked as $n=>$id)
 				{
+					// Extra data
+					if(!$id) continue;
 					$resource = $this->bo->read($id);
 					$resource['deleted'] = null;
 					$this->bo->save($resource);
@@ -365,6 +367,8 @@ class resources_ui
 				$promoted_accessories = 0;
 				foreach($checked as $n => &$id)
 				{
+					// Extra data
+					if(!$id) continue;
 					if($settings == 'promote')
 					{
 						// Handle a selected accessory
@@ -396,6 +400,7 @@ class resources_ui
 						// Remove checked accessories, deleting resource will remove them
 						// We get an error if we try to delete them after they're gone
 						$accessories = $this->bo->get_acc_list($id);
+
 						foreach($accessories as $acc_id => $name)
 						{
 							$checked_key = array_search($acc_id, $checked);
