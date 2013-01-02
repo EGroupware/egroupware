@@ -86,7 +86,10 @@ class resources_bo
 	 */
 	function get_rows($query,&$rows,&$readonlys)
 	{
-		$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$query);
+		if(!$query['csv_export'])
+		{
+			$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$query);
+		}
 		if ($query['store_state'])	// request to store state in session and filter in prefs?
 		{
 			egw_cache::setSession('resources',$query['store_state'],$query);
@@ -244,6 +247,11 @@ class resources_bo
 				$rows[$num]['picture_thumb'] = $this->get_picture($resource);
 			}
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
+		}
+
+		if(!config::get_customfields('resources'))
+		{
+			$rows['no_customfields'] = true;
 		}
 		return $nr;
 	}

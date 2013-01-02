@@ -18,6 +18,10 @@ class resources_wizard_export_csv extends importexport_wizard_basic_export_csv
 		// Field mapping
 		$this->export_fields = resources_bo::$field2label;
 
+		// Fields deprecated, but still in DB
+		unset($this->export_fields['buyable']);
+		unset($this->export_fields['prize']);
+
 		// Custom fields
 		$custom = config::get_customfields('resources', true);
 		foreach($custom as $name => $data) {
