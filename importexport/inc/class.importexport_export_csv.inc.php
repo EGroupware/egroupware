@@ -359,7 +359,7 @@ class importexport_export_csv implements importexport_iface_export_record
 			}
 		}
 		foreach((array)$fields['select-bool'] as $name) {
-			if($record->$name != null) {
+			if($record->$name !== null) {
 				$record->$name = $record->$name ? lang('Yes') : lang('No');
 			}
 		}
