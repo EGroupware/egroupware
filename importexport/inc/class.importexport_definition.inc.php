@@ -130,7 +130,7 @@ class importexport_definition implements importexport_iface_egw_record {
 			case 'plugin_options' :
 				return $this->set_options($_data);
 			case 'filter':
-				return $this->set_filter($_data);
+				return $this->set_filter((Array)$_data);
 			default :
 				$this->definition[$_attribute_name] = $_data;
 				return;

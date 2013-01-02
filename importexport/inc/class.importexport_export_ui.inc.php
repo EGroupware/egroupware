@@ -194,7 +194,7 @@ class importexport_export_ui {
 		}
 
 		// fill selection tab
-		if($definition && $definition->plugin_options['selection'] && !$content['selection_passed']) {
+		if($definition && is_array($definition->plugin_options) && $definition->plugin_options['selection'] && !$content['selection_passed']) {
 			$_selection = $definition->plugin_options['selection'];
 		}
 		
@@ -291,23 +291,26 @@ class importexport_export_ui {
 			// Set filter
 			// Note that because not all dates are DB dates, the plugin has to handle them
 			$filter = $definition->filter;
-			foreach($_content['filter'] as $key => $value)
+			if(is_array($_content['filter']))
 			{
-				// Handle multiple values
-				if(!is_array($value) && strpos($value,',') !== false) $value = explode(',',$value);
-
-				$filter[$key] = $value;
-
-				// Skip empty values or empty ranges
-				if(!$value || is_array($value) && array_key_exists('from',$value) && !$value['from'] && !$value['to'] )
+				foreach($_content['filter'] as $key => $value)
 				{
-					unset($filter[$key]);
-				}
-				// If user selects an end date, they most likely want entries including that date
-				if(is_array($value) && array_key_exists('to',$value) && $value['to'] )
-				{
-					// Adjust time to 23:59:59
-					$filter[$key]['to'] = mktime(23,59,59,date('n',$value['to']),date('j',$value['to']),date('Y',$value['to']));
+					// Handle multiple values
+					if(!is_array($value) && strpos($value,',') !== false) $value = explode(',',$value);
+
+					$filter[$key] = $value;
+
+					// Skip empty values or empty ranges
+					if(!$value || is_array($value) && array_key_exists('from',$value) && !$value['from'] && !$value['to'] )
+					{
+						unset($filter[$key]);
+					}
+					// If user selects an end date, they most likely want entries including that date
+					if(is_array($value) && array_key_exists('to',$value) && $value['to'] )
+					{
+						// Adjust time to 23:59:59
+						$filter[$key]['to'] = mktime(23,59,59,date('n',$value['to']),date('j',$value['to']),date('Y',$value['to']));
+					}
 				}
 			}
 			unset($_content['filter']);
