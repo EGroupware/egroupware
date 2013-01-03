@@ -381,8 +381,8 @@ class resources_ui
 							continue;
 						}
 						
-						// Make associated accessories into resources
-						$accessories = $this->bo->get_acc_list($id);
+						// Make associated accessories into resources - include deleted
+						$accessories = $this->bo->get_acc_list($id,true);
 						foreach($accessories as $acc_id => $name)
 						{
 							$acc = $this->bo->read($acc_id);
