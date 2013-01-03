@@ -79,7 +79,8 @@ class importexport_arrayxml {
 			$n = &$_xml;
 		} else {
 			$n = new DOMDocument;
-			$n->loadXML($_xml);
+			$loaded = $n->loadXML($_xml);
+			if(!$loaded) return array();
 		}
 		$xml_array = array();
 		
