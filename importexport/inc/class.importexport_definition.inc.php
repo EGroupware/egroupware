@@ -78,10 +78,17 @@ class importexport_definition implements importexport_iface_egw_record {
 			if ( !( importexport_definitions_bo::is_permitted($this->get_record_array()) || $this->is_admin)) {
 				throw new Exception('Error: User "'.$this->user.'" is not permitted to get definition with identifier "'.$_identifier.'"!');
 			}
-			$options_data = importexport_arrayxml::xml2array( $this->definition['plugin_options'] );
-			$this->definition['plugin_options'] = $options_data['root'];
-			if($this->definition['filter']) $filter = importexport_arrayxml::xml2array( $this->definition['filter']  );
-			$this->definition['filter'] = $filter['root'];
+			try
+			{
+				$options_data = importexport_arrayxml::xml2array( $this->definition['plugin_options'] );
+				$this->definition['plugin_options'] = $options_data['root'];
+				if($this->definition['filter']) $filter = importexport_arrayxml::xml2array( $this->definition['filter']  );
+				$this->definition['filter'] = $filter['root'];
+			}
+			catch (Exception $e)
+			{
+				error_log($e->getMessage());
+			}
 		}
 	}
 
