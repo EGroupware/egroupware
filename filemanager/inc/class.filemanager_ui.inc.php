@@ -1305,6 +1305,7 @@ function force_download(_action, _senders)
 		}
 		// mergeapp select options
 		$mergeapp_list = egw_link::app_list('merge');
+		unset($mergeapp_list[$GLOBALS['egw_info']['flags']['currentapp']]); // exclude filemanager from list
 		$mergeapp_empty = !empty($content['mergeapp_parent'])
 			? $mergeapp_list[$content['mergeapp_parent']] . ' (parent setting)' : '';
 		$sel_options['mergeapp'] = array(''	=> $mergeapp_empty);
