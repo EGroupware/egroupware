@@ -110,7 +110,7 @@ function phpgwapi_upgrade1_5_003()
 	}
 	elseif ( $GLOBALS['egw_setup']->db->Type == 'pgsql' )
 	{
-		$GLOBALS['egw_setup']->db->query('ALTER SEQUENCE egw_sqlfs_fs_id_seq RESTART WITH '.(count($dirs) + 1),__LINE__,__FILE__); 
+		$GLOBALS['egw_setup']->db->query('ALTER SEQUENCE egw_sqlfs_fs_id_seq RESTART WITH '.(count($dirs) + 1),__LINE__,__FILE__);
 	}
 
 	foreach($dirs as $path => $id)
@@ -448,7 +448,11 @@ function phpgwapi_upgrade1_5_011()
 		'depth' => true,
 	),create_function('$url,$stat','
 		$new_path = sqlfs_stream_wrapper::_fs_path($stat["ino"]);	// loads egw_info/server/files_dir (!)
-		if (file_exists($old_path = $GLOBALS["egw_info"]["server"]["files_dir"].($path=parse_url($url,PHP_URL_PATH))))
+		// if file not found in filesystem convert filename to hardcoded old charset and try that one
+		$old_charset = "iso-8859-1";
+		if (file_exists($old_path = $GLOBALS["egw_info"]["server"]["files_dir"].($path=parse_url($url,PHP_URL_PATH))) ||
+			$GLOBALS["egw_setup"]->system_charset != $old_charset &&
+			file_exists($conv_path = translation::convert($old_path, $GLOBALS["egw_setup"]->system_charset, $old_charset)) && ($old_path=$conv_path))
 		{
 			if (!is_dir($old_path))
 			{
@@ -464,7 +468,7 @@ function phpgwapi_upgrade1_5_011()
 		}
 		elseif(!($stat["mode"] & sqlfs_stream_wrapper::MODE_DIR))
 		{
-			echo "phpgwapi_upgrade1_5_011() $url: $old_path not found!\n";
+			echo "phpgwapi_upgrade1_5_011() $stat[ino]: $url: $old_path not found!\n";
 		}
 	'));
 	if ($GLOBALS['DEBUG'] && isset($_SERVER['HTTP_HOST'])) echo "</pre>\n";
