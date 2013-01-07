@@ -345,6 +345,16 @@ class importexport_export_ui {
 			$plugin_object = new $definition->plugin;
 			$result = $plugin_object->export( $file, $definition );
 
+			if(is_object($result) && method_exists($result, 'get_num_of_records'))
+			{
+				$record_count = $result->get_num_of_records();
+				if($record_count == 0)
+				{
+					$response->addScript('alert("' . lang('No records selected') . '");');
+					return $response->getXML();
+				}
+			}
+
 			// Keep settings
 			$keep = array_diff_key($_content, array_flip(array('appname', 'definition', 'plugin', 'preview', 'export', $tabs)));
 			$GLOBALS['egw']->preferences->add('importexport',$definition->definition_id,serialize($keep));
@@ -398,9 +408,12 @@ class importexport_export_ui {
 					$GLOBALS['egw']->translation->charset()
 				);
 
+				if($record_count)
+				{
+					$preview = "<div class='header'>".lang('Preview') . "<span class='count'>$record_count</span></div>".$preview;
+				}
 				$response->addAssign('exec[preview-box]','innerHTML',nl2br($preview));
-				$response->jquery('.preview-box','show');
-				$response->jquery('.preview-box-buttons','show');
+				$response->jquery('.preview_box','show');
 
 				$response->addScript("xajax_eT_wrapper();");
 				return $response->getXML();

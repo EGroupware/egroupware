@@ -334,7 +334,8 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 								}
 								unset($results[$id]);
 							}
-							if($exact_count > 1)
+							// Too many exact matches, or none good enough
+							if($exact_count > 1 || count($results) == 0)
 							{
 								$warnings[] = lang('Unable to link to %1 "%2"',
 									lang($links[$name]), $record[$name]).

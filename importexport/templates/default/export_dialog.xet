@@ -166,38 +166,48 @@
 					</hbox>
 				</row>
 				<row>
-					<box id="preview-box" needed="1" class="preview-box">
-						<description/>
-					</box>
-				</row>
-				<row>
-					<box align="center" id="preview-box-buttons" needed="1" class="preview-box-buttons">
-						<button align="center" label="OK" onclick="document.getElementById(form::name('preview-box')).style.display='none'; document.getElementById(form::name('preview-box-buttons')).style.display='none'; return false;"/>
+					<box id="preview_box" span="all" class="preview_box">
+						<box id="preview-box" needed="1" class="content">
+							<description/>
+						</box>
+						<box align="center" id="preview-box-buttons" class="preview-box-buttons">
+							<button align="center" label="OK" onclick="document.getElementById(form::name('preview_box')).style.display='none'; return false;"/>
+						</box>
 					</box>
 				</row>
 			</rows>
 		</grid>
 		<styles>
-			.preview-box {
+			.preview_box {
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 400px;
-  height: 360px;
-  overflow: scroll;
+  width: 97%;
+  height: 95%;
+  overflow: hidden;
   background-color: white;
   z-index: 999;
   display: none;
+  border: 1px solid black;
+  margin: 1.5%;
 }
-.preview-box-buttons {
+.preview_box .header {
+  font-size: 150%;
+  margin-bottom: 5px;
+  padding: 5px;
+  border-bottom: 1px outset;
+}
+.header .count {
+  float:right;
+}
+.preview_box&gt;.content {
+  overflow: auto;
+}
+.preview-box-buttons  {
   position: absolute;
-  top: 365px;
-  left: 0px;
-  width: 400px;
-  height: 20px;
-
-  z-index: 999;
-  display: none;
+  bottom: 0px;
+  width: 100%;
+  margin-left: 50%;
 }
 		</styles>
 	</template>
