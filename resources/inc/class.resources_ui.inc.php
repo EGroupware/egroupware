@@ -104,7 +104,7 @@ class resources_ui
 			$msg = $content;
 		}
 		$content = array();
-		$content['msg'] = $msg;
+		$content['msg'] = $msg ? $msg : $_GET['msg'];
 
 		$content['nm']['header_left']	= 'resources.resource_select.header';
 		$content['nm']['header_right']	= 'resources.show.nm_right';
@@ -451,23 +451,32 @@ class resources_ui
 // 						// links are already saved by eTemplate
 // 						unset($resource['link_to']['to_id']);
 // 					}
+					if($content['res_id'])
+					{
+						 $acc_count = count($this->bo->get_acc_list($content['res_id']));
+					}
 					$result = $this->bo->save($content);
 					if(is_numeric($result))
 					{
 						$content['res_id'] = $result;
+						if($acc_count && $content['accessory_of'] != -1)
+						{
+							// Resource with accessories changed into accessory
+							if($acc_count) $msg = lang('%1 accessories now resources',$acc_count);
+						}
 					}
 					else
 					{
-						$content['msg'] = $result;
+						$msg = $result;
 					}
 					break;
 				case 'delete':
 					unset($content['delete']);
-					$content['msg'] = $this->bo->delete($content['res_id']);
+					$msg = $this->bo->delete($content['res_id']);
 					break;
 			}
-			$js = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','addressbook',{$content['res_id']});";
-			if($button != 'apply' && !$content['msg'])
+			$js = "opener.egw_refresh('".str_replace("'","\\'",$msg)."','resources',{$content['res_id']});";
+			if($button != 'apply' && !$msg)
 			{
 				$js .= 'window.close();';
 				echo "<html><body><script>$js</script></body></html>\n";
@@ -485,7 +494,6 @@ class resources_ui
 		if (isset($nm_session_data['filter2']) && $nm_session_data['filter2'] > 0) $accessory_of = $nm_session_data['filter2'];
 		if (isset($_GET['accessory_of'])) $accessory_of = $_GET['accessory_of'];
 		$content = array('res_id' => $res_id);
-
 		if ($res_id > 0)
 		{
 			$content = $this->bo->read($res_id);
@@ -511,6 +519,10 @@ class resources_ui
 			$content['cat_id'] = $nm_session_data['filter'];
 			$content['bookable'] = true;
 		}
+		if($msg) {
+			$content['msg'] = $msg;
+		}
+
 		if ($_GET['msg']) $content['msg'] = strip_tags($_GET['msg']);
 	
 		// some presetes

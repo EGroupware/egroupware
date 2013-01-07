@@ -235,7 +235,7 @@
 			</columns>
 			<rows>
 				<row>
-					<description id="msg" no_lang="1"/>
+					<description id="msg" no_lang="1" span="all" class="message"/>
 				</row>
 				<row>
 					<hbox>

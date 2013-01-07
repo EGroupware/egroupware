@@ -359,6 +359,18 @@ class resources_bo
 		if($resource['accessory_of'] != $old['accessory_of'])
 		{
 			egw_link::unlink(0,'resources',$resource['res_id'],'','resources',$old['accessory_of']);
+
+			// Check for resource changing to accessory - move its accessories to resource
+			if($old['accessory_of'] == -1 && $accessories = $this->get_acc_list($resource['res_id']))
+			{
+				foreach($accessories as $accessory => $name)
+				{
+					egw_link::unlink(0,'resources',$accessory,'','resources',$resource['res_id']);
+					$acc = $this->read($accessory);
+					$acc['accessory_of'] = -1;
+					$this->so->save($acc);
+				}
+			}
 		}
 		if($resource['accessory_of'] != -1)
 		{
