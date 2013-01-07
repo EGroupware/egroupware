@@ -844,15 +844,12 @@
 							{
 								egw_vfs::load_wrapper('vfs');
 							}
-							else
-							{
-								$_mailObject->AddAttachment (
-									$attachment['file'],
-									$_mailObject->EncodeHeader($attachment['name']),
-									(strtoupper($attachment['type'])=='MESSAGE/RFC822'?'7bit':'base64'),
-									$attachment['type']
-								);
-							}
+							$_mailObject->AddAttachment (
+								$attachment['file'],
+								$_mailObject->EncodeHeader($attachment['name']),
+								(strtoupper($attachment['type'])=='MESSAGE/RFC822'?'7bit':'base64'),
+								$attachment['type']
+							);
 						}
 					}
 				}
