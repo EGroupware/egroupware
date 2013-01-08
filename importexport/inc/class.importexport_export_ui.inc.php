@@ -350,7 +350,7 @@ class importexport_export_ui {
 				$record_count = $result->get_num_of_records();
 				if($record_count == 0)
 				{
-					$response->addScript('alert("' . lang('No records selected') . '");');
+					$response->addScript('alert("' . lang('No matching records') . '");');
 					return $response->getXML();
 				}
 			}
