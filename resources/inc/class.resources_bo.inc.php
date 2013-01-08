@@ -441,7 +441,7 @@ class resources_bo
 		}
 		elseif ($this->so->delete(array('res_id'=>$res_id)))
 		{
-			$accessories = $this->get_acc_list($res_id);
+			$accessories = $this->get_acc_list($res_id, true);
 			foreach($accessories as $acc_id => $name)
 			{
 				if($this->delete($acc_id))

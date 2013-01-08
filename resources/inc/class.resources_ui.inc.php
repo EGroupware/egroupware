@@ -369,10 +369,10 @@ class resources_ui
 				{
 					// Extra data
 					if(!$id) continue;
+					$resource = $this->bo->read($id);
 					if($settings == 'promote')
 					{
 						// Handle a selected accessory
-						$resource = $this->bo->read($id);
 						if($resource['accessory_of'] > 0)
 						{
 							$resource['accessory_of'] = -1;
@@ -399,7 +399,7 @@ class resources_ui
 					{
 						// Remove checked accessories, deleting resource will remove them
 						// We get an error if we try to delete them after they're gone
-						$accessories = $this->bo->get_acc_list($id);
+						$accessories = $this->bo->get_acc_list($id,$resource['deleted']);
 
 						foreach($accessories as $acc_id => $name)
 						{
