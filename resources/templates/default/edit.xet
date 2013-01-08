@@ -52,7 +52,7 @@
 						<menupopup id="accessory_of" no_lang="1"/>
 					</menulist>
 					<description/>
-					<description/>
+					<description id="accessory_label"/>
 				</row>
 				<row>
 					<description disabled="true" value="Buyable"/>
@@ -228,7 +228,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.edit" template="" lang="" group="0" version="1.9.001">
+	<template id="resources.edit" template="" lang="" group="0" version="1.9.002">
 		<grid>
 			<columns>
 				<column width="700"/>
