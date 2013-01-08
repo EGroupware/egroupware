@@ -1,3 +1,12 @@
+egroupware-epl (11.1.20130108-1) hardy; urgency=low
+
+  * Calendar: added missing holidays for CR (Costa Rica) provided by Rafael Chacon
+  * Tracker: Multi-select for tracker queue; Optional start and end date; Custom stati can now be closed stati; Escalation changes - more filter options, flag to not run on all existing tickets
+  * Tracker: try to handle html comments correctly on display in comment-list
+  * ImportExport: small stability fixes and improvements
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 08 Jan 2013 17:21:17 +0100
+
 egroupware-epl (11.1.20130101-1) hardy; urgency=low
 
   * Filemanager/Versioning: fix for Office (2010), which renames old version before deleting it, now they got stored again under original name to show up as versions
