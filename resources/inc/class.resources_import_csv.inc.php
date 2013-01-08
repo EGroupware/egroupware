@@ -55,6 +55,39 @@ class resources_import_csv extends importexport_basic_import_csv  {
 	*/
 	protected function import_record(importexport_iface_egw_record &$record, &$import_csv)
 	{
+		// Check for an un-matched accessory of, try again on just name
+		if(!is_numeric($record->accessory_of))
+		{
+			$accessory_of = $record->accessory_of;
+
+			// Look for exact match in just name
+			$results = $this->bo->so->search(array('name' => $record->accessory_of),array('res_id','name'));
+			if(count($results) >= 1)
+			{
+				// More than 1 result?  Bad names.  Pick one.
+				foreach($results as $result)
+				{
+					if($result['name'] == $record->accessory_of)
+					{
+						$record->accessory_of = $result['res_id'];
+						break;
+					}
+				}
+				if(is_numeric($record->accessory_of))
+				{
+					// Import/Export conversion gave a warning, so cancel it
+					$pattern = lang('Unable to link to %1 "%2"',lang('resources'),$accessory_of) . ' - ('.lang('too many matches') . '|'.lang('no matches') . ')';
+					$this->warnings[$import_csv->get_current_position()] = preg_replace($pattern, '', $this->warnings[$import_csv->get_current_position()], 1);
+					// If that was the only warning, clear it for this row
+					if(trim($this->warnings[$import_csv->get_current_position()]) == '')
+					{
+						unset($this->warnings[$import_csv->get_current_position()]);
+					}
+				}
+			}
+		}
+
+
 		// Check for a new category, it needs permissions set
 		$category = $GLOBALS['egw']->categories->read($record->cat_id);
 
