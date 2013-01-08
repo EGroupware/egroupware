@@ -320,7 +320,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					if(!is_numeric($record[$name]))
 					{
 						$results = egw_link::query($links[$name], $record[$name]);
-						if(count($results) > 1)
+						if(count($results) >= 1)
 						{
 							// More than 1 result.  Check for exact match
 							$exact_count = 0;
@@ -340,12 +340,12 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 								$warnings[] = lang('Unable to link to %1 "%2"',
 									lang($links[$name]), $record[$name]).
  									' - ' .lang('too many matches');
-								$record[$name] = null;
 								continue;
 							}
 							elseif ($exact_count == 1)
 							{
 								$record[$name] = $app_id;
+								continue;
 							}
 						}
 						if (count($results) == 0)
@@ -353,7 +353,6 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 							$warnings[] = lang('Unable to link to %1 "%2"',
 								lang($links[$name]), $record[$name]).
  								' - ' . lang('no matches');
-							$record[$name] = null;
 							continue;
 						} else {
 							$record[$name] = key($results);
