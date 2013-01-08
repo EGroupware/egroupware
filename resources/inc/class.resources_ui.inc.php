@@ -531,6 +531,10 @@ class resources_ui
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
 		$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : $accessory_of;
 
+		if($content['res_id'] && $content['accessory_of'] == -1)
+		{
+			$content['acc_count'] = count($this->bo->get_acc_list($content['res_id']));
+		}
 		$content['history'] = array(
 			'id' => $res_id,
 			'app' => 'resources',
@@ -567,10 +571,18 @@ class resources_ui
 			$read_only['delete'] = true;
 		}
 
+		// Can't make a resource with accessories an accessory
+		$read_only['accessory_of'] = $content['acc_count'];
+		if($read_only['accessory_of'])
+		{
+			$content['accessory_label'] = lang('Remove accessories before changing Accessory of');
+		}
+
 		// Disable custom tab if there are no custom fields defined
 		$read_only['tabs']['custom'] = !(config::get_customfields('resources',true));
 
 		$preserv = $content;
+
 		$this->tmpl->read('resources.edit');
 		return $this->tmpl->exec('resources.resources_ui.edit',$content,$sel_options,$read_only,$preserv,2);
 	}
