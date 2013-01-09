@@ -93,9 +93,18 @@ function cal_open(_action, _senders)
  */
 function cal_delete(_action, _senders)
 {
-	var id = _senders[0].id;
-	var matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
 	var backup = _action.data;
+	var matches = false;
+
+	// Loop so we ask if any of the selected entries is part of a series
+	for(var i = 0; i < _senders.length; i++)
+	{
+		var id = _senders[i].id;
+		if(!matches)
+		{
+			matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
+		}
+	}
 	if (matches)
 	{
 		var id = matches[1];
