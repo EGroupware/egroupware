@@ -161,6 +161,10 @@
 .listVbox {
   width: 100%;
 }
+
+.action_popup {
+  display:none;
+}
 		</styles>
 	</template>
 </overlay>
