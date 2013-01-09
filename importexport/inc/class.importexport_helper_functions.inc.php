@@ -136,10 +136,17 @@ class importexport_helper_functions {
 			}
 
 			// Handle groups listed as Group, <name>
-			if ( $account_lid[0] == ' ' && $account_id = $GLOBALS['egw']->accounts->name2id( trim($account_lid))) {
+			if ( $account_lids[$key][0] == ' ' && $account_id = $GLOBALS['egw']->accounts->name2id( $account_lid)) {
 				$account_ids[] = $account_id;
 				unset($account_lids[$key-1]);
 				unset($account_lids[$key]);
+				continue;
+			}
+			// Group, <name> - remove the Group part
+			if($account_lid == 'Group')
+			{
+				unset($account_lids[$key]);
+				continue;
 			}
 		}
 		$_account_lids = (is_array($_account_lids) ? $account_lids : implode(',',$account_lids));
