@@ -610,6 +610,7 @@ class importexport_definitions_ui
 		{
 			$this->response = new xajaxResponse();
 
+			egw_framework::include_css_js_response();
 			if ($content['closewindow'])
 			{
 				$this->response->addScript("opener.location.reload();");
@@ -636,6 +637,7 @@ class importexport_definitions_ui
 		else
 		{
 			$GLOBALS['egw']->js->set_onload("document.getElementById('picturebox').style.display = 'none';");
+			egw_framework::validate_file('.', 'etemplate', 'etemplate');
 			egw_framework::validate_file('.', 'etemplate', 'etemplate');
 			common::egw_header();
 			echo '<div id="divMain">'."\n";

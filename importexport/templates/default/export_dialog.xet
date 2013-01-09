@@ -52,19 +52,44 @@
 		</grid>
 	</template>
 	<template id="importexport.export_dialog.selection_tab" template="" lang="" group="0" version="">
-		<grid height="200px">
+		<grid width="100%" height="200px">
 			<columns>
-				<column/>
+				<column width="150"/>
+				<column width="300" disabled="@no_filter"/>
 			</columns>
 			<rows>
+				<row class="th" height="20" disabled="@plugin_selectors_template">
+					<description/>
+					<description value="Definition filter"/>
+				</row>
 				<row valign="top" disabled="@plugin_selectors_template">
 					<html id="plugin_selectors_html" no_lang="1"/>
+					<box class="filters">
+						<filter id="filter"/>
+					</box>
 				</row>
-				<row>
+				<row class="th" height="20" disabled="!@plugin_selectors_template">
+					<description/>
+					<description value="Definition filter"/>
+				</row>
+				<row valign="top" disabled="!@plugin_selectors_template">
 					<template id="@plugin_selectors_template"/>
+					<box onclick="\$j('input[value=\'filter\']').not(':checked').attr('checked',true).parent().effect('highlight',{},2000);" class="filters">
+						<filter id="filter"/>
+					</box>
 				</row>
 			</rows>
 		</grid>
+		<styles>
+			select[multiple] {
+  width: 400px;
+}
+.filters {
+  max-height: 300px;
+  min-height: 150px;
+  overflow-y: auto;
+}
+		</styles>
 	</template>
 	<template id="importexport.export_dialog.options_tab" template="" lang="" group="0" version="">
 		<grid height="200px">
@@ -141,38 +166,48 @@
 					</hbox>
 				</row>
 				<row>
-					<box id="preview-box" needed="1" class="preview-box">
-						<description/>
-					</box>
-				</row>
-				<row>
-					<box align="center" id="preview-box-buttons" needed="1" class="preview-box-buttons">
-						<button align="center" label="OK" onclick="document.getElementById(form::name('preview-box')).style.display='none'; document.getElementById(form::name('preview-box-buttons')).style.display='none'; return false;"/>
+					<box id="preview_box" span="all" class="preview_box">
+						<box id="preview-box" needed="1" class="content">
+							<description/>
+						</box>
+						<box align="center" id="preview-box-buttons" class="preview-box-buttons">
+							<button align="center" label="OK" onclick="document.getElementById(form::name('preview_box')).style.display='none'; return false;"/>
+						</box>
 					</box>
 				</row>
 			</rows>
 		</grid>
 		<styles>
-			.preview-box {
+			.preview_box {
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 400px;
-  height: 360px;
-  overflow: scroll;
+  width: 97%;
+  height: 95%;
+  overflow: hidden;
   background-color: white;
   z-index: 999;
   display: none;
+  border: 1px solid black;
+  margin: 1.5%;
 }
-.preview-box-buttons {
+.preview_box .header {
+  font-size: 150%;
+  margin-bottom: 5px;
+  padding: 5px;
+  border-bottom: 1px outset;
+}
+.header .count {
+  float:right;
+}
+.preview_box&gt;.content {
+  overflow: auto;
+}
+.preview-box-buttons  {
   position: absolute;
-  top: 365px;
-  left: 0px;
-  width: 400px;
-  height: 20px;
-
-  z-index: 999;
-  display: none;
+  bottom: 0px;
+  width: 100%;
+  margin-left: 50%;
 }
 		</styles>
 	</template>

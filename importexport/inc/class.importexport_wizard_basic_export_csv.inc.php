@@ -1,12 +1,12 @@
 <?php
 /**
  * eGroupWare - A basic implementation of a wizard to go with the basic CSV plugin.
- * 
+ *
  * To add or remove steps, change $this->steps appropriately.  The key is the function, the value is the title.
  * Don't go past 80, as that's where the wizard picks it back up again to finish it off.
- * 
+ *
  * For the field list to work properly, you'll have to populate $export_fields with the fields available
- * 
+ *
  * NB: Your wizard class must be in <appname>/inc/class.appname_wizard_<plugin_name>.inc.php
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -15,7 +15,7 @@
  * @author Nathan Gray
  */
 
-class importexport_wizard_basic_export_csv 
+class importexport_wizard_basic_export_csv
 {
 
 	const TEMPLATE_MARKER = '-eTemplate-';
@@ -31,6 +31,7 @@ class importexport_wizard_basic_export_csv
 	protected $step_templates = array(
 		'wizard_step30' => 'importexport.wizard_basic_export_csv.choose_fields',
 		'wizard_step40' => 'importexport.wizard_basic_export_csv.choosesepncharset',
+		'wizard_step80' => 'importexport.wizard_basic_export_csv.filter',
 	);
 		
 
@@ -58,6 +59,7 @@ class importexport_wizard_basic_export_csv
 		$this->steps = array(
 			'wizard_step30' => lang('Choose fields to export'),
 			'wizard_step40' => lang('Choose seperator and charset'),
+			'wizard_step80' => lang('Filters'),
 		);
 		list($appname, $part2) = explode('_', get_class($this));
 		if(!$GLOBALS['egw_info']['apps'][$appname]) $appname .= '_'.$part2; // Handle apps with _ in the name
@@ -210,6 +212,73 @@ class importexport_wizard_basic_export_csv
 			return $this->step_templates[$content['step']];
 		}
 		
+	}
+
+	/**
+	 * Set export filters
+	 *
+	 * @param array $content
+	 * @param array $sel_options
+	 * @param array $readonlys
+	 * @param array $preserv
+	 * @return string template name
+	 */
+	function wizard_step80(&$content, &$sel_options, &$readonlys, &$preserv)
+	{
+		if($this->debug) error_log(get_class($this) . '::' . __METHOD__ .'->$content '.print_r($content,true));
+		// return from submit
+		if ($content['step'] == 'wizard_step80') {
+			// Process submitted
+			unset($content['filter']);
+			unset($content['set_filter']['fields']);
+			foreach($content['set_filter'] as $key => $value)
+			{
+				if($value) {
+					$content['filter'][$key] = $value;
+				}
+			}
+			unset($content['set_filter']);
+
+			// Next step
+			switch (array_search('pressed', $content['button']))
+			{
+				case 'next':
+					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],1);
+				case 'previous' :
+					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],-1);
+				case 'finish':
+					return 'wizard_finish';
+				default :
+					return $this->wizard_step80($content,$sel_options,$readonlys,$preserv);
+			}
+		} else {
+
+			// Step 50 - filters
+			$content['msg'] = $this->steps['wizard_step80'];
+			$content['step'] = 'wizard_step80';
+
+			// Find filterable fields
+			if(!$content['set_filter'] && $content['filter']) {
+				$load = true;
+			}
+			$content['set_filter']['fields'] = importexport_helper_functions::get_filter_fields(
+				$content['application'],$content['plugin'],$this
+			);
+			// Load existing filter from either content or definition
+			if($load)
+			{
+				foreach($content['set_filter']['fields'] as $field => $settings)
+				{
+					$content['set_filter'][$field] = $content['filter'][$field];
+				}
+			}
+
+			$sel_options = array();
+
+			$preserv = $content;
+			unset ($preserv['button']);
+			return $this->step_templates[$content['step']];
+		}
 	}
 
 	/**

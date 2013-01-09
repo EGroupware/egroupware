@@ -460,8 +460,30 @@
 
 			if($type == 'export')
 			{
-				// Set to export all
-				$definition->plugin_options = array_merge($definition->plugin_options, array('selection' => 'all'));
+				// Set to export all or filter, if set
+				$selection = array('selection' => 'all');
+				if($definition->filter)
+				{
+					$fields = importexport_helper_functions::get_filter_fields($definition->application, $po);
+					$selection = array('selection' => 'filter');
+					$filters = array();
+					foreach($definition->filter as $field => $value)
+					{
+						 // Handle multiple values
+						if(!is_array($value) && strpos($value,',') !== false) $value = explode(',',$value);
+
+						$filters[$field] = $value;
+
+						// Process relative dates into the current absolute date
+						if($filters[$field] && strpos($fields[$field]['type'],'date') === 0)
+						{
+							$filters[$field] = importexport_helper_functions::date_rel2abs($value);
+						}
+					}
+					// Update filter to use current absolute dates
+					$definition->filter = $filters;
+				}
+				$definition->plugin_options = array_merge($definition->plugin_options, $selection);
 			}
 
 			foreach($targets as $target)

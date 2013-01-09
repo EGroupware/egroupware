@@ -173,13 +173,31 @@ class importexport_export_ui {
 					$content['plugin_options_template'] = $options;
 				}
 			}
+			$content['filter'] = $definition->filter;
+			$content['filter']['fields'] = importexport_helper_functions::get_filter_fields($_appname, $selected_plugin);
+			if(!$content['filter']['fields'])
+			{
+				$this->js->set_onload("\$j('input[value=\"filter\"]').parent().hide();");
+				$content['no_filter'] = true;
+			}
+			else
+			{
+				// Process relative dates into the current absolute date
+				foreach($content['filter']['fields'] as $field => $settings)
+				{
+					if($content['filter'][$field] && strpos($settings['type'],'date') === 0)
+					{
+						$content['filter'][$field] = importexport_helper_functions::date_rel2abs($content['filter'][$field]);
+					}
+				}
+			}
 		}
 
 		// fill selection tab
-		if($definition && $definition->plugin_options['selection'] && !$content['selection_passed']) {
+		if($definition && is_array($definition->plugin_options) && $definition->plugin_options['selection'] && !$content['selection_passed']) {
 			$_selection = $definition->plugin_options['selection'];
 		}
-
+		
 		if ($_selection && ($content['old_definition'] == $content['definition'] || $content['selection_passed'])) {
 			$readonlys[$tabs]['selection_tab'] = true;
 			$content['selection'] = $_selection;
@@ -209,9 +227,18 @@ class importexport_export_ui {
 				disable_button('exec[export]');
 			");
 		}
+
+		// Disable / hide definition filter if not selected
+		if($content['selection'] !== 'filter')
+		{
+			$this->js->set_onload("
+				\$j('div.filters').hide();
+			");
+		}
+
 		$preserv['old_definition'] = $content['definition'];
 		if (($prefs = $GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]) &&
-			($prefs = unserialize($prefs)) && !$content['selection']['plugin_override'])
+			($prefs = unserialize($prefs)) && is_array($content['selection']) && !$content['selection']['plugin_override'])
 		{
 			$selection = $content['selection'];
 			$content = array_merge_recursive($content,$prefs);
@@ -260,6 +287,35 @@ class importexport_export_ui {
 					'mapping'	=>	array()
 				);
 			}
+
+			// Set filter
+			// Note that because not all dates are DB dates, the plugin has to handle them
+			$filter = $definition->filter;
+			if(is_array($_content['filter']))
+			{
+				foreach($_content['filter'] as $key => $value)
+				{
+					// Handle multiple values
+					if(!is_array($value) && strpos($value,',') !== false) $value = explode(',',$value);
+
+					$filter[$key] = $value;
+
+					// Skip empty values or empty ranges
+					if(!$value || is_array($value) && array_key_exists('from',$value) && !$value['from'] && !$value['to'] )
+					{
+						unset($filter[$key]);
+					}
+					// If user selects an end date, they most likely want entries including that date
+					if(is_array($value) && array_key_exists('to',$value) && $value['to'] )
+					{
+						// Adjust time to 23:59:59
+						$filter[$key]['to'] = mktime(23,59,59,date('n',$value['to']),date('j',$value['to']),date('Y',$value['to']));
+					}
+				}
+			}
+			unset($_content['filter']);
+			$definition->filter = $filter;
+
 			$definition->plugin_options = array_merge(
 				$definition->plugin_options,
 				$_content
@@ -287,7 +343,17 @@ class importexport_export_ui {
 				}
 			}
 			$plugin_object = new $definition->plugin;
-			$plugin_object->export( $file, $definition );
+			$result = $plugin_object->export( $file, $definition );
+
+			if(is_object($result) && method_exists($result, 'get_num_of_records'))
+			{
+				$record_count = $result->get_num_of_records();
+				if($record_count == 0)
+				{
+					$response->addScript('alert("' . lang('No matching records') . '");');
+					return $response->getXML();
+				}
+			}
 
 			// Keep settings
 			$keep = array_diff_key($_content, array_flip(array('appname', 'definition', 'plugin', 'preview', 'export', $tabs)));
@@ -302,7 +368,20 @@ class importexport_export_ui {
 				fclose($file);
 				$filename = pathinfo($tmpfname, PATHINFO_FILENAME);
 				$response->addScript("xajax_eT_wrapper();");
-				$response->addScript("opener.location.href='". $GLOBALS['egw']->link('/index.php','menuaction=importexport.importexport_export_ui.download&_filename='. $filename.'&_appname='. $definition->application). "&_suffix=". $plugin_object->get_filesuffix(). "&_type=".$plugin_object->get_mimetype() ."';");
+				$link_query = array(
+					'menuaction'	=> 'importexport.importexport_export_ui.download',
+					'_filename'	=> $filename,
+					'_appname'	=> $definition->application,
+					'_suffix'	=> $plugin_object->get_filesuffix(),
+					'_type'		=> $plugin_object->get_mimetype()
+				);
+
+				// Allow plugins to suggest a file name - return false if they have no suggestion
+				if(method_exists($plugin_object, 'get_filename') && $plugin_filename = $plugin_object->get_filename())
+				{
+					$link_query['filename'] = $plugin_filename;
+				}
+				$response->addScript("opener.location.href='". $GLOBALS['egw']->link('/index.php',$link_query)."'");
 				$response->addScript('window.setTimeout("window.close();", 100);');
 				return $response->getXML();
 			}
@@ -329,9 +408,12 @@ class importexport_export_ui {
 					$GLOBALS['egw']->translation->charset()
 				);
 
+				if($record_count)
+				{
+					$preview = "<div class='header'>".lang('Preview') . "<span class='count'>$record_count</span></div>".$preview;
+				}
 				$response->addAssign('exec[preview-box]','innerHTML',nl2br($preview));
-				$response->jquery('.preview-box','show');
-				$response->jquery('.preview-box-buttons','show');
+				$response->jquery('.preview_box','show');
 
 				$response->addScript("xajax_eT_wrapper();");
 				return $response->getXML();
@@ -494,7 +576,7 @@ class importexport_export_ui {
 		if (!is_readable($tmpfname)) die();
 
 		$appname = $_GET['_appname'];
-		$nicefname = 'egw_export_'.$appname.'-'.date('Y-m-d');
+		$nicefname = $_GET['filename'] ? $_GET['filename'] : 'egw_export_'.$appname.'-'.date('Y-m-d');
 
 		// Turn off all output buffering
 		while (@ob_end_clean());

@@ -30,9 +30,14 @@ class importexport_export_csv implements importexport_iface_export_record
 	protected  $conversion = array();
 	
 	/**
+	 * @var Current record being processed
+	 */
+	public $record;
+
+	/**
 	 * @var array holding the current record
 	 */
-	protected $record = array();
+	protected $record_array = array();
 	
 	/**
 	 * @var translation holds (charset) translation object
@@ -145,7 +150,8 @@ class importexport_export_csv implements importexport_iface_export_record
 	 * @return bool
 	 */
 	public function export_record( importexport_iface_egw_record $_record ) {
-		$this->record = $_record->get_record_array();
+		$this->record = $_record;
+		$this->record_array = $_record->get_record_array();
 		
 		// begin with fieldnames ?
 		if ($this->num_of_records == 0 && $this->csv_options['begin_with_fieldnames'] ) {
@@ -175,7 +181,7 @@ class importexport_export_csv implements importexport_iface_export_record
 					}
 				}
 			}
-			$mapping = ! empty( $this->mapping ) ? $this->mapping : array_keys ( $this->record );
+			$mapping = ! empty( $this->mapping ) ? $this->mapping : array_keys ( $this->record_array );
 			self::fputcsv( $this->handle ,$mapping ,$this->csv_options['delimiter'], $this->csv_options['enclosure'] );
 		}
 
@@ -186,19 +192,19 @@ class importexport_export_csv implements importexport_iface_export_record
 		
 		// do conversions
 		if ( !empty( $this->conversion )) {
-			$this->record = importexport_helper_functions::conversion( $this->record, $this->conversion );
+			$this->record_array = importexport_helper_functions::conversion( $this->record_array, $this->conversion );
 		}
 		
 		// do fieldmapping
 		if ( !empty( $this->mapping ) ) {
-			$record_data = $this->record;
-			$this->record = array();
+			$record_data = $this->record_array;
+			$this->record_array = array();
 			foreach ($this->mapping as $egw_field => $csv_field) {
-				$this->record[$csv_field] = $record_data[$egw_field];
+				$this->record_array[$csv_field] = $record_data[$egw_field];
 			}
 		}
 		
-		self::fputcsv( $this->handle, $this->record, $this->csv_options['delimiter'], $this->csv_options['enclosure'] );
+		self::fputcsv( $this->handle, $this->record_array, $this->csv_options['delimiter'], $this->csv_options['enclosure'] );
 		$this->num_of_records++;
 	}
 

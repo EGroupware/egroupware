@@ -18,6 +18,9 @@ class infolog_wizard_export_csv extends importexport_wizard_basic_export_csv
 		// Field mapping
 		$bo = new infolog_tracking(new infolog_bo());
 		$this->export_fields = array('info_id' => 'Infolog ID', 'pm_id' => 'Project ID', 'project' => 'Project Name') + $bo->field2label;
+		// Add in created date, in the appropriate place
+		$first = array_splice($this->export_fields, 0, array_search('info_datemodified',array_keys($this->export_fields)));
+		$this->export_fields = array_merge($first, array('info_created'=>'creation'), $this->export_fields);
 
 		// Custom fields
 		unset($this->export_fields['custom']); // Heading, not a real field

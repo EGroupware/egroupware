@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="importexport.wizard_basic_export_csv.filter" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<filter id="set_filter" options="1"/>
+				</row>
+			</rows>
+		</grid>
+		<styles>select {
+  width: 200px;
+}</styles>
+	</template>
+</overlay>
