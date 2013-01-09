@@ -279,6 +279,7 @@ class resources_ui
 				'icon' => 'revert',
 				'enableClass' => 'deleted',
 				'hideOnDisabled' => true,
+				'nm_action' => 'open_popup',
 				'group' => $group,
 			)
 		);
@@ -314,7 +315,7 @@ class resources_ui
 				$checked[] = $resource['res_id'];
 			}
 		}
-		//echo __METHOD__."('$action', ".array2string($checked).', '.array2string($use_all).",,, '$session_name')";
+		echo __METHOD__."('$action', ".array2string($checked).', '.array2string($use_all).",,, '$session_name')";
 
 		// Dialogs to get options
 		list($action, $settings) = explode('_', $action, 2);
@@ -359,8 +360,21 @@ class resources_ui
 					$resource = $this->bo->read($id);
 					$resource['deleted'] = null;
 					$this->bo->save($resource);
+					if($settings == 'accessories')
+					{
+						// Restore accessories too
+						$accessories = $this->bo->get_acc_list($id,true);
+						foreach($accessories as $acc_id => $name)
+						{
+							$acc = $this->bo->read($acc_id);
+							$acc['deleted'] = null;
+							$this->bo->save($acc);
+							$restored_accessories++;
+						}
+					}
 					$success++;
 				}
+				if($restored_accessories) $action_msg .= ", " . lang('%1 accessories restored',$restored_accessories);
 				break;
 			case 'delete':
 				$action_msg = lang('deleted');
