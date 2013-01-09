@@ -1,3 +1,9 @@
+egroupware-epl (11.1.20130109-1) hardy; urgency=low
+
+  * Tracker: fix for template issue - tabcontrol not working
+
+ -- Ralf Becker <rb@stylite.de>  Wed, 09 Jan 2013 12:13:10 +0100
+
 egroupware-epl (11.1.20130108-1) hardy; urgency=low
 
   * Calendar: added missing holidays for CR (Costa Rica) provided by Rafael Chacon
