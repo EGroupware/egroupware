@@ -580,6 +580,11 @@ class calendar_uilist extends calendar_ui
 			{
 				case 'delete':
 					$action_msg = lang('deleted');
+					if($settings == 'series')
+					{
+						// Delete the whole thing
+						$recur_date = 0;
+					}
 					if ($id && $this->bo->delete($id, $recur_date,false,$skip_notification))
 					{
 						$success++;
@@ -834,6 +839,7 @@ class calendar_uilist extends calendar_ui
 			'caption' => 'Delete',
 			'confirm' => 'Delete this event',
 			'confirm_multiple' => 'Delete these entries',
+			'onExecute' => 'javaScript:cal_delete',
 			'group' => $group,
 			'disableClass' => 'rowNoDelete',
 		);
