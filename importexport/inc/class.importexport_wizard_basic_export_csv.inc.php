@@ -283,6 +283,11 @@ class importexport_wizard_basic_export_csv
 				}
 			}
 
+			if(!$content['set_filter']['fields'])
+			{
+				// No fields
+				return importexport_definitions_ui::SKIP;
+			}
 			$sel_options = array();
 
 			$preserv = $content;
