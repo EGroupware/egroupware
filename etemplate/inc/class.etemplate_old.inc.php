@@ -1225,7 +1225,20 @@ class etemplate_old extends boetemplate
 		{
 			case 'label':	//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size],[link_title]
 				if (is_array($value)) break;
-				list($style,$extra_link,$activate_links,$label_for,$extra_link_target,$extra_link_popup,$extra_link_title) = self::csv_split($cell_options,7);
+				if($cell_options)
+				{
+					list($style,$extra_link,$activate_links,$label_for,$extra_link_target,$extra_link_popup,$extra_link_title) = self::csv_split($cell_options,7);
+				}
+				else
+				{
+					$style = $cell['font_style'];
+					$extra_link = $cell['href'];
+					$activate_links = $cell['activate_links'];
+					$label_for = $cell['for'];
+					$extra_link_target = $cell['extra_link_target'];
+					$extra_link_popup = $cell['extra_link_popup'];
+					$extra_link_title = $cell['extra_link_title'];
+				}
 				$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
 				$value = nl2br(html::htmlspecialchars($value));
 				if ($activate_links) $value = html::activate_links($value);

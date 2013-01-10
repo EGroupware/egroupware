@@ -559,6 +559,7 @@ class xul_io
 								}
 								$grid = array(	// empty grid
 									'type' => 'grid',
+									'name' => $attr['name'],
 									'data' => array(),
 									'cols' => 0,
 									'rows' => 0,
