@@ -21,6 +21,9 @@ class importexport_definitions_ui
 
 	const _appname = 'importexport';
 
+	// To skip a step, step returns this
+	const SKIP = '-skip-';
+
 	public $public_functions = array(
 		'edit' => true,
 		'index' => true,
@@ -567,14 +570,28 @@ class importexport_definitions_ui
 			if(!$content['name'] || !$content['type'] || !$content['plugin']) {
 				$GLOBALS['egw']->js->set_onload("disable_button('exec[button][finish]');");
 			}
-			if(!key_exists($next_step,$this->steps))
-			{
-				$this->wizard_content_template = $this->plugin->$next_step($content,$sel_options,$readonlys,$preserv);
-			}
-			else
-			{
-				$this->wizard_content_template = $this->$next_step($content,$sel_options,$readonlys,$preserv);
-			}
+			do {
+				if(!key_exists($next_step,$this->steps))
+				{
+					$this->wizard_content_template = $this->plugin->$next_step($content,$sel_options,$readonlys,$preserv);
+				}
+				else
+				{
+					$this->wizard_content_template = $this->$next_step($content,$sel_options,$readonlys,$preserv);
+				}
+				if($this->wizard_content_template == self::SKIP)
+				{
+					if(!key_exists($content['step'],$this->steps))
+					{
+						$next_step = $this->plugin->$content['step']($content);
+					}
+					else
+					{
+						$next_step = $this->$content['step']($content);
+					}
+				}
+			} while($this->wizard_content_template == self::SKIP);
+
 			if(!$this->can_edit($content))
 			{
 				$readonlys[$this->wizard_content_template] = true;
