@@ -131,7 +131,7 @@ class filter_widget extends customfields_widget
 						'size' => $field['type'] == 'link-entry' ? '' : $field['type'],
 					));
 					// register post-processing of link widget to get eg. needed/required validation
-					etemplate_old::$request->set_to_process(etemplate_old::form_name($form_name,$this->prefix.$lname), 'ext-link');
+					etemplate::$request->set_to_process(etemplate::form_name($form_name,$this->prefix.$lname), 'ext-link');
 					break;
 				case 'select':
 				default:
@@ -162,7 +162,7 @@ class filter_widget extends customfields_widget
 							'size' => $field['type'] == 'link-entry' ? '' : $field['type'],
 						));
 						// register post-processing of link widget to get eg. needed/required validation
-						etemplate_old::$request->set_to_process(etemplate_old::form_name($form_name,$lname), 'ext-link');
+						etemplate::$request->set_to_process(etemplate::form_name($form_name,$lname), 'ext-link');
 		
 					} else {
 error_log('Trying to filter with unsupported field type: ' . $field['type']);
