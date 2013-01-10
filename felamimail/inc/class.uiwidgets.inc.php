@@ -108,6 +108,7 @@ class uiwidgets
 			if (isset($preferences->preferences['templateFolder']) &&
 				$preferences->preferences['templateFolder'] != 'none') $userDefinedFunctionFolders['Templates'] = $preferences->preferences['templateFolder'];
 			// create a list of all folders, also the ones which are not subscribed
+			$suFolders = array();
  			foreach($_folders as $key => $obj) {
 				//error_log('->'.array2string($key));
 				$folderParts = explode($obj->delimiter,$key);
@@ -124,16 +125,39 @@ class uiwidgets
 							$allFolders[$string]->displayName = $this->encodeFolderName($allFolders[$string]->folderName);
 							$allFolders[$string]->shortDisplayName = $this->encodeFolderName($allFolders[$string]->shortFolderName);
 							//$prefix = array_shift(explode($obj->delimiter, $nameSpace['others']['prefix']));
-							//error_log('->'.$obj->delimiter.':'.$prefix.'<->'.$allFolders[$string]->shortFolderName);
-							if (array_shift(explode($obj->delimiter, $nameSpace['shared']['prefix'])) == $allFolders[$string]->shortFolderName) $allFolders[$string]->shortDisplayName = $this->encodeFolderName(lang('shared folders'));
-							if (array_shift(explode($obj->delimiter, $nameSpace['others']['prefix'])) == $allFolders[$string]->shortFolderName) $allFolders[$string]->shortDisplayName = $this->encodeFolderName(lang('shared user folders'));
+							//error_log('->'.$obj->delimiter.':'.$prefix.'<->'.$allFolders[$string]->shortFolderName.'#'.$allFolders[$string]->folderName);
+							if (array_shift(explode($obj->delimiter, $nameSpace['shared']['prefix'])) == $allFolders[$string]->shortFolderName)
+							{
+								$allFolders[$string]->shortDisplayName = $this->encodeFolderName(lang('shared folders'));
+								if (!in_array($allFolders[$string]->shortFolderName,$suFolders)) $suFolders[] =$allFolders[$string]->shortFolderName;
+							}
+							if (array_shift(explode($obj->delimiter, $nameSpace['others']['prefix'])) == $allFolders[$string]->shortFolderName)
+							{
+								$allFolders[$string]->shortDisplayName = $this->encodeFolderName(lang('shared user folders'));
+								if (!in_array($allFolders[$string]->shortFolderName,$suFolders)) $suFolders[] =$allFolders[$string]->shortFolderName;
+							}
+							if (!in_array($allFolders[$string]->folderName,$suFolders) && !$this->bofelamimail->folderIsSelectable($allFolders[$string]->folderName))
+							{
+								$suFolders[] = $allFolders[$string]->folderName;
+							}
 						}
 					}
 				}
 				$allFolders[$key] = $obj;
-				if (array_shift(explode($obj->delimiter, $nameSpace['shared']['prefix'])) == $obj->shortFolderName) $allFolders[$key]->shortDisplayName = $this->encodeFolderName(lang('shared folders'));
-				if (array_shift(explode($obj->delimiter, $nameSpace['others']['prefix'])) == $obj->shortFolderName) $allFolders[$key]->shortDisplayName = $this->encodeFolderName(lang('shared user folders'));
-
+				if (array_shift(explode($obj->delimiter, $nameSpace['shared']['prefix'])) == $obj->shortFolderName)
+				{
+					$allFolders[$key]->shortDisplayName = $this->encodeFolderName(lang('shared folders'));
+					if (!in_array($obj->shortFolderName,$suFolders)) $suFolders[] =$obj->shortFolderName;
+				}
+				if (array_shift(explode($obj->delimiter, $nameSpace['others']['prefix'])) == $obj->shortFolderName)
+				{
+					$allFolders[$key]->shortDisplayName = $this->encodeFolderName(lang('shared user folders'));
+					if (!in_array($obj->shortFolderName,$suFolders)) $suFolders[] =$obj->shortFolderName;
+				}
+				if (!in_array($obj->folderName,$suFolders) && !$this->bofelamimail->folderIsSelectable($obj->folderName))
+				{
+					$suFolders[] = $obj->folderName;
+				}
 			}
 
 			$folderImageDir = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/templates/default/images';
@@ -150,6 +174,10 @@ class uiwidgets
 }";
 			$folder_tree_new .= "var tree=new dhtmlXTreeObject('$_divName','100%','100%',0);";
 			$folder_tree_new .= "var felamimail_folders=[];";
+			$folder_tree_new .= "var donotclick_folders=[];";
+			$folder_tree_new .= "donotclick_folders.push('--topfolder--');";
+			//error_log(__METHOD__.__LINE__.array2string($suFolders));
+			foreach ($suFolders as $suFi => $suFv) $folder_tree_new .= "donotclick_folders.push('$suFv');";
 			$folder_tree_new .= "tree.parentObject.style.overflow=\"auto\";";
 			$folder_tree_new .= "tree.setImagePath('$folderImageDir/dhtmlxtree/');";
 			if($_displayCheckBox) {

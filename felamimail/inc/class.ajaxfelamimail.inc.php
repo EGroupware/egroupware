@@ -64,6 +64,9 @@ class ajaxfelamimail
 			$this->uiwidgets	= CreateObject('felamimail.uiwidgets');
 			$this->icServer = $this->bofelamimail->mailPreferences->getIncomingServer($this->imapServerID);
 			$this->_connectionStatus = $this->bofelamimail->openConnection($this->imapServerID);
+			if(!$this->bofelamimail->folderIsSelectable($folderToSelect)) {
+				$folderToSelect = null;
+			}
 
 			$this->sessionDataAjax	=& $GLOBALS['egw']->session->appsession('ajax_session_data','felamimail');
 			$this->sessionData	=& $GLOBALS['egw']->session->appsession('session_data','felamimail');
@@ -234,7 +237,7 @@ class ajaxfelamimail
 		{
 			if($this->_debug) error_log(__METHOD__.__LINE__.array2string($_acl).function_backtrace());
 			$aclList = array('l','r','s','w','i','p','c','d','a');
-			
+
 			$lang["lang_acl_l"] = "Look up the name of the mailbox (but not its contents).";
 			$lang["lang_acl_r"] = "Read the contents of the mailbox.";
 			$lang["lang_acl_s"] = "Preserve the 'seen' and 'recent' status of messages across IMAP sessions.";
@@ -703,6 +706,15 @@ class ajaxfelamimail
 			$listMode = 0;
 
 			$this->bofelamimail->restoreSessionData();
+			$shortName = '';
+			if($folderStatus = $this->bofelamimail->getFolderStatus($_folderName)) {
+				$shortName =$folderStatus['shortDisplayName'];
+				if (stripos(array2string($folderStatus['attributes']),'noselect')!==false)
+				{
+					$_folderName = 'INBOX';
+					return $this->generateMessageList($_folderName,$modifyoffset,$listOnly);
+				}
+			}
 			//error_log($this->sessionData['previewMessage']);
 			//error_log(__METHOD__.__LINE__.' ->'.$_folderName.' ShowAsSent:'.$GLOBALS['egw_info']['user']['preferences']['felamimail']['messages_showassent_0']);
 
@@ -776,10 +788,7 @@ class ajaxfelamimail
 			$lastMessage  = (int)$headers['info']['last'];
 			$totalMessage = (int)$headers['info']['total'];
 			if ((int)$maxMessages<0) $totalMessage = $rowsFetched['messages'];
-			$shortName = '';
-			if($folderStatus = $this->bofelamimail->getFolderStatus($_folderName)) {
-				$shortName =$folderStatus['shortDisplayName'];
-			}
+			// moved getFolderStatus up, see there
 			if($totalMessage == 0) {
 				$response->addAssign("messageCounter", "innerHTML", '<b>'.$shortName.': </b>'.lang('no messages found...'));
 			} else {
@@ -797,21 +806,22 @@ class ajaxfelamimail
 				}
 			}
 
-			if($folderStatus = $this->bofelamimail->getFolderStatus($_folderName)) {
-				if($folderStatus['unseen'] > 0) {
-					$response->addScript("egw_topWindow().tree.setItemText('$_folderName', '<b>". $folderStatus['shortDisplayName'] ." (". $folderStatus['unseen'] .")</b>');");
-				} else {
-					$response->addScript("egw_topWindow().tree.setItemText('$_folderName', '". $folderStatus['shortDisplayName'] ."');");
-				}
+			if($folderStatus['unseen'] > 0) {
+				$response->addScript("egw_topWindow().tree.setItemText('$_folderName', '<b>". $folderStatus['shortDisplayName'] ." (". $folderStatus['unseen'] .")</b>');");
+			} else {
+				$response->addScript("egw_topWindow().tree.setItemText('$_folderName', '". $folderStatus['shortDisplayName'] ."');");
 			}
 
 			if(!empty($GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder']) &&
 				$GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'] != 'none' ) {
-				$folderStatus = $this->bofelamimail->getFolderStatus($GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder']);
-				if($folderStatus['unseen'] > 0) {
-					$response->addScript("egw_topWindow().tree.setItemText('". $GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'] ."', '<b>". $folderStatus['shortDisplayName'] ." (". $folderStatus['unseen'] .")</b>');");
+				if ($_folderName != $GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'])
+				{
+					$folderStatusT = $this->bofelamimail->getFolderStatus($GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder']);
+				}
+				if($folderStatusT['unseen'] > 0) {
+					$response->addScript("egw_topWindow().tree.setItemText('". $GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'] ."', '<b>". $folderStatusT['shortDisplayName'] ." (". $folderStatusT['unseen'] .")</b>');");
 				} else {
-					$response->addScript("egw_topWindow().tree.setItemText('". $GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'] ."', '". $folderStatus['shortDisplayName'] ."');");
+					$response->addScript("egw_topWindow().tree.setItemText('". $GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'] ."', '". $folderStatusT['shortDisplayName'] ."');");
 				}
 			}
 

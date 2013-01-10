@@ -125,6 +125,12 @@ class felamimail_bo
 	static $autoFolders = array('Drafts', 'Templates', 'Sent', 'Trash', 'Junk', 'Outbox');
 
 	/**
+	 * var to hold IDNA2 object
+	 * @var class object
+	 */
+	static $idna2;
+
+	/**
 	* Autoload classes from emailadmin, 'til they get autoloading conform names
 	*
 	* @param string $class
@@ -220,6 +226,7 @@ class felamimail_bo
 			}
 		}
 		self::$instances[$_profileID]->profileID = $_profileID;
+		if (!isset(self::$instances[$_profileID]->idna2)) self::$instances[$_profileID]->idna2 = new egw_idna;
 		//if ($_profileID==0); error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID);
 		return self::$instances[$_profileID];
 	}
@@ -410,6 +417,7 @@ class felamimail_bo
 		if (function_exists('mb_convert_encoding')) {
 			$this->mbAvailable = TRUE;
 		}
+		if (!isset(self::$idna2)) self::$idna2 = new egw_idna;
 
 	}
 
@@ -1637,6 +1645,27 @@ class felamimail_bo
 	}
 
 	/**
+	* get IMAP folder status regarding NoSelect
+	*
+	* returns true or false regarding the noselect attribute
+	*
+	* @param foldertoselect string the foldername
+	*
+	* @return boolean
+	*/
+	function folderIsSelectable($folderToSelect)
+	{
+		$retval = true;
+		if($folderToSelect && ($folderStatus = $this->getFolderStatus($folderToSelect))) {
+			if (stripos(array2string($folderStatus['attributes']),'noselect')!==false)
+			{
+				$retval = false;
+			}
+		}
+		return $retval;
+	}
+
+	/**
 	* get IMAP folder status
 	*
 	* returns an array information about the imap folder
@@ -1652,6 +1681,7 @@ class felamimail_bo
 		{
 			return false;
 		}
+		static $folderInfoCache; // reduce traffic on single request
 		$retValue = array();
 		$retValue['subscribed'] = false;
 		if(!$icServer = $this->mailPreferences->getIncomingServer($this->profileID)) {
@@ -1660,8 +1690,9 @@ class felamimail_bo
 		}
 
 		// does the folder exist???
-		$folderInfo = $this->icServer->getMailboxes('', $_folderName, true);
-
+		if (is_null($folderInfoCache) || !isset($folderInfoCache[$_folderName])) $folderInfoCache[$_folderName] = $this->icServer->getMailboxes('', $_folderName, true);
+		$folderInfo = $folderInfoCache[$_folderName];
+		//error_log(__METHOD__.__LINE__.array2string($folderInfo).'->'.function_backtrace());
 		if(($folderInfo instanceof PEAR_Error) || !is_array($folderInfo[0])) {
 			if (self::$debug||$folderInfo instanceof PEAR_Error) error_log(__METHOD__." returned Info for folder $_folderName:".print_r($folderInfo->message,true));
 			if ( ($folderInfo instanceof PEAR_Error) || PEAR::isError($r = $this->_getStatus($_folderName)) || $r == 0) return false;
@@ -1675,11 +1706,6 @@ class felamimail_bo
 		#if(!is_array($folderInfo[0])) {
 		#	return false;
 		#}
-
-		$subscribedFolders = $this->icServer->listsubscribedMailboxes('', $_folderName);
-		if(is_array($subscribedFolders) && count($subscribedFolders) == 1) {
-			$retValue['subscribed'] = true;
-		}
 
 		$retValue['delimiter']		= $folderInfo[0]['HIERACHY_DELIMITER'];
 		$retValue['attributes']		= $folderInfo[0]['ATTRIBUTES'];
@@ -1695,6 +1721,14 @@ class felamimail_bo
 		elseif (in_array($retValue['shortName'],self::$autoFolders))
 		{
 			$retValue['displayName'] = $retValue['shortDisplayName'] = lang($retValue['shortName']);
+		}
+		if (stripos(array2string($retValue['attributes']),'noselect')!==false)
+		{
+			return $retValue;
+		}
+		$subscribedFolders = $this->icServer->listsubscribedMailboxes('', $_folderName);
+		if(is_array($subscribedFolders) && count($subscribedFolders) == 1) {
+			$retValue['subscribed'] = true;
 		}
 
 		if ( PEAR::isError($folderStatus = $this->_getStatus($_folderName,$ignoreStatusCache)) ) {
@@ -2722,7 +2756,6 @@ class felamimail_bo
 				}
 			}
 			//if ($decode) _debug_array($newData);
-
 			return $newData;
 		}
 	}
@@ -3881,10 +3914,10 @@ class felamimail_bo
 		//{
 			//error_log( "------------------------reopen- $_foldername <br>");
 			//error_log(__METHOD__.__LINE__.' Connected with icServer for Profile:'.$this->profileID.'?'.print_r($this->icServer->_connected,true));
-			if ($this->icServer->_connected == 1) {
-				$tretval = $this->icServer->selectMailbox($_foldername);
-			} else {
+			if (!($this->icServer->_connected == 1)) {
 				$tretval = $this->openConnection($this->profileID,false);
+			}
+			if ($this->icServer->_connected == 1 && $this->folderIsSelectable($_foldername)) {
 				$tretval = $this->icServer->selectMailbox($_foldername);
 			}
 			$folderOpened = $_foldername;

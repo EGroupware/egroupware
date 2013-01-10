@@ -637,7 +637,17 @@ function onNodeSelect(_nodeID) {
 			*/
 			CopyOrMoveCalled = false;
 //-		} else {
-			if (_nodeID=='--topfolder--') _nodeID = 'INBOX';
+			if (typeof egw_appWindow('felamimail').donotclick_folders == 'undefined')
+			{
+				//alert('donotclick folders not defined here');
+				var donotclick_folders=[];
+				donotclick_folders.push('--topfolder--');
+			}
+			for (var i=0; i<egw_appWindow('felamimail').donotclick_folders.length; i++)
+			{
+				//alert('node selected:'+_nodeID+'<->'+donotclick_folders[i]+'#');
+				if (_nodeID==egw_appWindow('felamimail').donotclick_folders[i]) _nodeID = 'INBOX';
+			}
 			mail_resetMessageSelect();
 			egw_appWindow('felamimail').setStatusMessage('<span style="font-weight: bold;">' + egw_appWindow('felamimail').lang_loading + ' ' + top.tree.getUserData(_nodeID, 'folderName') + '</span>');
 			mail_cleanup();
