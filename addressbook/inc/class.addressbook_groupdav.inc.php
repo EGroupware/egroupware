@@ -88,7 +88,8 @@ class addressbook_groupdav extends groupdav_handler
 
 		$this->home_set_pref = $GLOBALS['egw_info']['user']['preferences']['groupdav']['addressbook-home-set'];
 		$this->home_set_pref = $this->home_set_pref ? explode(',',$this->home_set_pref) : array();
-
+		//actively disable distributionslist (possibly selected) for 11.1
+		if (in_array('D',$this->home_set_pref)) foreach ($this->home_set_pref as $k =>$v) if ($v=='D') unset($this->home_set_pref[$k]);
 		// silently switch "Sync all into one" preference on for OS X addressbook, as it only supports one AB
 		// this restores behavior before Lion (10.7), where AB synced all ABs contained in addressbook-home-set
 		if (substr(self::get_agent(),0,9) == 'cfnetwork' && !in_array('O',$this->home_set_pref))
@@ -922,7 +923,9 @@ disabled for epl-11.1
 		{
 			$limit_in_ab = array_keys($this->bo->grants);
 		}*/
-		if (!$contact && ($contact = $this->bo->read_lists(array('list_'.self::$path_attr => $id),'contact_uid',$limit_in_ab)))
+		// distributionslist search is not active for 11.1, use standard instead
+		// (path_attr only if D is selected for home_set_pref (should not be possible for for 11.1))
+		if (!$contact && ($contact = $this->bo->read_lists(array('list_'.(in_array('D',$this->home_set_pref)?self::$path_attr:'id') => $id),'contact_uid',$limit_in_ab)))
 		{
 			$contact = array_shift($contact);
 			$contact['n_fn'] = $contact['n_family'] = $contact['list_name'];
