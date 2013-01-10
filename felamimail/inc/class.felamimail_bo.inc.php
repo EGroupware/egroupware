@@ -1656,7 +1656,7 @@ class felamimail_bo
 	function folderIsSelectable($folderToSelect)
 	{
 		$retval = true;
-		if($folderToSelect && ($folderStatus = $this->getFolderStatus($folderToSelect))) {
+		if($folderToSelect && ($folderStatus = $this->getFolderStatus($folderToSelect,false,true))) {
 			if (stripos(array2string($folderStatus['attributes']),'noselect')!==false)
 			{
 				$retval = false;
@@ -1671,17 +1671,25 @@ class felamimail_bo
 	* returns an array information about the imap folder
 	*
 	* @param _folderName string the foldername
+	* @param ignoreStatusCache bool ignore the cache used for counters
+	* @param basicInfoOnly bool retrieve only names and stuff returned by getMailboxes
 	*
 	* @return array
 	*/
-	function getFolderStatus($_folderName,$ignoreStatusCache=false)
+	function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false)
 	{
 		if (self::$debug) error_log(__METHOD__." called with:".$_folderName);
 		if (!is_string($_folderName) || empty($_folderName)) // something is wrong. Do not proceed
 		{
 			return false;
 		}
-		static $folderInfoCache; // reduce traffic on single request
+		static $folderBasicInfo;
+		if (is_null($folderBasicInfo))
+		{
+			$folderBasicInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
+			$folderInfoCache = $folderBasicInfo[$this->profileID];
+		}
+		if (isset($folderInfoCache[$_folderName]) && $ignoreStatusCache==false && $basicInfoOnly) return $folderInfoCache[$_folderName];
 		$retValue = array();
 		$retValue['subscribed'] = false;
 		if(!$icServer = $this->mailPreferences->getIncomingServer($this->profileID)) {
@@ -1722,7 +1730,9 @@ class felamimail_bo
 		{
 			$retValue['displayName'] = $retValue['shortDisplayName'] = lang($retValue['shortName']);
 		}
-		if (stripos(array2string($retValue['attributes']),'noselect')!==false)
+		$folderBasicInfo[$this->profileID][$_folderName]=$retValue;
+		egw_cache::setCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderBasicInfo,$expiration=60*60*1);
+		if ($basicInfoOnly || stripos(array2string($retValue['attributes']),'noselect')!==false)
 		{
 			return $retValue;
 		}
@@ -1825,10 +1835,16 @@ class felamimail_bo
 			{
 				unset($lastFolderUsedForMove[$_ImapServerId]);
 			}
+			$folderBasicInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
+			if (isset($folderBasicInfo[$_ImapServerId]))
+			{
+				unset($folderBasicInfo[$_ImapServerId]);
+			}
 		}
 		egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return, $expiration=60*60*1);
 		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,$expiration=60*5);
 		egw_cache::setCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),$lastFolderUsedForMove,$expiration=60*60*1);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderBasicInfo,$expiration=60*60*1);
 	}
 
 	/**
