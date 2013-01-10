@@ -15,36 +15,8 @@
 /**
  * class to import resources from CSV
  */
-class resources_import_csv implements importexport_iface_import_plugin  {
+class resources_import_csv extends importexport_basic_import_csv  {
 
-	private static $plugin_options = array(
-		'fieldsep', 		// char
-		'charset', 			// string
-		'contact_owner', 	// int
-		'update_cats', 			// string {override|add} overides record
-								// with cat(s) from csv OR add the cat from
-								// csv file to exeisting cat(s) of record
-		'num_header_lines', // int number of header lines
-		'field_conversion', // array( $csv_col_num => conversion)
-		'field_mapping',	// array( $csv_col_num => adb_filed)
-		'conditions',		/* => array containing condition arrays:
-				'type' => exists, // exists
-				'string' => '#kundennummer',
-				'true' => array(
-					'action' => update,
-					'last' => true,
-				),
-				'false' => array(
-					'action' => insert,
-					'last' => true,
-				),*/
-
-	);
-
-	/**
-	 * actions wich could be done to data entries
-	 */
-	protected static $actions = array( 'none', 'update', 'insert', 'delete', );
 
 	/**
 	 * conditions for actions
@@ -54,65 +26,12 @@ class resources_import_csv implements importexport_iface_import_plugin  {
 	protected static $conditions = array( 'exists' );
 
 	/**
-	 * @var definition
-	 */
-	private $definition;
-
-	/**
-	 * @var bo
-	 */
-	private $bo;
-
-	/**
-	 * @var bool
-	 */
-	private $dry_run = false;
-
-	/**
-	 * @var bool is current user admin?
-	 */
-	private $is_admin = false;
-
-	/**
-	 * @var int
-	 */
-	private $user = null;
-
-	/**
-	 * List of import warnings
-	 */
-	protected $warnings = array();
-
-	/**
-	 * List of import errors
-	 */
-	protected $errors = array();
-
-	/**
-         * List of actions, and how many times that action was taken
-         */
-        protected $results = array();
-
-	/**
 	 * imports entries according to given definition object.
 	 * @param resource $_stream
 	 * @param string $_charset
 	 * @param definition $_definition
 	 */
-	public function import( $_stream, importexport_definition $_definition ) {
-		$import_csv = new importexport_import_csv( $_stream, array(
-			'fieldsep' => $_definition->plugin_options['fieldsep'],
-			'charset' => $_definition->plugin_options['charset'],
-		));
-
-		$this->definition = $_definition;
-
-		// user, is admin ?
-		$this->is_admin = isset( $GLOBALS['egw_info']['user']['apps']['admin'] ) && $GLOBALS['egw_info']['user']['apps']['admin'];
-		$this->user = $GLOBALS['egw_info']['user']['account_id'];
-
-		// dry run?
-		$this->dry_run = isset( $_definition->plugin_options['dry_run'] ) ? $_definition->plugin_options['dry_run'] :  false;
+	public function init(importexport_definition $_definition ) {
 
 		// fetch the resource bo
 		$this->bo = new resources_bo();
@@ -120,112 +39,116 @@ class resources_import_csv implements importexport_iface_import_plugin  {
 		// For adding ACLs
 		$this->acl_bo = CreateObject('resources.bo_acl',True);
 
-		// set FieldMapping.
-		$import_csv->mapping = $_definition->plugin_options['field_mapping'];
+		// For checking categories
+		$this->start_time = time();
+	}
 
-		// set FieldConversion
-		$import_csv->conversion = $_definition->plugin_options['field_conversion'];
+	/**
+	* Import a single record
+	*
+	* You don't need to worry about mappings or translations, they've been done already.
+	* You do need to handle the conditions and the actions taken.
+	*
+	* Updates the count of actions taken
+	*
+	* @return boolean success
+	*/
+	protected function import_record(importexport_iface_egw_record &$record, &$import_csv)
+	{
+		// Check for an un-matched accessory of, try again on just name
+		if(!is_numeric($record->accessory_of))
+		{
+			$accessory_of = $record->accessory_of;
 
-		//check if file has a header lines
-		if ( isset( $_definition->plugin_options['num_header_lines'] ) && $_definition->plugin_options['num_header_lines'] > 0) {
-			$import_csv->skip_records($_definition->plugin_options['num_header_lines']);
-		} elseif(isset($_definition->plugin_options['has_header_line']) && $_definition->plugin_options['has_header_line']) {
-			// First method is preferred
-			$import_csv->skip_records(1);
+			// Look for exact match in just name
+			$results = $this->bo->so->search(array('name' => $record->accessory_of),array('res_id','name'));
+			if(count($results) >= 1)
+			{
+				// More than 1 result?  Bad names.  Pick one.
+				foreach($results as $result)
+				{
+					if($result['name'] == $record->accessory_of)
+					{
+						$record->accessory_of = $result['res_id'];
+						break;
+					}
+				}
+				if(is_numeric($record->accessory_of))
+				{
+					// Import/Export conversion gave a warning, so cancel it
+					$pattern = lang('Unable to link to %1 "%2"',lang('resources'),$accessory_of) . ' - ('.lang('too many matches') . '|'.lang('no matches') . ')';
+					$this->warnings[$import_csv->get_current_position()] = preg_replace($pattern, '', $this->warnings[$import_csv->get_current_position()], 1);
+					// If that was the only warning, clear it for this row
+					if(trim($this->warnings[$import_csv->get_current_position()]) == '')
+					{
+						unset($this->warnings[$import_csv->get_current_position()]);
+					}
+				}
+			}
 		}
 
-		// Start counting successes
-		$count = 0;
-		$this->results = array();
 
-		// Failures
-		$this->errors = array();
+		// Check for a new category, it needs permissions set
+		$category = $GLOBALS['egw']->categories->read($record->cat_id);
 
-		$types = importexport_export_csv::$types;
-		$types['select-bool'] = array('bookable');
-		$lookups = array();
-		$start_time = time();
+		if($category['last_mod'] >= $this->start_time) {
+			// New category.  Give read & write permissions to the current user's default group
+			$this->acl_bo->set_rights($record['cat_id'],
+				array($GLOBALS['egw_info']['user']['account_primary_group']),
+				array($GLOBALS['egw_info']['user']['account_primary_group']),
+				array(),
+				array(),
+				array()
+			);
+			// Refresh ACL
+			//$GLOBALS['egw']->acl->read_repository();
+		}
+		if(!$record->accessory_of) $record->accessory_of = -1;
+		//error_log(__METHOD__.__LINE__.array2string($_definition->plugin_options['conditions']));
+		if ($this->definition->plugin_options['conditions']) {
 		
-		while ( $record = $import_csv->get_record() ) {
-			$success = false;
+			foreach ( $this->definition->plugin_options['conditions'] as $condition ) {
+				$results = array();
+				switch ( $condition['type'] ) {
+					// exists
+					case 'exists' :
+						if($record->$condition['string']) {
+							$results = $this->bo->so->search(
+								array( $condition['string'] => $record->$condition['string']),
+								False
+							);
+						}
 
-			// don't import empty records
-			if( count( array_unique( $record ) ) < 2 ) continue;
-
-			// Automatically handle human friendly values
-			importexport_import_csv::convert($record, $types, 'resources', $lookups,($_definition->plugin_options['convert']?$_definition->plugin_options['convert']:0));
-
-			// Check for a new category, it needs permissions set
-			$category = $GLOBALS['egw']->categories->read($record['cat_id']);
-
-			if($category['last_mod'] >= $start_time) {
-				// New category.  Give read & write permissions to the current user's default group
-				$this->acl_bo->set_rights($record['cat_id'],
-					array($GLOBALS['egw_info']['user']['account_primary_group']),
-					array($GLOBALS['egw_info']['user']['account_primary_group']),
-					array(),
-					array(),
-					array()
-				);
-				// Refresh ACL
-				//$GLOBALS['egw']->acl->read_repository();
-			}
-			//error_log(__METHOD__.__LINE__.array2string($_definition->plugin_options['conditions']));
-			$conditionexist=false;
-			if ( $_definition->plugin_options['conditions'] ) {
-				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
-					switch ( $condition['type'] ) {
-						case 'exists' :
-							if ((isset($condition['true']['action'])&&!empty($condition['true']['action'])) ||
-								(isset($condition['false']['action'])&&!empty($condition['false']['action']))) $conditionexist=true;
-					}
-				}
-			}
-			if ($conditionexist) {
-				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
-					$results = array();
-					switch ( $condition['type'] ) {
-						// exists
-						case 'exists' :
-							if($record[$condition['string']]) {
-								$results = $this->bo->so->search(
-									array( $condition['string'] => $record[$condition['string']]),
-									False
-								);
-							}
-
-							if ( is_array( $results ) && count( array_keys( $results )) >= 1) {
-								// apply action to all contacts matching this exists condition
-								$action = $condition['true'];
-								foreach ( (array)$results as $resource ) {
-									$record['res_id'] = $resource['res_id'];
-									if ( $_definition->plugin_options['update_cats'] == 'add' ) {
-										if ( !is_array( $resource['cat_id'] ) ) $resource['cat_id'] = explode( ',', $resource['cat_id'] );
-										if ( !is_array( $record['cat_id'] ) ) $record['cat_id'] = explode( ',', $record['cat_id'] );
-										$record['cat_id'] = implode( ',', array_unique( array_merge( $record['cat_id'], $resource['cat_id'] ) ) );
-									}
-									$success = $this->action(  $action['action'], $record, $import_csv->get_current_position() );
+						if ( is_array( $results ) && count( array_keys( $results )) >= 1) {
+							// apply action to all contacts matching this exists condition
+							$action = $condition['true'];
+							foreach ( (array)$results as $resource ) {
+								$record->res_id = $resource['res_id'];
+								if ( $_definition->plugin_options['update_cats'] == 'add' ) {
+									if ( !is_array( $resource['cat_id'] ) ) $resource['cat_id'] = explode( ',', $resource['cat_id'] );
+									if ( !is_array( $record->cat_id ) ) $record->cat_id = explode( ',', $record->cat_id );
+									$record->cat_id = implode( ',', array_unique( array_merge( $record->cat_id, $resource['cat_id'] ) ) );
 								}
-							} else {
-								$action = $condition['false'];
-								$success = ($this->action(  $action['action'], $record, $import_csv->get_current_position() ));
+								$success = $this->action(  $action['action'], $record->get_record_array(), $import_csv->get_current_position() );
 							}
-							break;
+						} else {
+							$action = $condition['false'];
+							$success = ($this->action(  $action['action'], $record->get_record_array(), $import_csv->get_current_position() ));
+						}
+						break;
 
-						// not supported action
-						default :
-							die('condition / action not supported!!!');
-							break;
-					}
-					if ($action['last']) break;
+					// not supported action
+					default :
+						die('condition / action not supported!!!');
+						break;
 				}
-			} else {
-				// unconditional insert
-				$success = $this->action( 'insert', $record, $import_csv->get_current_position() );
+				if ($action['last']) break;
 			}
-			if($success) $count++;
+		} else {
+			// unconditional insert
+			$success = $this->action( 'insert', $record->get_record_array(), $import_csv->get_current_position() );
 		}
-		return $count;
+		return $success;
 	}
 
 	/**
@@ -235,7 +158,7 @@ class resources_import_csv implements importexport_iface_import_plugin  {
 	 * @param array $_data contact data for the action
 	 * @return bool success or not
 	 */
-	private function action ( $_action, $_data, $record_num = 0 ) {
+	protected function action ( $_action, Array $_data, $record_num = 0 ) {
 		switch ($_action) {
 			case 'none' :
 				return true;
@@ -258,7 +181,7 @@ class resources_import_csv implements importexport_iface_import_plugin  {
 					return true;
 				} else {
 					$result = $this->bo->save( $_data );
-					if($result) {
+					if($result && !is_numeric($result)) {
 						$this->errors[$record_num] = $result;
 						return false;
 					} else {
@@ -335,29 +258,5 @@ class resources_import_csv implements importexport_iface_import_plugin  {
         public function get_warnings() {
 		return $this->warnings;
 	}
-
-	/**
-        * Returns errors that were encountered during importing
-        * Maximum of one error message per record, but you can append if you need to
-        *
-        * @return Array (
-        *       record_# => error message
-        *       )
-        */
-        public function get_errors() {
-		return $this->errors;
-	}
-
-	/**
-        * Returns a list of actions taken, and the number of records for that action.
-        * Actions are things like 'insert', 'update', 'delete', and may be different for each plugin.
-        *
-        * @return Array (
-        *       action => record count
-        * )
-        */
-        public function get_results() {
-                return $this->results;
-        }
-} // end of iface_export_plugin
+}
 ?>

@@ -275,10 +275,22 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 				self::$cf_parse_cache[$appname] = array($c_fields, $selects, $links, $methods);
 			}
 			list($c_fields, $c_selects, $links, $methods) = self::$cf_parse_cache[$appname];
+
+			// Add in any fields that are keys to another app
+			foreach((array)$fields['links'] as $link_field => $app)
+			{
+				if(is_numeric($link_field)) continue;
+				$links[$link_field] = $app;
+				// Set it as a normal link field
+				$fields['links'][] = $link_field;
+				unset($fields['links'][$link_field]);
+			}
+
 			// Not quite a recursive merge, since only one level
-			foreach($fields as $type => &$list) {
+			foreach($fields as $type => &$list)
+			{
 				if($c_fields[$type]) {
-					$list = array_merge($c_fields[$type], $list);;
+					$list = array_merge($c_fields[$type], $list);
 					unset($c_fields[$type]);
 				}
 			}
@@ -308,7 +320,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					if(!is_numeric($record[$name]))
 					{
 						$results = egw_link::query($links[$name], $record[$name]);
-						if(count($results) > 1)
+						if(count($results) >= 1)
 						{
 							// More than 1 result.  Check for exact match
 							$exact_count = 0;
@@ -322,18 +334,17 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 								}
 								unset($results[$id]);
 							}
-							// Too many exact matches, or none good enough
-							if($exact_count > 1 || count($results) == 0)
+							if($exact_count > 1)
 							{
 								$warnings[] = lang('Unable to link to %1 "%2"',
 									lang($links[$name]), $record[$name]).
  									' - ' .lang('too many matches');
-								$record[$name] = null;
 								continue;
 							}
 							elseif ($exact_count == 1)
 							{
 								$record[$name] = $app_id;
+								continue;
 							}
 						}
 						if (count($results) == 0)
@@ -341,7 +352,6 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 							$warnings[] = lang('Unable to link to %1 "%2"',
 								lang($links[$name]), $record[$name]).
  								' - ' . lang('no matches');
-							$record[$name] = null;
 							continue;
 						} else {
 							$record[$name] = key($results);

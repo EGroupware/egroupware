@@ -68,7 +68,10 @@ class resources_bo
 	 */
 	function get_rows($query,&$rows,&$readonlys)
 	{
-		$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$query);
+		if(!$query['csv_export'])
+		{
+			$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$query);
+		}
 		if ($query['store_state'])	// request to store state in session and filter in prefs?
 		{
 			egw_cache::setSession('resources',$query['store_state'],$query);
@@ -205,6 +208,11 @@ class resources_bo
 
 			$rows[$num]['picture_thumb'] = $this->get_picture($resource);
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
+		}
+
+		if(!config::get_customfields('resources'))
+		{
+			$rows['no_customfields'] = true;
 		}
 		return $nr;
 	}
@@ -453,6 +461,7 @@ class resources_bo
 		$filter = array(
 			'cat_id' => array_flip((array)$this->acl->get_cats(EGW_ACL_READ)),
 			//'accessory_of' => '-1'
+			'deleted' => null
 		);
 		$limit = false;
 		if($options['start'] || $options['num_rows']) {
@@ -538,7 +547,7 @@ class resources_bo
 								if (!isset($res_info_cache[$resource_id]['useable'])) {
 									$res_info_cache[$resource_id]['useable'] = 1;
 								}
-								// now decrement this quantity usable
+								// now decrement this quantity useable
 								// TODO : decrement with real event quantity, not 1
 								// but this quantity is not given by calendar search, we should re-use a cal object
 								// to load specific cal infos, like quantity... lot of requests

@@ -36,10 +36,12 @@ class resources_wizard_import_csv extends importexport_wizard_basic_import_csv
 			'location'	=> lang('Location'),
 			'storage_info'	=> lang('Storage'),
 			'bookable'	=> lang('Bookable'),
-			'buyable'	=> lang('Buyable'),
-			'prize'		=> lang('Prize'),
+			// Deprecated, but still in DB
+			//'buyable'	=> lang('Buyable'),
+			//'prize'		=> lang('Prize'),
 			'long_description'      => lang('Long description'),
 			'inventory_number'      => lang('inventory number'),
+			'accessory_of'	=> lang('Accessory of')
                 );
 
 		$custom = config::get_customfields('resources', true);

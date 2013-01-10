@@ -37,8 +37,10 @@ class resources_export_csv implements importexport_iface_export_plugin {
 		elseif ( $options['selection'] == 'all' ) {
 			$query = array(
 				'num_rows'	=> -1,
+				'filter2'	=> -3,  // Accessories & resources
 				'csv_export' => true,	// so get_rows method _can_ produce different content or not store state in the session
 			);	// all
+			unset($query['store_state']);
 			$bo->get_rows($query,$selection,$readonlys);
 		} else {
 			$selection = explode(',',$options['selection']);
@@ -55,7 +57,7 @@ class resources_export_csv implements importexport_iface_export_plugin {
 				break;
 			}
 		}
-		$types = importexport_export_csv::$types;
+		$types = resources_egw_record::$types;
 		$types['select-bool'] = array('bookable');
 
 		foreach ($selection as $record) {

@@ -20,7 +20,15 @@ class resources_egw_record implements importexport_iface_egw_record
 {
 	private $identifier = '';
 	private $record = array();
-
+	
+	static $types = array(
+                'select-account'=> array('creator', 'modifier'),
+                'date-time'     => array('modified', 'created'),
+                'select-cat'    => array('cat_id'),
+		'select-bool'   => array('bookable'),
+		// Links is field name => app name
+		'links' => array('accessory_of' => 'resources')
+	);
 	/**
 	 * constructor
 	 * reads record from backend if identifier is given.

@@ -69,6 +69,7 @@ manage mapping	importexport	en	Manage mapping
 next	importexport	en	Next
 next run	importexport	en	Next run
 no matching records	importexport	en	No matching records
+no matches	importexport	en	no matches
 no records selected	importexport	en	No records selected!
 old fixed definition	preferences	en	Old fixed definition
 please select file to import	importexport	en	Please select file to import
@@ -92,9 +93,11 @@ target	importexport	en	Target
 target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv	importexport	en	Target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv
 target field	importexport	en	Target field
 test only	importexport	en	Test only
+too many matches	importexport	en	too many matches
 translation	importexport	en	Translation
 true	importexport	en	True
 try	importexport	en	Try
+unable to link to %1 "%2"	importexport	en	Unable to link to %1 "%2"
 unable to schedule	importexport	en	Unable to schedule.
 update categories	importexport	en	Update categories
 user preference	importexport	en	User preference
