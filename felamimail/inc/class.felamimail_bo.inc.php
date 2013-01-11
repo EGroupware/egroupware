@@ -3850,7 +3850,7 @@ class felamimail_bo
 		//error_log( "-------------------------->open connection ".function_backtrace());
 		//error_log(__METHOD__.__LINE__.' ->'.array2string($this->icServer));
 		if ($this->icServer->_connected == 1) {
-			$tretval = $this->icServer->selectMailbox($this->icServer->currentMailbox);
+			if (!empty($this->icServer->currentMailbox)) $tretval = $this->icServer->selectMailbox($this->icServer->currentMailbox);
 			if ( PEAR::isError($tretval) ) $isError[$_icServerID] = $tretval->message;
 			//error_log(__METHOD__." using existing Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true));
 		} else {
@@ -3866,7 +3866,7 @@ class felamimail_bo
 					error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
 				}
 			}
-			if (isset($this->sessionData['mailbox'])) $smretval = $this->icServer->selectMailbox($this->sessionData['mailbox']);//may fail silently
+			if (!PEAR::isError($tretval) && isset($this->sessionData['mailbox']) && !empty($this->sessionData['mailbox'])) $smretval = $this->icServer->selectMailbox($this->sessionData['mailbox']);//may fail silently
 		}
 		if ( PEAR::isError($tretval) ) egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
 		//error_log(print_r($this->icServer->_connected,true));
