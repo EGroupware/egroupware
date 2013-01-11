@@ -1657,6 +1657,7 @@ class felamimail_bo
 	{
 		$retval = true;
 		if($folderToSelect && ($folderStatus = $this->getFolderStatus($folderToSelect,false,true))) {
+			if ($folderStatus instanceof PEAR_Error) return false;
 			if (stripos(array2string($folderStatus['attributes']),'noselect')!==false)
 			{
 				$retval = false;
@@ -1731,7 +1732,7 @@ class felamimail_bo
 		{
 			$retValue['displayName'] = $retValue['shortDisplayName'] = lang($retValue['shortName']);
 		}
-		$folderBasicInfo[$this->profileID][$_folderName]=$retValue;
+		if (!($folderInfo instanceof PEAR_Error)) $folderBasicInfo[$this->profileID][$_folderName]=$retValue;
 		egw_cache::setCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderBasicInfo,$expiration=60*60*1);
 		if ($basicInfoOnly || stripos(array2string($retValue['attributes']),'noselect')!==false)
 		{
