@@ -28,7 +28,8 @@ $phpgw_baseline = array(
 			'picture_src' => array('type' => 'varchar','precision' => '20'),
 			'accessory_of' => array('type' => 'int','precision' => '11','default' => '-1'),
 			'storage_info' => array('type' => 'varchar','precision' => '200'),
-			'inventory_number' => array('type' => 'varchar','precision' => '20')
+			'inventory_number' => array('type' => 'varchar','precision' => '20'),
+			'deleted' => array('type' => 'int','precision' => '8')
 		),
 		'pk' => array('res_id'),
 		'fk' => array(),
