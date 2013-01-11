@@ -1683,6 +1683,7 @@ class felamimail_bo
 		{
 			return false;
 		}
+		static $folderInfoCache; // reduce traffic on single request
 		static $folderBasicInfo;
 		if (is_null($folderBasicInfo))
 		{
