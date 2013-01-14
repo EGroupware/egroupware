@@ -141,7 +141,8 @@ if(@get_var('submit',Array('POST')))
 				echo '<br />' . $app_title . ' ' . lang('hooks deregistered') . '.';
 			}
 
-			if ($historylog->delete($appname))
+			$historylog->appname = $appname;
+			if ($historylog->delete(null))
 			{
 				echo '<br />' . $app_title . ' ' . lang('Historylog removed') . '.';
 			}

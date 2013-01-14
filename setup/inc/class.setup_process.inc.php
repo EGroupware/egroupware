@@ -462,6 +462,8 @@ class setup_process
 			}
 			/* $appdata['status'] = 'C'; */
 		}
+		// Clear categories cache in case app adds categories
+		categories::invalidate_cache();
 
 		/* Done, return current status */
 		return ($setup_info);
