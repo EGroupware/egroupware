@@ -29,3 +29,22 @@ $oProc->query("INSERT INTO {$resources_table_prefix} (name,cat_id,bookable,pictu
 $oProc->query("INSERT INTO {$resources_table_prefix} (name,cat_id,bookable,picture_src,accessory_of) VALUES ( 'Meeting room 2',$locations_cat_id,1,'cat_src',-1)");
 $res_id = $oProc->m_odb->get_last_insert_id($resources_table_prefix,'res_id');
 $oProc->query("INSERT INTO {$resources_table_prefix} (name,cat_id,bookable,picture_src,accessory_of) VALUES ( 'Fixed Beamer',$cat_id,0,'cat_src',$res_id)");
+
+// Turn on history by default
+foreach(array(
+	'history'     => 'history',
+) as $name => $value)
+{
+	$GLOBALS['egw_setup']->db->insert(
+		$GLOBALS['egw_setup']->config_table,
+		array(
+			'config_app' => 'resources',
+			'config_name' => $name,
+			'config_value' => $value,
+		),array(
+			'config_app' => 'resources',
+			'config_name' => $name,
+		),__LINE__,__FILE__
+	);
+}
+
