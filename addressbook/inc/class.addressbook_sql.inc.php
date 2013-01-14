@@ -386,6 +386,23 @@ class addressbook_sql extends so_sql_cf
 				}
 				//_debug_array($order_by); _debug_array($extra_cols);
 			}
+
+			// Understand search by date with wildcard (????.10.??) according to user date preference
+			if(is_string($criteria))
+			{
+				$date_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
+				// First, check for a 'date', with wildcards, in the user's format
+				$date_regex = str_replace(array('Y','m','d','.','-'), array('(?P<Y>(?:\?|\Q){4})','(?P<m>(?:\?|\Q){2})','(?P<d>(?:\?|\Q){2})','\.','\-'),$date_format);
+				$date_regex = str_replace('Q','d',$date_regex);
+				if(preg_match_all('$'.$date_regex.'$', $criteria, $matches))
+				{
+					foreach($matches[0] as $m_id => $match)
+					{
+						// Birthday is Y-m-d
+						$criteria = '*'.str_replace($match, "{$matches['Y'][$m_id]}-{$matches['m'][$m_id]}-{$matches['d'][$m_id]}",$criteria) . '*';
+					}
+				}
+			}
 		}
 		$rows =& parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 
