@@ -1047,8 +1047,11 @@ abstract class bo_tracking
 	protected function get_signature($data, $old, $receiver)
 	{
 		$config = config::read('notifications');
-		
-		if(class_exists($this->app. '_merge'))
+		if(!isset($data[$this->id_field]))
+		{
+			error_log($this->app . ' did not properly implement bo_tracking->id_field.  Merge skipped.');
+		}
+		elseif(class_exists($this->app. '_merge'))
 		{
 			$merge_class = $this->app.'_merge';
 			$merge = new $merge_class();
