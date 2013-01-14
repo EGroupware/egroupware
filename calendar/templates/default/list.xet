@@ -149,6 +149,20 @@
 					</box>
 					<description/>
 				</row>
+				<row>
+					<box class="action_popup prompt" id="undelete_popup">
+						<vbox class="prompt">
+							<description value="Un-delete" class="promptheader"/>
+							<description value="Do you want to Un-delete this event as an exception, or un-delete the whole series?"/>
+							<hbox>
+								<button label="Un-delete exception" id="undelete" onclick="nm_submit_popup(this); return false;"/>
+								<button label="Un-delete series" id="undelete_series" onclick="nm_popup_action.id = 'undelete_series'; nm_submit_popup(this); return false;"/>
+								<buttononly label="Cancel" onclick="nm_hide_popup(this,'undelete_popup');"/>
+							</hbox>
+						</vbox>
+					</box>
+					<description/>
+				</row>
 			</rows>
 		</grid>
 		<styles>
