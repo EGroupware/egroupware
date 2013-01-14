@@ -315,7 +315,7 @@ class resources_ui
 				$checked[] = $resource['res_id'];
 			}
 		}
-		echo __METHOD__."('$action', ".array2string($checked).', '.array2string($use_all).",,, '$session_name')";
+		//echo __METHOD__."('$action', ".array2string($checked).', '.array2string($use_all).",,, '$session_name')";
 
 		// Dialogs to get options
 		list($action, $settings) = explode('_', $action, 2);
@@ -401,6 +401,8 @@ class resources_ui
 						{
 							$acc = $this->bo->read($acc_id);
 							$acc['accessory_of'] = -1;
+							// Restore them if deleted
+							$acc['deleted'] = null;
 							$this->bo->save($acc);
 							$promoted_accessories++;
 
