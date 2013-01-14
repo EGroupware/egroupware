@@ -1707,11 +1707,11 @@ function open_edit(series)
 		{
 			$timespan = $this->bo->timespan($event['start_m'],$event['end_m']);
 		}
+		$icons = array();
 		if(!(int)$event['id'] && preg_match('/^([a-z_-]+)([0-9]+)$/i',$event['id'],$matches))
 		{
 			$app = $matches[1];
 			$app_id = $matches[2];
-			$icons = array();
 			if (($is_private = calendar_bo::integration_get_private($app,$app_id,$event)))
 			{
 				$icons[] = html::image('calendar','private');
