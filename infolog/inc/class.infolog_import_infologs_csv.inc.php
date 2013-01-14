@@ -346,7 +346,10 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 					$this->results[$_action]++;
 					break;
 				} else {
-					$result = $this->boinfolog->write( $_data, true, 2);	// 2 = dont touch modification date
+					$result = $this->boinfolog->write(
+						$_data, true, 2,true, 	// 2 = dont touch modification date
+						$this->definition->plugin_options['no_notification']
+					);
 					if(!$result)
 					{
 						if($result === false)
