@@ -343,6 +343,7 @@ move selected to	felamimail	en	Move selected to
 move to	felamimail	en	Move to
 move to trash	felamimail	en	Move to Trash
 moving messages to	felamimail	en	Moving messages to
+multiple email forwarding addresses can be accomplished by separating them with a semicolon	felamimail	en	multiple email forwarding addresses can be accomplished by separating them with a semicolon
 name	felamimail	en	Name
 never display html emails	felamimail	en	Never display HTML emails
 new	common	en	New
@@ -380,6 +381,7 @@ no valid emailprofile selected!!	felamimail	en	No valid email profile selected!
 none	felamimail	en	None
 none, create all	felamimail	en	None, create all
 not allowed	felamimail	en	Not allowed
+note:	felamimail	en	Note:
 notify when new mails arrive on these folders	felamimail	en	Notify when new mails arrive on these folders
 on	felamimail	en	On
 on behalf of	felamimail	en	On behalf of

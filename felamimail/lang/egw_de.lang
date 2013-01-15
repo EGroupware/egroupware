@@ -343,6 +343,7 @@ move selected to	felamimail	de	Verschiebe ausgewählte nach
 move to	felamimail	de	Verschieben in
 move to trash	felamimail	de	in den Papierkorb verschieben
 moving messages to	felamimail	de	verschiebe Nachrichten nach
+multiple email forwarding addresses can be accomplished by separating them with a semicolon	felamimail	de	mehrere Weiterleitungsadressen können mittels Semikolon verkettet werden
 name	felamimail	de	Name
 never display html emails	felamimail	de	niemals anzeigen
 new	common	de	Neu
@@ -380,6 +381,7 @@ no valid emailprofile selected!!	felamimail	de	Sie haben kein gültiges E-Mail-P
 none	felamimail	de	kein
 none, create all	felamimail	de	keine, erstellt alle
 not allowed	felamimail	de	nicht erlaubt
+note:	felamimail	de	Beachte:
 notify when new mails arrive on these folders	felamimail	de	Benachrichtigung, wenn neue E-Mails in diesen Ordnern ankommen
 on	felamimail	de	am
 on behalf of	felamimail	de	im Auftrag von

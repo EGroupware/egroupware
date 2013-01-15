@@ -19,7 +19,7 @@
 			{lang_keep_local_copy}
 		</td>
 		<td>
-			<input type="checkbox" name="keepLocalCopy" value="yes" {checked_keep_local_copy}>
+			<input type="checkbox" name="keepLocalCopy" value="yes" {checked_keep_local_copy}> &nbsp; ({lang_note}{lang_accomplish_multiple_forwardaddresses})
 		</td>
 	</tr>
 	<tr>

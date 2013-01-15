@@ -224,7 +224,9 @@
 
 			if($_POST['save']) {
 				//_debug_array($_POST);_debug_array($_POST);_debug_array($_POST);
-				$ogServer->saveSMTPForwarding($GLOBALS['egw_info']['user']['account_id'],$_POST['forwardingAddress'],$_POST['keepLocalCopy']);
+				$fwdAddr = (!empty($_POST['forwardingAddress'])?explode(';',$_POST['forwardingAddress']):array());
+				foreach($fwdAddr as $k => &$fA) $fwA = trim($fwA);
+				$ogServer->saveSMTPForwarding($GLOBALS['egw_info']['user']['account_id'],$fwdAddr,$_POST['keepLocalCopy']);
 			} elseif($_POST['cancel']) {
 				ExecMethod('felamimail.uifelamimail.viewMainScreen');
 				return;
@@ -243,7 +245,7 @@
 				'menuaction'    => 'felamimail.uipreferences.editForwardingAddress'
 			);
 			$this->t->set_var('form_action',$GLOBALS['egw']->link('/index.php',$linkData));
-			$this->t->set_var('forwarding_address',$userData['mailForwardingAddress'][0]);
+			$this->t->set_var('forwarding_address',(count($userData['mailForwardingAddress'])>1?implode(';',$userData['mailForwardingAddress']):$userData['mailForwardingAddress'][0]));
 
 			#deliveryMode checked_keep_local_copy
 			if($userData['deliveryMode'] != 'forwardOnly') {
@@ -836,6 +838,7 @@
 
 		function translate()
 		{
+			$this->t->set_var('lang_note',lang('Note:'));
 			$this->t->set_var('lang_signature',lang('Signatur'));
 			$this->t->set_var("lang_folder_name",lang('folder name'));
 			$this->t->set_var("lang_folder_list",lang('folderlist'));
@@ -876,6 +879,7 @@
 			$this->t->set_var('lang_Overview',lang('Overview'));
 			$this->t->set_var('lang_edit_forwarding_address',lang('edit email forwarding address'));
 			$this->t->set_var('lang_forwarding_address',lang('email forwarding address'));
+			$this->t->set_var('lang_accomplish_multiple_forwardaddresses',lang('multiple email forwarding addresses can be accomplished by separating them with a semicolon'));
 			$this->t->set_var('lang_keep_local_copy',lang('keep local copy of email'));
 			$this->t->set_var('hostname_address',lang('hostname / address'));
 			$this->t->set_var('lang_username',lang('username'));
