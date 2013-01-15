@@ -1029,4 +1029,29 @@ abstract class bo_tracking
 	{
 	 	return array();
 	}
+
+	/**
+	 * Get a (global) signature to append to the change notificaiton
+	 */
+	protected function get_signature($data, $old, $receiver)
+	{
+		$config = config::read('notifications');
+		if(!isset($data[$this->id_field]))
+		{
+			error_log($this->app . ' did not properly implement bo_tracking->id_field.  Merge skipped.');
+		}
+		elseif(class_exists($this->app. '_merge'))
+		{
+			$merge_class = $this->app.'_merge';
+			$merge = new $merge_class();
+			$sig = $merge->merge_string($config['signature'], array($data[$this->id_field]), $error, 'text/html');
+			if($error)
+			{
+				error_log($error);
+				return $config['signature'];
+			}
+			return $sig;
+		}
+		return $config['signature'];
+	}
 }
