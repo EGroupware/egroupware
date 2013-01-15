@@ -360,6 +360,20 @@ class resources_ui
 					if(!$id) continue;
 					$resource = $this->bo->read($id);
 					$resource['deleted'] = null;
+					if($resource['accessory_of'] > 0)
+					{
+						/*
+						If restoring an accessory, and parent is deleted, and not in
+						the list of resources to be restored right now, un-parent
+						*/
+						$parent = $this->bo->read($resource['accessory_of']);
+						$checked_key = array_search($parent['res_id'], $checked);
+						if($checked_key === false && $parent['deleted'])
+						{
+							$resource['accessory_of'] = -1;
+						}
+					}
+
 					$this->bo->save($resource);
 					if($settings == 'accessories')
 					{
