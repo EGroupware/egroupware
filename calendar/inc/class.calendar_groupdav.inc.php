@@ -750,7 +750,9 @@ class calendar_groupdav extends groupdav_handler
 			// if no edit-rights (aka no organizer), update only attendee stuff: status and alarms
 			if (!$this->check_access(EGW_ACL_EDIT, $oldEvent))
 			{
-				if (isset($oldEvent['participants'][$user]))
+				$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user, true);
+				$user_and_memberships[] = $user;
+				if (!array_intersect(array_keys($oldEvent['participants']), $user_and_memberships))
 				{
 					if ($this->debug) error_log(__METHOD__."(,,$user) user $user is NOT an attendee!");
 					return '403 Forbidden';
