@@ -663,11 +663,19 @@ class calendar_groupdav extends groupdav_handler
 					if ($this->debug) error_log(__METHOD__."(,,$user) schedule_tag missmatch: given '$schedule_tag_match' != '$schedule_tag'");
 					return '412 Precondition Failed';
 				}
+			}
+			// if no edit-rights (aka no organizer), update only attendee stuff: status and alarms
+			if (!$this->check_access(EGW_ACL_EDIT, $oldEvent))
+			{
+				$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user, true);
+				$user_and_memberships[] = $user;
+				if (!array_intersect(array_keys($oldEvent['participants']), $user_and_memberships))
+				{
+					if ($this->debug) error_log(__METHOD__."(,,$user) user $user is NOT an attendee!");
+					return '403 Forbidden';
+				}
 				// update only participant status and alarms of current user
-				// fix for iCal on OS X, which uses only a schedule-tag (no etag), if event has no participants (only calendar owner)
-				// --> do regular calendar update as with matching etag (otherwise no updates possible)
-				if (!(count($oldEvent['participants']) == 1 && isset($oldEvent['participants'][$user])) &&
-					($events = $handler->icaltoegw($vCalendar)))
+				if (($events = $handler->icaltoegw($vCalendar)))
 				{
 					$modified = 0;
 					foreach($events as $n => $event)
