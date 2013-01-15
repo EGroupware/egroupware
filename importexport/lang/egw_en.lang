@@ -1,5 +1,6 @@
 %1 definition(s) %2	importexport	en	%1 definition(s) %2
 %1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	en	%1 definition(s) %2, %3 failed because of insufficient rights !!!
+%1 definitions %2	importexport	en	%1 definitions %2
 %1 is not a known user or group	importexport	en	%1 is not a known user or group
 %1 is not readable	importexport	en	%1 is not readable.
 %1 is not writable	importexport	en	%1 is not writable.
@@ -9,6 +10,8 @@
 (0-23)	importexport	en	(0-23)
 (0-6, 0=sun)	importexport	en	(0-6, 0=Sun)
 *contact id cannot be changed by import	importexport	en	*Contact ID cannot be changed by import
+addressbook csv import	importexport	en	Addressbook CSV Import
+addressbook vcard import	importexport	en	Addressbook vCard import
 admin disabled exporting	importexport	en	Admin disabled exporting
 all encodings	importexport	en	All encodings
 allowed users	importexport	en	Allowed users
@@ -25,8 +28,12 @@ choose an application	importexport	en	Choose an application
 choose fields to export	importexport	en	Choose fields to export
 choose seperator and charset	importexport	en	Choose separator and charset
 column mismatch.  expected %1 columns, your file has %2.	importexport	en	Column mismatch.  Expected %1 columns, your file has %2.
+column mismatch: %1 should be %2, not %3	importexport	en	Column mismatch: %1 should be %2, not %3
 condition	importexport	en	Condition
 copied	importexport	en	Copied.
+create a <a href="%1">new definition</a> for this file	importexport	en	Create a <a href="%1">new definition</a> for this file
+create export	importexport	en	Create export
+created	importexport	en	created
 csv field	importexport	en	CSV field
 database values	importexport	en	Database values
 day of week	importexport	en	Day of week
@@ -36,6 +43,10 @@ delete all selected definitions	importexport	en	Delete ALL selected definitions
 deleted	importexport	en	Deleted.
 duplicate name, please choose another.	importexport	en	Duplicate name, please choose another.
 edit conditions	importexport	en	Edit conditions
+edit definition <a href="%1">%2</a> to match your file	importexport	en	Edit definition <a href="%1">%2</a> to match your file
+edit your file to match the definition:	importexport	en	Edit your file to match the definition:
+errors	importexport	en	Errors
+execute	importexport	en	Execute
 expert options	importexport	en	Expert options
 export	importexport	en	Export
 export all selected definitions	importexport	en	Export ALL selected definitions
@@ -44,10 +55,12 @@ export definition to use for nextmatch export	preferences	en	Export definition t
 export spreadsheet	importexport	en	Export Spreadsheet
 exported	importexport	en	Exported.
 extra charsets for import / export	importexport	en	Extra charsets for import / export
+extra encodings	importexport	en	Extra encodings
 false	importexport	en	False
 field labels	importexport	en	Field labels
 field names	importexport	en	Field names
 fieldseperator	importexport	en	Field separator
+filters	importexport	en	Filters
 finish	importexport	en	Finish
 from definition	importexport	en	From definition
 general	preferences	en	General
@@ -56,9 +69,12 @@ header lines to skip	importexport	en	Header lines to skip
 human friendly values	importexport	en	Human friendly values
 if you specify an export definition, it will be used when you export	preferences	en	If you specify an export definition, it will be used when you export.
 import	importexport	en	Import
+import aborted	importexport	en	Import aborted
+import data is	importexport	en	Import data is
 import definition	importexport	en	Import definition
 import definitions	common	en	Import definitions
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	en	Import definitions. Attention: Existing definitions with equal names will be overwritten!
+imported	importexport	en	imported
 importexport	common	en	Import | Export
 importexport wizard finished successfully!	importexport	en	Import|Export wizard finished successfully!
 imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	en	Imports information from a CSV file.  This is only a base class, and doesn't do anything on its own.
@@ -66,12 +82,14 @@ include header	importexport	en	Include header
 just me	importexport	en	Just me
 last run	importexport	en	Last run
 load sample file	importexport	en	Load sample file
+lock expired on previous run	importexport	en	Lock expired on previous run
 manage mapping	importexport	en	Manage mapping
 next	importexport	en	Next
 next run	importexport	en	Next run
 no matches	importexport	en	no matches
 no matching records	importexport	en	No matching records
 no records selected	importexport	en	No records selected!
+none found	importexport	en	None found
 old fixed definition	preferences	en	Old fixed definition
 please select file to import	importexport	en	Please select file to import
 plugin	importexport	en	Plugin
@@ -81,11 +99,13 @@ problems during import:	importexport	en	Problems during import:
 save as definition	importexport	en	Save as definition
 schedule	common	en	Schedule
 schedule import / export	common	en	Schedule import | export
+schedule import | export	importexport	en	Schedule import | export
 schedule not found	importexport	en	Schedule not found.
 schedule times are server time!  currently %s.	importexport	en	Schedule times are server time!  Currently %s.
 select definition	importexport	en	Select definition
 select plugin	importexport	en	Select plugin
 select...	importexport	en	Select...
+skipped	importexport	en	Skipped
 some nice text	importexport	en	Some nice text
 some records may not have been imported	importexport	en	Some records may not have been imported.
 stop	importexport	en	Stop
@@ -98,13 +118,17 @@ too many matches	importexport	en	too many matches
 translation	importexport	en	Translation
 true	importexport	en	True
 try	importexport	en	Try
+unable to delete	importexport	en	Unable to delete
 unable to link to %1 "%2"	importexport	en	Unable to link to %1 "%2"
 unable to schedule	importexport	en	Unable to schedule.
 update categories	importexport	en	Update categories
+use default	importexport	en	Use default
 user preference	importexport	en	User preference
 user template folder	importexport	en	User template folder
 users allowed to create their own definitions	importexport	en	Users allowed to create their own definitions
 users allowed to share their own definitions	importexport	en	Users allowed to share their own definitions
+warnings	importexport	en	Warnings
 which useres are allowed for this definition	importexport	en	Which users are allowed to use this definition
 which users are allowed to use this definition	importexport	en	Which users are allowed to use this definition
+you may want to <a href="%1" target="_new">backup</a> first.	importexport	en	You may want to <a href="%1" target="_new">backup</a> first.
 you need to select an app and format first!	importexport	en	You need to select an app and format first!
