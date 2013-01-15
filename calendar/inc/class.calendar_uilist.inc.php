@@ -559,7 +559,7 @@ class calendar_uilist extends calendar_ui
 		{
 			$timesheet_bo = new timesheet_bo();
 		}
-		foreach($checked as $id)
+		foreach($checked as &$id)
 		{
 			$recur_date = $app = $app_id = null;
 			if(is_array($id) && $id['id'])
@@ -588,6 +588,18 @@ class calendar_uilist extends calendar_ui
 					if ($id && $this->bo->delete($id, $recur_date,false,$skip_notification))
 					{
 						$success++;
+						if(!$recur_date && $settings == 'series')
+						{
+							// If there are multiple events in a series selected, the next one could purge
+							foreach($checked as $key => $c_id)
+							{
+								list($c_id,$recur_date) = explode(':',$c_id);
+								if($c_id == $id)
+								{
+									unset($checked[$key]);
+								}
+							}
+						}
 					}
 					else
 					{
@@ -596,6 +608,11 @@ class calendar_uilist extends calendar_ui
 					break;
 				case 'undelete':
 					$action_msg = lang('recovered');
+					if($settings == 'series')
+					{
+						// unDelete the whole thing
+						$recur_date = 0;
+					}
 					if ($id && ($event = $this->bo->read($id, $recur_date)) && $this->bo->check_perms(EGW_ACL_EDIT,$id) &&
 						is_array($event) && $event['deleted'])
 					{
