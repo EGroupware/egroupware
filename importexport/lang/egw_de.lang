@@ -1,6 +1,7 @@
 %1 definition(s) %2	importexport	de	%1 Profildefinition(en) %2
 %1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	de	%1 Import/Exportdefonition(en) %2, %3 konnte wegen fehlender Rechte nicht ausgeführt wegen !!!
-%1 is not a known user or group	importexport	de	%1 ist kein Benutzer oder eine Benutzergrupper
+%1 definitions %2	importexport	de	%1 Import/Exportdefonition(en) %2
+%1 is not a known user or group	importexport	de	%1 ist kein Benutzer oder eine Benutzergruppe
 %1 is not readable	importexport	de	%1 ist nicht lesbar
 %1 is not writable	importexport	de	%1 ist nicht möglich zu schreiben
 %1 records processed	importexport	de	%1 Einträge ausgeführt
@@ -9,8 +10,10 @@
 (0-23)	importexport	de	(0-23)
 (0-6, 0=sun)	importexport	de	(0-6, 0=Sonntag)
 *contact id cannot be changed by import	importexport	de	*Contact ID kann nicht durch den Import verändert werden
-admin disabled exporting	importexport	de	Ihr Adminisrator hat den Export deaktiviert
-all encodings	importexport	de	Alle Kopierungen
+addressbook csv import	importexport	de	Adressen per CSV Importieren
+addressbook vcard import	importexport	de	Adressen per vCard Importieren
+admin disabled exporting	importexport	de	Ihr Administrator hat den Export deaktiviert
+all encodings	importexport	de	Alle Enkodierungen
 allowed users	importexport	de	Erlaubte Benutzer
 automatically created by importexport	importexport	de	Wurde automatisch vom Import/Export Modul erstellt
 basic csv import	importexport	de	Basis CSV Import
@@ -20,12 +23,17 @@ changed owner	importexport	de	Besitzer geändert
 charset of file	importexport	de	Zeichensatz der Datei
 check all	importexport	de	Alle markieren
 choose a name for this definition	importexport	de	Wählen sie einen Namen für diese Definition.
-choose a plugin	importexport	de	Wählen sie ein Plugin.
+choose a plugin	importexport	de	Wählen sie ein Plug-in.
 choose an application	importexport	de	Wählen sei eine Anwendung.
 choose fields to export	importexport	de	Wählen Sie die Felder für den Export aus.
 choose seperator and charset	importexport	de	Wählen Sie das Trennzeichen und den Zeichensatz aus
-condition	importexport	de	Bendingungen
+column mismatch.  expected %1 columns, your file has %2.	importexport	de	Zuordnungsfehler bei der Spaltendefinition. %1 Spalten in der Definition, In der Importdatei  %2.
+column mismatch: %1 should be %2, not %3	importexport	de	Zuordnungsfehler in der Spaltendefinition. %1 sollte %2, nicht %3 sein
+condition	importexport	de	Bedingungen
 copied	importexport	de	Kopiert
+create a <a href="%1">new definition</a> for this file	importexport	de	Erstellen Sie hier <a href="%1">Neue Definition</a> für Ihre Importdatei
+create export	importexport	de	Exportdefinition erstellen
+created	importexport	de	erstellt
 csv field	importexport	de	CSV Feld (Importdatei)
 database values	importexport	de	Werte der Datenbank
 day of week	importexport	de	Wochentag
@@ -35,6 +43,10 @@ delete all selected definitions	importexport	de	Alle ausgewählten Definitionen 
 deleted	importexport	de	Gelöscht
 duplicate name, please choose another.	importexport	de	Doppelter Name, bitte wählen Sie einen anderen Namen
 edit conditions	importexport	de	Einstellmöglichkeiten bearbeiten
+edit definition <a href="%1">%2</a> to match your file	importexport	de	Importdefinition überarbeiten<a href="%1">%2</a> um Ihre Datei zu Importieren
+edit your file to match the definition:	importexport	de	Bearbeiten Sie Ihre Importdatei, um Ihrem Importprofil zu Entsprechen
+errors	importexport	de	Fehler
+execute	importexport	de	Ausführen
 expert options	importexport	de	Export Optionen
 export	importexport	de	Exportieren
 export all selected definitions	importexport	de	Alle ausgewählten Definitionen exportieren
@@ -43,10 +55,12 @@ export definition to use for nextmatch export	preferences	de	Export Definition f
 export spreadsheet	importexport	de	Export Tabellenkalkulation
 exported	importexport	de	Exportiert.
 extra charsets for import / export	importexport	de	Anderen Zeichensatz für den Impor/Export wählen
+extra encodings	importexport	de	Extra Enkodierung
 false	importexport	de	Unwahr
 field labels	importexport	de	Feld Beschreibung
 field names	importexport	de	Feld Name
 fieldseperator	importexport	de	Feldtrenner
+filters	importexport	de	Filter
 finish	importexport	de	Fertig
 from definition	importexport	de	Von der Vorlage
 general	preferences	de	Generell
@@ -55,20 +69,27 @@ header lines to skip	importexport	de	Kopfzeilen zu überspringen
 human friendly values	importexport	de	Verwendet die Beschreibungen, anstatt der Internen Bezeichnungen
 if you specify an export definition, it will be used when you export	preferences	de	Wenn Sie  Export Definition erfassen , wird dieses Profil für den Export verwendet.
 import	importexport	de	Import
+import aborted	importexport	de	Import abgebrochen
+import data is	importexport	de	Importformat
 import definition	importexport	de	Import Definition
 import definitions	common	de	Import von Definitionsdateien
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	de	Definitionen importieren (Achtung: Alle gleichnamigen existierenden Definitionen werden überschrieben!)
+imported	importexport	de	importiert
 importexport	common	de	Import/Export
 importexport wizard finished successfully!	importexport	de	Der ImportExport Assistent wurde erfolgreich beendet
 imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	de	Importiert Informationen aus einem CSV Datei. Dies ist nur eine Basis Klasse.
 include header	importexport	de	Kopfzeile inklusive
 just me	importexport	de	Nur von mir zu verwenden
-last run	importexport	de	Letzer Import-Lauf
+last run	importexport	de	Letzter Import-Lauf
 load sample file	importexport	de	Beispieldatei laden
+lock expired on previous run	importexport	de	Ihre Zeitsperre ist bei letzten Importlauf abgelaufen.
 manage mapping	importexport	de	Zuordnung bearbeiten
 next	importexport	de	Weiter
 next run	importexport	de	Nächster Import
+no matches	importexport	de	Keine Übereinstimmungen
+no matching records	importexport	de	Keine passenden Einträge gefunden
 no records selected	importexport	de	Keine Datensätze ausgewählt
+none found	importexport	de	Keine Einträge gefunden
 old fixed definition	preferences	de	Alte feste Definition
 please select file to import	importexport	de	Bitte wählen Sie ein Import Datei
 plugin	importexport	de	Plug-In
@@ -78,11 +99,13 @@ problems during import:	importexport	de	Schwierigkeiten während des Imports:
 save as definition	importexport	de	Als Definition speichern
 schedule	common	de	Zeitplan
 schedule import / export	common	de	Zeitplan für Import/Export
+schedule import | export	importexport	de	Zeitplan für Import/Export
 schedule not found	importexport	de	Kein Zeitplan gefunden
 schedule times are server time!  currently %s.	importexport	de	Zeitgesteuerter Import bezieht sich auf die Serverzeit. Aktuell %s.
 select definition	importexport	de	Definition auswählen
-select plugin	importexport	de	Plugin auswählen
+select plugin	importexport	de	Plug-in auswählen
 select...	importexport	de	Auswählen...
+skipped	importexport	de	Überspringen
 some nice text	importexport	de	Ein schöner Text
 some records may not have been imported	importexport	de	Einige Datensätze konnten nicht importiert werden
 stop	importexport	de	Stopp
@@ -91,15 +114,21 @@ target	importexport	de	Ziel
 target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv	importexport	de	Beispiel für Importpfade: vfs://default/home/user/export.csv oder http://server.net/prices.csv
 target field	importexport	de	Zielfeld (EGroupware)
 test only	importexport	de	Nur Test
+too many matches	importexport	de	zu viele Übereinstimmungen
 translation	importexport	de	Umwandlung
 true	importexport	de	Wahr
 try	importexport	de	Testen
+unable to delete	importexport	de	Löschen nicht möglich
+unable to link to %1 "%2"	importexport	de	Verknüpfung nicht möglich %1 "%2"
 unable to schedule	importexport	de	Zeitplan nicht möglich
 update categories	importexport	de	Kategorien aktualisieren
+use default	importexport	de	Standard verwenden
 user preference	importexport	de	Einstellen verwenden
-user template folder	importexport	de	Vorlageverzeichnis verwenden
+user template folder	importexport	de	Vorlagenverzeichnis verwenden
 users allowed to create their own definitions	importexport	de	Benutzern erlauben, Ihre eigenen Definitionen zu erstellen.
 users allowed to share their own definitions	importexport	de	Benutzer dürfen Ihre Profile auch anderen Nutzern zur Verfügung stellen.
-which useres are allowed for this definition	importexport	de	Welche Benutzer dürden diese Definition verwenden?
+warnings	importexport	de	Warnungen
+which useres are allowed for this definition	importexport	de	Welche Benutzer dürfen diese Definition verwenden?
 which users are allowed to use this definition	importexport	de	Welche Benutzer dürfen die Definition benutzen?
+you may want to <a href="%1" target="_new">backup</a> first.	importexport	de	Erstellen Sie eine <a href="%1" target="_new">Sicherung Ihrer bestehenden Daten</a> bevor Sie den Impost starten.
 you need to select an app and format first!	importexport	de	Sie müssen zuerst eine Anwendung und ein Format auswählen
