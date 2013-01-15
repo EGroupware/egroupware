@@ -458,6 +458,13 @@ class resources_bo
 				, 'short_description' => $pattern);
 		}
 		$only_keys = 'res_id,name,short_description,bookable,useable';
+
+		// If no read access to any category, just stop
+		if(!$this->acl->get_cats(EGW_ACL_READ))
+		{
+			$options['total'] = 0;
+			return array();
+		}
 		$filter = array(
 			'cat_id' => array_flip((array)$this->acl->get_cats(EGW_ACL_READ)),
 			//'accessory_of' => '-1'

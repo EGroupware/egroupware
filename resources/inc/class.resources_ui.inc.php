@@ -138,9 +138,10 @@ class resources_ui
 		$content['nm']['actions']	= $this->get_actions();
 
 		// check if user is permitted to add resources
-		if(!$this->bo->acl->get_cats(EGW_ACL_ADD))
+		// If they can't read any categories, they won't be able to save it
+		if(!$this->bo->acl->get_cats(EGW_ACL_ADD) || !$this->bo->acl->get_cats(EGW_ACL_READ))
 		{
-			$no_button['add'] = true;
+			$no_button['add'] = $no_button['nm']['add'] = true;
 		}
 		$no_button['back'] = true;
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('resources');
