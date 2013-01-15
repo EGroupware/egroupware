@@ -1812,7 +1812,7 @@
 					$partText = $mimePart;
 				} elseif($mimePart->type == 'TEXT' && $mimePart->subType == 'HTML' && $mimePart->bytes > 0) {
 					$partHTML = $mimePart;
-				} elseif ($mimePart->type == 'MULTIPART' && $mimePart->subType == 'RELATED' && is_array($mimePart->subParts)) {
+				} elseif ($mimePart->type == 'MULTIPART' && ($mimePart->subType == 'RELATED' || $mimePart->subType == 'MIXED') && is_array($mimePart->subParts)) {
 					// in a multipart alternative we treat the multipart/related as html part
 					#$partHTML = array($mimePart);
 					error_log(__METHOD__." process MULTIPART/RELATED with array as subparts");
@@ -1828,6 +1828,8 @@
 					if(is_object($partHTML)) {
 						if($partHTML->subType == 'RELATED') {
 							return $this->getMultipartRelated($_uid, $partHTML, 'always_display', $_preserveSeen);
+						} elseif($partHTML->subType == 'MIXED') {
+							return $this->getMultipartMixed($_uid, $partHTML, 'always_display', $_preserveSeen);
 						} else {
 							return $this->getTextPart($_uid, $partHTML, 'always_display',$_preserveSeen);
 						}
