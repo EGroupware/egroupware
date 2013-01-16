@@ -83,3 +83,65 @@ function cal_open(_action, _senders)
 	
 	_action.data = backup;	// restore url, width, height, nm_action
 }
+
+/**
+ * Delete calendar entry, asking if you want to delete series or exception
+ * 
+ * 
+ * @param _action
+ * @param _senders
+ */
+function cal_delete(_action, _senders)
+{
+	var backup = _action.data;
+	var matches = false;
+
+	// Loop so we ask if any of the selected entries is part of a series
+	for(var i = 0; i < _senders.length; i++)
+	{
+		var id = _senders[i].id;
+		if(!matches)
+		{
+			matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
+		}
+	}
+	if (matches)
+	{
+		var id = matches[1];
+		var date = matches[2];
+		var popup = jQuery(document.getElementById(_action.getManager().etemplate_var_prefix + '[' + _action.id + '_popup]'));
+		var row = null;
+
+		// Cancel normal confirm
+		delete _action.data.confirm;
+		delete _action.data.confirm_multiple;
+
+		// nm action - show popup
+		nm_open_popup(_action,_senders);
+
+		if(!popup)
+		{
+			return;
+		}
+		if (row = jQuery("#"+id+"\\:"+date)) {
+			// Open at row
+			popup.css({
+				position: "absolute",
+				top: row.position().top + row.height() -popup.height()/2,
+				left: $j(window).width()/2-popup.width()/2
+			});
+		} else {
+			// Open popup in the middle
+			popup.css({
+				position: "absolute",
+				top: $j(window).height()/2-popup.height()/2,
+				left: $j(window).width()/2-popup.width()/2
+			});
+		}
+		return;
+	}
+	console.log(_action);
+	nm_action(_action, _senders, null, {ids: []});
+	
+	_action.data = backup;	// restore url, width, height, nm_action
+}
