@@ -14,7 +14,7 @@
 $phpgw_baseline = array(
 	'egw_resources' => array(
 		'fd' => array(
-			'res_id' => array('type' => 'auto'),
+			'res_id' => array('type' => 'auto','nullable' => False),
 			'name' => array('type' => 'varchar','precision' => '100'),
 			'short_description' => array('type' => 'varchar','precision' => '100'),
 			'cat_id' => array('type' => 'int','precision' => '11','nullable' => False),

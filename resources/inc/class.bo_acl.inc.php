@@ -197,6 +197,7 @@ class bo_acl
 			self::get_permissions($cat_id);
 		}
 		//echo "<p>".__METHOD__."($cat_id,$right) = ".self::$permissions[$cat_id]." & $right = ".(self::$permissions[$cat_id] & $right)."</p>\n";
+
 		return (boolean) (self::$permissions[$cat_id] & $right);
 	}
 

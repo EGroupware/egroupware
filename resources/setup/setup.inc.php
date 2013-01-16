@@ -45,3 +45,4 @@ $setup_info['resources']['depends'][]	= array( // cause eTemplates is not in the
 	 'appname' => 'etemplate',
 	 'versions' => Array('1.7','1.8','1.9')
 );
+

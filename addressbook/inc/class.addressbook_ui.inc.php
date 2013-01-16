@@ -633,6 +633,7 @@ class addressbook_ui extends addressbook_bo
 		{
 			$actions['undelete'] = array(
 				'caption' => 'Un-delete',
+				'icon' => 'revert',
 				'group' => $group,
 				'disableClass' => 'rowNoEdit',
 			);

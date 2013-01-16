@@ -18,6 +18,7 @@
  */
 class resources_bo
 {
+	const DELETED = 'deleted';
 	const PICTURE_NAME = '.picture.jpg';
 	var $resource_icons = '/resources/templates/default/images/resource_icons/';
 	var $debug = 0;
@@ -46,6 +47,23 @@ class resources_bo
 		-2 => 'accessories',
 		-3 => 'resources and accessories'
 		// Accessories of a resource added when resource selected
+	);
+
+	public static $field2label = array(
+		'res_id'	=> 'Resource ID',
+		'name'		=> 'name',
+		'short_description'	=> 'short description',
+		'cat_id'	=> 'Category',
+		'quantity'	=> 'Quantity',
+		'useable'	=> 'Useable',
+		'location'	=> 'Location',
+		'storage_info'	=> 'Storage',
+		'bookable'	=> 'Bookable',
+		'buyable'	=> 'Buyable',
+		'prize'		=> 'Prize',
+		'long_description'	=> 'Long description',
+		'inventory_number'	=> 'inventory number',
+		'accessory_of'	=> 'Accessory of'
 	);
 
 	function __construct()
@@ -109,8 +127,17 @@ class resources_bo
 				$join = $acc_join;
 				$extra_cols[] = 'acc_count';
 				break;
+			case self::DELETED:
+				$join = $acc_join;
+				$extra_cols[] = 'acc_count';
+				$filter[] = 'deleted IS NOT NULL';
+				break;
 			default:
 				$filter['accessory_of'] = $query['filter2'];
+		}
+		if($query['filter2'] != self::DELETED)
+		{
+			$filter['deleted'] = null;
 		}
 		
 		if ($query['filter'])
@@ -157,13 +184,20 @@ class resources_bo
 			return $nr;
 		}
 
+		$config = config::read('resources');
 		foreach($rows as $num => &$resource)
 		{
 			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_EDIT))
 			{
 				$readonlys["edit[$resource[res_id]]"] = true;
 			}
-			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_DELETE))
+			elseif($resource['deleted'])
+			{
+				$resource['class'] .= 'deleted ';
+			}
+			if (!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_DELETE) ||
+				($resource['deleted'] && !$GLOBALS['egw_info']['user']['apps']['admin'] && $config['history'] == 'history')
+			)
 			{
 				$readonlys["delete[$resource[res_id]]"] = true;
 				$resource['class'] .= 'no_delete ';
@@ -197,7 +231,7 @@ class resources_bo
 			if($resource['acc_count'])
 			{
 				$resource['class'] .= 'hasAccessories ';
-				$accessories = $this->get_acc_list($resource['res_id']);
+				$accessories = $this->get_acc_list($resource['res_id'],$query['filter2']==self::DELETED);
 				foreach($accessories as $acc_id => $acc_name)
 				{
 					$resource['accessories'][] = array('acc_id' => $acc_id, 'name' => $this->link_title($acc_id));
@@ -206,7 +240,14 @@ class resources_bo
 				$resource['accessory_of_label'] = $this->link_title($resource['accessory_of']);
 			}
 
-			$rows[$num]['picture_thumb'] = $this->get_picture($resource);
+			if($resource['deleted'])
+			{
+				$rows[$num]['picture_thumb'] = 'deleted';
+			}
+			else
+			{
+				$rows[$num]['picture_thumb'] = $this->get_picture($resource);
+			}
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}
 
@@ -296,6 +337,12 @@ class resources_bo
 			return $msg;
 		}
 
+		// Check for restore of deleted, restore held links
+                if($old && $old['deleted'] && !$resource['deleted'])
+                {
+                        egw_link::restore('resources', $resource['res_id']);
+                }
+
 		// delete old pictures
 		if($resource['picture_src'] != 'own_src')
 		{
@@ -312,6 +359,18 @@ class resources_bo
 		if($resource['accessory_of'] != $old['accessory_of'])
 		{
 			egw_link::unlink(0,'resources',$resource['res_id'],'','resources',$old['accessory_of']);
+
+			// Check for resource changing to accessory - move its accessories to resource
+			if($old['accessory_of'] == -1 && $accessories = $this->get_acc_list($resource['res_id']))
+			{
+				foreach($accessories as $accessory => $name)
+				{
+					egw_link::unlink(0,'resources',$accessory,'','resources',$resource['res_id']);
+					$acc = $this->read($accessory);
+					$acc['accessory_of'] = -1;
+					$this->so->save($acc);
+				}
+			}
 		}
 		if($resource['accessory_of'] != -1)
 		{
@@ -331,6 +390,17 @@ class resources_bo
 		}
 
 		$res_id = $this->so->save($resource);
+
+		// History & notifications
+		if (!is_object($this->tracking))
+		{
+			$this->tracking = new resources_tracking();
+		}
+		if ($this->tracking->track($resource,$old,$this->user) === false)
+		{
+			return implode(', ',$this->tracking->errors);
+		}
+
 		return $res_id ? $res_id : lang('Something went wrong by saving resource');
 	}
 
@@ -347,9 +417,31 @@ class resources_bo
 			return lang('You are not permitted to delete this resource!');
 		}
 
-		if ($this->so->delete(array('res_id'=>$res_id)))
+		// check if we only mark resources as deleted, or really delete them
+		$old = $this->read($res_id);
+		$config = config::read('resources');
+		if ($config['history'] != '' && $old['deleted'] == null)
 		{
+			$old['deleted'] = time();
+			$this->save($old);
+			egw_link::unlink(0,'resources',$res_id,'','','',true);
 			$accessories = $this->get_acc_list($res_id);
+			foreach($accessories as $acc_id => $name)
+			{
+				// Don't purge already deleted accessories
+				$acc = $this->read($acc_id);
+				if(!$acc['deleted'])
+				{
+					$acc['deleted'] = time();
+					$this->save($acc);
+					egw_link::unlink(0,'resources',$acc_id,'','','',true);
+				}
+			}
+			return false;
+		}
+		elseif ($this->so->delete(array('res_id'=>$res_id)))
+		{
+			$accessories = $this->get_acc_list($res_id, true);
 			foreach($accessories as $acc_id => $name)
 			{
 				if($this->delete($acc_id))
@@ -373,15 +465,20 @@ class resources_bo
 	 *
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param int $res_id id of resource
+	 * @param boolean $deleted Include deleted accessories
 	 * @return array
 	 */
-	function get_acc_list($res_id)
+	function get_acc_list($res_id,$deleted=false)
 	{
 		if($res_id < 1){return;}
-		$data = $this->so->search('','res_id,name','','','','','',$start,array('accessory_of' => $res_id),'',$need_full_no_count=true);
-		foreach($data as $num => $resource)
-		{
-			$acc_list[$resource['res_id']] = $resource['name'];
+		$data = $this->so->search('','res_id,name,deleted','','','','','',$start,array('accessory_of' => $res_id),'',$need_full_no_count=true);
+		$acc_list = array();
+		if($data) {
+			foreach($data as $num => $resource)
+			{
+				if($resource['deleted'] && !$deleted) continue;
+				$acc_list[$resource['res_id']] = $resource['name'];
+			}
 		}
 		return $acc_list;
 	}

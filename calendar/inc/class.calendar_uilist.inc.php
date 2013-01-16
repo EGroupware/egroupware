@@ -842,6 +842,7 @@ class calendar_uilist extends calendar_ui
 		{
 			$actions['undelete'] = array(
 				'caption' => 'Un-delete',
+				'icon' => 'revert',
 				'hint' => 'Recover this event',
 				'group' => $group,
 				'enabled' => 'javaScript:nm_enableClass',

@@ -154,6 +154,19 @@
 						</vbox>
 					</box>
 				</row>
+				<row>
+					<box class="action_popup prompt" id="restore_popup">
+						<vbox class="prompt">
+							<description value="Un-delete" class="promptheader"/>
+							<description value="Un-delete accessories of selected resources too?"/>
+							<hbox>
+								<button label="Yes - Un-delete accessories too" id="restore_accessories" onclick="nm_popup_action.id = 'restore_accessories';nm_submit_popup(this); return false;"/>
+								<button label="No - Leave them" id="restore" onclick="nm_popup_action.id = 'restore'; nm_submit_popup(this); return false;"/>
+								<buttononly label="Cancel" onclick="nm_hide_popup(this,'restore_popup');"/>
+							</hbox>
+						</vbox>
+					</box>
+				</row>
 			</rows>
 		</grid>
 		<styles>

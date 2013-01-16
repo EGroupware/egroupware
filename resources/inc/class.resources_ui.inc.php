@@ -104,7 +104,7 @@ class resources_ui
 			$msg = $content;
 		}
 		$content = array();
-		$content['msg'] = $msg;
+		$content['msg'] = $msg ? $msg : $_GET['msg'];
 
 		$content['nm']['header_left']	= 'resources.resource_select.header';
 		$content['nm']['header_right']	= 'resources.show.nm_right';
@@ -127,6 +127,12 @@ class resources_ui
 		}
 		$content['nm']['options-filter']= array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ);
 		$content['nm']['options-filter2'] = resources_bo::$filter_options;
+
+		$config = config::read('resources');
+		if($config['history'])
+		{
+			$content['nm']['options-filter2'][resources_bo::DELETED] = lang('Deleted');
+		}
 
 		if($_GET['search']) {
 			$content['nm']['search'] = $_GET['search'];
@@ -269,6 +275,14 @@ class resources_ui
 				'nm_action' => 'open_popup',
 				'hideOnDisabled' => true
 			),
+			'restore' => array(
+				'caption' => 'Un-delete',
+				'icon' => 'revert',
+				'enableClass' => 'deleted',
+				'hideOnDisabled' => true,
+				'nm_action' => 'open_popup',
+				'group' => $group,
+			)
 		);
 		return $actions;
 	}
@@ -338,15 +352,56 @@ class resources_ui
 				egw_framework::set_onload("egw_openWindowCentered2('".egw::link('/index.php',$url_params) ."','_blank');");
 				$action_msg = lang('booked');
 				break;
+			case 'restore':
+				$action_msg = lang('restored');
+				foreach($checked as $n=>$id)
+				{
+					// Extra data
+					if(!$id) continue;
+					$resource = $this->bo->read($id);
+					$resource['deleted'] = null;
+					if($resource['accessory_of'] > 0)
+					{
+						/*
+						If restoring an accessory, and parent is deleted, and not in
+						the list of resources to be restored right now, un-parent
+						*/
+						$parent = $this->bo->read($resource['accessory_of']);
+						$checked_key = array_search($parent['res_id'], $checked);
+						if($checked_key === false && $parent['deleted'])
+						{
+							$resource['accessory_of'] = -1;
+						}
+					}
+
+					$this->bo->save($resource);
+					if($settings == 'accessories')
+					{
+						// Restore accessories too
+						$accessories = $this->bo->get_acc_list($id,true);
+						foreach($accessories as $acc_id => $name)
+						{
+							$acc = $this->bo->read($acc_id);
+							$acc['deleted'] = null;
+							$this->bo->save($acc);
+							$restored_accessories++;
+						}
+					}
+					$success++;
+				}
+				if($restored_accessories) $action_msg .= ", " . lang('%1 accessories restored',$restored_accessories);
+				break;
 			case 'delete':
 				$action_msg = lang('deleted');
 				$promoted_accessories = 0;
 				foreach($checked as $n => &$id)
 				{
+					// Extra data
+					if(!$id) continue;
+					$resource = $this->bo->read($id);
 					if($settings == 'promote')
 					{
 						// Handle a selected accessory
-						$resource = $this->bo->read($id);
 						if($resource['accessory_of'] > 0)
 						{
 							$resource['accessory_of'] = -1;
@@ -355,12 +410,14 @@ class resources_ui
 							continue;
 						}
 						
-						// Make associated accessories into resources
-						$accessories = $this->bo->get_acc_list($id);
+						// Make associated accessories into resources - include deleted
+						$accessories = $this->bo->get_acc_list($id,true);
 						foreach($accessories as $acc_id => $name)
 						{
 							$acc = $this->bo->read($acc_id);
 							$acc['accessory_of'] = -1;
+							// Restore them if deleted
+							$acc['deleted'] = null;
 							$this->bo->save($acc);
 							$promoted_accessories++;
 
@@ -373,7 +430,8 @@ class resources_ui
 					{
 						// Remove checked accessories, deleting resource will remove them
 						// We get an error if we try to delete them after they're gone
-						$accessories = $this->bo->get_acc_list($id);
+						$accessories = $this->bo->get_acc_list($id,$resource['deleted']);
+
 						foreach($accessories as $acc_id => $name)
 						{
 							$checked_key = array_search($acc_id, $checked);
@@ -424,23 +482,32 @@ class resources_ui
 // 						// links are already saved by eTemplate
 // 						unset($resource['link_to']['to_id']);
 // 					}
+					if($content['res_id'])
+					{
+						 $acc_count = count($this->bo->get_acc_list($content['res_id']));
+					}
 					$result = $this->bo->save($content);
 					if(is_numeric($result))
 					{
 						$content['res_id'] = $result;
+						if($acc_count && $content['accessory_of'] != -1)
+						{
+							// Resource with accessories changed into accessory
+							if($acc_count) $msg = lang('%1 accessories now resources',$acc_count);
+						}
 					}
 					else
 					{
-						$content['msg'] = $result;
+						$msg = $result;
 					}
 					break;
 				case 'delete':
 					unset($content['delete']);
-					$content['msg'] = $this->bo->delete($content['res_id']);
+					$msg = $this->bo->delete($content['res_id']);
 					break;
 			}
-			$js = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','addressbook',{$content['res_id']});";
-			if($button != 'apply' && !$content['msg'])
+			$js = "opener.egw_refresh('".str_replace("'","\\'",$msg)."','resources',{$content['res_id']});";
+			if($button != 'apply' && !$msg)
 			{
 				$js .= 'window.close();';
 				echo "<html><body><script>$js</script></body></html>\n";
@@ -458,7 +525,6 @@ class resources_ui
 		if (isset($nm_session_data['filter2']) && $nm_session_data['filter2'] > 0) $accessory_of = $nm_session_data['filter2'];
 		if (isset($_GET['accessory_of'])) $accessory_of = $_GET['accessory_of'];
 		$content = array('res_id' => $res_id);
-
 		if ($res_id > 0)
 		{
 			$content = $this->bo->read($res_id);
@@ -484,6 +550,10 @@ class resources_ui
 			$content['cat_id'] = $nm_session_data['filter'];
 			$content['bookable'] = true;
 		}
+		if($msg) {
+			$content['msg'] = $msg;
+		}
+
 		if ($_GET['msg']) $content['msg'] = strip_tags($_GET['msg']);
 	
 		// some presetes
@@ -491,6 +561,19 @@ class resources_ui
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
 		$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : $accessory_of;
+
+		if($content['res_id'] && $content['accessory_of'] == -1)
+		{
+			$content['acc_count'] = count($this->bo->get_acc_list($content['res_id']));
+		}
+		$content['history'] = array(
+			'id' => $res_id,
+			'app' => 'resources',
+			'status-widgets' => array(
+				'accessory_of' => 'link-entry:resources'
+			)
+		);
+		$sel_options['status'] = resources_bo::$field2label;
 
 		$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
 		$sel_options['cat_id'] =  $this->bo->acl->get_cats(EGW_ACL_ADD);
@@ -512,15 +595,25 @@ class resources_ui
 		{
 			$read_only['__ALL__'] = true;
 		}
-		if(!$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_DELETE))
+		$config = config::read('resources');
+		if(!$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_DELETE) ||
+			($content['deleted'] && !$GLOBALS['egw_info']['user']['apps']['admin'] && $config['history'] == 'history'))
 		{
 			$read_only['delete'] = true;
+		}
+
+		// Can't make a resource with accessories an accessory
+		$read_only['accessory_of'] = $content['acc_count'];
+		if($read_only['accessory_of'])
+		{
+			$content['accessory_label'] = lang('Remove accessories before changing Accessory of');
 		}
 
 		// Disable custom tab if there are no custom fields defined
 		$read_only['tabs']['custom'] = !(config::get_customfields('resources',true));
 
 		$preserv = $content;
+
 		$this->tmpl->read('resources.edit');
 		return $this->tmpl->exec('resources.resources_ui.edit',$content,$sel_options,$read_only,$preserv,2);
 	}

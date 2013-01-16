@@ -52,7 +52,7 @@
 						<menupopup id="accessory_of" no_lang="1"/>
 					</menulist>
 					<description/>
-					<description/>
+					<description id="accessory_label"/>
 				</row>
 				<row>
 					<description disabled="true" value="Buyable"/>
@@ -171,6 +171,9 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="resources.edit_tabs.history" template="" lang="" group="0" version="">
+		<historylog cols="1" id="history" rows="1"/>
+	</template>
 	<template id="resources.edit_tabs" template="" lang="" group="0" version="">
 		<grid height="380">
 			<columns>
@@ -187,6 +190,7 @@
 							<tab id="pictures" label="Picture" statustext="Prizeing information for booking or buying"/>
 							<tab id="links" label="Links" statustext="Web-Page of resource"/>
 							<tab id="custom" label="Custom" statustext="Pictures or resource"/>
+							<tab id="history" label="History"/>
 						</tabs>
 						<tabpanels>
 							<template id="resources.edit_tabs.general"/>
@@ -194,6 +198,7 @@
 							<template id="resources.edit_tabs.pictures"/>
 							<template id="resources.edit_tabs.links"/>
 							<template id="resources.edit_tabs.custom"/>
+							<template id="resources.edit_tabs.history"/>
 						</tabpanels>
 					</tabbox>
 				</row>
@@ -223,14 +228,14 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.edit" template="" lang="" group="0" version="1.9.001">
+	<template id="resources.edit" template="" lang="" group="0" version="1.9.002">
 		<grid>
 			<columns>
 				<column width="700"/>
 			</columns>
 			<rows>
 				<row>
-					<description id="msg" no_lang="1"/>
+					<description id="msg" no_lang="1" span="all" class="message"/>
 				</row>
 				<row>
 					<hbox>
