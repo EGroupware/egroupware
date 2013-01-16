@@ -279,8 +279,17 @@ abstract class bo_merge
 	 * Get links for the given record
 	 *
 	 * Uses egw_link system to get link titles
+	 *
+	 * @param app Name of current app
+	 * @param id ID of current entry
+	 * @param only_app Restrict links to only given application
+	 * @param exclude Exclude links to these applications
+	 * @param style String One of:
+	 * 	'title' - plain text, just the title of the link
+	 * 	'link' - URL to the entry
+	 * 	'href' - HREF tag wrapped around the title
 	 */
-	protected function get_links($app, $id, $only_app='', $exclude = array())
+	protected function get_links($app, $id, $only_app='', $exclude = array(), $style = 'title')
 	{
 		$links = egw_link::get_links($app, $id, $only_app);
 		$link_titles = array();
@@ -300,6 +309,26 @@ abstract class bo_merge
 			if(class_exists('stylite_links_stream_wrapper') && $link_info['app'] != egw_link::VFS_APPNAME)
 			{
 				$title = stylite_links_stream_wrapper::entry2name($link_info['app'], $link_info['id'], $title);
+			}
+			if($style == 'href' || $style == 'link')
+			{
+				$link = egw_link::view($link_info['app'], $link_info['id'], $link_info);
+				if($link_info['app'] != egw_link::VFS_APPNAME)
+				{
+					// Set app to false so we always get an external link
+					$link = str_replace(',','%2C',egw::link('/index.php',$link, false));
+				}
+				else
+				{
+					$link = egw::link($link, array());
+				}
+				// Prepend site
+				if ($link{0} == '/')
+				{
+					$link = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
+						($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$link;
+				}
+				$title = $style == 'href' ? html::a_href(html::htmlspecialchars($title), $link) : $link;
 			}
 			$link_titles[] = $title;
 		}
@@ -830,6 +859,12 @@ abstract class bo_merge
 			{
 				switch($mimetype.$mso_application_progid)
 				{
+					case 'text/html':
+						$replace_tags = array(
+							'<b>','<strong>','<i>','<em>','<u>','<span>','<ol>','<ul>','<li>',
+							'<table>','<tr>','<td>','<a>',
+						);
+						break;
 					case 'application/vnd.oasis.opendocument.text':		// open office
 					case 'application/vnd.oasis.opendocument.spreadsheet':
 						$replace_tags = array(
