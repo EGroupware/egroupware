@@ -570,7 +570,8 @@ class resources_ui
 			'id' => $res_id,
 			'app' => 'resources',
 			'status-widgets' => array(
-				'accessory_of' => 'link-entry:resources'
+				'accessory_of' => 'link-entry:resources',
+				'long_description' => 'html'
 			)
 		);
 		$sel_options['status'] = resources_bo::$field2label;
