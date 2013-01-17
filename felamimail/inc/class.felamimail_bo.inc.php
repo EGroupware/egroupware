@@ -785,21 +785,35 @@ class felamimail_bo
 	 * decode header (or envelope information)
 	 * if array given, note that only values will be converted
 	 * @param  mixed $_string input to be converted, if array call decode_header recursively on each value
+	 * @param  mixed/boolean $_tryIDNConversion (true/false AND FORCE): try IDN Conversion on domainparts of emailADRESSES
 	 * @return mixed - based on the input type
 	 */
-	static function decode_header($_string)
+	static function decode_header($_string, $_tryIDNConversion=false)
 	{
 		if (is_array($_string))
 		{
 			foreach($_string as $k=>$v)
 			{
-				$_string[$k] = self::decode_header($v);
+				$_string[$k] = self::decode_header($v, $_tryIDNConversion);
 			}
 			return $_string;
 		}
 		else
 		{
-			return translation::decodeMailHeader($_string,self::$displayCharset);
+			$_string = translation::decodeMailHeader($_string,self::$displayCharset);
+			if ($_tryIDNConversion===true && stripos($_string,'@')!==false)
+			{
+				$rfcAddr = imap_rfc822_parse_adrlist($_string,'');
+				if (!isset(self::$idna2)) self::$idna2 = new egw_idna;
+				//$_string = str_replace($rfcAddr[0]->host,self::$idna2->decode($rfcAddr[0]->host),$_string);
+				$_string = imap_rfc822_write_address($rfcAddr[0]->mailbox,self::$idna2->decode($rfcAddr[0]->host),$rfcAddr[0]->personal);
+			}
+			if ($_tryIDNConversion==='FORCE')
+			{
+				//error_log(__METHOD__.__LINE__.'->'.$_string.'='.self::$idna2->decode($_string));
+				$_string = self::$idna2->decode($_string);
+			}
+			return $_string;
 		}
 	}
 
@@ -2735,7 +2749,7 @@ class felamimail_bo
 				return false;
 			}
 			//if ($decode) _debug_array($envelope[0]);
-			return ($decode ? self::decode_header($envelope[0]): $envelope[0]);
+			return ($decode ? self::decode_header($envelope[0],true): $envelope[0]);
 		} else {
 			if( PEAR::isError($headers = $this->icServer->getParsedHeaders($_uid, true, $_partID, true)) ) {
 				return false;
@@ -2750,7 +2764,7 @@ class felamimail_bo
 			$recepientList = array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY_TO');
 			foreach($recepientList as $recepientType) {
 				if(isset($headers[$recepientType])) {
-					if ($decode) $headers[$recepientType] =  self::decode_header($headers[$recepientType]);
+					if ($decode) $headers[$recepientType] =  self::decode_header($headers[$recepientType],true);
 					$addresses = imap_rfc822_parse_adrlist($headers[$recepientType], '');
 					foreach($addresses as $singleAddress) {
 						$addressData = array(
@@ -2959,9 +2973,9 @@ class felamimail_bo
 				}
 				if(is_array($headerObject['FROM']) && is_array($headerObject['FROM'][0])) {
 					if($headerObject['FROM'][0]['HOST_NAME'] != 'NIL') {
-						$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0]['EMAIL']);
+						$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0]['EMAIL'],true);
 					} else {
-						$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0]['MAILBOX_NAME']);
+						$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0]['MAILBOX_NAME'],true);
 					}
 					if($headerObject['FROM'][0]['PERSONAL_NAME'] != 'NIL') {
 						$retValue['header'][$sortOrder[$uid]]['sender_name'] = self::decode_header($headerObject['FROM'][0]['PERSONAL_NAME']);
@@ -2971,9 +2985,9 @@ class felamimail_bo
 
 				if(is_array($headerObject['TO']) && is_array($headerObject['TO'][0])) {
 					if($headerObject['TO'][0]['HOST_NAME'] != 'NIL') {
-						$retValue['header'][$sortOrder[$uid]]['to_address'] = self::decode_header($headerObject['TO'][0]['EMAIL']);
+						$retValue['header'][$sortOrder[$uid]]['to_address'] = self::decode_header($headerObject['TO'][0]['EMAIL'],true);
 					} else {
-						$retValue['header'][$sortOrder[$uid]]['to_address'] = self::decode_header($headerObject['TO'][0]['MAILBOX_NAME']);
+						$retValue['header'][$sortOrder[$uid]]['to_address'] = self::decode_header($headerObject['TO'][0]['MAILBOX_NAME'],true);
 					}
 					if($headerObject['TO'][0]['PERSONAL_NAME'] != 'NIL') {
 						$retValue['header'][$sortOrder[$uid]]['to_name'] = self::decode_header($headerObject['TO'][0]['PERSONAL_NAME']);
@@ -2987,11 +3001,11 @@ class felamimail_bo
 							//error_log(__METHOD__.__LINE__."-> $k:".array2string($add));
 							if($add['HOST_NAME'] != 'NIL')
 							{
-								$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]['address'] = self::decode_header($add['EMAIL']);
+								$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]['address'] = self::decode_header($add['EMAIL'],true);
 							}
 							else
 							{
-								$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]['address'] = self::decode_header($add['MAILBOX_NAME']);
+								$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]['address'] = self::decode_header($add['MAILBOX_NAME'],true);
 							}
 							if($headerObject['TO'][$k]['PERSONAL_NAME'] != 'NIL')
 							{
@@ -3856,7 +3870,7 @@ class felamimail_bo
 			if ( PEAR::isError($tretval) ) $isError[$_icServerID] = $tretval->message;
 			//error_log(__METHOD__." using existing Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true));
 		} else {
-			//error_log( "-------------------------->open connection for Server with profileID:".$_icServerID.function_backtrace());
+			//error_log(__METHOD__.__LINE__."->open connection for Server with profileID:".$_icServerID.function_backtrace());
 			$timeout = felamimail_bo::getTimeOut();
 			$tretval = $this->icServer->openConnection($_adminConnection,$timeout);
 			if ( PEAR::isError($tretval) || $tretval===false)

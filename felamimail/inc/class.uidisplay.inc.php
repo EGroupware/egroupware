@@ -179,6 +179,8 @@
 		function parseHREF (&$body) {
 			#echo __METHOD__."called<br>";
 			$webserverURL   = $GLOBALS['egw_info']['server']['webserver_url'];
+			$fullWebServerUrl = (substr(trim($webserverURL),0,1) == '/'?($GLOBALS['egw_info']['server']['enforce_ssl'] || $_SERVER['HTTPS'] ? 'https://' : 'http://').
+				($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']):$webserverURL);
 			$alnum            = 'a-z0-9';
 			#$domain = "(http(s?):\/\/)*";
 			#$domain            .= "([$alnum]([-$alnum]*[$alnum]+)?)";
@@ -208,10 +210,17 @@
 				if (empty($link)) continue;
 				if ($llink == $link) next($addresses);
 				#echo $text."#<br>";
-				#echo $link."#<br>\n";
+				//error_log(__METHOD__.__LINE__."#". $link."#".$webserverURL."#");
 				$link = str_replace("\n","",$link);
-				//$comp_uri = "<a href=\"$webserverURL/redirect.php?go=".$link;
-				$comp_uri = "<a target=\"_blank\" href=\"".$link;
+				if (stripos($link,$webserverURL) !== false || stripos($link,$fullWebServerUrl) !== false || substr(trim($link),0,1) == '/')
+				{
+					//$comp_uri = "<a href=\"$webserverURL/redirect.php?go=".$link;
+					$comp_uri = "<a target=\"_top\" href=\"".$link;
+				}
+				else
+				{
+					$comp_uri = "<a target=\"_blank\" href=\"".$link;
+				}
 				$body = str_replace('<a href="'.$link, $comp_uri, $body);
 				$llink=$link;
 			}
@@ -1170,7 +1179,7 @@ blockquote[type=cite] {
 						{
 							$newSenderAddress = felamimail_bo::decode_header($newSenderAddressORG);
 							$decodedPersonalName = felamimail_bo::decode_header($decodedPersonalName);
-							$addressData['EMAIL'] = felamimail_bo::decode_header($addressData['EMAIL']);
+							$addressData['EMAIL'] = felamimail_bo::decode_header($addressData['EMAIL'],true);
 						}
 						$realName =  $decodedPersonalName;
 						// add mailaddress
@@ -1232,7 +1241,7 @@ blockquote[type=cite] {
 						}
 					} else {
 						$addrEMailORG = $addrEMail = $addressData['EMAIL'];
-						if ($decode) $addrEMail = felamimail_bo::decode_header($addrEMail);
+						if ($decode) $addrEMail = felamimail_bo::decode_header($addrEMail,true);
 						$linkData = array (
 							'menuaction'	=> 'felamimail.uicompose.compose',
 							'send_to'	=> base64_encode($addressData['EMAIL'])
@@ -1608,7 +1617,6 @@ blockquote[type=cite] {
 		function image_callback($matches)
 		{
 			static $cache = array();	// some caching, if mails containing the same image multiple times
-
 			$linkData = array (
 				'menuaction'    => 'felamimail.uidisplay.displayImage',
 				'uid'		=> $this->uid,

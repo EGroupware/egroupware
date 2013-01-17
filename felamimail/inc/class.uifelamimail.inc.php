@@ -204,8 +204,17 @@ class uifelamimail
 				self::$icServerID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $imapServer->ImapServerId;
 			}
 			echo "<h2>".lang('Test Connection and display basic information about the selected profile')."</h2>";
+
 			_debug_array('Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.self::$icServerID);
 			emailadmin_bo::unsetCachedObjects(self::$icServerID);
+
+			if (felamimail_bo::$idna2)
+			{
+				_debug_array('Umlautdomains supported (see Example below)');
+				$dom = 'füßler.com';
+				$encDom = felamimail_bo::$idna2->encode($dom);
+				_debug_array(array('source'=>$dom,'result'=>array('encoded'=>$encDom,'decoded'=>felamimail_bo::$idna2->decode($encDom))));
+			}
 
 			if ($preferences->preferences['prefcontroltestconnection'] == 'reset') exit;
 

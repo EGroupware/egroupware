@@ -231,6 +231,7 @@
 		function compose($_focusElement='to',$suppressSigOnTop=false, $isReply=false)
 		{
 			//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
+			if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
 			// read the data from session
 			// all values are empty for a new compose window
 			$insertSigOnTop = false;
@@ -399,6 +400,8 @@
 					{
 						$sessionData['mimeType']  = 'html';
 						$sessionData['body'] = "<pre>".$sessionData['body']."</pre>";
+						// take care this assumption is made on the creation of the reply header in bocompose::getReplyData
+						if (strpos($sessionData['body'],"<pre> \r\n \r\n---")===0) $sessionData['body'] = substr_replace($sessionData['body']," <br>\r\n<pre>---",0,strlen("<pre> \r\n \r\n---")-1);
 					}
 				}
 			}
@@ -636,7 +639,16 @@
 			{
 				$disableRuler = true;
 			}
-			
+			$font_span ='';
+			if($sessionData['mimeType'] == 'html' /*&& trim($sessionData['body'])==''*/) {
+				// User preferences for style
+				$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
+				$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
+				$font_span = '<span '.($font?'style="font-family:'.$font.'; ':'').';'.($font_size?'font-size:'.$font_size.'; ':'').'">';
+				if (empty($font) && empty($font_size)) $font_span = '';
+			}			
+			//remove possible html header stuff
+			if (stripos($sessionData['body'],'<html><head></head><body>')!==false) $sessionData['body'] = str_ireplace(array('<html><head></head><body>','</body></html>'),array('',''),$sessionData['body']);
 			//error_log(__METHOD__.__LINE__.array2string($this->bocompose->preferencesArray));
 			if (isset($this->bocompose->preferencesArray['insertSignatureAtTopOfMessage']) &&
 				$this->bocompose->preferencesArray['insertSignatureAtTopOfMessage'] &&
@@ -647,6 +659,7 @@
 				if($sessionData['mimeType'] == 'html') {
 					$before = ($disableRuler ?'&nbsp;<br>':'&nbsp;<br><hr style="border:1px dotted silver; width:90%;">');
 					$inbetween = '&nbsp;<br>';
+					if (!empty($font_span) && !($insertSigOnTop === 'below')) $before = $font_span.$before.'</span>';
 				} else {
 					$before = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
 					$inbetween = "\r\n";
@@ -656,13 +669,18 @@
 
 				if ($insertSigOnTop === 'below')
 				{
-					$sessionData['body'] = $sessionData['body'].$before.($sessionData['mimeType'] == 'html'?$sigText:$this->bocompose->convertHTMLToText($sigText));
+					$sessionData['body'] = $font_span.($font_span?'&#8203;</span>':'').$sessionData['body'].$before.($sessionData['mimeType'] == 'html'?$sigText:$this->bocompose->convertHTMLToText($sigText));
 				}
 				else
 				{
 					$sessionData['body'] = $before.($sessionData['mimeType'] == 'html'?$sigText:$this->bocompose->convertHTMLToText($sigText)).$inbetween.$sessionData['body'];
 				}
 			}
+			else
+			{
+				$sessionData['body'] = $font_span.($font_span?($insertSigOnTop?'&#8203;':($isReply||isset($replyID)||empty($sessionData['body'])?'&nbsp;':'')).'</span>':'').$sessionData['body'];
+			}
+			//error_log(__METHOD__.__LINE__.$sessionData['body']);
 			// prepare body
 			// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
 			if (strtoupper($this->displayCharset) == 'UTF-8')
