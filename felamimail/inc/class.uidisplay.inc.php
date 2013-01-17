@@ -2015,7 +2015,7 @@ blockquote[type=cite] {
 			$GLOBALS['egw']->session->commit_session();
 			if ($display==false)
 			{
-				$subject = str_replace('$$','__',$headers['SUBJECT']);
+				$subject = str_replace('$$','__',felamimail_bo::decode_header($headers['SUBJECT']));
 				header ("Content-Type: message/rfc822; name=\"". $subject .".eml\"");
 				header ("Content-Disposition: attachment; filename=\"". $subject .".eml\"");
 				header("Expires: 0");
