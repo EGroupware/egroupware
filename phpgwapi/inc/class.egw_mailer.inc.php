@@ -176,9 +176,10 @@ class egw_mailer extends PHPMailer
  	 */
 	public function AddrAppend($type, $addr)
 	{
+		if (is_null($addr)) $addr = array();
 		foreach($addr as $data)
 		{
-			$this->addresses[$type][] = $data[0];
+			if (!empty($data[0])) $this->addresses[$type][] = $data[0];
 		}
 		return parent::AddrAppend($type, $addr);
 	}
