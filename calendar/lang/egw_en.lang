@@ -44,6 +44,7 @@ allows to edit the event again	calendar	en	Allows to edit the event again
 always	calendar	en	Always
 apply the action on the whole query, not only the shown events	calendar	en	Apply the action on the whole query, NOT only the shown events.
 apply the changes	calendar	en	Apply the changes
+appointment settings	calendar	en	Appointment settings
 are you sure you want to delete this country ?	calendar	en	Are you sure you want to delete this country?
 are you sure you want to delete this holiday ?	calendar	en	Are you sure you want to delete this holiday?
 as an alternative you can %1download a mysql dump%2 and import it manually into egw_cal_timezones table.	calendar	en	As an alternative you can %1download a MySQL dump%2 and import it manually into egw_cal_timezones table.
@@ -106,6 +107,7 @@ custom fields	common	en	Custom fields
 custom_2	common	en	Free/Busy
 daily	calendar	en	Daily
 daily tables	calendar	en	Daily tables
+data exchange settings	calendar	en	Data exchange settings
 date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.	calendar	en	Date for the day of the week, available for the first entry inside each day of week or daily table inside the selected range.
 day	calendar	en	Day
 day of week tables	calendar	en	Day of week tables
@@ -316,6 +318,7 @@ notification messages for disinvited participants	calendar	en	Notification messa
 notification messages for modified events	calendar	en	Notification messages for modified events
 notification messages for your alarms	calendar	en	Notification messages for your alarms
 notification messages for your responses	calendar	en	Notification messages for your responses
+notification settings	calendar	en	Notification settings
 notify non-egroupware users about event updates	calendar	en	Notify non-EGroupware users about event updates
 number of records to read (%1)	calendar	en	Number of records to read (%1)
 number of weeks to show	calendar	en	Number of weeks to show
@@ -514,6 +517,7 @@ users + groups: inviting both allways requires an invite grant	admin	en	Users + 
 using already existing event on server.	calendar	en	Using already existing event on server.
 view exception	calendar	en	View exception
 view series	calendar	en	View series
+view settings	calendar	en	View settings
 view this event	calendar	en	View this event
 views with fixed time intervals	calendar	en	Views with fixed time intervals
 wed	calendar	en	Wed
