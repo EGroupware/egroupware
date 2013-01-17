@@ -3475,7 +3475,7 @@ class felamimail_bo
 			error_log(__METHOD__.__LINE__.array2string($retValue->message));
 			$retValue = null;
 		}
-		return ($decode ? self::decode_header($retValue):$retValue);
+		return ($decode ? self::decode_header($retValue,true):$retValue);
 	}
 
 	function getMessageRawBody($_uid, $_partID = '')
@@ -4676,7 +4676,7 @@ class felamimail_bo
 				//$p = (string)$addressObject->personal;
 				$returnAddr .= (strlen($returnAddr)>0?',':'');
 				//error_log(__METHOD__.__LINE__.$p.' <'.$mb.'@'.$h.'>');
-				$buff = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
+				$buff = imap_rfc822_write_address($addressObject->mailbox, self::$idna2->decode($addressObject->host), $addressObject->personal);
 				$buff = str_replace(array('<','>'),array('[',']'),$buff);
 				if ($createHTML) $buff = felamimail_bo::htmlspecialchars($buff);
 				//error_log(__METHOD__.__LINE__.' Address: '.$returnAddr);
@@ -4686,6 +4686,7 @@ class felamimail_bo
 		else
 		{
 			// do not mess with strings, return them untouched /* ToDo: validate string as Address */
+			$rfcAddressArray = self::decode_header($rfcAddressArray,true);
 			$rfcAddressArray = str_replace(array('<','>'),array('[',']'),$rfcAddressArray);
 			if (is_string($rfcAddressArray)) return ($createHTML ? felamimail_bo::htmlspecialchars($rfcAddressArray) : $rfcAddressArray);
 		}
