@@ -73,15 +73,6 @@ class preferences_hooks
 			'v2'     => lang ('Silver theme')
 		);
 
-		$user_apps = array();
-		foreach((array)$GLOBALS['egw_info']['user']['apps'] as $app => $data)
-		{
-			if($GLOBALS['egw_info']['apps'][$app]['status'] != 2 && $app)
-			{
-				$user_apps[$app] = $GLOBALS['egw_info']['apps'][$app]['title'] ? $GLOBALS['egw_info']['apps'][$app]['title'] : lang($app);
-			}
-		}
-
 		$account_sels = array(
 			'selectbox'     => lang('Selectbox'),
 			'primary_group' => lang('Selectbox with primary group and search'),
@@ -407,16 +398,6 @@ class preferences_hooks
 				'help'   => 'How many toolbar buttons are available',
 				'admin'  => false,
 				'default'=> 'extended'
-			),
-			'default_app' => array(
-				'type'   => 'select',
-				'label'  => 'Default application',
-				'name'   => 'default_app',
-				'values' => $user_apps,
-				'help'   => "The default application will be started when you enter eGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).",
-				'xmlrpc' => False,
-				'admin'  => False,
-				'default'=> '',
 			),
 		);
 		// disable thumbnails, if no size configured by admin
