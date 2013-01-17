@@ -506,6 +506,21 @@ class timesheet_bo extends so_sql_cf
 			$this->summary = array();
 			return array();
 		}
+		if ($only_summary==false && $criteria && $this->show_sums)
+		{
+			// if we have a criteria AND intend to show the sums we first query the affected ids,
+			// then we throw away criteria and filter, and replace the filter with the list of ids
+			$ids = parent::search($criteria,'egw_timesheet.ts_id as id','','',$wildcard,$empty,$op,false,$filter,$join);
+			//_debug_array($ids);
+			if (empty($ids))
+			{
+				$this->summary = array('duration'=>0,'price'=>null,'quantity'=>0);
+				return array();
+			}
+			unset($criteria);
+			foreach ($ids as $r =>$v) $id_filter[] = $v['id'];
+			$filter = array('ts_id'=>$id_filter);
+		}
 		// if we only want to return the summary (sum of duration and sum of price) we have to take care that the customfield table
 		// is not joined, as the join causes a multiplication of the sum per customfield found
 		// joining of the cutomfield table is triggered by criteria being set with either a string or an array
