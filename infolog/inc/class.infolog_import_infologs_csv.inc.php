@@ -128,6 +128,9 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 		// Get the tracker for changes
 		$this->tracking = new infolog_tracking($this->boinfolog);
 
+		// Need translations for some human stuff (early type detection)
+		translation::add_app('infolog');
+
 		// set FieldMapping.
 		$import_csv->mapping = $_definition->plugin_options['field_mapping'];
 
@@ -172,9 +175,15 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 			if( count( array_unique( $record ) ) < 2 ) continue;
 
 			$lookups = $_lookups;
-			if($record['info_type'] && $this->boinfolog->status[$record['info_type']])
+
+			// Early detection of type, to load appropriate statuses
+			foreach(array($lookups['info_type'], array_map('strtolower',array_map('lang',$lookups['info_type']))) as $types)
 			{
-				$lookups['info_status'] = $this->boinfolog->status[$record['info_type']];
+				if($record['info_type'] && $key = array_search(strtolower($record['info_type']),$types))
+				{
+					$lookups['info_status'] = $this->boinfolog->status[$key];
+					break;
+				}
 			}
 
 			$result = importexport_import_csv::convert($record, infolog_egw_record::$types, 'infolog', $lookups, $_definition->plugin_options['convert']);
@@ -341,12 +350,22 @@ class infolog_import_infologs_csv implements importexport_iface_import_plugin  {
 						$_data, true, 2,true, 	// 2 = dont touch modification date
 						$this->definition->plugin_options['no_notification']
 					);
-					if(!$result) {
-						$this->errors[$record_num] = lang('Permissions error - %1 could not %2',
-							$GLOBALS['egw']->accounts->id2name($_data['info_owner']),
-							lang($_action)
-						);
-					} else {
+					if(!$result)
+					{
+						if($result === false)
+						{
+							$this->errors[$record_num] = lang('Permissions error - %1 could not %2',
+								$GLOBALS['egw']->accounts->id2name($_data['info_owner']),
+								lang($_action)
+							);
+						}
+						else
+						{
+							$this->errors[$record_num] = lang('Error: the entry has been updated since you opened it for editing!');
+						}
+					}
+					else
+					{
 						$this->results[$_action]++;
 					}
 					break;
