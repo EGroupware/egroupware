@@ -286,7 +286,7 @@ window.egw_getFramework = function()
 	{
 		return framework;
 	}
-	else if (typeof window.parent.egw_getFramework != "undefined" && window !== window.parent)
+	else if (typeof window.parent.egw_getFramework != "undefined" && window != window.parent)
 	{
 		return window.parent.egw_getFramework();
 	}
