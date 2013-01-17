@@ -11,6 +11,15 @@
 
    /* $Id$ */
 
+	$user_apps = array();
+	foreach((array)$GLOBALS['egw_info']['user']['apps'] as $app => $data)
+	{
+		if($GLOBALS['egw_info']['apps'][$app]['status'] != 2 && $app)
+		{
+			$user_apps[$app] = $GLOBALS['egw_info']['apps'][$app]['title'] ? $GLOBALS['egw_info']['apps'][$app]['title'] : lang($app);
+		}
+	}
+
    $top_menu = array(
 	  'topmenu' => lang('Show as Topmenu'),
 	  'sidebox' => lang('Show in sidebox')
@@ -32,6 +41,16 @@
 		 'xmlrpc' => False,
 		 'admin'  => False
 	  ),
+	'default_app' => array(
+		'type'   => 'select',
+		'label'  => 'Default application',
+		'name'   => 'default_app',
+		'values' => $user_apps,
+		'help'   => "The default application will be started when you enter eGroupWare or click on the homepage icon.<br>You can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).",
+		'xmlrpc' => False,
+		'admin'  => False,
+		'default'=> '',
+	),
 	  'show_general_menu' => array(
 		 'type'   => 'select',
 		 'label'  => 'How to show the general eGroupWare menu ?',
