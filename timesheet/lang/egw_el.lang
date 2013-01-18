@@ -1,0 +1,44 @@
+actions	timesheet	el	Ενέργειες
+applies the changes	timesheet	el	εφαρμόζει τις αλλαγές
+by	timesheet	el	μέσω
+check all	timesheet	el	Έλεγχος όλων
+create new links	timesheet	el	Δημιουργία νέων συνδέσμων
+creates a new field	timesheet	el	δημιουργεί νέο πεδίο
+custom fields	timesheet	el	Προσαρμοσμένα πεδία
+delete this entry	timesheet	el	δαγραφή αυτής της καταχώρησης
+deleted	timesheet	el	διεγράφη
+deletes this field	timesheet	el	διαγράφει αυτό το πεδίο
+determines the order the fields are displayed	timesheet	el	καθορίζει τη σειρά εμφάνισης των πεδίων
+each value is a line like <id>[=<label>]	timesheet	el	κάθε τιμή είναι μία γραμμή σαν <id>[=<label>]
+edit status	timesheet	el	Επιμέλεια κατάστασης
+edit this entry	timesheet	el	Επιμέλεια αυτής της καταχώρησης
+end	timesheet	el	Τέλος
+existing links	timesheet	el	Υπάρχοντες σύνδεσμοι
+export	timesheet	el	εξαγωγή
+field must not be empty !!!	timesheet	el	Το πεδίο δεν πρέπει να μείνει κενό !!!
+general	timesheet	el	Γενικά
+global categories	timesheet	el	Παγκόσμιες κατηγορίες
+history	timesheet	el	Ιστορικό
+id	timesheet	el	Id
+last modified	timesheet	el	Τελευταία τροποποίηση
+leaves without saveing	timesheet	el	αποχώρηση χωρίς αποθήκευση
+length<br>rows	timesheet	el	Μήκος<br>Γραμμές
+links	timesheet	el	Σύνδεσμοι
+max length of the input [, length of the inputfield (optional)]	timesheet	el	μέγιστο μήκος για την εισαγωγή, [μήκος του πεδίου εισαγωγής (κατ'επιλογήν)]
+no details	timesheet	el	συνοπτικά
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	el	αριθμός σειρών για ένα πολυγραμμικό πεδίο εισαγωγής ή γραμμών για ένα πολυ-επιλογών-κουτί
+order	timesheet	el	Ταξινόμηση
+parent	timesheet	el	Μητρική
+price	timesheet	el	Τιμή
+quantity	timesheet	el	Ποσότητα
+saves the changes made	timesheet	el	αποθηκεύει τις αλλαγές που έγιναν
+saves the changes made and leaves	timesheet	el	αποθηκέυει όλες τις αλλαγές που έγιναν και αποχωρεί
+select a price	timesheet	el	Επιλέξτε μια τιμή
+select a project	timesheet	el	Επιλέξτε ένα έργο
+start	timesheet	el	Έναρξη
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	el	το όνομα χρησιμοποιείται εσωτερικά (<=20 χαρακτ), ενδεχόμενη αλλαγή του προκαλεί μη διαθεσιμότητα των δεδομένων
+the text displayed to the user	timesheet	el	το κείμενο που προβάλεται στον χρήστη
+values for selectbox	timesheet	el	Αξίες του επιλεγμένου κουτιού
+week	timesheet	el	Εβδομάδα
+whole query	timesheet	el	ολόκληρη απορία
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	el	Το ηλεκτρονικό σας αρχείο ΔΕΝ είναι ενημερωμένο (%1 vs. %2), παρακαλώ τρέξτε %3setup%4  για να ενημερώσετε το ηλεκτρονικό σας αρχείο.

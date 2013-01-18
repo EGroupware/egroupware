@@ -33,7 +33,6 @@ account is expired	common	lo	ບັນຊີໝົດອາຍຸການໃຊ
 accounts	common	lo	ບັນຊີ
 acl	common	lo	ACL
 action	common	lo	ປະຕິບັດ
-actions	common	lo	ປະຕິບັດ
 active	common	lo	ດໍາເນີນວຽກຢູ່
 add	common	lo	ເພີ່ມ
 add %1 category for	common	lo	ເພີ່ມ %1 ໝວດໝູ່ສໍາລັບ
@@ -50,14 +49,12 @@ albania	common	lo	ALBANIA
 algeria	common	lo	ALGERIA
 all	common	lo	ທັງໝົດ
 all fields	common	lo	ຟີລທັງໝົດ
-all in one	common	lo	ລວມໃນໜຶ່ງດຽວ
 all languages	common	lo	ພາສາທັງໝົດ
 alphabet	common	lo	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	lo	ສະລັບຮູບແບບ
 american samoa	common	lo	AMERICAN SAMOA
 an error happened	common	lo	ຂໍ້ຜິດພາດເກີດຂຶ້ນ
 an existing and by the webserver readable directory enables the image browser and upload.	common	lo	ສິ່ງທີ່ມີຢູ່ ແລະ ເວບເຊີບເວີ້
-and	common	lo	ແລະ
 andorra	common	lo	ANDORRA
 angola	common	lo	ANGOLA
 anguilla	common	lo	ANGUILLA
@@ -538,7 +535,6 @@ portugal	common	lo	PORTUGAL
 postal	common	lo	ລະຫັດໄປສະນີ
 powered by	common	lo	Powered by
 preferences	common	lo	ການຕັ້ງຄ່າ
-preferences for the %1 template set	preferences	lo	ການຕັ້ງຄ່າສໍາລັບຈັດການຮູບແບບຂອງ idots
 prev. month (hold for menu)	jscalendar	lo	ເດືອນກ່ອນໜ້ານີ້(ພາກສ່ວນເມນູທີ່ຕົກຄ້າງ)
 prev. year (hold for menu)	jscalendar	lo	ປີກ່ອນໜ້ານີ້(ພາກສ່ວນເມນູທີ່ຕົກຄ້າງ)
 previous page	common	lo	ໜ້າກ່ອນນີ້
@@ -594,7 +590,6 @@ search or select accounts	common	lo	ຄົ້ນຫາ ຫຼື ເລືອກ
 second	common	lo	ວິນາທີ
 section	common	lo	ພາກສ່ວນ
 select	common	lo	ເລືອກ
-select action	common	lo	ເລືອກເອົາທັງໝົດ %1 %2 for %3
 select all %1 %2 for %3	common	lo	ເລືອກໝວດໝູ່
 select category	common	lo	ເລືອກວັນທີ
 select date	common	lo	ເລືອກກຸ່ມ

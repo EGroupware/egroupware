@@ -1,0 +1,88 @@
+--> enter new name	timesheet	ru	--> введите новое имя
+2 month ago	timesheet	ru	2 месяца назад
+2 years ago	timesheet	ru	2 года назад
+3 years ago	timesheet	ru	3 года назад
+actions	timesheet	ru	Действия
+all projects	timesheet	ru	Все проекты
+applies the changes	timesheet	ru	применить изменения
+both: allow to use projectmanager and free project-names	admin	ru	Оба: позволяет использовать Управление проектами и свободные названия проектов
+by	timesheet	ru	к
+check all	timesheet	ru	Отметить все
+comment by %1 at %2:	timesheet	ru	Откоментировано %1 %2:
+create new links	timesheet	ru	Создать новые ссылки
+creates a new field	timesheet	ru	создать новое поле
+creating new entry	timesheet	ru	создание новой записи
+custom fields	timesheet	ru	Пользовательские Поля
+delete this entry	timesheet	ru	Удалить эту запись
+delete this status	timesheet	ru	Удалить это состояние
+deleted	timesheet	ru	удалено
+deletes this field	timesheet	ru	Удалить это поле
+determines the order the fields are displayed	timesheet	ru	оперделяет порядок,в котором отображаются поля
+each value is a line like <id>[=<label>]	timesheet	ru	каждое значение - это строка типа <идентификатор>[=<метка>]
+edit status	timesheet	ru	Редактировать состояние
+edit this entry	timesheet	ru	Редактировать эту запись
+empty if identical to duration	timesheet	ru	пусто, если идентично длительности
+end	timesheet	ru	Конец
+entry deleted	timesheet	ru	Запись удалена
+entry saved	timesheet	ru	Запись сохранена
+error deleting the entry!!!	timesheet	ru	Ошибка при удалении записи!!!
+error saving the entry!!!	timesheet	ru	Ошибка при сохранении записи!!!
+existing links	timesheet	ru	Существующие ссылки
+export	timesheet	ru	экспорт
+export to openoffice spreadsheet	timesheet	ru	Экспорт в электронную таблицу OpenOffice
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	ru	Экспортирует записи в файл CSV. CSV означает 'Значения, Разделенные Запятыми'. Однако, в закладке опции вы можете также выбрать другие разделители.
+field must not be empty !!!	timesheet	ru	Поле не должно быть пустым !!!
+full: use only projectmanager	admin	ru	Полный: использовать только Управление проектами
+general	timesheet	ru	Общий
+global categories	timesheet	ru	Общие Категории
+history	timesheet	ru	История
+id	timesheet	ru	Ид
+last modified	timesheet	ru	Последнее изменение
+last month	timesheet	ru	Прошлый месяц
+last week	timesheet	ru	Прошлая неделя
+last year	timesheet	ru	Прошлый год
+leave it empty for a full week	timesheet	ru	Оставьте незаполненным для всей недели
+leaves without saveing	timesheet	ru	выйти без сохранения
+length<br>rows	timesheet	ru	Длина<br>Строк
+links	timesheet	ru	Ссылки
+max length of the input [, length of the inputfield (optional)]	timesheet	ru	макс. длина строки ввода [, длина поля ввода (необязательно)]
+new ticket submitted by %1 at %2	timesheet	ru	Новый запрос отправлен %1 в %2
+no details	timesheet	ru	нет подробностей
+no project	timesheet	ru	Нет проекта
+none: use only free project-names	admin	ru	Пусто: использовать только свободные названия проектов
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	ru	количество строк с многострочном поле вводща или в списке с множественным выбором
+or endtime	timesheet	ru	или Время окончания
+order	timesheet	ru	Порядок
+parent	timesheet	ru	Родитель
+permission denied!!!	timesheet	ru	Доступ запрещен!!!
+price	timesheet	ru	Цена
+projectmanager integration	admin	ru	Интеграция Управления проектами
+quantity	timesheet	ru	Количество
+save & new	timesheet	ru	Сохранить и добавить новый
+saves the changes made	timesheet	ru	Сохраняет внесенные изменения
+saves the changes made and leaves	timesheet	ru	записать сделанные изменения и выйти
+saves this entry and add a new one	timesheet	ru	Сохраняет эту запись и добавляет новую
+select a price	timesheet	ru	Выбрать цену
+select a project	timesheet	ru	Выбрать проект
+show a quantity sum (eg. to sum up negative overtime)	admin	ru	Показывать суммарное количество (напр. для суммирования перерасходов времени)
+start	timesheet	ru	Старт
+starttime	timesheet	ru	Время начала
+starttime has to be before endtime !!!	timesheet	ru	Время начала должно быть перед временем окончания !!!
+sum %1:	timesheet	ru	Сумма %1:
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	ru	Внутреннее имя (<= 20 символов), изменение сделает существующие данные недоступными
+the text displayed to the user	timesheet	ru	текст, показываемый пользователю
+this month	timesheet	ru	Этот месяц
+this week	timesheet	ru	Эта неделя
+this year	timesheet	ru	Этот год
+ticket modified by %1 at %2	timesheet	ru	Запарос модивицирован %1 в %2
+timesheet	common	ru	Табель учета времени
+timesheet csv export	timesheet	ru	Экспорт Табеля в CVS
+timesheet openoffice export	timesheet	ru	Экспорт Табеля в OpenOffice
+tracker	timesheet	ru	Система Трекера
+unitprice	timesheet	ru	Цена за единицу
+values for selectbox	timesheet	ru	Значения для списка выбора
+view this entry	timesheet	ru	Показать эту запись
+week	timesheet	ru	Неделя
+whole query	timesheet	ru	весь запрос
+yesterday	timesheet	ru	Вчера
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	ru	Ваша база данных устарела (%1 вместо %2), пожалуйста, запустите %3Установку%4 чтобы обновить вашу базу данных.

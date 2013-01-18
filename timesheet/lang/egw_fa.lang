@@ -1,0 +1,66 @@
+2 month ago	timesheet	fa	دو ماه قبل
+2 years ago	timesheet	fa	دو سال قبل
+3 years ago	timesheet	fa	سه سال قبل
+actions	timesheet	fa	فعالیتها
+applies the changes	timesheet	fa	تغییرات را اعمال می کند
+by	timesheet	fa	بوسیله
+check all	timesheet	fa	چک کردن همه
+create new links	timesheet	fa	ایجاد پیوندهای جدید
+creates a new field	timesheet	fa	ایجاد فیلد جدید
+custom fields	timesheet	fa	فیلدهای سفارشی
+delete this entry	timesheet	fa	حذف این ورودی
+deleted	timesheet	fa	حذف شد
+deletes this field	timesheet	fa	حذف این فیلد
+determines the order the fields are displayed	timesheet	fa	تشخیص ترتیب نمایش فیلدها
+each value is a line like <id>[=<label>]	timesheet	fa	هر مقدار در یک خط مثل [<id>[=<label>
+edit status	timesheet	fa	ویراستن وضعیت
+edit this entry	timesheet	fa	ویراستن این ورودی
+empty if identical to duration	timesheet	fa	خالی بگذارید اگر به مدت بستگی دارد
+end	timesheet	fa	اتمام
+entry deleted	timesheet	fa	ورودی حذف شد
+entry saved	timesheet	fa	ورودی ذخیره شد
+error deleting the entry!!!	timesheet	fa	خطای حذف ورودی!!!
+error saving the entry!!!	timesheet	fa	خطای ذخیره ورودی!!!
+existing links	timesheet	fa	پیوندهای موجود
+export	timesheet	fa	صدور
+field must not be empty !!!	timesheet	fa	فیلد نباید خالی باشد !!!
+general	timesheet	fa	عمومی
+global categories	timesheet	fa	دسته های عمومی
+history	timesheet	fa	تاریخچه
+id	timesheet	fa	کد
+last modified	timesheet	fa	آخرین تغییرات
+last month	timesheet	fa	ماه گذشته
+last week	timesheet	fa	هفته گذشته
+last year	timesheet	fa	سال گذشته
+leave it empty for a full week	timesheet	fa	برای یک هفته کامل خالی بگذارید
+leaves without saveing	timesheet	fa	ترک بدون ذخیره
+length<br>rows	timesheet	fa	طول <br> سطور
+links	timesheet	fa	پیوندها
+max length of the input [, length of the inputfield (optional)]	timesheet	fa	حداکثر اندازه ورودی [طول فیلد ورودی] (دلخواه)
+no details	timesheet	fa	بدون جزئیات
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	fa	تعداد سطور یک فیلد چند خطی یا خط چند انتخابی
+order	timesheet	fa	ترتیب
+parent	timesheet	fa	والد
+permission denied!!!	timesheet	fa	دسترسی ممنوع!!!
+price	timesheet	fa	قیمت
+quantity	timesheet	fa	کمیت
+save & new	timesheet	fa	ذخیره و جدید
+saves the changes made	timesheet	fa	ذخیره کردن تغییرات ایجاد شده
+saves the changes made and leaves	timesheet	fa	تغییرات را ذخیره کرده و خارج می شود
+saves this entry and add a new one	timesheet	fa	ذخیره کردن این ورودی و اضافه کردن جدید
+select a price	timesheet	fa	قیمت را انتخاب کنید
+select a project	timesheet	fa	پروژه را انتخاب کنید
+start	timesheet	fa	شروع
+sum %1:	timesheet	fa	جمع %1:
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	fa	نامی که داخلی استفاده می شود(کمتر از ۲۰ کاراکتر)، تغییر آن ممکن است باعث شود که اطلاعات غیر قابل دسترس شون
+the text displayed to the user	timesheet	fa	متنی که به کاربر نمایش داده می شود
+this month	timesheet	fa	این ماه
+this week	timesheet	fa	این هفته
+this year	timesheet	fa	امسال
+timesheet	common	fa	گزارش کار
+unitprice	timesheet	fa	واحد قیمت
+values for selectbox	timesheet	fa	مقادیر برای جعبه انتخاب
+view this entry	timesheet	fa	دیدن این ورودی
+week	timesheet	fa	هفته
+yesterday	timesheet	fa	دیروز
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	fa	پایگاه داده شما بهنگام نیست ((%1 بجای %2) لطفا %3نصب%4 را اجرا کنید تا پایگاه داده شما بهنگام شود

@@ -1,0 +1,87 @@
+00 (disable)	setup	hu	00 (tiltva / ajánlott)
+13 (ntp)	setup	hu	13 (ntp)
+80 (http)	setup	hu	80 (http)
+actions	setup	hu	Műveletek
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	hu	Az automatikusan létrehozott felhasználók alapértelmezett csoportja (ha üresen hagyja, akkor a 'Default' csoportba kerülnek!)
+admin password	setup	hu	Adminisztrátor jelszava
+admin username	setup	hu	Adminisztrátor felhasználóneve
+admins	setup	hu	Adminisztrátorok
+all users	setup	hu	Összes felhasználó
+application title	setup	hu	Alkalmazás címe
+are you sure?	setup	hu	Biztos vagy benne?
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	hu	FTP esetén próbálja használni a megfelelő mime típust az alapértelmezett 'application/octet-stream' helyett.
+authentication / accounts	setup	hu	Azonosítás / Azonosítók
+auto create account records for authenticated users	setup	hu	Hitelesített felhasználóknak automatikus hozzáférés generálása.
+back to user login	setup	hu	Vissza a felhasználói bejelentkezéshez
+bottom	setup	hu	legalsó
+cancel	setup	hu	Mégsem
+charset	setup	hu	utf-8
+check installation	setup	hu	Telepítés ellenőrzése
+check ip address of all sessions	setup	hu	Összes session IP cím ellenőrzése
+completed	setup	hu	Teljesítve
+configuration	setup	hu	Konfiguráció
+contain	setup	hu	tartalmaz
+continue	setup	hu	Folytat
+convert	setup	hu	Konvertál
+country selection	setup	hu	Ország kiválasztása
+create	setup	hu	Létrehoz
+created	setup	hu	Létrehozva
+current version	setup	hu	Aktuális verzió
+day	setup	hu	nap
+db backup and restore	setup	hu	Adatbázis mentés és helyreállítás
+default	setup	hu	alapértelmezett
+default file system space per user/group ?	setup	hu	Az alapértelmezett fájlrendszerméret felhasználónként ?
+delete	setup	hu	Törlés
+deny all users access to grant other users access to their entries ?	setup	hu	Minden felhasználó esetén tiltsa a más felhasználóknak kiadható jogosultság beállítást? Ez esetben pl. nem oszthatja meg a saját naptárát más felhasználóval (ez csak az egyedi engedélyezést befolyásolja, a csoport jogosultságra nincs hatással!)
+domain	setup	hu	Tartomány
+download	setup	hu	Letöltés
+enter the hostname of the machine on which this server is running	setup	hu	Adja meg a gazdagép nevét, ahol az egw szerver fut.
+enter the site password for peer servers	setup	hu	Adja meg a site jelszót a peer szerverhez
+enter the site username for peer servers	setup	hu	Adja meg a site felhasználót a peer szerverhez
+enter the title for your site	setup	hu	A webhely megnevezése
+enter your default ftp server	setup	hu	Az alapértelmezett FTP-kiszolgáló
+enter your http proxy server	setup	hu	A HTTP-proxy kiszolgáló
+enter your http proxy server port	setup	hu	A HTTP-proxy kiszolgáló portszáma
+file	setup	hu	Állomány
+filename	setup	hu	Állománynév
+go back	setup	hu	Visszatérés
+go to	setup	hu	Ugorj ide
+host information	setup	hu	Host információ
+if no acl records for user or any group the user is a member of	setup	hu	Ha a felhasználónak vagy összes csoportjának nincs ACL meghatározva
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	hu	Ha LDAP-ot használ, kívánja kezelni a Saját könyvtárat és a bejelentkezési héj tulajdonságait?
+ldap accounts context	setup	hu	LDAP fiók környezet
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	hu	LDAP Alapértelmezett Saját könyvtár előtagja (pl. /home a /home/felhasználó formához)
+ldap default shell (e.g. /bin/bash)	setup	hu	LDAP Alapértelmezett héj (pl. /bin/bash)
+ldap encryption type	setup	hu	LDAP titkosítás típusa
+ldap groups context	setup	hu	LDAP csoport környezet
+ldap host	setup	hu	LDAP hoszt
+ldap root password	setup	hu	LDAP root jelszava
+ldap rootdn	setup	hu	LDAP rootdn
+mail server login type	setup	hu	Mail szerver bejelentkezés típusa
+maximum account id (e.g. 65535 or 1000000)	setup	hu	Legnagyobb felhasználói azonosító (pl. 65535 vagy 1000000)
+minimum account id (e.g. 500 or 100, etc.)	setup	hu	Legkisebb felhasználói azonosító (pl. 500 vagy 100)
+modified	setup	hu	Módosított
+month	setup	hu	Hónap
+new	setup	hu	Új
+next run	setup	hu	Következő futtatás
+no algorithms available	setup	hu	nincsenek elérhető algoritmusok
+no modes available	setup	hu	nincs elérhetó mód
+not set	setup	hu	nincs megadva
+one month	setup	hu	egy hónap
+one week	setup	hu	egy hét
+or	setup	hu	vagy
+password for smtp-authentication	setup	hu	Jelszó az SMTP-azonosításhoz
+path information	setup	hu	Útvonal-információ
+re-enter password	setup	hu	Jelszó újra
+remove	setup	hu	eltávolítás
+select where you want to store/retrieve user accounts	setup	hu	Válassza ki, hol kívánja tárolni a felhasználói hozzáféréseket
+selectbox	setup	hu	Kiválasztó doboz
+show 'powered by' logo on	setup	hu	'Powered by' logó megjelenítése
+size	setup	hu	Méret
+text entry	setup	hu	Szöveges bejegyzés
+two weeks	setup	hu	két hét
+use cookies to pass sessionid	setup	hu	Használjon sütiket a session azonosító átadásához
+use pure html compliant code (not fully working yet)	setup	hu	Használjon tiszta HTML kódot (nem teljesen működik egyelőre)
+user for smtp-authentication (leave it empty if no auth required)	setup	hu	Felhasználó az SMTP hitelesítéshez (hagyja üresen, ha nem szükséges hitelesíteni)
+would you like to show each application's upgrade status ?	setup	hu	Akarja, hogy megjelenítésre kerüljön minden alkalmazás upgrade állapota?
+write	setup	hu	Írás

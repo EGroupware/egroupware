@@ -2,7 +2,15 @@ allowed users	importexport	zh-tw	允許使用的帳號
 choose a name for this definition	importexport	zh-tw	選擇這個定義的名稱
 choose a plugin	importexport	zh-tw	選擇一個外掛
 choose an application	importexport	zh-tw	選擇一個模組
+choose seperator and charset	importexport	zh-tw	選擇分隔字元與字集
+export	importexport	zh-tw	匯出
 finish	importexport	zh-tw	完成
+general	importexport	zh-tw	一般
+import	importexport	zh-tw	匯入
+load sample file	importexport	zh-tw	讀取範例檔案
+manage mapping	importexport	zh-tw	管理對應
 next	importexport	zh-tw	下一個
+preview	importexport	zh-tw	預覽
 previous	importexport	zh-tw	上一個
+schedule	common	zh-tw	排程
 which useres are allowed for this definition	importexport	zh-tw	哪個使用者可以運用這個定義

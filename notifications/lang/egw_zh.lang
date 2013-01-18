@@ -1,0 +1,20 @@
+do not notify me at all	notifications	zh	什么都不要通知我
+e-mail only	notifications	zh	仅邮件
+egroupware has notifications for you	notifications	zh	系统已通知您
+egroupware-popup and e-mail	notifications	zh	系统弹出窗口与邮件
+egroupware-popup first, if that fails notify me by e-mail	notifications	zh	首先是系统弹出窗口，如果失败则以邮件通知我
+egroupware-popup only	notifications	zh	只用系统弹出窗口
+egroupware-popup verbosity	notifications	zh	系统弹出窗口冗长
+folder	notifications	zh	邮件夹
+from	notifications	zh	从
+if set, embedded links get rendered special for external clients	notifications	zh	如果设置，指定的外部客户能购获得嵌入链接
+linked entries:	common	zh	链接的条目：
+message from	notifications	zh	发件人
+minutes	notifications	zh	分钟
+notification	common	zh	通知管理
+notify me by	notifications	zh	通知我
+optimize e-mails for external mail client	notifications	zh	为外在邮件客户优化电子邮件
+preferences for notification	notifications	zh	通知管理参数选择
+windows-popup and e-mail	notifications	zh	Windows 弹出窗和邮件
+windows-popup first, if that fails notify me by e-mail	notifications	zh	首先是系统弹出窗口，如果失败则以邮件通知我
+windows-popup only	notifications	zh	仅 Windows 弹出窗

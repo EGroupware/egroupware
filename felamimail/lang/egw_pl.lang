@@ -45,13 +45,13 @@ bcc	felamimail	pl	UDW
 before headers	felamimail	pl	Przed nagłówkiem
 between headers and message body	felamimail	pl	Pomiędzy nagłówkiem a treścią
 body part	felamimail	pl	treść wiadomości
-by date	felamimail	pl	według daty
+by date	felamimail	pl	Według daty
 can not send message. no recipient defined!	felamimail	pl	nie można wyłsać wiadomości, nieokreślony odbiorca
 can't connect to inbox!!	felamimail	pl	nie można podłączyć się do INBOX!
 cc	felamimail	pl	DW
 change folder	felamimail	pl	Zmień folder
 check message against next rule also	felamimail	pl	sprawdź również kolejnę regułę
-checkbox	felamimail	pl	Checkbox
+checkbox	felamimail	pl	Pola zaznaczenia
 clear search	felamimail	pl	wyczyść wyszukiwanie
 click here to log back in.	felamimail	pl	Kliknij aby zalogować się ponownie
 click here to return to %1	felamimail	pl	Kliknij tutaj aby wrócić do %1
@@ -90,7 +90,7 @@ date(newest first)	felamimail	pl	Data (od najnowszych)
 date(oldest first)	felamimail	pl	Data (od najstarszych)
 days	felamimail	pl	dni
 deactivate script	felamimail	pl	deaktywuj skrypt
-default	felamimail	pl	domyślny
+default	felamimail	pl	Domyślne
 default signature	felamimail	pl	domyślna sygnaturka
 default sorting order	felamimail	pl	Domyślny porządek sortowania
 delete all	felamimail	pl	kasuj wszystko
@@ -180,8 +180,7 @@ expunge	felamimail	pl	Opróżnij
 extended	felamimail	pl	rozszerzone
 felamimail	common	pl	FelaMiMail
 file into	felamimail	pl	informacja o pliku
-file rejected, no %2. is:%1	felamimail	pl	Plik odrzucony. Jest %1 nie %2.
-filemanager	felamimail	pl	Menadżer plików
+filemanager	felamimail	pl	Pliki
 files	felamimail	pl	pliki
 filter active	felamimail	pl	filtr jest aktywny
 filter name	felamimail	pl	nazwa filtra
@@ -189,7 +188,7 @@ filter rules	common	pl	reguły filtra
 first name	felamimail	pl	Imię
 flagged	felamimail	pl	oflagowano
 flags	felamimail	pl	flagi
-folder	felamimail	pl	folder
+folder	felamimail	pl	Katalog
 folder acl	felamimail	pl	lista ACL folderu
 folder name	felamimail	pl	Nazwa foldera
 folder path	felamimail	pl	Ścieżka foldera
@@ -211,7 +210,6 @@ forward to	felamimail	pl	Prześlij do
 forward to address	felamimail	pl	Prześlij na adres
 forwarding	felamimail	pl	Przekazywanie
 found	felamimail	pl	Znaleziono
-fri	felamimail	pl	Pią
 from	felamimail	pl	Od
 from(a->z)	felamimail	pl	Od (A->Z)
 from(z->a)	felamimail	pl	Od (Z->A)
@@ -249,7 +247,6 @@ imaps encryption only	felamimail	pl	Tylko szyfrowanie IMAPS
 import	felamimail	pl	Importuj
 import mail	felamimail	pl	Importuj Pocztę
 import message	felamimail	pl	importuj wiadomość
-importance	felamimail	pl	ważność
 in	felamimail	pl	w
 inbox	felamimail	pl	ODEBRANE
 incoming mail server(imap)	felamimail	pl	serwer poczty przychodzącej (IMAP)
@@ -265,7 +262,6 @@ keep local copy of email	felamimail	pl	zachowja lokalną kopię tej wiadomości
 kilobytes	felamimail	pl	kilobajtów
 language	felamimail	pl	Język
 last name	felamimail	pl	Nazwisko
-left	felamimail	pl	Lewy
 less	felamimail	pl	mniej
 less than	felamimail	pl	mniej niż
 light gray	felamimail	pl	Jasny Szary
@@ -294,7 +290,6 @@ max uploadsize	felamimail	pl	limit ładowania danych
 message highlighting	felamimail	pl	Podświetlanie wiadomości
 message list	felamimail	pl	Lista wiadomości
 messages	felamimail	pl	wiadomości
-mon	felamimail	pl	Pon
 move	felamimail	pl	przenieś
 move folder	felamimail	pl	przenieś folder
 move messages	felamimail	pl	przenieś wiadomości
@@ -335,7 +330,7 @@ none	felamimail	pl	Żaden
 none, create all	felamimail	pl	żaden, utwórz wszystko
 not allowed	felamimail	pl	brak zezwolenia
 notify when new mails arrive on these folders	felamimail	pl	powiadom o przyjściu wiadomości do tego folderu
-on	felamimail	pl	w
+on	felamimail	pl	na
 on behalf of	felamimail	pl	w imieniu
 one address is not valid	felamimail	pl	Jeden adres nie jest poprawny
 only inbox	felamimail	pl	Tylko ODEBRANE
@@ -364,7 +359,6 @@ previous message	felamimail	pl	poprzednia wiadomość
 print it	felamimail	pl	wydrukuj to
 print this page	felamimail	pl	wydrukuj tę stronę
 printview	felamimail	pl	wydrukuj widok
-processing of file %1 failed. failed to meet basic restrictions.	felamimail	pl	Przetwarzanie pliku %1 nie powiodło się. Nie dotrzymano podstawowych restrykcji.
 quicksearch	felamimail	pl	Szybkie wyszukiwanie
 read	felamimail	pl	Odczytaj
 reading	felamimail	pl	odczytywanie
@@ -387,10 +381,8 @@ respond	felamimail	pl	Odpowiedź
 respond to mail sent to	felamimail	pl	odpowiedz na mail wysłany do
 return	felamimail	pl	Powrót
 return to options page	felamimail	pl	Powrót do strony konfiguracji
-right	felamimail	pl	Prawy
 row order style	felamimail	pl	styl porządku wierszy
 rule	felamimail	pl	Reguła
-sat	felamimail	pl	Sob
 save	felamimail	pl	Zapisz
 save all	felamimail	pl	Zapisz wszystko
 save as draft	felamimail	pl	zapisz jako szkic
@@ -408,7 +400,6 @@ select folder	felamimail	pl	Wybierz folder
 select your mail server type	admin	pl	Wybierz typ serwera email
 send	felamimail	pl	Wyślij
 send a reject message	felamimail	pl	odeślij wiadomość odrzucającą
-sender	felamimail	pl	nadawca
 sent	felamimail	pl	Wysłano
 sent folder	felamimail	pl	Folder Wysłane
 server supports mailfilter(sieve)	felamimail	pl	serwer posiada filtr poczy (sieve - sito)
@@ -438,32 +429,28 @@ submit	felamimail	pl	Wyślij
 subscribe	felamimail	pl	Subskrybuj
 subscribed	felamimail	pl	Uruchomiono subskrypcję
 subscribed successfully!	felamimail	pl	Uruchomiono subskrypcję poprawnie!
-sun	felamimail	pl	Nie
 system signature	felamimail	pl	podpis systemowy
 table of contents	felamimail	pl	Spis treści
 template folder	felamimail	pl	Katalog szablnów
 templates	felamimail	pl	Szablony
 text only	felamimail	pl	Tylko tekst
 text/plain	felamimail	pl	zwykły tekst
-the action will be applied to all messages of the current folder.ndo you want to proceed?	felamimail	pl	Ta akcja zostanie użyta na wszystkich wiadomościach aktualnego folderu.\nCzy chcesz kontynuować?
 the connection to the imap server failed!!	felamimail	pl	Nieudane połączenie z serwerem SMTP!!
-the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	pl	Serwer IMAP nie wspiera wybranej metody uwierzytelnienia. Skontaktuj się z administratorem.
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	pl	Serwer IMAP nie obsługuje wskazanej metody autentykacji. Proszę skontaktować się z administratorem.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	pl	Nadawca wiadomości poprosił o potwierdzenie przeczytania wiadomości. Czy chcesz je wysłać?
 the mimeparser can not parse this message.	felamimail	pl	Nie udało się przetworzyć zawartości MIME tej wiadomości
 then	felamimail	pl	WTEDY
 there is no imap server configured.	felamimail	pl	Brak skonfigurowanego serwera IMAP
 this folder is empty	felamimail	pl	TEN FOLDER JEST PUSTY
 this php has no imap support compiled in!!	felamimail	pl	PHP nie ma skompilowanej obsługi IMAP!!
-thu	felamimail	pl	Czw
 to	felamimail	pl	Do
 to mail sent to	felamimail	pl	do poczty wysłanej do
-to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	pl	Aby użyć połączenia TLS musisz mieć zainstalowane PHP 5.1.0 lub wyższe na serwerze.
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	pl	Aby skorzystać z połączenia TLS, musisz posiadać wersję PHP 5.1.0 lub wyższą.
 translation preferences	felamimail	pl	Preferencje tłumaczenia
 translation server	felamimail	pl	Serwer tłumaczeń
 trash	felamimail	pl	Kosz
 trash fold	felamimail	pl	Folder Kosza
 trash folder	felamimail	pl	Folder Kosza
-tue	felamimail	pl	Wto
 type	felamimail	pl	typ
 unexpected response from server to authenticate command.	felamimail	pl	Niespodziewana odpowiedź z serwera na polecenie AUTHENTICATE
 unexpected response from server to digest-md5 response.	felamimail	pl	Niespodziewana odpowiedź z serwera na polecenie Digest-MD5
@@ -471,7 +458,7 @@ unexpected response from server to login command.	felamimail	pl	Niespodziewana o
 unflagged	felamimail	pl	nie oflagowano
 unknown err	felamimail	pl	Nieznany błąd
 unknown error	felamimail	pl	Nieznany błąd
-unknown imap response from the server. server responded: %s	felamimail	pl	Nieznana odpowiedź IMAP od serwera. Serwer odpowiedział: %s
+unknown imap response from the server. server responded: %s	felamimail	pl	Nieznana odpowiedź z serwera IMAP. Serwer przesłał: %s
 unknown sender	felamimail	pl	Nieznany nadawca
 unknown user or password incorrect.	felamimail	pl	Użytkownik nieznany lub hasło niezgodne.
 unread	common	pl	nieprzeczytane
@@ -502,7 +489,6 @@ view message	felamimail	pl	Pokaż wiadomość
 viewing full header	felamimail	pl	Pokazuje cały nagłówek
 viewing message	felamimail	pl	Pokazuje wiadomość
 viewing messages	felamimail	pl	Pokazuje wiadomości
-wed	felamimail	pl	Śro
 when deleting messages	felamimail	pl	Gdy usuwasz wiadomość
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	pl	które foldery (oprócz Wysłane) powinny być wyświetlone z użyciem schematy folderu "Wysłane"
 which folders - in general - should not be automatically created, if not existing	felamimail	pl	które foldery - ogólnie - nie powinny być automatycznie tworzone jeśli nie istnieją

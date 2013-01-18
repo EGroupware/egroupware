@@ -1,0 +1,24 @@
+%1 records imported	infolog	ja	%1 件インポートされました
+accept	infolog	ja	承諾
+action	infolog	ja	アクション
+add sub	infolog	ja	サブ追加
+configuration	infolog	ja	環境設定
+contact	infolog	ja	連絡先
+csv-filename	infolog	ja	CSVファイル名
+custom fields	infolog	ja	カスタム項目
+done	common	ja	終了
+download	infolog	ja	ダウンロード
+duration	infolog	ja	継続時間
+fax	infolog	ja	Fax
+fieldseparator	infolog	ja	項目の区切り
+from	infolog	ja	差出人
+global categories	infolog	ja	グローバルカテゴリ
+id	infolog	ja	ID
+import	infolog	ja	インポート
+location	infolog	ja	場所
+order	infolog	ja	順序
+project	infolog	ja	プロジェクト
+sub	infolog	ja	サブ
+today	infolog	ja	今日
+translation	infolog	ja	言語環境
+urgency	infolog	ja	優先度

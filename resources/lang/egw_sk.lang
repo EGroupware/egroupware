@@ -23,6 +23,7 @@ conflict	resources	sk	konflikt
 create new accessory for this resource	resources	sk	Vytvoriť novú kategóriu pre tento zdroj
 create new links	resources	sk	Vytvoriť nové odkazy
 custom fields	resources	sk	Vlastné polia
+days	resources	sk	Dní
 delete selected resources	resources	sk	Odstrániť vybrané zdroje
 delete this entry	resources	sk	Odstrániť túto položku
 description (short)	resources	sk	Popis (stručný)
@@ -30,18 +31,25 @@ direct booking permissions	resources	sk	Priame rezervačné práva
 don't use vfs (this will need a symlink --> see readme)	resources	sk	Nepoužívať vfs (bude potrebný symlink --> prečítajte si README)
 edit this entry	resources	sk	Uprav tento záznam
 existing links	resources	sk	Existujúce odkazy
+exists	resources	sk	Existuje
+export definitition to use for nextmatch export	resources	sk	Exportná definícia pre použitie v exporte
+exports a list of resources to a csv file.	resources	sk	Exportovať zoznam zdrojov do CSV súboru
 general	resources	sk	Hlavné
 general informations about resource	resources	sk	Hlavné informácie o zdroji
 gernal resource	resources	sk	Hlavný zdroj
 global categories	resources	sk	Globálne kategórie
+hours	resources	sk	Hodín
 how many of the resources are useable?	resources	sk	Koľko zdrojov je použíteľných?
 how many of them are useable?	resources	sk	Koľko z nich je použiteľných?
 how many of this resource are usable	resources	sk	Koľko kusov tohto zdroja je použiteľných
 how many of this resource exists	resources	sk	Koľko kusov tohto zdroja existuje
+if you specify an export definition, it will be used when you export	resources	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch
 implies booking permission	resources	sk	Z toho automaticky vyplýva aj rezervačné právo
 implies read permission	resources	sk	Z toho automaticky vyplýva aj právo na čítanie
+imports a list of resources from a csv file.	resources	sk	Naimportuje zoznam zdrojov z CSV súboru
 information about storage	resources	sk	Informácie o sklade
 informations about the location of resource	resources	sk	Informácie o umiestnení zdroja
+insert	resources	sk	Vložiť
 inventory number	resources	sk	Inventárne číslo
 inventory number:	resources	sk	Inventárne číslo:
 is resource bookable?	resources	sk	Dá sa zdroj rezervovať?
@@ -52,6 +60,9 @@ links	resources	sk	Odkazy
 location	resources	sk	Umiestnenie
 location of resource	resources	sk	Umiestnenie zdroja
 location:	resources	sk	Umiestnenie:
+locations / rooms	resources	sk	Umiestnenia / miestnosti
+long description	resources	sk	Dlhý popis
+manage mapping	resources	sk	Správa mapovania
 name of resource	resources	sk	Názov zdroja:
 name:	resources	sk	Názov:
 no description available	resources	sk	Žiadny popis sa nenašiel
@@ -62,6 +73,7 @@ picture source	resources	sk	Zdroj obrázka
 picture type is not supported, sorry!	resources	sk	Je mi ľúto, tento typ obrázka nie je podporovaný!
 pictures or resource	resources	sk	Obrázky zdroja
 planer	resources	sk	Plánovač
+prize	resources	sk	Cena
 prizeing information for booking or buying	resources	sk	Cenník rezervácií a nákupov
 quantity	resources	sk	Množstvo
 quantity of resource	resources	sk	Počet kusov zdroja
@@ -69,7 +81,10 @@ quantity:	resources	sk	Množstvo:
 read calendar permissions	resources	sk	Právo čítať Kalendár
 read permissions	resources	sk	Právo na čítanie
 related links	resources	sk	Súvisiace odkazy
+resource id	resources	sk	ID zdroja
 resources	common	sk	Zdroje
+resources csv export	resources	sk	CSV export zdrojov
+resources csv import	resources	sk	CSV import zdrojov
 resources list	resources	sk	Zoznam zdrojov
 responsible:	resources	sk	Zodpovedný:
 saves entry and exits	resources	sk	Uloží položku a skončí
@@ -82,6 +97,7 @@ short description of resource	resources	sk	Zobraziť popis zdroja
 show calendar of resource	resources	sk	Zobraziť kalendár zdroja
 something went wrong by deleting resource	resources	sk	Počas odstraňovania zdroja sa niečo nepodarilo
 something went wrong by saving resource	resources	sk	Počas ukladania zdroja sa niečo nepodarilo
+storage	resources	sk	Sklad
 storage information	resources	sk	Informácie o sklade
 storage information:	resources	sk	Informácie o sklade:
 the calendar of this resource	resources	sk	Kalendár pre tento zdroj
@@ -98,7 +114,7 @@ web-site for this resource	resources	sk	Webstránka tohto zdroja
 where to find this resource?	resources	sk	Kde sa dá nájsť tento zdroj
 which category does this resource belong to?	resources	sk	Do ktorej kategórie tento zdroj patrí?
 write permissions	resources	sk	Oprávnenia k zápisu
-you are not permitted to delete this reource!	resources	sk	Nemáte oprávnenie odstrániť tento zdroj!
-you are not permitted to edit this reource!	resources	sk	Nemáte oprávnenie upravovať tento zdroj!
+you are not permitted to delete this resource!	resources	sk	Nemáte oprávnenia odstrániť tento zdroj!
+you are not permitted to edit this resource!	resources	sk	Nemáte oprávnenia upraviť tento zdroj!
 you are not permitted to get information about this resource!	resources	sk	Nemáte oprávnenia čítať informácie o tomto zdroji!
 you chose more resources than available	resources	sk	Vybrali ste si viacej zdrojov než je dostupných

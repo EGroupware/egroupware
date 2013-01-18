@@ -26,6 +26,7 @@ a short subject for the entry	infolog	pt-br	um nome curto para este registro
 abort without deleting	infolog	pt-br	Cancelar sem apagar
 accept	infolog	pt-br	aceitar
 action	infolog	pt-br	Ação
+actions...	infolog	pt-br	Ações...
 actual date and time	infolog	pt-br	Data e Hora atuais
 add	infolog	pt-br	Adicionar
 add a file	infolog	pt-br	Adicionar um arquivo
@@ -38,12 +39,15 @@ add file	infolog	pt-br	Adicionar um arquivo
 add sub	infolog	pt-br	adicionar uma Sub
 add timesheet entry	infolog	pt-br	Adicionar registro à planilha de tempo
 add:	infolog	pt-br	Adicionar:
+added	infolog	pt-br	adicionado
 all	infolog	pt-br	Todos
 all links and attachments	infolog	pt-br	todos links e arquivos anexados
+all projects	infolog	pt-br	Todos projetos
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	pt-br	permite configurar o status de um registro. Ex. marque um Apontamento com o Status finalizado quando esta estiver terminada. (Os valores dependem do tipo de registro)
 apply the changes	infolog	pt-br	Aplicar as alterações
 archive	infolog	pt-br	arquivar
 are you shure you want to delete this entry ?	infolog	pt-br	Você tem certeza que deseja apagar este registro?
+at the moment the following document-types are supported:	infolog	pt-br	No nomento os seguintes tipos de documentos são suportados:
 attach a file	infolog	pt-br	Anexar um arquivo
 attach file	infolog	pt-br	Anexar arquivo
 attention: no contact with address %1 found.	infolog	pt-br	Atenção: nenhum contato com endereço %1 encontrado.
@@ -58,16 +62,22 @@ categories	infolog	pt-br	Categorias
 category	infolog	pt-br	Categoria
 change the status of an entry, eg. close it	infolog	pt-br	Alterar o status de um registro (ex. fechado)
 charset of file	infolog	pt-br	Conjunto de carácteres do arquivo
+check all	infolog	pt-br	Verificar todos
 check to set startday	infolog	pt-br	Selecione para determinar a data de início
 check to specify custom contact	infolog	pt-br	Marque para especificar contato personalizado
+choose owner of imported data	infolog	pt-br	Escolha o proprietário dos dados importados
 click here to create the link	infolog	pt-br	clique aqui para inserir um hyperlink
 click here to start the search	infolog	pt-br	clique aqui para iniciar uma pesquisa
 close	infolog	pt-br	Fechar
+close all	infolog	pt-br	Fechar todos
+closed	infolog	pt-br	Fechado
 comment	infolog	pt-br	Comentário
 completed	infolog	pt-br	Completada
 configuration	infolog	pt-br	Configuração
 confirm	infolog	pt-br	Confirme
 contact	infolog	pt-br	Contato
+contact fields	infolog	pt-br	Campos de contatos
+copy of:	infolog	pt-br	Copiar para:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	pt-br	Copiar suas alterações para a área de transferência, %1recarregar o registro%2 e mesclá-los.
 create new links	infolog	pt-br	Criar um novo hyperlink
 creates a new field	infolog	pt-br	criar um novo campo
@@ -119,8 +129,9 @@ do you want a notification, if items you created get updated?	infolog	pt-br	Voc�
 do you want a notification, if items you delegated are about to start?	infolog	pt-br	Você quer receber uma notificação, se itens que você designou estiverem prestes a iniciar?
 do you want a notification, if items you delegated are due?	infolog	pt-br	Você quer receber uma notificação, se itens que você designou excederem o prazo?
 do you want to receive notifications as html-mails or plain text?	infolog	pt-br	Você quer receber notificações em HTML ou texto puro?
+document '%1' does not exist or is not readable for you!	infolog	pt-br	Documento '%1' não existe ou você não pode ser lido por você!
 don't show infolog	infolog	pt-br	Não exibir Tarefas
-done	infolog	pt-br	Encerrado
+done	common	pt-br	Encerrado
 download	infolog	pt-br	Baixar
 duration	infolog	pt-br	Duração
 each value is a line like <id>[=<label>]	infolog	pt-br	cada valor por linha <id>[=<label>]
@@ -131,6 +142,7 @@ edit status	infolog	pt-br	Editar o Status
 edit the entry	infolog	pt-br	Editar o registro
 edit this entry	infolog	pt-br	Editar este registro
 empty for all	infolog	pt-br	esvaziar tudo
+end	infolog	pt-br	Fim
 enddate	infolog	pt-br	Data Final
 enddate can not be before startdate	infolog	pt-br	A data final não pode ser anterior a data inicial
 enter a custom contact, leave empty if linked entry should be used	infolog	pt-br	Digitar um contato personalizado, deixe vazio para utilizar o que já existe
@@ -140,16 +152,21 @@ enter the query pattern	infolog	pt-br	Digite o argumento da consulta
 entry and all files	infolog	pt-br	Este e todos os arquivos
 error: saving the entry	infolog	pt-br	Erro salvando o registro
 error: the entry has been updated since you opened it for editing!	infolog	pt-br	Erro: o registro foi atualizado desde sua abertura, por você, para edição!
+execute a further action for this entry	infolog	pt-br	Executar uma outra ação para este registro
 existing links	infolog	pt-br	Links existentes
 fax	infolog	pt-br	Fax
 field must not be empty !!!	infolog	pt-br	O campo não pode estar vazio!!!
 fieldseparator	infolog	pt-br	Separador de Campos
 finish	infolog	pt-br	finalizar
+for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	pt-br	Para cartas em série use esta tag. Coloque o conteúdo, que você quer que repita, entre duas Tags.
 for which types should this field be used	infolog	pt-br	para quais tipos este campo deve ser utilizado
 from	infolog	pt-br	De
 general	infolog	pt-br	Geral
+general fields:	infolog	pt-br	Campos gerais:
+global categories	infolog	pt-br	Categorias Globais
 group owner for	infolog	pt-br	Grupo-proprietário para
 high	infolog	pt-br	alta
+history	infolog	pt-br	Histórico
 history logging	infolog	pt-br	Registro de histórico
 history logging and deleting of items	infolog	pt-br	Registro de histórico e remoção de itens
 id	infolog	pt-br	Id
@@ -172,11 +189,13 @@ infolog filter for the main screen	infolog	pt-br	Filtro para Tarefas na Página 
 infolog list	infolog	pt-br	Lista de Tarefas
 infolog preferences	common	pt-br	Preferências - Tarefas
 infolog-fieldname	infolog	pt-br	Nome do campo - Tarefas
+insert in document	infolog	pt-br	Inserir em documento
 invalid filename	infolog	pt-br	Nome de arquivo inválido
 label<br>helptext	infolog	pt-br	Etiqueta<br>Texto para ajuda
 last changed	infolog	pt-br	Última alteração
 last modified	infolog	pt-br	Última modificação
 leave it empty	infolog	pt-br	Deixe em branco
+leave it empty for a full week	infolog	pt-br	Deixar vazio para uma semana inteira
 leave without saveing the entry	infolog	pt-br	Sair sem salvar o registro
 leaves without saveing	infolog	pt-br	Sair sem salvar
 length<br>rows	infolog	pt-br	Largura<br>Colunas
@@ -188,9 +207,11 @@ list no subs/childs	infolog	pt-br	não listar subs/filhos
 location	infolog	pt-br	Local
 longer textual description	infolog	pt-br	descrição detalhada
 low	infolog	pt-br	baixo
+manage mapping	infolog	pt-br	Gerenciar mapeamento
 max length of the input [, length of the inputfield (optional)]	infolog	pt-br	tamanho máximo para inclusão [, tamanho para o campo (opcional)]
 modifierer	infolog	pt-br	Modificador
 name must not be empty !!!	infolog	pt-br	O campo nome não pode estar vazio!!!
+name of current user, all other contact fields are valid too	infolog	pt-br	Nome do usuário atual, todos outros campos são válidos também
 name of new type to create	infolog	pt-br	nome para o novo tipo
 never hide search and filters	infolog	pt-br	Nunca ocultar Pesquisa e Filtros
 new %1	infolog	pt-br	Novo %1
@@ -203,6 +224,7 @@ no details	infolog	pt-br	Sem detalhes
 no entries found, try again ...	infolog	pt-br	nenhum registro encontrado, tente novamente ...
 no filter	infolog	pt-br	sem filtro
 no links or attachments	infolog	pt-br	sem links ou anexos
+no project	infolog	pt-br	Nenhum projeto
 nonactive	infolog	pt-br	não ativo
 none	infolog	pt-br	Nenhum
 normal	infolog	pt-br	normal
@@ -223,6 +245,7 @@ only the links	infolog	pt-br	apenas links
 open	infolog	pt-br	abrir
 optional note to the link	infolog	pt-br	Nota opcional para o Link
 order	infolog	pt-br	Ordem
+organization	infolog	pt-br	organização
 overdue	infolog	pt-br	atrasado
 own	infolog	pt-br	Suas tarefas
 own open	infolog	pt-br	Suas tarefas abertas
@@ -247,6 +270,7 @@ priority	infolog	pt-br	Prioridade
 private	infolog	pt-br	Particular
 project	infolog	pt-br	Projeto
 project settings: price, times	infolog	pt-br	Configurações do projeto: preço, tempo
+projectmanager	infolog	pt-br	Gerenciador de Projetos
 re:	infolog	pt-br	Re:
 read one record by passing its id.	infolog	pt-br	Ler um registro contornando seu id.
 read rights (default)	infolog	pt-br	Permissões de leitura (padrão)
@@ -257,7 +281,6 @@ receive notifications about own items	infolog	pt-br	Receber notificações sobre
 receive notifications about starting entries you are responsible for	infolog	pt-br	Receber notificações sobre registros prestes a se iniciar, cujo responsável seja você.
 receive notifications about starting entries you delegated	infolog	pt-br	Receber notificações sobre registros prestes a se iniciar que você tenha designado.
 receive notifications as html-mails	infolog	pt-br	Receber notificações em formato HTML
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	pt-br	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	pt-br	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 remark	infolog	pt-br	Destaque
 remove this link (not the entry itself)	infolog	pt-br	Remover este link (não o registro)
@@ -283,6 +306,7 @@ select a responsible user: a person you want to delegate this task	infolog	pt-br
 select a typ to edit it's status-values or delete it	infolog	pt-br	selecione um tipo para editar o valor do status ou apague-o
 select an app to search in	infolog	pt-br	Selecione em que aplicativo a pesquisa será feita
 select an entry to link with	infolog	pt-br	Selecione um registro para link
+select multiple contacts for a further action	infolog	pt-br	Selecione múltiplos contatos para ação posterior
 select to filter by owner	infolog	pt-br	Selecione para filtrar por proprietário
 select to filter by responsible	infolog	pt-br	Selecione para filtrar por responsável
 sets the status of this entry and its subs to done	infolog	pt-br	Configura o status deste registros e seus sub-registros como Completada
@@ -302,6 +326,7 @@ show status and percent done separate	infolog	pt-br	Exibir status e percentagem 
 show ticket id	infolog	pt-br	Exibir identificador do Ticket
 show times	infolog	pt-br	Exibir horários
 small view	infolog	pt-br	visão compacta
+start	infolog	pt-br	Iniciar
 start a new search, cancel this link	infolog	pt-br	iniciar um nova pesquisa, cancelar este link
 startdate	infolog	pt-br	Data Inicial
 startdate enddate	infolog	pt-br	Data inicial / Data Final
@@ -340,8 +365,6 @@ urgency	infolog	pt-br	urgência
 urgent	infolog	pt-br	urgente
 used time	infolog	pt-br	Horas utilizadas
 valid path on clientside<br>eg. \\server\share or e:\	infolog	pt-br	valid path on clientside<br>eg. \\Server\Share or e:\
-valid path on clientside<br>eg. \servershare or e:	infolog	pt-br	valid path on clientside<br>eg. \\Server\Share or e:\
-valid path on clientside<br>eg. servershare or e:	infolog	pt-br	valid path on clientside<br>eg. \\Server\Share or e:\
 values for selectbox	infolog	pt-br	Valores para a caixa de seleção
 view all subs of this entry	infolog	pt-br	Ver todas as subs para este registro
 view other subs	infolog	pt-br	ver outras subs

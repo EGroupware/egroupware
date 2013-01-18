@@ -1,0 +1,93 @@
+%1 records imported	calendar	ja	%1 件インポートされました
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	ja	%1 件読み込みました(まだインポートされていません。戻ってTestインポートのチェックを外してやりなおしてください)
+actions	calendar	ja	動作
+add alarm	calendar	ja	アラームを追加
+alarm	calendar	ja	アラーム
+alarm management	calendar	ja	アラーム管理
+alarms	calendar	ja	アラーム
+all day	calendar	ja	全ての日
+are you sure you want to delete this country ?	calendar	ja	この国の休日を削除してもよろしいですか?
+are you sure you want to delete this holiday ?	calendar	ja	この休日を削除してもよろしいですか?
+birthday	calendar	ja	誕生日
+calendar holiday management	admin	ja	休日設定
+calendar preferences	calendar	ja	カレンダーユーザ設定
+calendar settings	admin	ja	カレンダー設定
+countries	calendar	ja	国一覧
+country	calendar	ja	国
+csv-filename	calendar	ja	CSVファイル名
+custom fields	common	ja	カスタム項目
+daily	calendar	ja	日単位
+days repeated	calendar	ja	曜日
+dayview	calendar	ja	日表示
+default calendar filter	calendar	ja	カレンダーの初期選択
+default calendar view	calendar	ja	カレンダーの初期表示
+delete series	calendar	ja	連続削除
+display status of events	calendar	ja	イベント状況表示
+do you wish to autoload calendar holidays files dynamically?	admin	ja	休日ファイルを自動ロードする
+download	calendar	ja	ダウンロード
+edit series	calendar	ja	連続訂正
+end date/time	calendar	ja	終了日時
+ends	calendar	ja	終了日
+export	calendar	ja	エクスポート
+fieldseparator	calendar	ja	項目の区切り
+fri	calendar	ja	金
+full description	calendar	ja	詳細
+global categories	calendar	ja	グローバルカテゴリ
+global public and group public	calendar	ja	パブリックと所属グループ
+global public only	calendar	ja	パブリック
+group planner	calendar	ja	グループ予定表
+group public only	calendar	ja	所属グループ
+holiday	calendar	ja	休日
+holidays	calendar	ja	休日一覧
+ical / rfc2445	calendar	ja	iCal / rfc2445
+ignore conflict	calendar	ja	無視
+import	calendar	ja	インポート
+import csv-file	common	ja	CSVファイルをインポート
+interval	calendar	ja	間隔
+location	calendar	ja	場所
+location to autoload from	admin	ja	自動ロード元
+minutes	calendar	ja	分
+mon	calendar	ja	月
+monthly	calendar	ja	月単位
+monthly (by date)	calendar	ja	月単位(日)
+monthly (by day)	calendar	ja	月単位(曜日)
+monthview	calendar	ja	月表示
+no matches found	calendar	ja	見つかりません。
+no response	calendar	ja	返答なし
+observance rule	calendar	ja	休日のルールを適用
+occurence	calendar	ja	曜日指定
+one month	calendar	ja	１ヶ月
+one week	calendar	ja	１週間
+overlap holiday	calendar	ja	振替休日
+participants	calendar	ja	参加者
+people holiday	calendar	ja	国民の休日
+private and global public	calendar	ja	プライベートと共有
+private and group public	calendar	ja	プライベートと所属グループ
+private only	calendar	ja	プライベートのみ
+re-edit event	calendar	ja	再編集
+rejected	calendar	ja	拒否済み
+repeat type	calendar	ja	タイプ
+repeating event information	calendar	ja	繰返しイベント
+repetition	calendar	ja	繰返し
+reset	calendar	ja	再入力
+sat	calendar	ja	土
+scheduling conflict	calendar	ja	予定を確認
+show default view on main screen	calendar	ja	初期表示をメイン画面に表示
+start date/time	calendar	ja	開始日時
+submit to repository	calendar	ja	転送
+sun	calendar	ja	日
+tentative	calendar	ja	仮承諾
+thu	calendar	ja	木
+translation	calendar	ja	翻訳
+tue	calendar	ja	火
+two weeks	calendar	ja	２週間
+use end date	calendar	ja	終了日指定
+wed	calendar	ja	水
+week	calendar	ja	週
+weekday starts on	calendar	ja	週の初め
+weekly	calendar	ja	週単位
+weekview	calendar	ja	週表示
+work day ends on	calendar	ja	就業時間（終了）
+work day starts on	calendar	ja	就業時間（開始）
+yearly	calendar	ja	年単位
+yearview	calendar	ja	年表示

@@ -1,0 +1,31 @@
+applies the changes	timesheet	lo	ໃຊ້ການປ່ຽນແປງ
+by	timesheet	lo	ໂດຍ
+check all	timesheet	lo	ກວດສອບທັງໝົດ
+create new links	timesheet	lo	ສ້າງການເຊື່ອມຕໍ່ໃໝ່
+creates a new field	timesheet	lo	ສ້າງfieldໄໝ
+custom fields	timesheet	lo	ກໍານົດ fields
+delete this entry	timesheet	lo	ລຶບຂໍ້ມູນເຂົ້າມານີ້
+deletes this field	timesheet	lo	ລຶບ field ນີ້
+determines the order the fields are displayed	timesheet	lo	ສະແດງລໍາດັບຂອງ fields ທີ່ສະແດງ
+each value is a line like <id>[=<label>]	timesheet	lo	ແຕ່ລະລາຄ່າເປັນໜຶ່ງແຖວ <id>[=<label>]
+edit this entry	timesheet	lo	ແກ້ໄຂຂໍ້ບັນທຶກນີ້
+end	timesheet	lo	ສິ້ນສຸດ
+existing links	timesheet	lo	ການເຊື່ອມຕໍ່ທີ່ມີຢູ່ແລ້ວ
+general	timesheet	lo	ທົ່ວໄປ
+global categories	timesheet	lo	ໝວດທົ່ວໄປ
+history	timesheet	lo	ປະຫວັດສາດ
+id	timesheet	lo	ລະຫັດ
+leaves without saveing	timesheet	lo	ອອກໂດຍບໍ່ໄກ້ບັນທຶກ
+length<br>rows	timesheet	lo	ຄວາມຍາວ <br> ແຖວ
+links	timesheet	lo	ເຊື່ອມຕໍ່
+max length of the input [, length of the inputfield (optional)]	timesheet	lo	ຄວາມຍາວສູງສຸດຂອງການປ້ອນຂໍ້ຄວາມ[, ຄວາມຍາວຂອງພື້ນທີ່ຂໍ້ຄວາມ(ຖ້າມີ)]
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	lo	ຈໍານວນແຖວສໍາລັບຂອບເຂດຂອງການປ້ອນຂໍ້ມູນຫຼາຍໆແຖວ ຫຼື ຕົວເລືອກຫຼາຍໆຕົວ
+order	timesheet	lo	Order
+quantity	timesheet	lo	ປະລິມານ
+saves the changes made	timesheet	lo	ບັນທຶກການປ່ຽນແປງທີ່ໄດ້ເຮັດ.
+saves the changes made and leaves	timesheet	lo	ບັນທຶກການປ່ຽນແປງ made ແລະ leaves
+start	timesheet	lo	ເລີ່ມ
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	lo	ຊື່ທີ່ໃຊ້(<=20ຕົວອັກສອນ), ຖ້າມີການປ່ຽນແປງຂໍ້ມູນທີ່ມີຢູ່ຈະເຮັດໃຫ້ໃຊ້ບໍ່ໄດ້
+the text displayed to the user	timesheet	lo	ຂໍ້ຄວາມທີ່ສະແດງໄປຫາຜູ້ໃຊ້
+view this entry	timesheet	lo	ເບິ່ງລາຍການຂໍ້ມູນນີ້
+week	timesheet	lo	ອາທິດທີ

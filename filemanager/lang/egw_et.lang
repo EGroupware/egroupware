@@ -1,0 +1,21 @@
+actions	filemanager	et	Tegevused
+applications	common	et	Rakendused
+check all	filemanager	et	Kontrolli kõik
+comment	filemanager	et	Kommentaar
+created	filemanager	et	Tehtud
+cut	filemanager	et	Lõika
+download	filemanager	et	Lae alla
+file	filemanager	et	Pail
+general	filemanager	et	Üldine
+id	filemanager	et	Id
+link	filemanager	et	Link
+location	filemanager	et	Asukoht
+modified	filemanager	et	Muudetud
+move	filemanager	et	liiguta
+open	filemanager	et	avatud
+permissions	filemanager	et	Õigused
+preview	filemanager	et	Eelvaade
+save changes	filemanager	et	Salvesta muudatused
+show	filemanager	et	Näita
+size	filemanager	et	suurus
+up	filemanager	et	üles

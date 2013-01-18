@@ -19,7 +19,7 @@ import definitions	common	es-es	Importar definiciones
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	es-es	Importar definiciones (¡¡Atención: se sobreescribirán las definiciones existentes con el mismo nombre!!)
 importexport	common	es-es	importar/exportar
 importexport wizard finished successfully!	importexport	es-es	¡El asistente de Importar-Exportar finalizó correctamente!
-imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	es-es	Importa información de un fichero CSV. Esta es sólo una clase base, y no hace nada por sí misma.
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	es-es	Importa información de un fichero CSV. Esto sólo es una clase base, y no hace nada por sí misma.
 load sample file	importexport	es-es	Cargar un fichero de ejemplo
 manage mapping	importexport	es-es	Gestionar mapeo
 next	importexport	es-es	Siguiente

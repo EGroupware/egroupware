@@ -9,12 +9,14 @@ export	importexport	et	Eksport
 export all selected definitions	importexport	et	ekspordi KÕIK valitud definitsioonid
 finish	importexport	et	valmis
 general	importexport	et	Üldine
+import	importexport	et	Import
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	et	Impordi definitsioonid (Ettevaatust: Olemasolevad definitsioonid mis on sama nimega kirjutatakse üle!!!)
 importexport wizard finished successfully!	importexport	et	Import-Eksport abimees lõpetas edukalt !
 next	importexport	et	järgmine
 preview	importexport	et	Eelvaade
 previous	importexport	et	eelmine
 save as definition	importexport	et	Salvesta kui definitsioon
+schedule	common	et	ajastatud
 select definition	importexport	et	Vali definitsioon
 select plugin	importexport	et	Vali plugin
 some nice text	importexport	et	mõni lahe tekst

@@ -1,0 +1,30 @@
+actions	resources	et	Tegevused
+all categories	resources	et	Kõik kategooriad
+check all	resources	et	Kontrolli kõik
+configure access permissions	admin	et	Konfigureeri Ligipääsu Õigusi
+create new links	resources	et	Tee uued lingid
+days	resources	et	päeva
+delete this entry	resources	et	kustuta see kirje
+edit this entry	resources	et	Muuda seda kirjet
+existing links	resources	et	Eksisteerivad lingid
+general	resources	et	Üldine
+global categories	resources	et	Globaalsed Kategooriad
+hours	resources	et	tundi
+inventory number	resources	et	Inventari number
+inventory number:	resources	et	Inventari number:
+links	resources	et	Lingid
+location	resources	et	Asukoht
+location:	resources	et	Asukoht:
+name:	resources	et	Nimi:
+no description available	resources	et	Kirjeldust ei ole
+picture	resources	et	Pilt
+quantity	resources	et	Kogus
+quantity:	resources	et	Kogus:
+read permissions	resources	et	Lugemise õigused
+resources	common	et	Resursid
+select a category	resources	et	Vali Kategooria
+select resources	common	et	Vali resursid
+short description	resources	et	Lühike kirjeldus
+useable	resources	et	kasutatav
+useable:	resources	et	Kasutatav:
+write permissions	resources	et	Kirjutamise õigused

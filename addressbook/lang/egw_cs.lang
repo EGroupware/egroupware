@@ -211,6 +211,7 @@ group %1	addressbook	cs	Skupina %1
 h	addressbook	cs	h
 hide accounts from addressbook	addressbook	cs	Nezobrazovat účty v adresáři
 hides accounts completly from the adressbook.	addressbook	cs	Kompletně skryje účty před adresářem.
+history logging	admin	cs	Protokolování historie
 home address	addressbook	cs	Domácí adresa
 home address, birthday, ...	addressbook	cs	Domácí adresa, narozeniny, ...
 home city	addressbook	cs	Domov - město
@@ -423,6 +424,7 @@ yes, for the next three days	addressbook	cs	Ano, po následující tři měsíce
 yes, for the next two weeks	addressbook	cs	Ano, po následující dva týdny
 yes, for the next week	addressbook	cs	Ano, po následující týden
 yes, for today and tomorrow	addressbook	cs	Ano, po dnešní a zítřejší den
+yes, only admins can purge deleted items	admin	cs	Ano, jen administrátoři mohou odstraňovat smazané položky
 you are not permitted to delete contact %1	addressbook	cs	Nemáte oprávnění ke smazání kontaktu %1
 you are not permittet to delete this contact	addressbook	cs	Nemáte oprávnění ke smazání tohoto kontaktu
 you are not permittet to edit this contact	addressbook	cs	Nemáte oprávnění k editaci tohoto kontaktu
@@ -435,4 +437,3 @@ you need to select a distribution list	addressbook	cs	Musíte vybrat distribučn
 you need to select some contacts first	addressbook	cs	Nejprve musíte vybrat nějaké kontakty
 zip code	common	cs	PSČ
 zip_note	addressbook	cs	<p><b>Poznámka:</b>Soubor může být zip archiv .csv, .vcf nebo .ldif souborů. Nesmíte však kombinovat různé typy souborů během jednoho importu.
-deleted	addressbook	cs	smazáno

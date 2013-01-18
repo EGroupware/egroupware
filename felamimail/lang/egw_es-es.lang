@@ -3,7 +3,7 @@
 (only cc/bcc)	felamimail	es-es	(sólo Cc/Cco)
 (separate multiple addresses by comma)	felamimail	es-es	(separar múltiples direcciones con comas)
 (unknown sender)	felamimail	es-es	(remitente desconocido)
-3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	felamimail	es-es	Vista de 3 paneles: Si desea tener una vista previa de un mensaje pulsando una vez en el asunto, establezca la altura para la lista de mensajes y el área de previsualización aquí (300 parece ser un buen valor). La vista previa se mostrará al final de la lista de mensajes bajo demanda (pulsando).
+3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	felamimail	es-es	Vista de tres paneles: si desea tener una vista previa del correo con un simple clic en el asunto, ponga aquí la altura para la lista de mensajes y el área de vista previa (300 parece un valor apropiado). La vista previa se mostrará al final de la lista de mensajes bajo demanda, al pulsar.
 aborted	felamimail	es-es	abortado
 activate	felamimail	es-es	Activar
 activate script	felamimail	es-es	activar script
@@ -119,7 +119,7 @@ do not validate certificate	felamimail	es-es	No validar el certificado
 do you really want to delete the '%1' folder?	felamimail	es-es	¿Realmente quiere borrar la carpeta '%1'?
 do you really want to delete the selected accountsettings and the assosiated identity.	felamimail	es-es	¿Realmente desea borrar las configuraciones de cuenta seleccionadas y la identidad asociada?
 do you really want to delete the selected signatures?	felamimail	es-es	¿Realmente desea borrar las firmas seleccionadas?
-do you really want to move or copy the selected messages to folder:	felamimail	es-es	Realmente desea mover o copiar los mensajes seleccionados a la carpeta:
+do you really want to move or copy the selected messages to folder:	felamimail	es-es	¿Realmente desea mover o copiar los siguientes mensajes a la carpeta:
 do you really want to move the selected messages to folder:	felamimail	es-es	¿Realmente desea mover los mensajes seleccionados a la carpeta:
 do you want to be asked for confirmation before moving selected messages to another folder?	felamimail	es-es	¿Desea que se le pida confirmación antes de mover los mensajes seleccionados a otra carpeta?
 do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	felamimail	es-es	¿Desea prevenir la edición o configuración de los correos mediante las preferencias (incluso si SIEVE está activado)?
@@ -169,7 +169,7 @@ error	felamimail	es-es	ERROR
 error connecting to imap serv	felamimail	es-es	Error al conectar al servidor IMAP
 error connecting to imap server. %s : %s.	felamimail	es-es	Error al conectar con el servidor IMAP: %s: %s
 error connecting to imap server: [%s] %s.	felamimail	es-es	Error al conectar con el servidor IMAP: [%s] %s
-error creating rule while trying to use forward/redirect.	felamimail	es-es	Error al crear la regla mientras se intentaba usar el redireccionamiento.
+error creating rule while trying to use forward/redirect.	felamimail	es-es	Error al crear la regla al intentar reenviar.
 error opening	felamimail	es-es	Error al abrir
 error saving %1!	felamimail	es-es	¡Error al guardar %1!
 error:	felamimail	es-es	Error:
@@ -350,8 +350,8 @@ original message	felamimail	es-es	mensaje original
 outgoing mail server(smtp)	felamimail	es-es	servidor de correo de salida (SMTP)
 participants	felamimail	es-es	Participantes
 personal information	felamimail	es-es	Información personal
-please ask the administrator to correct the emailadmin imap server settings for you.	felamimail	es-es	Por favor, pida al administrador que corrija la configuración del servidor IMAP.
-please configure access to an existing individual imap account.	felamimail	es-es	Por favor, configure el acceso a una cuenta individual IMAP existente.
+please ask the administrator to correct the emailadmin imap server settings for you.	felamimail	es-es	Por favor, solicite al administrador que corrija la configuración del servidor IMAP.
+please configure access to an existing individual imap account.	felamimail	es-es	por favor, configure el acceso a una cuenta individual IMAP.
 please select a address	felamimail	es-es	Por favor, seleccione una dirección
 please select the number of days to wait between responses	felamimail	es-es	Por favor, seleccione el número de días a esperar entre las respuestas
 please supply the message to send with auto-responses	felamimail	es-es	Por favor, indique el mensaje a enviar para respuestas automáticas
@@ -410,7 +410,7 @@ sent	felamimail	es-es	Enviados
 sent folder	felamimail	es-es	Carpeta de enviados
 server supports mailfilter(sieve)	felamimail	es-es	El servidor soporta filtro de correo (sieve)
 set as default	felamimail	es-es	Establecer como predeterminado
-show all folders (subscribed and unsubscribed) in main screen folder pane	felamimail	es-es	mostrar todas las carpetas (suscritas Y no suscritas) en el panel de carpetas de la pantalla principal
+show all folders (subscribed and unsubscribed) in main screen folder pane	felamimail	es-es	mostrar todas las carpetas (suscritas Y no suscritas) en la pantalla principal
 show header	felamimail	es-es	mostrar cabecera
 show new messages on main screen	felamimail	es-es	Mostrar mensajes nuevos en la pantalla principal
 sieve script name	felamimail	es-es	nombre del script sieve
@@ -441,7 +441,6 @@ template folder	felamimail	es-es	Carpeta de plantillas
 templates	felamimail	es-es	Plantillas
 text only	felamimail	es-es	Sólo texto
 text/plain	felamimail	es-es	text/plain
-the action will be applied to all messages of the current folder.ndo you want to proceed?	felamimail	es-es	La acción se aplicará a todos los mensajes de la carpeta actual.\n¿Desea proceder?
 the connection to the imap server failed!!	felamimail	es-es	¡Ha fallado la conexión con el servidor IMAP!
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	es-es	El servidor IMAP no parece que soporte el método de identificación seleccionado. Por favor, póngase en contacto con su administrador del sistema.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	es-es	El remitente del mensaje ha solicitado una respuesta para indicar que usted ha leído este mensaje. ¿Desea enviar una confirmación?

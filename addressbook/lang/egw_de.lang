@@ -5,12 +5,12 @@
 %1 fields in %2 other organisation member(s) changed	addressbook	de	%1 Felder in %2 Mitglied(ern) der Organisation geändert
 %1 not implemented for %2!	addressbook	de	%1 nicht implementiert für %2!
 %1 records imported	addressbook	de	%1 Datensätze importiert
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test-Import auschalten)
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test-Import ausschalten)
 %1 starts with '%2'	addressbook	de	%1 beginnt mit '%2'
 %s please calculate the result	addressbook	de	%s Bitte berechnen Sie das Ergebnis
 (e.g. 1969)	addressbook	de	(z.B. 1969)
 (empty = use global limit, no = no export at all)	admin	de	(leer = globale Begrenzung verwenden, nein = gar kein Export)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein Übersetzungstyp <none> konnte gefunden werden.</b> Bitte wählen Sie einen Übersetzungstyp aus der Liste
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein Übersetzungstyp <none> konnte gefunden werden.</b> Bitte wählen Sie einen Übersetzungstyp aus der Liste aus.
 @-eval() is only availible to admins!!!	addressbook	de	@-eval() ist nur für Administratoren verfügbar !!!
 account repository	admin	de	Speicherort für Benutzerkonten
 accounts	addressbook	de	Benutzerkonten
@@ -55,7 +55,7 @@ are you shure you want to delete this contact?	addressbook	de	Diesen Kontakt lö
 are you sure you want to delete this field?	addressbook	de	Sind Sie sicher, dass Sie dieses Feld löschen möchten?
 assistent	addressbook	de	Assistent
 assistent phone	addressbook	de	Telefon Assistent
-at the moment the following document-types are supported:	addressbook	de	Im Moment werden die folgenden Dokumenttypen unterstützt:
+at the moment the following document-types are supported:	addressbook	de	Aktuell werden die folgenden Dokumenttypen unterstützt:
 birthday	common	de	Geburtstag
 birthdays	common	de	Geburtstage
 blank	addressbook	de	Leer
@@ -85,7 +85,7 @@ charset of file	addressbook	de	Zeichensatz der Datei
 check all	addressbook	de	Alle auswählen
 choose an icon for this contact type	admin	de	Wählen Sie ein Icon für diesen Kontakt Typ
 choose owner of imported data	addressbook	de	Wählen Sie den Besitzer der importierten Daten
-choose seperator and charset	addressbook	de	Wählen Sie ein Trennzeichen und den Zeichensatz
+choose seperator and charset	addressbook	de	Wählen Sie das Trennzeichen und den Zeichensatz aus
 chosse an etemplate for this contact type	admin	de	Wählen Sie ein eTemplate für diesen Kontakt Typ
 city	common	de	Stadt
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	de	Bereinige Adressbuch Felder (anwenden, wenn die Synchronisation Duplikate erzeugt)
@@ -118,7 +118,7 @@ country	common	de	Land
 create new links	addressbook	de	Neue Verknüpfung erstellen
 created	addressbook	de	Angelegt
 credit	addressbook	de	Darlehen
-csv field	addressbook	de	CSV Feld
+csv field	addressbook	de	CSV Feld (Importdatei)
 csv-fieldname	addressbook	de	CSV-Feldname
 csv-filename	addressbook	de	CSV-Dateiname
 custom	addressbook	de	Benutzerdefiniert
@@ -149,7 +149,7 @@ distribution lists	addressbook	de	Verteilerlisten
 distribution lists, ...	addressbook	de	Verteilerlisten, ...
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	de	Sie können mit dieser Funktion ein privates Adressbuch nutzen, das nicht an andere Benutzer freigegeben werden kann und Ihre Privatsphäre optimal schützt. Aktivieren Sie diese Funktion nach Bedarf.
 do your really want to delete this contact?	addressbook	de	Wollen Sie diesen Kontakt wirklich löschen?
-document '%1' does not exist or is not readable for you!	addressbook	de	Dokument '%1' existiert nicht oder ist für Sie nicht lesbar!
+document '%1' does not exist or is not readable for you!	addressbook	de	Das Dokument '%1' steht nicht zur Verfügung, oder ist für Sie nicht lesbar!
 doesn't matter	addressbook	de	egal
 domestic	addressbook	de	Wohnung
 don't hide empty columns	addressbook	de	Leere Spalten nicht ausblenden
@@ -211,6 +211,7 @@ group %1	addressbook	de	Gruppe %1
 h	addressbook	de	h
 hide accounts from addressbook	addressbook	de	Benutzer im Adressbuch ausblenden
 hides accounts completly from the adressbook.	addressbook	de	Entfernt die Benutzer komplett aus dem Adressbuch.
+history logging	admin	de	Verfolgung der Änderungen
 home address	addressbook	de	Privatadresse
 home address, birthday, ...	addressbook	de	Privatadresse, Geburtstag, ...
 home city	addressbook	de	Stadt privat
@@ -227,7 +228,7 @@ if accounts are already in ldap	admin	de	wenn die Benutzer bereits im LDAP sind
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das Adressbuch einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
 if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das Adressbuch ein zusätzliches Dokumenten Icon. Dieses Icon erlaubt das Dokument mit Kontaktdaten eingefügt herunterzuladen.
 ignore first line	addressbook	de	Erste Zeile ignorieren
-import	addressbook	de	Import
+import	addressbook	de	Importieren
 import contacts	addressbook	de	Kontakte importieren
 import csv-file into addressbook	addressbook	de	Import CSV-Datei ins Adressbuch
 import file	addressbook	de	Datei importieren
@@ -241,7 +242,7 @@ imports contacts into your addressbook from a csv file. csv means 'comma seperat
 in %1 days (%2) is %3's birthday.	addressbook	de	In %1 Tagen (%2) ist der Geburtstag von %3.
 income	addressbook	de	Einkommen
 infolog	addressbook	de	InfoLog
-insert in document	addressbook	de	Einfügen in Dokument
+insert in document	addressbook	de	In ein Dokument einfügen
 insufficent rights to delete this list!	addressbook	de	Keine Rechte vorhanden um diese Liste zu löschen!
 international	addressbook	de	International
 internet	addressbook	de	Internet
@@ -265,7 +266,7 @@ load sample file	addressbook	de	Beispieldatei laden
 load vcard	addressbook	de	VCard laden
 location	addressbook	de	Standort
 locations	addressbook	de	Standorte
-manage mapping	addressbook	de	Zuordnungen verwalten
+manage mapping	addressbook	de	Feldzuordnungen verwalten
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
 merge into first or account, deletes all other!	addressbook	de	Vereinige im ersten oder Benutzerkonto, löscht alle anderen !
 merged	addressbook	de	vereinigt
@@ -316,6 +317,7 @@ preferred email address to use in distribution lists	addressbook	de	Bevorzugte E
 preferred phone	addressbook	de	bevorzugte Telefonnummer
 preferred type of email address to add for distribution lists	addressbook	de	bevorzugter Typ der E-Mailadresse für Verteilerlisten
 prefix	addressbook	de	Anrede
+prevent deleting of contacts	admin	de	Das Löschen von Adressen verhindern
 private custom fields	addressbook	de	Private Benutzerdefinierte Felder
 public key	addressbook	de	öffentlicher Schlüssel
 publish into groups:	addressbook	de	In folgenden Gruppen veröffentlichen:
@@ -331,7 +333,7 @@ removed from distribution list	addressbook	de	vom Verteiler gelöscht
 repetition	addressbook	de	Wiederholung
 replacements for inserting contacts into documents	addressbook	de	Platzhalter für das Einfügen von Kontakten in Dokumente
 required fields *	addressbook	de	unbedingt auszufüllende Felder *
-role	addressbook	de	Funktion
+role	addressbook	de	Beruf
 room	addressbook	de	Raum
 search for '%1'	addressbook	de	Suche nach '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	de	Wählen Sie ein hochformatiges jpeg Foto. Es wird 60 Pixel breit skaliert.
@@ -361,7 +363,7 @@ start	admin	de	Starten
 startrecord	addressbook	de	Startdatensatz
 state	common	de	Bundesland
 street	common	de	Straße
-subject for email	addressbook	de	Betreff der Email
+subject for email	addressbook	de	Betreff der E-mail
 successfully imported %1 records into your addressbook.	addressbook	de	%1 Kontakte wurden erfolgreich in Ihr Adressbuch importiert
 suffix	addressbook	de	Zusatz
 tag to mark positions for address labels	addressbook	de	Markierungszeichen, um die Positionen von Adressetiktetten zu markieren
@@ -412,7 +414,7 @@ what should links to the addressbook display in other applications. empty values
 where to add the email address	addressbook	de	wo soll die E-Mailadresse hinzugefügt werden
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	de	Welches Format soll das Adressbuch für Adressen verwenden, deren landesübliches Adressformat unbekannt ist. Wenn das Adressformat eines Landes dem Adressbuch bekannt ist, wird das unabhängig von dieser Einstellung benutzt.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	de	Welches Adressbuch soll beim Hinzufügen von Kontakten ausgewählt sein, wenn Sie keine Hinzufügen Rechte zum aktuellen Adressbuch haben.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die systemweite Vorgabe ist der Zeichensatz der EGroupware Installation.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die Systemweite Vorgabe ist der Zeichensatz der EGroupware Installation.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	de	Welche Felder sollen exportiert werden. 'Alle' bedeutet jedes Feld, welches im Adressbuch gespeichert ist, einschl. der benutzerdefinierten Felder. Die Geschäfts- oder Privatadresse enthält nur Name, Firma und die ausgewählte Adresse.
 whole query	addressbook	de	gesamte Abfrage
 work email if given, else home email	addressbook	de	Geschäftliche E-Mail wenn vorhanden, ansonsten private E-Mail
@@ -423,6 +425,8 @@ yes, for the next three days	addressbook	de	Ja, für die nächsten drei Tage
 yes, for the next two weeks	addressbook	de	Ja, für die nächsten zwei Wochen
 yes, for the next week	addressbook	de	Ja, für die nächste Woche
 yes, for today and tomorrow	addressbook	de	Ja, für heute und morgen
+yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren können gelöschte Einträge bereinigen
+yes, users can purge their deleted items	admin	de	Benutzer können Ihre eigenen Datensätze wieder herstellen (z.B. persönliches Adressbuch)
 you are not permitted to delete contact %1	addressbook	de	Sie haben keine Berechtigungen um den Kontakt %1 zu löschen
 you are not permittet to delete this contact	addressbook	de	Sie haben keine Berechtigung diesen Kontakt zu löschen
 you are not permittet to edit this contact	addressbook	de	Sie haben keine Berechtigung diesen Kontakt zu bearbeiten
@@ -435,8 +439,3 @@ you need to select a distribution list	addressbook	de	Sie müssen eine Verteiler
 you need to select some contacts first	addressbook	de	Sie müssen zuerst Kontakte auswählen
 zip code	common	de	PLZ
 zip_note	addressbook	de	<p><b>Notiz:</b>Die Datei kann ein zip Archiv sein, bestehend aus .csv, .vcf oder .ldif Dateien. Sie dürfen die Dateitypen pro Import nicht mischen!
-deleted	addressbook	de	gelöscht
-history logging	admin	de	Verfolgung der Änderungen
-prevent deleting of contacts	admin	de	Das Löschen von Adressen verhindern
-yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren können gelöschte Einträge bereinigen
-yes, users can purge their deleted items	admin	de	Benutzer können Ihre eigenen Datensätze wieder herstellen (z.B. persönliches Adressbuch)

@@ -154,6 +154,7 @@ edit phonenumbers -	addressbook	ru	Редкатировать номера те�
 either the configured email addesses are wrong or the mail configuration.	addressbook	ru	Либо адрес электронной почты, либо настройки почты неверны.
 email & internet	addressbook	ru	Электронная почта и Интернет
 email addresses (comma separated) to send the contact data	addressbook	ru	Адреса эл. почты (разделенные запятыми) для отправки данных контакта
+empty	admin	ru	Пусто(очистить)
 empty for all	addressbook	ru	пусто для всех
 enable an extra private addressbook	addressbook	ru	Разрешить дополнительную личную адресную книгу
 end	addressbook	ru	Конец
@@ -197,6 +198,7 @@ group %1	addressbook	ru	Группа %1
 h	addressbook	ru	ч
 hide accounts from addressbook	addressbook	ru	Скрыть учетные записи из адресной книги
 hides accounts completly from the adressbook.	addressbook	ru	Скрывает учетные записи полностью из адресной книги.
+history logging	admin	ru	Запись истории
 home address	addressbook	ru	Домашний адрес
 home address, birthday, ...	addressbook	ru	Домашний адрес, День рождения, ...
 home city	addressbook	ru	Домашний - Город
@@ -207,7 +209,6 @@ home phone	addressbook	ru	Домашний телефон
 home state	addressbook	ru	Домашний - Штат
 home street	addressbook	ru	Домашний - Улица
 home zip code	addressbook	ru	Домашний почтовый индекс
-how many contacts should non-admins be able to export (empty = no limit)	admin	ru	Сколько контактов разрешается экспортировать не администраторам (псто - без ограничений)
 icon	addressbook	ru	Пиктограмма
 if accounts are already in ldap	admin	ru	если учетная запись уже в LDAP
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	ru	Если вы указываете каталог (полный путь vfs) здесь, адресная книга показывает действие для каждого документа. Это действие позволяет загрузить указанный документ со вставленными данными контакта.
@@ -225,6 +226,7 @@ import_instructions	addressbook	ru	В Netscape откройте Адресную
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	ru	Импортирует контакты в вашу Адресную книгу из файла CSV. CSV означает "Значения разделенные запятыми", однако в закладке настроек можно выбрать другой разделитель.
 in %1 days (%2) is %3's birthday.	addressbook	ru	Ч-з %1 день/дней (51) будет день рождения %3
 income	addressbook	ru	Входящие
+infolog	addressbook	ru	ИнфоЖурнал
 insert in document	addressbook	ru	Вставить в документ
 insufficent rights to delete this list!	addressbook	ru	Недостаточно прав для удаления этого списка!
 international	addressbook	ru	Международный
@@ -393,6 +395,7 @@ yes, for the next three days	addressbook	ru	Да, для следующих тр
 yes, for the next two weeks	addressbook	ru	Да, для следующих двух недель
 yes, for the next week	addressbook	ru	Да, для следующей недели
 yes, for today and tomorrow	addressbook	ru	Да, на сегодня и завтра
+yes, only admins can purge deleted items	admin	ru	Да, только администраторы могут уничтожить удаленые записи
 you are not permitted to delete contact %1	addressbook	ru	Вам не разрешено удалять контакт %1
 you are not permittet to delete this contact	addressbook	ru	Вам не разрешено удалять этот контакт
 you are not permittet to edit this contact	addressbook	ru	Вам не разрешено редактировать этот контакт
@@ -405,4 +408,3 @@ you need to select a distribution list	addressbook	ru	Вы должны выбр
 you need to select some contacts first	addressbook	ru	Вы должны сначала выбрать несколько контактов
 zip code	common	ru	Почтовый индекс
 zip_note	addressbook	ru	<p><b>Примечание:</b> Файл может быть zip-архивом файлов .csv, .vcf, или .ldif. Однако не смешивайте разные типы при импорте.
-deleted	addressbook	ru	удалено

@@ -1,0 +1,115 @@
+%1 already exists as a file	filemanager	zh	文件%1已存在
+%1 directories and %2 files copied.	filemanager	zh	%1目录和%2文件已复制。
+%1 directories and %2 files deleted.	filemanager	zh	%1目录和%2文件已删除。
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	zh	%1复制错误(%2目录和%3文件已复制)！
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	zh	%1删除错误(%2目录和%3文件已删除)！
+%1 errors moving (%2 files moved)!	filemanager	zh	%1移动错误(%2文件已移动)！
+%1 files copied.	filemanager	zh	%1文件已复制。
+%1 files deleted.	filemanager	zh	%1文件已删除。
+%1 files moved.	filemanager	zh	%1文件已移动。
+%1 starts with '%2'	filemanager	zh	%1以'%2'开始
+%1 the following files into current directory	filemanager	zh	以下文件%1在当前目录里
+%1 urls %2 to clipboard.	filemanager	zh	%1 URLs %2到剪贴板。
+actions	filemanager	zh	操作
+and all it's childeren	filemanager	zh	并且全部是自文件夹
+applications	common	zh	应用程序
+cancel editing %1 without saving	filemanager	zh	取消编辑%1， 不保存
+cannot create directory because it begins or ends in a space	filemanager	zh	无法创建目录, 目录名开头或末尾不能带有空格
+check all	filemanager	zh	全选
+clear search	filemanager	zh	清除搜索
+comment	filemanager	zh	注释
+comments cannot contain "%1"	filemanager	zh	注释不能包含"%1"
+copied	filemanager	zh	已复制
+copied %1 to %2	filemanager	zh	%1已复制到%2
+copy to	filemanager	zh	复制到
+copy to clipboard	filemanager	zh	复制到剪贴板
+could not copy %1 to %2	filemanager	zh	无法将%1复制到%2
+could not copy file because no destination directory is given	filemanager	zh	无法复制文件，因为没有目标文件夹
+could not create %1	filemanager	zh	无法创建%1
+could not delete %1	filemanager	zh	无法删除 %1
+could not move %1 to %2	filemanager	zh	无法将%1移动到%2
+could not move file because no destination directory is given	filemanager	zh	无法移动文件，因为没有目标文件夹
+could not rename %1 to %2	filemanager	zh	无法将%1重命名为 %2
+could not save %1	filemanager	zh	无法保存%1
+create file	filemanager	zh	创建文件
+create folder	filemanager	zh	创建文件夹
+created	filemanager	zh	创建日期
+created %1,%2	filemanager	zh	%1，%2已创建
+created between	filemanager	zh	创建介于
+created directory %1	filemanager	zh	目录%1已创建
+current directory	filemanager	zh	当前目录
+custom fields	filemanager	zh	自定义字段
+cut	filemanager	zh	剪切
+cut to clipboard	filemanager	zh	剪切到剪贴板
+deleted %1	filemanager	zh	%1已删除
+directory	filemanager	zh	目录
+directory %1 already exists	filemanager	zh	目录%1已存在
+directory %1 does not exist	filemanager	zh	目录%1不存在
+directory names cannot contain "%1"	filemanager	zh	目录名不能包含"%1"
+directory not found or no permission to access it!	filemanager	zh	目录不存在或无权访问！
+display and modification of content	filemanager	zh	内容显示和更改
+display of content	filemanager	zh	内容显示
+download	filemanager	zh	下载
+edit comments	filemanager	zh	编辑注释
+failed to create directory!	filemanager	zh	创建目录失败！
+file	filemanager	zh	文件
+file %1 already exists. please edit it or delete it first.	filemanager	zh	文件%1已存在, 请首先编辑或删除它。
+file %1 could not be created.	filemanager	zh	文件 %1 不能创建。
+file %1 may be too big. contact your systemadministrator for further info	filemanager	zh	文件%1太大，请联系系统管理员取得更多信息
+file deleted.	filemanager	zh	文件已删除。
+file names cannot contain "%1"	filemanager	zh	文件名不能包含"%1"
+file or directory not found!	filemanager	zh	文件或目录不存在！
+file successful uploaded.	filemanager	zh	文件上传成功。
+filemanager	common	zh	文件管理器
+files in this directory	filemanager	zh	文件在此目录中
+folder up	filemanager	zh	向上
+general	filemanager	zh	通用
+go home	filemanager	zh	返回首页
+go to	filemanager	zh	跳转到
+go to your home directory	filemanager	zh	跳转到主目录
+go up	filemanager	zh	向上
+id	filemanager	zh	编号
+link	filemanager	zh	链接
+location	filemanager	zh	文件位置
+mime type	filemanager	zh	MIME类型
+modified	filemanager	zh	修改日期
+modified between	filemanager	zh	修改介于
+move	filemanager	zh	移动
+move to	filemanager	zh	移动到
+moved %1 to %2	filemanager	zh	%1已移动到%2
+no access	filemanager	zh	无访问
+no files in this directory.	filemanager	zh	该目录为空。
+no version history for this file/directory	filemanager	zh	该文件/目录夹无版本历史记录
+open	filemanager	zh	待决事项
+operation	filemanager	zh	操作
+permissions	filemanager	zh	访问权限
+please select a file to delete.	filemanager	zh	请选择要删除文件。
+preview	filemanager	zh	预览
+preview %1	filemanager	zh	预览%1
+preview of %1	filemanager	zh	%1的预览
+projectmanager	filemanager	zh	项目管理
+quick jump to	filemanager	zh	快速跳转到
+read & write access	filemanager	zh	读写访问
+read access only	filemanager	zh	只读访问
+reload	filemanager	zh	重新载入
+renamed %1 to %2	filemanager	zh	%1已重命名为%2
+renamed %1 to %2.	filemanager	zh	%1已重命名为%2。
+replaced %1	filemanager	zh	%1已替换
+save %1	filemanager	zh	保存%1
+save %1, and go back to file listing	filemanager	zh	保存%1并返回文件列表
+save changes	filemanager	zh	保存更改
+saved %1	filemanager	zh	%1已保存
+search for '%1'	filemanager	zh	搜索'%1'
+searchstring	filemanager	zh	搜索字符串
+select action...	filemanager	zh	选择动作...
+show	filemanager	zh	显示
+size	filemanager	zh	大小
+start search	filemanager	zh	开始搜索
+total files	filemanager	zh	全部文件
+unused space	filemanager	zh	可用空间
+up	filemanager	zh	向上
+updated comment for %1	filemanager	zh	%1的注释已更新
+used space	filemanager	zh	已用空间
+you do not have access to %1	filemanager	zh	您无权访问%1
+you need to select some files first!	filemanager	zh	您需要首先选择某文件!
+your home dir did not exist, egroupware created a new one.	filemanager	zh	您的主目录不存在，eGroupWare 已创建一个新目录。

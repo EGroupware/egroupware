@@ -98,7 +98,7 @@ which charset should be used for the csv export. the system default is the chars
 which currency symbol or name should be used in egroupware.	preferences	lo	ເຄື່ອງໝາຍສະກຸນເງິນ ຫຼື ຊ
 write prefs for the specified application.	preferences	lo	ຂຽນການຕັ້ງຄ່າຂອງການໃຊ້ງານພິເສດ
 you can show the applications as icons only, icons with app-name or both.	preferences	lo	ທ່ານສາມາດສະແດງພຽງແຕ່ແອບພຼິເຄຊັນໃຊ້ງານດ້ວຍໄອຄ໋ອນ, ໄອຄ໋ອນກັບຊື່ແອບພຼິເຄຊັນຫຼືທັງສອງ
-you can show the linked entries with icons only, icons with app-name or both.	common	lo	ທ່ານສາມາດສະແດງພຽງແຕ່ການເຊື່ອມຕໍ່ດ້ວຍໄອຄ໋ອນ, ໄອຄ໋ອນກັບຊື່ແອບພຼິເຄຊັນຫຼືທັງສອງ
+you can show the linked entries with icons only, icons with app-name or both.	addressbook	lo	ທ່ານສາມາດສະແດງພຽງແຕ່ການເຊື່ອມຕໍ່ດ້ວຍໄອຄ໋ອນ, ໄອຄ໋ອນກັບຊື່ແອບພຼິເຄຊັນຫຼືທັງສອງ
 you do not have permission to set acl's in this mode!	preferences	lo	ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ຕັ້ງ ACL
 you must enter a password	preferences	lo	ທ່ານຕ້ອງໃສ່ລະຫັດຜ່ານ
 your current theme is: %1	preferences	lo	ຮູບແບບຂອງທ່ານປັດຈຸບັນແມ່ນ: %1

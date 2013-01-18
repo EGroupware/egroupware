@@ -1,0 +1,32 @@
+%1 starts with '%2'	filemanager	ru	%1 начинается с %2
+actions	filemanager	ru	Действия
+applications	common	ru	Приложения
+check all	filemanager	ru	Отметить все
+clear search	filemanager	ru	очистить поиск
+comment	filemanager	ru	Комментарий
+copy to	filemanager	ru	Копия
+create folder	filemanager	ru	Создать папку
+created	filemanager	ru	Создано
+custom fields	filemanager	ru	Пользовательские Поля
+cut	filemanager	ru	Вырезать
+download	filemanager	ru	Загрузить
+file	filemanager	ru	Файл
+general	filemanager	ru	Общее
+go to	filemanager	ru	Перейти к
+id	filemanager	ru	Ид
+link	filemanager	ru	Ссылка
+location	filemanager	ru	Расположени
+mime type	filemanager	ru	Тип Mime
+modified	filemanager	ru	Изменено
+move	filemanager	ru	переместить
+move to	filemanager	ru	переместить выбранное в
+open	filemanager	ru	открытые
+permissions	filemanager	ru	Разрешения
+preview	filemanager	ru	Предварительный просмотр
+projectmanager	filemanager	ru	Управление Проектами
+reload	filemanager	ru	Перезагрузка
+save changes	filemanager	ru	сохранить изменения
+search for '%1'	filemanager	ru	Искать '%1'
+show	filemanager	ru	Показать
+size	filemanager	ru	Размер
+up	filemanager	ru	вверх

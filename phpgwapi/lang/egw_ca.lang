@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	ca	%1 adreces de correu afegides
 %1 is not executable by the webserver !!!	common	ca	%1 no es pot executar en el servidor web !!!
-%1 manual	common	ca	%1 manual
-%1 start	common	ca	%1 inicia
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	ca	%1Tria un altre directori%2<br />o fes que %3 sigui modificable pel webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ca	%1eGroupWare%2 és una eina de treball en grup, multiusuari i basada en web escrita en %3PHP%4
 (shift-)click or drag to change value	jscalendar	ca	(Maj-)+clic o arrosegar per a canviar el valor
@@ -30,6 +28,7 @@ account has been created	common	ca	Compte creat
 account has been deleted	common	ca	Compte esborrat
 account has been updated	common	ca	Compte actualitzat
 account is expired	common	ca	Compte caducat
+accounts	common	ca	Comptes
 acl	common	ca	LCA
 action	common	ca	Acció
 active	common	ca	Actiu
@@ -112,7 +111,6 @@ cannot replace %1 because it is a directory	common	ca	No es pot reemplaçar %1 p
 cant open '%1' for %2	common	ca	No es pot obrir '%1' per %2
 cape verde	common	ca	CAP VERD
 caption	common	ca	Contingut
-catalonia	common	ca	CATALUNYA
 categories	common	ca	Categories
 categories for	common	ca	categories per
 category	common	ca	Categoria
@@ -183,6 +181,7 @@ detail	common	ca	Detall
 details	common	ca	Detalls
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	ca	Desactivar l'execució del pegat d'IE 5.5 i superiors per mostrar transparències en imatges PNG?
 direction left to right	common	ca	Direcció d'esquerra a dreta
+directory	common	ca	Directori
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	ca	El directori no existeix, el servidor web no el pot llegir o no pertany a l'arrel del document!
 disable internet explorer png-image-bugfix	common	ca	Desactivar el pegat d'IE per veure imatges PNG
 disable slider effects	common	ca	Desactivar efectes lliscants
@@ -210,7 +209,6 @@ edit %1 category for	common	ca	Editar %1 categoria per
 edit categories	common	ca	Editar categories
 edit category	common	ca	Editar categoria
 egroupware api version	common	ca	Versió eGroupWare API
-egroupware api version %1	common	ca	eGroupWare API versió %1
 egroupware: login blocked for user '%1', ip %2	common	ca	eGroupWare: inici de sessió bloquejat per a l'usuari '%1', IP %2
 egypt	common	ca	EGIPTE
 el salvador	common	ca	EL SALVADOR
@@ -351,6 +349,7 @@ kyrgyzstan	common	ca	KIRGIZYSTAN
 language	common	ca	Idioma
 language_direction_rtl	common	ca	rtl_adreça_idioma
 lao peoples democratic republic	common	ca	LAOS,  REPÚBLICA DEMOCRÀTICA POPULAR DE
+last modified	common	ca	Darrera modificació
 last name	common	ca	Cognom
 last name of the user, eg. "%1"	common	ca	Cognom de l'usuari, ex "%1"
 last page	common	ca	Darrera plana
@@ -533,6 +532,7 @@ remove shortcut	common	ca	Esborra tecles ràpides
 rename	common	ca	Reanomena
 replace	common	ca	Reemplaça
 replace with	common	ca	Reemplaça per
+restore failed	common	ca	Ha fallat la restauració
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	ca	Torna una llista completa dels comptes del sistema. Atenció: pot ser molt llarg
 returns an array of todo items	common	ca	Torna una matriu de tasques pendents
 returns struct of users application access	common	ca	Torna una estructura de l'accés dels usuaris a l'aplicació
@@ -602,6 +602,8 @@ showing %1 - %2 of %3	common	ca	mostrant %1 - %2 de %3
 sierra leone	common	ca	SIERRA LEONA
 simple	common	ca	Simple
 singapore	common	ca	SINGAPUR
+site configuration	common	ca	Configuració del Lloc
+size	common	ca	Mida
 slovakia	common	ca	ESLOVÀQUIA
 slovenia	common	ca	ESLOVÈNIA
 solomon islands	common	ca	ILLES SALOMÓ
@@ -691,11 +693,11 @@ use button to search for project	common	ca	useu el Botó per cercar per projecte
 user	common	ca	Usuari
 user accounts	common	ca	Comptes d'usuari
 user groups	common	ca	Grups d'usuari
-user openinstance	common	ca	Instància Oberta d'Usuari
 username	common	ca	Nom d'usuari
 users	common	ca	usuaris
 users choice	common	ca	Tria de l'usuari
 uzbekistan	common	ca	UZBEKISTAN
+value	common	ca	Valor
 vanuatu	common	ca	VANUATU
 venezuela	common	ca	VENEÇUELA
 version	common	ca	Versió
@@ -742,4 +744,3 @@ your settings have been updated	common	ca	Preferències actualitzades
 zambia	common	ca	ZAMBIA
 zimbabwe	common	ca	ZIMBABWE
 zoom	common	ca	Zoom
-site configuration	common	ca	Configuració del Lloc

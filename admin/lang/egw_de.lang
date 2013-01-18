@@ -58,7 +58,7 @@ aliases	admin	de	E-Mail-Alias
 all records and account information will be lost!	admin	de	Alle Datensätze und Kontoinformationen sind dann verloren!
 all users	admin	de	Alle Benutzer
 allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
-allow remote administration from following install id's (comma separated)	admin	de	Erlaube die Remote-Verwaltung  identifiziert durch folgende (Komma separierte) Install IDs
+allow remote administration from following install id's (comma separated)	admin	de	Erlaube die Remote-Verwaltung durch folgende (Komma separierte) Install IDs
 alternate email address	admin	de	Alternative E-Mail-Adresse
 anonymous user	admin	de	Anonymer Benutzer
 anonymous user (not shown in list sessions)	admin	de	Anonymer Benutzer (wird bei 'Sitzungen anzeigen' nicht angezeigt)
@@ -86,7 +86,7 @@ are you sure you want to kill this session ?	admin	de	Sind Sie sicher, dass Sie 
 async services last executed	admin	de	Asynchroner Dienst zuletzt ausgeführt
 asynchronous timed services	admin	de	Asynchroner zeitgesteuerter Dienst
 asyncservices not yet installed or other error (%1) !!!	admin	de	Asynchroner Dienst ist noch nicht installiert oder ein anderer Fehler ist aufgetreten (%1) !!!
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	de	Soll versucht werden, den richtigen MINE-typ für FTP zu verwenden, statt dem Vorgabewert "application/octet-stream"
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	de	Es wird versucht, den richtigen MIME-typ für FTP zu verwenden, statt dem Vorgabewert "application/octet-stream".
 attribute accountstatus explained	admin	de	Dies betrifft das Attribut <b>-accountStatus-</b> aus dem QMAIL Schema
 attribute mail explained	admin	de	Dies betrifft das Attribut <b><i>-mail-</i></b> aus dem CORE Schema. Dieses Attribut darf nicht leer sein und wird gleichzeitig als E-Mail-Adresse innerhalb eGW verwendet.
 attribute mailalternateaddress explained	admin	de	Dies betrifft das Attribut <b>-mailAlternateAddress-</b> aus dem QMAIL Schema. Das experimentelle Schema verwendet dies auch als Alias für mailLocalAddress.
@@ -103,7 +103,9 @@ cancel testjob!	admin	de	Test-Job abbrechen!
 cancel this scheduled command	admin	de	Diesen geplanten Befehl abbrechen
 categories list	admin	de	Liste der Kategorien
 category %1 has been saved !	admin	de	Kategorie %1 wurde gespeichert
+category deleted.	admin	de	Kategorie gelöscht
 category list	admin	de	Kategorieliste
+category saved.	admin	de	Kategorie gespeichert
 change account_id	admin	de	Änderung der account_id
 change acl rights	admin	de	ACL-Rechte ändern
 change config settings	admin	de	Konfiguration der Anwendung ändern
@@ -113,7 +115,7 @@ check acl for entries of not (longer) existing accounts	admin	de	Prüfe ACL Eint
 check ip address of all sessions	admin	de	IP-Adresse für alle Sessions überprüfen
 check items to <b>%1</b> to %2 for %3	admin	de	Durch Abhaken %3 in %2 <b>%1</b>
 children	admin	de	Kinder
-click to select a color	admin	de	Anclicken um eine Farbe auszuwählen
+click to select a color	admin	de	Anklicken um eine Farbe auszuwählen
 color	admin	de	Farbe
 command scheduled to run at %1	admin	de	Ausführung des Befehls eingeplant am/um %1
 commercial: all sorts of companies	admin	de	Kommerziell: alle Arten von Firmen
@@ -139,7 +141,7 @@ default file system space per user	admin	de	Vorgabewert für Dateisystemplatz pr
 default file system space per user/group ?	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer/Gruppe verwenden?
 deinstall crontab	admin	de	Crontab deinstallieren
 delete account	admin	de	Benutzerkonto löschen
-delete account %1	admin	de	Löschen des Benutzerkontos %1
+delete account %1	admin	de	Benutzerkonto %1 löschen
 delete all records	admin	de	Alle Einträge löschen
 delete application	admin	de	Anwendung löschen
 delete category	admin	de	Kategorie löschen
@@ -175,10 +177,10 @@ determines the order the fields are displayed	admin	de	bestimmt die Reihenfolge 
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
-display	admin	de	Anzeigen
+display	admin	de	anzeigen
 do not delete the category and return back to the list	admin	de	Kategorie NICHT löschen und zurück zur Liste gehen
 do you also want to delete all global subcategories ?	admin	de	Wollen Sie auch alle globalen Unterkategorien löschen?
-do you want to delete all global subcategories ?	admin	de	Möchten Sie alle Globale Unterkategorien löschen?
+do you want to delete all global subcategories ?	admin	de	Möchten Sie alle globale Unterkategorien löschen?
 do you want to move all global subcategories one level down ?	admin	de	Wollen Sie alle globalen Unterkategorien eine Ebene nach unten verschieben?
 document root (default)	admin	de	Wurzelverzeichnis des Webservers (Vorgabe)
 each value is a line like <id>[=<label>]	admin	de	jeder Wert ist ein Zeile <id>[=<label>]
@@ -237,16 +239,16 @@ enter your http proxy server port	admin	de	HTTP-Proxy-Server-Port
 enter your smtp server hostname or ip address	admin	de	SMTP-Server Hostname oder IP-Adresse
 enter your smtp server port	admin	de	SMTP-Server Port
 error canceling timer, maybe there's none set !!!	admin	de	Fehler beim Abbrechen des Test-Jobs, eventuell läuft gar kein Job !!!
-error changing the password for % !!!	admin	de	Fehler beim Ändern des Passworts für % !!!
+error changing the password for % !!!	admin	de	Fehler beim Ändern des Passworts für % !
 error changing the password for %1 !!!	admin	de	Fehler beim Ändern des Passworts für %1 !
 error deleting log entry!	admin	de	Fehler beim Löschen des Protokolleintrags!
 error saving	admin	de	Fehler beim Speichern
 error saving account!	admin	de	Fehler beim Speichern des Benutzerkontos!
 error saving the command!	admin	de	Fehler beim Speichern des Befehls!
 error saving to db:	admin	de	Fehler beim Speichern in der Datenbank:
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	de	Fehler beim Starten des Test-Jobs, falsche Syntax oder es läuft schon einer!!!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	de	Fehler beim Starten des Test-Jobs, falsche Syntax oder es läuft schon einer!
 error! no appname found	admin	de	Fehler: Kein Anwendungsname gefunden
-error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder anderer Fehler!!!
+error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder anderer Fehler!
 expires	admin	de	abgelaufen
 explanation of ldapman	admin	de	Dieses Modul ist derzeit nur für folgende Konfiguration getestet: Postfix, LDAP, Courier-Imap, Procmail und erfordert die Schemas: core und qmail(OID 7914). Weitere Konfigurationshinweise sind im README.ldapman im DOC Verzeichnis des Moduls ADMIN zu finden.
 fallback (after each pageview)	admin	de	Ausweichmöglichkeit (nach jedem Seitenaufbau)
@@ -257,10 +259,13 @@ file space must be an integer	admin	de	Speicherplatz muss eine Zahl sein
 find and register all application hooks	admin	de	Suchen und registrieren der "Hooks" aller Anwendungen
 for the times above	admin	de	für die oben angegebenen Zeiten
 for the times below (empty values count as '*', all empty = every minute)	admin	de	für die darunter angegebenen Zeiten (leere Felder zählen als "*", alles leer = jede Minute)
+force password strength (1-5, default empty: no check against rules for a strong password)?	admin	de	Erzwinge eine gewisse Qualität der Passwörter im Passwort-Ändern Dialog (1-5, 1:gering, 5=stark; Default=leer kein Check gegen Regeln zur Passwortqualität)
 force selectbox	admin	de	Auswahl erzwingen
+force users to change their password regularily?(empty for no,number for after that number of days	admin	de	Erzwinge das ändern von Passwörtern durch den Benutzer nach X Tagen. (leer für nein, eine positive Zahl für alle X Tage)
 forward also to	admin	de	Zusätzlich weiterleiten an
 forward emails to	admin	de	E-Mails weiterleiten an
 forward only	admin	de	nur weiterleiten
+full name	admin	de	Vollständiger Name
 global categories	common	de	Globale Kategorien
 go directly to admin menu, returning here the next time you click on administration.	admin	de	Geht direkt zum Administrationsmenü, kehrt hier her zurück wenn Sie das nächste mal auf die Administration klicken.
 governmental: incl. state or municipal authorities or services	admin	de	Öffentlicher Dienst: Bundes-, Länder- oder stättische Behörden und Dienstleistungen
@@ -277,7 +282,7 @@ hide php information	admin	de	PHP-Informationen ausblenden
 home directory	admin	de	Benutzerverzeichnis
 host information	admin	de	Host-Information
 hour<br>(0-23)	admin	de	Stunde<br>(0-23)
-how big should thumbnails for linked images be (maximum in pixels) ?	admin	de	Wie gross sollen Thumbnails für verknüpfte Bilder sein (maximum in Bildpunkten)
+how big should thumbnails for linked images be (maximum in pixels) ?	admin	de	Wie gross sollen Thumbnails für verknüpfte Bilder sein (maximum in Bildpunkten)?
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	de	Wie viele Tage sollen Einträge im Zugangsprotokoll bleiben, bevor sie gelöscht werden (Vorgabe 90)?
 how many entries should non-admins be able to export (empty = no limit, no = no export)	admin	de	Wie viele Einträge sollen Nicht-Administratoren exportieren können (leer = kein Limit, Nein = kein Export)
 how many minutes should an account or ip be blocked (default 30) ?	admin	de	Wie viele Minuten soll ein Benutzerkonto oder eine IP gesperrt werden (Vorgabe 30)?
@@ -354,7 +359,7 @@ mode	admin	de	Modus
 modified	admin	de	Geändert
 month	admin	de	Monat
 more secure	admin	de	sicherer
-name must not be empty !!!	admin	de	Name darf nicht leer sein !!!
+name must not be empty !!!	admin	de	Name darf nicht leer sein!
 name of the egroupware instance, eg. default	admin	de	Name der EGroupware Instanz, z.B. default
 new group name	admin	de	Neuer Gruppenname
 new name	admin	de	neuer Name
@@ -362,7 +367,7 @@ new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leer l
 next run	admin	de	nächste Ausführung
 no algorithms available	admin	de	Kein Algorithmus verfügbar
 no alternate email address	admin	de	keine Aliase definiert
-no jobs in the database !!!	admin	de	Keine Jobs in der Datenbank !!!
+no jobs in the database !!!	admin	de	Keine Jobs in der Datenbank!
 no login history exists for this user	admin	de	Benutzer hat sich noch nie angemeldet
 no matches found	admin	de	Keine Übereinstimmungen gefunden
 no modes available	admin	de	Kein Modus verfügbar
@@ -371,7 +376,7 @@ no permission to add users	admin	de	Sie haben keine ausreichenden Rechte eine Be
 no permission to create groups	admin	de	Sie haben keine ausreichenden Rechte um eine Gruppe zu erstellen
 non profit: clubs, associations, ...	admin	de	Gemeinnützig: Vereine, Verbände, ...
 note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit CURL-Unterstützung gebaut wurde
-number of active users	admin	de	Anzahl aktive User
+number of active users	admin	de	Anzahl aktiver User
 number of row for a multiline inputfield or line of a multi-select-box	admin	de	Anzahl der Zeilen in einem mehrzeiligen Feld oder eine multi-select-box
 number of sessions / egroupware logins in the last 30 days	admin	de	Anzahl Sitzungen / EGroupware Logins in den letzten 30 Tagen
 number of users	admin	de	Anzahl Benutzer
@@ -384,7 +389,7 @@ only below displayed information is directly submitted to %s.	admin	de	Nur die u
 operating system	admin	de	Betriebssystem
 order	admin	de	Reihenfolge
 outbound	admin	de	ausgehend
-own install id:	admin	de	Eigene Install-ID
+own install id:	admin	de	eigene Install-ID
 passthrough	admin	de	durchgehend
 password for smtp-authentication	admin	de	Passwort für SMTP Authentifizierung
 password updated	admin	de	Passwort aktualisiert
@@ -417,10 +422,10 @@ register application hooks	admin	de	Registrieren der "Hooks" der Anwendungen
 remote administration instances	admin	de	Remote Administrations Instanzen
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	de	Die Remote Administration muss von der Remote-Instanz (unter Admin -> Konfiguration der Anwendung) freigegeben werden.
 remote instance saved	admin	de	Remote Instanz gespeichert
-remove	admin	de	Entfernen
-remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe
-remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gruppe ?
-requested	admin	de	Angefordert
+remove	admin	de	entfernen
+remove all users from this group	admin	de	Entferne alle Benutzer aus dieser Gruppe.
+remove all users from this group ?	admin	de	Entferne alle Benutzer aus dieser Gruppe?
+requested	admin	de	angefordert
 return to admin mainscreen	admin	de	zum Administrationsmenü zurückkehren
 return to view account	admin	de	Zurück zum Anzeigen des Benutzerkontos
 route all mails to	admin	de	Alle E-Mails senden an
@@ -429,7 +434,7 @@ run asynchronous services	admin	de	Asynchrone Dienste ausführen
 save the category	admin	de	Kategorie speichern
 save the category and return back to the list	admin	de	Kategorie speichern und zur Liste zurückkehren
 saves the changes made and leaves	admin	de	beendet und speichert die Änderungen
-saves this entry	admin	de	Speichert diesen Eintrag
+saves this entry	admin	de	speichert diesen Eintrag
 scheduled	admin	de	geplant
 search accounts	admin	de	Benutzerkonten durchsuchen
 search categories	admin	de	Kategorien durchsuchen
@@ -438,7 +443,7 @@ search peer servers	admin	de	Serververbund durchsuchen
 security	admin	de	Sicherheit
 select accounts for which the custom field should be visible	admin	de	Benutzer auswählen, für die dieses benutzerdefinierte Feld sichtbar sein soll.
 select group managers	admin	de	Gruppenmanager auswählen
-select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte für diese Gruppe.
+select permissions this group will have	admin	de	wählen Sie die Zugriffsrechte für diese Gruppe.
 select the parent category. if this is a main category select no category	admin	de	Eine übergeordnete Kategorie auswählen. Wenn dies eine Hauptkategorie ist, KEINE KATEGORIE auswählen.
 select users for inclusion	admin	de	Benutzer für diese Gruppe auswählen
 select where you want to store/retrieve filesystem information	admin	de	Wo möchten Sie Datei Informationen ablegen / lesen
@@ -464,9 +469,9 @@ show phpinfo()	admin	de	phpinfo() anzeigen
 show session ip address	admin	de	IP-Adresse der Sitzung anzeigen
 site	admin	de	Site
 soap	admin	de	SOAP
-sorry, that group name has already been taken.	admin	de	Der Gruppenname wird bereits verwendet.
-sorry, the above users are still a member of the group %1	admin	de	Der Benutzer ist immer noch Mitglied der Gruppe %1.
-sorry, the follow users are still a member of the group %1	admin	de	Sorry, die folgenden Benutzer sind noch Mitglied der Gruppe %1
+sorry, that group name has already been taken.	admin	de	Dieser Gruppenname wird bereits verwendet.
+sorry, the above users are still a member of the group %1	admin	de	Diese Benutzer sind noch Mitglied der Gruppe %1.
+sorry, the follow users are still a member of the group %1	admin	de	Die folgenden Benutzer sind noch Mitglied der Gruppe %1.
 sort the entries	admin	de	Einträge sortieren
 ssl	admin	de	verschlüsselt (SSL)
 standard	admin	de	Standard
@@ -559,6 +564,7 @@ wrong account type: %1 is no %2 !!!	admin	de	Falscher Konten Typ: %1 ist kein(e)
 wrong admin-account or -password !!!	admin	de	Falscher Admin-Account oder Passwort !!!
 xml-rpc	admin	de	XML-RPC
 you have entered an invalid expiration date	admin	de	Sie haben ein ungültiges Ablaufdatum angegeben
+you have no email address for your user set !!!	admin	de	Sie haben noch keine E-Mail für den Benutzer vergeben.
 you have to enter a name, to create a new field!!!	admin	de	Sie müssen einen Namen angeben um ein neues Feld anzulegen!!!
 you have to enter a name, to create a new type!!!	admin	de	Sie müssen einen Namen angeben um einen neuen Typ anzulegen!!!
 you must add at least 1 permission or group to this account	admin	de	Sie müssen mindestens ein Zugriffsrecht oder eine Gruppe für diesen Benutzer angeben

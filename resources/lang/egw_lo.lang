@@ -22,6 +22,8 @@ configure access permissions	admin	lo	ກຳໜົດສິດໃນການເ
 conflict	resources	lo	ຄວາມຂັດແຍ້ງ
 create new accessory for this resource	resources	lo	ສ້າງອຸປະກອນເສີມໃໝ່ສຳລັບຊັບພະຍາກອນນີ້
 create new links	resources	lo	ສ້າງການເຊື່ອມຕໍ່ໃໝ່
+custom fields	resources	lo	ກໍານົດ fields
+days	resources	lo	ວັນ
 delete selected resources	resources	lo	ລຶບຊັບພະຍາກອນທີ່ໄດ້ເລືອກ
 delete this entry	resources	lo	ລຶບຂໍ້ມູນເຂົ້າມານີ້
 description (short)	resources	lo	ລາຍລະອຽດ(ສັ້ນໆ)
@@ -29,9 +31,12 @@ direct booking permissions	resources	lo	ສິດທິການຈອງໂດ�
 don't use vfs (this will need a symlink --> see readme)	resources	lo	ຫ້າມໃຊ້ vfs (ນີ້ຈະຕ້ອງການ  symlink--> ເບີ່ງທີ ເອກະສານກໍາກັບ )
 edit this entry	resources	lo	ແກ້ໄຂຂໍ້ບັນທຶກນີ້
 existing links	resources	lo	ທີ່ມີການເຊື່ອມຕໍ່
+exists	resources	lo	ມີຢູ່ແລ້ວ
 general	resources	lo	ທົ່ວໄປ
 general informations about resource	resources	lo	ຂໍ້ມູນທົ່ວໄປກ່ຽວກັບຊັບພະຍາກອນ
 gernal resource	resources	lo	ຊັບພະຍາກອນທົ່ວໄປ
+global categories	resources	lo	ໝວດທົ່ວໄປ
+hours	resources	lo	ຊົ່ວໂມງ
 how many of the resources are useable?	resources	lo	ຊັບພະຍາກອນ ທີ່ສາມາດໃຊ້ໄດ້ມີເທົ່າໃດ?
 how many of them are useable?	resources	lo	ຮູບແບບທີ່ສາມາດໃຊ້ໄດ້ມີເທົ່າໃດ?
 how many of this resource are usable	resources	lo	ຊັບພະຍາກອນ ທີ່ສາມາດໃຊ້ໄດ້ນີ້ມີເທົ່າໃດ?

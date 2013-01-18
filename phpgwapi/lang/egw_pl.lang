@@ -12,10 +12,10 @@
 - use the %1, %2 buttons to select month	jscalendar	pl	- Użyj przycisków %1, %2 aby wybrać miesiąc
 - use the %1, %2 buttons to select year	jscalendar	pl	- Użyj przycisków %1, %2 aby wybrać rok
 00 (disable)	admin	pl	00 (wyłączony)
-1 day	common	pl	1 dzień
-1 hour	common	pl	1 godzina
-1 month	common	pl	1 miesiąc
-1 week	common	pl	1 tydzień
+1 day	common	pl	jeden dzień
+1 hour	common	pl	jedna godzina
+1 month	common	pl	jeden miesiąc
+1 week	common	pl	jeden tydzień
 13 (ntp)	admin	pl	13 (ntp)
 3 number of chars for day-shortcut	jscalendar	pl	3 ilość znaków dla skrótu dnia
 3 number of chars for month-shortcut	jscalendar	pl	3 ilość znaków dla skrótu miesiąca
@@ -49,7 +49,6 @@ albania	common	pl	ALBANIA
 algeria	common	pl	ALGIERIA
 all	common	pl	Wszystko
 all fields	common	pl	wszystkie pola
-all in one	common	pl	Wszystko w jednym
 all languages	common	pl	wszystkie języki
 alphabet	common	pl	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,r,s,t,u,w,x,y,z
 alternate style-sheet:	common	pl	Alternatywny arkusz stylu
@@ -196,7 +195,7 @@ detail	common	pl	Opis szczegółowy
 details	common	pl	Opis szczegółowy
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pl	Wyłączyć poprawkę do Internet Explorera 5.5 i wyższych aby pokazać przezroczystość ilustracji PNG?
 direction left to right	common	pl	Kierunek od lewej do prawej
-directory	common	pl	Książka telefoniczna
+directory	common	pl	Katalog
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	pl	Katalog nie istnieje, serwer WWW nie ma do niego praw odczytu lub nie jest podkatalogiem DOCUMENT_ROOT
 disable internet explorer png-image-bugfix	common	pl	Wyłącz poprawkę Internet Explorera dotyczącą ilustracji png
 disable slider effects	common	pl	Wyłącz efekt płynnego przesuwania
@@ -267,7 +266,7 @@ firstname	common	pl	Imię
 fixme!	common	pl	NAPRAW MNIE!
 folder already exists.	common	pl	Folder o takiej nazwie już istnieje
 force selectbox	common	pl	Wymuś wybór z listy
-forever	common	pl	zawsze
+forever	common	pl	Na zawsze
 france	common	pl	FRANCJA
 french guiana	common	pl	GUJANA FRANCUSKA
 french polynesia	common	pl	POLINEZJA FRANCUSKA
@@ -372,7 +371,7 @@ kyrgyzstan	common	pl	KIRGISTAN
 language	common	pl	Język
 language_direction_rtl	common	pl	kierunek_tekstu_prawy_do_lewego
 lao peoples democratic republic	common	pl	LAOS
-last modified	common	pl	Ostatnio modyfikowany
+last modified	common	pl	ostatnio zmodyfikowany
 last name	common	pl	Nazwisko
 last name of the user, eg. "%1"	common	pl	nazwisko użytkownika, np. "%1"
 last page	common	pl	Ostatnia strona
@@ -395,8 +394,8 @@ local	common	pl	Lokalny
 login	common	pl	Zaloguj się
 loginid	common	pl	Identyfikator (login)
 logout	common	pl	Wylogowanie
-lost login id	common	pl	Zapomniałeś loginu ID
-lost password	common	pl	Zapomniałeś hasła
+lost login id	common	pl	Zapomniano nazwę konta
+lost password	common	pl	Zapomniano hasło
 low	common	pl	Niski
 lowest	common	pl	Najniższy
 luxembourg	common	pl	LUKSEMBURG
@@ -469,7 +468,7 @@ normal	common	pl	Normalny
 northern mariana islands	common	pl	PÓŁNOCNE WYSPY MARIANA
 norway	common	pl	NORWEGIA
 not	common	pl	nie
-not a user yet? register now	common	pl	Nie jesteś jeszcze użytkownikiem? Zarejestruj się
+not a user yet? register now	common	pl	Nie masz konta? Zapisz się teraz!
 not assigned	common	pl	nie przypisany
 not readable %1 entry of user %2	common	pl	Nie można odczytać wejścia %1 użytkownika %2
 note	common	pl	Uwaga
@@ -540,7 +539,6 @@ preferences for the idots template set	common	pl	Preferencje dla template-u idot
 prev. month (hold for menu)	jscalendar	pl	Poprz. miesiąc (zatrzymaj aby pokazać menu)
 prev. year (hold for menu)	jscalendar	pl	Poprz. rok (zatrzymaj aby pokazać menu)
 previous page	common	pl	Poprzednia strona
-primary group	common	pl	Grupa główna
 primary style-sheet:	common	pl	Podstawowy arkusz stylu:
 print	common	pl	Drukuj
 priority	common	pl	Priorytet
@@ -557,7 +555,7 @@ reading	common	pl	odczytywanie
 register	common	pl	rejestracja
 regular	common	pl	prawidłowy
 reject	common	pl	Odrzuć
-remember me	common	pl	Zapamiętaj mnie
+remember me	common	pl	zapamiętaj mnie
 remove selected accounts	common	pl	usuń wybrane konta
 remove shortcut	common	pl	Usuń skrót
 rename	common	pl	Zmień nazwę
@@ -636,7 +634,7 @@ sierra leone	common	pl	SIERRA LEONE
 simple	common	pl	prosty
 singapore	common	pl	SINGAPUR
 site configuration	common	pl	Konfiguracja serwisu
-size	common	pl	Rozmiar
+size	common	pl	Wielkość
 slovakia	common	pl	SŁOWACJA
 slovenia	common	pl	SŁOWENIA
 solomon islands	common	pl	WYSPY SALOMONA

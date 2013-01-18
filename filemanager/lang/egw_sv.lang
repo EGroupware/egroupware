@@ -1,0 +1,82 @@
+%1 already exists as a file	filemanager	sv	%1 finns redan som fil
+%1 starts with '%2'	filemanager	sv	%1 börjar med '%2'
+actions	filemanager	sv	Åtgärder
+applications	common	sv	Applikationer
+cancel editing %1 without saving	filemanager	sv	Avbryt ändring av %1 utan att spara
+cannot create directory because it begins or ends in a space	filemanager	sv	Kan inte skapa katalog eftersom namnet börjar eller slutar med ett mellanslag
+check all	filemanager	sv	Markera alla
+clear search	filemanager	sv	Rensa sökning
+comment	filemanager	sv	Kommentar
+comments cannot contain "%1"	filemanager	sv	Kommentarer kan inte innehålla "%1"
+copied %1 to %2	filemanager	sv	Kopierade %1 till %2
+copy to	filemanager	sv	Kopiera
+could not copy %1 to %2	filemanager	sv	Kunde inte kopiera %1 till %2
+could not copy file because no destination directory is given	filemanager	sv	Kunde inte kopiera filen eftersom målkatalog saknas
+could not create %1	filemanager	sv	Kunde inte skapa %1
+could not delete %1	filemanager	sv	Kunde inte radera %1
+could not move %1 to %2	filemanager	sv	Kunde inte flytta %1 till %2
+could not move file because no destination directory is given	filemanager	sv	Kan inte flytta filen eftersom ingen målkatalog saknas
+could not rename %1 to %2	filemanager	sv	Kunde inte ändra namn på %1 till %2
+could not save %1	filemanager	sv	Kunde inte spara %1
+create file	filemanager	sv	Skapa fil
+create folder	filemanager	sv	Skapa katalog
+created	filemanager	sv	Skapad
+created %1,%2	filemanager	sv	Skapade %1, %2
+created directory %1	filemanager	sv	Skapade katalogen %1
+custom fields	filemanager	sv	Anpassade fält
+cut	filemanager	sv	Klipp ut
+deleted %1	filemanager	sv	Raderade %1
+directory	filemanager	sv	Katalog
+directory %1 already exists	filemanager	sv	Katalogen %1 finns redan
+directory %1 does not exist	filemanager	sv	Katalogen %1 finns inte
+directory names cannot contain "%1"	filemanager	sv	Katalognamn kan inte innehålla "%1"
+download	filemanager	sv	Ladda ned
+edit comments	filemanager	sv	Ändra kommentar
+file	filemanager	sv	Fil
+file %1 already exists. please edit it or delete it first.	filemanager	sv	Fil %1 finns redan. Var vänlig ändra den eller ta bort den först
+file %1 could not be created.	filemanager	sv	Fil % kunde inte skapas
+file names cannot contain "%1"	filemanager	sv	Filnamn kan inte innehålla "%1"
+filemanager	common	sv	Filhanterare
+files in this directory	filemanager	sv	Objekt i katalogen
+folder up	filemanager	sv	Upp ett steg
+general	filemanager	sv	Allmänt
+go home	filemanager	sv	Gå hem
+go to	filemanager	sv	Gå till
+go to your home directory	filemanager	sv	Gå till din hemkatalog
+go up	filemanager	sv	Gå upp
+id	filemanager	sv	ID
+link	filemanager	sv	Länk
+location	filemanager	sv	Plats
+mime type	filemanager	sv	MIME-typ
+modified	filemanager	sv	Ändrad
+move	filemanager	sv	Flytta
+move to	filemanager	sv	Flytta
+moved %1 to %2	filemanager	sv	Flyttade %1 till %2
+no files in this directory.	filemanager	sv	Inga filer i katalogen
+no version history for this file/directory	filemanager	sv	Ingen versionshistorik för filen/katalogen
+open	filemanager	sv	Öppen
+operation	filemanager	sv	Åtgärd
+permissions	filemanager	sv	Behörigheter
+please select a file to delete.	filemanager	sv	Välj fil för radering
+preview	filemanager	sv	Förhandsgranska
+preview %1	filemanager	sv	Förhandsgranska %1
+preview of %1	filemanager	sv	Förhandsgransking av %1
+projectmanager	filemanager	sv	Projekthantering
+quick jump to	filemanager	sv	Hoppa till
+reload	filemanager	sv	Ladda om
+renamed %1 to %2	filemanager	sv	Döpte om %1 till %2
+replaced %1	filemanager	sv	Ersatte %2
+save %1	filemanager	sv	Spara %1
+save %1, and go back to file listing	filemanager	sv	Spara %1 och gå tillbaka till fillistan
+save changes	filemanager	sv	Spara ändringar
+saved %1	filemanager	sv	Sparade %1
+search for '%1'	filemanager	sv	Sök efter '%1'
+show	filemanager	sv	Visa
+size	filemanager	sv	Storlek
+total files	filemanager	sv	Totalt antal filer
+unused space	filemanager	sv	Ledigt utrymme
+up	filemanager	sv	Upp
+updated comment for %1	filemanager	sv	Uppdaterad kommentar för %1
+used space	filemanager	sv	Använt diskutrymme
+you do not have access to %1	filemanager	sv	Du har inte behörighet till %1
+your home dir did not exist, egroupware created a new one.	filemanager	sv	Det fanns ingen hemkatalog för dig, eGroupWare skapade en ny åt dig.

@@ -20,15 +20,14 @@ acl added.	filemanager	de	Zugriffsrecht hinzugefügt.
 acl deleted.	filemanager	de	Zugriffsrecht gelöscht.
 actions	filemanager	de	Befehle
 all files	common	de	Alle Dateien
-allow a maximum of the above configured folderlinks to be configured in settings	admin	de	erlaube das oben eingestellte Maximum an Einstellungen für Verzeichnisverweise
-and all it's childeren	filemanager	de	und alle seine Kinder
+allow a maximum of the above configured folderlinks to be configured in settings	admin	de	Erlaube das oben eingestellte Maximum an Einstellungen für Verzeichnisverweise
+and all it's childeren	filemanager	de	und alle seine Kinderelemente
 applications	common	de	Anwendungen
 basedirectory	filemanager	de	Basisverzeichnis
 can't open directory %1!	filemanager	de	Kann Verzeichnis %1 nicht öffnen!
 cancel editing %1 without saving	filemanager	de	Beende das Bearbeiten von %1 ohne zu Speichern
 cannot create directory because it begins or ends in a space	filemanager	de	Die Erstellung des Verzeichnisses schlug fehl, da es mit einem Leerzeichen beginnt oder endet
 check all	filemanager	de	Alle auswählen
-check virtual filesystem	filemanager	de	Virtuelles Dateisystem überprüfen
 clear search	filemanager	de	Suchfelder zurücksetzen
 comment	filemanager	de	Kommentar
 comments cannot contain "%1"	filemanager	de	Kommentare dürfen "%1" nicht enthalten
@@ -71,9 +70,9 @@ display of content	filemanager	de	Anzeigen des Inhaltes
 do you want to overwrite the existing file %1?	filemanager	de	Wollen Sie die existierende Datei %1 überschreiben?
 download	filemanager	de	Herunterladen
 edit comments	filemanager	de	Kommentare bearbeiten
-edit settings	filemanager	de	Einstellungen bearbeiten
+edit settings	filemanager	de	Eigenschaften bearbeiten
 enter setup user and password	filemanager	de	Setup Benutzer und Passwort eingeben
-enter setup user and password to get root rights	filemanager	de	Setup Benutzer und Passwort eingeben um root Rechte zu bekommen
+enter setup user and password to get root rights	filemanager	de	Setup Benutzer und Passwort eingeben um root Rechte zu erhalten
 enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenu zu erzeugen
 enter the complete vfs path to specify a fast access link to a folder (1).	filemanager	de	Geben Sie den kompletten Pfad ein, um einen Schnelle Zugangsverknüpfung zu einem Verzeichnis zu erzeugen (1)
 enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS Pfad zu Ihrem gewünschten Anfangsverzeichnis ein
@@ -82,7 +81,7 @@ error creating symlink to target %1!	filemanager	de	Fehler beim Anlegen einer Ve
 error deleting the acl entry!	filemanager	de	Fehler beim Löschen des Zugriffsrechts!
 executable	filemanager	de	Ausführbar
 extended access control list	filemanager	de	Erweiterte Zugriffsrechte
-extended acl	filemanager	de	Erweiterte ACL
+extended acl	filemanager	de	Erweiterte Zugriffsrechte
 failed to change permissions of %1!	filemanager	de	Konnte Zugriffsrechte von %1 nicht ändern!
 failed to create directory!	filemanager	de	Konnte Verzeichnis nicht anlegen!
 favorites	filemanager	de	Favoriten
@@ -95,17 +94,15 @@ file names cannot contain "%1"	filemanager	de	Dateinamen dürfen "%1" nicht enth
 file or directory not found!	filemanager	de	Datei oder Verzeichnis nicht gefunden!
 file successful uploaded.	filemanager	de	Datei erfolgreich hochgeladen.
 filemanager	common	de	Dateimanager
-filemanager configuration	admin	de	Dateimanager Konfiguration
+filemanager configuration	admin	de	Konfiguration Dateimanager
 files from subdirectories	filemanager	de	Dateien aus Unterverzeichnissen
 files in this directory	filemanager	de	Dateien in diesem Verzeichnis
-filesystem check reported no problems.	filemanager	de	Überprüfung des Dateisystem ergab keine Probleme.
-fix reported problems	filemanager	de	Gefundene Probleme beheben
-folder up	filemanager	de	darüberliegendes Verzeichnis
+folder up	filemanager	de	Übergeordnetes Verzeichnis
 general	filemanager	de	Allgemein
-go home	filemanager	de	Heimatverzeichnis
+go home	filemanager	de	Gehe zum Heimverzeichnis
 go to	filemanager	de	Gehe zu
 go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
-go up	filemanager	de	in das darüber liegende Verzeichnis wechseln
+go up	filemanager	de	in das übergeordnete Verzeichnis wechseln
 id	filemanager	de	Id
 inherited	filemanager	de	Geerbt
 link	filemanager	de	verknüpfen
@@ -123,9 +120,9 @@ move to	filemanager	de	Verschieben nach
 moved %1 to %2	filemanager	de	%1 nach %2 verschoben
 no access	filemanager	de	Kein Zugriff
 no files in this directory.	filemanager	de	Keine Dateien in diesem Verzeichnis.
-no preview available	filemanager	de	Keine Vorschau verfügbar
-no version history for this file/directory	filemanager	de	Keine Versionshistorie für diese Datei oder dieses Verzeichnis
-only owner can rename or delete the content	filemanager	de	Nur der Besitzer kann den Inhalt umbenennen oder löschen
+no preview available	filemanager	de	Keine Vorschau verfügbar.
+no version history for this file/directory	filemanager	de	Keine Versionshistorie für diese Datei oder dieses Verzeichnis.
+only owner can rename or delete the content	filemanager	de	Nur der Besitzer kann den Inhalt umbenennen oder löschen.
 open	filemanager	de	Öffnen
 operation	filemanager	de	Vorgang
 permission denied!	filemanager	de	Zugriff verweigert!
@@ -158,16 +155,16 @@ saving properties failed!	filemanager	de	Speichern der Eigenschaften fehlgeschla
 search for '%1'	filemanager	de	nach %1 suchen
 searchstring	filemanager	de	Suchbegriff
 select action...	filemanager	de	Befehl auswählen...
-select file to upload in current directory	filemanager	de	Datei zum hochladen in das aktuelle Verzeichnis auswählen
+select file to upload in current directory	filemanager	de	Datei zum hochladen in das aktuelle Verzeichnis auswählen.
 show	filemanager	de	Zeige
 show hidden files	filemanager	de	Zeige versteckte Dateien
-show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenu?
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenü?
 size	filemanager	de	Größe
 start search	filemanager	de	Suche starten
 startfolder	filemanager	de	Anfangsordner
 superuser	filemanager	de	Superuser
 symlink to %1 created.	filemanager	de	Verknüpfung nach %1 angelegt.
-the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	de	Die Vorgabe für das Anfangsverzeichnis ist Ihr perönlicher Ordner. Die Vorgabe wird verwendet, wenn Sie hier nichts eintragen, der Pfad nicht existiert oder Ihnen die notwendigen Zugriffsrechte fehlen.
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	de	Die Vorgabe für das Anfangsverzeichnis ist Ihr persönlicher Ordner. Die Vorgabe wird verwendet, wenn Sie hier nichts eintragen, der Pfad nicht existiert oder Ihnen die notwendigen Zugriffsrechte fehlen.
 the requested path %1 is not available.	filemanager	de	Der angeforderte Verzeichnispfad %1 steht nicht zur Verfügung.
 there's already a directory with that name!	filemanager	de	Es gibt bereits ein Verzeichnis mit diesem Namen!
 there's already a file with that name!	filemanager	de	Es gibt bereits eine Datei mit diesem Namen!
@@ -180,7 +177,7 @@ used space	filemanager	de	Benutzter Platz
 users and groups	filemanager	de	Benutzer und Gruppen
 wrong username or password!	filemanager	de	Falscher Benutzername oder Passwort!
 you are not allowed to upload a script!	filemanager	de	Sie dürfen KEINE Skripte hochladen!
-you can only grant additional rights, you can not take rights away!	filemanager	de	Sie könnnen nur zusätzliche Rechte gewähren, Rechte können NICHT weg genommen werden!
+you can only grant additional rights, you can not take rights away!	filemanager	de	Sie können nur zusätzliche Rechte gewähren, Rechte können NICHT weg genommen werden!
 you do not have access to %1	filemanager	de	Sie besitzen keine Zugriffsrechte für %1
 you need to select an owner!	filemanager	de	Sie müssen einen Eigentümer auswählen!
 you need to select some files first!	filemanager	de	Sie müssen zuerst die Dateien auswählen!

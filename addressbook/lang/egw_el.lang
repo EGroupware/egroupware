@@ -20,6 +20,7 @@ add a single entry by passing the fields.	addressbook	el	Προσθέστε έν
 add business email of whole distribution list?	addressbook	el	Προσθήκη email εργασίας ολόκληρης της λίστας διανομής;
 add custom field	addressbook	el	Πρόσθεση Τυχαίου Πεδίου
 add to distribution list:	addressbook	el	Προσθήκη στη λίστα διανομής:
+added	addressbook	el	Προστέθηκε
 added by synchronisation	addressbook	el	προστέθηκε συγχρονισμένα
 added to distribution list	addressbook	el	προστέθηκε στη λίστα διανομής
 additional information about using ldap as contact repository	admin	el	Επιπρόσθετες πληροφορίες για τη χρήση του LDAP ως αποθήκη επαφής
@@ -141,6 +142,7 @@ end	addressbook	el	Τέλος
 enter the path to the exported file here	addressbook	el	Εισάγετε τη διαδρομή για το αρχείο εξαγωγής εδώ
 error deleting the contact !!!	addressbook	el	Σφάλμα στη διαγραφή της επαφής !!!
 error saving the contact !!!	addressbook	el	Σφάλμα στην αποθήκευση της επαφής !!!
+error: the entry has been updated since you opened it for editing!	addressbook	el	Σφάλμα:η καταχώρηση έχει ενημερωθεί από όταν την ανοίξατε για προσαρμογή!
 existing links	addressbook	el	Υπάρχοντες σύνδεσμοι
 export	addressbook	el	εξαγωγή
 export as csv	addressbook	el	Εξαγωγή ως CSV
@@ -172,6 +174,7 @@ grant addressbook access	common	el	Πρόσβαση στο βιβλίο Διευ
 group %1	addressbook	el	Ομάδα %1
 hide accounts from addressbook	addressbook	el	Απόκρυψη λογαριασμών από το βιβλίο διευθύνσεων
 hides accounts completly from the adressbook.	addressbook	el	Αποκρύπτει λογαριασμούς εντελώς από το βιβλίο διευθύνσεων
+history logging	admin	el	Ιστορικό εισόδων
 home address	addressbook	el	Διεύθυνση οικίας
 home address, birthday, ...	addressbook	el	Διεύθυνση οικίας, Γενέθλια, ...
 home city	addressbook	el	Πόλη οικίας
@@ -181,7 +184,6 @@ home phone	addressbook	el	Τηλέφωνο οικίας
 home state	addressbook	el	Νομός οικίας
 home street	addressbook	el	Διεύθυνση οικίας
 home zip code	addressbook	el	Τ.Κ. οικίας
-how many contacts should non-admins be able to export (empty = no limit)	admin	el	Πόσες επαφές επιθυμείτε οι μη διαχεριστές να μπορούν να εξάγουν (κενό=απεριόριστες)
 icon	addressbook	el	Εικόνα
 if accounts are already in ldap	admin	el	αν οι λογαριασμοί είναι ακόμα στο LDAP
 import	addressbook	el	Εισαγωγή
@@ -196,6 +198,7 @@ import next set	addressbook	el	Εισαγωγή επόμενου σετ
 import_instructions	addressbook	el	Στο Netscape, ανοίξτε την ατζέντα διευθύνσεων και επιλέξτε <b>Εξαγωγή</b> από το <b>Αρχείο</b>. Το εξαγώγιμο αρχείο θα είναι σε LDIF μορφή.<p>Ή, στο Outlook, επιλέξτε το φάκελο Eπαφών, επιλέξτε<b>Import and Export...</b> από το <b>File</b> menu και εξάγετε τις επαφές σας σε ένα CSV αρχείο.<p>Ή, στο Palm Desktop 4.0 ή μεγαλύτερο, επισκεφθείτε το βιβλίο διευθύνσεων σας και επιλέξτε <b>Export</b> από το <b>File</b> menu.Το εξαγώγιμο αρχείο θα ειναι σε VCard μορφή.
 in %1 days (%2) is %3's birthday.	addressbook	el	Σε %1 ημέρες (%2) είναι του/της %3 τα γενέθλια.
 income	addressbook	el	Εισόδημα
+infolog	addressbook	el	Infolog
 insufficent rights to delete this list!	addressbook	el	Ανεπαρκή δικαιώματα για διαγραφή αυτής της λίστας!
 international	addressbook	el	Διεθνείς
 label	addressbook	el	Ετικέττα
@@ -214,6 +217,7 @@ list already exists!	addressbook	el	Η λίστα υπάρχει ήδη
 list created	addressbook	el	Η λίστα δημιουργήθηκε
 list creation failed, no rights!	addressbook	el	Η δημιουργία της λίστας απέτυχε, δεν έχετε το δικαίωμα!
 load vcard	addressbook	el	Φόρτωση VCard
+location	addressbook	el	Τοποθεσία
 locations	addressbook	el	τοποθεσίες
 mark records as private	addressbook	el	Σημείωση εγγραφών ως ιδιωτικές
 merge into first or account, deletes all other!	addressbook	el	Συγχώνευση στο πρώτο ή το λογαριασμό,διαγραφή όλων των άλλων
@@ -246,6 +250,7 @@ other phone	addressbook	el	Αλλο τηλέφωνο
 own sorting	addressbook	el	προσωπική ταξινόμηση
 pager	common	el	Αριθμός μπίπερ
 parcel	addressbook	el	Πακέτο
+participants	addressbook	el	Συμμετέχοντες
 permission denied !!!	addressbook	el	Άδεια απορρίπτεται !!!
 phone number	common	el	Αριθμός τηλεφώνου
 phone numbers	common	el	Αριθμοί τηλεφώνων
@@ -266,6 +271,7 @@ record access	addressbook	el	Πρόσβαση Εγγραφής
 record owner	addressbook	el	Ιδιοκτήτης εγγραφής
 remove selected contacts from distribution list	addressbook	el	Αφαίρεση επιλεγμένων επαφών από τη λίστα διανομής
 removed from distribution list	addressbook	el	Αφαιρέθηκε από τη λίστα διανομής
+repetition	addressbook	el	Επανάληψη
 required fields *	addressbook	el	απαιτούμενα πεδία *
 role	addressbook	el	Ρόλος
 room	addressbook	el	Γραφείο
@@ -312,6 +318,7 @@ tomorrow is %1's birthday.	common	el	Αύριο είναι τα γενέθλια
 translation	addressbook	el	Μετάφραση
 type	addressbook	el	Τύπος
 update a single entry by passing the fields.	addressbook	el	Ενημέρωση συγκεκριμένης καταχώρησης εισάγωντας τα πεδία
+updated	addressbook	el	Ενημερώθηκε
 upload or delete the photo	addressbook	el	Φορτώστε ή διαγράψτε τη φωτογραφία
 use an extra category tab?	addressbook	el	Χρήση μιας επιπλέον ετικέτας κατηγοριών
 use country list	addressbook	el	Χρήση καταλόγου χωρών
@@ -336,6 +343,7 @@ yes, for the next three days	addressbook	el	Ναι, για τις επόμενε
 yes, for the next two weeks	addressbook	el	Ναι, για τις επόμενες δύο εβδομάδες
 yes, for the next week	addressbook	el	Ναι, για την επόμενη εβδομάδα
 yes, for today and tomorrow	addressbook	el	Ναι, για σήμερα και αύριο
+yes, only admins can purge deleted items	admin	el	Ναι, μόνο ο διαχειριστής μπορεί να καθαρίσει τα αντικείμενα που έχουν διαγραφεί
 you are not permitted to delete contact %1	addressbook	el	Δεν έχετε άδεια να διαγράψετε την επαφή %1
 you are not permittet to delete this contact	addressbook	el	Δεν έχετε άδεια να διαγράψετε αυτήν την επαφή
 you are not permittet to edit this contact	addressbook	el	Δεν έχετε άδεια να επεξεργαστείτε αυτήν την επαφή
@@ -348,4 +356,3 @@ you need to select a distribution list	addressbook	el	Πρέπει να επιλ
 you need to select some contacts first	addressbook	el	Πρέπει να επιλέξετε κάποιες επαφές πρώτα
 zip code	common	el	Τ.Κ.
 zip_note	addressbook	el	<p><b>Σημείωση:</b> Το αρχείο μπορεί να είναι μια συλλογή συμπιεσμένων αρχείων .csv, .vcf, ή .ldif αρχείων. Εντούτοις, μην αναμίξτε τους τύπους αρχείου ανά εισαγωγή.
-deleted	addressbook	el	διεγράφη

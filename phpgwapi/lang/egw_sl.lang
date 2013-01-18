@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	sl	Vnesenih %1 E-naslovov
 %1 is not executable by the webserver !!!	common	sl	Spletni strežnik ne more zagnati %1!
-%1 manual	common	sl	Priročnik %1
-%1 start	common	sl	Zaženi %1
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	sl	%1Izberite drugo mapo%2<br /> ali nastavite, da bo %3 zapisljiva za spletni strežnik
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sl	%1eGroupWare%2 je večuporabniški, spletno osnovani paket za skupinsko delo, napisan v %3PHP%4-ju.
 (session restored in %1 seconds)	common	sl	(seja je bila vzpostavljena v % sekundah)
@@ -48,6 +46,7 @@ albania	common	sl	ALBANIJA
 algeria	common	sl	ALŽIRIJA
 all	common	sl	Vse
 all fields	common	sl	vsa polja
+all languages	common	sl	vsi jeziki
 alphabet	common	sl	a,b,c,č,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,š,t,u,v,w,x,y,z,ž
 alternate style-sheet:	common	sl	Nadomestna (CSS) predloga
 american samoa	common	sl	AMERIŠKA SAMOA
@@ -188,6 +187,7 @@ detail	common	sl	Podrobnost
 details	common	sl	Podrobnosti
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sl	Onemogoči izvajanje skripte, ki popravi hrošča pri prikazu transparentnih PNG slik v Microsoft Internet Explorerju 5.5 in višjih?
 direction left to right	common	sl	Smer levo proti desni
+directory	common	sl	Mapa
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	sl	Mapa ne obstaja, ni berljiva s strani spletnega strežnika ali ni podana relativno na koren dokumentov (document root)!
 disable internet explorer png-image-bugfix	common	sl	Onemogoči popravek PNG hrošča v IE?
 disable slider effects	common	sl	Onemogoči učinek drsnika
@@ -216,7 +216,6 @@ edit categories	common	sl	Popravi kategorije
 edit category	common	sl	Popravi kategorijo
 egroupware	common	sl	eGroupWare
 egroupware api version	common	sl	Različica API eGroupWare
-egroupware api version %1	common	sl	eGroupWare API različica %1
 egroupware: login blocked for user '%1', ip %2	common	sl	eGroupWare: prijava uporabnika '%1' na IPju '%2' onemogočena.
 egypt	common	sl	EGIPT
 el salvador	common	sl	SALVADOR
@@ -358,6 +357,7 @@ kyrgyzstan	common	sl	KIRGIZISTAN
 language	common	sl	Jezik
 language_direction_rtl	common	sl	language_direction_rtl
 lao peoples democratic republic	common	sl	LAOS
+last modified	common	sl	Nazadnje spremenjeno
 last name	common	sl	Priimek
 last name of the user, eg. "%1"	common	sl	Priimek uporabnika, npr. "%1"
 last page	common	sl	Zadnja stran
@@ -544,6 +544,7 @@ remove shortcut	common	sl	Odstrani bližnjico
 rename	common	sl	Preimenuj
 replace	common	sl	Zamenjaj
 replace with	common	sl	Zamenjaj z
+restore failed	common	sl	Obnovitev je splodletela
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	sl	Vrne poln seznam uporabnikov sistema. Pozor: seznam je lahko precej dolg.
 returns an array of todo items	common	sl	Vrne niz opravil
 returns struct of users application access	common	sl	Vrne strukturo dostopanja uporabnikov do programa
@@ -613,6 +614,8 @@ showing %1 - %2 of %3	common	sl	Prikazani %1 - %2 od %3
 sierra leone	common	sl	SIERRA LEONE
 simple	common	sl	Preprosto
 singapore	common	sl	SINGAPUR
+site configuration	common	sl	Nastavitve strežnika
+size	common	sl	Velikost
 slovakia	common	sl	SLOVAŠKA
 slovenia	common	sl	SLOVENIJA
 solomon islands	common	sl	SOLOMONOVO OTOČJE
@@ -706,6 +709,7 @@ username	common	sl	Uporabniško ime
 users	common	sl	Uporabniki
 users choice	common	sl	Uporabnikov izbor
 uzbekistan	common	sl	UZBEKISATAN
+value	common	sl	Vrednost
 vanuatu	common	sl	VANUATU
 venezuela	common	sl	VENEZUELA
 version	common	sl	Različica
@@ -753,4 +757,3 @@ your settings have been updated	common	sl	Vaše nastavitve so bile posodobljene
 zambia	common	sl	ZAMBIJA
 zimbabwe	common	sl	ZIMBABVE
 zoom	common	sl	Zoom
-site configuration	common	sl	Nastavitve strežnika

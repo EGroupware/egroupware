@@ -197,9 +197,9 @@ database is version %1 and up to date.	setup	pl	wersja bazy danych to %1 i jest 
 database successfully converted from '%1' to '%2'	setup	pl	Baza danych poprawnie skonwertowana z '%1' do '%2'
 datebase %1 droped.	setup	pl	Baza danych %1 usunięta.
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	pl	Port czasowy <br />Jeśli używany port 13, ustaw reguły Firewall przed zatwierdzeniem zmian.<br />(Port: 13 / Host: 129.6.15.28)
-day	setup	pl	dzień
+day	setup	pl	Dzień
 day of week<br />(0-6, 0=sunday)	setup	pl	dzień tygodnia <br />(0-6, 0=niedziela)
-db backup and restore	setup	pl	Kopia bezpieczeństwa DB i przywracanie
+db backup and restore	setup	pl	Kopie zapasowe bazy danych
 db host	setup	pl	Host DB
 db name	setup	pl	Nazwa DB
 db password	setup	pl	Hasło DB
@@ -208,9 +208,8 @@ db root password	setup	pl	Hasło root do bazy danych
 db root username	setup	pl	nazwa użytkownika root bazy danych
 db type	setup	pl	Typ DB
 db user	setup	pl	Użytkownik DB
-default	setup	pl	polecane ustawienia domyślne
+default	setup	pl	Domyślne
 default file system space per user/group ?	setup	pl	Domyślny rozmiar plików na użytkownika/grupę ?
-delete	setup	pl	Usuń
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	pl	Usuń wszystkie konta SQL, grupy, prawa i preferencje (standardowo nie wymagane) ?
 delete all my tables and data	setup	pl	Uswanie wszystkich moich tabel i danych
 delete all old languages and install new ones	setup	pl	Usuń wszystkie języki i zainstaluj je na nowo
@@ -262,7 +261,7 @@ enter the full path for users and group files.<br />examples: /files, e:\files	s
 enter the full path for users and group files.<br />examples: /files, e:files	setup	pl	Podaj pełną śieżkę do plików użytkowników i grup.<br />Na przykład: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	pl	Wprowadź pełną ścieżkę do katalogu kopii bezpieczeństwa. <br/> jeśli pusta: katalog plików
 enter the hostname of the machine on which this server is running	setup	pl	Podaj nazwę komputera, na którym jest uruchomiony serwer
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pl	Podaj URL do twojego portalu eGroupWare's URL.<br />Na przykład: http://www.domain.com/egroupware   or   /egroupware<br /><b>Bez kończącego ciacha (,,/'')</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pl	Podaj URL do twojego portala eGroupWare's URL.<br />Na przykład: http://www.domain.com/egroupware   or   /egroupware<br /><b>Bez kończącego ciacha (,,/'')</b>
 enter the site password for peer servers	setup	pl	Wprowadź hasło serwisu dla serwerów równorzędnych (peer servers)
 enter the site username for peer servers	setup	pl	Wprowadź nazwę użytkownika serwisu dla serwerów równorzędnych (peer servers)
 enter the title for your site	setup	pl	Podaj nazwę swojego portala (serwisu)
@@ -283,7 +282,7 @@ false	setup	pl	Błąd
 file	setup	pl	Plik
 file type, size, version, etc.	setup	pl	typ pliku, rozmiar, wersja, itd.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	pl	Ładowanie plików zostało wyłączone: Nie możesz korzystać z manadzerów plików ani dodawać plików w różnych aplikacjach !
-filename	setup	pl	nazwa pliku
+filename	setup	pl	Nazwa pliku
 filesystem	setup	pl	System plików
 filesystem (default)	setup	pl	System plików ( domyślnie)
 force selectbox	setup	pl	Wymuś wybór z listy
@@ -292,7 +291,6 @@ gives further options	setup	pl	daje więcej możliwości
 go back	setup	pl	Powrót
 go to	setup	pl	Idź do
 grant access	setup	pl	Przydziel dostęp
-group	setup	pl	grupa
 group memberships will be migrated too.	setup	pl	Zawartość grupy będzie również zmigrowana .
 has a version mismatch	setup	pl	ma niezgodną wersję
 header admin login	setup	pl	Logowanie do administrowania domenami eGW
@@ -314,13 +312,13 @@ however the tables are still in the database	setup	pl	Mimo to tabele są ciągle
 however, the application is otherwise installed	setup	pl	Mimo to aplikacja jest zainstalowana
 however, the application may still work	setup	pl	Mimo to aplikacja może ciągle pracować
 http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	pl	typy autoryzacji HTTP (oddzielone przecinkami) do używania bez strony logowania, np. "NTLM"
-if no acl records for user or any group the user is a member of	setup	pl	Jeśli brak rekordów ACL dla użytkownika albo grupy dla której użytkownik jest członkiem
+if no acl records for user or any group the user is a member of	setup	pl	Jeśli brak uprawnień dostępu (ACL) dla użytkownika lub jakiejkolwiek grupy, której użytkownik jest członkiem
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	pl	Jeśli tryb bezpieczny (safe_mode) jest aktywny, eGW nie może zmieniać różnych ustawień poprzez runtime ani nie można załadować do tej pory niezaładowanych modułów.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	pl	Jeśli aplikacja nie ma zdefiniowanych tabel, wybór aktualizacji rozwiąże problem.
 if using ads (active directory) authentication	setup	pl	Jeśli używana autoryzacja  ADS (Active Directory)
 if using cas (central authentication service):	setup	pl	Jeśli używany CAS (Central Authentication Service):
 if using ldap	setup	pl	Jeśli używany LDAP
-if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	pl	Jeśli używany LDAP, czy chcesz zarządzać  atrybutami katalogów domowych i loginów shell ?
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	pl	Jeżeli używasz LDAP, czy chciałbyś administrować katalogiem domowym i atrybutami powłoki?
 if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	pl	Jeśli masz tylko dostęp do docroot, wybierz <b>Bazę danych</b> gdzie przechowujesz zawartość plików i użyj tej samej ścieżki do folderu plików tymczasowych.
 if you did not receive any errors, your applications have been	setup	pl	Jeśli nie dostałeś żadnego błędu, aplikacja istnieje
 if you did not receive any errors, your tables have been	setup	pl	Jeśli nie dostałeś żadnego błędu, tabele istnieją
@@ -340,9 +338,7 @@ installation started, this might take a few minutes ...	setup	pl	Instalacja rozp
 installed	setup	pl	Zainstalowano
 instructions for creating the database in %1:	setup	pl	Polecenia dla utworzenia bazy danych w %1:
 invalid argument '%1' !!!	setup	pl	Błędny argument '%1' !!!
-invalid ip address	setup	pl	Błędny adres IP
 invalid mcrypt algorithm/mode combination	setup	pl	Błędny algorytm kombinacji MCrypt
-invalid password	setup	pl	Błędne hasło
 is broken	setup	pl	is broken
 is disabled	setup	pl	Jest zablokowane
 is in the webservers docroot	setup	pl	obecny w docroot serwera WEB
@@ -372,7 +368,7 @@ login to mysql -	setup	pl	Logowanie do mysql -
 loginname needed for domain configuration	setup	pl	Login konieczny dla konfiguracji domeny
 logout	setup	pl	Wyloguj
 mail domain (for virtual mail manager)	setup	pl	Domena mailowa (dla wirtualnego mail manadżera )
-mail server login type	setup	pl	Typ loginy do serwera Mail
+mail server login type	setup	pl	Typ logowania do serwera poczty
 mail server protocol	setup	pl	Protokół serwera Mail
 make sure that your database is created and the account permissions are set	setup	pl	Upewnij się, że baza danych została utworzona i uprawnienia kont są ustawione
 manage applications	setup	pl	Zarządzanie aplikacjami
@@ -389,18 +385,17 @@ memory_limit is set to less than %1: some applications of egroupware need more t
 migration between egroupware account repositories	setup	pl	Migracja międzu repozytoriami kont eGroupware
 min backup count	setup	pl	Liczba kopi bezpieczeństwa do przechowywania (zero: wszystkie/ bez limitu)
 minimum account id (e.g. 500 or 100, etc.)	setup	pl	Minimalny ID konta (np. 500 lub 100, itd.)
-minute	setup	pl	minut
 missing or uncomplete mailserver configuration	setup	pl	Konfiguracja serwera mail nieobecna lub niekompletna
 modifications have been completed!	setup	pl	Zmiany zostały wprowadzone!
-modified	setup	pl	zmodyfikowano
+modified	setup	pl	Zmodyfikowany
 modify	setup	pl	Modyfikuj
-month	setup	pl	miesiąc
+month	setup	pl	Miesiąc
 multi-language support setup	setup	pl	Instalacja wersji językowych
 name of database	setup	pl	Nazwa bazy danych
 name of db user egroupware uses to connect	setup	pl	Nazwa bazy danych użytkowników eGW używane do połączeń
 never	setup	pl	Nigdy
-new	setup	pl	Nowy
-next run	setup	pl	następne uruchomienie
+new	setup	pl	Nowa
+next run	setup	pl	Termin następnego wykonania
 no	setup	pl	Nie
 no %1 support found. disabling	setup	pl	Brak wsparcia %1. Dezaktywowano
 no accounts existing	setup	pl	Brak kont
@@ -416,7 +411,7 @@ not all mcrypt algorithms and modes work with egroupware. if you experience prob
 not complete	setup	pl	Nie gotowe
 not completed	setup	pl	Nie zakończone
 not ready for this stage yet	setup	pl	Jeszcze nie gotowe na tym etapie
-not set	setup	pl	nie ustawione
+not set	setup	pl	nie ustawiono
 note: you will be able to customize this later	setup	pl	Uwaga: Będzie można zmienić to później
 nothing to change.	setup	pl	Brak elementów do wprowadzenia zmian.
 now guessing better values for defaults...	setup	pl	Teraz zgadnij lepsze wartości niż domyślne...
@@ -432,14 +427,13 @@ or %1continue to the header admin%2	setup	pl	lub %1 kontunuj w Header Admin %2
 or http://webdav.domain.com (webdav)	setup	pl	lub http://webdav.domain.com (WebDAV)
 or we can attempt to create the database for you:	setup	pl	Lub baza danych może zostać stworzona dla Ciebie:
 or you can install a previous backup.	setup	pl	Lub możesz zainstalować wcześniejsza kopię bezpieczeństwa
-password for smtp-authentication	setup	pl	Hasło do autoryzacji SMTP
+password for smtp-authentication	setup	pl	Hasło do autentyfikacji SMTP
 password needed for domain configuration.	setup	pl	Wymagane hasło konfiguracji domeny.
 password of db user	setup	pl	Hasło użytkownika bazy danych
 passwords did not match, please re-enter	setup	pl	Hasła nie są identyczne, proszę wpisać je jeszcze raz
 path (not url!) to your egroupware installation.	setup	pl	Ścieżka (nie URL!) do instalacji eGroupware.
 path information	setup	pl	Ścieżki
 path of egroupware install directory (default auto-detected)	setup	pl	ścieżka do katalogu instalacji eGroupware (domyślnie auto wykrywanie)
-path to user and group files has to be outside of the webservers document-root!!!	setup	pl	Ścieżka do plików użytkownika  grup musi być poza głównym folderem instalacji (document-root) serwera WEB
 path to various directories: have to exist and be writeable by the webserver	setup	pl	ścieżka do różnych katalogów: musi istnieć i mieć prawa zapisu dla serwera WEB
 pear (%1) is a php repository and is usually in a package called %2.	setup	pl	Pear (%1) jest repozytorium PHP i zawiera się w pakiecie %2.
 pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	pl	Rozszerzenia PEAR są wymagane przez wiele różnych aplikacji eGroupware, PEAR sam w sobie jest podstawą wymogów dla każdego rozszerzenia!
@@ -459,7 +453,6 @@ please install	setup	pl	Proszę zainstalować
 please login	setup	pl	Proszę się zalogować
 please login to egroupware and run the admin application for additional site configuration	setup	pl	Proszę zalogować się się do eGroupWare i wejść do modułu Administracja dla dalszej konfiguracji
 please make the following change in your php.ini	setup	pl	Wykonaj następujące zmiany w pliku php.ini
-please wait...	setup	pl	Czekaj
 pop/imap mail server hostname or ip address	setup	pl	nazwa lub adres IP serwera mail - POP/IMAP
 possible reasons	setup	pl	Prawdopodobne przyczyny
 possible solutions	setup	pl	Możliwe rozwiazania
@@ -482,7 +475,6 @@ registered	setup	pl	Zarejestrowano
 rejected lines	setup	pl	Odrzucone linie
 remove	setup	pl	Usuń
 remove all	setup	pl	Usuń wszystko
-rename	setup	pl	zmień nazwę
 requires reinstall or manual repair	setup	pl	Wymaga reinstalacji lub ręcznej naprawy
 requires upgrade	setup	pl	Wymaga aktualizacji
 resolve	setup	pl	Rozwiąż
@@ -495,28 +487,27 @@ return to setup	setup	pl	Wróć do menu Setup
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	pl	uruchom aktualizację schematu bazy danych (jeśli wymagane): domain(all),[config user(admin)],password
 run installation tests	setup	pl	Uruchom test instalacji
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	pl	tryb bezpieczny safe_mode jest włączony. System jest bardziej bezpieczny.
-save	setup	pl	Zapisz
 save this text as contents of your header.inc.php	setup	pl	Zapisz ten tekst jako zawartość pliku header.inc.php
 schedule	setup	pl	zaplanuj
 scheduled backups	setup	pl	zaplanowane wykonanie kopii bezpieczeństwa
-select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	pl	Wybierz aplikację, wprowadź docelową wersję, następnie zatwierdź by przejść do tej wersji.<br/>Jeśli nie wybierzesz wersji, tylko podstawowe tabele będą utworzone dla aplikacji<br /><blink>TA KOMENDA NAJPIERW USUNIE WSZYSTKIE TABELE DLA APLIKACJI !</blink>
+select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	pl	Select an app, enter a target version, then submit to process to that version.<br />If you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>THIS WILL DROP ALL OF THE APPS' TABLES FIRST!</blink>
 select one...	setup	pl	wybierz jeden...
-select the default applications to which your users will have access	setup	pl	Wybierz domyślną aplikację do której użytkownicy będą mieli dostęp.
+select the default applications to which your users will have access	setup	pl	Select the default applications to which your users will have access
 select the desired action(s) from the available choices	setup	pl	Wybierz z dostępnych żądane polecenie
 select to download file	setup	pl	Select to download file
 select where you want to store/retrieve user accounts	setup	pl	Wybierz gdzie chcesz przechowywać konta użytkowników
 select which group(s) will be exported	setup	pl	Wybierz które grupy bedą eksportowane
-select which group(s) will be imported (group membership will be maintained)	setup	pl	Wybierz grupę(y) do zaimportowania (członkowie grupy będą również zaimportowani)
+select which group(s) will be imported (group membership will be maintained)	setup	pl	Select which group(s) will be imported (group membership will be maintained)
 select which group(s) will be modified (group membership will be maintained)	setup	pl	Wybierz które grupy będą zmodyfikowane (członkowie grup będą zachowani)
 select which languages you would like to use	setup	pl	Wybierz te języki, które chcesz zainstalować
 select which method of upgrade you would like to do	setup	pl	Wybierz metodę aktualizacji
 select which type of authentication you are using	setup	pl	Wybierz rodzaj autentykacji, który chcesz używać
 select which user(s) will also have admin privileges	setup	pl	Wybierz użytkowników którzy mają przywileje ADMIN
-select which user(s) will be exported	setup	pl	Wybierz użytkowników do eksportu
-select which user(s) will be imported	setup	pl	Wybierz użytkowników do importu
+select which user(s) will be exported	setup	pl	Select which user(s) will be exported
+select which user(s) will be imported	setup	pl	Select which user(s) will be imported
 select which user(s) will be modified	setup	pl	Wybierz użytkowników do modyfikacji
-select which user(s) will have admin privileges	setup	pl	Wybierz użytkowników którzy nabędą uprawnienia ADMIN
-select your old version	setup	pl	Wybierz swoją poprzednią wersję
+select which user(s) will have admin privileges	setup	pl	Select which user(s) will have admin privileges
+select your old version	setup	pl	Select your old version
 selectbox	setup	pl	Wybór z listy
 server root	setup	pl	Katalog główny serwera (Serwer Root)
 session handler class used.	setup	pl	Klasa do obsługi sesją
@@ -526,12 +517,11 @@ set and not	setup	pl	ustaw i nie
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	pl	Ustawienie systemu kodowania znaków do UTF-8 (unicode) pozwala na współistnienie języków o różnym kodowaniu obok siebie.
 settings	setup	pl	Ustawienia
 setup	setup	pl	Setup
-setup main menu	setup	pl	Menu główne
 setup the database	setup	pl	Setup bazy danych
 setup/config admin login	setup	pl	Logowanie do konfiguracji domeny eGW
 show 'powered by' logo on	setup	pl	Wyświetlaj logo 'działa w oparciu o'
 sieve: host[,port(2000)]	setup	pl	Nawiąż połączenie do: Host[,Port(2000)]
-size	setup	pl	rozmiar
+size	setup	pl	Wielkość
 skip the installation tests (not recommended)	setup	pl	Pomiń test poprawności instalacji
 smtp server hostname or ip address	setup	pl	Adres lub IP serwera SMTP
 smtp server port	setup	pl	Port serwera SMTP
@@ -560,7 +550,7 @@ successful connected to ldap server on %1 using dn %2.	setup	pl	Poprawnie połą
 supported node types:	setup	pl	Typy wspieranych węzłów
 table change messages	setup	pl	Komunikaty zmiany tabel
 tables dropped	setup	pl	Usunięto tabele
-tables installed, unless there are errors printed above	setup	pl	Zainstalowano tabele, chyba że wystąpiły powyżej błędy
+tables installed, unless there are errors printed above	setup	pl	Zainstalowano tabele, unless there are errors printed above
 tables upgraded	setup	pl	Tabele zaktualizowano
 target version	setup	pl	Wersja docelowa
 tcp port number of database server	setup	pl	Port TCP serwera bazy danych
@@ -628,45 +618,41 @@ use cookies to pass sessionid	setup	pl	Używać cookie do przechowywania session
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	pl	Użyj mcrypt do kodowania danych sesji: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]
 use persistent db connections: {on(default) | off}	setup	pl	użyj stałego połączenia do bazy danych: {on(default) | off}
 use pure html compliant code (not fully working yet)	setup	pl	Use pure HTML compliant code (not fully working yet)
-user	setup	pl	użytkownik
 user account prefix	setup	pl	Prefiks konta użytkownika
-user for smtp-authentication (leave it empty if no auth required)	setup	pl	Użyj dla autoryzacji SMTP (pozostaw puste jeśli autoryzacja nie wymagana)
+user for smtp-authentication (leave it empty if no auth required)	setup	pl	Użytkownik dla logowania SMTP (pozostaw puste jeśli nie jest wymagane)
 usernames (comma-separated) which can get vfs root access (beside setup user)	setup	pl	Nazwy użytkowników (oddzielone przecinkami) którzy mogą mieć dostęp do VFS (poza tym skonfiguruj użytkowników)
 usernames are casesensitive	setup	pl	Nazwa użytkownika jest czuła na wielkość liter
 users choice	setup	pl	Wybór użytkownika
 usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	pl	Zwykle bardziej denerwujące. <br/> Administratorzy mogą używać Admin >> Zarządzania kontami lub grupami by zapewnić dostęp do wcześnie kolejnych aplikacji.
 utf-8 (unicode)	setup	pl	Utf-8 (Unicode)
 validation errors	setup	pl	Błąd walidacji
-version	setup	pl	wersja
 version mismatch	setup	pl	Niezgodne wersje
-view	setup	pl	Pokaż
 virtual filesystem	setup	pl	Wirtualny system plików VFS
 virtual mail manager (login-name includes domain)	setup	pl	Wirtualny manadżer maili (nazwa do logowania powinna zawierać domenę)
 warning!	setup	pl	Ostrzeżenie!
 we can proceed	setup	pl	Można kontynuować
 we could not determine the version of %1, please make sure it is at least %2	setup	pl	Nie można ustalić wersji dla %1, sprawdź czy jest to przynajmniej wersja %2
-we will automatically update your tables/records to %1	setup	pl	Rekordy/Tabele zostaną zaktualizowane do %1
+we will automatically update your tables/records to %1	setup	pl	We will automatically update your tables/records to %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	pl	Zostaną przeprowadzone testy -- to może zająć kilka minut -- Wybierz poniższy link by zatwierdzić.
 welcome to the egroupware installation	setup	pl	Witamy w instalacji systemu eGroupware
 where should egroupware store file content	setup	pl	Gdzie eGW powinien przechowywać zawartość plików
 which database type do you want to use with egroupware?	setup	pl	Którą bazę danych chcesz używać z eGroupware
 world readable	setup	pl	do odczytu
 world writable	setup	pl	do zapisu
-would you like egroupware to cache the phpgw info array ?	setup	pl	Czy chcesz by EGW wrzucił do pamięci cache phpgw informacje o tablicy ?
+would you like egroupware to cache the phpgw info array ?	setup	pl	Would you like eGroupWare to cache the phpgw info array ?
 would you like egroupware to check for a new version<br />when admins login ?	setup	pl	Chcesz sprawdzać czy jest nowa wersja eGroupWare<br />gdy loguje się administrator?
-would you like to show each application's upgrade status ?	setup	pl	Czy chcesz zobaczyć status aktualizacji dla każdej aplikacji ?
+would you like to show each application's upgrade status ?	setup	pl	Would you like to show each application's upgrade status ?
 writable by the webserver	setup	pl	do zapisu przez serwer WEB
-write	setup	pl	Wpisz
+write	setup	pl	Zapisz
 wrong credentials to access the header.inc.php file!	setup	pl	Błędne uprawnienia dostępu do pliku header.inc.php!
-year	setup	pl	rok
 yes	setup	pl	Tak
 yes, with lowercase usernames	setup	pl	Tak, nazwa użytkownika pisana małymi literami
-you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	pl	Wygląda na to że używasz wersji beta eGroupWare.<br />Wersja ta nie jest dłużej wspierana i nie można wykonać na niej aktualizacji do nowszej w menu setup.<br /> Wykonaj najpierw aktualizację do wersji 0.9.10 (wersja ta wspiera aktualizację) <br /> następnie wykonaj aktualizację do najnowszej wersji.
+you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	pl	You appear to be running a pre-beta version of eGroupWare.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	pl	Prawdopodobnie używasz starszej wersji PHP<br/> Zalecana jest aktualizacja do nowej wersji. <br/> eGroupware może nie działać ze starszymi wersjami PHP, jeśli w ogóle. <br/><br/> Wykonaj aktualizację przynajmniej do wersji %1.
 you appear to be running version %1 of egroupware	setup	pl	You appear to be running version %1 of eGroupWare
 you appear to have %1 support.	setup	pl	Wygląda na to że masz wsparcie dla %1
 you appear to have xml support enabled	setup	pl	Wygląda na to, że jest dostępne wsparcie dla XML.
-you are ready for this stage, but this stage is not yet written.<br />	setup	pl	Jesteś gotowy na przejście tego kroku jednak dane nie zostały jeszcze uzupełnione.<br />
+you are ready for this stage, but this stage is not yet written.<br />	setup	pl	You are ready for this stage, but this stage is not yet written.<br />
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	pl	Używana wersja PHP %1. eGroupware wymaga teraz wersji %2 lub wcześniejszej, polecana wersja PHP - %3.
 you can install it by running:	setup	pl	Można zainstalować to wydając polecenie:
 you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	pl	Możesz teraz używać użytkownika i hasła z HEADER do wszystkich domen. Jeśli to hasło nie jest ustawione przez linię poleceń, to jest pobierane ze zmiennych systemowych EGW_CLI_PASSWORD lub oczekuje podania przez użytkownika.
@@ -674,7 +660,7 @@ you didn't enter a config password for domain %1	setup	pl	Nie podano hasła admi
 you didn't enter a config username for domain %1	setup	pl	Nie podano nazwy administratora dla domeny '%1'.
 you didn't enter a header admin password	setup	pl	Nie podano hasła do administracji domenami eGW
 you didn't enter a header admin username	setup	pl	Nie podano nazwy użytkownika do administracji domenami eGW
-you do not have any languages installed. please install one now <br />	setup	pl	Nie masz zainstalowanych jakichkolwiek języków. Zainstaluj dowolny teraz  <br />
+you do not have any languages installed. please install one now <br />	setup	pl	You do not have any languages installed. Please install one now <br />
 you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	pl	JPGraph wersja %1 lub wyższa nie zainstalowana! Wymagane do działania Menadźera projektów - wykresów Ganta
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	pl	Nie utworzono dotąd pliku konfiguracyjnego 'header.inc.php'!<br />Możesz zrobić to teraz.
 you have successfully logged out	setup	pl	Pomyślnie wylogowano z eGroupWare

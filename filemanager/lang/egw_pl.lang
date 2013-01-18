@@ -18,59 +18,57 @@
 accessrights	filemanager	pl	Prawa dostępu
 acl added.	filemanager	pl	Dodano ACL.
 acl deleted.	filemanager	pl	Usunięto ACL.
-actions	filemanager	pl	Akcje
+actions	filemanager	pl	Polecenia
 all files	common	pl	Wszystkie pliki
 allow a maximum of the above configured folderlinks to be configured in settings	admin	pl	zezwól na konfigurację maksymalnie powyższej liczby linków folderów
 and all it's childeren	filemanager	pl	i wszystkie elementy podrzędne
 applications	common	pl	Aplikacje
 basedirectory	filemanager	pl	Katalog bazowy
 can't open directory %1!	filemanager	pl	Nie mogę otworzyć katalogu %1!
-cancel editing %1 without saving	filemanager	pl	Anuluj edycję %1 bez zapisywania
-cannot create directory because it begins or ends in a space	filemanager	pl	Nie mogę utworzyć katalogu bo zaczyna się lub kończy spacją
-cautiously rejecting to remove folder '%1'!	filemanager	pl	Z ostrożności nie usuwam folderu '%1'!
-check all	filemanager	pl	Sprawdź wszystkie
+cancel editing %1 without saving	filemanager	pl	Przerwij edycję %1 bez zapisywania
+cannot create directory because it begins or ends in a space	filemanager	pl	Nie moge utworzyć katalogu, ponieważ nazwa zaczyna lub konczy się spacją
+check all	filemanager	pl	Zaznacz wszystkie
 clear search	filemanager	pl	wyczyść wyszukiwanie
 comment	filemanager	pl	Komentarz
-comments cannot contain "%1"	filemanager	pl	Komentarze nie mogą zawierać "%1"
+comments cannot contain "%1"	filemanager	pl	Komentarz nie zawiera "%1"
 copied	filemanager	pl	skopiowano
 copied %1 to %2	filemanager	pl	Skopiowano %1 do %2
-copy	filemanager	pl	Kopiuj
 copy to	filemanager	pl	Kopiuj do
 copy to clipboard	filemanager	pl	Kopiuj do schowka
-could not copy %1 to %2	filemanager	pl	Nie mogłem skopiować %1 do %2
-could not copy file because no destination directory is given	filemanager	pl	Nie mogłem skopiować pliku bo nie podano katalogu docelowego
-could not create %1	filemanager	pl	Nie mogłem utworzyć %1
-could not delete %1	filemanager	pl	Nie mogłem usunąć %1
-could not move %1 to %2	filemanager	pl	Nie mogłem przenieść %1 do %2
-could not move file because no destination directory is given	filemanager	pl	Nie mogłem przenieść pliku bo nie podano katalogu docelowego
-could not rename %1 to %2	filemanager	pl	Nie mogłem zmienić nazwy %1 na %2
-could not save %1	filemanager	pl	Nie mogłem zapisać %1
+could not copy %1 to %2	filemanager	pl	Nie można skopiować %1 do %2
+could not copy file because no destination directory is given	filemanager	pl	Nie można skopiować pliku, ponieważ nie określono katalogu docelowego
+could not create %1	filemanager	pl	Nie można utworzyć %1
+could not delete %1	filemanager	pl	Nie można usunąć %1
+could not move %1 to %2	filemanager	pl	Nie można przenieść %1
+could not move file because no destination directory is given	filemanager	pl	Nie można przenieść pliku, ponieważ nie określono katalogu docelowego
+could not rename %1 to %2	filemanager	pl	Nie mona zmienić nazwy %1 na %2
+could not save %1	filemanager	pl	Nie mona zapisać %1
 create a link	filemanager	pl	Utwórz link
 create directory	filemanager	pl	Utwórz katalog
 create file	filemanager	pl	Utwórz plik
-create folder	filemanager	pl	Utwórz folder
-created	filemanager	pl	utworzono
+create folder	filemanager	pl	Utwórz katalog
+created	filemanager	pl	Utworzony
 created %1,%2	filemanager	pl	Utworzono %1, %2
 created between	filemanager	pl	utworzono pomiędzy
 created directory %1	filemanager	pl	Utworzono katalog %1
 current directory	filemanager	pl	Katalog aktualny
-custom fields	filemanager	pl	Pola własne
-cut	filemanager	pl	wytnij
+custom fields	filemanager	pl	Pola użytkownika
+cut	filemanager	pl	Wytnij
 cut to clipboard	filemanager	pl	Wytnij do schowka
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	pl	Domyślne zachowanie to NIE. Link nie będzie wyświetlany, ale możesz przejść do tej lokalizacji i skonfigurować tą lokację jako folder startowy lub link do folderu.
 delete this file or directory	filemanager	pl	Usuń ten plik lub katalog
-deleted %1	filemanager	pl	Usunięto %1
+deleted %1	filemanager	pl	Skasowano %1
 directories sorted in	filemanager	pl	Katalogi przechowywane w
 directory	filemanager	pl	Katalog
 directory %1 already exists	filemanager	pl	Katalog %1 już istnieje
 directory %1 does not exist	filemanager	pl	Katalog %1 nie istnieje
-directory names cannot contain "%1"	filemanager	pl	Nazwy katalogów nie mogą zawierać "%1"
+directory names cannot contain "%1"	filemanager	pl	Nazwa katalogu zawiera "%1"
 directory not found or no permission to access it!	filemanager	pl	Nie znaleziono katalogu lub brak uprawnień
 display and modification of content	filemanager	pl	Wyświetlanie i modyfikacja zawartości
 display of content	filemanager	pl	Wyświetlanie zawartości
 do you want to overwrite the existing file %1?	filemanager	pl	Czy chcesz nadpisać istniejący plik %1?
 download	filemanager	pl	Pobierz
-edit comments	filemanager	pl	Edytuj komentarze
+edit comments	filemanager	pl	Edycja komentarza
 edit settings	filemanager	pl	Edytuj ustawienia
 enter setup user and password	filemanager	pl	Wprowadź nazwę użytkownika setup i hasło
 enter setup user and password to get root rights	filemanager	pl	Wprowadź nazwę użytkownika setup i hasło aby uzyskać prawa roota
@@ -80,7 +78,6 @@ enter the complete vfs path to specify your desired start folder.	filemanager	pl
 error adding the acl!	filemanager	pl	Błąd przy dodawaniu ACL!
 error creating symlink to target %1!	filemanager	pl	Błąd przy tworzeniu linku do %1!
 error deleting the acl entry!	filemanager	pl	Błąd przy usuwaniu wpisu ACL!
-error uploading file!	filemanager	pl	Błąd przy ładowaniu pliku!
 executable	filemanager	pl	Wykonywalny
 extended access control list	filemanager	pl	Rozszerzona lista kontroli dostępu
 extended acl	filemanager	pl	Rozszerzona ACL
@@ -88,61 +85,61 @@ failed to change permissions of %1!	filemanager	pl	Błąd przy zmianie uprawnie�
 failed to create directory!	filemanager	pl	Błąd przy tworzeniu katalogu!
 favorites	filemanager	pl	Ulubione
 file	filemanager	pl	Plik
-file %1 already exists. please edit it or delete it first.	filemanager	pl	Plik %1 już istnieje. Proszę go najpierw wyedytować lub usunąć.
-file %1 could not be created.	filemanager	pl	Plik %1 nie mógł być utworzony.
+file %1 already exists. please edit it or delete it first.	filemanager	pl	Plik %1 już istnieje. Proszę najpierw wyedytować go lub usunąć.
+file %1 could not be created.	filemanager	pl	Plik %1 nie może być utworzony
 file %1 may be too big. contact your systemadministrator for further info	filemanager	pl	Plik %1 może być za duży. Skontaktuj się z administratorem systemu aby uzyskać więcej informacji.
 file deleted.	filemanager	pl	Plik usunięty.
-file names cannot contain "%1"	filemanager	pl	Nazwy plików nie mogą zawierać "%1"
+file names cannot contain "%1"	filemanager	pl	Plik nie zawiera "%1"
 file or directory not found!	filemanager	pl	Nie znaleziono pliku lub katalogu!
 file successful uploaded.	filemanager	pl	Plik przesłany pomyślnie.
-filemanager	common	pl	Menadżer plików
+filemanager	common	pl	Pliki
 filemanager configuration	admin	pl	Konfiguracja managera plików
 files from subdirectories	filemanager	pl	Plików z podkatalogów
-files in this directory	filemanager	pl	Plików w tym katalogu
-folder up	filemanager	pl	Folder nadrzędny
-general	filemanager	pl	Ogólne
-go home	filemanager	pl	Katalog Domowy
-go to	filemanager	pl	Przejdź do
-go to your home directory	filemanager	pl	Przejdź do katalogu domowego
-go up	filemanager	pl	folder nadrzędny
-id	filemanager	pl	ID
+files in this directory	filemanager	pl	Pliki w tym katalogu
+folder up	filemanager	pl	Folder w górę
+general	filemanager	pl	Główne
+go home	filemanager	pl	Idź do strony głównej
+go to	filemanager	pl	Idź do
+go to your home directory	filemanager	pl	Idź do katalogu domowego
+go up	filemanager	pl	w górę
+id	filemanager	pl	id
 inherited	filemanager	pl	Odziedziczone
-link	filemanager	pl	Link
+link	filemanager	pl	Link do zdarzenia
 link %1: %2	filemanager	pl	Link %1: %2
 link target %1 not found!	filemanager	pl	Cel linku %1 nie odnaleziony!
-location	filemanager	pl	Lokacja
+location	filemanager	pl	Położenie
 log out as superuser	filemanager	pl	Wyloguj jako super-użytkownik
 max folderlinks	admin	pl	maksymalna ilość linków folderów
-mime type	filemanager	pl	typ pliku
-modified	filemanager	pl	zmodyfikowany
+mime type	filemanager	pl	Typ MIME
+modified	filemanager	pl	Zmodyfikowany
 modified between	filemanager	pl	zmodyfikowany pomiędzy
 modify all subdirectories and their content	filemanager	pl	Modyfikuj wszystkie podkatalogi i ich zawartość
-move	filemanager	pl	Przenieś
+move	filemanager	pl	przenieś
 move to	filemanager	pl	Przenieś do
-moved %1 to %2	filemanager	pl	Przenieś %1 do %2
+moved %1 to %2	filemanager	pl	Przeniesiono %1 do %2
 no access	filemanager	pl	Brak dostępu
-no files in this directory.	filemanager	pl	Brak plików w tym katalogu.
+no files in this directory.	filemanager	pl	Nie ma plików w tym katalogu
 no preview available	filemanager	pl	Podgląd niedostępny
-no version history for this file/directory	filemanager	pl	Brak historii wersji tego pliku/katalogu
+no version history for this file/directory	filemanager	pl	Nie istnieje historia wersji tego pliku/katalogu
 only owner can rename or delete the content	filemanager	pl	Tylko właściciel może zmienić nazwę lub usunąć zawartość
 open	filemanager	pl	Otwórz
 operation	filemanager	pl	Operacja
 permission denied!	filemanager	pl	Dostęp zabroniony!
 permissions	filemanager	pl	Uprawnienia
 permissions of %1 changed.	filemanager	pl	Zmieniono uprawnienia do %1
-please select a file to delete.	filemanager	pl	Wybierz plik do usunięcia
-preview	filemanager	pl	Pogląd
+please select a file to delete.	filemanager	pl	Proszę wybrać plik do skasowania.
+preview	filemanager	pl	Podgląd
 preview %1	filemanager	pl	Podgląd %1
 preview of %1	filemanager	pl	Podgląd %1
 projectmanager	filemanager	pl	Menedżer Projektów
 properties saved.	filemanager	pl	Zapisano właściwości
-quick jump to	filemanager	pl	Przeskocz szybko do
+quick jump to	filemanager	pl	Szybki skok do
 read & write access	filemanager	pl	Dostęp do odczytu i zapisu
 read access only	filemanager	pl	Tylko do odczytu
-reload	filemanager	pl	przeładuj
+reload	filemanager	pl	odśwież
 rename of %1 to %2 failed!	filemanager	pl	Zmiana nazwy %1 na %2 nie powiodła się!
 rename, change permissions or ownership	filemanager	pl	Zmień nazwę, zmień uprawnienia lub właściciela
-renamed %1 to %2	filemanager	pl	Zmiana nazwy %1 na %2
+renamed %1 to %2	filemanager	pl	Zmieniono nazwę %1 na %2
 renamed %1 to %2.	filemanager	pl	Zmieniono nazwę %1 na %2.
 replaced %1	filemanager	pl	Zastąpiono %1
 rights	filemanager	pl	Prawa
@@ -150,18 +147,18 @@ root	filemanager	pl	root
 root access granted.	filemanager	pl	Przyznano dostęp na prawach roota.
 root access stopped.	filemanager	pl	Zatrzymano dostęp na prawach roota.
 save %1	filemanager	pl	Zapisz %1
-save %1, and go back to file listing	filemanager	pl	Zapisz %1 i wróć do listy plików
+save %1, and go back to file listing	filemanager	pl	Zapisz %1 i przejdź do listy plików
 save changes	filemanager	pl	Zapisz zmiany
 saved %1	filemanager	pl	Zapisano %1
 saving properties failed!	filemanager	pl	Błąd zapisu właściwości!
-search for '%1'	filemanager	pl	Wyszukaj '%1'
+search for '%1'	filemanager	pl	Szukaj '%1'
 searchstring	filemanager	pl	szukana fraza
 select action...	filemanager	pl	Wybierz akcję...
 select file to upload in current directory	filemanager	pl	Wybierz plik do załadowania do aktualnego katalogu
-show	filemanager	pl	Pokaż
+show	filemanager	pl	Wyświetl
 show hidden files	filemanager	pl	Pokaż ukryte pliki
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	pl	Pokazać link do katalogu bazowego managera plików w menu bocznym?
-size	filemanager	pl	Rozmiar
+size	filemanager	pl	Wielkość
 start search	filemanager	pl	rozpocznij wyszukiwanie
 startfolder	filemanager	pl	Folder początkowy
 superuser	filemanager	pl	Super-użytkownik
@@ -171,19 +168,19 @@ the requested path %1 is not available.	filemanager	pl	Żądana ścieżka %1 nie
 there's already a directory with that name!	filemanager	pl	Istnieje już katalog z tą nazwą
 there's already a file with that name!	filemanager	pl	Istnieje już plik z tą nazwą
 to overwrite the existing file store again.	filemanager	pl	Aby nadpisać istniejący plik zapisz go jeszcze raz.
-total files	filemanager	pl	Plików w sumie
-unused space	filemanager	pl	Niewykorzystana przestrzeń
-up	filemanager	pl	Nadrzędny
-updated comment for %1	filemanager	pl	Zaktualizowano komentarz dla %1
-used space	filemanager	pl	Użyta przestrzeń
+total files	filemanager	pl	Wszystkich plików
+unused space	filemanager	pl	Wolne miejsce
+up	filemanager	pl	W górę
+updated comment for %1	filemanager	pl	Zaktualizowano komentarz do %1
+used space	filemanager	pl	Wykorzystane miejsce
 users and groups	filemanager	pl	Użytkownicy i grupy
 wrong username or password!	filemanager	pl	Niepoprawna nazwa użytkownika lub hasło!
 you are not allowed to upload a script!	filemanager	pl	Nie możesz załadować skryptu!
 you can only grant additional rights, you can not take rights away!	filemanager	pl	Możesz tylko dodać prawa, nie możesz ich zabrać!
-you do not have access to %1	filemanager	pl	Nie masz dostępu do %1
+you do not have access to %1	filemanager	pl	Nie masz uprawnień do %1
 you need to select an owner!	filemanager	pl	Musisz wybrać właściciela!
 you need to select some files first!	filemanager	pl	Musisz najpierw wybrać jakieś pliki!
 you will be redirected to your home directory.	filemanager	pl	Zostaniesz przekierowany do katalogu domowego
 you will be redirected to your start folder.	filemanager	pl	Zostaniesz przekierowany do katalogu początkowego
-your home dir did not exist, egroupware created a new one.	filemanager	pl	Twój katalog domowy nie istnieje, eGroupware utworzył nowy.
+your home dir did not exist, egroupware created a new one.	filemanager	pl	Twój Katalog domowy nie istniał, więc eGroupWare utworzył go.
 your home directory	filemanager	pl	Twój katalog domowy

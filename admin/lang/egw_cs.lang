@@ -258,6 +258,7 @@ force selectbox	admin	cs	Vynuit rozbalovací nabídku
 forward also to	admin	cs	přeposlat také na
 forward emails to	admin	cs	přeposlat e-maily na
 forward only	admin	cs	jen přeposlat
+full name	admin	cs	Celé jméno
 global categories	common	cs	Globální kategorie
 go directly to admin menu, returning here the next time you click on administration.	admin	cs	Jít přímo do administračního menu; sem se vrátíte jakmile příště kliknete na administraci.
 governmental: incl. state or municipal authorities or services	admin	cs	Vládní: včetně státních nebo obecních úřadů a služeb

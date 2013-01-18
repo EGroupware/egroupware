@@ -3,18 +3,23 @@ automatically created by importexport	importexport	sl	Samodejno ustvarjeno z Imp
 choose a name for this definition	importexport	sl	Izberite ime za to definicijo
 choose a plugin	importexport	sl	Izberite vtičnik
 choose an application	importexport	sl	Izberite aplikacijo
+choose seperator and charset	importexport	sl	Izberite ločilo polj in nabor znakov
 delete all selected definitions	importexport	sl	Izbriši vse izbrane definicije
 expert options	importexport	sl	Napredne možnosti
 export	importexport	sl	Izvozi
 export all selected definitions	importexport	sl	Izvozi vse izbrane definicije
 finish	importexport	sl	Končaj
 general	importexport	sl	Splošno
+import	importexport	sl	Uvoz
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	sl	Uvozi definicije (pozor: obstoječe definicije z enakim imenom bodo prepisane!)
 importexport wizard finished successfully!	importexport	sl	Čarovnik ImportExport se je uspešno zaključil.
+load sample file	importexport	sl	Naloži datoteko s primeri
+manage mapping	importexport	sl	Upravljaj mapiranje
 next	importexport	sl	Naslednji
 preview	importexport	sl	Predogled
 previous	importexport	sl	Prejšnji
 save as definition	importexport	sl	Shrani kot definicijo
+schedule	common	sl	urnik
 select definition	importexport	sl	Izberi definicijo
 select plugin	importexport	sl	Izberi vtičnik
 some nice text	importexport	sl	Nekaj ljubkega besedila

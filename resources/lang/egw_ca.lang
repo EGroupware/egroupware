@@ -1,0 +1,23 @@
+actions	resources	ca	Accions
+all categories	resources	ca	Totes les categories
+bookable	resources	ca	Reservable
+check all	resources	ca	Comprova-ho tot
+configure access permissions	admin	ca	Configurar permissos d'accés
+create new links	resources	ca	Crear nous enllaços
+custom fields	resources	ca	Camps personalitzats
+days	resources	ca	dies
+delete this entry	resources	ca	esborrar aquesta entrada
+edit this entry	resources	ca	Editar aquesta entrada
+existing links	resources	ca	Enllaços existents
+general	resources	ca	General
+global categories	resources	ca	Categories globals
+hours	resources	ca	hores
+implies read permission	resources	ca	implica permís de lectura
+links	resources	ca	Enllaços
+location	resources	ca	Lloc
+quantity	resources	ca	Quantitat
+read permissions	resources	ca	Llegir permissos
+resources	common	ca	Recursos
+select a category	resources	ca	seleccione una categoría
+select resources	common	ca	Selecciona recursos
+write permissions	resources	ca	Escriure permissos

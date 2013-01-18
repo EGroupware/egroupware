@@ -369,6 +369,7 @@ minimum account id (e.g. 500 or 100, etc.)	setup	sl	Najnižji ID računa (npr. 5
 minute	setup	sl	minuta
 missing or uncomplete mailserver configuration	setup	sl	Manjkajoča ali nepopolna konfiguracija poštnega strežnika
 modifications have been completed!	setup	sl	Spremembe so končane.
+modified	setup	sl	Spremenjeno
 modify	setup	sl	Spremeni
 month	setup	sl	Mesec
 multi-language support setup	setup	sl	Namestitev večjezične podpore

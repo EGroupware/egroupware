@@ -1,0 +1,79 @@
+%1 already exists as a file	filemanager	eu	%1 fitxategia gisa existitzen da
+%1 starts with '%2'	filemanager	eu	%1 '%2'tik hasten da
+actions	filemanager	eu	Ekintzak
+applications	common	eu	Aplikazioak
+cancel editing %1 without saving	filemanager	eu	Kantzelatu %1 en edizioa gorde gabe
+cannot create directory because it begins or ends in a space	filemanager	eu	Direktorioa sortzea ezinezkoa izan da hasieran edo bukaeran zuriune bat duelako
+check all	filemanager	eu	Guztia hautatu
+comment	filemanager	eu	Oharra
+comments cannot contain "%1"	filemanager	eu	Oharrak ezin dute "%1" izan
+copied %1 to %2	filemanager	eu	%1 %2 ra kopiatuta
+copy to	filemanager	eu	Kopiatu Hona
+could not copy %1 to %2	filemanager	eu	%1 %2 ra kopiatzea ezinezkoa izan da
+could not copy file because no destination directory is given	filemanager	eu	Fitxategia kopiatzea ezinezkoa izan da helburu-karpeta ez delako adierazi
+could not create %1	filemanager	eu	%1 sortzea ezinezkoa izan da
+could not delete %1	filemanager	eu	%1 ezabatzea ezinezkoa izan da
+could not move %1 to %2	filemanager	eu	%1 %2 ra mugitzea ezinezkoa izan da
+could not move file because no destination directory is given	filemanager	eu	Fitxategia mugitzea ezinezkoa izan da helburu-karpeta ez delako adierazi
+could not rename %1 to %2	filemanager	eu	%1 %2 ra berrizendatzea ezinezkoa izan da
+could not save %1	filemanager	eu	%1 gordetzea ezinezkoa izan da
+create file	filemanager	eu	Fitxategia sortu
+create folder	filemanager	eu	Karpeta sortu
+created	filemanager	eu	Sortua
+created %1,%2	filemanager	eu	%1, %2 sortua
+created directory %1	filemanager	eu	Sortua %1 direktorioa
+custom fields	filemanager	eu	Egokitu Eremuak
+cut	filemanager	eu	Ebaki
+deleted %1	filemanager	eu	%1 ezabatu
+directory	filemanager	eu	Direktorioa
+directory %1 already exists	filemanager	eu	%1 direktorioa existitzen da
+directory %1 does not exist	filemanager	eu	%1 direktorioa ez da existitzen
+directory names cannot contain "%1"	filemanager	eu	Direktorio izenek ezin dute "%1" izan
+download	filemanager	eu	Behera kargatu
+edit comments	filemanager	eu	Oharrak editatu
+file	filemanager	eu	Fitxategia
+file %1 already exists. please edit it or delete it first.	filemanager	eu	%1 fitxategia existitzen da. Editatu edo ezabatu aurrena arren.
+file %1 could not be created.	filemanager	eu	%1 fitxategia sortzea ezinezkoa izan da.
+file names cannot contain "%1"	filemanager	eu	Fitxategi izenek ezin dute "%1" izan
+filemanager	common	eu	Fitxategi-kudeatzailea
+files in this directory	filemanager	eu	Direktorio hontako fitxategiak
+folder up	filemanager	eu	Karpeta bat gora
+general	filemanager	eu	Orokorra
+go home	filemanager	eu	hasierara joan
+go to	filemanager	eu	Joan
+go to your home directory	filemanager	eu	Hasierako direktoriora joan
+go up	filemanager	eu	joan gora
+id	filemanager	eu	Id
+link	filemanager	eu	Lotura
+location	filemanager	eu	Kokapena
+mime type	filemanager	eu	MIME mota
+modified	filemanager	eu	Aldatze-data
+move	filemanager	eu	mugitu
+move to	filemanager	eu	Eraman Hona
+moved %1 to %2	filemanager	eu	%1 %2 ra eraman
+no files in this directory.	filemanager	eu	Direktorio honetan ez daude fitxategiak.
+no version history for this file/directory	filemanager	eu	Fitxategi/Direktorio honentzat ez dago bertsio historialik
+open	filemanager	eu	ireki
+operation	filemanager	eu	Operazioa
+permissions	filemanager	eu	Baimenak
+please select a file to delete.	filemanager	eu	Ezabatzeko fitxategi bat aukeratu arren.
+preview %1	filemanager	eu	%1 bistaratu
+preview of %1	filemanager	eu	%1 en bistaratzea
+projectmanager	filemanager	eu	Proiektuen administratzailea
+quick jump to	filemanager	eu	Jauzi azkarra
+reload	filemanager	eu	Birkargatu
+renamed %1 to %2	filemanager	eu	%1 %2 ra berrizendatu
+replaced %1	filemanager	eu	%1 ordezkatua
+save %1	filemanager	eu	%1 gorde
+save %1, and go back to file listing	filemanager	eu	%1 gorde, eta fitxategi-zerrendara itzuli
+save changes	filemanager	eu	Gorde aldaketak
+saved %1	filemanager	eu	%1 gordea
+show	filemanager	eu	Bistaratu
+size	filemanager	eu	Tamaina
+total files	filemanager	eu	Fitxategi totalak
+unused space	filemanager	eu	Leku librea
+up	filemanager	eu	Gora
+updated comment for %1	filemanager	eu	%1 rako freskatutako komentarioa
+used space	filemanager	eu	Erabilitako lekua
+you do not have access to %1	filemanager	eu	%1 ra sartzeko baimenik ez duzu
+your home dir did not exist, egroupware created a new one.	filemanager	eu	Zure Hasierako Direktorioa ez zen existitzen, eta eGroupwarek berri bat sortu du.

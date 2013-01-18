@@ -542,7 +542,6 @@ view error log	admin	lo	ສະແດງຂໍ້ມູນຜິດພາດ
 view sessions	admin	lo	ສະແດງ ເຊສຊັ້ນ
 view this user	admin	lo	ສະແດງຜູ້ໃຊ້ນີ້
 view user account	admin	lo	ສະແດງບັນຊີຜູ້ໃຊ້
-warn users about the need to change their password? the number set here should be lower than the value used to enforce the change of passwords every x days. only effective when enforcing of password change is enabled. (empty for no,number for number of days before they must change)	admin	lo	ພວກເຮົາຂໍໃຫ້ຂໍ້ມູນເຫຼົ່ານັ້ນເພື່ອວັດຖຸປະສົງສະເພາະທາງສະຖິຕິເພື່ອໃຫ້ໄດ້ພາບລວມທົ່ວໄປກ່ຽວກັບການໃຊ້ ລະບົບຕາຕະລາງ (Egroupware) ໃນທົ່ວໂລກ
 we hope you understand the importance for this voluntary statistic and not deny it lightly.	admin	lo	ພວກເຮົາບໍ່ສາມາດບັນທຶກຂໍ້ມູນໃດໆກ່ຽວກັບຕົວທ່ານ
 who would you like to transfer all records owned by the deleted user to?	admin	lo	ແມ່ນຜູ້ໃດທີ່ຕ້ອງການເອົາຂໍ້ມູນຂອງຜູ້ທີ່ຖືກລຶບໄປ ?
 would you like egroupware to cache the egw info array ?	admin	lo	ທ່ານຕ້ອງການ ລະບົບຕາຕະລາງ (eGroupWare) ໃຫ້ເກັບເປັນຊຸດຂໍ້ມູນ egw?

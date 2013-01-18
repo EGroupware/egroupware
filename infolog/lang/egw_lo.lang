@@ -1,0 +1,63 @@
+%1 records imported	infolog	lo	%1 ບັນທຶກການນໍາເຂົ້າ
+added	infolog	lo	ເພີ່ມເຕີມ
+apply the changes	infolog	lo	ໃຊ້ການປ່ຽນແປງ
+change history	infolog	lo	ປະຫວັດການປ່ຽນແປງ
+check all	infolog	lo	ກວດສອບທັງໝົດ
+comment	infolog	lo	ຄວາມຄິດເຫັນ
+copy of:	infolog	lo	ກອບປີ້ ຂອງ:
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	lo	ຄັດລອກການປ່ຽນແປງຂອງທ່ານໄປຄຼິບບອດ,%1ໂຫຼດຄືນການບັນທຶກ/ຂໍ້ມູນ %2 ແລະ ລວມມັນເຂົ້າກັນ
+create new links	infolog	lo	ສ້າງການເຊື່ອມຕໍ່ໃໝ່
+creates a new field	infolog	lo	ສ້າງfieldໄໝ
+csv-fieldname	infolog	lo	ຊື່ຂອບເຂດຂອງ CSV
+csv-filename	infolog	lo	ຊື່ຟາຍຂອງ CSV
+custom fields	infolog	lo	ກໍານົດ fields
+days	infolog	lo	ວັນ
+delete this entry	infolog	lo	ລຶບຂໍ້ມູນເຂົ້າມານີ້
+deletes this field	infolog	lo	ລຶບ field ນີ້
+determines the order the fields are displayed	infolog	lo	ສະແດງລໍາດັບຂອງ fields ທີ່ສະແດງ
+download	infolog	lo	ດາວໂຫຼດ
+duration	infolog	lo	ໄລຍະເວລາ
+each value is a line like <id>[=<label>]	infolog	lo	ແຕ່ລະລາຄ່າເປັນໜຶ່ງແຖວ <id>[=<label>]
+edit this entry	infolog	lo	ແກ້ໄຂຂໍ້ບັນທຶກນີ້
+empty for all	infolog	lo	ບ່ອນວ່າງສຳລັບທັງໝົດ
+end	infolog	lo	ສິ້ນສຸດ
+enddate	infolog	lo	ວັນສຸດທ້າຍ
+error: the entry has been updated since you opened it for editing!	infolog	lo	ຂໍ້ຜິດພາດ: ຂໍ້ມູນ/ລາຍການ ໄດ້ຮັບການປັບປຸງຕັ້ງແຕ່ຕອນທ່ານເປີດສໍາລັບການແກ້ໄຂ!!!
+execute a further action for this entry	infolog	lo	ການຈັດການ/ການປະຕິບັດ ການດໍາເນີນການເພີ່ມເຕີມສໍາລັບລາຍການນີ້
+existing links	infolog	lo	ການເຊື່ອມຕໍ່ທີ່ມີຢູ່ແລ້ວ
+exists	infolog	lo	ມີຢູ່ແລ້ວ
+fieldseparator	infolog	lo	ການແຍກຟີລ
+general	infolog	lo	ທົ່ວໄປ
+global categories	infolog	lo	ໝວດທົ່ວໄປ
+history	infolog	lo	ປະຫວັດສາດ
+id	infolog	lo	ລະຫັດ
+leave without saveing the entry	infolog	lo	ອອກໂດຍບໍ່ໄກ້ບັນທຶກການເຂົ້າ
+leaves without saveing	infolog	lo	ອອກໂດຍບໍ່ໄກ້ບັນທຶກ
+length<br>rows	infolog	lo	ຄວາມຍາວ <br> ແຖວ
+link	infolog	lo	ເຊື່ອມຕໍ່ໄປທີ່ເຫດການ
+links	infolog	lo	ເຊື່ອມຕໍ່
+location	infolog	lo	ສະຖານທີ່
+max length of the input [, length of the inputfield (optional)]	infolog	lo	ຄວາມຍາວສູງສຸດຂອງການປ້ອນຂໍ້ຄວາມ[, ຄວາມຍາວຂອງພື້ນທີ່ຂໍ້ຄວາມ(ຖ້າມີ)]
+name must not be empty !!!	infolog	lo	ຫ້າມໃຫ້ຊື່ວ່າງ !!!
+new name	infolog	lo	ຊື່ໃໝ່
+no filter	infolog	lo	ບໍ່ມີການຕຶກຕອງ
+number of records to read (%1)	infolog	lo	ຈໍານວນຂອງບັນທຶກທີ່ຈະອ່ານ (%1)
+number of row for a multiline inputfield or line of a multi-select-box	infolog	lo	ຈໍານວນແຖວສໍາລັບຂອບເຂດຂອງການປ້ອນຂໍ້ມູນຫຼາຍໆແຖວ ຫຼື ຕົວເລືອກຫຼາຍໆຕົວ
+open	infolog	lo	ເປີດ
+order	infolog	lo	Order
+permission denied	infolog	lo	ບໍ່ໄດ້ຮັບອະນຸຍາດ
+projectmanager	infolog	lo	ຜູ້ຈັດການໂຄງການ
+saves the changes made and leaves	infolog	lo	ບັນທຶກການປ່ຽນແປງ made ແລະ leaves
+saves this entry	infolog	lo	ບັນທຶກຂໍ້ມູນການເຂົ້ານີ້
+select an action	infolog	lo	ເລືອກການດໍາເນີນການ/ເລືອກຮູບແບບການປະຕິບັດ
+select an action...	infolog	lo	ເລືອກການດໍາເນີນການ/ເລືອກຮູບແບບການປະຕິບັດ...
+select multiple contacts for a further action	infolog	lo	ເລືອກເອົາການຕິດຕໍ່ຫຼາຍຮູບແບບ ເພື່ອການດໍາເນີນການຕໍ່ໄປ
+start	infolog	lo	ເລີ່ມ
+startdate	infolog	lo	ວັນທີ່ເລີ່ມ
+startrecord	infolog	lo	ເລີ່ມບັນທຶກ
+test import (show importable records <u>only</u> in browser)	infolog	lo	ທົດສອບການນໍາເຂົ້າ, ສະແດງການບັນທຶກ ທີ່ສໍາຄັນ <u>ພຽງແຕ່</u> ໃນໜ້າຕ່າງ
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	lo	ຊື່ທີ່ໃຊ້(<=20ຕົວອັກສອນ), ຖ້າມີການປ່ຽນແປງຂໍ້ມູນທີ່ມີຢູ່ຈະເຮັດໃຫ້ໃຊ້ບໍ່ໄດ້
+the text displayed to the user	infolog	lo	ຂໍ້ຄວາມທີ່ສະແດງໄປຫາຜູ້ໃຊ້
+times	infolog	lo	ຄັ້ງ
+to many might exceed your execution-time-limit	infolog	lo	ຫຼາຍເກີນໄປອາດຈະເກີນໄລຍະເວລາຈໍາກັດການປະຕິບັດແຜນການຂອງທ່ານ
+type of customfield	infolog	lo	ຊະນິດຂອງ ຟິລທີ່ກໍານົດເອງ

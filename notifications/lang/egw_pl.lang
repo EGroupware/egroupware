@@ -19,8 +19,8 @@ enable egroupware-popup backend	admin	pl	Włącz backend eGroupware-popup
 enable sms backend	admin	pl	Włącz backend SMS
 enable windows-popup backend	admin	pl	Włącz backend Windows-popup
 enabled chains	notifications	pl	Włączone łańcuchy
-folder	notifications	pl	folder
-from	notifications	pl	od
+folder	notifications	pl	Katalog
+from	notifications	pl	Z
 how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	pl	Jak szczegółowy powinien być popup egroupware:<br/>low - wyświetl sygnał powiadomienia w menu górnym (górne menu musi być włączone)<br/>medium - wyświetl powiadomienie na wierzchu<br/>high - wyświetl powiadomienie na wierzchu i zezwól przeglądarce na zwrócenie uwagi użytkownika
 if set, embedded links get rendered special for external clients	notifications	pl	Jeśli opcja zostanie skonfigurowana, załączone linki będą renderowane specjalnie dla klientów zewnętrznych
 linked entries:	common	pl	Powiązane wpisy:
@@ -32,11 +32,10 @@ notification	common	pl	Powiadomienie
 notify me by	notifications	pl	Powiadom mnie przez
 optimize e-mails for external mail client	notifications	pl	Optymalizuj emaile dla zewnętrznego klienta poczty
 poll interval	notifications	pl	okres odpytywania
-preferences for notification	notifications	pl	preferencje powiadomień
+preferences for notification	notifications	pl	Preferencje dla powiadomienia
 received	notifications	pl	odebrano
 sms backend	admin	pl	Backend SMS
 sms only	notifications	pl	Tylko SMS
-this egroupware notification has been sent to you by mail because your	notifications	pl	To powiadomienie zostało wysłane przez email ponieważ twój
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	pl	To powiadomienie zostało wysłane do ciebie przez email ponieważ twój wybrany łańcuch powiadomień został zablokowany przez administratora. Proszę wybrać inny łańcuch w opcjach.
 windows-popup and e-mail	notifications	pl	Popup windows i email
 windows-popup backend	admin	pl	Backend Windows-popup

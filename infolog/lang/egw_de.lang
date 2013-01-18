@@ -53,8 +53,8 @@ apply the action on the whole query, not only the shown entries!!!	infolog	de	We
 apply the changes	infolog	de	Übernimmt die Änderungen
 archive	infolog	de	Archiviert
 are you shure you want to close this entry ?	infolog	de	Wollen Sie wirklich den Infolog schliessen?
-are you shure you want to delete this entry ?	infolog	de	Sind Sie sicher, dass Sie diesen Eintrag löschen wollen?
-at the moment the following document-types are supported:	infolog	de	Zur Zeit werden die folgenden Dokument Typen unterstützt:
+are you shure you want to delete this entry ?	infolog	de	Wollen Sie diesen Infolog wirklich löschen?
+at the moment the following document-types are supported:	infolog	de	Aktuell werden die folgenden Dokumenttypen unterstützt:
 attach a file	infolog	de	Datei anhängen
 attach file	infolog	de	Datei anhängen
 attention: no contact with address %1 found.	infolog	de	Achtung: Kein Kontakt mit der Adresse %1 gefunden!
@@ -77,12 +77,12 @@ change status:	infolog	de	Status ändern
 change the status of an entry, eg. close it	infolog	de	Status eines Eintrags ändern, z.B. Ihn als erledigt markieren
 change type:	infolog	de	Infolog Typ ändern
 changed category to %1	infolog	de	Kategorie geändert zu %1
-changed completion to %1%	infolog	de	Bearbeitungsstatus geändert zu %1
+changed completion to %1%	infolog	de	Erledigt geändert zu %1%
 changed responsible	infolog	de	Zuständigkeit ändern
-changed status to %1	infolog	de	Typ geändert zu %1
-changed type	infolog	de	Typ ändern
+changed status to %1	infolog	de	Status geändert zu %1
+changed type	infolog	de	Typ geändert
 charset of file	infolog	de	Zeichensatz der Datei
-check all	infolog	de	Alle marktieren
+check all	infolog	de	Alle auswählen
 check to set startday	infolog	de	ankreuzen um Startdatum zu setzen
 check to specify custom contact	infolog	de	Ankreuzen um einen eigenen Kontakt anzugeben
 choose owner of imported data	infolog	de	Wählen Sie den Eigentümer der Importierten Daten
@@ -140,7 +140,6 @@ delete	infolog	de	Löschen
 delete one record by passing its id.	infolog	de	Einen Datensatz spezifiziert durch seine id löschen.
 delete selected entries?	infolog	de	Sollen die ausgewählen Datensätze gelöscht werden?
 delete the entry	infolog	de	Eintrag löschen
-delete this entry	infolog	de	diesen Eintrag löschen
 delete this entry and all listed sub-entries	infolog	de	Diesen Eintrag und all aufgelisteten Untereinträge löschen
 deleted	infolog	de	gelöscht
 deletes the selected typ	infolog	de	löscht den ausgewählten Typ
@@ -159,7 +158,7 @@ do you want a notification, if items you created get updated?	infolog	de	Wollen 
 do you want a notification, if items you delegated are about to start?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge die Sie delegiert haben beginnen sollen?
 do you want a notification, if items you delegated are due?	infolog	de	Wollen Sie eine Benachrichtigung, wenn Einträge die Sie delegiert haben fällig werden?
 do you want to receive notifications as html-mails or plain text?	infolog	de	Wollen Sie die Benachrichtigungen als HTML Mail oder reinen Text empfangen?
-document '%1' does not exist or is not readable for you!	infolog	de	Dokument '%1' existiert nicht, oder ist nicht lesbar für Sie!
+document '%1' does not exist or is not readable for you!	infolog	de	Das Dokument '%1' steht nicht zur Verfügung, oder ist für Sie nicht lesbar!
 don't show infolog	infolog	de	InfoLog NICHT anzeigen
 done	common	de	erledigt
 download	infolog	de	Datei laden
@@ -191,7 +190,7 @@ example {{nelfnv role}} - if field role is not empty, set a lf without any value
 execute a further action for this entry	infolog	de	Eine weitere Aktion für diesen Eintrag ausführen
 existing links	infolog	de	Bestehende Verknüpfungen
 exists	infolog	de	Besteht
-export definitition to use for nextmatch export	infolog	de	Export Profil der Listenansicht (Disketten Symbol)
+export definitition to use for nextmatch export	infolog	de	Export Profil der Listenansicht  (Disketten Symbol)
 exports infolog entries into a csv file.	infolog	de	Exportiert Infolog Einträge in einen CSV Datei.
 fax	infolog	de	Fax
 field must not be empty !!!	infolog	de	Feld darf nicht leer sein !!!
@@ -202,7 +201,7 @@ for serial letter use this tag. put the content, you want to repeat between two 
 for which types should this field be used	infolog	de	für welche Typen soll dieses Feld benutzt werden
 from	infolog	de	Von
 general	infolog	de	Allgemein
-general fields:	infolog	de	Allgemeine Felder
+general fields:	infolog	de	Allgemeine Felder:
 global categories	infolog	de	Globale Kategorien
 group owner for	infolog	de	Gruppeneigentümer für
 high	infolog	de	hoch
@@ -218,7 +217,7 @@ if not set, the line with search and filters is hidden for less entries then "ma
 if you specify a directory (full vfs path) here, infolog displays an action for each document. that action allows to download the specified document with the infolog data inserted.	infolog	de	Wenn Sie hier ein Verzeichnis angeben (kompletter Pfad des VFS), erstellt das Infolog eine Aktion zum Einfügen der Infolog Daten für jeden Dokument.
 if you specify a document (full vfs path) here, infolog displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	infolog	de	Wenn Sie hier ein Verzeichnis angeben (kompletter Pfad des VFS), erstellt das Infolog eine Aktion zum Einfügen der Infolog Daten für jeden Dokument.
 if you specify an export definition, it will be used when you export	infolog	de	Wählen Sie eine Export Definition für den Export.
-import	infolog	de	Import
+import	infolog	de	Importieren
 import next set	infolog	de	Nächsten Satz importieren
 importance	infolog	de	Wichtigkeit
 imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	de	Importiert Einträge in das Infolog Modul aus einer CSV Datei (Komma getrennte Werte).
@@ -266,7 +265,7 @@ list no subs/childs	infolog	de	Untereinträge nicht anzeigen
 location	infolog	de	Ort
 longer textual description	infolog	de	längere textliche Beschreibung
 low	infolog	de	niedrig
-manage mapping	infolog	de	Verwaltung der Zuordnung
+manage mapping	infolog	de	Feldzuordnungen verwalten
 max length of the input [, length of the inputfield (optional)]	infolog	de	max. Länge der Eingabe [, Länge des Eingabefeldes (optional)]
 modifier	infolog	de	Geändert von
 modifierer	infolog	de	Geändert von
@@ -302,7 +301,6 @@ only for details	infolog	de	Nur bei Details
 only if i get assigned or removed	infolog	de	Nur wenn ich zugewiesen oder entfernt werde
 only the attachments	infolog	de	nur die Anhänge
 only the links	infolog	de	nur die Verknüpfungen
-open	infolog	de	offen
 open and upcoming	infolog	de	zukünftige und offene
 optional note to the link	infolog	de	zusätzliche Notiz zur Verknüpfung
 order	infolog	de	Reihenfolge
@@ -438,7 +436,7 @@ to what should the startdate of new entries be set.	infolog	de	Auf was soll das 
 today	infolog	de	Heute
 todays date	infolog	de	heutiges Datum
 todo	infolog	de	Aufgabe
-translation	infolog	de	Translation
+translation	infolog	de	Übersetzung
 typ	infolog	de	Typ
 typ '%1' already exists !!!	infolog	de	Typ '%1' existiert bereits !!!
 type	infolog	de	Typ
@@ -458,7 +456,7 @@ used time	infolog	de	benötigte Zeit
 values for selectbox	infolog	de	Werte für die Auswahlbox
 view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen
 view other subs	infolog	de	andere Untereinträge anzeigen
-view parent	infolog	de	übergeordneter Eintrag anzeigen
+view parent	infolog	de	Elterneintrag anzeigen
 view subs	infolog	de	Untereinträge anzeigen
 view the parent of this entry and all his subs	infolog	de	übergeordneter Eintrag mit allen seinen Untereinträgen anzeigen
 view this linked entry in its application	infolog	de	diesen verknüpfen Eintrag in seiner Anwendung anzeigen
@@ -466,7 +464,6 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	de	Welche zusätzlichen Felder soll der Verantwortliche bearbeiten können ohne Bearbeitungsrechte zu haben?<br />Status, Prozent und Datum erledigt sind immer erlaubt.
 which implicit acl rights should the responsible get?	infolog	de	Welche impliziten Zugriffsrechte soll der Verantwortliche bekommen?
 which types should the calendar show	infolog	de	Welche Typen soll der Kalender anzeigen
-whole query	infolog	de	gesamte Abfrage
 will-call	infolog	de	ruft zurück
 write (add or update) a record by passing its fields.	infolog	de	Schreiben (zufügen oder aktualisieren) eines Datensatzes durch Angabe seiner Felder.
 yes - close	infolog	de	Ja schließen

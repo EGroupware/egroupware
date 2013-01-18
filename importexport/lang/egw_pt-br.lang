@@ -3,18 +3,23 @@ automatically created by importexport	importexport	pt-br	Automaticamente criado 
 choose a name for this definition	importexport	pt-br	Escolha um nome para esta definição
 choose a plugin	importexport	pt-br	EScolha um plugin
 choose an application	importexport	pt-br	Escolha uma aplicação
+choose seperator and charset	importexport	pt-br	Escolha o separador e a codificação de caracteres
 delete all selected definitions	importexport	pt-br	remover TODAS as definições selecionadas
 expert options	importexport	pt-br	Opções avançadas
 export	importexport	pt-br	Exportar
 export all selected definitions	importexport	pt-br	exportar TODAS as definições selecionadas
 finish	importexport	pt-br	terminar
 general	importexport	pt-br	Geral
+import	importexport	pt-br	Importar
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	pt-br	Importar definições (Atenção: definições existentes com nomes iguais serão substituídas!!!)
 importexport wizard finished successfully!	importexport	pt-br	Assistente de importação/exportação terminado com sucesso!
+load sample file	importexport	pt-br	Carregar arquivo exemplo
+manage mapping	importexport	pt-br	Gerenciar mapeamento
 next	importexport	pt-br	próximo
 preview	importexport	pt-br	Pré-visualização
 previous	importexport	pt-br	anterior
 save as definition	importexport	pt-br	Salvar como definição
+schedule	common	pt-br	agendar
 select definition	importexport	pt-br	Selecionar definição
 select plugin	importexport	pt-br	Selecionar plugin
 some nice text	importexport	pt-br	algum texto legal

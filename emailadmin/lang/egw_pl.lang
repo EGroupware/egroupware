@@ -26,7 +26,7 @@ cyrus imap server	emailadmin	pl	Serwer IMAP Cyrus
 cyrus imap server administration	emailadmin	pl	Administracja serwerem IMAP Cyrus
 default	emailadmin	pl	domyślny
 deliver extern	emailadmin	pl	dostarczanie na zewnątrz
-do not validate certificate	emailadmin	pl	Nie zatwierdza certyfikatu
+do not validate certificate	emailadmin	pl	nie sprawdzaj poprawności certyfikatu
 do you really want to delete this profile	emailadmin	pl	Czy na pewno chcesz usunąć ten profil?
 do you really want to reset the filter for the profile listing	emailadmin	pl	Czy na pewno chcesz zresetować filtr w liście profilu?
 domainname	emailadmin	pl	Nazwa domeny
@@ -34,12 +34,12 @@ edit email settings	emailadmin	pl	Edytuj ustawienia poczty elektronicznej
 email account active	emailadmin	pl	Konto poczty aktywne
 email address	emailadmin	pl	Adres poczty elektronicznej
 email settings	common	pl	Ustawienia poczty elektronicznej
-emailadmin	emailadmin	pl	Administrator Poczty
+emailadmin	emailadmin	pl	Poczta Elektroniczna - Administracja
 emailadmin: group assigned profile	common	pl	Administrator Poczty: Grupa przypisana do profilu
 emailadmin: user assigned profile	common	pl	Administrator Poczty: użytkownik przypisany do profilu
 enable cyrus imap server administration	emailadmin	pl	aktywuj administrację serwerem IMAP Cyrus
 enable sieve	emailadmin	pl	aktywuj sito (Sieve)
-encrypted connection	emailadmin	pl	szyfrowanie połączenia
+encrypted connection	emailadmin	pl	połączenie szyfrowane
 encryption settings	emailadmin	pl	ustawienia szyfrowania
 enter your default mail domain (from: user@domain)	emailadmin	pl	Wprowadź domyślną domenę pocztową (z użytkownik@domena)
 error connecting to imap server. %s : %s.	emailadmin	pl	Błąd połączenia do serwera IMAP. %s : %s
@@ -93,7 +93,7 @@ profile access rights	emailadmin	pl	prawa dostępu do profilu
 profile is active	emailadmin	pl	Profil jest aktywny
 profile list	emailadmin	pl	Lista profili
 profile name	emailadmin	pl	Nazwa Profilu
-qmaildotmode	emailadmin	pl	sposób punktowania qmail
+qmaildotmode	emailadmin	pl	qmaildotmode
 qouta size in mbyte	emailadmin	pl	rozmiar quoty w megabajtach
 quota settings	emailadmin	pl	ustawnienia quoty
 remove	emailadmin	pl	Usuń
@@ -131,7 +131,6 @@ use predefined username and password defined below	emailadmin	pl	Skorzystaj z pr
 use smtp auth	emailadmin	pl	Skorzystaj z autentykacji SMTP
 use tls authentication	emailadmin	pl	Skorzystaj z autentykacji TLS
 use tls encryption	emailadmin	pl	Skorzystaj z szyfrowania TLS
-use users email-address (as seen in useraccount)	emailadmin	pl	użyj adresu użytkownika (taki jak widoczny w opcjach konta)
 user can edit forwarding address	emailadmin	pl	Użytkownik może zmieniać adres przekazywania
 username (standard)	emailadmin	pl	login (standardowo)
 username/password defined by admin	emailadmin	pl	Nazwa uzytkownika/Hasło określone przez administratora
@@ -141,4 +140,4 @@ users can define their own identities	emailadmin	pl	Użytkownicy mogą definiowa
 users can define their own signatures	emailadmin	pl	Użytkownicy mogą definiować swoje własne podpisy
 users can utilize these stationery templates	emailadmin	pl	Użytkownicy mogą użyć tych szablonów stacjonarnych
 vaction messages with start- and end-date require an admin account to be set!	emailadmin	pl	Wiadomość urlopowa z datą początkową i końcową wymaga uprawnień administratora!
-virtual mail manager	emailadmin	pl	Manager kont wirtualnych
+virtual mail manager	emailadmin	pl	Wirtualny Serwer Pocztowy - zarządca

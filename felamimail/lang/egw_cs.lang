@@ -440,7 +440,6 @@ template folder	felamimail	cs	Složka šablon
 templates	felamimail	cs	Šablony
 text only	felamimail	cs	Pouze text
 text/plain	felamimail	cs	prostý text
-the action will be applied to all messages of the current folder.ndo you want to proceed?	felamimail	cs	Zvolená akce bude aplikována na všechny zprávy v aktuální složce.\nChcete pokračovat?
 the connection to the imap server failed!!	felamimail	cs	Připojení k IMAP serveru selhalo!!
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	cs	Zdá se, že IMAP server nepodporuje vybranou metodu autentikace. Zkontaktujte prosím Vašeho systémového administrátora.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	cs	Odesílatel požaduje zaslání potvrzení o přečtení zprávy. Přejete si potvrzení odeslat?

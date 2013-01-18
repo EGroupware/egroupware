@@ -1,0 +1,21 @@
+actions	resources	el	Ενέργειες
+all categories	resources	el	Όλες οι κατηγορίες
+check all	resources	el	Έλεγχος όλων
+configure access permissions	admin	el	Τροποποίηση Άδειας Εισόδου
+create new links	resources	el	Δημιουργία νέων συνδέσμων
+custom fields	resources	el	Προσαρμοσμένα πεδία
+days	resources	el	ημέρες
+delete this entry	resources	el	δαγραφή αυτής της καταχώρησης
+edit this entry	resources	el	Επιμέλεια αυτής της καταχώρησης
+existing links	resources	el	Υπάρχοντες σύνδεσμοι
+general	resources	el	Γενικά
+global categories	resources	el	Παγκόσμιες κατηγορίες
+hours	resources	el	Ωρες
+implies read permission	resources	el	υπονοεί άδεια ανάγνωσης
+links	resources	el	Σύνδεσμοι
+location	resources	el	Τοποθεσία
+quantity	resources	el	Ποσότητα
+read permissions	resources	el	Ανάγνωση αδειών
+resources	common	el	Πόροι
+select resources	common	el	Επιλέξτε πόρους
+write permissions	resources	el	Γραφή αδειών

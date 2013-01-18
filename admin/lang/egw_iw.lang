@@ -1,0 +1,416 @@
+%1 - %2 of %3 user accounts	admin	iw	%1 - %2 מתוך %3 חשבונות משתמשים
+%1 - %2 of %3 user groups	admin	iw	%1 - %2 מתוך %3 קבוצות משתמשים
+%1 not found or not executable !!!	admin	iw	!%1 נא נמצא או שאינו ניתן להרצה
+(stored password will not be shown here)	admin	iw	(סיסמא שמורה לא יוצג כאן)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	iw	(-להתקנת יישומים חדשים השתמש ב<br>
+accesslog and bruteforce defense	admin	iw	הגנת של יומן גישה והשימוש בכוח
+account active	admin	iw	החשבון פעיל
+account has been created	common	iw	החשבון נוצר
+account has been deleted	common	iw	החשבון נמחק
+account has been updated	common	iw	החשבון עודכן
+account list	admin	iw	רשימת חשבונות
+account permissions	admin	iw	הרשאות חשבון
+account preferences	admin	iw	העדיפויות חשבון
+acl manager	admin	iw	מנהל רשימות גישה
+acl rights	common	iw	הרשאות רשימות גישה
+action	admin	iw	פעולה
+actions	admin	iw	פעולות
+activate wysiwyg-editor	admin	iw	WYSIWYG הפעל עורך
+add a category	admin	iw	הוסף קטגוריה
+add a group	admin	iw	הוסף קבוצה
+add a new account.	admin	iw	.הוסף חשבון חדש
+add a subcategory	admin	iw	הוסף תת-קטגוריה
+add a user	admin	iw	הוסף משתמש
+add account	admin	iw	הוסף חשבון
+add application	admin	iw	הוסף יישום
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	iw	(הוסף משתמשים הנוצרים אוטומטית אל קבוצה זו (אני אנסה 'ברירת מחדל' אם שדה זה ריק
+add global category	admin	iw	הוסף קטגוריה גלובלית
+add global category for %1	admin	iw	הוסף קטגוריה גלובלית עבור %1
+add group	admin	iw	הוסף קבוצה
+add new account	admin	iw	הוסף חשבון חדש
+add new application	admin	iw	הוסף יישום חדש
+add peer server	admin	iw	הוסף שרת חבר
+add sub-category	admin	iw	הוסף תת-קטגוריה
+admin email	admin	iw	ניהול דוא"ל
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	iw	(כתובות דוא"ל של המנהלים (המופרדות בפסיק) אליהן תישלך הודעות בדבר חסימות (ריק =ללא הודעות
+admin name	admin	iw	שם מנהל
+administration	admin	iw	ניהול
+admins	admin	iw	מנהלים
+advanced options	admin	iw	אופציות מתקדמות
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	iw	?(לאחר כמה נסיונות כניסה כושלים יש לחסום חשבון (ברירת מחדל 3
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	iw	?(לאחר כמה נסיונות כניסה כושלים יש לחסום כתובת (ברירת מחדל 3
+all records and account information will be lost!	admin	iw	!כל הרשומות ומידע חשבון יאבדו
+all users	admin	iw	כל המשתמשים
+allow anonymous access to this app	admin	iw	אפשר גישה אנונימית ליישום זה
+alternate email address	admin	iw	כתובת דואר אלקטרוני חילופי
+anonymous user	admin	iw	משתמש אנונימי
+anonymous user (not shown in list sessions)	admin	iw	(משתמש אנאנימי (אינו מופיע ברשימות המושבים
+appearance	admin	iw	מופע
+application	admin	iw	יישום
+application name	admin	iw	שם היישום
+application title	admin	iw	כותרת היישום
+applications	admin	iw	יישומים
+applications list	admin	iw	רשימת יישומים
+applies the changes	admin	iw	מבצע את השינוים
+are you sure you want to delete the application %1 ?	admin	iw	?בטוח שברצונך למחוק את היישום %1
+are you sure you want to delete this account ?	admin	iw	?בטוח שברצונך למחוק חשבון זה
+are you sure you want to delete this application ?	admin	iw	?בטוח שברצונך למחוק יישום זה
+are you sure you want to delete this category ?	common	iw	?בטוח שברצונך למחוק קטגוריה זו
+are you sure you want to delete this global category ?	admin	iw	?בטוח שברצונך למחוק קטגוריה גלובלית זו
+are you sure you want to delete this group ?	admin	iw	?בטוח שברצונך למחוק קבוצה זו
+are you sure you want to delete this server?	admin	iw	?בטוח שברצונך למחוק שרת זה
+are you sure you want to kill this session ?	admin	iw	?בטוח שברצונך להרוג מושב זה
+async services last executed	admin	iw	שירותים א-סנכרונים בוצעו לאחרונה
+asynchronous timed services	admin	iw	שירותים מתוזמנים א-סנכרונית
+asyncservices not yet installed or other error (%1) !!!	admin	iw	!שירותים א-סנכרונים לא מותקנים או שגיאה אחרת
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	iw	'application/octet-stream' במקום ברירת המחדל FTP נכון עבור MIME נסה להשתמש בסוג
+authentication / accounts	admin	iw	אימות / חשבונות
+auto create account records for authenticated users	admin	iw	צור אוטומטית רשומות חשבון עבור משתמשים מאומתים
+back to the list	admin	iw	חזרה לרשימה
+bi-dir passthrough	admin	iw	מעבר דו-מחיצתי
+bi-directional	admin	iw	דו-כיווני
+bottom	admin	iw	תחתית
+calculate next run	admin	iw	חשב את ההרצה הבאה
+can change password	admin	iw	יכול לשנות את הסיסמא
+cancel testjob!	admin	iw	!בטל עבודת ניסיון
+categories list	admin	iw	רשימת קטגוריות
+category %1 has been saved !	admin	iw	!קטגוריה %1 נשמרה
+category list	admin	iw	רשימת קטגוריות
+change acl rights	admin	iw	שינוי הרשאות ברשימות גישה
+change config settings	admin	iw	שינוי הגדרות קונפיגורציה
+change main screen message	admin	iw	שינוי המסר במסך הראשי
+check ip address of all sessions	admin	iw	של כל המושבים IP בדוק כתובות
+check items to <b>%1</b> to %2 for %3	admin	iw	בדוק פריטים <br>ל%1</br>  ל%2 עבור %3
+click to select a color	admin	iw	הקלק לבחירת צבע
+color	admin	iw	צבע
+country	admin	iw	ארץ
+country selection	admin	iw	בחירת ארץ
+create group	admin	iw	צור קבוצה
+created	admin	iw	נוצר
+creates a new field	admin	iw	יוצר שדה חדש
+crontab only (recomended)	admin	iw	(בלבד (מומלץ crontab
+custom fields	admin	iw	שדות מותאמים אישית
+cyrus imap server	admin	iw	Cyrus IMAP שרת
+data	admin	iw	מידע
+day	admin	iw	יום
+day of week<br>(0-6, 0=sun)	admin	iw	היום בשבוע<br>(0-6, 0=יום ראשון)
+default	admin	iw	ברירת מחדל
+default file system space per user	admin	iw	מקום המחדלי במערכת הקבצים עבור כל משתמש
+default file system space per user/group ?	admin	iw	הקצאת מקום מחדלי במערכת הקבצים לכל משתמש/קבוצה?
+deinstall crontab	admin	iw	crontab הסר התקנת
+delete account	admin	iw	מחק חשבון
+delete all records	admin	iw	מחק את כל הרשומות
+delete application	admin	iw	מחק יישום
+delete category	admin	iw	מחק קטגוריה
+delete group	admin	iw	מחק קבוצה
+delete peer server	admin	iw	מחק שרת חבר
+delete the category	admin	iw	מחק את הקטגוריה
+delete the group	admin	iw	מחק את הקבוצה
+delete this category	admin	iw	מחק קטגוריה זו
+delete this group	admin	iw	מחק קבוצה זו
+delete this user	admin	iw	מחק משתמש זה
+deletes this field	admin	iw	מוחק את השדה הזה
+deliver extern	admin	iw	מסירה חיצונית
+deny access to access log	admin	iw	מנע גישה ליומן הגישה
+deny access to application registery	admin	iw	מנע גישה לרישום היישומים
+deny access to applications	admin	iw	מנע גישה ליישומים
+deny access to asynchronous timed services	admin	iw	מנע גישה לשירותים מתוזמנים א-סינכרונית
+deny access to current sessions	admin	iw	מנע גישה למשתמשים נוכחיים
+deny access to error log	admin	iw	מנע גישה ליומן שגיאות
+deny access to global categories	admin	iw	מנע גישה לקטגוריות גלובליות
+deny access to groups	admin	iw	מנע גישה לקבוצות
+deny access to mainscreen message	admin	iw	מנע גישה למסר של מסך הראשי
+deny access to peer servers	admin	iw	מנע גישה לשרתים חברים
+deny access to phpinfo	admin	iw	phpinfo-מנע גישה ל
+deny access to site configuration	admin	iw	מנע גישה לקינפוג האתר
+deny access to user accounts	admin	iw	מנע גישה לחשבןנות משתמשים
+deny all users access to grant other users access to their entries ?	admin	iw	?מנע מכל המשתמשים גישה לאפשר למשתמשים אחרים  גישה אל הרשומות שלהם
+description can not exceed 255 characters in length !	admin	iw	!אורך התיאור עד 255 תווים
+determines the order the fields are displayed	admin	iw	קובע את סדר תצוגת השדות
+disable "auto completion" of the login form	admin	iw	הפוך "השלמה אוטומטית" של טופס הכניסה ללא פעילה
+disable wysiwyg-editor	admin	iw	ללא פעיל WYSIWYG הפוך עורך
+disabled (not recomended)	admin	iw	(לא פעיל (לא מומלץ
+display	admin	iw	תצוגה
+do not delete the category and return back to the list	admin	iw	אל תציג את הקטגוריה וחזור אל הרשימה
+do you also want to delete all global subcategories ?	admin	iw	?ברצונך גם למחוק את תתי-הקטגוריות הגלובליות
+do you want to delete all global subcategories ?	admin	iw	?ברצונך למחוק את תתי-הקטגוריות הגלובליות
+do you want to move all global subcategories one level down ?	admin	iw	?ברצונך להוריד את כל תתי-הקטגוריות רמה אחת למטה
+edit account	admin	iw	ערוך חשבון
+edit application	admin	iw	ערוך יישום
+edit email settings	admin	iw	ערוך הגדרות דואר אלקטרוני
+edit global category	admin	iw	ערוך קטגוריה גלובלית
+edit global category for %1	admin	iw	ערוך קטגוריה גלובלית עבור %1
+edit group	admin	iw	ערוך קבוצה
+edit group acl's	admin	iw	ערוך רשימת גישה של קבוצה
+edit login screen message	admin	iw	ערוך מסר של מסך הכניסה
+edit main screen message	admin	iw	עריך מסר של מסך הראשי
+edit peer server	admin	iw	ערוך שרת חבר
+edit table format	admin	iw	ערוך פורמט של טבלה
+edit this category	admin	iw	ערוך קטגוריה זו
+edit this group	admin	iw	ערוך קבוצה זו
+edit this user	admin	iw	ערוך משתמש זה
+edit user	admin	iw	ערוך משתמש
+edit user account	admin	iw	ערוך חשבון משתמש
+email account active	admin	iw	חשבון דואר אלקטרוני פעיל
+email address	admin	iw	כתובת דואר אלקטרוני
+enable debug-messages	admin	iw	לפעילים debug הפוך הודעות
+enabled - hidden from navbar	admin	iw	פעיל - מוסתר מפס הניווט
+enabled - popup window	admin	iw	פעיל חלוןנית קופצת
+enter a description for the category	admin	iw	ציין תיאור לקטגוריה זו
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	iw	הקלד טקסט אקראי עבור הצפנת<br>
+enter the background color for the login page	admin	iw	ציין את צבע הרקע של עמוד הכניסה
+enter the background color for the site title	admin	iw	ציין את תבע הרקע של כותרת האתר
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	iw	הקלד את המסלול המלא אל הקבצים הזמניים<br>
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	iw	הקלד את המסלול המלא אל קבצי משתמשים וקבוצות<br>
+enter the hostname of the machine on which this server is running	admin	iw	הקלד את שם המחשב בו שרת זה רץ
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	iw	eGroupWare של URL-הקלד את ה<br>
+enter the search string. to show all entries, empty this field and press the submit button again	admin	iw	ציין את צחרוזת החיפוש. להציג את כל הרשומות, רוקן שדה זה ולחץ שוב על כפתור הגש
+enter the site password for peer servers	admin	iw	הקלד את סיסמת האתר עבור שרתי חבר
+enter the site username for peer servers	admin	iw	הקלד את שם המשתמש האתר עבור שרתי חבר
+enter the title for your site	admin	iw	הקלד את הכותרת של האתר שלך
+enter the title of your logo	admin	iw	הקלד את הכותרת ללוגו שלך
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	iw	של הלוגו שלך (phpgwapi/templates/default/images-או שם הקובץ(ב URL-ציין את ה
+enter the url where your logo should link to	admin	iw	בו אל קישור זה יש לקשור את הלוגו שלך URL-הקלד את ה
+enter your default ftp server	admin	iw	המחדלי שלך FTP-הקלד את שרת ה
+enter your default mail domain ( from: user@domain )	admin	iw	(user@domain :הקלד את דומיין הדואר המחדלי שלך (מאת
+enter your http proxy server	admin	iw	שלך HTTP-הקלד את שם שרת הפרוקסי ה
+enter your http proxy server port	admin	iw	שלך HTTP-הקלד את הפורט בשרת הפרוקסי ה
+enter your smtp server hostname or ip address	admin	iw	שלו IP-שלך או אתכתובת ה SMTP-הכנס את שם שרת ה
+enter your smtp server port	admin	iw	שלך SMTP-הכנס את פורט שרת ה
+error canceling timer, maybe there's none set !!!	admin	iw	!שגיאה בכיוון הטיימר, יתכן שאין טיימר מכוון
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	iw	!שגיאה בכיוון הטיימר, תחביר שגוי או שכבר רץ טיימר אחד
+error: %1 not found or other error !!!	admin	iw	!שגיאה: %1 לא נמצא או שגיאה אחרת
+expires	admin	iw	פג תוקף
+fallback (after each pageview)	admin	iw	(נקודת החזרה (לאחר כל תצוגת עמוד
+false	admin	iw	לא נכון
+file space	admin	iw	מקום לקבצים
+file space must be an integer	admin	iw	מקום לקבתים חייב להיות מספר שלם
+for the times above	admin	iw	עבור השעות לעיל
+for the times below (empty values count as '*', all empty = every minute)	admin	iw	(עבור השעות למטה )ערך ריק נחשב כ-"*", הכל ריק = כל דקה
+force selectbox	admin	iw	לחייב תיבת בחירה
+forward also to	admin	iw	להעביר גם אל
+forward only	admin	iw	העבר בלבד
+full name	admin	iw	שם מלא
+global categories	common	iw	קטגוריות גלובליות
+group ?	admin	iw	?קבוצה
+group has been added	common	iw	הקבוצה נוספה
+group has been deleted	common	iw	הקבוצה נמחקה
+group has been updated	common	iw	הקבוצה עודכנה
+group list	admin	iw	רשימת קבוצות
+group manager	admin	iw	מנהל הקבוצה
+group name	admin	iw	שם הקבוצה
+hide php information	admin	iw	php הסתר נתוני
+home directory	admin	iw	מחיצת בית
+host information	admin	iw	מידע על השרת
+hour<br>(0-23)	admin	iw	שעה<br>(0-23)
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	iw	(כמה ימים יש להשאיר רשומות ביומן הגישה עד שמוחקים אותן (ברירת מחדל: 90
+how many minutes should an account or ip be blocked (default 30) ?	admin	iw	(ברירת מחדל: 30) IP כמה דקות יש לחסום חשבון או כתובת
+icon	admin	iw	צלמית
+idle	admin	iw	סרק
+if no acl records for user or any group the user is a member of	admin	iw	אם אין למשתמש או לקבוצה כל שהיא אליה הוא שייך רשומות ברשימת גישה
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	iw	?האם ברצונך לנהל תכונות שלמחיצת הבית ושל של הכניסה LDAP-אם משתמשים ב
+in mbyte	admin	iw	MB-ב
+inbound	admin	iw	כלפי פנים
+install crontab	admin	iw	crontab התקן
+installed applications	common	iw	יישומים מעודכנים
+installed crontab	admin	iw	contrab התקנתי את
+interface	admin	iw	ממשק
+jobs	admin	iw	עבודות
+kill	admin	iw	הרוג
+kill session	admin	iw	הרוג מושב
+last %1 logins	admin	iw	%1 הכניסות האחרונות
+last %1 logins for %2	admin	iw	%1 הכניסות האחרונות עבור
+last login	admin	iw	הכניסה האחרונה
+last login from	admin	iw	-הכמיסה האחרונה מ
+last time read	admin	iw	נקרא לאחרונה
+ldap accounts context	admin	iw	LDAP הקשר של חשבונות
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	iw	(/home for /home/username :לדוגמא) LDAP קידומת של מחיצת הבית המחדלית של
+ldap default shell (e.g. /bin/bash)	admin	iw	(/bin/bash :לדוגמא) LDAP של ברירת המחדל של(
+ldap encryption type	admin	iw	LDAP סוג ההצפנה של
+ldap groups context	admin	iw	LDAP הקשר של קבוצות
+ldap host	admin	iw	LDAP מחשב
+ldap root password	admin	iw	LDAP של root-סיסמת ה
+leave empty for no quota	admin	iw	השאר ריק ללא הקצאה
+leave the category untouched and return back to the list	admin	iw	אל תגע בקטגוריה וחזור אל הרשימה
+leave the group untouched and return back to the list	admin	iw	אל תיגע בקבוצו וחזור את הרשימה
+leave without saveing the entry	admin	iw	צא בלי לשמור את הרשומה
+leaves without saveing	admin	iw	יוצא בלי לשמור
+length<br>rows	admin	iw	אורך<br>שורות
+list config settings	admin	iw	הצג הגדרות קונפיגורציה
+list current sessions	admin	iw	הצג משתמשים נוכחיים
+list of current users	admin	iw	רשימת המשתמשים הנוכחיים
+login history	admin	iw	היסטורית כניסה
+login message	admin	iw	מסר הכניסה
+login screen	admin	iw	מסך הכניסה
+login shell	admin	iw	כניסה shell
+login time	admin	iw	שעת הכניסה
+loginid	admin	iw	זיהוי כניסה
+mail settings	admin	iw	הגדרות דואר
+main screen message	admin	iw	מסר של מסך הראשי
+manager	admin	iw	מנהל
+max length of the input [, length of the inputfield (optional)]	admin	iw	([אורך הקלט המירבי [, אורך שדה הקלט (אופציונאלי
+maximum account id (e.g. 65535 or 1000000)	admin	iw	(זיהוי חשבון מירבי (לדוגמא: 65535 או 10000000
+maximum entries in click path history	admin	iw	כמות הרשומות המירבי בהסטוריה של הקלקות
+message has been updated	admin	iw	המסר עודכן
+method	admin	iw	מטודה
+minimum account id (e.g. 500 or 100, etc.)	admin	iw	(זיהוי חשבון מיזערי (למשל 500 או 100 וכדומה
+minute	admin	iw	דקה
+mode	admin	iw	מצב
+modified	admin	iw	השתנה
+month	admin	iw	חודש
+name must not be empty !!!	admin	iw	!לשם אסור להיות ריק
+new group name	admin	iw	שם של הקבוצה החדשה
+new name	admin	iw	שם חדש
+new password [ leave blank for no change ]	admin	iw	(סיסמא חדשה (השאר ריק להשאיר ללא שינוי
+next run	admin	iw	ההרצה הבאה
+no algorithms available	admin	iw	אין אלגוריטמים זמינים
+no alternate email address	admin	iw	אין כתובת דואר אלקטרוני חלופי
+no jobs in the database !!!	admin	iw	!אין עבודות בבסיס הנתונים
+no login history exists for this user	admin	iw	לא קיימת הסטוריה של כניסות של משתמש זה
+no matches found	admin	iw	לא נמצאו התאמות
+no modes available	admin	iw	אין מצבים זמינים
+no permission to add groups	admin	iw	אין הרשאה להוסיף קבוצות
+no permission to add users	admin	iw	אין הרשאה להוסיף משתמשים
+no permission to create groups	admin	iw	אין הרשאה ליצור קביצות
+note: ssl available only if php is compiled with curl support	admin	iw	curl מקומפל עם תמיכת php זמין רק אם SSL :הערה
+number of row for a multiline inputfield or line of a multi-select-box	admin	iw	מספר השורה של שדה קלט רב-שורות או של תיבת רבי-בחירה
+one month	admin	iw	חודש אחד
+one week	admin	iw	שבוע אחד
+order	admin	iw	סדר
+outbound	admin	iw	קלפי חוץ
+passthrough	admin	iw	מעבר
+password for smtp-authentication	admin	iw	SMTP סיסמא לאימות של
+path information	admin	iw	מידע על המסלול
+peer server list	admin	iw	רשימת שרתים חברים
+peer servers	admin	iw	שרתים חברים
+percent of users that logged out	admin	iw	איוז המשתמשים שיצאו מהמערכת
+percent this user has logged out	admin	iw	אחוז הפעמים בהם משתמש זה יצא מהמערכת
+permission denied	admin	iw	הגישה אסורה
+permissions	admin	iw	הרשאות
+permissions this group has	admin	iw	הרשאות של הקבוצה
+phpinfo	admin	iw	php נתוני
+please enter a name	admin	iw	נא להקליד שם
+please enter a name for that server !	admin	iw	!נא לציין שפ עבור שרת זה
+please run setup to become current	admin	iw	כדי היות מעודכן setup נא להריץ
+please select	admin	iw	נא לבחור
+postfix with ldap	admin	iw	LDAP עם Postfix
+preferences	admin	iw	עדיפויות
+primary group	admin	iw	קבוצה ראשית
+qmaildotmode	admin	iw	qmaildotmode
+quota settings	admin	iw	הגדרות הקצאה
+re-enter password	admin	iw	הקלד סיסמא שנית
+read this list of methods.	admin	iw	.קרא רשימת מטודות זו
+remove	admin	iw	הסר
+remove all users from this group	admin	iw	הסר את כל המשתמשים מקבוצה זו
+remove all users from this group ?	admin	iw	?להסיר את כל המשתמשים מקבוצה זו
+return to admin mainscreen	admin	iw	חזרה למסך הראשי של ניהול
+return to view account	admin	iw	חזרה לתצוגת חשבון
+run asynchronous services	admin	iw	הרץ שירותים א-סנכרונים
+save the category	admin	iw	שמור את הקטגוריה
+save the category and return back to the list	admin	iw	שמור את הקטגוריה וחזור לרשימה
+saves the changes made and leaves	admin	iw	יוצא ושומר את השינוים
+saves this entry	admin	iw	שומר רשומה זו
+search accounts	admin	iw	חיפוש חשבונות
+search categories	admin	iw	חיפוש קטגוריות
+search groups	admin	iw	חיפוש קבוצות
+search peer servers	admin	iw	חיפוש שרתים חברים
+security	admin	iw	אבטחה
+select group managers	admin	iw	בחר מנהלי קבוצה
+select permissions this group will have	admin	iw	בחר אילו הרשאות יהיו לקבוצה זו
+select the parent category. if this is a main category select no category	admin	iw	בחר את קטגוריית האם. אם זוהי קטגוריה ראשית, בחר ללא קטגוריה
+select users for inclusion	admin	iw	בחר איזה משץמשים לכלול
+select where you want to store/retrieve filesystem information	admin	iw	בחר היכן ברצונך לשמור/לאחזר את המידע אודות מערכת הקובצים
+select where you want to store/retrieve user accounts	admin	iw	בחר היכן ברצונך לשמור/לאחזר חשבונות משתמשים
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	iw	(ביר באיזה מקום יישום זה יופיע בפס הניווט. מהנמוך ביותר (שמאל) לגבוה ביותר (ימין
+selectbox	admin	iw	תיבת בחירה
+server %1 has been updated	admin	iw	שרת %1 עודכן
+server list	admin	iw	רשימת שרתים
+server password	admin	iw	סיסמת השרת
+server type(mode)	admin	iw	סוג (מצב) השרת
+server url	admin	iw	של השרת URL
+server username	admin	iw	שם משתמש בשרת
+set preference values.	admin	iw	.קבע ערכי עדיפות
+should the login page include a language selectbox (useful for demo-sites) ?	admin	iw	(לכלול תיבת בחירת שפה בעמוד הכניסה (שימושי לרתרי דמו
+show 'powered by' logo on	admin	iw	-הצג לוגו  'הופעל בעזרת' ב
+show access log	admin	iw	הצג את יומן הגישה
+show current action	admin	iw	הצג פעולה נוכחית
+show error log	admin	iw	הצג יומן שגיאות
+show phpinfo()	admin	iw	PHPINFO() הצג
+show session ip address	admin	iw	של המושב IP הצג כתובת
+site	admin	iw	אתר
+sorry, that group name has already been taken.	admin	iw	.מצטער, שם קבוצה זה כבר תפוס
+sorry, the above users are still a member of the group %1	admin	iw	מצטער, המשתמשים הרשומים לעיל עדיין חברים בקבוצת %1
+sorry, the follow users are still a member of the group %1	admin	iw	מצטער, המשתמשים הרשומים מטה עדיין חברים בקבוצת %1
+sort the entries	admin	iw	מיין את הרשומות
+standard	admin	iw	סנדרד
+standard imap server	admin	iw	תקני IMAP שרת
+standard pop3 server	admin	iw	תקני POP3 שרת
+standard smtp-server	admin	iw	תקני SMTP שרת
+start testjob!	admin	iw	!החל עבודת הניסיון
+submit changes	admin	iw	הגש שינוים
+submit the search string	admin	iw	הגש את מחרוזת החיפוש
+template selection	admin	iw	בחירת תבנית
+text entry	admin	iw	רשומת טקסט
+that application name already exists.	admin	iw	.שם יישום זה כבר קיים
+that application order must be a number.	admin	iw	.סדר יישום זה חייב להיות מספרי
+that loginid has already been taken	admin	iw	זיהוי כניסה זה כבר תפוס
+that name has been used already	admin	iw	שם זה כבר בשימוש
+that server name has been used already !	admin	iw	!שם שרת זה כבר בשימוש
+the api is current	admin	iw	מעודכן API-ה
+the api requires an upgrade	admin	iw	זקוק לעדכון API-ה
+the groups must include the primary group	admin	iw	הקבוצות חייבות לכלול את הקבוצה הראשית
+the login and password can not be the same	admin	iw	שם הכניסה והסיסמא חייבים להיות שונים זה מזה
+the loginid can not be more then 8 characters	admin	iw	אורך זיהוי הכניסה עד 8 תווים
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	iw	השם לשימוש פנימי (>=20 תווים), אם משנים אותו אין יותר גישה לנתונים הקיימים
+the testjob sends you a mail everytime it is called.	admin	iw	עבודת הניסיון שולח לך דואר בכל פעם שהיא נקראת
+the text displayed to the user	admin	iw	הטקסט להציג למשתמש
+the two passwords are not the same	admin	iw	שני הסיסמאות אינם זהים
+the users bellow are still members of group %1	admin	iw	המשתמשים הרשומים מטה עדיין חברים בקבוצת %1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	iw	יש כבר קבוצה בעלת שם כזה. זיהוי משתמשים חייבים להיות שונים מזיהוי קבוצות
+they must be removed before you can continue	admin	iw	חייבים להסיר אותך טרם תמשיך
+this application is current	admin	iw	יישום זה מעודכן
+this application requires an upgrade	admin	iw	יישום זה זקוק לעדכון
+this category is currently being used by applications as a parent category	admin	iw	.קטגוריה זו כרגע משמש יישומים כקטגורית אם
+timeout for application session data in seconds (default 86400 = 1 day)	admin	iw	(זמן פוגה של נתוני מושב של יישום בשניות (ברירת מחדל: 86400 = יום 1
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	iw	(זמן פוגה של נתוני מושב בשניות (ברירת מחדל: 14400 = 4 שעות
+times	admin	iw	פעמים
+top	admin	iw	עליון
+total records	admin	iw	סך כל הרשומות
+true	admin	iw	נכון
+trust level	admin	iw	trust-רמת ה
+trust relationship	admin	iw	trust-יחסי ה
+two weeks	admin	iw	שבועיים
+updated	admin	iw	מעודכן
+use cookies to pass sessionid	admin	iw	השתמש בעוגיות כדי להעביר זיהוי מושב
+use pure html compliant code (not fully working yet)	admin	iw	(עם תאימות מלאה (לא לגמרי עובד עדיין HTML השתמש בקוד
+use theme	admin	iw	השתמש בערכת נושא
+user accounts	admin	iw	חשבונות משתמשים
+user data	common	iw	נתוני משתמש
+user for smtp-authentication (leave it empty if no auth required)	admin	iw	(השאר ריק אם לא דרושה אימות) SMTP שם משתמש עבור אימות
+user groups	admin	iw	קבוצות משתמשים
+userdata	admin	iw	נתוני משתמש
+users choice	admin	iw	בחירת המשתמשים
+view access log	admin	iw	הצג יומן גישה
+view account	admin	iw	הצג חשבון
+view category	admin	iw	הצג קטגוריה
+view error log	admin	iw	הצג יומן שגיאות
+view sessions	admin	iw	הצג מושבים
+view this user	admin	iw	הצג משתמש זה
+view user account	admin	iw	הצג חשבון משתמש
+who would you like to transfer all records owned by the deleted user to?	admin	iw	?אל מי ברצונך להעביר את כל הרשומות של המשתמש הנמחק
+would you like egroupware to cache the egw info array ?	admin	iw	?egw יטמין את מערך המידע של eGroupWare-ברצונך ש
+would you like egroupware to check for a new version<br>when admins login ?	admin	iw	יבדוק אם יש גירסא חדשה eGroupWare-תרצה ש<br>
+would you like egroupware to check for new application versions when admins login ?	admin	iw	יבדוק אם יש גירסת יישומים חדשה eGroupWare-תרצה ש<br>
+would you like to automaticaly load new langfiles (at login-time) ?	admin	iw	(האם להטעין קבצי שפה חדשים אוטומטית (שבשעת הכניסה למערכת
+would you like to show each application's upgrade status ?	admin	iw	תרצה להציג את סטאטוס העדכון של כל יישום
+you have entered an invalid expiration date	admin	iw	ציינת תאריך פוגה לא חוקי
+you must add at least 1 permission or group to this account	admin	iw	עליך לציין לפחות הרשאה אחת או קבוצה אחת לחשבון זה
+you must enter a group name.	admin	iw	.עליך לציין שם לקבוצה
+you must enter a lastname	admin	iw	עליך לציין שם משפחה
+you must enter a loginid	admin	iw	.עליך לציין זיהוי כניסה
+you must enter an application name and title.	admin	iw	.עליך לציין שם וכותרת ליישום
+you must enter an application name.	admin	iw	.עליך לציין שם ליישום
+you must enter an application title.	admin	iw	עליך לציין כותרת ליישום
+you must select a file type	admin	iw	עליך לבחור סןג קובץ
+you will need to remove the subcategories before you can delete this category	admin	iw	!עליך להסיר את תתי-הקטגוריות לפני שאפשר יהיה למחוק קטגוריה זו
+your session could not be verified.	admin	iw	.לא הצלחתי לשחזר את המושב

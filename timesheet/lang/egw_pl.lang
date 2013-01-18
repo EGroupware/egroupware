@@ -8,24 +8,24 @@ actions	timesheet	pl	Działania
 all projects	timesheet	pl	Wszystkie projekty
 all status	timesheet	pl	Wszystkie statusy
 and its members	timesheet	pl	i jego członków
-applies the changes	timesheet	pl	zastosuje zmiany
+applies the changes	timesheet	pl	zapisuje zmiany
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	pl	Zastosuj akcję na całym zapytaniu, nie tylko na wyświetlonych arkuszach!
 both: allow to use projectmanager and free project-names	admin	pl	Częściowa: zezwalaj na używanie Menadżera Projektów jak również dowolnych nazw projektów
 by	timesheet	pl	przez
 changed status	timesheet	pl	zmieniło status
-check all	timesheet	pl	Sprawdź wszystkie
-comment by %1 at %2:	timesheet	pl	Komentarz %1 z %2:
+check all	timesheet	pl	Zaznacz wszystkie
+comment by %1 at %2:	timesheet	pl	Komentarz dodany %2, przez %1
 create new links	timesheet	pl	Utwórz nowe odsyłacze
-creates a new field	timesheet	pl	tworzy nowe pole
+creates a new field	timesheet	pl	utwórz nowe pole
 creating new entry	timesheet	pl	Tworzenie nowego wpisu
-custom fields	timesheet	pl	Własne pola
+custom fields	timesheet	pl	Pola użytkownika
 delete this entry	timesheet	pl	Usuń ten wpis
 delete this status	timesheet	pl	Usuń wskazany status
 delete timesheet	timesheet	pl	Usuń arkusz czasu pracy
-deleted	timesheet	pl	usunięto
+deleted	timesheet	pl	skasowany
 deletes this field	timesheet	pl	usuwa to pole
 determines the order the fields are displayed	timesheet	pl	decyduje o kolejności, w jakiej pola zostaną pokazane
-each value is a line like <id>[=<label>]	timesheet	pl	każda wartość to linia w stylu <id>[=<label>]
+each value is a line like <id>[=<label>]	timesheet	pl	każda wartość jest linią jak <id>[=<label>]
 edit status	timesheet	pl	Edytuj status
 edit this entry	timesheet	pl	Edytuj ten wpis
 empty if identical to duration	timesheet	pl	pusty jesli identyczny jak czas trwania
@@ -38,21 +38,21 @@ existing links	timesheet	pl	Istniejące odsyłacze
 export	timesheet	pl	Eksport
 export to openoffice spreadsheet	timesheet	pl	Eksportuj do arkusza OpenOffice
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	pl	Exportuj wpisy ze swojego Czasu Pracy do pliku CSV (CSV - wpisy rozdzielane przecinkiem). W opcjach możesz wybrać własny separator wpisów.
-field must not be empty !!!	timesheet	pl	Pole nie może być puste !
+field must not be empty !!!	timesheet	pl	Powyższe pole nie może być puste!
 full: use only projectmanager	admin	pl	Pełna: zezwalaj tylko na nazwy z Menadżera Projektów
 general	timesheet	pl	Ogólnie
-global categories	timesheet	pl	Kategorie Globalne
+global categories	timesheet	pl	Kategorie globalne
 history	timesheet	pl	Historia
-id	timesheet	pl	ID
+id	timesheet	pl	id
 last modified	timesheet	pl	Ostatnio zmodyfikowany
 last month	timesheet	pl	Ostatni miesiąc
 last week	timesheet	pl	Ostatni tydzień
 last year	timesheet	pl	Ostatni rok
 leave it empty for a full week	timesheet	pl	Pozostaw pusty na cały tydzień
-leaves without saveing	timesheet	pl	porzuca bez zapisania
-length<br>rows	timesheet	pl	Długość<br>Wiersze
+leaves without saveing	timesheet	pl	Pozostaw bez zmian
+length<br>rows	timesheet	pl	Długość<br>linie
 links	timesheet	pl	Odsyłacze
-max length of the input [, length of the inputfield (optional)]	timesheet	pl	maksymalna długość wpisu [, długość pola wpisu (opcjonalnie)]
+max length of the input [, length of the inputfield (optional)]	timesheet	pl	maksymalna długość danych [,długość pola (opcjonalnie)]
 modify the status of the timesheet	timesheet	pl	Zmodyfikuj status arkuszu Czasu Pracy
 new ticket submitted by %1 at %2	timesheet	pl	Nowy ticket przesłany przez %1 , %2
 new timesheet submitted by %1 at %2	timesheet	pl	Nowy arkusz przesłany przez %1, %2
@@ -60,7 +60,7 @@ no details	timesheet	pl	bez szczegółów
 no project	timesheet	pl	Żaden projekt
 no status	timesheet	pl	Brak statusu
 none: use only free project-names	admin	pl	Żadna: używaj nazw niezależnych od Menadżera Projektów
-number of row for a multiline inputfield or line of a multi-select-box	timesheet	pl	numer wiersza dla wielo-liniowego pola lub linia multi-select boxa
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	pl	ilość linii dla danych obszaru tekstu albo ilość linii dla listy wielokrotnego wyboru
 only admin	timesheet	pl	Tylko administrator
 only admin can edit this status	timesheet	pl	tylko administrator może edytować ten status
 or endtime	timesheet	pl	lub czas zakończenia
@@ -72,7 +72,7 @@ projectmanager integration	admin	pl	Integracja z Menadżerem projektów
 quantity	timesheet	pl	Ilość
 save & new	timesheet	pl	Zapisz & Nowy
 saves the changes made	timesheet	pl	Zapisz poczynione zmiany
-saves the changes made and leaves	timesheet	pl	zapisuje zmiany i wychodzi
+saves the changes made and leaves	timesheet	pl	zapisz zmiany i zamknij
 saves this entry and add a new one	timesheet	pl	Zachowaj ten wpis i dodaj nowy
 select a price	timesheet	pl	Wybierz ceną
 select a project	timesheet	pl	Wybierz projekt
@@ -89,8 +89,8 @@ status deleted.	timesheet	pl	Status usunięty
 status of created timesheets	timesheet	pl	Status utworzonych arkuszy czasu pracy
 status updated.	timesheet	pl	Status zaktualizowany
 sum %1:	timesheet	pl	Suma %1:
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	pl	nazwa używana wewnętrznie (<= 20 znaków), zmiana jej spowoduje utratę dostępu do aktualnych danych
-the text displayed to the user	timesheet	pl	tekst wyświetlany użytkownikowi
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	pl	ta nazwa jest wykorzystywana wewnętrznie (<=20 liter), zmienienie jej spowoduje blokowanie dostępu do danych
+the text displayed to the user	timesheet	pl	Tekst wyświetlany dla użytkownika
 this month	timesheet	pl	Bieżący miesiąc
 this week	timesheet	pl	Bieżący tydzień
 this year	timesheet	pl	Bieżący rok
@@ -102,12 +102,12 @@ timesheet openoffice export	timesheet	pl	Eksport czasu pracy do arkusza OpenOffi
 timesheet status-%1 '%2' added.	timesheet	pl	Status arkusza - %1, '%2' dodano
 timesheet-%1 '%2' updated.	timesheet	pl	Arkusz - %1 '%2' zaktualizowany.
 timesheet-%1 deleted.	timesheet	pl	Arkusz - %1 usunięty.
-tracker	timesheet	pl	Traker
+tracker	timesheet	pl	System śledzenia
 unitprice	timesheet	pl	Cena jednostkowa
-values for selectbox	timesheet	pl	Wartości dla pola wyboru
+values for selectbox	timesheet	pl	Wartości selectboxa
 view this entry	timesheet	pl	Pokaż ten wpis
 week	timesheet	pl	Tydzień
-whole query	timesheet	pl	całe zapytanie
+whole query	timesheet	pl	Całe zapytanie
 yesterday	timesheet	pl	Wczoraj
 you need to select some timesheets first	timesheet	pl	Musisz najpierw wybrać jakieś arkusze
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	pl	Twoja baza danych jest NIEAKTUALNA (%1 vs. %2), proszę uruchom %3setup%4 by zaktualizować Twoją bazę.

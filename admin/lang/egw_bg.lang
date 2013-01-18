@@ -1,0 +1,52 @@
+actions	admin	bg	Действия
+admins	admin	bg	Администратори
+all users	admin	bg	Всички потребители
+application title	admin	bg	Заглавия на приложенията
+apply the changes	admin	bg	прилагане на промените
+are you sure you want to delete this category ?	common	bg	Наистина ли искате да изтриете тази категория?
+click to select a color	admin	bg	Натиснете за избор на цвят
+color	admin	bg	Цвят
+country	admin	bg	Държава
+country selection	admin	bg	Избор на държава
+created	admin	bg	Създаден
+creates a new field	admin	bg	създава ново поле
+custom fields	admin	bg	Полета по избор
+default	admin	bg	по подразбиране
+deletes this field	admin	bg	изтрива това поле
+description can not exceed 255 characters in length !	admin	bg	Описанието не може да превишава 255 символа!
+determines the order the fields are displayed	admin	bg	определя реда за показване на полетата
+each value is a line like <id>[=<label>]	admin	bg	всяка стойност е ред във формат <id>[=<label>]
+email address	admin	bg	E-Mail адрес
+enter your default mail domain ( from: user@domain )	admin	bg	Въведете e-mail домейн по подразбиране (От: user@domain)
+enter your smtp server hostname or ip address	admin	bg	Въведете името или IP адреса на SMTP сървъра
+enter your smtp server port	admin	bg	Въведете порта на SMTP сървъра
+full name	admin	bg	Име
+global categories	common	bg	Глобални категории
+icon	admin	bg	Икона
+leave without saveing the entry	admin	bg	изход без запис
+leaves without saveing	admin	bg	изход без запис
+length<br>rows	admin	bg	Дължина<br>Редове
+mail settings	admin	bg	Настройки на пощата
+max length of the input [, length of the inputfield (optional)]	admin	bg	макс. дължина на входа[, дължнина на вх.поле (опция)]
+modified	admin	bg	Редактирано
+name must not be empty !!!	admin	bg	Името трябва да бъде попълнено!!!
+new name	admin	bg	ново име
+no matches found	admin	bg	Не са открити съвпадения
+number of row for a multiline inputfield or line of a multi-select-box	admin	bg	Брой редове за многоредово текстово поле или множествен избор
+one month	admin	bg	един месец
+one week	admin	bg	една седмица
+order	admin	bg	Ред
+permission denied	admin	bg	Не е позволено
+permission denied !!!	admin	bg	Достъпът отказан !!!
+permissions	admin	bg	Права
+re-enter password	admin	bg	Въведете отново паролата
+remove	admin	bg	премахване
+saves the changes made and leaves	admin	bg	запазва направените промени и излиза
+saves this entry	admin	bg	Запазва записа
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	bg	името, използвано в системата (до 20 символа) Промяната му прави съществуващите данни недостъпни
+the text displayed to the user	admin	bg	текстът, показван на потребителя
+the two passwords are not the same	admin	bg	Паролите не съвпадат
+times	admin	bg	Времена
+two weeks	admin	bg	две седмици
+type of customfield	admin	bg	Тип на полето по избор
+updated	admin	bg	Актуализиран

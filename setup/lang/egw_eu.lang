@@ -1,0 +1,52 @@
+actions	setup	eu	Ekintzak
+admins	setup	eu	Administratzaileak
+all users	setup	eu	Erabiltzaile guztiak
+application title	setup	eu	Aplikazioaren izenburua
+authentication / accounts	setup	eu	Identitatea/Kontuak
+check ip address of all sessions	setup	eu	Saio guztietako IPa begiratu
+completed	setup	eu	Osatua
+configuration	setup	eu	Konfigurazioa
+country selection	setup	eu	Herrialde bat aukeratu
+created	setup	eu	Sortua
+day	setup	eu	Eguna
+default	setup	eu	Lehenetsia
+default file system space per user/group ?	setup	eu	Lehenetsitako gunea fitxategien sisteman erabiltzaile edo taldearengatik?
+download	setup	eu	Deskargatu
+enter the site password for peer servers	setup	eu	Sar ezazu lekuaren pasahitza peer zerbitzarirako
+enter the site username for peer servers	setup	eu	Sar ezazu lekuaren erabiltzailea peer zerbitzarirako
+enter the title for your site	setup	eu	Sar ezazu izenburu bat zure lekurako
+enter your default ftp server	setup	eu	Sar ezazu zure FTP zerbitzari lehenetsia
+enter your http proxy server	setup	eu	Sar ezazu zure HTTP proxi zerbitzaria
+enter your http proxy server port	setup	eu	Sar ezazu zure HTTP proxi zerbitzariaren ataka
+file	setup	eu	Fitxategia
+filename	setup	eu	Fitxategiaren izena
+go to	setup	eu	Joan
+host information	setup	eu	Ostalariaren informazioa
+ldap accounts context	setup	eu	LDAP kontuen testuingurua
+ldap encryption type	setup	eu	LDAP zifratu mota
+ldap groups context	setup	eu	LDAP taldeen testuingurua
+ldap host	setup	eu	LDAP zerbitzaria
+ldap root password	setup	eu	LDAP supererabiltzaile pasahitza
+ldap rootdn	setup	eu	LDAP rootdn
+mail server login type	setup	eu	E-Posta zerbitzarian saioa hasteko era
+minute	setup	eu	Minutua
+modified	setup	eu	Aldatua
+month	setup	eu	Hilabetea
+new	setup	eu	Berria
+next run	setup	eu	Hurrengo exekutaketa
+no algorithms available	setup	eu	ez dago algoritmorik eskuragarri
+no modes available	setup	eu	ez dago modurik eskuragarri
+not	setup	eu	ez
+one month	setup	eu	hilabete bat
+one week	setup	eu	aste bat
+or	setup	eu	edo
+password for smtp-authentication	setup	eu	SMTP-rako identifikazio pasahitza
+path information	setup	eu	Bideko informazioa
+re-enter password	setup	eu	Pasahitza baieztatu
+remove	setup	eu	ezabatu
+selectbox	setup	eu	Aukeraketa kuadroa
+size	setup	eu	Tamainua
+text entry	setup	eu	Testu sarrera
+two weeks	setup	eu	bi aste
+use cookies to pass sessionid	setup	eu	Cookiak erabili saioak gordetzeko
+use pure html compliant code (not fully working yet)	setup	eu	HTML kode garbia erabili (oraindik ez du guztiz funtzionatzen)

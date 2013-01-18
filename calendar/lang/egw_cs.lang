@@ -93,6 +93,7 @@ delete this alarm	calendar	cs	Smazat tuto připomínku
 delete this event	calendar	cs	Smazat tuto událost
 delete this exception	calendar	cs	Smazat tuto vyjímku
 delete this series of recuring events	calendar	cs	Smazat tyto řady opakujících se událostí
+deleted	calendar	cs	smazáno
 deny ressources reservation for private events	calendar	cs	Zakázat rezervaci zdrojů pro soukromé události
 disinvited	calendar	cs	Zrušená pozvánka
 display status of events	calendar	cs	Zobrazit stav událostí
@@ -171,6 +172,7 @@ here is your requested alarm.	calendar	cs	Zde je Váše požadovaná připomínk
 hide private infos	calendar	cs	Skrýt soukromé informace
 high priority	calendar	cs	vysoká priorita
 history	calendar	cs	Historie
+history logging	admin	cs	Protokolování historie
 holiday	calendar	cs	Svátek
 holiday management	calendar	cs	Správa svátků
 holidays	calendar	cs	Svátky
@@ -407,6 +409,7 @@ workday	calendar	cs	Pracovní den
 workdays	calendar	cs	Pracovní dny
 yearly	calendar	cs	Ročně
 yearview	calendar	cs	Roční pohled
+yes, only admins can purge deleted items	admin	cs	Ano, jen administrátoři mohou odstraňovat smazané položky
 you are not allowed to book the resource selected:	calendar	cs	Nemáte oprávnění si rezervovat vybraný zdroj:
 you can either set a year or a occurence, not both !!!	calendar	cs	Můžete nastavit rok nebo výskyt, ne obojí !!!
 you can only set a year or a occurence !!!	calendar	cs	Můžete nastavit jen rok nebo výskyt !!!

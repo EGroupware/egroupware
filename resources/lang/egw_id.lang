@@ -19,8 +19,11 @@ check all	resources	id	Contreng semua
 choose categories admin	resources	id	pilih admin kategori
 clear selection	resources	id	bersihkan pilihan
 configure access permissions	admin	id	Pengaturan Ijin Akses
+conflict	resources	id	Konflik
 create new accessory for this resource	resources	id	Bikin aksesori baru untuk sumberdaya ini
 create new links	resources	id	Bikin tautan baru
+custom fields	resources	id	Custom fields
+days	resources	id	hari
 delete selected resources	resources	id	hapus sumberdaya terpilih
 delete this entry	resources	id	Hapus entri ini
 description (short)	resources	id	Uraian (ringkas)
@@ -30,6 +33,8 @@ existing links	resources	id	Tautan yang ada
 general	resources	id	Umum
 general informations about resource	resources	id	Informasi umum mengenai sumberdaya
 gernal resource	resources	id	sumberdaya umum
+global categories	resources	id	Kategori Global
+hours	resources	id	jam
 information about storage	resources	id	Informasi mengenai penyimpanan
 informations about the location of resource	resources	id	Informasi mengenai lokasi penyimpanan
 inventory number	resources	id	Nomor Inventaris
@@ -42,6 +47,7 @@ links	resources	id	Tautan
 location	resources	id	Lokasi
 location of resource	resources	id	Lokasi sumberdaya
 location:	resources	id	Lokasi:
+manage mapping	resources	id	Mengelola pemetaan
 name of resource	resources	id	Nama Sumberdaya
 name:	resources	id	Nama:
 no description available	resources	id	tanpa uraian

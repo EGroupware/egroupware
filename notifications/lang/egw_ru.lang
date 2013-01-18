@@ -1,0 +1,23 @@
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	ru	Выберите цепочку извещений. Вы можете быть извещены через обработчики встроенные в цепочки.<br/>Примечание: Если цепочка извещений отмечена как "отключено", значит ваш Администратор не разрешает использование одного или более обработчиков сообщений встроенных в цепочку и извещения для вас будут приходить на эл. почту.
+common chains	notifications	ru	Общие цепочки
+disabled chains	notifications	ru	Отключенные цепочки
+egroupware has notifications for you	notifications	ru	в eGroupWare для вас есть сообщения
+egroupware-popup backend	admin	ru	Обработчик всплавающих окон eGroupware
+egroupware-popup verbosity	notifications	ru	Многословие всплавающих окон eGroupware
+enable egroupware-popup backend	admin	ru	Включить
+enable sms backend	admin	ru	Включить обработчик СМС
+enable windows-popup backend	admin	ru	Включить обработчик всплывающих окон
+enabled chains	notifications	ru	Включить цепочки
+folder	notifications	ru	папка
+from	notifications	ru	От
+if set, embedded links get rendered special for external clients	notifications	ru	Если установлено, внутренние ссылки преобразуются для использования внешними клиентами
+linked entries:	common	ru	Связанные записи:
+maximum sms messages per notification	admin	ru	Максимальное количество СМСок на сообщение
+message from	notifications	ru	Сообщение от
+minutes	notifications	ru	Минуты
+notification	common	ru	Извещения
+notify me by	notifications	ru	Уведомлять меня через
+optimize e-mails for external mail client	notifications	ru	Оптимизировать эл. письма для внешних почтовых клиентов
+preferences for notification	notifications	ru	Настройки Извещений
+sms backend	admin	ru	Обработка СМС
+windows-popup backend	admin	ru	Обработка всплывающих окон

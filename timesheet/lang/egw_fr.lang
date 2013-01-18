@@ -1,0 +1,81 @@
+--> enter new name	timesheet	fr	--> entrez un nouveau nom
+2 month ago	timesheet	fr	Il y a 2 mois
+2 years ago	timesheet	fr	Il y a 2 ans
+3 years ago	timesheet	fr	Il y a 3 ans
+actions	timesheet	fr	Actions
+all projects	timesheet	fr	Tous les projets
+applies the changes	timesheet	fr	appliquer les changements
+both: allow to use projectmanager and free project-names	admin	fr	Les deux: permettre l'utilisation du Gestionnaire de projets et l'utilisation de noms de projets libres
+by	timesheet	fr	par
+check all	timesheet	fr	Vérifier tout
+comment by %1 at %2:	timesheet	fr	Commentaire par %1 à %2:
+create new links	timesheet	fr	Créer de nouveaux liens
+creates a new field	timesheet	fr	Créer un nouveau champ
+creating new entry	timesheet	fr	nouvelle entrée en création
+custom fields	timesheet	fr	Champs personnalisés
+delete this entry	timesheet	fr	Supprimer cette entrée
+delete this status	timesheet	fr	Supprimer ce status
+deleted	timesheet	fr	supprimé
+deletes this field	timesheet	fr	Supprimer ce champ
+determines the order the fields are displayed	timesheet	fr	Détermine l'ordre d'afficahge des champs
+each value is a line like <id>[=<label>]	timesheet	fr	Chaque valeur est une ligne comme <id>[=<label>]
+edit status	timesheet	fr	Modifier Statut
+edit this entry	timesheet	fr	Modifier cette entrée
+empty if identical to duration	timesheet	fr	vide si identique à la durée
+end	timesheet	fr	Fin
+entry deleted	timesheet	fr	Entrée supprimée
+entry saved	timesheet	fr	Entrée enregistrée
+error deleting the entry!!!	timesheet	fr	Erreur lors de la suppression de l'entrée !!!
+error saving the entry!!!	timesheet	fr	Erreur lors de l'enregistrement de l'entrée !!!
+existing links	timesheet	fr	Liens existants
+export	timesheet	fr	Exportation
+field must not be empty !!!	timesheet	fr	Le champ ne doit pas être vide !!!
+full: use only projectmanager	admin	fr	Complet: utiliser seulement le Gestionnaire de projets
+general	timesheet	fr	Général
+global categories	timesheet	fr	Catégorie globale
+history	timesheet	fr	Historique
+id	timesheet	fr	Id
+last modified	timesheet	fr	Dernière modification
+last month	timesheet	fr	Le mois dernier
+last week	timesheet	fr	La semaine dernière
+last year	timesheet	fr	L'année dernière
+leave it empty for a full week	timesheet	fr	Laisser vide pour une semaine pleine
+leaves without saveing	timesheet	fr	Quitter sans enregistrer
+length<br>rows	timesheet	fr	Longueur<br>lignes
+links	timesheet	fr	Liens
+max length of the input [, length of the inputfield (optional)]	timesheet	fr	Longueur maximum de l'entrée [, longueur du champ de saisi (optionnel)]
+no details	timesheet	fr	pas de détails
+no project	timesheet	fr	Pas de projet
+none: use only free project-names	admin	fr	Aucun: utiliser seulement des noms de projets libres
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	fr	Nombre de lignes pour un champ multiligne ou pour une boîte de sélection multiple.
+or endtime	timesheet	fr	ou Date de fin
+order	timesheet	fr	Ordre
+parent	timesheet	fr	Parent
+permission denied!!!	timesheet	fr	Autorisation refusée!!!
+price	timesheet	fr	Prix
+projectmanager integration	admin	fr	Intégration au Gestionnaire de projets
+quantity	timesheet	fr	Quantité
+save & new	timesheet	fr	Enregistrer & Nouveau
+saves the changes made	timesheet	fr	Enregistrer les modifications
+saves the changes made and leaves	timesheet	fr	Enregistrer les modifications et quitter
+saves this entry and add a new one	timesheet	fr	Enregistrer cette entrée et en ajouter une nouvelle
+select a price	timesheet	fr	Choisissez un prix
+select a project	timesheet	fr	Choisissez un projet
+start	timesheet	fr	Début
+starttime	timesheet	fr	Heure de début
+starttime has to be before endtime !!!	timesheet	fr	L'heure de début doit être avant l'heure de fin !!!
+sum %1:	timesheet	fr	Somme %1:
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	fr	Nom utilisé en interne (<= 20 caractères), le changer rendra certaines données inaccessibles.
+the text displayed to the user	timesheet	fr	le texte montré à l'utilisateur
+this month	timesheet	fr	Ce mois
+this week	timesheet	fr	Cette semaine
+this year	timesheet	fr	Cette année
+timesheet	common	fr	Feuille de temps
+tracker	timesheet	fr	Traqueur
+unitprice	timesheet	fr	Prix à l'unité
+values for selectbox	timesheet	fr	Valeurs des boîtes de sélection
+view this entry	timesheet	fr	Voir cette entrée
+week	timesheet	fr	Semaine
+whole query	timesheet	fr	requête entière
+yesterday	timesheet	fr	Hier
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	fr	Votre base de données n'est PAS à jour (%1 contre %2), veuillez exécuter %3setup%4 pour mettre à jour votre base de données.

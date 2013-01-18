@@ -1,0 +1,87 @@
+%1 already exists as a file	filemanager	zh-tw	%1 檔案已經存在
+%1 starts with '%2'	filemanager	zh-tw	%1 開始於 '%2'
+actions	filemanager	zh-tw	動作
+applications	common	zh-tw	應用程式
+cancel editing %1 without saving	filemanager	zh-tw	取消編輯%1，不儲存
+cannot create directory because it begins or ends in a space	filemanager	zh-tw	資料夾名稱包含空白字元，無法建立資料夾
+check all	filemanager	zh-tw	全選
+clear search	filemanager	zh-tw	清除搜尋
+comment	filemanager	zh-tw	備註
+comments cannot contain "%1"	filemanager	zh-tw	備註不能包含 "%1"
+copied %1 to %2	filemanager	zh-tw	複製 %1 到 %2
+copy to	filemanager	zh-tw	複製到
+could not copy %1 to %2	filemanager	zh-tw	無法複製 %1 到 %2
+could not copy file because no destination directory is given	filemanager	zh-tw	無法複製檔案，因為沒有目標資料夾
+could not create %1	filemanager	zh-tw	無法建立%1
+could not delete %1	filemanager	zh-tw	無法刪除%1
+could not move %1 to %2	filemanager	zh-tw	無法搬移%1到%2
+could not move file because no destination directory is given	filemanager	zh-tw	無法移動檔案，因為沒有目標資料夾
+could not rename %1 to %2	filemanager	zh-tw	無法將%1改名為%2
+could not save %1	filemanager	zh-tw	無法儲存%1
+create file	filemanager	zh-tw	建立檔案
+create folder	filemanager	zh-tw	建立資料夾
+created	filemanager	zh-tw	建立日期
+created %1,%2	filemanager	zh-tw	建立 %1,%2
+created between	filemanager	zh-tw	建立介於
+created directory %1	filemanager	zh-tw	建立資料夾%1
+custom fields	filemanager	zh-tw	自訂欄位
+cut	filemanager	zh-tw	剪下
+deleted %1	filemanager	zh-tw	刪除%1
+directory	filemanager	zh-tw	資料夾
+directory %1 already exists	filemanager	zh-tw	資料夾 %1 已經存在
+directory %1 does not exist	filemanager	zh-tw	資料夾 %1 不存在
+directory names cannot contain "%1"	filemanager	zh-tw	資料夾名稱不應該包含 "%1"
+download	filemanager	zh-tw	下載
+edit comments	filemanager	zh-tw	編輯備註
+file	filemanager	zh-tw	檔案
+file %1 already exists. please edit it or delete it first.	filemanager	zh-tw	檔案 %1已經存在，請先編輯或刪除它。
+file %1 could not be created.	filemanager	zh-tw	檔案 %1 無法建立。
+file %1 may be too big. contact your systemadministrator for further info	filemanager	zh-tw	檔案 %1 也許太大，請聯絡管理員取得更多資訊
+file names cannot contain "%1"	filemanager	zh-tw	檔案名不能包含 "%1"
+filemanager	common	zh-tw	檔案管理員
+files in this directory	filemanager	zh-tw	資料夾中的檔案
+folder up	filemanager	zh-tw	資料夾上移
+general	filemanager	zh-tw	一般
+go home	filemanager	zh-tw	回首頁
+go to	filemanager	zh-tw	前往
+go to your home directory	filemanager	zh-tw	到主要目錄
+go up	filemanager	zh-tw	上一層
+id	filemanager	zh-tw	編號
+link	filemanager	zh-tw	連結
+location	filemanager	zh-tw	位置
+mime type	filemanager	zh-tw	MIME 類型
+modified	filemanager	zh-tw	修改日期
+modified between	filemanager	zh-tw	修改介於
+move	filemanager	zh-tw	移動
+move to	filemanager	zh-tw	搬到
+moved %1 to %2	filemanager	zh-tw	把 %1搬到%2
+no files in this directory.	filemanager	zh-tw	資料夾中沒有任何檔案
+no version history for this file/directory	filemanager	zh-tw	這個檔案/資料夾沒有版本歷史
+open	filemanager	zh-tw	開啟
+operation	filemanager	zh-tw	操作
+permissions	filemanager	zh-tw	權限
+please select a file to delete.	filemanager	zh-tw	請選擇要刪除的檔案
+preview	filemanager	zh-tw	預覽
+preview %1	filemanager	zh-tw	預覽 %1
+preview of %1	filemanager	zh-tw	%1 的預覽
+projectmanager	filemanager	zh-tw	專案管理員
+quick jump to	filemanager	zh-tw	快速切換
+reload	filemanager	zh-tw	重新讀取
+renamed %1 to %2	filemanager	zh-tw	把%1 檔名改成 %2
+replaced %1	filemanager	zh-tw	%1 完成修改
+save %1	filemanager	zh-tw	儲存 %1
+save %1, and go back to file listing	filemanager	zh-tw	儲存 %1，接著回到檔案列表
+save changes	filemanager	zh-tw	儲存異動
+saved %1	filemanager	zh-tw	%1 儲存完成
+search for '%1'	filemanager	zh-tw	搜尋 '%1'
+searchstring	filemanager	zh-tw	搜尋字串
+show	filemanager	zh-tw	顯示
+size	filemanager	zh-tw	大小
+start search	filemanager	zh-tw	開始搜尋
+total files	filemanager	zh-tw	檔案數
+unused space	filemanager	zh-tw	剩餘空間
+up	filemanager	zh-tw	上一層
+updated comment for %1	filemanager	zh-tw	更新%1的備註
+used space	filemanager	zh-tw	使用空間
+you do not have access to %1	filemanager	zh-tw	%1沒有任何異動
+your home dir did not exist, egroupware created a new one.	filemanager	zh-tw	您的家目錄不存在，eGroupWare建立一個新的

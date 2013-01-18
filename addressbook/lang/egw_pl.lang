@@ -12,7 +12,6 @@
 (empty = use global limit, no = no export at all)	admin	pl	(puste = użyj limitu globalnego, no = bez eksportu)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	pl	<b>Nie wybrano trybu konwersji typu <żaden>.</b> Proszę wybrać typ trybu konwersji z listy
 @-eval() is only availible to admins!!!	addressbook	pl	@-eval() jest dostępne wyłącznie dla administratorów !!!
-account id	addressbook	pl	ID konta
 account repository	admin	pl	Repozytorium kont
 accounts	addressbook	pl	Konta
 actions	addressbook	pl	Polecenia
@@ -27,7 +26,7 @@ add custom field	addressbook	pl	Dodaj pole użytkownika
 add emails of whole distribution list?	addressbook	pl	Dodać emaile całej listy dystrybucyjnej?
 add or delete categories	addressbook	pl	Dodaj lub usuń kategorie
 add to distribution list:	addressbook	pl	Dodaj do listy dystrybucyjnej:
-added	addressbook	pl	dodano
+added	addressbook	pl	Dodano
 added by synchronisation	addressbook	pl	dodano poprzez synchronizację
 added to distribution list	addressbook	pl	dodano do listy dystrybucyjnej
 additional information about using ldap as contact repository	admin	pl	Dodatkowe informacje o korzystaniu z LDAP jako repozytorium kontaktów
@@ -38,10 +37,8 @@ address line 2	addressbook	pl	Wiersz adresu nr 2
 address type	addressbook	pl	Typ adresu
 addressbook	common	pl	Książka adresowa
 addressbook csv export	addressbook	pl	Eksport książki adresowej do CSV
-addressbook csv import	addressbook	pl	Import książki adresowej z CSV
 addressbook field	addressbook	pl	Pole książki adresowej
 addressbook menu	addressbook	pl	Menu książki adresowej
-addressbook of	addressbook	pl	Książka adresowa
 addressbook preferences	addressbook	pl	Ustawienia książki adresowej
 addressbook the contact should be saved to	addressbook	pl	Książka adresowa do której  ma zostać zapisany ontakt
 addressbook the contact should be shown	addressbook	pl	Książka adresowa w której kontakt ma być wydoczny
@@ -83,8 +80,7 @@ categories, notes, ...	addressbook	pl	Kategorie, notatki, ...
 category tree	admin	pl	Drzewo kategorii
 cell phone	addressbook	pl	Telefon komórkowy
 change all organisation members	addressbook	pl	zmień wszystkich członków organizacji
-charset for the csv export	addressbook	pl	Strona kodowa dla eksportu CSV
-charset for the vcard export	addressbook	pl	Strona kodowa dla eksportu vCard
+charset for the csv export	addressbook	pl	strona kodowa dla eksportu CSV
 charset of file	addressbook	pl	strona kodowa pliku
 check all	addressbook	pl	Zaznacz wszystkie
 choose an icon for this contact type	admin	pl	Wybierz ikonkę dla tego typu kontaktów
@@ -103,7 +99,6 @@ contact deleted	addressbook	pl	Kontakt został skasowany
 contact fields to show	addressbook	pl	Pokazuj te pola kontaktu
 contact fields:	addressbook	pl	Pola kontaktu:
 contact id	addressbook	pl	ID kontaktu
-contact id cannot be changed by import	addressbook	pl	ID kontaktu nie może być zmienione przez import
 contact maintenance	admin	pl	Obsługa kontaktów
 contact modified by %1 at %2	addressbook	pl	Kontakt zmodyfikowany przez %1 , %2
 contact not found!	addressbook	pl	Nie znaleziono kontaktu!
@@ -118,7 +113,7 @@ contacts to ldap, account contact-data to sql	admin	pl	kontakty do LDAP'a, dane 
 contains	addressbook	pl	zawiera
 copied by %1, from record #%2.	addressbook	pl	Skopiowane przez %1, z rekordu # %2
 copy a contact and edit the copy	addressbook	pl	Skopiuj kontakt i edytuj kopię
-copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	pl	Skopiuj zmiany do schowka, %1przeładuj wpis%2 i wprowadź je.
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	pl	Skopiuj zmiany do schowka, %1przeładuj wpis%2 i zastosuj je.
 country	common	pl	Kraj
 create new links	addressbook	pl	Utwórz nowe linki
 created	addressbook	pl	Utworzony
@@ -130,7 +125,7 @@ custom	addressbook	pl	Użytkownika
 custom etemplate for the contactform	addressbook	pl	Własny eSzablon do formularza kontaktowego
 custom fields	addressbook	pl	Pola użytkownika
 debug output in browser	addressbook	pl	Debuguj wynik w przeglądarce
-default	addressbook	pl	domyślny
+default	addressbook	pl	Domyślne
 default address format	addressbook	pl	Domyślny format adresu
 default addressbook for adding contacts	addressbook	pl	Domyślna książka adresowa przy dodawaniu kontaktów
 default document to insert contacts	addressbook	pl	Domyślny dokument do wstawiania kontaktów
@@ -161,7 +156,7 @@ don't hide empty columns	addressbook	pl	Nie ukrywaj pustych kolumn
 download	addressbook	pl	Pobierz
 download export file (uncheck to debug output in browser)	addressbook	pl	Zapisz plik na dysku (jeżeli nie zaznaczysz, wynik będzie pokazany wyłącznie w oknie przeglądarki)
 download this contact as vcard file	addressbook	pl	sciągnij ten kontakt jako plik vCard
-duration	addressbook	pl	Okres trwania
+duration	addressbook	pl	Czas trwania
 edit custom field	addressbook	pl	Edytuj pole użytkownika
 edit custom fields	admin	pl	Edytuj pola użytkownika
 edit extra account-data in the addressbook	admin	pl	Eytuj dodatkowe dane kont w książce adresowej
@@ -173,19 +168,14 @@ empty	admin	pl	Pusty
 empty for all	addressbook	pl	puste dla wszystkich
 enable an extra private addressbook	addressbook	pl	Włącz dodatkową prywatną książkę adresową
 enclosure	addressbook	pl	Obudowa
-end	addressbook	pl	Koniec
+end	addressbook	pl	Zakończenie
 enter the path to the exported file here	addressbook	pl	Podaj ścieżkę do wyexportowanego pliku tutaj
 error deleting the contact !!!	addressbook	pl	Błąd podczas kasowania kontaktu !!!
 error saving the contact !!!	addressbook	pl	Błąd podczas zapisywania kontaktu !!!
-error: the entry has been updated since you opened it for editing!	addressbook	pl	Błąd: ten wpis został zaktualizowany od czasu jego otwarcia do edycji!
+error: the entry has been updated since you opened it for editing!	addressbook	pl	Błąd: wpis został zaktualizowany od czasu jego otwarcia do edycji!
 example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	pl	Przykład $$IF n_prefix~Pan~Witam Pana~Witam Panią.$$ - wyszukaj w "Pan" w polu n_prefix. Jeśli znajdziesz wstaw "Witam Pana" w przeciwnym wypadku "Witam Panią".
-example $$letterprefix$$ - gives a letter prefix without double spaces, if the title is emty for  example	addressbook	pl	Przykład $$LETTERPREFIX$$ - zwraca prefiks listku bez podwójnych spacji, np jeśli tytuł jest pusty
-example $$letterprefixcustom n_prefix title n_family$$ - example: mr dr. james miller	addressbook	pl	Przykład  $$LETTERPREFIXCUSTOM n_prefix title n_family$$ - Pan Dr Jan Kowalski
-example $$nelf role$$ - if field role is not empty, you will get a new line with the value of field role	addressbook	pl	Przykład $$NELF role$$ - jeśli rola pola nie jest pusta zostanie wstawiona nowa linia z rolą pola
-example $$nelfnv role$$ - if field role is not empty, set a lf without any value of the field	addressbook	pl	Przykład $$NELFNV role$$ - jeśli rola pola nie jest pusta, wstaw LF bez żadnej wartości pola
 existing links	addressbook	pl	Istniejące linki
-exists	addressbook	pl	istnieje
-export	addressbook	pl	eksport
+export	addressbook	pl	Eksport
 export as csv	addressbook	pl	Eksport jako CSV
 export as vcard	addressbook	pl	Eksport jako vCard
 export contacts	addressbook	pl	Eksportuj kontakty
@@ -218,7 +208,7 @@ geo	addressbook	pl	GEO
 global categories	addressbook	pl	Kategorie globalne
 grant addressbook access	common	pl	Nadaj prawa dostępu do książki adresowej
 group %1	addressbook	pl	Grupa %1
-h	addressbook	pl	h
+h	addressbook	pl	g
 hide accounts from addressbook	addressbook	pl	Ukryj konta z książki adresowej
 hides accounts completly from the adressbook.	addressbook	pl	Ukrywa całkowicie konta z książki adresowej
 home address	addressbook	pl	Adres domowy
@@ -235,9 +225,7 @@ how many contacts should non-admins be able to export	admin	pl	Ile kontaktów mo
 icon	addressbook	pl	Ikonka
 if accounts are already in ldap	admin	pl	jeśli konta są już w LDAPie
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	pl	Jeśli podasz tutaj ścieżkę do katalogu (pełna ścieżka systemowa) książka adresowa wyświetli czynność dla każdego dokumentu. Ta akcja pozwoli na pobranie wskazanego dokumentu z wstawionymi danymi tego kontaktu.
-if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted. the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (<a href="http://demo.jns.pl/index.php?menuaction=addressbook.addressbook_merge.show_replacements" target="_blank">full list of placeholder names</a>). at the moment the following document-types are supported:*.rtf, *.txt	addressbook	pl	Jeśli podasz tutaj katalog (pełna ścieżka systemowa), książka adresowa wyświetla akcję dla każdego dokumentu. Akcja ta pozwala na pobranie dokumentu z wstawionymi danymi kontaktu. Dokument ten może zawierać elementy podstawiane, takie jak $$n_fn$$, któe będą zastąpione danymi z kontaktu (<a href="http://demo.jns.pl/index.php?menuaction=addressbook.addressbook_merge.show_replacements" target="_blank">pełna lista elementów podstawianych</a>). W tej chwili wspierane są następujące typy plików: RTF, TXT
 if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	pl	Jeśli podasz tutaj ścieżkę do dokumentu (pełna ścieżka systemowa) książka adresowa wyświetli dodatkową ikonę dla każdego adresu. Ta ikona pozwoli na pobranie wskazanego dokumentu z wstawionymi danymi tego kontaktu.
-if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted. the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (<a href="http://demo.jns.pl/index.php?menuaction=addressbook.addressbook_merge.show_replacements" target="_blank">full list of placeholder names</a>). at the moment the following document-types are supported:*.rtf, *.txt	addressbook	pl	Jeśli podasz tutaj plik (pełna ścieżka systemowa), książka adresowa wyświetla akcję dla każdego dokumentu. Akcja ta pozwala na pobranie dokumentu z wstawionymi danymi kontaktu. Dokument ten może zawierać elementy podstawiane, takie jak $$n_fn$$, któe będą zastąpione danymi z kontaktu (<a href="http://demo.jns.pl/index.php?menuaction=addressbook.addressbook_merge.show_replacements" target="_blank">pełna lista elementów podstawianych</a>). W tej chwili wspierane są następujące typy plików: RTF, TXT
 ignore first line	addressbook	pl	Ignoruj pierwszą linię
 import	addressbook	pl	Importuj
 import contacts	addressbook	pl	Importuj kontakty
@@ -252,13 +240,11 @@ import_instructions	addressbook	pl	W Netscape, otwórz Książkę Adresową (Add
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	pl	Importuj kontakty do Twojej książki adresowej z pliku CSV.
 in %1 days (%2) is %3's birthday.	addressbook	pl	Za %1 dni są urodziny %3
 income	addressbook	pl	Dochód
-infolog	addressbook	pl	Dziennik
-insert	addressbook	pl	wstaw
+infolog	addressbook	pl	CRM Dziennik
 insert in document	addressbook	pl	Wstaw w dokumencie
 insufficent rights to delete this list!	addressbook	pl	Brak wystarczających uprawnień do usunięcia listy!
 international	addressbook	pl	Międzynarodowy
 internet	addressbook	pl	Internet
-invalid addressbook id: %1.  might be a bad field translation.  used %2 instead.	addressbook	pl	Niewłaściwe ID książki adresowej: %1. Być może przyczyną jest niepoprawna translacja pola. Używam zastępczo %2.
 label	addressbook	pl	Etykieta
 last date	addressbook	pl	Ostatnia data
 last modified	addressbook	pl	ostatnio zmodyfikowany
@@ -277,7 +263,7 @@ list created	addressbook	pl	Lista została utworzona
 list creation failed, no rights!	addressbook	pl	Lista NIE została utworzona, brak uprawnień!
 load sample file	addressbook	pl	Załaduj przykładowy plik
 load vcard	addressbook	pl	Ładuj vCard
-location	addressbook	pl	Lokacja
+location	addressbook	pl	Lokalizacja
 locations	addressbook	pl	Lokacje
 manage mapping	addressbook	pl	Zarządzaj mapowaniem
 mark records as private	addressbook	pl	Zaznacz rekordy jako prywatne
@@ -339,11 +325,10 @@ read a single entry by passing the id and fieldlist.	addressbook	pl	Czytaj pojed
 read only	addressbook	pl	tylko do odczytu
 record access	addressbook	pl	Dostęp do rekordu
 record owner	addressbook	pl	Właściciel rekordu
-recovered	addressbook	pl	odzyskany
 region	addressbook	pl	Region
 remove selected contacts from distribution list	addressbook	pl	Usuń wybrane kontakty z listy dystrybucyjnej
 removed from distribution list	addressbook	pl	usunięto z listy dystrybucyjnej
-repetition	addressbook	pl	Powtarzalność
+repetition	addressbook	pl	Powtarzanie
 replacements for inserting contacts into documents	addressbook	pl	Zamienniki do wstawiania kontaktów w dokuemntach
 required fields *	addressbook	pl	pola wymagane *
 role	addressbook	pl	Pozycja
@@ -362,7 +347,6 @@ select the type of conversion	addressbook	pl	Wybierz typ konwersji
 select the type of conversion:	addressbook	pl	Wybierz typ konwersji
 select where you want to store / retrieve contacts	admin	pl	Wybierz, dokąd mam zapisywać kontakty
 selected contacts	addressbook	pl	wybrane kontakty
-send emailcopy to receiver	addressbook	pl	Wyślij kopię email do odbiorcy
 seperator	addressbook	pl	Separator
 set full name and file as field in contacts of all users (either all or only empty values)	admin	pl	Ustawi pełną nazwą i plik jako pole w kontaktach wszystkich użytkowników (wszystkie lub tylko puste wartości)
 set only full name	addressbook	pl	Ustaw tylko pełną nazwę
@@ -390,7 +374,6 @@ the anonymous user has probably no add rights for this addressbook.	addressbook	
 the anonymous user needs add rights for it!	addressbook	pl	Anonimowy użytkownik potrzebuje praw dodawania!
 the anonymous user needs read it!	addressbook	pl	Anonimowy użytkownik potrzebuje praw odczytu!
 the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	pl	Ten dokument może zawierać wstawki, takie jak $$n_fn$$ które zostaną zastąpione danymi kontaktu (%1pełna lista wstawek%2).
-the zip extension is needed, to insert contact data in openoffice or msoffice documents.	addressbook	pl	Wymagane jest rozszerzenie zip aby wstawić kontakty w dokumenty OpenOffice lub MSOffice
 there was an error saving your data :-(	addressbook	pl	Przy zapisie danych wystąpił błąd :(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	pl	Ten moduł wyświetla formularz kontaktu, który zapisuje bezpośrednio do książki adresowej.
 this module displays block from a adddressbook group.	addressbook	pl	Ten moduł wyświetla blok z grupy książki adresowej.
@@ -403,12 +386,11 @@ tomorrow is %1's birthday.	common	pl	Jutro s urodziny  %1
 translation	addressbook	pl	Tłumaczenie
 two of: %1	addressbook	pl	podwójne: %2
 type	addressbook	pl	typ
-un-delete	addressbook	pl	Przywróć
 unique id (uid)	addressbook	pl	Unikatowy ID (UID)
 unique id<br />(to update existing records)	addressbook	pl	Unikatowy ID<br />Do aktualizacji istniejących wpisów
 update a single entry by passing the fields.	addressbook	pl	Aktualizuj pojedyńczy wpis poprzez podawanie wartości pól.
 update fields by edited organisations?	admin	pl	Zaktualizować pola przez edycje organizacji?
-updated	addressbook	pl	Zaktualizowano
+updated	addressbook	pl	Uaktualniony
 upload or delete the photo	addressbook	pl	Załaduj lub usuń zdjęcie
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	pl	Odnośnik URL do numerów telefonów (użyj %1 zamiast numeru telefonu, %2 zamiast nazwy konta, %3 zamiast numeru telefonu konta)
 use an extra category tab?	addressbook	pl	Używać specjalnej zakładki kategorii?
@@ -425,13 +407,12 @@ view linked infolog entries	addressbook	pl	Pokaż wpisy do InfoLog jako link
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pl	UWAGA!! Można używać LDAP tylko kiedy NIE używa się kontaktów do przechowywania kont!
 warning: all contacts found will be deleted!	addressbook	pl	UWAGA: Wszystkie znalezione kontakty zostaną skasowane!
 warning: template "%1" not found, using default template instead.	addressbook	pl	UWAGA: Szablon "%1" nie znaleziony, używam domyślnego szablonu.
-weekday	addressbook	pl	Dzień tygodnia
+weekday	addressbook	pl	dzień tygodnia
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	pl	Jaką treść powinny mieć odnośniki do książki adresowej widocznie w innych aplikacjach? Puste wartości zostaną pominięte. Musisz na nowo się zalogować, jeżeli zmienisz to ustawienie.
 where to add the email address	addressbook	pl	gdzie dodać adres email
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	pl	Jaki format adresu powinien być używany przez książkę adresową dla państw, które nie mają określonego formatu adresu? Jeżeli format dla danego państwa jest ustalony, ma pierwszeństwo przed powyższym.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	pl	Która książka adresowa powinna być wybrana przy dodawaniu kontaktu, jeżeli nie masz praw zapisu do BIEŻĄCEJ książki adresowej?
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pl	Jakiego zestawu znaków użyć przy eksporcie do CSV? Zestaw 'systemowy domyślny' jest zestawem wybrany w tej instalacji eGroupWare.
-which charset should be used for the vcard export.	addressbook	pl	Który zestaw znaków ma być używany przy eksporcie vCard.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	pl	Które pola powinny być wyeksportowane? 'Wszystkie', czyli każde pole książki adresowej, również pola własne użytkowników. Tryb adresu 'biznes' oraz 'domowy' zawiera tylko: nazwę, przedsiębiorstwo oraz wybrany rodzaj adresu.
 whole query	addressbook	pl	Całe zapytanie
 work email if given, else home email	addressbook	pl	Email do pracy jeśli został podany, w przeciwnym wypadku domowy
@@ -447,11 +428,10 @@ you are not permittet to delete this contact	addressbook	pl	Nie masz uprawnień 
 you are not permittet to edit this contact	addressbook	pl	Nie masz uprawnień do edytowania tego kontaktu
 you are not permittet to view this contact	addressbook	pl	Nie masz uprawnień do oglądania tego kontaktu
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	pl	Możesz jedynie używać LDAP jako repozytorium kontaktów, jeśli te konto zostało zapisane także w LDAP!
-you can respond by visiting:	addressbook	pl	Aby go wyświetlić odwiedź:
+you can respond by visiting:	addressbook	pl	Możesz odpowiedzieć odwiedzając stronę:
 you must select a vcard. (*.vcf)	addressbook	pl	Musisz wybrać kartke adresową VCard (*.vcf)
 you must select at least 1 column to display	addressbook	pl	Musisz wybrać przynajmniej jedną kolumnę do wyświetlenia
 you need to select a distribution list	addressbook	pl	Musisz wybrać listę dystrybucyjną
 you need to select some contacts first	addressbook	pl	Musisz najpierw wybrać kontakty
 zip code	common	pl	Kod pocztowy
 zip_note	addressbook	pl	<p><b>Uwaga:</b>Plik może być typu zip i zawierać zbiór plików typu .csv, .vcf lub .ldif. Mimo to proszę nie mieszać plików różnego typu w jednym archiwum.
-deleted	addressbook	pl	skasowany

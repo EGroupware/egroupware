@@ -2,7 +2,14 @@ allowed users	importexport	fr	Utilisateurs autorisés
 choose a name for this definition	importexport	fr	Choisissez un nom pour cette définition
 choose a plugin	importexport	fr	Choisissez un module enfichable
 choose an application	importexport	fr	Choisissez une application
+choose seperator and charset	importexport	fr	Choisisser le séparateur et l'encodage
+export	importexport	fr	Exportation
 finish	importexport	fr	terminer
+general	importexport	fr	Général
+import	importexport	fr	Importation
+manage mapping	importexport	fr	Gestion des correspondances
 next	importexport	fr	prochain
+preview	importexport	fr	Aperçu
 previous	importexport	fr	précédent
+schedule	common	fr	planification
 which useres are allowed for this definition	importexport	fr	Quels utilisateurs sont autorisés pour cette définition

@@ -1,4 +1,3 @@
-$label	preferences	pl	$label
 %1 - preferences	preferences	pl	%1 - Ustawienia
 %1 hours	preferences	pl	%1 godzin
 12 hour	preferences	pl	12 godzinny
@@ -8,7 +7,6 @@ a theme defines the colors and fonts used by the template.	preferences	pl	Tematy
 acl grants have been updated	preferences	pl	Uprawniena dostępu (ACL) zostały odnowione
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	pl	Wszelkie listy w eGroupWare będą wyświetlać tutaj ustawioną liczbę wierszy na stronę.<br />Za wiele spowolni dość znacznie wyświetlanie stron, za mało spowoduje utratę przejrzystości informacji.
 are you sure you want to delete this category ?	preferences	pl	Napewno skasować tę kategorie ?
-br	preferences	pl	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	pl	Zmień hasło użytkownika podając stare i nowe hasło. Odpowiedź TRUE oznacza poprawną zmianę, podczas gdy FALSE związane jest z błędem.
 change your password	preferences	pl	Zmień swoje hasło
 change your profile	preferences	pl	Zmień swój profil
@@ -32,7 +30,6 @@ enable drag and drop functionality (experimental)	preferences	pl	Włącz funkcjo
 enable selectbox dropdown resizing for ie (experimental)	preferences	pl	Aktywuj skalowanie pola rozwijanego dla IE
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	pl	Włącza obsługę przeciągnij i upuść we wszystkich aplikacjach. Jeśli przeglądarka tego nie wspiera zostanie automatycznie wyłączone. To funkcja eksperymentalna.
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	pl	Aktywuj lub deaktywuj skalowanie pola rozwijanego dla IE we wszystkich aplikacjach. Jeśli przeglądarką  nie jest IE, opcja nie zadziała. To funkcja eksperymentalna.
-enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	pl	Aktywuj lub deaktywuj skalowanie pola wyboru dla IE we wszystkich aplikacjach. Jeśli przeglądarką  nie jest IE, opcja nie zadziała. To funkcja eksperymentalna.
 enter your new password	preferences	pl	Wprowadź nowe hasło
 enter your old password	preferences	pl	Wprowadź stare hasło
 failed to change password.  please contact your administrator.	preferences	pl	Zmiana hasła nieudana. Proszę skontaktować się z administratorem.
@@ -92,8 +89,7 @@ spellchecker language	addressbook	pl	Język sprawdzania pisowni
 text only	preferences	pl	Tylko tekst
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	pl	Aplikacja domyślna będzie wywoływana za każdym razem kiedy będziesz się rejestrował do eGroupWare lub wybierzesz ikonę strony głównej.<br>Możesz także wyświetlać dane z kilku aplikacji na stronie głównej jeżeli nie wybierzesz żadnej domyślnej aplikacji w tym polu (wyświetlanie na stronie głównej jest ustawiane dla każdej aplikacji w jej menu ustawień oddzielnie).
 the old password is not correct	preferences	pl	Wprowadzone stare hasło nie jest poprawne
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	pl	Rozwijana lista wyboru pokazuje wszystkich użytkowników (może być bardzo wolne przy dużej liczbie użytkowników). Okienko wyskakujące może szukać użytkowników według imienia lub grupie.
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. ostatnie dwie opcje ograniczają widoczność innych użytkowników więc powinny być wymuszone i dotyczyć nie-administratorów.	preferences	pl	Rozwijana lista wyboru pokazuje wszystkich użytkowników (może być bardzo wolne przy dużej liczbie użytkowników). Okienko wyskakujące może szukać użytkowników według imienia lub grupie. Ostatnie dwie opcje ograniczają widoczność innych użytkowników więc powinny być wymuszone i dotyczyć NIE-administratorów.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	pl	Rozwijana lista wyboru pokazuje wszystkich użytkowników (może być bardzo wolne przy dużej liczbie użytkowników). Okienko wyskakujące może szukać użytkowników według imienia lub adresu poczty elektronicznej.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	pl	Rozwijana lista wyboru pokazuje wszystkich użytkowników (może być bardzo wolne przy dużej liczbie użytkowników). Okienko wyskakujące może szukać użytkowników według imienia lub grupie. Ostatnie dwie opcje ograniczają widoczność innych użytkowników więc powinny być wymuszone i dotyczyć NIE-administratorów. Pomimo tego ich ustawienie nie powinno być wymuszane i stosowane dla ADMINISTRATORÓW.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	pl	Ostatnie dwie opcje ograniczają widoczność innych użytkowników więc powinny być wymuszone i dotyczyć NIE-administratorów.
 the two passwords are not the same	preferences	pl	Te dwa hasła nie są identyczne
@@ -103,7 +99,6 @@ thousands separator is only used for displaying and not for editing numbers.	pre
 time format	preferences	pl	Format czasu
 use default	preferences	pl	Domyślne
 users choice	preferences	pl	Wybierają użytkownicy
-when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	pl	Jeśli wybierzesz "tak" przyciski Strony domowej i wylogowania są prezentowane jako aplikacje w głównym pasku narzędziowym.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pl	Jakiego zestawu znaków użyć przy eksporcie do CSV? Zestaw 'systemowy domyślny' jest zestawem wybrany w tej instalacji eGroupWare.
 which currency symbol or name should be used in egroupware.	preferences	pl	Który symbol waluty powinien być użyty w eGroupWare
 write prefs for the specified application.	preferences	pl	Zapisz ustawienia wybranej aplikacji.

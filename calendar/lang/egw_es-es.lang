@@ -1,5 +1,5 @@
 %1 %2 in %3	calendar	es-es	%1 %2 en %3
-%1 participants removed because of missing invite grants	calendar	es-es	Se han eliminado %1 participantes por falta de permiso de invitación
+%1 participants removed because of missing invite grants	calendar	es-es	%1 participantes eliminados por faltar acceso a la invitación
 %1 records imported	calendar	es-es	%1 registros importados
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	es-es	%1 registros leídos (todavía sin importar, puede volver atrás y desmarcar Probar Importar)
 %1 weeks	calendar	es-es	%1 semanas
@@ -53,7 +53,7 @@ can't aquire lock!	calendar	es-es	¡No se ha podido obtener un bloqueo!
 canceled	calendar	es-es	Cancelado
 category %1 removed because of missing rights	calendar	es-es	Se ha eliminado la categoría %1 por falta de permisos
 category acl	calendar	es-es	ACL de la categoría
-category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	es-es	La ACL de la categoría sólo restringe añadir una categoría a un evento o cambiar el estdo de un participante. NO cambia la visibilidad de un evento.
+category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	es-es	La ACL de la categoría sólo restringe añadir una categoría a un evento o cambiar el estado de un participante. ¡Esto NO cambia la visibilidad de un evento!
 chair	calendar	es-es	Silla
 change history	calendar	es-es	Cambiar historial
 charset of file	calendar	es-es	Juego de caracteres del fichero
@@ -93,6 +93,7 @@ delete this alarm	calendar	es-es	Borrar esta alarma
 delete this event	calendar	es-es	Borrar este evento
 delete this exception	calendar	es-es	Borrar esta excepción
 delete this series of recuring events	calendar	es-es	Borrar esta serie de eventos recurrentes
+deleted	calendar	es-es	Borrado
 deny ressources reservation for private events	calendar	es-es	Denegar la reserva de recursos para eventos privados
 disinvited	calendar	es-es	Ya no está invitado
 display status of events	calendar	es-es	Mostrar estado de los eventos
@@ -120,6 +121,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	es-es	Fecha f
 enddate of the export	calendar	es-es	Fecha de fin de la exportación
 ends	calendar	es-es	acaba
 error adding the alarm	calendar	es-es	Error al añadir la alarma
+error: can't delete original series!	calendar	es-es	Error: No se puede borrar la serie original
 error: importing the ical	calendar	es-es	Error al importar el fichero iCal
 error: no participants selected !!!	calendar	es-es	Error: ¡No se seleccionó ningún participante!
 error: ressources reservation in private events is not allowed!!!	calendar	es-es	Error: ¡No se permite la reserva de recursos para eventos privados!
@@ -171,6 +173,7 @@ here is your requested alarm.	calendar	es-es	Aquí está la alama solicitada
 hide private infos	calendar	es-es	Ocultar información privada
 high priority	calendar	es-es	prioridad alta
 history	calendar	es-es	Historial
+history logging	admin	es-es	Registro de historial
 holiday	calendar	es-es	Festivo
 holiday management	calendar	es-es	Gestión de festivos
 holidays	calendar	es-es	Festivos
@@ -197,7 +200,7 @@ invite	calendar	es-es	invitar
 last	calendar	es-es	último
 lastname of person to notify	calendar	es-es	Apellido de la persona a la que notificar
 length of the time interval	calendar	es-es	Longitud del intervalo de tiempo
-link	calendar	es-es	Vincular al evento
+link	calendar	es-es	Enlace
 link to view the event	calendar	es-es	Vínculo para ver el evento
 links	calendar	es-es	Enlaces
 links, attachments	calendar	es-es	Enlaces, adjuntos
@@ -263,6 +266,7 @@ planner by category	calendar	es-es	Planificador por categorías
 planner by user	calendar	es-es	Planificador por usuario
 please note: you can configure the field assignments after you uploaded the file.	calendar	es-es	Por favor, tenga en cuenta: puede configurar el campo asignaciones DESPUES de subir el fichero.
 preselected group for entering the planner	calendar	es-es	Grupo preseleccionado para entrar en el planificador
+prevent deleting of entries	admin	es-es	Prevenir el borrado de entradas
 previous	calendar	es-es	anterior
 private and global public	calendar	es-es	Privado y público global
 private and group public	calendar	es-es	Privado y público global
@@ -336,14 +340,14 @@ startrecord	calendar	es-es	Registro inicial
 status changed	calendar	es-es	Estado modificado
 status for all future scheduled days changed	calendar	es-es	El estado para las planificaciones futuras se ha modificado
 status for this particular day changed	calendar	es-es	El estado para este día en particular se ha modificado
-status of participants set to unknown because of missing category rights	calendar	es-es	El estado de los participantes se ha establecido a desconocido por falta de permiso en la categoría
+status of participants set to unknown because of missing category rights	calendar	es-es	El estado de los participantes se ha establecido a desconocido debido a la fata de derechos en la categoría
 submit to repository	calendar	es-es	Enviar al repositorio
 sun	calendar	es-es	Dom
 tentative	calendar	es-es	Provisional
 test import (show importable records <u>only</u> in browser)	calendar	es-es	Probar Importar (mostrar <u>solamente</u> registros importables en el navegador)
 the resource you selected is already overbooked:	calendar	es-es	El recurso que ha seleccionado ya está reservado:
 this day is shown as first day in the week or month view.	calendar	es-es	Este día se mostrará como el primer día en las vistas de semana o de mes.
-this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	es-es	Esto define el final de la vista del día  Los eventos posteriores a esta hora se muestran debajo de la vista del día.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	es-es	Esto define el final de la vista del día. Los eventos posteriores a esta hora se muestran debajo de la vista del día.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	es-es	Esto define el inicio de la vista del día. Los eventos anteriores a esta hora se muestran encima de la vista del día.<br>Esta hora se usa también como hora predeterminada para nuevos eventos.
 this entry is currently opened by %1!	calendar	es-es	¡Esta entrada está abierta actualmente por %1!
 this entry is opened by user:	calendar	es-es	Esta entrada se abrió dentro del intervalo de tiempo configurado por el usuario:
@@ -407,6 +411,8 @@ workday	calendar	es-es	día laborable
 workdays	calendar	es-es	días laborables
 yearly	calendar	es-es	Anual
 yearview	calendar	es-es	Vista anual
+yes, only admins can purge deleted items	admin	es-es	Sí, sólo los administradores pueden purgar los elementos borrados
+yes, users can purge their deleted items	admin	es-es	Sí, los usuarios pueden purgar sus elementos borrados
 you are not allowed to book the resource selected:	calendar	es-es	No tiene permiso para reservar el recurso seleccionado:
 you can either set a year or a occurence, not both !!!	calendar	es-es	Puede poner un año o una ocurrencia, pero no ambos.
 you can only set a year or a occurence !!!	calendar	es-es	Sólo puede poner un año o una ocurrencia
@@ -419,7 +425,3 @@ you need to set either a day or a occurence !!!	calendar	es-es	Debe indicar un d
 you requested more than available for the selected resource:	calendar	es-es	Ha solicitado más de lo que tiene disponible al recurso seleccionado
 your meeting scheduled for %1 has been canceled	calendar	es-es	Su reunión programada para %1 ha sido cancelada
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	es-es	Su reunión programada para %1 ha sido reprogramada para %2
-deleted	calendar	es-es	Borrado
-history logging	admin	es-es	Registro de historial
-prevent deleting of entries	admin	es-es	Prevenir el borrado de entradas
-yes, only admins can purge deleted items	admin	es-es	Sí, sólo los administradores pueden purgar los elementos borrados

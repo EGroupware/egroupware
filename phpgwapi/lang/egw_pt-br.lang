@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	pt-br	%1 endereço(s) de email(s) inseridos
 %1 is not executable by the webserver !!!	common	pt-br	%1 não é executável pelo servidor web !!!
-%1 manual	common	pt-br	manual de %1
-%1 start	common	pt-br	%1 iniciar
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	pt-br	%1Escolha outro diretório%2<br/> ou dê ao servidor web permissão de escrita em %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt-br	%1eGroupWare%2 é um software de colaboração multi-usuário escrito em %3PHP%4.
 (session restored in %1 seconds)	common	pt-br	(sessão restaurada em %1 segundos)
@@ -48,6 +46,7 @@ albania	common	pt-br	ALBANIA
 algeria	common	pt-br	ALGERIA
 all	common	pt-br	Todos
 all fields	common	pt-br	todos os campos
+all languages	common	pt-br	Todos os idiomas
 alphabet	common	pt-br	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	pt-br	Estilo de folha alternativo
 american samoa	common	pt-br	SAMOA AMERICANA
@@ -188,6 +187,7 @@ detail	common	pt-br	Detalhe
 details	common	pt-br	Detalhes
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pt-br	Desativar a execução dos recursos de exibição de transparências de imagens PNG, para o Explorer 5.5 ou superior?
 direction left to right	common	pt-br	Direção: esquerda para direita
+directory	common	pt-br	Pasta
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	pt-br	Diretório não existe, não pode ser lido pelo servidor web ou não é relativo à pasta raiz!
 disable internet explorer png-image-bugfix	common	pt-br	Desativar recursos para imagem-png no Internet Explorer
 disable slider effects	common	pt-br	Desativar efeitos de transição de slide
@@ -216,7 +216,6 @@ edit categories	common	pt-br	Editar categorias
 edit category	common	pt-br	Editar categoria
 egroupware	common	pt-br	eGroupWare
 egroupware api version	common	pt-br	Versão da API eGroupWare
-egroupware api version %1	common	pt-br	API version %1
 egroupware: login blocked for user '%1', ip %2	common	pt-br	Extranet: login bloqueado para o usuário '%1', endereço IP %2
 egypt	common	pt-br	EGITO
 el salvador	common	pt-br	EL SALVADOR
@@ -358,6 +357,7 @@ kyrgyzstan	common	pt-br	QUIRGUISTÃO
 language	common	pt-br	Idioma
 language_direction_rtl	common	pt-br	Direção rtl do idioma
 lao peoples democratic republic	common	pt-br	LAOS
+last modified	common	pt-br	última alteração
 last name	common	pt-br	Último nome
 last name of the user, eg. "%1"	common	pt-br	Último nome do usuário, ex. "%1"
 last page	common	pt-br	Última página
@@ -544,6 +544,7 @@ remove shortcut	common	pt-br	Remover tecla de atalho
 rename	common	pt-br	Renomear
 replace	common	pt-br	Substituir
 replace with	common	pt-br	Substituir por
+restore failed	common	pt-br	Restauração falhou
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	pt-br	Retorna a lista complesta de usuários no sistema. Atenção: Isto pode causar lentidão dependendo da quantidade de registros.
 returns an array of todo items	common	pt-br	Retorna uma lista dos itens de Tarefas
 returns struct of users application access	common	pt-br	Retorna a estrutura de usuários e aplicativos para acesso
@@ -614,6 +615,7 @@ sierra leone	common	pt-br	SERRA LEOA
 simple	common	pt-br	Simples
 singapore	common	pt-br	SINGAPURA
 site configuration	common	pt-br	Configuração do servidor
+size	common	pt-br	Tamanho
 slovakia	common	pt-br	ESLOVÁQUIA
 slovenia	common	pt-br	ESLOVÊNIA
 solomon islands	common	pt-br	ILHAS SOLOMON
@@ -703,11 +705,11 @@ use button to search for project	common	pt-br	Utilize o botão para procurar por
 user	common	pt-br	Usuário
 user accounts	common	pt-br	Contas do usuário
 user groups	common	pt-br	Grupos do usuário
-user openinstance	common	pt-br	Instância do usuário aberta
 username	common	pt-br	Nome do usuário
 users	common	pt-br	Usuários
 users choice	common	pt-br	À escolha dos usuários
 uzbekistan	common	pt-br	UZBEQUIISTÃO
+value	common	pt-br	Valor
 vanuatu	common	pt-br	VANUATU
 venezuela	common	pt-br	VENEZUELA
 version	common	pt-br	Versão

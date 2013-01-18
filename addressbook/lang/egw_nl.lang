@@ -157,6 +157,7 @@ edit phonenumbers -	addressbook	nl	Telefoonnummers wijzigen
 either the configured email addesses are wrong or the mail configuration.	addressbook	nl	Of de ingestelde emailadressen zijn onjuist of de email configuratie is onjuist.
 email & internet	addressbook	nl	Email & Internet
 email addresses (comma separated) to send the contact data	addressbook	nl	Emailadressen (kommagescheiden) om de contactgegevens te verzenden
+empty	admin	nl	Leeg
 empty for all	addressbook	nl	leeg voor allen
 enable an extra private addressbook	addressbook	nl	Maak een extra persoonlijk adresboek mogelijk
 end	addressbook	nl	Einde
@@ -200,6 +201,7 @@ group %1	addressbook	nl	Groep %1
 h	addressbook	nl	u
 hide accounts from addressbook	addressbook	nl	Verberg accounts in het adresboek
 hides accounts completly from the adressbook.	addressbook	nl	Hou de accounts helemaal uit het adresboek
+history logging	admin	nl	Historie vastleggen
 home address	addressbook	nl	Privé adres
 home address, birthday, ...	addressbook	nl	Thuis adres, geboortedatum, ...
 home city	addressbook	nl	Privé Woonplaats
@@ -228,6 +230,7 @@ import_instructions	addressbook	nl	In Netscape, open het adressenboek en selecte
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	nl	Importeert contacten in je adresboek vanuit een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het Opties tabblad kun je ook andere scheidingstekens kiezen.
 in %1 days (%2) is %3's birthday.	addressbook	nl	Over %1 dagen (%2) is %3 jarig.
 income	addressbook	nl	Inkomen
+infolog	addressbook	nl	InfoLog
 insert in document	addressbook	nl	Invoegen in document
 insufficent rights to delete this list!	addressbook	nl	Niet genoeg rechten om deze lijst te verwijderen!
 international	addressbook	nl	Internationaal
@@ -396,6 +399,7 @@ yes, for the next three days	addressbook	nl	Ja, voor de volgende drie dagen
 yes, for the next two weeks	addressbook	nl	Ja, voor de volgende twee dagen
 yes, for the next week	addressbook	nl	Ja, voor de volgende week
 yes, for today and tomorrow	addressbook	nl	Ja, voor vandaag en morgen
+yes, only admins can purge deleted items	admin	nl	Ja, alleen beheerders kunnen gewiste items definitief verwijderen
 you are not permitted to delete contact %1	addressbook	nl	U bent niet bevoegd om contact %1 te verwijderen
 you are not permittet to delete this contact	addressbook	nl	U bent niet bevoegd om dit contact te verwijderen
 you are not permittet to edit this contact	addressbook	nl	U bent niet bevoegd om dit contact te wijzigen
@@ -408,4 +412,3 @@ you need to select a distribution list	addressbook	nl	U moet een distributielijs
 you need to select some contacts first	addressbook	nl	U moet eerst enkele contacten selecteren
 zip code	common	nl	Postcode
 zip_note	addressbook	nl	<p><b>Opmerking:</b> Het bestand mag een zip file zijn bestaande uit .csv, .vcf, of .ldif bestanden. Echter, geen meerdere types per import.
-deleted	addressbook	nl	verwijderd

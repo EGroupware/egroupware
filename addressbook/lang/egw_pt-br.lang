@@ -154,6 +154,7 @@ edit phonenumbers -	addressbook	pt-br	Editar números de telefones
 either the configured email addesses are wrong or the mail configuration.	addressbook	pt-br	Os endereços de e-mail informados estão errados ou a configuração do e-mail é inválida.
 email & internet	addressbook	pt-br	Email & Internet
 email addresses (comma separated) to send the contact data	addressbook	pt-br	Endereços de e-mail (separados por vírgula) para enviar os dados de contatos
+empty	admin	pt-br	Vazio
 empty for all	addressbook	pt-br	vazio para todos
 enable an extra private addressbook	addressbook	pt-br	Habilitar um Livro de Contatos particular
 end	addressbook	pt-br	Fim
@@ -197,6 +198,7 @@ group %1	addressbook	pt-br	Grupo %1
 h	addressbook	pt-br	h
 hide accounts from addressbook	addressbook	pt-br	Ocultar contas do Livro de Contatos
 hides accounts completly from the adressbook.	addressbook	pt-br	Oculta completamente contas dos Contatos
+history logging	admin	pt-br	Registro de histórico
 home address	addressbook	pt-br	Endereço residencial
 home address, birthday, ...	addressbook	pt-br	Endereço residencial, Aniversário, ...
 home city	addressbook	pt-br	Cidade
@@ -207,7 +209,6 @@ home phone	addressbook	pt-br	Telefone residencial
 home state	addressbook	pt-br	Estado
 home street	addressbook	pt-br	Rua, Av, Trav., etc.
 home zip code	addressbook	pt-br	CEP
-how many contacts should non-admins be able to export (empty = no limit)	admin	pt-br	Quantos contatos não-administradores são capazes de exportar (vazio = sem limite)
 icon	addressbook	pt-br	Ícone
 if accounts are already in ldap	admin	pt-br	se as contas já estiverem em LDAP
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	pt-br	Se você especificar um diretório (completo vfs caminho) aqui, o aplicativo Contatos exibirá uma ação para cada documento. Estas ações permitem fazer download do documento especificado com os dados do contato inclusos.
@@ -225,6 +226,7 @@ import_instructions	addressbook	pt-br	No Netscape, abra o Livro de Contatos e se
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	pt-br	Importa itens em sua lista de Contatos de um arquivo CVS. CVS significa 'Comma Separated Values' (Valores Separados por Vírgula). Na aba Opções, no entanto, você pode escolher outros separadores.
 in %1 days (%2) is %3's birthday.	addressbook	pt-br	Em %1 dia(s) (%2) será aniversário de %3
 income	addressbook	pt-br	Renda
+infolog	addressbook	pt-br	Tarefas
 insert in document	addressbook	pt-br	Inserir em documento
 insufficent rights to delete this list!	addressbook	pt-br	Direitos insuficientes para remover esta lista!
 international	addressbook	pt-br	Internacional
@@ -393,6 +395,7 @@ yes, for the next three days	addressbook	pt-br	Sim, para os próximos três dias
 yes, for the next two weeks	addressbook	pt-br	Sim, para as próximas duas semanas
 yes, for the next week	addressbook	pt-br	Sim, para a próxima semana
 yes, for today and tomorrow	addressbook	pt-br	Sim, para hoje e amanhã
+yes, only admins can purge deleted items	admin	pt-br	Sim, somente administradores podem limpar registros removidos
 you are not permitted to delete contact %1	addressbook	pt-br	Você não tem permissão para deletar o contato %1
 you are not permittet to delete this contact	addressbook	pt-br	Você não tem permissão para deletar este contato
 you are not permittet to edit this contact	addressbook	pt-br	Você não tem permissão para editar este contato
@@ -405,4 +408,3 @@ you need to select a distribution list	addressbook	pt-br	Você deve selecionar u
 you need to select some contacts first	addressbook	pt-br	Você deve selecionar alguns contatos primeiro
 zip code	common	pt-br	CEP
 zip_note	addressbook	pt-br	<p><b> Nota:</b> O arquivo pode conter um conjunto de arquivos .csv, .vcf, or .ldif. Entretanto não misture tipos de arquivo durante a exportação.
-deleted	addressbook	pt-br	removido

@@ -1,0 +1,51 @@
+--> enter new name	timesheet	sl	--> vnesite novo ime
+actions	timesheet	sl	Dejanja
+applies the changes	timesheet	sl	Uveljavi spremembe
+by	timesheet	sl	od
+check all	timesheet	sl	Preveri vse
+comment by %1 at %2:	timesheet	sl	Komentarji od %1 pri %2
+create new links	timesheet	sl	Ustvari nove povezave
+creates a new field	timesheet	sl	Ustvari novo polje
+custom fields	timesheet	sl	Lastna polja
+delete this entry	timesheet	sl	Izbriši ta vnos
+delete this status	timesheet	sl	Izbriši ta status
+deleted	timesheet	sl	Zbrisano
+deletes this field	timesheet	sl	Ibriše to polje
+determines the order the fields are displayed	timesheet	sl	Določa vrstni red prikaza polj
+each value is a line like <id>[=<label>]	timesheet	sl	vsaka vrednost je vrstica oblike <id>[=<oznaka>]
+edit status	timesheet	sl	Uredi status
+edit this entry	timesheet	sl	Uredi ta vnos
+end	timesheet	sl	Konec
+entry saved	timesheet	sl	Vnos shranjen
+error saving the entry!!!	timesheet	sl	Napaka pri shranjevanju vnosa!
+existing links	timesheet	sl	Obstoječe povezave
+export	timesheet	sl	Izvozi
+field must not be empty !!!	timesheet	sl	Polje ne sme biti prazno!
+general	timesheet	sl	Splošno
+global categories	timesheet	sl	Globalne kategorije
+history	timesheet	sl	Zgodovina
+id	timesheet	sl	Šifra
+last modified	timesheet	sl	Nazadnje spremenjeno
+leaves without saveing	timesheet	sl	Zapre brez shranjevanja
+length<br>rows	timesheet	sl	Dolžina<br>Vrstic
+links	timesheet	sl	Povezave
+max length of the input [, length of the inputfield (optional)]	timesheet	sl	Največja dolžina vnosa [, dolžina vnosnega polja (opcijsko)]
+no details	timesheet	sl	Brez podrobnosti
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	sl	Število vrstic za večvrstično vnosno polje ali vrstica v polju z več izbirami
+order	timesheet	sl	Vrstni red
+parent	timesheet	sl	Nadrejen
+price	timesheet	sl	Cena
+quantity	timesheet	sl	Količina
+saves the changes made	timesheet	sl	Shrani spremembe
+saves the changes made and leaves	timesheet	sl	Shrani narejene spremembe in zapusti program
+select a price	timesheet	sl	Izberite ceno
+select a project	timesheet	sl	Izberite projekt
+start	timesheet	sl	Začetek
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	sl	Ime, uporabljeno interno (<= 20 znakov). Če ga spremenite, obstoječi podatki ne bodo več na voljo.
+the text displayed to the user	timesheet	sl	Besedilo, ki se prikaže uporabniku
+tracker	timesheet	sl	Tracker
+values for selectbox	timesheet	sl	Vrednosti za izbirno polje
+view this entry	timesheet	sl	Poglej ta vnos
+week	timesheet	sl	Teden
+whole query	timesheet	sl	Celotno povpraševanje
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	sl	Vaša podatkovna baza NI obnovljena (%1 vs. %2), prosimo poženite %3 nastavitev%4 za prenovo vaše podatkovne baze.

@@ -1,0 +1,24 @@
+clear search	felamimail	lo	ລົບລ້າງການຄົ້ນຫາ
+color	felamimail	lo	ສີ
+create folder	felamimail	lo	ສ້າງໂຟລເດີ
+days	felamimail	lo	ວັນ
+default	felamimail	lo	ຄ່າເລີ່ມຕົ້ນ
+download	felamimail	lo	ດາວໂຫຼດ
+email address	felamimail	lo	ທີ່ຢູ່ email
+enter your default mail domain ( from: user@domain )	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ mail domain ຂອງທ່ານ(ຈາກ: user@domain)
+enter your smtp server hostname or ip address	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ SMTP ເຊີບເວີ້ ຊື່ໂຮສ ຫຼື ທີ່ຢູ່ IP ຂອງທ່ານ
+enter your smtp server port	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ SMTP ເຊີບເວີ້ ພອດ ຂອງທ່ານ
+filemanager	felamimail	lo	ຕົວຈັດການຟາຍ
+icons and text	felamimail	lo	ໄອຄ໋ອນ ແລະ ເນື້ອຫາ
+icons only	felamimail	lo	ສະເພາະໄອຄ໋ອນ
+mail settings	felamimail	lo	ຕັ້ງຄ່າ mail
+move	felamimail	lo	ເຄື່ອນຫຍ້າຍ
+no filter	felamimail	lo	ບໍ່ມີການຕຶກຕອງ
+participants	felamimail	lo	ຜູ້ເຂົ້າຮ່ວມ
+previous	felamimail	lo	ກ່ອນ
+remove	felamimail	lo	ລຶບອອກ
+rule	felamimail	lo	ລະບຽບ
+save changes	felamimail	lo	ບັນທຶກການປ່ຽນແປງ
+search for	felamimail	lo	ຄົ້ນຫາສໍາລັບ
+text only	felamimail	lo	ສະເພາະຂໍ້ຄວາມ
+up	felamimail	lo	ຂຶ້ນ

@@ -191,6 +191,7 @@ grant addressbook access	common	bg	Разрешаване на достъп до
 group %1	addressbook	bg	Група %1
 hide accounts from addressbook	addressbook	bg	Скриване на акаунтите от адр. указател
 hides accounts completly from the adressbook.	addressbook	bg	Скрива напълно акаунтите от адр. указател
+history logging	admin	bg	Запис на история
 home address	addressbook	bg	Личен адрес
 home address, birthday, ...	addressbook	bg	Личен адрес, Рожден ден, ...
 home city	addressbook	bg	Личен - град
@@ -201,7 +202,6 @@ home phone	addressbook	bg	Домашен телефон
 home state	addressbook	bg	Личен - Област / Щат
 home street	addressbook	bg	Личен - улица
 home zip code	addressbook	bg	Личен - Пощенски код
-how many contacts should non-admins be able to export (empty = no limit)	admin	bg	Колко контакта е позволено на не-администраторите да експортират (не посочено = без ограничение)
 icon	addressbook	bg	Икона
 if accounts are already in ldap	admin	bg	ако акаунитие вече са в LDAP
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	bg	Ако укажете директория (пълния VFS път), Адресният указател ще показва диалог за действие за всеки документ. Това позволява да изтеглите указания документ с вмъкнати данни за контакта.
@@ -219,6 +219,7 @@ import_instructions	addressbook	bg	В Netscape, отворете адресни�
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	bg	Импортира контакти в Адресния указател от CSV файл (стойности, разделени със запетая). От таб Опции може да изберете друг разделител.
 in %1 days (%2) is %3's birthday.	addressbook	bg	Рожденият ден на %3 е след %1 дни (%2).
 income	addressbook	bg	Доход
+infolog	addressbook	bg	Дневник
 insert in document	addressbook	bg	Вмъкване в документа
 insufficent rights to delete this list!	addressbook	bg	Недостатъчни права за изтриване на списъка!
 international	addressbook	bg	Международен
@@ -379,6 +380,7 @@ yes, for the next three days	addressbook	bg	Да, за следващите тр
 yes, for the next two weeks	addressbook	bg	Да, за следващите две седмици
 yes, for the next week	addressbook	bg	Да, за следващата седмица
 yes, for today and tomorrow	addressbook	bg	Да, за днес и утре
+yes, only admins can purge deleted items	admin	bg	Да, само администраторите могат да заличават изтрити записи
 you are not permitted to delete contact %1	addressbook	bg	Нямате право да изтриете контакта: %1
 you are not permittet to delete this contact	addressbook	bg	Нямате право да изтриете този контакт
 you are not permittet to edit this contact	addressbook	bg	Нямате право да редактирате този контакт
@@ -390,4 +392,3 @@ you need to select a distribution list	addressbook	bg	Трябва да избе
 you need to select some contacts first	addressbook	bg	Трябва да изберете контакти
 zip code	common	bg	Пощенски код
 zip_note	addressbook	bg	<p><b>Забележка:</b> Файлът може да бъде zip, съдържащ .csv, .vcf, или .ldif файлове. Не смесвайте тези типове при един импорт!
-deleted	addressbook	bg	изтрит

@@ -23,6 +23,7 @@ conflict	resources	fi	Konflikti
 create new accessory for this resource	resources	fi	Luo uusi lisätarvike tälle resurssille
 create new links	resources	fi	Luo uusi linkki
 custom fields	resources	fi	Lisäkentät
+days	resources	fi	Päivää
 delete selected resources	resources	fi	Poista valitut resurssit
 delete this entry	resources	fi	Poista tämä merkintä
 description (short)	resources	fi	Kuvaus (lyhyt)
@@ -30,18 +31,25 @@ direct booking permissions	resources	fi	Suora varausoikeus
 don't use vfs (this will need a symlink --> see readme)	resources	fi	Älä käytä vfs (tämä tarvitsee symbolisenlinkin --> katso LueMinut)
 edit this entry	resources	fi	Muokkaa tätä merkintää
 existing links	resources	fi	Olemassa olevat linkit
+exists	resources	fi	Olemassaoleva
+export definitition to use for nextmatch export	resources	fi	Vienti asetukset 'nextmatch' vientiin
+exports a list of resources to a csv file.	resources	fi	Vie merkintöjä Resursseista CSV tiedostoon
 general	resources	fi	Yleinen
 general informations about resource	resources	fi	Yleistä tietoa resurssista
 gernal resource	resources	fi	Yleinen resurssi
 global categories	resources	fi	Yleiset kategoriat
+hours	resources	fi	Tuntia
 how many of the resources are useable?	resources	fi	Kuinka moni resurssi on käytettävissä?
 how many of them are useable?	resources	fi	Kuinka moni niistä on käytettävissä?
 how many of this resource are usable	resources	fi	Kuinka moni näistä resursseista on käytettävissä?
 how many of this resource exists	resources	fi	Kuinka monta näistä resursseista on olemassa?
+if you specify an export definition, it will be used when you export	resources	fi	Valitse viennin oletusasetus
 implies booking permission	resources	fi	Vaikuttaa varausoikeuksiin
 implies read permission	resources	fi	Vaikuttaa lukuoikeuksiin
+imports a list of resources from a csv file.	resources	fi	Tuo merkintöjä CSV tiedostosta Resursseihin
 information about storage	resources	fi	Varaston tiedot
 informations about the location of resource	resources	fi	Resurssin sijainnin tiedot
+insert	resources	fi	Syötä
 inventory number	resources	fi	Varastonumero
 inventory number:	resources	fi	Varastonumero:
 is resource bookable?	resources	fi	Onko resurssi varattavissa?
@@ -52,6 +60,8 @@ links	resources	fi	Linkit
 location	resources	fi	Sijainti
 location of resource	resources	fi	Resurssin sijainti
 location:	resources	fi	Sijainti:
+long description	resources	fi	Kuvaus
+manage mapping	resources	fi	Valitse kentät
 name of resource	resources	fi	Resurssin nimi
 name:	resources	fi	Nimi:
 no description available	resources	fi	Kuvausta ei ole saatavilla
@@ -62,6 +72,7 @@ picture source	resources	fi	Kuvan lähde
 picture type is not supported, sorry!	resources	fi	Kuvan tyyppiä ei tueta.
 pictures or resource	resources	fi	Resurssin kuva
 planer	resources	fi	Suunnitelma
+prize	resources	fi	Hinta
 prizeing information for booking or buying	resources	fi	Hinnasto varausta tai ostamista varten
 quantity	resources	fi	Määrä
 quantity of resource	resources	fi	Resurssien määrä
@@ -69,7 +80,10 @@ quantity:	resources	fi	Määrä:
 read calendar permissions	resources	fi	Kalenterin lukuoikeudet
 read permissions	resources	fi	Lukuoikeudet
 related links	resources	fi	Liittyvät linkit
+resource id	resources	fi	Resurssin ID
 resources	common	fi	Resurssit
+resources csv export	resources	fi	CSV vienti
+resources csv import	resources	fi	CSV vienti
 resources list	resources	fi	Resurssiluettelo
 responsible:	resources	fi	Vastuussa:
 saves entry and exits	resources	fi	Tallenna merkintä ja poistu
@@ -82,7 +96,8 @@ short description of resource	resources	fi	Resurssin lyhyt kuvaus
 show calendar of resource	resources	fi	Näytä resurssin kalenteri
 something went wrong by deleting resource	resources	fi	Virhe poistettaessa resurssia
 something went wrong by saving resource	resources	fi	Virhe tallentaessa resurssia
-storage information	resources	fi	Varaston tiedot
+storage	resources	fi	Varasto
+storage information	resources	fi	Varasto
 storage information:	resources	fi	Varaston tiedot:
 the calendar of this resource	resources	fi	Tämän resurssin kalenteri
 this module displays the resources app	resources	fi	Tämä moduli näyttää resurssi-sovelluksen
@@ -94,11 +109,11 @@ useable:	resources	fi	Käytettävissä:
 view accessories for this resource	resources	fi	Näytä tämän resurssin lisätarvikkeet
 view this entry	resources	fi	Näytä tämä merkintä
 web-page of resource	resources	fi	Resurssien web-sivu
-web-site for this resource	resources	fi	Tämän resurssin web-sivu
-where to find this resource?	resources	fi	Mistä tämä resurssi löytyy?
-which category does this resource belong to?	resources	fi	Mihin kategoriaan tämä resurssi kuuluu?
+web-site for this resource	resources	fi	Resurssin web-sivu
+where to find this resource?	resources	fi	Resurssin sijaintitiedot
+which category does this resource belong to?	resources	fi	Resurssin kategoria
 write permissions	resources	fi	Kirjoitusoikeudet
-you are not permitted to delete this reource!	resources	fi	Sinulla ei ole oikeuksia poistaa tätä resurssia
-you are not permitted to edit this reource!	resources	fi	Sinulla ei ole oikeuksia muokata tätä resurssia
+you are not permitted to delete this resource!	resources	fi	Sinulla ei ole riittäviä oikeuksia poistaa tätä resurssia!
+you are not permitted to edit this resource!	resources	fi	Sinulla ei ole riittäviä oikeuksia muokata tätä resurssia!
 you are not permitted to get information about this resource!	resources	fi	Sinulla ei ole oikeutta nähdä tämän resurssin tietoja!
 you chose more resources than available	resources	fi	Valitsit useamman resurssin kuin mitä oli vapaana

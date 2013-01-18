@@ -25,6 +25,7 @@ a short subject for the entry	infolog	bg	тема на записа накрат
 abort without deleting	infolog	bg	Отказ без изтриване
 accept	infolog	bg	приемане
 action	infolog	bg	Действие
+actions...	infolog	bg	Действия...
 actual date and time	infolog	bg	действителни дата и час
 add	infolog	bg	Добавяне
 add a file	infolog	bg	Добави файл
@@ -37,12 +38,15 @@ add file	infolog	bg	Добави файл
 add sub	infolog	bg	Добави Под-
 add timesheet entry	infolog	bg	Добави запис в Графика
 add:	infolog	bg	Добавяне:
+added	infolog	bg	добавен
 all	infolog	bg	Всички
 all links and attachments	infolog	bg	всички връзки и приложения
+all projects	infolog	bg	Всички проекти
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	bg	позволява установяване статуса на запис, напр. Предстоящо като Изпълнено, ако е приключило (стойностите зависят от типа на записа)
 apply the changes	infolog	bg	Приложи промените
 archive	infolog	bg	архив
 are you shure you want to delete this entry ?	infolog	bg	Желаете ли да изтриете този запис ?
+at the moment the following document-types are supported:	infolog	bg	Към момента се поддържат следните типове документи:
 attach a file	infolog	bg	Прилагане на файл
 attach file	infolog	bg	Приложи файл
 attention: no contact with address %1 found.	infolog	bg	Внимание! Не е намерен контакт с адрес %1.
@@ -57,16 +61,20 @@ categories	infolog	bg	Категории
 category	infolog	bg	Категория
 change the status of an entry, eg. close it	infolog	bg	Променя статуса на запис, напр. приключва го
 charset of file	infolog	bg	Символен набор (Charset) на файла
+check all	infolog	bg	Маркира всички
 check to set startday	infolog	bg	отбележете за начална дата
 check to specify custom contact	infolog	bg	отбележете за използване на контакт по избор
+choose owner of imported data	infolog	bg	Избор на собственик на импортираните данни
 click here to create the link	infolog	bg	кликнете тук за създаване на връзката
 click here to start the search	infolog	bg	кликнете тук за начало на търсенето
 close	infolog	bg	Затвори
+close all	infolog	bg	затваряне на всичко
 comment	infolog	bg	Коментар
 completed	infolog	bg	Приключен
 configuration	infolog	bg	Конфигурация
 confirm	infolog	bg	Потвърди
 contact	infolog	bg	Контакт
+copy of:	infolog	bg	Копие на:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	bg	Копирайте промените в клипборда, %1презаредете записа%2 и ги съберете.
 create new links	infolog	bg	Създаване на нови връзки
 creates a new field	infolog	bg	създава ново поле
@@ -118,8 +126,9 @@ do you want a notification, if items you created get updated?	infolog	bg	Жел�
 do you want a notification, if items you delegated are about to start?	infolog	bg	Желаете ли известие преди началото на задачи, които сте делефирали?
 do you want a notification, if items you delegated are due?	infolog	bg	Желаете ли известие при достигане на крайния срок за задачи, които сте делегирали?
 do you want to receive notifications as html-mails or plain text?	infolog	bg	Известията да бъдат във вид на HTML или текстови съобщения?
+document '%1' does not exist or is not readable for you!	infolog	bg	Документът '%1' не съществува или нямате право на достъп до него!
 don't show infolog	infolog	bg	НЕ показвай Дневника
-done	infolog	bg	приключен
+done	common	bg	приключен
 download	infolog	bg	Изтегляне
 duration	infolog	bg	Продължителност
 each value is a line like <id>[=<label>]	infolog	bg	всяка стойност е ред във формат <id>[=<label>]
@@ -130,6 +139,7 @@ edit status	infolog	bg	Редактиране на статуса
 edit the entry	infolog	bg	Редактиране на записа
 edit this entry	infolog	bg	Редактиране на записа
 empty for all	infolog	bg	непопълнен за всички
+end	infolog	bg	Край
 enddate	infolog	bg	Краен срок
 enddate can not be before startdate	infolog	bg	Крайния срок не може да бъде преди началната дата
 enter a custom contact, leave empty if linked entry should be used	infolog	bg	Въведете контакт по избор, или ще се използва контакт от връзка
@@ -139,6 +149,7 @@ enter the query pattern	infolog	bg	Въведете низ за запитван
 entry and all files	infolog	bg	Записа и всички файлове
 error: saving the entry	infolog	bg	Грешка при запис
 error: the entry has been updated since you opened it for editing!	infolog	bg	Грешка: записът е бил обновен, след като сте го отворили за редакция!
+execute a further action for this entry	infolog	bg	Изпълни допълнително за това събитие
 existing links	infolog	bg	Съществуващи връзки
 fax	infolog	bg	Факс
 field must not be empty !!!	infolog	bg	Полето не може да бъде празно !!!
@@ -147,8 +158,11 @@ finish	infolog	bg	край
 for which types should this field be used	infolog	bg	за кои типове да се използва полето
 from	infolog	bg	От
 general	infolog	bg	Общи
+general fields:	infolog	bg	Общи полета:
+global categories	infolog	bg	Глобални категории
 group owner for	infolog	bg	Група-собственик на
 high	infolog	bg	висок
+history	infolog	bg	История
 history logging	infolog	bg	Запис на история
 history logging and deleting of items	infolog	bg	Запис на история и изтриване на елементи
 id	infolog	bg	No.
@@ -171,11 +185,13 @@ infolog filter for the main screen	infolog	bg	Филтър за главния �
 infolog list	infolog	bg	Дневник - списък
 infolog preferences	common	bg	Дневник - настройки
 infolog-fieldname	infolog	bg	Дневник - име на поле
+insert in document	infolog	bg	Вмъкване в документа
 invalid filename	infolog	bg	Невалидно име на файл
 label<br>helptext	infolog	bg	Етикет<br>Помощен текст
 last changed	infolog	bg	Последна промяна
 last modified	infolog	bg	Последно изменение
 leave it empty	infolog	bg	оставете непопълнено
+leave it empty for a full week	infolog	bg	Непопълнено - цяла седмица
 leave without saveing the entry	infolog	bg	изход без запис
 leaves without saveing	infolog	bg	изход без запис
 length<br>rows	infolog	bg	Дължина<br>Редове
@@ -187,8 +203,10 @@ list no subs/childs	infolog	bg	Покажи без Под-
 location	infolog	bg	Местонахождение
 longer textual description	infolog	bg	по-дълго текстово описание
 low	infolog	bg	нисък
+manage mapping	infolog	bg	Управление на съответствията
 max length of the input [, length of the inputfield (optional)]	infolog	bg	макс. дължина на входа[, дължнина на вх.поле (опция)]
 name must not be empty !!!	infolog	bg	Името трябва да бъде попълнено!!!
+name of current user, all other contact fields are valid too	infolog	bg	Име на текущия потребител, останалите полета на контакта също са валидни
 name of new type to create	infolog	bg	име на новия тип
 never hide search and filters	infolog	bg	Не скривай търсенето и филтрите
 new %1	infolog	bg	Нов %1
@@ -201,6 +219,7 @@ no details	infolog	bg	без детайли
 no entries found, try again ...	infolog	bg	няма намерени записи, опитайте отново
 no filter	infolog	bg	няма филтър
 no links or attachments	infolog	bg	няма връзки или приложения
+no project	infolog	bg	Няма проект
 nonactive	infolog	bg	неактивен
 none	infolog	bg	Няма
 normal	infolog	bg	нормален
@@ -221,6 +240,7 @@ only the links	infolog	bg	само връзките
 open	infolog	bg	отвори
 optional note to the link	infolog	bg	бележка към връзката
 order	infolog	bg	Ред
+organization	infolog	bg	организация
 overdue	infolog	bg	просрочен
 own	infolog	bg	собствен
 own open	infolog	bg	отворен от собственика
@@ -279,6 +299,7 @@ select a responsible user: a person you want to delegate this task	infolog	bg	и
 select a typ to edit it's status-values or delete it	infolog	bg	изберете тип за да редактирате статуса или да го изтриете
 select an app to search in	infolog	bg	Изберете приложение, в което да се търси
 select an entry to link with	infolog	bg	Изберете запис, с който да се свърже
+select multiple contacts for a further action	infolog	bg	Избор на множество контакти
 select to filter by owner	infolog	bg	филтър по собственик
 select to filter by responsible	infolog	bg	филтър по отговорни
 sets the status of this entry and its subs to done	infolog	bg	Маркира записа заедно с под-зап. като Изпълнени
@@ -298,6 +319,7 @@ show status and percent done separate	infolog	bg	Статус и степен н
 show ticket id	infolog	bg	Показва No. на етикет
 show times	infolog	bg	Показва времената
 small view	infolog	bg	умален изглед
+start	infolog	bg	Старт
 start a new search, cancel this link	infolog	bg	Започва ново търсене, отказва тази връзка
 startdate	infolog	bg	Начална дата
 startdate enddate	infolog	bg	Начална дата дата за прикл.
@@ -334,8 +356,6 @@ upcoming	infolog	bg	предстоящ
 urgency	infolog	bg	спешност
 urgent	infolog	bg	спешно
 used time	infolog	bg	използвано време
-valid path on clientside<br>eg. \servershare or e:	infolog	bg	валиден път от страна на клиента<br>напр. \\Server\Share или e:\
-valid path on clientside<br>eg. servershare or e:	infolog	bg	валиден път от страна на клиента<br>напр. \\Server\Share или e:\
 values for selectbox	infolog	bg	Стойности за избор
 view all subs of this entry	infolog	bg	Показва всички под- на записа
 view other subs	infolog	bg	показва другите Под-

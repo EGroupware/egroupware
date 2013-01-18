@@ -20,6 +20,7 @@ add a single entry by passing the fields.	addressbook	zh-tw	從欄位中新增�
 add business email of whole distribution list?	addressbook	zh-tw	在整個分配清單新增商務信箱？
 add custom field	addressbook	zh-tw	新增自訂欄位
 add to distribution list:	addressbook	zh-tw	新增到分配清單：
+added	addressbook	zh-tw	新增日期
 added by synchronisation	addressbook	zh-tw	同步後新增
 added to distribution list	addressbook	zh-tw	新增到分配清單
 additional information about using ldap as contact repository	admin	zh-tw	關於將 LDAP 當作聯絡人資料庫的其他資訊
@@ -98,6 +99,7 @@ contacts to ldap, account contact-data to sql	admin	zh-tw	聯絡人到LDAP，帳
 contains	addressbook	zh-tw	包含
 copied by %1, from record #%2.	addressbook	zh-tw	由 %1 複製, 從記錄 #%2.
 copy a contact and edit the copy	addressbook	zh-tw	複製與編輯聯絡人
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	zh-tw	複製異動資料到剪貼簿， %1重新讀取資料%2並且將他們合併。
 country	common	zh-tw	國家/地區
 create new links	addressbook	zh-tw	新增連結
 created	addressbook	zh-tw	建立日期
@@ -108,6 +110,7 @@ custom	addressbook	zh-tw	自訂
 custom etemplate for the contactform	addressbook	zh-tw	自訂 eTemplate 的聯絡表單
 custom fields	addressbook	zh-tw	自訂欄位
 debug output in browser	addressbook	zh-tw	從瀏覽器輸入錯誤訊息
+default	addressbook	zh-tw	預設
 default address format	addressbook	zh-tw	預設住址格式
 default addressbook for adding contacts	addressbook	zh-tw	新增聯絡人時的預設通訊錄
 default document to insert contacts	addressbook	zh-tw	新增聯絡人的預設文件
@@ -141,12 +144,14 @@ edit phonenumbers -	addressbook	zh-tw	編輯電話號碼 -
 either the configured email addesses are wrong or the mail configuration.	addressbook	zh-tw	信箱或是郵件設定有誤。
 email & internet	addressbook	zh-tw	Email & 網路
 email addresses (comma separated) to send the contact data	addressbook	zh-tw	寄送聯絡人資料的信箱（逗點分隔）
+empty	admin	zh-tw	清空
 empty for all	addressbook	zh-tw	全部清除
 enable an extra private addressbook	addressbook	zh-tw	啟用私人通訊錄
 end	addressbook	zh-tw	結束
 enter the path to the exported file here	addressbook	zh-tw	輸入匯出檔案的路徑
 error deleting the contact !!!	addressbook	zh-tw	刪除聯絡人時發生錯誤！
 error saving the contact !!!	addressbook	zh-tw	儲存聯絡人時發生錯誤！
+error: the entry has been updated since you opened it for editing!	addressbook	zh-tw	錯誤： 在您開始編輯後這個資料已經被其他人更新了！
 existing links	addressbook	zh-tw	現有連結
 export	addressbook	zh-tw	匯出
 export as csv	addressbook	zh-tw	匯出成 CSV
@@ -180,6 +185,7 @@ group %1	addressbook	zh-tw	群組 %1
 h	addressbook	zh-tw	時
 hide accounts from addressbook	addressbook	zh-tw	從通訊錄中隱藏帳號
 hides accounts completly from the adressbook.	addressbook	zh-tw	從通訊錄中完整隱藏帳號
+history logging	admin	zh-tw	歷史記錄
 home address	addressbook	zh-tw	住家住址
 home address, birthday, ...	addressbook	zh-tw	住家住址、生日、...
 home city	addressbook	zh-tw	縣/市
@@ -189,7 +195,6 @@ home phone	addressbook	zh-tw	電話
 home state	addressbook	zh-tw	省/市
 home street	addressbook	zh-tw	地址
 home zip code	addressbook	zh-tw	郵遞區號
-how many contacts should non-admins be able to export (empty = no limit)	admin	zh-tw	非管理員可以匯出的聯絡人數量（空白表示不限制）
 icon	addressbook	zh-tw	圖示
 if accounts are already in ldap	admin	zh-tw	如果帳號已經存在於 LDAP
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	zh-tw	如果您在這裡指定了一個資料夾（完整的虛擬檔案系統路徑），通訊錄會在每個文件旁顯示一個操作，這個操作允許下載插入聯絡人資料的指定文件。
@@ -207,6 +212,7 @@ import_instructions	addressbook	zh-tw	Netscape，開啟通訊錄並且從<b>檔�
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	zh-tw	從 CSV 檔案匯入聯絡人資料到通訊錄，CSV 表示逗點分隔數值，不過在選項欄位可以指定其他的分隔字元。
 in %1 days (%2) is %3's birthday.	addressbook	zh-tw	再 %1 天 (%2) 就是 %3 的生日。
 income	addressbook	zh-tw	收入
+infolog	addressbook	zh-tw	記事本
 insert in document	addressbook	zh-tw	插入文件
 insufficent rights to delete this list!	addressbook	zh-tw	沒有刪除這個清單的權限！
 international	addressbook	zh-tw	國際
@@ -228,6 +234,7 @@ list created	addressbook	zh-tw	清單建立日期
 list creation failed, no rights!	addressbook	zh-tw	建立清單失敗，沒有權限！
 load sample file	addressbook	zh-tw	讀取範例檔案
 load vcard	addressbook	zh-tw	讀取名片檔
+location	addressbook	zh-tw	約會位置
 locations	addressbook	zh-tw	位置
 manage mapping	addressbook	zh-tw	管理對應
 mark records as private	addressbook	zh-tw	標示為私人記錄
@@ -263,6 +270,7 @@ other phone	addressbook	zh-tw	其他電話
 own sorting	addressbook	zh-tw	自訂排序
 pager	common	zh-tw	呼叫器
 parcel	addressbook	zh-tw	兼職
+participants	addressbook	zh-tw	與會者
 permission denied !!!	addressbook	zh-tw	沒有權限！
 phone number	common	zh-tw	電話號碼
 phone numbers	common	zh-tw	電話號碼
@@ -284,6 +292,7 @@ record access	addressbook	zh-tw	記錄存取
 record owner	addressbook	zh-tw	記錄擁有者
 remove selected contacts from distribution list	addressbook	zh-tw	從分配清單移除選擇的聯絡人
 removed from distribution list	addressbook	zh-tw	從分配清單移除了
+repetition	addressbook	zh-tw	重覆約會
 replacements for inserting contacts into documents	addressbook	zh-tw	將聯絡人加入文件的替換字元
 required fields *	addressbook	zh-tw	必填欄位
 role	addressbook	zh-tw	角色
@@ -333,6 +342,7 @@ tomorrow is %1's birthday.	common	zh-tw	明天是 %1 的生日。
 translation	addressbook	zh-tw	轉換
 type	addressbook	zh-tw	類型
 update a single entry by passing the fields.	addressbook	zh-tw	從欄位更新一筆資料。
+updated	addressbook	zh-tw	更新日期
 upload or delete the photo	addressbook	zh-tw	上傳或是刪除照片
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	zh-tw	連結電話號碼的網址（使用 %1 = 撥打號碼， %u = 帳號名稱， %t = 帳號電話）
 use an extra category tab?	addressbook	zh-tw	使用附加類別標籤？
@@ -361,6 +371,7 @@ yes, for the next three days	addressbook	zh-tw	是，在接下來三天
 yes, for the next two weeks	addressbook	zh-tw	是，在接下來兩週
 yes, for the next week	addressbook	zh-tw	是，在接下來一週
 yes, for today and tomorrow	addressbook	zh-tw	是，在今天與明天
+yes, only admins can purge deleted items	admin	zh-tw	是，只有管理者可以排除刪除的項目
 you are not permitted to delete contact %1	addressbook	zh-tw	您沒有權限刪除聯絡人 %1
 you are not permittet to delete this contact	addressbook	zh-tw	您沒有權限刪除這個聯絡人
 you are not permittet to edit this contact	addressbook	zh-tw	您沒有權限編輯這個聯絡人
@@ -373,4 +384,3 @@ you need to select a distribution list	addressbook	zh-tw	您必須選擇一個�
 you need to select some contacts first	addressbook	zh-tw	您必須先選擇一些聯絡人
 zip code	common	zh-tw	郵遞區號
 zip_note	addressbook	zh-tw	<p><b>注意：</b> 壓縮檔案可能包含 .csv, .vcf, 或 .ldif 格式，請不要在同一次的匯入工作中混用不同的檔案格式！
-deleted	addressbook	zh-tw	刪除了

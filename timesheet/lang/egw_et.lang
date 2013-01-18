@@ -1,0 +1,43 @@
+--> enter new name	timesheet	et	--> Sisesta uus nimi
+actions	timesheet	et	Tegevused
+all projects	timesheet	et	Kõik projektid
+check all	timesheet	et	Kontrolli kõik
+create new links	timesheet	et	Tee uued lingid
+creates a new field	timesheet	et	teeb uue välja
+delete this entry	timesheet	et	kustuta see kirje
+delete this status	timesheet	et	Kustuta see staatus
+deleted	timesheet	et	kustutatud
+deletes this field	timesheet	et	kustutab selle välja
+each value is a line like <id>[=<label>]	timesheet	et	iga väärtus on rida nagu <id>[=<label>]
+edit status	timesheet	et	Muuda staatust
+edit this entry	timesheet	et	Muuda seda kirjet
+end	timesheet	et	Lõpp
+entry saved	timesheet	et	Kirje salvestatud
+error saving the entry!!!	timesheet	et	Viga kirje salvestamisel !!!
+existing links	timesheet	et	Eksisteerivad lingid
+export	timesheet	et	Eksport
+field must not be empty !!!	timesheet	et	Väli ei tohi jääda tühjaks !!!
+general	timesheet	et	Üldine
+global categories	timesheet	et	Globaalsed Kategooriad
+history	timesheet	et	Ajalugu
+id	timesheet	et	Id
+last modified	timesheet	et	Viimati muudetud
+last month	timesheet	et	Viimane kuu
+last week	timesheet	et	Viimane nädal
+last year	timesheet	et	Viimane aasta
+leaves without saveing	timesheet	et	lahkub ilma salvestamatta
+links	timesheet	et	Lingid
+no details	timesheet	et	mitte detailselt
+or endtime	timesheet	et	või Lõpuaeg
+permission denied!!!	timesheet	et	Ligipääs keelatud !!!
+price	timesheet	et	Hind
+quantity	timesheet	et	Kogus
+save & new	timesheet	et	Salvesta & Uus
+select a price	timesheet	et	Vali hind
+select a project	timesheet	et	Vali Projekt
+start	timesheet	et	Start
+starttime	timesheet	et	Startimise aeg
+starttime has to be before endtime !!!	timesheet	et	Startimise aeg on pärast lõpetamise aega !!!
+tracker	timesheet	et	Jälgimise Süsteem
+week	timesheet	et	Nädal
+yesterday	timesheet	et	Eile

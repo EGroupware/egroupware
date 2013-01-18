@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	el	%1 διευθύνσεις email εισήχθησαν
 %1 is not executable by the webserver !!!	common	el	%1 δεν είναι εκτελέσιμο από τον webserver !!!
-%1 manual	common	el	%1 χειροκίνητα
-%1 start	common	el	%1 έναρξη
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	el	%1Επιλέξτε έναν άλλο κατάλογο%2<br />ή κάντε %3 εγγράψιμο από τον webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	el	%1eGroupWare%2 είναι ένα multi-user, web-based groupware suite γραμμένο σε %3PHP%4.
 (shift-)click or drag to change value	jscalendar	el	(Shift-)Click ή σύρετε για να αλλάξετε τιμή
@@ -26,6 +24,7 @@ account has been created	common	el	Ο λογαριασμός έχει δημιο
 account has been deleted	common	el	Ο λογαριασμός έχει διαγραφεί
 account has been updated	common	el	Ο λογαριασμός έχει ενημερωθεί
 account is expired	common	el	Ο λογαριασμός έχει λήξει
+accounts	common	el	Λογαριασμοί
 acl	common	el	ACL
 action	common	el	Ενέργεια
 active	common	el	Ενεργό
@@ -176,6 +175,7 @@ detail	common	el	Λεπτομέρεια
 details	common	el	Λεπτομέρειες
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	el	Nα απενεργοποιηθεί η εκτέλεση του bugfixscript στον Internet Explorer 5.5 και μεγαλύτερο για να εμφανίζεται η διαφάνεια στις PNG-εικόνες;
 direction left to right	common	el	Κατεύθυνση από αριστερά προς τα δεξιά
+directory	common	el	Κατάλογος
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	el	Ο κατάλογος δεν υπάρχει, δεν είναι αναγνώσιμος από τον webserver ή δεν είναι σχετικός με την πορεία του εγγράφου!
 disable internet explorer png-image-bugfix	common	el	Απενεργοποίηση του Internet Explorer png-image-bugfix
 disable slider effects	common	el	Aπενεργοποίηση των εφέ της μπάρας κύλισης
@@ -200,7 +200,6 @@ edit	common	el	Επεξεργασία
 edit %1 category for	common	el	Επεξεργασία της κατηγορίας 1% για
 edit categories	common	el	Επεξεργασία Κατηγοριών
 edit category	common	el	Επεξεργασία Κατηγορίας
-egroupware api version %1	common	el	eGroupWare API έκδοση %1
 egroupware: login blocked for user '%1', ip %2	common	el	eGroupWare: Είσοδος μπλοκαρισμένη για το χρήστη '%1', με ip %2
 egypt	common	el	ΑΙΓΥΠΤΟΣ
 el salvador	common	el	ΕΛ ΣΑΛΒΑΔΟΡ
@@ -239,6 +238,7 @@ first page	common	el	Αρχική σελίδα
 firstname	common	el	Ονομα
 fixme!	common	el	Διόρθωσέ με!
 folder already exists.	common	el	Ο φάκελος υπάρχει ήδη
+force selectbox	common	el	Εξανάγκασε Επιλογή κουτιού
 france	common	el	ΓΑΛΙΑ
 french guiana	common	el	ΓΑΛΛΙΚΗ ΓΟΥΪΑΝΑ
 french polynesia	common	el	ΓΑΛΛΙΚΗ ΠΟΛΥΝΗΣΙΑ
@@ -338,6 +338,7 @@ kyrgyzstan	common	el	ΚΥΡΓΥΣΤΑΝ
 language	common	el	Γλώσσα
 language_direction_rtl	common	el	γλώσσα_κατεύθυνση_rtl
 lao peoples democratic republic	common	el	ΛΑΟΣ
+last modified	common	el	Τελευταία τροποποίηση
 last name	common	el	Επίθετο
 last name of the user, eg. "%1"	common	el	επίθετο του χρήστη, π.χ. "%1"
 last page	common	el	Τελευταία σελίδα
@@ -429,6 +430,7 @@ norfolk island	common	el	ΝΗΣΟΣ ΝΟΡΦΟΛΚ
 normal	common	el	Κανονικό
 northern mariana islands	common	el	ΝΗΣΟΙ ΝΟΤΙΑ ΜΑΡΙΑΝΑ
 norway	common	el	ΝΟΡΒΗΓΙΑ
+not	common	el	δεν
 not assigned	common	el	χωρίς ανάθεση
 note	common	el	Σημείωση
 notes	common	el	Σημειώσεις
@@ -574,6 +576,8 @@ showing %1 - %2 of %3	common	el	εμφάνιση %1 - %2 από %3
 sierra leone	common	el	ΣΙΕΡΡΑ ΛΕΟΝΕ
 simple	common	el	Απλό
 singapore	common	el	ΣΙΓΚΑΠΟΥΡΗ
+site configuration	common	el	Διαμόρφωση ιστιοσελίδας
+size	common	el	Μέγεθος
 slovakia	common	el	ΣΛΟΒΑΚΙΑ
 slovenia	common	el	ΣΛΟΒΕΝΙΑ
 solomon islands	common	el	ΝΗΣΟΙ ΣΟΛΟΜΩΝΤΑ
@@ -709,4 +713,3 @@ your settings have been updated	common	el	Οι ρυθμίσεις σας έχο�
 zambia	common	el	ΖΑΜΠΙΑ
 zimbabwe	common	el	ΖΙΜΠΑΜΠΟΥΕ
 zoom	common	el	Εστίαση
-site configuration	common	el	Διαμόρφωση ιστιοσελίδας

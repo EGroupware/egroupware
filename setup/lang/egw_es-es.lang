@@ -392,7 +392,7 @@ minimum account id (e.g. 500 or 100, etc.)	setup	es-es	Id mínimo para la cuenta
 minute	setup	es-es	minuto
 missing or uncomplete mailserver configuration	setup	es-es	La configuración del servidor de correo falta o está incompleta
 modifications have been completed!	setup	es-es	¡Se han completado las modificaciones!
-modified	setup	es-es	modificado
+modified	setup	es-es	Modificado
 modify	setup	es-es	Modificar
 month	setup	es-es	mes
 multi-language support setup	setup	es-es	Configuración del soporte multi-Idioma
@@ -675,7 +675,7 @@ you didn't enter a config username for domain %1	setup	es-es	No ha introducido u
 you didn't enter a header admin password	setup	es-es	No ha introducido una contraseña para administrar los encabezados
 you didn't enter a header admin username	setup	es-es	No ha introducido un nombre de usuario para administrar los encabezados
 you do not have any languages installed. please install one now <br />	setup	es-es	No tiene ningún idioma instalado. Por favor, instale uno ahora
-you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	es-es	¡No tiene la versión %1 de JPGraph o superior instalada! Se necesita para las gráficas Gantt en el Administrador de proyectos.
+you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	es-es	¡No tiene la versión %1 de JPGraph o superior instalada! Se necesita desde el Administador de proyectos para gráficas Gantt.
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	es-es	¡No ha creado todavía el fichero header.inc.php!<br />Puede crearlo ahora.
 you have successfully logged out	setup	es-es	Ha cerrado la sesión correctamente
 you must enter a username for the admin	setup	es-es	Debe introducir un nombre de usuario para el administrador

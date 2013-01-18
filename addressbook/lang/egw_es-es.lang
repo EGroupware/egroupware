@@ -211,6 +211,7 @@ group %1	addressbook	es-es	Grupo %1
 h	addressbook	es-es	h
 hide accounts from addressbook	addressbook	es-es	Ocultar las cuentas de la libreta de direcciones
 hides accounts completly from the adressbook.	addressbook	es-es	Oculta completamente las cuentas de la libreta de direcciones
+history logging	admin	es-es	Registro de historial
 home address	addressbook	es-es	Domicilio particular
 home address, birthday, ...	addressbook	es-es	Domicilio particular, Cumpleaños, ...
 home city	addressbook	es-es	Ciudad de residencia
@@ -316,6 +317,7 @@ preferred email address to use in distribution lists	addressbook	es-es	Direcció
 preferred phone	addressbook	es-es	teléfono preferido
 preferred type of email address to add for distribution lists	addressbook	es-es	Tipo preferido de dirección de correo electrónico para añadir a las listas de distribución
 prefix	addressbook	es-es	Prefijo
+prevent deleting of contacts	admin	es-es	Evitar el borrado de contactos
 private custom fields	addressbook	es-es	Campos personalizados privados
 public key	addressbook	es-es	Clave pública
 publish into groups:	addressbook	es-es	Publicar en los grupos:
@@ -423,6 +425,8 @@ yes, for the next three days	addressbook	es-es	Sí, para los tres próximos día
 yes, for the next two weeks	addressbook	es-es	Sí, para las dos semanas siguientes
 yes, for the next week	addressbook	es-es	Sí, para la semana siguiente
 yes, for today and tomorrow	addressbook	es-es	Sí, para hoy y mañana
+yes, only admins can purge deleted items	admin	es-es	Sí, sólo los administradores pueden purgar los elementos borrados
+yes, users can purge their deleted items	admin	es-es	Sí, los usuarios pueden purgar sus elementos borrados
 you are not permitted to delete contact %1	addressbook	es-es	No tiene permiso para borrar el contacto %1
 you are not permittet to delete this contact	addressbook	es-es	No tiene permiso para borrar este contacto
 you are not permittet to edit this contact	addressbook	es-es	No tiene permiso para editar este contacto
@@ -435,4 +439,3 @@ you need to select a distribution list	addressbook	es-es	Necesita seleccionar un
 you need to select some contacts first	addressbook	es-es	Necesita seleccionar antes algunos contactos
 zip code	common	es-es	Código postal
 zip_note	addressbook	es-es	<p><b>Nota:</b> El fichero puede ser un fichero zip conteniendo ficheros .csv, .vcf o .ldif. Sin embargo, no mezcle los tipos cada vez que importe.
-deleted	addressbook	es-es	borrado

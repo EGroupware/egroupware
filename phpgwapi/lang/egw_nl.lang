@@ -363,6 +363,7 @@ kyrgyzstan	common	nl	KIRGIZIË
 language	common	nl	Taal
 language_direction_rtl	common	nl	language_direction_rtl
 lao peoples democratic republic	common	nl	LAOS
+last modified	common	nl	laatste wijziging
 last name	common	nl	Achternaam
 last name of the user, eg. "%1"	common	nl	Achternaam van de gebruiker, bijv. "%1"
 last page	common	nl	laaste pagina
@@ -549,6 +550,7 @@ remove shortcut	common	nl	Snelkoppeling verwijderen
 rename	common	nl	Hernoemen
 replace	common	nl	Vervangen
 replace with	common	nl	Vervangen met
+restore failed	common	nl	Terugzetten mislukte
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	nl	Geeft een volledige lijst met accounts die aanwezig zijn op het systeem. Waarschuwing: Deze lijst kan erg lang zijn.
 returns an array of todo items	common	nl	Geef een serie van todo items
 returns struct of users application access	common	nl	Geeft de toegangsrechten van de gebruikers
@@ -620,6 +622,7 @@ sierra leone	common	nl	SIERRA LEONE
 simple	common	nl	Eenvoudig
 singapore	common	nl	SINGAPORE
 site configuration	common	nl	Siteconfiguratie
+size	common	nl	Grootte
 slovakia	common	nl	SLOWAKIJË
 slovenia	common	nl	SLOVENIË
 solomon islands	common	nl	SALOMOMEILANDEN
@@ -713,6 +716,7 @@ username	common	nl	Gebruikersnaam
 users	common	nl	gebruikers
 users choice	common	nl	Gebruikerskeuze
 uzbekistan	common	nl	OEZBEKISTAN
+value	common	nl	Waarde
 vanuatu	common	nl	VANUATU
 venezuela	common	nl	VENEZUELA
 version	common	nl	Versie

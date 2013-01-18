@@ -1,0 +1,88 @@
+--> enter new name	timesheet	zh	--> 输入新名称
+2 month ago	timesheet	zh	两月前
+2 years ago	timesheet	zh	两年前
+3 years ago	timesheet	zh	三年前
+actions	timesheet	zh	操作
+all projects	timesheet	zh	所有项目
+applies the changes	timesheet	zh	应用更改
+both: allow to use projectmanager and free project-names	admin	zh	两者：使用项目管理和自选项目名称
+by	timesheet	zh	由
+check all	timesheet	zh	全选
+comment by %1 at %2:	timesheet	zh	%1在%2的评论：
+create new links	timesheet	zh	创建新链接
+creates a new field	timesheet	zh	创建一新字段
+creating new entry	timesheet	zh	创建新条目
+custom fields	timesheet	zh	自定义字段
+delete this entry	timesheet	zh	删除此条目
+delete this status	timesheet	zh	删除这个状态
+deleted	timesheet	zh	已删除
+deletes this field	timesheet	zh	删除此字段域
+determines the order the fields are displayed	timesheet	zh	确定显示字段域顺序
+each value is a line like <id>[=<label>]	timesheet	zh	每个数值是一行像是<id>[=<label>]这样的文字
+edit status	timesheet	zh	Edit Status
+edit this entry	timesheet	zh	编辑此条目
+empty if identical to duration	timesheet	zh	如果同期侧留空
+end	timesheet	zh	结束
+entry deleted	timesheet	zh	条目已删除
+entry saved	timesheet	zh	条目已保存
+error deleting the entry!!!	timesheet	zh	删除条目错误！
+error saving the entry!!!	timesheet	zh	保存条目错误！
+existing links	timesheet	zh	现有链接
+export	timesheet	zh	导出
+export to openoffice spreadsheet	timesheet	zh	导出到 OpenOffice 电子表格
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	zh	从您的Timesheet导出词条到CSV文件。CSV采用'逗号分隔'方法。然而在选项标签您仍能够选择其它分隔符。
+field must not be empty !!!	timesheet	zh	字段不得为空！
+full: use only projectmanager	admin	zh	完全：只使用项目管理
+general	timesheet	zh	普通
+global categories	timesheet	zh	全局分类
+history	timesheet	zh	历史记录
+id	timesheet	zh	编号
+last modified	timesheet	zh	最近修改
+last month	timesheet	zh	上个月
+last week	timesheet	zh	上星期
+last year	timesheet	zh	去年
+leave it empty for a full week	timesheet	zh	留空表示整个星期
+leaves without saveing	timesheet	zh	不保存
+length<br>rows	timesheet	zh	字段长度<br>字段行数
+links	timesheet	zh	链接
+max length of the input [, length of the inputfield (optional)]	timesheet	zh	输入的最大长度 [, 输入字段的长度 (可选)]
+new ticket submitted by %1 at %2	timesheet	zh	新传票由%1在%2提交
+no details	timesheet	zh	无细节
+no project	timesheet	zh	无项目
+none: use only free project-names	admin	zh	决不：只使用自选项目名称
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	zh	多行输入字段的列数或多选框的行数
+or endtime	timesheet	zh	结束时间
+order	timesheet	zh	排序
+parent	timesheet	zh	上一层
+permission denied!!!	timesheet	zh	没有权限！
+price	timesheet	zh	价格
+projectmanager integration	admin	zh	项目管理集成
+quantity	timesheet	zh	数量
+save & new	timesheet	zh	保存并新建
+saves the changes made	timesheet	zh	保存所做更改
+saves the changes made and leaves	timesheet	zh	保存修改并离开
+saves this entry and add a new one	timesheet	zh	保存此条目并新添另一个
+select a price	timesheet	zh	选择一个价格
+select a project	timesheet	zh	选择一个项目
+show a quantity sum (eg. to sum up negative overtime)	admin	zh	显示数量合计(如：合计超时加班的费用)
+start	timesheet	zh	开始
+starttime	timesheet	zh	开始时间
+starttime has to be before endtime !!!	timesheet	zh	开始时间必须在结束时间之前！
+sum %1:	timesheet	zh	合计%1：
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	zh	使用的名称在内 (<= 20 个字符)，修改现有的无效数据
+the text displayed to the user	timesheet	zh	向用户显示的文本
+this month	timesheet	zh	这个月
+this week	timesheet	zh	这星期
+this year	timesheet	zh	今年
+ticket modified by %1 at %2	timesheet	zh	传票由%1在%2修改
+timesheet	common	zh	时间表
+timesheet csv export	timesheet	zh	时间表 CSV 格式导出
+timesheet openoffice export	timesheet	zh	时间表 OpenOffice 格式导出
+tracker	timesheet	zh	跟踪系统
+unitprice	timesheet	zh	单价
+values for selectbox	timesheet	zh	选单数值数据
+view this entry	timesheet	zh	查看该条目
+week	timesheet	zh	星期
+whole query	timesheet	zh	完整查询
+yesterday	timesheet	zh	昨天
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	zh	您的数据库没有更新到日期(%1 vs. %2)，请运行%3setup%4更新您的数据库。

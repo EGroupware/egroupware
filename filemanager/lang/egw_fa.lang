@@ -1,0 +1,79 @@
+%1 already exists as a file	filemanager	fa	%1 قبلا بعنوان پرونده وجود دارد
+actions	filemanager	fa	اعمال
+applications	common	fa	کاربردها
+cancel editing %1 without saving	filemanager	fa	لغو ویرایش %1 بدون ذخیره سازی
+cannot create directory because it begins or ends in a space	filemanager	fa	ناتوان از ایجاد پوشه چون با یک فاصله شروع یا تمام می شود
+check all	filemanager	fa	چک کردن همه
+comment	filemanager	fa	توضیحات
+comments cannot contain "%1"	filemanager	fa	توضیحات نمی توانند شامل "%1" باشند
+copied %1 to %2	filemanager	fa	%1 به %2 نسخه برداری شد
+copy to	filemanager	fa	نسخه برداری به
+could not copy %1 to %2	filemanager	fa	ناتوان از نسخه برداری %1 به %2
+could not copy file because no destination directory is given	filemanager	fa	ناتوان از نسخه برداری پرونده، چون پوشه مقصد مشخص نشده است
+could not create %1	filemanager	fa	نمی توانم %1 را بسازم
+could not delete %1	filemanager	fa	نمی توانم %1 را حذف کنم
+could not move %1 to %2	filemanager	fa	نمی توانم %1 را به %2 انتقال دهم
+could not move file because no destination directory is given	filemanager	fa	ناتوان از جابجائی پرونده چون پوشه مقصد تعیین نشده است
+could not rename %1 to %2	filemanager	fa	نمی توانم %1 را به %2 تغییر نام دهم
+could not save %1	filemanager	fa	نمی توانم %1 را ذخیره کنم
+create file	filemanager	fa	ایجاد پرونده
+create folder	filemanager	fa	ایجاد پوشه
+created	filemanager	fa	ایجاد شد
+created %1,%2	filemanager	fa	%1,%2 ایجاد شد
+created directory %1	filemanager	fa	پوشه %1 ایجاد شد
+custom fields	filemanager	fa	فیلدهای سفارشی
+cut	filemanager	fa	بریدن
+deleted %1	filemanager	fa	%1 حذف شد
+directory	filemanager	fa	پوشه
+directory %1 already exists	filemanager	fa	پوشه %1 قبلا وجود دارد
+directory %1 does not exist	filemanager	fa	پوشه %1 وجود ندارد
+directory names cannot contain "%1"	filemanager	fa	نام پوشه شامل "%1" نمی باشد
+download	filemanager	fa	دریافت
+edit comments	filemanager	fa	ویراستن توضیحات
+file	filemanager	fa	پرونده
+file %1 already exists. please edit it or delete it first.	filemanager	fa	پرونده %1 وجود دارد ابتدا آنرا ویرایش یا حذف کنید
+file %1 could not be created.	filemanager	fa	پرونده %1 نمی تواند ایجاد شود
+file names cannot contain "%1"	filemanager	fa	نام پرونده نمی تواند شامل "%1" باشد
+filemanager	common	fa	مدیر پرونده
+files in this directory	filemanager	fa	پرونده های موجود در این پوشه
+folder up	filemanager	fa	پوشه بالا
+general	filemanager	fa	عمومی
+go home	filemanager	fa	برو به خانه
+go to	filemanager	fa	برو به
+go to your home directory	filemanager	fa	برو به پوشه خانه خودت
+go up	filemanager	fa	برو به بالا
+id	filemanager	fa	کد
+link	filemanager	fa	پیوند شود
+location	filemanager	fa	مکان
+mime type	filemanager	fa	نوع فایل
+modified	filemanager	fa	تغییر یافته
+move	filemanager	fa	انتقال دادن
+move to	filemanager	fa	انتقال به
+moved %1 to %2	filemanager	fa	انتقال %1 به %2
+no files in this directory.	filemanager	fa	پرونده ای در پوشه نیست
+no version history for this file/directory	filemanager	fa	تاریخچه نسخه ای برای این پرونده/پوشه نیست
+open	filemanager	fa	کارهای باز
+operation	filemanager	fa	عملیات
+permissions	filemanager	fa	مجورها
+please select a file to delete.	filemanager	fa	لطفا پرونده ای را برای حذف انتخاب کنید
+preview	filemanager	fa	پیش نمایش
+preview %1	filemanager	fa	پیش نمایش %1
+preview of %1	filemanager	fa	پیش نمایش %1
+projectmanager	filemanager	fa	مدیریت پروژه
+quick jump to	filemanager	fa	پرش سریع به
+reload	filemanager	fa	باز خوانی
+renamed %1 to %2	filemanager	fa	تغییر نام %1 به %2
+replaced %1	filemanager	fa	جایگزین شد%1
+save %1	filemanager	fa	ذخیره کن %1
+save %1, and go back to file listing	filemanager	fa	%1 را ذخیره کن  و به لیست پرونده ها برگرد
+save changes	filemanager	fa	ذخیره کردن تغییرات
+saved %1	filemanager	fa	%1 ذخیره شد
+show	filemanager	fa	نمایش
+size	filemanager	fa	اندازه
+total files	filemanager	fa	تعداد پرونده ها
+unused space	filemanager	fa	فضای استفاده نشده
+up	filemanager	fa	بالا
+updated comment for %1	filemanager	fa	توضیحات را برای %1 به روز کن
+used space	filemanager	fa	فضای استفاده شده
+you do not have access to %1	filemanager	fa	شما حق دسترسی به %1 را ندارید
+your home dir did not exist, egroupware created a new one.	filemanager	fa	پوشه خانه شما وجود ندارد - گروه افزار برایتان ایجاد کرد

@@ -1,0 +1,23 @@
+choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	pt-br	Escolha uma série de notificação. Você será notificado pelos métodos incluídos na série. <br />Nota: Se uma série de notificação estiver marcada como "desabilitada", seu administrador não permitiu um ou mais métodos incluídos naquela série e as notificações usarão o método "E-Mail".
+common chains	notifications	pt-br	Séries comuns
+disabled chains	notifications	pt-br	Séries desabilitadas
+egroupware has notifications for you	notifications	pt-br	O eGroupWare possui notificações para você
+egroupware-popup backend	admin	pt-br	Método eGroupWare-Popup
+egroupware-popup verbosity	notifications	pt-br	Nível de detalhe do eGroupWare-Popup
+enable egroupware-popup backend	admin	pt-br	Habilitar método eGroupWare-Popup
+enable sms backend	admin	pt-br	Habilitar método SMS
+enable windows-popup backend	admin	pt-br	Habilitar método Windows-Popup
+enabled chains	notifications	pt-br	Séries habilitadas
+folder	notifications	pt-br	pasta
+from	notifications	pt-br	De
+if set, embedded links get rendered special for external clients	notifications	pt-br	Se definido, links embutidos serão exibidos de forma especial para clientes externos
+linked entries:	common	pt-br	Registros linkados:
+maximum sms messages per notification	admin	pt-br	Máximo de mensagens SMS por notificação
+message from	notifications	pt-br	Mensagem de
+minutes	notifications	pt-br	minutos
+notification	common	pt-br	Notificação
+notify me by	notifications	pt-br	Notificar-me por
+optimize e-mails for external mail client	notifications	pt-br	Optmizar e-mails para clientes externos
+preferences for notification	notifications	pt-br	Preferências para notificação
+sms backend	admin	pt-br	Método SMS
+windows-popup backend	admin	pt-br	Método Windows-Popup

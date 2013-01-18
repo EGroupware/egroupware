@@ -1,0 +1,56 @@
+actions	setup	uk	Дії
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	uk	Додавати автоматично створених користувачів до цієї групи ('Default' якщо порожнє)
+admins	setup	uk	Адміністратори
+all users	setup	uk	Всі користувачі
+application title	setup	uk	Найменування приложення
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	uk	Спроба використати вірний mime-тип для FTP замість типового 'application/octet-stream'
+authentication / accounts	setup	uk	Аутентифікація / Рахунки
+auto create account records for authenticated users	setup	uk	Створювати автоматично записи рахунків для аутентифікованих користувачів
+bottom	setup	uk	низ
+check ip address of all sessions	setup	uk	перевіряти ip адресу для всіх сесій
+configuration	setup	uk	Конфігурація
+country selection	setup	uk	Вибір країни
+day	setup	uk	День
+default	setup	uk	По замовченню
+default file system space per user/group ?	setup	uk	Обсяг файлової системи для користувача/групи по замовченню
+deny all users access to grant other users access to their entries ?	setup	uk	Заборонити всім користувачам давати доступ іншим користувачам до їх записів ?
+download	setup	uk	Загрузити
+enter the hostname of the machine on which this server is running	setup	uk	Введіть hostname машини, на якій працює цей сервер.
+enter the site password for peer servers	setup	uk	Введіть пароль сайту для peer серверів
+enter the site username for peer servers	setup	uk	Введіть ім'я користувача сайту для peer серверів
+enter the title for your site	setup	uk	Введіть найменування Вашого сайту
+enter your default ftp server	setup	uk	Введіть Ваш типовий FTP сервер
+enter your http proxy server	setup	uk	Введіть Ваш HTTP проксі сервер
+enter your http proxy server port	setup	uk	Введіть порт Вашого HTTP проксі серверу
+host information	setup	uk	Інформація хосту
+if no acl records for user or any group the user is a member of	setup	uk	Якщо немає записів ACL для користувача або будь якої групи, членом якої є користувач
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	uk	При використанні LDAP, чи хочете Ви керувати домашніми каталогами та атрибутами входу до системи?
+ldap accounts context	setup	uk	Контекст LDAP рахунків
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	uk	Типовий префікс домашніх каталогів LDAP (тобто /home для /home/username)
+ldap default shell (e.g. /bin/bash)	setup	uk	Типовий шелл LDAP (тобто /bin/bash)
+ldap encryption type	setup	uk	Тип шифрування LDAP
+ldap groups context	setup	uk	Контекст LDAP груп
+ldap host	setup	uk	Хост LDAP
+ldap root password	setup	uk	root пароль LDAP
+ldap rootdn	setup	uk	LDAP rootdn
+maximum account id (e.g. 65535 or 1000000)	setup	uk	Максимальний ідентифікатор рахунку (тобто 65535 або 1000000)
+minimum account id (e.g. 500 or 100, etc.)	setup	uk	Мінімальний ідентифікатор рахунку (тобто 65535 або 1000000)
+minute	setup	uk	Хвилина
+modified	setup	uk	Змінено
+month	setup	uk	Місяць
+next run	setup	uk	Наступний запуск
+no algorithms available	setup	uk	Немає алгоритмів
+no modes available	setup	uk	Немає режимів
+not	setup	uk	не треба
+path information	setup	uk	Інформація шляху
+re-enter password	setup	uk	Перевведіть пароль
+remove	setup	uk	Видалити
+select where you want to store/retrieve user accounts	setup	uk	Визначте де зберігати рахунки користувачів
+selectbox	setup	uk	Selectbox
+show 'powered by' logo on	setup	uk	Показувати логотип 'powered by'
+text entry	setup	uk	Текстовий запис
+top	setup	uk	зверху
+use cookies to pass sessionid	setup	uk	Використовувати куки для передачі ідентифікатора сесії
+use pure html compliant code (not fully working yet)	setup	uk	Використовувати чистий HTML код (ще не повністю працює)
+would you like to show each application's upgrade status ?	setup	uk	Чи показувати стан поновлення кожного приложення ?
+write	setup	uk	Записати

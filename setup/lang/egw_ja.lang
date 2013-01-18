@@ -1,0 +1,193 @@
+actions	setup	ja	動作
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	ja	自動作成時のグループ &nbsp; (指定なしの場合 'default')
+admin first name	setup	ja	姓
+admin last name	setup	ja	名
+admin password	setup	ja	パスワード
+admin username	setup	ja	ユーザID
+admins	setup	ja	管理者
+all applications	setup	ja	で、すべてのアプリケーションテーブルを作成します。
+all users	setup	ja	全てのユーザ
+app details	setup	ja	アプリケーションの詳細
+app install/remove/upgrade	setup	ja	アプリケーションの追加/更新/削除
+application data	setup	ja	アプリケーション情報
+application management	setup	ja	アプリケーション設定
+application name and status information	setup	ja	<center>アプリケーション名<BR>状態</center>
+application title	setup	ja	タイトル名
+at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	ja	データベースの作成、およびユーザをアサインしました。
+at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	ja	古いアプリケーションを現在のバージョンにアップグレードしました。
+at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ja	古いテーブルを現在のフォーマットにアップグレードしました。
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	ja	At your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	ja	アプリケーションアンインストールで、テーブルとデータを削除しました
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	ja	FTP のMIMEタイプで &nbsp; 'application/octet-stream' &nbsp; の代わりに<br />正しいタイプを使う
+authentication / accounts	setup	ja	認証/アカウント情報
+auto create account records for authenticated users	setup	ja	認証したユーザ情報を自動的に作成する
+auto-created user accounts expire	setup	ja	自動作成したユーザの有効期限
+available version	setup	ja	最新の<BR>バージョン
+because it depends upon	setup	ja	理由は次のとおりです
+because it is not a user application, or access is controlled via acl	setup	ja	ユーザのアプリケーションでないか、ACL によってアクセス制限しています。
+because it requires manual table installation, <br />or the table definition was incorrect	setup	ja	手動でテーブルをインストールする必要があるか、<br />テーブル定義が正しくありません。
+because of a failed upgrade or install	setup	ja	追加もしくは更新に失敗しました。
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	ja	データベースのバージョンがこのアプリケーションの動作可能バージョンよりも新しいため、更新に失敗しました。
+because the enable flag for this app is set to 0, or is undefined	setup	ja	このアプリケーションが利用可能となっていません。
+bottom	setup	ja	下部
+cancel	setup	ja	キャンセル
+charset	setup	ja	utf-8
+check ip address of all sessions	setup	ja	全てのセッションで IP アドレスのチェックを行う
+click here	setup	ja	ここをクリックする
+configuration	setup	ja	環境設定
+configuration completed	setup	ja	環境設定は完了しました。
+configure now	setup	ja	環境設定
+country selection	setup	ja	国の選択
+create	setup	ja	作成
+create database	setup	ja	データベースを作成しました
+create demo accounts	setup	ja	デモ用アカウント作成
+create one now	setup	ja	作成
+created	setup	ja	作成
+creating tables	setup	ja	テーブルを作成しました。
+current version	setup	ja	現在の<BR>バージョン
+currently installed languages: %1 <br />	setup	ja	現在の言語: %1 <br />
+delete all my tables and data	setup	ja	すべてのテーブルとデータを削除します
+delete all old languages and install new ones	setup	ja	現在の言語をすべて削除して、選択した言語をインストールする
+deleting tables	setup	ja	テーブルを削除しました
+demo server setup	setup	ja	デモサーバセットアップ
+deny access	setup	ja	アクセス不可
+deny all users access to grant other users access to their entries ?	setup	ja	他のユーザ情報へのアクセスを全てのユーザに許可しない
+deregistered	setup	ja	登録解除しました
+details for admin account	setup	ja	管理者アカウントの詳細情報
+domain	setup	ja	ドメイン
+edit current configuration	setup	ja	環境設定
+enter some random text for app session encryption	setup	ja	アプリケーションセッション暗号化のための任意テキスト入力
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	ja	ファイルマネージャのファイル保存先（フルパス）<br />例：/files や E:\FILES など
+enter the hostname of the machine on which this server is running	setup	ja	eGroupWare が動作するホスト名
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	ja	eGroupWare の URL<BR>例：http://www.itheart.com/egroupware &nbsp; や &nbsp; /egroupware など<BR><b>最後はスラッシュを指定しないこと</b>
+enter the site password for peer servers	setup	ja	同等サーバのパスワード
+enter the site username for peer servers	setup	ja	同等サーバのユーザ名
+enter the title for your site	setup	ja	タイトル名
+enter your default ftp server	setup	ja	既定の FTP サーバ
+enter your http proxy server	setup	ja	HTTP &nbsp; プロキシサーバ
+enter your http proxy server port	setup	ja	HTTP &nbsp; プロキシサーバポート
+force selectbox	setup	ja	セレクトボックス
+go back	setup	ja	戻る
+grant access	setup	ja	アクセス許可
+has a version mismatch	setup	ja	バージョンが異なります
+hooks deregistered	setup	ja	フックを登録解除しました。
+hooks registered	setup	ja	フックを登録しました。
+host information	setup	ja	ホスト情報
+however, the application is otherwise installed	setup	ja	このアプリケーションの他の部分はインストールしました。
+if no acl records for user or any group the user is a member of	setup	ja	ACLにユーザやグループの情報がない場合の処理
+if the application has no defined tables, selecting upgrade should remedy the problem	setup	ja	アプリケーションテーブルが存在しない場合、更新を選択して問題を解決してください。
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ja	LDAP 利用時のホームディレクトリとログインシェルの情報
+if you did not receive any errors, your applications have been	setup	ja	エラーは見つかりませんでした。
+if you did not receive any errors, your tables have been	setup	ja	エラーは見つかりませんでした。
+install	setup	ja	インストール
+install language	setup	ja	言語追加
+installed	setup	ja	インストール
+is broken	setup	ja	壊れています
+is disabled	setup	ja	使用できません
+ldap accounts configuration	setup	ja	LDAP アカウント設定
+ldap accounts context	setup	ja	LDAP アカウントコンテキスト
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	ja	既定のホームディレクトリプレフィックス<br /> &nbsp; &nbsp; (例：/home ならば /home/uername となります)
+ldap default shell (e.g. /bin/bash)	setup	ja	既定のシェル &nbsp; (例：/bin/bashなど)
+ldap encryption type	setup	ja	LDAP 暗号化タイプ
+ldap groups context	setup	ja	LDAP グループコンテキスト
+ldap host	setup	ja	LDAP ホスト名
+ldap root password	setup	ja	LDAP ルートパスワード
+ldap rootdn	setup	ja	LDAP rootdn
+logout	setup	ja	ログアウト
+make sure that your database is created and the account permissions are set	setup	ja	データベースの作成とアカウントに権限を与えます
+manage applications	setup	ja	アプリケーション設定
+manage languages	setup	ja	言語環境設定
+maximum account id (e.g. 65535 or 1000000)	setup	ja	最大ユーザID &nbsp; (例：65536 や 1000000 など)
+mcrypt algorithm (default tripledes)	setup	ja	Mcryptアルゴリズム(デフォルト:TRIPLEDES)
+mcrypt mode (default cbc)	setup	ja	Mcryptモード(デフォルト:CBC)
+mcrypt settings (requires mcrypt php extension)	setup	ja	Mcrypt 設定情報(McryptはPHPの拡張が必要)
+minimum account id (e.g. 500 or 100, etc.)	setup	ja	最小ユーザID &nbsp; (例： 500 や 100 など)
+month	setup	ja	月
+multi-language support setup	setup	ja	言語環境設定
+never	setup	ja	無期限
+new	setup	ja	新規作成
+no	setup	ja	いいえ
+not complete	setup	ja	完了していません。
+not ready for this stage yet	setup	ja	実行できません。
+note: you will be able to customize this later	setup	ja	備考: 後でカスタマイズすることが可能です
+ok	setup	ja	OK
+once the database is setup correctly	setup	ja	Once the database is setup correctly
+one month	setup	ja	１ヶ月
+one week	setup	ja	１週間
+only add languages that are not in the database already	setup	ja	新しい言語すべてを追加（初めて追加する場合）
+only add new phrases	setup	ja	新しいフレーズの追加
+or we can attempt to create the database for you:	setup	ja	または、この処理でデータベースを作成することが可能です
+passwords did not match, please re-enter	setup	ja	パスワードに誤りがあります。再度入力して下さい
+path information	setup	ja	パス情報
+please check for sql scripts within the application's directory	setup	ja	Please check for sql scripts within the application's directory
+please install	setup	ja	Please install
+please login	setup	ja	ログイン
+please login to egroupware and run the admin application for additional site configuration	setup	ja	eGroupWare にログインして、admin アプリケーション内の各アプリケーションサイト環境設定を実行して下さい
+possible solutions	setup	ja	Possible Solutions
+potential problem	setup	ja	Potential Problem
+preferences	setup	ja	ユーザ設定情報
+problem resolution	setup	ja	解決方法
+re-check my installation	setup	ja	インストール確認
+re-enter password	setup	ja	パスワード再入力
+registered	setup	ja	registered
+remove	setup	ja	削除
+requires reinstall or manual repair	setup	ja	Requires reinstall or manual repair
+requires upgrade	setup	ja	Requires upgrade
+resolve	setup	ja	確認
+select the default applications to which your users will have access	setup	ja	Select the default applications to which your users will have access
+select the desired action(s) from the available choices	setup	ja	アプリケーションの設定動作を選択してください。
+select where you want to store/retrieve user accounts	setup	ja	ユーザアカウントの格納/検索場所
+select which group(s) will be imported (group membership will be maintained)	setup	ja	Select which group(s) will be imported (group membership will be maintained)
+select which languages you would like to use	setup	ja	言語を選択してください。
+select which method of upgrade you would like to do	setup	ja	言語環境設定の方法を選択してください。
+select which type of authentication you are using	setup	ja	認証タイプ
+select which user(s) will be exported	setup	ja	Select which user(s) will be exported
+select which user(s) will be imported	setup	ja	Select which user(s) will be imported
+select which user(s) will have admin privileges	setup	ja	Select which user(s) will have admin privileges
+select your old version	setup	ja	Select your old version
+selectbox	setup	ja	セレクトボックス
+setup	setup	ja	セットアップ
+show 'powered by' logo on	setup	ja	powered by ロゴ表示位置
+some or all of its tables are missing	setup	ja	必要なテーブルが存在しません。
+status	setup	ja	状態表示
+step %1 - advanced application management	setup	ja	Step %1 - アプリケーション設定
+step %1 - configuration	setup	ja	Step %1 - 環境設定
+step %1 - language management	setup	ja	Step %1 - 言語環境設定
+step %1 - simple application management	setup	ja	Step %1 - テーブル作成
+table change messages	setup	ja	テーブル変更メッセージ
+tables dropped	setup	ja	テーブルを削除しました
+tables installed, unless there are errors printed above	setup	ja	をインストールしました。エラー表示がなければ完了です。
+tables upgraded	setup	ja	テーブルを更新しました
+text entry	setup	ja	テキスト入力
+the tables	setup	ja	the tables
+this stage is completed<br />	setup	ja	この段階は完了しました。<br />
+top	setup	ja	上部
+two weeks	setup	ja	２週間
+uninstall all applications	setup	ja	アプリケーションのアンインストール
+uninstalled	setup	ja	アンインストール
+upgrade	setup	ja	更新
+upgraded	setup	ja	アップグレード
+upgrading tables	setup	ja	Upgrading Tables
+use cookies to pass sessionid	setup	ja	cookieのセッションidを使用
+use pure html compliant code (not fully working yet)	setup	ja	純粋なHTMLを利用（完全に動作しません）
+user	setup	ja	ユーザ
+users choice	setup	ja	ユーザ選択
+version	setup	ja	バージョン
+version mismatch	setup	ja	Version Mismatch
+we will automatically update your tables/records to %1	setup	ja	セットアップは、%1 用のテーブルやデータに自動アップグレードします。
+would you like egroupware to cache the phpgw info array ?	setup	ja	eGroupWare のキャッシュにphpgw info 配列を利用する
+would you like egroupware to check for a new version<br />when admins login ?	setup	ja	管理者でログイン時、eGroupWareのバージョンチェックを行う
+would you like to show each application's upgrade status ?	setup	ja	アプリケーションのアップグレード状況表示
+write	setup	ja	Write
+year	setup	ja	年
+yes	setup	ja	はい
+you are ready for this stage, but this stage is not yet written.<br />	setup	ja	You are ready for this stage, but this stage is not yet written.<br />
+you do not have any languages installed. please install one now <br />	setup	ja	どの言語環境もありません。最低１つの言語環境をインストールして下さい。<br />
+you must enter a username for the admin	setup	ja	ユーザIDを入力して下さい。
+you should either uninstall and then reinstall it, or attempt manual repairs	setup	ja	アンインストールした後再インストールするか、手動でインストールして下さい。
+your applications are current	setup	ja	アプリケーションのインストールは完了しました。
+your database does not exist	setup	ja	データベースが存在しません。
+your database is not working!	setup	ja	データベースが存在しません。
+your database is working, but you dont have any applications installed	setup	ja	データベースは存在していますが、各アプリケーションテーブルが未作成です。
+your tables are current	setup	ja	Your tables are current
+your tables will be dropped and you will lose data	setup	ja	テーブルを削除します。データは復旧できません

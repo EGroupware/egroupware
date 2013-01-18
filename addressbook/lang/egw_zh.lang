@@ -100,6 +100,7 @@ contacts to ldap, account contact-data to sql	admin	zh	联系人到 LDAP，账�
 contains	addressbook	zh	包含
 copied by %1, from record #%2.	addressbook	zh	由%1从纪录 #%2复制。
 copy a contact and edit the copy	addressbook	zh	复制联系人并编辑副本
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	zh	复制您的改变到剪贴板，%1重新载入条目%2并合并它们。
 country	common	zh	国家
 create new links	addressbook	zh	创建新链接
 created	addressbook	zh	创建
@@ -145,12 +146,14 @@ edit phonenumbers -	addressbook	zh	编辑电话号码 -
 either the configured email addesses are wrong or the mail configuration.	addressbook	zh	邮箱地址或是邮件设置有错误。
 email & internet	addressbook	zh	电子邮件 & 英特网
 email addresses (comma separated) to send the contact data	addressbook	zh	发送联系人数据的信箱(以逗号分隔)
+empty	admin	zh	清空
 empty for all	addressbook	zh	全部清空
 enable an extra private addressbook	addressbook	zh	启用私人通讯簿
 end	addressbook	zh	结束
 enter the path to the exported file here	addressbook	zh	输入导出档桉的路径
 error deleting the contact !!!	addressbook	zh	删除联系人时发生错误！
 error saving the contact !!!	addressbook	zh	保存联系人时发生错误！
+error: the entry has been updated since you opened it for editing!	addressbook	zh	错误：条目自从您打开编辑以来已经更新！
 existing links	addressbook	zh	存在的链接
 export	addressbook	zh	导出
 export as csv	addressbook	zh	导出成 CSV
@@ -194,7 +197,6 @@ home phone	addressbook	zh	家庭电话
 home state	addressbook	zh	省/自治区
 home street	addressbook	zh	居住街道
 home zip code	addressbook	zh	住地邮编
-how many contacts should non-admins be able to export (empty = no limit)	admin	zh	非管理员可以导出的联系人数量 (留空 = 无限制)
 icon	addressbook	zh	图标
 if accounts are already in ldap	admin	zh	如果帐号已经存在于 LDAP
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	zh	如果您指定一个目录(完整虚拟文件系统路径)，通讯簿会在每个文件旁显示一个动作，这个动作允许下载指定的插入联系人数据的文件。
@@ -212,6 +214,7 @@ import_instructions	addressbook	zh	请按照下列方法从其他应用程序导
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	zh	从 CSV 文件导入联系人资料到通讯簿，CSV 是'逗号分隔'方式，不过您可以在选项标签指定其他的分隔符。
 in %1 days (%2) is %3's birthday.	addressbook	zh	在%1 天 (%2) 就是%3的生日。
 income	addressbook	zh	收入
+infolog	addressbook	zh	记事薄
 insert in document	addressbook	zh	插入文件
 insufficent rights to delete this list!	addressbook	zh	没有删除这个列表的权限！
 international	addressbook	zh	国际
@@ -337,7 +340,6 @@ this module displays a contactform, that stores direct into the addressbook.	add
 this person's first name was not in the address book.	addressbook	zh	这个人的名字不在通讯簿中。
 this person's last name was not in the address book.	addressbook	zh	这个人的姓不在通讯簿中。
 timezone	addressbook	zh	时区
-title	addressbook	zh	职称
 to many might exceed your execution-time-limit	addressbook	zh	许多可能超过你的执行时间限制
 today is %1's birthday!	common	zh	今天是%1的生日！
 tomorrow is %1's birthday.	common	zh	明天是%1的生日。
@@ -387,4 +389,3 @@ you need to select a distribution list	addressbook	zh	您必须选择一个分�
 you need to select some contacts first	addressbook	zh	您必须首先选择某些联系人
 zip code	common	zh	邮政编码
 zip_note	addressbook	zh	<p><b>注意:</b> 该文件可以是.csv 文件、.vcf 文件或.ldif 文件的压缩包，但每一导入能只能是一种类型。
-deleted	addressbook	zh	已删除

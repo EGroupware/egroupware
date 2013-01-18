@@ -45,7 +45,6 @@ allow authentication via cookie	setup	sv	Tillåt autenticering via cookies
 allow password migration	setup	sv	Tillåt lösenords migrering
 allowed migration types (comma-separated)	setup	sv	Tillåtna migrerings sätt (komma separerad)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	sv	Alternativa domäner som kan användas genoma att logga in med <i>användarnamn@domän</i>.
-analysis	setup	sv	Analys
 and is up to date	setup	sv	är uppdaterad
 and reload your webserver, so the above changes take effect !!!	setup	sv	OCH starta om webservern så att förändringarna träder i kraft!!
 app details	setup	sv	Applikationsdetaljer
@@ -244,7 +243,6 @@ file uploads are switched off: you can not use any of the filemanagers, nor can 
 filename	setup	sv	Filnamn
 filesystem	setup	sv	Filsystem
 force selectbox	setup	sv	Listruta
-found existing configuration file. loading settings from the file...	setup	sv	Hittade befintlig konfigurationsfil. Läser in inställningar från filen.
 give admin access to all installed apps	setup	sv	Ge administratören åtkomst till alla installerade applikationer
 gives further options	setup	sv	Ger fler alternativ
 go back	setup	sv	Tillbaka
@@ -280,8 +278,6 @@ if you running this the first time, don't forget to manualy %1 !!!	setup	sv	Om d
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	sv	Om du bara använder språk med samma teckentabell behöver du inte ställa in systemteckentabell
 image type selection order	setup	sv	Ordning för bildtypsval
 import has been completed!	setup	sv	Importen hav slutförts
-importing old settings into the new format....	setup	sv	Importerar gamla inställningar till nytt format
-include root	setup	sv	Inklusive root
 include_path need to contain "." - the current directory	setup	sv	iclude_path måste innehålla "." (aktuell katalog)
 install	setup	sv	Installera
 install all	setup	sv	Installera samtliga
@@ -337,13 +333,13 @@ mcrypt algorithm (default tripledes)	setup	sv	MCrypt algoritm (standard 3DES)
 mcrypt initialization vector	setup	sv	MCrypt initialisationsvektor
 mcrypt mode (default cbc)	setup	sv	MCrypt (standard CBC)
 mcrypt settings (requires mcrypt php extension)	setup	sv	MCrypt alternativ (kräver MCrypt PHP utökning)
-mcrypt version	setup	sv	MCrypt version
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sv	memory_limit är satt till mindre än %1B. En del applikationer i eGroupWare kräver mer än de rekommenderade 8 MB. Förvänta dig problem emellanåt.
 migration between egroupware account repositories	setup	sv	Migrering mellan eGroupWare kontodatabaser
 minimum account id (e.g. 500 or 100, etc.)	setup	sv	Minimum kontoID (dvs 500 eller 100 t ex)
 minute	setup	sv	Minut
 missing or uncomplete mailserver configuration	setup	sv	E-postserver inställningar saknas eller är felaktiga
 modifications have been completed!	setup	sv	Ändringarna genomförda
+modified	setup	sv	Ändrad
 modify	setup	sv	Ändra
 month	setup	sv	Månad
 multi-language support setup	setup	sv	Flerspråksstöd
@@ -393,7 +389,6 @@ path to various directories: have to exist and be writeable by the webserver	set
 pear (%1) is a php repository and is usually in a package called %2.	setup	sv	PEAR (%1) är ett PHP bibloitek och finns oftast i paketet %2.
 pear%1 is needed by: %2.	setup	sv	PEAR%1 behövs för: %2.
 persistent connections	setup	sv	Ständig koppling (Persistent connections)
-php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	sv	PHP plus återställningar ger bäst prestanda då den lagrar eGW miljön i sessionen.
 please check for sql scripts within the application's directory	setup	sv	Var god och kontrollera efter sqlskript i applikationens katalog
 please check read/write permissions on directories, or back up and use another option.	setup	sv	Var god och kontrollera läs/skrivrättigheter på katalogerna, eller ta backup och använd ett annat alternativ
 please configure egroupware for your environment	setup	sv	Var god och gör eGroupWare inställningar för din miljö
@@ -420,7 +415,6 @@ re-enter password	setup	sv	Återge lösenordet igen
 read translations from	setup	sv	Läs in översättningar från
 readable by the webserver	setup	sv	läsbar av webservern
 really uninstall all applications	setup	sv	Vill du verkligen avinstallera samtliga installationer
-recommended: filesystem	setup	sv	Rekomenderas: Filsystem
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	sv	register_globals är PÅslagen, eGroupWare kräver inte det och det är säkrare med det AVslaget.
 registered	setup	sv	registrerad
 rejected lines	setup	sv	Ej godtagna rader
@@ -439,7 +433,6 @@ return to setup	setup	sv	Återgå till installationen
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	sv	Kör databas uppdateringar på schemat (om nödvändigt): domain(all),[config user(admin)],password
 run installation tests	setup	sv	Kör installations test
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	sv	safe_mode är aktiverat, vilket generellt är bra eftersom det gör installationen säkrare.
-sample configuration not found. using built in defaults	setup	sv	Demo konfiguration hittades inte, använder inbyggda standardvärden
 save	setup	sv	Spara
 save this text as contents of your header.inc.php	setup	sv	Spara denna text som innehållet i din header.inc.php
 schedule	setup	sv	Schema
@@ -449,8 +442,6 @@ select one...	setup	sv	Markera en ...
 select the default applications to which your users will have access	setup	sv	Välj vilka applikationer användaren skall ha åtkomst till som standard
 select the desired action(s) from the available choices	setup	sv	Välj åtgärder i listan nedan
 select to download file	setup	sv	Markera för att ladda ner fil
-select where you want to store/retrieve file contents	setup	sv	Välj hur du vill lagra filinnehåll
-select where you want to store/retrieve filesystem information	setup	sv	Välj hur du vill lagra filsystemsinformation
 select where you want to store/retrieve user accounts	setup	sv	Välj hur du vill lagra användarkonton
 select which group(s) will be exported	setup	sv	Välj vilka gruper som ska exporteras
 select which group(s) will be imported (group membership will be maintained)	setup	sv	Välj vilka grupper som skall importeras (gruppmedlemsskap bibehålls)
@@ -466,16 +457,13 @@ select which user(s) will have admin privileges	setup	sv	Välj vilka användare 
 select your old version	setup	sv	Välj den gamla versionen
 selectbox	setup	sv	Listruta
 server root	setup	sv	Server root
-sessions type	setup	sv	Sessionstyp
 set	setup	sv	ställ in
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	sv	sätt denna till Äldre för versioner < 2.4, annars den exakta versionen av mcrypt du har.
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	sv	Sättande av systemteckentabell till UTF-8(Unicode) tillåter samexeistens av data med flera olika språk.
 settings	setup	sv	Inställningar
 setup	setup	sv	Installation
 setup main menu	setup	sv	Installation huvudmeny
 setup the database	setup	sv	Databaskonfiguration
 setup/config admin login	setup	sv	Installera/konfigurera Admin login
-should be the same as server root unless you know what you are doing.	setup	sv	Bör vara samma som server root om du inte vet vad du gör.
 show 'powered by' logo on	setup	sv	Visa "Powered by" logotyp
 sieve: host[,port(2000)]	setup	sv	Sieve: Värd[,Port(2000)]
 size	setup	sv	Storlek
@@ -539,7 +527,6 @@ translations upgraded	setup	sv	Översättningar uppgraderade
 true	setup	sv	Sant
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	sv	Försök konfigurera php att stödja någon av databaserna ovan, eller installera eGroupWare för hand.
 two weeks	setup	sv	två veckor
-unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	sv	Tyvärr har några PHP/Apache paket problem med detta (Apache processen går fel och man kan inte längre logga in).
 uninstall	setup	sv	Avinstallera
 uninstall all applications	setup	sv	Avinstallera samtliga applikationer
 uninstalled	setup	sv	Avinstallerade
@@ -577,7 +564,6 @@ we can proceed	setup	sv	Vi kan forstätta
 we will automatically update your tables/records to %1	setup	sv	Vi kommer automatiskt att uppdatera dina tabeller/poster till %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	sv	Vi kör nu ett antal teste vilket kan ta några minuter. Klicka på länken nedan för att fortsätta
 welcome to the egroupware installation	setup	sv	Välkommen till installation av eGroupWare
-what type of sessions management do you want to use (php session management may perform better)?	setup	sv	Vilken sessionshantering vill du använda(PHP sessions hantering kan ge bättre prestanda)?
 which database type do you want to use with egroupware?	setup	sv	Vilken typ av databas vill du använda med eGroupWare?
 world readable	setup	sv	Läsbar av alla (world readable)
 world writable	setup	sv	Skrivbar av alla (world writable)
@@ -593,7 +579,6 @@ you appear to be running a pre-beta version of egroupware.<br />these versions a
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	sv	Du verkar köra en äldre version av PHP.<br />Det är rekommenderat att du uppgraderar till en nyare version.<br />Äldre versioner av PHP kanske inte kör eGroupWare korrekt, om alls.<br /><br />Du rekommenderas starkt att uppgradera till åtminstone version %1
 you appear to be running version %1 of egroupware	setup	sv	Du verkar använda version eGroupWare %1
 you appear to have %1 support.	setup	sv	Du verkar ha stöd för %1
-you appear to have php session support. enabling php sessions.	setup	sv	Du verkar ha stöd för PHP sessioner. Aktiverar PHP sessioner.
 you appear to have xml support enabled	setup	sv	Du verkar ha stöd för XML aktiverat
 you are ready for this stage, but this stage is not yet written.<br />	setup	sv	Du är redo för detta stadium, men detta stadium är inte skrivet ännu.<br />
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	sv	Du använder  PHP version %1. eGroupWare kräver numera version %2 eller senare. Rekomenderar PHP %3
@@ -608,7 +593,6 @@ you have not created your header.inc.php yet!<br /> you can create it now.	setup
 you have successfully logged out	setup	sv	Du har nu loggat ut.
 you must enter a username for the admin	setup	sv	Du måste ange ett lösenord för admin
 you need to add at least one egroupware domain / database instance.	setup	sv	Du måste lägga till en eGroupWare domän/database instans.
-you need to add some domains to your header.inc.php.	setup	sv	Du måste lägga till domäner till din header.inc.php
 you need to configure egroupware:	setup	sv	Du behöver konfigurera eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	sv	Du måste rätta till felen ovanför, innan header.inc.php kan skrivas!
 you need to save the settings you made here first!	setup	sv	Du måste spara ändringarna så här långt först!
@@ -616,7 +600,6 @@ you need to select your current charset!	setup	sv	Du måste välja teckenuppsät
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	sv	Du måste antingen avinstallera och installera om, eller reparera manuellt.
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	sv	Du kan inte använda PHP sessioner i eGroupWare: "sessionen kunde inte verifieras"!
 you're using an old configuration file format...	setup	sv	Du använder ett äldre format på konfigurationsfilen ...
-you're using an old header.inc.php version...	setup	sv	Du använder en gammal header.inc.php version...
 your applications are current	setup	sv	Dina applikationer är aktuella
 your backup directory '%1' %2	setup	sv	Din backupkatalog '%1' %2
 your database does not exist	setup	sv	Din databas existerar inte

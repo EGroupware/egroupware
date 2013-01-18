@@ -1,0 +1,305 @@
+(no subject)	felamimail	hr	(nema teme)
+(only cc/bcc)	felamimail	hr	(samo Cc/Bcc)
+(unknown sender)	felamimail	hr	(nepoznat pošaljioc)
+activate	felamimail	hr	Aktiviraj
+activate script	felamimail	hr	aktiviraj skriptu
+add address	felamimail	hr	Dodaj adresu
+add rule	felamimail	hr	Dodaj pravilo
+add script	felamimail	hr	Dodaj skriptu
+add to %1	felamimail	hr	Dodaj k %1
+add to address book	felamimail	hr	Dodaj u adresar
+add to addressbook	felamimail	hr	dodaj u adrersar
+additional info	felamimail	hr	Dodatne informacije
+address book	felamimail	hr	Adresar
+address book search	felamimail	hr	Pretraživanje adresara
+after message body	felamimail	hr	Nakon poruke
+all address books	felamimail	hr	svi adresari
+all folders	felamimail	hr	Sve mape
+always show html emails	felamimail	hr	Uvijek prikaži HTML e-mailove
+and	felamimail	hr	And
+anyone	felamimail	hr	svi
+as a subfolder of	felamimail	hr	kao podmapa od
+attach	felamimail	hr	Attach
+attachments	felamimail	hr	Privitci
+auto refresh folder list	felamimail	hr	Automatsko obnavljavljanje liste mapa
+back to folder	felamimail	hr	Povratak u mapu
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	hr	U ovisnosti o danim uvjetima, ulazne poruke mogu imati različite podloge u listi poruka. Ovime lakše razlikujete od koga ste dobili poruke, posebno ukoliko ste na nekoj mail listi.
+bcc	felamimail	hr	BCC
+before headers	felamimail	hr	Prije zaglavlja
+between headers and message body	felamimail	hr	Između zaglavlja i teksta poruke
+body part	felamimail	hr	body part
+can't connect to inbox!!	felamimail	hr	nemogu se spojiti sa INBOX!!
+cc	felamimail	hr	CC
+change folder	felamimail	hr	Promijeni mapu
+checkbox	felamimail	hr	selektiraj
+click here to log back in.	felamimail	hr	Ponovni prijavak
+click here to return to %1	felamimail	hr	Povratak na %1
+close all	felamimail	hr	zatvori sve
+close this page	felamimail	hr	zatvori ovu stranicu
+close window	felamimail	hr	Zatvori prozor
+color	felamimail	hr	Boja
+compose	felamimail	hr	Pisanje nove poruke
+compress folder	felamimail	hr	Smanjii mapu
+configuration	felamimail	hr	Konfiguracija
+contains	felamimail	hr	sadrži
+create	felamimail	hr	Napravi
+create folder	felamimail	hr	Napravi mapu
+create sent	felamimail	hr	Napravi poslano
+create subfolder	felamimail	hr	Napravi podmapu
+create trash	felamimail	hr	Napravi smeće
+created folder successfully!	felamimail	hr	Mapa uspješno napravljena
+dark blue	felamimail	hr	Tamno plavo
+dark cyan	felamimail	hr	Tamno cijan
+dark gray	felamimail	hr	Tamno sivo
+dark green	felamimail	hr	Tamno zeleno
+dark magenta	felamimail	hr	Tamno magenta
+dark yellow	felamimail	hr	Tamno žuto
+date(newest first)	felamimail	hr	po datumu (noviji prvo)
+date(oldest first)	felamimail	hr	po datumu (stariji prvo)
+days	felamimail	hr	dana
+deactivate script	felamimail	hr	deaktiviraj skriptu
+default	felamimail	hr	Početno postavljena vrijednost
+default sorting order	felamimail	hr	Početno postavljen redoslijed sortiranja
+delete all	felamimail	hr	obriši sve
+delete folder	felamimail	hr	Obriši mapu
+delete selected	felamimail	hr	Obriši izabrano
+delete selected messages	felamimail	hr	obriši izabrane poruke
+deleted	felamimail	hr	obrisano
+deleted folder successfully!	felamimail	hr	Uspješno obrisana mapa
+disable	felamimail	hr	Onemogući
+display message in new window	felamimail	hr	Prikaži poruku u novom prozoru
+display of html emails	felamimail	hr	Prikaz HTML emailova
+display only when no plain text is available	felamimail	hr	Prikaži samo u neprisutnosti običnog teksta
+display preferences	felamimail	hr	Prikaži postavke
+do it!	felamimail	hr	Učini to!!
+do not use sent	felamimail	hr	Ne upotrebljavaj mapu Poslano
+do not use trash	felamimail	hr	Ne upotrebljavaj mapu Smeće
+do you really want to delete the '%1' folder?	felamimail	hr	Da li zaista želite obrsati mapu: '%1'?
+does not contain	felamimail	hr	ne sadrži
+does not match	felamimail	hr	nema podudarnosti
+does not match regexp	felamimail	hr	nema podudarnosti regexp
+don't use sent	felamimail	hr	Ne upotrebljavaj Pošiljanje
+don't use trash	felamimail	hr	Ne upotrebljavaj Smeće
+down	felamimail	hr	dolje
+download	felamimail	hr	Prenesi sa poslužitelja
+download this as a file	felamimail	hr	Prenesi sa poslužitelja kao datoteku
+e-mail	felamimail	hr	E-Mail
+e-mail address	felamimail	hr	E-Mail adresa
+e-mail folders	felamimail	hr	E-Mail mapa
+edit filter	felamimail	hr	Uredi filter
+edit rule	felamimail	hr	uredi pravilo
+edit selected	felamimail	hr	Uredi izabrano
+email address	felamimail	hr	E-Mail adresa
+email signature	felamimail	hr	Email potpis
+empty trash	felamimail	hr	isprazni Smeće
+enable	felamimail	hr	omogući
+enter your default mail domain ( from: user@domain )	admin	hr	Unesite vašu početno postavljenu domenu za poruke (format: korisnik@domena)
+enter your imap mail server hostname or ip address	admin	hr	Unesite ime vašeg IMAP poslužitelja ili IP adresu
+enter your sieve server hostname or ip address	admin	hr	Unesite ime vašeg SIEVE poslužitelja ili IP adresu
+enter your sieve server port	admin	hr	Unesite port vašeg SIEVE poslužitelja
+enter your smtp server hostname or ip address	admin	hr	Unesite ime vašeg SMTP poslužitelja ili IP adresu
+enter your smtp server port	admin	hr	Unesite port vašeg SMTP poslužitelja
+entry saved	felamimail	hr	Entry saved
+error	felamimail	hr	GREŠKA
+error connecting to imap serv	felamimail	hr	Greška prilikom spajanja na IMAP poslužitelj
+error opening	felamimail	hr	Greška prilikom otvaranja
+expunge	felamimail	hr	Izbriši
+extended	felamimail	hr	Produži
+felamimail	common	hr	FelaMiMail
+file into	felamimail	hr	informacije o datoteci
+filemanager	felamimail	hr	Filemanager
+files	felamimail	hr	datoteke
+filter active	felamimail	hr	aktivni filtri
+filter name	felamimail	hr	Ime filtra
+first name	felamimail	hr	Ime
+flagged	felamimail	hr	flagged
+flags	felamimail	hr	Flags
+folder	felamimail	hr	Mapa
+folder acl	felamimail	hr	acl mapa
+folder name	felamimail	hr	Ime mape
+folder path	felamimail	hr	Folder Path
+folder preferences	felamimail	hr	Postavke mape
+folder settings	felamimail	hr	Postavke mape
+folder status	felamimail	hr	Status mape
+folderlist	felamimail	hr	Lista mapa
+foldername	felamimail	hr	Ime mape
+folders	felamimail	hr	Mape
+folders created successfully!	felamimail	hr	Mape napravljene uspješno!
+follow	felamimail	hr	prati
+for mail to be send - not functional yet	felamimail	hr	Slanje pošte još nije u funkciji
+for received mail	felamimail	hr	Za primljenu poštu
+forward	felamimail	hr	Proslijedi
+found	felamimail	hr	Pronađeno
+from	felamimail	hr	Pošaljitelj
+from(a->z)	felamimail	hr	po pošaljitelju (silazno A->Z)
+from(z->a)	felamimail	hr	po pošaljitelju (uzlazno Z->A)
+full name	felamimail	hr	Puno ime
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	hr	Pogledajte <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> da bi naučili nešto više o Squirrelmail.<br>
+header lines	felamimail	hr	Linije zaglavlja
+hide header	felamimail	hr	sakrij zaglavlje
+html	felamimail	hr	HTML
+icons and text	felamimail	hr	Ikone i tekst
+icons only	felamimail	hr	Samo ikone
+identifying name	felamimail	hr	Ime za prepoznavanje
+if	felamimail	hr	AKO
+illegal folder name.  please select a different name.	felamimail	hr	Nažalost nemožete koristiti unešeno ime. Molimo vas unesite drugo ime za mapu.
+imap	felamimail	hr	IMAP
+imap server	felamimail	hr	IMAP Poslužitelj
+imap server address	felamimail	hr	IMAP Adresa poslužitelja
+imap server type	felamimail	hr	IMAP vrsta poslužitelja
+imaps authentication	felamimail	hr	IMAPS provjera valjnanosti
+imaps encryption only	felamimail	hr	Samo IMAPS enkripcija
+import	felamimail	hr	Uvezi
+in	felamimail	hr	u
+inbox	felamimail	hr	Inbox
+index order	felamimail	hr	Redoslijed indeksa
+info	felamimail	hr	Informacije
+invalid user name or password	felamimail	hr	Nevaljani korisnik ili zaporka
+javascript	felamimail	hr	JavaScript
+language	felamimail	hr	Jezik
+last name	felamimail	hr	Prezime
+left	felamimail	hr	Lijevo
+less	felamimail	hr	manje
+light gray	felamimail	hr	Svijetlo sivo
+list all	felamimail	hr	Prikaži sve
+location of buttons when composing	felamimail	hr	Lokacija buttons prilikom pisanja poruke
+mail server login type	admin	hr	Vrsta prijave mail poslužitelja
+mail settings	felamimail	hr	Postavke pošte
+mainmessage	felamimail	hr	glavna poruka
+manage folders	common	hr	Uređivanje mapa
+manage sieve	common	hr	Uređivanje Sieve skripti
+mark as deleted	felamimail	hr	Označi obrisanim
+mark messages as	felamimail	hr	Označi izabranu poruku kao
+mark selected as flagged	felamimail	hr	Označi izabrano kao flagged
+mark selected as read	felamimail	hr	Označi izabrano pročitanim
+mark selected as unflagged	felamimail	hr	Označi izabrano kao unflagged
+mark selected as unread	felamimail	hr	Označi izabrano nepročitanim
+match	felamimail	hr	Pronađi podudarnosti
+matches	felamimail	hr	podudarnosti
+matches regexp	felamimail	hr	podudara se sa regexp
+message highlighting	felamimail	hr	Istaknuto u poruci
+message list	felamimail	hr	Lista poruka
+messages	felamimail	hr	poruke
+move	felamimail	hr	premjesti
+move messages	felamimail	hr	premjesti poruku
+move selected to	felamimail	hr	premjesti izabrano u
+move to trash	felamimail	hr	Premjesti u Smeće
+name	felamimail	hr	Ime
+never display html emails	felamimail	hr	Nikad ne prikaži HTML emailove
+new	common	hr	Novo
+new filter	felamimail	hr	Novi filter
+next	felamimail	hr	Slijedeće
+next message	felamimail	hr	slijedeća poruka
+no filter	felamimail	hr	Nema filtera
+no folders found	felamimail	hr	Nisam našao mapu(e)
+no folders were found to subscribe to!	felamimail	hr	Nisam našao mape za pretplatu!
+no folders were found to unsubscribe from!	felamimail	hr	Nisam našao mape za odjaviti pretplatu!
+no highlighting is defined	felamimail	hr	Nije definirano ništa za istaknuti u poruci
+no messages were selected.	felamimail	hr	Niste izabrali nijednu poruku
+no previous message	felamimail	hr	Nema više prethodnih poruka
+no valid emailprofile selected!!	felamimail	hr	Izabrani profil nije važeći!!
+none	felamimail	hr	nikakav
+on behalf of	felamimail	hr	u ime
+only inbox	felamimail	hr	Samo INBOX
+only unseen	felamimail	hr	Samo neviđene
+open all	felamimail	hr	otvori sve
+options	felamimail	hr	Opcije
+or	felamimail	hr	or
+organisation	felamimail	hr	organizacija
+organization	felamimail	hr	organization
+organization name	admin	hr	Ime organizacije
+participants	felamimail	hr	Sudionici
+personal information	felamimail	hr	Osobne informacije
+posting	felamimail	hr	posting
+previous	felamimail	hr	Prijašnja
+previous message	felamimail	hr	prijašnja poruka
+print it	felamimail	hr	ispiši
+print this page	felamimail	hr	ispiši ovu stanicu
+quicksearch	felamimail	hr	Brza pretraga
+read	felamimail	hr	pročitaj
+reading	felamimail	hr	čitam
+recent	felamimail	hr	nedavni
+refresh time in minutes	felamimail	hr	Obnovi vrijeme u minutama
+remove	felamimail	hr	makni
+remove immediately	felamimail	hr	Obriši odmah
+rename	felamimail	hr	Preimenuj
+rename a folder	felamimail	hr	Preimenuj mapu
+rename folder	felamimail	hr	Preimenuj mapu
+renamed successfully!	felamimail	hr	Uspješno preimenovano
+replied	felamimail	hr	odgovoreno
+reply	felamimail	hr	Odgovori
+reply all	felamimail	hr	Odgovori svima
+reply to	felamimail	hr	Odgovori
+replyto	felamimail	hr	Odgovori
+return	felamimail	hr	Povratak
+return to options page	felamimail	hr	Povratak na stranicu opcija
+right	felamimail	hr	Desno
+rule	felamimail	hr	Pravilo
+save	felamimail	hr	Spremi
+save all	felamimail	hr	Spremi sve
+save changes	felamimail	hr	Spremi promjene
+search	felamimail	hr	Potraga
+search for	felamimail	hr	Traži
+select	felamimail	hr	Izaberite
+select all	felamimail	hr	Izaberite sve
+select emailprofile	felamimail	hr	Izabertei e-mail profil
+select your mail server type	admin	hr	Izaberte vrstu mail poslužitelja
+send	felamimail	hr	Pošalji
+sent folder	felamimail	hr	Mapa poslano
+show header	felamimail	hr	prikaži zaglavlje
+show new messages on main screen	felamimail	hr	Prikaži novu poruku na glavnom ekranu
+sieve settings	admin	hr	Postavke Sieve
+signature	felamimail	hr	Potpis
+simply click the target-folder	felamimail	hr	Samo izaberite ciljanu mapu
+size	felamimail	hr	Veličina
+size of editor window	felamimail	hr	Veličina prozora za uređivanje
+size(...->0)	felamimail	hr	po veličini (silazno ...->0)
+size(0->...)	felamimail	hr	po veličini (uzlazno 0->...)
+small view	felamimail	hr	smanji pogled
+smtp settings	admin	hr	Postavke SMTP
+subject	felamimail	hr	Tema
+subject(a->z)	felamimail	hr	po temi (silazno A->Z)
+subject(z->a)	felamimail	hr	po temi (uzlazno Z->A)
+submit	felamimail	hr	Pošalji
+subscribe	felamimail	hr	Pretplata
+subscribed	felamimail	hr	Pretplaćen
+subscribed successfully!	felamimail	hr	Uspješno ste pretplaćeni!
+table of contents	felamimail	hr	Tabela sadržaja
+text only	felamimail	hr	Samo tekst
+the connection to the imap server failed!!	felamimail	hr	Neuspjelo spajanje na IMAP poslužitelja!!
+then	felamimail	hr	TADA
+this folder is empty	felamimail	hr	OVA MAPA JE PRAZNA
+this php has no imap support compiled in!!	felamimail	hr	Ovaj PHP nema ugrađenu podršku za IMAP!!
+to	felamimail	hr	Za
+translation preferences	felamimail	hr	Postavke prijevoda
+translation server	felamimail	hr	Poslužitelj prijevoda
+trash fold	felamimail	hr	Mapa Smeće
+trash folder	felamimail	hr	Mapa Smeće
+type	felamimail	hr	vrsta (tip)
+unflagged	felamimail	hr	unflagged
+unknown err	felamimail	hr	Nepoznata greška
+unknown error	felamimail	hr	Nepoznata greška
+unknown sender	felamimail	hr	Pošiljatelj nepoznat
+unknown user or password incorrect.	felamimail	hr	Nepoznat korisnik ili nevažeća zaporka.
+unread	common	hr	nepročitano
+unseen	felamimail	hr	Neviđeno
+unselect all	felamimail	hr	Odizaberi sve
+unsubscribe	felamimail	hr	Odpretplata
+unsubscribed	felamimail	hr	Odpretplaćen
+unsubscribed successfully!	felamimail	hr	Uspiješan prekid pretplate!
+up	felamimail	hr	gore
+use a signature	felamimail	hr	Upotrijebi potpis
+use a signature?	felamimail	hr	Upotrijebi potpis?
+use addresses	felamimail	hr	Upotrijebi adresu
+use custom settings	felamimail	hr	Upotrijebi prilagođene postavke
+use smtp auth	admin	hr	Upotrijebi SMTP autorizaciju
+users can define their own emailaccounts	admin	hr	Korisnici mogu sami definirati svoje e-mail račune
+view full header	felamimail	hr	Prikaži cijelo zaglavlje
+view message	felamimail	hr	Prikaži poruku
+viewing full header	felamimail	hr	Prikazujem cijelo zaglavlje
+viewing message	felamimail	hr	Prikazujem poruku
+viewing messages	felamimail	hr	Prikazujem poruku
+when deleting messages	felamimail	hr	Prilikom brisanja poruka
+wrap incoming text at	felamimail	hr	Omotaj ulazni tekst pri
+writing	felamimail	hr	zapisujem
+wrote	felamimail	hr	zapisano (zapisao je)

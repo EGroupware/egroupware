@@ -57,13 +57,13 @@ category acl only restrict adding a category to an event or changing status of a
 chair	calendar	sv	Ägare
 change history	calendar	sv	Ändra historien
 charset of file	calendar	sv	Filens teckenuppsättning
-check all	calendar	sv	Kolla alla
+check all	calendar	sv	Markera alla
 close the window	calendar	sv	Stäng fönstret
 compose a mail to all participants after the event is saved	calendar	sv	Skicka e-post till alla deltagare efter att händelsen sparats
 conflict	calendar	sv	Konflikt
 copy of:	calendar	sv	Kopia av:
 copy this event	calendar	sv	Kopiera händelsen
-copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	sv	Kopiera dina ändringar till urklipp, %1ladda om posten%2 och lägg ihop dem.
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	sv	Kopiera dina ändringar till urklipp, %1 ladda om posten och migrera.
 countries	calendar	sv	Länder
 country	calendar	sv	Land
 create an exception for the given date	calendar	sv	Skapa ett undantag för givet datum
@@ -93,6 +93,7 @@ delete this alarm	calendar	sv	Radera larmet
 delete this event	calendar	sv	Radera händelsen
 delete this exception	calendar	sv	Radera undantaget
 delete this series of recuring events	calendar	sv	Radera återkommande händelse
+deleted	calendar	sv	Raderad
 deny ressources reservation for private events	calendar	sv	Neka resurserna bokning av privata evenemang
 disinvited	calendar	sv	Avbokad
 display status of events	calendar	sv	Visa händelse status
@@ -125,7 +126,7 @@ error: no participants selected !!!	calendar	sv	Fel: inga deltagare valda
 error: ressources reservation in private events is not allowed!!!	calendar	sv	Fel: Resursbokning för privata evenemang ej tillåten!
 error: saving the event !!!	calendar	sv	Fel: vid sparande av händelsen
 error: starttime has to be before the endtime !!!	calendar	sv	Fel: Start tid måste vara  före slut tid
-error: the entry has been updated since you opened it for editing!	calendar	sv	Fel: Posten har uppdaterats sedan dess du öppnade den för redigering!
+error: the entry has been updated since you opened it for editing!	calendar	sv	Posten har ändrats sedan du öppnade den för skrivning!
 event copied - the copy can now be edited	calendar	sv	Händelsen kopierad - kopian kan nu ändras
 event deleted	calendar	sv	Händelsen raderad
 event details follow	calendar	sv	Händelse detaljer följer
@@ -170,7 +171,7 @@ h	calendar	sv	t
 here is your requested alarm.	calendar	sv	Begärt larm
 hide private infos	calendar	sv	Göm privat information
 high priority	calendar	sv	Hög prioritet
-history	calendar	sv	Historie
+history	calendar	sv	Historik
 holiday	calendar	sv	Helgsdag
 holiday management	calendar	sv	Helgdags hantering
 holidays	calendar	sv	Helgdagar
@@ -197,7 +198,7 @@ invite	calendar	sv	Bjuda in
 last	calendar	sv	Senaste
 lastname of person to notify	calendar	sv	Efternamn på person att meddela
 length of the time interval	calendar	sv	Tidsintervall längd
-link	calendar	sv	Länk till evenemang
+link	calendar	sv	Länk
 link to view the event	calendar	sv	Länk till händelse
 links	calendar	sv	Länkar
 links, attachments	calendar	sv	Länkar, bilagor
@@ -223,7 +224,7 @@ no matches found	calendar	sv	Inga träffar
 no recurrence	calendar	sv	Ingen upprepning
 no response	calendar	sv	Inget svar
 non blocking	calendar	sv	Ej blockerande
-not	calendar	sv	inte
+not	calendar	sv	Inte
 not rejected	calendar	sv	Inte avböjd
 nothing to update, version is already %1.	calendar	sv	Inget att uppdatera, versionen är redan %1.
 notification messages for added events	calendar	sv	Meddelande om tillagda händelser
@@ -299,7 +300,7 @@ scheduling conflict	calendar	sv	Schema konflikt
 select a %1	calendar	sv	Välj %1
 select a time	calendar	sv	Välj en tid
 select an action	calendar	sv	Välj en aktion
-select multiple contacts for a further action	calendar	sv	Välj flera kontakter för ytterligare aktion
+select multiple contacts for a further action	calendar	sv	Välj flera kontakter för åtgärd
 select resources	calendar	sv	Välj resurser
 select who should get the alarm	calendar	sv	Välja mottagare av larm
 selected range	calendar	sv	Valt område
@@ -398,8 +399,8 @@ weekview without weekend	calendar	sv	Vecka utan veckoslut
 which events do you want to see when you enter the calendar.	calendar	sv	Vilka händelser vill du se när du öppnar kalendern?
 which of calendar view do you want to see, when you start calendar ?	calendar	sv	Vilken vy vill du se när du öppnar kalendern?
 whole day	calendar	sv	Heldag
-whole query	calendar	sv	hel fråga
-wk	calendar	sv	v
+whole query	calendar	sv	Hela frågan
+wk	calendar	sv	Arb
 work day ends on	calendar	sv	Arbetsdag slutar
 work day starts on	calendar	sv	Arbetsdag börjar
 workday	calendar	sv	Arbetsdag

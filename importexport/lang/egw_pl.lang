@@ -13,8 +13,8 @@ expert options	importexport	pl	Opcje zaawansowane
 export	importexport	pl	Eksport
 export all selected definitions	importexport	pl	eksportuj WSZYSTKIE wybrane definicje
 finish	importexport	pl	zakończ
-general	importexport	pl	Ogólne
-import	importexport	pl	importuj
+general	importexport	pl	Główne
+import	importexport	pl	Importuj
 import definitions	common	pl	Importuj definicje
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	pl	Importuj definicje (Uwaga: Istniejące definicje o tych samych nazwach zostaną nadpisane!!!)
 importexport	common	pl	Import Eksport

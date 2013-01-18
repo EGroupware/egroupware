@@ -48,7 +48,6 @@ baseline	etemplate	pl	Baseline
 blurtext	etemplate	pl	blurTExt
 border	etemplate	pl	Ramka
 border-line-thickness for the table-tag	etemplate	pl	Grubość ramki dla tagu table
-bottom	etemplate	pl	Dół
 box	etemplate	pl	Pudełko
 box...	etemplate	pl	Pudełko...
 can not have special sql-value null	etemplate	pl	nie może mieć wartości specjalnej SQL NULL
@@ -65,7 +64,7 @@ center	etemplate	pl	Wyśrodkowanie
 changed	etemplate	pl	Zmieniono
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	pl	zaznacz, jeżeli zawartość ma być wyświetlana, ale nie zmieniana (nie jest wtedy odsyłana z powrotem do przeglądarki)
 check if field has to be filled by user	etemplate	pl	zaznacz, jeżeli pole musi być wypełnione przez użytkownika
-checkbox	etemplate	pl	Checkbox
+checkbox	etemplate	pl	Pola zaznaczenia
 class	etemplate	pl	Klasa
 class, valign	etemplate	pl	klasa, w pionie
 click here to attach the file	etemplate	pl	kliknij tutaj, aby dołączyć plik
@@ -227,7 +226,6 @@ label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][
 lang	etemplate	pl	Język
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	pl	skrótowa nazwa języka (np. 'pl' dla polskiego) dla szablonów zależnych od języka
 last	etemplate	pl	Ostatni
-left	etemplate	pl	Lewy
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	pl	długość dla char+varchar, precyzja int: 2, 4, 8 i float: 4, 8
 link	etemplate	pl	Odnośnik
 linkapps	etemplate	pl	LinkAplikacji
@@ -260,7 +258,7 @@ nextmatch filterheader	etemplate	pl	Następny pasujący - Nagłówek filtra
 nextmatch header	etemplate	pl	Następny pasujący - Nagłówek
 nextmatch sortheader	etemplate	pl	Następny pasujący - Nagłówek sortowania
 no column to swap with !!!	etemplate	pl	brak kolumny do zamiany!!!
-no file	etemplate	pl	brak pliku
+no file	etemplate	pl	Nie ma pliku
 no filename given or selected via browse...	etemplate	pl	nie podano nazwy pliku i nie wybrano jej
 no matches found	etemplate	pl	Nie znaleziono zgodnych
 no row to swap with !!!	etemplate	pl	brak rzędu do zamiany!!!
@@ -299,9 +297,8 @@ read etemplate from database (for the keys above)	etemplate	pl	odczytaj e-Szablo
 readonly	etemplate	pl	tylko do odczytu
 remove row (can not be undone!!!)	etemplate	pl	usuń wiersz (nie można cofnąć!)
 remove this link (not the entry itself)	etemplate	pl	usuń ten odnośnik (ale nie wpis)
-required	etemplate	pl	Wymagany
+required	etemplate	pl	Wymagane
 returns savely, without deleting	etemplate	pl	powraca zapisując, bez usuwania
-right	etemplate	pl	Prawy
 row...	etemplate	pl	Wiersz...
 save selected columns as default preference for all users.	etemplate	pl	Zachowaj wybrane kolumny w formie domyślnej preferencji dla wszystkich użytkowników.
 save the changes made and close the window	etemplate	pl	Zachowuje zmiany i zamyka okno
@@ -310,8 +307,7 @@ saves changes to tables_current.inc.php	etemplate	pl	zapisz zmiany do pliku tabl
 saves the template with given version number and closes the window	etemplate	pl	zapisuje szablon z podanym numerem wersji i zamyka okno
 scale	etemplate	pl	Skala
 scale for float	etemplate	pl	skala dla float
-search	etemplate	pl	Szukaj
-select a category	etemplate	pl	wybierz kategorię
+select a category	etemplate	pl	Wybierz kategorię
 select a primary contact, to show in the list	etemplate	pl	Wybierz podstawowy kontakt, który będzie pokazywany na liście
 select access	etemplate	pl	Wybierz rodzaj dostępu
 select account	etemplate	pl	Wybierz konto
@@ -321,9 +317,8 @@ select an application	etemplate	pl	Wybierz aplikację
 select an application, (*) = uninstalled	etemplate	pl	Wybierz aplikację, (*) = odinstalowana
 select an entry to link with	etemplate	pl	Wybierz wpis z którym połączysz
 select an table of the application	etemplate	pl	Wybierz tabelę aplikacji
-select application	etemplate	pl	Wybierz aplikację
+select application	etemplate	pl	Wybierz aplikacj?
 select application to search	etemplate	pl	Wybierz aplikację do przeszukania
-select category	etemplate	pl	Wybierz kategorię
 select columns	etemplate	pl	Wybierz kolumny
 select country	etemplate	pl	Wybierz kraj
 select day	etemplate	pl	Wybierz dzień
@@ -344,7 +339,7 @@ select this etemplate to delete it	etemplate	pl	wybierz ten eSzablon aby go usun
 select which accounts to show	etemplate	pl	wybierz konta, które mają być pokazane
 select which values to show	etemplate	pl	wybierz wartości, które mają być pokazane
 select year	etemplate	pl	Wybierz rok
-selectbox	etemplate	pl	Selectbox
+selectbox	etemplate	pl	Wybór z listy
 sets today as date	etemplate	pl	ustaw "dzisiaj" jako datę
 should the form be submitted or any custom javascript be executed	etemplate	pl	Czy formularz powinien być przesłany czy będzie wykonywany kod JavaScript?
 show	etemplate	pl	Pokaż
@@ -376,7 +371,7 @@ template	etemplate	pl	Szablon
 template deleted	etemplate	pl	Szablon usunięto
 template saved	etemplate	pl	Szablon zapisano
 text	etemplate	pl	Tekst
-textarea	etemplate	pl	Textarea
+textarea	etemplate	pl	Obszar tekstu
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	pl	Ten tekst jest wyświetlany jeśli pole input jest puste i nie zostało wybrane
 time	etemplate	pl	Czas
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	pl	aby wyłączyć: [! = nie]<wartość>[=<test>], np. '!@data' - wyłącz kolumnę jeśli pole 'data' jest puste
@@ -384,16 +379,13 @@ to start the db-tools	etemplate	pl	aby uruchomić narzędzie bazodanowe
 to start the etemplate editor	etemplate	pl	aby uruchomić edytor e-Szablonów
 to start the search	etemplate	pl	aby uruchomić wyszukiwanie
 today	etemplate	pl	Dzisiaj
-top	etemplate	pl	Góra
 tree	etemplate	pl	Drzewo
-type	etemplate	pl	Typ
 type of the column	etemplate	pl	typ kolumny
 type of the field (select label if field should be empty)	etemplate	pl	typ pola (wybierz Etykieta jeśli pole powinno być puste)
 unique	etemplate	pl	Unikalna
-unlink	etemplate	pl	Odlinkuj
-update a single entry by passing the fields.	etemplate	pl	Uaktualnij pojedynczy wpis przez przekazanie pól.
+unlink	etemplate	pl	Odłącz
+update a single entry by passing the fields.	etemplate	pl	Aktualizuj pojedyńczy wpis poprzez podawanie wartości pól.
 update from version '%s' to	etemplate	pl	Uaktualnij z wersji '%s' do
-upload	etemplate	pl	Załaduj
 valign	etemplate	pl	w pionie
 value	etemplate	pl	Wartość
 value has to be at least '%1' !!!	etemplate	pl	Wartość musi być przynajmniej '%1'!
@@ -403,7 +395,7 @@ version	etemplate	pl	Wersja
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	pl	numer wersji, powinien być w formie: główna.pomniejsza.rewizja.numer (np. 0.9.13.001, wszystkie numery powinny być wypełnione zerami)
 vertical alignment of row	etemplate	pl	pionowe porządkowanie wiersza
 view this etemplate	etemplate	pl	wyświetl ten eSzablon
-view this linked entry in its application	etemplate	pl	wyświetl ten podlinkowany wpis w aplikacji z której pochodzi
+view this linked entry in its application	etemplate	pl	zoabcz podlinkowany wpis w jego aplikacji (np. w Książce Adresowej dla kontaktu)
 weekend	etemplate	pl	weekend
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	pl	co dzieje się z przepełnioną zawartością (overflow): visible (domyślne), hidden, scroll, auto
 widget copied into clipboard	etemplate	pl	Obiekt skopiowano do schowka
@@ -421,5 +413,5 @@ xml-file to import	etemplate	pl	plik xml do zaimportowania
 xslt template	etemplate	pl	Szablon XSLT
 year	etemplate	pl	Rok
 you are not allowed to export more then %1 entries!	etemplate	pl	Nie masz zezwolenia na eksport więcej niż %1 wpisów!
-you can respond by visiting:	etemplate	pl	Możesz odpowiedzieć odwiedzając:
+you can respond by visiting:	etemplate	pl	Możesz odpowiedzieć odwiedzając stronę:
 you need to select a file first!	etemplate	pl	Musisz najpierw wybrać plik!

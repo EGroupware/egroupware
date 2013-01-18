@@ -1,0 +1,31 @@
+address book	felamimail	ko	주소록
+and	felamimail	ko	그리고(AND 연산)
+color	felamimail	ko	색
+configuration	felamimail	ko	구성
+days	felamimail	ko	일동안
+default	felamimail	ko	기본
+delete selected	felamimail	ko	선택 삭제
+deleted	felamimail	ko	삭제됨
+download	felamimail	ko	내려받기
+email signature	felamimail	ko	E-Mail 서명
+enter your default mail domain ( from: user@domain )	admin	ko	기본 메일 도메인을 입력 ( From : 유저@도메인 )
+enter your smtp server hostname or ip address	admin	ko	SMTP서버 호스트 이름이나 IP주소 입력
+enter your smtp server port	admin	ko	SMTP 서버 포트 입력
+extended	felamimail	ko	확장
+from	felamimail	ko	부터
+full name	felamimail	ko	이름
+icons and text	felamimail	ko	아이콘과 설명
+icons only	felamimail	ko	오직 아이콘만
+import	felamimail	ko	가져오기
+mail settings	felamimail	ko	메일 설정
+new	common	ko	새로만들기
+no filter	felamimail	ko	필터없음
+or	felamimail	ko	이거나(OR연산)
+participants	felamimail	ko	참석자들
+previous	felamimail	ko	이전
+remove	felamimail	ko	삭제
+rule	felamimail	ko	규칙
+select all	felamimail	ko	모두 선택
+show new messages on main screen	felamimail	ko	새로운 메시지를 메인화면에 보여줍니다.
+small view	felamimail	ko	미니뷰
+text only	felamimail	ko	글자만

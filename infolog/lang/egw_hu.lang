@@ -26,6 +26,7 @@ a short subject for the entry	infolog	hu	egy rövid tárgy a bejegyzésnek
 abort without deleting	infolog	hu	Megszakítás törlés nélkül
 accept	infolog	hu	elfogad
 action	infolog	hu	Művelet
+actions...	infolog	hu	Műveletek...
 actual date and time	infolog	hu	aktuális dátum és idő
 add	infolog	hu	Hozzáad
 add a file	infolog	hu	Állomány hozzáadása
@@ -38,6 +39,7 @@ add file	infolog	hu	Állomány hozzáadása
 add sub	infolog	hu	Albejegyzés hozzáadása
 add timesheet entry	infolog	hu	Regiszter bejegyzés hozzáadása
 add:	infolog	hu	Hozzáadás:
+added	infolog	hu	Hozzáadva
 all	infolog	hu	Összes
 all links and attachments	infolog	hu	Minden hivatkozás és melléklet
 all projects	infolog	hu	Minden projekt
@@ -47,6 +49,7 @@ apply the changes	infolog	hu	Változások végrehajtása
 archive	infolog	hu	archív
 are you shure you want to close this entry ?	infolog	hu	Valóban le akarod zárni ezt a bejegyzést?
 are you shure you want to delete this entry ?	infolog	hu	Valóban törölni kívánod ezt a bejegyzést?
+at the moment the following document-types are supported:	infolog	hu	Jelenleg a következő dokumentum típusok támogatottak:
 attach a file	infolog	hu	Állomány csatolása
 attach file	infolog	hu	Állomány csatolása
 attention: no contact with address %1 found.	infolog	hu	Figyelem: %1 címmel Kapcsolat nem található.
@@ -62,18 +65,22 @@ category	infolog	hu	Kategória
 change history	infolog	hu	Történet módosítása
 change the status of an entry, eg. close it	infolog	hu	Bejegyzés státusza megváltozott, pl. lezárták
 charset of file	infolog	hu	Állomány karakterkészlete
+check all	infolog	hu	Összes kijelölese
 check to set startday	infolog	hu	Kezdőnap beállításhoz ikszelje be
 check to specify custom contact	infolog	hu	Kapcsolja be az egyéni kapcsolat megadásához
+choose owner of imported data	infolog	hu	Válassza ki az importált adatok tulajdonosát
 click here to create the link	infolog	hu	hivatkozás létrehozásához kattintson ide
 click here to start the search	infolog	hu	keresés elindításához kattintson ide
 close	infolog	hu	Lezár
 close all	infolog	hu	Mindet lezár
 close this entry and all listed sub-entries	infolog	hu	Bejegyzés lezárása minden el bejegyzéssel együtt
+closed	infolog	hu	Lezárt
 comment	infolog	hu	Megjegyzés
 completed	infolog	hu	Teljesítve
 configuration	infolog	hu	Konfiguráció
 confirm	infolog	hu	Megerősít
 contact	infolog	hu	Kapcsolat
+copy of:	infolog	hu	Másolás
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	hu	A változásokat másolja a Vágóasztalra, %1újra olvassa be a bejegyzést%2 és fűzze össze őket
 create new links	infolog	hu	Új hivatkozás létrehozása
 creates a new field	infolog	hu	Új mező létrehozása
@@ -125,8 +132,9 @@ do you want a notification, if items you created get updated?	infolog	hu	Kér é
 do you want a notification, if items you delegated are about to start?	infolog	hu	Kér értesítést, ha egy megbízásos feladatot rövidesen el kell kezdenie?
 do you want a notification, if items you delegated are due?	infolog	hu	Kér értesítést, ha egy megbízásos feladatának határideje rövidesen elérkezik?
 do you want to receive notifications as html-mails or plain text?	infolog	hu	Az értesítést html vagy normál szöveges formában kéri?
+document '%1' does not exist or is not readable for you!	infolog	hu	A(z) '%1' dokumentum nem létezik, vagy nincs hozzá olvasási joga!
 don't show infolog	infolog	hu	Infolog bejegyzés elrejtése
-done	infolog	hu	kész
+done	common	hu	kész
 download	infolog	hu	Letölt
 duration	infolog	hu	Időtartam
 e-mail:	infolog	hu	E-mail:
@@ -138,6 +146,7 @@ edit status	infolog	hu	Állapot szerkesztése
 edit the entry	infolog	hu	Bejegyzés szerkesztése
 edit this entry	infolog	hu	Aktuális bejegyzés szerkesztése
 empty for all	infolog	hu	összes törlése
+end	infolog	hu	Befejezés
 enddate	infolog	hu	Lejárat napja
 enddate can not be before startdate	infolog	hu	A lejárat dátuma nem lehet korábbi mint a kezdés dátuma
 enter a custom contact, leave empty if linked entry should be used	infolog	hu	egyedi kapcsolat megadása, üresen hagyva a hivatkozott bejegyzést használja
@@ -147,6 +156,7 @@ enter the query pattern	infolog	hu	Lekérdező minta megadása
 entry and all files	infolog	hu	Bejegyzés és minden állomány
 error: saving the entry	infolog	hu	Hiba a bejegyzés mentésekor
 error: the entry has been updated since you opened it for editing!	infolog	hu	Hiba: a bejegyzés megváltozott azóta, hogy megnyitotta szerkesztésre! Másvalaki frissítette.
+execute a further action for this entry	infolog	hu	További művelet végrehajtása ezen a bejegyzésen
 existing links	infolog	hu	Létező hivatkozások
 fax	infolog	hu	Fax
 field must not be empty !!!	infolog	hu	A mezőt ki kell tölteni!!!
@@ -155,6 +165,7 @@ finish	infolog	hu	befejez
 for which types should this field be used	infolog	hu	használható típusok a mezőben
 from	infolog	hu	Feladó
 general	infolog	hu	Általános
+general fields:	infolog	hu	Általános mezők:
 global categories	infolog	hu	Globális kategóriák
 group owner for	infolog	hu	Csoport tulajdonos
 high	infolog	hu	magas
@@ -189,6 +200,7 @@ last changed	infolog	hu	Utolsó változás
 last modified	infolog	hu	Utolsó módosítás
 leave blank to get the used time calculated by timesheet entries	infolog	hu	Hagyd üresen, hogy a kalkulált időt az időtábla bejegyzéseiből lehessen kalkulálni.
 leave it empty	infolog	hu	hagyja üresen
+leave it empty for a full week	infolog	hu	Teljes héthez hagyja üresen
 leave without saveing the entry	infolog	hu	kilépés mentés nélkül
 leaves without saveing	infolog	hu	kilépés mentés nélkül
 length<br>rows	infolog	hu	Sorok<br>Hossza
@@ -234,7 +246,7 @@ only for details	infolog	hu	Csak a részletekhez
 only if i get assigned or removed	infolog	hu	Csak ha hozzám rendelték vagy törölték
 only the attachments	infolog	hu	csupán a mellékletek
 only the links	infolog	hu	csupán a hivatkozások
-open	infolog	hu	nyitott
+open	infolog	hu	Megnyit
 optional note to the link	infolog	hu	tetszőleges megjegyzés a hivatkozáshoz
 order	infolog	hu	Rendezés
 organization	infolog	hu	Szervezet
@@ -276,7 +288,6 @@ receive notifications about own items	infolog	hu	Értesítés saját bejegyzése
 receive notifications about starting entries you are responsible for	infolog	hu	Értesítés a felelősségembe tartozó bejegyzés kezdéséről
 receive notifications about starting entries you delegated	infolog	hu	Értesítés a hozzám rendelt bejegyzés kezdéséről
 receive notifications as html-mails	infolog	hu	Értesítés mint html email
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	hu	reguláris kifejezés a helyi IP címhez <b>pl. ^192\.168\.1\.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	hu	reguláris kifejezés a helyi IP címhez <b>pl. ^192\.168\.1\.
 remark	infolog	hu	Megjegyzés
 remove this link (not the entry itself)	infolog	hu	Hivatkozás eltávolítása (nem a bejegyzést magát)
@@ -302,6 +313,7 @@ select a responsible user: a person you want to delegate this task	infolog	hu	Fe
 select a typ to edit it's status-values or delete it	infolog	hu	válassz egy tipust szerkeszteni annak a státusz értékét vagy törölni azt
 select an app to search in	infolog	hu	Alkalmazásban keresés
 select an entry to link with	infolog	hu	Bejegyzés választása hivatkozás készítéshez
+select multiple contacts for a further action	infolog	hu	Válasszon ki több kapcsolatot a további művelethez
 select to filter by owner	infolog	hu	szűrés tulajdonosra
 select to filter by responsible	infolog	hu	szűrés felelősre
 sender	infolog	hu	Feladó
@@ -322,6 +334,7 @@ show status and percent done separate	infolog	hu	Mutassa a státuszt és százal
 show ticket id	infolog	hu	Mutassa a jegy azonosítóját
 show times	infolog	hu	Időtartamok megjelenítése
 small view	infolog	hu	kis nézet
+start	infolog	hu	Indít
 start a new search, cancel this link	infolog	hu	új keresés indítása, hivatkozás elhagyása
 startdate	infolog	hu	Kezdés dátuma
 startdate enddate	infolog	hu	Kezdés dátuma Befejezés dátuma
@@ -360,8 +373,6 @@ urgency	infolog	hu	Sürgősség
 urgent	infolog	hu	sürgős
 used time	infolog	hu	felhasznált idő
 valid path on clientside<br>eg. \\server\share or e:\	infolog	hu	Kliensoldali érvényes útvonal<br>pl. \\Server\Share vagy e:\
-valid path on clientside<br>eg. \servershare or e:	infolog	hu	Kliensoldali érvényes útvonal<br>pl. \\Server\Share vagy e:\
-valid path on clientside<br>eg. servershare or e:	infolog	hu	Kliensoldali érvényes útvonal<br>pl. \\Server\Share vagy e:\
 values for selectbox	infolog	hu	Éktékek a kiválasztódoboznak
 view all subs of this entry	infolog	hu	Bejegyzés összes albejegyzésének a megtekintése
 view other subs	infolog	hu	egyéb albejegyzések megtekintése
