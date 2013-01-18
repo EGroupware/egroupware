@@ -175,10 +175,17 @@ class felamimail_bo
 	{
 		if ($_profileID == 0)
 		{
-			$profileID = emailadmin_bo::getUserDefaultProfileID();
+			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
+			{
+				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
+			}
+			else
+			{
+				$profileID = emailadmin_bo::getUserDefaultProfileID();
+			}
 			if ($profileID!=$_profileID) $_restoreSession==false;
 			$_profileID=$profileID;
-			if (self::$debug) error_log(__METHOD__.__LINE__.' called with profileID==0 using '.$profileID.' instead->'.function_backtrace());
+			if (self::$debug); error_log(__METHOD__.__LINE__.' called with profileID==0 using '.$profileID.' instead->'.function_backtrace());
 		}
 		if ($_profileID != 0 && $_validate)
 		{

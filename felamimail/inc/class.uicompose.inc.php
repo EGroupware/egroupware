@@ -345,6 +345,7 @@
 				$sessionData['to'] = base64_decode($_REQUEST['send_to']);
 				// first check if there is a questionmark or ampersand
 				if (strpos($sessionData['to'],'?')!== false) list($sessionData['to'],$rest) = explode('?',$sessionData['to'],2);
+				$sessionData['to'] = html_entity_decode($sessionData['to']);
 				if (($at_pos = strpos($sessionData['to'],'@')) !== false)
 				{
 					if (($amp_pos = strpos(substr($sessionData['to'],$at_pos),'&')) !== false)
