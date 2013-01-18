@@ -100,8 +100,8 @@ profile is active	emailadmin	de	Profil ist aktiv
 profile list	emailadmin	de	Profilliste
 profile name	emailadmin	de	Profilname
 qmaildotmode	emailadmin	de	qmaildotmode
+qouta size in mbyte	emailadmin	de	Quota Größe in MByte
 quota settings	emailadmin	de	Quota Einstellungen
-quota size in mbyte	emailadmin	de	Quota Größe in MByte
 remove	emailadmin	de	Entfernen
 reset filter	emailadmin	de	Filter zurücksetzen
 select type of imap server	emailadmin	de	IMAP-Server Typ auswählen

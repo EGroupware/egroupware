@@ -1,28 +1,59 @@
 %1 added	addressbook	et	%1 lisatud
 accounts	addressbook	et	Kontod
+actions	addressbook	et	Tegevused
 add %1	addressbook	et	Lisa %1
 add a new contact	addressbook	et	Lisa uus kontakt
+added	addressbook	et	Lisatud
+added by synchronisation	addressbook	et	lisatud sünkroniseerimise käigus
+advanced search	addressbook	et	Laiendatud Otsing
 always	addressbook	et	alati
 birthday	common	et	Sünnipäev
 birthdays	common	et	Sünnipäevad
 cell phone	addressbook	et	Mobiil telefon
+check all	addressbook	et	Kontrolli kõik
 city	common	et	Linn
+configuration	common	et	Konfiguratsioon
+contact	common	et	Kontakt
 contains	addressbook	et	sisaldab
 country	common	et	Riik
 create new links	addressbook	et	Tee uued lingid
 created	addressbook	et	Tehtud
+csv-fieldname	addressbook	et	CSV-Väljanimi
+csv-filename	addressbook	et	CSV-Failinimi
+default	addressbook	et	Vaikimisi
 default filter	addressbook	et	Vaikimisi Filter
 delete this contact	addressbook	et	Kustuta see kontakt
 deleted	addressbook	et	kustutatud
+doesn't matter	addressbook	et	pole tähtis
+download	addressbook	et	Lae alla
 duration	addressbook	et	Kestvus
 email & internet	addressbook	et	Email & Internet
 empty for all	addressbook	et	tühi kõigijaoks
 end	addressbook	et	Lõpp
 existing links	addressbook	et	Eksisteerivad lingid
+fax	addressbook	et	Faks
+fieldseparator	addressbook	et	Väljaeraldaja
+full name	addressbook	et	Täis nimi
+general	admin	et	Üldine
+global categories	addressbook	et	Globaalsed Kategooriad
+icon	addressbook	et	Ikoon
+import	addressbook	et	Import
+infolog	addressbook	et	InfoLog
+last modified	addressbook	et	Viimati muudetud
 links	addressbook	et	Lingid
+location	addressbook	et	Asukoht
+organisation	addressbook	et	Organisatsioon
+participants	addressbook	et	Osalejad
+permission denied !!!	addressbook	et	Õigused puuduvad !!!
 photo	addressbook	et	Foto
+repetition	addressbook	et	Kordus
 select all	addressbook	et	Märgi kõik
+show	addressbook	et	Näita
+start	admin	et	Start
 state	common	et	Maakond
 street	common	et	Tänav
+translation	addressbook	et	Tõlkimine
+updated	addressbook	et	uuendatud
 weekday	addressbook	et	Nädalati
 wrong - try again ...	addressbook	et	Vale - proovi uuesti ...
+you can respond by visiting:	addressbook	et	Sa saad vastata külastates:

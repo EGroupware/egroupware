@@ -1,11 +1,29 @@
+--> enter new name	timesheet	et	--> Sisesta uus nimi
 all projects	timesheet	et	Kõik projektid
+check all	timesheet	et	Kontrolli kõik
 create new links	timesheet	et	Tee uued lingid
-general	timesheet	et	Üldine
+creates a new field	timesheet	et	teeb uue välja
+delete this status	timesheet	et	Kustuta see staatus
+deleted	timesheet	et	kustutatud
+deletes this field	timesheet	et	kustutab selle välja
+each value is a line like <id>[=<label>]	timesheet	et	iga väärtus on rida nagu <id>[=<label>]
+edit status	timesheet	et	Muuda staatust
+edit this entry	timesheet	et	Muuda seda kirjet
+end	timesheet	et	Lõpp
+entry saved	timesheet	et	Kirje salvestatud
+error saving the entry!!!	timesheet	et	Viga kirje salvestamisel !!!
+existing links	timesheet	et	Eksisteerivad lingid
+field must not be empty !!!	timesheet	et	Väli ei tohi jääda tühjaks !!!
+global categories	timesheet	et	Globaalsed Kategooriad
+history	timesheet	et	Ajalugu
+id	timesheet	et	Id
 last modified	timesheet	et	Viimati muudetud
 last month	timesheet	et	Viimane kuu
 last week	timesheet	et	Viimane nädal
 last year	timesheet	et	Viimane aasta
+leaves without saveing	timesheet	et	lahkub ilma salvestamatta
 links	timesheet	et	Lingid
+modified	timesheet	et	Muudetud
 no details	timesheet	et	mitte detailselt
 or endtime	timesheet	et	või Lõpuaeg
 permission denied!!!	timesheet	et	Ligipääs keelatud !!!

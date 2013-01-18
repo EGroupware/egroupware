@@ -34,8 +34,10 @@ enable sieve	emailadmin	zh	启用过滤
 encrypted connection	emailadmin	zh	加密连接
 encryption settings	emailadmin	zh	加密设置
 enter your default mail domain (from: user@domain)	emailadmin	zh	输入您的默认邮箱域 (比如：user@domain，取@之后的所有词或字母)
+entry saved	emailadmin	zh	条目已储存
 error connecting to imap server. %s : %s.	emailadmin	zh	连接到 IMAP 服务器错误。%s : %s。
 error connecting to imap server: [%s] %s.	emailadmin	zh	连接到 IMAP 服务器错误：[%s] %s。
+error saving the entry!!!	emailadmin	zh	保存条目时发生错误！
 forward also to	emailadmin	zh	同时转发到
 forward email's to	emailadmin	zh	转发邮件到
 forward only	emailadmin	zh	转发

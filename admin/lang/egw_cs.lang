@@ -54,6 +54,8 @@ advanced options	admin	cs	rozšířené volby
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	cs	Po kolika neúspěšných pokusech o přihlášení má být účet zablokován (výchozí 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	cs	Po kolika neúspěšných pokusech o přihlášení má být IP zablokována (výchozí 3)?
 aliases	admin	cs	Aliasy
+all applications	admin	cs	všechny aplikace
+all categories	admin	cs	Všechny kategorie
 all records and account information will be lost!	admin	cs	Všechny záznamy a informace o účtu budou ztraceny!
 all users	admin	cs	Všichni uživatelé
 allow anonymous access to this app	admin	cs	Povolit anonymní přístup k této aplikaci
@@ -152,6 +154,7 @@ delete this category	admin	cs	smazat tuto kategorii
 delete this group	admin	cs	smazat tuto skupinu
 delete this log entry	admin	cs	Smazat tento záznam v logu
 delete this user	admin	cs	smazat tohoto uživatele
+deleted	admin	cs	smazáno
 deletes this field	admin	cs	smaže tuto položku
 deliver extern	admin	cs	doručit extern
 deny access to access log	admin	cs	Zablokovat přístup k přístupovému protokolu
@@ -171,6 +174,7 @@ deny access to user accounts	admin	cs	Zablokovat přístup k uživatelským úč
 deny all users access to grant other users access to their entries ?	admin	cs	Zablokovat všem uživatelům právo přidělit přístup k vlastním záznamům jiným uživatelům ?
 description can not exceed 255 characters in length !	admin	cs	Popis nesmí překročit délku 255 znaků !
 determines the order the fields are displayed	admin	cs	určuje pořadí zobrazování položek
+disable	admin	cs	Zakázat
 disable "auto completion" of the login form	admin	cs	Zakázat funkci "automatického dokončení" na přihlašovacím formuláři
 disable wysiwyg-editor	admin	cs	zakázat WYSIWYG editor
 disabled (not recomended)	admin	cs	zakázáno (nedoporučuje se)
@@ -180,6 +184,7 @@ do you also want to delete all global subcategories ?	admin	cs	Chcete také smaz
 do you want to delete all global subcategories ?	admin	cs	Chcete smazat všechny globální podkategorie?
 do you want to move all global subcategories one level down ?	admin	cs	Chcete přesunout všechny globální podkategorie o jednu úroveň níže ?
 document root (default)	admin	cs	Kořenový adresář dokumentů (výchozí)
+down	admin	cs	dolů
 each value is a line like <id>[=<label>]	admin	cs	každá hodnota je řádek ve tvaru <id>[=<label>]
 each value is a line like id[=label]	admin	cs	každá hodnota je řádek ve tvaru id[=label]
 edit account	admin	cs	Editovat účet
@@ -204,6 +209,7 @@ egroupware version	admin	cs	Verze eGroupWaru
 either install id and config password needed or the remote hash!	admin	cs	Je zapotřebí instalační ID a konfigurační heslo nebo vzdálený hash!
 email account active	admin	cs	e-mailový účet aktivní
 email address	admin	cs	e-mailová adresa
+enable	admin	cs	povolit
 enable debug-messages	admin	cs	Povolit debugovací zprávy
 enable the soap service	admin	cs	Povolit službu soap
 enable the spellcheck in the ritch text editor ?	admin	cs	Povolit kontrolu pravopisu v richtext editoru?
@@ -251,13 +257,13 @@ false	admin	cs	ne
 field '%1' already exists !!!	admin	cs	Položka '%1' již existuje !!!
 file space	admin	cs	Prostor pro soubory
 file space must be an integer	admin	cs	Prostor pro soubory musí být celé číslo
-find and register all application hooks	admin	cs	Najít a zaregistrovat všechny aplikace
 for the times above	admin	cs	pro výše uvedené časy
 for the times below (empty values count as '*', all empty = every minute)	admin	cs	pro níže uvedené časy (prázdné hodnoty se berou jako '*', vše prázdné = každou minutu)
 force selectbox	admin	cs	Vynuit rozbalovací nabídku
 forward also to	admin	cs	přeposlat také na
 forward emails to	admin	cs	přeposlat e-maily na
 forward only	admin	cs	jen přeposlat
+full name	admin	cs	Celé jméno
 global categories	common	cs	Globální kategorie
 go directly to admin menu, returning here the next time you click on administration.	admin	cs	Jít přímo do administračního menu; sem se vrátíte jakmile příště kliknete na administraci.
 governmental: incl. state or municipal authorities or services	admin	cs	Vládní: včetně státních nebo obecních úřadů a služeb
@@ -295,6 +301,7 @@ installed crontab	admin	cs	Nainstalovaný crontab
 instance	admin	cs	Instance
 interface	admin	cs	Rozhranní
 international use	admin	cs	Mezinárodní využití
+invalid argument '%1' !!!	admin	cs	Neplatný argument '%1' !!!
 invalid formated date "%1"!	admin	cs	Neplatný formát datumu "%1"!
 invalid remote id or name "%1"!	admin	cs	Neplatné vzdálené ID nebo název "%1"!
 invalid value "%1" use yes or no!	admin	cs	Neplatná hodnota "%1", použijte ano nebo ne!
@@ -338,10 +345,12 @@ logoutime	admin	cs	Čas odhlášení
 mail settings	admin	cs	Nastavení pošty
 main email-address	admin	cs	Hlavní e-mailová adresa
 main screen message	admin	cs	Zpráva na hlavní obrazovce
+manage mapping	admin	cs	Spravovat mapování
 manager	admin	cs	Správce
 max length of the input [, length of the inputfield (optional)]	admin	cs	maximální délka vstupu (volitelné)
 maximum account id (e.g. 65535 or 1000000)	admin	cs	Maximální id účtu (např. 65535 nebo 1000000)
 maximum entries in click path history	admin	cs	Maximální počet záznamů v historii kliknutí
+members	admin	cs	Členové
 message has been updated	admin	cs	zpráva byla aktualizována
 method	admin	cs	Metoda
 minimum account id (e.g. 500 or 100, etc.)	admin	cs	Minimální id účtu (např. 500 nebo 100, atp.)
@@ -469,6 +478,7 @@ standard	admin	cs	standardní
 standard imap server	admin	cs	standardní IMAP server
 standard pop3 server	admin	cs	standardní POP3 server
 standard smtp-server	admin	cs	standardní SMTP server
+start	admin	cs	Start
 start testjob!	admin	cs	Zahájit testovací úlohu
 submit changes	admin	cs	Odeslat změny
 submit displayed information?	admin	cs	Odeslat zobrazené informace?
@@ -499,7 +509,6 @@ the text displayed to the user	admin	cs	text zobrazený uživateli
 the two passwords are not the same	admin	cs	Zadaná hesla se neshodují
 the users bellow are still members of group %1	admin	cs	níže uvedení uživatelé jsou stále členy skupiny %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	cs	Skupina s tímto jménem již existuje. Uživatelé a skupiny nemohou mít stejná id.
-there already is a system-user with this name. user's should not have the same name as a systemuser	admin	cs	Už existuje systémový uživatel tohoto jména. Uživatelé by neměli mít stejná jména jako systémoví uživatelé
 they must be removed before you can continue	admin	cs	Musí být odstraněni, aby jste mohl(a) pokračovat
 this application is current	admin	cs	Tato aplikace je aktuální
 this application requires an upgrade	admin	cs	Tato aplikace vyžaduje aktualizaci
@@ -511,6 +520,7 @@ to allow us to track the growth of your individual installation use this submit 
 top	admin	cs	nahoře
 total of %1 id's changed.	admin	cs	Celkem změněno %1 ID.
 total records	admin	cs	Celkem záznamů
+translation	admin	cs	Překlad
 true	admin	cs	ano
 trust level	admin	cs	Stupeň důvěry
 trust relationship	admin	cs	Vztah důvěry
@@ -524,6 +534,7 @@ under windows you need to install the asyncservice %1manually%2 or use the fallb
 unknown account: %1 !!!	admin	cs	Neznámý účet: %1 !!!
 unknown command %1!	admin	cs	Neznámý příkaz %1!
 unknown option %1	admin	cs	Neznámá volba %1
+up	admin	cs	nahoru
 updated	admin	cs	aktualizováno
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	cs	URL instalace eGroupWaru, např. http://domain.com/egroupware
 usage	admin	cs	Využití

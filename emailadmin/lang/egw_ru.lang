@@ -33,13 +33,16 @@ email account active	emailadmin	ru	Учетная запись включена
 email address	emailadmin	ru	Адрес эл. почты
 email settings	common	ru	Настройки почты
 emailadmin	emailadmin	ru	АдминПочты
+emailadmin: user assigned profile	common	ru	Администрирование почты: Профиль назначенный Пользователю
 enable cyrus imap server administration	emailadmin	ru	включить администрирование IMAP сервера Cyrus
 enable sieve	emailadmin	ru	Включить Sieve
 encrypted connection	emailadmin	ru	зашифрованное соединение
 encryption settings	emailadmin	ru	Настройки шифрования
 enter your default mail domain (from: user@domain)	emailadmin	ru	Укажите ваш почтовый домен по умолчанию (от: user@domain)
+entry saved	emailadmin	ru	Запись сохранена
 error connecting to imap server. %s : %s.	emailadmin	ru	Ошибка соединения с сервером IMAP. %s : %s.
 error connecting to imap server: [%s] %s.	emailadmin	ru	Ошибка соединения с сервером IMAP: [%s] %s.
+error saving the entry!!!	emailadmin	ru	Ошибка сохранения записи!!!
 filtered by account	emailadmin	ru	отфильтровано по Учетной записи
 forward also to	emailadmin	ru	Направить также в
 forward email's to	emailadmin	ru	Направлять письма в
@@ -132,3 +135,4 @@ users can define their own identities	emailadmin	ru	пользователи м�
 users can define their own signatures	emailadmin	ru	пользователи могут устанавливать свои собственные подписи
 vaction messages with start- and end-date require an admin account to be set!	emailadmin	ru	Vaction-сообщения (сообщения об отпуске? вакансиях? высвобождении? незанятых периодах? вовсе сообщения от объекта Java VAction? сообщения виртуальных действий?) с датами начала и окончания требуют установленной учетной записи администратора!
 virtual mail manager	emailadmin	ru	Менеджер Виртуальной ПОЧТЫ
+you have received a new message on the	emailadmin	ru	Вы получили новое сообщение на

@@ -16,6 +16,7 @@ email address	emailadmin	iw	כתובת דואר אלקטרוני
 enable cyrus imap server administration	emailadmin	iw	Cyrus IMAP איפשור ניהול שרת
 enable sieve	emailadmin	iw	Sieve אישפור
 enter your default mail domain (from: user@domain)	emailadmin	iw	(user@domain :ציין את דומיין דואר המחדלי שלך (לדוגמא
+entry saved	emailadmin	iw	הרשומה נשמרה
 forward also to	emailadmin	iw	להעביר גם אל
 forward email's to	emailadmin	iw	להעביר דואר אלקטרוני אל
 forward only	emailadmin	iw	העבר בלבד
@@ -39,6 +40,8 @@ mail settings	admin	iw	הגדרות דואר
 name of organisation	emailadmin	iw	שם האירגון
 no alternate email address	emailadmin	iw	אין כתובת דואר אלקטרוני חלופי
 no forwarding email address	emailadmin	iw	אין כתובת להעברת דואר אלקטרוני
+order	emailadmin	iw	סדר
+organisation	emailadmin	iw	אירגון
 pop3 server hostname or ip address	emailadmin	iw	IP או כתובת pop3 שם שרת
 pop3 server port	emailadmin	iw	POP3 פורט שרת
 postfix with ldap	emailadmin	iw	LDAP עם Postfix
@@ -54,6 +57,7 @@ sieve server hostname or ip address	emailadmin	iw	IP או כתובת Sieve שם 
 sieve server port	emailadmin	iw	Sieve פורט שרת
 sieve settings	emailadmin	iw	Sieve הגדרות
 smtp server name	emailadmin	iw	SMTP שם שרת
+smtp settings	emailadmin	iw	הגדרות SMTP
 smtp-server hostname or ip address	emailadmin	iw	IP או כתובת SMTP שם שרת
 smtp-server port	emailadmin	iw	SMTP פורת שרת
 standard	emailadmin	iw	תקני

@@ -92,10 +92,7 @@ error while creating directory.	filemanager	es-es	Error al crear el directorio
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	es-es	Ejemplo {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - buscar el campo "n_prefix", para "Mr", si se encuentra, escribir  Hello Mr., si no, escribir Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	es-es	Ejemplo {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Ejemplo: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	es-es	Ejemplo {{NELF role}} - si el rol del campo no está vacío, obtendrá una línea nueva con el valor del rol del campo
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	es-es	Ejemplo {{NELFNV role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
 executable	filemanager	es-es	Ejecutable
-export definition to use for nextmatch export	filemanager	es-es	Exportar la definición a usar para exportar nextmatch
-export definitition to use for nextmatch export	filemanager	es-es	Exportar la definición a usar para exportar nextmatch
 extended access control list	filemanager	es-es	Listas de control de acceso extendidas
 extended acl	filemanager	es-es	ACL extendida
 failed to change permissions of %1!	filemanager	es-es	Fallo al cambiar los permisos de %1
@@ -119,7 +116,6 @@ fix reported problems	filemanager	es-es	Corregir los problemas encontrados
 folder up	filemanager	es-es	Subir un directorio
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	es-es	Para los ficheros vinculados a una entrada de aplicación (dentro de /apps/appname/id/) los marcadores para esa aplicación también están disponibles. Vea la aplicación específica para una lista de marcadores disponibles.
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	es-es	Para los ficheros vinculados a una entrada de aplicación (dentro de /apps/appname/id/) los marcadores para esa aplicación también están disponibles. Vea la aplicación específica para una lista de marcadores.
-for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	es-es	Para cartas en serie use esta etiqueta. Ponga el contenido que desee repetir entre dos etiquetas
 general	filemanager	es-es	General
 general fields:	filemanager	es-es	Campos generales:
 go home	filemanager	es-es	ir al inicio
@@ -127,10 +123,6 @@ go to	filemanager	es-es	Ir A
 go to your home directory	filemanager	es-es	Ir al directorio personal
 go up	filemanager	es-es	Subir
 id	filemanager	es-es	Id
-if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra una acción para cada documento. Esa acción permite descargar el documento especificado con los datos %1 insertados.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra un icono extra de documento para cada entrada. Ese icono permite descargar el documento especificado con los datos insertados.
-if you specify an export definition, it will be used when you export	filemanager	es-es	Si especifica una definición de exportación, se usará al exportar
-if you specify an export definition, it will be used when you export*	filemanager	es-es	Si especifica una definición de exportación, se usará al exportar
 inherited	filemanager	es-es	heredado
 link	filemanager	es-es	Enlace
 link %1: %2	filemanager	es-es	Enlace %1: %2
@@ -200,10 +192,7 @@ start search	filemanager	es-es	comenzar la búsqueda
 startfolder	filemanager	es-es	Carpeta de inicio
 superuser	filemanager	es-es	Superusuario
 symlink to %1 created.	filemanager	es-es	Se ha creado el enlace simbólico a %1.
-tag to mark positions for address labels	filemanager	es-es	Etiqueta para marcar posiciones para etiquetas de dirección
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	es-es	La carpeta predeterminada es su carpeta personal. Si se deja en blanco, no existe la ruta o no tiene los permisos necesarios, se usa la predeterminada.
-the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	es-es	El documento puede contener un marcador como {{%3}}, para sustituirlo con los datos (%1lista completa de nombres de marcadores%2).
-the following document-types are supported:	filemanager	es-es	Los siguientes tipos de documentos están soportados:
 the requested path %1 is not available.	filemanager	es-es	La ruta solicitada %1 no está disponible.
 there's already a directory with that name!	filemanager	es-es	¡Ya existe un directorio con ese nombre!
 there's already a file with that name!	filemanager	es-es	¡Ya existe un fichero con ese nombre!
@@ -214,7 +203,6 @@ up	filemanager	es-es	Arriba
 updated comment for %1	filemanager	es-es	Comentario actualizado para %1
 upload fields	filemanager	es-es	Subir campos
 upload files	filemanager	es-es	Subir ficheros
-use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	es-es	Use esta estiqueta para etiquetas de direcciones. Ponga el contenido que desee repetir entre dos etiquetas.
 used space	filemanager	es-es	Espacio utilizado
 users and groups	filemanager	es-es	Usuarios y grupos
 versioning	filemanager	es-es	Versionado

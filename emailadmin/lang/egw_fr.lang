@@ -34,8 +34,10 @@ enable sieve	emailadmin	fr	Activer Sieve
 encrypted connection	emailadmin	fr	connexion chiffrée
 encryption settings	emailadmin	fr	Paramètres de chiffrement
 enter your default mail domain (from: user@domain)	emailadmin	fr	Introduisez votre domaine par défaut (utilisateur@domaine.com)
+entry saved	emailadmin	fr	Entrée enregistrée
 error connecting to imap server. %s : %s.	emailadmin	fr	Erreur de connexion avec le serveur IMAP. %s: %s.
 error connecting to imap server: [%s] %s.	emailadmin	fr	Erreur de connexion avec le serveur IMAP. [%s] %s.
+error saving the entry!!!	emailadmin	fr	Erreur lors de l'enregistrement de l'entrée !!!
 forward also to	emailadmin	fr	Transférer aussi à
 forward email's to	emailadmin	fr	Transférer les emails à
 forward only	emailadmin	fr	Seulement transférer
@@ -101,6 +103,7 @@ standard	emailadmin	fr	Standard
 standard imap server	emailadmin	fr	Serveur IMAP standard
 standard pop3 server	emailadmin	fr	Serveur POP3 standard
 standard smtp-server	emailadmin	fr	Serveur SMTP standard
+stationery	emailadmin	fr	Entrepôt
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	fr	Le serveur IMAP ne supporterait pas la méthode d'authentication sélectionnée. Veuillez contacter votre administrateur système.
 this php has no imap support compiled in!!	emailadmin	fr	Ce PHP ne comprend pas de support IMAP!!
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	fr	Pour utiliser une connexion TLS, vous devez utiliser une version PHP 5.1.0 ou plus élevée.
@@ -120,3 +123,4 @@ username@domainname (virtual mail manager)	emailadmin	fr	utilisateur@domaine (Vi
 users can define their own emailaccounts	emailadmin	fr	Les utilisateurs peuvent définir leurs propres comptes de messagerie
 users can define their own signatures	emailadmin	fr	les utilisateurs peuvent définir leurs propres signatures
 virtual mail manager	emailadmin	fr	Virtual MAIL ManaGeR
+you have received a new message on the	emailadmin	fr	Vous avez reçu un nouveau message sur le

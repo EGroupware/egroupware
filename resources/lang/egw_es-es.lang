@@ -28,17 +28,25 @@ direct booking permissions	resources	es-es	Permisos de reserva directa
 don't use vfs (this will need a symlink --> see readme)	resources	es-es	No usar vfs (esto necesitaría un enlace simbólico --> ver README)
 edit this entry	resources	es-es	Editar esta entrada
 existing links	resources	es-es	Enlaces existentes
+exists	resources	es-es	Existe
+export definitition to use for nextmatch export	resources	es-es	Exportar la definición a usar para exportar nextmatch
+exports a list of resources to a csv file.	resources	es-es	Exportar una lista de recursos a un fichero CSV
 general	resources	es-es	General
 general informations about resource	resources	es-es	Información general acerca del recurso
 gernal resource	resources	es-es	recurso general
+global categories	resources	es-es	Categorías globales
+hours	resources	es-es	horas
 how many of the resources are useable?	resources	es-es	¿Cuántos de los recursos son utilizables?
 how many of them are useable?	resources	es-es	¿Cuántos de ellos son utilizables?
 how many of this resource are usable	resources	es-es	Cuántos de este recurso son utilizables
 how many of this resource exists	resources	es-es	Cuántos de este recurso existen
+if you specify an export definition, it will be used when you export	resources	es-es	Si especifica una definición de exportación, se usará al exportar
 implies booking permission	resources	es-es	implica permiso de reserva
 implies read permission	resources	es-es	implica permiso de lectura
+imports a list of resources from a csv file.	resources	es-es	Importa una lista de recursos desde un fichero CSV.
 information about storage	resources	es-es	Información sobre el almacenamiento
 informations about the location of resource	resources	es-es	Información acerca de la ubicación del recurso
+insert	resources	es-es	Insertar
 inventory number	resources	es-es	Número de inventario
 inventory number:	resources	es-es	Número de inventario:
 is resource bookable?	resources	es-es	¿Se puede realizar una reserva sobre el recurso?
@@ -49,6 +57,9 @@ links	resources	es-es	Enlaces
 location	resources	es-es	Ubicación
 location of resource	resources	es-es	Ubicación del recurso
 location:	resources	es-es	Ubicación:
+locations / rooms	resources	es-es	Ubicaciones / habitaciones
+long description	resources	es-es	Descripción larga
+manage mapping	resources	es-es	Administrar los mapeos
 name of resource	resources	es-es	Nombre del recurso
 name:	resources	es-es	Nombre:
 no description available	resources	es-es	no hay descripción disponible
@@ -59,6 +70,7 @@ picture source	resources	es-es	origen de la imagen
 picture type is not supported, sorry!	resources	es-es	Lo sentimos, el tipo de imagen no está soportado
 pictures or resource	resources	es-es	Imángenes o recurso
 planer	resources	es-es	planificador
+prize	resources	es-es	Premio
 prizeing information for booking or buying	resources	es-es	Poniendo precio a la información de reservar o comprar
 quantity	resources	es-es	Cantidad
 quantity of resource	resources	es-es	Cantidad del recurso
@@ -66,7 +78,10 @@ quantity:	resources	es-es	Cantidad:
 read calendar permissions	resources	es-es	Leer permisos del calendario
 read permissions	resources	es-es	Permiso de lectura
 related links	resources	es-es	Enlaces relacionados
+resource id	resources	es-es	ID del recurso
 resources	common	es-es	Recursos
+resources csv export	resources	es-es	Exportación CSV de recursos
+resources csv import	resources	es-es	Importación CSV de recursos
 resources list	resources	es-es	lista de recursos
 responsible:	resources	es-es	Responsable:
 saves entry and exits	resources	es-es	Guarda la entra y sale
@@ -79,6 +94,7 @@ short description of resource	resources	es-es	Descripción corta del recurso
 show calendar of resource	resources	es-es	Mostrar el calendario del recurso
 something went wrong by deleting resource	resources	es-es	Ocurrió algo extraño al borrar el recurso
 something went wrong by saving resource	resources	es-es	Ocurrió algo extraño al guardar el recurso
+storage	resources	es-es	Almacenamiento
 storage information	resources	es-es	Información del almacenamiento
 storage information:	resources	es-es	Información del almacenamiento:
 the calendar of this resource	resources	es-es	El calendario de este recurso
@@ -95,7 +111,7 @@ web-site for this resource	resources	es-es	Sitio web para este recurso
 where to find this resource?	resources	es-es	¿Dónde encontrar este recurso?
 which category does this resource belong to?	resources	es-es	¿A qué categoría pertenece este recurso?
 write permissions	resources	es-es	Permiso de escritura
-you are not permitted to delete this reource!	resources	es-es	¡No le está permitido borrar este recurso!
-you are not permitted to edit this reource!	resources	es-es	¡No le está permitido editar este recurso!
+you are not permitted to delete this resource!	resources	es-es	¡No tiene permiso para borrar este recurso!
+you are not permitted to edit this resource!	resources	es-es	¡No tiene permiso para editar este recurso!
 you are not permitted to get information about this resource!	resources	es-es	¡No le está permitido obtener información sobre este recurso!
 you chose more resources than available	resources	es-es	Ha elegido más recursos de los disponibles

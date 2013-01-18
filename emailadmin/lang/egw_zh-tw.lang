@@ -34,8 +34,10 @@ enable sieve	emailadmin	zh-tw	啟用Sieve
 encrypted connection	emailadmin	zh-tw	加密連線
 encryption settings	emailadmin	zh-tw	加密設定
 enter your default mail domain (from: user@domain)	emailadmin	zh-tw	輸入您的預設郵件網域(小老鼠後面所有字：帳號@網域)
+entry saved	emailadmin	zh-tw	資料儲存了
 error connecting to imap server. %s : %s.	emailadmin	zh-tw	連線到 IMAP 伺服器時發生錯誤。 %s : %s
 error connecting to imap server: [%s] %s.	emailadmin	zh-tw	連線到 IMAP 伺服器時發生錯誤。 [%s] %s
+error saving the entry!!!	emailadmin	zh-tw	儲存資料時發生錯誤！
 forward also to	emailadmin	zh-tw	同時轉寄到
 forward email's to	emailadmin	zh-tw	轉寄信件到
 forward only	emailadmin	zh-tw	轉寄

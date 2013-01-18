@@ -1,4 +1,3 @@
-$label	preferences	id	$label
 %1 - preferences	preferences	id	Kesukaan - %1
 %1 hours	preferences	id	%1 jam
 12 hour	preferences	id	12 jam
@@ -66,7 +65,7 @@ selectbox	preferences	id	Kotak pilihan
 selectbox with groupmembers	common	id	Kotak pilihan dengan anggota kelompok
 selectbox with primary group and search	preferences	id	Kotak pilihan dengan pencarian kelompok utama
 show helpmessages by default	preferences	id	Tampilkan pesan bantuan menurut bawaan
-show links between egroupware aps as	addressbook	id	Tampilkan tautan antar aplikasi eGroupWare sebagai
+show links between egroupware aps as	common	id	Tampilkan tautan antar aplikasi eGroupWare sebagai
 show navigation bar as	preferences	id	Tampilkan baris navigasi sebagai
 show number of current users	preferences	id	Tampilkan jumlah pengguna saat ini
 show text on navigation icons	preferences	id	Tampilkan teks pada ikon navigasi

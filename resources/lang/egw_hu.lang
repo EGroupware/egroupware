@@ -18,7 +18,7 @@ category:	resources	hu	Kategória
 check all	resources	hu	Összes ellenőrzése
 choose categories admin	resources	hu	kategória adminisztrátor kiválasztása
 clear selection	resources	hu	kijelölés eltávolítása
-configure access permissions	resources	hu	Hozzáférési jogosultságok beállítása
+configure access permissions	admin	hu	Hozzáférési jogosultságok beállítása
 create new accessory for this resource	resources	hu	Új kiegészítő hozzáadása
 create new links	resources	hu	Új hivatkozások létrehozása
 delete selected resources	resources	hu	kiválasztott erőforrás törlése
@@ -31,6 +31,8 @@ existing links	resources	hu	Meglévő hivatkozások
 general	resources	hu	Általános
 general informations about resource	resources	hu	Általános információk az erőforrásról
 gernal resource	resources	hu	általános erőforrás
+global categories	resources	hu	Globális kategóriák
+hours	resources	hu	órák
 how many of the resources are useable?	resources	hu	Hány darab használható az erőforrások közül?
 how many of them are useable?	resources	hu	Hány darab használható közülük?
 how many of this resource are usable	resources	hu	Hány darab használható ebből az erőforrásból
@@ -95,7 +97,5 @@ web-site for this resource	resources	hu	Az erőforrás webhelye
 where to find this resource?	resources	hu	Hol található ez az erőforrás?
 which category does this resource belong to?	resources	hu	Melyik kategóriába tartozik ez az erőforrás?
 write permissions	resources	hu	Írási jogosultságok
-you are not permitted to delete this reource!	resources	hu	Nincs jogosultsága az erőforrás törléséhez!
-you are not permitted to edit this reource!	resources	hu	Nincs jogosultsága az erőforrás szerkesztéséhez!
 you are not permitted to get information about this resource!	resources	hu	Nincs jogosultság az erőforrás adatainak megtekintéséhez!
 you chose more resources than available	resources	hu	Több erőforrás lett kiválasztva, mint amennyi elérhető

@@ -26,6 +26,7 @@ a short subject for the entry	infolog	zh-tw	一個簡短的主題
 abort without deleting	infolog	zh-tw	取消刪除
 accept	infolog	zh-tw	確定
 action	infolog	zh-tw	動作
+actions...	infolog	zh-tw	動作...
 actual date and time	infolog	zh-tw	實際日期與時間
 add	infolog	zh-tw	新增
 add a file	infolog	zh-tw	新增檔案
@@ -38,14 +39,17 @@ add file	infolog	zh-tw	新增檔案
 add sub	infolog	zh-tw	新增子分類
 add timesheet entry	infolog	zh-tw	新增時間表資料
 add:	infolog	zh-tw	新增：
+added	infolog	zh-tw	新增日期
 all	infolog	zh-tw	全部
 all links and attachments	infolog	zh-tw	所有的連結與附加檔案
+all projects	infolog	zh-tw	所有專案
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	zh-tw	允許設定事件的狀態，例如這個事件如果結束就將指定的待辦事項設定為完成(附屬在事件下的)
 apply the changes	infolog	zh-tw	儲存異動
 archive	infolog	zh-tw	歸檔
 are you shure you want to delete this entry ?	infolog	zh-tw	您確定要刪除這個事件？
 attach a file	infolog	zh-tw	附加一個檔案
 attach file	infolog	zh-tw	附加檔案
+attachments	infolog	zh-tw	附加檔案
 attention: no contact with address %1 found.	infolog	zh-tw	注意：找不到住址為 %1 的聯絡人。
 back to main list	infolog	zh-tw	回到主要清單
 billed	infolog	zh-tw	已付款
@@ -57,17 +61,21 @@ cancelled	infolog	zh-tw	取消了
 categories	infolog	zh-tw	分類
 category	infolog	zh-tw	類別
 change the status of an entry, eg. close it	infolog	zh-tw	修改資料狀態，例如：關閉
-charset of file	infolog	zh-tw	檔案字元編碼
 check to set startday	infolog	zh-tw	設定開始日期
 check to specify custom contact	infolog	zh-tw	勾選這個項目來指定自訂聯絡人
+choose owner of imported data	infolog	zh-tw	選擇匯入資料的擁有者
 click here to create the link	infolog	zh-tw	點選這裡來建立連結
 click here to start the search	infolog	zh-tw	點選這裡來開始搜尋
 close	infolog	zh-tw	關閉
+close all	infolog	zh-tw	全部關閉
+closed	infolog	zh-tw	關閉的
 comment	infolog	zh-tw	備註
 completed	infolog	zh-tw	完成了
 configuration	infolog	zh-tw	設定
 confirm	infolog	zh-tw	確認
 contact	infolog	zh-tw	聯絡
+contact fields	infolog	zh-tw	聯絡人欄位
+copy of:	infolog	zh-tw	複製：
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	zh-tw	複製異動資料到剪貼簿， %1重新讀取資料%2並且將他們合併。
 create new links	infolog	zh-tw	建立新的連結
 creates a new field	infolog	zh-tw	建立新的區域
@@ -99,8 +107,6 @@ delegated upcomming	infolog	zh-tw	即將開始的委派
 delegation	infolog	zh-tw	授權
 delete	infolog	zh-tw	刪除
 delete one record by passing its id.	infolog	zh-tw	透過傳遞ID來刪除記錄
-delete the entry	infolog	zh-tw	刪除這個事件
-delete this entry	infolog	zh-tw	刪除這個事件
 delete this entry and all listed sub-entries	infolog	zh-tw	刪除這筆資料與所有附屬的項目
 deleted	infolog	zh-tw	刪除了
 deletes the selected typ	infolog	zh-tw	刪除這個格式
@@ -118,7 +124,7 @@ do you want a notification, if items you delegated are about to start?	infolog	z
 do you want a notification, if items you delegated are due?	infolog	zh-tw	您指派的項目過期時，您是否想要收到提醒？
 do you want to receive notifications as html-mails or plain text?	infolog	zh-tw	您希望收到的提醒信件格式為 html 或純文字？
 don't show infolog	infolog	zh-tw	不要顯示記事本
-done	infolog	zh-tw	完成
+done	common	zh-tw	完成
 download	infolog	zh-tw	下載
 duration	infolog	zh-tw	進行期間
 each value is a line like <id>[=<label>]	infolog	zh-tw	每個值都是這樣的線 <id>[=<label>]
@@ -129,6 +135,7 @@ edit status	infolog	zh-tw	編輯狀態
 edit the entry	infolog	zh-tw	編輯這個事件
 edit this entry	infolog	zh-tw	編輯這個事件
 empty for all	infolog	zh-tw	全部空白
+end	infolog	zh-tw	結束
 enddate	infolog	zh-tw	結束日期
 enddate can not be before startdate	infolog	zh-tw	結束日期不應該在開始日期之前
 enter a custom contact, leave empty if linked entry should be used	infolog	zh-tw	輸入一個自訂的聯絡人，如果連結的事件必須使用就請保持空白
@@ -138,21 +145,23 @@ enter the query pattern	infolog	zh-tw	輸入查詢的方式
 entry and all files	infolog	zh-tw	事件與所有檔案
 error: saving the entry	infolog	zh-tw	錯誤： 儲存資料時
 error: the entry has been updated since you opened it for editing!	infolog	zh-tw	錯誤： 在您開始編輯後這個資料已經被其他人更新了！
+execute a further action for this entry	infolog	zh-tw	在這筆資料執行其他操作
 existing links	infolog	zh-tw	已經存在的連結
 fax	infolog	zh-tw	傳真
+field must not be empty !!!	infolog	zh-tw	欄位不能空白！
 fieldseparator	infolog	zh-tw	欄位分隔字元
 finish	infolog	zh-tw	完成
 for which types should this field be used	infolog	zh-tw	這個欄位使用什麼格式
 from	infolog	zh-tw	從
-general	infolog	zh-tw	一般
+global categories	infolog	zh-tw	全域類別
 group owner for	infolog	zh-tw	群組擁有者
 high	infolog	zh-tw	高
+history	infolog	zh-tw	記錄
 history logging	infolog	zh-tw	歷史記錄
 history logging and deleting of items	infolog	zh-tw	歷史記錄與刪除項目
 id	infolog	zh-tw	ID
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	zh-tw	如果一個類型有群組擁有者，所有該類型的資料將會屬於指定的群組而非建立的使用者！
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	zh-tw	如果沒有設定，在資料數量少於"每頁顯示資料數量上限"（在您的一般設定中）時會隱藏過濾與搜尋功能。
-import	infolog	zh-tw	匯入
 import next set	infolog	zh-tw	匯入下一組
 info log	common	zh-tw	記事本
 infolog	common	zh-tw	記事本
@@ -168,11 +177,13 @@ infolog filter for the main screen	infolog	zh-tw	首頁的記事本顯示規則
 infolog list	infolog	zh-tw	記事本清單
 infolog preferences	common	zh-tw	記事本設定
 infolog-fieldname	infolog	zh-tw	記事本 - 欄位名稱
+insert in document	infolog	zh-tw	插入文件
 invalid filename	infolog	zh-tw	錯誤的檔案名稱
 label<br>helptext	infolog	zh-tw	標籤<br>說明文字
 last changed	infolog	zh-tw	最後修改
 last modified	infolog	zh-tw	最後修改
 leave it empty	infolog	zh-tw	保持空白
+leave it empty for a full week	infolog	zh-tw	空白表示整個星期
 leave without saveing the entry	infolog	zh-tw	離開並且不要儲存這個事件
 leaves without saveing	infolog	zh-tw	離開並且不要儲存
 length<br>rows	infolog	zh-tw	長度<br>列
@@ -186,6 +197,7 @@ longer textual description	infolog	zh-tw	較長的原文描述
 low	infolog	zh-tw	低
 max length of the input [, length of the inputfield (optional)]	infolog	zh-tw	最大輸入長度[, 輸入欄位長度 (選填)]
 name must not be empty !!!	infolog	zh-tw	名稱不能空白！
+name of current user, all other contact fields are valid too	infolog	zh-tw	目前使用者的名稱，所有其他聯絡人欄位也是正確的
 name of new type to create	infolog	zh-tw	建立新的格式名稱
 never hide search and filters	infolog	zh-tw	永遠顯示搜尋與過濾功能
 new %1	infolog	zh-tw	新 %1
@@ -198,6 +210,7 @@ no details	infolog	zh-tw	沒有細節
 no entries found, try again ...	infolog	zh-tw	沒有找到任何事件，請重新嘗試...
 no filter	infolog	zh-tw	沒有過濾規則
 no links or attachments	infolog	zh-tw	沒有連結或附加檔案
+no project	infolog	zh-tw	沒有專案
 nonactive	infolog	zh-tw	停用
 none	infolog	zh-tw	無
 normal	infolog	zh-tw	一般
@@ -218,11 +231,13 @@ only the links	infolog	zh-tw	只有連結
 open(status)	infolog	zh-tw	開啟
 optional note to the link	infolog	zh-tw	連結的附加說明
 order	infolog	zh-tw	順序
+organization	infolog	zh-tw	組織
 overdue	infolog	zh-tw	過期的
 own	infolog	zh-tw	自己的
 own open	infolog	zh-tw	開啟自己的
 own overdue	infolog	zh-tw	自己的過期
 own upcoming	infolog	zh-tw	自己的即將來臨
+parent	infolog	zh-tw	上一層
 path on (web-)serverside<br>eg. /var/samba/share	infolog	zh-tw	伺服器(網站-)路徑<br>例如/var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	zh-tw	使用者與群組檔案路徑必須在網站伺服器的網頁根目錄之外！
 pattern for search in addressbook	infolog	zh-tw	搜尋通訊錄的條件
@@ -235,10 +250,13 @@ phonecall	infolog	zh-tw	聯絡清單
 planned	infolog	zh-tw	已規劃
 planned time	infolog	zh-tw	已規劃時間
 price	infolog	zh-tw	價格
+pricelist	infolog	zh-tw	價格表
 priority	infolog	zh-tw	優先權
 private	infolog	zh-tw	私人的
 project	infolog	zh-tw	專案
+project id	infolog	zh-tw	專案代碼
 project settings: price, times	infolog	zh-tw	專案設定： 價格、時間
+projectmanager	infolog	zh-tw	專案管理員
 re:	infolog	zh-tw	回覆：
 read one record by passing its id.	infolog	zh-tw	透過傳遞ID來讀取記錄
 read rights (default)	infolog	zh-tw	閱讀權限（預設）
@@ -249,8 +267,6 @@ receive notifications about own items	infolog	zh-tw	接收自己項目的提醒
 receive notifications about starting entries you are responsible for	infolog	zh-tw	接收您負責項目即將開始的提醒
 receive notifications about starting entries you delegated	infolog	zh-tw	接收您指派項目即將開始的提醒
 receive notifications as html-mails	infolog	zh-tw	提醒信件格式為 html
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	zh-tw	本地端IP的過濾規則<br>例如^192\.168\.1\.
-reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	zh-tw	本地端IP的過濾規則<br>例如^192\.168\.1\.
 remark	infolog	zh-tw	標註
 remove this link (not the entry itself)	infolog	zh-tw	移除這個連結(不是它的資料)
 responsible	infolog	zh-tw	責任
@@ -275,6 +291,7 @@ select a responsible user: a person you want to delegate this task	infolog	zh-tw
 select a typ to edit it's status-values or delete it	infolog	zh-tw	選擇一個格式來編輯它的狀態或是將它刪除
 select an app to search in	infolog	zh-tw	選擇要搜尋的應用程式
 select an entry to link with	infolog	zh-tw	選擇要連結的事件
+select multiple contacts for a further action	infolog	zh-tw	選擇多個聯絡人來進行操作
 select to filter by owner	infolog	zh-tw	依據擁有者過濾
 select to filter by responsible	infolog	zh-tw	依據負責人過濾
 sets the status of this entry and its subs to done	infolog	zh-tw	設定這筆資料與附屬項目的狀態為完成
@@ -294,6 +311,7 @@ show status and percent done separate	infolog	zh-tw	將狀態與完成度比率�
 show ticket id	infolog	zh-tw	顯示傳票編號
 show times	infolog	zh-tw	顯示時間
 small view	infolog	zh-tw	縮小
+start	infolog	zh-tw	開始
 start a new search, cancel this link	infolog	zh-tw	開啟一個新的搜尋並且取消這個連結
 startdate	infolog	zh-tw	開始日期
 startdate enddate	infolog	zh-tw	開始日期 結束日期
@@ -318,7 +336,6 @@ to what should the startdate of new entries be set.	infolog	zh-tw	新資料的�
 today	infolog	zh-tw	今天
 todays date	infolog	zh-tw	今天日期
 todo	infolog	zh-tw	待辦事項
-translation	infolog	zh-tw	翻譯
 typ	infolog	zh-tw	格式
 typ '%1' already exists !!!	infolog	zh-tw	'%1' 格式已經存在！
 type	infolog	zh-tw	格式
@@ -330,8 +347,6 @@ upcoming	infolog	zh-tw	即將到來
 urgency	infolog	zh-tw	緊急
 urgent	infolog	zh-tw	緊急的
 used time	infolog	zh-tw	使用的時間
-valid path on clientside<br>eg. \\server\share or e:\	infolog	zh-tw	用戶端可用的路徑<br>例如\\Server\Share 或是 e:\
-valid path on clientside<br>eg. \servershare or e:	infolog	zh-tw	用戶端可用的路徑<br>例如\\Server\Share 或是 e:\
 values for selectbox	infolog	zh-tw	選單的值
 view all subs of this entry	infolog	zh-tw	顯示這個事件的所有附屬資訊
 view other subs	infolog	zh-tw	顯示其他附屬資訊
@@ -343,7 +358,6 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	zh-tw	哪些額外欄位即使負責人沒有編輯權限也能夠編輯？<br />狀態、比率與完成日期預設都會允許。
 which implicit acl rights should the responsible get?	infolog	zh-tw	負責人可以取得哪個隱含的權限？
 which types should the calendar show	infolog	zh-tw	行事曆要顯示哪些類型
-whole query	infolog	zh-tw	整個查詢
 will-call	infolog	zh-tw	將連絡
 write (add or update) a record by passing its fields.	infolog	zh-tw	透過傳遞它的欄位來寫入(新增或更新)一筆記錄
 yes - delete	infolog	zh-tw	確定 - 刪除

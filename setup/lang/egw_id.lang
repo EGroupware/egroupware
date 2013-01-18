@@ -1,6 +1,3 @@
-are you sure?	setup	id	ANDA YAKIN?
-file	setup	id	FILE
-ok	setup	id	OK
 00 (disable)	setup	id	00 (disable / recomended)
 13 (ntp)	setup	id	13 (ntp)
 80 (http)	setup	id	80 (http)
@@ -20,6 +17,8 @@ application data	setup	id	Application Data
 application list	setup	id	Application List
 application management	setup	id	Application Management
 application title	setup	id	Application Title
+are you sure?	setup	id	ANDA YAKIN?
+authentication / accounts	setup	id	Otentikasi / Akoun
 authentification mode:	setup	id	Authentification mode:
 available version	setup	id	Available Version
 backup failed	setup	id	Backup failed
@@ -78,6 +77,7 @@ domain-name	setup	id	domain-name
 download	setup	id	Unduh
 enable mcrypt	setup	id	Enable MCrypt
 false	setup	id	False
+file	setup	id	FILE
 filename	setup	id	filename
 filesystem	setup	id	Filesystem
 filesystem (default)	setup	id	Filesystem (default)
@@ -105,28 +105,37 @@ invalid password	setup	id	Invalid password
 is broken	setup	id	is broken
 is disabled	setup	id	is disabled
 languages updated.	setup	id	Bahasa updated.
+ldap accounts context	setup	id	LDAP accounts context*
 ldap config	setup	id	LDAP Config
+ldap encryption type	setup	id	LDAP encryption type
+ldap groups context	setup	id	LDAP groups context
 ldap host	setup	id	LDAP host
 ldap import	setup	id	LDAP Import
+ldap root password	setup	id	LDAP root password
 ldap rootdn	setup	id	LDAP rootdn
 limit access	setup	id	Limit access
 logout	setup	id	Keluar
 manage applications	setup	id	Manage Applications
 manage languages	setup	id	Manage Languages
 minute	setup	id	menit
+modified	setup	id	Diubah
 modify	setup	id	Modify
 month	setup	id	bulan
 never	setup	id	never
 new	setup	id	Baru
 next run	setup	id	next run
 no	setup	id	Tidak
+no algorithms available	setup	id	no algorithms available
+no modes available	setup	id	no modes available
 not	setup	id	not
 not complete	setup	id	not complete
 not completed	setup	id	Not Completed
 not set	setup	id	not set
+ok	setup	id	OK
 one month	setup	id	satu bulan
 one week	setup	id	satu minggu
 or	setup	id	atau
+password for smtp-authentication	setup	id	Password for SMTP-authentication
 path information	setup	id	Path information
 pem certificate	setup	id	PEM certificate
 persistent connections	setup	id	Persistent connections

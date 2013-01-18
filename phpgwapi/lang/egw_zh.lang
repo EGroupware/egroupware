@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	zh	已插入%1个电子邮件地址
 %1 is not executable by the webserver !!!	common	zh	Web 服务器无法执行%1！
-%1 manual	common	zh	%1用户指南
-%1 start	common	zh	%1开始
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	zh	%1选择另一个目录%2<br />或使得 Web 服务器可以写入%3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh	%1eGroupWare%2 是一个多用户、基于 Web 的以 %3PHP%4 为基础开发的工作组套件。
 (shift-)click or drag to change value	jscalendar	zh	(Shift+)点击或拖放修改其值
@@ -30,8 +28,10 @@ account has been created	common	zh	账户创建成功
 account has been deleted	common	zh	账户已删除
 account has been updated	common	zh	账户已更新
 account is expired	common	zh	帐户已过有效期
+accounts	common	zh	帐户
 acl	common	zh	ACL
 action	common	zh	操作
+actions	common	zh	操作
 active	common	zh	活动的
 add	common	zh	添加
 add %1 category for	common	zh	添加类别为
@@ -46,11 +46,13 @@ albania	common	zh	阿尔巴尼亚
 algeria	common	zh	阿尔及利亚
 all	common	zh	全部
 all fields	common	zh	所有字段
+all languages	common	zh	所有语言
 alphabet	common	zh	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	zh	替代的样式表：
 american samoa	common	zh	东萨摩亚
 an error happened	common	zh	发生了错误
 an existing and by the webserver readable directory enables the image browser and upload.	common	zh	现有的和 Web 服务器可读取的目录可启用图片浏览与上传。
+and	common	zh	及
 andorra	common	zh	安道尔共和国
 angola	common	zh	安哥拉
 anguilla	common	zh	安圭拉岛
@@ -179,22 +181,22 @@ default category	common	zh	默认显示类别
 default height for the windows	common	zh	默认窗口高度
 default width for the windows	common	zh	默认窗口宽度
 delete	common	zh	删除
+delete category	common	zh	删除类别
 delete row	common	zh	删除行
+delete this entry	common	zh	删除该事项
 denmark	common	zh	丹麦
 description	common	zh	描述
 detail	common	zh	详细信息
 details	common	zh	详细信息
-dhtml date/time selector	jscalendar	zh	DHTML 日期/时间选择器
 direction left to right	common	zh	由左到右
+directory	common	zh	目录
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	zh	目录不存在、对于Web服务器不可读或不是相对的文档根目录！
 disable internet explorer png-image-bugfix	common	zh	禁用 Internet Explorer 浏览器的 PNG 图片修正脚本
 disable slider effects	common	zh	禁用滑动效果
-disable the animated slider effects when showing or hiding menus in the page?  opera and konqueror users will probably must want this.	common	zh	是否禁用显示或隐藏菜单的滑动效果？建议 Opera 和 Konqueror 的用户选择禁用。
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zh	在页面显示或隐藏菜单时禁用动画效果？Opera 和 Konqueror 用户也许必须这样做。
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zh	禁用为使 Internet Explorer 5.5 或更高版本能够显示透明的 PNG 图片的修复脚本？
 disabled	common	zh	已禁用
 display %s first	jscalendar	zh	首先显示%s
-distributed under gnu lgpl.  see http://gnu.org/licenses/lgpl.html for details.	jscalendar	zh	在 GNU LGPL. 条款下分发，详见 http://gnu.org/licenses/lgpl.html。
 djibouti	common	zh	吉布提
 do you also want to delete all subcategories ?	common	zh	确定也要删除所有的子类别吗？
 doctype:	common	zh	文件类型：
@@ -206,6 +208,7 @@ domestic	common	zh	国内
 dominica	common	zh	多米尼加
 dominican republic	common	zh	多米尼加共和国
 done	common	zh	完成
+download	common	zh	下载
 drag to move	jscalendar	zh	拖动
 e-mail	common	zh	电子邮件
 east timor	common	zh	东帝汶
@@ -214,14 +217,13 @@ edit	common	zh	编辑
 edit %1 category for	common	zh	编辑类别%1为
 edit categories	common	zh	类别编辑
 edit category	common	zh	类别编辑
+egroupware	common	zh	eGroupWare
 egroupware api version	common	zh	eGroupWare API 版本
-egroupware api version %1	common	zh	eGroupWare API 版本 %1
 egroupware: login blocked for user '%1', ip %2	common	zh	eGroupWare：用户'%1'，IP地址%2已被禁止登录
 egypt	common	zh	埃及
 el salvador	common	zh	萨尔瓦多
 email	common	zh	电子邮件
 email-address of the user, eg. "%1"	common	zh	用户的电子邮件地址，例如："%1"
-emailadmin	common	zh	邮箱管理
 enabled	common	zh	已启用
 end date	common	zh	终止日期
 end time	common	zh	终止时间
@@ -256,7 +258,6 @@ first page	common	zh	第一页
 firstname	common	zh	名
 fixme!	common	zh	FIXME！
 folder already exists.	common	zh	文件夹已存在。
-for latest version visit: http://dynarch.com/mishoo/calendar.epl	jscalendar	zh	了解最新版本请访问：http://dynarch.com/mishoo/calendar.epl
 force selectbox	common	zh	必选框
 forever	common	zh	始终
 france	common	zh	法国
@@ -352,13 +353,12 @@ kazakstan	common	zh	哈萨克斯坦
 kenya	common	zh	肯尼亚
 keywords	common	zh	关键词
 kiribati	common	zh	基里巴斯
-korea democratic peoples republic of	common	zh	朝鲜
-korea republic of	common	zh	韩国
 kuwait	common	zh	科威特
 kyrgyzstan	common	zh	吉尔吉斯坦
 language	common	zh	语言
 language_direction_rtl	common	zh	language_direction_rtl
 lao peoples democratic republic	common	zh	老挝
+last modified	common	zh	最近修改
 last name	common	zh	姓
 last name of the user, eg. "%1"	common	zh	用户的‘姓’，例如："%1"
 last page	common	zh	最后一页
@@ -377,6 +377,7 @@ list	common	zh	列表
 list members	common	zh	会员列表
 lithuania	common	zh	立陶宛
 local	common	zh	本地
+locations	common	zh	位置
 login	common	zh	登录
 loginid	common	zh	登录名
 logout	common	zh	注销
@@ -390,6 +391,7 @@ macedonia, the former yugoslav republic of	common	zh	马其顿王国
 madagascar	common	zh	马达加斯加岛
 mail domain, eg. "%1"	common	zh	邮件域，例如："%1"
 main category	common	zh	主分类
+main screen	common	zh	主窗口
 maintainer	common	zh	维护人员
 malawi	common	zh	马拉维
 malaysia	common	zh	马来西亚
@@ -469,9 +471,11 @@ on mouse over	common	zh	鼠标移至上面时
 only private	common	zh	仅私有
 only yours	common	zh	只有您
 oops! you caught us in the middle of system maintainance.	common	zh	Oops! 您在系统维护中间捉住了我们。
+open	common	zh	待决事项
 open notify window	common	zh	打开提示窗口
 open popup window	common	zh	打开弹出式窗口·
 open sidebox	common	zh	打开侧边栏
+or	common	zh	或
 ordered list	common	zh	排序列表
 original	common	zh	原来的
 other	common	zh	其它
@@ -518,10 +522,10 @@ portugal	common	zh	葡萄牙
 postal	common	zh	邮政
 powered by	common	zh	Powered by
 preferences	common	zh	参数选择
-preferences for the idots template set	common	zh	Idots 模板的参数选择
 prev. month (hold for menu)	jscalendar	zh	上个月(hold for menu)
 prev. year (hold for menu)	jscalendar	zh	去年(hold for menu)
 previous page	common	zh	前一页
+primary group	common	zh	主要群组
 primary style-sheet:	common	zh	主要样式表：
 print	common	zh	打印
 priority	common	zh	优先级
@@ -543,6 +547,7 @@ remove shortcut	common	zh	移除快捷键
 rename	common	zh	重命名
 replace	common	zh	替换
 replace with	common	zh	替换与
+restore failed	common	zh	还原失败
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	zh	返回系统所有帐户的列表，注意：该列表可能很长
 returns an array of todo items	common	zh	返回一排待处理列表
 returns struct of users application access	common	zh	返回用户访问应用程序的结构
@@ -612,6 +617,8 @@ showing %1 - %2 of %3	common	zh	显示%3的%1 - %2
 sierra leone	common	zh	塞拉利昂
 simple	common	zh	精简
 singapore	common	zh	新加坡
+site configuration	common	zh	站点配置
+size	common	zh	大小
 slovakia	common	zh	斯洛伐克
 slovenia	common	zh	斯洛文尼亚
 solomon islands	common	zh	所罗门群岛
@@ -701,11 +708,11 @@ use button to search for project	common	zh	使用按钮查找项目
 user	common	zh	用户
 user accounts	common	zh	用户帐户
 user groups	common	zh	用户组
-user openinstance	common	zh	用户开放实例
 username	common	zh	用户名
 users	common	zh	用户
 users choice	common	zh	用户的选择
 uzbekistan	common	zh	乌兹别克斯坦
+value	common	zh	数值
 vanuatu	common	zh	瓦努阿图
 venezuela	common	zh	委内瑞拉
 version	common	zh	版本
@@ -722,6 +729,7 @@ what style would you like the image to have?	common	zh	您喜欢什么样的图�
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	zh	如果选择“是”，“首页”和“注销”图标将显示在应用程序工具条中。
 where and how will the egroupware links like preferences, about and logout be displayed.	common	zh	将在什么位置和如何以喜欢偏好显示 eGroupWare、关于及注销的链接。
 which groups	common	zh	哪一个组
+whole query	common	zh	完整查询
 width	common	zh	宽度
 wk	jscalendar	zh	星期
 work email	common	zh	工作 EMail 地址
@@ -750,8 +758,6 @@ your search returned %1 matchs	common	zh	您的搜索返回%1个匹配结果
 your search returned 1 match	common	zh	您的搜索返回1个匹配结果
 your session could not be verified.	login	zh	本次会话无法校验。
 your settings have been updated	common	zh	您的设置已更新
-yugoslavia	common	zh	南斯拉夫
 zambia	common	zh	赞比亚
 zimbabwe	common	zh	津巴布韦
 zoom	common	zh	缩放
-site configuration	common	zh	站点配置

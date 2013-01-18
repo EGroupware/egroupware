@@ -35,8 +35,10 @@ all days	etemplate	ru	все дни
 all operations save the template!	etemplate	ru	все действия сохраняют шаблон!
 am	etemplate	ru	утр?(am)
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	ru	проиндексированные колонки уеличивают скорость обработки запросов использующих колонки (при этом затрачивается дополнительное дисковое пространство)
+and	etemplate	ru	и
 application	etemplate	ru	Приложение
 application name needed to write a langfile or dump the etemplates !!!	etemplate	ru	Имя приложения необходмо для записи языкового файла или е-Шаблона
+applications	etemplate	ru	Приложения
 applies the changes made	etemplate	ru	применяет сделанные изменения
 applies the changes to the given version of the template	etemplate	ru	применяет изменения к выбранной версии шаблона
 as default	etemplate	ru	по-умолчанию
@@ -61,6 +63,7 @@ cells	etemplate	ru	Ячейки
 cellspacing for the table-tag	etemplate	ru	Интервал между ячейками для тега Таблица
 center	etemplate	ru	Центрировать
 changed	etemplate	ru	Изменилось
+check all	etemplate	ru	Отметить все
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	ru	убедитесь, что содержимое должно только отображаться, но не меняться (содержание не будет отослано назад!)
 check if field has to be filled by user	etemplate	ru	отметьте если поле будет заполняться пользователем
 checkbox	etemplate	ru	Флажек
@@ -85,6 +88,7 @@ contact fields	etemplate	ru	Поля Контакта
 contains	etemplate	ru	содержит
 create a new table for the application	etemplate	ru	Создать новую таблицу для приложения
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	ru	создает английский ('en') файл перевода из меток и текстов помощи (для приложения по Имени)
+creator	preferences	ru	Создатель
 css class for the table-tag	etemplate	ru	Класс CSS для тега Таблица
 css properties	etemplate	ru	свойства CSS
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	ru	название класса CSS для этой строки, предопределенные: 'nmh' = заголовок СледующегоСоответствия, 'nmr' = перемежающаяся СледСтр строка, СледСтр строки 'nmr0'+'nmr1'
@@ -123,6 +127,7 @@ displayed in front of input or input is inserted for a '%s' in the label (label 
 displayed in statusline of browser if input-field gets focus	etemplate	ru	показывается в строке состояния браузера если поле ввода получает фокус
 displayed in the top line of the groupbox (legend)	etemplate	ru	показывается в верхней строке рамки группировки (надпись)
 do you want to save the changes you made in table %s?	etemplate	ru	Желаете ли вы сохранить сделанные вами изменения в таблицу %s?
+document '%1' does not exist or is not readable for you!	preferences	ru	Документ %1 не может быть прочитан либо не существует
 documentation	etemplate	ru	Документация
 doesn't matter	etemplate	ru	не важно
 drop a table - this can not be undone	etemplate	ru	Сброс таблицы - действие не может быть отменено
@@ -171,6 +176,7 @@ first	etemplate	ru	Первый
 floating point	etemplate	ru	С плавающей запятой
 foreign key	etemplate	ru	Внешний ключ
 formatted text (html)	etemplate	ru	Форматированный текст (HTML)
+general fields:	preferences	ru	Основные поля:
 go to the first entry	etemplate	ru	перейти к первой записи
 go to the last entry	etemplate	ru	перейти к последней записи
 go to the next page of entries	etemplate	ru	перейти на следующую страницу
@@ -208,6 +214,7 @@ insert a row above	etemplate	ru	вставить строку выше
 insert a row below	etemplate	ru	вставить строку ниже
 insert a widget before	etemplate	ru	вставить виджет перед
 insert a widget behind	etemplate	ru	вставить виджет после
+insert in document	etemplate	ru	Вставить в документ
 insert new column behind this one	etemplate	ru	вставить новую колонку сзади этой
 insert new column in front of all	etemplate	ru	вставить новую колонку впереди всех
 insert new row after this one	etemplate	ru	вставить новую строку после этой
@@ -270,6 +277,7 @@ open the online help.	etemplate	ru	Открыть онлайн справку
 operator	etemplate	ru	Оператор
 optional note about the link	etemplate	ru	необязательная заметка о Ссылке
 options	etemplate	ru	Настройки
+or	etemplate	ru	или
 order to navigating by tab key through the form	etemplate	ru	Порядок навигации по форме по клавише табуляции
 overflow	etemplate	ru	Переполнение
 padding	etemplate	ru	Набивка

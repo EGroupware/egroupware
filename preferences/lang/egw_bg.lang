@@ -8,6 +8,7 @@ are you sure you want to delete this category ?	preferences	bg	Наистина 
 change your password	preferences	bg	Смяна на парола
 change your profile	preferences	bg	Промяна на профила
 change your settings	preferences	bg	Промяна на настройки
+charset for the csv export	addressbook	bg	Символен набор за експорта в CSV
 click to select a color	preferences	bg	Натиснете за избор на цвят
 color	preferences	bg	Цвят
 country	preferences	bg	Държава
@@ -17,6 +18,7 @@ default application	preferences	bg	Приложение по подразбир�
 default preferences	preferences	bg	Настройки по подразбиране
 delete categories	preferences	bg	Изтриване на категории
 description can not exceed 255 characters in length !	preferences	bg	Описанието не може да превишава 255 символа!
+edit custom fields	preferences	bg	Редакция на полета по избор
 enter your new password	preferences	bg	Въведете нова парола
 hours	preferences	bg	часа
 how do you like to display accounts	preferences	bg	Как искате да се изобразяват акаунтите
@@ -42,6 +44,7 @@ theme (colors/fonts) selection	preferences	bg	Избор на тема (цвет
 time format	preferences	bg	Формат на часа
 use default	preferences	bg	Използване на стойност по подразбиране
 users choice	preferences	bg	По избор на потребителя
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	bg	Кой символен набор (charset) да се използва за експорт в CSV? По подразбиране - символният набор на инсталацията на eGroupWare.
 you must enter a password	preferences	bg	Трябва да въведете парола
 your current theme is: %1	preferences	bg	текущата ви тема е %1
 your preferences	preferences	bg	Вашите настройки

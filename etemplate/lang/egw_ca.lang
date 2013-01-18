@@ -15,13 +15,16 @@ add a new multi-column index	etemplate	ca	Añadir un nuevo índice multicolumna
 add column	etemplate	ca	Añadir columna
 add index	etemplate	ca	Añadir índice
 add table	etemplate	ca	Añadir tabla
+advanced search	etemplate	ca	Cerca avançada
 align	etemplate	ca	Alinear
 alignment of label and input-field in table-cell	etemplate	ca	posición de la etiqueta y campo de entrada en la celda de la tabla
 alignment of the v/hbox containing table-cell	etemplate	ca	Posición del recuadro horizontal o vertical que contiene la celda de la tabla
 am	etemplate	ca	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	ca	una columna indexada acelera las consultas que usen esa columna (a costa de espacio en el disco)
+and	etemplate	ca	I
 application	etemplate	ca	Aplicación
 application name needed to write a langfile or dump the etemplates !!!	etemplate	ca	Se necesita el nombre de la aplicación para escribir un fichero de idioma o volcar las plantillas
+applications	etemplate	ca	Aplicacions
 attach	etemplate	ca	Adjuntar
 attach file	etemplate	ca	Adjuntar fichero
 blurtext	etemplate	ca	Texto poco claro
@@ -34,6 +37,8 @@ cellpadding for the table-tag	etemplate	ca	Distancia de la etiquete de la tabla 
 cells	etemplate	ca	Celdas
 cellspacing for the table-tag	etemplate	ca	Espaciado en la celda para la etiqueta de la tabla
 center	etemplate	ca	Centrar
+changed	etemplate	ca	Canviat
+check all	etemplate	ca	Comprova-ho tot
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	ca	marcar si desea mostrar el contenido sin modificar (el contenido no es devuelto)
 check if field has to be filled by user	etemplate	ca	marcar si el campo tiene que rellenarlo el usuario
 checkbox	etemplate	ca	Casilla
@@ -46,14 +51,20 @@ click here to upload the file	etemplate	ca	Pulse aquí para subir el fichero al 
 click to order after that criteria	etemplate	ca	pulse para ordenar después de ese criterio
 columnname	etemplate	ca	Nombre de la columna
 comment	etemplate	ca	Comentario
+confirm	etemplate	ca	confirmar
+contact	etemplate	ca	Contacte
+contains	etemplate	ca	conté
 create a new table for the application	etemplate	ca	Crear una tabla nueva para la aplicación
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	ca	Crea un fichero de idioma en inglés ('en') a partir de la etiqueta y textos de ayuda (para la aplicación indicada en Nombre)
 css class for the table-tag	etemplate	ca	clase CSS para la etiqueta de la tabla
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	ca	Nombre de la Clase CSS para esta fila. Predefinidos: 'nmh' (NextMatch header), 'nmr' (Alternating NM row), 'nmr0'+'nmr1' filas NM
 css-styles	etemplate	ca	Estilos CSS
+custom	etemplate	ca	Personalitzat
+custom fields	etemplate	ca	Camps personalitzats
 date+time	etemplate	ca	Fecha + hora
 datum	etemplate	ca	Fecha
 day	etemplate	ca	Día
+days	etemplate	ca	dies
 db ensures that every row has a unique value in that column	etemplate	ca	La base de datos se asegura de que cada fila tiene un valor único en esa columna
 db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	ca	Opciones de índice específicas de la base de datos (separadas por comas), por ej. mysql(FULLTEXT) o mysql(100) para la longitud indexada de una columna
 db-tools	etemplate	ca	Herramientas de la base de datos
@@ -74,9 +85,11 @@ displayed in front of input or input is inserted for a '%s' in the label (label 
 displayed in statusline of browser if input-field gets focus	etemplate	ca	Se muestra en la línea de estado del navegador cuando el cuadro de texto tiene el foco
 do you want to save the changes you made in table %s?	etemplate	ca	¿Desea guardar los cambis que ha realizado en la tabla %s?
 documentation	etemplate	ca	Documentación
+doesn't matter	etemplate	ca	no importa
 drop a table - this can not be undone	etemplate	ca	Borrar una tabla - NO se puede deshacer
 drop table	etemplate	ca	Borrar tabla
 dump4setup	etemplate	ca	Volcar para instalación
+duration	etemplate	ca	Duració
 edit	etemplate	ca	Editar
 edit the etemplate spez. above	etemplate	ca	editar las especificaciones de la plantilla indicada arriba
 editable templates - db-tools	etemplate	ca	Plantillas editables - Herramientas de la base de datos
@@ -106,6 +119,7 @@ exchange this two columns	etemplate	ca	Intercambiar estas dos columnas
 export the loaded etemplate into a xml-file	etemplate	ca	Exportar la plantilla cargada en un fichero xml
 export xml	etemplate	ca	Exportar XML
 extensions loaded:	etemplate	ca	Extensiones cargadas:
+field must not be empty !!!	etemplate	ca	El camp no ha d'estar buit !!!
 file	etemplate	ca	Fichero
 file contains more than one etemplate, last one is shown !!!	etemplate	ca	El fichero contiene más de una plantilla. Sólo se mostrará la última.
 file writen	etemplate	ca	Fichero guardado
@@ -125,6 +139,7 @@ height, disabled	etemplate	ca	Altura, desactivada
 help	etemplate	ca	Ayuda
 horizontal rule	etemplate	ca	Regla horizontal
 hour	etemplate	ca	Hora
+hours	etemplate	ca	hores
 html	etemplate	ca	Html
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	ca	Si el campo está desactivado, la celda de la tabla estará vacía, para borrar temporalmente un campo o celda.
 image	etemplate	ca	Imagen
@@ -154,6 +169,7 @@ linkstring	etemplate	ca	Cadena de enlaces
 linkto	etemplate	ca	Enlace a
 load this template into the editor	etemplate	ca	cargar esta plantilla en el editor
 minute	etemplate	ca	Minuto
+minutes	etemplate	ca	minuts
 month	etemplate	ca	Mes
 multicolumn indices	etemplate	ca	Indices multicolumna
 name	etemplate	ca	Nombre
@@ -168,6 +184,7 @@ newer version '%1' exists !!!	etemplate	ca	¡Existe una versión '%1' más recie
 nextmatch	etemplate	ca	Siguiente coincidencia
 no file	etemplate	ca	sin fichero
 no filename given or selected via browse...	etemplate	ca	no se indicó un nombre de fichero ni se selección mediante Examinar...
+no matches found	etemplate	ca	Sense resultats
 not null	etemplate	ca	NO NULO
 nothing found - try again !!!	etemplate	ca	No se encontró nada. Inténtelo de nuevo.
 nothing matched search criteria !!!	etemplate	ca	No se encontró nada con ese criterio.
@@ -177,6 +194,7 @@ of	etemplate	ca	de
 only an other version found !!!	etemplate	ca	sólo se encontró otra versión!
 optional note about the link	etemplate	ca	nota opcional sobre el enlace
 options	etemplate	ca	Opciones
+or	etemplate	ca	o
 overflow	etemplate	ca	Desbordamiento
 padding	etemplate	ca	Distancia del texto a la celda
 please enter table-name first !!!	etemplate	ca	Por favor, introduzca el nombre de la tabla primero
@@ -189,8 +207,10 @@ read	etemplate	ca	Leído
 read a list of entries.	etemplate	ca	Leer una lista de entradas
 read a single entry by passing the id and fieldlist.	etemplate	ca	Leer una sola entrada pasando el id y la lista de campos
 read etemplate from database (for the keys above)	etemplate	ca	leer plantilla de la base de datos (para las claves de arriba)
+readonly	etemplate	ca	només de lectura
 remove row (can not be undone!!!)	etemplate	ca	eliminar fila (¡NO se puede deshacer!)
 remove this link (not the entry itself)	etemplate	ca	Borrar este enlace (no la entrada en sí)
+required	etemplate	ca	Obligatori
 returns savely, without deleting	etemplate	ca	vuelve de forma segura, SIN borrar
 right	etemplate	ca	Derecha
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	ca	guardar la plantilla bajo las claves de arriba (nombre, etc). Cámbielas para Guardar como.

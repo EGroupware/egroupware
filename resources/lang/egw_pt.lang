@@ -18,7 +18,7 @@ category:	resources	pt	Categoria
 check all	resources	pt	Marcar todas
 choose categories admin	resources	pt	escolher categorias de administração
 clear selection	resources	pt	Limpar selecção
-configure access permissions	resources	pt	Configurar permissões de acesso
+configure access permissions	admin	pt	Configurar permissões de acesso
 create new accessory for this resource	resources	pt	Criar novo acessório para este recurso
 create new links	resources	pt	Criar novas ligações
 delete selected resources	resources	pt	Eliminar recursos seleccionados
@@ -31,6 +31,8 @@ existing links	resources	pt	Ligações existentes
 general	resources	pt	Geral
 general informations about resource	resources	pt	Informações gerais sobre recurso
 gernal resource	resources	pt	Recurso geral
+global categories	resources	pt	Categorias gerais
+hours	resources	pt	Horas
 how many of the resources are useable?	resources	pt	Quantos recursos estão funcionais?
 how many of them are useable?	resources	pt	Quantos deles estão funcionais?
 how many of this resource are usable	resources	pt	Quantos deste recurso estão funcionais
@@ -95,7 +97,5 @@ web-site for this resource	resources	pt	Página Web para este recurso
 where to find this resource?	resources	pt	Onde encontrar este recurso?
 which category does this resource belong to?	resources	pt	A que categoria pertence este recurso?
 write permissions	resources	pt	Permissões de escrita
-you are not permitted to delete this reource!	resources	pt	Não tem permissões para eliminar este recurso!
-you are not permitted to edit this reource!	resources	pt	Não tem permissões para editar este recurso!
 you are not permitted to get information about this resource!	resources	pt	Não tem permissões para aceder a informações sobre este recurso!
 you chose more resources than available	resources	pt	Escolheu mais recursos do que os disponíveis

@@ -26,6 +26,7 @@ a short subject for the entry	infolog	hu	egy rövid tárgy a bejegyzésnek
 abort without deleting	infolog	hu	Megszakítás törlés nélkül
 accept	infolog	hu	elfogad
 action	infolog	hu	Művelet
+actions...	infolog	hu	Műveletek...
 actual date and time	infolog	hu	aktuális dátum és idő
 add	infolog	hu	Hozzáad
 add a file	infolog	hu	Állomány hozzáadása
@@ -38,6 +39,7 @@ add file	infolog	hu	Állomány hozzáadása
 add sub	infolog	hu	Albejegyzés hozzáadása
 add timesheet entry	infolog	hu	Regiszter bejegyzés hozzáadása
 add:	infolog	hu	Hozzáadás:
+added	infolog	hu	Hozzáadva
 all	infolog	hu	Összes
 all links and attachments	infolog	hu	Minden hivatkozás és melléklet
 all projects	infolog	hu	Minden projekt
@@ -49,6 +51,7 @@ are you shure you want to close this entry ?	infolog	hu	Valóban le akarod zárn
 are you shure you want to delete this entry ?	infolog	hu	Valóban törölni kívánod ezt a bejegyzést?
 attach a file	infolog	hu	Állomány csatolása
 attach file	infolog	hu	Állomány csatolása
+attachments	infolog	hu	Mellékletek
 attention: no contact with address %1 found.	infolog	hu	Figyelem: %1 címmel Kapcsolat nem található.
 back to main list	infolog	hu	Vissza a fő listára
 billed	infolog	hu	számlázva
@@ -61,19 +64,21 @@ categories	infolog	hu	Kategóriák
 category	infolog	hu	Kategória
 change history	infolog	hu	Történet módosítása
 change the status of an entry, eg. close it	infolog	hu	Bejegyzés státusza megváltozott, pl. lezárták
-charset of file	infolog	hu	Állomány karakterkészlete
 check to set startday	infolog	hu	Kezdőnap beállításhoz ikszelje be
 check to specify custom contact	infolog	hu	Kapcsolja be az egyéni kapcsolat megadásához
+choose owner of imported data	infolog	hu	Válassza ki az importált adatok tulajdonosát
 click here to create the link	infolog	hu	hivatkozás létrehozásához kattintson ide
 click here to start the search	infolog	hu	keresés elindításához kattintson ide
 close	infolog	hu	Lezár
 close all	infolog	hu	Mindet lezár
 close this entry and all listed sub-entries	infolog	hu	Bejegyzés lezárása minden el bejegyzéssel együtt
+closed	infolog	hu	Lezárt
 comment	infolog	hu	Megjegyzés
 completed	infolog	hu	Teljesítve
 configuration	infolog	hu	Konfiguráció
 confirm	infolog	hu	Megerősít
 contact	infolog	hu	Kapcsolat
+copy of:	infolog	hu	Másolás
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	hu	A változásokat másolja a Vágóasztalra, %1újra olvassa be a bejegyzést%2 és fűzze össze őket
 create new links	infolog	hu	Új hivatkozás létrehozása
 creates a new field	infolog	hu	Új mező létrehozása
@@ -107,8 +112,6 @@ delegated upcomming	infolog	hu	közelgő megbízatás
 delegation	infolog	hu	Feladat delegálás
 delete	infolog	hu	Töröl
 delete one record by passing its id.	infolog	hu	Egy rekord törlése az azonosítója alapján
-delete the entry	infolog	hu	Bejegyzés törlése
-delete this entry	infolog	hu	Aktuális bejegyzés törlése
 delete this entry and all listed sub-entries	infolog	hu	Aktuális és az összes listázott albejegyzés törlése
 deleted	infolog	hu	törölve
 deletes the selected typ	infolog	hu	kiválasztott típus törlése
@@ -126,7 +129,7 @@ do you want a notification, if items you delegated are about to start?	infolog	h
 do you want a notification, if items you delegated are due?	infolog	hu	Kér értesítést, ha egy megbízásos feladatának határideje rövidesen elérkezik?
 do you want to receive notifications as html-mails or plain text?	infolog	hu	Az értesítést html vagy normál szöveges formában kéri?
 don't show infolog	infolog	hu	Infolog bejegyzés elrejtése
-done	infolog	hu	kész
+done	common	hu	kész
 download	infolog	hu	Letölt
 duration	infolog	hu	Időtartam
 e-mail:	infolog	hu	E-mail:
@@ -138,6 +141,7 @@ edit status	infolog	hu	Állapot szerkesztése
 edit the entry	infolog	hu	Bejegyzés szerkesztése
 edit this entry	infolog	hu	Aktuális bejegyzés szerkesztése
 empty for all	infolog	hu	összes törlése
+end	infolog	hu	Befejezés
 enddate	infolog	hu	Lejárat napja
 enddate can not be before startdate	infolog	hu	A lejárat dátuma nem lehet korábbi mint a kezdés dátuma
 enter a custom contact, leave empty if linked entry should be used	infolog	hu	egyedi kapcsolat megadása, üresen hagyva a hivatkozott bejegyzést használja
@@ -147,6 +151,7 @@ enter the query pattern	infolog	hu	Lekérdező minta megadása
 entry and all files	infolog	hu	Bejegyzés és minden állomány
 error: saving the entry	infolog	hu	Hiba a bejegyzés mentésekor
 error: the entry has been updated since you opened it for editing!	infolog	hu	Hiba: a bejegyzés megváltozott azóta, hogy megnyitotta szerkesztésre! Másvalaki frissítette.
+execute a further action for this entry	infolog	hu	További művelet végrehajtása ezen a bejegyzésen
 existing links	infolog	hu	Létező hivatkozások
 fax	infolog	hu	Fax
 field must not be empty !!!	infolog	hu	A mezőt ki kell tölteni!!!
@@ -154,7 +159,6 @@ fieldseparator	infolog	hu	Mező elválasztó
 finish	infolog	hu	befejez
 for which types should this field be used	infolog	hu	használható típusok a mezőben
 from	infolog	hu	Feladó
-general	infolog	hu	Általános
 global categories	infolog	hu	Globális kategóriák
 group owner for	infolog	hu	Csoport tulajdonos
 high	infolog	hu	magas
@@ -166,7 +170,6 @@ id	infolog	hu	Azonosító
 id#	infolog	hu	Azonosító#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	hu	Ha egy típusnak van csoport tulajdonosa, akkor az ezzel a típussal létrehozott bejegyzések tulajdonosa a megadott CSOPORT és nem az a felhasználó, aki létrehozta!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	hu	Ha nincs beállítva, a kereső és szűrő sor rejtve marad abban az esetben, ha a "maximális egyezés egy lapon" limittől kevesebb találat volt (ahogy az Általános beállítások alatt be van állítva)
-import	infolog	hu	Importál
 import next set	infolog	hu	Következő széria importálása
 importance	infolog	hu	Fontosság
 info log	common	hu	InfoLog
@@ -189,6 +192,7 @@ last changed	infolog	hu	Utolsó változás
 last modified	infolog	hu	Utolsó módosítás
 leave blank to get the used time calculated by timesheet entries	infolog	hu	Hagyd üresen, hogy a kalkulált időt az időtábla bejegyzéseiből lehessen kalkulálni.
 leave it empty	infolog	hu	hagyja üresen
+leave it empty for a full week	infolog	hu	Teljes héthez hagyja üresen
 leave without saveing the entry	infolog	hu	kilépés mentés nélkül
 leaves without saveing	infolog	hu	kilépés mentés nélkül
 length<br>rows	infolog	hu	Sorok<br>Hossza
@@ -262,6 +266,7 @@ primary link	infolog	hu	elsődleges kapcsolat
 priority	infolog	hu	Prioritás
 private	infolog	hu	Magán
 project	infolog	hu	Projekt
+project id	infolog	hu	Projekt ID
 project settings: price, times	infolog	hu	Projekt beállítások: ár, idő
 projectmanager	infolog	hu	Projektmanager
 re-planned	infolog	hu	újratervezett
@@ -276,8 +281,6 @@ receive notifications about own items	infolog	hu	Értesítés saját bejegyzése
 receive notifications about starting entries you are responsible for	infolog	hu	Értesítés a felelősségembe tartozó bejegyzés kezdéséről
 receive notifications about starting entries you delegated	infolog	hu	Értesítés a hozzám rendelt bejegyzés kezdéséről
 receive notifications as html-mails	infolog	hu	Értesítés mint html email
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	hu	reguláris kifejezés a helyi IP címhez <b>pl. ^192\.168\.1\.
-reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	hu	reguláris kifejezés a helyi IP címhez <b>pl. ^192\.168\.1\.
 remark	infolog	hu	Megjegyzés
 remove this link (not the entry itself)	infolog	hu	Hivatkozás eltávolítása (nem a bejegyzést magát)
 responsible	infolog	hu	Felelős
@@ -302,6 +305,7 @@ select a responsible user: a person you want to delegate this task	infolog	hu	Fe
 select a typ to edit it's status-values or delete it	infolog	hu	válassz egy tipust szerkeszteni annak a státusz értékét vagy törölni azt
 select an app to search in	infolog	hu	Alkalmazásban keresés
 select an entry to link with	infolog	hu	Bejegyzés választása hivatkozás készítéshez
+select multiple contacts for a further action	infolog	hu	Válasszon ki több kapcsolatot a további művelethez
 select to filter by owner	infolog	hu	szűrés tulajdonosra
 select to filter by responsible	infolog	hu	szűrés felelősre
 sender	infolog	hu	Feladó
@@ -322,6 +326,7 @@ show status and percent done separate	infolog	hu	Mutassa a státuszt és százal
 show ticket id	infolog	hu	Mutassa a jegy azonosítóját
 show times	infolog	hu	Időtartamok megjelenítése
 small view	infolog	hu	kis nézet
+start	infolog	hu	Indít
 start a new search, cancel this link	infolog	hu	új keresés indítása, hivatkozás elhagyása
 startdate	infolog	hu	Kezdés dátuma
 startdate enddate	infolog	hu	Kezdés dátuma Befejezés dátuma
@@ -347,7 +352,6 @@ to what should the startdate of new entries be set.	infolog	hu	Új bejegyzés es
 today	infolog	hu	Ma
 todays date	infolog	hu	Mai dátum
 todo	infolog	hu	Tennivalók
-translation	infolog	hu	Fordítás
 typ	infolog	hu	Típus
 typ '%1' already exists !!!	infolog	hu	'%1' típus már létezik!!!
 type	infolog	hu	Típus
@@ -359,9 +363,6 @@ upcoming	infolog	hu	közelgő
 urgency	infolog	hu	Sürgősség
 urgent	infolog	hu	sürgős
 used time	infolog	hu	felhasznált idő
-valid path on clientside<br>eg. \\server\share or e:\	infolog	hu	Kliensoldali érvényes útvonal<br>pl. \\Server\Share vagy e:\
-valid path on clientside<br>eg. \servershare or e:	infolog	hu	Kliensoldali érvényes útvonal<br>pl. \\Server\Share vagy e:\
-valid path on clientside<br>eg. servershare or e:	infolog	hu	Kliensoldali érvényes útvonal<br>pl. \\Server\Share vagy e:\
 values for selectbox	infolog	hu	Éktékek a kiválasztódoboznak
 view all subs of this entry	infolog	hu	Bejegyzés összes albejegyzésének a megtekintése
 view other subs	infolog	hu	egyéb albejegyzések megtekintése
@@ -373,7 +374,6 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	hu	A bejegyzés felelőse mely mezőket szerkesztheti anélkül, hogy egyébként szerkesztési jogosultságai lennének?<br/>A Státusz, százalékos készültség és dátum mindig szerkeszthető!<br/>(például ha az alapértelmezett csoportjogosultság nem tenné lehetővé, hogy a leírást módosítsa a felelős).
 which implicit acl rights should the responsible get?	infolog	hu	Mely értelemszerűen felmerülő ACL jogosultságokat kapjon a felelős?
 which types should the calendar show	infolog	hu	Mely típust mutasson a naptár
-whole query	infolog	hu	teljes lekérdezés
 will-call	infolog	hu	hívni fog
 write (add or update) a record by passing its fields.	infolog	hu	Kiír (hozzáad vagy módosít) egy bejegyzést a mezők átadásával.
 yes - close	infolog	hu	Igen - lezárni

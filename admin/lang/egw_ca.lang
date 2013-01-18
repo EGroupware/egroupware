@@ -17,6 +17,7 @@ account preferences	admin	ca	Preferències del compte
 acl manager	admin	ca	Gestió de LCA
 acl rights	common	ca	Permisos de LCA
 action	admin	ca	Acció
+actions	admin	ca	Accions
 activate wysiwyg-editor	admin	ca	Activar l'editor WYSIWYG
 add a category	admin	ca	Afegir una categoria
 add a group	admin	ca	Afegir un grup
@@ -42,6 +43,8 @@ advanced options	admin	ca	opcions avançades
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ca	Després de quants intents erronis de connexió ha de bloquejar-se un compte? (predeterminat, 3)
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	ca	Després de quants intents erronis de connexió ha de bloquejar-se una IP? (predeterminat, 3)
 aliases	admin	ca	Àlies
+all applications	admin	ca	Totes les aplicacions
+all categories	admin	ca	Totes les categories
 all records and account information will be lost!	admin	ca	Es perdran tots els registres i la informació dels comptes!
 all users	admin	ca	Tots els usuaris
 allow anonymous access to this app	admin	ca	Permetre l'accés anònim a aquesta aplicació
@@ -57,6 +60,7 @@ application title	admin	ca	Títol de l'aplicació
 applications	admin	ca	Aplicacions
 applications list	admin	ca	Llista d'aplicacions
 applies the changes	admin	ca	aplica els canvis
+apply the changes	admin	ca	Aplica els canvis
 are you sure you want to delete the application %1 ?	admin	ca	Esteu segurs de voler esborrar l'aplicació %1 ?
 are you sure you want to delete this account ?	admin	ca	Esteu segurs de voler esborrar aquest compte?
 are you sure you want to delete this application ?	admin	ca	Esteu segurs de voler esborrar aquesta aplicació?
@@ -94,8 +98,10 @@ click to select a color	admin	ca	Pitjau per a seleccionar un color
 color	admin	ca	Color
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	ca	Domini de cookie (camp buit significa ús del nom complet del domini, per SiteMgr pe. ".domini.com" permet usar el mateix cookie per egw.domini.com i www.domini.com)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	ca	Espai cookie (permet múltiples sessions eGW amb diferents directoris, té problemes amb SiteMgr!
+country	admin	ca	País
 country selection	admin	ca	Seleccionar país
 create group	admin	ca	Crear grup
+created	admin	ca	Creat per
 creates a new field	admin	ca	crea un camp nou
 crontab only (recomended)	admin	ca	Només per crontab (recomenat)
 custom fields	admin	ca	Camps personalitzats
@@ -119,6 +125,7 @@ delete the group	admin	ca	esborrar el grup
 delete this category	admin	ca	esborrar aquesta categoria
 delete this group	admin	ca	esborrar aquest grup
 delete this user	admin	ca	esborrar aquest usuari
+deleted	admin	ca	eliminat
 deletes this field	admin	ca	esborra aquest camp
 deliver extern	admin	ca	lliura extern
 deny access to access log	admin	ca	Denegar accés al registre d'accesos
@@ -138,6 +145,7 @@ deny access to user accounts	admin	ca	Denegar accés als comptes d'usuari
 deny all users access to grant other users access to their entries ?	admin	ca	Prohibir als usuaris cedir accés a d'altres per als seus registres?
 description can not exceed 255 characters in length !	admin	ca	La descripció no pot excedir de 255 caràcters!
 determines the order the fields are displayed	admin	ca	determina l'ordre en que es mostren els camps
+disable	admin	ca	Deshabilitar
 disable "auto completion" of the login form	admin	ca	Desactivar "completat automàtic" al formulari d'inici de sessió
 disable wysiwyg-editor	admin	ca	desactiva l'editor WYSIWYG
 disabled (not recomended)	admin	ca	desactivat (no es recomana)
@@ -147,6 +155,7 @@ do you also want to delete all global subcategories ?	admin	ca	Voleu també esbo
 do you want to delete all global subcategories ?	admin	ca	Voleu esborrar totes les subcategories globals?
 do you want to move all global subcategories one level down ?	admin	ca	Voleu moure totes les subcategories globals un nivell cap avall?
 document root (default)	admin	ca	Arrel del document (predetermidada)
+down	admin	ca	avall
 each value is a line like <id>[=<label>]	admin	ca	cada valor és una línia com <id>[=<etiqueta>]
 each value is a line like id[=label]	admin	ca	cada valor és una línia com id[=etiqueta]
 edit account	admin	ca	Editar compte
@@ -168,6 +177,7 @@ edit user account	admin	ca	Editar compte de l'usuari
 egroupware directory	admin	ca	directori eGroupWare
 email account active	admin	ca	compte de correu actiu
 email address	admin	ca	adreça de correu
+enable	admin	ca	Habilitar
 enable debug-messages	admin	ca	Activar missatges de depuració
 enable the soap service	admin	ca	Habilita el servei soap
 enable the xmlrpc service	admin	ca	Habilita el servei xmlrpc
@@ -201,16 +211,17 @@ error: %1 not found or other error !!!	admin	ca	Error: no s'ha trobat %1 o bé u
 expires	admin	ca	Caduca
 explanation of ldapman	admin	ca	Aquest mòdul ha estat provat per POSTFIX,LDAP,Courier-IMAP i necessita els esquemes CORE i QMAIL (OID7914). Més detalls de com utilitzar i configurar aquest sistema es pot trobar a README.ldapman dins la carpeta doc d'ADMIN.
 fallback (after each pageview)	admin	ca	Activar després d'error (després de veure cada pàgina)
+false	admin	ca	Fals
 field '%1' already exists !!!	admin	ca	El camp '%1' ja existeix !!!
 file space	admin	ca	Espai per a arxius
 file space must be an integer	admin	ca	L'espai per a arxius ha de ser un nombre sencer
-find and register all application hooks	admin	ca	Trobar i registrar tots els "hooks" de les aplicacions
 for the times above	admin	ca	per a les vegades indicades a dalt
 for the times below (empty values count as '*', all empty = every minute)	admin	ca	per a les vegades indicades avall (valors buits equivalen a un '*', tots buits = cada minut)
 force selectbox	admin	ca	Llista desplegable obligatòria
 forward also to	admin	ca	reenviar també a
 forward emails to	admin	ca	reenviar correu a
 forward only	admin	ca	reenviar només
+full name	admin	ca	Nom complet
 global categories	common	ca	Categories Globals
 group ?	admin	ca	grup ?
 group has been added	common	ca	Grup afegit
@@ -257,12 +268,13 @@ ldap rootdn	admin	ca	LDAP rootdn
 leave empty for no quota	admin	ca	deixar buit si no té cita
 leave the category untouched and return back to the list	admin	ca	deixar la categoria intacta i tornar a la llista
 leave the group untouched and return back to the list	admin	ca	Deixar el grup intacte i tornar a la llista
+leave without saveing the entry	admin	ca	Sortir sense desar l'entrada
 leaves without saveing	admin	ca	Sortir sense desar
 length<br>rows	admin	ca	Longitud<br>Files
 list config settings	admin	ca	Llista de les opcions de configuració
 list current sessions	admin	ca	Llista de les sessions actuals
 list of current users	admin	ca	Llista d'usuaris presents
-login history	common	ca	Historial d'accessos
+login history	admin	ca	Historial d'accessos
 login message	admin	ca	Missatge d'inici de sessió
 login screen	admin	ca	Pantalla d'inici de sessió
 login shell	admin	ca	Intèrpret d'ordres d'inici de sessió
@@ -275,11 +287,13 @@ manager	admin	ca	Gestor
 max length of the input [, length of the inputfield (optional)]	admin	ca	longitud màxima de l'entrada [, longitud del camp de text (opcional)]
 maximum account id (e.g. 65535 or 1000000)	admin	ca	Màxim id de compte (ex. 65535 o 1000000)
 maximum entries in click path history	admin	ca	Nombre màxim d'entrades a l'historial de pulsacions de rutes
+members	admin	ca	Membres
 message has been updated	admin	ca	el missatge s'ha actualitzat
 method	admin	ca	Mètode
 minimum account id (e.g. 500 or 100, etc.)	admin	ca	Mínim id de compte (ex. 500 o 100, etc.)
 minute	admin	ca	Minut
 mode	admin	ca	Mode
+modified	admin	ca	Modificat
 month	admin	ca	Mes
 more secure	admin	ca	més segur
 name must not be empty !!!	admin	ca	El nom no pot estar buit !!!
@@ -298,6 +312,8 @@ no permission to add users	admin	ca	no teniu permís per a afegir usuaris
 no permission to create groups	admin	ca	no teniu permís per a crear grups
 note: ssl available only if php is compiled with curl support	admin	ca	Nota: "SSL" disponible només si "PHP" está compilat amb suport "curl"
 number of row for a multiline inputfield or line of a multi-select-box	admin	ca	número de files per a un camp de text de més d'una selecció
+one month	admin	ca	un mes
+one week	admin	ca	una setmana
 order	admin	ca	Ordre
 outbound	admin	ca	Notes
 passthrough	admin	ca	passant
@@ -308,6 +324,7 @@ peer servers	admin	ca	Servidors Parells
 percent of users that logged out	admin	ca	Percentatge d'usuaris que han sortit
 percent this user has logged out	admin	ca	Percentatge de desconnexions d'aquest usuari
 permission denied	admin	ca	Permís denegat
+permission denied !!!	admin	ca	Permís denegat !!!
 permissions	admin	ca	Permisos
 permissions this group has	admin	ca	Permisos d'aquest grup
 phpinfo	admin	ca	Informació de PHP
@@ -334,6 +351,7 @@ run asynchronous services	admin	ca	Executar serveis asíncrons
 save the category	admin	ca	guardar la categoria
 save the category and return back to the list	admin	ca	guardar la categoria i tornar a la llista
 saves the changes made and leaves	admin	ca	Desar els canvis fets i sortir
+saves this entry	admin	ca	Desar aquesta entrada
 search accounts	admin	ca	Cercar comptes
 search categories	admin	ca	Cercar categories
 search groups	admin	ca	Cercar grups
@@ -373,6 +391,7 @@ standard	admin	ca	estàndard
 standard imap server	admin	ca	servidor IMAP estàndard
 standard pop3 server	admin	ca	servidor POP3 estàndard
 standard smtp-server	admin	ca	servidor SMTP estàndard
+start	admin	ca	Inici
 start testjob!	admin	ca	Iniciar el treball de proves
 submit changes	admin	ca	Enviar canvis
 submit the search string	admin	ca	Enviar la cadena de recerca
@@ -405,11 +424,16 @@ timeout for sessions in seconds (default 14400 = 4 hours)	admin	ca	Temps d'esper
 times	admin	ca	Vegades
 top	admin	ca	Superior
 total records	admin	ca	Total de Registres
+translation	admin	ca	Traducció
+true	admin	ca	Cert
 trust level	admin	ca	Nivell de confiança
 trust relationship	admin	ca	Relacions de confiança
+two weeks	admin	ca	dues setmanes
 type '%1' already exists !!!	admin	ca	tipus '%1' ja existeix !!!
 type of customfield	admin	ca	Tipus de camp
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	ca	En Windows necessites instal·lar el servei asíncron %1manualment%2 o utilitzar el mode de sistema alternatiu. Sistema alternatiu significa que les feines només s'activen després de cada vista de pàgina !!!
+up	admin	ca	a dalt
+updated	admin	ca	Actualitzat
 use cookies to pass sessionid	admin	ca	Usar galetes per a gestionar sessions
 use pure html compliant code (not fully working yet)	admin	ca	Usar codi HTML pur (no és totalment funcional encara)
 use theme	admin	ca	Usar tema

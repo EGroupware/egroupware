@@ -25,6 +25,7 @@ any of	felamimail	sv	Någon av
 any status	felamimail	sv	Alla status
 anyone	felamimail	sv	Alla
 as a subfolder of	felamimail	sv	Som underkatalog till
+attach	felamimail	sv	Bifoga
 attachments	felamimail	sv	Bilagor
 authentication required	felamimail	sv	Autentisering krävs
 auto refresh folder list	felamimail	sv	Auto uppdatera katalog lista
@@ -37,6 +38,7 @@ bcc	felamimail	sv	Bcc
 before headers	felamimail	sv	Före brevhuvud
 between headers and message body	felamimail	sv	Mellan brevhuvud och meddelandets innehåll
 body part	felamimail	sv	Meddelandeinnehåll
+by date	felamimail	sv	Enligt datum
 can't connect to inbox!!	felamimail	sv	Kan inte ansluta till Inkorg
 cc	felamimail	sv	Cc
 change folder	felamimail	sv	Byt katalog
@@ -55,6 +57,7 @@ condition	felamimail	sv	vilkor
 configuration	felamimail	sv	Alternativ
 connection dropped by imap server.	felamimail	sv	Anslutningen stängd av IMAP server
 contains	felamimail	sv	Innehåller
+copy to	felamimail	sv	Kopiera
 could not complete request. reason given: %s	felamimail	sv	Kunde inte fullfölja förfrågan. Svaret: %s
 could not open secure connection to the imap server. %s : %s.	felamimail	sv	Kunde inte öppna en söker anslutning till IMAP servern. %s: %s
 cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	sv	CRAM-MD5 och DIGEST-MD5 kräver att Auth_SASL paketet installerats
@@ -74,6 +77,7 @@ date(newest first)	felamimail	sv	Datum (nyaste först)
 date(oldest first)	felamimail	sv	Datum (äldsta först)
 days	felamimail	sv	Dagar
 deactivate script	felamimail	sv	Inaktivera skript
+default	felamimail	sv	Standard
 default signature	felamimail	sv	Standard signatur
 default sorting order	felamimail	sv	Standard sorterings ordning
 delete all	felamimail	sv	Radera alla
@@ -130,24 +134,28 @@ enter your sieve server hostname or ip address	admin	sv	SIEVE server värdnamn e
 enter your sieve server port	admin	sv	SIEVE server port
 enter your smtp server hostname or ip address	admin	sv	SMTP server värdnamn eller IP adress
 enter your smtp server port	admin	sv	SMTP server port
+entry saved	felamimail	sv	Post sparad
 error	felamimail	sv	FEL
 error connecting to imap serv	felamimail	sv	Fel: Kunde inte ansluta till IMAP server
 error connecting to imap server. %s : %s.	felamimail	sv	Kunde inte ansluta till IMAP server %s : %s
 error connecting to imap server: [%s] %s.	felamimail	sv	Kunde inte ansluta till IMAP server [%s] %s
 error opening	felamimail	sv	Fel: Kunde inte öppna
+event details follow	felamimail	sv	Händelse detaljer följer
 every	felamimail	sv	Varje
 every %1 days	felamimail	sv	Var %1 dag
 expunge	felamimail	sv	Utplåna
 extended	felamimail	sv	Utökad
 felamimail	common	sv	FelaMiMail
 file into	felamimail	sv	Flytta till
+filemanager	felamimail	sv	Filhanterare
 files	felamimail	sv	Filer
 filter active	felamimail	sv	Aktiva filter
 filter name	felamimail	sv	Filter namn
-filter rules	felamimail	sv	Filter regler
+filter rules	common	sv	Filter regler
 first name	felamimail	sv	Förnamn
 flagged	felamimail	sv	Flaggad
 flags	felamimail	sv	Flaggor
+folder	felamimail	sv	Katalog
 folder acl	felamimail	sv	Katalog ACL
 folder name	felamimail	sv	Katalognamn
 folder path	felamimail	sv	Katalogsökväg
@@ -166,7 +174,6 @@ forward to	felamimail	sv	Vidarebefodra till
 forward to address	felamimail	sv	Vidarebefodra till adress
 forwarding	felamimail	sv	Vidarebefodrar
 found	felamimail	sv	Hittade
-fri	felamimail	sv	Fre
 from	felamimail	sv	Från
 from(a->z)	felamimail	sv	Från (A->Ö)
 from(z->a)	felamimail	sv	Från (Ö->A)
@@ -199,6 +206,7 @@ imap server type	felamimail	sv	IMAP Server typ
 imap server username	felamimail	sv	IMAP Server användarnamn
 imaps authentication	felamimail	sv	IMAPS Autentisering
 imaps encryption only	felamimail	sv	IMAPS Kryptering endast
+import	felamimail	sv	Importera
 in	felamimail	sv	den
 inbox	felamimail	sv	Inkorg
 incoming mail server(imap)	felamimail	sv	Inkommande e-post server (IMAP)
@@ -213,6 +221,7 @@ keep local copy of email	felamimail	sv	Spara en lokal kopia av brev
 kilobytes	felamimail	sv	Kb
 language	felamimail	sv	Språk
 last name	felamimail	sv	Efternamn
+later	felamimail	sv	Senare
 left	felamimail	sv	Vänster
 less	felamimail	sv	Färre
 less than	felamimail	sv	Mindre än
@@ -223,7 +232,7 @@ location of buttons when composing	felamimail	sv	Knapp placering medans man skri
 mail server login type	admin	sv	E-post server inloggnings typ
 mail settings	felamimail	sv	E-post alternativ
 mainmessage	felamimail	sv	huvudmeddelande
-manage emailaccounts	felamimail	sv	Hantera e-postkonton
+manage emailaccounts	common	sv	Hantera e-postkonton
 manage emailfilter / vacation	preferences	sv	Hantera E-postfilter / Frånvaro
 manage folders	common	sv	Katalog hantering
 manage sieve	common	sv	Hantera Sieve skript
@@ -241,9 +250,10 @@ max uploadsize	felamimail	sv	Max uppladdnings storlek
 message highlighting	felamimail	sv	Meddelande fokusering
 message list	felamimail	sv	Meddelande lista
 messages	felamimail	sv	Meddelanden
-mon	felamimail	sv	Mån
 move	felamimail	sv	Flytta
+move folder	felamimail	sv	Flytta katalog
 move messages	felamimail	sv	Flytta meddelanden
+move selected to	felamimail	sv	Flytta valda till
 move to	felamimail	sv	Flytta valda till
 move to trash	felamimail	sv	Flytta till Borttaget
 moving messages to	felamimail	sv	Flyttar meddelanden till
@@ -268,6 +278,7 @@ no previous message	felamimail	sv	Inga tidigare meddelanden
 no supported imap authentication method could be found.	felamimail	sv	Kunde inte hitta supporterad IMAP autentiserings metod
 no valid emailprofile selected!!	felamimail	sv	Ingen giltig e-post profil vald
 none	felamimail	sv	Inga
+on	felamimail	sv	På
 on behalf of	felamimail	sv	Företräder
 one address is not valid	felamimail	sv	En adress är ogiltig
 only inbox	felamimail	sv	Endast Inkorg
@@ -316,8 +327,8 @@ return to options page	felamimail	sv	Återvänd till alternativ
 right	felamimail	sv	Höger
 row order style	felamimail	sv	Rad sortering
 rule	felamimail	sv	Regel
-sat	felamimail	sv	Lör
 save	felamimail	sv	Spara
+save all	felamimail	sv	Spara alla
 save as draft	felamimail	sv	Spara som utkast
 save as infolog	felamimail	sv	Spara som InfoLogg
 save changes	felamimail	sv	Spara ändringar
@@ -355,7 +366,6 @@ submit	felamimail	sv	Skicka
 subscribe	felamimail	sv	Prenumerera
 subscribed	felamimail	sv	Prenumererad
 subscribed successfully!	felamimail	sv	Prenumeration lyckad
-sun	felamimail	sv	Sön
 table of contents	felamimail	sv	Innehåll
 text only	felamimail	sv	Text endast
 the connection to the imap server failed!!	felamimail	sv	Anslutningen till IMAP servern misslyckades
@@ -364,7 +374,6 @@ the mimeparser can not parse this message.	felamimail	sv	MIME-tolken kunde inte 
 then	felamimail	sv	SEN
 this folder is empty	felamimail	sv	Katalogen är tom
 this php has no imap support compiled in!!	felamimail	sv	Denna installation har inte IMAP stöd kompilerat i PHP.
-thu	felamimail	sv	Tor
 to	felamimail	sv	Till
 to mail sent to	felamimail	sv	Till meddelande skickat till
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	sv	För att använda TLS anslutning måste du ha PHP version 5.1.0 eller högre
@@ -372,7 +381,6 @@ translation preferences	felamimail	sv	Översättnings alternativ
 translation server	felamimail	sv	Översättnings server
 trash fold	felamimail	sv	Borttaget
 trash folder	felamimail	sv	Borttaget
-tue	felamimail	sv	Tis
 type	felamimail	sv	Typ
 unexpected response from server to authenticate command.	felamimail	sv	Oväntat svar från servern på AUTENTISERINGS kommandot
 unexpected response from server to digest-md5 response.	felamimail	sv	Oväntat svar från servern på Digest-MD5
@@ -392,6 +400,7 @@ unsubscribed successfully!	felamimail	sv	Avprenumererad
 up	felamimail	sv	Upp
 updating message status	felamimail	sv	Uppdaterar meddelande status
 updating view	felamimail	sv	Uppdaterar vy
+urgent	felamimail	sv	Brådskande
 use <a href="%1">emailadmin</a> to create profiles	felamimail	sv	Använd <a href="%1">E-post Admin</a> för att skapa profiler
 use a signature	felamimail	sv	Använd signatur
 use a signature?	felamimail	sv	Använd signatur?
@@ -400,7 +409,7 @@ use custom settings	felamimail	sv	Använd anpassade inställningar
 use regular expressions	felamimail	sv	Använd regexp
 use smtp auth	admin	sv	Använd SMTP autentisering
 users can define their own emailaccounts	admin	sv	Användare kan definiera egna epost konton
-vacation notice	felamimail	sv	Frånvaro meddelande
+vacation notice	common	sv	Frånvaro meddelande
 validate certificate	felamimail	sv	Validera certifikat
 view full header	felamimail	sv	Visa hela brevhuvudet
 view header lines	felamimail	sv	Visa brevhuvudet
@@ -408,7 +417,6 @@ view message	felamimail	sv	Visa meddelandet
 viewing full header	felamimail	sv	Visar hela brevhuvudet
 viewing message	felamimail	sv	Visar meddelandet
 viewing messages	felamimail	sv	Visar meddelanden
-wed	felamimail	sv	Ons
 when deleting messages	felamimail	sv	Vid meddelande radering
 with message	felamimail	sv	Med meddelande
 with message "%1"	felamimail	sv	Med meddelande "%1"

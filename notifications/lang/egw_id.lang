@@ -7,7 +7,7 @@ egroupware-popup verbosity	notifications	id	EGroupware-Popup verbosity
 enabled chains	notifications	id	enabled chains
 folder	notifications	id	folder
 from	notifications	id	dari
-linked entries:	notifications	id	entri terkait:
+linked entries:	common	id	entri terkait:
 message from	notifications	id	pesan dari
 minutes	notifications	id	menit
 notification	common	id	notifikasi

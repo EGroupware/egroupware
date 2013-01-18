@@ -73,7 +73,7 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	hu	Az aktív kapcsolatok számának állandó megjelenítése (egyszerre hányan használják a rendszert).
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	hu	A segítség üzenetek állandóan megjelenítésre kerülnek, amikor változtatja a tulajdonságokat, vagy csak akkor jelennek meg, ha kifejezetten kéri a megjelenítést.
 show helpmessages by default	preferences	hu	Segítség megjelenítése alapértelmezésben
-show links between egroupware aps as	addressbook	hu	Az eGroupWare alkalmazások közötti linkeket mutassa
+show links between egroupware aps as	common	hu	Az eGroupWare alkalmazások közötti linkeket mutassa
 show navigation bar as	preferences	hu	Mutassa a navigációs panelt mint
 show number of current users	preferences	hu	Aktuálisan bejelentkezett felhasználók számának mutatása
 show text on navigation icons	preferences	hu	Szöveg megjelenítése a navigációs ikonokon
@@ -95,7 +95,7 @@ when you say yes the home and logout buttons are presented as applications in th
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	hu	Milyen karakterkódolást alkalmazzunk CSV exportnál? Az alapértelmezett karakterkódolás az eGroupWare rendszer alapértelmezett karakterkódolásával egyezik meg.
 which currency symbol or name should be used in egroupware.	preferences	hu	Melyik pénznemet használja a rendszer.
 you can show the applications as icons only, icons with app-name or both.	preferences	hu	Az alkalmazások gombja a navigációs panelen megjeleníthetőek mint ikonok, ikonok az alkalmazás nevével, vagy csak az alkalmazás nevével.
-you can show the linked entries with icons only, icons with app-name or both.	addressbook	hu	Csatolt elemeket ikonként, szövegként vagy mindkettőt feltüntetve lehet megjeleníteni.
+you can show the linked entries with icons only, icons with app-name or both.	common	hu	Csatolt elemeket ikonként, szövegként vagy mindkettőt feltüntetve lehet megjeleníteni.
 you do not have permission to set acl's in this mode!	preferences	hu	Ebben a helyzetben nincs jogosultsága az ACL-eket beállítani!
 you must enter a password	preferences	hu	Meg kell adnia egy jelszót
 your current theme is: %1	preferences	hu	az ön aktuális témája: %1

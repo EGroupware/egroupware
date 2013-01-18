@@ -1,0 +1,47 @@
+%1 records imported	addressbook	lo	%1 ບັນທຶກການນໍາເຂົ້າ
+%1 starts with '%2'	addressbook	lo	%1ເລີ່ມ '%2'
+added	addressbook	lo	ເພີ່ມເຕີມ
+added by synchronisation	addressbook	lo	ເພີ່ມໂດຍການເຮັດໃຫ້ຂໍ້ມູນຖືກກັນ
+birthday	common	lo	ວັນເກີດ
+birthdays	common	lo	ວັນຄ້າຍວັນເກີດ
+charset for the csv export	addressbook	lo	ລະຫັດຕົວອັກສອນສໍາຫຼັບການສົ່ງອອກ  CSV
+check all	addressbook	lo	ກວດສອບທັງໝົດ
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	lo	ຄັດລອກການປ່ຽນແປງຂອງທ່ານໄປຄຼິບບອດ,%1ໂຫຼດຄືນການບັນທຶກ/ຂໍ້ມູນ %2 ແລະ ລວມມັນເຂົ້າກັນ
+country	common	lo	ປະເທດ
+create new links	addressbook	lo	ສ້າງການເຊື່ອມຕໍ່ໃໝ່
+created	addressbook	lo	ຖືກສ້າງແລ້ວ
+csv-fieldname	addressbook	lo	ຊື່ຂອບເຂດຂອງ CSV
+csv-filename	addressbook	lo	ຊື່ຟາຍຂອງ CSV
+custom fields	addressbook	lo	ກໍານົດ fields
+default	addressbook	lo	ຄ່າເລີ່ມຕົ້ນ
+download	addressbook	lo	ດາວໂຫຼດ
+duration	addressbook	lo	ໄລຍະເວລາ
+edit custom fields	admin	lo	ແກ້ໄຂຟີລທີ່ກໍານົດເອງ
+empty for all	addressbook	lo	ບ່ອນວ່າງສຳລັບທັງໝົດ
+end	addressbook	lo	ສິ້ນສຸດ
+error: the entry has been updated since you opened it for editing!	addressbook	lo	ຂໍ້ຜິດພາດ: ຂໍ້ມູນ/ລາຍການ ໄດ້ຮັບການປັບປຸງຕັ້ງແຕ່ຕອນທ່ານເປີດສໍາລັບການແກ້ໄຂ!!!
+existing links	addressbook	lo	ການເຊື່ອມຕໍ່ທີ່ມີຢູ່ແລ້ວ
+exists	addressbook	lo	ມີຢູ່ແລ້ວ
+fieldseparator	addressbook	lo	ການແຍກຟີລ
+general	admin	lo	ທົ່ວໄປ
+global categories	addressbook	lo	ໝວດທົ່ວໄປ
+h	addressbook	lo	ຊົ່ວໂມງ
+icon	addressbook	lo	Icon
+links	addressbook	lo	ເຊື່ອມຕໍ່
+location	addressbook	lo	ສະຖານທີ່
+number of records to read (%1)	addressbook	lo	ຈໍານວນຂອງບັນທຶກທີ່ຈະອ່ານ (%1)
+participants	addressbook	lo	ຜູ້ເຂົ້າຮ່ວມ
+permission denied !!!	addressbook	lo	ບໍ່ໄດ້ຮັບອະນຸຍາດ !!!
+repetition	addressbook	lo	ການເຮັດຊໍ້າ
+role	addressbook	lo	ບົດບາດ
+search for '%1'	addressbook	lo	ຄົ້ນຫາ '% 1'
+select multiple contacts for a further action	addressbook	lo	ເລືອກເອົາການຕິດຕໍ່ຫຼາຍຮູບແບບ ເພື່ອການດໍາເນີນການຕໍ່ໄປ
+show	addressbook	lo	ສະແດງ
+start	admin	lo	ເລີ່ມ
+startrecord	addressbook	lo	ເລີ່ມບັນທຶກ
+test import (show importable records <u>only</u> in browser)	addressbook	lo	ທົດສອບການນໍາເຂົ້າ, ສະແດງການບັນທຶກ ທີ່ສໍາຄັນ <u>ພຽງແຕ່</u> ໃນໜ້າຕ່າງ
+timezone	addressbook	lo	ເຂດເວລາ
+to many might exceed your execution-time-limit	addressbook	lo	ຫຼາຍເກີນໄປອາດຈະເກີນໄລຍະເວລາຈໍາກັດການປະຕິບັດແຜນການຂອງທ່ານ
+updated	addressbook	lo	ປັບປຸງແລ້ວ
+weekday	addressbook	lo	ວັນທໍາມະດາ
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	lo	ຕົວອັກສອນໃດຄວນຈະໃຊ້ໃນ CSV ສົ່ງອອກ.

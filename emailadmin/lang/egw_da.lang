@@ -1,7 +1,6 @@
 add profile	emailadmin	da	Tilføj Profil
 admin dn	emailadmin	da	admin dn
 admin password	emailadmin	da	admin adgangskode
-admin passwort	emailadmin	da	admin adgangskode
 admin username	emailadmin	da	admin brugernavn
 advanced options	emailadmin	da	avanceret indstillinger
 alternate email address	emailadmin	da	alternativ e-mail adresse
@@ -40,6 +39,8 @@ mail settings	admin	da	Post indstillinger
 name of organisation	emailadmin	da	Navn på organisation
 no alternate email address	emailadmin	da	ingen alternativ e-mail adresse
 no forwarding email address	emailadmin	da	ingen viderestillet e-mail adresse
+order	emailadmin	da	Rækkefølge
+organisation	emailadmin	da	Organisation
 pop3 server hostname or ip address	emailadmin	da	POP3 server domænenavn eller IP adresse
 pop3 server port	emailadmin	da	POP server port
 postfix with ldap	emailadmin	da	Postfix med LDAP
@@ -55,12 +56,14 @@ sieve server hostname or ip address	emailadmin	da	Sieve server domænenavn eller
 sieve server port	emailadmin	da	Sieve server port
 sieve settings	emailadmin	da	Sieve indstillinger
 smtp server name	emailadmin	da	SMTP server navn
+smtp settings	emailadmin	da	SMTP indstillinger
 smtp-server hostname or ip address	emailadmin	da	SMTP server domænenavn eller IP adresse
 smtp-server port	emailadmin	da	SMTP server port
 standard	emailadmin	da	Standart
 standard imap server	emailadmin	da	Standart IMAP server
 standard pop3 server	emailadmin	da	Standart POP3 server
 standard smtp-server	emailadmin	da	Standart SMTP server
+this php has no imap support compiled in!!	emailadmin	da	Der er ikke understøttelse for IMAP i din PHP kode.
 use ldap defaults	emailadmin	da	brug LDAP standarter
 use smtp auth	emailadmin	da	Brug SMTP autorisation
 use tls authentication	emailadmin	da	Brug TLS autorisation

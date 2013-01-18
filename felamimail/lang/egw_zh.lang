@@ -28,6 +28,7 @@ any of	felamimail	zh	任何
 any status	felamimail	zh	任何状态
 anyone	felamimail	zh	任何人
 as a subfolder of	felamimail	zh	作为该邮件夹的子邮件夹
+attach	felamimail	zh	附加
 attachments	felamimail	zh	附件
 authentication required	felamimail	zh	必要附件
 auto refresh folder list	felamimail	zh	自动刷新邮件夹列表
@@ -59,7 +60,9 @@ compress folder	felamimail	zh	压缩文件夹
 condition	felamimail	zh	条件
 configuration	felamimail	zh	配置
 connection dropped by imap server.	felamimail	zh	连接被 IMAP 服务器中断
+contact not found!	felamimail	zh	联系人未找到！
 contains	felamimail	zh	包含
+copy to	felamimail	zh	复制到
 could not complete request. reason given: %s	felamimail	zh	无法完成请求。原因是：%s
 could not open secure connection to the imap server. %s : %s.	felamimail	zh	无法开启到 IMAP 服务器的安全连接。%s：%s。
 cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	zh	CRAM-MD5 或 DIGEST-MD5 需要安装 Auth_SASL 包。
@@ -136,17 +139,20 @@ enter your sieve server hostname or ip address	admin	zh	输入您的 ISIEV 服�
 enter your sieve server port	admin	zh	输入您的 ISIEV 服务器端口
 enter your smtp server hostname or ip address	admin	zh	输入您的 SMAP 服务器主机名或 IP 地址
 enter your smtp server port	admin	zh	输入您的 SMAP 服务器端口
+entry saved	felamimail	zh	条目已储存
 error	felamimail	zh	错误
 error connecting to imap serv	felamimail	zh	连接 IMAP 服务器错误
 error connecting to imap server. %s : %s.	felamimail	zh	连接到 IMAP 服务器错误。%s：%s。
 error connecting to imap server: [%s] %s.	felamimail	zh	连接到 IMAP 服务器错误：[%s] %s。
 error opening	felamimail	zh	打开错误
+event details follow	felamimail	zh	事件细节
 every	felamimail	zh	每一
 every %1 days	felamimail	zh	每 %1 天
 expunge	felamimail	zh	删掉
 extended	felamimail	zh	延伸的
 felamimail	common	zh	我的邮箱
 file into	felamimail	zh	文件插入
+filemanager	felamimail	zh	文件管理器
 files	felamimail	zh	文件
 filter active	felamimail	zh	过滤器激活
 filter name	felamimail	zh	过滤器名称
@@ -174,7 +180,6 @@ forward to	felamimail	zh	转发到
 forward to address	felamimail	zh	转发到地址
 forwarding	felamimail	zh	转发中
 found	felamimail	zh	建立
-fri	felamimail	zh	五
 from	felamimail	zh	发件人
 from(a->z)	felamimail	zh	从 (A->Z)
 from(z->a)	felamimail	zh	从 (Z->A)
@@ -207,6 +212,7 @@ imap server type	felamimail	zh	IMAP 服务器类型
 imap server username	felamimail	zh	IMAP 服务器用户名
 imaps authentication	felamimail	zh	IMAPS 身份验证
 imaps encryption only	felamimail	zh	仅 IMAPS 加密
+import	felamimail	zh	导入
 in	felamimail	zh	在
 inbox	felamimail	zh	收件箱
 incoming mail server(imap)	felamimail	zh	收件服务器(IMAP)
@@ -221,6 +227,7 @@ keep local copy of email	felamimail	zh	在本地保留邮件副本
 kilobytes	felamimail	zh	kb
 language	felamimail	zh	语言
 last name	felamimail	zh	姓
+later	felamimail	zh	晚一点
 left	felamimail	zh	左
 less	felamimail	zh	少
 less than	felamimail	zh	少于
@@ -231,7 +238,7 @@ location of buttons when composing	felamimail	zh	排版时按钮的位置
 mail server login type	admin	zh	邮件服务器登录类型
 mail settings	felamimail	zh	邮件设置
 mainmessage	felamimail	zh	主要邮件
-manage emailaccounts	preferences	zh	管理邮件帐户
+manage emailaccounts	common	zh	管理邮件帐户
 manage emailfilter / vacation	preferences	zh	管理邮件过滤 / 假期
 manage folders	common	zh	邮件夹管理
 manage sieve	common	zh	管理服务器脚本
@@ -249,9 +256,10 @@ max uploadsize	felamimail	zh	最大上传
 message highlighting	felamimail	zh	邮件高亮显示
 message list	felamimail	zh	邮件列表
 messages	felamimail	zh	邮件
-mon	felamimail	zh	一
 move	felamimail	zh	移动
+move folder	felamimail	zh	移动文件夹
 move messages	felamimail	zh	移动邮件
+move selected to	felamimail	zh	将选定邮件移至
 move to	felamimail	zh	将选定邮件移至
 move to trash	felamimail	zh	移动至回收站
 moving messages to	felamimail	zh	移动邮件到
@@ -279,6 +287,7 @@ no subject given!	felamimail	zh	没有指定的主题！
 no supported imap authentication method could be found.	felamimail	zh	找不到支持 IMAP 验证方法。
 no valid emailprofile selected!!	felamimail	zh	指定的邮件帐户无效！
 none	felamimail	zh	无
+on	felamimail	zh	在
 on behalf of	felamimail	zh	代表
 one address is not valid	felamimail	zh	其中一个地址无效
 only inbox	felamimail	zh	只有收件箱
@@ -327,8 +336,8 @@ return to options page	felamimail	zh	返回到选项
 right	felamimail	zh	正确
 row order style	felamimail	zh	行排序类型
 rule	felamimail	zh	规则
-sat	felamimail	zh	六
 save	felamimail	zh	保存
+save all	felamimail	zh	保存所有
 save as draft	felamimail	zh	存为草稿
 save as infolog	felamimail	zh	存为记事本
 save changes	felamimail	zh	保存为修改
@@ -368,7 +377,6 @@ submit	felamimail	zh	提交
 subscribe	felamimail	zh	订阅
 subscribed	felamimail	zh	已订阅
 subscribed successfully!	felamimail	zh	订阅成功！
-sun	felamimail	zh	日
 system signature	felamimail	zh	系统签名
 table of contents	felamimail	zh	目录
 text only	felamimail	zh	纯文字
@@ -378,7 +386,6 @@ the mimeparser can not parse this message.	felamimail	zh	mime 解析器不能解
 then	felamimail	zh	然后
 this folder is empty	felamimail	zh	这个文件夹时空的
 this php has no imap support compiled in!!	felamimail	zh	您的 PHP 并未编译为支持 IMAP！
-thu	felamimail	zh	四
 to	felamimail	zh	收件人
 to mail sent to	felamimail	zh	到邮件收件人
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	zh	要使用 TLS 连接，您必须运行 PHP 5.1.0 或更高版本。
@@ -386,7 +393,6 @@ translation preferences	felamimail	zh	翻译偏好
 translation server	felamimail	zh	翻译服务器
 trash fold	felamimail	zh	垃圾桶
 trash folder	felamimail	zh	回收站
-tue	felamimail	zh	二
 type	felamimail	zh	类型
 unexpected response from server to authenticate command.	felamimail	zh	服务器 AUTHENTICATE 指令返回了不明回应。
 unexpected response from server to digest-md5 response.	felamimail	zh	服务器 Digest-MD5 指令返回了不明回应。
@@ -406,6 +412,7 @@ unsubscribed successfully!	felamimail	zh	取消订阅成功！
 up	felamimail	zh	向上
 updating message status	felamimail	zh	更新邮件状态
 updating view	felamimail	zh	更新查看
+urgent	felamimail	zh	最高
 use <a href="%1">emailadmin</a> to create profiles	felamimail	zh	使用<a href="%1">邮件管理</a>来创建配置文件(profile)
 use a signature	felamimail	zh	使用签名
 use a signature?	felamimail	zh	使用签名？
@@ -424,7 +431,6 @@ view message	felamimail	zh	查看邮件
 viewing full header	felamimail	zh	查看完整邮件头
 viewing message	felamimail	zh	查看邮件
 viewing messages	felamimail	zh	查看邮件
-wed	felamimail	zh	三
 when deleting messages	felamimail	zh	当删除邮件时
 with message	felamimail	zh	与邮件
 with message "%1"	felamimail	zh	与邮件"%1"

@@ -1,3 +1,5 @@
+%1 records imported	infolog	ko	%1 개의 레코드를 가져왔습니다
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	ko	%1 개의 레코드를 읽음 (아직 가져오기는 수행되지 않았음, %2뒤로가기%2 해서 가져오기 테스트를 체크해제한 후 수행하세요)
 a short subject for the entry	infolog	ko	이 엔트리의 짧은 제목
 abort without deleting	infolog	ko	삭제없이 취소
 accept	infolog	ko	수락
@@ -13,6 +15,7 @@ add file	infolog	ko	파일 추가
 add sub	infolog	ko	하위 추가
 add timesheet entry	infolog	ko	타임시트 엔트리에 추가
 add:	infolog	ko	추가:
+added	infolog	ko	추가됨
 all	infolog	ko	모두
 all links and attachments	infolog	ko	모든 첨부와 링크들
 apply the changes	infolog	ko	변경사항 적용
@@ -27,7 +30,6 @@ cancelled	infolog	ko	취소됨
 categories	infolog	ko	카테고리들
 category	infolog	ko	카테고리
 change the status of an entry, eg. close it	infolog	ko	엔트리의 상태를 변경 (예: 만료)
-charset of file	infolog	ko	파일의 문자열설정
 check to set startday	infolog	ko	시작일 설정을 확인
 click here to create the link	infolog	ko	새 링크를 생성하려면 클릭하세요
 click here to start the search	infolog	ko	검색을 시작하려면 클릭하세요
@@ -37,25 +39,29 @@ completed	infolog	ko	완료됨
 configuration	infolog	ko	설정
 confirm	infolog	ko	확인
 contact	infolog	ko	연락
+copy of:	infolog	ko	사본:
 create new links	infolog	ko	새 링크 만들기
 creates a new field	infolog	ko	새 필드 만들기
 creates a new status with the given values	infolog	ko	주어진 값으로 새 상태 만들기
 creates a new typ with the given name	infolog	ko	주어진 이름으로 새 형식 만들기
 creation	infolog	ko	생성
+csv-fieldname	infolog	ko	CSV-필드이름
+csv-filename	infolog	ko	CSV-파일이름
+custom	infolog	ko	사용자정의
+custom fields	infolog	ko	사용자정의 필드
 date completed	infolog	ko	완료일
 datecreated	infolog	ko	개설일
+days	infolog	ko	일동안
 delegation	infolog	ko	위임
 delete	infolog	ko	삭제
-delete the entry	infolog	ko	엔트리 삭제
-delete this entry	infolog	ko	이 엔트리 삭제
 delete this entry and all listed sub-entries	infolog	ko	하위 엔트리를 포함 삭제
+deleted	infolog	ko	삭제됨
 deletes the selected typ	infolog	ko	선택된 형식 삭제
 deletes this field	infolog	ko	이 필드 삭제
 deletes this status	infolog	ko	이 상태 삭제
 description	infolog	ko	내용
-details	infolog	ko	내용포함
 don't show infolog	infolog	ko	인포로그 보이지 않기
-done	infolog	ko	완료
+done	common	ko	완료
 download	infolog	ko	다운로드
 duration	infolog	ko	기간
 edit	infolog	ko	수정
@@ -64,6 +70,8 @@ edit rights (full edit rights incl. making someone else responsible!)	infolog	ko
 edit status	infolog	ko	상태 수정
 edit the entry	infolog	ko	엔트리 수정
 edit this entry	infolog	ko	이 엔트리 수정
+empty for all	infolog	ko	모두 비우기
+end	infolog	ko	종료
 enddate	infolog	ko	만기일
 enddate can not be before startdate	infolog	ko	만기일은 시작일보다 앞설수 없습니다.
 enter the query pattern	infolog	ko	질의 패턴 입력
@@ -73,8 +81,10 @@ existing links	infolog	ko	기존 링크
 fax	infolog	ko	팩스
 fieldseparator	infolog	ko	필드구분자
 finish	infolog	ko	완료
-general	infolog	ko	일반
-import	infolog	ko	불러오기
+from	infolog	ko	부터
+global categories	infolog	ko	전역 카테고리
+history	infolog	ko	내역
+import next set	infolog	ko	** 다음 집합(set)에서 가져오기
 info log	common	ko	인포로그
 infolog	common	ko	인포로그
 infolog - delete	infolog	ko	인포로그 - 삭제
@@ -115,6 +125,7 @@ no filter	infolog	ko	필터없음
 no links or attachments	infolog	ko	링크 혹은 첨부 없음
 none	infolog	ko	없음
 normal	infolog	ko	일반
+not	infolog	ko	아니(not)
 not assigned	infolog	ko	지정안됨
 not-started	infolog	ko	시작안됨
 note	infolog	ko	노트
@@ -127,7 +138,7 @@ own	infolog	ko	소유
 own open	infolog	ko	소유 개설
 own overdue	infolog	ko	소유 만기초과
 own upcoming	infolog	ko	소유 예정
-owner	infolog	ko	소유주
+path to user and group files has to be outside of the webservers document-root!!!	infolog	ko	사용자와 그룹파일의 경로는 반드시 웹서버 DocumentRoot 설정 외부에 있어야 합니다!!!
 pattern for search in addressbook	infolog	ko	주소록 검색을 위한 패턴
 pattern for search in projects	infolog	ko	프로젝트 검색을 위한 패턴
 percent completed	infolog	ko	퍼센트 완료
@@ -152,6 +163,7 @@ save	infolog	ko	저장
 saves the changes made and leaves	infolog	ko	저장하고 나가기
 saves this entry	infolog	ko	이 엔트리를 저장함
 search	infolog	ko	검색
+search for:	infolog	ko	찾기 :
 select	infolog	ko	선택
 select a category for this entry	infolog	ko	이 엔트리의 카테고리를 선택하세요
 select a price	infolog	ko	가격을 선택하세요
@@ -166,6 +178,7 @@ show last modified	infolog	ko	마지막 수정일 표기
 show status and percent done separate	infolog	ko	상태 및 완료도 개별 표기
 show ticket id	infolog	ko	티켓ID 표기
 small view	infolog	ko	미니뷰
+start	infolog	ko	시작
 start a new search, cancel this link	infolog	ko	이 링크를 취소하고 새로 검색
 startdate	infolog	ko	시작일
 startdate enddate	infolog	ko	시작일 만기일
@@ -176,10 +189,12 @@ status ...	infolog	ko	상태 ...
 sub	infolog	ko	하위
 subject	infolog	ko	제목
 task	infolog	ko	할일
+test import (show importable records <u>only</u> in browser)	infolog	ko	가져오기 테스트 (가져올수 있는 레코드 <u>오직</u> 브라우저에서만 보여줍니다)
+times	infolog	ko	시간
+to many might exceed your execution-time-limit	infolog	ko	너무 많을 경우 최대실행시간(execution-time-limit)을 초과함
 today	infolog	ko	오늘
 todays date	infolog	ko	오늘 일자
 todo	infolog	ko	할일
-translation	infolog	ko	번역
 typ	infolog	ko	형식
 typ '%1' already exists !!!	infolog	ko	%1 형식은 이미 있습니다.
 type	infolog	ko	형식

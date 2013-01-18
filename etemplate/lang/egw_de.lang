@@ -94,6 +94,7 @@ contact fields	etemplate	de	Kontaktfelder
 contains	etemplate	de	enthalten
 create a new table for the application	etemplate	de	Neue Tabelle für die Anwendung anlegen
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	de	erzeugt eine englische ('en') Sprachdatei aus den Beschriftungen und Hilfetexten (für die Anwendung in Name)
+creator	preferences	de	Ersteller
 css class for the table-tag	etemplate	de	CSS class der Tabelle
 css properties	etemplate	de	CSS Attribute
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
@@ -253,6 +254,7 @@ linkentry	etemplate	de	VerknüpfungEintrag
 linklist	etemplate	de	VerknüpfungListe
 linkstring	etemplate	de	VerknüpfungZeichenkette
 linkto	etemplate	de	VerknüpfungZu
+list of files linked to the current record	preferences	de	Liste der Dokumente, die zu dem aktuellen Datensatz gehören.
 load this template into the editor	etemplate	de	lädt diese Template zum Bearbeiten
 maximum size for uploads	filemanager	de	Maximale Größe beim Hochladen
 message ...	etemplate	de	Nachricht ...
@@ -262,6 +264,7 @@ middle	etemplate	de	Mittig
 minute	etemplate	de	Minute
 minutes	etemplate	de	Minuten
 missing: %1	etemplate	de	nicht vorhanden: %1
+modifier	preferences	de	Geändert von
 month	etemplate	de	Monat
 more than 1 match for '%1'	etemplate	de	Mehr als 1 trift für '%1' zu
 multicolumn indices	etemplate	de	Mehrspaltige Indices

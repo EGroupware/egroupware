@@ -54,7 +54,6 @@ export data as	importexport	de	Daten exportieren als
 export definition to use for nextmatch export	preferences	de	Export Definition für den Export über die Benutzeroberfläche (nextmatch)
 export spreadsheet	importexport	de	Export Tabellenkalkulation
 exported	importexport	de	Exportiert.
-extra charsets for import / export	importexport	de	Anderen Zeichensatz für den Impor/Export wählen
 extra encodings	importexport	de	Extra Enkodierung
 false	importexport	de	Unwahr
 field labels	importexport	de	Feld Beschreibung

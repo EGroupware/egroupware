@@ -16,6 +16,8 @@ email address	emailadmin	no	E-mailadresse
 enable cyrus imap server administration	emailadmin	no	Tillat Cyrus IMAP-tjener administrasjon
 enable sieve	emailadmin	no	Tillat Sieve
 enter your default mail domain (from: user@domain)	emailadmin	no	Registrer ditt standard Emaildomene (fra: bruker@domene)
+entry saved	emailadmin	no	Registrering lagret
+error saving the entry!!!	emailadmin	no	Feil ved lagring av forekomst!
 forward also to	emailadmin	no	videresend også til
 forward email's to	emailadmin	no	videresend e-mailer til
 forward only	emailadmin	no	bare videresending
@@ -39,6 +41,8 @@ mail settings	admin	no	E-post innstillinger
 name of organisation	emailadmin	no	Navn på organisasjon
 no alternate email address	emailadmin	no	ingen alternativ e-mailadresse
 no forwarding email address	emailadmin	no	ingen e-mailadresse for videresending
+order	emailadmin	no	Ordre
+organisation	emailadmin	no	Organisasjon
 pop3 server hostname or ip address	emailadmin	no	Tjenernavn eller IP-adresse for POP3 tjener
 pop3 server port	emailadmin	no	POP3 Tjenerport
 postfix with ldap	emailadmin	no	Postfix med LDAP
@@ -54,12 +58,14 @@ sieve server hostname or ip address	emailadmin	no	Tjenernavn eller IP-adresse fo
 sieve server port	emailadmin	no	Sieve tjenerport
 sieve settings	emailadmin	no	Sieve innstillinger
 smtp server name	emailadmin	no	SMTP Tjenernavn
+smtp settings	emailadmin	no	SMTP innstillinger
 smtp-server hostname or ip address	emailadmin	no	Tjenernavn eller IP-Adresse for SMTP-Tjener
 smtp-server port	emailadmin	no	SMTP Tjenerport
 standard	emailadmin	no	standard
 standard imap server	emailadmin	no	Standard IMAP tjener
 standard pop3 server	emailadmin	no	Standard POP3 tjener
 standard smtp-server	emailadmin	no	Standard SMTP tjener
+this php has no imap support compiled in!!	emailadmin	no	PHP versjonen har ingen IMAP-støtte kompilert inn
 use ldap defaults	emailadmin	no	Bruk LDAP standaroppsett
 use smtp auth	emailadmin	no	Bruk SMTP autentisering
 use tls authentication	emailadmin	no	Bruk TLS autentisering

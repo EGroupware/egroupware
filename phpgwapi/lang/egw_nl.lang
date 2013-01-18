@@ -33,6 +33,7 @@ account is expired	common	nl	Account is verlopen
 accounts	common	nl	Accounts
 acl	common	nl	ACL
 action	common	nl	Actie
+actions	common	nl	Acties
 active	common	nl	Actief
 add	common	nl	Toevoegen
 add %1 category for	common	nl	%1 Categorie toevoegen voor
@@ -53,6 +54,7 @@ alternate style-sheet:	common	nl	Afwisselende style-sheet:
 american samoa	common	nl	AMERIKAANS SAMOA
 an error happened	common	nl	Een fout trad op
 an existing and by the webserver readable directory enables the image browser and upload.	common	nl	Een bestaande EN door de webserver leesbare directory maakt het mogelijk om door afbeeldingen te bladeren en te uploaden.
+and	common	nl	En
 andorra	common	nl	ANDORRA
 angola	common	nl	ANGOLA
 anguilla	common	nl	ANGUILLA
@@ -182,7 +184,9 @@ default category	common	nl	Standaard Categorie
 default height for the windows	common	nl	Standaard hoogte voor de vensters
 default width for the windows	common	nl	Standaard breedte voor de vensters
 delete	common	nl	Verwijderen
+delete category	common	nl	Categorie verwijderen
 delete row	common	nl	Rij verwijderen
+delete this entry	common	nl	dit infolog verwijderen
 denmark	common	nl	DENEMARKEN
 description	common	nl	Beschrijving
 detail	common	nl	Detail
@@ -208,6 +212,7 @@ domestic	common	nl	thuis
 dominica	common	nl	DOMINICA
 dominican republic	common	nl	DOMINICAANSE REPUBLIEK
 done	common	nl	Gereed
+download	common	nl	Download
 drag to move	jscalendar	nl	Sleep om te verplaatsen
 e-mail	common	nl	Email
 east timor	common	nl	OOST TIMOR
@@ -363,6 +368,7 @@ kyrgyzstan	common	nl	KIRGIZIË
 language	common	nl	Taal
 language_direction_rtl	common	nl	language_direction_rtl
 lao peoples democratic republic	common	nl	LAOS
+last modified	common	nl	laatste wijziging
 last name	common	nl	Achternaam
 last name of the user, eg. "%1"	common	nl	Achternaam van de gebruiker, bijv. "%1"
 last page	common	nl	laaste pagina
@@ -382,6 +388,7 @@ list	common	nl	Lijst
 list members	common	nl	Lijst van leden
 lithuania	common	nl	LITOUWEN
 local	common	nl	Lokaal
+locations	common	nl	locaties
 login	common	nl	Aanmelden
 loginid	common	nl	Loginnaam
 logout	common	nl	Afmelden
@@ -476,9 +483,11 @@ on mouse over	common	nl	Bij Mouse Over
 only private	common	nl	alleen privé
 only yours	common	nl	alleen eigen weergeven
 oops! you caught us in the middle of system maintainance.	common	nl	Oeps! Je treft ons aan terwijl wij midden in het systeem onderhoud zitten
+open	common	nl	open
 open notify window	common	nl	Attentievenster openen
 open popup window	common	nl	Popupvenster openen
 open sidebox	common	nl	Zijkant box openen
+or	common	nl	of
 ordered list	common	nl	Genummerde lijst
 original	common	nl	Origineel
 other	common	nl	Andere
@@ -524,10 +533,10 @@ portugal	common	nl	PORTUGAL
 postal	common	nl	Post
 powered by	common	nl	Ondersteund door
 preferences	common	nl	Voorkeuren
-preferences for the idots template set	common	nl	Voorkeuren voor de idots template set
 prev. month (hold for menu)	jscalendar	nl	Vorige maand (vasthouden voor menu)
 prev. year (hold for menu)	jscalendar	nl	Vorig jaar (vasthouden voor menu)
 previous page	common	nl	Vorige pagina
+primary group	common	nl	Primaire groep
 primary style-sheet:	common	nl	Primaire style-sheet:
 print	common	nl	Afdrukken
 priority	common	nl	Prioriteit
@@ -549,6 +558,7 @@ remove shortcut	common	nl	Snelkoppeling verwijderen
 rename	common	nl	Hernoemen
 replace	common	nl	Vervangen
 replace with	common	nl	Vervangen met
+restore failed	common	nl	Terugzetten mislukte
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	nl	Geeft een volledige lijst met accounts die aanwezig zijn op het systeem. Waarschuwing: Deze lijst kan erg lang zijn.
 returns an array of todo items	common	nl	Geef een serie van todo items
 returns struct of users application access	common	nl	Geeft de toegangsrechten van de gebruikers
@@ -620,6 +630,7 @@ sierra leone	common	nl	SIERRA LEONE
 simple	common	nl	Eenvoudig
 singapore	common	nl	SINGAPORE
 site configuration	common	nl	Siteconfiguratie
+size	common	nl	Grootte
 slovakia	common	nl	SLOWAKIJË
 slovenia	common	nl	SLOVENIË
 solomon islands	common	nl	SALOMOMEILANDEN
@@ -713,6 +724,7 @@ username	common	nl	Gebruikersnaam
 users	common	nl	gebruikers
 users choice	common	nl	Gebruikerskeuze
 uzbekistan	common	nl	OEZBEKISTAN
+value	common	nl	Waarde
 vanuatu	common	nl	VANUATU
 venezuela	common	nl	VENEZUELA
 version	common	nl	Versie
@@ -730,6 +742,7 @@ what style would you like the image to have?	common	nl	Welke stijl wilt u dat de
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	nl	Indien u ja antwoord worden de home en loguit knop gepresenteerd als toepassingen in de toepassingenbalk.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	nl	Waar en op welke manier moeten de eGroupWare links zoals voorkeuren, informatie en uitloggen getoond worden.
 which groups	common	nl	Welke groepen
+whole query	common	nl	gehele query
 width	common	nl	Breedte
 wk	jscalendar	nl	wk
 work email	common	nl	email werk

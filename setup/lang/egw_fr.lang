@@ -45,7 +45,6 @@ allow authentication via cookie	setup	fr	Permettre l'authentification par cookie
 allow password migration	setup	fr	Permettre la migration des mots de passe
 allowed migration types (comma-separated)	setup	fr	Permettre les types de migration (séparés par virgules)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	fr	Alternativement, les domaines peuvent être accédés en se connectant avec <i>utilisateur@domaine</i>.
-analysis	setup	fr	Analyse
 and is up to date	setup	fr	et est à jour
 and reload your webserver, so the above changes take effect !!!	setup	fr	ET redémarrez votre serveur Web pour qu'ils soient pris en compte.
 app details	setup	fr	Détails de l'application
@@ -69,6 +68,7 @@ at your request, this script is going to take the evil action of deleting your e
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	fr	Sur votre demande, ce script va (sans hésiter !) désinstaller toutes vos applications, ce qui supprime vos tables existantes et vos données de configuration
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	fr	Tentative d'utiliser le type MIME correct pour FTP au lieu de celui par défaut 'application/octet-stream'
 authentication / accounts	setup	fr	Authentification / Comptes
+authentification mode:	setup	fr	Mode d'authentification :
 auto create account records for authenticated users	setup	fr	Créer automatiquement les enregistrements de comptes pour les utilisateurs authentifiés
 auto login anonymous user	setup	fr	Connexion automatique avec utilisateur anonyme
 auto-created user accounts expire	setup	fr	Les comptes d'utilisateur auto-créés expirent
@@ -80,6 +80,7 @@ backup '%1' deleted	setup	fr	sauvegarde '%1' supprimée
 backup '%1' renamed to '%2'	setup	fr	sauvegarde '%1' renommée en '%2'
 backup '%1' restored	setup	fr	sauvegarde '%1' récupérée
 backup and restore	setup	fr	Sauvegarde et récupération
+backup directory %1 mounted as %2	setup	fr	Répertoire de backup %1 monté comme %2
 backup failed	setup	fr	La sauvegarde a échoué
 backup finished	setup	fr	la sauvegarde est terminée
 backup now	setup	fr	sauvegarder maintenant
@@ -96,8 +97,12 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	fr	car le témoin d'activation de cette application est sur 0 ou indéfini
 bottom	setup	fr	Bas
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	fr	Mais nous vous <u>recommandons fortement de sauvegarder</u> vos tables au cas où le script endommagerait vos données.<br /><strong>Ces scripts automatiques peuvent facilement endommager vos données.</strong>
+ca certificate	setup	fr	Certificat CA
 cancel	setup	fr	Abandon
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	fr	Impossible de créer le fichier header.inc.php à cause des permissions manquantes.<br /> A la place vous pouvez %1 ou %2 le fichier.
+cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	fr	Nom du serveur CAS hôte :<br />Exemple : sso-cas.univ-rennes1.fr
+cas server uri:	setup	fr	URI du serveur CAS :
+certificate (pem or ca):	setup	fr	Certificat (PEM ou CA) :
 change system-charset	setup	fr	Modifier jeu de caractères
 charset	setup	fr	utf-8
 charset to convert to	setup	fr	Conversion vers
@@ -238,6 +243,7 @@ enter your http proxy server username	setup	fr	Entrez le nom d'utilisateur pour 
 error in admin-creation !!!	setup	fr	Erreur lors de la création admin !!!
 error in group-creation !!!	setup	fr	Erreur lors de la création groupe !!!
 export has been completed!	setup	fr	L'exportation est terminée!
+failed to mount backup directory!	setup	fr	Echec du montage du répertoire Backup !
 failed writing configuration file header.inc.php, check the permissions !!!	setup	fr	L'écriture du fichier de configuration header.inc.php a échoué, vérifiez les permissions !!!
 false	setup	fr	Faux
 file	setup	fr	Fichier
@@ -246,7 +252,6 @@ file uploads are switched off: you can not use any of the filemanagers, nor can 
 filename	setup	fr	nom du fichier
 filesystem	setup	fr	Système de fichiers
 force selectbox	setup	fr	Forcer la boîte de sélection
-found existing configuration file. loading settings from the file...	setup	fr	J'ai trouvé un fichier de configuration existant. Je charge les réglages depuis ce fichier...
 give admin access to all installed apps	setup	fr	Donner les droits administrateur à toutes les applications installées
 gives further options	setup	fr	fournit d'autres options
 go back	setup	fr	Retour arrière
@@ -275,6 +280,7 @@ if no acl records for user or any group the user is a member of	setup	fr	Si aucu
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	fr	Si safe_mode est activé, eGroupWare sera incapable de modifier certaines options ou d'activer certains modules.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	fr	Si l'application n'a pas défini de tables, choisir mise à jour devrait résoudre le problème
 if using ads (active directory) authentication	setup	fr	Si vous utilisez l'authentification ADS (Active Directory)
+if using cas (central authentication service):	setup	fr	Si vous utilisez l'authentification CAS (Central Authentication Service) :
 if using ldap	setup	fr	Si vous utilisez LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	fr	Si vous utilisez LDAP, voulez-vous gérer les attributs répertoire d'accueil et shell de connexion?
 if you did not receive any errors, your applications have been	setup	fr	Si vous n'avez pas reçu de messages d'erreur, vos applications ont été
@@ -283,8 +289,6 @@ if you running this the first time, don't forget to manualy %1 !!!	setup	fr	Si v
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	fr	Si vous utilisez des langues qui appartiennent aux mêmes jeux de caractères (exemple: Europe de l'ouest), vous n'avez pas besoin de définir le jeu de caractère au niveau du système
 image type selection order	setup	fr	Ordre de sélection de type d'image
 import has been completed!	setup	fr	L'importation est terminée!
-importing old settings into the new format....	setup	fr	Importation des anciens réglages au nouveau format....
-include root	setup	fr	Inclure root
 include_path need to contain "." - the current directory	setup	fr	include_path doit contenir "." - le répertoire courant
 install	setup	fr	Installer
 install all	setup	fr	Installer Tout
@@ -340,15 +344,16 @@ mcrypt algorithm (default tripledes)	setup	fr	Algorithme Mcrypt (par défaut TRI
 mcrypt initialization vector	setup	fr	Vecteur d'initialisation MCrypt
 mcrypt mode (default cbc)	setup	fr	Mode Mcrypt (par défaut CBC)
 mcrypt settings (requires mcrypt php extension)	setup	fr	Réglages Mcrypt (nécessite l'extension PHP mcrypt)
-mcrypt version	setup	fr	Version de MCrypt
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	fr	L'option memory_limit est positionnée en dessous de %1: <br/>certaines applications ont requièrent plus de 8M, ceci peut entraîner des problèmes.
 migration between egroupware account repositories	setup	fr	Migration entre les dépôts de comptes eGroupWare
 minimum account id (e.g. 500 or 100, etc.)	setup	fr	ID de compte minimum (p.e. 500 ou 100, etc.)
 minute	setup	fr	minute
 missing or uncomplete mailserver configuration	setup	fr	Configuration du serveur de messagerie manquante ou incomplète
 modifications have been completed!	setup	fr	Les modifications sont terminées!
+modified	setup	fr	Modifié
 modify	setup	fr	Modifier
 month	setup	fr	mois
+mount backup directory to %1	setup	fr	Monter le répertoire de backup sur %1
 multi-language support setup	setup	fr	Setup pour le support multilingue
 name of database	setup	fr	Nom de la base de données
 name of db user egroupware uses to connect	setup	fr	Nom de l'utilisateur de la base de données dont eGroupWare se sert pour se connecter
@@ -395,9 +400,10 @@ path to user and group files has to be outside of the webservers document-root!!
 path to various directories: have to exist and be writeable by the webserver	setup	fr	le chemin vers divers répertoires: doivent exister et le serveur web doit pouvoir y écrire
 pear (%1) is a php repository and is usually in a package called %2.	setup	fr	PEAR (%1) est un dépôt PHP et est généralement fourni par un paquetge appelé %2.
 pear%1 is needed by: %2.	setup	fr	PEAR%1 est requis par: %2.
+pem certificate	setup	fr	Certificat PEM
 persistent connections	setup	fr	Connexions persistantes
-php plus restore	setup	fr	PHP plus restore
-php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	fr	PHP plus restore vous donne la meilleure performance, car il stocke l'enviroment eGW completement dans la session.
+php client	setup	fr	php Client
+php proxy	setup	fr	php Proxy
 please check for sql scripts within the application's directory	setup	fr	SVP vérifiez la présence de scripts SQL dans le répertoire setup de l'application
 please check read/write permissions on directories, or back up and use another option.	setup	fr	SVP vérifiez les permissions de lecture/écriture sur les répertoires, ou faîtes une sauvegarde et utilisez une autre option.
 please configure egroupware for your environment	setup	fr	SVP configurez eGroupWare pour votre environnement
@@ -424,7 +430,6 @@ re-enter password	setup	fr	Réentrer mon mot de passe
 read translations from	setup	fr	Lire les traductions depuis
 readable by the webserver	setup	fr	lisible par le serveur Web
 really uninstall all applications	setup	fr	Désinstaller VRAIMENT toutes les applications
-recommended: filesystem	setup	fr	Recommandé: système de fichiers
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	fr	L'option register_globals est activé, eGroupWare n'a pas besoin de cela et cela est il est généralement plus sécurisé en le désactivant.
 registered	setup	fr	Enregistré
 rejected lines	setup	fr	Lignes rejetées
@@ -443,7 +448,6 @@ return to setup	setup	fr	Revenir à la page de setup
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	fr	exécutez une mise à jour du schéma de la base de données (si nécessaire): domain(all),[config user(admin)],password
 run installation tests	setup	fr	Démarrage de la procédure de vérification...
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	fr	l'option safe_mode (mode sécurisé) est actif, ceci est en général une bonne chose et rend votre installation plus sécurisée.
-sample configuration not found. using built in defaults	setup	fr	Configuration exemple introuvable. Utilisation des valeurs par défaut prédéfinies
 save	setup	fr	Enregistrer
 save this text as contents of your header.inc.php	setup	fr	Enregistrer ce texte comme le contenu de votre fichier header.inc.php
 schedule	setup	fr	planification
@@ -453,8 +457,6 @@ select one...	setup	fr	sélectionnez un...
 select the default applications to which your users will have access	setup	fr	Choisisseez les applications par défaut auxquelles vos utilisateurs auront accès
 select the desired action(s) from the available choices	setup	fr	Choisissez la(les) action(s) désirée(s) dans les choix possibles
 select to download file	setup	fr	Choisissez pour downloader le fichier
-select where you want to store/retrieve file contents	setup	fr	Choisissez où vous voulez stocker/récupérer les contenus de fichiers
-select where you want to store/retrieve filesystem information	setup	fr	Choisissez où vous voulez stocker/récupérer les informations sur le système de fichiers
 select where you want to store/retrieve user accounts	setup	fr	Choisissez où vous voulez stocker/récupérer les informations de comptes utilisateurs
 select which group(s) will be exported	setup	fr	Sélectionnez quels groupes seront exportés
 select which group(s) will be imported (group membership will be maintained)	setup	fr	Choisissez quel(s) groupe(s) va(vont) être importé(s) (l'appartenance au groupe sera conservée)
@@ -470,16 +472,13 @@ select which user(s) will have admin privileges	setup	fr	Choisissez quel(s) util
 select your old version	setup	fr	Choisissez votre ancienne version
 selectbox	setup	fr	Boîte de sélection
 server root	setup	fr	Racine serveur
-sessions type	setup	fr	Type de Sessions
 set	setup	fr	définir
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	fr	Mettez ceci sur "old" pour les versions < 2.4, sinon la version exacte de mcrypt que vous utilisez.
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	fr	Définir le jeu de caractères en UTF8 permet la co-existence de données provenant de jeu de caractères des différentes langues.
 settings	setup	fr	Réglages
 setup	setup	fr	Installation
 setup main menu	setup	fr	Menu principal de configuration
 setup the database	setup	fr	Configurer la base de données
 setup/config admin login	setup	fr	Page de connexion pour la configuration et l'installation
-should be the same as server root unless you know what you are doing.	setup	fr	Devrait être identique au ServerRoot sauf si vous savez ce que vous faites.
 show 'powered by' logo on	setup	fr	Montrer le logo 'motorisé par' sur
 sieve: host[,port(2000)]	setup	fr	Sieve: Host[,Port(2000)]
 size	setup	fr	taille
@@ -488,6 +487,7 @@ smtp server hostname or ip address	setup	fr	Nom d'hôte ou adresse IP du serveur
 smtp server port	setup	fr	Port du serveur SMTP
 some or all of its tables are missing	setup	fr	Certaines ou toutes ses tables manquent
 sql encryption type	setup	fr	Type de chiffrement SQL (par défaut - md5)
+ssl validation:	setup	fr	Validation SSL :
 standard (login-name identical to egroupware user-name)	setup	fr	standard (login identique à l'utilisateur eGroupWare)
 standard mailserver settings (used for mail authentication too)	setup	fr	Paramètres standard du serveur de messagerie (utilisé aussi pour l'authentification d'emails)
 start the postmaster	setup	fr	Démarrer le postmaster
@@ -543,7 +543,6 @@ translations upgraded	setup	fr	Traductions Mises à jour
 true	setup	fr	Vrai
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	fr	Essayez de configurer php pour qu'il supporte une des bases de données mentionnées ci-dessus, ou installez eGroupWare à la main.
 two weeks	setup	fr	deux semaines
-unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	fr	Malheureusement quelques paquetages PHP/Apache ont des problèmes avec (Apache meurt et vous ne pouvez plus vous connecter)
 uninstall	setup	fr	désinstaller
 uninstall all applications	setup	fr	Désinstaller toutes les applications
 uninstalled	setup	fr	désinstallé
@@ -581,7 +580,6 @@ we can proceed	setup	fr	Nous pouvons continuer
 we will automatically update your tables/records to %1	setup	fr	Nous allons automatiquement mettre à jour vos tables/enregistrements vers %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	fr	Nous allons démarrer une série de tests qui vont prendre quelques minutes. Cliquez sur le lien ci-dessous pour commencer.
 welcome to the egroupware installation	setup	fr	Bienvenue sur l'installateur eGroupWare
-what type of sessions management do you want to use (php session management may perform better)?	setup	fr	Quel type de gestion de session voulez-vous utiliser (les sessions PHP pourraient avoir de meilleures performances)?
 which database type do you want to use with egroupware?	setup	fr	Quel type de base de données voulez-vous utiliser avec eGroupWare?
 world readable	setup	fr	visible par tous
 world writable	setup	fr	accès en écriture pour tous
@@ -597,7 +595,6 @@ you appear to be running a pre-beta version of egroupware.<br />these versions a
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	fr	Vous semblez utiliser une ancienne version de PHP<br />Il est recommandé de faire une mise à jour.<br />Les anciennes versions de PHP pourraient ne pas fonctionner correctement, ou pas du tout, avec eGroupWare.<br /><br />SVP faites une mise à jour à la dernière version %1
 you appear to be running version %1 of egroupware	setup	fr	Vous semblez utiliser la version %1 d'eGroupWare
 you appear to have %1 support.	setup	fr	Votre support %1 semble activé
-you appear to have php session support. enabling php sessions.	setup	fr	Votre support sessions PHP semble activé. J'active le support de sessions PHP
 you appear to have xml support enabled	setup	fr	Votre support XML semble activé
 you are ready for this stage, but this stage is not yet written.<br />	setup	fr	Vous êtes prêt pour cette étape, mais ceci n'est pas encore écrit.<br />
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	fr	Vous utilisez PHP version %1. eGroupWare requiert à présent %2 ou plus, PHP %3 est recommandé.
@@ -612,14 +609,12 @@ you have not created your header.inc.php yet!<br /> you can create it now.	setup
 you have successfully logged out	setup	fr	Vous vous êtes déconnecté avec succès
 you must enter a username for the admin	setup	fr	Vous devez entrer un nom d'utilisateur pour le compte admin
 you need to add at least one egroupware domain / database instance.	setup	fr	Vous devez ajouter au moins un domaine / instance de base de données eGroupWare.
-you need to add some domains to your header.inc.php.	setup	fr	Vous devez ajouter quelques domaines dans votre header.inc.php.
 you need to configure egroupware:	setup	fr	Vous devez configurer eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	fr	Vous devez résoudre les erreurs ci-dessus, avant que le fichier de configuration header.inc.php puisse être écrit!
 you need to select your current charset!	setup	fr	Vous devez sélectionner votre jeu de caractères!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	fr	Vous devriez soit le désinstaller et le ré-installer, soit tenter une réparation manuelle
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	fr	Vous ne pourrez PAS vous connecter à eGroupWare en utilisant des sessions PHP: "la session n'a pas pu être vérifiée" !!!
 you're using an old configuration file format...	setup	fr	Vous utilisez un ancien format de fichier de configuration...
-you're using an old header.inc.php version...	setup	fr	Vous utilisez une ancienne version du fichier header.inc.php...
 your applications are current	setup	fr	Vos applications sont à jour
 your backup directory '%1' %2	setup	fr	Votre répertoire de sauvegarde '%1' %2
 your database does not exist	setup	fr	Votre base de données n'existe pas
@@ -636,15 +631,3 @@ your tables will be dropped and you will lose data	setup	fr	Vos tables seront su
 your temporary directory '%1' %2	setup	fr	Votre répertoire temporaire '%1' %2
 {db | php(default) | php-restore}	setup	fr	{db | php(par défaut) | php-restore}
 {off(default) | on}	setup	fr	{off(par défaut) | on}
-authentification mode:	setup	fr	Mode d'authentification :
-ca certificate	setup	fr	Certificat CA
-cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	fr	Nom du serveur CAS hôte :<br />Exemple : sso-cas.univ-rennes1.fr
-cas server port:<br />Example: 443	setup	fr	Port du serveur CAS :<br />Exemple : 443
-cas server uri:	setup	fr	URI du serveur CAS :
-certificate (pem or ca):	setup	fr	Certificat (PEM ou CA) :
-if using cas (central authentication service):	setup	fr	Si vous utilisez l'authentification CAS (Central Authentication Service) :
-pem certificate	setup	fr	Certificat PEM
-php client	setup	fr	php Client
-php proxy	setup	fr	php Proxy
-ssl validation:	setup	fr	Validation SSL :
-

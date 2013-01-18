@@ -1,22 +1,41 @@
 allowed users	importexport	pt-br	Usuários permitidos
 automatically created by importexport	importexport	pt-br	Automaticamente criado por importar/exportar
+changed	importexport	pt-br	Alterado
+charset of file	importexport	pt-br	Charset do arquivo
+check all	importexport	pt-br	Verificar todos
 choose a name for this definition	importexport	pt-br	Escolha um nome para esta definição
 choose a plugin	importexport	pt-br	EScolha um plugin
 choose an application	importexport	pt-br	Escolha uma aplicação
+choose seperator and charset	importexport	pt-br	Escolha o separador e a codificação de caracteres
+condition	importexport	pt-br	condição
+copied	importexport	pt-br	copiado
+created	importexport	pt-br	Criado
 delete all selected definitions	importexport	pt-br	remover TODAS as definições selecionadas
+deleted	importexport	pt-br	removido
 expert options	importexport	pt-br	Opções avançadas
 export	importexport	pt-br	Exportar
 export all selected definitions	importexport	pt-br	exportar TODAS as definições selecionadas
+exported	importexport	pt-br	exportado
+false	importexport	pt-br	falso
 finish	importexport	pt-br	terminar
-general	importexport	pt-br	Geral
+general	preferences	pt-br	Geral
+general fields:	preferences	pt-br	Campos gerais:
+import	importexport	pt-br	Importar
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	pt-br	Importar definições (Atenção: definições existentes com nomes iguais serão substituídas!!!)
 importexport wizard finished successfully!	importexport	pt-br	Assistente de importação/exportação terminado com sucesso!
+load sample file	importexport	pt-br	Carregar arquivo exemplo
+manage mapping	importexport	pt-br	Gerenciar mapeamento
 next	importexport	pt-br	próximo
+next run	importexport	pt-br	Próxima execução
 preview	importexport	pt-br	Pré-visualização
 previous	importexport	pt-br	anterior
 save as definition	importexport	pt-br	Salvar como definição
+schedule	common	pt-br	agendar
 select definition	importexport	pt-br	Selecionar definição
 select plugin	importexport	pt-br	Selecionar plugin
 some nice text	importexport	pt-br	algum texto legal
+translation	importexport	pt-br	Tradução
+true	importexport	pt-br	verdadeiro
+use default	importexport	pt-br	Usar o padrão
 which useres are allowed for this definition	importexport	pt-br	Quais usuários são permitidos para esta definição
 you need to select an app and format first!	importexport	pt-br	Você deve selecionar um aplicativo e um formato primeiro!

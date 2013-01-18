@@ -8,6 +8,7 @@ account permissions	admin	et	Konto õigused
 account preferences	admin	et	Konto eelistused
 acl manager	admin	et	ACL Manageerija
 acl rights	common	et	ACL Õigused
+actions	admin	et	Tegevused
 add a category	admin	et	lisa kategooria
 add a group	admin	et	lisa grupp
 add a new account.	admin	et	Lisa uus konto
@@ -15,6 +16,7 @@ add a subcategory	admin	et	lisa alam kategooria
 add a user	admin	et	lisa kasutaja
 add account	admin	et	Lisa konto
 add application	admin	et	Lisa rakendus
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	et	Lisa automaatselt tehtud kasutajad sellesse gruppi (selleks on 'Default' kui väli on tühi.)
 add global category	admin	et	Lisa globaalne kategooria
 add group	admin	et	Lisa grupp
 add new account	admin	et	Lisa uus konto
@@ -22,6 +24,8 @@ add new application	admin	et	Lisa uus rakendus
 add sub-category	admin	et	Lisa alam kategooria
 admin email	admin	et	Admin Email
 admin name	admin	et	Admin Nimi
+all applications	admin	et	kõik rakendused
+all categories	admin	et	Kõik kategooriad
 all users	admin	et	Kõik kasutajad
 allow anonymous access to this app	admin	et	Luba anonüümne ligipääs sellele rakendusele
 alternate email address	admin	et	alternatiivne email aadress
@@ -33,6 +37,7 @@ application name	admin	et	Rakenduse nimi
 application title	admin	et	Rakenduse pealkiri
 applications	admin	et	Rakendused
 applications list	admin	et	Rakenduste nimekiri
+apply the changes	admin	et	rakenda uuendused
 are you sure you want to delete the application %1 ?	admin	et	Oled kindel, et soovid kustutada seda rakendust %1 ?
 are you sure you want to delete this account ?	admin	et	Oled kindel, et tahad kustutada seda kontot ?
 are you sure you want to delete this application ?	admin	et	Oled kindel, et soovid kustutada seda rakendust ?
@@ -41,6 +46,7 @@ are you sure you want to delete this global category ?	admin	et	Oled kindel, et 
 are you sure you want to delete this group ?	admin	et	Oled kindel, et tahad kustutada seda gruppi ?
 are you sure you want to delete this server?	admin	et	Oled kindel, et tahad kustutada seda serverit ?
 are you sure you want to kill this session ?	admin	et	Oled kindel, et tahad tappa seda sessiooni ?
+authentication / accounts	admin	et	Autentimine / Kontod
 can change password	admin	et	Võib muuta parooli
 categories list	admin	et	Kategooriate nimekiri
 category list	admin	et	Kategooria nimekiri
@@ -48,8 +54,10 @@ change acl rights	admin	et	muuda ACL Õigusi
 change main screen message	admin	et	Muuda pealehe sõnumit
 click to select a color	admin	et	Kliki valimaks värvi
 color	admin	et	Värv
+country	admin	et	Riik
 country selection	admin	et	Riigi Valik
 create group	admin	et	Tee Grupp
+created	admin	et	Tehtud
 creates a new field	admin	et	teeb uue välja
 cyrus imap server	admin	et	Cyrus IMAP Server
 day	admin	et	Päev
@@ -62,6 +70,7 @@ delete group	admin	et	Kustuta grupp
 delete this category	admin	et	kustuta see kategooria
 delete this group	admin	et	kustuta see grupp
 delete this user	admin	et	kustuta see kasutaja
+deleted	admin	et	kustutatud
 deletes this field	admin	et	kustutab selle välja
 deny access to access log	admin	et	Keela ligipääs külastus logile
 deny access to application registery	admin	et	Keela ligipääs rakenduse registrile
@@ -74,11 +83,14 @@ deny access to groups	admin	et	Keela ligipääs gruppidele
 deny access to mainscreen message	admin	et	Keela ligipääs pealehe sõnumile
 deny access to phpinfo	admin	et	Keela ligipääs phpinfo-le
 deny access to user accounts	admin	et	Keela ligipääs kasutaja kontodele
+disable	admin	et	Keela
 disabled (not recomended)	admin	et	väljalülitatud (pole soovitav)
 do you also want to delete all global subcategories ?	admin	et	Kas tahad kustutada samuti kõik globaalsed alamkategooriad ?
 do you want to delete all global subcategories ?	admin	et	Kas tahad kustutada kõik globaalsed alamkategooriad ?
 do you want to move all global subcategories one level down ?	admin	et	Kas tahad liigutada kõik globaalsed alamkategooriad üks level alla ?
 document root (default)	admin	et	Dokument root (vaikimisi)
+down	admin	et	alla
+each value is a line like <id>[=<label>]	admin	et	iga väärtus on rida nagu <id>[=<label>]
 edit account	admin	et	Muuda kontot
 edit application	admin	et	Muuda rakendust
 edit email settings	admin	et	muuda email setinguid
@@ -96,7 +108,9 @@ edit user account	admin	et	Muuda kasutaja kontot
 egroupware directory	admin	et	eGroupWare kaust
 email account active	admin	et	email konto aktiivne
 email address	admin	et	email aadress
+enable	admin	et	luba
 enabled - popup window	admin	et	Lubatud - Hüpikaknad
+enter the hostname of the machine on which this server is running	admin	et	Sisesta hostinimi kus see server töötab
 enter your default ftp server	admin	et	Sisesta oma vaikimisi FTP server
 enter your http proxy server	admin	et	Sisesta oma HTTP proksi server
 enter your http proxy server port	admin	et	Sisesta oma HTTP proksi serveri port
@@ -107,15 +121,18 @@ error setting timer, wrong syntax or maybe there's one already running !!!	admin
 error: %1 not found or other error !!!	admin	et	Viga: %1 ei leitud või muu viga !!!
 expires	admin	et	Aegub
 field '%1' already exists !!!	admin	et	Väli '%1' eksisteerib juba !!!
+full name	admin	et	Täis nimi
 global categories	common	et	Globaalsed Kategooriad
 group ?	admin	et	grupp ?
 group list	admin	et	Gruppi nimekiri
 group name	admin	et	Grupi Nimi
 hide php information	admin	et	peida php informatsioon
 home directory	admin	et	Kodu kataloog
+host information	admin	et	Hosti informatsioon
 how many minutes should an account or ip be blocked (default 30) ?	admin	et	Mitu minutit konto või IP blokeeritakse (vaikimisi 30) ?
 how should email addresses for new users be constructed?	admin	et	Kuidas EMail aadress uute kasutajatejaoks konstrueeritakse?
 icon	admin	et	Ikoon
+installed applications	common	et	Installeeritud rakendused
 ip	admin	et	IP
 kill	admin	et	Tapa
 kill session	admin	et	Tapa sessioon
@@ -124,9 +141,10 @@ last login	admin	et	viimane login
 ldap encryption type	admin	et	LDAP krüpteeringu tüüp
 ldap root password	admin	et	LDAP root parool
 ldap rootdn	admin	et	LDAP rootdn
+leaves without saveing	admin	et	lahkub ilma salvestamatta
 list current sessions	admin	et	Nimekiri hetke sessioonidest
 list of current users	admin	et	nimekiri hetke kasutajatest
-login history	common	et	Sisselogimise ajalugu
+login history	admin	et	Sisselogimise ajalugu
 login message	admin	et	Sisselogimise teade
 login screen	admin	et	Sisselogimise aken
 login shell	admin	et	Sisselogimise shell
@@ -134,6 +152,7 @@ login time	admin	et	Sisselogimise Aeg
 loginid	admin	et	SisselogimiseID
 mail settings	admin	et	Mail settingud
 minute	admin	et	Mi
+modified	admin	et	Muudetud
 month	admin	et	Kuu
 name must not be empty !!!	admin	et	Nimi ei tohi olla tühi !!!
 new group name	admin	et	Uus grupi nimi
@@ -141,9 +160,14 @@ new name	admin	et	uus nimi
 new password [ leave blank for no change ]	admin	et	Uus parool [ Jäta tühjaks kui ei soovi muuta ]
 no alternate email address	admin	et	pole alternatiivset email aadressi
 no login history exists for this user	admin	et	Pole sisselogimise ajalugu sellel kasutajal
+no matches found	admin	et	sobivaid ei leitud
 no permission to add groups	admin	et	pole õigusi gruppide lisamiseks
 no permission to add users	admin	et	pole õigusi kasutajate lisamiseks
 no permission to create groups	admin	et	pole õigusi gruppide tegemiseks
+one month	admin	et	üks kuu
+one week	admin	et	üks kuu
+password for smtp-authentication	admin	et	Parool SMTP-audentimiseks
+path information	admin	et	Teekonna informatsioon
 permission denied	admin	et	Õigused puuduvad
 permission denied !!!	admin	et	Õigused puuduvad !!!
 permissions	admin	et	Õigused
@@ -157,6 +181,8 @@ search accounts	admin	et	Otsi kontosid
 search categories	admin	et	Otsi kategooriaid
 search groups	admin	et	Otsi gruppe
 security	admin	et	Turvalisus
+select where you want to store/retrieve filesystem information	admin	et	Vali kuhu sa tahad salvestada failisüsteemi informatsiooni
+select where you want to store/retrieve user accounts	admin	et	Vali kuhu sa tahad salvestada kasutaja kontosid
 server list	admin	et	Serveri Nimekiri
 server password	admin	et	Serveri Parool
 server username	admin	et	Serveri Kasutajanimi
@@ -165,9 +191,9 @@ show error log	admin	et	Näita vigade logi
 show phpinfo()	admin	et	Näita phpinfo()
 show session ip address	admin	et	Näita sessiooni IP aadressi
 site	admin	et	Sait
-site configuration	common	et	Saidi seadistused
 sorry, that group name has already been taken.	admin	et	Vabandust, see grupinimi on juba võetud
 ssl	admin	et	ssl
+start	admin	et	Start
 submit changes	admin	et	Salvesta Muudatused
 text entry	admin	et	Järgmine Kirje
 that application name already exists.	admin	et	See rakenduse nimi juba eksisteerib
@@ -178,14 +204,17 @@ the api is current	admin	et	API on kaasaegne
 the api requires an upgrade	admin	et	API vajab uuendamist
 the login and password can not be the same	admin	et	Kasutajanimi ja parool ei tohi olla samad
 the loginid can not be more then 8 characters	admin	et	Kasutajanimi ei või olla pikem kui 8 tähte
+the two passwords are not the same	admin	et	Kaks parooli pole identsed
 this application is current	admin	et	See rakendus on kaasaegne
 this application requires an upgrade	admin	et	See rakendus vajab uuendust
+translation	admin	et	Tõlkimine
+two weeks	admin	et	kaks nädalat
 unknown account: %1 !!!	admin	et	Tundmatu konto:: %1 !!!
-unknown group: %1 !!!	admin	et	Tundmatu grupp:: %1 !!!
-unknown user: %1 !!!	admin	et	Tundmatu kasutaja:: %1 !!!
+up	admin	et	üles
 updated	admin	et	uuendatud
 use theme	admin	et	Kasuta nahka
 user accounts	admin	et	Kasutaja kontod
+user for smtp-authentication (leave it empty if no auth required)	admin	et	Kasutajanimi SMTP-autentimiseks (jäta see tühjaks kui pole nõutav)
 user groups	admin	et	Kasutajate grupid
 users choice	admin	et	Kasutajate Valik
 view access log	admin	et	Vaata sisselogimise logi

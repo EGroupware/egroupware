@@ -28,9 +28,12 @@ direct booking permissions	resources	pl	Pozwolenie na bezpośrednią rezerwacje
 don't use vfs (this will need a symlink --> see readme)	resources	pl	Nie używaj 'VFS' (to będzie wymagać odnośników symbolicznych --> patrz README)
 edit this entry	resources	pl	Edytuj ten wpis
 existing links	resources	pl	Istniejące odsyłacze
+exists	resources	pl	istnieje
 general	resources	pl	Ogólnie
 general informations about resource	resources	pl	Ogólne informacje o zasobie
 gernal resource	resources	pl	ogólne zasony
+global categories	resources	pl	Kategorie globalne
+hours	resources	pl	godziny
 how many of the resources are useable?	resources	pl	jaka ilość zasobów jest do użytku?
 how many of them are useable?	resources	pl	Ile z nich jest do użytku?
 how many of this resource are usable	resources	pl	Jaka ilość tego zasobu jest do użytku?
@@ -39,6 +42,7 @@ implies booking permission	resources	pl	implikuje prawa rezerwacji
 implies read permission	resources	pl	implikuje prawa odczytu
 information about storage	resources	pl	Informacje o przechowywaniu
 informations about the location of resource	resources	pl	Informacje o lokalizacji zsobu
+insert	resources	pl	wstaw
 inventory number	resources	pl	Numer inwentarza
 inventory number:	resources	pl	Numer inwentarza
 is resource bookable?	resources	pl	Czy zasób jest do zarezewowania?
@@ -49,6 +53,7 @@ links	resources	pl	Odsyłacze
 location	resources	pl	Lokalizacja
 location of resource	resources	pl	Lokalizacja zasobu
 location:	resources	pl	Lokalizacja:
+manage mapping	resources	pl	Zarządzaj mapowaniem
 name of resource	resources	pl	Nazwa zasobu
 name:	resources	pl	Nazwa:
 no description available	resources	pl	opis niedostępny
@@ -95,6 +100,5 @@ web-site for this resource	resources	pl	Serwis internetowy tego zasobu
 where to find this resource?	resources	pl	Gdzie znaleść ten zasób?
 which category does this resource belong to?	resources	pl	Do jakiej kategori należy ten zasób?
 write permissions	resources	pl	Pozwolenie zapisu
-you are not permitted to edit this reource!	resources	pl	Nie masz zezwolenia na edycję tego zasobu!
 you are not permitted to get information about this resource!	resources	pl	Nie masz zezwolenia by otrzymać informację na temat tego zasobu!
 you chose more resources than available	resources	pl	Wybrałeś więcej zasobów niż jest dostępnych

@@ -11,6 +11,7 @@ change a user password by passing the old and new passwords.  returns true on su
 change your password	preferences	fr	Changer votre mot de passe
 change your profile	preferences	fr	Changer votre profil
 change your settings	preferences	fr	Changer vos paramètres
+charset for the csv export	addressbook	fr	Jeu de caractères pour l'exportation CSV
 click to select a color	preferences	fr	Cliquez pour sélectionner une couleur
 color	preferences	fr	Couleur
 country	preferences	fr	Pays
@@ -67,7 +68,7 @@ text only	preferences	fr	Texte seulement
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fr	L'application par défaut sera exécutée quand vous entrez dans eGroupWare ou cliquez sur l'icône de la page d'accueil.<br>Vous pouvez aussi avoir plus d'une application s'affichant sur la page d'accueil, si vous ne choisissez pas d'application spécifique ici (ceci doit être configuré dans les préférences de chaque application).
 the old password is not correct	preferences	fr	L'ancien mon de passe est erroné
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	fr	La boîte de sélection montre tous les utilisateurs disponibles (ceci peut être très lent lors d'installations importantes avec beaucoup d'utilisateurs). La fenêtre Popup peut rechercher les utilisateurs par nom ou groupe.
-the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	common	fr	Les deux dernières options limitent la visibilité pour les autres utilisateurs. Pour cette raison, elles doivent être forcées et elles ne s'appliquent pas pour les administrateurs.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	fr	Les deux dernières options limitent la visibilité pour les autres utilisateurs. Pour cette raison, elles doivent être forcées et elles ne s'appliquent pas pour les administrateurs.
 the two passwords are not the same	preferences	fr	Les deux mots de passe ne sont pas identiques
 theme (colors/fonts) selection	preferences	fr	Sélection de thème (couleurs/polices)
 this server is located in the %1 timezone	preferences	fr	Ce serveur est situé dans le fuseau horaire %1
@@ -75,6 +76,7 @@ time format	preferences	fr	Format d'heure
 use default	preferences	fr	Utiliser le défaut
 users choice	preferences	fr	Choix des utilisateurs
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fr	Si vous dites Oui, les boutons Accueil et Déconnexion sont présentés comme des applications dans la barre de navigation.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fr	Quel jeu de caractères faut-il utiliser pour l'exportation CSV. Le paramétrage par défaut est celui utilisé lors de l'installation d'eGroupWare.
 which currency symbol or name should be used in egroupware.	preferences	fr	Quel symbole de monnaie ou nom devrait être utilisé dans eGroupWare.
 write prefs for the specified application.	preferences	fr	Ecrire les préférences pour l'apllication spécifiée.
 you can show the applications as icons only, icons with app-name or both.	preferences	fr	Vous pouvez montrer les applications comme des icônes seulement, des icônes avec le nom de l'application ou les deux.
@@ -82,5 +84,3 @@ you do not have permission to set acl's in this mode!	preferences	fr	Vous n'avez
 you must enter a password	preferences	fr	Vous devez entrer un mot de passe
 your current theme is: %1	preferences	fr	Votre thème actuel est: %1
 your preferences	preferences	fr	Vos préférences
-charset for the csv export	addressbook	fr	Jeu de caractères pour l'exportation CSV
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fr	Quel jeu de caractères faut-il utiliser pour l'exportation CSV. Le paramétrage par défaut est celui utilisé lors de l'installation d'eGroupWare.

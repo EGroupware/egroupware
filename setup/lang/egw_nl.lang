@@ -135,6 +135,7 @@ click <a href="index.php">here</a> to return to setup.	setup	nl	Klik <a href="in
 click here	setup	nl	Klik hier
 click here to re-run the installation tests	setup	nl	Klik hier om de installatie testen nogmaals uit te voeren
 comma separated ip-addresses or host-names, default access to setup from everywhere	setup	nl	komma gescheiden ip-adressen of hostnamen, standaard toegang tot setup vanaf iedere adres
+complete path to aspell program	setup	nl	Volledige pad naar aspell programma
 completed	setup	nl	Compleet
 config password	setup	nl	Configuratie wachtwoord
 config username	setup	nl	Configuratie gebruikersnaam
@@ -368,6 +369,7 @@ minimum account id (e.g. 500 or 100, etc.)	setup	nl	Minimum account ID (voorbeel
 minute	setup	nl	minuut
 missing or uncomplete mailserver configuration	setup	nl	Ontbrekende of incomplete mailserver configuratie
 modifications have been completed!	setup	nl	Aanpassingen zijn voltooid!
+modified	setup	nl	Gewijzigd
 modify	setup	nl	Aanpassen
 month	setup	nl	maand
 multi-language support setup	setup	nl	meertalige ondersteuning instellen
@@ -670,4 +672,3 @@ your tables will be dropped and you will lose data	setup	nl	Uw tabellen worden v
 your temporary directory '%1' %2	setup	nl	Uw tijdelijke directory '%1' %2
 {db | php(default) | php-restore}	setup	nl	{db | php(default) | php-restore}
 {off(default) | on}	setup	nl	{off(default) | on}
-complete path to aspell program	setup	nl	Volledige pad naar aspell programma

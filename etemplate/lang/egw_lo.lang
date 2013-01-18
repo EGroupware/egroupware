@@ -1,0 +1,19 @@
+applications	etemplate	lo	ແອັບພຼິເຄຊັນ
+check all	etemplate	lo	ກວດສອບທັງໝົດ
+comment	etemplate	lo	ຄວາມຄິດເຫັນ
+custom fields	etemplate	lo	ກໍານົດ fields
+cut	etemplate	lo	ຕັດ
+day	etemplate	lo	ມື້
+days	etemplate	lo	ວັນ
+default	etemplate	lo	ຄ່າເລີ່ມຕົ້ນ
+duration	etemplate	lo	ໄລຍະເວລາ
+file	etemplate	lo	ຟາຍ
+hours	etemplate	lo	ຊົ່ວໂມງ
+last	etemplate	lo	ສຸດທ້າຍ
+link	etemplate	lo	ເຊື່ອມຕໍ່ໄປທີ່ເຫດການ
+minutes	etemplate	lo	ນາທີ
+month	etemplate	lo	ເດືອນ
+no matches found	etemplate	lo	ບໍ່ພົບລາຍການທີ່ກົງກັນ
+select a category	etemplate	lo	ເລືອກໝວດໝູ່
+selectbox	etemplate	lo	ຊ່ອງສໍາລັບເລືອກ
+show	etemplate	lo	ສະແດງ

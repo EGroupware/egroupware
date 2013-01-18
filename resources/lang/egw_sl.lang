@@ -28,9 +28,12 @@ direct booking permissions	resources	sl	Neposredno dovoljenje za rezervacijo
 don't use vfs (this will need a symlink --> see readme)	resources	sl	Ne uporabljaj vfs (za to potrebujete symlink --> glejte README)
 edit this entry	resources	sl	Uredi ta vnos
 existing links	resources	sl	Obstoječe povezave
+exists	resources	sl	Obstaja
 general	resources	sl	Splošno
 general informations about resource	resources	sl	Splošne informacije o sredstvu
 gernal resource	resources	sl	Splošno sredstvo
+global categories	resources	sl	Globalne kategorije
+hours	resources	sl	ure
 how many of the resources are useable?	resources	sl	Koliko sredstev je uporabnih?
 how many of them are useable?	resources	sl	Koliko jih je uporabnih?
 how many of this resource are usable	resources	sl	Koliko sredstev je uporabnih
@@ -39,6 +42,7 @@ implies booking permission	resources	sl	Vsebuje dovoljenje za rezervacijo
 implies read permission	resources	sl	Vsebuje dovoljenje za branje
 information about storage	resources	sl	Informacije o prostoru
 informations about the location of resource	resources	sl	Informacije o lokaciji sredstva
+insert	resources	sl	Vstavi
 inventory number	resources	sl	Inventarna številka
 inventory number:	resources	sl	Inventarna številka:
 is resource bookable?	resources	sl	Se sredstvo lahko rezervira?
@@ -49,6 +53,7 @@ links	resources	sl	Povezave
 location	resources	sl	Lokacija
 location of resource	resources	sl	Lokacija sredstva
 location:	resources	sl	Lokacija:
+manage mapping	resources	sl	Upravljaj mapiranje
 name of resource	resources	sl	Ime sredstva
 name:	resources	sl	Ime:
 no description available	resources	sl	Opis ni na voljo
@@ -95,6 +100,5 @@ web-site for this resource	resources	sl	Spletna stran tega sredstva
 where to find this resource?	resources	sl	Kje najti to sredstvo?
 which category does this resource belong to?	resources	sl	Kateri kategoriji to sredstvo pripada?
 write permissions	resources	sl	Dovoljenje za pisanje
-you are not permitted to edit this reource!	resources	sl	Nimate dovoljenja za urejanje tega sredstva!
 you are not permitted to get information about this resource!	resources	sl	Nimate dovoljenja pridobiti informacij o tem sredstvu!
 you chose more resources than available	resources	sl	Izbrali ste več sredstev, kot jih je na voljo

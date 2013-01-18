@@ -31,8 +31,10 @@ all days	etemplate	sv	Samtliga dagar
 all operations save the template!	etemplate	sv	Alla operationer sparar template
 am	etemplate	sv	fm
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	sv	En kolumn med index går fortare att sök i (på bekostnad av filsystemsutrymme)
+and	etemplate	sv	Och
 application	etemplate	sv	Applikation
 application name needed to write a langfile or dump the etemplates !!!	etemplate	sv	Namnet på applikationen behövs för att skriva en språkfil eller dumpa eTemplate
+applications	etemplate	sv	Applikationer
 applies the changes made	etemplate	sv	Sparar ändringar
 applies the changes to the given version of the template	etemplate	sv	Applicerar förändringar på en given version av template
 attach	etemplate	sv	Bifoga
@@ -55,6 +57,7 @@ cells	etemplate	sv	Celler
 cellspacing for the table-tag	etemplate	sv	Cellutrymme för tabell kod
 center	etemplate	sv	Centrera
 changed	etemplate	sv	Ändrad
+check all	etemplate	sv	Markera alla
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	sv	Kontrollera om innehållet bara ska visas men inte förändras (innehållet skickas då inte tillbaks)
 check if field has to be filled by user	etemplate	sv	Kontrollera om fältet ska fyllas i av användare
 checkbox	etemplate	sv	Kryssruta
@@ -73,6 +76,7 @@ comment	etemplate	sv	Kommentar
 confirm	etemplate	sv	bekräfta
 confirmation message or custom javascript (returning true or false)	etemplate	sv	Bekräftelsemeddelande eller eget javascript (som returnerar sant eller falskt)
 confirmation necesary or custom java-script	etemplate	sv	Bekräftelse nödvändig eller anpassat java skript
+contact	etemplate	sv	Kontakt
 contact fields	etemplate	sv	Kontakt fält
 contains	etemplate	sv	Innehåller
 create a new table for the application	etemplate	sv	Skapa ny tabell för applikationen
@@ -153,6 +157,7 @@ exchange this two columns	etemplate	sv	Byt dessa två kolumner
 export the loaded etemplate into a xml-file	etemplate	sv	Exportera den laddade eTemplate till XML fil
 export xml	etemplate	sv	Exportera XML
 extensions loaded:	etemplate	sv	Laddade utökningar:
+field	etemplate	sv	Fält
 field must not be empty !!!	etemplate	sv	Fältet kan inte vara tomt
 file	etemplate	sv	Fil
 file contains more than one etemplate, last one is shown !!!	etemplate	sv	Filen innehåller mer än ett eTemplate, visar sista
@@ -239,6 +244,7 @@ nextmatch sortheader	etemplate	sv	Nästa matchande Sortheader
 no column to swap with !!!	etemplate	sv	Ingen kolumn att byta med!
 no file	etemplate	sv	Ingen fil
 no filename given or selected via browse...	etemplate	sv	Ingen fil angiven eller vald
+no matches found	etemplate	sv	Inga träffar
 no row to swap with !!!	etemplate	sv	Ingen rad att byta med!
 not null	etemplate	sv	NOT NULL
 nothing	etemplate	sv	Ingenting
@@ -255,6 +261,7 @@ open the online help.	etemplate	sv	Öppna online-hjälp
 operator	etemplate	sv	Operator
 optional note about the link	etemplate	sv	Frivillig anteckning om länken
 options	etemplate	sv	Alternativ
+or	etemplate	sv	Eller
 order to navigating by tab key through the form	etemplate	sv	Ordning att tab navigera genom fälten
 overflow	etemplate	sv	Overflow
 padding	etemplate	sv	Fyllnad
@@ -275,6 +282,7 @@ read etemplate from database (for the keys above)	etemplate	sv	Läs eTemplate fr
 readonly	etemplate	sv	Skrivskyddad
 remove row (can not be undone!!!)	etemplate	sv	Radera rad (kan INTE återskapas)
 remove this link (not the entry itself)	etemplate	sv	Radera länk (inte posten i sig)
+required	etemplate	sv	Krävs
 returns savely, without deleting	etemplate	sv	Återgår UTAN att radera
 right	etemplate	sv	Höger
 row...	etemplate	sv	Rad
@@ -388,3 +396,4 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	sv	Importera XML fil
 xslt template	etemplate	sv	XSLT mall
 year	etemplate	sv	År
+you can respond by visiting:	etemplate	sv	Du kan svara genom att besöka:

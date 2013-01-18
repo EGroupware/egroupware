@@ -1,0 +1,23 @@
+create new links	timesheet	ko	새 링크 만들기
+creates a new field	timesheet	ko	새 필드 만들기
+custom fields	timesheet	ko	사용자정의 필드
+deleted	timesheet	ko	삭제됨
+deletes this field	timesheet	ko	이 필드 삭제
+edit status	timesheet	ko	상태 수정
+edit this entry	timesheet	ko	이 엔트리 수정
+end	timesheet	ko	종료
+existing links	timesheet	ko	기존링크
+global categories	timesheet	ko	전역 카테고리
+history	timesheet	ko	내역
+last modified	timesheet	ko	마지막 수정
+leaves without saveing	timesheet	ko	저장없이 나가기
+links	timesheet	ko	링크
+modified	timesheet	ko	변경됨
+no details	timesheet	ko	내용제외
+price	timesheet	ko	가격
+saves the changes made	timesheet	ko	변경사항 저장
+saves the changes made and leaves	timesheet	ko	저장하고 나가기
+select a price	timesheet	ko	가격을 선택하세요
+select a project	timesheet	ko	프로젝트를 선택하세요
+start	timesheet	ko	시작
+week	timesheet	ko	주

@@ -1,0 +1,33 @@
+applies the changes	timesheet	hr	Prihvaćanje promjena
+create new links	timesheet	hr	Create new links
+creates a new field	timesheet	hr	stvara novo polje
+custom fields	timesheet	hr	Proizvoljno Polje
+deleted	timesheet	hr	Obrisano
+deletes this field	timesheet	hr	obriši ova polja
+determines the order the fields are displayed	timesheet	hr	Određuje redosljed prikazivanja polja
+each value is a line like <id>[=<label>]	timesheet	hr	each value is a line like <id>[=<label>]
+edit status	timesheet	hr	Uredi status
+edit this entry	timesheet	hr	Uredi ovaj zapis
+entry saved	timesheet	hr	Entry saved
+existing links	timesheet	hr	Existing links
+field must not be empty !!!	timesheet	hr	Field must not be empty !!!
+global categories	timesheet	hr	Globalne kategorije
+history	timesheet	hr	povijest
+id	timesheet	hr	identitet
+last modified	timesheet	hr	Zadnja izmjena
+leaves without saveing	timesheet	hr	napusti bez spremanja
+length<br>rows	timesheet	hr	Duljina<br>Retci
+links	timesheet	hr	Links
+max length of the input [, length of the inputfield (optional)]	timesheet	hr	max length of the input [, length of the inputfield (optional)]
+modified	timesheet	hr	Promijenjeno
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	hr	number of row for a multiline inputfield or line of a multi-select-box
+order	timesheet	hr	Naredba
+saves the changes made and leaves	timesheet	hr	sprema promjene i izlazi
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	hr	ime upotrebljavano interno (<= 20 znakova), mijenjanjem postoječe podatke činite nedostupnima
+the text displayed to the user	timesheet	hr	Tekst prikazan korisniku
+this month	timesheet	hr	Ovog mjeseca
+this week	timesheet	hr	Ovog tjedna
+this year	timesheet	hr	Ove godine
+values for selectbox	timesheet	hr	Vrijednosti za izabrati
+view this entry	timesheet	hr	Prikaži ovaj unos
+week	timesheet	hr	Tjedan

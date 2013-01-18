@@ -1,11 +1,14 @@
 %1 %2 in %3	calendar	ko	%3에 %1 %2
 %1 records imported	calendar	ko	%1개의 레코드를 가져왔습니다.
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	ko	%1개 항목을 읽음 ( 아직 가져오기를 수행하지 않음, 뒤로돌아가기를 선택해서 가져오기테스트를 체크해제 할 수 있습니다)
+accept	calendar	ko	수락
 accept or reject an invitation	calendar	ko	초대에 대해 승락 혹은 거절
 accepted	calendar	ko	승락됨
 access denied to the calendar of %1 !!!	calendar	ko	%1 일정의 접근이 금지되었습니다 !!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	ko	알림 메세지를 발생하는 행동: 추가됨,취소됨,승락됨,거부됨, ...
+actions	calendar	ko	액션
 add alarm	calendar	ko	알람 추가
+add timesheet entry	calendar	ko	타임시트 엔트리에 추가
 added	calendar	ko	추가됨
 after current date	calendar	ko	오늘이후
 alarm	calendar	ko	알람
@@ -19,13 +22,14 @@ all day	calendar	ko	하루종일
 all events	calendar	ko	모든 이벤트
 all participants	calendar	ko	모든 참석자
 allows to edit the event again	calendar	ko	이벤트 재수정 허용
+always	calendar	ko	언제나
 apply the changes	calendar	ko	변경사항 적용
 are you sure you want to delete this country ?	calendar	ko	이 국가를 삭제 하시겠습니까?
 are you sure you want to delete this holiday ?	calendar	ko	이 공휴일을 삭제 하시겠습니까?
 before current date	calendar	ko	오늘 이전에
 before the event	calendar	ko	이벤트 전에
 birthday	calendar	ko	생일
-calendar	common	ko	일정
+birthdays	admin	ko	생일
 calendar event	calendar	ko	일정 이벤트
 calendar holiday management	admin	ko	일정 공휴일 관리
 calendar menu	calendar	ko	일정 메뉴
@@ -33,19 +37,18 @@ calendar preferences	calendar	ko	일정 환경설정
 calendar settings	admin	ko	일정 설정
 calendar-fieldname	calendar	ko	일정-필드이름
 canceled	calendar	ko	취소됨
-charset of file	calendar	ko	파일의 문자셋
 close the window	calendar	ko	창닫기
 compose a mail to all participants after the event is saved	calendar	ko	이벤트 저장후 모든 참석자에게 메일작성
 copy of:	calendar	ko	사본:
 copy this event	calendar	ko	이 이벤트 복사
 countries	calendar	ko	국가들
 country	calendar	ko	국가
-create an exception at this recuring event	calendar	ko	이 연속이벤트대한 예외작성
 create new links	calendar	ko	새 링크개설
 csv-fieldname	calendar	ko	컴마구분값-필드이름
 csv-filename	calendar	ko	컴마구분값-파일이름
 custom fields	common	ko	사용자정의 필드
 daily	calendar	ko	매일
+day	calendar	ko	날
 days	calendar	ko	일동안
 days of the week for a weekly repeated event	calendar	ko	주간반복이벤트가 적용될 요일
 days repeated	calendar	ko	일동안 반복됨
@@ -60,15 +63,16 @@ delete this alarm	calendar	ko	이 알람 삭제
 delete this event	calendar	ko	이 이벤트 삭제
 delete this exception	calendar	ko	이 예외 삭제
 delete this series of recuring events	calendar	ko	이 연속 이벤트 삭제
+deleted	calendar	ko	삭제됨
 disinvited	calendar	ko	제외
 display status of events	calendar	ko	이벤트의 상태를 표시
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	ko	기본 한달 보기를 시작페이지에 보이겠습니까? ( eGroupWare에 들어올때나 홈페이지 아이콘을 클릭했을때의 페이지)
 do you want a weekview with or without weekend?	calendar	ko	주간보기에 주말을 포함하시겠습니까? 포함하지 않겠습니까?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	ko	약속이 변경되거나 새로 만들어지면 알림메세지를 받으시겠습니까? 만약 그렇다면 자신이 작성한 약속에도 알림메세지를 받게 됩니다.<br> 알림메세지를 특정페이지에서만 동작하도록 제한할수 있습니다. 각 항목은 모든 알림메세지를 가지고 있게 됩니다. 제목, 설명, 참여자를 포함한 어떠한 수정사항이 발생하는 것도 포함합니다. 단 참여자의 응답은 제외합니다. 만약 이벤트의 주최자가 모든 알림메세지를 요구했을 경우 그는 언제든 참여자의 승낙과 거부등의 대답을 받을수 있습니다.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	ko	약속을 요약한 이메일을 정기적 수신하시겠습니까?<br>요약문은 기본 이메일 주소로 매일 아침이나 매주 월요일 주별 요약을 발송합니다.<br> 그 날이나 그 주에 약속이 있을경우에만 발송됩니다.
 do you wish to autoload calendar holidays files dynamically?	admin	ko	공휴일 일정 자동로드를 동적으로 수행할까요?
 download	calendar	ko	내려받기
 download this event as ical	calendar	ko	이 이벤트 iCal로 다운로드
+duration	calendar	ko	기간
 duration of the meeting	calendar	ko	미팅기간
 edit exception	calendar	ko	예외 편집
 edit series	calendar	ko	연속 편집
@@ -84,6 +88,7 @@ error: importing the ical	calendar	ko	오류: ical 불러오기 오류
 error: no participants selected !!!	calendar	ko	오류: 참석자가 선택되지 않았습니다.
 error: saving the event !!!	calendar	ko	오류: 이벤트 저장
 error: starttime has to be before the endtime !!!	calendar	ko	오류: 시작시간이 종료시간보다 이릅니다.
+error: the entry has been updated since you opened it for editing!	calendar	ko	오류: 이 엔트리는 당신이 수정하는 중간에 업데이트 되었습니다.
 event copied - the copy can now be edited	calendar	ko	이벤트 복사됨 - 이 복사는 이제 수정이 가능합니다
 event deleted	calendar	ko	이벤트 삭제됨
 event details follow	calendar	ko	** 다음은 이벤트-설명
@@ -91,7 +96,6 @@ event saved	calendar	ko	이벤트 저장됨
 exception	calendar	ko	예외
 exceptions	calendar	ko	예외
 existing links	calendar	ko	기존링크
-export	calendar	ko	내보내기
 extended	calendar	ko	확장
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	ko	완전한 이벤트-설명을 항상 포함하는 확장. iCal은 특정 다른 일정 응용프로그램으로 가져오기를 할수 있습니다.
 fieldseparator	calendar	ko	필드구분자
@@ -104,7 +108,7 @@ freetime search	calendar	ko	여분시간 찾기
 fri	calendar	ko	금요일
 full description	calendar	ko	자세한 설명
 fullname of person to notify	calendar	ko	알림 메세징 할 사람의 전체이름
-general	calendar	ko	일반
+global categories	calendar	ko	전역 카테고리
 global public and group public	calendar	ko	전역 공용 과 그룹 공용
 global public only	calendar	ko	전역 공용만
 group invitation	calendar	ko	그룹 초대
@@ -113,6 +117,7 @@ group public only	calendar	ko	그룹 공용만
 groupmember(s) %1 not included, because you have no access.	calendar	ko	권한이 없는이유로 그룹멤버중 %1 은 제외되었습니다.
 here is your requested alarm.	calendar	ko	요청하신 알람입니다.
 high priority	calendar	ko	높은 우선순위
+history	calendar	ko	내역
 holiday	calendar	ko	공휴일
 holiday management	calendar	ko	공휴일관리
 holidays	calendar	ko	공휴일
@@ -121,11 +126,11 @@ ical / rfc2445	calendar	ko	iCal / rfc2445
 ical successful imported	calendar	ko	iCal 불러오기 성공
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	ko	만약 주말에 공휴일이 있다면, 월요일로 공휴일 설정.
 ignore conflict	calendar	ko	겹치는 일정 무시하기
-import	calendar	ko	가져오기
 import csv-file	common	ko	컴마구분-파일 가져오기
 interval	calendar	ko	간격
 last	calendar	ko	마지막
 lastname of person to notify	calendar	ko	알림 메세징 할 사람의 성
+link	calendar	ko	링크
 link to view the event	calendar	ko	이벤트 보기로 링크
 links	calendar	ko	링크
 links, attachments	calendar	ko	링크, 첨부
@@ -136,15 +141,18 @@ mail all participants	calendar	ko	참석자에게 메일전송
 minutes	calendar	ko	분
 modified	calendar	ko	변경됨
 mon	calendar	ko	월요일
+month	calendar	ko	월
 monthly	calendar	ko	월별
 monthly (by date)	calendar	ko	매월 (by date)
 monthly (by day)	calendar	ko	매월 (by day)
 monthview	calendar	ko	월 보기
+new	calendar	ko	새로만들기
 new search with the above parameters	calendar	ko	아래의 값으로 다시 검색
 no events found	calendar	ko	이벤트를 찾을 수 없습니다
 no filter	calendar	ko	필터없음
 no matches found	calendar	ko	일치하는 것을 찾을수 없습니다
 no response	calendar	ko	답변이 없습니다
+not	calendar	ko	아니(not)
 notification messages for added events	calendar	ko	추가된 이벤트에 알림 메세지
 notification messages for canceled events	calendar	ko	취소된 이벤트에 알림 메세지
 notification messages for modified events	calendar	ko	변경된 이벤트에 알림 메세지
@@ -203,18 +211,16 @@ select a time	calendar	ko	시간선택
 select resources	calendar	ko	리소스 선택
 set a year only for one-time / non-regular holidays.	calendar	ko	1회만 있거나 정기적이지 않은 휴일을 포함한 년도 설정
 set new events to private	calendar	ko	새 개인 이벤트 설정
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	ko	거부된 초대도 계속 일정에 표시할까요?<br>만약 이들이 귀하의 일정에 아직 보여진다면 이들은 나중에 승락만 할수 있습니다(예 일정에서 다른일정과의 중복이 없어졌을때)
 should new events created as private by default ?	calendar	ko	새로 생성되는 이벤트는 개인 - 기본 으로 하시겠습니까?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	ko	접속하지 않은 사람도 귀하의 freebusy 정보를 볼수 있게 하시겠습니까? 기본적인 암호와 다른 추가 암호를 설정하셔서 이 정보를 보호할 수 있습니다. 귀하가 바쁘실때의 freebusy 정보는 iCal 포멧형식에 시간을 포함한 형태로 포함되어 있습니다. 이는 이벤트이름이나 설명, 위치등의 정보를 포함하고 있지 않습니다. 귀하의 freebusy 정보의 URL은 %1 입니다.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	ko	이벤트-참가자의 상황이 각 참가자이름 이후에 괄호로 표시하시겠습니까? ( 승락, 거부, 등)
 show default view on main screen	calendar	ko	기본보기로 주화면 보기
-show invitations you rejected	calendar	ko	거부한 초대 보기
 show list of upcoming events	calendar	ko	예정된 이벤트 목록 보기
 show this month	calendar	ko	이번달보기
 show this week	calendar	ko	이번주보기
 single event	calendar	ko	단독 이벤트
 start	calendar	ko	시작
 start date/time	calendar	ko	시작 날짜/시간
+startdate	calendar	ko	시작일
 startdate / -time	calendar	ko	시작 날짜/-시간
 startrecord	calendar	ko	시작레코드
 status changed	calendar	ko	상태 변경됨
@@ -236,7 +242,6 @@ three month	calendar	ko	분기
 thu	calendar	ko	목요일
 title of the event	calendar	ko	이벤트 제목
 to many might exceed your execution-time-limit	calendar	ko	너무 많을 경우 최대실행시간(execution-time-limit)를 초과하게 됩니다
-translation	calendar	ko	번역
 tue	calendar	ko	화요일
 two weeks	calendar	ko	보름
 updated	calendar	ko	갱신됨
@@ -249,8 +254,6 @@ weekly	calendar	ko	매주
 weekview	calendar	ko	주간 보기
 weekview with weekend	calendar	ko	주간보기 (주말포함)
 weekview without weekend	calendar	ko	주간보기 (주말제외)
-which events do you want to see when you enter the calendar.	calendar	ko	일정을 보실때 어떤 이벤트를 보고 싶으신가요?
-which of calendar view do you want to see, when you start calendar ?	calendar	ko	일정을 시작할때 어떤 형식의 일정을 보고 싶으신가요?
 whole day	calendar	ko	하루종일
 wk	calendar	ko	주
 work day ends on	calendar	ko	업무 끝나는 날

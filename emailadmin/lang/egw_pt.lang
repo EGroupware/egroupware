@@ -1,7 +1,6 @@
 add profile	emailadmin	pt	Adicionar perfil
 admin dn	emailadmin	pt	DN do administrador
 admin password	emailadmin	pt	Senha do administrador
-admin passwort	emailadmin	pt	Senha do administrador
 admin username	emailadmin	pt	Nome do utilizador do administrador
 advanced options	emailadmin	pt	Opções avançadas
 alternate email address	emailadmin	pt	Endereço de correio electrónico alternativo
@@ -22,6 +21,8 @@ enable cyrus imap server administration	emailadmin	pt	Activar administração do
 enable sieve	emailadmin	pt	Activar Sieve
 encryption settings	emailadmin	pt	Definições de cifragem
 enter your default mail domain (from: user@domain)	emailadmin	pt	Insira o seu domínio de correio electrónico por omissão (de: utilizador@domínio)
+entry saved	emailadmin	pt	Registo guardado
+error saving the entry!!!	emailadmin	pt	Erro ao guardar o registo!!!
 forward also to	emailadmin	pt	Reencaminhar também para
 forward email's to	emailadmin	pt	Reencaminhar mensagens para
 forward only	emailadmin	pt	Reencaminhar apenas
@@ -74,6 +75,7 @@ standard	emailadmin	pt	Por omissão
 standard imap server	emailadmin	pt	Servidor IMAP por omissão
 standard pop3 server	emailadmin	pt	Servidor POP3 por omissão
 standard smtp-server	emailadmin	pt	Servidor SMTP por omissão
+this php has no imap support compiled in!!	emailadmin	pt	O PHP não tem suporte de IMAP compilado!!
 use ldap defaults	emailadmin	pt	Utilizar definições por omissão do LDAP
 use smtp auth	emailadmin	pt	Utilizar autenticação SMTP
 use tls authentication	emailadmin	pt	Utilizar autenticação TLS

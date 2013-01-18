@@ -40,6 +40,7 @@ all fields	common	vi	t&#7845;t c&#7843; các tr&#432;&#7901;ng
 alphabet	common	vi	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	vi	Style-sheet thay th&#7871;:
 american samoa	common	vi	AMERICAN SAMOA
+and	common	vi	V&#224;
 andorra	common	vi	ANDORRA
 angola	common	vi	ANGOLA
 anguilla	common	vi	ANGUILLA
@@ -163,6 +164,7 @@ domestic	common	vi	Vùng
 dominica	common	vi	DOMINICA
 dominican republic	common	vi	DOMINICAN REPUBLIC
 done	common	vi	&#272;ã xong
+download	common	vi	T&#7843;i v&#7873;
 drag to move	jscalendar	vi	Kéo và rê chu&#7897;t &#273;&#7875; di chuy&#7875;n
 e-mail	common	vi	E-Mail
 east timor	common	vi	EAST TIMOR
@@ -171,7 +173,6 @@ edit	common	vi	Hi&#7879;u ch&#7881;nh
 edit %1 category for	common	vi	Hi&#7879;u ch&#7881;nh %1 nhóm cho
 edit categories	common	vi	Hi&#7879;u ch&#7881;nh các nhóm
 edit category	common	vi	Hi&#7879;u ch&#7881;nh nhóm
-egroupware api version %1	common	vi	eGroupWare API phiên b&#7843;n %1
 egroupware: login blocked for user '%1', ip %2	common	vi	eGroupWare: &#273;&#259;ng nh&#7853;p b&#7883; khóa &#273;&#7889;i v&#7899;i ng&#432;&#7901;i s&#7917; d&#7909;ng '%1', có &#273;&#7883;a ch&#7881; IP %2
 egypt	common	vi	EGYPT
 el salvador	common	vi	EL SALVADOR
@@ -409,9 +410,6 @@ password	common	vi	M&#7853;t kh&#7849;u
 password could not be changed	common	vi	M&#7853;t kh&#7849;u không th&#7875; thay &#273;&#7893;i
 password has been updated	common	vi	M&#7853;t kh&#7849;u &#273;ã &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
 path to user and group files has to be outside of the webservers document-root!!!	common	vi	&#272;&#432;&#7901;ng d&#7851;n &#273;&#7871;n các t&#7853;p tin ng&#432;&#7901;i s&#7917; d&#7909;ng và nhóm PH&#7842;I N&#7856;M NGOÀI th&#432; m&#7909;c g&#7889;c c&#7911;a máy ch&#7911; Web.
-pattern for search in addressbook	common	vi	M&#7851;u dùng cho Tìm ki&#7871;n trong S&#7893; &#273;&#7883;a ch&#7881;
-pattern for search in calendar	common	vi	M&#7851;u dùng cho Tìm ki&#7871;m trong L&#7883;ch
-pattern for search in projects	common	vi	M&#7851;u dùng cho Tìm ki&#7871;m trong Qu&#7843;n lý D&#7921; án
 permissions to the files/users directory	common	vi	các quy&#7873;n truy c&#7853;p &#273;&#7871;n các t&#7853;p tin/ th&#432; m&#7909;c c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng
 personal	common	vi	Cá nhân
 peru	common	vi	PERU
@@ -429,7 +427,6 @@ poland	common	vi	POLAND
 portugal	common	vi	PORTUGAL
 postal	common	vi	&#272;&#432;&#7901;ng b&#432;u &#273;i&#7879;n
 preferences	common	vi	Các tùy ch&#7885;n
-preferences for the idots template set	common	vi	Các tùy ch&#7885;n cho b&#7897; idots template
 prev. month (hold for menu)	jscalendar	vi	Tháng tr&#432;&#7899;c (&#273;&#432;a ra menu)
 prev. year (hold for menu)	jscalendar	vi	N&#259;m tr&#432;&#7899;c (&#273;&#432;a ra menu)
 previous page	common	vi	Trang tr&#432;&#7899;c
@@ -597,7 +594,6 @@ year	common	vi	N&#259;m
 yemen	common	vi	YEMEN
 yes	common	vi	Vâng
 you are required to change your password during your first login	common	vi	B&#7841;n c&#7847;n thay &#273;&#7893;i m&#7853;t kh&#7849;u c&#7911;a b&#7841;n trong l&#7847;n &#273;&#259;ng nh&#7853;p &#273;&#7847;u tiên
-you are running a newer version of phpgroupware than your database is setup for	common	vi	B&#7841;n &#273;ang s&#7917; d&#7909;ng phiên b&#7843;n phpGroupware m&#7899;i h&#417;n cái mà c&#417; s&#7903; d&#7919; li&#7879;u b&#7841;n &#273;ã cài &#273;&#7863;t c&#7847;n.
 you have been successfully logged out	login	vi	B&#7841;n &#273;ã &#273;&#432;&#7907;c thoát ra ngoài h&#7879; th&#7889;ng thành công
 you have not entered a title	common	vi	B&#7841;n ch&#432;a &#273;i&#7873;n tiêu &#273;&#7873;
 you have not entered a valid date	common	vi	B&#7841;n &#273;i&#7873;n sai ngày
@@ -613,6 +609,5 @@ your search returned %1 matchs	common	vi	tác v&#7909; tìm ki&#7871;m c&#7911;a
 your search returned 1 match	common	vi	tác v&#7909; tìm ki&#7871;m c&#7911;a b&#7841;n tìm th&#7845;y 1 k&#7871;t qu&#7843;
 your session could not be verified.	login	vi	Phiên làm vi&#7879;c c&#7911;a b&#7841;n không th&#7875; xác minh &#273;&#432;&#7907;c
 your settings have been updated	common	vi	Các thi&#7871;t l&#7853;p c&#7911;a b&#7841;n &#273;ã &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
-yugoslavia	common	vi	YUGOSLAVIA
 zambia	common	vi	ZAMBIA
 zimbabwe	common	vi	ZIMBABWE

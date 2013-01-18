@@ -11,6 +11,7 @@ change a user password by passing the old and new passwords.  returns true on su
 change your password	preferences	ca	Canvieu la vostra contrasenya
 change your profile	preferences	ca	Canvieu el vostre perfil
 change your settings	preferences	ca	Canvieu les vostres Configuracions
+charset for the csv export	addressbook	ca	Joc de caràcters per l'exportació CSV
 click to select a color	preferences	ca	Pitjeu per a seleccionar un color
 color	preferences	ca	Color
 country	preferences	ca	País
@@ -22,8 +23,8 @@ delete categories	preferences	ca	Esborrar Categories
 description can not exceed 255 characters in length !	preferences	ca	La Descripció no pot passar de 255 caràcters de llarg !
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	ca	Preferiu el format de temps de 24 hores, o bé el de 12 hores amb "am/pm" darrere ?
 edit custom fields	preferences	ca	Editar camps personalitzats
-enable drag and drop functionality (experimental)	common	ca	Habilita funcionalitat d'arrossegar i deixar anar (experimental)
-enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	common	ca	Habilita o deshabilita funcions d'arrossegar i deixar anar a totes les aplicacions. Si el navegador no permet l'arrossegar i deixar anar, serà inhabilitat automàticament. Aquesta funció és experimental de moment.
+enable drag and drop functionality (experimental)	preferences	ca	Habilita funcionalitat d'arrossegar i deixar anar (experimental)
+enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	ca	Habilita o deshabilita funcions d'arrossegar i deixar anar a totes les aplicacions. Si el navegador no permet l'arrossegar i deixar anar, serà inhabilitat automàticament. Aquesta funció és experimental de moment.
 enter your new password	preferences	ca	Entreu la nova contrasenya
 enter your old password	preferences	ca	Escriu la contrasenya antiga
 failed to change password.  please contact your administrator.	preferences	ca	Error al canviar la contrasenya. Contacteu amb el vostre Administrador.
@@ -69,8 +70,6 @@ text only	preferences	ca	Només Text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	ca	L'aplicació per defecte s'inicia en entrar a eGroupWare o prement la icona de la plana d'inici.<br>Podeu tenir més d'una aplicació mostrant-se a la plana d'inici, si no escolliu una aplicació específica aquí (aleshores s'ha de configurar a les preferències de cada aplicació).
 the old password is not correct	preferences	ca	La contrasenya antiga no és correcta
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	ca	La llista desplegable mostra tots els usuaris disponibles (pot ser molt lent a grans instal·lacions amb molts usuaris). La finestra desplegable pot cercar usuaris per nom o grup.
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. there for they should be forced and apply not to administrators.	common	ca	La llista desplegable mostra tots els usuaris disponibles (pot ser molt lenta en grans instal·lacions amb molts usuaris)
-the two last options limit the visibility of other users. there for they should be forced and apply not to administrators.	common	ca	Les dues darreres opcions limiten la visibilitat d'altres usuaris. Allà per ells
 the two passwords are not the same	preferences	ca	Les dues contrasenyes no són iguals
 theme (colors/fonts) selection	preferences	ca	Selecció  de Tema (colors/fonts)
 this server is located in the %1 timezone	preferences	ca	Aquest servidor pertany a la zona horària %1
@@ -78,6 +77,7 @@ time format	preferences	ca	Format d'hora
 use default	preferences	ca	Utilitza el valor per defecte
 users choice	preferences	ca	Tria de l'usuari
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	ca	Quan dieu que sí els botons d'inici i tancar sessió es presenten com a plicacions a la barra superior principal.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	ca	Quin joc de caràcters ha de ser utilitzat per l'exportació CSV. El sistema per defecte és el joc de caràcters de la instal·lació d'aquest eGroupWare.
 which currency symbol or name should be used in egroupware.	preferences	ca	Quin símbol o nom de moneda s'ha d'utilitzar a eGroupWare?
 write prefs for the specified application.	preferences	ca	Escriu prefs per l'aplicació especificada.
 you can show the applications as icons only, icons with app-name or both.	preferences	ca	Podeu mostrar les aplicacions com: només icones, només nom o bé ambdós.

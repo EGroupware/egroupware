@@ -12,6 +12,7 @@
 (empty = use global limit, no = no export at all)	admin	es-es	(vacío = usar limite global; no = no exportar nada)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	es-es	<b>No se encontró el tipo de conversión <none>.</b> Por favor, seleccione un tipo de conversión de la lista
 @-eval() is only availible to admins!!!	addressbook	es-es	¡@-eval está disponible sólo para los administradores!
+account id	addressbook	es-es	ID de la cuenta
 account repository	admin	es-es	Repositorio de cuentas
 accounts	addressbook	es-es	Cuentas
 actions	addressbook	es-es	Acciones
@@ -55,7 +56,6 @@ are you shure you want to delete this contact?	addressbook	es-es	¿Está seguro 
 are you sure you want to delete this field?	addressbook	es-es	¿Está seguro de que desea borrar este campo?
 assistent	addressbook	es-es	Asistente
 assistent phone	addressbook	es-es	teléfono del asistente
-at the moment the following document-types are supported:	addressbook	es-es	De momento, los siguientes tipos de documentos están soportados:
 birthday	common	es-es	Fecha de nacimiento
 birthdays	common	es-es	Cumpleaños
 blank	addressbook	es-es	Vacío
@@ -85,7 +85,6 @@ charset of file	addressbook	es-es	Juego de caracteres del fichero
 check all	addressbook	es-es	Marcar todo
 choose an icon for this contact type	admin	es-es	Elija un icono para este tipo de contacto
 choose owner of imported data	addressbook	es-es	Elija el propietario de los datos importados
-choose seperator and charset	addressbook	es-es	Elija el separador y el juego de caracteres
 chosse an etemplate for this contact type	admin	es-es	Elija una plantilla para este tipo de contacto
 city	common	es-es	Ciudad
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	es-es	Limpiar los campos de la libreta de direcciones (aplicar si la sincronización crea duplicados)
@@ -118,7 +117,6 @@ country	common	es-es	País
 create new links	addressbook	es-es	Crear enlaces nuevos
 created	addressbook	es-es	Creado
 credit	addressbook	es-es	Crédito
-csv field	addressbook	es-es	Campo CSV
 csv-fieldname	addressbook	es-es	Nombre de campo CSV
 csv-filename	addressbook	es-es	Archivo CSV
 custom	addressbook	es-es	Personalizado
@@ -149,7 +147,6 @@ distribution lists	addressbook	es-es	Listas de distribución
 distribution lists, ...	addressbook	es-es	Listas de distribución, ...
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	es-es	¿Desea una libreta de direcciones privada, que no pueden ver otros usuarios (a menos que conceda acceso a su libreta de direcciones personal)?
 do your really want to delete this contact?	addressbook	es-es	¿Realmente desea borrar este contacto?
-document '%1' does not exist or is not readable for you!	addressbook	es-es	El documento '%1' no existe o usted no tiene permiso para leerlo
 doesn't matter	addressbook	es-es	no importa
 domestic	addressbook	es-es	Doméstico
 don't hide empty columns	addressbook	es-es	No ocultar las columnas vacías
@@ -173,12 +170,17 @@ enter the path to the exported file here	addressbook	es-es	Introduzca aquí la r
 error deleting the contact !!!	addressbook	es-es	¡Error al borrar el contacto!
 error saving the contact !!!	addressbook	es-es	¡Error al guardar el contacto!
 error: the entry has been updated since you opened it for editing!	addressbook	es-es	Error: la entrada se ha actualizado desde que la abrió para editar
-example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	es-es	Ejemplo $$IF prefijo_n~Sr~Hola Sr.~Hola Srta.$$ - busca el campo "prefijo_n", para "Sr". Si lo encuentra, escribe "Hola Sr.", si no, escribe "Hola Srta."
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	es-es	Ejemplo {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - buscar el campo "n_prefix", para "Mr", si se encuentra, escribir  Hello Mr., si no, escribir Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	es-es	Ejemplo {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Ejemplo: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	es-es	Ejemplo {{NELF role}} - si el rol del campo no está vacío, obtendrá una línea nueva con el valor del rol del campo
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	addressbook	es-es	Ejemplo {{NELFNV role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
 existing links	addressbook	es-es	Enlaces existentes
-export	addressbook	es-es	exportar
+exists	addressbook	es-es	Existe
 export as csv	addressbook	es-es	Exportar como CSV
 export as vcard	addressbook	es-es	Exportar como tarjeta de visita
 export contacts	addressbook	es-es	Exportar contactos
+export definition to use for nextmatch export	addressbook	es-es	Exportar la definición a usar para exportar nextmatch
+export definitition to use for nextmatch export	addressbook	es-es	Exportar la definición a usar para exportar nextmatch
 export file name	addressbook	es-es	Nombre del fichero a exportar
 export from addressbook	addressbook	es-es	Exportar de la libreta de direcciones
 export selection	addressbook	es-es	Exportar la selección
@@ -196,13 +198,11 @@ fields for the csv export	addressbook	es-es	Campos para exportar a CSV
 fields the user is allowed to edit himself	admin	es-es	Campos que el propio usuario puede editar
 fields to show in address list	addressbook	es-es	Campos a mostrar en la lista de direcciones
 fieldseparator	addressbook	es-es	Separador de campos
-fieldseperator	addressbook	es-es	Separador de campos
-for more then one contact in a document use the tag pagerepeat!	addressbook	es-es	para más de un contacto en un documento use la etiqueta pagerepeat
 for read only ldap	admin	es-es	para LDAP de sólo lectura
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	es-es	Para carta de serie use esta etiqueta. Ponga el contenido que quiera repetir entre dos etiquetas.
 freebusy uri	addressbook	es-es	URI para disponibilidad
 full name	addressbook	es-es	Nombre completo
-general	addressbook	es-es	General
+general	admin	es-es	General
 general fields:	addressbook	es-es	Campos generales:
 geo	addressbook	es-es	GEO
 global categories	addressbook	es-es	Categorías globales
@@ -211,6 +211,7 @@ group %1	addressbook	es-es	Grupo %1
 h	addressbook	es-es	h
 hide accounts from addressbook	addressbook	es-es	Ocultar las cuentas de la libreta de direcciones
 hides accounts completly from the adressbook.	addressbook	es-es	Oculta completamente las cuentas de la libreta de direcciones
+history logging	admin	es-es	Registro de historial
 home address	addressbook	es-es	Domicilio particular
 home address, birthday, ...	addressbook	es-es	Domicilio particular, Cumpleaños, ...
 home city	addressbook	es-es	Ciudad de residencia
@@ -224,8 +225,6 @@ home zip code	addressbook	es-es	Código postal
 how many contacts should non-admins be able to export	admin	es-es	Cuántos contactos deben poder exportar usuarios que no son administradores
 icon	addressbook	es-es	Icono
 if accounts are already in ldap	admin	es-es	si las cuentas ya están en LDAP
-if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	es-es	Si especifica un directorio (ruta completa vfs) aquí, la libreta de direcciones muestra una acción para cada documento. Esa acción permite descargar el documento especificado con los datos del contacto insertados.
-if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	es-es	Si especifica un documento (ruta completa vfs) aquí, la libreta de direcciones muestra un icono de documento extra para cada dirección. Ese icono permite descargar el documento especificado con los datos del contacto insertados.
 ignore first line	addressbook	es-es	Ignorar la primera línea
 import	addressbook	es-es	Importar
 import contacts	addressbook	es-es	Importar contactos
@@ -241,7 +240,7 @@ imports contacts into your addressbook from a csv file. csv means 'comma seperat
 in %1 days (%2) is %3's birthday.	addressbook	es-es	En %1 días (%2) es el cumpleaños de %3.
 income	addressbook	es-es	Ingresos
 infolog	addressbook	es-es	Registro de tareas
-insert in document	addressbook	es-es	Insertar en el documento
+insert	addressbook	es-es	Insertar
 insufficent rights to delete this list!	addressbook	es-es	No tiene privilegios suficientes para borrar esta lista
 international	addressbook	es-es	Internacional
 internet	addressbook	es-es	Internet
@@ -261,7 +260,6 @@ list all customfields	addressbook	es-es	Lista de todos los campos personalizados
 list already exists!	addressbook	es-es	¡La lista ya existe!
 list created	addressbook	es-es	Se ha creado la lista
 list creation failed, no rights!	addressbook	es-es	Falló la creación de lista. No tiene privilegios suficientes.
-load sample file	addressbook	es-es	Cargar el fichero de ejemplo
 load vcard	addressbook	es-es	Cargar VCard
 location	addressbook	es-es	Ubicación
 locations	addressbook	es-es	ubicaciones
@@ -278,7 +276,6 @@ mobile	addressbook	es-es	Móvil
 mobile phone	addressbook	es-es	Teléfono móvil
 modem phone	addressbook	es-es	Teléfono módem
 more ...	addressbook	es-es	Más...
-move to addressbook:	addressbook	es-es	Mover a la libreta de direcciones:
 moved	addressbook	es-es	movido
 multiple vcard	addressbook	es-es	VCard múltiple
 name for the distribution list	addressbook	es-es	Nombre para la lista de distribución
@@ -316,6 +313,7 @@ preferred email address to use in distribution lists	addressbook	es-es	Direcció
 preferred phone	addressbook	es-es	teléfono preferido
 preferred type of email address to add for distribution lists	addressbook	es-es	Tipo preferido de dirección de correo electrónico para añadir a las listas de distribución
 prefix	addressbook	es-es	Prefijo
+prevent deleting of contacts	admin	es-es	Evitar el borrado de contactos
 private custom fields	addressbook	es-es	Campos personalizados privados
 public key	addressbook	es-es	Clave pública
 publish into groups:	addressbook	es-es	Publicar en los grupos:
@@ -347,6 +345,7 @@ select the type of conversion	addressbook	es-es	Seleccione el tipo de conversió
 select the type of conversion:	addressbook	es-es	Seleccione el tipo de conversión:
 select where you want to store / retrieve contacts	admin	es-es	Seleccione dónde desea almacenar o recuperar contactos
 selected contacts	addressbook	es-es	Contactos seleccionados
+send emailcopy to receiver	addressbook	es-es	Enviar copia por correo al destinatario
 seperator	addressbook	es-es	Separador
 set full name and file as field in contacts of all users (either all or only empty values)	admin	es-es	Establecer el nombre completo y el fichero como campo de contactos de todos los usuarios (todos o sólo valores vacíos)
 set only full name	addressbook	es-es	Establecer sólo el nombre completo
@@ -373,7 +372,6 @@ that field name has been used already !	addressbook	es-es	El nombre del campo ya
 the anonymous user has probably no add rights for this addressbook.	addressbook	es-es	El usuario anónimo probablemente no tiene derechos de añadir para esta libreta de direcciones.
 the anonymous user needs add rights for it!	addressbook	es-es	¡El usuario anónimo necesita derechos de añadir para esto!
 the anonymous user needs read it!	addressbook	es-es	¡El usuario anónimo necesita leerlo!
-the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	es-es	El documento puede tener un contenedor como $$n_fn$$, para ser sustituido con los datos del contacto (%1lista completa de nombres del contenedor%2).
 there was an error saving your data :-(	addressbook	es-es	Ocurrió un error al guardar los datos
 this module displays a contactform, that stores direct into the addressbook.	addressbook	es-es	Este módulo muestra un formulario de contacto que se guarda directamente en la libreta de direcciones.
 this module displays block from a adddressbook group.	addressbook	es-es	Este módulo muestra el bloque de un grupo de libreta de direcciones
@@ -423,6 +421,8 @@ yes, for the next three days	addressbook	es-es	Sí, para los tres próximos día
 yes, for the next two weeks	addressbook	es-es	Sí, para las dos semanas siguientes
 yes, for the next week	addressbook	es-es	Sí, para la semana siguiente
 yes, for today and tomorrow	addressbook	es-es	Sí, para hoy y mañana
+yes, only admins can purge deleted items	admin	es-es	Sí, sólo los administradores pueden purgar los elementos borrados
+yes, users can purge their deleted items	admin	es-es	Sí, los usuarios pueden purgar sus elementos borrados
 you are not permitted to delete contact %1	addressbook	es-es	No tiene permiso para borrar el contacto %1
 you are not permittet to delete this contact	addressbook	es-es	No tiene permiso para borrar este contacto
 you are not permittet to edit this contact	addressbook	es-es	No tiene permiso para editar este contacto

@@ -55,7 +55,6 @@ are you shure you want to delete this contact?	addressbook	cs	Určitě chcete sm
 are you sure you want to delete this field?	addressbook	cs	Určitě chcete smazat tuto položku?
 assistent	addressbook	cs	Asistent(ka)
 assistent phone	addressbook	cs	telefon asistenta(ky)
-at the moment the following document-types are supported:	addressbook	cs	V současnosti jsou podporovány následující typy souborů
 birthday	common	cs	Narozeniny
 birthdays	common	cs	Narozeniny
 blank	addressbook	cs	Prázdný
@@ -85,7 +84,6 @@ charset of file	addressbook	cs	Znaková sada souboru
 check all	addressbook	cs	Označit všechny
 choose an icon for this contact type	admin	cs	Vybrat ikonu pro tento typ kontaktu
 choose owner of imported data	addressbook	cs	Vyberte vlastníka importovaných dat
-choose seperator and charset	addressbook	cs	Vyberte oddělovač a znakovou sadu
 chosse an etemplate for this contact type	admin	cs	Vybrat eTemplate pro tento typ kontaktu
 city	common	cs	Město
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	cs	Vyčistit položky adresáře (použijte pokud synchronizace vytvořila duplicity)
@@ -118,7 +116,6 @@ country	common	cs	Země
 create new links	addressbook	cs	Vytvořit nové odkazy
 created	addressbook	cs	Vytvořeno
 credit	addressbook	cs	Platební lhůta
-csv field	addressbook	cs	CSV pole
 csv-fieldname	addressbook	cs	Název CSV pole
 csv-filename	addressbook	cs	Jméno CSV souboru
 custom	addressbook	cs	Uživatelsky definované
@@ -149,7 +146,6 @@ distribution lists	addressbook	cs	Distribuční seznamy
 distribution lists, ...	addressbook	cs	Distribuční seznamy, ...
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	cs	Chcete vytvořit soukromý adresář, kam nebudou mít přístup ani uživatelé, kterým dáte přístup do Vašeho osobního adresáře?
 do your really want to delete this contact?	addressbook	cs	Opravdu chcete smazat tento kontakt?
-document '%1' does not exist or is not readable for you!	addressbook	cs	Dokument '%1' neexistuje nebo nemáte oprávnění k jeho čtení!
 doesn't matter	addressbook	cs	nezáleží na tom
 domestic	addressbook	cs	Vnitrostátní
 don't hide empty columns	addressbook	cs	Neschovávat prázdné sloupce
@@ -173,9 +169,7 @@ enter the path to the exported file here	addressbook	cs	Zde vyplňte cestu pro e
 error deleting the contact !!!	addressbook	cs	Chyba při mazání kontaktu
 error saving the contact !!!	addressbook	cs	Chyba při ukládání kontaktu
 error: the entry has been updated since you opened it for editing!	addressbook	cs	Chyba: záznam byl zaktualizován v době, kdy jste ho měl(a) otevřený k editaci!
-example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	cs	Příklad $$IF n_prefix~Mr~Hello Mr.~Hello Ms.$$ - prohledej pole "n_prefix", pokud nalezneš "Mr", napiš Hello Mr., v opačném případě napiš Hello Ms.
 existing links	addressbook	cs	Stávající odkazy
-export	addressbook	cs	export
 export as csv	addressbook	cs	Exportovat jako CSV
 export as vcard	addressbook	cs	Exportovat jako VCard
 export contacts	addressbook	cs	Exportovat kontakty
@@ -196,13 +190,11 @@ fields for the csv export	addressbook	cs	Položky k exportu do CSV
 fields the user is allowed to edit himself	admin	cs	Položky, které si smí editovat sami uživatelé
 fields to show in address list	addressbook	cs	Položky, které se zobrazují v seznamu adres
 fieldseparator	addressbook	cs	Oddělovač položek
-fieldseperator	addressbook	cs	Oddělovač položek
-for more then one contact in a document use the tag pagerepeat!	addressbook	cs	pro více než jeden kontakt v dokumentu použijte štítek pagerepeat!
 for read only ldap	admin	cs	LDAP jen pro čtení
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	cs	Pro hromadný dopis použijte tento štítek. Obsah, který chcete opakovat vložte mezi dva štítky.
 freebusy uri	addressbook	cs	Volný / zaneprázdněn URI
 full name	addressbook	cs	Celé jméno
-general	addressbook	cs	Obecné
+general	admin	cs	Obecné
 general fields:	addressbook	cs	Obecné položky:
 geo	addressbook	cs	Geografické umístění
 global categories	addressbook	cs	Globální kategorie
@@ -211,6 +203,7 @@ group %1	addressbook	cs	Skupina %1
 h	addressbook	cs	h
 hide accounts from addressbook	addressbook	cs	Nezobrazovat účty v adresáři
 hides accounts completly from the adressbook.	addressbook	cs	Kompletně skryje účty před adresářem.
+history logging	admin	cs	Protokolování historie
 home address	addressbook	cs	Domácí adresa
 home address, birthday, ...	addressbook	cs	Domácí adresa, narozeniny, ...
 home city	addressbook	cs	Domov - město
@@ -224,8 +217,6 @@ home zip code	addressbook	cs	Domov - PSČ
 how many contacts should non-admins be able to export	admin	cs	Kolik kontaktů budou moci exportovat uživatelé bez oprávnění administrátora
 icon	addressbook	cs	Ikona
 if accounts are already in ldap	admin	cs	pokud jsou účty již v LDAP
-if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	cs	Pokud zde uvedete adresář (celou cestu ve virtuálním systému souborů), aplikace zobrazí akci pro každý dokument. Tato akce pak umožní stáhnout vybraný dokument s vloženými údaji kontaktu.
-if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	cs	Pokud zde uvedete dokument (celou cestu ve virtuálním systému souborů), aplikace zobrazí extra ikonu dokumentu pro každou adresu. Tato ikona pak umožní stáhnout vybraný dokument s vloženými údaji kontaktu.
 ignore first line	addressbook	cs	Ignorovat první řádek
 import	addressbook	cs	Importovat
 import contacts	addressbook	cs	Importovat kontakty
@@ -241,7 +232,6 @@ imports contacts into your addressbook from a csv file. csv means 'comma seperat
 in %1 days (%2) is %3's birthday.	addressbook	cs	Za %1 dní (%2) má %3 narozeniny.
 income	addressbook	cs	Hospodářský výsledek
 infolog	addressbook	cs	InfoLog
-insert in document	addressbook	cs	Vložit do dokumentu
 insufficent rights to delete this list!	addressbook	cs	Nemáte dostatečná oprávnění ke smazání seznamu!
 international	addressbook	cs	Mezinárodní
 internet	addressbook	cs	Internet
@@ -261,7 +251,6 @@ list all customfields	addressbook	cs	Vypsat všechny uživatelsky definované po
 list already exists!	addressbook	cs	Seznam už existuje!
 list created	addressbook	cs	Seznam vytvořen
 list creation failed, no rights!	addressbook	cs	Vytvoření seznamu selhalo, nedostatečná práva!
-load sample file	addressbook	cs	Načíst ukázkový soubor
 load vcard	addressbook	cs	Nahrát VCard
 location	addressbook	cs	Umístění
 locations	addressbook	cs	umístění
@@ -278,7 +267,6 @@ mobile	addressbook	cs	Mobilní
 mobile phone	addressbook	cs	Mobilní telefon
 modem phone	addressbook	cs	Telefon modemu
 more ...	addressbook	cs	Více ...
-move to addressbook:	addressbook	cs	Přesunout do adresáře:
 moved	addressbook	cs	přesunuto
 multiple vcard	addressbook	cs	Více VCard
 name for the distribution list	addressbook	cs	Název distribučního seznamu
@@ -347,6 +335,7 @@ select the type of conversion	addressbook	cs	Vybrat typ konverze
 select the type of conversion:	addressbook	cs	Vybrat typ konverze:
 select where you want to store / retrieve contacts	admin	cs	Vybrat úložiště kontaktů
 selected contacts	addressbook	cs	vybrané kontakty
+send emailcopy to receiver	addressbook	cs	Poslat kopii e-mailu příjemci
 seperator	addressbook	cs	Oddělovač
 set full name and file as field in contacts of all users (either all or only empty values)	admin	cs	Nastavit celé jméno a evidovat jako pole v kontaktech všech uživatelů (buď všechny nebo jen prázdné hodnoty)
 set only full name	addressbook	cs	Nastavit jen celé jméno
@@ -373,7 +362,6 @@ that field name has been used already !	addressbook	cs	Tento název položky je 
 the anonymous user has probably no add rights for this addressbook.	addressbook	cs	Anonymní uživatel patrně nemá práva k přidávání záznamů do adresáře.
 the anonymous user needs add rights for it!	addressbook	cs	Anonymní uživatel potřebuje práva k přidávání záznamů.
 the anonymous user needs read it!	addressbook	cs	Anonymní uživatel potřebuje právo pro čtení!
-the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	cs	Dokument může obsahovat rezervovaná místa jako $$n_fn$$, která budou nahrazena daty kontaktu (%1kompletní seznam názvů rezervovaných míst%2).
 there was an error saving your data :-(	addressbook	cs	Došlo k chybě při ukládání Vašich dat :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	cs	Tento modul zobrazuje formulář kontaktu, který ukládá data přímo do adresáře.
 this module displays block from a adddressbook group.	addressbook	cs	Tento modul zobrazuje blok z adresářové skupiny.
@@ -423,6 +411,7 @@ yes, for the next three days	addressbook	cs	Ano, po následující tři měsíce
 yes, for the next two weeks	addressbook	cs	Ano, po následující dva týdny
 yes, for the next week	addressbook	cs	Ano, po následující týden
 yes, for today and tomorrow	addressbook	cs	Ano, po dnešní a zítřejší den
+yes, only admins can purge deleted items	admin	cs	Ano, jen administrátoři mohou odstraňovat smazané položky
 you are not permitted to delete contact %1	addressbook	cs	Nemáte oprávnění ke smazání kontaktu %1
 you are not permittet to delete this contact	addressbook	cs	Nemáte oprávnění ke smazání tohoto kontaktu
 you are not permittet to edit this contact	addressbook	cs	Nemáte oprávnění k editaci tohoto kontaktu

@@ -41,8 +41,6 @@ add category	common	lo	ເພີ່ມໝວດໝູ່
 add shortcut	common	lo	ເພີ່ມເສັ້ນທາງລັດ
 add sub	common	lo	ເພີ່ມກຸ່ມຍ່ອຍ
 addressbook	common	lo	ປຶ້ມທີ່ຢູ່
-addressbooks for carddav attribute "addressbook-home-set".	common	lo	Addressbooks for CardDAV attribute "addressbook-home-set".
-addressbooks to sync with apple clients	common	lo	Addressbooks to sync with Apple clients
 admin	common	lo	ຜູ້ຄຸ້ມຄອງລະບົບ
 administration	common	lo	ການຄຸ້ມຄອງ
 afghanistan	common	lo	AFGHANISTAN
@@ -50,7 +48,7 @@ albania	common	lo	ALBANIA
 algeria	common	lo	ALGERIA
 all	common	lo	ທັງໝົດ
 all fields	common	lo	ຟີລທັງໝົດ
-all in one	common	lo	ລວມໃນໜຶ່ງດຽວ
+all in one	groupdav	lo	ລວມໃນໜຶ່ງດຽວ
 all languages	common	lo	ພາສາທັງໝົດ
 alphabet	common	lo	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	lo	ສະລັບຮູບແບບ
@@ -191,7 +189,9 @@ default category	common	lo	ໝວດໝູ່ເລີ່ມຕົ້ນ
 default height for the windows	common	lo	ຄວາມສູງເດີມຂອງ Windows
 default width for the windows	common	lo	ຄວາມກວ້າງເດີມຂອງ Windows
 delete	common	lo	ລຶບ
+delete category	common	lo	ລຶບໝວດໝູ່
 delete row	common	lo	ລຶບແຖວ
+delete this entry	common	lo	ລຶບຂໍ້ມູນເຂົ້າມານີ້
 denmark	common	lo	DENMARK
 description	common	lo	ລາຍລະອຽດ
 detail	common	lo	ລາຍລະອຽດ
@@ -217,6 +217,7 @@ domestic	common	lo	ພາຍໃນປະເທດ
 dominica	common	lo	DOMINICA
 dominican republic	common	lo	DOMINICAN REPUBLIC
 done	common	lo	ສໍາເລັດ
+download	common	lo	ດາວໂຫຼດ
 drag to move	jscalendar	lo	ລາກເຄື່ອນຍ້າຍ
 e-mail	common	lo	ອີເມລ
 east timor	common	lo	EAST TIMOR
@@ -489,6 +490,7 @@ on mouse over	common	lo	ເອົາເມົ້າໄວ້ບົນເທິ�
 only private	common	lo	ເປັນສ່ວນໂຕຢ່າງດຽວ
 only yours	common	lo	ມີພຽງຂອງທ່ານ
 oops! you caught us in the middle of system maintainance.	common	lo	Oops! ລະບົບບໍາລຸງຮັກສາຂອງທ່ານໄດ້ກໍານົດພວກຂ້າພະເຈົ້າໄວ້.
+open	common	lo	ເປີດ
 open notify window	common	lo	ເປີດໜ້າຕ່າງແຈ້ງເຕືອນ
 open popup window	common	lo	ເປີດໜ້າຕ່າງປ໋ອບອັບ
 open sidebox	common	lo	ເປີດກ່ອງດ້ານຂ້າງ
@@ -542,6 +544,7 @@ preferences for the %1 template set	preferences	lo	ການຕັ້ງຄ່�
 prev. month (hold for menu)	jscalendar	lo	ເດືອນກ່ອນໜ້ານີ້(ພາກສ່ວນເມນູທີ່ຕົກຄ້າງ)
 prev. year (hold for menu)	jscalendar	lo	ປີກ່ອນໜ້ານີ້(ພາກສ່ວນເມນູທີ່ຕົກຄ້າງ)
 previous page	common	lo	ໜ້າກ່ອນນີ້
+primary group	common	lo	ກຸ່ມຫຼັກ
 primary style-sheet:	common	lo	ຮູບແບບຫຼັກ
 print	common	lo	ພິມອອກ
 priority	common	lo	ລະດັບຄວາມສໍາຄັນ

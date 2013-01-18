@@ -77,6 +77,7 @@ ldap settings	emailadmin	fi	LDAP -asetukset
 leave empty for no quota	emailadmin	fi	Jätä tyhjäksi, jos ei rajoiteta
 mail settings	admin	fi	Sähköpostin asetukset
 manage stationery templates	emailadmin	fi	Hallitse sähköpostin taustakuvamallipohjia
+mb used	emailadmin	fi	MB käytetty
 name of organisation	emailadmin	fi	Organisaation nimi
 no alternate email address	emailadmin	fi	Ei vaihtoehtoista osoitetta
 no encryption	emailadmin	fi	Ei suojausta
@@ -148,4 +149,6 @@ users can define their own signatures	emailadmin	fi	Käyttäjät voivat määrit
 users can utilize these stationery templates	emailadmin	fi	Käyttäjät voivat määritellä omia sähköpostin taustakuvamallipohjia
 vaction messages with start- and end-date require an admin account to be set!	emailadmin	fi	Lomavastaajaviestit alkamis- ja loppumispäiväyksellä vaativat ylläpitotilin asetuksen.
 virtual mail manager	emailadmin	fi	Virtual MAIL ManaGeR
+yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	fi	Kyllä, Käytä annettua salasanaa vain hälytyksiin ja huomautusviesteihin, muulloin käyttäjän tunnuksia
+yes, use credentials of current user or if given credentials below	emailadmin	fi	Kyllä, käyttäjän tunnukset, tai mahdolliset allaolevat tunnukset
 you have received a new message on the	emailadmin	fi	Sinulle on uusi viesti

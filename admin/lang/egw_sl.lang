@@ -11,12 +11,14 @@ account active	admin	sl	Račun je aktiven
 account has been created	common	sl	Račun je bil ustvarjen.
 account has been deleted	common	sl	Račun je bil izbrisan.
 account has been updated	common	sl	Račun je bil posodobljen.
+account id	admin	sl	ID računa
 account list	admin	sl	Seznam računov
 account permissions	admin	sl	Dovoljenja računa
 account preferences	admin	sl	Nastavitve računa
 acl manager	admin	sl	Upravljalec ACL
 acl rights	common	sl	Pravice ACL
 action	admin	sl	Dejanje
+actions	admin	sl	Dejanja
 activate wysiwyg-editor	admin	sl	Aktiviraj WYSIWYG urejevalnik
 add a category	admin	sl	Dodaj kategorijo
 add a group	admin	sl	Dodaj skupino
@@ -42,6 +44,8 @@ advanced options	admin	sl	Razširjene izbire
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	sl	Po kolikih neuspešnih prijavah se račun onemogoči? (privzeto 3)
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	sl	Po kolikih neuspešnih prijavah se onemogoči IP? (privzeto 3)
 aliases	admin	sl	Psevdonimi
+all applications	admin	sl	Vse aplikacije
+all categories	admin	sl	Vse kategorije
 all records and account information will be lost!	admin	sl	Vsi podatki o računih bodo izgubljeni!
 all users	admin	sl	Vsi uporabniki
 allow anonymous access to this app	admin	sl	Dovoli dostop do te aplikacije anonimnim uporabnikom
@@ -57,6 +61,7 @@ application title	admin	sl	Naslov aplikacije
 applications	admin	sl	Aplikacije
 applications list	admin	sl	Seznam aplikacij
 applies the changes	admin	sl	Uveljavi spremembe
+apply the changes	admin	sl	Uveljavi spremembe
 are you sure you want to delete the application %1 ?	admin	sl	Ste prepričani, da želite izbrisati aplikacijo %1?
 are you sure you want to delete this account ?	admin	sl	Ste prepričani, da želite izbrisati ta račun?
 are you sure you want to delete this application ?	admin	sl	Ste prepričani, da želite izbrisati to aplikacijo?
@@ -84,7 +89,9 @@ can change password	admin	sl	Sme menjati geslo
 cancel testjob!	admin	sl	Prekini testno nalogo!
 categories list	admin	sl	Seznam kategorij
 category %1 has been saved !	admin	sl	Kategorija %1 je bila shranjena!
+category deleted.	admin	sl	Kategorije izbrisana
 category list	admin	sl	Seznam kategorij
+category saved.	admin	sl	Kategorije shranjena.
 change acl rights	admin	sl	Spremeni pravice ACL
 change config settings	admin	sl	Spremeni konfiguracijske nastavitve
 change main screen message	admin	sl	Spremeni besedilo osnovnega zaslona
@@ -94,8 +101,10 @@ click to select a color	admin	sl	Izbira barve
 color	admin	sl	Barva
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	sl	Domena za piškotke (privzeto je prazno, kar pomeni, da bo uporabljeno celotno ime domene. Za SiteMgr ".domena.si" dovoli uporabo istega piškotka za domeno www.domena.si in za egw.domena.si)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	sl	Pot za piškotke (dovoljeno je več sej eGW z različnimi mapami ampak se znajo pojaviti problemi s SiteMgr!)
+country	admin	sl	Država
 country selection	admin	sl	Izbor države
 create group	admin	sl	Ustvari skupino
+created	admin	sl	Ustvarjeno
 creates a new field	admin	sl	Ustvari novo polje
 crontab only (recomended)	admin	sl	Samo crontab (priporočeno)
 custom fields	admin	sl	Polja po meri
@@ -119,6 +128,7 @@ delete the group	admin	sl	Izbriši skupino
 delete this category	admin	sl	Izbriši to kategorijo
 delete this group	admin	sl	Izbriši to skupino
 delete this user	admin	sl	Izbriši tega uporabnika
+deleted	admin	sl	Zbrisano
 deletes this field	admin	sl	Ibriše to polje
 deliver extern	admin	sl	Dostavi zunanji aplikaciji
 deny access to access log	admin	sl	Prepreči dostop do dnevnika dostopov
@@ -138,6 +148,7 @@ deny access to user accounts	admin	sl	Prepreči dostop do uporabniških računov
 deny all users access to grant other users access to their entries ?	admin	sl	Preprečim vsem uporabnikom dostop do upravljanja pravic dostopa njihovih zapisov?
 description can not exceed 255 characters in length !	admin	sl	Opis po dolžini ne sme presegati 255 znakov!
 determines the order the fields are displayed	admin	sl	Določa vrstni red prikaza polj
+disable	admin	sl	Onemogoči
 disable "auto completion" of the login form	admin	sl	Prepreči samodejno izpolnjevanje prijavne forme
 disable wysiwyg-editor	admin	sl	Onemogoči WYSIWYG urejevalnik
 disabled (not recomended)	admin	sl	Onemogočeno (ni priporočeno)
@@ -147,6 +158,7 @@ do you also want to delete all global subcategories ?	admin	sl	Ali želite izbri
 do you want to delete all global subcategories ?	admin	sl	Ali želite izbrisati tudi globalne vse podkategorije?
 do you want to move all global subcategories one level down ?	admin	sl	Ali želite premakniti vse globalne podkategorije nivo niže?
 document root (default)	admin	sl	Koren dokumentov (Document root) (privzeto)
+down	admin	sl	Navzdol
 each value is a line like <id>[=<label>]	admin	sl	vsaka vrednost je vrstica oblike <id>[=<oznaka>]
 each value is a line like id[=label]	admin	sl	Vsaka vrednost je vrstica oblike id[=oznaka]
 edit account	admin	sl	Urejanje računa
@@ -168,6 +180,7 @@ edit user account	admin	sl	Uredi uporabniški račun
 egroupware directory	admin	sl	Mapa eGroupWare
 email account active	admin	sl	E-poštni račun je aktiven
 email address	admin	sl	E-poštni naslov
+enable	admin	sl	Omogoči
 enable debug-messages	admin	sl	Omogoči sporočila za iskanje napak
 enable the soap service	admin	sl	Omogoči servis SOAP
 enable the xmlrpc service	admin	sl	Omogoči servis XMLRPC
@@ -200,19 +213,21 @@ error canceling timer, maybe there's none set !!!	admin	sl	Napaka ob prekinjanju
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	sl	Napaka ob vzpostavljanju kronometra: napačna sintaksa ali pa je kronometer že vzpostavljen!
 error! no appname found	admin	sl	Napaka! Ime aplikacije ni bilo najdeno
 error: %1 not found or other error !!!	admin	sl	Napaka: ne najdem %1 ali druga napaka!
+exists	admin	sl	Obstaja
 expires	admin	sl	Preteče
 explanation of ldapman	admin	sl	Ta modul je bil zaenkrat testiran z Postfixom, LDAPom in Courier-IMAP in potrebuje sheme CORE in QMAIL (OID7914). Podrobnosti o uporabi in konfiguraciji lahko preberete v README.ldapman v mapi "doc" oskrbnika.
 fallback (after each pageview)	admin	sl	Rezervni (po prikazu vsake strani)
+false	admin	sl	Ne
 field '%1' already exists !!!	admin	sl	Polje '%1' že obstaja
 file space	admin	sl	Prostor za datoteke
 file space must be an integer	admin	sl	Prostor za datoteke mora biti celo števlio
-find and register all application hooks	admin	sl	Poišči in registriraj vse zanke v aplikacijah
 for the times above	admin	sl	Za čase nad
 for the times below (empty values count as '*', all empty = every minute)	admin	sl	za čase pod (prazno šteje kot '*'; vse prazno = vsako minuto)
 force selectbox	admin	sl	Vsili izbiro
 forward also to	admin	sl	Posreduj tudi
 forward emails to	admin	sl	Posreduj sporočila
 forward only	admin	sl	Samo posreduj
+full name	admin	sl	Polno ime
 global categories	common	sl	Globalne kategorije
 group ?	admin	sl	Skupina?
 group has been added	common	sl	Skupina je bila dodana.
@@ -240,6 +255,7 @@ install crontab	admin	sl	Namesti crontab
 installed applications	common	sl	Nameščene aplikacije
 installed crontab	admin	sl	Crontab je nameščen
 interface	admin	sl	Vmesnik
+invalid argument '%1' !!!	admin	sl	Napačen argument '%1'!
 ip	admin	sl	IP
 jobs	admin	sl	Naloge
 kill	admin	sl	Prekini
@@ -260,12 +276,13 @@ ldap rootdn	admin	sl	LDAP rootdn
 leave empty for no quota	admin	sl	Pustite prazno za neomejeno
 leave the category untouched and return back to the list	admin	sl	pusti kategorijo nedotaknjeno in se vrni nazaj na seznam
 leave the group untouched and return back to the list	admin	sl	Pusti skupino nedotaknjeno in se vrni nazaj na seznam
+leave without saveing the entry	admin	sl	Zapusti brez shranjevanja zapisa
 leaves without saveing	admin	sl	Zapre brez shranjevanja
 length<br>rows	admin	sl	Dolžina<br>Vrstic
 list config settings	admin	sl	Seznam konfiguracijskih nastavitev
 list current sessions	admin	sl	Seznam trenutnih sej
 list of current users	admin	sl	Seznam trenutnih uporabnikov
-login history	common	sl	Zgodovina prijav
+login history	admin	sl	Zgodovina prijav
 login message	admin	sl	Prijavno sporočilo
 login screen	admin	sl	Prijavni zaslon
 login shell	admin	sl	Prijavna lupina
@@ -274,15 +291,18 @@ loginid	admin	sl	Uporabniško ime
 mail settings	admin	sl	E-poštne nastavitve
 main email-address	admin	sl	Glavni E-naslov
 main screen message	admin	sl	Sporočilo osnovnega zaslona
+manage mapping	admin	sl	Upravljaj mapiranje
 manager	admin	sl	Upravitelj
 max length of the input [, length of the inputfield (optional)]	admin	sl	Največja dolžina vnosa [, dolžina vnosnega polja (opcijsko)]
 maximum account id (e.g. 65535 or 1000000)	admin	sl	Najvišji ID računa (npr. 65535 ali 1000000)
 maximum entries in click path history	admin	sl	Največ vnosov v zgodovino klikanja
+members	admin	sl	Člani
 message has been updated	admin	sl	sporočilo je bilo spremenjeno
 method	admin	sl	Postopek
 minimum account id (e.g. 500 or 100, etc.)	admin	sl	Najnižji ID računa (npr. 100 ali 500)
 minute	admin	sl	Minute
 mode	admin	sl	Način
+modified	admin	sl	Spremenjeno
 month	admin	sl	Mesec
 more secure	admin	sl	Bolj varno
 name must not be empty !!!	admin	sl	Ime ne sme biti prazno!
@@ -301,6 +321,8 @@ no permission to add users	admin	sl	Ni dovoljenja za dodajanje uporabnikov
 no permission to create groups	admin	sl	Ni dovoljenja za ustvarjanje skupin
 note: ssl available only if php is compiled with curl support	admin	sl	Pozor: SSL je na razpolago le, če je PHP preveden s curl podporo.
 number of row for a multiline inputfield or line of a multi-select-box	admin	sl	Število vrstic za večvrstično vnosno polje ali vrstica v polju z več izbirami
+one month	admin	sl	En mesec
+one week	admin	sl	En teden
 order	admin	sl	Vrstni red
 outbound	admin	sl	Nzhodno
 passthrough	admin	sl	Nrehod (passthrough)
@@ -311,6 +333,7 @@ peer servers	admin	sl	Vzporedni strežniki
 percent of users that logged out	admin	sl	Delež uporabnikov, ki so se odjavili
 percent this user has logged out	admin	sl	Delež odjav tega uporabnika
 permission denied	admin	sl	Dostop zavrnjen
+permission denied !!!	admin	sl	Dostop zavrnjen!
 permissions	admin	sl	Dovoljenja
 permissions this group has	admin	sl	Dovoljenja za to skupino
 phpinfo	admin	sl	Podatki o PHPju
@@ -330,6 +353,7 @@ register application hooks	admin	sl	Registrirajte zanke aplikacij
 remove	admin	sl	Odstrani
 remove all users from this group	admin	sl	Odstranite vse uporabnike iz te skupine
 remove all users from this group ?	admin	sl	Odstranim vse uporabnike iz te skupine?
+requested	admin	sl	Zahtevano
 return to admin mainscreen	admin	sl	Vrni se na oskrbnikov zaslon
 return to view account	admin	sl	Vrni se na pregled računa
 route all mails to	admin	sl	Preusmeri vso pošto na
@@ -337,6 +361,7 @@ run asynchronous services	admin	sl	Poženi asinhrone storitve
 save the category	admin	sl	Shrani to kategorijo
 save the category and return back to the list	admin	sl	Shrani kategorijo in se vrni na seznam
 saves the changes made and leaves	admin	sl	Shrani narejene spremembe in zapusti program
+saves this entry	admin	sl	Shrani ta zapis
 search accounts	admin	sl	Išči po računih
 search categories	admin	sl	Išči po kategorijah
 search groups	admin	sl	Išči skupine
@@ -376,6 +401,7 @@ standard	admin	sl	Standardni
 standard imap server	admin	sl	Standardni strežnik imap
 standard pop3 server	admin	sl	Standardni strežnik POP3
 standard smtp-server	admin	sl	Standardni strežnik SMTP
+start	admin	sl	Začetek
 start testjob!	admin	sl	Poženi testno nalogo (TestJob)!
 submit changes	admin	sl	Shrani spremembe
 submit the search string	admin	sl	Pošlji iskalni niz
@@ -408,11 +434,16 @@ timeout for sessions in seconds (default 14400 = 4 hours)	admin	sl	Čas preteka 
 times	admin	sl	Časi
 top	admin	sl	Vrh
 total records	admin	sl	Skupno vseh zapisov
+translation	admin	sl	Prevod
+true	admin	sl	DA
 trust level	admin	sl	Stopnja zaupanja
 trust relationship	admin	sl	Povezava zaupanja
+two weeks	admin	sl	Dva tedna
 type '%1' already exists !!!	admin	sl	Vrsta '%1' že obstaja!
 type of customfield	admin	sl	Vrsta polja po meri
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	sl	Pod Windowsi morate asinhrone storitve namestiti %1ročno%2.
+up	admin	sl	Gor
+updated	admin	sl	Podosodobljeno
 use cookies to pass sessionid	admin	sl	Uporaba piškotkov za prenos ID seje.
 use pure html compliant code (not fully working yet)	admin	sl	Uporabi HTML veljavno kodo (popolnoma še ne deluje).
 use theme	admin	sl	Uporabi temo

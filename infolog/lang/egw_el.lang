@@ -21,6 +21,7 @@ a short subject for the entry	infolog	el	ένα μικρό θέμα για τη�
 abort without deleting	infolog	el	Έξοδος χωρίς διαγραφή
 accept	infolog	el	αποδοχή
 action	infolog	el	Ενέργεια
+actions...	infolog	el	Ενέργειες...
 actual date and time	infolog	el	πραγματική ημερομηνία και ώρα
 add	infolog	el	Προσθήκη
 add a file	infolog	el	Προσθήκη αρχείου
@@ -32,6 +33,7 @@ add a new todo	infolog	el	Προσθήκη νέας εκκρεμότητας
 add file	infolog	el	Προσθήκη αρχείου
 add sub	infolog	el	προσθήκη υπό
 add:	infolog	el	Προσθήκη:
+added	infolog	el	Προστέθηκε
 all	infolog	el	Όλα
 all links and attachments	infolog	el	όλοι οι σύνδεσμοι και οι επισυνάψεις
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	el	επιτρέπει τον καθορισμό της κατάστασης μιας καταχώρησης,π.χ. καθορισμός μιας εκκρεμότητας σε ολοκληρωμένη εάν τελείωσε (αξίες εξαρτώνται από τον τύπο της καταχώρησης)
@@ -39,6 +41,7 @@ apply the changes	infolog	el	Εφαρμογή των αλλαγών
 are you shure you want to delete this entry ?	infolog	el	Είστε σίγουρος ότι θέλετε να διαγράψετε αυτή την καταχώρηση;
 attach a file	infolog	el	Επισύναψη αρχείου
 attach file	infolog	el	Επισύναψη αρχείου
+attachments	infolog	el	Επισυνάψεις
 attention: no contact with address %1 found.	infolog	el	Προσοχή: Καμία Επαφή με τη διεύθυνση %1 δεν βρέθηκε.
 back to main list	infolog	el	Πίσω στη βασική λίστα
 billed	infolog	el	χρεώθηκε
@@ -49,17 +52,19 @@ cancelled	infolog	el	ακυρώθηκε
 categories	infolog	el	Κατηγορίες
 category	infolog	el	Κατηγορία
 change the status of an entry, eg. close it	infolog	el	Αλλαγή της κατάστασης μιας καταχώρησης, π.χ. κλείσιμο
-charset of file	infolog	el	Κωδικοσελίδα αρχείου
 check to set startday	infolog	el	Έλεγχος για ορισμό ημέρας έναρξης
 check to specify custom contact	infolog	el	Έλεγχος για καθορισμό  επαφής πελάτη
+choose owner of imported data	infolog	el	Επιλέξτε ιδιοκτήτη των εισαγόμενων δεδομένων
 click here to create the link	infolog	el	κάντε κλικ εδώ για τη δημιουργία συνδέσμου
 click here to start the search	infolog	el	κάντε κλικ εδώ για να αρχίσετε την αναζήτηση
 close	infolog	el	Κλείσιμο
+close all	infolog	el	κλείσιμο όλων
 comment	infolog	el	Σχόλιο
 completed	infolog	el	Ολοκληρώθηκε
 configuration	infolog	el	Τροποποίηση
 confirm	infolog	el	Επιβεβαίωση
 contact	infolog	el	Επαφή
+copy of:	infolog	el	Αντίγραφο του:
 create new links	infolog	el	Δημιουργία νέων συνδέσμων
 creates a new field	infolog	el	δημιουργεί νέο πεδίο
 creates a new status with the given values	infolog	el	δημιουργεί μια νέα κατάσταση με τις δοσμένες αξίες
@@ -91,8 +96,6 @@ delegated upcomming	infolog	el	εξουσιοδοτημένα επερχόμεν
 delegation	infolog	el	Εξουσιοδότηση
 delete	infolog	el	Διαγραφή
 delete one record by passing its id.	infolog	el	Διαγραφή μιας εγγραφής διαβαίνοντας απο το id της.
-delete the entry	infolog	el	Διαγραφή αυτής της καταχώρησης
-delete this entry	infolog	el	δαγραφή αυτής της καταχώρησης
 delete this entry and all listed sub-entries	infolog	el	Διαγραφή αυτής της καταχώρησης και όλων των υπο-καταχωρήσεων στη λίστα
 deleted	infolog	el	διαγράφηκαν
 deletes the selected typ	infolog	el	διαγραφή του επιλεγμένου τύπου
@@ -110,7 +113,7 @@ do you want a notification, if items you delegated are about to start?	infolog	e
 do you want a notification, if items you delegated are due?	infolog	el	Επιθυμείτε ειδοποίηση, αν αντικείμενα για τα οποία είστε εξουσιοδοτημένος έχουν καθυστερήσει;
 do you want to receive notifications as html-mails or plain text?	infolog	el	Επιθυμείτε να λαμβάνετε ειδοποιήσεις ως html-mails ή απλό κείμενο;
 don't show infolog	infolog	el	ΜΗΝ εμφανίζετε το InfoLog
-done	infolog	el	ολοκληρώθηκε
+done	common	el	ολοκληρώθηκε
 download	infolog	el	Download
 duration	infolog	el	Διάρκεια
 each value is a line like <id>[=<label>]	infolog	el	κάθε αξία είναι μία γραμμή όπως <id>[=<label>]
@@ -121,6 +124,7 @@ edit status	infolog	el	Επιμέλεια κατάστασης
 edit the entry	infolog	el	Επιμέλεια της καταχώρησης
 edit this entry	infolog	el	Επιμέλεια αυτής της καταχώρησης
 empty for all	infolog	el	κενό για όλα
+end	infolog	el	Τέλος
 enddate	infolog	el	Προθεσμία λήξης
 enddate can not be before startdate	infolog	el	Η προθεσμία λήξης δεν μπορεί να είναι προηγούμενη της  ημερομηνίας έναρξης
 enter a custom contact, leave empty if linked entry should be used	infolog	el	είσοδος σε μία προσαρμοσμένη επαφή, να μείνει κενή αν πρέπει να χρησιμοποιηθεί συνδεδεμένη καταχώρηση
@@ -129,6 +133,7 @@ enter a textual description of the log-entry	infolog	el	Πληκτρολογήσ
 enter the query pattern	infolog	el	Enter the query pattern
 error: saving the entry	infolog	el	Σφάλμα: κατά την αποθήκευση της καταχώρησης
 error: the entry has been updated since you opened it for editing!	infolog	el	Σφάλμα:η καταχώρηση έχει ενημερωθεί από όταν την ανοίξατε για προσαρμογή!
+execute a further action for this entry	infolog	el	Εκτελέστε περαιτέρω ενέργεια για αυτήν την καταχώρηση
 existing links	infolog	el	Υπάρχοντες σύνδεσμοι
 fax	infolog	el	Fax
 field must not be empty !!!	infolog	el	Το πεδίο δεν πρέπει να μείνει κενό !!!
@@ -136,13 +141,13 @@ fieldseparator	infolog	el	Διαχωριστής πεδίων
 finish	infolog	el	τέλος
 for which types should this field be used	infolog	el	για ποιους τύπους να χρησιμοποιηθεί αυτό το πεδίο
 from	infolog	el	Από
-general	infolog	el	Γενικά
+global categories	infolog	el	Παγκόσμιες κατηγορίες
 high	infolog	el	υψηλή
+history	infolog	el	Ιστορικό
 history logging	infolog	el	Ιστορικό εισόδων
 history logging and deleting of items	infolog	el	Ιστορικό εισόδων και διαγραφών αντικειμένων
 id	infolog	el	Id
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	el	Αν ο τύπος έχει έναν ιδιοκτήτη ομάδας, όλες οι καταχωρήσεις αυτού του τύπου θα ανήκουν στη συγκεριμένη ομάδα και ΟΧΙ στο χρήστη που το δημιούργησε!
-import	infolog	el	Εισαγωγή
 import next set	infolog	el	εισαγωγή επόμενου σετ
 info log	common	el	Infolog
 infolog	common	el	Infolog
@@ -208,6 +213,7 @@ only the links	infolog	el	μόνο οι σύνδεσμοι
 open(status)	infolog	el	ανοικτά
 optional note to the link	infolog	el	προαιρετική σημείωση στο σύνδεσμο
 order	infolog	el	Παραγγελία
+organization	infolog	el	οργανισμός
 overdue	infolog	el	καθυστερημένα
 own	infolog	el	δικά μου
 own open	infolog	el	δικά μου ανοικτά
@@ -265,6 +271,7 @@ select a responsible user: a person you want to delegate this task	infolog	el	Ε
 select a typ to edit it's status-values or delete it	infolog	el	επιλέξτε έναν τύπο για να επιμεληθείτε την κατάστασή του
 select an app to search in	infolog	el	Επελέξτε μία εφαρμογή στην οποία θα γίνει αναζήτηση
 select an entry to link with	infolog	el	Επελέξτε μία καταχώρηση προς σύνδεση
+select multiple contacts for a further action	infolog	el	Επιλέξτε πολλαπλές επαφές για περαιτέρω ενέργειες
 select to filter by owner	infolog	el	Επιλογή φίλτρου σύμφωνα με τον ιδιοκτήτη
 select to filter by responsible	infolog	el	Επιλογή φίλτρου σύμφωνα με τον υπεύθυνο
 sets the status of this entry and its subs to done	infolog	el	Ορίζει την κατάσταση αυτής της καταχώρησης και των υποκατηγοριών της σε ολοκληρωμένη
@@ -284,6 +291,7 @@ show status and percent done separate	infolog	el	Παρουσίαση της κ�
 show ticket id	infolog	el	Εμφάνιση Id εισιτηρίου
 show times	infolog	el	Εμφάνιση των ωρών
 small view	infolog	el	μικρή εμφάνιση
+start	infolog	el	Έναρξη
 start a new search, cancel this link	infolog	el	έναρξη νέας αναζήτησης, ακύρωση αυτού του συνδέσμου
 startdate	infolog	el	Ημερομηνία έναρξης
 startdate enddate	infolog	el	Ημερομηνία έναρξης ημερομηνία εξόφλησης
@@ -298,6 +306,7 @@ sum	infolog	el	Σύνολο
 task	infolog	el	Εργασίες
 template	infolog	el	Πρότυπο
 test import (show importable records <u>only</u> in browser)	infolog	el	Έλεγχος Εισαγωγής (εμφάνιση εισαγώγιμων εγγραφών <u>only</> στο browser)
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	el	το όνομα χρησιμοποιείται εσωτερικά (<=20 χαρακτ), ενδεχόμενη αλλαγή του προκαλεί μη διαθεσιμότητα των δεδομένων
 the text displayed to the user	infolog	el	το κείμενο εμφανίζεται στο χρήστη
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	el	Αυτές είναι οι χρήσεις του InfoLog φίλτρου όταν εισέρχεστε στην εφαρμογή.Τα φίλτρα περιορίζουν τις καταχωρήσεις να εμφανίζονται στην πραγματική παρουσίαση.Υπάρχουν φίλτρα που παρουσιάζουν μόνο τα ολοκληρωμένα, τα τρέχοντα ή τις δικές σας μελλοντικές καταχωρήσεις ή και όλων των χρηστών.
 til when should the todo or phonecall be finished	infolog	el	μέχρι πότε πρέπει το θέμα προς διεκπαιρέωση ή η τηλεφωνική κλήση να έχει τελείωσει
@@ -307,7 +316,6 @@ to what should the startdate of new entries be set.	infolog	el	Σε τι πρέ�
 today	infolog	el	Σήμερα
 todays date	infolog	el	σημερινή ημερομηνία
 todo	infolog	el	Εργασίες
-translation	infolog	el	Μετάφραση
 typ	infolog	el	Τύπος
 typ '%1' already exists !!!	infolog	el	Ο τύπος '%1' υπάρχει ήδη
 type	infolog	el	Τύπος
@@ -319,8 +327,6 @@ upcoming	infolog	el	επερχόμενο
 urgency	infolog	el	επείγον
 urgent	infolog	el	επείγον
 used time	infolog	el	χρησιμοποιημένος χρόνος
-valid path on clientside<br>eg. \servershare or e:	infolog	el	έγκυρο μονοπάτι προς την πλευρά του πελάτη<br>π.χ. \\Server\Share ή e:\
-valid path on clientside<br>eg. servershare or e:	infolog	el	έγκυρο μονοπάτι προς την πλευρά του πελάτη<br>π.χ. \\Server\Share ή e:\
 values for selectbox	infolog	el	Αξίες του επιλεγμένου κουτιού
 view all subs of this entry	infolog	el	Εμφάνιση όλων των υποκατηγοριών αυτής της καταχώρησης
 view other subs	infolog	el	εμφάνιση άλλων υποκατηγοριών
@@ -331,7 +337,6 @@ view this linked entry in its application	infolog	el	εμφάνιση αυτής
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	el	πότε θα έπρεπε οι Εργασίες ή Κλήση τηλεφώνου να αρχίζουν,εμφανίζεται από εκείνη την ημερομηνία στο άνοιγμα φίλτρου ή δικά μου άνοιγμα (αρχική σελίδα)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	el	Ποια επιπλέον πεδία πρέπει ο υπεύθυνος να έχει άδεια να επιμεληθεί χωρίς να έχει δικαιώματα επιμέλειας;<br/>Κατάσταση, ποσοστό και ημερομηνία ολοκλήρωσης είναι πάντοτε επιτρεπτά.
 which implicit acl rights should the responsible get?	infolog	el	Ποια αυτονόητα ACL δικαιώματα πρέπει ο υπεύθυνος να έχει;
-whole query	infolog	el	ολόκληρη απορία
 will-call	infolog	el	θα τηλεφωνήσει
 write (add or update) a record by passing its fields.	infolog	el	Καταγραφή (προσθήκη ή ενημέρωση) μιας εγγραφής διαβαίνοντας από τα πεδία της.
 yes - delete	infolog	el	Ναι- Διαγραφή

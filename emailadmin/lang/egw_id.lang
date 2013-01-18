@@ -32,6 +32,8 @@ enable sieve	emailadmin	id	Bolehkan Sieve
 encrypted connection	emailadmin	id	koneksi ter-enkripsi
 encryption settings	emailadmin	id	Pengaturan Enkripsi
 enter your default mail domain (from: user@domain)	emailadmin	id	Berikan nama domain email anda (dari: pengguna@domain)
+entry saved	emailadmin	id	Entri disimpan
+error saving the entry!!!	emailadmin	id	Error saving the entry!!!
 filtered by account	emailadmin	id	saringan menurut Akoun
 filtered by group	emailadmin	id	saringan menurut Kelompok
 forward only	emailadmin	id	Hanya Forward
@@ -51,6 +53,7 @@ no alternate email address	emailadmin	id	tanpa alamat email pengganti
 no encryption	emailadmin	id	tanpa enkripsi
 order	emailadmin	id	Urutan
 organisation	emailadmin	id	Organisasi
+postfix with ldap	emailadmin	id	Postfix with LDAP
 profile list	emailadmin	id	Daftar Profil
 profile name	emailadmin	id	Nama Profil
 qmaildotmode	emailadmin	id	qmaildotmode

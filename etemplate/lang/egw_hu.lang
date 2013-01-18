@@ -5,7 +5,9 @@ add table	etemplate	hu	Táblázat hozzáadása
 advanced search	etemplate	hu	Kiterjesztett keresés
 align	etemplate	hu	Igazítás
 am	etemplate	hu	de
+and	etemplate	hu	És
 application	etemplate	hu	Alkalmazás
+applications	etemplate	hu	Alkalmazások
 attach	etemplate	hu	Csatol
 attach file	etemplate	hu	Állomány csatolása
 baseline	etemplate	hu	Alapvonal
@@ -16,8 +18,11 @@ category	etemplate	hu	Kategória
 cells	etemplate	hu	Cellák
 center	etemplate	hu	Középre
 changed	etemplate	hu	Változott
+check all	etemplate	hu	Összes kijelölese
 checkbox	etemplate	hu	Checkbox
 class	etemplate	hu	Osztály
+click here to create the link	etemplate	hu	hivatkozás létrehozásához kattintson ide
+click here to start the search	etemplate	hu	keresés elindításához kattintson ide
 comment	etemplate	hu	Hozzászólás
 confirm	etemplate	hu	megerősít
 contact	etemplate	hu	Kapcsolat
@@ -28,15 +33,23 @@ cut	etemplate	hu	Kivág
 day	etemplate	hu	Nap
 days	etemplate	hu	napok
 default	etemplate	hu	Alapértelmezett
+delete a single entry by passing the id.	etemplate	hu	Töröl egy bejegyzést az azonosító megadásával.
 delete column	etemplate	hu	Oszlop törlés
 delete index	etemplate	hu	Index törlése
+document '%1' does not exist or is not readable for you!	preferences	hu	A(z) '%1' dokumentum nem létezik, vagy nincs hozzá olvasási joga!
 documentation	etemplate	hu	Dokumentáció
+doesn't matter	etemplate	hu	nem számít
 duration	etemplate	hu	Időtartam
 edit	etemplate	hu	Szerkeszt
 edit...	etemplate	hu	Szerkeszt...
+entry saved	etemplate	hu	Bejegyzés elmentve
+error uploading file!	filemanager	hu	HIba a file feltöltése során!
 etemplate	common	hu	eTemplate
+field	etemplate	hu	Mező
+field must not be empty !!!	etemplate	hu	A mezőt ki kell tölteni!!!
 file	etemplate	hu	Állomány
 first	etemplate	hu	Első
+general fields:	preferences	hu	Általános mezők:
 height	etemplate	hu	Magasság
 help	etemplate	hu	Segítség
 hour	etemplate	hu	Óra
@@ -45,28 +58,42 @@ html	etemplate	hu	HTML
 image	etemplate	hu	Kép
 import	etemplate	hu	Import
 key	etemplate	hu	Kulcs
+label	etemplate	hu	Címke
 lang	etemplate	hu	Nyelv
 last	etemplate	hu	Utolsó
 left	etemplate	hu	Balra
 link	etemplate	hu	Hivatkozás
+maximum size for uploads	filemanager	hu	Feltöltés maximális mérete
 minute	etemplate	hu	Perc
 minutes	etemplate	hu	Percek
 month	etemplate	hu	Hónap
 name	etemplate	hu	Név
 new search	common	hu	Új keresés
+no file	etemplate	hu	nincs file
+no matches found	etemplate	hu	Nincs egyezés
 not null	etemplate	hu	NOT NULL
 nothing	etemplate	hu	semmi
 options	etemplate	hu	Opciók
+or	etemplate	hu	vagy
 padding	etemplate	hu	Helykitöltés
 paste	etemplate	hu	Beilleszt
 path	etemplate	hu	Útvonal
 pm	etemplate	hu	du
 read	etemplate	hu	Olvas
+read a list of entries.	etemplate	hu	Bejegyzés lista olvasása.
+read a single entry by passing the id and fieldlist.	etemplate	hu	Egyedi bejegyzés olvasása az azonositó és mezőlista alapján.
+readonly	etemplate	hu	csak olvasható
+remove this link (not the entry itself)	etemplate	hu	Hivatkozás eltávolítása (nem a bejegyzést magát)
+required	etemplate	hu	Szükséges
 right	etemplate	hu	Jobbra
 search	etemplate	hu	Keres
 select a category	etemplate	hu	Kategória kiválasztása
+select an app to search in	etemplate	hu	Alkalmazásban keresés
+select an entry to link with	etemplate	hu	Bejegyzés választása hivatkozás készítéshez
+selectbox	etemplate	hu	Kiválasztó doboz
 show	etemplate	hu	Mutat
 spacing	etemplate	hu	Betűköz
+start a new search, cancel this link	etemplate	hu	új keresés indítása, hivatkozás elhagyása
 template	etemplate	hu	Sablon
 text	etemplate	hu	Szöveg
 textarea	etemplate	hu	Szövegterület
@@ -75,11 +102,12 @@ today	etemplate	hu	Mai nap
 top	etemplate	hu	Felül
 type	etemplate	hu	Típus
 unlink	etemplate	hu	Hivatkozás törlése
+update a single entry by passing the fields.	etemplate	hu	Egy egyedüli bejegyzés frissítése a mezök beírásával.
 upload	etemplate	hu	Feltölt
 version	etemplate	hu	Verzió
+view this linked entry in its application	etemplate	hu	hivatkozott bejegyzés megtekintése a hozzá tartozó alkalmazással
 weekend	etemplate	hu	hétvége
 width	etemplate	hu	Szélesség
 working days	etemplate	hu	munkanapok
 year	etemplate	hu	Év
-error uploading file!	filemanager	hu	HIba a file feltöltése során!
-maximum size for uploads	filemanager	hu	Feltöltés maximális mérete
+you can respond by visiting:	etemplate	hu	Megtekintéshez látogasson el ide:

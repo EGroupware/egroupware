@@ -32,6 +32,7 @@ attach	felamimail	id	Lampirkan
 attachments	felamimail	id	Lampiran
 authentication required	felamimail	id	authentication required
 back to folder	felamimail	id	Kembali ke folder
+bad login name or password.	felamimail	id	Nama atau password tidak benar.
 bcc	felamimail	id	BCC
 before headers	felamimail	id	Sebelum header
 between headers and message body	felamimail	id	Diantara header dan tubuh-pesan
@@ -55,7 +56,10 @@ configuration	felamimail	id	Konfigurasi
 contact not found!	felamimail	id	Kontak tidak ditemukan!
 contains	felamimail	id	mengandung
 copy or move messages?	felamimail	id	Salin atau Pindahkan Pesan?
+copy to	felamimail	id	Salin ke
 copying messages to	felamimail	id	menyalin pesan ke
+could not open secure connection to the imap server. %s : %s.	felamimail	id	Could not open secure connection to the IMAP server. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	id	CRAM-MD5 or DIGEST-MD5 requires the Auth_SASL package to be installed.
 create	felamimail	id	Bikin
 create folder	felamimail	id	Bikin Folder
 create sent	felamimail	id	Bikin Sent
@@ -147,7 +151,6 @@ forward to	felamimail	id	forward to
 forward to address	felamimail	id	forward to address
 forwarding	felamimail	id	Forwarding
 found	felamimail	id	Ditemukan
-fri	felamimail	id	Jum
 from	felamimail	id	Dari
 from(a->z)	felamimail	id	Dari (A->Z)
 from(z->a)	felamimail	id	Dari (Z->A)
@@ -172,6 +175,7 @@ imaps authentication	felamimail	id	IMAPS Authentication
 imaps encryption only	felamimail	id	IMAPS Encryption only
 import	felamimail	id	impor
 import mail	felamimail	id	Impor Mail
+importance	felamimail	id	Importance
 in	felamimail	id	dalam
 inbox	felamimail	id	INBOX
 index order	felamimail	id	Urutan Indeks
@@ -183,6 +187,7 @@ junk	felamimail	id	Junk
 kilobytes	felamimail	id	kilobyte
 language	felamimail	id	Bahasa
 last name	felamimail	id	Nama Belakang
+later	felamimail	id	Later
 left	felamimail	id	Kiri
 less	felamimail	id	kurang
 less than	felamimail	id	kurang dari
@@ -205,11 +210,11 @@ max uploadsize	felamimail	id	max uploadsize
 message highlighting	felamimail	id	Penyorotan Pesan
 message list	felamimail	id	Daftar Pesan
 messages	felamimail	id	pesan-pesan
-mon	felamimail	id	Sen
 move	felamimail	id	Pindahkan
 move folder	felamimail	id	pindahkan folder
 move messages	felamimail	id	pindahkan pesan
 move messages?	felamimail	id	Pindahkan Pesan?
+move to	felamimail	id	Pindahkan ke
 name	felamimail	id	Nama
 new	common	id	Baru
 new filter	felamimail	id	Saringan baru
@@ -264,7 +269,6 @@ respond	felamimail	id	Tanggapan
 return	felamimail	id	Kembali
 right	felamimail	id	Kanan
 rule	felamimail	id	Rule/Aturan
-sat	felamimail	id	Sab
 save	felamimail	id	Simpan
 save all	felamimail	id	Simpan semuanya
 save as draft	felamimail	id	simpan sbg draft
@@ -281,6 +285,7 @@ select emailprofile	felamimail	id	Pilih Profil Email
 select folder	felamimail	id	pilih folder
 send	felamimail	id	Kirim
 send a reject message	felamimail	id	kirim pesan penolakan
+sender	felamimail	id	Pengirim
 sent	felamimail	id	Sent
 sent folder	felamimail	id	Sent Folder
 set as default	felamimail	id	Tetapkan sbg bawaan
@@ -304,7 +309,6 @@ submit	felamimail	id	Kirimkan
 subscribe	felamimail	id	Berlangganan
 subscribed	felamimail	id	Berlangganan
 subscribed successfully!	felamimail	id	Sukses berlangganan!
-sun	felamimail	id	Min
 system signature	felamimail	id	tandatangan sistem
 table of contents	felamimail	id	Daftar Isi
 template folder	felamimail	id	Folder Templat
@@ -313,15 +317,14 @@ text only	felamimail	id	Hanya teks
 text/plain	felamimail	id	text/plain
 then	felamimail	id	THEN
 this folder is empty	felamimail	id	THIS FOLDER IS EMPTY
-thu	felamimail	id	Kam
 to	felamimail	id	Kepada
 translation preferences	felamimail	id	Kesukaan Penerjemahan
 translation server	felamimail	id	Server Penerjemahan
 trash	felamimail	id	Trash
 trash fold	felamimail	id	Trash Fold
 trash folder	felamimail	id	Trash Folder
-tue	felamimail	id	Sel
 type	felamimail	id	tipe
+unexpected response from server to login command.	felamimail	id	Unexpected response from server to LOGIN command.
 unflagged	felamimail	id	tak ditandai
 unknown err	felamimail	id	Unknown err
 unknown error	felamimail	id	Unknown error
@@ -334,6 +337,7 @@ unsubscribed	felamimail	id	Batal berlangganan
 unsubscribed successfully!	felamimail	id	Sukses membatalkan langganan!
 up	felamimail	id	naik
 updating view	felamimail	id	memperbarui tampilan
+urgent	felamimail	id	mendesak
 use addresses	felamimail	id	Gunakan Alamat
 vacation notice	common	id	vacation notice
 validate certificate	felamimail	id	validate certificate
@@ -342,7 +346,6 @@ view message	felamimail	id	Lihat pesan
 viewing full header	felamimail	id	Melihat header penuh
 viewing message	felamimail	id	Melihat pesan
 viewing messages	felamimail	id	Melihat pesan
-wed	felamimail	id	Rab
 with message	felamimail	id	dengan pesan
 with message "%1"	felamimail	id	dengan pesan "%1"
 wrap incoming text at	felamimail	id	Gulung teks pada

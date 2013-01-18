@@ -351,7 +351,6 @@ image directory relative to document root (use / !), example:	common	it	La carte
 image url	common	it	URL immagine
 india	common	it	INDIA
 indonesia	common	it	INDONESIA
-infolog types to sync	common	it	Tipi di Attività da sincronizzare
 insert all %1 addresses of the %2 contacts in %3	common	it	Inseriti tutti i %1 indirizzi dei %2 contatti in %3
 insert column after	common	it	Inserisci colonna dopo
 insert column before	common	it	Inserisci colonna prima
@@ -415,6 +414,7 @@ list	common	it	Lista
 list members	common	it	Elenco membri
 lithuania	common	it	LITUANIA
 local	common	it	Locale
+locations	common	it	località
 logging / debuging	groupdav	it	Resgistro/Debug
 login	common	it	Login
 loginid	common	it	LoginID
@@ -788,7 +788,6 @@ what style would you like the image to have?	common	it	Che stile vuoi che abbia 
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	it	Se dirai sì, i pulsanti Home e Logout saranno presenti come applicazioni sulla barra principale delle applicazioni
 where and how will the egroupware links like preferences, about and logout be displayed.	common	it	Come e dove verranno visualizzati i collegamenti come Preferenze, About e Log
 which groups	common	it	Quali gruppi
-which infolog types should be synced with the device, default only tasks.	common	it	Quali tipi di Attività dovrebbero essere sincronizzati con il dispositivo? Predefinito = solo task
 whole query	common	it	Tutta la query
 width	common	it	Larghezza
 wk	jscalendar	it	set

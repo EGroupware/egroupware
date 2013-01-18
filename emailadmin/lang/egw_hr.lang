@@ -16,6 +16,7 @@ email address	emailadmin	hr	email address
 enable cyrus imap server administration	emailadmin	hr	enable Cyrus IMAP server administration
 enable sieve	emailadmin	hr	enable Sieve
 enter your default mail domain (from: user@domain)	emailadmin	hr	Enter your default mail domain (from: user@domain)
+entry saved	emailadmin	hr	Entry saved
 forward also to	emailadmin	hr	forward also to
 forward email's to	emailadmin	hr	forward email's to
 forward only	emailadmin	hr	forward only
@@ -38,6 +39,8 @@ mail settings	admin	hr	Mail settings
 name of organisation	emailadmin	hr	Name of organization
 no alternate email address	emailadmin	hr	no alternate email address
 no forwarding email address	emailadmin	hr	no forwarding email address
+order	emailadmin	hr	Naredba
+organisation	emailadmin	hr	organizacija
 pop3 server hostname or ip address	emailadmin	hr	POP3 server hostname or ip address
 pop3 server port	emailadmin	hr	POP3 server port
 postfix with ldap	emailadmin	hr	Postfix with LDAP
@@ -53,16 +56,17 @@ sieve server hostname or ip address	emailadmin	hr	Sieve server hostname or ip ad
 sieve server port	emailadmin	hr	Sieve server port
 sieve settings	emailadmin	hr	Sieve settings
 smtp server name	emailadmin	hr	SMTP server name
+smtp settings	emailadmin	hr	Postavke SMTP
 smtp-server hostname or ip address	emailadmin	hr	SMTP server hostname or IP address
 smtp-server port	emailadmin	hr	SMTP server port
 standard	emailadmin	hr	Standard
 standard imap server	emailadmin	hr	Standard IMAP server
 standard pop3 server	emailadmin	hr	Standard POP3 server
 standard smtp-server	emailadmin	hr	Standard SMTP server
+this php has no imap support compiled in!!	emailadmin	hr	Ovaj PHP nema ugrađenu podršku za IMAP!!
 use ldap defaults	emailadmin	hr	use LDAP defaults
 use smtp auth	emailadmin	hr	Use SMTP auth
 use tls authentication	emailadmin	hr	Use TLS authentication
 use tls encryption	emailadmin	hr	Use TLS encryption
 users can define their own emailaccounts	emailadmin	hr	Users can define their own email accounts
 virtual mail manager	emailadmin	hr	Virtual MAIL ManaGeR
-IMAP C-Client Version < 2001	emailadmin	hr	IMAP C-Client Version < 2001

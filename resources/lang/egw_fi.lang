@@ -1,6 +1,3 @@
-%1 resource(s) %2	resources	fi	%1 resurssi(a) %2
-%1 resource(s) %2, %3 failed	resources	fi	%1 resurssi(a) %2, %3 epäonnistui
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	fi	%1 resurssi(a) %2, %3 epäonnistui riittämättömien käyttöoikeuksien vouksi
 accessories of	resources	fi	Lisätarvikkeet:
 accessories:	resources	fi	Lisätarvikkeet:
 actions	resources	fi	Toiminnot
@@ -13,7 +10,6 @@ book	resources	fi	Varaus
 book selected resources	resources	fi	Varaa valitsemasi resurssit
 book this resource	resources	fi	Varaa tämä resurssi
 bookable	resources	fi	Varattavissa
-booked	resources	fi	Varattu
 buy this article	resources	fi	Osta tämä tuote
 buy this resource	resources	fi	Osta tämä resurssi
 buyable	resources	fi	Ostettavissa
@@ -23,14 +19,10 @@ check all	resources	fi	Valitse kaikki
 choose categories admin	resources	fi	Valitse kategorioiden ylläpitäjä
 clear selection	resources	fi	Poista valinnat
 configure access permissions	admin	fi	Myönnä ACL-oikeuksia
-conflict	resources	fi	Konflikti
 create new accessory for this resource	resources	fi	Luo uusi lisätarvike tälle resurssille
 create new links	resources	fi	Luo uusi linkki
-custom fields	resources	fi	Lisäkentät
-days	resources	fi	Päivää
 delete selected resources	resources	fi	Poista valitut resurssit
 delete this entry	resources	fi	Poista tämä merkintä
-deleted	resources	fi	poistettu
 description (short)	resources	fi	Kuvaus (lyhyt)
 direct booking permissions	resources	fi	Suora varausoikeus
 don't use vfs (this will need a symlink --> see readme)	resources	fi	Älä käytä vfs (tämä tarvitsee symbolisenlinkin --> katso LueMinut)
@@ -49,7 +41,6 @@ how many of them are useable?	resources	fi	Kuinka moni niistä on käytettäviss
 how many of this resource are usable	resources	fi	Kuinka moni näistä resursseista on käytettävissä?
 how many of this resource exists	resources	fi	Kuinka monta näistä resursseista on olemassa?
 if you specify an export definition, it will be used when you export	resources	fi	Valitse viennin oletusasetus
-if you specify an export definition, it will be used when you export*	resources	fi	Valitse viennin oletusasetus
 implies booking permission	resources	fi	Vaikuttaa varausoikeuksiin
 implies read permission	resources	fi	Vaikuttaa lukuoikeuksiin
 imports a list of resources from a csv file.	resources	fi	Tuo merkintöjä CSV tiedostosta Resursseihin

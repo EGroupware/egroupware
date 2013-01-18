@@ -354,7 +354,6 @@ image directory relative to document root (use / !), example:	common	sk	Adresár
 image url	common	sk	URL adresa obrázka
 india	common	sk	INDIA
 indonesia	common	sk	INDONÉZIA
-infolog types to sync	common	sk	Typy Záznamníka pre synchronizáciu
 insert all %1 addresses of the %2 contacts in %3	common	sk	Vložiť všetkých %1 adries z %2 kontaktov in %3
 insert column after	common	sk	Vložiť Stĺpec za
 insert column before	common	sk	Vložiť Stĺpec Pred
@@ -418,6 +417,7 @@ list	common	sk	Zoznam
 list members	common	sk	Zoznam členov
 lithuania	common	sk	LITVA
 local	common	sk	Lokálny
+locations	common	sk	Umiestnenia
 logging / debuging	groupdav	sk	Protokolovanie / ladenie
 login	common	sk	Prihlásiť
 loginid	common	sk	Prihlasovacie ID
@@ -791,7 +791,6 @@ what style would you like the image to have?	common	sk	Aký štýl má mať obr�
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sk	Keď odpoviete áno, tlačítka Domov a Odhlásenie sa zobrazia ako aplikácie v hlavnom paneli aplikácií.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	sk	Kde a ako sa budú zobrazovať odkazy EGroupware, ako sú Nastavenia, O aplikácii a Odhlásiť.
 which groups	common	sk	Ktoré skupiny
-which infolog types should be synced with the device, default only tasks.	common	sk	Ktoré typy Záznamníka sa majú synchronizovať s týmto zariadením; štandardne iba úlohy.
 whole query	common	sk	Celý výber
 width	common	sk	Šírka
 wk	jscalendar	sk	Týž

@@ -288,7 +288,6 @@ false	admin	es-es	falso
 field '%1' already exists !!!	admin	es-es	¡El campo '%1' ya existe!
 file space	admin	es-es	Espacio del fichero
 file space must be an integer	admin	es-es	El espacio del fichero debe ser un entero
-find and register all application hooks	admin	es-es	Encontrar y registrar todos los "hooks" de las aplicaciones
 for the times above	admin	es-es	durante las horas indicadas arriba
 for the times below (empty values count as '*', all empty = every minute)	admin	es-es	para las horas indicadas debajo (los valores vacíos cuentan como '*', todos vacío = cada minuto)
 force password strength (1-5, default empty: no check against rules for a strong password)?	admin	es-es	¿Forzar robustez de la contraseña (1-5, vacío: no comprobar reglas para comprobar la debilidad)?

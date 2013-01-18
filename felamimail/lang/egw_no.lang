@@ -3,6 +3,7 @@
 (unknown sender)	felamimail	no	(ukjent avsender)
 activate	felamimail	no	Aktiviser
 activate script	felamimail	no	Aktiviser skript
+add acl	felamimail	no	Opprett acl
 add address	felamimail	no	Legg til adresse
 add rule	felamimail	no	Legg til regel
 add script	felamimail	no	Legg til skript
@@ -18,9 +19,11 @@ all folders	felamimail	no	Alle mapper
 all of	felamimail	no	alle av
 allways a new window	felamimail	no	altid et nytt vindu
 always show html emails	felamimail	no	Vis alltid HTML meldinger
+and	felamimail	no	Og
 any of	felamimail	no	noen av
 anyone	felamimail	no	hvem som helst
 as a subfolder of	felamimail	no	som en undermappe av
+attach	felamimail	no	Tilknytt
 attachments	felamimail	no	Vedlegg
 auto refresh folder list	felamimail	no	Oppdater mappeliste automatisk
 back to folder	felamimail	no	TIlbake til mappe
@@ -44,6 +47,7 @@ compose	felamimail	no	Ny melding
 compress folder	felamimail	no	Komprimer mappe
 configuration	felamimail	no	Konfigurasjon
 contains	felamimail	no	inneholder
+copy to	felamimail	no	Kopier til
 create	felamimail	no	Opprett
 create folder	felamimail	no	Opprett Mappe
 create sent	felamimail	no	Opprett Sendt
@@ -60,6 +64,7 @@ date(newest first)	felamimail	no	Dato (nyeste først)
 date(oldest first)	felamimail	no	Dato (eldste først)
 days	felamimail	no	dager
 deactivate script	felamimail	no	deaktiver skript
+default	felamimail	no	Standard
 default sorting order	felamimail	no	Standard sortering
 delete all	felamimail	no	slett alle
 delete folder	felamimail	no	Slett Mappe
@@ -103,21 +108,26 @@ enter your sieve server hostname or ip address	admin	no	Skriv inn SIEVE tjenerna
 enter your sieve server port	admin	no	Skriv inn SIEVE tjenerport
 enter your smtp server hostname or ip address	admin	no	Skriv inn SMTP tjenernavn eller IP adresse
 enter your smtp server port	admin	no	Skriv inn SMTP tjenerport
+entry saved	felamimail	no	Registrering lagret
 error	felamimail	no	FEIL
 error connecting to imap serv	felamimail	no	Feil ved tilkobling til IMAP tjener
 error opening	felamimail	no	Kunne ikke åpne
+event details follow	felamimail	no	Hendelses Detaljer Følger
 every	felamimail	no	hver
 every %1 days	felamimail	no	hver %1 dag
 expunge	felamimail	no	Slett for godt
+extended	felamimail	no	Forlenget
 felamimail	common	no	E-post
 file into	felamimail	no	fil til
+filemanager	felamimail	no	Filhåndterer
 files	felamimail	no	filer
 filter active	felamimail	no	aktivt filter
 filter name	felamimail	no	Filternavn
-filter rules	felamimail	no	Regler for filter
+filter rules	common	no	Regler for filter
 first name	felamimail	no	Fornavn
 flagged	felamimail	no	flagget
 flags	felamimail	no	Flagg
+folder	felamimail	no	Mappe
 folder acl	felamimail	no	mappe acl
 folder name	felamimail	no	Mappemavn
 folder path	felamimail	no	Mappesti
@@ -134,7 +144,6 @@ for received mail	felamimail	no	For mottatt e-post
 forward	felamimail	no	Videresend
 forward to address	felamimail	no	Videresend til adresse
 found	felamimail	no	Funnet
-fri	felamimail	no	Fre
 from	felamimail	no	Fra
 from(a->z)	felamimail	no	Fra (A -> Å)
 from(z->a)	felamimail	no	Fra (Å -> A)
@@ -160,7 +169,9 @@ imap server address	felamimail	no	IMAP Tjener Adresse
 imap server type	felamimail	no	IMAP Tjener type
 imaps authentication	felamimail	no	IMAPS Autentisering
 imaps encryption only	felamimail	no	Kun IMAPS Kryptering
+import	felamimail	no	Importer
 in	felamimail	no	i
+inbox	felamimail	no	Innboks
 index order	felamimail	no	Inndeks Sortering
 info	felamimail	no	Informasjon
 invalid user name or password	felamimail	no	Galt brukernavn eller passord
@@ -193,9 +204,10 @@ matches regexp	felamimail	no	treffer regexp
 message highlighting	felamimail	no	Meldingsmerking
 message list	felamimail	no	Meldingsliste
 messages	felamimail	no	meldinger
-mon	felamimail	no	Man
 move	felamimail	no	flytt
+move folder	felamimail	no	Flytte mappe
 move messages	felamimail	no	flytt meldinger
+move selected to	felamimail	no	flytt valgt til
 move to	felamimail	no	flytt valgt til
 move to trash	felamimail	no	Flytt til søppelkurv
 moving messages to	felamimail	no	Flytter meldinger til
@@ -215,6 +227,7 @@ no messages were selected.	felamimail	no	Ingen meldinger er valgt
 no previous message	felamimail	no	ingen foregående Melding
 no valid emailprofile selected!!	felamimail	no	Ingen Gyldig E-post profil er valgt
 none	felamimail	no	ingen
+on	felamimail	no	på
 on behalf of	felamimail	no	på vegne av
 one address is not valid	felamimail	no	En av adressene er ikke gyldig
 only inbox	felamimail	no	Kun INNBOKS
@@ -222,6 +235,7 @@ only one window	felamimail	no	Bare et vindu
 only unseen	felamimail	no	Bare usett
 open all	felamimail	no	åpne alle
 options	felamimail	no	Alternativer
+or	felamimail	no	eller
 organisation	felamimail	no	organisering
 organization	felamimail	no	organisasjon
 organization name	admin	no	Organisasjonsnavn
@@ -257,8 +271,8 @@ return	felamimail	no	Tilbake
 return to options page	felamimail	no	Tilbake til alternativer
 right	felamimail	no	Høyre
 rule	felamimail	no	Regel
-sat	felamimail	no	Lør
 save	felamimail	no	Lagre
+save all	felamimail	no	Lagre alle
 save changes	felamimail	no	Lagre endringer
 script name	felamimail	no	Navn på skript
 script status	felamimail	no	Status for skript
@@ -290,21 +304,18 @@ submit	felamimail	no	Send
 subscribe	felamimail	no	Meld på
 subscribed	felamimail	no	Meldt på
 subscribed successfully!	felamimail	no	Påmelding vellykket
-sun	felamimail	no	Søn
 table of contents	felamimail	no	Innhold
 text only	felamimail	no	Kun tekst
 the connection to the imap server failed!!	felamimail	no	Koblingen til IMAP tjeneren feilet!!
 then	felamimail	no	DA
 this folder is empty	felamimail	no	DENNE MAPPEN ER TOM
 this php has no imap support compiled in!!	felamimail	no	PHP versjonen har ingen IMAP-støtte kompilert inn
-thu	felamimail	no	Tor
 to	felamimail	no	Til
 to mail sent to	felamimail	no	Til mail sent til
 translation preferences	felamimail	no	Oversettelses innstillinger
 translation server	felamimail	no	Oversettelses tjener
 trash fold	felamimail	no	Søppelmappe
 trash folder	felamimail	no	Søppelmappe
-tue	felamimail	no	Tir
 type	felamimail	no	type
 unflagged	felamimail	no	avflagget
 unknown err	felamimail	no	Ukjent feil
@@ -318,27 +329,24 @@ unsubscribe	felamimail	no	Avmeld
 unsubscribed	felamimail	no	Avmeldt
 unsubscribed successfully!	felamimail	no	Vellykket avmelding
 up	felamimail	no	opp
+urgent	felamimail	no	haster
 use <a href="%1">emailadmin</a> to create profiles	felamimail	no	bruk <a href="%1">EmailAdmin</a> for å opprette profiler
 use a signature	felamimail	no	Bruk en signatur
 use a signature?	felamimail	no	Bruk en signatur?
 use addresses	felamimail	no	Bruk adresser
 use custom settings	felamimail	no	Bruk Normale Innstillinger
-use javascript or html addressbook?	felamimail	no	Bruk Javascript eller HTML adressebok?
 use regular expressions	felamimail	no	bruk regulære uttrykk
 use smtp auth	admin	no	Bruk SMTP autentisering
 users can define their own emailaccounts	admin	no	Brukere kan definere egne e-post kontoer
-vacation notice	felamimail	no	Ferie melding
+vacation notice	common	no	Ferie melding
 view full header	felamimail	no	Vis hele meldingshodet
 view message	felamimail	no	Vis melding
 viewing full header	felamimail	no	Viser hele meldingshodet
 viewing message	felamimail	no	Viser melding
 viewing messages	felamimail	no	Viser meldinger
-wed	felamimail	no	Ons
-welcome to %1's webmail system	felamimail	no	Velkommen til %1 WebMail system
 when deleting messages	felamimail	no	Når du sletter meldinger
 with message	felamimail	no	Med melding
 with message "%1"	felamimail	no	Med melding "%1"
 wrap incoming text at	felamimail	no	Bryt innkommende tekst ved
 writing	felamimail	no	skrivning
 wrote	felamimail	no	skrev
-you must login first.	felamimail	no	Du må logge inn først

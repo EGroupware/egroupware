@@ -6,6 +6,7 @@
 %1 matches on search criteria	etemplate	cs	%1 shod s kritériem vyhledávání
 %1 more...	etemplate	cs	%1 více...
 %1 new etemplates imported for application '%2'	etemplate	cs	%1 nových eŠablon importováno pro aplikaci '%2'
+%1 not implemented for %2!	etemplate	cs	%1 není implementováno pro %2!
 %s disabled	etemplate	cs	%s zablokováno
 %s needed	etemplate	cs	%s zapotřebí
 %s notranslation	etemplate	cs	%s bez překladu
@@ -37,8 +38,10 @@ all operations save the template!	etemplate	cs	všechny operace ukládají šabl
 allowed file type: %1	etemplate	cs	Povolený typ souboru: %1
 am	etemplate	cs	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	cs	indexy vytvořené pro sloupec zrychlují vyhledávání v daném sloupci (ale také zabírají místo na disku !!!)
+and	etemplate	cs	A
 application	etemplate	cs	Aplikace
 application name needed to write a langfile or dump the etemplates !!!	etemplate	cs	Název aplikace potřeboval zapsat jazykový soubor nebo vypsat eŠablony !!!
+applications	etemplate	cs	Aplikace
 applies the changes made	etemplate	cs	použije provedené změny
 applies the changes to the given version of the template	etemplate	cs	použije změny provedené v dané verzi šablony
 as default	etemplate	cs	jako výchozí
@@ -63,6 +66,7 @@ cells	etemplate	cs	Buňky
 cellspacing for the table-tag	etemplate	cs	Vzdálenost mezi buňkami pro tag tabulky
 center	etemplate	cs	Střed
 changed	etemplate	cs	Změněno
+check all	etemplate	cs	Označit všechny
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	cs	zaškrtněte, pokud má být obsah jen zobrazen, nikoli měněn (obsah pak není posílán zpět!)
 check if field has to be filled by user	etemplate	cs	zaškrtněte, pokud musí uživatel položku vyplnit
 checkbox	etemplate	cs	Zaškrtávací políčko
@@ -87,6 +91,7 @@ contact fields	etemplate	cs	Kontaktní položky
 contains	etemplate	cs	obsahuje
 create a new table for the application	etemplate	cs	Vytvořit novou tabulku pro aplikaci
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	cs	vytvoří nový anglický jazykový soubor ('en') z označení a pomocných textů (pro aplikaci uvedenou v Názvu)
+creator	preferences	cs	Tvůrce
 css class for the table-tag	etemplate	cs	CSS třída pro tag tabulky
 css properties	etemplate	cs	Vlastnosti CSS
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	cs	název CSS třídy pro tento řádek, přednastaveno: 'nmh' = NextMatch header (záhlaví DalšíShoda),'nmr' = alternating NM row (střídavý NM řádek),'nmr0'+'nmr1' NM řádky
@@ -125,6 +130,7 @@ displayed in front of input or input is inserted for a '%s' in the label (label 
 displayed in statusline of browser if input-field gets focus	etemplate	cs	zobrazeno ve stavové liště prohlížeče pokud vstupní pole získá fokus
 displayed in the top line of the groupbox (legend)	etemplate	cs	zobrazeno v horní řádce rámečku skupiny (v legendě)
 do you want to save the changes you made in table %s?	etemplate	cs	Chcete uložit změny, které jste udělal(a)v tabulce %s?
+document '%1' does not exist or is not readable for you!	preferences	cs	Dokument '%1' neexistuje nebo nemáte oprávnění k jeho čtení!
 documentation	etemplate	cs	Dokumentace
 doesn't matter	etemplate	cs	nezáleží na tom
 drop a table - this can not be undone	etemplate	cs	Smazat tabulku - nelze vrátit zpět
@@ -179,6 +185,7 @@ first	etemplate	cs	První
 floating point	etemplate	cs	Plovoucí desetinná čárka
 foreign key	etemplate	cs	Cizí klíč
 formatted text (html)	etemplate	cs	Formátovaný text (HTML)
+general fields:	preferences	cs	Obecné položky:
 go to the first entry	etemplate	cs	jít na první záznam
 go to the last entry	etemplate	cs	jít na poslední záznam
 go to the next page of entries	etemplate	cs	jít na další stránku záznamů
@@ -216,6 +223,7 @@ insert a row above	etemplate	cs	vložit řádek nad
 insert a row below	etemplate	cs	vložit řádek pod
 insert a widget before	etemplate	cs	vložit widget před
 insert a widget behind	etemplate	cs	vložit widget za
+insert in document	etemplate	cs	Vložit do dokumentu
 insert new column behind this one	etemplate	cs	vložit nový sloupec za tento
 insert new column in front of all	etemplate	cs	vložit nový sloupec před všechny ostatní
 insert new row after this one	etemplate	cs	vložit nový řádek za tento
@@ -279,6 +287,7 @@ open the online help.	etemplate	cs	Otevřit online nápovědu.
 operator	etemplate	cs	Operátor
 optional note about the link	etemplate	cs	volitelná poznámka o odkazu
 options	etemplate	cs	Volby
+or	etemplate	cs	nebo
 order to navigating by tab key through the form	etemplate	cs	Pořadí v navigaci fomulářem pomocí klávesy tabulátor
 overflow	etemplate	cs	Přetečení
 padding	etemplate	cs	Odsazení

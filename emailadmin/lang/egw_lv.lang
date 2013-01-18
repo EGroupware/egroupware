@@ -15,6 +15,7 @@ email address	emailadmin	lv	e-pasta adrese
 enable cyrus imap server administration	emailadmin	lv	atļaut Cyrus IMAP servera administrēšanu
 enable sieve	emailadmin	lv	atļaut Sieve
 enter your default mail domain (from: user@domain)	emailadmin	lv	Ievadi noklusēto pasta domēnu (no: lietotājs@domēns)
+entry saved	emailadmin	lv	Ieraksts saglabāts
 forward also to	emailadmin	lv	pārsūtīt arī
 forward email's to	emailadmin	lv	pārsūtīt e-pasta vēstules
 forward only	emailadmin	lv	tikai pārsūtīt
@@ -36,6 +37,7 @@ mail settings	admin	lv	Pasta uzstādījumi
 name of organisation	emailadmin	lv	Organizācijas nosaukums
 no alternate email address	emailadmin	lv	nav alternatīvas e-pasta adreses
 no forwarding email address	emailadmin	lv	nav pārsūtāmās e-pasta adreses
+order	emailadmin	lv	Kārtība
 pop3 server hostname or ip address	emailadmin	lv	POP3 servera hosta vārds vai IP adrese
 pop3 server port	emailadmin	lv	POP3 servera ports
 profile list	emailadmin	lv	Profila saraksts
@@ -47,12 +49,14 @@ sieve server hostname or ip address	emailadmin	lv	<b>?Sieve?</b> servera hosta v
 sieve server port	emailadmin	lv	Sieve servera ports
 sieve settings	emailadmin	lv	Sieve uzstadījumi
 smtp server name	emailadmin	lv	SMTP servera nosaukums
+smtp settings	emailadmin	lv	SMTP uzstādījumi
 smtp-server hostname or ip address	emailadmin	lv	SMTP servera hosta vārds vai IP adrese
 smtp-server port	emailadmin	lv	SMTP servera ports
 standard	emailadmin	lv	Standarta
 standard imap server	emailadmin	lv	Standarta IMAP serveris
 standard pop3 server	emailadmin	lv	Standarta POP3 serveris
 standard smtp-server	emailadmin	lv	Standarta SMTP serveris
+this php has no imap support compiled in!!	emailadmin	lv	Šim PHP nav IMAP nokompilēts atbalsts
 use ldap defaults	emailadmin	lv	lieto LDAP noklusējumus
 use smtp auth	emailadmin	lv	Lieto SMTP autentifikāciju
 use tls authentication	emailadmin	lv	Lieto TLS autentifikāciju

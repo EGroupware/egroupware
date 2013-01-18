@@ -1,0 +1,28 @@
+address book	felamimail	tr	Adres Defteri
+and	felamimail	tr	Ve
+color	felamimail	tr	Renk
+configuration	felamimail	tr	Ayarlar
+days	felamimail	tr	gün
+default	felamimail	tr	Varsayýlan
+deleted	felamimail	tr	Silindi
+disable	felamimail	tr	Engelle
+download	felamimail	tr	?ndir
+email notification	felamimail	tr	Emaille Uyarý
+enable	felamimail	tr	Etkinleþtir
+enter your default mail domain ( from: user@domain )	admin	tr	Varsayýlan mail domain'ini giriniz ( From: kullanýcý@domain )
+enter your smtp server hostname or ip address	admin	tr	SMTP sunucu hostname ve IP'nizi giriniz.
+enter your smtp server port	admin	tr	SMTP sunucu portunuzu giriniz.
+event details follow	felamimail	tr	Etkinlik Detaylarý Ektedir
+extended	felamimail	tr	Geniþletilmiþ
+from	felamimail	tr	Nereden
+full name	felamimail	tr	Tam ?sim
+import	felamimail	tr	?thal Et
+mail settings	felamimail	tr	Mail ayarlarý
+name	felamimail	tr	Ýsim
+new	common	tr	Yeni
+or	felamimail	tr	ya da
+participants	felamimail	tr	Katýlýmcýlar
+remove	felamimail	tr	Kaldýr
+rule	felamimail	tr	Kural
+select all	felamimail	tr	Tamam?n? seç
+submit	felamimail	tr	Gönder

@@ -28,6 +28,7 @@ any of	felamimail	pt-br	qualquer
 any status	felamimail	pt-br	qualquer status
 anyone	felamimail	pt-br	qualquer um
 as a subfolder of	felamimail	pt-br	como subpasta de
+attach	felamimail	pt-br	anexo
 attachments	felamimail	pt-br	Anexos
 authentication required	felamimail	pt-br	autenticação requerida
 auto refresh folder list	felamimail	pt-br	Auto atualizar lista de pastas
@@ -60,7 +61,9 @@ compress folder	felamimail	pt-br	Compactar pasta
 condition	felamimail	pt-br	condição
 configuration	felamimail	pt-br	Configuração
 connection dropped by imap server.	felamimail	pt-br	Conexão interrompida pelo servidor IMAP.
+contact not found!	felamimail	pt-br	Contato não encontrato!
 contains	felamimail	pt-br	contém
+copy to	felamimail	pt-br	Copiar para
 could not complete request. reason given: %s	felamimail	pt-br	Não foi possível completar a requisição. Motivo informado: %s
 could not import message:	felamimail	pt-br	Não foi possível importar Mensagem:
 could not open secure connection to the imap server. %s : %s.	felamimail	pt-br	Não foi possível abrir conexão segura ao servidor IMAP. %s : %s.
@@ -147,6 +150,7 @@ enter your sieve server hostname or ip address	admin	pt-br	Digite o nome ou o en
 enter your sieve server port	admin	pt-br	Digite a porta do seu servidor SIEVE
 enter your smtp server hostname or ip address	admin	pt-br	Digite o nome ou o endereço IP do seu servidor SMTP
 enter your smtp server port	admin	pt-br	Preencha a porta do seu servidor SMTP
+entry saved	felamimail	pt-br	Registro salvo
 error	felamimail	pt-br	ERRO
 error connecting to imap serv	felamimail	pt-br	Erro conectando ao servidor IMAP
 error connecting to imap server. %s : %s.	felamimail	pt-br	Erro conectando ao servidor IMAP. %s : %s.
@@ -154,12 +158,14 @@ error connecting to imap server: [%s] %s.	felamimail	pt-br	Erro conectando ao se
 error opening	felamimail	pt-br	Erro abrindo
 error:	felamimail	pt-br	Erro:
 error: could not save message as draft	felamimail	pt-br	Erro: Não foi possível salvar a mensagem como Rascunho
+event details follow	felamimail	pt-br	Seguem detalhes do evento
 every	felamimail	pt-br	cada
 every %1 days	felamimail	pt-br	cada %1 dia(s)
 expunge	felamimail	pt-br	Excluir
 extended	felamimail	pt-br	extendido
 felamimail	common	pt-br	eMail
 file into	felamimail	pt-br	Arquivar em
+filemanager	felamimail	pt-br	Gerenciador de Arquivos
 files	felamimail	pt-br	arquivos
 filter active	felamimail	pt-br	filtro ativo
 filter name	felamimail	pt-br	Nome do filtro
@@ -189,7 +195,6 @@ forward to	felamimail	pt-br	encaminhar para
 forward to address	felamimail	pt-br	Encaminhar para endereço
 forwarding	felamimail	pt-br	Encaminhando
 found	felamimail	pt-br	Encontrado
-fri	felamimail	pt-br	Sex
 from	felamimail	pt-br	De
 from(a->z)	felamimail	pt-br	de (A->Z)
 from(z->a)	felamimail	pt-br	de (Z->A)
@@ -241,6 +246,7 @@ keep local copy of email	felamimail	pt-br	manter uma cópia local do e-mail
 kilobytes	felamimail	pt-br	Kbytes
 language	felamimail	pt-br	Idioma
 last name	felamimail	pt-br	Último nome
+later	felamimail	pt-br	Depois
 left	felamimail	pt-br	Esquerda
 less	felamimail	pt-br	menor
 less than	felamimail	pt-br	menor que
@@ -270,9 +276,10 @@ max uploadsize	felamimail	pt-br	tamanho máximo para upload
 message highlighting	felamimail	pt-br	Destaque de mensagens
 message list	felamimail	pt-br	Lista de mensagens
 messages	felamimail	pt-br	mensagens
-mon	felamimail	pt-br	Seg
 move	felamimail	pt-br	mover
+move folder	felamimail	pt-br	Mover pasta
 move messages	felamimail	pt-br	mover mensagens
+move selected to	felamimail	pt-br	mover selecionados para
 move to	felamimail	pt-br	mover selecionados para
 move to trash	felamimail	pt-br	Mover para a lixeira
 moving messages to	felamimail	pt-br	Movendo mensagens para
@@ -353,7 +360,6 @@ return to options page	felamimail	pt-br	Voltar à página de opções
 right	felamimail	pt-br	Direita
 row order style	felamimail	pt-br	estilo da ordem de linha
 rule	felamimail	pt-br	Regra
-sat	felamimail	pt-br	Sáb
 save	felamimail	pt-br	salvar
 save as draft	felamimail	pt-br	salvar como rascunho
 save as infolog	felamimail	pt-br	salvar como tarefa
@@ -397,7 +403,6 @@ submit	felamimail	pt-br	Enviar
 subscribe	felamimail	pt-br	Inscrever
 subscribed	felamimail	pt-br	Inscrito
 subscribed successfully!	felamimail	pt-br	Inscrito com sucesso!
-sun	felamimail	pt-br	Dom
 system signature	felamimail	pt-br	assinatura do sistema
 table of contents	felamimail	pt-br	Índice
 template folder	felamimail	pt-br	Pasta Modelos
@@ -411,7 +416,6 @@ the mimeparser can not parse this message.	felamimail	pt-br	O analisador mime n�
 then	felamimail	pt-br	ENTÃO
 this folder is empty	felamimail	pt-br	ESTA PASTA  ESTÁ  VAZIA
 this php has no imap support compiled in!!	felamimail	pt-br	Esse aplicativo PHP não foi compilado com suporte IMAP
-thu	felamimail	pt-br	Qui
 to	felamimail	pt-br	Para
 to mail sent to	felamimail	pt-br	Enviar e-mail para
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	pt-br	Para usar uma conexão TLS você precisar estar rodadndo a versão 5.1.0 ou maior do PHP.
@@ -420,7 +424,6 @@ translation server	felamimail	pt-br	Servidor de tradução
 trash	felamimail	pt-br	Lixeira
 trash fold	felamimail	pt-br	Pasta Lixeira
 trash folder	felamimail	pt-br	Pasta Lixeira
-tue	felamimail	pt-br	Ter
 type	felamimail	pt-br	tipo
 unexpected response from server to authenticate command.	felamimail	pt-br	Resposta inesperada do servidor para o comando AUTENTICAR.
 unexpected response from server to digest-md5 response.	felamimail	pt-br	Resposta inesperada do servidor para a resposta Digest-MD5.
@@ -440,6 +443,7 @@ unsubscribed successfully!	felamimail	pt-br	Desinscrito com sucesso!
 up	felamimail	pt-br	para cima
 updating message status	felamimail	pt-br	atualizando status da(s) mensagem(ns)
 updating view	felamimail	pt-br	atualizando exibição
+urgent	felamimail	pt-br	urgente
 use <a href="%1">emailadmin</a> to create profiles	felamimail	pt-br	usar <a href="%1">Administrador de E-Mails</a> para criar perfis.
 use a signature	felamimail	pt-br	Usar uma asinatura
 use a signature?	felamimail	pt-br	Usar uma asinatura?
@@ -459,7 +463,6 @@ view message	felamimail	pt-br	Exibir mensagem
 viewing full header	felamimail	pt-br	Exibindo cabeçalho completo
 viewing message	felamimail	pt-br	Exibindo mensagem
 viewing messages	felamimail	pt-br	Exibindo mensagens
-wed	felamimail	pt-br	Qua
 when deleting messages	felamimail	pt-br	Ao remover mensagens
 with message	felamimail	pt-br	com mensagem
 with message "%1"	felamimail	pt-br	com mensagem "%1"

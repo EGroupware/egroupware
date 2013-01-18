@@ -42,8 +42,10 @@ enable sieve	emailadmin	hu	Sieve engedélyezése
 encrypted connection	emailadmin	hu	titkosított kapcsolat
 encryption settings	emailadmin	hu	Titkosítás beállításai
 enter your default mail domain (from: user@domain)	emailadmin	hu	Adja meg az alapértelmezett levelezési tartományt (a felhasználó@tartomány-ból)
+entry saved	emailadmin	hu	Bejegyzés elmentve
 error connecting to imap server. %s : %s.	emailadmin	hu	Hiba történt az IMAP szerverhez csatlakozás közben. %s : %s
 error connecting to imap server: [%s] %s.	emailadmin	hu	Hiba történt az IMAP szerverhez csatlakozás közben. [%s ]: %s
+error saving the entry!!!	emailadmin	hu	Bejegyzés mentése közben hiba történt!!!
 filtered by account	emailadmin	hu	Fiók szerint szűrve
 filtered by group	emailadmin	hu	Csoport szerint szűrve
 forward also to	emailadmin	hu	továbbítsd ide is
@@ -141,3 +143,4 @@ users can define their own signatures	emailadmin	hu	A felhasználók beállítha
 users can utilize these stationery templates	emailadmin	hu	A felhasználók alkalmazhatják az irodaszer mintákat
 vaction messages with start- and end-date require an admin account to be set!	emailadmin	hu	A házon kívül üzenet érvényességi dátumának megadása adminisztrátor szintű hozzáférést igényel!
 virtual mail manager	emailadmin	hu	Virtuális MAIL ManaGeR
+you have received a new message on the	emailadmin	hu	Új üzenet érkezett a

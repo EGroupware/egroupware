@@ -41,8 +41,10 @@ enable sieve	emailadmin	sl	Omogoči Sieve
 encrypted connection	emailadmin	sl	Kodirana povezava
 encryption settings	emailadmin	sl	Nastavitve šifriranja
 enter your default mail domain (from: user@domain)	emailadmin	sl	Vnesite privzeto domeno (oblika: uporabnik@domena)
+entry saved	emailadmin	sl	Vnos shranjen
 error connecting to imap server. %s : %s.	emailadmin	sl	Napaka pri povezavi s strežnikom IMAP. %s: %s.
 error connecting to imap server: [%s] %s.	emailadmin	sl	Napaka pri povezavi s strežnikom IMAP: [%s] %s.
+error saving the entry!!!	emailadmin	sl	Napaka pri shranjevanju vnosa!
 filtered by account	emailadmin	sl	Filtrirano s strani računa
 filtered by group	emailadmin	sl	Filtrirano s strani skupine
 forward also to	emailadmin	sl	Posreduj tudi
@@ -113,6 +115,7 @@ standard	emailadmin	sl	Standarden
 standard imap server	emailadmin	sl	Standardni IMAP strežnik
 standard pop3 server	emailadmin	sl	Standardni POP3 strežnik
 standard smtp-server	emailadmin	sl	Standardni SMTP strežnik
+stationery	emailadmin	sl	Stacionarno
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	sl	Strežnik IMAP ne podpira izbrane metode avtentikacije. Kontaktirajte sistemskega upravitelja.
 this php has no imap support compiled in!!	emailadmin	sl	Ta PHP ne vsebuje podpore za IMAP!
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	sl	Če želite uporabljati povezavo TLS, morate imeti nameščeno različico PHP 5.1.0 ali višjo.
@@ -136,3 +139,4 @@ users can define their own identities	emailadmin	sl	Uporabniki lahko določijo l
 users can define their own signatures	emailadmin	sl	Uporabniki lahko določijo lastne podpise
 vaction messages with start- and end-date require an admin account to be set!	emailadmin	sl	Nastavitev sporočila o odsotnosti z začetnim in končnim datumom zahteva nastavljen administratorski račun!
 virtual mail manager	emailadmin	sl	Virtualni upravljalec E-pošte
+you have received a new message on the	emailadmin	sl	Prejeli ste novo sporočilo na

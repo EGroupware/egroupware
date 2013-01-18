@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	da	%1 e-mail adresser insat
 %1 is not executable by the webserver !!!	common	da	%1 kan ikke udføres af Web server
-%1 manual	common	da	%1 manual
-%1 start	common	da	%1 start
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	da	%1Vælg en anden folder%2<br/>eller gør %3 skrivbar for Web server
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	da	%1eGroupWare%2 er et multi-bruger, web-baseret sammenarbejds værktøj skrevet i %3PHP%4.
 (shift-)click or drag to change value	jscalendar	da	(Shift)Klik eller træk for at ændre værdien
@@ -28,6 +26,7 @@ account has been updated	common	da	Kontoen er opdateret
 account is expired	common	da	Kontoen er udløbet
 acl	common	da	ACL
 action	common	da	Handling
+actions	common	da	Handling
 active	common	da	Aktiv
 add	common	da	Tilføj
 add %1 category for	common	da	Tilføj kategorien %1 for
@@ -45,6 +44,7 @@ all fields	common	da	alle felter
 alphabet	common	da	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,w,x,y,z
 alternate style-sheet:	common	da	Alternativt style-sheet
 american samoa	common	da	Amerikansk Samoa
+and	common	da	Og
 andorra	common	da	Andorra
 angola	common	da	Angola
 anguilla	common	da	Anguilla
@@ -165,13 +165,16 @@ default category	common	da	Standard Kategori
 default height for the windows	common	da	Standard højde for vinduer
 default width for the windows	common	da	Standard bredde for vinduer
 delete	common	da	Slet
+delete category	common	da	Slet kategori
 delete row	common	da	Slet række
+delete this entry	common	da	Slet denne indtastning
 denmark	common	da	Danmark
 description	common	da	Beskrivelse
 detail	common	da	Detalje
 details	common	da	Detaljer
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	Deaktivere udførelsen af bugfixscripts for Internet Explorer 5.5 og nyere, for visning af gennemsigtige PNG-billeder?
 direction left to right	common	da	Retning venstre til højre
+directory	common	da	Bibliotek
 disable internet explorer png-image-bugfix	common	da	Deaktiver Internet Explorer PNG-image-bugfix?
 disable slider effects	common	da	Deaktiver glide-effekter?
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	da	Deaktiver den animerede effekt når sidenmenuen gemmes og vises på siden? Opera og Konqueror brugere vil sandsynligvis vælge ja her.
@@ -189,6 +192,7 @@ domestic	common	da	Indenrigs
 dominica	common	da	Dominica
 dominican republic	common	da	Dominikanske Republik
 done	common	da	Udført
+download	common	da	Download
 drag to move	jscalendar	da	Træk for at flytte
 e-mail	common	da	E-mail
 east timor	common	da	Øst Timor
@@ -197,7 +201,6 @@ edit	common	da	Redigér
 edit %1 category for	common	da	Redigér kategorien %1 for
 edit categories	common	da	Redigér Kategorier
 edit category	common	da	Redigér kategori
-egroupware api version %1	common	da	eGroupWare API version %1
 egroupware: login blocked for user '%1', ip %2	common	da	eGroupWare: login blokeret for bruger '%1', IP %2
 egypt	common	da	Egypten
 el salvador	common	da	El Salvador
@@ -294,6 +297,7 @@ insert column before	common	da	Indsæt kolonne foran
 insert row after	common	da	Indsæt række efter
 insert row before	common	da	Indsæt række foran
 international	common	da	International
+invalid filename	common	da	Ugyldigt filnavn
 invalid ip address	common	da	Ugyldig IP
 invalid password	common	da	Ugyldig adgangskode
 iran, islamic republic of	common	da	Iran, Den Islamiske Republik
@@ -320,6 +324,7 @@ kuwait	common	da	Kuwait
 kyrgyzstan	common	da	Kyrgystan
 language	common	da	Sprog
 lao peoples democratic republic	common	da	Lao, Folkets Demokratiske Republik
+last modified	common	da	Sidst opdateret
 last name	common	da	Efternavn
 last name of the user, eg. "%1"	common	da	efternavn på brugeren, f.eks. "%1"
 last page	common	da	Sidste side
@@ -366,6 +371,7 @@ menu	common	da	Menu
 message	common	da	Besked
 mexico	common	da	Mexico
 micronesia, federated states of	common	da	Mikronesien, Den Føderale Stat
+minute	common	da	Minut
 moldova, republic of	common	da	Moldova, Republikken
 monaco	common	da	Monaco
 monday	common	da	Mandag
@@ -404,9 +410,12 @@ norfolk island	common	da	Norfolk Øen
 normal	common	da	Normal
 northern mariana islands	common	da	Nordligt Mariana Øerne
 norway	common	da	Norge
+not	common	da	ikke
+not a user yet? register now	common	da	Ikke en bruger endnu? Registrere nu
 not assigned	common	da	ikke tildelt
 note	common	da	Note
 notes	common	da	Noter
+notifications	common	da	Alarmer
 notify window	common	da	Notificer vindue
 november	common	da	November
 october	common	da	Oktober
@@ -417,13 +426,16 @@ on *nix systems please type: %1	common	da	På *nix systemer skriver Du: %1
 on mouse over	common	da	Ved mus over
 only private	common	da	kun private
 only yours	common	da	Kun Din
+open	common	da	åben
 open notify window	common	da	Åben Notificer Vindue
 open popup window	common	da	åben popup vindue
+or	common	da	eller
 ordered list	common	da	Nummerliste
 original	common	da	Original
 other	common	da	Anden
 overview	common	da	Oversigt
 owner	common	da	Ejer
+page	common	da	Side
 page was generated in %1 seconds	common	da	Siden var genereret på %1 sekunder
 pakistan	common	da	Pakistan
 palau	common	da	Palau
@@ -437,9 +449,6 @@ password	common	da	Adgangskode
 password could not be changed	common	da	Adgangskoden kunne ikke ændres
 password has been updated	common	da	Password er opdateret
 path to user and group files has to be outside of the webservers document-root!!!	common	da	Sti til bruger og gruppe filer SKAL VÆRE UDEN FOR webserverens dokument-rod!!!
-pattern for search in addressbook	common	da	Mønster for søg i Adressebog
-pattern for search in calendar	common	da	Mønster for søg i Kalender
-pattern for search in projects	common	da	Mønster for søg i Projekter
 permissions to the files/users directory	common	da	Rettigheder for fil/bruger mappen
 personal	common	da	Personlig
 peru	common	da	Peru
@@ -457,10 +466,10 @@ poland	common	da	Polen
 portugal	common	da	Portugal
 postal	common	da	Post
 preferences	common	da	Præferencer
-preferences for the idots template set	common	da	Præferencer for idots skabelonen
 prev. month (hold for menu)	jscalendar	da	Sidste måned (hold knap nede for menu)
 prev. year (hold for menu)	jscalendar	da	Sidste år (hold knap nede for menu)
 previous page	common	da	Forrige side
+primary group	common	da	primær gruppe
 print	common	da	Udskriv
 priority	common	da	Prioritet
 private	common	da	Privat
@@ -470,6 +479,7 @@ puerto rico	common	da	Puerto Rico
 qatar	common	da	Qatar
 read	common	da	Læs
 read this list of methods.	common	da	Læs denne liste over metoder
+reading	common	da	læser
 reject	common	da	Afvis
 rename	common	da	Omdøb
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	da	Returnere en fuld liste over alle brugere på systemet. Advarsel: Den kan være ret stor
@@ -492,6 +502,7 @@ saturday	common	da	Lørdag
 saudi arabia	common	da	Saudi Arabien
 save	common	da	Gem
 search	common	da	Søg
+search accounts	common	da	Søg kontoer
 section	common	da	Sektion
 select	common	da	Vælg
 select all %1 %2 for %3	common	da	Vælg alle %1 %2 for %3
@@ -521,6 +532,8 @@ showing %1	common	da	Viser: %1
 showing %1 - %2 of %3	common	da	Viser: %1 - %2 ud af %3
 sierra leone	common	da	Sierra Leone
 singapore	common	da	Singapore
+site configuration	common	da	Site konfiguration
+size	common	da	Størrelse
 slovakia	common	da	Slovakiet
 slovenia	common	da	Slovenien
 solomon islands	common	da	Solomon Øerne
@@ -580,6 +593,7 @@ turkey	common	da	Tyrkiet
 turkmenistan	common	da	Turkmenistan
 turks and caicos islands	common	da	Tyrkiske og Caicos Øerne
 tuvalu	common	da	Tuvalu
+type	common	da	type
 uganda	common	da	Uganda
 ukraine	common	da	Ukraine
 underline	common	da	Understreg
@@ -589,6 +603,7 @@ united states	common	da	USA
 united states minor outlying islands	common	da	USA Mindre omkringliggende øer
 unknown	common	da	Ukendt
 update	common	da	Opdater
+upload	common	da	Upload
 url	common	da	URL
 uruguay	common	da	Uruguay
 use button to search for	common	da	brug knappen for at søge efter
@@ -613,10 +628,12 @@ wallis and futuna	common	da	Wallis og Futuna
 wednesday	common	da	Onsdag
 welcome	common	da	Velkommen
 western sahara	common	da	Vest Sahara
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	da	Hvis du siger ja, bliver hjem og logout knapperne vist som applikationer i hoved applikations linien.
 which groups	common	da	Hvilke grupper
 width	common	da	Bredde
 wk	jscalendar	da	uge
 work email	common	da	arbejds e-mail
+writing	common	da	skriver
 written by:	common	da	Skrevet af:
 year	common	da	År
 yemen	common	da	Yemen
@@ -636,7 +653,5 @@ your search returned %1 matchs	common	da	Søgningen leverede %1 resultater
 your search returned 1 match	common	da	Søgningen leverede 1 resultat
 your session could not be verified.	login	da	Din session kunne ikke verificeres
 your settings have been updated	common	da	Dine indstillinger er opdateret
-yugoslavia	common	da	Jugoslavien
 zambia	common	da	Zambia
 zimbabwe	common	da	Zimbabwe
-site configuration	common	da	Site konfiguration

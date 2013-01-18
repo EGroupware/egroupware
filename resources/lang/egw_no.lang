@@ -18,7 +18,7 @@ category:	resources	no	Kategori
 check all	resources	no	Kontroller alle
 choose categories admin	resources	no	Velg admin. for kategoriene
 clear selection	resources	no	Opphev valgene
-configure access permissions	resources	no	Konfigurer aksesstillatelser
+configure access permissions	admin	no	Konfigurer aksesstillatelser
 create new accessory for this resource	resources	no	Opprette nytt tilbehør til denne ressursen
 create new links	resources	no	Opprette nye lenker
 delete selected resources	resources	no	Slett valgte ressurser
@@ -31,6 +31,8 @@ existing links	resources	no	Eksisterende lenker
 general	resources	no	Generell
 general informations about resource	resources	no	Generell informasjon om ressursen
 gernal resource	resources	no	Generell ressurs
+global categories	resources	no	Globale Kategorier
+hours	resources	no	timer
 how many of the resources are useable?	resources	no	Hvor mange av ressursene er brukbare ?
 how many of them are useable?	resources	no	Hvor mange av dem er brukbare ?
 how many of this resource are usable	resources	no	Hvor mange av denne ressursen er brukbare ?
@@ -72,7 +74,7 @@ responsible:	resources	no	Ansvarlig :
 saves entry and exits	resources	no	Lagre endringene og fortsette
 select a category	resources	no	Velg en kategori
 select resource	resources	no	Velg en ressurs
-select resources	resources	no	Velg ressurser
+select resources	common	no	Velg ressurser
 select/deselect all	resources	no	Velg/fravelg alle
 short description	resources	no	Kort beskrivelse
 short description of resource	resources	no	Kort beskivelse av ressursen
@@ -95,6 +97,5 @@ web-site for this resource	resources	no	Nettsted for denne ressursen
 where to find this resource?	resources	no	Hvor finnes denne ressursen ?
 which category does this resource belong to?	resources	no	Hvilken kategori hører denne ressursen hjemme i
 write permissions	resources	no	Skrivetillatelser
-you are not permitted to edit this reource!	resources	no	Du har ikke lov til endre denne ressursen !
 you are not permitted to get information about this resource!	resources	no	Du har ikke tillatelse til å få informasjon om denne ressursen
 you chose more resources than available	resources	no	Du valgte flere ressurser enn tilgjengelige

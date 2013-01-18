@@ -21,12 +21,13 @@ add a new list	addressbook	id	Tambah daftar baru
 add or delete categories	addressbook	id	Tambah atau hapus Kategori
 add to distribution list:	addressbook	id	Masukkan ke daftar distribusi:
 added	addressbook	id	ditambahkan
+added by synchronisation	addressbook	id	Penambahan karena sinkronisasi
 address book	common	id	Buku Alamat
 address book - vcard in	addressbook	id	Buku Alamat - vCard in
 address book - view	addressbook	id	Buku Alamat - lihat
 address line 2	addressbook	id	Alamat Baris 2
 address type	addressbook	id	Tipe Alamat
-addressbook	addressbook	id	Buku Alamat
+addressbook	common	id	Buku Alamat
 addressbook csv export	addressbook	id	Ekspor CSV Buku Alamat
 addressbook field	addressbook	id	Field Buku Alamat
 addressbook menu	addressbook	id	Menu Buku Alamat
@@ -41,7 +42,6 @@ always	addressbook	id	selalu
 are you shure you want to delete this contact?	addressbook	id	Anda yakin mau menghapus kontak ini?
 assistent	addressbook	id	Asisten
 assistent phone	addressbook	id	Telepon Asisten
-at the moment the following document-types are supported:	addressbook	id	Saat ini, tipe dokumen yang didukung adalah sebagai berikut:
 birthday	common	id	HUT
 birthdays	common	id	HUT
 blank	addressbook	id	Kosong
@@ -65,6 +65,8 @@ categories, notes, ...	addressbook	id	Kategori, Catatan, ...
 category tree	admin	id	Pohon Kategori
 cell phone	addressbook	id	Telepon Seluler
 change all organisation members	addressbook	id	ubah semua anggota organisasi
+charset for the csv export	addressbook	id	Charset untuk ekspor CSV
+charset of file	addressbook	id	Charset of file
 check all	addressbook	id	Contreng semua
 city	common	id	Kota
 company	common	id	Lembaga
@@ -88,7 +90,10 @@ country	common	id	Negara
 create new links	addressbook	id	Bikin tautan baru
 created	addressbook	id	Dibikin
 credit	addressbook	id	Kredit
+csv-fieldname	addressbook	id	Nama field-CSV
+csv-filename	addressbook	id	Nama berkas CSV
 custom	addressbook	id	Custom
+custom fields	addressbook	id	Custom fields
 default	addressbook	id	bawaan
 default address format	addressbook	id	Format alamat bawaan
 default addressbook for adding contacts	addressbook	id	Buku alamat bawaan untuk penambahan kontak
@@ -105,13 +110,13 @@ distribution list deleted	addressbook	id	Daftar distribusi dihapus
 distribution lists	addressbook	id	Daftar Distribusi
 distribution lists, ...	addressbook	id	Daftar Distribusi, ...
 do your really want to delete this contact?	addressbook	id	Anda sungguh ingin menghapus kontak ini?
-document '%1' does not exist or is not readable for you!	addressbook	id	Dokumen '%1' tidak ada atau tidak terbaca oleh anda!
 doesn't matter	addressbook	id	tidak penting
 domestic	addressbook	id	Domestik
 don't hide empty columns	addressbook	id	Jangan sembunyikan kolom kosong
 download	addressbook	id	Unduh
 download this contact as vcard file	addressbook	id	unduh kontak sebagai vCard
 duration	addressbook	id	Durasi
+edit custom fields	admin	id	edit custom fields
 edit phonenumbers -	addressbook	id	Edit Nomor telepon -
 email & internet	addressbook	id	Email & Internet
 email addresses (comma separated) to send the contact data	addressbook	id	Alamat Email (dipisahkan koma) untuk mengirim data-data kontak
@@ -119,7 +124,6 @@ empty	admin	id	Kosong
 empty for all	addressbook	id	kosongkan untuk semuanya
 end	addressbook	id	Akhir
 existing links	addressbook	id	Tautan yang ada
-export	addressbook	id	ekspor
 export as csv	addressbook	id	Ekspor sebagai CSV
 export as vcard	addressbook	id	Ekspor sebagai vCard
 export contacts	addressbook	id	Ekspor Kontak
@@ -136,10 +140,9 @@ field %1 has been updated !	addressbook	id	Field %1 telah dikinikan!
 field name	addressbook	id	Nama Field
 fields to show in address list	addressbook	id	Field yang ditampilkan dalam daftar alamat
 fieldseparator	addressbook	id	Pemisah field
-fieldseperator	addressbook	id	Pemisah field
 freebusy uri	addressbook	id	URI Senggang/sibuk
 full name	addressbook	id	Nama Lengkap
-general	addressbook	id	Umum
+general	admin	id	Umum
 general fields:	addressbook	id	Field Umum:
 geo	addressbook	id	GEO
 global categories	addressbook	id	Kategori Global
@@ -148,6 +151,7 @@ group %1	addressbook	id	Kelompok %1
 h	addressbook	id	h
 hide accounts from addressbook	addressbook	id	Sembunyikan akoun dari bukualamat
 hides accounts completly from the adressbook.	addressbook	id	Sembunyikan sama sekali dari buku alamat.
+history logging	admin	id	Catatan riwayat
 home address	addressbook	id	Alamat Rumah
 home address, birthday, ...	addressbook	id	Alamat Rumah, HUT, ...
 home city	addressbook	id	Kota Rumah
@@ -167,9 +171,9 @@ import from	addressbook	id	Impor dari
 import from ldif, csv, or vcard	addressbook	id	Impor dari LDIF, CSV, atau vCard
 import from outlook	addressbook	id	Impor dari Outlook
 import multiple vcard	addressbook	id	Impor beberapa vCard
+import next set	addressbook	id	Impor kelompok berikutnya
 in %1 days (%2) is %3's birthday.	addressbook	id	Tinggal %1 hari (%2) adalah HUT %3.
 infolog	addressbook	id	InfoLog
-insert in document	addressbook	id	Sisipkan dalam dokumen
 international	addressbook	id	Internasional
 internet	addressbook	id	Internet
 label	addressbook	id	Label
@@ -182,7 +186,6 @@ links	addressbook	id	Tautan
 list all categories	addressbook	id	Daftar semua kategori
 list already exists!	addressbook	id	Daftar telah ada!
 list created	addressbook	id	Daftar dibuat
-load sample file	addressbook	id	Muatkan berkas contoh
 load vcard	addressbook	id	Muatkan vCard
 location	addressbook	id	Lokasi
 locations	addressbook	id	lokasi
@@ -197,7 +200,6 @@ mobile	addressbook	id	Bergerak
 mobile phone	addressbook	id	Telepon Bergerak
 modem phone	addressbook	id	Telepon Modem
 more ...	addressbook	id	Selebihnya...
-move to addressbook:	addressbook	id	Pindahkan ke buku alamat:
 moved	addressbook	id	dipindahkan
 multiple vcard	addressbook	id	Beberapa VCard
 name for the distribution list	addressbook	id	Nama daftar distribusi
@@ -247,6 +249,7 @@ select a view	addressbook	id	Pilih tampilan
 select addressbook type	addressbook	id	Pilih tipe buku alamat
 select all	addressbook	id	Pilih semua
 select migration type	admin	id	Pilih tipe migrasi
+select multiple contacts for a further action	addressbook	id	Pilih beberapa kontak untuk tindakan selanjutnya
 selected contacts	addressbook	id	Kontak terpilih
 seperator	addressbook	id	Pemisah
 show	addressbook	id	Tampilkan
@@ -259,6 +262,7 @@ subject for email	addressbook	id	Subyek email
 suffix	addressbook	id	Akhiran/Gelar
 tel home	addressbook	id	Tel rumah
 telephony integration	admin	id	Keterpaduan telepon
+test import (show importable records <u>only</u> in browser)	addressbook	id	Tes Impor (tampilkan rekaman yang dapat diimpor <em>hanya</em> dalam browser)
 thank you for contacting us.	addressbook	id	Terimakasih telah menghubungi kami.
 that field name has been used already !	addressbook	id	Nama field tersebut telah digunakan!
 there was an error saving your data :-(	addressbook	id	Ada kesalahan dalam menyimpan data anda :-(

@@ -37,6 +37,7 @@ bcc	felamimail	el	BCC
 before headers	felamimail	el	Πριν τις κεφαλίδες
 between headers and message body	felamimail	el	Ανάμεσα στις κεφαλίδες και το κυρίως σώμα του μηνύματος
 body part	felamimail	el	κυρίως σώμα
+by date	felamimail	el	Βάσει ημερομηνίας
 can't connect to inbox!!	felamimail	el	δεν μπορεί να συνδεθεί με τα ΕΙΣΕΡΧΟΜΕΝΑ
 cc	felamimail	el	CC
 change folder	felamimail	el	Αλλαγή φακέλου
@@ -53,7 +54,9 @@ compress folder	felamimail	el	Φάκελος συμπίεσης
 condition	felamimail	el	κατάσταση
 configuration	felamimail	el	Διάρθρωση
 connection dropped by imap server.	felamimail	el	Έπεσε η σύνδεση από τον IMAP server
+contact not found!	felamimail	el	Δεν βρέθηκε η επαφή!
 contains	felamimail	el	περιέχει
+copy to	felamimail	el	Αντιγραφή στο
 could not complete request. reason given: %s	felamimail	el	Δεν ολοκληρώθηκε το αίτημα. Αιτία: %s
 could not open secure connection to the imap server. %s : %s.	felamimail	el	Δεν έγινε ασφαλής σύνδεση με τον IMAP server. %s : %s.
 cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	el	CRAM-MD5 ή DIGEST-MD5 απαιτεί το Auth_SASL πακέτο να εγκατασταθεί.
@@ -73,6 +76,7 @@ date(newest first)	felamimail	el	Ημερομηνία (πρώτα η πιο πρ
 date(oldest first)	felamimail	el	Ημερομηνία (πρώτα η πιο παλιά)
 days	felamimail	el	ημέρες
 deactivate script	felamimail	el	απενεργοποίηση σεναρίου
+default	felamimail	el	προκαθορισμένο
 default signature	felamimail	el	προεπιλεγμένη υπογραφή
 default sorting order	felamimail	el	Προεπιλεγμένη σειρά ταξινόμησης
 delete all	felamimail	el	διαγραφή όλων
@@ -122,6 +126,7 @@ emailaddress	felamimail	el	Διεύθυνση e-mail
 empty trash	felamimail	el	Άδειασμα κάδου αχρήστων
 enable	felamimail	el	ενεργοποίηση
 encrypted connection	felamimail	el	αποκρυπτογραφημένη σύνδεση
+enter your default mail domain ( from: user@domain )	admin	el	Εισαγωγή του προκαθορισμένου ονόματος τομέα αλληλογραφίας (Από:user@domain)
 enter your imap mail server hostname or ip address	admin	el	Πληκτρολογήστε το IMAP mail server όνομα χρήστη ή την IP διεύθυνση
 enter your sieve server hostname or ip address	admin	el	Πληκτρολογήστε το SIEVE server όνομα χρήστη ή την IP διεύθυνση
 enter your sieve server port	admin	el	Πληκτρολογήστε την SIEVE server θύρα
@@ -132,12 +137,14 @@ error connecting to imap serv	felamimail	el	Σφάλμα κατά τη σύνδ�
 error connecting to imap server. %s : %s.	felamimail	el	Σφάλμα κατά τη σύνδεση με τον IMAP server. %s : %s.
 error connecting to imap server: [%s] %s.	felamimail	el	Σφάλμα κατά τη σύνδεση με τον IMAP server. [%s] : %s.
 error opening	felamimail	el	Σφάλμα στο άνοιγμα
+event details follow	felamimail	el	Ακολουθούν λεπτομέρειες γεγονότων
 every	felamimail	el	κάθε
 every %1 days	felamimail	el	κάθε %1 ημέρες
 expunge	felamimail	el	Διαγράφω
 extended	felamimail	el	επεκτάθηκε
 felamimail	common	el	FelaMiMail
 file into	felamimail	el	αρχείο μέσα στο
+filemanager	felamimail	el	Διαχειριστής αρχείων
 files	felamimail	el	αρχεία
 filter active	felamimail	el	ενεργό φίλτρο
 filter name	felamimail	el	Όνομα φίλτρου
@@ -145,6 +152,7 @@ filter rules	common	el	κανόνες φίλτρου
 first name	felamimail	el	Όνομα
 flagged	felamimail	el	σημαιοστολισμένο
 flags	felamimail	el	Σημαίες
+folder	felamimail	el	Φάκελος
 folder acl	felamimail	el	Acl φακέλου
 folder name	felamimail	el	Όνομα φακέλου
 folder path	felamimail	el	Διαδρομή φακέλου
@@ -163,7 +171,6 @@ forward to	felamimail	el	προώθηση σε
 forward to address	felamimail	el	προώθηση στην διεύθυνση
 forwarding	felamimail	el	Προωθείται
 found	felamimail	el	Βρέθηκε
-fri	felamimail	el	Παρ
 from	felamimail	el	Από
 from(a->z)	felamimail	el	Από (Α->Ω)
 from(z->a)	felamimail	el	Από (Ω->Α)
@@ -196,6 +203,7 @@ imap server type	felamimail	el	IMAP Server τύπος
 imap server username	felamimail	el	imap server όνομα χρήστη
 imaps authentication	felamimail	el	IMAPS ΑΥΘΕΝΤΙΚΟΤΗΤΑ
 imaps encryption only	felamimail	el	Μόνο IMAPS κρυπτογράφηση
+import	felamimail	el	Εισαγωγή
 in	felamimail	el	μέσα
 inbox	felamimail	el	Εισερχόμενα
 incoming mail server(imap)	felamimail	el	server(IMAP) εισερχομένων μηνυμάτων
@@ -220,7 +228,7 @@ location of buttons when composing	felamimail	el	Τοποθεσία κουμπι
 mail server login type	admin	el	Τύπος εισόδου μηνύματος server
 mail settings	felamimail	el	Ρυθμίσεις μηνύματος
 mainmessage	felamimail	el	κύριο μήνυμα
-manage emailaccounts	preferences	el	Διαχείριση λογαρισμών Email
+manage emailaccounts	common	el	Διαχείριση λογαρισμών Email
 manage emailfilter / vacation	preferences	el	Διαχείριση φίλτρου Email / Διακοπών
 manage folders	common	el	Διαχείριση Φακέλων
 manage sieve	common	el	Διαχείριση Sieve σεναρίων
@@ -238,9 +246,9 @@ max uploadsize	felamimail	el	μέγιστο μέγεθος φορτώματος
 message highlighting	felamimail	el	Υπογράμμιση Μηνύματος
 message list	felamimail	el	Κατάλογος μηνυμάτων
 messages	felamimail	el	μηνύματα
-mon	felamimail	el	Δευ
 move	felamimail	el	μετακίνηση
 move messages	felamimail	el	μετακίνηση μηνυμάτων
+move selected to	felamimail	el	μετακίνηση επιλεγμένων στο
 move to	felamimail	el	μετακίνηση επιλεγμένων στο
 move to trash	felamimail	el	Μετακίνηση στον Κάδο Αχρήστων
 moving messages to	felamimail	el	μετακίνηση επιλεγμένων στο
@@ -265,6 +273,7 @@ no previous message	felamimail	el	κανένα προηγούμενο κείμε
 no supported imap authentication method could be found.	felamimail	el	Δεν βρέθηκε καμία υποστηριζόμενη IMAP επικυρωμένη μέθοδος.
 no valid emailprofile selected!!	felamimail	el	Έχει επιλεχθεί άκυρο προφίλ Email!
 none	felamimail	el	κανένα
+on	felamimail	el	πάνω
 on behalf of	felamimail	el	εκ μέρους του
 one address is not valid	felamimail	el	Κάποια διεύθυνση είναι άκυρη
 only inbox	felamimail	el	Μόνο τα ΕΙΣΕΡΧΟΜΕΝΑ
@@ -311,8 +320,8 @@ return to options page	felamimail	el	Επιστροφή στη σελίδα επ
 right	felamimail	el	Δεξιά
 row order style	felamimail	el	Στυλ ταξινόμησης σειράς
 rule	felamimail	el	Κανόνας
-sat	felamimail	el	Σάβ
 save	felamimail	el	Αποθήκευση
+save all	felamimail	el	Αποθήκευση όλων
 save as draft	felamimail	el	Αποθήκευση ως προσχέδιο
 save as infolog	felamimail	el	Αποθήκευση ως infolog
 save changes	felamimail	el	αποθήκευση αλλαγών
@@ -350,7 +359,6 @@ submit	felamimail	el	Υποβολή
 subscribe	felamimail	el	Εγγραφή
 subscribed	felamimail	el	Έχει εγγραφεί
 subscribed successfully!	felamimail	el	Η εγγραφή ήταν επιτυχής
-sun	felamimail	el	Κυρ
 table of contents	felamimail	el	Πίνακας περιεχομένων
 text only	felamimail	el	Μόνο κείμενο
 the connection to the imap server failed!!	felamimail	el	Αποτυχία σύνδεση με τον IMAP Server
@@ -358,14 +366,12 @@ the imap server does not appear to support the authentication method selected. p
 then	felamimail	el	ΜΕΤΑ
 this folder is empty	felamimail	el	ΑΥΤΟΣ Ο ΦΑΚΕΛΟΣ ΕΙΝΑΙ ΑΔΕΙΟΣ
 this php has no imap support compiled in!!	felamimail	el	Αυτό το PHP δεν έχει καθόλου IMAP υποστήριξη μεταφρασμένη!!
-thu	felamimail	el	Πέμ
 to	felamimail	el	Στο
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	el	Για τη χρησιμοποίηση TLS σύνδεσης, πρέπει να έχετε PHP 5.1.0 ή υψηλότερη έκδοση.
 translation preferences	felamimail	el	Προτιμήσεις Μετάφρασης
 translation server	felamimail	el	Server μετάφρασης
 trash fold	felamimail	el	Φάκ Κάδου Αχρήστων
 trash folder	felamimail	el	Φάκελος Κάδου Αχρήστων
-tue	felamimail	el	Τρί
 type	felamimail	el	τύπος
 unexpected response from server to authenticate command.	felamimail	el	Απρόσμενη απάντηση από τον server στην ΕΞΑΚΡΙΒΩΣΗ ΓΝΗΣΙΟΤΗΤΑΣ εντολής.
 unexpected response from server to digest-md5 response.	felamimail	el	Απρόσμενη απάντηση από τον server στην Digest-MD5 απάντηση.
@@ -385,6 +391,7 @@ unsubscribed successfully!	felamimail	el	Η συνδρομή σταμάτησε 
 up	felamimail	el	πάνω
 updating message status	felamimail	el	ενημέρωση κατάστασης μηνύματος
 updating view	felamimail	el	ενημέρωση εμφάνισης
+urgent	felamimail	el	επείγον
 use <a href="%1">emailadmin</a> to create profiles	felamimail	el	χρησιμοποιήστε <a href="%1">EmailAdmin</a> για τη δημιουργία προφίλ
 use a signature	felamimail	el	Χρήση υπογραφής
 use a signature?	felamimail	el	Χρήση υπογραφής;
@@ -402,7 +409,6 @@ view message	felamimail	el	Προβολή μηνύματος
 viewing full header	felamimail	el	Προβάλλεται πλήρης τίτλος
 viewing message	felamimail	el	Προβολή μηνύματος
 viewing messages	felamimail	el	Προβολή μηνυμάτων
-wed	felamimail	el	Τετ
 when deleting messages	felamimail	el	Όταν διαγράφονται τα μηνύματα
 with message	felamimail	el	με μήνυμα
 with message "%1"	felamimail	el	με μήνυμα "%1"

@@ -22,7 +22,6 @@ activate safe password check	setup	zh-tw	啟用儲存密碼功能
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	zh-tw	新增自動建立使用者到這個群組﹝若留空白則使用「Default」﹞
 add new database instance (egw domain)	setup	zh-tw	新增資料庫實例(eGW 網域)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	zh-tw	新增或編輯一個網域：
-[網域名稱（預設）],[資料庫名稱(egroupware)],[資料庫帳號(egroupware)],資料庫密碼,[資料庫類型(mysql)],[資料庫主機(localhost)],[資料庫連接埠(視資料庫而定)],[設定使用者帳號(如同頁首)],[設定密碼(如同頁首)]
 adding, editing or deleting an egroupware domain / database instance:	setup	zh-tw	新增、編輯或刪除一個 eGroupWare 網域/資料庫實例：
 additional options and there defaults (in brackets)	setup	zh-tw	附加選項與預設（同時處理）
 additional settings	setup	zh-tw	其他設定
@@ -46,7 +45,6 @@ allow authentication via cookie	setup	zh-tw	允許透過 cookie 認證
 allow password migration	setup	zh-tw	允許密碼轉換
 allowed migration types (comma-separated)	setup	zh-tw	允許的轉換類型（逗點分隔）
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	zh-tw	其他的網域可以透過 <i>帳號@網域</i> 的形式登入
-analysis	setup	zh-tw	分析
 and is up to date	setup	zh-tw	是最新的
 and reload your webserver, so the above changes take effect !!!	setup	zh-tw	重新啟動您的網站伺服器來套用異動！
 app details	setup	zh-tw	應用程式詳細內容
@@ -241,7 +239,6 @@ file uploads are switched off: you can not use any of the filemanagers, nor can 
 filename	setup	zh-tw	檔案名稱
 filesystem	setup	zh-tw	檔案系統
 force selectbox	setup	zh-tw	強制使用選取方塊
-found existing configuration file. loading settings from the file...	setup	zh-tw	找到已經存在的設定檔案，讀取設定中...
 give admin access to all installed apps	setup	zh-tw	授予管理者存取所有已安裝的程式
 go back	setup	zh-tw	回到上一頁
 go to	setup	zh-tw	前往
@@ -277,8 +274,6 @@ if you running this the first time, don't forget to manualy %1 !!!	setup	zh-tw	�
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	zh-tw	如果您使用的語言都是同樣的編碼(例如：西歐)，您不需要設定系統編碼！
 image type selection order	setup	zh-tw	圖片格式選取順序
 import has been completed!	setup	zh-tw	匯入成功！
-importing old settings into the new format....	setup	zh-tw	匯入舊的設定值到新的格式中...
-include root	setup	zh-tw	包含根目錄
 include_path need to contain "." - the current directory	setup	zh-tw	include_path 必須包含"." - 目前的資料夾
 install	setup	zh-tw	安裝
 install all	setup	zh-tw	全部安裝
@@ -314,7 +309,6 @@ ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setu
 leave empty to keep current.	setup	zh-tw	空白表示不改變
 limit access	setup	zh-tw	存取限制
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	zh-tw	限制下面位址、網域或是主機存取安裝設定(例如：127.0.0.1,10.1.1,myhost.dnydns.org)
-list availible values:	setup	zh-tw	允許的數值：
 list of availible translations	setup	zh-tw	可以使用的翻譯
 login as user postgres, eg. by using su as root	setup	zh-tw	登入為使用者 postgres ，就像是透過 su 來切換成 root
 login to mysql -	setup	zh-tw	登入到MYSQL -
@@ -334,13 +328,13 @@ mcrypt algorithm (default tripledes)	setup	zh-tw	Mcrypt 演算法 (預設為 TRI
 mcrypt initialization vector	setup	zh-tw	MCrypt 組態依據
 mcrypt mode (default cbc)	setup	zh-tw	Mcrypt 模式 (預設為 CBC)
 mcrypt settings (requires mcrypt php extension)	setup	zh-tw	Mcrypt 設定 (需要 mcrypt 的PHP 擴充)
-mcrypt version	setup	zh-tw	MCrypt 版本
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	zh-tw	memory_limit(最大可存取記憶體)設定小於%1：eGroupWare有部份應用程式會使用超過預設值8M的記憶體存取，特別是無法預期的錯誤
 migration between egroupware account repositories	setup	zh-tw	轉移 eGroupWare 帳號資料庫
 minimum account id (e.g. 500 or 100, etc.)	setup	zh-tw	使用者帳號編碼最小值﹝如：500 或 100﹞
 minute	setup	zh-tw	分
 missing or uncomplete mailserver configuration	setup	zh-tw	缺少或未完成郵件伺服器設定
 modifications have been completed!	setup	zh-tw	修改已經完成！
+modified	setup	zh-tw	修改日期
 modify	setup	zh-tw	修改
 month	setup	zh-tw	月
 multi-language support setup	setup	zh-tw	多國語言設定
@@ -387,11 +381,7 @@ path information	setup	zh-tw	路徑資訊
 path of egroupware install directory (default auto-detected)	setup	zh-tw	eGroupWare 安裝的路徑（預設會自動偵測）
 path to user and group files has to be outside of the webservers document-root!!!	setup	zh-tw	使用者與群組的檔案路徑必須在網站伺服器的網頁根目錄以外！
 path to various directories: have to exist and be writeable by the webserver	setup	zh-tw	幾個資料夾的路徑：必須存在而且網頁伺服器能夠寫入
-pear is needed by syncml or the ical import+export of calendar.	setup	zh-tw	SyncML 或是行事曆的 iCal 匯入、匯出功能都需要 PEAR
-pear::log is needed by syncml.	setup	zh-tw	SyncML需要PEAR::Log
 persistent connections	setup	zh-tw	持續連線
-php plus restore	setup	zh-tw	PHP 加強儲存
-php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	zh-tw	PHP 加強儲存提供較佳的執行效能，因為它將 eGW 環境資訊完整儲存在連線資料中。
 please check for sql scripts within the application's directory	setup	zh-tw	請檢查應用程式目錄下的 SQL 命令檔
 please check read/write permissions on directories, or back up and use another option.	setup	zh-tw	請檢查資料夾讀取/寫入的權限或是備份後使用其他選項。
 please configure egroupware for your environment	setup	zh-tw	請為您現在的環境設定 eGroupWare 的相關組態
@@ -417,7 +407,6 @@ re-enter password	setup	zh-tw	重新輸入密碼
 read translations from	setup	zh-tw	讀取翻譯資料
 readable by the webserver	setup	zh-tw	網頁伺服器可讀取
 really uninstall all applications	setup	zh-tw	確定要移除所有的應用程式
-recommended: filesystem	setup	zh-tw	建議：檔案系統
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	zh-tw	register_globals開啟中，eGroupWare不需要這個設定，而且關閉它通常會比較安全
 registered	setup	zh-tw	註冊
 rejected lines	setup	zh-tw	拒絕的行數
@@ -436,7 +425,6 @@ return to setup	setup	zh-tw	回到安裝程式
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	zh-tw	執行資料庫結構更新（如果需要）： 網域(全部),[設定者(admin)],密碼
 run installation tests	setup	zh-tw	執行安裝測試
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	zh-tw	安全模式啟用中，這樣一來您的安裝過程通常會比較安全。
-sample configuration not found. using built in defaults	setup	zh-tw	找不到範例設定檔案，系統需要它用來設定預設值
 save	setup	zh-tw	儲存
 save this text as contents of your header.inc.php	setup	zh-tw	儲存這些資料成為您的header.inc.php內容
 schedule	setup	zh-tw	排程
@@ -446,8 +434,6 @@ select one...	setup	zh-tw	選擇一個...
 select the default applications to which your users will have access	setup	zh-tw	選擇您的使用者預設使用的應用程式
 select the desired action(s) from the available choices	setup	zh-tw	在現有的選項中選擇所需的動作
 select to download file	setup	zh-tw	選擇下載檔案
-select where you want to store/retrieve file contents	setup	zh-tw	選擇您希望儲存與取得檔案內容的地方
-select where you want to store/retrieve filesystem information	setup	zh-tw	選擇您欲儲存／取得的檔案系統資訊
 select where you want to store/retrieve user accounts	setup	zh-tw	選擇您欲儲存／取得使用者帳號的方式
 select which group(s) will be exported	setup	zh-tw	選擇要匯出的群組
 select which group(s) will be imported (group membership will be maintained)	setup	zh-tw	選擇您欲匯入的群組﹝群組使用者將不會做任何更動﹞
@@ -463,16 +449,13 @@ select which user(s) will have admin privileges	setup	zh-tw	選擇擁有管理�
 select your old version	setup	zh-tw	選擇舊的版本
 selectbox	setup	zh-tw	勾選方塊
 server root	setup	zh-tw	根目錄
-sessions type	setup	zh-tw	連線類型
 set	setup	zh-tw	設定
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	zh-tw	如果版本是 < 2.4就設定為"old"，其他情形請設定為您目前使用的版本
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	zh-tw	設定系統編碼為UTF-8 (萬國編碼)時可以同時在畫面中顯示多種不同的語言編碼
 settings	setup	zh-tw	設定
 setup	setup	zh-tw	安裝
 setup main menu	setup	zh-tw	安裝主要選單
 setup the database	setup	zh-tw	安裝資料庫
 setup/config admin login	setup	zh-tw	安裝/設定管理員登入
-should be the same as server root unless you know what you are doing.	setup	zh-tw	如果您不確定，它應該跟伺服器根目錄一樣。
 show 'powered by' logo on	setup	zh-tw	顯示「powered by」圖示位置
 size	setup	zh-tw	大小
 skip the installation tests (not recommended)	setup	zh-tw	略過安裝測試（不建議）
@@ -505,7 +488,6 @@ the db_type in defaults (%1) is not supported on this server. using first suppor
 the file	setup	zh-tw	檔案
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	zh-tw	安裝eGroupWare的第一步是確定您的安裝環境是否需要進一步設定來執行應用程式
 the following applications need to be upgraded:	setup	zh-tw	下面這些應用程式需要升級：
-the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	zh-tw	兩個電子郵件的應用程式需要imap外掛(即使您只有使用POP3的郵件協定)。
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	zh-tw	如果您希望系統完全支援多國語言編碼(utf-8)，您會需要mbstring外掛
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	zh-tw	要完全支援萬國字元(UTF-8)或是其他雙位元組編碼，您必須設定mbstring.func_overload = 7
 the session extension is needed to use php sessions (db-sessions work without).	setup	zh-tw	要使用php session就必須安裝session外掛（透過資料庫儲存則不用）
@@ -533,7 +515,6 @@ translations upgraded	setup	zh-tw	語系更新了
 true	setup	zh-tw	是
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	zh-tw	請嘗試組態您的PHP來支援上面提到的資料庫管理系統，或是請您手動安裝eGroupWare。
 two weeks	setup	zh-tw	兩星期
-unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	zh-tw	部份 PHP/Apache 軟體執行時發生問題（Apache終止了因此您無法再登入）。
 uninstall	setup	zh-tw	移除
 uninstall all applications	setup	zh-tw	移除所有應用程式
 uninstalled	setup	zh-tw	已經移除
@@ -571,7 +552,6 @@ we can proceed	setup	zh-tw	我們可以處理
 we will automatically update your tables/records to %1	setup	zh-tw	我們將自動幫您更新您的資料表及資料到 %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	zh-tw	接下來我們會執行一系列的測試，這將會需要一點時間。點選下面的連結繼續。
 welcome to the egroupware installation	setup	zh-tw	歡迎使用eGroupWare
-what type of sessions management do you want to use (php session management may perform better)?	setup	zh-tw	希望使用的連線（sessions）管理方式（透過PHP session會有較好的效能）？
 which database type do you want to use with egroupware?	setup	zh-tw	您希望eGroupWare安裝在哪一種資料庫？
 world readable	setup	zh-tw	所有人可讀取
 world writable	setup	zh-tw	所有人可寫入
@@ -587,7 +567,6 @@ you appear to be running a pre-beta version of egroupware.<br />these versions a
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	zh-tw	您似乎正在執行較舊版本的PHP<br />建議您將它更新到較新的版本。<br />較舊的PHP版本也許無法正確執行eGroupWare。<br /><br />請將版本至少更新到%1
 you appear to be running version %1 of egroupware	setup	zh-tw	您目前所使用的 eGroupWare 版本為 %1
 you appear to have %1 support.	setup	zh-tw	您的系統支援 %1 。
-you appear to have php session support. enabling php sessions.	setup	zh-tw	您的系統支援 PHP session ，PHP sessions功能啟用中。
 you appear to have xml support enabled	setup	zh-tw	您的系統支援XML
 you are ready for this stage, but this stage is not yet written.<br />	setup	zh-tw	您已經準備好要使用這個步驟，但這個步驟尚未開發完成。<br />
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	zh-tw	您使用的 PHP 版本為 %1 ， eGroupWare 現在需要 %2 或更新版本，建議使用 PHP %3
@@ -602,13 +581,11 @@ you have not created your header.inc.php yet!<br /> you can create it now.	setup
 you have successfully logged out	setup	zh-tw	您已經成功登出了
 you must enter a username for the admin	setup	zh-tw	您必須輸入管理者的帳號名稱
 you need to add at least one egroupware domain / database instance.	setup	zh-tw	您至少必須新增一個 eGroupWare 網域/資料庫實例。
-you need to add some domains to your header.inc.php.	setup	zh-tw	您必須在header.inc.php新增一些網域的設定
 you need to configure egroupware:	setup	zh-tw	您必須設定 eGroupWare ：
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	zh-tw	您必須修正上面的錯誤來寫入設定檔案 header.inc.php ！
 you need to select your current charset!	setup	zh-tw	您必須選擇目前的字元編碼
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	zh-tw	您應該要移除並重新安裝應用程式或試著手動安裝
 you're using an old configuration file format...	setup	zh-tw	您正在使用舊版的設定檔案...
-you're using an old header.inc.php version...	setup	zh-tw	您正在使用舊版的header.inc.php...
 your applications are current	setup	zh-tw	您的應用程式目前狀態
 your backup directory '%1' %2	setup	zh-tw	您的備份資料夾 '%1' %2
 your database does not exist	setup	zh-tw	找不到您的資料庫系統。

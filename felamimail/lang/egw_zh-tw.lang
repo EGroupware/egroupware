@@ -26,6 +26,7 @@ any of	felamimail	zh-tw	任意的
 any status	felamimail	zh-tw	任意狀態
 anyone	felamimail	zh-tw	任何人
 as a subfolder of	felamimail	zh-tw	子資料夾在
+attach	felamimail	zh-tw	附加
 attachments	felamimail	zh-tw	附加檔案
 authentication required	felamimail	zh-tw	需要登入
 auto refresh folder list	felamimail	zh-tw	自動更新資料夾清單
@@ -38,6 +39,7 @@ bcc	felamimail	zh-tw	密件副本
 before headers	felamimail	zh-tw	頁首之前
 between headers and message body	felamimail	zh-tw	頁首與訊息內容之間
 body part	felamimail	zh-tw	內容部份
+by date	felamimail	zh-tw	按日期
 can't connect to inbox!!	felamimail	zh-tw	無法連結收件夾！
 cc	felamimail	zh-tw	副本
 change folder	felamimail	zh-tw	改變資料夾
@@ -55,7 +57,9 @@ compress folder	felamimail	zh-tw	壓縮資料夾
 condition	felamimail	zh-tw	條件
 configuration	felamimail	zh-tw	設定
 connection dropped by imap server.	felamimail	zh-tw	連線被 IMAP 伺服器中斷了
+contact not found!	felamimail	zh-tw	找不到聯絡人！
 contains	felamimail	zh-tw	包含
+copy to	felamimail	zh-tw	複製到
 could not complete request. reason given: %s	felamimail	zh-tw	無法完成請求，理由： %s
 could not open secure connection to the imap server. %s : %s.	felamimail	zh-tw	無法開啟安全連線到 IMAP 伺服器。 %s： %s
 cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	zh-tw	CRAM-MD5 或 DIGEST-MD5 需要安裝 Auth_SASL 程式。
@@ -75,6 +79,7 @@ date(newest first)	felamimail	zh-tw	日期(新的在前)
 date(oldest first)	felamimail	zh-tw	日期(舊的在前)
 days	felamimail	zh-tw	日
 deactivate script	felamimail	zh-tw	停用程式
+default	felamimail	zh-tw	預設
 default signature	felamimail	zh-tw	預設簽名
 default sorting order	felamimail	zh-tw	預設排序
 delete all	felamimail	zh-tw	刪除全部
@@ -131,17 +136,20 @@ enter your sieve server hostname or ip address	admin	zh-tw	輸入您的SIEVE伺�
 enter your sieve server port	admin	zh-tw	輸入您的SIEVE伺服器連接埠
 enter your smtp server hostname or ip address	admin	zh-tw	輸入您的SMTP伺服器主機名稱或IP位址
 enter your smtp server port	admin	zh-tw	輸入您的SMTP伺服器連接埠
+entry saved	felamimail	zh-tw	資料儲存了
 error	felamimail	zh-tw	錯誤
 error connecting to imap serv	felamimail	zh-tw	連結IMAP伺服器錯誤
 error connecting to imap server. %s : %s.	felamimail	zh-tw	連線到 IMAP 伺服器時發生錯誤。 %s : %s
 error connecting to imap server: [%s] %s.	felamimail	zh-tw	連線到 IMAP 伺服器時發生錯誤： [%s] %s
 error opening	felamimail	zh-tw	開啟錯誤
+event details follow	felamimail	zh-tw	事件細節
 every	felamimail	zh-tw	每一
 every %1 days	felamimail	zh-tw	每 %1 天
 expunge	felamimail	zh-tw	刪去
 extended	felamimail	zh-tw	延伸的
 felamimail	common	zh-tw	FelaMiMail
 file into	felamimail	zh-tw	檔案插入
+filemanager	felamimail	zh-tw	檔案管理員
 files	felamimail	zh-tw	檔案
 filter active	felamimail	zh-tw	規則啟用中
 filter name	felamimail	zh-tw	規則名稱
@@ -149,6 +157,7 @@ filter rules	common	zh-tw	過濾規則
 first name	felamimail	zh-tw	名
 flagged	felamimail	zh-tw	被標示
 flags	felamimail	zh-tw	標示
+folder	felamimail	zh-tw	資料夾
 folder acl	felamimail	zh-tw	資料夾 ACL
 folder name	felamimail	zh-tw	資料夾名稱
 folder path	felamimail	zh-tw	資料夾路徑
@@ -167,7 +176,6 @@ forward to	felamimail	zh-tw	轉寄給
 forward to address	felamimail	zh-tw	轉寄到信箱
 forwarding	felamimail	zh-tw	轉寄中
 found	felamimail	zh-tw	找到
-fri	felamimail	zh-tw	五
 from	felamimail	zh-tw	來自
 from(a->z)	felamimail	zh-tw	從 (A->Z)
 from(z->a)	felamimail	zh-tw	從 (Z->A)
@@ -200,6 +208,7 @@ imap server type	felamimail	zh-tw	IMAP伺服器種類
 imap server username	felamimail	zh-tw	IMAP伺服器帳號
 imaps authentication	felamimail	zh-tw	IMAPS驗證
 imaps encryption only	felamimail	zh-tw	只透過IMAPS加密
+import	felamimail	zh-tw	匯入
 in	felamimail	zh-tw	在
 inbox	felamimail	zh-tw	收件匣
 incoming mail server(imap)	felamimail	zh-tw	收信伺服器（IMAP）
@@ -214,6 +223,7 @@ keep local copy of email	felamimail	zh-tw	在本機保留信件備份
 kilobytes	felamimail	zh-tw	KB
 language	felamimail	zh-tw	語言
 last name	felamimail	zh-tw	姓
+later	felamimail	zh-tw	晚一點
 left	felamimail	zh-tw	左
 less	felamimail	zh-tw	少
 less than	felamimail	zh-tw	小於
@@ -224,7 +234,7 @@ location of buttons when composing	felamimail	zh-tw	建立按鈕時的位置
 mail server login type	admin	zh-tw	郵件伺服器登入種類
 mail settings	felamimail	zh-tw	郵件設定
 mainmessage	felamimail	zh-tw	郵件主體
-manage emailaccounts	preferences	zh-tw	管理郵件帳號
+manage emailaccounts	common	zh-tw	管理郵件帳號
 manage emailfilter / vacation	preferences	zh-tw	管理郵件規則/假期
 manage folders	common	zh-tw	管理資料夾
 manage sieve	common	zh-tw	管理Sieve程式
@@ -242,9 +252,10 @@ max uploadsize	felamimail	zh-tw	上傳檔案大小上限
 message highlighting	felamimail	zh-tw	訊息醒目標示
 message list	felamimail	zh-tw	訊息清單
 messages	felamimail	zh-tw	訊息
-mon	felamimail	zh-tw	一
 move	felamimail	zh-tw	移動
+move folder	felamimail	zh-tw	移動資料夾
 move messages	felamimail	zh-tw	移動訊息
+move selected to	felamimail	zh-tw	移動選取的到
 move to	felamimail	zh-tw	移動選取的到
 move to trash	felamimail	zh-tw	移到垃圾桶
 moving messages to	felamimail	zh-tw	移動信件到
@@ -270,6 +281,7 @@ no recipient address given!	felamimail	zh-tw	沒有輸入收件人信箱！
 no supported imap authentication method could be found.	felamimail	zh-tw	找不到能夠使用的 IMAP 驗證方式。
 no valid emailprofile selected!!	felamimail	zh-tw	沒有選取可以使用的郵件資料！
 none	felamimail	zh-tw	無
+on	felamimail	zh-tw	在
 on behalf of	felamimail	zh-tw	代表
 one address is not valid	felamimail	zh-tw	其中一個信箱格式有誤
 only inbox	felamimail	zh-tw	只有收件夾
@@ -318,8 +330,8 @@ return to options page	felamimail	zh-tw	回到選項
 right	felamimail	zh-tw	正確
 row order style	felamimail	zh-tw	列順序風格
 rule	felamimail	zh-tw	規則
-sat	felamimail	zh-tw	六
 save	felamimail	zh-tw	儲存
+save all	felamimail	zh-tw	儲存全部
 save as draft	felamimail	zh-tw	儲存為草稿
 save as infolog	felamimail	zh-tw	儲存為記事
 save changes	felamimail	zh-tw	儲存修改
@@ -358,7 +370,6 @@ submit	felamimail	zh-tw	送出
 subscribe	felamimail	zh-tw	訂閱
 subscribed	felamimail	zh-tw	已訂閱
 subscribed successfully!	felamimail	zh-tw	訂閱完成！
-sun	felamimail	zh-tw	日
 table of contents	felamimail	zh-tw	內容表單
 text only	felamimail	zh-tw	純文字
 the connection to the imap server failed!!	felamimail	zh-tw	連結IMAP伺服器發生錯誤！
@@ -367,7 +378,6 @@ the mimeparser can not parse this message.	felamimail	zh-tw	mime 解析程式無
 then	felamimail	zh-tw	然後
 this folder is empty	felamimail	zh-tw	這個資料夾沒有任何信件
 this php has no imap support compiled in!!	felamimail	zh-tw	您的PHP並未編譯為支援IMAP的狀態
-thu	felamimail	zh-tw	四
 to	felamimail	zh-tw	到
 to mail sent to	felamimail	zh-tw	到郵件寄件人
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	zh-tw	要使用 TLS 連線，您必須執行在 PHP 5.1.0 或是更新版本中。
@@ -375,7 +385,6 @@ translation preferences	felamimail	zh-tw	翻譯偏好
 translation server	felamimail	zh-tw	翻譯伺服器
 trash fold	felamimail	zh-tw	垃圾桶
 trash folder	felamimail	zh-tw	垃圾桶
-tue	felamimail	zh-tw	二
 type	felamimail	zh-tw	格式
 unexpected response from server to authenticate command.	felamimail	zh-tw	伺服器 AUTHENTICATE 指令傳回了不明的回應。
 unexpected response from server to digest-md5 response.	felamimail	zh-tw	伺服器 Digest-MD5 指令傳回了不明的回應。
@@ -395,6 +404,7 @@ unsubscribed successfully!	felamimail	zh-tw	取消訂閱完成！
 up	felamimail	zh-tw	上一層
 updating message status	felamimail	zh-tw	更新訊息狀態中
 updating view	felamimail	zh-tw	更新檢視
+urgent	felamimail	zh-tw	緊急的
 use <a href="%1">emailadmin</a> to create profiles	felamimail	zh-tw	使用 <a href="%1">郵件管理</a> 來建立資料
 use a signature	felamimail	zh-tw	使用簽名檔
 use a signature?	felamimail	zh-tw	使用簽名檔？
@@ -412,7 +422,6 @@ view message	felamimail	zh-tw	顯示訊息
 viewing full header	felamimail	zh-tw	顯示完整標頭中
 viewing message	felamimail	zh-tw	顯示訊息中
 viewing messages	felamimail	zh-tw	顯示訊息中
-wed	felamimail	zh-tw	三
 when deleting messages	felamimail	zh-tw	當刪除訊息時
 with message	felamimail	zh-tw	信件
 with message "%1"	felamimail	zh-tw	信件 "%1"

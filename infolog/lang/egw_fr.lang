@@ -54,6 +54,7 @@ apply the action on the whole query, not only the shown entries!!!	infolog	fr	Ap
 apply the changes	infolog	fr	Appliquer les changements
 archive	infolog	fr	Archiver
 are you shure you want to close this entry ?	infolog	fr	Etês vous certain de vouloir fermer cette entrée ?
+are you shure you want to delete this entry ?	infolog	fr	Etes-vous sûr de vouloir supprimer cette entrée ?
 attach a file	infolog	fr	Attacher un fichier
 attach file	infolog	fr	Attacher un fichier
 attachments	infolog	fr	Pièces jointes

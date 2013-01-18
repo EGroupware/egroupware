@@ -51,6 +51,7 @@ before headers	felamimail	sk	Pred hlavičkou
 between headers and message body	felamimail	sk	Medzi hlavičkou a telom správy
 body part	felamimail	sk	časť tela
 by date	felamimail	sk	podľa dátumu
+can not open imap connection	felamimail	sk	Nedá sa otvoriť spojenie IMAP
 can not send message. no recipient defined!	felamimail	sk	Nepodarilo sa odoslať správu. Nebol zadaný adresát!
 can't connect to inbox!!	felamimail	sk	nedá sa pripojiť k Doručenej pošte!
 cc	felamimail	sk	Kópia
@@ -192,6 +193,7 @@ error: could not save message as draft	felamimail	sk	Chyba: Nepodarilo sa uloži
 error: could not save rule	felamimail	sk	Chyba: Nepodarilo sa uložiť pravidlo.
 error: could not send message.	felamimail	sk	Chyba: Nepodarilo sa odoslať správu.
 error: message could not be displayed.	felamimail	sk	CHYBA: Správa sa nedá zobraziť.
+esync will fail without a working email configuration!	felamimail	sk	eSync NEBUDE fungovať bez funkčnej konfigurácie E-mailu!
 event details follow	felamimail	sk	Podrobnosti udalosti:
 every	felamimail	sk	každý
 every %1 days	felamimail	sk	každých
@@ -363,6 +365,7 @@ no signature	felamimail	sk	Žiadny podpis!
 no subject given!	felamimail	sk	Nebol zadaný predmet sprrávy!
 no supported imap authentication method could be found.	felamimail	sk	Nenašla sa žiadna z podporovaných metód IMAP overovania.
 no text body supplied, check attachments for message text	felamimail	sk	Správa nemá telo textu, skontrolujte prílohy či neobsahujú text správy
+no valid %1 folder configured!	felamimail	sk	Nebol nastavený platný priečinok %1!
 no valid data to create mailprofile!!	felamimail	sk	Nie sú k dispozícii platné údaje k vytvoreniu poštového profilu!
 no valid emailprofile selected!!	felamimail	sk	Nebol vybratý platný E-mailový profil!
 none	felamimail	sk	žiadne

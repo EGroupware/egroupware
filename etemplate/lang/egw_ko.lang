@@ -1,0 +1,38 @@
+advanced search	etemplate	ko	상세 검색
+and	etemplate	ko	그리고(AND 연산)
+application	etemplate	ko	응용프로그램
+applications	etemplate	ko	응용프로그램들
+attach file	etemplate	ko	파일 첨부
+changed	etemplate	ko	변경됨
+click here to create the link	etemplate	ko	새 링크를 생성하려면 클릭하세요
+click here to start the search	etemplate	ko	검색을 시작하려면 클릭하세요
+comment	etemplate	ko	커멘트
+confirm	etemplate	ko	확인
+contact	etemplate	ko	주소록
+custom	etemplate	ko	사용자정의
+custom fields	etemplate	ko	사용자정의 필드
+day	etemplate	ko	날
+days	etemplate	ko	일동안
+default	etemplate	ko	기본
+delete a single entry by passing the id.	etemplate	ko	ID값으로 단일 엔트리 삭제
+duration	etemplate	ko	기간
+file	etemplate	ko	FILE
+hours	etemplate	ko	시간
+import	etemplate	ko	가져오기
+label	etemplate	ko	라벨
+last	etemplate	ko	마지막
+link	etemplate	ko	링크
+minutes	etemplate	ko	분
+month	etemplate	ko	월
+new search	common	ko	새 검색
+no file	etemplate	ko	파일 없음
+no matches found	etemplate	ko	일치하는 것을 찾을수 없습니다
+or	etemplate	ko	이거나(OR연산)
+read a list of entries.	etemplate	ko	엔트리 목록을 읽음
+read a single entry by passing the id and fieldlist.	etemplate	ko	ID와 필드목록으로 단일 엔트리를 읽음
+readonly	etemplate	ko	읽기전용
+selectbox	etemplate	ko	선택상자
+start a new search, cancel this link	etemplate	ko	이 링크를 취소하고 새로 검색
+unlink	etemplate	ko	삭제
+update a single entry by passing the fields.	etemplate	ko	필드값으로 단일 엔트리 갱신
+version	etemplate	ko	버전

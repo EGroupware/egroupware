@@ -25,6 +25,7 @@ account-id's have to be integers!	admin	pt-br	Id da conta deve ser número intei
 acl manager	admin	pt-br	Administração de Regras de Acesso (ACL)
 acl rights	common	pt-br	Permissões de Acesso
 action	admin	pt-br	Ação
+actions	admin	pt-br	Ações
 activate wysiwyg-editor	admin	pt-br	ativar editor WYSIWYG
 add a category	admin	pt-br	adicionar uma categoria
 add a group	admin	pt-br	adicionar um grupo
@@ -51,6 +52,8 @@ advanced options	admin	pt-br	opções avançadas
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	pt-br	Após quantos erros de conexão, a conta deverá ser bloqueada (padrão 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	pt-br	Após quantos erros de conexão, um endereço IP deverá ser bloqueado (padrão 3)?
 aliases	admin	pt-br	Apelidos
+all applications	admin	pt-br	Todos aplicativos
+all categories	admin	pt-br	Todas as categorias
 all records and account information will be lost!	admin	pt-br	Todos registros e informações de contas serão perdidos!
 all users	admin	pt-br	Todos usuários
 allow anonymous access to this app	admin	pt-br	Permitir acesso anônimo a esta aplicação
@@ -69,6 +72,7 @@ applications	admin	pt-br	Aplicativos
 applications list	admin	pt-br	Lista de Aplicativos
 applications run rights updated.	admin	pt-br	Direitos de execução dos aplicativos atualizados.
 applies the changes	admin	pt-br	aplicar as alterações
+apply the changes	admin	pt-br	aplicar as alterações
 are you sure you want to delete the application %1 ?	admin	pt-br	Você tem certeza que deseja remover o aplicativo %1 ?
 are you sure you want to delete this account ?	admin	pt-br	Você tem certeza que deseja remover esta conta?
 are you sure you want to delete this application ?	admin	pt-br	Você tem certeza que deseja remover este aplicativo?
@@ -96,7 +100,9 @@ can change password	admin	pt-br	Permite alterar a senha
 cancel testjob!	admin	pt-br	Cancelar trabalhos de teste!
 categories list	admin	pt-br	Lista de Categorias
 category %1 has been saved !	admin	pt-br	Categoria %1 foi salva!
+category deleted.	admin	pt-br	Categoria removida.
 category list	admin	pt-br	Lista de Categorias
+category saved.	admin	pt-br	Categoria salva.
 change account_id	admin	pt-br	Alterar id da conta
 change acl rights	admin	pt-br	Mudar direitos da ACL
 change config settings	admin	pt-br	Mudar parâmetros de configuração
@@ -111,6 +117,7 @@ command scheduled to run at %1	admin	pt-br	Comando agendado para rodar às %1
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	pt-br	Cookie domínio (o padrão vazio significa usar o nome completo do domínio, por exemplo: para SiteMgr ".dominio.com.br" permite usar o mesmo domínio para egw.dominio.com.br e www.dominio.com.br)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	pt-br	Cookie caminho (permite múltiplas sessões eGW com diferentes diretórios, mas tem problemas com SiteMgr!)
 could not remote execute the command	admin	pt-br	Não foi possível executar remotamente o comando
+country	admin	pt-br	País
 country selection	admin	pt-br	Seleção de País
 create group	admin	pt-br	Criar Grupo
 created	admin	pt-br	Criado
@@ -139,6 +146,7 @@ delete the group	admin	pt-br	Remover o grupo
 delete this category	admin	pt-br	Remover esta categoria
 delete this group	admin	pt-br	Remover este grupo
 delete this user	admin	pt-br	remover este usuário
+deleted	admin	pt-br	removido
 deletes this field	admin	pt-br	Remover este campo
 deliver extern	admin	pt-br	entrega externa
 deny access to access log	admin	pt-br	Negar acesso ao registro de acessos
@@ -158,6 +166,7 @@ deny access to user accounts	admin	pt-br	Negar acesso às contas de usuários
 deny all users access to grant other users access to their entries ?	admin	pt-br	Não permitir que usuários concedam acesso aos seus registros para outros usuários ?
 description can not exceed 255 characters in length !	admin	pt-br	A descrição não deverá exceder 255 caracteres!
 determines the order the fields are displayed	admin	pt-br	determinar a ordem de exibição dos campos
+disable	admin	pt-br	Desabilitada
 disable "auto completion" of the login form	admin	pt-br	Desbilitar "auto completar" no formulário de entrada
 disable wysiwyg-editor	admin	pt-br	desabilitar editor WYSIWYG
 disabled (not recomended)	admin	pt-br	desabilitar (não recomendado)
@@ -167,6 +176,7 @@ do you also want to delete all global subcategories ?	admin	pt-br	Deseja também
 do you want to delete all global subcategories ?	admin	pt-br	Deseja remover todas subcategorias globais ?
 do you want to move all global subcategories one level down ?	admin	pt-br	Deseja mover todas as subcategorias globais para um nível abaixo?
 document root (default)	admin	pt-br	Pasta raiz (padrão)
+down	admin	pt-br	baixo
 each value is a line like <id>[=<label>]	admin	pt-br	cada valor é uma linha como <id>[=<label>]
 each value is a line like id[=label]	admin	pt-br	cada valor é uma linha como id[=label]
 edit account	admin	pt-br	Editar conta
@@ -189,6 +199,7 @@ egroupware directory	admin	pt-br	Diretório eGroupWare
 either install id and config password needed or the remote hash!	admin	pt-br	Necessário ID de instalação E senha de configuração OU o hash remoto!
 email account active	admin	pt-br	conta de e-mail ativa
 email address	admin	pt-br	e-mail
+enable	admin	pt-br	habilitado
 enable debug-messages	admin	pt-br	Habilitar menssagens de depuração
 enable the soap service	admin	pt-br	Habilitar o serviço soap
 enable the spellcheck in the ritch text editor ?	admin	pt-br	Habilitar o verificador ortográfico no editor de texto ?
@@ -235,13 +246,13 @@ false	admin	pt-br	falso
 field '%1' already exists !!!	admin	pt-br	Campo '%1' já existe !!!
 file space	admin	pt-br	Espaço para arquivos
 file space must be an integer	admin	pt-br	Espaço para arquivos deve ser um número inteiro
-find and register all application hooks	admin	pt-br	Procurar e registrar todas as configurações de aplicações
 for the times above	admin	pt-br	para os horários acima
 for the times below (empty values count as '*', all empty = every minute)	admin	pt-br	para os horários abaixo (campos vazios contam como '*', todos vazios = a cada minuto)
 force selectbox	admin	pt-br	Forçar Caixa de seleção
 forward also to	admin	pt-br	encaminhar também para
 forward emails to	admin	pt-br	encaminhar e-mails para
 forward only	admin	pt-br	apenas encaminhar
+full name	admin	pt-br	Nome Completo
 global categories	common	pt-br	Categorias globais
 grant	admin	pt-br	Conceder
 group ?	admin	pt-br	grupo?
@@ -271,6 +282,7 @@ install crontab	admin	pt-br	Instalar crontab
 installed applications	common	pt-br	Aplicativos Instalados
 installed crontab	admin	pt-br	Crontab instalado
 interface	admin	pt-br	Interface
+invalid argument '%1' !!!	admin	pt-br	Argumento inválido: '%1' !!!
 invalid formated date "%1"!	admin	pt-br	Data formatada inválida "%1"!
 invalid remote id or name "%1"!	admin	pt-br	ID remoto ou nome inválido "%1"!
 invalid value "%1" use yes or no!	admin	pt-br	Valor inválido "%1"! Use sim ou não!
@@ -294,12 +306,13 @@ ldap rootdn	admin	pt-br	super usuário LDAP
 leave empty for no quota	admin	pt-br	deixar vazio para sem cota
 leave the category untouched and return back to the list	admin	pt-br	deixar a categoria intocada e retornar à lista
 leave the group untouched and return back to the list	admin	pt-br	deixar o grupo intocado e retornar à lista
+leave without saveing the entry	admin	pt-br	Sair sem salvar o registro
 leaves without saveing	admin	pt-br	sair sem salvar
 length<br>rows	admin	pt-br	Tamanho<br>Linhas
 list config settings	admin	pt-br	Listar parâmetros de configuração
 list current sessions	admin	pt-br	Listar sessões correntes
 list of current users	admin	pt-br	lista de usuários conectados
-login history	common	pt-br	Histórico de conexões
+login history	admin	pt-br	Histórico de conexões
 login message	admin	pt-br	Mensagem de entrada
 login screen	admin	pt-br	Tela de Conexão
 login shell	admin	pt-br	Shell de Conexão
@@ -308,10 +321,12 @@ loginid	admin	pt-br	Código do usuário
 mail settings	admin	pt-br	Configurações de E-Mail
 main email-address	admin	pt-br	E-Mail principal
 main screen message	admin	pt-br	Mensagem da tela principal
+manage mapping	admin	pt-br	Gerenciar mapeamento
 manager	admin	pt-br	Gerenciador
 max length of the input [, length of the inputfield (optional)]	admin	pt-br	tamanho máximo da entrada [, tamanho do campo de entrada (opcional)]
 maximum account id (e.g. 65535 or 1000000)	admin	pt-br	id máximo para contas (Exemplo: 65535 ou 1000000)
 maximum entries in click path history	admin	pt-br	Máximo de entradas no histórico de caminho de cliques
+members	admin	pt-br	Membros
 message has been updated	admin	pt-br	Mensagem foi atualizada
 method	admin	pt-br	Método
 minimum account id (e.g. 500 or 100, etc.)	admin	pt-br	id mínimo para contas (Exemplo: 500 ou 100, etc.)
@@ -336,6 +351,8 @@ no permission to add users	admin	pt-br	sem permissão para adicionar grupos
 no permission to create groups	admin	pt-br	sem permissão para criar grupos
 note: ssl available only if php is compiled with curl support	admin	pt-br	Nota: O SSL estará disponível somente se o PHP houver sido compilado com suporte a curl
 number of row for a multiline inputfield or line of a multi-select-box	admin	pt-br	número de linhas para um campo de entrada ou linhas para uma caixa de seleção
+one month	admin	pt-br	um mês
+one week	admin	pt-br	uma semana
 order	admin	pt-br	Ordem
 outbound	admin	pt-br	Saída
 own install id:	admin	pt-br	Próprio id de instalação:
@@ -378,6 +395,7 @@ run asynchronous services	admin	pt-br	Executar Serviços Assícronos
 save the category	admin	pt-br	salvar a categoria
 save the category and return back to the list	admin	pt-br	salvar a categoria e retornar à lista
 saves the changes made and leaves	admin	pt-br	salvar as alterações feitas e sair
+saves this entry	admin	pt-br	Salvar este registro
 search accounts	admin	pt-br	Pesquisar contas
 search categories	admin	pt-br	Pesquisar categorias
 search groups	admin	pt-br	Pesquisar grupos
@@ -407,7 +425,6 @@ show error log	admin	pt-br	Exibir registro de erros
 show phpinfo()	admin	pt-br	Exibir phpinfo()
 show session ip address	admin	pt-br	Exibir endereço IP das sessões
 site	admin	pt-br	Site
-site configuration	admin	pt-br	Configuração do Servidor
 soap	admin	pt-br	SOAP
 sorry, that group name has already been taken.	admin	pt-br	Este nome de grupo já está em uso.
 sorry, the above users are still a member of the group %1	admin	pt-br	Desculpe, os usuários acima ainda são membros do grupo %1
@@ -418,6 +435,7 @@ standard	admin	pt-br	padrão
 standard imap server	admin	pt-br	servidor IMAP padrão
 standard pop3 server	admin	pt-br	servidor POP3 padrão
 standard smtp-server	admin	pt-br	servidor SMTP padrão
+start	admin	pt-br	Iniciar
 start testjob!	admin	pt-br	Iniciar TestJob!
 submit changes	admin	pt-br	Enviar alterações
 submit the search string	admin	pt-br	Enviar expressão de busca
@@ -451,15 +469,18 @@ times	admin	pt-br	Horários
 top	admin	pt-br	topo
 total of %1 id's changed.	admin	pt-br	Total de %1 IDs alterada(s)
 total records	admin	pt-br	Total de registros
+translation	admin	pt-br	Tradução
 true	admin	pt-br	verdadeiro
 trust level	admin	pt-br	Nível de confiança
 trust relationship	admin	pt-br	Relação de confiança
+two weeks	admin	pt-br	duas semanas
 type '%1' already exists !!!	admin	pt-br	tipo '%1' já existe !!
 type of customfield	admin	pt-br	Tipo do campo personalizado
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	pt-br	No Windows você precisa instalar o asyncservide %1manualmente%2 ou usar o modo fallback. Fallback significa que os trabalhos serão verificados somente após cada visualização de página!!!
 unknown account: %1 !!!	admin	pt-br	Conta desconhecida: %1 !!!
 unknown command %1!	admin	pt-br	Comando desconhecido %1!
 unknown option %1	admin	pt-br	Opção desconhecida %1
+up	admin	pt-br	para cima
 updated	admin	pt-br	atualizado
 use cookies to pass sessionid	admin	pt-br	Usar cookies para transmitir id de sessão
 use pure html compliant code (not fully working yet)	admin	pt-br	Usar código HTML puro (não funciona totalmente ainda)

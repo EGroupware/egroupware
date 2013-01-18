@@ -69,6 +69,7 @@ connection dropped by imap server.	felamimail	sl	Strežnik IMAP je prekinil pove
 contact not found!	felamimail	sl	Stik ni bil najden!
 contains	felamimail	sl	Vsebuje
 copy or move messages?	felamimail	sl	Kopiram ali premaknem sporočilo?
+copy to	felamimail	sl	Kopiraj v
 copying messages to	felamimail	sl	Kopiram sporočilo v
 could not complete request. reason given: %s	felamimail	sl	Ne morem dokončati zahteve. Podan vzrok: %s
 could not import message:	felamimail	sl	Sporočila ni bilo mogoče uvoziti:
@@ -211,7 +212,6 @@ forward to	felamimail	sl	Posreduj
 forward to address	felamimail	sl	Posreduj na naslov
 forwarding	felamimail	sl	Posredujem
 found	felamimail	sl	Najdenih
-fri	felamimail	sl	Pet
 from	felamimail	sl	Pošiljatelj
 from(a->z)	felamimail	sl	Pošiljatelj (A->Z)
 from(z->a)	felamimail	sl	Pošiljatelj (Z->A)
@@ -264,6 +264,7 @@ keep local copy of email	felamimail	sl	Obdrži lokalno kopijo E-pošte
 kilobytes	felamimail	sl	Kilobajtov
 language	felamimail	sl	Jezik
 last name	felamimail	sl	Priimek
+later	felamimail	sl	Pozneje
 left	felamimail	sl	Levo
 less	felamimail	sl	Manj
 less than	felamimail	sl	Manj kot
@@ -293,11 +294,11 @@ max uploadsize	felamimail	sl	Največja velikost prenosa
 message highlighting	felamimail	sl	Poudarjanje sporočil
 message list	felamimail	sl	Seznam sporočil
 messages	felamimail	sl	Sporočila
-mon	felamimail	sl	Pon
 move	felamimail	sl	Premakni
 move folder	felamimail	sl	Premakni mapo
 move messages	felamimail	sl	Premakni sporočila
 move messages?	felamimail	sl	Premaknem sporočila?
+move selected to	felamimail	sl	Premakni označeno v
 move to	felamimail	sl	Premakni označeno v
 move to trash	felamimail	sl	Premakni v smeti
 moving messages to	felamimail	sl	Premikanje sporočila v
@@ -388,7 +389,6 @@ return to options page	felamimail	sl	Vrnitev na stran opcij
 right	felamimail	sl	Desno
 row order style	felamimail	sl	Slog zaporednih vrstic
 rule	felamimail	sl	Pravilo
-sat	felamimail	sl	Sob
 save	felamimail	sl	Shrani
 save all	felamimail	sl	Shrani vse
 save as draft	felamimail	sl	Shrani kot osnutek
@@ -435,7 +435,6 @@ submit	felamimail	sl	Pošlji
 subscribe	felamimail	sl	Naroči
 subscribed	felamimail	sl	Naročeno
 subscribed successfully!	felamimail	sl	Uspešno naročeno!
-sun	felamimail	sl	Ned
 system signature	felamimail	sl	Sistemski podpis
 table of contents	felamimail	sl	Kazalo
 template folder	felamimail	sl	Mapa s predlogami
@@ -451,7 +450,6 @@ then	felamimail	sl	THEN
 there is no imap server configured.	felamimail	sl	Noben strežnik IMAP ni nastavljen.
 this folder is empty	felamimail	sl	TA MAPA JE PRAZNA
 this php has no imap support compiled in!!	felamimail	sl	Ta PHP ne vsebuje podpore za IMAP!
-thu	felamimail	sl	Čet
 to	felamimail	sl	Prejemnik
 to mail sent to	felamimail	sl	Sporočilo poslano na
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	sl	Če želite uporabljati povezavo TLS, morate imeti različico PHP 5.1.0 ali več.
@@ -460,7 +458,6 @@ translation server	felamimail	sl	Strežnik s prevodi
 trash	felamimail	sl	Koš
 trash fold	felamimail	sl	Koš
 trash folder	felamimail	sl	Mapa Koš
-tue	felamimail	sl	Tor
 type	felamimail	sl	Vrsta
 unexpected response from server to authenticate command.	felamimail	sl	Nepričakovan odgovor strežnika na ukaz AUTHENTICATE.
 unexpected response from server to digest-md5 response.	felamimail	sl	Nepričakovan odgovor strežnika na odgovor Digest-MD5.
@@ -480,6 +477,7 @@ unsubscribed successfully!	felamimail	sl	Uspešno odjavljen!
 up	felamimail	sl	Gor
 updating message status	felamimail	sl	Posodabljanje stanja sporočil
 updating view	felamimail	sl	Posodabljanje pogleda
+urgent	felamimail	sl	Nujno
 use <a href="%1">emailadmin</a> to create profiles	felamimail	sl	uporabi <a href="%1">EmailAdmin</a> za izdelavo profilov
 use a signature	felamimail	sl	Uporabi podpis
 use a signature?	felamimail	sl	Uporabim podpis?
@@ -499,7 +497,6 @@ view message	felamimail	sl	Pokaži sporočilo
 viewing full header	felamimail	sl	Prikaz celotne glave
 viewing message	felamimail	sl	Prikaz sporočila
 viewing messages	felamimail	sl	Prikaz sporočil
-wed	felamimail	sl	Sre
 when deleting messages	felamimail	sl	Ob brisanju sporočil
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	sl	Katere mape (poleg Poslano) naj bodo prikazane z uporabo sheme Pogled mape Poslano
 which folders - in general - should not be automatically created, if not existing	felamimail	sl	Katere mape - na splošno - naj ne bodo samodejno ustvarjene, če že ne obstajajo

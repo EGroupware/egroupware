@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	el	%1 διευθύνσεις email εισήχθησαν
 %1 is not executable by the webserver !!!	common	el	%1 δεν είναι εκτελέσιμο από τον webserver !!!
-%1 manual	common	el	%1 χειροκίνητα
-%1 start	common	el	%1 έναρξη
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	el	%1Επιλέξτε έναν άλλο κατάλογο%2<br />ή κάντε %3 εγγράψιμο από τον webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	el	%1eGroupWare%2 είναι ένα multi-user, web-based groupware suite γραμμένο σε %3PHP%4.
 (shift-)click or drag to change value	jscalendar	el	(Shift-)Click ή σύρετε για να αλλάξετε τιμή
@@ -26,8 +24,10 @@ account has been created	common	el	Ο λογαριασμός έχει δημιο
 account has been deleted	common	el	Ο λογαριασμός έχει διαγραφεί
 account has been updated	common	el	Ο λογαριασμός έχει ενημερωθεί
 account is expired	common	el	Ο λογαριασμός έχει λήξει
+accounts	common	el	Λογαριασμοί
 acl	common	el	ACL
 action	common	el	Ενέργεια
+actions	common	el	Ενέργειες
 active	common	el	Ενεργό
 add	common	el	Προσθήκη
 add %1 category for	common	el	Προσθήκη κατηγορίας %1 για
@@ -46,6 +46,7 @@ alphabet	common	el	α,β,γ,δ,ε,ζ,η,θ,ι,κ,λ,μ,ν,ξ,ο,π,ρ,σ,τ,υ,�
 alternate style-sheet:	common	el	Εναλλακτικό στυλ-φύλλου
 american samoa	common	el	ΑΜΕΡΙΚΑΝΙΚΗ ΣΑΜΟΑ
 an existing and by the webserver readable directory enables the image browser and upload.	common	el	Ένας υπάρχον ΚΑΙ από τον webserver αναγνώσιμος κατάλογος ενεργοποιεί τον εικονικό browser και τον φορτώνει.
+and	common	el	και
 andorra	common	el	ΑΝΔΟΡΡΑ
 angola	common	el	ΑΝΓΚΟΛΑ
 anguilla	common	el	ΑΝΓΚΟΥΙΛΛΑ
@@ -169,13 +170,16 @@ default category	common	el	Προεπιλεγμένη Κατηγορία
 default height for the windows	common	el	Προεπιλεγμένο ύψος για τα παράθυρα
 default width for the windows	common	el	Προεπιλεγμένο πλάτος για τα παράθυρα
 delete	common	el	Διαγραφή
+delete category	common	el	Διαγραφή κατηγορίας
 delete row	common	el	Διαγραφή σειράς
+delete this entry	common	el	δαγραφή αυτής της καταχώρησης
 denmark	common	el	ΔΑΝΙΑ
 description	common	el	Περιγραφή
 detail	common	el	Λεπτομέρεια
 details	common	el	Λεπτομέρειες
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	el	Nα απενεργοποιηθεί η εκτέλεση του bugfixscript στον Internet Explorer 5.5 και μεγαλύτερο για να εμφανίζεται η διαφάνεια στις PNG-εικόνες;
 direction left to right	common	el	Κατεύθυνση από αριστερά προς τα δεξιά
+directory	common	el	Κατάλογος
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	el	Ο κατάλογος δεν υπάρχει, δεν είναι αναγνώσιμος από τον webserver ή δεν είναι σχετικός με την πορεία του εγγράφου!
 disable internet explorer png-image-bugfix	common	el	Απενεργοποίηση του Internet Explorer png-image-bugfix
 disable slider effects	common	el	Aπενεργοποίηση των εφέ της μπάρας κύλισης
@@ -192,6 +196,7 @@ domestic	common	el	Εσωτερικός
 dominica	common	el	ΔΟΜΙΝΙΚΗ
 dominican republic	common	el	ΔΟΜΙΝΙΚΑΝΙΚΗ ΔΗΜΟΚΡΑΤΙΑ
 done	common	el	Ολοκληρώθηκε
+download	common	el	Καταβίβαση
 drag to move	jscalendar	el	Σύρε για μετακίνηση
 e-mail	common	el	E-Mail
 east timor	common	el	ΑΝΑΤΟΛΙΚΟ ΤΙΜΟΡ
@@ -200,7 +205,6 @@ edit	common	el	Επεξεργασία
 edit %1 category for	common	el	Επεξεργασία της κατηγορίας 1% για
 edit categories	common	el	Επεξεργασία Κατηγοριών
 edit category	common	el	Επεξεργασία Κατηγορίας
-egroupware api version %1	common	el	eGroupWare API έκδοση %1
 egroupware: login blocked for user '%1', ip %2	common	el	eGroupWare: Είσοδος μπλοκαρισμένη για το χρήστη '%1', με ip %2
 egypt	common	el	ΑΙΓΥΠΤΟΣ
 el salvador	common	el	ΕΛ ΣΑΛΒΑΔΟΡ
@@ -239,6 +243,7 @@ first page	common	el	Αρχική σελίδα
 firstname	common	el	Ονομα
 fixme!	common	el	Διόρθωσέ με!
 folder already exists.	common	el	Ο φάκελος υπάρχει ήδη
+force selectbox	common	el	Εξανάγκασε Επιλογή κουτιού
 france	common	el	ΓΑΛΙΑ
 french guiana	common	el	ΓΑΛΛΙΚΗ ΓΟΥΪΑΝΑ
 french polynesia	common	el	ΓΑΛΛΙΚΗ ΠΟΛΥΝΗΣΙΑ
@@ -338,6 +343,7 @@ kyrgyzstan	common	el	ΚΥΡΓΥΣΤΑΝ
 language	common	el	Γλώσσα
 language_direction_rtl	common	el	γλώσσα_κατεύθυνση_rtl
 lao peoples democratic republic	common	el	ΛΑΟΣ
+last modified	common	el	Τελευταία τροποποίηση
 last name	common	el	Επίθετο
 last name of the user, eg. "%1"	common	el	επίθετο του χρήστη, π.χ. "%1"
 last page	common	el	Τελευταία σελίδα
@@ -356,6 +362,7 @@ list	common	el	Λίστα
 list members	common	el	Μέλη λίστας
 lithuania	common	el	ΛΙΘΟΥΑΝΙΑ
 local	common	el	Τοπικός
+locations	common	el	τοποθεσίες
 login	common	el	Είσοδος
 loginid	common	el	Ταυτότητα εισόδου
 logout	common	el	Εξοδος
@@ -429,6 +436,7 @@ norfolk island	common	el	ΝΗΣΟΣ ΝΟΡΦΟΛΚ
 normal	common	el	Κανονικό
 northern mariana islands	common	el	ΝΗΣΟΙ ΝΟΤΙΑ ΜΑΡΙΑΝΑ
 norway	common	el	ΝΟΡΒΗΓΙΑ
+not	common	el	δεν
 not assigned	common	el	χωρίς ανάθεση
 note	common	el	Σημείωση
 notes	common	el	Σημειώσεις
@@ -443,9 +451,11 @@ on *nix systems please type: %1	common	el	Σε *nix συστήματα πληκ�
 on mouse over	common	el	Με mouse over
 only private	common	el	μόνο ιδιωτικά
 only yours	common	el	μόνο δικά σας
+open	common	el	ανοικτά
 open notify window	common	el	Ανοιξε το παράθυρο ειδοποίησης
 open popup window	common	el	Ανοιξε το εκτινασσόμενο παράθυρο
 open sidebox	common	el	Άνοιγμα μενού
+or	common	el	ή
 original	common	el	Αρχικός
 other	common	el	Αλλο
 overview	common	el	Επισκόπηση
@@ -485,10 +495,10 @@ poland	common	el	ΠΟΛΩΝΙΑ
 portugal	common	el	ΠΟΡΤΟΓΑΛΙΑ
 postal	common	el	Ταχυδρομικός
 preferences	common	el	Επιλογές
-preferences for the idots template set	common	el	Επιλογές συνόλων προτύπων για τα idots
 prev. month (hold for menu)	jscalendar	el	Προηγούμενος μήνας (κρατήστε για μενού)
 prev. year (hold for menu)	jscalendar	el	Προηγούμενος χρόνος (κρατήστε για μενού)
 previous page	common	el	Προηγούμενη σελίδα
+primary group	common	el	Κυρίως ομάδα
 primary style-sheet:	common	el	Αρχικός τύπος φύλλου
 print	common	el	Εκτύπωση
 priority	common	el	Προτεραιότητα
@@ -574,6 +584,8 @@ showing %1 - %2 of %3	common	el	εμφάνιση %1 - %2 από %3
 sierra leone	common	el	ΣΙΕΡΡΑ ΛΕΟΝΕ
 simple	common	el	Απλό
 singapore	common	el	ΣΙΓΚΑΠΟΥΡΗ
+site configuration	common	el	Διαμόρφωση ιστιοσελίδας
+size	common	el	Μέγεθος
 slovakia	common	el	ΣΛΟΒΑΚΙΑ
 slovenia	common	el	ΣΛΟΒΕΝΙΑ
 solomon islands	common	el	ΝΗΣΟΙ ΣΟΛΟΜΩΝΤΑ
@@ -680,6 +692,7 @@ what color should all the blank space on the desktop have	common	el	Τι χρώ�
 what style would you like the image to have?	common	el	Τι στυλ θα θέλατε να έχει η εικόνα;
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	el	Όταν λέτε ναι τα κουμπιά αρχικής σελίδας και εξόδου από το σύστημα εμφανίζονται ως εφαρμογές στην κύρια μπάρα εργασιών
 which groups	common	el	Ποιές ομάδες
+whole query	common	el	ολόκληρη απορία
 width	common	el	Πλάτος
 wk	jscalendar	el	εβ.
 work email	common	el	email εργασίας
@@ -709,4 +722,3 @@ your settings have been updated	common	el	Οι ρυθμίσεις σας έχο�
 zambia	common	el	ΖΑΜΠΙΑ
 zimbabwe	common	el	ΖΙΜΠΑΜΠΟΥΕ
 zoom	common	el	Εστίαση
-site configuration	common	el	Διαμόρφωση ιστιοσελίδας

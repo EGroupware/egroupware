@@ -1,4 +1,3 @@
-$label	preferences	sl	$label
 %1 - preferences	preferences	sl	%1 - lastnosti
 %1 hours	preferences	sl	%1 ur
 12 hour	preferences	sl	12 ur
@@ -24,12 +23,12 @@ default preferences	preferences	sl	Privzete nastavitve
 default theme	preferences	sl	Privzeta tema
 delete categories	preferences	sl	Izbriši kategorije
 description can not exceed 255 characters in length !	preferences	sl	Opis ne more presegati 255 znakov!
-display thumbnails for linked images	addressbook	sl	Prikaži ikonice za slike s povezavami
+display thumbnails for linked images	preferences	sl	Prikaži ikonice za slike s povezavami
 div	preferences	sl	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	sl	Imate raje 24 ali 12 urni časovni zapis?
 edit custom fields	preferences	sl	Uredi lastna polja
-enable drag and drop functionality (experimental)	addressbook	sl	Omogoči "povleci in spusti"
-enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	addressbook	sl	Omogoči ali onemogoči "povleci in spusti" v vseh aplikacijah. Če brskalnik tega ne podpira, bo samodejno onemogočeno. Ta funkcionalnost je trenutno v testni fazi.
+enable drag and drop functionality (experimental)	preferences	sl	Omogoči "povleci in spusti"
+enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	sl	Omogoči ali onemogoči "povleci in spusti" v vseh aplikacijah. Če brskalnik tega ne podpira, bo samodejno onemogočeno. Ta funkcionalnost je trenutno v testni fazi.
 enter your new password	preferences	sl	Vpišite novo geslo
 enter your old password	preferences	sl	Vpišite staro geslo
 failed to change password.  please contact your administrator.	preferences	sl	Napaka pri spreminjanju gesla. Obvestite oskrbnika.
@@ -44,7 +43,7 @@ how should egroupware display dates for you.	preferences	sl	Kako naj eGroupWare 
 icon	preferences	sl	Ikona
 icons and text	preferences	sl	Ikone in besedilo
 icons only	preferences	sl	Samo ikone
-images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	addressbook	sl	Slike, ki so povezane na vnos, so lahko prikazane kot ikonice. Če želite pohitriti nalaganje strani, lahko to izključite.
+images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	sl	Slike, ki so povezane na vnos, so lahko prikazane kot ikonice. Če želite pohitriti nalaganje strani, lahko to izključite.
 in which country are you. this is used to set certain defaults for you.	preferences	sl	V kateri državi ste. Uporabno za pravilen izbor privzetih vrednosti.
 interface/template selection	preferences	sl	Vmesnik/izbira predloge
 language	preferences	sl	Jezik
@@ -60,14 +59,14 @@ please, select a new theme	preferences	sl	Izberite novo temo
 popup with search	preferences	sl	Okno za iskanje
 re-enter your password	preferences	sl	Ponovno vpišite geslo
 read prefs for the specified application.	preferences	sl	Preberite lastnosti izbrane aplikacije.
-rich text editor enter mode	addressbook	sl	Način obogatenega besedila
-rich text editor theme	addressbook	sl	Tema obogatenega besedila
+rich text editor enter mode	preferences	sl	Način obogatenega besedila
+rich text editor theme	preferences	sl	Tema obogatenega besedila
 select different theme	preferences	sl	Izberite drugačno temo
-select how the rich text editor will generate the enter (linebreak) tag.	addressbook	sl	Izberite, kako bo urejevalnik obogatenega besedila ustvaril značko za prelom vsrtice.
+select how the rich text editor will generate the enter (linebreak) tag.	preferences	sl	Izberite, kako bo urejevalnik obogatenega besedila ustvaril značko za prelom vsrtice.
 select one	preferences	sl	Izberite eno
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	sl	Izberi jezik sporočil in besedil znotraj EGW.<br>Nekateri jeziki morda ne vsebujejo vseh prevodov in v tem primeru bo izpisano besedilo v angleščini.
-select the language of the spellchecker integrated into the rich text editor.	addressbook	sl	Izberite jezik črkovalnika, vgrajenega v urejevalnik  obogatenega besedila.
-select the theme (visualization) of the rich text editor.	addressbook	sl	Izberite temo urejevalnika obogatenega besedila.
+select the language of the spellchecker integrated into the rich text editor.	preferences	sl	Izberite jezik črkovalnika, vgrajenega v urejevalnik  obogatenega besedila.
+select the theme (visualization) of the rich text editor.	preferences	sl	Izberite temo urejevalnika obogatenega besedila.
 selectbox	preferences	sl	Izbirno polje
 selectbox with groupmembers	common	sl	Izbirno polje s člani skupine
 selectbox with primary group and search	preferences	sl	Izbirno polje s primarno skupino in iskanjem
@@ -75,7 +74,7 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	sl	Ali naj bo število aktivnih sej prikazano ves čas?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	sl	Naj bo pomoč vidna vedno ali samo na zahtevo?
 show helpmessages by default	preferences	sl	Privzeto prikaži sporočila s pomočjo
-show links between egroupware aps as	addressbook	sl	Prikaži povezave med aplikacijami eGroupWare kot
+show links between egroupware aps as	common	sl	Prikaži povezave med aplikacijami eGroupWare kot
 show navigation bar as	preferences	sl	Prikaži navigacijsko vrstico kot
 show number of current users	preferences	sl	Prikaži število prijavljenih uporabnikov
 show text on navigation icons	preferences	sl	Prikaži besedilo na navigacijski ikoni
@@ -86,7 +85,7 @@ text only	preferences	sl	Samo besedilo
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sl	Privzeta aplikacija se bo zagnala ob vstopu v EGW ali ob kliku na domačo ikono.<br>Na domači strani je lahko hkrati prikazanih več aplikacij. Prikaz aplikacij določate v nastavitvah aplikacij.
 the old password is not correct	preferences	sl	Staro geslo ni pravilno
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	sl	Izbirni seznam prikazuje uporabnike, ki so na voljo (lahko je precej dolg). Z iskalnim oknom lahko iščete uporabnike po imenu ali skupini.
-the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	common	sl	Zadnji dve možnosti omejujeta vidnost uporabnikov. Zato ne bi smeli biti vsiljeni in uveljavljeni za administratorje.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	sl	Zadnji dve možnosti omejujeta vidnost uporabnikov. Zato ne bi smeli biti vsiljeni in uveljavljeni za administratorje.
 the two passwords are not the same	preferences	sl	Gesli nista enaki.
 theme (colors/fonts) selection	preferences	sl	Izbira teme (barve/pisave)
 this server is located in the %1 timezone	preferences	sl	Ta strežnik se nahaja v časovnem pasu %1
@@ -98,7 +97,7 @@ which charset should be used for the csv export. the system default is the chars
 which currency symbol or name should be used in egroupware.	preferences	sl	Kateri valutni simbol ali ime bo uporabno v EGW.
 write prefs for the specified application.	preferences	sl	Napišite lastnosti izbrane aplikacije.
 you can show the applications as icons only, icons with app-name or both.	preferences	sl	Lahko pokažem aplikacije kot ikone, ikone z imenom aplikacije ali oboje.
-you can show the linked entries with icons only, icons with app-name or both.	addressbook	sl	Vnose s povezavami lahko prikažete samo z ikonami, samo z imenom aplikacije ali z obojim.
+you can show the linked entries with icons only, icons with app-name or both.	common	sl	Vnose s povezavami lahko prikažete samo z ikonami, samo z imenom aplikacije ali z obojim.
 you do not have permission to set acl's in this mode!	preferences	sl	Nimate dovoljenja za nastavitev ACL v tem načinu!
 you must enter a password	preferences	sl	Vpisati morate geslo
 your current theme is: %1	preferences	sl	Vaša trenutna tema je: %1

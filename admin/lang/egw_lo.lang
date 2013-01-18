@@ -54,6 +54,7 @@ advanced options	admin	lo	ການຕັ້ງຄ່າແບບພິເສດ
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	lo	ການເຂົ້າລະບົບ "ບໍ່ຜ່ານ" ຫຼາຍເທື່່ອ, ບັນຊີຈະຖືກລະງັບ(ຄ່າເລີ້ມຕົ້ນ=3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	lo	ການເຂົ້າລະບົບ "ບໍ່ຜ່ານ" ຫຼາຍເທື່່ອ, ໄອພີຈະຖືກລະງັບ(ຄ່າເລີ້ມຕົ້ນ=3)?
 aliases	admin	lo	ຊື່ແທນ
+all categories	admin	lo	ໝວດໝູ່ທັງໝົດ
 all records and account information will be lost!	admin	lo	ຂໍ້ມູນທີ່ບັນທຶກ ແລະ ບັນຊີທັງໝົດຈະສູນຫາຍ!
 all users	admin	lo	ຜູ້ໃຊ້ທັງໝົດ
 allow anonymous access to this app	admin	lo	ອະນຸຍາດໃຫ້ເຂົ້າໃຊ້ງານທີ່ບໍ່ໄດ້ລະບຸຊື່ app
@@ -244,6 +245,7 @@ error saving to db:	admin	lo	ການບັນທຶກເຂົ້າຖານ
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	lo	ການຕັ້ງຄ່າເວລາພົບຂໍ້ຜິດພາດ, ອາດຈະຜິດທີ່ໄວຍະກອນ ຫຼື ອາດຈະມີບາງສ່ວນກໍາລັງຖືກໃຊ້ງານຢູ່
 error! no appname found	admin	lo	ພົບຂໍ້ຜິດພາດ! ບໍ່ເຫັນ appname
 error: %1 not found or other error !!!	admin	lo	ພົບຂໍ້ຜິດພາດ: %1 ບໍ່ພົບ ຫຼື ພົບຂໍ້ຜິດພາດອື່ນໆ!!!
+exists	admin	lo	ມີຢູ່ແລ້ວ
 expires	admin	lo	ໝົດອາຍຸ
 explanation of ldapman	admin	lo	moduleນີ້ໄດ້ຮັບການທົດສອບເພື່ອ POSTFIX, LDAP, Courier-IMAP ແລະຈະຕ້ອງມີ schemas CORE ແລະ QMAIL(OID7914). ສ່ວນລາຍລະອຽດເພີ່ມເຕີມກ່ຽວກັບການນໍາໃຊ້ແລະກໍາໜົດຄ່າຂອງລະບົບນີ້ສາມາດພົບໄດ້ທີ່ README.Idapman in doc folder of ADMIN.
 fallback (after each pageview)	admin	lo	ທາງເລືອກ(ຫຼັງຈາກການສະແດງໃນແຕ່ລະໜ້າ)
@@ -251,7 +253,6 @@ false	admin	lo	ຜິດ/ບໍ່ຜ່ານ
 field '%1' already exists !!!	admin	lo	Field '%1' ມີຢູ່ແລ້ວ !!!
 file space	admin	lo	ເນື້ອທີ່ຈັດເກັບຟາຍ
 file space must be an integer	admin	lo	ເນື້ອທີ່ຈັດເກັບຟາຍ ຈະຕ້ອງເປັນຈໍານວນເຕັມ
-find and register all application hooks	admin	lo	ຄົ້ນຫາແລະລົງທະບຽນທຸກ ແອັບພຼິເຄຊັນ Hooks
 for the times above	admin	lo	ສໍາລັບເວລາຂ້າງຕົ້ນ
 for the times below (empty values count as '*', all empty = every minute)	admin	lo	ສໍາລັບເວລາຂ້າງລຸ່ມນີ້(ຄ່າເປົ່າຫວ່າງໃຫ້ນັບເປັນ '*', ຄ່າເປົ່າຫວ່າງທັງໝົດ=ທຸກໆນາທີ)
 force selectbox	admin	lo	ຕ້ອງເລືອກເອົາ
@@ -468,6 +469,7 @@ standard	admin	lo	ມາດຕະຖານ
 standard imap server	admin	lo	ມາດຕະຖານ IMAP ເຊີເວີ້
 standard pop3 server	admin	lo	ມາດຕະຖານ POP3 ເຊີເວີ້
 standard smtp-server	admin	lo	ມາດຕະຖານ SMTP-ເຊີເວີ້
+start	admin	lo	ເລີ່ມ
 start testjob!	admin	lo	ເລີ່ມຕົ້ນທົດສອບການເຮັດວຽກ!
 submit changes	admin	lo	ນໍາສະເໜີການປ່ຽນແປງ
 submit displayed information?	admin	lo	ນໍາສະເໜີການສະແດງຂໍ້ມູນ ບໍ?
@@ -522,6 +524,7 @@ under windows you need to install the asyncservice %1manually%2 or use the fallb
 unknown account: %1 !!!	admin	lo	ບັນຊີທີ່ບໍ່ຮູ້ຈັກ: %1 !!!
 unknown command %1!	admin	lo	ຄໍາສັ່ງທີ່ບໍ່ຮູ້ຈັກ: %1 !
 unknown option %1	admin	lo	ຕົວເລືອກທີ່ບໍ່ຮູ້ຈັກ: %1
+up	admin	lo	ຂຶ້ນ
 updated	admin	lo	ປັບປຸງແລ້ວ
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	lo	URL ຂອງການຕິດຕັ້ງລະບົບຕາຕະລາງ(eGroupware) ເຊັ່ນ.http://domain.com/egroupware
 usage	admin	lo	ການໃຊ້

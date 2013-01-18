@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	ru	Вставлен адрес e-mail: %1
 %1 is not executable by the webserver !!!	common	ru	%1 не может быть запущен Веб-сервером!!!
-%1 manual	common	ru	%1 руководство
-%1 start	common	ru	%1 запуск
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	ru	%1Выберите другой каталог%2<br />или дайте веб-серверу права на запись в %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ru	%1eGroupWare%2 - многопользовательская, web-ориентированная среда коллективной работы,  написанная на %3PHP%4.
 (session restored in %1 seconds)	common	ru	(сессия восстановлена за %1 секунд)
@@ -34,6 +32,7 @@ account is expired	common	ru	Учетная запись просрочена
 accounts	common	ru	Учетные записи
 acl	common	ru	ACL
 action	common	ru	Действие
+actions	common	ru	Действия
 active	common	ru	Активно
 add	common	ru	Добавить
 add %1 category for	common	ru	Добавить %1 категорию для
@@ -48,11 +47,13 @@ albania	common	ru	Албания
 algeria	common	ru	Алжир
 all	common	ru	Все
 all fields	common	ru	все поля
+all languages	common	ru	все языки
 alphabet	common	ru	а,б,в,г,д,е,ж,з,и,й,к,л,м,н,о,п,р,с,т,у,ф,х,ц,ч,ш,щ,ъ,ы,ь,э,ю,я
 alternate style-sheet:	common	ru	Альтернативная таблица стилей:
 american samoa	common	ru	Американское Самоа
 an error happened	common	ru	Произошла ошибка
 an existing and by the webserver readable directory enables the image browser and upload.	common	ru	Существующий И читаемый веб-сервером каталог разрешает просмотр картинок и выгрузку
+and	common	ru	и
 andorra	common	ru	Андорра
 angola	common	ru	Ангола
 anguilla	common	ru	Ангилья
@@ -181,7 +182,9 @@ default category	common	ru	Категория по умолчанию
 default height for the windows	common	ru	Высота окна по умолчанию
 default width for the windows	common	ru	Ширина окна по умолчанию
 delete	common	ru	Удалить
+delete category	common	ru	Удалить категорию
 delete row	common	ru	Удалить строку
+delete this entry	common	ru	Удалить эту запись
 denmark	common	ru	Дания
 description	common	ru	Описание
 detail	common	ru	Подробность
@@ -206,6 +209,7 @@ domestic	common	ru	Домашний
 dominica	common	ru	Доминика
 dominican republic	common	ru	Доминиканская республика
 done	common	ru	Готово
+download	common	ru	Загрузить
 drag to move	jscalendar	ru	Перетащите
 e-mail	common	ru	E-mail
 east timor	common	ru	Восточный Тимор
@@ -216,7 +220,6 @@ edit categories	common	ru	Редактировать Категории
 edit category	common	ru	Редактировать категорию
 egroupware	common	ru	eGroupWare
 egroupware api version	common	ru	Версия API eGroupWare
-egroupware api version %1	common	ru	eGroupWare API версии %1
 egroupware: login blocked for user '%1', ip %2	common	ru	eGroupWare: вход для пользователя '%1', IP %2 заблокирован
 egypt	common	ru	Египет
 el salvador	common	ru	Сальвадор
@@ -358,6 +361,7 @@ kyrgyzstan	common	ru	Кыргызстан
 language	common	ru	Язык
 language_direction_rtl	common	ru	language_direction_rtl
 lao peoples democratic republic	common	ru	Лаос
+last modified	common	ru	последние изменение
 last name	common	ru	Фамилия
 last name of the user, eg. "%1"	common	ru	Фамилия пользователя, напр. "%1"
 last page	common	ru	Последняя страница
@@ -376,6 +380,7 @@ list	common	ru	Список
 list members	common	ru	Список участников
 lithuania	common	ru	Литва
 local	common	ru	Локальный
+locations	common	ru	местонахождения
 login	common	ru	Вход
 loginid	common	ru	LoginID
 logout	common	ru	Выход
@@ -470,9 +475,11 @@ on mouse over	common	ru	При наведенном курсоре
 only private	common	ru	только личные
 only yours	common	ru	только Ваши
 oops! you caught us in the middle of system maintainance.	common	ru	Опс! Вы застукали нас прямо во время обслуживания системы.
+open	common	ru	открытые
 open notify window	common	ru	Открыть окно извещения
 open popup window	common	ru	Открыть всплывающее окно
 open sidebox	common	ru	Открыть боковое меню
+or	common	ru	или
 ordered list	common	ru	Нумерованный список
 original	common	ru	Оригинал
 other	common	ru	Другие
@@ -519,10 +526,10 @@ portugal	common	ru	Португалия
 postal	common	ru	Почтовый
 powered by	common	ru	Под управлением
 preferences	common	ru	Настройки
-preferences for the idots template set	common	ru	Настройки для набора тем idots
 prev. month (hold for menu)	jscalendar	ru	Предыдущий месяц
 prev. year (hold for menu)	jscalendar	ru	Предыдущий год
 previous page	common	ru	Предыдущая страница
+primary group	common	ru	первичная Группа
 primary style-sheet:	common	ru	Основная таблица стилей:
 print	common	ru	Печать
 priority	common	ru	Приоритет
@@ -544,6 +551,7 @@ remove shortcut	common	ru	Удалить Сокращение
 rename	common	ru	Переименовать
 replace	common	ru	Замена
 replace with	common	ru	Заменить на
+restore failed	common	ru	Восстановление не удалось
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	ru	Показать список учетных записей пользователей в системе. ВНИМАНИЕ: Список может быть весьма большим.
 returns an array of todo items	common	ru	Возвращает массив Заданий
 returns struct of users application access	common	ru	Возвращает структуру доступа пользователей к приложениям
@@ -614,6 +622,7 @@ sierra leone	common	ru	Сьерра Леоне
 simple	common	ru	Простой
 singapore	common	ru	Сингапур
 site configuration	common	ru	Конфигурирование сайта
+size	common	ru	Размер
 slovakia	common	ru	Словакия
 slovenia	common	ru	Словения
 solomon islands	common	ru	Соломоновы о-ва
@@ -703,11 +712,11 @@ use button to search for project	common	ru	используйте Кнопку �
 user	common	ru	Пользователь
 user accounts	common	ru	учетные записи пользователей
 user groups	common	ru	группы пользователей
-user openinstance	common	ru	Экземпляр, открытый пользователем
 username	common	ru	Имя
 users	common	ru	пользователи
 users choice	common	ru	Выбор Пользователя
 uzbekistan	common	ru	Узбекистан
+value	common	ru	Значение
 vanuatu	common	ru	Ванату
 venezuela	common	ru	Венесуэлла
 version	common	ru	Версия
@@ -724,6 +733,7 @@ what style would you like the image to have?	common	ru	Выберите стил
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	ru	Если Вы ответите "да", кнопки "Домой" и "Выход" будут представлены в виде иконок на верхней панели.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	ru	Где и как eGroupWare будет показывать такие ссылки как Настройки, О Нас и Выход.
 which groups	common	ru	Какие группы
+whole query	common	ru	весь запрос
 width	common	ru	Ширина
 wk	jscalendar	ru	нед.
 work email	common	ru	рабочий e-mail

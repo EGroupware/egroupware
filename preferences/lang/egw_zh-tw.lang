@@ -11,6 +11,7 @@ change a user password by passing the old and new passwords.  returns true on su
 change your password	preferences	zh-tw	變更您的密碼
 change your profile	preferences	zh-tw	變更您的個人設定
 change your settings	preferences	zh-tw	變更您的喜好設定
+charset for the csv export	addressbook	zh-tw	CSV 檔案匯出編碼
 click to select a color	preferences	zh-tw	選擇一個顏色
 color	preferences	zh-tw	顏色
 country	preferences	zh-tw	國家
@@ -67,7 +68,7 @@ text only	preferences	zh-tw	只顯示文字
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	zh-tw	預設的應用程式會在您進入eGroupWare時或是點選首頁圖示顯示<br>如果您並未指定特別的應用程式，您可以選擇一個以上的應用程式(必須在各個應用程式的偏好中設定)。
 the old password is not correct	preferences	zh-tw	舊密碼錯誤
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	zh-tw	下拉式選單列出所有使用者(如果有很多筆資料會影響速度)，跳出式視窗可以透過名稱或群組蒐尋使用者。
-the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	common	zh-tw	最後兩個選項限制了其他使用者能否存取，他們在那兒必須被強制套用對於管理者為否。
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	zh-tw	最後兩個選項限制了其他使用者能否存取，他們在那兒必須被強制套用對於管理者為否。
 the two passwords are not the same	preferences	zh-tw	兩次輸入的密碼不一致
 theme (colors/fonts) selection	preferences	zh-tw	選擇畫面配置（顏色及字型）
 this server is located in the %1 timezone	preferences	zh-tw	這台伺服器主機放置於 %1 時區
@@ -75,6 +76,7 @@ time format	preferences	zh-tw	時間格式
 use default	preferences	zh-tw	預設值
 users choice	preferences	zh-tw	使用者選擇
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	zh-tw	當您選擇"是"，首頁與登出圖示會顯示在導覽列中
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh-tw	CSV 格式檔案希望使用的字元編碼，預設會與安裝一致。
 which currency symbol or name should be used in egroupware.	preferences	zh-tw	您希望在eGroupWare中使用什麼貨幣符號或名稱。
 write prefs for the specified application.	preferences	zh-tw	寫入指定應用程式的偏好設定。
 you can show the applications as icons only, icons with app-name or both.	preferences	zh-tw	您可以指定只顯示應用程式圖示或是加上它的名稱。
@@ -82,5 +84,3 @@ you do not have permission to set acl's in this mode!	preferences	zh-tw	您沒�
 you must enter a password	preferences	zh-tw	您必須輸入密碼
 your current theme is: %1	preferences	zh-tw	您目前的佈景是： %1
 your preferences	preferences	zh-tw	您的偏好設定
-charset for the csv export	addressbook	zh-tw	CSV 檔案匯出編碼
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh-tw	CSV 格式檔案希望使用的字元編碼，預設會與安裝一致。

@@ -25,9 +25,9 @@ accessrights	filemanager	de	Zugangsberechtigungen
 acl added.	filemanager	de	Zugriffsrecht hinzugefügt.
 acl deleted.	filemanager	de	Zugriffsrecht gelöscht.
 actions	filemanager	de	Befehle
-add to clipboard	filemanager	de	Anhängen an die Zwischenablage
+add to clipboard	filemanager	de	In die Zwischenablage hinzufügen
 all files	common	de	Alle Dateien
-allow a maximum of the above configured folderlinks to be configured in settings	admin	de	erlaube das oben eingestellte Maximum an Einstellungen für Verzeichnisverweise
+allow a maximum of the above configured folderlinks to be configured in settings	admin	de	Erlaube das oben eingestellte Maximum an Einstellungen für Verzeichnisverweise
 and all it's childeren	filemanager	de	und alle seine Kinderelemente
 application fields	filemanager	de	Anwendungsfelder
 applications	common	de	Anwendungen
@@ -81,7 +81,7 @@ download	filemanager	de	Herunterladen
 edit comments	filemanager	de	Kommentare bearbeiten
 edit settings	filemanager	de	Eigenschaften bearbeiten
 enter setup user and password	filemanager	de	Setup Benutzer und Passwort eingeben
-enter setup user and password to get root rights	filemanager	de	Setup Benutzer und Passwort eingeben um root Rechte zu bekommen
+enter setup user and password to get root rights	filemanager	de	Setup Benutzer und Passwort eingeben um root Rechte zu erhalten
 enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenu zu erzeugen
 enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS Pfad zu Ihrem gewünschten Anfangsverzeichnis ein
 error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
@@ -94,7 +94,7 @@ example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james m
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	de	Beispiel: {{NELF role}} - Wenn das Feld "role" nicht leer ist, dann wird der Inhalt des Feldes "role" in eine neue Zeile geschrieben.
 executable	filemanager	de	Ausführbar
 extended access control list	filemanager	de	Erweiterte Zugriffsrechte
-extended acl	filemanager	de	Erweiterte ACL
+extended acl	filemanager	de	Erweiterte Zugriffsrechte
 failed to change permissions of %1!	filemanager	de	Konnte Zugriffsrechte von %1 nicht ändern!
 failed to create directory!	filemanager	de	Konnte Verzeichnis nicht anlegen!
 favorites	filemanager	de	Favoriten
@@ -106,22 +106,22 @@ file names cannot contain "%1"	filemanager	de	Dateinamen dürfen "%1" nicht enth
 file or directory not found!	filemanager	de	Datei oder Verzeichnis nicht gefunden!
 file successful uploaded.	filemanager	de	Datei erfolgreich hochgeladen.
 filemanager	common	de	Dateimanager
-filemanager configuration	admin	de	Dateimanager Konfiguration
+filemanager configuration	admin	de	Konfiguration Dateimanager
 filemanager fields:	filemanager	de	Dateimanager Felder:
 filename must not be empty!	filemanager	de	Dateinamen darf nicht leer sein!
 files from subdirectories	filemanager	de	Dateien aus Unterverzeichnissen
 files in this directory	filemanager	de	Dateien in diesem Verzeichnis
 filesystem check reported no problems.	filemanager	de	Überprüfung des Dateisystem ergab keine Probleme.
 fix reported problems	filemanager	de	Gefundene Probleme beheben
-folder up	filemanager	de	darüberliegendes Verzeichnis
+folder up	filemanager	de	Übergeordnetes Verzeichnis
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	de	Die Platzhalter für Verknüpfte Eintrage bzw. Dateien (unter /apps/appname/id) der entsprechenden Anwendung stehen Ihnen hier auch zur Verfügung. Sie können die Platzhalter auch unter der Liste der Platzhalter der entsprechenden Anwendung einsehen.
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	de	Die Platzhalter für Verknüpfte Eintrage bzw. Dateien (unter /apps/appname/id) der entsprechenden Anwendung stehen Ihnen hier auch zur Verfügung. Sie können die Platzhalter auch unter der Liste der Platzhalter der entsprechenden Anwendung einsehen.
 general	filemanager	de	Allgemein
 general fields:	filemanager	de	Allgemeine Platzhalter
-go home	filemanager	de	Heimverzeichnis
+go home	filemanager	de	Gehe zum Heimverzeichnis
 go to	filemanager	de	Gehe zu
 go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
-go up	filemanager	de	in das darüber liegende Verzeichnis wechseln
+go up	filemanager	de	in das übergeordnete Verzeichnis wechseln
 id	filemanager	de	Id
 inherited	filemanager	de	Geerbt
 link	filemanager	de	verknüpfen
@@ -130,7 +130,7 @@ link target	filemanager	de	Ziel der Verknüpfung
 link target %1 not found!	filemanager	de	Verknüpfungsziel %1 nicht gefunden!
 location	filemanager	de	Ort
 log out as superuser	filemanager	de	Superuser abmelden
-mail files	filemanager	de	Dateien per EMail versenden
+mail files	filemanager	de	Dateien per E-mail versenden
 max folderlinks	admin	de	maximale Anzahl von Links zu Verzeichnissen
 mime type	filemanager	de	MIME-Typ
 modified	filemanager	de	verändert
@@ -143,9 +143,9 @@ name of current user, all other contact fields are valid too	filemanager	de	Name
 new directory	filemanager	de	Neues Verzeichnis
 no access	filemanager	de	Kein Zugriff
 no files in this directory.	filemanager	de	Keine Dateien in diesem Verzeichnis.
-no preview available	filemanager	de	Keine Vorschau verfügbar
-no version history for this file/directory	filemanager	de	Keine Versionshistorie für diese Datei oder dieses Verzeichnis
-only owner can rename or delete the content	filemanager	de	Nur der Besitzer kann den Inhalt umbenennen oder löschen
+no preview available	filemanager	de	Keine Vorschau verfügbar.
+no version history for this file/directory	filemanager	de	Keine Versionshistorie für diese Datei oder dieses Verzeichnis.
+only owner can rename or delete the content	filemanager	de	Nur der Besitzer kann den Inhalt umbenennen oder löschen.
 open	filemanager	de	Öffnen
 operation	filemanager	de	Vorgang
 permission denied!	filemanager	de	Zugriff verweigert!
@@ -180,10 +180,10 @@ saving properties failed!	filemanager	de	Speichern der Eigenschaften fehlgeschla
 search for '%1'	filemanager	de	nach %1 suchen
 searchstring	filemanager	de	Suchbegriff
 select action...	filemanager	de	Befehl auswählen...
-select file to upload in current directory	filemanager	de	Datei zum hochladen in das aktuelle Verzeichnis auswählen
+select file to upload in current directory	filemanager	de	Datei zum hochladen in das aktuelle Verzeichnis auswählen.
 show	filemanager	de	Zeige
 show hidden files	filemanager	de	Zeige versteckte Dateien
-show link "%1" in side box menu?	filemanager	de	Zeige die Verknüpfung "%1" im Seitenmenü?
+show link "%1" in side box menu?	filemanager	de	Zeige die Verknüpfung "%1" im Seitenmenü
 show link "users and groups*" in side box menu?*	filemanager	de	Möchten Sie die Verknüpfung "Benutzer und Gruppen" innerhalb des Seitenmenüs anzeigen?
 show link "your home directory*" in side box menu?*	filemanager	de	Möchten Sie den Verknüpfung  "Ihr Home Verzeichnis" innerhalb des Seitenmenüs angezeigt bekommen?
 show link to filemanagers basedirectory (/) in side box menu?	filemanager	de	Zeige die Verknüpfung zum Basisverzeichnis (/) des Dateimanagers im Seitenmenü?

@@ -59,7 +59,9 @@ compress folder	felamimail	bg	Компресиране на папката
 condition	felamimail	bg	условие
 configuration	felamimail	bg	Конфигурация
 connection dropped by imap server.	felamimail	bg	Връзката е прекъсната от IMAP сървъра.
+contact not found!	felamimail	bg	Контактът не е намерен!
 contains	felamimail	bg	съдържа
+copy to	felamimail	bg	Копиране в
 could not complete request. reason given: %s	felamimail	bg	Неуспешно изпълнение на заявката поради: %s
 could not import message:	felamimail	bg	Неуспешен импорт на съобщение:
 could not open secure connection to the imap server. %s : %s.	felamimail	bg	Неуспешно изграждане на криптирана връзка с IMAP сървъра. %s : %s.
@@ -147,6 +149,7 @@ enter your sieve server hostname or ip address	admin	bg	Въведете име�
 enter your sieve server port	admin	bg	Въведете порта на SIEVE сървъра
 enter your smtp server hostname or ip address	admin	bg	Въведете името или IP адреса на SMTP сървъра
 enter your smtp server port	admin	bg	Въведете порта на SMTP сървъра
+entry saved	felamimail	bg	Записът е запазен
 error	felamimail	bg	ГРЕШКА
 error connecting to imap serv	felamimail	bg	Грешка при връзка с IMAP сървъра
 error connecting to imap server. %s : %s.	felamimail	bg	Грешка при връзка с IMAP сървъра. %s : %s.
@@ -154,12 +157,14 @@ error connecting to imap server: [%s] %s.	felamimail	bg	Грешка при вр
 error opening	felamimail	bg	Грешка при отваряне на
 error:	felamimail	bg	Грешка:
 error: could not save message as draft	felamimail	bg	Грешка: неуспешно запазване на съобщнието като Чернова
+event details follow	felamimail	bg	Следват подробности за събитието
 every	felamimail	bg	всеки
 every %1 days	felamimail	bg	на всеки %1 дни
 expunge	felamimail	bg	Заличаване
 extended	felamimail	bg	разширен
 felamimail	common	bg	Електронна поща
 file into	felamimail	bg	файл в
+filemanager	felamimail	bg	Файл мениджър
 files	felamimail	bg	файлове
 filter active	felamimail	bg	филтърът е активен
 filter name	felamimail	bg	Име на филтъра
@@ -189,7 +194,6 @@ forward to	felamimail	bg	препрати до
 forward to address	felamimail	bg	препрати до адрес
 forwarding	felamimail	bg	Препращане
 found	felamimail	bg	Намерен(и)
-fri	felamimail	bg	Пет
 from	felamimail	bg	Подател
 from(a->z)	felamimail	bg	Подател (A->Z)
 from(z->a)	felamimail	bg	Подател (Z->A)
@@ -268,9 +272,9 @@ matches regexp	felamimail	bg	съвпада с рег. израз
 max uploadsize	felamimail	bg	максимален обем:
 message list	felamimail	bg	Списък със съобщения
 messages	felamimail	bg	съобщения
-mon	felamimail	bg	Пон
 move	felamimail	bg	премести
 move messages	felamimail	bg	премести съобщенията
+move selected to	felamimail	bg	премести избраните в
 move to	felamimail	bg	премести избраните в
 move to trash	felamimail	bg	Премести в Кошчето
 moving messages to	felamimail	bg	преместване на съобщенията в
@@ -346,7 +350,6 @@ return to options page	felamimail	bg	Връщане към страницата 
 right	felamimail	bg	Дясно
 row order style	felamimail	bg	Стил на изгледа
 rule	felamimail	bg	Правило
-sat	felamimail	bg	съб
 save	felamimail	bg	Запис
 save as draft	felamimail	bg	запис като чернова
 save as infolog	felamimail	bg	запис в Дневника
@@ -390,7 +393,6 @@ submit	felamimail	bg	Предаване
 subscribe	felamimail	bg	Включи абонамент
 subscribed	felamimail	bg	Включен абонамент
 subscribed successfully!	felamimail	bg	Абонаментът е успешен!
-sun	felamimail	bg	Нед
 system signature	felamimail	bg	генериран от системата
 table of contents	felamimail	bg	Съдържание
 template folder	felamimail	bg	Папка "Шаблони"
@@ -403,7 +405,6 @@ the message sender has requested a response to indicate that you have read this 
 then	felamimail	bg	ТОГАВА
 this folder is empty	felamimail	bg	Папката е празна
 this php has no imap support compiled in!!	felamimail	bg	PHP няма включена поддръжка за IMAP!!!
-thu	felamimail	bg	Чет
 to	felamimail	bg	До
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	bg	За да използвате TLS е необходима версия на PHP 5.1.0 или по-висока.
 translation preferences	felamimail	bg	Настройки за превод
@@ -411,7 +412,6 @@ translation server	felamimail	bg	Сървър за превод
 trash	felamimail	bg	Кошче
 trash fold	felamimail	bg	Папка "Кошче"
 trash folder	felamimail	bg	Папка "Кошче"
-tue	felamimail	bg	Вт
 type	felamimail	bg	тип
 unexpected response from server to authenticate command.	felamimail	bg	Неочакван отговор от сървъра на команда AUTHENTICATE.
 unexpected response from server to digest-md5 response.	felamimail	bg	Неочакван отговор от сървъра на Digest-MD5.
@@ -431,6 +431,7 @@ unsubscribed successfully!	felamimail	bg	Абонаментът е прекъс�
 up	felamimail	bg	нагоре
 updating message status	felamimail	bg	обновява състоянието на съобщението
 updating view	felamimail	bg	обновява изгледа
+urgent	felamimail	bg	спешно
 use <a href="%1">emailadmin</a> to create profiles	felamimail	bg	използвайте <a href="%1">EmailAdmin</a> за създаване на профили
 use a signature	felamimail	bg	Включване на подпис
 use a signature?	felamimail	bg	Включване на подпис?
@@ -450,7 +451,6 @@ view message	felamimail	bg	Покажи съобщението
 viewing full header	felamimail	bg	Заглавни части (Header)
 viewing message	felamimail	bg	Показване на съобщение
 viewing messages	felamimail	bg	Показани съобщения
-wed	felamimail	bg	Сря
 when deleting messages	felamimail	bg	При изтриване на съобщения
 which folders - in general - should not be automatically created, if not existing	felamimail	bg	кои папки НЕ следва са се създават автоматично, ако не съществуват.
 with message	felamimail	bg	със съобщение

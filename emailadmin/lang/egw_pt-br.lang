@@ -41,8 +41,10 @@ enable sieve	emailadmin	pt-br	habilitar Sieve
 encrypted connection	emailadmin	pt-br	conexão criptografada
 encryption settings	emailadmin	pt-br	configurações de criptografia
 enter your default mail domain (from: user@domain)	emailadmin	pt-br	Entre com o domínio de e-mail padrão (de: usuario@dominio)
+entry saved	emailadmin	pt-br	Registro salvo
 error connecting to imap server. %s : %s.	emailadmin	pt-br	Erro conectando ao servidor IMAP. %s : %s.
 error connecting to imap server: [%s] %s.	emailadmin	pt-br	Erro conectando ao servidor IMAP: [%s] %s.
+error saving the entry!!!	emailadmin	pt-br	Erro salvando o registro!!
 filtered by account	emailadmin	pt-br	filtrado por Conta
 filtered by group	emailadmin	pt-br	filtrado por Grupo
 forward also to	emailadmin	pt-br	encaminhar também para
@@ -136,3 +138,4 @@ users can define their own identities	emailadmin	pt-br	usuários podem definir s
 users can define their own signatures	emailadmin	pt-br	usuários podem definir suas próprias assinaturas
 vaction messages with start- and end-date require an admin account to be set!	emailadmin	pt-br	Mensagens de ausência com datas de início e término necessitam de uma conta de administrador para serem definidas!
 virtual mail manager	emailadmin	pt-br	Gerenciador Virtual Mail
+you have received a new message on the	emailadmin	pt-br	Você recebeu uma nova mensagem na

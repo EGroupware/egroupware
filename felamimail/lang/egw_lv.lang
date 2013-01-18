@@ -16,8 +16,10 @@ after message body	felamimail	lv	Pēc vēstules teksta
 all address books	felamimail	lv	Visas adrešu grāmatas
 all folders	felamimail	lv	Visas mapes
 always show html emails	felamimail	lv	Vienmēr rādīt HTML e-pasta vēstules
+and	felamimail	lv	Un
 anyone	felamimail	lv	jebkurš
 as a subfolder of	felamimail	lv	kā  apakšmape
+attach	felamimail	lv	Pievienot
 attachments	felamimail	lv	Pielikumi
 auto refresh folder list	felamimail	lv	Automātiski atsvaidzināt mapes sarakstu
 back to folder	felamimail	lv	Atpakaļ uz mapi
@@ -39,6 +41,7 @@ compose	felamimail	lv	Rakstīt jaunu
 compress folder	felamimail	lv	Kompresēt mapi
 configuration	felamimail	lv	Konfigurēšana
 contains	felamimail	lv	satur
+copy to	felamimail	lv	Kopēt Uz:
 create	felamimail	lv	Izveidot
 create folder	felamimail	lv	Izveidot mapi
 create sent	felamimail	lv	Izveidot Nosūtītās
@@ -55,6 +58,7 @@ date(newest first)	felamimail	lv	Datums (jaunākais pirmais)
 date(oldest first)	felamimail	lv	Datums (vecākais pirmais)
 days	felamimail	lv	dienas
 deactivate script	felamimail	lv	deaktivizēt skriptu
+default	felamimail	lv	Noklusējums
 default sorting order	felamimail	lv	Noklusētā kārtošanas secība
 delete all	felamimail	lv	izdzēst visu
 delete folder	felamimail	lv	Izdzēst mapi
@@ -85,6 +89,7 @@ edit filter	felamimail	lv	Rediģēt filtru
 edit rule	felamimail	lv	rediģēt kārtulu
 edit selected	felamimail	lv	Rediģēt atzīmēto
 email address	felamimail	lv	E-pasta adrese
+email notification	felamimail	lv	E-pasta paziņojums
 email signature	felamimail	lv	E-pasta paraksts
 empty trash	felamimail	lv	atbrīvot atkritumus
 enable	felamimail	lv	atļaut
@@ -94,20 +99,24 @@ enter your sieve server hostname or ip address	admin	lv	Ievadi tava SIEVE server
 enter your sieve server port	admin	lv	Ievadi tava SIEVE servera portu
 enter your smtp server hostname or ip address	admin	lv	Ievadi tava SMTP servera hosta vārdu vai IP adresi
 enter your smtp server port	admin	lv	Ievadi tava SMTP servera portu
+entry saved	felamimail	lv	Ieraksts saglabāts
 error	felamimail	lv	Kļūda!
 error connecting to imap serv	felamimail	lv	Kļūda pieslēdzoties IMAP serverim
 error opening	felamimail	lv	Kļūda atverot
 every	felamimail	lv	katru
 every %1 days	felamimail	lv	katras %1 dienas
 expunge	felamimail	lv	Izņemt
+extended	felamimail	lv	Paplašinats
 felamimail	common	lv	ViA e-pasts
 file into	felamimail	lv	ievietot
+filemanager	felamimail	lv	Datņu pārvaldnieks
 files	felamimail	lv	datnes
 filter active	felamimail	lv	aktīvais filtrs
 filter name	felamimail	lv	Filtra nosaukums
 first name	felamimail	lv	Vārds
 flagged	felamimail	lv	arkarodziņiem
 flags	felamimail	lv	Karodziņi
+folder	felamimail	lv	Mape
 folder name	felamimail	lv	Mapes nosaukums
 folder path	felamimail	lv	Mapes ceļš
 folder preferences	felamimail	lv	Mapes izvēles
@@ -122,7 +131,6 @@ for received mail	felamimail	lv	Saņemtām vēstulēm
 forward	felamimail	lv	Pārsūtīt
 forward to address	felamimail	lv	pārsūtīt uz adresi
 found	felamimail	lv	Atrasts
-fri	felamimail	lv	Pk
 from	felamimail	lv	No
 from(a->z)	felamimail	lv	No (A->Z)
 from(z->a)	felamimail	lv	No (Z->A)
@@ -143,7 +151,9 @@ imap server address	felamimail	lv	IMAP servera adrese
 imap server type	felamimail	lv	IMAP servera tips
 imaps authentication	felamimail	lv	IMAP servera autentifikācija
 imaps encryption only	felamimail	lv	IMAP servera šifrēšana
+import	felamimail	lv	Importēt
 in	felamimail	lv	in
+inbox	felamimail	lv	Iesūtne
 index order	felamimail	lv	Indeksu kārtība
 info	felamimail	lv	Informācija
 invalid user name or password	felamimail	lv	Nederīgs lietotājvārds vai parole
@@ -158,6 +168,7 @@ less than	felamimail	lv	mazāk nekā
 light gray	felamimail	lv	Gaiši pelēks
 list all	felamimail	lv	Uzskaitīt visu
 location of buttons when composing	felamimail	lv	Pogu novietojums, kad raksta
+mail server login type	admin	lv	Pasta servera pieteikšanās tips
 mail settings	felamimail	lv	Pasta uzstādījumi
 mainmessage	felamimail	lv	galvenais ziņojums
 manage folders	common	lv	Pārvaldīt mapes
@@ -169,9 +180,9 @@ mark selected as unread	felamimail	lv	Atzīmē atlasītās kā nelasītas
 message highlighting	felamimail	lv	Vēstules izgaismošana
 message list	felamimail	lv	Vēstuļu saraksts
 messages	felamimail	lv	vēstules
-mon	felamimail	lv	Pr
 move	felamimail	lv	pārvietot
 move messages	felamimail	lv	pārvietot vēstules
+move selected to	felamimail	lv	pārvietot atlasītās uz
 move to	felamimail	lv	pārvietot atlasītās uz
 move to trash	felamimail	lv	Pārvietot uz atkritumiem
 moving messages to	felamimail	lv	vēstules tiek pārvietoti uz
@@ -191,10 +202,12 @@ no messages were selected.	felamimail	lv	Netika atlasīta neviena vēstule
 no previous message	felamimail	lv	nav iepriekšējās vēstules
 no valid emailprofile selected!!	felamimail	lv	Nav atlasīts derīgs E-pasta profils
 none	felamimail	lv	neviens
+on	felamimail	lv	ieslēgts
 only inbox	felamimail	lv	Tikai iesūtne
 only unseen	felamimail	lv	Tikai neredzētos
 open all	felamimail	lv	atvērt visus
 options	felamimail	lv	Iespējas
+or	felamimail	lv	vai
 organization	felamimail	lv	organizācija
 organization name	admin	lv	Organizācijas nosaukums
 participants	felamimail	lv	Dalībnieki
@@ -225,8 +238,8 @@ return	felamimail	lv	Atgriezties
 return to options page	felamimail	lv	Atgriezties opciju lapā
 right	felamimail	lv	Pa labi
 rule	felamimail	lv	Kārtula
-sat	felamimail	lv	Se
 save	felamimail	lv	Saglabāt
+save all	felamimail	lv	Saglabāt visus
 save changes	felamimail	lv	sag;abāt izmaiņas
 search	felamimail	lv	Meklēt
 search for	felamimail	lv	Meklēt
@@ -254,19 +267,16 @@ submit	felamimail	lv	Iesniegt
 subscribe	felamimail	lv	Parakstīties
 subscribed	felamimail	lv	Parakstīts
 subscribed successfully!	felamimail	lv	Veiksmīgi parakstīts!
-sun	felamimail	lv	Sv
 table of contents	felamimail	lv	Satura rādītājs
 text only	felamimail	lv	Tikai teksts
 the connection to the imap server failed!!	felamimail	lv	Neveiksmīga pieslēgšanās IMAP serverim!
 then	felamimail	lv	THEN
 this folder is empty	felamimail	lv	Šī mape ir tukša
 this php has no imap support compiled in!!	felamimail	lv	Šim PHP nav IMAP nokompilēts atbalsts
-thu	felamimail	lv	Ce
 to	felamimail	lv	Uz
 translation preferences	felamimail	lv	Vēlamie tulkošanas iestatījumi
 translation server	felamimail	lv	Tulkojuma serveris
 trash folder	felamimail	lv	Atkritumu mape
-tue	felamimail	lv	Ot
 type	felamimail	lv	tips
 unknown err	felamimail	lv	Nezināma kļūda
 unknown error	felamimail	lv	Nezināma kļūda
@@ -279,24 +289,21 @@ unsubscribe	felamimail	lv	Atrakstīties
 unsubscribed	felamimail	lv	Atrakstīts
 unsubscribed successfully!	felamimail	lv	Veiksmīgi atrakstīts!
 up	felamimail	lv	augšup
+urgent	felamimail	lv	nepieciešams
 use <a href="%1">emailadmin</a> to create profiles	felamimail	lv	lai izveidotu profilus,lieto <a href="%1">EmailAdmin</a>
 use a signature	felamimail	lv	Lietot parakstu
 use a signature?	felamimail	lv	Lietot parakstu?
 use addresses	felamimail	lv	Lietot adreses
 use custom settings	felamimail	lv	Lietot persnonalizētus iestatījumus
-use javascript or html addressbook?	felamimail	lv	LIetot Javascript vai HTML adrešu grāmatu?
 use smtp auth	admin	lv	Lieto SMTP autentifikāciju
 users can define their own emailaccounts	admin	lv	Lietotāji paši var kontrolēt savus e-pasta kontus
-vacation notice	felamimail	lv	norāde par atrašanos atvaļinājumā
+vacation notice	common	lv	norāde par atrašanos atvaļinājumā
 view full header	felamimail	lv	Rādīt pilnu galveni
 view message	felamimail	lv	Rādīt vēstuli
 viewing full header	felamimail	lv	Rāda pilnu galveni
 viewing message	felamimail	lv	Rāda vēstuli
 viewing messages	felamimail	lv	Rāda vēstules
-wed	felamimail	lv	Tr
-welcome to %1's webmail system	felamimail	lv	Lapni lūdzam %1 WebMail sistēmā
 when deleting messages	felamimail	lv	Kad dzēš vēstules
 wrap incoming text at	felamimail	lv	Ienākošo tekstu dalīt rindās pie
 writing	felamimail	lv	raksta
 wrote	felamimail	lv	rakstīja
-you must login first.	felamimail	lv	Jums vispirms jāautorizējas!

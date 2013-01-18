@@ -16,12 +16,13 @@ after message body	felamimail	iw	אחרי גוף ההודעה
 all address books	felamimail	iw	כל ספרי הכתובות
 all folders	felamimail	iw	כל התיקיות
 always show html emails	felamimail	iw	HTML תמיד להציג דואר אלקטרוני
+and	felamimail	iw	-ו
 anyone	felamimail	iw	כל אחד
 as a subfolder of	felamimail	iw	כתת תיקיה של
+attach	felamimail	iw	צרף
 attachments	felamimail	iw	מצורפים
 auto refresh folder list	felamimail	iw	רענן רשימת תיקיות אוטומטית
 back to folder	felamimail	iw	חזור לתיקיה
-bad reque	felamimail	iw	בקשה לא חוקית
 based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	iw	בהתאם לקרטריונים מוגדרים, צבע הרקע של דואר נכנס מתקבל בהתאם לשם השולח. זה שימושי במיוחד ברשימות תפוצה.
 bcc	felamimail	iw	העתק מוסתר
 before headers	felamimail	iw	לפני הכותרות
@@ -41,6 +42,7 @@ compose	felamimail	iw	חדש
 compress folder	felamimail	iw	קבץ תיקיה
 configuration	felamimail	iw	הגדרה
 contains	felamimail	iw	מכיל
+copy to	felamimail	iw	העתק אל
 create	felamimail	iw	צור
 create folder	felamimail	iw	צור תיקיה
 create sent	felamimail	iw	צור פריטים שנשלחו
@@ -57,6 +59,7 @@ date(newest first)	felamimail	iw	(תאריך (חדשים תחילה
 date(oldest first)	felamimail	iw	(תאריך (ישנים תחילה
 days	felamimail	iw	ימים
 deactivate script	felamimail	iw	הפס הפעלת סקריפט
+default	felamimail	iw	ברירת מחדל
 default sorting order	felamimail	iw	סדר מיון מחדלי
 delete all	felamimail	iw	מחק הכל
 delete folder	felamimail	iw	מחק תיקיה
@@ -90,6 +93,7 @@ edit rule	felamimail	iw	ערוץ חוק
 edit selected	felamimail	iw	ערוך נבחרים
 edit vacation settings	felamimail	iw	ערוך הגדרת חופשות
 email address	felamimail	iw	כתובת דוא"ל
+email notification	felamimail	iw	הודעת דוא"ל
 email signature	felamimail	iw	חתימת דוא"ל
 empty trash	felamimail	iw	רוקן אשפה
 enable	felamimail	iw	אפשר
@@ -99,20 +103,25 @@ enter your sieve server hostname or ip address	admin	iw	שלו IP-שלך או א
 enter your sieve server port	admin	iw	שלך Sieve-הכנס את פורט שרת ה
 enter your smtp server hostname or ip address	admin	iw	שלו IP-שלך או אתכתובת ה SMTP-הכנס את שם שרת ה
 enter your smtp server port	admin	iw	שלך SMTP-הכנס את פורט שרת ה
+entry saved	felamimail	iw	הרשומה נשמרה
 error	felamimail	iw	שגיאה
 error connecting to imap serv	felamimail	iw	IMAP שגיאה בחיבור לשרת
 error opening	felamimail	iw	שגיעה בפתיחת
+event details follow	felamimail	iw	פרטי האירוע בהמשך
 every	felamimail	iw	כל
 every %1 days	felamimail	iw	כל %1 ימים
 expunge	felamimail	iw	השמד
+extended	felamimail	iw	מורחב
 file into	felamimail	iw	תייק בתוך
+filemanager	felamimail	iw	מנהל הקבצים
 files	felamimail	iw	קבצים
 filter active	felamimail	iw	מסנן פעיל
 filter name	felamimail	iw	שם מסנן
-filter rules	felamimail	iw	חוקי סינון
+filter rules	common	iw	חוקי סינון
 first name	felamimail	iw	שם פרטי
 flagged	felamimail	iw	מדוגל
 flags	felamimail	iw	דגלים
+folder	felamimail	iw	מחיצה
 folder acl	felamimail	iw	רשימת גישה לתיקיה
 folder name	felamimail	iw	שם תיקיה
 folder path	felamimail	iw	מסלול אל התיקיה
@@ -128,7 +137,6 @@ for mail to be send - not functional yet	felamimail	iw	עבור דואר שיש�
 for received mail	felamimail	iw	עבור דואר נכנס
 forward	felamimail	iw	העבר
 found	felamimail	iw	נמצא
-fri	felamimail	iw	שישי
 from	felamimail	iw	מאת
 from(a->z)	felamimail	iw	(מאת (א ->ת
 from(z->a)	felamimail	iw	(מאת (ת->א
@@ -146,9 +154,9 @@ imap server address	felamimail	iw	כתובת שרת IMAP
 imap server type	felamimail	iw	סוג שרת IMAP
 imaps authentication	felamimail	iw	אימות IMAPS
 imaps encryption only	felamimail	iw	הצפנת IMAPS בלבד
+import	felamimail	iw	ייבא
 in	felamimail	iw	בתוך
-in order for squirrelmail to provide the full set of options you need to create the special folders listed below.  just click the check box and hit the create button.	felamimail	iw	כדי ש-SquirrelMail יוכל לספק את מלוא האופציות האפשריות עליך ליצור את התיקיות המיוחדות הרשומות למטה. רק סמן את התיבה ולחץ על כפתור צור.
-in the center	felamimail	iw	במרכז
+inbox	felamimail	iw	תיבת דואר נכנס
 index order	felamimail	iw	סדר אינדקס
 info	felamimail	iw	מידע
 invalid user name or password	felamimail	iw	שם משתמש או סיסמא לא חוקי
@@ -156,16 +164,9 @@ language	felamimail	iw	שפה
 last name	felamimail	iw	שם משפחה
 left	felamimail	iw	שמאל
 less	felamimail	iw	פחות
-let this folder contain subfolders	felamimail	iw	תיקיה זו מכילה תתי תיקיות
-light blue	felamimail	iw	כחול בהיר
-light cyan	felamimail	iw	ציאן בהיר
 light gray	felamimail	iw	אפור בהיר
-light green	felamimail	iw	ירוק בהיר
-light magenta	felamimail	iw	סגול בהיר
-light yellow	felamimail	iw	צהוב בהיר
 list all	felamimail	iw	הצג הכל
 location of buttons when composing	felamimail	iw	מיקום הכפתורים בעת כתיבת הודעה
-location of folder list	felamimail	iw	מיקום רשימת התיקיות
 mail server login type	admin	iw	סוג הכניסה לשרת הדואר
 mail settings	felamimail	iw	הגדרות דואר
 mainmessage	felamimail	iw	הודעה ראשית
@@ -180,68 +181,50 @@ mark selected as unread	felamimail	iw	סמן נבחרות כלא נקראו
 match	felamimail	iw	התאם
 matches	felamimail	iw	התאמות
 matches regexp	felamimail	iw	התאמות regexp
-medium gray	felamimail	iw	אפור בינוני
-message	felamimail	iw	הודעה
 message highlighting	felamimail	iw	הדגשות הודעה
 message list	felamimail	iw	רשימת הודעות
 messages	felamimail	iw	הודעות
-minute	felamimail	iw	דקה
-minutes	felamimail	iw	דקות
-mon	felamimail	iw	שני
-more	felamimail	iw	עוד
 move	felamimail	iw	הזז
 move messages	felamimail	iw	הזז הודעות
+move selected to	felamimail	iw	הזז הודעות אל
 move to	felamimail	iw	הזז הודעות אל
 move to trash	felamimail	iw	הזז לאשפה
-must be unique	felamimail	iw	חייב להיות ייחודי
 name	felamimail	iw	שם
 never display html emails	felamimail	iw	לעולם לא להציג הודעות HTML
 new	common	iw	חדש
 new filter	felamimail	iw	מסנן חדש
 next	felamimail	iw	הבאה
 next message	felamimail	iw	ההודעה הבאה
-nickname	felamimail	iw	שם חיבה
 no filter	felamimail	iw	ללא מסנן
 no folders found	felamimail	iw	לא נמצאו תיקיות
 no folders were found to subscribe to!	felamimail	iw	לא נמצאו תיקיות שאפשר להרשם אליהן!
 no folders were found to unsubscribe from!	felamimail	iw	לא נמצאו תיקיות שאפשר לבטל הרשמה מהן!
 no highlighting is defined	felamimail	iw	לא מוגדרת הדגשה כלשהי
 no messages were selected.	felamimail	iw	לא נבחרה אף הודעה.
-no next message	felamimail	iw	אין הודעה הבאה
-no notification	felamimail	iw	אין התרעה
-no personal address book is defined. contact administrator.	felamimail	iw	לא הוגדרה ספר כתובות אישי. צור קשר אם המנהל.
-no persons matching your search was found	felamimail	iw	לא נמצאו אנשים המתאימים לחיפוש.
 no previous message	felamimail	iw	אין הודעה קודמת
 no valid emailprofile selected!!	felamimail	iw	לא נבחרה פרופיל דוא"ל חוקי !!
 none	felamimail	iw	ללא
-number of messages to index	felamimail	iw	מספר ההודעות למיפתוח
+on	felamimail	iw	-ב
 on behalf of	felamimail	iw	בשם
 only inbox	felamimail	iw	רק תיבת דואר נכנס
 only unseen	felamimail	iw	רק לא נקראו
 open all	felamimail	iw	פתח הכל
 options	felamimail	iw	אפשריות
+or	felamimail	iw	או
 organisation	felamimail	iw	אירגון
 organization	felamimail	iw	אירגון
 organization name	admin	iw	שם האירגון
-oth	felamimail	iw	אחר
 participants	felamimail	iw	משתתפים
 personal information	felamimail	iw	מידע אישי
 posting	felamimail	iw	שולח
-preference file %1 not found. exiting abnormally	felamimail	iw	קובץ עדיפויות %1 לא נמצא. יוצא יציאה לא טבעית.
-preference file, %1, does not exist. log out, and log back in to create a default preference file.	felamimail	iw	קובץ עדיפויות, %!, לא קיים. צא מהמערכת וכנס מחדש כדי ליצור קובץ עדיפויות מחדלי.
 previous	felamimail	iw	הקודמת
 previous message	felamimail	iw	ההודעה הקודמת
 print it	felamimail	iw	הדפס
 print this page	felamimail	iw	הדפס עמוד זה
-purge	felamimail	iw	טהר
 quicksearch	felamimail	iw	חיפוש מהיר
 read	felamimail	iw	קרא
-read da	felamimail	iw	קרא מידע
 reading	felamimail	iw	קורא
-reason giv	felamimail	iw	הסיבה הניתנת
 recent	felamimail	iw	לאחרונה
-refresh folder list	felamimail	iw	רענן רשימת תיקיות
-refresh page	felamimail	iw	רענן עמוד
 refresh time in minutes	felamimail	iw	זמן רענון בדקות
 remove	felamimail	iw	הסר
 remove immediately	felamimail	iw	הסר מיד
@@ -258,23 +241,17 @@ return	felamimail	iw	חזור
 return to options page	felamimail	iw	חזור לעמוד אפשריות
 right	felamimail	iw	ימין
 rule	felamimail	iw	חוק
-running squirrelmail version %1 (c) 1999-2000.	felamimail	iw	מריץ SquirrelMail גירסא%1 (c) 1999-2000.
-same window - not functional yet	felamimail	iw	אותו חלון - עוד לא עובד
-sat	felamimail	iw	שבת
 save	felamimail	iw	שמור
+save all	felamimail	iw	שמור הכל
+save changes	felamimail	iw	שמור שינוים
 search	felamimail	iw	חפש
 search for	felamimail	iw	חפש
-seconds	felamimail	iw	שניות
 select	felamimail	iw	בחר
 select all	felamimail	iw	בחר הכל
 select emailprofile	felamimail	iw	בחר פרופיל דוא"ל
-select home email address	felamimail	iw	בחר כתובת דוא\"ל בבית
-select work email address	felamimail	iw	בחר כתובת דוא\"ל בעבודה
 select your mail server type	admin	iw	בחר את סוג שרת הדואר שלך
 send	felamimail	iw	שלח
-sent fold	felamimail	iw	תיקית נשלחו
 sent folder	felamimail	iw	תיקיית נשלחו
-server respond	felamimail	iw	תגובת השרת
 show header	felamimail	iw	הצג כותרת
 show new messages on main screen	felamimail	iw	הצג הודעות חדשות במסך הראשי.
 sieve settings	admin	iw	הגדרות Sieve
@@ -286,9 +263,6 @@ size(...->0)	felamimail	iw	גודל (...->0)
 size(0->...)	felamimail	iw	גודל (0->...)
 small view	felamimail	iw	תצוגה קטנה
 smtp settings	admin	iw	הגדרות SMTP
-some or all of the help documents are not present!	felamimail	iw	לפחות חלק מקבצי העזרה חסרי!
-source	felamimail	iw	מקור
-special folder options	felamimail	iw	אפשריות תיקיה מיוחדות
 subject	felamimail	iw	נושא
 subject(a->z)	felamimail	iw	נושא (א -> ת)
 subject(z->a)	felamimail	iw	נושא (ת -> א)
@@ -296,35 +270,16 @@ submit	felamimail	iw	הגש
 subscribe	felamimail	iw	הרשם
 subscribed	felamimail	iw	רשום
 subscribed successfully!	felamimail	iw	נרשם בהצלתה~!
-successfully saved display preferences!	felamimail	iw	עדיפויות תצוגה נשמרו בהצלחה!
-successfully saved folder preferences!	felamimail	iw	עדיפויות תיקיה נשמרו בהצלחה!
-successfully saved personal information!	felamimail	iw	מידע אישי נשמר בהצלחה!
-sun	felamimail	iw	ראשון
-switch current folder to	felamimail	iw	החלף תיקיה נוכחית ל-
 table of contents	felamimail	iw	תוכן העיניינים
 text only	felamimail	iw	טקסו בלבד
 the connection to the imap server failed!!	felamimail	iw	הקישור לשרת IMAP נכשל!!
-the help has not been translated to %1.  it will be displayed in english instead.	felamimail	iw	העזרה עדיין לא תורגמה ל %1. היא תוצג באנגלית במקום זאת.
-the index order is the order that the columns are arranged in the message index.  you can add, remove, and move columns around to customize them to fit your needs.	felamimail	iw	סדר האינדקס הוא הסדר בו העמודות מסודרות באינדקס ההודעות. אפשר להוסיף, להסיר ולהזיז עמודות כדי להתאים אותן לצורכיך.
-the order of the message index can be rearanged and changed to contain the headers in any order you want.	felamimail	iw	ניתן לשנות את סדר אינדקס ההודעות כדי להכיל את הכותרות בכל סדר רצוי לך.
-theme	felamimail	iw	ערכת נושא
-these settings change the way your folders are displayed and manipulated.	felamimail	iw	הגדרות אלו משנות את הדרך בה התיקיות שלך מוצגות ומטופלות.
-this contains personal information about yourself such as your name, your email address, etc.	felamimail	iw	זה מכיל מידע אישי ודותך כמו שמך, כתובת דו"ל וכדומה.
 this folder is empty	felamimail	iw	תיקיה זו ריקה
-this port is based on squirrelmail, which is a standalone imap client.<br>	felamimail	iw	פורט זה מבוסס על Squirrelmail, שהנו לקוח IMAP העומד בפני עצמו.<br>
-thu	felamimail	iw	חמישי
 to	felamimail	iw	אל
-to the left	felamimail	iw	לשמאל
-to the right	felamimail	iw	לימין
-top	felamimail	iw	עליון
-translation location	felamimail	iw	מיקום התרגום
 translation preferences	felamimail	iw	עדיפויות תרגום
 translation server	felamimail	iw	שרת תרגום
 trash fold	felamimail	iw	תיקיית אשפה
 trash folder	felamimail	iw	תיקיית אשפה
-tue	felamimail	iw	שלישי
 type	felamimail	iw	סוג
-unable to list addresses from %1	felamimail	iw	לא יכול להציג כתובות מ-%1
 unflagged	felamimail	iw	לא מדוגלים
 unknown err	felamimail	iw	שגיאה לא ידועה
 unknown error	felamimail	iw	שגיאה לא ידועה
@@ -332,21 +287,17 @@ unknown sender	felamimail	iw	שולח לא ידוע
 unknown user or password incorrect.	felamimail	iw	משתמש לא מוכר או שגיאה בסיסמא.
 unread	common	iw	לא נקרא
 unseen	felamimail	iw	לא נראה
-unseen and total	felamimail	iw	לא נראו וסך הכל
-unseen message notification	felamimail	iw	התרעה על הודעה שלא נראה
-unseen message notification type	felamimail	iw	סוג ההתרעה על הודעה שלא נראה
 unselect all	felamimail	iw	נקה בחר הכל
 unsubscribe	felamimail	iw	בטל הרשמה
 unsubscribed	felamimail	iw	הרשמה בוטלה
 unsubscribed successfully!	felamimail	iw	הרשמה בוטלה בהצלחה!
 up	felamimail	iw	למעלה
-update address	felamimail	iw	עדכן כתובת
+urgent	felamimail	iw	דחוף
 use <a href="%1">emailadmin</a> to create profiles	felamimail	iw	השתמש ב-<a href="%1">EmailAdmin</a> כדי ליצור פרופילים
 use a signature	felamimail	iw	השתמש בחתימה
 use a signature?	felamimail	iw	השתמש בחתימה?
 use addresses	felamimail	iw	השתמש בכתובת
 use custom settings	felamimail	iw	השתמש בהגדרות מותאמות אישית
-use javascript or html addressbook?	felamimail	iw	להשתמש בספר כתובת Javascript  או HTML?
 use smtp auth	admin	iw	השתמש באימות משתמשים של SMTP
 users can define their own emailaccounts	admin	iw	משתמשים יכולים להגדיר בעצמם את חשבונות דואר האלקטרוני שלהם
 view full header	felamimail	iw	הצג כותרת מלאה
@@ -354,16 +305,7 @@ view message	felamimail	iw	הצג הודעה
 viewing full header	felamimail	iw	מציג כותרת מלאה
 viewing message	felamimail	iw	מציג הודעה
 viewing messages	felamimail	iw	מציג הודעות
-wed	felamimail	iw	רביעי
-welcome to %1's webmail system	felamimail	iw	ברוך בואך אל מערכ ה-WebMail  של %1
 when deleting messages	felamimail	iw	בשעת מחיקת הדעות
-white	felamimail	iw	לבן
-width of folder list	felamimail	iw	רוחב רשימת התיקיות
 wrap incoming text at	felamimail	iw	גלל טקסט נכנס ב-
 writing	felamimail	iw	כותב
 wrote	felamimail	iw	כתב
-you can change the way that squirrelmail looks and displays information to you, such as the colors, the language, and other settings.	felamimail	iw	אפשר לשנות את הצורה בה SquirrelMail נראה ומציג מידע, לדוגמת צבעים, שפות והגדרות נוספות.
-you can only edit one address at the time	felamimail	iw	אשפר לערוך רק כתובת אחת בכל פעם
-you must login first.	felamimail	iw	עליך להכנס למערכת קודם.
-you need a valid user and password to access this page!	felamimail	iw	צריך שם משתמש וסיסמה בתוקף כדי לגשת לעמוד זה!
-your search failed with the following error(s)	felamimail	iw	חיפשך נכשל עם השגיאה(ות) הבאות

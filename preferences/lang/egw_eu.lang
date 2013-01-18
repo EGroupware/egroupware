@@ -11,6 +11,7 @@ change a user password by passing the old and new passwords.  returns true on su
 change your password	preferences	eu	Zure pasahitza aldatu
 change your profile	preferences	eu	Zure profila aldatu
 change your settings	preferences	eu	Zure konfigurazioa aldau
+charset for the csv export	addressbook	eu	Fitxategiaren karaktere jokoa
 click to select a color	preferences	eu	Egin kilk kolorea aukeratzeko
 color	preferences	eu	Kolorea
 country	preferences	eu	Herrialdea
@@ -77,4 +78,3 @@ you do not have permission to set acl's in this mode!	preferences	eu	Ez daukazu 
 you must enter a password	preferences	eu	Pasahitz bat sartu behar duzu
 your current theme is: %1	preferences	eu	Zure momentuko gaia da: %1
 your preferences	preferences	eu	Zure hobespenak
-charset for the csv export	addressbook	eu	Fitxategiaren karaktere jokoa

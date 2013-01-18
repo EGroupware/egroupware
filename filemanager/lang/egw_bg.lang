@@ -22,27 +22,23 @@ cannot create directory because it begins or ends in a space	filemanager	bg	Не
 check all	filemanager	bg	Маркирай всички
 clear search	filemanager	bg	изтрий търсенето
 comment	filemanager	bg	Коментар
-comments cannot contain "%1"	filemanager	bg	Коментарите не могат да съдържат "%1"
 copied	filemanager	bg	копиран(и)
 copied %1 to %2	filemanager	bg	Копиран(и) %1 в %2
 copy to	filemanager	bg	Копиране в
 copy to clipboard	filemanager	bg	Копиране в клипборд
 could not copy %1 to %2	filemanager	bg	Неуспешно копиране на %1 в %2
-could not copy file because no destination directory is given	filemanager	bg	Неуспешно копиране на файла - не е зададена директория, където да се копира
 could not create %1	filemanager	bg	Неуспешно създаване на %1
 could not delete %1	filemanager	bg	Неуспешно изтриване на %1
 could not move %1 to %2	filemanager	bg	Неуспешно преместване на %1 в %2
-could not move file because no destination directory is given	filemanager	bg	Неуспешно преместване на файла - не е зададена директория, където да се премести
 could not rename %1 to %2	filemanager	bg	Неуспешно преименуване на %1 като %2
-could not save %1	filemanager	bg	Неуспешен запис на %1
 create directory	filemanager	bg	Създаване на директория
 create file	filemanager	bg	Създай файл
 create folder	filemanager	bg	Създай директория
 created	filemanager	bg	създаден на
 created %1,%2	filemanager	bg	Създаден %1, %2
-created between	filemanager	bg	създадени между
 created directory %1	filemanager	bg	Създадена е директория %1
 current directory	filemanager	bg	Текуща директория
+custom fields	filemanager	bg	Полета по избор
 cut	filemanager	bg	преместен(и)
 cut to clipboard	filemanager	bg	Преместване в клипборд
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	bg	По подразбиране - не. Връзката няма да се показва, но е достъпна и може да конфигурирате местоположението й като стартова директория или връзка към директория.
@@ -52,7 +48,6 @@ directories sorted in	filemanager	bg	Сортирани вкл. директор
 directory	filemanager	bg	Директория
 directory %1 already exists	filemanager	bg	Директорията %1 вече съществува
 directory %1 does not exist	filemanager	bg	Директорията %1 не съществува
-directory names cannot contain "%1"	filemanager	bg	Имената на директориите не могат да съдържат "%1"
 directory not found or no permission to access it!	filemanager	bg	Директорията не съществува или нямате право на достъп!
 display and modification of content	filemanager	bg	Преглед и промяна на съдържанието
 display of content	filemanager	bg	Преглед на съдържанието
@@ -63,12 +58,12 @@ enter the complete vfs path to specify a fast access link to a folder	filemanage
 enter the complete vfs path to specify your desired start folder.	filemanager	bg	Въведете пълния VFS път, за да зададете желаната си стартова директория
 error adding the acl!	filemanager	bg	Грешка при добавяне на ACL!
 error deleting the acl entry!	filemanager	bg	Грешка при изтриване на ACL записа
+error uploading file!	filemanager	bg	Грешка при качване на файла!
 executable	filemanager	bg	Изпълним
 extended access control list	filemanager	bg	Разширен списък за контрол на достъпа (ACL)
 extended acl	filemanager	bg	Разширен ACL
 failed to create directory!	filemanager	bg	Грешка при създаване на директория!
 file	filemanager	bg	Файл
-file %1 already exists. please edit it or delete it first.	filemanager	bg	Файлът %1 вече съществува. Моля, редактирайте него или го изтрийте.
 file %1 could not be created.	filemanager	bg	Неуспешно създаване на файла %1.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	bg	Файлът %1 може би е твърде голям. Свържете се с Вашия Администратор за повече информация
 file deleted.	filemanager	bg	Файлът е изтрит.
@@ -81,12 +76,14 @@ files from subdirectories	filemanager	bg	Файлове от поддирект�
 files in this directory	filemanager	bg	Файлове в тази директория
 folder up	filemanager	bg	Нагоре (в директориите)
 general	filemanager	bg	Общи
+general fields:	filemanager	bg	Общи полета:
 go home	filemanager	bg	Към домашната
 go to	filemanager	bg	промени в текущ
 go to your home directory	filemanager	bg	Към домшната (home) директория
 go up	filemanager	bg	нагоре
 id	filemanager	bg	ИД
 inherited	filemanager	bg	Наследени
+link	filemanager	bg	Връзка
 link %1: %2	filemanager	bg	Връзка %1: %2
 location	filemanager	bg	Местоположение
 max folderlinks	admin	bg	макс. връзки към директории
@@ -97,15 +94,16 @@ modify all subdirectories and their content	filemanager	bg	Промяна на �
 move	filemanager	bg	Преместване
 move to	filemanager	bg	Премести в
 moved %1 to %2	filemanager	bg	%1 е преместен в %2
+name of current user, all other contact fields are valid too	filemanager	bg	Име на текущия потребител, останалите полета на контакта също са валидни
 no access	filemanager	bg	Няма достъп
 no files in this directory.	filemanager	bg	В тази директория няма файлове
 no preview available	filemanager	bg	Няма възможност за преглед
 no version history for this file/directory	filemanager	bg	За този файл/директория няма история на версиите
 only owner can rename or delete the content	filemanager	bg	Само Собственикът може да преименува или изтрива съдържанието
+open	filemanager	bg	отвори
 operation	filemanager	bg	Действие
 permission denied!	filemanager	bg	Достъпът отказан!
 permissions	filemanager	bg	Права
-permissions changed for %1.	filemanager	bg	Променени са правата за %1.
 please select a file to delete.	filemanager	bg	Моля, изберете файл за изтриване.
 preview	filemanager	bg	преглед
 preview %1	filemanager	bg	Преглед %1

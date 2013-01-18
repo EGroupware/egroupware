@@ -28,6 +28,7 @@ any of	felamimail	ru	любой из
 any status	felamimail	ru	любое состояние
 anyone	felamimail	ru	хоть один
 as a subfolder of	felamimail	ru	как подпапка
+attach	felamimail	ru	Вложить
 attachments	felamimail	ru	Вложения
 authentication required	felamimail	ru	требуется идентификация
 auto refresh folder list	felamimail	ru	Автообновление списка папок
@@ -60,7 +61,9 @@ compress folder	felamimail	ru	Сжать папку
 condition	felamimail	ru	состояние
 configuration	felamimail	ru	Конфигурация
 connection dropped by imap server.	felamimail	ru	Соединение разорвано IMAP сервером
+contact not found!	felamimail	ru	Контакт не найден!
 contains	felamimail	ru	содержат
+copy to	felamimail	ru	Копия
 could not complete request. reason given: %s	felamimail	ru	Не могу завершить запрос. Возможная Причина: %s
 could not open secure connection to the imap server. %s : %s.	felamimail	ru	Не могу открыть защищенное соединение с сервером IMAP. %s : %s
 cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	ru	CRAM-MD5 и DIGEST-MD5 требуют установленного пакета Auth_SASL.
@@ -146,12 +149,14 @@ enter your sieve server hostname or ip address	admin	ru	Укажите имя к
 enter your sieve server port	admin	ru	Укажите порт сервера SIEVE
 enter your smtp server hostname or ip address	admin	ru	Укажите имя компьютера или IP адрес вашего сервера SMTP
 enter your smtp server port	admin	ru	Укажите порт сервера SMTP
+entry saved	felamimail	ru	Запись сохранена
 error	felamimail	ru	ОШИБКА
 error connecting to imap serv	felamimail	ru	Ошибка соединения с сервером IMAP
 error connecting to imap server. %s : %s.	felamimail	ru	Ошибка соединения с сервером IMAP. %s : %s.
 error connecting to imap server: [%s] %s.	felamimail	ru	Ошибка соединения с сервером IMAP: [%s] %s.
 error opening	felamimail	ru	Ошибка открытия
 error: could not save message as draft	felamimail	ru	Ошибка: Не могу сохранить Сообщение как Черновик
+event details follow	felamimail	ru	Детали события следуют
 every	felamimail	ru	каждый
 every %1 days	felamimail	ru	каждые %1 дни
 expunge	felamimail	ru	Вычеркнуть
@@ -187,7 +192,6 @@ forward to	felamimail	ru	переслать
 forward to address	felamimail	ru	переслать на адрес
 forwarding	felamimail	ru	Пересылка
 found	felamimail	ru	Найдено
-fri	felamimail	ru	Птн
 from	felamimail	ru	От
 from(a->z)	felamimail	ru	От (А->Я)
 from(z->a)	felamimail	ru	От (Я->А)
@@ -222,6 +226,7 @@ imap server type	felamimail	ru	Тип Сервера IMAP
 imap server username	felamimail	ru	Имя пользователя сервера IMAP
 imaps authentication	felamimail	ru	Авторизация IMAPS
 imaps encryption only	felamimail	ru	Шифрование только IMAPS
+import	felamimail	ru	Импорт
 in	felamimail	ru	в
 inbox	felamimail	ru	Входящие (INBOX)
 incoming mail server(imap)	felamimail	ru	Сервер входящих сообщений (IMAP)
@@ -237,6 +242,7 @@ keep local copy of email	felamimail	ru	хранить локальную коп�
 kilobytes	felamimail	ru	килобайт
 language	felamimail	ru	Язык
 last name	felamimail	ru	Фамилия
+later	felamimail	ru	Позже
 left	felamimail	ru	Левый
 less	felamimail	ru	меньше
 less than	felamimail	ru	меньше чем
@@ -266,9 +272,10 @@ max uploadsize	felamimail	ru	макс. размер публикации
 message highlighting	felamimail	ru	Подсветка Сообщений
 message list	felamimail	ru	Список Сообщений
 messages	felamimail	ru	сообщения
-mon	felamimail	ru	Пнд
 move	felamimail	ru	переместить
+move folder	felamimail	ru	переместить папку
 move messages	felamimail	ru	переместить сообщения
+move selected to	felamimail	ru	переместить выбранное в
 move to	felamimail	ru	переместить выбранное в
 move to trash	felamimail	ru	Переместить в корзину
 moving messages to	felamimail	ru	Перемещение сообщений в
@@ -348,7 +355,6 @@ return to options page	felamimail	ru	Вернуться на страницу н
 right	felamimail	ru	Вправо
 row order style	felamimail	ru	порядок сортировки строк
 rule	felamimail	ru	Правило
-sat	felamimail	ru	Сбт
 save	felamimail	ru	Сохранить
 save as draft	felamimail	ru	сохранить как черновик
 save as infolog	felamimail	ru	сохранить как элемент ИнфоЖурнала
@@ -392,7 +398,6 @@ submit	felamimail	ru	Отправить
 subscribe	felamimail	ru	Подписаться
 subscribed	felamimail	ru	Подписано
 subscribed successfully!	felamimail	ru	Подписались успешно!
-sun	felamimail	ru	Вскр
 system signature	felamimail	ru	системная подпись
 table of contents	felamimail	ru	Содержание
 template folder	felamimail	ru	Папка шаблонов
@@ -406,7 +411,6 @@ the mimeparser can not parse this message.	felamimail	ru	Обработчик MI
 then	felamimail	ru	ТОГДА
 this folder is empty	felamimail	ru	ЭТА ПАПКА ПУСТА
 this php has no imap support compiled in!!	felamimail	ru	Эта версия PHP собрана без поддержки IMAP!!
-thu	felamimail	ru	Чт
 to	felamimail	ru	Кому
 to mail sent to	felamimail	ru	отправить сообщение получателю
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	ru	Для использования соединения TLS, у вас должен работать PHP версии 5.1.0 или выше.
@@ -415,7 +419,6 @@ translation server	felamimail	ru	Сервер перевода
 trash	felamimail	ru	Корзина
 trash fold	felamimail	ru	Папка Корзина
 trash folder	felamimail	ru	Папка Корзина
-tue	felamimail	ru	Вт
 type	felamimail	ru	тип
 unexpected response from server to authenticate command.	felamimail	ru	Непредусмотренный ответ сервера на команду AUTHENTICATE
 unexpected response from server to digest-md5 response.	felamimail	ru	Непредусмотренный ответ сервера на сообщение Digest-MD5
@@ -435,6 +438,7 @@ unsubscribed successfully!	felamimail	ru	Отказ от подписки уда
 up	felamimail	ru	вверх
 updating message status	felamimail	ru	обновление состояния сообщения
 updating view	felamimail	ru	обновление окна просмотра
+urgent	felamimail	ru	срочное
 use <a href="%1">emailadmin</a> to create profiles	felamimail	ru	используйте <a href="%1">EmailAdmin</a> для создания профиля
 use a signature	felamimail	ru	Использовать подпись
 use a signature?	felamimail	ru	Использовать подпись?
@@ -454,7 +458,6 @@ view message	felamimail	ru	Просмотреть сообщение
 viewing full header	felamimail	ru	Просмотр заголовка полностью
 viewing message	felamimail	ru	Просмотр сообщения
 viewing messages	felamimail	ru	Просмотр сообщений
-wed	felamimail	ru	Ср
 when deleting messages	felamimail	ru	При удалении сообщений
 with message	felamimail	ru	с сообщением
 with message "%1"	felamimail	ru	с сообщением "%1"

@@ -14,7 +14,7 @@ categories admin	resources	lv	Kategoriju administrators
 check all	resources	lv	Pārbaudīt visu
 choose categories admin	resources	lv	izvēlēties kategoriju administratoru
 clear selection	resources	lv	notīrīt izvēli
-configure access permissions	resources	lv	Konfigurēt pieejas atļaujas
+configure access permissions	admin	lv	Konfigurēt pieejas atļaujas
 create new accessory for this resource	resources	lv	Izveidot jaunu piederumu šim resursam
 create new links	resources	lv	Izveidot jaunas saites
 delete this entry	resources	lv	Dzēst šo ierakstu
@@ -25,6 +25,8 @@ existing links	resources	lv	Esošās saites
 general	resources	lv	Vispārējs
 general informations about resource	resources	lv	Vispārēja informācija par resursu
 gernal resource	resources	lv	vispārējs resurss
+global categories	resources	lv	Globālās kategorijas
+hours	resources	lv	stundas
 how many of the resources are useable?	resources	lv	Cik daudz resursu ir izmantojamii?
 how many of them are useable?	resources	lv	Cik daudz no tiem ir izmantojami?
 how many of this resource are usable	resources	lv	Cik daudz no šī resursa ir izmantojams/
@@ -51,7 +53,6 @@ quantity	resources	lv	Daudzums
 quantity of resource	resources	lv	Resursa daudzums
 quantity:	resources	lv	Daudzums:
 read calendar permissions	resources	lv	Lasīt kalendāra atļaujas
-read calender permissions	resources	lv	Lasīt kalendāra atļaujas
 read permissions	resources	lv	Lasīt atļaujas
 related links	resources	lv	Saistītās saites
 resources	common	lv	resursi
@@ -60,7 +61,7 @@ responsible:	resources	lv	Atbildīgs:
 saves entry and exits	resources	lv	Saglabā ierakstu un iziet
 select a category	resources	lv	Iezīmē kategoriju
 select resource	resources	lv	iezīmē resursu
-select resources	resources	lv	Iezīmē resursus
+select resources	common	lv	Iezīmē resursus
 short description	resources	lv	īss apraksts
 short description of resource	resources	lv	īss resursa apraksts
 something went wrong by deleting resource	resources	lv	Kaut kas nenotika pareizi dzēšot resursu
@@ -79,6 +80,5 @@ web-site for this resource	resources	lv	Šī resursa tīmekļa vietne
 where to find this resource?	resources	lv	Kur atrast šo resursu?
 which category does this resource belong to?	resources	lv	Kurai kategorijai pieder šis resurss?
 write permissions	resources	lv	Rakstīt atļaujas
-you are not permitted to edit this reource!	resources	lv	Tev nav atļauts rediģēt šo resursu!
 you are not permitted to get information about this resource!	resources	lv	Tev nav atļauts iegūt informāciju par šo resursu!
 you chose more resources than available	resources	lv	Tu izvēlies vairāk resursu kā pieejams

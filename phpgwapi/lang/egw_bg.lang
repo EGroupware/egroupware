@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	bg	Вмъкнати %1 e-mail адреса
 %1 is not executable by the webserver !!!	common	bg	%1 не е изпълним за WEB сървъра!!!
-%1 manual	common	bg	%1 ръководство
-%1 start	common	bg	%1 старт
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	bg	%1Изберете друга директория%2<br />или позволете в %3 запис на WEB сървъра
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	bg	%1eGroupWare%2 е многопотребителска, web-базирана система за работа в екип, написана на %3PHP%4.
 (session restored in %1 seconds)	common	bg	(сесията възстановена за %1 секунди)
@@ -34,6 +32,7 @@ account is expired	common	bg	Акаунтът е изтекъл
 accounts	common	bg	Акаунти
 acl	common	bg	Списък за контрол на достъпа
 action	common	bg	Действие
+actions	common	bg	Действия
 active	common	bg	Активен
 add	common	bg	Добави
 add %1 category for	common	bg	Добави %1 категория за
@@ -53,6 +52,7 @@ alternate style-sheet:	common	bg	Алтернативен style-sheet:
 american samoa	common	bg	Американска Самоа
 an error happened	common	bg	Възникнала е грешка
 an existing and by the webserver readable directory enables the image browser and upload.	common	bg	Браузърът за изображения и ъплоудът се разрешават чрез съществуваща И достъпна за четене от WEB сървъра директория
+and	common	bg	И
 andorra	common	bg	Андора
 angola	common	bg	Ангола
 anguilla	common	bg	Ангуила
@@ -182,12 +182,14 @@ default height for the windows	common	bg	Височина на прозорци�
 default width for the windows	common	bg	Ширина на прозорците по подразбиране
 delete	common	bg	Изтриване
 delete row	common	bg	Изтриване на ред
+delete this entry	common	bg	изтриване на този запис
 denmark	common	bg	Дания
 description	common	bg	Описание
 detail	common	bg	Детайл
 details	common	bg	Детайли
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	bg	Да се забрани изпълнението на скрипта за корекция на грешки при показване на прозрачност при PNG изображения в IE 5.5 и по-високи?
 direction left to right	common	bg	Посока от ляво надясно
+directory	common	bg	Директория
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	bg	Директорията не съществува, не е позволено четенето и от WEB сървъра или не е даден относителният път спрямо document root!
 disable internet explorer png-image-bugfix	common	bg	Забрани Internet Explorer png-image-bugfix
 disable slider effects	common	bg	Забрани slider-ефектите
@@ -206,6 +208,7 @@ domestic	common	bg	Домашен
 dominica	common	bg	Доминика
 dominican republic	common	bg	Доминиканска Република
 done	common	bg	Готово
+download	common	bg	Изтегляне
 drag to move	jscalendar	bg	Провлачете за преместване
 e-mail	common	bg	E-Mail
 east timor	common	bg	Източен Тимур
@@ -216,7 +219,6 @@ edit categories	common	bg	Редактиране на категориите
 edit category	common	bg	Редактиране на категория
 egroupware	common	bg	eGroupWare
 egroupware api version	common	bg	версия на eGroupWare API
-egroupware api version %1	common	bg	eGroupWare: версия на API - %1
 egroupware: login blocked for user '%1', ip %2	common	bg	eGroupWare: влизането блокирано за потребител '%1' от IP-адрес %2
 egypt	common	bg	Египет
 el salvador	common	bg	Ел Салвадор
@@ -357,6 +359,7 @@ kuwait	common	bg	Кувейт
 kyrgyzstan	common	bg	Киргизстан
 language	common	bg	Език
 lao peoples democratic republic	common	bg	Лаос
+last modified	common	bg	Последно модифициран
 last name	common	bg	Фамилно име
 last name of the user, eg. "%1"	common	bg	фамилията на потребителя, например "%1"
 last page	common	bg	Последна страница
@@ -376,6 +379,7 @@ list	common	bg	Списък
 list members	common	bg	Списък с членове
 lithuania	common	bg	Литва
 local	common	bg	Локален
+locations	common	bg	местоположения
 login	common	bg	Влизане (Login)
 loginid	common	bg	Име на потребител
 logout	common	bg	Изход
@@ -470,9 +474,11 @@ on mouse over	common	bg	При посочване с мишката
 only private	common	bg	само "лични"
 only yours	common	bg	само Вашите
 oops! you caught us in the middle of system maintainance.	common	bg	Съжалаваме, в момента се извършва профилактика на системата.
+open	common	bg	отвори
 open notify window	common	bg	Отваряне на прозореца за известяване
 open popup window	common	bg	Отваряне на "изскачащ" прозорец
 open sidebox	common	bg	Отваряне на страничната кутия
+or	common	bg	или
 ordered list	common	bg	Подреден списък
 original	common	bg	Оригинал
 other	common	bg	Други
@@ -518,7 +524,6 @@ portugal	common	bg	Португалия
 postal	common	bg	Пощенски
 powered by	common	bg	Работи с
 preferences	common	bg	Настройки
-preferences for the idots template set	common	bg	Настройки за набор шаблони idots
 prev. month (hold for menu)	jscalendar	bg	Предишен месец (задръжте за списък)
 prev. year (hold for menu)	jscalendar	bg	Предишна година (задръжте за списък)
 previous page	common	bg	Предишна страница
@@ -611,6 +616,7 @@ sierra leone	common	bg	Сиера Леоне
 simple	common	bg	Опростен
 singapore	common	bg	Сингапур
 site configuration	common	bg	Конфиргурация на системата
+size	common	bg	Размер
 slovakia	common	bg	Словакия
 slovenia	common	bg	Словения
 solomon islands	common	bg	Соломонови острови
@@ -719,6 +725,7 @@ what style would you like the image to have?	common	bg	Какъв стил да 
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	bg	Ако отговорите ДА бутоните Home и Logout ще се появят като приложения в горната главна лента на приложенията
 where and how will the egroupware links like preferences, about and logout be displayed.	common	bg	Къде и как да се изобразяват връзките на eGroupWare като настройки, "относно" и Logout.
 which groups	common	bg	Кои групи
+whole query	common	bg	всички резултати
 width	common	bg	Ширина
 wk	jscalendar	bg	сед
 work email	common	bg	служебен e-mail

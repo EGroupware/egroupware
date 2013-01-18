@@ -40,13 +40,18 @@ create	setup	bg	Създаване
 create admin account	setup	bg	Създаване на администраторски акаунт
 create database	setup	bg	Създаване на база данни
 create demo accounts	setup	bg	Създаване на примерни потребители
+created	setup	bg	Създаден
 creating tables	setup	bg	Създаване на таблиците
 current version	setup	bg	Текуща версия
+default	setup	bg	по подразбиране
 delete	setup	bg	Изтриване
 deleting tables	setup	bg	Изтриване на таблици
 details for admin account	setup	bg	Подробности за администраторския акаунт
 download	setup	bg	Изтегляне
+file	setup	bg	Файл
+filename	setup	bg	Име на файл
 go back	setup	bg	Назад
+go to	setup	bg	промени в текущ
 import has been completed!	setup	bg	Внасянето привърши!
 install	setup	bg	Инсталиране
 install all	setup	bg	Инсталиране на всички
@@ -57,9 +62,11 @@ invalid ip address	setup	bg	Невалиден IP адрес
 invalid password	setup	bg	Грешна парола
 login to mysql -	setup	bg	Свързване към MySQL -
 logout	setup	bg	Изход
+mail server login type	setup	bg	Тип на влизане (login) в Mail сървъра
 manage applications	setup	bg	Управление на приложенията
 manage languages	setup	bg	Управление на езиците
 may be broken	setup	bg	може да е повредено
+modified	setup	bg	Редактирано
 modify	setup	bg	Промяна
 name of database	setup	bg	Име на базата данни
 never	setup	bg	никога
@@ -82,6 +89,7 @@ requires upgrade	setup	bg	Има нужда от обновяване
 save	setup	bg	Запис
 select one...	setup	bg	изберете едно...
 setup main menu	setup	bg	Главно меню
+size	setup	bg	Размер
 some or all of its tables are missing	setup	bg	Някои или всички таблици липсват
 status	setup	bg	Състояние
 step %1 - admin account	setup	bg	Стъпка %1 - Администраторски акаунт
@@ -106,8 +114,6 @@ view	setup	bg	Преглед
 warning!	setup	bg	Внимание
 welcome to the egroupware installation	setup	bg	Добре дошли в инсталацията на eGroupWare
 writable by the webserver	setup	bg	с права за запис от уеб-сървъра
-write config	setup	bg	Запис на настройката
 yes	setup	bg	Да
-you're using an old header.inc.php version...	setup	bg	Използвате стара версия на header.inc.php...
 your database does not exist	setup	bg	Базата ви данни не съществува
 your database is not working!	setup	bg	Базата ви данни не работи!

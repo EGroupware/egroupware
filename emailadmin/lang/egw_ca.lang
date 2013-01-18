@@ -16,6 +16,7 @@ email address	emailadmin	ca	Adreça de correu electrònic
 enable cyrus imap server administration	emailadmin	ca	activar administració del servidor Cyrus IMAP
 enable sieve	emailadmin	ca	Activar Sieve
 enter your default mail domain (from: user@domain)	emailadmin	ca	Entreu el domini predeterminat (de usuari@domini)
+entry saved	emailadmin	ca	Entrada guardada
 forward also to	emailadmin	ca	Reenviar també a
 forward email's to	emailadmin	ca	Reenviar correus a
 forward only	emailadmin	ca	Només reenviar
@@ -39,6 +40,8 @@ mail settings	admin	ca	Configuració del correu
 name of organisation	emailadmin	ca	Nom de l'organització
 no alternate email address	emailadmin	ca	sense adreça de correu alternativa
 no forwarding email address	emailadmin	ca	sense adreça de correu per a reenviar
+order	emailadmin	ca	Ordre
+organisation	emailadmin	ca	Organització
 pop3 server hostname or ip address	emailadmin	ca	Nom del servidor POP3 o adreça IP
 pop3 server port	emailadmin	ca	Port del servidor POP3
 postfix with ldap	emailadmin	ca	Postfix amb LDAP
@@ -54,12 +57,14 @@ sieve server hostname or ip address	emailadmin	ca	Nom del servidor Sieve o adre�
 sieve server port	emailadmin	ca	Port del servidor Sieve
 sieve settings	emailadmin	ca	Configuració de Sieve
 smtp server name	emailadmin	ca	Nom del servidor SMTP
+smtp settings	emailadmin	ca	Opcions SMTP
 smtp-server hostname or ip address	emailadmin	ca	Nom del servidor SMTP o adreça IP
 smtp-server port	emailadmin	ca	Port del servidor SMTP
 standard	emailadmin	ca	Estàndar
 standard imap server	emailadmin	ca	Servidor IMAP estàndar
 standard pop3 server	emailadmin	ca	Servidor POP3 estàndar
 standard smtp-server	emailadmin	ca	Servidor SMTP estàndar
+this php has no imap support compiled in!!	emailadmin	ca	Aquesta instal·lació de PHP no té suport IMAP!
 use ldap defaults	emailadmin	ca	Usar les opcions predeterminades per LDAP
 use smtp auth	emailadmin	ca	Usar identificació SMTP
 use tls authentication	emailadmin	ca	Usar identificació TLS

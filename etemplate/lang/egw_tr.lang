@@ -1,0 +1,34 @@
+and	etemplate	tr	Ve
+application	etemplate	tr	Uygulama
+applications	etemplate	tr	Uygulamalar
+bottom	etemplate	tr	taban
+cancel	etemplate	tr	Ýptal
+contact	etemplate	tr	?leti?im
+custom	etemplate	tr	Özel
+custom fields	etemplate	tr	Özel Alanlar
+day	etemplate	tr	Gün
+days	etemplate	tr	gün
+default	etemplate	tr	Varsayýlan
+delete a single entry by passing the id.	etemplate	tr	ID'sini girerek bir girdiyi sil
+duration	etemplate	tr	Süre
+edit	etemplate	tr	Düzenle
+hours	etemplate	tr	saat
+import	etemplate	tr	?thal Et
+label	etemplate	tr	Etiket
+last	etemplate	tr	son
+link	etemplate	tr	Link
+minute	etemplate	tr	Dakika
+minutes	etemplate	tr	dakika
+month	etemplate	tr	Ay
+name	etemplate	tr	Ýsim
+no file	etemplate	tr	dosya yok
+no matches found	etemplate	tr	Hiç eþleþme yok
+or	etemplate	tr	ya da
+read a list of entries.	etemplate	tr	Bir girdi listesini oku
+read a single entry by passing the id and fieldlist.	etemplate	tr	ID ve alan listesini tarayarak bir girdi oku
+selectbox	etemplate	tr	Seçim kutusu
+text	etemplate	tr	Metin
+today	etemplate	tr	Bugün
+top	etemplate	tr	Maks
+update a single entry by passing the fields.	etemplate	tr	Alan de?erleri ile bir alan? güncelle.
+version	etemplate	tr	Sürüm

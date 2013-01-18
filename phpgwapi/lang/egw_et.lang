@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	et	%1 email aadress sisestatud
 %1 is not executable by the webserver !!!	common	et	%1 pole veebiserverijaoks käivitatav !!!
-%1 manual	common	et	%1 manual
-%1 start	common	et	%1 start
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	et	%1Vali teine kaust%2<br />või tee %3 veebiserverijaoks kirjutatavaks
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	et	%1eGroupWare%2 on multi-kasutaja, veebipõhine grupitöö vahend mis on kirjutatud %3PHP%4.
 - use the %1, %2 buttons to select month	jscalendar	et	- Kasuta %1, %2 nuppe kuu valimiseks
@@ -23,7 +21,9 @@ account has been created	common	et	Konto tehtud
 account has been deleted	common	et	Konto kustutatud
 account has been updated	common	et	Konto uuendatud
 account is expired	common	et	Konto on aegunud
+accounts	common	et	Kontod
 action	common	et	Tegevus
+actions	common	et	Tegevused
 active	common	et	Aktiivne
 add	common	et	Lisa
 add %1 category for	common	et	Lisa %1 kategooria
@@ -41,6 +41,7 @@ all fields	common	et	kõik väljad
 alphabet	common	et	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	et	Alternatiivne stiilileht:
 american samoa	common	et	AMEERIKA SAMOA
+and	common	et	Ja
 andorra	common	et	ANDORRA
 angola	common	et	ANGOLA
 anguilla	common	et	ANGUILLA
@@ -154,7 +155,9 @@ default category	common	et	Vaikimisi Kategooria
 default height for the windows	common	et	Vaikimisi akna kõrgus
 default width for the windows	common	et	Vaikimisi akna laius
 delete	common	et	Kustuta
+delete category	common	et	Kustuta kategooria
 delete row	common	et	Kustuta rida
+delete this entry	common	et	kustuta see kirje
 denmark	common	et	TAANI
 description	common	et	Kirjeldus
 detail	common	et	Detail
@@ -171,6 +174,7 @@ domestic	common	et	Kodumaine
 dominica	common	et	DOMINICA
 dominican republic	common	et	DOMINIKAANI VABARIIK
 done	common	et	Valmis
+download	common	et	Lae alla
 drag to move	jscalendar	et	Lohista liigutamiseks
 e-mail	common	et	E-Mail
 east timor	common	et	IDA TIMOR
@@ -179,8 +183,8 @@ edit	common	et	Muuda
 edit %1 category for	common	et	Muuda %1 kategooriat
 edit categories	common	et	Muuda Kategooriaid
 edit category	common	et	Muuda katekooria
+egroupware	common	et	eGroupWare
 egroupware api version	common	et	eGroupWare API versioon
-egroupware api version %1	common	et	eGroupWare API versioon %1
 egroupware: login blocked for user '%1', ip %2	common	et	eGroupWare: logimine blokeeritud kasutajale '%1', IP %2
 egypt	common	et	EGIPTUS
 el salvador	common	et	EL SALVADOR
@@ -253,6 +257,7 @@ honduras	common	et	HONDURAS
 hong kong	common	et	HONG KONG
 hungary	common	et	UNGARI
 iceland	common	et	ISLAND
+image url	common	et	Pildi URL
 india	common	et	INDIA
 indonesia	common	et	INDONEESIA
 insert column after	common	et	Sisesta veerg enne
@@ -269,7 +274,10 @@ january	common	et	Jaanuar
 japan	common	et	JAAPAN
 july	common	et	Juuli
 june	common	et	Juuni
+keywords	common	et	Märksõnad
 language	common	et	Keel
+last modified	common	et	Viimati muudetud
+last name	common	et	perekonnanimi
 last page	common	et	Viimane leht
 latvia	common	et	LÄTI
 left	common	et	Vasak
@@ -278,7 +286,10 @@ license	common	et	Litsents
 list	common	et	Nimekiri
 lithuania	common	et	LEEDU
 local	common	et	Lokaalne
+loginid	common	et	SisselogimiseID
 logout	common	et	Logi välja
+lost login id	common	et	Kaotasid logimise id
+lost password	common	et	Kaotasid parooli
 low	common	et	Madal
 lowest	common	et	Madalaim
 main category	common	et	Peamine kategooria
@@ -320,7 +331,10 @@ old value	common	et	Vana Väärtus
 oman	common	et	OMAAN
 only private	common	et	ainult privaatne
 only yours	common	et	ainult sinu
+open	common	et	avatud
 open popup window	common	et	Ava hüpikaken
+or	common	et	või
+original	common	et	Originaal
 overview	common	et	Ülevaade
 owner	common	et	Omanik
 page	common	et	Leht
@@ -337,6 +351,7 @@ poland	common	et	POOLA
 portugal	common	et	PORTUGAL
 preferences	common	et	Eelistused
 previous page	common	et	Eelmine leht
+primary group	common	et	primaarne Grupp
 primary style-sheet:	common	et	Primaarne siilileht:
 print	common	et	Prindi
 priority	common	et	Prioriteet
@@ -345,11 +360,13 @@ programs	common	et	Programmid
 project	common	et	Projekt
 read	common	et	Lugema
 reading	common	et	loen
+register	common	et	registreeru
 regular	common	et	Regulaarne
 reject	common	et	Lükka tagasi
 remove selected accounts	common	et	eemalda märgitud kontod
 rename	common	et	Nimeta ümber
 replace	common	et	Asenda
+restore failed	common	et	Taastamine ebaõnnestus
 reunion	common	et	REUNION
 right	common	et	Parem
 romania	common	et	RUMEENIA
@@ -387,9 +404,12 @@ show clock?	common	et	Näita kella?
 show menu	common	et	näita menüüd
 show page generation time	common	et	Näita lehe genereerimise aega
 show page generation time?	common	et	Näita lehe genereerimise aega?
+show_more_apps	common	et	Näita rohkem programme
 showing %1	common	et	näitan %1
 simple	common	et	Lihtne
 singapore	common	et	SINGAPUR
+site configuration	common	et	Saidi seadistused
+size	common	et	suurus
 slovakia	common	et	SLOVAKIA
 slovenia	common	et	SLOVEENIA
 somalia	common	et	SOMAALIA
@@ -398,11 +418,15 @@ spain	common	et	HISPAANIA
 start date	common	et	Algus kuupäev
 start time	common	et	Algus aeg
 status	common	et	Staatus
+subject	common	et	Subjekt
+submit	common	et	Saada
 sudan	common	et	SUDAAN
 sunday	common	et	Pühapäev
 sweden	common	et	ROOTSI
 text color:	common	et	Teksti värv:
 thailand	common	et	TAI
+the api is current	common	et	API on kaasaegne
+the api requires an upgrade	common	et	API vajab uuendamist
 the following applications require upgrades	common	et	Järgmised rakendused vajavad uuendusi
 this application is current	common	et	See rakendus on kaasaegne
 this application requires an upgrade	common	et	See rakendus vajab uuendust

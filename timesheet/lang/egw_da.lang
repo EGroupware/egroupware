@@ -1,0 +1,34 @@
+applies the changes	timesheet	da	udfør ændringerne
+by	timesheet	da	af
+create new links	timesheet	da	Lav nyt link
+creates a new field	timesheet	da	opretter et nyt felt
+custom fields	timesheet	da	Valgfri Felter
+deleted	timesheet	da	slettet
+deletes this field	timesheet	da	sletter dette felt
+determines the order the fields are displayed	timesheet	da	bestemmer rækkefølgen felterne bliver vist
+each value is a line like <id>[=<label>]	timesheet	da	hver værdi er en linie som <id>[=<label>]
+edit status	timesheet	da	Redigér status
+edit this entry	timesheet	da	Redigér denne indstasning
+end	timesheet	da	Slut
+existing links	timesheet	da	eksisterende links
+global categories	timesheet	da	Globale Kategorier
+history	timesheet	da	Historisk
+id	timesheet	da	ID
+last modified	timesheet	da	Sidst opdateret
+leaves without saveing	timesheet	da	forlad uden at gemme
+length<br>rows	timesheet	da	Længde<br>række
+links	timesheet	da	Links
+max length of the input [, length of the inputfield (optional)]	timesheet	da	maks længde af inputtet [længde af input feltet (valg frit)]
+modified	timesheet	da	Modificeret
+no details	timesheet	da	Ingen detaljer
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	da	Antal af rækker for et multi-linie felt eller linier i en multi-select box
+order	timesheet	da	Rækkefølge
+parent	timesheet	da	Overstående
+saves the changes made	timesheet	da	gem ændringer
+saves the changes made and leaves	timesheet	da	gem ændringerne og afslut
+start	timesheet	da	Start
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	da	Navn brugt internt (<= 20 tegn), ændring gør eksisterende data utilgængelige
+the text displayed to the user	timesheet	da	teksten som vises til brugeren
+values for selectbox	timesheet	da	Værdier for selectboks
+week	timesheet	da	Uge
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	da	Din database er ikke up to date (%1 vs. %2) Kør %3setup%4 for at opdatere database.

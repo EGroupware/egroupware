@@ -17,6 +17,7 @@ account preferences	admin	pt	Preferências da conta
 acl manager	admin	pt	Administração de regras de acesso
 acl rights	common	pt	Permissões de acesso
 action	admin	pt	Acção
+actions	admin	pt	Acções
 activate wysiwyg-editor	admin	pt	Activar editor WYSIWYG
 add a category	admin	pt	Adicionar uma categoria
 add a group	admin	pt	Adicionar um grupo
@@ -42,6 +43,8 @@ advanced options	admin	pt	opções avançadas
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	pt	Uma conta deve ser bloqueada após quantas tentativas de acesso sem sucesso (por omissão 3) ?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	pt	Um IP deve ser bloqueado após quantas tentativas de acesso sem sucesso (por omissão 3) ?
 aliases	admin	pt	Sinónimos
+all applications	admin	pt	Todas as aplicações
+all categories	admin	pt	Todas as categorias
 all records and account information will be lost!	admin	pt	Todos registos e dados de contas serão perdidos!
 all users	admin	pt	Todos os utilizadores
 allow anonymous access to this app	admin	pt	Permitir acesso anónimo a esta aplicação
@@ -57,6 +60,7 @@ application title	admin	pt	Título da aplicação
 applications	admin	pt	Aplicações
 applications list	admin	pt	Lista de aplicações
 applies the changes	admin	pt	Aplicar as alterações
+apply the changes	admin	pt	Aplicar alterações
 are you sure you want to delete the application %1 ?	admin	pt	Tem a certeza de que deseja eliminar a aplicação %1 ?
 are you sure you want to delete this account ?	admin	pt	Tem certeza de que deseja eliminar esta conta ?
 are you sure you want to delete this application ?	admin	pt	Tem certeza de que deseja eliminar esta aplicação ?
@@ -92,8 +96,10 @@ check ip address of all sessions	admin	pt	Verificar endereço IP de todas as ses
 check items to <b>%1</b> to %2 for %3	admin	pt	Marcar items de <b>%1</b> a %2 para %3
 click to select a color	admin	pt	Clique aqui para seleccionar uma cor
 color	admin	pt	Cor
+country	admin	pt	País
 country selection	admin	pt	Selecção de País
 create group	admin	pt	Criar Grupo
+created	admin	pt	Criado
 creates a new field	admin	pt	cria um novo campo
 crontab only (recomended)	admin	pt	Apenas crontab (recomendado)
 custom fields	admin	pt	Campos personalizados
@@ -117,6 +123,7 @@ delete the group	admin	pt	eliminar o grupo
 delete this category	admin	pt	eliminar esta categoria
 delete this group	admin	pt	elimnar este grupo
 delete this user	admin	pt	eliminar este utilizador
+deleted	admin	pt	eliminado/a
 deletes this field	admin	pt	eliminar este campo
 deliver extern	admin	pt	Entrega externa
 deny access to access log	admin	pt	Negar acesso ao registo de acessos
@@ -136,6 +143,7 @@ deny access to user accounts	admin	pt	Negar acesso às contas de utilizadores
 deny all users access to grant other users access to their entries ?	admin	pt	Negar a todos os utilizadores a possibilidade de conceder o acesso de outros utilizadores aos seus registos ?
 description can not exceed 255 characters in length !	admin	pt	A descrição não pode exceder os 255 caracteres !
 determines the order the fields are displayed	admin	pt	determina a ordem de apresentação dos campos
+disable	admin	pt	Desactivar
 disable "auto completion" of the login form	admin	pt	Desactivar a funcionalidade de "informação de formulários guardada" no formulário de acesso
 disable wysiwyg-editor	admin	pt	Desactivar o editor do WYSIWYG
 disabled (not recomended)	admin	pt	Desactivado (não recomendado)
@@ -144,6 +152,7 @@ do not delete the category and return back to the list	admin	pt	NÃO eliminar a 
 do you also want to delete all global subcategories ?	admin	pt	Deseja eliminar também todas subcategorias gerais ?
 do you want to delete all global subcategories ?	admin	pt	Deseja eliminar todas as subcategorias gerais ?
 do you want to move all global subcategories one level down ?	admin	pt	Deseja mover todas as subcategorias gerais para um nível mais abaixo ?
+down	admin	pt	baixo
 each value is a line like <id>[=<label>]	admin	pt	cada valor é uma linha como <id>[=<etiqueta>]
 each value is a line like id[=label]	admin	pt	cada valor é uma linha como <id>[=etiqueta]
 edit account	admin	pt	Editar conta
@@ -164,6 +173,7 @@ edit user	admin	pt	editar utilizador
 edit user account	admin	pt	Editar conta de utilizador
 email account active	admin	pt	conta de correio electrónico activa
 email address	admin	pt	endereço de correio electrónico
+enable	admin	pt	Activar
 enable debug-messages	admin	pt	Activar mensagens de debug
 enable the soap service	admin	pt	Activar o serviço soap
 enable the xmlrpc service	admin	pt	Activar o serviço xmlrpc
@@ -197,16 +207,17 @@ error: %1 not found or other error !!!	admin	pt	Erro: %1 não encontrado ou outr
 expires	admin	pt	Expira
 explanation of ldapman	admin	pt	Até ao momento, este módulo foi testado para POSTFIX, LDAP, Courier-IMAP e necessita de schemas CORE e QMAIL (OID7914). Para mais informações sobre a utilização e configuração deste sistema, consulte o ficheiro README.Idapman na pasta de documentos de ADMIN.
 fallback (after each pageview)	admin	pt	Fallback (depois de cada visualização de página)
+false	admin	pt	Falso
 field '%1' already exists !!!	admin	pt	O campo '%1' já existe !!!
 file space	admin	pt	Espaço do ficheiro
 file space must be an integer	admin	pt	O espaço do ficheiro tem de ser íntegro
-find and register all application hooks	admin	pt	Procurar e registar todas os pontos de entrada de aplicações
 for the times above	admin	pt	para as ocasiões anteriores
 for the times below (empty values count as '*', all empty = every minute)	admin	pt	para as ocasiões seguintes (valores vazios contam como '*', tudo vazio = todos os minutos)
 force selectbox	admin	pt	Forçar caixa de selecção
 forward also to	admin	pt	reencaminha também para
 forward emails to	admin	pt	reencaminhar mensagens para
 forward only	admin	pt	reencaminhar apenas
+full name	admin	pt	Nome completo
 global categories	common	pt	Categorias gerais
 group ?	admin	pt	grupo ?
 group has been added	common	pt	O grupo foi  adicionado
@@ -251,12 +262,13 @@ ldap rootdn	admin	pt	super utilizador LDAP
 leave empty for no quota	admin	pt	Vazio para não definir quota
 leave the category untouched and return back to the list	admin	pt	Deixa a categoria e volta para a lista
 leave the group untouched and return back to the list	admin	pt	Deixa o grupo e volta para a lista
+leave without saveing the entry	admin	pt	Continua sem guardar o registo
 leaves without saveing	admin	pt	Continua sem guardar
 length<br>rows	admin	pt	Altura<br>Linhas
 list config settings	admin	pt	Listar configurações
 list current sessions	admin	pt	Listar sessões actuais
 list of current users	admin	pt	Lista de utilizadores ligados
-login history	common	pt	Histórico de acessos
+login history	admin	pt	Histórico de acessos
 login message	admin	pt	Mensagem de entrada
 login screen	admin	pt	Ecrã de acesso
 login shell	admin	pt	Shell de acesso
@@ -269,11 +281,13 @@ manager	admin	pt	Gestor
 max length of the input [, length of the inputfield (optional)]	admin	pt	comprimento máximo [, comprimento do campo (opcional)]
 maximum account id (e.g. 65535 or 1000000)	admin	pt	ID máximo para contas (Exemplo: 65535 ou 1000000)
 maximum entries in click path history	admin	pt	Número máximo de registos ao clicar no histórico
+members	admin	pt	Membros
 message has been updated	admin	pt	Mensagem foi atualizada
 method	admin	pt	Método
 minimum account id (e.g. 500 or 100, etc.)	admin	pt	id mínimo para contas (Exemplo: 500 ou 100, etc.)
 minute	admin	pt	Minuto
 mode	admin	pt	Modo
+modified	admin	pt	Modificado
 month	admin	pt	Mês
 name must not be empty !!!	admin	pt	O campo do nome não pode ficar vazio !!!
 new group name	admin	pt	Nome do novo Grupo
@@ -291,6 +305,8 @@ no permission to add users	admin	pt	sem permissão para adicionar utilizadores
 no permission to create groups	admin	pt	sem permissão para criar grupos
 note: ssl available only if php is compiled with curl support	admin	pt	Nota: SSL disponível apenas se o PHP estiver compilado com suporte curl.
 number of row for a multiline inputfield or line of a multi-select-box	admin	pt	Número de linhas para um campo multi-linha ou linhas de uma caixa de selecção múltipla.
+one month	admin	pt	um mês
+one week	admin	pt	uma semana
 order	admin	pt	Ordenar
 outbound	admin	pt	Saída
 passthrough	admin	pt	Atravessar
@@ -301,6 +317,7 @@ peer servers	admin	pt	Servidores remotos
 percent of users that logged out	admin	pt	Percentagem de utilizadores que saíram
 percent this user has logged out	admin	pt	Percentagem das saídas deste utilizador
 permission denied	admin	pt	Permissão negada
+permission denied !!!	admin	pt	Permissão negada !!!
 permissions	admin	pt	Permissões
 permissions this group has	admin	pt	Permissões do grupo
 phpinfo	admin	pt	Informações do PHP
@@ -327,6 +344,7 @@ run asynchronous services	admin	pt	Executar serviços assíncronos
 save the category	admin	pt	guardar a categoria
 save the category and return back to the list	admin	pt	guardar a categoria e voltar à lista
 saves the changes made and leaves	admin	pt	guarda as alterações e deixa
+saves this entry	admin	pt	Guarda este registo
 search accounts	admin	pt	Pesquisar contas
 search categories	admin	pt	Pesquisar categorias
 search groups	admin	pt	Pesquisar grupos
@@ -365,6 +383,7 @@ standard	admin	pt	Por omissão
 standard imap server	admin	pt	Servidor IMAP por omissão
 standard pop3 server	admin	pt	Servidor POP3 por omissão
 standard smtp-server	admin	pt	Servidor SMTP por omissão
+start	admin	pt	Início
 start testjob!	admin	pt	Iniciar trabalho de teste!
 submit changes	admin	pt	Enviar alterações
 submit the search string	admin	pt	Enviar termo de pesquisa
@@ -396,16 +415,21 @@ timeout for sessions in seconds (default 14400 = 4 hours)	admin	pt	As sessões e
 times	admin	pt	Tempo
 top	admin	pt	Topo
 total records	admin	pt	Total de registos
+translation	admin	pt	Tradução
+true	admin	pt	Verdadeiro
 trust level	admin	pt	Nível de confiança
 trust relationship	admin	pt	Relação de confiança
+two weeks	admin	pt	duas semanas
 type '%1' already exists !!!	admin	pt	O tipo '%1' já existe !!!
 type of customfield	admin	pt	Tipo de campo personalizado
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	pt	No windowz é necessário instalar o asyncservice %1manualmente%2 ou utilizar o modo Fallback. Este modo significa que as tarefas só serão verificadas depois de cada visualização de página.
+up	admin	pt	para cima
+updated	admin	pt	Actualizado
 use cookies to pass sessionid	admin	pt	Utilizar cookies para transmitir id de sessão
 use pure html compliant code (not fully working yet)	admin	pt	Usar puro código HTML (não funciona totalmente ainda)
 use theme	admin	pt	Utilizar tema
 user accounts	admin	pt	Contas de utilizadores
-user data	admin	pt	Dados de utilizadores
+user data	common	pt	Dados de utilizadores
 user for smtp-authentication (leave it empty if no auth required)	admin	pt	Utilizador para autenticação SMTP (deixar vazio se a autenticação não for necessária)
 user groups	admin	pt	Grupos de utilizadores
 userdata	admin	pt	Dados de utilizadores

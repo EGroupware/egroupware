@@ -41,8 +41,10 @@ enable sieve	emailadmin	nl	activeer Sieve
 encrypted connection	emailadmin	nl	versleutelde verbinding
 encryption settings	emailadmin	nl	encryptie instellingen
 enter your default mail domain (from: user@domain)	emailadmin	nl	Voer uw standaard emaildomein in (uit: gebruiker@domein)
+entry saved	emailadmin	nl	Record opgeslagen
 error connecting to imap server. %s : %s.	emailadmin	nl	Fout verbinden met de IMAP server. %s : %s
 error connecting to imap server: [%s] %s.	emailadmin	nl	Fout verbinden met de IMAP server: [%s] %s
+error saving the entry!!!	emailadmin	nl	Fout bij het bewaren van de invoer!!!
 filtered by account	emailadmin	nl	gefilterd op Account
 filtered by group	emailadmin	nl	gefilterd op Groep
 forward also to	emailadmin	nl	Ook doorsturen naar
@@ -113,6 +115,7 @@ standard	emailadmin	nl	Standaard
 standard imap server	emailadmin	nl	Standaard IMAP-server
 standard pop3 server	emailadmin	nl	Standaard POP3-server
 standard smtp-server	emailadmin	nl	Standaard SMTP-server
+stationery	emailadmin	nl	stationery
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	nl	The IMAP server blijkt geen authenticatiemethode te ondersteunen. Gelieve uw systeembeheerder te contacteren.
 this php has no imap support compiled in!!	emailadmin	nl	Deze PHP heeft geen IMAP ondersteuning verzamelt in!!
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	nl	Om een TLS verbinding te gebruiken, moet u een versie van PHP 5.1.0 of hoger gebruiken.
@@ -136,3 +139,4 @@ users can define their own identities	emailadmin	nl	gebruikers kunnen hun eigen 
 users can define their own signatures	emailadmin	nl	gebruikers kunnen hun eigen ondertekening instellen
 vaction messages with start- and end-date require an admin account to be set!	emailadmin	nl	Afwezigheidsmeldingen met een start- en einddatum vereisen dat een beheerders account is ingesteld!
 virtual mail manager	emailadmin	nl	Virtual MAIL ManaGeR
+you have received a new message on the	emailadmin	nl	U heeft een nieuw bericht ontvangen op de

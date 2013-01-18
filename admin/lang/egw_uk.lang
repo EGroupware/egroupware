@@ -13,6 +13,7 @@ account preferences	admin	uk	Параметри рахунку
 acl manager	admin	uk	Керування ACL
 acl rights	common	uk	Права ACL
 action	admin	uk	Дія
+actions	admin	uk	Дії
 add a category	admin	uk	Додати категорію
 add a group	admin	uk	Додати групу
 add a new account.	admin	uk	Створити новий рахунок
@@ -46,6 +47,7 @@ application name	admin	uk	Назва приложення
 application title	admin	uk	Найменування приложення
 applications	admin	uk	Приложення
 applications list	admin	uk	Перелік приложень
+applies the changes	admin	uk	Застосувати зміни
 are you sure you want to delete the application %1 ?	admin	uk	Ви дійсно хочете видалити приложення %1 ?
 are you sure you want to delete this account ?	admin	uk	Ви дійсно хочете видалити цей рахунок?
 are you sure you want to delete this application ?	admin	uk	Ви дійсно хочете видалити це приложення ?
@@ -61,8 +63,6 @@ attempt to use correct mimetype for ftp instead of default 'application/octet-st
 authentication / accounts	admin	uk	Аутентифікація / Рахунки
 auto create account records for authenticated users	admin	uk	Створювати автоматично записи рахунків для аутентифікованих користувачів
 back to the list	admin	uk	Назад до переліку
-bi-dir passthrough	admin	uk	
-bi-directional	admin	uk	
 bottom	admin	uk	низ
 calculate next run	admin	uk	Розрахувати наступний запуск
 can change password	admin	uk	Може міняти пароль
@@ -74,10 +74,12 @@ change acl rights	admin	uk	Змінити ACL права
 change config settings	admin	uk	Змінити конфігураційні установки
 change main screen message	admin	uk	Змінити повідомлення основного екрану
 check ip address of all sessions	admin	uk	перевіряти ip адресу для всіх сесій
-check items to <b>%1</b> to %2 for %3	admin	uk	
+country	admin	uk	Країна
 country selection	admin	uk	Вибір країни
 create group	admin	uk	Створити групу
+creates a new field	admin	uk	створює нові поля
 crontab only (recomended)	admin	uk	тільки crontab (рекомендується)
+custom fields	admin	uk	Власні поля
 data	admin	uk	Число
 day	admin	uk	День
 day of week<br>(0-6, 0=sun)	admin	uk	День тиждня (0-6, 0=Неділя)
@@ -96,6 +98,8 @@ delete the group	admin	uk	Видалити групу
 delete this category	admin	uk	Видалити цю категорію
 delete this group	admin	uk	Видалити цю групу
 delete this user	admin	uk	Видалити цього користувача
+deleted	admin	uk	Видалено
+deletes this field	admin	uk	видаляє це поле
 deny access to access log	admin	uk	Заборонити доступ до протоколу доступу
 deny access to application registery	admin	uk	Заборонити доступ до регістру приложень
 deny access to applications	admin	uk	Заборонити доступ до приложень
@@ -111,6 +115,8 @@ deny access to site configuration	admin	uk	Заборонити доступ д�
 deny access to user accounts	admin	uk	Заборонити доступ до рахунків користувачів
 deny all users access to grant other users access to their entries ?	admin	uk	Заборонити всім користувачам давати доступ іншим користувачам до їх записів ?
 description can not exceed 255 characters in length !	admin	uk	Довжина опису не може перевищувати 255 символів !
+determines the order the fields are displayed	admin	uk	визначає послідовність показу полів
+disable	admin	uk	Відключити
 disable "auto completion" of the login form	admin	uk	Відключити "авто заповнення" у формі входу
 disabled (not recomended)	admin	uk	відключено (не рекомендується)
 display	admin	uk	Показувати
@@ -118,6 +124,7 @@ do not delete the category and return back to the list	admin	uk	НЕ видал�
 do you also want to delete all global subcategories ?	admin	uk	Чи хочете ви також видалити всі глобальні підкатегорії ?
 do you want to delete all global subcategories ?	admin	uk	Чи хочете ви видалити всі глобальні підкатегорії ?
 do you want to move all global subcategories one level down ?	admin	uk	Чи хочете ви перенести всі глобальні підкатегорії рівнем нижче ?
+each value is a line like <id>[=<label>]	admin	uk	Кожне значення є рядком у вигляді <id>[=<label>]
 edit account	admin	uk	Редагувати рахунок
 edit application	admin	uk	Редагувати приложення
 edit global category	admin	uk	Редагувати глобальну категорію
@@ -132,13 +139,13 @@ edit this group	admin	uk	Редагувати цю групу
 edit this user	admin	uk	Редагувати цього користувача
 edit user	admin	uk	Редагувати користувача
 edit user account	admin	uk	Редагувати рахунок користувача
+enable	admin	uk	Включити
 enable debug-messages	admin	uk	Дозволити відладочні повідомлення
 enabled - hidden from navbar	admin	uk	Включено - Сховано з навігаційної панелі
 enter a description for the category	admin	uk	введіть опис категорії
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	uk	Введіть якийсь випадковий текст для app_session<br>шифрації (вимагає mcrypt)
 enter the background color for the login page	admin	uk	Введіть колір фону для вхідного екрану
 enter the background color for the site title	admin	uk	Введіть колір фону для заголовку сайта
-enter the file name of your logo	admin	uk	Введіть назву файлу логотипу
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	uk	Введіть повний шлях для тимчасових файлів. <br>Наприклад: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	uk	Введіть повний шлях для файлів користувачів та груп. <br>Наприклад: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	uk	Введіть hostname машини, на якій працює цей сервер.
@@ -156,13 +163,10 @@ error canceling timer, maybe there's none set !!!	admin	uk	Помилка зуп
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	uk	Помилка встановлення таймеру, невірний синтаксис або вже один працює !!!
 error: %1 not found or other error !!!	admin	uk	Помилка: %1 не знайдено або інша помилка!!!
 expires	admin	uk	Обмежено
-fallback (after each pageview)	admin	uk	
 file space	admin	uk	Розмір файлу
 file space must be an integer	admin	uk	Розмір файлу має бути цілим числом
-find and register all application hooks	admin	uk	Шукати та реєструвати всі Hook'и приложень
-for the times above	admin	uk	
-for the times below (empty values count as '*', all empty = every minute)	admin	uk	
 force selectbox	admin	uk	Форсувати Selectbox
+full name	admin	uk	Повне ім'я
 global categories	common	uk	Глобальні категорії
 group ?	admin	uk	Група ?
 group has been added	common	uk	Група створена
@@ -204,10 +208,13 @@ ldap root password	admin	uk	root пароль LDAP
 ldap rootdn	admin	uk	LDAP rootdn
 leave the category untouched and return back to the list	admin	uk	залишити категорію незмінною та повернутися до переліку
 leave the group untouched and return back to the list	admin	uk	Залишити групу незмінною та повернутися до переліку
+leave without saveing the entry	admin	uk	вийти без збереження запису
+leaves without saveing	admin	uk	вийти без збереження
+length<br>rows	admin	uk	Довжина<br>Рядки
 list config settings	admin	uk	Перелік конфігураційних установок
 list current sessions	admin	uk	Перелік поточних сесій
 list of current users	admin	uk	Перелік поточних користувачів
-login history	common	uk	Історія входів
+login history	admin	uk	Історія входів
 login message	admin	uk	Повідомлення при вході
 login screen	admin	uk	Екран входу
 login shell	admin	uk	Шелл після входу
@@ -215,6 +222,7 @@ login time	admin	uk	Час входу
 loginid	admin	uk	ID входу
 main screen message	admin	uk	Повідомлення основного екрану
 manager	admin	uk	Керівник
+max length of the input [, length of the inputfield (optional)]	admin	uk	максимальна довжина вводу[, видима довжина поля вводу (необов'язково)]
 maximum account id (e.g. 65535 or 1000000)	admin	uk	Максимальний ідентифікатор рахунку (тобто 65535 або 1000000)
 maximum entries in click path history	admin	uk	Максимальна кількість записів у історії переходів
 message has been updated	admin	uk	Повідомлення змінено
@@ -222,8 +230,11 @@ method	admin	uk	Метод
 minimum account id (e.g. 500 or 100, etc.)	admin	uk	Мінімальний ідентифікатор рахунку (тобто 65535 або 1000000)
 minute	admin	uk	Хвилина
 mode	admin	uk	Режим
+modified	admin	uk	Змінено
 month	admin	uk	Місяць
+name must not be empty !!!	admin	uk	Назва повинна бути непорожнім
 new group name	admin	uk	Назва нової групи
+new name	admin	uk	нова назва
 new password [ leave blank for no change ]	admin	uk	Новий пароль [залиште порожнім якщо без змін]
 next run	admin	uk	Наступний запуск
 no algorithms available	admin	uk	Немає алгоритмів
@@ -235,13 +246,15 @@ no permission to add groups	admin	uk	Дозвіл на створення гру
 no permission to add users	admin	uk	Дозвіл на створення користувачів не надано
 no permission to create groups	admin	uk	Дозвіл на створення груп не надано
 note: ssl available only if php is compiled with curl support	admin	uk	Примітка: SSL доступний тільки якщо PHP скомпільовано з підтримкою curl
+number of row for a multiline inputfield or line of a multi-select-box	admin	uk	кількість рядків для багаторядкового поля вводу або рядків віконця вибору множини
+order	admin	uk	Послідовність
 outbound	admin	uk	вихідний
-passthrough	admin	uk	
 path information	admin	uk	Інформація шляху
 peer server list	admin	uk	Перелік peer серверів
 peer servers	admin	uk	Peer сервери
 percent of users that logged out	admin	uk	Процент користувачів, що вийшли нормально
 percent this user has logged out	admin	uk	Процент нормальних виходів користувача
+permission denied	admin	uk	Заборонено
 permissions	admin	uk	Дозволи
 permissions this group has	admin	uk	Ця група має дозволи
 phpinfo	admin	uk	Інформація PHP
@@ -253,7 +266,7 @@ preferences	admin	uk	Параметри
 primary group	admin	uk	первинна група
 re-enter password	admin	uk	Перевведіть пароль
 read this list of methods.	admin	uk	Прочитати цей перелік методів
-register application hooks	admin	uk	
+remove	admin	uk	Видалити
 remove all users from this group	admin	uk	Видалити всіх користувачів з цієї групи
 remove all users from this group ?	admin	uk	Видалити всіх користувачів з цієї групи ?
 return to admin mainscreen	admin	uk	Повернутись до головного екрану адміністратора
@@ -261,6 +274,8 @@ return to view account	admin	uk	Повернутись до перегляду �
 run asynchronous services	admin	uk	Виконувати асинхронні сервіси
 save the category	admin	uk	зберегти категорію
 save the category and return back to the list	admin	uk	зберегти категорію та повернутись до переліку
+saves the changes made and leaves	admin	uk	зберігає зроблені зміни та виходить
+saves this entry	admin	uk	Зберігає цей запис
 search accounts	admin	uk	Шукати рахунки
 search categories	admin	uk	Шукати категорії
 search groups	admin	uk	Шукати групи
@@ -310,9 +325,9 @@ the api requires an upgrade	admin	uk	API потребує оновлення
 the login and password can not be the same	admin	uk	Ідентифікатор користувача та пароль не можуть співпадати
 the loginid can not be more then 8 characters	admin	uk	Ідентифікатор користувача не може бути довше 8 символів
 the testjob sends you a mail everytime it is called.	admin	uk	Тестове завдання шле Вам листа кожного разу, коли його виконують
+the text displayed to the user	admin	uk	текст, що показуються користувачу
 the two passwords are not the same	admin	uk	Паролі не співпадають
 the users bellow are still members of group %1	admin	uk	нижчевказані користувачі все ще члени групи %1
-they must be removed before you can continue	admin	uk	
 this application is current	admin	uk	Приложення не потребує оновлення
 this application requires an upgrade	admin	uk	Приложення потребує оновлення
 this category is currently being used by applications as a parent category	admin	uk	Ця категорія використовується приложеннями як батьківська категорія.
@@ -321,14 +336,15 @@ timeout for sessions in seconds (default 14400 = 4 hours)	admin	uk	Таймау�
 times	admin	uk	Раз
 top	admin	uk	зверху
 total records	admin	uk	Всього записів
+translation	admin	uk	Переклад
 trust level	admin	uk	Рівень довіри
 trust relationship	admin	uk	Довірительні відносини
-under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	uk	Зараз в windows Ви можете використовувати тільки fallback режим. Це означає, що завдання перевіряються тільки після кожної перзагрузки сторінки!!!
+updated	admin	uk	Змінено
 use cookies to pass sessionid	admin	uk	Використовувати куки для передачі ідентифікатора сесії
 use pure html compliant code (not fully working yet)	admin	uk	Використовувати чистий HTML код (ще не повністю працює)
 use theme	admin	uk	Використовувати тему
 user accounts	admin	uk	Рахунки користувачів
-user data	admin	uk	Дані користувача
+user data	common	uk	Дані користувача
 user groups	admin	uk	Групи користувачів
 userdata	admin	uk	Дані користувача
 users choice	admin	uk	Вибір користувача

@@ -6,28 +6,26 @@
 actions	addressbook	uk	Дії
 add a single entry by passing the fields.	addressbook	uk	Додати один запис шляхом заповнення полів
 add custom field	addressbook	uk	Додати власне поле
+added	addressbook	uk	Добавлено
 address book	common	uk	Адресна Книга
 address book - vcard in	addressbook	uk	Адресна Книга - VCard in
 address book - view	addressbook	uk	Адресна Книга - перегляд
 address line 2	addressbook	uk	Рядок 2
-address line 3	addressbook	uk	Рядок 3
 address type	addressbook	uk	Тип адреси
 addressbook	common	uk	Адресна Книга
 addressbook preferences	addressbook	uk	Параметри Адресної Книги
 addressbook-fieldname	addressbook	uk	Адресна Книга - назва поля
 addvcard	addressbook	uk	Додати VCard
 alt. csv import	addressbook	uk	Альтернативний CSV Імпорт
+always	addressbook	uk	Завжди
 are you sure you want to delete this field?	addressbook	uk	Ви дійсно хочете видалити цей запис?
-bbs phone	addressbook	uk	Телефон BBS
 birthday	common	uk	День народження
 birthdays	common	uk	Дні народження
 blank	addressbook	uk	Порожньо
 business	common	uk	Робоча адреса
-business address type	addressbook	uk	Тип робочої адреси
 business city	addressbook	uk	Місто
 business country	addressbook	uk	Країна
 business email	addressbook	uk	Робочий EMail
-business email type	addressbook	uk	Тип робочого EMail
 business fax	addressbook	uk	Факс
 business phone	addressbook	uk	Телефон
 business state	addressbook	uk	Область
@@ -38,27 +36,32 @@ cell phone	addressbook	uk	Сотовий телефон
 charset of file	addressbook	uk	Кодування файлу
 city	common	uk	Місто
 company	common	uk	Компанія
-company name	common	uk	Назва компанії
+company name	addressbook	uk	Назва компанії
 configuration	common	uk	Конфігурація
 contact	common	uk	Контакт
 contact application	admin	uk	Приложення Контакт
 contact settings	admin	uk	Параметри Контакту
 copied by %1, from record #%2.	addressbook	uk	Скопійовано %1, з запису #%2.
 country	common	uk	Країна
+create new links	addressbook	uk	Створити нові посилання
 csv-fieldname	addressbook	uk	CSV-Fieldname
 csv-filename	addressbook	uk	CSV-Filename
 custom	addressbook	uk	Власне
 custom fields	addressbook	uk	Власні поля
 debug output in browser	addressbook	uk	Debug output in browser
+default	addressbook	uk	По замовченню
 default filter	addressbook	uk	Типовий фільтр
 delete a single entry by passing the id.	addressbook	uk	Видалити один запис по id.
+deleted	addressbook	uk	Видалено
 department	common	uk	Департамент
 domestic	addressbook	uk	Місцевий
 download	addressbook	uk	Загрузити
+duration	addressbook	uk	Тривалість
 edit custom field	addressbook	uk	Редагувати власне поле
 edit custom fields	admin	uk	Редагувати власні поля
 empty for all	addressbook	uk	Порожнє для всіх
 enter the path to the exported file here	addressbook	uk	Введіть шлях до файлу експорту
+existing links	addressbook	uk	Існуючі посилання
 export contacts	addressbook	uk	Експортувати контакти
 export file name	addressbook	uk	Назва файлу експорту
 export from addressbook	addressbook	uk	Експорт з Адресної книги
@@ -72,12 +75,11 @@ fields to show in address list	addressbook	uk	Видимі поля у пере�
 fieldseparator	addressbook	uk	Розділитель полів
 full name	addressbook	uk	Повне ім'я
 geo	addressbook	uk	GEO
+global categories	addressbook	uk	Глобальні категорії
 grant addressbook access	common	uk	Надати доступи до адресної книги
-home address type	addressbook	uk	Тип домашньої адреси
 home city	addressbook	uk	Місто
 home country	addressbook	uk	Країна
 home email	addressbook	uk	Домашній EMail
-home email type	addressbook	uk	Тип домашнього EMail
 home phone	addressbook	uk	Телефон
 home state	addressbook	uk	Область
 home street	addressbook	uk	Вулиця
@@ -90,15 +92,14 @@ import from ldif, csv, or vcard	addressbook	uk	Імпортувати LDIF, CSV 
 import from outlook	addressbook	uk	Імпорт з Outlook
 import next set	addressbook	uk	Імпортувати наступний набір
 import_instructions	addressbook	uk	В Нетскейпі(Мозілі) відкрийте Адресну книгу та виберіть <b>Експорт</b> з меню <b>Файл</b>. Файл буде експортовано в форматі LDIF. <p>В Outlook зайдіть в закладку Контакти, виберіть <b>Імпорт та Експорт...</b> в меню <b>Файл</b> та експортуйте ваші контакти в CSV-файл.<p>В  Palm Desktop 4.0 або вище, зайдіть в Адресну книгу та виберіть <b>Експорт</b> в меню <b>Файл</b>. Файл буде експортовано в форматі VCard.
+infolog	addressbook	uk	Записки
 international	addressbook	uk	Міжнародний
-isdn phone	addressbook	uk	ISDN телефон
 label	addressbook	uk	Примітки
-ldap context for contacts	admin	uk	
-ldap host for contacts	admin	uk	
-ldap root dn for contacts	admin	uk	
-ldap root pw for contacts	admin	uk	
+last modified	addressbook	uk	Востаннє змінено
 ldif	addressbook	uk	LDIF
 line 2	addressbook	uk	Рядок 2
+links	addressbook	uk	Посилання
+location	addressbook	uk	Місце
 mark records as private	addressbook	uk	Помітити записи як особисті
 message phone	addressbook	uk	Телефон автовідповідача
 middle name	addressbook	uk	По батькові
@@ -111,6 +112,7 @@ other number	addressbook	uk	Інший номер
 other phone	addressbook	uk	Інший телефон
 pager	common	uk	Пейджер
 parcel	addressbook	uk	Поштова скринька
+participants	addressbook	uk	Учасники
 phone number	common	uk	Номер телефону
 phone numbers	common	uk	Телефонні номери
 please enter a name for that field !	addressbook	uk	Будь ласка введіть назву поля !
@@ -122,9 +124,8 @@ read a list of entries.	addressbook	uk	Прочитати перелік зап�
 read a single entry by passing the id and fieldlist.	addressbook	uk	Прочитати один запис по id та переліку полів.
 record access	addressbook	uk	Доступи запису
 record owner	addressbook	uk	Власник запису
-retrieve contacts	admin	uk	втягнути контакти
+repetition	addressbook	uk	Повторення
 select the type of conversion	addressbook	uk	Виберіть тип конверсії
-select where you want to store	admin	uk	Виберіть місце для зберігання
 show birthday reminders on main screen	addressbook	uk	Показувати основному екрані нагадування про дні народження
 startrecord	addressbook	uk	Початковий запис
 state	common	uk	Область
@@ -139,13 +140,13 @@ to many might exceed your execution-time-limit	addressbook	uk	надто баг�
 today is %1's birthday!	common	uk	Сьогодні день народження %1!
 tomorrow is %1's birthday.	common	uk	Завтра день народження %1.
 translation	addressbook	uk	Переклад
+type	addressbook	uk	Тип
 update a single entry by passing the fields.	addressbook	uk	Змінити один запис шляхом заповнення полів.
+updated	addressbook	uk	Змінено
 use country list	addressbook	uk	Використовувати перелік країн
 vcard	common	uk	VCard
 vcards require a first name entry.	addressbook	uk	VCard потребує поле імені.
 vcards require a last name entry.	addressbook	uk	VCard потребує поле прізвища.
-video phone	addressbook	uk	Відеотелефон
-voice phone	addressbook	uk	Голосовий телефон
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	uk	УВАГА!! LDAP можливий тільки якщо Ви НЕ використовуєте контакти для зберігання рахунків користувачів!
 work phone	addressbook	uk	Робочий телефон
 you must select a vcard. (*.vcf)	addressbook	uk	Необхідно вказати VCard. (*.vcf)

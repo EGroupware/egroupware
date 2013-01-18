@@ -70,6 +70,7 @@ connection dropped by imap server.	felamimail	cs	Připojení ukončeno IMAP serv
 contact not found!	felamimail	cs	Kontakt nebyl nalezen!
 contains	felamimail	cs	obsahuje
 copy or move messages?	felamimail	cs	Kopírovat nebo přesunout zprávy?
+copy to	felamimail	cs	Kopírovat do
 copying messages to	felamimail	cs	kopíruji zprávy do
 could not complete request. reason given: %s	felamimail	cs	Nemohu dokončit požadavek. Důvod: %s
 could not import message:	felamimail	cs	Nemohu importovat zprávu:
@@ -175,6 +176,7 @@ error:	felamimail	cs	Chyba:
 error: could not save message as draft	felamimail	cs	Chyba: Zprávu nebylo možné uložit jako rozepsanou
 error: could not save rule	felamimail	cs	Chyba:  Nelze uložit pravidlo
 error: message could not be displayed.	felamimail	cs	Chyba: Zprávu nelze zobrazit.
+event details follow	felamimail	cs	Následují detaily události
 every	felamimail	cs	každý
 every %1 days	felamimail	cs	každý %1 den
 expunge	felamimail	cs	Vymazat
@@ -248,6 +250,7 @@ imaps encryption only	felamimail	cs	IMAPS jen šifrování
 import	felamimail	cs	importovat
 import mail	felamimail	cs	Importovat poštu
 import message	felamimail	cs	importovat zprávu
+importance	felamimail	cs	Důležitost
 in	felamimail	cs	v
 inbox	felamimail	cs	INBOX
 incoming mail server(imap)	felamimail	cs	server příchozí pošty (IMAP)
@@ -263,6 +266,7 @@ keep local copy of email	felamimail	cs	zachovat lokální kopii zprávy
 kilobytes	felamimail	cs	kilobytů
 language	felamimail	cs	Jazyk
 last name	felamimail	cs	Příjmení
+later	felamimail	cs	Později
 left	felamimail	cs	Levý
 less	felamimail	cs	menší
 less than	felamimail	cs	menší než
@@ -297,6 +301,7 @@ move folder	felamimail	cs	přesunout složku
 move messages	felamimail	cs	přesunout zprávy
 move messages?	felamimail	cs	Přesunout zprávy?
 move selected to	felamimail	cs	přesunout vybrané (kam)
+move to	felamimail	cs	Přesunout do
 move to trash	felamimail	cs	Přesunout do koše
 moving messages to	felamimail	cs	přesouvám zprávy do
 name	felamimail	cs	Jméno
@@ -405,6 +410,7 @@ select folder	felamimail	cs	vybrat složku
 select your mail server type	admin	cs	Vybrat typ e-mailového serveru
 send	felamimail	cs	Odeslat
 send a reject message	felamimail	cs	odeslat zprávu se zamítnutím
+sender	felamimail	cs	Odesílatel
 sent	felamimail	cs	Odeslané
 sent folder	felamimail	cs	Odeslané
 server supports mailfilter(sieve)	felamimail	cs	server podporuje poštovní filter (sieve)
@@ -476,6 +482,7 @@ unsubscribed successfully!	felamimail	cs	Úspěšně odhlášeno !
 up	felamimail	cs	nahoru
 updating message status	felamimail	cs	aktualizuji stav zprávy
 updating view	felamimail	cs	aktualizuji zobrazení
+urgent	felamimail	cs	Naléhavé
 use <a href="%1">emailadmin</a> to create profiles	felamimail	cs	pro vytvoření profilů použijte <a href="%1">EmailAdmin</a>
 use a signature	felamimail	cs	Použít podpis
 use a signature?	felamimail	cs	Použít podpis?

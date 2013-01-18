@@ -46,7 +46,6 @@ allow authentication via cookie	setup	zh	允许通过 cookie 认证
 allow password migration	setup	zh	允许密码迁移
 allowed migration types (comma-separated)	setup	zh	允许的迁移类型 (逗号分隔)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	zh	其它域可通过 <i>username@domain</i> 帐户登录访问。
-analysis	setup	zh	分析
 and is up to date	setup	zh	是最新的
 and reload your webserver, so the above changes take effect !!!	setup	zh	并重启服务器使以上修改生效！
 app details	setup	zh	应用程序详细信息
@@ -121,6 +120,7 @@ click <a href="index.php">here</a> to return to setup.	setup	zh	点击<a href="i
 click here	setup	zh	点击此处
 click here to re-run the installation tests	setup	zh	点击返回安装测试
 comma separated ip-addresses or host-names, default access to setup from everywhere	setup	zh	用逗号分隔 IP 地址或主机名，默认可以从任何地方访问安装程序。
+complete path to aspell program	setup	zh	Aspell (拼写检查软件)程序的完整路径
 completed	setup	zh	已完成
 config password	setup	zh	登录密码
 config username	setup	zh	登录帐户
@@ -248,7 +248,6 @@ file uploads are switched off: you can not use any of the filemanagers, nor can 
 filename	setup	zh	文件名
 filesystem	setup	zh	文件系统
 force selectbox	setup	zh	选择框
-found existing configuration file. loading settings from the file...	setup	zh	找到配置文件，正在从文件中读取配置信息...
 give admin access to all installed apps	setup	zh	给予管理员访问所有已安装应用程序权限
 gives further options	setup	zh	gives further options
 go back	setup	zh	返回上一页
@@ -286,8 +285,6 @@ if you running this the first time, don't forget to manualy %1 !!!	setup	zh	如�
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	zh	如果您只使用相同编码的语言(如：西欧)，则不需要设置系统编码！
 image type selection order	setup	zh	选择图片类型优先顺序
 import has been completed!	setup	zh	导入完成!
-importing old settings into the new format....	setup	zh	导入旧设置到新格式中...
-include root	setup	zh	包含根
 include_path need to contain "." - the current directory	setup	zh	include_path 必须包含"." - 当前目录
 install	setup	zh	安装
 install all	setup	zh	安装所有
@@ -343,13 +340,13 @@ mcrypt algorithm (default tripledes)	setup	zh	Mcrypt 加密算法 (默认是 TRI
 mcrypt initialization vector	setup	zh	MCrypt 初始化向量
 mcrypt mode (default cbc)	setup	zh	Mcrypt 模式 (默认是 CBC)
 mcrypt settings (requires mcrypt php extension)	setup	zh	Mcrypt 配置 (要求 mcrypt 以 PHP 为扩展名)
-mcrypt version	setup	zh	MCrypt 版本
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	zh	memory_limit(最大可用内存)设为小于%1：eGroupWare有部分应用程序会使用超过默认值8M的内存，特别是无法预期的错误。
 migration between egroupware account repositories	setup	zh	在 eGroupWare 帐户储存库之间迁移
 minimum account id (e.g. 500 or 100, etc.)	setup	zh	帐户 ID 最小值 (如：500 or 100，等)
 minute	setup	zh	分
 missing or uncomplete mailserver configuration	setup	zh	缺少或未完成邮件服务器设置
 modifications have been completed!	setup	zh	修改完成！
+modified	setup	zh	修改
 modify	setup	zh	修改
 month	setup	zh	月
 multi-language support setup	setup	zh	多语言安装支持
@@ -399,8 +396,6 @@ path to various directories: have to exist and be writeable by the webserver	set
 pear (%1) is a php repository and is usually in a package called %2.	setup	zh	PEAR(%1)是一个 php 库，通常 PEAR 包被称为%2。
 pear%1 is needed by: %2.	setup	zh	PEAR%1 需要由：%2。
 persistent connections	setup	zh	持续连接
-php plus restore	setup	zh	PHP plus restore
-php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	zh	PHP 的增强还原功能到目前为止是最好的，就像它在会话中存储 eGW 全部范围一样。
 please check for sql scripts within the application's directory	setup	zh	请在应用程序所在目录中检查 SQL 脚本
 please check read/write permissions on directories, or back up and use another option.	setup	zh	请检查对目录的读/写权限，或者备份后采取其它措施。
 please configure egroupware for your environment	setup	zh	请根据您的运行环境设置eGroupWare
@@ -427,7 +422,6 @@ re-enter password	setup	zh	重新输入密码
 read translations from	setup	zh	读取转换信息
 readable by the webserver	setup	zh	网络服务器可读取
 really uninstall all applications	setup	zh	确实卸载所有应用程序
-recommended: filesystem	setup	zh	推荐: 文件系统
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	zh	register_globals 开启中，eGroupWare 不需要这个设定，而且关闭它通常比较安全
 registered	setup	zh	注册
 rejected lines	setup	zh	拒绝的行
@@ -446,7 +440,6 @@ return to setup	setup	zh	返回安装页面
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	zh	执行数据库结构更新(如需要)：域(全部)，[设置者(admin)]，密码
 run installation tests	setup	zh	执行安装测试
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	zh	安全模式启用中，这样您的安装过程将会比较安全。
-sample configuration not found. using built in defaults	setup	zh	未找到配置范例。将使用内置的默认配置
 save	setup	zh	保存
 save this text as contents of your header.inc.php	setup	zh	将文本保存为header.inc.php
 schedule	setup	zh	计划任务
@@ -456,8 +449,6 @@ select one...	setup	zh	选择一个...
 select the default applications to which your users will have access	setup	zh	选择一个您的用户能够访问的应用程序
 select the desired action(s) from the available choices	setup	zh	从下面的操作中选出您需要的操作
 select to download file	setup	zh	选择下载文件
-select where you want to store/retrieve file contents	setup	zh	请选择保存/恢复文件内容的位置
-select where you want to store/retrieve filesystem information	setup	zh	请选择保存/恢复文件系统信息的位置
 select where you want to store/retrieve user accounts	setup	zh	选择保存/恢复用户帐户信息的位置
 select which group(s) will be exported	setup	zh	选择要导出的组
 select which group(s) will be imported (group membership will be maintained)	setup	zh	请选择要导入的组(组成员仍然保留)
@@ -473,16 +464,13 @@ select which user(s) will have admin privileges	setup	zh	请选择哪个用户�
 select your old version	setup	zh	请选择您旧的版本
 selectbox	setup	zh	选择对话框
 server root	setup	zh	服务器根目录
-sessions type	setup	zh	会话类型
 set	setup	zh	设置
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	zh	此处应设置为"旧"版本<2.4, 或者设置为mcrypt的确切版本号。
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	zh	设置系统字符集编码为 UTF-8(unicode) 允许来自不同字符集语言的数据共存。
 settings	setup	zh	设置
-setup	admin	zh	安装程序
+setup	setup	zh	安装程序
 setup main menu	setup	zh	安装主菜单
 setup the database	setup	zh	安装数据库
 setup/config admin login	setup	zh	安装/设定管理员登入
-should be the same as server root unless you know what you are doing.	setup	zh	如果您不确定，它应该和服务器根目录一样。
 show 'powered by' logo on	setup	zh	显示 'powered by' 徽标
 sieve: host[,port(2000)]	setup	zh	Sieve: Host[,Port(2000)]
 size	setup	zh	大小
@@ -548,7 +536,6 @@ translations upgraded	setup	zh	转换已升级
 true	setup	zh	True
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	zh	请将您的 php 设置成支持上述的关系数据库, 或者手动安装 eGroupWare。
 two weeks	setup	zh	两周
-unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	zh	部分 PHP/Apache 软件执行时发生错误 (Apache终止，因此您无法登录)。
 uninstall	setup	zh	卸载
 uninstall all applications	setup	zh	卸载所有应用程序
 uninstalled	setup	zh	卸载
@@ -587,7 +574,6 @@ we could not determine the version of %1, please make sure it is at least %2	set
 we will automatically update your tables/records to %1	setup	zh	将自动将您的数据表/纪录自动升级到%1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	zh	我们现在将进行一系列的测试，这可能需要几分钟时间。点击以下链接继续。
 welcome to the egroupware installation	setup	zh	欢迎使用 eGroupWare
-what type of sessions management do you want to use (php session management may perform better)?	setup	zh	您想要使用哪种类型的会话管理工具？(PHP会话管理也许能更好执行)？
 which database type do you want to use with egroupware?	setup	zh	你想选择哪一种数据库类型用于eGroupWare？
 world readable	setup	zh	所有人可读
 world writable	setup	zh	所有人可写
@@ -603,7 +589,6 @@ you appear to be running a pre-beta version of egroupware.<br />these versions a
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	zh	您目前运行的PHP版本太旧<br />建议您升级到较新版本。<br />因为老版本的 PHP 可能会造成 eGroupWare 运行不正常。<br /><br />建议您升级到至少 %1
 you appear to be running version %1 of egroupware	setup	zh	您目前运行的eGroupWare版本为 %1
 you appear to have %1 support.	setup	zh	您的系统支持 %1 。
-you appear to have php session support. enabling php sessions.	setup	zh	您的系统支持 PHP session, PHP sessions 功能已启用。
 you appear to have xml support enabled	setup	zh	您的系统支持XML
 you are ready for this stage, but this stage is not yet written.<br />	setup	zh	您已经选择好要使用这个步骤，但这个步骤尚未完成开发。<br />
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	zh	您使用的 PHP 版本为 %1，eGroupWare 现在需要 %2 或更新版本，建议使用PHP %3。
@@ -618,7 +603,6 @@ you have not created your header.inc.php yet!<br /> you can create it now.	setup
 you have successfully logged out	setup	zh	注销成功
 you must enter a username for the admin	setup	zh	您必须为管理员输入一个用户名
 you need to add at least one egroupware domain / database instance.	setup	zh	您必须至少添加一个 eGroupWare 域/数据库实例。
-you need to add some domains to your header.inc.php.	setup	zh	您需要在 header.inc.php 中添加域。
 you need to configure egroupware:	setup	zh	您需要配置 eGroupWare：
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	zh	您必须先修复上面的错误以便配置文件 header.inc.php 能够写入！
 you need to select your current charset!	setup	zh	您必须选择当前系统编码！
@@ -626,7 +610,6 @@ you should either install the sources or uninstall it, to get rid of the tables	
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	zh	您应该卸载后重新安装，或者尝试手动修复
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	zh	您将不能使用 PHP sessions 登录到 eGroupWare："会话无法验证"！
 you're using an old configuration file format...	setup	zh	您使用的是旧的配置文件格式...
-you're using an old header.inc.php version...	setup	zh	您使用的是旧版本的header.inc.php ...
 your applications are current	setup	zh	您的应用程序是当前应用程序
 your backup directory '%1' %2	setup	zh	您的备份文件夹 '%1' %2
 your database does not exist	setup	zh	您的数据库不存在
@@ -644,4 +627,3 @@ your tables will be dropped and you will lose data	setup	zh	您的数据表将�
 your temporary directory '%1' %2	setup	zh	您的暂存文件夹 '%1' %2
 {db | php(default) | php-restore}	setup	zh	{db | php(默认) | php-restore}
 {off(default) | on}	setup	zh	{off(默认) | on}
-complete path to aspell program	setup	zh	Aspell (拼写检查软件)程序的完整路径

@@ -18,6 +18,8 @@ email settings	common	et	Email setingud
 encrypted connection	emailadmin	et	krüpteeritud ühendus
 encryption settings	emailadmin	et	Krüpteerimise setingud
 enter your default mail domain (from: user@domain)	emailadmin	et	Sisesta oma vaikimisi mail doomen (kasutaja@doomen)
+entry saved	emailadmin	et	Kirje salvestatud
+error saving the entry!!!	emailadmin	et	Viga kirje salvestamisel !!!
 global options	emailadmin	et	Globaalsed omadused
 imap admin password	admin	et	IMAP admin parool
 imap admin user	admin	et	IMAP admin kasutaja

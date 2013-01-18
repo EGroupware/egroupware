@@ -36,6 +36,8 @@ administration	admin	id	Administrasi
 admins	admin	id	Admins
 advanced options	admin	id	Opsi canggih
 aliases	admin	id	Alias
+all applications	admin	id	all applications
+all categories	admin	id	Semua kategori
 all users	admin	id	Semua pengguna
 alternate email address	admin	id	alamat email pengganti
 anonymous user	admin	id	Anonymous user
@@ -48,6 +50,7 @@ applications	admin	id	Aplikasi
 applications list	admin	id	Daftar Aplikasi
 applies the changes	admin	id	terapkan perubahan
 apply the changes	admin	id	Terapkan perubahan
+are you sure you want to delete this category ?	common	id	Anda yakin ingin menghapus kategori ini?
 asynchronous timed services	admin	id	Asynchronous timed services
 authentication / accounts	admin	id	Otentikasi / Akoun
 back to the list	admin	id	kembali ke daftar
@@ -59,7 +62,9 @@ can change password	admin	id	Can change password
 cancel testjob!	admin	id	Batalkan TestJob!
 categories list	admin	id	Daftar Kategori
 category %1 has been saved !	admin	id	Kategori %1 telah disimpan!
+category deleted.	admin	id	Kategori dihapus.
 category list	admin	id	Daftar Kategori
+category saved.	admin	id	Kategori disimpan.
 change account_id	admin	id	Ubah account_id
 change acl rights	admin	id	Ubah Hak-hak ACL
 change config settings	admin	id	Ubah seting konfigurasi
@@ -72,6 +77,7 @@ country selection	admin	id	Pemilihan Negara
 create group	admin	id	Bikin Kelompok
 created	admin	id	Dibuat
 created with id #%1	admin	id	dibuat dengan ID #%1
+creates a new field	admin	id	bikin field baru
 crontab only (recomended)	admin	id	hanya crontab (rekomendasi)
 custom fields	admin	id	Custom fields
 cyrus imap server	admin	id	Cyrus IMAP Server
@@ -94,12 +100,18 @@ delete this category	admin	id	hapus kategori ini
 delete this group	admin	id	hapus kelompok ini
 delete this log entry	admin	id	Hapus entri log ini
 delete this user	admin	id	hapus pengguna ini
+deleted	admin	id	terhapus
 deletes this field	admin	id	hapus field ini
 deliver extern	admin	id	deliver extern
+description can not exceed 255 characters in length !	admin	id	Panjang uraian tidak boleh melebihi 255 karakter!
+determines the order the fields are displayed	admin	id	menentukan urutan field ditampilkan
+disable	admin	id	Disable
 disable wysiwyg-editor	admin	id	disable WYSIWYG-editor
 disabled (not recomended)	admin	id	disabled (not recomended)
 display	admin	id	Tampilan
 document root (default)	admin	id	Document root (default)
+down	admin	id	turun
+each value is a line like <id>[=<label>]	admin	id	setiap nilai adalah sebuah baris seperti <id>[=<label>]
 edit account	admin	id	Edit akoun
 edit application	admin	id	Edit aplikasi
 edit email settings	admin	id	edit pengaturan email
@@ -120,12 +132,15 @@ egroupware directory	admin	id	direktori eGroupWare
 egroupware version	admin	id	Versi EGroupware
 email account active	admin	id	akoun email aktif
 email address	admin	id	alamat email
+enable	admin	id	enable
 enable debug-messages	admin	id	Enable debug-messages
 error saving	admin	id	Error menyimpan
 error saving account!	admin	id	Error menyimpan akoun!
 expires	admin	id	Kadaluarsa
 false	admin	id	false
 file space	admin	id	File space
+forward only	admin	id	Hanya Forward
+full name	admin	id	Nama Lengkap
 global categories	common	id	Kategori Global
 group ?	admin	id	kelompok?
 group has been added	common	id	Kelompok telah dibuat
@@ -167,6 +182,7 @@ ldap groups context	admin	id	LDAP groups context
 ldap host	admin	id	LDAP host
 ldap root password	admin	id	LDAP root password
 ldap rootdn	admin	id	LDAP rootdn
+leave empty for no quota	admin	id	kosongkan bila tanpa kuota
 leave without saveing the entry	admin	id	tinggalkan tanpa menyimpan entri
 leaves without saveing	admin	id	tinggalkan tanpa menyimpan
 length<br>rows	admin	id	Length<br>Rows
@@ -187,7 +203,9 @@ logoutime	admin	id	Logoutime
 mail settings	admin	id	Pengaturan Mail
 main email-address	admin	id	Alamat eMail Utama
 main screen message	admin	id	Pesan layar utama
+manage mapping	admin	id	Mengelola pemetaan
 manager	admin	id	Manajer
+members	admin	id	Anggota
 method	admin	id	Metode
 minute	admin	id	Menit
 mode	admin	id	Mode
@@ -198,8 +216,10 @@ new group name	admin	id	Nama kelompok baru
 new name	admin	id	nama baru
 next run	admin	id	Next run
 no algorithms available	admin	id	no algorithms available
+no alternate email address	admin	id	tanpa alamat email pengganti
 no matches found	admin	id	No matches found
 no modes available	admin	id	no modes available
+number of row for a multiline inputfield or line of a multi-select-box	admin	id	number of row for a multiline inputfield or line of a multi-select-box
 one day	admin	id	satu hari
 one hour	admin	id	satu jam
 one month	admin	id	satu bulan
@@ -233,6 +253,7 @@ re-enter password	admin	id	Masukan-ulang password
 remove	admin	id	buang
 requested	admin	id	Diminta
 save the category	admin	id	simpan kategori ini
+saves the changes made and leaves	admin	id	simpan perubahan dan tinggalkan
 saves this entry	admin	id	Simpan entri ini
 search accounts	admin	id	Cari akoun
 search categories	admin	id	Cari kategori
@@ -260,6 +281,7 @@ standard	admin	id	standar
 standard imap server	admin	id	standard IMAP server
 standard pop3 server	admin	id	standard POP3 server
 standard smtp-server	admin	id	standard SMTP-Server
+start	admin	id	Mulai
 start testjob!	admin	id	Start TestJob!
 submit changes	admin	id	Submit Changes
 submit displayed information?	admin	id	Submit displayed information?
@@ -271,10 +293,12 @@ success	admin	id	sukses
 template selection	admin	id	Pemilihan Templat
 text entry	admin	id	Text Entry
 the api is current	admin	id	The API is current
+the two passwords are not the same	admin	id	Kedua password tidak sama
 the users bellow are still members of group %1	admin	id	pengguna berikut ini masih menjadi anggota kelompok %1
 times	admin	id	Times
 top	admin	id	atas
 total records	admin	id	Total rekaman
+translation	admin	id	Terjemahan
 true	admin	id	true
 trust level	admin	id	Trust Level
 trust relationship	admin	id	Trust Relationship
@@ -286,6 +310,7 @@ type of customfield	admin	id	Type of customfield
 unknown account: %1 !!!	admin	id	Akoun takdikenal: %1 !!!
 unknown command %1!	admin	id	Perintah %1 tak dikenal!
 unknown option %1	admin	id	Opsi %1 tak dikenal
+up	admin	id	naik
 updated	admin	id	dikinikan
 use theme	admin	id	Gunakan tema
 user accounts	admin	id	Akoun pengguna

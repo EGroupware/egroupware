@@ -4,14 +4,14 @@
 2 month ago	timesheet	es-es	Hace 2 meses
 2 years ago	timesheet	es-es	Hace 2 años
 3 years ago	timesheet	es-es	Hace 3 años
-actions	timesheet	es-es	Acciones
 all projects	timesheet	es-es	Todos los proyectos
-all status	timesheet	es-es	Todos los estados
 and its members	timesheet	es-es	y sus miembros
 applies the changes	timesheet	es-es	aplica los cambios
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	es-es	¡Aplicar la acción a toda la consulta, NO sólo a las hojas de tiempo mostradas!
 both: allow to use projectmanager and free project-names	admin	es-es	Ambos: permitir usar nombres de proyectos del Administrador de proyectos y libres
 by	timesheet	es-es	por
+change category	timesheet	es-es	Cambiar categoría
+changed category to %1	timesheet	es-es	La categoría se ha cambiado a %1
 changed status	timesheet	es-es	estado cambiado
 check all	timesheet	es-es	Marcar todo
 comment by %1 at %2:	timesheet	es-es	Comentario por %1 a las %2:
@@ -19,12 +19,12 @@ create new links	timesheet	es-es	Crear enlaces nuevos
 creates a new field	timesheet	es-es	crea un campo nuevo
 creating new entry	timesheet	es-es	creando nueva entrada
 custom fields	timesheet	es-es	Campos personalizados
-delete this entry	timesheet	es-es	Borrar esta entrada
+default document to insert entries	timesheet	es-es	Documento predeterminado para insertar entradas
 delete this status	timesheet	es-es	Borrar este estado
-delete timesheet	timesheet	es-es	Borrar hoja de tiempo
 deleted	timesheet	es-es	borrado
 deletes this field	timesheet	es-es	borra este campo
 determines the order the fields are displayed	timesheet	es-es	determina el orden en que se muestran los campos
+directory with documents to insert entries	timesheet	es-es	Directorio con documentos para insertar entradas
 each value is a line like <id>[=<label>]	timesheet	es-es	cada valor es una línea como <id>[=<etiqueta>]
 edit status	timesheet	es-es	Editar estado
 edit this entry	timesheet	es-es	Editar esta entrada
@@ -35,15 +35,18 @@ entry saved	timesheet	es-es	Se ha guardado la entrada
 error deleting the entry!!!	timesheet	es-es	Error al borrar la entrada
 error saving the entry!!!	timesheet	es-es	¡Se ha producido un error al guardar la entrada!
 existing links	timesheet	es-es	Enlaces existentes
-export	timesheet	es-es	Exportar
+exists	timesheet	es-es	Existe
 export to openoffice spreadsheet	timesheet	es-es	Exportar a hoja de cálculo de OpenOffice
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	es-es	Exporta entradas desde la hoja de tiempos en un fichero CSV (valores separados por comas). Sin embargo, también se pueden elegir otros separadores en la pestaña de opciones.
 field must not be empty !!!	timesheet	es-es	¡El campo no debe estar vacío!
+for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	es-es	Para carta de serie use esta etiqueta. Ponga el contenido que quiera repetir entre dos etiquetas.
 full: use only projectmanager	admin	es-es	Completo: usar sólo el Administrador de proyectos
-general	timesheet	es-es	General
 global categories	timesheet	es-es	Categorías globales
 history	timesheet	es-es	Historial
 id	timesheet	es-es	ID
+ignore	timesheet	es-es	Ignorar
+insert	timesheet	es-es	Insertar
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	es-es	El ID del propietario no es válido: %1. Puede ser una mala traducción del campo. Se ha usado %2 en su lugar.
 last modified	timesheet	es-es	Ultima modificación
 last month	timesheet	es-es	Último mes
 last week	timesheet	es-es	Última semana
@@ -53,7 +56,9 @@ leaves without saveing	timesheet	es-es	sale sin guardar
 length<br>rows	timesheet	es-es	Longitud<br>Filas
 links	timesheet	es-es	Enlaces
 max length of the input [, length of the inputfield (optional)]	timesheet	es-es	longitud máxima de la entrada [, longitud del campo de entrada (opcional)]
-modify the status of the timesheet	timesheet	es-es	Modificar el estado de la hoja de tiempos
+modified	timesheet	es-es	Modificado
+modify status	timesheet	es-es	Estado de modificación
+name of current user, all other contact fields are valid too	timesheet	es-es	Nombre del usuario actual. Todos los demás campos del contacto también son válidos.
 new ticket submitted by %1 at %2	timesheet	es-es	Nuevo ticket enviado por %1 a las %2
 new timesheet submitted by %1 at %2	timesheet	es-es	Nueva hoja de tiempos emitida por %1 a las %2
 no details	timesheet	es-es	Sin detalles
@@ -67,9 +72,11 @@ or endtime	timesheet	es-es	u hora de finalización
 order	timesheet	es-es	Orden
 parent	timesheet	es-es	Padre
 permission denied!!!	timesheet	es-es	¡Se ha denegado el permiso!
+permissions error - %1 could not %2	timesheet	es-es	Error en los permisos - %1 no pudo %2
 price	timesheet	es-es	Precio
 projectmanager integration	admin	es-es	Integración con el Administrador de proyectos
 quantity	timesheet	es-es	Cantidad
+replacements for inserting entries into documents	timesheet	es-es	Sustituciones para insertar entradas en los documentos
 save & new	timesheet	es-es	Guardar y crear
 saves the changes made	timesheet	es-es	Guardar los cambios realizados
 saves the changes made and leaves	timesheet	es-es	guarda los cambios realizados y sale
@@ -77,10 +84,9 @@ saves this entry and add a new one	timesheet	es-es	Guarda esta entrada y añade 
 select a price	timesheet	es-es	Seleccionar un precio
 select a project	timesheet	es-es	Seleccionar un proyecto
 select a status of the timesheet	timesheet	es-es	seleccionar un estado de una hoja de tiempo
-select action	timesheet	es-es	Seleccionar acción
 select infolog	timesheet	es-es	seleccionar elemento de tareas
 select multiple timeshhets for a further action	timesheet	es-es	Seleccionar múltiples hojas de tiempo para una acción posterior
-select the predefined status, whan creating a new timesheet	timesheet	es-es	Seleccionar el estado predefinido cuando se cree una hoja de tiempos nueva
+select the predefined status, whan creating a new timesheet	preferences	es-es	Seleccionar el estado predefinido cuando se cree una hoja de tiempos nueva
 show a quantity sum (eg. to sum up negative overtime)	admin	es-es	Mostrar una suma de cantidades (p. ej. sumar tiempo extra negativo)
 start	timesheet	es-es	Inicio
 starttime	timesheet	es-es	Hora de inicio
@@ -89,6 +95,7 @@ status deleted.	timesheet	es-es	Se ha borrado el estado.
 status of created timesheets	timesheet	es-es	Estado de las hojas de tiempo creadas
 status updated.	timesheet	es-es	Se ha actualizado el estado.
 sum %1:	timesheet	es-es	Suma %1:
+tag to mark positions for address labels	timesheet	es-es	Etiqueta para marcar las posiciones para las etiquetas de direcciones
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	es-es	el nombre utilizado internamente (<= 20 caracteres), si se cambia, impide acceder a los datos
 the text displayed to the user	timesheet	es-es	el texto mostrado al usuario
 this month	timesheet	es-es	Este mes
@@ -102,12 +109,10 @@ timesheet openoffice export	timesheet	es-es	Exportar a OpenOffice la hoja de pre
 timesheet status-%1 '%2' added.	timesheet	es-es	Estado de la hoja de tiempo-%1 '%2' añadido.
 timesheet-%1 '%2' updated.	timesheet	es-es	Hoja de tiempo-%1 '%2' actualizado.
 timesheet-%1 deleted.	timesheet	es-es	Hoja de tiempo-%1 '%2' borrado.
-tracker	timesheet	es-es	Elemento de seguimiento
 unitprice	timesheet	es-es	Precio por unidad
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	es-es	Usar esta etiqueta para las etiquetas de direcciones. Ponga el contenido que quiera repetir entre dos etiquetas.
 values for selectbox	timesheet	es-es	Valores para la lista de selección.
 view this entry	timesheet	es-es	Ver esta entrada
 week	timesheet	es-es	Semana
-whole query	timesheet	es-es	la consulta completa
 yesterday	timesheet	es-es	Ayer
-you need to select some timesheets first	timesheet	es-es	Antes necesita seleccionar algunas hojas de tiempo
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	es-es	La base de datos NO está actualizada (%1 vs %2). Por favor, ejecute %3setup%4 para actualizar la base de datos.

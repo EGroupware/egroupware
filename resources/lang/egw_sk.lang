@@ -1,6 +1,3 @@
-%1 resource(s) %2	resources	sk	%1 zdrojov %2
-%1 resource(s) %2, %3 failed	resources	sk	%1 zdrojov %2, %3 zlyhalo
-%1 resource(s) %2, %3 failed because of insufficent rights !!!	resources	sk	%1 zdrojov %2, %3 zlyhalo kvôli nedostatočným oprávneniam!
 accessories of	resources	sk	Príslušenstvo k
 accessories:	resources	sk	Príslušenstvo:
 actions	resources	sk	Akcie
@@ -14,7 +11,6 @@ book resource	resources	sk	Rezervovať zdroj
 book selected resources	resources	sk	Rezervovať vybrané zdroje
 book this resource	resources	sk	Rezervovať tento zdroj
 bookable	resources	sk	Rezervovateľný
-booked	resources	sk	Rezervovaný
 buy this article	resources	sk	Kúpiť tento článok
 buy this resource	resources	sk	Kúpiť tento zdroj
 buyable	resources	sk	Na predaj
@@ -24,25 +20,16 @@ check all	resources	sk	Označ všetko
 choose categories admin	resources	sk	Vyberte správcu kategórií
 clear selection	resources	sk	Zrušiť výber
 configure access permissions	admin	sk	Nastaviť prístupové práva
-confirmation email text	resources	sk	Text potvrdzovacej správy
-confirmed addressbook.	resources	sk	Potvrdený adresár
-conflict	resources	sk	konflikt
 create new accessory for this resource	resources	sk	Vytvoriť novú kategóriu pre tento zdroj
 create new links	resources	sk	Vytvoriť nové odkazy
-custom etemplate for the contactform	resources	sk	Vlastná eŠablóna pre kontaktný formulár
-days	resources	sk	Dní
 delete selected resources	resources	sk	Odstrániť vybrané zdroje
 delete this entry	resources	sk	Odstrániť túto položku
-deleted	resources	sk	Odstránené
 description (short)	resources	sk	Popis (stručný)
 direct booking permissions	resources	sk	Priame rezervačné práva
 don't use vfs (this will need a symlink --> see readme)	resources	sk	Nepoužívať vfs (bude potrebný symlink --> prečítajte si README)
 edit this entry	resources	sk	Uprav tento záznam
-event start	resources	sk	Začiatok udalosti
 existing links	resources	sk	Existujúce odkazy
 exists	resources	sk	Existuje
-expiry	resources	sk	vyprší
-export definition to use for nextmatch export	resources	sk	Exportná definícia pre použitie v exporte
 export definitition to use for nextmatch export	resources	sk	Exportná definícia pre použitie v exporte
 exports a list of resources to a csv file.	resources	sk	Exportovať zoznam zdrojov do CSV súboru
 general	resources	sk	Hlavné
@@ -80,13 +67,11 @@ new accessory	resources	sk	Nové príslušenstvo
 no description available	resources	sk	Žiadny popis sa nenašiel
 no resources selected	resources	sk	Nie sú vybrané žiadne zdroje
 notify your administrator to correct this situation	resources	sk	Upozornite svojho správcu, nech napraví vzniknutú situáciu
-old fixed definition	resources	sk	Stará pevná definícia
 picture	resources	sk	Obrázok
 picture source	resources	sk	Zdroj obrázka
 picture type is not supported, sorry!	resources	sk	Je mi ľúto, tento typ obrázka nie je podporovaný!
 pictures or resource	resources	sk	Obrázky zdroja
 planer	resources	sk	Plánovač
-please choose a different time:	resources	sk	Prosím zvoľte iný čas:
 prize	resources	sk	Cena
 prizeing information for booking or buying	resources	sk	Cenník rezervácií a nákupov
 quantity	resources	sk	Množstvo
@@ -94,11 +79,7 @@ quantity of resource	resources	sk	Počet kusov zdroja
 quantity:	resources	sk	Množstvo:
 read calendar permissions	resources	sk	Právo čítať Kalendár
 read permissions	resources	sk	Právo na čítanie
-registration confirmed %1	resources	sk	Registrácia potvrdená %1
 related links	resources	sk	Súvisiace odkazy
-require confirmation	resources	sk	Vyžiadať potvrdenie
-reserve	resources	sk	Rezervovať
-resource	resources	sk	Zdroj
 resource id	resources	sk	ID zdroja
 resources	common	sk	Zdroje
 resources csv export	resources	sk	CSV export zdrojov
@@ -113,16 +94,13 @@ select/deselect all	resources	sk	Vybrať všetko / zrušiť výber
 short description	resources	sk	Stručný popis
 short description of resource	resources	sk	Zobraziť popis zdroja
 show calendar of resource	resources	sk	Zobraziť kalendár zdroja
-simple reservation of a single item	resources	sk	Jednoduchá rezervácia jednej položky
 something went wrong by deleting resource	resources	sk	Počas odstraňovania zdroja sa niečo nepodarilo
 something went wrong by saving resource	resources	sk	Počas ukladania zdroja sa niečo nepodarilo
 storage	resources	sk	Sklad
 storage information	resources	sk	Informácie o sklade
 storage information:	resources	sk	Informácie o sklade:
-the anonymous user needs add rights for it!	resources	sk	Anonymný používateľ potrebuje na to dostať oprávnenia!
 the calendar of this resource	resources	sk	Kalendár pre tento zdroj
 this module displays the resources app	resources	sk	Tento modul zobrazuje aplikáciu pre zdroje
-unable to process confirmation.	resources	sk	Nepodarilo sa spracovať potvrdenie.
 use general resources icon	resources	sk	Použiť všeobecnú ikonu zdrojov
 use own picture	resources	sk	Použiť vlastný obrázok
 use the category's icon	resources	sk	Použiť ikonu kategórie

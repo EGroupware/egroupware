@@ -30,6 +30,8 @@ existing links	resources	id	Tautan yang ada
 general	resources	id	Umum
 general informations about resource	resources	id	Informasi umum mengenai sumberdaya
 gernal resource	resources	id	sumberdaya umum
+global categories	resources	id	Kategori Global
+hours	resources	id	jam
 information about storage	resources	id	Informasi mengenai penyimpanan
 informations about the location of resource	resources	id	Informasi mengenai lokasi penyimpanan
 inventory number	resources	id	Nomor Inventaris
@@ -42,6 +44,7 @@ links	resources	id	Tautan
 location	resources	id	Lokasi
 location of resource	resources	id	Lokasi sumberdaya
 location:	resources	id	Lokasi:
+manage mapping	resources	id	Mengelola pemetaan
 name of resource	resources	id	Nama Sumberdaya
 name:	resources	id	Nama:
 no description available	resources	id	tanpa uraian

@@ -42,8 +42,10 @@ enable sieve	emailadmin	es-es	activar Sieve
 encrypted connection	emailadmin	es-es	conexión cifrada
 encryption settings	emailadmin	es-es	configuración del cifrado
 enter your default mail domain (from: user@domain)	emailadmin	es-es	introduzca el dominio predeterminado (de usuario@dominio)
+entry saved	emailadmin	es-es	La entrada ha sido guardada
 error connecting to imap server. %s : %s.	emailadmin	es-es	Error al conectar con el servidor IMAP. %s: %s.
 error connecting to imap server: [%s] %s.	emailadmin	es-es	Error al conectar con el servidor IMAP: [%s] %s.
+error saving the entry!!!	emailadmin	es-es	Error guardando el elemento!!!
 filtered by account	emailadmin	es-es	filtrado por cuenta
 filtered by group	emailadmin	es-es	filtrado por grupo
 forward also to	emailadmin	es-es	reenviar también a
@@ -141,3 +143,4 @@ users can define their own signatures	emailadmin	es-es	Los usuarios pueden defin
 users can utilize these stationery templates	emailadmin	es-es	Los usuarios pueden utilizar estas plantillas preimpresas
 vaction messages with start- and end-date require an admin account to be set!	emailadmin	es-es	Los mensajes con fecha de inicio y fin requieren establecer una cuenta de administrador
 virtual mail manager	emailadmin	es-es	Gestor de correo virtual
+you have received a new message on the	emailadmin	es-es	Ha recibido un mensaje nuevo en la

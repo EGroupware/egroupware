@@ -1,36 +1,53 @@
 2 month ago	timesheet	eu	Orain dela 2 hilabete
 2 years ago	timesheet	eu	Orain dela 2 urte
 3 years ago	timesheet	eu	Orain dela 3 urte
-actions	timesheet	eu	Ekintzak
+applies the changes	timesheet	eu	Aldaketak aplikatu
 by	timesheet	eu	norengatik
+check all	timesheet	eu	Guztia hautatu
 create new links	timesheet	eu	Lotura berriak sortu
-delete this entry	timesheet	eu	Sarrera hau ezabatu
+creates a new field	timesheet	eu	Fitxategi berri bat sortu
+custom fields	timesheet	eu	Egokitu Eremuak
+deleted	timesheet	eu	ezabatua
+deletes this field	timesheet	eu	Fitxategi hauek ezabatu
+edit status	timesheet	eu	Egoera editatu
 edit this entry	timesheet	eu	Sarrera hau editatu
 empty if identical to duration	timesheet	eu	Hutsik iraupenaren berdina bada
+end	timesheet	eu	Bukaera
 entry deleted	timesheet	eu	Sarrera hau ezabatu da
 entry saved	timesheet	eu	Sarrera gorde da
 error deleting the entry!!!	timesheet	eu	Errorea sarrera ezabatzerakoan
 error saving the entry!!!	timesheet	eu	Errorea sarrera gordetzerakoan
 existing links	timesheet	eu	Existitzen diren loturak
-general	timesheet	eu	Orokorra
+field must not be empty !!!	timesheet	eu	Eremuak ez dira hutsik egon behar!!!
+global categories	timesheet	eu	Kategoria orokorrak
+history	timesheet	eu	Historia
+id	timesheet	eu	Id
 last modified	timesheet	eu	Azken aldaketa
 last month	timesheet	eu	Azken hilabetea
 last week	timesheet	eu	Azken astea
 last year	timesheet	eu	Azken urtea
+leaves without saveing	timesheet	eu	gorde gabe irten
+length<br>rows	timesheet	eu	Luzera<br>Errenkadak
 links	timesheet	eu	Loturak
+modified	timesheet	eu	Aldatua
 no details	timesheet	eu	detailerik gabe
+order	timesheet	eu	Ordena
 permission denied!!!	timesheet	eu	Baimena ukatuta!
 price	timesheet	eu	Prezioa
 quantity	timesheet	eu	Kantitatea
 save & new	timesheet	eu	Gorde eta sortu
 saves the changes made	timesheet	eu	Egindako aldaketak gorde
+saves the changes made and leaves	timesheet	eu	aldaketak gorde eta irten
 saves this entry and add a new one	timesheet	eu	Sarrera hau gorde eta berri bat gehitu
 select a price	timesheet	eu	Aukeratu prezio bat
 select a project	timesheet	eu	Aukeratu proiektu bat
+start	timesheet	eu	Hasiera
+the text displayed to the user	timesheet	eu	testua erabltzaileari erakutsita
 this month	timesheet	eu	Hilabete honetan
 this week	timesheet	eu	Aste honetan
 this year	timesheet	eu	Urte honetan
 timesheet	common	eu	Ordu sarrera
 unitprice	timesheet	eu	Prezioa unitateko
 view this entry	timesheet	eu	Sarrera hau ikusi
+week	timesheet	eu	Astea
 yesterday	timesheet	eu	Atzo

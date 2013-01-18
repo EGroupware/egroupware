@@ -276,6 +276,7 @@ keep local copy of email	felamimail	fi	Säilytä kopio viestistä
 kilobytes	felamimail	fi	Kilotavu(a)
 language	felamimail	fi	Kieli
 last name	felamimail	fi	Sukunimi
+later	felamimail	fi	Jälkeen
 left	felamimail	fi	Vasen
 less	felamimail	fi	Vähemmän
 less than	felamimail	fi	Vähemmän kuin
@@ -499,6 +500,7 @@ unsubscribed successfully!	felamimail	fi	Tilaus peruutettu!
 up	felamimail	fi	Ylös
 updating message status	felamimail	fi	Päivitä viestin tila
 updating view	felamimail	fi	Päivitysnäkymä
+urgent	felamimail	fi	Tärkeä
 use <a href="%1">emailadmin</a> to create profiles	felamimail	fi	Käytä <a href="%1">EmailAdmin</a> tehdäksesi profiileja
 use a signature	felamimail	fi	Käytä allekirjoitusta
 use a signature?	felamimail	fi	Käytetäänkö allekirjoitusta?

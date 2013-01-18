@@ -25,8 +25,10 @@ all days	etemplate	no	alle dager
 all operations save the template!	etemplate	no	alle operasjoner lagrer malen!
 am	etemplate	no	er
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	no	en indeksert kolonne øker hastigheten på spørringer som benytter kolonnen(tar plass på disk!)
+and	etemplate	no	Og
 application	etemplate	no	Program
 application name needed to write a langfile or dump the etemplates !!!	etemplate	no	Programnavnet må skrives til en språkfil eller fjern eMalene!
+applications	etemplate	no	Applikasjoner
 applies the changes made	etemplate	no	lagre utførte endringer
 applies the changes to the given version of the template	etemplate	no	lagre utførte endringer til en gitt versjon av malen
 attach	etemplate	no	Tilknytt
@@ -41,6 +43,8 @@ cancel	etemplate	no	Kanseller
 category	etemplate	no	Kategori
 cells	etemplate	no	Celler
 center	etemplate	no	Sentrer
+changed	etemplate	no	Endret
+check all	etemplate	no	Kontroller alle
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	no	Kryss av dersom innholdet kun skal vises og ikke endres(innholdet sendes da ikke tilbake!)
 check if field has to be filled by user	etemplate	no	kryss av om feltet skal fylles ut av bruker
 checkbox	etemplate	no	Sjekkboks
@@ -57,6 +61,8 @@ column...	etemplate	no	Kolonne..
 columnname	etemplate	no	Kolonnenavn
 comment	etemplate	no	Kommentar
 confirm	etemplate	no	Bekreft
+contact	etemplate	no	Kontakt
+contains	etemplate	no	inneholder
 create a new table for the application	etemplate	no	Lag en ny tabell for programmet
 css properties	etemplate	no	CSS Egenskaper
 css-styles	etemplate	no	CSS Stiler
@@ -84,6 +90,7 @@ deletes this column	etemplate	no	Slett denne kolonnen
 deletes this index	etemplate	no	Slett denne indeksen
 discard changes	etemplate	no	opphev endringer
 documentation	etemplate	no	Dokumentasjon
+doesn't matter	etemplate	no	Spiller ingen rolle
 drop a table - this can not be undone	etemplate	no	Slette en tabell - dette kan ikke gjøres om !
 drop table	etemplate	no	Slett tabell
 duration	etemplate	no	Varighet
@@ -154,6 +161,7 @@ insert new row after this one	etemplate	no	Sett inn en linje etter denne
 insert new row in front of first line	etemplate	no	Sett inn en linje foran første linje
 integer	etemplate	no	Heltall
 key	etemplate	no	Nøkkel
+label	etemplate	no	Etikett
 lang	etemplate	no	Språk
 last	etemplate	no	Siste
 left	etemplate	no	Venstre
@@ -164,6 +172,7 @@ linkto	etemplate	no	Lenk til
 load this template into the editor	etemplate	no	laste denne malen inn i tekstbehandleren
 middle	etemplate	no	Midten
 minute	etemplate	no	Minutt
+minutes	etemplate	no	minutter
 month	etemplate	no	Måned
 name	etemplate	no	Navn
 name of table to add	etemplate	no	Navn på tabell som skal legges til
@@ -173,6 +182,7 @@ newer version '%1' exists !!!	etemplate	no	nyere versjon '%1' eksisterer!
 nextmatch	etemplate	no	Neste treff
 no file	etemplate	no	ingen fil
 no filename given or selected via browse...	etemplate	no	intet filnavn angitt eller valgt ved gjennomsyn
+no matches found	etemplate	no	Ingen treff funnet
 not null	etemplate	no	Ikke NULL
 nothing	etemplate	no	ingenting
 nothing found - try again !!!	etemplate	no	Ingenting funnet - prøv igjen !
@@ -183,6 +193,7 @@ onclick	etemplate	no	vedKlikk
 only an other version found !!!	etemplate	no	det ble bare funnet en annen versjon!
 optional note about the link	etemplate	no	Valgri kommentar om denne lenken
 options	etemplate	no	Alternativer
+or	etemplate	no	eller
 padding	etemplate	no	Luft
 parent is a '%1' !!!	etemplate	no	overordnet er en '%1'!
 paste	etemplate	no	Lim inn
@@ -196,9 +207,11 @@ primary key for the table, gets automaticaly indexed	etemplate	no	Hovednøkkel f
 radiobutton	etemplate	no	Radioknapp
 read	etemplate	no	Lese
 read a list of entries.	etemplate	no	Les en liste av oppføringer.
+read a single entry by passing the id and fieldlist.	etemplate	no	Les ett enkelt innslag ved å gi id og feltliste.
 readonly	etemplate	no	Bare lese
 remove row (can not be undone!!!)	etemplate	no	Fjern linje (Kan ikke gjøres om!)
 remove this link (not the entry itself)	etemplate	no	Fjern denne lenken (ikke forekomsten i seg selv)
+required	etemplate	no	Nødvendig
 right	etemplate	no	Høyre
 row...	etemplate	no	Rad...
 save the changes made and close the window	etemplate	no	Lagre utførte endringer og så lukke vinduet
@@ -254,6 +267,7 @@ top	etemplate	no	Topp
 type	etemplate	no	Type
 unique	etemplate	no	Unik
 unlink	etemplate	no	Fjern lenke
+update a single entry by passing the fields.	etemplate	no	Oppdater ett enkelt innslag ved å legge inn felter.
 update from version '%s' to	etemplate	no	Oppdater fra versjon '%s' til
 upload	etemplate	no	Last opp
 valign	etemplate	no	vJuster
@@ -263,6 +277,7 @@ value has to be at maximum '%1' !!!	etemplate	no	Verdien kan maks være '%1' !
 vbox	etemplate	no	vBoks
 version	etemplate	no	Versjon
 view this etemplate	etemplate	no	vis denne eMalen
+view this linked entry in its application	etemplate	no	vis lenken i den egens applikasjon
 weekend	etemplate	no	Helg
 width	etemplate	no	Bredde
 width of column (in % or pixel)	etemplate	no	bredde på kolonne (i % eller piksler)

@@ -60,6 +60,7 @@ after how many unsuccessful attempts to login, an account should be blocked (def
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	it	Dopo quanti tentativi falliti di login, un IP deve essere bloccato (predefinito 3) ?
 aliases	admin	it	Alias
 all applications	admin	it	Tutte le applicazioni
+all categories	admin	it	Tutte le categorie
 all records and account information will be lost!	admin	it	Tutte le registrazioni e le informazioni dell'account andranno perse!
 all users	admin	it	Tutti gli utenti
 allow anonymous access to this app	admin	it	Consenti accesso anonimo a questa applicazione
@@ -171,6 +172,7 @@ delete this category	admin	it	Cancella questa categoria
 delete this group	admin	it	Cancella questo gruppo
 delete this log entry	admin	it	Rimuovi questa voce dal registro
 delete this user	admin	it	Cancella questo utente
+deleted	admin	it	cancellato
 deletes this field	admin	it	Cancella questo campo
 deliver extern	admin	it	Invia esterno
 deny access to access log	admin	it	Nega l'accesso ai log di accesso
@@ -283,7 +285,6 @@ false	admin	it	Falso
 field '%1' already exists !!!	admin	it	Il campo '%1' esiste già !!!
 file space	admin	it	Spazio per i file
 file space must be an integer	admin	it	Lo spazio per i file deve essere un intero
-find and register all application hooks	admin	it	Trova e registra tutti gli gli agganci alle chiamate delle applicazioni
 for the times above	admin	it	per il tempo sovrastante
 for the times below (empty values count as '*', all empty = every minute)	admin	it	per i tempi sottostanti (un valore vuoto equivale a '*', tutti vuoti = ogni minuto)
 force password strength (1-5, default empty: no check against rules for a strong password)?	admin	it	Imposta la sicurezza della password. 1 = debole, fino a 5 = molto sicura. Predefinito = vuoto, la sicurezza della password non viene controllata.

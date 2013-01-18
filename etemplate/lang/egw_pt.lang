@@ -31,8 +31,10 @@ all days	etemplate	pt	Todos os dias
 all operations save the template!	etemplate	pt	Todas as operações foram guardadas no modelo!
 am	etemplate	pt	Manhã
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	pt	As querys utilizam uma coluna com maior eficiência se esta estiver indexada (ocupa espaço em disco !!!)
+and	etemplate	pt	E
 application	etemplate	pt	Aplicação
 application name needed to write a langfile or dump the etemplates !!!	etemplate	pt	É necessário o nome da aplicação para editar um ficheiro de idioma ou deixar os modelos Web !!!
+applications	etemplate	pt	Aplicações
 applies the changes made	etemplate	pt	Aplica as alterações efectuadas
 applies the changes to the given version of the template	etemplate	pt	Aplica as alterações em determinada versão do modelo
 attach	etemplate	pt	Anexar
@@ -54,6 +56,8 @@ cellpadding for the table-tag	etemplate	pt	Preenchimento de célula da tabela
 cells	etemplate	pt	Células
 cellspacing for the table-tag	etemplate	pt	Espaçamento da célula da tabela
 center	etemplate	pt	Centro
+changed	etemplate	pt	Alterado/a
+check all	etemplate	pt	Marcar todas
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	pt	Marcar se o conteúdo deve ser exibido, mas não alterado (o conteúdo não será devolvido!)
 check if field has to be filled by user	etemplate	pt	Marcar se o campo for de preenchimento obrigatório para o utilizador
 checkbox	etemplate	pt	Caixa de selecção
@@ -72,6 +76,7 @@ comment	etemplate	pt	Comentário
 confirm	etemplate	pt	Confirmar
 confirmation message or custom javascript (returning true or false)	etemplate	pt	Mensagem de confirmação ou java-script personalizável (a devolver verdadeiro ou falso)
 confirmation necesary or custom java-script	etemplate	pt	É necessária confirmação ou java-script personalizável
+contact	etemplate	pt	Contacto
 contains	etemplate	pt	Contém
 create a new table for the application	etemplate	pt	Criar uma nova tabela para a aplicação
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	pt	Cria um ficheiro de idioma inglês ('en') a partir de etiquetas ou textos de ajuda (para aplicar no Nome)
@@ -236,6 +241,7 @@ nextmatch sortheader	etemplate	pt	Ocorrência seguinte da lista de cabeçalhos
 no column to swap with !!!	etemplate	pt	Nenhuma coluna com que trocar !!!
 no file	etemplate	pt	Nenhum ficheiro
 no filename given or selected via browse...	etemplate	pt	Nenhum nome de ficheiro inserido ou seleccionado a partir do Navegar...
+no matches found	etemplate	pt	Nenhuma ocorrência encontrada
 no row to swap with !!!	etemplate	pt	Nenhuma linha com que trocar !!!
 not null	etemplate	pt	Não nulo
 nothing	etemplate	pt	Nada
@@ -252,6 +258,7 @@ open the online help.	etemplate	pt	Abrir ajuda em linha.
 operator	etemplate	pt	Operador
 optional note about the link	etemplate	pt	Informações adicionais sobre a ligação
 options	etemplate	pt	Opções
+or	etemplate	pt	ou
 order to navigating by tab key through the form	etemplate	pt	Ordem para navegar pela chave da tabela através do formulário.
 overflow	etemplate	pt	Excedente
 padding	etemplate	pt	Preenchimento
@@ -272,6 +279,7 @@ read etemplate from database (for the keys above)	etemplate	pt	Ler modelo Web da
 readonly	etemplate	pt	Apenas para leitura
 remove row (can not be undone!!!)	etemplate	pt	Remover linha (não será possível anular esta acção!!!)
 remove this link (not the entry itself)	etemplate	pt	Remover esta ligação (não o registo em si)
+required	etemplate	pt	Necessário
 returns savely, without deleting	etemplate	pt	Voltar sem eliminar
 right	etemplate	pt	Direita
 row...	etemplate	pt	Linha...
@@ -383,6 +391,3 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	pt	Ficheiro XML para importar
 xslt template	etemplate	pt	Modelo XSLT
 year	etemplate	pt	Ano
-1	etemplate	pt	1
-2	etemplate	pt	2
-3	etemplate	pt	3

@@ -165,6 +165,7 @@ enter your sieve server hostname or ip address	admin	nl	Voer de naam of het IP-a
 enter your sieve server port	admin	nl	Voer de poort in van uw SIEVE-server
 enter your smtp server hostname or ip address	admin	nl	Vul uw SMTP server hostnaam of IP adres in
 enter your smtp server port	admin	nl	Vul uw SMTP server poort in
+entry saved	felamimail	nl	Record opgeslagen
 error	felamimail	nl	FOUT
 error connecting to imap serv	felamimail	nl	Fout met het verbinden met de IMAP-server
 error connecting to imap server. %s : %s.	felamimail	nl	Fout bij verbinden met de IMAP server. %s : %s

@@ -33,6 +33,7 @@ account is expired	common	es-es	La cuenta ha expirado
 accounts	common	es-es	Cuentas
 acl	common	es-es	LCA
 action	common	es-es	Acción
+actions	common	es-es	Acciones
 active	common	es-es	Activo
 add	common	es-es	Añadir
 add %1 category for	common	es-es	Añadir %1 categoría para
@@ -188,7 +189,9 @@ default category	common	es-es	Categoría predeterminada
 default height for the windows	common	es-es	Altura predeterminada para las ventanas
 default width for the windows	common	es-es	Ancho predeterminado para las ventanas
 delete	common	es-es	Eliminar
+delete category	common	es-es	Borrar categoría
 delete row	common	es-es	Eliminar una fila
+delete this entry	common	es-es	eliminar esta entrada
 denmark	common	es-es	DINAMARCA
 description	common	es-es	Descripción
 detail	common	es-es	Detalle
@@ -204,6 +207,7 @@ disable the execution a bugfixscript for internet explorer 5.5 and higher to sho
 disabled	common	es-es	Deshabilitado
 display %s first	jscalendar	es-es	Mostrar %s primero
 djibouti	common	es-es	DJIBOUTI
+do not notify of these changes	common	es-es	No notificar estos cambios
 do you also want to delete all subcategories ?	common	es-es	¿Desea eliminar también todas las subcategorías?
 doctype:	common	es-es	DOCTYPE:
 document properties	common	es-es	Propiedades del documento
@@ -214,6 +218,7 @@ domestic	common	es-es	Doméstico
 dominica	common	es-es	DOMINICA
 dominican republic	common	es-es	REPUBLICA DOMINICANA
 done	common	es-es	Hecho
+download	common	es-es	Descargar
 drag to move	jscalendar	es-es	Arrastre para mover
 e-mail	common	es-es	Correo electrónico
 east timor	common	es-es	EAST TIMOR
@@ -297,6 +302,7 @@ group has been deleted	common	es-es	El grupo se ha borrado
 group has been updated	common	es-es	El grupo ha sido actualizado
 group name	common	es-es	nombre del grupo
 group public	common	es-es	Grupo público
+groupdav	common	es-es	Servidor para CalDAV, CarDAV y GroupDAV
 groups	common	es-es	Grupos
 groups with permission for %1	common	es-es	Grupos con permiso para %1
 groups without permission for %1	common	es-es	Grupos sin permiso para %1
@@ -389,6 +395,7 @@ list	common	es-es	Lista
 list members	common	es-es	Lista de miembros
 lithuania	common	es-es	LITUANIA
 local	common	es-es	Local
+locations	common	es-es	ubicaciones
 login	common	es-es	Entrar
 loginid	common	es-es	ID de usuario
 logout	common	es-es	Salir
@@ -484,6 +491,7 @@ on mouse over	common	es-es	Al mover el ratón por encima
 only private	common	es-es	sólo los privados
 only yours	common	es-es	sólo los suyos
 oops! you caught us in the middle of system maintainance.	common	es-es	¡Ups! Nos ha pillado en mitad del mantenimiento del sistema
+open	common	es-es	Abrir
 open notify window	common	es-es	Abrir ventana de notificación
 open popup window	common	es-es	Abrir ventana emergente
 open sidebox	common	es-es	Abrir caja lateral
@@ -538,6 +546,7 @@ preferences for the %1 template set	preferences	es-es	Se han establecido las pre
 prev. month (hold for menu)	jscalendar	es-es	Mes anterior (mantener para menú)
 prev. year (hold for menu)	jscalendar	es-es	Año anterior (mantener para menú)
 previous page	common	es-es	Página anterior
+primary group	common	es-es	Grupo principal
 primary style-sheet:	common	es-es	Hoja de estilo principal:
 print	common	es-es	Imprimir
 priority	common	es-es	Prioridad
@@ -590,6 +599,7 @@ search or select accounts	common	es-es	buscar o seleccionar cuentas
 second	common	es-es	segundo
 section	common	es-es	Sección
 select	common	es-es	Seleccionar
+select action	common	es-es	Seleccionar acción
 select all %1 %2 for %3	common	es-es	Seleccionar todos los %1 %2 para %3
 select category	common	es-es	Seleccionar categoría
 select date	common	es-es	Seleccionar fecha
@@ -749,6 +759,7 @@ what style would you like the image to have?	common	es-es	¿Qué estilo desea qu
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	es-es	Si dice que sí, los botones de Inicio y Salir se presentan como aplicaciones en la barra principal de aplicaciones.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	es-es	Dónde y cómo mostrar los enlaces de egroupware com las preferencias, acerca de y salir.
 which groups	common	es-es	Qué grupos
+whole query	common	es-es	la consulta completa
 width	common	es-es	Anchura
 wk	jscalendar	es-es	wk
 work email	common	es-es	correo del trabajo

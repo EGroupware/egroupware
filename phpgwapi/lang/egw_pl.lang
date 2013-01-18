@@ -1,9 +1,9 @@
 %1 email addresses inserted	common	pl	%1 adresów email dodane
+%1 file	common	pl	%1 plik
 %1 is not executable by the webserver !!!	common	pl	%1 nie może być wykonany przez webserver !!!
-%1 manual	common	pl	%1 podręcznik
-%1 start	common	pl	%1 start
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	pl	%1Wybierz inny katalog%2<br />lub uczyń %3 dostępny do zapisu dla serwera WWW
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pl	%1eGroupWare%2 jest pakietem oprogramowania do pracy grupowej dla wielu użytkowników, działającym w środowisku internetowym / intranetowym i napisanym w PHP4.
+(session restored in %1 seconds)	common	pl	(sesja będzie przywrócona po upływie %1 sekund)
 (shift-)click or drag to change value	jscalendar	pl	Kilknij z Shift-em aby przenieść lub zmienić wartość
 - click on any of the time parts to increase it	jscalendar	pl	- Kliknij na dowolny wycinek czasu aby go zwiększyć
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	pl	- Zatrzymaj przycisk myszy na którymś z powyższych przycisków, aby szybciej wybrać.
@@ -12,6 +12,10 @@
 - use the %1, %2 buttons to select month	jscalendar	pl	- Użyj przycisków %1, %2 aby wybrać miesiąc
 - use the %1, %2 buttons to select year	jscalendar	pl	- Użyj przycisków %1, %2 aby wybrać rok
 00 (disable)	admin	pl	00 (wyłączony)
+1 day	common	pl	jeden dzień
+1 hour	common	pl	jedna godzina
+1 month	common	pl	jeden miesiąc
+1 week	common	pl	jeden tydzień
 13 (ntp)	admin	pl	13 (ntp)
 3 number of chars for day-shortcut	jscalendar	pl	3 ilość znaków dla skrótu dnia
 3 number of chars for month-shortcut	jscalendar	pl	3 ilość znaków dla skrótu miesiąca
@@ -26,8 +30,10 @@ account has been created	common	pl	Konto zostało utworzone
 account has been deleted	common	pl	Konto zostało skasowane
 account has been updated	common	pl	Konto zostało uaktualnione
 account is expired	common	pl	Konto wygasło
+accounts	common	pl	Konta
 acl	common	pl	ACL
 action	common	pl	Operacja
+actions	common	pl	Polecenia
 active	common	pl	Aktywne
 add	common	pl	Dodaj
 add %1 category for	common	pl	Dodaj kategorię %1 dla
@@ -42,10 +48,14 @@ albania	common	pl	ALBANIA
 algeria	common	pl	ALGIERIA
 all	common	pl	Wszystko
 all fields	common	pl	wszystkie pola
+all in one	groupdav	pl	Wszystko w jednym
+all languages	common	pl	wszystkie języki
 alphabet	common	pl	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,r,s,t,u,w,x,y,z
 alternate style-sheet:	common	pl	Alternatywny arkusz stylu
 american samoa	common	pl	SAMOA AMERYKAŃSKIE
+an error happened	common	pl	Wystąpił błąd
 an existing and by the webserver readable directory enables the image browser and upload.	common	pl	Katalog: istniejący ORAZ możliwy do odczytu przez serwer WWW, pozwala uruchomić przeglądarkę obrazków oraz ładowanie plików na serwer.
+and	common	pl	oraz
 andorra	common	pl	ANDORA
 angola	common	pl	ANGOLA
 anguilla	common	pl	ANGUILLA
@@ -72,6 +82,7 @@ azerbaijan	common	pl	AZERBEJDŻAN
 back	common	pl	Powrót
 back to user login	common	pl	Wróć do logowania uzytkowników
 background color:	common	pl	Kolor tła
+backupdir '%1' is not writeable by the webserver	common	pl	backupdir '%1' nie jest zapisyalny przez serwer
 bad login or password	common	pl	Błędna nazwa użytkownika lub hasło
 bahamas	common	pl	BAHAMY
 bahrain	common	pl	BAHRAJN
@@ -96,6 +107,7 @@ brazil	common	pl	BRAZYLIA
 british indian ocean territory	common	pl	BRYTYJSKIE TERYTORIUM OCEANU INDYJSKIEGO
 brunei darussalam	common	pl	BRUNEI
 bulgaria	common	pl	BUŁGARIA
+bulgarian	common	pl	Bułgarski
 burkina faso	common	pl	BURKINA FASO
 burundi	common	pl	BURUNDI
 calendar	common	pl	Kalendarz
@@ -104,6 +116,7 @@ cameroon	common	pl	KAMERUN
 canada	common	pl	KANADA
 cancel	common	pl	Wyjdź
 cannot replace %1 because it is a directory	common	pl	Nie moge zamienić %1 gdyż jest to katalog
+cant open %1, needs ziparchive	common	pl	Nie mogę otworzyć %1, potrzebuje ZipArchiwe
 cant open '%1' for %2	common	pl	Nie mogę otworzyć %1 do %2
 cape verde	common	pl	REPUBLIKA ZIELONEGO PRZYLĄDKA
 caption	common	pl	Nagłówek
@@ -134,11 +147,15 @@ christmas island	common	pl	WYSPA BOŻEGO NARODZENIA
 clear	common	pl	Wyczyść
 clear form	common	pl	Wyczyść formularz
 click	common	pl	Kliknij
+click here to resume your egroupware session.	common	pl	Kliknij tutaj aby powrócić do sesji eGroupWare.
 click or mouse over to show menus	common	pl	Kliknij  lub najedź myszką, aby wyświetlić menu
 click or mouse over to show menus?	common	pl	Kliknij  lub najedź myszką, aby wyświetlić menu?
+click this image on the navbar: %1	common	pl	Kliknij ten obraz na pasku zadań: %1
 close	common	pl	Zamknij
 close sidebox	common	pl	Zamknij boczne okno
 cocos (keeling) islands	common	pl	WYSPY KOKOSOWE
+collection empty.	common	pl	Kolekcja pusta.
+collection listing	common	pl	Zawartość kolekcji.
 colombia	common	pl	KOLUMBIA
 common preferences	common	pl	Wspólne ustawienia
 comoros	common	pl	KOMORY
@@ -146,6 +163,7 @@ company	common	pl	Firma
 congo	common	pl	KONGO
 congo, the democratic republic of the	common	pl	REPUBLIKA DEMOKRATYCZNA KONGA
 contacting server...	common	pl	Trwa łączenie z serwerem...
+content type	common	pl	Typ zawartości
 cook islands	common	pl	WYSPY COOKA
 copy	common	pl	Kopiuj
 costa rica	common	pl	KOSTARYKA
@@ -160,6 +178,8 @@ current	common	pl	Bieżący
 current users	common	pl	Bieżący użytkownicy
 cyprus	common	pl	CYPR
 czech republic	common	pl	REPUBLIKA CZESKA
+database error	common	pl	Bład bazy danych
+database error!	common	pl	Błąd bazy danych!
 date	common	pl	Data
 date due	common	pl	Data wymagalności
 date selection:	jscalendar	pl	Wybór daty:
@@ -169,13 +189,16 @@ default category	common	pl	Kategoria domyślna
 default height for the windows	common	pl	Domyślna wysokość dla okna
 default width for the windows	common	pl	Domyslna szerokość dla okna
 delete	common	pl	Usuń
+delete category	common	pl	Usuń kategorię
 delete row	common	pl	Skasuj wiersz
+delete this entry	common	pl	skasuj ten wpis
 denmark	common	pl	DANIA
 description	common	pl	Opis
 detail	common	pl	Opis szczegółowy
 details	common	pl	Opis szczegółowy
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pl	Wyłączyć poprawkę do Internet Explorera 5.5 i wyższych aby pokazać przezroczystość ilustracji PNG?
 direction left to right	common	pl	Kierunek od lewej do prawej
+directory	common	pl	Katalog
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	pl	Katalog nie istnieje, serwer WWW nie ma do niego praw odczytu lub nie jest podkatalogiem DOCUMENT_ROOT
 disable internet explorer png-image-bugfix	common	pl	Wyłącz poprawkę Internet Explorera dotyczącą ilustracji png
 disable slider effects	common	pl	Wyłącz efekt płynnego przesuwania
@@ -194,15 +217,18 @@ domestic	common	pl	Domowy
 dominica	common	pl	DOMINIKA
 dominican republic	common	pl	DOMINIKANA
 done	common	pl	Gotowe
+download	common	pl	Pobierz
 drag to move	jscalendar	pl	Przeciągnij aby przenieść
 e-mail	common	pl	E-mail
 east timor	common	pl	TIMOR WSCHODNI
+eastern european	common	pl	Europa Wschodnia
 ecuador	common	pl	EKWADOR
 edit	common	pl	Edytuj
 edit %1 category for	common	pl	Edytuj kategorię %1 dla
 edit categories	common	pl	Edytuj kategorie
 edit category	common	pl	Edytuj kategorię
-egroupware api version %1	common	pl	Wersja API eGroupWare: %1
+egroupware	common	pl	eGroupWare
+egroupware api version	common	pl	eGroupWare wersja API
 egroupware: login blocked for user '%1', ip %2	common	pl	eGroupWare: zablokowane logowanie dla użytkownika '%1', IP %2
 egypt	common	pl	EGIPT
 el salvador	common	pl	SALWADOR
@@ -213,6 +239,7 @@ end date	common	pl	Data końcowa
 end time	common	pl	Czas końcowy
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pl	Podaj adres URL pakietu eGroupWare.<br>Przykład: http://www.twojadomena.pl/egroupware   lub   /egroupware<br><b>Bez końcowego ciacha</b>
 entry has been deleted sucessfully	common	pl	Dane zostały usunięte
+entry not found!	common	pl	Nie znaleziono danych!
 entry updated sucessfully	common	pl	Dane zostały uaktualnione
 equatorial guinea	common	pl	GWINEA RÓWNIKOWA
 eritrea	common	pl	ERYTREA
@@ -221,6 +248,7 @@ error creating %1 %2 directory	common	pl	Błąt podczas tworzenia katalogu %1 %2
 error deleting %1 %2 directory	common	pl	Błąd podczas usuwania katalogu %1 %2
 error renaming %1 %2 directory	common	pl	Błąd podczas zmiany nazwy katalogu %1 %2
 estonia	common	pl	ESTONIA
+etag	common	pl	ETag
 ethiopia	common	pl	ETIOPIA
 everything	common	pl	Wszystko
 exact	common	pl	dokładnie
@@ -242,6 +270,7 @@ firstname	common	pl	Imię
 fixme!	common	pl	NAPRAW MNIE!
 folder already exists.	common	pl	Folder o takiej nazwie już istnieje
 force selectbox	common	pl	Wymuś wybór z listy
+forever	common	pl	Na zawsze
 france	common	pl	FRANCJA
 french guiana	common	pl	GUJANA FRANCUSKA
 french polynesia	common	pl	POLINEZJA FRANCUSKA
@@ -263,6 +292,7 @@ global public	common	pl	Globalny publiczny
 go today	jscalendar	pl	Idź do Dzisiaj
 grant access	common	pl	Przyznaj dostęp
 greece	common	pl	GRECJA
+greek	common	pl	grecki
 greenland	common	pl	GRENLANDIA
 grenada	common	pl	GRENADA
 group	common	pl	Grupa
@@ -272,6 +302,7 @@ group has been deleted	common	pl	Grupa została skasowana
 group has been updated	common	pl	Grupa została uaktualniona
 group name	common	pl	nazwa grupy
 group public	common	pl	Grupowy publiczny
+groupdav	common	pl	Serwer CalDAV, CardDAV i GroupDAV
 groups	common	pl	Grupy
 groups with permission for %1	common	pl	Grupy z uprawnieniami do %1
 groups without permission for %1	common	pl	Grupy bez uprawnień do %1
@@ -293,6 +324,7 @@ home email	common	pl	e-mail domowy
 honduras	common	pl	HONDURAS
 hong kong	common	pl	HONG KONG
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	pl	Jak dużo ikon ma się pojawiać w pasku nawigacyjnym (nagłówku strony). Pozostałe ikony znajdą się w menu rozwijanym po prawej stronie paska nawigacyjnego.
+how to show the general egroupware menu ?	common	pl	Jak wyświetlić
 hungary	common	pl	WĘGRY
 iceland	common	pl	ISLANDIA
 iespell not detected. click ok to go to download page.	common	pl	Nie znaleziono ieSpell. Wybierz OK aby przejść na stronę pobierania.
@@ -322,6 +354,7 @@ italy	common	pl	WŁOCHY
 jamaica	common	pl	JAMAJKA
 january	common	pl	Styczeń
 japan	common	pl	JAPONIA
+japanese	common	pl	Japoński
 jordan	common	pl	JORDANIA
 july	common	pl	Lipiec
 jun	common	pl	Czer
@@ -336,11 +369,13 @@ keywords	common	pl	Słowa kluczowe
 kiribati	common	pl	KIRIBATI
 korea, democratic peoples republic of	common	pl	KOREAŃSKA REPUBLIA LUDOWO-DEMOKRATYCZNA
 korea, republic of	common	pl	KOREA POŁUDNIOWA
+korean	common	pl	Koreański
 kuwait	common	pl	KUWEJT
 kyrgyzstan	common	pl	KIRGISTAN
 language	common	pl	Język
 language_direction_rtl	common	pl	kierunek_tekstu_prawy_do_lewego
 lao peoples democratic republic	common	pl	LAOS
+last modified	common	pl	ostatnio zmodyfikowany
 last name	common	pl	Nazwisko
 last name of the user, eg. "%1"	common	pl	nazwisko użytkownika, np. "%1"
 last page	common	pl	Ostatnia strona
@@ -354,14 +389,18 @@ liberia	common	pl	LIBERIA
 libyan arab jamahiriya	common	pl	LIBIA
 license	common	pl	Licencja
 liechtenstein	common	pl	LIECHTENSTEIN
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	pl	Linia %1: '%2'<br /><b>dane CSV zawiera ###last-check-run##  dla tabeli %3  ==> ZIGNOROWANO</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pl	Linia %1: '%2'<br /><b>dane CSV mają złą liczbę kolumn dla tabeli %3 ==> ZIGNOROWANO</b>
 list	common	pl	Lista
 list members	common	pl	Członkowie listy
 lithuania	common	pl	LITWA
 local	common	pl	Lokalny
+locations	common	pl	Lokacje
 login	common	pl	Zaloguj się
 loginid	common	pl	Identyfikator (login)
 logout	common	pl	Wylogowanie
+lost login id	common	pl	Zapomniano nazwę konta
+lost password	common	pl	Zapomniano hasło
 low	common	pl	Niski
 lowest	common	pl	Najniższy
 luxembourg	common	pl	LUKSEMBURG
@@ -403,6 +442,7 @@ multiple	common	pl	wielokrotny
 myanmar	common	pl	BIRMA
 name	common	pl	Nazwa
 name of the user, eg. "%1"	common	pl	nazwa uzytkownika, np. "%1"
+namespace	common	pl	Przestrzeń nazw
 namibia	common	pl	NAMIBIA
 nauru	common	pl	NAURU
 nepal	common	pl	NEPAL
@@ -432,9 +472,13 @@ norfolk island	common	pl	WYSPA NORFOLK
 normal	common	pl	Normalny
 northern mariana islands	common	pl	PÓŁNOCNE WYSPY MARIANA
 norway	common	pl	NORWEGIA
+not	common	pl	nie
+not a user yet? register now	common	pl	Nie masz konta? Zapisz się teraz!
 not assigned	common	pl	nie przypisany
+not readable %1 entry of user %2	common	pl	Nie można odczytać wejścia %1 użytkownika %2
 note	common	pl	Uwaga
 notes	common	pl	Uwagi
+notifications	common	pl	Powiadomienia
 notify window	common	pl	Okno powiadamiania
 notify your administrator to correct this situation	common	pl	Powiadom Twojego Administratora, aby mógł poprawić ten problem
 november	common	pl	Listopad
@@ -446,9 +490,12 @@ on *nix systems please type: %1	common	pl	W systemach Unixowych wpisz: %1
 on mouse over	common	pl	Dla On Mouse Over
 only private	common	pl	tylko prywatne
 only yours	common	pl	tylko twoje
+oops! you caught us in the middle of system maintainance.	common	pl	Przepraszamy, trwa konserwacja systemu.
+open	common	pl	Otwórz
 open notify window	common	pl	Otwórz okno powiadamiania
 open popup window	common	pl	Otwórz okno typu popup
 open sidebox	common	pl	Otworz boczny kontener
+or	common	pl	lub
 ordered list	common	pl	Lista numerowana
 original	common	pl	Oryginalny
 other	common	pl	Inne
@@ -473,7 +520,9 @@ password must contain at least %1 special characters	common	pl	Hasło musi zawie
 password must contain at least %1 uppercase letters	common	pl	Hasło musi zawierać przynajmniej %1 WIELKICH liter
 password must have at least %1 characters	common	pl	Hasło musi składać się z przynajmniej %1 znaków
 path to user and group files has to be outside of the webservers document-root!!!	common	pl	Ścieżka do plików użytkowników i grup MUSI BYĆ POZA rootem dokumentów serwera!!!
+permission denied!	common	pl	Odmowa!
 permissions to the files/users directory	common	pl	uprawnienia do katalogu plików/użytkowników
+permisson denied!	common	pl	Dostęp zabroniony!
 personal	common	pl	Osobisty
 peru	common	pl	PERU
 philippines	common	pl	FILIPINY
@@ -487,39 +536,47 @@ please select	common	pl	Proszę wybrać
 please set your global preferences	common	pl	Proszę wprowadzić swoje globalne preferencje !
 please set your preferences for this application	common	pl	Proszę wprowadzić ustawienia dla tej aplikacji
 please wait...	common	pl	Proszę czekac...
+please, check back with us shortly.	common	pl	Proszę spróbować ponownie w najbliższym czasie.
 poland	common	pl	POLSKA
 portugal	common	pl	PORTUGALIA
 postal	common	pl	Pocztowy
 powered by	common	pl	Działa w oparciu o
 preferences	common	pl	Ustawienia
-preferences for the idots template set	common	pl	Preferencje dla template-u idots
 prev. month (hold for menu)	jscalendar	pl	Poprz. miesiąc (zatrzymaj aby pokazać menu)
 prev. year (hold for menu)	jscalendar	pl	Poprz. rok (zatrzymaj aby pokazać menu)
 previous page	common	pl	Poprzednia strona
+primary group	common	pl	Grupa domyślna
 primary style-sheet:	common	pl	Podstawowy arkusz stylu:
 print	common	pl	Drukuj
 priority	common	pl	Priorytet
 private	common	pl	Prywatny
 programs	common	pl	Programy
 project	common	pl	Projekt
+properties	common	pl	Właściwości
 public	common	pl	Publiczny
 puerto rico	common	pl	PORTORYKO
 qatar	common	pl	KATAR
 read	common	pl	Czytaj
 read this list of methods.	common	pl	Odczytaj listę metod.
 reading	common	pl	odczytywanie
+register	common	pl	rejestracja
+regular	common	pl	prawidłowy
 reject	common	pl	Odrzuć
+remember me	common	pl	zapamiętaj mnie
 remove selected accounts	common	pl	usuń wybrane konta
 remove shortcut	common	pl	Usuń skrót
 rename	common	pl	Zmień nazwę
 replace	common	pl	Zastąp
 replace with	common	pl	Zastąp
+resource type	common	pl	Tym zasobu
+restore failed	common	pl	Odtworzenie nie powiodło się
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	pl	Pokazuje pełną listę kont w systemie.  Uwaga: Lista może być długa
 returns an array of todo items	common	pl	Pokazuje tablicę Zadań
 returns struct of users application access	common	pl	Returns struct of users application access
 reunion	common	pl	REUNION
 right	common	pl	Do prawej
 romania	common	pl	RUMUNIA
+russian	common	pl	Rosyjski
 russian federation	common	pl	ROSJA
 rwanda	common	pl	RWANDA
 saint helena	common	pl	WYSPY ŚW. HELENY
@@ -537,9 +594,11 @@ save	common	pl	Zachowaj
 search	common	pl	Szukaj
 search %1 '%2'	common	pl	Wyszukaj %1 '%2'
 search accounts	common	pl	Wyszukaj konta
+search or select accounts	common	pl	Wyszukaj lub wybierz konta
 second	common	pl	sekunda
 section	common	pl	Sekcja
 select	common	pl	Wybierz
+select action	common	pl	Wybierz akcję
 select all %1 %2 for %3	common	pl	Wybierz wszystkie %1 %2 dla %3
 select category	common	pl	Wybierz kategorię
 select date	common	pl	Wybierz datę
@@ -555,6 +614,7 @@ selection	common	pl	Wybór
 send	common	pl	Wyślij
 senegal	common	pl	SENEGAL
 september	common	pl	Wrzesień
+serbia	common	pl	Serbia
 server %1 has been added	common	pl	Serwer %1 został dodany
 server answered. processing response...	common	pl	Otrzymano odpowiedź serwera. Przetwarzanie...
 server contacted. waiting for response...	common	pl	Nawiązako kontakt z serweraem. Oczekiwanie...
@@ -565,8 +625,10 @@ setup main menu	common	pl	Menu główne setupu
 seychelles	common	pl	SESZELE
 show all	common	pl	Pokaż wszystko
 show all categorys	common	pl	Pokaż wszystkie kategorie
+show as topmenu	common	pl	Pokaż jako Top menu
 show clock?	common	pl	Pokazywać zegar?
 show home and logout button in main application bar?	common	pl	Czy pokazywać przyciski "Strona domowa" oraz "Wylogowanie" w głównym pasku aplikacji?
+show in sidebox	common	pl	Pokaż w sidebox
 show logo's on the desktop.	common	pl	Czy pokazywać logo na biurku?
 show menu	common	pl	pokaż menu
 show page generation time	common	pl	Wyświetl czas generowania strony
@@ -577,7 +639,10 @@ show_more_apps	common	pl	show_more_apps
 showing %1	common	pl	Wyświetlono %1
 showing %1 - %2 of %3	common	pl	Wyświetlanie %1 - %2 z %3
 sierra leone	common	pl	SIERRA LEONE
+simple	common	pl	prosty
 singapore	common	pl	SINGAPUR
+site configuration	common	pl	Konfiguracja serwisu
+size	common	pl	Wielkość
 slovakia	common	pl	SŁOWACJA
 slovenia	common	pl	SŁOWENIA
 solomon islands	common	pl	WYSPY SALOMONA
@@ -604,6 +669,7 @@ swaziland	common	pl	SUAZILAND
 sweden	common	pl	SZWECJA
 switzerland	common	pl	SZWARCARIA
 syrian arab republic	common	pl	SYRIA
+table %1 is excluded from backup and restore. data will not be restored.	common	pl	Tabela %1 jest wykluczona z backupu i odtwarzania. Dane nie zostaną przywrócone.
 table properties	common	pl	Właściwości tabeli
 taiwan	common	pl	TAJWAN
 tajikistan	common	pl	TADŻYKISTAN
@@ -614,10 +680,12 @@ the api is current	common	pl	API jest aktualne
 the api requires an upgrade	common	pl	API wymaga aktualizacji
 the following applications require upgrades	common	pl	Następujące aplikacje wymagają upgrade'u
 the mail server returned	common	pl	Serwer pocztowy zwrócił
+there already is a system-user with this name. user's should not have the same name as a systemuser	common	pl	Istnieje już użytkownik systemowy z tą nazwą. Użytkownicy nie powinni pokrywać się nazwami z użytkownikami systemowymi.
 this application is current	common	pl	Wersja aplikacji jest aktualna
 this application requires an upgrade	common	pl	Aplikacja wymaga aktualizacji
 this name has been used already	common	pl	Ta nazwa została już użyta
 thursday	common	pl	Czwartek
+tiled	common	pl	Sąsiadujący
 time	common	pl	Czas
 time selection:	jscalendar	pl	Wybór czasu:
 time zone	common	pl	Strefa czasowa
@@ -670,6 +738,7 @@ username	common	pl	Nazwa użytkownika
 users	common	pl	Użytkownicy
 users choice	common	pl	Wybierają użytkownicy
 uzbekistan	common	pl	UZBEKISTAN
+value	common	pl	Wartość
 vanuatu	common	pl	VANUATU
 venezuela	common	pl	WENEZUELA
 version	common	pl	Wersja
@@ -680,11 +749,14 @@ virgin islands, u.s.	common	pl	AMERYKAŃSKIE WYSPY DZIEWICZE
 wallis and futuna	common	pl	WALLIS AND FUTUNA
 wednesday	common	pl	Środa
 welcome	common	pl	Strona główna
+western european	common	pl	Europa Zachodnia
 western sahara	common	pl	SAHARA ZACHODNIA
 what color should all the blank space on the desktop have	common	pl	Jaki powinien być kolor wszelkich wolnych przestrzeni w obszarze roboczym?
 what style would you like the image to have?	common	pl	W jakim stylu powinnien być obrazek?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pl	Jeżeli wybierzesz "TAK", "Powrót na stronę domową" oraz "Wylogowanie" będą pokazywane jako przyciski aplikacji na głównym pasku aplikacji.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	pl	Gdzie będą wyświetlane linki wylogowania egroupware?
 which groups	common	pl	Które grupy
+whole query	common	pl	Całe zapytanie
 width	common	pl	Szerokosc
 wk	jscalendar	pl	tydz
 work email	common	pl	email służbowy
@@ -704,7 +776,10 @@ you have not entered participants	common	pl	Nie wprowadziłeś uczestników
 you have selected an invalid date	common	pl	Wybrałeś nieprawidłową datę
 you have selected an invalid main category	common	pl	Wybrałeś niewłaściwą kategorię główną
 you have successfully logged out	common	pl	Wylogowałes/aś się pomyślnie
+you need to %1set your timezone preference%2.	common	pl	Musisz ustawić %1strefę czasową%2.
 you need to add the webserver user '%1' to the group '%2'.	common	pl	Musisz dodać użytkownika '%1' do grupy '%2'.
+you need to be an egroupware administrator to access this functionality!	common	pl	Tylko administrator eGroupWaze ma dostęp do tej funkcji!
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	pl	Próba otworzenia aplikacji %1 nie powiodła się, gdyż nie masz uprawnień dostępu to tej aplikacji.
 your message could <b>not</b> be sent!<br>	common	pl	Twoja wiadomość <b>nie</b> została wysłana!<br>
 your message has been sent	common	pl	Wiadomość została wysłana
 your search returned %1 matchs	common	pl	wyszukiwanie zwróciło %1 trafień
@@ -714,4 +789,3 @@ your settings have been updated	common	pl	Twoje ustawienia zostały uaktualnione
 zambia	common	pl	ZAMBIA
 zimbabwe	common	pl	ZIMBABWE
 zoom	common	pl	Powiększenie
-site configuration	common	pl	Konfiguracja serwisu

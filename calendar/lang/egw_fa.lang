@@ -3,12 +3,14 @@
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	fa	رکوردهای خوانده شده (هنوز وارد نشده، شما می توانید به عقب برگردید و بررسی آزمایش واردات را غیر فعال کنید)
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	fa	<b> به خاطر داشته باشید:</b> تقویم، از روزهای تعطیل کشور شما استفاده میکند که تنظیم شده روی %1. شما می توانید آنرا در %2 خود تغییر دهید.<br /> تعطیلات %3  بطور خودکار از %4 نصب شده اند. شما می توانید آنرا در %5 تغییر دهید.
 a non blocking event will not conflict with other events	calendar	fa	یک رویداد ناقفل گر با دیگر رویدادها تداخلی ایجاد نمیکند
+accept	calendar	fa	قبول
 accept or reject an invitation	calendar	fa	تأیید یا رد دعوت
 accepted	calendar	fa	تأیید شد
 access denied to the calendar of %1 !!!	calendar	fa	دسترسی به تقویم %1 ممنوع است!!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	fa	فعالیتی که باعث این تذکر شده است: افزودن، لغو شدن، تأیید کردن، رد کردن و ...
 actions	calendar	fa	فعالیتها
 add alarm	calendar	fa	اضافه کردن هشدار
+add timesheet entry	calendar	fa	افزودن برگه ساعت کار
 added	calendar	fa	اضافه شد
 after current date	calendar	fa	بعد از تاریخ جاری
 alarm	calendar	fa	هشدار
@@ -19,20 +21,19 @@ alarm management	calendar	fa	مدیریت هشدار
 alarms	calendar	fa	هشدارها
 all categories	calendar	fa	همه دسته ها
 all day	calendar	fa	همه روزها
-all days	calendar	fa	همه روزها
 all events	calendar	fa	همه رویدادها
 all participants	calendar	fa	همه همراهان
 allows to edit the event again	calendar	fa	اجازه میدهد تا رویداد دوباره ویرایش شود
+always	calendar	fa	همیشه
 apply the changes	calendar	fa	اعمال تغییرات
 are you sure you want to delete this country ?	calendar	fa	آیا مطمئنید که می خواهید این کشور را حذف کنید؟
 are you sure you want to delete this holiday ?	calendar	fa	آیا مطمئنید که می خواهید این تعطیلی را حذف کنید؟
-attach	calendar	fa	پیوست
-attach file	calendar	fa	پیوست پرونده
 back half a month	calendar	fa	نصف ماه به عقب
 back one month	calendar	fa	یک ماه به عقب
 before current date	calendar	fa	قبل از تاریخ جاری
 before the event	calendar	fa	قبل از رویداد
 birthday	calendar	fa	تاریخ تولد
+birthdays	admin	fa	تاریخ تولد
 busy	calendar	fa	اشغال
 by	calendar	fa	بوسیله
 calendar event	calendar	fa	رویداد تقویم
@@ -42,25 +43,23 @@ calendar preferences	calendar	fa	تنظیمات تقویم
 calendar settings	admin	fa	تنظیمات تقویم
 calendar-fieldname	calendar	fa	نام فیلد-تقویم
 can't add alarms in the past !!!	calendar	fa	هشدار در گذشته نمی تواند اضافه شود!!!
-cancel	calendar	fa	بستن
 canceled	calendar	fa	لغو شد
-charset of file	calendar	fa	UTF-8
+check all	calendar	fa	چک کردن همه
+choose a category	calendar	fa	دسته را انتخاب کنید
 close the window	calendar	fa	بستن پنجره
-comment	calendar	fa	شرح
 compose a mail to all participants after the event is saved	calendar	fa	ایجاد نامه برای برای همه همراهان، بعد از ضبط شدن رویداد
 copy of:	calendar	fa	رونوشت از:
 copy this event	calendar	fa	رونوشت این رویداد
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	fa	تغییرات شما را در تخته یادداشت نگه میدارد، %1ورودی را مجددا بازیابی نمائید%2 و ادغامشان کنید
 countries	calendar	fa	کشورها
 country	calendar	fa	کشور
-create an exception at this recuring event	calendar	fa	ایجاد استثناء روی این رویداد تکرار شدنی
 create new links	calendar	fa	ایجاد پیوندهای جدید
 csv	calendar	fa	CSV
 csv-fieldname	calendar	fa	نام فیلد CSV
 csv-filename	calendar	fa	نام پرونده CSV
-custom	calendar	fa	سفارشی
 custom fields	common	fa	فیلدهای سفارشی
-d	calendar	fa	روز
 daily	calendar	fa	روزانه
+day	calendar	fa	روز
 days	calendar	fa	روز
 days of the week for a weekly repeated event	calendar	fa	روزهای هفته برای رویدادهای تکرار شونده هفتگی
 days repeated	calendar	fa	روزهای تکرار
@@ -70,19 +69,17 @@ default calendar filter	calendar	fa	صافی پیش فرض تقویم
 default calendar view	calendar	fa	نمای پیش فرض تقویم
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	fa	مدت پیش فرض برای رویدادهای ایجاد شده جدید. مدت به دقیقه می باشد.(مانند: 60 دقیقه برای 1 ساعت)
 default week view	calendar	fa	نمای پیش فرض هفتگی
-defines the size in minutes of the lines in the day view.	calendar	fa	اندازه خطوط را به دقیقه در سبک نمای روزانه تعریف می کند
 delete series	calendar	fa	حذف سریها
 delete this alarm	calendar	fa	حذف این هشدار
 delete this event	calendar	fa	حذف این رویداد
 delete this exception	calendar	fa	حذف این استثناء
 delete this series of recuring events	calendar	fa	حذف این سری از رویدادهای تکرارشونده
+deleted	calendar	fa	حذف شد
 disinvited	calendar	fa	لغو دعوت
 display status of events	calendar	fa	نمایش وضعیت رویداد
 displayed view	calendar	fa	نمای دید
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	fa	نمای پیش فرض تقویم شما را در صفحه ورود نشان می دهد.( صفحه ای که شما در زمان ورود به گروه افزار آنرا می بینید یا در زمانی که روی نمایه خانه کلیک می کنید)
 do you want a weekview with or without weekend?	calendar	fa	آیا میخواهید که نمای هفتگی را با/بدون تعطیلات آخر هفته ببینید؟
-do you want to be notified about new or changed appointments?	preferences	fa	آیا میخواهید در مورد قرارملاقاتهای جدید یا تغییر یافته مطلع شوید؟ شما از تغییرات ایجاد شده توسط خودتان مطلع می شوید.<br> شما می توانید آگهی رسانی را به تغییرات خاصی محدود نمائید. هر مورد شامل همه آگهی رسانیهای بالای خود می شود. همه تغییرات شامل تغییر عنوان، شرح، همکاران، و نه پاسخ همکاران می شود. اگر مالک یک رویداد، آگهی رسانی درخواست نماید، او همیشه پاسخهائی از همکاران مربوطه در رویداد، مانند تأیید رویداد یا رد آن خواهد داشت.
-do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	common	fa	آیا میخواهید در مورد قرارملاقاتهای جدید یا تغییر یافته مطلع شوید؟ شما از تغییرات ایجاد شده توسط خودتان مطلع می شوید.<br> شما می توانید آگهی رسانی را به تغییرات خاصی محدود نمائید. هر مورد شامل همه آگهی رسانیهای بالای خود می شود. همه تغییرات شامل تغییر عنوان، شرح، همکاران، و نه پاسخ همکاران می شود. اگر مالک یک رویداد، آگهی رسانی درخواست نماید، او همیشه پاسخهائی از همکاران مربوطه در رویداد، مانند تأیید رویداد یا رد آن خواهد داشت.
+do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	fa	آیا میخواهید در مورد قرارملاقاتهای جدید یا تغییر یافته مطلع شوید؟ شما از تغییرات ایجاد شده توسط خودتان مطلع می شوید.<br> شما می توانید آگهی رسانی را به تغییرات خاصی محدود نمائید. هر مورد شامل همه آگهی رسانیهای بالای خود می شود. همه تغییرات شامل تغییر عنوان، شرح، همکاران، و نه پاسخ همکاران می شود. اگر مالک یک رویداد، آگهی رسانی درخواست نماید، او همیشه پاسخهائی از همکاران مربوطه در رویداد، مانند تأیید رویداد یا رد آن خواهد داشت.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	fa	آیا میخواهید یک خلاصه قاعده مند از قرارملاقاتهایتان توسط رایانامه دریافت کنید؟ <br>خلاصه مذکور هر صبح آنروز یا در روز شنبه  برای خلاصه رویدادهای هفتگی به نشانی رایانامه استاندارد شما ارسال می شود<.br> آن فقط زمانی ارسال میشود که شما حداقل یک قرارملاقات در روز یا هفته داشته باشید
 do you wish to autoload calendar holidays files dynamically?	admin	fa	آیا میخواهید که بطور خودکار تعطیلات تقویمی بصورت پویا بارگذاری شوند؟
 download	calendar	fa	دریافت
@@ -105,6 +102,7 @@ error: importing the ical	calendar	fa	خطا: وارد کردن iCal
 error: no participants selected !!!	calendar	fa	خطا: دست اندرکاری انتخاب نشد
 error: saving the event !!!	calendar	fa	خطا: ضبط رویداد
 error: starttime has to be before the endtime !!!	calendar	fa	خطا: ساعت شروع باید قبل از ساعت پایان باشد
+error: the entry has been updated since you opened it for editing!	calendar	fa	خطا: ورودی درحال بهنگام سازی است در زمانی که شما دارید ویرایش یا بازش می کنید
 event copied - the copy can now be edited	calendar	fa	رویداد رونوشت شد. رونوشت می تواند ویرایش شود
 event deleted	calendar	fa	رویداد حذف شد
 event details follow	calendar	fa	پیگیری جزئیات رویداد
@@ -113,11 +111,10 @@ event will occupy the whole day	calendar	fa	رویداد تمام روز را ا
 exception	calendar	fa	استثناء
 exceptions	calendar	fa	استثنائات
 existing links	calendar	fa	پیوندهای موجود
-export	calendar	fa	صدور
 extended	calendar	fa	توسعه یافته
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	fa	بهنگام سازی های اضافی همیشه شامل جزئیات کامل رویداد هستند. موارد iCal توانائی وارد شدن از طریق کاربردهای تقویمی دیگر را دارند
-field must not be empty !!!	calendar	fa	فیلد نمیتواند خالی باشد!!!
 fieldseparator	calendar	fa	جدا کننده فیلد
+filemanager	calendar	fa	مدیر پرونده
 filename	calendar	fa	نام پرونده
 filename of the download	calendar	fa	نام پرونده برای دریافت
 find free timeslots where the selected participants are availible for the given timespan	calendar	fa	یافتن زمان خالی برای همکاران انتخاب شده که در آن زمانها موجود باشند
@@ -133,7 +130,7 @@ freetime search	calendar	fa	جستجوی ساعت خالی
 fri	calendar	fa	جمعه
 full description	calendar	fa	شرح کامل
 fullname of person to notify	calendar	fa	نام کامل شخص برای یادآوری
-general	calendar	fa	عمومی
+global categories	calendar	fa	دسته های عمومی
 global public and group public	calendar	fa	گروه عمومی و سراسری عمومی
 global public only	calendar	fa	فقط سراسری عمومی
 group invitation	calendar	fa	دعوت گروهی
@@ -143,6 +140,7 @@ groupmember(s) %1 not included, because you have no access.	calendar	fa	اعضا
 h	calendar	fa	ساعت
 here is your requested alarm.	calendar	fa	اینجا درخواست هشدار شماست
 high priority	calendar	fa	بالاترین تقدم
+history	calendar	fa	تاریخچه
 holiday	calendar	fa	تعطیلی
 holiday management	calendar	fa	مدیریت تعطیلات
 holidays	calendar	fa	تعطیلات
@@ -158,10 +156,8 @@ ical successful imported	calendar	fa	iCal با موفقیت وارد شد
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	fa	اگر فعال شود تعطیلاتی که به آخر هفته می رسند، به شنبه بعد منتقل می گردند
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	fa	اگر شما اینجا گذرواژه ای تنظیم نکنید، اطلاعات برای همه موجود خواهد بود، آنهائی که نشانی را بلدند
 ignore conflict	calendar	fa	نادیده گرفتن همپوشانی
-import	calendar	fa	وارد کردن
-import csv-file	preferences	fa	وارد کردن پرونده CSV
+import csv-file	common	fa	وارد کردن پرونده CSV
 interval	calendar	fa	وقفه
-intervals in day view	calendar	fa	وقفه در نمای روزانه
 invalid email-address "%1" for user %2	calendar	fa	نشانی نامه الکترونیکی "%1" نامعتبر است برای کاربر  %2
 last	calendar	fa	آخرین
 lastname of person to notify	calendar	fa	نام خانوادگی شخص برای یادآوری
@@ -179,11 +175,12 @@ make freebusy information available to not loged in persons?	calendar	fa	اطل�
 minutes	calendar	fa	دقیقه
 modified	calendar	fa	تغییر یافته
 mon	calendar	fa	دوشنبه
+month	calendar	fa	ماه
 monthly	calendar	fa	ماهانه
 monthly (by date)	calendar	fa	ماهانه (با تاریخ)
 monthly (by day)	calendar	fa	ماهانه(با روز)
 monthview	calendar	fa	نمای ماهانه
-new search	calendar	fa	جستجوی جدید
+new	calendar	fa	جدید
 new search with the above parameters	calendar	fa	جستجوی جدید با پارامترهای بالا
 no events found	calendar	fa	رویدادی پیدا نشد
 no filter	calendar	fa	بدون صافی
@@ -200,7 +197,6 @@ notification messages for your responses	calendar	fa	پیامهای آگهی ر�
 number of records to read (%1)	calendar	fa	تعداد رکوردها برای خواندن (%1)
 observance rule	calendar	fa	قانون رعایت
 occurence	calendar	fa	رخداد
-of	calendar	fa	از
 old startdate	calendar	fa	تاریخ شروع قبلی
 on %1 %2 %3 your meeting request for %4	calendar	fa	در %1 %2 %3 درخواست ملاقات شما برای%4
 on all modification, but responses	calendar	fa	در همه تغییرات، حتی جوابها
@@ -228,6 +224,7 @@ previous	calendar	fa	قبلی
 private and global public	calendar	fa	خصوصی و عمومی همگانی
 private and group public	calendar	fa	خصوصی و عمومی گروهی
 private only	calendar	fa	فقط خصوصی
+quantity	calendar	fa	مقدار
 re-edit event	calendar	fa	ویراستن مجدد رویداد
 receive email updates	calendar	fa	دریافت نامه بهنگام رسانی
 receive summary of appointments	calendar	fa	دریافت خلاصه ملاقاتها
@@ -243,6 +240,7 @@ repetition	calendar	fa	تکرار
 repetitiondetails (or empty)	calendar	fa	جزئیات تکرار(یا خالی)
 reset	calendar	fa	از نو
 resources	calendar	fa	منابع
+role	calendar	fa	وظیفه
 rule	calendar	fa	قاعده
 sat	calendar	fa	شنبه
 saves the changes made	calendar	fa	تغییرات را ضبط میکند
@@ -254,27 +252,22 @@ select resources	calendar	fa	منابع را انتخاب کنید
 select who should get the alarm	calendar	fa	انتخاب کنید چه کسی باید هشدار را دریافت کند
 set a year only for one-time / non-regular holidays.	calendar	fa	سال را برای تعطیلات یک بار/بی قاعده تنظیم کنید
 set new events to private	calendar	fa	تنظیم رویدادهای جدید به خصوصی
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	fa	آیا دعوتنامه هائی که شما رد می کنید باید همچنان در تقویم شما نمایش داده شوند؟<br> شما فقط می توانید بعدا آنها را تأیید کنید(مثلا وقتی که تداخل برنامه خود را حل کردید!) اگر همچنان در تقویم شما بمانند
 should new events created as private by default ?	calendar	fa	نمایش رویدادهای جدید ایجاد شده بعنوان خصوصی بصورت پیش فرض؟
-should not loged in persons be able to see your freebusy information? the url to your freebusy information is %1.	preferences	fa	آیا باید کاربران وارد نشده به سیستم، اطلاعات آزاد/مشغول بودن شما را ببینند؟ شما می توانید برای حفاظت از این اطلاعات یک گذرواژه اضافی تنظیم کنید - متفاوت از گذرواژه خودتان. اطلاعات آزاد/مشغول فقط در قالب iCal بوده و فقط شامل زمانهائی می شود که شما مشغول هستید. شامل نام رویداد یا شرح یا محل نمی باشد. نشانی مراجعه به اطلاعات آزاد مشغول شما هست: %1
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	admin	fa	آیا باید کاربران وارد نشده به سیستم، اطلاعات آزاد/مشغول بودن شما را ببینند؟ شما می توانید برای حفاظت از این اطلاعات یک گذرواژه اضافی تنظیم کنید - متفاوت از گذرواژه خودتان. اطلاعات آزاد/مشغول فقط در قالب iCal بوده و فقط شامل زمانهائی می شود که شما مشغول هستید. شامل نام رویداد یا شرح یا محل نمی باشد. نشانی مراجعه به اطلاعات آزاد مشغول شما هست: %1
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	fa	آیا وضعیت رویداد همکاران(تأیید،رد و...) باید در کروشه بعد از نام هر همکار نمایش داده شود؟
 show default view on main screen	calendar	fa	نمایش نمای پیش فرض در صفحه اصلی
-show invitations you rejected	calendar	fa	نمایش دعوتنامه هائی که شما رد میکنید
 show list of upcoming events	calendar	fa	نمایش فهرستی از رویدادهای آمدنی
 show this month	calendar	fa	نمایش این ماه
 show this week	calendar	fa	نمایش این هفته
-showing	calendar	fa	نمایش
 single event	calendar	fa	رویداد تنها
 start	calendar	fa	شروع
 start date/time	calendar	fa	تاریخ/ساعت شروع
+startdate	calendar	fa	تاریخ شروع
 startdate / -time	calendar	fa	تاریخ/ساعت شروع
 startdate and -time of the search	calendar	fa	تاریخ و ساعت شروع جستجو
 startdate of the export	calendar	fa	تاریخ شروع صادرات
 startrecord	calendar	fa	رکورد شروع
 status changed	calendar	fa	وضعیت تغییر کرد
 submit to repository	calendar	fa	ثبت در مخزن
-substitutions and their meanings:	calendar	fa	معادلها و معانی آنها:<br>
 sun	calendar	fa	یکشنبه
 tentative	calendar	fa	آزمایشی
 test import (show importable records <u>only</u> in browser)	calendar	fa	آزمایش واردات (نمایش رکوردهای قابل وارد شدن <u>فقط</u> در مرورگر
@@ -288,6 +281,7 @@ this message is sent to disinvited participants.	calendar	fa	این پیام ب�
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	fa	این پیام برای همه همراهانی که در یک رویداد هستند و آگهی رسانی برای رویدادهای جدید را فعال ساخته اند ارسال می شود. <br> شما می توانید از متغیرهای معادل شده با مقادیر سیستم برای رویداد ها در این پیام استفاده کنید. خط اول بعنوان موضوع رایانامه در نظر گرفته می شود.
 this message is sent when you accept, tentative accept or reject an event.	calendar	fa	این پیام زمانی که شما رویدادی را تأیید کردید یا آزمایشی تأیید کردید یا رد کردید ارسال شده است
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	fa	این پیام زمانی که شما یک هشدار را برای یک رویداد تنظیم میکنید ارسال می شود. بهمراه همه اطلاعاتی که شما نیاز دارید
+this module displays the current month	calendar	fa	این پیمانه ماه جاری را نمایش می دهد
 three month	calendar	fa	سه ماه
 thu	calendar	fa	پنج شنبه
 til	calendar	fa	تا
@@ -295,7 +289,6 @@ timeframe	calendar	fa	بازه زمانی
 timeframe to search	calendar	fa	چهارچوب زمانی برای جستجو
 title of the event	calendar	fa	عنوان رویداد
 to many might exceed your execution-time-limit	calendar	fa	خیلی زیاد که شود ممکن است به حد اجرای برنامه برسد(execution-time-limit)
-translation	calendar	fa	ترجمه
 tue	calendar	fa	سه شنبه
 two weeks	calendar	fa	دو هفته
 updated	calendar	fa	بهنگام شد
@@ -308,18 +301,14 @@ week	calendar	fa	هفته
 weekday starts on	calendar	fa	روز هفته شروع می شود در
 weekdays	calendar	fa	روزهای هفته
 weekdays to use in search	calendar	fa	روزهای هفته برای استفاده در جستجو
-weekend	calendar	fa	آخر هفته
 weekly	calendar	fa	هفتگی
 weekview	calendar	fa	نمای هفته
 weekview with weekend	calendar	fa	نمای هفتگی با تعطیلات آخر هفته
 weekview without weekend	calendar	fa	نمای هفتگی بدون تعطیلات آخر هفته
-which events do you want to see when you enter the calendar.	calendar	fa	کدام رویدادها را وقتی وارد تقویم میشوید می خواهید ببینید
-which of calendar view do you want to see, when you start calendar ?	calendar	fa	کدام نمای تقویم را در زمان ورود به تقویم می خواهید ببینید؟
 whole day	calendar	fa	همه روز
 wk	calendar	fa	هفته
 work day ends on	calendar	fa	روز کاری تمام می شود در
 work day starts on	calendar	fa	روز کاری شروع می شود در
-working days	calendar	fa	روزهای کاری
 yearly	calendar	fa	سالانه
 yearview	calendar	fa	نمای سال
 you can either set a year or a occurence, not both !!!	calendar	fa	شما می توانید سال یا رخداد را تنظیم کنید نه هر دو را !!!

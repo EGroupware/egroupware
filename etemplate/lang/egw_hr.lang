@@ -23,13 +23,16 @@ alignment of label and input-field in table-cell	etemplate	hr	alignment of label
 alignment of the v/hbox containing table-cell	etemplate	hr	Alignment of the V/HBox containing table-cell
 am	etemplate	hr	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	hr	an indexed column speeds up querys using that column (cost space on the disk !!!)
+and	etemplate	hr	And
 application	etemplate	hr	Application
 application name needed to write a langfile or dump the etemplates !!!	etemplate	hr	Application name needed to write a langfile or dump the eTemplates !!!
+applications	etemplate	hr	Aplikacije
 attach	etemplate	hr	Attach
 attach file	etemplate	hr	attach file
 blurtext	etemplate	hr	blurText
 border	etemplate	hr	Border
 border-line-thickness for the table-tag	etemplate	hr	Border-line-thickness for the table-tag
+bottom	etemplate	hr	dno
 can not have special sql-value null	etemplate	hr	can not have special SQL-value NULL
 cancel	etemplate	hr	Cancel
 category	etemplate	hr	Category
@@ -37,6 +40,7 @@ cellpadding for the table-tag	etemplate	hr	Cellpadding for the table-tag
 cells	etemplate	hr	Cells
 cellspacing for the table-tag	etemplate	hr	Cellspacing for the table-tag
 center	etemplate	hr	Center
+changed	etemplate	hr	Promijenjeno
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	hr	check if content should only be displayed but not altered (the content is not send back then!)
 check if field has to be filled by user	etemplate	hr	check if field has to be filled by user
 checkbox	etemplate	hr	Checkbox
@@ -49,20 +53,24 @@ click here to upload the file	etemplate	hr	Click here to upload the file
 click to order after that criteria	etemplate	hr	click to order after that criteria
 columnname	etemplate	hr	ColumnName
 comment	etemplate	hr	Comment
+confirm	etemplate	hr	Potvrdi
+contact	etemplate	hr	Kontakt
+contains	etemplate	hr	sadrži
 create a new table for the application	etemplate	hr	Create a new table for the application
-creates an english ('hr') langfile from label and helptexts (for application in name)	etemplate	hr	creates an english ('hr') langfile from label and helptexts (for application in Name)
 css class for the table-tag	etemplate	hr	CSS class for the table-tag
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	hr	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
 css-styles	etemplate	hr	CSS-styles
+custom	etemplate	hr	Proizvoljno
+custom fields	etemplate	hr	Proizvoljno Polje
 date+time	etemplate	hr	Date+Time
 datum	etemplate	hr	Datum
 day	etemplate	hr	Day
+days	etemplate	hr	dana
 db ensures that every row has a unique value in that column	etemplate	hr	DB ensures that every row has a unique value in that column
 db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	hr	db-specific index options (comma-sep.), eg. mysql(FULLTEXT) or mysql(100) for the indexed length of a col
 db-tools	etemplate	hr	DB-Tools
 deck	etemplate	hr	Deck (internal)
 default	etemplate	hr	Default
-delete	etemplate	hr	Delete
 delete a single entry by passing the id.	etemplate	hr	Delete a single entry by passing the id.
 delete all selected etemplates, without further inquiry	etemplate	hr	delete ALL selected eTemplates, WITHOUT further inquiry
 delete column	etemplate	hr	Delete Column
@@ -81,6 +89,7 @@ documentation	etemplate	hr	Documentation
 drop a table - this can not be undone	etemplate	hr	Drop a table - this can NOT be undone
 drop table	etemplate	hr	Drop Table
 dump4setup	etemplate	hr	Dump4Setup
+duration	etemplate	hr	Trajanje
 edit	etemplate	hr	Edit
 edit the etemplate spez. above	etemplate	hr	edit the eTemplate spez. above
 editable templates - db-tools	etemplate	hr	Editable Templates - DB-Tools
@@ -98,14 +107,11 @@ enter the new version number here (has to be > old_version)	etemplate	hr	enter t
 entry saved	etemplate	hr	Entry saved
 error: template not found !!!	etemplate	hr	Error: Template not found !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	hr	Error: webserver is not allowed to write into '%1' !!!
-error: while saveing !!!	etemplate	hr	Error: while saveing !!!
-error: writeing !!!	etemplate	hr	Error: writeing !!!
 error: writing file (no write-permission for the webserver) !!!	etemplate	hr	Error: writing file (no write-permission for the webserver) !!!
 etemplate	common	hr	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	hr	eTemplate '%1' imported, use Save to put it in the database
 etemplate '%1' written to '%2'	etemplate	hr	eTemplate '%1' written to '%2'
 etemplate editor	etemplate	hr	eTemplate Editor
-etemplate referenz	etemplate	hr	eTemplate Referenz
 etemplate tutorial	etemplate	hr	eTemplate Tutorial
 exchange this row with the one above	etemplate	hr	exchange this row with the one above
 exchange this two columns	etemplate	hr	exchange this two columns
@@ -133,6 +139,7 @@ height, disabled	etemplate	hr	Height, Disabled
 help	etemplate	hr	Help
 horizontal rule	etemplate	hr	Horizontal Rule
 hour	etemplate	hr	Hour
+hours	etemplate	hr	sati
 html	etemplate	hr	Html
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	hr	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
 image	etemplate	hr	Image
@@ -152,7 +159,6 @@ key	etemplate	hr	Key
 label	etemplate	hr	Label
 label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	hr	Label:[bold][italic] Text:[len][,max] Numbers:[min][,[max][,len]] T.area:[rows][,cols] Radiob.:value H.Rule:[width] Templ.:[IndexInContent] Select:[multiselect] Date:[values: eg. 'Y-m-d']
 lang	etemplate	hr	Lang
-language-short (eg. 'hr' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	hr	language-short (eg. 'hr' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')
 last	etemplate	hr	Last
 left	etemplate	hr	Left
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	hr	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
@@ -162,6 +168,7 @@ linkstring	etemplate	hr	LinkString
 linkto	etemplate	hr	LinkTo
 load this template into the editor	etemplate	hr	load this template into the editor
 minute	etemplate	hr	Minute
+minutes	etemplate	hr	minuta
 month	etemplate	hr	Month
 multicolumn indices	etemplate	hr	Multicolumn Indices
 name	etemplate	hr	Name
@@ -178,6 +185,7 @@ nextmatch filterheader	etemplate	hr	Nextmatch Filterheader
 nextmatch sortheader	etemplate	hr	Nextmatch Sortheader
 no file	etemplate	hr	no file
 no filename given or selected via browse...	etemplate	hr	no filename given or selected via Browse...
+no matches found	etemplate	hr	Nemogu naći podudarnosti
 not null	etemplate	hr	NOT NULL
 nothing found - try again !!!	etemplate	hr	Nothing found - try again !!!
 nothing matched search criteria !!!	etemplate	hr	Nothing matched search criteria !!!
@@ -187,6 +195,7 @@ of	etemplate	hr	of
 only an other version found !!!	etemplate	hr	only an other Version found !!!
 optional note about the link	etemplate	hr	optional note about the Link
 options	etemplate	hr	Options
+or	etemplate	hr	or
 overflow	etemplate	hr	Overflow
 padding	etemplate	hr	Padding
 please enter table-name first !!!	etemplate	hr	Please enter table-name first !!!
@@ -199,11 +208,11 @@ read	etemplate	hr	Read
 read a list of entries.	etemplate	hr	Read a list of entries.
 read a single entry by passing the id and fieldlist.	etemplate	hr	Read a single entry by passing the id and fieldlist.
 read etemplate from database (for the keys above)	etemplate	hr	read eTemplate from database (for the keys above)
+readonly	etemplate	hr	samo za čitanje
 remove row (can not be undone!!!)	etemplate	hr	remove Row (can NOT be undone!!!)
 remove this link (not the entry itself)	etemplate	hr	Remove this link (not the entry itself)
 returns savely, without deleting	etemplate	hr	returns savely, WITHOUT deleting
 right	etemplate	hr	Right
-save	etemplate	hr	Save
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	hr	save the eTemplate under the above keys (name, ...), change them for a SaveAs
 saves changes to tables_current.inc.php	etemplate	hr	saves changes to tables_current.inc.php
 scale	etemplate	hr	Scale
@@ -262,6 +271,7 @@ to start the db-tools	etemplate	hr	to start the DB-Tools
 to start the etemplate editor	etemplate	hr	to start the eTemplate editor
 to start the search	etemplate	hr	to start the search
 today	etemplate	hr	Today
+top	etemplate	hr	vrh
 type	etemplate	hr	Type
 type of the column	etemplate	hr	type of the column
 type of the field (select label if field should be empty)	etemplate	hr	type of the field (select Label if field should be empty)

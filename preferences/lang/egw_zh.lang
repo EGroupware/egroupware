@@ -1,4 +1,3 @@
-$label	preferences	zh	$label
 %1 - preferences	preferences	zh	%1 - 参数选择
 %1 hours	preferences	zh	%1小时
 12 hour	preferences	zh	12小时
@@ -13,7 +12,7 @@ change a user password by passing the old and new passwords.  returns true on su
 change your password	preferences	zh	更改密码
 change your profile	preferences	zh	更改您的配置文件
 change your settings	preferences	zh	更改您的设置
-charset for the csv export	preferences	zh	用于 CSV 输出的字符集
+charset for the csv export	addressbook	zh	用于 CSV 输出的字符集
 click to select a color	preferences	zh	点击选择一颜色
 color	preferences	zh	颜色
 country	preferences	zh	国家
@@ -38,7 +37,6 @@ help off	preferences	zh	关闭提示信息
 hours	preferences	zh	小时
 how do you like to display accounts	preferences	zh	您喜欢以何种方式显示帐户
 how do you like to select accounts	preferences	zh	您喜欢以何种方式选择帐户
-how many hours are you in front or after the timezone of the server. <br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	zh	您与服务器所在时区的时差，也可以是您所在地的日期和时间。<br>如果您和服务器在同一时区，选择 0 小时。
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	zh	在页面顶部导航栏导显示多少个图标。其它图标放进下拉菜单中，在导航栏最右边可随时点击下拉按钮显示他们。
 how should egroupware display dates for you.	preferences	zh	以何种方式显示日期。
 icon	preferences	zh	图标
@@ -51,7 +49,7 @@ language	preferences	zh	语言
 max matches per page	preferences	zh	每页的最大匹配数
 max number of icons in navbar	preferences	zh	导航栏最多显示图标数量
 no default	preferences	zh	无默认值
-no user-selection at all	preferences	zh	无任何用户选择
+no user-selection at all	common	zh	无任何用户选择
 note: this feature does *not* change your email password. this will	preferences	zh	注：此特征<b>不会</b>更改您的电子邮件密码。这将
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	zh	注：此特征<b>不会</b>更改您的电子邮件密码，这将需要通过手动更改。
 office 2003 theme	preferences	zh	Office 2003 主题
@@ -75,15 +73,14 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	zh	选择是否总是显示活动会话的数目。
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	zh	进行用户参数配置时总是显示这些帮助消息，或只应要求时显示。
 show helpmessages by default	preferences	zh	默认情况下显示帮助消息
-show links between egroupware aps as	preferences	zh	显示 eGroupWare 应用程序之间的链接
+show links between egroupware aps as	common	zh	显示 eGroupWare 应用程序之间的链接
 show navigation bar as	preferences	zh	导航栏显示模式为
 show number of current users	preferences	zh	显示当前用户数
 show text on navigation icons	preferences	zh	在导航栏图标上显示文字说明
 show_more_apps	common	zh	显示更多应用程序
 silver theme	preferences	zh	银色主题
-spellchecker language	preferences	zh	拼写检查语言
+spellchecker language	addressbook	zh	拼写检查语言
 text only	preferences	zh	只显示文字
-the default application will be started when you enter egroupware or click on the homepage icon. <br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	zh	当您登录 eGroupWare 或点击主页图标时，默认应用程序将已经开始运行。<br>如果您没有选择一个具体应用程序 (在各应用程序参数选择里设置的)，您也可以选择多个应用程序显示在主页上。
 the old password is not correct	preferences	zh	旧密码不正确
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	zh	选择框显示所有可用的用户 (在较大安装与较多用户情况下可能很缓慢)。弹出窗口可根据用户名或群组搜索用户。最后的两个选项限制了其它用户的可见性。所以他们应该是被强制的和不适用于管理员。
 the two passwords are not the same	preferences	zh	两次输入的密码不一致
@@ -93,11 +90,11 @@ time format	preferences	zh	时间格式
 use default	preferences	zh	使用默认值
 users choice	preferences	zh	用户选择
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	zh	如您选择'是'，'主页'和'注销'按钮将作为应用程序显示在顶部应用程序栏上。
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	preferences	zh	其字符集将用于 CSV 输出。系统默认是 eGroupWare 安装的字符集。
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh	其字符集将用于 CSV 输出。系统默认是 eGroupWare 安装的字符集。
 which currency symbol or name should be used in egroupware.	preferences	zh	在 eGroupWare 中应使用何种货币符号或名称。
 write prefs for the specified application.	preferences	zh	为指定应用程序写入配置文件。
 you can show the applications as icons only, icons with app-name or both.	preferences	zh	您可以让工具栏上的应用程序只显示图标、文字, 或是两者都显示。
-you can show the linked entries with icons only, icons with app-name or both.	preferences	zh	你可以让链接的条目只显示图标、应用程序名称或两者都显示。
+you can show the linked entries with icons only, icons with app-name or both.	common	zh	你可以让链接的条目只显示图标、应用程序名称或两者都显示。
 you do not have permission to set acl's in this mode!	preferences	zh	您没有在该模式下设置 ACL 的权限！
 you must enter a password	preferences	zh	您必须输入密码
 your current theme is: %1	preferences	zh	您当前使用的主题是：%1

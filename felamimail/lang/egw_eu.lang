@@ -24,6 +24,7 @@ and	felamimail	eu	eta
 any of	felamimail	eu	batekin
 anyone	felamimail	eu	Edozein
 as a subfolder of	felamimail	eu	Barne karpeta gisa
+attach	felamimail	eu	Erantsi
 attachments	felamimail	eu	Atxikiak
 authentication required	felamimail	eu	Autentifikazioa behar da
 auto refresh folder list	felamimail	eu	Berritu karpeta lista
@@ -49,6 +50,7 @@ compress folder	felamimail	eu	Karpeta konprimatu
 condition	felamimail	eu	baldintza
 configuration	felamimail	eu	Konfigurazioa
 contains	felamimail	eu	dauka
+copy to	felamimail	eu	Kopiatu Hona
 create	felamimail	eu	Sortu
 create folder	felamimail	eu	Karpeta sortu
 create sent	felamimail	eu	Bidalitakoen karpeta sortu
@@ -65,6 +67,7 @@ date(newest first)	felamimail	eu	Data (berriak lehenik)
 date(oldest first)	felamimail	eu	Data (Zaharrak lehenik)
 days	felamimail	eu	egunak
 deactivate script	felamimail	eu	Script-a ezgaitu
+default	felamimail	eu	Lehenetsia
 default sorting order	felamimail	eu	sailkapen lehenetsia
 delete all	felamimail	eu	Dena ezabatu
 delete folder	felamimail	eu	Karpeta ezabatu
@@ -112,22 +115,26 @@ enter your sieve server hostname or ip address	admin	eu	Sartu zure SIEVE zerbitz
 enter your sieve server port	admin	eu	Sartu zure SIEVE zerbitzariaren portu-zenbakia
 enter your smtp server hostname or ip address	admin	eu	Sartu zure SMTP zerbitzariaren ostalari-izena (hostname) edo IP helbidea
 enter your smtp server port	admin	eu	Sartu zure SMTP zerbitzariaren portu-zenbakia
+entry saved	felamimail	eu	Sarrera gordeta
 error	felamimail	eu	ERROREA
 error connecting to imap serv	felamimail	eu	IMAP zerbitzariarekin konektatzerakoan errorea
 error opening	felamimail	eu	Errorea irekitzean
+event details follow	felamimail	eu	Gertakariaren detaileak
 every	felamimail	eu	guztiak
 every %1 days	felamimail	eu	guztiak %1 egunetan
 expunge	felamimail	eu	Deuseztu
 extended	felamimail	eu	hedatua
 felamimail	common	eu	Posta
 file into	felamimail	eu	Filtroa
+filemanager	felamimail	eu	Fitxategi-kudeatzailea
 files	felamimail	eu	artxiboak
 filter active	felamimail	eu	Filtro aktiboa
 filter name	felamimail	eu	Filtroaren izena
-filter rules	felamimail	eu	Filtratzeko erregelak
+filter rules	common	eu	Filtratzeko erregelak
 first name	felamimail	eu	Lehen izena
 flagged	felamimail	eu	Bandera du
 flags	felamimail	eu	Banderak
+folder	felamimail	eu	Karpeta
 folder acl	felamimail	eu	Karpetaren ACL-ak
 folder name	felamimail	eu	Karpeta izena
 folder path	felamimail	eu	Karpetaren bidea
@@ -145,7 +152,6 @@ forward	felamimail	eu	Birbidali
 forward to	felamimail	eu	Birbidali hona
 forward to address	felamimail	eu	Birbidali helbide honetara
 found	felamimail	eu	Aurkitua
-fri	felamimail	eu	Ostirala
 from	felamimail	eu	Nork
 from(a->z)	felamimail	eu	Nork (A->Z)
 from(z->a)	felamimail	eu	Nork (Z->A)
@@ -169,6 +175,7 @@ imap server type	felamimail	eu	IMAP Zerbitzari tipoa
 imap server username	felamimail	eu	imap zerbitzariko erabiltzaile izena
 imaps authentication	felamimail	eu	IMAPS Autentifikazioa
 imaps encryption only	felamimail	eu	IMAPS Enkripzioa soilik
+import	felamimail	eu	Inportatu
 in	felamimail	eu	barne
 index order	felamimail	eu	Indize ordena
 info	felamimail	eu	Informazioa
@@ -199,9 +206,9 @@ matches regexp	felamimail	eu	Regexp parekatuak
 message highlighting	felamimail	eu	Mezua nabaritu
 message list	felamimail	eu	Mezu zerrenda
 messages	felamimail	eu	mezuak
-mon	felamimail	eu	Astelehena
 move	felamimail	eu	mugitu
 move messages	felamimail	eu	mugitu mezuak
+move selected to	felamimail	eu	mugitu hautatuak
 move to	felamimail	eu	mugitu hautatuak
 move to trash	felamimail	eu	Mugitu Zakarra karpetara
 moving messages to	felamimail	eu	mezua mugitu hona
@@ -229,6 +236,7 @@ only one window	felamimail	eu	leiho bat bakarrik
 only unseen	felamimail	eu	Ikusi gabeak bakarrik
 open all	felamimail	eu	guztiak ireki
 options	felamimail	eu	Aukerak
+or	felamimail	eu	edo
 organisation	felamimail	eu	erakundea
 organization	felamimail	eu	erakundea
 organization name	admin	eu	Erakundearen izena
@@ -265,8 +273,8 @@ return	felamimail	eu	Itzuli
 return to options page	felamimail	eu	Itzuli aukeren orrialdera
 right	felamimail	eu	Zuzen
 rule	felamimail	eu	Erregela
-sat	felamimail	eu	Larunbata
 save	felamimail	eu	Gorde
+save all	felamimail	eu	Gorde dena
 save changes	felamimail	eu	aldaketak gorde
 script name	felamimail	eu	scriptaren izena
 script status	felamimail	eu	scriptaren egoera
@@ -298,21 +306,18 @@ submit	felamimail	eu	Bidali
 subscribe	felamimail	eu	Harpidetu
 subscribed	felamimail	eu	Harpidetuta
 subscribed successfully!	felamimail	eu	Harpidetza burutua
-sun	felamimail	eu	Igandea
 table of contents	felamimail	eu	Edukien taula
 text only	felamimail	eu	Testua bakarrik
 the connection to the imap server failed!!	felamimail	eu	IMAP zerbitzariarekiko konexioak hutsegin du
 then	felamimail	eu	ORDUAN
 this folder is empty	felamimail	eu	KARPETA HAU UTZIK DAGO
 this php has no imap support compiled in!!	felamimail	eu	PHParendako IMAPa konpilatu gabe
-thu	felamimail	eu	Osteguna
 to	felamimail	eu	Nori
 to mail sent to	felamimail	eu	Nori bidalitako postari
 translation preferences	felamimail	eu	Itzulpenen lehentasunak
 translation server	felamimail	eu	Itzulpenen zerbitzaria
 trash fold	felamimail	eu	Zakar karpeta
 trash folder	felamimail	eu	Zakar karpeta
-tue	felamimail	eu	Asteartea
 type	felamimail	eu	mota
 unflagged	felamimail	eu	bandera gabea
 unknown err	felamimail	eu	errore ezezaguna
@@ -326,27 +331,24 @@ unsubscribe	felamimail	eu	Harpidetza kendu
 unsubscribed	felamimail	eu	Harpidetza kenduta
 unsubscribed successfully!	felamimail	eu	Harpidetza arrakastaz kenduta
 up	felamimail	eu	gora
+urgent	felamimail	eu	presazko
 use <a href="%1">emailadmin</a> to create profiles	felamimail	eu	erabili <a href="%1">EmailAdmin</a> profilak sortzeko
 use a signature	felamimail	eu	Erabili sinadura
 use a signature?	felamimail	eu	Sinadura erabili?
 use addresses	felamimail	eu	Helbideak erabili
 use custom settings	felamimail	eu	Lehentasun hautatuak erabili
-use javascript or html addressbook?	felamimail	eu	Javascript edo HTML helbide liburua erabili?
 use smtp auth	admin	eu	SMTP autentifikazioa erabili
 users can define their own emailaccounts	admin	eu	Erabiltzaileek euren posta kontuak defini ditzazkete
-vacation notice	felamimail	eu	Opor abisua
+vacation notice	common	eu	Opor abisua
 validate certificate	felamimail	eu	balioztatu ziurtagiria
 view full header	felamimail	eu	Goiburu osoak ikusi
 view message	felamimail	eu	Mezua ikusi
 viewing full header	felamimail	eu	Goiburu osoak ikusten
 viewing message	felamimail	eu	Mezua ikusten
 viewing messages	felamimail	eu	Mezuak ikusten
-wed	felamimail	eu	Asteazkena
-welcome to %1's webmail system	felamimail	eu	Ongietorri %1 webmail sistemara
 when deleting messages	felamimail	eu	Mezuak ezabatzerakoan
 with message	felamimail	eu	mezuarekin
 with message "%1"	felamimail	eu	%1 mezuarekin
 wrap incoming text at	felamimail	eu	Posta sarrerak bateratu
 writing	felamimail	eu	Idazten
 wrote	felamimail	eu	Idatzia
-you must login first.	felamimail	eu	Lehenbizi sisteman sartu beharra daukazu

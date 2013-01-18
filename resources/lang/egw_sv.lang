@@ -31,6 +31,8 @@ existing links	resources	sv	Befintliga länkar
 general	resources	sv	Allmänt
 general informations about resource	resources	sv	Allmän information om resurser
 gernal resource	resources	sv	Allmäna resuser
+global categories	resources	sv	Globala kategorier
+hours	resources	sv	Timmar
 how many of the resources are useable?	resources	sv	Hur många av resurserna är tillgängliga
 how many of them are useable?	resources	sv	Hur många av dem är tillgängliga
 how many of this resource are usable	resources	sv	Hur många av resursen är tillgängliga
@@ -95,7 +97,5 @@ web-site for this resource	resources	sv	Resursens webbsajt
 where to find this resource?	resources	sv	Var hittas resursen
 which category does this resource belong to?	resources	sv	Vilken kategori tillhör resursen
 write permissions	resources	sv	Skrivrättigheter
-you are not permitted to delete this reource!	resources	sv	Du saknar rättigheter att radera resursen
-you are not permitted to edit this reource!	resources	sv	Du saknar rättigheter att ändra i resursen
 you are not permitted to get information about this resource!	resources	sv	Du saknar behörighet att hämta information om resusen
 you chose more resources than available	resources	sv	Du valde fler resurser än tillgängliga

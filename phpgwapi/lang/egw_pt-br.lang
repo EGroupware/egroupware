@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	pt-br	%1 endereço(s) de email(s) inseridos
 %1 is not executable by the webserver !!!	common	pt-br	%1 não é executável pelo servidor web !!!
-%1 manual	common	pt-br	manual de %1
-%1 start	common	pt-br	%1 iniciar
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	pt-br	%1Escolha outro diretório%2<br/> ou dê ao servidor web permissão de escrita em %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt-br	%1eGroupWare%2 é um software de colaboração multi-usuário escrito em %3PHP%4.
 (session restored in %1 seconds)	common	pt-br	(sessão restaurada em %1 segundos)
@@ -34,6 +32,7 @@ account is expired	common	pt-br	A conta está expirada
 accounts	common	pt-br	Contas
 acl	common	pt-br	ACL
 action	common	pt-br	Ação
+actions	common	pt-br	Ações
 active	common	pt-br	Ativo
 add	common	pt-br	Adicionar
 add %1 category for	common	pt-br	Adicionar categoria %1 para
@@ -48,11 +47,13 @@ albania	common	pt-br	ALBANIA
 algeria	common	pt-br	ALGERIA
 all	common	pt-br	Todos
 all fields	common	pt-br	todos os campos
+all languages	common	pt-br	Todos os idiomas
 alphabet	common	pt-br	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	pt-br	Estilo de folha alternativo
 american samoa	common	pt-br	SAMOA AMERICANA
 an error happened	common	pt-br	Um erro ocorreu
 an existing and by the webserver readable directory enables the image browser and upload.	common	pt-br	Um diretório existente e que o servidor web tenha direito de leitura habilita a navegação e upload de imagem.
+and	common	pt-br	E
 andorra	common	pt-br	ANDORRA
 angola	common	pt-br	ANGOLA
 anguilla	common	pt-br	ANGUILLA
@@ -181,13 +182,16 @@ default category	common	pt-br	Categoria padrão
 default height for the windows	common	pt-br	Altura padrão para as janelas
 default width for the windows	common	pt-br	Largura padrão para as janelas
 delete	common	pt-br	Remover
+delete category	common	pt-br	Remover categoria
 delete row	common	pt-br	Remover linha
+delete this entry	common	pt-br	Apagar este registro
 denmark	common	pt-br	DINAMARCA
 description	common	pt-br	Descrição
 detail	common	pt-br	Detalhe
 details	common	pt-br	Detalhes
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pt-br	Desativar a execução dos recursos de exibição de transparências de imagens PNG, para o Explorer 5.5 ou superior?
 direction left to right	common	pt-br	Direção: esquerda para direita
+directory	common	pt-br	Pasta
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	pt-br	Diretório não existe, não pode ser lido pelo servidor web ou não é relativo à pasta raiz!
 disable internet explorer png-image-bugfix	common	pt-br	Desativar recursos para imagem-png no Internet Explorer
 disable slider effects	common	pt-br	Desativar efeitos de transição de slide
@@ -206,6 +210,7 @@ domestic	common	pt-br	Doméstico
 dominica	common	pt-br	DOMINICA
 dominican republic	common	pt-br	REPÚBLICA DOMINICANA
 done	common	pt-br	Pronto
+download	common	pt-br	Baixar
 drag to move	jscalendar	pt-br	Arraste para mover
 e-mail	common	pt-br	E-mail
 east timor	common	pt-br	TIMOR LESTE
@@ -216,7 +221,6 @@ edit categories	common	pt-br	Editar categorias
 edit category	common	pt-br	Editar categoria
 egroupware	common	pt-br	eGroupWare
 egroupware api version	common	pt-br	Versão da API eGroupWare
-egroupware api version %1	common	pt-br	API version %1
 egroupware: login blocked for user '%1', ip %2	common	pt-br	Extranet: login bloqueado para o usuário '%1', endereço IP %2
 egypt	common	pt-br	EGITO
 el salvador	common	pt-br	EL SALVADOR
@@ -358,6 +362,7 @@ kyrgyzstan	common	pt-br	QUIRGUISTÃO
 language	common	pt-br	Idioma
 language_direction_rtl	common	pt-br	Direção rtl do idioma
 lao peoples democratic republic	common	pt-br	LAOS
+last modified	common	pt-br	última alteração
 last name	common	pt-br	Último nome
 last name of the user, eg. "%1"	common	pt-br	Último nome do usuário, ex. "%1"
 last page	common	pt-br	Última página
@@ -376,6 +381,7 @@ list	common	pt-br	Lista
 list members	common	pt-br	Listar membros
 lithuania	common	pt-br	LITUÂNIA
 local	common	pt-br	Local
+locations	common	pt-br	Localizações
 login	common	pt-br	Conectar
 loginid	common	pt-br	ID Login
 logout	common	pt-br	Desconectar
@@ -470,9 +476,11 @@ on mouse over	common	pt-br	Passar o mouse
 only private	common	pt-br	Apenas particular
 only yours	common	pt-br	somente as suas
 oops! you caught us in the middle of system maintainance.	common	pt-br	Ôpa! Você nos pegou no meio de uma manutenção do sistema.
+open	common	pt-br	abrir
 open notify window	common	pt-br	Abrir janela de notificação
 open popup window	common	pt-br	Abrir janela
 open sidebox	common	pt-br	Abrir caixa lateral
+or	common	pt-br	ou
 ordered list	common	pt-br	Lista Classificada
 original	common	pt-br	Original
 other	common	pt-br	Outro
@@ -519,10 +527,10 @@ portugal	common	pt-br	PORTUGAL
 postal	common	pt-br	CEP
 powered by	common	pt-br	Desenvolvido por
 preferences	common	pt-br	Preferências
-preferences for the idots template set	common	pt-br	Preferências para o modelo de layout Idots
 prev. month (hold for menu)	jscalendar	pt-br	Mês anterior
 prev. year (hold for menu)	jscalendar	pt-br	Ano anterior
 previous page	common	pt-br	Página anterior
+primary group	common	pt-br	Grupo primário
 primary style-sheet:	common	pt-br	Estilho de folha primário:
 print	common	pt-br	Imprimir
 priority	common	pt-br	Prioridade
@@ -544,6 +552,7 @@ remove shortcut	common	pt-br	Remover tecla de atalho
 rename	common	pt-br	Renomear
 replace	common	pt-br	Substituir
 replace with	common	pt-br	Substituir por
+restore failed	common	pt-br	Restauração falhou
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	pt-br	Retorna a lista complesta de usuários no sistema. Atenção: Isto pode causar lentidão dependendo da quantidade de registros.
 returns an array of todo items	common	pt-br	Retorna uma lista dos itens de Tarefas
 returns struct of users application access	common	pt-br	Retorna a estrutura de usuários e aplicativos para acesso
@@ -614,6 +623,7 @@ sierra leone	common	pt-br	SERRA LEOA
 simple	common	pt-br	Simples
 singapore	common	pt-br	SINGAPURA
 site configuration	common	pt-br	Configuração do servidor
+size	common	pt-br	Tamanho
 slovakia	common	pt-br	ESLOVÁQUIA
 slovenia	common	pt-br	ESLOVÊNIA
 solomon islands	common	pt-br	ILHAS SOLOMON
@@ -703,11 +713,11 @@ use button to search for project	common	pt-br	Utilize o botão para procurar por
 user	common	pt-br	Usuário
 user accounts	common	pt-br	Contas do usuário
 user groups	common	pt-br	Grupos do usuário
-user openinstance	common	pt-br	Instância do usuário aberta
 username	common	pt-br	Nome do usuário
 users	common	pt-br	Usuários
 users choice	common	pt-br	À escolha dos usuários
 uzbekistan	common	pt-br	UZBEQUIISTÃO
+value	common	pt-br	Valor
 vanuatu	common	pt-br	VANUATU
 venezuela	common	pt-br	VENEZUELA
 version	common	pt-br	Versão
@@ -724,6 +734,7 @@ what style would you like the image to have?	common	pt-br	Que estilo você quer 
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pt-br	Quando você escolhe sim, os botões Página Inicial e Desconectar são exibidos como aplicativos na barra de aplicativos principais.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	pt-br	Onde e como os links como Preferências, Sobre e Desconectar serão exibidos.
 which groups	common	pt-br	Qual grupo
+whole query	common	pt-br	toda a consulta
 width	common	pt-br	Largura
 wk	jscalendar	pt-br	wk
 work email	common	pt-br	Endereço de e-mail comercial
