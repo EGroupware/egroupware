@@ -9,7 +9,6 @@
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	lv	<b>lietojamā rakstzīmju kopu</b>(izmanto utf-8, ja plāno izmantot valodas ar dažādām rakstzīmju kopām)
 accounts existing	setup	lv	Konti eksistē
 actions	setup	lv	Darbības
-add a domain	setup	lv	Pievienojiet domeinu
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	lv	Pievieno automātiski izveidotos lietotājus šai grupai (Tiks pielietots "Noklusējums", ja atstās tukšu )
 additional settings	setup	lv	Papildus iestatījumi
 admin first name	setup	lv	Aministratora vārds
@@ -25,7 +24,6 @@ all users	setup	lv	Visi lietotāji
 allow authentication via cookie	setup	lv	Atļauj autentifikāciju caur sīkdatni
 allow password migration	setup	lv	Atļauj paroles migrāciju
 allowed migration types (comma-separated)	setup	lv	Atļautie migrācijas tipi (atdalīti ar komatu)
-analysis	setup	lv	Analīzēšana
 and reload your webserver, so the above changes take effect !!!	setup	lv	UN pārstartējiet savu webserveri, lai izmaiņas stātos spēkā!!!
 app details	setup	lv	Aplikācijas info
 app install/remove/upgrade	setup	lv	Aplikāciju instalēšana/dzēšana/uzlabošana
@@ -46,6 +44,7 @@ at your request, this script is going to attempt to upgrade your old application
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	lv	Pēc tava pieprasījuma, šis skripts mēģina atjaunināt vecās tabulas jaunajā formātā
 at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	lv	Pēc tava pieprasījuma, šis skripts sāk dzēst eksistējošās tabulas un pārveidot tās jaunajā formātā
 at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	lv	Pēc tava pieprasījuma, šis skripts sāk atinstalēt visu tavu programmatūru, kas dzēš eksistējošas tabulas un datus.
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	lv	Mēģināt lietot pareizu FTP mimetype noklusējuma 'application/octet-stream' vietā
 authentication / accounts	setup	lv	Autentifikācija/konti
 auto create account records for authenticated users	setup	lv	Automātiski veido konta ierakstus autentificētiem lietotājiem
 auto-created user accounts expire	setup	lv	Automātiski izveidoto lietotāju kontu derīguma termiņš beidzas
@@ -108,7 +107,6 @@ created	setup	lv	izveidots
 created header.inc.php!	setup	lv	Izveidots header.inc.php!
 creating tables	setup	lv	Veido tabulas
 current system-charset	setup	lv	Patreizēja sistēmas rakstzīmju kopa
-current system-charset is %1, click %2here%3 to change it.	setup	lv	Patreizējā sistēmas rakstzīmju kopa ir %1, noklikšķini%2 šeit%3, lai to mainītu
 current version	setup	lv	Patreizējā versija
 currently installed languages: %1 <br />	setup	lv	Pašlaikt iestatītās valodas: %1<br/>
 database successfully converted from '%1' to '%2'	setup	lv	Datubāze veiksmīgi konvertēta no "%1" uz "%2"
@@ -123,6 +121,7 @@ db root password	setup	lv	DB saknes parole
 db root username	setup	lv	DB saknes lietotājvārds
 db type	setup	lv	DB tips
 db user	setup	lv	D lietotājs
+default	setup	lv	Noklusējums
 default file system space per user/group ?	setup	lv	Noklusētā disku apjoma vērtība lietotājam/grupai?
 delete	setup	lv	Dzēst
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	lv	Dzēst esošos SQL kontus, grupas, ACL un izvēles(parasti nav nepieciešams)?
@@ -149,7 +148,6 @@ edit your existing header.inc.php	setup	lv	Rediģēt esošo header.inc.php
 edit your header.inc.php	setup	lv	Rediģēt tavu header.inc.php
 egroupware administration manual	setup	lv	eGroupWare administrēšanas rokasgrāmata
 enable for extra debug-messages	setup	lv	atļauts ekstra atkļūdošanas ziņojumiem
-enable ldap version 3	setup	lv	Atļauta LDAP versija 3
 enable mcrypt	setup	lv	Atļaut MCrypt
 enter some random text for app session encryption	setup	lv	Ievadi brīvi izvēlētu tekstu aplikāciju sesijas šifrēšanai
 enter the full path to the backup directory.<br />if empty: files directory	setup	lv	Ievadi pilno ceļu uz dublējuma direktoriju.<br/>ja tukšs: failu direktoriju
@@ -165,16 +163,11 @@ enter your http proxy server port	setup	lv	Ievadi savu HTTP proxy servera portu
 enter your http proxy server username	setup	lv	Ievadi sava HTTP proxy servera lietotājvārdu
 error in admin-creation !!!	setup	lv	Kļūda veidojot administratoru!!!
 error in group-creation !!!	setup	lv	Kļūda veidojot grupu!!!
-export egroupware accounts from sql to ldap	setup	lv	Eksportēt eGroupWare kontus no SQL uz LDAP
-export has been completed!  you will need to set the user passwords manually.	setup	lv	Ekspotēšana tika pabeigta! Teb jāuzzstāda lietotāju paroles
-export sql users to ldap	setup	lv	Eksportēt SQL lietotājus uz LDAP
 false	setup	lv	Nepatiess
 file	setup	lv	Datne
 file type, size, version, etc.	setup	lv	datnes tips, izmērs, versija utt.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	lv	Datņu ielādes ir izslēgtas: Tu nevari izmantot datņu pārvaldnieku, kā arī nevari pievienot failus savās aplikācijās
 filename	setup	lv	faila nosaukums
-for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	lv	Jaunai instalācijai, atzīmē importet,. Lai konvertētu eksistējošus SQL kontus uz LDAP, atzīmē eksportēt
-found existing configuration file. loading settings from the file...	setup	lv	Atrada eksistējošu konfigurēšanas datni. Ielādē uzstādījumus no datnes...
 go back	setup	lv	Atgriezties
 go to	setup	lv	Iet uz
 grant access	setup	lv	Atļaut Piekļuvi
@@ -193,16 +186,12 @@ if no acl records for user or any group the user is a member of	setup	lv	Ja nav 
 if using ads (active directory) authentication	setup	lv	Ja lieto ADS (aktīvā direktorija) autentifikāciju
 if using ldap	setup	lv	Ja lieto LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	lv	Ja lieto LDAP, vai vēlies pārvaldīt mājasdirektoriju un pieteikuma ailes atribūtus?
-if using mail authentication	setup	lv	Ja lieto Pasta autentifikāciju
 if you did not receive any errors, your applications have been	setup	lv	Ja nesaņēmi kļūdu paziņojumus, tava aplikācija ir
 if you did not receive any errors, your tables have been	setup	lv	Ja nesaņēmi kļūdu paziņojumus,tavas tabulas ir
 if you running this the first time, don't forget to manualy %1 !!!	setup	lv	Ja lieto pirmo reizi, neaizmirsti manuāli %1!!!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	lv	Ja lieto valodu no tādas pašas rakstzīmju kopas(piem.,rietumu eiropas), tev nav jāuzstāda sistēmas rakstzīmju kopa
 image type selection order	setup	lv	Attēlu tipu izvēles kartība
-import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	lv	Importēt kontus no LDAP uz eGroupWare kontu tabulu (jaunai instalēšanai lieto SQL kontus)
 import has been completed!	setup	lv	Importēšana pabeigta
-import ldap users/groups	setup	lv	Importēt LDAP lietotājus/grupas
-importing old settings into the new format....	setup	lv	Importē vecos uzstādījumus jaunajā formātā...
 install	setup	lv	Instalēt
 install all	setup	lv	Instalēt visu
 install applications	setup	lv	Instalēt programmatūru
@@ -215,20 +204,15 @@ invalid password	setup	lv	Nederīga parole
 is broken	setup	lv	bojāts
 is disabled	setup	lv	nav atļauts
 is in the webservers docroot	setup	lv	tīmekļa servera saknes dokumentā
-ldap account import/export	setup	lv	LDAP konta imports/eksports
 ldap accounts configuration	setup	lv	LDAP kontu konfigurēšana
 ldap accounts context	setup	lv	LDAP kontu konteksts
 ldap config	setup	lv	LDAP konfigurēšana
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	lv	LDAP noklusējuma mājasdirektorijas prefikss(piem., /home for/home/username)
 ldap default shell (e.g. /bin/bash)	setup	lv	LDAP noklusēta aile (piem./bin/bash)
 ldap encryption type	setup	lv	LDAP šifrēšanas tips
-ldap export	setup	lv	LDAP eksportēt
-ldap export users	setup	lv	LDAP eksportēt lietototājus
 ldap groups context	setup	lv	LDAP grupu konteksts
 ldap host	setup	lv	LDAP hosts
 ldap import	setup	lv	LDAP importēt
-ldap import users	setup	lv	LDAP importēt lietotājus
-ldap modify	setup	lv	LDAP modificē
 ldap root password	setup	lv	LDAP saknes parole
 ldap rootdn	setup	lv	LDAP saknesdn
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	lv	LDAP meklēšanas filtrs kontiem, noklusējums:"(uid=%lietotājs)",%domēns=eGW-domēns
@@ -246,10 +230,10 @@ mcrypt algorithm (default tripledes)	setup	lv	Mcrypt algoritms (noklusējums TRI
 mcrypt initialization vector	setup	lv	MCrypt inicializācijas vektors
 mcrypt mode (default cbc)	setup	lv	Mcrypt režīms (noklusētais CBC)
 mcrypt settings (requires mcrypt php extension)	setup	lv	Mcrypt uzstādījumi (pieprasa mcrypt PHP attiecināšana )
-mcrypt version	setup	lv	MCrypt versija
 minimum account id (e.g. 500 or 100, etc.)	setup	lv	Minimālais kontu id (piem.500vai 100)
 minute	setup	lv	minūte
 modifications have been completed!	setup	lv	Modifikācijas pabeigtas!
+modified	setup	lv	Pārveidots
 modify	setup	lv	Modificēt
 month	setup	lv	mēnesis
 multi-language support setup	setup	lv	Daudzvalodu atbalsta iestatīšana
@@ -281,13 +265,11 @@ or %1continue to the header admin%2	setup	lv	vai %1Turpināt ar Galvenes adminis
 or http://webdav.domain.com (webdav)	setup	lv	vai http://webdav.domain.com (WebDAV)
 or we can attempt to create the database for you:	setup	lv	Vai arī mēs varam mēģināt izveidot tev datubāzi:
 or you can install a previous backup.	setup	lv	Vai arī tu vari iestatīt iepriekšējo dublējumu
-password needed for configuration	setup	lv	Konfigurēšanai nepieciešama parole
+password for smtp-authentication	setup	lv	Parole SMTP autentifikācijai
 password of db user	setup	lv	DB lietotāja parole
 passwords did not match, please re-enter	setup	lv	Paroles nesakrīt, lūdzu ievadi vēlreiz
 path information	setup	lv	Ceļa informācija
-pear::log is needed by syncml.	setup	lv	PEAR:: Logs nepieciešams SyncML
 persistent connections	setup	lv	Pastāvīgs pieslēgums
-php plus restore	setup	lv	PHP plus atjaunošana
 please check for sql scripts within the application's directory	setup	lv	Lūdzu pārbaudi sql skriptus aplikāciju direktorijā
 please check read/write permissions on directories, or back up and use another option.	setup	lv	Lūdzu pārbaudi lasīšanas/rakstīšanas atļaujas direktorijās, vai izveido dublikātu un lieto citu iespēju
 please configure egroupware for your environment	setup	lv	Lūdzu konfigurē eGroupWare savai videi
@@ -311,7 +293,6 @@ re-enter password	setup	lv	Ievadi vēlreiz paroli
 read translations from	setup	lv	Lasīt tulkojumu no
 readable by the webserver	setup	lv	tīmekļa serveris vai izlasīt
 really uninstall all applications	setup	lv	TIEŠĀM atinstalēt visas aplikācijas
-recommended: filesystem	setup	lv	Rekomedēts: Datņu sistēma
 registered	setup	lv	reģistrēts
 rejected lines	setup	lv	Nederīgās līnijas
 remove	setup	lv	Pārvietot
@@ -326,7 +307,6 @@ restore finished	setup	lv	atjaunošana pabeigta
 return to setup	setup	lv	Atgriezties uz iestatīšanu
 run installation tests	setup	lv	Palaist instalēšanas testus
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	lv	drošais režīms ir ieslēgts, kas padara tavu instalēšanu vairāk drošu
-sample configuration not found. using built in defaults	setup	lv	Parauga konfigurācija neika atrasta. Lieto iebūvēto noklusējumā
 save	setup	lv	Saglabāt
 save this text as contents of your header.inc.php	setup	lv	Saglabāt šo tekstu kā galvenes.inc.php saturu
 schedule	setup	lv	grafiks
@@ -334,10 +314,7 @@ select one...	setup	lv	atzīmē vienu
 select the default applications to which your users will have access	setup	lv	Atzīmē noklusētās aplikācijas, kuras būs pieejamas lietotājiem
 select the desired action(s) from the available choices	setup	lv	Atzīmē vēlamās darbības no pieejamām izvēlēm
 select to download file	setup	lv	Atzīmē, lai lejupielādētu datni
-select where you want to store/retrieve file contents	setup	lv	Atzīmē, kur tu gribi uzglabāt/atjaunot datnes saturu
-select where you want to store/retrieve filesystem information	setup	lv	Atzīmē, kur tu vēlies uzglabāt/atjaunot datņu sistēmas informāciju
 select where you want to store/retrieve user accounts	setup	lv	Atzīmē, kur tu vēlies uzglabāt/atjaunot lietotāju kontus
-select which group(s) will be exported (group membership will be maintained)	setup	lv	Atzīmē, kura(s) grupa(s) tiks eksportēta(s)(grupu piederība tiks saglabata)
 select which group(s) will be imported (group membership will be maintained)	setup	lv	Atzīmē, kura(s) grupa(s)tiks importēta(s)(grupu piederība tiks saglabāta)
 select which group(s) will be modified (group membership will be maintained)	setup	lv	Atzīmē, kura(s) grupa(s) tiks pārveidota(s)(grupu piederība tiks saglabāta)
 select which languages you would like to use	setup	lv	Atzīmē, kuras valodas tu vēlētos lietot
@@ -351,11 +328,9 @@ select which user(s) will have admin privileges	setup	lv	Atzīmē, kuram(iem) li
 select your old version	setup	lv	Atzīmē savu veco versiju
 selectbox	setup	lv	Izvēlne (selectbox)
 server root	setup	lv	Servera superlietotājs
-sessions type	setup	lv	Sesijas tips
 set	setup	lv	uzstādīt
 settings	setup	lv	Uzstādījumi
 setup	setup	lv	Iestatīšana
-setup demo accounts in ldap	setup	lv	Iestatīt demo kontus LDAP
 setup main menu	setup	lv	Iestatīšanas galvenā izvēlne
 setup the database	setup	lv	Iestatīt datubāzi
 setup/config admin login	setup	lv	Iestatīt/konfigurēt administratora pieteikšanos
@@ -413,6 +388,7 @@ uploads a backup and installs it on your db	setup	lv	augšupielādē dublējumu 
 use cookies to pass sessionid	setup	lv	Lieto sīkdatnes lai pārietu sesijasid
 use pure html compliant code (not fully working yet)	setup	lv	Lieto HTML pieļāvīgu kodu(kurš vēl pilnībā nestrādā)
 user account prefix	setup	lv	Lietotāja konta prefikss
+user for smtp-authentication (leave it empty if no auth required)	setup	lv	Lietotājs SMTP- autentifikācijai (atstāt tukšu, ja nepieprasa autentifikāciju)
 usernames are casesensitive	setup	lv	Lietotājvardi ir reģistrjūtīgi
 users choice	setup	lv	LIetotāju izvēle
 utf-8 (unicode)	setup	lv	utf-8(Unicode)
@@ -425,7 +401,6 @@ we can proceed	setup	lv	Mēs varam turpināt
 we will automatically update your tables/records to %1	setup	lv	Mēs automatiski atjauninām tavu tabulu/ierakstus uz %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	lv	Mēs palaidīsim dažus testus, kas var prasīt dažas minūtes laika. Noklikšķini uz saites, lai turpinātu
 welcome to the egroupware installation	setup	lv	Laipni lūdzam eGroupWare instalēšanā
-what type of sessions management do you want to use (php session management may perform better)?	setup	lv	Kāda tipa sesijas pārvaldību tu vēlies izmantot (PHP sesiju pārvaldība varētu atbilst labāk) ?
 which database type do you want to use with egroupware?	setup	lv	Kadu datubāzes tipu tu vēlies lietot eGroupWare?
 world readable	setup	lv	pasaulē lasāms
 world writable	setup	lv	pasaulē rakstāms
@@ -433,14 +408,12 @@ would you like egroupware to cache the phpgw info array ?	setup	lv	Vai vēlies, 
 would you like egroupware to check for a new version<br />when admins login ?	setup	lv	Vai vēlies, lai eGroupWare pārbauda jauno versiju<br/> kad administrators piesakās?
 would you like to show each application's upgrade status ?	setup	lv	Vai vēlies, lai tiktu parādīts katras aplikācijas atjaunināsanās stāvoklis?
 writable by the webserver	setup	lv	rakstāms tīmekļa serverī
-write config	setup	lv	Rakstīšanas konfigurēšana
+write	setup	lv	Rakstīt
 year	setup	lv	gads
 yes	setup	lv	Jā
 yes, with lowercase usernames	setup	lv	Jā, lietotājvārdi ar maziem burtiem
 you appear to be running version %1 of egroupware	setup	lv	Tu palaid eGroupWare versiju %1
-you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	lv	Tu lieto PHP vecāku kā4.1.0. eGroupWare tagad pieprasa 4.1.0. vai jaunāku
 you appear to have %1 support.	setup	lv	Tev atļauts %1 atbalsts
-you appear to have php session support. enabling php sessions.	setup	lv	Tev atļauts PHP sesiju atbalsts. Atļauj PHP sesijas.
 you appear to have xml support enabled	setup	lv	Tev ir  atļauts XML atbalsts
 you didn't enter a config password for domain %1	setup	lv	Tu neesi ievadījis konfigurēšanas paroli domēnam %1
 you didn't enter a config username for domain %1	setup	lv	Tu neesi ievadījis konfigurēšanas lietotājvārdu domēnam%1
@@ -450,12 +423,9 @@ you do not have any languages installed. please install one now <br />	setup	lv	
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	lv	Tev vēl nav izveidots header.inc.php <br/> Tu vari to izveidot tagad
 you have successfully logged out	setup	lv	Jūs veiksmīgi beidzāt darbu
 you must enter a username for the admin	setup	lv	Tev jāievada lietotajvārds administratoram
-you need to add some domains to your header.inc.php.	setup	lv	Tev jāpievieno daži domēni tavam header,php.inc.php
 you need to select your current charset!	setup	lv	Tev jāatzīmē pašreizējā rakstzīmju kopa!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	lv	Tev tas vai nu jaatinstale, vai jāpārinstalē, vai arī manuāli jāsalabo
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	lv	Tev jāielādē atribūtu shēma tavā LDAP serverī-skatīt <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
 you're using an old configuration file format...	setup	lv	Tu lieto veco konfigurēšanas datnes formātu...
-you're using an old header.inc.php version...	setup	lv	Tu lieto veco header.inc.php versiju...
 your applications are current	setup	lv	Tavas patreizējās aplikacijas
 your backup directory '%1' %2	setup	lv	Tavs dublējuma direktorijs "%1" %2
 your database does not exist	setup	lv	Tava datubāze neeksistē

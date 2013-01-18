@@ -1,1 +1,74 @@
+account has been created	common	tr	Hesap oluþturuldu
+account has been deleted	common	tr	Hesap silindi
+account has been updated	common	tr	Hesap güncellendi
+accounts	common	tr	Hesaplar
+action	common	tr	Eylem
+actions	common	tr	Eylemler
+add	common	tr	ekle
+addressbook	common	tr	Adres Defteri
+administration	common	tr	Yönetim
+and	common	tr	Ve
+application	common	tr	Uygulama
+apply	common	tr	uygula
+back	common	tr	Geri
+bottom	common	tr	taban
+calendar	common	tr	Takvim
+cancel	common	tr	Ýptal
+change	common	tr	Deðiþtir
+company	common	tr	?irket
+created by	common	tr	Oluþturan
+delete category	common	tr	Kategori sil
+description	common	tr	Açýklama
+disabled	common	tr	engellendi
+domestic	common	tr	Ev
+done	common	tr	tamam
+download	common	tr	?ndir
+edit	common	tr	Düzenle
+enabled	common	tr	etkin
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	eGroupware URL'sini giriniz.<br>Örnek: http://www.domain.com/egroupware yada   /egroupware<br><b>Sonda bölü iþareti kullanmayýnýz.</b>
+fax number	common	tr	Fax No
+force selectbox	common	tr	Seçimn kurusunu mecburi tut
+group has been added	common	tr	Grup eklendi
+group has been deleted	common	tr	Grup silindi
+group has been updated	common	tr	Grup güncellendi
+group name	common	tr	Grup Ýsmi
+highest	common	tr	En yüksek
+home email	common	tr	Ev E-mail
+international	common	tr	Uluslararas?
+loginid	common	tr	Kullanýcý Adý
+lowest	common	tr	En düþük
+message	common	tr	Mesaj
+minute	common	tr	Dakika
+name	common	tr	Ýsim
+ok	common	tr	Tamam
+or	common	tr	ya da
+original	common	tr	Orjinal
+parcel	common	tr	Parsel
+phone number	common	tr	Tel no
+please enter a name	common	tr	Litfen bir isim giriniz
+please run setup to become current	common	tr	Güncel olmak için kurulumu çalýþtýrýnýz
+please select	common	tr	Lütfen seçiniz
+postal	common	tr	Posta
+preferences	common	tr	Ayarlar
+primary group	common	tr	ana grup
+project	common	tr	Proje
+read this list of methods.	common	tr	Method listesini oku
+search accounts	common	tr	Hesaplarý ara
 site configuration	common	tr	Site Ayarlarý
+submit	common	tr	Gönder
+the api is current	common	tr	API güncel
+the api requires an upgrade	common	tr	API güncelleme gerektiriyor
+this application is current	common	tr	Uygulamanýz güncel
+this application requires an upgrade	common	tr	Uygulamanýz güncelleme gerektirmektedir. (Yeni sürüm var)
+title	common	tr	Baþlýk
+today	common	tr	Bugün
+top	common	tr	Maks
+update	common	tr	Güncelle
+user accounts	common	tr	Kullanýcý hesaplarý
+user groups	common	tr	Kullanýcý gruplarý
+users choice	common	tr	Kullanýcý Seçimleri
+version	common	tr	Sürüm
+you have not entered a title	common	tr	Bir baþlýk girmediniz
+you have not entered a valid date	common	tr	Geçerli bir tarih girmediniz
+you have not entered a valid time of day	common	tr	Geçerli bir gün saati girmediniz
+you have not entered participants	common	tr	Katýlýmcýlarý girmediniz

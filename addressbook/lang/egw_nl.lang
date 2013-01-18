@@ -10,6 +10,7 @@
 (empty = use global limit, no = no export at all)	admin	nl	(leeg = gebruik globale limiet, no = helemaal geen export)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	nl	<b>Geen conversietype <none&g; gevonden </b> Selecteer a.u.b. een conversietype uit de lijst.
 @-eval() is only availible to admins!!!	addressbook	nl	@-eval() is alleen beschikbaar voor beheerders
+account id	addressbook	nl	Account ID
 account repository	admin	nl	Account databasegegevens
 accounts	addressbook	nl	Accounts
 actions	addressbook	nl	Acties
@@ -52,7 +53,6 @@ are you shure you want to delete this contact?	addressbook	nl	Weet u zeker dat u
 are you sure you want to delete this field?	addressbook	nl	Weet u zeker dat u dit veld wilt verwijderen?
 assistent	addressbook	nl	Assistent
 assistent phone	addressbook	nl	telefoon assistent
-at the moment the following document-types are supported:	addressbook	nl	Op dit moment worden de volgende documenttypes ondersteund:
 birthday	common	nl	Verjaardag
 birthdays	common	nl	Verjaardagen
 blank	addressbook	nl	Blanco
@@ -82,7 +82,6 @@ charset of file	addressbook	nl	Karakterset van bestand
 check all	addressbook	nl	Markeer alles
 choose an icon for this contact type	admin	nl	Kies een pictogram voor dit  type contact
 choose owner of imported data	addressbook	nl	Kies de eigenaar van de geimporteerde gegevens
-choose seperator and charset	addressbook	nl	Kies scheidingsteken en karakterset
 chosse an etemplate for this contact type	admin	nl	Kies een eTemplate voor dit type contact
 city	common	nl	Stad
 company	common	nl	Bedrijf
@@ -142,7 +141,6 @@ distribution list deleted	addressbook	nl	Distributielijst verwijderd
 distribution lists	addressbook	nl	Distributielijsten
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	nl	Wil je een persoonlijk adresboek dat niet door andere gebruikers bekeken kan worden, jij verleent toegang tot je persoonlijke adresboek
 do your really want to delete this contact?	addressbook	nl	Wilt u dit contact werkelijk verwijderen?
-document '%1' does not exist or is not readable for you!	addressbook	nl	Document '%1' bestaat niet of is niet toegankelijk voor jou!
 doesn't matter	addressbook	nl	maakt niets uit
 domestic	addressbook	nl	Huiselijk
 don't hide empty columns	addressbook	nl	Lege kolommen niet verbergen
@@ -157,6 +155,7 @@ edit phonenumbers -	addressbook	nl	Telefoonnummers wijzigen
 either the configured email addesses are wrong or the mail configuration.	addressbook	nl	Of de ingestelde emailadressen zijn onjuist of de email configuratie is onjuist.
 email & internet	addressbook	nl	Email & Internet
 email addresses (comma separated) to send the contact data	addressbook	nl	Emailadressen (kommagescheiden) om de contactgegevens te verzenden
+empty	admin	nl	Leeg
 empty for all	addressbook	nl	leeg voor allen
 enable an extra private addressbook	addressbook	nl	Maak een extra persoonlijk adresboek mogelijk
 end	addressbook	nl	Einde
@@ -164,9 +163,7 @@ enter the path to the exported file here	addressbook	nl	Geef folder voor het te 
 error deleting the contact !!!	addressbook	nl	Fout bij verwijderen van contact !!!
 error saving the contact !!!	addressbook	nl	Fout bij bewaren van contact !!!
 error: the entry has been updated since you opened it for editing!	addressbook	nl	Fout: het record is gewijzigd sinds jij bent begonnen met wijzigen!
-example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	nl	Voorbeeld $$ n_prefix~Mr~Hello Mr.~Hello Ms.$$ - doorzoek het veld "n_prefix", naar "Mr", indien gevonden, schrijf dan Hello Mr., anders schrijf Hello Ms.
 existing links	addressbook	nl	Bestaande links
-export	addressbook	nl	exporteren
 export as csv	addressbook	nl	Exporteer als CSV
 export as vcard	addressbook	nl	Exporteer als VCard
 export contacts	addressbook	nl	Exporteer contacten
@@ -186,12 +183,11 @@ fields for the csv export	addressbook	nl	Velden voor de CSV export
 fields the user is allowed to edit himself	admin	nl	Velden die de gebruiker zelf mag wijzigen
 fields to show in address list	addressbook	nl	Velden die zichtbaar zijn in adreslijst
 fieldseparator	addressbook	nl	Scheidingssymbool velden
-for more then one contact in a document use the tag pagerepeat!	addressbook	nl	voor meer dan één contact in een document gebruik je de tag pagerepeat!
 for read only ldap	admin	nl	voor alleen-lezen LDAP
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	nl	Gebruik deze tag voor serie brieven. Plaats de inhoud die herhaald moet worden tussen de twee tags.
 freebusy uri	addressbook	nl	Vrij/bezet URI
 full name	addressbook	nl	Volledige naam
-general	addressbook	nl	Algemeen
+general	admin	nl	Algemeen
 general fields:	addressbook	nl	Algemene velden:
 geo	addressbook	nl	GEO
 global categories	addressbook	nl	Algemene categoriën
@@ -200,6 +196,7 @@ group %1	addressbook	nl	Groep %1
 h	addressbook	nl	u
 hide accounts from addressbook	addressbook	nl	Verberg accounts in het adresboek
 hides accounts completly from the adressbook.	addressbook	nl	Hou de accounts helemaal uit het adresboek
+history logging	admin	nl	Historie vastleggen
 home address	addressbook	nl	Privé adres
 home address, birthday, ...	addressbook	nl	Thuis adres, geboortedatum, ...
 home city	addressbook	nl	Privé Woonplaats
@@ -213,8 +210,6 @@ home zip code	addressbook	nl	Privé Postcode
 how many contacts should non-admins be able to export	admin	nl	Hoeveel contactpersonen moet een niet-beheerder kunnen exporteren
 icon	addressbook	nl	Icoon
 if accounts are already in ldap	admin	nl	indien accounts reeds in LDAP zitten
-if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	nl	Indien je hier een directory opgeeft (volledige vfs pad), dan toont het adresboek een actie voor ieder document. Die aktie biedt de mogelijkheid om het bewuste document te downloaden samen met de contactgegevens ingevoegd.
-if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	nl	Indien je hier een document opgeeft (volledige vfs pad), dan toont het adresboek een extra documentikoon voor ieder adres. Zo'n ikoon biedt de mogelijkheid het bewuste document te downloaden met de contactgegevens ingevoegd.
 import	addressbook	nl	Importeren
 import contacts	addressbook	nl	Contacten Importeren
 import csv-file into addressbook	addressbook	nl	CSV-bestand importeren naar adresboek
@@ -228,7 +223,7 @@ import_instructions	addressbook	nl	In Netscape, open het adressenboek en selecte
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	nl	Importeert contacten in je adresboek vanuit een CSV bestand. CSV betekent 'Komma gescheiden waarden'. Maar in het Opties tabblad kun je ook andere scheidingstekens kiezen.
 in %1 days (%2) is %3's birthday.	addressbook	nl	Over %1 dagen (%2) is %3 jarig.
 income	addressbook	nl	Inkomen
-insert in document	addressbook	nl	Invoegen in document
+infolog	addressbook	nl	InfoLog
 insufficent rights to delete this list!	addressbook	nl	Niet genoeg rechten om deze lijst te verwijderen!
 international	addressbook	nl	Internationaal
 label	addressbook	nl	Label
@@ -247,7 +242,6 @@ list all customfields	addressbook	nl	Toon alle op maat gemaakte velden
 list already exists!	addressbook	nl	Lijst bestaat reeds!
 list created	addressbook	nl	Lijst aangemaakt
 list creation failed, no rights!	addressbook	nl	Lijst aanmaak is mislukt, geen rechten!
-load sample file	addressbook	nl	Laad een voorbeeldbestand
 load vcard	addressbook	nl	Laad VCard
 location	addressbook	nl	Locatie
 locations	addressbook	nl	locaties
@@ -264,7 +258,6 @@ mobile	addressbook	nl	Mobiel
 mobile phone	addressbook	nl	Mobilofoon
 modem phone	addressbook	nl	Telefoonmodem
 more ...	addressbook	nl	Meer ...
-move to addressbook:	addressbook	nl	Verplaats naar adresboek:
 moved	addressbook	nl	verplaatst
 multiple vcard	addressbook	nl	Meervoudige VCard
 name for the distribution list	addressbook	nl	Naam voor de distributielijst
@@ -350,7 +343,6 @@ that field name has been used already !	addressbook	nl	Het veldnaam is al in  ge
 the anonymous user has probably no add rights for this addressbook.	addressbook	nl	De anonieme gebruiker heeft waarschijnlijk geen toevoegrechten voor dit adresboek.
 the anonymous user needs add rights for it!	addressbook	nl	De anonieme gebruiker moet hier toevoegrechten voor hebben!
 the anonymous user needs read it!	addressbook	nl	De anonieme gebruiker moet hier leesrechten voor hebben!
-the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	nl	Het document kan variabelen bevatten zoals $$n_fn$$, die vervangen worden met de contact gegevens (%1volledige lijst van variabelen%2).
 there was an error saving your data :-(	addressbook	nl	Er ontstond een fout tijdens het opslaan van uw gegevens :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	nl	Deze module toont een contact formulier dat gegevens direct opslaat in het adresboek.
 this module displays block from a adddressbook group.	addressbook	nl	Deze module toont een blok van een adresboek groep.
@@ -396,6 +388,7 @@ yes, for the next three days	addressbook	nl	Ja, voor de volgende drie dagen
 yes, for the next two weeks	addressbook	nl	Ja, voor de volgende twee dagen
 yes, for the next week	addressbook	nl	Ja, voor de volgende week
 yes, for today and tomorrow	addressbook	nl	Ja, voor vandaag en morgen
+yes, only admins can purge deleted items	admin	nl	Ja, alleen beheerders kunnen gewiste items definitief verwijderen
 you are not permitted to delete contact %1	addressbook	nl	U bent niet bevoegd om contact %1 te verwijderen
 you are not permittet to delete this contact	addressbook	nl	U bent niet bevoegd om dit contact te verwijderen
 you are not permittet to edit this contact	addressbook	nl	U bent niet bevoegd om dit contact te wijzigen

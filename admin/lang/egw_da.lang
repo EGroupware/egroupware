@@ -13,6 +13,7 @@ account preferences	admin	da	Konto præferencer
 acl manager	admin	da	ACL Håndtering
 acl rights	common	da	ACL rettigheder
 action	admin	da	Handling
+actions	admin	da	Handling
 add a category	admin	da	tilføj en kategori
 add a group	admin	da	tilføj en gruppe
 add a new account.	admin	da	tilføj en ny konto
@@ -33,8 +34,10 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	da	Administrator navn
 administration	admin	da	Administration
 admins	admin	da	Administratore
+advanced options	admin	da	avanceret indstillinger
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	da	Efter hvor mange usuccesfulde forsøg på login, skal en konto låses (Standard 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	da	Efter hvor mange usuccesfulde forsøg på login, skal en IP låses (Standard 3)?
+all categories	admin	da	Alle kategorier
 all records and account information will be lost!	admin	da	Alle posteringer og konto infomationer vil gå tabt!
 all users	admin	da	Alle brugere
 allow anonymous access to this app	admin	da	Tillad anonym adgang til denne applikation
@@ -50,6 +53,7 @@ application title	admin	da	Applikation titel
 applications	admin	da	Applikationer
 applications list	admin	da	Applikation liste
 applies the changes	admin	da	udfør ændringerne
+apply the changes	admin	da	Acceptér ændringerne
 are you sure you want to delete the application %1 ?	admin	da	Er du sikker på du vil slette applikationen %1?
 are you sure you want to delete this account ?	admin	da	Er du sikker på du vil slette denne konto?
 are you sure you want to delete this application ?	admin	da	Er du sikker på du vil slette denne applikation?
@@ -73,9 +77,16 @@ change acl rights	admin	da	ændre ACL rettigheder
 change config settings	admin	da	Ændre konfigurations indstillingerne
 change main screen message	admin	da	Ændre startside besked
 check ip address of all sessions	admin	da	Kontrollere IP adresse for alle sessioner
+click to select a color	admin	da	Klik for at vælge en farve
+color	admin	da	Farve
+country	admin	da	Land
 country selection	admin	da	Vælg land
 create group	admin	da	Opret gruppe
+created	admin	da	Oprettet
+creates a new field	admin	da	opretter et nyt felt
 crontab only (recomended)	admin	da	kun crontab (anbefalet)
+custom fields	admin	da	Valgfri Felter
+cyrus imap server	admin	da	Cyrus IMAP Server
 data	admin	da	Data
 day	admin	da	Dag
 day of week<br>(0-6, 0=sun)	admin	da	Ugedag<br>(0-6, 0=Søn)
@@ -94,6 +105,9 @@ delete the group	admin	da	Slet gruppen
 delete this category	admin	da	Slet denne kategori
 delete this group	admin	da	Slet denne gruppe
 delete this user	admin	da	Slet denne bruger
+deleted	admin	da	slettet
+deletes this field	admin	da	sletter dette felt
+deliver extern	admin	da	lever ekstern
 deny access to access log	admin	da	Nægt adgang til adgangslog
 deny access to application registery	admin	da	Nægt adgang til applikation registering
 deny access to applications	admin	da	Nægt adgang til applikationer
@@ -108,6 +122,8 @@ deny access to site configuration	admin	da	Nægt adgang til site konfiguration
 deny access to user accounts	admin	da	Nægt adgang til bruger kontoer
 deny all users access to grant other users access to their entries ?	admin	da	Nægt alle brugere at give adgang til andre brugere til deres data
 description can not exceed 255 characters in length !	admin	da	Beskrivelse må ikke overstige 255 tegn!
+determines the order the fields are displayed	admin	da	bestemmer rækkefølgen felterne bliver vist
+disable	admin	da	Deaktivere
 disable "auto completion" of the login form	admin	da	Deaktivere "auto færdigørelse" på loginsiden
 disabled (not recomended)	admin	da	deaktiveret (ikke anbefalet)
 display	admin	da	Vis
@@ -115,8 +131,11 @@ do not delete the category and return back to the list	admin	da	slet IKKE denne 
 do you also want to delete all global subcategories ?	admin	da	Vil du også slette alle globale underkategorier?
 do you want to delete all global subcategories ?	admin	da	Vil du slette alle globale underkategorier?
 do you want to move all global subcategories one level down ?	admin	da	Vil du flytte alle globale underkategorier et tak ned?
+down	admin	da	ned
+each value is a line like <id>[=<label>]	admin	da	hver værdi er en linie som <id>[=<label>]
 edit account	admin	da	Redigér konto
 edit application	admin	da	Redigér applikation
+edit email settings	admin	da	redigere e-mail indstillingerne
 edit global category	admin	da	Redigér global kategori
 edit global category for %1	admin	da	Redigér global kategori til %1
 edit group	admin	da	Redigér gruppe
@@ -130,6 +149,9 @@ edit this group	admin	da	redigér denne gruppe
 edit this user	admin	da	redigér denne bruger
 edit user	admin	da	redigér bruger
 edit user account	admin	da	Redigér bruger konto
+email account active	admin	da	e-mail konto aktiv
+email address	admin	da	e-mail adresse
+enable	admin	da	aktivere
 enable debug-messages	admin	da	Aktivere debug-beskeder
 enabled - hidden from navbar	admin	da	Aktiveret - Gemt fra navigationsbjælken
 enabled - popup window	admin	da	Aktiveret - Popup vindue
@@ -165,6 +187,9 @@ file space must be an integer	admin	da	Fil plads skal være et helt tal
 for the times above	admin	da	for tider over
 for the times below (empty values count as '*', all empty = every minute)	admin	da	for tider under (tom værdi virker som '*', alle tomme = hvert minut)
 force selectbox	admin	da	Tving Selectboks
+forward also to	admin	da	videresend også til
+forward only	admin	da	videresend kun
+full name	admin	da	Fulde Navn
 global categories	common	da	Globale Kategorier
 group ?	admin	da	gruppe?
 group has been added	common	da	Gruppen er tilføjet
@@ -179,8 +204,10 @@ host information	admin	da	Host information
 hour<br>(0-23)	admin	da	Timer<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	da	Hvor mange dage skal en notits blive i adgangsloggen, før den slettes (standard 90)?
 how many minutes should an account or ip be blocked (default 30) ?	admin	da	Hvor mange minutter skal en konto eller IP låses (standard 30)?
+icon	admin	da	Ikon
 if no acl records for user or any group the user is a member of	admin	da	Hvis ingen ACL journal for en bruger eller gruppe som brugeren er medlem af
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	da	Hvis LDAP bruges, vil du håndtere hjemmemapper og loginshells atributter?
+in mbyte	admin	da	i Megabytes
 inbound	admin	da	indkommende
 install crontab	admin	da	Installere crontab
 installed applications	common	da	Installerede applikationer
@@ -203,12 +230,16 @@ ldap groups context	admin	da	LDAP gruppe contekst
 ldap host	admin	da	LDAP host
 ldap root password	admin	da	LDAP root adgangskode
 ldap rootdn	admin	da	LDAP rootdn
+leave empty for no quota	admin	da	efterlad tom hvis ingen citat
 leave the category untouched and return back to the list	admin	da	efterlad kategorien urørt og vend tilbage til listen
 leave the group untouched and return back to the list	admin	da	efterlad gruppen urørt og vend tilbage til listen
+leave without saveing the entry	admin	da	forlad uden at gemme indtastningen
+leaves without saveing	admin	da	forlad uden at gemme
+length<br>rows	admin	da	Længde<br>række
 list config settings	admin	da	Vis konfigurations indstillinger
 list current sessions	admin	da	Vis nuværende sessions
 list of current users	admin	da	Vis alle nuværende brugere
-login history	common	da	Login historie
+login history	admin	da	Login historie
 login message	admin	da	Login besked
 login screen	admin	da	Login skærm
 login shell	admin	da	Login shell
@@ -217,6 +248,7 @@ loginid	admin	da	LoginID
 mail settings	admin	da	Post indstillinger
 main screen message	admin	da	Startside besked
 manager	admin	da	Håndtering
+max length of the input [, length of the inputfield (optional)]	admin	da	maks længde af inputtet [længde af input feltet (valg frit)]
 maximum account id (e.g. 65535 or 1000000)	admin	da	Maksimum konto id (f.eks. 65535 eller 10000000)
 maximum entries in click path history	admin	da	Maksimum antal i klik sti historie
 message has been updated	admin	da	beskeden er opdateret
@@ -224,11 +256,15 @@ method	admin	da	Metode
 minimum account id (e.g. 500 or 100, etc.)	admin	da	Minimum konto id (f.eks 500 eller 100, osv.)
 minute	admin	da	Minut
 mode	admin	da	Mode
+modified	admin	da	Modificeret
 month	admin	da	Måned
+name must not be empty !!!	admin	da	Navn må ikke være tomt!!!
 new group name	admin	da	Nyt gruppe navn
+new name	admin	da	nyt navn
 new password [ leave blank for no change ]	admin	da	Ny adgangskode [Efterlad tom for ingen ændring]
 next run	admin	da	Næste kørsel
 no algorithms available	admin	da	Ingen algoritmer tilgængelig
+no alternate email address	admin	da	ingen alternativ e-mail adresse
 no jobs in the database !!!	admin	da	Ingen jobs i databasen!!!
 no login history exists for this user	admin	da	Nogen login historie findes for denne bruger
 no matches found	admin	da	Ingen resultater fundet
@@ -236,11 +272,16 @@ no permission to add groups	admin	da	ingen rettigheder til at tilføje grupper
 no permission to add users	admin	da	ingen rettigheder til at tilføje brugere
 no permission to create groups	admin	da	ingen rettigheder til at oprette grupper
 note: ssl available only if php is compiled with curl support	admin	da	Note: SSL er kun tilgængelig hvis PHP er kompileret med curl understøttelse)
+number of row for a multiline inputfield or line of a multi-select-box	admin	da	Antal af rækker for et multi-linie felt eller linier i en multi-select box
+one month	admin	da	en måned
+one week	admin	da	en uge
+order	admin	da	Rækkefølge
 outbound	admin	da	udgående
 peer server list	admin	da	Peer server liste
 peer servers	admin	da	Peer servere
 percent of users that logged out	admin	da	Procent af brugere der loggede ud
 percent this user has logged out	admin	da	Procent som denne bruger loggede ud
+permission denied	admin	da	Adgang nægtet
 permissions	admin	da	Rettigheder
 permissions this group has	admin	da	Rettigheder denne gruppe har
 phpinfo	admin	da	PHP information
@@ -248,16 +289,22 @@ please enter a name	admin	da	Indtast venligst et navn
 please enter a name for that server !	admin	da	Indtast venligst et navn for den server!
 please run setup to become current	admin	da	Kør venligst setup for at opdatere
 please select	admin	da	Vlæg venligst
+postfix with ldap	admin	da	Postfix med LDAP
 preferences	admin	da	Præferencer
 primary group	admin	da	primær gruppe
+qmaildotmode	admin	da	qmaildotmode
+quota settings	admin	da	quota indstillinger
 re-enter password	admin	da	Genindtast adgangskode
 read this list of methods.	admin	da	Læs denne liste over metoder
+remove	admin	da	Fjern
 remove all users from this group	admin	da	Fjern alle brugere fra denne gruppe
 remove all users from this group ?	admin	da	Fjern alle brugere fra denne gruppe?
 return to admin mainscreen	admin	da	gå tilbage til admin startside
 return to view account	admin	da	Tilbage til konto visning
 save the category	admin	da	gem kategorien
 save the category and return back to the list	admin	da	gem kategorien og vend tilbage til listen
+saves the changes made and leaves	admin	da	gem ændringerne og afslut
+saves this entry	admin	da	Gem denne postering
 search accounts	admin	da	Søg kontoer
 search categories	admin	da	Søg kategorier
 search groups	admin	da	Søg grupper
@@ -293,6 +340,10 @@ sorry, the follow users are still a member of the group %1	admin	da	Beklager, f�
 sort the entries	admin	da	sorter resultaterne
 ssl	admin	da	ssl
 standard	admin	da	standard
+standard imap server	admin	da	Standart IMAP server
+standard pop3 server	admin	da	Standart POP3 server
+standard smtp-server	admin	da	Standart SMTP server
+start	admin	da	Start
 start testjob!	admin	da	Start TestJob!
 submit changes	admin	da	Gem ændringerne
 submit the search string	admin	da	Send søgningen
@@ -308,6 +359,8 @@ the api requires an upgrade	admin	da	API'en behøver en opgradering
 the groups must include the primary group	admin	da	Grupperne skal indeholde en primær gruppe
 the login and password can not be the same	admin	da	Brugernavn og adgangskode kan ikke være ens
 the loginid can not be more then 8 characters	admin	da	LoginID kan ikke være længere end 8 tegn
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	da	Navn brugt internt (<= 20 tegn), ændring gør eksisterende data utilgængelige
+the text displayed to the user	admin	da	teksten som vises til brugeren
 the two passwords are not the same	admin	da	De to adgangskoder er ikke ens
 the users bellow are still members of group %1	admin	da	brugerene nedenfor er stadig medlem af gruppen %1
 they must be removed before you can continue	admin	da	De skal fjernes før du kan forsætte
@@ -319,8 +372,12 @@ timeout for sessions in seconds (default 14400 = 4 hours)	admin	da	Timeout for s
 times	admin	da	Gange
 top	admin	da	top
 total records	admin	da	Total posteringer
+translation	admin	da	Oversættelse
 trust level	admin	da	Tillids niveau
 trust relationship	admin	da	Tillids forhold
+two weeks	admin	da	to uger
+up	admin	da	op
+updated	admin	da	Opdateret
 use cookies to pass sessionid	admin	da	Brug cookies som sessionid
 use pure html compliant code (not fully working yet)	admin	da	Brug ren HTML godkendt kode (virker ikke 100% endnu)
 use theme	admin	da	Brug tema

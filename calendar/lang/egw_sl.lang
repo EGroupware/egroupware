@@ -12,6 +12,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	sl	Dejanja
 actions...	calendar	sl	Dejanja ...
 add alarm	calendar	sl	Dodaj opomnik
+add timesheet entry	calendar	sl	Dodaj vnos timeheet
 added	calendar	sl	Dodano
 added by synchronisation	calendar	sl	Dodano s sinhronizacijo
 after	calendar	sl	Po
@@ -156,6 +157,7 @@ exception created - you can now edit or delete it	calendar	sl	Izjema ustvarjena 
 exceptions	calendar	sl	Izjeme
 execute a further action for this entry	calendar	sl	Izvede dodatna dejanja za ta vnos
 existing links	calendar	sl	Obstoječe povezave
+exists	calendar	sl	Obstaja
 extended	calendar	sl	Razširjen
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	sl	Razširjeni popravki vedno vključujejo popolne podrobnosti o dogodku. iCal-ovi dogodki se lahko uvozijo preko drugih aplikacij koledarja.
 fieldseparator	calendar	sl	Ločilo polj
@@ -165,6 +167,7 @@ filename of the download	calendar	sl	Ime datoteke za prenos
 find free timeslots where the selected participants are availible for the given timespan	calendar	sl	Najdi prost termin, kjer so vsi udeleženci prosti
 firstname of person to notify	calendar	sl	Ime osebe, ki jo obveščamo
 for	calendar	sl	Za
+for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	sl	Za tipska pisma uporabite značko. Vsebino, ki jo želite imeti v vseh dokumentih, vnesite med značke.
 for which views should calendar show distinct lines with a fixed time interval.	calendar	sl	Za katere poglede naj Koledar prikaže različne vrstice s stalnim časovnim intervalom?
 format of event updates	calendar	sl	Format popravkov dogodka
 forward half a month	calendar	sl	Naprej pol meseca
@@ -188,6 +191,7 @@ here is your requested alarm.	calendar	sl	Vaš zahtevani alarm
 hide private infos	calendar	sl	Skrij osebne podatke
 high priority	calendar	sl	Visoka prioriteta
 history	calendar	sl	Zgodovina
+history logging	admin	sl	Beleženje zgodovine
 holiday	calendar	sl	Prazniki
 holiday management	calendar	sl	Urejanje praznikov
 holidays	calendar	sl	Prazniki
@@ -236,6 +240,7 @@ monthly (by date)	calendar	sl	Mesečno (po datumu)
 monthly (by day)	calendar	sl	Mesečno (po dnevu)
 monthview	calendar	sl	Mesečni pogled
 multiple week view	calendar	sl	Pogled več tednov
+name of current user, all other contact fields are valid too	calendar	sl	Ime trenutnega uporabnika, veljavna so tudi vsa druga polja stika
 new	calendar	sl	Nov
 new search with the above parameters	calendar	sl	Novo iskanje z zgornjimi parametri
 no events found	calendar	sl	Noben dogodek ni bil najden
@@ -317,6 +322,7 @@ select a %1	calendar	sl	Izberite %1
 select a time	calendar	sl	izberite čas
 select an action	calendar	sl	Izberite dejanje
 select an action...	calendar	sl	Izberite dejanje ...
+select multiple contacts for a further action	calendar	sl	Izberite več stikov za nadaljnja dejanja
 select resources	calendar	sl	Izberite sredstva
 select who should get the alarm	calendar	sl	Izberite, kdo naj dodi sporočilo alarma
 selected range	calendar	sl	Izbrani obseg
@@ -336,6 +342,7 @@ show this week	calendar	sl	Prikaži ta teden
 single event	calendar	sl	Pposamezen dogodek
 start	calendar	sl	Začetek
 start date/time	calendar	sl	Začetni datum/čas
+startdate	calendar	sl	Začetni datum
 startdate / -time	calendar	sl	Začetni datum /-čas
 startdate and -time of the search	calendar	sl	Začetni datum in -čas iskanja
 startdate of the export	calendar	sl	Začetni datum izvoza
@@ -343,6 +350,7 @@ startrecord	calendar	sl	Začetni zapis
 status changed	calendar	sl	Status spremenjen
 submit to repository	calendar	sl	Pošlji v zbirko
 sun	calendar	sl	Ned
+tag to mark positions for address labels	calendar	sl	Oznaka za označitev položajev oznak adresarja
 tentative	calendar	sl	Preizkušen
 test import (show importable records <u>only</u> in browser)	calendar	sl	Test uvoza (pokaži uvozljive zapise<u>samo</u> v brskalniku)
 this day is shown as first day in the week or month view.	calendar	sl	Ta dan je prikazan kot prvi dan v tednu ali v mesecu.
@@ -363,6 +371,7 @@ thu	calendar	sl	Čet
 til	calendar	sl	do
 timeframe	calendar	sl	Časovni okvir
 timeframe to search	calendar	sl	Iskanje časovnega okvira
+timezone	calendar	sl	Časovni pas
 title of the event	calendar	sl	Naslov dogodka
 to many might exceed your execution-time-limit	calendar	sl	Preveč lahko preseže čas izvajanja programa
 tomorrow	calendar	sl	Jutri
@@ -371,6 +380,7 @@ two weeks	calendar	sl	Dva tedna
 updated	calendar	sl	Podosodobljeno
 use end date	calendar	sl	Uporabi končni datum
 use the selected time and close the popup	calendar	sl	Uporabi izbrani čas in zapri pojavno okno
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	calendar	sl	Uporabi to značko za naslov nalepk. Stik, ki ga želite ponoviti, dajte med dve znački.
 user or group	calendar	sl	Uporabnik ali skupina
 view this event	calendar	sl	Poglej ta dogodek
 views with fixed time intervals	calendar	sl	Pogledi s stalnimi časovnimi intervali
@@ -391,6 +401,8 @@ work day ends on	calendar	sl	Delovnik se konča ob
 work day starts on	calendar	sl	Delovnik se začne ob
 yearly	calendar	sl	Letno
 yearview	calendar	sl	Letni pogled
+yes, only admins can purge deleted items	admin	sl	Da, samo skrbniki lahko dokončno izbrišejo podatke
+yes, users can purge their deleted items	admin	sl	Da, uporabniki lahko dokončno izbrišejo podatke
 you can either set a year or a occurence, not both !!!	calendar	sl	Nastavite lahko ali leto ali dogodek ne pa obojega!
 you can only set a year or a occurence !!!	calendar	sl	Nastavite lahko le leto ali pojavljanje!
 you do not have permission to read this record!	calendar	sl	Nimate dovoljenja brati tega zapisa!

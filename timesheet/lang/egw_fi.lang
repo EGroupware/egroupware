@@ -8,8 +8,8 @@ all projects	timesheet	fi	Kaikki projektit
 and its members	timesheet	fi	ja sen jäsenet
 applies the changes	timesheet	fi	Lisää muutokset
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	fi	Lisää muutokset kaikkiin valttuihin, EI vain näkyvissä oleviin!!
-at the moment the following document-types are supported:	timesheet	fi	Käytössä olevat asiakirjatyypit
 both: allow to use projectmanager and free project-names	admin	fi	Molemmat: salli projektinhallinnan ja vapaiden projektinimien käyttö
+by	timesheet	fi	Henkilö:
 change category	timesheet	fi	Muuta kategoria
 changed category to %1	timesheet	fi	Kategoria muutettu: %1
 changed status	timesheet	fi	Tila muutettu
@@ -26,7 +26,6 @@ deleted	timesheet	fi	Poistettu
 deletes this field	timesheet	fi	Poistaa tämän kentän
 determines the order the fields are displayed	timesheet	fi	Määrittelee järjestyksen, jossa kentät näytetään
 directory with documents to insert entries	timesheet	fi	Asiakirjan oletuskansio
-document '%1' does not exist or is not readable for you!	timesheet	fi	Asiakirjaa '%1' ei ole olemassa tai sinulla ei ole oikeuksia lukea sitä!
 each value is a line like <id>[=<label>]	timesheet	fi	Jokainen arvo on rivillä kuten <id>[=<label>]
 edit status	timesheet	fi	Muokkaa tilaa
 edit this entry	timesheet	fi	Muokkaa merkintää
@@ -36,29 +35,17 @@ entry deleted	timesheet	fi	Merkintä poistettu
 entry saved	timesheet	fi	Merkintä tallennettu
 error deleting the entry!!!	timesheet	fi	Virhe poistettaessa merkintää!
 error saving the entry!!!	timesheet	fi	Virhe tallentaessa merkintää!
-example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	timesheet	fi	Esimerkki {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} --> etsii "n_prefix" kentästä  'Mr', jos olemassa kirjoita Hello Mr., muutoin kirjoita Hello Ms.
-example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	timesheet	fi	Esimerkki {{LETTERPREFIXCUSTOM n_prefix title n_family}} ---> Mr Dr. James Miller
-example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	timesheet	fi	Esimerkki {{NELF role}} - jos kenttä 'role'='rooli/asema' ei ole tyhjä, se kirjoitetaan seuraavalle riville
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	timesheet	fi	Esimerkki {{NELFNV role}} - jos kenttä 'role'='rooli/asema' ei ole tyhjä, aseta LF ilman arvoa
 existing links	timesheet	fi	Olemassa olevat linkit
 exists	timesheet	fi	Olemassaoleva
-export	timesheet	fi	Vienti
-export definitition to use for nextmatch export	timesheet	fi	Vienti asetukset 'nextmatch' vientiin
 export to openoffice spreadsheet	timesheet	fi	Vie OpenOffice Spreadsheet
 exports entries from your timesheet into a csv file.	timesheet	fi	Vie merkintöjä Ajanhallinnasta CSV tiedostoon
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	fi	Vie merkintöjä Ajanhallinnasta CSV tiedostoon. CSV 'Comma Separated Values' tarkoittaa pilkulla eroitettuja arvoja. Voit valita myös muita erotustapoja.
 field must not be empty !!!	timesheet	fi	Kenttää ei voi jättää tyhjäksi!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	fi	Käytä tägiä toistettaviin dokumentteihin. Lisää sisältö kahden tägin väliin.
 full: use only projectmanager	admin	fi	Täysi: käytä vain projektinhallintaa
-general	timesheet	fi	Yleinen
-general fields:	timesheet	fi	Yleiset kentät:
 global categories	timesheet	fi	Yleiset kategoriat
 history	timesheet	fi	Historia
 id	timesheet	fi	ID
-if you specify a directory (full vfs path) here, egroupware displays an action for each document. that action allows to download the specified document with the %1 data inserted.	timesheet	fi	Oletuskansio näyttää valikossa kaikki kansiossa olevat asiakirjat. Merkitse kenttään täydellinen kansion VFS polku!
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the contact data inserted.	timesheet	fi	Oletusasiakirja, %1 näyttää ylimääräisen asiakirjakuvakkeen jokaiselle merkinnälle. Merkitse kenttään täydellinen asiakirjan VFS polku!
-if you specify an export definition, it will be used when you export	timesheet	fi	Valitse viennin oletusasetus
-if you specify an export definition, it will be used when you export*	timesheet	fi	Valitse viennin oletusasetus
 ignore	timesheet	fi	Ohita
 import options	timesheet	fi	Tuontiasetukset
 imports entries into the timesheet from a csv file.	timesheet	fi	Tuo merkintöjä CSV tiedostosta Ajanhallintaan.
@@ -71,9 +58,8 @@ last week	timesheet	fi	Viime viikolla
 last year	timesheet	fi	Viime vuonna
 leave it empty for a full week	timesheet	fi	Jätä tyhjäksi, jos koko viikko
 leaves without saveing	timesheet	fi	Poistuu tallentamatta
-length<br>rows	timesheet	fi	Pituus<br>Rivit
+length<br>rows	timesheet	fi	Pituus Rivit
 links	timesheet	fi	Linkit
-manage mapping	timesheet	fi	Valitse kentät
 max length of the input [, length of the inputfield (optional)]	timesheet	fi	Maksimipituus merkinnälle. [, merkintäkentän pituus (valinnainen)]
 modified	timesheet	fi	Muokattu
 modify status	timesheet	fi	Muokkaa tilaa

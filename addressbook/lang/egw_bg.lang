@@ -51,7 +51,6 @@ are you shure you want to delete this contact?	addressbook	bg	Сигурни л�
 are you sure you want to delete this field?	addressbook	bg	Сигурни ли сте, че искате да изтриете това поле?
 assistent	addressbook	bg	Асистент
 assistent phone	addressbook	bg	телефон на асистента
-at the moment the following document-types are supported:	addressbook	bg	Към момента се поддържат следните типове документи:
 birthday	common	bg	Рожден ден
 birthdays	common	bg	Рождени дни
 blank	addressbook	bg	Празно
@@ -81,7 +80,6 @@ charset of file	addressbook	bg	Символен набор на файла
 check all	addressbook	bg	Маркира всички
 choose an icon for this contact type	admin	bg	Избор на икона за този тип контакт
 choose owner of imported data	addressbook	bg	Избор на собственик на импортираните данни
-choose seperator and charset	addressbook	bg	Избор на разделител и символен набор
 chosse an etemplate for this contact type	admin	bg	Избор на eTemplate за този тип контакт
 city	common	bg	Град
 company	common	bg	Организация
@@ -138,7 +136,6 @@ distribution list deleted	addressbook	bg	Пощенският списък е и
 distribution lists	addressbook	bg	Пощенски списъци
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	bg	Желаете ли личен (private) адресен указател, който не е досъпен за потребителите, на които позволите достъп до собствения си (personal) адресен указател?
 do your really want to delete this contact?	addressbook	bg	Наистина ли желаете да изтриете този контакт?
-document '%1' does not exist or is not readable for you!	addressbook	bg	Документът '%1' не съществува или нямате право на достъп до него!
 doesn't matter	addressbook	bg	без значение
 domestic	addressbook	bg	Домашен
 don't hide empty columns	addressbook	bg	Да не се скриват празните колони
@@ -160,9 +157,7 @@ enter the path to the exported file here	addressbook	bg	Въведете път�
 error deleting the contact !!!	addressbook	bg	Грешка при изтриване на контакта !!!
 error saving the contact !!!	addressbook	bg	Грешка при запис на контакта !!!
 error: the entry has been updated since you opened it for editing!	addressbook	bg	Грешка: записът е бил актуализиран, след като сте го отворили за редакция!
-example $$if n_prefix~mr~hello mr.~hello ms.$$ - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	bg	Пример $$IF n_prefix~Г-н~Здравейте, Г-н~Здравейте, Г-жо.$$ - търси в полето "n_prefix", ако открие "Г-н", записва Здравейте, Г-н. , иначе - здравейте, Г-жо.
 existing links	addressbook	bg	Съществуващи връзки
-export	addressbook	bg	експорт
 export as csv	addressbook	bg	Експорт в CSV
 export as vcard	addressbook	bg	Експорт във VCard
 export contacts	addressbook	bg	Експорт на контактите
@@ -184,13 +179,14 @@ fields to show in address list	addressbook	bg	Полета, видими в сп
 fieldseparator	addressbook	bg	Разделител на полета
 for read only ldap	admin	bg	за LDAP, достъпен само за четене
 full name	addressbook	bg	Име
-general	addressbook	bg	Общи
+general	admin	bg	Общи
 general fields:	addressbook	bg	Общи полета:
 global categories	addressbook	bg	Глобални категории
 grant addressbook access	common	bg	Разрешаване на достъп до адр. указател
 group %1	addressbook	bg	Група %1
 hide accounts from addressbook	addressbook	bg	Скриване на акаунтите от адр. указател
 hides accounts completly from the adressbook.	addressbook	bg	Скрива напълно акаунтите от адр. указател
+history logging	admin	bg	Запис на история
 home address	addressbook	bg	Личен адрес
 home address, birthday, ...	addressbook	bg	Личен адрес, Рожден ден, ...
 home city	addressbook	bg	Личен - град
@@ -201,11 +197,8 @@ home phone	addressbook	bg	Домашен телефон
 home state	addressbook	bg	Личен - Област / Щат
 home street	addressbook	bg	Личен - улица
 home zip code	addressbook	bg	Личен - Пощенски код
-how many contacts should non-admins be able to export (empty = no limit)	admin	bg	Колко контакта е позволено на не-администраторите да експортират (не посочено = без ограничение)
 icon	addressbook	bg	Икона
 if accounts are already in ldap	admin	bg	ако акаунитие вече са в LDAP
-if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	bg	Ако укажете директория (пълния VFS път), Адресният указател ще показва диалог за действие за всеки документ. Това позволява да изтеглите указания документ с вмъкнати данни за контакта.
-if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	bg	Ако укажете документ (пълния VFS път), Адресният указател ще показва допълнителна иконка за всеки адрес. Тя позволява да изтеглите указания документ с вмъкнати данни за контакта.
 import	addressbook	bg	Импорт
 import contacts	addressbook	bg	Импорт на контакти
 import csv-file into addressbook	addressbook	bg	Импорт на CSV-файл в адресния указател
@@ -219,7 +212,7 @@ import_instructions	addressbook	bg	В Netscape, отворете адресни�
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	bg	Импортира контакти в Адресния указател от CSV файл (стойности, разделени със запетая). От таб Опции може да изберете друг разделител.
 in %1 days (%2) is %3's birthday.	addressbook	bg	Рожденият ден на %3 е след %1 дни (%2).
 income	addressbook	bg	Доход
-insert in document	addressbook	bg	Вмъкване в документа
+infolog	addressbook	bg	Дневник
 insufficent rights to delete this list!	addressbook	bg	Недостатъчни права за изтриване на списъка!
 international	addressbook	bg	Международен
 label	addressbook	bg	Етикет
@@ -237,7 +230,6 @@ list all customfields	addressbook	bg	Показване на всички пол
 list already exists!	addressbook	bg	Списъкът вече съществува!
 list created	addressbook	bg	Списъкът е създаден
 list creation failed, no rights!	addressbook	bg	Грешка при създаване на списъка: нямате права!
-load sample file	addressbook	bg	Зареждане на примерен файл
 load vcard	addressbook	bg	Зареждане на VCard
 location	addressbook	bg	Местоположение
 locations	addressbook	bg	местоположения
@@ -253,7 +245,6 @@ mobile	addressbook	bg	Мобилен
 mobile phone	addressbook	bg	Мобилен телефон
 modem phone	addressbook	bg	Модем
 more ...	addressbook	bg	Още ...
-move to addressbook:	addressbook	bg	Преместен(и) в адр. указател:
 moved	addressbook	bg	преместен(и)
 multiple vcard	addressbook	bg	Множество VCard
 name for the distribution list	addressbook	bg	Име на пощенския списък
@@ -379,6 +370,7 @@ yes, for the next three days	addressbook	bg	Да, за следващите тр
 yes, for the next two weeks	addressbook	bg	Да, за следващите две седмици
 yes, for the next week	addressbook	bg	Да, за следващата седмица
 yes, for today and tomorrow	addressbook	bg	Да, за днес и утре
+yes, only admins can purge deleted items	admin	bg	Да, само администраторите могат да заличават изтрити записи
 you are not permitted to delete contact %1	addressbook	bg	Нямате право да изтриете контакта: %1
 you are not permittet to delete this contact	addressbook	bg	Нямате право да изтриете този контакт
 you are not permittet to edit this contact	addressbook	bg	Нямате право да редактирате този контакт

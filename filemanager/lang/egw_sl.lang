@@ -58,6 +58,7 @@ custom fields	filemanager	sl	Polja po meri
 cut	filemanager	sl	Izreži
 cut to clipboard	filemanager	sl	Izreži v odložišče
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	sl	Privzeta nastavitev je NE. Povezava ne bo prikazana, vseeno pa boste lahko prišli do lokacije ali določili to lokacijo kot začetno mapo ali povezavo na mapo.
+default document to insert entries	filemanager	sl	Privzeti dokument za vstavljanje
 delete these files or directories?	filemanager	sl	Izbrišem te datoteke ali mape?
 delete this file or directory	filemanager	sl	Izbriši to datoteko ali mapo
 deleted %1	filemanager	sl	Izbrisano %1
@@ -67,6 +68,7 @@ directory %1 already exists	filemanager	sl	Mapa %1 že obstaja
 directory %1 does not exist	filemanager	sl	Mapa %1 ne obstaja
 directory not found or no permission to access it!	filemanager	sl	Mapa ni ila najdena ali pa nimate pravic za dostop!
 directory successfully created.	filemanager	sl	Mapa je bila uspešno ustvarjena.
+directory with documents to insert entries	filemanager	sl	Mapa z dokumenti za vstavljanje
 display and modification of content	filemanager	sl	Prikaz in sprememba vsebine
 display of content	filemanager	sl	Prikaz vsebine
 do you want to overwrite the existing file %1?	filemanager	sl	Želite prepisati obstoječo datoteko %1?
@@ -101,7 +103,9 @@ filename must not be empty!	filemanager	sl	Ime datoteke ne sme biti prazno.
 files from subdirectories	filemanager	sl	Datoteke iz podmap
 files in this directory	filemanager	sl	Datoteke v mapi
 folder up	filemanager	sl	Nadrejena mapa
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	sl	Za tipska pisma uporabite značko. Vsebino, ki jo želite imeti v vseh dokumentih, vnesite med značke.
 general	filemanager	sl	Splošno
+general fields:	filemanager	sl	Splošna polja:
 go home	filemanager	sl	Pojdi domov
 go to	filemanager	sl	Pojdi na
 go to your home directory	filemanager	sl	Pojdi na domačo mapo
@@ -123,6 +127,7 @@ modify all subdirectories and their content	filemanager	sl	Spremeni vse podmape 
 move	filemanager	sl	Premakni
 move to	filemanager	sl	Premakni v
 moved %1 to %2	filemanager	sl	%1 je bilo premaknjeno v %2
+name of current user, all other contact fields are valid too	filemanager	sl	Ime trenutnega uporabnika, veljavna so tudi vsa druga polja stika
 new directory	filemanager	sl	Nva mapa
 no access	filemanager	sl	Ni dostopa
 no files in this directory.	filemanager	sl	V tej mapi ni datotek
@@ -155,6 +160,7 @@ root access granted.	filemanager	sl	Dostop do root je bil odobren.
 root access stopped.	filemanager	sl	Dostop do korena je bil ustavljen.
 save %1	filemanager	sl	Shrani %1
 save %1, and go back to file listing	filemanager	sl	Shrani %1 in se vrni na seznam datotek
+save as	filemanager	sl	Shrani kot
 save changes	filemanager	sl	Shrani spremembe
 saved %1	filemanager	sl	Shranjen %1
 saving properties failed!	filemanager	sl	Shranjevanje lastnosti ni uspelo!
@@ -171,6 +177,7 @@ start search	filemanager	sl	Začni iskanje
 startfolder	filemanager	sl	Začetna mapa
 superuser	filemanager	sl	Superuser
 symlink to %1 created.	filemanager	sl	Povezava do %1 je bila ustvarjena
+tag to mark positions for address labels	filemanager	sl	Oznaka za označitev položajev oznak adresarja
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	sl	Privzeta začetna mapa je vaša osebna mapa. Če pustite to prazno ali vnesena pt ne obstaja ali nimate ustreznih pravic za dostop, bo uporabljena privzeta vrednost.
 the requested path %1 is not available.	filemanager	sl	Pot %1 ni na voljo.
 there's already a directory with that name!	filemanager	sl	Mapa s tem imenom že obstaja.
@@ -182,6 +189,7 @@ up	filemanager	sl	Navzgor
 updated comment for %1	filemanager	sl	Komentar za %1 je bil posodobljen
 upload fields	filemanager	sl	Naloži polja
 upload files	filemanager	sl	Naloži datoteke
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	sl	Uporabi to značko za naslov nalepk. Stik, ki ga želite ponoviti, dajte med dve znački.
 used space	filemanager	sl	Uporabljen prostor
 users and groups	filemanager	sl	Uporabniki in skupine
 versioning	filemanager	sl	Vodenje različic

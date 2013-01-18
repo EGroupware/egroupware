@@ -33,6 +33,7 @@ account is expired	common	cs	Platnost účtu vypršela
 accounts	common	cs	Účty
 acl	common	cs	ACL
 action	common	cs	Akce
+actions	common	cs	Akce
 active	common	cs	Aktivní
 add	common	cs	Přidat
 add %1 category for	common	cs	Přidat kategorii %1 pro
@@ -40,8 +41,6 @@ add category	common	cs	Přidat kategorii
 add shortcut	common	cs	Přidat zástupce
 add sub	common	cs	Přidat pod
 addressbook	common	cs	Adresář
-addressbooks for carddav attribute "addressbook-home-set".	common	cs	Adresáře pro CardDAV atribut "addressbook-home-set".
-addressbooks to sync with apple clients	common	cs	Adresáře, které mají být synchronizovány s klienty Apple
 admin	common	cs	Administrátor
 administration	common	cs	Administrace
 afghanistan	common	cs	AFGHÁNISTÁN
@@ -55,6 +54,7 @@ alternate style-sheet:	common	cs	Alternativní formátovací sada
 american samoa	common	cs	AMERICKÁ SAMOA
 an error happened	common	cs	Došlo k chybě
 an existing and by the webserver readable directory enables the image browser and upload.	common	cs	Existující adresář pro který má web server práva pro čtení povolí prohlížeč obrázků a upload.
+and	common	cs	A
 andorra	common	cs	ANDORA
 angola	common	cs	ANGOLA
 anguilla	common	cs	ANGUILLA
@@ -188,7 +188,9 @@ default category	common	cs	Výchozí kategorie
 default height for the windows	common	cs	Výchozí výška oken
 default width for the windows	common	cs	Výchozí šířka oken
 delete	common	cs	Smazat
+delete category	common	cs	Smazat kategorii
 delete row	common	cs	Smazat řádek
+delete this entry	common	cs	smazat záznam
 denmark	common	cs	DÁNSKO
 description	common	cs	Popis
 detail	common	cs	Detail
@@ -214,6 +216,7 @@ domestic	common	cs	Vnitrostátní
 dominica	common	cs	DOMINIKA
 dominican republic	common	cs	DOMINIKÁNSKÁ REPUBLIKA
 done	common	cs	Hotovo
+download	common	cs	Stáhnout
 drag to move	jscalendar	cs	Pro přesun uchopte
 e-mail	common	cs	E-Mail
 east timor	common	cs	VÝCHODNÍ TIMOR
@@ -391,6 +394,7 @@ list	common	cs	Seznam
 list members	common	cs	Seznam členů
 lithuania	common	cs	LITVA
 local	common	cs	Lokální
+locations	common	cs	umístění
 login	common	cs	Přihlásit
 loginid	common	cs	ID pro přihlášení
 logout	common	cs	Odhlásit
@@ -486,9 +490,11 @@ on mouse over	common	cs	Při pohybu myši přes
 only private	common	cs	jen soukromé
 only yours	common	cs	jen Vaše
 oops! you caught us in the middle of system maintainance.	common	cs	Omlouváme se! Zastihnul(a) jste nás uprostřed údržby systému.
+open	common	cs	Otevřít
 open notify window	common	cs	Otevřít okno s upozorněním
 open popup window	common	cs	Otevřít překryvné okno
 open sidebox	common	cs	Otevřít postranní panel
+or	common	cs	nebo
 ordered list	common	cs	Setříděný seznam
 original	common	cs	Původní
 other	common	cs	Ostatní
@@ -535,10 +541,10 @@ portugal	common	cs	PORTUGALSKO
 postal	common	cs	Poštovní
 powered by	common	cs	Založeno na
 preferences	common	cs	Předvolby
-preferences for the idots template set	common	cs	Předvolby pro šablony idots
 prev. month (hold for menu)	jscalendar	cs	Předchozí měsíc (podržte pro menu)
 prev. year (hold for menu)	jscalendar	cs	Předchozí rok (podržte pro menu)
 previous page	common	cs	Predchozí strana
+primary group	common	cs	primární skupina
 primary style-sheet:	common	cs	Primární formátovací sada:
 print	common	cs	Tisknout
 priority	common	cs	Priorita
@@ -591,6 +597,7 @@ search or select accounts	common	cs	vyhledat nebo vybrat účty
 second	common	cs	sekunda
 section	common	cs	Sekce
 select	common	cs	Vybrat
+select action	common	cs	Vybrat akci
 select all %1 %2 for %3	common	cs	Vybrat vše %1 %2 pro %3
 select category	common	cs	Vybrat kategorii
 select date	common	cs	Vybrat datum
@@ -748,6 +755,7 @@ what style would you like the image to have?	common	cs	Jaký styl mají mít obr
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	cs	Odpovíte-li ano, potom tlačítka pro hlavní stranu a odhlášení budou přítomna ve vrchní aplikační liště.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	cs	Kde a jak budou zobrazeny v eGrouWaru odkazy jako předvolby, o aplikaci nebo odhlášení.
 which groups	common	cs	Které skupiny
+whole query	common	cs	celý dotaz
 width	common	cs	Šířka
 wk	jscalendar	cs	týd.
 work email	common	cs	pracovní e-mail

@@ -18,7 +18,7 @@ category:	resources	eu	Kategoria:
 check all	resources	eu	Guztiak hautatu
 choose categories admin	resources	eu	Hautatu kategorien admin.
 clear selection	resources	eu	Garbitu hautaketa
-configure access permissions	resources	eu	Sarrera Baimenak Kudeatu
+configure access permissions	admin	eu	Sarrera Baimenak Kudeatu
 create new accessory for this resource	resources	eu	Osagarri berria sortu errekurtsoarendako
 create new links	resources	eu	Esteka berria sortu
 delete selected resources	resources	eu	Ezabatu hautatutako errekurtsoak
@@ -31,6 +31,8 @@ existing links	resources	eu	Orain dauden estekak
 general	resources	eu	Orokorra
 general informations about resource	resources	eu	Errekurtsoari buruzko informazio orokorra
 gernal resource	resources	eu	Errekurtso orokorra
+global categories	resources	eu	Kategoria orokorrak
+hours	resources	eu	orduak
 how many of the resources are useable?	resources	eu	Zenbat errekurtso daude erabilgarriak?
 how many of them are useable?	resources	eu	Zenbat dira erabilgarriak?
 how many of this resource are usable	resources	eu	Errekurtso honetako zenbat unitate dira erabilgarriak
@@ -95,6 +97,5 @@ web-site for this resource	resources	eu	Errekurtso honen webgunea
 where to find this resource?	resources	eu	Non aurkitu errekurtso hau
 which category does this resource belong to?	resources	eu	Zein kategoriatakoa da errekurtso hau?
 write permissions	resources	eu	Idazteko baimenak
-you are not permitted to edit this reource!	resources	eu	Ez daukazu baimenik errekurtso hau aldatzeko!
 you are not permitted to get information about this resource!	resources	eu	Ez daukazu baimenik errekurtso honen inguruan informazio lortzeko!
 you chose more resources than available	resources	eu	Eskuragarri direnak baino gehiago hautatu dituzu

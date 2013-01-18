@@ -79,7 +79,7 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	cs	Chcete neustále zobrazovat počet aktivních relací?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	cs	Mají být tyto pomocné texty zobrazeny vždy při úpravě předvoleb nebo jen na vyžádání.
 show helpmessages by default	preferences	cs	Standardně zobrazovat pomocné texty
-show links between egroupware aps as	addressbook	cs	Zobrazovat odkazy mezi eGroupWare aplikacemi jako
+show links between egroupware aps as	common	cs	Zobrazovat odkazy mezi eGroupWare aplikacemi jako
 show navigation bar as	preferences	cs	Zobrazovat navigační lištu jako
 show number of current users	preferences	cs	Zobrazovat počet připojených uživatelů
 show text on navigation icons	preferences	cs	Zobrazovat text u navigačních ikon
@@ -104,7 +104,7 @@ which charset should be used for the csv export. the system default is the chars
 which currency symbol or name should be used in egroupware.	preferences	cs	Jaký název nebo symbol měny má eGroupWare používat.
 write prefs for the specified application.	preferences	cs	Uložit předvolby pro vybranou aplikaci.
 you can show the applications as icons only, icons with app-name or both.	preferences	cs	Můžete aplikace zobrazovat jen jako ikony, ikony s názvem aplikace nebo obojí.
-you can show the linked entries with icons only, icons with app-name or both.	addressbook	cs	Můžete zobrazovat odkazované záznamy jen ikonami, ikonami s názvem aplikace nebo jen názvem aplikace.
+you can show the linked entries with icons only, icons with app-name or both.	common	cs	Můžete zobrazovat odkazované záznamy jen ikonami, ikonami s názvem aplikace nebo jen názvem aplikace.
 you do not have permission to set acl's in this mode!	preferences	cs	Nemáte oprávnění nastavovat ACL v tomto režimu!
 you must enter a password	preferences	cs	Musíte zadat heslo
 your current theme is: %1	preferences	cs	Vaše aktuální téma je: %1

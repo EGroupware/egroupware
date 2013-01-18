@@ -1,22 +1,29 @@
 allowed users	importexport	et	Lubatud kasutajad
 automatically created by importexport	importexport	et	automaatselt tehtud Import-Eksport poolt
+check all	importexport	et	Kontrolli kõik
 choose a name for this definition	importexport	et	Vali nimi selle definitsioonijaoks
 choose a plugin	importexport	et	Vali plugin
 choose an application	importexport	et	Vali rakendus
+created	importexport	et	Tehtud
 delete all selected definitions	importexport	et	kustuta KÕIK valitud definitsioonid
+deleted	importexport	et	kustutatud
 expert options	importexport	et	Ekspordi omadused
 export	importexport	et	Eksport
 export all selected definitions	importexport	et	ekspordi KÕIK valitud definitsioonid
 finish	importexport	et	valmis
-general	importexport	et	Üldine
+general	preferences	et	Üldine
+import	importexport	et	Import
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	et	Impordi definitsioonid (Ettevaatust: Olemasolevad definitsioonid mis on sama nimega kirjutatakse üle!!!)
 importexport wizard finished successfully!	importexport	et	Import-Eksport abimees lõpetas edukalt !
 next	importexport	et	järgmine
 preview	importexport	et	Eelvaade
 previous	importexport	et	eelmine
 save as definition	importexport	et	Salvesta kui definitsioon
+schedule	common	et	ajastatud
 select definition	importexport	et	Vali definitsioon
 select plugin	importexport	et	Vali plugin
 some nice text	importexport	et	mõni lahe tekst
+translation	importexport	et	Tõlkimine
+use default	importexport	et	Kasuta vaikimisi
 which useres are allowed for this definition	importexport	et	Millised kasutajad on lubatud selle definitsioonijaoks
 you need to select an app and format first!	importexport	et	Vajalik on valida rakendus ja formaat esmalt!

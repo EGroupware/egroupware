@@ -1,0 +1,60 @@
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	lo	ເພີ່ມຜູ້ໃຊເຂົ້າໃນກຸ່ມນີ້ອັດຕະໂນມັດ ('ຄ່າເລີ່ມຕົ້ນ'ຈະຖືກກໍານົດເປັນຄ່າວ່າງເປົ່າ)
+admins	setup	lo	ຜູ້ເບິ່ງແຍງລະບົບ
+all users	setup	lo	ຜູ້ໃຊ້ທັງໝົດ
+application title	setup	lo	ຫົວຂໍ້ ແອັບພຼິເຄຊັນ
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	lo	ພະຍາຍາມທີຈະໃຊ້ mimetype ທີ່ຖືກຕ້ອງສໍາລັບ FTP ແທນທີ່ຈະໃຊ້ຄ່າເລີ່ມຕົນ 'application/octet-stream'
+authentication / accounts	setup	lo	ການຮັບຮອງ/ບັນຊີ
+auto create account records for authenticated users	setup	lo	ສ້າງຕົວບັນທຶກອັດຕະໂນມັດຂອງບັນຊີຜູ້ໃຊ້ເພື່ອຍືນຍັນສິດນໍາໃຊ້
+check ip address of all sessions	setup	lo	ກວດສອບທີ່ຢູ່ IP ຂອງທຸກ session
+country selection	setup	lo	ເລືອກປະເທດ
+created	setup	lo	ຖືກສ້າງແລ້ວ
+day	setup	lo	ມື້
+db backup and restore	setup	lo	DB backup and restore
+default	setup	lo	ຄ່າເລີ່ມຕົ້ນ
+default file system space per user/group ?	setup	lo	ຄ່າເລີ່ມຕົ້ນຂອງພື້ນທີ່ສໍາລັບ 1 ຜູ້ໃຊ້/ກຸ່ມ
+download	setup	lo	ດາວໂຫຼດ
+enter the hostname of the machine on which this server is running	setup	lo	ພິມ ຊື່ໂຮສ ຂອງເຄື່ອງ ເຊີບເວີ້ ທີ່ກໍາລັງໃຊ້ຢູ່
+enter the site password for peer servers	setup	lo	ພິມລະຫັດຜ່ານສໍາລັບ peer servers
+enter the site username for peer servers	setup	lo	ພິມຊື່ສໍາລັບ peer ເຊີບເວີ້
+enter the title for your site	setup	lo	ພິມຫົວຂໍ້ສໍາລັບ ເວບໄຊ້ ຂອງທ່ານ
+enter your default ftp server	setup	lo	ພິມຄ່າເລີ່ມຕົ້ນ FTP ເຊີບເວີ້ ຂອງທ່ານ
+enter your http proxy server	setup	lo	ພິມຄ່າເລີ່ມຕົ້ນ HTTP ພຣັອກຊີເຊີບເວີ້ຂອງທ່ານ
+enter your http proxy server port	setup	lo	ພິມຄ່າເລີ່ມຕົ້ນ HTTP ພຣັອກຊີເຊີບເວີ້ ພອດ ຂອງທ່ານ
+false	setup	lo	ຜິດ/ບໍ່ຜ່ານ
+file	setup	lo	ຟາຍ
+filename	setup	lo	ຊື່ຟາຍ
+go to	setup	lo	ໄປທີ່
+host information	setup	lo	ຂໍ້ມູນ ໂຮສ
+if no acl records for user or any group the user is a member of	setup	lo	ຖ້າບໍ່ມີການບັນທຶກ ACL ສໍາລັບຜູ້ໃຊ້ຫຼືກຸ່ມຜູ້ໃຊ້ທີ່ເປັນສະມາຊິກຂອງ
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	lo	ຖ້ານໍາໃຊ້ LDAP, ທ່ານຕ້ອງການທີ່ຈະຈັດການຄຸນລັກສະນະ ໄດເລັກທໍລີຫຼັກ ແລະ loginshell ບໍ?
+ldap accounts context	setup	lo	LDAP ບັນຊີ
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	lo	LDAP ຄ່າເລີ່ມຕົ້ນ ໄດເລັກເທີລີຫຼັກ prefix (ເຊັ່ນ: /home ສໍາລັບ /home/username)
+ldap default shell (e.g. /bin/bash)	setup	lo	LDAP  ຄ່າເລີ່ມຕົ້ນ shell (ເຊັ່ນ: /bin/bash)
+ldap encryption type	setup	lo	LDAP ຊະນິດການເຂົ້າລະຫັດ
+ldap groups context	setup	lo	LDAP ກຸ່ມ
+ldap host	setup	lo	LDAP host
+ldap root password	setup	lo	LDAP root ລະຫັດຜ່ານ
+ldap rootdn	setup	lo	LDAP rootdn
+maximum account id (e.g. 65535 or 1000000)	setup	lo	ຈໍານວນ ID ບັບຊີສູງສຸດ(ເຊັ່ນ: 65535 ຫຼື 1000000)
+minimum account id (e.g. 500 or 100, etc.)	setup	lo	ຈໍານວນ ID ບັບຊີ ຕໍ່າສຸດ(ເຊັ່ນ: 500 ຫຼື 100, ...)
+modified	setup	lo	ປັບປຸງ
+month	setup	lo	ເດືອນ
+next run	setup	lo	ດໍາເນີນການຂັ້ນຕໍ່ໄປ
+no algorithms available	setup	lo	ບໍ່ມີຂັ້ນຕອນໃດໃຊ້ໄດ້
+no modes available	setup	lo	ບໍ່ມີ modes ທີ່ໃຊ້ໄດ້
+one month	setup	lo	ໜຶ່ງເດືອນ
+one week	setup	lo	ໜຶ່ງອາທິດ
+password for smtp-authentication	setup	lo	ລະຫັດຜ່ານສໍາລັບການຮັບຮອງຂອງ SMTP
+path information	setup	lo	ຂໍ້ມູນຂອງພາດຈັດເກັບຟາຍ
+re-enter password	setup	lo	ພິມລະຫັດຜ່ານອີກ
+remove	setup	lo	ລຶບອອກ
+select where you want to store/retrieve user accounts	setup	lo	ເລືອກບ່ອນຈັດເກັບ / ຮ້ອງໃຊ້ ບັນຊີຜູ້ໃຊ້
+selectbox	setup	lo	ຊ່ອງສໍາລັບເລືອກ
+show 'powered by' logo on	setup	lo	Show 'powered by' logo on
+text entry	setup	lo	ລາຍການຂໍ້ຄວາມ
+true	setup	lo	ຖືກ
+two weeks	setup	lo	ສອງອາທິດ
+use cookies to pass sessionid	setup	lo	ໃຊ້ cookies ເພື່ອຜ່ານ sessionid
+use pure html compliant code (not fully working yet)	setup	lo	ໃຊ້ HTML code (ຍັງເຮັດວຽກບໍ່ເຕັມທີ່)
+user for smtp-authentication (leave it empty if no auth required)	setup	lo	ນໍາໃຊ້ສໍາລັບ SMTP-authentication ກວດສອບຜູ້ໃຊ້(ຄ່າເປົ່າຖ້າບໍ່ໃສ່ຫຍັງ)
+would you like to show each application's upgrade status ?	setup	lo	ທ່ານຕ້ອງການສະແດງສະຖານະການປັບປຸງຂອງແຕ່ລະແອັບພຼິເຄຊັນ ບໍ?

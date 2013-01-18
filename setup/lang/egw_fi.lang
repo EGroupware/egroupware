@@ -329,6 +329,7 @@ list of availible translations	setup	fi	saatavilla olevien kielipakttien lista
 login to mysql -	setup	fi	Kirjaudu mysql:ään -
 loginname needed for domain configuration	setup	fi	Domain konfiguraatio vaatii kirjautumisnimen
 logout	setup	fi	Kirjaudu ulos
+mail server login type	setup	fi	Sähköpostipalvelimen kirjautumistyyppi
 make sure that your database is created and the account permissions are set	setup	fi	Varmista, että tietokanta on luotu ja käyttöoikeudet ovat kunnossa
 manage applications	setup	fi	Sovellusten hallinta
 manage languages	setup	fi	Kielten hallinta
@@ -345,6 +346,7 @@ minimum account id (e.g. 500 or 100, etc.)	setup	fi	Käyttäjätunnisteen minimi
 minute	setup	fi	minuutti
 missing or uncomplete mailserver configuration	setup	fi	Postipalvelimen asetukset puuttuvat tai ovat vajaat
 modifications have been completed!	setup	fi	Muutokset on suoritettu loppuun!
+modified	setup	fi	Muokattu
 modify	setup	fi	Muokkaa
 month	setup	fi	kuukausi
 multi-language support setup	setup	fi	Kielituen asennus
@@ -433,6 +435,7 @@ run installation tests	setup	fi	Aja asennustestit
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	fi	safe_mode on päällä. Tämä on hyvä asia, koska näin asennuksesi on turvallisempi.
 save	setup	fi	Tallenna
 save this text as contents of your header.inc.php	setup	fi	Tallenna tämä teksti tiedostoon header.inc.php
+schedule	setup	fi	Ajastettu toiminto
 select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	fi	Valitse sovellus, anna versio ja lähetä tiedot.<br />Jos et anna versionumeroa, vain perustaulut asennetaan.<br /><blink>KAIKKI SOVELLUKSEN TAULUT POISTETAAN ENSIN!</blink>
 select one...	setup	fi	valitse...
 select the default applications to which your users will have access	setup	fi	Valitse oletussovellukset, joihin käyttäjillä on käyttöoikeus
@@ -527,6 +530,7 @@ use cookies to pass sessionid	setup	fi	Välitä istunnon tunniste evästeessä
 use pure html compliant code (not fully working yet)	setup	fi	Käytä täysin HTML-yhteensopivaa koodia (ei toimi täysin vielä)
 user	setup	fi	Käyttäjä
 user account prefix	setup	fi	Käyttäjätunnuksen etuliite
+user for smtp-authentication (leave it empty if no auth required)	setup	fi	SMTP -käyttäjätunnus (tyhjä, jos ei käytetä)
 usernames are casesensitive	setup	fi	Käyttäjätunnukset ovat merkkikokoherkkiä
 users choice	setup	fi	Käyttäjän valinta
 utf-8 (unicode)	setup	fi	utf-8 (Unicode)

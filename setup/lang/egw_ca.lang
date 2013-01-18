@@ -39,7 +39,6 @@ all users	setup	ca	Tots els usuaris
 allow authentication via cookie	setup	ca	Permet autentificació amb galetes
 allow password migration	setup	ca	Permet migració de contrasenya
 allowed migration types (comma-separated)	setup	ca	Tipus de migracions permeses (separades per comes)
-analysis	setup	ca	Anàlisi
 and is up to date	setup	ca	i està al dia
 and reload your webserver, so the above changes take effect !!!	setup	ca	I recarrega el servidor web a fi de que els canvis tenguin efecte !!!
 app details	setup	ca	Detalls de l'Aplicació
@@ -222,7 +221,6 @@ file uploads are switched off: you can not use any of the filemanagers, nor can 
 filename	setup	ca	nom del fitxer
 filesystem	setup	ca	Sistema de fitxers
 force selectbox	setup	ca	Obligar a llista desplegable
-found existing configuration file. loading settings from the file...	setup	ca	S'ha trobat un arxiu de configuració existent. Carregant els seus paràmetres...
 give admin access to all installed apps	setup	ca	Dóna accés administrador a totes les aplicacions instal·lades
 gives further options	setup	ca	dóna opcions addicionals
 go back	setup	ca	Tornar
@@ -256,8 +254,6 @@ if you running this the first time, don't forget to manualy %1 !!!	setup	ca	Si e
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	ca	Si només utilitzeu llenguatges del mateix joc de caràcters (ex. els de l'Europa Occidental), no necessiteu indicar un joc de caràcters pel sistema!
 image type selection order	setup	ca	Ordre de selecció del tipus d'imatge
 import has been completed!	setup	ca	Importació acabada!
-importing old settings into the new format....	setup	ca	Importar configuració antiga al nou format...
-include root	setup	ca	Arrel a incloure
 include_path need to contain "." - the current directory	setup	ca	include_path necessita contenir "." - el directori actual
 install	setup	ca	Instal·lar
 install all	setup	ca	Instal·lar-ho tot
@@ -310,13 +306,12 @@ mcrypt algorithm (default tripledes)	setup	ca	Algorisme Mcrypt (predeterminat: T
 mcrypt initialization vector	setup	ca	Vector d' inicialització Mcrypt
 mcrypt mode (default cbc)	setup	ca	Modus Mcrypt (predeterminat: CBC)
 mcrypt settings (requires mcrypt php extension)	setup	ca	Configuració Mcrypt (necessita la extensió mcrypt de PHP)
-mcrypt version	setup	ca	Versió Mcrypt
-memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ca	memory_limit te un valor menor de 16M: algunes aplicacions d'eGroupWare necessiten més dels recomanats 8M. Es poden produir petades ocasionals
 migration between egroupware account repositories	setup	ca	Migració entre comptes de repositoris eGroupWare
 minimum account id (e.g. 500 or 100, etc.)	setup	ca	Id mínim de compte (ex. 500 o 100, etc)
 minute	setup	ca	minut
 missing or uncomplete mailserver configuration	setup	ca	Configuració del servidor de correu desconeguda o incompleta
 modifications have been completed!	setup	ca	Modificacions acabades!
+modified	setup	ca	Modificat
 modify	setup	ca	Modificar
 month	setup	ca	mes
 multi-language support setup	setup	ca	Configuració del suport Multi-Idioma
@@ -364,8 +359,6 @@ path to various directories: have to exist and be writeable by the webserver	set
 pear (%1) is a php repository and is usually in a package called %2.	setup	ca	PEAR (%1) és una llibreria PHP i normalment està en un paquet anomenat %2.
 pear%1 is needed by: %2.	setup	ca	PEAR%1 és necessari per: %2.
 persistent connections	setup	ca	Connexions persistents
-php plus restore	setup	ca	restauració de PHP plus
-php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	ca	La restauració de PHP plus és, de molt, la millor actuació ja que guarda completament l'entorn d'eGW dins la sessió.
 please check for sql scripts within the application's directory	setup	ca	Si us plau, comproveu els arxius d'ordres sql en el directori de l'aplicació
 please check read/write permissions on directories, or back up and use another option.	setup	ca	Si us plau, comproveu els permisos de lectura i escriptura als directoris, o torneu i feu servir una altra opció
 please configure egroupware for your environment	setup	ca	Configureu eGroupWare per al vostre entorn
@@ -392,7 +385,6 @@ re-enter password	setup	ca	Confirmeu la contrasenya
 read translations from	setup	ca	Llegir traduccions de
 readable by the webserver	setup	ca	pot ser llegit pel servidor web
 really uninstall all applications	setup	ca	REALMENT voleu desinstal·lar totes les aplicacions
-recommended: filesystem	setup	ca	Recomanat: sistema d' arxius
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ca	register_globals està activat. eGroupWare NO ho necessita i generalment és més segur tenir-ho desactivat.
 registered	setup	ca	registrat
 rejected lines	setup	ca	Línies rebutjades
@@ -410,7 +402,6 @@ restoring a backup will delete/replace all content in your database. are you sur
 return to setup	setup	ca	Tornar a la instal·lació
 run installation tests	setup	ca	Arranca els test d'instal·lació
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	ca	safe_mode està activat, la qual cosa està molt bé perquè fa que la vostra instal·lació sigui més segura.
-sample configuration not found. using built in defaults	setup	ca	No s'ha trobat una configuració d'exemple. Usant valors predefinits.
 save	setup	ca	Desar
 save this text as contents of your header.inc.php	setup	ca	Desar aquest text com a contingut del vostre header.inc.php
 schedule	setup	ca	programar
@@ -420,8 +411,6 @@ select one...	setup	ca	seleccionar un...
 select the default applications to which your users will have access	setup	ca	Seleccioneu les aplicacions predeterminades a les que tindran accés els usuaris
 select the desired action(s) from the available choices	setup	ca	Seleccioneu les accion(s) desitjades de la llista d'opcions disponibles
 select to download file	setup	ca	Seleccioneu per a descarregar arxiu
-select where you want to store/retrieve file contents	setup	ca	Seleccioneu on voleu desar/recuperar continguts d'arxius
-select where you want to store/retrieve filesystem information	setup	ca	Seleccioneu on voleu desar/recuperar informació del sistema d'arxius
 select where you want to store/retrieve user accounts	setup	ca	Seleccioneu on voleu desar/recuperar informació dels comptes d'usuari
 select which group(s) will be exported	setup	ca	Selecciona quin grup(s) s'exportaran
 select which group(s) will be imported (group membership will be maintained)	setup	ca	Seleccioneu quins grups s'importaran (es mantindran les pertenències al grup)
@@ -437,9 +426,7 @@ select which user(s) will have admin privileges	setup	ca	Seleccioneu quin(s) usu
 select your old version	setup	ca	Seleccioneu la versió anterior
 selectbox	setup	ca	Quadre de selecció
 server root	setup	ca	Arrel del servidor
-sessions type	setup	ca	Tipus de sessions
 set	setup	ca	configura
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	ca	Establiu això a "old" per a versions < 2.4, altrament indiqueu la versió exacta de mcrypt  que feu servir.
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	ca	Fent que el conjunt de caràcters del sistema sigui UTF-8 (unicode) és possible la coexistència de llenguatges amb conjunts de caràcters diferents.
 settings	setup	ca	Configuració
 setup	setup	ca	Instal·lació
@@ -506,7 +493,6 @@ translations upgraded	setup	ca	Traduccions actualitzades
 true	setup	ca	Cert
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	ca	Intenteu configurar php per a suportar un dels esmentats SGBD, o instal·leu eGroupWare manualment.
 two weeks	setup	ca	dues setmanes
-unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	ca	Desafortunadament alguns paquets PHP/Apache tenen problemes amb això (Apache mor i no pots tornar a entrar).
 uninstall	setup	ca	desinstal·lar
 uninstall all applications	setup	ca	Desinstal·lar totes les aplicacions
 uninstalled	setup	ca	desinstal·lat
@@ -538,7 +524,6 @@ we can proceed	setup	ca	Podem procedir
 we will automatically update your tables/records to %1	setup	ca	Actualitzarem automàticament les vostres taules/registres a %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	ca	Ara executarem una sèrie de proves que duraran uns pocs minuts. Pitjeu sobre l'enllaç d'abaix per continuar.
 welcome to the egroupware installation	setup	ca	Benvinguts a la Instal·lació de eGroupWare
-what type of sessions management do you want to use (php session management may perform better)?	setup	ca	Quin tipus de gestor de sessions vols utilitzar (el gestor de sessions de PHP funcionarà millor)?
 which database type do you want to use with egroupware?	setup	ca	Quin tipus de base de dades voleu usar amb eGroupWare?
 world readable	setup	ca	pot ser llegit per tothom
 world writable	setup	ca	pot ser modificat per tothom
@@ -554,7 +539,6 @@ you appear to be running a pre-beta version of egroupware.<br />these versions a
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	ca	Pareix que executes una versió pre-beta d'eGroupware.<br />És recomanable que actualitzis a una versió nova. <br />Les versions antigues de PHP poden fer que eGroupware no funcioni correctament, o gens ni mica. <br /><br />Per favor, actualitza a la darrera versió %1
 you appear to be running version %1 of egroupware	setup	ca	Sembla que esteu executant la versió %1 d'eGroupWare
 you appear to have %1 support.	setup	ca	Pareix que tens suport %1.
-you appear to have php session support. enabling php sessions.	setup	ca	Pareix que tens suport de sessions PHP. Habilitant sessions PHP.
 you appear to have xml support enabled	setup	ca	Sembla que teniu activat el suport de XML
 you are ready for this stage, but this stage is not yet written.<br />	setup	ca	Estàs a punt per a aquest nivell, però aquest nivell esncara no s'ha guardat.<br />
 you can install it by running:	setup	ca	Ho pots instal·lar executant:
@@ -566,12 +550,10 @@ you do not have any languages installed. please install one now <br />	setup	ca	
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	ca	Encara no has creat el teu header.inc.php!<br /> El pots crear ara.
 you have successfully logged out	setup	ca	Us heu desconnectat correctament.
 you must enter a username for the admin	setup	ca	Heu d'introduir un nom d'usuari per a l'administrador
-you need to add some domains to your header.inc.php.	setup	ca	Necessiteu afegir alguns dominis a l'arxiu header.inc.php.
 you need to configure egroupware:	setup	ca	Heu de configurar eGroupWare:
 you need to select your current charset!	setup	ca	Heu de seleccionar el joc de caràcters actual!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	ca	Podeu desintalar-la i tornar-la a instal·lar, o podeu intentar una reparació manual
 you're using an old configuration file format...	setup	ca	Esteu usant un arxiu de configuració amb format antic
-you're using an old header.inc.php version...	setup	ca	Esteu usant una versió antiga de l'arxiu header.inc.php
 your applications are current	setup	ca	Les vostres aplicacions estan actualitzades
 your backup directory '%1' %2	setup	ca	El vostre directori de còopies de seguretat '%1' %2
 your database does not exist	setup	ca	La vostra base de dades no existeix

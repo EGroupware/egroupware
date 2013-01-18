@@ -1,10 +1,12 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	es-es	%1 mensajes(%2 nuevos) escritos para la aplicación '%3' e idiomas '%4'
+%1 entries found, select one ...	etemplate	es-es	Se han encontrado %1 entradas. Seleccione una...
 %1 etemplates deleted	etemplate	es-es	%1 plantillas borradas
 %1 etemplates for application '%2' dumped to '%3'	etemplate	es-es	%1 plantillas para la aplicación '%2' volcadas a '%3'
 %1 etemplates found	etemplate	es-es	%1 plantillas encontradas
 %1 matches on search criteria	etemplate	es-es	%1 coincidencias para la búsqueda solicitada
 %1 more...	etemplate	es-es	%1 más...
 %1 new etemplates imported for application '%2'	etemplate	es-es	%1 nuevas plantillas importadas para la aplicación '%2'
+%1 not implemented for %2!	etemplate	es-es	%1 no está implementado para %2!
 %s disabled	etemplate	es-es	%s desactivado
 %s needed	etemplate	es-es	%s es necesario
 %s notranslation	etemplate	es-es	%s sin traducción
@@ -33,10 +35,12 @@ alignment of label and input-field in table-cell	etemplate	es-es	posición de la
 alignment of the v/hbox containing table-cell	etemplate	es-es	Posición del recuadro horizontal o vertical que contiene la celda de la tabla
 all days	etemplate	es-es	todos los días
 all operations save the template!	etemplate	es-es	¡Todas las operaciones guardan la plantilla!
+allowed file type: %1	etemplate	es-es	Tipo de fichero permitido: %1
 am	etemplate	es-es	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	es-es	una columna indexada acelera las consultas que usen esa columna (a costa de espacio en el disco)
 application	etemplate	es-es	Aplicación
 application name needed to write a langfile or dump the etemplates !!!	etemplate	es-es	Se necesita el nombre de la aplicación para escribir un fichero de idioma o volcar las plantillas
+applications	etemplate	es-es	Aplicaciones
 applies the changes made	etemplate	es-es	aplica los cambios realizados
 applies the changes to the given version of the template	etemplate	es-es	aplica los cambios a la versión dada de la plantilla
 as default	etemplate	es-es	como predeterminado
@@ -61,6 +65,7 @@ cells	etemplate	es-es	Celdas
 cellspacing for the table-tag	etemplate	es-es	Espaciado en la celda para la etiqueta de la tabla
 center	etemplate	es-es	Centrar
 changed	etemplate	es-es	Modificado
+check all	etemplate	es-es	Marcar todo
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	es-es	marcar si desea mostrar el contenido sin modificar (el contenido no es devuelto)
 check if field has to be filled by user	etemplate	es-es	marcar si el campo tiene que rellenarlo el usuario
 checkbox	etemplate	es-es	Casilla
@@ -85,6 +90,7 @@ contact fields	etemplate	es-es	Campos de contacto
 contains	etemplate	es-es	contiene
 create a new table for the application	etemplate	es-es	Crear una tabla nueva para la aplicación
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	es-es	Crea un fichero de idioma en inglés ('en') a partir de la etiqueta y textos de ayuda (para la aplicación indicada en Nombre)
+creator	preferences	es-es	Creador
 css class for the table-tag	etemplate	es-es	clase CSS para la etiqueta de la tabla
 css properties	etemplate	es-es	Propiedades CSS
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	es-es	Nombre de la clase CSS para esta fila. Predefinidos: 'nmh' (NextMatch header), 'nmr' (Alternating NM row), 'nmr0'+'nmr1' filas NM
@@ -123,6 +129,7 @@ displayed in front of input or input is inserted for a '%s' in the label (label 
 displayed in statusline of browser if input-field gets focus	etemplate	es-es	Se muestra en la línea de estado del navegador cuando el cuadro de texto tiene el foco
 displayed in the top line of the groupbox (legend)	etemplate	es-es	mostrada en la línea superior del recuadro de grupo (leyenda)
 do you want to save the changes you made in table %s?	etemplate	es-es	¿Desea guardar los cambios que ha realizado en la tabla %s?
+document '%1' does not exist or is not readable for you!	preferences	es-es	El documento '%1' no existe o usted no tiene permiso para leerlo
 documentation	etemplate	es-es	Documentación
 doesn't matter	etemplate	es-es	no importa
 drop a table - this can not be undone	etemplate	es-es	Borrar una tabla - NO se puede deshacer
@@ -146,6 +153,10 @@ enter filename to upload and attach, use [browse...] to search for it	etemplate	
 enter the new version number here (> old_version), empty for no update-file	etemplate	es-es	Introduzca el nuevo número de versión aquí (mayor que versión anterior), vacío para no usar fichero de actualización
 enter the new version number here (has to be > old_version)	etemplate	es-es	Introduzca el nuevo número de versión aquí (tiene que ser mayor que la versión anterior)
 entry saved	etemplate	es-es	La entrada ha sido guardada
+error copying uploaded file to vfs!	etemplate	es-es	¡Error al copiar el fichero subido al vfs!
+error create parent directory %1!	etemplate	es-es	¡Error al crear el directorio superior %1!
+error deleting %1!	etemplate	es-es	¡Error al borrar %1!
+error uploading file!	filemanager	es-es	¡Error al subir el fichero!
 error: template not found !!!	etemplate	es-es	Error: no se encontró la plantilla
 error: webserver is not allowed to write into '%1' !!!	etemplate	es-es	Error: ¡El servidor no puede escribir en '%1'!
 error: while saving !!!	etemplate	es-es	¡¡Error al guardar!!
@@ -156,6 +167,9 @@ etemplate '%1' written to '%2'	etemplate	es-es	La plantilla electrónica '%1' se
 etemplate editor	etemplate	es-es	Editor de plantillas electrónicas
 etemplate reference	etemplate	es-es	Referencia de plantillas electrónicas
 etemplate tutorial	etemplate	es-es	Tutorial de plantillas electrónicas
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	es-es	Ejemplo {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - buscar el campo "n_prefix", para "Mr", si se encuentra, escribir  Hello Mr., si no, escribir Hello Ms.
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	es-es	Ejemplo {{NELF role}} - si el rol del campo no está vacío, obtendrá una línea nueva con el valor del rol del campo
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	es-es	Ejemplo {{NELFNV role}} - si el rol del campo no está vacío, establece un salto de línea (LF) sin ningún valor del campo
 exchange this row with the one above	etemplate	es-es	Intercambiar esta fila con la de encima
 exchange this two columns	etemplate	es-es	Intercambiar estas dos columnas
 export the loaded etemplate into a xml-file	etemplate	es-es	Exportar la plantilla cargada en un fichero xml
@@ -164,13 +178,16 @@ extensions loaded:	etemplate	es-es	Extensiones cargadas:
 field	etemplate	es-es	Campo
 field must not be empty !!!	etemplate	es-es	¡¡¡El campo no debe estar vacío!!!
 file	etemplate	es-es	Fichero
+file '%1' not found!	etemplate	es-es	¡No se ha encontrado el fichero '%1'!
 file contains more than one etemplate, last one is shown !!!	etemplate	es-es	El fichero contiene más de una plantilla. Sólo se mostrará la última.
+file is of wrong type (%1 != %2)!	etemplate	es-es	El fichero es de un tipo incorrecto (%1 != %2)
 file writen	etemplate	es-es	Fichero guardado
 fileupload	etemplate	es-es	Subir fichero
 first	etemplate	es-es	Primero
 floating point	etemplate	es-es	Coma flotante
 foreign key	etemplate	es-es	Clave ajena
 formatted text (html)	etemplate	es-es	Texto con formato (HTML)
+general fields:	preferences	es-es	Campos generales:
 go to the first entry	etemplate	es-es	Ir a la primera entrada
 go to the last entry	etemplate	es-es	Ir a la última entrada
 go to the next page of entries	etemplate	es-es	Ir a la página siguiente de entradas
@@ -193,6 +210,7 @@ hours	etemplate	es-es	horas
 how many entries should the list show	etemplate	es-es	¿Cuántas entradas se muestran en la lista?
 html	etemplate	es-es	Html
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	es-es	Si el campo está desactivado, se muestra la celda de la tabla vacía, para borrar temporalmente un campo o celda.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	es-es	Si especifica un directorio aquí (la ruta vgs completa), %1 muestra un icono extra de documento para cada entrada. Ese icono permite descargar el documento especificado con los datos insertados.
 image	etemplate	es-es	Imagen
 import	etemplate	es-es	Importar
 import an etemplate from a xml-file	etemplate	es-es	Importar una plantilla de un fichero xml
@@ -208,6 +226,7 @@ insert a row above	etemplate	es-es	insertar una fila encima
 insert a row below	etemplate	es-es	insertar una fila debajo
 insert a widget before	etemplate	es-es	insertar un control delante
 insert a widget behind	etemplate	es-es	insertar un control detrás
+insert in document	etemplate	es-es	Insertar en el documento
 insert new column behind this one	etemplate	es-es	Insertar nueva columna detrás de ésta
 insert new column in front of all	etemplate	es-es	Insertar nueva columna al principio de todas
 insert new row after this one	etemplate	es-es	Insertar una nueva fila después de ésta
@@ -228,10 +247,12 @@ linklist	etemplate	es-es	Lista de enlaces
 linkstring	etemplate	es-es	Cadena de enlace
 linkto	etemplate	es-es	Enlace a
 load this template into the editor	etemplate	es-es	cargar esta plantilla en el editor
+maximum size for uploads	filemanager	es-es	Tamaño máximo para subida de ficheros
 message ...	etemplate	es-es	Mensaje...
 middle	etemplate	es-es	Medio
 minute	etemplate	es-es	Minuto
 minutes	etemplate	es-es	MInutos
+modifier	preferences	es-es	Modificador
 month	etemplate	es-es	Mes
 more than 1 match for '%1'	etemplate	es-es	Más de 1 coincidencia para '%1'
 multicolumn indices	etemplate	es-es	Indices multicolumna
@@ -340,6 +361,7 @@ sets today as date	etemplate	es-es	pone hoy como fecha
 should the form be submitted or any custom javascript be executed	etemplate	es-es	Se debe enviar el formulario o ejecutar cualquier javascript personalizado
 show	etemplate	es-es	Mostrar
 show (no save)	etemplate	es-es	Mostrar (sin guardar)
+show all / cancel filter	etemplate	es-es	Mostrar todo / cancelar filtro
 show values	etemplate	es-es	Mostar valores
 showing	etemplate	es-es	mostrando
 shows / allows you to enter values into the etemplate for testing	etemplate	es-es	muestra / permite introducir valores en la plantilla para probar
@@ -367,6 +389,8 @@ template deleted	etemplate	es-es	Plantilla borrada
 template saved	etemplate	es-es	Plantilla guardada
 text	etemplate	es-es	Texto
 textarea	etemplate	es-es	Area de texto
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	es-es	El documento puede contener un marcador como {{%3}}, para sustituirlo con los datos (%1lista completa de nombres de marcadores%2).
+the following document-types are supported:	preferences	es-es	Los siguientes tipos de documentos están soportados:
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	es-es	este texto se muestra si el campo de entrada está vacío y no tiene foco (borroso)
 time	etemplate	es-es	Hora (completa)
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	es-es	para desactivar: [! = no]<valor>[=<comprobar>] p.ej: '!@data' desactiva si el contenido de 'data' está vacío
@@ -412,5 +436,4 @@ xslt template	etemplate	es-es	Plantilla XSLT
 year	etemplate	es-es	Año
 you are not allowed to export more than %1 entries!	common	es-es	¡No se le permite exportar más de %1 entradas!
 you can respond by visiting:	etemplate	es-es	Puede responder visitando:
-error uploading file!	filemanager	es-es	¡Error al subir el fichero!
-maximum size for uploads	filemanager	es-es	Tamaño máximo para subida de ficheros
+you need to select a file first!	etemplate	es-es	¡Necesita seleccionar un fichero antes!

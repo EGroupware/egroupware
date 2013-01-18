@@ -30,27 +30,22 @@ cannot create directory because it begins or ends in a space	filemanager	hu	Kön
 check all	filemanager	hu	Összes kijelölése
 clear search	filemanager	hu	keresés eredményének törlése
 comment	filemanager	hu	Megjegyzés
-comments cannot contain "%1"	filemanager	hu	Megjegyzés nem tartalmazhatja "%1"
 copied	filemanager	hu	másolva
 copied %1 to %2	filemanager	hu	%1 átmásolva ide: %2
 copy	filemanager	hu	Másol
 copy to	filemanager	hu	Másold ide:
 copy to clipboard	filemanager	hu	Vágólapra másol
 could not copy %1 to %2	filemanager	hu	%1 nem másolható ide: %2
-could not copy file because no destination directory is given	filemanager	hu	Másolás nem lehetséges mert nincs megadva célkönyvtár
 could not create %1	filemanager	hu	%1 nem hozható létre
 could not delete %1	filemanager	hu	%1 nem törölhető
 could not move %1 to %2	filemanager	hu	%1 nem mozgatható át ide: %2
-could not move file because no destination directory is given	filemanager	hu	Mozgatás nem lehetséges mert nincs megadva célkönyvtár
 could not rename %1 to %2	filemanager	hu	%1 nem nevezhető át erre: %2
-could not save %1	filemanager	hu	%1 nem menthető el
 create a link	filemanager	hu	Link létrehozása
 create directory	filemanager	hu	Mappa létrehozása
 create file	filemanager	hu	Fájl létrehozása
 create folder	filemanager	hu	Mappa létrehozása
 created	filemanager	hu	Létrehozva
 created %1,%2	filemanager	hu	%1,%2 létrehozva
-created between	filemanager	hu	létrehozva
 created directory %1	filemanager	hu	%1 mappa létrehozva
 current directory	filemanager	hu	aktuális mappa
 custom fields	filemanager	hu	egyedi mező
@@ -63,7 +58,6 @@ directories sorted in	filemanager	hu	Mappák tárolva a
 directory	filemanager	hu	Könyvtár
 directory %1 already exists	filemanager	hu	%1 könyvtár már létezik
 directory %1 does not exist	filemanager	hu	%1 könyvtár nem létezik
-directory names cannot contain "%1"	filemanager	hu	Könyvtárnév nem tartalmazhatja: "%1"
 directory not found or no permission to access it!	filemanager	hu	Könyvtár nem létezik vagy nincs hozzáférési jogosultságod a belépéshez!
 display and modification of content	filemanager	hu	A tartalom megjelenítése és módosítása
 display of content	filemanager	hu	A tartalom megjelenítése
@@ -74,11 +68,11 @@ edit settings	filemanager	hu	Beállítások módosítása
 enter setup user and password	filemanager	hu	Kérem az operator felhasználónevét és jelszavát
 enter setup user and password to get root rights	filemanager	hu	Kérem az operator felhasználónevét és jelszavát
 enter the complete vfs path to specify a fast access link to a folder	filemanager	hu	Add meg a teljes VFS elérési utat a gyors mappa-hozzáféréshez
-enter the complete vfs path to specify a fast access link to a folder (1).	filemanager	hu	Add meg a teljes VFS elérési utat a gyors mappa-hozzáféréshez (1).
 enter the complete vfs path to specify your desired start folder.	filemanager	hu	Add meg a teljes VFS elérési utat kiinduló mappa meghatározásához.
 error adding the acl!	filemanager	hu	HIba a hozzáférés létrehozása során!
 error creating symlink to target %1!	filemanager	hu	Hiba a sylink létrehozása során %1 céhoz!
 error deleting the acl entry!	filemanager	hu	Hiba a hozzáférés törlése során!
+error uploading file!	filemanager	hu	HIba a file feltöltése során!
 executable	filemanager	hu	Végrehajtható
 extended access control list	filemanager	hu	Kiterjeszett hozzáférés korlátozás lista
 extended acl	filemanager	hu	Kiterjeszett hozzáférés korlátozás
@@ -86,7 +80,6 @@ failed to change permissions of %1!	filemanager	hu	Hiba a %1 hozzáférés módo
 failed to create directory!	filemanager	hu	Hiba a mappa léterhozása során!
 favorites	filemanager	hu	Kedvencek
 file	filemanager	hu	File
-file %1 already exists. please edit it or delete it first.	filemanager	hu	%1 állomány már létezik. Kérem szerkessze azt, vagy törölje előbb.
 file %1 could not be created.	filemanager	hu	%1 fájl nem hozható létre.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	hu	%1 file mérete túl nagy, további információért lépj kapcsolatba a rendszergazdával.
 file deleted.	filemanager	hu	File törölve.
@@ -99,6 +92,7 @@ files from subdirectories	filemanager	hu	Alkönyvtárak filejai
 files in this directory	filemanager	hu	A könyvtár fájljai
 folder up	filemanager	hu	Felső mappa
 general	filemanager	hu	general
+general fields:	filemanager	hu	Általános mezők:
 go home	filemanager	hu	Saját mappára ugrás
 go to	filemanager	hu	Ugorj ide
 go to your home directory	filemanager	hu	Saját mappára ugrás

@@ -50,7 +50,6 @@ allow authentication via cookie	setup	pt-br	Permitir autenticação via cookie
 allow password migration	setup	pt-br	Permitir migração de senhas
 allowed migration types (comma-separated)	setup	pt-br	Tipos permitidos de migração (separados por vírgula)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	pt-br	Domínios alternativos podem ser acessados logando com <i>nome_usuário@domínio</i>
-analysis	setup	pt-br	Análise
 and is up to date	setup	pt-br	e está atualizado
 and reload your webserver, so the above changes take effect !!!	setup	pt-br	E reinicie seu servidor Web, de forma que as mudanças acima surtam efeito !!!
 app details	setup	pt-br	Detlhes do aplicativo
@@ -130,6 +129,7 @@ click <a href="index.php">here</a> to return to setup.	setup	pt-br	Clique <a hre
 click here	setup	pt-br	Clique aqui
 click here to re-run the installation tests	setup	pt-br	Clique aqui para re-executar os testes de instalação
 comma separated ip-addresses or host-names, default access to setup from everywhere	setup	pt-br	Endereços de IP separados ou nomes de servidores separados por vírgulas. O padrão é acesso à Configuração por qualquer lugar.
+complete path to aspell program	setup	pt-br	Caminho completo para o programa aspell
 completed	setup	pt-br	COMPLETO
 config password	setup	pt-br	Senha do Configurador
 config username	setup	pt-br	Usuário do Configurador
@@ -260,7 +260,6 @@ filename	setup	pt-br	Nome do arquivo
 filesystem	setup	pt-br	Sistema de arquivos
 filesystem (default)	setup	pt-br	Sistema de arquivos (padrão)
 force selectbox	setup	pt-br	Forçar caixa de seleção
-found existing configuration file. loading settings from the file...	setup	pt-br	Foi encontrado um arquivo de configurações. Carregando os dados desse arquivo.
 give admin access to all installed apps	setup	pt-br	Dar acesso administrativo a todos os aplicativos instalados
 gives further options	setup	pt-br	Dá opções adicionais
 go back	setup	pt-br	Voltar
@@ -293,15 +292,12 @@ if the application has no defined tables, selecting upgrade should remedy the pr
 if using ads (active directory) authentication	setup	pt-br	Se estiver usando autenticação por ADS (Active Directory)
 if using ldap	setup	pt-br	Se estiver usando LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	pt-br	Se estiver usando LDAP, você deseja definir atributos de diretório base e  do interpretador de comandos?
-if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporäry files.	setup	pt-br	Se você tem acesso apenas à pasta raiz, escolha <b>Banco de Dados</b> como local para armazenar o conteúdo do arquivo E use o mesmo caminho para arquivos temporários.
 if you did not receive any errors, your applications have been	setup	pt-br	Se não foi exibido nenhum erro, suas aplicações foram
 if you did not receive any errors, your tables have been	setup	pt-br	Se não foi exibido nenhum erro, as tabelas foram
 if you running this the first time, don't forget to manualy %1 !!!	setup	pt-br	Se você está rodando isso pela primeira vez, não esqueça de  %1 manualmente!!!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	pt-br	Se você usa apenas idiomas do mesmo conjunto de caracteres (ex: western european) você não precisa definir um conjunto de caracteres!
 image type selection order	setup	pt-br	Seleção de ordem de tipos de imagens
 import has been completed!	setup	pt-br	A importação está completa!
-importing old settings into the new format....	setup	pt-br	Importar configurações antigas no novo formato
-include root	setup	pt-br	Incluir root
 include_path need to contain "." - the current directory	setup	pt-br	Inclua o caminho necessário para conter " " - o diretório atual
 install	setup	pt-br	Instalar
 install all	setup	pt-br	Instalar todos
@@ -358,13 +354,13 @@ mcrypt algorithm (default tripledes)	setup	pt-br	Algoritmo Mcrypt (padrão TRIPL
 mcrypt initialization vector	setup	pt-br	Vetor de iniciação do MCrypt
 mcrypt mode (default cbc)	setup	pt-br	Modo Mcrypt (padrão CBC)
 mcrypt settings (requires mcrypt php extension)	setup	pt-br	Configurações para Mcrypt (requer extensão mcrypt do PHP)
-mcrypt version	setup	pt-br	Versão do MCrypt
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	pt-br	O Valor de limite de memória está menor que %1. Alguns aplicativos do eGroupware necessitam mais que os 8M recomendados. É possível que ocorram problemas.
 migration between egroupware account repositories	setup	pt-br	Migração entre respositórios de contas do eGroupWare
 minimum account id (e.g. 500 or 100, etc.)	setup	pt-br	Id mínimo para contas (Exemplo: 500 ou 100, etc.)
 minute	setup	pt-br	minuto
 missing or uncomplete mailserver configuration	setup	pt-br	Configuração do servidor de e-mail está faltando
 modifications have been completed!	setup	pt-br	As modificações foram completadas
+modified	setup	pt-br	Modificado
 modify	setup	pt-br	Modificar
 month	setup	pt-br	mês
 multi-language support setup	setup	pt-br	Configuração de suporte a idiomas
@@ -416,8 +412,6 @@ pear (%1) is a php repository and is usually in a package called %2.	setup	pt-br
 pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	pt-br	Extensões PEAR são requeridas por muitos aplicativos eGroupWare, o próprio PEAR é requerimento básico para cada extensão!
 pear%1 is needed by: %2.	setup	pt-br	PEAR %1 é requerido por: %2.
 persistent connections	setup	pt-br	Conexões Persistentes
-php plus restore	setup	pt-br	PHP + restauração
-php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	pt-br	PHP + restauração tem uma performance melhor, já que o ambiente eGW é completamente guardado na sessão.
 please check for sql scripts within the application's directory	setup	pt-br	Por favor verifique os scripts SQL no diretório da aplicação
 please check read/write permissions on directories, or back up and use another option.	setup	pt-br	Porfavor verifique os direitos de escrita/leitura. ou faça uma cópia de segurança e use outra opção.
 please configure egroupware for your environment	setup	pt-br	Por favor configure o eGroupWare para o seu ambiente
@@ -462,7 +456,6 @@ return to setup	setup	pt-br	Retornar ao Configurador
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	pt-br	rodar uma atualização de base de dados (se necessário): domínio(todos),[usuário configurador(admin)],senha
 run installation tests	setup	pt-br	Executar testes de instalação
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	pt-br	A Modo de segurança está ligado. O que normalmente é uma coisa boa, isto torna sua instalação mais segura.
-sample configuration not found. using built in defaults	setup	pt-br	Configuração padrão não encontrada. usado os valores padrões internos.
 save	setup	pt-br	Salvar
 save this text as contents of your header.inc.php	setup	pt-br	Salve este texto como conteúdo do seu header.inc.php
 schedule	setup	pt-br	agendar
@@ -487,16 +480,13 @@ select which user(s) will have admin privileges	setup	pt-br	Selecione os usuári
 select your old version	setup	pt-br	Selecione a versão antiga
 selectbox	setup	pt-br	Caixa de seleção
 server root	setup	pt-br	Raiz do Servidor
-sessions type	setup	pt-br	Tipo de seção
 set	setup	pt-br	Configure
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	pt-br	Defina esse valor para "old"para versões < 2.4, ou para a versão exata do MCrypt em uso.
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	pt-br	Definir o conjunto de caracteres para UTF-8 (unicode) permite que dados de idiomas diferentes possam aparecer e coexistir no sistema.
 settings	setup	pt-br	Configurações
 setup	setup	pt-br	Configurador
 setup main menu	setup	pt-br	Menu principal de configuração
 setup the database	setup	pt-br	Configurar a base de dados
 setup/config admin login	setup	pt-br	Definir/Configurar a conexão do Administrador
-should be the same as server root unless you know what you are doing.	setup	pt-br	Deverá ser o mesmo que Raíz do Servidor, a menos que você saiba o que está fazendo.
 show 'powered by' logo on	setup	pt-br	Área para exibição 'powered by  eGroupWare'
 sieve: host[,port(2000)]	setup	pt-br	Sieve: servidor[,port(2000)]
 size	setup	pt-br	tamanho
@@ -571,7 +561,6 @@ translations upgraded	setup	pt-br	Traduções atualizadas
 true	setup	pt-br	Verdadeiro
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	pt-br	Tente configurar seu PHP para suportar um dos Banco de Dados mencionados acima, ou instale o eGroupWare manualmente
 two weeks	setup	pt-br	2 semanas
-unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	pt-br	Infelizmente alguns pacotes PHP/Apache têm problems com isso (Apache termina e você não pode logar novamente)
 uninstall	setup	pt-br	desinstalar
 uninstall all applications	setup	pt-br	Desinstalar todas aplicações
 uninstalled	setup	pt-br	desinstaladas
@@ -611,7 +600,6 @@ we could not determine the version of %1, please make sure it is at least %2	set
 we will automatically update your tables/records to %1	setup	pt-br	As tabelas/registros serão automaticamente atualizadas para %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	pt-br	Nós iremos executar neste momento uma série de testes que poderão levar alguns minutos. Clique noa link abaixo para prosseguir.
 welcome to the egroupware installation	setup	pt-br	Bem-vindo(a) à instalação do eGroupWare
-what type of sessions management do you want to use (php session management may perform better)?	setup	pt-br	Que tipo de gerenciamento de sessão você quer usar (sessões PHP podem ser melhores)?
 where should egroupware store file content	setup	pt-br	Onde o eGroupWare deve armazenar o conteúdo de arquivos
 which database type do you want to use with egroupware?	setup	pt-br	Qual tipo de base de dados você pretende usar com o eGroupWare?
 world readable	setup	pt-br	Leitura permitida para todos
@@ -629,7 +617,6 @@ you appear to be running a pre-beta version of egroupware.<br />these versions a
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	pt-br	Aparentemente você está rodando uma versão antiga do PHP <br /> é altamente recomendável que você faça a atualização para uma versão mais nova <br /> Versões antigas do PHP podem não rodar corretamente com o eGroupWare. <br /><br />Por favor atualize para, no mínimo, a versão %1
 you appear to be running version %1 of egroupware	setup	pt-br	Aparentemente você está rodando a versão %1 do eGroupWare
 you appear to have %1 support.	setup	pt-br	Aparentemente você tem suporte a %1
-you appear to have php session support. enabling php sessions.	setup	pt-br	Aparentemente você tem suporte à sessões PHP. Habilitando sessões PHP.
 you appear to have xml support enabled	setup	pt-br	Aparentemente você tem suporte a XML
 you are ready for this stage, but this stage is not yet written.<br />	setup	pt-br	Você está pronto para este passo, mas este estágio não está escrito ainda.<br />
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	pt-br	Você está usando PHP versão %1. eGroupWare requer %2 ou superior, %3 é recomendada.
@@ -644,7 +631,6 @@ you have not created your header.inc.php yet!<br /> you can create it now.	setup
 you have successfully logged out	setup	pt-br	Você foi desconectado com sucesso.
 you must enter a username for the admin	setup	pt-br	Você deve especificar um nome de usuário para o Administrador
 you need to add at least one egroupware domain / database instance.	setup	pt-br	Você precisa adicionar ao menos um domínio / base de dados ao eGroupWare.
-you need to add some domains to your header.inc.php.	setup	pt-br	Você precisa adicionar um domínio no arquivo header.inc.php
 you need to configure egroupware:	setup	pt-br	Você precisa configurar o eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	pt-br	Você precisa corrigir os erros acima antes que o arquivo header.inc.php possa ser gravado!
 you need to select your current charset!	setup	pt-br	Você  precisa selecionar seu conjunto de carácteres atual
@@ -653,7 +639,6 @@ you should either install the sources or uninstall it, to get rid of the tables	
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	pt-br	Você pode tentar desinstalar e então reinstalar ou tentar executar reparos manuais.
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	pt-br	Você não poderá logar no eGroupWare usando sessões PHP: "sessão não poderá ser verificada !!"
 you're using an old configuration file format...	setup	pt-br	Você está usando um formato de arquivo de configuração antigo
-you're using an old header.inc.php version...	setup	pt-br	Você está usando uma versão antiga do arquivo header.inc.php
 your applications are current	setup	pt-br	Suas aplicações estão atualizadas
 your backup directory '%1' %2	setup	pt-br	Seu diretório de backup '%1' %2
 your database does not exist	setup	pt-br	Sua base de dados não existe
@@ -671,4 +656,3 @@ your tables will be dropped and you will lose data	setup	pt-br	Suas tabelas ser�
 your temporary directory '%1' %2	setup	pt-br	Seu diretório temporário '%1' %2
 {db | php(default) | php-restore}	setup	pt-br	{db | php(default) | php-restore}
 {off(default) | on}	setup	pt-br	{off(default | on}
-complete path to aspell program	setup	pt-br	Caminho completo para o programa aspell

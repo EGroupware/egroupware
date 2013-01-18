@@ -25,6 +25,7 @@ account-id's have to be integers!	admin	ru	Идентификаторы учет
 acl manager	admin	ru	Менеджер ACL
 acl rights	common	ru	Права ACL
 action	admin	ru	Действие
+actions	admin	ru	Действия
 activate wysiwyg-editor	admin	ru	включить визуальный (WYSIWYG) редактор
 add a category	admin	ru	Добавить категорию
 add a group	admin	ru	Добавить группу
@@ -51,6 +52,8 @@ advanced options	admin	ru	расширенные параметры
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ru	После скольких неудачных попыток входа в систему блокировать учетную запись (по умолчанию 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	ru	После скольких неудачных попыток входа в систему блокировать IP-адрес (по умолчанию 3)?
 aliases	admin	ru	Псевдонимы
+all applications	admin	ru	все приложения
+all categories	admin	ru	Все категории
 all records and account information will be lost!	admin	ru	Все записи и информация учетные записи будут потеряны!
 all users	admin	ru	Все пользователи
 allow anonymous access to this app	admin	ru	Разрешить анонимный доступ к данному приложению
@@ -69,6 +72,7 @@ applications	admin	ru	Приложения
 applications list	admin	ru	Список приложений
 applications run rights updated.	admin	ru	Права на запуск приложений изменены!
 applies the changes	admin	ru	применить изменения
+apply the changes	admin	ru	Применить изменения
 are you sure you want to delete the application %1 ?	admin	ru	Вы уверены, что хотите удалить приложение %1?
 are you sure you want to delete this account ?	admin	ru	Вы уверены, что хотите удалить эту учетную запись?
 are you sure you want to delete this application ?	admin	ru	Вы уверены, что хотите удалить это приложение?
@@ -96,7 +100,9 @@ can change password	admin	ru	Возможно изменять пароль
 cancel testjob!	admin	ru	Прервать Тестовое Задание!
 categories list	admin	ru	Список категорий
 category %1 has been saved !	admin	ru	Категория %1 сохранена !
+category deleted.	admin	ru	Категория удалена.
 category list	admin	ru	Список категорий
+category saved.	admin	ru	Категория сохранена.
 change account_id	admin	ru	Изменить идентификатор учетной записи
 change acl rights	admin	ru	изменить права ACL
 change config settings	admin	ru	Изменить настройки конфигурации
@@ -111,6 +117,7 @@ command scheduled to run at %1	admin	ru	Команда запланирован�
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	ru	Домен куки (по-умолчанию пуст и позволяет использовать полное имя домена, для менеджера сайта (SiteMgr) например ".domain.ru" позволяет использовать один файл куки как для egw.domain.ru  так и www.domain.ru)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	ru	Путь куки (позволяет одновременно работать нескольким сессиям с различными папками, имеются проблемы с менеджером сайта (SiteMgr!)
 could not remote execute the command	admin	ru	Не могу удаленно запустить команду
+country	admin	ru	Страна
 country selection	admin	ru	Выбор страны
 create group	admin	ru	Создать группу
 created	admin	ru	Создано
@@ -139,6 +146,7 @@ delete the group	admin	ru	удалить группу
 delete this category	admin	ru	удалить эту категорию
 delete this group	admin	ru	удалить эту группу
 delete this user	admin	ru	удалить этого пользователя
+deleted	admin	ru	удалено
 deletes this field	admin	ru	Удалить это поле
 deliver extern	admin	ru	доставка извне
 deny access to access log	admin	ru	Закрыть доступ к журналу доступа
@@ -158,6 +166,7 @@ deny access to user accounts	admin	ru	Закрыть доступ к учетн�
 deny all users access to grant other users access to their entries ?	admin	ru	Закрыть всем пользователям доступ к возможности предоставлять доступ другим пользователям к их записям ?
 description can not exceed 255 characters in length !	admin	ru	Описание не может превышать 255 знаков в длину !
 determines the order the fields are displayed	admin	ru	оперделяет порядок,в котором отображаются поля
+disable	admin	ru	Отключено
 disable "auto completion" of the login form	admin	ru	Отключить автозаполнение формы входа
 disable wysiwyg-editor	admin	ru	отключить визуальный (WYSIWYG) редактор
 disabled (not recomended)	admin	ru	отключено (не рекомендуется)
@@ -167,6 +176,7 @@ do you also want to delete all global subcategories ?	admin	ru	Вы также �
 do you want to delete all global subcategories ?	admin	ru	Вы хотите удалить все общие подкатегории ?
 do you want to move all global subcategories one level down ?	admin	ru	Вы желаете переместить все подкатегории на уровень ниже ?
 document root (default)	admin	ru	Корень документов (по умолчанию)
+down	admin	ru	вниз
 each value is a line like <id>[=<label>]	admin	ru	каждое значение - это строка типа <идентификатор>[=<метка>]
 each value is a line like id[=label]	admin	ru	каждое значение - это строка типа <идентификатор>[=<метка>]
 edit account	admin	ru	Редактировать учетную запись
@@ -189,7 +199,7 @@ egroupware directory	admin	ru	папка eGroupWare
 either install id and config password needed or the remote hash!	admin	ru	Нужен либо идентификатор установки и пароль конфигурирования, либо удаленный хэш!
 email account active	admin	ru	учетная запись электронной почты активна
 email address	admin	ru	адрес электронной почты
-emailadmin: user assigned profile	admin	ru	Администрирование почты: Профиль назначенный Пользователю
+enable	admin	ru	включить
 enable debug-messages	admin	ru	Разрешить отладочные сообщения
 enable the soap service	admin	ru	Разрешить сервис soap
 enable the spellcheck in the ritch text editor ?	admin	ru	Включить проверку орфографии в редакторе?
@@ -236,13 +246,13 @@ false	admin	ru	неверно
 field '%1' already exists !!!	admin	ru	Поле '%1' уже существует !!!
 file space	admin	ru	Размер файла
 file space must be an integer	admin	ru	Размер файла должен быть целым числом
-find and register all application hooks	admin	ru	Найти и зарегистрировать ловушки всех приложений
 for the times above	admin	ru	на время, указанное выше
 for the times below (empty values count as '*', all empty = every minute)	admin	ru	на время, казанное ниже (пустые значения считаются как '*', все пустые = каждую минуту)
 force selectbox	admin	ru	Принудительно список выбора
 forward also to	admin	ru	перенаправить также на
 forward emails to	admin	ru	перенаправить почту на
 forward only	admin	ru	только перенаправить
+full name	admin	ru	Полное Имя
 global categories	common	ru	Общие Категории
 grant	admin	ru	Предоставить
 group ?	admin	ru	группа?
@@ -272,6 +282,7 @@ install crontab	admin	ru	Установить crontab
 installed applications	common	ru	Установленные приложения
 installed crontab	admin	ru	Crontab установлен
 interface	admin	ru	Интерфейс
+invalid argument '%1' !!!	admin	ru	Неправильный аргумент '%1' !!!
 invalid formated date "%1"!	admin	ru	Неверный формат даты "%1"!
 invalid remote id or name "%1"!	admin	ru	Неверный удаленный идентификатор или название "%1"!
 invalid value "%1" use yes or no!	admin	ru	Неверное значение "%1" используйте да или нет (yes или no)!
@@ -295,12 +306,13 @@ ldap rootdn	admin	ru	LDAP rootdn
 leave empty for no quota	admin	ru	Оставить пустым, если нет квот
 leave the category untouched and return back to the list	admin	ru	Оставить категорию нетронутой и вернуться назад к списку
 leave the group untouched and return back to the list	admin	ru	Оставить группу нетронутой и вернуться назад к списку
+leave without saveing the entry	admin	ru	выйти без сохранения записи
 leaves without saveing	admin	ru	выйти без сохранения
 length<br>rows	admin	ru	Длина<br>Строк
 list config settings	admin	ru	Список установок конфигурации
 list current sessions	admin	ru	Пролистать текущие сеансы
 list of current users	admin	ru	список текущих пользователей
-login history	common	ru	История Подключений
+login history	admin	ru	История Подключений
 login message	admin	ru	Сообщение сеанса
 login screen	admin	ru	Экран сеанса
 login shell	admin	ru	Оболочка входа
@@ -309,10 +321,12 @@ loginid	admin	ru	LoginID
 mail settings	admin	ru	Установки почты
 main email-address	admin	ru	Основной адрес электронной почты
 main screen message	admin	ru	Сообщение главного окна
+manage mapping	admin	ru	Управление отобажением
 manager	admin	ru	Менеджер
 max length of the input [, length of the inputfield (optional)]	admin	ru	макс. длина строки ввода [, длина поля ввода (необязательно)]
 maximum account id (e.g. 65535 or 1000000)	admin	ru	Максимальный идентификатор учетной записи (напр. 65535 или 1000000)
 maximum entries in click path history	admin	ru	Максимальное количество записей в истории пути кликов
+members	admin	ru	Участники
 message has been updated	admin	ru	сообщение обновлено
 method	admin	ru	Метод
 minimum account id (e.g. 500 or 100, etc.)	admin	ru	Минимальный идентификатор учетной записи (напр. 500 или 100)
@@ -337,6 +351,8 @@ no permission to add users	admin	ru	нет прав добавлять поль�
 no permission to create groups	admin	ru	нет прав создавать группы
 note: ssl available only if php is compiled with curl support	admin	ru	Примечание: SSL доступен только если PHP собран с поддержкой curl
 number of row for a multiline inputfield or line of a multi-select-box	admin	ru	количество строк с многострочном поле вводща или в списке с множественным выбором
+one month	admin	ru	месяц
+one week	admin	ru	неделя
 order	admin	ru	Порядок
 outbound	admin	ru	исходящий
 own install id:	admin	ru	Собственный идентификатор установки:
@@ -379,6 +395,7 @@ run asynchronous services	admin	ru	Запустить Асинхронные с�
 save the category	admin	ru	записать категорию
 save the category and return back to the list	admin	ru	записать категорию и вернуться назад к списку
 saves the changes made and leaves	admin	ru	записать сделанные изменения и выйти
+saves this entry	admin	ru	Сохраняет эту запись
 search accounts	admin	ru	Поиск учетных записей
 search categories	admin	ru	Поиск категорий
 search groups	admin	ru	Поиск групп
@@ -408,7 +425,6 @@ show error log	admin	ru	Показать журнал ошибок
 show phpinfo()	admin	ru	Показать информацию php
 show session ip address	admin	ru	Показать адрес IP сеанса
 site	admin	ru	Сайт
-site configuration	admin	ru	Конфигурация сайта
 soap	admin	ru	SOAP
 sorry, that group name has already been taken.	admin	ru	Извините. Такое имя группы уже существует.
 sorry, the above users are still a member of the group %1	admin	ru	Извините, но указанные выше пользователи являются членами группы %1
@@ -419,6 +435,7 @@ standard	admin	ru	стандартный
 standard imap server	admin	ru	стандартный сервер IMAP
 standard pop3 server	admin	ru	стандартный сервер POP3
 standard smtp-server	admin	ru	стандартный сервер SMTP
+start	admin	ru	Начало
 start testjob!	admin	ru	Начать Тестовое Задание!
 submit changes	admin	ru	Подтвердить Изменения
 submit the search string	admin	ru	Подтвердить строку поиска
@@ -452,15 +469,18 @@ times	admin	ru	Раз
 top	admin	ru	верх
 total of %1 id's changed.	admin	ru	Всего изменено %1 идентификаторов.
 total records	admin	ru	Всего записей
+translation	admin	ru	Перевод
 true	admin	ru	верно
 trust level	admin	ru	Уровень Доверия
 trust relationship	admin	ru	Доверительные Отношения
+two weeks	admin	ru	две недели
 type '%1' already exists !!!	admin	ru	тип '%1' уже существует
 type of customfield	admin	ru	Тип пользовательского поля
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	ru	Под окном вы должны установить асинхронные сервисы %1вручную%2 или использовать режим отката. Откат означает, что задания толдько проверяются после каждого просмотра страницы!!!
 unknown account: %1 !!!	admin	ru	Неизвестная учетная запись: %1 !!!
 unknown command %1!	admin	ru	Неизвестная команда %1!
 unknown option %1	admin	ru	Неизвестный параметр %1
+up	admin	ru	вверх
 updated	admin	ru	изменено
 use cookies to pass sessionid	admin	ru	Использовать cookies для передачи идентификатора сеанса
 use pure html compliant code (not fully working yet)	admin	ru	Использовать код, отвечающий чистому HTML (пока не полностью работоспособно)

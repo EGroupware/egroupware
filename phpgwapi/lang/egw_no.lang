@@ -9,6 +9,10 @@
 - use the %1, %2 buttons to select month	jscalendar	no	- Bruk %1, %2 knappene for å velge måned
 - use the %1, %2 buttons to select year	jscalendar	no	- Bruk %1, %2 knappene for å velge år
 00 (disable)	admin	no	00 (frakoblet)
+1 day	common	no	1 dag
+1 hour	common	no	1 time
+1 month	common	no	1 måned
+1 week	common	no	1 uke
 13 (ntp)	admin	no	13 (ntp)
 3 number of chars for day-shortcut	jscalendar	no	3 karakterer for dag
 3 number of chars for month-shortcut	jscalendar	no	3 karakterer for måned
@@ -24,6 +28,7 @@ account has been updated	common	no	Brukerkonto har blitt oppdatert
 account is expired	common	no	Brukerkonto har utløpt på dato
 acl	common	no	Tlgangskontroll
 action	common	no	Funksjon
+actions	common	no	Funksjoner
 active	common	no	Aktiv
 add	common	no	Legg til
 add %1 category for	common	no	Legg til %1 kategori for
@@ -37,14 +42,17 @@ albania	common	no	ALBANIA
 algeria	common	no	ALGERIE
 all	common	no	Alle
 all fields	common	no	alle felt
+all languages	common	no	alle språk
 alphabet	common	no	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,x,z
 alternate style-sheet:	common	no	Alternativt Style Sheet
 american samoa	common	no	SAMOA
+and	common	no	Og
 andorra	common	no	ANDORRA
 angola	common	no	ANGOLA
 anguilla	common	no	ANGUILLA
 antarctica	common	no	ANTARKTIS
 antigua and barbuda	common	no	ANTIGUA OG BARBUDA
+application	common	no	Applikasjon
 apply	common	no	Utfør
 april	common	no	April
 are you sure you want to delete these entries ?	common	no	Er du sikkert på at du vil slette disse innslagene?
@@ -94,6 +102,7 @@ cambodia	common	no	KAMBODSJA
 cameroon	common	no	KAMERUN
 canada	common	no	CANADA
 cancel	common	no	Avbryt
+cannot replace %1 because it is a directory	common	no	Kan ikke erstatte %1 fordi det er en mappe
 cape verde	common	no	KAPP VERDE
 caption	common	no	Overskrift
 categories	common	no	Kategorier
@@ -146,12 +155,15 @@ datetime port.<br>if using port 13, please set firewall rules appropriately befo
 december	common	no	Desember
 default category	common	no	Standard kategori
 delete	common	no	Slett
+delete category	common	no	Slett kategori
 delete row	common	no	Fjern rad
+delete this entry	common	no	slett dette forekomsten
 denmark	common	no	DANMARK
 description	common	no	Beskrivelse
 detail	common	no	Detalj
 details	common	no	Detaljer
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	no	Koble ut bugscriptfix for Internet Explorer 5.5 og høyere for å vise gjennomsiktige PNG-bilder?
+directory	common	no	Mappe
 disable internet explorer png-image-bugfix	common	no	Koble ut Internet Explorer png-bilde bugfix
 disable slider effects	common	no	Slå av skyve-effektene
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	no	Slå av de animerte skyver-effektene under visning eller skjuling av menyene på siden? Opera og Konqueror brukere bør sannsynligvis velge dette.
@@ -168,6 +180,7 @@ domestic	common	no	Innenlands
 dominica	common	no	DOMINICA
 dominican republic	common	no	DOMINIKANSKE REPUBLIKK
 done	common	no	Ferdig
+download	common	no	Last ned
 drag to move	jscalendar	no	Dra for å flytte
 e-mail	common	no	E-Post
 east timor	common	no	ØST TIMOR
@@ -176,7 +189,7 @@ edit	common	no	Endre
 edit %1 category for	common	no	Endre %1 kategori for
 edit categories	common	no	Endre kategorier
 edit category	common	no	Endre kategori
-egroupware api version %1	common	no	eGroupWare API version %1
+egroupware	common	no	egroupware
 egroupware: login blocked for user '%1', ip %2	common	no	eGroupWare: pålogging blokkert for bruker '%1', IP %2
 egypt	common	no	EGYPT
 el salvador	common	no	EL SALVADOR
@@ -212,6 +225,7 @@ first page	common	no	Første side
 firstname	common	no	Fornavn
 fixme!	common	no	FIXMEG!
 force selectbox	common	no	Tvungen utvalgsboks
+forever	common	no	For alltid
 france	common	no	FRANKRIKE
 french guiana	common	no	FRANSKE GUYANA
 french polynesia	common	no	FRANSK POLYNESIA
@@ -252,6 +266,7 @@ guyana	common	no	GUYANA
 haiti	common	no	HAITI
 heard island and mcdonald islands	common	no	HEARD OG MCDONALD ØYENE
 height	common	no	Høyde
+help	common	no	Hjelp
 high	common	no	Høy
 highest	common	no	Høyest
 holy see (vatican city state)	common	no	VATIKANET
@@ -271,6 +286,7 @@ insert column before	common	no	Opprett kolonne før
 insert row after	common	no	Opprett rad etter
 insert row before	common	no	Opprett rad før
 international	common	no	Internasjonal
+invalid filename	common	no	Ugyldig filnavn
 invalid ip address	common	no	Ugyldig IP adresse
 invalid password	common	no	Ugyldig passord
 iran, islamic republic of	common	no	IRAN
@@ -302,6 +318,7 @@ kuwait	common	no	QUWAIT
 kyrgyzstan	common	no	KYRGYZSTAN
 language	common	no	Språk
 lao peoples democratic republic	common	no	LAO
+last modified	common	no	Sist endret
 last name	common	no	Etternavn
 last name of the user, eg. "%1"	common	no	Brukerens etternavn, f.eks: "%1"
 last page	common	no	siste side
@@ -322,6 +339,8 @@ local	common	no	Lokal
 login	common	no	Login
 loginid	common	no	LoginID
 logout	common	no	Logg ut
+lost login id	common	no	Siste loginident
+lost password	common	no	Glemt passordet
 low	common	no	Lav
 lowest	common	no	Lavest
 luxembourg	common	no	LUXEMBURG
@@ -350,6 +369,7 @@ menu	common	no	Meny
 message	common	no	Melding
 mexico	common	no	MEXICO
 micronesia, federated states of	common	no	MIKRONESIA
+minute	common	no	Minutt
 moldova, republic of	common	no	MOLDOVA
 monaco	common	no	MONACO
 monday	common	no	Mandag
@@ -388,10 +408,14 @@ norfolk island	common	no	NORFOLK-ØYA
 normal	common	no	Normal
 northern mariana islands	common	no	NORDRE MARIANA ØYENE
 norway	common	no	NORGE
+not	common	no	ikke
+not a user yet? register now	common	no	Ikke registrert bruker ennå?  Registrer nå
 not assigned	common	no	ikke tildelt
 note	common	no	Notat
 notes	common	no	Notater
+notifications	common	no	Bekjentgjørelser
 notify window	common	no	Meldingsvindu
+notify your administrator to correct this situation	common	no	Gjør din EDB-ansvarlige beskjed om å korrigere denne situasjonen
 november	common	no	November
 october	common	no	Oktober
 ok	common	no	OK
@@ -401,8 +425,10 @@ on *nix systems please type: %1	common	no	På *nix systemer tast: %1
 on mouse over	common	no	On Mouse Over
 only private	common	no	kun private
 only yours	common	no	kun dine
+open	common	no	åpen
 open notify window	common	no	Åpne varslingsvindu
 open popup window	common	no	Åpne pop-up vindu
+or	common	no	eller
 ordered list	common	no	Nummerliste
 original	common	no	Orginal
 other	common	no	Annet
@@ -439,10 +465,10 @@ poland	common	no	POLEN
 portugal	common	no	PORTUGAL
 postal	common	no	Post
 preferences	common	no	Preferanser
-preferences for the idots template set	common	no	Innstillinger for idots malen
 prev. month (hold for menu)	jscalendar	no	Forrige måned (hold for meny)
 prev. year (hold for menu)	jscalendar	no	Forrige år (hold for meny)
 previous page	common	no	Forrige side
+primary group	common	no	primærgruppe
 primary style-sheet:	common	no	Primær style-sheet:
 print	common	no	Skriv ut
 priority	common	no	Prioritet
@@ -453,11 +479,14 @@ puerto rico	common	no	PUERTO RICO
 qatar	common	no	QATAR
 read	common	no	Les
 read this list of methods.	common	no	Les metode-listen.
+reading	common	no	lesing
 reject	common	no	Avvis
+remember me	common	no	Husk meg
 remove selected accounts	common	no	fjern valgte konti
 rename	common	no	Endre navn
 replace	common	no	Erstatt
 replace with	common	no	Erstatt med
+restore failed	common	no	Återställning misslyckades
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	no	Returner en komplett liste av brukerkontoer på systemet. Advarsel: Denne listen kan bli svært lang
 returns an array of todo items	common	no	Viser en tabell med gjøremål
 returns struct of users application access	common	no	Viser en struktur over brukeres tilgang til applikasjonene
@@ -479,8 +508,8 @@ saudi arabia	common	no	SAUDI-ARABIA
 save	common	no	Lagre
 search	common	no	Søk
 search %1 '%2'	common	no	Søk %1 '%2'
+search accounts	common	no	Søk kontoer
 search or select accounts	common	no	Søk eller velg konti
-search or select multiple accounts	common	no	SSøk eller velg flere konti
 section	common	no	Avsnitt
 select	common	no	Velg
 select all %1 %2 for %3	common	no	Velg alle %1 %2 for %3
@@ -512,6 +541,8 @@ showing %1	common	no	viser %1
 showing %1 - %2 of %3	common	no	viser %1 - %2 of %3
 sierra leone	common	no	SIERRA LEONE
 singapore	common	no	SINGAPORE
+site configuration	common	no	Konfigurasjon av nettsted
+size	common	no	Størrelse
 slovakia	common	no	SLOVAKIA
 slovenia	common	no	SLOVENIA
 solomon islands	common	no	SOLOMON ØYENE
@@ -557,7 +588,6 @@ time zone offset	common	no	Tidsforskjell
 title	common	no	Tittel
 to	common	no	Til
 to correct this error for the future you will need to properly set the	common	no	For å unngå denne feilen i framtiden må du sette
-to go back to the msg list, click <a href= %1?sessionid=36fd5dd75a4d144ab9a930c30210bdb5 >here</a>	common	no	For å gå tilbake til meldingslisten, klikk <a hre="%1?sessionid=36fd5dd75a4d144ab9a930c30210bdb5">her</a>
 today	common	no	Idag
 todays date, eg. "%1"	common	no	Dagens dato, f.eks: "%1"
 toggle first day of week	jscalendar	no	Velg føste ukedag
@@ -574,6 +604,7 @@ turkey	common	no	TYRKIA
 turkmenistan	common	no	TURKMENISTAN
 turks and caicos islands	common	no	TURKS OG CAICOS ØYENE
 tuvalu	common	no	TUVALU
+type	common	no	Type
 uganda	common	no	UGANDA
 ukraine	common	no	UKRAINA
 underline	common	no	Understreket
@@ -597,6 +628,7 @@ username	common	no	Brukernavn
 users	common	no	brukere
 users choice	common	no	Brukervalg
 uzbekistan	common	no	USBEKISTAN
+value	common	no	Verdi
 vanuatu	common	no	VANUATU
 venezuela	common	no	VENEZUELA
 version	common	no	Versjon
@@ -608,10 +640,12 @@ wallis and futuna	common	no	WALLIS OG FUTUNA ØYENE
 wednesday	common	no	Onsdag
 welcome	common	no	Velkommen
 western sahara	common	no	VEST-SAHARA
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	no	Når du svarer ja vil hjem- og avloggingsknappene prsenteres som valg i topp av hovedbildet.
 which groups	common	no	Hvilke grupper
 width	common	no	Bredde
 wk	jscalendar	no	wk
 work email	common	no	arbeids-epost
+writing	common	no	skrivning
 written by:	common	no	Skrevet av:
 year	common	no	År
 yemen	common	no	JEMEN
@@ -632,7 +666,5 @@ your search returned %1 matchs	common	no	ditt søk gav %1 treff
 your search returned 1 match	common	no	ditt søk gav 1 treff
 your session could not be verified.	login	no	Din sesjon kunne ikke bekreftes
 your settings have been updated	common	no	Dine innstillinger har blitt oppdatert
-yugoslavia	common	no	JUGOSLAVIA
 zambia	common	no	ZAMBIA
 zimbabwe	common	no	ZIMBABWE
-site configuration	common	no	Konfigurasjon av nettsted

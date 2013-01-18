@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	eu	%1 helbide elektronikoak txertatuak
 %1 is not executable by the webserver !!!	common	eu	%1-ek ez du baimenik web zerbitzaria exekutatzeko!!!
-%1 manual	common	eu	%1 eskuzkoa
-%1 start	common	eu	%1 hasi
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	eu	%1eGroupWare%2 web-ean oinarritutako talde lanerako tresna erabiltzaile anitza da
 (shift-)click or drag to change value	jscalendar	eu	Sakatu maiuskula edota arrastatu balioa aldatzeko
 - click on any of the time parts to increase it	jscalendar	eu	- Egin klik edozein zatitan handitzeko
@@ -25,8 +23,10 @@ account has been created	common	eu	Kontu bat sortu da
 account has been deleted	common	eu	Kontua ezabatua izan da
 account has been updated	common	eu	Kontua eguneratua izan da
 account is expired	common	eu	Kontua iraungi egin da
+accounts	common	eu	Kontuak
 acl	common	eu	ACL
 action	common	eu	Ekin
+actions	common	eu	Ekintzak
 active	common	eu	Aktibatua
 add	common	eu	Gehitu
 add %1 category for	common	eu	%1 kategoria gehitu zertarako
@@ -44,6 +44,7 @@ all fields	common	eu	eremu guztiak
 alphabet	common	eu	a,b,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	eu	Txadakatu estilo-orria
 american samoa	common	eu	AMERICAN SAMOA
+and	common	eu	Eta
 andorra	common	eu	ANDORRA
 angola	common	eu	ANGOLA
 anguilla	common	eu	ANGUILLA
@@ -84,7 +85,6 @@ bermuda	common	eu	BERMUDA
 bhutan	common	eu	BHUTAN
 blocked, too many attempts	common	eu	Blokeatuta saiakera gehiegi
 bold	common	eu	Lodia
-bold.gif	common	eu	lodia.gif
 bolivia	common	eu	BOLIBIA
 border	common	eu	Ertza
 bosnia and herzegovina	common	eu	BOSNIA ETA HERZEGOVINA
@@ -163,12 +163,15 @@ date selection:	jscalendar	eu	Aukeratu data:
 december	common	eu	Abendua
 default category	common	eu	Lehenetsitako kategoria
 delete	common	eu	Ezabatu
+delete category	common	eu	Kategoria ezabatu
 delete row	common	eu	Errenkada ezabatu
+delete this entry	common	eu	Sarrera hau ezabatu
 denmark	common	eu	Danimarka
 description	common	eu	Deskribapena
 detail	common	eu	Zehaztasuna
 details	common	eu	Zehaztasunak
 direction left to right	common	eu	Helbidea ezkerretik eskubira
+directory	common	eu	Direktorioa
 disable slider effects	common	eu	Efektu graduatzaileak desaktibatu
 disabled	common	eu	Desaktibatu
 display %s first	jscalendar	eu	Erakutsi % lehenengo
@@ -182,6 +185,7 @@ domestic	common	eu	Lokal
 dominica	common	eu	DOMINICA
 dominican republic	common	eu	ERREPUBLICA DOMINIKARRA
 done	common	eu	Egina
+download	common	eu	Deskargatu
 drag to move	jscalendar	eu	Arrastatu mugitzeko
 e-mail	common	eu	Posta elektronikoa
 east timor	common	eu	EAST TIMOR
@@ -190,7 +194,6 @@ edit	common	eu	Editatu
 edit %1 category for	common	eu	Editatu %1 kategoria
 edit categories	common	eu	Editatu kategoriak
 edit category	common	eu	Editatu kategoria
-egroupware api version %1	common	eu	eGroupware API bertsioa %1
 egypt	common	eu	EGIPTO
 el salvador	common	eu	EL SALVADOR
 email	common	eu	Posta elektronikoa
@@ -272,6 +275,7 @@ home	common	eu	Hasiera
 home email	common	eu	Posta elektroniko pribatua
 honduras	common	eu	HONDURAS
 hong kong	common	eu	HONG KONG
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	eu	Zenbait ikono ikusi nahi dituzu orrialdearen goialdeko nabigazio barran. Ikono gehigarriak nabigazio barraren eskuin aldeko gotibeherako menu batean daude.
 hungary	common	eu	HUNGARIA
 iceland	common	eu	ISLANDIA
 image url	common	eu	URL irudia
@@ -311,6 +315,7 @@ kuwait	common	eu	KUWAIT
 kyrgyzstan	common	eu	KYRGYZSTAN
 language	common	eu	Hizkuntza
 lao peoples democratic republic	common	eu	LAO PEOPLES DEMOCRATIC REPUBLIC
+last modified	common	eu	azken aldaketa
 last name	common	eu	Abizena
 last page	common	eu	Azken orria
 lastname	common	eu	Abizena
@@ -327,6 +332,7 @@ list	common	eu	Zerrenda
 list members	common	eu	Zerrendako partaideak
 lithuania	common	eu	LITUANIA
 local	common	eu	Lokal
+locations	common	eu	kokalekuak
 login	common	eu	Sartu
 loginid	common	eu	Erabiltzaile izena
 logout	common	eu	Irten
@@ -357,6 +363,7 @@ menu	common	eu	Menua
 message	common	eu	Mezua
 mexico	common	eu	MEXIKO
 micronesia, federated states of	common	eu	MICRONESIA FEDERATED STATES OF
+minute	common	eu	Minutua
 moldova, republic of	common	eu	MOLDOVAKO ERREPUBLIKA
 monaco	common	eu	MONACO
 monday	common	eu	Astelehena
@@ -395,6 +402,7 @@ norfolk island	common	eu	NORFOLK IRLAK
 normal	common	eu	Normala
 northern mariana islands	common	eu	NORTHERN MARIANA ISLANDS
 norway	common	eu	NORWAY
+not	common	eu	ez
 not assigned	common	eu	Esleitu gabe
 note	common	eu	Oharra
 notes	common	eu	Oharrak
@@ -408,7 +416,9 @@ oman	common	eu	OMAN
 on mouse over	common	eu	Xagua gainetik mugitzerakoan
 only private	common	eu	pribatua soilik
 only yours	common	eu	bakarrik zureak
+open	common	eu	ireki
 open notify window	common	eu	Abisu leihoa zabaldu
+or	common	eu	edo
 ordered list	common	eu	Ordenatutako zerrenda
 original	common	eu	Jatorrizkoa
 other	common	eu	Besteak
@@ -434,6 +444,7 @@ phone number	common	eu	Telefono zenbakia
 phpgwapi	common	eu	eGroupWare API
 pitcairn	common	eu	PITCAIRN
 please enter a name	common	eu	Mesedez izen bat sartu
+please run setup to become current	common	eu	Mesedez setup exekutatu eguneratzeko
 please select	common	eu	Mesedez aukeratu
 please wait...	common	eu	Mesedez itxaron
 poland	common	eu	POLONIA
@@ -443,6 +454,7 @@ preferences	common	eu	Hobespenak
 prev. month (hold for menu)	jscalendar	eu	Aurreko hilabetea (menuan mantendu)
 prev. year (hold for menu)	jscalendar	eu	Aurreko urtea (menuan mantendu)
 previous page	common	eu	Aurreko orria
+primary group	common	eu	Talde nagusia
 primary style-sheet:	common	eu	Lehenengo estilo orria
 print	common	eu	Inprimatu
 priority	common	eu	Lehentasuna
@@ -453,6 +465,7 @@ puerto rico	common	eu	PUERTO RICO
 qatar	common	eu	QATAR
 read	common	eu	Irakurri
 read this list of methods.	common	eu	Metodo zerrenda hau irakurri
+reading	common	eu	irakurtzen
 reject	common	eu	Ukatu
 remove selected accounts	common	eu	Aukeratutako kontuak kendu
 rename	common	eu	Berizendatu
@@ -476,6 +489,7 @@ saudi arabia	common	eu	SAUDI ARABIA
 save	common	eu	Gorde
 search	common	eu	Bilatu
 search %1 '%2'	common	eu	Bilatu %1 '%2'
+search accounts	common	eu	Kontuak bilatu
 search or select accounts	common	eu	Bilatu aukeratutako kontuetan
 section	common	eu	Sekzioa
 select	common	eu	Aukeratu
@@ -507,6 +521,8 @@ showing %1	common	eu	%1 erakutsiz
 showing %1 - %2 of %3	common	eu	%1 %2 %3tik erakutsiz
 sierra leone	common	eu	SIERRA LEONA
 singapore	common	eu	SINGAPORE
+site configuration	common	eu	Lekuaren konfigurazioa
+size	common	eu	Tamainua
 slovakia	common	eu	SLOVAKIA
 slovenia	common	eu	SLOVENIA
 solomon islands	common	eu	SOLOMON ISLANDS
@@ -543,6 +559,7 @@ time selection:	jscalendar	eu	Ordua aukeratu:
 time zone	common	eu	Ordu-zona
 time zone offset	common	eu	Ordu-zonako diferentzia
 title	common	eu	Izenburua
+to	common	eu	Nori
 today	common	eu	Gaur
 toggle first day of week	jscalendar	eu	Asteko lehen eguna aldatu
 togo	common	eu	TOGO
@@ -556,6 +573,7 @@ tunisia	common	eu	TUNISIA
 turkey	common	eu	TURKIA
 turkmenistan	common	eu	TURKMENISTAN
 tuvalu	common	eu	TUVALU
+type	common	eu	mota
 uganda	common	eu	UGANDA
 ukraine	common	eu	UKRANIA
 underline	common	eu	Azpimarratu
@@ -563,6 +581,7 @@ united kingdom	common	eu	ERRESUMA BATUA
 united states	common	eu	ESTATU BATUAK
 unknown	common	eu	Ezezaguna
 update	common	eu	Eguneratu
+upload	common	eu	Kargatu
 url	common	eu	URL
 uruguay	common	eu	URUGUAY
 use button to search for	common	eu	erabili botoia bilaketarako
@@ -585,10 +604,12 @@ wallis and futuna	common	eu	WALLIS ETA FUTUNA
 wednesday	common	eu	Asteazkena
 welcome	common	eu	Ongo etorri
 western sahara	common	eu	MENDEBALDEKO SAHARA
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	eu	Bai aukeratzen bada sarrera eta irteera botoiak aplikazio nagusien barran agertuko dira.
 which groups	common	eu	Zein taldeak
 width	common	eu	Zabalera
 wk	jscalendar	eu	wk
 work email	common	eu	laneko posta elektronikoa
+writing	common	eu	Idazten
 written by:	common	eu	Nork idatzi:
 year	common	eu	Urtea
 yemen	common	eu	YEMEN
@@ -606,8 +627,6 @@ your search returned %1 matchs	common	eu	Zure bilaketak %1eko emaitza izan du
 your search returned 1 match	common	eu	Zure bilaketak emaitza bai izan du
 your session could not be verified.	login	eu	Zure saioa ezin izan da egiaztatu
 your settings have been updated	common	eu	Zure hobespenak eguneratuak izan dira
-yugoslavia	common	eu	YUGOSLAVIA
 zambia	common	eu	ZAMBIA
 zimbabwe	common	eu	ZIMBABWE
 zoom	common	eu	Zoom
-site configuration	common	eu	Lekuaren konfigurazioa

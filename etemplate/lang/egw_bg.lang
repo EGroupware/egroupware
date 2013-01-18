@@ -1,2 +1,50 @@
+advanced search	etemplate	bg	Разширено търсене
+and	etemplate	bg	И
+attach file	etemplate	bg	Приложи файл
+category tree	etemplate	bg	Дърво на категориите
+check all	etemplate	bg	Маркира всички
+click here to create the link	etemplate	bg	кликнете тук за създаване на връзката
+click here to start the search	etemplate	bg	кликнете тук за начало на търсенето
+comment	etemplate	bg	Коментар
+confirm	etemplate	bg	Потвърди
+contact	etemplate	bg	Контакт
+contains	etemplate	bg	съдържа
+custom	etemplate	bg	по избор
+custom fields	etemplate	bg	Полета по избор
+cut	etemplate	bg	преместен(и)
+days	etemplate	bg	дни
+default	etemplate	bg	по подразбиране
+delete a single entry by passing the id.	etemplate	bg	Изтриване на единичен запис чрез предаване на ID.
+document '%1' does not exist or is not readable for you!	preferences	bg	Документът '%1' не съществува или нямате право на достъп до него!
+doesn't matter	etemplate	bg	без значение
+duration	etemplate	bg	Продължителност
+entry saved	etemplate	bg	Записът е запазен
 error uploading file!	filemanager	bg	Грешка при качване на файла!
+field must not be empty !!!	etemplate	bg	Полето не може да бъде празно !!!
+file	etemplate	bg	Файл
+general fields:	preferences	bg	Общи полета:
+hours	etemplate	bg	часа
+html	etemplate	bg	HTML
+import	etemplate	bg	Импорт
+insert in document	etemplate	bg	Вмъкване в документа
+label	etemplate	bg	Етикет
+last	etemplate	bg	последен
+link	etemplate	bg	Връзка
 maximum size for uploads	filemanager	bg	Максимален размер за качване
+minutes	etemplate	bg	минути
+new search	common	bg	Ново търсене
+no matches found	etemplate	bg	Не са открити съвпадения
+options	etemplate	bg	Опции
+or	etemplate	bg	или
+read a list of entries.	etemplate	bg	Четене на списък със записи.
+read a single entry by passing the id and fieldlist.	etemplate	bg	Четене на единичен запис чрез подаване на id и списък с полета
+remove this link (not the entry itself)	etemplate	bg	Премахване на връзката (не и на записа)
+select an app to search in	etemplate	bg	Изберете приложение, в което да се търси
+select an entry to link with	etemplate	bg	Изберете запис, с който да се свърже
+show	etemplate	bg	Покажи
+start a new search, cancel this link	etemplate	bg	Започва ново търсене, отказва тази връзка
+template	etemplate	bg	Шаблон
+unlink	etemplate	bg	Премахва връзка
+update a single entry by passing the fields.	etemplate	bg	Актуализация на единичен запис чрез предаване на полетата.
+view this linked entry in its application	etemplate	bg	показва свързания запис в съотв. приложение
+you can respond by visiting:	etemplate	bg	За преглед посетете:

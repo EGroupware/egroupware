@@ -6,7 +6,6 @@
 (stored password will not be shown here)	admin	hu	(a tárolt jelszó  nem fog itt megjelenni)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	hu	(Új alkalmazás telepítéséhez használja a <br><a href="setup/" target="setup">Setup</a> felületet [Alkalmazások Kezelése].)
 -  type	admin	hu	- típus
-a group needs at least one member!	admin	hu	A csoportnak legalább egy taggal rendelkeznie kell!
 accesslog and bruteforce defense	admin	hu	Log elérése és brute force védelem
 account %1 %2	admin	hu	Felhasználói hozzáférés %1 %2
 account '%1' deleted.	admin	hu	'%1' felhasználói hozzáférés törölve.
@@ -21,6 +20,7 @@ account-id's have to be integers!	admin	hu	Felhasználói azonosító egész sz�
 acl manager	admin	hu	ACL kezelő
 acl rights	common	hu	ACL jogok
 action	admin	hu	Művelet
+actions	admin	hu	Műveletek
 activate wysiwyg-editor	admin	hu	WYSIWYG-szerkesztő engedélyezése
 add a category	admin	hu	kategória hozzáadása
 add a group	admin	hu	csoport hozzáadása
@@ -46,6 +46,7 @@ advanced options	admin	hu	További beállítások
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az azonosító blokkolt (alapértelmezésben 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az IP-cím blokkolt (alapértelmezésben 3)?
 aliases	admin	hu	Álnevek
+all categories	admin	hu	Összes kategória
 all records and account information will be lost!	admin	hu	Minden bejegyzés és információ törlésre kerül a hozzáférési joggal kapcsolatban!
 all users	admin	hu	Összes felhasználó
 allow anonymous access to this app	admin	hu	Engedélyezi az anonim hozzáféréseket ehhez az alkalmazáshoz
@@ -63,6 +64,7 @@ applications	admin	hu	Alkalmazások
 applications list	admin	hu	Alkalmazások listája
 applications run rights updated.	admin	hu	Modul futási jogok modosítva.
 applies the changes	admin	hu	változások végrehajtása
+apply the changes	admin	hu	Változások elfogadása
 are you sure you want to delete the application %1 ?	admin	hu	Valóban törlésre kerüljön ez az alkalmazás: %1 ?
 are you sure you want to delete this account ?	admin	hu	Biztosan törölésre kerüljön ez az azonosító?
 are you sure you want to delete this application ?	admin	hu	Biztosan törölésre kerüljön ez az alkalmazás?
@@ -90,7 +92,9 @@ can change password	admin	hu	Megváltoztathatja a jelszavát
 cancel testjob!	admin	hu	Tesztfeladat leállítása/törlése!
 categories list	admin	hu	Kategóriák listája
 category %1 has been saved !	admin	hu	%1 kategória elmentve
+category deleted.	admin	hu	Kategória törölve.
 category list	admin	hu	Kategórialista
+category saved.	admin	hu	Kategória mentve.
 change acl rights	admin	hu	ACL jogok változtatása
 change config settings	admin	hu	Beállítások megváltoztatása
 change main screen message	admin	hu	Főképernyőn megjelenő üzenet változtatása
@@ -100,8 +104,10 @@ click to select a color	admin	hu	Színválasztás
 color	admin	hu	Szín
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	hu	Süti tartomány (az alapértelmezett üres jelentése a teljes domain, például a SiteManager esetében a ".domain.com" lehetővé teszi ugyanazon süti használatát az egw.domain.com és a www.domain.com számára is)
 cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	hu	Süti útvonal (többszörös eGW munkamenetet külön könyvtárakba menti, problémákat okozhat a Sitemanager esetében)
+country	admin	hu	Ország
 country selection	admin	hu	Ország kiválasztása
 create group	admin	hu	Csoport létrehozása
+created	admin	hu	Létrehozva
 created with id #%1	admin	hu	létrehozva a #%1 azonosítóval
 creates a new field	admin	hu	Új mező létrehozása
 crontab only (recomended)	admin	hu	csak crontab (ajánlott)
@@ -126,6 +132,7 @@ delete the group	admin	hu	csoport törlése
 delete this category	admin	hu	kategória törlése
 delete this group	admin	hu	csoport törlése
 delete this user	admin	hu	felhasználó törlése
+deleted	admin	hu	törölve
 deletes this field	admin	hu	Aktuális mező törlése
 deliver extern	admin	hu	külső kézbesítés
 deny access to access log	admin	hu	A hozzáférési naplóhoz történő hozzáférés tiltása
@@ -145,6 +152,7 @@ deny access to user accounts	admin	hu	A felhasználói azonosítókhoz történ�
 deny all users access to grant other users access to their entries ?	admin	hu	Minden felhasználó esetén tiltsa a más felhasználóknak kiadható jogosultság beállítást? Ez esetben pl. nem oszthatja meg a saját naptárát más felhasználóval (ez csak az egyedi engedélyezést befolyásolja, a csoport jogosultságra nincs hatással!)
 description can not exceed 255 characters in length !	admin	hu	A leírás nem haladhatja meg a 255 karaktert!
 determines the order the fields are displayed	admin	hu	megjelenített mezők rendezésének meghatározása
+disable	admin	hu	Letilt
 disable "auto completion" of the login form	admin	hu	Az automatikus kiegészítés tiltása a bejelentkezőképernyőn
 disable wysiwyg-editor	admin	hu	WYSIWYG-szerkesztő kikapcsolása
 disabled (not recomended)	admin	hu	tiltott (nem ajánlott)
@@ -154,6 +162,7 @@ do you also want to delete all global subcategories ?	admin	hu	Biztosan törlés
 do you want to delete all global subcategories ?	admin	hu	Biztosan törlésre kerüljön az összes alkategória?
 do you want to move all global subcategories one level down ?	admin	hu	Biztosan szeretné egy szinttel lejjebb vinni az összes globális alkategóriát?
 document root (default)	admin	hu	Dokumentum főkönyvtár (alapértelmezett)
+down	admin	hu	Le
 each value is a line like <id>[=<label>]	admin	hu	minden érték egy sor, ehhez hasonlóan: <id>[=<címke>]
 each value is a line like id[=label]	admin	hu	minden érték egy sor, ehhez hasonlóan: id[=címke]
 edit account	admin	hu	Azonosító szerkesztése
@@ -175,6 +184,7 @@ edit user account	admin	hu	Felhasználói azonosító szerkesztése
 egroupware directory	admin	hu	eGroupWare könyvtár
 email account active	admin	hu	email azonosító aktív
 email address	admin	hu	email cím
+enable	admin	hu	engedélyez
 enable debug-messages	admin	hu	Hibajelentő üzenetek engedélyezése
 enable the soap service	admin	hu	SOAP-szolgáltatás engedélyezése
 enable the xmlrpc service	admin	hu	XML-RPC-szolgáltatás engedélyezése
@@ -214,13 +224,13 @@ fallback (after each pageview)	admin	hu	visszatérés (minden oldalnézet után)
 field '%1' already exists !!!	admin	hu	'%1' mező már létezik!
 file space	admin	hu	Fájl space
 file space must be an integer	admin	hu	Fájl space egész értékű kell legyen
-find and register all application hooks	admin	hu	Keresse meg és Regisztrálja az összes alkalmazás visszacsatolását
 for the times above	admin	hu	fent látható időpontokban
 for the times below (empty values count as '*', all empty = every minute)	admin	hu	lent látható időpontokban (az üres bejegyzés '*'-ként szerepel, ha minden üres, akkor az egyenértékű a 'minden percben'-el)
 force selectbox	admin	hu	Kényszerített selectbox
 forward also to	admin	hu	továbbítsd ide is
 forward emails to	admin	hu	email továbbítása ide
 forward only	admin	hu	csak továbbküldés
+full name	admin	hu	Teljes Neve
 global categories	common	hu	Globális kategóriák
 group ?	admin	hu	csoport?
 group has been added	common	hu	A csoport hozzáadása megtörtént
@@ -247,7 +257,6 @@ install crontab	admin	hu	Crontab telepítése
 installed applications	common	hu	Telepített alkalmazások
 installed crontab	admin	hu	Telepített crontab
 interface	admin	hu	Felület
-invalid date '%1' use yyyy-mm-dd!	admin	hu	Érvénytelen dátum: '%1'. Használja ezt a formátumot: YYYY-MM-DD
 ip	admin	hu	IP
 jobs	admin	hu	Munkák
 kill	admin	hu	Kitiltás
@@ -268,12 +277,13 @@ ldap rootdn	admin	hu	LDAP rootdn
 leave empty for no quota	admin	hu	hagyja üresen a kvóta figyelmen kívül hagyásához
 leave the category untouched and return back to the list	admin	hu	hagyja érintetlenül a kategóriát és térjen vissza a listához
 leave the group untouched and return back to the list	admin	hu	Hagyja érintetlenül a csoportot és térjen vissza a listához
+leave without saveing the entry	admin	hu	kilépés mentés nélkül
 leaves without saveing	admin	hu	kilépés mentés nélkül
 length<br>rows	admin	hu	Sorok<br>Hossza
 list config settings	admin	hu	Konfigurációs beállítások listája
 list current sessions	admin	hu	Jelenlegi session-ök listája
 list of current users	admin	hu	jelenlegi felhasználók listája
-login history	common	hu	Bejelentkezések története
+login history	admin	hu	Bejelentkezések története
 login message	admin	hu	Bejelentkezési üzenet
 login screen	admin	hu	Bejelentkezési képernyő
 login shell	admin	hu	Bejelentkezési héj
@@ -286,11 +296,13 @@ manager	admin	hu	Manager
 max length of the input [, length of the inputfield (optional)]	admin	hu	a beviteli mező maximális hossza (opcionális)
 maximum account id (e.g. 65535 or 1000000)	admin	hu	Legnagyobb felhasználói azonosító (pl. 65535 vagy 1000000)
 maximum entries in click path history	admin	hu	Útvonal látogatottság bejegyzések maximális száma
+members	admin	hu	Résztvevők
 message has been updated	admin	hu	az üzenet frissítve
 method	admin	hu	Metódus
 minimum account id (e.g. 500 or 100, etc.)	admin	hu	Legkisebb felhasználói azonosító (pl. 500 vagy 100)
 minute	admin	hu	Perc
 mode	admin	hu	Mód
+modified	admin	hu	Módosított
 month	admin	hu	Hónap
 more secure	admin	hu	biztonságosabb
 name must not be empty !!!	admin	hu	Név nem lehet üres!!!
@@ -309,6 +321,8 @@ no permission to add users	admin	hu	nincs jogosultság felhasználók hozzáadá
 no permission to create groups	admin	hu	nincs jogosultság csoportok létrehozására
 note: ssl available only if php is compiled with curl support	admin	hu	Megjegyzés: SSL csak akkor érhető el, ha a PHP curl támogatással lett lefordítva
 number of row for a multiline inputfield or line of a multi-select-box	admin	hu	sorok száma a többsoros beviteli mező, vagy egy kiválasztó lista esetén (ilyen 'magas' lesz a doboz/szerkesztő mező)
+one month	admin	hu	egy hónap
+one week	admin	hu	egy hét
 order	admin	hu	Rendezés
 outbound	admin	hu	kimenő
 passthrough	admin	hu	átmenő
@@ -346,6 +360,7 @@ run asynchronous services	admin	hu	Feladat ütemező futtatása
 save the category	admin	hu	Kategória mentése
 save the category and return back to the list	admin	hu	Kategória mentése és visszatérés a listához
 saves the changes made and leaves	admin	hu	Változások mentése és kilépés
+saves this entry	admin	hu	Bejegyzés mentése
 search accounts	admin	hu	Felhasználói hozzáférések keresése
 search categories	admin	hu	Kategóriák keresése
 search groups	admin	hu	Csoportok keresése
@@ -385,6 +400,7 @@ standard	admin	hu	szabványos
 standard imap server	admin	hu	szabványos IMAP-kiszolgáló
 standard pop3 server	admin	hu	szabványos POP3-kiszolgáló
 standard smtp-server	admin	hu	szabványos SMTP-kiszolgáló
+start	admin	hu	Indít
 start testjob!	admin	hu	TesztFeladat indítása!
 submit changes	admin	hu	Változások elküldése
 submit the search string	admin	hu	Keresési szöveg elküldése
@@ -418,18 +434,15 @@ times	admin	hu	Időigény
 top	admin	hu	Felül
 total of %1 id's changed.	admin	hu	Összesen %1 azonosító megváltoztatva.
 total records	admin	hu	Összes rekord
+translation	admin	hu	Fordítás
 trust level	admin	hu	Bizalmi szint
 trust relationship	admin	hu	Bizalmi viszony
+two weeks	admin	hu	két hét
 type '%1' already exists !!!	admin	hu	'%1' típus már létezik!!!
 type of customfield	admin	hu	Egyedi mező típusa
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	hu	Windows alatt a feladatütemezőt %1kézzel%2 kell telepíteni, vagy használni a Fallback módot. A Fallback azt jelenti, hogy minden egyes oldal letöltésnél/megjelenítésnél történik a feladatok végrehajtása, ha szükséges!!
-unknown account to delete: %1 !!!	admin	hu	Ismeretlen felhasználói hozzáférés törlése: %1!!!
 unknown account: %1 !!!	admin	hu	Ismeretlen felhasználói hozzáférés: %1!!!
-unknown group to edit: %1 !!!	admin	hu	Ismeretlen csoport szerkesztése: %1!!!
-unknown group: %1 !!!	admin	hu	Ismeretlen csoport: %1!!!
-unknown user to edit: %1 !!!	admin	hu	Ismeretlen felhasználó szerkesztése: %1!!!
-unknown user to move to: %1 !!!	admin	hu	Ismeretlen felhasználó mozgatása: %1!!!
-unknown user: %1 !!!	admin	hu	Ismeretlen felhasználó!!!
+up	admin	hu	Fel
 updated	admin	hu	frissítve
 use cookies to pass sessionid	admin	hu	Használjon sütiket a session azonosító átadásához
 use pure html compliant code (not fully working yet)	admin	hu	Használjon tiszta HTML kódot (nem teljesen működik egyelőre)
@@ -458,9 +471,6 @@ xml-rpc	admin	hu	XML-RPC
 you have entered an invalid expiration date	admin	hu	Érvénytelen lejárati időt adott meg
 you have to enter a name, to create a new field!!!	admin	hu	Meg kell adnia egy nevet, hogy az új mezőt létre lehessen hozni!!!
 you have to enter a name, to create a new type!!!	admin	hu	Meg kell adnia egy nevet, hogy az új típust létre lehessen hozni!!!
-you have to specify an non-empty account-name and lastname!	admin	hu	Meg kell adnia egy nem üres felhasználói nevet és keresztnevet!
-you have to specify an non-empty group-name!	admin	hu	Meg kell adnia egy nem üres csoport nevet!
-you have to specify at least a primary group!	admin	hu	Meg kell adni legalább az elsődleges csoportot!
 you must add at least 1 permission or group to this account	admin	hu	Legalább egy engedélyt vagy csoportot hozzá kell adni a felhasználói hozzáféréshez
 you must enter a group name.	admin	hu	Meg kell adnia egy csoportnevet.
 you must enter a lastname	admin	hu	Meg kell adnia egy keresztnevet.

@@ -4,7 +4,6 @@ actions	resources	zh	操作
 add accessory	resources	zh	添加附件
 add resource	resources	zh	添加资源
 add resources	resources	zh	添加资源
-admin	resources	zh	管理员
 administrator	resources	zh	管理员
 all categories	resources	zh	所有分类
 book	resources	zh	预订资源
@@ -31,9 +30,9 @@ edit this entry	resources	zh	编辑此条目
 existing links	resources	zh	已存在链接
 general	resources	zh	通用
 general informations about resource	resources	zh	关于资源的通用信息
-general resources	resources	zh	一般资源
 gernal resource	resources	zh	通用资源
 global categories	resources	zh	全局分类
+hours	resources	zh	小时
 how many of the resources are useable?	resources	zh	有多少资源可以使用？
 how many of them are useable?	resources	zh	他们有多少可以使用？
 how many of this resource are usable	resources	zh	该资源有多少可以使用
@@ -52,6 +51,7 @@ links	resources	zh	链接
 location	resources	zh	位置
 location of resource	resources	zh	资源的位置
 location:	resources	zh	位置：
+manage mapping	resources	zh	管理匹配
 name of resource	resources	zh	资源名称
 name:	resources	zh	名称：
 no description available	resources	zh	没有可用的描述
@@ -80,7 +80,6 @@ select/deselect all	resources	zh	选择/全部取消
 short description	resources	zh	简短描述
 short description of resource	resources	zh	资源的简短描述
 show calendar of resource	resources	zh	显示资源日历
-site configuration	resources	zh	站点配置
 something went wrong by deleting resource	resources	zh	删除资源时发生错误
 something went wrong by saving resource	resources	zh	保存资源时发生错误
 storage information	resources	zh	存储信息
@@ -99,7 +98,5 @@ web-site for this resource	resources	zh	这一资源的网站
 where to find this resource?	resources	zh	从哪里找的到这一资源？
 which category does this resource belong to?	resources	zh	这一资源属于哪个类别？
 write permissions	resources	zh	写入权限
-you are not permitted to delete this reource!	resources	zh	您没有删除这个资源的权限！
-you are not permitted to edit this reource!	resources	zh	您没有编辑这个资源的权限！
 you are not permitted to get information about this resource!	resources	zh	您没有获取有关这个资源信息的权限！
 you chose more resources than available	resources	zh	您选择的资源超过了现有可用范围！

@@ -1,4 +1,3 @@
-$label	preferences	nl	$label
 %1 - preferences	preferences	nl	%1 - Voorkeuren
 %1 hours	preferences	nl	%1 uren
 12 hour	preferences	nl	12 uren
@@ -24,12 +23,12 @@ default preferences	preferences	nl	Standaard voorkeuren
 default theme	preferences	nl	Standaard theme
 delete categories	preferences	nl	Verwijder categorieën
 description can not exceed 255 characters in length !	preferences	nl	Beschrijving mag de 255 tekens niet overschrijden in lengte!
-display thumbnails for linked images	addressbook	nl	Toon miniaturen voor gekoppelde afbeeldingen
+display thumbnails for linked images	preferences	nl	Toon miniaturen voor gekoppelde afbeeldingen
 div	preferences	nl	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	nl	Prefereert u de tijd in 24-uurs formaat, of in 12-uurs formaat met am/pm toegevoegd?
 edit custom fields	preferences	nl	wijzig aangepaste velden
-enable drag and drop functionality (experimental)	addressbook	nl	Schakel drag and drop functionaliteit in (experimenteel)
-enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	addressbook	nl	Schakel drag and drop functies in alle toepassingen in of uit. Indien de browser drag and drop niet ondersteund wordt, wordt het vanzelf uitgeschakeld. Deze functie is op dit moment experimenteel.
+enable drag and drop functionality (experimental)	preferences	nl	Schakel drag and drop functionaliteit in (experimenteel)
+enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	nl	Schakel drag and drop functies in alle toepassingen in of uit. Indien de browser drag and drop niet ondersteund wordt, wordt het vanzelf uitgeschakeld. Deze functie is op dit moment experimenteel.
 enter your new password	preferences	nl	Voer uw nieuwe wachtwoord in
 enter your old password	preferences	nl	Voer uw oude wachtwoord in
 failed to change password.  please contact your administrator.	preferences	nl	Wachtwoord kan niet worden gewijzigd. Neem contact op met uw beheerder.
@@ -44,7 +43,7 @@ how should egroupware display dates for you.	preferences	nl	Hoe moet eGroupWare 
 icon	preferences	nl	Icoon
 icons and text	preferences	nl	Iconen en tekst
 icons only	preferences	nl	Alleen iconen
-images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	addressbook	nl	Afbeeldingen gekoppeld aan een record kunnen worden weergegeven als miniaturen. U kunt dit uitschakelen om de snelheid van weergave te verhogen.
+images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	nl	Afbeeldingen gekoppeld aan een record kunnen worden weergegeven als miniaturen. U kunt dit uitschakelen om de snelheid van weergave te verhogen.
 in which country are you. this is used to set certain defaults for you.	preferences	nl	In welk land bevindt u zich? Dit wordt gebruikt om bepaalde standaardinstellingen voor u te maken.
 interface/template selection	preferences	nl	Interface/Template Selectie
 language	preferences	nl	Taal
@@ -60,14 +59,14 @@ please, select a new theme	preferences	nl	Selecteer een nieuw thema
 popup with search	preferences	nl	Popupvenster met zoekfunctie
 re-enter your password	preferences	nl	Voor uw wachtwoord nogmaals in
 read prefs for the specified application.	preferences	nl	Lees voorkeuren voor de opgegeven toepassing
-rich text editor enter mode	addressbook	nl	Rich text editor invoer modus
-rich text editor theme	addressbook	nl	Rich text editor theme
+rich text editor enter mode	preferences	nl	Rich text editor invoer modus
+rich text editor theme	preferences	nl	Rich text editor theme
 select different theme	preferences	nl	Selecteer een ander thema
-select how the rich text editor will generate the enter (linebreak) tag.	addressbook	nl	Kies hoe de rich text editor de Enter (regelomloop) tag moet opbouwen.
+select how the rich text editor will generate the enter (linebreak) tag.	preferences	nl	Kies hoe de rich text editor de Enter (regelomloop) tag moet opbouwen.
 select one	preferences	nl	Selecteer één
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	nl	Selecteer de taal teksten en berichten in eGroupWare. <br />Sommige talen zijn niet compleet.  In dat geval wordt teruggevallen op de Engelse taal.
-select the language of the spellchecker integrated into the rich text editor.	addressbook	nl	Kies de taal van de spellingcontrole die is geintegreerde rich text editor.
-select the theme (visualization) of the rich text editor.	addressbook	nl	Kies het theme (vormgeving) van de rich text editor.
+select the language of the spellchecker integrated into the rich text editor.	preferences	nl	Kies de taal van de spellingcontrole die is geintegreerde rich text editor.
+select the theme (visualization) of the rich text editor.	preferences	nl	Kies het theme (vormgeving) van de rich text editor.
 selectbox	preferences	nl	Keuzevenster
 selectbox with groupmembers	common	nl	Keuzevenster met groepsleden
 selectbox with primary group and search	preferences	nl	Keuzevenster met primaire groep en zoekveld
@@ -75,7 +74,7 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	nl	Moet het aantal actieve sessies altijd aan u worden weergegeven?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	nl	Moet deze extra uitleg altijd worden weergegeven als u uw voorkeuren wijzigd?
 show helpmessages by default	preferences	nl	Extra uitleg standaard weergeven.
-show links between egroupware aps as	addressbook	nl	Toon links tussen eGroupWare toepassingen als
+show links between egroupware aps as	common	nl	Toon links tussen eGroupWare toepassingen als
 show navigation bar as	preferences	nl	Navigatiebalk weergeven als
 show number of current users	preferences	nl	Aantal huidige gebruikers weergeven
 show text on navigation icons	preferences	nl	Geef tekst weer op de navigatiebalk
@@ -86,7 +85,7 @@ text only	preferences	nl	Alleen tekst
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	nl	De standaard toepassing wordt direct geopend na het inloggen in eGroupWare en wanneer u klikt op start.<br />U kunt ook informatie van meerdere applicaties weergeven op de startpagina door hier geen specifieke pagina te selecteren. Niet alle toepassingen kunnen informatie tonen op de startpagina. Een voorbeeld toepassing die het wel kan is 'Kalender'. Zie de voorkeuren van 'Kalender' voor meer informatie.
 the old password is not correct	preferences	nl	Het oude wachtwoord is onjuist
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	nl	De selectbox geeft alle beschikbare gebruikers weer (dit kan erg traag zijn bij installaties met veel gebruikers). In het popupvenster kunt u zoeken op naam of groep.
-the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	common	nl	De twee laatste opties beperken de zichtbaarheid van andere gebruikers. Daarom zouden zij gedwongen moeten worden en zijn zij niet van toepassing op beheerders
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	nl	De twee laatste opties beperken de zichtbaarheid van andere gebruikers. Daarom zouden zij gedwongen moeten worden en zijn zij niet van toepassing op beheerders
 the two passwords are not the same	preferences	nl	De twee wachtwoorden komen niet overeen
 theme (colors/fonts) selection	preferences	nl	Themaselectie (kleuren/lettertypen)
 this server is located in the %1 timezone	preferences	nl	Tijdzone
@@ -98,7 +97,7 @@ which charset should be used for the csv export. the system default is the chars
 which currency symbol or name should be used in egroupware.	preferences	nl	Welke symbool of naam voor de munteenheid moet gebruikt worden in eGroupWare.
 write prefs for the specified application.	preferences	nl	Schrijf de voorkeuren op voor de opgegeven toepassing.
 you can show the applications as icons only, icons with app-name or both.	preferences	nl	U kunt de toepassingen weergeven met alleen iconen iconen met tekst, of alleen tekst.
-you can show the linked entries with icons only, icons with app-name or both.	addressbook	nl	U kunt de gekoppelde records weergeven met alleen ikonen, ikonen met toepassingsnaam of beiden.
+you can show the linked entries with icons only, icons with app-name or both.	common	nl	U kunt de gekoppelde records weergeven met alleen ikonen, ikonen met toepassingsnaam of beiden.
 you do not have permission to set acl's in this mode!	preferences	nl	U heeft geen toelating om de ACL's in te stellen in deze modus!
 you must enter a password	preferences	nl	U moet een wachtwoord invoeren
 your current theme is: %1	preferences	nl	uw huidige thema is %1

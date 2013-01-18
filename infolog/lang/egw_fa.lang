@@ -4,10 +4,7 @@
 0%	infolog	fa	٪۰
 10%	infolog	fa	٪۱۰
 100%	infolog	fa	٪۱۰۰
-2 month ago	infolog	fa	دو ماه پیش
-2 years ago	infolog	fa	دو سال پیش
 20%	infolog	fa	٪۲۰
-3 years ago	infolog	fa	سه سال پیش
 30%	infolog	fa	٪۳۰
 40%	infolog	fa	٪۴۰
 50%	infolog	fa	٪۵۰
@@ -32,15 +29,16 @@ add file	infolog	fa	افزودن پرونده
 add sub	infolog	fa	افزودن ارجاع/جواب
 add timesheet entry	infolog	fa	افزودن برگه ساعت کار
 add:	infolog	fa	افزودن:
+added	infolog	fa	اضافه شد
 all	infolog	fa	همه
 all links and attachments	infolog	fa	همه اتصالها و پیوستها
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	fa	اجازه تنظیم وضعیت هر ورودی را میدهد، مثلا تنظیم یک «برای انجام» به «انجام شده» وقتی که به اتمام می رسد.(مقادیر به نوع ورودی بستگی دارند)
-am	infolog	fa	صبح
 apply the changes	infolog	fa	اعمال تغییرات
+archive	infolog	fa	آرشیو
 are you shure you want to delete this entry ?	infolog	fa	آیا برای حذف ورودی مطمئنید؟
-attach	infolog	fa	پیوست
 attach a file	infolog	fa	پیوست کردن یک پرونده
 attach file	infolog	fa	پیوست کردن پرونده
+attachments	infolog	fa	پیوندها
 back to main list	infolog	fa	بازگشت به لیست اصلی
 billed	infolog	fa	صورتحساب شده
 both	infolog	fa	هر دو
@@ -50,18 +48,17 @@ cancelled	infolog	fa	لغو شد
 categories	infolog	fa	دسته ها
 category	infolog	fa	دسته
 change the status of an entry, eg. close it	infolog	fa	تغییر وضعیت یک ورودی - مثلا بستن آن
-charset of file	infolog	fa	کاراکتر ست پرونده
 check to set startday	infolog	fa	چک کنید تا روز شروع تنظیم شود
-click here to attach the file	infolog	fa	اینجا کلیک کنید تا پرونده پیوست شود
 click here to create the link	infolog	fa	اینجا کلیک کنید تا اتصال ساخته شود
 click here to start the search	infolog	fa	اینجا کلیک کنید تا جستجو آغاز شود
-click to order after that criteria	infolog	fa	برای مرتب شدن بر اساس شرط، کلیک کنید
 close	infolog	fa	بستن
+close all	infolog	fa	بستن همه
 comment	infolog	fa	توضیحات
 completed	infolog	fa	اتمام قطعی
 configuration	infolog	fa	تنظیمات
 confirm	infolog	fa	تأیید
 contact	infolog	fa	مخاطب(ین)/ذینفع(ان)
+copy of:	infolog	fa	رونوشت از:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	fa	تغییرات شما را در تخته یادداشت نگه میدارد، %1ورودی را مجددا بازیابی نمائید%2 و ادغامشان کنید
 create new links	infolog	fa	ایجاد اتصالهای جدید
 creates a new field	infolog	fa	یک فیلد جدید می سازد
@@ -84,15 +81,13 @@ date completed (leave it empty to have it automatic set if status is done or bil
 datecreated	infolog	fa	تاریج ایجاد شدن
 dates, status, access	infolog	fa	تاریخها، وضعیت، دسترسی
 days	infolog	fa	روز
-default	infolog	fa	پیش فرض
 default filter for infolog	infolog	fa	صافی پیش فرض برای کارها
 default status for a new log entry	infolog	fa	وضعیت پیش فرض برای یک ورودی
 delegation	infolog	fa	مسئولان اجرا
 delete	infolog	fa	حذف
 delete one record by passing its id.	infolog	fa	حذف یک رکورد با رد کردن کد آن
-delete the entry	infolog	fa	حذف ورودی
-delete this entry	infolog	fa	حذف این ورودی
 delete this entry and all listed sub-entries	infolog	fa	حذف این ورودی و تمام زیر ورودیهایش
+deleted	infolog	fa	حذف شد
 deletes the selected typ	infolog	fa	انواع انتخاب شده را حذف میکند
 deletes this field	infolog	fa	این فیلد را حذف می کند
 deletes this status	infolog	fa	این وضعیت را حذف می کند
@@ -101,7 +96,7 @@ determines the order the fields are displayed	infolog	fa	ترتیب نمایش �
 disables a status without deleting it	infolog	fa	یک وضعیت را بدون اینکه حذفش کند غیر فعال می سازد
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	fa	آیا تاییدیه ای از پاسخگویی روی :قبول است۷ تمام شد یا هر دو می خواهید؟
 don't show infolog	infolog	fa	کارها را نمایش نده
-done	infolog	fa	انجام شده
+done	common	fa	انجام شده
 download	infolog	fa	دریافت
 duration	infolog	fa	مدت
 each value is a line like <id>[=<label>]	infolog	fa	هرمقدار در یک خط باشد مثل: <id>[=<label>]
@@ -112,12 +107,12 @@ edit status	infolog	fa	ویراستن وضعیت
 edit the entry	infolog	fa	ویراستن ورودی
 edit this entry	infolog	fa	ویراستن این ورودی
 empty for all	infolog	fa	خالی برای همه
+end	infolog	fa	اتمام
 enddate	infolog	fa	تاریخ اتمام
 enddate can not be before startdate	infolog	fa	تاریخ اتمام نمی تواند قبل از تاریخ شروع باشد
 enter a custom contact, leave empty if linked entry should be used	infolog	fa	یک مخاطب(ین).ذینفع(ان) سفارشی اضافه کنید. اگر ورودی پیوندشده باید استفاده شود، خالی بگذارید
 enter a custom phone/email, leave empty if linked entry should be used	infolog	fa	یک شماره تلفن یا نشانی نامه الکترونیکی وارد کنید. اگر ورودی پیوند شده باید استفاده شود، خالی بگذارید
 enter a textual description of the log-entry	infolog	fa	یک شرح متنی برای ورودی ثبت  وارد کنید
-enter filename to upload and attach, use [browse...] to search for it	infolog	fa	نام پرونده را برای ارسال و پیوست شدن بنویسید از ‌Browse برای جستجوی آن استفاده کنید...
 enter the query pattern	infolog	fa	یک الگوی پرس و جو وارد کنید
 entry and all files	infolog	fa	ورودی و همه پرونده ها
 error: saving the entry	infolog	fa	خطا: ذخیره ورودی
@@ -126,17 +121,14 @@ existing links	infolog	fa	اتصالهای موجود
 fax	infolog	fa	دورنگار
 field must not be empty !!!	infolog	fa	فیلد نمی تواند خالی باشد!!!
 fieldseparator	infolog	fa	جدا کننده فیلد
-file	infolog	fa	پرونده
 finish	infolog	fa	اتمام
 for which types should this field be used	infolog	fa	برای کدام نوع باید این فیلد استفاده شود
 from	infolog	fa	از
-fyi	infolog	fa	جهت اطلاع
-general	infolog	fa	عمومی
+global categories	infolog	fa	دسته های عمومی
 high	infolog	fa	بالا
-hours	infolog	fa	ساعت
+history	infolog	fa	تاریخچه
 id	infolog	fa	کد
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	fa	اگر تنظیم نشود، خطوط دارای صافی و جستجو برای مقادیر کمتر از «حداکثر جور شده ها در صفحه» (که در تنظیمات عمومی تعریف می کنید) پنهان می شوند.
-import	infolog	fa	وارد کردن
 import next set	infolog	fa	وارد کردن مجموعه بعدی
 info log	common	fa	کارها
 infolog	common	fa	کارها
@@ -153,14 +145,11 @@ infolog list	infolog	fa	فهرست کارها
 infolog preferences	common	fa	تنظیمات کارها
 infolog-fieldname	infolog	fa	ثبت اطلاعات - نام فیلد
 invalid filename	infolog	fa	نام پرونده نامعتبر
-label	infolog	fa	برچسب
 label<br>helptext	infolog	fa	برچسب <br> متن راهنما
 last changed	infolog	fa	آخرین تغییرات
 last modified	infolog	fa	آخرین تغییرات
-last month	infolog	fa	ماه گذشته
-last week	infolog	fa	هفته گذشته
-last year	infolog	fa	سال گذشته
 leave it empty	infolog	fa	خالی بگذارید
+leave it empty for a full week	infolog	fa	برای یک هفته کامل خالی بگذارید
 leave without saveing the entry	infolog	fa	بدون ذخیره کردن ورودی رها کنید
 leaves without saveing	infolog	fa	بدون ذخیره رها می کند
 length<br>rows	infolog	fa	طول <br> سطر
@@ -172,7 +161,6 @@ list no subs/childs	infolog	fa	لیست بدون زیر دسته
 location	infolog	fa	محل
 longer textual description	infolog	fa	شرح متنی طولانی تر
 low	infolog	fa	کم
-mail all participants	infolog	fa	نامه به همه مسئولان اجرا
 max length of the input [, length of the inputfield (optional)]	infolog	fa	حداکثر اندازه ورودی [طول فیلد ورودی] (دلخواه)
 name must not be empty !!!	infolog	fa	نام نباید خالی باشد!!!
 name of new type to create	infolog	fa	نام نوع جدید برای ایجاد
@@ -185,16 +173,15 @@ no details	infolog	fa	بدون جزئیات
 no entries found, try again ...	infolog	fa	ورودی پیدا نشد، مجددا سعی کنید
 no filter	infolog	fa	بدون صافی
 no links or attachments	infolog	fa	پیوند یا پیوستی نیست
+nonactive	infolog	fa	غیر فعال
 none	infolog	fa	هیچکدام
 normal	infolog	fa	عادی
 not	infolog	fa	نه
 not assigned	infolog	fa	اختصاص نیافته
-not-present	infolog	fa	حضور نداشتند
 not-started	infolog	fa	شروع نشده
 note	infolog	fa	یادداشت
 number of records to read (%1)	infolog	fa	تعداد رکوردها برای خواندن (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	fa	تعداد سطور یک فیلد چند خطی یا خط چند انتخابی
-of	infolog	fa	از
 offer	infolog	fa	پیشنهاد
 ongoing	infolog	fa	درحال انجام
 only for details	infolog	fa	فقط برای جزئیات
@@ -203,11 +190,13 @@ only the links	infolog	fa	فقط پیوندها
 open(status)	infolog	fa	کارهای باز
 optional note to the link	infolog	fa	یادداشت دلخواه برای پیوند
 order	infolog	fa	ترتیب
+organization	infolog	fa	سازمان
 overdue	infolog	fa	کارهای سررسیده
 own	infolog	fa	در مالکیت شما
 own open	infolog	fa	در مالکیت شما و باز
 own overdue	infolog	fa	در مالکیت شما و سررسید شده
 own upcoming	infolog	fa	در مالکیت شما و آینده
+parent	infolog	fa	والد
 path on (web-)serverside<br>eg. /var/samba/share	infolog	fa	مسیر برروی کارگزار
 path to user and group files has to be outside of the webservers document-root!!!	infolog	fa	مسیر به پرونده های گروه و کاربر باید خارج از مسیر اصلی کارگزار وب باشد
 pattern for search in addressbook	infolog	fa	الگو برای جستجو در دفترنشانی
@@ -219,13 +208,14 @@ phone/email	infolog	fa	تلفن/ایمیل
 phonecall	infolog	fa	تماس تلفنی
 planned	infolog	fa	برنامه ریزی شده
 planned time	infolog	fa	زمان برنامه ریزی شده
-pm	infolog	fa	عصر
-preferences	preferences	fa	تنظیمات
 price	infolog	fa	قیمت
+pricelist	infolog	fa	لیست قیمت
 priority	infolog	fa	تقدم
 private	infolog	fa	کارشخصی
 project	infolog	fa	پروژه
+project id	infolog	fa	شناسه پروژه
 project settings: price, times	infolog	fa	تنظیمات پروژه: قیمت و زمان
+projectmanager	infolog	fa	مدیریت پروژه
 re:	infolog	fa	جواب:
 read one record by passing its id.	infolog	fa	خواندن یک رکورد با ارسال شناسه اش
 read rights (default)	infolog	fa	خواندن حقوق(پیش فرض)
@@ -253,11 +243,9 @@ select an app to search in	infolog	fa	یک برنامه برای جستجو را
 select an entry to link with	infolog	fa	یک ورودی را برای پیوند دادن انتخاب کنید
 select to filter by owner	infolog	fa	برای صافی توسط مالک انتخاب کنید
 select to filter by responsible	infolog	fa	برای صافی توسط مسئول انتخاب کنید
-select which values to show	infolog	fa	انتخاب کنید کدام مقدارها باید نمایش داده شوند
 sets the status of this entry and its subs to done	infolog	fa	وضعیت این ورودی و جواب/ارجاعهایش را انجام شده قرار بده
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	fa	آیا «کارها» باید زیروظایف،تماسها یا یادداشتها را در نمای معمولی نشان دهد یا نه. شما همیشه ارجاعات/جوابها را میتوانید از طریق والد آنها ببینید.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	fa	آیا «کارها» باید پیوند به دیگر کاربردها و پرونده ها را رد فهرست خود نمایش دهد.(درنمای معمولی)
-should infolog show the links to other applications.	infolog	fa	آیا «کارها» باید پیوند به دیگر کاربردها و پرونده ها را رد فهرست خود نمایش دهد.(درنمای معمولی)
 should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	fa	آیا «کارها» باید درصفحه خانه دیده شود، و با کدام صافی. وقتی کار می کند که شما کاربردی را در صفحه خانه انتخاب نکرده باشید.(در تنظیمات)
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	fa	آیا  کارها باید نام کامل استفاده کند(نام و نام خانوادگی) یا فقط از شناسه ورود استفاده کند
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	fa	آیا  کارها در فهرستها باید عدد یکتائی که بعدا بعنوان شناسه بلیط در نظر گرفته شود، نمایش دهد
@@ -265,15 +253,14 @@ should the infolog list show the column "last modified".	infolog	fa	آیا کا�
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	fa	آیا کارها در فهرستها باید میزان درصد انجام کار را فقط برای وضعیت در حال انجام نشان دهد یا بصورت دو نمایه جدا گانه
 should this entry only be visible to you and people you grant privat access via the acl	infolog	fa	آیا ورودی باید فقط توسط شما و کسانی که به آنها اجازه دیدن خصوصی هارا داده اید ، دیده شوند
 show a column for used and planned times in the list.	infolog	fa	نمایش ستونی برای موارد استفاده شده و برنامه ریزی شده در فهرست
-show date filtters	infolog	fa	صافیهای تاریخ
 show full usernames	infolog	fa	نمایش نام کاربری کامل
 show in the infolog list	infolog	fa	نمایش لیست کارها
 show last modified	infolog	fa	نمایش آخرین تغییرات
 show status and percent done separate	infolog	fa	نمایش جداگانه وضعیت و درصد انجام
 show ticket id	infolog	fa	نمایش شناسه آگهی
 show times	infolog	fa	نمایش زمانها
-showing	infolog	fa	نمایش
 small view	infolog	fa	نمای کوچک
+start	infolog	fa	شروع
 start a new search, cancel this link	infolog	fa	شروع جستجوی جدید، لغو این پیوند
 startdate	infolog	fa	تاریخ شروع
 startdate enddate	infolog	fa	تاریخ شروع تاریخ انجام
@@ -285,15 +272,12 @@ sub	infolog	fa	ارجاع/جواب
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	fa	اگر والدی نباشد، زیر ورودی تحت والد یا بعنوان ورودی اصلی می شود
 subject	infolog	fa	موضوع
 task	infolog	fa	برای انجام
+template	infolog	fa	فرم
 test import (show importable records <u>only</u> in browser)	infolog	fa	آزمایش واردات(نمایش رکوردهای قابل وارد کردن <u>فقط</u> در مرورگر)
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	fa	نامی که داخلی استفاده می شود(کمتر از ۱۰ کاراکتر)، تغییر آن ممکن است باعث شود که اطلاعات غیر قابل دسترس شوند
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	fa	نامی که داخلی استفاده می شود(کمتر از ۲۰ کاراکتر)، تغییر آن ممکن است باعث شود که اطلاعات غیر قابل دسترس شون
 the text displayed to the user	infolog	fa	متنی که به کاربر نشان داده می شود
-this is the filter infolog uses when you enter the application.	infolog	fa	این صافی است که وقتی وارد «کارها» می شوید اعمال میشود. صافیها ورودی های موجود را به موضوعات خاصی محدود میکنند.
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	fa	این صافی است که وقتی وارد «کارها» می شوید اعمال میشود. صافیها ورودی های موجود را به موضوعات خاصی محدود میکنند.
-this month	infolog	fa	این ماه
-this week	infolog	fa	این هفته
-this year	infolog	fa	امسال
 til when should the todo or phonecall be finished	infolog	fa	تا چه زمانی باید برای انجام یا تماس تلفنی اتمام برسد
 times	infolog	fa	زمانها
 to many might exceed your execution-time-limit	infolog	fa	زیاد باشد ممکن است به محدودیت زمان اجرا برسد
@@ -301,11 +285,11 @@ to what should the startdate of new entries be set.	infolog	fa	ورودیهای 
 today	infolog	fa	امروز
 todays date	infolog	fa	تاریخ امروز
 todo	infolog	fa	برای انجام
-translation	infolog	fa	ترجمه
 typ	infolog	fa	نوع
 typ '%1' already exists !!!	infolog	fa	نوع '%1' وجود دارد
 type	infolog	fa	نوع
 type ...	infolog	fa	نوع...
+type of customfield	infolog	fa	نوع فیلد سفارشی
 type of the log-entry: note, phonecall or todo	infolog	fa	نوع ورودی ثبت: یادداشت، تماس تلفنی یا برای انجام
 unlink	infolog	fa	برداشتن پیوند
 upcoming	infolog	fa	کارهای آینده
@@ -326,7 +310,6 @@ will-call	infolog	fa	تماس خواهد گرفت
 write (add or update) a record by passing its fields.	infolog	fa	نوشتن(افزودن یا بهنگام سازی) یک رکورد با ارسال یک فیلد به آن
 yes - delete	infolog	fa	بله - حذف کن
 yes - delete including sub-entries	infolog	fa	بله - بهمراه جواب/ارجاعها حذف کن
-yesterday	infolog	fa	دیروز
 you can't delete one of the stock types !!!	infolog	fa	شما نمی توانید یک از انواع سهام را حذف کنید
 you have entered an invalid ending date	infolog	fa	شما یک تاریخ انجام نامعتبر وارد کردید
 you have entered an invalid starting date	infolog	fa	شما یک تاریخ شروع نامعتبر وارد کردید

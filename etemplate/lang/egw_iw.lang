@@ -18,13 +18,16 @@ add a new multi-column index	etemplate	iw	הוסף אינדקס רב-עמודו�
 add column	etemplate	iw	הוסף עמודה
 add index	etemplate	iw	הוסף אינדקס
 add table	etemplate	iw	הוסף טבלה
+advanced search	etemplate	iw	חיפוש מתקדם
 align	etemplate	iw	יישר
 alignment of label and input-field in table-cell	etemplate	iw	יישור התווית ושדה הקלט בתא של הטלה
 alignment of the v/hbox containing table-cell	etemplate	iw	יישור תיבת האנכי/אופקי המכיל את התא של הטבהל
 am	etemplate	iw	הנני
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	iw	!(עמודה מאונדקסת מזרזת שאילתות המשתמשות בעמודה זו (על חשבון מקום אכסון
+and	etemplate	iw	-ו
 application	etemplate	iw	יישום
 application name needed to write a langfile or dump the etemplates !!!	etemplate	iw	!eTemplates שם היישום הדרוש כדי לכתוב קובץ שפה או להשליך
+applications	etemplate	iw	יישומים
 attach	etemplate	iw	צרף
 attach file	etemplate	iw	צרף קובץ
 blurtext	etemplate	iw	טשטש טקסט
@@ -37,6 +40,7 @@ cellpadding for the table-tag	etemplate	iw	ריפוד התא עבור תג טב�
 cells	etemplate	iw	תאים
 cellspacing for the table-tag	etemplate	iw	ריווח תאים לתג טבלה
 center	etemplate	iw	מרכז
+changed	etemplate	iw	שונה
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	iw	(בדוק באם יש להציג את התוכן בלבד ולא לשנות אותו (אז לא מחזירים את התוכן
 check if field has to be filled by user	etemplate	iw	סמן אם על המשתמש למלא את השדה
 checkbox	etemplate	iw	תיבת סימון
@@ -49,19 +53,24 @@ click here to upload the file	etemplate	iw	הקלק כאן לעלות את הק�
 click to order after that criteria	etemplate	iw	הקלק כאן כדי לסדר לפי קרטיריון זה
 columnname	etemplate	iw	שם העמודה
 comment	etemplate	iw	הערה
+confirm	etemplate	iw	אישורך
+contact	etemplate	iw	איש קשר
+contains	etemplate	iw	מכיל
 create a new table for the application	etemplate	iw	צור עמודה חדשה עבור יישום זה
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	iw	(מתוויות וטקסט עזרה (עבור היישום בשם ('en') יוצר קובץ שפה באנגלית
 css class for the table-tag	etemplate	iw	עבור תג הטבלה CSS סיווג
 css-styles	etemplate	iw	CSS-סגנונות
+custom	etemplate	iw	מותאם אישית
+custom fields	etemplate	iw	שדות מותאמים אישית
 date+time	etemplate	iw	שעה+תאריך
 datum	etemplate	iw	נתון
 day	etemplate	iw	יום
+days	etemplate	iw	ימים
 db ensures that every row has a unique value in that column	etemplate	iw	בסיס הנתונים מוודא של כל שורה יש ערך ייחודי בעמודה זו
 db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	iw	עבור אורך המונדקס של עמודה mysql(100) או nysql(FULLTECT): אפשרויות אידקס ייחודיות של (בסיס הנתונים (המופרד בפסיקים
 db-tools	etemplate	iw	כלי בסיס הנתונים
 deck	etemplate	iw	(חפיסה (פנימית
 default	etemplate	iw	ברירת מחדל
-delete	etemplate	iw	מחק
 delete a single entry by passing the id.	etemplate	iw	.מחיקת רשומה  ע"י העברת זיהויו
 delete all selected etemplates, without further inquiry	etemplate	iw	המובחרים ללא כל שאלה נוספת eTemplates מחק את כל
 delete column	etemplate	iw	מחק עמודה
@@ -79,6 +88,7 @@ do you want to save the changes you made in table %s?	etemplate	iw	?ברצונך
 documentation	etemplate	iw	תיעוד
 drop a table - this can not be undone	etemplate	iw	השלך טבלה - לא ניתן לשיחזור
 drop table	etemplate	iw	השלך טבלה
+duration	etemplate	iw	משך
 edit	etemplate	iw	ערוך
 edit the etemplate spez. above	etemplate	iw	לעיל eTemplates-ערוך את ספציפיקציות ה
 editable templates - db-tools	etemplate	iw	הניתנים לעריכה - כלי בסיס נתונים eTemplates
@@ -94,8 +104,6 @@ enter the new version number here (has to be > old_version)	etemplate	iw	(ציי
 entry saved	etemplate	iw	הרשומה נשמרה
 error: template not found !!!	etemplate	iw	!שגיאה: התבנית לא נמצאה
 error: webserver is not allowed to write into '%1' !!!	etemplate	iw	!%1 שגיאה: לשרת הווב אין הרשאה לכתוב אל
-error: while saveing !!!	etemplate	iw	!שגיאה: בשמירה
-error: writeing !!!	etemplate	iw	!שגיאה: בכתיבה
 error: writing file (no write-permission for the webserver) !!!	etemplate	iw	(!שגיאה: בכתיבת הקובץ (אין לשרת הווב הרשאות כתיבה
 etemplate '%1' imported, use save to put it in the database	etemplate	iw	הובא, השתמש ב-[שמור] כדי להכניס אותו לבסיס הנתונים eTemplate-ה
 etemplate '%1' written to '%2'	etemplate	iw	%1 נכתב אל %2 eTemplate-ה
@@ -125,6 +133,7 @@ height, disabled	etemplate	iw	גובה, במוטל
 help	etemplate	iw	עזרה
 horizontal rule	etemplate	iw	חוק אופקי
 hour	etemplate	iw	שעה
+hours	etemplate	iw	שעות
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	iw	אם השדה מבוטל תא ריק מוצג כדי להסיר (זמנית) את השדה/תא
 image	etemplate	iw	תמונה
 import	etemplate	iw	ייבוא
@@ -151,6 +160,7 @@ linkstring	etemplate	iw	מחרוזת הקישור
 linkto	etemplate	iw	לקשור אל
 load this template into the editor	etemplate	iw	טען תבנית זו אל העורך
 minute	etemplate	iw	דקה
+minutes	etemplate	iw	דקות
 month	etemplate	iw	חודש
 multicolumn indices	etemplate	iw	אידקס רב-עמודות
 name	etemplate	iw	שם
@@ -167,6 +177,7 @@ nextmatch filterheader	etemplate	iw	סנן כותרות להתאמה הבאה
 nextmatch sortheader	etemplate	iw	מיין כותרות להתאמה הבאה
 no file	etemplate	iw	אין קובץ
 no filename given or selected via browse...	etemplate	iw	[לא ציון שם קובץ וגם לא נבחר באמצעות [עיון
+no matches found	etemplate	iw	לא נמצאו התאמות
 not null	etemplate	iw	NULL לא
 nothing found - try again !!!	etemplate	iw	!לא נמצא כלום - נסה שוב
 nothing matched search criteria !!!	etemplate	iw	!שום דבר לא התאים לקרטריון החיפוש
@@ -175,6 +186,7 @@ of	etemplate	iw	של
 only an other version found !!!	etemplate	iw	!נמצאה גירסה אחרת בלבד
 optional note about the link	etemplate	iw	הערה אפציונלית לקישור
 options	etemplate	iw	אפשריות
+or	etemplate	iw	או
 overflow	etemplate	iw	גלישה
 padding	etemplate	iw	ריפוד
 please enter table-name first !!!	etemplate	iw	!נא להקליד שם טבלה קודם
@@ -187,11 +199,12 @@ read	etemplate	iw	קרא
 read a list of entries.	etemplate	iw	קרא רשימת רשומות
 read a single entry by passing the id and fieldlist.	etemplate	iw	קרא רשומוה בודדת ע"י העברת הזיהוי ורשימת שדות
 read etemplate from database (for the keys above)	etemplate	iw	(מבסיס נתונים (עבור המפתחות לעיל eTemplate קרא
+readonly	etemplate	iw	לקריאה בלבד
 remove row (can not be undone!!!)	etemplate	iw	(הסר שורה (לא ניתן לשחזור
 remove this link (not the entry itself)	etemplate	iw	(הסר קישור זה (אבל לא את הרשומה עצמה
+required	etemplate	iw	נדרש
 returns savely, without deleting	etemplate	iw	חוזר תוך כדי שמירה, בלי למחוק
 right	etemplate	iw	ימין
-save	etemplate	iw	שמור
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	iw	[תחת המפתחות לעיל (שם,...), שנה שם עבור [שמור בשם eTemplate-שמור את ה
 saves changes to tables_current.inc.php	etemplate	iw	tables_current.inc.php שמור שינוים אל
 scale	etemplate	iw	קנה מידה

@@ -4,6 +4,7 @@
 %1 etemplates found	etemplate	sl	%1 najdenih ePredlog
 %1 matches on search criteria	etemplate	sl	%1 zadetkov za iskani kriterij
 %1 new etemplates imported for application '%2'	etemplate	sl	%1 novih ePredlog uvoženih za program '%2'
+%1 not implemented for %2!	etemplate	sl	%1 ni implementirano za %2!
 %s disabled	etemplate	sl	%s onemogočenih
 %s needed	etemplate	sl	%s potrebnih
 %s notranslation	etemplate	sl	%s brez prevoda
@@ -32,8 +33,10 @@ all days	etemplate	sl	Vsi dnevi
 all operations save the template!	etemplate	sl	Vse operacije shranijo predlogo!
 am	etemplate	sl	dop
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	sl	Oštevilčen stolpec pospeši poizvedbe (zavzame več prostora na disku!)
+and	etemplate	sl	in
 application	etemplate	sl	Aplikacija
 application name needed to write a langfile or dump the etemplates !!!	etemplate	sl	Ime programa, ki je potreben za zapis jezikovne datoteke ali skladiščenje ePredlog
+applications	etemplate	sl	Aplikacije
 applies the changes made	etemplate	sl	Potrdi spremembe
 applies the changes to the given version of the template	etemplate	sl	potrdi spremembe podane verzije predloge
 as default	etemplate	sl	Kot privzeto
@@ -58,6 +61,7 @@ cells	etemplate	sl	Celice
 cellspacing for the table-tag	etemplate	sl	Razmik med celicami
 center	etemplate	sl	Sredina
 changed	etemplate	sl	Spremenjeno
+check all	etemplate	sl	Preveri vse
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	sl	Preveri, če naj bo vsebina samo prikazana in ne spremenjena (na ta način ni poslana nazaj!)
 check if field has to be filled by user	etemplate	sl	Preveri, če naj uporabnik izpolni polja
 checkbox	etemplate	sl	Izbirno polje
@@ -120,6 +124,7 @@ displayed in front of input or input is inserted for a '%s' in the label (label 
 displayed in statusline of browser if input-field gets focus	etemplate	sl	Prikazano v statusni vrstici brskalnika, če se vnosno polje označi
 displayed in the top line of the groupbox (legend)	etemplate	sl	Prikazano v vrhnji liniji okvirja skupine (legenda)
 do you want to save the changes you made in table %s?	etemplate	sl	Ali želite shraniti spremembe v tabeli %s?
+document '%1' does not exist or is not readable for you!	preferences	sl	Dokument '%1' ne obstaja ali pa nimate pravice branja!
 documentation	etemplate	sl	Dokumentacija
 doesn't matter	etemplate	sl	Ni pomembno
 drop a table - this can not be undone	etemplate	sl	Izbriši (drop) tabelo - ni mogoče razveljaviti
@@ -143,6 +148,7 @@ enter filename to upload and attach, use [browse...] to search for it	etemplate	
 enter the new version number here (> old_version), empty for no update-file	etemplate	sl	Sem vnesite novo številko različice (> stara_različica), prazno za ne-obnovo datoteke
 enter the new version number here (has to be > old_version)	etemplate	sl	Sem vnesite novo številko različice  (mora biti > stara_različica)
 entry saved	etemplate	sl	Vnos shranjen
+error uploading file!	filemanager	sl	Napaka pri prenosu datoteke!
 error: template not found !!!	etemplate	sl	Napaka: ne najdem predloge!
 error: webserver is not allowed to write into '%1' !!!	etemplate	sl	Napaka: spletni strežnik nima pravic za pisanje v '%1' !
 error: while saving !!!	etemplate	sl	Napaka: med shranjevanjem!
@@ -168,6 +174,7 @@ first	etemplate	sl	Prvi
 floating point	etemplate	sl	Decimalna vejica
 foreign key	etemplate	sl	Tuji ključ
 formatted text (html)	etemplate	sl	Oblikovano besedilo (HTML)
+general fields:	preferences	sl	Splošna polja:
 go to the first entry	etemplate	sl	Pojdi na prvi vnos
 go to the last entry	etemplate	sl	Pojdi na zadnji vnos
 go to the next page of entries	etemplate	sl	Pojdi na naslednjo stran vnosov
@@ -205,6 +212,7 @@ insert a row above	etemplate	sl	Vstavi vrstico nad
 insert a row below	etemplate	sl	Vstavi vrstico spodaj
 insert a widget before	etemplate	sl	Vstavi gradnik spredaj
 insert a widget behind	etemplate	sl	Vstavi gradnik zadaj
+insert in document	etemplate	sl	Vstavi v dokument
 insert new column behind this one	etemplate	sl	Vstavi nov stolpec za tem
 insert new column in front of all	etemplate	sl	Vstavi nov stolpec pred vsemi
 insert new row after this one	etemplate	sl	Vstavi novo vrstico za to
@@ -225,6 +233,7 @@ linklist	etemplate	sl	Povezava - seznam
 linkstring	etemplate	sl	Povezava - besedilo
 linkto	etemplate	sl	Povezava na
 load this template into the editor	etemplate	sl	Naloži to predlogo v urejevalnik
+maximum size for uploads	filemanager	sl	Največja velikost za prenos
 middle	etemplate	sl	Srednji
 minute	etemplate	sl	Minuta
 minutes	etemplate	sl	Minute
@@ -248,6 +257,7 @@ nextmatch sortheader	etemplate	sl	Naslednji zadetek, razvrsti glave
 no column to swap with !!!	etemplate	sl	Nobenega stolpca za zamenjavo!
 no file	etemplate	sl	Ni datoteke
 no filename given or selected via browse...	etemplate	sl	Nobena datoteka ni bila izbrana prek Prebrskaj ...
+no matches found	etemplate	sl	Ni najdenih zadetkov
 no row to swap with !!!	etemplate	sl	Nobene vrstice za zamenjavo!
 not null	etemplate	sl	NOT NULL
 nothing	etemplate	sl	Nič
@@ -264,6 +274,7 @@ open the online help.	etemplate	sl	Odpri pomoč.
 operator	etemplate	sl	Operator
 optional note about the link	etemplate	sl	Morebitne opombe o povezavi
 options	etemplate	sl	Možnosti
+or	etemplate	sl	ali
 order to navigating by tab key through the form	etemplate	sl	Vrstni red krmarjenja po obrazcu s tipko Tab
 overflow	etemplate	sl	Prenasičenost
 padding	etemplate	sl	Odmik
@@ -284,6 +295,7 @@ read etemplate from database (for the keys above)	etemplate	sl	Beri ePredlogo iz
 readonly	etemplate	sl	Samo za branje
 remove row (can not be undone!!!)	etemplate	sl	Odstrani vrstico (ni mogoče razveljaviti)
 remove this link (not the entry itself)	etemplate	sl	Odstrani to povezavo (ne samega vnosa)
+required	etemplate	sl	Zahtevano
 returns savely, without deleting	etemplate	sl	Vrne varno, BREZ brisanja
 right	etemplate	sl	Desno
 row...	etemplate	sl	Vrstica ...
@@ -403,5 +415,4 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	sl	Datoteka XML za izvoz
 xslt template	etemplate	sl	Predloga XSLT
 year	etemplate	sl	Leto
-error uploading file!	filemanager	sl	Napaka pri prenosu datoteke!
-maximum size for uploads	filemanager	sl	Največja velikost za prenos
+you can respond by visiting:	etemplate	sl	Za ogled pojdite na:

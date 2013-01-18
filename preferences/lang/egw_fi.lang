@@ -1,6 +1,7 @@
-$label	preferences	fi	$label
 %1 - preferences	preferences	fi	%1 - asetukset
 %1 hours	preferences	fi	%1 tunti(a)
+%1 is no existing vfs directory!	preferences	fi	%1 ei ole olemassaoleva kansio
+%1 is no existing vfs file!	preferences	fi	%1 ei ole olemassaoleva tiedosto
 12 hour	preferences	fi	12 tuntia
 24 hour	preferences	fi	24 tuntia
 a template defines the layout of egroupware and it contains icons for each application.	preferences	fi	Mallipohja sisältää ulkoasun ja kuvakkeet jokaiselle sovellukselle.
@@ -38,6 +39,7 @@ enter your old password	preferences	fi	Anna vanha salasana
 failed to change password.  please contact your administrator.	preferences	fi	Salasanan vaihto ei onnistunut.
 forced preferences	preferences	fi	Pakotetut asetukset
 help off	preferences	fi	Piilota ohjeet
+holding ctrl/cmd key and click on the line	preferences	fi	Paina Ctrl/Cmd painiketta ja klikkaa riviä
 hours	preferences	fi	Tuntia
 how do you like to display accounts	preferences	fi	Käyttäjätilien esitystapa
 how do you like to select accounts	preferences	fi	Käyttäjätilien valinta
@@ -50,11 +52,13 @@ icons only	preferences	fi	Vain kuvakkeet
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	fi	Näytä linkitettyjen kuvien thumbnailit. Voit ottaa tämän toiminnon pois käytöstä nopeuttaaksesi sivun latautumista.
 in which country are you. this is used to set certain defaults for you.	preferences	fi	Maa, jossa olet. Tämän avulla määritellään joitakin oletusasetuksia.
 interface/template selection	preferences	fi	Mallipohja
+just clicking on the line, like a checkbox	preferences	fi	Klikkaamalla riviä
 language	preferences	fi	Kieli
 max matches per page	preferences	fi	Osumien maksimimäärä sivulla
 max number of icons in navbar	preferences	fi	Kuvakkeiden maksimimäärä navigaatiopalkissa
 no default	preferences	fi	Ei oletusta
 no user-selection at all	common	fi	Ei ollenkaan käyttäjävalintaa
+note: this feature does *not* change your email password. this will	preferences	fi	Huom: tämä asetus EI muuta sähköpostin salasanaa. Sähköpostin salasana on vaihdetaan muuta kautta.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	fi	Huom! Tämä asetus EI muuta sähköpostin salasanaa. Sähköpostin salasana on vaihdetaan muuta kautta.
 number format	preferences	fi	Numeroiden muoto
 office 2003 theme	preferences	fi	Office 2003 teema
@@ -70,6 +74,7 @@ re-enter your password	preferences	fi	Anna salasana uudelleen
 read prefs for the specified application.	preferences	fi	Lukuoikeudet tiettyyn sovellukseen
 rich text editor enter mode	preferences	fi	Rich text editor enter -tila
 rich text editor theme	preferences	fi	Rich text editor -teema
+select additional lines in lists by	preferences	fi	Valitse lisärivit listanäkymässä
 select different theme	preferences	fi	Valitse toinen teema
 select how the rich text editor will generate the enter (linebreak) tag.	preferences	fi	Valitse kuinka Rich text editor tuottaa rivivälin merkin.
 select one	preferences	fi	Valitse
@@ -84,6 +89,7 @@ should the number of active sessions be displayed for you all the time.	preferen
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	fi	Näytetäänkö ohjeviestit aina, vai vain tarvittaessa.
 show helpmessages by default	preferences	fi	Ohjeviestit
 show links between egroupware aps as	common	fi	Sovellusten kuvakkeet ja linkit
+show navigation bar as	preferences	fi	Näytä navigaatiopalkki
 show number of current users	preferences	fi	Nykyiset käyttäjät
 show text on navigation icons	preferences	fi	Näytä navigaatiokuvakkeiden teksti
 show_more_apps	common	fi	Näytä lisää sovelluksia
@@ -92,7 +98,8 @@ spellchecker language	addressbook	fi	Oikolukuohjelman kieli
 text only	preferences	fi	Vain teksti
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fi	Oletus sovellus käynnistyy kun kirjaudut EGroupwareen tai painat etusivun kuvaketta.<br>Sinulla voi olla enemmän kuin yksi sovellus etusivullasi (pitää asettaa sovelluskohtaisesti), jollet määrittele tiettyä sovellusta tähän.
 the old password is not correct	preferences	fi	Vanha salasana ei ole oikein!
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.* the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.*	preferences	fi	Valintalaatikko näyttää kaikki käyttäjät, voi olla hidas isoissa yrityksissä. Ponnahdusikkuna voi etsiä kayttäjiä sekä nimen että ryhmän mukaan. Muut vaihtoehdot rajoittavat valintaa, ei suositella ylläpitäjille!
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	fi	Valintaruutu näyttää kaikki käytettävissä olevat käyttäjät (saattaa hidastaa järjestelmää, jos käyttäjiä on paljon). Käyttäjiä ja ryhmiä voidaan etsiä ponnahdusikkunassa.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	fi	Kaksi viimeistä vaihtoehtoa rajoittava näkyvyyttä käyttäjille. Niitä EI tule asettaa ylläpitäjille.
 the two passwords are not the same	preferences	fi	Salasanat eivät ole samoja
 theme (colors/fonts) selection	preferences	fi	Teema
 this server is located in the %1 timezone	preferences	fi	Palvelin on aikavyöhykkeellä %1
@@ -104,6 +111,7 @@ when you say yes the home and logout buttons are presented as applications in th
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fi	Valitse merkistökoodaus CSV tuontiin ja vientiin.
 which currency symbol or name should be used in egroupware.	preferences	fi	Rahayksikkö: symboli tai nimi.
 write prefs for the specified application.	preferences	fi	Kirjoitusoikeudet sovellukseen.
+you can show the applications as icons only, icons with app-name or both.	preferences	fi	Voit näyttää linkitetyt tietueet ainoastaan kuvakkeina, kuvakkeen nimellä tai molempina.
 you can show the linked entries with icons only, icons with app-name or both.	common	fi	Voit näyttää linkitetyt tietueet ainoastaan kuvakkeina, kuvakkeen nimellä tai molempina.
 you do not have permission to set acl's in this mode!	preferences	fi	Et voi määritellä käyttöoikeuksia tässä tilassa!
 you must enter a password	preferences	fi	Anna salasana

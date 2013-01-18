@@ -4,6 +4,7 @@
 %1 weeks	calendar	zh	%1 星期
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	zh	<b>请注意</b>：日历使用您的国家的法定假日，目前设置为 %1；您可以将其修改为适合您的 %2。<br />假日信息 %3 是自动从 %4 安装的，可以在 %5 修改。
 a non blocking event will not conflict with other events	calendar	zh	一个未锁定事件将不会与其它事件冲突
+accept	calendar	zh	接受
 accept or reject an invitation	calendar	zh	接受或拒绝邀请
 accepted	calendar	zh	已接受
 access denied to the calendar of %1 !!!	calendar	zh	对 %1 的日历的访问被拒绝！
@@ -11,6 +12,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	zh	操作
 actions...	calendar	zh	操作...
 add alarm	calendar	zh	添加闹铃
+add timesheet entry	calendar	zh	添加时间表条目
 added	calendar	zh	添加
 added by synchronisation	calendar	zh	由同步添加
 after %1	calendar	zh	在%1以后
@@ -27,6 +29,7 @@ all events	calendar	zh	所有事件
 all future	calendar	zh	所有未来
 all participants	calendar	zh	所有参与者
 allows to edit the event again	calendar	zh	允许再次编辑事件
+always	calendar	zh	永远
 apply the changes	calendar	zh	应用修改
 are you sure you want to delete this country ?	calendar	zh	您确定要移除这个国家吗？
 are you sure you want to delete this holiday ?	calendar	zh	您确定要移除这个假日吗？
@@ -41,6 +44,7 @@ busy	calendar	zh	忙碌
 by	calendar	zh	于
 calendar csv export	calendar	zh	日历 CSV 导出
 calendar event	calendar	zh	日历事件
+calendar fields:	calendar	zh	日历字段：
 calendar holiday management	admin	zh	日历假日管理
 calendar menu	calendar	zh	日历菜单
 calendar preferences	calendar	zh	日历参数设置
@@ -48,7 +52,8 @@ calendar settings	admin	zh	日历设置
 calendar-fieldname	calendar	zh	日历-字段名
 can't add alarms in the past !!!	calendar	zh	不能在过去添加闹铃！
 canceled	calendar	zh	取消
-charset of file	calendar	zh	文件字符编码
+check all	calendar	zh	全选
+choose a category	calendar	zh	选择分类
 close the window	calendar	zh	关闭窗口
 compose a mail to all participants after the event is saved	calendar	zh	在事件保存后发邮件通知每一个参与者
 copy of:	calendar	zh	复制：
@@ -64,6 +69,7 @@ csv-fieldname	calendar	zh	CSV-字段名
 csv-filename	calendar	zh	CSV-字段名
 custom fields	common	zh	自定义字段
 daily	calendar	zh	每日
+day	calendar	zh	日
 days	calendar	zh	日
 days of the week for a weekly repeated event	calendar	zh	一个每周重复事件在星期几
 days repeated	calendar	zh	重复日
@@ -78,16 +84,16 @@ delete this alarm	calendar	zh	删除闹铃
 delete this event	calendar	zh	删除事件
 delete this exception	calendar	zh	删除例外
 delete this series of recuring events	calendar	zh	删除此系列循环事件
+deleted	calendar	zh	已删除
 disinvited	calendar	zh	不邀请
 display status of events	calendar	zh	显示事件状态
 displayed view	calendar	zh	显示视图
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	zh	在首页显示您的默认日历视图 (您登录 egroupWare 的第一个页面或点击'首页图标'时显示的页面)？
 do you want a weekview with or without weekend?	calendar	zh	您想在周视图上包含或不包含周末？
-do you want to be notified about new or changed appointments? you be notified about changes you make yourself. <br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	zh	您希望通知管理系统在新增或改变约会时通知您吗？同样您也通知您自己您所做的更改。<br>您可以限制通知管理系统只提醒确定的改变。每个项目包含了所有关于它的通知列表。所有的修改包括标题、描述、参与者的改变，但不包括参与者回复。如果事件发起人要求任何通知，他会随时收到参与者接受或是拒绝的回复。
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	zh	您希望通过邮件接收您的约会的规则概要吗？<br>该概要是在当天早上或者在每个周一的每周概要发到您的标准信箱。<br>它只会在当您有约会的那一天或是那一周发出。
 do you wish to autoload calendar holidays files dynamically?	admin	zh	您希望动态地自动加载日历的假期文件吗？
 download	calendar	zh	下载
 download this event as ical	calendar	zh	下载这一事件的 iCal 格式
+duration	calendar	zh	期间
 duration of the meeting	calendar	zh	会议期间
 edit exception	calendar	zh	编辑例外
 edit series	calendar	zh	编辑系列
@@ -116,10 +122,10 @@ exception created - you can now edit or delete it	calendar	zh	例外已建立 - 
 exceptions	calendar	zh	例外
 execute a further action for this entry	calendar	zh	为这一输入执行进一步的操作
 existing links	calendar	zh	已存在链接
-export	calendar	zh	导出
 extended	calendar	zh	扩展
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	zh	扩展更新总是含完整的事件细节，iCal 格式可以被其它日历应用软件读取。
 fieldseparator	calendar	zh	字段分隔符
+filemanager	calendar	zh	文件管理器
 filename	calendar	zh	字段名
 filename of the download	calendar	zh	需下载的字段名
 find free timeslots where the selected participants are availible for the given timespan	calendar	zh	找出在指定的期间所选择的参与者都有空的最佳时间段
@@ -135,7 +141,7 @@ freetime search	calendar	zh	空闲时间搜寻
 fri	calendar	zh	五
 full description	calendar	zh	完整描述
 fullname of person to notify	calendar	zh	被通知者的全名
-general	calendar	zh	常规
+global categories	calendar	zh	全局分类
 global public and group public	calendar	zh	全局公用及群组公用
 global public only	calendar	zh	全局公用
 group invitation	calendar	zh	群组邀请
@@ -146,6 +152,7 @@ h	calendar	zh	时
 here is your requested alarm.	calendar	zh	这是您的请求提醒
 hide private infos	calendar	zh	隐藏私人信息
 high priority	calendar	zh	高优先
+history	calendar	zh	历史记录
 holiday	calendar	zh	假日
 holiday management	calendar	zh	假日管理
 holidays	calendar	zh	假期
@@ -162,14 +169,15 @@ ical successful imported	calendar	zh	iCal 导入成功
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	zh	周末指定的节日将在下周一生效。
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	zh	如果您在此未设置密码，知道网址的任何人都可读取此信息。
 ignore conflict	calendar	zh	忽略冲突
-import	calendar	zh	导入
 import csv-file	common	zh	导入CSV文件
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	zh	从CSV文件导入事件到日历中。CSV方法'以逗号分隔的值'。不过在选项选项卡，你仍可以选择其他分隔符。
+insert in document	calendar	zh	插入文件
 interval	calendar	zh	间隔
 invalid email-address "%1" for user %2	calendar	zh	用户 %2 错误的邮箱 "%1"
 last	calendar	zh	最后的
 lastname of person to notify	calendar	zh	被通知人的 姓
 length of the time interval	calendar	zh	间隔时间长度
+link	calendar	zh	链接
 link to view the event	calendar	zh	链接查看事件
 links	calendar	zh	链接
 links, attachments	calendar	zh	链接、附件
@@ -182,11 +190,14 @@ make freebusy information available to not loged in persons?	calendar	zh	将可�
 minutes	calendar	zh	分钟
 modified	calendar	zh	更改
 mon	calendar	zh	一
+month	calendar	zh	月
 monthly	calendar	zh	每月
 monthly (by date)	calendar	zh	每月 (以日期计)
 monthly (by day)	calendar	zh	每月 (以天数计)
 monthview	calendar	zh	月视图
 multiple week view	calendar	zh	多重周视图
+name of current user, all other contact fields are valid too	calendar	zh	目前用户的名称，所有其他联系人字段也是正确的
+new	calendar	zh	新建
 new search with the above parameters	calendar	zh	就以上的参与者重新搜索
 no events found	calendar	zh	无事件
 no filter	calendar	zh	无筛选
@@ -243,8 +254,10 @@ repeating event information	calendar	zh	重复事件信息
 repeating interval, eg. 2 to repeat every second week	calendar	zh	重复间隔，例如：2代表每隔两周重复一次
 repetition	calendar	zh	重复
 repetitiondetails (or empty)	calendar	zh	重复细节 (或空白)
+requested	calendar	zh	请求
 reset	calendar	zh	重置
 resources	calendar	zh	资源
+role	calendar	zh	职务
 rule	calendar	zh	规则
 sat	calendar	zh	六
 saves the changes made	calendar	zh	保存所做更改
@@ -252,22 +265,19 @@ saves the event ignoring the conflict	calendar	zh	保存时间并忽略冲突
 scheduling conflict	calendar	zh	时间表重迭
 select a %1	calendar	zh	选择 %1
 select a time	calendar	zh	选择时间
+select multiple contacts for a further action	calendar	zh	为下一步操作选择多个联系人
 select resources	calendar	zh	选择资源
 select who should get the alarm	calendar	zh	选择应通知者
 selected range	calendar	zh	选择的范围
 set a year only for one-time / non-regular holidays.	calendar	zh	设置一年仅一次/非规则假日。
 set new events to private	calendar	zh	设置新事件为私有
 setting lock time calender	admin	zh	设定日历的数据锁定时间为(默认为1秒)
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	zh	您已经拒绝的邀请仍要显示在您的日历中吗？<br>如果它仍然显示在您的日历中，您只有以后接受他们(例如：在去除了您的时间表冲突时)。
 should new events created as private by default ?	calendar	zh	默认新增的事件为私有？
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	zh	没有登录的人能否看到您现在的空闲/繁忙信息？您可以设置一个与正常密码不同的附加密码来保护此信息。该空闲/繁忙信息是在iCal格式里和只包括你处于忙状态的时间，它不包括事件的名称、描述或地点。您的空闲/繁忙信息的网址是 %1。
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="http://demo.mzc.cn/calendar/freebusy.php?user=michel" target="_blank">http://demo.mzc.cn/calendar/freebusy.php?user=michel</a>.	calendar	zh	没有登录的人能否看到您现在的空闲/繁忙信息？您可以设置一个与正常密码不同的附加密码来保护此信息。该空闲/繁忙信息是在iCal格式里和只包括你处于忙状态的时间，它不包括事件的名称、描述或地点。您的空闲/繁忙信息的网址是 <a href="http://demo.mzc.cn/calendar/freebusy.php?user=michel" target="_blank">http://demo.mzc.cn/calendar/freebusy.php?user=michel</a>。
 should the planner display an empty row for users or categories without any appointment.	calendar	zh	计划应该为没有任何约会的用户或类别显示一个空白行。
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	zh	事件参与者的状态(接受，拒绝...)应该显示在每个参与者名字后面的方括号里吗？
 show birthdays from addressbook	admin	zh	从通讯录显示生日
 show default view on main screen	calendar	zh	在主窗口显示默认视图
 show empty rows in planner	calendar	zh	在计划中显示空白行
-show invitations you rejected	calendar	zh	显示您拒绝的邀请
 show list of upcoming events	calendar	zh	显示即将到来的事件列表
 show only the date, not the year	admin	zh	只显示日期，不显示年份
 show this month	calendar	zh	显示这个月
@@ -275,6 +285,7 @@ show this week	calendar	zh	显示这一周
 single event	calendar	zh	单一事件
 start	calendar	zh	开始
 start date/time	calendar	zh	开始日期/时间
+startdate	calendar	zh	起始日期
 startdate / -time	calendar	zh	开始日期 / -时间
 startdate and -time of the search	calendar	zh	搜索的开始日期和 -时间
 startdate of the export	calendar	zh	导出的开始日期
@@ -301,9 +312,9 @@ thu	calendar	zh	四
 til	calendar	zh	到
 timeframe	calendar	zh	时段
 timeframe to search	calendar	zh	搜索的时段
+timezone	calendar	zh	时区
 title of the event	calendar	zh	事件标题
 to many might exceed your execution-time-limit	calendar	zh	对许多也许超出了您的执行时间极限
-translation	calendar	zh	翻译
 tue	calendar	zh	二
 two weeks	calendar	zh	两周
 updated	calendar	zh	更新日期
@@ -323,8 +334,6 @@ weeks in multiple week view	calendar	zh	几星期在多重周视图中
 weekview	calendar	zh	周视图
 weekview with weekend	calendar	zh	周视图 (有周末)
 weekview without weekend	calendar	zh	周视图 (无周末)
-which events do you want to see when you enter the calendar.	calendar	zh	当您进入日历时您希望看到哪一个事件。
-which of calendar view do you want to see, when you start calendar ?	calendar	zh	当您开始一个日历时，您希望看到哪一个日历视图？
 whole day	calendar	zh	整天
 wk	calendar	zh	周
 work day ends on	calendar	zh	工作日结束时间

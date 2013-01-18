@@ -35,8 +35,10 @@ all days	etemplate	pt-br	Todos os dias
 all operations save the template!	etemplate	pt-br	Todas as operações salvam o modelo!
 am	etemplate	pt-br	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	pt-br	uma coluna indexada posicionada acima das querys (custa espaço no disco)
+and	etemplate	pt-br	E
 application	etemplate	pt-br	Aplicativo
 application name needed to write a langfile or dump the etemplates !!!	etemplate	pt-br	É preciso o nome da aplicação para escrever um arquivo de idioma ou copiar o eModelo!!!
+applications	etemplate	pt-br	Aplicativos
 applies the changes made	etemplate	pt-br	Aplicar as alterações realizadas
 applies the changes to the given version of the template	etemplate	pt-br	Aplicar as alterações para a versão do modelo informado
 as default	etemplate	pt-br	como padrão
@@ -61,6 +63,7 @@ cells	etemplate	pt-br	Células
 cellspacing for the table-tag	etemplate	pt-br	Espaçamento da célula para a tabela
 center	etemplate	pt-br	Centralizar
 changed	etemplate	pt-br	Alterado
+check all	etemplate	pt-br	Verificar todos
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	pt-br	marque se o conteúdo está sómente sendo mostrado e não alterado (o conteúdo não pode ser desfeito!)
 check if field has to be filled by user	etemplate	pt-br	marque se o campo tiver que ser preenchido pelo usuário
 checkbox	etemplate	pt-br	Caixa de seleção
@@ -85,6 +88,7 @@ contact fields	etemplate	pt-br	Campos de contatos
 contains	etemplate	pt-br	contém
 create a new table for the application	etemplate	pt-br	Criar uma nova tabela para aplicação
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	pt-br	criados em um arquivo de idioma inglês ('en') da etiqueta e arquivos de ajuda (para a aplicação em nome)
+creator	preferences	pt-br	Criador
 css class for the table-tag	etemplate	pt-br	Classe CSS para a tabela
 css properties	etemplate	pt-br	Propriedades CSS
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	pt-br	Nome da classe CSS para esta linha, pré-ajuste: 'nmh' = NextMatch cabeçalho, 'nmr' = alternar NM linha, 'nmr0'+'nmr1' NM linhas
@@ -123,6 +127,7 @@ displayed in front of input or input is inserted for a '%s' in the label (label 
 displayed in statusline of browser if input-field gets focus	etemplate	pt-br	indicado na linha de status do navegador se o campo de entrada começar em foco
 displayed in the top line of the groupbox (legend)	etemplate	pt-br	Exibido acima do groupbox (legenda)
 do you want to save the changes you made in table %s?	etemplate	pt-br	Deseja salvar as alterações efetuadas na tabela %s?
+document '%1' does not exist or is not readable for you!	preferences	pt-br	Documento '%1' não existe ou você não pode ser lido por você!
 documentation	etemplate	pt-br	Documentação
 doesn't matter	etemplate	pt-br	não importa
 drop a table - this can not be undone	etemplate	pt-br	Apagar a tabela - isto NÃO pode ser desfeito
@@ -146,6 +151,7 @@ enter filename to upload and attach, use [browse...] to search for it	etemplate	
 enter the new version number here (> old_version), empty for no update-file	etemplate	pt-br	informe o número da nova versão aqui (> old_version), deixe vazio para não atualizar o arquivo
 enter the new version number here (has to be > old_version)	etemplate	pt-br	informe o número da nova versão aqui (tem que ser > old_version)
 entry saved	etemplate	pt-br	Registro salvo
+error uploading file!	filemanager	pt-br	Erro carregando arquivo!
 error: template not found !!!	etemplate	pt-br	Erro: Modelo não encontrado!!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	pt-br	Erro: servidor web não possui permissão para escrever em '%1' !!!
 error: while saving !!!	etemplate	pt-br	Erro salvando !
@@ -171,6 +177,7 @@ first	etemplate	pt-br	Primeiro
 floating point	etemplate	pt-br	Ponto de flutuação
 foreign key	etemplate	pt-br	Chave externa
 formatted text (html)	etemplate	pt-br	Texto Formatado (HTML)
+general fields:	preferences	pt-br	Campos gerais:
 go to the first entry	etemplate	pt-br	ir para o primeiro registro
 go to the last entry	etemplate	pt-br	ir para o último registro
 go to the next page of entries	etemplate	pt-br	próxima página de registros
@@ -208,6 +215,7 @@ insert a row above	etemplate	pt-br	Inserir uma linha acima
 insert a row below	etemplate	pt-br	Inserir uma linha abaixo
 insert a widget before	etemplate	pt-br	Inserir widget antes
 insert a widget behind	etemplate	pt-br	Inserir widget atrás
+insert in document	etemplate	pt-br	Inserir em documento
 insert new column behind this one	etemplate	pt-br	inserir uma nova coluna antes desta
 insert new column in front of all	etemplate	pt-br	inserir uma nova coluna ao final de todas
 insert new row after this one	etemplate	pt-br	inserir uma nova linha após esta
@@ -228,6 +236,7 @@ linklist	etemplate	pt-br	Listar link
 linkstring	etemplate	pt-br	Texto para link
 linkto	etemplate	pt-br	Linkar para
 load this template into the editor	etemplate	pt-br	carregar este modelo para o editor
+maximum size for uploads	filemanager	pt-br	Tamanho máximo para uploads
 message ...	etemplate	pt-br	Mensagem...
 middle	etemplate	pt-br	Meio
 minute	etemplate	pt-br	Minuto
@@ -270,6 +279,7 @@ open the online help.	etemplate	pt-br	Abrir a ajuda online.
 operator	etemplate	pt-br	Operador
 optional note about the link	etemplate	pt-br	nota opcional para o Link
 options	etemplate	pt-br	Opções
+or	etemplate	pt-br	ou
 order to navigating by tab key through the form	etemplate	pt-br	Ordenar para nevegação por tecla TAB através do formulário
 overflow	etemplate	pt-br	Excesso
 padding	etemplate	pt-br	Estofamento
@@ -412,5 +422,3 @@ xslt template	etemplate	pt-br	Modelo XSLT
 year	etemplate	pt-br	Ano
 you are not allowed to export more than %1 entries!	common	pt-br	Você não tem permissão para exportar mais de %1 registros!
 you can respond by visiting:	etemplate	pt-br	Você pode responder acessando:
-error uploading file!	filemanager	pt-br	Erro carregando arquivo!
-maximum size for uploads	filemanager	pt-br	Tamanho máximo para uploads

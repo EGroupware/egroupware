@@ -1,0 +1,35 @@
+applies the changes	timesheet	lv	apstiprināt izmaiņas
+check all	timesheet	lv	Parbaudīt visu
+create new links	timesheet	lv	Izveidot jaunas saites
+creates a new field	timesheet	lv	veido jaunu lauku
+custom fields	timesheet	lv	Mainīti lauki
+deleted	timesheet	lv	Izdzēsts
+deletes this field	timesheet	lv	dzēš šo lauku
+determines the order the fields are displayed	timesheet	lv	nosaka kārtību, kādā tiek attēloti lauki
+each value is a line like <id>[=<label>]	timesheet	lv	katra vēr'tiba ir līniija kā <id>[=<iezīme>]
+edit status	timesheet	lv	Rediģēt statusu
+edit this entry	timesheet	lv	Rediģēt šo ierakstu
+entry saved	timesheet	lv	Ieraksts saglabāts
+existing links	timesheet	lv	Eksistējošas saites
+field must not be empty !!!	timesheet	lv	Lauks nedīkst būt tukšs
+global categories	timesheet	lv	Globālās kategorijas
+history	timesheet	lv	Vēsture
+id	timesheet	lv	ID
+last modified	timesheet	lv	Pēdējo reizi pārveidots
+leaves without saveing	timesheet	lv	aiziet bez saglabāšanas
+length<br>rows	timesheet	lv	Garums<br>Rindas
+links	timesheet	lv	Saites
+max length of the input [, length of the inputfield (optional)]	timesheet	lv	ievades datu maksimālais garums[, ievades lauka garums (pēc izvēles)]
+modified	timesheet	lv	Pārveidots
+order	timesheet	lv	Kārtība
+parent	timesheet	lv	Vecāki
+quantity	timesheet	lv	Daudzums
+saves the changes made and leaves	timesheet	lv	saglabā izdarītās izmaiņas un aiziet
+select a project	timesheet	lv	atzīmēt projektu
+the text displayed to the user	timesheet	lv	lietotājam parādīts teksts
+this month	timesheet	lv	Šis mēnesis
+this week	timesheet	lv	Šī nedēļa
+this year	timesheet	lv	Šis gads
+values for selectbox	timesheet	lv	Vērtības<i>selectboxam</i>
+view this entry	timesheet	lv	Rādīt šo ierakstu
+week	timesheet	lv	Nedēļa

@@ -54,6 +54,7 @@ after how many unsuccessful attempts to login, an account should be blocked (def
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	fi	Kuinka monen epäonnistuneen kirjautumisyrityksen jälkeen IP-osoite lukitaan (oletus: 3)?
 aliases	admin	fi	Aliakset
 all applications	admin	fi	Kaikki sovellukset
+all categories	admin	fi	Kaikki kategoriat
 all records and account information will be lost!	admin	fi	Kaikki tietueet ja tunnuksen tiedot poistetaan!
 all users	admin	fi	Kaikki käyttäjät
 allow anonymous access to this app	admin	fi	Sovellusta voi käyttää kirjautumatta järjestelmään
@@ -98,7 +99,6 @@ calendar recurrence horizont in days (default 1000)	admin	fi	Kalenterin toistuvi
 can change password	admin	fi	Voi vaihtaa salasanaa
 cancel testjob!	admin	fi	Peruuta TestiTyö!
 cancel this scheduled command	admin	fi	Peruuta tämä ajastettu toiminto
-cat_permission_confirm	admin	fi	Ryhmän valitsematta jättäminen voi aiheuttaa ongelmia kategoriaan merkittyjen tietojen näkyvyydessä ryhmälle:
 categories list	admin	fi	Kategorialuettelo
 category %1 has been saved !	admin	fi	Kategoria %1 on tallennettu !
 category deleted.	admin	fi	Kategoria poistettu!
@@ -108,6 +108,7 @@ change account_id	admin	fi	Vaihda account_id
 change acl rights	admin	fi	Muuta ACL -oikeuksia
 change config settings	admin	fi	Muuta asetuksia
 change main screen message	admin	fi	Vaihda päänäytön viesti
+change owner	admin	fi	Vaihda omistaja
 change password for %1	admin	fi	Vaihda salasana %1
 change password hash to	admin	fi	Muuta salasana hash:
 changed password hash for %1 to %2.	admin	fi	Salasana hash %1 muutettu %1
@@ -129,6 +130,7 @@ creates / updates user groups from csv file	admin	fi	Luo uusia tai päivitä ole
 creates a new field	admin	fi	Luodaan uusi kenttä
 crontab only (recomended)	admin	fi	Vain crontab (suositellaan)
 custom fields	admin	fi	Lisäkentät
+custom translation	admin	fi	Omat käännökset
 cyrus imap server	admin	fi	Cyrus IMAP palvelin
 data	admin	fi	Tieto
 day	admin	fi	Päivä
@@ -153,7 +155,9 @@ delete this category	admin	fi	Poista tämä kategoria
 delete this group	admin	fi	Poista tämä ryhmä
 delete this log entry	admin	fi	Poista tämä lokitietue
 delete this user	admin	fi	Poista tämä käyttäjä
+deleted	admin	fi	Poistettu
 deletes this field	admin	fi	Poista tämä kenttä
+deliver extern	admin	fi	Deliver extern
 deny access to access log	admin	fi	Estä pääsy käyttölokiin
 deny access to application registery	admin	fi	Estä pääsy sovellusrekisteriin
 deny access to applications	admin	fi	Estä pääsy sovelluksiin
@@ -262,7 +266,6 @@ false	admin	fi	false
 field '%1' already exists !!!	admin	fi	Kenttä'%1' on jo olemassa !!!
 file space	admin	fi	Tallennustila
 file space must be an integer	admin	fi	Tallennustila on oltava kokonaisluku
-find and register all application hooks	admin	fi	Etsi ja rekisteröi kaikki sovelluskoukut
 for the times above	admin	fi	Näinä aikoina
 for the times below (empty values count as '*', all empty = every minute)	admin	fi	Yläpuolella määritettyinä aikoina (tyhjä tarkoittaa '*', kaikki tyhjää = joka minuutti)
 force password strength (1-5, default empty: no check against rules for a strong password)?	admin	fi	Salasanan vahvuus 1-5. Oletus tyhjä= ei tarkisteta salasanan vahvuutta
@@ -308,6 +311,7 @@ installed applications, percentage of allowed users and total number of entries.
 installed crontab	admin	fi	Asennettu crontab
 interface	admin	fi	Käyttöliittymä
 international use	admin	fi	Kansainvälinen käyttö
+invalid argument '%1' !!!	admin	fi	Virheellinen argumentti '%1'!!
 invalid formated date "%1"!	admin	fi	Virheellinen päivämäärä "%1"!
 invalid remote id or name "%1"!	admin	fi	Virheellinen Remote ID tai nimi "%1"!
 invalid value "%1" use yes or no!	admin	fi	Virheellinen arvo "%1", aseta Kyllä tai Ei!
@@ -321,6 +325,7 @@ last action	admin	fi	Viimeisin toimenpide
 last login	admin	fi	Kirjautunut viimeksi
 last login from	admin	fi	Kirjautunut viimeksi osoitteesta
 last password change	admin	fi	Viimeisin salasanan vaihto
+last submission:	admin	fi	Viimeisin kirjaus
 last time read	admin	fi	Luettu viimeksi
 ldap accounts context	admin	fi	LDAP -tunnusten konteksti
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	fi	LDAP kotihakemistojen etuliite (esim. /home jos hakemisto on /home/username)
@@ -405,6 +410,7 @@ only below displayed information is directly submitted to %s.	admin	fi	Ainoastaa
 operating system	admin	fi	Käyttöjärjestelmä
 order	admin	fi	Järjestä
 outbound	admin	fi	Lähtevä
+own categories	admin	fi	Omat kategoriat
 own install id:	admin	fi	Asennus ID:
 passthrough	admin	fi	Läpikulku
 password for smtp-authentication	admin	fi	Salasana SMTP-tunnistukselle
@@ -422,6 +428,8 @@ permissions this group has	admin	fi	Tämän ryhmän oikeudet
 personal: eg. within a family	admin	fi	Kotitaloudet
 php version	admin	fi	PHP-versio
 phpinfo	admin	fi	PHP-tiedot
+phrase	admin	fi	Fraasi
+phrase deleted	admin	fi	Fraasi poistettu
 please enter a name	admin	fi	Anna nimi
 please enter a name for that server !	admin	fi	Anna palvelimen nimi!
 please run setup to become current	admin	fi	Aja setup-sovellus päivittääksesi
@@ -455,10 +463,10 @@ search categories	admin	fi	Etsi kategoroita
 search groups	admin	fi	Etsi ryhmiä
 search peer servers	admin	fi	Etsi rinnakkaispalvelimia
 security	admin	fi	Tietoturva
-select accounts for which the custom field should be visible	admin	fi	valitse käyttäjät joille lisäkenttien tulisi olla näkyvillä.
+select accounts for which the custom field should be visible	admin	fi	Valitse käyttäjät joille lisäkenttien tulisi olla näkyvillä.
 select group managers	admin	fi	Valitse ryhmien ylläpitäjät
 select permissions this group will have	admin	fi	Valitse ryhmälle oikeudet
-select the parent category. if this is a main category select no category	admin	fi	Valitse yläkategoria. Jos tämä on pääkategoria, valitse EI KATEGORIAA
+select the parent category. if this is a main category select no category	admin	fi	Valitse pääkategoria. Jos tämä on pääkategoria, valitse EI KATEGORIAA
 select users	admin	fi	Valitse käyttäjät
 select users for inclusion	admin	fi	Valitse mukaan otettavat käyttäjät
 select where you want to store/retrieve filesystem information	admin	fi	Valitse minne haluat tallentaa/noutaa tiedostojärjestelmän tiedot.
@@ -472,6 +480,7 @@ server type(mode)	admin	fi	Palvelimen tyyppi(moodi)
 server url	admin	fi	Palvelimen URL
 server username	admin	fi	Palvelimen käyttäjätunnus
 sessions last 30 days	admin	fi	Istunnot viimeisen kuukauden ajalta
+set a random password	admin	fi	Aseta satunnainen salasana
 set preference values.	admin	fi	Tee asetukset.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	fi	Näytetäänkö kirjautumisnäytöllä kielien valintalista (käytännöllinen esittelyjä varten) ?
 show 'powered by' logo on	admin	fi	'Tämä on' -logon paikka
@@ -524,6 +533,7 @@ they must be removed before you can continue	admin	fi	Ne on poistettava ennen ku
 this application is current	admin	fi	Sovellus on ajan tasalla
 this application requires an upgrade	admin	fi	Sovellus vaatii päivityksen
 this category is currently being used by applications as a parent category	admin	fi	Sovellus käyttää tätä kategoriaa yläkategoriana.
+this controls exports and merging.	admin	fi	Vaikuttaa Vientiin ja "Merge print"-toimintoon
 timeout for application session data in seconds (default 86400 = 1 day)	admin	fi	Kuinka monta sekuntia sovelluksen tilatietoa säilytetään (oletus: 86400 = 1 vrk)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	fi	Kuinka monta sekuntia on istunnon aikakatkaisu (oletus: 14400 = 4 tuntia)
 times	admin	fi	Ajat
@@ -531,6 +541,7 @@ to allow us to track the growth of your individual installation use this submit 
 top	admin	fi	Ylös
 total of %1 id's changed.	admin	fi	Kaikkiaan %1 ID muutettu.
 total records	admin	fi	Tietueita
+translation	admin	fi	Käännös
 true	admin	fi	Totta
 trust level	admin	fi	Luottamuksen taso
 trust relationship	admin	fi	Luottosuhde
@@ -544,6 +555,7 @@ under windows you need to install the asyncservice %1manually%2 or use the fallb
 unknown account: %1 !!!	admin	fi	Tuntematon käyttäjätili: %1!!!
 unknown command %1!	admin	fi	Tuntematon komento: %1!!!
 unknown option %1	admin	fi	Tuntematon optio: %1!!!
+unwilling to save category with current settings. check for inconsistency:	admin	fi	Kategoriaa ei voitu tallentaa valituilla asetuksilla. Tarkista toiminnot.
 up	admin	fi	Ylös
 updated	admin	fi	Päivitetty
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	fi	EGroupwaren URL, esim. http://domain.com/egroupware
@@ -560,6 +572,7 @@ user groups	admin	fi	Käyttäjäryhmät
 userdata	admin	fi	Käyttäjän tiedot
 users choice	admin	fi	Käyttäjä valitsee
 value for column %1 is not unique!	admin	fi	Sarakkeen arvo %1 ei ole ainutlaatuinen!
+vfs directory "%1" not found!	admin	fi	VFS tiedostoa "%1" ei löytynyt!
 view access log	admin	fi	Näytä käyttöloki
 view account	admin	fi	Näytä käyttäjätili
 view category	admin	fi	Näytä kategoria

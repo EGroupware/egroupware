@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	fa	%1 آدرس رایانامه وارد شده
 %1 is not executable by the webserver !!!	common	fa	%1 قابل اجرا توسط وب سرور نمی باشد !!!
-%1 manual	common	fa	راهنمای %1
-%1 start	common	fa	شروع %1
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fa	%1گروه افزار%2 یک محیط کارمشترک مبتنی بر وب و چند کاربره است که در %3PHP%4نوشته شده است.
 (shift-)click or drag to change value	jscalendar	fa	(تبدیل-) کلیک کنید یا بکشید تا مقدار را تغییر دهید
 - click on any of the time parts to increase it	jscalendar	fa	روی هر بخشی از زمان کلیک کنید تا زیادش کنید
@@ -9,9 +7,12 @@
 - or click and drag for faster selection.	jscalendar	fa	یا برای انتخاب سریعتر کلیک کنید و بکشید
 - or shift-click to decrease it	jscalendar	fa	یا تبدیل-کلیک کنید تا کم شود
 00 (disable)	admin	fa	(غیر فعال) ۰۰
-1 day	login	fa	یک روز
-1 hour	login	fa	یک ساعت
-1 month	login	fa	یک ماه
+1 day	common	fa	یک روز
+1 hour	common	fa	یک ساعت
+1 month	common	fa	یک ماه
+1 week	common	fa	یک هفته
+13 (ntp)	admin	fa	13 (ntp)
+80 (http)	admin	fa	80 (http)
 about	common	fa	درباره
 about %1	common	fa	درباره %1
 about egroupware	common	fa	درباره گروه افزار
@@ -24,6 +25,7 @@ account has been updated	common	fa	حساب ويرايش شده است
 account is expired	common	fa	حساب منقضی شده است
 acl	common	fa	لیست کنترل دسترسی
 action	common	fa	عمل
+actions	common	fa	اعمال
 active	common	fa	فعال
 add	common	fa	افزودن
 add %1 category for	common	fa	افزودن %1 دسته برای
@@ -38,8 +40,10 @@ albania	common	fa	آلبانی
 algeria	common	fa	الجزاير
 all	common	fa	همه
 all fields	common	fa	همه فیلدها
+all languages	common	fa	همه زبانها
 alphabet	common	fa	ا,آ,ب,پ,ت,ث,ج,چ,ح,خ,د,ذ,ر,ز,ژ,س,ش,ص,ض,ط,ظ,ع,غ,ف,ق,ک,گ,ل,م,ن,و,ه,ی
 alternate style-sheet:	common	fa	برگه سبک دیگر:
+and	common	fa	و
 andorra	common	fa	آندورا
 angola	common	fa	آنگولا
 application	common	fa	برنامه
@@ -132,14 +136,18 @@ default category	common	fa	دسته پيش فرض
 default height for the windows	common	fa	ارتفاع پیش فرض برای پنجره ها
 default width for the windows	common	fa	عرض پیش فرض برای پنجره ها
 delete	common	fa	حذف
+delete category	common	fa	حذف دسته
 delete row	common	fa	حذف سطر
+delete this entry	common	fa	حذف این ورودی
 denmark	common	fa	دانمارک
 description	common	fa	توصيف
 detail	common	fa	شرح
 details	common	fa	جزئیات
 direction left to right	common	fa	جهت چپ به راست
+directory	common	fa	پوشه
 disable internet explorer png-image-bugfix	common	fa	غیر فعال کردن png-image-bugfix در برنامه Internet Explorer
 disable slider effects	common	fa	غیر فعال کردن جلوه های فهرست
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fa	غیر فعال کردن اجرای نویسه های رفع خطا برای IE 5.5 و بالاتر که بتواند شفافیت در تصاویر PNG را نمایش دهد.
 disabled	common	fa	غیر فعال شده
 display %s first	jscalendar	fa	نمايش S% ابتدا
 do you also want to delete all subcategories ?	common	fa	آيا شما همچنين می خواهيد همه زير دسته ها را حذف کنيد
@@ -150,19 +158,18 @@ domain	common	fa	دامنه
 domain name for mail-address, eg. "%1"	common	fa	نام حوزه برای نشانی نامه الکترونیکی، مثلا:"%1"
 domestic	common	fa	خانگی
 done	common	fa	انجام شد
+download	common	fa	دریافت
 drag to move	jscalendar	fa	برای حرکت بکشید
 e-mail	common	fa	رایانامه
 edit	common	fa	ویراستن
 edit %1 category for	common	fa	ويراستن 1% دسته برای
 edit categories	common	fa	ويراستن دسته ها
 edit category	common	fa	ويراستن دسته
-egroupware api version %1	common	fa	نسخه eGroupWare API معادل %1 است
 egroupware: login blocked for user '%1', ip %2	common	fa	ورود برای کاربر '%1' با آدرس  شبکه %2 قفل شده
 egypt	common	fa	مصر
 el salvador	common	fa	السالوادر
 email	common	fa	رایانامه
 email-address of the user, eg. "%1"	common	fa	آدرس رایانامه کاربر، به عنوان مثال1%
-emailadmin	common	fa	مدیر رایانامه
 enabled	common	fa	فعال شده
 end date	common	fa	تاریخ پایان
 end time	common	fa	زمان پایان
@@ -172,7 +179,6 @@ error	common	fa	خطا
 error creating %1 %2 directory	common	fa	خطای ايجاد 1% 2% پوشه
 error deleting %1 %2 directory	common	fa	خطای حذف 1% 2% پوشه
 error renaming %1 %2 directory	common	fa	خطای دوباره نامگذاری 1% 2% پوشه
-etemplate	common	fa	فرم ساز
 exact	common	fa	دقیقا
 fax number	common	fa	شماره نمابر
 february	common	fa	فوريه
@@ -186,7 +192,7 @@ first page	common	fa	صفحه اول
 firstname	common	fa	نام کوچک
 folder already exists.	common	fa	پوشه وجود دارد
 force selectbox	common	fa	حتما جعبه انتخاب باشد
-forever	login	fa	همیشگی
+forever	common	fa	همیشگی
 france	common	fa	فرانسه
 friday	common	fa	جمعه
 ftp	common	fa	پروتکل انتقال پرونده (FTP)
@@ -219,12 +225,11 @@ home	common	fa	خانه
 home email	common	fa	رایانامه خانه
 honduras	common	fa	هندوراس
 hong kong	common	fa	هنگ کنگ
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	fa	چند نمایه در ناوبری اصلی بالای صفحه باید نمایش داده شوند. نمایه های اضافی در فهرست پایین افتادنی قرار خواهند گرفت که از طریق یک فلش کوچک (در ابتدا یا انتهای نوار ناوبری) قابل دسترس می باشند.
 iceland	common	fa	ايسلند
 image url	common	fa	نشانی URL تصویر
 india	common	fa	هند
 indonesia	common	fa	اندونزی
-insert	tinymce	fa	درج
-insert 'return false'	common	fa	درج با خطا برگشت
 insert all %1 addresses of the %2 contacts in %3	common	fa	درج همه %1 نشانی ها از %2 مخاطب در %3
 insert column after	common	fa	درج ستون بعد از
 insert column before	common	fa	درج ستون قبل از
@@ -255,6 +260,7 @@ keywords	common	fa	کلیدواژه
 korea, republic of	common	fa	جمهوری کره
 kuwait	common	fa	کویت
 language	common	fa	زبان
+last modified	common	fa	آخرین تغییرات
 last name	common	fa	نام خانوادگی
 last name of the user, eg. "%1"	common	fa	نام خانوادگی کاربر مثلا:"%1"
 last page	common	fa	صفحه آخر
@@ -268,6 +274,8 @@ local	common	fa	محلی
 login	common	fa	ورود
 loginid	common	fa	شناسه کاربری
 logout	common	fa	خروج
+lost login id	common	fa	فراموشی شناسه کاربری
+lost password	common	fa	فراموشی گذرواژه
 low	common	fa	کم
 lowest	common	fa	کمترین
 luxembourg	common	fa	لوکزامبورگ
@@ -310,9 +318,12 @@ no subject	common	fa	بدون عنوان
 none	common	fa	هیچکدام
 normal	common	fa	معمولی
 norway	common	fa	نروژ
+not	common	fa	دیگر
+not a user yet? register now	common	fa	شناسه کاربری ندارید؟ هم اکنون ثبت نام کنید.
 not assigned	common	fa	اختصاص نیافته
 note	common	fa	یادداشت
 notes	common	fa	یادداشتها
+notifications	common	fa	افراد/گروههای مرتبط
 notify window	common	fa	پنجره نکته
 notify your administrator to correct this situation	common	fa	به مدیر سیستم برای رفع این مشکل خبر دهید
 november	common	fa	نوامبر
@@ -324,9 +335,11 @@ on *nix systems please type: %1	common	fa	روی سیستمهای nix* لطفا 
 on mouse over	common	fa	وقتی موشواره رو قرار می گیرد
 only private	common	fa	فقط خصوصی
 only yours	common	fa	فقط برای شما
+open	common	fa	کارهای باز
 open notify window	common	fa	باز کردن پنجره آگاهی
 open popup window	common	fa	باز کردن پنجره جدا
 open sidebox	common	fa	باز کردن جعبه کناری
+or	common	fa	یا
 ordered list	common	fa	لیست مرتب شده
 original	common	fa	اصلی
 other	common	fa	دیگر
@@ -336,18 +349,16 @@ page	common	fa	صفحه
 page was generated in %1 seconds	common	fa	صفحه در %1 ثانیه ایجاد شد
 pakistan	common	fa	پاکستان
 panama	common	fa	پاناما
+parcel	common	fa	جعبه پستی
 parent category	common	fa	دسته والد
 password	common	fa	گذرواژه
 password could not be changed	common	fa	گذرواژه نمی تواند عوض شود
 password has been updated	common	fa	گذرواژه بهنگام شد
 password must contain at least %1 lowercase letters	common	fa	گذرواژه باید حداقل %1 حرف کوچک داشته باشد
 password must contain at least %1 numbers	common	fa	گذرواژه باید حداقل %1 عدد داشته باشد
-password must contain at least %1 special charactars	common	fa	گذرواژه باید حداقل %1 کاراکتر ویژه داشته باشد
 password must contain at least %1 uppercase letters	common	fa	گذرواژه باید حداقل %1 حرف بزرگ داشته باشد
 password must have at least %1 characters	common	fa	گذرواژه باید حداقل %1 کاراکتر داشته باشد
-pattern for search in addressbook	common	fa	الگوی جستجوی دفتر نشانی
-pattern for search in calendar	common	fa	الگوی جستجوی تقویم
-pattern for search in projects	common	fa	الگوی جستجوی پروژه ها
+path to user and group files has to be outside of the webservers document-root!!!	common	fa	مسیر به پرونده های گروه و کاربر باید خارج از مسیر اصلی کارگزار وب باشد
 permissions to the files/users directory	common	fa	مجوزها به پوشه پرونده ها / کاربران
 personal	common	fa	شخصی
 peru	common	fa	پرو
@@ -360,13 +371,11 @@ please select	common	fa	لطفا انتخاب کنید
 please set your global preferences	common	fa	لطفا تنظیمات عمومی خود را انجام دهید
 please set your preferences for this application	common	fa	لطفا تنظیمات خود را برای این برنامه انجام دهید
 please wait...	common	fa	لطفا صبر کنید...
-pnu	common	fa	اطلاعات پایه
-pnureport	common	fa	گزارشات
-pnutadvin	common	fa	اطلاعات پایه تدوین
 portugal	common	fa	پرتغال
 postal	common	fa	پستی
 preferences	common	fa	تنظیمات
 previous page	common	fa	صفحه قبلی
+primary group	common	fa	گروه اولیه
 primary style-sheet:	common	fa	برگ سبک اولیه:
 print	common	fa	چاپ
 priority	common	fa	اولویت
@@ -378,13 +387,15 @@ qatar	common	fa	قطر
 read	common	fa	خواندن
 read this list of methods.	common	fa	این لیست شیوه ها را بخوانید
 reading	common	fa	در حال خواندن
+register	common	fa	ثبت نام
 reject	common	fa	رد کردن
-remember me	login	fa	ورود را حفظ کن
+remember me	common	fa	ورود را حفظ کن
 remove selected accounts	common	fa	حسابهای انتخاب شده را حذف کن
 remove shortcut	common	fa	میانبر را حذف کن
 rename	common	fa	تغییر نام
 replace	common	fa	جابجایی
 replace with	common	fa	جابجایی با
+restore failed	common	fa	ناموفق در بازگرداندن
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	fa	لیست کامل حسابهای موجود روی سیستم. هشدار این لیست ممکن است بزرگ و طولانی باشد
 returns an array of todo items	common	fa	آرایه ای از موارد انجام کار بر می گرداند
 returns struct of users application access	common	fa	ساختار دسترسی به برنامه ها را بر می گرداند
@@ -394,8 +405,8 @@ saturday	common	fa	شنبه
 save	common	fa	ذخیره
 search	common	fa	جستجو
 search %1 '%2'	common	fa	جستجوی %1 '%2'
+search accounts	common	fa	جستجوی حسابها
 search or select accounts	common	fa	جستجو یا انتخاب حسابها
-search or select multiple accounts	common	fa	جستجو یا انتخاب چندین حسابها
 second	common	fa	ثانیه
 section	common	fa	بخش
 select	common	fa	انتخاب
@@ -431,8 +442,11 @@ show page generation time	common	fa	زمان تولید صفحه را نشان �
 show page generation time on the bottom of the page?	common	fa	نمایش زمان ایجاد صفحه در پایین هر صفحه؟
 show page generation time?	common	fa	نمایش زمان ایجاد صفحه
 show the logo's of egroupware and x-desktop on the desktop.	common	fa	نمایش لوگوی گروه افزار و x-desktop روی رومیزی
+show_more_apps	common	fa	نمایش کاربردهای بیشتر
 showing %1	common	fa	درحال نشان دادن %1
 showing %1 - %2 of %3	common	fa	نمایش %1 - %2 از %3
+site configuration	common	fa	پیکربندی سایت
+size	common	fa	اندازه
 slovakia	common	fa	اسلوواکی
 somalia	common	fa	سومالی
 sorry, your login has expired	login	fa	متأسفم ورود شما منقضی شد
@@ -446,13 +460,17 @@ status	common	fa	وضعیت
 stretched	common	fa	کشیده شده
 subject	common	fa	موضوع
 submit	common	fa	ثبت
+substitutions and their meanings:	common	fa	معادلها و معانی آنها:<br>
 sudan	common	fa	سودان
 sunday	common	fa	یکشنبه
 tajikistan	common	fa	تاجیکستان
 text color:	common	fa	رنگ متن:
 thailand	common	fa	تایلند
+the api is current	common	fa	API بروز است
+the api requires an upgrade	common	fa	API بهنگام سازی لازم دارد
 the following applications require upgrades	common	fa	برنامه های زیر بهنگام سازی نیاز دارند
 the mail server returned	common	fa	کارگزار نامه می گوید
+this application is current	common	fa	این کاربرد بهنگام است
 this application requires an upgrade	common	fa	این برنامه بهنگام سازی می خواهد
 this name has been used already	common	fa	این نام قبلا استفاده شده!
 thursday	common	fa	پنجشنبه
@@ -477,23 +495,26 @@ update	common	fa	به روز
 update the clock per minute or per second	common	fa	ساعت را در دقیقه یا در ثانیه بهنگام کند
 upload	common	fa	ارسال
 upload directory does not exist, or is not writeable by webserver	common	fa	پوشه ارسال موجود نیست، یا بوسیله کارگزار وب قابل نوشتن نیست.
+url	common	fa	وب سایت
 use button to search for	common	fa	از دکمه برای جستجو استفاده کنید
 user	common	fa	کاربر
 user accounts	common	fa	حسابهای کاربری
 user groups	common	fa	گروههای کاربری
-user openinstance	common	fa	فرمهای باز کاربر
 username	common	fa	نام کاربری
 users	common	fa	کاربرها
 users choice	common	fa	پسند کاربرها
 uzbekistan	common	fa	ازبکستان
+value	common	fa	مقدار
 venezuela	common	fa	ونزوئلا
 version	common	fa	نسخه
 viet nam	common	fa	ویتنام
 view	common	fa	نما
 wednesday	common	fa	چهارشنبه
 welcome	common	fa	خوش آمدید
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fa	وقتی بگوئید «بله» نمایه های «خانه» و «خروج» در نوار ناوبری نمایش داده خواهند شد.
 which groups	common	fa	کدام گروهها
 width	common	fa	عرض
+wk	jscalendar	fa	هفته
 work email	common	fa	نشانی نامه الکترونیکی کاری
 would you like to display the page generation time at the bottom of every window?	common	fa	آیا میخواهید که زمان ایجاد صفحه در زیر هر صفحه نوشته شود؟
 writing	common	fa	در حال نوشتن
@@ -516,8 +537,6 @@ your search returned %1 matchs	common	fa	جستجوی شما %1 نتیجه دا�
 your search returned 1 match	common	fa	جستجوی شما یک نتیجه داشت
 your session could not be verified.	login	fa	نشست شما نمی تواند بررسی شود
 your settings have been updated	common	fa	تنظیمات شما بهنگام شد
-yugoslavia	common	fa	یوگوسلاوی
 zambia	common	fa	زامبیا
 zimbabwe	common	fa	زیمباوه
 zoom	common	fa	بزرگنمایی
-site configuration	common	fa	پیکربندی سایت

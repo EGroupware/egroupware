@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	sv	%1 e-postadresser tillagda
 %1 is not executable by the webserver !!!	common	sv	%1 är inte exekverbar av webbservern!
-%1 manual	common	sv	%1 manual
-%1 start	common	sv	%1 start
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	sv	%1Välj en annan katalog%2<br/> eller gör %3 skrivbar för webbservern
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sv	%1eGroupWare%2 är en webbaserad grupp-programvara skriven i %3PHP%4.
 (shift-)click or drag to change value	jscalendar	sv	(Shift)-klicka eller dra för att ändra värde
@@ -26,8 +24,10 @@ account has been created	common	sv	Kontot skapat
 account has been deleted	common	sv	Kontot raderat
 account has been updated	common	sv	Kontot uppdaterat
 account is expired	common	sv	Kontot har förfallit
+accounts	common	sv	Konton
 acl	common	sv	ACL
 action	common	sv	Åtgärd
+actions	common	sv	Åtgärder
 active	common	sv	Aktiv
 add	common	sv	Lägg till
 add %1 category for	common	sv	Lägg till %1 kategori för
@@ -45,6 +45,7 @@ all fields	common	sv	Alla fält
 alphabet	common	sv	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,å,ä,ö
 alternate style-sheet:	common	sv	Alternerande style-sheet:
 american samoa	common	sv	AMERIKANSKA SAMOA
+and	common	sv	Och
 andorra	common	sv	ANDORRA
 angola	common	sv	ANGOLA
 anguilla	common	sv	ANGUILLA
@@ -169,13 +170,16 @@ default category	common	sv	Standard kategori
 default height for the windows	common	sv	Standard hjöd för fönstret
 default width for the windows	common	sv	Standard bredd för fönstret
 delete	common	sv	Radera
+delete category	common	sv	Radera kategori
 delete row	common	sv	Radera rad
+delete this entry	common	sv	Radera posten
 denmark	common	sv	DANMARK
 description	common	sv	Beskrivning
 detail	common	sv	Detalj
 details	common	sv	Detaljer
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sv	Inaktivera exekveringen av bugfix skript för IExplorer 5.5 och högre för att visa transparanta png-bilder?
 direction left to right	common	sv	Riktning från vänster till höger
+directory	common	sv	Katalog
 disable internet explorer png-image-bugfix	common	sv	Inaktivera Internet Explorer png-bild-bugfix
 disable slider effects	common	sv	Inaktivera animerade effekter
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sv	Inaktivera animerade effekter vid visning eller vid täckta menyer på sidan? Opera och Konqueror användare väljer troligen detta.
@@ -193,6 +197,7 @@ domestic	common	sv	Inrikes
 dominica	common	sv	DOMINICA
 dominican republic	common	sv	DOMINIKANSKA REPUBLIKEN
 done	common	sv	Färdig
+download	common	sv	Ladda ned
 drag to move	jscalendar	sv	Dra för att flytta
 e-mail	common	sv	E-post
 east timor	common	sv	ÖSTRA TIMOR
@@ -201,13 +206,12 @@ edit	common	sv	Ändra
 edit %1 category for	common	sv	Ändra %1 kategori för
 edit categories	common	sv	Ändra kategorier
 edit category	common	sv	Ändra kategori
-egroupware api version %1	common	sv	eGroupWare API version %1
+egroupware	common	sv	eGroupWare
 egroupware: login blocked for user '%1', ip %2	common	sv	eGroupWare: inloggning spärrad för '%1', IP %2
 egypt	common	sv	EGYPTEN
 el salvador	common	sv	EL SALVADOR
 email	common	sv	E-post
 email-address of the user, eg. "%1"	common	sv	Användarens e-postadress, ex. "%1"
-en	common	sv	en
 enabled	common	sv	Aktiverad
 end date	common	sv	Slutdatum
 end time	common	sv	Sluttid
@@ -299,7 +303,6 @@ if there are some images in the background folder you can choose the one you wou
 image url	common	sv	Bild URL
 india	common	sv	INDIEN
 indonesia	common	sv	INDONESIEN
-insert 'return false'	common	sv	Infoga 'return false'
 insert all %1 addresses of the %2 contacts in %3	common	sv	Infoga alla %1 adresser för %2 kontakterna i %3
 insert column after	common	sv	Infoga kolumn efter
 insert column before	common	sv	Infoga kolumn före
@@ -316,7 +319,6 @@ israel	common	sv	ISRAEL
 it has been more then %1 days since you changed your password	common	sv	Det är mer än %1 dagar sedan du ändrade ditt lösenord
 it is recommended that you run setup to upgrade your tables to the current version	common	sv	Det rekomenderas att du kör installationen för att uppgradera dina tabeller till aktuell version.
 italic	common	sv	Kursiv
-italic.gif	common	sv	italic.gif
 italy	common	sv	ITALIEN
 jamaica	common	sv	JAMAICA
 january	common	sv	Januari
@@ -340,6 +342,7 @@ kyrgyzstan	common	sv	KIRGIZISTAN
 language	common	sv	Språk
 language_direction_rtl	common	sv	language_direction_rtl
 lao peoples democratic republic	common	sv	LAOS
+last modified	common	sv	Senast ändrad
 last name	common	sv	Efternamn
 last name of the user, eg. "%1"	common	sv	Användarens efternamn, ex. "%1"
 last page	common	sv	Sista sidan
@@ -358,9 +361,12 @@ list	common	sv	Lista
 list members	common	sv	Lista medlemmar
 lithuania	common	sv	LITAUEN
 local	common	sv	Lokal
+locations	common	sv	Placering
 login	common	sv	Inloggning
 loginid	common	sv	Inloggnings ID
 logout	common	sv	Logga ut
+lost login id	common	sv	Glömt inloggnings ID
+lost password	common	sv	Glömt lösenordet
 low	common	sv	Låg
 lowest	common	sv	Lägsta
 luxembourg	common	sv	LUXEMBOURG
@@ -430,9 +436,12 @@ norfolk island	common	sv	NORFOLKÖN
 normal	common	sv	Normal
 northern mariana islands	common	sv	NORDMARIANERNA
 norway	common	sv	NORGE
+not	common	sv	Inte
+not a user yet? register now	common	sv	Ännu inget konto? Registrera dig här
 not assigned	common	sv	Inte tilldelad
 note	common	sv	Anteckning
 notes	common	sv	Anteckningar
+notifications	common	sv	Meddelanden
 notify window	common	sv	Meddelande fönster
 notify your administrator to correct this situation	common	sv	Meddela administratör om problemet.
 november	common	sv	November
@@ -444,9 +453,11 @@ on *nix systems please type: %1	common	sv	På *nix system skriv: %1
 on mouse over	common	sv	När pekaren förs över
 only private	common	sv	Endast privata
 only yours	common	sv	Endast dina
+open	common	sv	Öppen
 open notify window	common	sv	Öppna meddelande fönster
 open popup window	common	sv	Öppna popup fönster
 open sidebox	common	sv	Öppna Länkboxen
+or	common	sv	Eller
 ordered list	common	sv	Numrerad lista
 original	common	sv	Orginal
 other	common	sv	Övriga
@@ -471,9 +482,6 @@ password must contain at least %1 special characters	common	sv	Lösenordet måst
 password must contain at least %1 uppercase letters	common	sv	Lösenordet måste innehålla åtminstone %1 stora bokstäver
 password must have at least %1 characters	common	sv	Lösenordet måste innehålla åtminstone %1 tecken
 path to user and group files has to be outside of the webservers document-root!!!	common	sv	Sökvägen till användar- och gruppfiler måste vara utanför webbserverns dokument root!
-pattern for search in addressbook	common	sv	Sökmönster i Adressboken
-pattern for search in calendar	common	sv	Sökmönster i Kalendern
-pattern for search in projects	common	sv	Sökmönster i Projekt
 permissions to the files/users directory	common	sv	Rättigheter på filer/användar bibliotek
 personal	common	sv	Personligt
 peru	common	sv	PERU
@@ -492,10 +500,10 @@ poland	common	sv	POLEN
 portugal	common	sv	PORTUGAL
 postal	common	sv	Post adress
 preferences	common	sv	Alternativ
-preferences for the idots template set	common	sv	Idots mall alternativ
 prev. month (hold for menu)	jscalendar	sv	Föreg. månad (håll för meny)
 prev. year (hold for menu)	jscalendar	sv	Föreg. år (håll för meny)
 previous page	common	sv	Föregående sida
+primary group	common	sv	Primär grupp
 primary style-sheet:	common	sv	Primär Style sheet
 print	common	sv	Skriv ut
 priority	common	sv	Prioritet
@@ -508,12 +516,14 @@ qatar	common	sv	QUATAR
 read	common	sv	Läs
 read this list of methods.	common	sv	Läs lista på metoder
 reading	common	sv	Läser
+register	common	sv	Registrera
 reject	common	sv	Avvisa
 remove selected accounts	common	sv	Radera valda konton
 remove shortcut	common	sv	Radera genväg
 rename	common	sv	Byt namn
 replace	common	sv	Ersätt
 replace with	common	sv	Ersätt med
+restore failed	common	sv	Återställning misslyckades
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	sv	Returnerar en fullständig lista på konton. Varning: Den kan vara tämligen stor
 returns an array of todo items	common	sv	Returnera en lista på Uppgifter
 returns struct of users application access	common	sv	Returnerar struktur på användares applikationsanvändning
@@ -536,8 +546,8 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	sv	Spara
 search	common	sv	Sök
 search %1 '%2'	common	sv	Sök %1 '%2'
+search accounts	common	sv	Sök konton
 search or select accounts	common	sv	Sök eller välj konton
-search or select multiple accounts	common	sv	Sök eller välj flera konton
 second	common	sv	Sekund
 section	common	sv	Avsnitt
 select	common	sv	Välj
@@ -579,6 +589,8 @@ showing %1	common	sv	Visar %1
 showing %1 - %2 of %3	common	sv	Visar %1 - %2 av %3
 sierra leone	common	sv	SIERRA LEONE
 singapore	common	sv	SINGAPORE
+site configuration	common	sv	Sajt alternativ
+size	common	sv	Storlek
 slovakia	common	sv	SLOVAKIEN
 slovenia	common	sv	SLOVENIEN
 solomon islands	common	sv	SALOMONÖARNA
@@ -649,7 +661,6 @@ type	common	sv	Typ
 uganda	common	sv	UGANDA
 ukraine	common	sv	UKRAINA
 underline	common	sv	Understruken
-underline.gif	common	sv	underline.gif
 united arab emirates	common	sv	FÖRENTA ARAB EMIRATEN
 united kingdom	common	sv	STORBRITANIEN
 united states	common	sv	U.S.A
@@ -672,6 +683,7 @@ username	common	sv	Användarnamn
 users	common	sv	Användare
 users choice	common	sv	Användarnas val
 uzbekistan	common	sv	UZBEKISTAN
+value	common	sv	Värde
 vanuatu	common	sv	VANUATU
 venezuela	common	sv	VENEZUELA
 version	common	sv	Version
@@ -687,6 +699,7 @@ what color should all the blank space on the desktop have	common	sv	Vilken färg
 what style would you like the image to have?	common	sv	Vilken stil vill du att bilden ska ha?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sv	Om du svara ja kommer Hem- och utloggningsknappen att visas i navigeringslisten.
 which groups	common	sv	Vilka grupper
+whole query	common	sv	Hela frågan
 width	common	sv	Bredd
 wk	jscalendar	sv	v.
 work email	common	sv	Arbete e-post
@@ -712,8 +725,6 @@ your search returned %1 matchs	common	sv	Sökning gav %1 träffar
 your search returned 1 match	common	sv	Sökning gav 1 träff
 your session could not be verified.	login	sv	Din session kunde inte verifieras
 your settings have been updated	common	sv	Inställningarna uppdaterade
-yugoslavia	common	sv	YOGOSLAVIEN
 zambia	common	sv	ZAMBIA
 zimbabwe	common	sv	ZIMBABWE
 zoom	common	sv	Zooma
-site configuration	common	sv	Sajt alternativ

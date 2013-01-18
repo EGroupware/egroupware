@@ -1,0 +1,28 @@
+applies the changes	timesheet	uk	Застосувати зміни
+create new links	timesheet	uk	Створити нові посилання
+creates a new field	timesheet	uk	створює нові поля
+custom fields	timesheet	uk	Власні поля
+deleted	timesheet	uk	Видалено
+deletes this field	timesheet	uk	видаляє це поле
+determines the order the fields are displayed	timesheet	uk	визначає послідовність показу полів
+each value is a line like <id>[=<label>]	timesheet	uk	Кожне значення є рядком у вигляді <id>[=<label>]
+edit this entry	timesheet	uk	Редагувати цей запис
+existing links	timesheet	uk	Існуючі посилання
+global categories	timesheet	uk	Глобальні категорії
+id	timesheet	uk	Id
+last modified	timesheet	uk	Востаннє змінено
+leaves without saveing	timesheet	uk	вийти без збереження
+length<br>rows	timesheet	uk	Довжина<br>Рядки
+links	timesheet	uk	Посилання
+max length of the input [, length of the inputfield (optional)]	timesheet	uk	максимальна довжина вводу[, видима довжина поля вводу (необов'язково)]
+modified	timesheet	uk	Змінено
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	uk	кількість рядків для багаторядкового поля вводу або рядків віконця вибору множини
+order	timesheet	uk	Послідовність
+saves the changes made and leaves	timesheet	uk	зберігає зроблені зміни та виходить
+the text displayed to the user	timesheet	uk	текст, що показуються користувачу
+this month	timesheet	uk	Поточний місяць
+this week	timesheet	uk	Поточний тиждень
+this year	timesheet	uk	Поточний рік
+values for selectbox	timesheet	uk	Значення для selectbox
+view this entry	timesheet	uk	Переглянути цей запис
+week	timesheet	uk	Тиждень

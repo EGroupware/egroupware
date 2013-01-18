@@ -1,38 +1,61 @@
 2 month ago	timesheet	no	2 måneder siden
 2 years ago	timesheet	no	2 år siden
 3 years ago	timesheet	no	3 år siden
-actions	timesheet	no	Handlinger
 by	timesheet	no	av
+check all	timesheet	no	Kontroller alle
 create new links	timesheet	no	Opprett nye lenker
-delete this entry	timesheet	no	Slett denne forekomsten
+creates a new field	timesheet	no	lager nytt felt
+custom fields	timesheet	no	Egendefinerte Felter
+deleted	timesheet	no	slettet
+deletes this field	timesheet	no	sletter dette feltet
+determines the order the fields are displayed	timesheet	no	avgjør rekkefølge feltene vises i
+each value is a line like <id>[=<label>]	timesheet	no	hver verdi er en linje som <id>[=<label>]
+edit status	timesheet	no	Endre status
 edit this entry	timesheet	no	Endre denne forekonsten
 empty if identical to duration	timesheet	no	blankt dersom det samme som varighet
+end	timesheet	no	Slutt
 entry deleted	timesheet	no	Forekomst slettet
 entry saved	timesheet	no	Forekomst lagret
 error deleting the entry!!!	timesheet	no	Feil ved sletting av forekomst!
 error saving the entry!!!	timesheet	no	Feil ved lagring av forekomst!
 existing links	timesheet	no	Eksisterende lenker
-general	timesheet	no	Generell
+field must not be empty !!!	timesheet	no	Feltet kan ikke være tomt!
+global categories	timesheet	no	Globale Kategorier
+history	timesheet	no	Historikk
+id	timesheet	no	Id
 last modified	timesheet	no	Sist endret
 last month	timesheet	no	Siste måned
 last week	timesheet	no	Siste uke
 last year	timesheet	no	Siste år
 leave it empty for a full week	timesheet	no	La stå tom for en full uke
+leaves without saveing	timesheet	no	avslutt uten å lagre
+length<br>rows	timesheet	no	Lengde<br>Kolonner
 links	timesheet	no	Lenker
+max length of the input [, length of the inputfield (optional)]	timesheet	no	maks. lengde på innslag [,feltlengde (valgfri)]
+modified	timesheet	no	Endret
 no details	timesheet	no	Ingen detaljer
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	no	antall rekker i multi-linje felter eller linjer i multi-valg bokser
+order	timesheet	no	Ordre
+parent	timesheet	no	Overordnet
 permission denied!!!	timesheet	no	Adgang nektes!
 price	timesheet	no	Pris
 quantity	timesheet	no	Antall
 save & new	timesheet	no	Lagre og ny
 saves the changes made	timesheet	no	Lagre endringene
+saves the changes made and leaves	timesheet	no	lagrer endringene og lukker
 saves this entry and add a new one	timesheet	no	Lagre denne forekomsten og opprette en ny
 select a price	timesheet	no	Velg en pris
 select a project	timesheet	no	Velg et prosjekt
+start	timesheet	no	Start
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	no	navnet benyttet intertnt(<= 20 kar.), endring gjør eksisterende data utilgjengelige.
+the text displayed to the user	timesheet	no	teksten som vises til bruker
 this month	timesheet	no	Denne måneden
 this week	timesheet	no	Denne uken
 this year	timesheet	no	Dette året
 timesheet	common	no	Timeregistrering
 unitprice	timesheet	no	Enhetspris
+values for selectbox	timesheet	no	Verdier for valgboksene
 view this entry	timesheet	no	Vis denne forekomsten
+week	timesheet	no	Uke
 yesterday	timesheet	no	I går
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	no	Din databse er ikke oppdatert (%1 vs. %2), kjør %3setup%4 for å oppgradere databasen.

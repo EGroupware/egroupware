@@ -31,15 +31,20 @@ minutes	notifications	cs	minut
 notification	common	cs	Upozornění
 notify me by	notifications	cs	Upozorni mě pomocí
 optimize e-mails for external mail client	notifications	cs	Optimalizovat e-maily pro externí poštovní klienty
+permission	notifications	cs	Oprávnění
 poll interval	notifications	cs	Interval dotazování (poll)
 preferences for notification	notifications	cs	Předvolby pro upozornění
 received	notifications	cs	Přijato
+settings	notifications	cs	Nastavení
 sms backend	admin	cs	SMS backend
 sms only	notifications	cs	Jen SMS
+step	notifications	cs	Krok
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	cs	Toto upozornění od eGroupWaru Vám bylo zasláno e-mailem, protože Vámi zvolená posloupnost upozornění byla zakázána administrátorem. Vyberte si prosím v předvolbách jinou posloupnost upozornění.
+warning	notifications	cs	Varování
 windows-popup and e-mail	notifications	cs	Překryvná okna ve Windows a e-mail
 windows-popup backend	admin	cs	Backend Překryvná okna ve Windows
 windows-popup first, if that fails notify me by e-mail	notifications	cs	Nejprve překryvná okna ve Windows, pokud se nezdaří, upozorni mě e-mailem
 windows-popup first, if that fails notify me by sms	notifications	cs	Nejprve překryvná okna ve Windows, pokud se nezdaří, upozorni mě SMS zprávou
 windows-popup only	notifications	cs	Jen překryvná okna ve Windows
 you've got new mail	notifications	cs	Přišel Vám nový e-mail
+your session could not be verified.	notifications	cs	Vaše relace nemohla být ověřena.

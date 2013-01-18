@@ -28,17 +28,23 @@ direct booking permissions	resources	it	Permessi di prenotazione diretti
 don't use vfs (this will need a symlink --> see readme)	resources	it	Non usare vfs (servirà un symlink --> vedi README)
 edit this entry	resources	it	Modifica questa voce
 existing links	resources	it	Collegamenti esistenti
+exists	resources	it	Esiste
+export definitition to use for nextmatch export	resources	it	Esporta la definizione da utilizzare per la esportazione
 general	resources	it	Generale
 general informations about resource	resources	it	Informazioni generali sulla risorsa
 gernal resource	resources	it	risorsa generale
+global categories	resources	it	Categorie Globali
+hours	resources	it	ore
 how many of the resources are useable?	resources	it	Quante risorse sono utilizzabili?
 how many of them are useable?	resources	it	Quante di loro sono utilizzabili?
 how many of this resource are usable	resources	it	Quante di questa risorse sono utilizzabili
 how many of this resource exists	resources	it	Quante di queste risorse esistono
+if you specify an export definition, it will be used when you export	resources	it	Se specifichi una definizione di esportazione, allora verrà usata durante la relativa operazione
 implies booking permission	resources	it	implica permesso di prenotazione
 implies read permission	resources	it	implica permesso di lettura
 information about storage	resources	it	Informazioni sullo stoccaggio
 informations about the location of resource	resources	it	Informazioni sulla localizzazione della risorsa
+insert	resources	it	Inserisci
 inventory number	resources	it	Numero inventario
 inventory number:	resources	it	Numero inventario:
 is resource bookable?	resources	it	La risorsa è prenotabile?
@@ -49,6 +55,7 @@ links	resources	it	Collegamenti
 location	resources	it	Luogo
 location of resource	resources	it	Luogo della risorsa
 location:	resources	it	Localizzazione:
+manage mapping	resources	it	Gestisci la mappatura
 name of resource	resources	it	Nome della risorsa
 name:	resources	it	Nome:
 no description available	resources	it	nessuna descrizione disponibile
@@ -95,7 +102,5 @@ web-site for this resource	resources	it	Pagina Web di questa risorsa
 where to find this resource?	resources	it	Dove trovare questa risorsa?
 which category does this resource belong to?	resources	it	A quale categoria appartiene questa risorsa?
 write permissions	resources	it	Permessi di scrittura
-you are not permitted to delete this reource!	resources	it	Non hai il permesso di cancellare questa risorsa!
-you are not permitted to edit this reource!	resources	it	Non hai il permesso di modificare questa risorsa!
 you are not permitted to get information about this resource!	resources	it	Non hai il permesso di ottenere informazioni su questa risorsa!
 you chose more resources than available	resources	it	Hai scelto più risorse di quelle disponibili

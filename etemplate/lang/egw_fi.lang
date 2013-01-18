@@ -67,6 +67,7 @@ cells	etemplate	fi	Solut
 cellspacing for the table-tag	etemplate	fi	Cellspacing table tagissa
 center	etemplate	fi	Asettaa keskelle
 changed	etemplate	fi	Muokattu
+check all	etemplate	fi	Tarkista kaikki
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	fi	Onko sisältö vain nähtävillä mutta ei vaihdettavissa
 check if field has to be filled by user	etemplate	fi	Valitse, jos kenttä on pakollinen
 checkbox	etemplate	fi	Valintalaatikko
@@ -91,6 +92,7 @@ contact fields	etemplate	fi	Yhteystietokentät
 contains	etemplate	fi	Sisältää
 create a new table for the application	etemplate	fi	Luo uusi taulukko sovellukselle
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	fi	Luodaan englanninkielinen ('en') kielitiedosto otsikosta ja ohjetekstit
+creator	preferences	fi	Luoja
 css class for the table-tag	etemplate	fi	CSS luokka taulukko merkille
 css properties	etemplate	fi	CSS asetukset
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	fi	CSS-luokan nimi tällä rivillä, esiasetukset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
@@ -100,6 +102,7 @@ custom	etemplate	fi	Valinnan mukaan
 custom fields	etemplate	fi	Lisäkentät
 custom javascript for onchange	etemplate	fi	Oma javascripti kohtaan onChange
 cut	etemplate	fi	Leikkaa
+date	preferences	fi	Päiväys
 date+time	etemplate	fi	Päivämäärä ja aika
 datum	etemplate	fi	Päiväys
 day	etemplate	fi	Päivä
@@ -125,7 +128,7 @@ deletes this index	etemplate	fi	Poistaa indeksin
 discard changes	etemplate	fi	Hylkää muutokset
 displayed in the top line of the groupbox (legend)	etemplate	fi	Näytetään ryhmävalintalaatikon ylärivillä (legend)
 do you want to save the changes you made in table %s?	etemplate	fi	Tallennetaanko tekemäsi muutokset taulukkoon %s?
-document '%1' does not exist or is not readable for you!	etemplate	fi	Tiedostoa '%1' ei ole olemassa tai sinulla ei ole lukuoikeutta!
+document '%1' does not exist or is not readable for you!	preferences	fi	Tiedostoa '%1' ei ole olemassa tai sinulla ei ole lukuoikeutta!
 documentation	etemplate	fi	Dokumentointi
 doesn't matter	etemplate	fi	Ei väliä
 drop a table - this can not be undone	etemplate	fi	Poista tietokannan taulu - tätä EI voi peruuttaa
@@ -163,6 +166,9 @@ etemplate '%1' written to '%2'	etemplate	fi	eMallipohja %1 kirjoitetaan %2
 etemplate editor	etemplate	fi	eMallipohjan muokkain
 etemplate reference	etemplate	fi	eMallipohjan referenssit
 etemplate tutorial	etemplate	fi	eMallipohjan opetusohjelma
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	fi	Esimerkki {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} --> etsii "n_prefix" kentästä  'Mr', jos olemassa kirjoita Hello Mr., muutoin kirjoita Hello Ms.
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	fi	Esimerkki {{NELF role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, se kirjoitetaan seuraavalle riville
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	fi	Esimerkki {{NELFNV role}} ---> jos kenttä 'role' = 'rooli/asema' ei ole tyhjä, aseta LF ilman arvoa
 exchange this row with the one above	etemplate	fi	Vaihda tämä rivi yläpuolella olevan kanssa
 exchange this two columns	etemplate	fi	Vaihda nämä kaksi saraketta keskenään
 export the loaded etemplate into a xml-file	etemplate	fi	Vie ladattu eMallipohja XML-tiedostoksi
@@ -178,9 +184,10 @@ file writen	etemplate	fi	Tiedostoa kirjoitetaan
 fileupload	etemplate	fi	Tiedostoa ladataan
 first	etemplate	fi	Ensimmäinen
 floating point	etemplate	fi	Liukuva pilkku
-for more than one contact in a document use the tag pagerepeat!	etemplate	fi	Käytä sivuntoisto -komentoa useammalle kuin yhdelle yhteystiedolle!
+for more than one contact in a document use the tag pagerepeat!	preferences	fi	Käytä sivuntoisto -komentoa useammalle kuin yhdelle yhteystiedolle!
 foreign key	etemplate	fi	Viiteavain
 formatted text (html)	etemplate	fi	Muotoiltu teksti (HTML)
+general fields:	preferences	fi	Yleiset kentät:
 go to the first entry	etemplate	fi	Mene ensimmäiseen merkintään
 go to the last entry	etemplate	fi	Mene viimeiseen merkintään
 go to the next page of entries	etemplate	fi	Mene seuraavan sivun merkintöihin
@@ -202,6 +209,8 @@ hours	etemplate	fi	Tuntia
 how many entries should the list show	etemplate	fi	Kuinka monta merkintää näytetään listalla
 html	etemplate	fi	HTML
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	fi	Jo kenttä ei ole sallittu, tyhjä solu näytetään
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	fi	Määrittele kansio (koko vfs polku), ja %1 näyttää kaikki kansiossa olevat tiedostot. Valittu tiedosto voidaan ladata, sisältäen tiedostoon automaattisesti syötetyt tiedot.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	fi	Määrittele tiedosto (koko vfs polku), ja %1 näyttää kaikki ylimääräisen kuvakkeen jokaiselle merkinnälle. Määritelty tiedosto voidaan ladata kuvaketta klikkaamalla, sisältäen tiedostoon automaattisesti syötetyt tiedot..
 image	etemplate	fi	Kuva
 import	etemplate	fi	Tuonti
 import an etemplate from a xml-file	etemplate	fi	Tuo eMallipohja XML-tiedostosta
@@ -230,15 +239,21 @@ link	etemplate	fi	Linkki
 linkapps	etemplate	fi	Linkki sovellukseen
 linkentry	etemplate	fi	Linkki tietueeseen
 linklist	etemplate	fi	Linkkiluettelo
+links and attached files	preferences	fi	Linkit ja liitetyt tiedostot
+links to specified application.  example: {{links/addressbook}}	etemplate	fi	Määriteltyjen sovellusten linkit. Esim. {{links/addressbook}}
 linkstring	etemplate	fi	Linkki merkkijonoon
-linkto	etemplate	fi	Linkittää
+linkto	etemplate	fi	Linkki
+list of files linked to the current record	preferences	fi	Lista liitetyistä tiedostoista
 load this template into the editor	etemplate	fi	Lataa mallipohja muokattavaksi
 maximum size for uploads	filemanager	fi	Latauksen maksimikoko
 message ...	etemplate	fi	Viesti...
+message(s) send failed!	etemplate	fi	Lähetys epäonnistui!
+message(s) send ok.	etemplate	fi	Lähetys onnistui
 middle	etemplate	fi	Keskellä
 minute	etemplate	fi	Minuutti
 minutes	etemplate	fi	Minuuttia
 missing: %1	etemplate	fi	Puuttuva: %1
+modifier	preferences	fi	Muokkaaja
 month	etemplate	fi	Kuukausi
 more than 1 match for '%1'	etemplate	fi	Useampi kuin yksi osuma kohteelle '%1'
 multicolumn indices	etemplate	fi	Usean sarakkeen indeksi
@@ -253,6 +268,7 @@ no column to swap with !!!	etemplate	fi	Ei saraketta johon voisi vaihtaa !!!
 no file	etemplate	fi	Ei tiedostoa
 no filename given or selected via browse...	etemplate	fi	Tiedostonimeä ei annettu tai valittu Selaa... -valinnan kautta
 no matches found	etemplate	fi	Ei osumia löydetty!
+no rights to export more than %1 entries!	common	fi	Sallittu vientimäärä: %1 merkintää!
 no row to swap with !!!	etemplate	fi	Ei riviä johon voisi vaihtaa !!!
 not null	etemplate	fi	EI NULL
 nothing	etemplate	fi	Ei mitään
@@ -289,6 +305,8 @@ readonly	etemplate	fi	Vain lukuoikeus
 remove row (can not be undone!!!)	etemplate	fi	Siirrä rivi (lopullinen, ei voida palauttaa !!!)
 remove this link (not the entry itself)	etemplate	fi	Poista tämä linkki (ei poista itse merkintää)
 required	etemplate	fi	Vaaditut
+restore all	etemplate	fi	Palauta kaikki
+restore all application templates, overwriting existing ones with identical version number	etemplate	fi	Palauta kaikki sovellusmallipohjat. Päällekirjoittaa samalla versionumerolla olevat mallipohjat.
 returns savely, without deleting	etemplate	fi	Palauta säästäen, ILMAN poistamista
 right	etemplate	fi	Oikea
 row...	etemplate	fi	Rivi...
@@ -363,8 +381,11 @@ template deleted	etemplate	fi	Mallipohja poistetaan
 template saved	etemplate	fi	Mallipohja tallennetaan
 text	etemplate	fi	Teksti
 textarea	etemplate	fi	Tekstialue
-this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	fi	Tämä teksti näytetään, jos syöttökenttä on tyhjä ja sillä ei ole fokusta
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	fi	Tiedosto voi sisältää merkintöjä kuten {{%3}}, mihin syötetään haluttu tieto. %1Lista mahdollisista merkinnöistä%2
+the following document-types are supported:	preferences	fi	Seuraavat tiedostotyypit ovat tuettuja:
+this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	fi	Tämä teksti näytetään, jos syöttökenttä on tyhjä ja sillä ei ole fokusta (blur)
 time	etemplate	fi	Aika
+titles of any entries linked to the current record, excluding attached files	preferences	fi	Linkitettyjen merkintöjen otsikot/aiheet, possulkien tiedostot
 to start the db-tools	etemplate	fi	Käynnistääksesi Tietokantatyökalut
 to start the etemplate editor	etemplate	fi	Käynnistääksesi eMallipohjan muokkauksen
 to start the search	etemplate	fi	Aloitetaan etsiminen

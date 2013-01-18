@@ -1,19 +1,34 @@
 allowed users	importexport	id	Pengguna yang dibolehkan
+changed	importexport	id	Diubah
+charset of file	importexport	id	Charset of file
+check all	importexport	id	Contreng semua
+condition	importexport	id	kondisi
+copied	importexport	id	disalin
+created	importexport	id	Dibikin
 define imports|exports	common	id	Definisi impor|ekspor
+deleted	importexport	id	terhapus
 edit conditions	importexport	id	Edit conditions
 expert options	importexport	id	Expert options
 export	importexport	id	Ekspor
+exported	importexport	id	diekspor
+false	importexport	id	false
+fieldseperator	importexport	id	Pemisah field
 finish	importexport	id	selesai
-general	importexport	id	Umum
+general	preferences	id	Umum
+general fields:	preferences	id	Field Umum:
 import	importexport	id	Impor
 import definitions	common	id	Impor definisi
 importexport	common	id	ImporEkspor
 load sample file	importexport	id	Muatkan berkas contoh
 manage mapping	importexport	id	Pengelolaan pemetaan
 next	importexport	id	berikutnya
+next run	importexport	id	Next run
 preview	importexport	id	Preview
 previous	importexport	id	sebelumnya
 schedule	common	id	Jadual
 schedule import / export	common	id	Jadualkan impor/ekspor
 select definition	importexport	id	Pilih definisi
 select plugin	importexport	id	Pilih plugin
+translation	importexport	id	Terjemahan
+true	importexport	id	true
+use default	importexport	id	Gunakan bawaan

@@ -286,7 +286,6 @@ file uploads are switched off: you can not use any of the filemanagers, nor can 
 filename	setup	sk	názov súboru
 filesystem	setup	sk	Súborový systém
 filesystem (default)	setup	sk	Súborový systém (predvolené)
-find and register all application hooks	setup	sk	Nájsť a zaregistrovať všetky háčiky aplikácií
 force selectbox	setup	sk	Vynúť ponuku pre výber
 give admin access to all installed apps	setup	sk	Dať správcovi prístup ku všetkým nainštalovaným aplikáciám
 gives further options	setup	sk	dáva ďalšie možnosti

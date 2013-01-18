@@ -1,5 +1,7 @@
+first name	common	rw	Izina Ribanza
 firstname	common	rw	Izina Ribanza
+last name	common	rw	Izina ry'Umuryango
 lastname	common	rw	Izina ry'Umuryango
-no	admin	rw	Oya
+no	common	rw	Oya
 password	common	rw	Urufunguzo
-yes	admin	rw	Yego
+yes	common	rw	Yego

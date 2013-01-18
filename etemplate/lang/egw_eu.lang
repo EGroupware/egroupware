@@ -24,7 +24,9 @@ align	etemplate	eu	Lerrokatzea
 all days	etemplate	eu	egunero
 all operations save the template!	etemplate	eu	operazio guztiek plantilla gordetzen dute!
 am	etemplate	eu	am
+and	etemplate	eu	Eta
 application	etemplate	eu	Aplikazioa
+applications	etemplate	eu	Aplikazioak
 applies the changes made	etemplate	eu	Egindako aldaketak aplikatu
 attach	etemplate	eu	Erantsi
 attach file	etemplate	eu	Fitxategia erantsi
@@ -40,6 +42,7 @@ category	etemplate	eu	Kategoria
 cells	etemplate	eu	Gelaxkak
 cellspacing for the table-tag	etemplate	eu	Gelaxkaren handiera taularen etiketarentzako
 center	etemplate	eu	Erdiratu
+check all	etemplate	eu	Guztia hautatu
 check if field has to be filled by user	etemplate	eu	markatu eremua erabiltzaileak bete behar badu
 checkbox	etemplate	eu	Laukia
 class	etemplate	eu	Klase
@@ -54,6 +57,7 @@ column...	etemplate	eu	Zutabea...
 columnname	etemplate	eu	Zutabearen izena
 comment	etemplate	eu	Komentarioa
 confirm	etemplate	eu	berretsi
+contact	etemplate	eu	Kontaktua
 contains	etemplate	eu	dauka
 create a new table for the application	etemplate	eu	Aplikaziorako taula berri bat sortu
 css class for the table-tag	etemplate	eu	Taularen etiketarentzako CSS klasea
@@ -179,6 +183,7 @@ newer version '%1' exists !!!	etemplate	eu	Bertsio '%1' berriagoa dago!!!
 nextmatch	etemplate	eu	Hurrengo parekatzea
 no column to swap with !!!	etemplate	eu	Ez dago zutaberik aldatzeko!!!
 no file	etemplate	eu	ez dago fitxategirik
+no matches found	etemplate	eu	Ez dago emaitzik
 no row to swap with !!!	etemplate	eu	Ez dago errenkadarik aldatzeko!!!
 not null	etemplate	eu	NOT NULL
 nothing	etemplate	eu	ezerrez
@@ -192,8 +197,23 @@ open the online help.	etemplate	eu	On line laguntza zabaldu
 operator	etemplate	eu	Operadorea
 optional note about the link	etemplate	eu	loturari buruzko aukerazko oharra
 options	etemplate	eu	Aukerak
+or	etemplate	eu	edo
 overflow	etemplate	eu	Gainezkatzea
 padding	etemplate	eu	Testutik gelaxkarako distantzia
 paste	etemplate	eu	Itsatsi
 path	etemplate	eu	Ruta
 pm	etemplate	eu	pm
+read a list of entries.	etemplate	eu	Sarrea zerrenda bat irakurri
+read a single entry by passing the id and fieldlist.	etemplate	eu	Sarrera bakarra irakurri "ID"-a eta "eremu zerrenda" pasatuaz.
+remove this link (not the entry itself)	etemplate	eu	Lotura hau ezabatu (ez sarrera)
+select a category	etemplate	eu	Kategoria hautatu
+select an app to search in	etemplate	eu	Bilaketa egiteko aplikazio bat aukeratu
+selectbox	etemplate	eu	Aukeraketa kuadroa
+show	etemplate	eu	Bistaratu
+start a new search, cancel this link	etemplate	eu	bilaketa berri bat hasi, lotura hau ezeztatu
+template	etemplate	eu	Plantilla
+type	etemplate	eu	mota
+unlink	etemplate	eu	Desestekatu
+update a single entry by passing the fields.	etemplate	eu	Eguneratu sarrera bakarra eremua emanez.
+upload	etemplate	eu	Kargatu
+view this linked entry in its application	etemplate	eu	zure aplikazioarekin lotura duen sarrera hau ikusi

@@ -1,6 +1,9 @@
 %1 email addresses inserted	common	ko	%1 E-Mail 주소가 삽입되었습니다.
 %1 is not executable by the webserver !!!	common	ko	%1 은 웹서버에 의해 실행될 수 없습니다 !!!
 (shift-)click or drag to change value	jscalendar	ko	쉬프트 클릭 혹은 드래그로 값을 변경하세요
+00 (disable)	admin	ko	00 ( 미사용 / 추천 )
+13 (ntp)	admin	ko	13 (ntp)
+80 (http)	admin	ko	80 (http)
 about	common	ko	소개
 about %1	common	ko	%1 에 대하여
 access	common	ko	액세스
@@ -9,22 +12,32 @@ account has been created	common	ko	아이디가 생성되었습니다.
 account has been deleted	common	ko	아이디가 삭제되었습니다.
 account has been updated	common	ko	아이디가 변경되었습니다.
 account is expired	common	ko	아이디가 만료되었습니다.
+accounts	common	ko	계정
+action	common	ko	액션
+actions	common	ko	액션
+active	common	ko	활성화
 add	common	ko	추가
 add category	common	ko	카테고리 추가
 add sub	common	ko	하위 추가
 addressbook	common	ko	주소록
 admin	common	ko	관리
 administration	common	ko	관리
+all	common	ko	모두
 all fields	common	ko	모든 필드
+and	common	ko	그리고(AND 연산)
+application	common	ko	응용프로그램
 apply	common	ko	적용
 april	common	ko	4월
 are you sure you want to delete these entries ?	common	ko	이 항목들을 정말로 삭제하시겠습니까?
 are you sure you want to delete this entry ?	common	ko	현재 항목을 삭제하시겠습니까?
 august	common	ko	8월
+back	common	ko	뒤로
+back to user login	common	ko	사용자 접속으로 돌아가기
 bad login or password	common	ko	사용자ID나 패스워드가 틀립니다.
 bold	common	ko	진하게
 border	common	ko	테두리
 bottom	common	ko	하단
+calendar	common	ko	일정
 cancel	common	ko	취소
 categories	common	ko	분류들
 category	common	ko	분류
@@ -55,7 +68,9 @@ date	common	ko	날짜
 date due	common	ko	만기일
 december	common	ko	12월
 delete	common	ko	삭제
+delete category	common	ko	카테고리 삭제
 delete row	common	ko	열 삭제
+delete this entry	common	ko	이 엔트리 삭제
 description	common	ko	내용
 detail	common	ko	상세
 details	common	ko	상세
@@ -71,7 +86,9 @@ document properties	common	ko	문서 속성
 document title:	common	ko	문서 제목:
 domain	common	ko	도메인
 domain name for mail-address, eg. "%1"	common	ko	이메일 주소를 위한 도메인 (예 : %1)
+domestic	common	ko	기숙사
 done	common	ko	완료
+download	common	ko	내려받기
 e-mail	common	ko	E-Mail
 edit	common	ko	수정
 edit categories	common	ko	분류 수정
@@ -98,6 +115,7 @@ first name of the user, eg. "%1"	common	ko	사용자의 이름, 예. "%1"
 first page	common	ko	첫 페이지
 firstname	common	ko	이름
 folder already exists.	common	ko	폴더가 이미 있습니다
+force selectbox	common	ko	강제 선택박스
 friday	common	ko	금요일
 ftp	common	ko	FTP
 fullscreen mode	common	ko	전체화면 모드
@@ -114,14 +132,16 @@ groups	common	ko	그룹
 height	common	ko	높이
 help	common	ko	도움말
 high	common	ko	높음
+highest	common	ko	가장높은 (highest)
 home	common	ko	홈으로
 home email	common	ko	자택 E-mail
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	ko	최상위 페이지의 네비게이션 바에서 몇개의 아이콘이 보이길 원하나요. 여분의 아이콘은 가장 네비게이션바의 가장 오른쪽 아이콘의 풀다운 메뉴안으로 들어갑니다.
 image url	common	ko	그림 URL
-insert 'return false'	common	ko	return false 문 삽입
 insert column after	common	ko	뒤에 행 넣기
 insert column before	common	ko	앞에 행 넣기
 insert row after	common	ko	뒤에 열 넣기
 insert row before	common	ko	앞에 열 넣기
+international	common	ko	국제
 invalid filename	common	ko	잘못된 파일명
 invalid ip address	common	ko	잘못된 IP주소
 invalid password	common	ko	잘못된 비밀번호
@@ -140,6 +160,7 @@ keywords	common	ko	키워드
 korea, democratic peoples republic of	common	ko	북한
 korea, republic of	common	ko	대한민국
 language	common	ko	언어
+last modified	common	ko	마지막 수정
 last name	common	ko	성
 last page	common	ko	끝 페이지로
 lastname	common	ko	성
@@ -149,6 +170,7 @@ login	common	ko	로그인
 loginid	common	ko	로그인ID
 logout	common	ko	로그아웃
 low	common	ko	낮음
+lowest	common	ko	가장낮은 (lowest)
 mail domain, eg. "%1"	common	ko	메일 도메인, 예. "%1"
 main category	common	ko	기본 분류
 main screen	common	ko	기본 화면
@@ -162,6 +184,7 @@ minute	common	ko	분
 monday	common	ko	월요일
 name	common	ko	이름
 name of the user, eg. "%1"	common	ko	사용자의 이름, 예. "%1"
+never	common	ko	절대(never)
 new entry added sucessfully	common	ko	새로운 데이터가 추가되었습니다.
 new main category	common	ko	새 기본 분류
 new value	common	ko	새 값
@@ -173,7 +196,9 @@ no history for this record	common	ko	이 레코드의 내역(변동기록)이 �
 no subject	common	ko	제목없음
 none	common	ko	없음
 normal	common	ko	보통
+not	common	ko	아니(not)
 not assigned	common	ko	할당되지 않음
+note	common	ko	노트
 notes	common	ko	기타
 november	common	ko	11월
 october	common	ko	10월
@@ -183,14 +208,17 @@ on *nix systems please type: %1	common	ko	유닉스 기반 시스템의 경우 �
 on mouse over	common	ko	마우스를 올렸을때
 only private	common	ko	개인적인것만
 only yours	common	ko	자신의 것만
+open	common	ko	개설
 open notify window	common	ko	알림창 열기
 open popup window	common	ko	팝업창 열기
 open sidebox	common	ko	사이드박스 열기
+or	common	ko	이거나(OR연산)
 ordered list	common	ko	번호 매기기
 original	common	ko	원본
 owner	common	ko	소유자
 page	common	ko	페이지
 page was generated in %1 seconds	common	ko	페이지 생성에 소요된 시간 : %1 초
+parcel	common	ko	소포
 parent category	common	ko	상위 분류
 password	common	ko	비밀번호
 password could not be changed	common	ko	비밀번호가 변경되지 않았습니다.
@@ -200,19 +228,25 @@ password must contain at least %1 numbers	common	ko	비밀번호는 적어도 %1
 password must contain at least %1 special characters	common	ko	비밀번호는 적어도 %1 개의 특수문자를 포함해야 합니다.
 password must contain at least %1 uppercase letters	common	ko	비밀번호는 적어도 %1 개의 대문자를 포함해야 합니다.
 password must have at least %1 characters	common	ko	비밀번호는 적어도 %1 개의 문자를 포함해야 합니다.
+path to user and group files has to be outside of the webservers document-root!!!	common	ko	사용자와 그룹파일의 경로는 반드시 웹서버 DocumentRoot 설정 외부에 있어야 합니다!!!
 permissions to the files/users directory	common	ko	permissions to the files/users directory
 phone number	common	ko	전화번호
 please %1 by hand	common	ko	%1을 직접 하시오.
 please enter a name	common	ko	이름을 입력해주세요!
+please run setup to become current	common	ko	현재버전이 되려면 설정을 실행하세요
 please select	common	ko	선택해주세요
 please set your global preferences	common	ko	전역 환경설정을 필히 설정해주세요!
 please set your preferences for this application	common	ko	이 응용프로그램의 환경설정을 설정해주세요
 please wait...	common	ko	기다려주세요
+postal	common	ko	우편번호
 preferences	common	ko	환경설정
 previous page	common	ko	이전 페이지로
+primary group	common	ko	주 그룹
 priority	common	ko	중요도
 private	common	ko	개인
+project	common	ko	프로젝트
 public	common	ko	공개
+read this list of methods.	common	ko	이 메소드 목록 읽기
 reject	common	ko	거부
 remove selected accounts	common	ko	선택된 계정 삭제
 rename	common	ko	이름변경
@@ -224,8 +258,8 @@ right	common	ko	오른쪽
 saturday	common	ko	토요일
 save	common	ko	저장
 search	common	ko	검색
+search accounts	common	ko	계정 찾기
 search or select accounts	common	ko	계정 선택 혹은 검색
-search or select multiple accounts	common	ko	다중 계정 선택 혹은 검색
 second	common	ko	초
 select	common	ko	선택
 select category	common	ko	분류 선택
@@ -233,6 +267,7 @@ select date	common	ko	날짜 선택
 select group	common	ko	그룹 선택
 select home email address	common	ko	자택 E-Mail address 선택
 select multiple accounts	common	ko	다중계정 선택
+select one	common	ko	하나를 선택
 select the default height for the application windows	common	ko	이 응용프로그램 창이 사용할 기본 높이를 선택해주세요
 select the default width for the application windows	common	ko	이 응용프로그램 창이 사용할 기본 길이를 선택해주세요
 select user	common	ko	사용자 선택
@@ -253,8 +288,10 @@ show menu	common	ko	메뉴 보이기
 show page generation time	common	ko	페이지 생성시간 보이기
 show page generation time on the bottom of the page?	common	ko	페이지 생성 시간을 페이지 하단에 출력하시겠습니까?
 show page generation time?	common	ko	페이지 생성시간을 출력합니까?
+show_more_apps	common	ko	더 많은 응용프로그램 보기
 showing %1	common	ko	현재 %1
 showing %1 - %2 of %3	common	ko	전체 %3에서 %1 - %2
+site configuration	common	ko	사이트 구성
 sorry, your login has expired	login	ko	귀하의 사용자ID는 만료되어 더 이상 사용하실수 없습니다.
 status	common	ko	상태
 subject	common	ko	제목
@@ -268,6 +305,7 @@ this application is current	common	ko	이 응용프로그램은 최신입니다.
 this application requires an upgrade	common	ko	이 응용프로그램은 업그레이드가 필요합니다.
 thursday	common	ko	목요일
 time	common	ko	시간
+time zone offset	common	ko	시간대 변경
 title	common	ko	제목
 to correct this error for the future you will need to properly set the	common	ko	이 오류를 수정하기 위해서는 다음 설정을 하여야 합니다 :
 to go back to the msg list, click <a href= %1 >here</a>	common	ko	메세지 목록으로 돌아가기 위해서는 <a href="%1">여기</a>를 클릭해주세요
@@ -286,6 +324,8 @@ user accounts	common	ko	사용자 계정
 user groups	common	ko	사용자 그룹
 username	common	ko	사용자ID
 users	common	ko	사용자
+users choice	common	ko	사용자 선택
+version	common	ko	버전
 view	common	ko	보기
 wednesday	common	ko	수요일
 welcome	common	ko	환영합니다
@@ -311,4 +351,3 @@ your search returned 1 match	common	ko	1건의 결과가 검색되었습니다.
 your session could not be verified.	login	ko	세션이 검증되지 않았습니다
 your settings have been updated	common	ko	설정이 변경되었습니다.
 zoom	common	ko	확대
-site configuration	common	ko	사이트 구성

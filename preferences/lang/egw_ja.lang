@@ -1,9 +1,8 @@
-change password	preferences	ja	パスワード変更
 change your password	preferences	ja	パスワード変更
 change your profile	preferences	ja	プロフィール変更
 change your settings	preferences	ja	設定変更
-country selection	preferences	ja	国の選択
-currency	preferences	ja	通貨
+color	preferences	ja	色
+country	preferences	ja	国
 date format	preferences	ja	日付書式
 default application	preferences	ja	アプリケーション（既定）
 edit custom fields	preferences	ja	カスタム項目訂正
@@ -18,13 +17,12 @@ please, select a new theme	preferences	ja	Please, select a new theme
 re-enter your password	preferences	ja	パスワードを再入力して下さい。
 select different theme	preferences	ja	異なるテーマを選択してください。
 select one	preferences	ja	選択して下さい
-show current users on navigation bar	preferences	ja	現在のユーザ数を表示する。
+selectbox	preferences	ja	セレクトボックス
 show navigation bar as	preferences	ja	ナビゲーション
 show text on navigation icons	preferences	ja	ナビゲーションアイコンにテキスト表示
 text only	preferences	ja	テキストのみ
 theme (colors/fonts) selection	preferences	ja	テーマ（色・フォント）選択
 this server is located in the %1 timezone	preferences	ja	 タイムゾーン
 time format	preferences	ja	時間書式
-use selectbox	preferences	ja	セレクトボックス
-use text entry	preferences	ja	テキスト入力
+users choice	preferences	ja	ユーザ選択
 your current theme is: %1	preferences	ja	</b>

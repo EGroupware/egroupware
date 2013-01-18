@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	ca	%1 adreces de correu afegides
 %1 is not executable by the webserver !!!	common	ca	%1 no es pot executar en el servidor web !!!
-%1 manual	common	ca	%1 manual
-%1 start	common	ca	%1 inicia
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	ca	%1Tria un altre directori%2<br />o fes que %3 sigui modificable pel webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ca	%1eGroupWare%2 és una eina de treball en grup, multiusuari i basada en web escrita en %3PHP%4
 (shift-)click or drag to change value	jscalendar	ca	(Maj-)+clic o arrosegar per a canviar el valor
@@ -30,8 +28,10 @@ account has been created	common	ca	Compte creat
 account has been deleted	common	ca	Compte esborrat
 account has been updated	common	ca	Compte actualitzat
 account is expired	common	ca	Compte caducat
+accounts	common	ca	Comptes
 acl	common	ca	LCA
 action	common	ca	Acció
+actions	common	ca	Accions
 active	common	ca	Actiu
 add	common	ca	Afegir
 add %1 category for	common	ca	Afegir %1 categoria per a
@@ -50,6 +50,7 @@ alphabet	common	ca	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	ca	Fulla d'estils alternativa:
 american samoa	common	ca	SAMOA AMERICANA
 an existing and by the webserver readable directory enables the image browser and upload.	common	ca	Un directori existent I llegible pel servidor web habilita la imatge del navegador i carrega.
+and	common	ca	I
 andorra	common	ca	ANDORRA
 angola	common	ca	ANGOLA
 anguilla	common	ca	ANGUILLA
@@ -112,7 +113,6 @@ cannot replace %1 because it is a directory	common	ca	No es pot reemplaçar %1 p
 cant open '%1' for %2	common	ca	No es pot obrir '%1' per %2
 cape verde	common	ca	CAP VERD
 caption	common	ca	Contingut
-catalonia	common	ca	CATALUNYA
 categories	common	ca	Categories
 categories for	common	ca	categories per
 category	common	ca	Categoria
@@ -176,13 +176,16 @@ default category	common	ca	Categoria predeterminada
 default height for the windows	common	ca	Alçada per defecte de la finestra
 default width for the windows	common	ca	Amplada per defecte de la finestra
 delete	common	ca	Esborrar
+delete category	common	ca	Esborrar categoria
 delete row	common	ca	Esborra fila
+delete this entry	common	ca	esborrar aquesta entrada
 denmark	common	ca	DINAMARCA
 description	common	ca	Descripció
 detail	common	ca	Detall
 details	common	ca	Detalls
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	ca	Desactivar l'execució del pegat d'IE 5.5 i superiors per mostrar transparències en imatges PNG?
 direction left to right	common	ca	Direcció d'esquerra a dreta
+directory	common	ca	Directori
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	ca	El directori no existeix, el servidor web no el pot llegir o no pertany a l'arrel del document!
 disable internet explorer png-image-bugfix	common	ca	Desactivar el pegat d'IE per veure imatges PNG
 disable slider effects	common	ca	Desactivar efectes lliscants
@@ -201,6 +204,7 @@ domestic	common	ca	Domèstic
 dominica	common	ca	DOMINICA
 dominican republic	common	ca	REPÚBLICA DOMINICANA
 done	common	ca	Fet
+download	common	ca	Descarregar
 drag to move	jscalendar	ca	Arrosegueu per moure
 e-mail	common	ca	Correu electrònic
 east timor	common	ca	TIMOR EST
@@ -210,7 +214,6 @@ edit %1 category for	common	ca	Editar %1 categoria per
 edit categories	common	ca	Editar categories
 edit category	common	ca	Editar categoria
 egroupware api version	common	ca	Versió eGroupWare API
-egroupware api version %1	common	ca	eGroupWare API versió %1
 egroupware: login blocked for user '%1', ip %2	common	ca	eGroupWare: inici de sessió bloquejat per a l'usuari '%1', IP %2
 egypt	common	ca	EGIPTE
 el salvador	common	ca	EL SALVADOR
@@ -351,6 +354,7 @@ kyrgyzstan	common	ca	KIRGIZYSTAN
 language	common	ca	Idioma
 language_direction_rtl	common	ca	rtl_adreça_idioma
 lao peoples democratic republic	common	ca	LAOS,  REPÚBLICA DEMOCRÀTICA POPULAR DE
+last modified	common	ca	Darrera modificació
 last name	common	ca	Cognom
 last name of the user, eg. "%1"	common	ca	Cognom de l'usuari, ex "%1"
 last page	common	ca	Darrera plana
@@ -369,6 +373,7 @@ list	common	ca	Llista
 list members	common	ca	Llista de membres
 lithuania	common	ca	LITUÀNIA
 local	common	ca	Local
+locations	common	ca	Ubicacions
 login	common	ca	Entrar
 loginid	common	ca	ID d'usuari
 logout	common	ca	Sortir
@@ -461,9 +466,11 @@ on mouse over	common	ca	En moure el ratolí per sobre
 only private	common	ca	només privat
 only yours	common	ca	només els vostres
 oops! you caught us in the middle of system maintainance.	common	ca	Ups! Ens heu agafat al mig del manteniment del sistema.
+open	common	ca	obert
 open notify window	common	ca	Obrir finestra de notificació
 open popup window	common	ca	Obrir finestra emergent
 open sidebox	common	ca	Obre el menú del costat
+or	common	ca	o
 ordered list	common	ca	Llista ordenada
 original	common	ca	Original
 other	common	ca	Altres
@@ -508,10 +515,10 @@ portugal	common	ca	PORTUGAL
 postal	common	ca	Postal
 powered by	common	ca	Gestionat per
 preferences	common	ca	Preferències
-preferences for the idots template set	common	ca	Preferències per al joc de plantilles "idot"
 prev. month (hold for menu)	jscalendar	ca	Mes anterior (mantenir clicat per menú)
 prev. year (hold for menu)	jscalendar	ca	Any anterior (mantenir clicat per menú)
 previous page	common	ca	Plana anterior
+primary group	common	ca	grup principal
 primary style-sheet:	common	ca	Full d'estils primari:
 print	common	ca	Imprimir
 priority	common	ca	Prioritat
@@ -533,6 +540,7 @@ remove shortcut	common	ca	Esborra tecles ràpides
 rename	common	ca	Reanomena
 replace	common	ca	Reemplaça
 replace with	common	ca	Reemplaça per
+restore failed	common	ca	Ha fallat la restauració
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	ca	Torna una llista completa dels comptes del sistema. Atenció: pot ser molt llarg
 returns an array of todo items	common	ca	Torna una matriu de tasques pendents
 returns struct of users application access	common	ca	Torna una estructura de l'accés dels usuaris a l'aplicació
@@ -602,6 +610,8 @@ showing %1 - %2 of %3	common	ca	mostrant %1 - %2 de %3
 sierra leone	common	ca	SIERRA LEONA
 simple	common	ca	Simple
 singapore	common	ca	SINGAPUR
+site configuration	common	ca	Configuració del Lloc
+size	common	ca	Mida
 slovakia	common	ca	ESLOVÀQUIA
 slovenia	common	ca	ESLOVÈNIA
 solomon islands	common	ca	ILLES SALOMÓ
@@ -691,11 +701,11 @@ use button to search for project	common	ca	useu el Botó per cercar per projecte
 user	common	ca	Usuari
 user accounts	common	ca	Comptes d'usuari
 user groups	common	ca	Grups d'usuari
-user openinstance	common	ca	Instància Oberta d'Usuari
 username	common	ca	Nom d'usuari
 users	common	ca	usuaris
 users choice	common	ca	Tria de l'usuari
 uzbekistan	common	ca	UZBEKISTAN
+value	common	ca	Valor
 vanuatu	common	ca	VANUATU
 venezuela	common	ca	VENEÇUELA
 version	common	ca	Versió
@@ -712,6 +722,7 @@ what style would you like the image to have?	common	ca	Quin estil vols que tengu
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	ca	Si dius que sí, els botons d'Inici i Sortir se presenten com a aplicacions a la barra principal d'aplicacions.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	ca	On i com seran mostrats els enllaços de egroupware com preferències, sobre i desconnexió.
 which groups	common	ca	Quins grups
+whole query	common	ca	consulta sencera
 width	common	ca	Amplada
 wk	jscalendar	ca	st
 work email	common	ca	correu del treball
@@ -742,4 +753,3 @@ your settings have been updated	common	ca	Preferències actualitzades
 zambia	common	ca	ZAMBIA
 zimbabwe	common	ca	ZIMBABWE
 zoom	common	ca	Zoom
-site configuration	common	ca	Configuració del Lloc

@@ -1,10 +1,30 @@
 %1 definition(s) %2	importexport	fr	%1 définition(s) %2
 %1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	fr	%1 définition(s) %2, %3 a échoué à cause de droits insuffisants !!!
 allowed users	importexport	fr	Utilisateurs autorisés
+changed	importexport	fr	Modifié
+charset of file	importexport	fr	Jeu de caractères du fichier
+check all	importexport	fr	Vérifier tout
 choose a name for this definition	importexport	fr	Choisissez un nom pour cette définition
 choose a plugin	importexport	fr	Choisissez un module enfichable
 choose an application	importexport	fr	Choisissez une application
+choose seperator and charset	importexport	fr	Choisisser le séparateur et l'encodage
+condition	importexport	fr	condition
+created	importexport	fr	Créé(s)
+deleted	importexport	fr	supprimé
+execute	importexport	fr	Exécuter
+export	importexport	fr	Exportation
+exported	importexport	fr	exporté
+false	importexport	fr	Faux
 finish	importexport	fr	terminer
+general	preferences	fr	Général
+import	importexport	fr	Importation
+manage mapping	importexport	fr	Gestion des correspondances
 next	importexport	fr	prochain
+next run	importexport	fr	Prochain démarrage
+preview	importexport	fr	Aperçu
 previous	importexport	fr	précédent
+schedule	common	fr	planification
+translation	importexport	fr	Traduction
+true	importexport	fr	Vrai
+use default	importexport	fr	Utiliser le défaut
 which useres are allowed for this definition	importexport	fr	Quels utilisateurs sont autorisés pour cette définition

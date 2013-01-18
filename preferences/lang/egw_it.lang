@@ -11,6 +11,7 @@ change a user password by passing the old and new passwords.  returns true on su
 change your password	preferences	it	Cambia la tua password
 change your profile	preferences	it	Cambia il tuo profilo
 change your settings	preferences	it	Cambia le tue impostazioni
+charset for the csv export	addressbook	it	Set di Caratteri per esportazione CSV
 click to select a color	preferences	it	Clicca per selezionare un colore
 color	preferences	it	Colore
 country	preferences	it	Nazione
@@ -79,4 +80,3 @@ you do not have permission to set acl's in this mode!	preferences	it	Non hai il 
 you must enter a password	preferences	it	Devi inserire una password
 your current theme is: %1	preferences	it	il tuo tema attuale è: %1
 your preferences	preferences	it	Preferenze personali
-charset for the csv export	addressbook	it	Set di Caratteri per esportazione CSV

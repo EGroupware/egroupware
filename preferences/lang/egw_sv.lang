@@ -11,6 +11,7 @@ change a user password by passing the old and new passwords.  returns true on su
 change your password	preferences	sv	Ändra lösenord
 change your profile	preferences	sv	Ändra profil
 change your settings	preferences	sv	Ändra inställningar
+charset for the csv export	addressbook	sv	Teckenuppsättning för CSV export
 click to select a color	preferences	sv	Välja färg
 color	preferences	sv	Färg
 country	preferences	sv	Land
@@ -67,7 +68,7 @@ text only	preferences	sv	Endast text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sv	Standard applikationen kommer att visas vid inloggning och när du klickar på eGroupWare-ikonen överst på sidan.<br>Du kan också visa fler än en applikation på startsidan, om du inte väljer en här.<br>Detta konfigureras under alternativ på respektive applikation.
 the old password is not correct	preferences	sv	Gamla lösenordet är inte rätt
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	sv	Valrutan visar tillgängliga användare (kan vara långsam med många samtidiga användare). I popup fönstret kan man söka användare efter namn eller grupp.
-the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	common	sv	De sista två valen begränsar synligheten av andra användare. Därför bör de vara tvingande men INTE ges administratörer.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	sv	De sista två valen begränsar synligheten av andra användare. Därför bör de vara tvingande men INTE ges administratörer.
 the two passwords are not the same	preferences	sv	Lösenorden är inte lika
 theme (colors/fonts) selection	preferences	sv	Tema (färg/font) val
 this server is located in the %1 timezone	preferences	sv	Denna server är placerad i tidzon %1
@@ -75,6 +76,7 @@ time format	preferences	sv	Tidformat
 use default	preferences	sv	Använd standard
 users choice	preferences	sv	Användarnas val
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	sv	Om du väljer Ja, kommer hem och utloggnings knappar att visas i navigerings listen.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sv	Vilken teckeuppsättning ska användas vid CSV export? Systemets standard är det som används av eGroupWare.
 which currency symbol or name should be used in egroupware.	preferences	sv	Vilken valutasymbol skall användas i eGroupWare.
 write prefs for the specified application.	preferences	sv	Skrivrättigheter för vald applikation
 you can show the applications as icons only, icons with app-name or both.	preferences	sv	Du kan se applikationerna som bara ikon, ikon med text eller bara text.
@@ -82,5 +84,3 @@ you do not have permission to set acl's in this mode!	preferences	sv	Du saknar r
 you must enter a password	preferences	sv	Ange ett lösenord
 your current theme is: %1	preferences	sv	Ditt nuvarande tema är: %1
 your preferences	preferences	sv	Dina inställningar
-charset for the csv export	addressbook	sv	Teckenuppsättning för CSV export
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sv	Vilken teckeuppsättning ska användas vid CSV export? Systemets standard är det som används av eGroupWare.

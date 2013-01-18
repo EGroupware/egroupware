@@ -4,6 +4,7 @@
 %1 weeks	calendar	ru	%1 недель
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	ru	<b>Пожалуйста помните</b>: Календарь использует праздничные дни вашей страны, которая установлена на %1. Вы можете изменить на %2. Праздники %3 автоматически установлены из %4. Вы можете изменить на %5.
 a non blocking event will not conflict with other events	calendar	ru	Неблокируемое событие не вызовет конфликтов с другими событиями
+accept	calendar	ru	принять
 accept or reject an invitation	calendar	ru	Принять или отклонить приглашение
 accepted	calendar	ru	Принято
 access denied to the calendar of %1 !!!	calendar	ru	Достпуп к календарю отклонен
@@ -11,8 +12,10 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	ru	Действия
 actions...	calendar	ru	Действия...
 add alarm	calendar	ru	Добавить "звонок"
+add timesheet entry	calendar	ru	Добавить запись табеля учета времени
 added	calendar	ru	Добавлено
 added by synchronisation	calendar	ru	добавлено при синхронизации
+after	calendar	ru	после
 after %1	calendar	ru	После %1
 after current date	calendar	ru	После текущей даты
 alarm	calendar	ru	"Звонок"
@@ -27,6 +30,7 @@ all events	calendar	ru	Все события
 all future	calendar	ru	Все будущие
 all participants	calendar	ru	Все участники
 allows to edit the event again	calendar	ru	Разрешает редактировать события
+always	calendar	ru	всегда
 apply the changes	calendar	ru	Применить изменения
 are you sure you want to delete this country ?	calendar	ru	Вы уверены, что хотите удалить эту страну ?
 are you sure you want to delete this holiday ?	calendar	ru	Вы уверены, что хотите удалить этот праздник ?
@@ -41,6 +45,7 @@ busy	calendar	ru	занят
 by	calendar	ru	к
 calendar csv export	calendar	ru	Экспорт календаря в CSV
 calendar event	calendar	ru	Событие в Календаре
+calendar fields:	calendar	ru	Поля Календаря:
 calendar holiday management	admin	ru	Управление праздниками в Календаре
 calendar menu	calendar	ru	Меню календаря
 calendar preferences	calendar	ru	Настройки Календаря
@@ -49,7 +54,8 @@ calendar-fieldname	calendar	ru	Календарь - Имя поля
 can't add alarms in the past !!!	calendar	ru	Невозможно добавлять сигнал к прошедшему(в конце?) !!!
 can't aquire lock!	calendar	ru	Невозможно приобрести блокировку!
 canceled	calendar	ru	Отменено
-charset of file	calendar	ru	Кодировка файла
+check all	calendar	ru	Отметить все
+choose a category	calendar	ru	Выберите категорию
 close the window	calendar	ru	Закрыть окно
 compose a mail to all participants after the event is saved	calendar	ru	Составить письмо ко всем участникам после сохранения события
 copy of:	calendar	ru	Копия
@@ -65,6 +71,7 @@ csv-fieldname	calendar	ru	CSV-Имя поля
 csv-filename	calendar	ru	CSV-Имя файла
 custom fields	common	ru	Дополнительные поля
 daily	calendar	ru	Ежедневно
+day	calendar	ru	День
 days	calendar	ru	дней
 days of the week for a weekly repeated event	calendar	ru	Дни недели для еженедельного события
 days repeated	calendar	ru	дней повторять
@@ -74,21 +81,23 @@ default calendar filter	calendar	ru	Фильтр Календаря по умо�
 default calendar view	calendar	ru	Вид Календаря по умолчанию
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	ru	Длительность нового события по умолчанию (в минутах, напр. 60 для 1 часа).
 default week view	calendar	ru	обзор недели по умолчанию
+delegated	calendar	ru	назначеные
 delete series	calendar	ru	Удалить серии
 delete this alarm	calendar	ru	Удалить данный сигнал
 delete this event	calendar	ru	Удалить данное событие
 delete this exception	calendar	ru	Удалить данное исключение
 delete this series of recuring events	calendar	ru	Удалить серии еженедельных событий
+deleted	calendar	ru	удалено
 disinvited	calendar	ru	Приглашение отозвано
 display status of events	calendar	ru	Показать статус событий
 displayed view	calendar	ru	Показывать обзор
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	ru	Показывать обзор вашего календаря по умолчанию на стартовой странице (на странице которую вы видите при входе в eGW или при щелчке по пктограмме домашней страницы)?
 do you want a weekview with or without weekend?	calendar	ru	Необходим ли обзор за полную неделю (7 дней) или только рабочую (5 дней)
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	ru	Вы хотите быть оповещены о новых назначениях? Вы будете оповещены также о своих собственных изменениях.<br>Вы можете ограничить извещения только некоторыми изменениями. Каждая запись включает все извещения показанные в списке над ней. Все изменения включают изменение названия, описания, подписчиков, но не ответы подписчиков. Если владелец события требует какие-либо извещения, он всегда будет получать ответы подписчиков, в том числе такие как присоединение и отказ.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	ru	Вы хотите получать регулярный отчет о новых назначениях по эл. почте?<br>Суммарный отчет посылается вам на обычный адрес эл. почты утром этого дня либо в Понедельник для отчетов за неделю.<br>Письма посылаются только при наличии встреч в этот день или неделю.
 do you wish to autoload calendar holidays files dynamically?	admin	ru	Вы хотите динамически и автоматически загружать файлы с календарными выходными?
 download	calendar	ru	Загрузить
 download this event as ical	calendar	ru	Загрузить данное событие как iCal
+duration	calendar	ru	Длительность
 duration of the meeting	calendar	ru	Продолжительность встречи
 edit exception	calendar	ru	Редактировать исключение
 edit series	calendar	ru	Редактировать серию
@@ -117,7 +126,6 @@ exception created - you can now edit or delete it	calendar	ru	Исключени
 exceptions	calendar	ru	Исключения
 execute a further action for this entry	calendar	ru	Выполнить дальнейшее действие для этой записи
 existing links	calendar	ru	Существующие ссылки
-export	calendar	ru	Экспорт
 extended	calendar	ru	Расширенное
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	ru	Расширенные обновления всегда включают в себя полные описания событий. iCal может быть импортирован многими другими приложениями управления календарями.
 fieldseparator	calendar	ru	Разделитель полей
@@ -126,6 +134,7 @@ filename of the download	calendar	ru	имя файла для загрузки
 find free timeslots where the selected participants are availible for the given timespan	calendar	ru	поиск свободного времени у выбранных участников проекта
 firstname of person to notify	calendar	ru	Имя для оповещения
 for	calendar	ru	для
+for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	ru	Для последовательности писем используйте эту метку. Поместите текст, который вы желаете повторять между двух меток.
 for which views should calendar show distinct lines with a fixed time interval.	calendar	ru	Для каких видов календарь должен показывать отдельные (разделительные?) линии с фиксированным интервалом времени.
 format of event updates	calendar	ru	Формат обновления событий
 forward half a month	calendar	ru	вперед на пол месяца
@@ -136,7 +145,7 @@ freetime search	calendar	ru	Поиск свободного времени
 fri	calendar	ru	Птн
 full description	calendar	ru	Полное описание
 fullname of person to notify	calendar	ru	Полное имя для оповещения
-general	calendar	ru	Общий
+global categories	calendar	ru	Общие Категории
 global public and group public	calendar	ru	Глобальная аудитория и группы
 global public only	calendar	ru	только Глобальная аудитория
 group invitation	calendar	ru	Групповое приглашение
@@ -147,6 +156,8 @@ h	calendar	ru	ч
 here is your requested alarm.	calendar	ru	Запрошенный Вами "звонок"
 hide private infos	calendar	ru	Скрыть личную информацию
 high priority	calendar	ru	высокий приоритет
+history	calendar	ru	История
+history logging	admin	ru	Запись истории
 holiday	calendar	ru	Праздник
 holiday management	calendar	ru	Управление Праздниками
 holidays	calendar	ru	Праздники
@@ -163,14 +174,15 @@ ical successful imported	calendar	ru	iCal удачно импортирован
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	ru	Если праздники выпадают на выходные, они переносятся на понедельник.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	ru	Если не установить пароль здесь,т о информация будет доступна каждому, кто знает URL (ссылку)!!!
 ignore conflict	calendar	ru	Игнорировать конфликт
-import	calendar	ru	Импорт
 import csv-file	common	ru	Импорт CSV-файла
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	ru	Импортирует события в ваш Календарь из файла CSV. CSV значит 'Comma Separated Values' - "Значения Разделенные Запятыми". Тем не менее, в закладке настроек вы можете выбрать другой знак-разделитель.
+insert in document	calendar	ru	Вставить в документ
 interval	calendar	ru	Интервал
 invalid email-address "%1" for user %2	calendar	ru	Неверный адрес электронной почты %1 для пользователя%2
 last	calendar	ru	последний
 lastname of person to notify	calendar	ru	Фамилия человека для оповещения
 length of the time interval	calendar	ru	Длительность интервала времени
+link	calendar	ru	Ссылка
 link to view the event	calendar	ru	Ссылка для просмотра события
 links	calendar	ru	Ссылки
 links, attachments	calendar	ru	Ссылки, Прикрепленные файлы
@@ -183,11 +195,14 @@ make freebusy information available to not loged in persons?	calendar	ru	Дат�
 minutes	calendar	ru	Минуты
 modified	calendar	ru	Изменено
 mon	calendar	ru	Пнд
+month	calendar	ru	Месяц
 monthly	calendar	ru	На месяц
 monthly (by date)	calendar	ru	На месяц (по дате)
 monthly (by day)	calendar	ru	На месяц (по дню)
 monthview	calendar	ru	Вид на месяц
 multiple week view	calendar	ru	Вид на несколько недель
+name of current user, all other contact fields are valid too	calendar	ru	Имя текущего пользователя, все остальные поля контакта также действительны.
+new	calendar	ru	Новая
 new search with the above parameters	calendar	ru	Новый поиск по старым параметрам
 no events found	calendar	ru	событий не найдено
 no filter	calendar	ru	нет фильтра
@@ -247,6 +262,7 @@ repetition	calendar	ru	Повтор
 repetitiondetails (or empty)	calendar	ru	Детали повтора (или пусто)
 reset	calendar	ru	Сброс
 resources	calendar	ru	ресурсы
+role	calendar	ru	Должность
 rule	calendar	ru	Правило
 sat	calendar	ru	Сбт
 saves the changes made	calendar	ru	сохранить внесенные изменения
@@ -254,21 +270,19 @@ saves the event ignoring the conflict	calendar	ru	Сохранить событ�
 scheduling conflict	calendar	ru	Конфликт расписания
 select a %1	calendar	ru	выбрать %1
 select a time	calendar	ru	выбрать время
+select multiple contacts for a further action	calendar	ru	Выбрать несколько контактов для дальнейшего действия
 select resources	calendar	ru	Выбрать ресурсы
 select who should get the alarm	calendar	ru	выбрать тех, кто должен получить сигнал
 selected range	calendar	ru	Выберите диапазон
 set a year only for one-time / non-regular holidays.	calendar	ru	Установить только Год для одноразовых/нерегулярных праздников.
 set new events to private	calendar	ru	Установить новые события как личные
 setting lock time calender	admin	ru	Установка времени блокировки даты для Календаря (по умолчанию 1 сек.)
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	ru	Показывать приглашения которые вы отклонили в календаре?<br>Вы сможете принять его позже (напр. когда ваш конфликт планов будет разрешен), если они все еще будут показываться в вашем календаре!
 should new events created as private by default ?	calendar	ru	Должны ли новые события создаваться как личные по умолчанию?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	ru	Могут ли невошедшие пользователи видеть информацию о вашей занятости? Вы можете установить дополнительный пароль, чтобы защитить информацию. Информация о занятости в формате iCal и включает только время в которые вы заняты. Тут не содержится название событий, описание и место проведения. %1 - ссылка на информацию о вашей занятости.
 should the planner display an empty row for users or categories without any appointment.	calendar	ru	Должен ли планировщик показывать пустую строку для пользователя или категории без назначений.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	ru	Показывать состояние участников событий (согласие, отказ, ...) в скобках после каждого имени?
 show birthdays from addressbook	admin	ru	Показывать в адресной книге дни рождений
 show default view on main screen	calendar	ru	Показать вид по умолчанию на главном экране
 show empty rows in planner	calendar	ru	Показывать пустые строки в планировщике
-show invitations you rejected	calendar	ru	Показать приглашения, от которых Вы отказались
 show list of upcoming events	calendar	ru	Показать список приближающихся событий
 show only the date, not the year	admin	ru	Показывать только дату, год не показывать
 show this month	calendar	ru	показать этот месяц
@@ -276,6 +290,7 @@ show this week	calendar	ru	показать эту неделю
 single event	calendar	ru	одно событие
 start	calendar	ru	начать
 start date/time	calendar	ru	Дата/время начала
+startdate	calendar	ru	Дата Начала
 startdate / -time	calendar	ru	дата начала/ время
 startdate and -time of the search	calendar	ru	Дата начала и время поиска
 startdate of the export	calendar	ru	дата начала экспорта
@@ -303,9 +318,9 @@ thu	calendar	ru	Чтв
 til	calendar	ru	до
 timeframe	calendar	ru	временные рамки
 timeframe to search	calendar	ru	временные рамки для поиска
+timezone	calendar	ru	Временная зона
 title of the event	calendar	ru	Заголовок события
 to many might exceed your execution-time-limit	calendar	ru	возможно расширить временные рамки для многого
-translation	calendar	ru	Перевод
 tue	calendar	ru	Втр
 two weeks	calendar	ru	две недели
 updated	calendar	ru	Обновлено
@@ -325,14 +340,13 @@ weeks in multiple week view	calendar	ru	Недели в виде несколь�
 weekview	calendar	ru	Вид на неделю
 weekview with weekend	calendar	ru	обзор недели, включачя выходные
 weekview without weekend	calendar	ru	обзор недели без выходных
-which events do you want to see when you enter the calendar.	calendar	ru	Какие события Вы хотите видеть при входе в Календарь.
-which of calendar view do you want to see, when you start calendar ?	calendar	ru	Какой Вид календаря Вы хотите видеть при запуске Календаря ?
 whole day	calendar	ru	целый день
 wk	calendar	ru	Рб
 work day ends on	calendar	ru	Рабочий день заканчивается в
 work day starts on	calendar	ru	Рабочий день начинается в
 yearly	calendar	ru	Ежегодно
 yearview	calendar	ru	Вид на Год
+yes, only admins can purge deleted items	admin	ru	Да, только администраторы могут уничтожить удаленые записи
 you can either set a year or a occurence, not both !!!	calendar	ru	Вы можете установить год или событие, только не оба сразу !!!
 you can only set a year or a occurence !!!	calendar	ru	Вы можете установить только событие или год!!!
 you do not have permission to read this record!	calendar	ru	У вас нет доступа для чтения данной записи!

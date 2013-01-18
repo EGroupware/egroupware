@@ -183,16 +183,21 @@ enter the path to the exported file here	addressbook	sk	Zadajte cestu k exportov
 error deleting the contact !!!	addressbook	sk	Chyba pri odstraňovaní kontaktu !!!
 error saving the contact !!!	addressbook	sk	Chyba pri ukladaní kontaktu !!!
 error: the entry has been updated since you opened it for editing!	addressbook	sk	Chyba: táto položka bola aktualizovaná v čase, kým ste ju mali otvorenú pre úpravy!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	addressbook	sk	Príklad {{IF n_prefix~pán~Dobrý deň pán~Dobrý deň pani}} - hľadá v poli "n_prefix" text "pán", ak nájde, napíše Dobrý deň pán, v opačnom prípade napíše Dobrý deň pani
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	preferences	sk	Príklad {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Príklad: pán Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	addressbook	sk	Príklad {{NELF role}} - ak pole pozícia nie je prázdne, dostanete nový riadok s hodnotou poľa pozícia
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	addressbook	sk	Príklad {{NELFNV role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
 existing links	addressbook	sk	Existujúce odkazy
 exists	addressbook	sk	existuje
 export as csv	addressbook	sk	Exportovať ako CSV
 export as vcard	addressbook	sk	Exportovať ako vizitku VCard
 export contacts	addressbook	sk	Exportovať kontakty
+export definition to use for nextmatch export	addressbook	sk	Exportná definícia pre použitie v exporte
 export definitition to use for nextmatch export	addressbook	sk	Definícia exportu pre použitie v nasledujúcom exporte
 export file name	addressbook	sk	Názov súboru pre export
 export from addressbook	addressbook	sk	Export z Adresára
 export selection	addressbook	sk	Exportovať výber
+exported	addressbook	sk	Exportované.
 exports contacts from your addressbook into a csv file.	addressbook	sk	Vyexportuje kontakty z adresára do súboru CSV.
 exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	sk	Vyexportuje kontakty z Vášho Adresára do súboru CSV (Comma Separated Values čiže hodnoty oddelené čiarkou). V karte možností môžete zvoliť aj iný oddeľovač než čiarku.
 extra	addressbook	sk	Extra
@@ -207,10 +212,13 @@ fields for the csv export	addressbook	sk	Polia pre CSV export
 fields the user is allowed to edit himself	admin	sk	Polia, ktoré smie používateľ upravovať
 fields to copy when copying an address?	admin	sk	Ktoré polia kopírovať pri kopírovaní adresy?
 fields to show in address list	addressbook	sk	Viditeľné polia v zozname
+fieldseparator	addressbook	sk	Oddeľovač polí
 for read only ldap	admin	sk	pre LDAP iba na čítanie
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	sk	Túto značku použite pre hromadný list. Obsah, ktorý chcete opakovať, zadajte medzi dve značky.
 freebusy uri	addressbook	sk	URI pre zaneprázdnenosť
 full name	addressbook	sk	Celé meno
+general	admin	sk	Všeobecné
+general fields:	addressbook	sk	Všeobecné polia:
 geo	addressbook	sk	GEO
 global categories	addressbook	sk	Globálne kategórie
 grant addressbook access	common	sk	Deleguj práva pre prístup k Adresáru
@@ -233,6 +241,7 @@ how many contacts should non-admins be able to export	admin	sk	Koľko kontaktov 
 icon	addressbook	sk	Ikona
 if accounts are already in ldap	admin	sk	ak sú účty už v LDAP
 ignore first line	addressbook	sk	Ignorovať prvý riadok
+import	addressbook	sk	Import
 import contacts	addressbook	sk	Importovať kontakty
 import csv-file into addressbook	addressbook	sk	Importovat CSV súbor do Adresára
 import file	addressbook	sk	Importuj súbor
@@ -261,15 +270,19 @@ ldif	addressbook	sk	LDIF
 line 2	addressbook	sk	Riadok 2
 link title for contacts show	addressbook	sk	Názov odkazu pre zobrazenie kontaktov
 links	addressbook	sk	Odkazy
+links and attached files	addressbook	sk	Odkazy a priložené súbory
+links to specified application.  example: {{links/infolog}}	addressbook	sk	Odkazy na vybranú aplikáciu. Príklad: {{links/infolog}}
 list all categories	addressbook	sk	Zoznam všetkých kategórií
 list all customfields	addressbook	sk	Zobraziť všetky používateľské položky
 list already exists!	addressbook	sk	Zoznam už existuje!
 list created	addressbook	sk	Zoznam bol vytvorený
 list creation failed, no rights!	addressbook	sk	Nepodarilo sa vytvoriť zoznam, nemáte práva!
+list of files linked to the current record	addressbook	sk	Zoznam súborov priložených k súčasnému záznamu
 load vcard	addressbook	sk	Nahrať vizitku VCard
 location	addressbook	sk	Umiestnenie
 locations	addressbook	sk	Umiestnenia
 main categories in their own field	addressbook	sk	Hlavné kategórie v samostatných poliach
+manage mapping	addressbook	sk	Správa mapovania
 mark records as private	addressbook	sk	Označiť záznamy ako súkromé
 merge contacts	addressbook	sk	Zlúčiť kontakty
 merge into first or account, deletes all other!	addressbook	sk	Zlúčiť do prvého účtu, odstránia sa všetky ostatné!
@@ -391,9 +404,11 @@ this person's first name was not in the address book.	addressbook	sk	Takéto men
 this person's last name was not in the address book.	addressbook	sk	Takéto priezvisko sa v adresári nenachádza.
 timezone	addressbook	sk	Časové pásmo
 title	addressbook	sk	Pracovné zaradenie
+titles of any entries linked to the current record, excluding attached files	addressbook	sk	Názvy akýchkoľvek položiek pripojených na súčasný záznam, okrem priložených súborov
 to many might exceed your execution-time-limit	addressbook	sk	Príliš veľa záznamov môže spôsobiť prekročenie povoleného časového limitu
 today is %1's birthday!	common	sk	Dnes má narodeniny %1!
 tomorrow is %1's birthday.	common	sk	Zajtra má narodeniny %1.
+translation	addressbook	sk	Preklad
 two of: %1	addressbook	sk	dva z: %1
 type	addressbook	sk	Typ
 un-delete	addressbook	sk	Obnoviť vymazané
@@ -405,6 +420,7 @@ update fields by edited organisations?	admin	sk	Aktualizovať polia podľa uprav
 updated	addressbook	sk	Aktualizované
 upload or delete the photo	addressbook	sk	Nahrať alebo odstrániť túto fotku
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	sk	URL adresa, na ktorú sa majú odkázať telefónne čísla (použite %1 = volané číslo, %u = názov účtu, %t = telefónne číslo účtu)
+use addressbooks "own sorting" attribute	addressbook	sk	použiť "vlastný" triediaci algoritmus adresára
 use an extra category tab?	addressbook	sk	Použiť extra kartu kategórie?
 use an extra tab for private custom fields?	admin	sk	Použiť extra kartu pre súkromné vlastné polia?
 use country list	addressbook	sk	Použiť zoznam krajín

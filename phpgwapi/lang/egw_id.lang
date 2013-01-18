@@ -14,10 +14,14 @@ about egroupware	common	id	Tentang eGroupware
 about the calendar	jscalendar	id	Tentang Kalender
 access	common	id	Akses
 access not permitted	common	id	Akses tidak diijinkan
+account has been created	common	id	Akoun telah dibuat
+account has been deleted	common	id	Akoun telah dihapus
+account has been updated	common	id	Akoun telah dikinikan
 account is expired	common	id	Akoun kadaluarsa
 accounts	common	id	Akoun
 acl	common	id	ACL
 action	common	id	Tindakan
+actions	common	id	Tindakan
 active	common	id	Aktif
 add	common	id	Tambah
 add %1 category for	common	id	Tambah %1 kategori untuk
@@ -37,6 +41,7 @@ alphabet	common	id	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	id	Alternate style-sheet:
 american samoa	common	id	SAMOA AMERIKA
 an error happened	common	id	Terjadi kesalahan
+and	common	id	Dan
 andorra	common	id	ANDORA
 angola	common	id	ANGOLA
 anguilla	common	id	ANGUILA
@@ -143,7 +148,9 @@ date selection:	jscalendar	id	Pemilihan tanggal:
 december	common	id	Desember
 default category	common	id	Kategori Bawaan
 delete	common	id	Hapus
+delete category	common	id	Hapus kategori
 delete row	common	id	Hapus baris
+delete this entry	common	id	Hapus entri ini
 denmark	common	id	DENMARK
 description	common	id	Uraian
 detail	common	id	Detil
@@ -161,6 +168,7 @@ domestic	common	id	Domestik
 dominica	common	id	DOMINIKA
 dominican republic	common	id	REPUBLIK DOMINIKA
 done	common	id	Selesai
+download	common	id	Unduh
 drag to move	jscalendar	id	Seretlah untuk memindahkan
 e-mail	common	id	E-Mail
 east timor	common	id	TIMOR LESTE
@@ -231,6 +239,9 @@ greenland	common	id	GREENLAND
 grenada	common	id	GRENADA
 group	common	id	Kelompok
 group access	common	id	Akses Kelompok
+group has been added	common	id	Kelompok telah dibuat
+group has been deleted	common	id	Kelompok telah dihapus
+group has been updated	common	id	Kelompok telah dikinikan
 group name	common	id	Nama kelompok
 group public	common	id	Kelompok Publik
 groups	common	id	Kelompok
@@ -260,6 +271,7 @@ insert column after	common	id	Sisipkan kolom setelah
 insert column before	common	id	Sisipkan kolom sebelum
 insert row after	common	id	Sisipkan baris setelah
 insert row before	common	id	Sisipkan baris sebelum
+international	common	id	Internasional
 invalid filename	common	id	Nama berkas salah
 invalid ip address	common	id	Alamat IP salah
 invalid password	common	id	Password salah
@@ -310,6 +322,7 @@ list	common	id	Daftar
 list members	common	id	Daftar anggota
 lithuania	common	id	LITHUANIA
 local	common	id	Lokal
+locations	common	id	lokasi
 login	common	id	Masuk
 loginid	common	id	LoginID
 logout	common	id	Keluar
@@ -334,6 +347,7 @@ marshall islands	common	id	KEPULAUAN MARSHALL
 martinique	common	id	MARTINIQUE
 mauritania	common	id	MAURITANIA
 mauritius	common	id	MAURITIUS
+max number of icons in navbar	common	id	Maks. jumlah ikon pada baris navigasi
 may	common	id	Mei
 mayotte	common	id	MAYOTTE
 medium	common	id	Medium
@@ -373,6 +387,7 @@ niger	common	id	NIGER
 nigeria	common	id	NIGERIA
 niue	common	id	NIUE
 no	common	id	Tidak
+no entries found, try again ...	common	id	tiada entri ditemukan, coba lagi ...
 no subject	common	id	Tanpa Subyek
 none	common	id	Tiada
 norfolk island	common	id	KEPULAUAN NORFOLK
@@ -393,9 +408,11 @@ oman	common	id	OMAN
 on mouse over	common	id	On Mouse Over
 only private	common	id	hanya privat
 only yours	common	id	hanya milik anda
+open	common	id	Open
 open notify window	common	id	Buka jendela pemberitahuan
 open popup window	common	id	Buka jendela popup
 open sidebox	common	id	Buka sidebox
+or	common	id	or
 ordered list	common	id	Daftar Teratur
 original	common	id	Asal-Muasal
 other	common	id	Lainnya
@@ -417,6 +434,7 @@ philippines	common	id	FILIPINA
 phone number	common	id	nomor telepon
 phpgwapi	common	id	eGroupWare API
 pitcairn	common	id	PITCAIRN
+please enter a name	common	id	Mohon masukan nama
 please select	common	id	Pilihlah
 please wait...	common	id	Tunggu...
 poland	common	id	POLANDIA
@@ -427,6 +445,7 @@ preferences	common	id	Kesukaan
 prev. month (hold for menu)	jscalendar	id	Bulan lalu (tekan, menu)
 prev. year (hold for menu)	jscalendar	id	Tahun lalu (tekan, menu)
 previous page	common	id	Halaman Sebelumnya
+primary group	common	id	Kelompok utama
 primary style-sheet:	common	id	Primary style-sheet:
 print	common	id	Cetak
 priority	common	id	Prioritas
@@ -448,6 +467,7 @@ remove shortcut	common	id	Buang Shortcut
 rename	common	id	Ubah
 replace	common	id	Ganti
 replace with	common	id	Ganti dengan
+restore failed	common	id	Restore failed
 reunion	common	id	REUNION
 right	common	id	Kanan
 romania	common	id	RUMANIA
@@ -472,6 +492,7 @@ search or select accounts	common	id	cari atau pilih akoun
 second	common	id	detik
 section	common	id	Seksi
 select	common	id	Pilih
+select action	common	id	Pilih tindakan
 select all %1 %2 for %3	common	id	Pilih semua %1 %2 untuk %3
 select category	common	id	Pilih Kategori
 select date	common	id	Pilih tanggal
@@ -496,6 +517,7 @@ show as topmenu	common	id	Tampilkan sebagai Topmenu
 show clock?	common	id	Tampilkan Jam?
 show in sidebox	common	id	Tampilkan pada sidebox
 show menu	common	id	tampilkan menu
+show_more_apps	common	id	Tunjukan Lebih banyak Aplikasi
 showing %1	common	id	menampilkan %1
 showing %1 - %2 of %3	common	id	menampilkan %1 - %2 dari %3
 sierra leone	common	id	SIERRA LEONE
@@ -532,6 +554,7 @@ tajikistan	common	id	TAJIKISTAN
 tanzania, united republic of	common	id	REPUBLIK TANZANIA
 text color:	common	id	Warna Teks:
 thailand	common	id	THAILAND
+the api is current	common	id	The API is current
 thursday	common	id	Kamis
 tiled	common	id	tiled
 time	common	id	Waktu
@@ -586,6 +609,7 @@ wednesday	common	id	Rabu
 welcome	common	id	Selamat Datang
 western european	common	id	Eropa Barat
 western sahara	common	id	SAHARA BARAT
+whole query	common	id	seluruh query
 width	common	id	Lebar (W)
 wk	jscalendar	id	mg
 work email	common	id	email kerja

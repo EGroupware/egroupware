@@ -31,8 +31,10 @@ all days	etemplate	fa	همه روزها
 all operations save the template!	etemplate	fa	همه عملیات فرم ذخیره شد!
 am	etemplate	fa	صبح
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	fa	ستون نمایه دار شده باعث می شود که پرس و جوهای آن ستون سریعتر انجام شوند(فضای دیسک را بیشتر مصرف می کند)!!!
+and	etemplate	fa	و
 application	etemplate	fa	کاربرد
 application name needed to write a langfile or dump the etemplates !!!	etemplate	fa	نام کاربرد لازم است در پرونده زبان نوشته شود یا در فرمها نوشته شود!!!
+applications	etemplate	fa	کاربردها
 applies the changes made	etemplate	fa	تغییرات انجام شده را اعمال میکند
 applies the changes to the given version of the template	etemplate	fa	تغییرات را به نسخه داده شده از فرم اعمال میکند
 attach	etemplate	fa	پیوست
@@ -54,6 +56,8 @@ cellpadding for the table-tag	etemplate	fa	عرض سلول برای علامت �
 cells	etemplate	fa	سلولها
 cellspacing for the table-tag	etemplate	fa	فاصله سلولها برای علامت جدول
 center	etemplate	fa	وسط
+changed	etemplate	fa	تغییر یافت
+check all	etemplate	fa	چک کردن همه
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	fa	اگر میخواهید محتوی فقط نشان داده شده و عوض نشوند، علامت بگذارید!(محتوی بعدا برگشت نخواهد کرد)
 check if field has to be filled by user	etemplate	fa	فیلد بررسی شود که بوسیله کاربر پرشده است
 checkbox	etemplate	fa	جعبه انتخاب
@@ -72,6 +76,7 @@ comment	etemplate	fa	توضیحات
 confirm	etemplate	fa	تأیید
 confirmation message or custom javascript (returning true or false)	etemplate	fa	پیام تأیید یا جاوااسکریپت سفارشی(با برگرداندن true یا false)
 confirmation necesary or custom java-script	etemplate	fa	تأییدیه ضروری یا جاوااسکریپت سفارشی
+contact	etemplate	fa	مخاطب
 contains	etemplate	fa	شامل
 create a new table for the application	etemplate	fa	ایجاد یک جدول جدید برای کاربرد
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	fa	یک پرونده زبان انگلیسی ('en') از برچسب و متون راهنما (برای کاربرد در نام)
@@ -213,7 +218,6 @@ linklist	etemplate	fa	فهرست پیوند
 linkstring	etemplate	fa	رشته پیوند
 linkto	etemplate	fa	پیوند به
 load this template into the editor	etemplate	fa	این فرم در ویرایشگر بارگذاری شود
-manual	etemplate	fa	راهنمای دستی
 middle	etemplate	fa	وسط
 minute	etemplate	fa	دقیقه
 minutes	etemplate	fa	دقیقه
@@ -232,6 +236,7 @@ nextmatch sortheader	etemplate	fa	موردجور شده بعدی در ترتیب
 no column to swap with !!!	etemplate	fa	ستونی برای جابجائی نیست!!!
 no file	etemplate	fa	پرونده ای نیست
 no filename given or selected via browse...	etemplate	fa	نام پرونده ای داده نشده یا از طریق Browse... انتخاب نشده
+no matches found	etemplate	fa	هیچ موردی یافت نشد
 no row to swap with !!!	etemplate	fa	سطری برای جابجائی نیست !!!
 not null	etemplate	fa	«پوچ» نباشد
 nothing	etemplate	fa	هیچ
@@ -247,6 +252,7 @@ open the online help.	etemplate	fa	باز کردن راهنمای برخط
 operator	etemplate	fa	عملگر
 optional note about the link	etemplate	fa	یادداشت دلخواه برای پیوند
 options	etemplate	fa	گزینه ها
+or	etemplate	fa	یا
 order to navigating by tab key through the form	etemplate	fa	ترتیب ناوبری توسط کلید tab در فرم
 overflow	etemplate	fa	سرریز
 padding	etemplate	fa	لایه گذاری
@@ -267,6 +273,7 @@ read etemplate from database (for the keys above)	etemplate	fa	خواندن فر
 readonly	etemplate	fa	فقط خواندنی
 remove row (can not be undone!!!)	etemplate	fa	حذف سطر(غیر قابل برگشت)!!!
 remove this link (not the entry itself)	etemplate	fa	حذف این پیوند (نه خود ورودی)
+required	etemplate	fa	لازم
 returns savely, without deleting	etemplate	fa	بازگشت ذخیره ای، بدون حذف
 right	etemplate	fa	راست
 row...	etemplate	fa	سطر...

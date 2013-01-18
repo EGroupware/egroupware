@@ -92,7 +92,9 @@ error while creating directory.	filemanager	en	Error while creating directory
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 executable	filemanager	en	Executable
+export definition to use for nextmatch export	filemanager	en	Export definition to use for nextmatch export
 extended access control list	filemanager	en	Extended access control list
 extended acl	filemanager	en	Extended ACL
 failed to change permissions of %1!	filemanager	en	Failed to change permissions of %1!
@@ -116,6 +118,7 @@ fix reported problems	filemanager	en	Fix reported problems
 folder up	filemanager	en	Folder up
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	en	For files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  See the specific application for a list of available placeholders.
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	en	For files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. See the specific application for a list of placeholders
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	en	For serial letter use this tag. Put the content, you want to repeat between two Tags.
 general	filemanager	en	General
 general fields:	filemanager	en	General fields:
 go home	filemanager	en	Go home
@@ -123,6 +126,10 @@ go to	filemanager	en	Go to
 go to your home directory	filemanager	en	Go to your home directory
 go up	filemanager	en	Go up
 id	filemanager	en	ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the %1 data inserted.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
+if you specify an export definition, it will be used when you export	filemanager	en	If you specify an export definition, it will be used when you export
+if you specify an export definition, it will be used when you export*	filemanager	en	If you specify an export definition, it will be used when you export*
 inherited	filemanager	en	Inherited
 link	filemanager	en	Link
 link %1: %2	filemanager	en	Link %1: %2
@@ -192,7 +199,10 @@ start search	filemanager	en	Start search
 startfolder	filemanager	en	Start folder
 superuser	filemanager	en	Super user
 symlink to %1 created.	filemanager	en	Symlink to %1 created.
+tag to mark positions for address labels	filemanager	en	Tag to mark positions for address labels
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	en	The default start folder is your personal folder. The default is used, if you leave this empty, the path does not exist or you lack the necessary access permissions.
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	en	The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).
+the following document-types are supported:	filemanager	en	The following document-types are supported:
 the requested path %1 is not available.	filemanager	en	The requested path %1 is not available!
 there's already a directory with that name!	filemanager	en	There's already a directory with that name!
 there's already a file with that name!	filemanager	en	There's already a file with that name!
@@ -203,6 +213,7 @@ up	filemanager	en	Up
 updated comment for %1	filemanager	en	Updated comment for %1
 upload fields	filemanager	en	Upload fields
 upload files	filemanager	en	Upload files
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	en	Use this tag for addresslabels. Put the content, you want to repeat, between two tags.
 used space	filemanager	en	Used space
 users and groups	filemanager	en	Users and groups
 versioning	filemanager	en	Versioning

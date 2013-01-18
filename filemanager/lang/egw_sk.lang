@@ -62,6 +62,7 @@ custom fields	filemanager	sk	Používateľské polia
 cut	filemanager	sk	Vystrihnúť
 cut to clipboard	filemanager	sk	Vystrihnúť do schránky
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	sk	Predvolené správanie je NIE. Odkaz sa nezobrazí, ale stále je možné dostať sa do tohto umiestnenia, alebo nastaviť niektorú oblasť ako štartovací priečinok alebo priečinkový odkaz.
+default document to insert entries	filemanager	sk	Predvolený dokument pre vloženie položiek
 delete these files or directories?	filemanager	sk	Odstrániť tieto súbory alebo priečinky?
 delete this file or directory	filemanager	sk	Odstrániť tento súbor alebo priečinok
 deleted %1	filemanager	sk	Odstránené %1
@@ -71,6 +72,7 @@ directory %1 already exists	filemanager	sk	Priečinok %1 už existuje
 directory %1 does not exist	filemanager	sk	Priečinok %1 neexistuje
 directory not found or no permission to access it!	filemanager	sk	Priečinok sa nenašiel alebo nemáme k nemu prístupové práva!
 directory successfully created.	filemanager	sk	Priečinok úspešne vytvorený.
+directory with documents to insert entries	filemanager	sk	Priečinok s dokumentami pre vloženie položiek
 display and modification of content	filemanager	sk	Zobrazenie a úprava obsahu
 display of content	filemanager	sk	Zobrazenie obsahu
 do you want to overwrite the existing file %1?	filemanager	sk	Chcete prepísať existujúci súbor "%1"?
@@ -86,9 +88,12 @@ error creating symlink to target %1!	filemanager	sk	Chyba pri vytváraní symbol
 error deleting the acl entry!	filemanager	sk	Chyba počas odstraňovania záznamu ACL!
 error uploading file!	filemanager	sk	Chyba počas odovzdávania súboru!
 error while creating directory.	filemanager	sk	Chyba pri vytváraní priečinku
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	sk	Príklad {{IF n_prefix~pán~Dobrý deň pán~Dobrý deň pani}} - hľadá v poli "n_prefix" text "pán", ak nájde, napíše Dobrý deň pán, v opačnom prípade napíše Dobrý deň pani
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	sk	Príklad {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Príklad: pán Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	sk	Príklad {{NELF role}} - ak pole pozícia nie je prázdne, dostanete nový riadok s hodnotou poľa pozícia
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	sk	Príklad {{NELFNV role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
 executable	filemanager	sk	Spustiteľný
 export definition to use for nextmatch export	filemanager	sk	Exportná definícia pre použitie v exporte
-export definitition to use for nextmatch export	filemanager	sk	Exportná definícia pre použitie v exporte
 extended access control list	filemanager	sk	Rozšírený zoznam prístupových oprávnení (ACL)
 extended acl	filemanager	sk	Rozšírený ACL
 failed to change permissions of %1!	filemanager	sk	Nepodarilo sa zmeniť oprávnenia ku %1!
@@ -109,12 +114,16 @@ files in this directory	filemanager	sk	Súbory v tomto priečinku
 filesystem check reported no problems.	filemanager	sk	Kontrola súborového systému nenašla žiadne problémy
 fix reported problems	filemanager	sk	Opraviť objavené problémy
 folder up	filemanager	sk	O priečinok vyššie
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	sk	Túto značku použite pre hromadný list. Obsah, ktorý chcete opakovať, zadajte medzi dve značky.
 general	filemanager	sk	Všeobecné
+general fields:	filemanager	sk	Všeobecné polia:
 go home	filemanager	sk	návrat domov
 go to	filemanager	sk	Choď na
 go to your home directory	filemanager	sk	Choď do svojho domovského adresára
 go up	filemanager	sk	nahor
 id	filemanager	sk	Id
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	sk	Ak tu určíte adresár (plná cesta VFS), %1 zobrazí akciu pre každý dokument. Táto akcia umožňuje stiahnuť vybraný dokument s vloženými údajmi %1.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	sk	Ak zadáte dokument, plnú vfs cestu, %1 zobrazí samostatnú ikonu dokumentu pre každú položku. Táto ikona umožní stiahnuť vybraný dokument s vloženými dátami.
 if you specify an export definition, it will be used when you export	filemanager	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch
 if you specify an export definition, it will be used when you export*	filemanager	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch
 inherited	filemanager	sk	Dedičné
@@ -133,6 +142,7 @@ modify all subdirectories and their content	filemanager	sk	Upraviť všetky poda
 move	filemanager	sk	Presunúť
 move to	filemanager	sk	Presunúť do
 moved %1 to %2	filemanager	sk	Presunuté %1 do %2
+name of current user, all other contact fields are valid too	filemanager	sk	Meno súčasného používateľa, ostatné kontaktné polia sú tiež platné.
 new directory	filemanager	sk	Nový priečinok
 no access	filemanager	sk	Bez prístupu
 no files in this directory.	filemanager	sk	Žiadne súbory v tomto priečinku.
@@ -159,6 +169,7 @@ rename, change permissions or ownership	filemanager	sk	Premenovať, zmeniť prí
 renamed %1 to %2	filemanager	sk	Premenované %1 na %2
 renamed %1 to %2.	filemanager	sk	Premenované %1 na %2.
 replaced %1	filemanager	sk	Nahradené %1
+replacements for inserting entries into documents	filemanager	sk	Náhrady pre vkladanie polí do dokumentov
 rights	filemanager	sk	Oprávnenia
 root	filemanager	sk	Koreň
 root access granted.	filemanager	sk	Správcovské oprávnenia pridelené.
@@ -184,7 +195,10 @@ start search	filemanager	sk	Hľadaj
 startfolder	filemanager	sk	Štartovací priečinok
 superuser	filemanager	sk	Supervízor
 symlink to %1 created.	filemanager	sk	Symbolický odkaz na %1 vytvorený.
+tag to mark positions for address labels	filemanager	sk	Značka pre označenie pozícií pre označenie adresy
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	sk	Predvolený štartovací priečinok vo vašom osobnom priečinku. Používa sa predvolený, ak ponecháte prázdne, cesta neexistuje alebo ak nemáte potrebné prístupové oprávnenia.
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	sk	Dokument môže obsahovať premennú, napr. {{%3}} ktorá sa nahradí údajmi (%1úplný zoznam názvov premenných%2).
+the following document-types are supported:	filemanager	sk	Podporované sú nasledovné typy dokumentov:
 the requested path %1 is not available.	filemanager	sk	Požadované cesta %1 nie je dostupná.
 there's already a directory with that name!	filemanager	sk	Priečinok s týmto názvom už existuje!
 there's already a file with that name!	filemanager	sk	Súbor s týmto menom už existuje!
@@ -195,6 +209,7 @@ up	filemanager	sk	Hore
 updated comment for %1	filemanager	sk	Aktualizovaná poznámka ku %1
 upload fields	filemanager	sk	Odovzdať polia
 upload files	filemanager	sk	Odovzdať súbory
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	sk	Použiť túto značku pre označenie adries. Vložte obsah, ktorý chcete, medzi dve značky.
 used space	filemanager	sk	Použitý priestor
 users and groups	filemanager	sk	Používatelia a skupiny
 versioning	filemanager	sk	Verziovanie

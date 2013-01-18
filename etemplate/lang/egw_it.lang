@@ -33,6 +33,7 @@ am	etemplate	it	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	it	una colonna indicizzata velocizza le ricerche che utilizzano quella colonna (costa spazio sul disco!!!)
 application	etemplate	it	Applicazione
 application name needed to write a langfile or dump the etemplates !!!	etemplate	it	Il nome applicazione è necessario per scrivere un file linguaggio o dump i eTemplate !!!
+applications	etemplate	it	Applicazioni
 applies the changes made	etemplate	it	applica le modifiche fatte
 applies the changes to the given version of the template	etemplate	it	applica le modifiche alla data versione del template
 attach	etemplate	it	Allega
@@ -55,6 +56,7 @@ cells	etemplate	it	Celle
 cellspacing for the table-tag	etemplate	it	Spaziatura celle per table-tag
 center	etemplate	it	Centrato
 changed	etemplate	it	Modificato
+check all	etemplate	it	Seleziona tutto
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	it	spunta se il contenuto deve essere solo visualizzato ma non alterato (il contenuto non viene rispedito allora!)
 check if field has to be filled by user	etemplate	it	spunta se il campo deve essere riempito dall'utente
 checkbox	etemplate	it	Checkbox
@@ -73,10 +75,12 @@ comment	etemplate	it	Commento
 confirm	etemplate	it	conferma
 confirmation message or custom javascript (returning true or false)	etemplate	it	messaggio di conferma o javascript personalizzato (che restituisce vero o falso)
 confirmation necesary or custom java-script	etemplate	it	conferma necessaria o javascript personalizzato
+contact	etemplate	it	Contatto
 contact fields	etemplate	it	campi Contatti
 contains	etemplate	it	contiene
 create a new table for the application	etemplate	it	Crea una nuova tabella per l'applicazione
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	it	creates an english ('en') langfile from label and helptexts (for application in Name)
+creator	preferences	it	Creatore
 css class for the table-tag	etemplate	it	classe CSS per table-tag
 css properties	etemplate	it	proprietà CSS
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	it	CSS-class name for this row, preset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
@@ -138,6 +142,7 @@ enter filename to upload and attach, use [browse...] to search for it	etemplate	
 enter the new version number here (> old_version), empty for no update-file	etemplate	it	enter the new version number here (> old_version), empty for no update-file
 enter the new version number here (has to be > old_version)	etemplate	it	inserisci il numero della nuova versione qui (deve essere > old_version)
 entry saved	etemplate	it	Voce salvata
+error uploading file!	filemanager	it	Errore di caricamento file!
 error: template not found !!!	etemplate	it	Errore: Template non trovato !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	it	Errore: il webserver non può scrivere in '%1' !!!
 error: while saving !!!	etemplate	it	Errore: durante salvataggio !!!
@@ -153,6 +158,7 @@ exchange this two columns	etemplate	it	scambia queste due colonne
 export the loaded etemplate into a xml-file	etemplate	it	esporta l'eTemplate caricato in un file xml
 export xml	etemplate	it	Esporta XML
 extensions loaded:	etemplate	it	Estensioni caricate:
+field	etemplate	it	Campo
 field must not be empty !!!	etemplate	it	Il campo non può essere vuoto !!!
 file	etemplate	it	File
 file contains more than one etemplate, last one is shown !!!	etemplate	it	Il file contiene più di un eTemplate, l'ultimo è visualizzato !!!
@@ -199,6 +205,7 @@ insert a row above	etemplate	it	inserisci una riga sopra
 insert a row below	etemplate	it	inserisci una riga sotto
 insert a widget before	etemplate	it	inserisci un widget prima
 insert a widget behind	etemplate	it	inserisci un widget dopo
+insert in document	etemplate	it	Inserisci in documento
 insert new column behind this one	etemplate	it	insert new column behind this one
 insert new column in front of all	etemplate	it	insert new column in front of all
 insert new row after this one	etemplate	it	insert new row after this one
@@ -239,6 +246,7 @@ nextmatch sortheader	etemplate	it	Nextmatch Sortheader
 no column to swap with !!!	etemplate	it	nessuna colonna con cui scambiare !!!
 no file	etemplate	it	nessun file
 no filename given or selected via browse...	etemplate	it	no filename given or selected via Browse...
+no matches found	etemplate	it	Nessuna corrispondenza trovata.
 no row to swap with !!!	etemplate	it	nessuna riga con cui scambiare !!!
 not null	etemplate	it	NON VUOTO
 nothing	etemplate	it	niente
@@ -275,6 +283,7 @@ read etemplate from database (for the keys above)	etemplate	it	read eTemplate fr
 readonly	etemplate	it	sola lettura
 remove row (can not be undone!!!)	etemplate	it	remove Row (can NOT be undone!!!)
 remove this link (not the entry itself)	etemplate	it	Remove this link (not the entry itself)
+required	etemplate	it	Richiesto
 returns savely, without deleting	etemplate	it	returns savely, WITHOUT deleting
 right	etemplate	it	Destra
 row...	etemplate	it	Riga...
@@ -386,3 +395,4 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	it	file XML da importare
 xslt template	etemplate	it	Template XSLT
 year	etemplate	it	Anno
+you can respond by visiting:	etemplate	it	Puoi rispondere visitando:

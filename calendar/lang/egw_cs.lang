@@ -5,14 +5,18 @@
 %1 weeks	calendar	cs	%1 týdnů
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	cs	<b>Upozornění</b>: Kalendář používá svátky Vaší země, aktuálně je nastavena %1. Můžete jí změnit v sekci %2.<br />Svátky jsou %3 automaticky instalovány z %4. Můžete je změnit v sekci %5.
 a non blocking event will not conflict with other events	calendar	cs	Neblokující událost nebude v konfliktu s jinými událostmi
+accept	calendar	cs	přijmout
 accept or reject an invitation	calendar	cs	Přijmout nebo odmítnout pozvání
 accepted	calendar	cs	Přijato
 access denied to the calendar of %1 !!!	calendar	cs	Odmítnut přístup ke kalendáři %1 !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	cs	Akce, který vyvolala upozornění: Přidáno, Ukončeno, Přijato, Odmítnuto,...
 actions	calendar	cs	Akce
+actions...	calendar	cs	Akce...
 add alarm	calendar	cs	Přidat připomínku
+add timesheet entry	calendar	cs	Přidat pracovní výkaz
 added	calendar	cs	Přidáno
 added by synchronisation	calendar	cs	přidáno synchronizací
+after	calendar	cs	po
 after %1	calendar	cs	Po %1
 after current date	calendar	cs	Po aktuálním datu
 alarm	calendar	cs	Připomínka
@@ -28,6 +32,7 @@ all future	calendar	cs	Všechny budoucí
 all incl. rejected	calendar	cs	Všechny včetně odmítnutých
 all participants	calendar	cs	Všichni účastníci
 allows to edit the event again	calendar	cs	Dovoluje znovu editovat událost
+always	calendar	cs	vždy
 apply the action on the whole query, not only the shown events	calendar	cs	Aplikovat akci na celý výsledek dotazu, nejen zobrazené události
 apply the changes	calendar	cs	použít změny
 are you sure you want to delete this country ?	calendar	cs	Určitě chcete smazat tuto zemi?
@@ -43,6 +48,7 @@ busy	calendar	cs	zaneprázdněn
 by	calendar	cs	(kým)
 calendar csv export	calendar	cs	Export kalendáře do CSV
 calendar event	calendar	cs	Událost v kalendáři
+calendar fields:	calendar	cs	Položky kalendáře:
 calendar holiday management	admin	cs	Správa svátků v kalendáři
 calendar menu	calendar	cs	Menu kalendáře
 calendar preferences	calendar	cs	Předvolby kalendáře
@@ -52,12 +58,12 @@ can't add alarms in the past !!!	calendar	cs	Není možné přidávat připomín
 can't aquire lock!	calendar	cs	Není možné získat zámek!
 canceled	calendar	cs	Stornováno
 category %1 removed because of missing rights	calendar	cs	Kategorie %1 byla odstraněna kvůli chybějícím oprávněním
-category acl	calendar	cs	ACL kategorie
+category acl	common	cs	ACL kategorie
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	cs	ACL kategorie ovlivňuje jen přiřazování kategorie k události nebo změnu stavu účastníka. Nemění viditelnost události.
 chair	calendar	cs	Předseda
 change history	calendar	cs	Historie změn
-charset of file	calendar	cs	Znaková sada souboru
 check all	calendar	cs	Označit vše
+choose a category	calendar	cs	Vybrat kategorii
 close the window	calendar	cs	Zavřít okno
 compose a mail to all participants after the event is saved	calendar	cs	napsat dopis všem účastníkům po uložení události
 conflict	calendar	cs	Konflikt
@@ -87,17 +93,18 @@ default length of newly created events. the length is in minutes, eg. 60 for 1 h
 default type of resources application selected in the calendar particpants research form.	calendar	cs	Která aplikace má být v kalendáři přednastavena jako výchozí typ zdroje při výběru účastníků
 default type of resources selection	calendar	cs	Výchozí volba při výběru zdroje
 default week view	calendar	cs	Výchozí týdenní pohled
+delegated	calendar	cs	delegované
 delete selected events	calendar	cs	Smazat vybrané události
 delete series	calendar	cs	Smazat řady
 delete this alarm	calendar	cs	Smazat tuto připomínku
 delete this event	calendar	cs	Smazat tuto událost
 delete this exception	calendar	cs	Smazat tuto vyjímku
 delete this series of recuring events	calendar	cs	Smazat tyto řady opakujících se událostí
+deleted	calendar	cs	smazáno
 deny ressources reservation for private events	calendar	cs	Zakázat rezervaci zdrojů pro soukromé události
 disinvited	calendar	cs	Zrušená pozvánka
 display status of events	calendar	cs	Zobrazit stav událostí
 displayed view	calendar	cs	zobrazený pohled
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	cs	Zobrazit výchozí pohled kalendáře na úvodní straně (stránka, na kterou se dostanete po přihlášení do eGroupWaru nebo kliknutím na ikonu Hlavní strana)?
 do not include events of group members	calendar	cs	Nezahrnovat události členů skupiny
 do you want a weekview with or without weekend?	calendar	cs	Chcete týdenní pohled včetně víkendu nebo bez něj?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	cs	Chcete být upozorněni na nové nebo změněné události? Budete upozorněni také na změny, které sami provedete.<br>Upozornění můžete omezit jen na některé události. Každá položka zahrnuje všechna předchozí upozornění. Všechny modifikace zahrnují také změny titulku, popisu a účastníků (nikoli však jejich odpovědi). Pokud vlastník události žádal jakékoli zprávy o změnách, vždy dostane i odpovědi účastníků, mj. také přijetí a odmítnutí.
@@ -106,6 +113,7 @@ do you want to receive a regulary summary of your appointsments via email?<br>th
 do you wish to autoload calendar holidays files dynamically?	admin	cs	Chcete automaticky načíst soubory se svátky do kalendáře?
 download	calendar	cs	Stáhnout
 download this event as ical	calendar	cs	Stáhnout tuto událost jako iCal
+duration	calendar	cs	Trvání
 duration of the meeting	calendar	cs	Délka trvání setkání
 edit exception	calendar	cs	Editovat výjimku
 edit series	calendar	cs	Editovat řadu
@@ -137,15 +145,16 @@ exception created - you can now edit or delete it	calendar	cs	Výjimka vytvořen
 exceptions	calendar	cs	Výjimky
 execute a further action for this entry	calendar	cs	Spustit další akci pro tento záznam
 existing links	calendar	cs	Stávající odkazy
-export	calendar	cs	Exportovat
 extended	calendar	cs	Rozšířený
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	cs	Rozšířené aktualizace vždy zahrnují kompletní detaily události. iCal soubory lze importovat do jiných kalendářů.
 fieldseparator	calendar	cs	Oddělovač položek
+filemanager	calendar	cs	Správce souborů
 filename	calendar	cs	Jméno souboru
 filename of the download	calendar	cs	Jméno souboru ke stažení
 find free timeslots where the selected participants are availible for the given timespan	calendar	cs	Najdi tři volné časové úseky v daném rozmezí, během kterých jsou vybraní účastníci volní
 firstname of person to notify	calendar	cs	Křestní jméno osoby, která má být upozorněna
 for	calendar	cs	pro
+for serial letter use this tag. put the content, you want to repeat between two tags.	calendar	cs	Pro hromadný dopis použijte tento štítek. Obsah, který chcete opakovat vložte mezi dva štítky.
 for which views should calendar show distinct lines with a fixed time interval.	calendar	cs	Ve kterých pohledech má kalendář zobrazit dělící čáry v pevně daných časových intervalech.
 format of event updates	calendar	cs	Formát aktualizací úkolů
 forward half a month	calendar	cs	dopředu o půl měsíce
@@ -157,7 +166,6 @@ freetime search	calendar	cs	Hledání volného času
 fri	calendar	cs	Pá
 full description	calendar	cs	Celý popis
 fullname of person to notify	calendar	cs	Celé jméno osoby, která má být upozorněna
-general	calendar	cs	Hlavní
 global categories	calendar	cs	Globální kategorie
 global public and group public	calendar	cs	veřejné globálně i pro skupinu
 global public only	calendar	cs	veřejné jen globálně
@@ -171,11 +179,13 @@ here is your requested alarm.	calendar	cs	Zde je Váše požadovaná připomínk
 hide private infos	calendar	cs	Skrýt soukromé informace
 high priority	calendar	cs	vysoká priorita
 history	calendar	cs	Historie
+history logging	admin	cs	Protokolování historie
 holiday	calendar	cs	Svátek
 holiday management	calendar	cs	Správa svátků
 holidays	calendar	cs	Svátky
 hours	calendar	cs	hodiny
 how far to search (from startdate)	calendar	cs	jak daleko hledat (od počátečního data)
+how many describtion lines should be directly visible. further lines are available via a scrollbar.	calendar	cs	Kolik řádek popisu má být vidět přímo. Ostatní řádky budou dostupné přes posouvací lištu.
 how many minutes should each interval last?	calendar	cs	Kolik minut by měl každý interval trvat?
 how many weeks should the multiple week view show?	calendar	cs	Kolik týdnů má zobrazovat vícetýdenní pohled?
 ical	calendar	cs	iCal
@@ -187,9 +197,9 @@ ical successful imported	calendar	cs	iCal úspěšně naimportován
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	cs	Pokud zaškrtnete, jsou svátky připadající na víkend automaticky přesunuty na následující pondělí.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	cs	Pokud zde nenastavíte heslo, bude informace dostupná každému, kdo zná adresu (URL)!!!
 ignore conflict	calendar	cs	Ignorovat konflikt
-import	calendar	cs	Importovat
 import csv-file	common	cs	Importovat CSV soubor
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	cs	Importuje události z CSV souboru do Vašeho kalendáře. CSV znamená 'hodnoty oddělené čárkou'.  Nicméně v záložce voleb si můžete vybrat jiné oddělovače.
+insert in document	calendar	cs	Vložit do dokumentu
 interval	calendar	cs	Interval
 invalid email-address "%1" for user %2	calendar	cs	Neplatná e-mailová adresa "%1" pro uživatele %2
 invitations	calendar	cs	Pozvánky
@@ -210,12 +220,15 @@ make freebusy information available to not loged in persons?	calendar	cs	Povolit
 minutes	calendar	cs	Minut
 modified	calendar	cs	Změněno
 mon	calendar	cs	Po
+month	calendar	cs	Měsíc
 monthly	calendar	cs	Měsíčně
 monthly (by date)	calendar	cs	Měsíčně (podle datumu)
 monthly (by day)	calendar	cs	Měsíšně (podle dne)
 monthview	calendar	cs	Měsíční pohled
 multiple week view	calendar	cs	Vícetýdenní pohled
+name of current user, all other contact fields are valid too	calendar	cs	Jméno aktuálního uživatele, všechny ostatní položky kontaktu jsou také platné
 needs action	calendar	cs	Vyžaduje akci
+new	calendar	cs	Nová
 new search with the above parameters	calendar	cs	nové hledání dle výše uvedených parametrů
 no events found	calendar	cs	Žádné události nebyly nalezeny
 no filter	calendar	cs	Žádný filtr
@@ -307,7 +320,6 @@ set a year only for one-time / non-regular holidays.	calendar	cs	Nastavit rok pr
 set new events to private	calendar	cs	Nastavit nové události jako soukromé
 setting lock time calender	admin	cs	Nastavení časového zámku pro kalendář (výchozí hodnota je 1 sekunda)
 should new events created as private by default ?	calendar	cs	Mají být nové události standardně vytvářeny jako soukormé?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	cs	Mají mít nepřihlášení uživatelé možnost vidět Váš stav volný/zaneprázdněn? Můžete nastavit zvláštní heslo, které se neshoduje s Vaším přihlašovacím heslem a chránit jím tuto informaci. Informace o stavu volný/zaneprázdněn je ve formátu iCal a obsahuje jen časy, kdy jste zaneprázdněn(a). Nezahrnuje názvy událostí, jejich popisy ani umístění. Adresa URL pro informace o Vašem volném a obsazeném času je %1.
 should the planner display an empty row for users or categories without any appointment.	calendar	cs	Má plánovač zobrazovat prázdný řádek pro uživatele nebo kategorie bez události.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	cs	Má být informace o stavu účasti jednotlivých účastníků (přijal, odmítnul) zobrazena v závorkách vedle jejich jména?
 show all events, as if they were private	calendar	cs	Zobrazit všechny události jako by byly soukromé
@@ -339,6 +351,7 @@ status for this particular day changed	calendar	cs	Stav pro tento konkrétní de
 status of participants set to unknown because of missing category rights	calendar	cs	Stav účastníků byl nastaven na neznámý kvůli chybějícím oprávněním kategorie
 submit to repository	calendar	cs	Uložit do databáze
 sun	calendar	cs	Ne
+tag to mark positions for address labels	calendar	cs	Značka pro vyznačení pozic v adresních štítcích
 tentative	calendar	cs	Předběžný
 test import (show importable records <u>only</u> in browser)	calendar	cs	Testovat import (zobrazit importovatelné záznamy <u>jen</u> v prohlížeči)
 the resource you selected is already overbooked:	calendar	cs	Vybraný zdroj je již příliš obsazen.
@@ -371,13 +384,13 @@ to-firstname	calendar	cs	Na křestní jméno
 to-fullname	calendar	cs	Na celé jméno
 to-lastname	calendar	cs	Na příjmení
 tomorrow	calendar	cs	Zítra
-translation	calendar	cs	Překlad
 tue	calendar	cs	Út
 two weeks	calendar	cs	dva týdny
-update timezones	calendar	cs	Aktualizovat časová pásma
+update timezones	common	cs	Aktualizovat časová pásma
 updated	calendar	cs	Aktualizováno
 use end date	calendar	cs	použít koncové datum
 use the selected time and close the popup	calendar	cs	použít zvolený čas a zavřít překryvné okno
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	calendar	cs	Použijte tuto značku pro adresní štítky. Obsah, který chcete opakovat, vložte mezi dvě značky.
 use this timezone to export calendar data.	calendar	cs	Použít toto časové pásmo pro export kalendářových dat
 user or group	calendar	cs	Uživatel nebo skupina
 users + groups: inviting both allways requires an invite grant	admin	cs	Uživatelé + skupiny: pro pozvání obou je vždy vyžadováno oprávnění
@@ -396,10 +409,7 @@ weeks in multiple week view	calendar	cs	Týdny ve vícetýdenním pohledu
 weekview	calendar	cs	Týdenní pohled
 weekview with weekend	calendar	cs	Týdenní pohled včetně víkendu
 weekview without weekend	calendar	cs	Týdenní pohled bez víkendu
-which events do you want to see when you enter the calendar.	calendar	cs	Které události chcete vidět, když vstoupíte do kalendáře.
-which of calendar view do you want to see, when you start calendar ?	calendar	cs	Který z pohledů chcete vidět, když spustíte kalendář?
 whole day	calendar	cs	celý den
-whole query	calendar	cs	celý dotaz
 wk	calendar	cs	Týd.
 work day ends on	calendar	cs	Pracovní den končí v
 work day starts on	calendar	cs	Pracovní den začíná v
@@ -407,6 +417,7 @@ workday	calendar	cs	Pracovní den
 workdays	calendar	cs	Pracovní dny
 yearly	calendar	cs	Ročně
 yearview	calendar	cs	Roční pohled
+yes, only admins can purge deleted items	admin	cs	Ano, jen administrátoři mohou odstraňovat smazané položky
 you are not allowed to book the resource selected:	calendar	cs	Nemáte oprávnění si rezervovat vybraný zdroj:
 you can either set a year or a occurence, not both !!!	calendar	cs	Můžete nastavit rok nebo výskyt, ne obojí !!!
 you can only set a year or a occurence !!!	calendar	cs	Můžete nastavit jen rok nebo výskyt !!!

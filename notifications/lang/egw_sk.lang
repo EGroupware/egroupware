@@ -31,16 +31,20 @@ minutes	notifications	sk	minút
 notification	common	sk	Pripomienka
 notify me by	notifications	sk	Pripomenúť mi pomocou
 optimize e-mails for external mail client	notifications	sk	Optimizovať E-Maily pre vonkajších poštových klientov
+permission	notifications	sk	Oprávnenie
 poll interval	notifications	sk	Interval delenia
 preferences for notification	notifications	sk	Predvoľby pre Pripomienky
 received	notifications	sk	Doručené
+settings	notifications	sk	Nastavenia
 sms backend	admin	sk	Mechanizmus SMS
 sms only	notifications	sk	Iba SMS
-this egroupware notification has been sent to you by mail because your	notifications	sk	Toto upozornenie EGroupware vám bolo odoslané emailom, pretože váš
+step	notifications	sk	Krok
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	sk	Táto pripomienka EGroupware vám bola odoslané E-mailom, pretože vaša nastavená upozorňovacia postupnosť bola zablokovaná správcom. Prosím, vyberte si inú postupnosť vo svojich predvoľbách!
+warning	notifications	sk	Pozor
 windows-popup and e-mail	notifications	sk	Vyskakovacie okno Windows a E-mail
 windows-popup backend	admin	sk	Windows vyskakovací mechanizmus
 windows-popup first, if that fails notify me by e-mail	notifications	sk	Najprv vyskakovacie okno Windows, ak sa nepodarí, použiť E-mail
 windows-popup first, if that fails notify me by sms	notifications	sk	Najprv vyskakovacie okno Windows, ak sa nepodarí, použiť SMS
 windows-popup only	notifications	sk	Iba vyskakovacie okno Windows
 you've got new mail	notifications	sk	Máte novú správu
+your session could not be verified.	notifications	sk	Vašu reláciu sa nepodarilo overiť.

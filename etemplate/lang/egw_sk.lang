@@ -167,6 +167,9 @@ etemplate '%1' written to '%2'	etemplate	sk	eŠablóna '%1' zapísaná do '%2'
 etemplate editor	etemplate	sk	Editor eŠablón
 etemplate reference	etemplate	sk	Referenčná príručka eŠablón
 etemplate tutorial	etemplate	sk	Tutoriál eŠablón
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	sk	Príklad {{IF n_prefix~pán~Dobrý deň pán~Dobrý deň pani}} - hľadá v poli "n_prefix" text "pán", ak nájde, napíše Dobrý deň pán, v opačnom prípade napíše Dobrý deň pani
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	sk	Príklad {{NELF role}} - ak pole pozícia nie je prázdne, dostanete nový riadok s hodnotou poľa pozícia
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	sk	Príklad {{NELFNV role}}  - ak pole pozícia nie je prázdne nastaví LF bez akejkoľvek hodnoty poľa
 exchange this row with the one above	etemplate	sk	zameniť tento riadok s riadkom vyššie
 exchange this two columns	etemplate	sk	zameniť tieto dva stĺpce
 export the loaded etemplate into a xml-file	etemplate	sk	exportovať nahranú eŠablónu do súboru xml
@@ -385,6 +388,7 @@ template deleted	etemplate	sk	Šablóna bola odstránené
 template saved	etemplate	sk	Šablóna uložená
 text	etemplate	sk	Text
 textarea	etemplate	sk	Oblasť textu
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	sk	Dokument môže obsahovať premennú, napr. {{%3}} ktorá sa nahradí údajmi (%1úplný zoznam názvov premenných%2).
 the following document-types are supported:	preferences	sk	Podporované sú nasledovné typy dokumentov:
 time	etemplate	sk	Čas
 titles of any entries linked to the current record, excluding attached files	preferences	sk	Názvy akýchkoľvek položiek pripojených na súčasný záznam, okrem priložených súborov

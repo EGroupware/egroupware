@@ -31,6 +31,8 @@ existing links	resources	pt-br	Links existentes
 general	resources	pt-br	Geral
 general informations about resource	resources	pt-br	Informações gerais sobre recursos
 gernal resource	resources	pt-br	Recurso geral
+global categories	resources	pt-br	Categorias Globais
+hours	resources	pt-br	horas
 how many of the resources are useable?	resources	pt-br	Quantos dos recursos podem ser usados?
 how many of them are useable?	resources	pt-br	Quantos deles podem ser usados?
 how many of this resource are usable	resources	pt-br	Quantos destes recursos podem ser usados?
@@ -49,6 +51,7 @@ links	resources	pt-br	Links
 location	resources	pt-br	Local
 location of resource	resources	pt-br	Local do recurso
 location:	resources	pt-br	Local:
+manage mapping	resources	pt-br	Gerenciar mapeamento
 name of resource	resources	pt-br	Nome do recurso
 name:	resources	pt-br	Nome:
 no description available	resources	pt-br	Nenhuma descrição disponível
@@ -95,7 +98,5 @@ web-site for this resource	resources	pt-br	Site para este recurso
 where to find this resource?	resources	pt-br	Onde encontrar este recurso?
 which category does this resource belong to?	resources	pt-br	Qual categoria este recurso pertence?
 write permissions	resources	pt-br	Permissões de escrita
-you are not permitted to delete this reource!	resources	pt-br	Você não tem permissão para remover este recurso!
-you are not permitted to edit this reource!	resources	pt-br	Você não tem permissão para editar este recurso!
 you are not permitted to get information about this resource!	resources	pt-br	Você não tem permissão para ver informações sobre este recurso!
 you chose more resources than available	resources	pt-br	Você escolheu mais recursos do que disponível

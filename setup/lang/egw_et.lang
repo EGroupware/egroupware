@@ -4,6 +4,7 @@
 13 (ntp)	setup	et	13 (ntp)
 80 (http)	setup	et	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	et	<b>millist charset kasutame</b> (kasuta utf-8 kui plaanid kasutada keeli millel on erinevad charset-id):
+actions	setup	et	Tegevused
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	et	Lisa automaatselt tehtud kasutajad sellesse gruppi (selleks on 'Default' kui väli on tühi.)
 additional settings	setup	et	Täiendavad seadistused
 admin account successful created.	setup	et	Admin konto tehtud.
@@ -47,6 +48,7 @@ checking pear%1 is installed	setup	et	Kontrollin kas PEAR%1 on installeritud
 checking php.ini	setup	et	Kontrollin php.ini
 click here	setup	et	Vajuta siia
 completed	setup	et	Lõpetatud
+configuration	setup	et	Konfiguratsioon
 configure now	setup	et	Konfigureeri nüüd
 confirm to delete this backup?	setup	et	Kinnitad selle tagavarakoopia kustutamise?
 contain	setup	et	sisaldab
@@ -72,6 +74,8 @@ currently installed languages: %1 <br />	setup	et	Käesolevalt installeeritud ke
 cyrus imap: admin user,password	setup	et	Cyrus IMAP: Admin kasutaja,Parool
 database	setup	et	Andmebaas
 day	setup	et	päev
+db backup and restore	setup	et	DB tagavara ja taastamine
+default	setup	et	Vaikimisi
 delete	setup	et	Kustuta
 delete all my tables and data	setup	et	Kustuta kõik minu tabelid ja andmed
 deleting tables	setup	et	Kustutan Tabeleid
@@ -100,7 +104,6 @@ file	setup	et	FAIL
 file type, size, version, etc.	setup	et	faili tüüp, suurus, versijoon, jne.
 filename	setup	et	failinimi
 filesystem	setup	et	Failisüsteem
-found existing configuration file. loading settings from the file...	setup	et	Leitud olemasolev konfiguratsiooni fail. Laen sisse seadistused sellest failist ...
 give admin access to all installed apps	setup	et	Luba admin ligipääs kõigile installeeritud rakendustele
 go back	setup	et	Mine tagasi
 grant access	setup	et	Luba Ligipääs
@@ -111,7 +114,6 @@ if using ads (active directory) authentication	setup	et	kui kasutad ADS (Active 
 if using ldap	setup	et	kui kasutad LDAP
 image type selection order	setup	et	Piltide tüübi sisestamise järjekord
 import has been completed!	setup	et	Importimine on lõpetatud!
-importing old settings into the new format....	setup	et	Impordin vanad seadistused uute formaati ...
 install	setup	et	Installeri
 install all	setup	et	Installeeri kõik
 install applications	setup	et	Installeeri Rakendused
@@ -130,6 +132,7 @@ languages updated.	setup	et	Keeled uuendatud.
 ldap accounts configuration	setup	et	LDAP Kontode Konfiguratsioon
 ldap encryption type	setup	et	LDAP krüptimise tüüp
 ldap root password	setup	et	LDAP root parool
+ldap rootdn	setup	et	LDAP rootdn
 logout	setup	et	Logi välja
 mail server login type	setup	et	Mail serveri sisselogimise tüüp
 mail server protocol	setup	et	Mail serveri protokol
@@ -139,7 +142,7 @@ manual / help	setup	et	Manual / Abi
 may be broken	setup	et	võibolla katki
 mcrypt algorithm (default tripledes)	setup	et	Mcrypt algoritm (vaikimisi TRIPLEDES)
 mcrypt settings (requires mcrypt php extension)	setup	et	Mcrypt Seadistused (nõutav mcrypt PHP laiendus)
-mcrypt version	setup	et	MCrypt versioon
+modified	setup	et	Muudetud
 modify	setup	et	Muuda
 month	setup	et	kuu
 name of database	setup	et	Andmebaasi nimi
@@ -171,7 +174,6 @@ re-check my database	setup	et	Kontrolli uuesti minu andmebaasi
 re-check my installation	setup	et	Kontrolli uuesti minu installatsiooni
 re-enter password	setup	et	Sisesta parool uuesti
 readable by the webserver	setup	et	loetav veebiserveri jaoks
-recommended: filesystem	setup	et	Soovitatav: Failisüsteem
 registered	setup	et	registreeritud
 remove	setup	et	Eemalda
 remove all	setup	et	Eemalda Kõik
@@ -187,8 +189,6 @@ save	setup	et	Salvesta
 schedule	setup	et	ajastatud
 scheduled backups	setup	et	ajastatud tagavarad
 select one...	setup	et	vali üks...
-select where you want to store/retrieve file contents	setup	et	Vali kuhu soovid salvestada failid
-select where you want to store/retrieve filesystem information	setup	et	Vali kuhu sa tahad salvestada failisüsteemi informatsiooni
 select where you want to store/retrieve user accounts	setup	et	Vali kuhu sa tahad salvestada kasutaja kontosid
 select which group(s) will be exported	setup	et	Vali milli(ne)(sed) grupp(id) eksporditakse
 select which languages you would like to use	setup	et	Vali milliseid keeli soovid kasutada
@@ -200,7 +200,6 @@ select which user(s) will be modified	setup	et	Vali milli(ne)(sed) kasutaja(d) m
 select which user(s) will have admin privileges	setup	et	Vali milli(ne)(sed) kasutaja(d) omavad admin privileege
 select your old version	setup	et	Vali oma vana versioon
 server root	setup	et	Serveri Root
-sessions type	setup	et	Sessioonide Tüüp
 settings	setup	et	Seadistused
 size	setup	et	suurus
 skip the installation tests (not recommended)	setup	et	Jäta vahele installeerimise testid (pole soovitatav)
@@ -217,6 +216,7 @@ tables installed, unless there are errors printed above	setup	et	tabelid install
 tables upgraded	setup	et	tabelid uuendatud
 target version	setup	et	Siht Versioon
 tcp port number of database server	setup	et	Andmebaasi serveri TCP pordi number
+text entry	setup	et	Järgmine Kirje
 the following applications need to be upgraded:	setup	et	Järgnevad rakendused vajavad uuendamis:
 this has to be outside the webservers document-root!!!	setup	et	See peab olema väljaspool weebiserverite document-root!!!
 this might take a while, please wait ...	setup	et	See võib võtta aega, palun oota ...
@@ -235,7 +235,6 @@ yes	setup	et	Jah
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	et	Sa pole veel teinud oma header.inc.php!<br /> sa saad teha selle nüüd.
 you have successfully logged out	setup	et	Oled täielikult välja loginud
 you're using an old configuration file format...	setup	et	Sa kasutad vana konfiguratsiooni faili formaati...
-you're using an old header.inc.php version...	setup	et	Sa kasutad vana header.inc.php versiooni...
 your applications are current	setup	et	Sinu rakendused on kaasaegsed
 your database does not exist	setup	et	Sinu andmebaasi ei eksisteeri
 your database is not working!	setup	et	Sinu andmebaas ei tööta!

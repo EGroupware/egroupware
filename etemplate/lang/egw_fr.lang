@@ -34,6 +34,7 @@ am	etemplate	fr	Matin
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	fr	Une colonne indexée accélère les requêtes qui utilisent cette colonne (coûte de l'espace disque !!!)
 application	etemplate	fr	Application
 application name needed to write a langfile or dump the etemplates !!!	etemplate	fr	L'application Nom a eu besoin d'écrire un fichier de langue ou de dumper les eTemplates !!!
+applications	etemplate	fr	Applications
 applies the changes made	etemplate	fr	applique les modifications apportées
 applies the changes to the given version of the template	etemplate	fr	applique les modifications à la version mentionnée du modèle
 as default	etemplate	fr	comme défaut
@@ -57,6 +58,7 @@ cells	etemplate	fr	Cellules
 cellspacing for the table-tag	etemplate	fr	Espacement des cellules pour le tag de la table
 center	etemplate	fr	Centre
 changed	etemplate	fr	Modifié
+check all	etemplate	fr	Vérifier tout
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	fr	vérifier si le contenu devrait être seulement affiché mais non modifié (le contenu n'est alors pas renvoyé!)
 check if field has to be filled by user	etemplate	fr	Vérifier si le champ doit êtr rempli par l'utilisateur
 checkbox	etemplate	fr	Case à cocher
@@ -204,6 +206,7 @@ insert a row above	etemplate	fr	insérer une ligne au-dessus
 insert a row below	etemplate	fr	insérer une ligne au-dessous
 insert a widget before	etemplate	fr	insérer un widget avant
 insert a widget behind	etemplate	fr	insérer un widget entre
+insert in document	etemplate	fr	Insérer dans un document
 insert new column behind this one	etemplate	fr	Insérer une nouvelle colonne derrière celle-ci
 insert new column in front of all	etemplate	fr	Insérer une nouvelle colonne devant toutes les autres
 insert new row after this one	etemplate	fr	Insérer une nouvelle ligne devant celle-ci
@@ -227,6 +230,7 @@ load this template into the editor	etemplate	fr	Charger ce template dans l'édit
 middle	etemplate	fr	Milieu
 minute	etemplate	fr	Minute
 minutes	etemplate	fr	Minutes
+modifier	preferences	fr	Editeur
 month	etemplate	fr	Mois
 multicolumn indices	etemplate	fr	Indices Multi-colonnes
 name	etemplate	fr	Nom
@@ -247,6 +251,7 @@ nextmatch sortheader	etemplate	fr	Prochaine occurence Entête de tri
 no column to swap with !!!	etemplate	fr	aucune colonne à échanger !!!
 no file	etemplate	fr	Pas de fichier
 no filename given or selected via browse...	etemplate	fr	Pas de nom de fichier donné ou sélectionnée avec naviguer...
+no matches found	etemplate	fr	Aucune occurrence trouvée
 no row to swap with !!!	etemplate	fr	aucune ligne à échanger !!!
 not null	etemplate	fr	PAS NULL
 nothing	etemplate	fr	rien
@@ -283,6 +288,7 @@ read etemplate from database (for the keys above)	etemplate	fr	Lire eTemplate de
 readonly	etemplate	fr	lecture seule
 remove row (can not be undone!!!)	etemplate	fr	Enlever la ligne (ne peut PAS être annulé!!!)
 remove this link (not the entry itself)	etemplate	fr	Enlever ce lien (pas l'entrée elle-même)
+required	etemplate	fr	Nécessaire
 returns savely, without deleting	etemplate	fr	Revient de manière sûre, sans effacer
 right	etemplate	fr	Droite
 row...	etemplate	fr	Ligne...
@@ -401,3 +407,4 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	fr	Fichier XML à importer
 xslt template	etemplate	fr	Template XSLT
 year	etemplate	fr	Année
+you can respond by visiting:	etemplate	fr	Pour le voir, visitez:

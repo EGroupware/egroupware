@@ -1,0 +1,65 @@
+actions	setup	tr	Eylemler
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	tr	Otomatik oluþturulmuþ kullanýcýlarý bu gruba ekle (Burasý boþ olursa 'Varsayýlan' seçeneði kullanýlacaktýr.)
+admins	setup	tr	Yöneticiler
+all users	setup	tr	Tüm Kullanýcýlar
+application title	setup	tr	Uygulama Baþlýðý
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	tr	FTP için 'application/octet-stream' yerine doðru mimetype kullanýnýz.
+authentication / accounts	setup	tr	Doðrulama / Hesaplar
+auto create account records for authenticated users	setup	tr	Giriþ yapan kullanýcýlar için kayýt tut.
+bottom	setup	tr	taban
+cancel	setup	tr	Ýptal
+check ip address of all sessions	setup	tr	Bütün oturumlarýn IP'leri kontrol et
+configuration	setup	tr	Ayarlar
+country selection	setup	tr	Ülke seçimi
+day	setup	tr	Gün
+default	setup	tr	Varsayýlan
+default file system space per user/group ?	setup	tr	(Varsayýlan) Kullanýcý/Grup disk alaný
+deny all users access to grant other users access to their entries ?	setup	tr	Bütün kullanýcýlarýn diðer kullanýcýlarýn girdilerine eriþimini engelle ?
+download	setup	tr	?ndir
+enter the hostname of the machine on which this server is running	setup	tr	Bu sunucunun çalýþtýðý makinanýn hostadý'ný giriniz.
+enter the site password for peer servers	setup	tr	Peer sunucular için site þifresi giriniz.
+enter the site username for peer servers	setup	tr	Peer sunucular için site kullanýcý adý giriniz.
+enter the title for your site	setup	tr	Site baþlýðýný giriniz.
+enter your default ftp server	setup	tr	Varsayýlan FTP sunucusunu giriniz
+enter your http proxy server	setup	tr	HTTP Proxy sunucunuzu giriniz.
+enter your http proxy server port	setup	tr	HTTP Proxy sunucu portunuzu giriniz.
+force selectbox	setup	tr	Seçimn kurusunu mecburi tut
+host information	setup	tr	Host bilgisi
+if no acl records for user or any group the user is a member of	setup	tr	ACL kaydý olmayan herhangi bir kullanýcý/grup bu grup üyesi sayýlacaktýr
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	tr	LDAP kullanýyorsanýz, ev dizini ve eriþim ayarlarýný yönetmek ister misiniz?
+ldap accounts context	setup	tr	LDAP hesap içeriði
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	tr	LDAP varsayýlan ev dizini öneki ( ör: /home/username için /home )
+ldap default shell (e.g. /bin/bash)	setup	tr	LDAP varsayýlan kabul (ör: /bin/bash)
+ldap encryption type	setup	tr	LDAP þifreleme tipi
+ldap groups context	setup	tr	LDAP grup içeriði
+ldap host	setup	tr	LDAP hostlarý
+ldap root password	setup	tr	LDAP yönetici þifresi
+ldap rootdn	setup	tr	LDAP rootdn
+maximum account id (e.g. 65535 or 1000000)	setup	tr	Meksimum hesap id'si (ör: 65535 ya da 1000000)
+minimum account id (e.g. 500 or 100, etc.)	setup	tr	Minimum hesap id'si (ör 500 ya da 100)
+minute	setup	tr	Dakika
+modified	setup	tr	Deðiþtirilmiþ
+month	setup	tr	Ay
+new	setup	tr	Yeni
+next run	setup	tr	Sýradaki çalýþtýrma
+no algorithms available	setup	tr	mevcut hiç algoritma yok
+no modes available	setup	tr	mevcut hiç mod yok
+ok	setup	tr	Tamam
+or	setup	tr	ya da
+password for smtp-authentication	setup	tr	SMTP doðrulamasý için þifre
+path information	setup	tr	Yol bilgisi
+preferences	setup	tr	Ayarlar
+re-enter password	setup	tr	Þifreyi yeniden giriniz
+remove	setup	tr	Kaldýr
+select where you want to store/retrieve user accounts	setup	tr	Kullanýcý hesaplarýný saklamak istediðiniz yeri seçiniz
+selectbox	setup	tr	Seçim kutusu
+show 'powered by' logo on	setup	tr	'Powered by' logosunun gösterileceði yer
+text entry	setup	tr	Metin Girdisi
+top	setup	tr	Maks
+use cookies to pass sessionid	setup	tr	Oturum id'sini taþýmak için çerez kullan (cookie)
+use pure html compliant code (not fully working yet)	setup	tr	Saf HTML uyumlu kod kullan (henüz tam olarak çalýþmamaktadýr)
+user for smtp-authentication (leave it empty if no auth required)	setup	tr	SMTP doðrulamasý için kullanýlacak kullanýcý (Doðrulama gerekmiyorsa boþ býrakýnýz)
+users choice	setup	tr	Kullanýcý Seçimleri
+version	setup	tr	Sürüm
+would you like to show each application's upgrade status ?	setup	tr	Her uygulamanýn güncelleme durumunu görüntülemek ister misiniz?
+write	setup	tr	Yaz

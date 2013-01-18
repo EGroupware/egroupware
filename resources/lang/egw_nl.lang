@@ -31,6 +31,8 @@ existing links	resources	nl	Bestaande links
 general	resources	nl	Algemeen
 general informations about resource	resources	nl	Algemene informatie over hulpbron
 gernal resource	resources	nl	algemene hulpbron
+global categories	resources	nl	Algemene categoriën
+hours	resources	nl	uren
 how many of the resources are useable?	resources	nl	Hoeveel van de hulpbronnen zijn bruikbaar?
 how many of them are useable?	resources	nl	Hoeveel ervan zijn bruikbaar?
 how many of this resource are usable	resources	nl	Hoeveel van deze hulpbron is bruikbaar
@@ -49,6 +51,7 @@ links	resources	nl	Links
 location	resources	nl	Locatie
 location of resource	resources	nl	Locatie van de hulpbron
 location:	resources	nl	Locatie
+manage mapping	resources	nl	Beheer de mappings
 name of resource	resources	nl	Naam van de hulpbron
 name:	resources	nl	Naam:
 no description available	resources	nl	geen beschrijving beschikbaar
@@ -95,7 +98,5 @@ web-site for this resource	resources	nl	Website voor deze hulpbron
 where to find this resource?	resources	nl	Waar kun je deze hulpbron vinden?
 which category does this resource belong to?	resources	nl	Tot welke categorie behoort deze hulpbron?
 write permissions	resources	nl	Schrijfrechten
-you are not permitted to delete this reource!	resources	nl	U bent niet bevoegd deze hulpbron te verwijderen!
-you are not permitted to edit this reource!	resources	nl	U bent niet bevoegd deze hulpbron te wijzigen!
 you are not permitted to get information about this resource!	resources	nl	U bent niet bevoegd informatie over deze hulpbron op te vragen!
 you chose more resources than available	resources	nl	U koos meer hulpbronnen dan er beschikbaar zijn

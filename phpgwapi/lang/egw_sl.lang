@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	sl	Vnesenih %1 E-naslovov
 %1 is not executable by the webserver !!!	common	sl	Spletni strežnik ne more zagnati %1!
-%1 manual	common	sl	Priročnik %1
-%1 start	common	sl	Zaženi %1
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	sl	%1Izberite drugo mapo%2<br /> ali nastavite, da bo %3 zapisljiva za spletni strežnik
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sl	%1eGroupWare%2 je večuporabniški, spletno osnovani paket za skupinsko delo, napisan v %3PHP%4-ju.
 (session restored in %1 seconds)	common	sl	(seja je bila vzpostavljena v % sekundah)
@@ -34,6 +32,7 @@ account is expired	common	sl	Uporabniški račun je potekel
 accounts	common	sl	Računi
 acl	common	sl	ACL
 action	common	sl	Dejanje
+actions	common	sl	Dejanja
 active	common	sl	Aktiven
 add	common	sl	Dodaj
 add %1 category for	common	sl	Dodaj kategorijo %1 za
@@ -48,11 +47,13 @@ albania	common	sl	ALBANIJA
 algeria	common	sl	ALŽIRIJA
 all	common	sl	Vse
 all fields	common	sl	vsa polja
+all languages	common	sl	vsi jeziki
 alphabet	common	sl	a,b,c,č,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,š,t,u,v,w,x,y,z,ž
 alternate style-sheet:	common	sl	Nadomestna (CSS) predloga
 american samoa	common	sl	AMERIŠKA SAMOA
 an error happened	common	sl	Pojavila se je napaka
 an existing and by the webserver readable directory enables the image browser and upload.	common	sl	Obstoječa IN s strani spletnega strežnika berljiva mapa omogoča brskanje in nalaganje slik.
+and	common	sl	in
 andorra	common	sl	ANDORA
 angola	common	sl	ANGOLA
 anguilla	common	sl	ANGVILA
@@ -181,13 +182,16 @@ default category	common	sl	Privzeta kategorija
 default height for the windows	common	sl	Privzeta višina oken
 default width for the windows	common	sl	Privzeta širina oken
 delete	common	sl	Izbriši
+delete category	common	sl	Izbriši kategorijo
 delete row	common	sl	Izbriši vrstico
+delete this entry	common	sl	Izbriši ta vnos
 denmark	common	sl	DANSKA
 description	common	sl	Opis
 detail	common	sl	Podrobnost
 details	common	sl	Podrobnosti
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sl	Onemogoči izvajanje skripte, ki popravi hrošča pri prikazu transparentnih PNG slik v Microsoft Internet Explorerju 5.5 in višjih?
 direction left to right	common	sl	Smer levo proti desni
+directory	common	sl	Mapa
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	sl	Mapa ne obstaja, ni berljiva s strani spletnega strežnika ali ni podana relativno na koren dokumentov (document root)!
 disable internet explorer png-image-bugfix	common	sl	Onemogoči popravek PNG hrošča v IE?
 disable slider effects	common	sl	Onemogoči učinek drsnika
@@ -206,6 +210,7 @@ domestic	common	sl	Domač
 dominica	common	sl	DOMINIKA
 dominican republic	common	sl	DOMINIKANSKA REPUBLIKA
 done	common	sl	Končano
+download	common	sl	Prenos
 drag to move	jscalendar	sl	Povleci za premik
 e-mail	common	sl	E-pošta
 east timor	common	sl	VZHODNI TIMOR
@@ -216,7 +221,6 @@ edit categories	common	sl	Popravi kategorije
 edit category	common	sl	Popravi kategorijo
 egroupware	common	sl	eGroupWare
 egroupware api version	common	sl	Različica API eGroupWare
-egroupware api version %1	common	sl	eGroupWare API različica %1
 egroupware: login blocked for user '%1', ip %2	common	sl	eGroupWare: prijava uporabnika '%1' na IPju '%2' onemogočena.
 egypt	common	sl	EGIPT
 el salvador	common	sl	SALVADOR
@@ -358,6 +362,7 @@ kyrgyzstan	common	sl	KIRGIZISTAN
 language	common	sl	Jezik
 language_direction_rtl	common	sl	language_direction_rtl
 lao peoples democratic republic	common	sl	LAOS
+last modified	common	sl	Nazadnje spremenjeno
 last name	common	sl	Priimek
 last name of the user, eg. "%1"	common	sl	Priimek uporabnika, npr. "%1"
 last page	common	sl	Zadnja stran
@@ -376,6 +381,7 @@ list	common	sl	Seznam
 list members	common	sl	Seznam članov
 lithuania	common	sl	LITVA
 local	common	sl	Lokalno
+locations	common	sl	Lokacije
 login	common	sl	Prijava
 loginid	common	sl	Uporabniško ime
 logout	common	sl	Odjava
@@ -470,9 +476,11 @@ on mouse over	common	sl	Ob prehodu z miško
 only private	common	sl	Samo zasebno
 only yours	common	sl	Samo vaše
 oops! you caught us in the middle of system maintainance.	common	sl	Smo sredi vzdrževanja sistema.
+open	common	sl	Odpri
 open notify window	common	sl	Odpri okno z opozorilom
 open popup window	common	sl	Odpri pojavno okno
 open sidebox	common	sl	Odpri stranski meni
+or	common	sl	ali
 ordered list	common	sl	Urejen seznam
 original	common	sl	Izvirnik
 other	common	sl	Ostalo
@@ -519,10 +527,10 @@ portugal	common	sl	PORTUGALSKA
 postal	common	sl	Poštno
 powered by	common	sl	Teče na
 preferences	common	sl	Nastavitve
-preferences for the idots template set	common	sl	Nastavitve predloge idots
 prev. month (hold for menu)	jscalendar	sl	Prejšnji mesec (držite tipko za meni)
 prev. year (hold for menu)	jscalendar	sl	Prejšnje leto (držite tipko za meni)
 previous page	common	sl	Prejšnja stran
+primary group	common	sl	Osnovna skupina
 primary style-sheet:	common	sl	Glavna CSS predloga
 print	common	sl	Natisni
 priority	common	sl	Prioriteta
@@ -544,6 +552,7 @@ remove shortcut	common	sl	Odstrani bližnjico
 rename	common	sl	Preimenuj
 replace	common	sl	Zamenjaj
 replace with	common	sl	Zamenjaj z
+restore failed	common	sl	Obnovitev je splodletela
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	sl	Vrne poln seznam uporabnikov sistema. Pozor: seznam je lahko precej dolg.
 returns an array of todo items	common	sl	Vrne niz opravil
 returns struct of users application access	common	sl	Vrne strukturo dostopanja uporabnikov do programa
@@ -613,6 +622,8 @@ showing %1 - %2 of %3	common	sl	Prikazani %1 - %2 od %3
 sierra leone	common	sl	SIERRA LEONE
 simple	common	sl	Preprosto
 singapore	common	sl	SINGAPUR
+site configuration	common	sl	Nastavitve strežnika
+size	common	sl	Velikost
 slovakia	common	sl	SLOVAŠKA
 slovenia	common	sl	SLOVENIJA
 solomon islands	common	sl	SOLOMONOVO OTOČJE
@@ -706,6 +717,7 @@ username	common	sl	Uporabniško ime
 users	common	sl	Uporabniki
 users choice	common	sl	Uporabnikov izbor
 uzbekistan	common	sl	UZBEKISATAN
+value	common	sl	Vrednost
 vanuatu	common	sl	VANUATU
 venezuela	common	sl	VENEZUELA
 version	common	sl	Različica
@@ -722,6 +734,7 @@ what style would you like the image to have?	common	sl	Kakšen slog želite za s
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sl	Če odgovorite z Da, bosta gumba Domov in Odjavi v orodni vrstici aplikacij.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	sl	Kje in kako naj egroupware prikaže povezave za nastavitve in odjavo.
 which groups	common	sl	Katere skupine
+whole query	common	sl	Celotno povpraševanje
 width	common	sl	Širina
 wk	jscalendar	sl	ted
 work email	common	sl	Službeni E-naslov
@@ -753,4 +766,3 @@ your settings have been updated	common	sl	Vaše nastavitve so bile posodobljene
 zambia	common	sl	ZAMBIJA
 zimbabwe	common	sl	ZIMBABVE
 zoom	common	sl	Zoom
-site configuration	common	sl	Nastavitve strežnika

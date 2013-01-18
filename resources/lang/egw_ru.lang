@@ -31,6 +31,8 @@ existing links	resources	ru	Существующие ссылки
 general	resources	ru	Общий
 general informations about resource	resources	ru	Общая информация о ресурсе
 gernal resource	resources	ru	общий ресурс
+global categories	resources	ru	Общие Категории
+hours	resources	ru	часы
 how many of the resources are useable?	resources	ru	Сколько ресурсов доступно?
 how many of them are useable?	resources	ru	Сколько из них доступно?
 how many of this resource are usable	resources	ru	Сколько этого ресурса доступно?
@@ -49,6 +51,7 @@ links	resources	ru	Ссылки
 location	resources	ru	Местоположение
 location of resource	resources	ru	Местоположение ресурса
 location:	resources	ru	Местоположение:
+manage mapping	resources	ru	Управление отобажением
 name of resource	resources	ru	Имя ресурса
 name:	resources	ru	Имя:
 no description available	resources	ru	описание недоступно
@@ -79,7 +82,6 @@ short description of resource	resources	ru	Краткое описание ру�
 show calendar of resource	resources	ru	Показать календарь ресурса
 something went wrong by deleting resource	resources	ru	Что-то пошло не так при удалении ресурса
 something went wrong by saving resource	resources	ru	Что-то пошло не так при сохранении ресурса
-storage inforation	resources	ru	Информация о Хранилище
 storage information	resources	ru	Информация о хранилище:
 storage information:	resources	ru	Информация о хранилище:
 the calendar of this resource	resources	ru	Календарь этого Ресурса
@@ -96,7 +98,5 @@ web-site for this resource	resources	ru	Веб-Сайт этого ресурс�
 where to find this resource?	resources	ru	Где искать этот ресурса
 which category does this resource belong to?	resources	ru	К какой категории относится этот ресурс
 write permissions	resources	ru	Разрешение на запись
-you are not permitted to delete this reource!	resources	ru	Вам не разрешено удалять этот ресурс!
-you are not permitted to edit this reource!	resources	ru	Вам не разрешено редактировать этот ресурс
 you are not permitted to get information about this resource!	resources	ru	Вам не разрешено получать информацию об этом ресурсе!
 you chose more resources than available	resources	ru	Вы выбрали больше ресурсов, чем возможно

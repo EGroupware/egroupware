@@ -1,23 +1,43 @@
 allowed users	importexport	zh	允许的用户
 automatically created by importexport	importexport	zh	导入导出自动地创建
+changed	importexport	zh	已更改
+charset of file	importexport	zh	文件的字符集
+check all	importexport	zh	全选
 choose a name for this definition	importexport	zh	选择这个定义的名称
 choose a plugin	importexport	zh	选择一插件
 choose an application	importexport	zh	选择一应用程序
+choose seperator and charset	importexport	zh	选择分隔符和字符集
+condition	importexport	zh	条件
+copied	importexport	zh	已复制
+created	importexport	zh	创建
 delete all selected definitions	importexport	zh	删除所有选择的定义
+deleted	importexport	zh	已删除
+execute	importexport	zh	执行
 expert options	importexport	zh	高级选项
 export	importexport	zh	导出
 export all selected definitions	importexport	zh	导出所有选择的定义
+exported	importexport	zh	已导出
+false	importexport	zh	错误的
 finish	importexport	zh	完成
-general	importexport	zh	通用
+general	preferences	zh	通用
+general fields:	preferences	zh	通用字段：
+import	importexport	zh	导入
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	zh	导入定义(注意：现有的同名定义将被覆盖！)
 importexport	common	zh	导入导出
 importexport wizard finished successfully!	importexport	zh	导入导出向导成功地完成！
+load sample file	importexport	zh	载入范例文件
+manage mapping	importexport	zh	管理匹配
 next	importexport	zh	下一个
+next run	importexport	zh	下次运行
 preview	importexport	zh	预览
 previous	importexport	zh	上一个
 save as definition	importexport	zh	保存为默认
+schedule	common	zh	计划任务
 select definition	importexport	zh	选择定义
 select plugin	importexport	zh	选择插件
 some nice text	importexport	zh	一些不错的文本
+translation	importexport	zh	翻译
+true	importexport	zh	真
+use default	importexport	zh	使用默认值
 which useres are allowed for this definition	importexport	zh	哪个用户考虑到这一定义
 you need to select an app and format first!	importexport	zh	您需要选择应用程序并首先格式化！

@@ -1,0 +1,16 @@
+and	etemplate	vi	V&#224;
+custom fields	etemplate	vi	Các tr&#432;&#7901;ng t&#7921; t&#7841;o
+days	etemplate	vi	ngày
+delete a single entry by passing the id.	etemplate	vi	Xóa 1 m&#7909;c b&#7857;ng cách truy&#7873;n id.
+duration	etemplate	vi	Th&#7901;i gian
+hours	etemplate	vi	gi&#7901;
+import	etemplate	vi	Nh&#7853;p
+last	etemplate	vi	cu&#7889;i
+link	etemplate	vi	Liên k&#7871;t
+minutes	etemplate	vi	phút
+month	etemplate	vi	Tháng
+no matches found	etemplate	vi	Không tìm th&#7845;y
+read a list of entries.	etemplate	vi	Li&#7879;t kê danh sách các m&#7909;c
+read a single entry by passing the id and fieldlist.	etemplate	vi	Li&#7879;t kê m&#7897;t m&#7909;c &#273;&#417;n b&#7857;ng cách truy&#7873;n id và fieldlist
+text	etemplate	vi	Ph&#7847;n ghi
+update a single entry by passing the fields.	etemplate	vi	C&#7853;p nh&#7853;t m&#7897;t m&#7909;c &#273;&#417;n b&#7857;ng cách truy&#7873;n các tr&#432;&#7901;ng

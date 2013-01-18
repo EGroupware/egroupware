@@ -59,6 +59,7 @@ custom fields	filemanager	it	Campi personalizzati
 cut	filemanager	it	Taglia
 cut to clipboard	filemanager	it	Taglia e metti negli appunti
 default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	it	Predefinito: No. Il collegamento non verrà mostrato, ma potrai comunque raggiungere questo percorso, oppure configurarlo come cartella di avvio o collegamento a cartella.
+default document to insert entries	filemanager	it	Documento predefinito per l'inserimento
 delete these files or directories?	filemanager	it	Eliminare i file o le cartelle?
 delete this file or directory	filemanager	it	Elimina questo file o questa cartella
 deleted %1	filemanager	it	Eliminato %1
@@ -68,6 +69,7 @@ directory %1 already exists	filemanager	it	La directory %1 esiste già
 directory %1 does not exist	filemanager	it	La directory %1 non esiste
 directory not found or no permission to access it!	filemanager	it	Directory non trovata oppure non hai diritto di accesso!
 directory successfully created.	filemanager	it	Directory creata con successo.
+directory with documents to insert entries	filemanager	it	Cartella con documenti per l'inserimento
 display and modification of content	filemanager	it	Visualizzazione e modifica del contenuto
 display of content	filemanager	it	Visualizzazione del contenuto
 do you want to overwrite the existing file %1?	filemanager	it	Vuoi sovrascrivere il file esistente?
@@ -84,7 +86,6 @@ error deleting the acl entry!	filemanager	it	Errore di eliminazione della regola
 error uploading file!	filemanager	it	Errore di caricamento file!
 error while creating directory.	filemanager	it	Errore di creazione della cartella
 executable	filemanager	it	Eseguibile
-export definitition to use for nextmatch export	filemanager	it	Esporta la definizione da utilizzare per la esportazione
 extended access control list	filemanager	it	Lista di controllo degli accessi (ACL) estesa
 extended acl	filemanager	it	ACL estesa
 failed to change permissions of %1!	filemanager	it	Non è stato possibilile modificare i permessi di %1!
@@ -105,6 +106,7 @@ files in this directory	filemanager	it	File in questa cartella
 filesystem check reported no problems.	filemanager	it	Non sono stati individuati problemi dopo il controllo del filesystem.
 fix reported problems	filemanager	it	Problemi riparati
 folder up	filemanager	it	Cartella superiore
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	it	Per una lettera seriale, utilizzare questo tag. Immettere il contenuto che si vuole ripetere tra due tag.
 general	filemanager	it	Generale
 go home	filemanager	it	Vai alla Home
 go to	filemanager	it	Vai A
@@ -128,6 +130,7 @@ modify all subdirectories and their content	filemanager	it	Modifica tutte le sot
 move	filemanager	it	Sposta
 move to	filemanager	it	Sposta in
 moved %1 to %2	filemanager	it	Ho spostato %1 in %2
+name of current user, all other contact fields are valid too	filemanager	it	Nome dell'utente corrente, tutti gli altri campi di contatto sono validi pure.
 new directory	filemanager	it	Nuova cartella
 no access	filemanager	it	Accesso negato
 no files in this directory.	filemanager	it	Nessun File in questa directory.
@@ -176,6 +179,7 @@ start search	filemanager	it	Avvia ricerca
 startfolder	filemanager	it	Cartella di avvio
 superuser	filemanager	it	Super utente
 symlink to %1 created.	filemanager	it	Link simbolico a %1 creato.
+tag to mark positions for address labels	filemanager	it	Tagga per marcare le posizioni per le etichette di indirizzo
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	it	La cartella di avvio predefinita è quella personale. Se lasci questa voce vuota, immetti un percorso inesistente oppure non hai i diritti di accesso sufficienti, allora verrà utilizzata quella predefinita.
 the requested path %1 is not available.	filemanager	it	Il percorso %1 non è disponibile!
 there's already a directory with that name!	filemanager	it	Esiste già una cartella con questo nome!
@@ -187,6 +191,7 @@ up	filemanager	it	Su
 updated comment for %1	filemanager	it	Ho aggiornato i commenti per %1
 upload fields	filemanager	it	campi caricamento
 upload files	filemanager	it	Carica File
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	it	Usa questo tag per le etichette di indirizzo. Posiziona il contenuto da ripetere, tra due tag.
 used space	filemanager	it	Spazio utilizzato
 users and groups	filemanager	it	Utenti e gruppo
 versioning	filemanager	it	Registrazione Versioni di file

@@ -1,4 +1,3 @@
-$label	preferences	pt-br	$rótulo
 %1 - preferences	preferences	pt-br	%1 - Preferências
 %1 hours	preferences	pt-br	%1 horas
 12 hour	preferences	pt-br	12 horas
@@ -24,12 +23,12 @@ default preferences	preferences	pt-br	Preferências padrões
 default theme	preferences	pt-br	Tema padrão
 delete categories	preferences	pt-br	Apagar Categorias
 description can not exceed 255 characters in length !	preferences	pt-br	A Descrição não deve exceder 255 caracteres!
-display thumbnails for linked images	addressbook	pt-br	Exibir miniaturas para imagens linkadas
+display thumbnails for linked images	preferences	pt-br	Exibir miniaturas para imagens linkadas
 div	preferences	pt-br	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	pt-br	Você prefere o formato de 24 horas, ou 12 horas acompanhado de am/pm?
 edit custom fields	preferences	pt-br	Editar campos personalizados
-enable drag and drop functionality (experimental)	addressbook	pt-br	Habilitar a funcionalidade arrastar e soltar (experimental)
-enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	addressbook	pt-br	Habilitar ou desabilitar funções de arrastar e soltar em todos os aplicativos. Se o navegador não suportar tal funcionalidade, esta será desabilitada automaticamente. Esta função é experimental no momento.
+enable drag and drop functionality (experimental)	preferences	pt-br	Habilitar a funcionalidade arrastar e soltar (experimental)
+enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	pt-br	Habilitar ou desabilitar funções de arrastar e soltar em todos os aplicativos. Se o navegador não suportar tal funcionalidade, esta será desabilitada automaticamente. Esta função é experimental no momento.
 enter your new password	preferences	pt-br	Digite sua nova senha
 enter your old password	preferences	pt-br	Digite sua antiga senha
 failed to change password.  please contact your administrator.	preferences	pt-br	Erro ao moudar a senha. Por favor contate seu administrador.
@@ -44,7 +43,7 @@ how should egroupware display dates for you.	preferences	pt-br	Como o eGroupWare
 icon	preferences	pt-br	Ícone
 icons and text	preferences	pt-br	Ícones e texto
 icons only	preferences	pt-br	Somente ícones
-images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	addressbook	pt-br	Imagens linkadas a um registro podem ser exibidas como miniaturas. Você pode desabilitar esta função para acelerar o carregamento da página.
+images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	pt-br	Imagens linkadas a um registro podem ser exibidas como miniaturas. Você pode desabilitar esta função para acelerar o carregamento da página.
 in which country are you. this is used to set certain defaults for you.	preferences	pt-br	Em que País você está. Isto é usado para determinar alguns padrões.
 interface/template selection	preferences	pt-br	Seleção de Interface/Modelo
 language	preferences	pt-br	Idioma
@@ -60,14 +59,14 @@ please, select a new theme	preferences	pt-br	Por favor, selecione um novo tema
 popup with search	preferences	pt-br	Janela  instantânea com busca
 re-enter your password	preferences	pt-br	Digite sua senha novamente
 read prefs for the specified application.	preferences	pt-br	Ler preferências do aplicativo específico
-rich text editor enter mode	addressbook	pt-br	Modo 'Enter' do Editor Rich Text
-rich text editor theme	addressbook	pt-br	Tema do Editor Rich Text
+rich text editor enter mode	preferences	pt-br	Modo 'Enter' do Editor Rich Text
+rich text editor theme	preferences	pt-br	Tema do Editor Rich Text
 select different theme	preferences	pt-br	Selecione um tema diferente
-select how the rich text editor will generate the enter (linebreak) tag.	addressbook	pt-br	Selecione como o editor rich text gerará a tag enter (quebra de linha).
+select how the rich text editor will generate the enter (linebreak) tag.	preferences	pt-br	Selecione como o editor rich text gerará a tag enter (quebra de linha).
 select one	preferences	pt-br	Selecione um
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	pt-br	Selecione o idioma dos textos e mensagens do eGroupWare.<br> Alguns idiomas podem estar incopletos, e neste caso aparecerá a mensagem original em inglês seguida de um asterisco.
-select the language of the spellchecker integrated into the rich text editor.	addressbook	pt-br	Selecione o idioma do corretor gramatical integrado ao editor rich text.
-select the theme (visualization) of the rich text editor.	addressbook	pt-br	Selecione o tema (visualização) do editor rich text.
+select the language of the spellchecker integrated into the rich text editor.	preferences	pt-br	Selecione o idioma do corretor gramatical integrado ao editor rich text.
+select the theme (visualization) of the rich text editor.	preferences	pt-br	Selecione o tema (visualização) do editor rich text.
 selectbox	preferences	pt-br	Caixa de seleção
 selectbox with groupmembers	common	pt-br	Caixa de seleção com usuários de grupo
 selectbox with primary group and search	preferences	pt-br	Caixa de seleção com grupo principal e busca
@@ -75,7 +74,7 @@ set this to your convenience. for security reasons, you might not want to show y
 should the number of active sessions be displayed for you all the time.	preferences	pt-br	O número de sessões ativas deve ser mostrado todo o tempo.
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	pt-br	Essas mensagens de ajuda devem aparecer sempre ao modificar preferências, ou quando somente quando requisitadas.
 show helpmessages by default	preferences	pt-br	Exibir mensagens de ajuda por padrão
-show links between egroupware aps as	addressbook	pt-br	Exibir links entre os aplicativos eGroupWare como
+show links between egroupware aps as	common	pt-br	Exibir links entre os aplicativos eGroupWare como
 show navigation bar as	preferences	pt-br	Exibir barra de navegação como
 show number of current users	preferences	pt-br	Exibir o número de usuários correntes
 show text on navigation icons	preferences	pt-br	Exibir texto na barra de navegação
@@ -86,7 +85,7 @@ text only	preferences	pt-br	Somente texto
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	pt-br	O aplicativo padrão será iniciado quando você entrar no eGroupWare ou clicar no ícone página inicial.<br>Você pode ter mais de um aplicativo padrão mostrado na página inicial, caso não seja especificado aqui (precisa ser configurado nas preferências de cada aplicativo)
 the old password is not correct	preferences	pt-br	A antiga senha não está correta
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	pt-br	A caixa de seleção mostra todos os usuários disponíveis (poderá causar lentidão em instalações com muitos usuários). Pela janela instantânea, é possível pesquisar usuários por nome ou grupo.
-the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	common	pt-br	As duas últimas opções limitam a visibilidade dos outros usuários. Lá para eles deverá ser forçado e NÃO se aplica aos administradores.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	pt-br	As duas últimas opções limitam a visibilidade dos outros usuários. Lá para eles deverá ser forçado e NÃO se aplica aos administradores.
 the two passwords are not the same	preferences	pt-br	As duas senhas não são iguais
 theme (colors/fonts) selection	preferences	pt-br	Seleção de tema (cores/fontes)
 this server is located in the %1 timezone	preferences	pt-br	Este servidor está localizado no fuso horário %1
@@ -98,7 +97,7 @@ which charset should be used for the csv export. the system default is the chars
 which currency symbol or name should be used in egroupware.	preferences	pt-br	Qual o simbolo monetário ou nome deve ser usado pelo eGroupWare.
 write prefs for the specified application.	preferences	pt-br	Gravar preferências para o aplicativo específico
 you can show the applications as icons only, icons with app-name or both.	preferences	pt-br	Você pode exibir os aplicativos como ícones, ícones com o nome do aplicativo ou ambos.
-you can show the linked entries with icons only, icons with app-name or both.	addressbook	pt-br	Você pode exibir os registros linkados como ícones, ícones com o nome do aplicativo ou ambos.
+you can show the linked entries with icons only, icons with app-name or both.	common	pt-br	Você pode exibir os registros linkados como ícones, ícones com o nome do aplicativo ou ambos.
 you do not have permission to set acl's in this mode!	preferences	pt-br	Você não possui permissão para determinar ACL´s nesse modo!
 you must enter a password	preferences	pt-br	Você deve digitar uma senha
 your current theme is: %1	preferences	pt-br	Seu tema atual é: %1

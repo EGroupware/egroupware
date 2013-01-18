@@ -32,8 +32,10 @@ all days	etemplate	zh	全部日数
 all operations save the template!	etemplate	zh	所有操作保存模板！
 am	etemplate	zh	上午
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	zh	使用索引列可以提高搜索速度(但是会占用磁盘空间！)
+and	etemplate	zh	及
 application	etemplate	zh	应用程序
 application name needed to write a langfile or dump the etemplates !!!	etemplate	zh	应用程序需要写一个语言文件或是转储模板！
+applications	etemplate	zh	应用程序
 applies the changes made	etemplate	zh	应用所作修改
 applies the changes to the given version of the template	etemplate	zh	应用修改到指定模板的版本
 as default	etemplate	zh	默认
@@ -58,6 +60,7 @@ cells	etemplate	zh	储存格
 cellspacing for the table-tag	etemplate	zh	表格标签文字与单元格之间的距离
 center	etemplate	zh	居中
 changed	etemplate	zh	已更改
+check all	etemplate	zh	全选
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	zh	检查如果内容只是被显示，但不被改变 (当时不返回内容！)
 check if field has to be filled by user	etemplate	zh	检查字段是否已被用户填写
 checkbox	etemplate	zh	选择框
@@ -82,6 +85,7 @@ contact fields	etemplate	zh	联系人字段
 contains	etemplate	zh	包含
 create a new table for the application	etemplate	zh	为这个应用程序创建一新数据表
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	zh	从标签和帮助文本创建一个英文('en')语言文件(用于应用程序名称)
+creator	preferences	zh	创建者
 css class for the table-tag	etemplate	zh	表格标签的 CSS 类
 css properties	etemplate	zh	CSS 属性
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	zh	该行的CSS类名，预设：'nmh' = NextMatch header，'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
@@ -120,6 +124,7 @@ displayed in front of input or input is inserted for a '%s' in the label (label 
 displayed in statusline of browser if input-field gets focus	etemplate	zh	如果输入字段获得焦点则在浏览器状态栏显示
 displayed in the top line of the groupbox (legend)	etemplate	zh	在GroupBox (图例) 的顶行显示
 do you want to save the changes you made in table %s?	etemplate	zh	是否要保存您在表%s所作修改？
+document '%1' does not exist or is not readable for you!	preferences	zh	文件'%1'不存在或是您没有读取权限！
 documentation	etemplate	zh	文档
 doesn't matter	etemplate	zh	没关系
 drop a table - this can not be undone	etemplate	zh	删去数据表 - 这将无法撤消
@@ -143,6 +148,7 @@ enter filename to upload and attach, use [browse...] to search for it	etemplate	
 enter the new version number here (> old_version), empty for no update-file	etemplate	zh	输入新的版本号(大于旧版本)，空白表示没有更新
 enter the new version number here (has to be > old_version)	etemplate	zh	输入新的版本号(必须大于旧版本)
 entry saved	etemplate	zh	条目已储存
+error uploading file!	filemanager	zh	上传文件错误！
 error: template not found !!!	etemplate	zh	错误：找不到模板！
 error: webserver is not allowed to write into '%1' !!!	etemplate	zh	错误：Web服务器无法写入文件'%1'！
 error: while saving !!!	etemplate	zh	错误：保存时！
@@ -168,6 +174,7 @@ first	etemplate	zh	第一条
 floating point	etemplate	zh	浮点数
 foreign key	etemplate	zh	外键 (Foreign Key)
 formatted text (html)	etemplate	zh	格式化文本 (HTML)
+general fields:	preferences	zh	通用字段：
 go to the first entry	etemplate	zh	到第一条目
 go to the last entry	etemplate	zh	到最后条目
 go to the next page of entries	etemplate	zh	下一条目页面
@@ -205,6 +212,7 @@ insert a row above	etemplate	zh	在上方插入一行
 insert a row below	etemplate	zh	在下方插入一行
 insert a widget before	etemplate	zh	在前面插入一个容器
 insert a widget behind	etemplate	zh	在后面插入一个容器
+insert in document	etemplate	zh	插入文件
 insert new column behind this one	etemplate	zh	在这一列之后插入新列
 insert new column in front of all	etemplate	zh	在最前面插入新列
 insert new row after this one	etemplate	zh	在这一行之后插入新行
@@ -228,6 +236,7 @@ load this template into the editor	etemplate	zh	载入该模板到编辑器中
 middle	etemplate	zh	中间
 minute	etemplate	zh	分
 minutes	etemplate	zh	分
+modifier	preferences	zh	修改人
 month	etemplate	zh	月
 multicolumn indices	etemplate	zh	多列索引
 name	etemplate	zh	名称
@@ -236,7 +245,7 @@ name of phpgw-template set (e.g. verdilak): '' = default (will read pref. templa
 name of table to add	etemplate	zh	要添加的数据表名称
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	zh	模板名称，应在表单 application.function[.subTemplate]中
 need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	zh	在表格中必须是唯一的且不是SQL的保留字，最好加上两个英文与一个底线当作前置字来表示应用程序
-new search	etemplate	zh	新建搜索
+new search	common	zh	新建搜索
 new table created	etemplate	zh	新表已创建
 newer version '%1' exists !!!	etemplate	zh	有新的版本 '%1'！
 nextmatch	etemplate	zh	下一个匹配
@@ -248,6 +257,7 @@ nextmatch sortheader	etemplate	zh	下一个匹配分类头
 no column to swap with !!!	etemplate	zh	没有与之交换的列！
 no file	etemplate	zh	无文件
 no filename given or selected via browse...	etemplate	zh	没有指定文件名或是通过浏览器选择的...
+no matches found	etemplate	zh	未找到匹配
 no row to swap with !!!	etemplate	zh	没有与之交换的行！
 not null	etemplate	zh	非空
 nothing	etemplate	zh	无
@@ -264,6 +274,7 @@ open the online help.	etemplate	zh	开启在线帮助
 operator	etemplate	zh	操作符
 optional note about the link	etemplate	zh	可选的关于链接的注释
 options	etemplate	zh	选项
+or	etemplate	zh	或
 order to navigating by tab key through the form	etemplate	zh	使用跳位键实现在表单中的导航
 overflow	etemplate	zh	超过
 padding	etemplate	zh	文框距离
@@ -284,6 +295,7 @@ read etemplate from database (for the keys above)	etemplate	zh	从数据库读�
 readonly	etemplate	zh	只读
 remove row (can not be undone!!!)	etemplate	zh	移除行 (无法还原！)
 remove this link (not the entry itself)	etemplate	zh	移除此链接 (不是条目本身)
+required	etemplate	zh	需要
 returns savely, without deleting	etemplate	zh	返回，未删除
 right	etemplate	zh	正确
 row...	etemplate	zh	列...
@@ -403,5 +415,4 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	zh	要导入的 XML-文件
 xslt template	etemplate	zh	XSLT 模板
 year	etemplate	zh	年
-error uploading file!	filemanager	zh	上传文件错误！
-maximum size for uploads: %1 (php.ini: upload_max_filesize=%2, post_max_size=%3)	filemanager	zh	上传最大大小：%1 (php.ini: upload_max_filesize=%2, post_max_size=%3)
+you can respond by visiting:	etemplate	zh	查看访问：

@@ -32,8 +32,10 @@ all days	etemplate	zh-tw	全部日數
 all operations save the template!	etemplate	zh-tw	所有的操作儲存到樣板！
 am	etemplate	zh-tw	上午
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	zh-tw	索引欄位可以提高搜尋資料的速度(但是會佔用硬碟的空間！)
+and	etemplate	zh-tw	且
 application	etemplate	zh-tw	應用程式
 application name needed to write a langfile or dump the etemplates !!!	etemplate	zh-tw	應用程式需要有語言檔或是將樣板匯出！
+applications	etemplate	zh-tw	應用程式
 applies the changes made	etemplate	zh-tw	儲存異動
 applies the changes to the given version of the template	etemplate	zh-tw	在這個樣板的指定版本儲存異動
 as default	etemplate	zh-tw	如同預設
@@ -58,6 +60,7 @@ cells	etemplate	zh-tw	儲存格
 cellspacing for the table-tag	etemplate	zh-tw	表格欄位與欄位文字的距離
 center	etemplate	zh-tw	置中
 changed	etemplate	zh-tw	已異動
+check all	etemplate	zh-tw	全選
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	zh-tw	如果內容只能被顯示而不能被改變請勾選
 check if field has to be filled by user	etemplate	zh-tw	如果欄位址能夠讓使用者填入請勾選
 checkbox	etemplate	zh-tw	核選方塊
@@ -120,6 +123,7 @@ displayed in front of input or input is inserted for a '%s' in the label (label 
 displayed in statusline of browser if input-field gets focus	etemplate	zh-tw	如果游標停在輸入欄位時在瀏覽器的狀態列顯示
 displayed in the top line of the groupbox (legend)	etemplate	zh-tw	在群組區塊（範例）的最上方顯示
 do you want to save the changes you made in table %s?	etemplate	zh-tw	您是否要儲存在表格 %s 的異動？
+document '%1' does not exist or is not readable for you!	preferences	zh-tw	文件 '%1' 不存在或是無法讀取！
 documentation	etemplate	zh-tw	文件
 doesn't matter	etemplate	zh-tw	沒關係
 drop a table - this can not be undone	etemplate	zh-tw	移出一個資料表 - 將無法還原
@@ -168,6 +172,7 @@ first	etemplate	zh-tw	第一筆
 floating point	etemplate	zh-tw	浮點數
 foreign key	etemplate	zh-tw	外部金鑰
 formatted text (html)	etemplate	zh-tw	格式化文字(HTML)
+general fields:	preferences	zh-tw	一般欄位：
 go to the first entry	etemplate	zh-tw	到第一筆資料
 go to the last entry	etemplate	zh-tw	到最後一筆資料
 go to the next page of entries	etemplate	zh-tw	下一頁資料
@@ -205,6 +210,7 @@ insert a row above	etemplate	zh-tw	在上方插入一列
 insert a row below	etemplate	zh-tw	在下方插入一列
 insert a widget before	etemplate	zh-tw	在前面插入一個容器
 insert a widget behind	etemplate	zh-tw	在後面插入一個容器
+insert in document	etemplate	zh-tw	插入文件
 insert new column behind this one	etemplate	zh-tw	在這一個之前插入新的欄位
 insert new column in front of all	etemplate	zh-tw	在最前面插入新的欄位
 insert new row after this one	etemplate	zh-tw	在這一個之後插入新的欄位
@@ -248,6 +254,7 @@ nextmatch sortheader	etemplate	zh-tw	下一個分類頁首
 no column to swap with !!!	etemplate	zh-tw	沒有可以切換的欄位！
 no file	etemplate	zh-tw	沒有檔案
 no filename given or selected via browse...	etemplate	zh-tw	沒有檔案名稱或是從瀏覽器選取...
+no matches found	etemplate	zh-tw	沒有找到符合的資料
 no row to swap with !!!	etemplate	zh-tw	沒有可以切換的資料列！
 not null	etemplate	zh-tw	NOT NULL
 nothing	etemplate	zh-tw	無
@@ -264,6 +271,7 @@ open the online help.	etemplate	zh-tw	開啟線上說明
 operator	etemplate	zh-tw	運算元
 optional note about the link	etemplate	zh-tw	連結的附註
 options	etemplate	zh-tw	選項
+or	etemplate	zh-tw	或
 order to navigating by tab key through the form	etemplate	zh-tw	表單中跳位鍵的順序
 overflow	etemplate	zh-tw	超過
 padding	etemplate	zh-tw	文框距離
@@ -284,6 +292,7 @@ read etemplate from database (for the keys above)	etemplate	zh-tw	從資料庫�
 readonly	etemplate	zh-tw	唯讀
 remove row (can not be undone!!!)	etemplate	zh-tw	移除列(無法還原！)
 remove this link (not the entry itself)	etemplate	zh-tw	移除這個連結(不是它的資料)
+required	etemplate	zh-tw	必填
 returns savely, without deleting	etemplate	zh-tw	回上頁，不儲存
 right	etemplate	zh-tw	正確
 row...	etemplate	zh-tw	資料列...
@@ -403,3 +412,4 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	zh-tw	要匯入的XML檔案
 xslt template	etemplate	zh-tw	XSLT樣版
 year	etemplate	zh-tw	年
+you can respond by visiting:	etemplate	zh-tw	檢視網址：

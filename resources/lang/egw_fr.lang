@@ -28,9 +28,12 @@ direct booking permissions	resources	fr	Permissions directes de réservation
 don't use vfs (this will need a symlink --> see readme)	resources	fr	N'employez vfs (ceci nécessitera un lien symbolique --> voir README)
 edit this entry	resources	fr	Modifier cette entrée
 existing links	resources	fr	Liens existants
+exists	resources	fr	Existe
 general	resources	fr	Générale
 general informations about resource	resources	fr	Informations générales au sujet des ressources
 gernal resource	resources	fr	ressources générales
+global categories	resources	fr	Catégorie globale
+hours	resources	fr	Heures
 how many of the resources are useable?	resources	fr	Combien de ces ressources sont utilisables?
 how many of them are useable?	resources	fr	Combien parmi elle sont utilisables?
 how many of this resource are usable	resources	fr	Combien sont utilisables
@@ -39,6 +42,7 @@ implies booking permission	resources	fr	implique la permission de lire le calend
 implies read permission	resources	fr	implique la permission de lecture
 information about storage	resources	fr	Informations sur le lieu
 informations about the location of resource	resources	fr	Informations sur le lieu de la ressource
+insert	resources	fr	Insérer
 inventory number	resources	fr	Numéro d'inventaire
 inventory number:	resources	fr	Numéro d'inventaire:
 is resource bookable?	resources	fr	Peut on réserver les ressources?
@@ -49,6 +53,7 @@ links	resources	fr	Liens
 location	resources	fr	Emplacement
 location of resource	resources	fr	Emplacementde la ressource
 location:	resources	fr	Emplacement:
+manage mapping	resources	fr	Gestion des correspondances
 name of resource	resources	fr	Nom de ressource
 name:	resources	fr	Nom:
 no description available	resources	fr	aucune description disponible
@@ -95,6 +100,5 @@ web-site for this resource	resources	fr	Site web de cette ressource
 where to find this resource?	resources	fr	Ou trouver cette ressource?
 which category does this resource belong to?	resources	fr	À quelle catégorie cette ressource appartient-elle?
 write permissions	resources	fr	Permissions d'écriture
-you are not permitted to edit this reource!	resources	fr	Vous n'êtes pas autorisés à modifier cette ressource!
 you are not permitted to get information about this resource!	resources	fr	Vous n'êtes pas autorisés à obtenir des informations sur cette ressource!
 you chose more resources than available	resources	fr	Vous avez choisi plus de ressources que disponibles

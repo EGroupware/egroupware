@@ -4,9 +4,7 @@
 2 month ago	timesheet	id	2 bulan yang lalu
 2 years ago	timesheet	id	2 tahun yang lalu
 3 years ago	timesheet	id	3 tahun yang lalu
-actions	timesheet	id	Tindakan
 all projects	timesheet	id	Semua Proyek
-all status	timesheet	id	Semua status
 and its members	timesheet	id	dan anggotanya
 applies the changes	timesheet	id	terapkan pengubahan
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	id	Tindakan berlaku untuk seluruh query, TIDAK cuma yang ditampilkan!!!
@@ -19,9 +17,7 @@ create new links	timesheet	id	Bikin tautan baru
 creates a new field	timesheet	id	bikin field baru
 creating new entry	timesheet	id	membuat entri baru
 custom fields	timesheet	id	Custom fields
-delete this entry	timesheet	id	Hapus entri ini
 delete this status	timesheet	id	Hapus status ini
-delete timesheet	timesheet	id	Hapus LembarWaktu
 deleted	timesheet	id	terhapus
 deletes this field	timesheet	id	hapus field ini
 determines the order the fields are displayed	timesheet	id	menentukan urutan field ditampilkan
@@ -35,22 +31,22 @@ entry saved	timesheet	id	Entri disimpan
 error deleting the entry!!!	timesheet	id	Error deleting the entry!!!
 error saving the entry!!!	timesheet	id	Error saving the entry!!!
 existing links	timesheet	id	Tautan yang ada
-export	timesheet	id	Ekspor
 export to openoffice spreadsheet	timesheet	id	Expor ke OpenOffice Spreadsheet
 field must not be empty !!!	timesheet	id	Field tidak boleh kosong !!!
 full: use only projectmanager	admin	id	Full: hanya menggunakan ManajerProyek
-general	timesheet	id	Umum
 global categories	timesheet	id	Kategori Global
 history	timesheet	id	Riwayat
 id	timesheet	id	ID
+ignore	timesheet	id	Ignore
 last modified	timesheet	id	Pengubahan terakhir
 last month	timesheet	id	Bulan lalu
 last week	timesheet	id	Minggu lalu
 last year	timesheet	id	Tahun lalu
 leave it empty for a full week	timesheet	id	Biarkan kosong bila seminggu penuh
 leaves without saveing	timesheet	id	tinggalkan tanpa menyimpan
+length<br>rows	timesheet	id	Length<br>Rows
 links	timesheet	id	Tautan
-modify the status of the timesheet	timesheet	id	Ubah Status LembarWaktu
+modified	timesheet	id	Diubah
 new ticket submitted by %1 at %2	timesheet	id	Tiket baru dikirimkan oleh %1 pada %2
 new timesheet submitted by %1 at %2	timesheet	id	LembarWaktu baru dikirim oleh %1 pada %2
 no details	timesheet	id	tiada kejelasan
@@ -74,7 +70,6 @@ saves this entry and add a new one	timesheet	id	Simpan entri ini dan bikin baru
 select a price	timesheet	id	Pilih harga
 select a project	timesheet	id	Pilih proyek
 select a status of the timesheet	timesheet	id	pilih status LembarWaktu
-select action	timesheet	id	Pilih tindakan
 select infolog	timesheet	id	pilih InfoLog
 select multiple timeshhets for a further action	timesheet	id	Pilih beberapa lembarwaktu untuk tindakan berikutnya
 start	timesheet	id	Mulai
@@ -95,9 +90,7 @@ timesheet openoffice export	timesheet	id	Ekspor LembarWaktu ke OpenOffice
 timesheet status-%1 '%2' added.	timesheet	id	Status-%1 LembarWaktu '%2' ditambahkan.
 timesheet-%1 '%2' updated.	timesheet	id	LembarWaktu-%1 '%2' diperbarui.
 timesheet-%1 deleted.	timesheet	id	LembarWaktu-%1 dihapus.
-tracker	timesheet	id	Tracker
 unitprice	timesheet	id	Satuan harga
 view this entry	timesheet	id	Tampilkan entri ini
 week	timesheet	id	Minggu
-whole query	timesheet	id	seluruh query
 yesterday	timesheet	id	Kemarin

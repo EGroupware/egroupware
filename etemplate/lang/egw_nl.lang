@@ -35,8 +35,10 @@ all days	etemplate	nl	alle dagen
 all operations save the template!	etemplate	nl	alle bewerkingen slaan de template op!
 am	etemplate	nl	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	nl	een geindexeerde kolom versnelt zoekopdrachten op dit kolom (kost wel ruimte op de schijf !!!)
+and	etemplate	nl	En
 application	etemplate	nl	Applicatie
 application name needed to write a langfile or dump the etemplates !!!	etemplate	nl	Applicatie naam is nodig om een taalbestand te schrijven of de eTemplates te kunnen dumpen !!!
+applications	etemplate	nl	Toepassingen
 applies the changes made	etemplate	nl	de gemaakte wijzigingen doorvoeren
 applies the changes to the given version of the template	etemplate	nl	de gemaakte wijzigingen doorvoeren op de opgegeven versie van de template
 as default	etemplate	nl	als standaard
@@ -61,6 +63,7 @@ cells	etemplate	nl	Cellen
 cellspacing for the table-tag	etemplate	nl	Cellspacing voor de table-tag
 center	etemplate	nl	Centreren
 changed	etemplate	nl	Veranderd
+check all	etemplate	nl	Markeer alles
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	nl	aanvinken indien content alleen getoond moet worden maar niet niet gewijzigd (de content wordt dan niet teruggezonden!)
 check if field has to be filled by user	etemplate	nl	Check of dit veld door de gebruiker moet worden ingevuld
 checkbox	etemplate	nl	Keuzevak
@@ -85,6 +88,7 @@ contact fields	etemplate	nl	Veldnamen contacten
 contains	etemplate	nl	bevat
 create a new table for the application	etemplate	nl	Maak een nieuwe tabel voor de applicatie
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	nl	creëert een engels ('en') taalbestand van label en helpteksten (voor applicatie in Naam)
+creator	preferences	nl	Melder
 css class for the table-tag	etemplate	nl	CSS klasse voor de table-tag
 css properties	etemplate	nl	CSS eigenschappen
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	nl	CSS-klasse naam voor deze rij, keuzemogelijkheden: 'nmh' = volgende overeenkomende kop, 'nmr' = afwisselend bij iedere volgende rij, 'nmr0'+'nmr1' volgende rijen
@@ -123,6 +127,7 @@ displayed in front of input or input is inserted for a '%s' in the label (label 
 displayed in statusline of browser if input-field gets focus	etemplate	nl	weergegeven in de statusbalk van de browser indien het invoerveld de focus heeft
 displayed in the top line of the groupbox (legend)	etemplate	nl	weergegeven in de bovenste regel van het groepskader (legenda)
 do you want to save the changes you made in table %s?	etemplate	nl	Wilt u de wijzigingen die in tabel %s gemaakt hebt bewaren?
+document '%1' does not exist or is not readable for you!	preferences	nl	Document '%1' bestaat niet of is niet toegankelijk voor jou!
 documentation	etemplate	nl	Documentatie
 doesn't matter	etemplate	nl	maakt niets uit
 drop a table - this can not be undone	etemplate	nl	Tabel verwijderen - dit kan niet ongedaan gemaakt worden
@@ -146,6 +151,7 @@ enter filename to upload and attach, use [browse...] to search for it	etemplate	
 enter the new version number here (> old_version), empty for no update-file	etemplate	nl	vul het nieuwe versienummer hierin (> old_version), leeg voor "geen update bestand"
 enter the new version number here (has to be > old_version)	etemplate	nl	vul het nieuwe versienummer hier in (moet > old_version zijn)
 entry saved	etemplate	nl	Record opgeslagen
+error uploading file!	filemanager	nl	Fout bij uploaden van bestand!
 error: template not found !!!	etemplate	nl	Fout: Template niet gevonden !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	nl	Fout: webserver heeft geen toestemming om de schrijven in '%1' !!!
 error: while saving !!!	etemplate	nl	Fout: tijdens het opslaan !!!
@@ -171,6 +177,7 @@ first	etemplate	nl	Eerste
 floating point	etemplate	nl	Drijvende komma
 foreign key	etemplate	nl	Foreign Key
 formatted text (html)	etemplate	nl	Opgemaakte tekst (HTML)
+general fields:	preferences	nl	Algemene velden:
 go to the first entry	etemplate	nl	ga naar de eerste entry
 go to the last entry	etemplate	nl	ga naar de laatste entry
 go to the next page of entries	etemplate	nl	ga naar de volgende pagina met entries
@@ -208,6 +215,7 @@ insert a row above	etemplate	nl	een rij hierboven invoegen
 insert a row below	etemplate	nl	een rij hieronder invoegen
 insert a widget before	etemplate	nl	een of ander iets hiervoor invoegen
 insert a widget behind	etemplate	nl	een of ander iets hierna invoegen
+insert in document	etemplate	nl	Invoegen in document
 insert new column behind this one	etemplate	nl	voeg een nieuwe kolom na deze kolom in
 insert new column in front of all	etemplate	nl	voeg een nieuwe kolom voor deze kolom in
 insert new row after this one	etemplate	nl	voeg een nieuwe rij onder deze rij in
@@ -228,6 +236,7 @@ linklist	etemplate	nl	Linklijst
 linkstring	etemplate	nl	LinkString
 linkto	etemplate	nl	LinkNaar
 load this template into the editor	etemplate	nl	laad deze tempate in de editor
+maximum size for uploads	filemanager	nl	Maximum grootte voor uploads
 message ...	etemplate	nl	Bericht...
 middle	etemplate	nl	Midden
 minute	etemplate	nl	Minuut
@@ -270,6 +279,7 @@ open the online help.	etemplate	nl	De online help openen.
 operator	etemplate	nl	Operator
 optional note about the link	etemplate	nl	optionele opmerking over de link
 options	etemplate	nl	Opties
+or	etemplate	nl	of
 order to navigating by tab key through the form	etemplate	nl	Volgorde van TAB toets navigatie door het formulier
 overflow	etemplate	nl	Overflow
 padding	etemplate	nl	Padding
@@ -412,5 +422,3 @@ xslt template	etemplate	nl	XSLT Template
 year	etemplate	nl	Jaar
 you are not allowed to export more than %1 entries!	common	nl	Je mag niet meer dan %1 items exporteren!
 you can respond by visiting:	etemplate	nl	Ju kunt reageren via:
-error uploading file!	filemanager	nl	Fout bij uploaden van bestand!
-maximum size for uploads	filemanager	nl	Maximum grootte voor uploads

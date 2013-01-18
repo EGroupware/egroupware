@@ -1,0 +1,33 @@
+applies the changes	timesheet	iw	מבצע את השינוים
+create new links	timesheet	iw	יצור קישורים חדשים
+creates a new field	timesheet	iw	יוצר שדה חדש
+custom fields	timesheet	iw	שדות מותאמים אישית
+deleted	timesheet	iw	נמחקו
+deletes this field	timesheet	iw	מוחק את השדה הזה
+determines the order the fields are displayed	timesheet	iw	קובע את סדר תצוגת השדות
+edit status	timesheet	iw	ערוך סטאטוס
+edit this entry	timesheet	iw	ערוך רשומה זו
+entry saved	timesheet	iw	הרשומה נשמרה
+existing links	timesheet	iw	קישורים קיימים
+field must not be empty !!!	timesheet	iw	!אסור לשדה הזה להיות ריק
+global categories	timesheet	iw	קטגוריות גלובליות
+history	timesheet	iw	היסטוריה
+id	timesheet	iw	זיהוי
+last modified	timesheet	iw	שונה לאחרונה
+leaves without saveing	timesheet	iw	יוצא בלי לשמור
+length<br>rows	timesheet	iw	אורך<br>שורות
+links	timesheet	iw	קישורים
+max length of the input [, length of the inputfield (optional)]	timesheet	iw	([אורך הקלט המירבי [, אורך שדה הקלט (אופציונאלי
+modified	timesheet	iw	השתנה
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	iw	מספר השורה של שדה קלט רב-שורות או של תיבת רבי-בחירה
+order	timesheet	iw	סדר
+parent	timesheet	iw	הורה
+saves the changes made and leaves	timesheet	iw	יוצא ושומר את השינוים
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	iw	השם לשימוש פנימי (>=20 תווים), אם משנים אותו אין יותר גישה לנתונים הקיימים
+the text displayed to the user	timesheet	iw	הטקסט להציג למשתמש
+this month	timesheet	iw	החודש
+this week	timesheet	iw	השבוע
+this year	timesheet	iw	השנה
+values for selectbox	timesheet	iw	הערכים לתיבת הבחירה
+view this entry	timesheet	iw	הצג רשומה זו
+week	timesheet	iw	שבוע

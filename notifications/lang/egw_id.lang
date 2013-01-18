@@ -7,15 +7,19 @@ egroupware-popup verbosity	notifications	id	EGroupware-Popup verbosity
 enabled chains	notifications	id	enabled chains
 folder	notifications	id	folder
 from	notifications	id	dari
-linked entries:	notifications	id	entri terkait:
+linked entries:	common	id	entri terkait:
 message from	notifications	id	pesan dari
 minutes	notifications	id	menit
 notification	common	id	notifikasi
 poll interval	notifications	id	poll interval
 preferences for notification	notifications	id	kesukaan untuk notifikasi
 received	notifications	id	received
+settings	notifications	id	Seting
 sms backend	admin	id	SMS backend
 sms only	notifications	id	Hanya SMS
+step	notifications	id	Langkah
+warning	notifications	id	Peringatan
 windows-popup backend	admin	id	Windows-Popup backend
 windows-popup only	notifications	id	Hanya Windows-Popup
 you've got new mail	notifications	id	Anda mendapat email baru
+your session could not be verified.	notifications	id	Sesi anda tidak dapat diperiksa.

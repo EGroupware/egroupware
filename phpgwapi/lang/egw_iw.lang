@@ -22,6 +22,7 @@ account has been updated	common	iw	החשבון עודכן
 account is expired	common	iw	פג תוקפו של החשבון
 acl	common	iw	רשימות גישה
 action	common	iw	פעולה
+actions	common	iw	פעולות
 active	common	iw	פעיל
 add	common	iw	הוסף
 add %1 category for	common	iw	הוסף קטגוריה %1 עבור
@@ -34,6 +35,8 @@ all	common	iw	הכל
 all fields	common	iw	כל השדות
 alphabet	common	iw	א,ב,ג,ד,ה,ו,ז,ח,ט,י,כ,ל,מ,נ,ס,ע,פ,צ,ק,ר,ש,ת
 alternate style-sheet:	common	iw	:דף סגנון חלופי
+and	common	iw	-ו
+application	common	iw	יישום
 apply	common	iw	בצע
 april	common	iw	אפריל
 are you sure you want to delete these entries ?	common	iw	?בטוח שהנך רוצה למחוק רשומות אילו
@@ -54,6 +57,7 @@ border	common	iw	גבול
 bottom	common	iw	תחתית
 calendar	common	iw	לוח שנה
 cancel	common	iw	בטל
+cannot replace %1 because it is a directory	common	iw	לא יכול להחליף את %1 כי היא מחיצה
 caption	common	iw	כותרת
 categories	common	iw	קטגוריות
 categories for	common	iw	קטגוריות עבור
@@ -87,11 +91,14 @@ datetime port.<br>if using port 13, please set firewall rules appropriately befo
 december	common	iw	דצמבר
 default category	common	iw	קטגוריה ברירת מחדל
 delete	common	iw	מחק
+delete category	common	iw	מחק קטגוריה
 delete row	common	iw	מחק שורה
+delete this entry	common	iw	מחק רשומה זו
 description	common	iw	תיאור
 detail	common	iw	פירוט
 details	common	iw	פרטים
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	iw	?PNG וחדש יותר כדי להציג שקיפות בתמונות Internet Explorer 5.5-לבטל תיקון הבג ב
+directory	common	iw	מחיצה
 disable internet explorer png-image-bugfix	common	iw	internet Explorer-ב PNG של תמונות bug-לבטל את תיקון ה
 disable slider effects	common	iw	בטל אפקט סליידר
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	iw	לבטל את אפקט האנימציה של הסליידר?<br>
@@ -105,19 +112,21 @@ domain	common	iw	דומיין
 domain name for mail-address, eg. "%1"	common	iw	שם הדומיין עבור כתובות דואר אלקטרוני, למשל "%1"
 domestic	common	iw	מקומי
 done	common	iw	בוצע
+download	common	iw	הורד
 drag to move	jscalendar	iw	גרור כדי להזיז
 e-mail	common	iw	דואר אלקטרוני
 edit	common	iw	ערוך
 edit %1 category for	common	iw	ערוך קטגוריה %1 עבור
 edit categories	common	iw	ערוך קטגוריות
 edit category	common	iw	ערוך קטגוריה
-egroupware api version %1	common	iw	גירסא %1 eGroupWare של API
+egroupware	common	iw	sdg
 egroupware: login blocked for user '%1', ip %2	common	iw	eGroupWare: הכניסה נחסמה למשתמש '%1', IP %2
 email	common	iw	דואר אלקטרוני
 email-address of the user, eg. "%1"	common	iw	כתובת דוא"ל של המשתמש, לדוגמא "%1"
 enabled	common	iw	מאופשר
 end date	common	iw	תאריך סיום
 end time	common	iw	שעת סיום
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	iw	eGroupWare של URL-הקלד את ה<br>
 entry has been deleted sucessfully	common	iw	הרשומה נמחקה בהצלחה
 entry updated sucessfully	common	iw	הרשומה עודכנה בהצלחה
 error	common	iw	שגיאה
@@ -167,6 +176,7 @@ insert column before	common	iw	הוסף עמודה לפני
 insert row after	common	iw	הוסף שורה אחרי
 insert row before	common	iw	הוסף שורה לפני
 international	common	iw	בינלאומי
+invalid filename	common	iw	שם קובץ לא חוקי
 invalid ip address	common	iw	לא חוקית IP כתובת
 invalid password	common	iw	סיסמא לא חוקית
 israel	common	iw	ישראל
@@ -183,6 +193,7 @@ justify left	common	iw	יישור שמאלה
 justify right	common	iw	יישור ימינה
 keywords	common	iw	מלות מפתח
 language	common	iw	שפה
+last modified	common	iw	שונה לאחרונה
 last name	common	iw	שם משפחה
 last name of the user, eg. "%1"	common	iw	שם משפחה של המשתמש, לדוגמא "%1"
 last page	common	iw	עמוד אחרון
@@ -207,6 +218,7 @@ may	common	iw	מאי
 medium	common	iw	בינוני
 menu	common	iw	תפריט
 message	common	iw	הודעה
+minute	common	iw	דקה
 monday	common	iw	יום שני
 name	common	iw	שם
 name of the user, eg. "%1"	common	iw	שם המשתמש, לדוגמא "%1"
@@ -224,6 +236,8 @@ no history for this record	common	iw	אין היסטוריה לרשומה זו
 no subject	common	iw	אין נושא
 none	common	iw	ללא
 normal	common	iw	רגיל
+not	common	iw	לא
+not a user yet? register now	common	iw	עדיין לא משתמש? הרשם עכשיו
 not assigned	common	iw	לא נקבע
 note	common	iw	הערה
 notes	common	iw	הערות
@@ -236,8 +250,10 @@ on *nix systems please type: %1	common	iw	במערכות 'ניקס יש לכתו
 on mouse over	common	iw	במעבר עכבר
 only private	common	iw	רק פרטיים
 only yours	common	iw	רק את שלך
+open	common	iw	פתח
 open notify window	common	iw	פתח חלון הודעות
 open popup window	common	iw	פתח חלון קופץ
+or	common	iw	או
 ordered list	common	iw	רשימה מסודרת
 original	common	iw	מקור
 other	common	iw	אחר
@@ -251,9 +267,6 @@ password	common	iw	סיסמא
 password could not be changed	common	iw	לא הצלחתי לשנות את הסיסמא
 password has been updated	common	iw	הסיסמא עודכן
 path to user and group files has to be outside of the webservers document-root!!!	common	iw	!המסלול את קבצי משתמשים וקבותות חייב להיות מחוץ לבסיס של שרת הווב
-pattern for search in addressbook	common	iw	תבנית לחיפוש בספר כתובות
-pattern for search in calendar	common	iw	תבנית לחיפוש בלוח שנה
-pattern for search in projects	common	iw	תבנית לחיפוש בפרויקטים
 permissions to the files/users directory	common	iw	הרשאות לקבצים/סיפריות משתמשים
 personal	common	iw	אישי
 phone number	common	iw	מספר טלפון
@@ -266,10 +279,10 @@ please set your preferences for this application	common	iw	!נא לקבוע את
 please wait...	common	iw	...המתן בבקשה
 postal	common	iw	דואר
 preferences	common	iw	העדיפויות
-preferences for the idots template set	common	iw	idots עדיפויות לסט התבניות
 prev. month (hold for menu)	jscalendar	iw	(החודש הקודם (החזק לקבלת תפריט
 prev. year (hold for menu)	jscalendar	iw	(השנה הקודמת (החזק לקבלת תפריט
 previous page	common	iw	עמוד קודם
+primary group	common	iw	קבוצה ראשית
 primary style-sheet:	common	iw	:דף סגנון ראשי
 print	common	iw	הדפס
 priority	common	iw	עדיפות
@@ -278,6 +291,7 @@ project	common	iw	פרויקט
 public	common	iw	ציבורי
 read	common	iw	קרא
 read this list of methods.	common	iw	.קרא רשימת מטודות זו
+reading	common	iw	קורא
 reject	common	iw	דחה
 remove selected accounts	common	iw	מחק חשבונות מובחרים
 rename	common	iw	שנה שם
@@ -291,6 +305,7 @@ saturday	common	iw	יום שבת
 save	common	iw	שמור
 search	common	iw	חיפוש
 search %1 '%2'	common	iw	חיפוש %1 '%2'
+search accounts	common	iw	חיפוש חשבונות
 search or select accounts	common	iw	חפש או בחר חשבונות
 section	common	iw	חלק
 select	common	iw	בחר
@@ -318,6 +333,8 @@ show page generation time on the bottom of the page?	common	iw	?להציג את 
 show_more_apps	common	iw	הצג_עוד_יישומים
 showing %1	common	iw	מציג %1
 showing %1 - %2 of %3	common	iw	מציג %1 - %2 מתוך %3
+site configuration	common	iw	הגדרות אתר
+size	common	iw	גודל
 sorry, your login has expired	login	iw	מצטער, פג תוקפו של החשבון שלך
 start date	common	iw	תאריך התחלה
 start time	common	iw	שעת התחלה
@@ -352,9 +369,11 @@ too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	c
 top	common	iw	עליון
 total	common	iw	סך הכל
 tuesday	common	iw	יום שלישי
+type	common	iw	סוג
 underline	common	iw	קו תחתי
 unknown	common	iw	לא מוכר
 update	common	iw	עדכן
+upload	common	iw	העלה
 use button to search for	common	iw	השתמש בכפתור כדי לחפש
 use button to search for address	common	iw	השתמש בכפתור לחיפוש כתובת
 use button to search for calendarevent	common	iw	השתמש בכפתור לחפש אירוע בלוח שנה
@@ -365,14 +384,17 @@ user groups	common	iw	קבוצות משתמשים
 username	common	iw	שם משתמש
 users	common	iw	משתמשים
 users choice	common	iw	בחירת המשתמשים
+value	common	iw	ערך
 version	common	iw	גירסא
 view	common	iw	תצוגה
 wednesday	common	iw	יום רביעי
 welcome	common	iw	ברוך בואך
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	iw	.כאשר עונים כאן כן, כפתורי הבית והיציאה מהמערכת מוצגים כצלמיות יישום בפס הניווט הראשי
 which groups	common	iw	איזו קבוצות
 width	common	iw	רוחב
 wk	jscalendar	iw	שבוע
 work email	common	iw	דוא"ל בעבודה
+writing	common	iw	כותב
 written by:	common	iw	:נכתב על ידי
 year	common	iw	שנה
 yes	common	iw	כן
@@ -394,4 +416,3 @@ your session could not be verified.	login	iw	.לא הצלחתי לשחזר את 
 your settings have been updated	common	iw	ההגדרות שלך עודכנו
 zambia	common	iw	זמביה
 zoom	common	iw	הגדל
-site configuration	common	iw	הגדרות אתר

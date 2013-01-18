@@ -33,6 +33,7 @@ account is expired	common	hu	Ez a felhasználói fiók lejárt
 accounts	common	hu	Hozzáférés
 acl	common	hu	ACL
 action	common	hu	Művelet
+actions	common	hu	Műveletek
 active	common	hu	Aktív
 add	common	hu	Hozzáad
 add %1 category for	common	hu	%1 kategória hozzáadása
@@ -53,6 +54,7 @@ alternate style-sheet:	common	hu	Stíluslap változtatása
 american samoa	common	hu	Amerikai Szamoa
 an error happened	common	hu	Hiba történt
 an existing and by the webserver readable directory enables the image browser and upload.	common	hu	Létező és a webszerver által olvasható könyvtár engedélyezi a képfeltöltést és böngészést.
+and	common	hu	És
 andorra	common	hu	Andorra
 angola	common	hu	Angola
 anguilla	common	hu	Anguilla
@@ -182,7 +184,9 @@ default category	common	hu	Alapértelmezett kategória
 default height for the windows	common	hu	Alapértelmezett ablak magasság
 default width for the windows	common	hu	Alapértelmezett ablak szélesség
 delete	common	hu	Töröl
+delete category	common	hu	Kategória törlése
 delete row	common	hu	Sor törlése
+delete this entry	common	hu	Aktuális bejegyzés törlése
 denmark	common	hu	Dánia
 description	common	hu	Leírás
 detail	common	hu	Részlet
@@ -208,6 +212,7 @@ domestic	common	hu	Belföldi
 dominica	common	hu	Dominika
 dominican republic	common	hu	Dominikai Köztársaság
 done	common	hu	Kész
+download	common	hu	Letölt
 drag to move	jscalendar	hu	Ragadja meg mozgatáshoz
 e-mail	common	hu	E-Mail
 east timor	common	hu	Kelet Timor
@@ -363,6 +368,7 @@ kyrgyzstan	common	hu	Kirgizisztán
 language	common	hu	Nyelv
 language_direction_rtl	common	hu	language_direction_rtl
 lao peoples democratic republic	common	hu	Lao Peoples Democratic Rebuplic
+last modified	common	hu	utoljára módosítva
 last name	common	hu	Keresztnév
 last name of the user, eg. "%1"	common	hu	A felhasználó keresztneve, pl. "%1"
 last page	common	hu	Utolsó oldal
@@ -382,6 +388,7 @@ list	common	hu	Lista
 list members	common	hu	Listatagok
 lithuania	common	hu	Litvánia
 local	common	hu	Helyi
+locations	common	hu	helyek
 login	common	hu	Belépés
 loginid	common	hu	Belépési azonosító
 logout	common	hu	Kilépés
@@ -476,9 +483,11 @@ on mouse over	common	hu	Egérkurzor felette
 only private	common	hu	csak privát
 only yours	common	hu	csak sajátot
 oops! you caught us in the middle of system maintainance.	common	hu	Hoppá! A rendszer éppen karbantartás alatt.
+open	common	hu	Megnyit
 open notify window	common	hu	Értesítő ablak megnyitása
 open popup window	common	hu	Felugró ablak megnyitása
 open sidebox	common	hu	Oldalmenü megnyitása
+or	common	hu	vagy
 ordered list	common	hu	Számozott lista
 original	common	hu	Eredeti
 other	common	hu	Más
@@ -524,10 +533,10 @@ portugal	common	hu	Portugália
 postal	common	hu	Postai
 powered by	common	hu	Powered by
 preferences	common	hu	Tulajdonságok
-preferences for the idots template set	common	hu	Idots sablon beállításai
 prev. month (hold for menu)	jscalendar	hu	Előző hónap
 prev. year (hold for menu)	jscalendar	hu	Előző év
 previous page	common	hu	Előző oldal
+primary group	common	hu	elsődleges csoport
 primary style-sheet:	common	hu	Elsődleges stíluslap
 print	common	hu	Nyomtat
 priority	common	hu	Prioritás
@@ -620,6 +629,7 @@ sierra leone	common	hu	Sierra Leone
 simple	common	hu	Egyszerű
 singapore	common	hu	Szingapúr
 site configuration	common	hu	Webhely beállításai
+size	common	hu	Méret
 slovakia	common	hu	Szlovákia
 slovenia	common	hu	Szlovénia
 solomon islands	common	hu	Salamon szigetek
@@ -730,6 +740,7 @@ what style would you like the image to have?	common	hu	Milyen stílusú legyen a
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	hu	Igen választása esetén a Kezdőlap és Kilépés gombok megjelennek a felső alkalmazás tálcán.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	hu	Hol és hogyan legyenek az egroupware link szerű tulajdonságok, leírások és kijelentkezés megjelenítve.
 which groups	common	hu	Melyik csoport
+whole query	common	hu	teljes lekérdezés
 width	common	hu	Szélesség
 wk	jscalendar	hu	hét
 work email	common	hu	munkahelyi email

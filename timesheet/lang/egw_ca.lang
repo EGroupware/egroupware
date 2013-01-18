@@ -1,0 +1,42 @@
+applies the changes	timesheet	ca	aplica els canvis
+by	timesheet	ca	per
+check all	timesheet	ca	Comprova-ho tot
+create new links	timesheet	ca	Crear nous enllaços
+creates a new field	timesheet	ca	crea un camp nou
+custom fields	timesheet	ca	Camps personalitzats
+deleted	timesheet	ca	eliminat
+deletes this field	timesheet	ca	esborra aquest camp
+determines the order the fields are displayed	timesheet	ca	determina l'ordre en que es mostren els camps
+each value is a line like <id>[=<label>]	timesheet	ca	cada valor és una línia com <id>[=<etiqueta>]
+edit status	timesheet	ca	Editar Estat
+edit this entry	timesheet	ca	Editar aquesta entrada
+end	timesheet	ca	Fi
+entry saved	timesheet	ca	Entrada guardada
+existing links	timesheet	ca	Enllaços existents
+field must not be empty !!!	timesheet	ca	El camp no ha d'estar buit !!!
+global categories	timesheet	ca	Categories globals
+history	timesheet	ca	Història
+id	timesheet	ca	id
+last modified	timesheet	ca	Darrera modificació
+leaves without saveing	timesheet	ca	Sortir sense desar
+length<br>rows	timesheet	ca	Longitud<br>Files
+links	timesheet	ca	Enllaços
+max length of the input [, length of the inputfield (optional)]	timesheet	ca	longitud màxima de l'entrada [, longitud del camp de text (opcional)]
+modified	timesheet	ca	Modificat
+no details	timesheet	ca	sense detalls
+number of row for a multiline inputfield or line of a multi-select-box	timesheet	ca	número de files per a un camp de text de més d'una selecció
+order	timesheet	ca	Ordre
+parent	timesheet	ca	Superior
+price	timesheet	ca	Preu
+quantity	timesheet	ca	Quantitat
+saves the changes made	timesheet	ca	guarda els canvis fets
+saves the changes made and leaves	timesheet	ca	Desar els canvis fets i sortir
+select a price	timesheet	ca	Selecciona un preu
+select a project	timesheet	ca	Selecciona un projecte
+start	timesheet	ca	Inici
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	ca	el nom utilitzat internament (<= 20 caràcters), si el canvies fas que les dades existents siguin inaccessibles.
+the text displayed to the user	timesheet	ca	el text mostrat a l'usuari
+unitprice	timesheet	ca	Unitat de Preu
+values for selectbox	timesheet	ca	Valors per a llista desplegable
+week	timesheet	ca	Setmana
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	ca	La teva base de dades NO està al dia (%1 vs. %2), per favor, executa %3setup%4 per actualitzar la teva base de dades.

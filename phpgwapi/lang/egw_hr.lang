@@ -24,6 +24,7 @@ account has been updated	common	hr	Račun je ažuriran
 account is expired	common	hr	Račun je istekao
 acl	common	hr	ACL
 action	common	hr	Akcija
+actions	common	hr	Akcije
 active	common	hr	Aktivno
 add	common	hr	Dodaj
 add %1 category for	common	hr	Dodaj %1 kategoriju za
@@ -40,11 +41,13 @@ all fields	common	hr	sva polja
 alphabet	common	hr	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	hr	Alternativni style-sheet:
 american samoa	common	hr	AMERICAN SAMOA
+and	common	hr	And
 andorra	common	hr	ANDORRA
 angola	common	hr	ANGOLA
 anguilla	common	hr	ANGUILLA
 antarctica	common	hr	ANTARCTICA
 antigua and barbuda	common	hr	ANTIGUA AND BARBUDA
+application	common	hr	Aplikacija
 apply	common	hr	Primjeni
 april	common	hr	Travanj
 are you sure you want to delete these entries ?	common	hr	Da li ste sigurni da želite obrisati ove stavke ?
@@ -77,8 +80,10 @@ bermuda	common	hr	BERMUDA
 bhutan	common	hr	BHUTAN
 blocked, too many attempts	common	hr	Blokirano, previše pokušaja
 bolivia	common	hr	BOLIVIA
+border	common	hr	Border
 bosnia and herzegovina	common	hr	BOSNIA AND HERZEGOVINA
 botswana	common	hr	BOTSWANA
+bottom	common	hr	dno
 bouvet island	common	hr	BOUVET ISLAND
 brazil	common	hr	BRAZIL
 british indian ocean territory	common	hr	BRITISH INDIAN OCEAN TERRITORY
@@ -91,6 +96,7 @@ cambodia	common	hr	CAMBODIA
 cameroon	common	hr	CAMEROON
 canada	common	hr	CANADA
 cancel	common	hr	Otkaži
+cannot replace %1 because it is a directory	common	hr	Nemogu zamijeniti %1 jer je mapa.
 cape verde	common	hr	CAPE VERDE
 categories	common	hr	Kategorije
 categories for	common	hr	kategorije za
@@ -142,11 +148,14 @@ datetime port.<br>if using port 13, please set firewall rules appropriately befo
 december	common	hr	Prosinac
 default category	common	hr	Default Category
 delete	common	hr	Obriši
+delete category	common	hr	Obriši kategoriju
+delete this entry	common	hr	Obriši ovaj zapis
 denmark	common	hr	DENMARK
 description	common	hr	Opis
 detail	common	hr	Detalj
 details	common	hr	Detalji
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	hr	Diable the execution a bugfixscript for Internet Explorer 5.5 and higher to show transparency in PNG-images?
+directory	common	hr	Mapa
 disable internet explorer png-image-bugfix	common	hr	Disable Internet Explorer png-image-bugfix
 disable slider effects	common	hr	Disable slider effects
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	hr	Disable the animated slider effects when showing or hiding menus in the page? Opera and Konqueror users will probably must want this.
@@ -160,6 +169,7 @@ domestic	common	hr	Domestic
 dominica	common	hr	DOMINICA
 dominican republic	common	hr	DOMINICAN REPUBLIC
 done	common	hr	Done
+download	common	hr	Preuzmi sa poslužitelja
 drag to move	jscalendar	hr	Drag to move
 e-mail	common	hr	E-Mail
 east timor	common	hr	EAST TIMOR
@@ -168,7 +178,6 @@ edit	common	hr	Uredi
 edit %1 category for	common	hr	Uredi %1 kategoriju za
 edit categories	common	hr	Uredi Kategorije
 edit category	common	hr	Uredi kategoriju
-egroupware api version %1	common	hr	eGroupWare API verzija %1
 egroupware: login blocked for user '%1', ip %2	common	hr	eGroupWare: login blokiran za korisnika '%1', IP %2
 egypt	common	hr	EGYPT
 el salvador	common	hr	EL SALVADOR
@@ -243,6 +252,7 @@ guinea-bissau	common	hr	GUINEA-BISSAU
 guyana	common	hr	GUYANA
 haiti	common	hr	HAITI
 heard island and mcdonald islands	common	hr	HEARD ISLAND AND MCDONALD ISLANDS
+height	common	hr	Height
 help	common	hr	Help
 high	common	hr	High
 highest	common	hr	Highest
@@ -258,6 +268,7 @@ india	common	hr	INDIA
 indonesia	common	hr	INDONESIA
 insert all %1 addresses of the %2 contacts in %3	common	hr	Insert all %1 addresses of the %2 contacts in %3
 international	common	hr	International
+invalid filename	common	hr	Nevažeće ime datoteke
 invalid ip address	common	hr	Invalid IP address
 invalid password	common	hr	Invalid password
 iran, islamic republic of	common	hr	IRAN, ISLAMIC REPUBLIC OF
@@ -289,13 +300,15 @@ kuwait	common	hr	KUWAIT
 kyrgyzstan	common	hr	KYRGYZSTAN
 language	common	hr	Language
 lao peoples democratic republic	common	hr	LAO PEOPLES DEMOCRATIC REPUBLIC
+last modified	common	hr	Zadnja izmjena
 last name	common	hr	Prezime
 last name of the user, eg. "%1"	common	hr	last name of the user, eg. "%1"
 last page	common	hr	Last page
 lastname	common	hr	Lastname
 latvia	common	hr	LATVIA
 lebanon	common	hr	LEBANON
-lesotho	preferences	hr	LESOTHO
+left	common	hr	Left
+lesotho	common	hr	LESOTHO
 liberia	common	hr	LIBERIA
 libyan arab jamahiriya	common	hr	LIBYAN ARAB JAMAHIRIYA
 license	common	hr	License
@@ -335,6 +348,7 @@ menu	common	hr	Izbornik
 message	common	hr	Poruka
 mexico	common	hr	MEXICO
 micronesia, federated states of	common	hr	MICRONESIA, FEDERATED STATES OF
+minute	common	hr	Minuta
 moldova, republic of	common	hr	MOLDOVA, REPUBLIC OF
 monaco	common	hr	MONACO
 monday	common	hr	Ponedjeljak
@@ -373,6 +387,7 @@ norfolk island	common	hr	NORFOLK ISLAND
 normal	common	hr	Normal
 northern mariana islands	common	hr	NORTHERN MARIANA ISLANDS
 norway	common	hr	NORWAY
+not	common	hr	ne
 not assigned	common	hr	not assigned
 note	common	hr	Note
 notes	common	hr	Notes
@@ -386,8 +401,10 @@ on *nix systems please type: %1	common	hr	On *nix systems please type: %1
 on mouse over	common	hr	On Mouse Over
 only private	common	hr	only private
 only yours	common	hr	only yours
+open	common	hr	otvori
 open notify window	common	hr	Open notify window
 open popup window	common	hr	Open popup window
+or	common	hr	or
 original	common	hr	Original
 other	common	hr	Other
 overview	common	hr	Pregled
@@ -406,9 +423,6 @@ password	common	hr	Password
 password could not be changed	common	hr	Password could not be changed
 password has been updated	common	hr	Password has been updated
 path to user and group files has to be outside of the webservers document-root!!!	common	hr	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
-pattern for search in addressbook	common	hr	Pattern for Search in Addressbook
-pattern for search in calendar	common	hr	Pattern for Search in Calendar
-pattern for search in projects	common	hr	Pattern for Search in Projects
 permissions to the files/users directory	common	hr	permissions to the files/users directory
 personal	common	hr	Personal
 peru	common	hr	PERU
@@ -426,10 +440,10 @@ poland	common	hr	POLAND
 portugal	common	hr	PORTUGAL
 postal	common	hr	Postal
 preferences	common	hr	Postavke
-preferences for the idots template set	common	hr	Preferences for the idots template set
 prev. month (hold for menu)	jscalendar	hr	Prev. month (hold for menu)
 prev. year (hold for menu)	jscalendar	hr	Prev. year (hold for menu)
 previous page	common	hr	Previous page
+primary group	common	hr	primarna grupa
 print	common	hr	Print
 priority	common	hr	Priority
 private	common	hr	Private
@@ -439,6 +453,7 @@ puerto rico	common	hr	PUERTO RICO
 qatar	common	hr	QATAR
 read	common	hr	Read
 read this list of methods.	common	hr	Read this list of methods.
+reading	common	hr	čitam
 reject	common	hr	Reject
 remove selected accounts	common	hr	remove selected accounts
 rename	common	hr	Rename
@@ -446,6 +461,7 @@ returns a full list of accounts on the system.  warning: this is return can be q
 returns an array of todo items	common	hr	Returns an array of todo items
 returns struct of users application access	common	hr	Returns struct of users application access
 reunion	common	hr	REUNION
+right	common	hr	Right
 romania	common	hr	ROMANIA
 russian federation	common	hr	RUSSIAN FEDERATION
 rwanda	common	hr	RWANDA
@@ -462,6 +478,7 @@ saudi arabia	common	hr	SAUDI ARABIA
 save	common	hr	Snimi
 search	common	hr	Search
 search %1 '%2'	common	hr	Search %1 '%2'
+search accounts	common	hr	Traži korisničke račune
 search or select accounts	common	hr	Search or select accounts
 section	common	hr	Section
 select	common	hr	Select
@@ -493,6 +510,8 @@ showing %1	common	hr	showing %1
 showing %1 - %2 of %3	common	hr	showing %1 - %2 of %3
 sierra leone	common	hr	SIERRA LEONE
 singapore	common	hr	SINGAPORE
+site configuration	common	hr	Site configuration
+size	common	hr	Veličina
 slovakia	common	hr	SLOVAKIA
 slovenia	common	hr	SLOVENIA
 solomon islands	common	hr	SOLOMON ISLANDS
@@ -545,6 +564,7 @@ togo	common	hr	TOGO
 tokelau	common	hr	TOKELAU
 tonga	common	hr	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	hr	Too many unsucessful attempts to login: %1 for the user '%2', %3 for the IP %4
+top	common	hr	vrh
 total	common	hr	Ukupno
 trinidad and tobago	common	hr	TRINIDAD AND TOBAGO
 tuesday	common	hr	Utorak
@@ -553,6 +573,7 @@ turkey	common	hr	TURKEY
 turkmenistan	common	hr	TURKMENISTAN
 turks and caicos islands	common	hr	TURKS AND CAICOS ISLANDS
 tuvalu	common	hr	TUVALU
+type	common	hr	Type
 uganda	common	hr	UGANDA
 ukraine	common	hr	UKRAINE
 united arab emirates	common	hr	UNITED ARAB EMIRATES
@@ -561,6 +582,7 @@ united states	common	hr	UNITED STATES
 united states minor outlying islands	common	hr	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	hr	Unknown
 update	common	hr	Ažuriraj
+upload	common	hr	Upload
 url	common	hr	URL
 uruguay	common	hr	URUGUAY
 use button to search for	common	hr	use Button to search for
@@ -574,6 +596,7 @@ username	common	hr	Korisničko ime
 users	common	hr	korisnici
 users choice	common	hr	Users Choice
 uzbekistan	common	hr	UZBEKISTAN
+value	common	hr	Value
 vanuatu	common	hr	VANUATU
 venezuela	common	hr	VENEZUELA
 version	common	hr	Verzija
@@ -585,15 +608,17 @@ wallis and futuna	common	hr	WALLIS AND FUTUNA
 wednesday	common	hr	Srijeda
 welcome	common	hr	Dobrodošli
 western sahara	common	hr	WESTERN SAHARA
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	hr	When you say yes the home and logout buttons are presented as applications in the main top applcation bar.
 which groups	common	hr	Koje grupe
+width	common	hr	Width
 wk	jscalendar	hr	wk
 work email	common	hr	E-mail poslovni
+writing	common	hr	zapisujem
 written by:	common	hr	Napisao:
 year	common	hr	Godina
 yemen	common	hr	YEMEN
 yes	common	hr	Da
 you are required to change your password during your first login	common	hr	You are required to change your password during your first login
-you are running a newer version of phpgroupware than your database is setup for	common	hr	You are running a newer version of phpGroupWare than your database is setup for.
 you have been successfully logged out	login	hr	Uspješno ste odjavljeni
 you have not entered a title	common	hr	You have not entered a title
 you have not entered a valid date	common	hr	You have not entered a valid date
@@ -609,7 +634,5 @@ your search returned %1 matchs	common	hr	your search returned %1 matches
 your search returned 1 match	common	hr	Vaša pretraga je vratila 1 rezultat
 your session could not be verified.	login	hr	Vašu sesiju nije moguće potvrditi.
 your settings have been updated	common	hr	Vaše postavke su Ažurirane
-yugoslavia	common	hr	JUGOSLAVIJA
 zambia	common	hr	ZAMBIA
 zimbabwe	common	hr	ZIMBABWE
-site configuration	common	hr	Site configuration

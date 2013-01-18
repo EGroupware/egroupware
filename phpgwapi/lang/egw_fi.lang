@@ -1,6 +1,7 @@
 %1 email addresses inserted	common	fi	%1 sähköpostiosoitetta lisätty.
 %1 file	common	fi	%1 tiedosto(a)
 %1 is not executable by the webserver !!!	common	fi	%1 ei ole web-palvelimen suoritettavissa!
+%1 to sync	groupdav	fi	Synkronoitava %1
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	fi	%1Valitse muu hakemisto%2<bt />tai salli veb palvelimelle kirjoitusoikeudet: %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fi	%1EGroupware%2 on %3PHP%4 kielellä kirjoitettu monen käyttäjän työryhmäohjelmisto.
 (session restored in %1 seconds)	common	fi	Istunto palautettu %1 sekunnissa.
@@ -33,6 +34,7 @@ account is expired	common	fi	Käyttäjätili on vanhentunut
 accounts	common	fi	Käyttäjätilit
 acl	common	fi	Käyttöoikeudet
 action	common	fi	Toimenpide
+action when category is an email address	groupdav	fi	Toimenpide, kun kategoria on sähköpostiosoite
 actions	common	fi	Toimenpiteet
 active	common	fi	Aktiivinen
 add	common	fi	Lisää
@@ -40,17 +42,19 @@ add %1 category for	common	fi	Lisää %1 kategoriaa kohteelle
 add category	common	fi	Lisää kategoria
 add shortcut	common	fi	Lisää pikakuvake
 add sub	common	fi	Lisää alikategoria
+add user to responsibles	groupdav	fi	Lisää käyttäjä vastuulliseksi
+add user to responsibles, removing evtl. previous category user	groupdav	fi	Lisää käyttäjä vastuulliseksi, poistaa edellisen vastuulisen henkilön
 addressbook	common	fi	Osoitekirja
-addressbooks for carddav attribute "addressbook-home-set".	common	fi	Osoitekirjat CardDAV atribuutille "addressbook-home-set".
-addressbooks to sync with apple clients	common	fi	Synkronisoitavat osoitekirjat Applen tuotteilla
+addressbooks to sync in addition to personal addressbook	groupdav	fi	Yksityisen osoitekirjan lisäksi synkronoitavat osoitekirjat
 admin	common	fi	Ylläpito
 administration	common	fi	Ylläpito
 afghanistan	common	fi	AFGANISTAN
 albania	common	fi	ALBANIA
 algeria	common	fi	ALGERIA
 all	common	fi	Kaikki
+all addressbooks	groupdav	fi	Kaikki osoitekirjat
 all fields	common	fi	Kaikki kentät
-all in one	common	fi	Kaikki samaan
+all in one	groupdav	fi	Kaikki samaan
 all languages	common	fi	Kaikki kielet
 alphabet	common	fi	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,å,ä,ö
 alternate style-sheet:	common	fi	Vaihtoehtoinen tyyli:
@@ -115,6 +119,7 @@ bulgarian	common	fi	Bulgarian
 burkina faso	common	fi	BURKINA FASO
 burundi	common	fi	BURUNDI
 calendar	common	fi	Kalenteri
+calendars to sync in addition to personal calendar	groupdav	fi	Yksityisen kalenterin lisäksi synkronoitavat kalenterit
 cambodia	common	fi	KAMPUTSEA
 cameroon	common	fi	KAMERUN
 canada	common	fi	KANADA
@@ -153,6 +158,7 @@ chosen parent category no longer exists	common	fi	Valistemaasi pääkategoriaa e
 christmas island	common	fi	JOULUSAARI
 clear	common	fi	Tyhjennä
 clear form	common	fi	Tyhjennä lomake
+clear window	common	fi	Tyhjennä ikkuna
 click	common	fi	Napsauta
 click here to resume your egroupware session.	common	fi	Palaa istuntoon.
 click or mouse over to show menus	common	fi	Näytetäänkö valikot napsauttamalla vai osoittamalla hiirellä?
@@ -160,7 +166,7 @@ click or mouse over to show menus?	common	fi	Näytetäänkö valikot napsauttama
 click this image on the navbar: %1	common	fi	Napsauta navigointipalkin kuvaa: %1
 close	common	fi	Sulje
 close sidebox	common	fi	Sulje sivuvalikko
-cocos (keeling) islands	common	fi	KOOKOSSAARET (KEELING)
+cocos (keeling) islands	common	fi	KOOKOSSAARET
 colombia	common	fi	KOLUMBIA
 common preferences	common	fi	Yleiset asetukset
 comoros	common	fi	KOMORIT
@@ -195,6 +201,7 @@ default height for the windows	common	fi	Ikkunan oletuskorkeus
 default width for the windows	common	fi	Ikkunan oletusleveys
 delete	common	fi	Poista
 delete category	common	fi	Poista kategoria
+delete file	common	fi	Poista tiedosto
 delete row	common	fi	Poista rivi
 delete these entries	common	fi	Poista merkinnät
 delete this entry	common	fi	Poista merkintä
@@ -212,6 +219,7 @@ disable the animated slider effects when showing or hiding menus in the page? op
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fi	Estä korjausskripti, joka mahdollistaa PNG kuvien läpinäkyvän taustan käytön Internet Explorer 5.5 ja uudemmissa selaimissa?
 disabled	common	fi	Ei käytössä
 display %s first	jscalendar	fi	Näytä ensin %s
+distribution lists as groups	groupdav	fi	Jakelulista ryhmänä
 djibouti	common	fi	DJIBOUTI
 do not notify	common	fi	Älä lähetä huomautusviestiä
 do not notify of these changes	common	fi	Älä lähetä huomautusviestiä
@@ -225,6 +233,7 @@ domestic	common	fi	Kotimainen
 dominica	common	fi	DOMINICA
 dominican republic	common	fi	DOMINIKAANINEN TASAVALTA
 done	common	fi	Valmis
+download	common	fi	Lataa
 drag to move	jscalendar	fi	Vedä siirtääksesi
 e-mail	common	fi	Sähköposti
 east timor	common	fi	ITÄTIMORI
@@ -241,7 +250,10 @@ egypt	common	fi	EGYPTI
 el salvador	common	fi	EL SALVADOR
 email	common	fi	Sähköposti
 email-address of the user, eg. "%1"	common	fi	Käyttäjän sähköpostiosoite, esim. "%1"
+empty file	common	fi	Tyhjä tiedosto
+enable logging	groupdav	fi	Salli loki
 enabled	common	fi	Käytössä
+enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	fi	Sallii CalDAV/CardDAV lokimerkinnät
 end date	common	fi	Loppumispäivä
 end time	common	fi	Loppumisaika
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna EGroupwaren URL.<br>Esimerkki: http://www.yritys.com/egroupware  tai  /egroupware<br>(<b>Ei kauttaviivaa loppuun</b>)
@@ -260,7 +272,7 @@ ethiopia	common	fi	ETIOPIA
 everything	common	fi	Kaikki
 exact	common	fi	Täsmällinen
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	fi	Yhteys palvelimeen epäonnistui, yritä uudestaan. Ota yhteyttä ylläpitäjään mikäli ongelma toistuu.
-falkland islands (malvinas)	common	fi	FALKLANDSAARET (MALVINAS)
+falkland islands (malvinas)	common	fi	FALKLANDSAARET
 faroe islands	common	fi	FÄRSAARET
 fax number	common	fi	Faksi
 features of the editor?	common	fi	Editorin ominaisuudet
@@ -341,6 +353,7 @@ image directory relative to document root (use / !), example:	common	fi	Kuvahake
 image url	common	fi	Kuvan URL
 india	common	fi	INTIA
 indonesia	common	fi	INDONEESIA
+infolog types to sync	common	fi	Tehtävähallinnan synkronoitavat tyypit
 insert all %1 addresses of the %2 contacts in %3	common	fi	Lisää kaikki %1 osoitetta %2 yhteystiedosta kohteeseen %3
 insert column after	common	fi	Lisää sarake jälkeen
 insert column before	common	fi	Lisää sarake eteen
@@ -404,6 +417,9 @@ list	common	fi	Luettelo
 list members	common	fi	Jäsenluettelo
 lithuania	common	fi	LIETTUIA
 local	common	fi	Paikallinen
+location calendars	groupdav	fi	Paikat/Sijainnit -kalenterit
+locations	common	fi	Paikat/Sijainnit
+logging / debuging	groupdav	fi	Loki
 login	common	fi	Kirjaudu
 loginid	common	fi	Kirjautumistunnus
 logout	common	fi	Kirjaudu ulos
@@ -454,7 +470,7 @@ namespace	common	fi	Nimikenttä
 namibia	common	fi	NAMIBIA
 nauru	common	fi	NAURU
 nepal	common	fi	NEPAL
-netherlands	common	fi	ALANKOMAAT (HOLLANTI)
+netherlands	common	fi	ALANKOMAAT
 netherlands antilles	common	fi	ALANKOMAIDEN ANTILLIT
 never	common	fi	Ei koskaan
 new caledonia	common	fi	UUSI KALEDONIA
@@ -577,6 +593,7 @@ remove shortcut	common	fi	Poista pikakuvake
 rename	common	fi	Nimeä uudelleen
 replace	common	fi	Korvaa
 replace with	common	fi	Korvataan merkkijonolla:
+resource calendars	groupdav	fi	Resurssien kalenterit
 resource type	common	fi	Resurssin tyyppi
 restore failed	common	fi	Palautus epäonnistui!
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	fi	Palauttaa täyden käyttäjäluettelon järjestelmästä. Varoitus: palautus voi olla aika suuri.
@@ -607,6 +624,8 @@ search or select accounts	common	fi	Etsi tai valitse käyttäjätilejä
 second	common	fi	Sekuntti
 section	common	fi	Osio
 select	common	fi	Valitse
+select "%1", if your client does not support multiple addressbooks.	groupdav	fi	Valitse "%1", jos synkronoiva laite/ohjelmisto ei tue useita osoitekirjoja.
+select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	fi	Valitse "%1", jos synkronoiva laite/ohjelmisto tukee ryhmiä.
 select action	common	fi	Valitse toiminto
 select all %1 %2 for %3	common	fi	Valitse kaikki %1 %2 for %3
 select category	common	fi	Valitse kategoria
@@ -629,6 +648,8 @@ server answered. processing response...	common	fi	Palvelin vastaa, prosessoidaan
 server contacted. waiting for response...	common	fi	Yhdistetään palvelimeen, odotetaan vastausta...
 server name	common	fi	Palvelimen nimi
 session has been killed	common	fi	Istunto on keskeytetty
+set user as only responsible user, but keeping groups	groupdav	fi	Valitse käyttäjä vastuulliseksi, mutta säilytä ryhmät
+set user as only responsible, removing all existing responsibles	groupdav	fi	Valitse käyttäjä ainoaksi vastuulliseksi, poistaa kaikki muut vastuulliset
 setup	common	fi	Asennus
 setup main menu	common	fi	Asennuksen päävalikko
 seychelles	common	fi	SEYCHELLIT
@@ -638,6 +659,7 @@ show as topmenu	common	fi	Näytä ylävalikossa
 show clock?	common	fi	Näytä kello
 show home and logout button in main application bar?	common	fi	Näytä etusivu- ja uloskirjautumispainikkeet päävalikossa
 show in sidebox	common	fi	Näytä sivuvalikossa
+show log of following device	groupdav	fi	Näytä valitun puhelimen loki
 show logo's on the desktop.	common	fi	Näytä logo työpöydällä
 show menu	common	fi	Näytä valikko
 show page generation time	common	fi	Näytä sivun tekemiseen kulunut aika
@@ -678,6 +700,7 @@ svalbard and jan mayen	common	fi	SVALBARD JA JAN MAYEN
 swaziland	common	fi	SWAZIMAA
 sweden	common	fi	RUOTSI
 switzerland	common	fi	SVEITSI
+sync all selected into one	groupdav	fi	Synkronoi kaikki yhteen
 syrian arab republic	common	fi	SYYRIAN ARABITASAVALTA
 table %1 is excluded from backup and restore. data will not be restored.	common	fi	Taulu %1 ei sisälly varmuuskopioon eikä palautukseen. Tietoja ei palauteta.
 table properties	common	fi	Taulukon ominaisuudet
@@ -767,6 +790,7 @@ what style would you like the image to have?	common	fi	Kuvan tyyli
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fi	Kun vastaat Kyllä, kotisivu- ja uloskirjautumispainikkeet näkyvät yläreunan valikossa, kuten sovellukset.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	fi	Missä ja kuinka Asetukset, Tietoja ja Kirjaudu Ulos -linkit tulisi näyttää?
 which groups	common	fi	Mitkä ryhmät
+which infolog types should be synced with the device, default only tasks.	common	fi	Mitkä Tehtävienhallinnan tyypit synkronoidaan, oletuksena "Tehtävät"
 whole query	common	fi	Kaikki merkinnät
 width	common	fi	Leveys
 wk	jscalendar	fi	vk
@@ -791,6 +815,7 @@ you need to %1set your timezone preference%2.	common	fi	Määrittele %1aikavyöh
 you need to add the webserver user '%1' to the group '%2'.	common	fi	Lisää web palvelimen käyttäjä '%1' ryhmään '%2'.
 you need to be an egroupware administrator to access this functionality!	common	fi	Vain ylläpitäjillä on käyttöoikeus tähän!
 you need to select some entries first!	common	fi	Valitse merkinnät!
+you need to set enable logging to "%1" to create/update a log.	groupdav	fi	Salli loki "%1" lokimerkinnöille.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fi	Sinulla ei ole käyttöoikeutta sovellukseen %1!
 your message could <b>not</b> be sent!<br>	common	fi	Viestiä <b>ei</b> voitu lähettää!<br>
 your message has been sent	common	fi	Viesti on lähetetty

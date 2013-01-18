@@ -30,27 +30,22 @@ cannot create directory because it begins or ends in a space	filemanager	cs	Nemo
 check all	filemanager	cs	Označit vše
 clear search	filemanager	cs	Nové hledání
 comment	filemanager	cs	Komentář
-comments cannot contain "%1"	filemanager	cs	Komentáře nemohou obsahovat "%1"
 copied	filemanager	cs	zkopírováno
 copied %1 to %2	filemanager	cs	%1 zkopírováno do %2
 copy	filemanager	cs	Kopírovat
 copy to	filemanager	cs	Kopírovat do
 copy to clipboard	filemanager	cs	Kopírovat do clipboardu
 could not copy %1 to %2	filemanager	cs	Nepodařilo se zkopírovat %1 do %2
-could not copy file because no destination directory is given	filemanager	cs	Nepodařilo se zkopírovat soubor, protože nebyl zadán cílový adresář
 could not create %1	filemanager	cs	Nepodařilo se vytvořit %1
 could not delete %1	filemanager	cs	Nepodařilo se smazat %1
 could not move %1 to %2	filemanager	cs	Nepodařilo se přesunout %1 do %2
-could not move file because no destination directory is given	filemanager	cs	Nepodařilo se přesunout soubor, protože nebyl zadán cílový adresář
 could not rename %1 to %2	filemanager	cs	Nepodařilo se přejmenovat %1 na %2
-could not save %1	filemanager	cs	Nepodařilo se uložit %1
 create a link	filemanager	cs	Vytvořit odkaz
 create directory	filemanager	cs	Vytvořit adresář
 create file	filemanager	cs	Vytvořit soubor
 create folder	filemanager	cs	Vytvořit složku
 created	filemanager	cs	Vytvořeno
 created %1,%2	filemanager	cs	Vytvořeno %1,%2
-created between	filemanager	cs	vytvořeno mezi
 created directory %1	filemanager	cs	Vytvořen adresář %1
 current directory	filemanager	cs	Aktuální adresář
 custom fields	filemanager	cs	Uživatelsky definované položky
@@ -63,7 +58,6 @@ directories sorted in	filemanager	cs	Zatříděné adresáře
 directory	filemanager	cs	Adresář
 directory %1 already exists	filemanager	cs	Adresář %1 již existuje
 directory %1 does not exist	filemanager	cs	Adresář %1 neexistuje
-directory names cannot contain "%1"	filemanager	cs	Jména adresářů nesmí obsahovat "%1"
 directory not found or no permission to access it!	filemanager	cs	Adresář nebyl nalezen nebo chybí přístupové oprávnění!
 display and modification of content	filemanager	cs	Zobrazení a úprava obsahu
 display of content	filemanager	cs	Zobrazení obsahu
@@ -74,11 +68,11 @@ edit settings	filemanager	cs	Editovat nastavení
 enter setup user and password	filemanager	cs	Zadejte jméno a heslo administrátora hlaviček
 enter setup user and password to get root rights	filemanager	cs	Zadejte jméno a heslo administrátora hlaviček pro získání práv roota
 enter the complete vfs path to specify a fast access link to a folder	filemanager	cs	Zadejte kompletní VFS cestu k nastavení odkazu pro rychlý přístup ke složce
-enter the complete vfs path to specify a fast access link to a folder (1).	filemanager	cs	Zadejte kompletní VFS cestu pro specifikaci odkazu na rychlý přístup ke složce (1).
 enter the complete vfs path to specify your desired start folder.	filemanager	cs	Zadejte kompletní VFS cestu k nastavení Vámi požadované počáteční složky.
 error adding the acl!	filemanager	cs	Při přidávání ACL došlo k chybě!
 error creating symlink to target %1!	filemanager	cs	Chyba při vytváření symbolického odkazu na cíl %1!
 error deleting the acl entry!	filemanager	cs	Při mazání ACL záznamu došlo k chybě!
+error uploading file!	filemanager	cs	Chyba při uploadu souboru!
 executable	filemanager	cs	Spustitelný
 extended access control list	filemanager	cs	Rozšířený seznam přístupových oprávnění
 extended acl	filemanager	cs	Rozšířený ACL
@@ -86,7 +80,6 @@ failed to change permissions of %1!	filemanager	cs	Nepodařilo se změnit opráv
 failed to create directory!	filemanager	cs	Nepodařilo se vytvořit adresář!
 favorites	filemanager	cs	Oblíbené
 file	filemanager	cs	Soubor
-file %1 already exists. please edit it or delete it first.	filemanager	cs	Soubor %1 již existuje. Buď ho nejprve smažte nebo ho zeditujte.
 file %1 could not be created.	filemanager	cs	Soubor %1 nemohl být vytvořen.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	cs	Soubor %1 je možná příliš velký. Kontaktujte Vašeho administrátora pro další informace.
 file deleted.	filemanager	cs	Soubor smazán.
@@ -98,7 +91,9 @@ filemanager configuration	admin	cs	Konfigurace správce souborů
 files from subdirectories	filemanager	cs	Soubory z podadresářů
 files in this directory	filemanager	cs	Soubory v tomto adresáři
 folder up	filemanager	cs	O složku výše
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	cs	Pro hromadný dopis použijte tento štítek. Obsah, který chcete opakovat vložte mezi dva štítky.
 general	filemanager	cs	Obecné
+general fields:	filemanager	cs	Obecné položky:
 go home	filemanager	cs	zpět domů
 go to	filemanager	cs	Jít na
 go to your home directory	filemanager	cs	Jít do domovského adresáře
@@ -118,6 +113,7 @@ modify all subdirectories and their content	filemanager	cs	Změnit všechny poda
 move	filemanager	cs	Přesunout
 move to	filemanager	cs	Přesunout do
 moved %1 to %2	filemanager	cs	%1přesunuto do %2
+name of current user, all other contact fields are valid too	filemanager	cs	Jméno aktuálního uživatele, všechny ostatní položky kontaktu jsou také platné
 no access	filemanager	cs	Přístup zakázán
 no files in this directory.	filemanager	cs	V tomto adresáři nejsou soubory.
 no preview available	filemanager	cs	Náhled není k dispozici
@@ -164,6 +160,7 @@ start search	filemanager	cs	Zahájit hledání
 startfolder	filemanager	cs	Počáteční složka
 superuser	filemanager	cs	Superuživatel
 symlink to %1 created.	filemanager	cs	Symbolický odkaz na %1 byl vytvořen.
+tag to mark positions for address labels	filemanager	cs	Značka pro vyznačení pozic v adresních štítcích
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	cs	Výchozí startovní složka je Vaše osobní. Je použita v případě, kdy položku nevyplníte, zadaná cesta neexistuje nebo pro ní nemáte přístupová oprávnění.
 the requested path %1 is not available.	filemanager	cs	Požadovaná cesta %1 není k dispozici.
 there's already a directory with that name!	filemanager	cs	Adresář s tímto názvem již existuje!
@@ -173,6 +170,7 @@ total files	filemanager	cs	Celkem souborů
 unused space	filemanager	cs	Nevyužité místo
 up	filemanager	cs	Nahoru
 updated comment for %1	filemanager	cs	Aktualizovat komentář pro %1
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	cs	Použijte tuto značku pro adresní štítky. Obsah, který chcete opakovat, vložte mezi dvě značky.
 used space	filemanager	cs	Využité místo
 users and groups	filemanager	cs	Uživatelé a skupiny
 wrong username or password!	filemanager	cs	Chybné uživatelské jméno nebo heslo

@@ -60,6 +60,7 @@ after how many unsuccessful attempts to login, an account should be blocked (def
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	sk	Po koľkých neúspešných pokusoch o prihlásenie sa má IP zablokovať (predvolené: 3)?
 aliases	admin	sk	Aliasy
 all applications	admin	sk	Všetky aplikácie
+all categories	admin	sk	Všetky kategórie
 all records and account information will be lost!	admin	sk	Všetky záznamy a informácie o účtoch sa stratia!
 all users	admin	sk	Všetci používatelia
 allow anonymous access to this app	admin	sk	Povoliť anonymnému používateľovi prístup k tejto aplikácii
@@ -170,6 +171,7 @@ delete this category	admin	sk	odstráň túto kategóriu
 delete this group	admin	sk	odstráň túto skupinu
 delete this log entry	admin	sk	Odstrániť túto položku záznamu
 delete this user	admin	sk	odstráň tohto používateľa
+deleted	admin	sk	Odstránené
 deletes this field	admin	sk	odstráni túto položku
 deliver extern	admin	sk	doručiť extern
 deny access to access log	admin	sk	Zakáž prístup do prístupových záznamov
@@ -282,7 +284,6 @@ false	admin	sk	Nepravda
 field '%1' already exists !!!	admin	sk	Pole '%1' už existuje
 file space	admin	sk	Priestor pre súbory
 file space must be an integer	admin	sk	Priestor pre súbory musí byť celé číslo
-find and register all application hooks	admin	sk	Nájdi a zaregistruj všetky aplikácie
 for the times above	admin	sk	pre vyššieuvedené časy
 for the times below (empty values count as '*', all empty = every minute)	admin	sk	pre nižšieuvedené časy (prázdne hodnoty sa berú ako '*', všetky prázdne = každú minútu)
 force password strength (1-5, default empty: no check against rules for a strong password)?	admin	sk	Vynútiť silu hesla (1-5, predvolené je prázdne: žiadna kontrola voči pravidlám na silu hesla)?
@@ -331,6 +332,7 @@ installed crontab	admin	sk	Nainštalovaný crontab
 instance	admin	sk	Inštancia
 interface	admin	sk	Rozhranie
 international use	admin	sk	Medzinárodné použitie
+invalid argument '%1' !!!	admin	sk	Neplatý argument '%1' !!!
 invalid formated date "%1"!	admin	sk	Chybný formát dátumu "%1"!
 invalid remote id or name "%1"!	admin	sk	Chybné vzdialené ID alebo meno "%1"!
 invalid value "%1" use yes or no!	admin	sk	Chybná hodnota "%1" - použite áno alebo nie"
@@ -348,8 +350,10 @@ last submission:	admin	sk	Naposledy odoslané:
 last time read	admin	sk	Naposledy Prečítané
 ldap accounts context	admin	sk	LDAP kontext účtov
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	sk	Predpona LDAP domovského adresára (napr. /home pre /home/používateľ)
+ldap default shell (e.g. /bin/bash)	admin	sk	LDAP predvolený shell (napr. /bin/bash)
 ldap encryption type	admin	sk	Typ LDAP šifrovania
 ldap groups context	admin	sk	LDAP kontext skupín
+ldap host	admin	sk	LDAP hostiteľ
 ldap root password	admin	sk	Heslo LDAP root-a
 ldap rootdn	admin	sk	LDAP koreňový dn
 leave empty for no quota	admin	sk	ak nechcete kvóty, ponechajte prázdne

@@ -48,7 +48,6 @@ are you shure you want to delete this contact?	addressbook	zh	您确定你要删
 are you sure you want to delete this field?	addressbook	zh	确定要删除该字段吗？
 assistent	addressbook	zh	辅助
 assistent phone	addressbook	zh	辅助电话
-at the moment the following document-types are supported:	addressbook	zh	在现阶段支持以下文件类型：
 birthday	common	zh	出生日期
 birthdays	common	zh	出生日期
 blank	addressbook	zh	空白
@@ -75,7 +74,6 @@ charset of file	addressbook	zh	文件的字符集
 check all	addressbook	zh	全选
 choose an icon for this contact type	admin	zh	选择该联系人类型图标
 choose owner of imported data	addressbook	zh	选择导入数据的拥有者
-choose seperator and charset	addressbook	zh	选择分隔符和字符集
 chosse an etemplate for this contact type	admin	zh	为联系人类型选择一个模板
 city	common	zh	城市
 company	common	zh	公司
@@ -100,6 +98,7 @@ contacts to ldap, account contact-data to sql	admin	zh	联系人到 LDAP，账�
 contains	addressbook	zh	包含
 copied by %1, from record #%2.	addressbook	zh	由%1从纪录 #%2复制。
 copy a contact and edit the copy	addressbook	zh	复制联系人并编辑副本
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	zh	复制您的改变到剪贴板，%1重新载入条目%2并合并它们。
 country	common	zh	国家
 create new links	addressbook	zh	创建新链接
 created	addressbook	zh	创建
@@ -130,7 +129,6 @@ distribution list deleted	addressbook	zh	分发列表已删除
 distribution lists	addressbook	zh	分发列表
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	zh	您是否需要私有通讯簿，其他用户无法查看，只有您能够访问的个人通讯簿？
 do your really want to delete this contact?	addressbook	zh	您确定要删除这个联系人？
-document '%1' does not exist or is not readable for you!	addressbook	zh	文件'%1'不存在或是您没有读取权限！
 doesn't matter	addressbook	zh	没关系
 domestic	addressbook	zh	国内
 don't hide empty columns	addressbook	zh	不隐藏空白栏
@@ -145,14 +143,15 @@ edit phonenumbers -	addressbook	zh	编辑电话号码 -
 either the configured email addesses are wrong or the mail configuration.	addressbook	zh	邮箱地址或是邮件设置有错误。
 email & internet	addressbook	zh	电子邮件 & 英特网
 email addresses (comma separated) to send the contact data	addressbook	zh	发送联系人数据的信箱(以逗号分隔)
+empty	admin	zh	清空
 empty for all	addressbook	zh	全部清空
 enable an extra private addressbook	addressbook	zh	启用私人通讯簿
 end	addressbook	zh	结束
 enter the path to the exported file here	addressbook	zh	输入导出档桉的路径
 error deleting the contact !!!	addressbook	zh	删除联系人时发生错误！
 error saving the contact !!!	addressbook	zh	保存联系人时发生错误！
+error: the entry has been updated since you opened it for editing!	addressbook	zh	错误：条目自从您打开编辑以来已经更新！
 existing links	addressbook	zh	存在的链接
-export	addressbook	zh	导出
 export as csv	addressbook	zh	导出成 CSV
 export as vcard	addressbook	zh	导出成 vCard
 export contacts	addressbook	zh	导出联系人
@@ -175,7 +174,7 @@ fieldseparator	addressbook	zh	字段分隔符
 for read only ldap	admin	zh	只读的 LDAP
 freebusy uri	addressbook	zh	闲忙状态网址
 full name	addressbook	zh	姓名
-general	addressbook	zh	通用
+general	admin	zh	通用
 general fields:	addressbook	zh	通用字段：
 geo	addressbook	zh	GEO
 global categories	addressbook	zh	全局分类
@@ -194,11 +193,8 @@ home phone	addressbook	zh	家庭电话
 home state	addressbook	zh	省/自治区
 home street	addressbook	zh	居住街道
 home zip code	addressbook	zh	住地邮编
-how many contacts should non-admins be able to export (empty = no limit)	admin	zh	非管理员可以导出的联系人数量 (留空 = 无限制)
 icon	addressbook	zh	图标
 if accounts are already in ldap	admin	zh	如果帐号已经存在于 LDAP
-if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	zh	如果您指定一个目录(完整虚拟文件系统路径)，通讯簿会在每个文件旁显示一个动作，这个动作允许下载指定的插入联系人数据的文件。
-if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	zh	如果您指定一个目录(完整虚拟文件系统路径)，通讯簿会在每个住址旁显示一个特别的文件图标，这个图标允许下载指定的插入联系人数据的文件。
 import	addressbook	zh	导入
 import contacts	addressbook	zh	导入联系人
 import csv-file into addressbook	addressbook	zh	从 CSV 文件导入
@@ -212,7 +208,7 @@ import_instructions	addressbook	zh	请按照下列方法从其他应用程序导
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	zh	从 CSV 文件导入联系人资料到通讯簿，CSV 是'逗号分隔'方式，不过您可以在选项标签指定其他的分隔符。
 in %1 days (%2) is %3's birthday.	addressbook	zh	在%1 天 (%2) 就是%3的生日。
 income	addressbook	zh	收入
-insert in document	addressbook	zh	插入文件
+infolog	addressbook	zh	记事薄
 insufficent rights to delete this list!	addressbook	zh	没有删除这个列表的权限！
 international	addressbook	zh	国际
 label	addressbook	zh	标签
@@ -231,7 +227,6 @@ list all customfields	addressbook	zh	列出所有自定义字段
 list already exists!	addressbook	zh	列表已经存在！
 list created	addressbook	zh	列表已建立
 list creation failed, no rights!	addressbook	zh	创建列表失败，没有权限！
-load sample file	addressbook	zh	载入范例文件
 load vcard	addressbook	zh	载入 vCard
 location	addressbook	zh	位置
 locations	addressbook	zh	位置
@@ -248,7 +243,6 @@ mobile	addressbook	zh	移动电话
 mobile phone	addressbook	zh	移动电话
 modem phone	addressbook	zh	调制解调器电话
 more ...	addressbook	zh	更多...
-move to addressbook:	addressbook	zh	移动到通讯簿：
 moved	addressbook	zh	已移动
 multiple vcard	addressbook	zh	多种 vCard
 name for the distribution list	addressbook	zh	分发列表的名称
@@ -331,7 +325,6 @@ thank you for contacting us.	addressbook	zh	感谢您的联系。
 that field name has been used already !	addressbook	zh	该字段名已被使用！
 the anonymous user has probably no add rights for this addressbook.	addressbook	zh	匿名用户也许没有为该通讯簿的添加权限。
 the anonymous user needs add rights for it!	addressbook	zh	匿名用户需要为它增加权限！
-the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	zh	文件可以包含像 $$n_fn$$ 的占位符，以替换联系人数据 (%1完整的占位符名称%2列表)。
 there was an error saving your data :-(	addressbook	zh	保存您的数据时发生一个错误：-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	zh	该模块显示一个联系人表单，其储存直接输入通讯簿中。
 this person's first name was not in the address book.	addressbook	zh	这个人的名字不在通讯簿中。

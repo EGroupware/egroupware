@@ -1,7 +1,5 @@
 %1 email addresses inserted	common	zh-tw	已匯入 %1 筆電子郵件位址
 %1 is not executable by the webserver !!!	common	zh-tw	網頁伺服器無法執行 %1 ！
-%1 manual	common	zh-tw	%1 手冊
-%1 start	common	zh-tw	%1 開始
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	zh-tw	%1選擇一個其他資料夾%2<br />或是讓網頁伺服器可以寫入 %3 。
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh-tw	%1eGroupWare%2 是多使用者、網頁為基礎的群組軟體，以 %3PHP%4 設計。
 (shift-)click or drag to change value	jscalendar	zh-tw	(Shift 鍵加)點選或拖拉滑鼠游標來改變數值
@@ -12,6 +10,10 @@
 - use the %1, %2 buttons to select month	jscalendar	zh-tw	- 使用按鈕 %1,%2來選擇月份
 - use the %1, %2 buttons to select year	jscalendar	zh-tw	- 使用按鈕 %1,%2來選擇年
 00 (disable)	admin	zh-tw	00 (關閉)
+1 day	common	zh-tw	1 天
+1 hour	common	zh-tw	1 小時
+1 month	common	zh-tw	1 個月
+1 week	common	zh-tw	1 星期
 13 (ntp)	admin	zh-tw	13 (ntp)
 3 number of chars for day-shortcut	jscalendar	zh-tw	-1
 3 number of chars for month-shortcut	jscalendar	zh-tw	2
@@ -26,8 +28,10 @@ account has been created	common	zh-tw	帳號已經建立
 account has been deleted	common	zh-tw	帳號已經刪除
 account has been updated	common	zh-tw	帳號已經更新
 account is expired	common	zh-tw	帳號已經到期
+accounts	common	zh-tw	帳號
 acl	common	zh-tw	控管權限
 action	common	zh-tw	動作
+actions	common	zh-tw	動作
 active	common	zh-tw	啟用
 add	common	zh-tw	新增
 add %1 category for	common	zh-tw	新增 %1 子分類給
@@ -42,10 +46,12 @@ albania	common	zh-tw	阿爾巴尼亞
 algeria	common	zh-tw	阿爾吉利亞
 all	common	zh-tw	所有
 all fields	common	zh-tw	所有欄位
+all languages	common	zh-tw	所有語言
 alphabet	common	zh-tw	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	zh-tw	替換的樣式表：
 american samoa	common	zh-tw	AMERICAN SAMOA
 an existing and by the webserver readable directory enables the image browser and upload.	common	zh-tw	一個已經存在而且網頁伺服器可以讀取的資料夾可以啟用圖片瀏覽器以及上傳功能。
+and	common	zh-tw	且
 andorra	common	zh-tw	安道爾
 angola	common	zh-tw	安哥拉
 anguilla	common	zh-tw	安圭拉
@@ -169,13 +175,16 @@ default category	common	zh-tw	預設分類
 default height for the windows	common	zh-tw	預設視窗高度
 default width for the windows	common	zh-tw	預設視窗寬度
 delete	common	zh-tw	移除
+delete category	common	zh-tw	刪除分類
 delete row	common	zh-tw	刪除列
+delete this entry	common	zh-tw	刪除這個事件
 denmark	common	zh-tw	丹麥
 description	common	zh-tw	說明
 detail	common	zh-tw	詳細
 details	common	zh-tw	詳細
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zh-tw	在PNG圖檔中停用IE 5.5或更新版本的修正來顯示透明效果
 direction left to right	common	zh-tw	方向由左至右
+directory	common	zh-tw	資料夾
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	zh-tw	資料夾不存在、網頁伺服器無法讀取或是路徑並非相對於網頁根目錄！
 disable internet explorer png-image-bugfix	common	zh-tw	停用 IE png-image-bugfix
 disable slider effects	common	zh-tw	停用切換效果
@@ -194,6 +203,7 @@ domestic	common	zh-tw	國內的
 dominica	common	zh-tw	多明尼加
 dominican republic	common	zh-tw	多明尼加共和國
 done	common	zh-tw	完成
+download	common	zh-tw	下載
 drag to move	jscalendar	zh-tw	拖曳移動
 e-mail	common	zh-tw	電子郵件
 east timor	common	zh-tw	EAST TIMOR
@@ -202,7 +212,7 @@ edit	common	zh-tw	編輯
 edit %1 category for	common	zh-tw	編輯分類 %1 給
 edit categories	common	zh-tw	編輯分類
 edit category	common	zh-tw	編輯分類
-egroupware api version %1	common	zh-tw	eGroupWare API 版本 %1
+egroupware	common	zh-tw	eGroupWare
 egroupware: login blocked for user '%1', ip %2	common	zh-tw	eGroupWare: 使用者鎖定 '%1', IP %2
 egypt	common	zh-tw	埃及
 el salvador	common	zh-tw	EL SALVADOR
@@ -242,6 +252,7 @@ firstname	common	zh-tw	名
 fixme!	common	zh-tw	修正！
 folder already exists.	common	zh-tw	資料夾已經存在
 force selectbox	common	zh-tw	強制使用選取方塊
+forever	common	zh-tw	永遠
 france	common	zh-tw	法國
 french guiana	common	zh-tw	法國奎亞那
 french polynesia	common	zh-tw	法國玻里尼西亞
@@ -341,6 +352,7 @@ kyrgyzstan	common	zh-tw	KYRGYZSTAN
 language	common	zh-tw	語言
 language_direction_rtl	common	zh-tw	language_direction_rtl
 lao peoples democratic republic	common	zh-tw	LAO PEOPLES DEMOCRATIC REPUBLIC
+last modified	common	zh-tw	最後更新
 last name	common	zh-tw	姓
 last name of the user, eg. "%1"	common	zh-tw	使用者的姓，例： "%1"
 last page	common	zh-tw	最後一頁
@@ -359,9 +371,12 @@ list	common	zh-tw	列表
 list members	common	zh-tw	列出會員
 lithuania	common	zh-tw	LITHUANIA
 local	common	zh-tw	本地
+locations	common	zh-tw	位置
 login	common	zh-tw	登入
 loginid	common	zh-tw	登入帳號
 logout	common	zh-tw	登出
+lost login id	common	zh-tw	忘記帳號
+lost password	common	zh-tw	忘記密碼
 low	common	zh-tw	低
 lowest	common	zh-tw	最低
 luxembourg	common	zh-tw	LUXEMBOURG
@@ -432,9 +447,12 @@ norfolk island	common	zh-tw	NORFOLK ISLAND
 normal	common	zh-tw	正常
 northern mariana islands	common	zh-tw	NORTHERN MARIANA ISLANDS
 norway	common	zh-tw	NORWAY
+not	common	zh-tw	否
+not a user yet? register now	common	zh-tw	還沒成為會員？立刻註冊
 not assigned	common	zh-tw	未分配
 note	common	zh-tw	備註
 notes	common	zh-tw	備忘
+notifications	common	zh-tw	提醒通知
 notify window	common	zh-tw	提示視窗
 notify your administrator to correct this situation	common	zh-tw	提醒您的管理者來修正這個情況
 november	common	zh-tw	十一月
@@ -446,9 +464,11 @@ on *nix systems please type: %1	common	zh-tw	在*nix系統請輸入：%1
 on mouse over	common	zh-tw	當滑鼠移過
 only private	common	zh-tw	只有私人的
 only yours	common	zh-tw	屬於您的資料
+open	common	zh-tw	開啟
 open notify window	common	zh-tw	開啟警示視窗
 open popup window	common	zh-tw	開啟彈出式視窗
 open sidebox	common	zh-tw	開啟其他選單
+or	common	zh-tw	或
 ordered list	common	zh-tw	已排序清單
 original	common	zh-tw	原本的
 other	common	zh-tw	其它
@@ -492,10 +512,10 @@ portugal	common	zh-tw	PORTUGAL
 postal	common	zh-tw	郵遞區號
 powered by	common	zh-tw	系統提供
 preferences	common	zh-tw	喜好設定
-preferences for the idots template set	common	zh-tw	idots樣板的設定
 prev. month (hold for menu)	jscalendar	zh-tw	上一個月(按住滑鼠鍵)
 prev. year (hold for menu)	jscalendar	zh-tw	上一年(按住滑鼠鍵)
 previous page	common	zh-tw	上一頁
+primary group	common	zh-tw	主要群組
 primary style-sheet:	common	zh-tw	主要樣式表：
 print	common	zh-tw	列印
 priority	common	zh-tw	優先權
@@ -510,11 +530,13 @@ read this list of methods.	common	zh-tw	讀取這個方法的列表
 reading	common	zh-tw	閱讀中
 regular	common	zh-tw	規則
 reject	common	zh-tw	拒絕
+remember me	common	zh-tw	記住我
 remove selected accounts	common	zh-tw	移除選取的帳號
 remove shortcut	common	zh-tw	移除快速鍵
 rename	common	zh-tw	更名
 replace	common	zh-tw	取代
 replace with	common	zh-tw	取代於
+restore failed	common	zh-tw	還原失敗
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	zh-tw	傳回系統的完整帳號清單。注意：傳回的資料量可能非常多
 returns an array of todo items	common	zh-tw	傳回待辦事項所有項目成為陣列
 returns struct of users application access	common	zh-tw	傳回使用者應用程式存取架構
@@ -581,6 +603,8 @@ showing %1 - %2 of %3	common	zh-tw	顯示 %1 - %2 之 %3
 sierra leone	common	zh-tw	SIERRA LEONE
 simple	common	zh-tw	簡單
 singapore	common	zh-tw	新加坡
+site configuration	common	zh-tw	網站設定
+size	common	zh-tw	大小
 slovakia	common	zh-tw	斯洛伐克
 slovenia	common	zh-tw	斯洛法尼亞
 solomon islands	common	zh-tw	SOLOMON ISLANDS
@@ -670,11 +694,11 @@ use button to search for project	common	zh-tw	使用按鈕搜尋專案
 user	common	zh-tw	使用者
 user accounts	common	zh-tw	使用者帳號
 user groups	common	zh-tw	使用者群組
-user openinstance	common	zh-tw	使用者開放實例
 username	common	zh-tw	使用者名稱
 users	common	zh-tw	使用者
 users choice	common	zh-tw	使用者選擇
 uzbekistan	common	zh-tw	UZBEKISTAN
+value	common	zh-tw	數值
 vanuatu	common	zh-tw	VANUATU
 venezuela	common	zh-tw	VENEZUELA
 version	common	zh-tw	版本
@@ -690,6 +714,7 @@ what color should all the blank space on the desktop have	common	zh-tw	桌面空
 what style would you like the image to have?	common	zh-tw	圖片使用的風格為何？
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	zh-tw	當您選擇是，首頁與登出圖示會顯示在選單中。
 which groups	common	zh-tw	哪個群組
+whole query	common	zh-tw	整個查詢
 width	common	zh-tw	寬度
 wk	jscalendar	zh-tw	週
 work email	common	zh-tw	工作信箱
@@ -719,4 +744,3 @@ your settings have been updated	common	zh-tw	您的設定已經更新。
 zambia	common	zh-tw	尚比亞
 zimbabwe	common	zh-tw	辛巴威
 zoom	common	zh-tw	放大
-site configuration	common	zh-tw	網站設定

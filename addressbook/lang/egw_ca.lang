@@ -19,6 +19,7 @@ add a single entry by passing the fields.	addressbook	ca	Afegir una entrada simp
 add business email of whole distribution list?	addressbook	ca	Afegiu un e-mail de treball de tota la llista de distribució?
 add custom field	addressbook	ca	Afegir camp personalitzat
 add to distribution list:	addressbook	ca	Afegeix a la llista de distribució:
+added	addressbook	ca	Afegit
 added by synchronisation	addressbook	ca	afegit per sincronització
 added to distribution list	addressbook	ca	afegit a la llista de distribució
 additional information about using ldap as contact repository	admin	ca	Informació adicional sobre l'ús de LDAP com a dipòsit de contactes
@@ -87,6 +88,7 @@ contacts to ldap, account contact-data to sql	admin	ca	contactes per LDAP,  dade
 contains	addressbook	ca	conté
 copied by %1, from record #%2.	addressbook	ca	Copiat per %1, del registre %2
 copy a contact and edit the copy	addressbook	ca	Copia un contacte i edita la còpia
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	ca	Copia els teus canvis al portapapers, %1recarrega l'entrada%2 i ajunta-ho.
 country	common	ca	País
 create new links	addressbook	ca	Crear nous enllaços
 created	addressbook	ca	Creat per
@@ -119,18 +121,21 @@ don't hide empty columns	addressbook	ca	No amaguis columnes buides
 download	addressbook	ca	Descarregar
 download export file (uncheck to debug output in browser)	addressbook	ca	Descarregar arxiu exportat (desmarcar per a depurar la sortida al navegador)
 download this contact as vcard file	addressbook	ca	baixa aquest contacte com a fitxer vCard
+duration	addressbook	ca	Duració
 edit custom field	addressbook	ca	Editar camp personalitzat
 edit custom fields	admin	ca	Editar camps personalitzats
 edit extra account-data in the addressbook	admin	ca	Edita dades de comptes extres a la llibreta d'adreces
 edit phonenumbers -	addressbook	ca	Edita números de telèfon
 email & internet	addressbook	ca	Email & Internet
+empty	admin	ca	Buit
 empty for all	addressbook	ca	buit per a tot
 enable an extra private addressbook	addressbook	ca	Habilita una llibreta d'adreces privada extra
+end	addressbook	ca	Fi
 enter the path to the exported file here	addressbook	ca	Introduïu el camí als arxius exportats aquí
 error deleting the contact !!!	addressbook	ca	Error a l'eliminar el contacte !!!
 error saving the contact !!!	addressbook	ca	Error al desar el contacte !!!
+error: the entry has been updated since you opened it for editing!	addressbook	ca	Error: l'entrada ha estat actualitzada des de que l'has obert per editar-la!
 existing links	addressbook	ca	Enllaços existents
-export	addressbook	ca	Exportar
 export as csv	addressbook	ca	Exporta com a CSV
 export as vcard	addressbook	ca	Exporta com a VCard
 export contacts	addressbook	ca	Exportar contactes
@@ -153,11 +158,12 @@ fieldseparator	addressbook	ca	Separador de camps
 for read only ldap	admin	ca	només lectura LDAP
 freebusy uri	addressbook	ca	lliure/ocupat URI
 full name	addressbook	ca	Nom complet
-general	addressbook	ca	General
+general	admin	ca	General
 geo	addressbook	ca	GEO
 global categories	addressbook	ca	Categories globals
 grant addressbook access	common	ca	Atorgar accés a la llibreta
 group %1	addressbook	ca	Grup %1
+h	addressbook	ca	h
 hide accounts from addressbook	addressbook	ca	Amaga comptes de la llibreta d'adreces
 hides accounts completly from the adressbook.	addressbook	ca	Amaga comptes completament de la llibreta d'adreces.
 home address	addressbook	ca	Domicili
@@ -169,7 +175,6 @@ home phone	addressbook	ca	Telèfon particular
 home state	addressbook	ca	Provincia de residència
 home street	addressbook	ca	Adreça particular
 home zip code	addressbook	ca	Codi postal
-how many contacts should non-admins be able to export (empty = no limit)	admin	ca	Quants contactes haurien de poder exportar els no-administradors (buit = sense límit)
 icon	addressbook	ca	Icona
 if accounts are already in ldap	admin	ca	si els comptes estan ja a LDAP
 import	addressbook	ca	Importar
@@ -184,6 +189,7 @@ import next set	addressbook	ca	Importar següent registre
 import_instructions	addressbook	ca	Si useu Mozilla o Netscape, obriu la llibreta d'adreces i seleccioneu <b>Exportar</b> des del menú <b>Arxiu</b>. L'arxiu exportat estarà en format LDIF.<p>O bé, en Outlook, seleccioneu la vostra carpeta de contactes, després, al menú <b>Arxiu</b>, <b>Importar i Exportar...</b> per desar-los en un arxiu separat per comes (CSV).<p>O també, en Palm Desktop 4.0 o superior, visiteu la vostra llibreta d'adreces i seleccioneu <b>Exportar</b> al menú <b>Arxiu</b>. L'arxiu exportat estarà en format VCard.
 in %1 days (%2) is %3's birthday.	addressbook	ca	En %1 dies (%2) es l'aniversari de %3.
 income	addressbook	ca	Entrada
+infolog	addressbook	ca	Tasques i Notes
 insufficent rights to delete this list!	addressbook	ca	Insuficients drets per esborrar aquesta llista!
 international	addressbook	ca	Internacional
 label	addressbook	ca	Etiqueta
@@ -202,6 +208,7 @@ list already exists!	addressbook	ca	La llista ja existeix!
 list created	addressbook	ca	Llista crada
 list creation failed, no rights!	addressbook	ca	Error en la creació de la llista, falta de drets!
 load vcard	addressbook	ca	Carrega VCard
+location	addressbook	ca	Lloc
 locations	addressbook	ca	Ubicacions
 mark records as private	addressbook	ca	Marcar registres com a privats
 merge into first or account, deletes all other!	addressbook	ca	Fusiona en el primer o en el compte, esborra els altres!
@@ -214,7 +221,6 @@ mobile	addressbook	ca	Mòbil
 mobile phone	addressbook	ca	Telèfon mòbil
 modem phone	addressbook	ca	Telèfon de módem
 more ...	addressbook	ca	Més ...
-move to addressbook:	addressbook	ca	Mou a la llibreta d'adreces:
 moved	addressbook	ca	mogut
 multiple vcard	addressbook	ca	VCard Múltiple
 name for the distribution list	addressbook	ca	Nom per la llista de distribució
@@ -232,6 +238,7 @@ other phone	addressbook	ca	Un altre telèfon
 own sorting	addressbook	ca	pròpia ordenació
 pager	common	ca	Buscapersones
 parcel	addressbook	ca	Paquet
+participants	addressbook	ca	Participants
 permission denied !!!	addressbook	ca	Permís denegat !!!
 phone number	common	ca	Número de telèfon
 phone numbers	common	ca	Números de telèfon
@@ -252,6 +259,7 @@ record access	addressbook	ca	Accés al registre
 record owner	addressbook	ca	Propietari del registre
 remove selected contacts from distribution list	addressbook	ca	Treu de la llista de distribució els contactes seleccionats
 removed from distribution list	addressbook	ca	trets de la llista de distribució
+repetition	addressbook	ca	Repetició
 role	addressbook	ca	Càrrec
 room	addressbook	ca	Despatx
 search for '%1'	addressbook	ca	Busceu per '%1'
@@ -292,6 +300,7 @@ tomorrow is %1's birthday.	common	ca	Demà és l'aniversari de %1.
 translation	addressbook	ca	Traducció
 type	addressbook	ca	Tipus
 update a single entry by passing the fields.	addressbook	ca	Actualitzar una sola entrada passant els camps
+updated	addressbook	ca	Actualitzat
 upload or delete the photo	addressbook	ca	Carrega o esborra  la foto
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	ca	URL per enllaçar-hi números de telèfon (utilitzeu %1 = número per trucar, %u = nom de compte, %t = telèfon de compte)
 use an extra category tab?	addressbook	ca	Utilitzeu una pestanya de categoria extra?

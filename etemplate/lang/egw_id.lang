@@ -6,6 +6,7 @@
 %1 matches on search criteria	etemplate	id	cocok %1 sesuai kriteria pencarian
 %1 more...	etemplate	id	%1 more...
 %1 new etemplates imported for application '%2'	etemplate	id	%1 eTemplat baru diimpor untuk Aplikasi '%2'
+%1 not implemented for %2!	etemplate	id	%1 tidak di-implementasikan untuk %2!
 %s disabled	etemplate	id	%s disabled
 %s needed	etemplate	id	%s needed
 %s notranslation	etemplate	id	%s NoTranslation
@@ -30,8 +31,10 @@ align	etemplate	id	Align
 all days	etemplate	id	seharian
 allowed file type: %1	etemplate	id	Tipe yang dibolehkan: %1
 am	etemplate	id	am
+and	etemplate	id	Dan
 application	etemplate	id	Aplikasi
 application name needed to write a langfile or dump the etemplates !!!	etemplate	id	Perlu nama Aplikasi untuk menuliskan berkas bahasa atau menuangkan eTemplat !!!
+applications	etemplate	id	Aplikasi
 applies the changes made	etemplate	id	terapkan perubahan
 as default	etemplate	id	sebagai bawaan
 attach	etemplate	id	Lampiran
@@ -48,6 +51,7 @@ category tree	etemplate	id	Pohon Kategori
 cells	etemplate	id	Cells
 center	etemplate	id	Tengah
 changed	etemplate	id	Diubah
+check all	etemplate	id	Contreng semua
 checkbox	etemplate	id	Checkbox
 class	etemplate	id	Class
 class, valign	etemplate	id	class, Valign
@@ -65,6 +69,7 @@ contact	etemplate	id	Kontak
 contact field to show	etemplate	id	Field Kontak untuk ditampilkan
 contact fields	etemplate	id	Field Kontak
 contains	etemplate	id	mengandung
+creator	preferences	id	Creator
 css properties	etemplate	id	properti CSS
 css-styles	etemplate	id	Gaya-CSS
 custom	etemplate	id	custom
@@ -89,6 +94,7 @@ deletes this column	etemplate	id	Hapus kolom ini
 deletes this index	etemplate	id	Hapus indeks ini
 discard changes	etemplate	id	buang pengubahan
 do you want to save the changes you made in table %s?	etemplate	id	Anda ingin menyimpan perubahan ke tabel %s?
+document '%1' does not exist or is not readable for you!	preferences	id	Dokumen '%1' tidak ada atau tidak terbaca oleh anda!
 documentation	etemplate	id	Dokumentasi
 doesn't matter	etemplate	id	tidak penting
 drop table	etemplate	id	Buang Tabel
@@ -107,6 +113,7 @@ etemplate tutorial	etemplate	id	Tutorial eTemplat
 export xml	etemplate	id	Ekspor XML
 extensions loaded:	etemplate	id	Ekstensi dimuat:
 field	etemplate	id	Field
+field must not be empty !!!	etemplate	id	Field tidak boleh kosong !!!
 file	etemplate	id	Berkas
 file '%1' not found!	etemplate	id	Berkas '%1' tidak ditemukan!
 file is of wrong type (%1 != %2)!	etemplate	id	Salah tipe berkas (%1 != %2 )!
@@ -115,6 +122,7 @@ fileupload	etemplate	id	Unggah Berkas
 first	etemplate	id	Awal
 floating point	etemplate	id	Floating Point
 foreign key	etemplate	id	Foreign Key
+general fields:	preferences	id	Field Umum:
 grid	etemplate	id	Grid
 groupbox	etemplate	id	GroupBox
 hbox	etemplate	id	HBox
@@ -131,6 +139,7 @@ import	etemplate	id	Impor
 import xml	etemplate	id	Impor XML
 indexed	etemplate	id	Indexed
 indexoptions	etemplate	id	Indexoptions
+insert in document	etemplate	id	Sisipkan dalam dokumen
 integer	etemplate	id	Integer
 key	etemplate	id	Key
 label	etemplate	id	Label
@@ -172,6 +181,7 @@ onchange	etemplate	id	onChange
 onclick	etemplate	id	onClick
 operator	etemplate	id	Operator
 options	etemplate	id	Options
+or	etemplate	id	or
 overflow	etemplate	id	Overflow
 padding	etemplate	id	Padding
 paste	etemplate	id	Tempel
@@ -216,6 +226,7 @@ spacing	etemplate	id	Spacing
 span	etemplate	id	Span
 span, class	etemplate	id	Span, Class
 stack	etemplate	id	Stack
+start a new search, cancel this link	etemplate	id	memulai pencarian baru, batalkan tautan ini
 submit form	etemplate	id	kirim formulir
 submitbutton	etemplate	id	Submitbutton
 swap	etemplate	id	swap
@@ -251,3 +262,4 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	id	berkas xml untuk impor
 xslt template	etemplate	id	Templat XSLT
 year	etemplate	id	Tahun
+you can respond by visiting:	etemplate	id	Untuk melihatnya, kunjungi:
