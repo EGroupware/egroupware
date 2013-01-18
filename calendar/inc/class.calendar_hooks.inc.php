@@ -287,6 +287,23 @@ class calendar_hooks
 		}
 
 		$settings = array(
+			array(
+				'type'  => 'section',
+				'title' => lang('view settings'),
+				'no_lang'=> true,
+				'xmlrpc' => False,
+				'admin'  => False
+			),
+			'mainscreen_showevents' => array(
+				'type'   => 'select',
+				'label'  => 'Which view to show on home page',
+				'name'   => 'mainscreen_showevents',
+				'values' => $mainscreen,
+				'help'   => 'Displays this calendar view on the home page (page you get when you enter EGroupware or click on the home page icon)?',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> '1',	// 1 = week
+			),
 			'days_in_weekview' => array(
 				'type'   => 'select',
 				'label'  => 'default week view',
@@ -306,16 +323,6 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'forced'=> 3,
-			),
-			'mainscreen_showevents' => array(
-				'type'   => 'select',
-				'label'  => 'Which view to show on home page',
-				'name'   => 'mainscreen_showevents',
-				'values' => $mainscreen,
-				'help'   => 'Displays this calendar view on the home page (page you get when you enter EGroupware or click on the home page icon)?',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> '1',	// 1 = week
 			),
 			'weekdaystarts' => array(
 				'type'   => 'select',
@@ -347,16 +354,6 @@ class calendar_hooks
 				'admin'  => False,
 				'default'=> 18,
 			),
-			'use_time_grid' => array(
-				'type'   => 'select',
-				'label'  => 'Views with fixed time intervals',
-				'name'   => 'use_time_grid',
-				'values' => $grid_views,
-				'help'   => 'For which views should calendar show distinct lines with a fixed time interval.',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'forced' => 'all',
-			),
 			'interval' => array(
 				'type'   => 'select',
 				'label'  => 'Length of the time interval',
@@ -367,26 +364,29 @@ class calendar_hooks
 				'admin'  => False,
 				'default'=> 30,
 			),
-			'defaultlength' => array(
-				'type'    => 'input',
-				'label'   => 'default appointment length (in minutes)',
-				'name'    => 'defaultlength',
-				'help'    => 'Default length of newly created events. The length is in minutes, eg. 60 for 1 hour.',
-				'default' => '',
-				'size'    => 3,
+			'display_holidays_event' => array(
+				'type'   => 'select',
+				'label'  => 'Display holidays or birthdays as events in dayview',
+				'name'   => 'display_holidays_event',
+				'values' => array(
+					'0'	 => lang('Display in header'), //Please note that these values are a binary mask
+					'1' => lang('Birthdays only'),
+					'2' => lang('Holidays only'),
+					'3' => lang('Both, holidays and birthdays')
+				),
+				'help'   => "When selected, birthdays and/or holidays will be displayed as events in your calendar. Please note that this option only changes the appereance inside of EGroupware, but does not change the information being sent via iCal or other calendar interfaces.",
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default'=> 60,
+				'default'=> '0',
 			),
-			'defaultresource_sel' => array(
-				'type'		=> 'select',
-				'label'		=> 'default type of resources selection',
-				'name'		=> 'defaultresource_sel',
-				'values'	=> $defaultresource_sel,
-				'help'		=> 'Default type of resources application selected in the calendar particpants research form.',
-				'xmlrpc'	=> True,
-				'admin'		=> False,
-				'forced'    => 'addressbook',
+			'limit_des_lines' => array(
+				'type'   => 'input',
+				'size'   => 5,
+				'label'  => 'Limit number of description lines in list view (default 5, 0 for no limit)',
+				'name'   => 'limit_des_lines',
+				'help'   => 'How many describtion lines should be directly visible. Further lines are available via a scrollbar.',
+				'xmlrpc' => True,
+				'admin'  => False
 			),
 			'planner_start_with_group' => array(
 				'type'   => 'select',
@@ -412,14 +412,43 @@ class calendar_hooks
 				'admin'  => False,
 				'forced' => 'user',
 			),
-			'limit_des_lines' => array(
-				'type'   => 'input',
-				'size'   => 5,
-				'label'  => 'Limit number of description lines in list view (default 5, 0 for no limit)',
-				'name'   => 'limit_des_lines',
-				'help'   => 'How many describtion lines should be directly visible. Further lines are available via a scrollbar.',
+			'use_time_grid' => array(
+				'type'   => 'select',
+				'label'  => 'Views with fixed time intervals',
+				'name'   => 'use_time_grid',
+				'values' => $grid_views,
+				'help'   => 'For which views should calendar show distinct lines with a fixed time interval.',
 				'xmlrpc' => True,
+				'admin'  => False,
+				'forced' => 'all',
+			),
+			array(
+				'type'  => 'section',
+				'title' => lang('appointment settings'),
+				'no_lang'=> true,
+				'xmlrpc' => False,
 				'admin'  => False
+			),
+			'defaultlength' => array(
+				'type'    => 'input',
+				'label'   => 'default appointment length (in minutes)',
+				'name'    => 'defaultlength',
+				'help'    => 'Default length of newly created events. The length is in minutes, eg. 60 for 1 hour.',
+				'default' => '',
+				'size'    => 3,
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> 60,
+			),
+			'defaultresource_sel' => array(
+				'type'		=> 'select',
+				'label'		=> 'default type of resources selection',
+				'name'		=> 'defaultresource_sel',
+				'values'	=> $defaultresource_sel,
+				'help'		=> 'Default type of resources application selected in the calendar particpants research form.',
+				'xmlrpc'	=> True,
+				'admin'		=> False,
+				'forced'    => 'addressbook',
 			),
 			'default_private' => array(
 				'type'  => 'check',
@@ -429,6 +458,23 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'forced' => '0',
+			),
+			'reset_stati'	=> array(
+				'type'   => 'select',
+				'label'  => 'Reset participant stati on event shifts',
+				'name'   => 'reset_stati',
+				'help'   => 'Select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.',
+				'values' => $reset_stati_on_shifts,
+				'default' => 'no',
+				'xmlrpc' => True,
+				'admin'  => False,
+			),
+			array(
+				'type'  => 'section',
+				'title' => lang('notification settings'),
+				'no_lang'=> true,
+				'xmlrpc' => False,
+				'admin'  => False
 			),
 			'receive_updates' => array(
 				'type'   => 'select',
@@ -440,25 +486,15 @@ class calendar_hooks
 				'admin'  => False,
 				'default'=> 'time_change',
 			),
-            'receive_own_updates' => array(
-                'type'   => 'select',
-                'label'  => 'Receive notifications about events you created/modified/deleted',
-                'name'   => 'receive_own_updates',
-                'values' => $yesno,
-                'help'   => "Do you want to be notified about changes of appointments you modified?",
-                'xmlrpc' => True,
-                'admin'  => False,
-                'default'=> 'false',
-            ),
-			'update_format' => array(
+			'receive_own_updates' => array(
 				'type'   => 'select',
-				'label'  => 'Format of event updates',
-				'name'   => 'update_format',
-				'values' => $update_formats,
-				'help'   => 'Extended updates always include the complete event-details. iCal\'s can be imported by certain other calendar-applications.',
+				'label'  => 'Receive notifications about events you created/modified/deleted',
+				'name'   => 'receive_own_updates',
+				'values' => $yesno,
+				'help'   => "Do you want to be notified about changes of appointments you modified?",
 				'xmlrpc' => True,
 				'admin'  => False,
-				'forced' => 'ical',
+				'default'=> 'false',
 			),
 			'notify_externals' => array(
 				'type'   => 'select',
@@ -470,25 +506,15 @@ class calendar_hooks
 				'admin'  => False,
 				'default'=> 'no',
 			),
-			'export_timezone' => array(
+			'update_format' => array(
 				'type'   => 'select',
-				'label'  => 'Timezone of event iCal file import/export',
-				'name'   => 'export_timezone',
-				'values' => $export_tzs,
-				'help'   => 'Use this timezone to import/export calendar data.',
+				'label'  => 'Format of event updates',
+				'name'   => 'update_format',
+				'values' => $update_formats,
+				'help'   => 'Extended updates always include the complete event-details. iCal\'s can be imported by certain other calendar-applications.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default' => '0', // Use event's TZ
-			),
-			'reset_stati'	=> array(
-				'type'   => 'select',
-				'label'  => 'Reset participant stati on event shifts',
-				'name'   => 'reset_stati',
-				'help'   => 'Select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.',
-				'values' => $reset_stati_on_shifts,
-				'default' => 'no',
-				'xmlrpc' => True,
-				'admin'  => False,
+				'forced' => 'ical',
 			),
 			'notifyAdded' => array(
 				'type'   => 'notify',
@@ -564,44 +590,14 @@ class calendar_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 			),
-			'freebusy' => array(
-				'type'  => 'select',
-				'label' => 'Make freebusy information available to not loged in persons?',
-				'name'  => 'freebusy',
-				'help'  => $freebusy_help,
-				'values'	=> $freebusy_values,
-				'run_lang' => false,
-				'subst_help' => False,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'forced' => 0,
-			),
-			'freebusy_pw' => array(
-				'type'  => 'input',
-				'label' => 'Password for not loged in users to your freebusy information?',
-				'name'  => 'freebusy_pw',
-				'help'  => 'If you dont set a password here, the information is available to everyone, who knows the URL!!!',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'forced' => ''
-			),
-			'display_holidays_event' => array(
-                'type'   => 'select',
-                'label'  => 'Display holidays or birthdays as events in dayview',
-                'name'   => 'display_holidays_event',
-                'values' => array(
-					'0'	 => lang('Display in header'), //Please note that these values are a binary mask
-					'1' => lang('Birthdays only'),
-					'2' => lang('Holidays only'),
-					'3' => lang('Both, holidays and birthdays')
-				),
-                'help'   => "When selected, birthdays and/or holidays will be displayed as events in your calendar. Please note that this option only changes the appereance inside of EGroupware, but does not change the information being sent via iCal or other calendar interfaces.",
-                'xmlrpc' => True,
-                'admin'  => False,
-                'default'=> '0',
+			array(
+				'type'  => 'section',
+				'title' => lang('Data exchange settings'),
+				'no_lang'=> true,
+				'xmlrpc' => False,
+				'admin'  => False
 			),
 		);
-
 		// Merge print
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
@@ -673,6 +669,40 @@ class calendar_hooks
 				'default'=> isset($options[$default_def]) ? $default_def : false,
 			);
 		}
+		$settings += array(
+			'export_timezone' => array(
+				'type'   => 'select',
+				'label'  => 'Timezone of event iCal file import/export',
+				'name'   => 'export_timezone',
+				'values' => $export_tzs,
+				'help'   => 'Use this timezone to import/export calendar data.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default' => '0', // Use event's TZ
+			),
+			'freebusy' => array(
+				'type'  => 'select',
+				'label' => 'Make freebusy information available to not loged in persons?',
+				'name'  => 'freebusy',
+				'help'  => $freebusy_help,
+				'values'	=> $freebusy_values,
+				'run_lang' => false,
+				'subst_help' => False,
+				'xmlrpc' => True,
+				'admin'  => False,
+				'forced' => 0,
+			),
+			'freebusy_pw' => array(
+				'type'  => 'input',
+				'label' => 'Password for not loged in users to your freebusy information?',
+				'name'  => 'freebusy_pw',
+				'help'  => 'If you dont set a password here, the information is available to everyone, who knows the URL!!!',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'forced' => ''
+			),
+		);
+
 		return $settings;
 	}
 
