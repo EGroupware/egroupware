@@ -5051,7 +5051,7 @@ class felamimail_bo
 				{
 					$mailObject->ClearReplyTos();
 					$activeMailProfile = $this->mailPreferences->getIdentity($this->profileID, true);
-					$mailObject->AddReplyTo($activeMailProfile->emailAddress,$activeMailProfile->realName);
+					$mailObject->AddReplyTo(self::$idna2->encode($activeMailProfile->emailAddress),$activeMailProfile->realName);
 				}
 				foreach ($SendAndMergeTocontacts as $k => $val)
 				{
@@ -5076,7 +5076,7 @@ class felamimail_bo
 						$mailObject->MessageID = '';
 						$mailObject->ClearAllRecipients();
 						$mailObject->ClearCustomHeaders();
-						$mailObject->AddAddress($email,$mailObject->EncodeHeader($nfn));
+						$mailObject->AddAddress(self::$idna2->encode($email),$mailObject->EncodeHeader($nfn));
 						$mailObject->Subject = $bo_merge->merge_string($Subject, $val, $e, 'text/plain', array(), self::$displayCharset);
 						if (!empty($AltBody))
 						{
@@ -5146,7 +5146,7 @@ class felamimail_bo
 							//error_log(__METHOD__.__LINE__.array2string($contact));
 							$email = ($contact['email'] ? $contact['email'] : $contact['email_home']);
 							$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
-							$mailObject->AddAddress($email,$mailObject->EncodeHeader($nfn));
+							$mailObject->AddAddress(self::$idna2->encode($email),$mailObject->EncodeHeader($nfn));
 						}
 						$mailObject->Subject = $bo_merge->merge_string($Subject, $val, $e, 'text/plain', array(), self::$displayCharset);
 						if (!empty($AltBody))
