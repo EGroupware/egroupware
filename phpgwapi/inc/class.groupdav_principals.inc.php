@@ -1259,6 +1259,7 @@ class groupdav_principals extends groupdav_handler
 			self::$all_resources = array();
 			$query = array(
 				'show_bookable' => true,	// ignore non-bookable resources
+				'filter2' => -3,
 			);
 			if (self::$resources->get_rows($query, $rows, $readonlys))
 			{
