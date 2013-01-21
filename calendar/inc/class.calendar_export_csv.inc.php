@@ -82,7 +82,14 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 						$query += $this->get_query_day($states);
 						break;
 					default:
+						// Let UI set the date ranges
 						$ui = new calendar_uiviews($query);
+						if(method_exists($ui, $states['view']))
+						{
+							ob_start();
+							$ui->$states['view']();
+							ob_end_flush();
+						}
 						$query += array(
 							'start' => is_array($ui->first) ? $this->bo->date2ts($ui->first) : $ui->first,
 							'end' => is_array($ui->last) ? $this->bo->date2ts($ui->last) : $ui->last
@@ -204,7 +211,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			// Use UI to get dates
 			$ui = new calendar_uilist();
 			$list['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
-			$ui->get_rows($list);
+			$ui->get_rows($list,$rows);
 			if($ui->first) $start = $ui->first;
 			if($ui->last) $end = $ui->last;
 

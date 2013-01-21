@@ -82,7 +82,14 @@ class calendar_export_ical extends calendar_export_csv {
 						$query += calendar_export_csv::get_query_day($states);
 						break;
 					default:
+						// Let UI set the date ranges
 						$ui = new calendar_uiviews($query);
+						if(method_exists($ui, $states['view']))
+						{
+							ob_start();
+							$ui->$states['view']();
+							ob_end_clean();
+						}
 						$query += array(
 							'start' => is_array($ui->first) ? $this->bo->date2ts($ui->first) : $ui->first,
 							'end' => is_array($ui->last) ? $this->bo->date2ts($ui->last) : $ui->last
