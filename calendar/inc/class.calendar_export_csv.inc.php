@@ -16,6 +16,12 @@
  */
 class calendar_export_csv implements importexport_iface_export_plugin {
 
+	public function __construct() {
+		translation::add_app('calendar');
+		$this->bo = new calendar_bo();
+		$this->get_selects();
+	}
+
 	/**
 	 * Exports records as defined in $_definition
 	 *
@@ -23,85 +29,128 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	 */
 	public function export( $_stream, importexport_definition $_definition) {
 		$options = $_definition->plugin_options;
-		$this->bo = new calendar_bo();
 
 		$limit_exception = bo_merge::is_export_limit_excepted();
 		if (!$limit_exception) $export_limit = bo_merge::getExportLimit('calendar');
 		// Custom fields need to be specifically requested
 		$cfs = array();
-		foreach($options['mapping'] as $key => $label) {
+		foreach($options['mapping'] + (array)$_definition->filter as $key => $label) {
 			if($key[0] == '#') $cfs[] = substr($key,1);
 		}
 
-		if($options['selection']['select'] == 'criteria') {
-			$query = array(
-				'start' => $options['selection']['start'],
-				'end'   => strtotime('+1 day',$options['selection']['end'])-1,
-				'categories'	=> $options['categories'] ? $options['categories'] : $options['selection']['categories'],
-				//'enum_recuring' => false, // we want the recurring events enumerated for csv export
-				'daywise'       => false,
-				'users'         => $options['selection']['owner'],
-				'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
-			);
-			if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
-				$query['offset'] = 0;
-				$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
-			}
-			$events =& $this->bo->search($query);
-		} elseif ($options['selection']['select'] == 'search_results') {
-			$states = $GLOBALS['egw']->session->appsession('session_data','calendar');
-			if($states['view'] == 'listview') {
-				$query = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
-				$query['num_rows'] = -1;        // all
-				$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
-				$query['start'] = 0;
-				$query['cfs'] = $cfs;
-
+		switch($options['selection'])
+		{
+			case 'criteria':
+				$query = array(
+					'start' => $options['criteria']['start'],
+					'end'   => strtotime('+1 day',$options['criteria']['end'])-1,
+					'categories'	=> $options['categories'] ? $options['categories'] : $options['criteria']['categories'],
+					//'enum_recuring' => false, // we want the recurring events enumerated for csv export
+					'daywise'       => false,
+					'users'         => $options['criteria']['owner'],
+					'cfs'		=> $cfs // Otherwise we shouldn't get any custom fields
+				);
 				if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
+					$query['offset'] = 0;
 					$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
 				}
-				$ui = new calendar_uilist();
-				$ui->get_rows($query, $events, $unused);
-			} else {
-				$query = $GLOBALS['egw']->session->appsession('session_data','calendar');
-				$query['users'] = explode(',', $query['owner']);
-				$query['num_rows'] = -1;
-				if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
-					$query['num_rows'] = (int)$export_limit;  // ! int of 'no' is 0
+				$events =& $this->bo->search($query);
+				break;
+			case 'search_results':
+				$states = $GLOBALS['egw']->session->appsession('session_data','calendar');
+				if($states['view'] == 'listview') {
+					$query = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
+					$query['num_rows'] = -1;        // all
+					$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
+					$query['start'] = 0;
+					$query['cfs'] = $cfs;
+
+					if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
+						$query['num_rows'] = (int)$export_limit; // ! int of 'no' is 0
+					}
+					$ui = new calendar_uilist();
+					$ui->get_rows($query, $events, $unused);
+				} else {
+					$query = $GLOBALS['egw']->session->appsession('session_data','calendar');
+					$query['users'] = explode(',', $query['owner']);
+					$query['num_rows'] = -1;
+					if(bo_merge::hasExportLimit($export_limit) && !$limit_exception) {
+						$query['num_rows'] = (int)$export_limit;  // ! int of 'no' is 0
+					}
+
+					$events = array();
+					switch($states['view']) {
+						case 'month':
+							$query += $this->get_query_month($states);
+							break;
+						case 'week':
+							$query += $this->get_query_week($states);
+							break;
+						case 'day':
+							$query += $this->get_query_day($states);
+							break;
+						default:
+							// Let UI set the date ranges
+							$ui = new calendar_uiviews($query);
+							if(method_exists($ui, $states['view']))
+							{
+								ob_start();
+								$ui->$states['view']();
+								ob_end_flush();
+							}
+							$query += array(
+								'start' => is_array($ui->first) ? $this->bo->date2ts($ui->first) : $ui->first,
+								'end' => is_array($ui->last) ? $this->bo->date2ts($ui->last) : $ui->last
+							);
+
+					}
+					$boupdate = new calendar_boupdate();
+					$events = $boupdate->search($query + array(
+						'offset' => 0,
+						'order' => 'cal_start',
+					));
+				}
+				break;
+			case 'filter':
+				$query = array(
+					'cfs'		=> $cfs, // Otherwise we shouldn't get any custom fields
+					'num_rows'	=> -1,
+					'csv_export'	=> true
+				);
+				$fields = importexport_helper_functions::get_filter_fields($_definition->application, $this);
+				$filter = $_definition->filter;
+
+				// Handle ranges
+				foreach($filter as $field => $value)
+				{
+					if($field == 'filter' && $value)
+					{
+						$query['filter'] = $value;
+						continue;
+					}
+					if(!is_array($value) || (!$value['from'] && !$value['to']))
+					{
+						$query['query']["cal_$field"] = $value;
+						continue;
+					}
+
+					// Ranges are inclusive, so should be provided that way (from 2 to 10 includes 2 and 10)
+					if($value['from']) $query['sql_filter'][] = "cal_$field >= " . (int)$value['from'];
+					if($value['to']) $query['sql_filter'][] = "cal_$field <= " . (int)$value['to'];
+
+				}
+				if($query['sql_filter'] && is_array($query['sql_filter']))
+				{
+					// Set as an extra parameter
+					$sql_filter = implode(' AND ',$query['sql_filter']);
 				}
 
-				$events = array();
-				switch($states['view']) {
-					case 'month':
-						$query += $this->get_query_month($states);
-						break;
-					case 'week':
-						$query += $this->get_query_week($states);
-						break;
-					case 'day':
-						$query += $this->get_query_day($states);
-						break;
-					default:
-						// Let UI set the date ranges
-						$ui = new calendar_uiviews($query);
-						if(method_exists($ui, $states['view']))
-						{
-							ob_start();
-							$ui->$states['view']();
-							ob_end_flush();
-						}
-						$query += array(
-							'start' => is_array($ui->first) ? $this->bo->date2ts($ui->first) : $ui->first,
-							'end' => is_array($ui->last) ? $this->bo->date2ts($ui->last) : $ui->last
-						);
-
-				}
-				$boupdate = new calendar_boupdate();
-				$events = $boupdate->search($query + array(
+			case 'all':
+				$events = $this->bo->search($query + array(
 					'offset' => 0,
 					'order' => 'cal_start',
-				));
-			}
+				),$sql_filter);
+				break;
 		}
 
 		$export_object = new importexport_export_csv($_stream, (array)$options);
@@ -111,14 +160,6 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 
 		$recurrence = $this->bo->recur_types;
 
-		$lookups = array(
-			'priority'	=> Array(
-				0 => '',
-				1 => lang('Low'),
-				2 => lang('Normal'),
-				3 => lang('High')
-			),
-		);
 		$record = new calendar_egw_record();
 		foreach ($events as $event) {
 			// the condition below (2 lines) may only work on enum_recuring=false and using the iterator to test an recurring event on the given timerange
@@ -138,7 +179,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 
 				// Standard stuff
 				if($options['convert']) {
-					importexport_export_csv::convert($record, $convert_fields, 'calendar', $lookups);
+					importexport_export_csv::convert($record, $convert_fields, 'calendar', $this->selects);
 				} else {
 					// Implode arrays, so they don't say 'Array'
 					foreach($record->get_record_array() as $key => $value) {
@@ -211,7 +252,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			// Use UI to get dates
 			$ui = new calendar_uilist();
 			$list['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
-			$ui->get_rows($list,$rows);
+			$ui->get_rows($list,$rows,$readonlys);
 			if($ui->first) $start = $ui->first;
 			if($ui->last) $end = $ui->last;
 
@@ -235,7 +276,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			'name'		=> 'calendar.export_csv_select',
 			'content'	=> array(
 				'plugin_override' => true, // Plugin overrides preferences
-				'select'	=> $prefs['selection']['select'] ? $prefs['selection']['select'] : 'criteria',
+				'selection'	=> $prefs['selection'] ? $prefs['selection'] : 'criteria',
 				'start'		=> is_object($start) ? $start->format('ts') : $start,
 				'end'		=> $end,
 				'owner'		=> $states['owner']
@@ -299,5 +340,65 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 		$query['start'] = $bo->date2ts((string)$states['date']);
 		$query['end'] = $query['start']+DAY_s-1;
 		return $query;
+	}
+
+	/**
+	 * Get select options for use in filter
+	 */
+	protected function get_selects()
+	{
+		$this->selects['priority'] = Array(
+			0 => '',
+			1 => lang('Low'),
+			2 => lang('Normal'),
+			3 => lang('High')
+		);
+		$this->selects['filter'] = array(
+			'default'     => lang('Not rejected'),
+			'accepted'    => lang('Accepted'),
+			'unknown'     => lang('Invitations'),
+			'tentative'   => lang('Tentative'),
+			'delegated'   => lang('Delegated'),
+			'rejected'    => lang('Rejected'),
+			'owner'       => lang('Owner too'),
+			'all'         => lang('All incl. rejected'),
+			'hideprivate' => lang('Hide private infos'),
+			'showonlypublic' =>  lang('Hide private events'),
+			'no-enum-groups' => lang('only group-events'),
+			'not-unknown' => lang('No meeting requests'),
+		);
+	}
+
+	/**
+	 * Adjust automatically generated field filters
+	 */
+	public function get_filter_fields(Array &$filters)
+	{
+		
+		// Calendar SO doesn't support filtering by column, so we have to remove pretty much everything
+		unset($filters['recur_date']);
+
+		// Add in the status filter at the beginning
+		$filters = array_reverse($filters, true);
+		$filters['filter'] = array(
+			'type'	=> 'select',
+			'name'	=> 'filter',
+			'label'	=> lang('Filter'),
+		);
+		$filters = array_reverse($filters, true);
+
+		foreach($filters as $field_name => &$settings)
+		{
+			// Can't filter on a custom field
+			if(strpos($field_name, '#') === 0)
+			{
+				unset($filters[$field_name]);
+				continue;
+			}
+
+			// Pass on select options
+			if($this->selects[$field_name]) $settings['values'] = $this->selects[$field_name];
+		}
+
 	}
 }
