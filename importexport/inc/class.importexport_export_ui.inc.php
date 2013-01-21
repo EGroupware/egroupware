@@ -173,24 +173,6 @@ class importexport_export_ui {
 					$content['plugin_options_template'] = $options;
 				}
 			}
-			$content['filter'] = $definition->filter;
-			$content['filter']['fields'] = importexport_helper_functions::get_filter_fields($_appname, $selected_plugin);
-			if(!$content['filter']['fields'])
-			{
-				$this->js->set_onload("\$j('input[value=\"filter\"]').parent().hide();");
-				$content['no_filter'] = true;
-			}
-			else
-			{
-				// Process relative dates into the current absolute date
-				foreach($content['filter']['fields'] as $field => $settings)
-				{
-					if($content['filter'][$field] && strpos($settings['type'],'date') === 0)
-					{
-						$content['filter'][$field] = importexport_helper_functions::date_rel2abs($content['filter'][$field]);
-					}
-				}
-			}
 		}
 
 		// fill selection tab
@@ -209,7 +191,7 @@ class importexport_export_ui {
 			} else {
 				$options = $plugin_object->get_selectors_etpl($definition);
 				if(is_array($options)) {
-					$content['selection'] = $options['content'];
+					$content += is_array($options['content']) ? $options['content'] : array('selection' => $options['content']);
 					$sel_options += (array)$options['sel_options'];
 					$readonlys['selection'] = (array)$options['readonlys'];
 					$preserv['selection'] = (array)$options['preserv'];
@@ -220,6 +202,24 @@ class importexport_export_ui {
 			}
 			if(!$content['plugin_selectors_html'] && !$content['plugin_selectors_template']) {
 				$readonlys[$tabs]['selection_tab'] = true;
+			}
+			$content['filter'] = $definition->filter;
+			$content['filter']['fields'] = importexport_helper_functions::get_filter_fields($_appname, $selected_plugin);
+			if(!$content['filter']['fields'])
+			{
+				$this->js->set_onload("\$j('input[value=\"filter\"]').parent().hide();");
+				$content['no_filter'] = true;
+			}
+			else
+			{
+				// Process relative dates into the current absolute date
+				foreach($content['filter']['fields'] as $field => $settings)
+				{
+					if($content['filter'][$field] && strpos($settings['type'],'date') === 0)
+					{
+						$content['filter'][$field] = importexport_helper_functions::date_rel2abs($content['filter'][$field]);
+					}
+				}
 			}
 		} elseif (!$_selection) {
 			$this->js->set_onload("

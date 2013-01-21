@@ -150,13 +150,8 @@ class calendar_export_ical extends calendar_export_csv {
 	 * returns selectors of this plugin
 	 *
 	 */
-	public function get_selectors_etpl() {
-		return array(
-			'name'		=> 'calendar.export_csv_select',
-			'content'	=> array(
-				'start'		=> time(),
-				'end'		=> time()
-			)
-		);
+	public function get_selectors_etpl($definition = null) {
+		$data = parent::get_selectors_etpl($definition);
+		return $data;
 	}
 }

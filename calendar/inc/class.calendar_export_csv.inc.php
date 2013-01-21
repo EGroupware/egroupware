@@ -277,9 +277,11 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			'content'	=> array(
 				'plugin_override' => true, // Plugin overrides preferences
 				'selection'	=> $prefs['selection'] ? $prefs['selection'] : 'criteria',
-				'start'		=> is_object($start) ? $start->format('ts') : $start,
-				'end'		=> $end,
-				'owner'		=> $states['owner']
+				'criteria'	=> array(
+					'start'		=> is_object($start) ? $start->format('ts') : $start,
+					'end'		=> $end,
+					'owner'		=> $states['owner']
+				)
 			)
 		);
 		return $data;
