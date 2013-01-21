@@ -1184,6 +1184,9 @@ class schema_proc
 
 			$type = method_exists($this->dict,'MetaType') ? $this->dict->MetaType($column) : strtoupper($column->type);
 
+			// fix longtext not correctly handled by ADOdb
+			if ($type == 'X' && $column->type == 'longtext') $type = 'XL';
+
 			static $ado_type2egw = array(
 				'C'		=> 'varchar',
 				'C2'	=> 'varchar',
