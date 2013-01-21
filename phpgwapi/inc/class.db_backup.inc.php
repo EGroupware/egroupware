@@ -455,7 +455,7 @@ class db_backup
 					// if column is longtext in current schema, convert text to longtext, in case user already updated column
 					foreach($schema['fd'] as $col => &$def)
 					{
-						if ($def['type'] == 'text' && $this->db->get_column_attribute($col, $table, true, 'type') == 'longtext')
+						if ($def['type'] == 'text' && $this->db->get_column_attribute($col, $table_name, true, 'type') == 'longtext')
 						{
 							$def['type'] = 'longtext';
 						}
