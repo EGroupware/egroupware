@@ -173,6 +173,13 @@ class infolog_hooks
 
 		/* Settings array for this app */
 		$settings = array(
+			array(
+				'type'  => 'section',
+				'title' => lang('General settings'),
+				'no_lang'=> true,
+				'xmlrpc' => False,
+				'admin'  => False
+			),
 			'defaultFilter' => array(
 				'type'   => 'select',
 				'label'  => 'Default Filter for InfoLog',
@@ -193,6 +200,39 @@ class infolog_hooks
 				'admin'  => False,
 				'default'=> 'responsible-open-today',
 			),
+			'set_start' => array(
+				'type'   => 'select',
+				'label'  => 'Startdate for new entries',
+				'name'   => 'set_start',
+				'values' => array(
+					'date'     => lang('todays date'),
+					'datetime' => lang('actual date and time'),
+					'empty'    => lang('leave it empty'),
+				),
+				'help'   => 'To what should the startdate of new entries be set.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> 'date',
+			),
+			'cat_add_default' => array(
+				'type'   => 'select',
+				'label'  => 'Default category for new Infolog entries',
+				'name'   => 'cat_add_default',
+				'values' => self::all_cats(),
+				'help'   => 'You can choose a categorie to be preselected, when you create a new Infolog entry',
+				'xmlrpc' => True,
+				'admin'  => False,
+			),
+			'show_id' => array(
+				'type'   => 'select',
+				'label'  => 'Show ticket Id',
+				'name'   => 'show_id',
+				'values' => $show_details,
+				'help'   => 'Should the Infolog list show a unique numerical Id, which can be used eg. as ticket Id.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> '1',	// Yes
+			),
 			'listNoSubs' => array(
 				'type'   => 'check',
 				'label'  => 'List no Subs/Childs',
@@ -212,15 +252,6 @@ class infolog_hooks
 				'admin'  => False,
 				'default'=> 'all',
 			),
-			'never_hide' => array(
-				'type'   => 'check',
-				'label'  => 'Never hide search and filters',
-				'name'   => 'never_hide',
-				'help'   => 'If not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> '1',
-			),
 			'show_percent' => array(
 				'type'   => 'select',
 				'label'  => 'Show status and percent done separate',
@@ -231,15 +262,14 @@ class infolog_hooks
 				'admin'  => False,
 				'default'=> 1,	// Yes
 			),
-			'show_id' => array(
-				'type'   => 'select',
-				'label'  => 'Show ticket Id',
-				'name'   => 'show_id',
-				'values' => $show_details,
-				'help'   => 'Should the Infolog list show a unique numerical Id, which can be used eg. as ticket Id.',
+			'never_hide' => array(
+				'type'   => 'check',
+				'label'  => 'Never hide search and filters',
+				'name'   => 'never_hide',
+				'help'   => 'If not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default'=> '1',	// Yes
+				'default'=> '1',
 			),
 			'limit_des_lines' => array(
 				'type'   => 'input',
@@ -260,40 +290,13 @@ class infolog_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 			),
-			'set_start' => array(
-				'type'   => 'select',
-				'label'  => 'Startdate for new entries',
-				'name'   => 'set_start',
-				'values' => array(
-					'date'     => lang('todays date'),
-					'datetime' => lang('actual date and time'),
-					'empty'    => lang('leave it empty'),
-				),
-				'help'   => 'To what should the startdate of new entries be set.',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> 'date',
+			array(
+				'type'  => 'section',
+				'title' => lang('Notification settings'),
+				'no_lang'=> true,
+				'xmlrpc' => False,
+				'admin'  => False
 			),
-			'cal_show' => array(
-				'type'   => 'multiselect',
-				'label'  => 'Which types should the calendar show',
-				'name'   => 'cal_show',
-				'values' => $info->enums['type'],
-				'help'   => 'Can be used to show further InfoLog types in the calendar or limit it to show eg. only tasks.',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> 'tasks,phone',
-			),
-			'cat_add_default' => array(
-				'type'   => 'select',
-				'label'  => 'Default category for new Infolog entries',
-				'name'   => 'cat_add_default',
-				'values' => self::all_cats(),
-				'help'   => 'You can choose a categorie to be preselected, when you create a new Infolog entry',
-				'xmlrpc' => True,
-				'admin'  => False,
-			),
-
 		);
 
 		// notification preferences
@@ -382,6 +385,43 @@ class infolog_hooks
 			'default'=> '0',	// No
 		);
 
+		$settings[] = array(
+			'type'  => 'section',
+			'title' => lang('Data exchange settings'),
+			'no_lang'=> true,
+			'xmlrpc' => False,
+			'admin'  => False
+		);
+
+		if ($GLOBALS['egw_info']['user']['apps']['calendar'])
+		{
+			$settings['cal_show'] = array(
+				'type'   => 'multiselect',
+				'label'  => 'Which types should the calendar show',
+				'name'   => 'cal_show',
+				'values' => $info->enums['type'],
+				'help'   => 'Can be used to show further InfoLog types in the calendar or limit it to show eg. only tasks.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> 'tasks,phone',
+			);
+			$settings['calendar_set'] = array(
+				'type'   => 'multiselect',
+				'label'  => 'Participants for scheduling an appointment',
+				'name'   => 'calendar_set',
+				'values' => array(
+					'responsible' => lang('Responsible'),
+					'contact' => lang('Contact'),
+					'owner' => lang('Owner'),
+					'user' => lang('Current user'),
+					'selected' => lang('Selected calendars'),
+				),
+				'help'   => 'Which participants should be preselected when scheduling an appointment.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> 'responsible,contact,user',
+			);
+		}
 		// Merge print
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
@@ -452,25 +492,6 @@ class infolog_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> isset($options[$default_def]) ? $default_def : false,
-			);
-		}
-		if ($GLOBALS['egw_info']['user']['apps']['calendar'])
-		{
-			$settings['calendar_set'] = array(
-				'type'   => 'multiselect',
-				'label'  => 'Participants for scheduling an appointment',
-				'name'   => 'calendar_set',
-				'values' => array(
-					'responsible' => lang('Responsible'),
-					'contact' => lang('Contact'),
-					'owner' => lang('Owner'),
-					'user' => lang('Current user'),
-					'selected' => lang('Selected calendars'),
-				),
-				'help'   => 'Which participants should be preselected when scheduling an appointment.',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> 'responsible,contact,user',
 			);
 		}
 		return $settings;
