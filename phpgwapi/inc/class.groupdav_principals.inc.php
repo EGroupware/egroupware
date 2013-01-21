@@ -1706,14 +1706,15 @@ class groupdav_principals extends groupdav_handler
 	}
 
 	/**
-	 * Return priviledges for current user, default is read and read-current-user-privilege-set
+	 * Return privileges for current user, default is read and read-current-user-privilege-set
 	 *
-	 * Priviledges are for the collection, not the resources / entries!
+	 * Privileges are for the collection, not the resources / entries!
 	 *
+	 * @param string $path path of collection
 	 * @param int $user=null owner of the collection, default current user
 	 * @return array with privileges
 	 */
-	public function current_user_privileges($user=null)
+	public function current_user_privileges($path, $user=null)
 	{
 		return array('read', 'read-current-user-privilege-set');
 	}
