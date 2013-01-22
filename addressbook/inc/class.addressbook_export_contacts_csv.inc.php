@@ -25,6 +25,12 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 	const EACH_CAT = 'each_cat';	// Every category gets its own field
 	const EXPLODE = 'explode';	// For [custom] multi-selects, each option gets its own field
 
+	public function __construct()
+	{
+		$this->ui= new addressbook_ui();
+		$this->get_selects();
+	}
+
 	/**
 	 * Exports records as defined in $_definition
 	 *
@@ -35,7 +41,6 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		$options = $_definition->plugin_options;
 		$this->export_object = $export_object = new importexport_export_csv($_stream, (array)$options);
 
-		$uicontacts = new addressbook_ui();
 		$selection = array();
 
 		// Addressbook defines its own export imits
@@ -56,7 +61,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			$query['num_rows'] = -1;	// all
 			$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 			if(!array_key_exists('filter',$query)) $query['filter'] = $GLOBALS['egw_info']['user']['account_id'];
-			$uicontacts->get_rows($query,$selection,$readonlys, true);	// only return the ids
+			$this->ui->get_rows($query,$selection,$readonlys, true);	// only return the ids
 		}
 		elseif ( $options['selection'] == 'all_contacts' ) {
 			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) {
@@ -64,7 +69,38 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			}
 			$selection = ExecMethod2('addressbook.addressbook_bo.search', array(), true, '', '','',false,'AND',false,$col_filter);
 			//$uicontacts->get_rows($query,$selection,$readonlys,true);
-		} else {
+		}
+		elseif ($options['selection'] == 'filter')
+		{
+			$fields = importexport_helper_functions::get_filter_fields($_definition->application, $this);
+			$filter = $_definition->filter;
+			$known_fields = $this->ui->get_fields('supported');
+			$query = array();
+
+			// Handle ranges
+			foreach($filter as $field => $value)
+			{
+				if($field == 'cat_id')
+				{
+					$query['col_filter'][$field] = implode(',',$value);
+					continue;
+				}
+				if(strpos($field, '#') !== 0)
+				{
+					$field = 'contact_'.$field;
+				}
+				$query['col_filter'][$field] = $value;
+				if(!is_array($value) || (!$value['from'] && !$value['to'])) continue;
+
+				// Ranges are inclusive, so should be provided that way (from 2 to 10 includes 2 and 10)
+				if($value['from']) $query['col_filter'][] = "$field >= " . (int)$value['from'];
+				if($value['to']) $query['col_filter'][] = "$field <= " . (int)$value['to'];
+				unset($query['col_filter'][$field]);
+			}
+			$selection = ExecMethod2('addressbook.addressbook_bo.search', array(), true, '', '','',false,'AND',false,$query['col_filter']);
+		}
+		else
+		{
 			$selection = explode(',',$options['selection']);
 		}
 		$GLOBALS['egw_info']['flags']['currentapp'] = $old_app;
@@ -186,13 +222,6 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 
 		$export_object->set_mapping($options['mapping']);
 
-		$selects = array(
-			'tid' => array('n' => 'Contact')
-		);
-		foreach($this->content_types as $tid => $data)
-		{
-			$selects['tid'][$tid] = $data['name'];
-		}
 		// $options['selection'] is array of identifiers as this plugin doesn't
 		// support other selectors atm.
 		foreach ($selection as $_contact) {
@@ -211,7 +240,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			// Some conversion
 			$this->convert($contact, $options);
 			if($options['convert']) {
-				importexport_export_csv::convert($contact, addressbook_egw_record::$types, 'addressbook',$selects);
+				importexport_export_csv::convert($contact, addressbook_egw_record::$types, 'addressbook',$this->selects);
 			} else {
 				// Implode arrays, so they don't say 'Array'
 				foreach($contact->get_record_array() as $key => $value) {
@@ -284,7 +313,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 	 */
 	public function get_selectors_etpl() {
 		return array(
-			'name'		=> 'addressbook.export_csv_selectors',
+			'name'		=> 'importexport.export_csv_selectors',
 			'content'	=> 'use_all',
 		);
 	}
@@ -330,5 +359,38 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 				if(is_array($record->$field_name)) $record->$field_name = implode(($options['convert'] ? ', ' : ','), $record->$field_name);
 			}
 		}
+	}
+
+	
+	protected function get_selects()
+	{
+		$this->selects = array(
+			'tid' => array('n' => 'Contact')
+		);
+		foreach($this->ui->content_types as $tid => $data)
+		{
+			$this->selects['tid'][$tid] = $data['name'];
+		}
+	}
+
+	/**
+	 * Adjust automatically generated filter fields
+	 */
+	public function get_filter_fields(Array &$filters)
+        {
+		unset($filters['last_event']);
+		unset($filters['next_event']);
+                foreach($filters as $field_name => &$settings)
+                {
+                        if($this->selects[$field_name]) $settings['values'] = $this->selects[$field_name];
+                }
+		$filters['owner'] = array(
+			'name'		=> 'owner',
+			'label'		=> 'addressbook',
+			'type'		=> 'select',
+			'rows'		=> 5,
+			'enhance'	=> true,
+			'values'	=> $this->ui->get_addressbooks(EGW_ACL_READ)
+		);
 	}
 }
