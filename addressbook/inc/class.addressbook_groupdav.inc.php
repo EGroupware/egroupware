@@ -857,7 +857,7 @@ class addressbook_groupdav extends groupdav_handler
 	 */
 	function check_access($acl,$contact)
 	{
-		return $this->bo->check_perms($acl,$contact);
+		return $this->bo->check_perms($acl, $contact, true);	// true = deny to delete accounts
 	}
 
 	/**
