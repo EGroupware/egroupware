@@ -35,7 +35,7 @@
 				foreach($content['scheduled'] as $row)
 				{
 					if($row['delete']) {
-						$key = key($row['delete']);
+						$key = urldecode(key($row['delete']));
 						ExecMethod('phpgwapi.asyncservice.cancel_timer', $key);
 					}
 				}
@@ -67,7 +67,7 @@
 						$async['data']['record_count'] = lang('%1 records processed', $async['data']['record_count']);
 					}
 					$data['scheduled'][] = array_merge($async['data'], array(
-						'id'	=>	$id,
+						'id'	=>	urlencode($id),
 						'next'	=>	egw_time::server2user($async['next']),
 						'times'	=>	str_replace("\n", '', print_r($async['times'], true)),
 						'last_run' =>	$async['data']['last_run'] ? egw_time::server2user($async['data']['last_run']) : ''
