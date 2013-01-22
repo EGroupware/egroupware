@@ -961,7 +961,7 @@ disabled for epl-11.1
 	 */
 	function check_access($acl,$contact)
 	{
-		return $this->bo->check_perms($acl,$contact);
+		return $this->bo->check_perms($acl, $contact, true);	// true = deny to delete accounts
 	}
 
 	/**
