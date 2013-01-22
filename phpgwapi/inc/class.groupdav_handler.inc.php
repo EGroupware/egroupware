@@ -416,6 +416,16 @@ abstract class groupdav_handler
 	}
 
 	/**
+	 * Get grants of current user and app
+	 *
+	 * @return array user-id => EGW_ACL_ADD|EGW_ACL_READ|EGW_ACL_EDIT|EGW_ACL_DELETE pairs
+	 */
+	public function get_grants()
+	{
+		return $this->acl->get_grants($this->app, $this->app != 'addressbook');
+	}
+
+	/**
 	 * Return priviledges for current user, default is read and read-current-user-privilege-set
 	 *
 	 * Priviledges are for the collection, not the resources / entries!
@@ -429,30 +439,31 @@ abstract class groupdav_handler
 		static $grants;
 		if (is_null($grants))
 		{
-			$grants = $this->acl->get_grants($this->app, $this->app != 'addressbook');
+			$grants = $this->get_grants();
 		}
 		$priviledes = array('read-current-user-privilege-set' => 'read-current-user-privilege-set');
 
-		if (!$user || $grants[$user] & EGW_ACL_READ)
+		if (is_null($user) || $grants[$user] & EGW_ACL_READ)
 		{
 			$priviledes['read'] = 'read';
 			// allows on all calendars/addressbooks to write properties, as we store them on a per-user basis
 			// and only allow to modify explicit named properties in CalDAV, CardDAV or Calendarserver name-space
 			$priviledes['write-properties'] = 'write-properties';
 		}
-		if (!$user || $grants[$user] & EGW_ACL_ADD)
+		if (is_null($user) || $grants[$user] & EGW_ACL_ADD)
 		{
 			$priviledes['bind'] = 'bind';	// PUT for new resources
 		}
-		if (!$user || $grants[$user] & EGW_ACL_EDIT)
+		if (is_null($user) || $grants[$user] & EGW_ACL_EDIT)
 		{
 			$priviledes['write-content'] = 'write-content';	// otherwise iOS calendar does not allow to add events
 		}
-		if (!$user || $grants[$user] & EGW_ACL_DELETE)
+		if (is_null($user) || $grants[$user] & EGW_ACL_DELETE)
 		{
 			$priviledes['unbind'] = 'unbind';	// DELETE
 		}
 		// copy/move of existing resources might require write-properties, thought we do not support an explicit PROPATCH
+		//error_log(__METHOD__."('$path', ".array2string($user).') returning '.array2string($priviledes).' '.function_backtrace());
 		return $priviledes;
 	}
 
