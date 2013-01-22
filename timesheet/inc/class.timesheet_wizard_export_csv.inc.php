@@ -17,7 +17,7 @@ class timesheet_wizard_export_csv extends importexport_wizard_basic_export_csv
 
 		// Field mapping
 		$bo = new timesheet_bo();
-		$this->export_fields = array('ts_id' => 'Timesheet ID') + $bo->field2label;
+		$this->export_fields = array('ts_id' => 'Timesheet ID') + $bo->field2label + array('ts_modified'=> 'Modified');
 
 		// Custom fields
 		unset($this->export_fields['customfields']);
