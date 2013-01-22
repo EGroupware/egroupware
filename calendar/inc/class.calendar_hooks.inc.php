@@ -290,7 +290,7 @@ class calendar_hooks
 		$settings = array(
 			array(
 				'type'  => 'section',
-				'title' => lang('view settings'),
+				'title' => lang('General settings'),
 				'no_lang'=> true,
 				'xmlrpc' => False,
 				'admin'  => False
