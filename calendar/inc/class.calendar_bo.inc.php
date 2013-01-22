@@ -1179,7 +1179,7 @@ class calendar_bo
 		}
 		// do NOT allow users to purge deleted events, if we dont have 'userpurge' enabled
 		if ($access && $needed == EGW_ACL_DELETE && $event['deleted'] &&
-			!$GLOBALS['egw_info']['user']['apps']['admin'] && $user != $this->user &&
+			!$GLOBALS['egw_info']['user']['apps']['admin'] &&
 			$GLOBALS['egw_info']['server']['calendar_delete_history'] != 'userpurge')
 		{
 			$access = false;
