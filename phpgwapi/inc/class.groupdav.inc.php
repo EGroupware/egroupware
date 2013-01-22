@@ -861,7 +861,7 @@ class groupdav extends HTTP_WebDAV_Server
 					groupdav::CALENDARSERVER,'getctag',$handler->getctag($path,$user));
 			}
 		}
-		if ($handler && $user)
+		if ($handler && !is_null($user))
 		{
 			return $this->add_collection($path, $props, $handler->current_user_privileges($path, $user));
 		}

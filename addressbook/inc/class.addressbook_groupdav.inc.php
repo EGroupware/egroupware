@@ -861,6 +861,18 @@ class addressbook_groupdav extends groupdav_handler
 	}
 
 	/**
+	 * Get grants of current user and app
+	 *
+	 * Reimplemented to account for static LDAP ACL and accounts (owner=0)
+	 *
+	 * @return array user-id => EGW_ACL_ADD|EGW_ACL_READ|EGW_ACL_EDIT|EGW_ACL_DELETE pairs
+	 */
+	public function get_grants()
+	{
+		return $this->bo->get_grants($this->bo->user);
+	}
+
+	/**
 	 * Return calendars/addressbooks shared from other users with the current one
 	 *
 	 * @param boolean $ignore_all_in_one=false if true, return selected addressbooks and not array() for all-in-one

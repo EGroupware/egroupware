@@ -354,11 +354,15 @@ class addressbook_so
 				// therefor the param false!
 				$grants = $GLOBALS['egw']->acl->get_grants($contact_app,false,$user);
 			}
+			// grants for accounts: everyone read, admins edit, no-one add or delete (only via admin app!)
+			$grants[0] = EGW_ACL_READ;
+			if ($this->is_admin()) $grants[0] |= EGW_ACL_EDIT;
 		}
 		else
 		{
 			$grants = array();
 		}
+		//error_log(__METHOD__."($user, '$contact_app') returning ".array2string($grants));
 		return $grants;
 	}
 
