@@ -101,7 +101,15 @@ class addressbook_hooks
 	 */
 	static function settings($hook_data)
 	{
-		$settings = array();
+		$settings = array(
+			array(
+				'type'  => 'section',
+				'title' => lang('General settings'),
+				'no_lang'=> true,
+				'xmlrpc' => False,
+				'admin'  => False
+			),
+		);
 		$settings['add_default'] = array(
 			'type'   => 'select',
 			'label'  => 'Default addressbook for adding contacts',
@@ -130,42 +138,19 @@ class addressbook_hooks
 				'default'=> 3,
 			);
 		}
-		$settings['no_auto_hide'] = array(
-			'type'   => 'check',
-			'label'  => 'Don\'t hide empty columns',
-			'name'   => 'no_auto_hide',
-			'help'   => 'Should the columns photo and home address always be displayed, even if they are empty.',
-			'xmlrpc' => True,
-			'admin'  => false,
-			'forced' => false,
-		);
-		// CSV Export
-		$settings['csv_fields'] = array(
+		$settings['distributionListPreferredMail'] = array(
 			'type'   => 'select',
-			'label'  => 'Fields for the CSV export',
-			'name'   => 'csv_fields',
+			'label'  => 'Preferred email address to use in distribution lists',
+			'name'   => 'distributionListPreferredMail',
 			'values' => array(
-				'all'      => lang('All'),
-				'business' => lang('Business address'),
-				'home'     => lang('Home address'),
+				'email'	=> lang("Work email if given, else home email"),
+				'email_home'	=> lang("Home email if given, else work email"),
 			),
-			'help'   => 'Which fields should be exported. All means every field stored in the addressbook incl. the custom fields. The business or home address only contains name, company and the selected address.',
+			'help'   => 'Defines which email address (business or home) to use as the preferred one for distribution lists in mail.',
 			'xmlrpc' => True,
-			'admin'  => false,
-			'default'=> 'business',
+			'admin'  => False,
+			'forced'=> 'email',
 		);
-
-		$settings['vcard_charset'] = array(
-			'type'   => 'select',
-			'label'  => 'Charset for the vCard import and export',
-			'name'   => 'vcard_charset',
-			'values' => translation::get_installed_charsets(),
-			'help'   => 'Which charset should be used for the vCard import and export.',
-			'xmlrpc' => True,
-			'admin'  => false,
-			'default'=> 'iso-8859-1',
-		);
-
 		if ($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
 		{
 			$settings['private_addressbook'] = array(
@@ -178,6 +163,24 @@ class addressbook_hooks
 				'forced' => false,
 			);
 		}
+		$settings['hide_accounts'] = array(
+			'type'   => 'check',
+			'label'  => 'Hide accounts from addressbook',
+			'name'   => 'hide_accounts',
+			'help'   => 'Hides accounts completly from the adressbook.',
+			'xmlrpc' => True,
+			'admin'  => false,
+			'default'=> '1',
+		);
+		$settings['no_auto_hide'] = array(
+			'type'   => 'check',
+			'label'  => 'Don\'t hide empty columns',
+			'name'   => 'no_auto_hide',
+			'help'   => 'Should the columns photo and home address always be displayed, even if they are empty.',
+			'xmlrpc' => True,
+			'admin'  => false,
+			'forced' => false,
+		);
 		$fileas_options = ExecMethod('addressbook.addressbook_bo.fileas_options');
 		$settings['link_title'] = array(
 			'type'   => 'select',
@@ -214,28 +217,15 @@ class addressbook_hooks
 			'admin'  => false,
 			'default'=> 'org_name: n_family, n_given',
 		);
-		$settings['hide_accounts'] = array(
-			'type'   => 'check',
-			'label'  => 'Hide accounts from addressbook',
-			'name'   => 'hide_accounts',
-			'help'   => 'Hides accounts completly from the adressbook.',
-			'xmlrpc' => True,
-			'admin'  => false,
-			'default'=> '1',
+		$settings[] = array(
+			'type'  => 'section',
+			'title' => lang('Data exchange settings'),
+			'no_lang'=> true,
+			'xmlrpc' => False,
+			'admin'  => False
 		);
-		$settings['distributionListPreferredMail'] = array(
-			'type'   => 'select',
-			'label'  => 'Preferred email address to use in distribution lists',
-			'name'   => 'distributionListPreferredMail',
-			'values' => array(
-				'email'	=> lang("Work email if given, else home email"),
-				'email_home'	=> lang("Home email if given, else work email"),
-			),
-			'help'   => 'Defines which email address (business or home) to use as the preferred one for distribution lists in mail.',
-			'xmlrpc' => True,
-			'admin'  => False,
-			'forced'=> 'email',
-		);
+		// CSV Export
+
 		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
 			$link = egw::link('/index.php','menuaction=addressbook.addressbook_merge.show_replacements');
@@ -264,6 +254,19 @@ class addressbook_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default' => '/templates/addressbook',
+			);
+		}
+
+		if ($GLOBALS['egw_info']['user']['apps']['felamimail'])
+		{
+			$settings['force_mailto'] = array(
+				'type'   => 'check',
+				'label'  => 'Open EMail addresses in external mail program',
+				'name'   => 'force_mailto',
+				'help'   => 'Default is to open EMail addresses in EGroupware EMail application, if user has access to it.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> false,
 			);
 		}
 
@@ -306,17 +309,30 @@ class addressbook_hooks
 				'admin'  => False,
 				'default'=> isset($options[$default_def]) ? $default_def : false,
 			);
-		}
-		if ($GLOBALS['egw_info']['user']['apps']['felamimail'])
-		{
-			$settings['force_mailto'] = array(
-				'type'   => 'check',
-				'label'  => 'Open EMail addresses in external mail program',
-				'name'   => 'force_mailto',
-				'help'   => 'Default is to open EMail addresses in EGroupware EMail application, if user has access to it.',
+			$settings['csv_fields'] = array(
+				'type'   => 'select',
+				'label'  => 'Fields for the CSV export',
+				'name'   => 'csv_fields',
+				'values' => array(
+					'all'      => lang('All'),
+					'business' => lang('Business address'),
+					'home'     => lang('Home address'),
+				),
+				'help'   => 'Which fields should be exported. All means every field stored in the addressbook incl. the custom fields. The business or home address only contains name, company and the selected address.',
 				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> false,
+				'admin'  => false,
+				'default'=> 'business',
+			);
+
+			$settings['vcard_charset'] = array(
+				'type'   => 'select',
+				'label'  => 'Charset for the vCard import and export',
+				'name'   => 'vcard_charset',
+				'values' => translation::get_installed_charsets(),
+				'help'   => 'Which charset should be used for the vCard import and export.',
+				'xmlrpc' => True,
+				'admin'  => false,
+				'default'=> 'iso-8859-1',
 			);
 		}
 		return $settings;
