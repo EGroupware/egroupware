@@ -84,6 +84,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 							$query += $this->get_query_month($states);
 							break;
 						case 'week':
+						case 'weekN':
 							$query += $this->get_query_week($states);
 							break;
 						case 'day':
@@ -96,7 +97,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 							{
 								ob_start();
 								$ui->$states['view']();
-								ob_end_flush();
+								ob_end_clean();
 							}
 							$query += array(
 								'start' => is_array($ui->first) ? $this->bo->date2ts($ui->first) : $ui->first,
@@ -237,15 +238,21 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	 */
 	public function get_selectors_etpl($definition = null) {
 		$states = $GLOBALS['egw']->session->appsession('session_data','calendar');
-		$start= new egw_time($states['date']);
-		if($states['view'] == 'week')
-		{
-			$days = isset($_GET['days']) ? $_GET['days'] : $GLOBALS['egw_info']['user']['preferences']['calendar']['days_in_weekview'];
-			if ($days != 5) $days = 7;
-			$end = "+$days days";
-			$end = strtotime($end, $start->format('ts'))-1;
+		switch($states['view']) {
+			case 'month':
+				$query = $this->get_query_month($states);
+				break;
+			case 'week':
+			case 'weekN':
+				$query = $this->get_query_week($states);
+				break;
+			case 'day':
+				$query = $this->get_query_day($states);
+				break;
 		}
-		elseif ($states['view'] == 'listview')
+		$start= new egw_time($query['start']);
+		$end = new egw_time($query['end']);
+		if ($states['view'] == 'listview')
 		{
 			$list = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
 
@@ -253,8 +260,8 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			$ui = new calendar_uilist();
 			$list['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
 			$ui->get_rows($list,$rows,$readonlys);
-			if($ui->first) $start = $ui->first;
-			if($ui->last) $end = $ui->last;
+			$start = $ui->first ? $ui->first : new egw_time($ui->date);
+			$end = $ui->last;
 
 			// Special handling
 			if($list['filter'] == 'all') $start = $end = null;
@@ -265,12 +272,11 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			}
 			$ui = null;
 		}
-		else
+		elseif(!$end)
 		{
 			$end = '+1 ' . $states['view'];
 			$end = strtotime($end, $start->format('ts'))-1;
 		}
-
 		$prefs = unserialize($GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]);
 		$data = array(
 			'name'		=> 'calendar.export_csv_select',
@@ -310,7 +316,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
                         $days = isset($_GET['days']) ? $_GET['days'] : $ui->cal_prefs['days_in_weekview'];
                         if ($days != 5) $days = 7;
                 }
-		if ($days == 4)         // next 4 days view
+		if ($states['view'] == 'week' && $days == 4)         // next 4 days view
                 {
                         $query['start'] = $this->bo->date2ts($states['date']);
                         $query['end'] = strtotime("+$days days",$query['start']) - 1;
@@ -330,7 +336,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 						break;
 				}
 			}
-			$query['end'] = strtotime("+$days days",$query['start']) - 1;
+			$query['end'] = strtotime($states['view'] == 'week' ? "+$days days" : "+{$ui->cal_prefs['multiple_weeks']} weeks",$query['start']) - 1;
 		}
 		return $query;
 	}
