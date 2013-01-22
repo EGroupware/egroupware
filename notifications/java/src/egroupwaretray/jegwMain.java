@@ -80,6 +80,15 @@ public class jegwMain implements ActionListener
                 System.exit(0);
             }
 
+			// Debuging
+			Boolean _debuging = ( jegwConst.getConstTag("egw_debuging").trim() 
+				== "1" ? true : false);
+			
+			egwDebuging.setDebuging(_debuging);
+			egwDebuging.setLevel(Level.parse(
+				jegwConst.getConstTag("egw_debuging_level").trim()));
+			// END 
+			
             if( this.egwconfig.getCXMLM().countConf() < 1 )
             {
 				String turl = jegwConst.getConstTag("egw_dc_url").trim();
@@ -162,6 +171,7 @@ public class jegwMain implements ActionListener
         {
             Logger.getLogger(jegwMain.class.getName()).log(Level.SEVERE, null, ex);
             jegwMain.debugDialog(ex.getMessage());
+			egwDebuging.log.log(Level.SEVERE, null, ex);
         }
     }
 
@@ -412,6 +422,8 @@ public class jegwMain implements ActionListener
 					jegwConst.getConstTag("info_info"),
 					jegwConst.getConstTag("egw_msg_start_browser_error"),
 					TrayIcon.MessageType.ERROR);
+				
+				egwDebuging.log.log(Level.SEVERE, null, exp);
 			}
 		}
     }
@@ -479,6 +491,7 @@ public class jegwMain implements ActionListener
 					dialog.setIconImage(hwTrayIcon.getImage(jegwConst.getConstTag("egwicon")));
 				} catch (IOException ex) {
 					Logger.getLogger(hwTrayIcon.class.getName()).log(Level.SEVERE, null, ex);
+					egwDebuging.log.log(Level.SEVERE, null, ex);
 				}
 				
 				dialog.setAlwaysOnTop(true);
@@ -629,6 +642,8 @@ public class jegwMain implements ActionListener
 					}
 					catch(Exception exp)
 					{
+						egwDebuging.log.log(Level.SEVERE, null, exp);
+						
 						// Fehler
 						this.hwtray.showBallon(
 							jegwConst.getConstTag("info_info"),
@@ -705,5 +720,6 @@ public class jegwMain implements ActionListener
         }
 
         Logger.getLogger(jegwMain.class.getName()).log(Level.SEVERE, null, ex);
+		egwDebuging.log.log(Level.SEVERE, null, ex);
     }
 }

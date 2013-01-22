@@ -15,8 +15,10 @@
 		<egw_dc_url></egw_dc_url>
 		<egw_dc_logindomain></egw_dc_logindomain>
 		<egw_dc_username></egw_dc_username>
-		<egw_dc_timeout_socket>10</egw_dc_timeout_socket>
+		<egw_dc_timeout_socket>1000</egw_dc_timeout_socket>
 		<egw_dc_timeout_notify>30000</egw_dc_timeout_notify>
+		<egw_debuging>0</egw_debuging>
+		<egw_debuging_level>ALL</egw_debuging_level>
 	</egwdefaultconfig>
 	<ShowBallonInfo>
 		<info_login>Login</info_login>

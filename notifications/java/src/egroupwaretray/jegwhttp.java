@@ -14,6 +14,7 @@ package egroupwaretray;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.util.*;
+import java.util.logging.Level;
 import org.json.simple.parser.ContainerFactory;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -146,6 +147,7 @@ public class jegwhttp
         }
         catch( Exception exp)
         {
+			egwDebuging.log.log(Level.SEVERE, null, exp);
             throw new Exception("HOSTNOTFOUND");
         }
 
@@ -705,6 +707,8 @@ public class jegwhttp
 			}
 			catch( ParseException pe )
 			{
+				egwDebuging.log.log(Level.SEVERE, null, pe);
+				
 				throw new Exception("NOAPPS");
 			}
         }

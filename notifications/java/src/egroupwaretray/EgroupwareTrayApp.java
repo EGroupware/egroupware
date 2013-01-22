@@ -50,6 +50,13 @@ public class EgroupwareTrayApp extends SingleFrameApplication {
     public static void main(String[] args) 
     {
         // Trayer Main Classe erstellen
-        new jegwMain();
+		try
+        {
+			jegwMain jegwMain = new jegwMain();
+		}
+		catch (Throwable uncaught)
+        {
+        	egwDebuging.dumpUncaughtError(uncaught);
+        }
     }
 }

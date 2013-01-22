@@ -32,7 +32,7 @@ public class BaseHttp
     private boolean _isSSL          = false;
     private boolean _isAjax         = false;
     private String _cookie          = "";
-	private int _sockettimeout		= 10;
+	private int _sockettimeout		= 10000;
 	
 	static private BaseHttpsTrustManager _bhtm = null;
 	
@@ -215,6 +215,7 @@ public class BaseHttp
         }
         catch( Exception exp )
         {
+			egwDebuging.log.log(Level.SEVERE, null, exp);
             throw new Exception("NETERROR");
         }
 
@@ -322,6 +323,7 @@ public class BaseHttp
         }
         catch(Exception exp)
         {
+			egwDebuging.log.log(Level.SEVERE, null, exp);
             throw new Exception("NETERROR");
         }
 
@@ -499,6 +501,7 @@ public class BaseHttp
         }
         catch( IOException ex)
         {
+			egwDebuging.log.log(Level.SEVERE, null, ex);
         }
 
         return false;

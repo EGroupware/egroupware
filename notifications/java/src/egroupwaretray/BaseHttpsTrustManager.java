@@ -20,6 +20,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
@@ -86,6 +87,8 @@ public class BaseHttpsTrustManager implements javax.net.ssl.X509TrustManager
 				}
 				
 				this.acceptcerts.add(cs);
+				
+				egwDebuging.log.log(Level.SEVERE, null, exp);
 			}
 		}
 	}

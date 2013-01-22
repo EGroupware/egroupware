@@ -150,6 +150,7 @@ public class jegwapplications
 					dialog.setIconImage(hwTrayIcon.getImage(jegwConst.getConstTag("egwicon")));
 				} catch (IOException ex) {
 					Logger.getLogger(hwTrayIcon.class.getName()).log(Level.SEVERE, null, ex);
+					egwDebuging.log.log(Level.SEVERE, null, ex);
 				}
 				
                 ((jegwInfoDialog)dialog).setNotifiyId(app.getString("notify_id"));
