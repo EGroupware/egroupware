@@ -85,6 +85,21 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 					$query['col_filter'][$field] = implode(',',$value);
 					continue;
 				}
+
+				// Birthdays in addressbook are formatted Y-m-d
+				if($field == 'bday')
+				{
+					if($value['from'])
+					{
+						$query['col_filter'][] = "contact_bday >= " . $GLOBALS['egw']->db->quote(date('Y-m-d', (int)$value['from']));
+					}
+					if($value['to'])
+					{
+						$query['col_filter'][] = "contact_bday <= " . $GLOBALS['egw']->db->quote(date('Y-m-d', (int)$value['to']));
+					}
+					continue;
+				}
+					
 				if(strpos($field, '#') !== 0)
 				{
 					$field = 'contact_'.$field;
@@ -314,7 +329,6 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 	public function get_selectors_etpl() {
 		return array(
 			'name'		=> 'importexport.export_csv_selectors',
-			'content'	=> 'use_all',
 		);
 	}
 
