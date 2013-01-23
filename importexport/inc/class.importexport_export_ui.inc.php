@@ -233,13 +233,6 @@ class importexport_export_ui {
 			");
 		}
 
-		// Disable / hide definition filter if not selected
-		if($content['selection'] !== 'filter')
-		{
-			$this->js->set_onload("
-				\$j('div.filters').hide();
-			");
-		}
 		$preserv['old_definition'] = $content['definition'];
 
 		// If not set by plugin, pre-set selection to preference, or 'search'
@@ -253,6 +246,14 @@ class importexport_export_ui {
 		if(!$content['selection'])
 		{
 			$content['selection'] = 'search';
+		}
+
+		// Disable / hide definition filter if not selected
+		if($content['selection'] != 'filter')
+		{
+			$this->js->set_onload("
+				\$j('div.filters').hide();
+			");
 		}
 		unset ($plugin_object);
 		$apps = importexport_helper_functions::get_apps('export');
