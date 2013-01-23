@@ -38,6 +38,11 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			if($key[0] == '#') $cfs[] = substr($key,1);
 		}
 
+		$query = array(
+			'cfs'		=> $cfs, // Otherwise we shouldn't get any custom fields
+			'num_rows'	=> -1,
+			'csv_export'	=> true
+		);
 		switch($options['selection'])
 		{
 			case 'criteria':
@@ -113,11 +118,6 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 				}
 				break;
 			case 'filter':
-				$query = array(
-					'cfs'		=> $cfs, // Otherwise we shouldn't get any custom fields
-					'num_rows'	=> -1,
-					'csv_export'	=> true
-				);
 				$fields = importexport_helper_functions::get_filter_fields($_definition->application, $this);
 				$filter = $_definition->filter;
 
