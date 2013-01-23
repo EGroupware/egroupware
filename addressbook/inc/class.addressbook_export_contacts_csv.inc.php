@@ -330,6 +330,10 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			$record->tel_prefer = $record->$field;
 		}
 
+		if(!is_array($options['explode_multiselects']))
+		{
+			return;
+		}
 		foreach((array)$options['explode_multiselects'] as $field => $explode_settings) {
 			if(!is_array($record->$field)) $record->$field = explode(',', $record->$field);
 			foreach((array)$explode_settings['values'] as $value => $settings) {
