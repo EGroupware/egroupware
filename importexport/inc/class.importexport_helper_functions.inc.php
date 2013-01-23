@@ -580,7 +580,11 @@ class importexport_helper_functions {
 		}
 
 		// Get field -> label map and initialize fields using wizard field order
-		$fields = $export_fields = $wizard_plugin->get_export_fields();
+		$fields = $export_fields = array();
+		if(method_exists($wizard_plugin, 'get_export_fields'))
+		{
+			$fields = $export_fields = $wizard_plugin->get_export_fields();
+		}
 
 		foreach($record_classname::$types as $type => $type_fields)
 		{

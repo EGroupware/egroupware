@@ -212,6 +212,11 @@ class importexport_export_ui {
 			}
 			else
 			{
+				if($definition->filter)
+				{
+					$content['selection'] = 'filter';
+				}
+
 				// Process relative dates into the current absolute date
 				foreach($content['filter']['fields'] as $field => $settings)
 				{
@@ -235,14 +240,19 @@ class importexport_export_ui {
 				\$j('div.filters').hide();
 			");
 		}
-
 		$preserv['old_definition'] = $content['definition'];
+
+		// If not set by plugin, pre-set selection to preference, or 'search'
 		if (($prefs = $GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]) &&
-			($prefs = unserialize($prefs)) && is_array($content['selection']) && !$content['selection']['plugin_override'])
+			($prefs = unserialize($prefs)) && !$content['selection']['plugin_override'])
 		{
 			$selection = $content['selection'];
 			$content = array_merge_recursive($content,$prefs);
 			$content['selection'] = $prefs['selection'] ? $prefs['selection'] : $selection;
+		}
+		if(!$content['selection'])
+		{
+			$content['selection'] = 'search';
 		}
 		unset ($plugin_object);
 		$apps = importexport_helper_functions::get_apps('export');
