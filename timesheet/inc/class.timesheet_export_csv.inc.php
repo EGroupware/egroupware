@@ -33,7 +33,7 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 		$this->ui = new timesheet_ui();
 		$selection = array();
 
-		if($options['selection'] == 'selected') {
+		if($options['selection'] == 'search') {
 			$query = $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP);
 			$query['num_rows'] = -1;	// all records
 			$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
@@ -145,7 +145,6 @@ class timesheet_export_csv implements importexport_iface_export_plugin {
 	public function get_selectors_etpl() {
 		return array(
 			'name'	=> 'importexport.export_csv_selectors',
-			'content' => 'selected'
 		);
 	}
 
