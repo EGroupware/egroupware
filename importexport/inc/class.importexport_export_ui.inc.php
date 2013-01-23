@@ -301,7 +301,7 @@ class importexport_export_ui {
 					$filter[$key] = $value;
 
 					// Skip empty values or empty ranges
-					if(!$value || is_array($value) && array_key_exists('from',$value) && !$value['from'] && !$value['to'] )
+					if($value == "" || is_null($value) || (is_array($value) && count($value) == 0) || is_array($value) && array_key_exists('from',$value) && !$value['from'] && !$value['to'] )
 					{
 						unset($filter[$key]);
 					}
