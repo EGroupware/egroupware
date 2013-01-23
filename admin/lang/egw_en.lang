@@ -201,6 +201,7 @@ description can not exceed 255 characters in length !	admin	en	Description can n
 determines the order the fields are displayed	admin	en	Determines the order the fields are displayed
 disable	admin	en	Disable
 disable "auto completion" of the login form	admin	en	Disable "auto completion" of the login form
+disable minifying of javascript and css files	admin	en	Disable minifying of javascript and CSS files
 disable wysiwyg-editor	admin	en	Disable WYSIWYG-editor
 disabled (not recomended)	admin	en	Disabled (not recommended)
 display	admin	en	Display

@@ -47,6 +47,8 @@ addressbook of	addressbook	en	Address book of
 addressbook preferences	addressbook	en	Address Book preferences
 addressbook the contact should be saved to	addressbook	en	Address book the contact should be saved to
 addressbook the contact should be shown	addressbook	en	Address book the contact should be shown
+addressbook vcard export	addressbook	en	Addressbook vCard export
+addressbook vcard import	addressbook	en	Addressbook vCard import
 addressbook-fieldname	addressbook	en	Address book field name
 addvcard	addressbook	en	Add vCard
 advanced search	addressbook	en	Advanced search
@@ -89,9 +91,11 @@ cell phone	addressbook	en	Mobile phone
 change all organisation members	addressbook	en	Change all organisation members
 charset for the csv export	addressbook	en	Charset for the CSV export
 charset for the vcard export	addressbook	en	Charset for the vCard export
+charset for the vcard import and export	addressbook	en	Charset for the vCard import and export
 charset of file	addressbook	en	Charset of file
 check all	addressbook	en	Check all
 choose an icon for this contact type	admin	en	Choose an icon for this contact type
+choose charset	addressbook	en	Choose charset
 choose export options	addressbook	en	Choose export options
 choose owner of imported data	addressbook	en	Choose owner of imported data
 chosse an etemplate for this contact type	admin	en	Chose an eTemplate for this contact type
@@ -254,6 +258,7 @@ import next set	addressbook	en	Import next set
 import_instructions	addressbook	en	In Netscape, open the Address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your address book and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in vCard format.
 importer's personal	addressbook	en	Importer's personal
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	en	Imports contacts into address book from a CSV File. CSV means 'Comma Separated Values'. In the options tab you can also choose other separators.
+imports contacts into your addressbook from a vcard file.	addressbook	en	Imports contacts into your Addressbook from a vCard File.
 in %1 days (%2) is %3's birthday.	addressbook	en	In %1 days (%2) is %3's birthday.
 income	addressbook	en	Income
 infolog	addressbook	en	InfoLog
@@ -432,6 +437,7 @@ use country list	addressbook	en	Use country list
 use setup for a full account-migration	admin	en	Use setup for a full account migration
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	en	Use this tag for address labels. Place the content you want to repeat between two tags.
 used for links and for the own sorting of the list	addressbook	en	Used for links and for the own sorting of the list
+user preference	addressbook	en	User preference
 vcard	common	en	vCard
 vcards require a first name entry.	addressbook	en	vCards require a first name entry.
 vcards require a last name entry.	addressbook	en	vCards require a last name entry.
@@ -447,6 +453,7 @@ which address format should the addressbook use for countries it does not know t
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	en	The address book to add contacts, when you have no rights to add to the current address book.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	en	Which charset should be used for the CSV export.
 which charset should be used for the vcard export.	addressbook	en	Which charset should be used for the vCard export.
+which charset should be used for the vcard import and export.	addressbook	en	Which charset should be used for the vCard import and export.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	en	Which fields should be exported. All means every field stored in the address book incl. the custom fields. The business or home address only contains name, company and the selected address.
 whole query	addressbook	en	Whole query
 work email if given, else home email	addressbook	en	Work email if given, else home email

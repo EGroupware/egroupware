@@ -5,6 +5,7 @@ as a subfolder of	felamimail	ja	親フォルダ
 attachments	felamimail	ja	添付ファイル
 checkbox	felamimail	ja	チェックボックス
 color	felamimail	ja	色
+compose	felamimail	ja	作成
 configuration	felamimail	ja	環境設定
 create folder	felamimail	ja	フォルダ作成
 delete folder	felamimail	ja	フォルダ削除
@@ -17,6 +18,8 @@ edit selected	felamimail	ja	訂正
 enter your default mail domain ( from: user@domain )	admin	ja	メールドメイン名 ( 書式 user@domain の domain部分 )
 enter your smtp server hostname or ip address	admin	ja	SMTP サーバ名または IP アドレス
 enter your smtp server port	admin	ja	SMTP ポート番号
+forward	felamimail	ja	転送
+from	felamimail	ja	差出人
 icons and text	felamimail	ja	アイコンとテキスト
 icons only	felamimail	ja	アイコンのみ
 identifying name	felamimail	ja	定義名
@@ -43,6 +46,7 @@ remove	felamimail	ja	削除
 rename a folder	felamimail	ja	フォルダ名の変更
 renamed successfully!	felamimail	ja	フォルダ名を変更しました。
 replied	felamimail	ja	返信済み
+reply	felamimail	ja	返信
 reply to	felamimail	ja	リプライ
 select all	felamimail	ja	全て選択
 signature	felamimail	ja	署名

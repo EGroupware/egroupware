@@ -24,6 +24,7 @@ adding file to message. please wait!	felamimail	en	Adding file to message. Pleas
 additional info	felamimail	en	Additional info
 address book	felamimail	en	Address Book
 address book search	felamimail	en	Address Book search
+administer the mailbox (change the mailbox's acl).	felamimail	en	Administer the mailbox (change the mailbox's ACL).
 after message body	felamimail	en	After message body
 all address books	felamimail	en	All address books
 all folders	felamimail	en	All folders
@@ -69,6 +70,7 @@ close all	felamimail	en	Close all
 close this page	felamimail	en	Close this page
 close window	felamimail	en	Close window
 color	felamimail	en	Color
+common acl	felamimail	en	Common ACL
 compose	felamimail	en	Compose
 compose as new	felamimail	en	Compose as new
 compress folder	felamimail	en	Compress folder
@@ -90,6 +92,7 @@ could not import message:	felamimail	en	Could not import message:
 could not open secure connection to the imap server. %s : %s.	felamimail	en	Could not open secure connection to the IMAP server. %s : %s.
 cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	en	CRAM-MD5 or DIGEST-MD5 requires the Auth_SASL package to be installed.
 create	felamimail	en	Create
+create a new mailbox below the top-level mailbox (ordinary users cannot create top-level mailboxes).	felamimail	en	Create a new mailbox below the top-level mailbox (ordinary users cannot create top-level mailboxes).
 create folder	felamimail	en	Create folder
 create sent	felamimail	en	Create Sent
 create subfolder	felamimail	en	Create sub folder
@@ -109,6 +112,7 @@ deactivate script	felamimail	en	De-activate script
 default	felamimail	en	Default
 default signature	felamimail	en	Default signature
 default sorting order	felamimail	en	Default sorting order
+delete a message and/or the mailbox itself.	felamimail	en	Delete a message and/or the mailbox itself.
 delete all	felamimail	en	Delete all
 delete folder	felamimail	en	Delete folder
 delete script	felamimail	en	Delete script
@@ -170,6 +174,7 @@ edit rule	felamimail	en	Edit rule
 edit selected	felamimail	en	Edit selected
 edit vacation settings	felamimail	en	Edit vacation settings
 editor type	felamimail	en	Editor type
+effective only if server supports acl at all	admin	en	effective only if server supports ACL at all
 email address	felamimail	en	Email address
 email forwarding address	felamimail	en	Email forwarding address
 email notification	felamimail	en	email notification
@@ -290,6 +295,7 @@ inbox	felamimail	en	INBOX
 incoming mail server(imap)	felamimail	en	Incoming mail server (IMAP)
 index order	felamimail	en	Index order
 info	felamimail	en	Info
+insert (move or copy) a message into the mailbox.	felamimail	en	Insert (move or copy) a message into the mailbox.
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	felamimail	en	Insert the signature at top of the new message when opening compose dialog.
 invalid user name or password	felamimail	en	Invalid user name or password!
 javascript	felamimail	en	JavaScript
@@ -310,6 +316,7 @@ light gray	felamimail	en	Light gray
 list all	felamimail	en	List all
 loading	felamimail	en	Loading
 location of buttons when composing	felamimail	en	Location of buttons when composing
+look up the name of the mailbox (but not its contents).	felamimail	en	Look up the name of the mailbox (but not its contents).
 mail grid behavior: how many messages should the mailgrid load? if you select all messages there will be no pagination for mail message list. (beware, as some actions on all selected messages may be problematic depending on the amount of selected messages.)	felamimail	en	Mail Grid Behavior: how many messages should the mail grid load? If you select all messages there will be no pagination for mail message list.
 mail server login type	admin	en	Mail server login type
 mail settings	felamimail	en	Mail settings
@@ -410,6 +417,7 @@ please select the number of days to wait between responses	felamimail	en	Select 
 please supply the message to send with auto-responses	felamimail	en	Supply the message to send with auto-responses
 port	felamimail	en	Port
 posting	felamimail	en	Posting
+preserve the 'seen' and 'recent' status of messages across imap sessions.	felamimail	en	Preserve the 'seen' and 'recent' status of messages across IMAP sessions.
 preview disabled for folder:	felamimail	en	Preview disabled for folder:
 previous	felamimail	en	Previous
 previous message	felamimail	en	Previous message
@@ -421,6 +429,7 @@ processing of file %1 failed. failed to meet basic restrictions.	felamimail	en	P
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	felamimail	en	provide a default vacation text, (used on new vacation messages when there was no message set up previously)
 quicksearch	felamimail	en	Quick search
 read	felamimail	en	Read
+read the contents of the mailbox.	felamimail	en	Read the contents of the mailbox.
 reading	felamimail	en	Reading
 receive notification	felamimail	en	Receive notification
 recent	felamimail	en	Recent
@@ -487,6 +496,7 @@ show all messages	felamimail	en	Show all messages
 show header	felamimail	en	Show header
 show new messages on main screen	felamimail	en	Show new messages on main screen
 show test connection section and control the level of info displayed?	felamimail	en	Show Test Connection section and control the level of info displayed?
+sieve	admin	en	sieve
 sieve connection status	felamimail	en	Sieve Connection Status
 sieve script name	felamimail	en	Sieve script name
 sieve settings	admin	en	Sieve settings
@@ -596,6 +606,7 @@ which folders - in general - should not be automatically created, if not existin
 with message	felamimail	en	With message
 with message "%1"	felamimail	en	With message "%1"
 wrap incoming text at	felamimail	en	Wrap incoming text at
+write (change message flags such as 'recent', 'answered', and 'draft').	felamimail	en	Write (change message flags such as 'recent', 'answered', and 'draft').
 writing	felamimail	en	Writing
 wrote	felamimail	en	Wrote
 yes, but mask all passwords	felamimail	en	yes, but mask all passwords
