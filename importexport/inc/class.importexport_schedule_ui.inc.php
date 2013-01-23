@@ -83,7 +83,7 @@
 		}
 
 		public function edit($content = array()) {
-			$id = $_GET['id'] ? $_GET['id'] : $content['id'];
+			$id = $_GET['id'] ? urldecode($_GET['id']) : $content['id'];
 			$definition_id = $_GET['definition'];
 
 			unset($content['id']);
