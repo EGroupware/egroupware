@@ -148,6 +148,10 @@ class filter_widget extends customfields_widget
 								$field['values'][$key] = $val;
 							}
 						}
+
+						// We don't want the 'All' or 'Select...' if it's there
+						unset($field['values']['']);
+
 						$input =& boetemplate::empty_cell($field['type'],$lname,array(
 							'sel_options' => $field['values'],
 							'size'        => $field['rows'],
