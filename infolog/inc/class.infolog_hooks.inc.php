@@ -291,35 +291,6 @@ class infolog_hooks
 				'admin'  => False,
 			),
 		);
-		if ($GLOBALS['egw_info']['user']['apps']['calendar'])
-		{
-			$settings['cal_show'] = array(
-				'type'   => 'multiselect',
-				'label'  => 'Which types should the calendar show',
-				'name'   => 'cal_show',
-				'values' => $info->enums['type'],
-				'help'   => 'Can be used to show further InfoLog types in the calendar or limit it to show eg. only tasks.',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> 'tasks,phone',
-			);
-			$settings['calendar_set'] = array(
-				'type'   => 'multiselect',
-				'label'  => 'Participants for scheduling an appointment',
-				'name'   => 'calendar_set',
-				'values' => array(
-					'responsible' => lang('Responsible'),
-					'contact' => lang('Contact'),
-					'owner' => lang('Owner'),
-					'user' => lang('Current user'),
-					'selected' => lang('Selected calendars'),
-				),
-				'help'   => 'Which participants should be preselected when scheduling an appointment.',
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> 'responsible,contact,user',
-			);
-		}
 		$settings[] = array(
 				'type'  => 'section',
 				'title' => lang('Notification settings'),
@@ -492,6 +463,35 @@ class infolog_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> isset($options[$default_def]) ? $default_def : false,
+			);
+		}
+		if ($GLOBALS['egw_info']['user']['apps']['calendar'])
+		{
+			$settings['cal_show'] = array(
+				'type'   => 'multiselect',
+				'label'  => 'Which types should the calendar show',
+				'name'   => 'cal_show',
+				'values' => $info->enums['type'],
+				'help'   => 'Can be used to show further InfoLog types in the calendar or limit it to show eg. only tasks.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> 'tasks,phone',
+			);
+			$settings['calendar_set'] = array(
+				'type'   => 'multiselect',
+				'label'  => 'Participants for scheduling an appointment',
+				'name'   => 'calendar_set',
+				'values' => array(
+					'responsible' => lang('Responsible'),
+					'contact' => lang('Contact'),
+					'owner' => lang('Owner'),
+					'user' => lang('Current user'),
+					'selected' => lang('Selected calendars'),
+				),
+				'help'   => 'Which participants should be preselected when scheduling an appointment.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> 'responsible,contact,user',
 			);
 		}
 		return $settings;
