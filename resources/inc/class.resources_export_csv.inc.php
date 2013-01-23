@@ -32,7 +32,7 @@ class resources_export_csv implements importexport_iface_export_plugin {
 		$options = $_definition->plugin_options;
 
 		$selection = array();
-		if ($options['selection'] == 'selected') {
+		if ($options['selection'] == 'search') {
 			// ui selection with checkbox 'selected'
 			$query = egw_cache::getSession('resources', 'get_rows');
 			$query['num_rows'] = -1;	// all
@@ -160,7 +160,6 @@ class resources_export_csv implements importexport_iface_export_plugin {
 	public function get_selectors_etpl() {
 		return array(
 			'name'	=> 'importexport.export_csv_selectors',
-			'content'	=> 'selected'
 		);
 	}
 
