@@ -175,7 +175,7 @@ class felamimail_bo
 	{
 		if ($_profileID == 0)
 		{
-			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
+			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']) && !empty($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
 			{
 				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
 			}
