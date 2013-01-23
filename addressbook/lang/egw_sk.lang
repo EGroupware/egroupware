@@ -427,6 +427,7 @@ use country list	addressbook	sk	Použiť zoznam krajín
 use setup for a full account-migration	admin	sk	Pre plnú migráciu účtov použite Setup
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	sk	Použiť túto značku pre označenie adries. Vložte obsah, ktorý chcete, medzi dve značky.
 used for links and for the own sorting of the list	addressbook	sk	Používa sa pre odkazy a vlastné spôsoby triedenia zoznamu
+user preference	addressbook	sk	Používateľská voľba
 vcard	common	sk	Vizitka VCard
 vcards require a first name entry.	addressbook	sk	Vizitky potrebujú zadané krstné meno.
 vcards require a last name entry.	addressbook	sk	Vizitky potřebujú zadané priezvisko.

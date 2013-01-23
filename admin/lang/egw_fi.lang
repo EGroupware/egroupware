@@ -1,6 +1,9 @@
 %1 - %2 of %3 user accounts	admin	fi	%1 - %2 / %3 käyttäjätunnusta
 %1 - %2 of %3 user groups	admin	fi	%1 - %2 / %3 käyttäjäryhmää
 %1 acl records of not (longer) existing accounts deleted.	admin	fi	%1 ACL tietuetta ei (enää) löydy, käyttäjätili(t) poistettu.
+%1 categories of not (longer) existing accounts deleted.	admin	fi	%1 kategoriaa poistettu
+%1 category(s) %2	admin	fi	%1 kategoriaa %2
+%1 category(s) %2, %3 failed because of insufficent rights !!!	admin	fi	%1 kategoriaa %2, %3 epäonnistui käyttäjäoikeuksien takia.
 %1 group %2	admin	fi	%1 ryhmä %2
 %1 is no command!	admin	fi	%1 ei ole käsky!
 %1 log entries deleted.	admin	fi	%1 lokitietuetta poistettu!
@@ -12,6 +15,8 @@
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fi	(Käytä <br><a href="setup/" target="setup">Setup</a> [Manage Applications] asentaaksesi uusia sovelluksia !!!)
 -  type	admin	fi	- muoto
 accesslog and bruteforce defense	admin	fi	Käyttöloki ja suoja käyttäjätunnusten arvuuttelulle
+account "%1" has no email address --> not notified!	admin	fi	Käyttäjätilillä "%1" ei ole sähköpostiosoitetta - ei huomautusviestiä.
+account "%1" has no plaintext password!	admin	fi	Käyttäjätilillä "%1" ei ole "plain text" salasanaa
 account %1 %2	admin	fi	Käyttäjätili%1 %2
 account '%1' deleted.	admin	fi	Käyttäjätili '%1' poistettu
 account active	admin	fi	Käyttäjätili aktiivinen
@@ -113,6 +118,7 @@ change password for %1	admin	fi	Vaihda salasana %1
 change password hash to	admin	fi	Muuta salasana hash:
 changed password hash for %1 to %2.	admin	fi	Salasana hash %1 muutettu %1
 check acl for entries of not (longer) existing accounts	admin	fi	Tarkista ACL- oikeudet tietueista, jotka kuuluvat poistetuille käyttäjätileille.
+check categories for not (longer) existing accounts	admin	fi	Tarkista poistettujen käyttäjätilien kategoriat
 check ip address of all sessions	admin	fi	Tarkista IP-osoite kaikille istunnoille
 check items to <b>%1</b> to %2 for %3	admin	fi	Tarkista kohteet <b>%1</b> %2 kohdasta %3
 click to select a color	admin	fi	Napsauta valitaksesi värin
@@ -412,6 +418,7 @@ order	admin	fi	Järjestä
 outbound	admin	fi	Lähtevä
 own categories	admin	fi	Omat kategoriat
 own install id:	admin	fi	Asennus ID:
+owner "%1" removed, please select group-owner	admin	fi	Omistaja "%1" poistettu. Valitse omistajaksi ryhmä.
 passthrough	admin	fi	Läpikulku
 password for smtp-authentication	admin	fi	Salasana SMTP-tunnistukselle
 password updated	admin	fi	salasana päivitetty

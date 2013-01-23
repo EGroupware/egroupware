@@ -427,6 +427,7 @@ use an extra tab for private custom fields?	admin	fi	Käytä ylimääräistä v�
 use country list	addressbook	fi	Käytä maaluetteloa
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	fi	Käytä tägiä esim. osoitetarroihin. Lisää haluamasi kentät kahden tägin väliin.
 used for links and for the own sorting of the list	addressbook	fi	Käytä linkeissä ja omassa lajittelulistassa
+user preference	addressbook	fi	Käyttäjäasetukset
 vcard	common	fi	VCard
 vcards require a first name entry.	addressbook	fi	VCard vaatii etunimen.
 vcards require a last name entry.	addressbook	fi	VCard vaatii sukunimen.

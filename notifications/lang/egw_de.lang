@@ -63,6 +63,7 @@ page not found, please check serveraddress.	notifications	de	Seite nicht gefunde
 password:	notifications	de	Passwort:
 permission	notifications	de	Berechtigung
 permission denied for notifications application.	notifications	de	Zugriff verweigert zur Benachrichtigungen Anwendung.
+placeholders with user/ prefix	admin	de	Platzhalter mit user/prefix
 please contact your egroupware admin.	notifications	de	Bitte kontaktieren Sie Ihren EGroupware Administrator
 please enter the url of your egroupware.	notifications	de	Bitte geben Sie die Serveradresse (URL) Ihre EGroupware ein.
 please enter your egroupware username.	notifications	de	Bitte geben Sie Ihren EGroupware Benutzernamen ein.
@@ -76,12 +77,15 @@ save password	notifications	de	Passwort speichern
 setting	notifications	de	Einstellung
 setting aborted, application exit	notifications	de	Einstellungen abgebrochen, Anwendung beenden
 settings	notifications	de	Einstellungen
+signature	admin	de	Signatur
+signature added to every change notification	admin	de	Signatur zu allen Änderungen hinzugefügt
 sms backend	admin	de	SMS Schnittstelle
 sms only	notifications	de	nur SMS
 sorry, your login has expired	notifications	de	Entschuldigung, Ihre Benutzerkennung ist abgelaufen
 step	notifications	de	Schritt
 subject dn:	notifications	de	Serveradresse
 the server certificate is not a valid trust center certificate!	notifications	de	Das Zertifikat des Webservers ist nicht vertrauenswürdig!
+this egroupware notification has been sent to you by mail because your	notifications	de	Diese EGroupware Benachrichtigung wurde Ihnen per E-Mail zugestellt.
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	de	Diese EGroupware-Benachrichtigung wurde Ihnen per Mail zugesandt, da Ihre gewählte Benachrichtigungskette vom Administrator deaktiviert wurde. Bitte wählen Sie eine andere Benachrichtigungskette in Ihren Einstellungen!
 user:	notifications	de	Benutzer:
 warning	notifications	de	Warnung
@@ -90,6 +94,7 @@ windows-popup backend	admin	de	Windows-Popup Schnittstelle
 windows-popup first, if that fails notify me by e-mail	notifications	de	Zuerst Windows-Popup. Wenn dies fehl schlägt, benachrichtige mich per E-Mail.
 windows-popup first, if that fails notify me by sms	notifications	de	Zuerst Windows-Popup. Wenn dies fehl schlägt, benachrichtige mich per SMS.
 windows-popup only	notifications	de	nur Windows-Popup
+you can also use	admin	de	Sie können ebenso folgendes verwenden:
 you have been successfully logged out	notifications	de	Sie wurde erfolgreich abgemeldet
 you've got new mail	notifications	de	Sie haben neue E-Mails
 your session could not be verified.	notifications	de	Ihre Sitzung konnte nicht verifiziert werden.

@@ -46,7 +46,9 @@ addressbook menu	addressbook	de	Adressbuch Menü
 addressbook of	addressbook	de	Adressbuch von
 addressbook preferences	addressbook	de	Adressbuch Einstellungen
 addressbook the contact should be saved to	addressbook	de	Adressbuch in dem der Kontakt gespeichert werden soll
-addressbook the contact should be shown	addressbook	de	Adressbuch in dem der Kontakt angezeit werden soll
+addressbook the contact should be shown	addressbook	de	Adressbuch in dem der Kontakt angezeigt werden soll
+addressbook vcard export	addressbook	de	Adressbuch im vCard-Format exportieren
+addressbook vcard import	addressbook	de	Adressbuch per vCard-Format importieren
 addressbook-fieldname	addressbook	de	Adressbuch Feldname
 addvcard	addressbook	de	VCard hinzufügen
 advanced search	addressbook	de	Erweiterte Suche
@@ -89,9 +91,11 @@ cell phone	addressbook	de	Mobiltelefon
 change all organisation members	addressbook	de	Alle Mitglieder der Organisation ändern
 charset for the csv export	addressbook	de	Zeichensatz für den CSV Export
 charset for the vcard export	addressbook	de	Zeichensatz für den vCard Export
+charset for the vcard import and export	addressbook	de	Zeichensatz für den vCard Import und Export
 charset of file	addressbook	de	Zeichensatz der Datei
 check all	addressbook	de	Alle auswählen
 choose an icon for this contact type	admin	de	Wählen Sie ein Icon für diesen Kontakt Typ
+choose charset	addressbook	de	Zeichensatz auswählen
 choose export options	addressbook	de	Wählen Sie die Export Optionen
 choose owner of imported data	addressbook	de	Wählen Sie den Besitzer der importierten Daten
 chosse an etemplate for this contact type	admin	de	Wählen Sie ein eTemplate für diesen Kontakt Typ
@@ -238,7 +242,7 @@ home phone	addressbook	de	Tel. privat
 home state	addressbook	de	Bundesland privat
 home street	addressbook	de	Straße privat
 home zip code	addressbook	de	PLZ privat
-how many contacts should non-admins be able to export	admin	de	Wieviele Kontakte sollen Nicht-Adminstratoren exportieren können?
+how many contacts should non-admins be able to export	admin	de	Wie viele Kontakte sollen Nicht-Adminstratoren exportieren können?
 icon	addressbook	de	Icon
 if accounts are already in ldap	admin	de	wenn die Benutzer bereits im LDAP sind
 ignore first line	addressbook	de	Erste Zeile ignorieren
@@ -254,6 +258,7 @@ import next set	addressbook	de	Nächsten Satz importieren
 import_instructions	addressbook	de	In Netscape: Öffnen Sie das Adressbuch und wählen Sie <b>Exportieren</b> aus dem Datei Menü aus. Die Dateien werden im LDIF Format exportiert.<p> In Outlook wählen Sie den Ordner Kontakte aus, wählen Sie <b>Importieren und Exportieren...</p> aus dem <b>Datei</b> Menü aus und Exportieren Sie die Kontakte als eine CSV Datei.<p> In Palm Desktop 4.0 oder größer, öffnen Sie Ihr Adressbuch und wählen Sie <b>Export</b> aus dem Datei-Menü aus. Die Datei wird im VCard-Format exportiert.
 importer's personal	addressbook	de	Persönliche Adressbuch des Importierenden
 imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	de	Importiert Kontakte aus einer CSV Datei in Ihr Adressbuch. CSV bedeutet Komma getrennte Werte. Sie können in dem Reiter Einstellungen auch ein anderes Trennzeichen wählen.
+imports contacts into your addressbook from a vcard file.	addressbook	de	Importiert Kontakte in Ihr Adressbuch von einer vCard Datei
 in %1 days (%2) is %3's birthday.	addressbook	de	In %1 Tagen (%2) ist der Geburtstag von %3.
 income	addressbook	de	Einkommen
 infolog	addressbook	de	InfoLog
@@ -389,10 +394,10 @@ start	admin	de	Starten
 startrecord	addressbook	de	Startdatensatz
 state	common	de	Bundesland
 street	common	de	Straße
-subject for email	addressbook	de	Betreff der E-mail
+subject for email	addressbook	de	Betreff der E-Mail
 successfully imported %1 records into your addressbook.	addressbook	de	%1 Kontakte wurden erfolgreich in Ihr Adressbuch importiert
 suffix	addressbook	de	Zusatz
-tag to mark positions for address labels	addressbook	de	Markierungszeichen, um die Positionen von Adressetiktetten zu markieren
+tag to mark positions for address labels	addressbook	de	Markierungszeichen, um die Positionen von Adressetiketten zu markieren
 tel home	addressbook	de	Telefon privat
 telephony integration	admin	de	Telefonie Integration
 test import (show importable records <u>only</u> in browser)	addressbook	de	Test-Import (zeigt importierbare Datensätze <u>nur</u> im Browser an)
@@ -430,8 +435,9 @@ use an extra category tab?	addressbook	de	Separaten Reiter für Kategorien verwe
 use an extra tab for private custom fields?	admin	de	Separaten Reiter für private benutzerdefinierte Felder verwenden?
 use country list	addressbook	de	Länderliste benutzen
 use setup for a full account-migration	admin	de	für eine komplette Benutzer Migration setup verwenden
-use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	de	Benutzen Sie diesen Markierungszeichen für Adressetiketten. Plazieren Sie den Inhalt, der wiederholt werden soll, zwischen zwei Markierungszeichen.
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	de	Benutzen Sie diesen Markierungszeichen für Adressetiketten. Platzieren Sie den Inhalt, der wiederholt werden soll, zwischen zwei Markierungszeichen.
 used for links and for the own sorting of the list	addressbook	de	wird für Verknüpfungen und die eigene Sortierung der Liste benutzt
+user preference	addressbook	de	Benutzerdefinierte Einstellungen
 vcard	common	de	VCard
 vcards require a first name entry.	addressbook	de	VCards benötigen einen Vornamen.
 vcards require a last name entry.	addressbook	de	VCards benötigen einen Nachnamen.
@@ -447,11 +453,12 @@ which address format should the addressbook use for countries it does not know t
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	de	Welches Adressbuch soll beim Hinzufügen von Kontakten ausgewählt sein, wenn Sie keine Hinzufügen Rechte zum aktuellen Adressbuch haben.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die Systemweite Vorgabe ist der Zeichensatz der EGroupware Installation.
 which charset should be used for the vcard export.	addressbook	de	Welcher Zeichensatz soll für den vCard Export verwendet werden?
+which charset should be used for the vcard import and export.	addressbook	de	Welcher Zeichensatz soll für den vCard Import und Export verwendet werden?
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	de	Welche Felder sollen exportiert werden. 'Alle' bedeutet jedes Feld, welches im Adressbuch gespeichert ist, einschl. der benutzerdefinierten Felder. Die Geschäfts- oder Privatadresse enthält nur Name, Firma und die ausgewählte Adresse.
 whole query	addressbook	de	gesamte Abfrage
 work email if given, else home email	addressbook	de	Geschäftliche E-Mail wenn vorhanden, ansonsten private E-Mail
 work phone	addressbook	de	Tel dienstl.
-write (update or add) a single entry by passing the fields.	addressbook	de	Schreibt (aktualiseren oder hinzufügen) eines einzelnen Eintrags durch Übergabe der Felder
+write (update or add) a single entry by passing the fields.	addressbook	de	Schreibt (aktualisieren oder hinzufügen) eines einzelnen Eintrags durch Übergabe der Felder
 wrong - try again ...	addressbook	de	Falsch - nochmal versuchen ...
 yes, for the next three days	addressbook	de	Ja, für die nächsten drei Tage
 yes, for the next two weeks	addressbook	de	Ja, für die nächsten zwei Wochen
