@@ -1126,6 +1126,14 @@ class calendar_groupdav extends groupdav_handler
 		{
 			$privileges['schedule-deliver'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'schedule-deliver', '');
 		}
+		// remove bind privilege on other users or groups calendars, if calendar config require_acl_invite is set
+		// and current user has no invite grant
+		if ($user && $user != $GLOBALS['egw_info']['user']['account_id'] && isset($privileges['bind']) &&
+			($this->bo->require_acl_invite == 'all' || $this->bo->require_acl_invite == 'groups' && $user < 0) &&
+			!$this->bo->check_perms(EGW_ACL_INVITE, 0, $user))
+		{
+			unset($privileges['bind']);
+		}
 		//error_log(__METHOD__."('$path', $user) returning ".array2string($privileges));
 		return $privileges;
 	}
