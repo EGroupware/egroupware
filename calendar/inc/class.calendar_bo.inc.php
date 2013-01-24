@@ -181,9 +181,9 @@ class calendar_bo
 	/**
 	 * Does a user require an extra invite grant, to be able to invite an other user, default no
 	 *
-	 * @var boolean
+	 * @var string 'all', 'groups' or null
 	 */
-	public $require_acl_invite = false;
+	public $require_acl_invite = null;
 
 	/**
 	 * if the number of selected users for a view exeeds this number a view is consolidated (5 is set as default)
