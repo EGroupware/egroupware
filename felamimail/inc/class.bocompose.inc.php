@@ -1130,10 +1130,10 @@
 				}
 			} else {
 				if (count(array($this->sessionData['folder']))>0 && !empty($this->sessionData['folder'])) {
-					#error_log("Folders:".print_r($this->sessionData['folder'],true));
+					//error_log(__METHOD__.__LINE__."Folders:".print_r($this->sessionData['folder'],true));
 				} else {
 					$this->errorInfo = lang("Error: ").lang("No Address TO/CC/BCC supplied, and no folder to save message to provided.");
-					#error_log($this->errorInfo);
+					//error_log(__METHOD__.__LINE__.$this->errorInfo);
 					return false;
 				}
 			}
