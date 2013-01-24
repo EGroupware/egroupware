@@ -542,12 +542,13 @@ class egw_link extends solink
 	 * @param $link_id link-id to remove if > 0
 	 * @param string $app='' appname of first endpoint
 	 * @param string/array $id='' id in $app or array with links, if 1. entry not yet created
+	 * @param int $owner=0 account_id to delete all links of a given owner, or 0
 	 * @param string $app2='' app of second endpoint
 	 * @param string $id2='' id in $app2
 	 * @param boolean $hold_for_purge Don't really delete the link, just mark it as deleted and wait for final delete
 	 * @return the number of links deleted
 	 */
-	static function unlink($link_id,$app='',$id='',$owner='',$app2='',$id2='',$hold_for_purge=false)
+	static function unlink($link_id,$app='',$id='',$owner=0,$app2='',$id2='',$hold_for_purge=false)
 	{
 		return self::unlink2($link_id,$app,$id,$owner,$app2,$id2,$hold_for_purge);
 	}
@@ -558,12 +559,13 @@ class egw_link extends solink
 	 * @param $link_id link-id to remove if > 0
 	 * @param string $app='' appname of first endpoint
 	 * @param string/array &$id='' id in $app or array with links, if 1. entry not yet created
+	 * @param int $owner=0 account_id to delete all links of a given owner, or 0
 	 * @param string $app2='' app of second endpoint, or !file (other !app are not yet supported!)
 	 * @param string $id2='' id in $app2
 	 * @param boolean $hold_for_purge Don't really delete the link, just mark it as deleted and wait for final delete
 	 * @return the number of links deleted
 	 */
-	static function unlink2($link_id,$app,&$id,$owner='',$app2='',$id2='',$hold_for_purge=false)
+	static function unlink2($link_id,$app,&$id,$owner=0,$app2='',$id2='',$hold_for_purge=false)
 	{
 		if (self::DEBUG)
 		{
