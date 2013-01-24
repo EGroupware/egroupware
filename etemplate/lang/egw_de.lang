@@ -259,6 +259,7 @@ list of files linked to the current record	preferences	de	Liste der Dokumente, d
 load this template into the editor	etemplate	de	lädt diese Template zum Bearbeiten
 maximum size for uploads	filemanager	de	Maximale Größe beim Hochladen
 message ...	etemplate	de	Nachricht ...
+message prepared for sending.	etemplate	de	Nachricht zum Versand vorbereitet.
 message(s) send failed!	etemplate	de	Senden der Nachricht(en) fehlgeschlagen!
 message(s) send ok.	etemplate	de	Nachricht(en) erfolgreich versandt.
 middle	etemplate	de	Mittig

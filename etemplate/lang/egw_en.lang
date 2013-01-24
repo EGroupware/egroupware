@@ -261,6 +261,7 @@ list of files linked to the current record	preferences	en	List of files linked t
 load this template into the editor	etemplate	en	Load template to the editor
 maximum size for uploads	filemanager	en	Maximum upload size
 message ...	etemplate	en	Message ...
+message prepared for sending.	etemplate	en	Message prepared for sending.
 message(s) send failed!	etemplate	en	Message(s) send failed!
 message(s) send ok.	etemplate	en	Message(s) send ok.
 middle	etemplate	en	Middle
