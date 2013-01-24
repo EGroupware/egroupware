@@ -88,8 +88,7 @@ class addressbook_groupdav extends groupdav_handler
 
 		$this->home_set_pref = $GLOBALS['egw_info']['user']['preferences']['groupdav']['addressbook-home-set'];
 		$this->home_set_pref = $this->home_set_pref ? explode(',',$this->home_set_pref) : array();
-		//actively disable distributionslist (possibly selected) for 11.1
-		if (in_array('D',$this->home_set_pref)) foreach ($this->home_set_pref as $k =>$v) if ($v=='D') unset($this->home_set_pref[$k]);
+
 		// silently switch "Sync all into one" preference on for OS X addressbook, as it only supports one AB
 		// this restores behavior before Lion (10.7), where AB synced all ABs contained in addressbook-home-set
 		if (substr(self::get_agent(),0,9) == 'cfnetwork' && !in_array('O',$this->home_set_pref))
@@ -243,8 +242,6 @@ class addressbook_groupdav extends groupdav_handler
 				$this->sync_collection_token = $contact['modified'];
 			}
 		}
-/*
-distribution list stuff disabled for epl-11.1
 		// add groups after contacts, but only if enabled and NOT for '/addressbook/' (!isset($filter['owner'])
 		if (in_array('D',$this->home_set_pref) && (!$start || count($contacts) < $start[1]) && isset($filter['owner']))
 		{
@@ -294,7 +291,6 @@ distribution list stuff disabled for epl-11.1
 				}
 			}
 		}
-*/
 		if ($this->debug) error_log(__METHOD__."($path,".array2string($filter).','.array2string($start).") took ".(microtime(true) - $starttime).' to return '.count($files).' items');
 		return $files;
 	}
@@ -733,16 +729,13 @@ distribution list stuff disabled for epl-11.1
 			$user = array_merge((array)$user,array_keys($this->get_shared(true)));	// true: ignore all-in-one pref
 		}
 		$ctag = $this->bo->get_ctag($user);
-/*
-disabled for epl-11.1
 		// include lists-ctag, if enabled and NOT in /addressbook/ (we dont sync distribution-lists/groups there)
 		if (in_array('D',$this->home_set_pref) && $path != '/addressbook/')
 		{
 			$lists_ctag = $this->bo->lists_ctag($user);
 		}
-*/
 		//error_log(__METHOD__."('$path', ".array2string($user_in).") --> user=".array2string($user)." --> ctag=$ctag=".date('Y-m-d H:i:s',$ctag).", lists_ctag=".($lists_ctag ? $lists_ctag.'='.date('Y-m-d H:i:s',$lists_ctag) : '').' returning '.max($ctag,$lists_ctag));
-		return $ctags[$path] = $ctag; //max($ctag,$lists_ctag); // distribution list stuff disabled for epl-11.1
+		return $ctags[$path] = max($ctag,$lists_ctag);
 	}
 
 	/**
@@ -923,9 +916,7 @@ disabled for epl-11.1
 		{
 			$limit_in_ab = array_keys($this->bo->grants);
 		}*/
-		// distributionslist search is not active for 11.1, use standard instead
-		// (path_attr only if D is selected for home_set_pref (should not be possible for for 11.1))
-		if (!$contact && ($contact = $this->bo->read_lists(array('list_'.(in_array('D',$this->home_set_pref)?self::$path_attr:'id') => $id),'contact_uid',$limit_in_ab)))
+		if (!$contact && ($contact = $this->bo->read_lists(array('list_'.self::$path_attr => $id),'contact_uid',$limit_in_ab)))
 		{
 			$contact = array_shift($contact);
 			$contact['n_fn'] = $contact['n_family'] = $contact['list_name'];
@@ -1035,8 +1026,7 @@ disabled for epl-11.1
 			'G'	=> lang('Primary Group'),
 			'U' => lang('Accounts'),
 			'O' => lang('Sync all selected into one'),
-// distribution list stuff disabled for epl-11.1
-//			'D' => lang('Distribution lists as groups')
+			'D' => lang('Distribution lists as groups')
 		) + $addressbooks;
 
 		// rewriting owner=0 to 'U', as 0 get's always selected by prefs
