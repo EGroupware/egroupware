@@ -185,15 +185,18 @@ class felamimail_bo
 			}
 			if ($profileID!=$_profileID) $_restoreSession==false;
 			$_profileID=$profileID;
-			if (self::$debug); error_log(__METHOD__.__LINE__.' called with profileID==0 using '.$profileID.' instead->'.function_backtrace());
+			if (self::$debug) error_log(__METHOD__.__LINE__.' called with profileID==0 using '.$profileID.' instead->'.function_backtrace());
 		}
 		if ($_profileID != 0 && $_validate)
 		{
 			$profileID = self::validateProfileID($_restoreSession, $_profileID);
 			if ($profileID != $_profileID)
 			{
-				error_log(__METHOD__.__LINE__.' Validation of profile with ID:'.$_profileID.' failed. Using '.$profileID.' instead.');
-				error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
+				if (self::$debug)
+				{
+					error_log(__METHOD__.__LINE__.' Validation of profile with ID:'.$_profileID.' failed. Using '.$profileID.' instead.');
+					error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
+				}
 				$_profileID = $profileID;
 				$GLOBALS['egw']->preferences->add('felamimail','ActiveProfileID',$_profileID,'user');
 				// save prefs
