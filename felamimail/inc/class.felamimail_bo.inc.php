@@ -201,8 +201,8 @@ class felamimail_bo
 				$GLOBALS['egw']->preferences->add('felamimail','ActiveProfileID',$_profileID,'user');
 				// save prefs
 				$GLOBALS['egw']->preferences->save_repository(true);
-				egw_cache::setSession('felamimail','activeProfileID',$_profileID);
 			}
+			egw_cache::setSession('felamimail','activeProfileID',$_profileID);
 		}
 		//error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.' called from:'.function_backtrace());
 		if (!isset(self::$instances[$_profileID]) || $_restoreSession===false)
