@@ -51,6 +51,7 @@ function initAll()
 		//alert(fm_height+' resize By:0,'+resizeHeight);
 		if (fm_height >= 750) window.resizeBy(0,resizeHeight);
 	}
+	if (egw_getWindowOuterHeight()>screen.availHeight) window.resizeBy(0,screen.availHeight-egw_getWindowOuterHeight());
 	//tab.init();
 	//alert(document.onkeydown);
 	var titletext = document.getElementById('fm_compose_subject').value;

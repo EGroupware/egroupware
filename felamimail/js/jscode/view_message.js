@@ -41,6 +41,7 @@ function goToMessage(url) {
 function initAll()
 {
 	//tab.init();
+	//alert('ViewMessage:'+egw_getWindowOuterHeight()+' Available:'+screen.availHeight);
 	if (egw_getWindowOuterHeight()<750)
 	{
 		var fm_height = screen.availHeight/100*75;
@@ -48,7 +49,7 @@ function initAll()
 		//alert(fm_height+' resize By:0,'+resizeHeight);
 		if (fm_height >= 750) window.resizeBy(0,resizeHeight);
 	}
-
+	if (egw_getWindowOuterHeight()>screen.availHeight) window.resizeBy(0,screen.availHeight-egw_getWindowOuterHeight());
 	var headerTable = document.getElementById('headerTable');
 	var headerDIV = document.getElementById('headerDIV');
 	if (headerTable) {

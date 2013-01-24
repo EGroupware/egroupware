@@ -1126,18 +1126,19 @@ function fm_readMessage(_url, _windowName, _node) {
 		}
 	} else {
 		window.setTimeout(function() {
-
+			//alert('Height:'+egw_getWindowOuterHeight());
 			if (!felamimail_abortView) {
 				// Remove the url which shall be opened as we do not want to open this
 				// message in the preview window
 				window.felamimail_readMessage = null;
 
-				egw_openWindowCentered(_url, _windowName, 750, egw_getWindowOuterHeight());
+				WinId = egw_openWindowCentered(_url, _windowName, 750, egw_getWindowOuterHeight());
 
 				// Refresh the folder state (count of unread emails)
 				egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshFolder");
 
 				fm_msg_removeClass(windowArray[1], 'unseen');
+				//alert('Got:'+WinId.outerHeight);
 			}
 		}, 0);
 	}
