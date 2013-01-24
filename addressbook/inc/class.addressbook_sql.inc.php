@@ -388,7 +388,7 @@ class addressbook_sql extends so_sql_cf
 			}
 
 			// Understand search by date with wildcard (????.10.??) according to user date preference
-			if(is_string($criteria))
+			if(is_string($criteria) && strpos($criteria, '?') !== false)
 			{
 				$date_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 				// First, check for a 'date', with wildcards, in the user's format
@@ -399,7 +399,7 @@ class addressbook_sql extends so_sql_cf
 					foreach($matches[0] as $m_id => $match)
 					{
 						// Birthday is Y-m-d
-						$criteria = '*'.str_replace($match, "{$matches['Y'][$m_id]}-{$matches['m'][$m_id]}-{$matches['d'][$m_id]}",$criteria) . '*';
+						$criteria = str_replace($match, "*{$matches['Y'][$m_id]}-{$matches['m'][$m_id]}-{$matches['d'][$m_id]}*",$criteria);
 					}
 				}
 			}
