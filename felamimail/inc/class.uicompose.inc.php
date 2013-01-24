@@ -181,13 +181,13 @@
 					return;
 				}
 			} else {
-				$cachedComposeID = egw_cache::getCache(egw_cache::INSTANCE,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60);
-				egw_cache::setCache(egw_cache::INSTANCE,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']),$this->composeID,$expiration=60);
+				$cachedComposeID = egw_cache::getCache(egw_cache::SESSION,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60);
+				egw_cache::setCache(egw_cache::SESSION,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']),$this->composeID,$expiration=60);
 				//error_log(__METHOD__.__LINE__.' '.$formData['subject'].' '.$cachedComposeID.'<->'.$this->composeID);
 				if (!empty($cachedComposeID) && $cachedComposeID != $this->composeID) return;
 				if(!$this->bocompose->send($formData)) {
 					// reset the cached composeID, as something failed
-					egw_cache::setCache(egw_cache::INSTANCE,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']),null,$expiration=60);
+					egw_cache::setCache(egw_cache::SESSION,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']),null,$expiration=60);
 //					print "<script type=\"text/javascript\">alert('".lang("Error: Could not send Message.")." ".lang("Trying to recover from session data")."');</script>";
 					$this->compose();
 					return;
@@ -420,7 +420,7 @@
 				// this is now moved to egw_htmLawed (triggered by default config) which is called with ckeditor anyway
 				//felamimail_bo::getCleanHTML($sessionData['body'],true);
 			}
-			
+
 			// is a certain signature requested?
 			// only the following values are supported (and make sense)
 			// no => means -2
@@ -649,7 +649,7 @@
 				$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
 				$font_span = '<span '.($font||$font_size?'style="':'').($font?'font-family:'.$font.'; ':'').';'.($font_size?'font-size:'.$font_size.'; ':'').'">';
 				if (empty($font) && empty($font_size)) $font_span = '';
-			}			
+			}
 			//remove possible html header stuff
 			if (stripos($sessionData['body'],'<html><head></head><body>')!==false) $sessionData['body'] = str_ireplace(array('<html><head></head><body>','</body></html>'),array('',''),$sessionData['body']);
 			//error_log(__METHOD__.__LINE__.array2string($this->bocompose->preferencesArray));
