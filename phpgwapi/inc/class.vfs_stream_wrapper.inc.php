@@ -55,6 +55,13 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	const LOG_LEVEL = 1;
 
 	/**
+	 * Maximum depth of symlinks, if exceeded url_stat will return false
+	 *
+	 * Used to prevent infinit recursion by circular links
+	 */
+	const MAX_SYMLINK_DEPTH = 10;
+
+	/**
 	 * Our fstab in the form mount-point => url
 	 *
 	 * The entry for root has to be the first, or more general if you mount into subdirs the parent has to be before!
@@ -725,7 +732,9 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static function readlink($path)
 	{
-		return self::_call_on_backend('readlink',array($path),true);	// true = fail silent, if backend does not support readlink
+		$ret = self::_call_on_backend('readlink',array($path),true);	// true = fail silent, if backend does not support readlink
+		//error_log(__METHOD__."('$path') returning ".array2string($ret).' '.function_backtrace());
+		return $ret;
 	}
 
 	/**
@@ -864,7 +873,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * @param boolean $check_symlink_components=true check if path contains symlinks in path components other then the last one
 	 * @return array
 	 */
-	static function url_stat ( $path, $flags, $try_create_home=false, $check_symlink_components=true )
+	static function url_stat ( $path, $flags, $try_create_home=false, $check_symlink_components=true, $check_symlink_depth=self::MAX_SYMLINK_DEPTH )
 	{
 		if (!($url = self::resolve_url($path,!($flags & STREAM_URL_STAT_LINK), $check_symlink_components)))
 		{
@@ -879,19 +888,27 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$stat = @stat($url);	// suppressed the stat failed warnings
 
-			if ($stat && ($stat['mode'] & self::MODE_LINK) &&  ($lpath = self::readlink($url)))
+			if ($stat && ($stat['mode'] & self::MODE_LINK))
 			{
-				if ($lpath[0] != '/')	// concat relative path
+				if (!$check_symlink_depth)
 				{
-					$lpath = egw_vfs::concat(parse_url($path,PHP_URL_PATH),'../'.$lpath);
+					if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path',$flags) maximum symlink depth exceeded, might be a circular symlink!");
+					$stat = false;
 				}
-				$url = egw_vfs::PREFIX.$lpath;
-				if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$flags) symlif (substr($path,-1) == '/' && $path != '/') $path = substr($path,0,-1);	// remove trailing slash eg. added by WebDAVink found and resolved to $url");
-				// try reading the stat of the link
-				if ($stat = self::url_stat($lpath,STREAM_URL_STAT_QUIET))
+				elseif (($lpath = self::readlink($url)))
 				{
-					if(isset($stat['url'])) $url = $stat['url'];	// if stat returns an url use that, as there might be more links ...
-					self::symlinkCache_add($path,$url);
+					if ($lpath[0] != '/')	// concat relative path
+					{
+						$lpath = egw_vfs::concat(parse_url($path,PHP_URL_PATH),'../'.$lpath);
+					}
+					$url = egw_vfs::PREFIX.$lpath;
+					if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$flags) symlif (substr($path,-1) == '/' && $path != '/') $path = substr($path,0,-1);	// remove trailing slash eg. added by WebDAVink found and resolved to $url");
+					// try reading the stat of the link
+					if ($stat = self::url_stat($lpath, STREAM_URL_STAT_QUIET, false, true, $check_symlink_depth-1))
+					{
+						if(isset($stat['url'])) $url = $stat['url'];	// if stat returns an url use that, as there might be more links ...
+						self::symlinkCache_add($path,$url);
+					}
 				}
 			}
 		}
