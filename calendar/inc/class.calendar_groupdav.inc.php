@@ -603,7 +603,10 @@ class calendar_groupdav extends groupdav_handler
 			return $oldEvent;
 		}
 
-		if (is_null($oldEvent) && ($user >= 0) && !$this->bo->check_perms(EGW_ACL_ADD, 0, $user))
+		if (is_null($oldEvent) && ($user >= 0 && !$this->bo->check_perms(EGW_ACL_ADD, 0, $user) ||
+			// if we require an extra invite grant, we fail if that does not exist (bind privilege is not given in that case)
+			$this->bo->require_acl_invite && $user && $user != $GLOBALS['egw_info']['user']['account_id'] &&
+				!$this->bo->check_acl_invite($user)))
 		{
 			// we have no add permission on this user's calendar
 			// ToDo: create event in current users calendar and invite only $user
@@ -1046,8 +1049,7 @@ class calendar_groupdav extends groupdav_handler
 		// remove bind privilege on other users or groups calendars, if calendar config require_acl_invite is set
 		// and current user has no invite grant
 		if ($user && $user != $GLOBALS['egw_info']['user']['account_id'] && isset($privileges['bind']) &&
-			($this->bo->require_acl_invite == 'all' || $this->bo->require_acl_invite == 'groups' && $user < 0) &&
-			!$this->bo->check_perms(EGW_ACL_INVITE, 0, $user))
+			!$this->bo->check_acl_invite($user))
 		{
 			unset($privileges['bind']);
 		}
