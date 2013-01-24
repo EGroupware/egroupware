@@ -499,11 +499,6 @@ class addressbook_sql extends so_sql_cf
 			if (!$ids) return array();
 			$uids[] = $this->db->expression($this->lists_table, $this->lists_table.'.',array('list_id' => $ids));
 		}
-		if (isset($uids['list_id']))
-		{
-			$uids[$this->lists_table.'.list_id'] = $uids['list_id'];
-			unset($uids['list_id']);
-		}
 		$lists = array();
 		$table_def = $this->db->get_table_definitions('phpgwapi',$this->lists_table);
 		$group_by = 'GROUP BY '.$this->lists_table.'.'.implode(','.$this->lists_table.'.',array_keys($table_def['fd']));
