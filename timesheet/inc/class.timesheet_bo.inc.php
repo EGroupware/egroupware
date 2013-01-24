@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -568,6 +568,32 @@ class timesheet_bo extends so_sql_cf
 		return $ret;
 	}
 
+	/**
+	 * delete / move all timesheets of a given user
+	 *
+	 * @param array $data
+	 * @param int $data['account_id'] owner to change
+	 * @param int $data['new_owner']  new owner or 0 for delete
+	 */
+	function deleteaccount($data)
+	{
+		$account_id = $data['account_id'];
+		$new_owner =  $data['new_owner'];
+
+		if (!$new_owner)
+		{
+			egw_link::unlink(0, TIMESHEET_APP, '', $account_id);
+			parent::delete(array('ts_owner' => $account_id));
+		}
+		else
+		{
+			$this->db->update($this->table_name, array(
+				'ts_owner' => $new_owner,
+			), array(
+				'ts_owner' => $account_id,
+			), __LINE__, __FILE__);
+		}
+	}
 
 	/**
 	 * set a status for timesheet entry identified by $keys
