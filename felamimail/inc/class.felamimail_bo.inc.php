@@ -2559,10 +2559,16 @@ class felamimail_bo
 		return $bodyPart;
 	}
 
-	function getHierarchyDelimiter()
+	/**
+	 * getHierarchyDelimiter
+	 * @var $_useCache boolean
+	 * @return string the hierarchyDelimiter
+	 */
+	function getHierarchyDelimiter($_useCache=true)
 	{
 		static $HierarchyDelimiter;
 		if (is_null($HierarchyDelimiter)) $HierarchyDelimiter =& egw_cache::getSession('felamimail','HierarchyDelimiter');
+		if ($_useCache===false) unset($HierarchyDelimiter[$this->icServer->ImapServerId]);
 		if (isset($HierarchyDelimiter[$this->icServer->ImapServerId])&&!empty($HierarchyDelimiter[$this->icServer->ImapServerId]))
 		{
 			$this->icServer->mailboxDelimiter = $HierarchyDelimiter[$this->icServer->ImapServerId];
@@ -3896,7 +3902,8 @@ class felamimail_bo
 		}
 		if ( PEAR::isError($tretval) ) egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
 		//error_log(print_r($this->icServer->_connected,true));
-		$hD = $this->getHierarchyDelimiter();
+		//make sure we are working with the correct hierarchyDelimiter on the current connection, calling getHierarchyDelimiter with false to reset the cache
+		$hD = $this->getHierarchyDelimiter(false);
 		$sUF = $this->getSpecialUseFolders();
 		//error_log(__METHOD__.__LINE__.array2string($sUF));
 
