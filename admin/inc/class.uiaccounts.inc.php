@@ -352,6 +352,7 @@
 				'sort' => $sort,
 				'order' => $order,
 				'query_type' => $_REQUEST['query_type'],
+				'active' => false,	// false = return inactive and expired accounts too
 			);
 			if (!$GLOBALS['egw']->acl->check('account_access',2,'admin'))
 			{
@@ -791,7 +792,7 @@
 					$group_info = Array(
 						'account_id'   => (int)$_GET['account_id'],
 						'account_name' => $GLOBALS['egw']->accounts->id2name($_GET['account_id']),
-						'account_user' => $GLOBALS['egw']->accounts->members($_GET['account_id']),
+						'account_user' => $GLOBALS['egw']->accounts->members($_GET['account_id'], false, false),
 						'account_apps' => $this->bo->load_group_apps($_GET['account_id'])
 					);
 

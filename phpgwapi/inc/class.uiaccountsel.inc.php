@@ -157,7 +157,7 @@ class uiaccountsel
 				{
 					foreach((array)$this->accounts->members($gid,true) as $member)
 					{
-						if (!in_array($member,$select)) $select[] = $member;
+						if (!in_array($member,$select) && $this->accounts->is_active($member)) $select[] = $member;
 					}
 				}
 				if ($use == 'both')	// show all memberships
@@ -177,6 +177,7 @@ class uiaccountsel
 					$select = $GLOBALS['egw']->accounts->search(array(
 						'type' => $use,
 						'app' => $app,
+						'active' => true,	// return only active accounts
 					));
 					//error_log(__METHOD__."() account_selection='$this->account_selection', accounts->search(array('type'=>'$use', 'app' => '$app')) returns ".array2string($select));
 				}
@@ -213,7 +214,7 @@ class uiaccountsel
 			{
 				$users[$id] = !is_array($val) ? $label :
 					common::display_fullname(
-						$val['account_lid'],$val['account_firstname'],$val['account_lastname']);
+						$val['account_lid'],$val['account_firstname'],$val['account_lastname'],$id);
 			}
 			else
 			{

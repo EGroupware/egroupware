@@ -654,6 +654,10 @@ class addressbook_ldap
 				$objectFilter = '(objectclass=inetorgperson)';
 				break;
 		}
+		// exclude expired accounts
+		//$shadowExpireNow = floor((time()+date('Z'))/86400);
+		//$objectFilter .= "(|(!(shadowExpire=*))(shadowExpire>=$shadowExpireNow))";
+		// shadowExpire>= does NOT work, as shadow schema only specifies intergerMatch and not integerOrderingMatch :-(
 
 		$searchFilter = '';
 		if(is_array($criteria) && count($criteria) > 0)
@@ -843,6 +847,7 @@ class addressbook_ldap
 		$_attributes[] = 'modifyTimestamp';
 		$_attributes[] = 'creatorsName';
 		$_attributes[] = 'modifiersName';
+		$_attributes[] = 'shadowExpire';
 
 		//echo "<p>ldap_search($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit)</p>\n";
 		if($_addressbooktype == ADDRESSBOOK_ALL)
@@ -856,11 +861,19 @@ class addressbook_ldap
 		if(!$result) return array();
 
 		$entries = ldap_get_entries($this->ds, $result);
+
 		$this->total = $entries['count'];
+		$shadowExpireNow = floor((time()-date('Z'))/86400);
 		foreach((array)$entries as $i => $entry)
 		{
 			if (!is_int($i)) continue;	// eg. count
 
+			// exclude expired or deactivated accounts
+			if (isset($entry['shadowexpire']) && $entry['shadowexpire'][0] <= $shadowExpireNow)
+			{
+				--$this->total;
+				continue;
+			}
 			$contact = array(
 				'id'  => $entry['uid'][0] ? $entry['uid'][0] : $entry['entryuuid'][0],
 				'tid' => 'n',	// the type id for the addressbook
