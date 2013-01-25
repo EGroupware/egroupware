@@ -251,6 +251,8 @@ class calendar_groupdav extends groupdav_handler
 			$filter['offset'] = $start[0];
 			$filter['num_rows'] = $start[1];
 		}
+		$requested_multiget_ids = $filter['query'][self::$path_attr];
+
 		$events =& $this->bo->search($filter);
 		if ($events)
 		{
@@ -258,6 +260,11 @@ class calendar_groupdav extends groupdav_handler
 
 			foreach($events as $event)
 			{
+				// remove event from requested multiget ids, to be able to report not found urls
+				if ($requested_multiget_ids && ($k = array_search($event[self::$path_attr], $requested_multiget_ids)) !== false)
+				{
+					unset($requested_multiget_ids[$k]);
+				}
 				// sync-collection report: deleted entries need to be reported without properties, same for rejected or deleted invitations
 				if ($sync_collection && ($event['deleted'] || in_array($event['participants'][$filter['users']][0], array('R','X'))))
 				{
@@ -303,6 +310,14 @@ class calendar_groupdav extends groupdav_handler
 					));
 				}*/
 				$files[] = $this->add_resource($path, $event, $props);
+			}
+			// report not found multiget urls
+			if ($requested_multiget_ids)
+			{
+				foreach($requested_multiget_ids as $id)
+				{
+					$files[] = array('path' => $path.$id.self::$path_extension);
+				}
 			}
 			// sync-collection report --> return modified of last contact as sync-token
 			if ($sync_collection_report)
@@ -793,7 +808,8 @@ class calendar_groupdav extends groupdav_handler
 							}
 						}
 						if ($this->debug) error_log(__METHOD__."(, $id, $user, '$prefix') eventId=$eventId ($oldEvent[id]), user=$user, old-status='{$oldEvent['participants'][$user]}', new-status='{$event['participants'][$user]}', recurrence=$event[recurrence]=".egw_time::to($event['recurrence']).", event=".array2string($event));
-						if (isset($event['participants']) && $event['participants'][$user] !== $oldEvent['participants'][$user])
+						if (isset($event['participants']) && isset($event['participants'][$user]) &&
+							$event['participants'][$user] !== $oldEvent['participants'][$user])
 						{
 							if (!$this->bo->set_status($oldEvent['id'], $user, $event['participants'][$user],
 								// real (not virtual) exceptions use recurrence 0 in egw_cal_user.cal_recurrence!
@@ -816,7 +832,7 @@ class calendar_groupdav extends groupdav_handler
 					}
 					if (!$modified)	// NO modififictions, or none we understood --> log it and return Ok: "204 No Content"
 					{
-						$this->groupdav->log(__METHOD__."(,,$user) schedule-tag given, but NO changes for current user events=".array2string($events).', old-event='.array2string($oldEvent));
+						$this->groupdav->log(__METHOD__."(,,$user) NO changes for current user events=".array2string($events).', old-event='.array2string($oldEvent));
 					}
 					$this->put_response_headers($eventId, $options['path'], '204 No Content', self::$path_attr == 'caldav_name');
 
