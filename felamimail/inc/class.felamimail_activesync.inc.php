@@ -332,7 +332,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			}
 			//die('Mail not or mis-configured!');
 			egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
-			throw new egw_exception_not_found(__METHOD__."($account) can not open connection!");
+			throw new egw_exception_not_found(__METHOD__."($account) can not open connection on Profile #".self::$profileID."!");
 		}
 		else
 		{
