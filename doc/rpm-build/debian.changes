@@ -1,3 +1,34 @@
+egroupware-epl (11.1.20130125-1) hardy; urgency=low
+
+  * all apps: exclude expired or deactivated accounts from all lists and selections (beside admin app to be able to activate them again)
+  * eMail: improve control regarding the unwanted selection of NoSelect Folders
+  * eMail: support multipart/mixed mails with html parts to display (apple mail does that kind of emails)
+  * eMail: when allowing users to edit their forwardingaddresses; allow them to edit all of them; add multiple forwards, etc.
+  * eMail: limit resizing of compose and view windows to available screen height
+  * eMail: now supporting umlautdomains on send; using prefs for preset font size/face on compose for reply/forward and messages with preset signature; changes regarding the targetwindow of links in HTML mails; better separation of former mail text to reply text section when forcing reply to HTML, and Source is text only; improved reply header layout on forced conversion
+  * CalDAV: remove "bind" privilege (create new events right) on other users or groups calendar, if invite requires special ACL grant, which current user does NOT have
+  * CalDAV/Calendar: fixed not working status change, if participant has no edit rights
+  * CalDAV/Calendar/Ressources: readded missing resource- and location-calendars after recent changes in resources app
+  * Calendar: added CR moving Holidays for years 2019 to 2023 (provided by R.Chacon)
+  * Calendar: merged polish translations from 1.8
+  * Calendar: fix not deletable favorites containing url special chars like a plus or space in their name for idots template
+  * eSync: fixed not working display of log: "Access denied to file"
+  * Addressbook: Understand date with wildcard (19??.02.??) as a date in user's format.  Convert to match bday.
+  * Tracker: Last 3 months date filter now only includes the previous 3 months
+  * Tracker: Configuration of notifications - custom notification message and signature
+  * Infolog: fix problem regarding the display of wrong sums on timesheets when applying a search AND have multiple customfields set for timesheets
+  * CardDAV: fixed wrong privileges for accounts addressbook, causing clients to report it read-only even for admins
+  * CardDAV/Addressbook: do NOT allow to delete accounts via CardDAV, was never intended, but as it is allowed in addressbook, it was possible via CardDAV
+  * ProjectManager: when (un)setting a category of an element, also need to update information, that category is overwritten, so it does NOT get updated by datasource; never update project categories from datasources
+  * Filemanager: introduced maximum symlink depth of 10, to stop infinit recursion in circular symlinks (eg. two symlinks pointing to each other)
+  * Filemanager: do not notify about *.tmp files (~$* and .~lock.* are already excluded)
+  * Import|Export: Add ability to set filters for export definitions.  Currently available for Infolog.
+  * Import|Export: Implement 'No notifications' flag when importing iCal
+  * Admin/Setup: fixed restore always converted longtext columns to text and therefore truncating them to 64k on MySQL, also fixed backup to report them correctly in backup of schema
+  * All apps: merged missing translations from other apps or branches
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 25 Jan 2013 14:54:07 +0100
+
 egroupware-epl (11.1.20130109-1) hardy; urgency=low
 
   * Tracker: fix for template issue - tabcontrol not working
