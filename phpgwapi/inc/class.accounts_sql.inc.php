@@ -510,7 +510,9 @@ class accounts_sql
 		}
 		else
 		{
-			$where[] = 'account_id IS NOT NULL';	// otherwise contacts with eg. the same email hide the accounts!
+			$where[] = 'account_id IS NOT NULL'.	// otherwise contacts with eg. the same email hide the accounts!
+				($table == $this->contacts_table ? " AND contact_tid != 'D'" : '');	// ignore deleted accounts contact-data
+
 		}
 		if (!($row = $this->db->select($table,$cols,$where,__LINE__,__FILE__)->fetch())) return false;
 
