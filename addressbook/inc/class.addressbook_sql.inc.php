@@ -32,7 +32,7 @@ class addressbook_sql extends so_sql_cf
 	 * filter to show only active account (and not already expired or deactived ones)
 	 * UNIX_TIMESTAMP(NOW()) gets replaced with value of time() in the code!
 	 */
-	const ACOUNT_ACTIVE_FILTER = "(account_expires IS NULL OR account_expires = -1 OR account_expires > UNIX_TIMESTAMP(NOW())) AND account_status='A'";
+	const ACOUNT_ACTIVE_FILTER = "(account_expires IS NULL OR account_expires = -1 OR account_expires > UNIX_TIMESTAMP(NOW())) AND (account_lid IS NULL OR account_status='A')";
 
 	/**
 	 * internal name of the id, gets mapped to uid
