@@ -234,12 +234,15 @@ class accounts
 	 *	'lid','firstname','lastname','email' - query only the given field for containing $param[query]
 	 * @param $param['app'] string with an app-name, to limit result on accounts with run-right for that app
 	 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
+	 * @param $param['active']=true boolean - true: return only acctive accounts, false: return expired or deactivated too
 	 * @return array with account_id => data pairs, data is an array with account_id, account_lid, account_firstname,
 	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */
 	function search($param)
 	{
-		//error_log(__METHOD__.'('.array2string($param).')');
+		//error_log(__METHOD__.'('.array2string($param).') '.function_backtrace());
+		if (!isset($param['active'])) $param['active'] = true;	// default is true = only return active accounts
+
 		self::setup_cache();
 		$account_search = &self::$cache['account_search'];
 		$serial = serialize($param);
@@ -326,7 +329,7 @@ class accounts
 		else
 		{
 			$account_search[$serial]['data'] = array();
-			$accounts = $this->backend->get_list($param['type'],$param['start'],$param['sort'],$param['order'],$param['query'],$param['offset'],$param['query_type']);
+			$accounts = $this->backend->get_list($param['type'],$param['start'],$param['sort'],$param['order'],$param['query'],$param['offset'],$param['query_type'],$param['active']);
 			if (!$accounts) $accounts = array();
 			foreach($accounts as $data)
 			{
@@ -523,7 +526,7 @@ class accounts
 		}
 		else
 		{
-			$invalidate = $this->members($id, true);
+			$invalidate = $this->members($id, true, false);
 		}
 		$invalidate[] = $id;
 
@@ -553,6 +556,19 @@ class accounts
 		$expires = isset($data['account_expires']) ? $data['account_expires'] : $data['expires'];
 
 		return $expires != -1 && $expires < time();
+	}
+
+	/**
+	 * Test if an account is active - NOT deactivated or expired
+	 *
+	 * @param int|array $data account_id or array with account-data
+	 * @return boolean false if account does not exist, is expired or decativated, true otherwise
+	 */
+	function is_active($data)
+	{
+		if (!is_array($data)) $data = $this->read($data);
+
+		return $data && !($this->is_expired($data) || $data['account_status'] != 'A');
 	}
 
 	/**
@@ -727,17 +743,20 @@ class accounts
 	 * @param int/string $accountid='' numeric account-id or alphanum. account-lid,
 	 *	default account of the user of this session
 	 * @param boolean $just_id=false return just an array of id's and not id => lid pairs, default false
+	 * @param boolean $active=false true: return only active (not expired or deactived) members, false: return all accounts
 	 * @return array with account_id ($just_id) or account_id => account_lid pairs (!$just_id)
 	 */
-	function members($account_id,$just_id=false)
+	function members($account_id, $just_id=false, $active=true)
 	{
 		if (!is_int($account_id) && !is_numeric($account_id))
 		{
 			$account_id = $this->name2id($account_id);
 		}
-		if ($account_id && ($data = self::cache_read($account_id)))
+		if ($account_id && ($data = self::cache_read($account_id, $active)))
 		{
-			return $just_id && $data['members'] ? array_keys($data['members']) : $data['members'];
+			$members = $active ? $data['members-active'] : $data['members'];
+
+			return $just_id && $members ? array_keys($members) : $members;
 		}
 		return null;
 	}
@@ -751,7 +770,7 @@ class accounts
 	function set_members($members,$gid)
 	{
 		//echo "<p>accounts::set_members(".print_r($members,true).",$gid)</p>\n";
-		if (($old_members = $this->members($gid, true)) != $members)
+		if (($old_members = $this->members($gid, true, false)) != $members)
 		{
 			$this->backend->set_members($members, $gid);
 
@@ -797,7 +816,7 @@ class accounts
 				$accounts['groups'][$id] = $id;
 				if ($use != 'groups')
 				{
-					foreach((array)$this->members($id,true) as $id)
+					foreach((array)$this->members($id, true) as $id)
 					{
 						$accounts['accounts'][$id] = $id;
 					}
@@ -1007,10 +1026,11 @@ class accounts
 	 * Read account incl. members/memberships from cache (or backend and cache it)
 	 *
 	 * @param int $account_id
+	 * @param boolean $need_active=false true = 'members-active' required
 	 * @return array
 	 * @throws egw_exception_wrong_parameter if no integer was passed as $account_id
 	 */
-	static function cache_read($account_id)
+	static function cache_read($account_id, $need_active=false)
 	{
 		if (!is_numeric($account_id)) throw new egw_exception_wrong_parameter('Not an integer!');
 
@@ -1040,6 +1060,18 @@ class accounts
 			}
 			//else error_log(__METHOD__."($account_id) read from instance cache ".array2string($account));
 		}
+		// if required and not already set, query active members AND cache them too
+		if ($need_active && $account_id < 0 && !isset($account['members-active']))
+		{
+			$instance = self::getInstance();
+			$account['members-active'] = array();
+			foreach($account['members'] as $id => $lid)
+			{
+				if ($instance->is_active($id)) $account['members-active'][$id] = $lid;
+			}
+			egw_cache::setInstance(__CLASS__, 'account-'.$account_id, $account, self::READ_CACHE_TIMEOUT);
+		}
+		//error_log(__METHOD__."($account_id, $need_active) returning ".array2string($account));
 		return $account;
 	}
 

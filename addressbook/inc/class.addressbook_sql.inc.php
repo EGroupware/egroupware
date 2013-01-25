@@ -29,10 +29,10 @@ class addressbook_sql extends so_sql_cf
 	 */
 	const ACCOUNT_ACTIVE_JOIN = ' LEFT JOIN egw_accounts ON egw_addressbook.account_id=egw_accounts.account_id';
 	/**
-	 * filter to show only active account (and not already expired ones)
+	 * filter to show only active account (and not already expired or deactived ones)
 	 * UNIX_TIMESTAMP(NOW()) gets replaced with value of time() in the code!
 	 */
-	const ACOUNT_ACTIVE_FILTER = '(account_expires IS NULL OR account_expires = -1 OR account_expires > UNIX_TIMESTAMP(NOW()))';
+	const ACOUNT_ACTIVE_FILTER = "(account_expires IS NULL OR account_expires = -1 OR account_expires > UNIX_TIMESTAMP(NOW())) AND account_status='A'";
 
 	/**
 	 * internal name of the id, gets mapped to uid

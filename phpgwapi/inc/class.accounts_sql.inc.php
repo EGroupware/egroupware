@@ -45,7 +45,8 @@ class accounts_sql
 	 *
 	 * @var string
 	 */
-	var $table = 'egw_accounts';
+	const TABLE = 'egw_accounts';
+	var $table = self::TABLE;
 	/**
 	 * table name for the contacts
 	 *
@@ -363,9 +364,10 @@ class accounts_sql
 	 * @param string $query=''
 	 * @param int $offset=null
 	 * @param string $query_type='all' 'start', 'all' (default), 'exact'
+	 * @param boolean $active=false true: return only active accounts
 	 * @return array
 	 */
-	function get_list($_type='both', $start = null,$sort = '', $order = '', $query = '', $offset = null, $query_type='')
+	function get_list($_type='both', $start = null,$sort = '', $order = '', $query = '', $offset = null, $query_type='', $active=false)
 	{
 		//echo "<p>accounts_sql($_type,$start,$sort,$order,$query,$offset,$query_type)</p>\n";
 		static $order2contact = array(
@@ -389,12 +391,16 @@ class accounts_sql
 				$filter = array('owner' => 0);
 				break;
 			case 'groups':
-				$filter = "account_type = 'g'";
+				$filter = array("account_type = 'g'");
 				break;
 			default:
 			case 'both':
-				$filter = "(egw_addressbook.contact_owner=0 OR egw_addressbook.contact_owner IS NULL)";
+				$filter = array("(egw_addressbook.contact_owner=0 OR egw_addressbook.contact_owner IS NULL)");
 				break;
+		}
+		if ($active)
+		{
+			$filter[] = str_replace('UNIX_TIMESTAMP(NOW())',time(),addressbook_sql::ACOUNT_ACTIVE_FILTER);
 		}
 		$criteria = array();
 		$wildcard = $query_type == 'start' || $query_type == 'exact' ? '' : '%';

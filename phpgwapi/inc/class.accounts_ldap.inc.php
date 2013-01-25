@@ -760,11 +760,17 @@ class accounts_ldap
 							'account_firstname' => translation::convert($allVals['givenname'][0],'utf-8'),
 							'account_lastname'  => translation::convert($allVals['sn'][0],'utf-8'),
 							'account_status'    => isset($allVals['shadowexpire'][0]) && $allVals['shadowexpire'][0]*24*3600-$utc_diff < time() ? false : 'A',
+							'account_expires'   => isset($data['shadowexpire']) && $data['shadowexpire'][0] ? $data['shadowexpire'][0]*24*3600+$utc_diff : -1, // LDAP date is in UTC
 							'account_email'     => $allVals['mail'][0],
 							'account_created' => isset($allVals['createtimestamp'][0]) ? self::accounts_ldap2ts($allVals['createtimestamp'][0]) : null,
 							'account_modified' => isset($allVals['modifytimestamp'][0]) ? self::accounts_ldap2ts($allVals['modifytimestamp'][0]) : null,
 						);
-						$account['account_fullname'] = common::display_fullname($account['account_lid'],$account['account_firstname'],$account['account_lastname']);
+						if ($param['active'] && !$this->frontend->is_active($account))
+						{
+							--$totalcount;
+							continue;
+						}
+						$account['account_fullname'] = common::display_fullname($account['account_lid'],$account['account_firstname'],$account['account_lastname'],$allVals['uidnumber'][0]);
 						// return objectclass(es)
 						if ($param['objectclass'])
 						{
