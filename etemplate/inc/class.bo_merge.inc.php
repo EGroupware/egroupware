@@ -1341,7 +1341,7 @@ abstract class bo_merge
 				}
 				//error_log(__METHOD__.__LINE__.' Message after importMessageToMergeAndSend:'.array2string($msgs));
 				$retString = '';
-				if (count($msgs['success'])>0) $retString .= count($msgs['success']).' '.lang('Message(s) send ok.');//implode('<br />',$msgs['success']);
+				if (count($msgs['success'])>0) $retString .= count($msgs['success']).' '.(count($msgs['success'])==1?lang('Message prepared for sending.'):lang('Message(s) send ok.'));//implode('<br />',$msgs['success']);
 				//if (strlen($retString)>0) $retString .= '<br />';
 				if (count($msgs['failed'])>0) $retString .= count($msgs['failed']).' '.lang('Message(s) send failed!').'=>'.implode(', ',$msgs['failed']);
 				return $retString;
