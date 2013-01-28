@@ -14,7 +14,7 @@
 /**
  * iSchedule client: clientside of iSchedule
  *
- * @link https://tools.ietf.org/html/draft-desruisseaux-ischedule-01 iSchedule draft from 2010
+ * @link https://tools.ietf.org/html/draft-desruisseaux-ischedule-03 iSchedule draft from 2013-01-22
  */
 class ischedule_client
 {
@@ -70,7 +70,7 @@ class ischedule_client
 
 		if (is_null($url))
 		{
-			list(,$domain) = explode('@', $recipient);
+			list(,$domain) = explode('@', $this->recipients[0]);
 			$this->url = self::discover($domain);
 		}
 		else

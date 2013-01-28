@@ -14,7 +14,7 @@
 /**
  * iSchedule server: serverside of iSchedule
  *
- * @link https://tools.ietf.org/html/draft-desruisseaux-ischedule-01 iSchedule draft from 2010
+ * @link https://tools.ietf.org/html/draft-desruisseaux-ischedule-03 iSchedule draft from 2013-01-22
  *
  * groupdav get's extended here to get it's logging, should separate that out ...
  */
@@ -601,6 +601,8 @@ yXUKsIQVi3qPyPdB3QIDAQAB
 		return array_combine($matches[1], $matches[2]);
 	}
 
+	const SERIAL = '123';
+
 	/**
 	 * Serve an iSchedule GET request, currently only action=capabilities
 	 *
@@ -612,11 +614,13 @@ yXUKsIQVi3qPyPdB3QIDAQAB
 	 * Content-Type: application/xml; charset=utf-8
 	 * Content-Length: xxxx
 	 * iSchedule-Version: 1.0
+	 * iSchedule-Capabilities: 123
 	 * ETag: "afasdf-132afds"
 	 *
 	 * <?xml version="1.0" encoding="utf-8" ?>
 	 * <query-result xmlns="urn:ietf:params:xml:ns:ischedule">
 	 *   <capabilities>
+	 *     <serial-number>123</serial-number>
 	 *     <versions>
 	 *       <version>1.0</version>
 	 *     </versions>
@@ -637,9 +641,6 @@ yXUKsIQVi3qPyPdB3QIDAQAB
 	 *       <inline/>
 	 *       <external/>
 	 *     </attachments>
-	 *     <supported-recipient-uri-scheme-set>
-	 *       <scheme>mailto</scheme>
-	 *     </supported-recipient-uri-scheme-set>
 	 *     <max-content-length>102400</max-content-length>
 	 *     <min-date-time>19910101T000000Z</min-date-time>
 	 *     <max-date-time>20381231T000000Z</max-date-time>
@@ -688,6 +689,7 @@ yXUKsIQVi3qPyPdB3QIDAQAB
 		$capabilities = '<?xml version="1.0" encoding="utf-8" ?>
   <query-result xmlns="urn:ietf:params:xml:ns:ischedule">
     <capabilities>
+      <serial-number>'.self::SERIAL.'</serial-number>
       <versions>
         <version>1.0</version>
       </versions>
@@ -708,9 +710,6 @@ yXUKsIQVi3qPyPdB3QIDAQAB
         <inline/>
         <external/>
       </attachments>
-      <supported-recipient-uri-scheme-set>
-        <scheme>mailto</scheme>
-      </supported-recipient-uri-scheme-set>
       <max-content-length>102400</max-content-length>
       <min-date-time>19910101T000000Z</min-date-time>
       <max-date-time>20381231T000000Z</max-date-time>
@@ -723,6 +722,7 @@ yXUKsIQVi3qPyPdB3QIDAQAB
 		// returning capabilities
 		header('Content-Type: application/xml; charset=utf-8');
 		header('iSchedule-Version: '.self::VERSION);
+		header('iSchedule-Capabilities: '.self::SERIAL);
 		header('Content-Length: '.bytes($capabilites));
 		header('ETag: "'.md5($capabilites).'"');
 
