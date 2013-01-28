@@ -7,7 +7,7 @@
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2012 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2012-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -278,6 +278,7 @@ class ischedule_client
 				$header_names[] = $header;
 			}
 		}
+error_log(__METHOD__."(".array2string($headers).", \$body, '$selector', '$sign_headers') header_names=".array2string($header_names).', header_values='.array2string($header_values));
 		include_once EGW_API_INC.'/php-mail-domain-signer/lib/class.mailDomainSigner.php';
 		list(,$domain) = explode('@', $this->originator);
 		$mds = new mailDomainSigner($this->dkim_private_key, $domain, $selector);
