@@ -17,7 +17,7 @@ if (isset($_SERVER['HTTP_HOST'])) die("This is a commandline ONLY tool!\n");
 /**
  * iSchedule command line client, primary for testing and development purpose
  *
- * @link https://tools.ietf.org/html/draft-desruisseaux-ischedule-01 iSchedule draft from 2010
+ * @link https://tools.ietf.org/html/draft-desruisseaux-ischedule-03 iSchedule draft from 2013-01-22
  */
 function usage($err=null)
 {
@@ -40,6 +40,9 @@ $GLOBALS['egw_info'] = array(
 		'currentapp' => 'login',
 	)
 );
+// set a domain for mserver
+$_REQUEST['domain'] = 'ralfsmacbook.local';
+
 // if you move this file somewhere else, you need to adapt the path to the header!
 $egw_dir = dirname(dirname(__FILE__));
 include($egw_dir.'/header.inc.php');
@@ -122,5 +125,5 @@ try {
 	}
 }
 catch(Exception $e) {
-	echo "\n".($e->getCode() ? $e->getCode().' ' : '').$e->getMessage()."\n\n";
+	if (!$verbose) echo "\n".($e->getCode() ? $e->getCode().' ' : '').$e->getMessage()."\n\n";
 }

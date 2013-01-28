@@ -14,7 +14,7 @@
 /**
  * iSchedule server: serverside of iSchedule
  *
- * @link https://tools.ietf.org/html/draft-desruisseaux-ischedule-01 iSchedule draft from 2010
+ * @link https://tools.ietf.org/html/draft-desruisseaux-ischedule-03 iSchedule draft from 2013-01-22
  */
 
 $GLOBALS['egw_info'] = array(

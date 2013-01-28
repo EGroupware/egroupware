@@ -63,7 +63,6 @@ class ischedule_server extends groupdav
 		// get raw request body
 		$this->request = file_get_contents('php://input');
 
-
 		switch($_SERVER['REQUEST_METHOD'])
 		{
 			case 'GET':
@@ -124,7 +123,19 @@ class ischedule_server extends groupdav
 		if (($missing = array_diff(explode(':', strtolower(self::REQUIRED_DKIM_HEADERS.':DKIM-Signature')), array_keys($headers))))
 		{
 			//error_log('headers='.array2string(array_keys($headers)).', required='.self::REQUIRED_DKIM_HEADERS.', missing='.array($missing));
-			throw new Exception ('Bad Request: missing required headers: '.implode(', ', $missing), 400);
+			if (in_array('originator', $missing))
+			{
+				$error = 'originator-missing';
+			}
+			elseif(in_array('recipient', $missing))
+			{
+				$error = 'recipient-missing';
+			}
+			else
+			{
+				$error = 'invalid-scheduling-message';
+			}
+			throw new Exception ("Bad Request: $error: missing required headers: ".implode(', ', $missing), 400);
 		}
 
 		// validate dkim signature
@@ -133,13 +144,17 @@ class ischedule_server extends groupdav
 		// It will fail if multiple recipients in a single header are also ", " separated (just comma works fine)
 		if (!self::dkim_validate($headers, $this->request, $error))
 		{
-			throw new Exception('Bad Request: DKIM signature invalid: '.$error, 400);
+			throw new Exception('Bad Request: verification-failed: DKIM signature invalid: '.$error, 400);
 		}
 		// check if recipient is a user
-		// ToDo: multiple recipients
-		if (!($account_id = $GLOBALS['egw']->accounts->name2id($headers['recipient'], 'account_email')))
+		// todo: multiple recipients, currently we use last recipient for EGroupware enviroment
+		foreach(preg_split('/, */', $headers['recipient']) as $recipient)
 		{
-			throw new Exception('Bad Request: unknown recipient', 400);
+			if (!stripos($recipient, 'mailto:') === 0 ||
+				!($account_id = $GLOBALS['egw']->accounts->name2id(substr($recipient, 7), 'account_email')))
+			{
+				throw new Exception("Bad Request: recipient-missing: unknown recipient '$recipient'", 400);
+			}
 		}
 		// create enviroment for recipient user, as we act on his behalf
 		$GLOBALS['egw']->session->account_id = $account_id;
@@ -162,7 +177,7 @@ class ischedule_server extends groupdav
 		if (!preg_match('/component=([^;]+)/i', $headers['content-type'], $matches) ||
 			(!in_array($component=strtoupper($matches[1]), self::$supported_components)))
 		{
-			throw new Exception ('Bad Request: missing or unsupported component in Content-Type header', 400);
+			throw new Exception ('Bad Request: invalid-calendar-data-type: missing or unsupported component in Content-Type header', 400);
 		}
 		if (!preg_match('/method=([^;]+)/i', $headers['content-type'], $matches) ||
 			(!isset(self::$supported_method2origin_requirement[$method=strtoupper($matches[1])])) ||
@@ -196,12 +211,15 @@ class ischedule_server extends groupdav
 			$matches = false;
 			foreach($originator_requirement as $requirement)
 			{
+				$originator = $headers['originator'];
+				if (stripos($originator, 'mailto:') === 0) $originator = substr($originator, 7);
+
 				if ($requirement == 'ORGANIZER' &&
-					($event['organizer'] == $headers['originator'] || strpos($event['organizer'], '<'.$headers['originator'].'>') !== false) ||
+					($event['organizer'] == $originator || strpos($event['organizer'], '<'.$originator.'>') !== false) ||
 					$requirement == 'ATTENDEE' &&
-					(in_array('e'.$headers['originator'], $event['participants']) ||
+					(in_array('e'.$originator, $event['participants']) ||
 					// ToDO: Participant could have CN, need to check that too
-					 $originator_account_id = $GLOBALS['egw']->accounts->name2id($headers['originator'], 'account_email') &&
+					 $originator_account_id = $GLOBALS['egw']->accounts->name2id($originator, 'account_email') &&
 					 	in_array($originator_account_id, $event['participants'])))
 			 	{
 			 		$matches = true;
@@ -210,7 +228,7 @@ class ischedule_server extends groupdav
 			}
 			if (!$matches)
 			{
-				throw new Exception('Bad Request: originator invalid for given '.$component.'!', 400);
+				throw new Exception("Bad Request: originator-invalid: originator '$originator' invalid for given $component component!", 400);
 			}
 		}
 
@@ -239,6 +257,7 @@ class ischedule_server extends groupdav
 
 		header('Content-Type: text/xml; charset=UTF-8');
 		header('iSchedule-Version: '.self::VERSION);
+		header('iSchedule-Capabilities: '.self::SERIAL);
 
 		echo $xml->outputMemory();
 	}
@@ -337,11 +356,10 @@ class ischedule_server extends groupdav
 	 * @param array $headers header-name in lowercase(!) as key
 	 * @param string $body
 	 * @param string &$error=null error if false returned
-	 * @param boolean $split_recipients=null true=split recpients in multiple headers, false dont, default null try both
 	 * @return boolean true if signature could be validated, false otherwise
 	 * @todo other dkim q= methods: http/well-known bzw private-exchange
 	 */
-	public static function dkim_validate(array $headers, $body, &$error=null, $split_recipients=null)
+	public static function dkim_validate(array $headers, $body, &$error=null)
 	{
 		// parse dkim signature
 		if (!isset($headers['dkim-signature']) ||
@@ -377,14 +395,6 @@ class ischedule_server extends groupdav
 			$value = $check[$header];
 			unset($check[$header]);
 
-			// special handling of multivalued recipient header
-			if ($header == 'recipient' && (!isset($split_recipients) || $split_recipients))
-			{
-				if (!is_array($value)) $value = explode(', ', $value);
-				$v = array_pop($value);	// dkim uses reverse order!
-				if ($value) $check[$header] = $value;
-				$value = $v;
-			}
 			$dkim_headers[] = $header.': '.$value;
 		}
 		// dkim signature is obvious without content of signature, but must not necessarly be last tag
@@ -392,7 +402,6 @@ class ischedule_server extends groupdav
 
 		// c defaults to 'simple/simple', check on valid canonicalization methods is performed further down
 		list($header_canon, $body_canon) = explode('/', isset($dkim['c']) ? $dkim['c'] : 'simple/simple');
-		require_once EGW_API_INC.'/php-mail-domain-signer/lib/class.mailDomainSigner.php';
 
 		// Canonicalization for Body
 		switch($body_canon)
@@ -436,6 +445,10 @@ class ischedule_server extends groupdav
 				$_unsigned  = mailDomainSigner::headRelaxCanon(implode("\r\n", $dkim_headers). "\r\n".$dkim_unsigned);
 				break;
 
+			case 'ischedule-relaxed':
+				$_unsigned  = mailDomainSigner::headIScheduleRelaxCanon(implode("\r\n", $dkim_headers). "\r\n".$dkim_unsigned);
+				break;
+
 			case 'simple':
 				$_unsigned  = mailDomainSigner::headSimpleCanon(implode("\r\n", $dkim_headers). "\r\n".$dkim_unsigned);
 				break;
@@ -477,7 +490,7 @@ class ischedule_server extends groupdav
 			return false;
 		}
 		$ok = openssl_verify($_unsigned, base64_decode($dkim['b']), $public_key, $hash_algo);
-		error_log(__METHOD__."() openssl_verify('$_unsigned', ..., '$public_key', '$hash_algo') returned ".array2string($ok));
+		if ($ok != 1) error_log(__METHOD__."() openssl_verify('$_unsigned', ..., '$public_key', '$hash_algo') returned ".array2string($ok));
 
 		switch($ok)
 		{
@@ -487,11 +500,6 @@ class ischedule_server extends groupdav
 
 			case 0:
 				$error = 'DKIM signature does NOT verify';
-				// if dkim did not validate, try not splitting Recipient header
-				if (!isset($split_recipients))
-				{
-					return self::dkim_validate($headers, $body, $error, false);
-				}
 				return false;
 		}
 
@@ -521,6 +529,14 @@ M8r0gHvp/sPSe9CQQQIDAQAB
 -----END PUBLIC KEY-----',
 		),
 		'caldav.egroupware.net' => array(
+			'calendar' => '-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCiawhLuTSVhnl1zz5pXs1A748y
+N3aNE181dni8nsYqIQB1h4H32J4dZurEiAnP9nflQRjCmmg1NTvFcNz11Bem4zo1
+K4r4mcfbjlheorK2Mwoh445HR3fo/pP7uV6CcXTNboBJLTxs6ZHswmQjxyuKBKmx
+yXUKsIQVi3qPyPdB3QIDAQAB
+-----END PUBLIC KEY-----',
+		),
+		'outdoor-training.de' => array(
 			'calendar' => '-----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCiawhLuTSVhnl1zz5pXs1A748y
 N3aNE181dni8nsYqIQB1h4H32J4dZurEiAnP9nflQRjCmmg1NTvFcNz11Bem4zo1
@@ -745,8 +761,29 @@ yXUKsIQVi3qPyPdB3QIDAQAB
 		// exception handler sending message back to the client as http status
 		$code = $e->getCode();
 		$msg = $e->getMessage();
+		list($http_status, $error, $description) = explode(': ', $msg, 3);
+		// check if we have a valid iSchedule error element, if not we use invalid-scheduling-message
+		if (!empty($error) && strpos($error, ' ') !== false)
+		{
+			$description = $error.($description ? ': '.$description : '');
+			$error = 'invalid-scheduling-message';
+		}
 		if (!in_array($code, array(400, 403, 407, 503))) $code = 500;
-		header('HTTP/1.1 '.$code.' '.$msg, true, $code);
+
+		header('HTTP/1.1 '.$code.' '.$http_status, true, $code);
+		header('Content-Type: text/xml; charset=UTF-8');
+		header('iSchedule-Version: '.self::VERSION);
+		header('iSchedule-Capabilities: '.self::SERIAL);
+
+		if ($error)
+		{
+			echo '<?xml version="1.0" encoding="utf-8" ?>
+<error xmlns="urn:ietf:params:xml:ns:ischedule">
+	<'.$error.' />
+	<response-description>'.htmlspecialchars($description).'</response-description>
+</error>
+';
+		}
 
 		// if our groupdav logging is active, log the request plus a trace, if enabled in server-config
 		if (groupdav::$request_starttime && isset(self::$instance))

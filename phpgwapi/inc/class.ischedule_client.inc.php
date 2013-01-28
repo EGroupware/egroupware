@@ -66,7 +66,7 @@ class ischedule_client
 	public function __construct($recipients, $url=null)
 	{
 		$this->recipients = (array)$recipients;
-		$this->originator = $GLOBALS['egw_info']['user']['account_email'];
+		$this->originator = 'mailto:'.$GLOBALS['egw_info']['user']['account_email'];
 
 		if (is_null($url))
 		{
@@ -122,7 +122,7 @@ class ischedule_client
 		{
 			throw new Exception("Invalid orginator '$originator'!");
 		}
-		$this->originator = $originator;
+		$this->originator = 'mailto:'.$originator;
 
 		if (!is_null($dkim_private_key))
 		{
@@ -221,15 +221,17 @@ class ischedule_client
 		    	//'follow_location' => 1,	// default 1=follow, but only for GET, not POST!
 		        //'timeout' => $timeout,	// max timeout in seconds (float)
 		        'content' => $content,
+		    	'ignore_errors' => true,	// return response, even for http-status != 2xx
 		    )
 		);
 
 		if ($debug) echo "POST $this->url HTTP/1.1\n$header_string\n$content\n";
 
 		// need to suppress warning, if http-status not 2xx
-		if (($response = @file_get_contents($this->url, false, stream_context_create($opts))) === false)
+		$response = @file_get_contents($this->url, false, stream_context_create($opts));
+		list(, $code, $message) = explode(' ', $http_response_header[0], 3);
+		if ($code[0] !== '2')
 		{
-			list(, $code, $message) = explode(' ', $http_response_header[0], 3);
 			if ($max_redirect && $code[0] === '3')
 			{
 				foreach($http_response_header as $header)
@@ -248,6 +250,10 @@ class ischedule_client
 					}
 				}
 			}
+			if ($debug) echo implode("\r\n", $http_response_header)."\r\n\r\n".$response;
+
+			if (preg_match('|<response-description>(.*)</response-description>|', $response, $matches)) $message .= ': '.$matches[1];
+
 			throw new Exception($message, $code);
 		}
 		return $response;
@@ -278,12 +284,10 @@ class ischedule_client
 				$header_names[] = $header;
 			}
 		}
-error_log(__METHOD__."(".array2string($headers).", \$body, '$selector', '$sign_headers') header_names=".array2string($header_names).', header_values='.array2string($header_values));
-		include_once EGW_API_INC.'/php-mail-domain-signer/lib/class.mailDomainSigner.php';
 		list(,$domain) = explode('@', $this->originator);
 		$mds = new mailDomainSigner($this->dkim_private_key, $domain, $selector);
 		// generate DKIM signature according to iSchedule spec
-		$dkim = $mds->getDKIM(implode(':', $header_names), $header_values, $body, 'relaxed/simple', 'rsa-sha256',
+		$dkim = $mds->getDKIM(implode(':', $header_names), $header_values, $body, 'ischedule-relaxed/simple', 'rsa-sha256',
 			"DKIM-Signature: ".
 	                "v=1; ".          // DKIM Version
 	                "a=\$a; ".        // The algorithm used to generate the signature "rsa-sha1"
