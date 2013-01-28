@@ -31,6 +31,8 @@ import javax.swing.JOptionPane;
 /**
  * jegwMain
  * 
+ * TODO http://www.java-blog-buch.de/d-plugin-entwicklung-in-java/
+ * 
  * @author Stefan Werfling <stefan.werfling@hw-softwareentwicklung.de>
  */
 public class jegwMain implements ActionListener
@@ -85,8 +87,16 @@ public class jegwMain implements ActionListener
 				== "1" ? true : false);
 			
 			egwDebuging.setDebuging(_debuging);
-			egwDebuging.setLevel(Level.parse(
-				jegwConst.getConstTag("egw_debuging_level").trim()));
+			
+			try
+			{
+				egwDebuging.setLevel(Level.parse(
+					jegwConst.getConstTag("egw_debuging_level").trim()));
+			}
+			catch(Exception exp)
+			{
+				egwDebuging.setLevel(Level.ALL);
+			}
 			// END 
 			
             if( this.egwconfig.getCXMLM().countConf() < 1 )

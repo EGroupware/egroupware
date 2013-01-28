@@ -53,6 +53,8 @@ function replace_callback($matches)
 			break;
 		case 'egw_dc_timeout_socket':
 		case 'egw_dc_timeout_notify':
+		case 'egw_debuging':
+		case 'egw_debuging_level':
 			break;
 		default:
 			$replacement = lang($r=$replacement);
