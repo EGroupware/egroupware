@@ -152,6 +152,74 @@ class mailDomainSigner{
   }
 
   /**
+   * The "ischedule-relaxed" Header Canonicalization Algorithm
+   * Function implementation according to draft-desruisseaux-ischedule-03:
+   *
+   * The "ischedule-relaxed" header canonicalization algorithm is used to
+   * canonicalize HTTP header fields where multiple headers fields with
+   * the same name might be combined by an HTTP intermediary
+   * into a single comma-separated header.
+   *
+   * Originally taken from headRelaxCanon above
+   *
+   * @param string $s Header String to Canonicalization
+   * @return string Relaxed Header Canonicalizated data
+   * @access public
+   * @author Ralf Becker
+   */
+  public function headIScheduleRelaxCanon($s) {
+    // Replace CR,LF and spaces into single SP
+    $s=preg_replace("/\r\n\s+/"," ",$s) ;
+
+    // Loop exploded header lines
+    $lines=array();
+    foreach (explode("\r\n",$s) as $line) {
+      // Split the key and value
+      list($heading,$value)=explode(":",$line,2) ;
+
+      // Lowercase heading key
+      $heading=strtolower($heading);
+
+      // Compress useless spaces
+      $value=preg_replace("/\s+/"," ",$value);
+
+      // Don't forget to remove WSP around the value
+      $value = trim($value);
+
+      // remove whitespace after comma in values
+      $value = preg_replace("/,\s+/",",",$value);
+
+      // for multiple headers, add them comma-separated to existing headers
+      if (isset($lines[$heading])) {
+      	$lines[$heading] .= ','.$value;
+      } else {
+      	$lines[$heading] = $heading.':'.$value;
+      }
+    }
+
+    // Implode it again
+    $s=implode("\r\n",$lines);
+
+    // Return Canonicalizated Headers
+    return $s;
+  }
+
+  /**
+   * The "simple" Header Canonicalization Algorithm
+   *
+   * Simple canonicalzation means no change to headers!
+   *
+   * @link https://tools.ietf.org/html/rfc4871#section-3.4.1
+   *
+   * @param string $s Header String to Canonicalization
+   * @return string Simple Header Canonicalizated data
+   * @access public
+   */
+  public function headSimpleCanon($s) {
+  	return $s;
+  }
+
+  /**
    * The "relaxed" Body Canonicalization Algorithm
    * Function implementation according to RFC4871
    *
@@ -191,6 +259,28 @@ class mailDomainSigner{
     return $canon_body;
   }
 
+  /**
+   * The "simple" Body Canonicalization Algorithm
+   * Function implementation according to RFC4871
+   *
+   * @link https://tools.ietf.org/html/rfc6376#section-3.4.3
+   *
+   * @param string $body Body String to Canonicalization
+   * @return string Simple Body Canonicalizated data
+   * @access public
+   */
+  public function bodySimpleCanon($body) {
+  	// remove all empty lines (CRLF pairs) at the end of the body
+  	while (substr($body, -2) === "\r\n") {
+  		$body = substr($body, 0, -2);
+  	}
+
+  	// add a single CRLF at the end
+  	$body .= "\r\n";
+
+    // Return the Canonicalizated Body
+    return $body;
+  }
 
   //////////////////////
   // PUBLIC FUNCTIONS //
@@ -219,46 +309,91 @@ class mailDomainSigner{
    * @param string $h Signed header fields, A colon-separated list of header field names that identify the header fields presented to the signing algorithm
    * @param array $_h Array of headers in same order with $h (Signed header fields)
    * @param string $body Raw Email Body String
-   * @return string DKIM-Signature Header String
+   * @param string $_c='relaxed/relaxed' header/body canonicalzation algorithm, default "relaxed/relaxed", can also be any combination of "relaxed" or "simple"
+   * @param string $_a='rsa-sha1' could also be eg. 'rsa/sha256' and other hashes supported by openssl for rsa signing
+   * @param string $_dkim=null template for creating DKIM signature, default as for email appropriate
+   * @return string|boolean DKIM-Signature Header String, or false if an error happend, eg. unimplemented canonicalization requested
    * @access public
    * @author Ahmad Amarullah
    */
-  public function getDKIM($h,$_h,$body) {
+  public function getDKIM($h,$_h,$body,$_c='relaxed/relaxed',$_a='rsa-sha1',$_dkim=null) {
 
     // Relax Canonicalization for Body
-    $_b = $this->bodyRelaxCanon($body);
+ 	list($header_canon,$body_canon) = explode('/',$_c);
+  	switch($body_canon)
+  	{
+  		case 'relaxed':
+    		$_b = $this->bodyRelaxCanon($body);
+    		break;
+
+  		case 'simple':
+    		$_b = $this->bodySimpleCanon($body);
+    		break;
+
+  		default:
+  			return false;	// unknown/unimplemented canonicalzation algorithm
+  	}
 
     // Canonicalizated Body Length [tag:l]
-    $_l = strlen($_b);
+    // use mb_strlen if availble to get length in bytes/octets, to kope with evtl. set mbstring.func_overload!
+    $_l = function_exists('mb_strlen') ? mb_strlen($_b, '8bit') : strlen($_b);
 
     // Signature Timestamp [tag:t]
     $_t = time();
 
     // Hash of the canonicalized body [tag:bh]
-    $_bh= base64_encode(sha1($_b,true));
-    #^--for ver < PHP5.3 # $_bh= base64_encode(pack("H*",sha1($_b)));
+    list(,$hash_algo) = explode('-', $_a);
+    $_bh = base64_encode(hash($hash_algo,$_b,true));
 
     // Creating DKIM-Signature
-    $_dkim = "DKIM-Signature: ".
-                "v=1; ".                  // DKIM Version
-                "a=rsa-sha1; ".           // The algorithm used to generate the signature "rsa-sha1"
-                "s={$this->s}; ".         // The selector subdividing the namespace for the "d=" (domain) tag
-                "d={$this->d}; ".         // The domain of the signing entity
-                "l={$_l}; ".              // Canonicalizated Body length count
-                "t={$_t}; ".              // Signature Timestamp
-                "c=relaxed/relaxed; ".    // Message (Headers/Body) Canonicalization "relaxed/relaxed"
-                "h={$h}; ".               // Signed header fields
-                "bh={$_bh};\r\n\t".       // The hash of the canonicalized body part of the message
-                "b=";                     // The signature data (Empty because we will calculate it later)
-
+    if (is_null($_dkim)) {
+	    $_dkim = "DKIM-Signature: ".
+	                "v=1; ".          // DKIM Version
+	                "a=\$a; ".        // The algorithm used to generate the signature "rsa-sha1"
+	                "s=\$s; ".        // The selector subdividing the namespace for the "d=" (domain) tag
+	                "d=\$d; ".        // The domain of the signing entity
+	                "l=\$l; ".        // Canonicalizated Body length count
+	                "t=\$t; ".        // Signature Timestamp
+	                "c=\$c; ".        // Message (Headers/Body) Canonicalization "relaxed/relaxed"
+	                "h=\$h; ".        // Signed header fields
+	                "bh=\$bh;\r\n\t". // The hash of the canonicalized body part of the message
+	                "b=";             // The signature data (Empty because we will calculate it later)
+    }
+	$_dkim = strtr($_dkim, array(
+		'$a' => $_a,
+		'$s' => $this->s,
+		'$d' => $this->d,
+		'$l' => $_l,
+		'$t' => $_t,
+		'$c' => $_c,
+		'$h' => $h,
+		'$bh' => $_bh,
+	));
     // Wrap DKIM Header
     $_dkim = wordwrap($_dkim,76,"\r\n\t");
 
     // Canonicalization Header Data
-    $_unsigned  = $this->headRelaxCanon(implode("\r\n",$_h)."\r\n{$_dkim}");
+  	switch($header_canon)
+  	{
+  		case 'relaxed':
+    		$_unsigned  = $this->headRelaxCanon(implode("\r\n",$_h)."\r\n{$_dkim}");
+    		break;
+
+  		case 'ischedule-relaxed':
+    		$_unsigned  = $this->headIScheduleRelaxCanon(implode("\r\n",$_h)."\r\n{$_dkim}");
+    		break;
+
+    	case 'simple':
+    		$_unsigned  = $this->headSimpleCanon(implode("\r\n",$_h)."\r\n{$_dkim}");
+     		break;
+
+  		default:
+  			return false;	// unknown/unimplemented canonicalzation algorithm
+  	}
+error_log(__METHOD__."() unsigned='".str_replace(array("\r","\n"),array('\\r','\\n'),$_unsigned)."'");
 
     // Sign Canonicalization Header Data with Private Key
-    openssl_sign($_unsigned, $_signed, $this->pkid, OPENSSL_ALGO_SHA1);
+    openssl_sign($_unsigned, $_signed, $this->pkid, $hash_algo);
 
     // Base64 encoded signed data
     // Chunk Split it
