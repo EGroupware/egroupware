@@ -29,7 +29,7 @@ $config = array(
 	'svnbranch' => 'branches/Stylite-EPL-11.1',	// 'branches/1.6' or 'tags/1.6.001'
 	'svnalias' => 'epl-ssh',			// default alias
 	'aliasdir' => 'egroupware',			// directory created by the alias
-	'extra' => array('stylite','jdots','$egwbase/$svnbranch/egw-pear','svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr'),
+	'extra' => array('stylite','jdots','$egwbase/$svnbranch/egw-pear','svn+ssh://stylite@svn.stylite.de/stylite/trunk/eventmgr','svn+ssh://stylite@svn.stylite.de/stylite/trunk/esyncpro'),
 	'types' => array('tar.bz2','tar.gz','zip'),
 	'svn' => '/usr/bin/svn',
 	'rsync' => 'rsync --progress -e "ssh -P 9922"',
@@ -47,7 +47,8 @@ $config = array(
         'copychangelog' => 'root@download.stylite.de:/var/www/html/stylite-epl/stylite-epl-$version/changelog.txt',
         'skip' => array(),
         'run' => array('editsvnchangelog','svntag','checkout','copy','virusscan','create','sign','obs'),
-	'patchCmd' => 'cp $obs/egroupware-epl-11.1/debian.changes $egw_buildroot/egroupware/doc/rpm-build/',	//'# run cmd after copy eg. "cd $egw_buildroot; patch -p1 /path/to/patch"',
+	// no longer copy changelog from obs to tgz, as we checkout the tag containing current changelog 'cp $obs/egroupware-epl-11.1/debian.changes $egw_buildroot/egroupware/doc/rpm-build/'
+	'patchCmd' => '',	//'# run cmd after copy eg. "cd $egw_buildroot; patch -p1 /path/to/patch"',
 );
 
 // process config from command line
@@ -222,6 +223,8 @@ function do_editsvnchangelog()
 		$cmd = $svn." commit -m 'Changelog for $config[version].$config[packaging]' ".$changelog;
 		run_cmd($cmd);
 	}
+	// update obs changelogs (so all changlogs are updated in case of a later error and changelog step can be skiped)
+	do_obs(true);	// true: only update debian.changes in obs checkouts
 }
 
 /**
@@ -330,8 +333,9 @@ function get_last_svn_tag($tags_url,$pattern,&$matches=null)
 /**
  * Copy archive files to obs checkout and commit them
  *
+ * @param boolean $only_update_changelog=false true update debian.changes, but nothing else, nor commit it
  */
-function do_obs()
+function do_obs($only_update_changelog=false)
 {
 	global $config,$verbose;
 
@@ -339,7 +343,7 @@ function do_obs()
 	{
 		usage("Path '$config[obs]' not found!");
 	}
-	if ($verbose) echo "Updating OBS checkout\n";
+	if ($verbose) echo $only_update_changelog ? "Updating OBS changelogs\n" : "Updating OBS checkout\n";
 	run_cmd('osc up '.$config['obs']);
 
 	$n = 0;
@@ -361,7 +365,7 @@ function do_obs()
 			++$n;
 		}
 		// updating dsc, spec and changelog files
-		if (substr($path,-4) == '.dsc' || substr($path,-5) == '.spec' ||
+		if (!$only_update_changelog && (substr($path,-4) == '.dsc' || substr($path,-5) == '.spec') ||
 			!empty($config['changelog']) && basename($path) == 'debian.changes')
 		{
 			$content = $content_was = file_get_contents($path);
@@ -395,7 +399,7 @@ function do_obs()
 			}
 		}
 	}
-	if ($n)
+	if ($n && !$only_update_changelog)
 	{
 		echo "$n files updated in OBS checkout ($config[obs]), commiting them now...\n";
 		//run_cmd('osc status '.$config['obs']);
@@ -600,8 +604,18 @@ function do_checkout()
 	chdir($config['svndir']);
 
 	// do we use a just created tag --> list of taged modules
-	if ($config['svntag'] && isset($config['modules']))
+	if ($config['svntag'])
 	{
+		if (!isset($config['modules']))
+		{
+			get_modules_per_repro();
+		}
+		if (strpos($config['svntag'],'$') !== false)	// in case svntag command did not run, translate tag name
+		{
+			$translate = array();
+			foreach($config as $name => $value) $translate['$'.$name] = $value;
+			$config['svntag'] = strtr($config['svntag'],$translate);
+		}
 		if (file_exists($config['aliasdir']))
 		{
 			system('/bin/rm -rf .svn '.$config['aliasdir']);	// --> remove the whole checkout, as we dont implement switching tags
