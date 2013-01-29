@@ -487,6 +487,10 @@
 					// Update filter to use current absolute dates
 					$definition->filter = $filters;
 				}
+				if(!is_array($definition->plugin_options))
+				{
+					$definition->plugin_options = array();
+				}
 				$definition->plugin_options = array_merge($definition->plugin_options, $selection);
 			}
 
