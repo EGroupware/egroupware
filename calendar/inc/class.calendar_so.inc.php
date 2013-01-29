@@ -461,9 +461,9 @@ class calendar_so
 				{
 					$users_by_type['u'][] = (int) $user;
 				}
-				elseif (is_numeric(substr($user,1)))
+				else
 				{
-					$users_by_type[$user[0]][] = (int) substr($user,1);
+					$users_by_type[$user[0]][] = substr($user,1);
 				}
 			}
 			$to_or = $user_or = array();
