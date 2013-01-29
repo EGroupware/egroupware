@@ -3617,10 +3617,10 @@ class felamimail_bo
 	function _getSpecialUseFolder($_type, $_checkexistance=TRUE)
 	{
 		static $types = array(
-			'Drafts'=>array('prefName'=>'draftFolder','profileKey'=>'draftfolder'),
-			'Template'=>array('prefName'=>'templateFolder','profileKey'=>'templatefolder'),
-			'Trash'=>array('prefName'=>'trashFolder','profileKey'=>'trashfolder'),
-			'Sent'=>array('prefName'=>'sentFolder','profileKey'=>'sentfolder'),
+			'Drafts'=>array('prefName'=>'draftFolder','profileKey'=>'draftfolder','autoFolderName'=>'Drafts'),
+			'Template'=>array('prefName'=>'templateFolder','profileKey'=>'templatefolder','autoFolderName'=>'Templates'),
+			'Trash'=>array('prefName'=>'trashFolder','profileKey'=>'trashfolder','autoFolderName'=>'Trash'),
+			'Sent'=>array('prefName'=>'sentFolder','profileKey'=>'sentfolder','autoFolderName'=>'Sent'),
 		);
 		if (!isset($types[$_type]))
 		{
@@ -3639,6 +3639,14 @@ class felamimail_bo
 		}
 		//no (valid) folder found yet; try specialUseFolders
 		if (empty($_folderName) && is_array(self::$specialUseFolders) && ($f = array_search($_type,self::$specialUseFolders))) $_folderName = $f;
+		//no specialUseFolder; try some Defaults
+		if (empty($_folderName) && isset($types[$_type]))
+		{
+			$nameSpace = $this->_getNameSpaces();
+			$prefix='';
+			if (isset($nameSpace['personal'])) $prefix = $nameSpace['personal']['prefix'];
+			if (self::folderExists($prefix.$types[$_type]['autoFolderName'])) $_folderName = $prefix.$types[$_type]['autoFolderName'];
+		}
 		return $_folderName;
 	}
 
