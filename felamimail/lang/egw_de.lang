@@ -3,6 +3,7 @@
 (only cc/bcc)	felamimail	de	(nur Kopie/Blindkopie)
 (select mails by clicking on the line, like a checkbox)	felamimail	de	(auswählen von E-Mails durch anklicken der Zeile (wie Auswahl über eine Checkbox))
 (separate multiple addresses by comma)	felamimail	de	(mehrere Adressen durch Komma trennen)
+(the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.)	felamimail	de	(Der Ordner <b>%1</b> wird verwendet, wenn hier nichts gesetzt ist und kein gültiger Vorgabewert eingetragen ist.)
 (unknown sender)	felamimail	de	(unbekannter Absender)
 (with checkbox enforced)	felamimail	de	(mit Auswahlbox für alle Ordner)
 1) keep drafted message (press ok)	felamimail	de	1) Nachrichtenentwurf behalten (wählen Sie OK)

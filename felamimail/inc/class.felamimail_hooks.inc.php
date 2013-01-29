@@ -125,6 +125,18 @@ class felamimail_hooks
 					#_debug_array($folderData);
 					$folderList[$folderName] = $folderInfo->displayName;
 				}
+				if ($GLOBALS['type'] === 'user')
+				{
+					$trashFolder    = $bofelamimail->getTrashFolder();
+					$draftFolder	= $bofelamimail->getDraftFolder();
+					$templateFolder = $bofelamimail->getTemplateFolder();
+					$sentFolder		= $bofelamimail->getSentFolder();
+					// use displaynames, if available
+					if (isset($folderList[$trashFolder])) $trashFolder = $folderList[$trashFolder];
+					if (isset($folderList[$draftFolder])) $draftFolder = $folderList[$draftFolder];
+					if (isset($folderList[$templateFolder])) $templateFolder = $folderList[$templateFolder];
+					if (isset($folderList[$sentFolder])) $sentFolder = $folderList[$sentFolder];
+				}
 				$bofelamimail->closeConnection();
 			}
 
@@ -551,7 +563,7 @@ class felamimail_hooks
 			),
 			'trashFolder' => array(
 				'type'   => 'select',
-				'label'  => 'trash folder',
+				'label'  => lang('trash folder').(isset($trashFolder)?'<br>'.lang('(The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.)',$trashFolder):''),
 				'name'   => 'trashFolder',
 				'values' => $trashOptions,
 				'xmlrpc' => True,
@@ -559,7 +571,7 @@ class felamimail_hooks
 			),
 			'sentFolder' => array(
 				'type'   => 'select',
-				'label'  => 'sent folder',
+				'label'  => lang('sent folder').(isset($sentFolder)?'<br>'.lang('(The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.)',$sentFolder):''),
 				'name'   => 'sentFolder',
 				'values' => $sentOptions,
 				'xmlrpc' => True,
@@ -567,7 +579,7 @@ class felamimail_hooks
 			),
 			'draftFolder' => array(
 				'type'   => 'select',
-				'label'  => 'draft folder',
+				'label'  => lang('draft folder').(isset($draftFolder)?'<br>'.lang('(The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.)',$draftFolder):''),
 				'name'   => 'draftFolder',
 				'values' => $draftOptions,
 				'xmlrpc' => True,
@@ -575,7 +587,7 @@ class felamimail_hooks
 			),
 		    'templateFolder' => array(
 		        'type'   => 'select',
-		        'label'  => 'template folder',
+		        'label'  => lang('template folder').(isset($templateFolder)?'<br>'.lang('(The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.)',$templateFolder):''),
 		        'name'   => 'templateFolder',
 		        'values' => $templateOptions,
 		        'xmlrpc' => True,
