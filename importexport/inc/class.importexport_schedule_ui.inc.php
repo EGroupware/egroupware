@@ -258,6 +258,8 @@
 			} else {
 				$response->addScript("xajax_doXMLHTTP('importexport.importexport_schedule_ui.ajax_get_definitions', '$appname', document.getElementById('exec[plugin]').value);");
 			}
+			// Trigger chosen
+			$response->addScript("\$j(document.getElementById('exec[plugin]')).trigger('liszt:updated');");
 
 			return $response->getXML();
 		}
@@ -284,6 +286,8 @@
 			} else {
 				$response->addScript("document.getElementById('exec[definition]').value = ''");
 			}
+			// Trigger chosen
+			$response->addScript("\$j(document.getElementById('exec[definition]')).trigger('liszt:updated');");
 			return $response->getXML();
 		}
 
