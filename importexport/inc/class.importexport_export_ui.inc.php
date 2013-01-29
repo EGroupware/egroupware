@@ -230,11 +230,6 @@ class importexport_export_ui {
 			}
 			else
 			{
-				if($definition->filter)
-				{
-					$content['selection'] = 'filter';
-				}
-
 				// Process relative dates into the current absolute date
 				foreach($content['filter']['fields'] as $field => $settings)
 				{
@@ -251,26 +246,24 @@ class importexport_export_ui {
 			");
 		}
 
-		// Disable / hide definition filter if not selected
-		if($content['selection'] !== 'filter')
-		{
-			$this->js->set_onload("
-				\$j('div.filters').hide();
-			");
-		}
 		$preserv['old_definition'] = $content['definition'];
 
-		// If not set by plugin, pre-set selection to preference, or 'search'
-		if (($prefs = $GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]) &&
-			($prefs = unserialize($prefs)) && !$content['selection']['plugin_override'])
+		// If not set by plugin, pre-set selection to filter if definition has one, or 'search'
+		if (!$content['selection'] && $definition->filter)
 		{
-			$selection = $content['selection'];
-			$content = array_merge_recursive($content,$prefs);
-			$content['selection'] = $prefs['selection'] ? $prefs['selection'] : $selection;
+			$content['selection'] = 'filter';
 		}
 		if(!$content['selection'])
 		{
 			$content['selection'] = 'search';
+		}
+
+		// Disable / hide definition filter if not selected
+		if($content['selection'] != 'filter')
+		{
+			$this->js->set_onload("
+				\$j('div.filters').hide();
+			");
 		}
 		unset ($plugin_object);
 		$apps = importexport_helper_functions::get_apps('export');
@@ -382,12 +375,6 @@ class importexport_export_ui {
 					return $response->getXML();
 				}
 			}
-
-			// Keep settings
-			$keep = array_diff_key($_content, array_flip(array('appname', 'definition', 'plugin', 'preview', 'export', $tabs)));
-			$GLOBALS['egw']->preferences->add('importexport',$definition->definition_id,serialize($keep));
-			// save prefs, but do NOT invalid the cache (unnecessary)
-			$GLOBALS['egw']->preferences->save_repository(false,'user',false);
 
 			// Store charset to use in header
 			egw_cache::setSession('importexport', $tmpfname, $charset, 100);

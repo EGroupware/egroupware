@@ -22,8 +22,7 @@ class resources_egw_record implements importexport_iface_egw_record
 	private $record = array();
 	
 	static $types = array(
-                'select-account'=> array('creator', 'modifier'),
-                'date-time'     => array('modified', 'created'),
+                'date-time'     => array(),
                 'select-cat'    => array('cat_id'),
 		'select-bool'   => array('bookable'),
 		// Links is field name => app name
