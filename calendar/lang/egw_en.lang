@@ -100,6 +100,8 @@ create a new series	calendar	en	Create a new series
 create an exception for the given date	calendar	en	Create an exception for the given date
 create exception	calendar	en	Create exception
 create new links	calendar	en	Create new links
+created	calendar	en	Created
+creator	calendar	en	Creator
 csv	calendar	en	CSV
 csv-fieldname	calendar	en	CSV field name
 csv-filename	calendar	en	CSV file name
@@ -288,6 +290,7 @@ meeting status information	calendar	en	Meeting status information
 merge document...	calendar	en	Merge document...
 minutes	calendar	en	Minutes
 modified	calendar	en	Modified
+modifier	calendar	en	Modifier
 mon	calendar	en	Mon
 month	calendar	en	Month
 monthly	calendar	en	Monthly
