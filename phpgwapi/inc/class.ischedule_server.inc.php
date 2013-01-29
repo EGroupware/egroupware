@@ -357,13 +357,13 @@ class ischedule_server extends groupdav
 	 * @param string $body
 	 * @param string &$error=null error if false returned
 	 * @return boolean true if signature could be validated, false otherwise
-	 * @todo other dkim q= methods: http/well-known bzw private-exchange
 	 */
 	public static function dkim_validate(array $headers, $body, &$error=null)
 	{
-		// parse dkim signature
+		// parse dkim signature, after unfolding it
 		if (!isset($headers['dkim-signature']) ||
-			!preg_match_all('/[\t\s]*([a-z]+)=([^;]+);?/i', $headers['dkim-signature'], $matches))
+			!preg_match_all('/[\t\s]*([a-z]+)=([^;]+);?/i',
+				preg_replace("|\r\n\s+|", "", $headers['dkim-signature']), $matches))
 		{
 			$error = "Can't parse DKIM signature";
 			return false;
@@ -384,10 +384,10 @@ class ischedule_server extends groupdav
 			return false;
 		}
 
-		// create headers array
+		// create headers array, h tag can contain whitespace, which need to be removed
 		$dkim_headers = array();
 		$check = $headers;
-		foreach(explode(':', strtolower($dkim['h'])) as $header)
+		foreach(explode(':', strtolower(preg_replace("|\s|", "", $dkim['h']))) as $header)
 		{
 			// dkim oversigning: ommit not existing headers in signing
 			if (!isset($check[$header])) continue;
@@ -430,8 +430,8 @@ class ischedule_server extends groupdav
 		// Hash of the canonicalized body [tag:bh]
 		$_bh = base64_encode(hash($hash_algo, $_b, true));
 
-		// check body hash
-		if ($_bh != $dkim['bh'])
+		// check body hash, need to remove optional whitespace
+		if ($_bh != preg_replace("|\s|", "", $dkim['bh']))
 		{
 			$error = 'Body hash does NOT verify';
 			error_log(__METHOD__."() body-hash='$_bh' != '$dkim[bh]'=dkim-bh $error");
@@ -489,7 +489,8 @@ class ischedule_server extends groupdav
 			$error = "No public key for d='$dkim[d]' and s='$dkim[s]' using methods q='$dkim[q]'";
 			return false;
 		}
-		$ok = openssl_verify($_unsigned, base64_decode($dkim['b']), $public_key, $hash_algo);
+		// value of b tag can contain whitespace, which need to be removed
+		$ok = openssl_verify($_unsigned, base64_decode(preg_replace("|\s|", "", $dkim['b'])), $public_key, $hash_algo);
 		if ($ok != 1) error_log(__METHOD__."() openssl_verify('$_unsigned', ..., '$public_key', '$hash_algo') returned ".array2string($ok));
 
 		switch($ok)
@@ -501,6 +502,12 @@ class ischedule_server extends groupdav
 			case 0:
 				$error = 'DKIM signature does NOT verify';
 				return false;
+		}
+
+		// verify optional x tag, unix timestamp when signature expires
+		if (isset($dkim['x']) && (!is_numeric($dkim['x']) || $dkim['x'] < time()))
+		{
+			$error = "DKIM signature is expired x=$dkim[x] < ".time();
 		}
 
 		return true;
