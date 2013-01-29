@@ -34,7 +34,6 @@ class ischedule_server extends groupdav
 	 * Required headers in DKIM signature (DKIM-Signature is always a required header!)
 	 */
 	const REQUIRED_DKIM_HEADERS = 'iSchedule-Version:Content-Type:Originator:Recipient';
-	//const REQUIRED_DKIM_HEADERS = 'iSchedule-Version:iSchedule-Message-ID:Content-Type:Originator:Recipient';
 
 	/**
 	 * Constructor
@@ -311,13 +310,14 @@ class ischedule_server extends groupdav
 		$organizer = $component->getAttribute('ORGANIZER');
 		$attendees = (array)$component->getAttribute('ATTENDEE');
 
-		foreach($event['participants'] as $uid => $status)
+		foreach($attendees as $attendee)
 		{
 			$xml->startElement('response');
 
-			$xml->writeElement('recipient', $attendee=array_shift($attendees));	// iSchedule has not DAV:href!
+			$xml->writeElement('recipient', $attendee);	// iSchedule has not DAV:href!
 
-			if (is_numeric($uid))
+			if (stripos($attendee, 'mailto:') === 0 &&
+				($uid = $GLOBALS['egw']->accounts->name2id(substr($attendee, 7), 'account_email')))
 			{
 				$xml->writeElement('request-status', '2.0;Success');
 				$xml->writeElement('calendar-data',
