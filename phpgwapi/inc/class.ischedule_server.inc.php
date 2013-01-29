@@ -528,6 +528,14 @@ R3ttma0JB6rMFfOTi1oHgk+h328MfGzhZK+SA9tsRPBcrJE/3uxs4SS2XNG9qRCG
 M8r0gHvp/sPSe9CQQQIDAQAB
 -----END PUBLIC KEY-----',
 		),
+		'ken.name' => array(
+			'ischedule' => '-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCfAWRKjVWS/W4F3nUYnj4XWYsy
++DsJdTjMKiHilUgQoz5MLnWpE/rt0LZklMG4Vz0io82pvnUzRrhmiaTTynlEwkj7
+gDABr/WCxv2j5vKNayz13my8z+D6efYkuHsPP8z5iQp9yzbKa8FXKb+O7AXbK5fS
+3U7S1OJgMpBeCrcpdwIDAQAB
+-----END PUBLIC KEY-----',
+		),
 		'caldav.egroupware.net' => array(
 			'calendar' => '-----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCiawhLuTSVhnl1zz5pXs1A748y
@@ -788,6 +796,7 @@ yXUKsIQVi3qPyPdB3QIDAQAB
 		// if our groupdav logging is active, log the request plus a trace, if enabled in server-config
 		if (groupdav::$request_starttime && isset(self::$instance))
 		{
+			self::$instance->_http_status = $code.' '.$http_status;
 			if ($GLOBALS['egw_info']['server']['exception_show_trace'])
 			{
 				self::$instance->log_request("\n".$e->getTraceAsString()."\n");
