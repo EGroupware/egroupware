@@ -962,7 +962,7 @@
 			// if the current folder is in draft or template folder save it there
 			// if it is called from printview then save it with the draft folder
 			//error_log(__METHOD__.__LINE__.array2string($this->preferences->ic_server));
-			$savingDestination = ($this->preferences->ic_server[$bofelamimail->profileID]->draftfolder ? $this->preferences->ic_server[$bofelamimail->profileID]->draftfolder : $this->preferencesArray['draftFolder']);
+			$savingDestination = $bofelamimail->getDraftFolder();
 			if (empty($this->sessionData['messageFolder']) && !empty($this->sessionData['mailbox']))
 			{
 				$this->sessionData['messageFolder'] = $this->sessionData['mailbox'];
@@ -973,7 +973,7 @@
 				$savingDestination = $this->sessionData['messageFolder'];
 				//error_log(__METHOD__.__LINE__.' SavingDestination:'.$savingDestination);
 			}
-			if (  !empty($_formData['printit']) && $_formData['printit'] == 0 ) $savingDestination = ($this->preferences->ic_server[$bofelamimail->profileID]->draftfolder ? $this->preferences->ic_server[$bofelamimail->profileID]->draftfolder : $this->preferencesArray['draftFolder']);
+			if (  !empty($_formData['printit']) && $_formData['printit'] == 0 ) $savingDestination = $bofelamimail->getDraftFolder();
 
 			if (count($mailAddr)>0) $BCCmail = $mail->AddrAppend("Bcc",$mailAddr);
 			//error_log(__METHOD__.__LINE__.$BCCmail.$mail->getMessageHeader().$mail->getMessageBody());
@@ -1069,14 +1069,14 @@
 
 			// check if there are folders to be used
 			$folder = (array)$this->sessionData['folder'];
-			if(isset($this->preferences->preferences['sentFolder']) &&
-				$this->preferences->preferences['sentFolder'] != 'none' &&
+			$sentFolder = $this->bofelamimail->getSentFolder();
+			if(isset($sentFolder) && $sentFolder != 'none' &&
 				$this->preferences->preferences['sendOptions'] != 'send_only' &&
 				$messageIsDraft == false)
 			{
-				if ($this->bofelamimail->folderExists($this->preferences->preferences['sentFolder'], true))
+				if ($this->bofelamimail->folderExists($sentFolder, true))
 				{
-					$folder[] = $this->preferences->preferences['sentFolder'];
+					$folder[] = $sentFolder;
 				}
 				else
 				{
@@ -1085,18 +1085,19 @@
 			}
 			else
 			{
-				if ((!isset($this->preferences->preferences['sentFolder']) && $this->preferences->preferences['sendOptions'] != 'send_only') ||
+				if ((!isset($sentFolder) && $this->preferences->preferences['sendOptions'] != 'send_only') ||
 					($this->preferences->preferences['sendOptions'] != 'send_only' &&
-					$this->preferences->preferences['sentFolder'] != 'none')) $this->errorInfo = lang("No Send Folder set in preferences");
+					$sentFolder != 'none')) $this->errorInfo = lang("No Send Folder set in preferences");
 			}
 			if($messageIsDraft == true) {
-				if(!empty($this->preferences->preferences['draftFolder']) && $this->bofelamimail->folderExists($this->preferences->preferences['draftFolder'])) {
-					$this->sessionData['folder'] = array($this->preferences->preferences['draftFolder']);
-					$folder[] = $this->preferences->preferences['draftFolder'];
+				$draftFolder = $this->bofelamimail->getDraftFolder();
+				if(!empty($draftFolder) && $this->bofelamimail->folderExists($draftFolder)) {
+					$this->sessionData['folder'] = array($draftFolder);
+					$folder[] = $draftFolder;
 				}
 			}
 			$folder = array_unique($folder);
-			if (($this->preferences->preferences['sendOptions'] != 'send_only' && $this->preferences->preferences['sentFolder'] != 'none') && !(count($folder) > 0) &&
+			if (($this->preferences->preferences['sendOptions'] != 'send_only' && $sentFolder != 'none') && !(count($folder) > 0) &&
 				!($_formData['to_infolog']=='on' || $_formData['to_tracker']=='on'))
 			{
 				$this->errorInfo = lang("Error: ").lang("No Folder destination supplied, and no folder to save message or other measure to store the mail (save to infolog/tracker) provided, but required.").($this->errorInfo?' '.$this->errorInfo:'');

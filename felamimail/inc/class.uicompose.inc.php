@@ -155,7 +155,7 @@
 			if((bool)$_POST['saveAsDraft'] == true) {
 				$formData['isDraft'] = 1;
 				// save as draft
-				$folder = ($this->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder ? $this->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder : $this->mailPreferences->preferences['draftFolder']);
+				$folder = $this->bofelamimail->getDraftFolder();
 				$this->bofelamimail->reopen($folder);
 				$status = $this->bofelamimail->getFolderStatus($folder);
 				//error_log(__METHOD__.__LINE__.array2string(array('Folder'=>$folder,'Status'=>$status)));

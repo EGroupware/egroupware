@@ -903,24 +903,23 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		$asf = ($send ? true:false); // initalize accordingly
 		if (($smartdata['saveinsentitems']==1 || !isset($smartdata['saveinsentitems'])) && $send==true && $this->mail->mailPreferences->preferences['sendOptions'] != 'send_only')
 		{
-		    $asf = false;
-		    if ($this->_sentID) {
-		        $folderArray[] = $this->_sentID;
-		    }
-			else if(isset($this->mail->mailPreferences->preferences['sentFolder']) &&
-				$this->mail->mailPreferences->preferences['sentFolder'] != 'none')
+			$asf = false;
+			$sentFolder = $this->mail->getSentFolder();
+			if ($this->_sentID) {
+				$folderArray[] = $this->_sentID;
+			}
+			else if(isset($sentFolder) && $sentFolder != 'none')
 			{
-		        $folderArray[] = $this->mail->mailPreferences->preferences['sentFolder'];
-		    }
-		    // No Sent folder set, try defaults
+				$folderArray[] = $sentFolder;
+			}
+			// No Sent folder set, try defaults
 			else
 			{
-		        debugLog("IMAP-SendMail: No Sent mailbox set");
+				debugLog("IMAP-SendMail: No Sent mailbox set");
 				// we dont try guessing
 				$asf = true;
-		    }
+			}
 			if (count($folderArray) > 0) {
-
 				foreach((array)$bccMailAddr as $address) {
 					$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
 					foreach((array)$address_array as $addressObject) {

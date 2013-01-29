@@ -125,6 +125,12 @@ class felamimail_bo
 	static $autoFolders = array('Drafts', 'Templates', 'Sent', 'Trash', 'Junk', 'Outbox');
 
 	/**
+	 * Array to cache the specialUseFolders, if existing
+	 * @var array2string
+	 */
+	static $specialUseFolders;
+
+	/**
 	 * var to hold IDNA2 object
 	 * @var class object
 	 */
@@ -625,7 +631,7 @@ class felamimail_bo
 	{
 		$folderName	= ($_folderName ? $_folderName : $this->sessionData['mailbox']);
 		$deleteOptions	= $GLOBALS['egw_info']['user']['preferences']['felamimail']['deleteOptions'];
-		$trashFolder	= $this->mailPreferences->preferences['trashFolder']; //$GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'];
+		$trashFolder	= $this->getTrashFolder(); //$GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'];
 
 		$this->icServer->selectMailbox($folderName);
 
@@ -962,9 +968,9 @@ class felamimail_bo
 		$deleteOptions = $_forceDeleteMethod; // use forceDeleteMethod if not "no", or unknown method
 		if ($_forceDeleteMethod === 'no' || !in_array($_forceDeleteMethod,array('move_to_trash',"mark_as_deleted","remove_immediately"))) $deleteOptions  = $this->mailPreferences->preferences['deleteOptions'];
 		//error_log(__METHOD__.__LINE__.'->'.array2string($_messageUID).','.$_folder.'/'.$this->sessionData['mailbox'].' Option:'.$deleteOptions);
-		$trashFolder    = $this->mailPreferences->preferences['trashFolder'];
-		$draftFolder	= $this->mailPreferences->preferences['draftFolder']; //$GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
-		$templateFolder = $this->mailPreferences->preferences['templateFolder']; //$GLOBALS['egw_info']['user']['preferences']['felamimail']['templateFolder'];
+		$trashFolder    = $this->getTrashFolder();
+		$draftFolder	= $this->getDraftFolder(); //$GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
+		$templateFolder = $this->getTemplateFolder(); //$GLOBALS['egw_info']['user']['preferences']['felamimail']['templateFolder'];
 		if(($_folder == $trashFolder && $deleteOptions == "move_to_trash") ||
 		   ($_folder == $draftFolder)) {
 			$deleteOptions = "remove_immediately";
@@ -1866,11 +1872,18 @@ class felamimail_bo
 			{
 				unset($folderBasicInfo[$_ImapServerId]);
 			}
+			$_specialUseFolders = egw_cache::getCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*12);
+			if (isset($_specialUseFolders[$_ImapServerId]))
+			{
+				unset($_specialUseFolders[$_ImapServerId]);
+				self::$specialUseFolders=null;
+			}
 		}
 		egw_cache::setCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$folders2return, $expiration=60*60*1);
 		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,$expiration=60*5);
 		egw_cache::setCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),$lastFolderUsedForMove,$expiration=60*60*1);
 		egw_cache::setCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderBasicInfo,$expiration=60*60*1);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$_specialUseFolders,$expiration=60*60*12);
 	}
 
 	/**
@@ -2086,7 +2099,8 @@ class felamimail_bo
 						switch($personalFolderName)
 						{
 							case 'Drafts': // => Entwürfe
-								if ($this->mailPreferences->preferences['draftFolder'] && $this->mailPreferences->preferences['draftFolder']=='none')
+								$draftFolder = $this->getDraftFolder();
+								if ($draftFolder && $draftFolder=='none')
 									$createfolder=false;
 								break;
 							case 'Junk': //] => Spammails
@@ -2095,15 +2109,18 @@ class felamimail_bo
 								break;
 							case 'Sent': //] => Gesendet
 								// ToDo: we may need more sophistcated checking here
-								if ($this->mailPreferences->preferences['sentFolder'] && $this->mailPreferences->preferences['sentFolder']=='none')
+								$sentFolder = $this->getSentFolder();
+								if ($sentFolder && $sentFolder=='none')
 									$createfolder=false;
 								break;
 							case 'Trash': //] => Papierkorb
-								if ($this->mailPreferences->preferences['trashFolder'] && $this->mailPreferences->preferences['trashFolder']=='none')
+								$trashFolder = $this->getTrashFolder();
+								if ($trashFolder && $trashFolder=='none')
 									$createfolder=false;
 								break;
 							case 'Templates': //] => Vorlagen
-								if ($this->mailPreferences->preferences['templateFolder'] && $this->mailPreferences->preferences['templateFolder']=='none')
+								$templateFolder = $this->bofelamimail->getTemplateFolder();
+								if ($templateFolder && $templateFolder=='none')
 									$createfolder=false;
 								break;
 							case 'Outbox': // Nokia Outbox for activesync
@@ -2584,23 +2601,41 @@ class felamimail_bo
 		return $HierarchyDelimiter[$this->icServer->ImapServerId];
 	}
 
-
+	/**
+	 * getSpecialUseFolders
+	 * @ToDo: could as well be static, when icServer is passed
+	 * @return mixed null/array
+	 */
 	function getSpecialUseFolders()
 	{
-		static $specialUseFolders;
-		if (is_null($specialUseFolders)) $specialUseFolders = egw_cache::getCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*24*5);
-		if (isset($specialUseFolders[$this->icServer->ImapServerId]))
+		//error_log(__METHOD__.__LINE__.':'.$this->icServer->ImapServerId.' Connected:'.$this->icServer->_connected);
+		static $_specialUseFolders;
+		if (is_null($_specialUseFolders)||empty($_specialUseFolders)) $_specialUseFolders = egw_cache::getCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*24*5);
+		if (isset($_specialUseFolders[$this->icServer->ImapServerId]) &&!empty($_specialUseFolders[$this->icServer->ImapServerId]))
 		{
-			return $specialUseFolders[$this->icServer->ImapServerId];
+			if(($this->icServer instanceof defaultimap))
+			{
+				//error_log(__METHOD__.__LINE__.array2string($specialUseFolders[$this->icServer->ImapServerId]));
+				// array('Drafts', 'Templates', 'Sent', 'Trash', 'Junk', 'Outbox');
+				if (empty($this->icServer->trashfolder) && ($f = array_search('Trash',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->trashfolder = $f;
+				if (empty($this->icServer->draftfolder) && ($f = array_search('Drafts',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->draftfolder = $f;
+				if (empty($this->icServer->sentfolder) && ($f = array_search('Sent',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->sentfolder = $f;
+				if (empty($this->icServer->templatefolder) && ($f = array_search('Templates',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->templatefolder = $f;
+			}
+			//error_log(__METHOD__.__LINE__.array2string($_specialUseFolders[$this->icServer->ImapServerId]));
+			self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId]; // make sure this one is set on function call
+			return $_specialUseFolders[$this->icServer->ImapServerId];
 		}
-		if(($this->icServer instanceof defaultimap))
+		if(($this->icServer instanceof defaultimap) && $this->icServer->_connected)
 		{
+			//error_log(__METHOD__.__LINE__);
 			if(($this->hasCapability('SPECIAL-USE')))
 			{
+				//error_log(__METHOD__.__LINE__);
 				$ret = $this->icServer->getSpecialUseFolders();
 				if (PEAR::isError($ret))
 				{
-					$specialUseFolders[$this->icServer->ImapServerId]=array();
+					$_specialUseFolders[$this->icServer->ImapServerId]=array();
 				}
 				else
 				{
@@ -2611,15 +2646,22 @@ class felamimail_bo
 						{
 							foreach (self::$autoFolders as $i => $n) // array('Drafts', 'Templates', 'Sent', 'Trash', 'Junk', 'Outbox');
 							{
-								if (in_array('\\'.$n,$f['ATTRIBUTES'])) $specialUseFolders[$this->icServer->ImapServerId][$f['MAILBOX']] = $n;
+								if (in_array('\\'.$n,$f['ATTRIBUTES'])) $_specialUseFolders[$this->icServer->ImapServerId][$f['MAILBOX']] = $n;
 							}
 						}
 					}
 				}
-				egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$specialUseFolders, $expiration=60*60*24*5);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$_specialUseFolders, $expiration=60*60*24*5);
 			}
+			//error_log(__METHOD__.__LINE__.array2string($_specialUseFolders[$this->icServer->ImapServerId]));
+			if (empty($this->icServer->trashfolder) && ($f = array_search('Trash',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->trashfolder = $f;
+			if (empty($this->icServer->draftfolder) && ($f = array_search('Drafts',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->draftfolder = $f;
+			if (empty($this->icServer->sentfolder) && ($f = array_search('Sent',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->sentfolder = $f;
+			if (empty($this->icServer->templatefolder) && ($f = array_search('Templates',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->templatefolder = $f;
 		}
-		return $specialUseFolders[$this->icServer->ImapServerId];
+		self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId]; // make sure this one is set on function call
+		//error_log(__METHOD__.__LINE__.array2string($_specialUseFolders[$this->icServer->ImapServerId]));
+		return $_specialUseFolders[$this->icServer->ImapServerId];
 	}
 
 	/**
@@ -3138,7 +3180,9 @@ class felamimail_bo
 	*/
 	function hasCapability($_capability)
 	{
-		return $this->icServer->hasCapability(strtoupper($_capability));
+		$rv = $this->icServer->hasCapability(strtoupper($_capability));
+		//error_log(__METHOD__.__LINE__." $_capability:".array2string($rv));
+		return $rv;
 	}
 
 	function getMailPreferences()
@@ -3564,61 +3608,64 @@ class felamimail_bo
 		return $quota;
 	}
 
+	/**
+	 * _getSpecialUseFolder
+	 * abstraction layer for getDraftFolder, getTemplateFolder, getTrashFolder and getSentFolder
+	 * @var $type string the type to fetch (Drafts|Template|Trash|Sent)
+	 * @return mixed strin or false
+	 */
+	function _getSpecialUseFolder($_type, $_checkexistance=TRUE)
+	{
+		static $types = array(
+			'Drafts'=>array('prefName'=>'draftFolder','profileKey'=>'draftfolder'),
+			'Template'=>array('prefName'=>'templateFolder','profileKey'=>'templatefolder'),
+			'Trash'=>array('prefName'=>'trashFolder','profileKey'=>'trashfolder'),
+			'Sent'=>array('prefName'=>'sentFolder','profileKey'=>'sentfolder'),
+		);
+		if (!isset($types[$_type]))
+		{
+			error_log(__METHOD__.__LINE__.' '.$_type.' not supported for '.__METHOD__);
+			return false;
+		}
+		if (is_null(self::$specialUseFolders) || empty(self::$specialUseFolders)) self::$specialUseFolders = $this->getSpecialUseFolders();
+
+		//highest precedence
+		$_folderName = $this->mailPreferences->ic_server[$this->profileID]->$types[$_type]['profileKey'];
+		//check prefs next
+		if (empty($_folderName)) $_folderName = $this->mailPreferences->preferences[$types[$_type]['prefName']];
+		// does the folder exist???
+		if ($_checkexistance && $_folderName !='none' && !self::folderExists($_folderName)) {
+			$_folderName = false;
+		}
+		//no (valid) folder found yet; try specialUseFolders
+		if (empty($_folderName) && is_array(self::$specialUseFolders) && ($f = array_search($_type,self::$specialUseFolders))) $_folderName = $f;
+		return $_folderName;
+	}
+
 	function getDraftFolder($_checkexistance=TRUE)
 	{
-		if(empty($this->mailPreferences->preferences['draftFolder'])) {
-			return false;
-		}
-		$_folderName = $this->mailPreferences->preferences['draftFolder'];
-		// does the folder exist???
-		if ($_checkexistance && !self::folderExists($_folderName)) {
-			return false;
-		}
-		return $_folderName;
+		return $this->_getSpecialUseFolder('Drafts', $_checkexistance);
 	}
 
 	function getTemplateFolder($_checkexistance=TRUE)
 	{
-		if(empty($this->mailPreferences->preferences['templateFolder'])) {
-			return false;
-		}
-		$_folderName = $this->mailPreferences->preferences['templateFolder'];
-		// does the folder exist???
-		if ($_checkexistance && !self::folderExists($_folderName)) {
-			return false;
-		}
-		return $_folderName;
+		return $this->_getSpecialUseFolder('Template', $_checkexistance);
 	}
 
 	function getTrashFolder($_checkexistance=TRUE)
 	{
-		if(empty($this->mailPreferences->preferences['trashFolder'])) {
-			return false;
-		}
-		$_folderName = $this->mailPreferences->preferences['trashFolder'];
-		// does the folder exist???
-		if ($_checkexistance && !self::folderExists($_folderName)) {
-			return false;
-		}
-		return $_folderName;
+		return $this->_getSpecialUseFolder('Trash', $_checkexistance);
 	}
 
 	function getSentFolder($_checkexistance=TRUE)
 	{
-		if(empty($this->mailPreferences->preferences['sentFolder'])) {
-			return false;
-		}
-		$_folderName = $this->mailPreferences->preferences['sentFolder'];
-		// does the folder exist???
-		if ($_checkexistance && !self::folderExists($_folderName)) {
-			return false;
-		}
-		return $_folderName;
+		return $this->_getSpecialUseFolder('Sent', $_checkexistance);
 	}
 
 	function isSentFolder($_folderName, $_checkexistance=TRUE)
 	{
-		if(empty($this->mailPreferences->preferences['sentFolder'])) {
+		$sentFolder = $this->getSentFolder();
+		if(empty($sentFolder)) {
 			return false;
 		}
 		// does the folder exist???
@@ -3626,7 +3673,7 @@ class felamimail_bo
 			return false;
 		}
 
-		if(false !== stripos($_folderName, $this->mailPreferences->preferences['sentFolder'])) {
+		if(false !== stripos($_folderName, $sentFolder)) {
 			return true;
 		} else {
 			return false;
@@ -3650,7 +3697,8 @@ class felamimail_bo
 
 	function isDraftFolder($_folderName, $_checkexistance=TRUE)
 	{
-		if(empty($this->mailPreferences->preferences['draftFolder'])) {
+		$draftFolder = $this->getDraftFolder();
+		if(empty($draftFolder)) {
 			return false;
 		}
 		// does the folder exist???
@@ -3658,7 +3706,7 @@ class felamimail_bo
 			return false;
 		}
 
-		if(false !== stripos($_folderName, $this->mailPreferences->preferences['draftFolder'])) {
+		if(false !== stripos($_folderName, $draftFolder)) {
 			return true;
 		} else {
 			return false;
@@ -3667,7 +3715,8 @@ class felamimail_bo
 
 	function isTrashFolder($_folderName, $_checkexistance=TRUE)
 	{
-		if(empty($this->mailPreferences->preferences['trashFolder'])) {
+		$trashFolder = $this->getTrashFolder();
+		if(empty($trashFolder)) {
 			return false;
 		}
 		// does the folder exist???
@@ -3675,7 +3724,7 @@ class felamimail_bo
 			return false;
 		}
 
-		if(false !== stripos($_folderName, $this->mailPreferences->preferences['trashFolder'])) {
+		if(false !== stripos($_folderName, $trashFolder)) {
 			return true;
 		} else {
 			return false;
@@ -3684,7 +3733,8 @@ class felamimail_bo
 
 	function isTemplateFolder($_folderName, $_checkexistance=TRUE)
 	{
-		if(empty($this->mailPreferences->preferences['templateFolder'])) {
+		$templateFolder = $this->getTemplateFolder();
+		if(empty($templateFolder)) {
 			return false;
 		}
 		// does the folder exist???
@@ -3692,7 +3742,7 @@ class felamimail_bo
 			return false;
 		}
 
-		if(false !== stripos($_folderName, $this->mailPreferences->preferences['templateFolder'])) {
+		if(false !== stripos($_folderName, $templateFolder)) {
 			return true;
 		} else {
 			return false;
@@ -3904,7 +3954,7 @@ class felamimail_bo
 		//error_log(print_r($this->icServer->_connected,true));
 		//make sure we are working with the correct hierarchyDelimiter on the current connection, calling getHierarchyDelimiter with false to reset the cache
 		$hD = $this->getHierarchyDelimiter(false);
-		$sUF = $this->getSpecialUseFolders();
+		self::$specialUseFolders = $this->getSpecialUseFolders();
 		//error_log(__METHOD__.__LINE__.array2string($sUF));
 
 		return $tretval;

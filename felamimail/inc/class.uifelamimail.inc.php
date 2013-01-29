@@ -257,8 +257,10 @@ class uifelamimail
 				_debug_array($isError[self::$icServerID]);
 				$lE = true;
 			}
-
 			_debug_array(($lE?'':lang('Successfully connected')));
+
+			$suF = $this->bofelamimail->getSpecialUseFolders();
+			if (is_array($suF) && !empty($suF)) _debug_array(array(lang('Server supports Special-Use Folders')=>$suF));
 
 			if(($sieveServer instanceof defaultimap) && $sieveServer->enableSieve) {
 				$scriptName = (!empty($GLOBALS['egw_info']['user']['preferences']['felamimail']['sieveScriptName'])) ? $GLOBALS['egw_info']['user']['preferences']['felamimail']['sieveScriptName'] : 'felamimail';
@@ -508,7 +510,7 @@ class uifelamimail
 			}
 
 			// preset for saving destination, we use draftfolder
-			$savingDestination = ($this->preferences->ic_server[0]->draftfolder ? $this->preferences->ic_server[0]->draftfolder : $GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder']);
+			$savingDestination = $this->bofelamimail->getDraftFolder();
 
 			$this->t->set_var('mailboxNameShort', $savingDestination);
 			$this->t->set_var('importtype', $importtype);

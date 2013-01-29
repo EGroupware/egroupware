@@ -313,7 +313,7 @@ class ajaxfelamimail
 		{
 			if($this->_debug) error_log(__METHOD__.__LINE__.' AutoSave'.$_autoSave.' ID:'.array2string($_composeID).' Data:'.array2string($_data));
 			$bocompose   = CreateObject('felamimail.bocompose',$_composeID,$this->charset);
-			$folder = $messageFolder = ($this->bofelamimail->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder ? $this->bofelamimail->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder : $this->bofelamimail->mailPreferences->preferences['draftFolder']);
+			$folder = $messageFolder = $this->bofelamimail->getDraftFolder();
 			// autosave should always save to Draft. Manual Save may Save to templates Folder
 			if ($_autoSave)
 			{
@@ -399,7 +399,7 @@ class ajaxfelamimail
 			if (!empty($_composeID))
 			{
 				$bocompose   = CreateObject('felamimail.bocompose',$_composeID,$this->charset);
-				$folder = ($this->bofelamimail->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder ? $this->bofelamimail->mailPreferences->ic_server[$this->bofelamimail->profileID]->draftfolder : $this->bofelamimail->mailPreferences->preferences['draftFolder']);
+				$folder = $this->bofelamimail->getDraftFolder();
 				$this->bofelamimail->reopen($folder);
 				if (isset($bocompose->sessionData['lastDrafted'])) $lastDrafted = $bocompose->sessionData['lastDrafted'];
 				if ($lastDrafted && is_array($lastDrafted) && isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $lastDrafted['uid'] = trim($lastDrafted['uid']);
@@ -615,9 +615,10 @@ class ajaxfelamimail
 		*/
 		function emptyTrash()
 		{
-			if($this->_debug) error_log("ajaxfelamimail::emptyTrash Folder:".$this->bofelamimail->mailPreferences->preferences['trashFolder']);
-			if(!empty($this->bofelamimail->mailPreferences->preferences['trashFolder'])) {
-				$this->bofelamimail->compressFolder($this->bofelamimail->mailPreferences->preferences['trashFolder']);
+			$trashFolder = $this->bofelamimail->getTrashFolder();
+			if($this->_debug) error_log("ajaxfelamimail::emptyTrash Folder:".$trashFolder);
+			if(!empty($trashFolder)) {
+				$this->bofelamimail->compressFolder($trashFolder);
 			}
 
 			return $this->generateMessageList($this->sessionData['mailbox']);
@@ -811,17 +812,16 @@ class ajaxfelamimail
 			} else {
 				$response->addScript("egw_topWindow().tree.setItemText('$_folderName', '". $folderStatus['shortDisplayName'] ."');");
 			}
-
-			if(!empty($GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder']) &&
-				$GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'] != 'none' ) {
-				if ($_folderName != $GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'])
+			$trashFolder = $this->bofelamimail->getTrashFolder();
+			if(!empty($trashFolder) && $trashFolder != 'none' ) {
+				if ($_folderName != $trashFolder)
 				{
-					$folderStatusT = $this->bofelamimail->getFolderStatus($GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder']);
+					$folderStatusT = $this->bofelamimail->getFolderStatus($trashFolder);
 				}
 				if($folderStatusT['unseen'] > 0) {
-					$response->addScript("egw_topWindow().tree.setItemText('". $GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'] ."', '<b>". $folderStatusT['shortDisplayName'] ." (". $folderStatusT['unseen'] .")</b>');");
+					$response->addScript("egw_topWindow().tree.setItemText('". $trashFolder ."', '<b>". $folderStatusT['shortDisplayName'] ." (". $folderStatusT['unseen'] .")</b>');");
 				} else {
-					$response->addScript("egw_topWindow().tree.setItemText('". $GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'] ."', '". $folderStatusT['shortDisplayName'] ."');");
+					$response->addScript("egw_topWindow().tree.setItemText('". $trashFolder ."', '". $folderStatusT['shortDisplayName'] ."');");
 				}
 			}
 
@@ -1510,6 +1510,7 @@ class ajaxfelamimail
 			{
 				$found = strpos($_content,trim($oldSigText));
 			}
+
 			if ($found !== false && $_oldSig != -2 && !(empty($oldSigText) || trim($bocompose->convertHTMLToText($oldSigText)) ==''))
 			{
 				//error_log(__METHOD__.'Old Content:'.$_content.'#');
@@ -1518,10 +1519,12 @@ class ajaxfelamimail
 				$_content = preg_replace('~'.$_oldSigText.'~mi',$sigText,$_content,1);
 				//error_log(__METHOD__.'new Content:'.$_content.'#');
 			}
+
 			if ($_oldSig == -2 && (empty($oldSigText) || trim($bocompose->convertHTMLToText($oldSigText)) ==''))
 			{
 				// if there is no sig selected, there is no way to replace a signature
 			}
+
 			if ($found === false)
 			{
 				if($this->_debug) error_log(__METHOD__." Old Signature failed to match:".$oldSigText);
@@ -1529,6 +1532,7 @@ class ajaxfelamimail
 			}
 			$response = new xajaxResponse();
 			if ($_currentMode == 'html') $_content = utf8_decode($_content);
+
 			$escaped = utf8_encode(str_replace(array("'", "\r", "\n"), array("\\'", "\\r", "\\n"), $_content));
 			//error_log(__METHOD__.$escaped);
 			if ($_currentMode == 'html')

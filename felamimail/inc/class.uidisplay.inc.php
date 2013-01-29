@@ -1777,15 +1777,7 @@ blockquote[type=cite] {
 			// broke the earlier assumption -> still no mailFolder, try to recover with the defaults
 			if ($callfromcompose)
 			{
-				if (isset($this->mailPreferences->preferences['draftFolder']) &&
-					$this->mailPreferences->preferences['draftFolder'] != 'none')
-				{
-					if (empty($mailFolder)) $folder = $this->mailPreferences->preferences['draftFolder'];
-				}
-				else
-				{
-					if (empty($mailFolder)) $folder = $GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
-				}
+				if (empty($mailFolder)) $folder = $this->bofelamimail->getDraftFolder();
 			}
 			// it is necessary to reopen... to make sure you are within the folder the message is in
 			//error_log(__METHOD__.__LINE__.$folder);
