@@ -221,6 +221,29 @@ class importexport_export_ui {
 			if(!$content['plugin_selectors_html'] && !$content['plugin_selectors_template']) {
 				$readonlys[$tabs]['selection_tab'] = true;
 			}
+			$content['filter'] = $definition->filter;
+			$content['filter']['fields'] = importexport_helper_functions::get_filter_fields($_appname, $selected_plugin);
+			if(!$content['filter']['fields'])
+			{
+				$this->js->set_onload("\$j('input[value=\"filter\"]').parent().hide();");
+				$content['no_filter'] = true;
+			}
+			else
+			{
+				if($definition->filter)
+				{
+					$content['selection'] = 'filter';
+				}
+
+				// Process relative dates into the current absolute date
+				foreach($content['filter']['fields'] as $field => $settings)
+				{
+					if($content['filter'][$field] && strpos($settings['type'],'date') === 0)
+					{
+						$content['filter'][$field] = importexport_helper_functions::date_rel2abs($content['filter'][$field]);
+					}
+				}
+			}
 		} elseif (!$_selection) {
 			$this->js->set_onload("
 				disable_button('exec[preview]');
@@ -235,14 +258,19 @@ class importexport_export_ui {
 				\$j('div.filters').hide();
 			");
 		}
-
 		$preserv['old_definition'] = $content['definition'];
+
+		// If not set by plugin, pre-set selection to preference, or 'search'
 		if (($prefs = $GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]) &&
-			($prefs = unserialize($prefs)) && is_array($content['selection']) && !$content['selection']['plugin_override'])
+			($prefs = unserialize($prefs)) && !$content['selection']['plugin_override'])
 		{
 			$selection = $content['selection'];
 			$content = array_merge_recursive($content,$prefs);
 			$content['selection'] = $prefs['selection'] ? $prefs['selection'] : $selection;
+		}
+		if(!$content['selection'])
+		{
+			$content['selection'] = 'search';
 		}
 		unset ($plugin_object);
 		$apps = importexport_helper_functions::get_apps('export');
@@ -301,7 +329,7 @@ class importexport_export_ui {
 					$filter[$key] = $value;
 
 					// Skip empty values or empty ranges
-					if(!$value || is_array($value) && array_key_exists('from',$value) && !$value['from'] && !$value['to'] )
+					if($value == "" || is_null($value) || (is_array($value) && count($value) == 0) || is_array($value) && array_key_exists('from',$value) && !$value['from'] && !$value['to'] )
 					{
 						unset($filter[$key]);
 					}
