@@ -7,6 +7,9 @@
 				<column/>
 			</columns>
 			<rows>
+				<row disabled="!@msg">
+					<description id="msg"/>
+				</row>
 				<row>
 					<filter id="set_filter" options="1"/>
 				</row>

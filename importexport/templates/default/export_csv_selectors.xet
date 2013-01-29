@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="importexport.export_csv_selectors" template="" lang="" group="0" version="1.9.002">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<radio label="Use all" id="selection" options="all"/>
+				</row>
+				<row>
+					<radio label="Use search results" id="selection" options="search"/>
+				</row>
+				<row>
+					<radio label="Use definition filter" id="selection" onclick="\$j('div.filters').show();" options="filter"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
