@@ -291,6 +291,9 @@ class ischedule_client
 			throw new Exception('You need to generate a key pair first!');
 		}
 		$url_parts = parse_url($this->url);
+		$user_agent = 'EGroupware-iSchedule-client/'.$GLOBALS['egw_info']['server']['versions']['phpgwapi'].' '.
+			preg_replace('|^\$Id$').
+			' PHP/'.PHP_VERSION;
 		$headers = array(
 			'Host' => $url_parts['host'].($url_parts['port'] ? ':'.$url_parts['port'] : ''),
 			'iSchedule-Version' => self::VERSION,
@@ -299,7 +302,7 @@ class ischedule_client
 			'Originator' => $this->originator,
 			'Recipient' => $this->recipients,
 			'Cache-Control' => 'no-cache, no-transform',	// required by iSchedule spec
-			'User-Agent' => 'EGroupware iSchedule client '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'].' $Id$',
+			'User-Agent' => $user_agent,
 			'Content-Length' => bytes($content),
 		);
 		$header_string = '';
@@ -316,7 +319,7 @@ class ischedule_client
 		    array(
 		        'method'  => 'POST',
 		        'header'  => $header_string,
-		    	'user_agent' => 'EGroupware iSchedule client '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'].' $Id$',
+		    	'user_agent' => $user_agent,
 		    	//'follow_location' => 1,	// default 1=follow, but only for GET, not POST!
 		        //'timeout' => $timeout,	// max timeout in seconds (float)
 		        'content' => $content,
@@ -365,9 +368,10 @@ class ischedule_client
 	 * @param string $body
 	 * @param string $selector='calendar'
 	 * @param string $sign_headers='iSchedule-Version:Content-Type:Originator:Recipient'
+	 * @param int $expires seconds the signature is valid, default 300
 	 * @return string DKIM-Signature: ...
 	 */
-	public function dkim_sign(array $headers, $body, $selector='calendar',$sign_headers=self::DKIM_HEADERS)
+	public function dkim_sign(array $headers, $body, $selector='calendar',$sign_headers=self::DKIM_HEADERS,$expires=300)
 	{
 		$header_values = $header_names = array();
 		foreach(explode(':', $sign_headers) as $header)
@@ -386,7 +390,7 @@ class ischedule_client
 	                "v=1; ".          // DKIM Version
 	                "a=\$a; ".        // The algorithm used to generate the signature "rsa-sha1"
 					"q=dns/txt:http/well-known; ".	// how to fetch public key: dns/txt, http/well-known or private-exchange
-					"x=".(time()+300)."; ".        // how long request will be valid as timestamp
+					"x=".(time()+$expires)."; ".        // how long request will be valid as timestamp
 					// end iSchedule specific
 	                "s=\$s; ".        // The selector subdividing the namespace for the "d=" (domain) tag
 	                "d=\$d; ".        // The domain of the signing entity
