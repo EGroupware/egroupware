@@ -508,6 +508,7 @@ class ischedule_server extends groupdav
 		if (isset($dkim['x']) && (!is_numeric($dkim['x']) || $dkim['x'] < time()))
 		{
 			$error = "DKIM signature is expired x=$dkim[x] < ".time();
+			return false;
 		}
 
 		return true;
