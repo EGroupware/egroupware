@@ -24,9 +24,18 @@ class ischedule_client
 	const VERSION = '1.0';
 
 	/**
-	 * Required headers in DKIM signature (DKIM-Signature is always a required header!)
+	 * Allow to specify iSchedule urls without publishing them in DNS
+	 *
+	 * @var array domain => url pairs
 	 */
-	const REQUIRED_DKIM_HEADERS = 'Host:iSchedule-Version:iSchedule-Message-ID:Content-Type:Originator:Recipient';
+	static public $domain2url = array(
+		'example.com' => 'https://caldav.egroupware.net/.well-known/ischedule',
+	);
+
+	/**
+	 * Headers in DKIM signature (DKIM-Signature is always a required header!)
+	 */
+	const DKIM_HEADERS = 'iSchedule-Version:Content-Type:Originator:Recipient:User-Agent:iSchedule-Message-ID';
 
 	/**
 	 * URL to use to contact iSchedule receiver
@@ -79,6 +88,74 @@ class ischedule_client
 		}
 
 		$this->dkim_private_key = $GLOBALS['egw_info']['server']['dkim_private_key'];
+	}
+
+	/**
+	 * Check if we can iSchedule with a given email address or domain
+	 *
+	 * We assume when a private key was generated, it is also published!
+	 *
+	 * @param string $domain domain or email/scheduling address
+	 * @return boolean true
+	 */
+	public static function available($domain)
+	{
+		if (empty($GLOBALS['egw_info']['server']['dkim_private_key']))
+		{
+			return false;
+		}
+		if (strpos($domain, '@') !== false) list(, $domain) = explode('@', $domain);
+
+		try {
+			$url = self::discover($domain);
+		}
+		catch (Exception $e) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Send FREEBUSY request via iSchedule
+	 *
+	 * @param string|array $recipients (array of) mailto urls (from same domain!)
+	 * @param int $start starttime
+	 * @param int $end endtime
+	 * @param string $uid=null
+	 * @param string $originator=null default current user's email
+	 * @return array with values for keys 'schedule-response' or 'error'
+	 * @throws Exception if discovery of recipient(s) fails
+	 */
+	public static function freebusy_request($recipients, $start, $end, $uid=null, $originator=null)
+	{
+		$client = new ischedule_client($recipients);
+		if ($originator) $client->setOriginator($originator);
+
+		$vcal = new Horde_iCalendar;
+		$vcal->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
+			strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
+		$vcal->setAttribute('VERSION','2.0');
+		$vcal->setAttribute('METHOD',$method='REQUEST');
+
+		$vfreebusy = Horde_iCalendar::newComponent($component='VFREEBUSY', $vcal);
+		if ($uid) $vfreebusy->setAttribute('UID', $uid);
+		$vfreebusy->setAttribute('DTSTAMP', time());
+		$vfreebusy->setAttribute('DTSTART', $start);
+		$vfreebusy->setAttribute('DTEND', $end);
+		$vfreebusy->setAttribute('ORGANIZER', $client->originator);
+		foreach($client->recipients as $recipient)
+		{
+			$vfreebusy->setAttribute('ATTENDEE', $recipient);
+		}
+		$vcal->addComponent($vfreebusy);
+		$content = $vcal->exportvCalendar('utf-8');
+		$content_type = 'text/calendar; component='.$component.'; method='.$method;
+		$xml = $client->post_msg($content, $content_type);
+
+		$reader = new XMLReader();
+		$reader->XML($xml, 'utf-8');
+
+		return self::xml2assoc($reader);
 	}
 
 	/**
@@ -144,11 +221,13 @@ class ischedule_client
 			'http' => 80,
 		);
 
+		if (isset(self::$domain2url[$domain])) return self::$domain2url[$domain];
+
 		$d = $domain;
 		for($n = 0; $n < 3; ++$n)
 		{
-			if (!($records = dns_get_record($host='_ischedules._tcp.'.$d, DNS_SRV)) &&
-				!($records = dns_get_record($host='_ischedule._tcp.'.$d, DNS_SRV)))
+			if (!($records = dns_get_record($host='_ischedules._tcp.'.$d, DNS_SRV+DNS_TXT)) &&
+				!($records = dns_get_record($host='_ischedule._tcp.'.$d, DNS_SRV+DNS_TXT)))
 			{
 				// try without subdomain(s)
 				$parts = explode('.', $d);
@@ -159,19 +238,38 @@ class ischedule_client
 		}
 		if (!$records) throw new Exception("Could not discover iSchedule service for domain '$domain'!");
 
-		// ToDo: do we need to use priority and weight
-		$record = $records[0];
+		$path = '/.well-known/ischedule';
+
+		foreach($records as $record)
+		{
+			switch($record['type'])
+			{
+				case 'SRV':
+					// for multiple SRV records we use the one with smallest priority and heighest weight
+					if (!isset($srv) || $srv['pri'] > $record['pri'] ||
+						$srv['pri'] == $record['pri'] && $srv['weight'] < $record['weight'])
+					{
+						$srv = $record;
+					}
+					break;
+
+				case 'TXT':
+					if (strpos($record['txt'], 'path=') === 0) $path = substr($record['txt'], 5);
+					break;
+			}
+		}
+		if (!isset($srv)) throw new Exception("Could not discover iSchedule service for domain '$domain'!");
 
 		$url = strpos($host, '_ischedules') === 0 ? 'https' : 'http';
-		if ($scheme2port[$url] == $record['port'])
+		if ($scheme2port[$url] == $srv['port'])
 		{
-			$url .= '://'.$record['target'];
+			$url .= '://'.$srv['target'];
 		}
 		else
 		{
-			$url .= '://'.$record['target'].':'.$record['port'];
+			$url .= '://'.$srv['target'].':'.$srv['port'];
 		}
-		$url .= '/.well-known/ischedule';
+		$url .= $path;
 
 		return $url;
 	}
@@ -201,6 +299,7 @@ class ischedule_client
 			'Originator' => $this->originator,
 			'Recipient' => $this->recipients,
 			'Cache-Control' => 'no-cache, no-transform',	// required by iSchedule spec
+			'User-Agent' => 'EGroupware iSchedule client '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'].' $Id$',
 			'Content-Length' => bytes($content),
 		);
 		$header_string = '';
@@ -250,7 +349,7 @@ class ischedule_client
 					}
 				}
 			}
-			if ($debug) echo implode("\r\n", $http_response_header)."\r\n\r\n".$response;
+			if ($debug && $http_response_header) echo implode("\r\n", $http_response_header)."\r\n\r\n".$response;
 
 			if (preg_match('|<response-description>(.*)</response-description>|', $response, $matches)) $message .= ': '.$matches[1];
 
@@ -268,7 +367,7 @@ class ischedule_client
 	 * @param string $sign_headers='iSchedule-Version:Content-Type:Originator:Recipient'
 	 * @return string DKIM-Signature: ...
 	 */
-	public function dkim_sign(array $headers, $body, $selector='calendar',$sign_headers=self::REQUIRED_DKIM_HEADERS)
+	public function dkim_sign(array $headers, $body, $selector='calendar',$sign_headers=self::DKIM_HEADERS)
 	{
 		$header_values = $header_names = array();
 		foreach(explode(':', $sign_headers) as $header)
@@ -276,11 +375,6 @@ class ischedule_client
 			foreach((array)$headers[$header] as $value)
 			{
 				$header_values[] = $header.': '.$value;
-				$header_names[] = $header;
-			}
-			// oversign multiple value header Recipient
-			if ($header == 'Recipient')
-			{
 				$header_names[] = $header;
 			}
 		}
@@ -292,7 +386,7 @@ class ischedule_client
 	                "v=1; ".          // DKIM Version
 	                "a=\$a; ".        // The algorithm used to generate the signature "rsa-sha1"
 					"q=dns/txt:http/well-known; ".	// how to fetch public key: dns/txt, http/well-known or private-exchange
-					"x=300; ".        // how long request will be valid in sec
+					"x=".(time()+300)."; ".        // how long request will be valid as timestamp
 					// end iSchedule specific
 	                "s=\$s; ".        // The selector subdividing the namespace for the "d=" (domain) tag
 	                "d=\$d; ".        // The domain of the signing entity
