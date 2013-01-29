@@ -18,6 +18,7 @@ $GLOBALS['egw_info'] = array(
 	)
 );
 
+ini_set('zlib.output_compression',0);
 include('../header.inc.php');
 
 ob_start();
@@ -110,7 +111,11 @@ check_load_extension('phar', true);
 $zip = new PharData($archive);
 $zip->addFromString($config_file, $xml);
 unset($zip);
+// clear stat cache, as otherwise filesize might report an earlier, smaller size!
+clearstatcache();
 ob_end_clean();
 
 html::content_header('egroupware-notifier-'.$GLOBALS['egw_info']['user']['account_lid'].'.jar', 'application/x-java-archive', filesize($archive));
-readfile($archive,'r');
+readfile($archive,'rb');
+
+@unlink($archive);
