@@ -1,3 +1,9 @@
+egroupware-epl (11.1.20130129-1) hardy; urgency=low
+
+  * Tracker: introduce new filter own or assigned; use filter ownorassigned-not-closed with notification for due or overdue
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 29 Jan 2013 13:00:25 +0100
+
 egroupware-epl (11.1.20130125-1) hardy; urgency=low
 
   * all apps: exclude expired or deactivated accounts from all lists and selections (beside admin app to be able to activate them again)
