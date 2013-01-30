@@ -32,6 +32,11 @@ class notifications_popup implements notifications_iface {
 	const _notification_table = 'egw_notificationpopup';
 
 	/**
+	 * Notification type
+	 */
+	const _type = 'base';
+
+	/**
 	 * holds account object for user who sends the message
 	 *
 	 * @var object
@@ -117,7 +122,8 @@ class notifications_popup implements notifications_iface {
 	private function save( $_message ) {
 		$result = $this->db->insert( self::_notification_table, array(
 			'account_id'     => $this->recipient->account_id,
-			'notify_message' => $_message
+			'notify_message' => $_message,
+			'notify_type'	 => self::_type
 			), false,__LINE__,__FILE__,self::_appname);
 		if ($result === false) throw new Exception("Can't save notification into SQL table");
 	}

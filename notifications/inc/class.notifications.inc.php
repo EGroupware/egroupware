@@ -45,7 +45,7 @@ final class notifications {
 	 * registered backends
 	 * @var array
 	 */
-	private $backends = array('popup', 'winpopup', 'email', 'sms');
+	private $backends = array('popup', 'winpopup', 'email', 'sms', 'jpopup');
 
 	/**
 	 * backends to skip even if the user has chosen it
@@ -80,6 +80,8 @@ final class notifications {
 		//'winpopup_or_sms'		=> array('winpopup' => 'fail', 'sms' => 'stop'),
 		'winpopup_and_email' 	=> array('winpopup' => 'continue', 'email' => 'stop'),
 		'sms_only' 				=> array('sms' => 'stop'),
+		'jpopup_only'			=> array('jpopup' => 'continue', 'popup' => 'stop'),
+		'jpopup_and_email'		=> array('jpopup' => 'continue', 'popup' => 'continue', 'email' => 'stop'),
 	);
 
 	/**
@@ -100,6 +102,8 @@ final class notifications {
 		//'winpopup_or_sms' 		=> 'Windows-Popup first, if that fails notify me by SMS',
 		'winpopup_and_email' 	=> 'Windows-Popup and E-Mail',
 		'sms_only' 				=> 'SMS only',
+		'jpopup_only'			=> 'Java-Windows-Popup and eGroupWare-Popup only',
+		'jpopup_and_email'		=> 'Java-Windows-Popup, eGroupWare-Popup and Email'
 	);
 
 	/**
@@ -647,6 +651,7 @@ final class notifications {
 			switch($backend) {
 				case 'email':
 				case 'popup':
+				case 'jpopup':
 					$enabled_backends[$backend] = true; // fallback must always be enabled
 					break;
 				default:

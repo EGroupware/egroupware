@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<root>
+<config>
+	<appversionnum>1915</appversionnum>
+	<appversion>1.9.15</appversion>
+	<egwtitle>eGroupware Notifier</egwtitle>
+	<icons>
+		<egwicon>lib/img/favicon.png</egwicon>
+		<egwiconoff>lib/img/favicon_g.png</egwiconoff>
+		<egwiconinfo>lib/img/favicon_info.png</egwiconinfo>
+		<egwiconerror>lib/img/favicon_error.png</egwiconerror>
+	</icons>
+	<egwaccountfile>egwnotifier.conf.xml</egwaccountfile>
+	<egwdefaultconfig>
+		<egw_dc_url></egw_dc_url>
+		<egw_dc_logindomain></egw_dc_logindomain>
+		<egw_dc_username></egw_dc_username>
+		<egw_dc_timeout_socket>1000</egw_dc_timeout_socket>
+		<egw_dc_timeout_notify>30000</egw_dc_timeout_notify>
+		<egw_debuging>0</egw_debuging>
+		<egw_debuging_level>ALL</egw_debuging_level>
+	</egwdefaultconfig>
+	<ShowBallonInfo>
+		<info_login>Login</info_login>
+		<info_info>Info</info_info>
+	</ShowBallonInfo>
+	<MenuItem>
+		<MI_browser>Browser</MI_browser>
+		<MI_login>Login</MI_login>
+		<MI_logout>Logout</MI_logout>
+		<MI_settings>Settings</MI_settings>
+		<MI_exit>Exit</MI_exit>
+	</MenuItem>
+	<egwstatuscodes>
+		<egw_sc_1>You have been successfully logged out</egw_sc_1>
+		<egw_sc_2>Sorry, your login has expired</egw_sc_2>
+		<egw_sc_4>Cookies are required to login to this site.</egw_sc_4>
+		<egw_sc_5>Bad login or password</egw_sc_5>
+		<egw_sc_10>Your session could not be verified.</egw_sc_10>
+		<egw_sc_11>Your session could not be verified.</egw_sc_11>
+		<egw_sc_98>Account is expired</egw_sc_98>
+		<egw_sc_99>Blocked, too many attempts</egw_sc_99>
+	</egwstatuscodes>
+	<egwmesssage>
+		<egw_msg_tm_certerror>The server certificate is not a valid trust center certificate!</egw_msg_tm_certerror>
+		<egw_msg_tm_connected>Continue to connect?</egw_msg_tm_connected>
+		<egw_msg_tm_title_errorssl>Error SSL</egw_msg_tm_title_errorssl>
+		<egw_msg_trayicon_init_error>Error on loading Tray icon</egw_msg_trayicon_init_error>
+		<egw_msg_infodialog_runapp>run application</egw_msg_infodialog_runapp>
+		<egw_msg_title_warning>Warning</egw_msg_title_warning>
+		<egw_msg_config_create>Info on load config file: create config file.</egw_msg_config_create>
+		<egw_msg_setting_aborting>Setting aborted, application exit</egw_msg_setting_aborting>
+		<egw_msg_login_aborting>Login aborted, application exit?</egw_msg_login_aborting>
+		<egw_msg_login_start>Egroupware login is starting, please wait.</egw_msg_login_start>
+		<egw_msg_start_browser>Browser is starting.</egw_msg_start_browser>
+		<egw_msg_start_browser_error>Error Browser can`t start.</egw_msg_start_browser_error>
+		<egw_msg_repeat_login>Repeat Login?</egw_msg_repeat_login>
+		<egw_msg_connection_error>Connection error. Please check connection to server.</egw_msg_connection_error>
+		<egw_msg_premission_denied>Permission denied for notifications application.</egw_msg_premission_denied>
+		<egw_msg_contact_admin>Please contact your EGroupware admin.</egw_msg_contact_admin>
+		<egw_msg_page_not_found>Page not found, please check Serveraddress.</egw_msg_page_not_found>
+		<egw_msg_domain_not_found>Domain not found, please check Serveraddress.</egw_msg_domain_not_found>
+		<egw_msg_password_enter>Please enter your password</egw_msg_password_enter>
+		<egw_msg_egroupware_not_found>Egroupware not found by URL.</egw_msg_egroupware_not_found>
+		<egw_msg_egroupware_not_found_con_lost>Egroupware not found by URL or connection lost to server.</egw_msg_egroupware_not_found_con_lost>
+		<egw_msg_cancal_setting>Cancal settings?</egw_msg_cancal_setting>
+		<egw_msg_info_url>Please enter the URL of your Egroupware.</egw_msg_info_url>
+		<egw_msg_info_logindomains>Egroupware Logindomains founds, please select.</egw_msg_info_logindomains>
+		<egw_msg_info_username>Please enter your Egroupware username.</egw_msg_info_username>
+	</egwmesssage>
+	<egwtext>
+		<egw_txt_tm_certinfo>Certification-information:</egw_txt_tm_certinfo>
+		<egw_txt_tm_issuer_dn>Issuer DN:</egw_txt_tm_issuer_dn>
+		<egw_txt_tm_subject_dn>Subject DN:</egw_txt_tm_subject_dn>
+		<egw_txt_account>Account:</egw_txt_account>
+		<egw_txt_login>login in EGroupware:</egw_txt_login>
+		<egw_txt_title_login>Login</egw_txt_title_login>
+		<egw_txt_title_premission>Permission</egw_txt_title_premission>
+		<egw_txt_title_notifier>Notifier</egw_txt_title_notifier>
+		<egw_txt_update>(Update in sec. %s)</egw_txt_update>
+		<egw_txt_connection_error>Connection error.</egw_txt_connection_error>
+		<egw_txt_title_password>Password:</egw_txt_title_password>
+		<egw_txt_cancel>Cancel</egw_txt_cancel>
+		<egw_txt_save_password>save password</egw_txt_save_password>
+		<egw_txt_title_dialog_password>Password</egw_txt_title_dialog_password>
+		<egw_txt_host>Host:</egw_txt_host>
+		<egw_txt_user>User:</egw_txt_user>
+		<egw_txt_setting>Setting</egw_txt_setting>
+		<egw_txt_error>Error</egw_txt_error>
+		<egw_txt_cancal2>Cancal?</egw_txt_cancal2>
+		<egw_txt_next>Next</egw_txt_next>
+		<egw_txt_step>Step</egw_txt_step>
+		<egw_txt_back>Back</egw_txt_back>
+		<egw_txt_save>Save</egw_txt_save>
+		<egw_txt_user>User:</egw_txt_user>
+		<egw_txt_egroupware_domain>Egroupware Logindomain:</egw_txt_egroupware_domain>
+	</egwtext>
+</config>
+</root>
