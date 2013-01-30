@@ -28,9 +28,6 @@ class calendar_export_ical extends calendar_export_csv {
 
 		// Custom fields need to be specifically requested
 		$cfs = array();
-		foreach($options['mapping'] as $key => $label) {
-			if($key[0] == '#') $cfs[] = substr($key,1);
-		}
 
 		$limit_exception = bo_merge::is_export_limit_excepted();
 		if (!$limit_exception) $export_limit = bo_merge::getExportLimit('calendar');
@@ -51,7 +48,8 @@ class calendar_export_ical extends calendar_export_csv {
 			}
 			$events =& $this->bo->search($query);
 		}
-		elseif ($options['selection'] == 'search_results')
+		// Scheduled export will use 'all', which we don't allow through UI
+		elseif ($options['selection'] == 'search_results' || $options['selection'] == 'all')
 		{
 			$states = $GLOBALS['egw']->session->appsession('session_data','calendar');
 			if($states['view'] == 'listview')
