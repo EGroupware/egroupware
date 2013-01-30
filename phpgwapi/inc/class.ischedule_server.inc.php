@@ -362,7 +362,7 @@ class ischedule_server extends groupdav
 	{
 		// parse dkim signature, after unfolding it
 		if (!isset($headers['dkim-signature']) ||
-			!preg_match_all('/[\t\s]*([a-z]+)=([^;]+);?/i',
+			!preg_match_all('/[\t\s]*([a-z]+)\s*=\s*([^;]+);?/i',
 				preg_replace("|\r\n\s+|", "", $headers['dkim-signature']), $matches))
 		{
 			$error = "Can't parse DKIM signature";
