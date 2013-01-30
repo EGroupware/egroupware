@@ -120,7 +120,7 @@ class emailadmin_smtp
 		if (($account_id = $this->accounts->name2id($_accountName, 'account_lid', 'u')))
 		{
 			$realName = trim($GLOBALS['egw_info']['user']['account_firstname'] . (!empty($GLOBALS['egw_info']['user']['account_firstname']) ? ' ' : '') . $GLOBALS['egw_info']['user']['account_lastname']);
-			$emailAddresses[] = $emailAddresses[] = array (
+			$emailAddresses[] = array (
 				'name'		=> $realName,
 				'address'	=> $this->accounts->id2name($account_id, 'account_email'),
 				'type'		=> 'default',
