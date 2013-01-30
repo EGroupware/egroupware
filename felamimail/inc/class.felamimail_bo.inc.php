@@ -3763,7 +3763,8 @@ class felamimail_bo
 		$forceCheck = $_forceCheck;
 		if (empty($_folder))
 		{
-			error_log(__METHOD__.__LINE__.' Called with empty Folder:'.$_folder.function_backtrace());
+			// this error is more or less without significance, unless we force the check
+			if ($_forceCheck===true) error_log(__METHOD__.__LINE__.' Called with empty Folder:'.$_folder.function_backtrace());
 			return false;
 		}
 		// reduce traffic within the Instance per User; Expire every 5 Minutes
