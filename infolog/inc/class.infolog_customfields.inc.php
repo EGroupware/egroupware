@@ -16,7 +16,8 @@
 class infolog_customfields
 {
 	var $public_functions = array(
-		'edit' => True
+		'edit' => True,
+		'custom_notifications' => true
 	);
 	/**
 	 * Instance of the infolog BO class
@@ -370,5 +371,69 @@ class infolog_customfields
 		//echo '<p>'.__METHOD__.'() \$this->fields=<pre style="text-aling: left;">'; print_r($this->fields); echo "</pre>\n";
 		config::save_value('customfields',$this->fields,'infolog');
 		config::save_value('group_owners',$this->group_owners,'infolog');
+	}
+
+	/**
+	 * Edit custom notifications for all infolog types and each type
+	 */
+	public function custom_notifications(Array $content = array())
+	{
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Custom notifications');
+		if (is_array($content))
+		{
+			//echo '<pre style="text-align: left;">'; print_r($content); echo "</pre>\n";
+			list($action) = @each($content['button']);
+			switch($action)
+			{
+				case 'save':
+				case 'apply':
+					$notifications = array();
+					foreach($content['notification'] as $type)
+					{
+						if(trim($type['value']))
+						{
+							$notifications[$type['old_name']] = trim($type['value']);
+						}
+					}
+					config::save_value('custom_notification', $notifications,'infolog');
+					if ($action != 'save')
+					{
+						break;
+					}
+				case 'cancel':
+					$GLOBALS['egw']->redirect_link('/admin/');
+					exit;
+			}
+		}
+		else
+		{
+			$content = array();
+		}
+		$readonlys = array();
+		$config = config::read('infolog');
+
+		$n = 0;
+		$content['notification'][++$n] = array(
+			'name'     => "~global~",
+			'value'    => $config['custom_notification']['~global~'],
+			'label'    => 'all',
+			'disabled' => False
+		);
+		$preserve['notification'][$n]['old_name'] = '~global~';
+
+		foreach($this->types as $type => $label)
+		{
+			$content['notification'][++$n] = array(
+				'value'    => $config['custom_notification'][$type],
+				'label'    => $label,
+				'disabled' => False
+			);
+			$preserve['notification'][$n]['old_name'] = $type;
+		}
+
+		//echo '<p>'.__METHOD__'.(content = <pre style="text-align: left;">'; print_r($content); echo "</pre>\n";
+		//echo 'readonlys = <pre style="text-align: left;">'; print_r($readonlys); echo "</pre>\n";
+		$this->tmpl->read('infolog.custom_notification');
+		$this->tmpl->exec('infolog.infolog_customfields.custom_notifications',$content,array(),$readonlys,$preserve);
 	}
 }

@@ -321,6 +321,22 @@ class infolog_tracking extends bo_tracking
 					$config = array_merge($config,preg_split('/, ?/',$data['info_cc']));
 				}
 				break;
+			case self::CUSTOM_NOTIFICATION:
+				$info_config = config::read('infolog');
+				if(!$info_config[self::CUSTOM_NOTIFICATION])
+				{
+					return '';
+				}
+				// Per-type notification
+				elseif($info_config[self::CUSTOM_NOTIFICATION][$data['info_type']])
+				{
+					$config = $info_config[self::CUSTOM_NOTIFICATION][$data['info_type']];
+				}
+				else
+				{
+					$config = $info_config[self::CUSTOM_NOTIFICATION]['~global~'];
+				}
+				break;
 		}
 		return $config;
 	}
