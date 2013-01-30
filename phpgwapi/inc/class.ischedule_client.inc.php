@@ -35,7 +35,7 @@ class ischedule_client
 	/**
 	 * Headers in DKIM signature (DKIM-Signature is always a required header!)
 	 */
-	const DKIM_HEADERS = 'iSchedule-Version:Content-Type:Originator:Recipient:User-Agent:iSchedule-Message-ID';
+	const DKIM_HEADERS = 'iSchedule-Version:Content-Type:Originator:Recipient:User-Agent:iSchedule-Message-ID:Authorization';
 
 	/**
 	 * URL to use to contact iSchedule receiver
@@ -369,9 +369,10 @@ class ischedule_client
 	 * @param string $selector='calendar'
 	 * @param string $sign_headers='iSchedule-Version:Content-Type:Originator:Recipient'
 	 * @param int $expires seconds the signature is valid, default 300
+	 * @param boolean $fold=false true: return folded signature, false: return a single line
 	 * @return string DKIM-Signature: ...
 	 */
-	public function dkim_sign(array $headers, $body, $selector='calendar',$sign_headers=self::DKIM_HEADERS,$expires=300)
+	public function dkim_sign(array $headers, $body, $selector='calendar',$sign_headers=self::DKIM_HEADERS,$expires=300,$fold=false)
 	{
 		$header_values = $header_names = array();
 		foreach(explode(':', $sign_headers) as $header)
@@ -402,7 +403,7 @@ class ischedule_client
 	                "b=");             // The signature data (Empty because we will calculate it later));
 
 		// as we do http, no need to fold dkim, in fact recommendation is not to
-		$dkim = str_replace(array(";\r\n\t", "\r\n\t"), array('; ', ''), $dkim);
+		if (!$fold) $dkim = str_replace(array(";\r\n\t", "\r\n\t"), array('; ', ''), $dkim);
 
 		return $dkim;
 	}
