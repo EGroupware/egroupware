@@ -181,6 +181,11 @@ abstract class bo_tracking
 	const ONE2N_SEPERATOR = '~|~';
 
 	/**
+	 * Config name for custom notification message
+	 */
+	const CUSTOM_NOTIFICATION = 'custom_notification';
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $cf_app=null if set, custom field names get added to $field2history
@@ -271,6 +276,7 @@ abstract class bo_tracking
 	 *  - 'link' string of link to view $data
 	 *  - 'sender' sender of email
 	 *  - 'skip_notify' array of email addresses that should _not_ be notified
+	 *  - CUSTOM_NOTIFICATION string notification body message.  Merge print placeholders are allowed.
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @return mixed
@@ -902,6 +908,19 @@ abstract class bo_tracking
 	public function get_body($html_email,$data,$old,$integrate_link = true,$receiver=null)
 	{
 		$body = '';
+		if($this->get_config(self::CUSTOM_NOTIFICATION, $data, $old))
+		{
+			$body = $this->get_custom_message($data,$old);
+			if($html_email)
+			{
+				$body = nl2br($body);
+			}
+			if($sig = $this->get_signature($data,$old,$receiver))
+			{
+				$body .= ($html_email ? '<br />':'') . "\n$sig";
+			}
+			return $body;
+		}
 		if ($html_email)
 		{
 			$body = '<table cellspacing="2" cellpadding="0" border="0" width="100%">'."\n";
@@ -1064,5 +1083,44 @@ abstract class bo_tracking
 			return $sig;
 		}
 		return $config['signature'];
+	}
+
+	/**
+	 * Get a custom notification message to be used instead of the standard one.
+	 * It can use merge print placeholders to include data.
+	 */
+	protected function get_custom_message($data, $old, $merge_class = null)
+	{
+		$message = $this->get_config(self::CUSTOM_NOTIFICATION, $data, $old);
+		if(!$message)
+		{
+			return '';
+		}
+
+		// Automatically set merge class from naming conventions
+		if($merge_class == null)
+		{
+			$merge_class = $this->app.'_merge';
+		}
+		if(!isset($data[$this->id_field]))
+		{
+			error_log($this->app . ' did not properly implement bo_tracking->id_field.  Merge skipped.');
+			return $message;
+		}
+		elseif(class_exists($merge_class))
+		{
+			$merge = new $merge_class();
+			$merged_message = $merge->merge_string($message, array($data[$this->id_field]), $error, 'text/html');
+			if($error)
+			{
+				error_log($error);
+				return $message;
+			}
+			return $merged_message;
+		}
+		else
+		{
+			throw new egw_exception_wrong_parameter("Invalid merge class '$merge_class' for {$this->app} custom notification");
+		}
 	}
 }
