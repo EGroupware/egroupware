@@ -967,8 +967,8 @@
 			{
 				$this->sessionData['messageFolder'] = $this->sessionData['mailbox'];
 			}
-			if ($bofelamimail->isDraftFolder($this->sessionData['messageFolder'])
-				|| $bofelamimail->isTemplateFolder($this->sessionData['messageFolder']))
+			if (!empty($this->sessionData['messageFolder']) && ($bofelamimail->isDraftFolder($this->sessionData['messageFolder'])
+				|| $bofelamimail->isTemplateFolder($this->sessionData['messageFolder'])))
 			{
 				$savingDestination = $this->sessionData['messageFolder'];
 				//error_log(__METHOD__.__LINE__.' SavingDestination:'.$savingDestination);
