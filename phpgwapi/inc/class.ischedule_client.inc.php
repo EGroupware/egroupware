@@ -389,7 +389,7 @@ class ischedule_client
 			"DKIM-Signature: ".
 	                "v=1; ".          // DKIM Version
 	                "a=\$a; ".        // The algorithm used to generate the signature "rsa-sha1"
-					"q=dns/txt:http/well-known; ".	// how to fetch public key: dns/txt, http/well-known or private-exchange
+					"q=private-exchange:dns/txt:http/well-known; ".	// how to fetch public key: dns/txt, http/well-known or private-exchange
 					"x=".(time()+$expires)."; ".        // how long request will be valid as timestamp
 					// end iSchedule specific
 	                "s=\$s; ".        // The selector subdividing the namespace for the "d=" (domain) tag
