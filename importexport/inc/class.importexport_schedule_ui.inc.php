@@ -35,7 +35,7 @@
 				foreach($content['scheduled'] as $row)
 				{
 					if($row['delete']) {
-						$key = key($row['delete']);
+						$key = urldecode(key($row['delete']));
 						ExecMethod('phpgwapi.asyncservice.cancel_timer', $key);
 					}
 				}
@@ -67,7 +67,7 @@
 						$async['data']['record_count'] = lang('%1 records processed', $async['data']['record_count']);
 					}
 					$data['scheduled'][] = array_merge($async['data'], array(
-						'id'	=>	$id,
+						'id'	=>	urlencode($id),
 						'next'	=>	egw_time::server2user($async['next']),
 						'times'	=>	str_replace("\n", '', print_r($async['times'], true)),
 						'last_run' =>	$async['data']['last_run'] ? egw_time::server2user($async['data']['last_run']) : ''
@@ -83,7 +83,7 @@
 		}
 
 		public function edit($content = array()) {
-			$id = $_GET['id'] ? $_GET['id'] : $content['id'];
+			$id = $_GET['id'] ? urldecode($_GET['id']) : $content['id'];
 			$definition_id = $_GET['definition'];
 
 			unset($content['id']);
@@ -258,6 +258,8 @@
 			} else {
 				$response->addScript("xajax_doXMLHTTP('importexport.importexport_schedule_ui.ajax_get_definitions', '$appname', document.getElementById('exec[plugin]').value);");
 			}
+			// Trigger chosen
+			$response->addScript("\$j(document.getElementById('exec[plugin]')).trigger('liszt:updated');");
 
 			return $response->getXML();
 		}
@@ -284,6 +286,8 @@
 			} else {
 				$response->addScript("document.getElementById('exec[definition]').value = ''");
 			}
+			// Trigger chosen
+			$response->addScript("\$j(document.getElementById('exec[definition]')).trigger('liszt:updated');");
 			return $response->getXML();
 		}
 
@@ -482,6 +486,10 @@
 					}
 					// Update filter to use current absolute dates
 					$definition->filter = $filters;
+				}
+				if(!is_array($definition->plugin_options))
+				{
+					$definition->plugin_options = array();
 				}
 				$definition->plugin_options = array_merge($definition->plugin_options, $selection);
 			}
