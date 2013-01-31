@@ -159,7 +159,7 @@ class calendar_import_csv implements importexport_iface_import_plugin  {
 
 		$lookups = array(
 			'priority'	=> Array(
-				0 => '',
+				0 => lang('None'),
 				1 => lang('Low'),
 				2 => lang('Normal'),
 				3 => lang('High')

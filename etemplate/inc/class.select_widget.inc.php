@@ -124,7 +124,7 @@ class select_widget
 				break;
 
 			case 'select-priority':
-				$cell['sel_options'] = array('','low','normal','high');
+				$cell['sel_options'] = array('none','low','normal','high');
 				break;
 
 			case 'select-bool':	// equal to checkbox, can be used with nextmatch-customfilter to filter a boolean column

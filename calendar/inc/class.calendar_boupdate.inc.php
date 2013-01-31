@@ -1648,7 +1648,7 @@ class calendar_boupdate extends calendar_bo
 		);
 
 		$pri = Array(
-			0   => '',
+			0   => lang('None'),
 			1	=> lang('Low'),
 			2	=> lang('Normal'),
 			3	=> lang('High')
