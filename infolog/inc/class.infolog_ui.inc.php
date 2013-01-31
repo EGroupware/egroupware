@@ -2242,7 +2242,7 @@ else
 	 * Infolog's site configuration
 	 *
 	 */
-	function admin( )
+	public function admin($content = array())
 	{
 		$fields = array(
 			'info_cat'      => 'Category',
@@ -2293,91 +2293,97 @@ else
 		$sub_excludefields = $excludefields;
 		unset($sub_excludefields['info_id_parent']);	// always set to parent!
 
-		$config_data = config::read('infolog');
+		$config = config::read('infolog');
 
-		if($_POST['save'] || $_POST['apply'])
+		if($content)
 		{
-			if (get_magic_quotes_gpc())
+			// Save
+			$button = key($content['button']);
+			if($button == 'save' || $button == 'apply')
 			{
-				$_POST = self::array_stripslashes($_POST);
-			}
-			$this->bo->responsible_edit = array('info_status','info_percent','info_datecompleted');
+				$this->bo->responsible_edit = array('info_status','info_percent','info_datecompleted');
 
-			if ($_POST['responsible_edit'])
-			{
-				$extra = array_intersect((array)$_POST['responsible_edit'],array_keys($fields));
-				$this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
-			}
-			// some fields like id, uid, created, createdby, modified and modifiedby are excluded by default
-			foreach(array('copy_excludefields','sub_excludefields') as $name)
-			{
-				$efs = array_keys($name == 'sub_excludefields' ? $sub_excludefields : $excludefields);
-				$this->bo->$name = array_unique(array_diff($this->bo->$name, $efs, 	// restore default from bo
-					$name == 'sub_excludefields' ? $this->bo->default_sub_excludefields : array()));
+				if ($content['responsible_edit'])
+				{
+					$extra = array_intersect((array)$content['responsible_edit'],array_keys($fields));
+					$this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
+				}
+				// some fields like id, uid, created, createdby, modified and modifiedby are excluded by default
+				foreach(array('copy_excludefields','sub_excludefields') as $name)
+				{
+					$efs = array_keys($name == 'sub_excludefields' ? $sub_excludefields : $excludefields);
+					$this->bo->$name = array_unique(array_diff($this->bo->$name, $efs, 	// restore default from bo
+						$name == 'sub_excludefields' ? $this->bo->default_sub_excludefields : array()));
 
-				if ($_POST[$name])
-				{
-					$this->bo->$name = array_merge($this->bo->$name, array_intersect((array)$_POST[$name], $efs));
+					if ($content[$name])
+					{
+						$this->bo->$name = array_merge($this->bo->$name, array_intersect((array)$content[$name], $efs));
+					}
+					elseif ($name == 'sub_excludefields' && !in_array('explicit-set',$this->bo->sub_excludefields))
+					{
+						$this->bo->sub_excludefields[] = 'explicit-set';	// otherwise we can NOT unset default info_des
+					}
 				}
-				elseif ($name == 'sub_excludefields' && !in_array('explicit-set',$this->bo->sub_excludefields))
-				{
-					$this->bo->sub_excludefields[] = 'explicit-set';	// otherwise we can NOT unset default info_des
-				}
+				config::save_value('copy_excludefields',$this->bo->copy_excludefields,'infolog');
+				config::save_value('sub_excludefields',$this->bo->sub_excludefields,'infolog');
+				config::save_value('responsible_edit',$this->bo->responsible_edit,'infolog');
+				config::save_value('implicit_rights',$this->bo->implicit_rights = $content['implicit_rights'] == 'edit' ? 'edit' : 'read','infolog');
+				config::save_value('history',$this->bo->history = $content['history'],'infolog');
+				config::save_value('index_load_cfs',$config_data['index_load_cfs'] = $content['index_load_cfs'],'infolog');
+				config::save_value('sub_prefix',$config_data['sub_prefix'] = $content['sub_prefix'],'infolog');
+
+				// Notifications
+				$notifications =& $config[infolog_tracking::CUSTOM_NOTIFICATION];
+				$notifications[$content['notification_type']] = $content['notification'];
+				config::save_value(infolog_tracking::CUSTOM_NOTIFICATION, $notifications,'infolog');
 			}
-			config::save_value('copy_excludefields',$this->bo->copy_excludefields,'infolog');
-			config::save_value('sub_excludefields',$this->bo->sub_excludefields,'infolog');
-			config::save_value('responsible_edit',$this->bo->responsible_edit,'infolog');
-			config::save_value('implicit_rights',$this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read','infolog');
-			config::save_value('history',$this->bo->history = $_POST['history'],'infolog');
-			config::save_value('index_load_cfs',$config_data['index_load_cfs'] = $_POST['index_load_cfs'],'infolog');
-			config::save_value('sub_prefix',$config_data['sub_prefix'] = $_POST['sub_prefix'],'infolog');
+			
+			if($button == 'save' || $button == 'cancel')
+			{
+				egw::redirect_link('/infolog/index.php');
+			}
 		}
-		if($_POST['cancel'] || $_POST['save'])
+		else
 		{
-			egw::redirect_link('/infolog/index.php');
+			// Load
+			$content = $config;
+
+			$content['implicit_rights'] = $this->bo->implicit_rights;
+			$content['responsible_edit'] = $this->bo->responsible_edit;
+			$content['copy_excludefields'] = $this->bo->copy_excludefields;
+			$content['sub_excludefields'] = $this->bo->sub_excludefields;
+			$content['history'] = $this->bo->history;
 		}
+
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Site configuration');
-		common::egw_header();
 
-		$GLOBALS['egw']->template->set_file(array('info_admin_t' => 'admin.tpl'));
-		$GLOBALS['egw']->template->set_block('info_admin_t', 'info_admin');
-
-		$GLOBALS['egw']->template->set_var(Array(
-			'lang_responsible_rights' => lang('Rights for the responsible'),
-			'lang_implicit_rights' => lang('Which implicit ACL rights should the responsible get?'),
-			'implicit_rights' => html::select('implicit_rights',$this->bo->implicit_rights,array(
+		// Load selected custom notification
+		if(!$content['notification_type'])
+		{
+			$content['notification_type'] = '~global~';
+		}
+		$content['notification'] = $config[infolog_tracking::CUSTOM_NOTIFICATION][$content['notification_type']];
+		$sel_options = array(
+			'implicit_rights' => array(
 				'read' => 'read rights (default)',
 				'edit' => 'edit rights (full edit rights incl. making someone else responsible!)',
-			)),
-			'lang_responsible_edit' => lang('Which additional fields should the responsible be allowed to edit without having edit rights?<br />Status, percent and date completed are always allowed.'),
-			'responsible_edit' => html::checkbox_multiselect('responsible_edit',$this->bo->responsible_edit,$fields,false,'',6),
-			'lang_copy_excludefields' => lang('Fields to exclude when copying an infolog:'),
-			'copy_excludefields' => html::checkbox_multiselect('copy_excludefields',$this->bo->copy_excludefields,$excludefields,false,'',6),
-			'lang_sub_excludefields' => lang('Fields to exclude when creating a sub-entry:'),
-			'sub_excludefields' => html::checkbox_multiselect('sub_excludefields',$this->bo->sub_excludefields,$sub_excludefields,false,'',6),
-			'text' => lang('<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients'),
-			'action_url'  => html::link('/index.php',array('menuaction'=>'infolog.infolog_ui.admin')),
-			'save_button' => html::submit_button('save','Save'),
-			'apply_button' => html::submit_button('apply','Apply'),
-			'cancel_button' => html::submit_button('cancel','Cancel'),
-			'lang_history'=> lang('History logging'),
-			'lang_history2'=> lang('History logging and deleting of items'),
-			'history'     => html::select('history',$this->bo->history,array(
+			),
+			'responsible_edit' => $fields,
+			'copy_excludefields' => $excludefields,
+			'sub_excludefields' => $sub_excludefields,
+			'history'     => array(
 				'' => lang('No'),
 				'history' => lang('Yes, with purging of deleted items possible'),
 				'history_admin_delete' => lang('Yes, only admins can purge deleted items'),
 				'history_no_delete' => lang('Yes, noone can purge deleted items'),
-			)),
-			'lang_other' => lang('Other configurations'),
-			'lang_index_load_cfs' => lang('Load custom fields in index, if filtered by selected types (eg. to display them in a type-specific index template)'),
-			'index_load_cfs' => html::checkbox_multiselect('index_load_cfs',$config_data['index_load_cfs'],$this->bo->enums['type'],true,'',5),
-			'lang_sub_prefix' => lang('Prefix for sub-entries (default: Re:)'),
-			'sub_prefix' => html::input('sub_prefix',$config_data['sub_prefix']),
-		));
-
-		echo parse_navbar();
-		$GLOBALS['egw']->template->pfp('phpgw_body','info_admin');
+			),
+			'index_load_cfs' => $this->bo->enums['type'],
+			'notification_type' => array('~global~' => 'all') + $this->bo->enums['type']
+		);
+		$preserve['notification_old_type'] = $content['notification_type'];
+		$this->tmpl->read('infolog.config');
+		$this->tmpl->exec('infolog.infolog_ui.admin',$content,$sel_options,$readonlys,$preserve);
 	}
 
 	/**

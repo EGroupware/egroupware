@@ -328,14 +328,14 @@ class infolog_tracking extends bo_tracking
 					return '';
 				}
 				// Per-type notification
-				elseif($info_config[self::CUSTOM_NOTIFICATION][$data['info_type']])
-				{
-					$config = $info_config[self::CUSTOM_NOTIFICATION][$data['info_type']];
-				}
-				else
-				{
-					$config = $info_config[self::CUSTOM_NOTIFICATION]['~global~'];
-				}
+				$config = $info_config[self::CUSTOM_NOTIFICATION][$data['info_type']];
+				$global = $info_config[self::CUSTOM_NOTIFICATION]['~global~'];
+
+				// Disabled
+				if(!$config['use_custom'] && !$global['use_custom']) return '';
+
+				// Type or globabl
+				$config = trim(strip_tags($config['message'])) != '' && $config['use_custom'] ? $config['message'] : $global['message'];
 				break;
 		}
 		return $config;
