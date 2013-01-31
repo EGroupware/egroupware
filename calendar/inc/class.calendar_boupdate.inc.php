@@ -572,7 +572,7 @@ class calendar_boupdate extends calendar_bo
 	 */
 	function send_update($msg_type,$to_notify,$old_event,$new_event=null,$user=0)
 	{
-		//error_log(__METHOD__."($msg_type,".array2string($to_notify).",...)");
+		//error_log(__METHOD__."($msg_type,".array2string($to_notify).",...) ".array2string($new_event));
 		if (!is_array($to_notify))
 		{
 			$to_notify = array();
@@ -590,6 +590,12 @@ class calendar_boupdate extends calendar_bo
 		if($old_event && $this->date2ts($old_event['start']) < ($this->now_su - 10))
 		{
 			return False;
+		}
+		// check if default timezone is set correctly to server-timezone (ical-parser messes with it!!!)
+		if ($GLOBALS['egw_info']['server']['server_timezone'] && ($tz = date_default_timezone_get()) != $GLOBALS['egw_info']['server']['server_timezone'])
+		{
+			$restore_tz = $tz;
+			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 		}
 		$temp_user = $GLOBALS['egw_info']['user'];	// save user-date of the enviroment to restore it after
 
@@ -692,6 +698,7 @@ class calendar_boupdate extends calendar_bo
 		$enddate = new egw_time($event['end']);
 		$modified = new egw_time($event['modified']);
 		if ($old_event) $olddate = new egw_time($old_event['start']);
+		//error_log(__METHOD__."() date_default_timezone_get()=".date_default_timezone_get().", user-timezone=".egw_time::$user_timezone->getName().", startdate=".$startdate->format().", enddate=".$enddate->format().", updated=".$modified->format().", olddate=".($olddate ? $olddate->format() : ''));
 		foreach($to_notify as $userid => $statusid)
 		{
 			unset($res_info);
@@ -805,6 +812,7 @@ class calendar_boupdate extends calendar_bo
 					$olddate->setTimezone($timezone);
 					$details['olddate'] = $olddate->format($timeformat);
 				}
+				//error_log(__METHOD__."() userid=$userid, timezone=".$timezone->getName().", startdate=$details[startdate], enddate=$details[enddate], updated=$details[updated], olddate=$details[olddate]");
 
 				list($subject,$body) = explode("\n",$GLOBALS['egw']->preferences->parse_notify($notify_msg,$details),2);
 
@@ -892,6 +900,9 @@ class calendar_boupdate extends calendar_bo
 		{
 			translation::init();
 		}
+		// restore timezone, in case we had to reset it to server-timezone
+		if ($restore_tz) date_default_timezone_set($restore_tz);
+
 		return true;
 	}
 
