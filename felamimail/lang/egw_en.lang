@@ -3,7 +3,6 @@
 (only cc/bcc)	felamimail	en	Only Cc/Bcc
 (select mails by clicking on the line, like a checkbox)	felamimail	en	(select mails by clicking on the line, like a checkbox)
 (separate multiple addresses by comma)	felamimail	en	Separate multiple addresses by comma
-(the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.)	felamimail	en	(The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.)
 (unknown sender)	felamimail	en	Unknown sender
 (with checkbox enforced)	felamimail	en	(with checkbox enforced)
 1) keep drafted message (press ok)	felamimail	en	1) keep drafted message (press OK)
@@ -535,6 +534,7 @@ text/plain	felamimail	en	Text/plain
 the action will be applied to all messages of the current folder.\ndo you want to proceed?	felamimail	en	The action will be applied to all messages of the current folder.\nDo you want to proceed?
 the action will be applied to all messages of the current folder.ndo you want to proceed?	felamimail	en	The action will be applied to all messages of the current folder.\nDo you want to proceed?
 the connection to the imap server failed!!	felamimail	en	The connection to the IMAP Server failed!
+the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	felamimail	en	The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	en	The IMAP server does not appear to support the authentication method selected. Contact your system administrator.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	en	The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?
 the mimeparser can not parse this message.	felamimail	en	The mimeparser can not parse this message.
