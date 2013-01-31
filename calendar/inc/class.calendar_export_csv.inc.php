@@ -356,7 +356,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	protected function get_selects()
 	{
 		$this->selects['priority'] = Array(
-			0 => '',
+			0 => lang('None'),
 			1 => lang('Low'),
 			2 => lang('Normal'),
 			3 => lang('High')
@@ -382,7 +382,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 	 */
 	public function get_filter_fields(Array &$filters)
 	{
-		
+
 		// Calendar SO doesn't support filtering by column, so we have to remove pretty much everything
 		unset($filters['recur_date']);
 
