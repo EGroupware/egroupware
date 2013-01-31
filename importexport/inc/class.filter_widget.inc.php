@@ -24,8 +24,6 @@
 class filter_widget extends customfields_widget
 {
 
-	// etemplate process_exec has trouble with the nulls, and returns the previous value
-	const ALL_DATES = '-all-';
 	public $prefix = '';
 	public $human_name = array(
 		'filter' => 'Import|Export filter'
@@ -217,7 +215,7 @@ error_log('Trying to filter with unsupported field type: ' . $field['type']);
 			'readonly'	=> $readonly,
 			'no_lang'	=> true,
 			'options'	=> $options,
-			'sel_options'	=> array(self::ALL_DATES => lang('all'))
+			'sel_options'	=> array('' => lang('all'))
 		));
 		foreach(importexport_helper_functions::$relative_dates as $label => $values)
 		{

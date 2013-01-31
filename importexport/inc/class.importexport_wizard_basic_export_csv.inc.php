@@ -243,7 +243,7 @@ class importexport_wizard_basic_export_csv
 			unset($content['set_filter']['fields']);
 			foreach($content['set_filter'] as $key => $value)
 			{
-				if($value && $value != '-all-') {
+				if($value) {
 					$content['filter'][$key] = $value;
 				}
 			}
@@ -266,6 +266,8 @@ class importexport_wizard_basic_export_csv
 			// Step 50 - filters
 			$content['msg'] = $this->steps['wizard_step80'];
 			$content['step'] = 'wizard_step80';
+			$preserv = $content;
+			unset ($preserv['button']);
 
 			$content['set_filter']['fields'] = importexport_helper_functions::get_filter_fields(
 				$content['application'],$content['plugin'],$this
@@ -283,8 +285,6 @@ class importexport_wizard_basic_export_csv
 			}
 			$sel_options = array();
 
-			$preserv = $content;
-			unset ($preserv['button']);
 			return $this->step_templates[$content['step']];
 		}
 	}
