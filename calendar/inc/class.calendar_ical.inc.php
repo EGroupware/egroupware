@@ -16,6 +16,9 @@ require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/lib/core.php';
 
 /**
  * iCal import and export via Horde iCalendar classes
+ *
+ * @ToDo: NOT changing default-timezone as it messes up timezone calculation of timestamps eg. in calendar_boupdate::send_update
+ * 	(currently fixed by restoring server-timezone in calendar_boupdate::send_update)
  */
 class calendar_ical extends calendar_boupdate
 {
