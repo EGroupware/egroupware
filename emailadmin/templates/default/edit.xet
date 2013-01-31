@@ -82,7 +82,7 @@
 								</row>
 								<row>
 									<description value="order"/>
-									<textbox type="integer" id="ea_order"/>
+									<int id="ea_order"/>
 								</row>
 							</rows>
 						</grid>
@@ -120,7 +120,7 @@
 								</row>
 								<row>
 									<description value="SMTP-Server Port"/>
-									<textbox type="integer" id="ea_smtp_port"/>
+									<int id="ea_smtp_port"/>
 								</row>
 							</rows>
 						</grid>
@@ -206,7 +206,7 @@
 								</row>
 								<row>
 									<description value="IMAP server port"/>
-									<textbox type="integer" id="ea_imap_port"/>
+									<int id="ea_imap_port"/>
 								</row>
 								<row>
 									<description value="imap server logintyp"/>
@@ -286,7 +286,7 @@
 								</row>
 								<row disabled="!@ea_imap_enable_sieve=yes">
 									<description value="Sieve server port"/>
-									<textbox type="integer" id="ea_imap_sieve_port"/>
+									<int id="ea_imap_sieve_port"/>
 								</row>
 								<row>
 									<description value="Vacation messages with start-  and end-date require an admin account to be set" span="2"/>
@@ -332,8 +332,8 @@
 							<rows>
 								<row>
 									<description value="quota size in mbyte"/>
-									<textbox type="integer" id="defaultQuota"/>
-									<description value="(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)"/>
+									<int id="defaultQuota"/>
+									<description value="(imapclass must support this feature by querying this config value and pass it as defaultquota to the imapserver)"/>
 								</row>
 							</rows>
 						</grid>
@@ -441,12 +441,12 @@
 				<row>
 					<tabbox id="tabs">
 						<tabs>
-							<tab id="global" label="Global"/>
-							<tab id="SMTP" label="SMTP"/>
-							<tab id="IMAP" label="IMAP"/>
-							<tab id="signature" label="Signature"/>
-							<tab id="stationery" label="Stationery"/>
-							<tab id="history" label="History"/>
+							<tab label="Global" statustext=""/>
+							<tab label="SMTP" statustext=""/>
+							<tab label="IMAP" statustext=""/>
+							<tab label="Signature" statustext=""/>
+							<tab label="Stationery" statustext=""/>
+							<tab label="History" statustext=""/>
 						</tabs>
 						<tabpanels>
 							<template id="emailadmin.edit.global"/>
