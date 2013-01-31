@@ -1,5 +1,5 @@
 %1 entries deleted.	emailadmin	de	%1 Einträge gelöscht
-(imapclass must support this feature by querying this config value and pass it as defaultquota to the imapserver)	emailadmin	de	(Die IMAP Klasse muss dieses Verfahren unterstützen indem es den entsprechenden Konfig Wert der Instanz ausliest und als Default Quota an den IMAP Server meldet.)
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	emailadmin	de	(Die IMAP Klasse muss dieses Verfahren unterstützen indem es den entsprechenden Konfig Wert der Instanz ausliest und als Default Quota an den IMAP Server meldet.)
 account '%1' not found !!!	emailadmin	de	Benutzerkonto '%1' nicht gefunden !!!
 active templates	emailadmin	de	Aktive Vorlagen
 add new email address:	emailadmin	de	Neue E-Mailadresse hinzufügen
@@ -148,7 +148,7 @@ users can define their own emailaccounts	emailadmin	de	Anwender können ihre eig
 users can define their own identities	emailadmin	de	Anwender können ihre eigenen Identitäten definieren
 users can define their own signatures	emailadmin	de	Anwender können ihre eigenen Signaturen definieren
 users can utilize these stationery templates	emailadmin	de	Benutzer können diese Briefpapiervorlagen verwenden
-vaction messages with start- and end-date require an admin account to be set!	emailadmin	de	Abwesenheitsnotizen mit Start- und Enddatum benötigen einen gesetzten Administrator Benutzer!
+vacation messages with start- and end-date require an admin account to be set	emailadmin	de	Abwesenheitsnotizen mit Start- und Enddatum benötigen einen gesetzten Administrator Benutzer!
 virtual mail manager	emailadmin	de	Virtual MAIL ManaGeR
 yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	de	Ja, die Daten darunter nur für Alarme und Benachrichtigungen verwenden, ansonsten die Daten des aktiven Benutzers.
 yes, use credentials of current user or if given credentials below	emailadmin	de	Ja, benutze Daten des aktuellen Benutzers oder wenn angegeben die Daten darunter

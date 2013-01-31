@@ -177,7 +177,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="emailadmin.edit.IMAP" template="" lang="" group="0" version="1.9.003">
+	<template id="emailadmin.edit.IMAP" template="" lang="" group="0" version="1.9.004">
 		<grid width="100%" height="400" overflow="auto">
 			<columns>
 				<column/>
@@ -281,7 +281,7 @@
 									<checkbox id="ea_imap_enable_sieve" onchange="1" options="yes,no"/>
 								</row>
 								<row disabled="!@ea_imap_enable_sieve=yes">
-									<description value="Sieve server or ip address"/>
+									<description value="Sieve server hostname or ip address"/>
 									<textbox id="ea_imap_sieve_server"/>
 								</row>
 								<row disabled="!@ea_imap_enable_sieve=yes">
@@ -289,7 +289,7 @@
 									<int id="ea_imap_sieve_port"/>
 								</row>
 								<row>
-									<description value="Vacation messages with start-  and end-date require an admin account to be set" span="2"/>
+									<description value="Vacation messages with start- and end-date require an admin account to be set" span="2"/>
 								</row>
 							</rows>
 						</grid>
@@ -333,7 +333,7 @@
 								<row>
 									<description value="quota size in mbyte"/>
 									<int id="defaultQuota"/>
-									<description value="(imapclass must support this feature by querying this config value and pass it as defaultquota to the imapserver)"/>
+									<description value="(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)"/>
 								</row>
 							</rows>
 						</grid>
