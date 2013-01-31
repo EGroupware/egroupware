@@ -173,7 +173,7 @@ class calendar_uiviews extends calendar_ui
 			'daywise' => True,
 		);
 		$this->holidays = $this->bo->read_holidays($this->year);
-		array_push($this->holidays, $this->bo->read_holidays($this->year+1));
+
 		$this->check_owners_access();
 
 		if($GLOBALS['egw_info']['user']['preferences']['common']['enable_dragdrop'])
