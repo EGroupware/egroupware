@@ -256,21 +256,16 @@ class importexport_wizard_basic_export_csv
 			// Step 50 - filters
 			$content['msg'] = $this->steps['wizard_step80'];
 			$content['step'] = 'wizard_step80';
+			$preserv = $content;
+			unset ($preserv['button']);
 
-			// Find filterable fields
-			if(!$content['set_filter'] && $content['filter']) {
-				$load = true;
-			}
 			$content['set_filter']['fields'] = importexport_helper_functions::get_filter_fields(
 				$content['application'],$content['plugin'],$this
 			);
 			// Load existing filter from either content or definition
-			if($load)
+			foreach($content['set_filter']['fields'] as $field => $settings)
 			{
-				foreach($content['set_filter']['fields'] as $field => $settings)
-				{
-					$content['set_filter'][$field] = $content['filter'][$field];
-				}
+				$content['set_filter'][$field] = $content['filter'][$field];
 			}
 
 			if(!$content['set_filter']['fields'])
@@ -280,8 +275,6 @@ class importexport_wizard_basic_export_csv
 			}
 			$sel_options = array();
 
-			$preserv = $content;
-			unset ($preserv['button']);
 			return $this->step_templates[$content['step']];
 		}
 	}
