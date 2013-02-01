@@ -1713,11 +1713,11 @@ function replace_eTemplate_onsubmit()
 							isset($existing_event['participants'][$event['ical_sender_uid']]) &&
 							$this->bo->check_status_perms($event['ical_sender_uid'], $existing_event))
 						{
-							$status = $event['participants'][$event['ical_sender_uid']];
-							calendar_so::split_status($status, $quantity, $role);
+							$event['ical_sender_status'] = $event['participants'][$event['ical_sender_uid']];
+							calendar_so::split_status($event['ical_sender_status'], $quantity, $role);
 							$existing_status = $existing_event['participants'][$event['ical_sender_uid']];
 							calendar_so::split_status($existing_status, $quantity, $role);
-							if ($existing_status != $status)
+							if ($existing_status != $event['ical_sender_status'])
 							{
 								$readonlys['button[apply]'] = false;
 							}
@@ -1822,9 +1822,7 @@ function replace_eTemplate_onsubmit()
 
 				case 'apply':
 					// set status and send notification / meeting response
-					$status = $event['participants'][$event['ical_sender_status']];
-					calendar_so::split_status($status, $quantity, $role);
-					if ($this->bo->set_status($event['id'], $event['ical_sender_uid'], $status))
+					if ($this->bo->set_status($event['id'], $event['ical_sender_uid'], $event['ical_sender_status']))
 					{
 						$msg = lang('Status changed');
 					}

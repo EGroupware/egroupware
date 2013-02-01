@@ -1019,10 +1019,12 @@ class groupdav_principals extends groupdav_handler
 				{
 					// found an addressbook entry
 					$uid = $data['account_id'] ? (int)$data['account_id'] : 'c'.$data['id'];
+					$type = 'users';
 				}
 				else	// just store email-address
 				{
 					$uid = 'e'.$rest;
+					$type = 'users';
 				}
 				break;
 
@@ -1048,7 +1050,7 @@ class groupdav_principals extends groupdav_handler
 						if (is_null($calendar_bo)) $calendar_bo = new calendar_bo();
 						foreach($calendar_bo->resources as $letter => $info)
 						{
-							if ($info['app'] == $type)
+							if ($info['app'] == $type || $info['app'] == 'resources' && $type == 'location')
 							{
 								$uid = $letter.$id;
 							}

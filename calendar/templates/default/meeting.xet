@@ -19,6 +19,13 @@
 					<button label="Reject" id="button[reject]" class="leftPad5"/>
 					<buttononly statustext="Edit event in calendar" label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=calendar.calendar_uiforms.edit&amp;cal_id=$cont[id]'),'_blank','dependent=yes,width=750,height=410,scrollbars=yes,status=yes'); return false;" class="leftPad5"/>
 				</row>
+				<row disabled="!@ics_method=reply">
+					<description value="This mail contains a reply to a meeting request" class="meetingRequestMessage"/>
+					<button label="Apply" id="button[apply]" class="leftPad5"/>
+					<description/>
+					<description/>
+					<description/>
+				</row>
 			</rows>
 		</grid>
 		<description/>
