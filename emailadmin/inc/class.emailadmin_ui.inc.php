@@ -302,7 +302,10 @@ class emailadmin_ui extends emailadmin_bo
 			}
 			else
 			{
-				$content['ea_user_defined_accounts'] = "yes";
+				$content['ea_user_defined_accounts'] = 'yes';
+				$content['ea_user_defined_identities'] = 'yes';
+				$content['ea_user_defined_signatures'] = 'yes';
+				$content['ea_editforwardingaddress'] = 'yes';
 				$content['ea_smtp_type'] = 'emailadmin_smtp';
 			}
 		}

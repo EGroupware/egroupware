@@ -803,6 +803,11 @@ class emailadmin_bo extends so_sql
 				//'ea_group' => 0,
 				//'ea_user' => 0,
 				'ea_active' => 1,
+				'ea_user_defined_accounts' => 'yes',
+				'ea_user_defined_identities' => 'yes',
+				'ea_user_defined_signatures' => 'yes',
+				'ea_editforwardingaddress' => 'yes',
+				'defaultQuota' => 2048,
 			);
 
 			if (empty($settings['mail_server'])) $profile['userDefinedAccounts'] = 'yes';
