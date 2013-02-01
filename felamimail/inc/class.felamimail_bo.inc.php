@@ -4329,7 +4329,8 @@ class felamimail_bo
 		switch (self::$felamimailConfig['how2displayIdentities'])
 		{
 			case 'email';
-				$retData = str_replace('@',' ',$identity->emailAddress).($fullString===true?' <'.$identity->emailAddress.'>':'');
+				//$retData = str_replace('@',' ',$identity->emailAddress).($fullString===true?' <'.$identity->emailAddress.'>':'');
+				$retData = $identity->emailAddress.($fullString===true?' <'.$identity->emailAddress.'>':'');
 				break;
 			case 'nameNemail';
 				$retData = (!empty($identity->realName)?$identity->realName:substr_replace($identity->emailAddress,'',strpos($identity->emailAddress,'@'))).($fullString===true?' <'.$identity->emailAddress.'>':'');
