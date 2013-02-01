@@ -1671,7 +1671,7 @@ function replace_eTemplate_onsubmit()
 	}
 
 	/**
-	 * Display a meeting request (iCal) for FMail and allow to accept, tentative or reject it
+	 * Display for FMail an iCal meeting request and allow to accept, tentative or reject it or a reply and allow to apply it
 	 *
 	 * @todo Handle situation when user is NOT invited, but eg. can view that mail ...
 	 * @param array $event=null
@@ -1681,6 +1681,7 @@ function replace_eTemplate_onsubmit()
 	{
 		$user = $GLOBALS['egw_info']['user']['account_id'];
 
+		$readonlys['button[apply]'] = true;
 		if (!is_array($event))
 		{
 			$ical_charset = 'utf-8';
@@ -1691,6 +1692,7 @@ function replace_eTemplate_onsubmit()
 				$ical_string = $session_data['attachment'];
 				$ical_charset = $session_data['charset'];
 				$ical_method = $session_data['method'];
+				$ical_sender = $session_data['sender'];
 				unset($session_data);
 			}
 			$ical = new calendar_ical();
@@ -1704,31 +1706,50 @@ function replace_eTemplate_onsubmit()
 			$event = array_shift($events);
 			if (($existing_event = $this->bo->read($event['uid'])) && !$existing_event['deleted'])
 			{
-				$event = $existing_event;
-				foreach((array)$event['participants'] as $uid => $status)
+				switch(strtolower($ical_method))
 				{
-					calendar_so::split_status($status, $quantity, $role);
-					if ($role == 'CHAIR')
-					{
-						$event['organizer'] = $this->bo->participant_name($uid,false,true);
+					case 'reply':
+						if ($ical_sender && ($event['ical_sender_uid'] = groupdav_principals::url2uid('mailto:'.$ical_sender)) &&
+							isset($existing_event['participants'][$event['ical_sender_uid']]) &&
+							$this->bo->check_status_perms($event['ical_sender_uid'], $existing_event))
+						{
+							$status = $event['participants'][$event['ical_sender_uid']];
+							calendar_so::split_status($status, $quantity, $role);
+							$existing_status = $existing_event['participants'][$event['ical_sender_uid']];
+							calendar_so::split_status($existing_status, $quantity, $role);
+							if ($existing_status != $status)
+							{
+								$readonlys['button[apply]'] = false;
+							}
+							else
+							{
+								$msg = lang('Status already applied');
+							}
+						}
 						break;
-					}
+
+					case 'request':
+						$status = $existing_event['participants'][$user];
+						calendar_so::split_status($status, $quantity, $role);
+						if (strtolower($ical_method) == 'response' && isset($existing_event['participants'][$user]) &&
+							$status != 'U' && isset($this->bo->verbose_status[$status]))
+						{
+							$msg = lang('You already replied to this invitation with').': '.lang($this->bo->verbose_status[$status]);
+						}
+						else
+						{
+							$msg = lang('Using already existing event on server.');
+						}
+						break;
 				}
-				if (empty($event['organizer']))
-				{
-					$event['organizer'] = $this->bo->participant_name($event['owner'],false,true);
-				}
-				$msg = lang('Using already existing event on server.');
+				$event['id'] = $existing_event['id'];
 			}
-			else
+			$event['participant_types'] = array();
+			foreach($event['participants'] as $uid => $status)
 			{
-				$event['participant_types'] = array();
-				foreach($event['participants'] as $uid => $status)
-				{
-					calendar_so::split_user($uid, $user_type, $user_id);
-					$event['participants'][$uid] = $event['participant_types'][$user_type][$user_id] =
-						$status && $status !== 'X' ? $status : 'U';	// X --> no status given --> U = unknown
-				}
+				calendar_so::split_user($uid, $user_type, $user_id);
+				$event['participants'][$uid] = $event['participant_types'][$user_type][$user_id] =
+					$status && $status !== 'X' ? $status : 'U';	// X --> no status given --> U = unknown
 			}
 			//error_log(__METHOD__."(...) parsed as ".array2string($event));
 			$event['recure'] = $this->bo->recure2string($event);
@@ -1793,17 +1814,29 @@ function replace_eTemplate_onsubmit()
 						}
 					}
 					// set status and send notification / meeting response
-					if ($this->bo->set_status($event, $user, $status))
+					if ($this->bo->set_status($event['id'], $user, $status))
 					{
 						if (!$msg) $msg = lang('Status changed');
 					}
 					break;
+
+				case 'apply':
+					// set status and send notification / meeting response
+					$status = $event['participants'][$event['ical_sender_status']];
+					calendar_so::split_status($status, $quantity, $role);
+					if ($this->bo->set_status($event['id'], $event['ical_sender_uid'], $status))
+					{
+						$msg = lang('Status changed');
+					}
+					break;
+
 			}
 		}
 		$event['msg'] = implode("\n",(array)$msg);
 		$readonlys['button[edit]'] = !$event['id'];
 		$event['ics_method'] = $readonlys['ics_method'] = strtolower($ical_method);
-		$event['ics_method_label'] = (strtolower($ical_method)=='request'?lang('Meeting request'):lang('Meeting status information'));
+		$event['ics_method_label'] = strtolower($ical_method) == 'request' ?
+			lang('Meeting request') : lang('Reply to meeting request');
 		$tpl = new etemplate('calendar.meeting');
 		$tpl->exec('calendar.calendar_uiforms.meeting', $event, $sel_options, $readonlys, $event, 2);
 	}

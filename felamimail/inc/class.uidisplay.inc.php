@@ -523,7 +523,7 @@
 			// --> use it to send the mail as data uri
 			if (!isset($_GET['printable']))
 			{
-				$mailData = $this->get_load_email_data($this->uid, $partID);
+				$mailData = $this->get_load_email_data($this->uid, $partID, $envelope['SENDER'][0]['EMAIL']);
 
 				$this->t->set_var('url_displayBody', $mailData['src']."\" onload=\"".$mailData['onload']);
 				$this->t->set_var('mail_dataScript', $mailData['script']);
@@ -1081,7 +1081,7 @@ blockquote[type=cite] {
 ';
 		}
 
-		function get_load_email_data($uid, $partID)
+		function get_load_email_data($uid, $partID, $sender)
 		{
 			// seems to be needed, as if we open a mail from notification popup that is
 			// located in a different folder, we experience: could not parse message
@@ -1104,6 +1104,7 @@ blockquote[type=cite] {
 						'charset' => $attach['charset'] ? $attach['charset'] : 'utf-8',
 						'attachment' => $attachment['attachment'],
 						'method' => $attach['method'],
+						'sender' => $sender,
 					));
 					return array("src"=>egw::link('/index.php',array(
 						'menuaction' => 'calendar.calendar_uiforms.meeting',

@@ -281,8 +281,7 @@ mail all participants	calendar	de	Mail an alle Teilnehmer
 make freebusy information available to not loged in persons?	calendar	de	Die Belegtzeiten für nicht angemeldete Personen verfügbar machen?
 max. number of entries to show (leave empty for no restriction)	calendar	de	Max. Anzahl von Einträgen die angezeigt werden sollen (Kein Eintrag = Keine Beschränkung)
 maximum available quantity of %1 exceeded!	calendar	de	Maximale Anzahl von %1 erreicht!
-meeting request	calendar	de	Termineinladung
-meeting status information	calendar	de	Terminstatus
+meeting request	calendar	de	Terminanfrage
 merge document...	calendar	de	Dokument einfügen...
 minutes	calendar	de	Minuten
 modified	calendar	de	Geändert
@@ -374,6 +373,7 @@ repeating interval, eg. 2 to repeat every second week	calendar	de	Wiederholungsi
 repetition	calendar	de	Wiederholung
 repetitiondetails (or empty)	calendar	de	Details der Wiederholung (oder leer)
 replacements for inserting events into documents	calendar	de	Platzhalter für das Einfügen von Terminen in Dokumente
+reply to meeting request	calendar	de	Antwort auf Terminanfrage
 requested	calendar	de	Erforderlich
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	de	Gewünschtes Datum %1 außerhalb des erlauben Bereiches von %2 Tagen: wiederholdende Termine ausgelassen!
 requested meeting is in the past!	calendar	de	Termin, zu dem eingeladen wird, ist in der Vergangenheit!
@@ -448,6 +448,7 @@ startdate / -time	calendar	de	Startdatum / -zeit
 startdate and -time of the search	calendar	de	Startdatum und -zeit der Suche
 startdate of the export	calendar	de	Startdatum des Exports
 startrecord	calendar	de	Startdatensatz
+status already applied	calendar	de	Der Status wurde bereits übernommen
 status changed	calendar	de	Status geändert
 status for all future scheduled days changed	calendar	de	Status alle zukünftig geplanten Termine geändert
 status for this particular day changed	calendar	de	Status für diesen Tag geändert
@@ -468,7 +469,8 @@ this entry is currently opened by %1!	calendar	de	Dieser Termin ist im Moment vo
 this entry is opened by user:	calendar	de	Dieser Eintrag ist von einem anderen Benutzer innerhalb des konfigurierten Zeitintervalls geöffnet worden:
 this event is part of a series	calendar	de	Dieser Termin ist Teil einer Serie
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	de	Diese Gruppe wird als Vorauswahl ausgewählt wenn Sie den Planer öffnen. Sie können die Gruppe jederzeit wechseln wenn Sie möchten.
-this mail contains a meeting request	calendar	de	Diese Nachricht enthält eine Termineinladung
+this mail contains a meeting request	calendar	de	Diese Nachricht enthält eine Terminanfrage
+this mail contains a reply to a meeting request	calendar	de	Diese Nachricht enthält eine Antwort auf eine Terminanfrage
 this message is sent for canceled or deleted events.	calendar	de	Diese Benachrichtigung wird für stornierte oder gelöschte Termine versendet.
 this message is sent for modified or moved events.	calendar	de	Diese Benachrichtigung wird für geänderte Termine versendet.
 this message is sent to disinvited participants.	calendar	de	Diese Nachricht wird ausgeladenen Teilnehmern gesendet.
@@ -544,9 +546,10 @@ years	admin	de	Jahre
 yearview	calendar	de	Jahresansicht
 yes, only admins can purge deleted items	admin	de	Ja, nur Administratoren können gelöschte Einträge bereinigen
 yes, users can purge their deleted items	admin	de	Ja, Benutzer können gelöschte Einträge selbst bereinigen
+you already replied to this invitation with	calendar	de	Sie haben bereits auf diese Einladung geantwortet mit
 you are not allowed to book the resource selected:	calendar	de	Sie sind nicht berechtigt die ausgewählte Ressource zu buchen.
 you are not invited to that event!	calendar	de	Sie sind zu diesem Termin nicht eingeladen!
-you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	de	Sie sind im Begriff eine Terminanforderung an die oben eingetragenen Empfänger zu versenden. Abhängig vom MailClient wird der jeweilige Empfänger die unten stehende Nachricht nie zu Gesicht bekommen, sondern nur die vom MailClient aufbereitete Terminanforderung.
+you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	de	Sie sind im Begriff eine Terminanfrage an die oben eingetragenen Empfänger zu versenden. Abhängig vom MailClient wird der jeweilige Empfänger die unten stehende Nachricht nie zu Gesicht bekommen, sondern nur die vom MailClient aufbereitete Terminanforderung.
 you can either set a year or a occurence, not both !!!	calendar	de	Sie können nur entweder das Jahr oder die Wiederholung angeben, nicht beides!
 you can only set a year or a occurence !!!	calendar	de	Sie können nur ein Jahr oder eine Wiederholung angeben !
 you do not have permission to read this record!	calendar	de	Sie haben keine Berechtigung diesen Eintrag zu lesen!

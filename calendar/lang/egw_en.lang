@@ -286,7 +286,6 @@ make freebusy information available to not loged in persons?	calendar	en	Make Fr
 max. number of entries to show (leave empty for no restriction)	calendar	en	Max. number of entries to show. Leave empty for no restriction.
 maximum available quantity of %1 exceeded!	calendar	en	Maximum available quantity of %1 exceeded!
 meeting request	calendar	en	Meeting request
-meeting status information	calendar	en	Meeting status information
 merge document...	calendar	en	Merge document...
 minutes	calendar	en	Minutes
 modified	calendar	en	Modified
@@ -380,6 +379,7 @@ repeating interval, eg. 2 to repeat every second week	calendar	en	Repeating inte
 repetition	calendar	en	Repetition
 repetitiondetails (or empty)	calendar	en	Repetition details (or empty)
 replacements for inserting events into documents	calendar	en	Replacements for inserting events into documents
+reply to meeting request	calendar	en	Reply to meeting request
 requested	calendar	en	Requested
 requested date %1 outside allowed range of %2 days: recurring events obmitted!	calendar	en	Requested date %1 outside allowed range of %2 days: recurring events obmitted!
 requested meeting is in the past!	calendar	en	Requested meeting is in the past!
@@ -454,6 +454,7 @@ startdate / -time	calendar	en	Start date / time
 startdate and -time of the search	calendar	en	Start date and time of the search
 startdate of the export	calendar	en	Start date of the export
 startrecord	calendar	en	Start record
+status already applied	calendar	en	Status already applied
 status changed	calendar	en	Status changed.
 status for all future scheduled days changed	calendar	en	Status for all future scheduled days changed.
 status for this particular day changed	calendar	en	Status for this particular day changed.
@@ -475,6 +476,7 @@ this entry is opened by user:	calendar	en	This entry was opened within the confi
 this event is part of a series	calendar	en	This event is part of a series
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	en	This group that is preselected when you enter the planner. You can change it in the planner at any time.
 this mail contains a meeting request	calendar	en	This mail contains a meeting request
+this mail contains a reply to a meeting request	calendar	en	This mail contains a reply to a meeting request
 this message is sent for canceled or deleted events.	calendar	en	This message is sent for canceled or deleted events.
 this message is sent for modified or moved events.	calendar	en	This message is sent for modified or moved events.
 this message is sent to disinvited participants.	calendar	en	This message is sent to disinvited participants.
@@ -551,6 +553,7 @@ years	admin	en	years
 yearview	calendar	en	Year view
 yes, only admins can purge deleted items	admin	en	Yes, only admins can purge deleted items
 yes, users can purge their deleted items	admin	en	Yes, users can purge their deleted items
+you already replied to this invitation with	calendar	en	You already replied to this invitation with
 you are not allowed to book the resource selected:	calendar	en	You are not allowed to book the resource selected:
 you are not invited to that event!	calendar	en	You are not invited to that event!
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	en	You attempt to mail a meetingrequest to the recipients above. Depending on the client this mail is opened with, the recipient may or may not see the message below, but only see the meeting request attached.

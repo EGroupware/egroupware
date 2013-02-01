@@ -1686,7 +1686,7 @@ $j(document).ready(function() {
 					$uidisplay = CreateObject('felamimail.uidisplay');
 					$uidisplay->uid = $headerData['uid'];
 					$uidisplay->mailbox = $_folderName;
-					$mailData = $uidisplay->get_load_email_data($headerData['uid'], $partID);
+					$mailData = $uidisplay->get_load_email_data($headerData['uid'], $partID, $sender_addresses[0]);
 					//error_log(__METHOD__.__LINE__.array2string($mailData));
 					$iframe_url = $mailData['src'];
 					$jscall .= $mailData['onload'];
