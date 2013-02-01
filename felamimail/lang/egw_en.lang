@@ -27,6 +27,7 @@ address book search	felamimail	en	Address Book search
 administer the mailbox (change the mailbox's acl).	felamimail	en	Administer the mailbox (change the mailbox's ACL).
 after message body	felamimail	en	After message body
 all address books	felamimail	en	All address books
+all available info	felamimail	en	All available info
 all folders	felamimail	en	All folders
 all messages in folder	felamimail	en	All messages in folder
 all of	felamimail	en	All of
@@ -130,6 +131,7 @@ display mail subject in notification	felamimail	en	Display mail subject in notif
 display message in new window	felamimail	en	Display message in new window
 display messages in multiple windows	felamimail	en	Display messages in multiple windows
 display of html emails	felamimail	en	Display HTML emails
+display of identities	felamimail	en	Display of Identities
 display only when no plain text is available	felamimail	en	Display only when no plain text is available
 display preferences	felamimail	en	Display preferences
 displaying html messages is disabled	felamimail	en	Displaying HTML messages is disabled.
@@ -174,7 +176,7 @@ edit rule	felamimail	en	Edit rule
 edit selected	felamimail	en	Edit selected
 edit vacation settings	felamimail	en	Edit vacation settings
 editor type	felamimail	en	Editor type
-effective only if server supports acl at all	admin	en	effective only if server supports ACL at all
+effective only if server supports acl at all	felamimail	en	effective only if server supports ACL at all
 email address	felamimail	en	Email address
 email forwarding address	felamimail	en	Email forwarding address
 email notification	felamimail	en	email notification
@@ -256,6 +258,7 @@ have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.
 header lines	felamimail	en	Header lines
 hide header	felamimail	en	Hide header
 hostname / address	felamimail	en	Hostname / address
+how should the available information on identities be displayed	felamimail	en	How should the available information on identities be displayed
 how to forward messages	felamimail	en	How to forward messages
 html	felamimail	en	HTML
 icons and text	felamimail	en	Icons and text

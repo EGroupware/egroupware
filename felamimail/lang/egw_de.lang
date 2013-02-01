@@ -27,6 +27,7 @@ address book search	felamimail	de	Adressbuch durchsuchen
 administer the mailbox (change the mailbox's acl).	felamimail	de	Administrieren der Mailbox (Berechtigung bzw. ACL der Mailbox)
 after message body	felamimail	de	nach dem Editorfenster
 all address books	felamimail	de	Alle Adressbücher
+all available info	felamimail	de	Alle verfügbaren Informationen
 all folders	felamimail	de	Alle Ordner
 all messages in folder	felamimail	de	Alle Nachrichten im Ordner
 all of	felamimail	de	mit allen
@@ -130,6 +131,7 @@ display mail subject in notification	felamimail	de	Anzeigen des Betreffs der E-M
 display message in new window	felamimail	de	Nachricht in neuem Fenster anzeigen
 display messages in multiple windows	felamimail	de	Nachrichten in mehreren Fenstern anzeigen
 display of html emails	felamimail	de	HTML-E-Mails anzeigen
+display of identities	felamimail	de	Anzeigeformat der verfügbaren Identitätsinformationen
 display only when no plain text is available	felamimail	de	nur anzeigen wenn kein Plain Text vorhanden ist
 display preferences	felamimail	de	Anzeige Einstellungen
 displaying html messages is disabled	felamimail	de	Die Anzeige von HTML-E-Mails ist deaktiviert.
@@ -174,7 +176,7 @@ edit rule	felamimail	de	Regel bearbeiten
 edit selected	felamimail	de	Ausgewählte bearbeiten
 edit vacation settings	felamimail	de	Abwesenheitsnotiz bearbeiten
 editor type	felamimail	de	Editortyp
-effective only if server supports acl at all	admin	de	Wird nur angewendet, wenn Ihr Server diese Methode unterstützt
+effective only if server supports acl at all	felamimail	de	Wird nur angewendet, wenn Ihr Server diese Methode unterstützt
 email address	felamimail	de	E-Mail-Adresse
 email forwarding address	felamimail	de	Zieladresse
 email notification	felamimail	de	E-Mail Benachrichtigung
@@ -256,6 +258,7 @@ have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.
 header lines	felamimail	de	Kopfzeilen
 hide header	felamimail	de	Kopfzeilen verbergen
 hostname / address	felamimail	de	Servername / Adresse
+how should the available information on identities be displayed	felamimail	de	Hier legen Sie fest wie die verfügbaren Informationen Ihrer Identitäten in ausgehenden Mails angezeigt wird
 how to forward messages	felamimail	de	Wie wollen Sie Nachrichten weiterleiten?
 html	felamimail	de	HTML
 icons and text	felamimail	de	Icons und Text

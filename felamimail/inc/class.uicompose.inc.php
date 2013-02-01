@@ -521,20 +521,24 @@
 
 			// header
 			$allIdentities = $this->mailPreferences->getIdentity();
+			unset($allIdentities[0]);
 			//_debug_array($allIdentities);
 			$defaultIdentity = 0;
 			$identities = array();
 			foreach($allIdentities as $key => $singleIdentity) {
-				#$identities[$singleIdentity->id] = $singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>';
-				if (array_search($singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>',$identities)==false) $identities[$key] = $singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>';
-				if(!empty($singleIdentity->default))
+				//$identities[$singleIdentity->id] = $singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>';
+				$iS = felamimail_bo::generateIdentityString($singleIdentity);
+				//error_log(__METHOD__.__LINE__.':'.$presetId.'->'.$key.'('.$singleIdentity->id.')'.'#'.$iS.'#');
+				if (array_search('('.$singleIdentity->id.') '.$iS,$identities)===false) $identities[$singleIdentity->id] = '('.$singleIdentity->id.') '.$iS;
+				if(!empty($singleIdentity->default) && $singleIdentity->default==1 && $defaultIdentity==0)
 				{
-					#$defaultIdentity = $singleIdentity->id;
-					$defaultIdentity = $key;
+					//_debug_array($singleIdentity);
+					$defaultIdentity = $singleIdentity->id;
+					//$defaultIdentity = $key;
 					$sessionData['signatureID'] = (!empty($singleIdentity->signature) ? $singleIdentity->signature : $sessionData['signatureID']);
 				}
 			}
-			$selectFrom = html::select('identity', ($presetId ? $presetId : $defaultIdentity), $identities, true, "style='width:100%;' onchange='changeIdentity(this);'");
+			$selectFrom = html::select('identity', (!empty($presetId) ? $presetId : $defaultIdentity), $identities, true, "style='width:100%;' onchange='changeIdentity(this);'");
 			$this->t->set_var('select_from', $selectFrom);
 			//error_log(__METHOD__.__LINE__.' DefaultIdentity:'.array2string($identities[($presetId ? $presetId : $defaultIdentity)]));
 			// navbar(, kind of)

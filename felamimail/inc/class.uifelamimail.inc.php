@@ -26,7 +26,6 @@ class uifelamimail
 			'importMessage'		=> True,
 			'importMessageFromVFS2DraftAndDisplay' => True,
 			'importMessageFromVFS2DraftAndEdit' => True,
-			'hookAdmin'		=> True,
 			'toggleFilter'		=> True,
 			'viewMainScreen'	=> True,
 			'redirectToConfig' => True,
@@ -136,8 +135,7 @@ class uifelamimail
 			// this need to fixed
 			// this does not belong to here
 
-			if($_GET['menuaction'] != 'felamimail.uifelamimail.hookAdmin' &&
-				 $_GET['menuaction'] != 'felamimail.uifelamimail.changeFolder') {
+			if($_GET['menuaction'] != 'felamimail.uifelamimail.changeFolder') {
 				$this->connectionStatus = $this->bofelamimail->openConnection(self::$icServerID);
 			}
 
@@ -777,79 +775,6 @@ class uifelamimail
 			$GLOBALS['egw']->common->egw_header();
 
 			echo $GLOBALS['egw']->framework->navbar();
-		}
-
-		function hookAdmin()
-		{
-			if(!$GLOBALS['egw']->acl->check('run',1,'admin'))
-			{
-				$GLOBALS['egw']->common->egw_header();
-				echo $GLOBALS['egw']->framework->navbar();
-				echo lang('access not permitted');
-				$GLOBALS['egw']->log->message('F-Abort, Unauthorized access to felamimail.uifelamimail.hookAdmin');
-				$GLOBALS['egw']->log->commit();
-				$GLOBALS['egw']->common->egw_exit();
-			}
-
-			if(!empty($_POST['profileID']) && is_int(intval($_POST['profileID'])))
-			{
-				$profileID = intval($_POST['profileID']);
-				$this->bofelamimail->setEMailProfile($profileID);
-			}
-
-			$boemailadmin = new emailadmin_bo();
-
-			$profileList = $boemailadmin->getProfileList();
-			$profileID = $this->bofelamimail->getEMailProfile();
-
-			$this->display_app_header();
-
-			$this->t->set_file(array("body" => "selectprofile.tpl"));
-			$this->t->set_block('body','main');
-			$this->t->set_block('body','select_option');
-
-			$this->t->set_var('lang_select_email_profile',lang('select emailprofile'));
-			$this->t->set_var('lang_site_configuration',lang('site configuration'));
-			$this->t->set_var('lang_save',lang('save'));
-			$this->t->set_var('lang_back',lang('back'));
-
-			$linkData = array
-			(
-				'menuaction'	=> 'felamimail.uifelamimail.hookAdmin'
-			);
-			$this->t->set_var('action_url',$GLOBALS['egw']->link('/index.php',$linkData));
-
-			$linkData = array
-			(
-				'menuaction'	=> 'emailadmin.emailadmin_ui.listProfiles'
-			);
-			$this->t->set_var('lang_go_emailadmin', lang('use <a href="%1">EmailAdmin</a> to create profiles', $GLOBALS['egw']->link('/index.php',$linkData)));
-
-			$this->t->set_var('back_url',$GLOBALS['egw']->link('/admin/index.php'));
-
-			if(isset($profileList) && is_array($profileList))
-			{
-				foreach($profileList as $key => $value)
-				{
-					#print "$key => $value<br>";
-					#_debug_array($value);
-					$this->t->set_var('profileID',$value['profileID']);
-					$this->t->set_var('description',$value['description']);
-					if(is_int($profileID) && $profileID == $value['profileID'])
-					{
-						$this->t->set_var('selected','selected');
-					}
-					else
-					{
-						$this->t->set_var('selected','');
-					}
-					$this->t->parse('select_options','select_option',True);
-				}
-			}
-
-			$this->t->parse("out","main");
-			print $this->t->get('out','main');
-
 		}
 
 		function viewMainScreen()

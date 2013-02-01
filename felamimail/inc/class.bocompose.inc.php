@@ -50,6 +50,7 @@
 			} else {
 				$this->preferencesArray['message_forwarding'] = 'asmail';
 			}
+			if (is_null(felamimail_bo::$felamimailConfig)) felamimail_bo::$felamimailConfig = config::read('felamimail');
 			// check if there is a composeid set, and restore the session, if so
 			if (!empty($_composeID))
 			{
@@ -683,13 +684,6 @@
 			return $this->sessionData;
 		}
 
-		// get the user name, will will use for the FROM field
-		function getUserName()
-		{
-			$retData = sprintf("%s <%s>",$this->preferences['realname'],$this->preferences['emailAddress']);
-			return $retData;
-		}
-
 		function removeAttachment($_attachmentID) {
 			if (parse_url($this->sessionData['attachments'][$_attachmentID]['file'],PHP_URL_SCHEME) != 'vfs') {
 				unlink($this->sessionData['attachments'][$_attachmentID]['file']);
@@ -720,7 +714,7 @@
 			if ($_identity->id != $activeMailProfile->id && strtolower($activeMailProfile->emailAddress) != strtolower($_identity->emailAddress)) error_log(__METHOD__.__LINE__.' Faking From/SenderInfo for '.$activeMailProfile->emailAddress.' with ID:'.$activeMailProfile->id.'. Identitiy to use for sending:'.array2string($_identity));
 			$_mailObject->Sender  = ($_identity->id<0 && $activeMailProfile->id < 0 ? $_identity->emailAddress : $activeMailProfile->emailAddress);
 			$_mailObject->From 	= $_identity->emailAddress;
-			$_mailObject->FromName = $_mailObject->EncodeHeader($_identity->realName);
+			$_mailObject->FromName = $_mailObject->EncodeHeader(felamimail_bo::generateIdentityString($_identity,false));
 			$_mailObject->Priority = $_formData['priority'];
 			$_mailObject->Encoding = 'quoted-printable';
 			$_mailObject->AddCustomHeader('X-Mailer: FeLaMiMail');
@@ -730,7 +724,7 @@
 			if($_formData['disposition']) {
 				$_mailObject->AddCustomHeader('Disposition-Notification-To: '. $_identity->emailAddress);
 			}
-			if(!empty($_identity->organization)) {
+			if(!empty($_identity->organization) && (felamimail_bo::$felamimailConfig['how2displayIdentities'] == '' || felamimail_bo::$felamimailConfig['how2displayIdentities'] == 'orgNemail')) {
 				#$_mailObject->AddCustomHeader('Organization: '. $bofelamimail->encodeHeader($_identity->organization, 'q'));
 				$_mailObject->AddCustomHeader('Organization: '. $_identity->organization);
 			}
@@ -1043,8 +1037,8 @@
 			#error_log(print_r($this->preferences,true));
 			$identity = $this->preferences->getIdentity((int)$this->sessionData['identity']);
 			$signature = $this->bosignatures->getSignature((int)$this->sessionData['signatureID']);
-			#error_log($this->sessionData['identity']);
-			#error_log(print_r($identity,true));
+			//error_log($this->sessionData['identity']);
+			//error_log(print_r($identity,true));
 			// create the messages
 			$this->createMessage($mail, $_formData, $identity, $signature, true);
 			// remember the identity

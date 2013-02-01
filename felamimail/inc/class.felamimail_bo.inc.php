@@ -94,6 +94,13 @@ class felamimail_bo
 	 * @var array
 	 */
 	var $mailPreferences;
+
+	/**
+	 * static used to hold the felamimail Config values
+	 * @array
+	 */
+	static $felamimailConfig;
+
 	// set to true, if php is compiled with multi byte string support
 	var $mbAvailable = FALSE;
 
@@ -244,6 +251,7 @@ class felamimail_bo
 		self::$instances[$_profileID]->profileID = $_profileID;
 		if (!isset(self::$instances[$_profileID]->idna2)) self::$instances[$_profileID]->idna2 = new egw_idna;
 		//if ($_profileID==0); error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID);
+		if (is_null(self::$felamimailConfig)) self::$felamimailConfig = config::read('felamimail');
 		return self::$instances[$_profileID];
 	}
 
@@ -433,6 +441,7 @@ class felamimail_bo
 		if (function_exists('mb_convert_encoding')) {
 			$this->mbAvailable = TRUE;
 		}
+		if (is_null(self::$felamimailConfig)) self::$felamimailConfig = config::read('felamimail');
 		if (!isset(self::$idna2)) self::$idna2 = new egw_idna;
 
 	}
@@ -1650,21 +1659,6 @@ class felamimail_bo
 		}
 
 		return $selectedID;
-	}
-
-	function getEMailProfile()
-	{
-		$config = CreateObject('phpgwapi.config','felamimail');
-		$config->read_repository();
-		$felamimailConfig = $config->config_data;
-
-		#_debug_array($felamimailConfig);
-
-		if(!isset($felamimailConfig['profileID'])){
-			return -1;
-		} else {
-			return intval($felamimailConfig['profileID']);
-		}
 	}
 
 	function getErrorMessage()
@@ -4069,14 +4063,6 @@ class felamimail_bo
 		$this->saveSessionData();
 	}
 
-	function setEMailProfile($_profileID)
-	{
-		$config = CreateObject('phpgwapi.config','felamimail');
-		$config->read_repository();
-		$config->value('profileID',$_profileID);
-		$config->save_repository();
-	}
-
 	function subscribe($_folderName, $_status)
 	{
 		if (self::$debug) error_log("felamimail_bo::".($_status?"":"un")."subscribe:".$_folderName);
@@ -4326,6 +4312,35 @@ class felamimail_bo
 		$rv = $send->SmtpSend($header,$body);
 		//error_log(__METHOD__.'#'.array2string($rv).'#');
 		return $rv;
+	}
+
+	/**
+	 * generateIdentityString
+	 * construct the string representing an Identity passed by $identity
+	 * @var array/object $identity, identity object that holds realname, organization, emailaddress and signatureid
+	 * @var boolean $fullString full or false=NamePart only is returned
+	 * @return string - constructed of identity object data as defined in felamimailConfig
+	 */
+	static function generateIdentityString($identity, $fullString=true)
+	{
+		if (is_null(self::$felamimailConfig)) self::$felamimailConfig = config::read('felamimail');
+		// not set? -> use default, means full display of all available data
+		if (!isset(self::$felamimailConfig['how2displayIdentities'])) self::$felamimailConfig['how2displayIdentities']='';
+		switch (self::$felamimailConfig['how2displayIdentities'])
+		{
+			case 'email';
+				$retData = str_replace('@',' ',$identity->emailAddress).($fullString===true?' <'.$identity->emailAddress.'>':'');
+				break;
+			case 'nameNemail';
+				$retData = (!empty($identity->realName)?$identity->realName:substr_replace($identity->emailAddress,'',strpos($identity->emailAddress,'@'))).($fullString===true?' <'.$identity->emailAddress.'>':'');
+				break;
+			case 'orgNemail';
+				$retData = (!empty($identity->organization)?$identity->organization:substr_replace($identity->emailAddress,'',0,strpos($identity->emailAddress,'@')+1)).($fullString===true?' <'.$identity->emailAddress.'>':'');
+				break;
+			default:
+				$retData = $identity->realName.(!empty($identity->organization)?' '.$identity->organization:'').($fullString===true?' <'.$identity->emailAddress.'>':'');
+		}
+		return $retData;
 	}
 
 	/**
@@ -5140,7 +5155,7 @@ class felamimail_bo
 						//error_log(__METHOD__.__LINE__.array2string($activeMailProfile));
 						$mailObject->From = $activeMailProfile->emailAddress;
 						//$mailObject->From  = $_identity->emailAddress;
-						$mailObject->FromName = $mailObject->EncodeHeader($activeMailProfile->realName);
+						$mailObject->FromName = $mailObject->EncodeHeader(self::generateIdentityString($activeMailProfile,false));
 
 						$mailObject->MessageID = '';
 						$mailObject->ClearAllRecipients();
