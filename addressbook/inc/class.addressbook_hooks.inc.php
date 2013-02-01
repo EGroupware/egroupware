@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package addressbook
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright (c) 2006-10 by Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright (c) 2006-13 by Ralf Becker <RalfBecker@outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -170,7 +170,6 @@ class addressbook_hooks
 			'help'   => 'Hides accounts completly from the adressbook.',
 			'xmlrpc' => True,
 			'admin'  => false,
-			'default'=> '1',
 		);
 		$settings['no_auto_hide'] = array(
 			'type'   => 'check',
