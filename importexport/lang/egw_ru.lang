@@ -1,40 +1,106 @@
+%1 definition(s) %2	importexport	ru	%1 определение(я) %2
+%1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	ru	%1 Определение  %2, %3 не удалось из-за недостаточных прав !!!
+%1 is not a known user or group	importexport	ru	%1 Неизвестный пользователь или группа.
+%1 is not readable	importexport	ru	%1 Недоступен для чтения.
+%1 is not writable	importexport	ru	%1 is недоступен для записи.
+%1 records processed	importexport	ru	%1 записей обработано.
+%s just me	importexport	ru	%s Только для меня
+(* for all)	importexport	ru	(* для всех)
+(0-23)	importexport	ru	(0-23)
+(0-6, 0=sun)	importexport	ru	(0-6, 0=Воскресенье)
+*contact id cannot be changed by import	importexport	ru	* ID контакта не может быть изменено при импорте
+admin disabled exporting	importexport	ru	Администратор отключил экспортирование.
+all encodings	importexport	ru	Все кодировки
 allowed users	importexport	ru	Пользователи имеющие доступ
-automatically created by importexport	importexport	ru	Автоматически создано ИмпортЭкспорт'ом
-changed	importexport	ru	Изменилось
+automatically created by importexport	importexport	ru	Автоматически создано с помощью"ИмпортЭкспорт"
+basic csv import	importexport	ru	Основной импорт CSV 
+changed	importexport	ru	Изменен
+changed allowed_users	importexport	ru	Изменить пользователей
+changed owner	importexport	ru	Изменить владельца
 charset of file	importexport	ru	Кодировка файла
-check all	importexport	ru	Отметить все
+check all	importexport	ru	Проверить всё
 choose a name for this definition	importexport	ru	Выберите название для этого определения
 choose a plugin	importexport	ru	Выберите модуль расширения
 choose an application	importexport	ru	Выберите приложение
+choose fields to export	importexport	ru	Выберите поля для экспорта
 choose seperator and charset	importexport	ru	Выберите разделитель и кодировку
-condition	importexport	ru	состояние
+condition	importexport	ru	Состояние
+copied	importexport	ru	Скопировано.
 created	importexport	ru	Создано
+csv field	importexport	ru	поле CSV 
+database values	importexport	ru	значение базы данных
+day of week	importexport	ru	День недели
+define imports|exports	common	ru	Определите Импорт/Экспорт
+definition	importexport	ru	Определение
 delete all selected definitions	importexport	ru	удаление ВСЕХ выбранных определений
-deleted	importexport	ru	удалено
-expert options	importexport	ru	Настройки для эксперта
+deleted	importexport	ru	Удалённый.
+duplicate name, please choose another.	importexport	ru	Повторяющееся имя, пожалуйста выберите другое.
+edit conditions	importexport	ru	Измените состояние
+expert options	importexport	ru	Расширенные настройки
 export	importexport	ru	Экспорт
 export all selected definitions	importexport	ru	экспорт ВСЕХ выбранных определений
-exported	importexport	ru	экспортировано
-false	importexport	ru	неверно
+export data as	importexport	ru	Экспортировать данные как
+export definition to use for nextmatch export	preferences	ru	Экспорт определения для использования при следующем экспорте
+export spreadsheet	importexport	ru	Экспорт таблицы
+exported	importexport	ru	Экспортировано.
+false	importexport	ru	Ошибка
+field labels	importexport	ru	Поле метки
+field names	importexport	ru	Поле имени
+fieldseperator	importexport	ru	Поле разделителя
 finish	importexport	ru	конец
-general	preferences	ru	Общее
-general fields:	preferences	ru	Основные поля:
+from definition	importexport	ru	Из определения
+general	importexport	ru	Общее
+general fields:	preferences	ru	Общие поля:
+header lines to skip	importexport	ru	Пропустить строки заголовков
+human friendly values	importexport	ru	Понятные значения
+if you specify an export definition, it will be used when you export	preferences	ru	если вы укажете оперделения для экспорта, оно будет использоваться при экспорте
 import	importexport	ru	Импорт
+import definition	importexport	ru	Импорт определения
+import definitions	common	ru	Импорт определений
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	ru	Импорт определений (Внимание: Существующие определения с совпадающими именами будут перезаписаны !!!)
-importexport wizard finished successfully!	importexport	ru	Мастер настройки ИмпортЭкспорта завершил работу успешно!
-load sample file	importexport	ru	Загрузка файла Примера
-manage mapping	importexport	ru	Управление отобажением
+importexport	common	ru	Импорт|Экспорт
+importexport wizard finished successfully!	importexport	ru	Мастер импорта|экспорта закончил работу успешно!
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	ru	Импорт информации из файла CSV. Это базовый класс, и ничего не делает сам по себе.
+include header	importexport	ru	Включая заголовки
+just me	importexport	ru	Только для меня
+last run	importexport	ru	Прошлый запуск
+load sample file	importexport	ru	Загрузка отдельного файла
+manage mapping	importexport	ru	управление наложением(mapping)
 next	importexport	ru	следующий
 next run	importexport	ru	Следующий запуск
+no records selected	importexport	ru	Записи не выбраны!
+old fixed definition	preferences	ru	Прежние изменения определены(Old fixed definition)
+please select file to import	importexport	ru	Выберите файл для импорта
+plugin	importexport	ru	Плагин
 preview	importexport	ru	Предварительный просмотр
 previous	importexport	ru	Предыдущий
+problems during import:	importexport	ru	Проблемы при импорте:
 save as definition	importexport	ru	Сохранить как определение
-schedule	common	ru	запланировать
+schedule	common	ru	Расписание
+schedule import / export	common	ru	Расписание импорта|экспорта
+schedule not found	importexport	ru	Расписание не найдено.
+schedule times are server time!  currently %s.	importexport	ru	Время расписания соответствует времени  сервера!  Текущее %s.
 select definition	importexport	ru	Выбор определения
 select plugin	importexport	ru	Выбор модуля расширения
-some nice text	importexport	ru	некий приятный текст
+select...	importexport	ru	Выбор...
+some nice text	importexport	ru	Какой-нибудь текст
+some records may not have been imported	importexport	ru	Некоторые записи не могут быть импортированы.
+stop	importexport	ru	Стоп
+stylite template folder	importexport	ru	Шаблон папки Stylite 
+target	importexport	ru	Назначение
+target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv	importexport	ru	Пример назначения: vfs://default/home/user/export.csv or http://server.net/prices.csv
+target field	importexport	ru	Назначенное поле
+test only	importexport	ru	Только тест
 translation	importexport	ru	Перевод
-true	importexport	ru	верно
+true	importexport	ru	истина
+try	importexport	ru	Пробовать
+unable to schedule	importexport	ru	Невозможно планировать.
+update categories	importexport	ru	Обновить категории
 use default	importexport	ru	использовать по умолчанию
-which useres are allowed for this definition	importexport	ru	Какие пользователи меют доступ к этому определению
-you need to select an app and format first!	importexport	ru	Вы должны сначала выбрать приложение и формат!
+user preference	importexport	ru	Предпочтения пользователя
+user template folder	importexport	ru	Шаблон папки пользователя.
+users allowed to create their own definitions	importexport	ru	Пользователи могут создавать свои собственные определения
+users allowed to share their own definitions	importexport	ru	пользователям разрешено делиться своими определениями
+which useres are allowed for this definition	importexport	ru	Пользователи, которым разрешено  это определение
+which users are allowed to use this definition	importexport	ru	Пользователи, которым разрешено использовать это определение
+you need to select an app and format first!	importexport	ru	Вы должны выбрать сначала приложение и формат!
