@@ -54,6 +54,7 @@ calendar-fieldname	calendar	ru	Календарь - Имя поля
 can't add alarms in the past !!!	calendar	ru	Невозможно добавлять сигнал к прошедшему(в конце?) !!!
 can't aquire lock!	calendar	ru	Невозможно приобрести блокировку!
 canceled	calendar	ru	Отменено
+chair	calendar	ru	Распорядитель
 check all	calendar	ru	Отметить все
 choose a category	calendar	ru	Выберите категорию
 close the window	calendar	ru	Закрыть окно
@@ -79,19 +80,24 @@ dayview	calendar	ru	Обзор на день
 default appointment length (in minutes)	calendar	ru	длительность события по умолчанию (в минутах)
 default calendar filter	calendar	ru	Фильтр Календаря по умолчанию
 default calendar view	calendar	ru	Вид Календаря по умолчанию
+default document to insert entries	calendar	ru	Документ по умолчанию для вставки записей
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	ru	Длительность нового события по умолчанию (в минутах, напр. 60 для 1 часа).
 default week view	calendar	ru	обзор недели по умолчанию
-delegated	calendar	ru	назначеные
+delegated	calendar	ru	Поручено
 delete series	calendar	ru	Удалить серии
 delete this alarm	calendar	ru	Удалить данный сигнал
 delete this event	calendar	ru	Удалить данное событие
 delete this exception	calendar	ru	Удалить данное исключение
 delete this series of recuring events	calendar	ru	Удалить серии еженедельных событий
 deleted	calendar	ru	удалено
+directory with documents to insert entries	calendar	ru	Каталог с документами для вставки
 disinvited	calendar	ru	Приглашение отозвано
+display holidays or birthdays as events in dayview	calendar	ru	Показывать праздники и дни рожденья как события Календаря в обзоре дня
 display status of events	calendar	ru	Показать статус событий
 displayed view	calendar	ru	Показывать обзор
+displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	ru	Показывать этот обзор Календаря на домашней странице (на которую Вы попадаете, когда входите в EGroupware или нажимаете на значок домашней страницы) ?
 do you want a weekview with or without weekend?	calendar	ru	Необходим ли обзор за полную неделю (7 дней) или только рабочую (5 дней)
+do you want to be notified about changes of appointments you modified?	calendar	ru	Хотите получать уведомления об изменениях событий, которые Вы произвели ?
 do you want to be notified about new or changed appointments? you are not notified about changes you made yourself.<br>you can limit the notifications to certain changes only. each item includes all notifications listed above. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get participant responses like acceptions or rejections too.	calendar	ru	Вы хотите быть оповещены о новых назначениях? Вы будете оповещены также о своих собственных изменениях.<br>Вы можете ограничить извещения только некоторыми изменениями. Каждая запись включает все извещения показанные в списке над ней. Все изменения включают изменение названия, описания, подписчиков, но не ответы подписчиков. Если владелец события требует какие-либо извещения, он всегда будет получать ответы подписчиков, в том числе такие как присоединение и отказ.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	ru	Вы хотите получать регулярный отчет о новых назначениях по эл. почте?<br>Суммарный отчет посылается вам на обычный адрес эл. почты утром этого дня либо в Понедельник для отчетов за неделю.<br>Письма посылаются только при наличии встреч в этот день или неделю.
 do you wish to autoload calendar holidays files dynamically?	admin	ru	Вы хотите динамически и автоматически загружать файлы с календарными выходными?
@@ -163,6 +169,7 @@ holiday management	calendar	ru	Управление Праздниками
 holidays	calendar	ru	Праздники
 hours	calendar	ru	часы
 how far to search (from startdate)	calendar	ru	Когда начать поиск(с момента дата запуска)
+how many describtion lines should be directly visible. further lines are available via a scrollbar.	calendar	ru	Сколько строк будет видно сразу. Следующие строки видны через полосу прокрутки
 how many minutes should each interval last?	calendar	ru	Сколько минут должен длиться каждый интервал
 how many weeks should the multiple week view show?	calendar	ru	Сколько недель должно быть в режиме просмотра нескольких недель?
 ical	calendar	ru	iCal
@@ -182,6 +189,7 @@ invalid email-address "%1" for user %2	calendar	ru	Неверный адрес �
 last	calendar	ru	последний
 lastname of person to notify	calendar	ru	Фамилия человека для оповещения
 length of the time interval	calendar	ru	Длительность интервала времени
+limit number of description lines in list view (default 5, 0 for no limit)	calendar	ru	Ограчение числа строк в списке обзоров (по умолчанию 5, 0 без ограничения)
 link	calendar	ru	Ссылка
 link to view the event	calendar	ru	Ссылка для просмотра события
 links	calendar	ru	Ссылки
@@ -216,6 +224,7 @@ notification messages for disinvited participants	calendar	ru	сообщения
 notification messages for modified events	calendar	ru	Оповещения для измененных событий
 notification messages for your alarms	calendar	ru	Оповещения для Ваших "звонков"
 notification messages for your responses	calendar	ru	Оповещения для Ваших ответов
+notify non-egroupware users about event updates	calendar	ru	Уведомлять не пользователей EGroupware об изменениях событий ?
 number of records to read (%1)	calendar	ru	Количество считываемых записей (%1)
 observance rule	calendar	ru	Правило Переноса
 occurence	calendar	ru	Действие
@@ -249,6 +258,7 @@ private only	calendar	ru	Только личные
 quantity	calendar	ru	Количество
 re-edit event	calendar	ru	Отредактировать Событие
 receive email updates	calendar	ru	Получить e-mail обновления
+receive notifications about events you created/modified/deleted	calendar	ru	Получать уведомления о событиях, которые Вы создали, изменили или удалили ?
 receive summary of appointments	calendar	ru	Получить список назначенных встреч
 recurrence	calendar	ru	Повторение
 recurring event	calendar	ru	Повторное событие
@@ -260,9 +270,11 @@ repeating event information	calendar	ru	Информация о повторяю
 repeating interval, eg. 2 to repeat every second week	calendar	ru	интервал повторения, напр. 2 - повторять каждую вторую неделю
 repetition	calendar	ru	Повтор
 repetitiondetails (or empty)	calendar	ru	Детали повтора (или пусто)
+requested	calendar	ru	Затребовано
 reset	calendar	ru	Сброс
+reset participant stati on event shifts	calendar	ru	Отменять статус участников при перемещении события Календаря
 resources	calendar	ru	ресурсы
-role	calendar	ru	Должность
+role	calendar	ru	Роль
 rule	calendar	ru	Правило
 sat	calendar	ru	Сбт
 saves the changes made	calendar	ru	сохранить внесенные изменения
@@ -272,8 +284,10 @@ select a %1	calendar	ru	выбрать %1
 select a time	calendar	ru	выбрать время
 select multiple contacts for a further action	calendar	ru	Выбрать несколько контактов для дальнейшего действия
 select resources	calendar	ru	Выбрать ресурсы
+select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	ru	Выберите, хотите ли Вы отменять статус участников, если событие переносится в Календаре по более позднее время
 select who should get the alarm	calendar	ru	выбрать тех, кто должен получить сигнал
 selected range	calendar	ru	Выберите диапазон
+send meetingrequest to all participants	calendar	ru	Отправить приглашение всем участникам
 set a year only for one-time / non-regular holidays.	calendar	ru	Установить только Год для одноразовых/нерегулярных праздников.
 set new events to private	calendar	ru	Установить новые события как личные
 setting lock time calender	admin	ru	Установка времени блокировки даты для Календаря (по умолчанию 1 сек.)
@@ -295,7 +309,7 @@ startdate / -time	calendar	ru	дата начала/ время
 startdate and -time of the search	calendar	ru	Дата начала и время поиска
 startdate of the export	calendar	ru	дата начала экспорта
 startrecord	calendar	ru	Запись начала
-status changed	calendar	ru	Состояние измененл
+status changed	calendar	ru	Состояние изменено
 submit to repository	calendar	ru	Отправить в хранилище
 sun	calendar	ru	Вск
 tentative	calendar	ru	Предполагаемый
@@ -319,6 +333,7 @@ til	calendar	ru	до
 timeframe	calendar	ru	временные рамки
 timeframe to search	calendar	ru	временные рамки для поиска
 timezone	calendar	ru	Временная зона
+timezone of event ical file import/export	calendar	ru	Часовой пояс событий файла импорта/экспорта iCal
 title of the event	calendar	ru	Заголовок события
 to many might exceed your execution-time-limit	calendar	ru	возможно расширить временные рамки для многого
 tue	calendar	ru	Втр
@@ -326,6 +341,7 @@ two weeks	calendar	ru	две недели
 updated	calendar	ru	Обновлено
 use end date	calendar	ru	Использовать дату окончания
 use the selected time and close the popup	calendar	ru	Используйте выбранное время и закройте всплывающие окна
+use this timezone to import/export calendar data.	calendar	ru	Использовать этот часовой пояс для импорта/экспорта данных Календаря.
 user or group	calendar	ru	Пользователь или группа
 view this event	calendar	ru	Обзор события
 views with fixed time intervals	calendar	ru	Вид с фиксированными интервалами времени
@@ -338,8 +354,10 @@ weekdays to use in search	calendar	ru	дни недели, используем�
 weekly	calendar	ru	Еженедельно
 weeks in multiple week view	calendar	ru	Недели в виде нескольких недель
 weekview	calendar	ru	Вид на неделю
-weekview with weekend	calendar	ru	обзор недели, включачя выходные
+weekview with weekend	calendar	ru	обзор недели, включая выходные
 weekview without weekend	calendar	ru	обзор недели без выходных
+when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	ru	Если выбрано, то дни рожденья и/или праздники будут показаны как события в вашем Календаре. Заметьте, что эта возможность меняет только события внутри EGroupware, но не меняет информацию, посылаемую через iCal или другие интерфейсы календаря.
+which view to show on home page	calendar	ru	Какой обзор использовать для домашней страницы Календаря ?
 whole day	calendar	ru	целый день
 wk	calendar	ru	Рб
 work day ends on	calendar	ru	Рабочий день заканчивается в
