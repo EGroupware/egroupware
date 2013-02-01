@@ -246,9 +246,12 @@ false	admin	ru	неверно
 field '%1' already exists !!!	admin	ru	Поле '%1' уже существует !!!
 file space	admin	ru	Размер файла
 file space must be an integer	admin	ru	Размер файла должен быть целым числом
+find and register all application hooks	admin	ru	Найти и зарегистрировать ловушки всех приложений
 for the times above	admin	ru	на время, указанное выше
 for the times below (empty values count as '*', all empty = every minute)	admin	ru	на время, казанное ниже (пустые значения считаются как '*', все пустые = каждую минуту)
+Force password strength (1-5, default empty: no check against rules for a strong password)? 	admin	ru	Принудительная стойкость пароля (1-5, по умолчанию пусто: без проверки, число правил проверки стойкости пароля) 
 force selectbox	admin	ru	Принудительно список выбора
+force users to change their password regularily?(empty for no,number for after that number of days	admin	ru	Заставить пользователей менять пароли регулярно (пусто - если нет, число - для смены через столько дней)
 forward also to	admin	ru	перенаправить также на
 forward emails to	admin	ru	перенаправить почту на
 forward only	admin	ru	только перенаправить
@@ -256,6 +259,7 @@ full name	admin	ru	Полное Имя
 global categories	common	ru	Общие Категории
 grant	admin	ru	Предоставить
 group ?	admin	ru	группа?
+group excepted from above export limit (admins are always excepted)	admin	ru	Группы, исключаемые из лимита экспорта (администраторы всегда исключаются)
 group has been added	common	ru	Группа добавлена
 group has been deleted	common	ru	Группа удалена
 group has been updated	common	ru	Группа обновлена
@@ -279,6 +283,7 @@ in mbyte	admin	ru	в Мбайтах
 inbound	admin	ru	входящий
 initial	admin	ru	Первоначальный
 install crontab	admin	ru	Установить crontab
+installation Type admin	ru	тип установки 
 installed applications	common	ru	Установленные приложения
 installed crontab	admin	ru	Crontab установлен
 interface	admin	ru	Интерфейс
@@ -294,6 +299,7 @@ last %1 logins	admin	ru	Последние %1 подключений
 last %1 logins for %2	admin	ru	Последние %1 подключений для %2
 last login	admin	ru	последнее подключение
 last login from	admin	ru	последнее подключение с
+last submission admin	ru	последнее обновление
 last time read	admin	ru	Время последнего просмотра
 ldap accounts context	admin	ru	Контекст учетных записей LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	admin	ru	Префикс по умолчанию домашних каталогов в LDAP (напр. /home для /home/username)
@@ -312,7 +318,7 @@ length<br>rows	admin	ru	Длина<br>Строк
 list config settings	admin	ru	Список установок конфигурации
 list current sessions	admin	ru	Пролистать текущие сеансы
 list of current users	admin	ru	список текущих пользователей
-login history	admin	ru	История Подключений
+login history	common	ru	История Подключений
 login message	admin	ru	Сообщение сеанса
 login screen	admin	ru	Экран сеанса
 login shell	admin	ru	Оболочка входа
@@ -417,6 +423,7 @@ server url	admin	ru	URL сервера
 server username	admin	ru	Имя пользователя сервера
 set preference values.	admin	ru	Установить значения настроек.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	ru	Отображать на странице входа выбор языков (полезно для demo-сайта) ?
+Should exceptions contain a trace (including function arguments)	admin	ru	Исключения должны содержать следы (включая аргументы функций) ?
 show 'powered by' logo on	admin	ru	Показать логотип 'на основе'
 show access log	admin	ru	Показать журнал доступа
 show an asterisk (*) to mark untranslated strings	admin	ru	Показывать звездочку (*) для отметки непереведенных строк
