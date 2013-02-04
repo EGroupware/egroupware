@@ -168,6 +168,12 @@ emailaddress	felamimail	ru	адрес почты
 empty trash	felamimail	ru	очистить корзину
 enable	felamimail	ru	включить
 encrypted connection	felamimail	ru	зашифрованное соединение
+enter your default mail domain ( from: user@domain )	admin	ru	Ведите ваш почтовый домен по умолчанию (От: user@domain)
+enter your imap mail server hostname or ip address	admin	ru	Укажите имя или IP адрес вашего сервера IMAP
+enter your sieve server hostname or ip address	admin	ru	Укажите имя или IP адрес вашего сервера SIEVE
+enter your sieve server port	admin	ru	Укажите порт сервера SIEVE
+enter your smtp server hostname or ip address	admin	ru	Укажите имя или IP адрес вашего сервера SMTP
+enter your smtp server port	admin	ru	Укажите порт сервера SMTP
 entry saved	felamimail	ru	Запись сохранена.
 error	felamimail	ru	ОШИБКА
 error connecting to imap serv	felamimail	ru	Ошибка соединения с сервером IMAP
@@ -186,12 +192,14 @@ every	felamimail	ru	каждый
 every %1 days	felamimail	ru	каждые %1 дни
 expunge	felamimail	ru	Вычеркнуть
 extended	felamimail	ru	расширенный
+felamimail	common	ru	Почта FelaMi
 file into	felamimail	ru	в файл
 file rejected, no %2. is:%1	felamimail	ru	Файл отвергнут, no %2. Is:%1
 filemanager	felamimail	ru	Файловый менеджер
 files	felamimail	ru	файлы
 filter active	felamimail	ru	фильтр активирован
 filter name	felamimail	ru	Имя фильтра
+filter rules	common	ru	правила фильтрования
 first name	felamimail	ru	Имя
 flagged	felamimail	ru	отмечено флажком
 flags	felamimail	ru	Флажки
@@ -278,7 +286,6 @@ kilobytes	felamimail	ru	килобайт
 language	felamimail	ru	Язык
 last name	felamimail	ru	Фамилия
 later	felamimail	ru	Позже
-later	common	ru	отложить
 left	felamimail	ru	Левый
 less	felamimail	ru	меньше
 less than	felamimail	ru	меньше чем
@@ -286,9 +293,15 @@ light gray	felamimail	ru	Светло-серый
 list all	felamimail	ru	Показать все
 loading	felamimail	ru	загружаю
 location of buttons when composing	felamimail	ru	Расположение кнопок при создании письма
+mail server login type	admin	ru	Тип входа сервера почты
 mail settings	felamimail	ru	Настройки почты
 mail source	felamimail	ru	Источник почты
 mainmessage	felamimail	ru	основное сообщение
+manage email accounts and identities	common	ru	Управление учетными записями
+manage emailaccounts	common	ru	Управление учетными записями эл. почты
+manage emailfilter / vacation	preferences	ru	Управлять Фильтром/Отказом
+manage folders	common	ru	Управление папками
+manage sieve	common	ru	Управление скриптами фильтрации почты Sieve
 manage signatures	felamimail	ru	Управление подписями
 mark as	felamimail	ru	Пометить как
 mark as deleted	felamimail	ru	Отметить как стертое
@@ -314,6 +327,7 @@ move to trash	felamimail	ru	Переместить в корзину
 moving messages to	felamimail	ru	Перемещение сообщений в
 name	felamimail	ru	Имя
 never display html emails	felamimail	ru	Никогда не показывать эл. письма в формате HTML
+new	common	ru	Новое
 new filter	felamimail	ru	Новый фильтр
 next	felamimail	ru	Следующее
 next message	felamimail	ru	Следующее сообщение
@@ -338,7 +352,6 @@ no previous message	felamimail	ru	нет предыдущего Сообщени
 no recipient address given!	felamimail	ru	Не указан адрес получателя!
 no send folder set in preferences	felamimail	ru	в настройках не указана папка Отправленные
 no signature	felamimail	ru	без подписи
-no stationery	felamimail	ru	No stationery(нет бланков?)!
 no subject given!	felamimail	ru	Тема не указана!
 no supported imap authentication method could be found.	felamimail	ru	Не может быть найден поддерживаемый метод IMAP авторизации.
 no text body supplied, check attachments for message text	felamimail	ru	Отсутствует текст сообщения, проверьте вложения для текста сообщения.
@@ -360,6 +373,7 @@ or	felamimail	ru	или
 or configure an valid imap server connection using the manage accounts/identities preference in the sidebox menu.	felamimail	ru	Или настроить соединение с действующим IMAP сервером используя управление учетными записями в боковом меню.
 organisation	felamimail	ru	Организация
 organization	felamimail	ru	Организация
+organization name	admin	ru	Название организации
 original message	felamimail	ru	исходное сообщение
 outgoing mail server(smtp)	felamimail	ru	сервер исходящих сообщений (SMTP)
 participants	felamimail	ru	Участники
@@ -429,6 +443,7 @@ select a message to switch on its preview (click on subject)	felamimail	ru	Вы�
 select all	felamimail	ru	Выбрать Все
 select emailprofile	felamimail	ru	Выбрать профиль эл. почты
 select folder	felamimail	ru	выбрать папку
+select your mail server type	admin	ru	Выберите тип вашего сервера почты
 selected	felamimail	ru	Выбранный
 send	felamimail	ru	Отправить
 send a reject message	felamimail	ru	Отправить сообщение об отказе
@@ -444,6 +459,7 @@ show header	felamimail	ru	Показать заголовок
 show test connection section and control the level of info displayed?	felamimail	ru	показать пункт меню "Проверка подключения"?
 sieve connection status	felamimail	ru	Статус соединения Sieve
 sieve script name	felamimail	ru	название скрипта sieve
+sieve settings	admin	ru	Настройки Sieve
 signatur	felamimail	ru	Подпись
 signature	felamimail	ru	Подпись
 simply click the target-folder	felamimail	ru	Простой щелчок на папке назначения
@@ -454,6 +470,7 @@ size(0->...)	felamimail	ru	Размер (0->...)
 skipping forward	felamimail	ru	Перейти вперед
 skipping previous	felamimail	ru	Пропустить  предыдущие(?)
 small view	felamimail	ru	просмотр в небольшом окне
+smtp settings	admin	ru	Параметры SMTP
 start new messages with mime type plain/text or html?	felamimail	ru	новые сообщения начинать как текст или html?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	felamimail	ru	Создать ответ на сообщение как текст (или html), или использовать формат сообщения по умолчанию?
 stationery	felamimail	ru	бланк
@@ -504,6 +521,7 @@ unknown error	felamimail	ru	Неизвестная ошибка
 unknown imap response from the server. server responded: %s	felamimail	ru	Неизвестный ответ сервера IMAP. Сервер ответил: %s
 unknown sender	felamimail	ru	Неизвестный отправитель
 unknown user or password incorrect.	felamimail	ru	Неизвестный пользователь либо неверный пароль
+unread	common	ru	не прочитано
 unseen	felamimail	ru	Не просмотрено
 unselect all	felamimail	ru	Снять все отметки
 unsubscribe	felamimail	ru	Отказаться от подписки
@@ -513,7 +531,6 @@ up	felamimail	ru	вверх
 updating message status	felamimail	ru	обновление состояния сообщения
 updating view	felamimail	ru	обновление окна просмотра
 urgent	felamimail	ru	срочное
-urgent	common	ru	срочное
 use <a href="%1">emailadmin</a> to create profiles	felamimail	ru	используйте <a href="%1">EmailAdmin</a> для создания профиля
 use a signature	felamimail	ru	Использовать подпись
 use a signature?	felamimail	ru	Использовать подпись?
@@ -522,7 +539,10 @@ use common preferences max. messages	felamimail	ru	Используйте общ
 use custom identities	felamimail	ru	использовать пользовательскую идентификацию
 use custom settings	felamimail	ru	Использовать Пользовательские Настройки
 use regular expressions	felamimail	ru	использовать регулярные выражения
+use smtp auth	admin	ru	Использовать авторизацию по SMTP
 use source as displayed, if applicable	felamimail	ru	Если возможно, использовать исходник как показано
+users can define their own emailaccounts	admin	ru	Пользователь может назначать свои собственные учетные записи эл. почты.
+vacation notice	common	ru	Автоответчик?
 vacation notice is active	felamimail	ru	Автоответчик активен.
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	felamimail	ru	Автоответчик ещё не сохранен! (Но мы заполнили некоторые значения по умолчанию, чтобы исправить некоторые ошибки.Проверьте и исправьте настройки и сохраните снова.)
 vacation start-date must be before the end-date!	felamimail	ru	Дата начала действия автоответчика должно быть РАНЬШЕ даты окончания!
