@@ -124,11 +124,11 @@ class etemplate_new extends etemplate_widget_template
 		if (!$this->rel_path) throw new egw_exception_assertion_failed('No (valid) template read!');
 
 		self::$request->output_mode = $output_mode;	// let extensions "know" they are run eg. in a popup
-		self::$request->readonlys = $readonlys;
 		self::$request->content = $content;
 		self::$request->changes = $changes;
-		self::$request->sel_options = $sel_options;
-		self::$request->preserv = $preserv;
+		self::$request->sel_options = $sel_options ? $sel_options : array();
+		self::$request->readonlys = $readonlys ? $readonlys : array();
+		self::$request->preserv = $preserv ? $preserve : array();
 		self::$request->method = $method;
 		self::$request->ignore_validation = $ignore_validation;
 		self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'];
