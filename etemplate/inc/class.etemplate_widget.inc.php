@@ -345,7 +345,7 @@ class etemplate_widget
 		// maintain $expand array name-expansion
 		$cname = $params[0];
 		$expand =& $params[1];
-		if ($expand['cname'] !== $cname)
+		if ($expand['cname'] && $expand['cname'] !== $cname)
 		{
 			$expand['cont'] =& self::get_array(self::$request->content, $cname);
 			$expand['cname'] = $cname;
@@ -360,7 +360,23 @@ class etemplate_widget
 		}
 		if (method_exists($this, $method_name))
 		{
-			call_user_func_array(array($this, $method_name), $params);
+			// Some parameter checking to avoid fatal errors
+			$call = true;
+			$method = new ReflectionMethod($this, $method_name);
+			foreach($method->getParameters() as $index => $param)
+			{
+				if(!$param->isOptional() && !array_key_exists($index,$params))
+				{
+					error_log("Missing required parameter {$param->getPosition()}: {$param->getName()}");
+					$call = false;
+				}
+				if($param->isArray() && !is_array($params[$index]))
+				{
+					error_log("$method_name expects an array for {$param->getPosition()}: {$param->getName()}");
+					$params[$index] = (array)$params[$index];
+				}
+			}
+			if($call) call_user_func_array(array($this, $method_name), $params);
 		}
 		foreach($this->children as $child)
 		{
@@ -537,7 +553,8 @@ class etemplate_widget
 	 */
 	public function __toString()
 	{
-		return $this->type.($this->attrs['type'] && $this->attrs['type'] != $this->type ? '('.$this->attrs['type'].')' : '').'#'.$this->id;
+		return '['.get_class($this).'] ' .
+			$this->type.($this->attrs['type'] && $this->attrs['type'] != $this->type ? '('.$this->attrs['type'].')' : '').'#'.$this->id;
 	}
 
 	/**

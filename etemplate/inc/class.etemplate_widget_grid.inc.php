@@ -128,6 +128,7 @@ class etemplate_widget_grid extends etemplate_widget_box
 					continue;	// do NOT run $method_name on disabled columns
 				}
 			}
+			//error_log('Running ' . $method_name . ' on child ' . $n . '(' . $child . ') ['.$expand['row'] . ','.$expand['c'] . ']');
 			$disabled = $child->run($method_name, $params, $respect_disabled, $columns_disabled) === false;
 
 			if ($this->type == 'columns' && $disabled)

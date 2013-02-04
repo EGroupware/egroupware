@@ -25,6 +25,62 @@ class etemplate_widget_vfs extends etemplate_widget_file
 		if($xml) parent::__construct($xml);
 	}
 
+	/**
+	 * If widget is a vfs-file widget, and there are files in the specified directory,
+	 * they should be displayed.
+	 */
+	public function beforeSendToClient($cname, $expand = array())
+	{
+		if($this->type == 'vfs-upload')
+		{
+echo "EXPAND";
+_debug_array($expand);
+			$form_name = self::form_name($cname, $this->id, $expand ? $expand : array('cont'=>self::$request->content));
+
+echo "this-ID: {$this->id}<br />";
+echo "Form name: $form_name<br />";
+			// ID maps to path - check there for any existing files
+			list($app,$id,$relpath) = explode(':',$this->id,3);
+			if($app && $id)
+			{
+echo "ID: $id<br />";
+				if(!is_numeric($id))
+				{
+					$_id = self::expand_name($id,0,0,0,0,self::$request->content);
+					if($_id != $id)
+					{
+						$id = $_id;
+						$form_name = "$app:$id:$relpath";
+echo "Form name: $form_name<br />";
+					}
+				}
+				$value =& self::get_array(self::$request->content, $form_name, true);
+echo "ID: $id<br />";
+				$path = egw_link::vfs_path($app,$id,'',true);
+				if (!empty($relpath)) $path .= '/'.$relpath;
+
+				// Single file, already existing
+				if (substr($path,-1) != '/' && egw_vfs::file_exists($path) && !egw_vfs::is_dir($path))
+				{
+					$value = $path;
+				}
+				else if (substr($path, -1) == '/' && egw_vfs::is_dir($path))
+				{
+					$value = egw_vfs::scandir($path);
+echo 'HERE!';
+					foreach($value as &$file)
+					{
+echo $file.'<br />';
+						$file = egw_vfs::stat("$path$file");
+_debug_array($file);
+					}
+				}
+			}
+echo $this;
+_debug_array($value);
+		}
+	}
+
 	public static function ajax_upload() {
 		parent::ajax_upload();
 		error_log(array2string($_FILES));
