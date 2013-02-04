@@ -126,6 +126,7 @@ do you want a notification, if items you delegated are about to start?	infolog	r
 do you want a notification, if items you delegated are due?	infolog	ru	Вы желаете получать напоминания, если задачи которые вы назначили должны быть уже завершены?
 do you want to receive notifications as html-mails or plain text?	infolog	ru	Вы желаете получать напоминания в виде HTML или обычного текста?
 don't show infolog	infolog	ru	НЕ показывать ИнфоЖурнал
+done	infolog	ru	сделано
 done	common	ru	сделано
 download	infolog	ru	Получить
 duration	infolog	ru	Продолжительность
