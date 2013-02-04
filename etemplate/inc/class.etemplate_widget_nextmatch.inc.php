@@ -144,7 +144,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			self::$request->sel_options = array_merge(self::$request->sel_options,$value['rows']['sel_options']);
 			unset($value['rows']['sel_options']);
 		}
-		
+
 		// todo: no need to store rows in request, it's enought to send them to client
 
 		//error_log(__METHOD__."() $this: total=$value[total]");
@@ -277,8 +277,10 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				$rows = array();
 				if (self::call_get_rows($value, $rows))
 				{
-					foreach($rows as $row)
+					foreach($rows as $n => $row)
 					{
+						if (!is_int($n)) continue;	// ignore non-row data set by get_rows method
+
 						if (!$row_modified || !isset($row[$row_modified]) ||
 							!isset($lastModified) || $row[$row_modified] > $lastModified)
 						{
