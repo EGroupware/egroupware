@@ -66,7 +66,7 @@ class etemplate_widget_url extends etemplate_widget
 						}
 						break;
 					case 'url-email':
-						$this->attrs['preg'] = '/^('.EMAIL_PREG.')?$/';
+						$this->attrs['preg'] = '/^('.self::EMAIL_PREG.')?$/';
 						break;
 				}
 			}
