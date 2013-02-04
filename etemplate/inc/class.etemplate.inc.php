@@ -7,7 +7,7 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-11 by RalfBecker@outdoor-training.de
+ * @copyright 2002-13 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -115,9 +115,8 @@ class etemplate_new extends etemplate_widget_template
 	 * @param array $changes change made in the last call if looping, only used internaly by process_exec
 	 * @return string html for $output_mode == 1, else nothing
 	 */
-	function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$output_mode=0,$ignore_validation='',$changes='')
+	function exec($method,array $content,array $sel_options=null,array $readonlys=null,array $preserv=null,$output_mode=0,$ignore_validation='',array $changes=null)
 	{
-
 		// Include the etemplate2 javascript code
 		egw_framework::validate_file('.', 'etemplate2', 'etemplate');
 
@@ -167,13 +166,6 @@ class etemplate_new extends etemplate_widget_template
 			// Include the jQuery-UI CSS - many more complex widgets use it
 			$theme = 'redmond';
 			egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.8.21.custom.css");
-
-			// check if application of template has a app.js file --> load it
-			list($app) = explode('.',$this->name);
-			if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
-			{
-				egw_framework::validate_file('.','app',$app,false);
-			}
 
 			common::egw_header();
 			if ($output_mode != 2)
@@ -267,9 +259,6 @@ class etemplate_new extends etemplate_widget_template
 		{
 			throw new egw_exception_wrong_parameter('Can NOT read template '.array2string(self::$request->template));
 		}
-
-		translation::add_app($GLOBALS['egw_info']['flags']['currentapp']);
-
 		$validated = array();
 		$expand = array(
 			'cont' => &self::$request->content,
