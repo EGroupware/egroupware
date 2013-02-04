@@ -1362,7 +1362,7 @@ class felamimail_bo
 		//error_log($_html);
 		//repair doubleencoded ampersands, and some stuff htmLawed stumbles upon with balancing switched on
 		$_html = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>','</td></font>','<br><td>','<tr></tr>','<o:p></o:p>','<o:p>','</o:p>'),
-							 array('&amp;',    '<BR>',           '<BR>',             '<BR>',             '</font></td>','<td>',    '',         '',           '<p>',  '</p>'),$_html);
+							 array('&amp;',    '<BR>',           '<BR>',             '<BR>',             '</font></td>','<td>',    '',         '',           '',  ''),$_html);
 		//$_html = str_replace(array('&amp;amp;'),array('&amp;'),$_html);
 		if (stripos($_html,'style')!==false) self::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
 		if (stripos($_html,'head')!==false) self::replaceTagsCompletley($_html,'head'); // Strip out stuff in head
@@ -4839,8 +4839,9 @@ class felamimail_bo
 		// http://code.google.com/p/browsersec/wiki/Part1#Cascading_stylesheets
 		$css = preg_replace('/(javascript|expession|-moz-binding)/i','',$style);
 		if (stripos($css,'script')!==false) felamimail_bo::replaceTagsCompletley($css,'script'); // Strip out script that may be included
-		// we need this, as styledefinitions are enclosed with curly brackets; and template stuuff tries to replace everything between curly brackets that is having no horizontal whitespace
-		$css = str_replace(':',': ',$css);
+		// we need this, as styledefinitions are enclosed with curly brackets; and template stuff tries to replace everything between curly brackets that is having no horizontal whitespace
+		// as the comments as <!-- styledefinition --> in stylesheet are outdated, and ck-editor does not understand it, we remove it
+		$css = str_replace(array(':','<!--','-->'),array(': ','',''),$css);
 		//error_log(__METHOD__.__LINE__.$css);
 		// TODO: we may have to strip urls and maybe comments and ifs
 		return $css;

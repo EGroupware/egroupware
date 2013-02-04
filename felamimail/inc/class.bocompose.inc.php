@@ -572,6 +572,7 @@
 			//error_log(__METHOD__.__LINE__.'->'.array2string($this->preferencesArray['htmlOptions']));
 			$bodyParts = $bofelamimail->getMessageBody($_uid, ($this->preferencesArray['htmlOptions']?$this->preferencesArray['htmlOptions']:''), $_partID);
 			//_debug_array($bodyParts);
+			$styles = felamimail_bo::getStyles($bodyParts);
 
 			$fromAddress = felamimail_bo::htmlspecialchars((($headers['FROM'][0]['PERSONAL_NAME'] != 'NIL') ? str_replace(array('<','>'),array('[',']'),$bofelamimail->decode_header($headers['FROM'][0]['RFC822_EMAIL'],true)) : $bofelamimail->decode_header($headers['FROM'][0]['EMAIL'],true)));
 
@@ -602,6 +603,7 @@
 					@htmlspecialchars(lang("date").": ".$headers['DATE'],ENT_QUOTES | ENT_IGNORE,felamimail_bo::$displayCharset, false)."<br>".
 					'----------------------------------------------------------'."</div>";
 				$this->sessionData['mimeType'] 	= 'html';
+				if (!empty($styles)) $this->sessionData['body'] .= $styles;
 				$this->sessionData['body']	.= '<blockquote type="cite">';
 
 				for($i=0; $i<count($bodyParts); $i++) {
