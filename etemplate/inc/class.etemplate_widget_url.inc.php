@@ -51,7 +51,7 @@ class etemplate_widget_url extends etemplate_widget
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 				return;
 			}
-			if (!isset($this->attrs['preg']))
+			elseif ((string)$value != '' && !isset($this->attrs['preg']))
 			{
 				switch($this->type)
 				{
