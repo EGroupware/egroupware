@@ -154,6 +154,13 @@ class etemplate_new extends etemplate_widget_template
 			$theme = 'redmond';
 			egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.8.21.custom.css");
 
+			// check if application of template has a app.js file --> load it
+			list($app) = explode('.',$this->name);
+			if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
+			{
+				egw_framework::validate_file('.','app',$app,false);
+			}
+
 			common::egw_header();
 			if ($output_mode != 2)
 			{
