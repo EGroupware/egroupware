@@ -438,8 +438,7 @@ class filemanager_ui
 					{
 						// encode chars which special meaning in url/vfs (some like / get removed!)
 						$to = egw_vfs::concat($content['nm']['path'],egw_vfs::encodePathComponent($upload['name']));
-
-						if ($upload && is_uploaded_file($upload['tmp_name']) &&
+						if ($upload &&
 							(egw_vfs::is_writable($content['nm']['path']) || egw_vfs::is_writable($to)) &&
 							copy($upload['tmp_name'],egw_vfs::PREFIX.$to))
 						{
