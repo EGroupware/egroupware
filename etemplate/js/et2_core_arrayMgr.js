@@ -381,7 +381,8 @@ var et2_readonlysArrayMgr = et2_arrayMgr.extend({
 		}
 
 		// Otherwise return the default value
-		return (typeof this.getEntry("__ALL__") != "undefined");
+		entry = this.getEntry("__ALL__");
+		return entry !== null && (typeof entry != "undefined");
 	}
 
 });

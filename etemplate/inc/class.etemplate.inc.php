@@ -22,9 +22,9 @@
  *
  * @ToDo supported customized templates stored in DB, currently we only support xet files stored in filesystem
  */
-class etemplate extends etemplate_old {};
-class etemplate_new extends etemplate_widget_template
-//class etemplate extends etemplate_widget_template
+//class etemplate extends etemplate_old {};
+//class etemplate_new extends etemplate_widget_template
+class etemplate extends etemplate_widget_template
 {
 	/**
 	 * Are we running as sitemgr module or not

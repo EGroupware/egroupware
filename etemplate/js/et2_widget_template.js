@@ -55,7 +55,7 @@ var et2_template = et2_DOMWidget.extend({
 		},
 	},
 
-	createNamespace: true,
+	createNamespace: false,
 
 	/**
 	 * Initializes this template widget as a simple container.
