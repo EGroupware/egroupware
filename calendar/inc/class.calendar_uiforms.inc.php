@@ -1543,7 +1543,7 @@ function replace_eTemplate_onsubmit()
 			$onload = "check_recur_type('recur_type',2);";
 			// We hide the enddate if one of our predefined durations fits
 			// the call to set_style_by_class has to be in onload, to make sure the function and the element is already created
-			$onload .= " set_style_by_class('table','end_hide','display','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'none' : 'block')."');";
+			$onload .= " \$j('table.end_hide').css('display','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'none' : 'block')."');";
 
 			$GLOBALS['egw']->js->set_onload($onload);
 
@@ -1630,8 +1630,9 @@ function replace_eTemplate_onsubmit()
 
 		//Function for disabling the recur_data multiselect box
 		$js .=
-			"\nfunction check_recur_type(_id, _ind)\n{\negw_set_checkbox_multiselect_enabled('recur_data',".
-			"document.getElementById('exec['+_id+']').selectedIndex == _ind);\n}\n";
+			"\nfunction check_recur_type(_id, _ind)\n{\nif(document.getElementById('exec['+_id+']')) {
+			egw_set_checkbox_multiselect_enabled('recur_data',".
+			"document.getElementById('exec['+_id+']').selectedIndex == _ind);\n\n}\n}\n";
 
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>\n$js\n</script>\n";
 
@@ -2077,7 +2078,7 @@ function replace_eTemplate_onsubmit()
 		if ($content['duration'] && isset($sel_options['duration'][$content['duration']])) $content['end'] = '';
 		// We hide the enddate if one of our predefined durations fits
 		// the call to set_style_by_class has to be in onload, to make sure the function and the element is already created
-		$GLOBALS['egw']->js->set_onload("set_style_by_class('table','end_hide','visibility','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'hidden' : 'visible')."');");
+		$GLOBALS['egw']->js->set_onload("\$j('table.end_hide').css('visibility','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'hidden' : 'visible')."');");
 
 		$etpl->exec('calendar.calendar_uiforms.freetimesearch',$content,$sel_options,'',array(
 				'participants'	=> $content['participants'],
