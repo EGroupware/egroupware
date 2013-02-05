@@ -1184,6 +1184,11 @@ class addressbook_ui extends addressbook_bo
 				$query['col_filter']['private'] = substr($query['filter'],-1) == 'p' ? 1 : 0;
 			}
 		}
+		else
+		{
+			unset($query['col_filter']['owner']);
+			unset($query['col_filter']['private']);
+		}
 		if ((int)$query['filter2'])	// not no distribution list
 		{
 			$query['col_filter']['list'] = (string) (int) $query['filter2'];
