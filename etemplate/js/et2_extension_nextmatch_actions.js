@@ -105,7 +105,7 @@ function nm_action(_action, _senders, _target, _ids)
 		case 'egw_open':
 			var params = _action.data.egw_open.split('-');	// type-appname-idNum (idNum is part of id split by :), eg. "edit-infolog"
 			console.log(params);
-			var egw_open_id = idsArr[0].id;
+			var egw_open_id = idsArr[0];
 			if (typeof params[2] != 'undefined') egw_open_id = egw_open_id.split(':')[params[2]];
 			egw(params[1],window).open(egw_open_id,params[1],params[0],params[3],target);
 			break;
