@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -31,8 +31,8 @@ CKEDITOR.lang['bg'] =
 	 * Screenreader titles. Please note that screenreaders are not always capable
 	 * of reading non-English words. So be careful while translating it.
 	 */
-	editorTitle : 'Rich text editor, %1', // MISSING
-	editorHelp : 'Press ALT 0 for help', // MISSING
+	editorTitle : 'Текстов редактор за форматиран текст, %1',
+	editorHelp : 'натиснете ALT 0 за помощ',
 
 	// ARIA descriptions.
 	toolbars	: 'Ленти с инструменти',
@@ -120,6 +120,7 @@ CKEDITOR.lang['bg'] =
 		alignTop		: 'Горе',
 		alignMiddle		: 'По средата',
 		alignBottom		: 'Долу',
+		invalidValue	: 'Invalid value.', // MISSING
 		invalidHeight	: 'Височината трябва да е число.',
 		invalidWidth	: 'Ширина требе да е число.',
 		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
@@ -697,7 +698,7 @@ CKEDITOR.lang['bg'] =
 		ignoreAll		: 'Ignore All', // MISSING
 		addWord			: 'Add Word', // MISSING
 		emptyDic		: 'Dictionary name should not be empty.', // MISSING
-
+		noSuggestions	: 'Няма предложения',
 		optionsTab		: 'Options', // MISSING
 		allCaps			: 'Ignore All-Caps Words', // MISSING
 		ignoreDomainNames : 'Ignore Domain Names', // MISSING

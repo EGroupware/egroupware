@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -31,8 +31,8 @@ CKEDITOR.lang['af'] =
 	 * Screenreader titles. Please note that screenreaders are not always capable
 	 * of reading non-English words. So be careful while translating it.
 	 */
-	editorTitle : 'Rich text editor, %1', // MISSING
-	editorHelp : 'Press ALT 0 for help', // MISSING
+	editorTitle : 'Teksverwerker, %1',
+	editorHelp : 'Druk op ALT 0 vir hulp',
 
 	// ARIA descriptions.
 	toolbars	: 'Editor toolbars', // MISSING
@@ -120,6 +120,7 @@ CKEDITOR.lang['af'] =
 		alignTop		: 'Bo',
 		alignMiddle		: 'Middel',
 		alignBottom		: 'Onder',
+		invalidValue	: 'Invalid value.', // MISSING
 		invalidHeight	: 'Hoogte moet \'n getal wees',
 		invalidWidth	: 'Breedte moet \'n getal wees.',
 		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
@@ -697,7 +698,7 @@ CKEDITOR.lang['af'] =
 		ignoreAll		: 'Ignoreer alles',
 		addWord			: 'Voeg woord by',
 		emptyDic		: 'Woordeboeknaam mag nie leeg wees nie.',
-
+		noSuggestions	: 'Geen voorstel',
 		optionsTab		: 'Opsies',
 		allCaps			: 'Ignoreer woorde in hoofletters',
 		ignoreDomainNames : 'Ignoreer domeinname',

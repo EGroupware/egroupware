@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -32,7 +32,7 @@ CKEDITOR.lang['ro'] =
 	 * of reading non-English words. So be careful while translating it.
 	 */
 	editorTitle : 'Rich text editor, %1', // MISSING
-	editorHelp : 'Press ALT 0 for help', // MISSING
+	editorHelp : 'Apasă ALT 0 pentru ajutor',
 
 	// ARIA descriptions.
 	toolbars	: 'Editează bara de unelte',
@@ -120,6 +120,7 @@ CKEDITOR.lang['ro'] =
 		alignTop		: 'Sus',
 		alignMiddle		: 'Mijloc',
 		alignBottom		: 'Jos',
+		invalidValue	: 'Invalid value.', // MISSING
 		invalidHeight	: 'Înălțimea trebuie să fie un număr.',
 		invalidWidth	: 'Lățimea trebuie să fie un număr.',
 		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
@@ -697,7 +698,7 @@ CKEDITOR.lang['ro'] =
 		ignoreAll		: 'Ignore All', // MISSING
 		addWord			: 'Add Word', // MISSING
 		emptyDic		: 'Dictionary name should not be empty.', // MISSING
-
+		noSuggestions	: 'Fără sugestii',
 		optionsTab		: 'Options', // MISSING
 		allCaps			: 'Ignore All-Caps Words', // MISSING
 		ignoreDomainNames : 'Ignore Domain Names', // MISSING

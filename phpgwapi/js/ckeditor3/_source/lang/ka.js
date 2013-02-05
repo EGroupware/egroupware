@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -31,8 +31,8 @@ CKEDITOR.lang['ka'] =
 	 * Screenreader titles. Please note that screenreaders are not always capable
 	 * of reading non-English words. So be careful while translating it.
 	 */
-	editorTitle : 'Rich text editor, %1', // MISSING
-	editorHelp : 'Press ALT 0 for help', // MISSING
+	editorTitle : 'ტექსტის რედაქტორი, %1',
+	editorHelp : 'დააჭირეთ ALT 0-ს დახმარების მისაღებად',
 
 	// ARIA descriptions.
 	toolbars	: 'Editor toolbars', // MISSING
@@ -120,6 +120,7 @@ CKEDITOR.lang['ka'] =
 		alignTop		: 'ზემოთა',
 		alignMiddle		: 'შუა',
 		alignBottom		: 'ქვემოთა',
+		invalidValue	: 'Invalid value.', // MISSING
 		invalidHeight	: 'სიმაღლე რიცხვით უნდა იყოს წარმოდგენილი.',
 		invalidWidth	: 'სიგანე რიცხვით უნდა იყოს წარმოდგენილი.',
 		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
@@ -697,7 +698,7 @@ CKEDITOR.lang['ka'] =
 		ignoreAll		: 'ყველას უგულებელყოფა',
 		addWord			: 'სიტყვის დამატება',
 		emptyDic		: 'ლექსიკონის სიტყვა არ უნდა იყოს ცარიელი.',
-
+		noSuggestions	: 'No suggestions', // MISSING
 		optionsTab		: 'პარამეტრები',
 		allCaps			: 'დიდი ასოებით დაწერილი სიტყვების უგულებელყოფა',
 		ignoreDomainNames : 'დომენური სახელების უგულებელყოფა',

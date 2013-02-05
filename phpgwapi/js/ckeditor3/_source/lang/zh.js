@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -31,8 +31,8 @@ CKEDITOR.lang['zh'] =
 	 * Screenreader titles. Please note that screenreaders are not always capable
 	 * of reading non-English words. So be careful while translating it.
 	 */
-	editorTitle : 'Rich text editor, %1', // MISSING
-	editorHelp : 'Press ALT 0 for help', // MISSING
+	editorTitle : '富文本編輯器，%1',
+	editorHelp : '按 ALT+0 以獲得幫助',
 
 	// ARIA descriptions.
 	toolbars	: '編輯器工具欄',
@@ -120,6 +120,7 @@ CKEDITOR.lang['zh'] =
 		alignTop		: '靠上對齊',
 		alignMiddle		: '置中對齊',
 		alignBottom		: '靠下對齊',
+		invalidValue	: 'Invalid value.', // MISSING
 		invalidHeight	: '高度必須為數字格式',
 		invalidWidth	: '寬度必須為數字格式',
 		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
@@ -697,7 +698,7 @@ CKEDITOR.lang['zh'] =
 		ignoreAll		: '全部忽略',
 		addWord			: '添加單詞',
 		emptyDic		: '字典名不應為空.',
-
+		noSuggestions	: '無建議值',
 		optionsTab		: '選項',
 		allCaps			: 'Ignore All-Caps Words', // MISSING
 		ignoreDomainNames : 'Ignore Domain Names', // MISSING

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -31,8 +31,8 @@ CKEDITOR.lang['fr'] =
 	 * Screenreader titles. Please note that screenreaders are not always capable
 	 * of reading non-English words. So be careful while translating it.
 	 */
-	editorTitle : 'Rich text editor, %1', // MISSING
-	editorHelp : 'Press ALT 0 for help', // MISSING
+	editorTitle : 'Éditeur de Texte Enrichi, %1',
+	editorHelp : 'Appuyez sur ALT-0 pour l\'aide',
 
 	// ARIA descriptions.
 	toolbars	: 'Barre d\'outils de l\'éditeur',
@@ -120,6 +120,7 @@ CKEDITOR.lang['fr'] =
 		alignTop		: 'Haut',
 		alignMiddle		: 'Milieu',
 		alignBottom		: 'Bas',
+		invalidValue	: 'Invalid value.', // MISSING
 		invalidHeight	: 'La hauteur doit être un nombre.',
 		invalidWidth	: 'La largeur doit être un nombre.',
 		invalidCssLength	: 'La valeur spécifiée pour le champ "%1" doit être un nombre positif avec ou sans unité de mesure CSS valide (px, %, in, cm, mm, em, ex, pt, or pc).',
@@ -697,7 +698,7 @@ CKEDITOR.lang['fr'] =
 		ignoreAll		: 'Ignorer Tout',
 		addWord			: 'Ajouter le mot',
 		emptyDic		: 'Le nom du dictionnaire ne devrait pas être vide.',
-
+		noSuggestions	: 'Aucune suggestion',
 		optionsTab		: 'Options',
 		allCaps			: 'Ignorer les mots entièrement en majuscules',
 		ignoreDomainNames : 'Ignorer les noms de domaines',
