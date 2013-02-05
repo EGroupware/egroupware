@@ -237,7 +237,7 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],{
 					this.span.click(this, link);
 					this.span.attr("href", "javascript:void(0)");
 				}
-				else
+				else if (link !== false)
 				{
 					this.span.attr("href", link);
 				}
