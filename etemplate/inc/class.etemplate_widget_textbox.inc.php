@@ -43,6 +43,31 @@ class etemplate_widget_textbox extends etemplate_widget
 	}
 
 	/**
+	 * Parse and set extra attributes from xml in template object
+	 *
+	 * Reimplemented to handle legacy read-only by setting size < 0
+	 *
+	 * @param string|XMLReader $xml
+	 * @return etemplate_widget_textbox current object or clone, if any attribute was set
+	 */
+	public function set_attrs($xml)
+	{
+		parent::set_attrs($xml);
+
+		// Legacy handling only
+		// A negative size triggered the HTML readonly attibute, but not etemplate readonly,
+		// so you got an input element, but it was not editable.
+		if ($this->attrs['size'] < 0)
+		{
+			$this->setElementAttribute($this->id, 'size', abs($this->attrs['size']));
+			self::$request->readonlys[$this->id] = false;
+			$this->setElementAttribute($this->id, 'readonly', true);
+			trigger_error("Using a negative size to set textbox readonly. " .$this, E_USER_DEPRECATED);
+		}
+		return $this;
+	}
+
+	/**
 	 * Validate input
 	 *
 	 * Following attributes get checked:

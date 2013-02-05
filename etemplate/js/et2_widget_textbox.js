@@ -102,6 +102,9 @@ var et2_textbox = et2_inputWidget.extend({
 		if(this.options.blur) {
 			this.set_blur(this.options.blur);
 		}
+		if(this.options.readonly) {
+			this.set_readonly(true);
+		}
 		this.input.addClass("et2_textbox");
 
 		this.setDOMNode(this.input[0]);
@@ -138,6 +141,15 @@ var et2_textbox = et2_inputWidget.extend({
 		}
 	},
 
+	/**
+	 * Set HTML readonly attribute.  
+	 * Do not confuse this with etemplate readonly, which would use et_textbox_ro instead
+	 * @param _readonly Boolean
+	 */
+	set_readonly: function(_readonly) {
+		this.input.attr("readonly", _readonly);
+	},
+	
 	set_blur: function(_value) {
 		if(_value) {
 			this.input.attr("placeholder", _value + "");	// HTML5
