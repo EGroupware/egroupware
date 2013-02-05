@@ -11,19 +11,6 @@
  * @version $Id$
  */
 
-// allow to call direct for tests (see end of class)
-if (!isset($GLOBALS['egw_info']))
-{
-	$GLOBALS['egw_info'] = array(
-		'flags' => array(
-			'currentapp' => $_REQUEST['sessionid'] ? 'etemplate' : 'login',
-			'nonavbar' => true,
-			'debug' => 'etemplate',
-		)
-	);
-	include_once '../../header.inc.php';
-}
-
 /**
  * New eTemplate serverside contains:
  * - main server methods like read, exec
@@ -120,7 +107,7 @@ class etemplate_new extends etemplate_widget_template
 		// Include the etemplate2 javascript code
 		egw_framework::validate_file('.', 'etemplate2', 'etemplate');
 
-		if (!$this->rel_path) throw new egw_exception_assertion_failed('No (valid) template read!');
+		if (!$this->rel_path) throw new egw_exception_assertion_failed("No (valid) template '$this->name' found!");
 
 		self::$request->output_mode = $output_mode;	// let extensions "know" they are run eg. in a popup
 		self::$request->content = $content;
@@ -529,18 +516,4 @@ foreach($files as $filename)
 			error_log($e->getMessage());
 		}
 	}
-}
-
-if ($GLOBALS['egw_info']['flags']['debug'] == 'etemplate')
-{
-	$name = isset($_GET['name']) ? $_GET['name'] : 'timesheet.edit';
-	$template = new etemplate();
-	if (!$template->read($name))
-	{
-		header('HTTP-Status: 404 Not Found');
-		echo "<html><head><title>Not Found</title><body><h1>Not Found</h1><p>The requested eTemplate '$name' was not found!</p></body></html>\n";
-		exit;
-	}
-	$GLOBALS['egw_info']['flags']['app_header'] = $name;
-	$template->exec('etemplate.etemplate.debug', array(), array(), array(), array(), 2);
 }
