@@ -298,12 +298,12 @@ var et2_date_duration = et2_date.extend({
 	},
 	attachToDOM: function() {
 		var node = this.getInputNode();
-                if (node)
-                {
-                        $j(node).bind("change.et2_inputWidget", this, function(e) {
-                                e.data.change(this);
-                        });
-                }
+		if (node)
+		{
+			$j(node).bind("change.et2_inputWidget", this, function(e) {
+				e.data.change(this);
+			});
+		}
 		et2_DOMWidget.prototype.attachToDOM.apply(this, arguments);
 	},
 	getDOMNode: function() {
@@ -319,18 +319,18 @@ var et2_date_duration = et2_date.extend({
 	set_id: function(_value) {
 		this.id = _value;
 
-                var node = this.getDOMNode(this);
-                if (node)
-                {
-                        if (_value != "")
-                        {
-                                node.setAttribute("id", _value);
-                        }
-                        else
-                        {
-                                node.removeAttribute("id");
-                        }
-                }
+		var node = this.getDOMNode(this);
+		if (node)
+		{
+			if (_value != "")
+			{
+				node.setAttribute("id", _value);
+			}
+			else
+			{
+				node.removeAttribute("id");
+			}
+		}
 	},
 	set_value: function(_value) {
 		this.options.value = _value;
@@ -369,9 +369,9 @@ var et2_date_duration = et2_date.extend({
 	 */
 	_convert_to_display: function(_value) {
 		if (_value)
-                {
+		{
 			// Put value into minutes for further processing
-                        switch(this.options.data_format)
+			switch(this.options.data_format)
 			{
 				case 'd':
 					_value *= this.options.hours_per_day;
@@ -380,31 +380,31 @@ var et2_date_duration = et2_date.extend({
 					_value *= 60;
 					break;
 			}
-                }
+		}
 
 
 		// Figure out best unit for display
 		var _unit = this.options.display_format == "d" ? "d" : "h";
 		if (this.options.data_format.indexOf('m') > -1 && _value && _value < 60)
-                {
-                        _unit = 'm';
-                }
-                else if (this.options.data_format.indexOf('d') > -1 && _value >= 60*this.options.hours_per_day)
-                {
-                        _unit = 'd';
-                }
+		{
+			_unit = 'm';
+		}
+		else if (this.options.data_format.indexOf('d') > -1 && _value >= 60*this.options.hours_per_day)
+		{
+			_unit = 'd';
+		}
 		_value = this.options.empty_not_0 && _value === '' || !this.options.empty_not_0 && !_value ? '' :
-                        (_unit == 'm' ? parseInt( _value) : (Math.round((_value / 60.0 / (_unit == 'd' ? this.options.hours_per_day : 1))*100)/100));
+			(_unit == 'm' ? parseInt( _value) : (Math.round((_value / 60.0 / (_unit == 'd' ? this.options.hours_per_day : 1))*100)/100));
 
 		if(_value === '') _unit = '';
 
-                // use decimal separator from user prefs
+		// use decimal separator from user prefs
 		var sep = '.';
 		var format = this.egw().preference('number_format');
-                if (format && (sep = format[0]) && sep != '.')
-                {
-                        _value = _value.replace('.',sep);
-                }
+		if (typeof _value == 'string' && format && (sep = format[0]) && sep != '.')
+		{
+			_value = _value.replace('.',sep);
+		}
 
 		return {value: _value, unit:_unit};
 	},
