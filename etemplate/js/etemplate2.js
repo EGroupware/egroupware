@@ -420,7 +420,7 @@ etemplate2.prototype.getValues = function(_root)
 			// Merge, if possible (link widget)
 			if(typeof _target[id] == 'object' && typeof value == 'object')
 			{
-				_target[id] = jQuery.extend([],_target[id],value);
+				_target[id] = jQuery.extend({},_target[id],value);
 			}
 			else
 			{
