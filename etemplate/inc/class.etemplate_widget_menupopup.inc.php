@@ -7,7 +7,7 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-11 by RalfBecker@outdoor-training.de
+ * @copyright 2002-13 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -296,13 +296,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 
 					if (categories::is_global($cat))
 					{
-						static $global_marker;
-						if (is_null($global_marker))
-						{
-							// as we add options with .text(), it can't be entities, but php knows no string literals with utf-8
-							$global_marker = html_entity_decode(' &#9830;', ENT_NOQUOTES, 'utf-8');
-						}
-						$s .= $global_marker;
+						$s .= categories::$global_marker;
 					}
 					$options[$cat['id']] = array(
 						'label' => $s,

@@ -5,7 +5,7 @@
  * @link www.egroupware.org
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @package addressbook
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -1392,14 +1392,20 @@ class addressbook_ui extends addressbook_bo
 				$this->type_icon($row['owner'],$row['private'],$row['tid'],$row['type'],$row['type_label']);
 
 				static $tel2show = array('tel_work','tel_cell','tel_home','tel_fax');
+				static $prefer_marker;
+				if (is_null($prefer_marker))
+				{
+					// as et2 adds options with .text(), it can't be entities, but php knows no string literals with utf-8
+					$prefer_marker = html_entity_decode(' &#9829;', ENT_NOQUOTES, 'utf-8');
+				}
 				foreach($tel2show as $name)
 				{
-					$row[$name] .= ' '.($row['tel_prefer'] == $name ? '&#9829;' : '');		// .' ' to NOT remove the field
+					$row[$name] .= ' '.($row['tel_prefer'] == $name ? $prefer_marker : '');		// .' ' to NOT remove the field
 				}
 				// allways show the prefered phone, if not already shown
 				if (!in_array($row['tel_prefer'],$tel2show) && $row[$row['tel_prefer']])
 				{
-					$row['tel_prefered'] = $row[$row['tel_prefer']].' &#9829;';
+					$row['tel_prefered'] = $row[$row['tel_prefer']].$prefer_marker;
 				}
 				if (!$this->check_perms(EGW_ACL_DELETE,$row) || (!$GLOBALS['egw_info']['user']['apps']['admin'] && $this->config['history'] != 'userpurge' && $query['col_filter']['tid'] == addressbook_so::DELETED_TYPE))
 				{

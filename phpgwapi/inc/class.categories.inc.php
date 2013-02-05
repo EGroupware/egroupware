@@ -106,6 +106,13 @@ class categories
 	private $global_owners = array(self::GLOBAL_ACCOUNT);
 
 	/**
+	 * string to postfix global cats
+	 *
+	 * @var string
+	 */
+	static public $global_marker;
+
+	/**
 	 * constructor for categories class
 	 *
 	 * @param int|string $accountid='' account id or lid, default to current user
@@ -132,6 +139,11 @@ class categories
 		if (is_null(self::$cache))	// should not be necessary, as cache is load and restored by egw object
 		{
 			self::init_cache();
+		}
+		if (is_null(self::$global_marker))
+		{
+			// as et2 adds options with .text(), it can't be entities, but php knows no string literals with utf-8
+			self::$global_marker = html_entity_decode(' &#9830;', ENT_NOQUOTES, 'utf-8');
 		}
 	}
 
@@ -344,7 +356,7 @@ class categories
 		{
 			$parents[] = $cat['id'];
 		}
-		
+
 		if($parent_id || !$cats) // Avoid wiping search results
 		{
 			// Go find the children
@@ -1156,7 +1168,7 @@ class categories
 					$s .= $GLOBALS['egw']->strip_html($cat['name']);
 					if (self::is_global($cat))
 					{
-						$s .= ' &#9830;';
+						$s .= self::$global_marker;
 					}
 					$s .= '</option>' . "\n";
 				}
