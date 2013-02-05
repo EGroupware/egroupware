@@ -155,6 +155,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 			if (entry)
 			{
 				_attrs["settings"] = entry;
+
+				// Make sure there's an action var parameter
+				if(_attrs["settings"]["actions"] && !_attrs.settings["action_var"])
+				{
+					_attrs.settings.action_var = "action";
+				}
 			}
 		}
 	},
