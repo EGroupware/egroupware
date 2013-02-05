@@ -1412,6 +1412,8 @@ class addressbook_ui extends addressbook_bo
 					$row['class'] .= 'rowNoEdit ';
 				}
 
+				unset($row['jpegphoto']);	// unused and messes up json encoding (not utf-8)
+
 				if ($row['photo']) $photos = true;
 				if ($row['role']) $roles = true;
 				if ($row['note']) $notes = true;
