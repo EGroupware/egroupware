@@ -214,14 +214,14 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],{
 
 		var link = et2_url.prototype.get_link(this._type, _value);
 
-		if(link == false && this.getDOMNode().nodeName == "A") 
+		if(!link && this.getDOMNode().nodeName == "A") 
 		{
 			this.span = $j(document.createElement("span"));
 			this.span.text(_value);
 			this.setDOMNode(this.span[0]);
 			return;
 		}
-		else if (this.getDOMNode().nodeName != "A")
+		else if (this.getDOMNode().nodeName != "A" && link)
 		{
 			this.span = $j(document.createElement("a"));
 			this.setDOMNode(this.span[0]);
@@ -237,7 +237,7 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],{
 					this.span.click(this, link);
 					this.span.attr("href", "javascript:void(0)");
 				}
-				else if (link !== false)
+				else if (link)
 				{
 					this.span.attr("href", link);
 				}
