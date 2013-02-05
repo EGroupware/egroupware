@@ -30,21 +30,21 @@
 					<description id="${row}[short_description]"/>
 					<description id="${row}[location]"/>
 					<description id="${row}[storage_info]"/>
-					<hbox no_lang="1" rows="1" cols="3" options="0,0">
-						<int options="1,,2" id="${row}[default_qty]"/>
-						<int label="of" class="leftPad5" id="${row}[useable]" readonly="true"/>
+					<hbox cols="3" no_lang="1" rows="1" options="0,0">
+						<textbox type="integer" id="${row}[default_qty]" min="1" size="2"/>
+						<textbox type="integer" label="of" id="${row}[useable]" readonly="true" class="leftPad5"/>
 					</hbox>
-					<button image="select" onclick="addOption('$row_cont[name]',$row_cont[res_id],this.id,$row_cont[useable]); return false;" needed="1" label="select resource" id="${row}"/>
+					<button label="select resource" id="${row}" needed="1" onclick="addOption('$row_cont[name]',$row_cont[res_id],this.id,$row_cont[useable]); return false;" image="select"/>
 				</row>
 			</rows>
 		</grid>
-		<vbox rows="3" cols="1" align="right" class="selSelection">
-			<hbox align="center" rows="1" cols="1" class="th">
+		<vbox align="right" cols="1" rows="3" class="selSelection">
+			<hbox align="center" cols="1" rows="1" class="th">
 				<description value="Selection" class="big"/>
-				<button image="delete" label="clear selection" onclick="removeSelectedOptions(); return false;" needed="1" align="right"/>
+				<button align="right" label="clear selection" needed="1" onclick="removeSelectedOptions(); return false;" image="delete"/>
 			</hbox>
-			<listbox rows="13+" id="selectbox" span="0" class="sel" no_lang="1"/>
-			<button label="Close" align="center" onclick="oneLineSubmit();window.close();"/>
+			<listbox id="selectbox" no_lang="1" rows="13+" span="0" class="sel"/>
+			<button align="center" label="Close" onclick="oneLineSubmit();window.close();"/>
 		</vbox>
 	</template>
 	<template id="resources.resource_select" template="" lang="" group="0" version="1.7.001">
@@ -54,7 +54,7 @@
 			</columns>
 			<rows>
 				<row>
-					<nextmatch options="resources.resource_select.row" id="nm"/>
+					<nextmatch id="nm" options="resources.resource_select.row"/>
 				</row>
 			</rows>
 		</grid>
