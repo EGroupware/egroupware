@@ -439,18 +439,10 @@ var et2_nextmatch_rowProvider = Class.extend({
 				var category_location = _data["class"].match(/(cat(_id|egory)?)/);
 				if(category_location) category_location = category_location[0];
 
-				// Get actual category
-				cats = classes.match(/(cat_)?([0-9]+)/);
-				if(cats == null) 
-				{
-					cats = '';
-				}
-				else
-				{
-					var invalid = typeof cats[1] == 'undefined';
-					if(invalid) this._rootWidget.egw().debug("warn", "Invalid class '%s', prefixed with 'cat_'",cats[0]);
-					cats = [cats[2]];
-				}
+				// Get actual categories, eg. "cat_15" or "123,456,789", make sure to not match numbers inside other class-names
+				cats = classes.match(/(^| |,|cat_)?([0-9]+)( |,|$)/g);
+				if (!cats) cats = [];
+				classes = classes.replace(/(^| |,|cat_)?([0-9]+)( |,|$)/g, '');
 
 				// Get category info
 				if(!this.categories)
@@ -467,21 +459,20 @@ var et2_nextmatch_rowProvider = Class.extend({
 				for(var i = 0; i < cats.length; i++)
 				{
 					// Need cat_, classes can't start with a number
-					var cat_class = 'cat_'+cats[i];
+					var cat_id = cats[i];
+					cat_id = cat_id.replace(/[^0-9]/, '');
+					var cat_class = 'cat_'+cat_id;
 
 					// Check for existing class
 					// TODO
 
 					// Create class
-					if(this.categories)
+					if(this.categories && this.categories[cat_id] && this.categories[cat_id].color)
 					{
-						if(this.categories[cats[i]] && this.categories[cats[i]].color)
-						{
-							var cat = this.categories[cats[i]];
-							this._rootWidget.egw().css('.'+cat_class, "background-color: " + cat.color + ";");
-						}
+						var cat = this.categories[cat_id];
+						this._rootWidget.egw().css('.'+cat_class, "background-color: " + cat.color + ";");
+						classes += ' '+cat_class;
 					}
-					if(invalid) classes = classes.replace(cats[i], cat_class);
 				}
 				classes += " row_category";
 			}
