@@ -579,6 +579,19 @@ var et2_widget = Class.extend({
 		}
 	},
 
+	/**
+	 * Create a et2_widget from an XML node.
+	 *
+	 * First the type and attributes are read from the node.  Then the readonly & modifications
+	 * arrays are checked for changes specific to the loaded data.  Then the appropriate
+	 * constructor is called.  After the constructor returns, the widget has a chance to
+	 * further initialize itself from the XML node when the widget's loadFromXML() method 
+	 * is called with the node.
+	 *
+	 * @param _node XML node to read
+	 *
+	 * @return et2_widget
+	 */
 	createElementFromNode: function(_node) {
 		var attributes = {};
 
