@@ -545,7 +545,7 @@ function et2_insertLinkText(_text, _node, _target)
 				}
 			}
 		}
-		else
+		else if(s.text)	// no need to generate a link, if there is no content in it
 		{
 			if(!s.href)
 			{
@@ -554,7 +554,7 @@ function et2_insertLinkText(_text, _node, _target)
 			}
 			var a = $j(document.createElement("a"))
 				.attr("href", s.href)
-				.text(s.text ? s.text : "-"+egw.lang("missing")+"-");
+				.text(s.text);
 
 			if (typeof _target != "undefined" && _target && _target != "_self")
 			{
