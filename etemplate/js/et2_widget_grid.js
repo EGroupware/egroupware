@@ -192,11 +192,11 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned], {
 
 		// Add in repeated rows
 		// TODO: It would be nice if we could skip header (thead) & footer (tfoot) or treat them separately
-		var rowIndex = 0;
 		if(this.getArrayMgr("content"))
 		{
 			var content = this.getArrayMgr("content");
 			var rowDataEntry = rowData[rowData.length-1];
+			var rowIndex = rowData.length-1;
 			// Find out if we have any content rows, and how many
 			while(true)
 			{
@@ -206,11 +206,6 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned], {
 				
 					rowIndex++;
 				}
-				else if (rowIndex == 0)
-				{
-					// Sometimes the header takes a row, so try at 1
-					rowIndex++;
-				}
 				else
 				{
 					// No more rows, stop
@@ -218,7 +213,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned], {
 				}
 			}
 		}
-		if(rowIndex <= 1)
+		if(rowIndex <= rowData.length - 1)
 		{
 			// No auto-repeat
 			this.lastRowNode = null;

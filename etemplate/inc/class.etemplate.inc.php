@@ -127,7 +127,7 @@ class etemplate_new extends etemplate_widget_template
 		self::$request->changes = $changes;
 		self::$request->sel_options = $sel_options ? $sel_options : array();
 		self::$request->readonlys = $readonlys ? $readonlys : array();
-		self::$request->preserv = $preserv ? $preserve : array();
+		self::$request->preserv = $preserv ? $preserv : array();
 		self::$request->method = $method;
 		self::$request->ignore_validation = $ignore_validation;
 		self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'];
