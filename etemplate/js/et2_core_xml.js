@@ -62,8 +62,11 @@ function et2_loadXMLFromURL(_url, _callback, _context)
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4)
 			{
-				var xmldoc = xmlhttp.responseXML.documentElement;
-				_callback.call(_context, xmldoc);
+				if(xmlhttp.responseXML)
+				{
+					var xmldoc = xmlhttp.responseXML.documentElement;
+					_callback.call(_context, xmldoc);
+				}
 			}
 		}
 
