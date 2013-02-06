@@ -378,15 +378,13 @@ var et2_dataview = Class.extend({
 				.append(cont)
 				.appendTo(this.headTr);
 
-			// Every column but last can be resized // TODO: This won't work as the last column could be hidden
-			if(i < this.columns.length-1) {
-				var enc_column = self.columnMgr.getColumnById(col.id);
-				et2_dataview_makeResizeable(column, function(_w) {
-						this.set_width(_w + "px");
-						self.columnMgr.updated = true;
-						self.updateColumns();
-				}, enc_column);
-			}
+			// make column resizable
+			var enc_column = self.columnMgr.getColumnById(col.id);
+			et2_dataview_makeResizeable(column, function(_w) {
+					this.set_width(_w + "px");
+					self.columnMgr.updated = true;
+					self.updateColumns();
+			}, enc_column);
 
 			// Store both nodes in the columnNodes array
 			this.columnNodes.push({

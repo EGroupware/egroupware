@@ -63,7 +63,7 @@
 
 				.bind("mousemove", function(e) {
 					didResize = true;
-					resizeWidth = Math.max(e.clientX - left + RESIZE_ADD,
+					resizeWidth = Math.max(e.pageX - left + RESIZE_ADD,
 						RESIZE_MIN_WIDTH);
 					helper.css("width", resizeWidth + "px");
 				})
@@ -107,12 +107,12 @@
 
 		// Bind the "mousemove" event in the "resize" namespace
 		_elem.bind("mousemove.resize", function(e) {
-			_elem.css("cursor", inResizeRegion(e.clientX, _elem) ? "ew-resize" : "auto");
+			_elem.css("cursor", inResizeRegion(e.pageX, _elem) ? "ew-resize" : "auto");
 		});
 
 		// Bind the "mousedown" event in the "resize" namespace
 		_elem.bind("mousedown.resize", function(e) {
-			if (inResizeRegion(e.clientX, _elem))
+			if (inResizeRegion(e.pageX, _elem))
 			{
 				// Start the resizing
 				startResize(outerTable, _elem, function(_w) {
