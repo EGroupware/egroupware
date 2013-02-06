@@ -41,7 +41,10 @@ class infolog_egw_record implements importexport_iface_egw_record
 		$this->identifier = $_identifier;
 		if(self::$bo == null) self::$bo = new infolog_bo();
 		if($_identifier) {
-			$this->set_record(self::$bo->read($this->identifier));
+			$lia = false;
+			if (isset(infolog_bo::$ignore_acl)) $lia = infolog_bo::$ignore_acl;
+			$rec = self::$bo->read($this->identifier,true,'ts',$lia);
+			if (is_array($rec)) $this->set_record($rec);
 		}
 	}
 
