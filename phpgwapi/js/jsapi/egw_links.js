@@ -273,7 +273,8 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 			}
 			else
 			{
-				if (othervars) _extravars += (_extravars?'&':'').othervars;
+				if (!_extravars) _extravars = '';
+				if (othervars) _extravars += (_extravars?'&':'')+othervars;
 			}
 	
 			// parse extravars string into the vars array
