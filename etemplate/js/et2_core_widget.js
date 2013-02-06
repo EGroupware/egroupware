@@ -475,8 +475,14 @@ var et2_widget = Class.extend({
 			var attrValue = _attrsObj[i].value;
 
 			// Special handling for the legacy options
-			if (attrName == "options")
+			if (attrName == "options" && _proto.legacyOptions.length > 0)
 			{
+				// Check for entire legacy options passed in content
+				if(attrValue.charAt(0) == '@' && attrValue.indexOf(',') == -1)
+				{
+					attrValue = mgr.expandName(attrValue);
+				}
+
 				// Parse the legacy options
 				var splitted = et2_csvSplit(attrValue);
 
@@ -487,6 +493,15 @@ var et2_widget = Class.extend({
 					{
 						attrValue = splitted[j];
 
+						/**
+						If more legacy options than expected, stuff them all in the last legacy option
+						Some legacy options take a comma separated list.
+						*/
+						if(j == _proto.legacyOptions.length - 1 && splitted.length > _proto.legacyOptions.length)
+						{
+							attrValue = splitted.slice(j);
+						}
+						
 						// Blank = not set
 						if(attrValue == "") continue;
 
@@ -498,7 +513,7 @@ var et2_widget = Class.extend({
 						{
 							attrValue = mgr.parseBoolExpression(attrValue);
 						}
-						else
+						else if (typeof attrValue != "object")
 						{
 							attrValue = mgr.expandName(attrValue);
 						}
