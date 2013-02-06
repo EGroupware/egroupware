@@ -567,10 +567,11 @@ class infolog_bo
 	 *	need to be set to false if called from link-title to prevent an infinit recursion
 	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time,
 	 * 	'array'=array or string with date-format
+	 * @param boolean $ignore_acl=false if true, do NOT check access, default false
 	 *
 	 * @return array|boolean infolog entry, null if not found or false if no permission to read it
 	 */
-	function &read($info_id,$run_link_id2from=true,$date_format='ts')
+	function &read($info_id,$run_link_id2from=true,$date_format='ts',$ignore_acl=false)
 	{
 		//error_log(__METHOD__.'('.array2string($info_id).', '.array2string($run_link_id2from).", '$date_format') ".function_backtrace());
 		if (is_scalar($info_id) || isset($info_id[count($info_id)-1]))
@@ -591,7 +592,7 @@ class infolog_bo
 		}
 		$info_id = $data['info_id'];	// in case the uid was specified
 
-		if (!$this->check_access($data,EGW_ACL_READ))	// check behind read, to prevent a double read
+		if (!$ignore_acl && !$this->check_access($data,EGW_ACL_READ))	// check behind read, to prevent a double read
 		{
 			return False;
 		}
