@@ -79,10 +79,15 @@ class etemplate_widget_date extends etemplate_widget_transformer
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!'));
 			}
+			elseif ($this->type == 'date-duration')
+			{
+				$valid = $value;
+			}
 			elseif (empty($this->attrs['dataformat']))	// integer timestamp
 			{
 				$valid = (int)$value;
 			}
+
 			// string with formatting letters like for php's date() method
 			elseif (($valid = date($this->attrs['dataformat'], $value)))
 			{
