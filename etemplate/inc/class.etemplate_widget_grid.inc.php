@@ -68,7 +68,7 @@ class etemplate_widget_grid extends etemplate_widget_box
 		$expand =& $params[1];
 		$old_cname = $params[0];
 		if ($this->id) $cname = self::form_name($cname, $this->id, $expand);
-		if ($expand['cname'] !== $cname)
+		if ($expand['cname'] !== $cname && $cname)
 		{
 			$expand['cont'] =& self::get_array(self::$request->content, $cname);
 			$expand['cname'] = $cname;
