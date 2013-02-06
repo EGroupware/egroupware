@@ -130,7 +130,7 @@ var et2_selectbox = et2_inputWidget.extend({
 				content_options = null;
 			}
 			// We could wind up too far inside options if label,title are defined
-			if(!isNaN(name_parts[name_parts.length -1]) && content_options.label && content_options.title)
+			if(content_options && !isNaN(name_parts[name_parts.length -1]) && content_options.label && content_options.title)
 			{
 				name_parts.pop();
 				content_options = this.getArrayMgr("sel_options").getEntry(name_parts.join('['));
