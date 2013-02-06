@@ -233,7 +233,7 @@ class importexport_definitions_bo {
 				$definition_id = $definition->get_identifier() ? $definition->get_identifier() : NULL;
 
 				$definition->set_record( $definition_data );
-				$definition->save( $definition_id );
+				if (isset($definition_id)) $definition->save( $definition_id );
 			}
 		}
 		return $definitions;
@@ -257,7 +257,7 @@ class importexport_definitions_bo {
 	{
 		// Only operates on import definitions
 		if($import->type != 'import') throw new egw_exception_wrong_parameter('Only import definitions');
-		
+
 		// Find export plugin
 		$plugin = str_replace('import', 'export',$import->plugin);
 		$plugin_list = importexport_helper_functions::get_plugins($import->application, 'export');
@@ -272,7 +272,7 @@ class importexport_definitions_bo {
 		}
 
 		$export = new importexport_definition();
-		
+
 		// Common settings
 		$export->name = str_replace('import', 'export',$import->name);
 		if($export->name == $import->name) $export->name = $export->name . '-export';
@@ -282,7 +282,7 @@ class importexport_definitions_bo {
 		$export->application = $import->application;
 		$export->plugin = $plugin;
 		$export->type = 'export';
-		
+
 		// Options
 		$i_options = $import->plugin_options;
 		$e_options = array(
