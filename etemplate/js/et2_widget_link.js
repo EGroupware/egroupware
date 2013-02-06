@@ -336,11 +336,17 @@ var et2_link_entry = et2_inputWidget.extend({
 			"type": "any",
 			"default": {}
 		},
-		"application": {
+		"only_app": {
 			"name": "Application",
 			"type": "string",
 			"default": "",
-			"description": "Limit to the listed application or applications (comma seperated)"
+			"description": "Limit to just this one application - hides app selection"
+		},
+		"application_list": {
+			"name": "Application list",
+			"type": "any",
+			"default": "",
+			"description": "Limit to the listed applications (comma seperated)"
 		},
 		"blur": {
 			"name": "Placeholder",
@@ -362,7 +368,7 @@ var et2_link_entry = et2_inputWidget.extend({
 		},
 	},
 
-	legacyOptions: ["application"],
+	legacyOptions: ["only_app", "application_list"],
 	search_timeout: 200, //ms after change to send query
 	minimum_characters: 2, // Don't send query unless there's at least this many chars
 
@@ -372,7 +378,7 @@ var et2_link_entry = et2_inputWidget.extend({
 		this.div = null;
 		this.search = null;
 		this.app_select = null;
-		this._oldValue = {id: null, app: this.options.application};
+		this._oldValue = {id: null, app: this.options.only_app};
 
 		if(typeof this.options.value == 'undefined') this.options.value = {};
 		this.cache = {};
@@ -409,8 +415,8 @@ var et2_link_entry = et2_inputWidget.extend({
 				.text(this.options.select_options[key]);
 			option.appendTo(this.app_select);
 		}
-		this.app_select.val(this.options.application);
-		if(opt_count == 1) 
+		this.app_select.val(this.options.only_app ? this.options.only_app : this.options.application_list[0]);
+		if(this.options.only_app) 
 		{
 			this.app_select.hide();
 			this.div.addClass("no_app");
@@ -420,7 +426,7 @@ var et2_link_entry = et2_inputWidget.extend({
 		// Search input
 		this.search = $j(document.createElement("input")) 
 			// .attr("type", "search") // Fake it for all browsers below
-			.focus(function(){if(!self.options.application) {
+			.focus(function(){if(!self.options.only_app) {
 				// Adjust width, leave room for app select & link button
 				self.div.removeClass("no_app");self.app_select.show();
 			}})
@@ -524,9 +530,9 @@ var et2_link_entry = et2_inputWidget.extend({
 
 
 		_attrs["select_options"] = {};
-		if(_attrs["application"])
+		if(_attrs["application_list"])
 		{
-			var apps = et2_csvSplit(_attrs["application"], null, ",");
+			var apps = (typeof _attrs["application_list"] == "string") ? et2_csvSplit(_attrs["application_list"], null, ","): _attrs["application_list"];
 			for(var i = 0; i < apps.length; i++)
 			{
 				_attrs["select_options"][apps[i]] = this.egw().lang(apps[i]);
@@ -553,7 +559,12 @@ var et2_link_entry = et2_inputWidget.extend({
 	},
 
 	getValue: function() {
-		return this.options.application ? this.options.value.id : this.options.value;
+		var value = this.options.only_app ? this.options.value.id : this.options.value;
+		if(!this.options.only_app)
+		{
+			value.search = this.search.val();
+		}
+		return value;
 	},
 
 	set_value: function(_value) {
@@ -569,10 +580,10 @@ var et2_link_entry = et2_inputWidget.extend({
 					id: split[1]
 				};
 			}
-			else if(_value && this.options.application)
+			else if(_value && this.options.only_app)
 			{
 				_value = {
-					app: this.options.application,
+					app: this.options.only_app,
 					id: _value
 				};
 			}
@@ -584,7 +595,7 @@ var et2_link_entry = et2_inputWidget.extend({
 			this.clear.hide();
 			this.options.value = _value = {'id':null};
 		}
-		if(!_value.app) _value.app = this.options.application;
+		if(!_value.app) _value.app = this.options.only_app;
 
 		if(_value.id) {
 			this.clear.show();
