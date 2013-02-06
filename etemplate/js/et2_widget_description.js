@@ -114,8 +114,19 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 	_parseText: function(_value) {
 		if (this.options.href)
 		{
+			var href = this.options.href;
+                	if (href.indexOf('/')==-1 && href.split('.').length >= 3 &&
+				!(href.indexOf('mailto:')!=-1 || href.indexOf('://') != -1 || href.indexOf('javascript:') != -1)
+			)
+			{
+				href = "/index.php?menuaction="+href;
+			}
+			if (href.charAt(0) == '/')             // link relative to eGW
+			{
+				href = egw.link(href);
+			}
 			return [{
-				"href": this.options.href,
+				"href": href,
 				"text": _value
 			}];
 		}
