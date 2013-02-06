@@ -120,9 +120,7 @@
 						<description id="${row}[first_org]" no_lang="1"/>
 					</vbox>
 					<description id="${row}[role]"/>
-					<menulist>
-						<menupopup type="select-cat" id="${row}[cat_id]" readonly="true" options="1"/>
-					</menulist>
+					<listbox type="select-cat" id="${row}[cat_id]" readonly="true" rows="2"/>
 					<image src="${row}[photo]" class="iphoto"/>
 					<date id="${row}[bday]" readonly="true" options="Y-m-d"/>
 					<vbox options="0,0">
