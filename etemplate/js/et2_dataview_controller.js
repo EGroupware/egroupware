@@ -179,6 +179,16 @@ var et2_dataview_controller = Class.extend({
 		return 0;
 	},
 
+	/**
+	 * Set the data cache prefix
+	 * The default is to use appname, but if you need to set it explicitly to
+	 * something else to avoid conflicts.  Use the same prefix everywhere for
+	 * each type of data.  eg. infolog for infolog entries, even if accessed via addressbook
+	 */
+	setPrefix: function(prefix) {
+		this.dataStorePrefix = prefix;
+	},
+
 
 	/* -- PRIVATE FUNCTIONS -- */
 
@@ -427,6 +437,10 @@ var et2_dataview_controller = Class.extend({
 					"start": query.start,
 					"count": query.num_rows,
 			};
+			if(this.dataStorePrefix)
+			{
+				ctx.prefix = this.dataStorePrefix;
+			}
 
 			// Call the callback
 			this._dataProvider.dataFetch(query, this._fetchCallback, ctx);

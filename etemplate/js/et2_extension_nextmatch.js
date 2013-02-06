@@ -591,6 +591,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 				this.options.settings.actions
 		);
 
+		// Set custom data cache prefix
+		if(this.options.settings.dataStorePrefix)
+		{
+			this.controller.setPrefix(this.options.settings.dataStorePrefix);
+		}
+
 		// Load the initial order
 		/*this.controller.loadInitialOrder(this._getInitialOrder(
 			this.options.settings.rows, this.options.settings.row_id

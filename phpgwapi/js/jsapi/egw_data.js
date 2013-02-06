@@ -25,9 +25,10 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 	 * The uid function generates a session-unique id for the current
 	 * application by appending the application name to the given uid.
 	 */
-	function UID(_uid)
+	function UID(_uid, prefix)
 	{
-		return _app + "::" + _uid;
+		prefix = prefix ? prefix : _app;
+		return prefix + "::" + _uid;
 	}
 
 	function parseServerResponse(_result, _callback, _context)
@@ -53,13 +54,13 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 			// Assemble the correct order uids
 			for (var i = 0; i < _result.order.length; i++)
 			{
-				_result.order[i] = UID(_result.order[i]);
+				_result.order[i] = UID(_result.order[i], _context.prefix);
 			}
 
 			// Load all data entries that have been sent or delete them
 			for (var key in _result.data)
 			{
-				var uid = UID(key);
+				var uid = UID(key, _context.prefix);
 				if (_result.data[key] === null)
 				{
 					egw.dataDeleteUID(uid);
@@ -162,7 +163,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 					_queriedRange,
 					_filters,
 					_widgetId,
-					_knownUids ? _knownUids : egw.dataKnownUIDs(_app),
+					_knownUids ? _knownUids : egw.dataKnownUIDs(_context.prefix ? _context.prefix : _app),
 					lm
 				],
 				function(result) {
@@ -433,6 +434,20 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 				// Unregister all callbacks for that uid
 				this.dataUnregisterUID(_uid);
 			}
+		},
+
+		/**
+		 * Force a refreash of the given uid from the server, and
+		 * calls all associated callbacks
+		 *
+		 * @param uid is the uid which should be refreshed.
+		 */
+		dataRefreshUID: function (_uid) {
+			if (typeof localStorage[_uid] === "undefined") return;
+
+			this.dataFetch(_execId, {'refresh':_uid}, _filters, _widgetId,
+					_callback, _context, _knownUids);
+			
 		}
 
 	};

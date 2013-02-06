@@ -55,6 +55,7 @@
  * 		array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
  *		or name of import/export definition
  *  'row_id'         =>     // I  key into row content to set it's value as tr id, eg. 'id'
+ *  'dataStorePrefix'	=>	// I Optional prefix for client side cache to prevent collisions in applications that have more than one data set, such as ProjectManager / Project elements.  Defaults to appname if not set.
  *  'actions'        =>     // I  array with actions, see nextmatch_widget::egw_actions
  *  'action_links'   =>     // I  array with enabled actions or ones which should be checked if they are enabled
  *                                optional, default id of all first level actions plus the ones with enabled='javaScript:...'
@@ -224,7 +225,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 
 		foreach($rows as $n => $row)
 		{
-			if (is_int($n))
+			if (is_int($n) && $row)
 			{
 				if (!isset($row[$row_id])) unset($row_id);	// unset default row_id of 'id', if not used
 				if (!isset($row[$row_modified])) unset($row_modified);
