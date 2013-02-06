@@ -114,6 +114,13 @@ class infolog_bo
 	 */
 	var $tracking;
 	/**
+	 * Variable used to tell read functions to ignore the acl
+	 * used in async_notification;
+	 *
+	 * @var ignore_acl
+	 */
+	static $ignore_acl;
+	/**
 	 * Maximum number of line characters (-_+=~) allowed in a mail, to not stall the layout.
 	 * Longer lines / biger number of these chars are truncated to that max. number or chars.
 	 *
@@ -567,10 +574,11 @@ class infolog_bo
 	 *	need to be set to false if called from link-title to prevent an infinit recursion
 	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time,
 	 * 	'array'=array or string with date-format
+	 * @param boolean $ignore_acl=false if true, do NOT check access, default false
 	 *
 	 * @return array|boolean infolog entry, null if not found or false if no permission to read it
 	 */
-	function &read($info_id,$run_link_id2from=true,$date_format='ts')
+	function &read($info_id,$run_link_id2from=true,$date_format='ts',$ignore_acl=false)
 	{
 		//error_log(__METHOD__.'('.array2string($info_id).', '.array2string($run_link_id2from).", '$date_format') ".function_backtrace());
 		if (is_scalar($info_id) || isset($info_id[count($info_id)-1]))
@@ -591,7 +599,7 @@ class infolog_bo
 		}
 		$info_id = $data['info_id'];	// in case the uid was specified
 
-		if (!$this->check_access($data,EGW_ACL_READ))	// check behind read, to prevent a double read
+		if (!$ignore_acl && !$this->check_access($data,EGW_ACL_READ))	// check behind read, to prevent a double read
 		{
 			return False;
 		}
@@ -1581,12 +1589,18 @@ class infolog_bo
 							break;
 					}
 					//error_log("notifiying $user($email) about $info[info_subject]: $info[message]");
+					// ignore acl for further processing, needed to instruct bo->read to ignore the
+					// acl, when called for tracking -> get_signature -> merge to resolve possible
+					// infolog specific placeholders in infolog_egw_record
+					self::$ignore_acl = true;
 					$this->tracking->send_notification($info,null,$email,$user,$pref);
+					self::$ignore_acl = false;
 
 					$notified_info_ids[] = $info['info_id'];
 				}
 			}
 		}
+
 		$GLOBALS['egw_info']['user']['account_id']  = $save_account_id;
 		$GLOBALS['egw_info']['user']['preferences'] = $save_prefs;
 	}
