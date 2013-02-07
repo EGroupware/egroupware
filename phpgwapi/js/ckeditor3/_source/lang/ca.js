@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -120,6 +120,7 @@ CKEDITOR.lang['ca'] =
 		alignTop		: 'Superior',
 		alignMiddle		: 'Centre',
 		alignBottom		: 'Inferior',
+		invalidValue	: 'Invalid value.', // MISSING
 		invalidHeight	: 'L\'alçada ha de ser un nombre.',
 		invalidWidth	: 'L\'amplada ha de ser un nombre.',
 		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
@@ -697,7 +698,7 @@ CKEDITOR.lang['ca'] =
 		ignoreAll		: 'Ignora\'ls tots',
 		addWord			: 'Afegeix una paraula',
 		emptyDic		: 'El nom del diccionari no hauria d\'estar buit.',
-
+		noSuggestions	: 'Cap suggeriment',
 		optionsTab		: 'Opcions',
 		allCaps			: 'Ignora paraules en majúscules',
 		ignoreDomainNames : 'Ignora els noms de domini',

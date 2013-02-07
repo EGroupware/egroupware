@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -31,7 +31,7 @@ CKEDITOR.lang['sv'] =
 	 * of reading non-English words. So be careful while translating it.
 	 */
 	editorTitle : 'Rich text editor, %1', // MISSING
-	editorHelp : 'Press ALT 0 for help', // MISSING
+	editorHelp : 'Tryck ALT 0 för hjälp',
 
 	// ARIA descriptions.
 	toolbars	: 'Editor toolbars', // MISSING
@@ -119,6 +119,7 @@ CKEDITOR.lang['sv'] =
 		alignTop		: 'Överkant',
 		alignMiddle		: 'Mitten',
 		alignBottom		: 'Nederkant',
+		invalidValue	: 'Invalid value.', // MISSING
 		invalidHeight	: 'Höjd måste vara ett nummer.',
 		invalidWidth	: 'Bredd måste vara ett nummer.',
 		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
@@ -696,7 +697,7 @@ CKEDITOR.lang['sv'] =
 		ignoreAll		: 'Ignorera alla',
 		addWord			: 'Lägg till ord',
 		emptyDic		: 'Ordlistans namn får ej vara tomt.',
-
+		noSuggestions	: 'Förslag saknas',
 		optionsTab		: 'Inställningar',
 		allCaps			: 'Ignorera alla ord med enbart versaler',
 		ignoreDomainNames : 'Ignorera domännamn',

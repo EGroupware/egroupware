@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -120,6 +120,7 @@ CKEDITOR.lang['nb'] =
 		alignTop		: 'Topp',
 		alignMiddle		: 'Midten',
 		alignBottom		: 'Bunn',
+		invalidValue	: 'Ugyldig verdi.',
 		invalidHeight	: 'Høyde må være et tall.',
 		invalidWidth	: 'Bredde må være et tall.',
 		invalidCssLength	: 'Den angitte verdien for feltet "%1" må være et positivt tall med eller uten en gyldig CSS-målingsenhet (px, %, in, cm, mm, em, ex, pt, eller pc).',
@@ -697,7 +698,7 @@ CKEDITOR.lang['nb'] =
 		ignoreAll		: 'Ignorer Alle',
 		addWord			: 'Legg til ord',
 		emptyDic		: 'Ordboknavn bør ikke være tom.',
-
+		noSuggestions	: 'Ingen forslag',
 		optionsTab		: 'Valg',
 		allCaps			: 'Ikke kontroller ord med kun store bokstaver',
 		ignoreDomainNames : 'Ikke kontroller domenenavn',

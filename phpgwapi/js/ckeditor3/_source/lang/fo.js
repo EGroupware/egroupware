@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -32,7 +32,7 @@ CKEDITOR.lang['fo'] =
 	 * of reading non-English words. So be careful while translating it.
 	 */
 	editorTitle : 'Rich text editor, %1', // MISSING
-	editorHelp : 'Press ALT 0 for help', // MISSING
+	editorHelp : 'Trýst ALT og 0 fyri vegleiðing',
 
 	// ARIA descriptions.
 	toolbars	: 'Editor toolbars',
@@ -120,6 +120,7 @@ CKEDITOR.lang['fo'] =
 		alignTop		: 'Ovast',
 		alignMiddle		: 'Miðja',
 		alignBottom		: 'Botnur',
+		invalidValue	: 'Invalid value.', // MISSING
 		invalidHeight	: 'Hædd má vera eitt tal.',
 		invalidWidth	: 'Breidd má vera eitt tal.',
 		invalidCssLength	: 'Virðið sett í "%1" feltið má vera eitt positivt tal, við ella uttan gyldugum CSS mátieind (px, %, in, cm, mm, em, ex, pt, ella pc).',
@@ -697,7 +698,7 @@ CKEDITOR.lang['fo'] =
 		ignoreAll		: 'Ignorera alt',
 		addWord			: 'Legg orð afturat',
 		emptyDic		: 'Heiti á orðabók eigur ikki at vera tómt.',
-
+		noSuggestions	: 'Einki uppskot',
 		optionsTab		: 'Uppseting',
 		allCaps			: 'Loyp orð við bert stórum stavum um',
 		ignoreDomainNames : 'loyp økisnøvn um',

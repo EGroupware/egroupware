@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -30,8 +30,8 @@ CKEDITOR.lang['tr'] =
 	 * Screenreader titles. Please note that screenreaders are not always capable
 	 * of reading non-English words. So be careful while translating it.
 	 */
-	editorTitle : 'Rich text editor, %1', // MISSING
-	editorHelp : 'Press ALT 0 for help', // MISSING
+	editorTitle : 'Zengin metin editörü, %1',
+	editorHelp : 'Yardım için ALT 0 tuşuna basın',
 
 	// ARIA descriptions.
 	toolbars	: 'Araç çubukları Editörü',
@@ -119,6 +119,7 @@ CKEDITOR.lang['tr'] =
 		alignTop		: 'Tepe',
 		alignMiddle		: 'Orta',
 		alignBottom		: 'Alt',
+		invalidValue	: 'Invalid value.', // MISSING
 		invalidHeight	: 'Yükseklik sayı olmalıdır.',
 		invalidWidth	: 'Genişlik bir sayı olmalıdır.',
 		invalidCssLength	: 'Belirttiğiniz sayı "%1" alanı için pozitif bir sayı CSS birim değeri olmalıdır (px, %, in, cm, mm, em, ex, pt, veya pc).',
@@ -696,7 +697,7 @@ CKEDITOR.lang['tr'] =
 		ignoreAll		: 'Tümünü Yoksay',
 		addWord			: 'Kelime Ekle',
 		emptyDic		: 'Sözlük adı boş olamaz.',
-
+		noSuggestions	: 'Öneri Yok',
 		optionsTab		: 'Seçenekler',
 		allCaps			: 'Tüm büyük küçük kelimeleri yoksay',
 		ignoreDomainNames : 'Domain adlarını yoksay',

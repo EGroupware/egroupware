@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -120,6 +120,7 @@ CKEDITOR.lang['sl'] =
 		alignTop		: 'Na vrh',
 		alignMiddle		: 'V sredino',
 		alignBottom		: 'Na dno',
+		invalidValue	: 'Invalid value.', // MISSING
 		invalidHeight	: 'Višina mora biti število.',
 		invalidWidth	: 'Širina mora biti število.',
 		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
@@ -697,7 +698,7 @@ CKEDITOR.lang['sl'] =
 		ignoreAll		: 'Prezri vse',
 		addWord			: 'Dodaj besedo',
 		emptyDic		: 'Ime slovarja ne more biti prazno.',
-
+		noSuggestions	: 'Ni predlogov',
 		optionsTab		: 'Možnosti',
 		allCaps			: 'Ignore All-Caps Words', // MISSING
 		ignoreDomainNames : 'Ignore Domain Names', // MISSING

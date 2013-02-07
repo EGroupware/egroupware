@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -32,7 +32,7 @@ CKEDITOR.lang['da'] =
 	 * of reading non-English words. So be careful while translating it.
 	 */
 	editorTitle : 'Rich text editor, %1', // MISSING
-	editorHelp : 'Press ALT 0 for help', // MISSING
+	editorHelp : 'Tryk ALT 0 for hjælp',
 
 	// ARIA descriptions.
 	toolbars	: 'Editors værktøjslinjer',
@@ -120,6 +120,7 @@ CKEDITOR.lang['da'] =
 		alignTop		: 'Øverst',
 		alignMiddle		: 'Centreret',
 		alignBottom		: 'Nederst',
+		invalidValue	: 'Invalid value.', // MISSING
 		invalidHeight	: 'Højde skal være et tal.',
 		invalidWidth	: 'Bredde skal være et tal.',
 		invalidCssLength	: 'Værdien specificeret for "%1" feltet skal være et positivt nummer med eller uden en CSS måleenhed  (px, %, in, cm, mm, em, ex, pt, eller pc).',
@@ -697,7 +698,7 @@ CKEDITOR.lang['da'] =
 		ignoreAll		: 'Ignorér alle',
 		addWord			: 'Tilføj ord',
 		emptyDic		: 'Ordbogsnavn må ikke være tom.',
-
+		noSuggestions	: 'Ingen forslag',
 		optionsTab		: 'Indstillinger',
 		allCaps			: 'Ignorer alle store bogstaver',
 		ignoreDomainNames : 'Ignorér domænenavne',

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -120,6 +120,7 @@ CKEDITOR.lang['en'] =
 		alignTop		: 'Top',
 		alignMiddle		: 'Middle',
 		alignBottom		: 'Bottom',
+		invalidValue	: 'Invalid value.',
 		invalidHeight	: 'Height must be a number.',
 		invalidWidth	: 'Width must be a number.',
 		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).',
@@ -697,7 +698,7 @@ CKEDITOR.lang['en'] =
 		ignoreAll		: 'Ignore All',
 		addWord			: 'Add Word',
 		emptyDic		: 'Dictionary name should not be empty.',
-
+		noSuggestions	: 'No suggestions',
 		optionsTab		: 'Options',
 		allCaps			: 'Ignore All-Caps Words',
 		ignoreDomainNames : 'Ignore Domain Names',

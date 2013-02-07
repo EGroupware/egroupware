@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -120,6 +120,7 @@ CKEDITOR.lang['cs'] =
 		alignTop		: 'Nahoru',
 		alignMiddle		: 'Na střed',
 		alignBottom		: 'Dolů',
+		invalidValue	: 'Neplatná hodnota.',
 		invalidHeight	: 'Zadaná výška musí být číslo.',
 		invalidWidth	: 'Šířka musí být číslo.',
 		invalidCssLength	: 'Hodnota určená pro pole "%1" musí být kladné číslo bez nebo s platnou jednotkou míry CSS (px, %, in, cm, mm, em, ex, pt, nebo pc).',
@@ -697,7 +698,7 @@ CKEDITOR.lang['cs'] =
 		ignoreAll		: 'Přeskočit vše',
 		addWord			: 'Přidat slovo',
 		emptyDic		: 'Název slovníku nesmí být prázdný.',
-
+		noSuggestions	: 'Zádné návrhy',
 		optionsTab		: 'Nastavení',
 		allCaps			: 'Ignorovat slova tvořená velkými písmeny',
 		ignoreDomainNames : 'Ignorovat doménová jména',

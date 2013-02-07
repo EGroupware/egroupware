@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2012, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -31,8 +31,8 @@ CKEDITOR.lang['hr'] =
 	 * Screenreader titles. Please note that screenreaders are not always capable
 	 * of reading non-English words. So be careful while translating it.
 	 */
-	editorTitle : 'Rich text editor, %1', // MISSING
-	editorHelp : 'Press ALT 0 for help', // MISSING
+	editorTitle : 'Bogati uređivač teksta, %1',
+	editorHelp : 'Pritisni ALT 0 za pomoć',
 
 	// ARIA descriptions.
 	toolbars	: 'Alatne trake uređivača teksta',
@@ -120,6 +120,7 @@ CKEDITOR.lang['hr'] =
 		alignTop		: 'Vrh',
 		alignMiddle		: 'Sredina',
 		alignBottom		: 'Dolje',
+		invalidValue	: 'Invalid value.', // MISSING
 		invalidHeight	: 'Visina mora biti broj.',
 		invalidWidth	: 'Širina mora biti broj.',
 		invalidCssLength	: 'Vrijednost određena za "%1" polje mora biti pozitivni broj sa ili bez važećih CSS mjernih jedinica (px, %, in, cm, mm, em, ex, pt ili pc).',
@@ -697,7 +698,7 @@ CKEDITOR.lang['hr'] =
 		ignoreAll		: 'Zanemari sve',
 		addWord			: 'Dodaj riječ',
 		emptyDic		: 'Naziv rječnika ne smije biti prazno.',
-
+		noSuggestions	: 'Nema preporuke',
 		optionsTab		: 'Opcije',
 		allCaps			: 'Ignoriraj riječi s velikim slovima',
 		ignoreDomainNames : 'Ignoriraj nazive domena',
