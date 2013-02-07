@@ -423,8 +423,10 @@ class preferences
 		}
 		// setup the standard substitutes and substitutes the data in $this->data
 		//
-		$this->standard_substitutes();
-
+		if ($GLOBALS['egw_info']['flags']['load_translations'] !== false)
+		{
+			$this->standard_substitutes();
+		}
 		// This is to supress warnings during login
 		if (is_array($this->data))
 		{
