@@ -335,6 +335,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 			}
 		}
 
+		// If no column preference or default set, use all columns
+		if(typeof columnPreference =="string" && columnPreference.length == 0)
+		{
+			columnDisplay = {};
+			negated = true;
+		}
+
 		var columnDisplay = typeof columnPreference === "string"
 				? et2_csvSplit(columnPreference,null,",") : columnPreference;
 
