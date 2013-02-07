@@ -114,7 +114,7 @@ class infolog_bo
 	 */
 	var $tracking;
 	/**
-	 * Variable used to tell read functions to ignore the acl
+	 * Variable used to tell read function to ignore the acl
 	 * used in async_notification;
 	 *
 	 * @var ignore_acl
@@ -599,7 +599,7 @@ class infolog_bo
 		}
 		$info_id = $data['info_id'];	// in case the uid was specified
 
-		if (!$ignore_acl && !$this->check_access($data,EGW_ACL_READ))	// check behind read, to prevent a double read
+		if (!(self::$ignore_acl || $ignore_acl) && !$this->check_access($data,EGW_ACL_READ))	// check behind read, to prevent a double read
 		{
 			return False;
 		}
