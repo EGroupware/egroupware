@@ -335,6 +335,48 @@ abstract class bo_merge
 	}
 
 	/**
+	 * Get all link placeholders
+	 *
+	 * Calls get_links() repeatedly to get all the combinations for the content.
+	 *
+	 * @param app String appname
+	 * @param id String ID of record
+	 * @param content String document content
+	 */
+	protected function get_all_links($app, $id, &$content)
+	{
+		$array = array();
+		$pattern = '@\$(links|attachments|links_attachments)\/?(title|href|link)?\/?([a-z]*)\$@';
+		static $link_cache;
+		if(preg_match_all($pattern, $content, $matches))
+		{
+			foreach($matches[0] as $i => $placeholder)
+			{
+				$placeholder = substr($placeholder, 1, -1);
+				if($link_cache[$id][$placeholder])
+				{
+					$array[$placeholder] = $link_cache[$id][$placeholder];
+					continue;
+				}
+				switch($matches[1][$i])
+				{
+					case 'links':
+						$array[$placeholder] = $this->get_links($app, $id, '!'.egw_link::VFS_APPNAME, array(),$matches[2][$i]);
+						break;
+					case 'attachments':
+						$array[$placeholder] = $this->get_links($app, $id, egw_link::VFS_APPNAME,array(),$matches[2][$i]);
+						break;
+					default:
+						$array[$placeholder] = $this->get_links($app, $id, $matches[3][$i], array(), $matches[2][$i]);
+						break;
+				}
+				$link_cache[$id][$placeholder] = $array[$placeholder];
+			}
+		}
+		return $array;
+	}
+
+	/**
 	 * Format a datetime
 	 *
 	 * @param int|string|DateTime $time unix timestamp or Y-m-d H:i:s string (in user time!)
