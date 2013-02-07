@@ -523,13 +523,26 @@
 			$allIdentities = $this->mailPreferences->getIdentity();
 			unset($allIdentities[0]);
 			//_debug_array($allIdentities);
+			if (is_null(felamimail_bo::$felamimailConfig)) felamimail_bo::$felamimailConfig = config::read('felamimail');
+			// not set? -> use default, means full display of all available data
+			if (!isset(felamimail_bo::$felamimailConfig['how2displayIdentities'])) felamimail_bo::$felamimailConfig['how2displayIdentities'] ='';
+			$globalIds = 0;
+			foreach($allIdentities as $key => $singleIdentity) {if ($singleIdentity->id<0){ $globalIds++; }/*else{ unset($allIdentities[$key]);}*/};
 			$defaultIdentity = 0;
 			$identities = array();
 			foreach($allIdentities as $key => $singleIdentity) {
 				//$identities[$singleIdentity->id] = $singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>';
 				$iS = felamimail_bo::generateIdentityString($singleIdentity);
+				if (felamimail_bo::$felamimailConfig['how2displayIdentities']=='' || count($allIdentities) ==1 || count($allIdentities) ==$globalIds)
+				{
+					$id_prepend ='';
+				}
+				else
+				{
+					$id_prepend = '('.$singleIdentity->id.') ';
+				}
 				//error_log(__METHOD__.__LINE__.':'.$presetId.'->'.$key.'('.$singleIdentity->id.')'.'#'.$iS.'#');
-				if (array_search('('.$singleIdentity->id.') '.$iS,$identities)===false) $identities[$singleIdentity->id] = '('.$singleIdentity->id.') '.$iS;
+				if (array_search($id_prepend.$iS,$identities)===false) $identities[$singleIdentity->id] = $id_prepend.$iS;
 				if(!empty($singleIdentity->default) && $singleIdentity->default==1 && $defaultIdentity==0)
 				{
 					//_debug_array($singleIdentity);

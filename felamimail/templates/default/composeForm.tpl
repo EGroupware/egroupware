@@ -234,9 +234,14 @@ if (toFocus=='body')
 					var s = ckeditor.getSelection();
 					if (typeof s != 'undefined')
 					{
-						var selected_ranges = s.getRanges(); // save selected range
+						var selected_ranges = s.getRanges()[0]; // save selected range
 						// do something
-						s.selectRanges(selected_ranges); // restore it
+						//var spanCont = selected_ranges.startContainer.getAscendant({ span: 1, div: 1});
+						//var newRange = new CKEDIOR.dom.range(selected_ranges);
+						//newRange.setStart(spanCont,selected_ranges.StartOffset);
+						//newRange.setEnd(spanCont,selected_ranges.StartOffset+50);
+						//newRange.select();
+						//s.selectRanges(selected_ranges); // restore it
 					}
 					else
 					{
@@ -255,9 +260,17 @@ if (toFocus=='body')
 					var s = ckeditor.getSelection();
 					if (typeof s != 'undefined')
 					{
-						var selected_ranges = s.getRanges(); // save selected range
+						var selected_ranges = s.getRanges()[0]; // save selected range
 						// do something
-						s.selectRanges(selected_ranges); // restore it
+						if (typeof selected_ranges != undefined)
+						{
+							//var spanCont = selected_ranges.startContainer.getAscendant({ span: 1, div: 1});
+							//var newRange = new CKEDIOR.dom.range(selected_ranges);
+							//newRange.setStart(spanCont,selected_ranges.StartOffset);
+							//newRange.setEnd(spanCont,selected_ranges.StartOffset+50);
+							//newRange.select();
+							//s.selectRanges(selected_ranges); // restore it
+						}
 					}
 					else
 					{
