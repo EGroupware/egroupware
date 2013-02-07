@@ -28,9 +28,15 @@
 var et2_link_to = et2_inputWidget.extend({
 
 	attributes: {
-		"application": {
+		"only_app": {
 			"name": "Application",
 			"type": "string",
+			"default": "",
+			"description": "Limit to just this one application - hides app selection"
+		},
+		"application_list": {
+			"name": "Application list",
+			"type": "any",
 			"default": "",
 			"description": "Limit to the listed application or applications (comma seperated)"
 		},
@@ -181,6 +187,8 @@ var et2_link_to = et2_inputWidget.extend({
 		// Link-to
 		var link_entry_attrs = {
 			id: this.id + '_link_entry',
+			only_app: this.options.only_app,
+			application_list: this.options.applicaiton_list,
 			blur: this.options.search_label ? this.options.search_label : this.egw().lang('Search...'),
 			query: function() { self.link_button.hide(); self.comment.hide(); return true;},
 			select: function() {self.link_button.show(); self.comment.show(); return true;}
@@ -291,9 +299,15 @@ et2_register_widget(et2_link_to, ["link-to"]);
 
 var et2_link_apps = et2_selectbox.extend({
 	attributes: {
-		"application": {
+		"only_app": {
 			"name": "Application",
 			"type": "string",
+			"default": "",
+			"description": "Limit to just this one application - hides app selection"
+		},
+		"application_list": {
+			"name": "Application list",
+			"type": "any",
 			"default": "",
 			"description": "Limit to the listed application or applications (comma seperated)"
 		}
@@ -305,10 +319,10 @@ var et2_link_apps = et2_selectbox.extend({
 		var select_options = {};
 
 		// Limit to one app
-		if(this.options.application) {
-			select_options[_attrs.application] = this.egw().lang(_attrs.application);
+		if(this.options.only_app) {
+			select_options[_attrs.only_app] = this.egw().lang(_attrs.only_app);
 		} else {
-			select_options = this.egw().link_app_list('query');
+			select_options = this.options.application_list ? $this.options.applicaiton_list : this.egw().link_app_list('query');
 
 			// Check whether the options entry was found, if not read it from the
 			// content array.
