@@ -1589,6 +1589,7 @@ class addressbook_ui extends addressbook_bo
 			unset($content['button']);
 			$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
 			$content['owner'] = (string) (int) $content['owner'];
+			$content['cat_id'] = $content['cat_id_tree'] ? $content['cat_id_tree'] : $content['cat_id'];
 
 			switch($button)
 			{
@@ -1822,6 +1823,9 @@ error_log($GLOBALS['egw_info']['flags']['currentapp']);
 			list(,$dates) = each($this->read_calendar(array($content['id']),false));
 			if(is_array($dates)) $content += $dates;
 		}
+		// Avoid ID conflict with tree & selectboxes
+		$content['cat_id_tree'] = $content['cat_id'];
+
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
 		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
