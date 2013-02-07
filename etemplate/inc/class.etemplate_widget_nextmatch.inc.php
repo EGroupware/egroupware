@@ -29,7 +29,7 @@
  * 	'bottom_too'     => True// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
  *	'never_hide'     => True// I  never hide the nextmatch-line if less then maxmatch entries
  *  'lettersearch'   => True// I  show a lettersearch
- *  'searchletter'   =>     // I0 active letter of the lettersearch or false for [all]
+ *  'searchletter'   =>     // IO active letter of the lettersearch or false for [all]
  * 	'start'          =>		// IO position in list
  *	'num_rows'       =>     // IO number of rows to show, defaults to maxmatches from the general prefs
  * 	'cat_id'         =>		// IO category, if not 'no_cat' => True
@@ -37,6 +37,9 @@
  * 	'order'          =>		// IO name of the column to sort after (optional for the sortheaders)
  * 	'sort'           =>		// IO direction of the sort: 'ASC' or 'DESC'
  * 	'col_filter'     =>		// IO array of column-name value pairs (optional for the filterheaders)
+ * 							// grid requires implementation of folowing filters in get_rows, even if not used as regular filters!
+ * 							//  O col_filter[$row_id]   to query certain rows only
+ * 							//  O col_filter[parent_id] row_id of parent to query children for hierachical display
  * 	'filter'         =>		// IO filter, if not 'no_filter' => True
  * 	'filter_no_lang' => True// I  set no_lang for filter (=dont translate the options)
  *	'filter_onchange'=> 'this.form.submit();' // I onChange action for filter, default: this.form.submit();
@@ -54,7 +57,10 @@
  *  'csv_fields'     =>		// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames or preferred importexport definition,
  * 		array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
  *		or name of import/export definition
- *  'row_id'         =>     // I  key into row content to set it's value as tr id, eg. 'id'
+ *  'row_id'         =>     // I  key into row content to set it's value as row-id, eg. 'id'
+ *  'row_modified'   =>		// I  key into row content for modification date or state of a row, to not query it again
+ *  'parent_id'      =>		// I  key into row content of children linking them to their parent
+ *  'is_parent'      =>		// I  key into row content to mark a row to have children
  *  'dataStorePrefix'	=>	// I Optional prefix for client side cache to prevent collisions in applications that have more than one data set, such as ProjectManager / Project elements.  Defaults to appname if not set.
  *  'actions'        =>     // I  array with actions, see nextmatch_widget::egw_actions
  *  'action_links'   =>     // I  array with enabled actions or ones which should be checked if they are enabled
