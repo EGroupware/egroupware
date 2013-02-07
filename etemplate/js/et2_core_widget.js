@@ -57,7 +57,7 @@ function et2_register_widget(_constructor, _types)
  * @param _name is the name of the widget with which it is registered. If the
  * 	widget is not found, an et2_placeholder will be created.
  * @param _attrs is an associative array with attributes. If not passed, it will
- * 	default to true.
+ * 	default to an empty object.
  * @param _parent is the parent to which the element will be attached. If _parent
  * 	is not passed, it will default to null. Then you have to attach the element
  * 	to a parent using the addChild or insertChild method.
@@ -183,10 +183,9 @@ var et2_widget = Class.extend({
 		this.id = _attrs["id"];
 
 		// Add this widget to the given parent widget
-		this._parent = _parent;
 		if (_parent != null)
 		{
-			this._parent.addChild(this);
+			_parent.addChild(this);
 		}
 
 		// The supported widget classes array defines a whitelist for all widget
@@ -477,6 +476,13 @@ var et2_widget = Class.extend({
 			// Special handling for the legacy options
 			if (attrName == "options" && _proto.legacyOptions.length > 0)
 			{
+				// Check for modifications on legacy options here.  Normal modifications
+				// are handled in widget constructor, but it's too late for legacy options then
+				if(_target.id && this.getArrayMgr("modifications").getEntry(_target.id))
+				{
+					var mod = this.getArrayMgr("modifications").getEntry(_target.id);
+					if(mod.options) attrValue = _attrsObj[i].value = mod.options;
+				}
 				// Check for entire legacy options passed in content
 				if(attrValue.charAt(0) == '@' && attrValue.indexOf(',') == -1)
 				{

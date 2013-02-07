@@ -1702,8 +1702,13 @@ var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend({
 			"type": "string",
 			"description": "The actual type of widget you should use"
 		},
+		"widget_options": {
+			"name": "Actual options",
+			"type": "any",
+			"description": "The options for the actual widget"
+		},
 	},
-	legacyOptions: ["widget_type"],
+	legacyOptions: ["widget_type","widget_options"],
 
 	real_node: null,
 
@@ -1720,7 +1725,7 @@ var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend({
 		}
 		// Avoid warning about non-existant attribute
 		delete(_attrs.widget_type);
-		this.real_node = et2_createWidget(_attrs.type, _attrs, this._parent);
+		this.real_node = et2_createWidget(_attrs.type, _attrs.widget_options, this._parent);
 	},
 
 	// Just pass the real DOM node through, in case anybody asks

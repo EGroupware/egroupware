@@ -171,6 +171,7 @@ var et2_tree = et2_inputWidget.extend({
 				}
 
 				var parent_id = parseInt(options[key]['parent']);
+				if(isNaN(parent_id)) parent_id = 0;
 				if(!stack[parent_id]) stack[parent_id] = [];
 				stack[parent_id].push(options[key]);
 			}

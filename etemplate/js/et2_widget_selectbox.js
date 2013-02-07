@@ -55,10 +55,15 @@ var et2_selectbox = et2_inputWidget.extend({
 		},
 		"value": {
 			"type": "any" // Can be string or integer
+		},
+		// Type specific legacy options.  Avoid using.
+		"other": {
+			"ignore": true, 
+			"type": "any"
 		}
 	},
 
-	legacyOptions: ["rows"],
+	legacyOptions: ["rows","other"], // Other is sub-type specific
 
 	init: function() {
 		this._super.apply(this, arguments);
@@ -159,6 +164,10 @@ var et2_selectbox = et2_inputWidget.extend({
 				{
 					var row_id = this.id.replace(/[0-9]+/,row_stuck[i]);
 					content_options = this.getArrayMgr("sel_options").getEntry(row_id);
+					if(!content_options || content_options.length == 0)
+					{
+						content_options = this.getArrayMgr("sel_options").getEntry(row_stuck[i] + '[' + this.id + ']');
+					}
 				}
 			}
 			if(_attrs["select_options"] && content_options)

@@ -416,7 +416,7 @@ var et2_date_duration = et2_date.extend({
 		var value = this.duration.val();
 		if(value === '')
 		{
-			return this.options.empty_not_0 ? null : '';
+			return this.options.empty_not_0 ? null : 0;
 		}
 		// Put value into minutes for further processing
 		switch(this.format ? this.format.val() : this.options.display_format)
