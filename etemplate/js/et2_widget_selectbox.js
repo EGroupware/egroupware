@@ -605,7 +605,7 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], {
 	},
 
 	set_value: function(_value) {
-		if(typeof _value == "string" && _value.match(/[,0-9]+$/) !== null && this.options.multiple)
+		if(typeof _value == "string" && _value.match(/[,0-9]+$/) !== null)
 		{
 			_value = _value.split(',');
 		}
