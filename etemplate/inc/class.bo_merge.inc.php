@@ -343,7 +343,7 @@ abstract class bo_merge
 	 * @param id String ID of record
 	 * @param content String document content
 	 */
-	protected function get_all_links($app, $id, &$content)
+	protected function get_all_links($app, $id, $prefix, &$content)
 	{
 		$array = array();
 		$pattern = '@\$(links|attachments|links_attachments)\/?(title|href|link)?\/?([a-z]*)\$@';
@@ -361,18 +361,23 @@ abstract class bo_merge
 				switch($matches[1][$i])
 				{
 					case 'links':
-						$array[$placeholder] = $this->get_links($app, $id, '!'.egw_link::VFS_APPNAME, array(),$matches[2][$i]);
+						$array[($prefix?$prefix.'/':'').$placeholder] = $this->get_links($app, $id, '!'.egw_link::VFS_APPNAME, array(),$matches[2][$i]);
 						break;
 					case 'attachments':
-						$array[$placeholder] = $this->get_links($app, $id, egw_link::VFS_APPNAME,array(),$matches[2][$i]);
+						$array[($prefix?$prefix.'/':'').$placeholder] = $this->get_links($app, $id, egw_link::VFS_APPNAME,array(),$matches[2][$i]);
 						break;
 					default:
-						$array[$placeholder] = $this->get_links($app, $id, $matches[3][$i], array(), $matches[2][$i]);
+						$array[($prefix?$prefix.'/':'').$placeholder] = $this->get_links($app, $id, $matches[3][$i], array(), $matches[2][$i]);
 						break;
 				}
 				$link_cache[$id][$placeholder] = $array[$placeholder];
 			}
 		}
+		// Need to set each app, to make sure placeholders are removed
+                foreach(array_keys($GLOBALS['egw_info']['user']['apps']) as $_app)
+                {
+                        $array[($prefix?$prefix.'/':'')."links/$app"] = $this->get_links($app,$id,$_app);
+                }
 		return $array;
 	}
 

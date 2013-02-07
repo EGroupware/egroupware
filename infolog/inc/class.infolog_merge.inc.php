@@ -125,9 +125,7 @@ class infolog_merge extends bo_merge
 		}
 
 		// Links
-		$array['links'] = $this->get_links('infolog', $id, '!'.egw_link::VFS_APPNAME, array($array['info_link']['id']));
-		$array['attachments'] = $this->get_links('infolog', $id, egw_link::VFS_APPNAME);
-		$array['links_attachments'] = $this->get_links('infolog', $id, '', array($array['info_link']['id']));
+		$array += $this->get_all_links('infolog', $id, $content);
 		// Need to set each app, to make sure placeholders are removed
 		foreach(array_keys($GLOBALS['egw_info']['user']['apps']) as $app)
 		{
