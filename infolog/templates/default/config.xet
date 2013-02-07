@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="infolog.config.configuration" template="" lang="" group="0" version="">
-		<grid>
+		<grid width="100%">
 			<columns>
 				<column width="60%"/>
 				<column/>
@@ -76,15 +76,15 @@
 		</grid>
 	</template>
 	<template id="infolog.config" template="" lang="" group="0" version="1.9.001">
-		<grid>
+		<grid width="100%">
 			<columns>
-				<column/>
+				<column width="100%"/>
 			</columns>
 			<rows>
 				<row>
 					<description id="msg" span="all" class="message"/>
 				</row>
-				<row>
+				<row valign="top" height="350px">
 					<tabbox id="configuration|notification">
 						<tabs>
 							<tab id="configuration" label="Configuration"/>
@@ -97,7 +97,7 @@
 					</tabbox>
 				</row>
 				<row>
-					<hbox>
+					<hbox span="all">
 						<button label="Save" id="button[save]"/>
 						<button label="Apply" id="button[apply]"/>
 						<button align="right" label="Cancel" id="button[cancel]"/>
