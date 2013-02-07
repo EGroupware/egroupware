@@ -91,6 +91,7 @@ class infolog_tracking extends bo_tracking
 		'info_cat'       => 'Category',
 		'info_priority'  => 'Priority',
 		'info_owner'     => 'Owner',
+		'info_modifier'  => 'Modifier',
 		'info_access'    => 'Access',
 		'info_status'    => 'Status',
 		'info_percent'   => 'Completed',
