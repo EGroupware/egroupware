@@ -185,7 +185,7 @@ class calendar_uilist extends calendar_ui
 				'em; overflow: auto; }}</style>';
 		}
 
-		$html = $etpl->exec('calendar.calendar_uilist.listview',$content,$sel_options,$readonlys,'',$home ? -1 : 0);
+		$html = $etpl->exec('calendar.calendar_uilist.listview',$content,$sel_options,$readonlys,array(),$home ? -1 : 0);
 
 		// Not sure why this has to be echoed instead of appended, but that's what works.
 		echo calendar_uiviews::edit_series();
