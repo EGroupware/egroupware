@@ -9,7 +9,7 @@
 	<template id="addressbook.index.right_add" template="" lang="" group="0" version="1.7.001">
 		<hbox>
 			<buttononly label="Advanced search" id="search" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.search'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
-			<buttononly statustext="Add a new contact" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" class="rightPadAdd"/>
+			<buttononly statustext="Add a new contact" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
 		</hbox>
 		<styles>.rightPadAdd { width: 30px; }</styles>
 	</template>
