@@ -127,6 +127,10 @@ class resources_ui
 		}
 		$content['nm']['options-filter']= array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ);
 		$content['nm']['options-filter2'] = resources_bo::$filter_options;
+		if(!$content['nm']['filter2'])
+		{
+			$content['nm']['filter2'] = key(resources_bo::$filter_options);
+		}
 
 		$config = config::read('resources');
 		if($config['history'])
