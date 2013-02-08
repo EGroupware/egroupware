@@ -179,7 +179,7 @@ class etemplate_widget
 		{
 			$this->attrs = array_merge($this->attrs,self::$request->modifications[$this->id]);
 		}
-		
+
 		return $template;
 	}
 
@@ -664,8 +664,9 @@ class etemplate_widget
 		$pos = &$arr;
 		foreach($idxs as $idx)
 		{
-			if (!is_array($pos) && !$reference_into)
+			if (!is_array($pos) && (!$reference_into || $reference_into && isset($pos)))
 			{
+				//if ($reference_into) error_log(__METHOD__."(".(strlen($s=array2string($arr))>512?substr($s,0,512).'...':$s).", '$idx', ".array2string($reference_into).", ".array2string($skip_empty).") ".function_backtrace());
 				return False;
 			}
 			if($skip_empty && (!is_array($pos) || !isset($pos[$idx]))) return false;
