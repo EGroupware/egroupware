@@ -1,0 +1,354 @@
+(no subject)	mail	fa	(بدون عنوان)
+(only cc/bcc)	mail	fa	(فقط رونوشت/رونوشت دوم)
+(unknown sender)	mail	fa	(فرستنده نامشخص)
+activate	mail	fa	فعال سازی
+activate script	mail	fa	اسکریپت فعال سازی
+add acl	mail	fa	اضافه کردن لیست دسترسی
+add address	mail	fa	افزودن نشانی
+add rule	mail	fa	افزودن قانون
+add script	mail	fa	افزودن اسکریپت
+add to %1	mail	fa	افزودن به %1
+add to address book	mail	fa	افزودن به دفترچه آدرس
+add to addressbook	mail	fa	افزودن به دفترچه آدرس
+additional info	mail	fa	اطلاعات بیشتر
+address book	mail	fa	دفترچه آدرس
+address book search	mail	fa	جستجوی دفترچه آدرس
+after message body	mail	fa	پس از بدنه پیام
+all address books	mail	fa	همه دفترچه آدرسها
+all folders	mail	fa	همه پوشه ها
+all of	mail	fa	همه
+allways a new window	mail	fa	همیشه پنجره جدید
+always show html emails	mail	fa	همیشه رایانامه های زنگام را نمایش بده
+and	mail	fa	و
+any of	mail	fa	هرکدام از
+anyone	mail	fa	همه
+as a subfolder of	mail	fa	بعنوان زیر پوشه
+attach	mail	fa	پیوست شود
+attachments	mail	fa	پیوندها
+auto refresh folder list	mail	fa	بازخوانی خودکار فهرست پوشه
+back to folder	mail	fa	بازگشت به پوشه
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	mail	fa	برپایه شاخصهای تعیین شده، پیامهای ورودی در فهرست پیامها می توانند رنگهای پس زمینه متفاوتی داشته باشند. این کمک می کند که به راحتی پیامها از یکدیگر تشخیص داده شوند
+bcc	mail	fa	رونوشت دوم
+before headers	mail	fa	قبل از سرآیندها
+between headers and message body	mail	fa	بین سرآیندها و بدنه پیام
+body part	mail	fa	قسمت بدنه
+can't connect to inbox!!	mail	fa	ناتوان از اتصال به صندوق ورودی!!!
+cc	mail	fa	رونوشت
+change folder	mail	fa	تغییر پوشه
+check message against next rule also	mail	fa	پیام را در مقابل قانون بعد هم بازرسی کن
+checkbox	mail	fa	جعبه انتخاب
+click here to log back in.	mail	fa	برای ورود مجدد اینجا کلیک کنید
+click here to return to %1	mail	fa	برای بازگشت به %1 اینجا را کلیک کنید
+close all	mail	fa	بستن همه
+close this page	mail	fa	بستن این صفحه
+close window	mail	fa	بستن پنجره
+color	mail	fa	رنگ
+compose	mail	fa	نامه جدید
+compress folder	mail	fa	فشرده سازی پوشه
+configuration	mail	fa	پیکربندی
+contains	mail	fa	شامل
+copy to	mail	fa	نسخه برداری به
+create	mail	fa	ایجاد
+create folder	mail	fa	ایجاد پوشه
+create sent	mail	fa	ایجاد ارسال شده
+create subfolder	mail	fa	ایجاد زیر پوشه
+create trash	mail	fa	ایجاد بازیافت
+created folder successfully!	mail	fa	پوشه با موفقیت ایجاد شد
+dark blue	mail	fa	آبی تیره
+dark cyan	mail	fa	فیروزه ای تیره
+dark gray	mail	fa	خاکستری تیره
+dark green	mail	fa	سبز تیره
+dark magenta	mail	fa	بنفش تیره
+dark yellow	mail	fa	زرد تیره
+date(newest first)	mail	fa	تاریخ (جدیدها اول)
+date(oldest first)	mail	fa	تاریخ (قدیمی ها اول)
+days	mail	fa	روز
+deactivate script	mail	fa	غیرفعال سازی اسکریپت
+default	mail	fa	پیش فرض
+default sorting order	mail	fa	ترتیب مرتب سازی پیش فرض
+delete all	mail	fa	حذف همه
+delete folder	mail	fa	حذف پوشه
+delete script	mail	fa	حذف اسکریپت
+delete selected	mail	fa	حذف انتخاب شده ها
+delete selected messages	mail	fa	حذف پیامهای انتخاب شده
+deleted	mail	fa	حذف شد
+deleted folder successfully!	mail	fa	پوشه با موفقیت حذف شد!
+disable	mail	fa	غیر فعال
+discard message	mail	fa	نادیده گرفتن پیام
+display messages in multiple windows	mail	fa	نمایش پیامها در چند پنجره
+display of html emails	mail	fa	نمایش رایانامه های زنگام
+display only when no plain text is available	mail	fa	نمایش فقط وقتی که متن معمولی موجود نیست
+display preferences	mail	fa	مشخصات نمایش
+do it!	mail	fa	انجامش بده!
+do not use sent	mail	fa	از ارسال شده استفاده نشود
+do not use trash	mail	fa	از بازیافت استفاده نشود
+do you really want to delete the '%1' folder?	mail	fa	آیا واقعا مطمئنید که می خواهید پوشه '%1' را حدف کنید؟
+does not contain	mail	fa	شامل نیست
+does not match	mail	fa	جور نیست
+does not match regexp	mail	fa	با عبارت باقاعده جور نبود
+don't use sent	mail	fa	از ارسال شده استفاده نشود
+don't use trash	mail	fa	از بازیافت استفاده نشود
+down	mail	fa	پائین
+download	mail	fa	دریافت
+download this as a file	mail	fa	دریافت این بعنوان یک پرونده
+e-mail	mail	fa	رایانامه ۲
+e-mail address	mail	fa	نشانی رایانامه
+e-mail folders	mail	fa	پوشه رایانامه
+edit email forwarding address	mail	fa	ویرایش نشانی رایانامه پیش سو
+edit filter	mail	fa	ویرایش صافی
+edit rule	mail	fa	ویرایش قانون
+edit selected	mail	fa	ویرایش انتخاب شده ها
+edit vacation settings	mail	fa	ویرایش تنظیمات بیکاری
+email address	mail	fa	نشانی رایانامه
+email forwarding address	mail	fa	نشانی رایانامه پیش سو
+email signature	mail	fa	امضاء رایانامه
+empty trash	mail	fa	خالی کردن زباله
+enable	mail	fa	فعال
+enter your default mail domain ( from: user@domain )	admin	fa	حوزه پیش فرض رایانامه خود را وارد کنید( از: user@domain‌ )
+enter your imap mail server hostname or ip address	admin	fa	نام میزبان یا نشانی IP کارگزار IMAP را وارد کنید
+enter your sieve server hostname or ip address	admin	fa	نام میزبان یا نشانی IP کارگزار SIEVE را وارد کنید
+enter your sieve server port	admin	fa	درگاه کارگزار SIEVE راوارد کنید
+enter your smtp server hostname or ip address	admin	fa	نام میزبان یا نشانی IP کارگزار SMTP را وارد کنید
+enter your smtp server port	admin	fa	درگاه کارگزار SMTP راوارد کنید
+entry saved	mail	fa	ورودی ذخیره شد
+error	mail	fa	خطا!
+error connecting to imap serv	mail	fa	خطا در اتصال به کارگزار آی مپ
+error opening	mail	fa	خطا در باز کردن
+event details follow	mail	fa	پیگیری جزئیات رویداد
+every	mail	fa	هر
+every %1 days	mail	fa	هر %1 روز
+expunge	mail	fa	محو کردن
+extended	mail	fa	توسعه یافته
+felamimail	common	fa	رایانامه ۲
+file into	mail	fa	پرونده در
+filemanager	mail	fa	مدیر پرونده
+files	mail	fa	پرونده ها
+filter active	mail	fa	فعالسازی صافی
+filter name	mail	fa	نام صافی
+filter rules	common	fa	قوانین صافی
+first name	mail	fa	نام
+flagged	mail	fa	علامت گذاری شده
+flags	mail	fa	علامتها
+folder	mail	fa	پوشه
+folder acl	mail	fa	حق دسترسی پوشه
+folder name	mail	fa	نام پوشه
+folder path	mail	fa	مسیر پوشه
+folder preferences	mail	fa	مشخصات پوشه
+folder settings	mail	fa	تنظیمات پوشه
+folder status	mail	fa	وضعیت پوشه
+folderlist	mail	fa	فهرست پوشه
+foldername	mail	fa	نام پوشه
+folders	mail	fa	پوشه ها
+folders created successfully!	mail	fa	پوشه ها با موفقیت ایجاد شدند!
+follow	mail	fa	پیرو
+for mail to be send - not functional yet	mail	fa	برای رایانامه هایی که ارسال می شوند - هنوز عملیاتی نیست
+for received mail	mail	fa	برای رایانامه های دریافت شده
+forward	mail	fa	پیش سو
+forward to address	mail	fa	پیش سو به نشانی
+forwarding	mail	fa	پیش سو می شود
+found	mail	fa	پیدا شدن
+from	mail	fa	از
+from(a->z)	mail	fa	از(A->Z)
+from(z->a)	mail	fa	از (Z->A)
+full name	mail	fa	نام کامل
+greater than	mail	fa	بزرگتر از
+header lines	mail	fa	خطوط سرآیند
+hide header	mail	fa	پنهانسازی سرآیند
+html	mail	fa	زنگام
+icons and text	mail	fa	نمایه و متن
+icons only	mail	fa	فقط نمایه
+identifying name	mail	fa	نام شناخته شده
+if	mail	fa	اگر
+if from contains	mail	fa	اگر از شامل باشد
+if mail header	mail	fa	اگر سرآیند نامه باشد
+if message size	mail	fa	اگر اندازه پیام باشد
+if subject contains	mail	fa	اگر موضوع شامل باشد
+if to contains	mail	fa	اگر به شامل باشد
+illegal folder name.  please select a different name.	mail	fa	نام نامعتبر برای پوشه. لطفا نام دیگری برگزینید
+imap	mail	fa	آی مپ
+imap server	mail	fa	کارگزار آی مپ
+imap server address	mail	fa	نشانی کارگزار آی مپ
+imap server type	mail	fa	نوع کارگزار آی مپ
+import	mail	fa	وارد کردن
+in	mail	fa	در
+inbox	mail	fa	صندوق ورودی
+index order	mail	fa	ترتیب اندیکس
+info	mail	fa	اطلاعات
+invalid user name or password	mail	fa	نام کاربری یا گذرواژه نادرست
+javascript	mail	fa	جاوا اسکریپت
+keep a copy of the message in your inbox	mail	fa	یک نسخه از پیام را در صندوق ورودی نگهداری شود
+keep local copy of email	mail	fa	نسخه محلی از رایانامه نگهداری شود
+kilobytes	mail	fa	کیلوبایت
+language	mail	fa	زبان
+last name	mail	fa	نام خانوادگی
+left	mail	fa	چپ
+less	mail	fa	کمتر
+less than	mail	fa	کمتر از
+light gray	mail	fa	خاکستری روشن
+list all	mail	fa	فهرست همه
+location of buttons when composing	mail	fa	محل دکمه ها در زمان نوشتن نامه جدید
+mail server login type	admin	fa	نوع ورود کارگزار رایانامه
+mail settings	mail	fa	تنظیمات رایانامه
+mainmessage	mail	fa	پیام اصلی
+manage emailfilter / vacation	preferences	fa	مدیریت بیکاری/صافی رایانامه
+manage folders	common	fa	مدیریت پوشه ها
+manage sieve	common	fa	مدیریت اسکریپتهای Sieve
+mark as deleted	mail	fa	شناسائی بعنوان حذف شده
+mark messages as	mail	fa	شناسائی انتخاب شده ها بعنوان
+mark selected as flagged	mail	fa	شناسائی انتخاب شده ها بعنوان علامت دار
+mark selected as read	mail	fa	شناسائی انتخاب شده ها بعنوان خوانده شده
+mark selected as unflagged	mail	fa	شناسائی انتخاب شده ها بعنوان بدون علامت
+mark selected as unread	mail	fa	شناسائی انتخاب شده ها بعنوان خوانده نشده
+match	mail	fa	جور شود
+matches	mail	fa	جور شده ها
+matches regexp	mail	fa	عبارات باقاعده جور شده
+message highlighting	mail	fa	نمایان سازی پیامها
+message list	mail	fa	فهرست پیامها
+messages	mail	fa	پیام
+move	mail	fa	انتقال دادن
+move folder	mail	fa	انتقال پوشه
+move messages	mail	fa	انتقال پیامها
+move selected to	mail	fa	انتقال انتخاب شده ها به
+move to	mail	fa	انتقال انتخاب شده ها به
+move to trash	mail	fa	انتقال به بازیافت
+moving messages to	mail	fa	در حال انتقال پیامها به
+name	mail	fa	نام
+never display html emails	mail	fa	هرگز پیامهای زنگام را نشان نده
+new	common	fa	جدید
+new filter	mail	fa	صافی جدید
+next	mail	fa	بعدی
+next message	mail	fa	پیام بعدی
+no filter	mail	fa	بدون صافی
+no folders found	mail	fa	پوشه ای پیدا نشد
+no folders were found to subscribe to!	mail	fa	پوشه ای برای عضویت پیدا نشد!
+no folders were found to unsubscribe from!	mail	fa	پوشه ای برای لغو عضویت پیدا نشد!
+no highlighting is defined	mail	fa	نمایان سازی تعریف نشده
+no messages found...	mail	fa	پیامی پیدا نشد...
+no messages were selected.	mail	fa	پیامی انتخاب نشده
+no previous message	mail	fa	پیام قبلی موجود نیست
+no valid emailprofile selected!!	mail	fa	تنظیمات معتبری برای رایانامه انتخاب نشده!!!
+none	mail	fa	هیچ
+on	mail	fa	در
+on behalf of	mail	fa	در نیمه
+one address is not valid	mail	fa	یکی از نشانیها معتبر نیستند
+only inbox	mail	fa	فقط صندوق ورودی
+only one window	mail	fa	فقط یک پنجره
+only unseen	mail	fa	فقط ندیده ها
+open all	mail	fa	بازکردن همه
+options	mail	fa	گزینه ها
+or	mail	fa	یا
+organisation	mail	fa	سازمان
+organization	mail	fa	سازمان
+organization name	admin	fa	نام سازمان
+participants	mail	fa	همکاران
+personal information	mail	fa	اطلاعات شخصی
+please select a address	mail	fa	لطفا یک نشانی انتخاب کنید
+please select the number of days to wait between responses	mail	fa	لطفا تعداد روزها برای انتظار مابین پاسخها را انتخاب کنید
+please supply the message to send with auto-responses	mail	fa	لطفا پیامی را برای ارسال پاسخ خودکار تعیین کنید
+posting	mail	fa	درحال پست
+previous	mail	fa	قبلی
+previous message	mail	fa	پیام قبلی
+print it	mail	fa	چاپش کن
+print this page	mail	fa	چاپ این صفحه
+quicksearch	mail	fa	جستجوی سریع
+read	mail	fa	خوانده شده
+reading	mail	fa	در حال خواندن
+recent	mail	fa	اخیر
+refresh time in minutes	mail	fa	زمان بازخوانی به دقیقه
+remove	mail	fa	حذف کردن
+remove immediately	mail	fa	فورا حذف شود
+rename	mail	fa	تغییر نام
+rename a folder	mail	fa	تغییر نام یک پوشه
+rename folder	mail	fa	تغییر نام پوشه
+renamed successfully!	mail	fa	با موفقیت تغییر نام یافت!
+replied	mail	fa	پاسخ داده شده
+reply	mail	fa	پاسخ
+reply all	mail	fa	پاسخ به همه
+reply to	mail	fa	پاسخ به
+replyto	mail	fa	پاسخ به
+respond	mail	fa	پاسخ
+respond to mail sent to	mail	fa	پاسخ به نامه ارسال شده به
+return	mail	fa	بازگشت
+return to options page	mail	fa	بازگشت به صفحه گزینه ها
+right	mail	fa	راست
+rule	mail	fa	قانون
+save	mail	fa	ذخیره
+save all	mail	fa	ذخیره کردن همه
+save changes	mail	fa	ذخیره تغییرات
+script name	mail	fa	نام اسکریپت
+script status	mail	fa	وضعیت اسکریپت
+search	mail	fa	جستجو
+search for	mail	fa	جستجو برای
+select	mail	fa	انتخاب
+select all	mail	fa	انتخاب همه
+select emailprofile	mail	fa	تنظیمات رایانامه را انتخاب کنید
+select folder	mail	fa	پوشه را انتخاب کنید
+select your mail server type	admin	fa	نوع کارگزار رایانامه خود را انتخاب کنید
+send	mail	fa	ارسال
+send a reject message	mail	fa	ارسال یک پیام برگشتی
+sent folder	mail	fa	پوشه ارسال شده
+show header	mail	fa	نمایش سرآیند
+show new messages on main screen	mail	fa	نمایش پیامهای جدید در صفحه اصلی(خانه)
+sieve settings	admin	fa	تنظیمات Sieve
+signature	mail	fa	امضاء
+simply click the target-folder	mail	fa	برای انتقال انتخاب شده ها فقط روی پوشه مقصد کلیک کنید
+size	mail	fa	اندازه
+size of editor window	mail	fa	اندازه پنجره ویرایشگر
+size(...->0)	mail	fa	اندازه (...->0)
+size(0->...)	mail	fa	اندازه (0->...)
+small view	mail	fa	نمای کوچک
+smtp settings	admin	fa	تنظیمات SMTP
+subject	mail	fa	موضوع
+subject(a->z)	mail	fa	موضوع (A->Z)
+subject(z->a)	mail	fa	موضوع (Z->A)
+submit	mail	fa	ثبت
+subscribe	mail	fa	عضو شدن
+subscribed	mail	fa	عضو شده
+subscribed successfully!	mail	fa	عضویت با موفقیت انجام شد!
+table of contents	mail	fa	فهرست محتویات
+text only	mail	fa	فقط متن
+the connection to the imap server failed!!	mail	fa	اتصال به کارگزار آی مپ ناموفق بود!!!
+the mimeparser can not parse this message.	mail	fa	تشخیص دهنده نوع فایل قادر به تشخیص این پیام نیست
+then	mail	fa	سپس
+this folder is empty	mail	fa	این پوشه خالی است
+this php has no imap support compiled in!!	mail	fa	این PHP پشتیبانی از آی مپ را در خود ندارد!
+to	mail	fa	به
+to mail sent to	mail	fa	برای نامه های ارسال شده
+translation preferences	mail	fa	مشخصات ترجمه
+translation server	mail	fa	کارگزار ترجمه
+trash fold	mail	fa	پوشه بازیافت
+trash folder	mail	fa	پوشه بازیافت
+type	mail	fa	نوع
+unflagged	mail	fa	بی علامت
+unknown err	mail	fa	خطای ناشناخته
+unknown error	mail	fa	خطای ناشناخته
+unknown sender	mail	fa	فرستنده ناشناس
+unknown user or password incorrect.	mail	fa	نام کاربری یا گذرواژه نادرست است
+unread	common	fa	خوانده نشده
+unseen	mail	fa	دیده نشده
+unselect all	mail	fa	خارج کردن از انتخاب همه
+unsubscribe	mail	fa	لغو عضویت
+unsubscribed	mail	fa	عضویت لغو شده
+unsubscribed successfully!	mail	fa	لغو شدن عضویت با موفقیت انجام شد!
+up	mail	fa	بالا
+urgent	mail	fa	فوری
+use <a href="%1">emailadmin</a> to create profiles	mail	fa	از <a href="%1">مدیر رایانامه</a برای ایجاد پروفایل استفاده کنید
+use a signature	mail	fa	استفاده از امضاء
+use a signature?	mail	fa	استفاده از امضاء؟
+use addresses	mail	fa	استفاده از
+use custom settings	mail	fa	از تنظیمات سفارشی استفاده شود
+use regular expressions	mail	fa	استفاده از عبارات باقاعده
+use smtp auth	admin	fa	استفاده از تصدیق در SMTP
+users can define their own emailaccounts	admin	fa	کاربران می توانند حسابهای کاربری را خودشان تعریف کنند
+vacation notice	common	fa	آگهی بیکاری
+view full header	mail	fa	نمایش همه سرآیندها
+view message	mail	fa	نمایش پیام
+viewing full header	mail	fa	نمایش همه سرآیندها
+viewing message	mail	fa	نمایش پیام
+viewing messages	mail	fa	نمایش پیامها
+when deleting messages	mail	fa	وقتی پیامی حذف می شود
+with message	mail	fa	با پیام
+with message "%1"	mail	fa	با پیام "%1"
+wrap incoming text at	mail	fa	شکستن متن ورودی در
+writing	mail	fa	نوشتن
+wrote	mail	fa	نوشته شده

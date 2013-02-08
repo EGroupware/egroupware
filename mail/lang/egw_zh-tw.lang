@@ -1,0 +1,430 @@
+(no subject)	mail	zh-tw	(沒有標題)
+(only cc/bcc)	mail	zh-tw	(只要副本/密件副本)
+(unknown sender)	mail	zh-tw	(不知名的寄件者)
+activate	mail	zh-tw	啟用
+activate script	mail	zh-tw	啟用程式
+add acl	mail	zh-tw	新增存取控制
+add address	mail	zh-tw	新增位址
+add rule	mail	zh-tw	新增規則
+add script	mail	zh-tw	新增程式
+add to %1	mail	zh-tw	新增到 %1
+add to address book	mail	zh-tw	加入通訊錄
+add to addressbook	mail	zh-tw	加入通訊錄
+adding file to message. please wait!	mail	zh-tw	新增檔案到訊息中，請等待！
+additional info	mail	zh-tw	其他資訊
+address book	mail	zh-tw	通訊錄
+address book search	mail	zh-tw	搜尋通訊錄
+after message body	mail	zh-tw	在訊息內容之後
+all address books	mail	zh-tw	所有通訊錄
+all folders	mail	zh-tw	所有資料夾
+all of	mail	zh-tw	所有的
+allow images from external sources in html emails	mail	zh-tw	在 HTML 郵件中允許來自外部的圖片
+allways a new window	mail	zh-tw	都開啟一個新視窗
+always show html emails	mail	zh-tw	都用HTML顯示郵件
+and	mail	zh-tw	且
+any of	mail	zh-tw	任意的
+any status	mail	zh-tw	任意狀態
+anyone	mail	zh-tw	任何人
+as a subfolder of	mail	zh-tw	子資料夾在
+attach	mail	zh-tw	附加
+attachments	mail	zh-tw	附加檔案
+authentication required	mail	zh-tw	需要登入
+auto refresh folder list	mail	zh-tw	自動更新資料夾清單
+back to folder	mail	zh-tw	回到資料夾
+bad login name or password.	mail	zh-tw	帳號或密碼有誤
+bad or malformed request. server responded: %s	mail	zh-tw	錯誤的請求，伺服器回應： %s
+bad request: %s	mail	zh-tw	錯誤的請求： %s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	mail	zh-tw	基於給予的規則，收進來的信件在清單中可以使用不同的背景顏色。這樣子可以輕易的辨識郵件的來源，特別是電子報。
+bcc	mail	zh-tw	密件副本
+before headers	mail	zh-tw	頁首之前
+between headers and message body	mail	zh-tw	頁首與訊息內容之間
+body part	mail	zh-tw	內容部份
+by date	mail	zh-tw	按日期
+can't connect to inbox!!	mail	zh-tw	無法連結收件夾！
+cc	mail	zh-tw	副本
+change folder	mail	zh-tw	改變資料夾
+check message against next rule also	mail	zh-tw	也用下一個規則檢查郵件
+checkbox	mail	zh-tw	核選方塊
+clear search	mail	zh-tw	清除搜尋
+click here to log back in.	mail	zh-tw	點這裡登入
+click here to return to %1	mail	zh-tw	點這裡回到%1
+close all	mail	zh-tw	全部關閉
+close this page	mail	zh-tw	關閉這一頁
+close window	mail	zh-tw	關閉視窗
+color	mail	zh-tw	顏色
+compose	mail	zh-tw	建立
+compress folder	mail	zh-tw	壓縮資料夾
+condition	mail	zh-tw	條件
+configuration	mail	zh-tw	設定
+connection dropped by imap server.	mail	zh-tw	連線被 IMAP 伺服器中斷了
+contact not found!	mail	zh-tw	找不到聯絡人！
+contains	mail	zh-tw	包含
+copy to	mail	zh-tw	複製到
+could not complete request. reason given: %s	mail	zh-tw	無法完成請求，理由： %s
+could not open secure connection to the imap server. %s : %s.	mail	zh-tw	無法開啟安全連線到 IMAP 伺服器。 %s： %s
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	mail	zh-tw	CRAM-MD5 或 DIGEST-MD5 需要安裝 Auth_SASL 程式。
+create	mail	zh-tw	建立
+create folder	mail	zh-tw	建立資料夾
+create sent	mail	zh-tw	建立寄件備份
+create subfolder	mail	zh-tw	建立子資料夾
+create trash	mail	zh-tw	建立垃圾桶
+created folder successfully!	mail	zh-tw	建立資料夾完成！
+dark blue	mail	zh-tw	深藍
+dark cyan	mail	zh-tw	深青綠
+dark gray	mail	zh-tw	深灰
+dark green	mail	zh-tw	深綠
+dark magenta	mail	zh-tw	深紅
+dark yellow	mail	zh-tw	深黃
+date(newest first)	mail	zh-tw	日期(新的在前)
+date(oldest first)	mail	zh-tw	日期(舊的在前)
+days	mail	zh-tw	日
+deactivate script	mail	zh-tw	停用程式
+default	mail	zh-tw	預設
+default signature	mail	zh-tw	預設簽名
+default sorting order	mail	zh-tw	預設排序
+delete all	mail	zh-tw	刪除全部
+delete folder	mail	zh-tw	刪除資料夾
+delete script	mail	zh-tw	刪除指令
+delete selected	mail	zh-tw	刪除所選擇的
+delete selected messages	mail	zh-tw	刪除所選擇的訊息
+deleted	mail	zh-tw	刪除日期
+deleted folder successfully!	mail	zh-tw	刪除資料夾完成！
+deleting messages	mail	zh-tw	刪除信件中
+disable	mail	zh-tw	停用
+discard	mail	zh-tw	取消
+discard message	mail	zh-tw	取消郵件
+display message in new window	mail	zh-tw	在新視窗顯示訊息
+display messages in multiple windows	mail	zh-tw	開啟多個視窗顯示訊息
+display of html emails	mail	zh-tw	顯示HTML郵件
+display only when no plain text is available	mail	zh-tw	只有在不包含存文字時顯示
+display preferences	mail	zh-tw	顯示設定
+displaying html messages is disabled	mail	zh-tw	顯示 html 信件的功能停用中
+do it!	mail	zh-tw	執行！
+do not use sent	mail	zh-tw	不使用寄件備份
+do not use trash	mail	zh-tw	不使用垃圾桶
+do not validate certificate	mail	zh-tw	不驗證執照
+do you really want to delete the '%1' folder?	mail	zh-tw	您確定要刪除資料夾 '%1' ？
+do you really want to delete the selected signatures?	mail	zh-tw	您確定要刪除選擇的簽名？
+does not contain	mail	zh-tw	不包含
+does not match	mail	zh-tw	不符合
+does not match regexp	mail	zh-tw	不符合條件
+don't use draft folder	mail	zh-tw	不使用草稿夾
+don't use sent	mail	zh-tw	不使用寄件備份
+don't use trash	mail	zh-tw	不使用垃圾桶
+down	mail	zh-tw	下
+download	mail	zh-tw	下載
+download this as a file	mail	zh-tw	另存新檔
+draft folder	mail	zh-tw	草稿夾
+e-mail	mail	zh-tw	E-Mail
+e-mail address	mail	zh-tw	E-Mail位址
+e-mail folders	mail	zh-tw	郵件資料夾
+edit email forwarding address	mail	zh-tw	編輯郵件轉寄位址
+edit filter	mail	zh-tw	編輯規則
+edit rule	mail	zh-tw	編輯規則
+edit selected	mail	zh-tw	編輯選取的
+edit vacation settings	mail	zh-tw	編輯假期設定
+email address	mail	zh-tw	郵件位址
+email forwarding address	mail	zh-tw	郵件轉寄位址
+email signature	mail	zh-tw	簽名檔
+emailaddress	mail	zh-tw	郵件位址
+empty trash	mail	zh-tw	清空垃圾桶
+enable	mail	zh-tw	啟用
+encrypted connection	mail	zh-tw	加密的連線
+enter your default mail domain ( from: user@domain )	admin	zh-tw	輸入您的預設郵件網域
+enter your imap mail server hostname or ip address	admin	zh-tw	輸入您的IMAP伺服器主機名稱或IP位址
+enter your sieve server hostname or ip address	admin	zh-tw	輸入您的SIEVE伺服器主機名稱或IP位址
+enter your sieve server port	admin	zh-tw	輸入您的SIEVE伺服器連接埠
+enter your smtp server hostname or ip address	admin	zh-tw	輸入您的SMTP伺服器主機名稱或IP位址
+enter your smtp server port	admin	zh-tw	輸入您的SMTP伺服器連接埠
+entry saved	mail	zh-tw	資料儲存了
+error	mail	zh-tw	錯誤
+error connecting to imap serv	mail	zh-tw	連結IMAP伺服器錯誤
+error connecting to imap server. %s : %s.	mail	zh-tw	連線到 IMAP 伺服器時發生錯誤。 %s : %s
+error connecting to imap server: [%s] %s.	mail	zh-tw	連線到 IMAP 伺服器時發生錯誤： [%s] %s
+error opening	mail	zh-tw	開啟錯誤
+event details follow	mail	zh-tw	事件細節
+every	mail	zh-tw	每一
+every %1 days	mail	zh-tw	每 %1 天
+expunge	mail	zh-tw	刪去
+extended	mail	zh-tw	延伸的
+felamimail	common	zh-tw	FelaMiMail
+file into	mail	zh-tw	檔案插入
+filemanager	mail	zh-tw	檔案管理員
+files	mail	zh-tw	檔案
+filter active	mail	zh-tw	規則啟用中
+filter name	mail	zh-tw	規則名稱
+filter rules	common	zh-tw	過濾規則
+first name	mail	zh-tw	名
+flagged	mail	zh-tw	被標示
+flags	mail	zh-tw	標示
+folder	mail	zh-tw	資料夾
+folder acl	mail	zh-tw	資料夾 ACL
+folder name	mail	zh-tw	資料夾名稱
+folder path	mail	zh-tw	資料夾路徑
+folder preferences	mail	zh-tw	資料夾偏好
+folder settings	mail	zh-tw	資料夾設定
+folder status	mail	zh-tw	資料夾狀態
+folderlist	mail	zh-tw	資料夾清單
+foldername	mail	zh-tw	資料夾名稱
+folders	mail	zh-tw	資料夾
+folders created successfully!	mail	zh-tw	資料夾建立成功！
+follow	mail	zh-tw	跟
+for mail to be send - not functional yet	mail	zh-tw	要寄出的郵件 - 尚未寄出
+for received mail	mail	zh-tw	收到的郵件
+forward	mail	zh-tw	轉寄
+forward to	mail	zh-tw	轉寄給
+forward to address	mail	zh-tw	轉寄到信箱
+forwarding	mail	zh-tw	轉寄中
+found	mail	zh-tw	找到
+from	mail	zh-tw	來自
+from(a->z)	mail	zh-tw	從 (A->Z)
+from(z->a)	mail	zh-tw	從 (Z->A)
+full name	mail	zh-tw	全名
+greater than	mail	zh-tw	大於
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	mail	zh-tw	更多訊息請參考<a href="http://www.felamimail.org" target="_new">www.felamimail.org</a><br>
+header lines	mail	zh-tw	頭條新聞
+hide header	mail	zh-tw	隱藏標頭
+hostname / address	mail	zh-tw	主機名稱/位址
+html	mail	zh-tw	HTML
+icons and text	mail	zh-tw	圖示與文字
+icons only	mail	zh-tw	只顯示圖示
+identifying name	mail	zh-tw	識別名稱
+identity	mail	zh-tw	識別
+if	mail	zh-tw	如果
+if from contains	mail	zh-tw	如果寄件人包含
+if mail header	mail	zh-tw	如果郵件標頭
+if message size	mail	zh-tw	如果信件大小
+if subject contains	mail	zh-tw	如果主旨包含
+if to contains	mail	zh-tw	如果收件人包含
+if using ssl or tls, you must have the php openssl extension loaded.	mail	zh-tw	如果使用 SSL 或 TLS ，您必須先載入 PHP openssl 外掛。
+illegal folder name.  please select a different name.	mail	zh-tw	錯誤的資料夾名稱，請重新輸入
+imap	mail	zh-tw	IMAP
+imap server	mail	zh-tw	IMAP伺服器
+imap server address	mail	zh-tw	IMAP伺服器位址
+imap server closed the connection.	mail	zh-tw	IMAP伺服器關閉連線
+imap server closed the connection. server responded: %s	mail	zh-tw	IMAP伺服器關閉連線，伺服器回應： %s
+imap server password	mail	zh-tw	IMAP伺服器密碼
+imap server type	mail	zh-tw	IMAP伺服器種類
+imap server username	mail	zh-tw	IMAP伺服器帳號
+imaps authentication	mail	zh-tw	IMAPS驗證
+imaps encryption only	mail	zh-tw	只透過IMAPS加密
+import	mail	zh-tw	匯入
+in	mail	zh-tw	在
+inbox	mail	zh-tw	收件匣
+incoming mail server(imap)	mail	zh-tw	收信伺服器（IMAP）
+index order	mail	zh-tw	排序
+info	mail	zh-tw	資訊
+invalid user name or password	mail	zh-tw	錯誤的帳號或密碼
+javascript	mail	zh-tw	JavaScript
+jumping to end	mail	zh-tw	跳到結束的地方
+jumping to start	mail	zh-tw	跳到開始的地方
+keep a copy of the message in your inbox	mail	zh-tw	在收件夾保留郵件副本
+keep local copy of email	mail	zh-tw	在本機保留信件備份
+kilobytes	mail	zh-tw	KB
+language	mail	zh-tw	語言
+last name	mail	zh-tw	姓
+later	mail	zh-tw	晚一點
+left	mail	zh-tw	左
+less	mail	zh-tw	少
+less than	mail	zh-tw	小於
+light gray	mail	zh-tw	淺灰
+list all	mail	zh-tw	顯示全部
+loading	mail	zh-tw	載入中
+location of buttons when composing	mail	zh-tw	建立按鈕時的位置
+mail server login type	admin	zh-tw	郵件伺服器登入種類
+mail settings	mail	zh-tw	郵件設定
+mainmessage	mail	zh-tw	郵件主體
+manage emailaccounts	common	zh-tw	管理郵件帳號
+manage emailfilter / vacation	preferences	zh-tw	管理郵件規則/假期
+manage folders	common	zh-tw	管理資料夾
+manage sieve	common	zh-tw	管理Sieve程式
+manage signatures	mail	zh-tw	管理簽名
+mark as deleted	mail	zh-tw	標示刪除
+mark messages as	mail	zh-tw	標示選取的訊息為
+mark selected as flagged	mail	zh-tw	標示選取的為標註
+mark selected as read	mail	zh-tw	標示選取的為已讀取
+mark selected as unflagged	mail	zh-tw	標示選取的為取消標註
+mark selected as unread	mail	zh-tw	標示選取的為未讀取
+match	mail	zh-tw	符合
+matches	mail	zh-tw	符合
+matches regexp	mail	zh-tw	符合規則
+max uploadsize	mail	zh-tw	上傳檔案大小上限
+message highlighting	mail	zh-tw	訊息醒目標示
+message list	mail	zh-tw	訊息清單
+messages	mail	zh-tw	訊息
+move	mail	zh-tw	移動
+move folder	mail	zh-tw	移動資料夾
+move messages	mail	zh-tw	移動訊息
+move selected to	mail	zh-tw	移動選取的到
+move to	mail	zh-tw	移動選取的到
+move to trash	mail	zh-tw	移到垃圾桶
+moving messages to	mail	zh-tw	移動信件到
+name	mail	zh-tw	名稱
+never display html emails	mail	zh-tw	不顯示HTML郵件
+new	common	zh-tw	新增
+new filter	mail	zh-tw	新規則
+next	mail	zh-tw	下一個
+next message	mail	zh-tw	下一封郵件
+no active imap server found!!	mail	zh-tw	找不到可以使用的 IMAP 伺服器！
+no encryption	mail	zh-tw	沒有加密
+no filter	mail	zh-tw	沒有過濾規則
+no folders found	mail	zh-tw	找不到資料夾
+no folders were found to subscribe to!	mail	zh-tw	找不到可以訂閱的資料夾
+no folders were found to unsubscribe from!	mail	zh-tw	找不到可以取消訂閱的資料夾
+no highlighting is defined	mail	zh-tw	未定義醒目標示
+no message returned.	mail	zh-tw	沒有訊息回應。
+no messages found...	mail	zh-tw	沒有任何信件...
+no messages were selected.	mail	zh-tw	沒有選取任何訊息
+no plain text part found	mail	zh-tw	找不到純文字部份
+no previous message	mail	zh-tw	沒有上一個
+no recipient address given!	mail	zh-tw	沒有輸入收件人信箱！
+no supported imap authentication method could be found.	mail	zh-tw	找不到能夠使用的 IMAP 驗證方式。
+no valid emailprofile selected!!	mail	zh-tw	沒有選取可以使用的郵件資料！
+none	mail	zh-tw	無
+on	mail	zh-tw	在
+on behalf of	mail	zh-tw	代表
+one address is not valid	mail	zh-tw	其中一個信箱格式有誤
+only inbox	mail	zh-tw	只有收件夾
+only one window	mail	zh-tw	只開啟一個視窗
+only unseen	mail	zh-tw	只有未讀取
+open all	mail	zh-tw	全部開啟
+options	mail	zh-tw	選項
+or	mail	zh-tw	或
+organisation	mail	zh-tw	組織
+organization	mail	zh-tw	組織
+organization name	admin	zh-tw	組織名稱
+outgoing mail server(smtp)	mail	zh-tw	寄信伺服器（SMTP）
+participants	mail	zh-tw	參與人
+personal information	mail	zh-tw	個人資訊
+please select a address	mail	zh-tw	請選擇一個位址
+please select the number of days to wait between responses	mail	zh-tw	請選擇回應之間要等待的天數
+please supply the message to send with auto-responses	mail	zh-tw	請提供要自動回信的內容
+port	mail	zh-tw	連接埠
+posting	mail	zh-tw	發佈中
+previous	mail	zh-tw	上一個
+previous message	mail	zh-tw	上一封郵件
+print it	mail	zh-tw	列印
+print this page	mail	zh-tw	印出這一頁
+quicksearch	mail	zh-tw	快速搜尋
+read	mail	zh-tw	讀取
+reading	mail	zh-tw	讀取中
+receive notification	mail	zh-tw	收到提醒
+recent	mail	zh-tw	最近
+refresh time in minutes	mail	zh-tw	重新整理的分鐘數
+reject with	mail	zh-tw	拒絕
+remove	mail	zh-tw	移除
+remove immediately	mail	zh-tw	立刻移除
+rename	mail	zh-tw	改名
+rename a folder	mail	zh-tw	修改資料匣名稱
+rename folder	mail	zh-tw	修改資料匣名稱
+renamed successfully!	mail	zh-tw	修改名稱完成！
+replied	mail	zh-tw	已回信
+reply	mail	zh-tw	回信
+reply all	mail	zh-tw	全部回覆
+reply to	mail	zh-tw	回覆到
+replyto	mail	zh-tw	回覆到
+respond	mail	zh-tw	回覆
+respond to mail sent to	mail	zh-tw	回覆到郵件收件人
+return	mail	zh-tw	回上頁
+return to options page	mail	zh-tw	回到選項
+right	mail	zh-tw	正確
+row order style	mail	zh-tw	列順序風格
+rule	mail	zh-tw	規則
+save	mail	zh-tw	儲存
+save all	mail	zh-tw	儲存全部
+save as draft	mail	zh-tw	儲存為草稿
+save as infolog	mail	zh-tw	儲存為記事
+save changes	mail	zh-tw	儲存修改
+save message to disk	mail	zh-tw	儲存訊息到硬碟
+script name	mail	zh-tw	指令名稱
+script status	mail	zh-tw	指令狀態
+search	mail	zh-tw	搜尋
+search for	mail	zh-tw	搜尋
+select	mail	zh-tw	選擇
+select all	mail	zh-tw	選擇全部
+select emailprofile	mail	zh-tw	選擇郵件資料
+select folder	mail	zh-tw	選擇資料夾
+select your mail server type	admin	zh-tw	選擇您的郵件伺服器種類
+send	mail	zh-tw	送出
+send a reject message	mail	zh-tw	寄送一個拒絕信件
+sent folder	mail	zh-tw	寄件備份
+server supports mailfilter(sieve)	mail	zh-tw	伺服器支援郵件規則(sieve)
+show header	mail	zh-tw	顯示標頭
+show new messages on main screen	mail	zh-tw	在主要畫面顯示新訊息
+sieve script name	mail	zh-tw	sieve 程式名稱
+sieve settings	admin	zh-tw	Sieve設定
+signature	mail	zh-tw	簽名檔
+simply click the target-folder	mail	zh-tw	點選目標資料夾
+size	mail	zh-tw	大小
+size of editor window	mail	zh-tw	編輯視窗大小
+size(...->0)	mail	zh-tw	大小 (...->0)
+size(0->...)	mail	zh-tw	大小(0->...)
+skipping forward	mail	zh-tw	略過轉寄
+skipping previous	mail	zh-tw	略過上一個
+small view	mail	zh-tw	縮小
+smtp settings	admin	zh-tw	SMTP設定
+subject	mail	zh-tw	主旨
+subject(a->z)	mail	zh-tw	標題(A->Z)
+subject(z->a)	mail	zh-tw	標題(Z->A)
+submit	mail	zh-tw	送出
+subscribe	mail	zh-tw	訂閱
+subscribed	mail	zh-tw	已訂閱
+subscribed successfully!	mail	zh-tw	訂閱完成！
+table of contents	mail	zh-tw	內容表單
+text only	mail	zh-tw	純文字
+the connection to the imap server failed!!	mail	zh-tw	連結IMAP伺服器發生錯誤！
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	mail	zh-tw	IMAP 伺服器不支援指定的認證方式，請聯繫您的系統管理員。
+the mimeparser can not parse this message.	mail	zh-tw	mime 解析程式無法處理這封郵件
+then	mail	zh-tw	然後
+this folder is empty	mail	zh-tw	這個資料夾沒有任何信件
+this php has no imap support compiled in!!	mail	zh-tw	您的PHP並未編譯為支援IMAP的狀態
+to	mail	zh-tw	到
+to mail sent to	mail	zh-tw	到郵件寄件人
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	mail	zh-tw	要使用 TLS 連線，您必須執行在 PHP 5.1.0 或是更新版本中。
+translation preferences	mail	zh-tw	翻譯偏好
+translation server	mail	zh-tw	翻譯伺服器
+trash fold	mail	zh-tw	垃圾桶
+trash folder	mail	zh-tw	垃圾桶
+type	mail	zh-tw	格式
+unexpected response from server to authenticate command.	mail	zh-tw	伺服器 AUTHENTICATE 指令傳回了不明的回應。
+unexpected response from server to digest-md5 response.	mail	zh-tw	伺服器 Digest-MD5 指令傳回了不明的回應。
+unexpected response from server to login command.	mail	zh-tw	伺服器登入指令傳回了不明的回應。
+unflagged	mail	zh-tw	取消標示
+unknown err	mail	zh-tw	不知名的錯誤
+unknown error	mail	zh-tw	不知名的錯誤
+unknown imap response from the server. server responded: %s	mail	zh-tw	不明的 IMAP 伺服器回應，回應內容： %s
+unknown sender	mail	zh-tw	不知名的寄件人
+unknown user or password incorrect.	mail	zh-tw	不知名的使用者或是密碼錯誤
+unread	common	zh-tw	未讀取
+unseen	mail	zh-tw	未讀取
+unselect all	mail	zh-tw	取消全部選取
+unsubscribe	mail	zh-tw	取消訂閱
+unsubscribed	mail	zh-tw	取消訂閱
+unsubscribed successfully!	mail	zh-tw	取消訂閱完成！
+up	mail	zh-tw	上一層
+updating message status	mail	zh-tw	更新訊息狀態中
+updating view	mail	zh-tw	更新檢視
+urgent	mail	zh-tw	緊急的
+use <a href="%1">emailadmin</a> to create profiles	mail	zh-tw	使用 <a href="%1">郵件管理</a> 來建立資料
+use a signature	mail	zh-tw	使用簽名檔
+use a signature?	mail	zh-tw	使用簽名檔？
+use addresses	mail	zh-tw	使用位址
+use custom settings	mail	zh-tw	使用個人設定
+use regular expressions	mail	zh-tw	使用樣式比對
+use smtp auth	admin	zh-tw	使用SMTP認證
+users can define their own emailaccounts	admin	zh-tw	使用者可以自行定義郵件帳號
+vacation notice	common	zh-tw	假期提醒
+vacation notice is active	mail	zh-tw	假期提醒功能啟用中
+validate certificate	mail	zh-tw	驗證
+view full header	mail	zh-tw	顯示完整標頭
+view header lines	mail	zh-tw	檢視檔頭
+view message	mail	zh-tw	顯示訊息
+viewing full header	mail	zh-tw	顯示完整標頭中
+viewing message	mail	zh-tw	顯示訊息中
+viewing messages	mail	zh-tw	顯示訊息中
+when deleting messages	mail	zh-tw	當刪除訊息時
+with message	mail	zh-tw	信件
+with message "%1"	mail	zh-tw	信件 "%1"
+wrap incoming text at	mail	zh-tw	自動斷行
+writing	mail	zh-tw	編輯中
+wrote	mail	zh-tw	寫

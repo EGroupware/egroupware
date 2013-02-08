@@ -1,0 +1,27 @@
+clear search	mail	lo	ລົບລ້າງການຄົ້ນຫາ
+color	mail	lo	ສີ
+copy to	mail	lo	ສໍາເນົາໄປທີ່
+create folder	mail	lo	ສ້າງໂຟລເດີ
+days	mail	lo	ວັນ
+default	mail	lo	ຄ່າເລີ່ມຕົ້ນ
+download	mail	lo	ດາວໂຫຼດ
+email address	mail	lo	ທີ່ຢູ່ email
+enter your default mail domain ( from: user@domain )	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ mail domain ຂອງທ່ານ(ຈາກ: user@domain)
+enter your smtp server hostname or ip address	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ SMTP ເຊີບເວີ້ ຊື່ໂຮສ ຫຼື ທີ່ຢູ່ IP ຂອງທ່ານ
+enter your smtp server port	admin	lo	ພິມຄ່າເລີ່ມຕົ້ນ SMTP ເຊີບເວີ້ ພອດ ຂອງທ່ານ
+event details follow	mail	lo	ຕິດຕາມລາຍລະອຽດກິດຈະກໍາ
+filemanager	mail	lo	ຕົວຈັດການຟາຍ
+icons and text	mail	lo	ໄອຄ໋ອນ ແລະ ເນື້ອຫາ
+icons only	mail	lo	ສະເພາະໄອຄ໋ອນ
+mail settings	mail	lo	ຕັ້ງຄ່າ mail
+move	mail	lo	ເຄື່ອນຫຍ້າຍ
+move to	mail	lo	ເຄື່ອນຫຍ້າຍໄປ
+no filter	mail	lo	ບໍ່ມີການຕຶກຕອງ
+participants	mail	lo	ຜູ້ເຂົ້າຮ່ວມ
+previous	mail	lo	ກ່ອນ
+remove	mail	lo	ລຶບອອກ
+rule	mail	lo	ລະບຽບ
+save changes	mail	lo	ບັນທຶກການປ່ຽນແປງ
+search for	mail	lo	ຄົ້ນຫາສໍາລັບ
+text only	mail	lo	ສະເພາະຂໍ້ຄວາມ
+up	mail	lo	ຂຶ້ນ

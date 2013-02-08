@@ -1,0 +1,425 @@
+(no subject)	mail	sv	(ingen rubrik)
+(only cc/bcc)	mail	sv	(endast Cc/Bcc)
+(unknown sender)	mail	sv	(okänd avsändare)
+activate	mail	sv	Aktivera
+activate script	mail	sv	Aktivera skript
+add acl	mail	sv	Lägg till ACL
+add address	mail	sv	Lägg till adress
+add rule	mail	sv	Lägg till regel
+add script	mail	sv	Lägg till skript
+add to %1	mail	sv	Lägg till %1
+add to address book	mail	sv	Lägg till i Adressbok
+add to addressbook	mail	sv	Lägg till i Adressbok
+adding file to message. please wait!	mail	sv	Bifogar fil i meddelandet. Var god och vänta!
+additional info	mail	sv	Övrig information
+address book	mail	sv	Adressbok
+address book search	mail	sv	Sök i Adressbok
+after message body	mail	sv	Efter meddelandets innehåll
+all address books	mail	sv	Alla adressböcker
+all folders	mail	sv	Alla kataloger
+all of	mail	sv	Alla
+allways a new window	mail	sv	Alltid nytt fönster
+always show html emails	mail	sv	Visa alltid HTML e-post
+and	mail	sv	Och
+any of	mail	sv	Någon av
+any status	mail	sv	Alla status
+anyone	mail	sv	Alla
+as a subfolder of	mail	sv	Som underkatalog till
+attach	mail	sv	Bifoga
+attachments	mail	sv	Bilagor
+authentication required	mail	sv	Autentisering krävs
+auto refresh folder list	mail	sv	Auto uppdatera katalog lista
+back to folder	mail	sv	Tillbaks till katalog
+bad login name or password.	mail	sv	Ogiltigt användarna eller lösenord
+bad or malformed request. server responded: %s	mail	sv	Ogiltig eller ofullständig förfrågan. Server svarade: %s
+bad request: %s	mail	sv	Ogiltig förfrågan: %s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	mail	sv	Baserat på given kriteria kan inkommande meddelanden ha olika bakgrundsfärg i meddelande listan. Detta är hjälper till att skilja på meddelande typ/avsändare.
+bcc	mail	sv	Bcc
+before headers	mail	sv	Före brevhuvud
+between headers and message body	mail	sv	Mellan brevhuvud och meddelandets innehåll
+body part	mail	sv	Meddelandeinnehåll
+by date	mail	sv	Enligt datum
+can't connect to inbox!!	mail	sv	Kan inte ansluta till Inkorg
+cc	mail	sv	Cc
+change folder	mail	sv	Byt katalog
+check message against next rule also	mail	sv	Verifiera meddelande även mot nästa regel
+checkbox	mail	sv	Kryssruta
+clear search	mail	sv	Rensa sökning
+click here to log back in.	mail	sv	Till inloggningen
+click here to return to %1	mail	sv	Återgå till %1
+close all	mail	sv	Stäng alla
+close this page	mail	sv	Stäng sidan
+close window	mail	sv	Stäng fönster
+color	mail	sv	Färg
+compose	mail	sv	Skriv
+compress folder	mail	sv	Komprimera katalog
+condition	mail	sv	vilkor
+configuration	mail	sv	Alternativ
+connection dropped by imap server.	mail	sv	Anslutningen stängd av IMAP server
+contains	mail	sv	Innehåller
+copy to	mail	sv	Kopiera
+could not complete request. reason given: %s	mail	sv	Kunde inte fullfölja förfrågan. Svaret: %s
+could not open secure connection to the imap server. %s : %s.	mail	sv	Kunde inte öppna en söker anslutning till IMAP servern. %s: %s
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	mail	sv	CRAM-MD5 och DIGEST-MD5 kräver att Auth_SASL paketet installerats
+create	mail	sv	Skapa
+create folder	mail	sv	Skapa Katalog
+create sent	mail	sv	Skapa Skickat
+create subfolder	mail	sv	Skapa Underkatalog
+create trash	mail	sv	Skapa Borttaget
+created folder successfully!	mail	sv	Skapade katalog
+dark blue	mail	sv	Mörk Blå
+dark cyan	mail	sv	Mörk Cyan
+dark gray	mail	sv	Mörk Grå
+dark green	mail	sv	Mörk Grön
+dark magenta	mail	sv	Mörk Magenta
+dark yellow	mail	sv	Mörk Gul
+date(newest first)	mail	sv	Datum (nyaste först)
+date(oldest first)	mail	sv	Datum (äldsta först)
+days	mail	sv	Dagar
+deactivate script	mail	sv	Inaktivera skript
+default	mail	sv	Standard
+default signature	mail	sv	Standard signatur
+default sorting order	mail	sv	Standard sorterings ordning
+delete all	mail	sv	Radera alla
+delete folder	mail	sv	Radera katalog
+delete script	mail	sv	Radera skript
+delete selected	mail	sv	Radera valda
+delete selected messages	mail	sv	Radera valad meddelanden
+deleted	mail	sv	Raderade
+deleted folder successfully!	mail	sv	Katalog raderad
+deleting messages	mail	sv	Raderar meddelanden
+disable	mail	sv	Inaktivera
+discard	mail	sv	Ignorera
+discard message	mail	sv	Ignorera meddelande
+display message in new window	mail	sv	Visa meddelanden i nytt fönster
+display messages in multiple windows	mail	sv	Visa meddelanden i flera fönster
+display of html emails	mail	sv	Visning av HTML e-post
+display only when no plain text is available	mail	sv	Visa endast när textformat inte är tillgängligt
+display preferences	mail	sv	Visa alternativ
+displaying html messages is disabled	mail	sv	Cisa HTML meddelanden är inaktiverat
+do it!	mail	sv	Gör Det!
+do not use sent	mail	sv	Använd inte Skickat
+do not use trash	mail	sv	Använd inte Borttaget
+do not validate certificate	mail	sv	Validera inte certifikat
+do you really want to delete the '%1' folder?	mail	sv	Vill du verkligen radera katalogen '%1'?
+do you really want to delete the selected signatures?	mail	sv	Vill du verkligen radera vald signatur?
+does not contain	mail	sv	Innehåller inte
+does not match	mail	sv	Matchar inte
+does not match regexp	mail	sv	Matchar inte regexp
+don't use draft folder	mail	sv	Använd inte Utkast
+don't use sent	mail	sv	Använd inte Skickat
+don't use trash	mail	sv	Använd inte Borttaget
+down	mail	sv	Ner
+download	mail	sv	Ladda ner
+download this as a file	mail	sv	Ladda ner som fil
+draft folder	mail	sv	Utkast katalog
+e-mail	mail	sv	E-post
+e-mail address	mail	sv	E-post adress
+e-mail folders	mail	sv	E-post katalog
+edit email forwarding address	mail	sv	Ändra e-post vidarebefodrings adressen
+edit filter	mail	sv	Ändra filter
+edit rule	mail	sv	Ändra regler
+edit selected	mail	sv	Ändra valda
+edit vacation settings	mail	sv	Ändra frånvaro alternativ
+email address	mail	sv	E-post adress
+email forwarding address	mail	sv	E-post vidarebefodrings adress
+email signature	mail	sv	E-post signatur
+emailaddress	mail	sv	E-post adress
+empty trash	mail	sv	Töm Borttaget
+enable	mail	sv	Aktivera
+encrypted connection	mail	sv	Krypterad anslutning
+enter your default mail domain ( from: user@domain )	admin	sv	Standard e-post domän (From: user@domain)
+enter your imap mail server hostname or ip address	admin	sv	IMAP e-post server värdnamn eller IP adress
+enter your sieve server hostname or ip address	admin	sv	SIEVE server värdnamn eller IP adress
+enter your sieve server port	admin	sv	SIEVE server port
+enter your smtp server hostname or ip address	admin	sv	SMTP server värdnamn eller IP adress
+enter your smtp server port	admin	sv	SMTP server port
+entry saved	mail	sv	Post sparad
+error	mail	sv	FEL
+error connecting to imap serv	mail	sv	Fel: Kunde inte ansluta till IMAP server
+error connecting to imap server. %s : %s.	mail	sv	Kunde inte ansluta till IMAP server %s : %s
+error connecting to imap server: [%s] %s.	mail	sv	Kunde inte ansluta till IMAP server [%s] %s
+error opening	mail	sv	Fel: Kunde inte öppna
+event details follow	mail	sv	Händelse detaljer följer
+every	mail	sv	Varje
+every %1 days	mail	sv	Var %1 dag
+expunge	mail	sv	Utplåna
+extended	mail	sv	Utökad
+felamimail	common	sv	FelaMiMail
+file into	mail	sv	Flytta till
+filemanager	mail	sv	Filhanterare
+files	mail	sv	Filer
+filter active	mail	sv	Aktiva filter
+filter name	mail	sv	Filter namn
+filter rules	common	sv	Filter regler
+first name	mail	sv	Förnamn
+flagged	mail	sv	Flaggad
+flags	mail	sv	Flaggor
+folder	mail	sv	Katalog
+folder acl	mail	sv	Katalog ACL
+folder name	mail	sv	Katalognamn
+folder path	mail	sv	Katalogsökväg
+folder preferences	mail	sv	Katalog alternativ
+folder settings	mail	sv	Katalog alternativ
+folder status	mail	sv	Katalog status
+folderlist	mail	sv	Kataloglista
+foldername	mail	sv	Katalognamn
+folders	mail	sv	Kataloger
+folders created successfully!	mail	sv	Katalogen skapad
+follow	mail	sv	Följ
+for mail to be send - not functional yet	mail	sv	För meddelande att skicka - inte ännu funktionell
+for received mail	mail	sv	För mottagna meddelanden
+forward	mail	sv	Vidarebefodra
+forward to	mail	sv	Vidarebefodra till
+forward to address	mail	sv	Vidarebefodra till adress
+forwarding	mail	sv	Vidarebefodrar
+found	mail	sv	Hittade
+from	mail	sv	Från
+from(a->z)	mail	sv	Från (A->Ö)
+from(z->a)	mail	sv	Från (Ö->A)
+full name	mail	sv	Fullständigt namn
+greater than	mail	sv	Större än
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	mail	sv	Se vidare på adressen <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> för att läsa mer om Squirrelmail.<br>
+header lines	mail	sv	Brevhuvud
+hide header	mail	sv	Göm brevhuvud
+hostname / address	mail	sv	värdnamn / adress
+html	mail	sv	HTML
+icons and text	mail	sv	Ikoner och text
+icons only	mail	sv	Ikoner endast
+identifying name	mail	sv	ID namn
+identity	mail	sv	Identitet
+if	mail	sv	OM
+if from contains	mail	sv	om Från innehåller
+if mail header	mail	sv	om brevhuvud
+if message size	mail	sv	om meddelande storlek
+if subject contains	mail	sv	om Ämne innehåller
+if to contains	mail	sv	om Till innehåller
+if using ssl or tls, you must have the php openssl extension loaded.	mail	sv	Om du vill använda SSL eller TLS måste PHP openssl stödet laddas
+illegal folder name.  please select a different name.	mail	sv	Ogiltigt katalognamn, var god och välj annat.
+imap	mail	sv	IMAP
+imap server	mail	sv	IMAP Server
+imap server address	mail	sv	IMAP Server Adress
+imap server closed the connection.	mail	sv	IMAP server stängde anslutningen
+imap server closed the connection. server responded: %s	mail	sv	IMAP server stängde anslutningen. Serverna svarade: %s
+imap server password	mail	sv	IMAP Server lösenord
+imap server type	mail	sv	IMAP Server typ
+imap server username	mail	sv	IMAP Server användarnamn
+imaps authentication	mail	sv	IMAPS Autentisering
+imaps encryption only	mail	sv	IMAPS Kryptering endast
+import	mail	sv	Importera
+in	mail	sv	den
+inbox	mail	sv	Inkorg
+incoming mail server(imap)	mail	sv	Inkommande e-post server (IMAP)
+index order	mail	sv	Index Ordning
+info	mail	sv	Info
+invalid user name or password	mail	sv	Oglitigt användarnamn eller lösenord
+javascript	mail	sv	JavaScript
+jumping to end	mail	sv	Hoppa till slutet
+jumping to start	mail	sv	Hoppa till början
+keep a copy of the message in your inbox	mail	sv	Spara en kopia av brev i din Inkorg
+keep local copy of email	mail	sv	Spara en lokal kopia av brev
+kilobytes	mail	sv	Kb
+language	mail	sv	Språk
+last name	mail	sv	Efternamn
+later	mail	sv	Senare
+left	mail	sv	Vänster
+less	mail	sv	Färre
+less than	mail	sv	Mindre än
+light gray	mail	sv	Ljus Grå
+list all	mail	sv	Lista alla
+loading	mail	sv	Laddar
+location of buttons when composing	mail	sv	Knapp placering medans man skriver meddelande
+mail server login type	admin	sv	E-post server inloggnings typ
+mail settings	mail	sv	E-post alternativ
+mainmessage	mail	sv	huvudmeddelande
+manage emailaccounts	common	sv	Hantera e-postkonton
+manage emailfilter / vacation	preferences	sv	Hantera E-postfilter / Frånvaro
+manage folders	common	sv	Katalog hantering
+manage sieve	common	sv	Hantera Sieve skript
+manage signatures	mail	sv	Hantera signaturer
+mark as deleted	mail	sv	Markera som raderad
+mark messages as	mail	sv	Markera valda meddelanden som
+mark selected as flagged	mail	sv	Flagga för uppföljning
+mark selected as read	mail	sv	Markera som läst
+mark selected as unflagged	mail	sv	Ta bort flagga
+mark selected as unread	mail	sv	Markera som oläst
+match	mail	sv	Matcha
+matches	mail	sv	Matchar
+matches regexp	mail	sv	Matchar regexp
+max uploadsize	mail	sv	Max uppladdnings storlek
+message highlighting	mail	sv	Meddelande fokusering
+message list	mail	sv	Meddelande lista
+messages	mail	sv	Meddelanden
+move	mail	sv	Flytta
+move folder	mail	sv	Flytta katalog
+move messages	mail	sv	Flytta meddelanden
+move selected to	mail	sv	Flytta valda till
+move to	mail	sv	Flytta valda till
+move to trash	mail	sv	Flytta till Borttaget
+moving messages to	mail	sv	Flyttar meddelanden till
+name	mail	sv	Namn
+never display html emails	mail	sv	Visa inte HTML meddelanden
+new	common	sv	Nya
+new filter	mail	sv	Nytt filter
+next	mail	sv	Nästa
+next message	mail	sv	Nästa meddelande
+no active imap server found!!	mail	sv	Hittade ingen IMAP server!
+no encryption	mail	sv	Ingen kryptering
+no filter	mail	sv	Inga filter
+no folders found	mail	sv	Ingen katalog funnen
+no folders were found to subscribe to!	mail	sv	Inga kataloger hittades att prenumerera
+no folders were found to unsubscribe from!	mail	sv	Inga kataloger hittades att avprenumerera
+no highlighting is defined	mail	sv	Ingen fokusering definierad
+no message returned.	mail	sv	Inget svar meddelandes
+no messages found...	mail	sv	Inga meddelanden ...
+no messages were selected.	mail	sv	Inga meddelanden valda
+no plain text part found	mail	sv	Hittade inget textfält
+no previous message	mail	sv	Inga tidigare meddelanden
+no supported imap authentication method could be found.	mail	sv	Kunde inte hitta supporterad IMAP autentiserings metod
+no valid emailprofile selected!!	mail	sv	Ingen giltig e-post profil vald
+none	mail	sv	Inga
+on	mail	sv	På
+on behalf of	mail	sv	Företräder
+one address is not valid	mail	sv	En adress är ogiltig
+only inbox	mail	sv	Endast Inkorg
+only one window	mail	sv	Endast ett fönster
+only unseen	mail	sv	Endast olästa
+open all	mail	sv	Öpnna alla
+options	mail	sv	Alternativ
+or	mail	sv	eller
+organisation	mail	sv	Organisation
+organization	mail	sv	Organisation
+organization name	admin	sv	Organisations namn
+outgoing mail server(smtp)	mail	sv	Utgående e-post server (SMTP)
+participants	mail	sv	Deltagare
+personal information	mail	sv	Personlig information
+please select a address	mail	sv	Välj adress
+please select the number of days to wait between responses	mail	sv	Antal dagar mellan svar
+please supply the message to send with auto-responses	mail	sv	Meddelande att skicka med autosvar
+port	mail	sv	Port
+posting	mail	sv	Postat
+previous	mail	sv	Tidigare
+previous message	mail	sv	Tidigare meddelande
+print it	mail	sv	Skriv ut
+print this page	mail	sv	Skriv ut sida
+quicksearch	mail	sv	Snabbsök
+read	mail	sv	Läst
+reading	mail	sv	Läser
+receive notification	mail	sv	Mottag notifieringar
+recent	mail	sv	Tidigare
+refresh time in minutes	mail	sv	Uppdaterings intervall i minuter
+reject with	mail	sv	Avvisa med
+remove	mail	sv	Radera
+remove immediately	mail	sv	Radera omedelbart
+rename	mail	sv	Byt namn
+rename a folder	mail	sv	Byt namn på katalog
+rename folder	mail	sv	Byt namn på katalog
+renamed successfully!	mail	sv	Namnet bytt
+replied	mail	sv	Svarade
+reply	mail	sv	Svara
+reply all	mail	sv	Svara alla
+reply to	mail	sv	Svara till
+replyto	mail	sv	Svara till
+respond	mail	sv	Svara
+respond to mail sent to	mail	sv	Svars meddelande skickat till
+return	mail	sv	Återvänd
+return to options page	mail	sv	Återvänd till alternativ
+right	mail	sv	Höger
+row order style	mail	sv	Rad sortering
+rule	mail	sv	Regel
+save	mail	sv	Spara
+save all	mail	sv	Spara alla
+save as draft	mail	sv	Spara som utkast
+save as infolog	mail	sv	Spara som InfoLogg
+save changes	mail	sv	Spara ändringar
+save message to disk	mail	sv	Spara meddelanden till disk
+script name	mail	sv	Skript namn
+script status	mail	sv	Skript status
+search	mail	sv	Sök
+search for	mail	sv	Sök efter
+select	mail	sv	Välj
+select all	mail	sv	Välj alla
+select emailprofile	mail	sv	Välj e-post profil
+select folder	mail	sv	Välj katalog
+select your mail server type	admin	sv	Välj e-post server typ
+send	mail	sv	Skicka
+send a reject message	mail	sv	Skicka ett nekande meddelande
+sent folder	mail	sv	Skickat katalog
+show header	mail	sv	Visa brevhuvud
+show new messages on main screen	mail	sv	Visa nya meddelanden på Startsidan
+sieve script name	mail	sv	Sieve skript namn
+sieve settings	admin	sv	Sieve alternativ
+signature	mail	sv	Signatur
+simply click the target-folder	mail	sv	Välj målkatalog
+size	mail	sv	Storlek
+size of editor window	mail	sv	Editor fönster storlek
+size(...->0)	mail	sv	Storlek (...->0)
+size(0->...)	mail	sv	Storlek (0->...)
+skipping forward	mail	sv	Hoppar framåt
+skipping previous	mail	sv	Hoppar bakåt
+small view	mail	sv	Liten vy
+smtp settings	admin	sv	SMTP alternativ
+subject	mail	sv	Ämne
+subject(a->z)	mail	sv	Ämne (A->Ö)
+subject(z->a)	mail	sv	Ämne (Ö->A)
+submit	mail	sv	Skicka
+subscribe	mail	sv	Prenumerera
+subscribed	mail	sv	Prenumererad
+subscribed successfully!	mail	sv	Prenumeration lyckad
+table of contents	mail	sv	Innehåll
+text only	mail	sv	Text endast
+the connection to the imap server failed!!	mail	sv	Anslutningen till IMAP servern misslyckades
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	mail	sv	IMAP servern verkar inte stödja den autentiserings metod du valt. Var god och kontakta administratör.
+the mimeparser can not parse this message.	mail	sv	MIME-tolken kunde inte tolka meddelandet
+then	mail	sv	SEN
+this folder is empty	mail	sv	Katalogen är tom
+this php has no imap support compiled in!!	mail	sv	Denna installation har inte IMAP stöd kompilerat i PHP.
+to	mail	sv	Till
+to mail sent to	mail	sv	Till meddelande skickat till
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	mail	sv	För att använda TLS anslutning måste du ha PHP version 5.1.0 eller högre
+translation preferences	mail	sv	Översättnings alternativ
+translation server	mail	sv	Översättnings server
+trash fold	mail	sv	Borttaget
+trash folder	mail	sv	Borttaget
+type	mail	sv	Typ
+unexpected response from server to authenticate command.	mail	sv	Oväntat svar från servern på AUTENTISERINGS kommandot
+unexpected response from server to digest-md5 response.	mail	sv	Oväntat svar från servern på Digest-MD5
+unexpected response from server to login command.	mail	sv	Oväntat svar från servern på INLOGGINGS kommandot
+unflagged	mail	sv	Oflaggad
+unknown err	mail	sv	Okänt fel
+unknown error	mail	sv	Okänt fel
+unknown imap response from the server. server responded: %s	mail	sv	Okänt IMAP svar från server. Svarade: %s
+unknown sender	mail	sv	Okänd avsändare
+unknown user or password incorrect.	mail	sv	Ogiltig användare eller fel lösenord
+unread	common	sv	Oläst
+unseen	mail	sv	Oläst
+unselect all	mail	sv	Avmarkera alla
+unsubscribe	mail	sv	Avprenumerera
+unsubscribed	mail	sv	Avprenumererad
+unsubscribed successfully!	mail	sv	Avprenumererad
+up	mail	sv	Upp
+updating message status	mail	sv	Uppdaterar meddelande status
+updating view	mail	sv	Uppdaterar vy
+urgent	mail	sv	Brådskande
+use <a href="%1">emailadmin</a> to create profiles	mail	sv	Använd <a href="%1">E-post Admin</a> för att skapa profiler
+use a signature	mail	sv	Använd signatur
+use a signature?	mail	sv	Använd signatur?
+use addresses	mail	sv	Använd adresser
+use custom settings	mail	sv	Använd anpassade inställningar
+use regular expressions	mail	sv	Använd regexp
+use smtp auth	admin	sv	Använd SMTP autentisering
+users can define their own emailaccounts	admin	sv	Användare kan definiera egna epost konton
+vacation notice	common	sv	Frånvaro meddelande
+validate certificate	mail	sv	Validera certifikat
+view full header	mail	sv	Visa hela brevhuvudet
+view header lines	mail	sv	Visa brevhuvudet
+view message	mail	sv	Visa meddelandet
+viewing full header	mail	sv	Visar hela brevhuvudet
+viewing message	mail	sv	Visar meddelandet
+viewing messages	mail	sv	Visar meddelanden
+when deleting messages	mail	sv	Vid meddelande radering
+with message	mail	sv	Med meddelande
+with message "%1"	mail	sv	Med meddelande "%1"
+wrap incoming text at	mail	sv	Avrunda inkommande text vid
+writing	mail	sv	Skriver
+wrote	mail	sv	Skrev

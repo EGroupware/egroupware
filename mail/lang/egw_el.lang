@@ -1,0 +1,417 @@
+(no subject)	mail	el	(κανένα θέμα)
+(only cc/bcc)	mail	el	(μόνο Cc/Bcc)
+(unknown sender)	mail	el	(άγνωστος αποστολέας)
+activate	mail	el	Ενεργοποίηση
+activate script	mail	el	ενεργοποίηση κειμένου ομιλίας
+add acl	mail	el	προσθήκη acl
+add address	mail	el	Προσθήκη διεύθυνσης
+add rule	mail	el	Προσθήκη Κανόνα
+add script	mail	el	Προσθήκη Κειμένου ομιλίας
+add to %1	mail	el	Προσθήκη στο %1
+add to address book	mail	el	Προσθήκη στο βιβλίο διευθύνσεων
+add to addressbook	mail	el	προσθήκη στο βιβλίο διευθύνσεων
+adding file to message. please wait!	mail	el	Το αρχείο προστίθεται στο μήνυμα.Παρακαλώ περιμένετε!
+additional info	mail	el	Επιπλέον πληροφορίες
+address book	mail	el	Βιβλίο Διευθύνσεων
+address book search	mail	el	Αναζήτηση Βιβλίου Διευθύνσεων
+after message body	mail	el	Μετά το κυρίως σώμα του μηνύματος
+all address books	mail	el	Όλα τα βιβλία διευθύνσεων
+all folders	mail	el	Όλοι οι Φάκελοι
+all of	mail	el	όλα από
+allow images from external sources in html emails	mail	el	Να επιτρέπονται οι εικόνες από εξωτερικές πηγές στα HTML emails
+allways a new window	mail	el	πάντα νέο παράθυρο
+always show html emails	mail	el	Να εμφανίζονται πάντοτε τα HTML emails
+and	mail	el	και
+any of	mail	el	οποιοδήποτε
+any status	mail	el	οποιαδήποτε κατάσταση
+anyone	mail	el	οποιοσδήποτε
+as a subfolder of	mail	el	ως υποφάκελος του
+attachments	mail	el	Επισυνάψεις
+authentication required	mail	el	απαιτείται αυθεντικότητα
+auto refresh folder list	mail	el	Αυτόματη ανανέωση λίστας φακέλων
+back to folder	mail	el	Πίσω στο φάκελο
+bad login name or password.	mail	el	Λάθος όνομα ή κωδικός πρόσβασης
+bad request: %s	mail	el	Άκυρη απαίτηση: %
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	mail	el	Βασισμένο πάνω στα δοθέντα κριτήρια, τα εισερχόμενα μηνύματα μπορούν να έχουν διαφορετικό χρώμα φόντου στη λίστα μηνυμάτων. Αυτό βοηθάει στην εύκολη διάκριση του αποστολέα, ιδιαίτερα  στις λίστες μηνυμάτων.
+bcc	mail	el	BCC
+before headers	mail	el	Πριν τις κεφαλίδες
+between headers and message body	mail	el	Ανάμεσα στις κεφαλίδες και το κυρίως σώμα του μηνύματος
+body part	mail	el	κυρίως σώμα
+by date	mail	el	Βάσει ημερομηνίας
+can't connect to inbox!!	mail	el	δεν μπορεί να συνδεθεί με τα ΕΙΣΕΡΧΟΜΕΝΑ
+cc	mail	el	CC
+change folder	mail	el	Αλλαγή φακέλου
+checkbox	mail	el	Checkbox
+clear search	mail	el	καθαρισμός αναζήτησης
+click here to log back in.	mail	el	Κάντε κλικ εδώ για να εισέλθετε ξανά πίσω
+click here to return to %1	mail	el	Κάντε κλικ εδώ για επιστροφή στο %1
+close all	mail	el	κλείσιμο όλων
+close this page	mail	el	κλείσιμο αυτής της σελίδας
+close window	mail	el	Κλείσιμο παράθυρου
+color	mail	el	Χρώμα
+compose	mail	el	Συνθέτω
+compress folder	mail	el	Φάκελος συμπίεσης
+condition	mail	el	κατάσταση
+configuration	mail	el	Διάρθρωση
+connection dropped by imap server.	mail	el	Έπεσε η σύνδεση από τον IMAP server
+contact not found!	mail	el	Δεν βρέθηκε η επαφή!
+contains	mail	el	περιέχει
+copy to	mail	el	Αντιγραφή στο
+could not complete request. reason given: %s	mail	el	Δεν ολοκληρώθηκε το αίτημα. Αιτία: %s
+could not open secure connection to the imap server. %s : %s.	mail	el	Δεν έγινε ασφαλής σύνδεση με τον IMAP server. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	mail	el	CRAM-MD5 ή DIGEST-MD5 απαιτεί το Auth_SASL πακέτο να εγκατασταθεί.
+create	mail	el	Δημιουργία
+create folder	mail	el	Δημιουργία Φακέλου
+create sent	mail	el	Δημιουργία Σταλθέντων
+create subfolder	mail	el	Δημιουργία υποφακέλου
+create trash	mail	el	Δημιουργία Κάδου Αχρήστων
+created folder successfully!	mail	el	Δημιουργία φακέλου επιτυχής!
+dark blue	mail	el	Σκούρο μπλε
+dark cyan	mail	el	Σκούρο κυανό
+dark gray	mail	el	Σκούρο γκρι
+dark green	mail	el	Σκούρο πράσινο
+dark magenta	mail	el	Σκούρο ματζέντα
+dark yellow	mail	el	Σκούρο κίτρινο
+date(newest first)	mail	el	Ημερομηνία (πρώτα η πιο πρόσφατη)
+date(oldest first)	mail	el	Ημερομηνία (πρώτα η πιο παλιά)
+days	mail	el	ημέρες
+deactivate script	mail	el	απενεργοποίηση σεναρίου
+default	mail	el	προκαθορισμένο
+default signature	mail	el	προεπιλεγμένη υπογραφή
+default sorting order	mail	el	Προεπιλεγμένη σειρά ταξινόμησης
+delete all	mail	el	διαγραφή όλων
+delete folder	mail	el	Διαγραφή Φακέλου
+delete script	mail	el	διαγραφή σεναρίου
+delete selected	mail	el	Διαγραφή επιλεγμένων
+delete selected messages	mail	el	διαγραφή επιλεγμένων μηνυμάτων
+deleted	mail	el	διεγράφη
+deleted folder successfully!	mail	el	Φάκελος διεγράφη επιτυχώς
+deleting messages	mail	el	διαγραφή μηνυμάτων
+disable	mail	el	Απενεργοποίηση
+discard	mail	el	απόρριψη
+discard message	mail	el	απόρριψη μηνύματων
+display message in new window	mail	el	Προβολή μηνύματος σε νέο παράθυρο
+display messages in multiple windows	mail	el	προβολή μηνυμάτων σε πολλαπλά παράθυρα
+display of html emails	mail	el	Προβολή των HTML emails
+display only when no plain text is available	mail	el	Προβολή μόνο όταν είναι δεν διαθέσιμο κανένα αποκρυπτογραφημένο κείμενο
+display preferences	mail	el	Προβολή Προτιμήσεων
+displaying html messages is disabled	mail	el	η προβολή των html μηνυμάτων είναι απενεργοποιημένη
+do it!	mail	el	Κάντο!
+do not use sent	mail	el	Μην χρησιμοποιείτε τα Σταλθέντα
+do not use trash	mail	el	Μην χρησιμοποιείτε τον Κάδο Αχρήστων
+do not validate certificate	mail	el	μην επικυρώνετε το πιστοποιητικό
+do you really want to delete the '%1' folder?	mail	el	Θέλετε πραγματικά να διαγράψετε τον φάκελο '%1' ;
+do you really want to delete the selected signatures?	mail	el	Θέλετε πραγματικά να διαγάψετε τι=ς επιλεγμένες υπογραφές;
+does not contain	mail	el	δεν περιέχει
+does not match	mail	el	δεν συμπίπτει
+don't use draft folder	mail	el	Μην χρησιμοποιείτε των φάκελο προσχεδίων
+don't use sent	mail	el	Μην χρησιμοποιείτε τα Σταλθέντα
+don't use trash	mail	el	Μην χρησιμοποιείτε των Κάδο Αχρήστων
+down	mail	el	κάτω
+download	mail	el	φόρτωση
+download this as a file	mail	el	Φόρτωση αυτού του φακέλου
+draft folder	mail	el	προσχέδιος φάκελος
+e-mail	mail	el	E-mail
+e-mail address	mail	el	Διεύθυνση e-mail
+e-mail folders	mail	el	Φάκελοι e-mail
+edit email forwarding address	mail	el	επεξεργασία διευθυνσης προωθημένου e-mail
+edit filter	mail	el	Επεξεργασία φίλτρου
+edit rule	mail	el	επεξεργασία κανόνα
+edit selected	mail	el	Επεξεργασία επιλεγμένων
+edit vacation settings	mail	el	επεξεργασία ρυθμίσεων διακοπών
+email address	mail	el	Διεύθυνση e-mail
+email forwarding address	mail	el	διεύθυνση προωθημένου e-mail
+email signature	mail	el	Υπογραφή e-mail
+emailaddress	mail	el	Διεύθυνση e-mail
+empty trash	mail	el	Άδειασμα κάδου αχρήστων
+enable	mail	el	ενεργοποίηση
+encrypted connection	mail	el	αποκρυπτογραφημένη σύνδεση
+enter your default mail domain ( from: user@domain )	admin	el	Εισαγωγή του προκαθορισμένου ονόματος τομέα αλληλογραφίας (Από:user@domain)
+enter your imap mail server hostname or ip address	admin	el	Πληκτρολογήστε το IMAP mail server όνομα χρήστη ή την IP διεύθυνση
+enter your sieve server hostname or ip address	admin	el	Πληκτρολογήστε το SIEVE server όνομα χρήστη ή την IP διεύθυνση
+enter your sieve server port	admin	el	Πληκτρολογήστε την SIEVE server θύρα
+enter your smtp server hostname or ip address	admin	el	Πληκτρολογήστε το SMTP server όνομα χρήστη ή την IP διεύθυνση
+enter your smtp server port	admin	el	Πληκτρολογήστε την SMTP server θύρα
+error	mail	el	ΣΦΑΛΜΑ
+error connecting to imap serv	mail	el	Σφάλμα κατά τη σύνδεση με τον IMAP serv
+error connecting to imap server. %s : %s.	mail	el	Σφάλμα κατά τη σύνδεση με τον IMAP server. %s : %s.
+error connecting to imap server: [%s] %s.	mail	el	Σφάλμα κατά τη σύνδεση με τον IMAP server. [%s] : %s.
+error opening	mail	el	Σφάλμα στο άνοιγμα
+event details follow	mail	el	Ακολουθούν λεπτομέρειες γεγονότων
+every	mail	el	κάθε
+every %1 days	mail	el	κάθε %1 ημέρες
+expunge	mail	el	Διαγράφω
+extended	mail	el	επεκτάθηκε
+felamimail	common	el	FelaMiMail
+file into	mail	el	αρχείο μέσα στο
+filemanager	mail	el	Διαχειριστής αρχείων
+files	mail	el	αρχεία
+filter active	mail	el	ενεργό φίλτρο
+filter name	mail	el	Όνομα φίλτρου
+filter rules	common	el	κανόνες φίλτρου
+first name	mail	el	Όνομα
+flagged	mail	el	σημαιοστολισμένο
+flags	mail	el	Σημαίες
+folder	mail	el	Φάκελος
+folder acl	mail	el	Acl φακέλου
+folder name	mail	el	Όνομα φακέλου
+folder path	mail	el	Διαδρομή φακέλου
+folder preferences	mail	el	Προτιμήσεις Φακέλου
+folder settings	mail	el	Ρυθμίσεις φακέλου
+folder status	mail	el	Κατάσταση φακέλου
+folderlist	mail	el	Λίστα φακέλου
+foldername	mail	el	Όνομα φακέλου
+folders	mail	el	Φάκελοι
+folders created successfully!	mail	el	Επιτυχής δημιουργία φακέλων!
+follow	mail	el	ακολουθώ
+for mail to be send - not functional yet	mail	el	Για αποστολή μηνύματος - δεν λειτουργεί ακόμα
+for received mail	mail	el	Για εισερχόμενα μηνύματα
+forward	mail	el	Προώθηση
+forward to	mail	el	προώθηση σε
+forward to address	mail	el	προώθηση στην διεύθυνση
+forwarding	mail	el	Προωθείται
+found	mail	el	Βρέθηκε
+from	mail	el	Από
+from(a->z)	mail	el	Από (Α->Ω)
+from(z->a)	mail	el	Από (Ω->Α)
+full name	mail	el	Ολόκληρο το όνομα
+greater than	mail	el	μεγαλύτερο από
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	mail	el	Κοιτάξτε στο <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> για να μάθετε περισσότερα για το Squirrelmail.<br>
+header lines	mail	el	Γραμμές Τίτλου
+hide header	mail	el	απόκρυψη τίτλου
+hostname / address	mail	el	όνομα χρήστη / διεύθυνση
+html	mail	el	HTML
+icons and text	mail	el	Εικόνες και κείμενο
+icons only	mail	el	Μόνο εικόνες
+identifying name	mail	el	Αναγνώριση ονόματος
+identity	mail	el	Ταυτότητα
+if	mail	el	ΑΝ
+if from contains	mail	el	αν από τα περιεχόμενα
+if mail header	mail	el	αν ο τίτλος του μηνύματος
+if message size	mail	el	αν το μέγεθος του μηνύματος
+if subject contains	mail	el	αν το θέμα περιέχει
+if to contains	mail	el	αν το σε περιέχει
+if using ssl or tls, you must have the php openssl extension loaded.	mail	el	Αν χρησιμοποιείται SSL ή TLS, πρέπει να έχετε την PHP openssl επέκταση φορτωμένη.
+illegal folder name.  please select a different name.	mail	el	Άκυρο όνομα φακέλου. Παρακαλώ επιλέξτε διαφορετικό όνομα.
+imap	mail	el	IMAP
+imap server	mail	el	IMAP Server
+imap server address	mail	el	Διεύθυνση IMAP Server
+imap server closed the connection.	mail	el	Ο IMAP Server έκλεισε τη σύνδεση
+imap server closed the connection. server responded: %s	mail	el	Ο IMAP Server έκλεισε τη σύνδεση. Ο Server απάντησε: %s
+imap server password	mail	el	imap server κωδικός
+imap server type	mail	el	IMAP Server τύπος
+imap server username	mail	el	imap server όνομα χρήστη
+imaps authentication	mail	el	IMAPS ΑΥΘΕΝΤΙΚΟΤΗΤΑ
+imaps encryption only	mail	el	Μόνο IMAPS κρυπτογράφηση
+import	mail	el	Εισαγωγή
+in	mail	el	μέσα
+inbox	mail	el	Εισερχόμενα
+incoming mail server(imap)	mail	el	server(IMAP) εισερχομένων μηνυμάτων
+index order	mail	el	Ταξινόμηση ευρετηρίου
+info	mail	el	Πληροφορίες
+invalid user name or password	mail	el	Άκυρο όνομα χρήστη ή κωδικός
+javascript	mail	el	JavaScript
+jumping to end	mail	el	μετάβαση στην αρχή
+jumping to start	mail	el	μετάβαση στο τέλος
+keep a copy of the message in your inbox	mail	el	κρατήστε ένα αντίγραφο του μηνύματος στα εισερχόμενα
+keep local copy of email	mail	el	κρατήστε ένα τοπικό αντίγραφο του email
+kilobytes	mail	el	kilobytes
+language	mail	el	Γλώσσα
+last name	mail	el	Επώνυμο
+left	mail	el	Αριστερά
+less	mail	el	λιγότερο
+less than	mail	el	λιγότερο από
+light gray	mail	el	Ανοιχτό Γκρι
+list all	mail	el	Δημιουργία λίστας με όλα
+loading	mail	el	φόρτωση
+location of buttons when composing	mail	el	Τοποθεσία κουμπιών όταν γίνεται η σύνθεση
+mail server login type	admin	el	Τύπος εισόδου μηνύματος server
+mail settings	mail	el	Ρυθμίσεις μηνύματος
+mainmessage	mail	el	κύριο μήνυμα
+manage emailaccounts	common	el	Διαχείριση λογαρισμών Email
+manage emailfilter / vacation	preferences	el	Διαχείριση φίλτρου Email / Διακοπών
+manage folders	common	el	Διαχείριση Φακέλων
+manage sieve	common	el	Διαχείριση Sieve σεναρίων
+manage signatures	mail	el	Διαχείριση υπογραφών
+mark as deleted	mail	el	Σημείωση ως διαγραμένο
+mark messages as	mail	el	Σημείωση επιλεγμένων μηνυμάτων ως
+mark selected as flagged	mail	el	Σημείωση επιλεγμένων ως σημαιοστολισμένα
+mark selected as read	mail	el	Σημείωση επιλεγμένων ως διαβασμένα
+mark selected as unflagged	mail	el	Σημείωση επιλεγμένων ως μη σημαιοστολισμένα
+mark selected as unread	mail	el	Σημείωση επιλεγμένων ως μη διαβασμένα
+match	mail	el	Συνδυασμός
+matches	mail	el	συνδυάζεται
+matches regexp	mail	el	συνδυάζεται regexp
+max uploadsize	mail	el	μέγιστο μέγεθος φορτώματος
+message highlighting	mail	el	Υπογράμμιση Μηνύματος
+message list	mail	el	Κατάλογος μηνυμάτων
+messages	mail	el	μηνύματα
+move	mail	el	μετακίνηση
+move messages	mail	el	μετακίνηση μηνυμάτων
+move selected to	mail	el	μετακίνηση επιλεγμένων στο
+move to	mail	el	μετακίνηση επιλεγμένων στο
+move to trash	mail	el	Μετακίνηση στον Κάδο Αχρήστων
+moving messages to	mail	el	μετακίνηση επιλεγμένων στο
+name	mail	el	Όνομα
+never display html emails	mail	el	Να μην προβάλονται τα HTML emails
+new	common	el	Νέο
+new filter	mail	el	Νέο φίλτρο
+next	mail	el	Επόμενο
+next message	mail	el	επόμενο μήνυμα
+no active imap server found!!	mail	el	Δεν βρέθηκε ενεργός IMAP server!!!
+no encryption	mail	el	Καμία κρυπτογράφηση
+no filter	mail	el	Κανένα φίλτρο
+no folders found	mail	el	Δεν βρέθηκε κανένας φάκελος
+no folders were found to subscribe to!	mail	el	Δεν βρέθηκε κανένας φάκελος για εγγραφή σε αυτόν!
+no folders were found to unsubscribe from!	mail	el	Δεν βρέθηκε κανένας φάκελος για παύση συνδρομής!
+no highlighting is defined	mail	el	Δεν έχει όριστει κάποια υπογράμμιση
+no message returned.	mail	el	Δεν επεστράφη κάποιο μήνυμα.
+no messages found...	mail	el	δεν βρέθηκαν μηνύματα...
+no messages were selected.	mail	el	Δεν επιλέχθηκαν κάποια μηνύματα.
+no plain text part found	mail	el	δεν βρέθηκε μέρος αποκρυπτογραφημένου κειμένου
+no previous message	mail	el	κανένα προηγούμενο κείμενο
+no supported imap authentication method could be found.	mail	el	Δεν βρέθηκε καμία υποστηριζόμενη IMAP επικυρωμένη μέθοδος.
+no valid emailprofile selected!!	mail	el	Έχει επιλεχθεί άκυρο προφίλ Email!
+none	mail	el	κανένα
+on	mail	el	πάνω
+on behalf of	mail	el	εκ μέρους του
+one address is not valid	mail	el	Κάποια διεύθυνση είναι άκυρη
+only inbox	mail	el	Μόνο τα ΕΙΣΕΡΧΟΜΕΝΑ
+only one window	mail	el	μόνο ένα παράθυρο
+only unseen	mail	el	μόνο αυτά που δεν έχουν προβληθεί
+open all	mail	el	άνοιγμα όλων
+options	mail	el	Επιλογές
+or	mail	el	ή
+organisation	mail	el	οργανισμός
+organization	mail	el	οργανισμός
+organization name	admin	el	Όνομα οργανισμού
+participants	mail	el	Συμμετέχοντες
+personal information	mail	el	Προσωπικές πληροφορίες
+please select a address	mail	el	Παρακαλώ επιλέξτε μία διεύθυνση
+please select the number of days to wait between responses	mail	el	παρακαλώ επιλέξτε τον αριθμό των ημερών για αναμονή μεταξύ των απαντήσεων
+please supply the message to send with auto-responses	mail	el	Παρακαλώ τροφοδοτήστε το μήνυμα προς αποστολή με αυτόματες απαντήσεις
+port	mail	el	θύρα
+posting	mail	el	ταχυδρόμηση
+previous	mail	el	Προηγούμενο
+previous message	mail	el	προηγούμενο μήνυμα
+print it	mail	el	εκτύπωση
+print this page	mail	el	εκτύπωση σελίδας
+quicksearch	mail	el	Γρήγορη αναζήτηση
+read	mail	el	ανάγνωση
+reading	mail	el	ανάγνωση
+receive notification	mail	el	Παρελήφθη ειδοποίηση
+recent	mail	el	πρόσφατα
+refresh time in minutes	mail	el	Ανανέωση ώρας σε λεπτά
+reject with	mail	el	απόρριψη με
+remove	mail	el	μετακίνηση
+remove immediately	mail	el	Άμεση μετακίνηση
+rename	mail	el	Μετονομασία
+rename a folder	mail	el	Μετονομασία ενός Φακέλου
+rename folder	mail	el	Μετονομασία φακέλου
+renamed successfully!	mail	el	Επιτυχής μετονομασία!
+replied	mail	el	απαντήθηκε
+reply	mail	el	Απάντηση
+reply all	mail	el	Απάντηση σε όλα
+reply to	mail	el	Απάντηση στο
+replyto	mail	el	Απάντησηστο
+respond	mail	el	Απόκριση
+return	mail	el	Επιστροφή
+return to options page	mail	el	Επιστροφή στη σελίδα επιλογών
+right	mail	el	Δεξιά
+row order style	mail	el	Στυλ ταξινόμησης σειράς
+rule	mail	el	Κανόνας
+save	mail	el	Αποθήκευση
+save all	mail	el	Αποθήκευση όλων
+save as draft	mail	el	Αποθήκευση ως προσχέδιο
+save as infolog	mail	el	Αποθήκευση ως infolog
+save changes	mail	el	αποθήκευση αλλαγών
+save message to disk	mail	el	αποθήκευση αλλαγών στο δίσκο
+script name	mail	el	όνομα σεναρίου
+script status	mail	el	κατάσταση σεναρίου
+search	mail	el	Αναζήτηση
+search for	mail	el	Αναζήτηση για
+select	mail	el	Επιλογή
+select all	mail	el	Επιλογή όλων
+select emailprofile	mail	el	Επιλογή προφίλ Email
+select folder	mail	el	επιλογή φακέλου
+select your mail server type	admin	el	Επιλέξτε τον τύπο mail server
+send	mail	el	Αποστολή
+send a reject message	mail	el	αποστολή μηνύματος απόρριψης
+sent folder	mail	el	Φάκελος σταλθέντων
+show header	mail	el	Προβολή τίτλου
+show new messages on main screen	mail	el	Προβολή νέων μηνυμάτων στην κύρια οθόνη
+sieve script name	mail	el	όνομα sieve σεναρίου
+sieve settings	admin	el	Ρυθμίσεις Sieve
+signature	mail	el	Υπογραφή
+simply click the target-folder	mail	el	Απλά κάντε κλικ στον στόχο-φάκελο
+size	mail	el	Μέγεθος
+size of editor window	mail	el	Μέγεθος παραθύρου συντάκτη
+size(...->0)	mail	el	Μέγεθος (...->0)
+size(0->...)	mail	el	Μέγεθος (0->...)
+skipping forward	mail	el	παράληψη προώθησης
+skipping previous	mail	el	παράληψη προηγουμένων
+small view	mail	el	μικρή προβολή
+smtp settings	admin	el	Ρυθμίσεις SMTP
+subject	mail	el	Θέμα
+subject(a->z)	mail	el	Θέμα (Α->Ω)
+subject(z->a)	mail	el	Θέμα (Ω->Α)
+submit	mail	el	Υποβολή
+subscribe	mail	el	Εγγραφή
+subscribed	mail	el	Έχει εγγραφεί
+subscribed successfully!	mail	el	Η εγγραφή ήταν επιτυχής
+table of contents	mail	el	Πίνακας περιεχομένων
+text only	mail	el	Μόνο κείμενο
+the connection to the imap server failed!!	mail	el	Αποτυχία σύνδεση με τον IMAP Server
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	mail	el	Ο IMAP server δεν υποστηρίζει την επιλεγμένη μέθοδο αυθεντικότητας.Παρακαλώ επικοινωνήστε με τον διαχειριστή σας.
+then	mail	el	ΜΕΤΑ
+this folder is empty	mail	el	ΑΥΤΟΣ Ο ΦΑΚΕΛΟΣ ΕΙΝΑΙ ΑΔΕΙΟΣ
+this php has no imap support compiled in!!	mail	el	Αυτό το PHP δεν έχει καθόλου IMAP υποστήριξη μεταφρασμένη!!
+to	mail	el	Στο
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	mail	el	Για τη χρησιμοποίηση TLS σύνδεσης, πρέπει να έχετε PHP 5.1.0 ή υψηλότερη έκδοση.
+translation preferences	mail	el	Προτιμήσεις Μετάφρασης
+translation server	mail	el	Server μετάφρασης
+trash fold	mail	el	Φάκ Κάδου Αχρήστων
+trash folder	mail	el	Φάκελος Κάδου Αχρήστων
+type	mail	el	τύπος
+unexpected response from server to authenticate command.	mail	el	Απρόσμενη απάντηση από τον server στην ΕΞΑΚΡΙΒΩΣΗ ΓΝΗΣΙΟΤΗΤΑΣ εντολής.
+unexpected response from server to digest-md5 response.	mail	el	Απρόσμενη απάντηση από τον server στην Digest-MD5 απάντηση.
+unexpected response from server to login command.	mail	el	Απρόσμενη απάντηση από τον server στην εντολή ΕΙΣΟΔΟΥ
+unflagged	mail	el	αποσημαιοστολίστηκε
+unknown err	mail	el	Άγνωστο λάθ
+unknown error	mail	el	Άγνωστο λάθος
+unknown imap response from the server. server responded: %s	mail	el	Άγνωστη IMAP απάντηση από τον server.Απάντηση Server:%s
+unknown sender	mail	el	Άγνωστος αποστολέας
+unknown user or password incorrect.	mail	el	Άγνωστος χρήστης ή λάθος κωδικός.
+unread	common	el	Αδιάβαστα
+unseen	mail	el	Αθέατα
+unselect all	mail	el	Αποεπιλογή όλων
+unsubscribe	mail	el	Παύση συνδρομής
+unsubscribed	mail	el	Η συνδρομή σταμάτησε
+unsubscribed successfully!	mail	el	Η συνδρομή σταμάτησε επιτυχώς!
+up	mail	el	πάνω
+updating message status	mail	el	ενημέρωση κατάστασης μηνύματος
+updating view	mail	el	ενημέρωση εμφάνισης
+urgent	mail	el	επείγον
+use <a href="%1">emailadmin</a> to create profiles	mail	el	χρησιμοποιήστε <a href="%1">EmailAdmin</a> για τη δημιουργία προφίλ
+use a signature	mail	el	Χρήση υπογραφής
+use a signature?	mail	el	Χρήση υπογραφής;
+use addresses	mail	el	Χρήση διευθύνσεων
+use custom settings	mail	el	Χρήση σύνηθων Ρυθμίσεων
+use regular expressions	mail	el	χρήση κανονικών εκφράσεων
+use smtp auth	admin	el	Χρήση SMTP αυθ
+users can define their own emailaccounts	admin	el	Οι χρήστες μπορούν να ορίσουν τους δικούς τους email λογαριασμούς
+vacation notice	common	el	ειδοποίηση διακοπών
+vacation notice is active	mail	el	Η ειδοποίηση διακοπών είναι ενεργή
+validate certificate	mail	el	επικύρωση πιστοποιητικού
+view full header	mail	el	Προβολή πλήρους τίτλου
+view header lines	mail	el	Προβολή γραμμών τίτλου
+view message	mail	el	Προβολή μηνύματος
+viewing full header	mail	el	Προβάλλεται πλήρης τίτλος
+viewing message	mail	el	Προβολή μηνύματος
+viewing messages	mail	el	Προβολή μηνυμάτων
+when deleting messages	mail	el	Όταν διαγράφονται τα μηνύματα
+with message	mail	el	με μήνυμα
+with message "%1"	mail	el	με μήνυμα "%1"
+wrap incoming text at	mail	el	Τύλιγμα εισερχόμενου μηνύματος σε
+writing	mail	el	γράφεται
+wrote	mail	el	γράφτηκε
