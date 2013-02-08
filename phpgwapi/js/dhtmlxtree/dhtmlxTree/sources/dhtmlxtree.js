@@ -1227,16 +1227,18 @@ SELECTION
 *     @desc: visual select item in tree
 *     @type: private
 *     @param: node - tree item object
+*     @param: mode - true suppress onSelect
 *     @edition: Professional
 *     @topic: 0
 */
-   dhtmlXTreeObject.prototype._selectItem=function(node,e){
-   		if (this.checkEvent("onSelect")) this._onSSCFold=this.getSelectedItemId();
+   dhtmlXTreeObject.prototype._selectItem=function(node,e,mode){
+	    if (typeof mode == 'undefined') mode=false;
+   		if (!mode && this.checkEvent("onSelect")) this._onSSCFold=this.getSelectedItemId();
 
             this._unselectItems();
 
 					this._markItem(node);
-		if (this.checkEvent("onSelect")) {
+		if (!mode && this.checkEvent("onSelect")) {
 		   	var z=this.getSelectedItemId();
 			if (z!=this._onSSCFold)
 				this.callEvent("onSelect",[z]);
@@ -1329,7 +1331,7 @@ SELECTION
 
         var lastId=that.getSelectedItemId();
 		if ((!e)||(!e.skipUnSel))
-	        that._selectItem(obj,e);
+	        that._selectItem(obj,e,mode);
 
       if (!mode) {	 	
          if (obj.actionHandler) obj.actionHandler(obj.id,lastId);

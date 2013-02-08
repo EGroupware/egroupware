@@ -1,11 +1,13 @@
 /**
- * eGroupWare eTemplate2 - JS Tree object
+ * EGroupware eTemplate2 - JS Tree object
  *
+ * @link http://community.egroupware.org/egroupware/phpgwapi/js/dhtmlxtree/docsExplorer/dhtmlxtree/
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Nathan Gray
+ * @author Ralf Becker
  * @copyright Nathan Gray 2011
  * @version $Id$
  */
@@ -15,7 +17,8 @@
 /*egw:uses
         et2_core_inputWidget;
 	/phpgwapi/js/dhtmlxtree/js/dhtmlXCommon.js;
-	/phpgwapi/js/dhtmlxtree/js/dhtmlXTree.js;
+//	using debugable and fixed source of dhtmltree instead: /phpgwapi/js/dhtmlxtree/js/dhtmlXTree.js;
+	/phpgwapi/js/dhtmlxtree/dhtmlxTree/sources/dhtmlxtree.js;
 	/phpgwapi/js/dhtmlxtree/dhtmlxTree/sources/ext/dhtmlxtree_json.js;
 //	/phpgwapi/js/dhtmlxtree/dhtmlxTree/sources/ext/dhtmlxtree_start.js;
 */
@@ -35,18 +38,25 @@ var et2_tree = et2_inputWidget.extend({
 			"default": {},
 			"description": "Used to set the tree options."
 		},
-		"onnodeselect": {
-			"name": "onNodeSelect",
+		"onclick": {
+			"name": "onClick",
+			"type": "string",
+			"default": "",
+			"description": "JS code which gets executed when clicks on text of a node"
+		},
+		"onselect": {
+			"name": "onSelect",
 			"type": "string",
 			"default": "",
 			"description": "Javascript executed when user selects a node"
 		},
 		"oncheck": {
-			"name": "onNodeSelect",
+			"name": "onCheck",
 			"type": "string",
 			"default": "",
 			"description": "Javascript executed when user checks a node"
 		},
+		// onChange event is mapped depending on multiple to onCheck or onSelect
 		"image_path": {
 			"name": "Image directory",
 			"type": "string",
@@ -58,6 +68,7 @@ var et2_tree = et2_inputWidget.extend({
 			"default": {}
 		}
 	},
+
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -121,16 +132,37 @@ var et2_tree = et2_inputWidget.extend({
 		}
 	},
 
+	// overwrite default onclick to do nothing, as we install onclick via dhtmlxtree
+	onclick: function(_node) {},
+
 	createTree: function(widget) {
 			widget.input = new dhtmlXTreeObject({
 				parent:		widget.div[0],
 				width:		'100%',
 				height:		'100%',
 				image_path:	widget.options.image_path,
-				checkbox:	true,
-				onCheck:	widget.options.oncheck,
+				checkbox:	widget.options.multiple,
 			});
-
+			// attach all event handlers (attributs starting with "on"), if they are set
+			for(var name in widget.options)
+			{
+				if (name.substr(0,2) == 'on' && widget.options[name])
+				{
+					// automatic convert onChange event to oncheck or onSelect depending on multiple is used or not
+					if (name == 'onchange') name = widget.options.multiple ? 'oncheck' : 'onselect';
+					widget.input.attachEvent(widget.attributes[name].name, function(_args){
+						var _widget = widget;	// closure to pass in et2 widget (1. param of event handler)
+						// use widget attributes to pass arguments and name of event to handler
+						_widget.event_args = arguments;
+						_widget.event_name = this.callEvent.arguments[0].substr(3);
+						var _js = _widget.options[_widget.event_name] || _widget.options.onchange;
+						(et2_compileLegacyJS(_js, _widget, this))();
+						delete _widget.event_args;
+						delete _widget.event_name;
+					});
+					
+				}
+			}
 	},
 
 	set_select_options: function(options) {
@@ -200,27 +232,34 @@ var et2_tree = et2_inputWidget.extend({
 	},
 
 	set_value: function(new_value) {
-		this.value = this._oldValue = (typeof new_value === 'string' ? new_value.split(',') : new_value);
+		this.value = this._oldValue = (typeof new_value === 'string' && this.options.multiple ? new_value.split(',') : new_value);
 		if(this.input == null) return;
-
-		// Clear all checked
-		var checked = this.input.getAllChecked().split(this.input.dlmtr);
-		for(var i = 0; i < checked.length; i++)
+		
+		if (this.options.multiple)
 		{
-			this.input.setCheck(checked[i], false);
+			// Clear all checked
+			var checked = this.input.getAllChecked().split(this.input.dlmtr);
+			for(var i = 0; i < checked.length; i++)
+			{
+				this.input.setCheck(checked[i], false);
+			}
+	
+			// Check selected
+			for(var i = 0; i < this.value.length; i++)
+			{
+				this.input.setCheck(this.value[i], true);
+				this.input.openItem(this.value[i]);
+			}
 		}
-
-		// Check selected
-		for(var i = 0; i < this.value.length; i++)
+		else
 		{
-			this.input.setCheck(this.value[i], true);
-			this.input.openItem(this.value[i]);
+			this.input.selectItem(this.value, false);	// false = do not trigger onSelect
 		}
 	},
 
 	getValue: function() {
 		if(this.input == null) return null;
-		return this.input.getAllChecked().split(this.input.dlmtr);
+		return this.options.multiple ? this.input.getAllChecked().split(this.input.dlmtr) : this.input.getSelectedItemId();
 	}
 });
 et2_register_widget(et2_tree, ["tree","tree-cat"]);

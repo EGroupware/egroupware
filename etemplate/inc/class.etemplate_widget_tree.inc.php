@@ -31,14 +31,10 @@ class etemplate_widget_tree extends etemplate_widget
 		$this->attrs['type'] = $xml->localName;
 		parent::set_attrs($xml);
 
-		// set attrs[multiple] from attrs[options], unset options only if it just contains number or rows
+		// set attrs[multiple] from attrs[options]
 		if ($this->attrs['options'] > 1)
 		{
-			$this->attrs['multiple'] = (int)$this->attrs['options'];
-			if ((string)$this->attrs['multiple'] == $this->attrs['options'])
-			{
-				unset($this->attrs['options']);
-			}
+			$this->setElementAttribute($this->id, 'multiple', true);
 		}
 	}
 
