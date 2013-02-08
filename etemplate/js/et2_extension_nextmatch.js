@@ -1386,7 +1386,7 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 			{
 				widget = et2_createWidget("nextmatch-entryheader", {
 					id: cf_id,
-					application: field.type,
+					only_app: field.type,
 					blur: field.label
 				}, this);
 			}
@@ -1660,7 +1660,7 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader, {
 		if(typeof this.nextmatch.activeFilters.col_filter == 'undefined')
 			this.nextmatch.activeFilters.col_filter = {};
 		if(selected && selected.item.value) {
-			if(event.data.options.application)
+			if(event.data.options.only_app)
 			{
 				// Only one application, just give the ID
 				this.nextmatch.activeFilters["col_filter"][this.id] = selected.item.value;

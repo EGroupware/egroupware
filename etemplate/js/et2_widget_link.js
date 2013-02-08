@@ -389,7 +389,6 @@ var et2_link_entry = et2_inputWidget.extend({
 	init: function() {
 		this._super.apply(this, arguments);
 
-		this.div = null;
 		this.search = null;
 		this.app_select = null;
 		this._oldValue = {id: null, app: this.options.only_app};
@@ -536,7 +535,7 @@ var et2_link_entry = et2_inputWidget.extend({
 	},
 
 	getDOMNode: function() {
-		return this.div[0];
+		return this.div ? this.div[0] : null;
 	},
 
 	transformAttributes: function(_attrs) {

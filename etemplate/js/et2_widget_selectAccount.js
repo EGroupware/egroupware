@@ -63,9 +63,6 @@ var et2_selectAccount = et2_selectbox.extend({
 
 		this._super.apply(this, arguments);
 
-		// Allow search 'inside' this widget
-		this.supportedWidgetClasses = [et2_link_entry];
-
 		// Holder for search jQuery nodes
 		this.search = null;
 
@@ -98,6 +95,9 @@ var et2_selectAccount = et2_selectbox.extend({
 		}
 		else if (type == 'popup')
 		{
+			// Allow search 'inside' this widget
+			this.supportedWidgetClasses = [et2_link_entry];
+
 			this._create_search();
 			// Use empty label as blur
 			if(this.options.empty_label) this.search_widget.set_blur(this.options.empty_label);
@@ -112,11 +112,12 @@ var et2_selectAccount = et2_selectbox.extend({
 				}
 				this.search_widget.search.change(this, function(event) {
 					var value = event.data.search_widget.getValue();
-					event.data.value = typeof value == 'object' ? value.id : value;
+					event.data.value = typeof value == 'object' && value ? value.id : value;
 					event.data.input.trigger("change");
 				});
 			}
-			this.setDOMNode(this.search_widget.getDOMNode());
+			var div = jQuery(document.createElement("div")).append(this.search_widget.getDOMNode());
+			this.setDOMNode(div[0]);
 		}
 	},
 
@@ -145,12 +146,16 @@ var et2_selectAccount = et2_selectbox.extend({
 		}
 		else if (type == 'popup')
 		{
+			// Allow search 'inside' this widget
+			this.supportedWidgetClasses = [et2_link_entry];
+
 			/**
 			 * Popup takes the dialog and embeds it in place of the selectbox
 			 */
 			var dialog = this._open_multi_search();
 			dialog.dialog("close");
-			this.setDOMNode(this.dialog[0]);
+			var div = jQuery(document.createElement("div")).append(this.dialog);
+			this.setDOMNode(div[0]);
 
 			var select_col = jQuery('#selection_col',dialog).children();
 			var selected = jQuery('#selected', select_col);
@@ -290,7 +295,7 @@ var et2_selectAccount = et2_selectbox.extend({
 		var search = this.search = jQuery(document.createElement("div"));
 
 		var search_widget = this.search_widget = et2_createWidget('link-entry', {
-				'application': 'home-accounts',
+				'only_app': 'home-accounts',
 				'query': function(request, response) {
 					// Clear previous search results for multi-select
 					if(!request.options)
