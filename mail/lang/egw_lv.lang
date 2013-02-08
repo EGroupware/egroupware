@@ -1,0 +1,309 @@
+(no subject)	mail	lv	(nav temata)
+(only cc/bcc)	mail	lv	(tikai Cc/Bcc)
+(unknown sender)	mail	lv	(nezināms sūtītājs)
+activate	mail	lv	Aktivizēt
+activate script	mail	lv	aktivizēt skriptu
+add address	mail	lv	Pievienot adresi
+add rule	mail	lv	Pievienot kārtulu
+add script	mail	lv	Pievienot skriptu
+add to %1	mail	lv	Pievinot %1
+add to address book	mail	lv	Pievienot adrešu grāmatai
+add to addressbook	mail	lv	pievienot adrešu grāmatai
+additional info	mail	lv	Papildus informācija
+address book	mail	lv	Adrešu grāmata
+address book search	mail	lv	Adrešu grāmatas meklētājs
+after message body	mail	lv	Pēc vēstules teksta
+all address books	mail	lv	Visas adrešu grāmatas
+all folders	mail	lv	Visas mapes
+always show html emails	mail	lv	Vienmēr rādīt HTML e-pasta vēstules
+and	mail	lv	Un
+anyone	mail	lv	jebkurš
+as a subfolder of	mail	lv	kā  apakšmape
+attach	mail	lv	Pievienot
+attachments	mail	lv	Pielikumi
+auto refresh folder list	mail	lv	Automātiski atsvaidzināt mapes sarakstu
+back to folder	mail	lv	Atpakaļ uz mapi
+bcc	mail	lv	BCC
+before headers	mail	lv	Pirms galvenes
+between headers and message body	mail	lv	Starp galveni un vēstules tekstu
+body part	mail	lv	teksta daļa
+can't connect to inbox!!	mail	lv	nevar pieslēgties iesūtnei!!
+cc	mail	lv	CC
+change folder	mail	lv	Pāriet uz mapi
+checkbox	mail	lv	izvēles rūtiņa
+click here to log back in.	mail	lv	Noklikšķini šeit, lai autorizētos vēlreiz.
+click here to return to %1	mail	lv	Noklikšķini šeit, lai atgrieztos uz %1
+close all	mail	lv	aizvērt visu
+close this page	mail	lv	aizvērt šo lapu
+close window	mail	lv	Aizvērt logu
+color	mail	lv	Krāsa
+compose	mail	lv	Rakstīt jaunu
+compress folder	mail	lv	Kompresēt mapi
+configuration	mail	lv	Konfigurēšana
+contains	mail	lv	satur
+copy to	mail	lv	Kopēt Uz:
+create	mail	lv	Izveidot
+create folder	mail	lv	Izveidot mapi
+create sent	mail	lv	Izveidot Nosūtītās
+create subfolder	mail	lv	Izveidot apakšmapi
+create trash	mail	lv	Izveidot mapi Dzēstās
+created folder successfully!	mail	lv	Mape veiksmīgi izveidota!
+dark blue	mail	lv	Tumši zils
+dark cyan	mail	lv	Tumšs ciāns
+dark gray	mail	lv	Tumši pelēks
+dark green	mail	lv	Tumši zaļš
+dark magenta	mail	lv	Tumšs fuksīns
+dark yellow	mail	lv	Tumši dzeltens
+date(newest first)	mail	lv	Datums (jaunākais pirmais)
+date(oldest first)	mail	lv	Datums (vecākais pirmais)
+days	mail	lv	dienas
+deactivate script	mail	lv	deaktivizēt skriptu
+default	mail	lv	Noklusējums
+default sorting order	mail	lv	Noklusētā kārtošanas secība
+delete all	mail	lv	izdzēst visu
+delete folder	mail	lv	Izdzēst mapi
+delete selected	mail	lv	Izdzēst atzīmēto
+delete selected messages	mail	lv	izdzēst atzīmētās vēstules
+deleted	mail	lv	izdzēsts
+deleted folder successfully!	mail	lv	Mape veiksmīgi izdzēta!
+disable	mail	lv	Neatļauts
+display message in new window	mail	lv	Parādīt vēstuli  jaunā logā
+display of html emails	mail	lv	Parādīt HTML vēstules
+display only when no plain text is available	mail	lv	Parādīt tikai tad, kad pieejams atklāts teksts
+display preferences	mail	lv	Parādīt izvēles
+do it!	mail	lv	dari to!
+do not use sent	mail	lv	Nelieto nosūtīts
+do not use trash	mail	lv	Nelieto atkritumi
+do you really want to delete the '%1' folder?	mail	lv	Vai tiešām vēlies dzēst mapi "%1"?
+does not contain	mail	lv	nesatur
+does not match	mail	lv	neatbilst
+don't use sent	mail	lv	Nelieto nosūtīts
+don't use trash	mail	lv	Nelieto atkritui
+down	mail	lv	lejā
+download	mail	lv	lejupielādēt
+download this as a file	mail	lv	Lejupielādēt šo kā failu
+e-mail	mail	lv	E-pasts
+e-mail address	mail	lv	E-pasta adrese
+e-mail folders	mail	lv	E-pasta mapes
+edit filter	mail	lv	Rediģēt filtru
+edit rule	mail	lv	rediģēt kārtulu
+edit selected	mail	lv	Rediģēt atzīmēto
+email address	mail	lv	E-pasta adrese
+email notification	mail	lv	E-pasta paziņojums
+email signature	mail	lv	E-pasta paraksts
+empty trash	mail	lv	atbrīvot atkritumus
+enable	mail	lv	atļaut
+enter your default mail domain ( from: user@domain )	admin	lv	Ievadi noklusēto pasta domēnu (NO: lietotājs@domēns)
+enter your imap mail server hostname or ip address	admin	lv	Ievadi tava IMAP servera hosta vārdu vai IP adresi
+enter your sieve server hostname or ip address	admin	lv	Ievadi tava SIEVE servera hosta vārdu vai IP adresi
+enter your sieve server port	admin	lv	Ievadi tava SIEVE servera portu
+enter your smtp server hostname or ip address	admin	lv	Ievadi tava SMTP servera hosta vārdu vai IP adresi
+enter your smtp server port	admin	lv	Ievadi tava SMTP servera portu
+entry saved	mail	lv	Ieraksts saglabāts
+error	mail	lv	Kļūda!
+error connecting to imap serv	mail	lv	Kļūda pieslēdzoties IMAP serverim
+error opening	mail	lv	Kļūda atverot
+every	mail	lv	katru
+every %1 days	mail	lv	katras %1 dienas
+expunge	mail	lv	Izņemt
+extended	mail	lv	Paplašinats
+felamimail	common	lv	ViA e-pasts
+file into	mail	lv	ievietot
+filemanager	mail	lv	Datņu pārvaldnieks
+files	mail	lv	datnes
+filter active	mail	lv	aktīvais filtrs
+filter name	mail	lv	Filtra nosaukums
+first name	mail	lv	Vārds
+flagged	mail	lv	arkarodziņiem
+flags	mail	lv	Karodziņi
+folder	mail	lv	Mape
+folder name	mail	lv	Mapes nosaukums
+folder path	mail	lv	Mapes ceļš
+folder preferences	mail	lv	Mapes izvēles
+folder settings	mail	lv	Mapes uzstādījumi
+folder status	mail	lv	Mapes statuss
+folderlist	mail	lv	Mapes saraksts
+foldername	mail	lv	Mapes nosaukums
+folders	mail	lv	Mapes
+folders created successfully!	mail	lv	Mapes tika veiksmīgi izveidotas!
+follow	mail	lv	sekot
+for received mail	mail	lv	Saņemtām vēstulēm
+forward	mail	lv	Pārsūtīt
+forward to address	mail	lv	pārsūtīt uz adresi
+found	mail	lv	Atrasts
+from	mail	lv	No
+from(a->z)	mail	lv	No (A->Z)
+from(z->a)	mail	lv	No (Z->A)
+full name	mail	lv	Pilns vārds
+greater than	mail	lv	lielāks nekā
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	mail	lv	Lai vairāk uzzinātu par Squirrelmail, paskaties <a href="http://www.felamimail.org" target="_blank">www.felamimail.org</a><br>
+header lines	mail	lv	Galvenes rindas
+hide header	mail	lv	noslēpt galveni
+html	mail	lv	HTML
+icons and text	mail	lv	Ikonas un teksts
+icons only	mail	lv	Rādīt tikai ikonas
+identifying name	mail	lv	Identificē vārdu
+if	mail	lv	Ja
+illegal folder name.  please select a different name.	mail	lv	Neatļauts mapes nosaukums. Lūdzu, izvēlies citu!
+imap	mail	lv	IMAP
+imap server	mail	lv	IMAP serveris
+imap server address	mail	lv	IMAP servera adrese
+imap server type	mail	lv	IMAP servera tips
+imaps authentication	mail	lv	IMAP servera autentifikācija
+imaps encryption only	mail	lv	IMAP servera šifrēšana
+import	mail	lv	Importēt
+in	mail	lv	in
+inbox	mail	lv	Iesūtne
+index order	mail	lv	Indeksu kārtība
+info	mail	lv	Informācija
+invalid user name or password	mail	lv	Nederīgs lietotājvārds vai parole
+javascript	mail	lv	JavaScript
+keep a copy of the message in your inbox	mail	lv	saglabāt vēstules kopiju IESŪTNĒ
+kilobytes	mail	lv	kb
+language	mail	lv	Valoda
+last name	mail	lv	Uzvārds
+left	mail	lv	Pa kreisi
+less	mail	lv	mazāk
+less than	mail	lv	mazāk nekā
+light gray	mail	lv	Gaiši pelēks
+list all	mail	lv	Uzskaitīt visu
+location of buttons when composing	mail	lv	Pogu novietojums, kad raksta
+mail server login type	admin	lv	Pasta servera pieteikšanās tips
+mail settings	mail	lv	Pasta uzstādījumi
+mainmessage	mail	lv	galvenais ziņojums
+manage folders	common	lv	Pārvaldīt mapes
+manage sieve	common	lv	Pārvaldīt SIEVE skriptus
+mark as deleted	mail	lv	Atzīmēt kā izdzēstu
+mark messages as	mail	lv	Atzīmēt atlasītās vēstules kā
+mark selected as read	mail	lv	Atzīmēt atlasītās kā izlasītas
+mark selected as unread	mail	lv	Atzīmē atlasītās kā nelasītas
+message highlighting	mail	lv	Vēstules izgaismošana
+message list	mail	lv	Vēstuļu saraksts
+messages	mail	lv	vēstules
+move	mail	lv	pārvietot
+move messages	mail	lv	pārvietot vēstules
+move selected to	mail	lv	pārvietot atlasītās uz
+move to	mail	lv	pārvietot atlasītās uz
+move to trash	mail	lv	Pārvietot uz atkritumiem
+moving messages to	mail	lv	vēstules tiek pārvietoti uz
+name	mail	lv	Vārds
+never display html emails	mail	lv	Nekas nerādīt HTML vēstules
+new	common	lv	Jauns
+new filter	mail	lv	Jauns filtrs
+next	mail	lv	Nākošais
+next message	mail	lv	nākamā vēstule
+no filter	mail	lv	Bez filtra
+no folders found	mail	lv	Netika atrasta neviena mape
+no folders were found to subscribe to!	mail	lv	Netika atrasta neviena mape, kurai pierakstīties!
+no folders were found to unsubscribe from!	mail	lv	Netika atrasta neviena mape, no kuras izrakstīties!
+no highlighting is defined	mail	lv	Nav definēta izgaismošana
+no messages found...	mail	lv	netika atrasta neviena vēstule...
+no messages were selected.	mail	lv	Netika atlasīta neviena vēstule
+no previous message	mail	lv	nav iepriekšējās vēstules
+no valid emailprofile selected!!	mail	lv	Nav atlasīts derīgs E-pasta profils
+none	mail	lv	neviens
+on	mail	lv	ieslēgts
+only inbox	mail	lv	Tikai iesūtne
+only unseen	mail	lv	Tikai neredzētos
+open all	mail	lv	atvērt visus
+options	mail	lv	Iespējas
+or	mail	lv	vai
+organization	mail	lv	organizācija
+organization name	admin	lv	Organizācijas nosaukums
+participants	mail	lv	Dalībnieki
+personal information	mail	lv	Personīgā informācija
+please select a address	mail	lv	Lūdzu, izvēlieties adresi
+posting	mail	lv	apziņošana
+previous	mail	lv	Iepriekšējā
+previous message	mail	lv	Iepriekšējā vēstule
+print it	mail	lv	izdrukā to
+print this page	mail	lv	izdrukā šo lapu
+quicksearch	mail	lv	Ātrā meklēšana
+read	mail	lv	lasīt
+reading	mail	lv	lasīšana
+recent	mail	lv	nesen
+refresh time in minutes	mail	lv	Atjaunošanas laiks ( minūtēs )
+remove	mail	lv	pārvietot
+remove immediately	mail	lv	Pārvietot nekavējoties
+rename	mail	lv	Pārsaukt
+rename a folder	mail	lv	Pārsaukt mapi
+rename folder	mail	lv	Pārsaukt mapi
+renamed successfully!	mail	lv	Veiksmīgi pārsaukts!
+replied	mail	lv	atbildēts
+reply	mail	lv	Atbildēt
+reply all	mail	lv	Atbildēt visiem
+reply to	mail	lv	Atbildēt
+replyto	mail	lv	Atbildēt
+return	mail	lv	Atgriezties
+return to options page	mail	lv	Atgriezties opciju lapā
+right	mail	lv	Pa labi
+rule	mail	lv	Kārtula
+save	mail	lv	Saglabāt
+save all	mail	lv	Saglabāt visus
+save changes	mail	lv	sag;abāt izmaiņas
+search	mail	lv	Meklēt
+search for	mail	lv	Meklēt
+select	mail	lv	Atzīmēt
+select all	mail	lv	Atzīmēt visu
+select emailprofile	mail	lv	Atzīmē e-pasta profilu
+select your mail server type	admin	lv	Atzīmē tava e-pasta servera tipu
+send	mail	lv	Sūtīt
+sent folder	mail	lv	Mape nosūtīts
+show header	mail	lv	rādīt galveni
+show new messages on main screen	mail	lv	Rādīt jaunās vēstules galvenajā logā
+sieve settings	admin	lv	SIEVE uzstādījumi
+signature	mail	lv	Paraksts
+simply click the target-folder	mail	lv	Vienkārši noklikšķini uz mērķa mapes
+size	mail	lv	Izmērs
+size of editor window	mail	lv	Redaktora loga izmērs
+size(...->0)	mail	lv	Izmērs (...->0)
+size(0->...)	mail	lv	Izmērs (0->...)
+small view	mail	lv	mazais skats
+smtp settings	admin	lv	SMTP uzstādījumi
+subject	mail	lv	Tēma
+subject(a->z)	mail	lv	Tēma (A->Z)
+subject(z->a)	mail	lv	Tēma (Z->A)
+submit	mail	lv	Iesniegt
+subscribe	mail	lv	Parakstīties
+subscribed	mail	lv	Parakstīts
+subscribed successfully!	mail	lv	Veiksmīgi parakstīts!
+table of contents	mail	lv	Satura rādītājs
+text only	mail	lv	Tikai teksts
+the connection to the imap server failed!!	mail	lv	Neveiksmīga pieslēgšanās IMAP serverim!
+then	mail	lv	THEN
+this folder is empty	mail	lv	Šī mape ir tukša
+this php has no imap support compiled in!!	mail	lv	Šim PHP nav IMAP nokompilēts atbalsts
+to	mail	lv	Uz
+translation preferences	mail	lv	Vēlamie tulkošanas iestatījumi
+translation server	mail	lv	Tulkojuma serveris
+trash folder	mail	lv	Atkritumu mape
+type	mail	lv	tips
+unknown err	mail	lv	Nezināma kļūda
+unknown error	mail	lv	Nezināma kļūda
+unknown sender	mail	lv	Nezināms sūtītājs
+unknown user or password incorrect.	mail	lv	Nezināms lietotājs vai nepareiza parole
+unread	common	lv	Nelasīts
+unseen	mail	lv	Neredzēts
+unselect all	mail	lv	Noņemt atzīmi no visām
+unsubscribe	mail	lv	Atrakstīties
+unsubscribed	mail	lv	Atrakstīts
+unsubscribed successfully!	mail	lv	Veiksmīgi atrakstīts!
+up	mail	lv	augšup
+urgent	mail	lv	nepieciešams
+use <a href="%1">emailadmin</a> to create profiles	mail	lv	lai izveidotu profilus,lieto <a href="%1">EmailAdmin</a>
+use a signature	mail	lv	Lietot parakstu
+use a signature?	mail	lv	Lietot parakstu?
+use addresses	mail	lv	Lietot adreses
+use custom settings	mail	lv	Lietot persnonalizētus iestatījumus
+use smtp auth	admin	lv	Lieto SMTP autentifikāciju
+users can define their own emailaccounts	admin	lv	Lietotāji paši var kontrolēt savus e-pasta kontus
+vacation notice	common	lv	norāde par atrašanos atvaļinājumā
+view full header	mail	lv	Rādīt pilnu galveni
+view message	mail	lv	Rādīt vēstuli
+viewing full header	mail	lv	Rāda pilnu galveni
+viewing message	mail	lv	Rāda vēstuli
+viewing messages	mail	lv	Rāda vēstules
+when deleting messages	mail	lv	Kad dzēš vēstules
+wrap incoming text at	mail	lv	Ienākošo tekstu dalīt rindās pie
+writing	mail	lv	raksta
+wrote	mail	lv	rakstīja

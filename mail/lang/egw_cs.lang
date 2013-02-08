@@ -1,0 +1,516 @@
+%1 is not writable by you!	mail	cs	Pro %1 nemáte oprávnění k zápisu!
+(no subject)	mail	cs	(žádný předmět)
+(only cc/bcc)	mail	cs	(jen Kopie/Skrytá kopie)
+(separate multiple addresses by comma)	mail	cs	(více adres oddělte čárkou)
+(unknown sender)	mail	cs	(neznámý odesílatel)
+3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	mail	cs	3OkenníVzhled: Pokud chcete zobrazovat náhled zprávy kliknutím na její předmět, nastavte výšku okna pro seznam zpráv a oblast náhledu (300 vypadá jako dobrá pracovní hodnota). Náhled se po kliknutí na předmět zprávy zobrazí na konci seznamu zpráv.
+aborted	mail	cs	přerušeno
+activate	mail	cs	Aktivovat
+activate script	mail	cs	aktivovat skript
+activating by date requires a start- and end-date!	mail	cs	Aktivace datumem vyžaduje nastavení počátečního A koncového data!
+add acl	mail	cs	přidat acl
+add address	mail	cs	Přidat adresu
+add rule	mail	cs	Přidat pravidlo
+add script	mail	cs	Přidat skript
+add to %1	mail	cs	Přidat k %1
+add to address book	mail	cs	Přidat do adresáře
+add to addressbook	mail	cs	přidat do adresáře
+adding file to message. please wait!	mail	cs	Připojuji soubor ke zprávě. Prosím čekejte!
+additional info	mail	cs	Další informace
+address book	mail	cs	Adresář
+address book search	mail	cs	Vyhledávání v adresáři
+after message body	mail	cs	Za tělem zprávy
+all address books	mail	cs	Všechny adresáře
+all folders	mail	cs	Všechny složky
+all messages in folder	mail	cs	všechny zprávy ve složce
+all of	mail	cs	vše z
+allow images from external sources in html emails	mail	cs	Povolit obrázky z externích zdrojů v HTML e-mailech
+allways a new window	mail	cs	Vždy nové okno
+always show html emails	mail	cs	Vždy zobrazovat HTML e-maily
+and	mail	cs	a
+any of	mail	cs	kterýkoli z
+any status	mail	cs	jakýkoli status
+anyone	mail	cs	kdokoli
+as a subfolder of	mail	cs	jako podsložka (čeho)
+attach	mail	cs	Připojit
+attachments	mail	cs	Přílohy
+authentication required	mail	cs	vyžadována autentikace
+auto refresh folder list	mail	cs	Automaticky obnovit seznam složek
+back to folder	mail	cs	Zpět do složky
+bad login name or password.	mail	cs	Chybné přihlašovací jméno nebo heslo.
+bad or malformed request. server responded: %s	mail	cs	Chybný nebo špatně fomulovaný požadavek. Server odpověděl: %s
+bad request: %s	mail	cs	Chybný požadavek: %s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	mail	cs	Příchozí zprávy mohou mít na základě zadaných kritérií odlišné barvy na pozadí v seznamu zpráv. Snadno pak odlišíte zprávy od různých odesílatelů, což se hodí zejména v diskusních skupinách.
+bcc	mail	cs	Skrytá kopie
+before headers	mail	cs	Před hlavičkami
+between headers and message body	mail	cs	Mezi hlavičkami a tělem zprávy
+body part	mail	cs	část těla
+by date	mail	cs	datumem
+can not send message. no recipient defined!	mail	cs	není možné odeslat zprávu, příjemce nebyl definován!
+can't connect to inbox!!	mail	cs	nelze se připojit k INBOXu!!
+cc	mail	cs	Kopie
+change folder	mail	cs	Změnit složku
+check message against next rule also	mail	cs	zkontrolovat zprávu také proti následujícímu pravidlu
+checkbox	mail	cs	Zaškrtávací políčko
+choose from vfs	mail	cs	vybrat z VFS
+clear search	mail	cs	Nové hledání
+click here to log back in.	mail	cs	Klikněte sem pro opětovné přihlášení.
+click here to return to %1	mail	cs	Klikněte se pro návrat na %1
+close all	mail	cs	zavřít vše
+close this page	mail	cs	zavřít tuto stránku
+close window	mail	cs	Zavřít okno
+color	mail	cs	Barva
+compose	mail	cs	Nová zpráva
+compose as new	mail	cs	Vytvořit jako novou zprávu
+compress folder	mail	cs	Komprimovat složku
+condition	mail	cs	podmínka
+configuration	mail	cs	Konfigurace
+configure a valid imap server in emailadmin for the profile you are using.	mail	cs	Nakonfigurujte platný IMAP server v Administrátoru pošty pro profil, který používáte.
+connection dropped by imap server.	mail	cs	Připojení ukončeno IMAP serverem.
+contact not found!	mail	cs	Kontakt nebyl nalezen!
+contains	mail	cs	obsahuje
+copy or move messages?	mail	cs	Kopírovat nebo přesunout zprávy?
+copy to	mail	cs	Kopírovat do
+copying messages to	mail	cs	kopíruji zprávy do
+could not complete request. reason given: %s	mail	cs	Nemohu dokončit požadavek. Důvod: %s
+could not import message:	mail	cs	Nemohu importovat zprávu:
+could not open secure connection to the imap server. %s : %s.	mail	cs	Nemohu otevřít zabezpečené připojení k IMAP serveru. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	mail	cs	CRAM-MD5 nebo DIGEST-MD5 vyžadují nainstalovaný balík Auth_SASL.
+create	mail	cs	Vytvořit
+create folder	mail	cs	Vytvořit složku
+create sent	mail	cs	Vytvořit složku Odeslané
+create subfolder	mail	cs	Vytvořit podsložku
+create trash	mail	cs	Vytvořit složku Koš
+created folder successfully!	mail	cs	Složka byla úspešně vytvořena!
+dark blue	mail	cs	Tmavě modrá
+dark cyan	mail	cs	Tmavě azurová
+dark gray	mail	cs	Tmavě šedá
+dark green	mail	cs	Tmavě zelená
+dark magenta	mail	cs	Tmavě fialová
+dark yellow	mail	cs	Tmavě žlutá
+date(newest first)	mail	cs	Datum (od nejnovějšího)
+date(oldest first)	mail	cs	Datum (od nejstaršího)
+days	mail	cs	dny
+deactivate script	mail	cs	deaktivace skriptu
+default	mail	cs	výchozí
+default signature	mail	cs	výchozí podpis
+default sorting order	mail	cs	Výchozí třídění
+delete all	mail	cs	smazat vše
+delete folder	mail	cs	Smazat složku
+delete script	mail	cs	smazat skript
+delete selected	mail	cs	Smazat vybrané
+delete selected messages	mail	cs	smazat vybrané zprávy
+deleted	mail	cs	smazané
+deleted folder successfully!	mail	cs	Složka úspěšně smazána !
+deleting messages	mail	cs	mažu zprávy
+disable	mail	cs	Zakázat
+discard	mail	cs	zahodit
+discard message	mail	cs	zahodit zprávu
+display message in new window	mail	cs	Zobrazit zprávu v novém okně
+display messages in multiple windows	mail	cs	Zobrazovat zprávy ve více oknech
+display of html emails	mail	cs	Zobrazování HTML zpráv
+display only when no plain text is available	mail	cs	Zobrazovat jen pokud není k dispozici prostý text
+display preferences	mail	cs	Předvolby zobrazení
+displaying html messages is disabled	mail	cs	zobrazování HTML zpráv je zakázáno
+do it!	mail	cs	Proveď !
+do not use sent	mail	cs	Nepoužívat Odeslané
+do not use trash	mail	cs	Nepoužívat Koš
+do not validate certificate	mail	cs	neověřovat certifikát
+do you really want to delete the '%1' folder?	mail	cs	Opravdu chcete smazat složku '%1' ?
+do you really want to delete the selected accountsettings and the assosiated identity.	mail	cs	Opravdu chcete smazat vybraná nastavení účtu a přiřazené identity?
+do you really want to delete the selected signatures?	mail	cs	Opravdu chcete smazat vybrané podpisy?
+do you really want to move or copy the selected messages to folder:	mail	cs	Opravdu chcete přesunout nebo kopírovat vybrané zprávy do složky:
+do you really want to move the selected messages to folder:	mail	cs	Opravdu chcete přesunout vybrané zprávy do složky:
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	cs	Chcete být požádáni o potvrzení při přesouvání vybraných zpráv do jiné složky?
+do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	cs	Chcete zablokovat změny v přesměrování pošty prostřednictvím nastavení (i když je povolen SIEVE)?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	cs	Chcete zablokovat změny v pravidlech pro filtrování pošty (i když je povolen SIEVE)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	cs	Chcete zablokovat změny v zasílání upozornění na příchod zprávy (i když je povolen SIEVE)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	cs	Chcete zablokovat změny ve zprávách o nepřítomnosti (i když je povolen SIEVE)?
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	cs	Chcete zablokovat správu poštovních složek (vytváření, přidělování přístupových práv a přihlášení k odebírání)?
+does not contain	mail	cs	neobsahuje
+does not exist on imap server.	mail	cs	neexistuje na IMAP serveru.
+does not match	mail	cs	neshoduje se s
+does not match regexp	mail	cs	neshoduje se s regulárním výrazem
+don't use draft folder	mail	cs	Nepoužívat složku Rozepsané
+don't use sent	mail	cs	Nepoužívat Odeslané
+don't use template folder	mail	cs	Nepoužívat složku šablon
+don't use trash	mail	cs	Nepoužívat Koš
+dont strip any tags	mail	cs	neodstraňovat žádné štítky
+down	mail	cs	dolů
+download	mail	cs	stáhnout
+download this as a file	mail	cs	Stáhnout jako soubor
+draft folder	mail	cs	Rozepsané
+drafts	mail	cs	Rozepsané
+e-mail	mail	cs	E-mail
+e-mail address	mail	cs	E-mailová adresa
+e-mail folders	mail	cs	E-mailové složky
+edit email forwarding address	mail	cs	editovat adresu pro přeposílání
+edit filter	mail	cs	Editovat filtr
+edit rule	mail	cs	editovat pravidlo
+edit selected	mail	cs	Editovat vybrané
+edit vacation settings	mail	cs	editovat nastavení odpovědi v nepřítomnosti
+editor type	mail	cs	Typ editoru
+email address	mail	cs	E-mailová adresa
+email forwarding address	mail	cs	adresa pro přeposílání
+email notification update failed	mail	cs	aktualizace e-mailových upozornění se nezdařila
+email signature	mail	cs	Podpis zprávy
+emailaddress	mail	cs	e-mailová adresa
+empty trash	mail	cs	Vyprázdnit koš
+enable	mail	cs	povolit
+encrypted connection	mail	cs	šifrované připojení
+enter your default mail domain ( from: user@domain )	admin	cs	Zadejte Vaší výchozí poštovní doménu (z: uživatel@doména)
+enter your imap mail server hostname or ip address	admin	cs	Zadejte doménové jméno nebo IP adresu Vašeho IMAP serveru
+enter your sieve server hostname or ip address	admin	cs	Zadejte doménové jméno nebo IP adresu Vašeho SIEVE serveru
+enter your sieve server port	admin	cs	Zadejte port Vašeho SIEVE serveru
+enter your smtp server hostname or ip address	admin	cs	Zadejte doménové jméno nebo IP adresu Vašeho SMTP serveru
+enter your smtp server port	admin	cs	Zadejte port Vašeho SMTP serveru
+entry saved	mail	cs	Záznam uložen
+error	mail	cs	CHYBA
+error connecting to imap serv	mail	cs	Chyba spojení na IMAP server
+error connecting to imap server. %s : %s.	mail	cs	Chyba spojení na IMAP server. %s : %s.
+error connecting to imap server: [%s] %s.	mail	cs	Chyba spojení na IMAP server: [%s] %s.
+error creating rule while trying to use forward/redirect.	mail	cs	Během nastavení přesměrování došlo k chybě při vytváření pravidla.
+error opening	mail	cs	Chyba při otevírání
+error saving %1!	mail	cs	Chyba při ukládání %1!
+error:	mail	cs	Chyba:
+error: could not save message as draft	mail	cs	Chyba: Zprávu nebylo možné uložit jako rozepsanou
+error: could not save rule	mail	cs	Chyba:  Nelze uložit pravidlo
+error: message could not be displayed.	mail	cs	Chyba: Zprávu nelze zobrazit.
+event details follow	mail	cs	Následují detaily události
+every	mail	cs	každý
+every %1 days	mail	cs	každý %1 den
+expunge	mail	cs	Vymazat
+extended	mail	cs	rozšířený
+felamimail	common	cs	FelaMiMail
+file into	mail	cs	soubor do
+filemanager	mail	cs	Správce souborů
+files	mail	cs	soubory
+filter active	mail	cs	filter aktivní
+filter name	mail	cs	Název filtru
+filter rules	common	cs	Pravidla filtru
+first name	mail	cs	Křestní jméno
+flagged	mail	cs	s příznakem
+flags	mail	cs	Příznaky
+folder	mail	cs	složka
+folder acl	mail	cs	acl složky
+folder name	mail	cs	Název složky
+folder path	mail	cs	Cesta ke složce
+folder preferences	mail	cs	Předvolby složky
+folder settings	mail	cs	Nastavení složky
+folder status	mail	cs	Stav složky
+folderlist	mail	cs	Seznam složek
+foldername	mail	cs	Název složky
+folders	mail	cs	Složky
+folders created successfully!	mail	cs	Složky byly úspěšně vytvořeny !
+follow	mail	cs	následovat
+for mail to be send - not functional yet	mail	cs	Pro odesílanou zprávu - zatím nefunkční
+for received mail	mail	cs	Pro přijatou poštu
+forward	mail	cs	Přeposlat
+forward as attachment	mail	cs	přeposlat jako přílohu
+forward inline	mail	cs	přeposlat vložené do dopisu
+forward messages to	mail	cs	Přeposlat zprávu (komu)
+forward to	mail	cs	přeposlat (komu)
+forward to address	mail	cs	přeposlat na adresu
+forwarding	mail	cs	Přeposílání
+found	mail	cs	Nalezeno
+from	mail	cs	Od
+from(a->z)	mail	cs	Od (A->Z)
+from(z->a)	mail	cs	Od (Z->A)
+full name	mail	cs	Celé jméno
+greater than	mail	cs	větší než
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	mail	cs	Pokud se o Squirrelmail chcete dozvědět více, navštivte <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a>.<br>
+header lines	mail	cs	Řádky hlavičky
+hide header	mail	cs	skrýt záhlaví
+hostname / address	mail	cs	doménové jméno / adresa
+how to forward messages	mail	cs	Jak přeposílat zprávy
+html	mail	cs	HTML
+icons and text	mail	cs	Ikony a text
+icons only	mail	cs	Jen ikony
+identifying name	mail	cs	Indentifikační jméno
+identity	mail	cs	Identita
+if	mail	cs	POKUD
+if from contains	mail	cs	pokud odesílatel obsahuje
+if mail header	mail	cs	pokud hlavička obsahuje
+if message size	mail	cs	pokud velikost zprávy
+if shown, which folders should appear on main screen	mail	cs	Při zobrazení, které složky by se měly objevit na hlavní obrazovce
+if subject contains	mail	cs	pokud předmět obsahuje
+if to contains	mail	cs	pokud adresát obsahuje
+if using ssl or tls, you must have the php openssl extension loaded.	mail	cs	Pro používání SSL nebo TLS musíte mít k aktivní openssl rozšíření PHP.
+illegal folder name.  please select a different name.	mail	cs	Neplatné jméno složky. Vyberte prosím jiné.
+imap	mail	cs	IMAP
+imap server	mail	cs	IMAP Server
+imap server address	mail	cs	Adresa IMAP serveru
+imap server closed the connection.	mail	cs	IMAP server ukončil spojení.
+imap server closed the connection. server responded: %s	mail	cs	IMAP server ukončil spojení. Odpověděl: %s
+imap server password	mail	cs	heslo pro IMAP server
+imap server type	mail	cs	Typ IMAP serveru
+imap server username	mail	cs	uživatelské jméno pro IMAP server
+imaps authentication	mail	cs	IMAPS autentikace
+imaps encryption only	mail	cs	IMAPS jen šifrování
+import	mail	cs	importovat
+import mail	mail	cs	Importovat poštu
+import message	mail	cs	importovat zprávu
+importance	mail	cs	Důležitost
+in	mail	cs	v
+inbox	mail	cs	INBOX
+incoming mail server(imap)	mail	cs	server příchozí pošty (IMAP)
+index order	mail	cs	Pořadí indexu
+info	mail	cs	Info
+invalid user name or password	mail	cs	Neplatné uživatelské jméno nebo heslo
+javascript	mail	cs	JavaScript
+jumping to end	mail	cs	přeskakuji na konec
+jumping to start	mail	cs	přeskakuji na začátek
+junk	mail	cs	Spam
+keep a copy of the message in your inbox	mail	cs	zachovat kopii zprávy ve Vašem inboxu
+keep local copy of email	mail	cs	zachovat lokální kopii zprávy
+kilobytes	mail	cs	kilobytů
+language	mail	cs	Jazyk
+last name	mail	cs	Příjmení
+later	mail	cs	Později
+left	mail	cs	Levý
+less	mail	cs	menší
+less than	mail	cs	menší než
+light gray	mail	cs	Světle šedá
+list all	mail	cs	Zobrazit vše
+loading	mail	cs	nahrávám
+location of buttons when composing	mail	cs	Umístění tlačítek při psaní
+mail server login type	admin	cs	Typ přihlášení na poštovní server
+mail settings	mail	cs	Nastavení pošty
+mainmessage	mail	cs	hlavní zpráva
+manage email accounts and identities	common	cs	Spravovat e-mailové účty a indentity
+manage emailaccounts	common	cs	Spravovat e-mailové účty
+manage emailfilter / vacation	preferences	cs	Spravovat e-mailový filter / odpověď v nepřítomnosti
+manage folders	common	cs	Spravovat složky
+manage sieve	common	cs	Spravovat Sieve skripty
+manage signatures	mail	cs	Spravovat podpisy
+mark as deleted	mail	cs	Označit jako smazané
+mark messages as	mail	cs	Označit vybrané zprávy jako
+mark selected as flagged	mail	cs	Označit vybrané jako zprávy s příznakem
+mark selected as read	mail	cs	Označit vybrané jako přečtené
+mark selected as unflagged	mail	cs	Označit vybrané jako zprávy bez příznaku
+mark selected as unread	mail	cs	Označit vybrané jako nepřečtené
+match	mail	cs	Shoda
+matches	mail	cs	shoduje se s
+matches regexp	mail	cs	shoduje se s regulárním výrazem
+max uploadsize	mail	cs	maximální velikost uploadu
+message highlighting	mail	cs	Zvýrazňování zpráv
+message list	mail	cs	Seznam zpráv
+messages	mail	cs	zprávy
+move	mail	cs	přesunout
+move folder	mail	cs	přesunout složku
+move messages	mail	cs	přesunout zprávy
+move messages?	mail	cs	Přesunout zprávy?
+move selected to	mail	cs	přesunout vybrané (kam)
+move to	mail	cs	Přesunout do
+move to trash	mail	cs	Přesunout do koše
+moving messages to	mail	cs	přesouvám zprávy do
+name	mail	cs	Jméno
+never display html emails	mail	cs	Nikdy nezobrazovat HTML e-maily
+new	common	cs	Nové
+new filter	mail	cs	Nový filtr
+next	mail	cs	Další
+next message	mail	cs	Další zpráva
+no active imap server found!!	mail	cs	Nenalezen aktivní IMAP server!!
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	cs	Nebyly zadány adresy Komu/Kopie/Skrytá kopie ani složka pro uložení zprávy.
+no encryption	mail	cs	bez šifrování
+no filter	mail	cs	Žádný filtr
+no folders	mail	cs	žádné složky
+no folders found	mail	cs	Nebyly nalezeny žádné složky
+no folders were found to subscribe to!	mail	cs	Nebyly nalezeny složky k přihlášení!
+no folders were found to unsubscribe from!	mail	cs	Nebyly nalezeny složky k odhlášení!
+no highlighting is defined	mail	cs	Žádné zvýrazňování není definováno
+no imap server host configured!!	mail	cs	Není nakonfigurován IMAP server!!
+no message returned.	mail	cs	Žádná zpráva se nevrátila.
+no messages found...	mail	cs	nebyly nalezeny žádné zprávy...
+no messages selected, or lost selection. changing to folder	mail	cs	Nebyla vybrána žádná zpráva nebo byl výběr ztracen. Přecházím do složky
+no messages were selected.	mail	cs	Nebyly vybrány žádné zprávy.
+no plain text part found	mail	cs	nebyla nalezena část ve formě prostého textu
+no previous message	mail	cs	žádná předchozí zpráva
+no recipient address given!	mail	cs	Nebyla zadána adresa příjemce!
+no signature	mail	cs	bez podpisu
+no stationery	mail	cs	bez šablony
+no subject given!	mail	cs	Nebyl zadán předmět!
+no supported imap authentication method could be found.	mail	cs	Nebyla nalezena podporovaná metoda IMAP autentikace.
+no valid data to create mailprofile!!	mail	cs	Chybí platné údaje pro vytvoření poštovního profilu!!
+no valid emailprofile selected!!	mail	cs	Nebyl vybrán platný e-mailový profil!!
+none	mail	cs	Žádné
+none, create all	mail	cs	žádné, vytvořit všechny
+not allowed	mail	cs	není povoleno
+notify when new mails arrive on these folders	mail	cs	Upozornit na příchod nových zpráv do těchto složek
+on	mail	cs	na
+on behalf of	mail	cs	jménem (koho)
+one address is not valid	mail	cs	Jedna adresa není platná
+only inbox	mail	cs	Jen INBOX
+only one window	mail	cs	Jen jedno okno
+only unseen	mail	cs	Jen nepřečtené
+open all	mail	cs	otevřít vše
+options	mail	cs	Volby
+or	mail	cs	nebo
+or configure an valid imap server connection using the manage accounts/identities preference in the sidebox menu.	mail	cs	nebo nakonfigurujte připojení k IMAP serveru pomocí volby Spravovat účty/Identity v postranním panelu.
+organisation	mail	cs	organizace
+organization	mail	cs	organizace
+organization name	admin	cs	Jméno organizace
+original message	mail	cs	původní zpráva
+outgoing mail server(smtp)	mail	cs	odchozí poštovní server(SMTP)
+participants	mail	cs	Účastníci
+personal information	mail	cs	Osobní údaje
+please ask the administrator to correct the emailadmin imap server settings for you.	mail	cs	Požádejte prosím administrátora o korektní nastavení IMAP serveru pro Váš účet.
+please configure access to an existing individual imap account.	mail	cs	Nakonfigurujte prosím přístup ke stávajícímu osobnímu IMAP účtu.
+please select a address	mail	cs	Prosím vyberte adresu
+please select the number of days to wait between responses	mail	cs	Vyberte prosím počet dní, jak dlouho čekat mezi odpovědmi
+please supply the message to send with auto-responses	mail	cs	Zadejte prosím zprávu, která se má odesílat v rámci automatické odpovědi
+port	mail	cs	port
+posting	mail	cs	odesílání
+preview disabled for folder:	mail	cs	Náhled zakázán pro složku:
+previous	mail	cs	Předchozí
+previous message	mail	cs	Předchozí zpráva
+print it	mail	cs	Tisknout
+print this page	mail	cs	tisknout aktuální stranu
+printview	mail	cs	tiskový náhled
+quicksearch	mail	cs	Rychlé hledání
+read	mail	cs	přečtené
+reading	mail	cs	čtení
+receive notification	mail	cs	Přijímat potvrzení
+recent	mail	cs	nedávný
+refresh time in minutes	mail	cs	Čas obnovování v minutách
+reject with	mail	cs	zamítnout s
+remove	mail	cs	odstranit
+remove immediately	mail	cs	Odstranit okamžitě
+rename	mail	cs	Přejmenovat
+rename a folder	mail	cs	Přejmenovat složku
+rename folder	mail	cs	Přejmenovat složku
+renamed successfully!	mail	cs	Úspěšně přejmenováno!
+replied	mail	cs	odpovězené
+reply	mail	cs	Odpovědět
+reply all	mail	cs	Odpovědět všem
+reply to	mail	cs	Odpovědět (komu)
+replyto	mail	cs	Odpovědět (komu)
+respond	mail	cs	Odpověď
+respond to mail sent to	mail	cs	Odpověď na e-mail zaslaný (komu)
+return	mail	cs	Návrat
+return to options page	mail	cs	Návrat na stránku voleb
+right	mail	cs	Pravý
+row order style	mail	cs	Způsob řazení řádků
+rule	mail	cs	Pravidlo
+save	mail	cs	Uložit
+save all	mail	cs	Uložit vše
+save as draft	mail	cs	Uložit jako rozepsané
+save as infolog	mail	cs	Uložit jako infolog
+save changes	mail	cs	Uložit změny
+save message to disk	mail	cs	Uložit zprávu na disk
+script name	mail	cs	jméno skriptu
+script status	mail	cs	status skriptu
+search	mail	cs	Hledat
+search for	mail	cs	Hledat (co)
+select	mail	cs	Vybrat
+select a message to switch on its preview (click on subject)	mail	cs	Klikněte na předmět zprávy pro zobrazení jejího náhledu
+select all	mail	cs	Vybrat vše
+select emailprofile	mail	cs	Vybrat e-mailový profil
+select folder	mail	cs	vybrat složku
+select your mail server type	admin	cs	Vybrat typ e-mailového serveru
+send	mail	cs	Odeslat
+send a reject message	mail	cs	odeslat zprávu se zamítnutím
+sender	mail	cs	Odesílatel
+sent	mail	cs	Odeslané
+sent folder	mail	cs	Odeslané
+server supports mailfilter(sieve)	mail	cs	server podporuje poštovní filter (sieve)
+set as default	mail	cs	Nastavit jako výchozí
+show all folders (subscribed and unsubscribed) in main screen folder pane	mail	cs	zobrazit všechny složky (přihlášené i nepřihlášené) na hlavní obrazovce v okně složek
+show header	mail	cs	Zobrazit hlavičku
+show new messages on main screen	mail	cs	Zobrazovat nové zprávy na hlavní obrazovce
+sieve script name	mail	cs	Jméno sieve skriptu
+sieve settings	admin	cs	Nastavení sieve
+signatur	mail	cs	Podpis
+signature	mail	cs	Podpis
+simply click the target-folder	mail	cs	Jednoduše klikněte na cílovou složku
+size	mail	cs	Velikost
+size of editor window	mail	cs	Velikost okna editoru
+size(...->0)	mail	cs	Velikost (...->0)
+size(0->...)	mail	cs	Velikost (0->...)
+skipping forward	mail	cs	vynechávám přeposlání
+skipping previous	mail	cs	vynechávám předchozí
+small view	mail	cs	malé zobrazení
+smtp settings	admin	cs	Nastavení SMTP
+start new messages with mime type plain/text or html?	mail	cs	Začínat psaní nových zpráv jako MIME typ plain/text nebo html?
+stationery	mail	cs	šablona
+subject	mail	cs	Předmět
+subject(a->z)	mail	cs	Předmět (A->Z)
+subject(z->a)	mail	cs	Předmět (Z->A)
+submit	mail	cs	Přijmout
+subscribe	mail	cs	Přihlásit
+subscribed	mail	cs	Přihlášeno
+subscribed successfully!	mail	cs	Úspěšně přihlášeno !
+system signature	mail	cs	systémový podpis
+table of contents	mail	cs	Obsah
+template folder	mail	cs	Složka šablon
+templates	mail	cs	Šablony
+text only	mail	cs	Pouze text
+text/plain	mail	cs	prostý text
+the action will be applied to all messages of the current folder.ndo you want to proceed?	mail	cs	Zvolená akce bude aplikována na všechny zprávy v aktuální složce.\nChcete pokračovat?
+the connection to the imap server failed!!	mail	cs	Připojení k IMAP serveru selhalo!!
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	mail	cs	Zdá se, že IMAP server nepodporuje vybranou metodu autentikace. Zkontaktujte prosím Vašeho systémového administrátora.
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	cs	Odesílatel požaduje zaslání potvrzení o přečtení zprávy. Přejete si potvrzení odeslat?
+the mimeparser can not parse this message.	mail	cs	Mimeparser nemůže zpracovat tuto zprávu.
+then	mail	cs	POTOM
+there is no imap server configured.	mail	cs	Není nakonfigurován žádný IMAP server.
+this folder is empty	mail	cs	TATO SLOŽKA JE PRÁZDNÁ
+this php has no imap support compiled in!!	mail	cs	Toto PHP nemá zkompilovanou podporu IMAPu.
+to	mail	cs	Komu
+to mail sent to	mail	cs	na e-mail zaslaný (komu)
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	mail	cs	Pro použití TLS připojení je třeba provozovat systém na PHP 5.1.0 nebo vyšším.
+translation preferences	mail	cs	Předvolby překladu
+translation server	mail	cs	Server pro překlad
+trash	mail	cs	Koš
+trash fold	mail	cs	Koš
+trash folder	mail	cs	Koš
+type	mail	cs	typ
+unexpected response from server to authenticate command.	mail	cs	Neočekávaná odpověď serveru na příkaz AUTHENTICATE.
+unexpected response from server to digest-md5 response.	mail	cs	Neočekávaná odpověď serveru na Digest-MD5 zprávu.
+unexpected response from server to login command.	mail	cs	Neočekávaná odpověď serveru na příkaz LOGIN.
+unflagged	mail	cs	bez příznaku
+unknown err	mail	cs	Neznámá chyba
+unknown error	mail	cs	Neznámá chyba
+unknown imap response from the server. server responded: %s	mail	cs	Neznámá odpověď IMAP serveru. Server odpověděl: %s
+unknown sender	mail	cs	Neznámý odesílatel
+unknown user or password incorrect.	mail	cs	Neznámý uživatel nebo nesprávné heslo.
+unread	common	cs	nepřečtené
+unseen	mail	cs	Nepřečtené
+unselect all	mail	cs	Zrušit výběr
+unsubscribe	mail	cs	Odhlásit
+unsubscribed	mail	cs	Odhlášený
+unsubscribed successfully!	mail	cs	Úspěšně odhlášeno !
+up	mail	cs	nahoru
+updating message status	mail	cs	aktualizuji stav zprávy
+updating view	mail	cs	aktualizuji zobrazení
+urgent	mail	cs	Naléhavé
+use <a href="%1">emailadmin</a> to create profiles	mail	cs	pro vytvoření profilů použijte <a href="%1">EmailAdmin</a>
+use a signature	mail	cs	Použít podpis
+use a signature?	mail	cs	Použít podpis?
+use addresses	mail	cs	Použít adresy
+use custom identities	mail	cs	použít uživatelsky definované identity
+use custom settings	mail	cs	Použít uživatelsky definovaná nastavení
+use regular expressions	mail	cs	použít regulární výrazy
+use smtp auth	admin	cs	Použít SMTP autentikaci
+users can define their own emailaccounts	admin	cs	Uživatelé smí definovat vlastní poštovní účty
+vacation notice	common	cs	Odpověď v nepřítomnosti
+vacation notice is active	mail	cs	Odpověď v nepřítomnosti je aktivní
+vacation start-date must be before the end-date!	mail	cs	Počáteční datum automatické odpovědi musí PŘEDCHÁZET koncovému datu!
+validate certificate	mail	cs	ověřit certifikát
+view full header	mail	cs	Zobrazit celou hlavičku
+view header lines	mail	cs	Zobrazit řádky hlavičky
+view message	mail	cs	Zobrazit zprávu
+viewing full header	mail	cs	Zobrazuji celou hlavičku
+viewing message	mail	cs	Zobrazuji zprávu
+viewing messages	mail	cs	Zobrazuji zprávy
+when deleting messages	mail	cs	Při mazání zpráv
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	cs	Které složky (kromě složky Odeslané) by měly být zobrazeny za použití schématu pro zobrazení složky Odeslané
+which folders - in general - should not be automatically created, if not existing	mail	cs	Které složky by neměly být automaticky vytvářeny pokud neexistují
+with message	mail	cs	se zprávou
+with message "%1"	mail	cs	se zprávou "%1"
+wrap incoming text at	mail	cs	Zarovnat příchozí text
+writing	mail	cs	psaní
+wrote	mail	cs	napsal
+yes, offer copy option	mail	cs	Ano, nabídnout volbu kopírování
+you can use %1 for the above start-date and %2 for the end-date.	mail	cs	Můžete použít %1 pro počáteční datum a %2 pro koncové datum.
+you have received a new message on the	mail	cs	Přišla Vám nová zpráva na
+your message to %1 was displayed.	mail	cs	Vaše zpráva pro %1 byla zobrazena.

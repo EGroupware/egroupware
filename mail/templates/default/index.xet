@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.index.rows" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column width="25"/>
+				<column/>
+				<column width="95"/>
+				<column width="120"/>
+				<column width="120"/>
+				<column width="50"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-header label="ID" id="uid" readonly="true"/>
+					<nextmatch-sortheader label="subject" id="subject"/>
+					<nextmatch-sortheader align="center" label="date" id="date"/>
+					<nextmatch-sortheader label="to" id="toaddress"/>
+					<nextmatch-sortheader label="from" id="fromaddress"/>
+					<nextmatch-sortheader align="center" label="size" id="size"/>
+				</row>
+				<row>
+					<description id="${row}[uid]" readonly="true"/>
+					<description id="${row}[subject]"/>
+					<date-time align="center" id="${row}[date]" readonly="true"/>
+					<url-email id="${row}[toaddress]" readonly="true"/>
+					<url-email id="${row}[fromaddress]" readonly="true"/>
+					<description align="right" id="${row}[size]" no_lang="1" readonly="true"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="mail.index" template="" lang="" group="0" version="1.9.001">
+		<nextmatch id="nm" options="mail.index.rows"/>
+	</template>
+</overlay>

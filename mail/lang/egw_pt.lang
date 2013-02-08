@@ -1,0 +1,356 @@
+(no subject)	mail	pt	(sem assunto)
+(only cc/bcc)	mail	pt	(apenas Cc/Bcc)
+(unknown sender)	mail	pt	(remetente desconhecido)
+activate	mail	pt	Activar
+activate script	mail	pt	activar script
+add acl	mail	pt	Adicionarl ACL
+add address	mail	pt	Adicionar endereço
+add rule	mail	pt	Adicionar regra
+add script	mail	pt	Adicionar script
+add to %1	mail	pt	Adicionar a %1
+add to address book	mail	pt	Adicionar ao livro de endereços
+add to addressbook	mail	pt	adicionar ao livro de endereços
+additional info	mail	pt	Informação adicional
+address book	mail	pt	Livro de Endereços
+address book search	mail	pt	Pesquisa no livro de endereços
+after message body	mail	pt	Depois do corpo da mensagem
+all address books	mail	pt	Todos os livros de endereços
+all folders	mail	pt	Todas as pastas
+all of	mail	pt	todos de
+allways a new window	mail	pt	Sempre numa nova janela
+always show html emails	mail	pt	Exibir sempre mensagens HTML
+and	mail	pt	E
+any of	mail	pt	algum de
+anyone	mail	pt	alguém
+as a subfolder of	mail	pt	como subpasta de
+attach	mail	pt	Anexar
+attachments	mail	pt	Anexos
+auto refresh folder list	mail	pt	Actualização automática da lista de pastas
+back to folder	mail	pt	Voltar à pasta
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	mail	pt	Baseado em critérios dados, as mensagens recebidas podem ter cores de fundo diferentes na lista de mensagens. Isso facilita a distinção da origem das mensagens, particularmente no caso de listas de mensagens.
+bcc	mail	pt	Bcc
+before headers	mail	pt	Antes do cabeçalho
+between headers and message body	mail	pt	Entre cabeçalho e corpo da mensagem
+body part	mail	pt	corpo da mensagem
+can't connect to inbox!!	mail	pt	não é possível aceder à caixa de entrada!!
+cc	mail	pt	Cc
+change folder	mail	pt	Alterar pastas
+check message against next rule also	mail	pt	Verificar mensagem aplicando a regra seguinte também
+checkbox	mail	pt	Caixa de selecção
+click here to log back in.	mail	pt	Clique aqui para (re-)entrar.
+click here to return to %1	mail	pt	Clique aqui para voltar a %1
+close all	mail	pt	fechar tudo
+close this page	mail	pt	fechar esta página
+close window	mail	pt	Fecha janela
+color	mail	pt	Cor
+compose	mail	pt	Compor
+compress folder	mail	pt	Comprimir pasta
+configuration	mail	pt	Configuração
+contains	mail	pt	contém
+copy to	mail	pt	Copiar para
+create	mail	pt	Criar
+create folder	mail	pt	Criar pasta
+create sent	mail	pt	Criar a pasta Enviados
+create subfolder	mail	pt	Criar subpasta
+create trash	mail	pt	Criar a pasta Lixo
+created folder successfully!	mail	pt	Pasta criada com sucesso!
+dark blue	mail	pt	Azul escuro
+dark cyan	mail	pt	Cyan escuro
+dark gray	mail	pt	Cinza escuro
+dark green	mail	pt	Verde escuro
+dark magenta	mail	pt	Bordeaux escuro
+dark yellow	mail	pt	Amarelo escuro
+date(newest first)	mail	pt	Data (+ recente primeiro)
+date(oldest first)	mail	pt	Data (+ antiga primeiro)
+days	mail	pt	dias
+deactivate script	mail	pt	desactivar script
+default	mail	pt	Por omissão
+default sorting order	mail	pt	Ordenar por (por omissão)
+delete all	mail	pt	eliminar tudo
+delete folder	mail	pt	Eliminar pasta
+delete script	mail	pt	eliminar script
+delete selected	mail	pt	Eliminar seleccionados
+delete selected messages	mail	pt	eliminar mensagens seleccionadas
+deleted	mail	pt	eliminado/a
+deleted folder successfully!	mail	pt	Pasta eliminada com sucesso!
+disable	mail	pt	Desactivar
+discard message	mail	pt	Cancelar mensagem
+display messages in multiple windows	mail	pt	Apresentar mensagens
+display of html emails	mail	pt	Apresentar mensagens em HTML
+display only when no plain text is available	mail	pt	Apresentar apenas quando a versão de texto não estiver disponível
+display preferences	mail	pt	Preferências de apresentação
+do it!	mail	pt	Executa!
+do not use sent	mail	pt	Não utilizar a pasta Enviados
+do not use trash	mail	pt	Não utilizar a pasta Lixo
+do you really want to delete the '%1' folder?	mail	pt	Tem a certeza de que deseja eliminar a pasta '%1'?
+does not contain	mail	pt	não contém
+does not match	mail	pt	não coincide
+does not match regexp	mail	pt	regexp não coincide
+don't use sent	mail	pt	Não utilizar a pasta Enviados
+don't use trash	mail	pt	Não utilizar a pasta Lixo
+down	mail	pt	baixo
+download	mail	pt	transferência
+download this as a file	mail	pt	Transferir como ficheiro
+e-mail	mail	pt	Correio electrónico
+e-mail address	mail	pt	Endereço de correio electrónico
+e-mail folders	mail	pt	Pastas de correio electrónico
+edit email forwarding address	mail	pt	editar endereço de reencaminhamento de mensagens
+edit filter	mail	pt	Editar filtro
+edit rule	mail	pt	Editar regra
+edit selected	mail	pt	Editar seleccionado
+edit vacation settings	mail	pt	editar definições de ausência
+email address	mail	pt	Endereço de correio electrónico
+email forwarding address	mail	pt	endereço de reencaminhamento de mensagens
+email signature	mail	pt	Assinatura
+empty trash	mail	pt	Esvaziar o Lixo
+enable	mail	pt	Activar
+enter your default mail domain ( from: user@domain )	admin	pt	Insira o seu domínio de correio electrónico por omissão ( De: utilizador@domínio )
+enter your imap mail server hostname or ip address	admin	pt	Insira o nome do seu servidor de correio electrónico IMAP ou o endereço IP
+enter your sieve server hostname or ip address	admin	pt	Insira o nome do seu servidor SIEVE ou o endereço IP
+enter your sieve server port	admin	pt	Insira o porto do seu servidor SIEVE
+enter your smtp server hostname or ip address	admin	pt	Insira o nome do seu servidor SMTP ou o endereço IP
+enter your smtp server port	admin	pt	Insira o porto do seu servidor SMTP
+entry saved	mail	pt	Registo guardado
+error	mail	pt	Erro
+error connecting to imap serv	mail	pt	Erro na ligação ao servidor IMAP
+error opening	mail	pt	Erro ao abrir
+event details follow	mail	pt	Seguem detalhes do evento
+every	mail	pt	todos
+every %1 days	mail	pt	todos os %1 dias
+expunge	mail	pt	Apagar
+extended	mail	pt	Avançado
+felamimail	common	pt	FelaMiMail
+file into	mail	pt	Ficheiro em
+filemanager	mail	pt	Gestor de ficheiros
+files	mail	pt	ficheiros
+filter active	mail	pt	filtro activo
+filter name	mail	pt	Nome do filtro
+filter rules	common	pt	regras do filtro
+first name	mail	pt	Primeiro nome
+flagged	mail	pt	marcado
+flags	mail	pt	Marcadores
+folder	mail	pt	Pasta
+folder acl	mail	pt	Pasta ACL
+folder name	mail	pt	Nome da pasta
+folder path	mail	pt	Folder Path
+folder preferences	mail	pt	Preferências de pastas
+folder settings	mail	pt	Definições das pastas
+folder status	mail	pt	Estado das pastas
+folderlist	mail	pt	Lista de pastas
+foldername	mail	pt	Nome da pasta
+folders	mail	pt	Pastas
+folders created successfully!	mail	pt	Pastas criadas com sucesso!
+follow	mail	pt	seguir
+for mail to be send - not functional yet	mail	pt	Para mensagens a ser enviadas - ainda não funcional
+for received mail	mail	pt	Para mensagens recebidas
+forward	mail	pt	Encaminhar
+forward to address	mail	pt	Encaminhar para o endereço
+forwarding	mail	pt	A encaminhar
+found	mail	pt	Encontrado
+from	mail	pt	De
+from(a->z)	mail	pt	De (A->Z)
+from(z->a)	mail	pt	De (Z->A)
+full name	mail	pt	Nome completo
+greater than	mail	pt	maior que
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	mail	pt	Para mais informações sobre o Squirrelmail, visite a ligação <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a>.<br>
+header lines	mail	pt	Linhas do cabeçalho
+hide header	mail	pt	esconder cabeçalho
+html	mail	pt	HTML
+icons and text	mail	pt	Ícones e texto
+icons only	mail	pt	Apenas ícones
+identifying name	mail	pt	Nome de identificação
+if	mail	pt	Se
+if from contains	mail	pt	Se o campo de contiver
+if mail header	mail	pt	Se o cabeçalho da mensagem for
+if message size	mail	pt	Se o tamanho da mensagem for
+if subject contains	mail	pt	Se o assunto contiver
+if to contains	mail	pt	Se o campo para contiver
+illegal folder name.  please select a different name.	mail	pt	Nome de pasta inválida. Por favor, escolha um nome diferente.
+imap	mail	pt	IMAP
+imap server	mail	pt	Servidor IMAP
+imap server address	mail	pt	Endereço de servidor IMAP
+imap server type	mail	pt	Tipo de servidor IMAP
+imaps authentication	mail	pt	Autenticação IMAP
+imaps encryption only	mail	pt	Apenas cifra IMAP
+import	mail	pt	Importar
+in	mail	pt	em
+index order	mail	pt	Índice
+info	mail	pt	Info
+invalid user name or password	mail	pt	Nome de utilizador ou senha inválidos
+javascript	mail	pt	JavaScript
+keep a copy of the message in your inbox	mail	pt	Guardar uma cópia da mensagem na suca caixa de entrada
+keep local copy of email	mail	pt	Guardar cópia local de mensagens
+kilobytes	mail	pt	kilobytes
+language	mail	pt	linguagem
+last name	mail	pt	Apelido
+left	mail	pt	Esquerda
+less	mail	pt	menos
+less than	mail	pt	menos de
+light gray	mail	pt	Cinza claro
+list all	mail	pt	Listar todos
+location of buttons when composing	mail	pt	Localização dos botões na hora de compor
+mail server login type	admin	pt	Tipo de acesso ao servidor de correio electrónico
+mail settings	mail	pt	Preferências de mensagens
+mainmessage	mail	pt	mensagem principal
+manage emailfilter / vacation	preferences	pt	Gerir filtro de mensagens / ausência
+manage folders	common	pt	Gerir pastas
+manage sieve	common	pt	Gerir scripts SIEVE
+mark as deleted	mail	pt	Marcar como apagada
+mark messages as	mail	pt	Marcar mensagens seleccionadas como
+mark selected as flagged	mail	pt	Marcar mensagens seleccionadas como marcadas
+mark selected as read	mail	pt	Marcar mensagens seleccionadas como lidas
+mark selected as unflagged	mail	pt	Marcar mensagens seleccionadas como não marcadas
+mark selected as unread	mail	pt	Marcar mensagens seleccionadas como não lidas
+match	mail	pt	Exacto
+matches	mail	pt	Coincide
+matches regexp	mail	pt	Coincide com regexp
+message highlighting	mail	pt	Colorização de mensagens
+message list	mail	pt	Lista de mensagens
+messages	mail	pt	Mensagens
+move	mail	pt	Mover
+move folder	mail	pt	Mover pasta
+move messages	mail	pt	Mover mensagens
+move selected to	mail	pt	Mover mensagens seleccionadas para
+move to	mail	pt	Mover mensagens seleccionadas para
+move to trash	mail	pt	Mover para o lixo
+moving messages to	mail	pt	A mover mensagens para
+name	mail	pt	Nome
+never display html emails	mail	pt	Nunca apresentar mensagens HTML
+new	common	pt	Novo
+new filter	mail	pt	Novo filtro
+next	mail	pt	Seguinte
+next message	mail	pt	mensagem seguinte
+no filter	mail	pt	Sem filtro
+no folders found	mail	pt	Nenhuma pasta encontrada
+no folders were found to subscribe to!	mail	pt	Nenhuma pasta encontrada para subscrição!
+no folders were found to unsubscribe from!	mail	pt	Nenhuma pasta encontrada para desistência de subscrição!
+no highlighting is defined	mail	pt	Nenhuma colorização foi definida
+no messages found...	mail	pt	Nenhuma mensagem encontrada...
+no messages were selected.	mail	pt	Nenhuma mensagem foi seleccionada.
+no previous message	mail	pt	Nenhuma mensagem anterior
+no valid emailprofile selected!!	mail	pt	Nenhum perfil válido de correio electrónico seleccionado!!
+none	mail	pt	Nenhum
+on	mail	pt	em
+on behalf of	mail	pt	em nome de
+one address is not valid	mail	pt	Um endereço não é válido
+only inbox	mail	pt	Apenas caixa de entrada
+only one window	mail	pt	Apenas numa janela
+only unseen	mail	pt	Apenas não vistas
+open all	mail	pt	abrir tudo
+options	mail	pt	Opções
+or	mail	pt	ou
+organisation	mail	pt	empresa
+organization	mail	pt	empresa
+organization name	admin	pt	Nome da empresa
+participants	mail	pt	Participantes
+personal information	mail	pt	Informação pessoal
+please select a address	mail	pt	Por favor, seleccione um endereço
+please select the number of days to wait between responses	mail	pt	Por favor, seleccione o número de dias a esperar entre respostas
+please supply the message to send with auto-responses	mail	pt	Por favor, insira uma mensagem a enviar como auto-resposta
+posting	mail	pt	publicar
+previous	mail	pt	Anterior
+previous message	mail	pt	mensagens anterior
+print it	mail	pt	imprimir
+print this page	mail	pt	imprimir esta página
+quicksearch	mail	pt	Pesquisa simples
+read	mail	pt	Lido
+reading	mail	pt	A ler
+recent	mail	pt	recente
+refresh time in minutes	mail	pt	Actualizar (em minutos)
+remove	mail	pt	eliminar
+remove immediately	mail	pt	Eliminar imediatamente
+rename	mail	pt	Renomear
+rename a folder	mail	pt	Renomear uma pasta
+rename folder	mail	pt	Renomear pasta
+renamed successfully!	mail	pt	Renomeado com sucesso!
+replied	mail	pt	respondido
+reply	mail	pt	Responder
+reply all	mail	pt	Responder a todos
+reply to	mail	pt	Responder a
+replyto	mail	pt	Responder a
+respond	mail	pt	Responder
+respond to mail sent to	mail	pt	Responder a mensagem enviada para
+return	mail	pt	Voltar
+return to options page	mail	pt	Voltar à página de opções
+right	mail	pt	Direita
+rule	mail	pt	Regra
+save	mail	pt	Guardar
+save all	mail	pt	Guardar tudo
+save changes	mail	pt	Guardar alterações
+script name	mail	pt	Nome do script
+script status	mail	pt	Estado do script
+search	mail	pt	Pesquisa
+search for	mail	pt	Pesquisar por
+select	mail	pt	Seleccionar
+select all	mail	pt	Seleccionar todos
+select emailprofile	mail	pt	Seleccionar perfil de correio electrónico
+select folder	mail	pt	Seleccionar pasta
+select your mail server type	admin	pt	Seleccionar o tipo do seu servidor de correio electrónico
+send	mail	pt	Enviar
+send a reject message	mail	pt	enviar mensagem de rejeição
+sent folder	mail	pt	Pasta Enviados
+show header	mail	pt	exibir cabeçalho
+show new messages on main screen	mail	pt	Exibir novas mensagens no ecrã principal
+sieve settings	admin	pt	Configurações do Sieve
+signature	mail	pt	Assinatura
+simply click the target-folder	mail	pt	Clique simplesmente na pasta de destino
+size	mail	pt	Tamanho
+size of editor window	mail	pt	Tamanho da janela para editar
+size(...->0)	mail	pt	Tamanho (...->0)
+size(0->...)	mail	pt	Tamanho (0->...)
+small view	mail	pt	Sumário
+smtp settings	admin	pt	Configurações do SMTP
+subject	mail	pt	Assunto
+subject(a->z)	mail	pt	Assunto (A->Z)
+subject(z->a)	mail	pt	Assunto (Z-->A)
+submit	mail	pt	Enviar
+subscribe	mail	pt	Subscrever
+subscribed	mail	pt	Subscrito
+subscribed successfully!	mail	pt	Subscreveu com sucesso!
+table of contents	mail	pt	Tabela de conteúdos
+text only	mail	pt	Apenas texto
+the connection to the imap server failed!!	mail	pt	Falha na ligação ao servidor IMAP!!
+the mimeparser can not parse this message.	mail	pt	O mimeparser não pode analisar estas mensagem.
+then	mail	pt	então
+this folder is empty	mail	pt	Esta pasta está vazia
+this php has no imap support compiled in!!	mail	pt	O PHP não tem suporte de IMAP compilado!!
+to	mail	pt	Para
+to mail sent to	mail	pt	Para mensagens enviadas para
+translation preferences	mail	pt	Preferências de tradução
+translation server	mail	pt	Servidor de tradução
+trash fold	mail	pt	Pasta Lixo
+trash folder	mail	pt	Pasta Lixo
+type	mail	pt	Tipo
+unflagged	mail	pt	desmarcado
+unknown err	mail	pt	Erro desconhecido
+unknown error	mail	pt	Erro desconhecido
+unknown sender	mail	pt	Remetente desconhecido
+unknown user or password incorrect.	mail	pt	Utilizador desconhecido ou senha incorrecta.
+unread	common	pt	Não lida
+unseen	mail	pt	Não vista
+unselect all	mail	pt	Não seleccionar tudo
+unsubscribe	mail	pt	Desistir de subscrição
+unsubscribed	mail	pt	Desistência de subscrição
+unsubscribed successfully!	mail	pt	Desistência de subscrição executada com sucesso!
+up	mail	pt	para cima
+urgent	mail	pt	urgente
+use <a href="%1">emailadmin</a> to create profiles	mail	pt	utilizar <a href="%1">Administração do Correio Electrónico</a> para criar perfis
+use a signature	mail	pt	Utilizar uma assinatura
+use a signature?	mail	pt	Utilizar uma asinatura?
+use addresses	mail	pt	Utilizar endereços
+use custom settings	mail	pt	Utilizar definições personalizadas
+use regular expressions	mail	pt	Utilizar expressões regulares
+use smtp auth	admin	pt	Utilizar autenticação SMTP
+users can define their own emailaccounts	admin	pt	Os utilizadores podem definir as suas contas de correio electrónico
+vacation notice	common	pt	aviso de ausência
+view full header	mail	pt	Ver cabeçalho completo
+view message	mail	pt	Ver mensagem
+viewing full header	mail	pt	A ver cabeçalho completo
+viewing message	mail	pt	A ver mensagem
+viewing messages	mail	pt	A ver mensagens
+when deleting messages	mail	pt	Ao eliminar mensagens
+with message	mail	pt	com mensagem
+with message "%1"	mail	pt	com mensagem "%1"
+wrap incoming text at	mail	pt	Quebrar a linha do texto de entrada em
+writing	mail	pt	A escrever
+wrote	mail	pt	Escreveu

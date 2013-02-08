@@ -1,0 +1,474 @@
+(no subject)	mail	pt-br	(sem assunto)
+(only cc/bcc)	mail	pt-br	(somente Cc/Cco)
+(separate multiple addresses by comma)	mail	pt-br	(separar vários endereços por vírgula)
+(unknown sender)	mail	pt-br	(remetente desconhecido)
+activate	mail	pt-br	Ativar
+activate script	mail	pt-br	Ativar script
+activating by date requires a start- and end-date!	mail	pt-br	Ativação por data requer uma data inicial e final!
+add acl	mail	pt-br	Adicionar ACL
+add address	mail	pt-br	Adicionar endereço
+add rule	mail	pt-br	Adicionar Regra
+add script	mail	pt-br	Adicionar Script
+add to %1	mail	pt-br	Adicionar a %1
+add to address book	mail	pt-br	Adicionar aos Contatos
+add to addressbook	mail	pt-br	Adicionar aos Contatos
+adding file to message. please wait!	mail	pt-br	Adicionando arquivo à mensagem. Por favor, aguarde...
+additional info	mail	pt-br	Adicionar informação
+address book	mail	pt-br	Contatos
+address book search	mail	pt-br	Procurar nos Contatos
+after message body	mail	pt-br	Após o corpo da mensagem
+all address books	mail	pt-br	Todos os contatos
+all folders	mail	pt-br	Todas as pastas
+all of	mail	pt-br	Todos
+allow images from external sources in html emails	mail	pt-br	Todas as imagens de origem externa em e-mails em HTML
+allways a new window	mail	pt-br	sempre uma nova janela
+always show html emails	mail	pt-br	Sempre mostar mensagens em HMTL
+and	mail	pt-br	e
+any of	mail	pt-br	qualquer
+any status	mail	pt-br	qualquer status
+anyone	mail	pt-br	qualquer um
+as a subfolder of	mail	pt-br	como subpasta de
+attach	mail	pt-br	anexo
+attachments	mail	pt-br	Anexos
+authentication required	mail	pt-br	autenticação requerida
+auto refresh folder list	mail	pt-br	Auto atualizar lista de pastas
+back to folder	mail	pt-br	Voltar para a pasta
+bad login name or password.	mail	pt-br	Nome de usuário ou senha incorretos.
+bad or malformed request. server responded: %s	mail	pt-br	Requisição mal formada ou incorreta. Servidor respondeu: %s
+bad request: %s	mail	pt-br	Requisição incorreta: %s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	mail	pt-br	Baseado nos critérios fornecidos, mensagens de entrada podem ter cores de fundo diferentes na lista de mensagens.  Isso ajuda a distinguir de quem são as mensagens, particularmente no caso de listas de mensagens.
+bcc	mail	pt-br	CCO
+before headers	mail	pt-br	Antes dos cabeçalhos
+between headers and message body	mail	pt-br	Entre cabeçalho e corpo da mensagem
+body part	mail	pt-br	corpo da mensagem
+by date	mail	pt-br	por data
+can not send message. no recipient defined!	mail	pt-br	não foi possível enviar mensagem. Sem conteúdo definido!
+can't connect to inbox!!	mail	pt-br	não foi possível conectar com CAIXA DE ENTRADA
+cc	mail	pt-br	cc
+change folder	mail	pt-br	Mudar pasta
+check message against next rule also	mail	pt-br	Verificar mensagem com a próxima regra também
+checkbox	mail	pt-br	Caixa de seleção
+clear search	mail	pt-br	limpar procura
+click here to log back in.	mail	pt-br	Clique aqui para conectar
+click here to return to %1	mail	pt-br	Clique aqui para voltar a %1
+close all	mail	pt-br	Fechar todos
+close this page	mail	pt-br	Fechar esta página
+close window	mail	pt-br	Fechar janela
+color	mail	pt-br	Cor
+compose	mail	pt-br	Compor
+compose as new	mail	pt-br	compor como novo
+compress folder	mail	pt-br	Compactar pasta
+condition	mail	pt-br	condição
+configuration	mail	pt-br	Configuração
+connection dropped by imap server.	mail	pt-br	Conexão interrompida pelo servidor IMAP.
+contact not found!	mail	pt-br	Contato não encontrato!
+contains	mail	pt-br	contém
+copy to	mail	pt-br	Copiar para
+could not complete request. reason given: %s	mail	pt-br	Não foi possível completar a requisição. Motivo informado: %s
+could not import message:	mail	pt-br	Não foi possível importar Mensagem:
+could not open secure connection to the imap server. %s : %s.	mail	pt-br	Não foi possível abrir conexão segura ao servidor IMAP. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	mail	pt-br	CRAM-MD5 ou DIGEST-MD5 requerem que o pacote Auth_SASL esteja instalado.
+create	mail	pt-br	Criar
+create folder	mail	pt-br	Criar pasta
+create sent	mail	pt-br	Criar Enviadas
+create subfolder	mail	pt-br	Criar sub-pasta
+create trash	mail	pt-br	Criar Lixeira
+created folder successfully!	mail	pt-br	Pasta criada com sucesso!
+dark blue	mail	pt-br	Azul escuro
+dark cyan	mail	pt-br	Cyan escuro
+dark gray	mail	pt-br	Cinza escuro
+dark green	mail	pt-br	Verde escuro
+dark magenta	mail	pt-br	Vinho
+dark yellow	mail	pt-br	Amarelo escuro
+date(newest first)	mail	pt-br	Data (mais novas primeiro)
+date(oldest first)	mail	pt-br	Data (mais antigas primeiro)
+days	mail	pt-br	dias
+deactivate script	mail	pt-br	desativar script
+default	mail	pt-br	padrão
+default signature	mail	pt-br	assinatura padrão
+default sorting order	mail	pt-br	Ordem padrão de classificação
+delete all	mail	pt-br	Remover todas
+delete folder	mail	pt-br	Remover pasta
+delete script	mail	pt-br	Remover script
+delete selected	mail	pt-br	Remover selecionados
+delete selected messages	mail	pt-br	Remover mensagens selecionadas
+deleted	mail	pt-br	Removido
+deleted folder successfully!	mail	pt-br	Pasta removida com sucesso!
+deleting messages	mail	pt-br	removendo mensagens
+disable	mail	pt-br	Desabilitada
+discard	mail	pt-br	descartar
+discard message	mail	pt-br	Descartar mensagem
+display message in new window	mail	pt-br	Exibir mensagem em uma nova janela
+display messages in multiple windows	mail	pt-br	Exibir mensagens em múltiplas janelas
+display of html emails	mail	pt-br	Exibir emails em HTML
+display only when no plain text is available	mail	pt-br	Exibir somente quando não possuir versão em texto plano disponível
+display preferences	mail	pt-br	Preferências de Exibição
+displaying html messages is disabled	mail	pt-br	a exibição de mensagens HTML está desativada
+do it!	mail	pt-br	faça!
+do not use sent	mail	pt-br	Não usar Enviadas
+do not use trash	mail	pt-br	Não usar Lixeira
+do not validate certificate	mail	pt-br	não valide certificados
+do you really want to delete the '%1' folder?	mail	pt-br	Você realmente deseja apagar a pasta '%1'?
+do you really want to delete the selected accountsettings and the assosiated identity.	mail	pt-br	Você realmente deseja remover as configurações de conta selecionadas e as identidades associadas?
+do you really want to delete the selected signatures?	mail	pt-br	Você realmente deseja remover as assinaturas selecionadas ?
+do you really want to move the selected messages to folder:	mail	pt-br	Você realmente deseja mover a(s) mensagem(ns) selecionada(s) para a pasta:
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	pt-br	Você deseja ser perguntado para confirmação ao mover mensagens para outra pasta?
+does not contain	mail	pt-br	não contém
+does not exist on imap server.	mail	pt-br	não existe no Servidor IMAP.
+does not match	mail	pt-br	Não coincide
+does not match regexp	mail	pt-br	não coincide com a expressão usada
+don't use draft folder	mail	pt-br	Não usar pasta Rascunhos
+don't use sent	mail	pt-br	Não usar pasta Mensagens Enviadas
+don't use template folder	mail	pt-br	Não usar pasta Modelos
+don't use trash	mail	pt-br	Não usar pasta Lixeira
+dont strip any tags	mail	pt-br	Não remover nenhuma tag
+down	mail	pt-br	baixo
+download	mail	pt-br	Download
+download this as a file	mail	pt-br	Fazer download como arquivo
+draft folder	mail	pt-br	Pasta Rascunho
+drafts	mail	pt-br	Rascunhos
+e-mail	mail	pt-br	E-Mail
+e-mail address	mail	pt-br	Endereço de E-Mail
+e-mail folders	mail	pt-br	Pastas de E-Mail
+edit email forwarding address	mail	pt-br	Editar e-mail de encaminhamento
+edit filter	mail	pt-br	Editar filtro
+edit rule	mail	pt-br	Editar regra
+edit selected	mail	pt-br	Editar selecionado
+edit vacation settings	mail	pt-br	Editar configurações de ausência
+editor type	mail	pt-br	Tipo do Editor
+email address	mail	pt-br	Endereço de E-Mail
+email forwarding address	mail	pt-br	E-Mail de encaminhamento
+email notification update failed	mail	pt-br	Atualização do email de notificação falhou
+email signature	mail	pt-br	Assinatura de E-Mail
+emailaddress	mail	pt-br	endereço de e-mail
+empty trash	mail	pt-br	Esvaziar Lixeira
+enable	mail	pt-br	habilitado
+encrypted connection	mail	pt-br	conexão criptografada
+enter your default mail domain ( from: user@domain )	admin	pt-br	Digite o seu domínio de correio eletrônico (do modelo usuario@dominio)
+enter your imap mail server hostname or ip address	admin	pt-br	Digite o nome ou o endereço IP do seu servidor IMAP
+enter your sieve server hostname or ip address	admin	pt-br	Digite o nome ou o endereço IP do seu servidor SIEVE
+enter your sieve server port	admin	pt-br	Digite a porta do seu servidor SIEVE
+enter your smtp server hostname or ip address	admin	pt-br	Digite o nome ou o endereço IP do seu servidor SMTP
+enter your smtp server port	admin	pt-br	Preencha a porta do seu servidor SMTP
+entry saved	mail	pt-br	Registro salvo
+error	mail	pt-br	ERRO
+error connecting to imap serv	mail	pt-br	Erro conectando ao servidor IMAP
+error connecting to imap server. %s : %s.	mail	pt-br	Erro conectando ao servidor IMAP. %s : %s.
+error connecting to imap server: [%s] %s.	mail	pt-br	Erro conectando ao servidor IMAP: [%s] %s.
+error opening	mail	pt-br	Erro abrindo
+error:	mail	pt-br	Erro:
+error: could not save message as draft	mail	pt-br	Erro: Não foi possível salvar a mensagem como Rascunho
+event details follow	mail	pt-br	Seguem detalhes do evento
+every	mail	pt-br	cada
+every %1 days	mail	pt-br	cada %1 dia(s)
+expunge	mail	pt-br	Excluir
+extended	mail	pt-br	extendido
+felamimail	common	pt-br	eMail
+file into	mail	pt-br	Arquivar em
+filemanager	mail	pt-br	Gerenciador de Arquivos
+files	mail	pt-br	arquivos
+filter active	mail	pt-br	filtro ativo
+filter name	mail	pt-br	Nome do filtro
+filter rules	common	pt-br	Regras de filtros
+first name	mail	pt-br	Primeiro nome
+flagged	mail	pt-br	sinalizado
+flags	mail	pt-br	Sinalizadores
+folder	mail	pt-br	pasta
+folder acl	mail	pt-br	permissão da pasta
+folder name	mail	pt-br	Nome da pasta
+folder path	mail	pt-br	Caminho da Pasta
+folder preferences	mail	pt-br	Preferências de pastas
+folder settings	mail	pt-br	Configurações da Pasta
+folder status	mail	pt-br	Status da Pasta
+folderlist	mail	pt-br	Lista de Pastas
+foldername	mail	pt-br	Nome da pasta
+folders	mail	pt-br	Pastas
+folders created successfully!	mail	pt-br	Pastas criadas com sucesso!
+follow	mail	pt-br	seguir
+for mail to be send - not functional yet	mail	pt-br	Para mensagem a ser enviada (não funcionando ainda)
+for received mail	mail	pt-br	Para email recebido
+forward	mail	pt-br	Encaminhar
+forward as attachment	mail	pt-br	encaminhar como anexo
+forward inline	mail	pt-br	encaminhar no corpo da mensagem
+forward messages to	mail	pt-br	Encaminhar mensagens para
+forward to	mail	pt-br	encaminhar para
+forward to address	mail	pt-br	Encaminhar para endereço
+forwarding	mail	pt-br	Encaminhando
+found	mail	pt-br	Encontrado
+from	mail	pt-br	De
+from(a->z)	mail	pt-br	de (A->Z)
+from(z->a)	mail	pt-br	de (Z->A)
+full name	mail	pt-br	Nome completo
+greater than	mail	pt-br	maior que
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	mail	pt-br	Dê uma olhada em <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> para aprender um pouco mais sobre o Squirrelmail.<br>
+header lines	mail	pt-br	Linhas de Cabeçalho
+hide header	mail	pt-br	esconder cabeçalho
+hostname / address	mail	pt-br	servidor / endereço
+how to forward messages	mail	pt-br	como encaminhar mensagens
+html	mail	pt-br	HTML
+icons and text	mail	pt-br	Ícones e texto
+icons only	mail	pt-br	Somente ícones
+identifying name	mail	pt-br	Nome de identificação
+identity	mail	pt-br	identificar
+if	mail	pt-br	SE
+if from contains	mail	pt-br	Se "De" contém
+if mail header	mail	pt-br	Se cabeçalho de e-mail
+if message size	mail	pt-br	Se tamanho da mensagem
+if shown, which folders should appear on main screen	mail	pt-br	se exibidas, quais pastas deverão aparecer na tela principal
+if subject contains	mail	pt-br	Se assunto contém
+if to contains	mail	pt-br	Se "Para" contém
+if using ssl or tls, you must have the php openssl extension loaded.	mail	pt-br	Se estiver usando SSL ou TLS, você deve ter a extensão php 'openssl' carregada.
+illegal folder name.  please select a different name.	mail	pt-br	Nome de pasta inválido. Por favor escolha um nome diferente.
+imap	mail	pt-br	IMAP
+imap server	mail	pt-br	Servidor IMAP
+imap server address	mail	pt-br	Endereço do Servidor IMAP
+imap server closed the connection.	mail	pt-br	O servidor IMAP fechou a conexão.
+imap server closed the connection. server responded: %s	mail	pt-br	O servidor IMAP fechou a conexão. O servidor respondeu: %s
+imap server password	mail	pt-br	senha do servidor IMAP
+imap server type	mail	pt-br	Tipo do Servidor IMAP
+imap server username	mail	pt-br	nome do usuário do servidor IMAP
+imaps authentication	mail	pt-br	Autenticação IMAPS
+imaps encryption only	mail	pt-br	Somente encriptação IMAPS
+import	mail	pt-br	importar
+import mail	mail	pt-br	Importar email
+in	mail	pt-br	em
+inbox	mail	pt-br	Caixa de Entrada
+incoming mail server(imap)	mail	pt-br	servidor IMAP de entrada
+index order	mail	pt-br	Índices de classificação
+info	mail	pt-br	Informação
+invalid user name or password	mail	pt-br	Usuário e/ou senha inválido(s)
+javascript	mail	pt-br	JavaScript
+jumping to end	mail	pt-br	Indo para o final
+jumping to start	mail	pt-br	Indo para o início
+junk	mail	pt-br	Spam
+keep a copy of the message in your inbox	mail	pt-br	Manter uma cópia da mensagem em sua caixa de entrada
+keep local copy of email	mail	pt-br	manter uma cópia local do e-mail
+kilobytes	mail	pt-br	Kbytes
+language	mail	pt-br	Idioma
+last name	mail	pt-br	Último nome
+later	mail	pt-br	Depois
+left	mail	pt-br	Esquerda
+less	mail	pt-br	menor
+less than	mail	pt-br	menor que
+light gray	mail	pt-br	Cinza claro
+list all	mail	pt-br	Listar todos
+loading	mail	pt-br	carregando
+location of buttons when composing	mail	pt-br	Localização dos botões na composição
+mail server login type	admin	pt-br	Tipo de conexão do servidor de correio
+mail settings	mail	pt-br	Preferências de Correio
+mainmessage	mail	pt-br	mensagem principal
+manage email accounts and identities	common	pt-br	Gerenciar contas de e-mail e identidades
+manage emailaccounts	common	pt-br	Gerenciar contas de e-mail
+manage emailfilter / vacation	preferences	pt-br	Gerenciar Filtros / Ausência
+manage folders	common	pt-br	Gerenciar pastas
+manage sieve	common	pt-br	Gerenciar scripts Sieve
+manage signatures	mail	pt-br	Gerenciar assinaturas
+mark as deleted	mail	pt-br	Remover mensagem(ns) selecionada(s)
+mark messages as	mail	pt-br	Marcar mensagem(ns) selecionada(s) como
+mark selected as flagged	mail	pt-br	Marcar mensagem(ns) selecionada(s) como sinalizada(s)
+mark selected as read	mail	pt-br	Marcar mensagem(ns) selecionada(s) como lida(s)
+mark selected as unflagged	mail	pt-br	Marcar mensagem(ns) selecionada(s) como não sinalizada(s)
+mark selected as unread	mail	pt-br	Marcar mensagem(ns) selecionada(s) como não lida(s)
+match	mail	pt-br	Coincidente
+matches	mail	pt-br	coincidentes
+matches regexp	mail	pt-br	coincidentes com a expressão
+max uploadsize	mail	pt-br	tamanho máximo para upload
+message highlighting	mail	pt-br	Destaque de mensagens
+message list	mail	pt-br	Lista de mensagens
+messages	mail	pt-br	mensagens
+move	mail	pt-br	mover
+move folder	mail	pt-br	Mover pasta
+move messages	mail	pt-br	mover mensagens
+move selected to	mail	pt-br	mover selecionados para
+move to	mail	pt-br	mover selecionados para
+move to trash	mail	pt-br	Mover para a lixeira
+moving messages to	mail	pt-br	Movendo mensagens para
+name	mail	pt-br	Nome
+never display html emails	mail	pt-br	Nunca mostar mensagens em HTML
+new	common	pt-br	Novo
+new filter	mail	pt-br	Novo Filtro
+next	mail	pt-br	Próximo
+next message	mail	pt-br	próxima mensagem
+no active imap server found!!	mail	pt-br	Nenhum servidor IMAP ativo encontrado!!
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	pt-br	Nenhum endereço em PARA/CC/CCO informado e nenhuma pasta para salvar mensagens definida.
+no encryption	mail	pt-br	sem criptografia
+no filter	mail	pt-br	Sem filtro
+no folders found	mail	pt-br	Nenhuma pasta encontrada
+no folders were found to subscribe to!	mail	pt-br	Nenhuma pasta encontrada para inscrição
+no folders were found to unsubscribe from!	mail	pt-br	Nenhuma pasta encontrada para desinscrever
+no highlighting is defined	mail	pt-br	Nenhum  destaque foi definido
+no message returned.	mail	pt-br	Nenhuma mensagem retornada.
+no messages found...	mail	pt-br	Nenhuma mensagem foi encontrada...
+no messages selected, or lost selection. changing to folder	mail	pt-br	Nenhuma mensagem selecionada (ou perdeu-se a seleção). Alternando para pasta
+no messages were selected.	mail	pt-br	Nenhuma mensagem foi selecionada.
+no plain text part found	mail	pt-br	Nehuma parte em texto puro encontrada
+no previous message	mail	pt-br	Nenhuma mensagem anterior
+no recipient address given!	mail	pt-br	Nenhum endereço informado!
+no signature	mail	pt-br	sem assinatura
+no subject given!	mail	pt-br	Nenhum assunto informado!
+no supported imap authentication method could be found.	mail	pt-br	Nenhum método de autenticação suportado pelo servidor IMAP foi encontrado.
+no valid emailprofile selected!!	mail	pt-br	Nenhum perfil de e-mail válido selecionado!!!
+none	mail	pt-br	Nenhum
+on	mail	pt-br	em
+on behalf of	mail	pt-br	em nome de
+one address is not valid	mail	pt-br	Um endereço não é válido
+only inbox	mail	pt-br	Somente Caixa de Entrada
+only one window	mail	pt-br	Somente uma janela
+only unseen	mail	pt-br	Somente não vistas
+open all	mail	pt-br	abrir tudo
+options	mail	pt-br	Opções
+or	mail	pt-br	ou
+organisation	mail	pt-br	organização
+organization	mail	pt-br	organização
+organization name	admin	pt-br	Nome da organização
+original message	mail	pt-br	mensagem original
+outgoing mail server(smtp)	mail	pt-br	servidor SMTP de saída
+participants	mail	pt-br	Participantes
+personal information	mail	pt-br	Informação pessoal
+please select a address	mail	pt-br	Por favor, selecione um endereço
+please select the number of days to wait between responses	mail	pt-br	Por favor, selecione o número de dias para aguardar entre respostas.
+please supply the message to send with auto-responses	mail	pt-br	Por favor, informe a mensagem para enviar como auto-resposta.
+port	mail	pt-br	porta
+posting	mail	pt-br	envio
+previous	mail	pt-br	Anteriores
+previous message	mail	pt-br	mensagem anterior
+print it	mail	pt-br	imprima
+print this page	mail	pt-br	Imprimir esta página
+printview	mail	pt-br	visualização da impressão
+quicksearch	mail	pt-br	Pesquia rápida
+read	mail	pt-br	Lido
+reading	mail	pt-br	Lendo
+receive notification	mail	pt-br	Receber notificação de entrega
+recent	mail	pt-br	recente
+refresh time in minutes	mail	pt-br	Tempo de atualização em minutos
+reject with	mail	pt-br	rejeitar com
+remove	mail	pt-br	Remover
+remove immediately	mail	pt-br	Remover imediatamente
+rename	mail	pt-br	Renomear
+rename a folder	mail	pt-br	Renomear uma pasta
+rename folder	mail	pt-br	Renomear pasta
+renamed successfully!	mail	pt-br	Renomeado com sucesso!
+replied	mail	pt-br	Respondido
+reply	mail	pt-br	Responde
+reply all	mail	pt-br	Responde a todos
+reply to	mail	pt-br	Responde a
+replyto	mail	pt-br	Responde a
+respond	mail	pt-br	Responder
+respond to mail sent to	mail	pt-br	Responder para e-mail de origem
+return	mail	pt-br	Voltar
+return to options page	mail	pt-br	Voltar à página de opções
+right	mail	pt-br	Direita
+row order style	mail	pt-br	estilo da ordem de linha
+rule	mail	pt-br	Regra
+save	mail	pt-br	salvar
+save as draft	mail	pt-br	salvar como rascunho
+save as infolog	mail	pt-br	salvar como tarefa
+save changes	mail	pt-br	Salvar alterações
+save message to disk	mail	pt-br	Salvar mensagem no disco
+script name	mail	pt-br	Nome do script
+script status	mail	pt-br	Status do script
+search	mail	pt-br	Pesquisa
+search for	mail	pt-br	Pesquisa por
+select	mail	pt-br	Selecionar
+select all	mail	pt-br	Selecionar todos
+select emailprofile	mail	pt-br	Selecionar perfil de E-Mail
+select folder	mail	pt-br	Selecionar pasta
+select your mail server type	admin	pt-br	Selecionar o tipo do seu servidor de e-mail
+send	mail	pt-br	Enviar
+send a reject message	mail	pt-br	Enviar uma mensagem de rejeição
+sent	mail	pt-br	Enviado
+sent folder	mail	pt-br	Pasta Enviadas
+server supports mailfilter(sieve)	mail	pt-br	Servidor suporta filtro de e-mails (sieve)
+set as default	mail	pt-br	Definir como padrão
+show header	mail	pt-br	Exibir cabeçalho
+show new messages on main screen	mail	pt-br	Exibir novas mensagens na tela principal
+sieve script name	mail	pt-br	nome do script sieve
+sieve settings	admin	pt-br	Configurações SIEVE
+signatur	mail	pt-br	Assinatura
+signature	mail	pt-br	Assinatura
+simply click the target-folder	mail	pt-br	Clique no diretório destino
+size	mail	pt-br	Tamanho
+size of editor window	mail	pt-br	Tamanho da janela do editor
+size(...->0)	mail	pt-br	Tamanho (...->0)
+size(0->...)	mail	pt-br	Tamanho (0->...)
+skipping forward	mail	pt-br	buscando as próximas mensagens
+skipping previous	mail	pt-br	buscando as mensagens anteriores
+small view	mail	pt-br	Visão resumida
+smtp settings	admin	pt-br	Cofigurações SMTP
+start new messages with mime type plain/text or html?	mail	pt-br	iniciar novas mensagens com mime type plain/text ou html ?
+subject	mail	pt-br	Assunto
+subject(a->z)	mail	pt-br	Assunto (A->Z)
+subject(z->a)	mail	pt-br	Assunto (Z->A)
+submit	mail	pt-br	Enviar
+subscribe	mail	pt-br	Inscrever
+subscribed	mail	pt-br	Inscrito
+subscribed successfully!	mail	pt-br	Inscrito com sucesso!
+system signature	mail	pt-br	assinatura do sistema
+table of contents	mail	pt-br	Índice
+template folder	mail	pt-br	Pasta Modelos
+templates	mail	pt-br	Modelos
+text only	mail	pt-br	Somente texto
+text/plain	mail	pt-br	texto/plano
+the connection to the imap server failed!!	mail	pt-br	A conexão com o servidor IMAP falhou!
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	mail	pt-br	O servidor IMAP aparentemente não suporta o método de autenticação selecionado. Por favor, entre em contato com o administrador do sistema.
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	pt-br	O remetente da mensagem solicitou uma resposta para indicar que você a leu. Gostaria de enviá-la?
+the mimeparser can not parse this message.	mail	pt-br	O analisador mime não pôde processar esta mensagem.
+then	mail	pt-br	ENTÃO
+this folder is empty	mail	pt-br	ESTA PASTA  ESTÁ  VAZIA
+this php has no imap support compiled in!!	mail	pt-br	Esse aplicativo PHP não foi compilado com suporte IMAP
+to	mail	pt-br	Para
+to mail sent to	mail	pt-br	Enviar e-mail para
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	mail	pt-br	Para usar uma conexão TLS você precisar estar rodadndo a versão 5.1.0 ou maior do PHP.
+translation preferences	mail	pt-br	Preferências de tradução
+translation server	mail	pt-br	Servidor de tradução
+trash	mail	pt-br	Lixeira
+trash fold	mail	pt-br	Pasta Lixeira
+trash folder	mail	pt-br	Pasta Lixeira
+type	mail	pt-br	tipo
+unexpected response from server to authenticate command.	mail	pt-br	Resposta inesperada do servidor para o comando AUTENTICAR.
+unexpected response from server to digest-md5 response.	mail	pt-br	Resposta inesperada do servidor para a resposta Digest-MD5.
+unexpected response from server to login command.	mail	pt-br	Resposta inesperada do servidor para o comando LOGIN.
+unflagged	mail	pt-br	dessinalizado
+unknown err	mail	pt-br	Erro desconhecido
+unknown error	mail	pt-br	Erro desconhecido
+unknown imap response from the server. server responded: %s	mail	pt-br	Resposta desconhecida do servidor IMAP. O servidor respondeu: %s
+unknown sender	mail	pt-br	Remetente desconhecido
+unknown user or password incorrect.	mail	pt-br	Usuário ou senha inválido.
+unread	common	pt-br	Não lido
+unseen	mail	pt-br	Não lido
+unselect all	mail	pt-br	Desmarcar todos
+unsubscribe	mail	pt-br	Desincrever
+unsubscribed	mail	pt-br	Desinscrito
+unsubscribed successfully!	mail	pt-br	Desinscrito com sucesso!
+up	mail	pt-br	para cima
+updating message status	mail	pt-br	atualizando status da(s) mensagem(ns)
+updating view	mail	pt-br	atualizando exibição
+urgent	mail	pt-br	urgente
+use <a href="%1">emailadmin</a> to create profiles	mail	pt-br	usar <a href="%1">Administrador de E-Mails</a> para criar perfis.
+use a signature	mail	pt-br	Usar uma asinatura
+use a signature?	mail	pt-br	Usar uma asinatura?
+use addresses	mail	pt-br	Usar endereços
+use custom identities	mail	pt-br	Usar identifidades personalizadas
+use custom settings	mail	pt-br	Usar configurações personalizadas
+use regular expressions	mail	pt-br	Usar expressões regulares
+use smtp auth	admin	pt-br	Usar autenticação SMTP
+users can define their own emailaccounts	admin	pt-br	Usuário pode definir suas próprias contas de correio
+vacation notice	common	pt-br	Notícia de ausência
+vacation notice is active	mail	pt-br	Notícia de ausência está ativa
+vacation start-date must be before the end-date!	mail	pt-br	Data inicial de ausência deve ser ANTERIOR à data final !
+validate certificate	mail	pt-br	validar certificado
+view full header	mail	pt-br	Exibir cabeçalho completo
+view header lines	mail	pt-br	Exibir linhas de cabeçalho
+view message	mail	pt-br	Exibir mensagem
+viewing full header	mail	pt-br	Exibindo cabeçalho completo
+viewing message	mail	pt-br	Exibindo mensagem
+viewing messages	mail	pt-br	Exibindo mensagens
+when deleting messages	mail	pt-br	Ao remover mensagens
+with message	mail	pt-br	com mensagem
+with message "%1"	mail	pt-br	com mensagem "%1"
+wrap incoming text at	mail	pt-br	Quebrar a linha do texto de entrada em
+writing	mail	pt-br	escrevendo
+wrote	mail	pt-br	escreveu
+you can use %1 for the above start-date and %2 for the end-date.	mail	pt-br	Você pode usar %1 para a data inicial acima e %2 para a data final.
+you have received a new message on the	mail	pt-br	Você recebeu uma nova mensagem na
+your message to %1 was displayed.	mail	pt-br	Sua mensagem para %1 foi lida

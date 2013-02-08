@@ -1,0 +1,511 @@
+%1 is not writable by you!	mail	sl	Nimate pravice pisanja v %1!
+(no subject)	mail	sl	(brez zadeve)
+(only cc/bcc)	mail	sl	(le CC/BCC)
+(separate multiple addresses by comma)	mail	sl	(več naslovov ločite z vejico)
+(unknown sender)	mail	sl	(neznan pošiljatelj)
+3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	mail	sl	Pogled 3D: če želite videti predogled sporočila z enojnim klikom na zadevo, nastavite višino seznama sporočil in področja prikaza (300 je dober primer iz prakse). Predogled bo na zahtevo (klik) prikazan na dnu seznama sporočil.
+aborted	mail	sl	Prekinjeno
+activate	mail	sl	Aktiviraj
+activate script	mail	sl	Skripta za aktiviranje
+activating by date requires a start- and end-date!	mail	sl	Aktiviranje glede na datum zahteva določitev začetnega in končnega datuma!
+add acl	mail	sl	Dodaj ACL
+add address	mail	sl	Dodaj naslov
+add rule	mail	sl	Dodaj pravilo
+add script	mail	sl	Dodaj skripto
+add to %1	mail	sl	Dodaj v %1
+add to address book	mail	sl	Dodaj v adresar
+add to addressbook	mail	sl	Dodaj v adresar
+adding file to message. please wait!	mail	sl	Dodajam datoteko k sporočilu. Počakajte, prosim.
+additional info	mail	sl	Podrobnosti
+address book	mail	sl	Imenik
+address book search	mail	sl	Iskanje po adresarju
+after message body	mail	sl	Za besedilom
+all address books	mail	sl	Vsi adresarji
+all folders	mail	sl	Vse mape
+all messages in folder	mail	sl	Vsa sporočila v mapi
+all of	mail	sl	Vse od
+allow images from external sources in html emails	mail	sl	Dovoli slike iz zunanjih virov v sporočilih HTML
+allways a new window	mail	sl	Vedno novo okno
+always show html emails	mail	sl	Vedno prikaži HTML sporočila
+and	mail	sl	in
+any of	mail	sl	Katerikoli od
+any status	mail	sl	Katerikoli status
+anyone	mail	sl	Kdorkoli
+as a subfolder of	mail	sl	Kot podmapa v
+attach	mail	sl	Priloži
+attachments	mail	sl	Priponke
+authentication required	mail	sl	Zahtevana je avtentikacija
+auto refresh folder list	mail	sl	Samodejno osveži seznam map
+back to folder	mail	sl	Nazaj v mapo
+bad login name or password.	mail	sl	Napačno uporabniško ime ali geslo
+bad or malformed request. server responded: %s	mail	sl	Napačna ali napačno oblikovana zahteva. Odgovor strežnika: %s
+bad request: %s	mail	sl	Napačna zahteva: %s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	mail	sl	Glede na podane kriterije imajo prispela sporočila v seznamih različne barve ozadij. To pomaga pri razlikovanju med pošiljatelji sporočil, še posebej v poštnih seznamih.
+bcc	mail	sl	BCC
+before headers	mail	sl	Pred glavo sporočila
+between headers and message body	mail	sl	Med glavo in telesom sporočila
+body part	mail	sl	Telo sporočila
+by date	mail	sl	Po datumu
+can not send message. no recipient defined!	mail	sl	Ne morem poslati sporočila - ni določen prejemnik!
+can't connect to inbox!!	mail	sl	Ne morem se povezati z INBOX nabiralnikom!
+cc	mail	sl	CC
+change folder	mail	sl	Spremeni mapo
+check message against next rule also	mail	sl	Preverite sporočilo tudi z naslednjim pravilom
+checkbox	mail	sl	Potrditveno polje
+clear search	mail	sl	Zbriši iskanje
+click here to log back in.	mail	sl	Kliknite tu za ponovno prijavo.
+click here to return to %1	mail	sl	Kliknite tu za vrnitev v %1
+close all	mail	sl	Zapri vse
+close this page	mail	sl	Zapri to stran
+close window	mail	sl	Zapri okno
+color	mail	sl	Barva
+compose	mail	sl	Novo sporočilo
+compose as new	mail	sl	Sestavi kot novo
+compress folder	mail	sl	Stisni mapo
+condition	mail	sl	Pogoj
+configuration	mail	sl	Nastavitev
+configure a valid imap server in emailadmin for the profile you are using.	mail	sl	Nastavite veljavni strežnik IMAP v emailadmin za profile, ki jih uporabljate.
+connection dropped by imap server.	mail	sl	Strežnik IMAP je prekinil povezavo.
+contact not found!	mail	sl	Stik ni bil najden!
+contains	mail	sl	Vsebuje
+copy or move messages?	mail	sl	Kopiram ali premaknem sporočilo?
+copy to	mail	sl	Kopiraj v
+copying messages to	mail	sl	Kopiram sporočilo v
+could not complete request. reason given: %s	mail	sl	Ne morem dokončati zahteve. Podan vzrok: %s
+could not import message:	mail	sl	Sporočila ni bilo mogoče uvoziti:
+could not open secure connection to the imap server. %s : %s.	mail	sl	Ne morem vzpostaviti varne povezave s strežnikom IMAP. %s: %s
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	mail	sl	CRAM-MD5 ali DIGEST-MD5 zahteva nameščen paket Auth_SASL.
+create	mail	sl	Ustvari
+create folder	mail	sl	Ustvari mapo
+create sent	mail	sl	Ustvari mapo Poslano (Sent)
+create subfolder	mail	sl	Ustvari podmapo
+create trash	mail	sl	Ustvari mapo Koš (Trash)
+created folder successfully!	mail	sl	Mapa je bila uspešno ustvarjena.
+dark blue	mail	sl	Temno modra
+dark cyan	mail	sl	Temno sinja
+dark gray	mail	sl	Temno siva
+dark green	mail	sl	Temno zelena
+dark magenta	mail	sl	Temno vijolična
+dark yellow	mail	sl	Temno rumena
+date(newest first)	mail	sl	Datum (najprej novejši)
+date(oldest first)	mail	sl	Datum (najprej starejši)
+days	mail	sl	Dni
+deactivate script	mail	sl	Skript za deaktiviranje
+default	mail	sl	Privzeto
+default signature	mail	sl	Privzeti podpis
+default sorting order	mail	sl	Privzet način razvrščanja
+delete all	mail	sl	Briši vse
+delete folder	mail	sl	Briši mapo
+delete script	mail	sl	Izbriši skript
+delete selected	mail	sl	Briši označene
+delete selected messages	mail	sl	Briši označena sporočila
+deleted	mail	sl	Izbrisano
+deleted folder successfully!	mail	sl	Mapa je bila uspešno izbrisana!
+deleting messages	mail	sl	Brisanje sporočila
+disable	mail	sl	Onemogoči
+discard	mail	sl	Zavrzi
+discard message	mail	sl	Zavrzi sporočilo
+display message in new window	mail	sl	Prikaži sporočilo v novem oknu
+display messages in multiple windows	mail	sl	Prikaži sporočila v več oknih
+display of html emails	mail	sl	Prikazovanje HTML sporočil
+display only when no plain text is available	mail	sl	Prikaži le, ko ni na voljo navadnega besedila
+display preferences	mail	sl	Prikaži nastavitve
+displaying html messages is disabled	mail	sl	Prikazovanje sporočil HTML je onemogočeno
+do it!	mail	sl	Izvedi!
+do not use sent	mail	sl	Ne uporabljaj mape Poslano (Sent)
+do not use trash	mail	sl	Ne uporabljaj mape Koš (Trash)
+do not validate certificate	mail	sl	Ne preverjaj certifikata
+do you really want to delete the '%1' folder?	mail	sl	Ali res želite izbrisati mapo '%1'?
+do you really want to delete the selected accountsettings and the assosiated identity.	mail	sl	Res želite izbrisati izbrano nastavitev računa in identiteto?
+do you really want to delete the selected signatures?	mail	sl	Res želite izbrisati izbrane podpise?
+do you really want to move or copy the selected messages to folder:	mail	sl	Res želite premakniti ali kopirati izbrana sporočila v mapo:
+do you really want to move the selected messages to folder:	mail	sl	Res želite premakniti izbrana sporočila v mapo:
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	sl	Želite biti vprašani za potrditev pred premikanjem izbranih sporočil v drugo mapo?
+do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	sl	Želite preprečiti urejanje/nastavljanje posredovanja sporočil v nastavitvah (tudi če je SIEVE omogočen)?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	sl	Želite preprečiti urejanje/nastavljanje pravil filtrov (tudi če je SIEVE omogočen)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	sl	Želite preprečiti urejanje/nastavljanje obvestil po pošti na drugi e-naslov, če pride sporočilo (tudi če je SIEVE omogočen)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	sl	Želite preprečiti urejanje/nastavljanje obvestila o odsotnosti/dopustu (tudi če je SIEVE omogočen)?
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	sl	Želite preprečiti upravljanje map (ustvarjanje, pravice dostopa in naročila)?
+does not contain	mail	sl	Ne vsebuje
+does not exist on imap server.	mail	sl	Ne obstaja na strežniku IMAP.
+does not match	mail	sl	Se ne ujema
+does not match regexp	mail	sl	Se ne ujema z regularnim izrazom
+don't use draft folder	mail	sl	Ne uporabljaj mape Osnutki
+don't use sent	mail	sl	Ne uporabljaj mape Poslano (Sent)
+don't use template folder	mail	sl	Ne uporabljaj mape s predlogami
+don't use trash	mail	sl	Ne uporabljaj mape Koš (Trash)
+dont strip any tags	mail	sl	Ne razčleni značk
+down	mail	sl	Navzdol
+download	mail	sl	Prenesi
+download this as a file	mail	sl	Prenesi kot datoteko
+draft folder	mail	sl	Mapa Osnutki
+drafts	mail	sl	Osnutki
+e-mail	mail	sl	E-Pošta
+e-mail address	mail	sl	E-Poštni naslov
+e-mail folders	mail	sl	E-Poštne mape
+edit email forwarding address	mail	sl	Uredi posredovalni naslov E-pošte
+edit filter	mail	sl	Uredi filter
+edit rule	mail	sl	Uredi pravilo
+edit selected	mail	sl	Uredi označeno
+edit vacation settings	mail	sl	Uredi nastavitve odsotnosti
+editor type	mail	sl	Vrsta urejevalnika
+email address	mail	sl	E-Poštni naslov
+email forwarding address	mail	sl	Posredovalni naslov E-pošte
+email notification update failed	mail	sl	Posodobitev obvestila elektronske pošte ni uspelo
+email signature	mail	sl	E-poštni podpis
+emailaddress	mail	sl	Poštni naslov
+empty trash	mail	sl	Izprazni smeti
+enable	mail	sl	Omogoči
+encrypted connection	mail	sl	Kodirana povezava
+enter your default mail domain ( from: user@domain )	admin	sl	Vnesite svojo privzeto domeno za naslove:
+enter your imap mail server hostname or ip address	admin	sl	Vnesite ime ali naslov IP strežnika IMAP
+enter your sieve server hostname or ip address	admin	sl	Vnesite ime ali naslov IP strežnika SIEVE
+enter your sieve server port	admin	sl	Vnesite vrata strežnika SIEVE
+enter your smtp server hostname or ip address	admin	sl	Vnesite ime ali naslov IP strežnika SMTP
+enter your smtp server port	admin	sl	Vnesite vrata strežnika SMTP
+entry saved	mail	sl	Vnos shranjen
+error	mail	sl	NAPAKA
+error connecting to imap serv	mail	sl	Napaka pri povezovanju s strežnikom IMAP
+error connecting to imap server. %s : %s.	mail	sl	Napaka pri povezavi s strežnikom IMAP. %s: %s.
+error connecting to imap server: [%s] %s.	mail	sl	Napaka pri povezovanja s strežnikom IMAP: [%s] %s.
+error creating rule while trying to use forward/redirect.	mail	sl	Napaka pri ustvarjanju pravila za posredovanje/preusmeritev.
+error opening	mail	sl	Napaka pri odpiranju
+error saving %1!	mail	sl	Napaka pri shranjevanju %1!
+error:	mail	sl	Napaka:
+error: could not save message as draft	mail	sl	Napaka: ne morem shraniti sporočila kot osnutek
+error: could not save rule	mail	sl	Napaka: ne morem shraniti pravila
+error: message could not be displayed.	mail	sl	Napaka: ne morem prikazati sporočila.
+event details follow	mail	sl	Podrobnosti dogodka sledijo
+every	mail	sl	Vsak
+every %1 days	mail	sl	Vsakih %1 dni
+expunge	mail	sl	Počisti
+extended	mail	sl	Razširjeno
+felamimail	common	sl	E-pošta
+file into	mail	sl	Shrani v
+filemanager	mail	sl	Upravljalec dokumentov
+files	mail	sl	Datoteke
+filter active	mail	sl	Filter je aktiven
+filter name	mail	sl	Ime filtra
+filter rules	common	sl	Pravila filtra
+first name	mail	sl	Ime
+flagged	mail	sl	Označen
+flags	mail	sl	Zastavice
+folder	mail	sl	Mapa
+folder acl	mail	sl	ACL mape
+folder name	mail	sl	Ime mape
+folder path	mail	sl	Pot mape
+folder preferences	mail	sl	Lastnosti mape
+folder settings	mail	sl	Nastavitve mape
+folder status	mail	sl	Status mape
+folderlist	mail	sl	Seznam map
+foldername	mail	sl	Ime mape
+folders	mail	sl	Mape
+folders created successfully!	mail	sl	Mape so bile uspešno ustvarjene!
+follow	mail	sl	Sledi
+for mail to be send - not functional yet	mail	sl	Za pošiljanje sporočila - še ne deluje
+for received mail	mail	sl	Za prejeto pošto
+forward	mail	sl	Posreduj
+forward as attachment	mail	sl	Posreduj kot prilogo
+forward inline	mail	sl	Posreduj v sporočilu
+forward messages to	mail	sl	Posreduj sporočilo osebi
+forward to	mail	sl	Posreduj
+forward to address	mail	sl	Posreduj na naslov
+forwarding	mail	sl	Posredujem
+found	mail	sl	Najdenih
+from	mail	sl	Pošiljatelj
+from(a->z)	mail	sl	Pošiljatelj (A->Z)
+from(z->a)	mail	sl	Pošiljatelj (Z->A)
+full name	mail	sl	Polno ime
+greater than	mail	sl	Večje kakor
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	mail	sl	Oglejte si <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> za več informacij o SquirrelMail.<br>
+header lines	mail	sl	Glava sporočila
+hide header	mail	sl	Skrij glavo
+hostname / address	mail	sl	Ime gostitelja/naslov
+how to forward messages	mail	sl	Kako naj se posreduje sporočilo
+html	mail	sl	HTML
+icons and text	mail	sl	Ikone in besedilo
+icons only	mail	sl	Le ikone
+identifying name	mail	sl	Določujoče ime
+identity	mail	sl	Identiteta
+if	mail	sl	IF
+if from contains	mail	sl	Če od vsebuje
+if mail header	mail	sl	Če glava elektronskega sporočila
+if message size	mail	sl	Če velikost sporočila
+if shown, which folders should appear on main screen	mail	sl	Če so prikazana, katere mape naj bodo prikazane na prvi strani?
+if subject contains	mail	sl	Če zadeva vsebuje
+if to contains	mail	sl	Če za vsebuje
+if using ssl or tls, you must have the php openssl extension loaded.	mail	sl	Če želite uporabljati SSL ali TSL, morate naložiti razširitev PHP openssl.
+illegal folder name.  please select a different name.	mail	sl	Nedovoljeno ime mape. Prosim, izberite drugo ime.
+imap	mail	sl	IMAP
+imap server	mail	sl	Strežnik IMAP
+imap server address	mail	sl	Naslov strežnika IMAP
+imap server closed the connection.	mail	sl	Strežnik IMAP je prekinil povezavo.
+imap server closed the connection. server responded: %s	mail	sl	Strežnik IMAP je prekinil povezavo. Odgovor strežnika: %s
+imap server password	mail	sl	Geslo strežnika IMAP
+imap server type	mail	sl	Tip strežnika IMAP
+imap server username	mail	sl	Uporabniško ime strežnika IMAP
+imaps authentication	mail	sl	Avtentikacija IMAPS
+imaps encryption only	mail	sl	Le IMAPS šifriranje
+import	mail	sl	Uvozi
+import mail	mail	sl	Uvozi pošto
+import message	mail	sl	Uvozi sporočilo
+in	mail	sl	V
+inbox	mail	sl	Prejeto
+incoming mail server(imap)	mail	sl	Strežnik za prihajajočo pošto (IMAP)
+index order	mail	sl	Vrstni red kazala
+info	mail	sl	Podatki
+invalid user name or password	mail	sl	Napačno uporabniško ime ali geslo
+javascript	mail	sl	Javascript
+jumping to end	mail	sl	Skok na konec
+jumping to start	mail	sl	Skok na začetek
+junk	mail	sl	Smeti
+keep a copy of the message in your inbox	mail	sl	Obdrži kopijo sporočila v mapi Prejeto
+keep local copy of email	mail	sl	Obdrži lokalno kopijo E-pošte
+kilobytes	mail	sl	Kilobajtov
+language	mail	sl	Jezik
+last name	mail	sl	Priimek
+later	mail	sl	Pozneje
+left	mail	sl	Levo
+less	mail	sl	Manj
+less than	mail	sl	Manj kot
+light gray	mail	sl	Svetlo siva
+list all	mail	sl	Izpiši vse
+loading	mail	sl	Nalaganje
+location of buttons when composing	mail	sl	Položaj gumbov pri pisanju novega sporočila
+mail server login type	admin	sl	Način prijave v poštni strežnik
+mail settings	mail	sl	Nastavitve mape
+mainmessage	mail	sl	Glavno sporočilo
+manage email accounts and identities	common	sl	Urejanje računov in identitet
+manage emailaccounts	common	sl	Upravljanje poštnih računov
+manage emailfilter / vacation	preferences	sl	Uredi EMailFilter/ odsotnost
+manage folders	common	sl	Upravljanje map
+manage sieve	common	sl	Upravljanje skript za Sieve
+manage signatures	mail	sl	Upravljanje podpisov
+mark as deleted	mail	sl	Označi kot izbrisano
+mark messages as	mail	sl	Označi izbrana sporočila kot
+mark selected as flagged	mail	sl	Označenim sporočilom dodaj zastavico
+mark selected as read	mail	sl	Označi izbrana sporočila kot prebrana
+mark selected as unflagged	mail	sl	Označenim sporočilom odvzemi zastavico
+mark selected as unread	mail	sl	Označi izbrana sporočila kot neprebrana
+match	mail	sl	Ujemanje
+matches	mail	sl	Se ujema z
+matches regexp	mail	sl	Se ujema z regularnim izrazom
+max uploadsize	mail	sl	Največja velikost prenosa
+message highlighting	mail	sl	Poudarjanje sporočil
+message list	mail	sl	Seznam sporočil
+messages	mail	sl	Sporočila
+move	mail	sl	Premakni
+move folder	mail	sl	Premakni mapo
+move messages	mail	sl	Premakni sporočila
+move messages?	mail	sl	Premaknem sporočila?
+move selected to	mail	sl	Premakni označeno v
+move to	mail	sl	Premakni označeno v
+move to trash	mail	sl	Premakni v smeti
+moving messages to	mail	sl	Premikanje sporočila v
+name	mail	sl	Ime
+never display html emails	mail	sl	Nikoli ne prikaži sporočil HTML
+new	common	sl	Novo
+new filter	mail	sl	Nov filter
+next	mail	sl	Naslednji
+next message	mail	sl	Naslednje sporočilo
+no active imap server found!!	mail	sl	Ni aktivnega strežnika IMAP!
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	sl	Ni bil podan niti naslov Za/Kp/Skp niti mapa, kamor naj bi se sporočilo shranilo.
+no encryption	mail	sl	Brez šifriranja
+no filter	mail	sl	Brez filtra
+no folders	mail	sl	Brez mapo
+no folders found	mail	sl	Ne najdem map
+no folders were found to subscribe to!	mail	sl	Ni map za naročilo!
+no folders were found to unsubscribe from!	mail	sl	Ni map za odjavo!
+no highlighting is defined	mail	sl	Poudarjanje ni definirano
+no imap server host configured!!	mail	sl	Noben strežnik IMAP ni nastavljen!
+no message returned.	mail	sl	Ni vrnjenega sporočila.
+no messages found...	mail	sl	Nobeno sporočilo ni najdeno
+no messages selected, or lost selection. changing to folder	mail	sl	Nobeno sporočilo ni izbrano ali pa je izbira izgubljena. Grem v mapo
+no messages were selected.	mail	sl	Nobeno sporočilo ni izbrano
+no plain text part found	mail	sl	Ni najdenega čistega besedila
+no previous message	mail	sl	Ni predhodnjega sporočila
+no recipient address given!	mail	sl	Ni nobenega nsalove prejemnika!
+no signature	mail	sl	Brez podpisa
+no stationery	mail	sl	Brez stacionarnega
+no subject given!	mail	sl	Ni zadeve!
+no supported imap authentication method could be found.	mail	sl	Ni podprte metode avtentikacije IMAP.
+no valid data to create mailprofile!!	mail	sl	Ni veljavnih podatkov za ustvarjanje poštneg aprofila!
+no valid emailprofile selected!!	mail	sl	Ni veljavnega E-poštnega profila!
+none	mail	sl	Prazno
+none, create all	mail	sl	Prazno, ustvari vse
+not allowed	mail	sl	Ni dovoljenja
+notify when new mails arrive on these folders	mail	sl	Obvesti, ko nova sporočila pridejo v te mape
+on	mail	sl	Vključeno
+on behalf of	mail	sl	V imenu
+one address is not valid	mail	sl	En naslov ni veljaven
+only inbox	mail	sl	Le nabiralnik INBOX
+only one window	mail	sl	Le eno okno
+only unseen	mail	sl	Le nova
+open all	mail	sl	Odpri vse
+options	mail	sl	Možnosti
+or	mail	sl	ali
+or configure an valid imap server connection using the manage accounts/identities preference in the sidebox menu.	mail	sl	ali nastavite veljavno povezavo do strežnik IMAP preko Upravljanje računov/Lastnosti identitete v meniju.
+organisation	mail	sl	Organizacija
+organization	mail	sl	Organizacija
+organization name	admin	sl	Ime organizacije
+original message	mail	sl	Izvirno sporočilo
+outgoing mail server(smtp)	mail	sl	Strežnik za odhajajočo pošto (IMAP)
+participants	mail	sl	Soudeleženci
+personal information	mail	sl	Osebni podatki
+please ask the administrator to correct the emailadmin imap server settings for you.	mail	sl	Prosite skrbnika, da popravi nastavitve strežnika IMAP.
+please configure access to an existing individual imap account.	mail	sl	nastavite dostop do obstoječega računa IMAP.
+please select a address	mail	sl	Izberite naslov
+please select the number of days to wait between responses	mail	sl	Izberite koliko dni naj počakam med odgovori
+please supply the message to send with auto-responses	mail	sl	Vpišite sporočilo, ki se bo poslalo pri samodejnem odgovoru
+port	mail	sl	Vrata
+posting	mail	sl	Objavljanje
+previous	mail	sl	Predhodnje
+previous message	mail	sl	Predhodnje sporočilo
+print it	mail	sl	Natisni
+print this page	mail	sl	Natisni to stran
+printview	mail	sl	Predogled tiskanja
+quicksearch	mail	sl	Hitro iskanje
+read	mail	sl	Prebrano
+reading	mail	sl	Branje
+receive notification	mail	sl	Sprejmi potrdilo
+recent	mail	sl	Nedavno
+refresh time in minutes	mail	sl	Osvežitveni čas v minutah
+reject with	mail	sl	Zavrni z
+remove	mail	sl	Odstrani
+remove immediately	mail	sl	Takoj odstrani
+rename	mail	sl	Preimenuj
+rename a folder	mail	sl	Preimenuj mapo
+rename folder	mail	sl	Preimenuj mapo
+renamed successfully!	mail	sl	Preimenovanje je bilo uspešno!
+replied	mail	sl	Odgovorjeno
+reply	mail	sl	Odgovori
+reply all	mail	sl	Odgovori vsem
+reply to	mail	sl	Odgovori na naslov
+replyto	mail	sl	Odgovori na
+respond	mail	sl	Odgovori
+respond to mail sent to	mail	sl	Odgovori na sporočilo poslano na
+return	mail	sl	Vrnitev
+return to options page	mail	sl	Vrnitev na stran opcij
+right	mail	sl	Desno
+row order style	mail	sl	Slog zaporednih vrstic
+rule	mail	sl	Pravilo
+save	mail	sl	Shrani
+save all	mail	sl	Shrani vse
+save as draft	mail	sl	Shrani kot osnutek
+save as infolog	mail	sl	Shrani kot Infolog
+save changes	mail	sl	Shrani spremembe
+save message to disk	mail	sl	Shrani sporočilo na disk
+script name	mail	sl	Ime skripte
+script status	mail	sl	Status skripte
+search	mail	sl	Iskanje
+search for	mail	sl	Išči
+select	mail	sl	Označi
+select all	mail	sl	Označi vse
+select emailprofile	mail	sl	Izberite E-poštni profil
+select folder	mail	sl	Izberi mapo
+select your mail server type	admin	sl	Izberite tip poštnega strežnika
+send	mail	sl	Pošlji
+send a reject message	mail	sl	Pošlji zavrnjeno sporočilo
+sent	mail	sl	Poslano
+sent folder	mail	sl	Mapa s poslanimi
+server supports mailfilter(sieve)	mail	sl	Strežnik podpira mailfilter (sieve)
+set as default	mail	sl	Nastavi kot privzeto
+show all folders (subscribed and unsubscribed) in main screen folder pane	mail	sl	Prikaži vse mape (naročene in ne-naročene) v glavnem oknu
+show header	mail	sl	Prikaži glavo
+show new messages on main screen	mail	sl	Prikaži nova sporočila na začetnem zaslonu
+sieve script name	mail	sl	Ime skripte sieve
+sieve settings	admin	sl	Nastavitve Sieve
+signatur	mail	sl	Podpis
+signature	mail	sl	Podpis
+simply click the target-folder	mail	sl	Kliknite ciljno mapo
+size	mail	sl	Velikost
+size of editor window	mail	sl	Velikost okna za urejanje
+size(...->0)	mail	sl	Velikost (... -> 0)
+size(0->...)	mail	sl	Velikost (0 -> ...)
+skipping forward	mail	sl	Skok naprej
+skipping previous	mail	sl	Skok nazaj
+small view	mail	sl	Skrčen pogled
+smtp settings	admin	sl	Nastavitve SMTP
+start new messages with mime type plain/text or html?	mail	sl	Začnem novo sporočilo kot navadno besedilo ali kot HTML?
+stationery	mail	sl	Stacionarno
+subject	mail	sl	Zadeva
+subject(a->z)	mail	sl	Zadeva (A->Z)
+subject(z->a)	mail	sl	Zadeva (Z->A)
+submit	mail	sl	Pošlji
+subscribe	mail	sl	Naroči
+subscribed	mail	sl	Naročeno
+subscribed successfully!	mail	sl	Uspešno naročeno!
+system signature	mail	sl	Sistemski podpis
+table of contents	mail	sl	Kazalo
+template folder	mail	sl	Mapa s predlogami
+templates	mail	sl	Predloge
+text only	mail	sl	Le besedilo
+text/plain	mail	sl	Navadno besedilo
+the action will be applied to all messages of the current folder.ndo you want to proceed?	mail	sl	To dejanje bo izvedeno nad vsemi sporočili v trenutni mapi.\nŽelite nadaljevati?
+the connection to the imap server failed!!	mail	sl	Povezava na strežnik IMAP ni uspela.
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	mail	sl	Strežnik IMAP verjetno ne podpira izbrane metode avtentikacije. Kontaktirajte sistemskega administratorja.
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	sl	Pošiljatelj sporočila je zahteval potrdilo, da ste sporočilo prebrali. Želite poslati obvestilo o tem?
+the mimeparser can not parse this message.	mail	sl	Mimeparser ne more prebrati tega sporočila.
+then	mail	sl	THEN
+there is no imap server configured.	mail	sl	Noben strežnik IMAP ni nastavljen.
+this folder is empty	mail	sl	TA MAPA JE PRAZNA
+this php has no imap support compiled in!!	mail	sl	Ta PHP ne vsebuje podpore za IMAP!
+to	mail	sl	Prejemnik
+to mail sent to	mail	sl	Sporočilo poslano na
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	mail	sl	Če želite uporabljati povezavo TLS, morate imeti različico PHP 5.1.0 ali več.
+translation preferences	mail	sl	Nastavitve prevodov
+translation server	mail	sl	Strežnik s prevodi
+trash	mail	sl	Koš
+trash fold	mail	sl	Koš
+trash folder	mail	sl	Mapa Koš
+type	mail	sl	Vrsta
+unexpected response from server to authenticate command.	mail	sl	Nepričakovan odgovor strežnika na ukaz AUTHENTICATE.
+unexpected response from server to digest-md5 response.	mail	sl	Nepričakovan odgovor strežnika na odgovor Digest-MD5.
+unexpected response from server to login command.	mail	sl	Nepričakovan odgovor strežnika na ukaz LOGIN.
+unflagged	mail	sl	Brez zastavice
+unknown err	mail	sl	Neznana napaka
+unknown error	mail	sl	Neznana napaka
+unknown imap response from the server. server responded: %s	mail	sl	Neznan odgovor IMAP strežnika. Strežnik je odgovoril: %s
+unknown sender	mail	sl	Neznan pošiljatelj
+unknown user or password incorrect.	mail	sl	Neznan uporabnik ali napačno geslo.
+unread	common	sl	Neprebrano
+unseen	mail	sl	Novo
+unselect all	mail	sl	Odznači vse
+unsubscribe	mail	sl	Odjavi
+unsubscribed	mail	sl	Odjavljen
+unsubscribed successfully!	mail	sl	Uspešno odjavljen!
+up	mail	sl	Gor
+updating message status	mail	sl	Posodabljanje stanja sporočil
+updating view	mail	sl	Posodabljanje pogleda
+urgent	mail	sl	Nujno
+use <a href="%1">emailadmin</a> to create profiles	mail	sl	uporabi <a href="%1">EmailAdmin</a> za izdelavo profilov
+use a signature	mail	sl	Uporabi podpis
+use a signature?	mail	sl	Uporabim podpis?
+use addresses	mail	sl	Uporabi naslove
+use custom identities	mail	sl	Uporabi identiteto po meri
+use custom settings	mail	sl	Uporabi lastne nastavitve
+use regular expressions	mail	sl	uporabite regularne izraze
+use smtp auth	admin	sl	Uporabi SMTP avtentikacijo
+users can define their own emailaccounts	admin	sl	Uporabniki lahko definirajo lastne E-poštne račune
+vacation notice	common	sl	Obvestilo o odsotnosti
+vacation notice is active	mail	sl	Obvestilo o odsotnosti je aktivno
+vacation start-date must be before the end-date!	mail	sl	Začetni datum počitnic mora biti pred končnim
+validate certificate	mail	sl	Preveri certifikat
+view full header	mail	sl	Pokaži celotno glavo
+view header lines	mail	sl	Pokaži glavo
+view message	mail	sl	Pokaži sporočilo
+viewing full header	mail	sl	Prikaz celotne glave
+viewing message	mail	sl	Prikaz sporočila
+viewing messages	mail	sl	Prikaz sporočil
+when deleting messages	mail	sl	Ob brisanju sporočil
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	sl	Katere mape (poleg Poslano) naj bodo prikazane z uporabo sheme Pogled mape Poslano
+which folders - in general - should not be automatically created, if not existing	mail	sl	Katere mape - na splošno - naj ne bodo samodejno ustvarjene, če že ne obstajajo
+with message	mail	sl	S sporočilom
+with message "%1"	mail	sl	S sporočilom "%1"
+wrap incoming text at	mail	sl	Besedilo prelomi pri
+writing	mail	sl	Pisanje
+wrote	mail	sl	Je napisal
+yes, offer copy option	mail	sl	Da, ponudi možnost Kopija
+you can use %1 for the above start-date and %2 for the end-date.	mail	sl	Za začetni datum lahko uporabite %1 in za končni datum %2
+you have received a new message on the	mail	sl	Prejeli ste novo sporočilo na
+your message to %1 was displayed.	mail	sl	Vaše sporočilo za %1 je bilo prikazano.

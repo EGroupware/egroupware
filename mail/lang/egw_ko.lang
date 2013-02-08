@@ -1,0 +1,33 @@
+address book	mail	ko	주소록
+and	mail	ko	그리고(AND 연산)
+color	mail	ko	색
+configuration	mail	ko	구성
+days	mail	ko	일동안
+default	mail	ko	기본
+delete selected	mail	ko	선택 삭제
+deleted	mail	ko	삭제됨
+download	mail	ko	내려받기
+email signature	mail	ko	E-Mail 서명
+enter your default mail domain ( from: user@domain )	admin	ko	기본 메일 도메인을 입력 ( From : 유저@도메인 )
+enter your smtp server hostname or ip address	admin	ko	SMTP서버 호스트 이름이나 IP주소 입력
+enter your smtp server port	admin	ko	SMTP 서버 포트 입력
+event details follow	mail	ko	** 다음은 이벤트-설명
+extended	mail	ko	확장
+from	mail	ko	부터
+full name	mail	ko	이름
+icons and text	mail	ko	아이콘과 설명
+icons only	mail	ko	오직 아이콘만
+import	mail	ko	가져오기
+mail settings	mail	ko	메일 설정
+new	common	ko	새로만들기
+no filter	mail	ko	필터없음
+or	mail	ko	이거나(OR연산)
+participants	mail	ko	참석자들
+previous	mail	ko	이전
+remove	mail	ko	삭제
+rule	mail	ko	규칙
+select all	mail	ko	모두 선택
+show new messages on main screen	mail	ko	새로운 메시지를 메인화면에 보여줍니다.
+small view	mail	ko	미니뷰
+text only	mail	ko	글자만
+urgent	mail	ko	긴급

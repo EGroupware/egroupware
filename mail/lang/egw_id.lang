@@ -1,0 +1,353 @@
+%1 is not writable by you!	mail	id	%1 TIDAK dapat anda tulisi!
+(no subject)	mail	id	(tanpa subyek)
+(only cc/bcc)	mail	id	(hanya CC/BCC)
+(separate multiple addresses by comma)	mail	id	(pisahkan alamat-alamat dengan koma)
+(unknown sender)	mail	id	(pengirim takdikenal)
+aborted	mail	id	dibatalkan
+activate	mail	id	Aktifkan
+activate script	mail	id	Aktifkan skrip
+activating by date requires a start- and end-date!	mail	id	Pengaktifan menurut tanggal memerlukan tanggal awal DAN akhir!
+add acl	mail	id	Tambah ACL
+add address	mail	id	Tambah alamat
+add rule	mail	id	Tambah Rule/Aturan
+add script	mail	id	Tambah Skrip
+add to %1	mail	id	Tambahkan ke %1
+add to address book	mail	id	Tambahkan ke buku alamat
+add to addressbook	mail	id	Tambahkan ke buku alamat
+adding file to message. please wait!	mail	id	Menambahkan berkas ke pesan. Mohon tunggu!
+additional info	mail	id	Info Tambahan
+address book	mail	id	Buku Alamat
+address book search	mail	id	Mencari Buku Alamat
+after message body	mail	id	Setelah tubuh-pesan
+all address books	mail	id	Semua buku alamat
+all folders	mail	id	Semua Folder
+all messages in folder	mail	id	semua pesan dalam folder
+all of	mail	id	semua
+and	mail	id	and
+any of	mail	id	sembarang
+any status	mail	id	status apapun
+anyone	mail	id	siapapun
+as a subfolder of	mail	id	sebagai subfolder dari
+attach	mail	id	Lampirkan
+attachments	mail	id	Lampiran
+authentication required	mail	id	authentication required
+back to folder	mail	id	Kembali ke folder
+bad login name or password.	mail	id	Nama atau password tidak benar.
+bcc	mail	id	BCC
+before headers	mail	id	Sebelum header
+between headers and message body	mail	id	Diantara header dan tubuh-pesan
+body part	mail	id	batang tubuh
+by date	mail	id	menurut tanggal
+cc	mail	id	CC
+change folder	mail	id	Ubah folder
+checkbox	mail	id	Checkbox
+clear search	mail	id	bersihkan pencarian
+click here to log back in.	mail	id	Klik disini untuk masuk lagi.
+click here to return to %1	mail	id	Klik disini untuk kembali ke %1
+close all	mail	id	tutup semuanya
+close this page	mail	id	tutup halaman ini
+close window	mail	id	Tutup jendela
+color	mail	id	Warna
+compose	mail	id	Tulis
+compose as new	mail	id	tulis sbg pesan baru
+compress folder	mail	id	Mampatkan folder
+condition	mail	id	kondisi
+configuration	mail	id	Konfigurasi
+contact not found!	mail	id	Kontak tidak ditemukan!
+contains	mail	id	mengandung
+copy or move messages?	mail	id	Salin atau Pindahkan Pesan?
+copy to	mail	id	Salin ke
+copying messages to	mail	id	menyalin pesan ke
+could not open secure connection to the imap server. %s : %s.	mail	id	Could not open secure connection to the IMAP server. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	mail	id	CRAM-MD5 or DIGEST-MD5 requires the Auth_SASL package to be installed.
+create	mail	id	Bikin
+create folder	mail	id	Bikin Folder
+create sent	mail	id	Bikin Sent
+create subfolder	mail	id	Bikin subfolder
+create trash	mail	id	Bikin Trash
+created folder successfully!	mail	id	Sukses bikin folder!
+dark blue	mail	id	Dark Blue
+dark cyan	mail	id	Dark Cyan
+dark gray	mail	id	Dark Gray
+dark green	mail	id	Dark Green
+dark magenta	mail	id	Dark Magenta
+dark yellow	mail	id	Dark Yellow
+date(newest first)	mail	id	Tanggal (terbaru)
+date(oldest first)	mail	id	Tanggal (terkuno)
+days	mail	id	hari
+deactivate script	mail	id	batalkan skrip
+default	mail	id	bawaan
+default signature	mail	id	tandatangan bawaan
+default sorting order	mail	id	Pengurutan bawaan
+delete all	mail	id	hapus semuanya
+delete folder	mail	id	Hapus Folder
+delete script	mail	id	hapus skrip
+delete selected	mail	id	Hapus selected
+delete selected messages	mail	id	hapus pesan terpilih
+deleted	mail	id	dihapus
+deleted folder successfully!	mail	id	Sukses menghapus folder!
+deleting messages	mail	id	menghapus pesan
+disable	mail	id	Disable
+discard	mail	id	buang
+discard message	mail	id	buang pesan
+display preferences	mail	id	Kesukaan Tampilan
+do it!	mail	id	laksanakan!
+do you really want to delete the '%1' folder?	mail	id	Anda sungguh ingin menghapus folder '%1'?
+down	mail	id	turun
+download	mail	id	unduh
+download this as a file	mail	id	Unduh sebagai berkas
+draft folder	mail	id	draft folder
+drafts	mail	id	Drafts
+e-mail	mail	id	E-Mail
+e-mail address	mail	id	Alamat E-Mail
+e-mail folders	mail	id	Folder E-Mail
+edit filter	mail	id	Edit saringan
+edit rule	mail	id	edit rule/aturan
+edit selected	mail	id	Edit yang dipilih
+editor type	mail	id	Tipe Editor
+email address	mail	id	Alamat E-Mail
+email signature	mail	id	Tandatangan Email
+emailaddress	mail	id	alamat email
+empty trash	mail	id	kosongkan trash
+enable	mail	id	enable
+encrypted connection	mail	id	encrypted connection
+entry saved	mail	id	Entri disimpan
+error	mail	id	ERROR
+error opening	mail	id	Error opening
+error saving %1!	mail	id	Error menyimpan %1!
+error:	mail	id	Error:
+event details follow	mail	id	Berikut ini detil kegiatan
+every	mail	id	setiap
+every %1 days	mail	id	setiap %1 hari
+expunge	mail	id	Expunge
+extended	mail	id	extended
+felamimail	common	id	eMail
+file into	mail	id	file into
+filemanager	mail	id	Manajer berkas
+files	mail	id	berkas
+filter active	mail	id	saringan aktif
+filter name	mail	id	Nama saringan
+filter rules	common	id	aturan saringan
+first name	mail	id	Nama Depan
+flagged	mail	id	ditandai
+flags	mail	id	Bendera
+folder	mail	id	folder
+folder acl	mail	id	ACL folder
+folder name	mail	id	Nama Folder
+folder path	mail	id	Jejak Folder
+folder preferences	mail	id	Kesukaan Folder
+folder settings	mail	id	Pengaturan Folder
+folder status	mail	id	Status Folder
+folderlist	mail	id	Daftar Folder
+foldername	mail	id	Nama Folder
+folders	mail	id	Folder
+folders created successfully!	mail	id	sukses bikin Folder!
+follow	mail	id	follow
+forward	mail	id	Forward
+forward as attachment	mail	id	forward as attachment
+forward inline	mail	id	forward inline
+forward messages to	mail	id	Forward messages to
+forward to	mail	id	forward to
+forward to address	mail	id	forward to address
+forwarding	mail	id	Forwarding
+found	mail	id	Ditemukan
+from	mail	id	Dari
+from(a->z)	mail	id	Dari (A->Z)
+from(z->a)	mail	id	Dari (Z->A)
+full name	mail	id	Nama Lengkap
+greater than	mail	id	lebih dari
+header lines	mail	id	Baris Header
+hide header	mail	id	sembunyikan header
+hostname / address	mail	id	namahost / alamat
+html	mail	id	HTML
+icons and text	mail	id	Ikon dan teks
+icons only	mail	id	Hanya Ikon
+identifying name	mail	id	Mengenali nama
+identity	mail	id	identitas
+if	mail	id	IF
+imap	mail	id	IMAP
+imap server	mail	id	IMAP Server
+imap server address	mail	id	IMAP Server Address
+imap server password	mail	id	imap server password
+imap server type	mail	id	IMAP Server type
+imap server username	mail	id	imap server username
+imaps authentication	mail	id	IMAPS Authentication
+imaps encryption only	mail	id	IMAPS Encryption only
+import	mail	id	impor
+import mail	mail	id	Impor Mail
+importance	mail	id	Importance
+in	mail	id	dalam
+inbox	mail	id	INBOX
+index order	mail	id	Urutan Indeks
+info	mail	id	Info
+javascript	mail	id	JavaScript
+jumping to end	mail	id	loncat ke akhir
+jumping to start	mail	id	loncat ke awal
+junk	mail	id	Junk
+kilobytes	mail	id	kilobyte
+language	mail	id	Bahasa
+last name	mail	id	Nama Belakang
+later	mail	id	Later
+left	mail	id	Kiri
+less	mail	id	kurang
+less than	mail	id	kurang dari
+light gray	mail	id	Light Gray
+list all	mail	id	Tampilkan semuanya
+loading	mail	id	memuatkan
+mail settings	mail	id	Pengaturan Mail
+mainmessage	mail	id	Pesan utama
+manage email accounts and identities	common	id	Mengelola Akoun eMail dan Identitas
+manage emailaccounts	common	id	Mengelola akoun EMail
+manage emailfilter / vacation	preferences	id	Mengelola saringan eMail / Liburan
+manage folders	common	id	Mengelola Folder
+manage sieve	common	id	Manage Sieve scripts
+manage signatures	mail	id	Mengelola Tandatangan
+mark as deleted	mail	id	Tandai sbg terhapus
+match	mail	id	Cocok
+matches	mail	id	kecocokan
+matches regexp	mail	id	cocok regexp
+max uploadsize	mail	id	max uploadsize
+message highlighting	mail	id	Penyorotan Pesan
+message list	mail	id	Daftar Pesan
+messages	mail	id	pesan-pesan
+move	mail	id	Pindahkan
+move folder	mail	id	pindahkan folder
+move messages	mail	id	pindahkan pesan
+move messages?	mail	id	Pindahkan Pesan?
+move to	mail	id	Pindahkan ke
+name	mail	id	Nama
+new	common	id	Baru
+new filter	mail	id	Saringan baru
+next	mail	id	Berikutnya
+next message	mail	id	pesan berikutnya
+no encryption	mail	id	tiada enkripsi
+no filter	mail	id	Tiada Saringan
+no folders	mail	id	tiada folder
+no signature	mail	id	tiada tandatangan
+no stationery	mail	id	no stationery
+no subject given!	mail	id	tiada subyek diisikan!
+none	mail	id	tiada
+not allowed	mail	id	tidak dibolehkan
+on	mail	id	pada
+on behalf of	mail	id	bertindak sebagai
+only inbox	mail	id	Hanya INBOX
+only unseen	mail	id	Hanya yang belum dilihat
+open all	mail	id	buka semuanya
+options	mail	id	Pilihan
+or	mail	id	or
+organisation	mail	id	organisasi
+organization	mail	id	organisasi
+organization name	admin	id	Nama Organisasi
+original message	mail	id	pesan asal
+participants	mail	id	Peserta
+personal information	mail	id	Info Pribadi
+port	mail	id	port
+posting	mail	id	posting
+previous	mail	id	Sebelumnya
+previous message	mail	id	pesan sebelumnya
+print it	mail	id	cetak
+print this page	mail	id	cetak halaman ini
+printview	mail	id	lihat cetakan
+quicksearch	mail	id	Cari cepat
+read	mail	id	terbaca
+reading	mail	id	membaca
+receive notification	mail	id	Terima notifikasi
+recent	mail	id	terbaru
+reject with	mail	id	tolak dengan
+remove	mail	id	buang
+remove immediately	mail	id	Buang segera
+rename	mail	id	Ubah
+rename a folder	mail	id	Ubah Folder
+rename folder	mail	id	Ubah folder
+renamed successfully!	mail	id	Sukses mengubah!
+replied	mail	id	dibalas
+reply	mail	id	Balas
+reply all	mail	id	Balas ke Semua
+reply to	mail	id	Balas Ke
+replyto	mail	id	ReplyTo
+respond	mail	id	Tanggapan
+return	mail	id	Kembali
+right	mail	id	Kanan
+rule	mail	id	Rule/Aturan
+save	mail	id	Simpan
+save all	mail	id	Simpan semuanya
+save as draft	mail	id	simpan sbg draft
+save as infolog	mail	id	simpan sbg infolog
+save changes	mail	id	simpan perubahan
+save message to disk	mail	id	simpan pesan ke disk
+script name	mail	id	nama skrip
+script status	mail	id	status skrip
+search	mail	id	Pencarian
+search for	mail	id	Mencari
+select	mail	id	Pilih
+select all	mail	id	Pilih Semuanya
+select emailprofile	mail	id	Pilih Profil Email
+select folder	mail	id	pilih folder
+send	mail	id	Kirim
+send a reject message	mail	id	kirim pesan penolakan
+sender	mail	id	Pengirim
+sent	mail	id	Sent
+sent folder	mail	id	Sent Folder
+set as default	mail	id	Tetapkan sbg bawaan
+show header	mail	id	tampilkan header
+sieve settings	admin	id	Sieve settings
+signatur	mail	id	Tandatangan
+signature	mail	id	Tandatangan
+simply click the target-folder	mail	id	Cukup klik folder tujuan
+size	mail	id	Ukuran
+size(...->0)	mail	id	Ukuran (...->0)
+size(0->...)	mail	id	Ukuran (0->...)
+skipping forward	mail	id	skipping forward
+skipping previous	mail	id	skipping previous
+small view	mail	id	small view
+smtp settings	admin	id	SMTP settings
+stationery	mail	id	stationery
+subject	mail	id	Subyek
+subject(a->z)	mail	id	Subyek (A->Z)
+subject(z->a)	mail	id	Subyek (Z->A)
+submit	mail	id	Kirimkan
+subscribe	mail	id	Berlangganan
+subscribed	mail	id	Berlangganan
+subscribed successfully!	mail	id	Sukses berlangganan!
+system signature	mail	id	tandatangan sistem
+table of contents	mail	id	Daftar Isi
+template folder	mail	id	Folder Templat
+templates	mail	id	Templat
+text only	mail	id	Hanya teks
+text/plain	mail	id	text/plain
+then	mail	id	THEN
+this folder is empty	mail	id	THIS FOLDER IS EMPTY
+to	mail	id	Kepada
+translation preferences	mail	id	Kesukaan Penerjemahan
+translation server	mail	id	Server Penerjemahan
+trash	mail	id	Trash
+trash fold	mail	id	Trash Fold
+trash folder	mail	id	Trash Folder
+type	mail	id	tipe
+unexpected response from server to login command.	mail	id	Unexpected response from server to LOGIN command.
+unflagged	mail	id	tak ditandai
+unknown err	mail	id	Unknown err
+unknown error	mail	id	Unknown error
+unknown sender	mail	id	Pengirim Takdikenal
+unread	common	id	Tak dibaca
+unseen	mail	id	Tak dilihat
+unselect all	mail	id	Batalkan semua pilihan
+unsubscribe	mail	id	Batal berlangganan
+unsubscribed	mail	id	Batal berlangganan
+unsubscribed successfully!	mail	id	Sukses membatalkan langganan!
+up	mail	id	naik
+updating view	mail	id	memperbarui tampilan
+urgent	mail	id	mendesak
+use addresses	mail	id	Gunakan Alamat
+vacation notice	common	id	vacation notice
+validate certificate	mail	id	validate certificate
+view full header	mail	id	Lihat header penuh
+view message	mail	id	Lihat pesan
+viewing full header	mail	id	Melihat header penuh
+viewing message	mail	id	Melihat pesan
+viewing messages	mail	id	Melihat pesan
+with message	mail	id	dengan pesan
+with message "%1"	mail	id	dengan pesan "%1"
+wrap incoming text at	mail	id	Gulung teks pada
+writing	mail	id	menulis
+wrote	mail	id	menulis

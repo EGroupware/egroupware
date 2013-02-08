@@ -1,0 +1,513 @@
+%1 is not writable by you!	mail	pl	%1 nie jest zapisywalny przez ciebie!
+(no subject)	mail	pl	(bez tematu)
+(only cc/bcc)	mail	pl	(tylko DW/UDW)
+(separate multiple addresses by comma)	mail	pl	(rozdziel adresy przecinkiem)
+(unknown sender)	mail	pl	(nieznany nadawca)
+3paneview: if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here (300 seems to be a good working value). the preview will be displayed at the end of the message list on demand (click).	mail	pl	Widok 3 panelowy: Jeśli chcesz zobaczyć podgląd wiadomości klikając na jej temat ustaw tutaj wysokość podglądu (300 jest dobrą wartością na początek). Podgląd będzie wyświetlany na życzenie pod na końcu listy wiadomości.
+aborted	mail	pl	anulowany
+activate	mail	pl	Aktywuj
+activate script	mail	pl	aktywuj skrypt
+activating by date requires a start- and end-date!	mail	pl	Aktywacja wymaga daty rozpoczęcia i zakończenia
+add acl	mail	pl	dodaj listę ACL
+add address	mail	pl	Dodaj adres
+add rule	mail	pl	Dodaj regułę
+add script	mail	pl	Dodaj skrypt
+add to %1	mail	pl	Dodaj do %1
+add to address book	mail	pl	Dodaj do książki adresowej
+add to addressbook	mail	pl	dodaj do książki adresowej
+adding file to message. please wait!	mail	pl	Dodaję plik do wiadomości. Proszę czekać
+additional info	mail	pl	Informacje dodatkowe
+address book	mail	pl	Książka adresowa
+address book search	mail	pl	Przeszukiwanie książki adresowej
+after message body	mail	pl	Za treścią wiadomości
+all address books	mail	pl	Wszystkie książki adresowe
+all folders	mail	pl	Wszystkie foldery
+all messages in folder	mail	pl	wszystkie wiadomości w folderze
+all of	mail	pl	wszystkie z
+allow images from external sources in html emails	mail	pl	Zezwalaj na wyświetlanie obrazkow z zewnętrznych serwerów w wiadomościach HTML
+allways a new window	mail	pl	zawsze w nowym oknie
+always show html emails	mail	pl	Zawsze pokazuj maile napisane w HTML
+and	mail	pl	i
+any of	mail	pl	dowolny z
+any status	mail	pl	dowolny status
+anyone	mail	pl	ktokolwiek
+as a subfolder of	mail	pl	jako podfolder w
+attach	mail	pl	Dołącz
+attachments	mail	pl	Załączniki
+authentication required	mail	pl	wymagane jest uwierzytelnianie
+auto refresh folder list	mail	pl	Automatycznie odświeżaj listę folderów
+back to folder	mail	pl	Wróć do folderu
+bad login name or password.	mail	pl	Zła nazwa użytkownika lub hasło
+bad or malformed request. server responded: %s	mail	pl	Nieprawidłowe lub źle skonstruowane żądane. Serwer odpowiedział: %s
+bad request: %s	mail	pl	Nieprawidłowe żądanie: %s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	mail	pl	Zgodnie ze wskazanymi dyspozycjami, wiadomości przychodzące będą miały odpowiednie tło wiadomości na liście. Pozwala to łatwo odróżnić nadawców wiadomości, szczególnie gdy są to listy mailingowe.
+bcc	mail	pl	UDW
+before headers	mail	pl	Przed nagłówkiem
+between headers and message body	mail	pl	Pomiędzy nagłówkiem a treścią
+body part	mail	pl	treść wiadomości
+by date	mail	pl	Według daty
+can not send message. no recipient defined!	mail	pl	nie można wyłsać wiadomości, nieokreślony odbiorca
+can't connect to inbox!!	mail	pl	nie można podłączyć się do INBOX!
+cc	mail	pl	DW
+change folder	mail	pl	Zmień folder
+check message against next rule also	mail	pl	sprawdź również kolejnę regułę
+checkbox	mail	pl	Pola zaznaczenia
+clear search	mail	pl	wyczyść wyszukiwanie
+click here to log back in.	mail	pl	Kliknij aby zalogować się ponownie
+click here to return to %1	mail	pl	Kliknij tutaj aby wrócić do %1
+close all	mail	pl	zamknij wszystko
+close this page	mail	pl	zamknij tę stronę
+close window	mail	pl	Zamknij okno
+color	mail	pl	Kolor
+compose	mail	pl	Utwórz
+compose as new	mail	pl	Utwórz nowe
+compress folder	mail	pl	Kompaktuj folder
+condition	mail	pl	warunek
+configuration	mail	pl	Konfiguracja
+configure a valid imap server in emailadmin for the profile you are using.	mail	pl	Skonfiguruj serwer IMAP w Administratorze Poczty dla profilu którego używasz.
+connection dropped by imap server.	mail	pl	Połączenie zerwane przez serwer IMAP
+contact not found!	mail	pl	Nie znaleziono kontaktu!
+contains	mail	pl	zawiera
+copy or move messages?	mail	pl	Skopiować lub Przenieść wiadomości?
+copy to	mail	pl	Kopiuj do
+copying messages to	mail	pl	kopiuje wiadomości do
+could not complete request. reason given: %s	mail	pl	Nie udało się zrealizować żądania. Powód: %s
+could not import message:	mail	pl	Nie udało się zaimportować wiadomości:
+could not open secure connection to the imap server. %s : %s.	mail	pl	Nie udało się nawiązać bezpiecznego połączenia
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	mail	pl	CRAM-MD5 lub DIGEST-MD5 wymagają obecności pakietu Auth_SASL.
+create	mail	pl	Stwórz
+create folder	mail	pl	Tworzenie folderu
+create sent	mail	pl	Stwórz Wysłane
+create subfolder	mail	pl	Stwórzy podfolder
+create trash	mail	pl	Stwórz Kosz
+created folder successfully!	mail	pl	Utworzono folder pomyślnie!
+dark blue	mail	pl	Ciemno Niebieski
+dark cyan	mail	pl	Ciemny Cyan
+dark gray	mail	pl	Ciemny Szary
+dark green	mail	pl	Ciemny Zielony
+dark magenta	mail	pl	Ciemny Magenta
+dark yellow	mail	pl	Ciemny Żółty
+date(newest first)	mail	pl	Data (od najnowszych)
+date(oldest first)	mail	pl	Data (od najstarszych)
+days	mail	pl	dni
+deactivate script	mail	pl	deaktywuj skrypt
+default	mail	pl	Domyślne
+default signature	mail	pl	domyślna sygnaturka
+default sorting order	mail	pl	Domyślny porządek sortowania
+delete all	mail	pl	kasuj wszystko
+delete folder	mail	pl	Usuń folder
+delete script	mail	pl	usuń skrypt
+delete selected	mail	pl	Usuń zaznaczone
+delete selected messages	mail	pl	skasuj wybrane wiadomości
+deleted	mail	pl	skasowany
+deleted folder successfully!	mail	pl	Folder został pomyślnie usunięty!
+deleting messages	mail	pl	usuwanie wiadomości w toku
+disable	mail	pl	Wyłącz
+discard	mail	pl	odrzuć
+discard message	mail	pl	odrzuć wiadomość
+display message in new window	mail	pl	Wyświetl wiadomość w nowym oknie
+display messages in multiple windows	mail	pl	wyświetl wiadomości w wielu oknach
+display of html emails	mail	pl	Wyświetlaj wiadomość w HTML
+display only when no plain text is available	mail	pl	Wyświetlaj jedynie, jeżeli nie ma wersji tekstowej
+display preferences	mail	pl	Wyświetl preferencje
+displaying html messages is disabled	mail	pl	Wyświetlanie wiadomości w HTML jest wyłączone
+do it!	mail	pl	zrób to!
+do not use sent	mail	pl	Nie używaj Wysłanych
+do not use trash	mail	pl	Nie używaj Kosza
+do not validate certificate	mail	pl	nie sprawdzaj poprawności certyfikatu
+do you really want to delete the '%1' folder?	mail	pl	Czy na pewno chcesz usunąć folder '%1'?
+do you really want to delete the selected accountsettings and the assosiated identity.	mail	pl	Czy na pewno chcesz usunąć wybrane ustawienia konta i powiązaną tożsamość?
+do you really want to delete the selected signatures?	mail	pl	Czy na pewno chcesz usunąć wybrane podpisy?
+do you really want to move or copy the selected messages to folder:	mail	pl	Czy na pewno chcesz przenieść lub skopiować wybrane wiadomości do folderu:
+do you really want to move the selected messages to folder:	mail	pl	Czy na pewno chcesz przenieść wybraną wiadomość do folderu:
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	pl	Czy chcesz być pytany o potwierdzenie przed przeniesieniem wybranej wiadomości do innego folderu?
+do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu przekazywania wiadomości poprzez ustawienia poczty (nawet jeśli SITO jest włączone)?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu reguł filtra (nawet jeśli SITO jest włączone)?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu powiadomienia wysyłanego na inne adresy email jeśli pojawią się nowe wiadomości (nawet jeśli SITO jest włączone)?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	pl	Czy chcesz zapobiec edycji / konfigurowaniu powiadomienia o wakacjach (nawet jeśli SITO jest włączone)?
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	pl	Czy chcesz zapobiec zarządzaniu folderami (tworzenie, prawa dostępu i subskrypcja)?
+does not contain	mail	pl	nie zawiera
+does not exist on imap server.	mail	pl	nie istnije na serwerze IMAP
+does not match	mail	pl	nie pasuje
+does not match regexp	mail	pl	nie pasuje do wzorca
+don't use draft folder	mail	pl	Nie używaj folderu szkiców
+don't use sent	mail	pl	Nie używaj Wysłanych
+don't use template folder	mail	pl	Nie używaj folderu szablonów
+don't use trash	mail	pl	Nie używaj Kosza
+dont strip any tags	mail	pl	nie usuwaj tagów
+down	mail	pl	w dół
+download	mail	pl	pobierz
+download this as a file	mail	pl	pobierz jako plik
+draft folder	mail	pl	folder szkiców
+drafts	mail	pl	Szkice
+e-mail	mail	pl	E-mail
+e-mail address	mail	pl	Adres e-mail
+e-mail folders	mail	pl	Foldery e-mail
+edit email forwarding address	mail	pl	edytuj adres e-mail przekazywania wiadomości
+edit filter	mail	pl	Edytuj filtr
+edit rule	mail	pl	edytuj regułę
+edit selected	mail	pl	Edytuj wybrane
+edit vacation settings	mail	pl	edytuj ustawienia autorespondera
+editor type	mail	pl	Rodzaj edytora
+email address	mail	pl	Adres e-mail
+email forwarding address	mail	pl	adres e-mail przekazywania wiadomości
+email notification update failed	mail	pl	aktualizacja powiadomień e-mail nie powiodła się
+email signature	mail	pl	Sygnaturka
+emailaddress	mail	pl	adres_email
+empty trash	mail	pl	opróżnij kosz
+enable	mail	pl	włącz
+encrypted connection	mail	pl	połączenie szyfrowane
+enter your default mail domain ( from: user@domain )	admin	pl	Podaj domyślną domenę pocztową (Od: użytkownik@domena)
+enter your imap mail server hostname or ip address	admin	pl	Podaj nazwę hosta lub IP serwera IMAP
+enter your sieve server hostname or ip address	admin	pl	Podaj nazwę hosta lub IP serwera SIEVE
+enter your sieve server port	admin	pl	Podaj port serwera SIEVE
+enter your smtp server hostname or ip address	admin	pl	Podaj nazwę hosta lub IP serwera SMTP
+enter your smtp server port	admin	pl	Podaj port serwera SMTP
+entry saved	mail	pl	Wpis zachowany
+error	mail	pl	BŁĄD
+error connecting to imap serv	mail	pl	Błąd łączenia z serwerem IMAP
+error connecting to imap server. %s : %s.	mail	pl	Błąd połączenia do serwera IMAP. %s : %s
+error connecting to imap server: [%s] %s.	mail	pl	Błąd połączenia do serwera IMAP. [%s]  %s
+error creating rule while trying to use forward/redirect.	mail	pl	Błąd przy tworzeniu zasady podczas próby użycia przekazania/przekierowania.
+error opening	mail	pl	Błąd podczas otwierania
+error saving %1!	mail	pl	Błąd zapisu %1!
+error:	mail	pl	Błąd:
+error: could not save message as draft	mail	pl	Błąd: Nie można zapisać wiadomości jako Szkic
+error: could not save rule	mail	pl	Błąd: Nie można zapisać zasady
+error: message could not be displayed.	mail	pl	Bład: Wiadomość nie może być wyświetlona.
+event details follow	mail	pl	Detale Wydarzenia Następują
+every	mail	pl	co
+every %1 days	mail	pl	co %1 dni
+expunge	mail	pl	Opróżnij
+extended	mail	pl	rozszerzone
+felamimail	common	pl	FelaMiMail
+file into	mail	pl	informacja o pliku
+file rejected, no %2. is:%1	mail	pl	Plik odrzucony. Jest %1 nie %2.
+filemanager	mail	pl	Pliki
+files	mail	pl	pliki
+filter active	mail	pl	filtr jest aktywny
+filter name	mail	pl	nazwa filtra
+filter rules	common	pl	reguły filtra
+first name	mail	pl	Imię
+flagged	mail	pl	oflagowano
+flags	mail	pl	flagi
+folder	mail	pl	Katalog
+folder acl	mail	pl	lista ACL folderu
+folder name	mail	pl	Nazwa foldera
+folder path	mail	pl	Ścieżka foldera
+folder preferences	mail	pl	Preferencje folderów
+folder settings	mail	pl	Ustawienia foldera
+folder status	mail	pl	Status foldera
+folderlist	mail	pl	Lista folderów
+foldername	mail	pl	Nazwa foldera
+folders	mail	pl	Foldery
+folders created successfully!	mail	pl	Pomyślnie utworzono folder
+follow	mail	pl	odpowiedz
+for mail to be send - not functional yet	mail	pl	Dla wiadomości przygtowanych do wysłania - jeszcze nie działa ;-)
+for received mail	mail	pl	Dla wiadomości otrzymanych
+forward	mail	pl	Prześlij dalej
+forward as attachment	mail	pl	Prześlij dalej jako załącznik
+forward inline	mail	pl	Prześlij dalej w wiadomości
+forward messages to	mail	pl	Prześlij wiadomość do
+forward to	mail	pl	Prześlij do
+forward to address	mail	pl	Prześlij na adres
+forwarding	mail	pl	Przekazywanie
+found	mail	pl	Znaleziono
+from	mail	pl	Od
+from(a->z)	mail	pl	Od (A->Z)
+from(z->a)	mail	pl	Od (Z->A)
+full name	mail	pl	Pełna nazwa
+greater than	mail	pl	większe niż
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	mail	pl	Aby dowiedzieć się więcej o Squirrelmail, zajrzyj na <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a>.<br>
+header lines	mail	pl	Linie nagłówka
+hide header	mail	pl	ukryj nagłówek
+hostname / address	mail	pl	adres domenowy / adres IP
+how to forward messages	mail	pl	sposób przekazywania wiadomości
+html	mail	pl	HTML
+icons and text	mail	pl	Ikony i tekst
+icons only	mail	pl	Tylko ikony
+identifying name	mail	pl	Nazwa identyfikatora
+identity	mail	pl	tożsamość
+if	mail	pl	JEŻELI
+if from contains	mail	pl	jeżeli pole 'From:" zawiera
+if mail header	mail	pl	jeżeli nagłówek wiadomości
+if message size	mail	pl	jeżeli rozmiar wiadomości
+if shown, which folders should appear on main screen	mail	pl	jeśli są pokazywane, które foldery powinny pojawiać się na ekranie głównym
+if subject contains	mail	pl	jeżeli pole "Temat" zawiera
+if to contains	mail	pl	jeżeli pole "Adresat" zawiera
+if using ssl or tls, you must have the php openssl extension loaded.	mail	pl	Jeżeli korzystasz z SSL lub TLS, musisz mieć dołączone rozszerzenie OpenSSL do PHP.
+illegal folder name.  please select a different name.	mail	pl	Nazwa folderu nie jest poprawna. Proszę wybrać inną nazwę.
+imap	mail	pl	IMAP
+imap server	mail	pl	Serwer IMAP
+imap server address	mail	pl	Adres serwera IMAP
+imap server closed the connection.	mail	pl	Serwer IMAP zakończył połączenie.
+imap server closed the connection. server responded: %s	mail	pl	Serwer IMAP zakończył połączenie. Serwer zwrócił: %s
+imap server password	mail	pl	hasło do serwera IMAP
+imap server type	mail	pl	Typ serwera IMAP
+imap server username	mail	pl	nazwa użytkownika do serwera IMAP
+imaps authentication	mail	pl	Autentykacja IMAPS
+imaps encryption only	mail	pl	Tylko szyfrowanie IMAPS
+import	mail	pl	Importuj
+import mail	mail	pl	Importuj Pocztę
+import message	mail	pl	importuj wiadomość
+importance	mail	pl	ważność
+in	mail	pl	w
+inbox	mail	pl	ODEBRANE
+incoming mail server(imap)	mail	pl	serwer poczty przychodzącej (IMAP)
+index order	mail	pl	Porządek indeksu
+info	mail	pl	Info
+invalid user name or password	mail	pl	Zła nazwa użytkownika lub hasło
+javascript	mail	pl	JavaScript
+jumping to end	mail	pl	skacze na koniec
+jumping to start	mail	pl	skacze na początek
+junk	mail	pl	Śmieci
+keep a copy of the message in your inbox	mail	pl	zachowaj kopię wiadomości w folderze ODEBRANE
+keep local copy of email	mail	pl	zachowja lokalną kopię tej wiadomości
+kilobytes	mail	pl	kilobajtów
+language	mail	pl	Język
+last name	mail	pl	Nazwisko
+later	mail	pl	Później
+less	mail	pl	mniej
+less than	mail	pl	mniej niż
+light gray	mail	pl	Jasny Szary
+list all	mail	pl	Pokaż wszystko
+loading	mail	pl	ładowanie
+location of buttons when composing	mail	pl	Położenie przycisków przy pisaniu maila
+mail server login type	admin	pl	Typ logowania do serwera poczty
+mail settings	mail	pl	Ustawienia poczty
+mainmessage	mail	pl	treść_wiadomości
+manage email accounts and identities	common	pl	Zarządzaj kontami pocztowymi i tożsamościami
+manage emailaccounts	common	pl	Zarządzaj kontami pocztowymi
+manage emailfilter / vacation	preferences	pl	Zarządzaj filtrem pocztym / powiadomieniami
+manage folders	common	pl	Zarządzanie folderami
+manage sieve	common	pl	Zarządzaj skryptami Sieve
+manage signatures	mail	pl	Zarządzaj sygnaturkami
+mark as deleted	mail	pl	Zaznacz jako usunietą
+mark messages as	mail	pl	Zaznacz wybrane wiadomości jako
+mark selected as flagged	mail	pl	Zaznacz wybrane oflagowaniem
+mark selected as read	mail	pl	Zaznacz wybrane wiadomości jako przeczytane
+mark selected as unflagged	mail	pl	Zaznacz wybrane jako nie oflagowane
+mark selected as unread	mail	pl	Zaznacz wybrane wiadomości jako nieprzeczytane
+match	mail	pl	Zgodne
+matches	mail	pl	pasuje do
+matches regexp	mail	pl	pasuje do wyrażenia regularnego
+max uploadsize	mail	pl	limit ładowania danych
+message highlighting	mail	pl	Podświetlanie wiadomości
+message list	mail	pl	Lista wiadomości
+messages	mail	pl	wiadomości
+move	mail	pl	przenieś
+move folder	mail	pl	przenieś folder
+move messages	mail	pl	przenieś wiadomości
+move messages?	mail	pl	Przenieść wiadomości?
+move selected to	mail	pl	przenieś wiadomości do
+move to	mail	pl	przenieś wiadomości do
+move to trash	mail	pl	przenieś do kosza
+moving messages to	mail	pl	przenoszę wiadomości do
+name	mail	pl	Nazwa
+never display html emails	mail	pl	Nigdy nie wyświetlaj emaili HTML
+new	common	pl	Nowe
+new filter	mail	pl	Nowy filtr
+next	mail	pl	Następny
+next message	mail	pl	następna wiadomość
+no active imap server found!!	mail	pl	Nie znaleziono aktywnego serwera IMAP!
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	pl	Nie podano adresu (TO/CC/BCC) ani folderu do zapisania wiadomości.
+no encryption	mail	pl	brak szyfrowania
+no filter	mail	pl	Brak filtra
+no folders	mail	pl	brak folderów
+no folders found	mail	pl	Nie znaleziono folderów
+no folders were found to subscribe to!	mail	pl	Nie znaleziono folderów do aktywowania subskrypcji!
+no folders were found to unsubscribe from!	mail	pl	Nie znaleziono folderów do anulowania subskrypcji!
+no highlighting is defined	mail	pl	Nie zdefiniowano podświetleń
+no imap server host configured!!	mail	pl	NIe skonfigurowano serwera IMAP
+no message returned.	mail	pl	Nie otrzymano wiadomości.
+no messages found...	mail	pl	nie znaleziono wiadomości...
+no messages selected, or lost selection. changing to folder	mail	pl	Nie wybrano wiadomości lub utracono selekcję. Przechodzę do folderu
+no messages were selected.	mail	pl	Nie wybrano żadnej wiadomości
+no plain text part found	mail	pl	brak części 'czystym' tekstem
+no previous message	mail	pl	brak poprzedniej wiadomości
+no recipient address given!	mail	pl	Nie podano adresu docelowego!
+no signature	mail	pl	brak podpisu
+no stationery	mail	pl	nie stacjonarny
+no subject given!	mail	pl	Nie podano tematu!
+no supported imap authentication method could be found.	mail	pl	Nie znaleziono obsługiwanej metody autentykacji IMAP.
+no valid data to create mailprofile!!	mail	pl	Brak danych do utworzenia profilu poczty!
+no valid emailprofile selected!!	mail	pl	Nie wybrano poprawnego profilu e-mail.
+none	mail	pl	Żaden
+none, create all	mail	pl	żaden, utwórz wszystko
+not allowed	mail	pl	brak zezwolenia
+notify when new mails arrive on these folders	mail	pl	powiadom o przyjściu wiadomości do tego folderu
+on	mail	pl	na
+on behalf of	mail	pl	w imieniu
+one address is not valid	mail	pl	Jeden adres nie jest poprawny
+only inbox	mail	pl	Tylko ODEBRANE
+only one window	mail	pl	tylko jedno okno
+only unseen	mail	pl	tylko nie przeczytane
+open all	mail	pl	otwórzy wszystkie
+options	mail	pl	Opcje
+or	mail	pl	lub
+or configure an valid imap server connection using the manage accounts/identities preference in the sidebox menu.	mail	pl	lub skonfiguruj połączenie z serwerem IMAP używając Zarządzania Kontami/Tożsamościami z menu bocznego
+organisation	mail	pl	instytucja
+organization	mail	pl	instytucja
+organization name	admin	pl	Nazwa instutucji
+original message	mail	pl	wiadomość oryginalna
+outgoing mail server(smtp)	mail	pl	serwer poczty wychodzącej (SMTP)
+participants	mail	pl	Uczestnicy
+personal information	mail	pl	Informacje osobiste
+please ask the administrator to correct the emailadmin imap server settings for you.	mail	pl	Poproś administratora o poprawienie ustawień serwera IMAP.
+please configure access to an existing individual imap account.	mail	pl	proszę skonfigurować dostęp do istniejącego konta IMAP.
+please select a address	mail	pl	Proszę wybrać adres
+please select the number of days to wait between responses	mail	pl	Wybierz, ile dni czekać między odpowiedziami
+please supply the message to send with auto-responses	mail	pl	Proszę wprowadzić wiadomość przesyłaną w automatycznych odpowiedziach
+port	mail	pl	port
+posting	mail	pl	przesyłanie
+previous	mail	pl	Poprzedni
+previous message	mail	pl	poprzednia wiadomość
+print it	mail	pl	wydrukuj to
+print this page	mail	pl	wydrukuj tę stronę
+printview	mail	pl	wydrukuj widok
+processing of file %1 failed. failed to meet basic restrictions.	mail	pl	Przetwarzanie pliku %1 nie powiodło się. Nie dotrzymano podstawowych restrykcji.
+quicksearch	mail	pl	Szybkie wyszukiwanie
+read	mail	pl	Odczytaj
+reading	mail	pl	odczytywanie
+receive notification	mail	pl	Odebrano powiadomienie
+recent	mail	pl	ostatnie
+refresh time in minutes	mail	pl	Czas odświeżania w minutach
+reject with	mail	pl	odrzuć z
+remove	mail	pl	usuń
+remove immediately	mail	pl	usuń natychmiast
+rename	mail	pl	Zmiana nazwy
+rename a folder	mail	pl	Zmiana nazwy foldera
+rename folder	mail	pl	Zmień nazwę foldera
+renamed successfully!	mail	pl	Pomyślnie zmieniono nazwę
+replied	mail	pl	odpowiedziano
+reply	mail	pl	Odpowiedz
+reply all	mail	pl	Odpowiedz wszystkim
+reply to	mail	pl	Odpowiedz
+replyto	mail	pl	Odpowiedz
+respond	mail	pl	Odpowiedź
+respond to mail sent to	mail	pl	odpowiedz na mail wysłany do
+return	mail	pl	Powrót
+return to options page	mail	pl	Powrót do strony konfiguracji
+row order style	mail	pl	styl porządku wierszy
+rule	mail	pl	Reguła
+save	mail	pl	Zapisz
+save all	mail	pl	Zapisz wszystko
+save as draft	mail	pl	zapisz jako szkic
+save as infolog	mail	pl	zapisz jako zadanie Dziennika CRM
+save changes	mail	pl	zachowaj zmiany
+save message to disk	mail	pl	zachowaj wiadomość na dysku
+script name	mail	pl	nazwa skryptu
+script status	mail	pl	status skryptu
+search	mail	pl	Szukaj
+search for	mail	pl	Szukaj dla
+select	mail	pl	Wybierz
+select all	mail	pl	Wybierz wszystko
+select emailprofile	mail	pl	Wybierz profil email
+select folder	mail	pl	Wybierz folder
+select your mail server type	admin	pl	Wybierz typ serwera email
+send	mail	pl	Wyślij
+send a reject message	mail	pl	odeślij wiadomość odrzucającą
+sender	mail	pl	nadawca
+sent	mail	pl	Wysłano
+sent folder	mail	pl	Folder Wysłane
+server supports mailfilter(sieve)	mail	pl	serwer posiada filtr poczy (sieve - sito)
+set as default	mail	pl	Ustaw jako domyslne
+show all folders (subscribed and unsubscribed) in main screen folder pane	mail	pl	pokaż wszystkie foldery (subskrybowane i nie subskrybowane) w panelu folderów głównego ekranu
+show header	mail	pl	pokaż nagłówek
+show new messages on main screen	mail	pl	Wyświetlać nowe wiadomości na stronie głównej?
+sieve script name	mail	pl	Nazwa skryptu sita ('sieve')
+sieve settings	admin	pl	Ustawienia Sieve
+signatur	mail	pl	Sygnatura
+signature	mail	pl	Sygnaturka
+simply click the target-folder	mail	pl	Kliknij folder docelowy
+size	mail	pl	Wielkość
+size of editor window	mail	pl	Wielkość okna edytora
+size(...->0)	mail	pl	Rozmiar (...->0)
+size(0->...)	mail	pl	Rozmiar (0->...)
+skipping forward	mail	pl	omija kolejną
+skipping previous	mail	pl	omija poprzednią
+small view	mail	pl	widok uproszczony
+smtp settings	admin	pl	Ustawienia SMTP
+start new messages with mime type plain/text or html?	mail	pl	nowe wiadomości mają być oznaczane jako tekst czy html?
+stationery	mail	pl	Stacjonarny
+subject	mail	pl	Temat
+subject(a->z)	mail	pl	Temat (A->Z)
+subject(z->a)	mail	pl	Temat (Z->A)
+submit	mail	pl	Wyślij
+subscribe	mail	pl	Subskrybuj
+subscribed	mail	pl	Uruchomiono subskrypcję
+subscribed successfully!	mail	pl	Uruchomiono subskrypcję poprawnie!
+system signature	mail	pl	podpis systemowy
+table of contents	mail	pl	Spis treści
+template folder	mail	pl	Katalog szablnów
+templates	mail	pl	Szablony
+text only	mail	pl	Tylko tekst
+text/plain	mail	pl	zwykły tekst
+the action will be applied to all messages of the current folder.ndo you want to proceed?	mail	pl	Ta akcja zostanie użyta na wszystkich wiadomościach aktualnego folderu.\nCzy chcesz kontynuować?
+the connection to the imap server failed!!	mail	pl	Nieudane połączenie z serwerem SMTP!!
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	mail	pl	Serwer IMAP nie obsługuje wskazanej metody autentykacji. Proszę skontaktować się z administratorem.
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	pl	Nadawca wiadomości poprosił o potwierdzenie przeczytania wiadomości. Czy chcesz je wysłać?
+the mimeparser can not parse this message.	mail	pl	Nie udało się przetworzyć zawartości MIME tej wiadomości
+then	mail	pl	WTEDY
+there is no imap server configured.	mail	pl	Brak skonfigurowanego serwera IMAP
+this folder is empty	mail	pl	TEN FOLDER JEST PUSTY
+this php has no imap support compiled in!!	mail	pl	PHP nie ma skompilowanej obsługi IMAP!!
+to	mail	pl	Do
+to mail sent to	mail	pl	do poczty wysłanej do
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	mail	pl	Aby skorzystać z połączenia TLS, musisz posiadać wersję PHP 5.1.0 lub wyższą.
+translation preferences	mail	pl	Preferencje tłumaczenia
+translation server	mail	pl	Serwer tłumaczeń
+trash	mail	pl	Kosz
+trash fold	mail	pl	Folder Kosza
+trash folder	mail	pl	Folder Kosza
+type	mail	pl	typ
+unexpected response from server to authenticate command.	mail	pl	Niespodziewana odpowiedź z serwera na polecenie AUTHENTICATE
+unexpected response from server to digest-md5 response.	mail	pl	Niespodziewana odpowiedź z serwera na polecenie Digest-MD5
+unexpected response from server to login command.	mail	pl	Niespodziewana odpowiedź serwera na polecenie LOGIN.
+unflagged	mail	pl	nie oflagowano
+unknown err	mail	pl	Nieznany błąd
+unknown error	mail	pl	Nieznany błąd
+unknown imap response from the server. server responded: %s	mail	pl	Nieznana odpowiedź z serwera IMAP. Serwer przesłał: %s
+unknown sender	mail	pl	Nieznany nadawca
+unknown user or password incorrect.	mail	pl	Użytkownik nieznany lub hasło niezgodne.
+unread	common	pl	nieprzeczytane
+unseen	mail	pl	nieprzeczytane (nie pobrane)
+unselect all	mail	pl	Odznacz wszystko
+unsubscribe	mail	pl	Anuluj subskrypcję
+unsubscribed	mail	pl	Anulowano subskrypcję
+unsubscribed successfully!	mail	pl	Anulowano subskrypcję poprawnie!
+up	mail	pl	w górę
+updating message status	mail	pl	aktualizuję status wiadomości
+updating view	mail	pl	aktualizuję widok
+urgent	mail	pl	pilne
+use <a href="%1">emailadmin</a> to create profiles	mail	pl	użyj <a href="%1">Administratora Poczty</a> aby utworzyć profile
+use a signature	mail	pl	Użyj sygnaturki
+use a signature?	mail	pl	Użyć sygnaturki?
+use addresses	mail	pl	użyj adresów
+use custom identities	mail	pl	użyj własnych tożsamości
+use custom settings	mail	pl	Użyj ustawień użytkownika
+use regular expressions	mail	pl	użyj wyrażeń regularnych
+use smtp auth	admin	pl	Skorzystaj z autentykacji SMTP
+users can define their own emailaccounts	admin	pl	Użytkownicy mogą definiować swoje własne konta poczty elektronicznej
+vacation notice	common	pl	powiadomienie urlopowe
+vacation notice is active	mail	pl	Powiadomienie urlopowe jest aktywne
+vacation start-date must be before the end-date!	mail	pl	Start Urlopu musi być wcześniejszy niż jego koniec
+validate certificate	mail	pl	sprawdź poprawność certyfikatu
+view full header	mail	pl	Pokaż pełny nagłówek
+view header lines	mail	pl	pokaż linie nagłówka
+view message	mail	pl	Pokaż wiadomość
+viewing full header	mail	pl	Pokazuje cały nagłówek
+viewing message	mail	pl	Pokazuje wiadomość
+viewing messages	mail	pl	Pokazuje wiadomości
+when deleting messages	mail	pl	Gdy usuwasz wiadomość
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	pl	które foldery (oprócz Wysłane) powinny być wyświetlone z użyciem schematy folderu "Wysłane"
+which folders - in general - should not be automatically created, if not existing	mail	pl	które foldery - ogólnie - nie powinny być automatycznie tworzone jeśli nie istnieją
+with message	mail	pl	z wiadomością
+with message "%1"	mail	pl	z wiadomością '%1'
+wrap incoming text at	mail	pl	Szerokość zawijania werszy
+writing	mail	pl	zapisywanie
+wrote	mail	pl	zapisano
+yes, offer copy option	mail	pl	tak, oferuj opcję kopii
+you can use %1 for the above start-date and %2 for the end-date.	mail	pl	Możesz użyć %1 dla powyższej daty początkowej i %2 dla daty końcowej.
+you have received a new message on the	mail	pl	Otrzymałeś nową wiadomość o
+your message to %1 was displayed.	mail	pl	Twoja wiadomość do %1 została wyświetlona.

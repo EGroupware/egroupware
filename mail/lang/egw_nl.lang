@@ -1,0 +1,533 @@
+%1 is not writable by you!	mail	nl	%1 is NIET voor uw schrijfbaar
+(no subject)	mail	nl	(geen onderwerp)
+(only cc/bcc)	mail	nl	(alleen Cc./Bcc.)
+(separate multiple addresses by comma)	mail	nl	(meerdere adressen scheiden door komma's)
+(unknown sender)	mail	nl	(onbekende afzender)
+(with checkbox enforced)	mail	nl	(met checkbox geforceerd)
+1) keep drafted message (press ok)	mail	nl	1) conecpt bericht behouden (klilk op ok)
+2) discard the message completely (press cancel)	mail	nl	2)
+aborted	mail	nl	afgebroken
+activate	mail	nl	Activeren
+activate script	mail	nl	script inschakelen
+activating by date requires a start- and end-date!	mail	nl	Activering op datum vereist een begin- EN einddatum!
+add acl	mail	nl	ACL toevoegen
+add address	mail	nl	Adres toevoegen
+add rule	mail	nl	Regel toevoegen
+add script	mail	nl	Script toevoegen
+add to %1	mail	nl	Aan %1 toevoegen
+add to address book	mail	nl	Aan adresboek toevoegen
+add to addressbook	mail	nl	Aan adresboek toevoegen
+adding file to message. please wait!	mail	nl	Een bestand wordt aan het bericht toegevoegd. Even wachten!
+additional info	mail	nl	Extra informatie
+address book	mail	nl	Adresboek
+address book search	mail	nl	Zoeken in adresboek
+after message body	mail	nl	Na tekstgedeelte
+all address books	mail	nl	Alle adresboeken
+all folders	mail	nl	Alle mappen
+all messages in folder	mail	nl	alle berichten in de folder
+all of	mail	nl	alles van
+allow images from external sources in html emails	mail	nl	Afbeeldingen vanaf externe bronnen in HTML emails toestaan
+allways a new window	mail	nl	altijd in een nieuw venster
+always show html emails	mail	nl	Altijd HTML-emails weergeven
+and	mail	nl	en
+any of	mail	nl	iedere van
+any status	mail	nl	iedere status
+anyone	mail	nl	iedereen
+as a subfolder of	mail	nl	als een submap van
+attach	mail	nl	Bijsluiten
+attach users vcard at compose to every new mail	mail	nl	Sluit gebruikers Vcard bij, elke nieuwe mail
+attachments	mail	nl	bijlagen
+authentication required	mail	nl	authenticatie vereist
+auto refresh folder list	mail	nl	Automatisch mappenlijst verversen
+available personal email-accounts/profiles	mail	nl	Beschikbare persoonlijke mail-postbussen/Profielen
+back to folder	mail	nl	Terug naar map
+bad login name or password.	mail	nl	Ongeldige login of wachtwoord
+bad or malformed request. server responded: %s	mail	nl	Ongeldig of slecht geformuleerde aanvraag. Server reageerde: %s
+bad request: %s	mail	nl	Ongeldig verzoek: %s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	mail	nl	Gebaseerd op opgegeven criteria, kunnen inkomende berichten verschillende achtergrondkleuren  krijgen in de berichtenlijst. Dit maakt het makkelijker te zien van wie de berichten afkomstig zijn, vooral in mailinglijsten.
+bcc	mail	nl	BCC
+before headers	mail	nl	Voor berichtkoppen
+between headers and message body	mail	nl	Tussen berichtkoppen en tekstgedeelte
+body part	mail	nl	tekstgedeelte
+by date	mail	nl	op datum
+can not send message. no recipient defined!	mail	nl	kan bericht niet verzenden. Geen ontvanger ingevuld!
+can't connect to inbox!!	mail	nl	kan geen verbinding maken met INBOX!!
+cc	mail	nl	CC
+change folder	mail	nl	Wijzig map
+check message against next rule also	mail	nl	controleer bericht ook tegen de volgende regel
+checkbox	mail	nl	Checkbox
+choose from vfs	mail	nl	Kies van VFS
+clear search	mail	nl	zoekveld leegmaken
+click here to log back in.	mail	nl	Klik hier om opnieuw in te loggen.
+click here to return to %1	mail	nl	Klik hier om terug te gaan naar %1
+close all	mail	nl	alles sluiten
+close this page	mail	nl	Sluit dit venster
+close window	mail	nl	Venster sluiten
+color	mail	nl	Kleur
+compose	mail	nl	Schrijf nieuw bericht
+compose as new	mail	nl	Stel op als nieuw
+compress folder	mail	nl	Comprimeer map
+condition	mail	nl	conditie
+configuration	mail	nl	Configuratie
+connection dropped by imap server.	mail	nl	Connectie verbroken door IMAP server.
+connection status	mail	nl	Status van de verbinding
+contact not found!	mail	nl	Contact niet gevonden
+contains	mail	nl	bevat
+copy or move messages?	mail	nl	Kopieer of verplaats bericht ?
+copy to	mail	nl	kopieer naar
+copying messages to	mail	nl	Verplaatrs berichten naar
+could not complete request. reason given: %s	mail	nl	Kon verzoek niet afmaken. Opgegeven reden: %s
+could not import message:	mail	nl	Kon het bericht niet importeren:
+could not open secure connection to the imap server. %s : %s.	mail	nl	Kon beveiligde verbinding met de IMAP server niet openen. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	mail	nl	CRAM-MD5 of DIGEST-MD5 vereist dat het Auth_SASL package geinstalleerd is.
+create	mail	nl	Aanmaken
+create folder	mail	nl	Map aanmaken
+create sent	mail	nl	Verzondenmap aanmaken
+create subfolder	mail	nl	Submap aanmaken
+create trash	mail	nl	Prullenmandmap aanmaken
+created folder successfully!	mail	nl	Map met succes aangemaakt!
+dark blue	mail	nl	Donker blauw
+dark cyan	mail	nl	Donker cyaan
+dark gray	mail	nl	Donker grijs
+dark green	mail	nl	Donker groen
+dark magenta	mail	nl	Donker magenta
+dark yellow	mail	nl	Donker geel
+date received	mail	nl	Datum ontvangen
+date(newest first)	mail	nl	Datum (nieuwste eerst)
+date(oldest first)	mail	nl	Datum (oudste eerst)
+days	mail	nl	dagen
+deactivate script	mail	nl	script uitschakelen
+default	mail	nl	standaard
+default signature	mail	nl	standaard ondertekening
+default sorting order	mail	nl	Standaard volgorde
+delete all	mail	nl	Alles verwijderen
+delete folder	mail	nl	Map verwijderen
+delete script	mail	nl	script verwijderen
+delete selected	mail	nl	Het geselecteerde verwijderen
+delete selected messages	mail	nl	Geselecteerde berichten verwijderen
+delete this folder irreversible?	mail	nl	Verwijder deze folder definitief ?
+deleted	mail	nl	verwijderde
+deleted folder successfully!	mail	nl	Map met succes verwijderd!
+deleting messages	mail	nl	berichten worden verwijderd
+disable	mail	nl	Deactiveren
+discard	mail	nl	negeer
+discard message	mail	nl	bericht negeren
+display message in new window	mail	nl	Bericht in nieuw venster weergeven
+display messages in multiple windows	mail	nl	berichten in meerdere vensters weergeven
+display of html emails	mail	nl	Weergave van HTML-emails
+display only when no plain text is available	mail	nl	Alleen weergeven als platte tekst niet beschikbaar is.
+display preferences	mail	nl	Weergavevoorkeuren
+displaying html messages is disabled	mail	nl	weergeven van html berichten is uitgeschakeld
+displaying plain messages is disabled	mail	nl	Weergeven standaard vericht is uitgeschakeld
+do it!	mail	nl	Nu uitvoeren!
+do not use sent	mail	nl	'Verzonden' niet gebruiken
+do not use trash	mail	nl	'Prullenmand' niet gebruiken
+do not validate certificate	mail	nl	valideer het certificaat niet
+do you really want to delete the '%1' folder?	mail	nl	Weet u zeker dat u de '%1' map wilt verwijderen?
+do you really want to delete the selected accountsettings and the assosiated identity.	mail	nl	Wilt u de geselecteerde Account instellingen en de bijbehorende identiteit echt verwijderen?
+do you really want to delete the selected signatures?	mail	nl	Wilt u de geselecteerde ondertekening echt verwijderen?
+do you really want to move the selected messages to folder:	mail	nl	Wilt u de geselecteerde bericht werkelijk verplaatsen naar folder:
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	nl	Wilt u een bevestigingsvraag krijgen voordat de geselecteerde berichten naar een andere folder worden verplaatst?
+does not contain	mail	nl	bevat niet
+does not exist on imap server.	mail	nl	bestaat niet op IMAP server.
+does not match	mail	nl	komt niet overeen met
+does not match regexp	mail	nl	komt niet overeen met regexp
+don't use draft folder	mail	nl	Concepten folder niet gebruiken
+don't use sent	mail	nl	'Verzonden' niet gebruiken
+don't use template folder	mail	nl	Sjablonenfolder niet gebruiken
+don't use trash	mail	nl	'Prullenmand' niet gebruiken
+dont strip any tags	mail	nl	geen enkele tag verwijderen
+down	mail	nl	omlaag
+download	mail	nl	Downloaden
+download this as a file	mail	nl	Dit als een bestand downloaden
+draft folder	mail	nl	conceptenfolder
+drafts	mail	nl	Concepten
+e-mail	mail	nl	Email
+e-mail address	mail	nl	Emailadres
+e-mail folders	mail	nl	Emailmappen
+edit email forwarding address	mail	nl	wijzig email doorstuur adres
+edit filter	mail	nl	Filter wijzigen
+edit rule	mail	nl	regel bewerken
+edit selected	mail	nl	Het geselecteerde wijzigen
+edit vacation settings	mail	nl	afwezigheidsinstellingen bewerken
+editor type	mail	nl	Tekstbewerker type
+email address	mail	nl	Emailadres
+email forwarding address	mail	nl	email doorstuur adres
+email notification update failed	mail	nl	email melding kon niet worden bijgewerkt
+email signature	mail	nl	Emailondertekening
+emailaddress	mail	nl	emailadres
+empty trash	mail	nl	Prullenmand legen
+enable	mail	nl	inschakelen
+encrypted connection	mail	nl	versleutelde verbinding
+enter your default mail domain ( from: user@domain )	admin	nl	Vul uw standaard mail domein in ( Van: gebruiker@domein )
+enter your imap mail server hostname or ip address	admin	nl	Voer de naam of het IP-adres in van uw IMAP-mailserver
+enter your sieve server hostname or ip address	admin	nl	Voer de naam of het IP-adres in van uw SIEVE-server
+enter your sieve server port	admin	nl	Voer de poort in van uw SIEVE-server
+enter your smtp server hostname or ip address	admin	nl	Vul uw SMTP server hostnaam of IP adres in
+enter your smtp server port	admin	nl	Vul uw SMTP server poort in
+entry saved	mail	nl	Record opgeslagen
+error	mail	nl	FOUT
+error connecting to imap serv	mail	nl	Fout met het verbinden met de IMAP-server
+error connecting to imap server. %s : %s.	mail	nl	Fout bij verbinden met de IMAP server. %s : %s
+error connecting to imap server: [%s] %s.	mail	nl	Fout bij verbinden met de IMAP server: [%s] %s
+error opening	mail	nl	Fout bij het openen
+error saving %1!	mail	nl	Fout bij bewaren %1
+error:	mail	nl	Fout:
+error: could not save message as draft	mail	nl	Fout: Bericht kon niet worden opgeslagen als Concept
+error: could not save rule	mail	nl	Fout: Kon regel niet bewaren
+error: could not send message.	mail	nl	Fout: Kon bericht niet verzenden
+error: message could not be displayed.	mail	nl	Fout: Bericht kan niet worden getoond
+event details follow	mail	nl	Details gebeurtenis volgen
+every	mail	nl	iedere
+every %1 days	mail	nl	iedere %1 dagen
+expunge	mail	nl	Definitief verwijderen
+extended	mail	nl	uitgebreid
+felamimail	common	nl	FelaMiMail
+file into	mail	nl	bestand naar
+file rejected, no %2. is:%1	mail	nl	Bestand geweigerd, geen %2.is:%1
+filemanager	mail	nl	Bestandsbeheer
+files	mail	nl	bestanden
+filter active	mail	nl	Filter actief
+filter name	mail	nl	Naam filter
+filter rules	common	nl	filter regels
+first name	mail	nl	Voornaam
+flagged	mail	nl	gemarkeerd
+flags	mail	nl	Markeringen
+folder	mail	nl	folder
+folder acl	mail	nl	folder acl
+folder name	mail	nl	Mapnaam
+folder path	mail	nl	Mappad
+folder preferences	mail	nl	Map voorkeuren
+folder settings	mail	nl	Map instellingen
+folder status	mail	nl	Map status
+folderlist	mail	nl	Mappenlijst
+foldername	mail	nl	Mapnaam
+folders	mail	nl	Mappen
+folders created successfully!	mail	nl	Mappen met succes aangemaakt!
+follow	mail	nl	volgen
+for mail to be send - not functional yet	mail	nl	Voor nog te vezenden email - nog niet functioneel
+for received mail	mail	nl	Voor ontvangen email
+force html	mail	nl	Forceer HTML
+force plain text	mail	nl	Forceer platte tekst
+forward	mail	nl	Doorsturen
+forward as attachment	mail	nl	doorsturen als bijlage
+forward inline	mail	nl	doorsturen in het bericht
+forward messages to	mail	nl	Berichten doorsturen naar
+forward to	mail	nl	doorsturen naar
+forward to address	mail	nl	doorsturen naar adres
+forwarding	mail	nl	Wordt doorgezonden
+found	mail	nl	Gevonden
+from	mail	nl	Van
+from(a->z)	mail	nl	Van (A->Z)
+from(z->a)	mail	nl	Van (Z->A)
+full name	mail	nl	Volledige naam
+greater than	mail	nl	groter dan
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	mail	nl	Surf naar <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> voor meer informatie over Squirrelmail.<br/>
+header lines	mail	nl	Kopregels
+hide header	mail	nl	Verberg berichtkop
+hostname / address	mail	nl	host naam / adres
+how to forward messages	mail	nl	hoe berichten doorgestuurd moeten worden
+html	mail	nl	HTML
+icons and text	mail	nl	Icoontjes en tekst
+icons only	mail	nl	Alleen icoontjes
+identifying name	mail	nl	Naam voor identificatie
+identity	mail	nl	identiteit
+if	mail	nl	ALS
+if from contains	mail	nl	als van bevat
+if mail header	mail	nl	als berichtkop bevat
+if message size	mail	nl	als berichtgrootte
+if shown, which folders should appear on main screen	mail	nl	indien getoond, welke folders moeten zichtbaar worden op het hoofdscherm
+if subject contains	mail	nl	als onderwerp bevat
+if to contains	mail	nl	als aan bevat
+if using ssl or tls, you must have the php openssl extension loaded.	mail	nl	Indien SSL of TLS gebruikt wordt, moet de PHP extensie openssl geladen zijn.
+illegal folder name.  please select a different name.	mail	nl	Mapnaam niet toegestaan. Select a.b.u. een andere naam.
+imap	mail	nl	IMAP
+imap server	mail	nl	IMAP server
+imap server address	mail	nl	IMAP serveradres
+imap server closed the connection.	mail	nl	IMAP server sloot de verbinding
+imap server closed the connection. server responded: %s	mail	nl	IMAP server sloot de verbinding af. Server antwoordde: %s
+imap server password	mail	nl	imap server wachtwoord
+imap server type	mail	nl	IMAP servertype
+imap server username	mail	nl	imap server gebruikersnaam
+imaps authentication	mail	nl	IMAPS authenticatie
+imaps encryption only	mail	nl	Uitsluitend IMAPS encryptie
+import	mail	nl	importeren
+import mail	mail	nl	Berichten importeren
+import message	mail	nl	Importeer bericht
+importance	mail	nl	Belangrijk
+in	mail	nl	in
+inbox	mail	nl	POSTVAK IN
+incoming mail server(imap)	mail	nl	inkomene mail server (IMAP)
+index order	mail	nl	Index volgorde
+info	mail	nl	Informatie
+invalid user name or password	mail	nl	Ongeldige gebruikersnaam of -wachtwoord
+javascript	mail	nl	JavaScript
+job	mail	nl	Taak
+jumping to end	mail	nl	springt naar eind
+jumping to start	mail	nl	springt naar begin
+junk	mail	nl	Junk
+keep a copy of the message in your inbox	mail	nl	bewaar een kopie van het bericht in uw postvak in
+keep local copy of email	mail	nl	bewaar een lokale kopie van het bericht
+kilobytes	mail	nl	kilobytes
+language	mail	nl	Taal
+last name	mail	nl	Achternaam
+later	mail	nl	later
+left	mail	nl	Links
+less	mail	nl	minder
+less than	mail	nl	minder dan
+light gray	mail	nl	Licht grijs
+list all	mail	nl	Alles weergeven
+loading	mail	nl	wordt geladen
+location of buttons when composing	mail	nl	Locatie van knoppen bij het schrijven van een nieuw bericht
+mail server login type	admin	nl	Mail server login type
+mail settings	mail	nl	Emailinstellingen
+mail source	mail	nl	Mail bron
+mainmessage	mail	nl	hoofdbericht
+manage email accounts and identities	common	nl	Beheer email accounts en identiteiten
+manage emailaccounts	common	nl	Beheer email accounts
+manage emailfilter / vacation	preferences	nl	Beheer emailfilter / afwezigheid
+manage folders	common	nl	Beheer mappen
+manage sieve	common	nl	Beheer Sieve scripts
+manage signatures	mail	nl	Beheer ondertekeningen
+mark as	mail	nl	Markeer als
+mark as deleted	mail	nl	Markeer als verwijderd
+mark messages as	mail	nl	Markeer geselecteerde berichten als
+mark selected as flagged	mail	nl	Markeer geselecteerde als 'gemarkeerd'
+mark selected as read	mail	nl	Markeer geselecteerde als 'gelezen'
+mark selected as unflagged	mail	nl	Markeer geselecteerde als 'niet gemarkeerd'
+mark selected as unread	mail	nl	Markeer geselecteerde als 'niet gezelezen
+match	mail	nl	Overeenkomstige
+matches	mail	nl	komt overeen met
+matches regexp	mail	nl	komt overeen met regexp
+max uploadsize	mail	nl	maximum upload grootte
+message highlighting	mail	nl	Bericht inkleuring
+message list	mail	nl	Berichtenlijst
+messages	mail	nl	berichten
+move	mail	nl	verplaatsen
+move folder	mail	nl	verplaats folder
+move messages	mail	nl	berichten verplaatsen
+move messages?	mail	nl	Verplaats berichten ?
+move selected to	mail	nl	verplaats geselecteeerde
+move to	mail	nl	geselecteerde verplaatsen naar
+move to trash	mail	nl	Verplaatsen naar prullenmand
+moving messages to	mail	nl	berichten verplaatsen naar
+name	mail	nl	Naam
+never display html emails	mail	nl	Nooit HTML-emails weergeven
+new	common	nl	Nieuw
+new filter	mail	nl	Nieuwe filter
+next	mail	nl	Volgende
+next message	mail	nl	volgende bericht
+no (valid) send folder set in preferences	mail	nl	Geen (geldige) Verzonden map in voorkeuren
+no active imap server found!!	mail	nl	Geen actieve IMAP server gevonden!!
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	nl	Geen adres in AAN/CC/BCC opgegeven en geen map aangegeven waar bericht opgeslagen moet worden.
+no encryption	mail	nl	geen versleuteling
+no filter	mail	nl	Geen filter
+no folders	mail	nl	geen folders
+no folders found	mail	nl	Geen mappen gevonden
+no folders were found to subscribe to!	mail	nl	Geen mappen gevonden om lid van te worden!
+no folders were found to unsubscribe from!	mail	nl	Geen mappen gevonden om lidmaatschap van op te zeggen!
+no highlighting is defined	mail	nl	Geen inkleuring ingesteld
+no imap server host configured!!	mail	nl	Geen IMAP server host geconfigureerd
+no message returned.	mail	nl	Geen bericht teruggekomen.
+no messages found...	mail	nl	geen berichten gevonden...
+no messages selected, or lost selection. changing to folder	mail	nl	Geen berichten geselecteerd of selectie is verloren gegaan. Schakelt naar folder
+no messages were selected.	mail	nl	Geen berichten geselecteerd.
+no plain text part found	mail	nl	geen platte tekst onderdeel gevonden
+no previous message	mail	nl	geen vorig bericht
+no recipient address given!	mail	nl	Geen ontvanger adres opgegeven!
+no send folder set in preferences	mail	nl	Geen map Verzonden in voorkeuren
+no signature	mail	nl	geen ondertekening
+no stationery	mail	nl	geen stationery
+no subject given!	mail	nl	Geen onderwerp opgegeven!
+no supported imap authentication method could be found.	mail	nl	Geen ondersteunde IMAP authenticatie methode werd gevonden.
+no valid data to create mailprofile!!	mail	nl	Geen geldige data om een email profiel te creeeren
+no valid emailprofile selected!!	mail	nl	Geen geldig Emailprofiel geselecteerd!
+none	mail	nl	geen
+none, create all	mail	nl	geen, maak ze allemaal
+not allowed	mail	nl	niet toegestaan
+notify when new mails arrive on these folders	mail	nl	waarschuw als er nieuwe mail is voor deze folders
+on	mail	nl	op
+on behalf of	mail	nl	namens
+one address is not valid	mail	nl	Een adres is ongeldig
+only inbox	mail	nl	Alleen INBOX
+only one window	mail	nl	uitsluitend één venster
+only unseen	mail	nl	Alleen ongelezen
+open all	mail	nl	open alle
+options	mail	nl	Opties
+or	mail	nl	of
+organisation	mail	nl	organisatie
+organization	mail	nl	Organisatie
+organization name	admin	nl	Organisatienaam
+original message	mail	nl	originele bericht
+outgoing mail server(smtp)	mail	nl	uitgaande mail server (SMTP)
+participants	mail	nl	Deelnemers
+personal	mail	nl	persoonlijk
+personal information	mail	nl	Persoonlijke informatie
+please choose:	mail	nl	Kies alstublieft:
+please select a address	mail	nl	Kies s.v.p. een adres
+please select the number of days to wait between responses	mail	nl	Kies s.v.p. het aantal dagen dat gewacht moet worden tussen de antwoorden
+please supply the message to send with auto-responses	mail	nl	Vul s.v.p. het bericht in dat met de automatisch antwoorden meegezonden moet worden
+port	mail	nl	poort
+posting	mail	nl	plaatsen
+preview disabled for folder:	mail	nl	Voorbeeld uitgezet vor deze folder,.
+previous	mail	nl	Vorig
+previous message	mail	nl	Vorig bericht
+primary emailadmin profile	mail	nl	Eerste eMailadmin profiel
+print it	mail	nl	Uitprinten
+print this page	mail	nl	Deze pagina uitprinten
+printview	mail	nl	afdrukweergave
+quicksearch	mail	nl	Snelzoeken
+read	mail	nl	lezen
+reading	mail	nl	lezen
+receive notification	mail	nl	Ontvangst bevestiging
+recent	mail	nl	Recente
+refresh time in minutes	mail	nl	Ververstijd in minuten
+reject with	mail	nl	weiger met
+remove	mail	nl	Verwijderen
+remove immediately	mail	nl	Meteen verwijderen
+remove label	mail	nl	verwijder sleutelwoorden
+rename	mail	nl	Hernoemen
+rename a folder	mail	nl	Een map hernoemen
+rename folder	mail	nl	Map hernoemen
+renamed successfully!	mail	nl	Met succes hernoemd!
+replied	mail	nl	gereageerd
+reply	mail	nl	Reageer
+reply all	mail	nl	Reageer aan adressen in bericht
+reply to	mail	nl	Reageer aan
+replyto	mail	nl	Reageer aan
+respond	mail	nl	Antwoorden
+respond to mail sent to	mail	nl	antwoorden op mail gezonden aan
+return	mail	nl	Terug
+return to options page	mail	nl	Terug naar pagina met opties
+right	mail	nl	Rechts
+row order style	mail	nl	rijvolgorde stijl
+rule	mail	nl	Regel
+save	mail	nl	Opslaan
+save all	mail	nl	Bewaar alle
+save as draft	mail	nl	opslaan als concept
+save as infolog	mail	nl	opslaan als infolog
+save as ticket	mail	nl	Bewaar als Tracker Ticket
+save as tracker	mail	nl	Bewaar als Tracker
+save changes	mail	nl	wijzigingen bewaren
+save message to disk	mail	nl	bericht opslaan op schijf
+save to filemanager	mail	nl	Sla op naar bestandsbeheer
+saving of message %1 succeeded. check folder %2.	mail	nl	Opslaan van bericht geslaagd %1.Controleer folder %2
+script name	mail	nl	script naam
+script status	mail	nl	script status
+search	mail	nl	Zoeken
+search for	mail	nl	Zoeken naar
+select	mail	nl	Selecteren
+select all	mail	nl	Alles selecteren
+select emailprofile	mail	nl	Emailprofiel selecteren
+select folder	mail	nl	map selecteren
+select your mail server type	admin	nl	Selecteer uw mail server type
+selected	mail	nl	Geselecteerd
+send	mail	nl	Verzenden
+send a reject message	mail	nl	verstuur een weigeringsbericht
+sender	mail	nl	Afzender
+sent	mail	nl	Verzonden
+sent folder	mail	nl	Verzondenmap
+server supports mailfilter(sieve)	mail	nl	server ondersteunt mailfilter (sieve)
+set as default	mail	nl	Instellen als standaard
+set label	mail	nl	Zet sleutelwoorden
+show all messages	mail	nl	Toon alle bercihten
+show header	mail	nl	berichtkop weergeven
+show new messages on main screen	mail	nl	Nieuwe berichten op hoofdscherm weergeven
+sieve connection status	mail	nl	Status Sieve connectie
+sieve script name	mail	nl	sieve script naam
+sieve settings	admin	nl	SIEVE instellingen
+signatur	mail	nl	Ondertekening
+signature	mail	nl	Ondertekening
+simply click the target-folder	mail	nl	Klik gewoon op de doelmap
+size	mail	nl	Grootte
+size of editor window	mail	nl	Grootte van schrijfvenster
+size(...->0)	mail	nl	Grootte (...->0)
+size(0->...)	mail	nl	Grootte 0->...)
+skipping forward	mail	nl	springt voorwaarts
+skipping previous	mail	nl	springt achterwaarts
+small view	mail	nl	kleine weergave
+smtp settings	admin	nl	SMTP-instellingen
+start new messages with mime type plain/text or html?	mail	nl	begin nieuwe berichten met mime type, plain/text of html?
+stationery	mail	nl	stationery
+subject	mail	nl	Onderwerp
+subject(a->z)	mail	nl	Onderwerp (A->Z)
+subject(z->a)	mail	nl	Onderwerp (Z->A)
+submit	mail	nl	Verzend
+subscribe	mail	nl	Lid worden
+subscribed	mail	nl	Lid van
+subscribed successfully!	mail	nl	Met succes lid geworden!
+successfully connected	mail	nl	Succesvol verbonden
+switching of signatures failed	mail	nl	Wisselen van handtekening is mislukt
+system signature	mail	nl	systeem ondertekening
+table of contents	mail	nl	Inhoudsopgave
+template folder	mail	nl	Sjabloon folder
+templates	mail	nl	Sjablonen
+test connection	mail	nl	Test actieve connectie
+text only	mail	nl	Alleen tekst
+text/plain	mail	nl	text/plain
+the connection to the imap server failed!!	mail	nl	De vebinding met de IMAP-server is mislukt!!
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	mail	nl	De IMAP server blijkt de authenticatie methode niet te ondersteunen. Neem contact op met uw systeem beheerder.
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	nl	De afzender heeft verzocht om een leesbevestiging. Wilt u een leesbevestiging verzenden?
+the mimeparser can not parse this message.	mail	nl	De mimeparsers kan dit bericht niet lezen.
+then	mail	nl	DAN
+there is no imap server configured.	mail	nl	Er is geen Imap server geconfigureerd
+this folder is empty	mail	nl	DEZE MAP IS LEEG
+this php has no imap support compiled in!!	mail	nl	In deze PHP versie is geen IMAP ondersteuning meegecompileerd!!
+to	mail	nl	Aan
+to do	mail	nl	te doen
+to mail sent to	mail	nl	naar mail gezonden aan
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	mail	nl	Om een TLS verbinding te gebruiken moet u PHP versie 5.1.0 of hoger gebruiken.
+translation preferences	mail	nl	Voorkeuren vertaling
+translation server	mail	nl	Server vertaling
+trash	mail	nl	Prullenbak
+trash fold	mail	nl	Prullenbak
+trash folder	mail	nl	Prullenbak
+trying to recover from session data	mail	nl	probeer  vanaf sessie data te herstellen.
+type	mail	nl	type
+unexpected response from server to authenticate command.	mail	nl	Onverwacht antwoord van de server op het AUTHENTICATIE verzoek.
+unexpected response from server to digest-md5 response.	mail	nl	Onverwacht antwoord van de server op het Digest-MD5 verzoek.
+unexpected response from server to login command.	mail	nl	Onverwachte reactie van de server op LOGIN opdracht.
+unflagged	mail	nl	niet gemarkeerd
+unknown err	mail	nl	Onbekende fout
+unknown error	mail	nl	Onbekende fout
+unknown imap response from the server. server responded: %s	mail	nl	Onbekend IMAP antwoord van de server. De server antwoordde: %s
+unknown sender	mail	nl	Onbekende afzender
+unknown user or password incorrect.	mail	nl	Onbekende gebruiker of ongeldig wachtwoord.
+unread	common	nl	ongelezen
+unseen	mail	nl	Ongezien
+unselect all	mail	nl	Deselecteer alles
+unsubscribe	mail	nl	Afmelden
+unsubscribed	mail	nl	Afgemeld
+unsubscribed successfully!	mail	nl	Met succes afgmeld
+up	mail	nl	boven
+updating message status	mail	nl	bericht status wordt bijgewerkt
+updating view	mail	nl	weergave wordt bijgewerkt
+urgent	mail	nl	belangrijk
+use <a href="%1">emailadmin</a> to create profiles	mail	nl	gebruik <a href="%1">EmailAdmin</a> om profielen aan te maken
+use a signature	mail	nl	Gebruik een ondertekening
+use a signature?	mail	nl	Een ondertekening gebruiken?
+use addresses	mail	nl	Gebruik adressen
+use custom identities	mail	nl	gebruik aangepaste identiteiten
+use custom settings	mail	nl	Gebruik aangepaste instellingen
+use regular expressions	mail	nl	gebruik reguliere expressies
+use smtp auth	admin	nl	Gebruik SMTP-authenticatie
+users can define their own emailaccounts	admin	nl	Gebruikers kunnen hun eigen email accounts maken
+vacation notice	common	nl	afwezigheidsbericht
+vacation notice is active	mail	nl	Afwezigheidbericht is ingeschakeld
+vacation start-date must be before the end-date!	mail	nl	Afwezigheidbericht startdatum moet VOOR de einddatum liggen!
+validate certificate	mail	nl	certificaat valideren
+view full header	mail	nl	Volledige berichtkop weergeven
+view header lines	mail	nl	kopregels weergeven
+view message	mail	nl	Bericht weergeven
+viewing full header	mail	nl	volledige berichtkop weergeven
+viewing message	mail	nl	bericht weergeven
+viewing messages	mail	nl	berichten weergeven
+when deleting messages	mail	nl	Bij het verwijderen van berichten
+with message	mail	nl	met bericht
+with message "%1"	mail	nl	met bericht "%1"
+wrap incoming text at	mail	nl	Kort tekst binnenkomende berichten af op
+writing	mail	nl	schrijft
+wrote	mail	nl	schreef
+you can use %1 for the above start-date and %2 for the end-date.	mail	nl	U kunt %1 gebruiken voor de bovenstaande startdatum en %2 voor de einddatum.
+you have received a new message on the	mail	nl	U heeft een nieuw bericht ontvangen op de
+your message to %1 was displayed.	mail	nl	Uw bericht aan %1 is bij de ontvanger weergegeven.

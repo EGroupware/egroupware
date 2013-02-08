@@ -1,0 +1,496 @@
+%1 is not writable by you!	mail	hu	%1-hez nincs írási jogosultságod!
+(no subject)	mail	hu	(nincs tárgy)
+(only cc/bcc)	mail	hu	(csak CC/BCC)
+(separate multiple addresses by comma)	mail	hu	(több címezett elválasztása vesszővel)
+(unknown sender)	mail	hu	(ismeretlen feladó)
+activate	mail	hu	Aktivál
+activate script	mail	hu	szkript aktiválás
+activating by date requires a start- and end-date!	mail	hu	Dátum szeretni aktiváláshoz kezdés ÉS befejezés időpont is szükséges!
+add acl	mail	hu	ACL hozzáadása
+add address	mail	hu	Cím hozzáadása
+add rule	mail	hu	Szabály hozzáadása
+add script	mail	hu	Szkript hozzáadása
+add to %1	mail	hu	Add hozzá ehhez: %1
+add to address book	mail	hu	Címjegyzékhez hozzáad
+add to addressbook	mail	hu	címjegyzékhez hozzáad
+adding file to message. please wait!	mail	hu	Fájl hozzáadása az üzenethez. Kérlek várj.
+additional info	mail	hu	További információ
+address book	mail	hu	Címjegyzék
+address book search	mail	hu	Címjegyzékben keresés
+after message body	mail	hu	Üzenetrész után
+all address books	mail	hu	Összes címjegyzék
+all folders	mail	hu	Összes mappa
+all of	mail	hu	összes innnen
+allow images from external sources in html emails	mail	hu	Külső forrásból származó képek megjelenítése a HTML email-ekben
+allways a new window	mail	hu	mindig új ablak
+always show html emails	mail	hu	Mindig jelenítse meg a HTML üzenetet
+and	mail	hu	és
+any of	mail	hu	bármennyi
+any status	mail	hu	bármilyen állapot
+anyone	mail	hu	bárki
+as a subfolder of	mail	hu	mint almappa innen
+attach	mail	hu	Csatol
+attachments	mail	hu	Mellékletek
+authentication required	mail	hu	hitelesítés szükséges
+auto refresh folder list	mail	hu	Mappalista automatikus frissítése
+back to folder	mail	hu	Vissza a mappába
+bad login name or password.	mail	hu	Hibás belépési név vagy jelszó.
+bad or malformed request. server responded: %s	mail	hu	Hibás vagy sérült kérés. Szerver válasza: %s
+bad request: %s	mail	hu	Hibás kérés: %s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	mail	hu	A megadott feltételek alapján a bejövő levelek különböző színű háttérrel jelennek meg a listán. Ez nagyban megkönnyíti a feladók azonosítását, különösen levelezőlista esetén.
+bcc	mail	hu	BCC
+before headers	mail	hu	Fejlécek előtt
+between headers and message body	mail	hu	Feljécek és üzenet között
+body part	mail	hu	test rész
+by date	mail	hu	dátum szerint
+can not send message. no recipient defined!	mail	hu	Üzenet kézbesítése nem  lehetséges, nincs megadva címzett!
+can't connect to inbox!!	mail	hu	nem tudok csatlakozni az INBOX-hoz!!!
+cc	mail	hu	CC
+change folder	mail	hu	Mappa változtatása
+check message against next rule also	mail	hu	üzenet ellenőrzése a következő szabály szerint is
+checkbox	mail	hu	Jelölőnégyzet
+clear search	mail	hu	keresés törlése
+click here to log back in.	mail	hu	Kattints ide a bejelentkezéshez.
+click here to return to %1	mail	hu	Kattints ide hogy %1
+close all	mail	hu	összes bezárása
+close this page	mail	hu	lap bezárása
+close window	mail	hu	Ablak bezárása
+color	mail	hu	Szín
+compose	mail	hu	Szerkeszt
+compose as new	mail	hu	szerkesztés újként
+compress folder	mail	hu	Mappa tömörítése
+condition	mail	hu	feltétel
+configuration	mail	hu	Beállítás
+configure a valid imap server in emailadmin for the profile you are using.	mail	hu	IMAP szerver beállítása az aktuális profilhoz.
+connection dropped by imap server.	mail	hu	A kapcsolatot az IMAP szerver eldobta.
+contact not found!	mail	hu	Nem találom a címzettet!
+contains	mail	hu	tartalmaz
+copy to	mail	hu	Másold ide:
+could not complete request. reason given: %s	mail	hu	Kérést nem lehet teljesíteni. Az ok: %s
+could not import message:	mail	hu	Nem lehetséges az üzenet importálása:
+could not open secure connection to the imap server. %s : %s.	mail	hu	Nem lehetséges biztonságosan kapcsolódni az IMAP szerverhez. %s : %s.
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	mail	hu	CRAM-MD5 vagy DIGEST-MD5 használatához az Auth_SASL csomagot telepíteni kell.
+create	mail	hu	Létrehoz
+create folder	mail	hu	Mappa létrehozása
+create sent	mail	hu	'Elküldött' mappa létrehozása
+create subfolder	mail	hu	Almappa létrehozása
+create trash	mail	hu	'Szemetes' létrehozása
+created folder successfully!	mail	hu	Mappa létrehozása sikeres.
+dark blue	mail	hu	Sötétkék
+dark cyan	mail	hu	Sötétcián
+dark gray	mail	hu	Sötétszürke
+dark green	mail	hu	Sötétzöld
+dark magenta	mail	hu	Sötét bíborvörös
+dark yellow	mail	hu	Sötétsárga
+date(newest first)	mail	hu	Dátum (újak elsőnek)
+date(oldest first)	mail	hu	Dátum (régiek elsőnek)
+days	mail	hu	napok
+deactivate script	mail	hu	szkript deaktiválása
+default	mail	hu	alapértelmezett
+default signature	mail	hu	alapértelmezett aláírás
+default sorting order	mail	hu	Alapértelmezett rendezési sor
+delete all	mail	hu	összes törlése
+delete folder	mail	hu	Mappa törlése
+delete script	mail	hu	szkript törlése
+delete selected	mail	hu	Kijelölt törlése
+delete selected messages	mail	hu	Kijelölt üzenetek törlése
+deleted	mail	hu	törölve
+deleted folder successfully!	mail	hu	Mappa törlése sikeres.
+deleting messages	mail	hu	üzenetek törlése
+disable	mail	hu	Letilt
+discard	mail	hu	elvet
+discard message	mail	hu	üzenet elvetése
+display message in new window	mail	hu	Üzenet megjelenítése új ablakban
+display messages in multiple windows	mail	hu	üzenetek megjelenítése több ablakban
+display of html emails	mail	hu	HTML email-ek megjelenítése
+display only when no plain text is available	mail	hu	Csak akkor jelenítse meg, ha nincs egyszerű szöveg
+display preferences	mail	hu	Beállítások megjelenítése
+displaying html messages is disabled	mail	hu	HTML levelek megjelenítése tiltva
+do it!	mail	hu	csináld!
+do not use sent	mail	hu	Ne használd az 'Elküldött' mappát
+do not use trash	mail	hu	Ne használd az 'Szemetes' mappát
+do not validate certificate	mail	hu	ne ellenőrizze a tanúsítványt
+do you really want to delete the '%1' folder?	mail	hu	Valóban törölni kívánja a '%1' mappát?
+do you really want to delete the selected accountsettings and the assosiated identity.	mail	hu	Valóban törölni szeretnéd a kijelölt fiókot és a hozzá tartozó beállításokat?
+do you really want to delete the selected signatures?	mail	hu	Valóban törölni szeretnéd a kiválasztott aláírást?
+do you really want to move the selected messages to folder:	mail	hu	Valóban át szeretnéd mozgatni a kijelölt üzenetet a következő mappába:
+do you want to be asked for confirmation before moving selected messages to another folder?	mail	hu	Szeretnél megerősítést a kijelölt üzenetek áthelyezése előtt?
+do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni a továbbított üzenetek módosítását? (engedélyezett SIEVE esetén is)
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni a szűrő szabályok létrehozását és alkalmazását? (engedélyezett SIEVE esetén is)
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni más címre küldött figyelmeztető e-mail beállítását beérkező üzenet esetén? (engedélyezett SIEVE esetén is)
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	mail	hu	Meg szeretnéd akadályozni a "szabadságon vagyok" üzenet módosításának lehetőségét? (engedélyezett SIEVE esetén is)
+do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	mail	hu	Meg szeretnéd akadályozni a mappák létrehozásának és módosításának lehetőségét? (létrehozás, hozzáférés korlátozás, feliratkozás)
+does not contain	mail	hu	nem tartalmazza
+does not exist on imap server.	mail	hu	nincs létrehozva az IMAP szerveren
+does not match	mail	hu	nem egyezik
+does not match regexp	mail	hu	nem egyezik a reguláris kifejezéssel
+don't use draft folder	mail	hu	Ne használd a 'Vázlat' mappát
+don't use sent	mail	hu	Ne használja a 'Elküldött' mappát
+don't use template folder	mail	hu	Ne használja a "Sablonok" mappát
+don't use trash	mail	hu	Ne használja a 'Szemetes' mappát
+dont strip any tags	mail	hu	Címkék meghagyása
+down	mail	hu	Le
+download	mail	hu	Letölt
+download this as a file	mail	hu	Letöltés mint állomány
+draft folder	mail	hu	vázlat mappa
+drafts	mail	hu	Piszkozatok
+e-mail	mail	hu	E-Mail
+e-mail address	mail	hu	E-Mail cím
+e-mail folders	mail	hu	E-Mail mappa
+edit email forwarding address	mail	hu	az email továbbítási címének szerkesztése
+edit filter	mail	hu	Szűrő szerkesztése
+edit rule	mail	hu	szabály szerkesztése
+edit selected	mail	hu	Kijelölt szerkesztése
+edit vacation settings	mail	hu	szabadság beállítások szerkesztése
+editor type	mail	hu	Szerkesztő típusa
+email address	mail	hu	E-Mail cím
+email forwarding address	mail	hu	az email továbbítási cím
+email notification update failed	mail	hu	e-mail értesítő frissítés mező
+email signature	mail	hu	E-Mail aláírás
+emailaddress	mail	hu	E-Mail cím
+empty trash	mail	hu	Szemetes ürítése
+enable	mail	hu	engedélyez
+encrypted connection	mail	hu	titkosított kapcsolat
+enter your default mail domain ( from: user@domain )	admin	hu	Add meg az alapértelmezett levelező tartományt (a felhasználó@tartomány-ból)
+enter your imap mail server hostname or ip address	admin	hu	Add meg az IMAP szerver nevét vagy IP címét
+enter your sieve server hostname or ip address	admin	hu	Add meg a SIEVE szerver nevét vagy IP címét
+enter your sieve server port	admin	hu	Add meg a SIEVE szerver portcímét
+enter your smtp server hostname or ip address	admin	hu	Az SMTP-kiszolgáló hosztneve vagy IP-címe
+enter your smtp server port	admin	hu	Az SMTP-kiszolgáló portszáma
+entry saved	mail	hu	Bejegyzés elmentve
+error	mail	hu	Hiba
+error connecting to imap serv	mail	hu	IMAP szerverhez csatlakozáskor hiba történt
+error connecting to imap server. %s : %s.	mail	hu	Hiba történt az IMAP szerverhez csatlakozás közben. %s : %s
+error connecting to imap server: [%s] %s.	mail	hu	Hiba történt az IMAP szerverhez csatlakozás közben. [%s ]: %s
+error opening	mail	hu	Nem sikerült megnyitni
+error saving %1!	mail	hu	Hiba %1 mentése során!
+error:	mail	hu	Hiba:
+error: could not save message as draft	mail	hu	Hiba: üzenet mentése piszkozatként nem sikerült
+error: message could not be displayed.	mail	hu	Hiba: az üzenet nem megjeleníthető
+event details follow	mail	hu	Esemény jellemzőinek követése
+every	mail	hu	minden
+every %1 days	mail	hu	minden %1 napon
+expunge	mail	hu	Kitöröl
+extended	mail	hu	kibővített
+felamimail	common	hu	FelaMiMail
+file into	mail	hu	állományba
+filemanager	mail	hu	Filekezelő
+files	mail	hu	Fájlok
+filter active	mail	hu	Szűrő aktív
+filter name	mail	hu	Szűrő neve
+filter rules	common	hu	Szűrési szabály
+first name	mail	hu	Vezetéknév
+flagged	mail	hu	megjelölt
+flags	mail	hu	Címkék
+folder	mail	hu	mappa
+folder acl	mail	hu	Mappa ACL
+folder name	mail	hu	Mappa név
+folder path	mail	hu	Mappa útvonala
+folder preferences	mail	hu	Mappa tulajdonságok
+folder settings	mail	hu	Mappa beállításai
+folder status	mail	hu	Mappa státusz
+folderlist	mail	hu	Mappa lista
+foldername	mail	hu	Mappa név
+folders	mail	hu	Mappák
+folders created successfully!	mail	hu	Mappák sikeresen létrehozva!
+follow	mail	hu	követés
+for mail to be send - not functional yet	mail	hu	Elküldött levelekre - még nem működik
+for received mail	mail	hu	Bejövő levelekre
+forward	mail	hu	Továbbít
+forward as attachment	mail	hu	továbbítás mellékletként
+forward inline	mail	hu	továbbítás beágyazva
+forward messages to	mail	hu	Üzenetek továbbítása
+forward to	mail	hu	Továbbítás ide
+forward to address	mail	hu	Címzettnek továbbít
+forwarding	mail	hu	Továbbítás
+found	mail	hu	Talált
+from	mail	hu	Feladó
+from(a->z)	mail	hu	Feladó (A->Z)
+from(z->a)	mail	hu	Feladó (Z->A)
+full name	mail	hu	Teljes Neve
+greater than	mail	hu	nagyobb mint
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	mail	hu	Keresd fel a <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> oldalt további információkért a Squirrelmail-ről.<br>
+header lines	mail	hu	Email fejléce
+hide header	mail	hu	Fejléc elrejtése
+hostname / address	mail	hu	gazdagépnév / cím
+how to forward messages	mail	hu	Üzenet továbbítás módja
+html	mail	hu	HTML
+icons and text	mail	hu	Ikonok és képek
+icons only	mail	hu	Csak ikonok
+identifying name	mail	hu	Azonosító név
+identity	mail	hu	azonosító
+if	mail	hu	HA
+if from contains	mail	hu	ha feladó tartalmazza
+if mail header	mail	hu	ha a levél fejléce
+if message size	mail	hu	ha a levél mérete
+if shown, which folders should appear on main screen	mail	hu	a főképernyőn megjelenő mappák kijelölése
+if subject contains	mail	hu	ha a tárgy tartalmazza
+if to contains	mail	hu	ha a címzett tartalmazza
+if using ssl or tls, you must have the php openssl extension loaded.	mail	hu	SSL vagy TLS használatához a PHP openssl bővítményét telepíteni kell.
+illegal folder name.  please select a different name.	mail	hu	Érvénytelen mappanév. Kérlek válassz másik nevet.
+imap	mail	hu	IMAP
+imap server	mail	hu	IMAP szerver
+imap server address	mail	hu	IMAP szerver címe
+imap server closed the connection.	mail	hu	Az IMAP szerver lezárta a kapcsolatot.
+imap server closed the connection. server responded: %s	mail	hu	Az IMAP szerver lezárta a kapcsolatot. A szerver válasza: %s
+imap server password	mail	hu	IMAP szerver jelszava
+imap server type	mail	hu	IMAP szerver típusa
+imap server username	mail	hu	IMAP szerver felhasználóneve
+imaps authentication	mail	hu	IMAPS azonosítás
+imaps encryption only	mail	hu	csak IMAPS titkosítás
+import	mail	hu	import
+import mail	mail	hu	Üzenet importálása
+importance	mail	hu	Fontosság
+in	mail	hu	be
+inbox	mail	hu	Bejövő
+incoming mail server(imap)	mail	hu	bejövő levélszerver (IMAP)
+index order	mail	hu	Index rendezés
+info	mail	hu	Info
+invalid user name or password	mail	hu	Érvénytelen felhasználónév vagy jelszó
+javascript	mail	hu	JavaScript
+jumping to end	mail	hu	ugrás az utolsóra
+jumping to start	mail	hu	ugrás az elsőre
+junk	mail	hu	Spam
+keep a copy of the message in your inbox	mail	hu	másolat megőrzése a Bejövő postafiókban
+keep local copy of email	mail	hu	helyi másolat megőrzése
+kilobytes	mail	hu	kilobájt
+language	mail	hu	Nyelv
+last name	mail	hu	Keresztnév
+later	mail	hu	Később
+left	mail	hu	Balra
+less	mail	hu	kisebb
+less than	mail	hu	kisebb mint
+light gray	mail	hu	Világosszürke
+list all	mail	hu	Összes listázása
+loading	mail	hu	betöltés
+location of buttons when composing	mail	hu	Szerkesztéskor a gombok elhelyezkedése
+mail server login type	admin	hu	Mail szerver bejelentkezés típusa
+mail settings	mail	hu	Levelezési beállítások
+mainmessage	mail	hu	főüzenet
+manage email accounts and identities	common	hu	felhasználói fiókók és azonosítók szerkesztése
+manage emailaccounts	common	hu	E-mail azonosítók kezelése
+manage emailfilter / vacation	preferences	hu	E-mail szűrő/szabadság kezelése
+manage folders	common	hu	Mappák kezelése
+manage sieve	common	hu	Sieve szkriptek kezelése
+manage signatures	mail	hu	Aláírások kezelése
+mark as deleted	mail	hu	Törlésre megjelöl
+mark messages as	mail	hu	Kiválasztott üzenetek címkézése mint
+mark selected as flagged	mail	hu	Kiválasztott üzenetek címkéje mint "Megjelölt"
+mark selected as read	mail	hu	Kiválasztott üzenetek megjelölése mint "Olvasott"
+mark selected as unflagged	mail	hu	Kiválasztott üzenetek címkézése mint "Jelöletlen"
+mark selected as unread	mail	hu	Kiválasztott üzenetek megjelölése mint "Olvasatlan"
+match	mail	hu	Egyezés
+matches	mail	hu	egyezés
+matches regexp	mail	hu	reguláris kifejezés egyezése
+max uploadsize	mail	hu	max feltölthető fájl méret
+message highlighting	mail	hu	Üzenet színkiemelés
+message list	mail	hu	Üzenetlista
+messages	mail	hu	üzenetek
+move	mail	hu	Mozgat
+move folder	mail	hu	mappa mozgatása
+move messages	mail	hu	üzenetek mozgatása
+move selected to	mail	hu	kijelöltek mozgatása
+move to	mail	hu	kijelöltek mozgatása
+move to trash	mail	hu	Szemetesbe mozgatás
+moving messages to	mail	hu	üzenetek mozgatása
+name	mail	hu	Név
+never display html emails	mail	hu	Soha ne jelenítse meg a HTML formátumú emaileket
+new	common	hu	Új
+new filter	mail	hu	Új szűrő
+next	mail	hu	Következő
+next message	mail	hu	következő üzenet
+no active imap server found!!	mail	hu	Atkív IMAP szerver nem található!
+no address to/cc/bcc supplied, and no folder to save message to provided.	mail	hu	Nincs címzett és mappa az üzenet mentéséhez beállítva.
+no encryption	mail	hu	titkosítás  nélkül
+no filter	mail	hu	Szűrő nélkül
+no folders	mail	hu	nincs mappa
+no folders found	mail	hu	Mappa nem található
+no folders were found to subscribe to!	mail	hu	Nincs mappa melyre feliratkozhatna!
+no folders were found to unsubscribe from!	mail	hu	Nincs mappa melyről leíratkozhatna!
+no highlighting is defined	mail	hu	Színkiemelés nincs definiálva
+no imap server host configured!!	mail	hu	IMAP szerver nincs beállítva.
+no message returned.	mail	hu	Nincs visszaadott üzenet.
+no messages found...	mail	hu	üzenetek nem találhatóak...
+no messages selected, or lost selection. changing to folder	mail	hu	Nincs üzenet kiválasztva, átlépek a következő mappába:
+no messages were selected.	mail	hu	Nincsenek kiválasztva üzenetek.
+no plain text part found	mail	hu	nem található egyszerű szöveges tartalom
+no previous message	mail	hu	nincs előző üzenet
+no recipient address given!	mail	hu	Címzett nincs megadva!
+no signature	mail	hu	nincs aláírás
+no subject given!	mail	hu	Az üzenethez nincs tárgy megadva.
+no supported imap authentication method could be found.	mail	hu	Nem található támogatott IMAP azonosítási eljárás.
+no valid emailprofile selected!!	mail	hu	Nincs érvényes email profil kiválasztva!!!
+none	mail	hu	Semmi
+none, create all	mail	hu	egyik sem, összes létrehozása
+notify when new mails arrive on these folders	mail	hu	értesítés ha új üzenet érkezik ezekbe a mappákba
+on	mail	hu	be
+on behalf of	mail	hu	kinek a nevében
+one address is not valid	mail	hu	Egy cím érvénytelen
+only inbox	mail	hu	Csak a Bejövő postafiók
+only one window	mail	hu	csak egy ablak
+only unseen	mail	hu	Csak az újak
+open all	mail	hu	összes megnyitása
+options	mail	hu	Opciók
+or	mail	hu	vagy
+or configure an valid imap server connection using the manage accounts/identities preference in the sidebox menu.	mail	hu	állíts be egy érvényes IMAP szervert az oldaldoboz Fiókok/azonosítok beállítása menüben.
+organisation	mail	hu	szervezet
+organization	mail	hu	szervezet
+organization name	admin	hu	Szervezet neve
+original message	mail	hu	eredeti üzenet
+outgoing mail server(smtp)	mail	hu	kimenő levelező szerver
+participants	mail	hu	Résztvevők
+personal information	mail	hu	Személyes információk
+please ask the administrator to correct the emailadmin imap server settings for you.	mail	hu	Kérlek lépj kapcsolatban a rendszergazdával az IMAP szerver beállításaival kapcsolatban.
+please select a address	mail	hu	Kérlek válassz címet
+please select the number of days to wait between responses	mail	hu	Kérlek add hány napot várjon a válaszok között
+please supply the message to send with auto-responses	mail	hu	Kérlek add meg az automatikus válaszüzenetet
+port	mail	hu	portcím
+posting	mail	hu	kézbesítés
+previous	mail	hu	előző
+previous message	mail	hu	előző üzenet
+print it	mail	hu	nyomtat
+print this page	mail	hu	oldal nyomtatása
+printview	mail	hu	nyomtatási kép
+quicksearch	mail	hu	Gyorskeresés
+read	mail	hu	olvasott
+reading	mail	hu	olvasás
+receive notification	mail	hu	Tértivevény
+recent	mail	hu	legfrissebb
+refresh time in minutes	mail	hu	Frissítési időintervallum percben
+reject with	mail	hu	elutasítás
+remove	mail	hu	eltávolítás
+remove immediately	mail	hu	Azonnali eltávolítás
+rename	mail	hu	Átnevez
+rename a folder	mail	hu	Mappa átnevezése
+rename folder	mail	hu	Mappa átnevezése
+renamed successfully!	mail	hu	Sikeres átnevezés!
+replied	mail	hu	megválaszolt
+reply	mail	hu	Válasz
+reply all	mail	hu	Válasz mindenkinek
+reply to	mail	hu	Válasz
+replyto	mail	hu	Válasz
+respond	mail	hu	Válaszol
+respond to mail sent to	mail	hu	Válaszol a címzettnek
+return	mail	hu	Vissza
+return to options page	mail	hu	Vissza az opciók lapra
+right	mail	hu	Jobbra
+row order style	mail	hu	sorok rendezése
+rule	mail	hu	Szabály
+save	mail	hu	Elment
+save all	mail	hu	Összes mentése
+save as draft	mail	hu	Mentés vázlatként
+save as infolog	mail	hu	Mentés InfoLog-ként
+save changes	mail	hu	Változások mentése
+save message to disk	mail	hu	Üzenet mentése lemezre
+script name	mail	hu	szkript név
+script status	mail	hu	szkript státusz
+search	mail	hu	Keres
+search for	mail	hu	Keres
+select	mail	hu	Kiválaszt
+select all	mail	hu	Mindet kiválaszt
+select emailprofile	mail	hu	Email profil kiválasztása
+select folder	mail	hu	Mappa kiválasztása
+select your mail server type	admin	hu	Válassza ki a levelezőszerver típusát
+send	mail	hu	Küld
+send a reject message	mail	hu	Visszautasító levél küldése
+sender	mail	hu	Feladó
+sent	mail	hu	Elköldött üzenetek
+sent folder	mail	hu	'Elküldött' mappa
+server supports mailfilter(sieve)	mail	hu	a szerver támogatja a levélszűrőket (sieve)
+set as default	mail	hu	Beállítás alapértelmezettként
+show header	mail	hu	fejléc megjelenítése
+show new messages on main screen	mail	hu	Új üzenetek megjelenítése a főképernyőn
+sieve script name	mail	hu	sieve szűrő szkript neve
+sieve settings	admin	hu	SIEVE beállítások
+signatur	mail	hu	Aláírás
+signature	mail	hu	Aláírás
+simply click the target-folder	mail	hu	Kattintson a célmappára
+size	mail	hu	Méret
+size of editor window	mail	hu	Szerkesztőablak mérete
+size(...->0)	mail	hu	Méret (...->0)
+size(0->...)	mail	hu	Méret (0->...)
+skipping forward	mail	hu	következőre ugrás
+skipping previous	mail	hu	előzőre ugrás
+small view	mail	hu	tömör nézet
+smtp settings	admin	hu	SMTP beállítások
+start new messages with mime type plain/text or html?	mail	hu	Új üzenet írása egyszerű szöveg vagy html-ként?
+stationery	mail	hu	Irodaszer
+subject	mail	hu	Tárgy
+subject(a->z)	mail	hu	Tárgy (A->Z)
+subject(z->a)	mail	hu	Tárgy (Z->A)
+submit	mail	hu	Elküld
+subscribe	mail	hu	Feliratkozás
+subscribed	mail	hu	Feliratkozva
+subscribed successfully!	mail	hu	Sikeres feliratkozás!
+system signature	mail	hu	rendszer aláírás
+table of contents	mail	hu	Tartalomjegyzék
+template folder	mail	hu	Sablonok mappa
+templates	mail	hu	Sablonok
+text only	mail	hu	Csak szöveg
+text/plain	mail	hu	szöveg
+the connection to the imap server failed!!	mail	hu	Sikertelen csatlakozás az IMAP szerverhez!
+the imap server does not appear to support the authentication method selected. please contact your system administrator.	mail	hu	Az IMAP szerver úgy tűnik nem támogatja a kiválasztott hitelesítést. Tovább információért lLépj kapcsolatba a rendszergazdával.
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	hu	A feladó kéri tértivevényt küldését amely jelzi, hogy megkaptad az üzenetet. Szeretnéd hogy elküldjem?
+the mimeparser can not parse this message.	mail	hu	A MIME feldolgozó nem tudta feldolgozni ezt az üzenetet.
+then	mail	hu	AKKOR
+there is no imap server configured.	mail	hu	Nincs IMAP szerver beállítva.
+this folder is empty	mail	hu	EZ A MAPPA ÜRES
+this php has no imap support compiled in!!	mail	hu	Az alkalmazott PHP verzió nem tartalmaz IMAP támogatást! (telepíteni kell)
+to	mail	hu	Címzett
+to mail sent to	mail	hu	az üzenet elküldlve
+to use a tls connection, you must be running a version of php 5.1.0 or higher.	mail	hu	TLS kapcsolat használatához a PHP verziója legalább 5.1.0 kell legyen.
+translation preferences	mail	hu	Fordítási tulajdonságok
+translation server	mail	hu	Fordító szerver
+trash	mail	hu	Törölt üzenetek
+trash fold	mail	hu	"Szemetes" mappa
+trash folder	mail	hu	"Szemetes" mappa
+type	mail	hu	Típus
+unexpected response from server to authenticate command.	mail	hu	Váratlan válasz a szervertől az AUTHENTICATE parancsra.
+unexpected response from server to digest-md5 response.	mail	hu	Váratlan válasz a szervertől a DIGEST-MD5 parancsra.
+unexpected response from server to login command.	mail	hu	Váratlan válasz a szervertől a LOGIN parancsra.
+unflagged	mail	hu	jelöletlen
+unknown err	mail	hu	Ismeretlen hiba
+unknown error	mail	hu	Ismeretlen hiba
+unknown imap response from the server. server responded: %s	mail	hu	Ismeretlen válasz a szervertől: %s.
+unknown sender	mail	hu	Ismeretlen feladó
+unknown user or password incorrect.	mail	hu	Ismeretlen felhasználó vagy jelszó
+unread	common	hu	Olvasatlan
+unseen	mail	hu	Új
+unselect all	mail	hu	Összes kijelölés megszüntetése
+unsubscribe	mail	hu	Leiratkozás
+unsubscribed	mail	hu	Leiratkozva
+unsubscribed successfully!	mail	hu	Sikeres leiratkozás!
+up	mail	hu	Fel
+updating message status	mail	hu	üzenet állapotok frissítése
+updating view	mail	hu	nézet frissítése
+urgent	mail	hu	sürgős
+use <a href="%1">emailadmin</a> to create profiles	mail	hu	Használd az <a href="%1">Email Adminisztrációt</a> profilkészítésre
+use a signature	mail	hu	Aláírás használata
+use a signature?	mail	hu	Használjuk az aláírást?
+use addresses	mail	hu	Címek használata
+use custom identities	mail	hu	Egyedi azonosító használata
+use custom settings	mail	hu	Egyedi beállítások használata
+use regular expressions	mail	hu	reguláris kifejezés használata
+use smtp auth	admin	hu	SMTP hitelesítés használata
+users can define their own emailaccounts	admin	hu	A felhasználók saját maguk állíthatják be az email postafiókjaikat
+vacation notice	common	hu	szabadság értesítés
+vacation notice is active	mail	hu	Szabadság értesítő aktív
+vacation start-date must be before the end-date!	mail	hu	Szabadság kezdete korábban legyen mint a vége!
+validate certificate	mail	hu	tanúsítvány ellenőrzése
+view full header	mail	hu	Teljes fejléc megjelenítése
+view header lines	mail	hu	fejléc tartalom megjelenítése
+view message	mail	hu	Üzenet megjelenítése
+viewing full header	mail	hu	Teljes fejléc megjelenítése
+viewing message	mail	hu	Üzenet megjelenítése
+viewing messages	mail	hu	Üzenetek megjelenítése
+when deleting messages	mail	hu	Üzenet törlése esetén
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	hu	melyik mappa legyen az Elküldött levelek mappa szerint megjelenítve?
+which folders - in general - should not be automatically created, if not existing	mail	hu	Melyik mappa ne legyen automatikusan létrehozva?
+with message	mail	hu	üzenettel
+with message "%1"	mail	hu	"%1" üzenettel
+wrap incoming text at	mail	hu	Bejövő szöveg tördelése
+writing	mail	hu	írás
+wrote	mail	hu	írta
+you can use %1 for the above start-date and %2 for the end-date.	mail	hu	%1-t használd kezdő dátumként, %2-t befejező dátumként.
+you have received a new message on the	mail	hu	Új üzenet érkezett a
+your message to %1 was displayed.	mail	hu	Az üzeneted %1 magkapta.

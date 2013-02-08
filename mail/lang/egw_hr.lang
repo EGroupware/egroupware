@@ -1,0 +1,310 @@
+(no subject)	mail	hr	(nema teme)
+(only cc/bcc)	mail	hr	(samo Cc/Bcc)
+(unknown sender)	mail	hr	(nepoznat pošaljioc)
+activate	mail	hr	Aktiviraj
+activate script	mail	hr	aktiviraj skriptu
+add address	mail	hr	Dodaj adresu
+add rule	mail	hr	Dodaj pravilo
+add script	mail	hr	Dodaj skriptu
+add to %1	mail	hr	Dodaj k %1
+add to address book	mail	hr	Dodaj u adresar
+add to addressbook	mail	hr	dodaj u adrersar
+additional info	mail	hr	Dodatne informacije
+address book	mail	hr	Adresar
+address book search	mail	hr	Pretraživanje adresara
+after message body	mail	hr	Nakon poruke
+all address books	mail	hr	svi adresari
+all folders	mail	hr	Sve mape
+always show html emails	mail	hr	Uvijek prikaži HTML e-mailove
+and	mail	hr	And
+anyone	mail	hr	svi
+as a subfolder of	mail	hr	kao podmapa od
+attach	mail	hr	Attach
+attachments	mail	hr	Privitci
+auto refresh folder list	mail	hr	Automatsko obnavljavljanje liste mapa
+back to folder	mail	hr	Povratak u mapu
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	mail	hr	U ovisnosti o danim uvjetima, ulazne poruke mogu imati različite podloge u listi poruka. Ovime lakše razlikujete od koga ste dobili poruke, posebno ukoliko ste na nekoj mail listi.
+bcc	mail	hr	BCC
+before headers	mail	hr	Prije zaglavlja
+between headers and message body	mail	hr	Između zaglavlja i teksta poruke
+body part	mail	hr	body part
+can't connect to inbox!!	mail	hr	nemogu se spojiti sa INBOX!!
+cc	mail	hr	CC
+change folder	mail	hr	Promijeni mapu
+checkbox	mail	hr	selektiraj
+click here to log back in.	mail	hr	Ponovni prijavak
+click here to return to %1	mail	hr	Povratak na %1
+close all	mail	hr	zatvori sve
+close this page	mail	hr	zatvori ovu stranicu
+close window	mail	hr	Zatvori prozor
+color	mail	hr	Boja
+compose	mail	hr	Pisanje nove poruke
+compress folder	mail	hr	Smanjii mapu
+configuration	mail	hr	Konfiguracija
+contains	mail	hr	sadrži
+copy to	mail	hr	Kopiraj u
+create	mail	hr	Napravi
+create folder	mail	hr	Napravi mapu
+create sent	mail	hr	Napravi poslano
+create subfolder	mail	hr	Napravi podmapu
+create trash	mail	hr	Napravi smeće
+created folder successfully!	mail	hr	Mapa uspješno napravljena
+dark blue	mail	hr	Tamno plavo
+dark cyan	mail	hr	Tamno cijan
+dark gray	mail	hr	Tamno sivo
+dark green	mail	hr	Tamno zeleno
+dark magenta	mail	hr	Tamno magenta
+dark yellow	mail	hr	Tamno žuto
+date(newest first)	mail	hr	po datumu (noviji prvo)
+date(oldest first)	mail	hr	po datumu (stariji prvo)
+days	mail	hr	dana
+deactivate script	mail	hr	deaktiviraj skriptu
+default	mail	hr	Početno postavljena vrijednost
+default sorting order	mail	hr	Početno postavljen redoslijed sortiranja
+delete all	mail	hr	obriši sve
+delete folder	mail	hr	Obriši mapu
+delete selected	mail	hr	Obriši izabrano
+delete selected messages	mail	hr	obriši izabrane poruke
+deleted	mail	hr	obrisano
+deleted folder successfully!	mail	hr	Uspješno obrisana mapa
+disable	mail	hr	Onemogući
+display message in new window	mail	hr	Prikaži poruku u novom prozoru
+display of html emails	mail	hr	Prikaz HTML emailova
+display only when no plain text is available	mail	hr	Prikaži samo u neprisutnosti običnog teksta
+display preferences	mail	hr	Prikaži postavke
+do it!	mail	hr	Učini to!!
+do not use sent	mail	hr	Ne upotrebljavaj mapu Poslano
+do not use trash	mail	hr	Ne upotrebljavaj mapu Smeće
+do you really want to delete the '%1' folder?	mail	hr	Da li zaista želite obrsati mapu: '%1'?
+does not contain	mail	hr	ne sadrži
+does not match	mail	hr	nema podudarnosti
+does not match regexp	mail	hr	nema podudarnosti regexp
+don't use sent	mail	hr	Ne upotrebljavaj Pošiljanje
+don't use trash	mail	hr	Ne upotrebljavaj Smeće
+down	mail	hr	dolje
+download	mail	hr	Prenesi sa poslužitelja
+download this as a file	mail	hr	Prenesi sa poslužitelja kao datoteku
+e-mail	mail	hr	E-Mail
+e-mail address	mail	hr	E-Mail adresa
+e-mail folders	mail	hr	E-Mail mapa
+edit filter	mail	hr	Uredi filter
+edit rule	mail	hr	uredi pravilo
+edit selected	mail	hr	Uredi izabrano
+email address	mail	hr	E-Mail adresa
+email notification	mail	hr	Obavijesti putem e-maila
+email signature	mail	hr	Email potpis
+empty trash	mail	hr	isprazni Smeće
+enable	mail	hr	omogući
+enter your default mail domain ( from: user@domain )	admin	hr	Unesite vašu početno postavljenu domenu za poruke (format: korisnik@domena)
+enter your imap mail server hostname or ip address	admin	hr	Unesite ime vašeg IMAP poslužitelja ili IP adresu
+enter your sieve server hostname or ip address	admin	hr	Unesite ime vašeg SIEVE poslužitelja ili IP adresu
+enter your sieve server port	admin	hr	Unesite port vašeg SIEVE poslužitelja
+enter your smtp server hostname or ip address	admin	hr	Unesite ime vašeg SMTP poslužitelja ili IP adresu
+enter your smtp server port	admin	hr	Unesite port vašeg SMTP poslužitelja
+entry saved	mail	hr	Entry saved
+error	mail	hr	GREŠKA
+error connecting to imap serv	mail	hr	Greška prilikom spajanja na IMAP poslužitelj
+error opening	mail	hr	Greška prilikom otvaranja
+event details follow	mail	hr	Slijede detalji obveze
+expunge	mail	hr	Izbriši
+extended	mail	hr	Produži
+felamimail	common	hr	FelaMiMail
+file into	mail	hr	informacije o datoteci
+filemanager	mail	hr	Filemanager
+files	mail	hr	datoteke
+filter active	mail	hr	aktivni filtri
+filter name	mail	hr	Ime filtra
+first name	mail	hr	Ime
+flagged	mail	hr	flagged
+flags	mail	hr	Flags
+folder	mail	hr	Mapa
+folder acl	mail	hr	acl mapa
+folder name	mail	hr	Ime mape
+folder path	mail	hr	Folder Path
+folder preferences	mail	hr	Postavke mape
+folder settings	mail	hr	Postavke mape
+folder status	mail	hr	Status mape
+folderlist	mail	hr	Lista mapa
+foldername	mail	hr	Ime mape
+folders	mail	hr	Mape
+folders created successfully!	mail	hr	Mape napravljene uspješno!
+follow	mail	hr	prati
+for mail to be send - not functional yet	mail	hr	Slanje pošte još nije u funkciji
+for received mail	mail	hr	Za primljenu poštu
+forward	mail	hr	Proslijedi
+found	mail	hr	Pronađeno
+from	mail	hr	Pošaljitelj
+from(a->z)	mail	hr	po pošaljitelju (silazno A->Z)
+from(z->a)	mail	hr	po pošaljitelju (uzlazno Z->A)
+full name	mail	hr	Puno ime
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	mail	hr	Pogledajte <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> da bi naučili nešto više o Squirrelmail.<br>
+header lines	mail	hr	Linije zaglavlja
+hide header	mail	hr	sakrij zaglavlje
+html	mail	hr	HTML
+icons and text	mail	hr	Ikone i tekst
+icons only	mail	hr	Samo ikone
+identifying name	mail	hr	Ime za prepoznavanje
+if	mail	hr	AKO
+illegal folder name.  please select a different name.	mail	hr	Nažalost nemožete koristiti unešeno ime. Molimo vas unesite drugo ime za mapu.
+imap	mail	hr	IMAP
+imap server	mail	hr	IMAP Poslužitelj
+imap server address	mail	hr	IMAP Adresa poslužitelja
+imap server type	mail	hr	IMAP vrsta poslužitelja
+imaps authentication	mail	hr	IMAPS provjera valjnanosti
+imaps encryption only	mail	hr	Samo IMAPS enkripcija
+import	mail	hr	Uvezi
+in	mail	hr	u
+inbox	mail	hr	Inbox
+index order	mail	hr	Redoslijed indeksa
+info	mail	hr	Informacije
+invalid user name or password	mail	hr	Nevaljani korisnik ili zaporka
+javascript	mail	hr	JavaScript
+language	mail	hr	Jezik
+last name	mail	hr	Prezime
+left	mail	hr	Lijevo
+less	mail	hr	manje
+light gray	mail	hr	Svijetlo sivo
+list all	mail	hr	Prikaži sve
+location of buttons when composing	mail	hr	Lokacija buttons prilikom pisanja poruke
+mail server login type	admin	hr	Vrsta prijave mail poslužitelja
+mail settings	mail	hr	Postavke pošte
+mainmessage	mail	hr	glavna poruka
+manage folders	common	hr	Uređivanje mapa
+manage sieve	common	hr	Uređivanje Sieve skripti
+mark as deleted	mail	hr	Označi obrisanim
+mark messages as	mail	hr	Označi izabranu poruku kao
+mark selected as flagged	mail	hr	Označi izabrano kao flagged
+mark selected as read	mail	hr	Označi izabrano pročitanim
+mark selected as unflagged	mail	hr	Označi izabrano kao unflagged
+mark selected as unread	mail	hr	Označi izabrano nepročitanim
+match	mail	hr	Pronađi podudarnosti
+matches	mail	hr	podudarnosti
+matches regexp	mail	hr	podudara se sa regexp
+message highlighting	mail	hr	Istaknuto u poruci
+message list	mail	hr	Lista poruka
+messages	mail	hr	poruke
+move	mail	hr	premjesti
+move messages	mail	hr	premjesti poruku
+move selected to	mail	hr	premjesti izabrano u
+move to	mail	hr	premjesti izabrano u
+move to trash	mail	hr	Premjesti u Smeće
+name	mail	hr	Ime
+never display html emails	mail	hr	Nikad ne prikaži HTML emailove
+new	common	hr	Novo
+new filter	mail	hr	Novi filter
+next	mail	hr	Slijedeće
+next message	mail	hr	slijedeća poruka
+no filter	mail	hr	Nema filtera
+no folders found	mail	hr	Nisam našao mapu(e)
+no folders were found to subscribe to!	mail	hr	Nisam našao mape za pretplatu!
+no folders were found to unsubscribe from!	mail	hr	Nisam našao mape za odjaviti pretplatu!
+no highlighting is defined	mail	hr	Nije definirano ništa za istaknuti u poruci
+no messages were selected.	mail	hr	Niste izabrali nijednu poruku
+no previous message	mail	hr	Nema više prethodnih poruka
+no valid emailprofile selected!!	mail	hr	Izabrani profil nije važeći!!
+none	mail	hr	nikakav
+on behalf of	mail	hr	u ime
+only inbox	mail	hr	Samo INBOX
+only unseen	mail	hr	Samo neviđene
+open all	mail	hr	otvori sve
+options	mail	hr	Opcije
+or	mail	hr	or
+organisation	mail	hr	organizacija
+organization	mail	hr	organization
+organization name	admin	hr	Ime organizacije
+participants	mail	hr	Sudionici
+personal information	mail	hr	Osobne informacije
+posting	mail	hr	posting
+previous	mail	hr	Prijašnja
+previous message	mail	hr	prijašnja poruka
+print it	mail	hr	ispiši
+print this page	mail	hr	ispiši ovu stanicu
+quicksearch	mail	hr	Brza pretraga
+read	mail	hr	pročitaj
+reading	mail	hr	čitam
+recent	mail	hr	nedavni
+refresh time in minutes	mail	hr	Obnovi vrijeme u minutama
+remove	mail	hr	makni
+remove immediately	mail	hr	Obriši odmah
+rename	mail	hr	Preimenuj
+rename a folder	mail	hr	Preimenuj mapu
+rename folder	mail	hr	Preimenuj mapu
+renamed successfully!	mail	hr	Uspješno preimenovano
+replied	mail	hr	odgovoreno
+reply	mail	hr	Odgovori
+reply all	mail	hr	Odgovori svima
+reply to	mail	hr	Odgovori
+replyto	mail	hr	Odgovori
+return	mail	hr	Povratak
+return to options page	mail	hr	Povratak na stranicu opcija
+right	mail	hr	Desno
+rule	mail	hr	Pravilo
+save	mail	hr	Spremi
+save all	mail	hr	Spremi sve
+save changes	mail	hr	Spremi promjene
+search	mail	hr	Potraga
+search for	mail	hr	Traži
+select	mail	hr	Izaberite
+select all	mail	hr	Izaberite sve
+select emailprofile	mail	hr	Izabertei e-mail profil
+select your mail server type	admin	hr	Izaberte vrstu mail poslužitelja
+send	mail	hr	Pošalji
+sent folder	mail	hr	Mapa poslano
+show header	mail	hr	prikaži zaglavlje
+show new messages on main screen	mail	hr	Prikaži novu poruku na glavnom ekranu
+sieve settings	admin	hr	Postavke Sieve
+signature	mail	hr	Potpis
+simply click the target-folder	mail	hr	Samo izaberite ciljanu mapu
+size	mail	hr	Veličina
+size of editor window	mail	hr	Veličina prozora za uređivanje
+size(...->0)	mail	hr	po veličini (silazno ...->0)
+size(0->...)	mail	hr	po veličini (uzlazno 0->...)
+small view	mail	hr	smanji pogled
+smtp settings	admin	hr	Postavke SMTP
+subject	mail	hr	Tema
+subject(a->z)	mail	hr	po temi (silazno A->Z)
+subject(z->a)	mail	hr	po temi (uzlazno Z->A)
+submit	mail	hr	Pošalji
+subscribe	mail	hr	Pretplata
+subscribed	mail	hr	Pretplaćen
+subscribed successfully!	mail	hr	Uspješno ste pretplaćeni!
+table of contents	mail	hr	Tabela sadržaja
+text only	mail	hr	Samo tekst
+the connection to the imap server failed!!	mail	hr	Neuspjelo spajanje na IMAP poslužitelja!!
+then	mail	hr	TADA
+this folder is empty	mail	hr	OVA MAPA JE PRAZNA
+this php has no imap support compiled in!!	mail	hr	Ovaj PHP nema ugrađenu podršku za IMAP!!
+to	mail	hr	Za
+translation preferences	mail	hr	Postavke prijevoda
+translation server	mail	hr	Poslužitelj prijevoda
+trash fold	mail	hr	Mapa Smeće
+trash folder	mail	hr	Mapa Smeće
+type	mail	hr	vrsta (tip)
+unflagged	mail	hr	unflagged
+unknown err	mail	hr	Nepoznata greška
+unknown error	mail	hr	Nepoznata greška
+unknown sender	mail	hr	Pošiljatelj nepoznat
+unknown user or password incorrect.	mail	hr	Nepoznat korisnik ili nevažeća zaporka.
+unread	common	hr	nepročitano
+unseen	mail	hr	Neviđeno
+unselect all	mail	hr	Odizaberi sve
+unsubscribe	mail	hr	Odpretplata
+unsubscribed	mail	hr	Odpretplaćen
+unsubscribed successfully!	mail	hr	Uspiješan prekid pretplate!
+up	mail	hr	gore
+urgent	mail	hr	hitan
+use a signature	mail	hr	Upotrijebi potpis
+use a signature?	mail	hr	Upotrijebi potpis?
+use addresses	mail	hr	Upotrijebi adresu
+use custom settings	mail	hr	Upotrijebi prilagođene postavke
+use smtp auth	admin	hr	Upotrijebi SMTP autorizaciju
+users can define their own emailaccounts	admin	hr	Korisnici mogu sami definirati svoje e-mail račune
+view full header	mail	hr	Prikaži cijelo zaglavlje
+view message	mail	hr	Prikaži poruku
+viewing full header	mail	hr	Prikazujem cijelo zaglavlje
+viewing message	mail	hr	Prikazujem poruku
+viewing messages	mail	hr	Prikazujem poruku
+when deleting messages	mail	hr	Prilikom brisanja poruka
+wrap incoming text at	mail	hr	Omotaj ulazni tekst pri
+writing	mail	hr	zapisujem
+wrote	mail	hr	zapisano (zapisao je)
