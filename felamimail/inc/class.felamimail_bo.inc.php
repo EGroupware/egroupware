@@ -101,9 +101,6 @@ class felamimail_bo
 	 */
 	static $felamimailConfig;
 
-	// set to true, if php is compiled with multi byte string support
-	var $mbAvailable = FALSE;
-
 	// what type of mimeTypes do we want from the body(text/html, text/plain)
 	var $htmlOptions;
 
@@ -438,9 +435,6 @@ class felamimail_bo
 			$this->saveSessionData();
 		}
 
-		if (function_exists('mb_convert_encoding')) {
-			$this->mbAvailable = TRUE;
-		}
 		if (is_null(self::$felamimailConfig)) self::$felamimailConfig = config::read('felamimail');
 		if (!isset(self::$idna2)) self::$idna2 = new egw_idna;
 
@@ -1881,19 +1875,19 @@ class felamimail_bo
 	}
 
 	/**
-	* get IMAP folder objects
-	*
-	* returns an array of IMAP folder objects. Put INBOX folder in first
-	* position. Preserves the folder seperator for later use. The returned
-	* array is indexed using the foldername. Use cachedObjects when retrieving subscribedFolders
-	*
-	* @param _subscribedOnly boolean get subscribed or all folders
-	* @param _getCounters    boolean get get messages counters
-	* @param _alwaysGetDefaultFolders boolean this triggers to ignore the possible notavailableautofolders - preference
-	*			as activeSync needs all folders like sent, trash, drafts, templates and outbox - if not present devices may crash
-	*
-	* @return array with folder objects. eg.: INBOX => {inbox object}
-	*/
+	 * get IMAP folder objects
+	 *
+	 * returns an array of IMAP folder objects. Put INBOX folder in first
+	 * position. Preserves the folder seperator for later use. The returned
+	 * array is indexed using the foldername. Use cachedObjects when retrieving subscribedFolders
+	 *
+	 * @param _subscribedOnly boolean get subscribed or all folders
+	 * @param _getCounters    boolean get get messages counters
+	 * @param _alwaysGetDefaultFolders boolean this triggers to ignore the possible notavailableautofolders - preference
+	 *			as activeSync needs all folders like sent, trash, drafts, templates and outbox - if not present devices may crash
+	 *
+	 * @return array with folder objects. eg.: INBOX => {inbox object}
+	 */
 	function getFolderObjects($_subscribedOnly=false, $_getCounters=false, $_alwaysGetDefaultFolders=false)
 	{
 		if (self::$debug) error_log(__METHOD__.__LINE__.' '."subscribedOnly:$_subscribedOnly, getCounters:$_getCounters, alwaysGetDefaultFolders:$_alwaysGetDefaultFolders");
@@ -2659,19 +2653,19 @@ class felamimail_bo
 	}
 
 	/**
-	* fetches a sorted list of messages from the imap server
-	* private function
-	*
-	* @todo implement sort based on Net_IMAP
-	* @param string $_folderName the name of the folder in which the messages get searched
-	* @param integer $_sort the primary sort key
-	* @param bool $_reverse sort the messages ascending or descending
-	* @param array $_filter the search filter
-	* @param bool $resultByUid if set to true, the result is to be returned by uid, if the server does not reply
-	* 			on a query for uids, the result may be returned by IDs only, this will be indicated by this param
-	* @param bool $setSession if set to true the session will be populated with the result of the query
-	* @return bool
-	*/
+	 * fetches a sorted list of messages from the imap server
+	 * private function
+	 *
+	 * @todo implement sort based on Net_IMAP
+	 * @param string $_folderName the name of the folder in which the messages get searched
+	 * @param integer $_sort the primary sort key
+	 * @param bool $_reverse sort the messages ascending or descending
+	 * @param array $_filter the search filter
+	 * @param bool $resultByUid if set to true, the result is to be returned by uid, if the server does not reply
+	 * 			on a query for uids, the result may be returned by IDs only, this will be indicated by this param
+	 * @param bool $setSession if set to true the session will be populated with the result of the query
+	 * @return mixed bool/array false or array of ids
+	 */
 	function getSortedList($_folderName, $_sort, &$_reverse, $_filter, &$resultByUid=true, $setSession=true)
 	{
 		//ToDo: FilterSpecific Cache
@@ -2850,7 +2844,7 @@ class felamimail_bo
 	{
 		//self::$debug=true;
 		if (self::$debug) error_log(__METHOD__.__LINE__.function_backtrace());
-		if (self::$debug) error_log(__METHOD__.__LINE__."$_folderName,$_startMessage, $_numberOfMessages, $_sort, $reverse, ".array2string($_filter).", $_thisUIDOnly");
+		if (self::$debug) error_log(__METHOD__.__LINE__."$_folderName,$_startMessage, $_numberOfMessages, $_sort, $_reverse, ".array2string($_filter).", $_thisUIDOnly");
 		$reverse = (bool)$_reverse;
 		// get the list of messages to fetch
 		if (self::$debug) $starttime = microtime (true);
@@ -4441,6 +4435,7 @@ class felamimail_bo
 		$needle = '/(=[0-9][A-F])|(=[A-F][0-9])|(=[A-F][A-F])|(=[0-9][0-9])/';
 		return preg_match("$needle",$string);
 	}
+
 	/**
 	 * Helper function to handle wrong or unrecognized timezones
 	 * returns the date as it is parseable by strtotime, or current timestamp if everything failes
@@ -5658,12 +5653,14 @@ class felamimail_bo
 							$dirname = md5($dirname);
 							$dir = $GLOBALS['egw_info']['server']['temp_dir']."/fmail_import/$dirname";
 							if (self::$debug) error_log(__METHOD__.__LINE__.' Dir to save attachment to:'.$dir);
-							if ( !file_exists( "$dir/$filename") )
+							if ( !file_exists( "$dir") )
 							{
 								@mkdir( $dir, 0700, true );
-								file_put_contents( "$dir/$filename", $part->body);
 							}
-							$path = "$dir/$filename";
+							$rp = felamimail_bo::getRandomString();
+							file_put_contents( "$dir/$rp$filename", $part->body);
+
+							$path = "$dir/$rp$filename";
 							$mailObject->AddEmbeddedImage($path, $part->headers['content-id'], $filename, ($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'), $part->ctype_primary.'/'.$part->ctype_secondary);
 						}
 						else
