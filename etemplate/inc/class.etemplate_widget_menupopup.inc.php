@@ -143,7 +143,8 @@ class etemplate_widget_menupopup extends etemplate_widget
 		}
 
 		// Make sure &nbsp;s, etc.  are properly encoded when sent, and not double-encoded
-		foreach(self::$request->sel_options[$form_name] as &$label)
+		$options = (self::$request->sel_options[$form_name] ? $form_name : $this->id);
+		foreach(self::$request->sel_options[$options] as &$label)
 		{
 			if(!is_array($label))
 			{
@@ -300,7 +301,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 					}
 					$options[$cat['id']] = array(
 						'label' => $s,
-						'title' => empty($cat['description']) ? $s : $cat['description'],
+						'title' => $cat['description'],
 					);
 					// Send data too
 					if(is_array($cat['data']))
