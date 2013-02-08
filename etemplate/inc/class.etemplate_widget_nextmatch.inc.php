@@ -799,6 +799,12 @@ class etemplate_widget_nextmatch extends etemplate_widget
 // Registration needs to go here, otherwise customfields won't be loaded until some other cf shows up
 etemplate_widget::registerWidget('etemplate_widget_customfields', array('nextmatch-customfields'));
 
+/**
+ * Extend selectbox so select options get parsed properly before being sent to client
+ */
+class etemplate_widget_nextmatch_filterheader extends etemplate_widget_menupopup
+{
+}
 
 /**
  * Extend selectbox and change type so proper users / groups get loaded, according to preferences
@@ -809,6 +815,30 @@ class etemplate_widget_nextmatch_accountfilter extends etemplate_widget_menupopu
         {
                 parent::set_attrs($xml);
 		$this->attrs['type'] = 'select-account';
+	}
+}
+
+/**
+ * A filter widget that fakes another (select) widget and turns it into a nextmatch filter widget.
+ */
+class etemplate_widget_nextmatch_customfilter extends etemplate_widget_transformer
+{
+
+	protected $legacy_options = 'type,options';
+
+	/**
+	 * Fill type options in self::$request->sel_options to be used on the client
+	 *
+	 * @param string $cname
+	 */
+	public function beforeSendToClient($cname)
+	{
+		self::$transformation['type'] = $this->attrs['type'];
+		$form_name = self::form_name($cname, $this->id, $expand);
+		$this->setElementAttribute($form_name, 'options', $this->attrs['options']);
+
+		parent::beforeSendToClient($cname);
+		$this->setElementAttribute($form_name, 'type', 'nextmatch-filterheader');
 	}
 }
 
