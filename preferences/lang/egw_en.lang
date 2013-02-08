@@ -9,6 +9,8 @@ a theme defines the colors and fonts used by the template.	preferences	en	A them
 acl grants have been updated	preferences	en	ACL grants have been updated.
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	en	Any listing in EGroupware will show this number of entries or lines per page. Too many slow down the page display, too less will cost you the overview.
 are you sure you want to delete this category ?	preferences	en	Are you sure you want to delete this category ?
+automatically start with this font	preferences	en	Automatically start with this font
+automatically start with this font size	preferences	en	Automatically start with this font size
 br	preferences	en	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	en	Change a user password by passing the old and new passwords.  Returns TRUE on success, FALSE on failure.
 change your password	preferences	en	Change password
@@ -22,6 +24,8 @@ country	preferences	en	Country
 date format	preferences	en	Date format
 default	preferences	en	Default
 default application	preferences	en	Default application
+default font	preferences	en	Default font
+default font size	preferences	en	Default font size
 default preferences	preferences	en	Default preferences
 default theme	preferences	en	Default theme
 delete categories	preferences	en	Delete categories
@@ -35,10 +39,13 @@ enable selectbox dropdown resizing for ie (experimental)	preferences	en	Select b
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	en	Enables or disables drag and drop functions in all applications. If the browser does not support drag and drop, it will be disabled automatically.
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	en	Enables or disables select box drop down menu resizing for IE in all applications. If the browser is not an IE, the option will not apply.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	en	Enables or disables selectbox dropdown resizing for IE in all applications. If the browser is not an IE , the option will not apply. This feature is experimental at the moment.
+enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	en	Enables or disables selectbox dropdown resizing for IE in all applications. If the browser is not an IE, the option will not apply. This feature is experimental at the moment.
 enter your new password	preferences	en	Enter new password
 enter your old password	preferences	en	Enter old password
 failed to change password.  please contact your administrator.	preferences	en	Failed to change password. Contact your administrator.
+features of the editor	preferences	en	Features of the editor
 forced preferences	preferences	en	Forced preferences
+formatting & general settings	preferences	en	Formatting & general settings
 help off	preferences	en	Help off
 holding ctrl/cmd key and click on the line	preferences	en	holding Ctrl/Cmd key and click on the line
 hours	preferences	en	Hours
@@ -46,6 +53,7 @@ how do you like to display accounts	preferences	en	Account display
 how do you like to select accounts	preferences	en	Account select
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	en	How many hours are you in front or after the timezone of the server?<br>If you are in the same time zone as the server select 0 hours, else select your locale date and time.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	en	How many icons should be shown in the navigation bar at the top of the page. Additional icons go into a pull down menu, callable by the icon on the far right side of the navigation bar.
+how many toolbar buttons are available	preferences	en	How many toolbar buttons are available
 how should egroupware display dates for you.	preferences	en	Select displayed date format
 icon	preferences	en	Icon
 icons and text	preferences	en	Icons and text
@@ -56,6 +64,7 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	en	Interface | Template
 just clicking on the line, like a checkbox	preferences	en	just clicking on the line, like a checkbox
 language	preferences	en	Language
+look & feel	preferences	en	Look & feel
 max matches per page	preferences	en	Max matches per page
 max number of icons in navbar	preferences	en	Max number of icons in navigation bar
 no default	preferences	en	No default
@@ -97,11 +106,13 @@ show text on navigation icons	preferences	en	Show text on navigation icons
 show_more_apps	common	en	Show more applications
 silver theme	preferences	en	Silver theme
 spellchecker language	addressbook	en	Spellchecker language
+text editor settings	preferences	en	Text editor settings
 text only	preferences	en	Text only
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	en	The default application will be started when you enter EGroupware or click on the Home icon.<br>More than one application scan be shown on the home page, if nothing is selected here. It has to be configured in the preferences of each application.
 the old password is not correct	preferences	en	The old password is not correct!
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	en	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	en	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group. The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.* the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.*	preferences	en	The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.* The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.*
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	en	The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.
 the two passwords are not the same	preferences	en	The two passwords are not the same!
 theme (colors/fonts) selection	preferences	en	Theme

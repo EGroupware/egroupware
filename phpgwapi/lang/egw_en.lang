@@ -1,6 +1,9 @@
+%1 active file(s) with same name as directory inactivated!	common	en	%1 active file(s) with same name as directory inactivated!
+%1 directories %2 found!	common	en	%1 directories %2 found!
 %1 email addresses inserted	common	en	%1 email addresses inserted.
 %1 file	common	en	%1 file
 %1 is not executable by the webserver !!!	common	en	%1 is not executable by the web server!
+%1 proxy of %2	common	en	%1 proxy of %2
 %1 to sync	groupdav	en	%1 to sync
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	en	%1Choose an other directory%2<br />or make %3 writable by web server.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.
@@ -58,6 +61,7 @@ all in one	groupdav	en	All in one
 all languages	common	en	All languages
 allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	en	Allows to modify responsible users from devices not supporting them, by setting EMail address of a user as category.
 alphabet	common	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alt	common	en	Alt
 alternate style-sheet:	common	en	Alternate style sheet:
 american samoa	common	en	AMERICAN SAMOA
 an admin required that you must change your password upon login.	common	en	Administrator requires that you must change your password upon log in.
@@ -123,6 +127,7 @@ calendar	common	en	Calendar
 calendars to sync in addition to personal calendar	groupdav	en	Calendars to sync in addition to personal calendar
 cambodia	common	en	CAMBODIA
 cameroon	common	en	CAMEROON
+can't create directory %1 to connect found unconnected nodes to it!	common	en	Can't create directory %1 to connect found unconnected nodes to it!
 canada	common	en	CANADA
 cancel	common	en	Cancel
 cannot replace %1 because it is a directory	common	en	Cannot replace %1 because it is a directory.
@@ -186,6 +191,7 @@ could not contact server. operation timed out!	common	en	Could not contact serve
 create	common	en	Create
 created by	common	en	Created by
 croatia	common	en	CROATIA
+ctrl	common	en	Ctrl
 cuba	common	en	CUBA
 currency	common	en	Currency
 current	common	en	Current
@@ -202,6 +208,7 @@ december	common	en	December
 default category	common	en	Default category
 default height for the windows	common	en	Default height for the windows
 default width for the windows	common	en	Default width for the windows
+del	common	en	Del
 delete	common	en	Delete
 delete category	common	en	Delete category
 delete file	common	en	Delete file
@@ -236,6 +243,7 @@ domestic	common	en	Domestic
 dominica	common	en	DOMINICA
 dominican republic	common	en	DOMINICAN REPUBLIC
 done	common	en	Done
+dos international	common	en	DOS International
 download	common	en	Download
 drag to move	jscalendar	en	Drag to move
 e-mail	common	en	Email
@@ -274,6 +282,7 @@ etag	common	en	ETag
 ethiopia	common	en	ETHIOPIA
 everything	common	en	Everything
 exact	common	en	Exact
+faild to move unconnected %1 %2 to %3!	common	en	Faild to move unconnected %1 %2 to %3!
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	en	Failed to contact server or invalid response from server. Try to re-login. Contact administrator in case of failure.
 falkland islands (malvinas)	common	en	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	en	FAROE ISLANDS
@@ -282,7 +291,11 @@ features of the editor?	common	en	Features of the editor
 february	common	en	February
 fields	common	en	Fields
 fiji	common	en	FIJI
+file %1 has no content in physical filesystem %2 --> failed to remove file!	common	en	File %1 has no content in physical filesystem %2 --> failed to remove file!
+file %1 has no content in physical filesystem %2 --> file removed!	common	en	File %1 has no content in physical filesystem %2 --> file removed!
+file %1 has no content in physical filesystem %2!	common	en	File %1 has no content in physical filesystem %2!
 files	common	en	Files
+files without content in physical filesystem will be removed.	common	en	Files without content in physical filesystem will be removed.
 filter	common	en	Filter
 finland	common	en	FINLAND
 first name	common	en	First name
@@ -293,6 +306,7 @@ fixme!	common	en	FIXME!
 folder already exists.	common	en	Folder already exists!
 force selectbox	common	en	Force select box
 forever	common	en	Forever
+found unconnected %1 %2!	common	en	Found unconnected %1 %2!
 france	common	en	FRANCE
 french guiana	common	en	FRENCH GUIANA
 french polynesia	common	en	FRENCH POLYNESIA
@@ -463,7 +477,10 @@ monday	common	en	Monday
 mongolia	common	en	MONGOLIA
 montenegro	common	en	MONTENEGRO
 montserrat	common	en	MONTSERRAT
+more then one active file %1 found, inactivating %2 older revisions!	common	en	More then one active file %1 found, inactivating %2 older revisions!
 morocco	common	en	MOROCCO
+moved %1 children from directory fs_id=%2 to %3	common	en	Moved %1 children from directory fs_id=%2 to %3
+moved unconnected %1 %2 to %3.	common	en	Moved unconnected %1 %2 to %3.
 mozambique	common	en	MOZAMBIQUE
 multiple	common	en	Multiple
 myanmar	common	en	MYANMAR
@@ -495,6 +512,7 @@ no history for this record	common	en	No history for this record
 no savant2 template directories were found in:	common	en	No Savant2 template directories were found in:
 no subject	common	en	No subject
 none	common	en	None
+none of %1	common	en	none of %1
 norfolk island	common	en	NORFOLK ISLAND
 normal	common	en	Normal
 northern mariana islands	common	en	NORTHERN MARIANA ISLANDS
@@ -554,6 +572,8 @@ permissions to the files/users directory	common	en	Permissions to the files/user
 permisson denied!	common	en	Permission denied!
 personal	common	en	Personal
 peru	common	en	PERU
+pg down	common	en	Pg down
+pg up	common	en	Pg up
 philippines	common	en	PHILIPPINES
 phone number	common	en	Phone number
 phpgwapi	common	en	EGroupware API
@@ -595,6 +615,7 @@ reject	common	en	Reject
 remember me	common	en	Remember me
 remove selected accounts	common	en	Remove selected accounts
 remove shortcut	common	en	Remove shortcut
+removed (now) empty directory fs_id=%1	common	en	Removed (now) empty directory fs_id=%1
 rename	common	en	Rename
 replace	common	en	Replace
 replace with	common	en	Replace with
@@ -602,6 +623,7 @@ requests and full responses to files directory	common	en	Requests and full respo
 requests and truncated responses to apache error-log	groupdav	en	Requests and truncated responses to Apache error-log
 resource calendars	groupdav	en	Resource calendars
 resource type	common	en	Resource type
+resources	common	en	Resources
 restore failed	common	en	Restore failed
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	en	Returns a full list of accounts on the system. Warning: This is return can be quite large.
 returns an array of todo items	common	en	Returns an array of todo items
@@ -624,6 +646,8 @@ saturday	common	en	Saturday
 saudi arabia	common	en	SAUDI ARABIA
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	en	Savant2 version differs from Savant2 wrapper. <br/>This version: %1 <br/>Savants version: %2
 save	common	en	Save
+scheduling inbox	common	en	Scheduling inbox
+scheduling outbox	common	en	Scheduling outbox
 search	common	en	Search
 search %1 '%2'	common	en	Search %1 '%2'
 search accounts	common	en	Search accounts
@@ -660,6 +684,7 @@ set user as only responsible, removing all existing responsibles	groupdav	en	set
 setup	common	en	Setup
 setup main menu	common	en	Setup main menu
 seychelles	common	en	SEYCHELLES
+shift	common	en	Shift
 show all	common	en	Show all
 show all categorys	common	en	Show all categories
 show as topmenu	common	en	Show as top menu
@@ -688,6 +713,7 @@ somalia	common	en	SOMALIA
 sorry, your login has expired	login	en	Sorry, your login has expired.
 south africa	common	en	SOUTH AFRICA
 south georgia and the south sandwich islands	common	en	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+space	common	en	Space
 spain	common	en	SPAIN
 sri lanka	common	en	SRI LANKA
 start date	common	en	Start date
@@ -700,6 +726,7 @@ stretched	common	en	Stretched
 subject	common	en	Subject
 submit	common	en	Submit
 substitutions and their meanings:	common	en	Substitutions and their meanings:
+successful created new directory %1 for unconnected nods.	common	en	Successful created new directory %1 for unconnected nods.
 sudan	common	en	SUDAN
 sunday	common	en	Sunday
 suriname	common	en	SURINAME
@@ -709,6 +736,7 @@ sweden	common	en	SWEDEN
 switzerland	common	en	SWITZERLAND
 sync all selected into one	groupdav	en	Sync all selected into one
 syrian arab republic	common	en	SYRIAN ARAB REPUBLIC
+tab	common	en	Tab
 table %1 is excluded from backup and restore. data will not be restored.	common	en	Table %1 is excluded from backup and restore. Data will not be restored.
 table properties	common	en	Table properties
 taiwan	common	en	TAIWAN/TAIPEI
@@ -734,6 +762,7 @@ time zone offset	common	en	Time zone offset
 title	common	en	Title
 to	common	en	To
 to correct this error for the future you will need to properly set the	common	en	To correct this error for the future you will need to properly set the
+to examine or reinstate inactived files, you might need to turn versioning on.	common	en	To examine or reinstate inactived files, you might need to turn versioning on.
 to go back to the msg list, click <a href= %1 >here</a>	common	en	To go back to the msg list, click <a href="%1">here</a>
 today	common	en	Today
 todays date, eg. "%1"	common	en	Todays date, eg. "%1"
@@ -755,7 +784,9 @@ tuvalu	common	en	TUVALU
 type	common	en	Type
 uganda	common	en	UGANDA
 ukraine	common	en	UKRAINE
+unconnected nodes will be moved to %1.	common	en	Unconnected nodes will be moved to %1.
 underline	common	en	Underline
+unicode	common	en	Unicode
 united arab emirates	common	en	UNITED ARAB EMIRATES
 united kingdom	common	en	UNITED KINGDOM
 united states	common	en	UNITED STATES

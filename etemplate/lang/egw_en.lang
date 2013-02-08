@@ -12,6 +12,7 @@
 %s notranslation	etemplate	en	%s NoTranslation
 %s onchange	etemplate	en	%s onChange
 %s readonly	etemplate	en	%s readonly
+'%1' has an invalid format	etemplate	en	'%1' has an invalid format
 '%1' has an invalid format !!!	etemplate	en	'%1' has an invalid format!
 '%1' is no php file in the egw server root (%2)!	etemplate	en	'%1' is no php file in the eGW server root (%2)!
 '%1' is not a valid date !!!	etemplate	en	'%1' is not a valid date!
@@ -250,6 +251,7 @@ last	etemplate	en	Last
 left	etemplate	en	Left
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	en	Length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
 link	etemplate	en	Link
+link target %1 not found!	etemplate	en	Link target %1 not found!
 linkapps	etemplate	en	Link apps
 linkentry	etemplate	en	Link entry
 linklist	etemplate	en	Link list

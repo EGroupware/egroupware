@@ -1,21 +1,22 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	de	%1 (%2 neue) Texte für die Anwendung '%3' und die Sprache '%4' geschrieben
 %1 entries found, select one ...	etemplate	de	%1 Einträge gefunden, einen auswählen ...
-%1 etemplates deleted	etemplate	de	%1 eTemplates gelöscht
-%1 etemplates for application '%2' dumped to '%3'	etemplate	de	%1 eTemplates für die Anwendung '%2' nach '%3' geschrieben
-%1 etemplates found	etemplate	de	%1 eTemplates gefunden
+%1 etemplates deleted	etemplate	de	%1 eTemplate(s) gelöscht
+%1 etemplates for application '%2' dumped to '%3'	etemplate	de	%1 eTemplate(s) für die Anwendung '%2' nach '%3' geschrieben
+%1 etemplates found	etemplate	de	%1 eTemplate(s) gefunden
 %1 matches on search criteria	etemplate	de	%1 Treffer bei der Suche
 %1 more...	etemplate	de	%1 mehr...
-%1 new etemplates imported for application '%2'	etemplate	de	%1 neue eTemplates importiert für die Anwendung '%2'
+%1 new etemplates imported for application '%2'	etemplate	de	%1 neue eTemplate(s) importiert für die Anwendung '%2'
 %1 not implemented for %2!	etemplate	de	%1 ist nicht  implementiert für '%2'
 %s disabled	etemplate	de	%s deaktiviert
 %s needed	etemplate	de	%s benötigt
 %s notranslation	etemplate	de	%s nicht übersetzen
 %s onchange	etemplate	de	%s onChange
 %s readonly	etemplate	de	%s Schreibschutz
+'%1' has an invalid format	etemplate	de	'%1' hat ein ungültiges Format !!!
 '%1' has an invalid format !!!	etemplate	de	'%1' hat ein ungültiges Format !!!
 '%1' is no php file in the egw server root (%2)!	etemplate	de	'%1' ist keine php Datei in dem EGW Server Wurzelverzeichnis (%2)!
 '%1' is not a valid date !!!	etemplate	de	'%1' ist ein ungültiges Datum !!!
-'%1' is not a valid floatingpoint number !!!	etemplate	de	'%1' ist keine gültige Kommazahl !!!
+'%1' is not a valid floatingpoint number !!!	etemplate	de	'%1' ist keine gültige Gleitkommazahl !!!
 '%1' is not a valid integer !!!	etemplate	de	'%1' ist keine gültige Ganzzahl !!!
 '%1' is not allowed ('%2')!	etemplate	de	'%1' ist NICHT erlaubt ('%2')!
 a pattern to be searched for	etemplate	de	ein Muster nach dem gesucht werden soll
@@ -40,7 +41,7 @@ am	etemplate	de	Vormittag
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	de	eine indizierte Spalte beschleunigt Anfragen die diese benutzen (kostet Plattenplatz !!!)
 and	etemplate	de	UND
 application	etemplate	de	Anwendung
-application has no etemplates (no file %1) to restore!	etemplate	de	Anwendung hat keine eTemplates (keine Datei %1) zum Wiederherestellen!
+application has no etemplates (no file %1) to restore!	etemplate	de	Anwendung hat keine eTemplates (keine Datei %1) zum Wiederherstellen!
 application name needed to restore etemplates!	etemplate	de	Anwendungsname wir benötigt zum wiederherstellen der eTemplates!
 application name needed to write a langfile or dump the etemplates !!!	etemplate	de	Name der Anwendung benötigt um eine Sprachdatei oder eTemplate-Distibutionsdate zu schreiben !!!
 applications	etemplate	de	Anwendungen
@@ -75,18 +76,18 @@ check if field has to be filled by user	etemplate	de	abhaken wenn das Eingabefel
 checkbox	etemplate	de	Checkbox
 class	etemplate	de	Class
 class, valign	etemplate	de	Class, Valign
-click here to attach the file	etemplate	de	hier clicken um die Datei anzuhängen
-click here to create the link	etemplate	de	hier clicken um die Verknüpfung anzulegen
-click here to start the search	etemplate	de	hier clicken um die Suche zu starten
-click here to upload the file	etemplate	de	hier clicken um die Datei hochzuladen
-click to order after that criteria	etemplate	de	anclicken um nach diesem Kriterium zu sortieren
-clickable path	etemplate	de	anclickbarer Pfad
+click here to attach the file	etemplate	de	hier klicken um die Datei anzuhängen
+click here to create the link	etemplate	de	hier klicken um die Verknüpfung anzulegen
+click here to start the search	etemplate	de	hier klicken um die Suche zu starten
+click here to upload the file	etemplate	de	hier klicken um die Datei hochzuladen
+click to order after that criteria	etemplate	de	anklicken um nach diesem Kriterium zu sortieren
+clickable path	etemplate	de	anklickbarer Pfad
 closes the window without saving the changes	etemplate	de	schließt das Fenster ohne zu speichern
 column...	etemplate	de	Spalte...
 columnname	etemplate	de	Spaltenname
 comment	etemplate	de	Kommentar
 confirm	etemplate	de	bestätigen
-confirmation message or custom javascript (returning true or false)	etemplate	de	Bestätigungsmeldung oder spezielles Javascript (true oder false zurücklieferned)
+confirmation message or custom javascript (returning true or false)	etemplate	de	Bestätigungsmeldung oder spezielles Javascript (true oder false zurückliefernd)
 confirmation necesary or custom java-script	etemplate	de	Bestätigung notwendig oder spezielles Javascript
 contact	etemplate	de	Kontakt
 contact field to show	etemplate	de	Kontaktfeld zum Anzeigen
@@ -109,7 +110,7 @@ date+time	etemplate	de	Datum+Uhrzeit
 datum	etemplate	de	Datum
 day	etemplate	de	Tag
 days	etemplate	de	Tage
-db ensures that every row has a unique value in that column	etemplate	de	die Datenbank stelt sicher das alle Zeilen einen einmaligen Wert in dieser Spalte haben
+db ensures that every row has a unique value in that column	etemplate	de	die Datenbank stellt sicher das alle Zeilen einen einmaligen Wert in dieser Spalte haben
 db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	de	DB-spezifische Index-Optionen (Komma-getrennt), z.B. mysql(FULLTEXT) oder mysql(100) für die indizierte Länge der Spalte
 db-tools	etemplate	de	DB-Tools
 deck	etemplate	de	Deck (intern)
@@ -138,7 +139,7 @@ do you want to send the message to all selected entries, without further editing
 document '%1' does not exist or is not readable for you!	preferences	de	Das Dokument '%1' steht nicht zur Verfügung, oder ist für Sie nicht lesbar!
 documentation	etemplate	de	Dokumentation
 doesn't matter	etemplate	de	spielt keine Rolle
-drop a table - this can not be undone	etemplate	de	Tabelle löschen (drop) - NICHT rückgänig zu machen
+drop a table - this can not be undone	etemplate	de	Tabelle löschen (drop) - NICHT rückgängig zu machen
 drop table	etemplate	de	Tabelle löschen
 dump4setup	etemplate	de	Dump4Setup
 duration	etemplate	de	Dauer
@@ -151,7 +152,7 @@ editable templates - delete template	etemplate	de	eTemplates - Löschen
 editable templates - editor	etemplate	de	eTemplates - Bearbeiten
 editable templates - search	etemplate	de	eTemplates - Suchen
 editable templates - show template	etemplate	de	eTemplates - Anzeigen
-embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	de	eingebette CSS Stile, zb. '.red { background: red; }' (man beachte den '.' vor der CSS class) oder '@import url(...)' (Angaben gelten für die gesamte Seite!)
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	de	eingebettete CSS Stile, zb. '.red { background: red; }' (man beachte den '.' vor der CSS class) oder '@import url(...)' (Angaben gelten für die gesamte Seite!)
 enable javascript onchange submit	etemplate	de	JavaScript absenden bei Änderung (onChange) aktivieren
 enter '' for an empty default, nothing mean no default	etemplate	de	'' für einen leeren Vorgabewert eingeben, nichts bedeutet keine Vorgabe
 enter a search pattern	etemplate	de	Suchmuster eingeben
@@ -159,7 +160,7 @@ enter filename to upload and attach, use [browse...] to search for it	etemplate	
 enter the new version number here (> old_version), empty for no update-file	etemplate	de	Neue Versionsnummer eingeben (größer als alte), leer wenn keine Update-Datei erzeugt werden soll
 enter the new version number here (has to be > old_version)	etemplate	de	Neue Versionsnummer eingeben (muss größer als die alte sein)
 entry saved	etemplate	de	Eintrag gespeichert
-error copying uploaded file to vfs!	etemplate	de	Fehler beim Kopieren der hochgeladenen Datei ins VFS!
+error copying uploaded file to vfs!	etemplate	de	Fehler beim Kopieren der  hoch geladenen Datei ins VFS!
 error create parent directory %1!	etemplate	de	Fehler beim Anlegen des Elternverzeichnisses %1!
 error deleting %1!	etemplate	de	Fehler beim Löschen von %1!
 error uploading file!	filemanager	de	Fehler beim Hochladen der Datei!
@@ -175,7 +176,7 @@ etemplate reference	etemplate	de	eTemplate Handbuch
 etemplate tutorial	etemplate	de	eTemplate Einführung
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	de	Beispiel: "{{IF n_prefix~Herr~Sehr geehrter~Sehr geehrte}}" - suche in dem Feld "n_prefix" nach "Herr", wenn gefunden, schreibe "Sehr geehrter", wenn nicht gefunden schreibe "Sehr geehrte". Es ist auch möglich anstatt fixer Werte, den Wert eines andren Feldes zu übernehmen. Beispiel (Land wird nur dann angezeigt, denn es nicht DEUTSCHLAND ist: }
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	de	Beispiel {{NELF role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role nicht leer ist. Der Wert des Feldes role (Funktion) wird nach dem Zeilenumbruch ausgegeben.
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	de	Beispiel {{NELFNV role}} -Erzeugt einen Zeilenumbruch, wenn das Feld role (Funktion) einen Wert besitzt. Der Wert role (Funktion) wird auch bei Vorhandensein des Feldes role nicht ausgegeben.
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	preferences	de	Beispiel {{NELFNV role}} - Erzeugt einen Zeilenumbruch, wenn das Feld role (Funktion) einen Wert besitzt. Der Wert role (Funktion) wird auch bei Vorhandensein des Feldes role nicht ausgegeben.
 exchange this row with the one above	etemplate	de	diese Zeile mit der darüber austauschen
 exchange this two columns	etemplate	de	diese beiden Spalten austauschen
 export the loaded etemplate into a xml-file	etemplate	de	das geladene eTemplate als XML Datei (.xet) exportieren
@@ -194,9 +195,9 @@ floating point	etemplate	de	Gleitkommawert
 for more than one contact in a document use the tag pagerepeat!	preferences	de	Für mehr als einen Kontakt verwenden Sie bitte den Platzhalter pagerepeat. Damit können Sie dann Seriendokumente erstellen.
 foreign key	etemplate	de	Foreign Key
 formatted text (html)	etemplate	de	Formatierter Text (HTML)
-general fields:	preferences	de	General fields:
+general fields:	preferences	de	Allgemeine Felder:
 go to the first entry	etemplate	de	gehe zum ersten Eintrag
-go to the last entry	etemplate	de	gege zum letzten Eintrag
+go to the last entry	etemplate	de	gehe zum letzten Eintrag
 go to the next page of entries	etemplate	de	gehe zur nächsten Seite
 go to the previous page of entries	etemplate	de	gehe zur vorherigen Seite
 grid	etemplate	de	Tabelle
@@ -214,7 +215,7 @@ history log	etemplate	de	Versionshistorie
 horizontal rule	etemplate	de	Waagrechte Linie
 hour	etemplate	de	Stunde
 hours	etemplate	de	Stunden
-how many entries should the list show	etemplate	de	Wieviele Einträge soll die Liste anzeigen
+how many entries should the list show	etemplate	de	Wie viele Einträge soll die Liste anzeigen
 html	etemplate	de	HTML
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	de	wenn das Feld deaktiviert ist, wird eine leere Tabellenzelle angezeigt, zum (zeitweisen) Entfernen eines Feldes
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das %1 einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
@@ -236,7 +237,7 @@ insert a widget before	etemplate	de	ein Widget davor einfügen
 insert a widget behind	etemplate	de	ein Widget dahinter einfügen
 insert in document	etemplate	de	In ein Dokument einfügen
 insert new column behind this one	etemplate	de	Neue Spalte hinter dieser einfügen
-insert new column in front of all	etemplate	de	Neue Spalte vor dieser einfüben
+insert new column in front of all	etemplate	de	Neue Spalte vor dieser einfügen
 insert new row after this one	etemplate	de	Neue Zeile nach dieser einfügen
 insert new row in front of first line	etemplate	de	Neue Zeile vor dieser einfügen
 integer	etemplate	de	Ganzzahl
@@ -249,10 +250,12 @@ last	etemplate	de	Letzte
 left	etemplate	de	Links
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	de	Länge für char+varchar, Genauigkeit für int: 2, 4, 8 und float: 4, 8
 link	etemplate	de	Verknüpfung
+link target %1 not found!	etemplate	de	Keine Verknüpfung zu %1 gefunden!
 linkapps	etemplate	de	VerknüpfungAnwendungen
 linkentry	etemplate	de	VerknüpfungEintrag
 linklist	etemplate	de	VerknüpfungListe
 links and attached files	preferences	de	Verknüpfungen zu anderen Datensätzen und angefügten Dateien
+links to specified application.  example: {{links/addressbook}}	etemplate	de	Verknüpfungen zu der entsprechenden Anwendung. Beispiel der Verknüpfungen zum Adressbuch: {{links/addressbook}}
 linkstring	etemplate	de	VerknüpfungZeichenkette
 linkto	etemplate	de	VerknüpfungZu
 list of files linked to the current record	preferences	de	Liste der Dokumente, die zu dem aktuellen Datensatz gehören.
@@ -268,7 +271,7 @@ minutes	etemplate	de	Minuten
 missing: %1	etemplate	de	nicht vorhanden: %1
 modifier	preferences	de	Geändert von
 month	etemplate	de	Monat
-more than 1 match for '%1'	etemplate	de	Mehr als 1 trift für '%1' zu
+more than 1 match for '%1'	etemplate	de	Mehr als 1 trifft für '%1' zu
 multicolumn indices	etemplate	de	Mehrspaltige Indices
 name	etemplate	de	Name
 name of other table where column is a key from	etemplate	de	Name der anderen Tabelle von der diese Spalte ein Schlüssel ist
@@ -307,7 +310,7 @@ operator	etemplate	de	Operator
 optional note about the link	etemplate	de	optionale Notiz zur Verknüpfung
 options	etemplate	de	Optionen
 or	etemplate	de	ODER
-order to navigating by tab key through the form	etemplate	de	Reihenfolger bei der Navigation mit der Tabulator Taste durch das Formular
+order to navigating by tab key through the form	etemplate	de	Reihenfolge bei der Navigation mit der Tabulator Taste durch das Formular
 overflow	etemplate	de	Überbreite
 padding	etemplate	de	Innenabstand
 parent is a '%1' !!!	etemplate	de	Elternelement is ein '%1' !!!
@@ -315,7 +318,7 @@ paste	etemplate	de	Einfügen
 path	etemplate	de	Pfad
 please enter table-name first !!!	etemplate	de	Bitte geben Sie zuerst einen Tabellennamen an !!!
 pm	etemplate	de	Nachmittag
-popup	etemplate	de	Popup
+popup	etemplate	de	Pop-up
 precision	etemplate	de	Genauigkeit
 primary key	etemplate	de	Primary Key
 primary key for the table, gets automaticaly indexed	etemplate	de	Hauptindex (Primary Key) der Tabelle, wird automatisch indiziert
@@ -350,7 +353,7 @@ select an app first !!!	etemplate	de	Bitte wählen Sie zuerst ein Anwendung aus 
 select an app to search in	etemplate	de	Anwendung zum Durchsuchen auswählen
 select an application	etemplate	de	Anwendung auswählen
 select an application, (*) = uninstalled	etemplate	de	Anwendung auswählen, (*) = nicht installiert
-select an entry to link with	etemplate	de	Eintrag zum Verküpfen auswählen
+select an entry to link with	etemplate	de	Eintrag zum Verknüpfen auswählen
 select an table of the application	etemplate	de	Tabelle der Anwendung auswählen
 select application	etemplate	de	Anwendung auswählen
 select application to search	etemplate	de	Anwendung zum Suchen auswählen
@@ -370,7 +373,7 @@ select percentage	etemplate	de	Prozente auswählen
 select priority	etemplate	de	Priorität auswählen
 select state	etemplate	de	US-State auswählen
 select the columns to display in the list	etemplate	de	Wählen Sie die Spalten aus, die in der Liste angezeigt werden sollen
-select the indexed columns in their desired order	etemplate	de	Zu indizierende Spalten in der gewünchten Reihenfolge auswählen
+select the indexed columns in their desired order	etemplate	de	Zu indizierende Spalten in der gewünschten Reihenfolge auswählen
 select this etemplate to delete it	etemplate	de	dieses eTemplate zum Löschen auswählen
 select which accounts to show	etemplate	de	Benutzer zum Anzeigen auswählen
 select which values to show	etemplate	de	auswählen welche Werte angezeigt werden
@@ -408,12 +411,12 @@ template deleted	etemplate	de	Template gelöscht
 template saved	etemplate	de	Template gespeichert
 text	etemplate	de	Textfeld
 textarea	etemplate	de	mehrzeiliges Textfeld
-the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, die mit den daten ersetzt werden (%1komplette Liste der Platzhalter%2).
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	preferences	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, die mit den Daten ersetzt werden (%1komplette Liste der Platzhalter%2).
 the following document-types are supported:	preferences	de	Im Moment werden die folgenden Dokumenttypen unterstützt:
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	de	dieser Text wird im Eingabefeld angezeigt, wenn es leer ist und nicht im Fokus ist (engl. blur)
 time	etemplate	de	Uhrzeit
 titles of any entries linked to the current record, excluding attached files	preferences	de	Titel der Verknüpften zu dem aktuellem Eintrag ohne Dateien.
-to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	de	zum deaktiviereb: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert wenn data leer ist
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	de	zum deaktivieren: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert wenn data leer ist
 to start the db-tools	etemplate	de	startet die DB-Tools
 to start the etemplate editor	etemplate	de	startet den eTemplate Editor
 to start the search	etemplate	de	startet die Suche
@@ -426,7 +429,7 @@ type of the field (select label if field should be empty)	etemplate	de	Type des 
 uncheck all	etemplate	de	Alle abwählen
 unique	etemplate	de	Unique
 unlink	etemplate	de	Lösen
-update a single entry by passing the fields.	etemplate	de	Aktualisert einen einzelnen Eintrag über seine Felder.
+update a single entry by passing the fields.	etemplate	de	Aktualisiert einen einzelnen Eintrag über seine Felder.
 update from version '%s' to	etemplate	de	Update von Version '%s' auf
 upload	etemplate	de	Hochladen
 valign	etemplate	de	vAlign
@@ -440,7 +443,7 @@ vertical alignment of row	etemplate	de	vertikale Ausrichtung der Zeile
 view this etemplate	etemplate	de	dieses eTemplate anzeigen
 view this linked entry in its application	etemplate	de	Zeige diesen Eintrag in seiner Anwendung an
 weekend	etemplate	de	Wochenende
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	de	was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatich (der Browser entscheidet)
+what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	de	was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatisch (der Browser entscheidet)
 widget copied into clipboard	etemplate	de	Widget wurde in die Zwischenablage kopiert
 width	etemplate	de	Breite
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	de	Breite der Spalte (in % oder Punkten), deaktiviert Spalten: [! = nicht]<wert>[=<test>] zB.: '!@data' deaktiviert Spalte wenn data leer ist
@@ -451,7 +454,7 @@ working days	etemplate	de	Werktage
 write <app>/setup/tables_current.inc.php	etemplate	de	schreibt <app>/setup/tables_current.inc.php
 write langfile	etemplate	de	Sprachdatei
 write tables	etemplate	de	Tabelle Schreiben
-writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	de	schreibt ein Distributionsfile 'etemplates.inc.php' (für die Anwendung in Name) in das setup Verzeichnis der Anwendung
+writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of the app	etemplate	de	schreibt ein Distributionsfile 'etemplates.inc.php' (für die Anwendung in Name) in das Setup Verzeichnis der Anwendung
 xml-file to import	etemplate	de	XML Datei zum Importieren
 xslt template	etemplate	de	XSLT Template
 year	etemplate	de	Jahr

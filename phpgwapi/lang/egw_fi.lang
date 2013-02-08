@@ -56,7 +56,9 @@ all addressbooks	groupdav	fi	Kaikki osoitekirjat
 all fields	common	fi	Kaikki kentät
 all in one	groupdav	fi	Kaikki samaan
 all languages	common	fi	Kaikki kielet
+allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	fi	Sallii vastuuhenkilöiden muokkaamisen laitteissa, mitkä eivät tue toimintoa, asettamalla käyttäjän sähköpostiosoitteen kategoriaksi
 alphabet	common	fi	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,å,ä,ö
+alt	common	fi	Alt
 alternate style-sheet:	common	fi	Vaihtoehtoinen tyyli:
 american samoa	common	fi	AMERIKAN SAMOA
 an admin required that you must change your password upon login.	common	fi	Salasana täytyy vaihtaa sisäänkirjautumisen yhteydessä!
@@ -183,6 +185,7 @@ could not contact server. operation timed out!	common	fi	Palvelimeen ei saatu yh
 create	common	fi	Luo
 created by	common	fi	Luonut
 croatia	common	fi	KROATIA
+ctrl	common	fi	Ctrl
 cuba	common	fi	KUUBA
 currency	common	fi	Valuutta
 current	common	fi	Nykyinen
@@ -199,6 +202,7 @@ december	common	fi	Joulukuu
 default category	common	fi	Oletuskategoria
 default height for the windows	common	fi	Ikkunan oletuskorkeus
 default width for the windows	common	fi	Ikkunan oletusleveys
+del	common	fi	Del
 delete	common	fi	Poista
 delete category	common	fi	Poista kategoria
 delete file	common	fi	Poista tiedosto
@@ -233,6 +237,7 @@ domestic	common	fi	Kotimainen
 dominica	common	fi	DOMINICA
 dominican republic	common	fi	DOMINIKAANINEN TASAVALTA
 done	common	fi	Valmis
+dos international	common	fi	Dos International
 download	common	fi	Lataa
 drag to move	jscalendar	fi	Vedä siirtääksesi
 e-mail	common	fi	Sähköposti
@@ -492,6 +497,7 @@ no history for this record	common	fi	Tällä merkinnällä ei ole historiatietoj
 no savant2 template directories were found in:	common	fi	Savant2 mallipohjan hakemistoa ei löydy:
 no subject	common	fi	Ei aihetta
 none	common	fi	Ei mitään
+none of %1	common	fi	0 / %1
 norfolk island	common	fi	NORFOLKSAARET
 normal	common	fi	Normaali
 northern mariana islands	common	fi	POHJOISET MARIAANIEN SAARET
@@ -513,6 +519,7 @@ oman	common	fi	OMAN
 on *nix systems please type: %1	common	fi	*nix-järjestelmissä voit kirjoittaa: %1
 on mouse over	common	fi	Hiirellä osoittamalla
 only private	common	fi	Vain yksityiset
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	groupdav	fi	Toiminto tuettu vain muutamissa laitteissa. Jos URL täytyy syöttää, toiminto todennäköisesti ei ole tuettu.
 only yours	common	fi	Vain omat
 oops! you caught us in the middle of system maintainance.	common	fi	Hups... Huoltokatko meneillään!
 open	common	fi	Avaa
@@ -549,6 +556,8 @@ permissions to the files/users directory	common	fi	Tiedostojen/käyttäjien hake
 permisson denied!	common	fi	Käyttöoikeus estetty!
 personal	common	fi	Henkilökohtainen
 peru	common	fi	PERU
+pg down	common	fi	Sivu alas
+pg up	common	fi	Sivu ylös
 philippines	common	fi	FILIPPIINIT
 phone number	common	fi	Puhelin
 phpgwapi	common	fi	EGroupware API
@@ -595,6 +604,7 @@ replace	common	fi	Korvaa
 replace with	common	fi	Korvataan merkkijonolla:
 resource calendars	groupdav	fi	Resurssien kalenterit
 resource type	common	fi	Resurssin tyyppi
+resources	common	fi	Resurssit
 restore failed	common	fi	Palautus epäonnistui!
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	fi	Palauttaa täyden käyttäjäluettelon järjestelmästä. Varoitus: palautus voi olla aika suuri.
 returns an array of todo items	common	fi	Palauttaa tehtävien taulukon
@@ -653,6 +663,7 @@ set user as only responsible, removing all existing responsibles	groupdav	fi	Val
 setup	common	fi	Asennus
 setup main menu	common	fi	Asennuksen päävalikko
 seychelles	common	fi	SEYCHELLIT
+shift	common	fi	Shift
 show all	common	fi	Näytä kaikki
 show all categorys	common	fi	Näytä kaikki kategoriat
 show as topmenu	common	fi	Näytä ylävalikossa
@@ -681,6 +692,7 @@ somalia	common	fi	SOMALIA
 sorry, your login has expired	login	fi	Käyttäjätilisi on vanhentunut
 south africa	common	fi	ETELÄAFRIKKA
 south georgia and the south sandwich islands	common	fi	ETELÄ-GEORGIA JA ETELÄISET SANDWICH-SAARET
+space	common	fi	Välilyönti
 spain	common	fi	ESPANJA
 sri lanka	common	fi	SRI LANKA
 start date	common	fi	Aloituspäivä
@@ -702,6 +714,7 @@ sweden	common	fi	RUOTSI
 switzerland	common	fi	SVEITSI
 sync all selected into one	groupdav	fi	Synkronoi kaikki yhteen
 syrian arab republic	common	fi	SYYRIAN ARABITASAVALTA
+tab	common	fi	Tab
 table %1 is excluded from backup and restore. data will not be restored.	common	fi	Taulu %1 ei sisälly varmuuskopioon eikä palautukseen. Tietoja ei palauteta.
 table properties	common	fi	Taulukon ominaisuudet
 taiwan	common	fi	TAIWAN / TAIPEI

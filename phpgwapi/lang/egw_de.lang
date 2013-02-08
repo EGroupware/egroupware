@@ -1,6 +1,9 @@
+%1 active file(s) with same name as directory inactivated!	common	de	%1 aktive Dateien mit dem selben Verzeichnisnamen wurden deaktiviert!
+%1 directories %2 found!	common	de	%1 Verzeichnisse %2 gefunden!
 %1 email addresses inserted	common	de	%1 E-Mail-Adressen eingefügt
 %1 file	common	de	%1 Datei
 %1 is not executable by the webserver !!!	common	de	%1 ist nicht ausführbar durch den Webserver !!!
+%1 proxy of %2	common	de	%1 beauftragt von %2
 %1 to sync	groupdav	de	%1 zum synchronisieren
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	de	%1Anderes Verzeichnis auswählen%2<br />oder %3 geben Sie dem Webserver Schreibrechte für dieses Verzeichnis.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	de	%1EGroupware%2 ist eine, in %3PHP%4 programmierte, webbasierte, Mehrbenutzer Groupware Suite.
@@ -34,7 +37,7 @@ account is expired	common	de	Benutzerkennung ist abgelaufen
 accounts	common	de	Benutzerkonten
 acl	common	de	ACL
 action	common	de	Aktion
-action when category is an email address	groupdav	de	Aktion wenn Kategorie eine EMail Adresse ist
+action when category is an email address	groupdav	de	Aktion wenn Kategorie eine E-Mail Adresse ist
 actions	common	de	Befehle
 active	common	de	Aktiv
 add	common	de	Hinzufügen
@@ -56,8 +59,9 @@ all addressbooks	groupdav	de	Alle Adressbücher
 all fields	common	de	alle Felder
 all in one	groupdav	de	Gemeinsam in einem
 all languages	common	de	Alle Sprachen
-allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	de	Erlaubt verantwortliche Benutzer durch setzen einer EMail Adresse als Kategorie zu ändern, von Geräten die keine verantwortlichen Benutzer unterstützen.
+allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	de	Erlaubt verantwortliche Benutzer durch setzen einer E-Mail Adresse als Kategorie zu ändern, von Geräten die keine verantwortlichen Benutzer unterstützen.
 alphabet	common	de	a,ä,b,c,d,e,f,g,h,i,j,k,l,m,n,o,ö,p,q,r,s,t,u,ü,v,w,x,y,z
+alt	common	de	Alt
 alternate style-sheet:	common	de	Alternatives Style-sheet
 american samoa	common	de	AMERICANISCH SAMOA
 an admin required that you must change your password upon login.	common	de	Sie werden hiermit aufgefordert Ihr Passwort zu ändern. (Dies wurde von einem Administrator veranlasst.)
@@ -123,6 +127,7 @@ calendar	common	de	Kalender
 calendars to sync in addition to personal calendar	groupdav	de	Kalender die zusätzlich zum persönlichen synchronisiert werden sollen.
 cambodia	common	de	KAMBODSCHA
 cameroon	common	de	KAMERUN
+can't create directory %1 to connect found unconnected nodes to it!	common	de	Das Verzeichnis %1 konnte nicht erstellt werden, da es nicht verbundene Knoten (nodes) für dieses Objekt gibt
 canada	common	de	KANADA
 cancel	common	de	Abbrechen
 cannot replace %1 because it is a directory	common	de	Kann %1 nicht ersetzen, da es ein Verzeichnis ist
@@ -186,6 +191,7 @@ could not contact server. operation timed out!	common	de	Konnte Server nicht kon
 create	common	de	Erstellen
 created by	common	de	Erstellt von
 croatia	common	de	KROATIEN
+ctrl	common	de	Ctr
 cuba	common	de	KUBA
 currency	common	de	Währung
 current	common	de	derzeit
@@ -202,6 +208,7 @@ december	common	de	Dezember
 default category	common	de	Standard-Kategorie
 default height for the windows	common	de	Vorgabewert für Höhe des Fensters
 default width for the windows	common	de	Vorgabewert für Breite des Fensters
+del	common	de	Del
 delete	common	de	Löschen
 delete category	common	de	Kategorie entfernen
 delete file	common	de	Datei löschen
@@ -228,7 +235,7 @@ do not notify	common	de	Nicht benachrichtigen
 do not notify of these changes	common	de	Nicht über diese Änderungen benachrichtigen
 do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
 doctype:	common	de	DOCTYPE:
-document properties	common	de	Dokument Eigentschaften
+document properties	common	de	Dokument Eigenschaften
 document title:	common	de	Titel des Dokuments:
 domain	common	de	Domain
 domain name for mail-address, eg. "%1"	common	de	Domainname für E-Mail Adresse, z.B. "%1"
@@ -236,11 +243,12 @@ domestic	common	de	Inland
 dominica	common	de	DOMINICA
 dominican republic	common	de	DOMINIKANISCHE REPUBLIK
 done	common	de	Fertig
+dos international	common	de	DOS International
 download	common	de	Herunterladen
 drag to move	jscalendar	de	Ziehen um zu Bewegen
 e-mail	common	de	E-Mail
 east timor	common	de	OST TIMOR
-eastern european	common	de	Östeuropäische
+eastern european	common	de	Osteuropäische
 ecuador	common	de	EQUADOR
 edit	common	de	Editieren
 edit %1 category for	common	de	%1 Kategorie editieren für
@@ -268,13 +276,14 @@ eritrea	common	de	ERITREA
 error	common	de	Fehler
 error creating %1 %2 directory	common	de	Fehler beim Erstellen des Verzeichnisses %1 %2
 error deleting %1 %2 directory	common	de	Fehler beim Löschen des Verzeichnisses %1 %2
-error renaming %1 %2 directory	common	de	Fehler beim Umbennenen des Verzeichnisses %1 %2
+error renaming %1 %2 directory	common	de	Fehler beim Umbenennen des Verzeichnisses %1 %2
 estonia	common	de	ESTONIEN
 etag	common	de	ETag
 ethiopia	common	de	ÄTHIOPIEN
 everything	common	de	Alles
 exact	common	de	exakt
-failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	de	Konnte Server nicht erreichen oder ungültige Antwort vom Server. Versuchen Sie sich nochmals anzumelden. Benachrichtigen Sie Ihren Adminstrator wenn dies fehlschlägt.
+faild to move unconnected %1 %2 to %3!	common	de	Verschiebung nicht möglich %1 %2 nach %3!
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	de	Konnte Server nicht erreichen oder ungültige Antwort vom Server. Versuchen Sie sich nochmals anzumelden. Benachrichtigen Sie Ihren Administrator  wenn dies fehlschlägt.
 falkland islands (malvinas)	common	de	FALKLAND INSELN (MALVINAS)
 faroe islands	common	de	FAROE INSELN
 fax number	common	de	Fax Nummer
@@ -282,7 +291,11 @@ features of the editor?	common	de	Funktionen des Editors?
 february	common	de	Februar
 fields	common	de	Felder
 fiji	common	de	FIJI
+file %1 has no content in physical filesystem %2 --> failed to remove file!	common	de	Datei %1 ist im Dateisystem nicht verfügbar %2 -> Löschen nicht möglich
+file %1 has no content in physical filesystem %2 --> file removed!	common	de	Datei %1 ist im Dateisystem nicht verfügbar %2 -> Dateieintrag gelöscht
+file %1 has no content in physical filesystem %2!	common	de	Datei %1 ist im Dateisystem nicht vorhanden
 files	common	de	Dateien
+files without content in physical filesystem will be removed.	common	de	Dateien ohne Inhalt in dem Dateisystem werden gelöscht
 filter	common	de	Filter
 finland	common	de	FINNLAND
 first name	common	de	Vorname
@@ -293,6 +306,7 @@ fixme!	common	de	KORREGIER MICH!
 folder already exists.	common	de	Verzeichnis existiert bereits.
 force selectbox	common	de	Auswahlfeld erzwingen
 forever	common	de	Für immer
+found unconnected %1 %2!	common	de	Nicht verbundenen Einträge gefunden %1 %2
 france	common	de	FRANKREICH
 french guiana	common	de	FRANZÖSISCH GUYANA
 french polynesia	common	de	FRANZÖSISCH POLYNESIEN
@@ -398,6 +412,7 @@ korean	common	de	Koreanisch
 kuwait	common	de	KUWAIT
 kyrgyzstan	common	de	KYRGYZSTAN
 language	common	de	Sprache
+language_direction_rtl	common	de	language_direction_rtl
 lao peoples democratic republic	common	de	LAOS, VOLKSREPUBLIK
 last modified	common	de	Letzte Änderung
 last name	common	de	Nachname
@@ -462,7 +477,10 @@ monday	common	de	Montag
 mongolia	common	de	MONGOLEI
 montenegro	common	de	MONTENEGRO
 montserrat	common	de	MONTSERRA
+more then one active file %1 found, inactivating %2 older revisions!	common	de	Mehr als eine Datei %1 verfügbar, %2 ältere Revisionen werden deaktiviert
 morocco	common	de	MAROKKO
+moved %1 children from directory fs_id=%2 to %3	common	de	verschoben %1 Kinderelemente vom Verzeichnis fs_id=%2 nach %3
+moved unconnected %1 %2 to %3.	common	de	nicht verbundene Einträge verschoben  %1 %2 nach %3.
 mozambique	common	de	MOZAMBIQUE
 multiple	common	de	mehrere
 myanmar	common	de	MYANMAR
@@ -494,6 +512,7 @@ no history for this record	common	de	Keine Historie für diesen Datensatz
 no savant2 template directories were found in:	common	de	Kein Savant2 Vorlagen Verzeichnis gefunden in:
 no subject	common	de	Kein Betreff
 none	common	de	Keine
+none of %1	common	de	keines von %1
 norfolk island	common	de	NORFOLK INSELN
 normal	common	de	Normal
 northern mariana islands	common	de	NORTHERN MARIANA ISLANDS
@@ -513,7 +532,7 @@ off	groupdav	de	Aus
 ok	common	de	OK
 old value	common	de	Alter Wert
 oman	common	de	OMAN
-on *nix systems please type: %1	common	de	Auf *nix systemen bitte %1 eingeben
+on *nix systems please type: %1	common	de	Auf *nix Systemen bitte %1 eingeben
 on mouse over	common	de	On Maus Over
 only private	common	de	nur private
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	groupdav	de	Wird nur von einigen vollständigen Clients (z.B. von Apple) unterstützt. Wenn Sie eine URL eingeben müssen, wird es vermutlich nicht unterstützt!
@@ -521,7 +540,7 @@ only yours	common	de	nur eigene
 oops! you caught us in the middle of system maintainance.	common	de	Hoppla! Sie haben uns in der Mitte einer Systemwartung erwischt.
 open	common	de	Öffnen
 open notify window	common	de	Benachrichtigungsfenster öffnen
-open popup window	common	de	Popup Fenster öffnen
+open popup window	common	de	Pop-up Fenster öffnen
 open sidebox	common	de	Seitenmenü öffnen
 or	common	de	oder
 ordered list	common	de	Nummerierung
@@ -553,6 +572,8 @@ permissions to the files/users directory	common	de	Zugriffsrechte zu den Dateien
 permisson denied!	common	de	Zugriff verweigert!
 personal	common	de	persönlich
 peru	common	de	PERU
+pg down	common	de	Pg down
+pg up	common	de	Pg up
 philippines	common	de	PHILIPPINEN
 phone number	common	de	Telefonnummer
 phpgwapi	common	de	EGroupware API
@@ -592,8 +613,9 @@ register	common	de	Registrieren
 regular	common	de	Normal
 reject	common	de	Zurückweisen
 remember me	common	de	Mich erinnern
-remove selected accounts	common	de	Ausgewähle Benutzer entfernen
+remove selected accounts	common	de	Ausgewählte Benutzer entfernen
 remove shortcut	common	de	Abkürzung entfernen
+removed (now) empty directory fs_id=%1	common	de	Leeres Verzeichnis fs_id=%1 wurde jetzt gelöscht
 rename	common	de	Umbenennen
 replace	common	de	Ersetzen
 replace with	common	de	Ersetzen durch
@@ -601,6 +623,7 @@ requests and full responses to files directory	common	de	Anfragen und komplette 
 requests and truncated responses to apache error-log	groupdav	de	Anfragen und gekürzte Antworten ins Apache error-log
 resource calendars	groupdav	de	Kalender von Ressourcen
 resource type	common	de	Ressource Typ
+resources	common	de	Ressourcen
 restore failed	common	de	Wiederherstellung fehlgeschlagen
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	de	Liefert eine vollständige Lister der Benutzerkonten auf diesem System. Warnung: Die Rückgabe kann sehr gross sein
 returns an array of todo items	common	de	Liefert eine Aufstellung mit ToDo Einträgen
@@ -623,6 +646,8 @@ saturday	common	de	Samstag
 saudi arabia	common	de	SAUDI ARABIEN
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	de	Savant2 Version unterscheidet sich von Savant2 Wrapper<br />Diese Version: %1<br />Savant version: %2
 save	common	de	Speichern
+scheduling inbox	common	de	Posteingang Terminplanung
+scheduling outbox	common	de	Postausgang Terminplanung
 search	common	de	Suchen
 search %1 '%2'	common	de	Suche %1 '%2'
 search accounts	common	de	Benutzer suchen
@@ -631,7 +656,7 @@ second	common	de	Sekunden
 section	common	de	Sektion
 select	common	de	Auswählen
 select "%1", if your client does not support multiple addressbooks.	groupdav	de	"%1" auswählen, wenn der Client nur ein einziges Adressbuch unterstützt.
-select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	de	"%1" auswählen, wenn der Client Gruppen unterstützt, zB. für das OS X oder iOS Adressbuch.
+select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	de	"%1" auswählen, wenn der Client Gruppen unterstützt, z.B. für das OS X oder iOS Adressbuch.
 select action	common	de	Befehl auswählen
 select all %1 %2 for %3	common	de	Alles auswählen %1 %2 von %3
 select category	common	de	Kategorie auswählen
@@ -643,7 +668,7 @@ select one	common	de	Eine(n) auswählen
 select the default height for the application windows	common	de	Vorgabewert für die Höhe des Anwendungsfensters auswählen
 select the default width for the application windows	common	de	Vorgabewert für die Breite des Anwendungsfensters auswählen
 select user	common	de	Benutzer auswählen
-select work email address	common	de	geschäftl. E-Mail-Addresse auswählen
+select work email address	common	de	geschäftl. E-Mail-Adresse auswählen
 selection	common	de	Auswahl
 send	common	de	senden
 senegal	common	de	SENEGAL
@@ -659,11 +684,12 @@ set user as only responsible, removing all existing responsibles	groupdav	de	set
 setup	common	de	Setup
 setup main menu	common	de	Setup Hauptmenü
 seychelles	common	de	SEYCHELLEN
+shift	common	de	Shift
 show all	common	de	alle anzeigen
 show all categorys	common	de	Alle Kategorien anzeigen
 show as topmenu	common	de	Menü oben anzeigen
 show clock?	common	de	Uhr anzeigen?
-show home and logout button in main application bar?	common	de	Zeige Start und Abmelde Symbol im Hauptnavigations Balken?
+show home and logout button in main application bar?	common	de	Zeige Start und Abmelde Symbol im Hauptnavigations-Balken?
 show in sidebox	common	de	In Seitenmenü anzeigen
 show log of following device	groupdav	de	Zeige Log des folgenden Geräts
 show logo's on the desktop.	common	de	Logos auf der Arbeitsfläche anzeigen.
@@ -687,6 +713,7 @@ somalia	common	de	SOMALIA
 sorry, your login has expired	login	de	Ihre Anmeldung ist abgelaufen !
 south africa	common	de	SÜDAFRIKA
 south georgia and the south sandwich islands	common	de	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+space	common	de	Space
 spain	common	de	SPANIEN
 sri lanka	common	de	SRI LANKA
 start date	common	de	Startdatum
@@ -699,6 +726,7 @@ stretched	common	de	ausgedehnt
 subject	common	de	Betreff
 submit	common	de	Absenden
 substitutions and their meanings:	common	de	Ersetzungen und ihre Bedeutung
+successful created new directory %1 for unconnected nods.	common	de	Verzeichnis %1 wurde erfolgreich erstellt für nicht verbundene Knoten (nods).
 sudan	common	de	SUDAN
 sunday	common	de	Sonntag
 suriname	common	de	SURINAME
@@ -708,6 +736,7 @@ sweden	common	de	SCHWEDEN
 switzerland	common	de	SCHWEIZ
 sync all selected into one	groupdav	de	Alle ausgewählten in eines synchronisieren
 syrian arab republic	common	de	SYRIEN, ARABISCHE REPUBLIK
+tab	common	de	Tab
 table %1 is excluded from backup and restore. data will not be restored.	common	de	Tabelle %1 ist ausgeschlossen von der Datensicherung und der Wiederherstellung. Die Daten werden nicht wiederhergestellt.
 table properties	common	de	Tabelleneigenschaften
 taiwan	common	de	TAIWAN/TAIPEI
@@ -719,7 +748,7 @@ the api is current	common	de	Die API ist aktuell
 the api requires an upgrade	common	de	Die API benötigt eine Aktualisierung
 the following applications require upgrades	common	de	Die folgenden Anwendungen benötigen eine Aktualisierung
 the mail server returned	common	de	Der E-Mail-Server liefert zurück
-there already is a system-user with this name. user's should not have the same name as a systemuser	common	de	Es gibt schon einen system Benutzer mit dem selben Namen. Die Benutzer sollten nicht die gleichen Namen haben, wie die Systembenutzer.
+there already is a system-user with this name. user's should not have the same name as a systemuser	common	de	Es gibt schon einen System Benutzer mit dem selben Namen. Die Benutzer sollten nicht die gleichen Namen haben, wie die Systembenutzer.
 they will be sub-folders in users home (%1 attribute).	common	de	Diese werden Unterordner im Homeverzeichnis des Benutzers (%1 Attribute).
 this application is current	common	de	Diese Anwendung ist aktuell
 this application requires an upgrade	common	de	Diese Anwendung benötigt eine Aktualisierung
@@ -733,9 +762,10 @@ time zone offset	common	de	Zeitzonendifferenz
 title	common	de	Titel
 to	common	de	An
 to correct this error for the future you will need to properly set the	common	de	Um diesen Fehler in der Zukunft zu verhindern, müssen sie folgendes setzen:
+to examine or reinstate inactived files, you might need to turn versioning on.	common	de	Um inaktive Dateien zu begutachten, sollten die Sie Versionierung von Dateien aktivieren.
 to go back to the msg list, click <a href= %1 >here</a>	common	de	Um zur Liste der Meldungen zurück zu gehen, <a href="%1">hier</a> anklicken
 today	common	de	Heute
-todays date, eg. "%1"	common	de	heutiges Datum, zB. "%1"
+todays date, eg. "%1"	common	de	heutiges Datum, z.B. "%1"
 toggle first day of week	jscalendar	de	ersten Tag der Woche wechseln
 togo	common	de	TOGO
 tokelau	common	de	TOKELAU
@@ -754,7 +784,9 @@ tuvalu	common	de	TUVALU
 type	common	de	Typ
 uganda	common	de	UGANDA
 ukraine	common	de	UKRAINE
+unconnected nodes will be moved to %1.	common	de	Nicht Verbundene Knoten werden nach %1 verschoben.
 underline	common	de	Unterstrichen
+unicode	common	de	Unicode
 united arab emirates	common	de	VEREINIGTEN ARABISCHEN EMIRATE
 united kingdom	common	de	GROSSBRITANIEN
 united states	common	de	VEREINIGTE STAATEN VON AMERIKA
@@ -797,7 +829,7 @@ what style would you like the image to have?	common	de	Welchen Stil soll das Bil
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	de	Wenn Sie dies aktivieren,  werden die Start und Abmelde Symbole als Anwendungen im oberen Anwendungsbalken angezeigt.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	de	Wo und wie werden die EGroupware Verknüpfungen wie Einstellungen, Über ..., und Abmelden angezeigt.
 which groups	common	de	Welche Gruppen
-which infolog types should be synced with the device, default only tasks.	common	de	Welche InfoLog Typen sollen synchronisiert werden, Vorabe nur Aufgaben.
+which infolog types should be synced with the device, default only tasks.	common	de	Welche InfoLog Typen sollen synchronisiert werden, Vorgabe nur Aufgaben.
 whole query	common	de	Gesamte Abfrage
 width	common	de	Breite
 wk	jscalendar	de	KW
@@ -809,7 +841,7 @@ year	common	de	Jahr
 yemen	common	de	JEMEN
 yes	common	de	Ja
 you are required to change your password during your first login	common	de	Sie müssen Ihr Passwort bei der ersten Anmeldung ändern
-you can customize how many icons and toolbars the editor shows.	common	de	Sie können bestimmen, wieviele Icons und Toolbars der Editor anzeigt.
+you can customize how many icons and toolbars the editor shows.	common	de	Sie können bestimmen, wie viele Icons und Toolbars der Editor anzeigt.
 you have been successfully logged out	login	de	Abmelden erfolgreich
 you have not entered a title	common	de	Sie haben keinen Titel eingegeben
 you have not entered a valid date	common	de	Sie haben kein gültiges Datum eingegeben
