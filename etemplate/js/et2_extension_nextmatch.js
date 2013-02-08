@@ -100,7 +100,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 			}
 		}
 		var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~');
-		if(typeof global_data == 'object')
+		if(typeof global_data == 'object' && global_data != null)
 		{
 			global_data.fields = cfs;
 		}
