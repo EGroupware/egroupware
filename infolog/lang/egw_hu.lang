@@ -115,7 +115,6 @@ delegation	infolog	hu	Feladat delegálás
 delete	infolog	hu	Töröl
 delete one record by passing its id.	infolog	hu	Egy rekord törlése az azonosítója alapján
 delete the entry	infolog	hu	Bejegyzés törlése
-delete this entry	infolog	hu	Aktuális bejegyzés törlése
 delete this entry and all listed sub-entries	infolog	hu	Aktuális és az összes listázott albejegyzés törlése
 deleted	infolog	hu	törölve
 deletes the selected typ	infolog	hu	kiválasztott típus törlése
@@ -177,7 +176,7 @@ id	infolog	hu	Azonosító
 id#	infolog	hu	Azonosító#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	hu	Ha egy típusnak van csoport tulajdonosa, akkor az ezzel a típussal létrehozott bejegyzések tulajdonosa a megadott CSOPORT és nem az a felhasználó, aki létrehozta!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	hu	Ha nincs beállítva, a kereső és szűrő sor rejtve marad abban az esetben, ha a "maximális egyezés egy lapon" limittől kevesebb találat volt (ahogy az Általános beállítások alatt be van állítva)
-import	infolog	hu	Importál
+import	infolog	hu	Import
 import next set	infolog	hu	Következő széria importálása
 importance	infolog	hu	Fontosság
 info log	common	hu	InfoLog
@@ -246,7 +245,6 @@ only for details	infolog	hu	Csak a részletekhez
 only if i get assigned or removed	infolog	hu	Csak ha hozzám rendelték vagy törölték
 only the attachments	infolog	hu	csupán a mellékletek
 only the links	infolog	hu	csupán a hivatkozások
-open	infolog	hu	Megnyit
 optional note to the link	infolog	hu	tetszőleges megjegyzés a hivatkozáshoz
 order	infolog	hu	Rendezés
 organization	infolog	hu	Szervezet
@@ -384,7 +382,6 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	hu	A bejegyzés felelőse mely mezőket szerkesztheti anélkül, hogy egyébként szerkesztési jogosultságai lennének?<br/>A Státusz, százalékos készültség és dátum mindig szerkeszthető!<br/>(például ha az alapértelmezett csoportjogosultság nem tenné lehetővé, hogy a leírást módosítsa a felelős).
 which implicit acl rights should the responsible get?	infolog	hu	Mely értelemszerűen felmerülő ACL jogosultságokat kapjon a felelős?
 which types should the calendar show	infolog	hu	Mely típust mutasson a naptár
-whole query	infolog	hu	teljes lekérdezés
 will-call	infolog	hu	hívni fog
 write (add or update) a record by passing its fields.	infolog	hu	Kiír (hozzáad vagy módosít) egy bejegyzést a mezők átadásával.
 yes - close	infolog	hu	Igen - lezárni

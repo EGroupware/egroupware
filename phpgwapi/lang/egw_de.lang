@@ -206,7 +206,7 @@ display %s first	jscalendar	de	%s zuerst anzeigen
 djibouti	common	de	DSCHIBUTI
 do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
 doctype:	common	de	DOCTYPE:
-document properties	common	de	Dokument Eigentschaften
+document properties	common	de	Dokument Eigenschaften
 document title:	common	de	Titel des Dokuments:
 domain	common	de	Domain
 domain name for mail-address, eg. "%1"	common	de	Domainname für E-Mail Adresse, z.B. "%1"
@@ -217,7 +217,7 @@ done	common	de	Fertig
 drag to move	jscalendar	de	Ziehen um zu Bewegen
 e-mail	common	de	E-Mail
 east timor	common	de	OST TIMOR
-eastern european	common	de	Östeuropäische
+eastern european	common	de	Osteuropäische
 ecuador	common	de	EQUADOR
 edit	common	de	Editieren
 edit %1 category for	common	de	%1 Kategorie editieren für
@@ -242,13 +242,13 @@ eritrea	common	de	ERITREA
 error	common	de	Fehler
 error creating %1 %2 directory	common	de	Fehler beim Erstellen des Verzeichnisses %1 %2
 error deleting %1 %2 directory	common	de	Fehler beim Löschen des Verzeichnisses %1 %2
-error renaming %1 %2 directory	common	de	Fehler beim Umbennenen des Verzeichnisses %1 %2
+error renaming %1 %2 directory	common	de	Fehler beim Umbenennen des Verzeichnisses %1 %2
 estonia	common	de	ESTONIEN
 etag	common	de	ETag
 ethiopia	common	de	ÄTHIOPIEN
 everything	common	de	Alles
 exact	common	de	exakt
-failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	de	Konnte Server nicht erreichen oder ungültige Antwort vom Server. Versuchen Sie sich nochmals anzumelden. Benachrichtigen Sie Ihren Adminstrator wenn dies fehlschlägt.
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	de	Konnte Server nicht erreichen oder ungültige Antwort vom Server. Versuchen Sie sich nochmals anzumelden. Benachrichtigen Sie Ihren Administrator  wenn dies fehlschlägt.
 falkland islands (malvinas)	common	de	FALKLAND INSELN (MALVINAS)
 faroe islands	common	de	FAROE INSELN
 fax number	common	de	Fax Nummer
@@ -369,6 +369,7 @@ korean	common	de	Koreanisch
 kuwait	common	de	KUWAIT
 kyrgyzstan	common	de	KYRGYZSTAN
 language	common	de	Sprache
+language_direction_rtl	common	de	language_direction_rtl
 lao peoples democratic republic	common	de	LAOS, VOLKSREPUBLIK
 last modified	common	de	Letzte Änderung
 last name	common	de	Nachname
@@ -480,13 +481,13 @@ october	common	de	Oktober
 ok	common	de	OK
 old value	common	de	Alter Wert
 oman	common	de	OMAN
-on *nix systems please type: %1	common	de	Auf *nix systemen bitte %1 eingeben
+on *nix systems please type: %1	common	de	Auf *nix Systemen bitte %1 eingeben
 on mouse over	common	de	On Maus Over
 only private	common	de	nur private
 only yours	common	de	nur eigene
 oops! you caught us in the middle of system maintainance.	common	de	Hoppla! Sie haben uns in der Mitte einer Systemwartung erwischt.
 open notify window	common	de	Benachrichtigungsfenster öffnen
-open popup window	common	de	Popup Fenster öffnen
+open popup window	common	de	Pop-up Fenster öffnen
 open sidebox	common	de	Seitenmenü öffnen
 ordered list	common	de	Nummerierung
 original	common	de	Original
@@ -555,7 +556,7 @@ register	common	de	Registrieren
 regular	common	de	Normal
 reject	common	de	Zurückweisen
 remember me	common	de	Mich erinnern
-remove selected accounts	common	de	Ausgewähle Benutzer entfernen
+remove selected accounts	common	de	Ausgewählte Benutzer entfernen
 remove shortcut	common	de	Abkürzung entfernen
 rename	common	de	Umbenennen
 replace	common	de	Ersetzen
@@ -600,7 +601,7 @@ select one	common	de	Eine(n) auswählen
 select the default height for the application windows	common	de	Vorgabewert für die Höhe des Anwendungsfensters auswählen
 select the default width for the application windows	common	de	Vorgabewert für die Breite des Anwendungsfensters auswählen
 select user	common	de	Benutzer auswählen
-select work email address	common	de	geschäftl. E-Mail-Addresse auswählen
+select work email address	common	de	geschäftl. E-Mail-Adresse auswählen
 selection	common	de	Auswahl
 send	common	de	senden
 senegal	common	de	SENEGAL
@@ -618,7 +619,7 @@ show all	common	de	alle anzeigen
 show all categorys	common	de	Alle Kategorien anzeigen
 show as topmenu	common	de	Menü oben anzeigen
 show clock?	common	de	Uhr anzeigen?
-show home and logout button in main application bar?	common	de	Zeige Start und Abmelde Symbol im Hauptnavigations Balken?
+show home and logout button in main application bar?	common	de	Zeige Start und Abmelde Symbol im Hauptnavigations-Balken?
 show in sidebox	common	de	In Seitenmenü anzeigen
 show logo's on the desktop.	common	de	Logos auf der Arbeitsfläche anzeigen.
 show menu	common	de	Menü anzeigen
@@ -671,7 +672,7 @@ the api is current	common	de	Die API ist aktuell
 the api requires an upgrade	common	de	Die API benötigt eine Aktualisierung
 the following applications require upgrades	common	de	Die folgenden Anwendungen benötigen eine Aktualisierung
 the mail server returned	common	de	Der E-Mail-Server liefert zurück
-there already is a system-user with this name. user's should not have the same name as a systemuser	common	de	Es gibt schon einen system Benutzer mit dem selben Namen. Die Benutzer sollten nicht die gleichen Namen haben, wie die Systembenutzer.
+there already is a system-user with this name. user's should not have the same name as a systemuser	common	de	Es gibt schon einen System Benutzer mit dem selben Namen. Die Benutzer sollten nicht die gleichen Namen haben, wie die Systembenutzer.
 this application is current	common	de	Diese Anwendung ist aktuell
 this application requires an upgrade	common	de	Diese Anwendung benötigt eine Aktualisierung
 this name has been used already	common	de	Dieser Name ist bereits in Benutzung !
@@ -686,7 +687,7 @@ to	common	de	An
 to correct this error for the future you will need to properly set the	common	de	Um diesen Fehler in der Zukunft zu verhindern, müssen sie folgendes setzen:
 to go back to the msg list, click <a href= %1 >here</a>	common	de	Um zur Liste der Meldungen zurück zu gehen, <a href="%1">hier</a> anklicken
 today	common	de	Heute
-todays date, eg. "%1"	common	de	heutiges Datum, zB. "%1"
+todays date, eg. "%1"	common	de	heutiges Datum, z.B. "%1"
 toggle first day of week	jscalendar	de	ersten Tag der Woche wechseln
 togo	common	de	TOGO
 tokelau	common	de	TOKELAU
@@ -757,7 +758,7 @@ year	common	de	Jahr
 yemen	common	de	JEMEN
 yes	common	de	Ja
 you are required to change your password during your first login	common	de	Sie müssen Ihr Passwort bei der ersten Anmeldung ändern
-you can customize how many icons and toolbars the editor shows.	common	de	Sie können bestimmen, wieviele Icons und Toolbars der Editor anzeigt.
+you can customize how many icons and toolbars the editor shows.	common	de	Sie können bestimmen, wie viele Icons und Toolbars der Editor anzeigt.
 you have been successfully logged out	login	de	Abmelden erfolgreich
 you have not entered a title	common	de	Sie haben keinen Titel eingegeben
 you have not entered a valid date	common	de	Sie haben kein gültiges Datum eingegeben

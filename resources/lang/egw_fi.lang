@@ -22,8 +22,8 @@ configure access permissions	admin	fi	Myönnä ACL-oikeuksia
 conflict	resources	fi	Konflikti
 create new accessory for this resource	resources	fi	Luo uusi lisätarvike tälle resurssille
 create new links	resources	fi	Luo uusi linkki
-custom fields	resources	fi	Lisäkentät
-days	resources	fi	Päivää
+custom fields	resources	fi	Lisätiedot
+days	resources	fi	päivää
 delete selected resources	resources	fi	Poista valitut resurssit
 delete this entry	resources	fi	Poista tämä merkintä
 description (short)	resources	fi	Kuvaus (lyhyt)

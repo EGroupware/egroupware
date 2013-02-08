@@ -136,7 +136,6 @@ delete	infolog	fr	Supprimer
 delete one record by passing its id.	infolog	fr	Effacer un enregistrement en passant son id.
 delete selected entries?	infolog	fr	Supprimer les entrées sélectionnées?
 delete the entry	infolog	fr	supprimer l´entrée
-delete this entry	infolog	fr	Supprimer cette entrée
 delete this entry and all listed sub-entries	infolog	fr	Détruire cette entrée et toutes les sous-entrées listées
 deleted	infolog	fr	Supprimé
 deletes the selected typ	infolog	fr	supprime le type sélectionné
@@ -288,7 +287,6 @@ only for details	infolog	fr	Seulement pour les détails
 only if i get assigned or removed	infolog	fr	Seulement si je suis assigné ou enlevé
 only the attachments	infolog	fr	Seulement les attachements
 only the links	infolog	fr	Seulement les liens
-open	infolog	fr	Ouvrir
 open and upcoming	infolog	fr	Ouvert et à venir
 optional note to the link	infolog	fr	note optionnelle vers le lien
 order	infolog	fr	Tri
@@ -454,7 +452,6 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	fr	Quels champs supplémentaires le responsable devrait être autorisé à modifier sans avoir à modifier les droits d'édition??<br />Statuts, pourcentage et date de fin sont toujours permis.
 which implicit acl rights should the responsible get?	infolog	fr	Quels droits ACL implicites le responsable devrait obtenir?
 which types should the calendar show	infolog	fr	Quels types le calendrier doit-il montrer
-whole query	infolog	fr	requête entière
 will-call	infolog	fr	Va appeler
 write (add or update) a record by passing its fields.	infolog	fr	Ecrit (ajoute ou met à jour) un enregistrement en passant ses champs.
 yes - close	infolog	fr	Oui - Fermer

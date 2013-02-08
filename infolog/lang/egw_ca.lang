@@ -92,7 +92,6 @@ delegation	infolog	ca	Delegació
 delete	infolog	ca	Esborrar
 delete one record by passing its id.	infolog	ca	Suprimeix un registre indicant el seu ID.
 delete the entry	infolog	ca	Esborrar l'entrada
-delete this entry	infolog	ca	esborrar aquesta entrada
 delete this entry and all listed sub-entries	infolog	ca	Esborra aquesta entrada i totes les subentrades llistades
 deleted	infolog	ca	eliminat
 deletes the selected typ	infolog	ca	esborra el tipus seleccionat
@@ -200,7 +199,6 @@ ongoing	infolog	ca	en curs
 only for details	infolog	ca	Només per detalls
 only the attachments	infolog	ca	només adjunts
 only the links	infolog	ca	només enllaços
-open	infolog	ca	obert
 optional note to the link	infolog	ca	nota opcional per a l'enllaç
 order	infolog	ca	Ordre
 organization	infolog	ca	Organització
@@ -326,7 +324,6 @@ view this linked entry in its application	infolog	ca	Veure aquesta entrada vincu
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	ca	Quan s'han d'iniciar les Tasques Pendents o les Trucades Telefòniques. Es mostra a la data del filtre o en obrir manualment a la plana d'inici
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	ca	Quins camps adicionals pot editar el responsable sense tenir drets per editar?<br />,Estat, percentatge i data complerta sempre estan permesos.
 which implicit acl rights should the responsible get?	infolog	ca	Quins drets ACL implícits ha de tenir el responsable?
-whole query	infolog	ca	consulta sencera
 will-call	infolog	ca	trucarà
 write (add or update) a record by passing its fields.	infolog	ca	Escriu (afegeix o actualitza) un registre, introduïnt els seus camps.
 yes - delete	infolog	ca	Sí - Esborrar

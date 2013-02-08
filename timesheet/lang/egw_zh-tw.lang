@@ -2,7 +2,6 @@
 2 month ago	timesheet	zh-tw	兩個月前
 2 years ago	timesheet	zh-tw	兩年前
 3 years ago	timesheet	zh-tw	三年前
-actions	timesheet	zh-tw	操作
 all projects	timesheet	zh-tw	所有專案
 applies the changes	timesheet	zh-tw	套用變更
 both: allow to use projectmanager and free project-names	admin	zh-tw	兩者：允許使用 ProjectManager 與自訂專案名稱
@@ -13,7 +12,6 @@ create new links	timesheet	zh-tw	建立新連結
 creates a new field	timesheet	zh-tw	建立新欄位
 creating new entry	timesheet	zh-tw	建立新資料
 custom fields	timesheet	zh-tw	自訂欄位
-delete this entry	timesheet	zh-tw	刪除這筆資料
 delete this status	timesheet	zh-tw	刪除這個狀態
 deleted	timesheet	zh-tw	刪除了
 deletes this field	timesheet	zh-tw	刪除這個欄位
@@ -76,6 +74,5 @@ unitprice	timesheet	zh-tw	單位價格
 values for selectbox	timesheet	zh-tw	選單的值
 view this entry	timesheet	zh-tw	檢視這筆資料
 week	timesheet	zh-tw	週
-whole query	timesheet	zh-tw	整個查詢
 yesterday	timesheet	zh-tw	昨天
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	zh-tw	您的資料庫不是最新版本（%1 vs. %2），請執行 %3安裝程式%4來更新您的資料庫。

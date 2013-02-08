@@ -2,7 +2,6 @@
 2 month ago	timesheet	zh	两月前
 2 years ago	timesheet	zh	两年前
 3 years ago	timesheet	zh	三年前
-actions	timesheet	zh	操作
 all projects	timesheet	zh	所有项目
 applies the changes	timesheet	zh	应用更改
 both: allow to use projectmanager and free project-names	admin	zh	两者：使用项目管理和自选项目名称
@@ -13,7 +12,6 @@ create new links	timesheet	zh	创建新链接
 creates a new field	timesheet	zh	创建一新字段
 creating new entry	timesheet	zh	创建新条目
 custom fields	timesheet	zh	自定义字段
-delete this entry	timesheet	zh	删除此条目
 delete this status	timesheet	zh	删除这个状态
 deleted	timesheet	zh	已删除
 deletes this field	timesheet	zh	删除此字段域
@@ -33,7 +31,7 @@ export to openoffice spreadsheet	timesheet	zh	导出到 OpenOffice 电子表格
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	zh	从您的Timesheet导出词条到CSV文件。CSV采用'逗号分隔'方法。然而在选项标签您仍能够选择其它分隔符。
 field must not be empty !!!	timesheet	zh	字段不得为空！
 full: use only projectmanager	admin	zh	完全：只使用项目管理
-general	timesheet	zh	普通
+general	timesheet	zh	通用
 global categories	timesheet	zh	全局分类
 history	timesheet	zh	历史记录
 id	timesheet	zh	编号
@@ -83,6 +81,5 @@ unitprice	timesheet	zh	单价
 values for selectbox	timesheet	zh	选单数值数据
 view this entry	timesheet	zh	查看该条目
 week	timesheet	zh	星期
-whole query	timesheet	zh	完整查询
 yesterday	timesheet	zh	昨天
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	zh	您的数据库没有更新到日期(%1 vs. %2)，请运行%3setup%4更新您的数据库。

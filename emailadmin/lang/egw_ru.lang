@@ -1,7 +1,8 @@
 account '%1' not found !!!	emailadmin	ru	Учетная запись '%1' не найдена !!!
+active templates	emailadmin	ru	Активные шаблоны
 add new email address:	emailadmin	ru	Добавить новый адрес эл. почты:
 add profile	emailadmin	ru	Добавить Профиль
-admin dn	emailadmin	ru	DN администратора
+admin dn	emailadmin	ru	администратор домена
 admin password	emailadmin	ru	Пароль администратора
 admin username	emailadmin	ru	Имя входа администратора
 advanced options	emailadmin	ru	Расширенные настройки
@@ -9,6 +10,7 @@ alternate email address	emailadmin	ru	Добавочный адрес эл. по
 any application	emailadmin	ru	Любое приложение
 any group	emailadmin	ru	Любая группа
 any user	emailadmin	ru	любой пользователь
+back to admin/grouplist	emailadmin	ru	Назад к Администрированию/Списку групп
 back to admin/userlist	emailadmin	ru	Назад к Администрированию/Списку пользователей
 bad login name or password.	emailadmin	ru	Неверное имя пользователя или пароль.
 bad or malformed request. server responded: %s	emailadmin	ru	Неверный или нераспознанный запрос. Ответ Сервера: %s
@@ -18,22 +20,23 @@ can be used by group	emailadmin	ru	Может быть использовано 
 can be used by user	emailadmin	ru	может быть использовано пользователем
 connection dropped by imap server.	emailadmin	ru	Соединение разорвано сервером IMAP
 could not complete request. reason given: %s	emailadmin	ru	Не могу завершить запрос. Возможная Причина: %s
-could not open secure connection to the imap server. %s : %s.	emailadmin	ru	Не могу установть защищенное соединение с сервером IMAP. %s : %s.
+could not open secure connection to the imap server. %s : %s.	emailadmin	ru	Не могу установить защищенное соединение с сервером IMAP. %s : %s.
 cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	ru	CRAM-MD5 и DIGEST-MD5 требуют установленного пакета Auth_SASL.
 cyrus imap server	emailadmin	ru	IMAP сервер Cyrus
 cyrus imap server administration	emailadmin	ru	администрирование IMAP сервера Cyrus
-default	emailadmin	ru	по-умолчанию
-deliver extern	emailadmin	ru	доставить внешний (снаружи?)
+default	emailadmin	ru	по умолчанию
+deliver extern	emailadmin	ru	доставить внешний
 do not validate certificate	emailadmin	ru	не проверять сертификат
-do you really want to delete this profile	emailadmin	ru	Вы уверенны, что хотите удалить этот Профиль
+do you really want to delete this profile	emailadmin	ru	Вы уверены, что хотите удалить этот Профиль
 do you really want to reset the filter for the profile listing	emailadmin	ru	Вы уверены что хотите очистить фильтр для создания списка Профилей
-domainname	emailadmin	ru	ИмяДомена
+domainname	emailadmin	ru	Имя Домена
 edit email settings	emailadmin	ru	Редактировать настройки почты
 email account active	emailadmin	ru	Учетная запись включена
 email address	emailadmin	ru	Адрес эл. почты
 email settings	common	ru	Настройки почты
-emailadmin	emailadmin	ru	АдминПочты
-emailadmin: user assigned profile	common	ru	Администрирование почты: Профиль назначенный Пользователю
+emailadmin	emailadmin	ru	Администрирование Почты
+emailadmin: group assigned profile	common	ru	Администрирование почты: Назначение профиля группы.
+emailadmin: user assigned profile	common	ru	Администрирование почты: Назначения профиля пользователя
 enable cyrus imap server administration	emailadmin	ru	включить администрирование IMAP сервера Cyrus
 enable sieve	emailadmin	ru	Включить Sieve
 encrypted connection	emailadmin	ru	зашифрованное соединение
@@ -42,21 +45,22 @@ enter your default mail domain (from: user@domain)	emailadmin	ru	Укажите 
 error connecting to imap server. %s : %s.	emailadmin	ru	Ошибка соединения с сервером IMAP. %s : %s.
 error connecting to imap server: [%s] %s.	emailadmin	ru	Ошибка соединения с сервером IMAP: [%s] %s.
 filtered by account	emailadmin	ru	отфильтровано по Учетной записи
-forward also to	emailadmin	ru	Направить также в
-forward email's to	emailadmin	ru	Направлять письма в
-forward only	emailadmin	ru	Только перенаправлять
+filtered by group	emailadmin	ru	отфильтровано по группе
+forward also to	emailadmin	ru	Переслать также в
+forward email's to	emailadmin	ru	Переслать письма в
+forward only	emailadmin	ru	Только переслать
 global options	emailadmin	ru	Общие настройки
-if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	ru	При использовании SSL или TLS, у вас должен быть PHP с загруженным расширением openssl
+if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	ru	При использовании SSL или TLS, у вас должен быть установлен PHP с загруженным расширением openssl
 imap admin password	admin	ru	пароль администратора IMAP
-imap admin user	admin	ru	Пользователь IMAP с правами администратора(?)
+imap admin user	admin	ru	Имя пользователя для администратора IMAP
 imap c-client version < 2001	emailadmin	ru	Версия C-клиента IMAP < 2001
 imap server closed the connection.	emailadmin	ru	Сервер IMAP разорвал соединение.
 imap server closed the connection. server responded: %s	emailadmin	ru	Сервер IMAP разорвал соединение. Сервер сообщил: %s
 imap server hostname or ip address	emailadmin	ru	Имя сервера IMAP или его ip-адрес
 imap server logintyp	emailadmin	ru	Тип входа сервера IMAP
-imap server name	emailadmin	ru	Название сервера imap
+imap server name	emailadmin	ru	имя сервера imap
 imap server port	emailadmin	ru	порт сервера IMAP
-imap/pop3 server name	emailadmin	ru	название сервера IMAP/POP3
+imap/pop3 server name	emailadmin	ru	имя сервера IMAP/POP3
 in mbyte	emailadmin	ru	в МБайтах
 inactive	emailadmin	ru	неактивно
 ldap basedn	emailadmin	ru	начальный DN LDAP
@@ -66,20 +70,21 @@ ldap server admin dn	emailadmin	ru	DN администратора сервер�
 ldap server admin password	emailadmin	ru	Пароль администратора сервера LDAP
 ldap server hostname or ip address	emailadmin	ru	Имя сервера LDAP или его ip-адрес
 ldap settings	emailadmin	ru	Настройки LDAP
-leave empty for no quota	emailadmin	ru	оставте пустым для отключения квотирования
+leave empty for no quota	emailadmin	ru	оставьте пустым для отключения квотирования
 mail settings	admin	ru	Настройки почты
+manage stationery templates	emailadmin	ru	Управление бланками шаблонов
 name of organisation	emailadmin	ru	Название организации
-no alternate email address	emailadmin	ru	дополнительный эл. адрес не используется
+no alternate email address	emailadmin	ru	Нет дополнительного эл. адреса
 no encryption	emailadmin	ru	без шифрования
-no forwarding email address	emailadmin	ru	без адреса перенаправления
+no forwarding email address	emailadmin	ru	нет адреса перенаправления
 no message returned.	emailadmin	ru	И никакого сообщения в ответ
-no supported imap authentication method could be found.	emailadmin	ru	Не ожет быть найден поддерживаемый метод авторизации IMAP.
+no supported imap authentication method could be found.	emailadmin	ru	Не может быть найден поддерживаемый метод авторизации IMAP.
 order	emailadmin	ru	Упорядочить
 organisation	emailadmin	ru	Организация
 plesk can't rename users --> request ignored	emailadmin	ru	Plesk не может переименовать пользователей --> запрос проигнорирован
 plesk imap server (courier)	emailadmin	ru	Сервер IMAP Plesk (Courier)
 plesk mail script '%1' not found !!!	emailadmin	ru	Не найден скрипт '%1'  почты Plesk!!!
-plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	ru	Plesk  требует длины пароля не менее 5 символов не содержащий имени аккаунта --> пароль НЕ установлен!!!
+plesk requires passwords to have at least 5 characters and not contain the account-name --> password not set!!!	emailadmin	ru	Plesk  требует длины пароля не менее 5 символов, не содержащий имени аккаунта --> пароль НЕ установлен!!!
 plesk smtp-server (qmail)	emailadmin	ru	Plesk SMTP сервер (Qmail)
 pop3 server hostname or ip address	emailadmin	ru	Имя компьютера или ip-адрес сервера POP3
 pop3 server port	emailadmin	ru	Порт сервера POP3
@@ -96,6 +101,7 @@ reset filter	emailadmin	ru	очистить фильтр
 select type of imap server	emailadmin	ru	выбор типа сервера IMAP
 select type of imap/pop3 server	emailadmin	ru	Выбор типасервера IMAP/POP3
 select type of smtp server	emailadmin	ru	Выбор типа сервера SMTP
+send using this email-address	emailadmin	ru	Отправить с этого адреса эл.почты
 server settings	emailadmin	ru	Настройки сервера
 sieve server hostname or ip address	emailadmin	ru	Имя компьютера или IP-адрес сервера Sieve
 sieve server port	emailadmin	ru	Порт сервера Sieve
@@ -110,6 +116,7 @@ standard	emailadmin	ru	Стандартный
 standard imap server	emailadmin	ru	Стандартный IMAP сервер
 standard pop3 server	emailadmin	ru	Стандартный POP3 сервер
 standard smtp-server	emailadmin	ru	Стандартный SMTP сервер
+stationery	emailadmin	ru	Бланк
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	ru	Сервер IMAP не сообщил о поддержке выбранного метода авторизации. Пожалуйста свяжитесь со своим системным администратором.
 this php has no imap support compiled in!!	emailadmin	ru	Эта версия PHP собрана без поддержки IMAP!!
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	ru	Для использования соединения TLS, у вас должен быть запущен PHP 5.1.0 или выше.
@@ -119,17 +126,18 @@ unexpected response from server to login command.	emailadmin	ru	Непредус
 unknown imap response from the server. server responded: %s	emailadmin	ru	Неизвестный IMAP-ответ от сервера. Сервер сообщил: %s
 unsupported action '%1' !!!	emailadmin	ru	Неподдерживаемое действие '%1' !!!
 update current email address:	emailadmin	ru	Обновить текущий адрес эл.почты:
-use ldap defaults	emailadmin	ru	Использовать настройки LDAP по-умолчанию
+use ldap defaults	emailadmin	ru	Использовать настройки LDAP по умолчанию
 use predefined username and password defined below	emailadmin	ru	Использовать предопределенное имя пользователя и пароль указанный ниже
 use smtp auth	emailadmin	ru	Использовать авторизацию SMTP
 use tls authentication	emailadmin	ru	Использовать авторизацию TLS
-use tls encryption	emailadmin	ru	Исползовать шифрование TLS
-user can edit forwarding address	emailadmin	ru	Ползователь может редактировать адрес перенаправления
+use tls encryption	emailadmin	ru	Использовать шифрование TLS
+user can edit forwarding address	emailadmin	ru	Ползователь может редактировать адрес пересылки.
 username (standard)	emailadmin	ru	имя пользователя (стандартное)
 username/password defined by admin	emailadmin	ru	Имя пользователя/Пароль установлены администратором
-username@domainname (virtual mail manager)	emailadmin	ru	username@domainname (Менеджер Виртуальной ПОЧТЫ)
+username@domainname (virtual mail manager)	emailadmin	ru	username@domainname (Менеджер Виртуальной почты)
 users can define their own emailaccounts	emailadmin	ru	Пользователь может назначать свои собственные учетные записи эл. почты.
 users can define their own identities	emailadmin	ru	пользователи могут устанавливать свои собственные данные идентификации
 users can define their own signatures	emailadmin	ru	пользователи могут устанавливать свои собственные подписи
+users can utilize these stationery templates	emailadmin	ru	Пользователи могут использовать эти бланки шаблонов
 vaction messages with start- and end-date require an admin account to be set!	emailadmin	ru	Vaction-сообщения (сообщения об отпуске? вакансиях? высвобождении? незанятых периодах? вовсе сообщения от объекта Java VAction? сообщения виртуальных действий?) с датами начала и окончания требуют установленной учетной записи администратора!
-virtual mail manager	emailadmin	ru	Менеджер Виртуальной ПОЧТЫ
+virtual mail manager	emailadmin	ru	Менеджер Виртуальной почты

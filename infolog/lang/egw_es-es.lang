@@ -139,7 +139,6 @@ delete	infolog	es-es	Eliminar
 delete one record by passing its id.	infolog	es-es	Borrar un registro pasando su id.
 delete selected entries?	infolog	es-es	¿Borrar las entradas seleccionadas?
 delete the entry	infolog	es-es	Eliminar la entrada
-delete this entry	infolog	es-es	eliminar esta entrada
 delete this entry and all listed sub-entries	infolog	es-es	Borrar esta entrada y todas las subentradas de la lista
 deleted	infolog	es-es	borrado
 deletes the selected typ	infolog	es-es	elimina el tipo seleccionado
@@ -301,7 +300,6 @@ only for details	infolog	es-es	Sólo para los detalles
 only if i get assigned or removed	infolog	es-es	Sólo si se me asigna o se me borra
 only the attachments	infolog	es-es	sólo los adjuntos
 only the links	infolog	es-es	sólo los enlaces
-open	infolog	es-es	Abrir
 open and upcoming	infolog	es-es	abierto y por venir
 optional note to the link	infolog	es-es	nota opcional para el enlace
 order	infolog	es-es	Ordenar
@@ -466,7 +464,6 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	es-es	¿Qué campos adicionales puede editar el responsable sin tener derechos de edición?<br />El estado, porcentaje y fecha de finalización se permiten siempre.
 which implicit acl rights should the responsible get?	infolog	es-es	¿Qué derechos implícitos de ACL debe tener el responsable?
 which types should the calendar show	infolog	es-es	Qué tipos debe mostrar el calendario
-whole query	infolog	es-es	la consulta completa
 will-call	infolog	es-es	va a llamar
 write (add or update) a record by passing its fields.	infolog	es-es	Escribir (añadir o actualizar) un registro pasando sus campos.
 yes - close	infolog	es-es	Sí, cerrar

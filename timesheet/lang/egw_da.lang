@@ -1,10 +1,8 @@
-actions	timesheet	da	Handling
 applies the changes	timesheet	da	udfør ændringerne
 by	timesheet	da	af
 create new links	timesheet	da	Lav nyt link
 creates a new field	timesheet	da	opretter et nyt felt
 custom fields	timesheet	da	Valgfri Felter
-delete this entry	timesheet	da	Slet denne indtastning
 deleted	timesheet	da	slettet
 deletes this field	timesheet	da	sletter dette felt
 determines the order the fields are displayed	timesheet	da	bestemmer rækkefølgen felterne bliver vist

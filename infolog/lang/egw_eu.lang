@@ -40,7 +40,7 @@ cancel	infolog	eu	Ezeztatu
 cancelled	infolog	eu	Ezeztatua
 categories	infolog	eu	Kategoriak
 category	infolog	eu	Kategoria
-charset of file	infolog	eu	Fitxategiko karaktereak
+charset of file	infolog	eu	Fitxategiaren Karaktere bilduma
 check all	infolog	eu	Guztia hautatu
 check to set startday	infolog	eu	markatu hasiera data ezartzeko
 click here to create the link	infolog	eu	egin klik lotura bat sortzeko
@@ -75,7 +75,6 @@ default status for a new log entry	infolog	eu	Lehenetsitako egoera sarrera berri
 delegation	infolog	eu	Ordezkaritza
 delete	infolog	eu	Ezabatu
 delete the entry	infolog	eu	Sarrera ezabatu
-delete this entry	infolog	eu	Sarrera hau ezabatu
 deleted	infolog	eu	ezabatua
 deletes the selected typ	infolog	eu	Aukeratutako mota ezabatu
 deletes this field	infolog	eu	Eremu hau ezabatu
@@ -157,7 +156,6 @@ offer	infolog	eu	Eskaini
 ongoing	infolog	eu	momentukoak
 only the attachments	infolog	eu	eranskinak soilik
 only the links	infolog	eu	loturak soilik
-open	infolog	eu	ireki
 optional note to the link	infolog	eu	aukerako oharra loturarentzat
 order	infolog	eu	Ordenatu
 organization	infolog	eu	erakundea

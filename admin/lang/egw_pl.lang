@@ -500,7 +500,6 @@ the text displayed to the user	admin	pl	Tekst wyświetlany dla użytkownika
 the two passwords are not the same	admin	pl	Oba hasła nie są identyczne
 the users bellow are still members of group %1	admin	pl	następujący użytkownicy są wciąż członkami grupy %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	pl	Istniej już grupa o tej nazwie. ID użytkownika nie może mieć tej samej nazwy co ID grupy.
-there already is a system-user with this name. user's should not have the same name as a systemuser	admin	pl	Istnieje już użytkownik systemowy z tą nazwą. Użytkownicy nie powinii mieć takich samych nazw jak użytkownicy systemowi.
 they must be removed before you can continue	admin	pl	Muszą być usunięte, zanim będzie można kontynuować
 this application is current	admin	pl	Wersja aplikacji jest aktualna
 this application requires an upgrade	admin	pl	Wersja aplikacji wymaga aktualizacji

@@ -47,7 +47,7 @@ cancelled	infolog	fa	لغو شد
 categories	infolog	fa	دسته ها
 category	infolog	fa	دسته
 change the status of an entry, eg. close it	infolog	fa	تغییر وضعیت یک ورودی - مثلا بستن آن
-charset of file	infolog	fa	کاراکتر ست پرونده
+charset of file	infolog	fa	UTF-8
 check all	infolog	fa	چک کردن همه
 check to set startday	infolog	fa	چک کنید تا روز شروع تنظیم شود
 click here to create the link	infolog	fa	اینجا کلیک کنید تا اتصال ساخته شود
@@ -88,7 +88,6 @@ delegation	infolog	fa	مسئولان اجرا
 delete	infolog	fa	حذف
 delete one record by passing its id.	infolog	fa	حذف یک رکورد با رد کردن کد آن
 delete the entry	infolog	fa	حذف ورودی
-delete this entry	infolog	fa	حذف این ورودی
 delete this entry and all listed sub-entries	infolog	fa	حذف این ورودی و تمام زیر ورودیهایش
 deleted	infolog	fa	حذف شد
 deletes the selected typ	infolog	fa	انواع انتخاب شده را حذف میکند
@@ -192,7 +191,6 @@ ongoing	infolog	fa	درحال انجام
 only for details	infolog	fa	فقط برای جزئیات
 only the attachments	infolog	fa	فقط پیوستها
 only the links	infolog	fa	فقط پیوندها
-open	infolog	fa	کارهای باز
 optional note to the link	infolog	fa	یادداشت دلخواه برای پیوند
 order	infolog	fa	ترتیب
 organization	infolog	fa	سازمان

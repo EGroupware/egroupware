@@ -98,7 +98,6 @@ delegation	infolog	el	Εξουσιοδότηση
 delete	infolog	el	Διαγραφή
 delete one record by passing its id.	infolog	el	Διαγραφή μιας εγγραφής διαβαίνοντας απο το id της.
 delete the entry	infolog	el	Διαγραφή αυτής της καταχώρησης
-delete this entry	infolog	el	δαγραφή αυτής της καταχώρησης
 delete this entry and all listed sub-entries	infolog	el	Διαγραφή αυτής της καταχώρησης και όλων των υπο-καταχωρήσεων στη λίστα
 deleted	infolog	el	διαγράφηκαν
 deletes the selected typ	infolog	el	διαγραφή του επιλεγμένου τύπου
@@ -216,7 +215,6 @@ only for details	infolog	el	Μόνο για λεπτομέρειες
 only if i get assigned or removed	infolog	el	Μόνο εάν μου ανατεθεί ή αφαιρεθεί
 only the attachments	infolog	el	μόνο οι επισυνάψεις
 only the links	infolog	el	μόνο οι σύνδεσμοι
-open	infolog	el	ανοικτά
 optional note to the link	infolog	el	προαιρετική σημείωση στο σύνδεσμο
 order	infolog	el	Παραγγελία
 organization	infolog	el	οργανισμός
@@ -344,7 +342,6 @@ view this linked entry in its application	infolog	el	εμφάνιση αυτής
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	el	πότε θα έπρεπε οι Εργασίες ή Κλήση τηλεφώνου να αρχίζουν,εμφανίζεται από εκείνη την ημερομηνία στο άνοιγμα φίλτρου ή δικά μου άνοιγμα (αρχική σελίδα)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	el	Ποια επιπλέον πεδία πρέπει ο υπεύθυνος να έχει άδεια να επιμεληθεί χωρίς να έχει δικαιώματα επιμέλειας;<br/>Κατάσταση, ποσοστό και ημερομηνία ολοκλήρωσης είναι πάντοτε επιτρεπτά.
 which implicit acl rights should the responsible get?	infolog	el	Ποια αυτονόητα ACL δικαιώματα πρέπει ο υπεύθυνος να έχει;
-whole query	infolog	el	ολόκληρη απορία
 will-call	infolog	el	θα τηλεφωνήσει
 write (add or update) a record by passing its fields.	infolog	el	Καταγραφή (προσθήκη ή ενημέρωση) μιας εγγραφής διαβαίνοντας από τα πεδία της.
 yes - delete	infolog	el	Ναι- Διαγραφή

@@ -23,7 +23,7 @@ calendar preferences	calendar	iw	העדיפויות לוח שנה
 calendar settings	admin	iw	הגדרות לוח שנה
 calendar-fieldname	calendar	iw	לוח שנה - שם שדה
 canceled	calendar	iw	מבוטל
-charset of file	calendar	iw	סוג התווים בקובץ
+charset of file	calendar	iw	סט תווים של הקובץ
 countries	calendar	iw	ארצות
 country	calendar	iw	ארץ
 create new links	calendar	iw	יצור קישורים חדשים
@@ -79,7 +79,7 @@ holidays	calendar	iw	חגים
 hours	calendar	iw	שעות
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	iw	.אם מסומן, חגים החלים בסופי שבוע, מעוברים ליום השני של אחריו
 ignore conflict	calendar	iw	תתעלם מהתנגשות
-import	calendar	iw	ייבוא
+import	calendar	iw	ייבא
 import csv-file	common	iw	CSV ייצאו קובץ
 interval	calendar	iw	אינטרול
 last	calendar	iw	אחרון

@@ -4,7 +4,6 @@ check all	timesheet	lo	ກວດສອບທັງໝົດ
 create new links	timesheet	lo	ສ້າງການເຊື່ອມຕໍ່ໃໝ່
 creates a new field	timesheet	lo	ສ້າງfieldໄໝ
 custom fields	timesheet	lo	ກໍານົດ fields
-delete this entry	timesheet	lo	ລຶບຂໍ້ມູນເຂົ້າມານີ້
 deletes this field	timesheet	lo	ລຶບ field ນີ້
 determines the order the fields are displayed	timesheet	lo	ສະແດງລໍາດັບຂອງ fields ທີ່ສະແດງ
 each value is a line like <id>[=<label>]	timesheet	lo	ແຕ່ລະລາຄ່າເປັນໜຶ່ງແຖວ <id>[=<label>]

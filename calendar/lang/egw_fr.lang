@@ -45,7 +45,7 @@ calendar-fieldname	calendar	fr	calendrier-nom du champs
 can't add alarms in the past !!!	calendar	fr	Impossible d'ajouter des alarmes sur des dates révolues !!!
 canceled	calendar	fr	Annulé
 change history	calendar	fr	Historique des changements
-charset of file	calendar	fr	Jeu de charactères du fichier
+charset of file	calendar	fr	Jeu de caractères du fichier
 check all	calendar	fr	Vérifier tout
 close the window	calendar	fr	Fermer la fenêtre
 compose a mail to all participants after the event is saved	calendar	fr	écrire un email à tous les participants après l'enregistrement de l'événement
@@ -328,7 +328,6 @@ weekview without weekend	calendar	fr	Vue hebdomadaire sans weekend
 which events do you want to see when you enter the calendar.	calendar	fr	Quels événements voulez-vous voir quand vous entrez dans le calendrier.
 which of calendar view do you want to see, when you start calendar ?	calendar	fr	Quelle vue du calendrier voulez-vous voir quand vous démarrez le calendrier ?
 whole day	calendar	fr	Journée entière
-whole query	calendar	fr	requête entière
 wk	calendar	fr	Sem.
 work day ends on	calendar	fr	Journée de travail finit à
 work day starts on	calendar	fr	Journée de travail démarre à

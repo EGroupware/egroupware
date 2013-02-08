@@ -78,7 +78,6 @@ delegation	infolog	da	Overdrag
 delete	infolog	da	Slet
 delete one record by passing its id.	infolog	da	Slet en record ved at angive dets ID
 delete the entry	infolog	da	Slet indtastningen
-delete this entry	infolog	da	Slet denne indtastning
 delete this entry and all listed sub-entries	infolog	da	Slet denne indtastning og alle listede under-indtastninger
 deleted	infolog	da	slettet
 deletes the selected typ	infolog	da	slet den valgte type
@@ -173,7 +172,6 @@ offer	infolog	da	tilbyde
 ongoing	infolog	da	i gang
 only the attachments	infolog	da	kun vedhæftninger
 only the links	infolog	da	kun linkene
-open	infolog	da	åben
 optional note to the link	infolog	da	Valgfri notat til Link
 order	infolog	da	Rækkefølge
 organization	infolog	da	organisation

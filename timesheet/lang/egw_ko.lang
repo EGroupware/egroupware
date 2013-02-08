@@ -1,8 +1,6 @@
-actions	timesheet	ko	액션
 create new links	timesheet	ko	새 링크 만들기
 creates a new field	timesheet	ko	새 필드 만들기
 custom fields	timesheet	ko	사용자정의 필드
-delete this entry	timesheet	ko	이 엔트리 삭제
 deleted	timesheet	ko	삭제됨
 deletes this field	timesheet	ko	이 필드 삭제
 edit status	timesheet	ko	상태 수정

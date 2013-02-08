@@ -41,7 +41,7 @@ calendar settings	admin	no	Kalender Innstillinger
 calendar-fieldname	calendar	no	Kalender-Feltnavn
 can't add alarms in the past !!!	calendar	no	Kan ikke legge til alarmer for passerte hendelser!
 canceled	calendar	no	Annullert
-charset of file	calendar	no	Karaktersett i fil
+charset of file	calendar	no	Karaktersett for filen
 check all	calendar	no	Kontroller alle
 close the window	calendar	no	Lukk vinduet
 compose a mail to all participants after the event is saved	calendar	no	Komponer en mail til alle deltagere etter at hendelsen er lagret
@@ -283,7 +283,7 @@ timeframe	calendar	no	Tidsrom
 timeframe to search	calendar	no	Tidrom for søk
 title of the event	calendar	no	Tittel på oppføringen
 to many might exceed your execution-time-limit	calendar	no	for mange vil muligens overskride din eksekverings-tidsgrense
-translation	calendar	no	Oversettelse
+translation	calendar	no	Oversetting
 tue	calendar	no	Tir
 two weeks	calendar	no	To uker
 updated	calendar	no	Oppdatert

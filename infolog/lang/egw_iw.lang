@@ -67,7 +67,6 @@ delegation	infolog	iw	נציגות
 delete	infolog	iw	מחק
 delete one record by passing its id.	infolog	iw	מחק רשומה אחת על ידי העברת הזיהוי שלה
 delete the entry	infolog	iw	מחק את הרשומה
-delete this entry	infolog	iw	מחק רשומה זו
 deleted	infolog	iw	נמחקו
 deletes the selected typ	infolog	iw	מוחק את הסוג הנבחר
 deletes this field	infolog	iw	מוחק את השדה הזה
@@ -102,7 +101,7 @@ global categories	infolog	iw	קטגוריות גלובליות
 high	infolog	iw	גבוה
 history	infolog	iw	היסטוריה
 id	infolog	iw	זיהוי
-import	infolog	iw	ייבוא
+import	infolog	iw	ייבא
 import next set	infolog	iw	ייבוא קבוצה הבאה
 infolog - delete	infolog	iw	Info-Log - מחיקה
 infolog - edit	infolog	iw	Info-Log - עריכה
@@ -148,7 +147,6 @@ offer	infolog	iw	הצעה
 ongoing	infolog	iw	מתמשך
 only the attachments	infolog	iw	רק את המצורפים
 only the links	infolog	iw	רק את הקישורים
-open	infolog	iw	פתח
 optional note to the link	infolog	iw	הערה אופציונלית לקישור
 order	infolog	iw	סדר
 organization	infolog	iw	אירגון

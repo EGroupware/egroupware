@@ -126,7 +126,7 @@ exception created - you can now edit or delete it	calendar	nl	Uitzondering aange
 exceptions	calendar	nl	Uitzonderingen
 execute a further action for this entry	calendar	nl	Voer een vervolg actie uit voor dit record
 existing links	calendar	nl	Bestaande links
-export	calendar	nl	Exporteren
+export	calendar	nl	exporteren
 extended	calendar	nl	Uitgebreid
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	nl	Uitgebreide updates bevatten altijd de complete afspraakdetails. iCal's kunnen worden geïmporteerd door aan aantal agendatoepassingen
 fieldseparator	calendar	nl	Veldscheidingssymbool
@@ -347,7 +347,6 @@ weekview without weekend	calendar	nl	Weekweergave zonder weekend
 which events do you want to see when you enter the calendar.	calendar	nl	Welke afspraken wilt u zien wanneer u de agenda opent?
 which of calendar view do you want to see, when you start calendar ?	calendar	nl	Welke agendaweergave wilt u zien wanneer u de agenda opent?
 whole day	calendar	nl	hele dag
-whole query	calendar	nl	gehele query
 wk	calendar	nl	Wk
 work day ends on	calendar	nl	Werkdag eindigt om
 work day starts on	calendar	nl	Werkdag begint om

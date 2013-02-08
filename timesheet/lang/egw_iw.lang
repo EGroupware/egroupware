@@ -1,9 +1,7 @@
-actions	timesheet	iw	פעולות
 applies the changes	timesheet	iw	מבצע את השינוים
 create new links	timesheet	iw	יצור קישורים חדשים
 creates a new field	timesheet	iw	יוצר שדה חדש
 custom fields	timesheet	iw	שדות מותאמים אישית
-delete this entry	timesheet	iw	מחק רשומה זו
 deleted	timesheet	iw	נמחקו
 deletes this field	timesheet	iw	מוחק את השדה הזה
 determines the order the fields are displayed	timesheet	iw	קובע את סדר תצוגת השדות

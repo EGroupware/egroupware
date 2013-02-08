@@ -96,7 +96,6 @@ delegation	infolog	it	Delega
 delete	infolog	it	Cancella
 delete one record by passing its id.	infolog	it	Cancella un record fornendo la sua ID
 delete the entry	infolog	it	Cancella la voce
-delete this entry	infolog	it	Cancella questa voce
 delete this entry and all listed sub-entries	infolog	it	Cancella questa voce e tutte le sotto-voci elencate
 deleted	infolog	it	cancellato
 deletes the selected typ	infolog	it	cancella il tipo selezionato

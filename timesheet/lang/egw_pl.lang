@@ -4,7 +4,6 @@
 2 month ago	timesheet	pl	2 miesiące temu
 2 years ago	timesheet	pl	2 lata temu
 3 years ago	timesheet	pl	2 lata temu
-actions	timesheet	pl	Działania
 all projects	timesheet	pl	Wszystkie projekty
 all status	timesheet	pl	Wszystkie statusy
 and its members	timesheet	pl	i jego członków
@@ -19,7 +18,6 @@ create new links	timesheet	pl	Utwórz nowe odsyłacze
 creates a new field	timesheet	pl	utwórz nowe pole
 creating new entry	timesheet	pl	Tworzenie nowego wpisu
 custom fields	timesheet	pl	Pola użytkownika
-delete this entry	timesheet	pl	Usuń ten wpis
 delete this status	timesheet	pl	Usuń wskazany status
 delete timesheet	timesheet	pl	Usuń arkusz czasu pracy
 deleted	timesheet	pl	skasowany
@@ -40,7 +38,7 @@ export to openoffice spreadsheet	timesheet	pl	Eksportuj do arkusza OpenOffice
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	pl	Exportuj wpisy ze swojego Czasu Pracy do pliku CSV (CSV - wpisy rozdzielane przecinkiem). W opcjach możesz wybrać własny separator wpisów.
 field must not be empty !!!	timesheet	pl	Powyższe pole nie może być puste!
 full: use only projectmanager	admin	pl	Pełna: zezwalaj tylko na nazwy z Menadżera Projektów
-general	timesheet	pl	Ogólnie
+general	timesheet	pl	Główne
 global categories	timesheet	pl	Kategorie globalne
 history	timesheet	pl	Historia
 id	timesheet	pl	id
@@ -77,7 +75,6 @@ saves this entry and add a new one	timesheet	pl	Zachowaj ten wpis i dodaj nowy
 select a price	timesheet	pl	Wybierz ceną
 select a project	timesheet	pl	Wybierz projekt
 select a status of the timesheet	timesheet	pl	wybierz status dla arkusza czasu pracy
-select action	timesheet	pl	Wybierz akcję
 select infolog	timesheet	pl	wybierz Dziennik
 select multiple timeshhets for a further action	timesheet	pl	wybierz wiele arkuszy czasu pracy dla dalszego przetwarzania
 select the predefined status, whan creating a new timesheet	timesheet	pl	Wybierz predefiniowany status nadawany nowym arkuszom
@@ -107,7 +104,6 @@ unitprice	timesheet	pl	Cena jednostkowa
 values for selectbox	timesheet	pl	Wartości selectboxa
 view this entry	timesheet	pl	Pokaż ten wpis
 week	timesheet	pl	Tydzień
-whole query	timesheet	pl	Całe zapytanie
 yesterday	timesheet	pl	Wczoraj
 you need to select some timesheets first	timesheet	pl	Musisz najpierw wybrać jakieś arkusze
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	pl	Twoja baza danych jest NIEAKTUALNA (%1 vs. %2), proszę uruchom %3setup%4 by zaktualizować Twoją bazę.

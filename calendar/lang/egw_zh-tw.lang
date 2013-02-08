@@ -45,7 +45,7 @@ calendar settings	admin	zh-tw	設定行事曆
 calendar-fieldname	calendar	zh-tw	行事曆欄位名稱
 can't add alarms in the past !!!	calendar	zh-tw	無法新增過去的警告！
 canceled	calendar	zh-tw	取消
-charset of file	calendar	zh-tw	檔案字元編碼
+charset of file	calendar	zh-tw	檔案字元編碼設定
 check all	calendar	zh-tw	全選
 close the window	calendar	zh-tw	關閉視窗
 compose a mail to all participants after the event is saved	calendar	zh-tw	在這個事件儲存後發信通知所有的參與人
@@ -302,7 +302,7 @@ timeframe to search	calendar	zh-tw	搜尋的時段
 timezone	calendar	zh-tw	時區
 title of the event	calendar	zh-tw	事件標題
 to many might exceed your execution-time-limit	calendar	zh-tw	處理太多資料可能會超過系統允許的處理時間
-translation	calendar	zh-tw	翻譯
+translation	calendar	zh-tw	轉換
 tue	calendar	zh-tw	二
 two weeks	calendar	zh-tw	兩週
 updated	calendar	zh-tw	更新日期
@@ -324,7 +324,6 @@ weekview without weekend	calendar	zh-tw	週曆不包含週末
 which events do you want to see when you enter the calendar.	calendar	zh-tw	當您進入行事曆時您希望看到什麼樣的行事曆。
 which of calendar view do you want to see, when you start calendar ?	calendar	zh-tw	當您開始了一個行事曆您希望看到哪個行事曆？
 whole day	calendar	zh-tw	整天
-whole query	calendar	zh-tw	整個查詢
 wk	calendar	zh-tw	週
 work day ends on	calendar	zh-tw	每日結束時間
 work day starts on	calendar	zh-tw	每日開始時間

@@ -41,7 +41,7 @@ addressbook field	addressbook	de	Adressbuch Feld
 addressbook menu	addressbook	de	Adressbuch Menü
 addressbook preferences	addressbook	de	Adressbuch Einstellungen
 addressbook the contact should be saved to	addressbook	de	Adressbuch in dem der Kontakt gespeichert werden soll
-addressbook the contact should be shown	addressbook	de	Adressbuch in dem der Kontakt angezeit werden soll
+addressbook the contact should be shown	addressbook	de	Adressbuch in dem der Kontakt angezeigt werden soll
 addressbook-fieldname	addressbook	de	Adressbuch Feldname
 addvcard	addressbook	de	VCard hinzufügen
 advanced search	addressbook	de	Erweiterte Suche
@@ -222,7 +222,7 @@ home phone	addressbook	de	Tel. privat
 home state	addressbook	de	Bundesland privat
 home street	addressbook	de	Straße privat
 home zip code	addressbook	de	PLZ privat
-how many contacts should non-admins be able to export	admin	de	Wieviele Kontakte sollen Nicht-Adminstratoren exportieren können?
+how many contacts should non-admins be able to export	admin	de	Wie viele Kontakte sollen Nicht-Adminstratoren exportieren können?
 icon	addressbook	de	Icon
 if accounts are already in ldap	admin	de	wenn die Benutzer bereits im LDAP sind
 if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das Adressbuch einen Befehl für jedes Dokument darin. Diese Befehle erlauben das angegebene Dokument mit Kontaktdaten eingefügt herunterzuladen.
@@ -363,10 +363,10 @@ start	admin	de	Starten
 startrecord	addressbook	de	Startdatensatz
 state	common	de	Bundesland
 street	common	de	Straße
-subject for email	addressbook	de	Betreff der E-mail
+subject for email	addressbook	de	Betreff der E-Mail
 successfully imported %1 records into your addressbook.	addressbook	de	%1 Kontakte wurden erfolgreich in Ihr Adressbuch importiert
 suffix	addressbook	de	Zusatz
-tag to mark positions for address labels	addressbook	de	Markierungszeichen, um die Positionen von Adressetiktetten zu markieren
+tag to mark positions for address labels	addressbook	de	Markierungszeichen, um die Positionen von Adressetiketten zu markieren
 tel home	addressbook	de	Telefon privat
 telephony integration	admin	de	Telefonie Integration
 test import (show importable records <u>only</u> in browser)	addressbook	de	Test-Import (zeigt importierbare Datensätze <u>nur</u> im Browser an)
@@ -399,7 +399,7 @@ use an extra category tab?	addressbook	de	Separaten Reiter für Kategorien verwe
 use an extra tab for private custom fields?	admin	de	Separaten Reiter für private benutzerdefinierte Felder verwenden?
 use country list	addressbook	de	Länderliste benutzen
 use setup for a full account-migration	admin	de	für eine komplette Benutzer Migration setup verwenden
-use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	de	Benutzen Sie diesen Markierungszeichen für Adressetiketten. Plazieren Sie den Inhalt, der wiederholt werden soll, zwischen zwei Markierungszeichen.
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	de	Benutzen Sie diesen Markierungszeichen für Adressetiketten. Platzieren Sie den Inhalt, der wiederholt werden soll, zwischen zwei Markierungszeichen.
 used for links and for the own sorting of the list	addressbook	de	wird für Verknüpfungen und die eigene Sortierung der Liste benutzt
 vcard	common	de	VCard
 vcards require a first name entry.	addressbook	de	VCards benötigen einen Vornamen.
@@ -419,7 +419,7 @@ which fields should be exported. all means every field stored in the addressbook
 whole query	addressbook	de	gesamte Abfrage
 work email if given, else home email	addressbook	de	Geschäftliche E-Mail wenn vorhanden, ansonsten private E-Mail
 work phone	addressbook	de	Tel dienstl.
-write (update or add) a single entry by passing the fields.	addressbook	de	Schreibt (aktualiseren oder hinzufügen) eines einzelnen Eintrags durch Übergabe der Felder
+write (update or add) a single entry by passing the fields.	addressbook	de	Schreibt (aktualisieren oder hinzufügen) eines einzelnen Eintrags durch Übergabe der Felder
 wrong - try again ...	addressbook	de	Falsch - nochmal versuchen ...
 yes, for the next three days	addressbook	de	Ja, für die nächsten drei Tage
 yes, for the next two weeks	addressbook	de	Ja, für die nächsten zwei Wochen

@@ -1,4 +1,4 @@
-%1 is not writable by you!	felamimail	de	%1 ist von Ihnen NICHT beschreibar!
+%1 is not writable by you!	felamimail	de	%1 ist von Ihnen NICHT beschreibbar!
 (no subject)	felamimail	de	(kein Betreff)
 (only cc/bcc)	felamimail	de	(nur Kopie/Blindkopie)
 (separate multiple addresses by comma)	felamimail	de	(mehrere Adressen durch Komma trennen)
@@ -54,7 +54,7 @@ check message against next rule also	felamimail	de	Nachricht auch gegen nächste
 checkbox	felamimail	de	Auswahlbox
 choose from vfs	felamimail	de	aus dem VFS auswählen
 clear search	felamimail	de	Suche zurücksetzen
-click here to log back in.	felamimail	de	Hier klicken um sich wieder einzulogen.
+click here to log back in.	felamimail	de	Hier klicken um sich wieder anzumelden.
 click here to return to %1	felamimail	de	Hier klicken um zu %1 zurückzukehren
 close all	felamimail	de	Schließe alle
 close this page	felamimail	de	Diese Seite schließen
@@ -235,16 +235,16 @@ if shown, which folders should appear on main screen	felamimail	de	Welche Ordner
 if subject contains	felamimail	de	wenn Betreff enthält
 if to contains	felamimail	de	wenn An enthält
 if using ssl or tls, you must have the php openssl extension loaded.	felamimail	de	Wenn Sie SSL oder TLS benutzen, muss die openssl PHP Erweiterung geladen sein.
-illegal folder name.  please select a different name.	felamimail	de	Ilegaler Ordnername. Bitte wählen Sie einen anderen Namen.
+illegal folder name.  please select a different name.	felamimail	de	ungültiger Ordnername. Bitte wählen Sie einen anderen Namen.
 imap	felamimail	de	IMAP
 imap server	felamimail	de	IMAP Server
 imap server address	felamimail	de	IMAP Server Adresse
 imap server closed the connection.	felamimail	de	IMAP Server hat die Verbindung beendet.
-imap server closed the connection. server responded: %s	felamimail	de	IMAP Server hat die Verbindung beendet. Server antworted: %s
+imap server closed the connection. server responded: %s	felamimail	de	IMAP Server hat die Verbindung beendet. Server antwortet: %s
 imap server password	felamimail	de	IMAP Server Password
 imap server type	felamimail	de	IMAP-Servertyp
 imap server username	felamimail	de	IMAP Server Benutzername
-imaps authentication	felamimail	de	IMAPS Authetifizierung
+imaps authentication	felamimail	de	IMAPS Authentifizierung
 imaps encryption only	felamimail	de	IMAPS nur Verschlüsselung
 import	felamimail	de	Importieren
 import mail	felamimail	de	E-Mail Importieren
@@ -357,7 +357,7 @@ please select the number of days to wait between responses	felamimail	de	Bitte w
 please supply the message to send with auto-responses	felamimail	de	Bitte geben Sie eine Nachricht ein, die mit der automatischen Antwort gesendet werden soll
 port	felamimail	de	Port
 posting	felamimail	de	sende
-preview disabled for folder:	felamimail	de	Die Vorschau für eMails wird in dem ausgewählten Ordner nicht unterstützt:
+preview disabled for folder:	felamimail	de	Die Vorschau für E-Mails wird in dem ausgewählten Ordner nicht unterstützt:
 previous	felamimail	de	vorherige
 previous message	felamimail	de	vorherige Nachricht
 print it	felamimail	de	E-Mail drucken
@@ -482,13 +482,13 @@ use a signature	felamimail	de	Signatur benutzen
 use a signature?	felamimail	de	Eine Signatur benutzen?
 use addresses	felamimail	de	Adresse benutzen
 use custom identities	felamimail	de	benutze benutzerdefinierte Identitäten
-use custom settings	felamimail	de	benutze angepaßte Einstellungen
+use custom settings	felamimail	de	benutze angepasste Einstellungen
 use regular expressions	felamimail	de	reguläre Ausdrücke verwenden
 use smtp auth	admin	de	SMTP Authentifizierung benutzen
 users can define their own emailaccounts	admin	de	Anwender können ihre eigenen Konten definieren
 vacation notice	common	de	Abwesenheitsnotiz
 vacation notice is active	felamimail	de	Abwesenheitsnotiz ist aktiv
-vacation start-date must be before the end-date!	felamimail	de	Startdatum der Abwesenheitsnotiz muss VOR dem Endedatum liegen!
+vacation start-date must be before the end-date!	felamimail	de	Startdatum der Abwesenheitsnotiz muss VOR dem Enddatum liegen!
 validate certificate	felamimail	de	Zertifikat überprüfen
 view full header	felamimail	de	alle Kopfzeilen anzeigen
 view header lines	felamimail	de	Kopfzeilen anzeigen
@@ -505,6 +505,6 @@ wrap incoming text at	felamimail	de	Text umbrechen nach
 writing	felamimail	de	schreiben
 wrote	felamimail	de	schrieb
 yes, offer copy option	felamimail	de	Ja, mit Kopieroption
-you can use %1 for the above start-date and %2 for the end-date.	felamimail	de	Sie können %1 für das obige Startdatum und %2 für das Endedatum verwenden.
+you can use %1 for the above start-date and %2 for the end-date.	felamimail	de	Sie können %1 für das obige Startdatum und %2 für das Enddatum verwenden.
 you have received a new message on the	felamimail	de	Sie haben eine neue Nachricht erhalten:
 your message to %1 was displayed.	felamimail	de	Ihre Nachricht an %1 wurde angezeigt.

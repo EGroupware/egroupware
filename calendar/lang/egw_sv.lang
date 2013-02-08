@@ -56,7 +56,7 @@ category acl	calendar	sv	Kategori-ACL
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	sv	Kategori-ACL begränsar bara inlagning av nya kategorier till en händelse samt ändra status för en deltagare. Det påverkar INTE synligheten av händelsen!
 chair	calendar	sv	Ägare
 change history	calendar	sv	Ändra historien
-charset of file	calendar	sv	Filens teckenuppsättning
+charset of file	calendar	sv	Teckenuppsättning för filen
 check all	calendar	sv	Markera alla
 close the window	calendar	sv	Stäng fönstret
 compose a mail to all participants after the event is saved	calendar	sv	Skicka e-post till alla deltagare efter att händelsen sparats
@@ -138,7 +138,7 @@ exception created - you can now edit or delete it	calendar	sv	Undantag skapat - 
 exceptions	calendar	sv	Undantag
 execute a further action for this entry	calendar	sv	Utför fler åtgärder för posten
 existing links	calendar	sv	Nuvarande länkar
-export	calendar	sv	Export
+export	calendar	sv	Exportera
 extended	calendar	sv	Utökad
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	sv	Utökade uppdateringar inkluderar alltid all händelse info. iCal kan importeras av vissa andra applikationer.
 fieldseparator	calendar	sv	Fältavskiljare
@@ -188,7 +188,7 @@ ical successful imported	calendar	sv	iCal importerad
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	sv	Markerade helgdagar som infaller under veckoslut tas ut efterföljande måndag.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	sv	Om du inte sätter ett lösenord här, är informationen tillgänglig för alla som kan hitta sidan!!
 ignore conflict	calendar	sv	Ignorera schema konflikt
-import	calendar	sv	Import
+import	calendar	sv	Importera
 import csv-file	common	sv	Importera CSV fil
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	sv	Importerar händelser in i din kalender från en CSV-fil. CSV betyder 'Kommaavgränsade värden', men du kan välja en annan avgränsare i tabben Inställningar.
 interval	calendar	sv	Intervall
@@ -399,7 +399,6 @@ weekview without weekend	calendar	sv	Vecka utan veckoslut
 which events do you want to see when you enter the calendar.	calendar	sv	Vilka händelser vill du se när du öppnar kalendern?
 which of calendar view do you want to see, when you start calendar ?	calendar	sv	Vilken vy vill du se när du öppnar kalendern?
 whole day	calendar	sv	Heldag
-whole query	calendar	sv	Hela frågan
 wk	calendar	sv	Arb
 work day ends on	calendar	sv	Arbetsdag slutar
 work day starts on	calendar	sv	Arbetsdag börjar

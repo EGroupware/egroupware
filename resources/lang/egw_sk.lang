@@ -19,11 +19,11 @@ check all	resources	sk	Označ všetko
 choose categories admin	resources	sk	Vyberte správcu kategórií
 clear selection	resources	sk	Zrušiť výber
 configure access permissions	admin	sk	Nastaviť prístupové práva
-conflict	resources	sk	konflikt
+conflict	resources	sk	Konflikt
 create new accessory for this resource	resources	sk	Vytvoriť novú kategóriu pre tento zdroj
 create new links	resources	sk	Vytvoriť nové odkazy
 custom fields	resources	sk	Vlastné polia
-days	resources	sk	Dní
+days	resources	sk	dní
 delete selected resources	resources	sk	Odstrániť vybrané zdroje
 delete this entry	resources	sk	Odstrániť túto položku
 description (short)	resources	sk	Popis (stručný)

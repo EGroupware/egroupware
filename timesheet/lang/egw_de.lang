@@ -33,7 +33,7 @@ entry saved	timesheet	de	Eintrag gespeichert
 error deleting the entry!!!	timesheet	de	Fehler beim Löschen des Eintrags!!!
 error saving the entry!!!	timesheet	de	Fehler beim Speichern des Eintrags!!!
 existing links	timesheet	de	Bestehende Verknüpfungen
-export	timesheet	de	Exportieren
+export	timesheet	de	Export
 export to openoffice spreadsheet	timesheet	de	zu Open Office exortieren
 exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	de	Exportiert die Einträge des Stundenzettels in eine CSV Datei. CSV bedeutet, Komma getrennte Werte. In dem options Tab können Sie andere Trennzeichen festlegen.
 field must not be empty !!!	timesheet	de	Dieses Feld darf nicht leer sein!!!

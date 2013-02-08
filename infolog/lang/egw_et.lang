@@ -68,7 +68,6 @@ delegated	infolog	et	delegeeritud
 delegated open	infolog	et	delegeeritud avatud
 delegation	infolog	et	Delekatsioon
 delete	infolog	et	Kustuta
-delete this entry	infolog	et	kustuta see kirje
 delete this entry and all listed sub-entries	infolog	et	Kustuta see kirje ja kõik alamkirjed
 deleted	infolog	et	kustutatud
 deletes the selected typ	infolog	et	kustutab märgitud tüübi
@@ -102,7 +101,7 @@ global categories	infolog	et	Globaalsed Kategooriad
 high	infolog	et	kõrge
 history	infolog	et	Ajalugu
 id	infolog	et	Id
-import	infolog	et	impordi
+import	infolog	et	Import
 info log	common	et	InfoLog
 infolog	common	et	InfoLog
 infolog - delete	infolog	et	Info Log - Kustuta
@@ -138,7 +137,6 @@ offer	infolog	et	pakkumine
 one day after	infolog	et	üks päev pärast
 one day in advance	infolog	et	üks päev enne
 ongoing	infolog	et	käimasolev
-open	infolog	et	avatud
 own	infolog	et	endaoma
 own open	infolog	et	endaoma avatud
 percent completed	infolog	et	Protsent valmis
@@ -173,7 +171,7 @@ status ...	infolog	et	Staatus ...
 sub	infolog	et	Alam
 subject	infolog	et	Subjekt
 today	infolog	et	Täna
-translation	infolog	et	Tõlge
+translation	infolog	et	Tõlkimine
 typ	infolog	et	Tüüp
 typ '%1' already exists !!!	infolog	et	Tüüp '%1' eksisteerib juba !!!
 type	infolog	et	Tüüp

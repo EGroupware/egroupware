@@ -2,7 +2,6 @@
 2 month ago	timesheet	fr	Il y a 2 mois
 2 years ago	timesheet	fr	Il y a 2 ans
 3 years ago	timesheet	fr	Il y a 3 ans
-actions	timesheet	fr	Actions
 all projects	timesheet	fr	Tous les projets
 applies the changes	timesheet	fr	appliquer les changements
 both: allow to use projectmanager and free project-names	admin	fr	Les deux: permettre l'utilisation du Gestionnaire de projets et l'utilisation de noms de projets libres
@@ -13,7 +12,6 @@ create new links	timesheet	fr	Créer de nouveaux liens
 creates a new field	timesheet	fr	Créer un nouveau champ
 creating new entry	timesheet	fr	nouvelle entrée en création
 custom fields	timesheet	fr	Champs personnalisés
-delete this entry	timesheet	fr	Supprimer cette entrée
 delete this status	timesheet	fr	Supprimer ce status
 deleted	timesheet	fr	supprimé
 deletes this field	timesheet	fr	Supprimer ce champ
@@ -76,6 +74,5 @@ unitprice	timesheet	fr	Prix à l'unité
 values for selectbox	timesheet	fr	Valeurs des boîtes de sélection
 view this entry	timesheet	fr	Voir cette entrée
 week	timesheet	fr	Semaine
-whole query	timesheet	fr	requête entière
 yesterday	timesheet	fr	Hier
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	fr	Votre base de données n'est PAS à jour (%1 contre %2), veuillez exécuter %3setup%4 pour mettre à jour votre base de données.

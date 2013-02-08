@@ -47,7 +47,7 @@ calendar settings	admin	zh	日历设置
 calendar-fieldname	calendar	zh	日历-字段名
 can't add alarms in the past !!!	calendar	zh	不能在过去添加闹铃！
 canceled	calendar	zh	取消
-charset of file	calendar	zh	文件字符编码
+charset of file	calendar	zh	文件的字符集
 check all	calendar	zh	全选
 close the window	calendar	zh	关闭窗口
 compose a mail to all participants after the event is saved	calendar	zh	在事件保存后发邮件通知每一个参与者
@@ -136,7 +136,7 @@ freetime search	calendar	zh	空闲时间搜寻
 fri	calendar	zh	五
 full description	calendar	zh	完整描述
 fullname of person to notify	calendar	zh	被通知者的全名
-general	calendar	zh	常规
+general	calendar	zh	通用
 global categories	calendar	zh	全局分类
 global public and group public	calendar	zh	全局公用及群组公用
 global public only	calendar	zh	全局公用
@@ -332,7 +332,6 @@ weekview without weekend	calendar	zh	周视图 (无周末)
 which events do you want to see when you enter the calendar.	calendar	zh	当您进入日历时您希望看到哪一个事件。
 which of calendar view do you want to see, when you start calendar ?	calendar	zh	当您开始一个日历时，您希望看到哪一个日历视图？
 whole day	calendar	zh	整天
-whole query	calendar	zh	完整查询
 wk	calendar	zh	周
 work day ends on	calendar	zh	工作日结束时间
 work day starts on	calendar	zh	工作日开始时间

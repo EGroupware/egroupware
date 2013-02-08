@@ -1,11 +1,9 @@
-actions	timesheet	ca	Accions
 applies the changes	timesheet	ca	aplica els canvis
 by	timesheet	ca	per
 check all	timesheet	ca	Comprova-ho tot
 create new links	timesheet	ca	Crear nous enllaços
 creates a new field	timesheet	ca	crea un camp nou
 custom fields	timesheet	ca	Camps personalitzats
-delete this entry	timesheet	ca	esborrar aquesta entrada
 deleted	timesheet	ca	eliminat
 deletes this field	timesheet	ca	esborra aquest camp
 determines the order the fields are displayed	timesheet	ca	determina l'ordre en que es mostren els camps
@@ -42,5 +40,4 @@ the text displayed to the user	timesheet	ca	el text mostrat a l'usuari
 unitprice	timesheet	ca	Unitat de Preu
 values for selectbox	timesheet	ca	Valors per a llista desplegable
 week	timesheet	ca	Setmana
-whole query	timesheet	ca	consulta sencera
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	ca	La teva base de dades NO està al dia (%1 vs. %2), per favor, executa %3setup%4 per actualitzar la teva base de dades.

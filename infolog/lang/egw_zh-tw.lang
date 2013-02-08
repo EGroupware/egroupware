@@ -61,7 +61,7 @@ cancelled	infolog	zh-tw	取消了
 categories	infolog	zh-tw	分類
 category	infolog	zh-tw	類別
 change the status of an entry, eg. close it	infolog	zh-tw	修改資料狀態，例如：關閉
-charset of file	infolog	zh-tw	檔案字元編碼
+charset of file	infolog	zh-tw	檔案字元編碼設定
 check all	infolog	zh-tw	全選
 check to set startday	infolog	zh-tw	設定開始日期
 check to specify custom contact	infolog	zh-tw	勾選這個項目來指定自訂聯絡人
@@ -110,7 +110,6 @@ delegation	infolog	zh-tw	授權
 delete	infolog	zh-tw	刪除
 delete one record by passing its id.	infolog	zh-tw	透過傳遞ID來刪除記錄
 delete the entry	infolog	zh-tw	刪除這個事件
-delete this entry	infolog	zh-tw	刪除這個事件
 delete this entry and all listed sub-entries	infolog	zh-tw	刪除這筆資料與所有附屬的項目
 deleted	infolog	zh-tw	刪除了
 deletes the selected typ	infolog	zh-tw	刪除這個格式
@@ -237,7 +236,6 @@ only for details	infolog	zh-tw	只顯示細節
 only if i get assigned or removed	infolog	zh-tw	只在我被指派或移除時
 only the attachments	infolog	zh-tw	只有附加檔案
 only the links	infolog	zh-tw	只有連結
-open	infolog	zh-tw	開啟
 optional note to the link	infolog	zh-tw	連結的附加說明
 order	infolog	zh-tw	順序
 organization	infolog	zh-tw	組織
@@ -345,7 +343,7 @@ to what should the startdate of new entries be set.	infolog	zh-tw	新資料的�
 today	infolog	zh-tw	今天
 todays date	infolog	zh-tw	今天日期
 todo	infolog	zh-tw	待辦事項
-translation	infolog	zh-tw	翻譯
+translation	infolog	zh-tw	轉換
 typ	infolog	zh-tw	格式
 typ '%1' already exists !!!	infolog	zh-tw	'%1' 格式已經存在！
 type	infolog	zh-tw	格式
@@ -369,7 +367,6 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	zh-tw	哪些額外欄位即使負責人沒有編輯權限也能夠編輯？<br />狀態、比率與完成日期預設都會允許。
 which implicit acl rights should the responsible get?	infolog	zh-tw	負責人可以取得哪個隱含的權限？
 which types should the calendar show	infolog	zh-tw	行事曆要顯示哪些類型
-whole query	infolog	zh-tw	整個查詢
 will-call	infolog	zh-tw	將連絡
 write (add or update) a record by passing its fields.	infolog	zh-tw	透過傳遞它的欄位來寫入(新增或更新)一筆記錄
 yes - delete	infolog	zh-tw	確定 - 刪除

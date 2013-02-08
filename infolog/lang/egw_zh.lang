@@ -47,7 +47,7 @@ cancel	infolog	zh	取消
 categories	infolog	zh	类别
 category	infolog	zh	类别
 change the status of an entry, eg. close it	infolog	zh	更改该事项的状态.
-charset of file	infolog	zh	文件编码
+charset of file	infolog	zh	文件的字符集
 check all	infolog	zh	全选
 check to set startday	infolog	zh	选中此项设定起始日期
 choose owner of imported data	infolog	zh	选择导入数据的拥有者
@@ -89,7 +89,6 @@ delegation	infolog	zh	委派
 delete	infolog	zh	删除
 delete one record by passing its id.	infolog	zh	通过事项ID删除事件
 delete the entry	infolog	zh	删除该事项
-delete this entry	infolog	zh	删除该事项
 deleted	infolog	zh	已删除
 deletes the selected typ	infolog	zh	删除选定类型
 deletes this field	infolog	zh	删除该字段
@@ -189,7 +188,6 @@ offer	infolog	zh	等待回应
 ongoing	infolog	zh	正在进行
 only the attachments	infolog	zh	仅显示关联文件
 only the links	infolog	zh	仅显示关联条目
-open	infolog	zh	待决事项
 optional note to the link	infolog	zh	该关联的说明
 order	infolog	zh	顺序
 organization	infolog	zh	组织
@@ -283,7 +281,6 @@ view subs	infolog	zh	查看子任务
 view the parent of this entry and all his subs	infolog	zh	查看该条目的父任务及所有子任务
 view this linked entry in its application	infolog	zh	查看该关联
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	zh	事项的起始日期, 仅对任务和函电有效.it shows up from that date in the filter open or own open (startpage)
-whole query	infolog	zh	完整查询
 will-call	infolog	zh	将致电
 write (add or update) a record by passing its fields.	infolog	zh	通过事项的字段写入(新增或更新)一个记录
 yes - delete	infolog	zh	是

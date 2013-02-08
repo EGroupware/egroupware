@@ -2,7 +2,6 @@
 2 month ago	timesheet	pt-br	2 meses atrás
 2 years ago	timesheet	pt-br	2 anos atrás
 3 years ago	timesheet	pt-br	3 anos atrás
-actions	timesheet	pt-br	Ações
 all projects	timesheet	pt-br	Todos projetos
 applies the changes	timesheet	pt-br	aplicar as alterações
 both: allow to use projectmanager and free project-names	admin	pt-br	Ambos: permitir usar Gerenciador de Projetos e nomes de projetos livres
@@ -13,7 +12,6 @@ create new links	timesheet	pt-br	Criar novos links
 creates a new field	timesheet	pt-br	criar um novo campo
 creating new entry	timesheet	pt-br	criando novo registro
 custom fields	timesheet	pt-br	Campos personalizados
-delete this entry	timesheet	pt-br	Remover este registro
 delete this status	timesheet	pt-br	Remover este status
 deleted	timesheet	pt-br	removido
 deletes this field	timesheet	pt-br	Remover este campo
@@ -83,6 +81,5 @@ unitprice	timesheet	pt-br	Unidade de preço
 values for selectbox	timesheet	pt-br	Valores para a caixa de seleção
 view this entry	timesheet	pt-br	Exibir este registro
 week	timesheet	pt-br	Semana
-whole query	timesheet	pt-br	toda a consulta
 yesterday	timesheet	pt-br	Ontem
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	pt-br	Sua base de dados NÃO está atualizada (%1 x %2). Por favor execute %3setup%4 para atualizá-la.

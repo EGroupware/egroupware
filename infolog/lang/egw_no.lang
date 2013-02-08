@@ -47,7 +47,7 @@ cancelled	infolog	no	Kansellert
 categories	infolog	no	Kategorier
 category	infolog	no	Kategori
 change the status of an entry, eg. close it	infolog	no	Endre status på innslag, f.eks lukke saken
-charset of file	infolog	no	Filens karaktersett
+charset of file	infolog	no	Karaktersett for filen
 check all	infolog	no	Kontroller alle
 check to set startday	infolog	no	velg for å sette startdag
 click here to create the link	infolog	no	klikk her for å lage lenke
@@ -88,7 +88,6 @@ delegation	infolog	no	Delegering
 delete	infolog	no	Slett
 delete one record by passing its id.	infolog	no	Slett en rekke etter ID
 delete the entry	infolog	no	Slett dette forekomsten
-delete this entry	infolog	no	slett dette forekomsten
 delete this entry and all listed sub-entries	infolog	no	Slette dette forekomsten og alle listede underforekomster
 deleted	infolog	no	slettet
 deletes the selected typ	infolog	no	sletter valgt type
@@ -131,7 +130,7 @@ high	infolog	no	høy
 history	infolog	no	Historikk
 id	infolog	no	Id
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	no	Dersom ikke satt, linjen med søk og filter er skjult dersom færre antall enn "maks antall pr. side" (som definert i globale preferanser).
-import	infolog	no	Import
+import	infolog	no	Importer
 import next set	infolog	no	importer neste sett
 info log	common	no	Infologg
 infolog	common	no	Infologg
@@ -188,7 +187,6 @@ offer	infolog	no	tilbud
 ongoing	infolog	no	pågående
 only the attachments	infolog	no	kun vedlegg
 only the links	infolog	no	kun lenker
-open	infolog	no	åpen
 optional note to the link	infolog	no	valgfri notat om Lenken
 order	infolog	no	Ordre
 organization	infolog	no	organisasjon

@@ -61,7 +61,7 @@ cancelled	infolog	ru	отменено
 categories	infolog	ru	Категории
 category	infolog	ru	Категория
 change the status of an entry, eg. close it	infolog	ru	Изменить состояние записи, например - закрыть ее.
-charset of file	infolog	ru	Кодировка файла.
+charset of file	infolog	ru	Кодировка файла
 check all	infolog	ru	Отметить все
 check to set startday	infolog	ru	отметить, чтобы установить дату начала
 check to specify custom contact	infolog	ru	Отметить для указания пользовательского контакта
@@ -102,6 +102,7 @@ datecreated	infolog	ru	дата создания
 dates, status, access	infolog	ru	Даты, Состояние, Доступ
 days	infolog	ru	дни
 default category for new infolog entries	infolog	ru	Категория по умолчанию для новых записей ИнфоЖурнала
+default document to insert entries	infolog	ru	Документ по умолчанию для вставки записей
 default filter for infolog	infolog	ru	Фильтр по Умолчанию для ИнфоЖурнала
 default status for a new log entry	infolog	ru	статус по умолчанию для новой записи журнала
 delegated	infolog	ru	назначеные
@@ -112,7 +113,6 @@ delegation	infolog	ru	Назначение
 delete	infolog	ru	Удалить
 delete one record by passing its id.	infolog	ru	Удалить одну запись по ее идентификатору
 delete the entry	infolog	ru	Удалить запись
-delete this entry	infolog	ru	Удалить эту запись
 delete this entry and all listed sub-entries	infolog	ru	Удалить эту запись и все перечисленные под-записи
 deleted	infolog	ru	удален
 deletes the selected typ	infolog	ru	удаляет выбранный тип
@@ -120,6 +120,7 @@ deletes this field	infolog	ru	удаляет это поле
 deletes this status	infolog	ru	удаляет это состояние
 description	infolog	ru	Описание
 determines the order the fields are displayed	infolog	ru	оперделяет порядок, в котором отображаются поля
+directory with documents to insert entries	infolog	ru	Каталог с документами для вставки
 disables a status without deleting it	infolog	ru	отключает состояние без удаления его
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	ru	хотите ли Вы подтверждения принятия под ответственность на: принятие, завершение задания или на оба.
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	ru	Вы желаете получать напоминания, при назначении вам заданий(записей) или при их изменении?
@@ -161,7 +162,7 @@ finish	infolog	ru	окончание
 for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	ru	Для последовательности писем используйте эту метку. Поместите текст, который вы желаете повторять между двух меток.
 for which types should this field be used	infolog	ru	для каких типов это поле должно быть использовано
 from	infolog	ru	Из
-general	infolog	ru	Общий
+general	infolog	ru	Общее
 general fields:	infolog	ru	Основные поля:
 global categories	infolog	ru	Общие Категории
 group owner for	infolog	ru	Группа-владелец для
@@ -169,12 +170,15 @@ high	infolog	ru	высокий
 history	infolog	ru	История
 history logging	infolog	ru	Запись истории
 history logging and deleting of items	infolog	ru	Журналирование истории и удаление записей
+how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	ru	Сколько строк будет видно сразу. Следующие строки видны через полосу прокрутки
 id	infolog	ru	Ид
 id#	infolog	ru	Ид№
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	ru	Если тип имеет группу-владельца, все записи этого типа будут иметь владельцем данную группу, а НЕ пользователя, который их создал!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	ru	Если не установлено, строка с поиском и фильтрами скрыта для количества записей меньшего, чем "макс. совпадений на страницу" (как определено в ваших общих настройках)
+if you specify an export definition, it will be used when you export	infolog	ru	если вы укажете оперделения для экспорта, оно будет использоваться при экспорте
 import	infolog	ru	Импорт
 import next set	infolog	ru	Импортировать следующий набор
+importance	infolog	ru	Значение
 info log	common	ru	ИнфоЖурнал
 infolog	common	ru	ИнфоЖурнал
 infolog - delete	infolog	ru	ИнфоЖурнал - Удаление
@@ -242,7 +246,6 @@ only for details	infolog	ru	Только для подробностей
 only if i get assigned or removed	infolog	ru	Только если Я  присоединен или отсоединен
 only the attachments	infolog	ru	только вложения
 only the links	infolog	ru	только ссылки
-open	infolog	ru	открытые
 optional note to the link	infolog	ru	необязательная заметка к Ссылке
 order	infolog	ru	Порядок
 organization	infolog	ru	Организация
@@ -309,6 +312,7 @@ select an entry to link with	infolog	ru	Выбрать запись, с кото
 select multiple contacts for a further action	infolog	ru	Выбрать несколько контактов для дальнейшего действия
 select to filter by owner	infolog	ru	выбрать для фильтрации по владельцу
 select to filter by responsible	infolog	ru	выбрать для фильтрации по ответственному
+sender	infolog	ru	Отправитель
 sets the status of this entry and its subs to done	infolog	ru	Устанавливает состояние этой записи и ей подчиненных в "сделано"
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	ru	Должен ли ИнфоЖурнал показывает подзадания, -звонки или -заметки в нормальном виде или нет. Вы всегда можете посмотреть подэлементы через их родителей.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	ru	Должен ли ИнфоЖурнал показывать ссылки на другие приложения и/или прикрепленные файлы в списке ИнфоЖурнала (нормальный вид при входе в ИнфоЖурнал)
@@ -376,7 +380,6 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	ru	Какие дополнительные поля должен мочь редактировать ответственный, не имея прав на редактирование?<br/>Состояние, процент и дата завершения уже разрешены.
 which implicit acl rights should the responsible get?	infolog	ru	Какие подразумеваемые права ACL должен получить ответственный?
 which types should the calendar show	infolog	ru	Какие типы календарь должен показывать
-whole query	infolog	ru	весь запрос
 will-call	infolog	ru	позвонит
 write (add or update) a record by passing its fields.	infolog	ru	Запишите (добавьте или обновите) запись прохождением её полей.
 yes - delete	infolog	ru	Да - Удалить

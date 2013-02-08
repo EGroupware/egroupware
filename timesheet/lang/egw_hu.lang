@@ -2,7 +2,6 @@
 2 month ago	timesheet	hu	2 hónappal korábban
 2 years ago	timesheet	hu	2 évvel korábban
 3 years ago	timesheet	hu	3 évvel korábban
-actions	timesheet	hu	Műveletek
 all projects	timesheet	hu	Összes projekt
 applies the changes	timesheet	hu	változások végrehajtása
 both: allow to use projectmanager and free project-names	admin	hu	Mindkettő: lehetővé teszi a ProjectManager és a szabad projekt nevek használatát
@@ -13,7 +12,6 @@ create new links	timesheet	hu	Új hivatkozás létrehozása
 creates a new field	timesheet	hu	Új mező létrehozása
 creating new entry	timesheet	hu	új bejegyzés létrehozása
 custom fields	timesheet	hu	Egyedi mezõk
-delete this entry	timesheet	hu	Bejegyzés törlése
 deleted	timesheet	hu	törölve
 deletes this field	timesheet	hu	Aktuális mező törlése
 determines the order the fields are displayed	timesheet	hu	megjelenített mezők rendezésének meghatározása
@@ -78,6 +76,5 @@ unitprice	timesheet	hu	Egységár
 values for selectbox	timesheet	hu	Éktékek a kiválasztódoboznak
 view this entry	timesheet	hu	Bejegyzés megtekintése
 week	timesheet	hu	hét
-whole query	timesheet	hu	teljes lekérdezés
 yesterday	timesheet	hu	Tegnap
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	hu	Az adatbázis nem friss (%1 <-> %2), kérjük %3frissítse%4 az adatbázist.

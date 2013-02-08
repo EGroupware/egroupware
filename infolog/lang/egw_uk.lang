@@ -69,7 +69,6 @@ default status for a new log entry	infolog	uk	Типовий статус нов
 delegation	infolog	uk	Делегування
 delete	infolog	uk	Видалити
 delete the entry	infolog	uk	Видалити цей запис
-delete this entry	infolog	uk	видалити цей запис
 deleted	infolog	uk	Видалено
 deletes the selected typ	infolog	uk	видаляє вибраний тип
 deletes this field	infolog	uk	видаляє це поле
@@ -150,7 +149,6 @@ offer	infolog	uk	пропозиція
 ongoing	infolog	uk	в роботі
 only the attachments	infolog	uk	тільки додатки
 only the links	infolog	uk	тільки посилання
-open	infolog	uk	відкрито
 optional note to the link	infolog	uk	необов'язкова примітка до Посилання
 order	infolog	uk	Послідовність
 overdue	infolog	uk	прострочено

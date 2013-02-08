@@ -500,7 +500,6 @@ the text displayed to the user	admin	cs	text zobrazený uživateli
 the two passwords are not the same	admin	cs	Zadaná hesla se neshodují
 the users bellow are still members of group %1	admin	cs	níže uvedení uživatelé jsou stále členy skupiny %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	cs	Skupina s tímto jménem již existuje. Uživatelé a skupiny nemohou mít stejná id.
-there already is a system-user with this name. user's should not have the same name as a systemuser	admin	cs	Už existuje systémový uživatel tohoto jména. Uživatelé by neměli mít stejná jména jako systémoví uživatelé
 they must be removed before you can continue	admin	cs	Musí být odstraněni, aby jste mohl(a) pokračovat
 this application is current	admin	cs	Tato aplikace je aktuální
 this application requires an upgrade	admin	cs	Tato aplikace vyžaduje aktualizaci

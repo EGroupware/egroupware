@@ -1,9 +1,7 @@
-actions	timesheet	hr	Akcije
 applies the changes	timesheet	hr	Prihvaćanje promjena
 create new links	timesheet	hr	Create new links
 creates a new field	timesheet	hr	stvara novo polje
 custom fields	timesheet	hr	Proizvoljno Polje
-delete this entry	timesheet	hr	Obriši ovaj zapis
 deleted	timesheet	hr	Obrisano
 deletes this field	timesheet	hr	obriši ova polja
 determines the order the fields are displayed	timesheet	hr	Određuje redosljed prikazivanja polja

@@ -1,11 +1,9 @@
-actions	timesheet	el	Ενέργειες
 applies the changes	timesheet	el	εφαρμόζει τις αλλαγές
 by	timesheet	el	μέσω
 check all	timesheet	el	Έλεγχος όλων
 create new links	timesheet	el	Δημιουργία νέων συνδέσμων
 creates a new field	timesheet	el	δημιουργεί νέο πεδίο
 custom fields	timesheet	el	Προσαρμοσμένα πεδία
-delete this entry	timesheet	el	δαγραφή αυτής της καταχώρησης
 deleted	timesheet	el	διεγράφη
 deletes this field	timesheet	el	διαγράφει αυτό το πεδίο
 determines the order the fields are displayed	timesheet	el	καθορίζει τη σειρά εμφάνισης των πεδίων
@@ -40,5 +38,4 @@ the name used internaly (<= 20 chars), changeing it makes existing data unavaili
 the text displayed to the user	timesheet	el	το κείμενο που προβάλεται στον χρήστη
 values for selectbox	timesheet	el	Αξίες του επιλεγμένου κουτιού
 week	timesheet	el	Εβδομάδα
-whole query	timesheet	el	ολόκληρη απορία
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	el	Το ηλεκτρονικό σας αρχείο ΔΕΝ είναι ενημερωμένο (%1 vs. %2), παρακαλώ τρέξτε %3setup%4  για να ενημερώσετε το ηλεκτρονικό σας αρχείο.

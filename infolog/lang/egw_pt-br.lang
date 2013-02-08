@@ -61,7 +61,7 @@ cancelled	infolog	pt-br	Cancelada
 categories	infolog	pt-br	Categorias
 category	infolog	pt-br	Categoria
 change the status of an entry, eg. close it	infolog	pt-br	Alterar o status de um registro (ex. fechado)
-charset of file	infolog	pt-br	Conjunto de carácteres do arquivo
+charset of file	infolog	pt-br	Charset do arquivo
 check all	infolog	pt-br	Verificar todos
 check to set startday	infolog	pt-br	Selecione para determinar a data de início
 check to specify custom contact	infolog	pt-br	Marque para especificar contato personalizado
@@ -112,7 +112,6 @@ delegation	infolog	pt-br	Atribuição
 delete	infolog	pt-br	Apagar
 delete one record by passing its id.	infolog	pt-br	Apagar um registro contornando seu id.
 delete the entry	infolog	pt-br	Apagar o registro
-delete this entry	infolog	pt-br	Apagar este registro
 delete this entry and all listed sub-entries	infolog	pt-br	Apagar este registro e todos os sub-registros listados
 deleted	infolog	pt-br	removido
 deletes the selected typ	infolog	pt-br	Apagar os tipos selecionados
@@ -242,7 +241,6 @@ only for details	infolog	pt-br	Somente para detalhes
 only if i get assigned or removed	infolog	pt-br	Somente se eu for designado ou removido
 only the attachments	infolog	pt-br	apenas arquivos anexos
 only the links	infolog	pt-br	apenas links
-open	infolog	pt-br	abrir
 optional note to the link	infolog	pt-br	Nota opcional para o Link
 order	infolog	pt-br	Ordem
 organization	infolog	pt-br	organização
@@ -376,7 +374,6 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	pt-br	Que registros adicionais o responsável estará autorizado a editar sem ter acesso à edição?<br/>Status, percentagem e data de finalização são sempre autorizados.
 which implicit acl rights should the responsible get?	infolog	pt-br	Que direitos implícitos o responsável deverá receber ?
 which types should the calendar show	infolog	pt-br	Quais tipos deverão ser exibidos pela Agenda
-whole query	infolog	pt-br	toda a consulta
 will-call	infolog	pt-br	a chamar
 write (add or update) a record by passing its fields.	infolog	pt-br	Escrever (adicionar ou atualizar) um registro contornando seus campos.
 yes - delete	infolog	pt-br	Sim - Apagar

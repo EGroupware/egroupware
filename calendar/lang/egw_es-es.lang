@@ -139,7 +139,7 @@ exception created - you can now edit or delete it	calendar	es-es	Se ha creado la
 exceptions	calendar	es-es	Excepciones
 execute a further action for this entry	calendar	es-es	Ejecutar una acción más para esta entrada
 existing links	calendar	es-es	Enlaces existentes
-export	calendar	es-es	Exportar
+export	calendar	es-es	exportar
 extended	calendar	es-es	Extendido
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	es-es	Las actualizaciones extendidas incluyen todos los detalles de los eventos. Los de tipo iCal pueden importarse mediante otras aplicaciones de tipo calendario.
 fieldseparator	calendar	es-es	Separador de campos
@@ -403,7 +403,6 @@ weekview without weekend	calendar	es-es	Vista semanal sin fin de semana
 which events do you want to see when you enter the calendar.	calendar	es-es	¿Qué eventos quiere ver al entrar al calendario?
 which of calendar view do you want to see, when you start calendar ?	calendar	es-es	¿Qué vista del calendario quiere ver cuando entra al calendario?
 whole day	calendar	es-es	todo el día
-whole query	calendar	es-es	toda la consulta
 wk	calendar	es-es	Semana
 work day ends on	calendar	es-es	Los días laborables acaban en
 work day starts on	calendar	es-es	Los días laborables empiezan en

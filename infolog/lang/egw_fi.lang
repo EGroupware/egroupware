@@ -78,7 +78,7 @@ changed completion to %1%	infolog	fi	Valmisprosentti muutettu: %1
 changed status to %1	infolog	fi	Tila vaihdettu: %1
 changed type	infolog	fi	Tyyppi vaihdettu
 charset of file	infolog	fi	Tiedoston merkistö
-check all	infolog	fi	Tarkista kaikki
+check all	infolog	fi	Valitse kaikki
 check to set startday	infolog	fi	Tarkista aloituspäivä
 check to specify custom contact	infolog	fi	Valitse tietty yhteystieto
 choose owner of imported data	infolog	fi	Valitse omistaja
@@ -153,7 +153,7 @@ do you want a notification, if items you created get updated?	infolog	fi	Haluatk
 do you want a notification, if items you delegated are about to start?	infolog	fi	Haluatko muistutusviestin, kun delegoimasi merkinnän/tehtävän alkamispäivä lähestyy?
 do you want a notification, if items you delegated are due?	infolog	fi	Haluatko muistutusviestin, kun delegoimasi merkinnän/tehtävän eräpäivä lähestyy?
 do you want to receive notifications as html-mails or plain text?	infolog	fi	Haluatko muistutusviestiesi olevan HTML vai pelkkänä tekstinä?
-document '%1' does not exist or is not readable for you!	infolog	fi	Asiakirjaa %1 ei löytynyt!
+document '%1' does not exist or is not readable for you!	infolog	fi	Tiedostoa '%1' ei ole olemassa tai sinulla ei ole lukuoikeutta!
 don't show infolog	infolog	fi	Älä näytä tehtäviä
 done	common	fi	Valmis
 download	infolog	fi	Lataa
@@ -195,7 +195,7 @@ for serial letter use this tag. put the content, you want to repeat between two 
 for which types should this field be used	infolog	fi	Mitkä tehtävätyypit käyttävät tätä kenttää?
 from	infolog	fi	Lähettäjä:
 general	infolog	fi	Yleinen
-general fields:	infolog	fi	Yleiset kentät:
+general fields:	infolog	fi	Yleiset kentät
 global categories	infolog	fi	Yleiset kategoriat
 group owner for	infolog	fi	Ryhmän omistaja
 high	infolog	fi	Korkea
@@ -259,7 +259,7 @@ list no subs/childs	infolog	fi	Älä listaa alimerkintöjä
 location	infolog	fi	Sijainti
 longer textual description	infolog	fi	Pitempi tekstikuvaus
 low	infolog	fi	Matala
-manage mapping	infolog	fi	Valitse kentät
+manage mapping	infolog	fi	Hallitse mappingiä
 max length of the input [, length of the inputfield (optional)]	infolog	fi	Kentän tekstin maksimipituus [, kentän maksimi pituus(vaihtoehtoinen)]
 modifier	infolog	fi	Muokkaaja
 modifierer	infolog	fi	Muokkaaja

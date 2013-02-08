@@ -12,7 +12,6 @@ csv-fieldname	infolog	lo	ຊື່ຂອບເຂດຂອງ CSV
 csv-filename	infolog	lo	ຊື່ຟາຍຂອງ CSV
 custom fields	infolog	lo	ກໍານົດ fields
 days	infolog	lo	ວັນ
-delete this entry	infolog	lo	ລຶບຂໍ້ມູນເຂົ້າມານີ້
 deletes this field	infolog	lo	ລຶບ field ນີ້
 determines the order the fields are displayed	infolog	lo	ສະແດງລໍາດັບຂອງ fields ທີ່ສະແດງ
 download	infolog	lo	ດາວໂຫຼດ
@@ -43,7 +42,6 @@ new name	infolog	lo	ຊື່ໃໝ່
 no filter	infolog	lo	ບໍ່ມີການຕຶກຕອງ
 number of records to read (%1)	infolog	lo	ຈໍານວນຂອງບັນທຶກທີ່ຈະອ່ານ (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	lo	ຈໍານວນແຖວສໍາລັບຂອບເຂດຂອງການປ້ອນຂໍ້ມູນຫຼາຍໆແຖວ ຫຼື ຕົວເລືອກຫຼາຍໆຕົວ
-open	infolog	lo	ເປີດ
 order	infolog	lo	Order
 permission denied	infolog	lo	ບໍ່ໄດ້ຮັບອະນຸຍາດ
 projectmanager	infolog	lo	ຜູ້ຈັດການໂຄງການ

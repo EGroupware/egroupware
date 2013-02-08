@@ -138,7 +138,7 @@ exception created - you can now edit or delete it	calendar	cs	Výjimka vytvořen
 exceptions	calendar	cs	Výjimky
 execute a further action for this entry	calendar	cs	Spustit další akci pro tento záznam
 existing links	calendar	cs	Stávající odkazy
-export	calendar	cs	Exportovat
+export	calendar	cs	export
 extended	calendar	cs	Rozšířený
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	cs	Rozšířené aktualizace vždy zahrnují kompletní detaily události. iCal soubory lze importovat do jiných kalendářů.
 fieldseparator	calendar	cs	Oddělovač položek
@@ -158,7 +158,7 @@ freetime search	calendar	cs	Hledání volného času
 fri	calendar	cs	Pá
 full description	calendar	cs	Celý popis
 fullname of person to notify	calendar	cs	Celé jméno osoby, která má být upozorněna
-general	calendar	cs	Hlavní
+general	calendar	cs	Obecné
 global categories	calendar	cs	Globální kategorie
 global public and group public	calendar	cs	veřejné globálně i pro skupinu
 global public only	calendar	cs	veřejné jen globálně
@@ -401,7 +401,6 @@ weekview without weekend	calendar	cs	Týdenní pohled bez víkendu
 which events do you want to see when you enter the calendar.	calendar	cs	Které události chcete vidět, když vstoupíte do kalendáře.
 which of calendar view do you want to see, when you start calendar ?	calendar	cs	Který z pohledů chcete vidět, když spustíte kalendář?
 whole day	calendar	cs	celý den
-whole query	calendar	cs	celý dotaz
 wk	calendar	cs	Týd.
 work day ends on	calendar	cs	Pracovní den končí v
 work day starts on	calendar	cs	Pracovní den začíná v

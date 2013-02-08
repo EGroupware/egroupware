@@ -76,7 +76,7 @@ hours	calendar	uk	години
 ical / rfc2445	calendar	uk	iCal / rfc2445
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	uk	Якщо відмічені свята припадають на вихідні, то наступний понеділок теж вихідний.
 ignore conflict	calendar	uk	Ігнорувати конфлікт
-import	calendar	uk	Імпортувати
+import	calendar	uk	Імпорт
 import csv-file	common	uk	Імпортувати CSV-файл
 interval	calendar	uk	Інтервал
 last	calendar	uk	Останній

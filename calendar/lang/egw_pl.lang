@@ -56,7 +56,7 @@ category acl	calendar	pl	ACL kategorii
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	pl	ACL kategorii ograniczają tylko dodawanie kategorii do zdarzenia lub zmianę statusu uczestnika. Nie zmienia to widoczności zdarzenia!
 chair	calendar	pl	Stanowiko
 change history	calendar	pl	Zmień historię
-charset of file	calendar	pl	Kodowanie pliku
+charset of file	calendar	pl	strona kodowa pliku
 check all	calendar	pl	Sprawdź wszystko
 close the window	calendar	pl	Zamknij okno
 compose a mail to all participants after the event is saved	calendar	pl	Po zapisaniu terminu, przejdź do tworzenia wiadomości poczty elektronicznej dla wszystkich uczestników
@@ -188,7 +188,7 @@ ical successful imported	calendar	pl	iCal został poprawnie zaimportowany
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	pl	Jeżeli zaznaczone święta przypadają na weekend, zostaną przeniesione na nadchodzący poniedziałek.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	pl	Jeżeli nie ustanowisz hasła w tym miejscu, informacja będzie dostępna dla każdego, kto zna adres odnośnika!
 ignore conflict	calendar	pl	Ignoruj konflikt
-import	calendar	pl	Import
+import	calendar	pl	Importuj
 import csv-file	common	pl	Importuj plik CSV
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	pl	Importuj zdarzenia do kalendarza z pliku CSV.
 interval	calendar	pl	Przedział
@@ -400,7 +400,6 @@ weekview without weekend	calendar	pl	Widok tygodniowy bez weekendu
 which events do you want to see when you enter the calendar.	calendar	pl	Które terminy chcesz widzieć, gdy uruchamiasz kalendarz?
 which of calendar view do you want to see, when you start calendar ?	calendar	pl	Który widok kalendarza chcesz widzieć, gdy uruchamiasz kalendarz?
 whole day	calendar	pl	cały dzień
-whole query	calendar	pl	całe zapytanie
 wk	calendar	pl	Tydź.
 work day ends on	calendar	pl	Koniec dnia o
 work day starts on	calendar	pl	Początek dnia o

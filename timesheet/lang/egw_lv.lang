@@ -1,10 +1,8 @@
-actions	timesheet	lv	Darbības
 applies the changes	timesheet	lv	apstiprināt izmaiņas
 check all	timesheet	lv	Parbaudīt visu
 create new links	timesheet	lv	Izveidot jaunas saites
 creates a new field	timesheet	lv	veido jaunu lauku
 custom fields	timesheet	lv	Mainīti lauki
-delete this entry	timesheet	lv	dzēst šo ierakstu
 deleted	timesheet	lv	Izdzēsts
 deletes this field	timesheet	lv	dzēš šo lauku
 determines the order the fields are displayed	timesheet	lv	nosaka kārtību, kādā tiek attēloti lauki

@@ -2,7 +2,6 @@
 2 month ago	timesheet	sv	3 månader tidigare
 2 years ago	timesheet	sv	2 år tidigare
 3 years ago	timesheet	sv	3 år tidigare
-actions	timesheet	sv	Åtgärder
 applies the changes	timesheet	sv	Sparar ändringar
 by	timesheet	sv	av
 check all	timesheet	sv	Markera alla
@@ -10,7 +9,6 @@ comment by %1 at %2:	timesheet	sv	Kommentar av %1 den %2:
 create new links	timesheet	sv	Skapa ny länk
 creates a new field	timesheet	sv	Skapar nytt fält
 custom fields	timesheet	sv	Anpassade fält
-delete this entry	timesheet	sv	Radera posten
 deleted	timesheet	sv	Raderad
 deletes this field	timesheet	sv	Raderar detta fält
 determines the order the fields are displayed	timesheet	sv	Avgör sorteringen av visade fält
@@ -62,6 +60,5 @@ unitprice	timesheet	sv	Pris per antal
 values for selectbox	timesheet	sv	Värde för valrutan
 view this entry	timesheet	sv	Visa posten
 week	timesheet	sv	Vecka
-whole query	timesheet	sv	Hela frågan
 yesterday	timesheet	sv	Igår
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	sv	Ditt data är inte uppdaterat (%1 mot %2), var god och kör %3installationen%4 och uppdatera databasen.

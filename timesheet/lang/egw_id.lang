@@ -4,7 +4,6 @@
 2 month ago	timesheet	id	2 bulan yang lalu
 2 years ago	timesheet	id	2 tahun yang lalu
 3 years ago	timesheet	id	3 tahun yang lalu
-actions	timesheet	id	Tindakan
 all projects	timesheet	id	Semua Proyek
 all status	timesheet	id	Semua status
 and its members	timesheet	id	dan anggotanya
@@ -19,7 +18,6 @@ create new links	timesheet	id	Bikin tautan baru
 creates a new field	timesheet	id	bikin field baru
 creating new entry	timesheet	id	membuat entri baru
 custom fields	timesheet	id	Custom fields
-delete this entry	timesheet	id	Hapus entri ini
 delete this status	timesheet	id	Hapus status ini
 delete timesheet	timesheet	id	Hapus LembarWaktu
 deleted	timesheet	id	terhapus
@@ -75,7 +73,6 @@ saves this entry and add a new one	timesheet	id	Simpan entri ini dan bikin baru
 select a price	timesheet	id	Pilih harga
 select a project	timesheet	id	Pilih proyek
 select a status of the timesheet	timesheet	id	pilih status LembarWaktu
-select action	timesheet	id	Pilih tindakan
 select infolog	timesheet	id	pilih InfoLog
 select multiple timeshhets for a further action	timesheet	id	Pilih beberapa lembarwaktu untuk tindakan berikutnya
 start	timesheet	id	Mulai
@@ -96,9 +93,8 @@ timesheet openoffice export	timesheet	id	Ekspor LembarWaktu ke OpenOffice
 timesheet status-%1 '%2' added.	timesheet	id	Status-%1 LembarWaktu '%2' ditambahkan.
 timesheet-%1 '%2' updated.	timesheet	id	LembarWaktu-%1 '%2' diperbarui.
 timesheet-%1 deleted.	timesheet	id	LembarWaktu-%1 dihapus.
-tracker	timesheet	id	Tracker
+tracker	timesheet	id	Tracking System
 unitprice	timesheet	id	Satuan harga
 view this entry	timesheet	id	Tampilkan entri ini
 week	timesheet	id	Minggu
-whole query	timesheet	id	seluruh query
 yesterday	timesheet	id	Kemarin

@@ -1,7 +1,6 @@
 2 month ago	timesheet	bg	преди 2 месеца
 2 years ago	timesheet	bg	преди 2 години
 3 years ago	timesheet	bg	преди 3 години
-actions	timesheet	bg	Действия
 all projects	timesheet	bg	Всички проекти
 both: allow to use projectmanager and free project-names	admin	bg	Позволява използване на имена на проекти, както от Проект-мениджъра, така и собствени
 by	timesheet	bg	от
@@ -10,7 +9,6 @@ create new links	timesheet	bg	Създаване на нови връзки
 creates a new field	timesheet	bg	създава ново поле
 creating new entry	timesheet	bg	създаване на нов запис
 custom fields	timesheet	bg	Полета по избор
-delete this entry	timesheet	bg	изтриване на записа
 deleted	timesheet	bg	изтрит
 deletes this field	timesheet	bg	изтрива това поле
 determines the order the fields are displayed	timesheet	bg	определя реда за показване на полетата
@@ -75,6 +73,5 @@ unitprice	timesheet	bg	Цена на артикул
 values for selectbox	timesheet	bg	Стойности за избор
 view this entry	timesheet	bg	Преглед на записа
 week	timesheet	bg	Седмица
-whole query	timesheet	bg	всички резултати
 yesterday	timesheet	bg	Вчера
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	bg	Вашата база данни НЕ Е актуална (%1 вм. %2)! Моля, стартирайте %3setup%4 за да я актуализирате.

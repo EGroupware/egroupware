@@ -1,16 +1,23 @@
 %1 starts with '%2'	filemanager	ru	%1 начинается с %2
 actions	filemanager	ru	Действия
-applications	common	ru	Приложения
+all files	common	ru	Все файлы
+applications	common	ru	Действия
 check all	filemanager	ru	Отметить все
 clear search	filemanager	ru	очистить поиск
 comment	filemanager	ru	Комментарий
+copied	filemanager	ru	Скопировано.
 copy to	filemanager	ru	Копия
 create folder	filemanager	ru	Создать папку
 created	filemanager	ru	Создано
+current directory	filemanager	ru	Этот каталог
 custom fields	filemanager	ru	Пользовательские Поля
 cut	filemanager	ru	Вырезать
+directories sorted in	filemanager	ru	Файлы и подкаталоги
 download	filemanager	ru	Загрузить
+favorites	filemanager	ru	Избранное
 file	filemanager	ru	Файл
+filemanager	common	ru	Файл
+files from subdirectories	filemanager	ru	Файлы в подкаталогах
 general	filemanager	ru	Общее
 go to	filemanager	ru	Перейти к
 id	filemanager	ru	Ид
@@ -28,5 +35,8 @@ reload	filemanager	ru	Перезагрузка
 save changes	filemanager	ru	сохранить изменения
 search for '%1'	filemanager	ru	Искать '%1'
 show	filemanager	ru	Показать
+show hidden files	filemanager	ru	Показывать скрытые файлы
 size	filemanager	ru	Размер
 up	filemanager	ru	вверх
+users and groups	filemanager	ru	Пользователи и группы
+your home directory	filemanager	ru	Домашний каталог

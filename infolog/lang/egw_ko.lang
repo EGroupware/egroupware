@@ -30,7 +30,7 @@ cancelled	infolog	ko	취소됨
 categories	infolog	ko	카테고리들
 category	infolog	ko	카테고리
 change the status of an entry, eg. close it	infolog	ko	엔트리의 상태를 변경 (예: 만료)
-charset of file	infolog	ko	파일의 문자열설정
+charset of file	infolog	ko	파일의 문자셋
 check to set startday	infolog	ko	시작일 설정을 확인
 click here to create the link	infolog	ko	새 링크를 생성하려면 클릭하세요
 click here to start the search	infolog	ko	검색을 시작하려면 클릭하세요
@@ -56,7 +56,6 @@ days	infolog	ko	일동안
 delegation	infolog	ko	위임
 delete	infolog	ko	삭제
 delete the entry	infolog	ko	엔트리 삭제
-delete this entry	infolog	ko	이 엔트리 삭제
 delete this entry and all listed sub-entries	infolog	ko	하위 엔트리를 포함 삭제
 deleted	infolog	ko	삭제됨
 deletes the selected typ	infolog	ko	선택된 형식 삭제
@@ -88,7 +87,7 @@ from	infolog	ko	부터
 general	infolog	ko	일반
 global categories	infolog	ko	전역 카테고리
 history	infolog	ko	내역
-import	infolog	ko	불러오기
+import	infolog	ko	가져오기
 import next set	infolog	ko	** 다음 집합(set)에서 가져오기
 info log	common	ko	인포로그
 infolog	common	ko	인포로그
@@ -137,7 +136,6 @@ note	infolog	ko	노트
 number of records to read (%1)	infolog	ko	%1 개의 레코드를 읽었습니다.
 offer	infolog	ko	제안
 ongoing	infolog	ko	진행중
-open	infolog	ko	개설
 overdue	infolog	ko	만기초과
 own	infolog	ko	소유
 own open	infolog	ko	소유 개설

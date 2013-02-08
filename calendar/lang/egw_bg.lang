@@ -48,7 +48,7 @@ calendar-fieldname	calendar	bg	Календар - Име на поле
 can't add alarms in the past !!!	calendar	bg	Невъзможно е добавяне на аларми в миналото !!!
 can't aquire lock!	calendar	bg	Невъзможно е заключването на записа!
 canceled	calendar	bg	Отменено
-charset of file	calendar	bg	Символен набор (charset) на файла
+charset of file	calendar	bg	Символен набор на файла
 check all	calendar	bg	Маркира всички
 close the window	calendar	bg	Затвори прозореца
 compose a mail to all participants after the event is saved	calendar	bg	съставяне на e-mail до всички участници след запис на събитието
@@ -118,7 +118,7 @@ exception created - you can now edit or delete it	calendar	bg	Изключени
 exceptions	calendar	bg	Изключения
 execute a further action for this entry	calendar	bg	Изпълни допълнително за това събитие
 existing links	calendar	bg	Съществуващи връзки
-export	calendar	bg	Експорт
+export	calendar	bg	експорт
 extended	calendar	bg	Разширен
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	bg	Разширените актуализации винаги включват пълната информация за събитията. iCal файловете могат да бъдат импортирани в много други приложения за управление на календар.
 fieldseparator	calendar	bg	Разделител на полетата
@@ -327,7 +327,6 @@ weekview without weekend	calendar	bg	Седмичен изглед без уик
 which events do you want to see when you enter the calendar.	calendar	bg	Кои събития да се изобразяват при влизане в "Календар" ?
 which of calendar view do you want to see, when you start calendar ?	calendar	bg	Предпочитан вид за изобразяване на календара при влизане:
 whole day	calendar	bg	цял ден
-whole query	calendar	bg	всички резултати
 wk	calendar	bg	Седм.
 work day ends on	calendar	bg	Работно време - край
 work day starts on	calendar	bg	Работно време - начало

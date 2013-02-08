@@ -259,7 +259,6 @@ weekdays	calendar	id	Weekdays
 weekly	calendar	id	Mingguan
 weekview	calendar	id	Tampilan mingguan
 whole day	calendar	id	Sepanjang hari
-whole query	calendar	id	seluruh query
 wk	calendar	id	Mg
 work day ends on	calendar	id	Jam Kerja Berakhir
 work day starts on	calendar	id	Jam Kerja Dimulai

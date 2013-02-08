@@ -1,27 +1,39 @@
+%1 records processed	importexport	ru	%1 записей обработано.
 allowed users	importexport	ru	Пользователи имеющие доступ
-automatically created by importexport	importexport	ru	Автоматически создано ИмпортЭкспорт'ом
+automatically created by importexport	importexport	ru	Автоматически создано с помощью"ИмпортЭкспорт"
+basic csv import	importexport	ru	Основной импорт CSV
 choose a name for this definition	importexport	ru	Выберите название для этого определения
 choose a plugin	importexport	ru	Выберите модуль расширения
 choose an application	importexport	ru	Выберите приложение
 choose seperator and charset	importexport	ru	Выберите разделитель и кодировку
+define imports|exports	common	ru	Определите Импорт/Экспорт
 delete all selected definitions	importexport	ru	удаление ВСЕХ выбранных определений
-expert options	importexport	ru	Настройки для эксперта
+edit conditions	importexport	ru	Измените состояние
+expert options	importexport	ru	Расширенные настройки
 export	importexport	ru	Экспорт
 export all selected definitions	importexport	ru	экспорт ВСЕХ выбранных определений
 finish	importexport	ru	конец
 general	importexport	ru	Общее
 import	importexport	ru	Импорт
+import definitions	common	ru	Импорт определений
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	ru	Импорт определений (Внимание: Существующие определения с совпадающими именами будут перезаписаны !!!)
-importexport wizard finished successfully!	importexport	ru	Мастер настройки ИмпортЭкспорта завершил работу успешно!
-load sample file	importexport	ru	Загрузка файла Примера
-manage mapping	importexport	ru	Управление отобажением
+importexport	common	ru	Импорт|Экспорт
+importexport wizard finished successfully!	importexport	ru	Мастер импорта|экспорта закончил работу успешно!
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	ru	Импорт информации из файла CSV. Это базовый класс, и ничего не делает сам по себе.
+load sample file	importexport	ru	Загрузка отдельного файла
+manage mapping	importexport	ru	управление наложением(mapping)
 next	importexport	ru	следующий
+no records selected	importexport	ru	Записи не выбраны!
 preview	importexport	ru	Предварительный просмотр
 previous	importexport	ru	Предыдущий
 save as definition	importexport	ru	Сохранить как определение
-schedule	common	ru	запланировать
+schedule	common	ru	Расписание
+schedule import / export	common	ru	Расписание импорта|экспорта
+schedule not found	importexport	ru	Расписание не найдено.
 select definition	importexport	ru	Выбор определения
 select plugin	importexport	ru	Выбор модуля расширения
-some nice text	importexport	ru	некий приятный текст
-which useres are allowed for this definition	importexport	ru	Какие пользователи меют доступ к этому определению
-you need to select an app and format first!	importexport	ru	Вы должны сначала выбрать приложение и формат!
+some nice text	importexport	ru	Какой-нибудь текст
+unable to schedule	importexport	ru	Невозможно планировать.
+which useres are allowed for this definition	importexport	ru	Пользователи, которым разрешено  это определение
+which users are allowed to use this definition	importexport	ru	Пользователи, которым разрешено использовать это определение
+you need to select an app and format first!	importexport	ru	Вы должны выбрать сначала приложение и формат!

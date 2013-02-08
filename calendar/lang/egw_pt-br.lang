@@ -119,7 +119,7 @@ exception created - you can now edit or delete it	calendar	pt-br	Exceção criad
 exceptions	calendar	pt-br	Exceções
 execute a further action for this entry	calendar	pt-br	Executar uma outra ação para este registro
 existing links	calendar	pt-br	Links existentes
-export	calendar	pt-br	Exportar
+export	calendar	pt-br	exportar
 extended	calendar	pt-br	Extendido
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	pt-br	Atualizações extendidas sempre incluem os detalhes completos do evento. iCals podem ser importados por certos aplicativos de calendários
 fieldseparator	calendar	pt-br	Separador de campos
@@ -336,7 +336,6 @@ weekview without weekend	calendar	pt-br	Visão semanal sem finais de semana
 which events do you want to see when you enter the calendar.	calendar	pt-br	Quais os eventos que você deseja exibir ao iniciar a Agenda ?
 which of calendar view do you want to see, when you start calendar ?	calendar	pt-br	Qual a visão da Agenda você deseja exibir ao iniciá-la ?
 whole day	calendar	pt-br	Dia inteiro
-whole query	calendar	pt-br	toda a consulta
 wk	calendar	pt-br	Semana
 work day ends on	calendar	pt-br	Dia de trabalho termina às
 work day starts on	calendar	pt-br	Dia de trabalho começa às

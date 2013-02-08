@@ -196,7 +196,7 @@ for serial letter use this tag. put the content, you want to repeat between two 
 for which types should this field be used	infolog	sk	Pre ktoré typy sa má použiť toto pole
 from	infolog	sk	Od
 general	infolog	sk	Všeobecné
-general fields:	infolog	sk	Hlavné polia:
+general fields:	infolog	sk	Všeobecné polia:
 global categories	infolog	sk	Globálne kategórie
 group owner for	infolog	sk	Skupinový vlastník pre
 high	infolog	sk	Vysoká
@@ -209,7 +209,7 @@ id	infolog	sk	ID
 id#	infolog	sk	ID#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	sk	Ak tento typ MÁ skupinového vlastníka, všetky záznamy tohto typu bude vlastniť zadaná skupina a NIE používateľ, ktorý záznam vytvoril!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	sk	Ak nie je nastavené, riadok vyhľadávania a filtrov je skrytý pre menej záznamov než "maximálny počet záznamov zobrazených na stránke" (ako je definované v bežných nastaveniach).
-if you specify an export definition, it will be used when you export	infolog	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch
+if you specify an export definition, it will be used when you export	infolog	sk	Ak zadáte exportnú definíciu, bude sa používať pri exportoch.
 import	infolog	sk	Import
 import next set	infolog	sk	Importovať ďalšiu sadu
 importance	infolog	sk	Dôležitosť

@@ -41,7 +41,7 @@ calendar settings	admin	eu	Lehentasunak egutegian
 calendar-fieldname	calendar	eu	Egutegia-Eremuaren izena
 can't add alarms in the past !!!	calendar	eu	Alarmak ezin dira iraganean gehitu!
 canceled	calendar	eu	Ezeztatu
-charset of file	calendar	eu	Fitxategiko karaktere jokoa
+charset of file	calendar	eu	Fitxategiaren Karaktere bilduma
 check all	calendar	eu	Guztia hautatu
 close the window	calendar	eu	Itxi leihoa
 compose a mail to all participants after the event is saved	calendar	eu	Partehartzaile guztie bidaltzeko posta bat sortu gertakaria gorde ondoren
@@ -106,7 +106,7 @@ event will occupy the whole day	calendar	eu	Gertakariak egun osoa hartuko du
 exception	calendar	eu	Salbuespena
 exceptions	calendar	eu	Salbuespenak
 existing links	calendar	eu	Loturak existitzen dira
-export	calendar	eu	Esportatu
+export	calendar	eu	esportatu
 extended	calendar	eu	Luzatua
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	eu	Eguneratzen zabalak gertakariaren datu guztiak eguneratzen ditu. iCal egutegiak beste egutegi aplikazio batzuek inportatu ditzazkete (Microsoft Outlook, etab.).
 fieldseparator	calendar	eu	Eremu banatzailea

@@ -61,7 +61,7 @@ categories	infolog	sl	Kategorije
 category	infolog	sl	Kategorija
 change history	infolog	sl	Spremembe
 change the status of an entry, eg. close it	infolog	sl	Sprememba statusa vnosa, npr. zapiranje
-charset of file	infolog	sl	Nabor znakov datoteke
+charset of file	infolog	sl	Kodna tabela datoteke
 check all	infolog	sl	Preveri vse
 check to set startday	infolog	sl	Označite za postavitev začetnega dneva
 check to specify custom contact	infolog	sl	Potrdite za določitev kontakta po meri
@@ -111,7 +111,6 @@ delegation	infolog	sl	Pooblastitev
 delete	infolog	sl	Izbriši
 delete one record by passing its id.	infolog	sl	Izbriši zapis s podano šifro.
 delete the entry	infolog	sl	Izbriši vnos
-delete this entry	infolog	sl	Izbriši ta vnos
 delete this entry and all listed sub-entries	infolog	sl	Izbriši ta vnos in podrejene vnose
 deleted	infolog	sl	Izbrisano
 deletes the selected typ	infolog	sl	Izbriše izbrani tip
@@ -240,7 +239,6 @@ only for details	infolog	sl	Samo za podrobnosti
 only if i get assigned or removed	infolog	sl	Samo če sem dodeljen ali odstranjen
 only the attachments	infolog	sl	Samo priloge
 only the links	infolog	sl	Samo povezave
-open	infolog	sl	Odpri
 optional note to the link	infolog	sl	Neobvezna opomba za povezavo
 order	infolog	sl	Vrstni red
 organization	infolog	sl	Organizacija
@@ -376,7 +374,6 @@ when should the todo or phonecall be started, it shows up from that date in the 
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	sl	Katera dodatna polja lahko odgovorni ureja brez pravic za urejanje?<br />Status, odstotek in datum opravljenega so vedno dovoljeni.
 which implicit acl rights should the responsible get?	infolog	sl	Katere pravice ACL naj dobi odgovorni?
 which types should the calendar show	infolog	sl	Katere vrste naj koledar prikaže
-whole query	infolog	sl	Celotno povpraševanje
 will-call	infolog	sl	Bodo klicani
 write (add or update) a record by passing its fields.	infolog	sl	Zapišite (dodajte ali posodobite) zapis s podanimi vrednostmi.
 yes - delete	infolog	sl	Da - Izbriši

@@ -49,7 +49,7 @@ categories	infolog	sv	Kategorier
 category	infolog	sv	Kategori
 change history	infolog	sv	Ändra historien
 change the status of an entry, eg. close it	infolog	sv	Ändra status på post, t.ex. stäng den
-charset of file	infolog	sv	Filens teckenuppsättning
+charset of file	infolog	sv	Teckenuppsättning för filen
 check all	infolog	sv	Markera alla
 check to set startday	infolog	sv	Markera för att sätta startdag
 check to specify custom contact	infolog	sv	Markera för att ange annan kontakt
@@ -93,7 +93,6 @@ delegation	infolog	sv	Delegering
 delete	infolog	sv	Radera
 delete one record by passing its id.	infolog	sv	Ange ID för att radera post
 delete the entry	infolog	sv	Radera post
-delete this entry	infolog	sv	Radera posten
 delete this entry and all listed sub-entries	infolog	sv	Radera posten och alla under
 deleted	infolog	sv	Raderad
 deletes the selected typ	infolog	sv	Raderar valda typer
@@ -198,7 +197,6 @@ ongoing	infolog	sv	Pågående
 only for details	infolog	sv	Endast detaljer
 only the attachments	infolog	sv	Endast bilagor
 only the links	infolog	sv	Endast länkar
-open	infolog	sv	Öppen
 optional note to the link	infolog	sv	Frivillig anteckning till länken
 order	infolog	sv	Sortering
 organization	infolog	sv	Organisation
@@ -321,7 +319,6 @@ view this linked entry in its application	infolog	sv	Visa den länkade posten i 
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	sv	När Uppgift och Samtal ska påbörjas visas de från aktuellt datum i Mina eller Mina öppna (Startsidan)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	sv	Vilka övriga fält ska ansvariga kunna ändra utan ändringsrättigheter?<br />Status, procent och datum är alltid tillåtna.
 which implicit acl rights should the responsible get?	infolog	sv	Vilka ACL rättigheter ska den ansvarigefå?
-whole query	infolog	sv	Hela frågan
 will-call	infolog	sv	Ska ringa
 write (add or update) a record by passing its fields.	infolog	sv	Fyll i fälten för att skapa eller uppdatera post
 yes - delete	infolog	sv	Ja - Radera

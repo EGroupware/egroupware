@@ -60,7 +60,7 @@ cancelled	infolog	bg	отменен
 categories	infolog	bg	Категории
 category	infolog	bg	Категория
 change the status of an entry, eg. close it	infolog	bg	Променя статуса на запис, напр. приключва го
-charset of file	infolog	bg	Символен набор (Charset) на файла
+charset of file	infolog	bg	Символен набор на файла
 check all	infolog	bg	Маркира всички
 check to set startday	infolog	bg	отбележете за начална дата
 check to specify custom contact	infolog	bg	отбележете за използване на контакт по избор
@@ -109,7 +109,6 @@ delegation	infolog	bg	Делегиране
 delete	infolog	bg	Изтриване
 delete one record by passing its id.	infolog	bg	Изтриване на един запис чрез предаване на ИД №
 delete the entry	infolog	bg	Изтриване записа
-delete this entry	infolog	bg	изтриване на този запис
 delete this entry and all listed sub-entries	infolog	bg	Изтриване на този запис и всички показани под-записи
 deleted	infolog	bg	изтрит
 deletes the selected typ	infolog	bg	изтрива избрания тип
@@ -237,7 +236,6 @@ only for details	infolog	bg	Само за детайлите
 only if i get assigned or removed	infolog	bg	Само ако бъда включен или изключен
 only the attachments	infolog	bg	само приложенията
 only the links	infolog	bg	само връзките
-open	infolog	bg	отвори
 optional note to the link	infolog	bg	бележка към връзката
 order	infolog	bg	Ред
 organization	infolog	bg	организация
@@ -366,7 +364,6 @@ view this linked entry in its application	infolog	bg	показва свърза
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	bg	Кои допълнителни полета да бъдат достъпни за редакция от отговорника, без да има съответните права?<br />Статус, степен на изпълнение и датата на приключване винаги са достъпни.
 which implicit acl rights should the responsible get?	infolog	bg	Какви права от Списъка за контрол на достъпа (ACL) да получава отговорника при назначаването си?
 which types should the calendar show	infolog	bg	Кои типове да се показват в Календара
-whole query	infolog	bg	всички резултати
 will-call	infolog	bg	ще телефонира
 write (add or update) a record by passing its fields.	infolog	bg	Запис (добавяне или актуализация) на запис чрез подаване на полетата му
 yes - delete	infolog	bg	Да - Изтриване

@@ -19,7 +19,7 @@ check all	resources	cs	Označit všechny
 choose categories admin	resources	cs	vybrat správce kategorií
 clear selection	resources	cs	zrušit výběr
 configure access permissions	admin	cs	Konfigurovat přístupová práva
-conflict	resources	cs	konflikt
+conflict	resources	cs	Konflikt
 create new accessory for this resource	resources	cs	Vytvořit nové příslušenství k tomtuto zdroji
 create new links	resources	cs	Vytvořit nové odkazy
 custom fields	resources	cs	Uživatelsky definovaná pole

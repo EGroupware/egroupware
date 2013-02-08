@@ -2,7 +2,6 @@
 2 month ago	timesheet	nl	2 maanden geleden
 2 years ago	timesheet	nl	2 jaar geleden
 3 years ago	timesheet	nl	3 jaar geleden
-actions	timesheet	nl	Acties
 all projects	timesheet	nl	Alle projecten
 applies the changes	timesheet	nl	past de wijzigingen toe
 both: allow to use projectmanager and free project-names	admin	nl	Beiden: accepteer het gebruik van ProjectManager en zelfgekozen projectnamen
@@ -13,7 +12,6 @@ create new links	timesheet	nl	Creëer nieuwe links
 creates a new field	timesheet	nl	creëert een nieuw veld
 creating new entry	timesheet	nl	een nieuw item aanmaken
 custom fields	timesheet	nl	Aangepast velden
-delete this entry	timesheet	nl	Verwijder dit item
 delete this status	timesheet	nl	Verwijder deze status
 deleted	timesheet	nl	verwijderd
 deletes this field	timesheet	nl	verwijdert dit veld
@@ -83,6 +81,5 @@ unitprice	timesheet	nl	Eenheidstarief
 values for selectbox	timesheet	nl	Waarden voor selectbox
 view this entry	timesheet	nl	Dit item weergeven
 week	timesheet	nl	Week
-whole query	timesheet	nl	gehele query
 yesterday	timesheet	nl	Gisteren
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	nl	Uw database is niet up to date (%1 vs. %2), draai s.v.p. %3setup%4 om uw database bij te werken.

@@ -75,7 +75,6 @@ default status for a new log entry	infolog	lv	noklusējus statuss jauna pieteiku
 delegation	infolog	lv	Deliģēšana
 delete	infolog	lv	Dzēst
 delete the entry	infolog	lv	Dzēst ierakstu
-delete this entry	infolog	lv	dzēst šo ierakstu
 deleted	infolog	lv	Izdzēsts
 deletes the selected typ	infolog	lv	dzēš atzīmēto tipu
 deletes this field	infolog	lv	dzēš šo lauku
@@ -160,7 +159,6 @@ offer	infolog	lv	piedāvā
 ongoing	infolog	lv	notiekošs
 only the attachments	infolog	lv	tikai pielikumi
 only the links	infolog	lv	tikai saites
-open	infolog	lv	atvērt
 optional note to the link	infolog	lv	izvēles piezīme saitei
 order	infolog	lv	Kārtība
 organization	infolog	lv	organizācija

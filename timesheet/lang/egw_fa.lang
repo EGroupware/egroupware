@@ -1,14 +1,12 @@
 2 month ago	timesheet	fa	دو ماه قبل
 2 years ago	timesheet	fa	دو سال قبل
 3 years ago	timesheet	fa	سه سال قبل
-actions	timesheet	fa	فعالیتها
 applies the changes	timesheet	fa	تغییرات را اعمال می کند
 by	timesheet	fa	بوسیله
 check all	timesheet	fa	چک کردن همه
 create new links	timesheet	fa	ایجاد پیوندهای جدید
 creates a new field	timesheet	fa	ایجاد فیلد جدید
 custom fields	timesheet	fa	فیلدهای سفارشی
-delete this entry	timesheet	fa	حذف این ورودی
 deleted	timesheet	fa	حذف شد
 deletes this field	timesheet	fa	حذف این فیلد
 determines the order the fields are displayed	timesheet	fa	تشخیص ترتیب نمایش فیلدها

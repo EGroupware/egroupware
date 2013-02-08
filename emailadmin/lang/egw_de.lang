@@ -34,9 +34,9 @@ edit email settings	emailadmin	de	E-Mail-Einstellungen
 email account active	emailadmin	de	E-Mail-Konto aktiv
 email address	emailadmin	de	E-Mail-Adresse
 email settings	common	de	E-Mail-Konto
-emailadmin	emailadmin	de	eMailAdmin
-emailadmin: group assigned profile	common	de	eMailAdmin: Vordefiniertes Gruppenprofil
-emailadmin: user assigned profile	common	de	eMailAdmin: Vordefiniertes Benutzerprofil
+emailadmin	emailadmin	de	E-Mail-Admin
+emailadmin: group assigned profile	common	de	E-Mail-Admin: Vordefiniertes Gruppenprofil
+emailadmin: user assigned profile	common	de	E-Mail-Admin: Vordefiniertes Benutzerprofil
 enable cyrus imap server administration	emailadmin	de	Cyrus IMAP-Server Administration aktivieren
 enable sieve	emailadmin	de	Sieve aktivieren
 encrypted connection	emailadmin	de	verschlüsselte Verbindung

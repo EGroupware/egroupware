@@ -1,10 +1,8 @@
 --> enter new name	timesheet	et	--> Sisesta uus nimi
-actions	timesheet	et	Tegevused
 all projects	timesheet	et	Kõik projektid
 check all	timesheet	et	Kontrolli kõik
 create new links	timesheet	et	Tee uued lingid
 creates a new field	timesheet	et	teeb uue välja
-delete this entry	timesheet	et	kustuta see kirje
 delete this status	timesheet	et	Kustuta see staatus
 deleted	timesheet	et	kustutatud
 deletes this field	timesheet	et	kustutab selle välja

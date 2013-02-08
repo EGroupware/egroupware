@@ -244,6 +244,7 @@ find and register all application hooks	admin	ru	Найти и зарегист�
 for the times above	admin	ru	на время, указанное выше
 for the times below (empty values count as '*', all empty = every minute)	admin	ru	на время, казанное ниже (пустые значения считаются как '*', все пустые = каждую минуту)
 force selectbox	admin	ru	Принудительно список выбора
+force users to change their password regularily?(empty for no,number for after that number of days	admin	ru	Заставить пользователей менять пароли регулярно (пусто - если нет, число - для смены через столько дней)
 forward also to	admin	ru	перенаправить также на
 forward emails to	admin	ru	перенаправить почту на
 forward only	admin	ru	только перенаправить
@@ -380,6 +381,7 @@ remote instance saved	admin	ru	Удаленная запись сохранен�
 remove	admin	ru	удалить
 remove all users from this group	admin	ru	Удалить всех пользователей из этой группы
 remove all users from this group ?	admin	ru	Удалить всех пользователей из этой группы ?
+requested	admin	ru	Затребовано
 return to admin mainscreen	admin	ru	вернуться в главное окно администратора
 return to view account	admin	ru	Вернуться в просмотр учетных записей
 route all mails to	admin	ru	Направлять всю почту к

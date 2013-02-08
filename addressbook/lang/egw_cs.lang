@@ -85,7 +85,7 @@ charset of file	addressbook	cs	Znaková sada souboru
 check all	addressbook	cs	Označit všechny
 choose an icon for this contact type	admin	cs	Vybrat ikonu pro tento typ kontaktu
 choose owner of imported data	addressbook	cs	Vyberte vlastníka importovaných dat
-choose seperator and charset	addressbook	cs	Vyberte oddělovač a znakovou sadu
+choose seperator and charset	addressbook	cs	Vybrat oddělovač a znakovou sadu
 chosse an etemplate for this contact type	admin	cs	Vybrat eTemplate pro tento typ kontaktu
 city	common	cs	Město
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	cs	Vyčistit položky adresáře (použijte pokud synchronizace vytvořila duplicity)
@@ -262,7 +262,7 @@ list all customfields	addressbook	cs	Vypsat všechny uživatelsky definované po
 list already exists!	addressbook	cs	Seznam už existuje!
 list created	addressbook	cs	Seznam vytvořen
 list creation failed, no rights!	addressbook	cs	Vytvoření seznamu selhalo, nedostatečná práva!
-load sample file	addressbook	cs	Načíst ukázkový soubor
+load sample file	addressbook	cs	Nahrát ukázkový soubor
 load vcard	addressbook	cs	Nahrát VCard
 location	addressbook	cs	Umístění
 locations	addressbook	cs	umístění

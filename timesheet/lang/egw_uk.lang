@@ -1,9 +1,7 @@
-actions	timesheet	uk	Дії
 applies the changes	timesheet	uk	Застосувати зміни
 create new links	timesheet	uk	Створити нові посилання
 creates a new field	timesheet	uk	створює нові поля
 custom fields	timesheet	uk	Власні поля
-delete this entry	timesheet	uk	видалити цей запис
 deleted	timesheet	uk	Видалено
 deletes this field	timesheet	uk	видаляє це поле
 determines the order the fields are displayed	timesheet	uk	визначає послідовність показу полів

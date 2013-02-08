@@ -55,7 +55,7 @@ category acl	calendar	fi	Kategorioiden ACL
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	fi	Kategorioiden ACL-oikeuksilla voidaan rajoittaa kategorioiden lisäämistä tapahtumaan tai osallistujan tilan  muuttamista. Tämä ei rajoita tapahtuman näkyvyyttä kalenterissa.
 chair	calendar	fi	Kutsuja
 change history	calendar	fi	Muuta historiaa
-charset of file	calendar	fi	Tiedoston merkistökoodaus
+charset of file	calendar	fi	Tiedoston merkistö
 check all	calendar	fi	Merkitse kaikki
 close the window	calendar	fi	Sulje ikkuna
 compose a mail to all participants after the event is saved	calendar	fi	Lähetä huomautus kaikille osallistujille kun tapahtuma on tallennettu.

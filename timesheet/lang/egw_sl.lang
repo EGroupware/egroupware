@@ -1,5 +1,4 @@
 --> enter new name	timesheet	sl	--> vnesite novo ime
-actions	timesheet	sl	Dejanja
 applies the changes	timesheet	sl	Uveljavi spremembe
 by	timesheet	sl	od
 check all	timesheet	sl	Preveri vse
@@ -7,7 +6,6 @@ comment by %1 at %2:	timesheet	sl	Komentarji od %1 pri %2
 create new links	timesheet	sl	Ustvari nove povezave
 creates a new field	timesheet	sl	Ustvari novo polje
 custom fields	timesheet	sl	Lastna polja
-delete this entry	timesheet	sl	Izbriši ta vnos
 delete this status	timesheet	sl	Izbriši ta status
 deleted	timesheet	sl	Zbrisano
 deletes this field	timesheet	sl	Ibriše to polje
@@ -47,5 +45,4 @@ tracker	timesheet	sl	Tracker
 values for selectbox	timesheet	sl	Vrednosti za izbirno polje
 view this entry	timesheet	sl	Poglej ta vnos
 week	timesheet	sl	Teden
-whole query	timesheet	sl	Celotno povpraševanje
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	sl	Vaša podatkovna baza NI obnovljena (%1 vs. %2), prosimo poženite %3 nastavitev%4 za prenovo vaše podatkovne baze.

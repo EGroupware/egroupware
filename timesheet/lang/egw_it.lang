@@ -2,7 +2,6 @@
 2 month ago	timesheet	it	2 mesi fa
 2 years ago	timesheet	it	2 anni fa
 3 years ago	timesheet	it	3 anni fa
-actions	timesheet	it	Azioni
 all projects	timesheet	it	Tutti i progetti
 applies the changes	timesheet	it	applica le modifiche
 both: allow to use projectmanager and free project-names	admin	it	Entrambi: permetti di usare Gestione Progetti e nomi-progetto liberi
@@ -13,7 +12,6 @@ create new links	timesheet	it	Crea nuovi collegamenti
 creates a new field	timesheet	it	Crea un nuovo campo
 creating new entry	timesheet	it	creazione di una nuova voce
 custom fields	timesheet	it	Campi Personalizzati
-delete this entry	timesheet	it	Cancella questa voce
 delete this status	timesheet	it	Cancella questo stato
 deleted	timesheet	it	cancellato
 deletes this field	timesheet	it	Cancella questo campo

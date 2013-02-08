@@ -85,7 +85,7 @@ charset of file	addressbook	es-es	Juego de caracteres del fichero
 check all	addressbook	es-es	Marcar todo
 choose an icon for this contact type	admin	es-es	Elija un icono para este tipo de contacto
 choose owner of imported data	addressbook	es-es	Elija el propietario de los datos importados
-choose seperator and charset	addressbook	es-es	Elija el separador y el juego de caracteres
+choose seperator and charset	addressbook	es-es	Elija separador y juego de caracteres
 chosse an etemplate for this contact type	admin	es-es	Elija una plantilla para este tipo de contacto
 city	common	es-es	Ciudad
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	es-es	Limpiar los campos de la libreta de direcciones (aplicar si la sincronización crea duplicados)
@@ -262,7 +262,7 @@ list all customfields	addressbook	es-es	Lista de todos los campos personalizados
 list already exists!	addressbook	es-es	¡La lista ya existe!
 list created	addressbook	es-es	Se ha creado la lista
 list creation failed, no rights!	addressbook	es-es	Falló la creación de lista. No tiene privilegios suficientes.
-load sample file	addressbook	es-es	Cargar el fichero de ejemplo
+load sample file	addressbook	es-es	Cargar un fichero de ejemplo
 load vcard	addressbook	es-es	Cargar VCard
 location	addressbook	es-es	Ubicación
 locations	addressbook	es-es	ubicaciones

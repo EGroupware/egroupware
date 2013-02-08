@@ -127,7 +127,7 @@ exception created - you can now edit or delete it	calendar	hu	Kivétel létrehoz
 exceptions	calendar	hu	Kivételek
 execute a further action for this entry	calendar	hu	További művelet végrehajtása ezen a bejegyzésen
 existing links	calendar	hu	Meglévő hivatkozások
-export	calendar	hu	Export
+export	calendar	hu	exportál
 extended	calendar	hu	Kibővített
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	hu	Kibővített frissítések mindig tartalmazzák a komplett esemény-jellemzőket.
 fieldseparator	calendar	hu	Mező elválasztó
@@ -351,7 +351,6 @@ weekview without weekend	calendar	hu	Heti nézet hétköznapokkal
 which events do you want to see when you enter the calendar.	calendar	hu	Naptárba lépéskor mely eseményeket szeretné látni?
 which of calendar view do you want to see, when you start calendar ?	calendar	hu	Melyik naptár nézetet akarja látni amikor elindítja a naptárat?
 whole day	calendar	hu	egész nap
-whole query	calendar	hu	teljes lekérdezés
 wk	calendar	hu	hét
 work day ends on	calendar	hu	Munkanapok vége
 work day starts on	calendar	hu	Munkanapok kezdete

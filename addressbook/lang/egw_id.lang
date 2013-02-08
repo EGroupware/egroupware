@@ -126,7 +126,7 @@ empty	admin	id	Kosong
 empty for all	addressbook	id	kosongkan untuk semuanya
 end	addressbook	id	Akhir
 existing links	addressbook	id	Tautan yang ada
-export	addressbook	id	ekspor
+export	addressbook	id	Ekspor
 export as csv	addressbook	id	Ekspor sebagai CSV
 export as vcard	addressbook	id	Ekspor sebagai vCard
 export contacts	addressbook	id	Ekspor Kontak

@@ -73,7 +73,7 @@ edit comments	filemanager	de	Kommentare bearbeiten
 edit settings	filemanager	de	Eigenschaften bearbeiten
 enter setup user and password	filemanager	de	Setup Benutzer und Passwort eingeben
 enter setup user and password to get root rights	filemanager	de	Setup Benutzer und Passwort eingeben um root Rechte zu erhalten
-enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenu zu erzeugen
+enter the complete vfs path to specify a fast access link to a folder	filemanager	de	Geben Sie den kompletten VFS Pfad ein, um einen Verweis zu diesem Ordner im Seitenmenü zu erzeugen
 enter the complete vfs path to specify a fast access link to a folder (1).	filemanager	de	Geben Sie den kompletten Pfad ein, um einen Schnelle Zugangsverknüpfung zu einem Verzeichnis zu erzeugen (1)
 enter the complete vfs path to specify your desired start folder.	filemanager	de	Geben Sie den kompletten VFS Pfad zu Ihrem gewünschten Anfangsverzeichnis ein
 error adding the acl!	filemanager	de	Fehler beim Hinzufügen des Zugriffsrechts!
