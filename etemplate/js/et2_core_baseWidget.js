@@ -287,8 +287,29 @@ var et2_container = et2_baseWidget.extend({
 		this._super.apply(this, arguments);
 
 		this.setDOMNode(document.createElement("div"));
-	}
+	},
 
+	/**
+	 * The destroy function destroys all children of the widget, removes itself
+	 * from the parents children list.
+	 * Overriden to not try to remove self from parent, as that's not possible.
+	 */
+	destroy: function() {
+		// Call the destructor of all children
+		for (var i = this._children.length - 1; i >= 0; i--)
+		{
+			this._children[i].free();
+		}
+
+		// Free the array managers if they belong to this widget
+		for (var key in this._mgrs)
+		{
+			if (this._mgrs[key] && this._mgrs[key].owner == this)
+			{
+				this._mgrs[key].free();
+			}
+		}
+	}
 });
 
 /**
