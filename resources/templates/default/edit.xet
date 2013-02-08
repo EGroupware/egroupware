@@ -234,7 +234,7 @@
 				<column width="700"/>
 			</columns>
 			<rows>
-				<row>
+				<row disabled="!@msg">
 					<description id="msg" no_lang="1" span="all" class="message"/>
 				</row>
 				<row>
