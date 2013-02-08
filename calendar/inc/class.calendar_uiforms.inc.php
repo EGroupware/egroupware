@@ -313,6 +313,11 @@ class calendar_uiforms extends calendar_ui
 							if (is_array($data))	// if $data['current'] is NOT set --> $app==''
 							{
 								list($app,$id) = explode(':',$data['current']);
+								if(!$app && !$id)
+								{
+									$app = $data['app'];
+									$id = $data['id'];
+								}
 							}
 							else
 							{
@@ -1871,7 +1876,7 @@ function replace_eTemplate_onsubmit()
 		);
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('Scheduling conflict');
 
-		$etpl->exec('calendar.calendar_uiforms.process_edit',$content,false,false,array_merge($event,$preserv),$preserv['no_popup'] ? 0 : 2);
+		$etpl->exec('calendar.calendar_uiforms.process_edit',$content,array(),array(),array_merge($event,$preserv),$preserv['no_popup'] ? 0 : 2);
 	}
 
 	/**
