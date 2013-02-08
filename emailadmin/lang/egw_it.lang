@@ -98,8 +98,8 @@ profile is active	emailadmin	it	Il profilo è attivo
 profile list	emailadmin	it	Elenco Profili
 profile name	emailadmin	it	Nome Profilo
 qmaildotmode	emailadmin	it	qmaildotmode
-qouta size in mbyte	emailadmin	it	dimensione quota in MByte
 quota settings	emailadmin	it	impostazioni quota
+quota size in mbyte	emailadmin	it	dimensione quota in MByte
 remove	emailadmin	it	rimuovi
 reset filter	emailadmin	it	Reimposta filtro
 select type of imap server	emailadmin	it	Seleziona il tipo di server IMAP
@@ -146,7 +146,6 @@ users can define their own emailaccounts	emailadmin	it	Gli utenti possono defini
 users can define their own identities	emailadmin	it	Gli utenti possono definire le loro identità personali
 users can define their own signatures	emailadmin	it	Gli utenti possono definire le loro firme personali
 users can utilize these stationery templates	emailadmin	it	Gli utenti possono utilizzare questi modelli
-vaction messages with start- and end-date require an admin account to be set!	emailadmin	it	Il messaggio di "vacanze" con data inizio e data fine può essere impostato da un account amministrativo!
 virtual mail manager	emailadmin	it	ManaGeR MAIL Virtuale
 yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	it	Sì, utilizza le credenziali sottostanti solo per allarmi e notifiche, altrimenti usa le credenziali dell'utente attuale
 yes, use credentials of current user or if given credentials below	emailadmin	it	Sì, utilizza le credenziali dell'utente attuale oppure, se date, e credenziali qui sotto

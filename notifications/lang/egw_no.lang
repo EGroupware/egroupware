@@ -2,3 +2,8 @@ folder	notifications	no	Mappe
 from	notifications	no	Fra
 message from	notifications	no	Melding fra
 minutes	notifications	no	minutter
+permission	notifications	no	tillatelser
+settings	notifications	no	Innstillinger
+step	notifications	no	Steg
+warning	notifications	no	Advarsel
+your session could not be verified.	notifications	no	Din sesjon kunne ikke bekreftes

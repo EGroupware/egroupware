@@ -97,6 +97,8 @@ create a new series	calendar	fi	Luo uusi toistuva tapahtuma
 create an exception for the given date	calendar	fi	Luo poikkeava tapahtuma annetulle päivälle
 create exception	calendar	fi	Luo poikkeus
 create new links	calendar	fi	Luo uusia linkkejä
+created	calendar	fi	Luotu
+creator	calendar	fi	Luoja
 csv	calendar	fi	CSV
 csv-fieldname	calendar	fi	CSV-kentän nimi
 csv-filename	calendar	fi	CSV-tiedoston nimi
@@ -275,6 +277,7 @@ max. number of entries to show (leave empty for no restriction)	calendar	fi	Näk
 merge document...	calendar	fi	Syötä asiakirjaan
 minutes	calendar	fi	minuuttia
 modified	calendar	fi	Muokattu
+modifier	calendar	fi	Muokkaaja
 mon	calendar	fi	Ma
 month	calendar	fi	Kuukausi
 monthly	calendar	fi	Kuukausittain

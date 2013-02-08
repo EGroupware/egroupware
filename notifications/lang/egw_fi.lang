@@ -1,10 +1,22 @@
+(update in sec. %s)	notifications	fi	Päivitä sekunneissa: %s
+account:	notifications	fi	Tili:
 all possible notification backends	notifications	fi	Kaikki mahdolliset huomautusviestien backendit
+browser	notifications	fi	Selain
+browser is starting.	notifications	fi	Selain avattaessa
+cancal settings?	notifications	fi	Keskeytä?
+cancal?	notifications	fi	Keskeytä?
+certification-information:	notifications	fi	Sertifikaatti - tiedot
 check both (first try (active) user defined account, if none use emailadmin profile)	admin	fi	Molemmat. Ensisijaisesti käyttäjätilin mukaan, sitten sähköpostinhallinnan profiilin mukaan.
 choose a notification-chain. you will be notified over the backends included in the chain.<br />note: if a notification-chain is marked as "disabled", your administrator does not allow one or more of the backends included in the chain and notifications falls back to "e-mail" while notifying you.	notifications	fi	Valitse huomautusviestiketju. Huomautusviestit tulevat kaikkien ketjuun sisällytettyjen backendien kautta.<br /> Huomaa: Jos huomautusviestiketju on merkitty "ei käytössä" olevaksi, ylläpitäjä(t) eivät salli yhtään (tai useampien kuin yhden) backendin sisällyttämistä, silloin huomautusviestit saapuvat sähkööpostilla.
 choose from mailsettings used for notification	admin	fi	Valitse huomautusviestien sähköpostiasetukset
 common chains	notifications	fi	Yleiset ketjut
+connection error.	notifications	fi	Yhteysvirhe.
+connection error. please check connection to server.	notifications	fi	Yhteysvirhe. Tarkista yhteys palvelimeen.
+continue to connect?	notifications	fi	Jatka?
+cookies are required to login to this site.	notifications	fi	Evästeiden (ns. Cookies) käyttö on vaadittu sisäänkirjautuessa.
 disabled chains	notifications	fi	Ketjut, mitkä eivät ole käytössä
 do not notify me at all	notifications	fi	Ei huomautusviestejä
+domain not found, please check serveraddress.	notifications	fi	Domain ei käytössä, tarkista palvelimen osoite
 e-mail only	notifications	fi	Vain sähköpostilla
 egroupware has notifications for you	notifications	fi	Sinulle on huomautusviestejä
 egroupware-popup and e-mail	notifications	fi	EGroupware-Popup ja sähköposti
@@ -22,6 +34,7 @@ enabled chains	notifications	fi	Sallitut ketjut
 folder	notifications	fi	Kansio
 from	notifications	fi	Lähettäjä
 how verbose should the egroupware-popup behave if a notification is sent to the user:<br />low: just display the notification bell in the topmenu - topmenu must be enabled!<br />medium: bring notification window to front<br />high: bring notification window to front and let the browser do something to announce itself	notifications	fi	Kuinka voimakas EGroupware-Popupin tulisi olla?<br />Matala: Näytä "huomautuskello" ylävalikossa (Ylävalikon on oltava käyttöönotettu!).<br />Normaali: Tuo huomautusikkuna eteen.<br />Voimakas: Tuo huomautusikkuna eteen ja salli selaimen tuotaa merkkiääni (tai jokin muu toiminto).
+java desktop notification app	preferences	fi	Java -huomautusikkuna sovellus työpöydälle
 linked entries:	common	fi	Linkitetyt tietueet:
 mail backend	admin	fi	Sähköpostin backendit
 maximum sms messages per notification	admin	fi	Maksimi tekstiviestien määrä per huomautus
@@ -29,15 +42,31 @@ message from	notifications	fi	Viesti henkilöltä:
 minutes	notifications	fi	Minuuttia
 notification	common	fi	Huomautusviesti
 notify me by	notifications	fi	Lähetä huomautus:
+page not found, please check serveraddress.	notifications	fi	Sivua ei löytynyt, tarkista palvelimen osoite
+password:	notifications	fi	Salasana:
+permission denied for notifications application.	notifications	fi	Huomautusviesti-sovelluksen käyttö estetty
+please contact your egroupware admin.	notifications	fi	Ota yhteys EGroupwaren ylläpitäjiin
+please enter the url of your egroupware.	notifications	fi	Syötä EGroupwaren URL
+please enter your egroupware username.	notifications	fi	Syötä EGroupwaren käyttäjänimi
+please enter your password	notifications	fi	Syötä salasana
 poll interval	notifications	fi	Äänestysten aikajakso
 preferences for notification	notifications	fi	Huomautuksen asetukset
 received	notifications	fi	Vastaanotettu
+save password	notifications	fi	Tallenna salasana
+setting	notifications	fi	Asetukset
+settings	notifications	fi	Asetukset
 sms backend	admin	fi	Tekstiviesti backend
 sms only	notifications	fi	Vain tekstiviesti
+sorry, your login has expired	notifications	fi	Käyttäjätili ei ole enää voimassa
+step	notifications	fi	Vaihe
 this egroupware notification has been sent to you by mail because your chosen notification-chain has been disabled by the administrator. please choose another notification-chain in your preferences!	notifications	fi	Tämä huomautusviesti on lähetetty sähköpostilla, koska ylläpitäjät eivät salli valitsemaasi huomautusviestiketjua. Valitse asetuksissa toinen huomautusviestiketju!
+user:	notifications	fi	Käyttäjä
+warning	notifications	fi	Varoitus
 windows-popup and e-mail	notifications	fi	Windows-Popup ja sähköposti
 windows-popup backend	admin	fi	Windows-Popup backend
 windows-popup first, if that fails notify me by e-mail	notifications	fi	Ensin Windows-Popup, sen epäonnistuessa sähköposti
 windows-popup first, if that fails notify me by sms	notifications	fi	Ensin Windows-Popup, sen epäonnistuessa tekstiviesti
 windows-popup only	notifications	fi	Vain Windows-popup
+you have been successfully logged out	notifications	fi	Olet kirjautunut ulos!
 you've got new mail	notifications	fi	Sinulle on uusi sähköposti
+your session could not be verified.	notifications	fi	Istuntoasi ei voitu määrittää

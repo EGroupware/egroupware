@@ -18,6 +18,11 @@ minutes	notifications	pt-br	minutos
 notification	common	pt-br	Notificação
 notify me by	notifications	pt-br	Notificar-me por
 optimize e-mails for external mail client	notifications	pt-br	Optmizar e-mails para clientes externos
+permission	notifications	pt-br	Permissões
 preferences for notification	notifications	pt-br	Preferências para notificação
+settings	notifications	pt-br	Configurações
 sms backend	admin	pt-br	Método SMS
+step	notifications	pt-br	Etapa
+warning	notifications	pt-br	Atenção
 windows-popup backend	admin	pt-br	Método Windows-Popup
+your session could not be verified.	notifications	pt-br	Sua sessão não pôde ser verificada

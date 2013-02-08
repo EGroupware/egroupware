@@ -83,8 +83,8 @@ profile access rights	emailadmin	zh-tw	存取資料權限
 profile list	emailadmin	zh-tw	資料清單
 profile name	emailadmin	zh-tw	資料名稱
 qmaildotmode	emailadmin	zh-tw	qmaildotmode
-qouta size in mbyte	emailadmin	zh-tw	配額(MB)
 quota settings	emailadmin	zh-tw	配額設定
+quota size in mbyte	emailadmin	zh-tw	配額大小（MB）
 remove	emailadmin	zh-tw	移除
 select type of imap server	emailadmin	zh-tw	選擇IMAP伺服器類型
 select type of imap/pop3 server	emailadmin	zh-tw	選擇IMAP/POP3伺服器的格式

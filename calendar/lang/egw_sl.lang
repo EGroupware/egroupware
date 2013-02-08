@@ -85,6 +85,7 @@ create a new series	calendar	sl	Ustvari nov set
 create an exception for the given date	calendar	sl	Ustvari izjemo za dani datum
 create exception	calendar	sl	Ustvari izjemo
 create new links	calendar	sl	Ustvari nove povezave
+created	calendar	sl	Ustvarjeno
 csv	calendar	sl	CSV
 csv-fieldname	calendar	sl	CSV-Ime polja
 csv-filename	calendar	sl	CSV-Ime datoteke

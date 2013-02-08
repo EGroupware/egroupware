@@ -36,9 +36,9 @@ edit email settings	emailadmin	de	E-Mail-Einstellungen
 email account active	emailadmin	de	E-Mail-Konto aktiv
 email address	emailadmin	de	E-Mail-Adresse
 email settings	common	de	E-Mail-Konto
-emailadmin	emailadmin	de	eMailAdmin
-emailadmin: group assigned profile	common	de	eMailAdmin: Vordefiniertes Gruppenprofil
-emailadmin: user assigned profile	common	de	eMailAdmin: Vordefiniertes Benutzerprofil
+emailadmin	emailadmin	de	E-Mail-Admin
+emailadmin: group assigned profile	common	de	E-Mail-Admin: Vordefiniertes Gruppenprofil
+emailadmin: user assigned profile	common	de	E-Mail-Admin: Vordefiniertes Benutzerprofil
 enable cyrus imap server administration	emailadmin	de	Cyrus IMAP-Server Administration aktivieren
 enable sieve	emailadmin	de	Sieve aktivieren
 encrypted connection	emailadmin	de	verschlüsselte Verbindung
@@ -138,7 +138,7 @@ use predefined username and password defined below	emailadmin	de	Verwende den un
 use smtp auth	emailadmin	de	SMTP Authentifizierung benutzen
 use tls authentication	emailadmin	de	TLS Authentifizierung benutzen
 use tls encryption	emailadmin	de	TLS Verschlüsselung benutzen
-use users email-address (as seen in useraccount)	emailadmin	de	Benutzt E-Mail Adresse des Benutzters (Die unter seinem Benutzerkonto angezeigt wird)
+use users email-address (as seen in useraccount)	emailadmin	de	Benutzt E-Mail Adresse des Benutzers (Die unter seinem Benutzerkonto angezeigt wird)
 user can edit forwarding address	emailadmin	de	Anwender können ihre Weiterleitungsadresse bearbeiten
 userid@domain eg. u1234@domain	emailadmin	de	UserId@domain z.B. u1234@domain
 username (standard)	emailadmin	de	Benutzername (Standard)

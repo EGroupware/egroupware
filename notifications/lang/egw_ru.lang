@@ -18,6 +18,11 @@ minutes	notifications	ru	Минуты
 notification	common	ru	Извещения
 notify me by	notifications	ru	Уведомлять меня через
 optimize e-mails for external mail client	notifications	ru	Оптимизировать эл. письма для внешних почтовых клиентов
+permission	notifications	ru	разрешение
 preferences for notification	notifications	ru	Настройки Извещений
+settings	notifications	ru	Настройки
 sms backend	admin	ru	Обработка СМС
+step	notifications	ru	Шаг
+warning	notifications	ru	Предупреждение
 windows-popup backend	admin	ru	Обработка всплывающих окон
+your session could not be verified.	notifications	ru	Ваша сессия не может быть проверена

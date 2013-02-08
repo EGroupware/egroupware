@@ -97,8 +97,8 @@ profile is active	emailadmin	sk	profil je aktívny
 profile list	emailadmin	sk	Zoznam profilov
 profile name	emailadmin	sk	Názov profilu
 qmaildotmode	emailadmin	sk	qmail bodkový režim
-qouta size in mbyte	emailadmin	sk	Neľkosť kvóty v Megabajtoch
 quota settings	emailadmin	sk	Nastavenia kvóty
+quota size in mbyte	emailadmin	sk	veľkosť kvóty v Megabajtoch
 remove	emailadmin	sk	Odstrániť
 reset filter	emailadmin	sk	vynulovať filter
 select type of imap server	emailadmin	sk	Vyberte typ IMAP servera
@@ -142,7 +142,6 @@ username@domainname (virtual mail manager)	emailadmin	sk	používateľ@doména (
 users can define their own emailaccounts	emailadmin	sk	Používatelia môžu definovať ich vlastné E-mailové účty
 users can define their own identities	emailadmin	sk	Používatelia môžu definovať svoje vlastné identity
 users can define their own signatures	emailadmin	sk	Používatelia môžu definovať svoje vlastné podpisy
-vaction messages with start- and end-date require an admin account to be set!	emailadmin	sk	Správy v neprítomnosti s počiatočným a koncovým dátumom vyžadujú, aby bol nastavený účet správcu!
 virtual mail manager	emailadmin	sk	Virtuálny MAIL ManaGeR
 yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	sk	Áno, použiť nižšieuvedené prístupové údaje iba pre upozornenia, ináč použiť prístupové údaje aktuálneho používateľa
 yes, use credentials of current user or if given credentials below	emailadmin	sk	Áno, použiť prístupové údaje aktuálneho používateľa, alebo prístupové údaje uvedené nižšie ak sú vyplnené

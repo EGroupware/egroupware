@@ -68,6 +68,8 @@ country	calendar	nl	Land
 create an exception for the given date	calendar	nl	Creëer een uitzondering voor de gekozen datum
 create exception	calendar	nl	Creëer uitzondering
 create new links	calendar	nl	Nieuwe links aanmaken
+created	calendar	nl	Gecreëerd
+creator	calendar	nl	Melder
 csv	calendar	nl	CSV
 csv-fieldname	calendar	nl	CSV-veldnaam
 csv-filename	calendar	nl	CSV-bestandsnaam

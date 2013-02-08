@@ -47,7 +47,6 @@ postfix with ldap	emailadmin	da	Postfix med LDAP
 profile list	emailadmin	da	Profil liste
 profile name	emailadmin	da	Profil navn
 qmaildotmode	emailadmin	da	qmaildotmode
-qouta size in mbyte	emailadmin	da	quota størrelse i Megabytes
 quota settings	emailadmin	da	quota indstillinger
 remove	emailadmin	da	fjern
 select type of imap/pop3 server	emailadmin	da	Vælg type IMAP/POP3 server

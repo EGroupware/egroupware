@@ -66,6 +66,8 @@ country	calendar	pt-br	País
 create an exception for the given date	calendar	pt-br	Criar uma exceção para a data informada
 create exception	calendar	pt-br	Criar exceção
 create new links	calendar	pt-br	Criar novos links
+created	calendar	pt-br	Criado
+creator	calendar	pt-br	Criador
 csv	calendar	pt-br	CSV
 csv-fieldname	calendar	pt-br	CVS-Nome do Campo
 csv-filename	calendar	pt-br	CVS-Nome do arquivo

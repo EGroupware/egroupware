@@ -83,8 +83,8 @@ profile access rights	emailadmin	zh	profile 访问权限
 profile list	emailadmin	zh	profile 列表
 profile name	emailadmin	zh	profile 名
 qmaildotmode	emailadmin	zh	qmaildotmode
-qouta size in mbyte	emailadmin	zh	配额大小在 (MByte)
 quota settings	emailadmin	zh	配额设置
+quota size in mbyte	emailadmin	zh	配额大小(MB)
 remove	emailadmin	zh	移除
 select type of imap server	emailadmin	zh	选择 IMAP 服务器类型
 select type of imap/pop3 server	emailadmin	zh	选择 IMAP / POP3 服务器类型
@@ -121,5 +121,4 @@ username (standard)	emailadmin	zh	用户名(标准)
 username@domainname (virtual mail manager)	emailadmin	zh	用户名@域 (虚拟邮箱管理)
 users can define their own emailaccounts	emailadmin	zh	用户可以自定义邮箱账户
 users can define their own signatures	emailadmin	zh	用户可以定义他们自己的签名
-vaction messages with start- and end-date require an admin account to be set!	emailadmin	zh	需要一个 admin 帐户来设置 Vaction 消息与开始和结束日期!
 virtual mail manager	emailadmin	zh	虚拟邮箱管理

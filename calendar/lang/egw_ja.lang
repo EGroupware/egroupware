@@ -15,6 +15,7 @@ calendar preferences	calendar	ja	カレンダーユーザ設定
 calendar settings	admin	ja	カレンダー設定
 countries	calendar	ja	国一覧
 country	calendar	ja	国
+created	calendar	ja	作成
 csv-filename	calendar	ja	CSVファイル名
 custom fields	common	ja	カスタム項目
 daily	calendar	ja	日単位

@@ -48,7 +48,6 @@ postfix with ldap	emailadmin	iw	LDAP עם Postfix
 profile list	emailadmin	iw	רשימת פרופילים
 profile name	emailadmin	iw	שם פרופיל
 qmaildotmode	emailadmin	iw	qmaildotmode
-qouta size in mbyte	emailadmin	iw	MB-גודל הקצאה ב
 quota settings	emailadmin	iw	הגדרות הקצאה
 remove	emailadmin	iw	הסר
 select type of imap/pop3 server	emailadmin	iw	IMAP/POP3 בחר סוג שרת

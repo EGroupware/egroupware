@@ -2,3 +2,7 @@ folder	notifications	ca	Carpeta
 from	notifications	ca	De
 message from	notifications	ca	Missatge de
 minutes	notifications	ca	minuts
+settings	notifications	ca	Configuració
+step	notifications	ca	Pas
+warning	notifications	ca	Avís
+your session could not be verified.	notifications	ca	La vostra sessió no s'ha pogut verificar.

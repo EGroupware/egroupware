@@ -62,6 +62,7 @@ country	calendar	zh-tw	國家
 create an exception for the given date	calendar	zh-tw	在指定日期建立一個例外
 create exception	calendar	zh-tw	建立例外
 create new links	calendar	zh-tw	建立新連結
+created	calendar	zh-tw	建立日期
 csv	calendar	zh-tw	CSV
 csv-fieldname	calendar	zh-tw	CSV-欄位名稱
 csv-filename	calendar	zh-tw	CSV-檔案名稱

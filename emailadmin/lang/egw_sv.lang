@@ -66,8 +66,8 @@ postfix with ldap	emailadmin	sv	Postfix med LDAP
 profile list	emailadmin	sv	Profil lista
 profile name	emailadmin	sv	Profil namn
 qmaildotmode	emailadmin	sv	qmaildotmode
-qouta size in mbyte	emailadmin	sv	Kvot storlek i Mb
 quota settings	emailadmin	sv	Kvot alternativ
+quota size in mbyte	emailadmin	sv	Kvotstorlek i Mb
 remove	emailadmin	sv	Radera
 select type of imap/pop3 server	emailadmin	sv	Välj typ av IMAP/POP3 server
 select type of smtp server	emailadmin	sv	Välj typ av SMTP Server

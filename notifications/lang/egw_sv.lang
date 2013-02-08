@@ -3,3 +3,8 @@ from	notifications	sv	Från
 message from	notifications	sv	Meddelande från
 minutes	notifications	sv	Minuter
 notification	common	sv	Meddelande
+permission	notifications	sv	Behörighet
+settings	notifications	sv	Alternativ
+step	notifications	sv	Steg
+warning	notifications	sv	Varning
+your session could not be verified.	notifications	sv	Din session kunde inte verifieras

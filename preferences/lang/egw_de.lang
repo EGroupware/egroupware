@@ -4,11 +4,13 @@
 %1 is no existing vfs file!	preferences	de	Die VFS Datei %1 existiert nicht!
 12 hour	preferences	de	12 Stunden
 24 hour	preferences	de	24 Stunden
-a template defines the layout of egroupware and it contains icons for each application.	preferences	de	Die Benutzeroberfläche definiert das Layout von eGroupWare und enthält die Icons (Symbole) der Anwendungen.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	de	Die Benutzeroberfläche definiert das Layout von EGroupWare und enthält die Icons (Symbole) der Anwendungen.
 a theme defines the colors and fonts used by the template.	preferences	de	Das Thema definiert die Farben und Schriftarten der Benutzeroberfläche.
 acl grants have been updated	preferences	de	ACL (Zugangskontrollliste) wurde upgedatet
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	de	Jede Liste in EGroupware zeigt diese Anzahl Zeilen pro Seite.<br>Zu viele verlangsamen den Aufbau der Seite, zu wenige kosten den Überblick.
 are you sure you want to delete this category ?	preferences	de	Sind sie sicher, dass sie diese Kategorie löschen wollen ?
+automatically start with this font	preferences	de	Startet automatisch mit dieser Schrift
+automatically start with this font size	preferences	de	Startet automatisch mit dieser Schriftgröße
 br	preferences	de	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	de	Ändern Sie Ihr Passwort, indem Sie Ihr altes und neues Passwort angeben. Es wird TRUE zurückgegeben für eine erfolgreiche Änderung und FALSE wenn es nicht erfolgreich war.
 change your password	preferences	de	Passwort ändern
@@ -22,6 +24,8 @@ country	preferences	de	Land
 date format	preferences	de	Datumsformat
 default	preferences	de	Vorgabe
 default application	preferences	de	Standard-Anwendung
+default font	preferences	de	Standard-Schrift
+default font size	preferences	de	Standard-Schriftgröße
 default preferences	preferences	de	Voreinstellungen
 default theme	preferences	de	Vorgabe Farbschema
 delete categories	preferences	de	Kategorie löschen
@@ -33,29 +37,34 @@ edit custom fields	preferences	de	Benutzerdefinierte Felder editieren
 enable drag and drop functionality (experimental)	preferences	de	Drag-and-Drop einschalten (experimentell)
 enable selectbox dropdown resizing for ie (experimental)	preferences	de	Aktiviere Selectbox-Drop-Down-Menue Grössenanpassung für IE (experimentell)
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	de	Schaltet drag-and-drop in allen Anwendungen ein. Wenn vom Browser nicht unterstützt, wird es automatisch ausgeschaltet. Ist im Moment noch experimentell.
-enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	de	Hier können die die Funktion aktiveren oder deaktivieren, die es Ihnen im Internet Explorer ermöglicht Auswahl Boxen automatisch auf Ihre wirkliche Größe (bei langen Texten) zu verweitern. Falls Sie einen anderen Browser verwenden, hat dies keine Auswirkungen. Diese Funktion ist noch in der Erprobung.
+enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	de	Hier können die die Funktion aktiveren oder deaktivieren, die es Ihnen im Internet Explorer ermöglicht Auswahl Boxen automatisch auf Ihre wirkliche Größe (bei langen Texten) zu erweitern. Falls Sie einen anderen Browser verwenden, hat dies keine Auswirkungen. Diese Funktion ist noch in der Erprobung.
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	de	Schaltet die Selectbox-Drop-Down-Menue Grössenanpassung für den Internet Explorer in allen Anwendungen ein oder aus. Wenn der Browser kein Internet Explorer ist,wird diese Option ignoriert. Diese Option ist im Moment noch experimentell.
+enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	de	Schaltet die Selectbox-Drop-Down-Menu Grössenanpassung für den Internet Explorer in allen Anwendungen ein oder aus. Wenn der Browser kein Internet Explorer ist,wird diese Option ignoriert.
 enter your new password	preferences	de	Neues Passwort eingeben
 enter your old password	preferences	de	Altes Passwort eingeben
 failed to change password.  please contact your administrator.	preferences	de	Passwortänderung fehlgeschlagen. Bitte kontaktieren Sie Ihren Administrator!
+features of the editor	preferences	de	Funktionsauswahl des Editors
 forced preferences	preferences	de	Erzwungene Einstellungen
+formatting & general settings	preferences	de	Formatierung & allgemeine Einstellungen
 help off	preferences	de	Keine Hilfe
 holding ctrl/cmd key and click on the line	preferences	de	halten der Strg/Cmd Taste und anklicken der Zeile
 hours	preferences	de	Stunden
 how do you like to display accounts	preferences	de	Wie sollen Benutzer angezeigt werden
 how do you like to select accounts	preferences	de	Wie sollen Benutzer ausgewählt werden
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	de	Wieviele Stunden beträgt die Abweichung Ihrer Zeitzone von der Zeitzone des Servers?<br> Wenn Sie sich in derselben Zeitzone befinden, wählen Sie 0 Stunden, sonst wählen Sie Ihre lokalen Datum-/Zeiteinstellungen
-how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	de	Wie viele Icons sollen in der Navigationsleiste am Kopf der Seite angezeigt werden. Zusätzliche Icons erscheinen in einem Pulldownmenü, das über ein Icon ganz rechts in der Navigation aufgerufen wird.
-how should egroupware display dates for you.	preferences	de	Wie soll eGroupWare das Datum für Sie anzeigen?
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	de	Wie viele Stunden beträgt die Abweichung Ihrer Zeitzone von der Zeitzone des Servers?<br> Wenn Sie sich in derselben Zeitzone befinden, wählen Sie 0 Stunden, sonst wählen Sie Ihre lokalen Datum-/Zeiteinstellungen
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	de	Wie viele Icons sollen in der Navigationsleiste am Kopf der Seite angezeigt werden. Zusätzliche Icons erscheinen in einem Pulldown-Menü, das über ein Icon ganz rechts in der Navigation aufgerufen wird.
+how many toolbar buttons are available	preferences	de	Wie viele Buttons sind in der Symbolleiste verfügbar
+how should egroupware display dates for you.	preferences	de	Wie soll EGroupware das Datum für Sie anzeigen?
 icon	preferences	de	Icon
 icons and text	preferences	de	Icons und Text
 icons only	preferences	de	nur Icons
-if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	de	Wenn bereits eine Zeile ausgewählt ist, werden weitere Zeilen entweder durch das Halten der Strg/Cmd Taste (um die bereits ausgewählten nicht abzuwählen) and anklicken derselben, oder durch einfaches anklicken wie für eine Checkbox, ausgewählt. Wenn keine Zeile ausgewählt ist, wählt anklicken diese immer aus. Das Halten der Umschalt Taste wählt alles zwischen der aktuell ausgewählten Zeile und der angeklickten.
+if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	de	Wenn bereits eine Zeile ausgewählt ist, werden weitere Zeilen entweder durch das Halten der Strg/Cmd Taste (um die bereits ausgewählten nicht abzuwählen) und anklicken derselben, oder durch einfaches anklicken wie für eine Checkbox, ausgewählt. Wenn keine Zeile ausgewählt ist, wählt anklicken diese immer aus. Das Halten der Umschalt Taste wählt alles zwischen der aktuell ausgewählten Zeile und der angeklickten.
 images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	de	Bilder die mit einem Eintrag verlinkt sind können als Vorschaubild angezeigt werden. Kann ausgeschaltet werden um die Geschwindigkeit der Anzeige zu erhöhen.
 in which country are you. this is used to set certain defaults for you.	preferences	de	In welchen Land befinden Sie sich? Damit werden verschiedene Voreinstellungen für Sie vorgenommen.
 interface/template selection	preferences	de	Auswahl der Benutzeroberfläche
 just clicking on the line, like a checkbox	preferences	de	einfaches anklicken der Zeile, wie eine Checkbox
 language	preferences	de	Sprache
+look & feel	preferences	de	Aussehen und Handhabung
 max matches per page	preferences	de	maximale Treffer pro Seite
 max number of icons in navbar	preferences	de	Maximale Anzahl von Icons in der Navigationsleiste
 no default	preferences	de	Keine Vorgabe
@@ -71,7 +80,7 @@ permanent time zone selection	preferences	de	Ständige Zeitzonen Auswahl
 please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	de	Zeitzonen auswählen, zwischen den schnell umgeschaltet werden soll. Der Umschalter wird NICHT angezeigt, wenn weniger als zwei ausgewählt werden.
 please select your timezone.	preferences	de	Bitte wählen Sie Ihre Zeitzone
 please, select a new theme	preferences	de	Bitte ein neues Schema wählen
-popup with search	preferences	de	Popup mit Suche
+popup with search	preferences	de	Pop-up mit Suche
 re-enter your password	preferences	de	Neues Passwort wiederholen
 read prefs for the specified application.	preferences	de	Liest Einstellungen von den ausgewählten Anwendungen.
 rich text editor enter mode	preferences	de	Zeilenumbruchmodus des Editors
@@ -97,11 +106,13 @@ show text on navigation icons	preferences	de	Text zu Icons in der Navigationslei
 show_more_apps	common	de	Mehr Anwendungen anzeigen
 silver theme	preferences	de	Silbern
 spellchecker language	addressbook	de	Sprache Rechtschreibprüfung
+text editor settings	preferences	de	Einstellungen des Texteditors
 text only	preferences	de	nur Text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	de	Diese Anwendung wird gestartet, wenn sie EGroupware neu starten oder auf das Symbol der Startseite klicken. Sie können auch mehrere Anwendungen auf Ihrer Startseite anzeigen, dazu wählen sie keine Anwendung aus. Welche Anwendungen dann angezeigt werden, wird in den Einstellungen der jeweiligen Anwendungen konfiguriert.
 the old password is not correct	preferences	de	Das alte Passwort ist nicht korrekt
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	de	Das Auswahlfeld zeigt alle verfügbaren Benutzer (kann sehr langsam sein bei großen Installationen mit vielen Benutzern). Das Popup ist ein extra Fenster, in dem nach Namen oder Gruppen gesucht werden kann.
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	de	Das Auswahlfeld zeigt alle verfügbaren Benutzer (kann sehr langsam sein bei großen Installationen mit vielen Benutzern). Das Popup ist ein extra Fenster, in dem nach Namen oder Gruppen gesucht werden kann. Die beiden letzten Optionen begrenzen die Sichtbarkeit von Benutzern. Aus diesem Grund sollten diese erzwungen werden, werden aber nicht auf Administratoren angewendet.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	de	Das Auswahlfeld zeigt alle verfügbaren Benutzer (kann sehr langsam sein bei großen Installationen mit vielen Benutzern). Das Pop-up ist ein extra Fenster, in dem nach Namen oder Gruppen gesucht werden kann.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	de	Das Auswahlfeld zeigt alle verfügbaren Benutzer (kann sehr langsam sein bei großen Installationen mit vielen Benutzern). Das Pop-up ist ein extra Fenster, in dem nach Namen oder Gruppen gesucht werden kann. Die beiden letzten Optionen begrenzen die Sichtbarkeit von Benutzern. Aus diesem Grund sollten diese erzwungen werden, werden aber nicht auf Administratoren angewendet.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.* the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.*	preferences	de	Das Auswahlfeld zeigt alle verfügbaren Benutzer (kann sehr langsam sein bei großen Installationen mit vielen Benutzern). Das Pop-up ist ein extra Fenster, in dem nach Namen oder Gruppen gesucht werden kann. Die beiden letzten Optionen begrenzen die Sichtbarkeit von Benutzern. Aus diesem Grund sollten diese erzwungen werden, werden aber nicht auf Administratoren angewendet.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	de	Die beiden letzten Optionen beschränken die Sichtbarkeit von anderen Benutzern. Daher sollten sie erzwungen werden und treffen NICHT auf Administratoren zu.
 the two passwords are not the same	preferences	de	Die beiden Passworte sind nicht identisch
 theme (colors/fonts) selection	preferences	de	Auswahl des Themas (Farben/Schriften)
@@ -111,8 +122,8 @@ time format	preferences	de	Zeitformat
 use default	preferences	de	Vorgabe benutzen
 users choice	preferences	de	Benutzerauswahl
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	de	Wenn Sie hier Ja auswählen, werden in der Hauptnavigationsleiste oben zusätzlich Buttons für die Startseite und zum Abmelden angezeigt.
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die Systemweite Vorgabe ist der Zeichensatz der EGroupware Installation.
-which currency symbol or name should be used in egroupware.	preferences	de	Welches Währungssymbol oder Name soll in eGroupWare verwendet werden.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Wählen Sie hier den Zeichensatz für den CSV Import|Export. Der Standard Zeichensatz, ist der Zeichensatz Ihrer EGroupware Installation.
+which currency symbol or name should be used in egroupware.	preferences	de	Welches Währungssymbol oder Name soll in EGroupware verwendet werden.
 write prefs for the specified application.	preferences	de	Schreibt die Einstellungen für die jeweilige Anwendung.
 you can show the applications as icons only, icons with app-name or both.	preferences	de	Sie können die Anwendungen als Symbol (Icon), Text oder beides anzeigen.
 you can show the linked entries with icons only, icons with app-name or both.	common	de	Sie können verknüpfte Einträge mit Bild, Anwendungsnamen oder beidem anzeigen.

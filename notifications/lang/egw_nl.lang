@@ -18,6 +18,11 @@ minutes	notifications	nl	minuten
 notification	common	nl	Melding
 notify me by	notifications	nl	Meld mij via
 optimize e-mails for external mail client	notifications	nl	Optimaliseer E-mails voor externe mail client
+permission	notifications	nl	toestemming
 preferences for notification	notifications	nl	Voorkeuren voor meldingen
+settings	notifications	nl	Instellingen
 sms backend	admin	nl	SMS backend
+step	notifications	nl	Stap
+warning	notifications	nl	Waarschuwing
 windows-popup backend	admin	nl	Windows-Popup backend
+your session could not be verified.	notifications	nl	Uw sessie kon niet geverifieerd worden

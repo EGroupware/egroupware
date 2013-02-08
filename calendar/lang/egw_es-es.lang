@@ -87,6 +87,8 @@ create a new series	calendar	es-es	Crear una serie nueva
 create an exception for the given date	calendar	es-es	Crear una excepción para la fecha indicada
 create exception	calendar	es-es	Crear excepción
 create new links	calendar	es-es	Crear enlaces nuevos
+created	calendar	es-es	Creado
+creator	calendar	es-es	Creador
 csv	calendar	es-es	CSV
 csv-fieldname	calendar	es-es	CSV - Nombre del campo
 csv-filename	calendar	es-es	CSV- Nombre del fichero
@@ -254,6 +256,7 @@ make freebusy information available to not loged in persons?	calendar	es-es	¿Po
 max. number of entries to show (leave empty for no restriction)	calendar	es-es	Número máximo de entradas a mostrar (dejar en blanco para no restricciones)
 minutes	calendar	es-es	minutos
 modified	calendar	es-es	Modificado
+modifier	calendar	es-es	Modificador
 mon	calendar	es-es	Lun
 month	calendar	es-es	Mes
 monthly	calendar	es-es	Mensualmente

@@ -99,6 +99,8 @@ create a new series	calendar	sk	Vytvoriť novú sériu
 create an exception for the given date	calendar	sk	Vytvoriť výnimku pre zadaný dátum
 create exception	calendar	sk	Vytvoriť výnimku
 create new links	calendar	sk	Vytvoriť nové odkazy
+created	calendar	sk	Vytvorené
+creator	calendar	sk	Tvorca
 csv	calendar	sk	CSV
 csv-fieldname	calendar	sk	Pole v CSV
 csv-filename	calendar	sk	CSV súbor
@@ -281,10 +283,10 @@ make freebusy information available to not loged in persons?	calendar	sk	Spríst
 max. number of entries to show (leave empty for no restriction)	calendar	sk	Maximálny počet položiek, ktorý sa má zobraziť (ak nechcete obmedziť, ponechajte prázdne)
 maximum available quantity of %1 exceeded!	calendar	sk	Prekročená najvyššie povolené množstvo %1!
 meeting request	calendar	sk	Požiadavka na stretnutie
-meeting status information	calendar	sk	Informácia o stave strtnutia
 merge document...	calendar	sk	Zlúčiť dokument...
 minutes	calendar	sk	minút
 modified	calendar	sk	Zmenené
+modifier	calendar	sk	Upravil
 mon	calendar	sk	Po
 month	calendar	sk	Mesiac
 monthly	calendar	sk	Mesačne

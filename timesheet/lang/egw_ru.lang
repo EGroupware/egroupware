@@ -2,7 +2,6 @@
 2 month ago	timesheet	ru	2 месяца назад
 2 years ago	timesheet	ru	2 года назад
 3 years ago	timesheet	ru	3 года назад
-actions	timesheet	ru	Действия
 all projects	timesheet	ru	Все проекты
 applies the changes	timesheet	ru	применить изменения
 both: allow to use projectmanager and free project-names	admin	ru	Оба: позволяет использовать Управление проектами и свободные названия проектов
@@ -13,11 +12,12 @@ create new links	timesheet	ru	Создать новые ссылки
 creates a new field	timesheet	ru	создать новое поле
 creating new entry	timesheet	ru	создание новой записи
 custom fields	timesheet	ru	Пользовательские Поля
-delete this entry	timesheet	ru	Удалить эту запись
+default document to insert entries	timesheet	ru	Документ по умолчанию для вставки записей
 delete this status	timesheet	ru	Удалить это состояние
 deleted	timesheet	ru	удалено
 deletes this field	timesheet	ru	Удалить это поле
 determines the order the fields are displayed	timesheet	ru	оперделяет порядок,в котором отображаются поля
+directory with documents to insert entries	timesheet	ru	Каталог с документами для вставки
 each value is a line like <id>[=<label>]	timesheet	ru	каждое значение - это строка типа <идентификатор>[=<метка>]
 edit status	timesheet	ru	Изменить состояние
 edit this entry	timesheet	ru	Редактировать эту запись
@@ -33,7 +33,6 @@ exports entries from your timesheet into a csv file. csv means 'comma seperated 
 field must not be empty !!!	timesheet	ru	Поле не должно быть пустым !!!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	ru	Для последовательности писем используйте эту метку. Поместите текст, который вы желаете повторять между двух меток.
 full: use only projectmanager	admin	ru	Полный: использовать только Управление проектами
-general	timesheet	ru	Общий
 global categories	timesheet	ru	Общие Категории
 history	timesheet	ru	История
 id	timesheet	ru	Ид

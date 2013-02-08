@@ -75,6 +75,8 @@ country	calendar	id	Negara
 create an exception for the given date	calendar	id	Bikin pengecualian untuk tanggal tertentu
 create exception	calendar	id	Bikin pengecualian
 create new links	calendar	id	Bikin tautan baru
+created	calendar	id	Dibikin
+creator	calendar	id	Creator
 csv	calendar	id	CSV
 csv-fieldname	calendar	id	Nama field-CSV
 csv-filename	calendar	id	Nama berkas CSV

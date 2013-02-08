@@ -169,6 +169,7 @@ existing links	addressbook	ru	Существующие ссылки
 export as csv	addressbook	ru	Экспортировать как CSV
 export as vcard	addressbook	ru	Экспортировать как VCard
 export contacts	addressbook	ru	Экспорт Контактов
+export definition to use for nextmatch export	addressbook	ru	Экспорт определения для использования при следующем экспорте
 export file name	addressbook	ru	Имя файла экспорта
 export from addressbook	addressbook	ru	Экспортировать из Адресной книги
 export selection	addressbook	ru	Экспортировать выбранное
@@ -365,11 +366,13 @@ update fields by edited organisations?	admin	ru	Заменить Поля о о�
 updated	addressbook	ru	Обновлено
 upload or delete the photo	addressbook	ru	Выгрузить или удалить фото
 url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	ru	Ссылка для связи номера телефона с (используйте %1 = номер для звонка,%u = наименование учетной записи, %t = телефон учетной записи)
+use addressbooks "own sorting" attribute	addressbook	ru	Использовать атрибут адресной книги "собственная сортировка"
 use an extra category tab?	addressbook	ru	Использовать дополнительную вкладку категории
 use an extra tab for private custom fields?	admin	ru	Использовать дополнительную закладку для частных пользовательских полей?
 use country list	addressbook	ru	Используйте Список Стран
 use setup for a full account-migration	admin	ru	использовать установку для полной миграции учетных записей
 used for links and for the own sorting of the list	addressbook	ru	используется для связей и для собственной сортироки списка
+user preference	addressbook	ru	Предпочтения пользователя
 vcard	common	ru	VCard
 vcards require a first name entry.	addressbook	ru	VCard требует наличия имени
 vcards require a last name entry.	addressbook	ru	VCard требует наличия фамилии

@@ -83,8 +83,8 @@ profile access rights	emailadmin	fr	droits d'accès du profil
 profile list	emailadmin	fr	Liste des profils
 profile name	emailadmin	fr	Nom de profil
 qmaildotmode	emailadmin	fr	qmaildotmode
-qouta size in mbyte	emailadmin	fr	Taille du quota en Mo
 quota settings	emailadmin	fr	Paramètres de quota
+quota size in mbyte	emailadmin	fr	Taille des quota en Mo
 remove	emailadmin	fr	Supprimer
 select type of imap server	emailadmin	fr	Sélectionner le type de serveur IMAP
 select type of imap/pop3 server	emailadmin	fr	Sélectionner le type de serveur IMAP/POP3

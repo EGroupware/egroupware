@@ -16,6 +16,7 @@ order	emailadmin	lo	Order
 postfix with ldap	emailadmin	lo	Postfix ດ້ວຍ LDAP
 qmaildotmode	emailadmin	lo	qmaildotmode
 quota settings	emailadmin	lo	ໂກຕ້າການຕັ້ງຄ່າ
+quota size in mbyte	emailadmin	lo	ຂະໜາດໂກຕ້າໃນ ເມກະໄບທ
 remove	emailadmin	lo	ລຶບອອກ
 standard	emailadmin	lo	ມາດຕະຖານ
 standard imap server	emailadmin	lo	ມາດຕະຖານ IMAP ເຊີເວີ້

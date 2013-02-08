@@ -99,6 +99,8 @@ create a new series	calendar	de	Neu Serie anlegen
 create an exception for the given date	calendar	de	Erzeugt eine Ausnahme am angegebenen Datum
 create exception	calendar	de	Ausnahme erzeugen
 create new links	calendar	de	Neue Verknüpfung erstellen
+created	calendar	de	Angelegt
+creator	calendar	de	Ersteller
 csv	calendar	de	CSV
 csv-fieldname	calendar	de	CSV-Feldname
 csv-filename	calendar	de	CSV-Dateiname
@@ -285,6 +287,7 @@ meeting request	calendar	de	Terminanfrage
 merge document...	calendar	de	Dokument einfügen...
 minutes	calendar	de	Minuten
 modified	calendar	de	Geändert
+modifier	calendar	de	Geändert von
 mon	calendar	de	Mo
 month	calendar	de	Monat
 monthly	calendar	de	Monatlich

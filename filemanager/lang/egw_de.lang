@@ -93,7 +93,6 @@ example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", fo
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	de	Beispiel: {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Beispiel: Herr Dr. Hans Müller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	de	Beispiel: {{NELF role}} - Wenn das Feld "role" nicht leer ist, dann wird der Inhalt des Feldes "role" in eine neue Zeile geschrieben.
 executable	filemanager	de	Ausführbar
-export definition to use for nextmatch export	filemanager	de	Exportdefinition für den nextmatch Export
 extended access control list	filemanager	de	Erweiterte Zugriffsrechte
 extended acl	filemanager	de	Erweiterte Zugriffsrechte
 failed to change permissions of %1!	filemanager	de	Konnte Zugriffsrechte von %1 nicht ändern!
@@ -131,7 +130,7 @@ link target	filemanager	de	Ziel der Verknüpfung
 link target %1 not found!	filemanager	de	Verknüpfungsziel %1 nicht gefunden!
 location	filemanager	de	Ort
 log out as superuser	filemanager	de	Superuser abmelden
-mail files	filemanager	de	Dateien per E-mail versenden
+mail files	filemanager	de	Dateien per E-Mail versenden
 max folderlinks	admin	de	maximale Anzahl von Links zu Verzeichnissen
 mime type	filemanager	de	MIME-Typ
 modified	filemanager	de	verändert

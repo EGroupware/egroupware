@@ -1,23 +1,26 @@
 %1 starts with '%2'	filemanager	ru	%1 начинается с %2
 actions	filemanager	ru	Действия
+all files	common	ru	Все файлы
 applications	common	ru	Действия
 check all	filemanager	ru	Отметить все
 check virtual filesystem	filemanager	ru	Проверить файловую систему
 clear search	filemanager	ru	очистить поиск
 comment	filemanager	ru	Комментарий
+copied	filemanager	ru	Скопировано.
 copy to	filemanager	ru	Копия
 create folder	filemanager	ru	Создать папку
 created	filemanager	ru	Создано
 current directory	filemanager	ru	Этот каталог
 custom fields	filemanager	ru	Пользовательские Поля
 cut	filemanager	ru	Вырезать
+default document to insert entries	filemanager	ru	Документ по умолчанию для вставки записей
 directories sorted in	filemanager	ru	Файлы и подкаталоги
+directory with documents to insert entries	filemanager	ru	Каталог с документами для вставки
 download	filemanager	ru	Загрузить
 favorites	filemanager	ru	Избранное
 file	filemanager	ru	Файл
 filemanager	common	ru	Файл
 files from subdirectories	filemanager	ru	Файлы в подкаталогах
-for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	ru	Для последовательности писем используйте эту метку. Поместите текст, который вы желаете повторять между двух меток.
 general	filemanager	ru	Общее
 general fields:	filemanager	ru	Основные поля:
 go to	filemanager	ru	Перейти к
@@ -34,6 +37,7 @@ permissions	filemanager	ru	Разрешения
 preview	filemanager	ru	Предварительный просмотр
 projectmanager	filemanager	ru	Управление Проектами
 reload	filemanager	ru	Перезагрузка
+save as	filemanager	ru	Сохранить как
 save changes	filemanager	ru	сохранить изменения
 search for '%1'	filemanager	ru	Искать '%1'
 show	filemanager	ru	Показать

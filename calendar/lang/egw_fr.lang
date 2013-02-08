@@ -62,6 +62,7 @@ countries	calendar	fr	Pays
 country	calendar	fr	Pays
 create an exception for the given date	calendar	fr	Créer une exception pour la date donnée
 create new links	calendar	fr	Créer de nouveaux liens
+created	calendar	fr	Créé(s)
 csv	calendar	fr	CSV
 csv-fieldname	calendar	fr	CSV-Nom du champs
 csv-filename	calendar	fr	CSV-Nom du fichier
@@ -197,6 +198,7 @@ mail all participants	calendar	fr	envoyer un email à tous les participants
 make freebusy information available to not loged in persons?	calendar	fr	Mettre à disposition les disponibilités aux personnes non connectées?
 minutes	calendar	fr	Minutes
 modified	calendar	fr	Modifié
+modifier	calendar	fr	Editeur
 mon	calendar	fr	Lun
 month	calendar	fr	Mois
 monthly	calendar	fr	Mensuel

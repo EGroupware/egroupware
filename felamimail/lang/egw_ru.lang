@@ -246,6 +246,7 @@ if	felamimail	ru	ЕСЛИ
 if from contains	felamimail	ru	если поле ОТ содержит
 if mail header	felamimail	ru	если заголовок письма
 if message size	felamimail	ru	если размер сообщения
+if shown, which folders should appear on main screen	felamimail	ru	если показано, какие папки следует выводить на основной экран
 if subject contains	felamimail	ru	если поле Предмет содержит
 if to contains	felamimail	ru	если поле Кому содержит
 if using ssl or tls, you must have the php openssl extension loaded.	felamimail	ru	При использовании SSL либо TLS, у вас должно быть загружено расширение PHP openssl
@@ -276,7 +277,7 @@ info	felamimail	ru	Информация
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	felamimail	ru	Вставить подпись в начало нового сообщения  при открытии диалогового окна "создать"(или "ответить")
 invalid user name or password	felamimail	ru	Неверно указаны имя пользователя или пароль
 javascript	felamimail	ru	JavaScript
-job	common	ru	работа
+job	felamimail	ru	работа
 jumping to end	felamimail	ru	перейти в конец
 jumping to start	felamimail	ru	перейти к началу
 junk	felamimail	ru	Спам
@@ -456,6 +457,7 @@ set as default	felamimail	ru	Установить по умолчанию
 set label	felamimail	ru	установить метку
 show all messages	felamimail	ru	Показать все сообщения
 show header	felamimail	ru	Показать заголовок
+show new messages on main screen	felamimail	ru	Показывать новые сообщения на основном экране
 show test connection section and control the level of info displayed?	felamimail	ru	показать пункт меню "Проверка подключения"?
 sieve connection status	felamimail	ru	Статус соединения Sieve
 sieve script name	felamimail	ru	название скрипта sieve
@@ -501,7 +503,7 @@ there is no imap server configured.	felamimail	ru	нету настроенно�
 this folder is empty	felamimail	ru	ЭТА ПАПКА ПУСТА
 this php has no imap support compiled in!!	felamimail	ru	Эта версия PHP собрана без поддержки IMAP!!
 to	felamimail	ru	Кому
-to do	common	ru	сделать
+to do	felamimail	ru	сделать
 to mail sent to	felamimail	ru	отправить сообщение получателю
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	ru	Для использования соединения TLS, у вас должен быть запущен PHP версии 5.1.0 или выше.
 translation preferences	felamimail	ru	Настройки перевода

@@ -56,8 +56,8 @@ profile access rights	emailadmin	pt	Perfil de direitos de acesso
 profile list	emailadmin	pt	Lista de perfis
 profile name	emailadmin	pt	Nome do perfil
 qmaildotmode	emailadmin	pt	Quota do correio electrónico no modo Idot
-qouta size in mbyte	emailadmin	pt	Quota em MBytes
 quota settings	emailadmin	pt	Configurações da quota
+quota size in mbyte	emailadmin	pt	tamanho da quota em MBytes
 remove	emailadmin	pt	Remover
 select type of imap/pop3 server	emailadmin	pt	Seleccionar tipo de servidor IMAP/POP3
 select type of smtp server	emailadmin	pt	Seleccionar tipo de servidor SMTP

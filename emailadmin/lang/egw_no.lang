@@ -49,8 +49,8 @@ postfix with ldap	emailadmin	no	Postfix med LDAP
 profile list	emailadmin	no	Profilliste
 profile name	emailadmin	no	Profilnavn
 qmaildotmode	emailadmin	no	qmaildotmodus
-qouta size in mbyte	emailadmin	no	Grense Str. i Mbyte
 quota settings	emailadmin	no	Grenseinstillinger
+quota size in mbyte	emailadmin	no	Grense Str. i Mbyte
 remove	emailadmin	no	fjern
 select type of imap/pop3 server	emailadmin	no	Velg type for IMAP/POP3 Tjener
 select type of smtp server	emailadmin	no	Velg type SMTP Tjener

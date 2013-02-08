@@ -16,6 +16,7 @@ order	emailadmin	eu	Ordena
 organisation	emailadmin	eu	antolaketa
 postfix with ldap	emailadmin	eu	Postfix-ak LDAP-arekin
 quota settings	emailadmin	eu	kuotaren konfigurazioa
+quota size in mbyte	emailadmin	eu	kuotaren tamaina MBytes-etan
 remove	emailadmin	eu	ezabatu
 sieve settings	emailadmin	eu	SIEVE ren lehentasunak
 smtp settings	emailadmin	eu	SMTP lehentasunak

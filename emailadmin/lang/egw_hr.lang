@@ -47,7 +47,6 @@ postfix with ldap	emailadmin	hr	Postfix with LDAP
 profile list	emailadmin	hr	Profile List
 profile name	emailadmin	hr	Profile Name
 qmaildotmode	emailadmin	hr	qmaildotmode
-qouta size in mbyte	emailadmin	hr	qouta size in MByte
 quota settings	emailadmin	hr	quota settings
 remove	emailadmin	hr	remove
 select type of imap/pop3 server	emailadmin	hr	Select type of IMAP/POP3 server

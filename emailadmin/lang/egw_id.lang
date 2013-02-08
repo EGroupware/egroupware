@@ -57,8 +57,8 @@ postfix with ldap	emailadmin	id	Postfix with LDAP
 profile list	emailadmin	id	Daftar Profil
 profile name	emailadmin	id	Nama Profil
 qmaildotmode	emailadmin	id	qmaildotmode
-qouta size in mbyte	emailadmin	id	Kuota dalam MByte
 quota settings	emailadmin	id	Pengaturan Kuota
+quota size in mbyte	emailadmin	id	ukuran kuota dalam MByte
 remove	emailadmin	id	Buang
 reset filter	emailadmin	id	ulangi penyaringan
 select type of imap server	emailadmin	id	Pilih tipe Server IMAP

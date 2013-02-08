@@ -79,6 +79,8 @@ country	calendar	pl	Kraj
 create an exception for the given date	calendar	pl	Utwórz wyjątek dla podanej daty
 create exception	calendar	pl	Utwórz wyjątek
 create new links	calendar	pl	Stwórz nowe odnośniki
+created	calendar	pl	Utworzony
+creator	calendar	pl	Twórca
 csv	calendar	pl	CSV
 csv-fieldname	calendar	pl	Nazwa pola CSV
 csv-filename	calendar	pl	Nazwa pliku CSV

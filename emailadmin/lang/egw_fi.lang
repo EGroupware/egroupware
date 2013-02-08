@@ -99,8 +99,8 @@ profile is active	emailadmin	fi	Profiili on aktiivinen
 profile list	emailadmin	fi	Profiileiluettelo
 profile name	emailadmin	fi	Profiilin nimi
 qmaildotmode	emailadmin	fi	qmaildotmode
-qouta size in mbyte	emailadmin	fi	Tallennuskiintiö Mt
 quota settings	emailadmin	fi	Tallennuskiintiön asetukset
+quota size in mbyte	emailadmin	fi	Rajoituksen koko Mb:nä
 remove	emailadmin	fi	Poista
 reset filter	emailadmin	fi	Poista suodatin
 select type of imap server	emailadmin	fi	Valitse IMAP -palvelimen tyyppi
@@ -147,7 +147,6 @@ users can define their own emailaccounts	emailadmin	fi	Käyttäjät voivat mää
 users can define their own identities	emailadmin	fi	Käyttäjät voivat määritellä omia identiteettejä
 users can define their own signatures	emailadmin	fi	Käyttäjät voivat määritellä omia allekirjoituksia
 users can utilize these stationery templates	emailadmin	fi	Käyttäjät voivat määritellä omia sähköpostin taustakuvamallipohjia
-vaction messages with start- and end-date require an admin account to be set!	emailadmin	fi	Lomavastaajaviestit alkamis- ja loppumispäiväyksellä vaativat ylläpitotilin asetuksen.
 virtual mail manager	emailadmin	fi	Virtual MAIL ManaGeR
 yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	fi	Kyllä, Käytä annettua salasanaa vain hälytyksiin ja huomautusviesteihin, muulloin käyttäjän tunnuksia
 yes, use credentials of current user or if given credentials below	emailadmin	fi	Kyllä, käyttäjän tunnukset, tai mahdolliset allaolevat tunnukset
