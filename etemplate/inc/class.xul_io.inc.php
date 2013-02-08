@@ -120,6 +120,14 @@ class xul_io
 		'menupopup' => 'select',
 		'description' => 'label'
 	);
+
+	/**
+	 * explicit whitelist for certain attributes and widget types
+	 */
+	var $attr_whitelist = array(
+		'rows' => array('textbox'),
+		'cols' => array('textbox'),
+	);
 	/**
 	 * Keys of currently processed template on export, to resolve relative names
 	 *
@@ -275,7 +283,7 @@ class xul_io
 			}
 			// no sure where the data key gets set, but it gives a warning in xml serialization (empty array)
 			unset($cell['data']);
-			$cell['orient'] = $orient;
+			if (!empty($orient)) $cell['orient'] = $orient;
 			$cell['size'] = $options;
 			break;
 
@@ -308,6 +316,11 @@ class xul_io
 			elseif (isset($this->attr2xul[$attr]))
 			{
 				$attr = $this->attr2xul[$attr];
+			}
+			// check if attribute has an explicit whitelist and widget type is in it
+			if (isset($this->attr_whitelist[$attr]) && !in_array($type, $this->attr_whitelist[$attr]))
+			{
+				continue;
 			}
 			$this->set_attributes($attr_widget,$attr,$val);
 		}
