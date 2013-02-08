@@ -533,7 +533,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 		this._super.apply(this, arguments);
 
 		this.value = "";
-		this.span = $j(document.createElement(this._type == "date-since" ? "span" : "time"))
+		this.span = $j(document.createElement(this._type == "date-since" || this._type == "date-time_today" ? "span" : "time"))
 			.addClass("et2_date_ro et2_label");
 
 		this.setDOMNode(this.span[0]);
@@ -566,6 +566,18 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 		var display = this.date.toString();
 
 		switch(this._type) {
+			case "date-time_today":
+				// Today - just the time
+				if(this.date.toDateString() == new Date().toDateString())
+				{
+					display = date(this.egw().preference('timeformat') == '24' ? 'H:i' : 'g:i a', this.date);
+				}
+				// Before today - just the date
+				else
+				{
+					display = date(this.egw().preference('dateformat'), this.date);
+				}
+				break;
 			case "date":
 				display = date(this.egw().preference('dateformat'), this.date);
 				break;
@@ -651,7 +663,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 
 });
 
-et2_register_widget(et2_date_ro, ["date_ro", "date-time_ro", "date-since"]);
+et2_register_widget(et2_date_ro, ["date_ro", "date-time_ro", "date-since", "date-time_today"]);
 
 
 var et2_date_timeonly_ro = et2_date_ro.extend({
