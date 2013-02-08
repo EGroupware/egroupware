@@ -3,6 +3,7 @@ from	notifications	hr	From
 message from	notifications	hr	Message from
 minutes	notifications	hr	minuta
 settings	notifications	hr	Settings
+signature	admin	hr	Potpis
 step	notifications	hr	Korak
 warning	notifications	hr	Warning
 your session could not be verified.	notifications	hr	Vašu sesiju nije moguće potvrditi.

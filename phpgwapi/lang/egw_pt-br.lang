@@ -552,6 +552,7 @@ remove shortcut	common	pt-br	Remover tecla de atalho
 rename	common	pt-br	Renomear
 replace	common	pt-br	Substituir
 replace with	common	pt-br	Substituir por
+resources	common	pt-br	Recursos
 restore failed	common	pt-br	Restauração falhou
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	pt-br	Retorna a lista complesta de usuários no sistema. Atenção: Isto pode causar lentidão dependendo da quantidade de registros.
 returns an array of todo items	common	pt-br	Retorna uma lista dos itens de Tarefas

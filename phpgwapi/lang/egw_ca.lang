@@ -540,6 +540,7 @@ remove shortcut	common	ca	Esborra tecles ràpides
 rename	common	ca	Reanomena
 replace	common	ca	Reemplaça
 replace with	common	ca	Reemplaça per
+resources	common	ca	Recursos
 restore failed	common	ca	Ha fallat la restauració
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	ca	Torna una llista completa dels comptes del sistema. Atenció: pot ser molt llarg
 returns an array of todo items	common	ca	Torna una matriu de tasques pendents

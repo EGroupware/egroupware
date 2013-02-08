@@ -6,6 +6,7 @@ notification	common	sl	Obvestila
 permission	notifications	sl	Dovoljenja
 preferences for notification	notifications	sl	Lastnosti za obvestila
 settings	notifications	sl	Nastavitve
+signature	admin	sl	Podpis
 step	notifications	sl	Korak
 warning	notifications	sl	Opozorilo
 your session could not be verified.	notifications	sl	Vaša seja ne more biti preverjena.

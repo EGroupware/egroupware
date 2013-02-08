@@ -55,6 +55,7 @@ received	notifications	fi	Vastaanotettu
 save password	notifications	fi	Tallenna salasana
 setting	notifications	fi	Asetukset
 settings	notifications	fi	Asetukset
+signature	admin	fi	Allekirjoitus
 sms backend	admin	fi	Tekstiviesti backend
 sms only	notifications	fi	Vain tekstiviesti
 sorry, your login has expired	notifications	fi	Käyttäjätili ei ole enää voimassa

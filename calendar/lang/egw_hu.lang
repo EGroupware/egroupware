@@ -68,6 +68,7 @@ country	calendar	hu	Ország
 create an exception for the given date	calendar	hu	Kivétel létrehozása a megadott dátumra
 create exception	calendar	hu	Kivétel létrehozása
 create new links	calendar	hu	Új hivatkozások létrehozása
+created	calendar	hu	Létrehozva
 csv	calendar	hu	CSV
 csv-fieldname	calendar	hu	CSV-Mezőnév
 csv-filename	calendar	hu	CSV-Fájlnév

@@ -568,6 +568,7 @@ rename	common	lo	ປ່ຽນຊື່
 replace	common	lo	ແທນທີ່
 replace with	common	lo	ແທນທີ່ດ້ວຍ
 resource type	common	lo	ປະເພດຫ້ອງປະຊຸມ ຫຼື ລົດ
+resources	common	lo	ແຫຼ່ງຂໍ້ມູນ
 restore failed	common	lo	ກູ້ຄືນໄດ້ຫຼົ້ມເຫຼວ
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	lo	ຍ້ອນກັບສູ່ລາຍການເຕັບຂອງບັນດາບັນຊີຢູ່ເທິງລະບົບ.  ຄໍາເຕືອນ: ການຍ້ອນກັບນີ້ຈະມີຂະໜາດຂ້ອນຂ້າງໃຫຍ່
 returns an array of todo items	common	lo	ຍ້ອນກັບໄປໜຶ່ງແຖວຂອງລາຍການທີ່ເຮັດ

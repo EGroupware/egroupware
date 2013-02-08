@@ -6,6 +6,7 @@ notification	common	fr	Notification
 permission	notifications	fr	permission
 preferences for notification	notifications	fr	Préférences de notification
 settings	notifications	fr	Paramètres
+signature	admin	fr	Signature
 step	notifications	fr	Etape
 warning	notifications	fr	Attention
 your session could not be verified.	notifications	fr	Votre session n'a pas pu être vérifiée.

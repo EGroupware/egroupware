@@ -526,6 +526,7 @@ remove shortcut	common	pt	Eliminar Atalho
 rename	common	pt	Renomear
 replace	common	pt	Substituir
 replace with	common	pt	Substituir por
+resources	common	pt	Fontes
 restore failed	common	pt	Reposição falhou
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	pt	Fornece a lista completa de contas no sistema. Aviso: Esta lista pode ser muito grande.
 returns an array of todo items	common	pt	Fornece a lista de tarefas a fazer

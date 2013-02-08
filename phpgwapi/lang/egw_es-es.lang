@@ -570,6 +570,7 @@ rename	common	es-es	Renombrar
 replace	common	es-es	Sustituir
 replace with	common	es-es	Sustituir por
 resource type	common	es-es	Tipo de recurso
+resources	common	es-es	Recursos
 restore failed	common	es-es	Fallo al restaurar
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	es-es	Devuelve una lista completa de las cuentas del sistema. Aviso: puede ser bastante largo
 returns an array of todo items	common	es-es	Devuelve un array de elementos pendientes

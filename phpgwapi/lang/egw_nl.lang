@@ -558,6 +558,7 @@ remove shortcut	common	nl	Snelkoppeling verwijderen
 rename	common	nl	Hernoemen
 replace	common	nl	Vervangen
 replace with	common	nl	Vervangen met
+resources	common	nl	Hulpmiddelen
 restore failed	common	nl	Terugzetten mislukte
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	nl	Geeft een volledige lijst met accounts die aanwezig zijn op het systeem. Waarschuwing: Deze lijst kan erg lang zijn.
 returns an array of todo items	common	nl	Geef een serie van todo items

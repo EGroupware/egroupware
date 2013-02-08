@@ -75,6 +75,8 @@ country	calendar	cs	Země
 create an exception for the given date	calendar	cs	Vytvořit výjimku pro zadané datum
 create exception	calendar	cs	Vytvořit výjimku
 create new links	calendar	cs	Vytvořit nové odkazy
+created	calendar	cs	Vytvořeno
+creator	calendar	cs	Tvůrce
 csv	calendar	cs	CSV
 csv-fieldname	calendar	cs	Název CSV pole
 csv-filename	calendar	cs	Jméno CSV souboru

@@ -6,6 +6,7 @@ notification	common	zh-tw	提醒
 permission	notifications	zh-tw	權限
 preferences for notification	notifications	zh-tw	提醒的設定
 settings	notifications	zh-tw	設定
+signature	admin	zh-tw	簽名檔
 step	notifications	zh-tw	步驟
 warning	notifications	zh-tw	注意
 your session could not be verified.	notifications	zh-tw	您的連線不合法。

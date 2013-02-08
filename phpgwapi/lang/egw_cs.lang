@@ -568,6 +568,7 @@ rename	common	cs	Přejmenovat
 replace	common	cs	Nahradit
 replace with	common	cs	Nahradit s
 resource type	common	cs	Typ zdroje
+resources	common	cs	Zdroje
 restore failed	common	cs	Obnovení se nezdařilo
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	cs	Vrací kompletní seznam účtů v systému. Varování: výpis může být velmi dlouhý.
 returns an array of todo items	common	cs	Vrací pole s položkami úkolů

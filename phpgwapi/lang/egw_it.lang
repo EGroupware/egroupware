@@ -595,6 +595,7 @@ replace with	common	it	Stostituisci con
 requests and full responses to files directory	common	it	Richieste e risposte alla cartella dei file
 requests and truncated responses to apache error-log	groupdav	it	Richieste e risposte troncate al registro errori di apache
 resource type	common	it	Tipo di risorsa
+resources	common	it	Risorse
 restore failed	common	it	Rirpristino fallito
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	it	Restituisce la lista degli account di sistema.  Attenzione: La lista può essere molto grande
 returns an array of todo items	common	it	Restituisce un elenco delle cose da fare

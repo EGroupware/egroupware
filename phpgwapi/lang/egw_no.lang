@@ -486,6 +486,7 @@ remove selected accounts	common	no	fjern valgte konti
 rename	common	no	Endre navn
 replace	common	no	Erstatt
 replace with	common	no	Erstatt med
+resources	common	no	Ressurser
 restore failed	common	no	Återställning misslyckades
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	no	Returner en komplett liste av brukerkontoer på systemet. Advarsel: Denne listen kan bli svært lang
 returns an array of todo items	common	no	Viser en tabell med gjøremål

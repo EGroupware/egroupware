@@ -548,6 +548,7 @@ remove shortcut	common	bg	Премахване на Shortcut-и
 rename	common	bg	Преименуване
 replace	common	bg	Замяна
 replace with	common	bg	Замяна с
+resources	common	bg	Ресурси
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	bg	Пълен списък на потребителите на системата. Внимание: списъкът може да бъде много дълъг!
 returns an array of todo items	common	bg	Връща масив с Предстоящи
 returns struct of users application access	common	bg	Връща структура с достъпа на потребителите до приложенията

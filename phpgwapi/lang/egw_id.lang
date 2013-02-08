@@ -467,6 +467,7 @@ remove shortcut	common	id	Buang Shortcut
 rename	common	id	Ubah
 replace	common	id	Ganti
 replace with	common	id	Ganti dengan
+resources	common	id	Sumberdaya
 restore failed	common	id	Restore failed
 reunion	common	id	REUNION
 right	common	id	Kanan

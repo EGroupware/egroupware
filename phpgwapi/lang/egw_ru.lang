@@ -594,6 +594,7 @@ replace with	common	ru	Заменить на
 requests and full responses to files directory	common	ru	Запросы и полные ответы на файловые каталоги
 requests and truncated responses to apache error-log	groupdav	ru	Запросы и короткие ответы  к логу ошибок apache
 resource type	common	ru	Тип ресурсов
+resources	common	ru	ресурсы
 restore failed	common	ru	Восстановление не удалось
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	ru	Показать список учетных записей пользователей в системе. ВНИМАНИЕ: Список может быть весьма большим.
 returns an array of todo items	common	ru	показать массив заданий

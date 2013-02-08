@@ -597,6 +597,7 @@ replace with	common	sk	Zameniť za
 requests and full responses to files directory	common	sk	Požiadavky a plné odpovede do priečinka súborov
 requests and truncated responses to apache error-log	groupdav	sk	Požiadavky a skrátené odpovede do chybového protokolu Apache
 resource type	common	sk	Typ zdroja
+resources	common	sk	Zdroje
 restore failed	common	sk	Obnova zlyhala
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	sk	Vráti úplný zoznam účtov v systéme. Upozornenie: môže byť pomerne rozsiahly
 returns an array of todo items	common	sk	Vracia pole úloh

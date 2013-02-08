@@ -236,6 +236,7 @@ language-short (eg. 'en' for english) for language-dependent template ('' reads 
 last	etemplate	pl	Ostatni
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	pl	długość dla char+varchar, precyzja int: 2, 4, 8 i float: 4, 8
 link	etemplate	pl	Odnośnik
+link target %1 not found!	etemplate	pl	Cel linku %1 nie odnaleziony!
 linkapps	etemplate	pl	LinkAplikacji
 linkentry	etemplate	pl	LinkWpisu
 linklist	etemplate	pl	LinkListy

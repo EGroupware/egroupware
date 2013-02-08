@@ -482,6 +482,7 @@ read this list of methods.	common	da	Læs denne liste over metoder
 reading	common	da	læser
 reject	common	da	Afvis
 rename	common	da	Omdøb
+resources	common	da	Ressourcer
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	da	Returnere en fuld liste over alle brugere på systemet. Advarsel: Den kan være ret stor
 returns an array of todo items	common	da	Returnere et array af opgaver
 returns struct of users application access	common	da	Returnere en struct af brugerapplikations adgang

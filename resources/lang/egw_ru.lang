@@ -37,6 +37,7 @@ how many of the resources are useable?	resources	ru	Сколько ресурс�
 how many of them are useable?	resources	ru	Сколько из них доступно?
 how many of this resource are usable	resources	ru	Сколько этого ресурса доступно?
 how many of this resource exists	resources	ru	Сколько этого ресурса есть?
+if you specify an export definition, it will be used when you export	resources	ru	если вы укажете оперделения для экспорта, оно будет использоваться при экспорте
 implies booking permission	resources	ru	подразумевает права на бронирование
 implies read permission	resources	ru	подразумевает права на чтение
 information about storage	resources	ru	Информация о хранилище

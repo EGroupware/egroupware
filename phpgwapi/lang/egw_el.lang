@@ -518,6 +518,7 @@ remove shortcut	common	el	Αφαίρεση Συντόμευσης
 rename	common	el	Μετονομασία
 replace	common	el	Αντικατάσταση
 replace with	common	el	Αντικατάσταση με
+resources	common	el	Πόροι
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	el	Επιστρέφει πλήρη λίστα λογαριασμών στο σύστημα. Προειδοποίηση: η λίστα μπορεί να είναι αρκετά μεγάλη
 returns an array of todo items	common	el	Επιστρέφει μια σειρά ανειλημμένες εργασίες
 returns struct of users application access	common	el	Επιστρέφει τη δομή πρόσβασης των εφαρμογών χρήστη

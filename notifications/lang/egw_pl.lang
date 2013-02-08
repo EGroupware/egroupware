@@ -35,6 +35,7 @@ poll interval	notifications	pl	okres odpytywania
 preferences for notification	notifications	pl	Preferencje dla powiadomienia
 received	notifications	pl	odebrano
 settings	notifications	pl	Ustawienia
+signature	admin	pl	Sygnaturka
 sms backend	admin	pl	Backend SMS
 sms only	notifications	pl	Tylko SMS
 step	notifications	pl	Krok

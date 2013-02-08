@@ -395,6 +395,7 @@ remove shortcut	common	fa	میانبر را حذف کن
 rename	common	fa	تغییر نام
 replace	common	fa	جابجایی
 replace with	common	fa	جابجایی با
+resources	common	fa	منابع
 restore failed	common	fa	ناموفق در بازگرداندن
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	fa	لیست کامل حسابهای موجود روی سیستم. هشدار این لیست ممکن است بزرگ و طولانی باشد
 returns an array of todo items	common	fa	آرایه ای از موارد انجام کار بر می گرداند

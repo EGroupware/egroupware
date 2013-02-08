@@ -241,6 +241,7 @@ last	etemplate	es-es	Última
 left	etemplate	es-es	Izquierda
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	es-es	longitud para char+varchar. Precisiones int: 2, 4, y float: 4, 8
 link	etemplate	es-es	Enlace
+link target %1 not found!	etemplate	es-es	¡No se ha encontrado el enlace de destino %1!
 linkapps	etemplate	es-es	Enlace a aplicaciones
 linkentry	etemplate	es-es	Entrada de enlace
 linklist	etemplate	es-es	Lista de enlaces

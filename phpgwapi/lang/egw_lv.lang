@@ -457,6 +457,7 @@ reading	common	lv	lasīšana
 reject	common	lv	Noraidīt
 remove selected accounts	common	lv	Likvidēt izvēlētos kontus
 rename	common	lv	Pārsaukt
+resources	common	lv	resursi
 restore failed	common	lv	Atjaunošana neizdevās
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	lv	Atgriež pilnu sistēmas lietotāju kontu sarakstu. Uzmanību: saraksts var būt samērā liels
 returns an array of todo items	common	lv	Atgriež darāmo lietu sarakstu

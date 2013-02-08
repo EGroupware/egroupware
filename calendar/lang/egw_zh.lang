@@ -64,6 +64,8 @@ country	calendar	zh	国家
 create an exception for the given date	calendar	zh	为特定日期创建一个例外
 create exception	calendar	zh	创建例外
 create new links	calendar	zh	创建新链接
+created	calendar	zh	创建
+creator	calendar	zh	创建者
 csv	calendar	zh	CSV
 csv-fieldname	calendar	zh	CSV-字段名
 csv-filename	calendar	zh	CSV-字段名
@@ -189,6 +191,7 @@ mail all participants	calendar	zh	发邮件给所有参与者
 make freebusy information available to not loged in persons?	calendar	zh	将可用的空闲/繁忙信息开放给未注册的人？
 minutes	calendar	zh	分钟
 modified	calendar	zh	更改
+modifier	calendar	zh	修改人
 mon	calendar	zh	一
 month	calendar	zh	月
 monthly	calendar	zh	每月

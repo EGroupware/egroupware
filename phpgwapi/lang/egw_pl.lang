@@ -569,6 +569,7 @@ rename	common	pl	Zmień nazwę
 replace	common	pl	Zastąp
 replace with	common	pl	Zastąp
 resource type	common	pl	Tym zasobu
+resources	common	pl	Zasoby
 restore failed	common	pl	Odtworzenie nie powiodło się
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	pl	Pokazuje pełną listę kont w systemie.  Uwaga: Lista może być długa
 returns an array of todo items	common	pl	Pokazuje tablicę Zadań

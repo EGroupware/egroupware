@@ -238,6 +238,7 @@ last	etemplate	cs	Poslední
 left	etemplate	cs	Levý
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	cs	délka pro char+varchar, přesnost celých čísel: 2, 4, 8 a desetinných: 4, 8
 link	etemplate	cs	Odkaz
+link target %1 not found!	etemplate	cs	Odkaz na cíl %1 nebyl nalezen!
 linkapps	etemplate	cs	Odkaz na aplikace
 linkentry	etemplate	cs	Záznam odkazu
 linklist	etemplate	cs	Seznam odkazů

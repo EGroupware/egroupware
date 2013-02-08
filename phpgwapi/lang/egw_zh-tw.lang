@@ -536,6 +536,7 @@ remove shortcut	common	zh-tw	移除快速鍵
 rename	common	zh-tw	更名
 replace	common	zh-tw	取代
 replace with	common	zh-tw	取代於
+resources	common	zh-tw	資源
 restore failed	common	zh-tw	還原失敗
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	zh-tw	傳回系統的完整帳號清單。注意：傳回的資料量可能非常多
 returns an array of todo items	common	zh-tw	傳回待辦事項所有項目成為陣列

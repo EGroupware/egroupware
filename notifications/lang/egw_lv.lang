@@ -3,6 +3,7 @@ from	notifications	lv	No
 message from	notifications	lv	Ziņa no
 minutes	notifications	lv	minūtes
 settings	notifications	lv	Uzstādījumi
+signature	admin	lv	Paraksts
 step	notifications	lv	Solis
 warning	notifications	lv	Brīdinājums
 your session could not be verified.	notifications	lv	Nevarēju Jūs pārbaudīt. Mēģiniet pēc 30sek. vēlreiz.

@@ -44,6 +44,7 @@ copy this event	calendar	ko	이 이벤트 복사
 countries	calendar	ko	국가들
 country	calendar	ko	국가
 create new links	calendar	ko	새 링크개설
+created	calendar	ko	생성됨
 csv-fieldname	calendar	ko	컴마구분값-필드이름
 csv-filename	calendar	ko	컴마구분값-파일이름
 custom fields	common	ko	사용자정의 필드

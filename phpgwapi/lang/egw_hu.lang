@@ -558,6 +558,7 @@ remove shortcut	common	hu	Gyorsbillentyű eltávolítása
 rename	common	hu	Átnevez
 replace	common	hu	Csere
 replace with	common	hu	Csere a következőre:
+resources	common	hu	Erőforrások
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	hu	A rendszeren található összes felhasználói fiók listája. Figyelem: Ez igazán nagy is lehet.
 returns an array of todo items	common	hu	Tennivalók listáját adja vissza egy tömbben
 returns struct of users application access	common	hu	Felhasználók alkalmazás elérési jogait tartalmazó struktúra visszaadása

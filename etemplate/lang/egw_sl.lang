@@ -227,6 +227,7 @@ last	etemplate	sl	Zadnji
 left	etemplate	sl	Levi
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	sl	Dolžina za char+varchar, natančnosti int: 2, 4, 8 in float: 4, 8
 link	etemplate	sl	Povezava
+link target %1 not found!	etemplate	sl	Cilj povezave %1 ni bil najden
 linkapps	etemplate	sl	Povezava - aplikacija
 linkentry	etemplate	sl	Povezava - vnos
 linklist	etemplate	sl	Povezava - seznam

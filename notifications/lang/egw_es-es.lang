@@ -36,6 +36,7 @@ poll interval	notifications	es-es	Intervalo de muestreo
 preferences for notification	notifications	es-es	Preferencias para la notificación
 received	notifications	es-es	Recibido
 settings	notifications	es-es	Configuración
+signature	admin	es-es	Firma
 sms backend	admin	es-es	Método SMS
 sms only	notifications	es-es	Sólo SMS
 step	notifications	es-es	Paso

@@ -547,6 +547,7 @@ remove shortcut	common	zh	移除快捷键
 rename	common	zh	重命名
 replace	common	zh	替换
 replace with	common	zh	替换与
+resources	common	zh	资源
 restore failed	common	zh	还原失败
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	zh	返回系统所有帐户的列表，注意：该列表可能很长
 returns an array of todo items	common	zh	返回一排待处理列表

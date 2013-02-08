@@ -11,6 +11,7 @@ file	etemplate	lo	ຟາຍ
 hours	etemplate	lo	ຊົ່ວໂມງ
 last	etemplate	lo	ສຸດທ້າຍ
 link	etemplate	lo	ເຊື່ອມຕໍ່ໄປທີ່ເຫດການ
+link target %1 not found!	etemplate	lo	ບໍ່ພົບເປົ້າໝາຍການເຊື່ອມຕໍ່ %1
 minutes	etemplate	lo	ນາທີ
 month	etemplate	lo	ເດືອນ
 no matches found	etemplate	lo	ບໍ່ພົບລາຍການທີ່ກົງກັນ

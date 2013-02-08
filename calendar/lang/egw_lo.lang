@@ -68,6 +68,7 @@ country	calendar	lo	ປະເທດ
 create an exception for the given date	calendar	lo	ສ້າງຂໍ້ຍົກເວັ້ນສໍາລັບວັນທີ ທີ່ຖືກລະບຸ
 create exception	calendar	lo	ສ້າງຂໍ້ຍົກເວັ້ນ
 create new links	calendar	lo	ສ້າງການເຊື່ອມຕໍ່ໃໝ່
+created	calendar	lo	ຖືກສ້າງແລ້ວ
 csv	calendar	lo	CSV
 csv-fieldname	calendar	lo	ຊື່ຂອບເຂດຂອງ CSV
 csv-filename	calendar	lo	ຊື່ຟາຍຂອງ CSV

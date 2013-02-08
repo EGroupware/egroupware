@@ -47,6 +47,7 @@ country	calendar	et	Riik
 create an exception for the given date	calendar	et	Tee erand antud kuupäevale
 create exception	calendar	et	Tee erand
 create new links	calendar	et	Tee uued lingid
+created	calendar	et	Tehtud
 csv-fieldname	calendar	et	CSV-Väljanimi
 csv-filename	calendar	et	CSV-Failinimi
 daily	calendar	et	Päeviti

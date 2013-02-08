@@ -552,6 +552,7 @@ remove shortcut	common	sl	Odstrani bližnjico
 rename	common	sl	Preimenuj
 replace	common	sl	Zamenjaj
 replace with	common	sl	Zamenjaj z
+resources	common	sl	Sredstva
 restore failed	common	sl	Obnovitev je splodletela
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	sl	Vrne poln seznam uporabnikov sistema. Pozor: seznam je lahko precej dolg.
 returns an array of todo items	common	sl	Vrne niz opravil

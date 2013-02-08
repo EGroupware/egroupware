@@ -1,4 +1,6 @@
+from	notifications	ja	差出人
 message from	notifications	ja	送信者
 minutes	notifications	ja	分
+signature	admin	ja	署名
 step	notifications	ja	ステップ
 your session could not be verified.	notifications	ja	Your session could not be verified.

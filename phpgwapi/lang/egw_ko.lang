@@ -252,6 +252,7 @@ remove selected accounts	common	ko	선택된 계정 삭제
 rename	common	ko	이름변경
 replace	common	ko	치환
 replace with	common	ko	치환될 글월
+resources	common	ko	리소스
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	ko	시스템의 존재하는 계정의 전체목록을 반환합니다. 주의: 데이터가 상당히 클 수 있습니다.
 returns struct of users application access	common	ko	사용자의 응용프로그램 액세스 구조 반환
 right	common	ko	오른쪽

@@ -67,6 +67,8 @@ country	calendar	ru	Страна
 create an exception for the given date	calendar	ru	Создать исключения для заданной даты
 create exception	calendar	ru	Создать исключение
 create new links	calendar	ru	Создайте новые ссылки
+created	calendar	ru	Создано
+creator	calendar	ru	Создатель
 csv	calendar	ru	CSV
 csv-fieldname	calendar	ru	CSV-Имя поля
 csv-filename	calendar	ru	CSV-Имя файла
@@ -135,6 +137,7 @@ existing links	calendar	ru	Существующие ссылки
 extended	calendar	ru	Расширенное
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	ru	Расширенные обновления всегда включают в себя полные описания событий. iCal может быть импортирован многими другими приложениями управления календарями.
 fieldseparator	calendar	ru	Разделитель полей
+filemanager	calendar	ru	Файловый менеджер
 filename	calendar	ru	Имя файла
 filename of the download	calendar	ru	имя файла для загрузки
 find free timeslots where the selected participants are availible for the given timespan	calendar	ru	поиск свободного времени у выбранных участников проекта
@@ -365,6 +368,7 @@ work day starts on	calendar	ru	Рабочий день начинается в
 yearly	calendar	ru	Ежегодно
 yearview	calendar	ru	Вид на Год
 yes, only admins can purge deleted items	admin	ru	Да, только администраторы могут уничтожить удаленые записи
+yes, users can purge their deleted items	admin	ru	Да, пользователи могут очистить удаленные ими записи
 you can either set a year or a occurence, not both !!!	calendar	ru	Вы можете установить год или событие, только не оба сразу !!!
 you can only set a year or a occurence !!!	calendar	ru	Вы можете установить только событие или год!!!
 you do not have permission to read this record!	calendar	ru	У вас нет доступа для чтения данной записи!

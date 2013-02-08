@@ -63,6 +63,7 @@ lang	etemplate	hu	Nyelv
 last	etemplate	hu	Utolsó
 left	etemplate	hu	Balra
 link	etemplate	hu	Hivatkozás
+link target %1 not found!	etemplate	hu	Link célpontja nem található (%1)!
 maximum size for uploads	filemanager	hu	Feltöltés maximális mérete
 minute	etemplate	hu	Perc
 minutes	etemplate	hu	Percek

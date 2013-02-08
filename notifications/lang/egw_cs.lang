@@ -36,6 +36,7 @@ poll interval	notifications	cs	Interval dotazování (poll)
 preferences for notification	notifications	cs	Předvolby pro upozornění
 received	notifications	cs	Přijato
 settings	notifications	cs	Nastavení
+signature	admin	cs	Podpis
 sms backend	admin	cs	SMS backend
 sms only	notifications	cs	Jen SMS
 step	notifications	cs	Krok

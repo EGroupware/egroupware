@@ -220,6 +220,7 @@ last	etemplate	it	Ultimo
 left	etemplate	it	Sinistra
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	it	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
 link	etemplate	it	Link
+link target %1 not found!	etemplate	it	Destinazione %1 del collegamento non trovata!
 linkapps	etemplate	it	Applicazioni Link
 linkentry	etemplate	it	Voce Link
 linklist	etemplate	it	Elenco Link

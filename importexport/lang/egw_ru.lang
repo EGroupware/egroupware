@@ -13,7 +13,7 @@ admin disabled exporting	importexport	ru	Администратор отключ
 all encodings	importexport	ru	Все кодировки
 allowed users	importexport	ru	Пользователи имеющие доступ
 automatically created by importexport	importexport	ru	Автоматически создано с помощью"ИмпортЭкспорт"
-basic csv import	importexport	ru	Основной импорт CSV 
+basic csv import	importexport	ru	Основной импорт CSV
 changed	importexport	ru	Изменен
 changed allowed_users	importexport	ru	Изменить пользователей
 changed owner	importexport	ru	Изменить владельца
@@ -27,7 +27,7 @@ choose seperator and charset	importexport	ru	Выберите разделите
 condition	importexport	ru	Состояние
 copied	importexport	ru	Скопировано.
 created	importexport	ru	Создано
-csv field	importexport	ru	поле CSV 
+csv field	importexport	ru	поле CSV
 database values	importexport	ru	значение базы данных
 day of week	importexport	ru	День недели
 define imports|exports	common	ru	Определите Импорт/Экспорт
@@ -49,7 +49,7 @@ field names	importexport	ru	Поле имени
 fieldseperator	importexport	ru	Поле разделителя
 finish	importexport	ru	конец
 from definition	importexport	ru	Из определения
-general	importexport	ru	Общее
+general	preferences	ru	Общее
 general fields:	preferences	ru	Общие поля:
 header lines to skip	importexport	ru	Пропустить строки заголовков
 human friendly values	importexport	ru	Понятные значения
@@ -86,7 +86,7 @@ select...	importexport	ru	Выбор...
 some nice text	importexport	ru	Какой-нибудь текст
 some records may not have been imported	importexport	ru	Некоторые записи не могут быть импортированы.
 stop	importexport	ru	Стоп
-stylite template folder	importexport	ru	Шаблон папки Stylite 
+stylite template folder	importexport	ru	Шаблон папки Stylite
 target	importexport	ru	Назначение
 target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv	importexport	ru	Пример назначения: vfs://default/home/user/export.csv or http://server.net/prices.csv
 target field	importexport	ru	Назначенное поле

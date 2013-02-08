@@ -15,6 +15,7 @@ poll interval	notifications	id	poll interval
 preferences for notification	notifications	id	kesukaan untuk notifikasi
 received	notifications	id	received
 settings	notifications	id	Seting
+signature	admin	id	Tandatangan
 sms backend	admin	id	SMS backend
 sms only	notifications	id	Hanya SMS
 step	notifications	id	Langkah

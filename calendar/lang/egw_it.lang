@@ -99,6 +99,8 @@ create a new series	calendar	it	Crea nuova serie
 create an exception for the given date	calendar	it	Crea una eccezione per questa data
 create exception	calendar	it	Crea eccezione
 create new links	calendar	it	Crea nuovi collegamenti
+created	calendar	it	Creato
+creator	calendar	it	Creatore
 csv	calendar	it	CSV
 csv-fieldname	calendar	it	Campi-CSV
 csv-filename	calendar	it	Nomefile-CSV

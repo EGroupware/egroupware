@@ -523,6 +523,7 @@ remove shortcut	common	sv	Radera genväg
 rename	common	sv	Byt namn
 replace	common	sv	Ersätt
 replace with	common	sv	Ersätt med
+resources	common	sv	Resurser
 restore failed	common	sv	Återställning misslyckades
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	sv	Returnerar en fullständig lista på konton. Varning: Den kan vara tämligen stor
 returns an array of todo items	common	sv	Returnera en lista på Uppgifter

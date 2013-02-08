@@ -36,6 +36,7 @@ poll interval	notifications	sk	Interval delenia
 preferences for notification	notifications	sk	Predvoľby pre Pripomienky
 received	notifications	sk	Doručené
 settings	notifications	sk	Nastavenia
+signature	admin	sk	Podpis
 sms backend	admin	sk	Mechanizmus SMS
 sms only	notifications	sk	Iba SMS
 step	notifications	sk	Krok
