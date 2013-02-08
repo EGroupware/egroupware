@@ -45,9 +45,9 @@ class etemplate_widget_projectmanager extends etemplate_widget_transformer
 
 		if ($this->type)
 		{
-			// += to keep further options set by app code
 			$pm_widget = new projectmanager_widget();
-			$cell = $this->attrs + array('type'=>$this->type);
+			$cell = $this->attrs;
+			$cell['type']=$this->type;
 			$pm_widget->pre_process($form_name, self::get_array(self::$request->content, $form_name),
 				$cell,
 				$this->attrs['readonly'],
@@ -78,5 +78,25 @@ class etemplate_widget_projectmanager extends etemplate_widget_transformer
 	 */
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
+		$form_name = self::form_name($cname, $this->id, $expand);
+
+                $ok = true;
+                if (!$this->is_readonly($cname, $form_name))
+                {
+                        $value = $value_in = self::get_array($content, $form_name);
+
+			switch($this->type)
+			{
+				case 'projectmanager-select-erole':
+					$value = null;
+					if(is_array($value_in)) $value = implode(',',$value_in);
+					break;
+				default:
+					$value = $value_in;
+					break;
+			}
+			$valid =& self::get_array($validated, $form_name, true);
+                        $valid = $value;
+		}
 	}
 }
