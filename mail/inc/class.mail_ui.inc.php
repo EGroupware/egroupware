@@ -69,8 +69,7 @@ class mail_ui
 	 */
 	function index(array $content=null,$msg=null)
 	{
-
-		//$this->TestConnection();
+		//_debug_array($content);
 		if (!is_array($content))
 		{
 			$content = array(
@@ -100,14 +99,8 @@ class mail_ui
 		}
 		// filter is used to choose the mailbox
 		//if (!isset($content['nm']['foldertree'])) // maybe we fetch the folder here
-		$sel_options['foldertree'] = array(
-			//'--topfolder--'=>array('label'=>'IMAP Server','title'=>'IMAP Server','image'=>'thunderbird.png'),
-			'/INBOX'=>array('label'=>'INBOX','title'=>'INBOX','image'=>'kfm_home.png'),
-			'/INBOX/sub'=>array('label'=>'sub','title'=>'INBOX/sub'),
-			'/user' => array('label' => 'user'),
-			'/user/birgit' => 'birgit',
-		);
-$content['nm']['foldertree'] = '/INBOX/sub';
+		$sel_options['foldertree'] = $this->getFolderTree();
+		$content['nm']['foldertree'] = '/INBOX';
 		$sel_options['cat_id'] = array(1=>'none');
 		if (!isset($content['nm']['filter'])) $content['nm']['filter'] = 'INBOX';
 		if (!isset($content['nm']['cat_id'])) $content['nm']['cat_id'] = 'All';
@@ -121,13 +114,13 @@ $content['nm']['foldertree'] = '/INBOX/sub';
 	 */
 	function TestConnection ()
 	{
-		$preferences	=& $this->mail_bo->mailPreferences;
 		// load translations
 		translation::add_app('mail');
 
 		common::egw_header();
 		parse_navbar();
 		//$GLOBALS['egw']->framework->sidebox();
+		$preferences	=& $this->mail_bo->mailPreferences;
 
 		if ($preferences->preferences['prefcontroltestconnection'] == 'none') die('You should not be here!');
 
@@ -256,6 +249,65 @@ $content['nm']['foldertree'] = '/INBOX/sub';
 			));
 		}
 		common::egw_footer();
+	}
+
+	/**
+	 * getFolderTree, get folders from server and prepare the folder tree
+	 *
+	 * @return array something like that: array(
+	 *		'/INBOX'=>array('label'=>'INBOX','title'=>'INBOX','image'=>'kfm_home.png'),
+	 *		'/INBOX/sub'=>array('label'=>'sub','title'=>'INBOX/sub'),
+	 *		'/user' => array('label' => 'user'),
+	 *		'/user/birgit' => 'birgit',
+	 *	);
+	 */
+	function getFolderTree()
+	{
+		$folderObjects = $this->mail_bo->getFolderObjects();
+		$trashFolder = $this->mail_bo->getTrashFolder();
+		$templateFolder = $this->mail_bo->getTemplateFolder();
+		$draftFolder = $this->mail_bo->getDraftFolder();
+		$sentFolder = $this->mail_bo->getSentFolder();
+		$userDefinedFunctionFolders = array();
+		if (isset($trashFolder) && $trashFolder != 'none') $userDefinedFunctionFolders['Trash'] = $trashFolder;
+		if (isset($sentFolder) && $sentFolder != 'none') $userDefinedFunctionFolders['Sent'] = $sentFolder;
+		if (isset($draftFolder) && $draftFolder != 'none') $userDefinedFunctionFolders['Drafts'] = $draftFolder;
+		if (isset($templateFolder) && $templateFolder != 'none') $userDefinedFunctionFolders['Templates'] = $templateFolder;
+		//_debug_array($folderObjects);
+		foreach($folderObjects as $key => $obj)
+		{
+			$fS = $this->mail_bo->getFolderStatus($key);
+			//_debug_array($fS);
+			$path = str_replace($obj->delimiter,'/',$obj->folderName);
+			$oA =array('label'=> $obj->shortDisplayName, 'title'=> $obj->displayName);
+			if ($fS['unseen']) $oA['label'] = '<b>'.$oA['label'].' ('.$fS['unseen'].')</b>';
+			if ($path=='INBOX')
+			{
+				$oA['image'] = 'kfm_home.png';
+			}
+			elseif (in_array($obj->shortFolderName,mail_bo::$autoFolders))
+			{
+				//echo $obj->shortFolderName.'<br>';
+				$oA['image'] = $image1 = $image2 = $image3 = "MailFolder".$obj->shortFolderName.".png";
+				//$image2 = "'MailFolderPlain.png'";
+				//$image3 = "'MailFolderPlain.png'";
+			}
+			elseif (in_array($key,$userDefinedFunctionFolders))
+			{
+				$_key = array_search($key,$userDefinedFunctionFolders);
+				$oA['image'] = $image1 = $image2 = $image3 = "MailFolder".$_key.".png";
+			}
+			else
+			{
+				$oA['image'] = $image1 = "MailFolderPlain.png"; // one Level
+				$image2 = "folderOpen.gif";
+				if (stripos(array2string($fS['attributes']),'\hasChildren')!== false) $oA['image'] = $image3 = "MailFolderClosed.png"; // has Children
+			}
+
+			$out[$path] = $oA;
+		}
+		//_debug_array($out);
+		return (isset($out)?$out:array('/INBOX'=>array('label'=>'INBOX','title'=>'INBOX','image'=>'kfm_home.png')));
 	}
 
 	/**

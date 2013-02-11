@@ -49,7 +49,7 @@ class mail_hooks
 	{
 		if (($default_profile_id = emailadmin_bo::getDefaultProfileID()))
 		{
-			$mail_bo = felamimail_bo::forceEAProfileLoad($default_profile_id);
+			$mail_bo = mail_bo::forceEAProfileLoad($default_profile_id);
 
 			$ogServer = $mail_bo->mailPreferences->getOutgoingServer($default_profile_id);
 			//error_log(__METHOD__."() default_profile_id = $default_profile_id, get_class(ogServer)=".get_class($ogServer));
@@ -78,17 +78,17 @@ class mail_hooks
     {
         return array(
 			'view'  => array(
-//				'menuaction' => 'felamimail.uidisplay.display',
+//				'menuaction' => 'mail.uidisplay.display',
 			),
 			'view_popup' => '850xegw_getWindowOuterHeight()',
 			'add'        => array(
-//				'menuaction' => 'felamimail.uicompose.compose',
+//				'menuaction' => 'mail.uicompose.compose',
 			),
 			'add_popup'  => '850xegw_getWindowOuterHeight()',
 			// register fmail as handler for .eml files
 			'mime' => array(
 				'message/rfc822' => array(
-//					'menuaction' => 'felamimail.uifelamimail.importMessageFromVFS2DraftAndDisplay',
+//					'menuaction' => 'mail.mail_ui.importMessageFromVFS2DraftAndDisplay',
 					'mime_popup' => '850xegw_getWindowOuterHeight()',
 					'mime_url'   => 'formData[file]',
 				),
@@ -136,11 +136,11 @@ class mail_hooks
 			}
 
 			$availableAutoFolders['none'] = lang('none, create all');
-			foreach(felamimail_bo::$autoFolders as $aname) {
+			foreach(mail_bo::$autoFolders as $aname) {
 				$availableAutoFolders[$aname] = lang($aname);
 			}
 
-			$felamimailConfig = config::read('mail');
+			$mailConfig = config::read('mail');
 		}
 		$refreshTime = array(
 			'0' => lang('disabled'),
@@ -268,9 +268,9 @@ class mail_hooks
 		$toggle = false;
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode'] == 'EGW_SELECTMODE_TOGGLE') $toggle=true;
 		$rowOrderStyle = array(
-			'felamimail'	=> lang('FeLaMiMail'),
+			'mail'	=> lang('mail'),
 			'outlook'	=> 'Outlook',
-			'felamimail_wCB' => lang('FeLaMiMail').' '.($toggle?lang('(select mails by clicking on the line, like a checkbox)'):lang('(with checkbox enforced)')),
+			'mail_wCB' => lang('mail').' '.($toggle?lang('(select mails by clicking on the line, like a checkbox)'):lang('(with checkbox enforced)')),
 			'outlook_wCB'	=> 'Outlook'.' '.($toggle?lang('(select mails by clicking on the line, like a checkbox)'):lang('(with checkbox enforced)')),
 		);
 
@@ -441,7 +441,7 @@ class mail_hooks
 				'values' => $rowOrderStyle,
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default'=> 'felamimail',
+				'default'=> 'mail',
 			),
 			'prefMailGridBehavior' => array(
 				'type'   => 'select',
@@ -675,7 +675,7 @@ class mail_hooks
 				'name'   => 'sieveScriptName',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'forced' => 'felamimail',
+				'forced' => 'mail',
 			),
 			'prefcontroltestconnection' => array(
 				'type'   => 'select',
@@ -721,14 +721,14 @@ class mail_hooks
 	{
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 		// Only Modify the $file and $title variables.....
-		$title = $appname = 'felamimail';
+		$title = $appname = 'mail';
 		$profileID = 0;
-		if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
-			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
+		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
+			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 
 		$file = Array(
-			'Site Configuration' => egw::link('/index.php',array('menuaction'=>'admin.uiconfig.index','appname'=>'felamimail')),
-			'eMailAdmin: Profilemanagement' => egw::link('/index.php','menuaction=felamimail.uifelamimail.redirectToEmailadmin'),
+			'Site Configuration' => egw::link('/index.php',array('menuaction'=>'admin.uiconfig.index','appname'=>'mail')),
+			'eMailAdmin: Profilemanagement' => egw::link('/index.php','menuaction=emailadmin.emailadmin_ui.index'),
 		);
 		display_section($appname,$title,$file);
 	}
@@ -742,26 +742,26 @@ class mail_hooks
 	{
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 		// Only Modify the $file and $title variables.....
-		$title = $appname = 'felamimail';
+		$title = $appname = 'mail';
 		$profileID = 0;
-		if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
-			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
+		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
+			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 
-		$mail_bo = felamimail_bo::getInstance(true,$profileID);
-		$profileID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $mail_bo->profileID;
+		$mail_bo = mail_bo::getInstance(true,$profileID);
+		$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $mail_bo->profileID;
 		$mailPreferences =& $mail_bo->mailPreferences;
 
 		$file['Preferences'] = egw::link('/index.php','menuaction=preferences.uisettings.index&appname=' . $appname);
-
+/*
 		if($mailPreferences->userDefinedAccounts) {
 			$linkData = array
 			(
-				'menuaction' => 'felamimail.uipreferences.listAccountData',
+				'menuaction' => 'mail.uipreferences.listAccountData',
 			);
 			$file['Manage eMail Accounts and Identities'] = egw::link('/index.php',$linkData);
 		}
 		if(empty($mailPreferences->preferences['prefpreventmanagefolders']) || $mailPreferences->preferences['prefpreventmanagefolders'] == 0) {
-			$file['Manage Folders'] = egw::link('/index.php','menuaction=felamimail.uipreferences.listFolder');
+			$file['Manage Folders'] = egw::link('/index.php','menuaction=mail.uipreferences.listFolder');
 		}
 		if (is_object($mailPreferences))
 		{
@@ -769,11 +769,12 @@ class mail_hooks
 
 			if($icServer->enableSieve) {
 				if(empty($mailPreferences->preferences['prefpreventeditfilterrules']) || $mailPreferences->preferences['prefpreventeditfilterrules'] == 0)
-					$file['filter rules'] = egw::link('/index.php', 'menuaction=felamimail.uisieve.listRules');
+					$file['filter rules'] = egw::link('/index.php', 'menuaction=mail.uisieve.listRules');
 				if(empty($mailPreferences->preferences['prefpreventabsentnotice']) || $mailPreferences->preferences['prefpreventabsentnotice'] == 0)
-					$file['vacation notice'] = egw::link('/index.php','menuaction=felamimail.uisieve.editVacation');
+					$file['vacation notice'] = egw::link('/index.php','menuaction=mail.uisieve.editVacation');
 			}
 		}
+*/
 		//Do not modify below this line
 		display_section($appname,$title,$file);
 	}
@@ -788,200 +789,25 @@ class mail_hooks
 		//error_log(__METHOD__);
 		// always show the side bar
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
-		$appname = 'felamimail';
+		$appname = 'mail';
 		$menu_title = $GLOBALS['egw_info']['apps'][$appname]['title'] . ' '. lang('Menu');
 		$file = array();
 		$profileID = 0;
-		if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
-			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
+		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
+			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 
-		$mail_bo = felamimail_bo::getInstance(true,$profileID);
-		$profileID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $mail_bo->profileID;
+		$mail_bo = mail_bo::getInstance(true,$profileID);
+		$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $mail_bo->profileID;
 		$preferences =& $mail_bo->mailPreferences;
 		$showMainScreenStuff = false;
-		if(($_GET['menuaction'] == 'felamimail.uifelamimail.viewMainScreen' ||
-			$_GET['menuaction'] == 'felamimail.uifelamimail.changeFolder' ||
-			stripos($_GET['menuaction'],'ajax_sidebox') !== false) &&
-			$_GET['menuaction'] != 'felamimail.uipreferences.editAccountData' &&
-			$_GET['menuaction'] != 'felamimail.uifelamimail.redirectToPreferences' &&
-			$_GET['menuaction'] != 'felamimail.uifelamimail.redirectToConfig' &&
-			$_GET['menuaction'] != 'felamimail.uifelamimail.redirectToEmailadmin') {
-			if (isset($_GET["mailbox"]))
-			{
-				$mail_bo->sessionData['mailbox'] = urldecode($_GET["mailbox"]);
-				$mail_bo->sessionData['startMessage']= 1;
-				$mail_bo->sessionData['sort']    = $preferences->preferences['sortOrder'];
-				$mail_bo->sessionData['activeFilter']= -1;
-				$mail_bo->saveSessionData();
-			}
-			$uiwidgets		= CreateObject('felamimail.uiwidgets');
-			$showMainScreenStuff = true;
-		}
 		if (!$showMainScreenStuff)
 		{
 			// action links that are mostly static and dont need any connection and additional classes ...
 			$file += array(
-				'felamimail'		=> egw::link('/index.php','menuaction=felamimail.uifelamimail.viewMainScreen&ajax=true'),
+				'mail'		=> egw::link('/index.php','menuaction=mail.mail_ui.index&ajax=true'),
 			);
 
-			// standard compose link
-			$linkData = array(
-				'menuaction'    => 'felamimail.uicompose.compose'
-			);
-			$file += array(
-				'Compose' => "javascript:egw_openWindowCentered2('".egw::link('/index.php', $linkData,false)."','compose',700,750,'no','$appname');",
-			);
 		}
-		// select account box, treeview, we use a whileloop as we may want to break out
-		while($showMainScreenStuff) {
-			$mail_bo->restoreSessionData();
-			$mailbox 		= $mail_bo->sessionData['mailbox'];
-			//_debug_array($mailbox);
-
-			$icServerID = (int)$mail_bo->profileID;
-			if (is_object($preferences))
-			{
-				// gather profile data
-				$imapServer =& $mail_bo->icServer;
-				//error_log(__METHOD__.__LINE__.array2string($imapServer));
-				// account select box
-				$selectedID = $mail_bo->getIdentitiesWithAccounts($identities);
-
-				if (empty($selectedID) && isset($imapServer->ImapServerId)) $selectedID = $imapServer->ImapServerId;
-				//error_log(__METHOD__.__LINE__.' SelectedID:'.$selectedID.' IcServerID:'.$imapServer->ImapServerId);
-				// if nothing valid is found return to user defined account definition
-				if (empty($imapServer->host) && count($identities)==0 && $preferences->userDefinedAccounts)
-				{
-					$showMainScreenStuff= false;
-					break;
-				}
-				//error_log(__METHOD__.__LINE__.array2string($preferences->identities));
-				$activeIdentity =& $preferences->getIdentity($icServerID, true);
-				//error_log(__METHOD__.__LINE__.' ActiveIdentity for profileID'.$icServerID.'->'.array2string($activeIdentity));
-				if ($imapServer->_connected != 1) $connectionStatus = $mail_bo->openConnection($icServerID);
-				$folderObjects = $mail_bo->getFolderObjects(true, false);
-				$folderStatus = $mail_bo->getFolderStatus($mailbox);
-
-				// the data needed here are collected at the start of this function
-				if (!isset($activeIdentity->id) && $selectedID == $icServerID) {
-					$identities[$icServerID] = $activeIdentity->realName.' '.$activeIdentity->organization.' <'.$activeIdentity->emailAddress.'>';
-				}
-				// if you use user defined accounts you may want to access the profile defined with the emailadmin available to the user
-				if ($activeIdentity->id) {
-					$boemailadmin = new emailadmin_bo();
-					$defaultProfile = $boemailadmin->getUserProfile() ;
-					//error_log(__METHOD__.__LINE__.array2string($defaultProfile));
-					$identitys =& $defaultProfile->identities;
-					$icServers =& $defaultProfile->ic_server;
-					foreach ($identitys as $tmpkey => $identity)
-					{
-						if (empty($icServers[$tmpkey]->host)) continue;
-						$identities[$identity->id] = $identity->realName.' '.$identity->organization.' <'.$identity->emailAddress.'>';
-					}
-					//$identities[0] = $defaultIdentity->realName.' '.$defaultIdentity->organization.' <'.$defaultIdentity->emailAddress.'>';
-				}
-
-				$selectAccount = html::select('accountSelect', $selectedID, $identities, true, 'id="accountSelect" style="width:100%;" onchange="var appWindow=egw_appWindow(\''.$appname.'\');appWindow.changeActiveAccount(this);"',0,false);
-				//error_log(__METHOD__.__LINE__.$selectAccount);
-				$file[] = array(
-					'text' => "<div id=\"divAccountSelect\" style=\" width:100%;\">".$selectAccount."</div>",
-					'no_lang' => True,
-					'link' => False,
-					'icon' => False,
-				);
-				// show foldertree
-				//_debug_array($folderObjects);
-				$folderTree = $uiwidgets->createHTMLFolder
-				(
-					$folderObjects,
-					$mailbox,
-					$folderStatus['unseen'],
-					lang('IMAP Server'),
-					$imapServer->username.'@'.$imapServer->host,
-					'divFolderTree',
-					FALSE
-				);
-				//$mail_bo->closeConnection();
-		        $file[] =  array(
-	        	    'text' => "<div id=\"divFolderTree\" class=\"dtree\" style=\"overflow:auto; max-width:400px; width:100%; max-height:450px; margin-bottom: 0px;padding-left: 0px; padding-right: 0px; padding-top:0px; z-index:100; \">
-					$folderTree
-					</div>
-					<script>
-						if (document.getElementById('accountSelect_chzn'))
-						{
-							var xchzn = document.getElementById('accountSelect_chzn');
-							xchzn.style.width = '100%';
-							if (xchzn.childElementCount>1)
-							{
-								xchzn.children[1].style.width='99%'; //chzn-drop
-								xchzn.children[1].children[0].children[0].style.width = '85%';
-							}
-						}
-
-						var wnd = egw_appWindow('".$appname."');
-						if (wnd && typeof wnd.refreshFolderStatus != 'undefined')
-						{
-							wnd.refreshFolderStatus();
-						}
-					</script>",
-					'no_lang' => True,
-					'link' => False,
-					'icon' => False,
-				);
-			}
-			break; // kill the while loop as we need only one go
-		}
-		// buttons
-		if($showMainScreenStuff) {
-
-			// some buttons
-			$linkData = array (
-				'menuaction'    => 'felamimail.uicompose.compose'
-			);
-			$urlCompose = "egw_appWindow('".$appname."').openComposeWindow('".egw::link('/index.php',$linkData,false)."');";
-
-			$navbarImages = array(
-				'new'			=> array(
-					'action'	=> $urlCompose,
-					'tooltip'	=> lang('compose'),
-				),
-				'read_small'		=> array(
-					'action'	=> "egw_appWindow('".$appname."').mail_flagMessages('read')",
-					'tooltip'	=> lang('mark selected as read'),
-				),
-				'unread_small'		=> array(
-					'action'	=> "egw_appWindow('".$appname."').mail_flagMessages('unread')",
-					'tooltip'	=> lang('mark selected as unread'),
-				),
-				'unread_flagged_small'	=> array(
-					'action'	=> "egw_appWindow('".$appname."').mail_flagMessages('flagged')",
-					'tooltip'	=> lang('mark selected as flagged'),
-				),
-				'read_flagged_small'	=> array(
-					'action'	=> "egw_appWindow('".$appname."').mail_flagMessages('unflagged')",
-					'tooltip'	=> lang('mark selected as unflagged'),
-				),
-				'delete'		=> array(
-					'action'	=> "egw_appWindow('".$appname."').mail_deleteMessages(egw_appWindow('".$appname."').mailGridGetSelected())",
-					'tooltip'	=> lang('mark as deleted'),
-				),
-			);
-
-			foreach($navbarImages as $buttonName => $buttonInfo) {
-				$navbarButtons .= $uiwidgets->navbarButton($buttonName, $buttonInfo['action'], $buttonInfo['tooltip']);
-			}
-			/*$file[] = array(
-				'text' => "<TABLE WIDTH=\"100%\" CELLPADDING=\"0\" CELLSPACING=\"0\" style=\"border: solid #aaaaaa 1px; border-right: solid black 1px; \">
-							<tr class=\"navbarBackground\">
-								<td align=\"right\" width=\"100%\">".$navbarButtons."</td>
-							</tr>
-						   </table>",
-				'no_lang' => True,
-				'link' => False,
-				'icon' => False,
-			);*/
-		}
-
 		// empty trash (if available -> move to trash )
 		if($preferences->preferences['deleteOptions'] == 'move_to_trash')
 		{
@@ -1001,7 +827,7 @@ class mail_hooks
 		if ((@include_once 'Mail/mimeDecode.php') !== false)
 		{
 			$linkData = array(
-				'menuaction' => 'felamimail.uifelamimail.importMessage',
+				'menuaction' => 'mail.mail_ui.importMessage',
 			);
 
 			$file += array(
@@ -1015,31 +841,31 @@ class mail_hooks
 
 		if ($GLOBALS['egw_info']['user']['apps']['preferences'])
 		{
-			#$mailPreferences = ExecMethod('felamimail.bopreferences.getPreferences');
+			#$mailPreferences = ExecMethod('mail.bopreferences.getPreferences');
 			$menu_title = lang('Preferences');
 			$file = array(
-				//'Preferences'		=> egw::link('/index.php','menuaction=preferences.uisettings.index&appname=felamimail'),
-				'Preferences'	=> egw::link('/index.php','menuaction=felamimail.uifelamimail.redirectToPreferences&appname=felamimail'),
+				'Preferences'		=> egw::link('/index.php','menuaction=preferences.uisettings.index&appname=mail'),
 			);
-
+/*
 			if($preferences->userDefinedAccounts || $preferences->userDefinedIdentities) {
 				$linkData = array (
-					'menuaction' => 'felamimail.uipreferences.listAccountData',
+					'menuaction' => 'mail.uipreferences.listAccountData',
 				);
 				$file['Manage eMail Accounts and Identities'] = egw::link('/index.php',$linkData);
 
 			}
-			if ($preferences->preferences['prefcontroltestconnection'] <> 'none') $file['Test Connection'] = egw::link('/index.php','menuaction=felamimail.uifelamimail.TestConnection&appname=felamimail');
-
+*/
+			if ($preferences->preferences['prefcontroltestconnection'] <> 'none') $file['Test Connection'] = egw::link('/index.php','menuaction=mail.mail_ui.TestConnection&appname=mail');
+/*
 			if($preferences->ea_user_defined_signatures) {
 				$linkData = array (
-					'menuaction' => 'felamimail.uipreferences.listSignatures',
+					'menuaction' => 'mail.uipreferences.listSignatures',
 				);
 				$file['Manage Signatures'] = egw::link('/index.php',$linkData);
 			}
 
 			if(empty($preferences->preferences['prefpreventmanagefolders']) || $preferences->preferences['prefpreventmanagefolders'] == 0) {
-				$file['Manage Folders']	= egw::link('/index.php',array('menuaction'=>'felamimail.uipreferences.listFolder'));
+				$file['Manage Folders']	= egw::link('/index.php',array('menuaction'=>'mail.uipreferences.listFolder'));
 			}
 			if (is_object($preferences)) $ogServer = $preferences->getOutgoingServer(0);
 			if(($ogServer instanceof emailadmin_smtp)) {
@@ -1047,14 +873,16 @@ class mail_hooks
 				{
 					$linkData = array
 						(
-							'menuaction'    => 'felamimail.uipreferences.editForwardingAddress',
+							'menuaction'    => 'mail.uipreferences.editForwardingAddress',
 						);
 					//if(empty($preferences->preferences['prefpreventforwarding']) || $preferences->preferences['prefpreventforwarding'] == 0)
 					$file['Forwarding']     = egw::link('/index.php',$linkData);
 				}
 			}
+*/
 			display_sidebox($appname,$menu_title,$file);
 			unset($file);
+/*
 			$menu_title = lang('Sieve');
 			if (is_object($preferences)) $icServer = $preferences->getIncomingServer($profileID);
 			if(($icServer instanceof defaultimap)) {
@@ -1062,14 +890,14 @@ class mail_hooks
 				{
 					$linkData = array
 					(
-						'menuaction'	=> 'felamimail.uisieve.listRules',
+						'menuaction'	=> 'mail.uisieve.listRules',
 					);
 					if(empty($preferences->preferences['prefpreventeditfilterrules']) || $preferences->preferences['prefpreventeditfilterrules'] == 0)
 						$file['filter rules']	= egw::link('/index.php',$linkData);
 
 					$linkData = array
 					(
-						'menuaction'	=> 'felamimail.uisieve.editVacation',
+						'menuaction'	=> 'mail.uisieve.editVacation',
 					);
 					if(empty($preferences->preferences['prefpreventabsentnotice']) || $preferences->preferences['prefpreventabsentnotice'] == 0)
 					{
@@ -1078,18 +906,20 @@ class mail_hooks
 					if((empty($preferences->preferences['prefpreventnotificationformailviaemail']) ||
 						$preferences->preferences['prefpreventnotificationformailviaemail'] == 0))
 					{
-						$file['email notification'] = egw::link('/index.php','menuaction=felamimail.uisieve.editEmailNotification'); //Added email notifications
+						$file['email notification'] = egw::link('/index.php','menuaction=mail.uisieve.editEmailNotification'); //Added email notifications
 					}
 					if (count($file)) display_sidebox($appname,$menu_title,$file);
 					unset($file);
 				}
 			}
+*/
 		}
+
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
-				'Site Configuration' => egw::link('/index.php','menuaction=felamimail.uifelamimail.redirectToConfig'), //'menuaction=admin.uiconfig.index&appname=felamimail'),
-				'eMailAdmin: Profilemanagement' => egw::link('/index.php','menuaction=felamimail.uifelamimail.redirectToEmailadmin'),
+				'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
+				'eMailAdmin: Profilemanagement' => egw::link('/index.php','menuaction=emailadmin.emailadmin_ui.index'),
 			);
 			display_sidebox($appname,lang('Admin'),$file);
 		}
