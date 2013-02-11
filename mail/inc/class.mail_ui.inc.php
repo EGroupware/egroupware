@@ -54,6 +54,7 @@ class mail_ui
 		}
 
 		$this->mail_bo = mail_bo::getInstance(false,$icServerID);
+
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
 		if (!($this->mail_bo->icServer->_connected == 1)) $this->mail_bo->openConnection($icServerID);
@@ -68,6 +69,7 @@ class mail_ui
 	 */
 	function index(array $content=null,$msg=null)
 	{
+
 		//$this->TestConnection();
 		if (!is_array($content))
 		{
@@ -78,9 +80,10 @@ class mail_ui
 			{
 				$content['nm'] = array(
 					'get_rows'       =>	'mail.mail_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
-					'filter'         => '1',	// current dir only
-					'no_filter2'     => True,	// I  disable the 2. filter (params are the same as for filter)
-					'no_cat'         => True,	// I  disable the cat-selectbox
+					'filter'         => 'INBOX',	// filter is used to choose the mailbox
+					'no_filter2'     => false,	// I  disable the 2. filter (params are the same as for filter)
+					'no_cat'         => false,	// I  disable the cat-selectbox
+					//'cat_is_select'	 => 'no_lang', // true or no_lang
 					'lettersearch'   => false,	// I  show a lettersearch
 					'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
 					'start'          =>	0,		// IO position in list
@@ -95,6 +98,11 @@ class mail_ui
 				//$content['nm']['path'] = self::get_home_dir();
 			}
 		}
+		// filter is used to choose the mailbox
+		//if (!isset($content['nm']['foldertree'])) // maybe wev fetch the folder here
+		$sel_options['nm']['foldertree'] = array('/'=>'IMAP Server','/INBOX'=>'INBOX');
+		if (!isset($content['nm']['filter'])) $content['nm']['filter'] = 'INBOX';
+		if (!isset($content['nm']['cat_id'])) $content['nm']['cat_id'] = 'All';
 		$etpl = new etemplate('mail.index');
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
@@ -105,14 +113,14 @@ class mail_ui
 	 */
 	function TestConnection ()
 	{
-		$preferences	=& $this->mail_bo->mailPreferences->preferences;
+		$preferences	=& $this->mail_bo->mailPreferences;
 
 		if ($preferences->preferences['prefcontroltestconnection'] == 'none') die('You should not be here!');
 
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 			$icServerID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
-		//_debug_array($icServerID);
-		if (is_object($preferences)) $imapServer        = $preferences->getIncomingServer($icServerID);
+		//_debug_array($this->mail_bo->mailPreferences);
+		if (is_object($preferences)) $imapServer = $preferences->getIncomingServer($icServerID);
 		if (isset($imapServer->ImapServerId) && !empty($imapServer->ImapServerId))
 		{
 			$icServerID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $imapServer->ImapServerId;
@@ -586,7 +594,6 @@ class mail_ui
 	 */
 	function get_rows($query,&$rows,&$readonlys)
 	{
-$_folderName='INBOX';
 unset($query['actions']);
 error_log(__METHOD__.__LINE__.array2string($query));
 		//error_log(__METHOD__.__LINE__.' Folder:'.array2string($_folderName).' FolderType:'.$folderType.' RowsFetched:'.array2string($rowsFetched)." these Uids:".array2string($uidOnly).' Headers passed:'.array2string($headers));
@@ -596,6 +603,7 @@ error_log(__METHOD__.__LINE__.array2string($query));
 			$maxMessages = (int)$this->mail_bo->mailPreferences->preferences['prefMailGridBehavior'];
 		$previewMessage = $this->sessionData['previewMessage'];
 		$sRToFetch = null;
+		$_folderName=$query['filter'];
 		$rowsFetched['messages'] = null;
 		$offset = $query['start']+1; // we always start with 1
 		$maxMessages = $query['num_rows'];

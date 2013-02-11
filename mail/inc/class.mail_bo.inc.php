@@ -164,6 +164,7 @@ class mail_bo
 	 */
 	public static function getInstance($_restoreSession=true, $_profileID=0, $_validate=true)
 	{
+		//error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.' called from:'.function_backtrace());
 		if ($_profileID == 0)
 		{
 			if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']) && !empty($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
