@@ -82,7 +82,7 @@ class mail_ui
 					'get_rows'       =>	'mail.mail_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
 					'filter'         => 'INBOX',	// filter is used to choose the mailbox
 					'no_filter2'     => false,	// I  disable the 2. filter (params are the same as for filter)
-					'no_cat'         => false,	// I  disable the cat-selectbox
+					'no_cat'         => true,	// I  disable the cat-selectbox
 					//'cat_is_select'	 => 'no_lang', // true or no_lang
 					'lettersearch'   => false,	// I  show a lettersearch
 					'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
@@ -99,8 +99,12 @@ class mail_ui
 			}
 		}
 		// filter is used to choose the mailbox
-		//if (!isset($content['nm']['foldertree'])) // maybe wev fetch the folder here
-		$sel_options['nm']['foldertree'] = array('/'=>'IMAP Server','/INBOX'=>'INBOX');
+		//if (!isset($content['nm']['foldertree'])) // maybe we fetch the folder here
+		$sel_options['foldertree'] = array(
+			'/'=>array('path'=>'/', 'label'=>'IMAP Server','title'=>'IMAP Server','image'=>'kfm_home.png'),
+			'/INBOX'=>array('path'=>'/INBOX','label'=>'INBOX','title'=>'INBOX')
+		);
+		$sel_options['cat_id'] = array(1=>'none');
 		if (!isset($content['nm']['filter'])) $content['nm']['filter'] = 'INBOX';
 		if (!isset($content['nm']['cat_id'])) $content['nm']['cat_id'] = 'All';
 		$etpl = new etemplate('mail.index');
@@ -114,6 +118,12 @@ class mail_ui
 	function TestConnection ()
 	{
 		$preferences	=& $this->mail_bo->mailPreferences;
+		// load translations
+		translation::add_app('mail');
+		
+		common::egw_header();
+		parse_navbar();
+		//$GLOBALS['egw']->framework->sidebox();
 
 		if ($preferences->preferences['prefcontroltestconnection'] == 'none') die('You should not be here!');
 
@@ -241,8 +251,7 @@ class mail_ui
 				'msg'	=> lang("There is no IMAP Server configured.")." - ".lang("Please configure access to an existing individual IMAP account."),
 			));
 		}
-
-		exit;
+		common::egw_footer();
 	}
 
 	/**
@@ -680,7 +689,7 @@ error_log(__METHOD__.__LINE__.array2string($query));
 		if (empty($rowsFetched['messages'])) $rowsFetched['messages'] = $rowsFetched['rowsFetched'];
 
 		//error_log(__METHOD__.__LINE__.' Rows fetched:'.$rowsFetched.' Data:'.array2string($sortResult));
-		$cols = array('row_id','uid','check','status','attachments','subject','toaddress','fromaddress','date','size');
+		$cols = array('row_id','uid','check','status','attachments','subject','toaddress','fromaddress','date','size','modified');
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
 		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType,$previewMessage);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
@@ -1006,6 +1015,10 @@ error_log(__METHOD__.__LINE__.array2string($query));
 				}
 				*/
 				$data["date"] = $header['date'];//$dateShort;//'<nobr><span style="font-size:10px" title="'.$dateLong.'">'.$dateShort.'</span></nobr>';
+			}
+			if (in_array("modified", $cols))
+			{
+				$data["modified"] = $header['internaldate'];
 			}
 
 			if (in_array("size", $cols))
