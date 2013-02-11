@@ -1,0 +1,46 @@
+/**
+ * CSS for the widget browser
+ * etemplate.etemplate_et2_widgets.index
+ */
+
+/* Basic layout */
+#widget_list {
+	position: fixed;
+	width: 260px;
+}
+#widget_list ul {
+	position: fixed;
+	top: 0px;
+	overflow-y: scroll;
+	height: 55%;
+	width: inherit;
+	list-style-type: none; 
+	margin: 0;
+	padding: 0;
+}
+#widget_attributes {
+	position: fixed;
+	bottom: 0px;
+	height: 44%;
+	width: inherit;
+	overflow-y: auto;
+	margin: 0;
+	padding: 0;
+}
+#widget_attributes table{
+	width: 100%;
+}
+#widget_container{
+	position: fixed;
+	left: 260px;
+	padding: 20px;
+}
+
+/* Nicer looks */
+#widget_list li {
+	cursor:pointer;
+	padding: 0.4em;
+	font-size: 1.4em;
+	height: 16px;
+	width: 50%;
+}

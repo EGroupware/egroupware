@@ -1,6 +1,6 @@
 <?php
 	/**
-	 * eGroupWare - Setup 
+	 * eGroupWare - Setup
 	 * Originaly from the phpGW XSLT API
 	 *
 	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -38,6 +38,11 @@
 			'text'   => 'eTemplate Reference',
 			'link'   => $docs.'reference.html',
 			'target' => 'docs'
+		),
+		array(
+			'text'   => 'eTemplate2 Reference',
+			'link'   => egw_framework::link('/index.php','menuaction=etemplate.etemplate_et2_widgets.index'),
+			'target' => '_blank'
 		),
 		array(
 			'text'   => 'eGroupWare '.lang('Documentation'),
