@@ -174,8 +174,8 @@ var et2_tree = et2_inputWidget.extend({
 			this.createTree(this);
 		}
 
-		// Structure data for tree
-		if(!jQuery.isArray(options)) {
+		// Structure data for category tree
+		if(this._type == 'tree-cat' && !jQuery.isArray(options)) {
 			var data = {id:0,item:[]};
 			var stack = [];
 			for(var key in options)
