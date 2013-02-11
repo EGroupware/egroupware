@@ -101,11 +101,13 @@ class mail_ui
 		// filter is used to choose the mailbox
 		//if (!isset($content['nm']['foldertree'])) // maybe we fetch the folder here
 		$sel_options['foldertree'] = array(
-			'--topfolder--'=>array('label'=>'IMAP Server','title'=>'IMAP Server','image'=>'thunderbird.png'),
-			'--topfolder--/INBOX'=>array('label'=>'INBOX','title'=>'INBOX','image'=>'kfm_home.png'),
-			'--topfolder--/INBOX/sub'=>array('label'=>'sub','title'=>'INBOX/sub'),
+			//'--topfolder--'=>array('label'=>'IMAP Server','title'=>'IMAP Server','image'=>'thunderbird.png'),
+			'/INBOX'=>array('label'=>'INBOX','title'=>'INBOX','image'=>'kfm_home.png'),
+			'/INBOX/sub'=>array('label'=>'sub','title'=>'INBOX/sub'),
+			'/user' => array('label' => 'user'),
+			'/user/birgit' => 'birgit',
 		);
-$content['nm']['foldertree'] = '--topfolder--/INBOX/sub';
+$content['nm']['foldertree'] = '/INBOX/sub';
 		$sel_options['cat_id'] = array(1=>'none');
 		if (!isset($content['nm']['filter'])) $content['nm']['filter'] = 'INBOX';
 		if (!isset($content['nm']['cat_id'])) $content['nm']['cat_id'] = 'All';
