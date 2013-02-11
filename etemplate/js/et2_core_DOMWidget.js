@@ -26,9 +26,9 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 
 	attributes: {
 		"disabled": {
-			"name": "Visible",
+			"name": "Disabled",
 			"type": "boolean",
-			"description": "Defines whether this widget is visible.",
+			"description": "Defines whether this widget is visible.  Not to be confused with an input widget's HTML attribute 'disabled'.",
 			"default": false
 		},
 		"width": {
