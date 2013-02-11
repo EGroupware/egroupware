@@ -52,7 +52,7 @@ var et2_color = et2_inputWidget.extend({
 		this._super.apply(this, arguments);
 
 		this.egw().includeCSS("phpgwapi/js/jquery/jpicker/css/jPicker-1.1.6.min.css");
-		this.input = this.$node = jQuery(document.createElement("span"));
+		this.input = this.$node = jQuery(document.createElement("span")).attr("id", this.options.id);
 
 		// Translations
 		for(var key in jQuery.fn.jPicker.defaults.localization.text)
@@ -69,6 +69,20 @@ var et2_color = et2_inputWidget.extend({
 		this.setDOMNode(this.$node[0]);
 	},
 
+	/**
+	 * Clean up and remove references to jPicker
+	 */
+	destroy: function() {
+		if(this.get_jPicker())
+		{
+			this.get_jPicker().destroy();
+			jQuery("table.jPicker").dialog("destroy");
+			jQuery("table.jPicker").remove();
+			this.$node.next("span").remove();
+		}
+		this._super.call(this, arguments);
+	},
+
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
 
@@ -77,6 +91,10 @@ var et2_color = et2_inputWidget.extend({
 		// Initialize jPicker
 
 		this.options.color.active = new jQuery.jPicker.Color({hex:this.value});
+		
+		// Do this to get a reference to the actual jPicker used, so we can fully remove it in destroy()
+		var list_id = jQuery.jPicker.List.length ? jQuery.jPicker.List.length : 0;
+
 		var val = this.$node.jPicker(this.options,
 			// Ok
 			function(value) {
@@ -89,7 +107,8 @@ var et2_color = et2_inputWidget.extend({
 			function(color) {
 				jQuery("table.jPicker").dialog("close");
 			}
-		);
+		)
+		jQuery.jPicker.List[list_id].id = this.id + "_jPicker";
 
 		// Make it look better - plugin defers initialization, so we have to also
 		setTimeout(function() {
@@ -101,7 +120,7 @@ var et2_color = et2_inputWidget.extend({
 				title: self.options.statustext ? self.options.statustext : self.egw().lang('Select color'),
 				autoOpen: false,
 				resizable: false,
-				width: self.get_jPicker() ? self.get_jPicker()[0].width : "auto"
+				width: self.get_jPicker() ? self.get_jPicker().width : "auto"
 			});
 
 			// Hide original move bar
@@ -120,8 +139,8 @@ var et2_color = et2_inputWidget.extend({
 		if(jQuery.jPicker.List.length)
 		{
 			var self = this;
-			return jQuery(jQuery.jPicker.List.filter(function(index, elem) {
-				return (this && this.id == self.id);
+			return jQuery(jQuery.jPicker.List.filter(function(elem,index) {
+				return (elem && elem.id == self.id + "_jPicker");
 			}))[0];
 		}
 		return null;
