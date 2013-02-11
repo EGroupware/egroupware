@@ -101,9 +101,11 @@ class mail_ui
 		// filter is used to choose the mailbox
 		//if (!isset($content['nm']['foldertree'])) // maybe we fetch the folder here
 		$sel_options['foldertree'] = array(
-			'/'=>array('path'=>'/', 'label'=>'IMAP Server','title'=>'IMAP Server','image'=>'kfm_home.png'),
-			'/INBOX'=>array('path'=>'/INBOX','label'=>'INBOX','title'=>'INBOX')
+			'--topfolder--'=>array('label'=>'IMAP Server','title'=>'IMAP Server','image'=>'thunderbird.png'),
+			'--topfolder--/INBOX'=>array('label'=>'INBOX','title'=>'INBOX','image'=>'kfm_home.png'),
+			'--topfolder--/INBOX/sub'=>array('label'=>'sub','title'=>'INBOX/sub'),
 		);
+$content['nm']['foldertree'] = '--topfolder--/INBOX/sub';
 		$sel_options['cat_id'] = array(1=>'none');
 		if (!isset($content['nm']['filter'])) $content['nm']['filter'] = 'INBOX';
 		if (!isset($content['nm']['cat_id'])) $content['nm']['cat_id'] = 'All';
@@ -120,7 +122,7 @@ class mail_ui
 		$preferences	=& $this->mail_bo->mailPreferences;
 		// load translations
 		translation::add_app('mail');
-		
+
 		common::egw_header();
 		parse_navbar();
 		//$GLOBALS['egw']->framework->sidebox();

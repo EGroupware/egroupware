@@ -32,7 +32,7 @@
 		</grid>
 	</template>
 	<template id="mail.index" template="" lang="" group="0" version="1.9.001">
-		<tree id="nm[foldertree]"/>
+		<tree id="nm[foldertree]" onclick="alert('onChange node='+arguments[0]);"/>
 		<nextmatch id="nm" options="mail.index.rows"/>
 	</template>
 </overlay>
