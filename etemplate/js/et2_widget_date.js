@@ -31,8 +31,14 @@ var et2_date = et2_inputWidget.extend({
 		},
 		"type": {
 			"ignore": false
+		},
+		"data_format": {
+			"ignore": true,
+			"description": "Format data is in.  This is not used client-side because it's always a timestamp client side."
 		}
 	},
+
+	legacyOptions: ["data_format"],
 
 	init: function() {
 		this._super.apply(this, arguments);
@@ -521,8 +527,14 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 		},
 		"type": {
 			"ignore": false
+		},
+		"data_format": {
+			"ignore": true,
+			"description": "Format data is in.  This is not used client-side because it's always a timestamp client side."
 		}
 	},
+
+	legacyOptions: ["data_format"],
 
 	/**
 	 * Internal container for working easily with dates
