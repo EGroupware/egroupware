@@ -99,7 +99,7 @@ class mail_ui
 		}
 		// filter is used to choose the mailbox
 		//if (!isset($content['nm']['foldertree'])) // maybe we fetch the folder here
-		$sel_options['foldertree'] = $this->getFolderTree();
+		$sel_options['nm']['foldertree'] = $this->getFolderTree();
 		$content['nm']['foldertree'] = '/INBOX';
 		$sel_options['cat_id'] = array(1=>'none');
 		if (!isset($content['nm']['filter'])) $content['nm']['filter'] = 'INBOX';
@@ -276,11 +276,20 @@ class mail_ui
 		//_debug_array($folderObjects);
 		foreach($folderObjects as $key => $obj)
 		{
-			if ($_fetchCounters) $fS = $this->mail_bo->getFolderStatus($key);
+			$fS = $this->mail_bo->getFolderStatus($key,false,($_fetchCounters?false:true));
 			//_debug_array($fS);
-			$path = str_replace($obj->delimiter,'/',$obj->folderName);
-			$oA =array('label'=> $obj->shortDisplayName, 'title'=> $obj->displayName);
-			if ($fS['unseen']) $oA['label'] = '<b>'.$oA['label'].' ('.$fS['unseen'].')</b>';
+			$fFP = $folderParts = explode($obj->delimiter, $key);
+
+			//get rightmost folderpart
+			$shortName = array_pop($folderParts);
+
+			// the rest of the array is the name of the parent
+			$parentName = implode((array)$folderParts,$obj->delimiter);
+
+			$path = $obj->folderName; //$obj->delimiter
+			$oA =array('text'=> $obj->shortDisplayName, 'tooltip'=> $obj->displayName);
+			$oA['path'] = $fFP;
+			if ($fS['unseen']) $oA['text'] = '<b>'.$oA['text'].' ('.$fS['unseen'].')</b>';
 			if ($path=='INBOX')
 			{
 				$oA['im0'] = 'kfm_home.png';
@@ -301,14 +310,44 @@ class mail_ui
 			{
 				$oA['im0'] =  "MailFolderPlain.png"; // one Level
 				$oA['im1'] = "folderOpen.gif";
-//if (stripos(array2string($fS['attributes']),'\hasChildren')!== false)
 				$oA['im2'] = "MailFolderClosed.png"; // has Children
 			}
-
-			$out[$path] = $oA;
+			$oA['id'] = $path; // ID holds the PATH
+			if (stripos(array2string($fS['attributes']),'\hasnochildren')=== false)
+			{
+				$oA['child']=1; // translates to: hasChildren -> dynamicLoading
+			}
+			$oA['parent'] = $parentName;
+			$out[] = $oA;
+$found=false;
+			//$this->setOutStructure($oA,$out,$found);
+_debug_array($out);
 		}
-		//_debug_array($out);
-		return (isset($out)?$out:array('/INBOX'=>array('label'=>'INBOX','title'=>'INBOX','image'=>'kfm_home.png')));
+		$structuredOut = array('id'=>0, 'item'=>$out);
+		_debug_array($out);
+		return (isset($out)?$structuredOut:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
+	}
+
+	function setOutStructure($data, &$out, &$found)
+	{
+		while ($key = array_shift($data['path']))
+		{
+			foreach($out as $k => $f)
+			{
+				$found = false;
+				if ($data['id']==$f['parent'])
+				{
+					$found = true;
+					$out[$k]['item'][] = $data;
+				}
+				if ($found==false && is_array($f['item']))
+				{
+					$out =& $out[$k];
+					$this->setOutStructure($data,$out,$found);
+				}
+			}
+		}
+		if (!$found) $out[] = $data;
 	}
 
 	/**

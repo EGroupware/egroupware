@@ -844,7 +844,7 @@ class mail_bo
 	/**
 	 * get IMAP folder status
 	 *
-	 * returns an array information about the imap folder
+	 * returns an array information about the imap folder, may be used as  wrapper to retrieve results from cache
 	 *
 	 * @param _folderName string the foldername
 	 * @param ignoreStatusCache bool ignore the cache used for counters
