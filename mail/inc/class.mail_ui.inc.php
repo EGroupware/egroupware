@@ -99,6 +99,19 @@ class mail_ui
 		}
 		// filter is used to choose the mailbox
 		//if (!isset($content['nm']['foldertree'])) // maybe we fetch the folder here
+		/*
+		$sel_options['nm']['foldertree'] =  array('id' => 0, 'item' => array(
+			array('id' => '/INBOX', 'text' => 'INBOX', 'im0' => 'kfm_home.png', 'child' => '1', 'item' => array(
+				array('id' => '/INBOX/sub', 'text' => 'sub'),
+				array('id' => '/INBOX/sub2', 'text' => 'sub2'),
+			)),
+			array('id' => '/user', 'text' => 'user', 'child' => '1', 'item' => array(
+				array('id' => '/user/birgit', 'text' => 'birgit'),
+			)),
+		));
+
+		$content['nm']['foldertree'] = '/INBOX/sub';
+		*/
 		$sel_options['nm']['foldertree'] = $this->getFolderTree();
 		$content['nm']['foldertree'] = '/INBOX';
 		$sel_options['cat_id'] = array(1=>'none');
@@ -273,7 +286,8 @@ class mail_ui
 		if (isset($sentFolder) && $sentFolder != 'none') $userDefinedFunctionFolders['Sent'] = $sentFolder;
 		if (isset($draftFolder) && $draftFolder != 'none') $userDefinedFunctionFolders['Drafts'] = $draftFolder;
 		if (isset($templateFolder) && $templateFolder != 'none') $userDefinedFunctionFolders['Templates'] = $templateFolder;
-		//_debug_array($folderObjects);
+		_debug_array($folderObjects);
+		$out = array('id' => 0);
 		foreach($folderObjects as $key => $obj)
 		{
 			$fS = $this->mail_bo->getFolderStatus($key,false,($_fetchCounters?false:true));
@@ -318,36 +332,42 @@ class mail_ui
 				$oA['child']=1; // translates to: hasChildren -> dynamicLoading
 			}
 			$oA['parent'] = $parentName;
-			$out[] = $oA;
-$found=false;
-			//$this->setOutStructure($oA,$out,$found);
-_debug_array($out);
+			//$out[] = $oA;
+			$this->setOutStructure($oA,$out,$obj->delimiter);
 		}
-		$structuredOut = array('id'=>0, 'item'=>$out);
+		//$structuredOut = array('id'=>0, 'item'=>$out);
 		_debug_array($out);
+		return $out;
 		return (isset($out)?$structuredOut:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
 	}
 
-	function setOutStructure($data, &$out, &$found)
+	function setOutStructure($data, &$out, $del='.')
 	{
-		while ($key = array_shift($data['path']))
+		error_log(__METHOD__."(".array2string($data).', '.array2string($out).", '$del')");
+		$components = $data['path'];
+		array_pop($components);	// remove own name
+
+		$insert = &$out;
+		$parents = array();
+		foreach($components as $component)
 		{
-			foreach($out as $k => $f)
+			$parent = implode($del, $parents);
+			if ($parent) $parent .= $del;
+			if (!is_array($insert) || !isset($insert['item'])) throw new Exception("1. id=$data[id]: Parent '$parent' '$component' not found! out=".array2string($out));
+			foreach($insert['item'] as $key => &$item)
 			{
-				$found = false;
-				if ($data['id']==$f['parent'])
+				if ($item['id'] == $parent.$component)
 				{
-					$found = true;
-					$out[$k]['item'][] = $data;
-				}
-				if ($found==false && is_array($f['item']))
-				{
-					$out =& $out[$k];
-					$this->setOutStructure($data,$out,$found);
+					$insert =& $item;//$insert['item'][$key];
+					break;
 				}
 			}
+			if ($item['id'] != $parent.$component) {_debug_array($out); exit;}//throw new Exception("2. id=$data[id]: Parent '$parent' '$component' not found!");
+			$parents[] = $component;
 		}
-		if (!$found) $out[] = $data;
+		unset($data['path']);
+		$insert['item'][] = $data;
+		error_log(__METHOD__."() leaving with out=".array2string($out));
 	}
 
 	/**
