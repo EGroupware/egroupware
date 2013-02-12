@@ -335,6 +335,7 @@ class mail_ui
 				$oA['child']=1; // translates to: hasChildren -> dynamicLoading
 			}
 			$oA['parent'] = $parentName;
+
 			$this->setOutStructure($oA,$out,$obj->delimiter);
 			$c++;
 		}
@@ -347,9 +348,10 @@ class mail_ui
 	 * @param array $data, data to be processed
 	 * @param array &$out, out array
 	 * @param string $del='.', needed as glue for parent/child operation / comparsion
+	 * @param boolean $createMissingParents=true create a missing parent, instead of throwing an exception
 	 * @return void
 	 */
-	function setOutStructure($data, &$out, $del='.')
+	function setOutStructure($data, &$out, $del='.', $createMissingParents=true)
 	{
 		//error_log(__METHOD__."(".array2string($data).', '.array2string($out).", '$del')");
 		$components = $data['path'];
@@ -370,7 +372,20 @@ class mail_ui
 					break;
 				}
 			}
-			if ($item['id'] != $parent.$component) throw new egw_exception_assertion_failed(__METHOD__.':'.__LINE__.": id=$data[id]: Parent '$parent' '$component' not found!");
+			if ($item['id'] != $parent.$component)
+			{
+				if ($createMissingParents)
+				{
+					unset($item);
+					$item = array('id' => $parent.$component, 'text' => $component, 'tooltip' => '**missing**');
+					$insert['item'][] =& $item;
+					$insert =& $item;
+				}
+				else
+				{
+					throw new egw_exception_assertion_failed(__METHOD__.':'.__LINE__.": id=$data[id]: Parent '$parent' '$component' not found!");
+				}
+			}
 			$parents[] = $component;
 		}
 		unset($data['path']);
