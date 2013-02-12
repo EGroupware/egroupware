@@ -260,14 +260,17 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		// check knowUids outside of range for modification
 		if ($knownUids)
 		{
-			if (!$row_id)	// row_id not set by nextmatch user --> tell client to delete data, as we cant identify rows
+			// commenting out trying to validate knowUids not returned in current list,
+			// as this generates a second db search and they might not be visible anyway
+			// --> for now we tell the grid to purge them
+			//if (!$row_id)	// row_id not set by nextmatch user --> tell client to delete data, as we cant identify rows
 			{
 				foreach($knownUids as $uid)
 				{
 					$result['data'][$uid] = null;
 				}
 			}
-			else
+			/*else
 			{
 				//error_log(__METHOD__."() knowUids left to check ".array2string($knownUids));
 				// check if they are up to date: we create a query similar to csv-export without any filters
@@ -295,7 +298,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 						}
 					}
 				}
-			}
+			}*/
 		}
 		foreach($result as $name => $value) if ($name != 'readonlys') error_log(__METHOD__."() result['$name']=".array2string($name == 'data' ? array_keys($value) : $value));
 		egw_json_response::get()->data($result);
