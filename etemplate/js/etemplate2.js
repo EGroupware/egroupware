@@ -113,6 +113,19 @@ etemplate2.prototype.clear = function()
 		this.widgetContainer.free();
 		this.widgetContainer = null;
 	}
+
+	// Remove self from the index
+	for(name in this.templates)
+	{
+		if(typeof etemplate2._byTemplate[name] == "undefined") continue;
+		for(var i = 0; i < etemplate2._byTemplate[name].length; i++)
+		{
+			if(etemplate2._byTemplate[name][i] == this)
+			{
+				etemplate2._byTemplate[name].splice(i,1);
+			}
+		}
+	}
 	this.templates = {};
 }
 
@@ -195,6 +208,13 @@ etemplate2.prototype.load = function(_name, _url, _data)
 
 		// Insert the document fragment to the DOM Container
 		this.DOMContainer.appendChild(frag);
+
+		// Add into indexed list
+		if(typeof etemplate2._byTemplate[_name] == "undefined")
+		{
+			etemplate2._byTemplate[_name] = [];
+		}
+		etemplate2._byTemplate[_name].push(this);
 
 		// Trigger the "resize" event
 		this.resize();
@@ -443,6 +463,95 @@ etemplate2.prototype.getValues = function(_root)
 
 	egw().debug("info", "Value", result);
 	return result;
+}
+
+
+/**
+ * "Intelligently" refresh the template based on the given ID
+ *
+ * Rather than blindly re-load the entire template, we try to be a little smarter about it.
+ * If there's a message provided, we try to find where it goes and set it directly.  Then
+ * we look for a nextmatch widget, and tell it to refresh its data based on that ID.
+ * 
+ * @param msg String Message to try to display.  eg: "Entry added"
+ * @param id String|null Application specific entry ID to try to refresh
+ * @param type String|null Type of change.  One of 'edit', 'delete', 'add' or null
+ *
+ * @see jsapi.egw_refresh()
+ * @see egw_fw.egw_refresh()
+ */
+etemplate2.prototype.refresh = function(msg, id, type)
+{
+	// We use et2_baseWidget in case the app uses something like HTML instead of label
+	this.widgetContainer.iterateOver(function(_widget) {
+		if (_widget.id == "msg" || _widget.id == "message")
+		{
+			_widget.set_Value(msg);
+		}
+	}, this, et2_baseWidget);
+
+	
+	this.widgetContainer.iterateOver(function(_widget) {
+		// TODO: This is not quite right - will restrict to just this one row
+		/*
+		if(_widget.options.settings && _widget.options.settings.row_id)
+		{
+			_widget.activeFilters[_widget.options.settings.row_id] = id;
+		}
+		*/
+		// Trigger refresh
+		_widget.applyFilters();
+	}, this, et2_nextmatch);
+}
+
+// Some static things to make getting into widget context a little easier //
+
+/**
+ * List of etemplates by loaded template
+ */
+etemplate2._byTemplate = {};
+
+/**
+ * Get a list of etemplate2 objects that loaded the given template name
+ *
+ * @param template String Name of the template that was loaded
+ *
+ * @return Array list of etemplate2 that have that template
+ */
+
+etemplate2.getByTemplate = function(template)
+{
+	if(typeof etemplate2._byTemplate[template] != "undefined")
+	{
+		return etemplate2._byTemplate[template];
+	}
+	else
+	{
+		// Return empty array so you can always iterate over results
+		return [];
+	}
+};
+
+/**
+ * Get a list of etemplate2 objects that are associated with the given application
+ * 
+ * "Associated" is determined by the first part of the template
+ *
+ * @param template String Name of the template that was loaded
+ *
+ * @return Array list of etemplate2 that have that app as the first part of their loaded template
+ */
+etemplate2.getByApplication = function(app)
+{
+	var list = [];
+	for(var name in etemplate2._byTemplate)
+	{
+		if(name.indexOf(app + ".") == 0)
+		{
+			list = list.concat(etemplate2._byTemplate[name]);
+		}
+	}
+	return list;
 }
 
 function etemplate2_handle_load(_type, _response)

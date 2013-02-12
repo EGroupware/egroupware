@@ -235,11 +235,23 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with)
 	var win = typeof _targetapp != 'undefined' ? egw_appWindow(_targetapp) : window;
 
 	// if window defines an app_refresh method, just call it
-	if (typeof win.app_refresh != 'undefined')
+	if (typeof win.app_refresh != 'undefined' && win.app_refresh.registered(_app))
 	{
 		win.app_refresh(_msg, _app, _id, _type);
 		return;
 	}
+
+	// etemplate2 specific to avoid reloading whole page
+	if(etemplate2 && etemplate2.getByApplication)
+	{
+		var et2 = etemplate2.getByApplication(_app);
+		for(var i = 0; i < et2.length; i++)
+		{
+			et2[i].refresh(_msg,_id,_type);
+		}
+		return;
+	}
+
 	var href = win.location.href;
 	
 	if (typeof _replace != 'undefined')
@@ -293,6 +305,48 @@ window.egw_getFramework = function()
 	else
 	{
 		return null;
+	}
+}
+
+/**
+ * Register a custom method to refresh an application in an intelligent way
+ *
+ * This function will be called any time the application needs to be refreshed.
+ * The default is to just reload, but with more detailed knowledge of the application
+ * internals, it should be possible to only refresh what is needed.
+ *
+ * The refresh function signature is:
+ * function (_msg, _app, _id, _type);
+ * returns void
+ * @see egw_refresh()
+ *
+ * @param appname String Name of the application
+ * @param refresh_func function to call when refreshing
+ */
+window.register_app_refresh = function(appname, refresh_func)
+{
+	var framework = window.egw_getFramework();
+	if(framework != null && typeof framework.register_app_refresh == "function")
+	{
+		framework.register_app_refresh(appname,refresh_func);
+	}
+	else
+	{
+		if(typeof window.app_refresh != "function")
+		{
+			// Define the app_refresh stuff here
+			window.app_refresh = function(_msg, appname, _id, _type) {
+				if(window.app_refresh.registry[appname])
+				{
+					window.app_refresh.registry[appname].call(this,_msg,appname,_id,_type);
+				}
+			};
+			window.app_refresh.registry = {};
+			window.app_refresh.registered = function(appname) {
+				return (typeof window.app_refresh.registry[appname] == "function");
+			};
+		}
+		window.app_refresh.registry[appname] = refresh_func;
 	}
 }
 
