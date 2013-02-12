@@ -2305,6 +2305,29 @@ class mail_bo
 	}
 
 	/**
+	 * remove any messages which are marked as deleted or
+	 * remove any messages from the trashfolder
+	 *
+	 * @param string _folderName the foldername
+	 * @return nothing
+	 */
+	function compressFolder($_folderName = false)
+	{
+		$folderName	= ($_folderName ? $_folderName : $this->sessionData['mailbox']);
+		$deleteOptions	= $GLOBALS['egw_info']['user']['preferences']['mail']['deleteOptions'];
+		$trashFolder	= $this->getTrashFolder();
+
+		$this->icServer->selectMailbox($folderName);
+
+		if($folderName == $trashFolder && $deleteOptions == "move_to_trash") {
+			$this->icServer->deleteMessages('1:*');
+			$this->icServer->expunge();
+		} else {
+			$this->icServer->expunge();
+		}
+	}
+
+	/**
 	 * Helper function to handle wrong or unrecognized timezones
 	 * returns the date as it is parseable by strtotime, or current timestamp if everything failes
 	 * @param string date to be parsed/formatted

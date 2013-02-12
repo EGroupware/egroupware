@@ -97,6 +97,17 @@ class mail_ui
 				//$content['nm']['path'] = self::get_home_dir();
 			}
 		}
+		if ($msg)
+		{
+			$content['msg'] = $msg;
+		}
+		else
+		{
+			unset($msg);
+			unset($content['msg']);
+		}
+		$this->mail_bo->restoreSessionData();
+				
 		// filter is used to choose the mailbox
 		//if (!isset($content['nm']['foldertree'])) // maybe we fetch the folder here
 		/*
@@ -112,11 +123,18 @@ class mail_ui
 
 		$content['nm']['foldertree'] = '/INBOX/sub';
 		*/
+		if ($this->mail_bo->folderExists($this->mail_bo->sessionData['maibox']))
+		{
+			$content['nm']['selectedFolder'] = $this->mail_bo->sessionData['maibox'];
+		}
+
 		$sel_options['nm']['foldertree'] = $this->getFolderTree();
-		$content['nm']['foldertree'] = '/INBOX';
+		if (!isset($content['nm']['foldertree'])) $content['nm']['foldertree'] = 'INBOX';
+		if (!isset($content['nm']['selectedFolder'])) $content['nm']['selectedFolder'] = 'INBOX';
+		$content['nm']['foldertree'] = $content['nm']['selectedFolder'];
 		$sel_options['cat_id'] = array(1=>'none');
-		if (!isset($content['nm']['filter'])) $content['nm']['filter'] = 'INBOX';
 		if (!isset($content['nm']['cat_id'])) $content['nm']['cat_id'] = 'All';
+
 		$etpl = new etemplate('mail.index');
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
@@ -743,15 +761,23 @@ class mail_ui
 	function get_rows($query,&$rows,&$readonlys)
 	{
 unset($query['actions']);
-error_log(__METHOD__.__LINE__.array2string($query));
+//error_log(__METHOD__.__LINE__.array2string($query));
+error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
+$starttime = microtime(true);
+		//error_log(__METHOD__.__LINE__.array2string($query['search']));
+		//$query['search'] is the phrase in the searchbox
+
 		//error_log(__METHOD__.__LINE__.' Folder:'.array2string($_folderName).' FolderType:'.$folderType.' RowsFetched:'.array2string($rowsFetched)." these Uids:".array2string($uidOnly).' Headers passed:'.array2string($headers));
 		$this->mail_bo->restoreSessionData();
 		$maxMessages = 50; // match the hardcoded setting for data retrieval as inital value
 		if (isset($this->mail_bo->mailPreferences->preferences['prefMailGridBehavior']) && (int)$this->mail_bo->mailPreferences->preferences['prefMailGridBehavior'] <> 0)
 			$maxMessages = (int)$this->mail_bo->mailPreferences->preferences['prefMailGridBehavior'];
-		$previewMessage = $this->sessionData['previewMessage'];
+		$previewMessage = $this->mail_bo->sessionData['previewMessage'];
+		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['maibox']=$query['selectedFolder'];
+		$this->mail_bo->saveSessionData();
+
 		$sRToFetch = null;
-		$_folderName=$query['filter'];
+		$_folderName=$query['selectedFolder'];
 		$rowsFetched['messages'] = null;
 		$offset = $query['start']+1; // we always start with 1
 		$maxMessages = $query['num_rows'];
@@ -832,6 +858,9 @@ error_log(__METHOD__.__LINE__.array2string($query));
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
 		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType,$previewMessage);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
+$endtime = microtime(true) - $starttime;
+error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].' Took:'.$endtime);
+
 		return $rowsFetched['messages'];
 	}
 
@@ -1180,4 +1209,18 @@ error_log(__METHOD__.__LINE__.array2string($query));
 		return $rv;
 	}
 
+	/**
+	 * empty trash folder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
+	 *
+	 * @return nothing
+	 */
+	function ajax_emptyTrash()
+	{
+		$trashFolder = $this->mail_bo->getTrashFolder();
+		if(!empty($trashFolder)) {
+			$this->mail_bo->compressFolder($trashFolder);
+		}
+		$response = egw_json_response::get();
+		$response->call('egw_refresh',lang('emptied Trash'),'mail');
+	}
 }
