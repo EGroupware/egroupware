@@ -26,7 +26,7 @@
 					<date-time align="center" id="${row}[date]" readonly="true"/>
 					<url-email id="${row}[toaddress]" readonly="true"/>
 					<url-email id="${row}[fromaddress]" readonly="true"/>
-					<description align="right" id="${row}[size]" no_lang="1" readonly="true"/>
+					<vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
 				</row>
 			</rows>
 		</grid>

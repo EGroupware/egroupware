@@ -267,11 +267,13 @@ class mail_ui
 	/**
 	 * getFolderTree, get folders from server and prepare the folder tree
 	 * @param bool $_fetchCounters, wether to fetch extended information on folders
-	 * @return array something like that: array(
-	 *		'/INBOX'=>array('label'=>'INBOX','title'=>'INBOX','image'=>'kfm_home.png'),
-	 *		'/INBOX/sub'=>array('label'=>'sub','title'=>'INBOX/sub'),
-	 *		'/user' => array('label' => 'user'),
-	 *		'/user/birgit' => 'birgit',
+	 * @return array something like that: array('id'=>0,
+	 * 		'item'=>array(
+	 *			'text'=>'INBOX',
+	 *			'tooltip'=>'INBOX'.' '.lang('(not connected)'),
+	 *			'im0'=>'kfm_home.png'
+	 *			'item'=>array($MORE_ITEMS)
+	 *		)
 	 *	);
 	 */
 	function getFolderTree($_fetchCounters=false)
@@ -286,8 +288,9 @@ class mail_ui
 		if (isset($sentFolder) && $sentFolder != 'none') $userDefinedFunctionFolders['Sent'] = $sentFolder;
 		if (isset($draftFolder) && $draftFolder != 'none') $userDefinedFunctionFolders['Drafts'] = $draftFolder;
 		if (isset($templateFolder) && $templateFolder != 'none') $userDefinedFunctionFolders['Templates'] = $templateFolder;
-		_debug_array($folderObjects);
+		//_debug_array($folderObjects);
 		$out = array('id' => 0);
+		$c = 0;
 		foreach($folderObjects as $key => $obj)
 		{
 			$fS = $this->mail_bo->getFolderStatus($key,false,($_fetchCounters?false:true));
@@ -300,25 +303,25 @@ class mail_ui
 			// the rest of the array is the name of the parent
 			$parentName = implode((array)$folderParts,$obj->delimiter);
 
-			$path = $obj->folderName; //$obj->delimiter
+			$path = $key; //$obj->folderName; //$obj->delimiter
 			$oA =array('text'=> $obj->shortDisplayName, 'tooltip'=> $obj->displayName);
 			$oA['path'] = $fFP;
 			if ($fS['unseen']) $oA['text'] = '<b>'.$oA['text'].' ('.$fS['unseen'].')</b>';
 			if ($path=='INBOX')
 			{
-				$oA['im0'] = 'kfm_home.png';
+				$oA['im0'] = $oA['im1']= $oA['im2'] = "kfm_home.png";
 			}
 			elseif (in_array($obj->shortFolderName,mail_bo::$autoFolders))
 			{
 				//echo $obj->shortFolderName.'<br>';
-				$oA['im0'] = "MailFolder".$obj->shortFolderName.".png";
+				$oA['im0'] = $oA['im1']= $oA['im2'] = "MailFolder".$obj->shortFolderName.".png";
 				//$image2 = "'MailFolderPlain.png'";
 				//$image3 = "'MailFolderPlain.png'";
 			}
 			elseif (in_array($key,$userDefinedFunctionFolders))
 			{
 				$_key = array_search($key,$userDefinedFunctionFolders);
-				$oA['im0'] = "MailFolder".$_key.".png";
+				$oA['im0'] = $oA['im1']= $oA['im2'] = "MailFolder".$_key.".png";
 			}
 			else
 			{
@@ -332,18 +335,23 @@ class mail_ui
 				$oA['child']=1; // translates to: hasChildren -> dynamicLoading
 			}
 			$oA['parent'] = $parentName;
-			//$out[] = $oA;
 			$this->setOutStructure($oA,$out,$obj->delimiter);
+			$c++;
 		}
-		//$structuredOut = array('id'=>0, 'item'=>$out);
-		_debug_array($out);
-		return $out;
-		return (isset($out)?$structuredOut:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
+		return ($c?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
 	}
 
+	/**
+	 * setOutStructure - helper function to transform the folderObjectList to dhtmlXTreeObject requirements
+	 *
+	 * @param array $data, data to be processed
+	 * @param array &$out, out array
+	 * @param string $del='.', needed as glue for parent/child operation / comparsion
+	 * @return void
+	 */
 	function setOutStructure($data, &$out, $del='.')
 	{
-		error_log(__METHOD__."(".array2string($data).', '.array2string($out).", '$del')");
+		//error_log(__METHOD__."(".array2string($data).', '.array2string($out).", '$del')");
 		$components = $data['path'];
 		array_pop($components);	// remove own name
 
@@ -353,21 +361,21 @@ class mail_ui
 		{
 			$parent = implode($del, $parents);
 			if ($parent) $parent .= $del;
-			if (!is_array($insert) || !isset($insert['item'])) throw new Exception("1. id=$data[id]: Parent '$parent' '$component' not found! out=".array2string($out));
-			foreach($insert['item'] as $key => &$item)
+			if (!is_array($insert) || !isset($insert['item'])) throw new egw_exception_assertion_failed(__METHOD__.':'.__LINE__." id=$data[id]: Parent '$parent' '$component' not found! out=".array2string($out));
+			foreach($insert['item'] as &$item)
 			{
 				if ($item['id'] == $parent.$component)
 				{
-					$insert =& $item;//$insert['item'][$key];
+					$insert =& $item;
 					break;
 				}
 			}
-			if ($item['id'] != $parent.$component) {_debug_array($out); exit;}//throw new Exception("2. id=$data[id]: Parent '$parent' '$component' not found!");
+			if ($item['id'] != $parent.$component) throw new egw_exception_assertion_failed(__METHOD__.':'.__LINE__.": id=$data[id]: Parent '$parent' '$component' not found!");
 			$parents[] = $component;
 		}
 		unset($data['path']);
 		$insert['item'][] = $data;
-		error_log(__METHOD__."() leaving with out=".array2string($out));
+		//error_log(__METHOD__."() leaving with out=".array2string($out));
 	}
 
 	/**
@@ -1138,7 +1146,7 @@ error_log(__METHOD__.__LINE__.array2string($query));
 			}
 
 			if (in_array("size", $cols))
-				$data["size"] = self::show_readable_size($header['size']); /// size
+				$data["size"] = $header['size']; /// size
 
 
 			/*
@@ -1155,35 +1163,6 @@ error_log(__METHOD__.__LINE__.array2string($query));
 			//error_log(__METHOD__.__LINE__.array2string($result));
 		}
 		return $rv;
-	}
-
-	/**
-	 * Returns a string showing the size of the message/attachment
-	 * @param int $bytes
-	 * @param string mode (not used)
-	 * @return string ($bytes $type)
-	 */
-	static function show_readable_size($bytes, $_mode='short')
-	{
-		$bytes /= 1024;
-		$type = 'k';
-
-		if ($bytes / 1024 > 1)
-		{
-			$bytes /= 1024;
-			$type = 'M';
-		}
-
-		if ($bytes < 10)
-		{
-			$bytes *= 10;
-			settype($bytes, 'integer');
-			$bytes /= 10;
-		}
-		else
-			settype($bytes, 'integer');
-
-		return $bytes . ' ' . $type ;
 	}
 
 }
