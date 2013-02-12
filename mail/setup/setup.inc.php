@@ -36,12 +36,10 @@ $setup_info['mail']['hooks']['settings'] = 'mail_hooks::settings';
 $setup_info['mail']['hooks']['preferences'] = 'mail_hooks::preferences';
 $setup_info['mail']['hooks']['sidebox_menu'] = 'mail_hooks::sidebox_menu';
 $setup_info['mail']['hooks']['session_creation'] = 'mail_bo::resetConnectionErrorCache';
+$setup_info['mail']['hooks']['verify_settings'] = 'mail_bo::forcePrefReload';
 
 /*
-
 $setup_info['mail']['hooks'][] = 'home';
-$setup_info['mail']['hooks']['verify_settings'] = 'mail_bo::forcePrefReload';
-$setup_info['mail']['hooks']['edit_user']		= 'mail_hooks::adminMenu';
 */
 
 /* Dependencies for this app to work */

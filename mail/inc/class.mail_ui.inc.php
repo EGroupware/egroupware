@@ -253,7 +253,7 @@ class mail_ui
 
 	/**
 	 * getFolderTree, get folders from server and prepare the folder tree
-	 *
+	 * @param bool $_fetchCounters, wether to fetch extended information on folders
 	 * @return array something like that: array(
 	 *		'/INBOX'=>array('label'=>'INBOX','title'=>'INBOX','image'=>'kfm_home.png'),
 	 *		'/INBOX/sub'=>array('label'=>'sub','title'=>'INBOX/sub'),
@@ -261,7 +261,7 @@ class mail_ui
 	 *		'/user/birgit' => 'birgit',
 	 *	);
 	 */
-	function getFolderTree()
+	function getFolderTree($_fetchCounters=false)
 	{
 		$folderObjects = $this->mail_bo->getFolderObjects();
 		$trashFolder = $this->mail_bo->getTrashFolder();
@@ -276,32 +276,33 @@ class mail_ui
 		//_debug_array($folderObjects);
 		foreach($folderObjects as $key => $obj)
 		{
-			$fS = $this->mail_bo->getFolderStatus($key);
+			if ($_fetchCounters) $fS = $this->mail_bo->getFolderStatus($key);
 			//_debug_array($fS);
 			$path = str_replace($obj->delimiter,'/',$obj->folderName);
 			$oA =array('label'=> $obj->shortDisplayName, 'title'=> $obj->displayName);
 			if ($fS['unseen']) $oA['label'] = '<b>'.$oA['label'].' ('.$fS['unseen'].')</b>';
 			if ($path=='INBOX')
 			{
-				$oA['image'] = 'kfm_home.png';
+				$oA['im0'] = 'kfm_home.png';
 			}
 			elseif (in_array($obj->shortFolderName,mail_bo::$autoFolders))
 			{
 				//echo $obj->shortFolderName.'<br>';
-				$oA['image'] = $image1 = $image2 = $image3 = "MailFolder".$obj->shortFolderName.".png";
+				$oA['im0'] = "MailFolder".$obj->shortFolderName.".png";
 				//$image2 = "'MailFolderPlain.png'";
 				//$image3 = "'MailFolderPlain.png'";
 			}
 			elseif (in_array($key,$userDefinedFunctionFolders))
 			{
 				$_key = array_search($key,$userDefinedFunctionFolders);
-				$oA['image'] = $image1 = $image2 = $image3 = "MailFolder".$_key.".png";
+				$oA['im0'] = "MailFolder".$_key.".png";
 			}
 			else
 			{
-				$oA['image'] = $image1 = "MailFolderPlain.png"; // one Level
-				$image2 = "folderOpen.gif";
-				if (stripos(array2string($fS['attributes']),'\hasChildren')!== false) $oA['image'] = $image3 = "MailFolderClosed.png"; // has Children
+				$oA['im0'] =  "MailFolderPlain.png"; // one Level
+				$oA['im1'] = "folderOpen.gif";
+//if (stripos(array2string($fS['attributes']),'\hasChildren')!== false)
+				$oA['im2'] = "MailFolderClosed.png"; // has Children
 			}
 
 			$out[$path] = $oA;
