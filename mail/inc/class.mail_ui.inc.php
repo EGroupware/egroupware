@@ -296,7 +296,7 @@ class mail_ui
 	 */
 	function getFolderTree($_fetchCounters=false)
 	{
-		$folderObjects = $this->mail_bo->getFolderObjects();
+		$folderObjects = $this->mail_bo->getFolderObjects(true,false,true);
 		$trashFolder = $this->mail_bo->getTrashFolder();
 		$templateFolder = $this->mail_bo->getTemplateFolder();
 		$draftFolder = $this->mail_bo->getDraftFolder();
