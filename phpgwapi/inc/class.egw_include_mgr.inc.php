@@ -40,21 +40,23 @@
  * 		jquery.jquery; // Includes jquery.js from package jquery in phpgwapi
  * 		/phpgwapi/js/jquery/jquery-ui.js; // Includes jquery-ui.js
  */
-
 class egw_include_mgr
 {
-
 	static private $DEBUG_MODE = true;
 
 	/**
 	 * The parsed_files array holds all files which have already been processed
 	 * by this class.
+	 *
+	 * @var array of path => true
 	 */
 	private $parsed_files = array();
 
 	/**
 	 * The included files array holds all files which will really be included
 	 * as a result of the current request.
+	 *
+	 * @var array of path => true
 	 */
 	private $included_files = array();
 
@@ -69,6 +71,9 @@ class egw_include_mgr
 	 */
 	private function parse_file($file)
 	{
+		// file is from url and can contain query-params, eg. /phpgwapi/inc/jscalendar-setup.php?dateformat=d.m.Y&amp;lang=de
+		if (strpos($file,'?') !== false) list($file) = explode('?',$file);
+
 		// Mark the file as parsed
 		$this->parsed_files[$file] = true;
 
@@ -221,7 +226,7 @@ class egw_include_mgr
 			}
 			else
 			{
-				error_log(__METHOD__." invalid egw:require in js_file -> ".print_r($entry, true));
+				error_log(__METHOD__." invalid egw:require in js_file '$path' -> ".array2string($entry));
 			}
 
 			if ($uses_path)
@@ -267,7 +272,6 @@ class egw_include_mgr
 	 * @param string $package package or complete path (relative to EGW_SERVER_ROOT) to be included
 	 * @param string|array $file=null file to be included - no ".js" on the end or array with get params
 	 * @param string $app='phpgwapi' application directory to search - default = phpgwapi
-	 * @param boolean $append=true should the file be added
 	 *
 	 * @returns the correct path on the server if the file is found or false, if the
 	 *  file is not found or no further processing is needed.
@@ -315,6 +319,19 @@ class egw_include_mgr
 		return false;
 	}
 
+	/**
+	 * Include a javascript file
+	 *
+	 * Example call syntax:
+	 * a) include_js_file('jscalendar','calendar')
+	 *    --> /phpgwapi/js/jscalendar/calendar.js
+	 * b) include_js_file('/phpgwapi/inc/calendar-setup.js',array('lang'=>'de'))
+	 *    --> /phpgwapi/inc/calendar-setup.js?lang=de
+	 *
+	 * @param string $package package or complete path (relative to EGW_SERVER_ROOT) to be included
+	 * @param string|array $file=null file to be included - no ".js" on the end or array with get params
+	 * @param string $app='phpgwapi' application directory to search - default = phpgwapi
+	 */
 	public function include_js_file($package, $file = null, $app = 'phpgwapi')
 	{
 		// Translate the given parameters into a valid path - false is returned
@@ -337,27 +354,47 @@ class egw_include_mgr
 		}
 	}
 
-	public function include_files(array $files)
+	/**
+	 * Include given files, optionally clear list of files to include
+	 *
+	 * @param array $files
+	 * @param boolean $clear_files=false if true clear list of files, before including given ones
+	 */
+	public function include_files(array $files, $clear_files=false)
 	{
+		if ($clear_files) self::$included_files = array();
+
 		foreach ($files as $file)
 		{
 			$this->include_js_file($file);
 		}
 	}
 
-	public function get_included_files()
+	/**
+	 * Return all files
+	 *
+	 * @param boolean $clear_files=false if true clear list of files after returning them
+	 * @return array
+	 */
+	public function get_included_files($clear_files=false)
 	{
-		return array_keys($this->included_files);
+		$ret = array_keys($this->included_files);
+		if ($clear_files) self::$included_files = array();
+		return $ret;
 	}
 
-	public function __construct($files = null)
+	/**
+	 * Constructor
+	 *
+	 * @param array $files=null optional files to include as for include_files method
+	 */
+	public function __construct(array $files = null)
 	{
 		if (isset($files) && is_array($files))
 		{
 			$this->include_files($files);
 		}
 	}
-
 }
 
 /*
