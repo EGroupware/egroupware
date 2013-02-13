@@ -32,7 +32,7 @@
 		</grid>
 	</template>
 	<template id="mail.index" template="" lang="" group="0" version="1.9.001">
-		<tree id="nm[foldertree]" onclick="changeFolder(widget.event_args[0],widget);"/>
+		<tree id="nm[foldertree]" onclick="changeFolder(widget.event_args[0],widget);" parent_node="tree_target"/>
 		<html id="msg"/>
 		<nextmatch id="nm" options="mail.index.rows"/>
 	</template>

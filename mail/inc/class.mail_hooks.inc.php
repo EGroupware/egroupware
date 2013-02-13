@@ -836,6 +836,14 @@ class mail_hooks
 
 		}
 
+		// Destination div for folder tree
+		$file[] = array(
+			'no_lang' => true,
+			'text'=>'<span id="tree_target"/>',
+			'link'=>false,
+			'icon' => false
+		);
+
 		// display them all
 		display_sidebox($appname,$menu_title,$file);
 
