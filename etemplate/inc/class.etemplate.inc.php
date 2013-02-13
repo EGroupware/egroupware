@@ -174,7 +174,25 @@ class etemplate_new extends etemplate_widget_template
 				$langRequire[] = array('app' => $app, 'lang' => $lang);
 			}
 
-			echo '
+			// check if we are in an ajax-exec call from jdots template (or future other tabed templates)
+			if (isset($GLOBALS['egw']->framework->response))
+			{
+				echo '
+		<div id="container"></div>
+		<script>
+			egw.langRequire(window, '.json_encode($langRequire).');
+			egw(window).includeJS('.json_encode(egw_framework::get_script_links(true, true)).	// return and clear
+				',function() {
+				egw.debug("info", "Instanciating etemplate2 object for '.$this->name.'");
+				var et2 = new etemplate2(document.getElementById("container"), "etemplate::ajax_process_content");
+				et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
+			}, window, egw.webserverUrl);
+		</script>
+';
+			}
+			else
+			{
+				echo '
 		<div id="container"></div>
 		<script>
 			egw.langRequire(window, '.json_encode($langRequire).');
@@ -184,6 +202,7 @@ class etemplate_new extends etemplate_widget_template
 			}, null, true);
 		</script>
 ';
+			}
 			common::egw_footer();
 		}
 	}
