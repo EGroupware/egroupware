@@ -483,12 +483,16 @@ etemplate2.prototype.getValues = function(_root)
 etemplate2.prototype.refresh = function(msg, id, type)
 {
 	// We use et2_baseWidget in case the app uses something like HTML instead of label
-	this.widgetContainer.iterateOver(function(_widget) {
-		if (_widget.id == "msg" || _widget.id == "message")
-		{
-			_widget.set_Value(msg);
-		}
-	}, this, et2_baseWidget);
+	var msg_widget = this.widgetContainer.getWidgetById("msg");
+	if(msg_widget)
+	{
+		msg_widget.set_Value(msg);
+		msg_widget.set_disabled(msg.trim().length == 0);
+
+		// In case parent(s) have been disabled, just show it all
+		// TODO: Fix this so messages go in a single, well defined place that don't get disabled
+		$j(msg_widget.getDOMNode()).parents().show();
+	}
 
 	
 	this.widgetContainer.iterateOver(function(_widget) {
