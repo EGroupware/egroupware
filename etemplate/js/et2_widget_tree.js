@@ -257,9 +257,49 @@ var et2_tree = et2_inputWidget.extend({
 		}
 	},
 
+	/**
+	 * getValue, retrieves the Id of the selected Item
+	 * @return string or object or null
+	 */
 	getValue: function() {
 		if(this.input == null) return null;
 		return this.options.multiple ? this.input.getAllChecked().split(this.input.dlmtr) : this.input.getSelectedItemId();
+	},
+
+	/**
+	 * getSelectedLabel, retrieves the Label of the selected Item
+	 * @return string or null
+	 */
+	getSelectedLabel: function() {
+		if(this.input == null) return null;
+		if (this.options.multiple)
+		{
+			/*
+			var out = [];
+			var checked = this.input.getAllChecked().split(this.input.dlmtr);
+			for(var i = 0; i < checked.length; i++)
+			{
+				out.push(this.input.getItemText(checked[i]));
+			}
+			return out;
+			*/
+			return null; // not supported yet
+		}
+		else
+		{
+			return this.input.getSelectedItemText();
+		}
+	},
+
+	/**
+	 * getSelectedNode, retrieves the full node of the selected Item
+	 * @return string or null
+	 */
+	getSelectedNode: function() {
+		if(this.input == null) return null;
+		// no support for multiple selections
+		// as there is no get Method to return the full selected node, we use this
+		return this.options.multiple ? null : this.input._selected[0];
 	}
 });
 et2_register_widget(et2_tree, ["tree","tree-cat"]);
