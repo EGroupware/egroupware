@@ -1238,33 +1238,36 @@ abstract class egw_framework
 	}
 
 	/**
-	 * Set or return all javascript files set via validate_file
+	 * Set or return all javascript files set via validate_file, optionally clear all files
 	 *
 	 * @param array $files=null array with pathes relative to EGW_SERVER_ROOT, eg. /phpgwapi/js/jquery/jquery.js
+	 * @param boolean $clear_files=false true clear files after returning them
 	 * @return array with pathes relative to EGW_SERVER_ROOT
 	 */
-	static function js_files(array $files=null)
+	static function js_files(array $files=null, $clear_files=false)
 	{
 		if (isset($files) && is_array($files))
 		{
 			self::$js_include_mgr->include_files($files);
 		}
-		return self::$js_include_mgr->get_included_files();
+		return self::$js_include_mgr->get_included_files($clear_files);
 	}
 
 	/**
-	* Used for generating the list of external js files to be included in the head of a page
-	*
-	* NOTE: This method should only be called by the template class.
-	* The validation is done when the file is added so we don't have to worry now
-	*
-	* @returns string the html needed for importing the js into a page
-	*/
-	static protected function get_script_links()
+	 * Used for generating the list of external js files to be included in the head of a page
+	 *
+	 * NOTE: This method should only be called by the template class.
+	 * The validation is done when the file is added so we don't have to worry now
+	 *
+	 * @param boolean $return_pathes=false false: return html script tags, true: return array of file pathes relative to webserver_url
+	 * @param boolean $clear_files=false true clear files after returning them
+	 * @return string|array see $return_pathes parameter
+	 */
+	static public function get_script_links($return_pathes=false, $clear_files=false)
 	{
 		$debug_minify = (bool)$GLOBALS['egw_info']['server']['debug_minify'];
-		$links = "\n";
 		$files = '';
+		$to_include = $to_minify = array();
 		$max_modified = 0;
 		foreach(self::$js_include_mgr->get_included_files() as $path)
 		{
@@ -1276,23 +1279,29 @@ abstract class egw_framework
 			if ($debug_minify || $query || substr($path, -3) != '.js' || strpos($path,'ckeditor') !== false)
 			{
 				$path .= '?'. $mod.($query ? '&'.$query : '');
-				$links .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $path.'">'."</script>\n";
+				$to_include[] = $path;
 			}
 			else
 			{
-				$files .= ($files ? ',' : '').substr($path,1);
+				$to_minify[] = substr($path,1);
 			}
 		}
-		if (!$debug_minify && $files)
+		if (!$debug_minify && $to_minify)
 		{
 			$base_path = $GLOBALS['egw_info']['server']['webserver_url'];
 			if ($base_path[0] != '/') $base_path = parse_url($base_path, PHP_URL_PATH);
-			$files = '/phpgwapi/inc/min/?'.($base_path && $base_path != '/' ? 'b='.substr($base_path, 1).'&' : '').
-				'f='.$files . '&'.$max_modified;
+			$path = '/phpgwapi/inc/min/?'.($base_path && $base_path != '/' ? 'b='.substr($base_path, 1).'&' : '').
+				'f='.implode(',', $to_minify) . '&'.$max_modified;
 			// need to include minified javascript before not minified stuff like jscalendar-setup, as it might depend on it
-			$links = '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $files.'">'."</script>".$links;
+			array_unshift($to_include, $path);
 		}
-		return $links."\n";
+		if ($return_pathes)
+		{
+			return $to_include;
+		}
+		$start = '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url'];
+		$end = '">'."</script>\n";
+		return "\n".$start.implode($end.$start, $to_include).$end;
 	}
 
 	/**
