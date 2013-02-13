@@ -54,6 +54,12 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 			"type": "string",
 			"default": et2_no_init,
 			"description": "If set, the css-overflow attribute is set to that value"
+		},
+		"parent_node": {
+			"name":	"DOM parent",
+			"type": "string",
+			"default": et2_no_init,
+			"description": "Insert into the target DOM node instead of the normal location"
 		}
 	},
 
@@ -102,7 +108,14 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 		// Check whether the parent implements the et2_IDOMNode interface. If
 		// yes, grab the DOM node and create our own.
 		if (this._parent && this._parent.implements(et2_IDOMNode)) {
-			this.setParentDOMNode(this._parent.getDOMNode(this));
+			if(this.options.parent_node)
+			{
+				this.set_parent_node(this.options.parent_node);
+			}
+			else
+			{
+				this.setParentDOMNode(this._parent.getDOMNode(this));
+			}
 		}
 
 		return true;
@@ -184,6 +197,23 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 		}
 
 		return this._surroundingsMgr;
+	},
+
+	/**
+	 * Set the parent DOM node of this element.  Takes a wider variety of types
+	 * than setParentDOMNode(), and matches the set_<attribute> naming convention.
+	 *
+	 * @param _node String|DOMNode DOM node to contain the widget, or the ID of the DOM node.
+	 */
+	set_parent_node: function(_node) {
+		if(typeof _node == "string")
+		{
+			this.setParentDOMNode($j('#'+_node).get(0));
+		}
+		else
+		{
+			this.setParentDOMNode(_node);
+		}
 	},
 
 	/**
