@@ -254,6 +254,7 @@ var et2_tree = et2_inputWidget.extend({
 		else
 		{
 			this.input.selectItem(this.value, false);	// false = do not trigger onSelect
+			this.input.openItem(this.value);
 		}
 	},
 
