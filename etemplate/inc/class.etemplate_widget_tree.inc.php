@@ -13,6 +13,8 @@
 
 /**
  * eTemplate tree widget
+ *
+ * @see /phpgwapi/js/dhtmlxtree/docsExplorer/dhtmlxtree/dhtmlxtree___syntax_templates.html Tree syntax
  */
 egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/css/dhtmlXTree.css');
 class etemplate_widget_tree extends etemplate_widget
