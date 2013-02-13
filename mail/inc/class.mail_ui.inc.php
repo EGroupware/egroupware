@@ -348,6 +348,12 @@ class mail_ui
 				$oA['im2'] = "MailFolderClosed.png"; // has Children
 			}
 			$oA['id'] = $path; // ID holds the PATH
+			if (stripos(array2string($fS['attributes']),'\noselect')!== false)
+			{
+				$oA['im0'] = "folderNoSelectClosed.gif"; // one Level
+				$oA['im1'] = "folderNoSelectOpen.gif";
+				$oA['im2'] = "folderNoSelectClosed.gif"; // has Children
+			}
 			if (stripos(array2string($fS['attributes']),'\hasnochildren')=== false)
 			{
 				$oA['child']=1; // translates to: hasChildren -> dynamicLoading
@@ -395,7 +401,7 @@ class mail_ui
 				if ($createMissingParents)
 				{
 					unset($item);
-					$item = array('id' => $parent.$component, 'text' => $component, 'tooltip' => '**missing**');
+					$item = array('id' => $parent.$component, 'text' => $component, 'im0' => "folderNoSelectClosed.gif",'im1' => "folderNoSelectOpen.gif",'im2' => "folderNoSelectClosed.gif",'tooltip' => '**missing**');
 					$insert['item'][] =& $item;
 					$insert =& $item;
 				}
@@ -1221,6 +1227,6 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 			$this->mail_bo->compressFolder($trashFolder);
 		}
 		$response = egw_json_response::get();
-		$response->call('egw_refresh',lang('emptied Trash'),'mail');
+		$response->call('egw_refresh',lang('empty trash'),'mail');
 	}
 }

@@ -808,6 +808,13 @@ class mail_hooks
 			);
 
 		}
+		// Destination div for folder tree
+		$file[] = array(
+			'no_lang' => true,
+			'text'=>'<span id="tree_target" class="dtree"/>',
+			'link'=>false,
+			'icon' => false
+		);
 		// empty trash (if available -> move to trash )
 		if($preferences->preferences['deleteOptions'] == 'move_to_trash')
 		{
@@ -836,13 +843,6 @@ class mail_hooks
 
 		}
 
-		// Destination div for folder tree
-		$file[] = array(
-			'no_lang' => true,
-			'text'=>'<span id="tree_target"/>',
-			'link'=>false,
-			'icon' => false
-		);
 
 		// display them all
 		display_sidebox($appname,$menu_title,$file);
