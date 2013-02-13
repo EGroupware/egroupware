@@ -486,7 +486,7 @@ etemplate2.prototype.refresh = function(msg, id, type)
 	var msg_widget = this.widgetContainer.getWidgetById("msg");
 	if(msg_widget)
 	{
-		msg_widget.set_Value(msg);
+		msg_widget.set_value(msg);
 		msg_widget.set_disabled(msg.trim().length == 0);
 
 		// In case parent(s) have been disabled, just show it all

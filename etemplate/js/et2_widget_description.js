@@ -24,7 +24,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 
 	attributes: {
 		"value": {
-			"name": "Caption",
+			"name": "Value",
 			"type": "string",
 			"description": "Displayed text",
 			"translate": "!no_lang"
@@ -111,7 +111,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 		}
 	},
 
-	set_Value: function(_value) {
+	set_value: function(_value) {
 		et2_insertLinkText(this._parseText(_value),
 			this.span[0],
 			this.options.extra_link_target
@@ -193,7 +193,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 		if (typeof _values["value"] != "undefined" || (updateLink && (_values["value"] || this.options.value)))
 		{
 			this.span = jQuery(_nodes[0]);
-			this.set_Value(_values["value"]);
+			this.set_value(_values["value"]);
 		}
 
 		if (typeof _values["class"] != "undefined")

@@ -16,6 +16,7 @@
 	jquery.jquery;
 	et2_core_inputWidget;
 	et2_core_valueWidget;
+	et2_widget_description;
 */
 
 /**
