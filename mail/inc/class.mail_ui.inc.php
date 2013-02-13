@@ -1229,4 +1229,24 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 		$response = egw_json_response::get();
 		$response->call('egw_refresh',lang('empty trash'),'mail');
 	}
+
+	/**
+	 * compress folder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
+	 * fetches the current folder from session and compresses it
+	 * @return nothing
+	 */
+	function ajax_compressFolder()
+	{
+		$this->mail_bo->restoreSessionData();
+		$folder = $this->mail_bo->sessionData['maibox'];
+		if ($this->mail_bo->folderExists($folder))
+		{
+			if(!empty($folder)) {
+				$this->mail_bo->compressFolder($folder);
+			}
+			$response = egw_json_response::get();
+			$response->call('egw_refresh',lang('compress folder').': '.$folder,'mail');
+		}
+	}
+
 }

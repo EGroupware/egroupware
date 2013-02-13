@@ -8,6 +8,43 @@
  * @version $Id$
  */
 
+var mail_doTimedRefresh;
+var mail_refreshTimeOut = 1000*60*3;
+mail_startTimerFolderStatusUpdate(mail_refreshTimeOut);
+
+/**
+ * mail_startTimerFolderStatusUpdate, timer functions, if the counter changes for the current folder
+ * refresh the message list
+ * @param timeout
+ */
+function mail_startTimerFolderStatusUpdate(_refreshTimeOut) {
+	if (typeof _refreshTimeOut == 'undefined')
+	{
+		var minutes = egw.preference('refreshTime','mail');
+		mail_refreshTimeOut = _refreshTimeOut= 1000*60*(minutes?minutes:3); // either the prefs or 3 Minutes
+	}
+	if (mail_refreshTimeOut > _refreshTimeOut) _refreshTimeOut = mail_refreshTimeOut;
+	if(mail_doTimedRefresh) {
+		window.clearTimeout(mail_doTimedRefresh);
+	}
+	if(_refreshTimeOut > 6000) {
+		mail_doTimedRefresh = window.setInterval("mail_refreshFolderStatus()", _refreshTimeOut);
+	}
+}
+
+function mail_refreshFolderStatus(_nodeID,mode) {
+/*
+	var nodeToRefresh = 0;
+	var mode2use = "none";
+	if (_nodeID) nodeToRefresh = _nodeID;
+	if (mode) {
+		if (mode == "forced") {mode2use = mode;}
+	}
+	var activeFolders = getTreeNodeOpenItems(nodeToRefresh,mode2use);
+	queueRefreshFolderList(activeFolders);
+*/
+}
+
 /**
  * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
  * 
@@ -24,13 +61,13 @@ function app_refresh(_msg, _app, _id, _type)
 	var bufferExists = false;
 	window.clearInterval(doStatus); // whatever message was up to be activated
 	//alert("app_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
-	//myCurrentMsg = getMsg();
+	//myCurrentMsg = mail_getMsg();
 	//if (myCurrentMsg.length) {
 		// clear message after some time
 		myMessageBuffer = ""; //myCurrentMsg;
 		bufferExists = true;
 	//}
-	setMsg('<span style="font-weight: bold;">' +_msg+ '</span>');
+	mail_setMsg('<span style="font-weight: bold;">' +_msg+ '</span>');
 	if (_app=='mail')
 	{
 		//we may want to trigger some actions, like modifying the grid, disable preview and stuff
@@ -41,10 +78,10 @@ function app_refresh(_msg, _app, _id, _type)
 }
 
 /**
- * getMsg - gets the current Message
+ * mail_getMsg - gets the current Message
  * @return string
  */
-function getMsg()
+function mail_getMsg()
 {
 	var msg_wdg = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('msg');
 	if (msg_wdg)
@@ -55,10 +92,10 @@ function getMsg()
 }
 
 /**
- * setMsg - sets a Message, with the msg container, and controls if the container is enabled/disabled
+ * mail_setMsg - sets a Message, with the msg container, and controls if the container is enabled/disabled
  * @param string myMsg - the message
  */
-function setMsg(myMsg)
+function mail_setMsg(myMsg)
 {
 	var msg_wdg = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('msg');
 	if (msg_wdg)
@@ -69,18 +106,27 @@ function setMsg(myMsg)
 }
 
 /**
- * emptyTrash
+ * mail_emptyTrash
  */
-function emptyTrash() {
+function mail_emptyTrash() {
 	app_refresh(egw.lang('empty trash'), 'mail');
 	var request = new egw_json_request('mail.mail_ui.ajax_emptyTrash');
 	request.sendRequest();
 }
 
 /**
- * changeFolder
+ * mail_compressFolder
  */
-function changeFolder(folder,_widget) {
+function mail_compressFolder() {
+	app_refresh(egw.lang('compress folder'), 'mail');
+	var request = new egw_json_request('mail.mail_ui.ajax_compressFolder');
+	request.sendRequest();
+}
+
+/**
+ * mail_changeFolder
+ */
+function mail_changeFolder(folder,_widget) {
 	//alert('change Folder called:'+folder);
 	app_refresh(egw.lang('change folder'), 'mail');
 	var img = _widget.getSelectedNode().images[0]; // fetch first image
