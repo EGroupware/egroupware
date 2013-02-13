@@ -235,14 +235,14 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with)
 	var win = typeof _targetapp != 'undefined' ? egw_appWindow(_targetapp) : window;
 
 	// if window defines an app_refresh method, just call it
-	if (typeof win.app_refresh != 'undefined' && win.app_refresh.registered(_app))
+	if (typeof win.app_refresh == "function" || typeof win.app_refresh.registered == "function" && win.app_refresh.registered(_app))
 	{
 		win.app_refresh(_msg, _app, _id, _type);
 		return;
 	}
 
 	// etemplate2 specific to avoid reloading whole page
-	if(etemplate2 && etemplate2.getByApplication)
+	if(typeof etemplate2 != "undefined" && etemplate2.getByApplication)
 	{
 		var et2 = etemplate2.getByApplication(_app);
 		for(var i = 0; i < et2.length; i++)
