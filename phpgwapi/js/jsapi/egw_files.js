@@ -26,53 +26,96 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	 * Array which contains all currently bound in javascript and css files.
 	 */
 	var files = {};
-
-	function addFile(src)
+	
+	/**
+	 * Remove optional timestamp attached directly as first query parameter, eg. /path/name.js?12345678[&other=val]
+	 * 
+	 * Examples:
+	 *  /path/file.js --> /path/file.js
+	 *  /path/file.js?123456 --> /path/file.js
+	 *  /path/file.php?123456&param=value --> /path/file.php?param=value
+	 *
+	 * @param _src url
+	 * @return url with timestamp stripped off
+	 */
+	function removeTS(_src)
 	{
-		if (src)
-		{
-			// Remove everything after the "?"
-			src = src.split('?').shift();
-			files[src] = true;
-		}
+		return _src.replace(/\?[0-9]+&?/, '?').replace(/\?$/, '');
 	}
 
 	/**
-	 * Gather all already loaded JavaScript and CSS files on document load.
+	 * Add file to list of loaded files
 	 * 
-	 * TODO: Currently this can only contain the JS files present in the main
-	 * window.
+	 * @param src url of file
+	 * @param dom optional dom node to trac loading status of javascript files
 	 */
-	// Iterate over the script tags
-	var scripts = _wnd.document.getElementsByTagName('script');
-	for (var i = 0; i < scripts.length; i++)
+	function addFile(src, dom)
 	{
-		addFile(scripts[i].getAttribute('src'));
-	}
-
-	// Iterate over the link tags
-	var links = _wnd.document.getElementsByTagName('link');
-	for (var i = 0; i < links.length; i++)
-	{
-		addFile(links[i].getAttribute('href'));
-	}
-
-	function includeJSFile(_jsFile, _callback, _context)
-	{
-		var alreadyLoaded = false;
-
-		if (typeof files[_jsFile] === 'undefined')
+		if (src)
 		{
-			// Create the script node which contains the new file
-			var scriptnode = _wnd.document.createElement('script');
-			scriptnode.type = "text/javascript";
-			scriptnode.src = _jsFile;
-			scriptnode._originalSrc = _jsFile;
+			files[removeTS(src)] = dom || true;
+		}
+	}
+	
+	/**
+	 * Check if a source file is already loaded or loading
+	 * 
+	 * @param _src url of file (already run throught removeTS!)
+	 * @return false: not loaded, true: loaded or "loading"
+	 */
+	function isLoaded(_src)
+	{
+		switch (typeof files[_src])
+		{
+			case 'undefined':
+				return false;
+			case 'boolean':
+				return files[_src];
+			default:
+				return files[_src].readyState == 'complete' || files[_src].readyState == 'loaded';
+		}
+		return "loading";
+	}
+	
+	/**
+	 * object with array of callbacks or contexts by source/url
+	 */
+	var callbacks = {};
+	var contexts = {};
+	
+	/**
+	 * Attach onLoad callback to given js source
+	 * 
+	 * @param _src url of file (already run throught removeTS!)
+	 * @param _callback
+	 * @param _context
+	 * @return true if callback got attached, false if it was run directly
+	 */
+	function attachCallback(_src, _callback, _context)
+	{
+		if (typeof _callback === 'undefined') return;
 
+		switch (typeof files[_src])
+		{
+			case 'undefined':
+			case 'boolean':
+				_callback.call(_context);
+				return false;
+		}
+		
+		if (typeof callbacks[_src] === 'undefined')
+		{
+			callbacks[_src] = []; 
+			contexts[_src] = [];
+			callbacks[_src].push(_callback);
+			contexts[_src].push(_context);
+			
+			var scriptnode = files[_src];
+			
 			// Setup the 'onload' handler for FF, Opera, Chrome
 			scriptnode.onload = function(e) {
-				egw.debug('info', 'Retrieved JS file "%s" from server', _jsFile);
-				_callback.call(_context, _jsFile);
+				egw.debug('info', 'Retrieved JS file "%s" from server', _src);
+				runCallbacks.call(this, _src);
 			};
 
 			// IE
@@ -85,16 +128,85 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 						var node = _wnd.event.srcElement;
 						if (node.readyState == 'complete' || node.readyState == 'loaded')
 						{
-							egw.debug('info', 'Retrieved JS file "%s" from server', _jsFile);
-							_callback.call(_context, _jsFile);
+							egw.debug('info', 'Retrieved JS file "%s" from server', _src);
+							runCallbacks.call(this, _src);
 						}
 					};
 				}
 				else
 				{
-					alreadyLoaded = true;
+					runCallbacks.call(this, _src);
+					return false;
 				}
 			}
+		}
+		else
+		{
+			callbacks[_src].push(_callback);
+			contexts[_src].push(_context);
+		}
+		return true;
+	}
+	
+	/**
+	 * Run all callbacks of a given source
+	 * 
+	 * @param _src url of file (already run throught removeTS!)
+	 */
+	function runCallbacks(_src)
+	{
+		if (typeof callbacks[_src] === 'undefined') return;
+		
+		egw.debug('info', 'Running %d callbacks for JS file "%s"', callbacks[_src].length, _src);
+
+		for(var i = 0; i < callbacks[_src].length; i++)
+		{
+			callbacks[_src][i].call(contexts[_src][i]);
+		}
+		delete callbacks[_src];
+		delete contexts[_src];
+	}
+
+	/**
+	 * Gather all already loaded JavaScript and CSS files on document load.
+	 */
+	// Iterate over the script tags
+	var scripts = _wnd.document.getElementsByTagName('script');
+	for (var i = 0; i < scripts.length; i++)
+	{
+		addFile(scripts[i].getAttribute('src'), scripts[i]);
+	}
+
+	// Iterate over the link tags
+	var links = _wnd.document.getElementsByTagName('link');
+	for (var i = 0; i < links.length; i++)
+	{
+		addFile(links[i].getAttribute('href'));
+	}
+
+	/**
+	 * Include a single javascript file and call given callback once it's done
+	 * 
+	 * If file is already loaded, _callback gets called imediatly
+	 * 
+	 * @param _jsFile url of file
+	 * @param _callback
+	 * @param _context for callback
+	 */
+	function includeJSFile(_jsFile, _callback, _context)
+	{
+		var _src = removeTS(_jsFile);
+		var alreadyLoaded = isLoaded(_src);
+
+		if (alreadyLoaded === false)
+		{
+			// Create the script node which contains the new file
+			var scriptnode = _wnd.document.createElement('script');
+			scriptnode.type = "text/javascript";
+			scriptnode.src = _jsFile;
+			scriptnode._originalSrc = _jsFile;
+			
+			files[_src] = scriptnode;
 
 			// Append the newly create script node to the head
 			var head = _wnd.document.getElementsByTagName('head')[0];
@@ -103,27 +215,29 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			// Request the given javascript file
 			egw.debug('info', 'Requested JS file "%s" from server', _jsFile);
 		}
+		else if (alreadyLoaded === true)
+		{
+			egw.debug('info', 'JS file "%s" already loaded', _jsFile);
+		}
 		else
 		{
-			alreadyLoaded = true;
+			egw.debug('info', 'JS file "%s" currently loading', _jsFile);
 		}
 
-		// If the file is already loaded, call the callback
-		if (alreadyLoaded)
-		{
-			_wnd.setTimeout(
-				function() {
-					_callback.call(_context, _jsFile);
-				}, 0);
-		}
+		// attach (or just run) callback
+		attachCallback(_src, _callback, _context);
 	}
 
 	return {
-		includeJS: function(_jsFiles, _callback, _context) {
+		includeJS: function(_jsFiles, _callback, _context, _prefix) {
 			// Also allow including a single javascript file
 			if (typeof _jsFiles === 'string')
 			{
 				_jsFiles = [_jsFiles];
+			}
+			if (typeof _prefix === 'undefined')
+			{
+				_prefix = '';
 			}
 
 			var loaded = 0;
@@ -132,7 +246,7 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			// the context function
 			for (var i = 0; i < _jsFiles.length; i++)
 			{
-				includeJSFile.call(this, _jsFiles[i], function(_file) {
+				includeJSFile.call(this, _prefix+_jsFiles[i], function(_file) {
 					loaded++;
 					if (loaded == _jsFiles.length && _callback) {
 						_callback.call(_context);
