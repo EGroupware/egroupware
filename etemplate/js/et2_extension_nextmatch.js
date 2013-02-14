@@ -20,6 +20,7 @@
 	// Include the action system
 	egw_action.egw_action;
 	egw_action.egw_action_popup;
+	egw_action.egw_action_dragdrop;
 	egw_action.egw_menu_dhtmlx;
 
 	// Include some core classes
