@@ -19,6 +19,11 @@
 
 egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 
+	/**
+	 * How many UIDs we'll tell the server we know about.  No need to pass the whole list around.
+	 */ 
+	var KNOWN_UID_LIMIT = 200;
+
 	var lastModification = null;
 
 	/**
@@ -60,8 +65,11 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 			// Load all data entries that have been sent or delete them
 			for (var key in _result.data)
 			{
-				var uid = UID(key, _context.prefix);
-				if (_result.data[key] === null)
+				var uid = UID(key, (typeof _context == "object" && _context != null) ?_context.prefix : "");
+				if (_result.data[key] === null && 
+				(
+					typeof _context.refresh == "undefined" || _context.refresh && !jQuery.inArray(key,_context.refresh)
+				))
 				{
 					egw.dataDeleteUID(uid);
 				}
@@ -86,6 +94,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 	}
 
 	return {
+
 		/**
 		 * The dataFetch function provides an abstraction layer for the
 		 * corresponding "etemplate_widget_nextmatch::ajax_get_rows" function.
@@ -156,6 +165,26 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 				lm = 0;
 			}
 
+			// Store refresh in context to not delete the other entries when server only returns these
+			if (typeof _queriedRange.refresh != undefined)
+			{
+				if(typeof _queriedRange.refresh == "string")
+				{
+					_context.refresh = [_queriedRange.refresh];
+				}
+				else
+				{
+					_context.refresh = _queriedRange.refresh;
+				}
+			}
+
+			// Limit the amount of UIDs we say we know about to a sensible number, in case user is enjoying auto-pagination
+			var knownUids = _knownUids ? _knownUids : egw.dataKnownUIDs(_context.prefix ? _context.prefix : _app);
+			if(knownUids > KNOWN_UID_LIMIT)
+			{
+				knownUids.slice(typeof _queriedRange.start != "undefined" ? _queriedRange.start:0,KNOWN_UID_LIMIT);
+			}
+
 			var request = egw.json(
 				"etemplate_widget_nextmatch::ajax_get_rows::etemplate",
 				[
@@ -163,7 +192,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 					_queriedRange,
 					_filters,
 					_widgetId,
-					_knownUids ? _knownUids : egw.dataKnownUIDs(_context.prefix ? _context.prefix : _app),
+					knownUids,
 					lm
 				],
 				function(result) {
@@ -273,7 +302,9 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 			// Store the given callback
 			registeredCallbacks[_uid].push({
 				"callback": _callback,
-				"context": _context ? _context : null
+				"context": _context ? _context : null,
+				"execId": _execId,
+				"widgetId" : _widgetId
 			});
 
 			// Check whether the data is available -- if yes, immediately call
@@ -437,17 +468,34 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		},
 
 		/**
-		 * Force a refreash of the given uid from the server, and
-		 * calls all associated callbacks
+		 * Force a refreash of the given uid from the server if known, and
+		 * calls all associated callbacks.  
+		 *
+		 * If the UID does not have any registered callbacks, it cannot be refreshed because the required
+		 * execID and context are missing.
 		 *
 		 * @param uid is the uid which should be refreshed.
+		 *
+		 * @return boolean True if the uid is known and can be refreshed, false if unknown and will not be refreshed
 		 */
 		dataRefreshUID: function (_uid) {
-			if (typeof localStorage[_uid] === "undefined") return;
+			if (typeof localStorage[_uid] === "undefined") return false;
 
-			this.dataFetch(_execId, {'refresh':_uid}, _filters, _widgetId,
-					_callback, _context, _knownUids);
-			
+			if(registeredCallbacks[_uid].length > 0)
+			{
+				var _execId = registeredCallbacks[_uid][0].execId;
+				// This widget ID MUST be a nextmatch, because the data call is to etemplate_widget_nexmatch
+				var nextmatchId = registeredCallbacks[_uid][0].widgetId;
+				var uid = _uid.split("::");
+				var context = {
+					"prefix":uid[0],
+				};
+				uid = uid[uid.length - 1];
+
+				this.dataFetch(_execId, {'refresh':uid}, {}, nextmatchId,false, context, [uid]);
+				return true;
+			}
+			return false;
 		}
 
 	};
