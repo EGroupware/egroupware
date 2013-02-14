@@ -364,6 +364,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 					req.onLoadFinish.call(req.sender);
 				}
 			});
+			return true;
 		}
 		throw 'Invalid parameters';
 	}, null, 'js');
@@ -383,6 +384,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 			// Close the document
 			_wnd.document.close();
+			return true;
 		}
 		throw 'Invalid parameters';
 	}, null, 'html');
