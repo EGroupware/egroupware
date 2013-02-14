@@ -5053,7 +5053,8 @@ class felamimail_bo
 					//error_log(__METHOD__.__LINE__.' '.$url.' -> '.$mimeType. ' TmpFile:'.$attachment_file);
 					if ( $_mailObject->AddEmbeddedImage($attachment_file, md5($filename), $filename, 'base64',$mimeType) )
 					{
-						$_html2parse = preg_replace("/".$images[1][$i]."=\"".preg_quote($url, '/')."\"/Ui", $images[1][$i]."=\"".$cid."\"", $_html2parse);
+						//$_html2parse = preg_replace("/".$images[1][$i]."=\"".preg_quote($url, '/')."\"/Ui", $images[1][$i]."=\"".$cid."\"", $_html2parse);
+						$_html2parse = str_replace($images[1][$i]."=\"".$url."\"", $images[1][$i]."=\"".$cid."\"", $_html2parse);
 					}
 				}
 			}
