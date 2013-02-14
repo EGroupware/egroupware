@@ -218,6 +218,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		if (($row_id = $value['row_id']) && $queriedRange['refresh'])
 		{
 			$value['col_filter'][$row_id] = $queriedRange['refresh'];
+			$value['csv_export'] = 'refresh';
 		}
 		$rows = $result['data'] = $result['order'] = array();
 		$result['total'] = self::call_get_rows($value, $rows, $result['readonlys']);
@@ -227,10 +228,10 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$row_modified = $value['row_modified'];
 		$is_parent = $value['is_parent'];
 
-		$kUkey = false;
 
 		foreach($rows as $n => $row)
 		{
+			$kUkey = false;
 			if (is_int($n) && $row)
 			{
 				if (!isset($row[$row_id])) unset($row_id);	// unset default row_id of 'id', if not used
@@ -267,7 +268,9 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			{
 				foreach($knownUids as $uid)
 				{
-					$result['data'][$uid] = null;
+					// Just don't send it back for now
+					unset($result['data'][$uid]);
+					//$result['data'][$uid] = null;
 				}
 			}
 			/*else

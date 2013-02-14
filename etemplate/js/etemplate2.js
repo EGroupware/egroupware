@@ -480,7 +480,7 @@ etemplate2.prototype.getValues = function(_root)
  * @see jsapi.egw_refresh()
  * @see egw_fw.egw_refresh()
  */
-etemplate2.prototype.refresh = function(msg, id, type)
+etemplate2.prototype.refresh = function(msg, app, id, type)
 {
 	// We use et2_baseWidget in case the app uses something like HTML instead of label
 	var msg_widget = this.widgetContainer.getWidgetById("msg");
@@ -494,18 +494,35 @@ etemplate2.prototype.refresh = function(msg, id, type)
 		$j(msg_widget.getDOMNode()).parents().show();
 	}
 
-	
-	this.widgetContainer.iterateOver(function(_widget) {
-		// TODO: This is not quite right - will restrict to just this one row
-		/*
-		if(_widget.options.settings && _widget.options.settings.row_id)
-		{
-			_widget.activeFilters[_widget.options.settings.row_id] = id;
-		}
-		*/
-		// Trigger refresh
-		_widget.applyFilters();
-	}, this, et2_nextmatch);
+	// Use jsapi data module to update
+	var uid = app + "::" + id;
+	var update = false;
+	switch(type)
+	{
+		case "update":
+			if(!egw(app).dataRefreshUID(uid))
+			{
+				// Could not update just that row
+				this.widgetContainer.iterateOver(function(_widget) {
+						// Trigger refresh
+						_widget.applyFilters();
+				}, this, et2_nextmatch);
+			}
+			break;
+		case "delete":
+			// Blank the row
+			egw().dataStoreUID(uid,null);
+			// Stop caring about this ID
+			egw().dataUnregisterUID(uid);
+			break;
+		case "add":
+		default:
+			this.widgetContainer.iterateOver(function(_widget) {
+					// Trigger refresh
+					_widget.applyFilters();
+			}, this, et2_nextmatch);
+			break;
+	}
 }
 
 // Some static things to make getting into widget context a little easier //

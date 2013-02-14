@@ -460,7 +460,9 @@ var et2_dataview_controller = Class.extend({
 	},
 
 	/**
-	 * 
+	 * Called by the data source when the data changes
+	 *
+	 * @param _data Object|null New data, or null.  Null will remove the row.
 	 */
 	_dataCallback: function (_data) {
 		// Set the "hasData" flag
@@ -472,6 +474,13 @@ var et2_dataview_controller = Class.extend({
 		{
 			// Remove everything from the current row
 			this.entry.row.clear();
+
+			// If there's no data, stop
+			if(typeof _data == "undefined" || _data == null)
+			{
+				this._destroyCallback();
+				return;
+			}
 
 			// Fill the row DOM Node with data
 			this.self._rowCallback.call(
