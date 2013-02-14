@@ -27,7 +27,7 @@ function mail_startTimerFolderStatusUpdate(_refreshTimeOut) {
 	if(mail_doTimedRefresh) {
 		window.clearTimeout(mail_doTimedRefresh);
 	}
-	if(_refreshTimeOut > 6000) {
+	if(_refreshTimeOut > 59000) {//we do not set _refreshTimeOut's less than a minute
 		mail_doTimedRefresh = window.setInterval("mail_refreshFolderStatus()", _refreshTimeOut);
 	}
 }
@@ -43,6 +43,9 @@ function mail_refreshFolderStatus(_nodeID,mode) {
 	var activeFolders = getTreeNodeOpenItems(nodeToRefresh,mode2use);
 	queueRefreshFolderList(activeFolders);
 */
+	var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
+	nm.applyFilters(); // this should refresh the active folder
+
 }
 
 /**

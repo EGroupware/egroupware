@@ -18,45 +18,65 @@ tr.mail a {
 }
 
 tr.recent div,
+tr.recent span,
+tr.recent time,
 tr.recent a,
 tr.unseen div,
+tr.unseen span,
+tr.unseen time,
 tr.unseen a {
 	color: #003075;
 	font-weight: bold;
 }
 
 tr.label1 div,
+tr.label1 span,
+tr.label1 time,
 tr.label1 a {
 	color: #ff0080 !important;
 }
 tr.label2 div,
+tr.label2 span,
+tr.label2 time,
 tr.label2 a {
 	color: #ff8000 !important;
 }
 tr.label3 div,
+tr.label3 span,
+tr.label3 time,
 tr.label3 a {
 	color: #008000 !important;
 }
 tr.label4 div,
+tr.label4 span,
+tr.label4 time,
 tr.label4 a {
 	color: #0000ff !important;
 }
 tr.label5 div,
+tr.label5 span,
+tr.label5 time,
 tr.label5 a {
 	color: #8000ff !important;
 }
 
 tr.flagged div,
+tr.flagged span,
+tr.flagged time,
 tr.flagged a {
 	color: #ff0000 !important;
 }
 
 tr.prio_high div,
+tr.prio_high span,
+tr.prio_high time,
 tr.prio_high a {
 	color: #ac0000 !important;
 }
 
 tr.deleted div,
+tr.deleted span,
+tr.deleted time,
 tr.deleted a {
 	color: silver;
 	text-decoration : line-through;

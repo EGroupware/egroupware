@@ -20,7 +20,7 @@
 					<nextmatch-sortheader label="from" id="fromaddress"/>
 					<nextmatch-sortheader align="center" label="size" id="size"/>
 				</row>
-				<row>
+				<row class="$row_cont[class]">
 					<description id="${row}[uid]" readonly="true"/>
 					<description id="${row}[subject]"/>
 					<date-time align="center" id="${row}[date]" readonly="true"/>

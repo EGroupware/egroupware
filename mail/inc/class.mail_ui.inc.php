@@ -754,7 +754,7 @@ class mail_ui
 			unset($actions['mark']['children']['setLabel']);
 			unset($actions['mark']['children']['unsetLabel']);
 		}
-		return nextmatch_widget::egw_actions($actions, 'mail', '', $action_links);
+		return $actions;
 	}
 
 	/**
@@ -983,7 +983,7 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 			//if (in_array("check", $cols))
 			// don't overwrite check with "false" as this forces the grid to
 			// deselect the row - sending "0" doesn't do that
-			if (in_array("check", $cols)) $data["check"] = $previewMessage == $header['uid'] ? true : 0;// $row_selected; //TODO:checkbox true or false
+			//if (in_array("check", $cols)) $data["check"] = $previewMessage == $header['uid'] ? true : 0;// $row_selected; //TODO:checkbox true or false
 			//$data["check"] ='<input  style="width:12px; height:12px; border: none; margin: 1px;" class="{row_css_class}" type="checkbox" id="msgSelectInput" name="msg[]" value="'.$message_uid.'"
 			//	onclick="toggleFolderRadio(this, refreshTimeOut)">';
 
@@ -1208,7 +1208,7 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 
 			//$this->t->set_var('phpgw_images',EGW_IMAGES);
 			//$result["data"] = $data;
-			//$result["rowClass"] = implode(' ', $css_styles);
+			$data["class"] = implode(' ', $css_styles);
 			$rv[] = $data;
 			//error_log(__METHOD__.__LINE__.array2string($result));
 		}
