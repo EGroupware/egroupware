@@ -246,10 +246,7 @@ class timesheet_ui extends timesheet_bo
 							egw_link::link(TIMESHEET_APP,$this->data['ts_id'],$content['link_to']['to_id']);
 						}
 					}
-					$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',array(
-						'menuaction' => $referer,
-						'msg'        => $msg,
-					))."';";
+					$js = "opener.egw_refresh('$msg','timesheet','{$this->data['ts_id']}', '" . ($content['ts_id'] ? 'update' : 'add')."');";
 					if ($button == 'apply') break;
 					if ($button == 'save_new')
 					{
@@ -280,7 +277,7 @@ class timesheet_ui extends timesheet_bo
 						if ($this->delete())
 						{
 							$msg = lang('Entry deleted');
-							$js = "opener.location.href=opener.location.href+'&msg=$msg';";
+							$js = "opener.egw_refresh('$msg','timesheet','{$this->data['ts_id']}', 'delete');";
 						}
 						else
 						{
@@ -513,7 +510,7 @@ class timesheet_ui extends timesheet_bo
 			}
 		}
 		//echo "<p align=right>show_sums=".print_r($this->show_sums,true)."</p>\n";
-		if (!$id_only) $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP,$query_in);
+		if (!$id_only && !$query_in['csv_export']) $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP,$query_in);
 
 		// Refresh actions (undelete needs this)
 		$query_in['actions'] = $this->get_actions($query_in);
