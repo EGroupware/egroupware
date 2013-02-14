@@ -95,10 +95,12 @@ function et2_checkType(_val, _type, _attr, _cname)
 	function _err() {
 		var res = et2_typeDefaults[_type];
 
-		egw.debug("warn", "'" + _val + "' was not of specified _type '" + 
-			_type + (_attr != null ? "' for attribute '" + _attr + "' " : "") +
-			"and is now '" + res + "'");
-
+		if(typeof _val != "undefined" && _val)
+		{
+			egw.debug("warn", "'" + _val + "' was not of specified _type '" + 
+				_type + (_attr != null ? "' for attribute '" + _attr + "' " : "") +
+				"and is now '" + res + "'");
+		}
 		return res;
 	}
 
