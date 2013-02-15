@@ -433,7 +433,7 @@ class egw_session
 			$this->passwd      = $passwd;
 			$this->passwd_type = $passwd_type;
 		}
-		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check)");
+		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) starting ...");
 
 		self::split_login_domain($login,$this->account_lid,$this->account_domain);
 		// add domain to the login, if not already there
@@ -493,6 +493,7 @@ class egw_session
 			{
 				$this->log_access($this->reason,$login,$user_ip,0);	// log unsuccessfull login
 			}
+			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) UNSUCCESSFULL ($this->reason)");
 			return false;
 		}
 		if (!$this->account_id && $GLOBALS['egw_info']['server']['auto_create_acct'])
@@ -548,6 +549,7 @@ class egw_session
 			$this->reason = 'account is expired';
 			$this->cd_reason = 98;
 
+			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) UNSUCCESSFULL ($this->reason)");
 			return false;
 		}
 
@@ -579,6 +581,7 @@ class egw_session
 				{
 					$this->reason = $this->cd_reason = $reason;
 					$this->log_access($this->reason,$login,$user_ip,$this->account_id);		// log unsuccessfull login
+					if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."($this->login,$this->passwd,$this->passwd_type,$no_session,$auth_check) UNSUCCESSFULL ($this->reason)");
 					return false;
 				}
 			}
