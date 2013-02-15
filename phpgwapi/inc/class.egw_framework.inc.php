@@ -89,6 +89,7 @@ abstract class egw_framework
 	public static function init_static()
 	{
 		self::$js_include_mgr = new egw_include_mgr(array(
+			'/phpgwapi/js/labjs/LAB.src.js',
 			// allways load jquery (not -ui) and egw_json first
 			'/phpgwapi/js/jquery/jquery.js',
 			'/phpgwapi/js/./egw_json.js',
@@ -1302,6 +1303,14 @@ abstract class egw_framework
 		$start = '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url'];
 		$end = '">'."</script>\n";
 		return "\n".$start.implode($end.$start, $to_include).$end;
+
+		// using LABjs to load all javascript would require all other script-tags to run in wait() of queue!
+		/*return "\n".$start.'/phpgwapi/js/labjs/LAB.src.js'.$end."\n".
+			'<script type="text/javascript">
+$LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['server']['webserver_url'].'/"}).script(
+'.json_encode(array_map(function($str){return substr($str,1);}, $to_include, array(1))).').wait();
+</script>
+';*/
 	}
 
 	/**
