@@ -136,6 +136,36 @@ class mail_ui
 		if (!isset($content['nm']['cat_id'])) $content['nm']['cat_id'] = 'All';
 
 		$etpl = new etemplate('mail.index');
+
+		// Set tree actions
+		$etpl->set_cell_attribute('nm[foldertree]','actions', array(
+			
+			'drop_move_mail' => array(
+				'type' => 'drop',
+				'acceptedTypes' => 'mail',
+				'icon' => 'move',
+				'caption' => 'Move to',
+				'onExecute' => 'javaScript:mail_move'
+			),
+			'drop_copy_mail' => array(
+				'type' => 'drop',
+				'acceptedTypes' => 'mail',
+				'icon' => 'copy',
+				'caption' => 'Copy to',
+				'onExecute' => 'javaScript:mail_copy'
+			),
+			'drop_cancel' => array(
+				'caption' => 'Cancel',
+				'acceptedTypes' => 'mail',
+				'type' => 'drop',
+			),
+			// Tree doesn't support this one - yet
+			'rename' => array(
+				'caption' => 'Rename',
+				'type' => 'popup'
+			)
+		));
+
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
 
@@ -708,32 +738,11 @@ class mail_ui
 				'group' => ++$group,
 				'onExecute' => 'javaScript:mail_delete',
 			),
-/*
 			'drag_mail' => array(
 				'dragType' => 'mail',
 				'type' => 'drag',
 				'onExecute' => 'javaScript:mail_dragStart',
 			),
-			'drop_move_mail' => array(
-				'type' => 'drop',
-				'acceptedTypes' => 'mail',
-				'icon' => 'move',
-				'caption' => 'Move to',
-				'onExecute' => 'javaScript:mail_move'
-			),
-			'drop_copy_mail' => array(
-				'type' => 'drop',
-				'acceptedTypes' => 'mail',
-				'icon' => 'copy',
-				'caption' => 'Copy to',
-				'onExecute' => 'javaScript:mail_copy'
-			),
-			'drop_cancel' => array(
-				'caption' => 'Cancel',
-				'acceptedTypes' => 'mail',
-				'type' => 'drop',
-			),
-*/
 		);
 		// save as tracker, save as infolog, as this are actions that are either available for all, or not, we do that for all and not via css-class disabling
 		if (!isset($GLOBALS['egw_info']['user']['apps']['infolog']))

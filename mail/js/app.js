@@ -158,3 +158,13 @@ function mail_changeFolder(folder,_widget) {
 	}
 }
 
+// Tree widget stubs
+mail_dragStart = function(action,sender) {
+console.log(action,sender);
+}
+mail_move = function(action,sender) {
+console.log(action,sender);
+}
+mail_copy = function(action,sender) {
+console.log(action,sender);
+}
