@@ -211,6 +211,12 @@ class uiwidgets
 					$key = array_search($longName,$userDefinedFunctionFolders);
 					$image1 = $image2 = $image3 = "'MailFolder".$key.".png'";
 				}
+				elseif (in_array($longName,$suFolders))
+				{
+					$image1 = "'folderNoSelectClosed.gif'";
+					$image2 = "'folderNoSelectOpen.gif'";
+					$image3 = "'folderNoSelectClosed.gif'";
+				}
 				else
 				{
 					$image1 = "'MailFolderPlain.png'";

@@ -669,32 +669,44 @@
 				// User preferences for style
 				$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
 				$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
-				$font_span = '<span '.($font||$font_size?'style="':'').($font?'font-family:'.$font.'; ':'').';'.($font_size?'font-size:'.$font_size.'; ':'').'">';
+				$font_span = '<span '.($font||$font_size?'style="':'').($font?'font-family:'.$font.'; ':'').';'.($font_size?'font-size:'.$font_size.'; ':'').'">'.'&nbsp;'.'</span>';
 				if (empty($font) && empty($font_size)) $font_span = '';
 			}
 			//remove possible html header stuff
 			if (stripos($sessionData['body'],'<html><head></head><body>')!==false) $sessionData['body'] = str_ireplace(array('<html><head></head><body>','</body></html>'),array('',''),$sessionData['body']);
 			//error_log(__METHOD__.__LINE__.array2string($this->bocompose->preferencesArray));
+			$blockElements = array('address','blockquote','center','del','dir','div','dl','fieldset','form','h1','h2','h3','h4','h5','h6','hr','ins','isindex','menu','noframes','noscript','ol','p','pre','table','ul');
 			if (isset($this->bocompose->preferencesArray['insertSignatureAtTopOfMessage']) &&
 				$this->bocompose->preferencesArray['insertSignatureAtTopOfMessage'] &&
 				!(isset($_POST['mySigID']) && !empty($_POST['mySigID']) ) && !$suppressSigOnTop
 			)
 			{
 				$insertSigOnTop = ($insertSigOnTop?$insertSigOnTop:true);
+				$sigText = felamimail_bo::merge($signature->fm_signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+				if ($sessionData['mimeType'] == 'html')
+				{
+					$sigTextStartsWithBlockElement = ($disableRuler?false:true);
+					foreach($blockElements as $e)
+					{
+						if ($sigTextStartsWithBlockElement) break;
+						if (stripos(trim($sigText),'<'.$e)===0) $sigTextStartsWithBlockElement = true;
+					}
+				}
 				if($sessionData['mimeType'] == 'html') {
-					$before = ($disableRuler ?'&nbsp;<br>':'&nbsp;<br><hr style="border:1px dotted silver; width:90%;">');
+					$before = (!empty($font_span) && !($insertSigOnTop === 'below')?$font_span:'&nbsp;').($disableRuler?''/*($sigTextStartsWithBlockElement?'':'<p style="margin:0px;"/>')*/:'<hr style="border:1px dotted silver; width:90%;">');
 					$inbetween = '&nbsp;<br>';
-					if (!empty($font_span) && !($insertSigOnTop === 'below')) $before = $font_span.$before.'</span>';
 				} else {
 					$before = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
 					$inbetween = "\r\n";
 				}
-				$sigText = felamimail_bo::merge($signature->fm_signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
-				if ($sessionData['mimeType'] == 'html') $sigText = "<!-- HTMLSIGBEGIN -->".$sigText."<!-- HTMLSIGEND -->";
+				if ($sessionData['mimeType'] == 'html')
+				{
+					$sigText = ($sigTextStartsWithBlockElement?'':"<div>")."<!-- HTMLSIGBEGIN -->".$sigText."<!-- HTMLSIGEND -->".($sigTextStartsWithBlockElement?'':"</div>");
+				}
 
 				if ($insertSigOnTop === 'below')
 				{
-					$sessionData['body'] = $font_span.($font_span?'&#8203;</span>':'').$sessionData['body'].$before.($sessionData['mimeType'] == 'html'?$sigText:$this->bocompose->convertHTMLToText($sigText));
+					$sessionData['body'] = $font_span.$sessionData['body'].$before.($sessionData['mimeType'] == 'html'?$sigText:$this->bocompose->convertHTMLToText($sigText));
 				}
 				else
 				{
@@ -703,7 +715,7 @@
 			}
 			else
 			{
-				$sessionData['body'] = $font_span.($font_span?($insertSigOnTop?'&#8203;':($isReply||isset($replyID)||empty($sessionData['body'])?'&nbsp;':'')).'</span>':'').$sessionData['body'];
+				$sessionData['body'] = $font_span.$sessionData['body'];
 			}
 			//error_log(__METHOD__.__LINE__.$sessionData['body']);
 			// prepare body
@@ -720,7 +732,7 @@
 					$sessionData['body'] = utf8_encode($sessionData['body']);
 				}
 			}
-
+			//error_log(__METHOD__.__LINE__.$sessionData['body']);
 			if($sessionData['mimeType'] == 'html') {
 				$mode = 'simple-withimage';
 				//$mode ='advanced';// most helpful for debuging

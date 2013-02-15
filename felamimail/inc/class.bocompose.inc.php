@@ -597,7 +597,7 @@
 				$ccAddress = @htmlspecialchars(lang("cc")).": ".$ccAddress.($bodyParts['0']['mimeType'] == 'text/html'?"<br>":"\r\n");
 			}
 			if($bodyParts['0']['mimeType'] == 'text/html') {
-				$this->sessionData['body']	= /*"<br>".*/"&nbsp;"."<div>".'----------------'.lang("original message").'-----------------'."".'<br>'.
+				$this->sessionData['body']	= /*"<br>".*//*"&nbsp;".*/"<div>".'----------------'.lang("original message").'-----------------'."".'<br>'.
 					@htmlspecialchars(lang("from")).": ".$fromAddress."<br>".
 					$toAddress.$ccAddress.
 					@htmlspecialchars(lang("date").": ".$headers['DATE'],ENT_QUOTES | ENT_IGNORE,felamimail_bo::$displayCharset, false)."<br>".
