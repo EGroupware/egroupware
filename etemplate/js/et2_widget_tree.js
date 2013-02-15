@@ -16,6 +16,7 @@
 
 /*egw:uses
         et2_core_inputWidget;
+	/phpgwapi/js/egw_action/egw_dragdrop_dhtmlx_tree.js;
 	/phpgwapi/js/dhtmlxtree/js/dhtmlXCommon.js;
 //	using debugable and fixed source of dhtmltree instead: /phpgwapi/js/dhtmlxtree/js/dhtmlXTree.js;
 	/phpgwapi/js/dhtmlxtree/dhtmlxTree/sources/dhtmlxtree.js;
@@ -66,6 +67,12 @@ var et2_tree = et2_inputWidget.extend({
 		"value": {
 			"type": "any",
 			"default": {}
+		},
+		"actions": {
+			"name": "Actions array",
+			"type": "any",
+			"default": et2_no_init,
+			"descriptions": "List of egw actions that can be done on the tree.  This includes context menu, drag and drop.  TODO: Link to action documentation"
 		}
 	},
 
@@ -168,6 +175,7 @@ var et2_tree = et2_inputWidget.extend({
 	set_select_options: function(options) {
 
 		var custom_images = false;
+		this.options.select_options = options;
 
 		if(this.input == null)
 		{
@@ -255,6 +263,90 @@ var et2_tree = et2_inputWidget.extend({
 		{
 			this.input.selectItem(this.value, false);	// false = do not trigger onSelect
 			this.input.openItem(this.value);
+		}
+	},
+
+	/**
+	 * Set Actions on the tree
+	 *
+	 * Each action is defined as an object:
+	 * move: {
+	 *	type: "drop",
+	 *	acceptedTypes: "mail",
+	 *	icon:	"move",
+	 *	caption:	"Move to"
+	 *	onExecute:	javascript:mail_move"
+	 * }
+	 *
+	 * This will turn all the tree nodes into drop targets.  When "mail" drag types are dropped,
+	 * the global function mail_move(egwAction action, egwActionObject sender) will be called.  The ID of the
+	 * dragged "mail" will be in sender.id, some information about the sender will be in sender.context.
+	 *
+	 * @param Object {ID: {attributes..}+} map of egw action information
+	 */
+	set_actions: function(actions) {
+		// TODO: This goes in the parent, when we're ready to have general actions on anything //
+		// Initialize the action manager and add some actions to it
+		var gam = egw_getAppActionManager();
+		this._actionManager = gam.addAction("actionManager", this.id);
+		// ActionManager wants an array
+		var parsed_actions = [];
+		if(typeof actions == "object" && actions)
+		{
+			for(var key in actions)
+			{
+				actions[key].id = key;
+				if(typeof actions[key].icon != "undefined" && actions[key].icon)
+				{
+					actions[key].iconUrl = this.egw().image(actions[key].icon);
+				}
+				parsed_actions.push(actions[key]);
+			}
+		}
+		else
+		{
+			parsed_actions = actions;
+		}
+		this._actionManager.updateActions(parsed_actions);
+		////
+
+		// Get the top level element for the tree
+		var objectManager = egw_getAppObjectManager(true);
+		var treeObj = objectManager.getObjectById(this.id);
+		if (treeObj == null) {
+			// Add a new container to the object manager which will hold the tree
+			// objects
+			treeObj = objectManager.addObject(this.id, null, EGW_AO_FLAG_IS_CONTAINER);
+		}
+
+		// Delete all old objects
+		treeObj.clear();
+
+		// Go over the tree parts & add links
+		var action_links = [];
+		for(var i = 0; i < parsed_actions.length; i++)
+		{
+			action_links.push(parsed_actions[i].id);
+		}
+		if (typeof this.options.select_options != 'undefined')
+		{
+
+			// Iterate over the options (leaves) and add action to each one
+			var apply_actions = function(treeObj, option)
+			{
+				// Add a new action object to the object manager
+				var obj = treeObj.addObject(this.id, new dhtmlxtreeItemAOI(this.input, option.id));
+                                obj.updateActionLinks(action_links);
+
+				if(option.item && option.item.length > 0)
+				{
+					for(var i = 0; i < option.item.length; i++)
+					{
+						apply_actions.call(this, treeObj, option.item[i]);
+					}
+				}
+			};
+			apply_actions.call(this, treeObj, this.options.select_options);
 		}
 	},
 

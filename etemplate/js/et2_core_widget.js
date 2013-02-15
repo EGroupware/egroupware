@@ -580,6 +580,8 @@ var et2_widget = Class.extend({
 						else
 						{
 							this.egw().debug("warn", "Attributes cannot be objects", this, key, data[key]);
+							// Do it anyway, unless we figure out why not
+							_attrs[key] = data[key];
 						}
 					}
 				}
