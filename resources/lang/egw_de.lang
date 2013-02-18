@@ -33,6 +33,7 @@ edit this entry	resources	de	Diesen Eintrag bearbeiten
 existing links	resources	de	Bestehende Verknüpfungen
 exists	resources	de	besteht bereits
 export definitition to use for nextmatch export	resources	de	Export Profil der Listenansicht  (Disketten Symbol)
+exports a list of resources to a csv file.	resources	de	Exportiert eine Liste der Ressourcen als CSV-Datei
 general	resources	de	Generell
 general informations about resource	resources	de	Generelle Informationen über diese Ressource
 gernal resource	resources	de	Generelle Ressource
@@ -45,6 +46,7 @@ how many of this resource exists	resources	de	Stückzahl der existierenden Resso
 if you specify an export definition, it will be used when you export	resources	de	Wählen Sie eine Export Definition für den Export.
 implies booking permission	resources	de	Impliziert Buchungsberechtigung
 implies read permission	resources	de	Impliziert Leseberechtigung
+imports a list of resources from a csv file.	resources	de	Importiert eine Liste im CSV Format
 information about storage	resources	de	Informationen zur Lagerung
 informations about the location of resource	resources	de	Informationen über den Lagerort der Ressource
 insert	resources	de	einfügen
@@ -59,6 +61,7 @@ location	resources	de	Lagerort
 location of resource	resources	de	Lagerort der Ressource
 location:	resources	de	Lagerort:
 locations / rooms	resources	de	Orte / Räume
+long description	resources	de	Detaillierte Beschreibung
 manage mapping	resources	de	Feldzuordnungen verwalten
 name of resource	resources	de	Name der Ressource
 name:	resources	de	Name:
@@ -70,6 +73,7 @@ picture source	resources	de	Quelle des Bildes
 picture type is not supported, sorry!	resources	de	Entschuldigung, dieser Bild-Datei-Typ wird nicht unterstützt
 pictures or resource	resources	de	Bild der Ressource
 planer	resources	de	Planer
+prize	resources	de	Preis
 prizeing information for booking or buying	resources	de	Preisinformation für Buchung und Kauf
 quantity	resources	de	Stückzahl
 quantity of resource	resources	de	Stückzahl der Ressource
@@ -77,7 +81,10 @@ quantity:	resources	de	Stückzahl:
 read calendar permissions	resources	de	Kalender-Leseberechtigung
 read permissions	resources	de	Leseberechtigung
 related links	resources	de	Siehe auch
+resource id	resources	de	Ressourcen ID
 resources	common	de	Ressourcen
+resources csv export	resources	de	CSV Export des Ressourcen-Moduls
+resources csv import	resources	de	CSV Import des Ressourcen-Moduls
 resources list	resources	de	Ressourcen Liste
 responsible:	resources	de	Verantwortlich:
 saves entry and exits	resources	de	Speichern und Schließen
@@ -90,12 +97,13 @@ short description of resource	resources	de	Kurzbeschreibung der Ressource
 show calendar of resource	resources	de	Kalender der Ressource anzeigen
 something went wrong by deleting resource	resources	de	Beim Löschen der Ressource gab es ein Problem
 something went wrong by saving resource	resources	de	Beim Speichern der Ressource gab es ein Problem
+storage	resources	de	Informationen zur Lagerung
 storage information	resources	de	Informationen zur Lagerung
 storage information:	resources	de	Informationen zur Lagerung:
 the calendar of this resource	resources	de	Kalender der Ressource
 this module displays the resources app	resources	de	Dieses Modul zeigt die Ressourcen Anwendung an
 use general resources icon	resources	de	Generelles Bild benutzen
-use own picture	resources	de	Eingenes Bild benutzen
+use own picture	resources	de	Eigenes Bild benutzen
 use the category's icon	resources	de	Bild der Kategorie benutzen
 useable	resources	de	Nutzbar
 useable:	resources	de	Nutzbar:
@@ -105,6 +113,8 @@ web-page of resource	resources	de	Ausführliche Beschreibung der Ressource
 web-site for this resource	resources	de	Ausführliche Beschreibung der Ressource
 where to find this resource?	resources	de	Wo findet man diese Ressource?
 which category does this resource belong to?	resources	de	Zu welcher Kategorie gehört diese Ressource?
-write permissions	resources	de	Schreiberechtigung
-you are not permitted to get information about this resource!	resources	de	Sie haben keine Erlaubnis sich informationen über diese Ressource anzuschauen
+write permissions	resources	de	Schreibberechtigung
+you are not permitted to delete this resource!	resources	de	Sie haben keine Berechtigung, diese Ressource zu löschen!
+you are not permitted to edit this resource!	resources	de	Sie haben keine Berechtigung, diese Ressource zu bearbeiten!
+you are not permitted to get information about this resource!	resources	de	Sie haben keine Erlaubnis sich Informationen über diese Ressource anzuschauen
 you chose more resources than available	resources	de	Sie haben mehr Ressourcen ausgewählt als verfügbar sind

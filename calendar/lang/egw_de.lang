@@ -117,7 +117,7 @@ empty for all	calendar	de	leer für alle
 end	calendar	de	Ende
 end date/time	calendar	de	Enddatum /-zeit
 enddate	calendar	de	Enddatum
-enddate / -time of the meeting, eg. for more then one day	calendar	de	Enddatum und -zeit des Termins, zB. für mehr als einen Tag
+enddate / -time of the meeting, eg. for more then one day	calendar	de	Enddatum und -zeit des Termins, z.B. für mehr als einen Tag
 enddate of the export	calendar	de	Enddatum des Exports
 ends	calendar	de	endet
 error adding the alarm	calendar	de	Fehler beim Zufügen des Alarms
@@ -210,7 +210,7 @@ location	calendar	de	Ort
 location to autoload from	admin	de	Von wo sollen sie geladen werden
 location, start- and endtimes, ...	calendar	de	Ort, Start- und Endzeiten
 mail all participants	calendar	de	Mail an alle Teilnehmer
-make freebusy information available to not loged in persons?	calendar	de	Die Belegtzeiten für nicht angemeldete Personen verfügbar machen?
+make freebusy information available to not loged in persons?	calendar	de	Die freien/nicht verfügbaren Zeiten für nicht angemeldete Personen sichtbar machen?
 minutes	calendar	de	Minuten
 modified	calendar	de	Geändert
 mon	calendar	de	Mo
@@ -260,7 +260,7 @@ owner too	calendar	de	Auch Besitzer
 participants	calendar	de	Teilnehmer
 participants disinvited from an event	calendar	de	Ausgeladene Teilnehmer eines Termins
 participants, resources, ...	calendar	de	Teilnehmer, Ressourcen
-password for not loged in users to your freebusy information?	calendar	de	Passwort für Ihre Belegtzeiten für nicht angemeldete Personen?
+password for not loged in users to your freebusy information?	calendar	de	Ihr Passwort, um nicht angemeldeten Benutzern Zugang zu Ihrer Terminverfügbarkeit zu gewähren.
 people holiday	calendar	de	Feiertag
 permission denied	calendar	de	Zugriff verweigert
 planner by category	calendar	de	Planer nach Kategorien
@@ -283,7 +283,7 @@ repeat days	calendar	de	Wiederholungstage
 repeat the event until which date (empty means unlimited)	calendar	de	Bis zu welchen Datum soll der Termin wiederholt werden (leer bedeutet unbegrenzt)
 repeat type	calendar	de	Wiederholungstyp
 repeating event information	calendar	de	Informationen zu sich wiederholenden Ereignissen
-repeating interval, eg. 2 to repeat every second week	calendar	de	Wiederholungsintervall, zB. 2 für jeder zweite Woche
+repeating interval, eg. 2 to repeat every second week	calendar	de	Wiederholungsintervall, z.B. 2 für jeder zweite Woche
 repetition	calendar	de	Wiederholung
 repetitiondetails (or empty)	calendar	de	Details der Wiederholung (oder leer)
 requested	calendar	de	Erforderlich
@@ -310,7 +310,7 @@ select who should get the alarm	calendar	de	Auswählen wer den Alarm erhalten so
 selected range	calendar	de	Ausgewählter Zeitraum
 set a year only for one-time / non-regular holidays.	calendar	de	Nur für einmalige bzw. unregelmäßige Feiertage das Jahr angeben.
 set new events to private	calendar	de	Neue Termine als private Termine eintragen
-setting lock time calender	admin	de	Zeitintervall für Datensatzlock (default 1 sec.)
+setting lock time calender	admin	de	Zeitintervall für Datensatzlock (Voreinstellung beträgt eine Sekunde)
 should new events created as private by default ?	calendar	de	Sollen neue Termine generell als Privat angelegt werden?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	de	Sollen nicht angemeldete Personen Ihre Belegtzeiten einsehen können? Sie können ein Passwort setzen um diese Informationen zu schützen. Das Passwort sollte sich von Ihrem normalen Passwort unterscheiden. Die Belegtzeiten sind im iCal Format und enthalten ausschließlich die Zeiten, an denen Sie nicht verfügbar sind. Sie enthalten NICHT den Namen, die Beschreibung oder den Ort des Termins. Die Adresse (URL) Ihrer Belegtzeiten ist %1.
 should the planner display an empty row for users or categories without any appointment.	calendar	de	Soll der Planer eine leere Zeile für Benutzer oder Kategorien ohne einen Termin anzeigen.
@@ -342,7 +342,7 @@ status changed	calendar	de	Status geändert
 status for all future scheduled days changed	calendar	de	Status alle zukünftig geplanten Termine geändert
 status for this particular day changed	calendar	de	Status für diesen Tag geändert
 status of participants set to unknown because of missing category rights	calendar	de	Status der Teilnehmer auf unbekannt gesetzt wegen fehlender Kategorie Rechte
-submit to repository	calendar	de	Übertragen zu EGroupware.org
+submit to repository	calendar	de	Übertragen zu www.egroupware.org
 sun	calendar	de	So
 tentative	calendar	de	Vorläufige Zusage
 test import (show importable records <u>only</u> in browser)	calendar	de	Test Import (zeigt importierte Datensätze <u>nur</u> im Webbrowser an)
@@ -382,7 +382,7 @@ two weeks	calendar	de	zwei Wochen
 update timezones	calendar	de	Zeitzonen aktualisieren
 updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
-use the selected time and close the popup	calendar	de	benutzt die ausgewählte Zeit und schließt das Popup
+use the selected time and close the popup	calendar	de	benutzt die ausgewählte Zeit und schließt das Pop-up
 use this timezone to export calendar data.	calendar	de	Diese Zeitzone zum exportieren von Kalenderdaten verwenden
 user or group	calendar	de	Benutzer oder Gruppe
 users + groups: inviting both allways requires an invite grant	admin	de	Benutzer + Gruppen: Einladungen beider brauchen eine Freigabe
