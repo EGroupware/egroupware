@@ -43,8 +43,10 @@ exports entries from your timesheet into a csv file. csv means 'comma seperated 
 field must not be empty !!!	timesheet	en	Field must not be empty!
 for serial letter use this tag. put the content, you want to repeat between two tags.	timesheet	en	For serial letter use this tag. Put the content, you want to repeat between two Tags.
 full: use only projectmanager	admin	en	Full: use only Project Manager
+general fields:	timesheet	en	General fields:
 global categories	timesheet	en	Global categories
 history	timesheet	en	History
+history logging	admin	en	History logging
 id	timesheet	en	ID
 ignore	timesheet	en	Ignore
 import options	timesheet	en	Import options

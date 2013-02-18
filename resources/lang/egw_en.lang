@@ -1,5 +1,5 @@
-accessories of	resources	en	Accessories of
 accessories	resources	en	Accessories
+accessories of	resources	en	Accessories of
 accessories:	resources	en	Accessories:
 actions	resources	en	Actions
 add accessory	resources	en	Add accessory
@@ -37,6 +37,7 @@ general	resources	en	General
 general informations about resource	resources	en	General information about resource
 gernal resource	resources	en	General resource
 global categories	resources	en	Global categories
+history logging	admin	en	History logging
 hours	resources	en	Hours
 how many of the resources are useable?	resources	en	How many are usable
 how many of them are useable?	resources	en	How many are usable
@@ -65,6 +66,7 @@ manage mapping	resources	en	Manage mapping
 name of resource	resources	en	Name of resource
 name:	resources	en	Name:
 new accessory	resources	en	New accessory
+new resource	resources	en	New Resource
 no description available	resources	en	No description available.
 no resources selected	resources	en	No resources selected.
 notify your administrator to correct this situation	resources	en	Notify your administrator.
@@ -73,6 +75,7 @@ picture source	resources	en	Picture source
 picture type is not supported, sorry!	resources	en	Picture type is not supported, sorry!
 pictures or resource	resources	en	Pictures or resource
 planer	resources	en	Planner
+prevent deleting	admin	en	Prevent deleting
 prize	resources	en	Prize
 prizeing information for booking or buying	resources	en	Prizing information for booking or buying
 quantity	resources	en	Quantity
