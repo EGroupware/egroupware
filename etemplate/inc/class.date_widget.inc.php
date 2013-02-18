@@ -49,6 +49,7 @@ class date_widget
 		'date-houronly' => 'Hour',	// hour
 		'date-duration' => 'Duration', // duration
 		'date-since'    => 'Time since',	// time past since given time
+		'date-time_today' => 'Date or todays time',
 	);
 	var $dateformat;	// eg. Y-m-d, d-M-Y
 	var $timeformat;	// 12 or 24
@@ -198,6 +199,18 @@ class date_widget
 		}
 		if ($readonly)	// is readonly
 		{
+			if ($type == 'date-time_today')
+			{
+				$today = new egw_time();
+				if ($value['Y'].$value['d'].$value['m'] == $today->format('Ymd'))
+				{
+					$format = $timeformat;
+				}
+				else
+				{
+					$format = $dateformat;
+				}
+			}
 			if ($value['H'] === '') unset($value['a']);	// no am/pm if no hour set
 
 			$sep = array(
@@ -237,6 +250,8 @@ class date_widget
 			unset($cell['size']);
 			return True;
 		}
+		if ($type == 'date-time_today') $type = 'date-time';	// no special handling for input
+
 		if ($cell['needed'])
 		{
 			etemplate_old::$request->set_to_process($name,'ext-'.$type,array(
