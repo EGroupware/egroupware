@@ -271,8 +271,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		if (typeof _row_ids == 'string') _rowids = [_row_ids];
 		// ToDo: use given context, to be more smart about what to change
 		this.applyFilters();
-	}
-	
+	},
 
 	/**
 	 * Generates the column caption for the given column widget
