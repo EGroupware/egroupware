@@ -296,11 +296,13 @@ filesystem	setup	en	File system
 filesystem (default)	setup	en	File system (default)
 force selectbox	setup	en	Force select box
 give admin access to all installed apps	setup	en	Give admin access to all installed apps
+give ldap root dn and password, if you need to create an instance specific admin user, user- or group-context	setup	en	Give LDAP root DN and password, if you need to create an instance specific admin user, user- or group-context
 gives further options	setup	en	Gives further options
 go back	setup	en	Go back
 go to	setup	en	Go to
 grant access	setup	en	Grant access
 group	setup	en	Group
+group %1 uses identical id %2 as user %3!	setup	en	Group %1 uses identical ID %2 as user %3!
 group memberships will be migrated too.	setup	en	Group memberships will be migrated too.
 has a version mismatch	setup	en	Has a version mismatch
 header admin login	setup	en	Header admin login
@@ -379,6 +381,7 @@ login as user postgres, eg. by using su as root	setup	en	Login as user postgres,
 login to mysql -	setup	en	Login to mysql -
 loginname needed for domain configuration	setup	en	Login name needed for domain configuration
 logout	setup	en	Logout
+mail account of %1 migraged	setup	en	Mail account of %1 migraged
 mail domain (for virtual mail manager)	setup	en	Mail domain (for Virtual mail manager)
 mail server login type	setup	en	Mail server login type
 mail server protocol	setup	en	Mail server protocol
@@ -395,6 +398,7 @@ mcrypt mode (default cbc)	setup	en	Mcrypt mode (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	en	Mcrypt Settings (requires mcrypt PHP extension)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	en	memory_limit is set to less than %1: some applications of EGroupware need more than the recommend 8M, expect occasional failures
 migration between egroupware account repositories	setup	en	Migration between EGroupware account repositories
+migration of group will fail, as sql does not allow identical ids.	setup	en	Migration of group will fail, as SQL does NOT allow identical IDs.
 min backup count	setup	en	Number of backups to keep at least (zero: all / no limit)
 minimum account id (e.g. 500 or 100, etc.)	setup	en	Minimum account id (e.g. 500 or 100, etc.)
 minute	setup	en	Minute
@@ -501,6 +505,8 @@ restore finished	setup	en	Restore finished!
 restore started, this might take a few minutes ...	setup	en	Restore started, this might take a few minutes ...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	en	Restoring a backup will delete/replace all content in your database. Are you sure?
 return to setup	setup	en	Return to setup
+root dn	setup	en	Root DN
+root dn password	setup	en	Root DN password
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	en	Run a database schema update (if necessary): domain(all),[config user(admin)],password
 run installation tests	setup	en	Run installation tests
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	en	safe_mode is turned on, which is generaly a good thing as it makes your install more secure.
