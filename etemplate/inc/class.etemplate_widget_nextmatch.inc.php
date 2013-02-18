@@ -800,6 +800,22 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			if(is_array(self::$request->preserve[$cname])) unset(self::$request->preserve[$cname][$key]);
 		}
 	}
+
+	/**
+	 * Refresh given rows for specified change
+	 *
+	 * Change type parameters allows for quicker refresh then complete server side reload:
+	 * - edit: send just modified data from given rows
+	 * - delete: just send null for given rows to clientside (no backend call neccessary)
+	 * - add: requires full reload
+	 *
+	 * @param array|string $row_ids rows to refresh
+	 * @param string $type='edit' "edit" (default), "delete" or "add"
+	 */
+	public function refresh($row_ids, $type='edit')
+	{
+		throw new Exception('Not yet implemented');
+	}
 }
 
 // Registration needs to go here, otherwise customfields won't be loaded until some other cf shows up

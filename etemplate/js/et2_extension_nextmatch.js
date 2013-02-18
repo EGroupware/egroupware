@@ -254,6 +254,25 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		// Trigger an update
 		this.controller.update();
 	},
+	
+	/**
+	 * Refresh given rows for specified change
+	 * 
+	 * Change type parameters allows for quicker refresh then complete server side reload:
+	 * - edit: request just modified data from given rows
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: requires full reload
+	 * 
+	 * @param array|string _row_ids rows to refresh
+	 * @param string _type "edit" (default), "delete" or "add"
+	 */
+	refresh: function(_row_ids, _type) {
+		if (typeof _type == 'undefined') _type = 'edit';
+		if (typeof _row_ids == 'string') _rowids = [_row_ids];
+		// ToDo: use given context, to be more smart about what to change
+		this.applyFilters();
+	}
+	
 
 	/**
 	 * Generates the column caption for the given column widget
