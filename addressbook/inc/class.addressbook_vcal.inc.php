@@ -34,7 +34,9 @@ class addressbook_vcal extends addressbook_bo
 	 */
 	var $productName;
 	/**
-	 * supported fields for vCard file and groupdav import/export
+	 * database fields for vCard import (and file/groupdav export)
+	 * the import method handles the 'smart' field mapping, so
+	 * don't change the keys.
 	 *
 	 * @var array
 	 */
@@ -45,22 +47,22 @@ class addressbook_vcal extends addressbook_bo
 									'adr_two_postalcode','adr_two_countryname'),
 			'BDAY'				=> array('bday'),
 			'CLASS'				=> array('private'),
-			'CATEGORIES'		=> array('cat_id'),
-			'EMAIL;WORK'		=> array('email'),
-			'EMAIL;HOME'		=> array('email_home'),
-			'N'					=> array('n_family','n_given','n_middle',
+			'CATEGORIES'			=> array('cat_id'),
+			'EMAIL;WORK'			=> array('email'),
+			'EMAIL;HOME'			=> array('email_home'),
+			'N'				=> array('n_family','n_given','n_middle',
 									'n_prefix','n_suffix'),
 			'FN'				=> array('n_fn'),
 			'NOTE'				=> array('note'),
 			'ORG'				=> array('org_name','org_unit','room'),
-			'TEL;CELL;WORK'		=> array('tel_cell'),
-			'TEL;CELL;HOME'		=> array('tel_cell_private'),
+			'TEL;CELL;WORK'			=> array('tel_cell'),
+			'TEL;CELL;HOME'			=> array('tel_cell_private'),
 			'TEL;CAR'			=> array('tel_car'),
 			'TEL;OTHER'			=> array('tel_other'),
-			'TEL;VOICE;WORK'	=> array('tel_work'),
-			'TEL;FAX;WORK'		=> array('tel_fax'),
-			'TEL;HOME;VOICE'	=> array('tel_home'),
-			'TEL;FAX;HOME'		=> array('tel_fax_home'),
+			'TEL;VOICE;WORK'		=> array('tel_work'),
+			'TEL;FAX;WORK'			=> array('tel_fax'),
+			'TEL;HOME;VOICE'		=> array('tel_home'),
+			'TEL;FAX;HOME'			=> array('tel_fax_home'),
 			'TEL;PAGER'			=> array('tel_pager'),
 			'TITLE'				=> array('title'),
 			'URL;WORK'			=> array('url'),
@@ -69,11 +71,11 @@ class addressbook_vcal extends addressbook_bo
 			'NICKNAME'			=> array('label'),
 			'FBURL'				=> array('freebusy_uri'),
 			'PHOTO'				=> array('jpegphoto'),
-			'X-ASSISTANT'		=> array('assistent'),
-			'X-ASSISTANT-TEL'	=> array('tel_assistent'),
+			'X-ASSISTANT'			=> array('assistent'),
+			'X-ASSISTANT-TEL'		=> array('tel_assistent'),
 			'UID'				=> array('uid'),
 			'REV'				=> array('modified'),
-			//set for Apple: 'X-ABSHOWAS' => array('fileas_type'),	// Horde vCard class uses uppercase prop-names!
+			//set for Apple: 'X-ABSHOWAS'	=> array('fileas_type'),	// Horde vCard class uses uppercase prop-names!
 		);
 		
 	var $supportedFields;
@@ -687,7 +689,7 @@ class addressbook_vcal extends addressbook_bo
 					case 'IPHONE':
 						if ($rowName == 'TEL' || $rowName == 'TEL;CELL')
 						{
-							$rowName = 'TEL;IPHONE';
+							$rowName = 'TEL;CELL;HOME';
 						}
 						break;
 					default:
@@ -836,17 +838,17 @@ class addressbook_vcal extends addressbook_bo
 					}
 					break;
 				case 'TEL;CELL;X-egw-Ref1':
-					$supported = isset($this->supportedFields['TEL;CELL']) ? 'TEL;CELL' : 'TEL;CELL;WORK';
-					if (!in_array($supported, $rowNames) && !isset($finalRowNames[$supported]))
+					if (!in_array('TEL;CELL;WORK', $rowNames)
+							&& !isset($finalRowNames['TEL;CELL;WORK']))
 					{
-						$finalRowNames[$supported] = $vcardKey;
+						$finalRowNames['TEL;CELL;WORK'] = $vcardKey;
 						break;
 					}
 				case 'TEL;CELL;X-egw-Ref2':
-					$supported = isset($this->supportedFields['TEL;IPHONE']) ? 'TEL;IPHONE' : 'TEL;CELL;HOME';
-					if (!in_array($supported, $rowNames) && !isset($finalRowNames[$supported]))
+					if (!in_array('TEL;CELL;HOME', $rowNames)
+							&& !isset($finalRowNames['TEL;CELL;HOME']))
 					{
-						$finalRowNames[$supported] = $vcardKey;
+						$finalRowNames['TEL;CELL;HOME'] = $vcardKey;
 						break;
 					}
 				case 'TEL;CELL;X-egw-Ref3':
