@@ -72,17 +72,6 @@ $GLOBALS['egw_info']['server']['mcrypt_enabled'] = {ENABLE_MCRYPT};
 */
 $GLOBALS['egw_info']['server']['mcrypt_iv'] = '{MCRYPT_IV}';
 
-if(!isset($GLOBALS['egw_info']['flags']['nocachecontrol']) || !$GLOBALS['egw_info']['flags']['nocachecontrol'])
-{
-	header('Cache-Control: no-cache, must-revalidate');  // HTTP/1.1
-	header('Pragma: no-cache');                          // HTTP/1.0
-}
-else
-{
-	// allow caching by browser
-	session_cache_limiter('private_no_expire');
-}
-
 $GLOBALS['egw_info']['flags']['page_start_time'] = microtime(true);
 
 define('DEBUG_API',  False);
