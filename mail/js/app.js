@@ -9,7 +9,7 @@
  */
 
 var mail_doTimedRefresh;
-var mail_refreshTimeOut = 1000*60*3;
+var mail_refreshTimeOut = 1000*10; // initial call
 mail_startTimerFolderStatusUpdate(mail_refreshTimeOut);
 
 /**
@@ -27,25 +27,74 @@ function mail_startTimerFolderStatusUpdate(_refreshTimeOut) {
 	if(mail_doTimedRefresh) {
 		window.clearTimeout(mail_doTimedRefresh);
 	}
-	if(_refreshTimeOut > 59000) {//we do not set _refreshTimeOut's less than a minute
+	if(_refreshTimeOut > 9999) {//we do not set _refreshTimeOut's less than 10 seconds (our initial call)
 		mail_doTimedRefresh = window.setInterval("mail_refreshFolderStatus()", _refreshTimeOut);
 	}
 }
 
+/**
+ * mail_refreshFolderStatus, function to call to read the counters of a folder and apply them
+ * 
+ * @param _nodeID
+ * @param mode
+ */
 function mail_refreshFolderStatus(_nodeID,mode) {
-/*
 	var nodeToRefresh = 0;
 	var mode2use = "none";
 	if (_nodeID) nodeToRefresh = _nodeID;
 	if (mode) {
 		if (mode == "forced") {mode2use = mode;}
 	}
-	var activeFolders = getTreeNodeOpenItems(nodeToRefresh,mode2use);
-	queueRefreshFolderList(activeFolders);
-*/
+	var tree_wdg = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+
+	var activeFolders = tree_wdg.getTreeNodeOpenItems(nodeToRefresh,mode2use);
+	//alert(activeFolders.join('#,#'));
+	mail_queueRefreshFolderList(activeFolders);
+
+	mail_refreshMessageGrid();
+}
+
+var mail_queuedFolders = [];
+var mail_queuedFoldersIndex = 0;
+
+/**
+ * Queues a refreshFolderList request for 1ms. Actually this will just execute the
+ * code after the calling script has finished.
+ */
+function mail_queueRefreshFolderList(_folders)
+{
+	mail_queuedFolders.push(_folders);
+	mail_queuedFoldersIndex++;
+
+	// Copy idx onto the anonymous function scope
+	var idx = mail_queuedFoldersIndex;
+	window.setTimeout(function() {
+		if (idx == mail_queuedFoldersIndex)
+		{
+			//var folders = mail_queuedFolders.join(",");
+			mail_queuedFoldersIndex = 0;
+			mail_queuedFolders = [];
+
+			var request = new egw_json_request('mail.mail_ui.ajax_setFolderStatus',[_folders]);
+			request.sendRequest();
+		}
+	}, 10);
+}
+
+/**
+ * mail_setFolderStatus, function to set the status for the visible folders
+ */
+function mail_setFolderStatus(_status) {
+	var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+	for (var i in _status) ftree.setLabel(i,_status[i]);//alert(i +'->'+_status[i]);
+}
+
+/**
+ * mail_refreshMessageGrid, function to call to reread ofthe current folder
+ */
+function mail_refreshMessageGrid() {
 	var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
 	nm.applyFilters(); // this should refresh the active folder
-
 }
 
 /**
@@ -59,7 +108,7 @@ function mail_refreshFolderStatus(_nodeID,mode) {
  * @param string _type=null either 'edit', 'delete', 'add' or null
  */
 var doStatus;
-function app_refresh(_msg, _app, _id, _type)
+window.register_app_refresh("mail", function(_msg, _app, _id, _type)
 {
 	var bufferExists = false;
 	window.clearInterval(doStatus); // whatever message was up to be activated
@@ -77,8 +126,9 @@ function app_refresh(_msg, _app, _id, _type)
 
 		// TODO: more actions
 	}
-	if (bufferExists) doStatus = window.setInterval("egw_appWindow('mail').setMsg(myMessageBuffer);", 10000);
+	if (bufferExists) doStatus = window.setInterval("egw_appWindow('mail').mail_setMsg(myMessageBuffer);", 10000);
 }
+);
 
 /**
  * mail_getMsg - gets the current Message
@@ -131,9 +181,9 @@ function mail_compressFolder() {
  */
 function mail_changeFolder(folder,_widget) {
 	//alert('change Folder called:'+folder);
-	app_refresh(egw.lang('change folder'), 'mail');
+	app_refresh(egw.lang('change folder')+'...', 'mail');
 	var img = _widget.getSelectedNode().images[0]; // fetch first image
-	if (!(img.search(eval('/'+'NoSelect'+'/'))<0))
+	if (!(img.search(eval('/'+'NoSelect'+'/'))<0) || !(img.search(eval('/'+'thunderbird'+'/'))<0))
 	{
 		if (_widget.event_args.length==2)
 		{
@@ -153,9 +203,68 @@ function mail_changeFolder(folder,_widget) {
 	{
 		window.clearInterval(doStatus);
 		displayname = _widget.getSelectedLabel();
+		inBraket = displayname.search(/\(/);
+		if (inBraket!=-1)
+		{
+			outBraket = displayname.search(/\)/);
+			if (outBraket!=-1) displayname = displayname.replace(/\((.*?)\)/,"");
+		}
 		myMsg = (displayname?displayname:folder)+' '+egw.lang('selected');
 		app_refresh(myMsg, 'mail');
 	}
+	mail_refreshFolderStatus(folder,'forced');
+}
+
+/**
+ * Flag mail as 'read', 'unread', 'flagged' or 'unflagged'
+ * 
+ * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
+ * @param _elems
+ */
+function mail_flag(_action, _elems)
+{
+	//alert(_action.id+' - '+_elems[0].id);
+	var msg = mail_getFormData(_elems);
+	//
+	mail_flagMessages(_action.id,msg);
+}
+
+/**
+ * Flag mail as 'read', 'unread', 'flagged' or 'unflagged'
+ * 
+ * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
+ * @param _elems
+ */
+function mail_flagMessages(_flag, _elems)
+{
+	app_refresh(egw.lang('flag messages'), 'mail');
+	var request = new egw_json_request('mail.mail_ui.ajax_flagMessages',[_flag, _elems]);
+	request.sendRequest(false);
+	mail_refreshMessageGrid()
+}
+
+/**
+ * mail_getFormData
+ * 
+ * @param _actionObjects, the senders
+ * @return structured array of message ids: array(msg=>message-ids)
+ */
+function mail_getFormData(_actionObjects) {
+	var messages = {};
+	if (_actionObjects.length>0)
+	{
+		messages['msg'] = [];
+	}
+
+	for (var i = 0; i < _actionObjects.length; i++) 
+	{
+		if (_actionObjects[i].id.length>0)
+		{
+			messages['msg'][i] = _actionObjects[i].id;
+		}
+	}
+
+	return messages;
 }
 
 // Tree widget stubs
@@ -168,3 +277,4 @@ console.log(action,sender);
 mail_copy = function(action,sender) {
 console.log(action,sender);
 }
+

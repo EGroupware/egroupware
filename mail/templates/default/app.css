@@ -29,34 +29,34 @@ tr.unseen a {
 	font-weight: bold;
 }
 
-tr.label1 div,
-tr.label1 span,
-tr.label1 time,
-tr.label1 a {
+tr.labelone div,
+tr.labelone span,
+tr.labelone time,
+tr.labelone a {
 	color: #ff0080 !important;
 }
-tr.label2 div,
-tr.label2 span,
-tr.label2 time,
-tr.label2 a {
+tr.labeltwo div,
+tr.labeltwo span,
+tr.labeltwo time,
+tr.labeltwo a {
 	color: #ff8000 !important;
 }
-tr.label3 div,
-tr.label3 span,
-tr.label3 time,
-tr.label3 a {
+tr.labelthree div,
+tr.labelthree span,
+tr.labelthree time,
+tr.labelthree a {
 	color: #008000 !important;
 }
-tr.label4 div,
-tr.label4 span,
-tr.label4 time,
-tr.label4 a {
+tr.labelfour div,
+tr.labelfour span,
+tr.labelfour time,
+tr.labelfour a {
 	color: #0000ff !important;
 }
-tr.label5 div,
-tr.label5 span,
-tr.label5 time,
-tr.label5 a {
+tr.labelfive div,
+tr.labelfive span,
+tr.labelfive time,
+tr.labelfive a {
 	color: #8000ff !important;
 }
 
@@ -210,7 +210,12 @@ pre {
  white-space: -o-pre-wrap; /* Opera 7 */
  width: 99%; 
 }
-
+/*
+.dhtmlxTree {
+	max-height: 300px;
+	overflow: scroll;
+}
+*/
 .dtree {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;

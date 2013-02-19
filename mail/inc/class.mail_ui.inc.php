@@ -54,7 +54,7 @@ class mail_ui
 		}
 
 		$this->mail_bo = mail_bo::getInstance(false,$icServerID);
-
+		error_log(__METHOD__.__LINE__.' Fetched IC Server:'.$icServerID.function_backtrace());
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
 		if (!($this->mail_bo->icServer->_connected == 1)) $this->mail_bo->openConnection($icServerID);
@@ -88,7 +88,7 @@ class mail_ui
 					'start'          =>	0,		// IO position in list
 					'order'          =>	'date',	// IO name of the column to sort after (optional for the sortheaders)
 					'sort'           =>	'ASC',	// IO direction of the sort: 'ASC' or 'DESC'
-					'default_cols'   => 'subject,fromaddress,date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+					'default_cols'   => 'status,attachments,subject,fromaddress,date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 					'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 					'actions'        => self::get_actions(),
@@ -123,14 +123,18 @@ class mail_ui
 
 		$content['nm']['foldertree'] = '/INBOX/sub';
 		*/
-		if ($this->mail_bo->folderExists($this->mail_bo->sessionData['maibox']))
+		$del = $this->mail_bo->getHierarchyDelimiter(false);
+
+		$sel_options['nm']['foldertree'] = $this->getFolderTree(false);
+
+		$sessionFolder = $this->mail_bo->sessionData['maibox'];
+		if ($this->mail_bo->folderExists($sessionFolder))
 		{
-			$content['nm']['selectedFolder'] = $this->mail_bo->sessionData['maibox'];
+			$content['nm']['selectedFolder'] = $this->mail_bo->profileID.$del.$this->mail_bo->sessionData['maibox'];
 		}
 
-		$sel_options['nm']['foldertree'] = $this->getFolderTree();
-		if (!isset($content['nm']['foldertree'])) $content['nm']['foldertree'] = 'INBOX';
-		if (!isset($content['nm']['selectedFolder'])) $content['nm']['selectedFolder'] = 'INBOX';
+		if (!isset($content['nm']['foldertree'])) $content['nm']['foldertree'] = $this->mail_bo->profileID.$del.'INBOX';
+		if (!isset($content['nm']['selectedFolder'])) $content['nm']['selectedFolder'] = $this->mail_bo->profileID.$del.'INBOX';
 		$content['nm']['foldertree'] = $content['nm']['selectedFolder'];
 		$sel_options['cat_id'] = array(1=>'none');
 		if (!isset($content['nm']['cat_id'])) $content['nm']['cat_id'] = 'All';
@@ -281,7 +285,7 @@ class mail_ui
 
 		// retrieve data for/from user defined accounts
 		$selectedID = 0;
-		if($this->preferences->userDefinedAccounts) $allAccountData = $this->bopreferences->getAllAccountData($this->preferences);
+		if($preferences->userDefinedAccounts) $allAccountData = $this->mail_bo->bopreferences->getAllAccountData($preferences);
 		if ($allAccountData) {
 			foreach ($allAccountData as $tmpkey => $accountData)
 			{
@@ -291,7 +295,7 @@ class mail_ui
 				//_debug_array($icServer);
 				//error_log(__METHOD__.__LINE__.' Userdefined Profiles ImapServerId:'.$icServer->ImapServerId);
 				if (empty($icServer->host)) continue;
-				$identities[$identity->id]=$identity->realName.' '.$identity->organization.' &lt;'.$identity->emailAddress.'&gt';
+				$identities[$identity->id]=$identity->realName.' '.$identity->organization.' &lt;'.$identity->emailAddress.'&gt;';
 				if (!empty($identity->default)) $identities[$identity->id] = $identities[$identity->id].'<b>('.lang('selected').')</b>';
 			}
 		}
@@ -301,7 +305,7 @@ class mail_ui
 			_debug_array($identities);
 		}
 
-		if (empty($imapServer->host) && count($identities)==0 && $this->preferences->userDefinedAccounts)
+		if (empty($imapServer->host) && count($identities)==0 && $preferences->userDefinedAccounts)
 		{
 			// redirect to new personal account
 			egw::redirect_link('/index.php',array('menuaction'=>'mail.uipreferences.editAccountData',
@@ -336,8 +340,35 @@ class mail_ui
 		if (isset($sentFolder) && $sentFolder != 'none') $userDefinedFunctionFolders['Sent'] = $sentFolder;
 		if (isset($draftFolder) && $draftFolder != 'none') $userDefinedFunctionFolders['Drafts'] = $draftFolder;
 		if (isset($templateFolder) && $templateFolder != 'none') $userDefinedFunctionFolders['Templates'] = $templateFolder;
-		//_debug_array($folderObjects);
 		$out = array('id' => 0);
+		$del = $this->mail_bo->getHierarchyDelimiter(false);
+		if($this->mail_bo->mailPreferences->userDefinedAccounts) $allAccountData = $this->mail_bo->bopreferences->getAllAccountData($this->mail_bo->mailPreferences);
+		if ($allAccountData) {
+			foreach ($allAccountData as $tmpkey => $accountData)
+			{
+				$identity =& $accountData['identity'];
+				$icServer =& $accountData['icServer'];
+				//_debug_array($identity);
+				//_debug_array($icServer);
+//if ($icServer->ImapServerId<>6) continue;
+				//error_log(__METHOD__.__LINE__.' Userdefined Profiles ImapServerId:'.$icServer->ImapServerId);
+				if (empty($icServer->host)) continue;
+				$identities[$icServer->ImapServerId]=$identity->realName.' '.$identity->organization.' &lt;'.$identity->emailAddress.'&gt;';
+				$oA = array('id'=>$icServer->ImapServerId,
+					'text'=>$identities[$icServer->ImapServerId], //$this->mail_bo->profileID,
+					'tooltip'=>'('.$icServer->ImapServerId.') '.htmlspecialchars_decode($identities[$icServer->ImapServerId]),
+					'im0' => 'thunderbird.png',
+					'im1' => 'thunderbird.png',
+					'im2' => 'thunderbird.png',
+					'path'=> array($icServer->ImapServerId),
+					'child'=> 1,
+					'parent' => ''
+				);
+				$this->setOutStructure($oA,$out,$del);
+			}
+		}
+
+		//_debug_array($folderObjects);
 		$c = 0;
 		foreach($folderObjects as $key => $obj)
 		{
@@ -350,10 +381,11 @@ class mail_ui
 
 			// the rest of the array is the name of the parent
 			$parentName = implode((array)$folderParts,$obj->delimiter);
-
-			$path = $key; //$obj->folderName; //$obj->delimiter
+			$parentName = $this->mail_bo->profileID.$obj->delimiter.$parentName;
 			$oA =array('text'=> $obj->shortDisplayName, 'tooltip'=> $obj->displayName);
+			array_unshift($fFP,$this->mail_bo->profileID);
 			$oA['path'] = $fFP;
+			$path = $key; //$obj->folderName; //$obj->delimiter
 			if ($fS['unseen']) $oA['text'] = '<b>'.$oA['text'].' ('.$fS['unseen'].')</b>';
 			if ($path=='INBOX')
 			{
@@ -377,6 +409,7 @@ class mail_ui
 				$oA['im1'] = "folderOpen.gif";
 				$oA['im2'] = "MailFolderClosed.png"; // has Children
 			}
+			$path = $this->mail_bo->profileID.$obj->delimiter.$key; //$obj->folderName; //$obj->delimiter
 			$oA['id'] = $path; // ID holds the PATH
 			if (stripos(array2string($fS['attributes']),'\noselect')!== false)
 			{
@@ -389,10 +422,11 @@ class mail_ui
 				$oA['child']=1; // translates to: hasChildren -> dynamicLoading
 			}
 			$oA['parent'] = $parentName;
-
+//_debug_array($oA);
 			$this->setOutStructure($oA,$out,$obj->delimiter);
 			$c++;
 		}
+
 		return ($c?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
 	}
 
@@ -417,7 +451,10 @@ class mail_ui
 		{
 			$parent = implode($del, $parents);
 			if ($parent) $parent .= $del;
-			if (!is_array($insert) || !isset($insert['item'])) throw new egw_exception_assertion_failed(__METHOD__.':'.__LINE__." id=$data[id]: Parent '$parent' '$component' not found! out=".array2string($out));
+			if (!is_array($insert) || !isset($insert['item']))
+			{
+				throw new egw_exception_assertion_failed(__METHOD__.':'.__LINE__." id=$data[id]: Parent '$parent' '$component' not found! out=".array2string($out));
+			}
 			foreach($insert['item'] as &$item)
 			{
 				if ($item['id'] == $parent.$component)
@@ -777,7 +814,7 @@ class mail_ui
 	{
 unset($query['actions']);
 //error_log(__METHOD__.__LINE__.array2string($query));
-error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
+//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
 $starttime = microtime(true);
 		//error_log(__METHOD__.__LINE__.array2string($query['search']));
 		//$query['search'] is the phrase in the searchbox
@@ -793,6 +830,16 @@ $starttime = microtime(true);
 
 		$sRToFetch = null;
 		$_folderName=$query['selectedFolder'];
+		$del = $this->mail_bo->getHierarchyDelimiter(false);
+		$splitFolder = explode($del,$_folderName);
+		if (is_numeric($splitFolder[0]))
+		{
+			array_shift($splitFolder);
+			$_folderName = implode($del,$splitFolder);
+		}
+		//save selected Folder to sessionData (mailbox)->currentFolder
+		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['maibox']=$_folderName;
+		$this->mail_bo->saveSessionData();
 		$rowsFetched['messages'] = null;
 		$offset = $query['start']+1; // we always start with 1
 		$maxMessages = $query['num_rows'];
@@ -869,7 +916,7 @@ $starttime = microtime(true);
 		if (empty($rowsFetched['messages'])) $rowsFetched['messages'] = $rowsFetched['rowsFetched'];
 
 		//error_log(__METHOD__.__LINE__.' Rows fetched:'.$rowsFetched.' Data:'.array2string($sortResult));
-		$cols = array('row_id','uid','check','status','attachments','subject','toaddress','fromaddress','date','size','modified');
+		$cols = array('row_id','uid','status','attachments','subject','toaddress','fromaddress','date','size','modified');
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
 		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType,$previewMessage);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
@@ -877,6 +924,31 @@ $endtime = microtime(true) - $starttime;
 error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].' Took:'.$endtime);
 
 		return $rowsFetched['messages'];
+	}
+
+	/**
+	 * function createRowID - create a unique rowID for the grid
+	 *
+	 * @param string $_folderName, used to ensure the uniqueness of the uid over all folders
+	 * @param string $message_uid, the message_Uid to be used for creating the rowID
+	 * @return string - a colon separated string in the form accountID:profileID:folder:message_uid
+	 */
+	function createRowID($_folderName, $message_uid)
+	{
+		return trim($GLOBALS['egw_info']['user']['account_id']).'::'.$this->mail_bo->profileID.'::'.base64_encode($_folderName).'::'.$message_uid;
+	}
+
+	/**
+	 * function splitRowID - split the rowID into its parts
+	 *
+	 * @param string $_rowID, string - a colon separated string in the form accountID:profileID:folder:message_uid
+	 * @return array populated named result array (accountID,profileID,folder,msgUID)
+	 */
+	function splitRowID($_rowID)
+	{
+		$res = explode('::',$_rowID);
+		// as a rowID is perceeded by app::, we ignore the first part
+		return array('accountID'=>$res[1], 'profileID'=>$res[2], 'folder'=>base64_decode($res[3]), 'msgUID'=>$res[4]);
 	}
 
 	/**
@@ -910,7 +982,7 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 			);
 			$message_uid = $header['uid'];
 			$data['uid'] = $message_uid;
-			$data['row_id']=trim($GLOBALS['egw_info']['user']['account_id']).':'.$this->mail_bo->profileID.':'.md5($_folderName).':'.$message_uid;
+			$data['row_id']=$this->createRowID($_folderName,$message_uid);
 
 			//_debug_array($header);
 			#if($i<10) {$i++;continue;}
@@ -973,19 +1045,19 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 				$css_styles[] = 'forwarded';
 			}
 			if ($header['label1']) {
-				$css_styles[] = 'label1';
+				$css_styles[] = 'labelone';
 			}
 			if ($header['label2']) {
-				$css_styles[] = 'label2';
+				$css_styles[] = 'labeltwo';
 			}
 			if ($header['label3']) {
-				$css_styles[] = 'label3';
+				$css_styles[] = 'labelthree';
 			}
 			if ($header['label4']) {
-				$css_styles[] = 'label4';
+				$css_styles[] = 'labelfour';
 			}
 			if ($header['label5']) {
-				$css_styles[] = 'label5';
+				$css_styles[] = 'labelfive';
 			}
 
 			//error_log(__METHOD__.array2string($css_styles));
@@ -1019,41 +1091,7 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 					$subject = @htmlspecialchars('('. lang('no subject') .')', ENT_QUOTES, $this->charset);
 				}
 
-				if($_folderType == 2 || $_folderType == 3) {
-					$linkData = array (
-						'menuaction'    => 'mail.uicompose.composeFromDraft',
-						'icServer'	=> 0,
-						'folder' 	=> base64_encode($_folderName),
-						'uid'		=> $header['uid'],
-						'id'		=> $header['id'],
-					);
-					$url_read_message = $GLOBALS['egw']->link('/index.php',$linkData);
-
-					$windowName = 'composeFromDraft_'.$header['uid'];
-					$read_message_windowName = $windowName;
-					$preview_message_windowName = $windowName;
-				} else {
-				#	_debug_array($header);
-					$linkData = array (
-						'menuaction'    => 'mail.uidisplay.display',
-						'showHeader'	=> 'false',
-						'mailbox'    => base64_encode($_folderName),
-						'uid'		=> $header['uid'],
-						'id'		=> $header['id'],
-					);
-					$url_read_message = $GLOBALS['egw']->link('/index.php',$linkData);
-
-					$windowName = ($_readInNewWindow == 1 ? 'displayMessage' : 'displayMessage_'.$header['uid']);
-
-					if ($this->use_preview) $windowName = 'MessagePreview_'.$header['uid'].'_'.$_folderType;
-
-					$preview_message_windowName = $windowName;
-				}
-
-				$data["subject"] = /*'<a class="'.$css_style.'" name="subject_url" href="#"
-					onclick="fm_handleMessageClick(false, \''.$url_read_message.'\', \''.$preview_message_windowName.'\', this); return false;"
-					ondblclick="fm_handleMessageClick(true, \''.$url_read_message.'\', \''.$read_message_windowName.'\', this); return false;"
-					title="'.$fullSubject.'">'.$subject.'</a>';//*/ $subject; // the mailsubject
+				$data["subject"] = $subject; // the mailsubject
 			}
 
 			//_debug_array($header);
@@ -1089,7 +1127,7 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 							$this->mail_bo->openConnection($this->profileID); // connect to the current server
 							$this->mail_bo->reopen($_folderName);
 						}
-						//$attachments = $this->mail_bo->getMessageAttachments($header['uid'],$_partID='', $_structure='', $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=false);
+						$attachments = $this->mail_bo->getMessageAttachments($header['uid'],$_partID='', $_structure='', $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=false);
 						if (count($attachments)<1) $image = '&nbsp;';
 					}
 					if (count($attachments)>0) $image = "<a name=\"subject_url\" href=\"#\"
@@ -1225,6 +1263,47 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 	}
 
 	/**
+	 * getFolderStatus - its called via json, so the function must start with ajax (or the class-name must contain ajax)
+	 * gets the counters and sets the text of a treenode if needed (unread Messages found)
+	 * @return nothing
+	 */
+	function ajax_setFolderStatus($_folder)
+	{
+		//error_log(__METHOD__.__LINE__.array2string($_folder));
+		if ($_folder)
+		{
+			$del = $this->mail_bo->getHierarchyDelimiter(false);
+			$oA = array();
+			foreach ($_folder as $_folderName)
+			{
+				$splitFolder = explode($del,$_folderName);
+				if (is_numeric($splitFolder[0]))
+				{
+					$fPID = array_shift($splitFolder);
+					if ($fPID != $this->mail_bo->profileID) continue; // only current connection
+					$folderName = implode($del,$splitFolder);
+					if ($folderName)
+					{
+						$fS = $this->mail_bo->getFolderStatus($folderName,false);
+						//error_log(__METHOD__.__LINE__.array2string($fS));
+						if ($fS['unseen'])
+						{
+							$oA[$_folderName] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';
+
+						}
+					}
+				}
+			}
+			//error_log(__METHOD__.__LINE__.array2string($oA));
+			if ($oA)
+			{
+				$response = egw_json_response::get();
+				$response->call('mail_setFolderStatus',$oA,'mail');
+			}
+		}
+	}
+
+	/**
 	 * empty trash folder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 *
 	 * @return nothing
@@ -1256,6 +1335,53 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 			$response = egw_json_response::get();
 			$response->call('egw_refresh',lang('compress folder').': '.$folder,'mail');
 		}
+	}
+
+	/**
+	 * flag messages as read, unread, flagged, ...
+	 *
+	 * @param string _flag name of the flag
+	 * @param array _messageList list of UID's
+	 *
+	 * @return xajax response
+	 */
+	function ajax_flagMessages($_flag, $_messageList)
+	{
+		if($this->_debug) error_log(__METHOD__."->".$_flag.':'.print_r($_messageList,true));
+		if ($_messageList=='all' || !empty($_messageList['msg']))
+		{
+			if ($_messageList=='all')
+			{
+				// we have no folder information
+				$folder=null;
+			}
+			else
+			{
+				$uidA = $this->splitRowID($_messageList['msg'][0]);
+				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
+			}
+			foreach($_messageList['msg'] as $rowID)
+			{
+				$hA = $this->splitRowID($rowID);
+				$messageList[] = $hA['msgUID'];
+			}
+			$this->mail_bo->flagMessages($_flag, ($_messageList=='all' ? 'all':$messageList),$folder);
+		}
+		else
+		{
+			if($this->_debug) error_log(__METHOD__."-> No messages selected.");
+		}
+
+		// unset preview, as refresh would mark message again read
+/*
+		if ($_flag == 'unread' && in_array($this->sessionData['previewMessage'], $_messageList['msg']))
+		{
+			unset($this->sessionData['previewMessage']);
+			$this->saveSessionData();
+		}
+*/
+		$response = egw_json_response::get();
+		$response->call('egw_refresh',lang('flagged %1 messages as %2 in %3',count($_messageList['msg']),$_flag,$folder),'mail');
 	}
 
 }

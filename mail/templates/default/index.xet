@@ -5,6 +5,8 @@
 		<grid>
 			<columns>
 				<column width="25"/>
+				<column width="20"/>
+				<column width="20"/>
 				<column/>
 				<column width="95"/>
 				<column width="120"/>
@@ -14,6 +16,8 @@
 			<rows>
 				<row class="th">
 					<nextmatch-header label="ID" id="uid" readonly="true"/>
+					<nextmatch-header statustext="Status" label="St." id="status"/>
+					<nextmatch-header statustext="attachments, ..." label="..." id="attachments"/>
 					<nextmatch-sortheader label="subject" id="subject"/>
 					<nextmatch-sortheader align="center" label="date" id="date"/>
 					<nextmatch-sortheader label="to" id="toaddress"/>
@@ -22,6 +26,8 @@
 				</row>
 				<row class="$row_cont[class]">
 					<description id="${row}[uid]" readonly="true"/>
+					<description span="1" class="status_img"/>
+					<html id="${row}[attachments]"/>
 					<description id="${row}[subject]"/>
 					<date-time_today align="center" id="${row}[date]" readonly="true"/>
 					<url-email id="${row}[toaddress]" readonly="true"/>

@@ -2328,6 +2328,123 @@ class mail_bo
 	}
 
 	/**
+	 * flag a Message
+	 *
+	 * @param string _flag (readable name)
+	 * @param mixed array/string _messageUID array of ids to flag, or 'all'
+	 * @param string _folder foldername
+	 *
+	 * @todo handle handle icserver->setFlags returnValue
+	 *
+	 * @return bool true, as we do not handle icserver->setFlags returnValue
+	 */
+	function flagMessages($_flag, $_messageUID,$_folder=NULL)
+	{
+		//error_log(__METHOD__.__LINE__.'->' .$_flag." ".array2string($_messageUID).",$_folder /".$this->sessionData['mailbox']);
+		if(!is_array($_messageUID)) {
+			#return false;
+			if ($_messageUID=='all')
+			{
+				//all is an allowed value to be passed
+			}
+			else
+			{
+				$_messageUID=array($_messageUID);
+			}
+		}
+
+		$this->icServer->selectMailbox(($_folder?$_folder:$this->sessionData['mailbox']));
+
+		switch($_flag) {
+			case "undelete":
+				$ret = $this->icServer->setFlags($_messageUID, '\\Deleted', 'remove', true);
+				break;
+			case "flagged":
+				$ret = $this->icServer->setFlags($_messageUID, '\\Flagged', 'add', true);
+				break;
+			case "read":
+				$ret = $this->icServer->setFlags($_messageUID, '\\Seen', 'add', true);
+				break;
+			case "forwarded":
+				$ret = $this->icServer->setFlags($_messageUID, '$Forwarded', 'add', true);
+			case "answered":
+				$ret = $this->icServer->setFlags($_messageUID, '\\Answered', 'add', true);
+				break;
+			case "unflagged":
+				$ret = $this->icServer->setFlags($_messageUID, '\\Flagged', 'remove', true);
+				break;
+			case "unread":
+				$ret = $this->icServer->setFlags($_messageUID, '\\Seen', 'remove', true);
+				$ret = $this->icServer->setFlags($_messageUID, '\\Answered', 'remove', true);
+				$ret = $this->icServer->setFlags($_messageUID, '$Forwarded', 'remove', true);
+				break;
+			case "mdnsent":
+				$ret = $this->icServer->setFlags($_messageUID, 'MDNSent', 'add', true);
+				break;
+			case "mdnnotsent":
+				$ret = $this->icServer->setFlags($_messageUID, 'MDNnotSent', 'add', true);
+				break;
+			case "label1":
+			case "labelone":
+				$ret = $this->icServer->setFlags($_messageUID, '$label1', 'add', true);
+				break;
+			case "unlabel1":
+			case "unlabelone":
+				$this->icServer->setFlags($_messageUID, '$label1', 'remove', true);
+				break;
+			case "label2":
+			case "labeltwo":
+				$ret = $this->icServer->setFlags($_messageUID, '$label2', 'add', true);
+				break;
+			case "unlabel2":
+			case "unlabeltwo":
+				$ret = $this->icServer->setFlags($_messageUID, '$label2', 'remove', true);
+				break;
+			case "label3":
+			case "labelthree":
+				$ret = $this->icServer->setFlags($_messageUID, '$label3', 'add', true);
+				break;
+			case "unlabel3":
+			case "unlabelthree":
+				$ret = $this->icServer->setFlags($_messageUID, '$label3', 'remove', true);
+				break;
+			case "label4":
+			case "labelfour":
+				$ret = $this->icServer->setFlags($_messageUID, '$label4', 'add', true);
+				break;
+			case "unlabel4":
+			case "unlabelfour":
+				$ret = $this->icServer->setFlags($_messageUID, '$label4', 'remove', true);
+				break;
+			case "label5":
+			case "labelfive":
+				$ret = $this->icServer->setFlags($_messageUID, '$label5', 'add', true);
+				break;
+			case "unlabel5":
+			case "unlabelfive":
+				$ret = $this->icServer->setFlags($_messageUID, '$label5', 'remove', true);
+				break;
+
+		}
+		if (PEAR::isError($ret))
+		{
+			if (stripos($ret->message,'Too long argument'))
+			{
+				$c = count($_messageUID);
+				$h =ceil($c/2);
+				error_log(__METHOD__.__LINE__.$ret->message." $c messages given for flagging. Trying with chunks of $h");
+				$this->flagMessages($_flag, array_slice($_messageUID,0,$h),($_folder?$_folder:$this->sessionData['mailbox']));
+				$this->flagMessages($_flag, array_slice($_messageUID,$h),($_folder?$_folder:$this->sessionData['mailbox']));
+			}
+		}
+
+		$this->sessionData['folderStatus'][$this->profileID][$this->sessionData['mailbox']]['uidValidity'] = 0;
+		$this->saveSessionData();
+		//error_log(__METHOD__.__LINE__.'->' .$_flag." ".array2string($_messageUID).",".($_folder?$_folder:$this->sessionData['mailbox']));
+		return true; // as we do not catch/examine setFlags returnValue
+	}
+
+	/**
 	 * Helper function to handle wrong or unrecognized timezones
 	 * returns the date as it is parseable by strtotime, or current timestamp if everything failes
 	 * @param string date to be parsed/formatted
@@ -2369,6 +2486,324 @@ class mail_bo
 		if (empty($_string) && !empty($_stringORG)) $_string = @htmlentities(translation::convert($_stringORG,self::detect_encoding($_stringORG),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
 		return $_string;
 	}
+
+	/**
+	 * Header and Bodystructure stuff
+	 */
+
+	/**
+	 * _getStructure
+	 * fetc the structure of a mail, represented by uid
+	 * @param string/int $_uid the messageuid,
+	 * @param boolean $byUid=true, is the messageuid given by UID or ID
+	 * @param boolean $_ignoreCache=false, use or disregard cache, when fetching
+	 * @param string $_folder='', if given search within that folder for the given $_uid, else use sessionData['mailbox'], or servers getCurrentMailbox
+	 * @return array  an structured array of information about the mail
+	 */
+	function _getStructure($_uid, $byUid=true, $_ignoreCache=false, $_folder = '')
+	{
+		static $structure;
+		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		//error_log(__METHOD__.__LINE__.'User:'.trim($GLOBALS['egw_info']['user']['account_id'])." UID: $_uid, ".$this->icServer->ImapServerId.','.$_folder);
+		if (is_null($structure)) $structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+		//error_log(__METHOD__.__LINE__." UID: $_uid, ".$this->icServer->ImapServerId.','.$_folder.'->'.array2string(array_keys($structure)));
+		if (isset($structure[$this->icServer->ImapServerId]) && !empty($structure[$this->icServer->ImapServerId]) &&
+			isset($structure[$this->icServer->ImapServerId][$_folder]) && !empty($structure[$this->icServer->ImapServerId][$_folder]) &&
+			isset($structure[$this->icServer->ImapServerId][$_folder][$_uid]) && !empty($structure[$this->icServer->ImapServerId][$_folder][$_uid]))
+		{
+			if ($_ignoreCache===false)
+			{
+				//error_log(__METHOD__.__LINE__.' Using cache for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid." in Folder:".$_folder.'->'.array2string($structure[$this->icServer->ImapServerId][$_folder][$_uid]));
+				return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
+			}
+		}
+		$structure[$this->icServer->ImapServerId][$_folder][$_uid] = $this->icServer->getStructure($_uid, $byUid);
+		egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
+		//error_log(__METHOD__.__LINE__.' Using query for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid." in Folder:".$_folder.'->'.array2string($structure[$this->icServer->ImapServerId][$_folder][$_uid]));
+		return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
+	}
+
+	/**
+	 * getMessageAttachments
+	 * parse the structure for attachments, it returns not the attachments itself, but an array of information about the attachment
+	 * @param string/int $_uid the messageuid,
+	 * @param string/int $_partID='' , the partID, may be omitted
+	 * @param array $_structure='', if given use structure for parsing
+	 * @param boolean $fetchEmbeddedImages=true,
+	 * @param boolean $fetchTextCalendar=false,
+	 * @param boolean $resolveTNEF=true
+	 * @return array  an array of information about the attachment: array of array(name, size, mimeType, partID, encoding)
+	 */
+	function getMessageAttachments($_uid, $_partID='', $_structure='', $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true)
+	{
+		if (self::$debug) echo __METHOD__."$_uid, $_partID<br>";
+
+		if(is_object($_structure)) {
+			$structure = $_structure;
+		} else {
+			$structure = $this->_getStructure($_uid, true);
+
+			if($_partID != '' && $_partID !=0) {
+				$structure = $this->_getSubStructure($structure, $_partID);
+			}
+		}
+		if (self::$debug) _debug_array($structure);
+		$attachments = array();
+		// this kind of messages contain only the attachment and no body
+		if($structure->type == 'APPLICATION' || $structure->type == 'AUDIO' || $structure->type == 'VIDEO' || $structure->type == 'IMAGE' || ($structure->type == 'TEXT' && $structure->disposition == 'ATTACHMENT') )
+		{
+			$newAttachment = array();
+			$newAttachment['name']		= $this->getFileNameFromStructure($structure,$_uid,$structure->partID);
+			$newAttachment['size']		= $structure->bytes;
+			$newAttachment['mimeType']	= $structure->type .'/'. $structure->subType;
+			$newAttachment['partID']	= $structure->partID;
+			$newAttachment['encoding']      = $structure->encoding;
+			// try guessing the mimetype, if we get the application/octet-stream
+			if (strtolower($newAttachment['mimeType']) == 'application/octet-stream') $newAttachment['mimeType'] = mime_magic::filename2mime($newAttachment['name']);
+
+			if(isset($structure->cid)) {
+				$newAttachment['cid']	= $structure->cid;
+			}
+			# if the new attachment is a winmail.dat, we have to decode that first
+			if ( $resolveTNEF && $newAttachment['name'] == 'winmail.dat' &&
+				( $wmattachments = $this->decode_winmail( $_uid, $newAttachment['partID'] ) ) )
+			{
+				$attachments = array_merge( $attachments, $wmattachments );
+			}
+			elseif ( $resolveTNEF===false && $newAttachment['name'] == 'winmail.dat' )
+			{
+				$attachments[] = $newAttachment;
+			} else {
+				$fetchit = $fetchEmbeddedImages;
+				if ($fetchEmbeddedImages === false && (!in_array(strtoupper($structure->subtype),array('JPG','JPEG','GIF','PNG')))) $fetchit = true;
+				if ( ($fetchit && isset($newAttachment['cid']) && strlen($newAttachment['cid'])>0) ||
+					!isset($newAttachment['cid']) ||
+					empty($newAttachment['cid'])) $attachments[] = $newAttachment;
+			}
+			//$attachments[] = $newAttachment;
+
+			#return $attachments;
+		}
+		// outlook sometimes sends a TEXT/CALENDAR;REQUEST as plain ics, nothing more.
+		if ($structure->type == 'TEXT' && $structure->subType == 'CALENDAR' &&
+			isset($structure->parameters['METHOD'] ) && strtoupper($structure->parameters['METHOD']) == 'REQUEST')
+		{
+			$newAttachment = array();
+			$newAttachment['name']      = 'event.ics';
+			$newAttachment['size']      = $structure->bytes;
+			$newAttachment['mimeType']  = $structure->type .'/'. $structure->subType;//.';'.$structure->parameters['METHOD'];
+			$newAttachment['partID']    = $structure->partID;
+			$newAttachment['encoding']  = $structure->encoding;
+			$newAttachment['method']    = $structure->parameters['METHOD'];
+			$newAttachment['charset']   = $structure->parameters['CHARSET'];
+			$attachments[] = $newAttachment;
+		}
+		// this kind of message can have no attachments
+		if(($structure->type == 'TEXT' && !($structure->disposition == 'INLINE' && $structure->dparameters['FILENAME'])) ||
+		   ($structure->type == 'MULTIPART' && $structure->subType == 'ALTERNATIVE' && !is_array($structure->subParts)) ||
+		   !is_array($structure->subParts))
+		{
+			if (count($attachments) == 0) return array();
+		}
+
+		#$attachments = array();
+
+		foreach((array)$structure->subParts as $subPart) {
+			// skip all non attachment parts
+			if(($subPart->type == 'TEXT' && ($subPart->subType == 'PLAIN' || $subPart->subType == 'HTML') && ($subPart->disposition != 'ATTACHMENT' &&
+				!($subPart->disposition == 'INLINE' && $subPart->dparameters['FILENAME']))) ||
+				($subPart->type == 'MULTIPART' && $subPart->subType == 'ALTERNATIVE') ||
+				($subPart->type == 'MULTIPART' && $subPart->subType == 'APPLEFILE') ||
+				($subPart->type == 'MESSAGE' && $subPart->subType == 'delivery-status'))
+			{
+				if ($subPart->type == 'MULTIPART' && $subPart->subType == 'ALTERNATIVE')
+				{
+					$attachments = array_merge($this->getMessageAttachments($_uid, '', $subPart, $fetchEmbeddedImages, $fetchTextCalendar, $resolveTNEF), $attachments);
+				}
+				if (!($subPart->type=='TEXT' && $subPart->disposition =='INLINE' && $subPart->filename)) continue;
+			}
+
+		   	// fetch the subparts for this part
+			if($subPart->type == 'MULTIPART' &&
+			   ($subPart->subType == 'RELATED' ||
+				$subPart->subType == 'MIXED' ||
+				$subPart->subType == 'SIGNED' ||
+				$subPart->subType == 'APPLEDOUBLE'))
+			{
+			   	$attachments = array_merge($this->getMessageAttachments($_uid, '', $subPart, $fetchEmbeddedImages,$fetchTextCalendar, $resolveTNEF), $attachments);
+			} else {
+				if (!$fetchTextCalendar && $subPart->type == 'TEXT' &&
+					$subPart->subType == 'CALENDAR' &&
+					$subPart->parameters['METHOD'] &&
+					$subPart->disposition !='ATTACHMENT') continue;
+				$newAttachment = array();
+				$newAttachment['name']		= $this->getFileNameFromStructure($subPart,$_uid,$subPart->partID);
+				$newAttachment['size']		= $subPart->bytes;
+				$newAttachment['mimeType']	= $subPart->type .'/'. $subPart->subType;
+				$newAttachment['partID']	= $subPart->partID;
+				$newAttachment['encoding']	= $subPart->encoding;
+				$newAttachment['method']    = $this->getMethodFromStructure($subPart,$_uid,$subPart->partID);
+				$newAttachment['charset']   = $subPart->parameters['CHARSET'];
+				if (isset($subPart->disposition) && !empty($subPart->disposition)) $newAttachment['disposition'] = $subPart->disposition;
+				// try guessing the mimetype, if we get the application/octet-stream
+				if (strtolower($newAttachment['mimeType']) == 'application/octet-stream') $newAttachment['mimeType'] = mime_magic::filename2mime($newAttachment['name']);
+
+				if(isset($subPart->cid)) {
+					$newAttachment['cid']	= $subPart->cid;
+				}
+
+				# if the new attachment is a winmail.dat, we have to decode that first
+				if ( $resolveTNEF && $newAttachment['name'] == 'winmail.dat' &&
+					( $wmattachments = $this->decode_winmail( $_uid, $newAttachment['partID'] ) ) )
+				{
+					$attachments = array_merge( $attachments, $wmattachments );
+				}
+				elseif ( $resolveTNEF===false && $newAttachment['name'] == 'winmail.dat' )
+				{
+					$attachments[] = $newAttachment;
+				} else {
+					$fetchit = $fetchEmbeddedImages;
+					if ($fetchEmbeddedImages === false && (!in_array(strtoupper($structure->subtype),array('JPG','JPEG','GIF','PNG')))) $fetchit = true;
+					if ( ($fetchit && isset($newAttachment['cid']) && strlen($newAttachment['cid'])>0) ||
+						!isset($newAttachment['cid']) ||
+						empty($newAttachment['cid']) || $newAttachment['cid'] == 'NIL')
+					{
+						$attachments[] = $newAttachment;
+					}
+					else
+					{
+						// embedded images should be INLINE, so we check this too, 'cause we want to show/list non embedded images
+						if ($fetchEmbeddedImages==false &&
+							isset($newAttachment['mimeType']) &&
+							!empty($newAttachment['mimeType']) &&
+							stripos($newAttachment['mimeType'],'IMAGE') !== false &&
+							isset($newAttachment['disposition']) &&
+							!empty($newAttachment['disposition']) &&
+							trim(strtoupper($newAttachment['disposition']))!='INLINE') $attachments[] = $newAttachment;
+					}
+				}
+				//$attachments[] = $newAttachment;
+			}
+		}
+
+	   	//_debug_array($attachments); exit;
+		return $attachments;
+
+	}
+
+	/**
+	 * getFileNameFromStructure
+	 * parse the structure for the filename of an attachment
+	 * @param array $_structure='', structure used for parsing
+	 * @param string/int $_uid the messageuid,
+	 * @param string/int $_partID='', the partID, may be omitted
+	 * @return string a string representing the filename of an attachment
+	 */
+	function getFileNameFromStructure(&$structure, $_uid = false, $partID = false)
+	{
+		static $namecounter;
+		if (is_null($namecounter)) $namecounter = 0;
+
+		//if ( $_uid && $partID) error_log(__METHOD__.__LINE__.array2string($structure).' Uid:'.$_uid.' PartID:'.$partID.' -> '.array2string($this->icServer->getParsedHeaders($_uid, true, $partID, true)));
+		if(isset($structure->parameters['NAME'])) {
+			if (is_array($structure->parameters['NAME'])) $structure->parameters['NAME'] = implode(' ',$structure->parameters['NAME']);
+			return rawurldecode(self::decode_header($structure->parameters['NAME']));
+		} elseif(isset($structure->dparameters['FILENAME'])) {
+			return rawurldecode(self::decode_header($structure->dparameters['FILENAME']));
+		} elseif(isset($structure->dparameters['FILENAME*'])) {
+			return rawurldecode(self::decode_header($structure->dparameters['FILENAME*']));
+		} elseif ( isset($structure->filename) && !empty($structure->filename) && $structure->filename != 'NIL') {
+			return rawurldecode(self::decode_header($structure->filename));
+		} else {
+			if ( $_uid && $partID)
+			{
+				$headers = $this->icServer->getParsedHeaders($_uid, true, $partID, true);
+				if ($headers)
+				{
+					if (!PEAR::isError($headers))
+					{
+						// simple parsing of the headers array for a usable name
+						//error_log( __METHOD__.__LINE__.array2string($headers));
+						foreach(array('CONTENT-TYPE','CONTENT-DISPOSITION') as $k => $v)
+						{
+							$headers[$v] = rawurldecode(self::decode_header($headers[$v]));
+							foreach(array('filename','name') as $sk => $n)
+							{
+								if (stripos($headers[$v],$n)!== false)
+								{
+									$buff = explode($n,$headers[$v]);
+									//error_log(__METHOD__.__LINE__.array2string($buff));
+									$namepart = array_pop($buff);
+									//error_log(__METHOD__.__LINE__.$namepart);
+									$fp = strpos($namepart,'"');
+									//error_log(__METHOD__.__LINE__.' Start:'.$fp);
+									if ($fp !== false)
+									{
+										$np = strpos($namepart,'"', $fp+1);
+										//error_log(__METHOD__.__LINE__.' End:'.$np);
+										if ($np !== false)
+										{
+											$name = trim(substr($namepart,$fp+1,$np-$fp-1));
+											if (!empty($name)) return $name;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			$namecounter++;
+			return lang("unknown").$namecounter.($structure->subType ? ".".$structure->subType : "");
+		}
+	}
+
+	/**
+	 * getMethodFromStructure
+	 * parse the structure for the METHOD of an ics event (attachment)
+	 * @param array $_structure='', structure used for parsing
+	 * @param string/int $_uid the messageuid,
+	 * @param string/int $_partID='', the partID, may be omitted
+	 * @return string a string representing the filename of an attachment
+	 */
+	function getMethodFromStructure(&$structure, $_uid = false, $partID = false)
+	{
+		//if ( $_uid && $partID) error_log(__METHOD__.__LINE__.array2string($structure).' Uid:'.$_uid.' PartID:'.$partID.' -> '.array2string($this->icServer->getParsedHeaders($_uid, true, $partID, true)));
+		if(isset($subPart->parameters['METHOD'])) {
+			return $subPart->parameters['METHOD'];
+		}
+		else
+		{
+			if ( $_uid && $partID && $structure->type=='TEXT' && $structure->subType=='CALENDAR' &&  $structure->filename=='NIL')
+			{
+				$attachment = $this->getAttachment($_uid, $partID);
+				if ($attachment['attachment'])
+				{
+					if (!PEAR::isError($attachment['attachment']))
+					{
+						// simple parsing of the attachment for a usable method
+						//error_log( __METHOD__.__LINE__.array2string($attachment['attachment']));
+						foreach(explode("\r\n",$attachment['attachment']) as $k => $v)
+						{
+							if (strpos($v,':') !== false)
+							{
+								list($first,$rest) = explode(':',$v,2);
+								$first = trim($first);
+								if ($first=='METHOD')
+								{
+									return trim($rest);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Hook stuff
+	 */
 
 	/**
 	 * hook to add account
