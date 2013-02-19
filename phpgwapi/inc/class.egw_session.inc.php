@@ -523,6 +523,7 @@ class egw_session
 		}
 		else
 		{
+			self::cache_control();
 			session_start();
 			// set a new session-id, if not syncml (already done in Horde code and can NOT be changed)
 			if (!$no_session && $GLOBALS['egw_info']['flags']['currentapp'] != 'syncml')
@@ -870,6 +871,7 @@ class egw_session
 
 		session_name(self::EGW_SESSION_NAME);
 		session_id($this->sessionid);
+		self::cache_control();
 		session_start();
 
 		// check if we have a eGroupware session --> return false if not (but dont destroy it!)
@@ -1625,6 +1627,70 @@ class egw_session
 		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() no active session!");
 
 		return false;
+	}
+
+	/**
+	 * Controling caching and expires header, based on $GLOBALS['egw_info']['flags']['nocachecontrol']:
+	 * - not set of false --> no caching (default)
+	 * - true --> private caching by browser (no expires header)
+	 * - "public" or integer --> public caching with given cache_expire in minutes or php.ini default session_cache_expire
+	 *
+	 * @param int $expire=null expiration time in seconds, default $GLOBALS['egw_info']['flags']['nocachecontrol'] or php.ini session.cache_expire
+	 */
+	public static function cache_control($expire=null)
+	{
+		if (is_null($expire) && isset($GLOBALS['egw_info']['flags']['nocachecontrol']) && is_int($GLOBALS['egw_info']['flags']['nocachecontrol']))
+		{
+			$expire = $GLOBALS['egw_info']['flags']['nocachecontrol'];
+		}
+		// session not yet started: use PHP session_cache_limiter() and session_cache_expires() functions
+		if (!isset($_SESSION))
+		{
+			// controling caching and expires header
+			if(!isset($GLOBALS['egw_info']['flags']['nocachecontrol']) || !$GLOBALS['egw_info']['flags']['nocachecontrol'])
+			{
+				session_cache_limiter('nocache');
+			}
+			elseif ($GLOBALS['egw_info']['flags']['nocachecontrol'] === 'public' || is_int($GLOBALS['egw_info']['flags']['nocachecontrol']))
+			{
+				// allow public caching: proxys, cdns, ...
+				if (isset($expire))
+				{
+					session_cache_expire((int)ceil($expire/60));	// in minutes
+				}
+				session_cache_limiter('public');
+			}
+			else
+			{
+				// allow caching by browser
+				session_cache_limiter('private_no_expire');
+			}
+		}
+		// session already started
+		if (isset($_SESSION))
+		{
+			if (isset($expire) && (session_cache_limiter() !== 'public' || $expire !== session_cache_expire()))
+			{
+				if (headers_sent($file, $line))
+				{
+					error_log(__METHOD__."($expire) called, but header already sent in $file: $line");
+				}
+				else
+				{
+					header('Cache-Control: public, maxage='.$expire);
+					header('Expires: ' . gmdate('D, d M Y H:i:s', time()+$expire) . ' GMT');
+					// remove Pragma header, might be set by old header
+					if (function_exists('header_remove'))	// PHP 5.3+
+					{
+						header_remove('Pragma');
+					}
+					else
+					{
+						header('Pragma:');
+					}
+				}
+			}
+		}
 	}
 
 	/**
