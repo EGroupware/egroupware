@@ -385,6 +385,17 @@ var et2_tree = et2_inputWidget.extend({
 	},
 
 	/**
+	 * setLabel, sets the Label of of an item by id
+	 * @param _id ID of the node
+	 * @param _label label to set
+	 * @return void
+	 */
+	setLabel: function(_id, _label) {
+		if(this.input == null) return null;
+		this.input.setItemText(_id,_label);
+	},
+
+	/**
 	 * getSelectedNode, retrieves the full node of the selected Item
 	 * @return string or null
 	 */
