@@ -393,6 +393,42 @@ var et2_tree = et2_inputWidget.extend({
 		// no support for multiple selections
 		// as there is no get Method to return the full selected node, we use this
 		return this.options.multiple ? null : this.input._selected[0];
+	},
+
+	/**
+	 * getTreeNodeOpenItems
+	 * 
+	 * @param _nodeID, the nodeID where to start from (initial node)
+	 * @param mode, the mode to run in: forced fakes the initial node openState to be open
+	 * @return structured array of node ids: array(message-ids)
+	 */
+	getTreeNodeOpenItems: function (_nodeID, mode) {
+		if(this.input == null) return null;
+		var z = this.input.getSubItems(_nodeID).split(",");
+		var oS;
+		var PoS;
+		var rv;
+		var returnValue = [_nodeID];
+		var modetorun = "none";
+		if (mode) { modetorun = mode }
+		PoS = this.input.getOpenState(_nodeID)
+		if (modetorun == "forced") PoS = 1;
+		if (PoS == 1) {
+			for(var i=0;i<z.length;i++) {
+				oS = this.input.getOpenState(z[i])
+				//alert(z[i]+' OpenState:'+oS);
+				if (oS == -1) { returnValue.push(z[i]) }
+				if (oS == 0) { returnValue.push(z[i]) }
+				if (oS == 1) {
+					//alert("got here")
+					rv = this.getTreeNodeOpenItems(z[i]);
+					//returnValue.concat(rv); // not working as expected; the following does
+					for(var j=0;j<rv.length;j++) {returnValue.push(rv[j]);}
+				}		
+			}
+		}
+		//alert(returnValue.join('#,#'));
+		return returnValue
 	}
 });
 et2_register_widget(et2_tree, ["tree","tree-cat"]);
