@@ -72,7 +72,13 @@ var et2_tree = et2_inputWidget.extend({
 			"name": "Actions array",
 			"type": "any",
 			"default": et2_no_init,
-			"descriptions": "List of egw actions that can be done on the tree.  This includes context menu, drag and drop.  TODO: Link to action documentation"
+			"description": "List of egw actions that can be done on the tree.  This includes context menu, drag and drop.  TODO: Link to action documentation"
+		},
+		"autoloading": {
+			"name": "Autoloading",
+			"type": "string",
+			"default": "",
+			"description": "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, GET parameter selected contains node-id"
 		}
 	},
 
@@ -169,6 +175,17 @@ var et2_tree = et2_inputWidget.extend({
 					});
 					
 				}
+			}
+			if (widget.options.autoloading)
+			{
+				var url = widget.options.autoloading;
+				if (url.charAt(0) != '/' && url.substr(0,4) != 'http')
+				{
+					url = '/json.php?menuaction='+url;
+				}
+				if (url.charAt(0) == '/') url = egw.webserverUrl+url;
+				widget.input.setXMLAutoLoading(url);
+				widget.input.setDataMode('JSON');
 			}
 	},
 
