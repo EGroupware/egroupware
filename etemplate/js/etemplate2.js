@@ -36,6 +36,7 @@
 	et2_widget_historylog;
 	et2_widget_hrule;
 	et2_widget_image;
+	et2_widget_iframe;
 	et2_widget_file;
 	et2_widget_link;
 	et2_widget_progress;
