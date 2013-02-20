@@ -1404,9 +1404,10 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 		if (is_null($rights) || $owner === false)
 		{
 			// delete eacl
-			if (is_null($owner) || $owner == egw_vfs::$user)
+			if (is_null($owner) || $owner == egw_vfs::$user ||
+				$owner < 0 && egw_vfs::$user && in_array($owner,$GLOBALS['egw']->accounts->memberships(egw_vfs::$user,true)))
 			{
-				unset(self::$extended_acl[$path]);
+				self::$extended_acl = null;	// force new read of eACL, as there could be multiple eACL for that path
 			}
 			$ret = $GLOBALS['egw']->acl->delete_repository(self::EACL_APPNAME,$fs_id,(int)$owner);
 		}
@@ -1416,7 +1417,7 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 				$owner < 0 && egw_vfs::$user && in_array($owner,$GLOBALS['egw']->accounts->memberships(egw_vfs::$user,true))))
 			{
 				// set rights for this class, if applicable
-				self::$extended_acl[$path] = $rights;
+				self::$extended_acl[$path] |= $rights;
 			}
 			$ret = $GLOBALS['egw']->acl->add_repository(self::EACL_APPNAME,$fs_id,$owner,$rights);
 		}
