@@ -79,7 +79,7 @@ class mail_ui
 		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
 		/*if (!($this->mail_bo->icServer->_connected == 1))*/ $this->mail_bo->openConnection($icServerID);
 		// save session varchar
-		$oldicServerID =& egw_cache::getSession('mail','activeProfileID');		
+		$oldicServerID =& egw_cache::getSession('mail','activeProfileID');
 		$oldicServerID = $icServerID;
 		// save pref
 		$GLOBALS['egw']->preferences->add('mail','ActiveProfileID',$icServerID,'user');
@@ -133,7 +133,7 @@ class mail_ui
 			unset($content['msg']);
 		}
 		$this->mail_bo->restoreSessionData();
-				
+
 		// filter is used to choose the mailbox
 		//if (!isset($content['nm']['foldertree'])) // maybe we fetch the folder here
 		/*
@@ -169,7 +169,7 @@ class mail_ui
 
 		// Set tree actions
 		$etpl->set_cell_attribute('nm[foldertree]','actions', array(
-			
+
 			'drop_move_mail' => array(
 				'type' => 'drop',
 				'acceptedTypes' => 'mail',
@@ -340,6 +340,24 @@ class mail_ui
 			));
 		}
 		common::egw_footer();
+	}
+
+	/**
+	 * Ajax callback to fetch folders for given profile
+	 *
+	 * We currently load all folders of a given profile, tree can also load parts of a tree.
+	 *
+	 * @param string $_GET[selected] if of node whos children are requested
+	 */
+	public function ajax_foldertree()
+	{
+		list($profileId) = explode(':', $_GET['selected']);
+
+		$data = $this->getFolderTree(false, $profileId);
+
+		header('Content-Type: application/json; charset=utf-8');
+		echo json_encode($data);
+		common::egw_exit();
 	}
 
 	/**

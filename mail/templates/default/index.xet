@@ -38,7 +38,7 @@
 		</grid>
 	</template>
 	<template id="mail.index" template="" lang="" group="0" version="1.9.001">
-		<tree id="nm[foldertree]" onclick="mail_changeFolder(widget.event_args[0],widget);" parent_node="tree_target"/>
+		<tree id="nm[foldertree]" onclick="mail_changeFolder(widget.event_args[0],widget);" parent_node="tree_target" autoloading="mail.mail_ui.ajax_foldertree"/>
 		<html id="msg"/>
 		<nextmatch id="nm" options="mail.index.rows"/>
 	</template>
