@@ -9,8 +9,10 @@
  */
 
 var mail_doTimedRefresh;
-var mail_refreshTimeOut = 1000*10; // initial call
+var mail_refreshTimeOut = 1000*60*3; // initial call
 mail_startTimerFolderStatusUpdate(mail_refreshTimeOut);
+//inital call of refresh folderstatus
+window.setTimeout('mail_refreshFolderStatus()',1000);
 
 /**
  * mail_startTimerFolderStatusUpdate, timer functions, if the counter changes for the current folder
@@ -27,14 +29,8 @@ function mail_startTimerFolderStatusUpdate(_refreshTimeOut) {
 	if(mail_doTimedRefresh) {
 		window.clearTimeout(mail_doTimedRefresh);
 	}
-	if(_refreshTimeOut > 9999) {//we do not set _refreshTimeOut's less than 10 seconds (our initial call)
+	if(_refreshTimeOut > 9999) {//we do not set _refreshTimeOut's less than 10 seconds
 		mail_doTimedRefresh = window.setInterval("mail_refreshFolderStatus()", _refreshTimeOut);
-	}
-	// initial call done -> now set the timeout to the timeout defined by pref
-	if(_refreshTimeOut == 10000)
-	{
-		var minutes = egw.preference('refreshTime','mail');
-		mail_refreshTimeOut = _refreshTimeOut= 1000*60*(minutes?minutes:3); // either the prefs or 3 Minutes		
 	}
 }
 
@@ -242,6 +238,7 @@ function mail_changeFolder(folder,_widget) {
 		myMsg = (displayname?displayname:folder)+' '+egw.lang('selected');
 		app_refresh(myMsg, 'mail');
 	}
+	//mail_refreshMessageGrid();
 	mail_refreshFolderStatus(folder,'forced');
 	mail_startTimerFolderStatusUpdate(mail_refreshTimeOut);
 }

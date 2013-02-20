@@ -27,6 +27,20 @@ class mail_ui
 	);
 
 	/**
+	 * current icServerID
+	 *
+	 * @var int
+	 */
+	static $icServerID;
+
+	/**
+	 * delimiter - used to separate profileID from foldertreestructure, and separate keyinformation in rowids
+	 *
+	 * @var string
+	 */
+	static $delimiter = '::';
+
+	/**
 	 * instance of mail_bo
 	 *
 	 * @var object
@@ -48,20 +62,19 @@ class mail_ui
 		//$icServerID =& egw_cache::getSession('mail','activeProfileID');
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']) && !empty($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 		{
-			$icServerID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+			self::$icServerID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 		}
 		if ($connectionReset)
 		{
-			error_log(__METHOD__.__LINE__.' Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.$icServerID);
-			emailadmin_bo::unsetCachedObjects($icServerID);
+			error_log(__METHOD__.__LINE__.' Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.self::$icServerID);
+			emailadmin_bo::unsetCachedObjects(self::$icServerID);
 		}
 
 		$this->mail_bo = mail_bo::getInstance(false,$icServerID);
-		error_log(__METHOD__.__LINE__.' Fetched IC Server:'.$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
+		error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
-		if (!($this->mail_bo->icServer->_connected == 1)) $this->mail_bo->openConnection($icServerID);
-
+		if (!($this->mail_bo->icServer->_connected == 1)) $this->mail_bo->openConnection(self::$icServerID);
 	}
 
 	/**
@@ -69,22 +82,23 @@ class mail_ui
 	 *
 	 * @param int $icServerID
 	 */
-	function changeProfile($icServerID)
+	function changeProfile($_icServerID)
 	{
-		error_log(__METHOD__.__LINE__.'->'.$icServerID);
-		emailadmin_bo::unsetCachedObjects($icServerID);
-		$this->mail_bo = mail_bo::getInstance(false,$icServerID);
-		error_log(__METHOD__.__LINE__.' Fetched IC Server:'.$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
+		self::$icServerID = $_icServerID;
+		error_log(__METHOD__.__LINE__.'->'.self::$icServerID);
+		emailadmin_bo::unsetCachedObjects(self::$icServerID);
+		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
+		error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
-		/*if (!($this->mail_bo->icServer->_connected == 1))*/ $this->mail_bo->openConnection($icServerID);
+		/*if (!($this->mail_bo->icServer->_connected == 1))*/ $this->mail_bo->openConnection(self::$icServerID);
 		// save session varchar
 		$oldicServerID =& egw_cache::getSession('mail','activeProfileID');
-		$oldicServerID = $icServerID;
+		$oldicServerID = self::$icServerID;
 		// save pref
-		$GLOBALS['egw']->preferences->add('mail','ActiveProfileID',$icServerID,'user');
+		$GLOBALS['egw']->preferences->add('mail','ActiveProfileID',self::$icServerID,'user');
 		$GLOBALS['egw']->preferences->save_repository(true);
-		$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $icServerID;
+		$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = self::$icServerID;
 	}
 
 	/**
@@ -149,18 +163,17 @@ class mail_ui
 
 		$content['nm']['foldertree'] = '/INBOX/sub';
 		*/
-		$del = $this->mail_bo->getHierarchyDelimiter(false);
 
 		$sel_options['nm']['foldertree'] = $this->getFolderTree(false);
 
 		$sessionFolder = $this->mail_bo->sessionData['maibox'];
 		if ($this->mail_bo->folderExists($sessionFolder))
 		{
-			$content['nm']['selectedFolder'] = $this->mail_bo->profileID.$del.$this->mail_bo->sessionData['maibox'];
+			$content['nm']['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.$this->mail_bo->sessionData['maibox'];
 		}
 
-		if (!isset($content['nm']['foldertree'])) $content['nm']['foldertree'] = $this->mail_bo->profileID.$del.'INBOX';
-		if (!isset($content['nm']['selectedFolder'])) $content['nm']['selectedFolder'] = $this->mail_bo->profileID.$del.'INBOX';
+		if (!isset($content['nm']['foldertree'])) $content['nm']['foldertree'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
+		if (!isset($content['nm']['selectedFolder'])) $content['nm']['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
 		$content['nm']['foldertree'] = $content['nm']['selectedFolder'];
 		$sel_options['cat_id'] = array(1=>'none');
 		if (!isset($content['nm']['cat_id'])) $content['nm']['cat_id'] = 'All';
@@ -347,13 +360,14 @@ class mail_ui
 	 *
 	 * We currently load all folders of a given profile, tree can also load parts of a tree.
 	 *
-	 * @param string $_GET[selected] if of node whos children are requested
+	 * @param string $_GET[id] if of node whos children are requested
 	 */
 	public function ajax_foldertree()
 	{
-		list($profileId) = explode(':', $_GET['selected']);
-
-		$data = $this->getFolderTree(false, $profileId);
+		$nodeID = $_GET['id'];
+		//error_log(__METHOD__.__LINE__.'->'.array2string($_REQUEST));
+		//error_log(__METHOD__.__LINE__.'->'.array2string($_GET));
+		$data = $this->getFolderTree(false, $nodeID);
 
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($data);
@@ -363,6 +377,7 @@ class mail_ui
 	/**
 	 * getFolderTree, get folders from server and prepare the folder tree
 	 * @param bool $_fetchCounters, wether to fetch extended information on folders
+	 * @param string $_nodeID, nodeID to fetch and return
 	 * @return array something like that: array('id'=>0,
 	 * 		'item'=>array(
 	 *			'text'=>'INBOX',
@@ -372,11 +387,19 @@ class mail_ui
 	 *		)
 	 *	);
 	 */
-	function getFolderTree($_fetchCounters=false, $_profileID=null)
+	function getFolderTree($_fetchCounters=false, $_nodeID=null)
 	{
-		if ($_profileID && $_profileID != $this->mail_bo->profileID)
+		if ($_nodeID)
 		{
-			$this->changeProfile($_profileID);
+			list($_profileID,$_folderName) = explode(self::$delimiter,$_nodeID,2);
+			if (is_numeric($_profileID))
+			{
+				if ($_profileID && $_profileID != $this->mail_bo->profileID)
+				{
+					error_log(__METHOD__.__LINE__.' change Profile to ->'.$_profileID);
+					$this->changeProfile($_profileID);
+				}
+			}
 		}
 		$folderObjects = $this->mail_bo->getFolderObjects(true,false,true);
 		$trashFolder = $this->mail_bo->getTrashFolder();
@@ -389,7 +412,6 @@ class mail_ui
 		if (isset($draftFolder) && $draftFolder != 'none') $userDefinedFunctionFolders['Drafts'] = $draftFolder;
 		if (isset($templateFolder) && $templateFolder != 'none') $userDefinedFunctionFolders['Templates'] = $templateFolder;
 		$out = array('id' => 0);
-		$del = $this->mail_bo->getHierarchyDelimiter(false);
 		if($this->mail_bo->mailPreferences->userDefinedAccounts) $allAccountData = $this->mail_bo->bopreferences->getAllAccountData($this->mail_bo->mailPreferences);
 		if ($allAccountData) {
 			foreach ($allAccountData as $tmpkey => $accountData)
@@ -398,7 +420,7 @@ class mail_ui
 				$icServer =& $accountData['icServer'];
 				//_debug_array($identity);
 				//_debug_array($icServer);
-//if ($icServer->ImapServerId<>6) continue;
+				if ($_profileID && $icServer->ImapServerId<>$_profileID) continue;
 				//error_log(__METHOD__.__LINE__.' Userdefined Profiles ImapServerId:'.$icServer->ImapServerId);
 				if (empty($icServer->host)) continue;
 				$identities[$icServer->ImapServerId]=$identity->realName.' '.$identity->organization.' &lt;'.$identity->emailAddress.'&gt;';
@@ -412,7 +434,7 @@ class mail_ui
 					'child'=> 1,
 					'parent' => ''
 				);
-				$this->setOutStructure($oA,$out,$del);
+				$this->setOutStructure($oA,$out,self::$delimiter);
 			}
 		}
 
@@ -429,7 +451,7 @@ class mail_ui
 
 			// the rest of the array is the name of the parent
 			$parentName = implode((array)$folderParts,$obj->delimiter);
-			$parentName = $this->mail_bo->profileID.$obj->delimiter.$parentName;
+			$parentName = $this->mail_bo->profileID.self::$delimiter.$parentName;
 			$oA =array('text'=> $obj->shortDisplayName, 'tooltip'=> $obj->displayName);
 			array_unshift($fFP,$this->mail_bo->profileID);
 			$oA['path'] = $fFP;
@@ -457,7 +479,7 @@ class mail_ui
 				$oA['im1'] = "folderOpen.gif";
 				$oA['im2'] = "MailFolderClosed.png"; // has Children
 			}
-			$path = $this->mail_bo->profileID.$obj->delimiter.$key; //$obj->folderName; //$obj->delimiter
+			$path = $this->mail_bo->profileID.self::$delimiter.$key; //$obj->folderName; //$obj->delimiter
 			$oA['id'] = $path; // ID holds the PATH
 			if (stripos(array2string($fS['attributes']),'\noselect')!== false)
 			{
@@ -474,8 +496,32 @@ class mail_ui
 			$this->setOutStructure($oA,$out,$obj->delimiter);
 			$c++;
 		}
-
+		if ($_nodeID)
+		{
+			$node = self::findNode($out,$_nodeID);
+			error_log(__METHOD__.__LINE__.array2string($node));
+			return $node;
+		}
 		return ($c?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
+	}
+
+	/**
+	 * findNode - helper function to return only a branch of the tree
+	 *
+	 * @param array &$out, out array (to be processed)
+	 * @param string $_nodeID, node to search for
+	 * @param boolean $childElements=true return node itself, or only its child items
+	 * @return array structured subtree
+	 */
+	static function findNode($_out, $_nodeID, $childElements = false)
+	{
+		foreach($_out['item'] as $node)
+		{
+			if ($node['id']==$_nodeID)
+			{
+				return ($childElements?$node['item']:$node);
+			}
+		}
 	}
 
 	/**
@@ -497,10 +543,21 @@ class mail_ui
 		$parents = array();
 		foreach($components as $component)
 		{
-			$parent = implode($del, $parents);
-			if ($parent) $parent .= $del;
+			if (count($parents)>1)
+			{
+				$helper = array_slice($parents,1,null,true);
+				$parent = $parents[0].self::$delimiter.implode($del, $helper);
+				if ($parent) $parent .= $del;
+			}
+			else
+			{
+				$parent = implode(self::$delimiter, $parents);
+				if ($parent) $parent .= self::$delimiter;
+			}
+			
 			if (!is_array($insert) || !isset($insert['item']))
 			{
+				//break;
 				throw new egw_exception_assertion_failed(__METHOD__.':'.__LINE__." id=$data[id]: Parent '$parent' '$component' not found! out=".array2string($out));
 			}
 			foreach($insert['item'] as &$item)
@@ -878,12 +935,15 @@ $starttime = microtime(true);
 
 		$sRToFetch = null;
 		$_folderName=$query['selectedFolder'];
-		$del = $this->mail_bo->getHierarchyDelimiter(false);
-		$splitFolder = explode($del,$_folderName);
-		if (is_numeric($splitFolder[0]))
+		list($_profileID,$folderName) = explode(self::$delimiter,$_folderName,2);
+		if (is_numeric($_profileID))
 		{
-			array_shift($splitFolder);
-			$_folderName = implode($del,$splitFolder);
+			if ($_profileID && $_profileID != $this->mail_bo->profileID)
+			{
+				error_log(__METHOD__.__LINE__.' change Profile to ->'.$_profileID);
+				$this->changeProfile($_profileID);
+			}
+			$_folderName = $folderName;
 		}
 		//save selected Folder to sessionData (mailbox)->currentFolder
 		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['maibox']=$_folderName;
@@ -983,7 +1043,7 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 	 */
 	function createRowID($_folderName, $message_uid)
 	{
-		return trim($GLOBALS['egw_info']['user']['account_id']).'::'.$this->mail_bo->profileID.'::'.base64_encode($_folderName).'::'.$message_uid;
+		return trim($GLOBALS['egw_info']['user']['account_id']).self::$delimiter.$this->mail_bo->profileID.self::$delimiter.base64_encode($_folderName).self::$delimiter.$message_uid;
 	}
 
 	/**
@@ -994,7 +1054,7 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 	 */
 	function splitRowID($_rowID)
 	{
-		$res = explode('::',$_rowID);
+		$res = explode(self::$delimiter,$_rowID);
 		// as a rowID is perceeded by app::, we ignore the first part
 		return array('accountID'=>$res[1], 'profileID'=>$res[2], 'folder'=>base64_decode($res[3]), 'msgUID'=>$res[4]);
 	}
@@ -1324,12 +1384,10 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 			$oA = array();
 			foreach ($_folder as $_folderName)
 			{
-				$splitFolder = explode($del,$_folderName);
-				if (is_numeric($splitFolder[0]))
+				list($profileID,$folderName) = explode(self::$delimiter,$_folderName,2);
+				if (is_numeric($profileID))
 				{
-					$fPID = array_shift($splitFolder);
-					if ($fPID != $this->mail_bo->profileID) continue; // only current connection
-					$folderName = implode($del,$splitFolder);
+					if ($profileID != $this->mail_bo->profileID) continue; // only current connection
 					if ($folderName)
 					{
 						$fS = $this->mail_bo->getFolderStatus($folderName,false);
@@ -1358,6 +1416,8 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 	 */
 	function ajax_changeProfile($icServerID)
 	{
+		if ($icServerID && $icServerID != $this->mail_bo->profileID)
+		error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
 		$this->changeProfile($icServerID);
 		$response = egw_json_response::get();
 		$response->call('egw_refresh',lang('changed profile'),'mail');
