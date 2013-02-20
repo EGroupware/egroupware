@@ -45,8 +45,11 @@ class mail_ui
 		if (!empty($_GET["resetConnection"])) $connectionReset = html::purify($_GET["resetConnection"]);
 		unset($_GET["resetConnection"]);
 
-		$icServerID =& egw_cache::getSession('mail','activeProfileID');
-
+		//$icServerID =& egw_cache::getSession('mail','activeProfileID');
+		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']) && !empty($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
+		{
+			$icServerID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
+		}
 		if ($connectionReset)
 		{
 			error_log(__METHOD__.__LINE__.' Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.$icServerID);
@@ -54,11 +57,34 @@ class mail_ui
 		}
 
 		$this->mail_bo = mail_bo::getInstance(false,$icServerID);
-		error_log(__METHOD__.__LINE__.' Fetched IC Server:'.$icServerID.function_backtrace());
+		error_log(__METHOD__.__LINE__.' Fetched IC Server:'.$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
 		if (!($this->mail_bo->icServer->_connected == 1)) $this->mail_bo->openConnection($icServerID);
 
+	}
+
+	/**
+	 * changeProfile
+	 *
+	 * @param int $icServerID
+	 */
+	function changeProfile($icServerID)
+	{
+		error_log(__METHOD__.__LINE__.'->'.$icServerID);
+		emailadmin_bo::unsetCachedObjects($icServerID);
+		$this->mail_bo = mail_bo::getInstance(false,$icServerID);
+		error_log(__METHOD__.__LINE__.' Fetched IC Server:'.$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
+		// no icServer Object: something failed big time
+		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
+		/*if (!($this->mail_bo->icServer->_connected == 1))*/ $this->mail_bo->openConnection($icServerID);
+		// save session varchar
+		$oldicServerID =& egw_cache::getSession('mail','activeProfileID');		
+		$oldicServerID = $icServerID;
+		// save pref
+		$GLOBALS['egw']->preferences->add('mail','ActiveProfileID',$icServerID,'user');
+		$GLOBALS['egw']->preferences->save_repository(true);
+		$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $icServerID;
 	}
 
 	/**
@@ -328,8 +354,12 @@ class mail_ui
 	 *		)
 	 *	);
 	 */
-	function getFolderTree($_fetchCounters=false)
+	function getFolderTree($_fetchCounters=false, $_profileID=null)
 	{
+		if ($_profileID && $_profileID != $this->mail_bo->profileID)
+		{
+			$this->changeProfile($_profileID);
+		}
 		$folderObjects = $this->mail_bo->getFolderObjects(true,false,true);
 		$trashFolder = $this->mail_bo->getTrashFolder();
 		$templateFolder = $this->mail_bo->getTemplateFolder();
@@ -1301,6 +1331,18 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 				$response->call('mail_setFolderStatus',$oA,'mail');
 			}
 		}
+	}
+
+	/**
+	 * empty changeProfile - its called via json, so the function must start with ajax (or the class-name must contain ajax)
+	 *
+	 * @return nothing
+	 */
+	function ajax_changeProfile($icServerID)
+	{
+		$this->changeProfile($icServerID);
+		$response = egw_json_response::get();
+		$response->call('egw_refresh',lang('changed profile'),'mail');
 	}
 
 	/**

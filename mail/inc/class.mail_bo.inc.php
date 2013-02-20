@@ -207,7 +207,8 @@ class mail_bo
 			$loadfailed = false;
 			self::$instances[$_profileID]->mailPreferences	= self::$instances[$_profileID]->bopreferences->getPreferences(true,$_profileID);
 			//error_log(__METHOD__.__LINE__." ReRead the Prefs for ProfileID ".$_profileID.' called from:'.function_backtrace());
-			if (self::$instances[$_profileID]->mailPreferences) {
+			if (self::$instances[$_profileID]->mailPreferences)
+			{
 				self::$instances[$_profileID]->icServer = self::$instances[$_profileID]->mailPreferences->getIncomingServer($_profileID);
 				// if we do not get an icServer object, session restore failed on bopreferences->getPreferences
 				if (!self::$instances[$_profileID]->icServer) $loadfailed=true;
@@ -289,6 +290,7 @@ class mail_bo
 			}
 		}
 		if (self::$debug) error_log(__METHOD__.'::'.__LINE__.' ProfileSelected:'.$_profileID.' -> '.$identities[$_profileID]);
+
 		return $_profileID;
 	}
 
@@ -2536,7 +2538,7 @@ class mail_bo
 	 */
 	function getMessageAttachments($_uid, $_partID='', $_structure='', $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true)
 	{
-		if (self::$debug) echo __METHOD__."$_uid, $_partID<br>";
+		if (self::$debug) error_log( __METHOD__.":$_uid, $_partID");
 
 		if(is_object($_structure)) {
 			$structure = $_structure;
@@ -2547,7 +2549,7 @@ class mail_bo
 				$structure = $this->_getSubStructure($structure, $_partID);
 			}
 		}
-		if (self::$debug) _debug_array($structure);
+		if (self::$debug) error_log(__METHOD__.__LINE__.array2string($structure));
 		$attachments = array();
 		// this kind of messages contain only the attachment and no body
 		if($structure->type == 'APPLICATION' || $structure->type == 'AUDIO' || $structure->type == 'VIDEO' || $structure->type == 'IMAGE' || ($structure->type == 'TEXT' && $structure->disposition == 'ATTACHMENT') )

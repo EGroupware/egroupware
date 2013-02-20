@@ -30,6 +30,12 @@ function mail_startTimerFolderStatusUpdate(_refreshTimeOut) {
 	if(_refreshTimeOut > 9999) {//we do not set _refreshTimeOut's less than 10 seconds (our initial call)
 		mail_doTimedRefresh = window.setInterval("mail_refreshFolderStatus()", _refreshTimeOut);
 	}
+	// initial call done -> now set the timeout to the timeout defined by pref
+	if(_refreshTimeOut == 10000)
+	{
+		var minutes = egw.preference('refreshTime','mail');
+		mail_refreshTimeOut = _refreshTimeOut= 1000*60*(minutes?minutes:3); // either the prefs or 3 Minutes		
+	}
 }
 
 /**
@@ -177,7 +183,23 @@ function mail_compressFolder() {
 }
 
 /**
+ * mail_changeProfile
+ * @param folder, the ID of the selected Node -> should be an integer
+ * @param _widget, handle to the tree widget
+ */
+function mail_changeProfile(folder,_widget) {
+//	alert(folder);
+	var request = new egw_json_request('mail.mail_ui.ajax_changeProfile',[folder]);
+	request.sendRequest(false);
+	mail_refreshMessageGrid();
+
+	return true;
+}
+
+/**
  * mail_changeFolder
+ * @param folder, the ID of the selected Node
+ * @param _widget, handle to the tree widget
  */
 function mail_changeFolder(folder,_widget) {
 	//alert('change Folder called:'+folder);
@@ -185,6 +207,14 @@ function mail_changeFolder(folder,_widget) {
 	var img = _widget.getSelectedNode().images[0]; // fetch first image
 	if (!(img.search(eval('/'+'NoSelect'+'/'))<0) || !(img.search(eval('/'+'thunderbird'+'/'))<0))
 	{
+		if (!(img.search(eval('/'+'thunderbird'+'/'))<0))
+		{
+			rv = mail_changeProfile(folder,_widget);
+			if (rv)
+			{
+				return rv;
+			}
+		}
 		if (_widget.event_args.length==2)
 		{
 			folder = _widget.event_args[1];
@@ -213,6 +243,7 @@ function mail_changeFolder(folder,_widget) {
 		app_refresh(myMsg, 'mail');
 	}
 	mail_refreshFolderStatus(folder,'forced');
+	mail_startTimerFolderStatusUpdate(mail_refreshTimeOut);
 }
 
 /**
