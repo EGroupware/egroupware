@@ -541,7 +541,7 @@ the folder <b>%1</b> will be used, if there is nothing set here, and no valid pr
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	en	The IMAP server does not appear to support the authentication method selected. Contact your system administrator.
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	en	The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?
 the mimeparser can not parse this message.	felamimail	en	The mimeparser can not parse this message.
-then	felamimail	en	THAN
+then	felamimail	en	THEN
 there is no imap server configured.	felamimail	en	There is no IMAP server configured.
 this folder is empty	felamimail	en	THIS FOLDER IS EMPTY
 this php has no imap support compiled in!!	felamimail	en	This PHP has no IMAP support compiled in!
