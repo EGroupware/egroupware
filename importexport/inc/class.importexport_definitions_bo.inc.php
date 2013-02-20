@@ -233,7 +233,7 @@ class importexport_definitions_bo {
 				$definition_id = $definition->get_identifier() ? $definition->get_identifier() : NULL;
 
 				$definition->set_record( $definition_data );
-				if (isset($definition_id)) $definition->save( $definition_id );
+				$definition->save( $definition_id );
 			}
 		}
 		return $definitions;
