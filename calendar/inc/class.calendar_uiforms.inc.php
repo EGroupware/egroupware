@@ -241,7 +241,7 @@ class calendar_uiforms extends calendar_ui
 		unset($event['alarm']['delete_alarm']);
 		unset($event['duration']);
 
-		if (in_array($button,array('ignore','freetime','reedit')))
+		if (in_array($button,array('ignore','freetime','reedit','confirm_edit_series')))
 		{
 			// no conversation necessary, event is already in the right format
 		}

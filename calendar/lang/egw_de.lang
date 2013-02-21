@@ -96,7 +96,7 @@ copy this event	calendar	de	Kopiert diesen Termin
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	calendar	de	Kopieren Sie ihre Änderungen in die Zwischenablage, %1laden den Eintrag neu%2 und fügen diese wieder ein.
 countries	calendar	de	Länder
 country	calendar	de	Land
-create a new series	calendar	de	Neu Serie anlegen
+create a new series	calendar	de	Neue Serie anlegen
 create an exception for the given date	calendar	de	Erzeugt eine Ausnahme am angegebenen Datum
 create exception	calendar	de	Ausnahme erzeugen
 create new links	calendar	de	Neue Verknüpfung erstellen
@@ -557,7 +557,6 @@ you already replied to this invitation with	calendar	de	Sie haben bereits auf di
 you are not allowed to book the resource selected:	calendar	de	Sie sind nicht berechtigt die ausgewählte Ressource zu buchen.
 you are not invited to that event!	calendar	de	Sie sind zu diesem Termin nicht eingeladen!
 you attempt to mail a meetingrequest to the recipients above. depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.	calendar	de	Sie sind im Begriff eine Terminanfrage an die oben eingetragenen Empfänger zu versenden.
-Achtung! - Eintragungen in dem Nachrichtentext, werden sehr häufig von den Empfangenen E-Mail Programmen ausgeblendet.
 you can either set a year or a occurence, not both !!!	calendar	de	Sie können nur entweder das Jahr oder die Wiederholung angeben, nicht beides!
 you can only set a year or a occurence !!!	calendar	de	Sie können nur ein Jahr oder eine Wiederholung angeben !
 you do not have permission to read this record!	calendar	de	Sie haben keine Berechtigung diesen Eintrag zu lesen!
