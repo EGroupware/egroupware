@@ -324,12 +324,11 @@ class mail_ui
 
 		// retrieve data for/from user defined accounts
 		$selectedID = 0;
-		if($preferences->userDefinedAccounts) $allAccountData = $this->mail_bo->bopreferences->getAllAccountData($preferences);
-		if ($allAccountData) {
-			foreach ($allAccountData as $tmpkey => $accountData)
+		if (count($preferences->ic_server)) {
+			foreach ($preferences->ic_server as $tmpkey => $accountData)
 			{
-				$identity =& $accountData['identity'];
-				$icServer =& $accountData['icServer'];
+				$identity =& $preferences->identities[$tmpkey];
+				$icServer =& $accountData;
 				//_debug_array($identity);
 				//_debug_array($icServer);
 				//error_log(__METHOD__.__LINE__.' Userdefined Profiles ImapServerId:'.$icServer->ImapServerId);
@@ -412,12 +411,13 @@ class mail_ui
 		if (isset($draftFolder) && $draftFolder != 'none') $userDefinedFunctionFolders['Drafts'] = $draftFolder;
 		if (isset($templateFolder) && $templateFolder != 'none') $userDefinedFunctionFolders['Templates'] = $templateFolder;
 		$out = array('id' => 0);
-		if($this->mail_bo->mailPreferences->userDefinedAccounts) $allAccountData = $this->mail_bo->bopreferences->getAllAccountData($this->mail_bo->mailPreferences);
-		if ($allAccountData) {
-			foreach ($allAccountData as $tmpkey => $accountData)
+		//_debug_array($this->mail_bo->mailPreferences);
+		//if($this->mail_bo->mailPreferences->userDefinedAccounts) $allAccountData = $this->mail_bo->bopreferences->getAllAccountData($this->mail_bo->mailPreferences);
+		if (count($this->mail_bo->mailPreferences->ic_server)) {
+			foreach ($this->mail_bo->mailPreferences->ic_server as $tmpkey => $accountData)
 			{
-				$identity =& $accountData['identity'];
-				$icServer =& $accountData['icServer'];
+				$identity =& $this->mail_bo->mailPreferences->identities[$tmpkey];
+				$icServer =& $accountData;
 				//_debug_array($identity);
 				//_debug_array($icServer);
 				if ($_profileID && $icServer->ImapServerId<>$_profileID) continue;
