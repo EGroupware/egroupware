@@ -199,7 +199,6 @@ class auth_ldap implements auth_backend
 		}
 		if($old_passwd)	// if old password given (not called by admin) update the password in the session
 		{
-			$GLOBALS['egw']->session->appsession('password','phpgwapi',$new_passwd);
 		}
 		return $entry['userpassword'];
 	}

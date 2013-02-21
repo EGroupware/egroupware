@@ -169,7 +169,6 @@ class auth_sql implements auth_backend
 
 		if(!$admin)
 		{
-			$GLOBALS['egw']->session->appsession('password','phpgwapi',$new_passwd);
 		}
 		return $encrypted_passwd;
 	}
