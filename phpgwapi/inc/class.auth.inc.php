@@ -91,7 +91,7 @@ class auth
 					$alpwchange_val = $backend->getLastPwdChange($GLOBALS['egw_info']['user']['account_lid']);
 					$pwdTsChecked = true;
 				}
-				// if your authsystem does not provide that information, its likely, that you cannot change your password there, 
+				// if your authsystem does not provide that information, its likely, that you cannot change your password there,
 				// thus checking for expiration, is not needed
 				if ($alpwchange_val === false)
 				{
@@ -224,7 +224,15 @@ class auth
 	 */
 	function change_password($old_passwd, $new_passwd, $account_id=0)
 	{
-		return $this->backend->change_password($old_passwd, $new_passwd, $account_id);
+		if (($ret = $this->backend->change_password($old_passwd, $new_passwd, $account_id)) &&
+			($account_id == $GLOBALS['egw_info']['user']['account_id']))
+		{
+			// need to change current users password in session
+			egw_cache::setSession('phpgwapi', 'password', base64_encode($new_passwd));
+			// invalidate EGroupware session, as password is stored in egw_info in session
+			egw::invalidate_session_cache();
+		}
+		return $ret;
 	}
 
 	/**

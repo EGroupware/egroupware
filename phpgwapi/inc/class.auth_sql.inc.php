@@ -253,7 +253,6 @@ class auth_sql implements auth_backend
 		if(!$admin)
 		{
 			egw_cache::setSession('phpgwapi','auth_alpwchange_val',$update['account_lastpwd_change']);
-			$GLOBALS['egw']->session->appsession('password','phpgwapi',$new_passwd);
 		}
 		return $encrypted_passwd;
 	}
