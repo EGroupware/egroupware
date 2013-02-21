@@ -475,11 +475,13 @@ class emailadmin_bo extends so_sql
 	 * 4) StructureCache (emailStructure Objects)
 	 * 5) INSTANCE OF FELAMIMAIL_BO
 	 *
-	 * @param int $_profileID
+	 * @param int $_profileID=null default profile of user as returned by getUserDefaultProfileID
 	 * @return void
 	 */
-	static function unsetCachedObjects($_profileID)
+	static function unsetCachedObjects($_profileID=null)
 	{
+		if (is_null($_profileID)) $_profileID = self::getUserDefaultProfileID();
+
 		if (!is_array($_profileID) && is_numeric($_profileID))
 		{
 			felamimail_bo::resetConnectionErrorCache($_profileID);
@@ -522,6 +524,19 @@ class emailadmin_bo extends so_sql
 			}
 			felamimail_bo::unsetInstance($_profileID);
 			if ($_profileID != 0) self::unsetCachedObjects(0); // reset the default ServerID as well
+		}
+	}
+
+	/**
+	 * Password changed hook --> unset cached objects, as password might be used for email connection
+	 *
+	 * @param array $hook_data
+	 */
+	public static function changepassword($hook_data)
+	{
+		if ($hook_data['account_id'] == $GLOBALS['egw_info']['user']['account_id'])
+		{
+			self::unsetCachedObjects();
 		}
 	}
 
@@ -803,10 +818,10 @@ class emailadmin_bo extends so_sql
 				//'ea_group' => 0,
 				//'ea_user' => 0,
 				'ea_active' => 1,
-				'ea_user_defined_accounts' => 'yes',
-				'ea_user_defined_identities' => 'yes',
+				'userDefinedAccounts' => 'yes',
+				'userDefinedIdentities' => 'yes',
 				'ea_user_defined_signatures' => 'yes',
-				'ea_editforwardingaddress' => 'yes',
+				'editforwardingaddress' => 'yes',
 				'defaultQuota' => 2048,
 			);
 

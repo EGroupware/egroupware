@@ -550,7 +550,7 @@ class egw_session
 			return false;
 		}
 
-		$this->appsession('password','phpgwapi',base64_encode($this->passwd));
+		egw_cache::setSession('phpgwapi', 'password', base64_encode($this->passwd));
 
 		if ($GLOBALS['egw']->acl->check('anonymous',1,'phpgwapi'))
 		{
@@ -952,10 +952,11 @@ class egw_session
 			}
 			return false;
 		}
+		$this->passwd = base64_decode(egw_cache::getSession('phpgwapi', 'password'));
 		if ($fill_egw_info_and_repositories)
 		{
 			$GLOBALS['egw_info']['user']['session_ip'] = $session['session_ip'];
-			$GLOBALS['egw_info']['user']['passwd']     = base64_decode($this->appsession('password','phpgwapi'));
+			$GLOBALS['egw_info']['user']['passwd']     = $this->passwd;
 		}
 		if ($this->account_domain != $GLOBALS['egw_info']['user']['domain'])
 		{
@@ -1601,6 +1602,7 @@ class egw_session
 		if (($sessionid = self::get_sessionid()))
 		{
 		 	session_id($sessionid);
+		 	self::cache_control();
 			$ok = session_start();
 			self::decrypt();
 			if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() sessionid=$sessionid, _SESSION[".self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]));
