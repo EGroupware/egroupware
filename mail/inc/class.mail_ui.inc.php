@@ -327,6 +327,7 @@ class mail_ui
 		if (count($preferences->ic_server)) {
 			foreach ($preferences->ic_server as $tmpkey => $accountData)
 			{
+				if ($tmpkey==0) continue;
 				$identity =& $preferences->identities[$tmpkey];
 				$icServer =& $accountData;
 				//_debug_array($identity);
@@ -416,6 +417,7 @@ class mail_ui
 		if (count($this->mail_bo->mailPreferences->ic_server)) {
 			foreach ($this->mail_bo->mailPreferences->ic_server as $tmpkey => $accountData)
 			{
+				if ($tmpkey==0) continue;
 				$identity =& $this->mail_bo->mailPreferences->identities[$tmpkey];
 				$icServer =& $accountData;
 				//_debug_array($identity);
