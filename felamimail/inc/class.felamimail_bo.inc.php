@@ -4102,18 +4102,26 @@ class felamimail_bo
 
 	function updateSingleACL($_folderName, $_accountName, $_aclType, $_aclStatus,$_recursive=false)
 	{
-		//error_log(__METHOD__.__LINE__." $_folderName, $_accountName, $_aclType, $_aclStatus,$_recursive");
+		//error_log(__METHOD__.__LINE__." $_folderName, $_accountName, $_aclType, $_aclStatus, $_recursive");
 		$userACL = $this->getIMAPACL($_folderName, $_accountName);
-
+		$aclType = $_aclType;
+		if ($_aclType=='c') $aclType ='ckx'; // rfc4314 obsolet c is union of k (create mailbox) and x (delete mailbox (aka rename))
+		if ($_aclType=='d') $aclType ='det'; // rfc4314 obsolet d is union of e(xpunge) and t (delete)
+		//error_log(__METHOD__.__LINE__.' UserACL:'.$userACL);
 		if($_aclStatus == 'true' || $_aclStatus == 1) {
 			if(strpos($userACL, $_aclType) === false) {
-				$userACL .= $_aclType;
+				$userACL .= $aclType;
 				$this->setACL($_folderName, $_accountName, $userACL, $_recursive);
 			}
 		} elseif($_aclStatus == 'false' || empty($_aclStatus)) {
 			if(strpos($userACL, $_aclType) !== false) {
-				$userACL = str_replace($_aclType,'',$userACL);
-				$this->setACL($_folderName, $_accountName, $userACL, $_recursive);
+				$userACL = str_replace(str_split($aclType,1),'',$userACL);
+				$rv = $this->setACL($_folderName, $_accountName, $userACL, $_recursive);
+				if ($rv === true && $userACL != ($newACL = $this->getIMAPACL($_folderName, $_accountName)))
+				{
+					error_log(__METHOD__.__LINE__." failed; IN: $userACL removing $aclType returned ".array2string($rv).'-> BUT retrieved:'.$newACL);
+					return $newACL;
+				}
 			}
 		}
 
