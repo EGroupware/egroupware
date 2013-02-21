@@ -179,6 +179,10 @@ class emailadmin_hooks
 						'description'	=> 'Postfix (qmail Schema)',
 						'classname'	=> 'postfixldap'
 					) : 'Postfix (qmail Schema)',
+					'emailadmin_smtp_qmail' 	=> $extended ? array(
+						'description'	=> 'Postfix (new qmail Schema)',
+						'classname'	=> 'emailadmin_smtp_qmail'
+					) : 'Postfix (new qmail Schema)',
 					'postfixinetorgperson'     => $extended ? array(
 						'description'   => 'Postfix (inetOrgPerson Schema)',
 						'classname'     => 'postfixinetorgperson'
