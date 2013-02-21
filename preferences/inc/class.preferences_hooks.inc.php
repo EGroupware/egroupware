@@ -97,6 +97,21 @@ class preferences_hooks
 			list(,$country) = explode('-',$lang);
 			if (empty($country)) $country = $lang;
 		}
+		// check for old rte_font_size pref including px and remove unit, px is default unit anyway
+		if (substr($GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'], -2) == 'px')
+		{
+			$prefs = new preferences($GLOBALS['egw_info']['user']['account_id']);
+			foreach(array('user','default','forced') as $type)
+			{
+				if (substr($prefs->{$type}['common']['rte_font_size'], -2) == 'px')
+				{
+					$prefs->{$type}['common']['rte_font_size'] = (string)(int)$prefs->{$type}['common']['rte_font_size'];
+					$prefs->save_repository(false, $type);
+				}
+			}
+			$GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'] =
+				(string)(int)$GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
+		}
 		// Settings array for this app
 		$settings = array(
 			array(
@@ -348,6 +363,16 @@ class preferences_hooks
 				'name'   => 'rte_font',
 				'values' => egw_ckeditor_config::$font_options,
 				'help'   => 'Automatically start with this font',
+				'xmlrpc' => True,
+				'admin'  => false
+			),
+			'rte_font_unit' => array(
+				'type'   => 'select',
+				'label'  => 'Font size unit',
+				'name'   => 'rte_font_unit',
+				'values' => array_map('lang', egw_ckeditor_config::$font_unit_options),
+				'help'   => 'Unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.',
+				'default'=> 'px',
 				'xmlrpc' => True,
 				'admin'  => false
 			),

@@ -546,7 +546,7 @@ class html
 
 		// User preferences
 		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
-+		$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
+		$font_size = (string)(int)$GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
 
 		// we need to enable double encoding here, as ckEditor has to undo one level of encoding
 		// otherwise < and > chars eg. from html markup entered in regular (not source) input, will turn into html!
@@ -1342,7 +1342,7 @@ class html
 		// User preferences
 		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
 		$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
-		
+
 		// Check for "blank" = just user preference span - for some reason we can't match on the entity, so approximate
 		$regex = '#^<span style="font-family:'.$font.';font-size:'.$font_size.';">.?</span>$#us';
 		if(preg_match($regex,$html))

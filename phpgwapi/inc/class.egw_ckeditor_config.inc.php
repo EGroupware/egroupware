@@ -31,24 +31,27 @@ class egw_ckeditor_config
 		'Verdana, Geneva, sans-serif' => 'Verdana'
 	);
 	public static $font_size_options = array(
-		'8px'  => '8',
-		'9px'  => '9',
-		'10px' => '10',
-		'11px' => '11',
-		'12px' => '12',
-		'14px' => '14',
-		'16px' => '16',
-		'18px' => '18',
-		'20px' => '20',
-		'22px' => '22',
-		'24px' => '24',
-		'26px' => '26',
-		'28px' => '28',
-		'36px' => '36',
-		'48px' => '48',
-		'72px' => '72'
+		8  => '8',
+		9  => '9',
+		10 => '10',
+		11 => '11',
+		12 => '12',
+		14 => '14',
+		16 => '16',
+		18 => '18',
+		20 => '20',
+		22 => '22',
+		24 => '24',
+		26 => '26',
+		28 => '28',
+		36 => '36',
+		48 => '48',
+		72 => '72',
 	);
-
+	public static $font_unit_options = array(
+		'px' => 'px: display pixels',
+		'pt' => 'pt: points (1/72 inch)',
+	);
 
 	/**
 	 * Read language and country settings for the ckeditor and store them in static
@@ -197,6 +200,14 @@ class egw_ckeditor_config
 		$config['language'] = self::get_lang();
 		$config['enterMode'] = self::get_enter_mode();
 		$config['skin'] = self::get_skin();
+
+		$config['fontSize_sizes'] = '';
+		$unit = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_unit'];
+		if (empty($unit)) $unit = 'px';
+		foreach(self::$font_size_options as $k => $v)
+		{
+			$config['fontSize_sizes'] .= $v.'/'.$k.$unit.';';
+		}
 	}
 
 	/**
