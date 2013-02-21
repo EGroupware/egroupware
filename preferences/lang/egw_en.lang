@@ -44,6 +44,7 @@ enter your new password	preferences	en	Enter new password
 enter your old password	preferences	en	Enter old password
 failed to change password.  please contact your administrator.	preferences	en	Failed to change password. Contact your administrator.
 features of the editor	preferences	en	Features of the editor
+font size unit	preferences	en	Font size unit
 forced preferences	preferences	en	Forced preferences
 formatting & general settings	preferences	en	Formatting & general settings
 help off	preferences	en	Help off
@@ -81,6 +82,8 @@ please select timezones, you want to be able to quickly switch between. switch i
 please select your timezone.	preferences	en	Select your time zone.
 please, select a new theme	preferences	en	Select a new theme
 popup with search	preferences	en	Popup with search
+pt: points (1/72 inch)	preferences	en	pt: points (1/72 inch)
+px: display pixels	preferences	en	px: display pixels
 re-enter your password	preferences	en	Re-enter your password
 read prefs for the specified application.	preferences	en	Read preferences for the specified application.
 rich text editor enter mode	preferences	en	Rich text editor enter mode
@@ -119,6 +122,7 @@ theme (colors/fonts) selection	preferences	en	Theme
 this server is located in the %1 timezone	preferences	en	This server is located in the %1 time zone
 thousands separator is only used for displaying and not for editing numbers.	preferences	en	Thousands separator is only used for displaying and not for editing numbers.
 time format	preferences	en	Time format
+unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	en	Unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.
 use default	preferences	en	Use default
 users choice	preferences	en	Users choice
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	en	Show Home and Logout buttons as applications in the top bar.

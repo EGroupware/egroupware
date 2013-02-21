@@ -44,6 +44,7 @@ enter your new password	preferences	de	Neues Passwort eingeben
 enter your old password	preferences	de	Altes Passwort eingeben
 failed to change password.  please contact your administrator.	preferences	de	Passwortänderung fehlgeschlagen. Bitte kontaktieren Sie Ihren Administrator!
 features of the editor	preferences	de	Funktionsauswahl des Editors
+font size unit	preferences	de	Einheit der Schriftgröße
 forced preferences	preferences	de	Erzwungene Einstellungen
 formatting & general settings	preferences	de	Formatierung & allgemeine Einstellungen
 help off	preferences	de	Keine Hilfe
@@ -81,6 +82,8 @@ please select timezones, you want to be able to quickly switch between. switch i
 please select your timezone.	preferences	de	Bitte wählen Sie Ihre Zeitzone
 please, select a new theme	preferences	de	Bitte ein neues Schema wählen
 popup with search	preferences	de	Pop-up mit Suche
+pt: points (1/72 inch)	preferences	de	pt: Punkt (1/72 Inch)
+px: display pixels	preferences	de	px: Bildschirmpixel
 re-enter your password	preferences	de	Neues Passwort wiederholen
 read prefs for the specified application.	preferences	de	Liest Einstellungen von den ausgewählten Anwendungen.
 rich text editor enter mode	preferences	de	Zeilenumbruchmodus des Editors
@@ -119,6 +122,7 @@ theme (colors/fonts) selection	preferences	de	Auswahl des Themas (Farben/Schrift
 this server is located in the %1 timezone	preferences	de	Der Server befindet sich in der Zeitzone %1
 thousands separator is only used for displaying and not for editing numbers.	preferences	de	Tausender Trennzeichen werden nur zur Anzeige benutzt, aber nicht, zum bearbeiten von Zahlen.
 time format	preferences	de	Zeitformat
+unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	de	Einzeit für angezeigte Schriftgrößen: entweder "px" wie z.B. bei Webseiten verwendet oder "pt" wie in der Textverarbeitung üblich
 use default	preferences	de	Vorgabe benutzen
 users choice	preferences	de	Benutzerauswahl
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	de	Wenn Sie hier Ja auswählen, werden in der Hauptnavigationsleiste oben zusätzlich Buttons für die Startseite und zum Abmelden angezeigt.
