@@ -1667,7 +1667,7 @@ class addressbook_ui extends addressbook_bo
 						egw_link::link('addressbook',$content['id'],$links);
 					}
 					$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','addressbook',{$content['id']}); if(opener.egw_getAppName() != 'addressbook') { opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','addressbook',{$content['id']},null,'addressbook');}";
-error_log($GLOBALS['egw_info']['flags']['currentapp']);
+
 					if ($button == 'save')
 					{
 						$content['js'] .= ' window.close();';

@@ -620,7 +620,6 @@ class addressbook_so
 		{
 			unset($filter['tid']);	// return all entries incl. deleted
 		}
-
 		$backend = $this->get_backend(null,$filter['owner']);
 		// single string to search for --> create so_sql conformant search criterial for the standard search columns
 		if ($criteria && !is_array($criteria))
@@ -738,6 +737,15 @@ class addressbook_so
 		{
 			$param['search'] = $this->data2db($param['search']);
 		}
+		if(!array_key_exists('tid', $param['col_filter']) || $param['col_filter']['tid'] === '')
+		{
+			$param['col_filter'][] = 'contact_tid != \'' . self::DELETED_TYPE . '\'';
+		}
+		elseif(is_null($param['col_filter']['tid']))
+		{
+			unset($param['col_filter']['tid']);	// return all entries incl. deleted
+		}
+
 		$rows = $this->somain->organisations($param);
 		$this->total = $this->somain->total;
 		//echo "<p>socontacts::organisations(".print_r($param,true).")<br />".$this->somain->db->Query_ID->sql."</p>\n";
