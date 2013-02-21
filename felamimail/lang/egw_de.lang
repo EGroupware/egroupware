@@ -93,7 +93,7 @@ could not import message:	felamimail	de	Konnte diese Nachricht nicht importieren
 could not open secure connection to the imap server. %s : %s.	felamimail	de	Konnte sichere Verbindung zum IMAP Server nicht öffnen. %s : %s.
 cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	de	CRAM-MD5 oder DIGEST-MD5 benötigt das Auth_SASL Packet.
 create	felamimail	de	Erzeugen
-create a new mailbox below the top-level mailbox (ordinary users cannot create top-level mailboxes).	felamimail	de	Erstellen Sie eine
+create a new mailbox below the top-level mailbox (ordinary users cannot create top-level mailboxes).	felamimail	de	Erstellen eines neuen Ordners unterhalb des Posteingangs (Top-Level-Mailbox); Normale Benutzer können keine Ordner auf Top-Level Ebene erstellen.
 create folder	felamimail	de	Ordner anlegen
 create sent	felamimail	de	Gesendete Objekte (Sent) Ordner anlegen
 create subfolder	felamimail	de	Unterordner anlegen
