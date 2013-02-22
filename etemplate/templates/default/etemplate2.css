@@ -92,6 +92,30 @@ div.et2_hbox>div {
 }
 
 /**
+ * Splitter widget - split pane
+ */
+.et2_split {
+	width: 100%;
+	min-width: 100px;
+	min-height: 100px;
+}
+.splitter-bar-vertical { cursor: ew-resize; width: 5px;}
+.splitter-bar-horizontal { cursor: ns-resize; height: 5px;}
+/* Hide iframes so moving works */
+.splitter-iframe-hide { display: none;}
+.et2_split div.splitter-bar-vertical div.ui-icon {
+	position: absolute;
+	margin-left: -5px;
+	top: 45%;
+}
+.et2_split div.splitter-bar-horizontal div.ui-icon {
+	position: absolute;
+	margin-top: -6px;
+	left: 47%;
+}
+
+
+/**
  * Label widget, and labels for other widgets
  */
 .et2_label {

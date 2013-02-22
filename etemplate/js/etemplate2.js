@@ -17,6 +17,7 @@
 	et2_widget_box;
 	et2_widget_hbox;
 	et2_widget_groupbox;
+	et2_widget_split;
 	et2_widget_button;
 	et2_widget_color;
 	et2_widget_description;
