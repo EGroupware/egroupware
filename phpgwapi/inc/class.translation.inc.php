@@ -1019,6 +1019,14 @@ class translation
 	 */
 	static function convertHTMLToText($_html,$displayCharset=false,$stripcrl=false,$stripalltags=true)
 	{
+		// assume input isHTML, but test the input anyway, because,
+		// if it is not, we may not want to strip whitespace
+		$isHTML = true;
+		if (strlen(strip_tags($_html)) == strlen($_html))
+		{
+			$isHTML = false;
+			// return $_html; // maybe we should not proceed at all
+		}
 		if ($displayCharset === false) $displayCharset = self::$system_charset;
 		//error_log(__METHOD__.$_html);
 		#print '<hr>';
@@ -1123,7 +1131,7 @@ class translation
 		$_html = preg_replace('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*)</a>~si','[$2 -> $1]',$_html);
 
 		// reducing double \r\n to single ones, dont mess with pre sections
-		if ($stripcrl === true )
+		if ($stripcrl === true && $isHTML)
 		{
 			if (stripos($_html,'<pre>')!==false)
 			{
@@ -1161,18 +1169,14 @@ class translation
 			$_html = preg_replace('~<[^>^@]+>~s','',$_html);
 			//$_html = strip_tags($_html, '<a>');
 		}
-		// reducing spaces
-		$_html = preg_replace('~ +~s',' ',$_html);
-		// we dont reduce whitespace at the start or the end of the line, since its used for structuring the document
-		#$_html = preg_replace('~^\s+~m','',$_html);
-		#$_html = preg_replace('~\s+$~m','',$_html);
+		// reducing spaces (not for input that was plain text from the beginning)
+		if ($isHTML) $_html = preg_replace('~ +~s',' ',$_html);
 		// restoring ampersands
 		$_html = str_replace('#amper#sand#','&',$_html);
 		//error_log(__METHOD__.__LINE__.' Charset:'.$displayCharset.' -> '.$_html);
 		$_html = html_entity_decode($_html, ENT_COMPAT, $displayCharset);
 		//error_log(__METHOD__.__LINE__.' Charset:'.$displayCharset.' After html_entity_decode: -> '.$_html);
 		//self::replaceEmailAdresses($_html);
-		#error_log($text);
 		$pos = strpos($_html, 'blockquote');
 		//error_log("convert HTML2Text: $_html");
 		if($pos === false) {
