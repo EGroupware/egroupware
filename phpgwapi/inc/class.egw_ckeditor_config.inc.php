@@ -72,7 +72,7 @@ class egw_ckeditor_config
 			$unit = 'px';
 			$size = (string)(int)$size;
 		}
-		return $size.$unit;
+		return $size.($size?$unit:'');
 	}
 
 	/**
@@ -228,7 +228,7 @@ class egw_ckeditor_config
 		if (empty($unit)) $unit = 'px';
 		foreach(self::$font_size_options as $k => $v)
 		{
-			$config['fontSize_sizes'] .= $v.'/'.$k.$unit.';';
+			$config['fontSize_sizes'] .= $v.$unit.'/'.$k.$unit.';';
 		}
 	}
 
