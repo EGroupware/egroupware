@@ -57,8 +57,9 @@ var et2_dynheight = Class.extend({
 			// Initialize the height calculation
 			this._initialize();
 
-			// Get the outer container height
+			// Get the outer container height and offset, if available
 			var oh = this.outerNode.height();
+			var ot = this.outerNode.offset() ? this.outerNode.offset().top : 0;
 
 			// Get top and height of the inner node
 			var it = this.innerNode.offset().top;
@@ -89,7 +90,7 @@ var et2_dynheight = Class.extend({
 
 			// Calculate the new height of the inner container
 			var w = this.innerNode.width();
-			var h = Math.max(this.minHeight, oh - it - bh -
+			var h = Math.max(this.minHeight, oh + ot - it - bh -
 				this.innerMargin - this.outerMargin);
 			this.innerNode.height(h);
 
