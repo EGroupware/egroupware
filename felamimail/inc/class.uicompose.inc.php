@@ -669,7 +669,7 @@
 				// User preferences for style
 				$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
 				$font_size = egw_ckeditor_config::font_size_from_prefs();
-				$font_span = '<span '.($font||$font_size?'style="':'').($font?'font-family:'.$font.'; ':'').';'.($font_size?'font-size:'.$font_size.'; ':'').'">'.'&nbsp;'.'</span>';
+				$font_span = '<span '.($font||$font_size?'style="':'').($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').'">'.'&nbsp;'.'</span>';
 				if (empty($font) && empty($font_size)) $font_span = '';
 			}
 			//remove possible html header stuff
