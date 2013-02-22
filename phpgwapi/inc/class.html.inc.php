@@ -547,6 +547,8 @@ class html
 		// User preferences
 		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
 		$font_size = egw_ckeditor_config::font_size_from_prefs();
+		$font_span = '<span '.($font||$font_size?'style=\"':'').($font?'font-family:'.$font.'; ':'').($font_size?'font-size:'.$font_size.'; ':'').'\">';
+		if (empty($font) && empty($font_size)) $font_span = '';
 
 		// we need to enable double encoding here, as ckEditor has to undo one level of encoding
 		// otherwise < and > chars eg. from html markup entered in regular (not source) input, will turn into html!
@@ -563,8 +565,8 @@ class html
 			ev.editor.resize("100%", '.str_replace('px', '', $pxheight).');
 		}
 	);'.
-	(trim($_content) == '' ? 'CKEDITOR.instances["'.$_name.'"].setData("<span style=\"font-family:'.$font.';font-size:'.$font_size.';\">&#8203;</span>");' : '').'
-</script>
+	(trim($_content) == '' && $font_span ? 'CKEDITOR.instances["'.$_name.'"].setData("'.$font_span.'&#8203;</span>");' : '').
+'</script>
 ';
 	}
 
