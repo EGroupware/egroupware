@@ -34,6 +34,16 @@
  * @ToDo check if we have to check if returned nonce matches our challange (not done in above link, but why would it be there)
  * @link http://en.wikipedia.org/wiki/Digest_access_authentication
  * @link http://tools.ietf.org/html/rfc2617
+ *
+ * Commented out is accept-charset parameter from (seems not supported by any client I tested with)
+ * @link https://tools.ietf.org/id/draft-reschke-basicauth-enc-06.html
+ *
+ * Implemented support for clients sending credentials in in iso-8859-1 instead of our utf-8:
+ * - Firefox 19.0
+ * - Thunderbird 17.0.3 with Lightning 1.8
+ * - IE 8
+ * - Netdrive
+ * (Chrome 24 or Safari 6 sends credentials in charset of webpage.)
  */
 class egw_digest_auth
 {
@@ -61,24 +71,42 @@ class egw_digest_auth
 		$realm = $GLOBALS['egw_info']['flags']['auth_realm'];
 		if (empty($realm)) $realm = 'EGroupware';
 
+		$username = $_SERVER['PHP_AUTH_USER']; $password = $_SERVER['PHP_AUTH_PW'];
 		// Support for basic auth when using PHP CGI (what about digest auth?)
-		if (!isset($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['Authorization']) && strpos($_SERVER['Authorization'],'Basic ') === 0)
+		if (!isset($username) && !empty($_SERVER['Authorization']) && strpos($_SERVER['Authorization'],'Basic ') === 0)
 		{
 			$hash = base64_decode(substr($_SERVER['Authorization'],6));
 			if (strpos($hash, ':') !== false)
 			{
-				list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $hash, 2);
+				list($username, $password) = explode(':', $hash, 2);
 			}
 		}
-		if (!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['PHP_AUTH_DIGEST']) ||
-			isset($_SERVER['PHP_AUTH_DIGEST']) && (!self::is_valid($realm,$_SERVER['PHP_AUTH_DIGEST'],$username,$password) ||
-				!($sessionid = $GLOBALS['egw']->session->create($username,$password,'text'))) ||
-			isset($_SERVER['PHP_AUTH_USER']) && !($sessionid = $GLOBALS['egw']->session->create($_SERVER['PHP_AUTH_USER'],$_SERVER['PHP_AUTH_PW'],'text')))
+		elseif (isset($_SERVER['PHP_AUTH_DIGEST']) && !self::is_valid($realm,$_SERVER['PHP_AUTH_DIGEST'],$username,$password))
+		{
+			unset($password);
+		}
+		// if given password contains non-ascii chars AND we can not authenticate with it
+		if (isset($username) && isset($password) &&
+			(preg_match('/[^\x20-\x7F]/', $password) || strpos($password, '\\x') !== false) &&
+			!$GLOBALS['egw']->auth->authenticate($username, $password, 'text'))
+		{
+			// replace \x encoded non-ascii chars in password, as they are used eg. by Thunderbird for German umlauts
+			if (strpos($password, '\\x') !== false)
+			{
+				$password = preg_replace_callback('/\\\\x([0-9A-F]{2})/i', function($matches){
+					return chr(hexdec($matches[1]));
+				}, $password);
+			}
+			// try translating the password from iso-8859-1 to utf-8
+			$password = translation::convert($password, 'iso-8859-1');
+			//error_log(__METHOD__."() Fixed non-ascii password of user '$username' from '$_SERVER[PHP_AUTH_PW]' to '$password'");
+		}
+		if (!isset($username) || !($sessionid = $GLOBALS['egw']->session->create($username, $password, 'text')))
 		{
 			// if the session class gives a reason why the login failed --> append it to the REALM
 			if ($GLOBALS['egw']->session->reason) $realm .= ': '.$GLOBALS['egw']->session->reason;
 
-			header('WWW-Authenticate: Basic realm="'.$realm.'"');
+			header('WWW-Authenticate: Basic realm="'.$realm.'"');// draft-reschke-basicauth-enc-06 adds, accept-charset="'.translation::charset().'"');
 			self::digest_header($realm);
 			header('HTTP/1.1 401 Unauthorized');
 			header('X-WebDAV-Status: 401 Unauthorized', true);
