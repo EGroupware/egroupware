@@ -146,6 +146,7 @@ class mail_ui
 			unset($msg);
 			unset($content['msg']);
 		}
+		$content['preview'] = "<html><body style='background-color: pink;'/></html>";
 		$this->mail_bo->restoreSessionData();
 
 		// filter is used to choose the mailbox
