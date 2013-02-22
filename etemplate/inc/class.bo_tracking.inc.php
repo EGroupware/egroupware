@@ -695,6 +695,23 @@ abstract class bo_tracking
 			translation::init();
 		}
 
+		// Cache message body to not have to re-generate it every time
+		static $body_cache = array();
+		$lang = translation::$userlang;
+		$date_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] .
+			$GLOBALS['egw_info']['user']['preferences']['common']['timeformat'];
+
+		// Cache text body
+		if(!$body_cache[$lang][$date_format][false])
+		{
+			$body_cache[$lang][$date_format][false] = $this->get_body(false,$data,$old,false,$receiver);
+		}
+		// Cache HTML body
+		if(!$body_cache[$lang][$date_format][true])
+		{
+			$body_cache[$lang][$date_format][true] = $this->get_body(true,$data,$old,false,$receiver);
+		}
+
 		// send over notification_app
 		if ($GLOBALS['egw_info']['apps']['notifications']['enabled']) {
 			// send via notification_app
@@ -702,8 +719,8 @@ abstract class bo_tracking
 			try {
 				$notification = new notifications();
 				$notification->set_receivers(array($receiver));
-				$notification->set_message($this->get_body(false,$data,$old,false,$receiver)); // set message as plaintext
-				$notification->set_message($this->get_body(true,$data,$old,false,$receiver)); // and html
+				$notification->set_message($body_cache[$lang][$date_format][false]);
+				$notification->set_message($body_cache[$lang][$date_format][true]);
 				$notification->set_sender($this->get_sender($data,$old,true,$receiver));
 				$notification->set_subject($this->get_subject($data,$old,$deleted,$receiver));
 				$notification->set_links(array($this->get_notification_link($data,$old,$receiver)));
@@ -713,7 +730,8 @@ abstract class bo_tracking
 				}
 				$notification->send();
 			}
-			catch (Exception $exception) {
+			catch (Exception $exception)
+			{
 				$this->errors[] = $exception->getMessage();
 				return false;
 			}
@@ -911,10 +929,6 @@ abstract class bo_tracking
 		if($this->get_config(self::CUSTOM_NOTIFICATION, $data, $old))
 		{
 			$body = $this->get_custom_message($data,$old);
-			if($html_email)
-			{
-				$body = nl2br($body);
-			}
 			if($sig = $this->get_signature($data,$old,$receiver))
 			{
 				$body .= ($html_email ? '<br />':'') . "\n$sig";
