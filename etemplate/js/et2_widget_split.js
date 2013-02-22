@@ -61,7 +61,6 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable], {
 	init: function() {
 		this._super.apply(this, arguments);
 
-
 		this.div = $j(document.createElement("div"));
 
 		// Create the dynheight component which dynamically scales the inner
@@ -74,13 +73,16 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable], {
 	},
 
 	destroy: function() {
-		// Store current position
+		// Store current position in preferences
 		if(this.id && this.egw().getAppName())
 		{
 			var size = this.orientation == "v" ? {sizeLeft: this.left.width()} : {sizeTop: this.left.height()};
 			this.egw().set_preference(this.egw().getAppName(), 'splitter-size-' + this.id, size);
 		}
+		// Destroy splitter, restore children
 		this.div.trigger("destroy");
+
+		// Destroy dynamic full-height
 		this.dynheight.free();
 
 		// Remove placeholder children
@@ -93,7 +95,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable], {
 
 	/**
 	 * Tap in here to check if we have real children, because all children should be created
-	 * by this point
+	 * by this point.  If there are, replace the placeholders.
 	 */
 	loadFromXML: function() {
 		this._super.apply(this, arguments);
@@ -112,6 +114,17 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable], {
 					.appendTo(this.div);
 			}
 		}
+
+		// Nextmatches (and possibly other "full height" widgets) need to be adjusted
+		// Trigger the dynamic height thing to re-initialize
+		for(var i = 0; i < this._children.length; i++)
+		{
+			if(this._children[i].dynheight)
+			{
+				this._children[i].dynheight.outerNode = (i == 0 ? this.left : this.right);
+				this._children[i].dynheight.initialized = false;
+			}
+		}
 	},
 
 	doLoadingFinished: function() {
@@ -126,7 +139,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable], {
 	},
 
 	/**
-	 * Initialize the splitter
+	 * Initialize the splitter UI
 	 * Internal.
 	 */
 	_init_splitter: function() {
@@ -137,6 +150,7 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable], {
 			splitterClass: "et2_split"
 		};
 		
+		// Check for position preference, load it in
 		if(this.id)
 		{
 			var pref = this.egw().preference('splitter-size-' + this.id, this.egw().getAppName());
@@ -151,6 +165,8 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable], {
 		{
 			this.div.trigger("destroy");
 		}
+
+		// Initialize splitter
 		this.div.splitter(options);
 		
 		// Add icon to splitter bar
@@ -172,7 +188,6 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable], {
 		{
 			this.dynheight.update();
 		}
-console.log(this.div);
 	},
 
 	getDOMNode: function() {
