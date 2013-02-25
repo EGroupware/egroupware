@@ -1622,6 +1622,23 @@ if (!isset($GLOBALS['egw_info']['flags']['no_exception_handler']) || $GLOBALS['e
 	set_exception_handler('egw_exception_handler');
 }
 
+/**
+ * Fail a little bit more gracefully then a catchable fatal error, by throwing an exception
+ *
+ * @param int $errno  level of the error raised: E_* constants
+ * @param string $errstr error message
+ * @param string $errfile filename that the error was raised in
+ * @param int $errline line number the error was raised at
+ * @throws ErrorException
+ */
+function egw_error_handler ($errno, $errstr, $errfile, $errline)
+{
+	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+}
+
+// install our error-handler only for catchable fatal errors
+set_error_handler('egw_error_handler', E_RECOVERABLE_ERROR);
+
 // some not longer necessary defines
 if (isset($GLOBALS['egw_info']['flags']['phpgw_compatibility']) && $GLOBALS['egw_info']['flags']['phpgw_compatibility'])
 {
