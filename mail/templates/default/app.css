@@ -210,12 +210,7 @@ pre {
  white-space: -o-pre-wrap; /* Opera 7 */
  width: 99%; 
 }
-/*
-.dhtmlxTree {
-	max-height: 300px;
-	overflow: scroll;
-}
-*/
+
 .dtree {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -246,4 +241,25 @@ pre {
 }
 .dtree table, .dtree tr, .dtree td {
 	border: none;
+}
+/*
+ influence the tree display and scrolling behavior
+*/
+#tree_target {
+	width: 100%;
+	max-height: 450px;
+	display: inline-block;
+	overflow: none;
+	overflow-y: auto;
+}
+/*
+ avoid the vertical scrollbar within the sidebox section (triggered by the vertical dimension of the tree)
+*/.divSidebox {
+	overflow: hidden;
+}
+/*
+ avoid the vertical scrollbar within the actual tablecontainer (of the tree)
+*/
+.containerTableStyle {
+	overflow: hidden;
 }
