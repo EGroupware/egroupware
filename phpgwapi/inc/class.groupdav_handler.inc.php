@@ -538,8 +538,12 @@ abstract class groupdav_handler
 	 */
 	public function add_resource($path, array $entry, array $props)
 	{
+		// only run get_etag, if we really need it, as it might be expensive (eg. calendar)
+		if (!isset($props['getetag']))
+		{
+			$props['getetag'] = $this->get_etag($entry);
+		}
 		foreach(array(
-			'getetag' => $this->get_etag($entry),
 			'getcontenttype' => 'text/calendar',
 			'getlastmodified' => $entry['modified'],
 			'displayname' => $entry['title'],
