@@ -368,6 +368,29 @@ class calendar_so
 	}
 
 	/**
+	 * Query calendar main table and return iterator of query
+	 *
+	 * Use as: foreach(get_cal_data() as $data) { $data = egw_db::strip_array_keys($data, 'cal_'); // do something with $data
+	 *
+	 * @param array $query filter, keys have to use 'cal_' prefix
+	 * @param string|array $cols='cal_id,cal_reference,cal_etag,cal_modified,cal_user_modified' cols to query
+	 * @return Iterator as egw_db::select
+	 */
+	function get_cal_data(array $query, $cols='cal_id,cal_reference,cal_etag,cal_modified,cal_user_modified', $include_user_modified=false)
+	{
+		if (!is_array($cols)) $cols = explode(',', $cols);
+
+		// special handling of cal_user_modified "pseudo" column
+		if (($key = array_search('cal_user_modified', $cols)) !== false)
+		{
+			$cols[$key] = $this->db->unix_timestamp('(SELECT MAX(cal_user_modified) FROM '.
+				$this->user_table.' WHERE '.$this->cal_table.'.cal_id='.$this->user_table.'.cal_id)').
+				' AS cal_user_modified';
+		}
+		return $this->db->select($this->cal_table, $cols, $query, __LINE__, __FILE__);
+	}
+
+	/**
 	 * generate SQL to filter after a given category (incl. subcategories)
 	 *
 	 * @param array|int $cat_id cat-id or array of cat-ids, or !$cat_id for none

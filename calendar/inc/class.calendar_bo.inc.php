@@ -1946,33 +1946,33 @@ class calendar_bo
 		}
 		$etag .= ':' . $modified;
 		// include exception etags into our own etag, if exceptions are included
-		if ($client_share_uid_excpetions && !empty($entry['uid']) &&
+		if ($client_share_uid_excpetions && //!empty($entry['uid']) &&
 			$entry['recur_type'] != MCAL_RECUR_NONE && $entry['recur_exception'])
 		{
-			$events =& $this->search(array(
-				//'query' => array('cal_uid' => $entry['uid']),
-				'query' => array('cal_reference' => $entry['id']),
-				'filter' => 'owner',  // return all possible entries
-				'daywise' => false,
-				'enum_recuring' => false,
-				'date_format' => 'server',
-				'no_total' => true,
-			));
-			foreach($events as $k => &$recurrence)
+			foreach($this->so->get_cal_data(array(
+				'cal_reference' => $entry['id'],
+			), 'cal_id,cal_reference,cal_etag,cal_modified'.(!$master_only ? ',cal_user_modified' : '')) as $recurrence)
 			{
+				$recurrence = egw_db::strip_array_keys($data, 'cal_');
 				if ($recurrence['reference'] && $recurrence['id'] != $entry['id'])	// ignore series master
 				{
-					$exception_etag = $this->get_etag($recurrence, $nul);
+					// modified need to be max from modified and user_modified
+					if (!$master_only && $recurrence['modified'] < $recurrence['user_modified'])
+					{
+						$recurrence['modified'] = $recurrence['user_modified'];
+					}
+					$exception_etag = $this->get_etag($recurrence);
 					// if $master_only, only add cal_etag, not max. user modification date
 					if ($master_only) list(,$exception_etag) = explode(':',$exception_etag);
 
-					$exception_etags .= ':'.$this->get_etag($recurrence, $nul);
+					$exception_etags .= ':'.$exception_etag;
 				}
 			}
 			if ($exception_etags)
 			{
 				$etag .= ':'.md5($exception_etags);	// limit size, as there can be many exceptions
 			}
+			//error_log(__METHOD__."($entry[id]: $entry[title]) returning $etag ".function_backtrace());
 		}
 		//error_log(__METHOD__ . "($entry[id],$client_share_uid_excpetions) entry=".array2string($entry)." --> etag=$etag");
 		return $etag;
