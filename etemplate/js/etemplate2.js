@@ -497,35 +497,12 @@ etemplate2.prototype.refresh = function(msg, app, id, type)
 		$j(msg_widget.getDOMNode()).parents().show();
 	}
 
-	// Use jsapi data module to update
-	var uid = app + "::" + id;
-	var update = false;
-	switch(type)
-	{
-		case "update":
-			if(!egw(app).dataRefreshUID(uid))
-			{
-				// Could not update just that row
-				this.widgetContainer.iterateOver(function(_widget) {
-						// Trigger refresh
-						_widget.applyFilters();
-				}, this, et2_nextmatch);
-			}
-			break;
-		case "delete":
-			// Blank the row
-			egw().dataStoreUID(uid,null);
-			// Stop caring about this ID
-			egw().dataUnregisterUID(uid);
-			break;
-		case "add":
-		default:
-			this.widgetContainer.iterateOver(function(_widget) {
-					// Trigger refresh
-					_widget.applyFilters();
-			}, this, et2_nextmatch);
-			break;
-	}
+	// Refresh nextmatches
+	this.widgetContainer.iterateOver(function(_widget) {
+		// Trigger refresh
+		_widget.refresh(id,type);
+	}, this, et2_nextmatch);
+
 }
 
 // Some static things to make getting into widget context a little easier //

@@ -269,8 +269,30 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 	refresh: function(_row_ids, _type) {
 		if (typeof _type == 'undefined') _type = 'edit';
 		if (typeof _row_ids == 'string') _rowids = [_row_ids];
-		// ToDo: use given context, to be more smart about what to change
-		this.applyFilters();
+
+		// Use jsapi data module to update
+		var uid = app + "::" + id;
+		switch(_type)
+		{
+			case "update":
+				if(!egw().dataRefreshUID(uid))
+				{
+					// Could not update just that row
+					this.applyFilters();
+				}
+				break;
+			case "delete":
+				// Blank the row
+				egw().dataStoreUID(uid,null);
+				// Stop caring about this ID
+				egw().dataUnregisterUID(uid);
+				break;
+			case "add":
+			default:
+				// Trigger refresh
+				this.applyFilters();
+				break;
+		}
 	},
 
 	/**
@@ -744,6 +766,16 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 			select.set_select_options(columns);
 			select.set_value(columns_selected);
 
+			var autoRefresh = et2_createWidget("select", {"empty_label":"Refresh"}, this);
+			autoRefresh.set_id("nm_autorefresh");
+			autoRefresh.set_select_options({
+				'': "off",
+				30: "30 seconds",
+				60: "1 Minute",
+				300: "5 Minutes"
+			});
+			autoRefresh.set_value(this._get_autorefresh());
+
 			var defaultCheck = et2_createWidget("checkbox", {}, this);
 			defaultCheck.set_id('as_default');
 			defaultCheck.set_label(this.egw().lang("As default"));
@@ -799,6 +831,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 
 				self.dataview.updateColumns();
 
+				// Auto refresh
+				self._set_autorefresh(autoRefresh.get_value());
+
 				// Set default?
 				if(defaultCheck.get_value() == "true")
 				{
@@ -819,6 +854,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 				.append(cancelButton.getDOMNode())
 				.appendTo(this.innerDiv);
 
+			// Add autorefresh
+			this.selectPopup.append(autoRefresh.getSurroundings().getDOMNode(autoRefresh.getDOMNode()));
+
 			// Add default checkbox for admins
 			var apps = this.egw().user('apps');
 			if(apps['admin'])
@@ -834,6 +872,42 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		var s_position = this.div.position();
 		this.selectPopup.css("top", t_position.top)
 			.css("left", s_position.left + this.div.width() - this.selectPopup.width());
+	},
+
+	/**
+	 * Set the auto-refresh time period, and starts the timer if not started
+	 *
+	 * @param time int Refresh period, in seconds
+	 */
+	_set_autorefresh: function(time) {
+		// Store preference
+		var refresh_preference = this.options.template + "_autorefresh";
+		var app = this.options.template.split(".");
+		this.egw().set_preference(app[0],refresh_preference,time);
+
+		// Start / update timer
+		var self = this;
+		if (this._autorefresh_timer)
+		{
+			window.clearInterval(this._autorefresh_timer);
+			delete this._autorefresh_timer;
+		}
+		if(time > 0)
+		{
+			this._autorefresh_timer = setInterval(function() {self.refresh();}, time * 1000);
+		}
+	},
+
+	/**
+	 * Get the auto-refresh timer
+	 *
+	 * @return int Refresh period, in secods
+	 */
+	_get_autorefresh: function() {
+		var refresh_preference = this.options.template + "_autorefresh";
+		var app = this.options.template.split(".");
+		return this.egw().preference(refresh_preference,app[0]);
+		console.log(this);
 	},
 
 	/**
@@ -881,6 +955,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 				this.sortBy(this.options.settings.order,
 					this.options.settings.sort == "ASC", false);
 			}
+
+			// Start auto-refresh
+			this._set_autorefresh(this._get_autorefresh());
 		}
 	},
 
