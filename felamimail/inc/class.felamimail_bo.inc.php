@@ -2504,6 +2504,14 @@ class felamimail_bo
 				'mimeType'	=> ($_structure->type == 'TEXT' && $_structure->subType == 'HTML') ? 'text/html' : 'text/plain',
 				'charSet'	=> $this->getMimePartCharset($_structure),
 			);
+			if ($_structure->type == 'TEXT' && $_structure->subType == 'PLAIN' &&
+				is_array($_structure->parameters) && isset($_structure->parameters['FORMAT']) &&
+				trim(strtolower($_structure->parameters['FORMAT']))=='flowed'
+			)
+			{
+				if (self::$debug) error_log(__METHOD__.__LINE__." detected TEXT/PLAIN Format:flowed -> removing leading blank ('\r\n ') per line");
+				$bodyPart['body'] = str_replace("\r\n ","\r\n", $bodyPart['body']);
+			}
 			if ($_structure->subType == 'CALENDAR')
 			{
 				// we get an inline CALENDAR ical/ics, we display it using the calendar notification style
@@ -5493,6 +5501,14 @@ class felamimail_bo
 			if ($structure->ctype_primary=='text' && $structure->body)
 			{
 				$mailObject->IsHTML($structure->ctype_secondary=='html'?true:false);
+				if ($structure->ctype_primary == 'text' && $structure->ctype_secondary == 'plain' &&
+					is_array($structure->ctype_parameters) && isset($structure->ctype_parameters['format']) &&
+					trim(strtolower($structure->ctype_parameters['format']))=='flowed'
+				)
+				{
+					if (self::$debug) error_log(__METHOD__.__LINE__." detected TEXT/PLAIN Format:flowed -> removing leading blank ('\r\n ') per line");
+					$structure->body = str_replace("\r\n ","\r\n", $structure->body);
+				}
 				$mailObject->Body = $structure->body;
 				$seemsToBePlainMessage = true;
 			}
@@ -5555,6 +5571,16 @@ class felamimail_bo
 					//error_log(__METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.' already fetched Content is HTML='.$isHTML.' Body:'.$part->body);
 					$bodyPart = $part->body;
 					if ($decode) $bodyPart = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'));
+/*
+					if ($part->ctype_primary == 'text' && $part->ctype_secondary == 'plain' &&
+						is_array($part->ctype_parameters) && isset($part->ctype_parameters['format']) &&
+						trim(strtolower($part->ctype_parameters['format']))=='flowed'
+					)
+					{
+						if (self::$debug) error_log(__METHOD__.__LINE__." detected TEXT/PLAIN Format:flowed -> removing leading blank ('\r\n ') per line");
+						$bodyPart = str_replace("\r\n ","\r\n", $bodyPart);
+					}
+*/
 					$mailObject->Body = ($isHTML==false?$mailObject->Body:'').$bodyPart;
 					$mailObject->AltBody .= $bodyPart;
 					$partFetched = true;
