@@ -560,7 +560,7 @@ abstract class groupdav_handler
 			}
 		}
 		if ($this->groupdav->prop_requested('owner') === true && !isset($props['owner']) &&
-			($account_lid = $this->accounts->name2id($entry['owner'])))
+			($account_lid = $this->accounts->id2name($entry['owner'])))
 		{
 			$type = $this->accounts->get_type($entry['owner']) == 'u' ? 'users' : 'groups';
 			$props['owner'] = HTTP_WebDAV_Server::mkprop('href', $this->base_uri.'/principals/'.$type.'/'.$account_lid.'/');
