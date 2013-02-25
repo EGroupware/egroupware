@@ -163,25 +163,28 @@ widget_browser.prototype.create_attribute = function(name, settings)
 
 	// Setter function - maybe editable?
 	var self = this;
+	var input = null;
 	switch(settings.type)
 	{
 		case 'string':
-			value.append('<input/>')
+			input = $j('<input/>')
 				.change(function(e) {
 					self.widget[set_function_name].apply(self.widget, [$j(e.target).val()]);
 				});
+			input.val(this.widget.options[name]);
 			break;
 		case 'boolean':
-			value.append('<input type="checkbox"/>')
+			input = $j('<input type="checkbox"/>')
+				.attr("checked", this.widget.options[name])
 				.change(function(e) {
-					self.widget[set_function_name].apply(self.widget, [$j(e.target).val()]);
+					self.widget[set_function_name].apply(self.widget, [e.target.checked]);
 				});
 			break;
 		default:
 			value.text(this.widget.options[name]);
 			return row;
 	}
-	value.val(this.widget.options[name]);
+	input.appendTo(value)
 
 	return row;
 }
