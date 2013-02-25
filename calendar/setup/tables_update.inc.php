@@ -2239,9 +2239,19 @@ function calendar_upgrade1_9_008()
 }
 
 /**
+ * Create index on egw_cal.cal_reference to speed up etag generation of recuring events
+ */
+function calendar_upgrade1_9_009()
+{
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_cal', array('cal_reference'));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.010';
+}
+
+/**
  * Add cal_rrule columns, drop egw_cal_repeats table
  */
-/*function calendar_upgrade1_9_009()
+/*function calendar_upgrade1_9_010()
 {
 	$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_rrule',array(
 		'type' => 'varchar',
@@ -2266,6 +2276,6 @@ function calendar_upgrade1_9_008()
 	}
 	$GLOBALS['egw_setup']->oProc->DropTable('egw_cal_repeats');
 
-	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.010';
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.011';
 }
 */
