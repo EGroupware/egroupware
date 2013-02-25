@@ -753,13 +753,18 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			list($app) = explode('.',$this->attrs['template']);
 			if($GLOBALS['egw_info']['user']['apps']['admin'] && $app)
 			{
-				$pref_name = 'nextmatch-' . (isset($value['columnselection_pref']) ? $value['columnselection_pref'] : $this->attrs['template'].'-details');
+				$pref_name = 'nextmatch-' . (isset($value['columnselection_pref']) ? $value['columnselection_pref'] : $this->attrs['template']);
 				// Columns already saved to user's preferences, use from there
-				$cols = $GLOBALS['egw']->preferences->read();
-				$cols = $cols[$app][$pref_name];
+				$prefs = $GLOBALS['egw']->preferences->read();
+				$cols = $prefs[$app][$pref_name];
 				$GLOBALS['egw']->preferences->add($app,$pref_name,is_array($cols) ? implode(',',$cols) : $cols,'default');
 
+				// Autorefresh
+				$refresh = $prefs[$app][$pref_name."-autorefresh"];
+				$GLOBALS['egw']->preferences->add($app,$pref_name."-autorefresh",(int)$refresh,'default');
+
 				$GLOBALS['egw']->preferences->save_repository(false,'default');
+				$prefs = $GLOBALS['egw']->preferences->read();
 			}
 		}
 		$validated[$form_name] = $value;
