@@ -29,6 +29,7 @@
 	et2_widget_radiobox;
 	et2_widget_date;
 	et2_widget_diff;
+	et2_widget_dropdown_button;
 	et2_widget_styles;
 	et2_widget_html;
 	et2_widget_htmlarea;
