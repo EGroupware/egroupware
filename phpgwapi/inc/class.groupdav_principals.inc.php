@@ -327,6 +327,7 @@ class groupdav_principals extends groupdav_handler
 			foreach($expand_prop['val'] as &$prop_val)
 			{
 				list(,$expand_path) = explode($this->groupdav->base_uri, $prop_val['val']);
+				//error_log(__METHOD__."('$path', ..., $user) calling propfind('$expand_path', ".array2string($options2).', '.array2string($prop_val).", $user)");
 				if ($this->propfind($expand_path, $options2, $prop_val, $user) !== true || !isset($prop_val['files'][0]))
 				{
 					throw new egw_exception_assertion_failed('no propfind for '.$expand_path);
@@ -1396,10 +1397,16 @@ class groupdav_principals extends groupdav_handler
 			if ($account_id !== 'run' && $account_id != $account && ($rights & $mask) == $right &&
 				($account_lid = $this->accounts->id2name($account_id)))
 			{
+				// ignore "broken" grants (eg. negative account_id for a user), as they lead to further errors (no members)
+				if (($t = $this->accounts->exists($account_id) == 1 ? 'u' : 'g') !== $this->accounts->get_type($account_id))
+				{
+					error_log(__METHOD__."('$principal', '$type') broken grants from #$account_id ($account_lid) type=$t ignored!");
+					continue;
+				}
 				$proxys[$account_id] = $account_lid;
 				// no need to add group-members, ACL grants to groups are understood by WebDAV ACL (tested with iCal)
 			}
-			//echo "<p>$account_id ($account_lid): (rights=$rights & mask=$mask) == right=$right --> ".array2string(($rights & $mask) == $right)."</p>\n";
+			//echo "<p>$account_id ($account_lid) type=$t: (rights=$rights & mask=$mask) == right=$right --> ".array2string(($rights & $mask) == $right)."</p>\n";
 		}
 		return $this->add_principal($principal.'/'.$type, array(
 				'displayname' => lang('%1 proxy of %2', lang($app).' '.lang($what), basename($principal)),
