@@ -1,3 +1,25 @@
+egroupware-epl (11.1.20130225-1) hardy; urgency=low
+
+  * eMail: implement the usage of possibly provided SPECIAL-USE folders information
+  * Java notifier app from Stefan Werfling, added translation and egw-configuration on download
+  * Calendar/CalDAV: fixed wrong time in notification mails caused by updates via CalDAV (not web interface), if user-timezone differs from server
+  * eMail: introduce config option to define the display of your chosen identity, the list of identities in send and derived from this, the information actively sent within the mailheader regarding the identity used
+  * Calendar/FMail: allow to apply replys to meeting requests
+  * API/CKEditor: Version update to 3.6.6
+  * eMail: fix embedded picture to large bug on compose; suggested solution from M.Dell Ambrogio
+  * SiteMgr: sitewide config to allow proxys and CDNs caching of anonymous requests (Expires and Cache-Control header)
+  * Filemanager: removing extended ACL for groups was not immediatly reflected in rights of current user, had to log out and in again
+  * Preferences/EMail: if user changed password, update password in session correct, so eg. EMail using that password keeps working
+  * Preferences/all apps: allow to specify font size unit of richtext editor: either "px" display pixels or "pt" as used in word processing
+  * EMailAdmin: support for new qmailLdap schema using mailQuotaSize instead of mailQuota
+  * Calendar: copying of events now preservs quantity of resources
+  * Calendar: moving an event series is not preserving participants (gave error there are not participants)
+  * Addressbook: fix problem regarding deleted entries found in org_view, when type filter is set to all
+  * WebDAV/CalDAV/CardDAV: implemented support for clients sending passwords with non-ascii chars (eg. acents or umlauts) in iso-8859-1 instead utf-8: Firefox, Thunderbird, IE, Netdrive
+  * CalDAV/CardDAV: removed unnecessary (double) etag generation and improved calendar etag generation for recurring events
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 25 Feb 2013 12:31:27 +0100
+
 egroupware-epl (11.1.20130129-1) hardy; urgency=low
 
   * Tracker: introduce new filter own or assigned; use filter ownorassigned-not-closed with notification for due or overdue
