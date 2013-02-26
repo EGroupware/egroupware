@@ -650,7 +650,7 @@ class Net_IMAP extends Net_IMAPProtocol {
             return $ret;
         }
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
-            return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
+            if ($ret["RESPONSE"]["CODE"]) return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
         // sometimes we get an [COMMAND] => OK with $ret["PARSED"][0] and no $ret["PARSED"][0]["EXT"]["BODYSTRUCTURE"]
         if (is_array($ret) && isset($ret["PARSED"])) {
@@ -664,6 +664,8 @@ class Net_IMAP extends Net_IMAPProtocol {
         $structure = array();
 
         $mimeParts = array();
+
+        if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK" && empty($ret2)) return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"].'/'.'No BODYSTRUCTURE found!');
         if (is_array($ret2)) $this->_parseStructureArray($ret2, $mimeParts);
 
         return array_shift($mimeParts);
@@ -2583,7 +2585,7 @@ class Net_IMAP extends Net_IMAPProtocol {
      */
     function getACL($mailbox_name = null )
     {
-       if($mailbox_name == null){
+        if($mailbox_name == null){
             $mailbox_name = $this->getCurrentMailbox();
         }
         if ( PEAR::isError( $ret = $this->cmdGetACL($mailbox_name) ) ) {

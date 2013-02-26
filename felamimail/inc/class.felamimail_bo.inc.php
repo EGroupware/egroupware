@@ -3436,6 +3436,7 @@ class felamimail_bo
 
 						break;
 
+					case 'NIL': // multipart with no Alternative
 					case 'MIXED':
 					case 'REPORT':
 					case 'SIGNED':
