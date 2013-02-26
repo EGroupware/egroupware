@@ -1755,7 +1755,7 @@ class calendar_boupdate extends calendar_bo
 
 		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
 
-		return $this->so->save_alarm($cal_id,$alarm, $this->now);
+		return $this->so->save_alarm($cal_id,$alarm);
 	}
 
 	/**
@@ -1775,7 +1775,7 @@ class calendar_boupdate extends calendar_bo
 
 		$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);
 
-		return $this->so->delete_alarm($id, $this->now);
+		return $this->so->delete_alarm($id);
 	}
 
 	/**
