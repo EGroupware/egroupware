@@ -271,27 +271,39 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		if (typeof _row_ids == 'string') _rowids = [_row_ids];
 
 		// Use jsapi data module to update
-		var uid = app + "::" + id;
-		switch(_type)
+		var list = et2_csvSplit(this.options.settings.get_rows, 2, ".");
+		var app = list[0];
+		
+		if(typeof _row_ids == "string")
 		{
-			case "update":
-				if(!egw().dataRefreshUID(uid))
-				{
-					// Could not update just that row
+			_row_ids = _row_ids.split(",");
+		}
+		id_loop:
+		for(var i = 0; i < _row_ids.length; i++)
+		{
+			var uid = app + "::" + _row_ids[i];
+			switch(_type)
+			{
+				case "update":
+					if(!egw().dataRefreshUID(uid))
+					{
+						// Could not update just that row
+						this.applyFilters();
+						break id_loop;
+					}
+					break;
+				case "delete":
+					// Blank the row
+					egw().dataStoreUID(uid,null);
+					// Stop caring about this ID
+					egw().dataUnregisterUID(uid);
+					break;
+				case "add":
+				default:
+					// Trigger refresh
 					this.applyFilters();
-				}
-				break;
-			case "delete":
-				// Blank the row
-				egw().dataStoreUID(uid,null);
-				// Stop caring about this ID
-				egw().dataUnregisterUID(uid);
-				break;
-			case "add":
-			default:
-				// Trigger refresh
-				this.applyFilters();
-				break;
+					break id_loop;
+			}
 		}
 	},
 
@@ -881,9 +893,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 	 */
 	_set_autorefresh: function(time) {
 		// Store preference
-		var refresh_preference = this.options.template + "_autorefresh";
+		var refresh_preference = "nextmatch-" + this.options.settings.columnselection_pref + "-autorefresh";
 		var app = this.options.template.split(".");
-		this.egw().set_preference(app[0],refresh_preference,time);
+		if(this._get_autorefresh() != time)
+		{
+			this.egw().set_preference(app[0],refresh_preference,time);
+		}
 
 		// Start / update timer
 		var self = this;
@@ -904,7 +919,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 	 * @return int Refresh period, in secods
 	 */
 	_get_autorefresh: function() {
-		var refresh_preference = this.options.template + "_autorefresh";
+		var refresh_preference = "nextmatch-" + this.options.settings.columnselection_pref + "-autorefresh";
 		var app = this.options.template.split(".");
 		return this.egw().preference(refresh_preference,app[0]);
 		console.log(this);
@@ -1134,6 +1149,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			this.filter2 = this._build_select('filter2', 'select', settings.filter2, settings.filter2_no_lang);
 		}
 
+		// Favorites
+		this._setup_favorites(settings['favorites']);
 
 		// Export
 		if(!settings.no_csv_export)
@@ -1165,7 +1182,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			self.nextmatch.activeFilters.search = self.search.getValue()
 			self.nextmatch.applyFilters();
 		};
-		
+
 
 		// Letter search
 		var current_letter = this.nextmatch.options.settings.searchletter ? 
@@ -1302,6 +1319,41 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			});
 		}	
 		return select;
+	},
+
+	/**
+	 * Set up the favorites UI control
+	 *
+	 * Favorites are implemented by saving the values for [column] filters.  Filters used/stored are
+	 * listed in the favorites nm setting.
+	 */
+	_setup_favorites: function(filters) {
+		var self = this;
+		var nm_div = this.nextmatch.div;
+
+		if(typeof filters == "undefined")
+		{
+			// No favorites configured
+			return;
+		}
+
+		var list = et2_csvSplit(this.options.get_rows, 2, ".");
+		var app = list[0];
+		var stored_filters = this.egw().preference("nextmatch-"+this.options.columnselection_pref+"-favorites", app);
+		if(typeof stored_filters == "undefined" || !stored_filters)
+		{
+			stored_filters = {};
+		}
+		/*
+		this.favorites = et2_createWidget("dropdown_button", {
+			id: "nm_favorites",
+			label_updates: false,
+			image: "etemplate/filter",
+			onclick: self.applyFilters,
+			select_options: stored_filters
+		}, this);
+		$j(this.favorites.getDOMNode(this.favorites)).insertAfter(this.count).css("float","right");
+		*/
 	},
 
 	/**
