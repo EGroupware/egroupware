@@ -1918,14 +1918,14 @@ class calendar_bo
 	/**
 	 * Get the etag for an entry
 	 *
+	 * As all update routines (incl. set_status and add/delete alarms) update (series master) modified timestamp,
+	 * we do NOT need any special handling for series master anymore
+	 *
 	 * @param array|int|string $event array with event or cal_id, or cal_id:recur_date for virtual exceptions
 	 * @param string &$schedule_tag=null on return schedule-tag (egw_cal.cal_id:egw_cal.cal_etag, no participant modifications!)
-	 * @param boolean $client_share_uid_excpetions Does client understand exceptions to be included in VCALENDAR component of series master sharing its UID
-	 * @param boolean $master_only=false only take into account recurrance masters
-	 * 	(for ActiveSync which does not support different participants/status on recurrences/exceptions!)
 	 * @return string|boolean string with etag or false
 	 */
-	function get_etag($entry, &$schedule_tag=null, $client_share_uid_excpetions=true,$master_only=false)
+	function get_etag($entry, &$schedule_tag=null)
 	{
 		if (!is_array($entry))
 		{
@@ -1934,46 +1934,8 @@ class calendar_bo
 			$entry = $this->read($entry, $recur_date, true, 'server');
 		}
 		$etag = $schedule_tag = $entry['id'].':'.$entry['etag'];
+		$etag .= ':'.$entry['modified'];
 
-		// use new MAX(modification date) of egw_cal_user table (deals with virtual exceptions too)
-		if (isset($entry['max_user_modified']))
-		{
-			$modified = max($entry['max_user_modified'], $entry['modified']);
-		}
-		else
-		{
-			$modified = max($this->so->max_user_modified($entry['id'],false,$master_only), $entry['modified']);
-		}
-		$etag .= ':' . $modified;
-		// include exception etags into our own etag, if exceptions are included
-		if ($client_share_uid_excpetions && //!empty($entry['uid']) &&
-			$entry['recur_type'] != MCAL_RECUR_NONE && $entry['recur_exception'])
-		{
-			foreach($this->so->get_cal_data(array(
-				'cal_reference' => $entry['id'],
-			), 'cal_id,cal_reference,cal_etag,cal_modified'.(!$master_only ? ',cal_user_modified' : '')) as $recurrence)
-			{
-				$recurrence = egw_db::strip_array_keys($data, 'cal_');
-				if ($recurrence['reference'] && $recurrence['id'] != $entry['id'])	// ignore series master
-				{
-					// modified need to be max from modified and user_modified
-					if (!$master_only && $recurrence['modified'] < $recurrence['user_modified'])
-					{
-						$recurrence['modified'] = $recurrence['user_modified'];
-					}
-					$exception_etag = $this->get_etag($recurrence);
-					// if $master_only, only add cal_etag, not max. user modification date
-					if ($master_only) list(,$exception_etag) = explode(':',$exception_etag);
-
-					$exception_etags .= ':'.$exception_etag;
-				}
-			}
-			if ($exception_etags)
-			{
-				$etag .= ':'.md5($exception_etags);	// limit size, as there can be many exceptions
-			}
-			//error_log(__METHOD__."($entry[id]: $entry[title]) returning $etag ".function_backtrace());
-		}
 		//error_log(__METHOD__ . "($entry[id],$client_share_uid_excpetions) entry=".array2string($entry)." --> etag=$etag");
 		return $etag;
 	}

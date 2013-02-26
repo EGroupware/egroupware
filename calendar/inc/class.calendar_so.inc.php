@@ -7,7 +7,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @author Christian Binder <christian-AT-jaytraxx.de>
  * @author Joerg Lehrke <jlehrke@noc.de>
- * @copyright (c) 2005-11 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-13 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -67,6 +67,9 @@ define('WEEK_s',7*DAY_s);
  *
  * DB-model uses egw_cal_user.cal_status='X' for participants who got deleted. They never get returned by
  * read or search methods, but influence the ctag of the deleted users calendar!
+ *
+ * All update methods not take care to update modification time of (evtl. existing) series master too,
+ * to force an etag, ctag and sync-token change! Methods not doing that are private to this class.
  */
 class calendar_so
 {
@@ -1303,12 +1306,18 @@ ORDER BY cal_user_type, cal_usre_id
 					if (!$ts) continue;
 					$alarm['time'] = $ts - $alarm['offset'];
 				}
-				$this->save_alarm($cal_id,$alarm);
+				$this->save_alarm($cal_id, $alarm, false);	// false: not update modified, we do it anyway
 			}
 		}
 		if (is_null($etag))
 		{
 			$etag = $this->db->select($this->cal_table,'cal_etag',array('cal_id' => $cal_id),__LINE__,__FILE__,false,'','calendar')->fetchColumn();
+		}
+
+		// if event is an exception: update modified of master, to force etag, ctag and sync-token change
+		if ($event['cal_reference'])
+		{
+			$this->updateModified($event['cal_reference']);
 		}
 		return $cal_id;
 	}
@@ -1629,7 +1638,11 @@ ORDER BY cal_user_type, cal_usre_id
 			if (!is_null($role) && $role != 'REQ-PARTICIPANT') $set['cal_role'] = $role;
 			$this->db->insert($this->user_table,$set,$where,__LINE__,__FILE__,'calendar');
 		}
-		$ret = $this->db->affected_rows();
+		// update modified and modifier in main table
+		if (($ret = $this->db->affected_rows()))
+		{
+			$this->updateModified($cal_id, true);	// true = update series master too
+		}
 		//error_log(__METHOD__."($cal_id,$user_type,$user_id,$status,$recur_date) = $ret");
 		return $ret;
 	}
@@ -1706,6 +1719,9 @@ ORDER BY cal_user_type, cal_usre_id
 		//echo "<p>socal::delete($cal_id)</p>\n";
 
 		$this->delete_alarms($cal_id);
+
+		// update timestamp of series master, updates own timestamp too, which does not hurt ;-)
+		$this->updateModified($cal_id, true);
 
 		foreach($this->all_tables as $table)
 		{
@@ -1809,10 +1825,10 @@ ORDER BY cal_user_type, cal_usre_id
 	 *
 	 * @param int $cal_id Id of the calendar-entry
 	 * @param array $alarm array with fields: text, owner, enabled, ..
-	 * @param timestamp $now=0 timestamp for modification of related event
+	 * @param boolean $update_modified=true call update modified, default true
 	 * @return string id of the alarm
 	 */
-	function save_alarm($cal_id, $alarm, $now=0)
+	function save_alarm($cal_id, $alarm, $update_modified=true)
 	{
 		//echo "<p>save_alarm(cal_id=$cal_id, alarm="; print_r($alarm); echo ")</p>\n";
 		//error_log(__METHOD__."(.$cal_id,$now,".array2string($alarm).')');
@@ -1840,21 +1856,20 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 
 		// update the modification information of the related event
-		if (!$now) $now = time();
-		$modifier = $GLOBALS['egw_info']['user']['account_id'];
-		$this->db->update($this->cal_table, array('cal_modified' => $now, 'cal_modifier' => $modifier),
-			array('cal_id' => $cal_id), __LINE__, __FILE__, 'calendar');
+		if ($update_modified) $this->updateModified($cal_id, true);
 
 		return $id;
 	}
 
 	/**
-	 * delete all alarms of a calendar-entry
+	 * Delete all alarms of a calendar-entry
+	 *
+	 * Does not update timestamps of series master, therefore private!
 	 *
 	 * @param int $cal_id Id of the calendar-entry
 	 * @return int number of alarms deleted
 	 */
-	function delete_alarms($cal_id)
+	private function delete_alarms($cal_id)
 	{
 		$alarms = $this->read_alarms($cal_id);
 
@@ -1869,19 +1884,15 @@ ORDER BY cal_user_type, cal_usre_id
 	 * delete one alarms identified by its id
 	 *
 	 * @param string $id alarm-id is a string of 'cal:'.$cal_id.':'.$alarm_nr, it is used as the job-id too
-	 * @param timestamp $now=0 timestamp for modification of related event
 	 * @return int number of alarms deleted
 	 */
-	function delete_alarm($id, $now=0)
+	function delete_alarm($id)
 	{
 		// update the modification information of the related event
 		list(,$cal_id) = explode(':',$id);
 		if ($cal_id)
 		{
-			if (!$now) $now = time();
-			$modifier = $GLOBALS['egw_info']['user']['account_id'];
-			$this->db->update($this->cal_table, array('cal_modified' => $now, 'cal_modifier' => $modifier),
-				array('cal_id' => $cal_id), __LINE__, __FILE__, 'calendar');
+			$this->updateModified($cal_id, true);
 		}
 		return $this->async->cancel_timer($id);
 	}
@@ -2403,17 +2414,29 @@ ORDER BY cal_user_type, cal_usre_id
 	}
 
 	/**
-	 * Udates the modification timestamp
+	 * Updates the modification timestamp to force an etag, ctag and sync-token change
 	 *
-	 * @param id		event id
-	 * @param time		new timestamp
-	 * @param modifier	uid of the modifier
-	 *
+	 * @param int $id event id
+	 * @param int|boolean $update_master=false id of series master or true, to update series master too
+	 * @param int $time=null new timestamp, default current (server-)time
+	 * @param int $modifier=null uid of the modifier, default current user
 	 */
-	function updateModified($id, $time, $modifier)
+	function updateModified($id, $update_master=false, $time=null, $modifier=null)
 	{
+		if (is_null($time) || !$time) $time = time();
+		if (is_null($modifier)) $modifier = $GLOBALS['egw_info']['user']['account_id'];
+
 		$this->db->update($this->cal_table,
 			array('cal_modified' => $time, 'cal_modifier' => $modifier),
 			array('cal_id' => $id), __LINE__,__FILE__, 'calendar');
+
+		// if event is an exception: update modified of master, to force etag, ctag and sync-token change
+		if ($update_master)
+		{
+			if ($update_master !== true || ($update_master = $this->db->select($this->cal_table, 'cal_reference', array('cal_id' => $id), __LINE__, __FILE__)->fetchColumn()))
+			{
+				$this->updateModified($update_master, false, $time, $modifier);
+			}
+		}
 	}
 }
