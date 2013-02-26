@@ -1,3 +1,9 @@
+egroupware-epl (11.1.20130226-1) hardy; urgency=low
+
+  * Calendar: create index on egw_cal.cal_reference and other fixes on new etag implementation
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 26 Feb 2013 09:58:30 +0100
+
 egroupware-epl (11.1.20130225-1) hardy; urgency=low
 
   * eMail: implement the usage of possibly provided SPECIAL-USE folders information
