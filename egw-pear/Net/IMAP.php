@@ -576,7 +576,7 @@ class Net_IMAP extends Net_IMAPProtocol {
             return $ret;
         }
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
-            return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
+            if ($ret["RESPONSE"]["CODE"]) return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
         $found = 0;
         foreach($ret["PARSED"] as $key => $value)
@@ -597,6 +597,8 @@ class Net_IMAP extends Net_IMAPProtocol {
         $structure = array();
 
         $mimeParts = array();
+
+        if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK" && empty($ret2)) return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"].'/'.'No BODYSTRUCTURE found!');
         $this->_parseStructureArray($ret2, $mimeParts);
         #_debug_array($ret);
         return array_shift($mimeParts);

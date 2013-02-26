@@ -1955,6 +1955,14 @@
 					'mimeType'	=> ($_structure->type == 'TEXT' && $_structure->subType == 'HTML') ? 'text/html' : 'text/plain',
 					'charSet'	=> $this->getMimePartCharset($_structure),
 				);
+				if ($_structure->type == 'TEXT' && $_structure->subType == 'PLAIN' &&
+					is_array($_structure->parameters) && isset($_structure->parameters['FORMAT']) &&
+					trim(strtolower($_structure->parameters['FORMAT']))=='flowed'
+				)
+				{
+					if (self::$debug) error_log(__METHOD__.__LINE__." detected TEXT/PLAIN Format:flowed -> removing leading blank ('\r\n ') per line");
+					$bodyPart['body'] = str_replace("\r\n ","\r\n", $bodyPart['body']);
+				}
 			}
 			//_debug_array($bodyPart);
 			return $bodyPart;
@@ -2490,6 +2498,7 @@
 
 							break;
 
+						case 'NIL':
 						case 'MIXED':
 						case 'REPORT':
 						case 'SIGNED':

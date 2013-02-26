@@ -1169,6 +1169,14 @@ class translation
 	 */
 	static function convertHTMLToText($_html,$displayCharset=false,$stripcrl=false,$stripalltags=true)
 	{
+		// assume input isHTML, but test the input anyway, because,
+		// if it is not, we may not want to strip whitespace
+		$isHTML = true;
+		if (strlen(strip_tags($_html)) == strlen($_html))
+		{
+			$isHTML = false;
+			// return $_html; // maybe we should not proceed at all
+		}
 		if ($displayCharset === false) $displayCharset = self::$system_charset;
 		//error_log(__METHOD__.$_html);
 		#print '<hr>';
@@ -1209,7 +1217,7 @@ class translation
 		$_html = preg_replace($Rules, $Replace, $_html);
 
 		//   removing carriage return linefeeds, preserve those enclosed in <pre> </pre> tags
-		if ($stripcrl === true )
+		if ($stripcrl === true && $isHTML)
 		{
 			if (stripos($_html,'<pre>')!==false)
 			{
@@ -1270,7 +1278,7 @@ class translation
 		// reducing double \r\n to single ones
 		//$_html = str_replace("\r\n\r\n", "\r\n", $_html); // ToDo: this needsv to be more sophosticated
 		// reducing spaces
-		$_html = preg_replace('~ +~s',' ',$_html);
+		if ($isHTML) $_html = preg_replace('~ +~s',' ',$_html);
 		// we dont reduce whitespace at the start or the end of the line, since its used for structuring the document
 		#$_html = preg_replace('~^\s+~m','',$_html);
 		#$_html = preg_replace('~\s+$~m','',$_html);
