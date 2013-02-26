@@ -448,6 +448,7 @@ class translation
 		$loaded = array();
 		foreach($load_app == 'all-apps' ? scandir(EGW_SERVER_ROOT) : (array)$load_app as $app_dir)
 		{
+			if ($load_app == 'all-apps' && $app_dir=='..') continue; // do not try to break out of egw server root
 			if ($app_dir[0] == '.' || !is_dir(EGW_SERVER_ROOT.'/'.$app_dir) ||
 				!@file_exists($file=self::get_lang_file($app_dir, $lang)) ||
 				!($f = fopen($file, 'r')))
