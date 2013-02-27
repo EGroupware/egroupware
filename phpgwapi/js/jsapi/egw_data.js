@@ -156,6 +156,8 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 				_callback, _context, _knownUids)
 		{
 			var lm = lastModification;
+			if(typeof _context.lastModification != "undefined") lm = _context.lastModification;
+
 			if (_queriedRange["no_data"])
 			{
 				lm = 0xFFFFFFFFFFFF;

@@ -436,6 +436,7 @@ var et2_dataview_controller = Class.extend({
 					"self": this,
 					"start": query.start,
 					"count": query.num_rows,
+					"lastModification": this._lastModification
 			};
 			if(this.dataStorePrefix)
 			{
