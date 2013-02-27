@@ -466,6 +466,32 @@ class calendar_rrule implements Iterator
 	}
 
 	/**
+	 * Get datetime of n-th event, 1. is original event-time
+	 *
+	 * This is identical on COUNT parameter of RRULE is evaluated, exceptions are NOT taken into account!
+	 *
+	 * @param int $count
+	 * @return DateTime
+	 */
+	public function count2date($count)
+	{
+		if ($count <= 1)
+		{
+			return clone $this->time;
+		}
+		if (isset($this->current)) $backup = $this->current;
+		$this->rewind();
+
+		while(--$count > 0)
+		{
+			$this->next_no_exception();
+		}
+		$ret = clone $this->current;
+		if ($backup) $this->current = $backup;
+		return $ret;
+	}
+
+	/**
 	 * Rewind the Iterator to the first element (called at beginning of foreach loop)
 	 */
 	public function rewind()
