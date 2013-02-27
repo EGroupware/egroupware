@@ -57,7 +57,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 		 * 
 		 * If a prefernce is not already loaded (only done for "common" by default), it is synchroniosly queryed from the server!
 		 * 
-		 * @param string _name name of the preference, eg. 'dateformat'
+		 * @param string _name name of the preference, eg. 'dateformat', or '*' to get all the application's preferences
 		 * @param string _app='common'
 		 * @return string preference value
 		 * @todo add a callback to query it asynchron
@@ -72,6 +72,8 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 
 				if (typeof prefs[_app] == 'undefined') prefs[_app] = {};
 			}
+			if(_name == "*") return prefs[_app];
+
 			return prefs[_app][_name];
 		},
 
