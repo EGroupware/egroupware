@@ -287,6 +287,16 @@ var et2_dropdown_button = et2_inputWidget.extend({
 		this.change(selected_node);
 	},
 
+	attachToDOM: function() {
+		this._super.apply(this, arguments);
+
+		// Move the parent's handler to the button, or we can't tell the difference between the clicks
+		$j(this.node).unbind("click.et2_baseWidget");
+		this.button.bind("click.et2_baseWidget", this, function(e) {
+			return e.data.click.call(e.data, this);
+		});
+	},
+
 	set_label: function(_value) {
 		if (this.button)
 		{
@@ -345,6 +355,10 @@ var et2_dropdown_button = et2_inputWidget.extend({
 				this.set_label(this.options.label);
 			}
 		}
+	},
+
+	getValue: function() {
+		return this.value;
 	}
 });
 

@@ -70,6 +70,8 @@
  *  'selected'       =>     //  O array with selected id's
  *  'checkboxes'     =>     //  O array with checkbox id as key and boolean checked value
  *  'select_all'     =>     //  O boolean value of select_all checkbox, reference to above value for key 'select_all'
+ *  'favorites'      =>     //  I boolean|array True to enable favorites, or an array of additional, app specific settings to include
+ *					in the saved filters (eg: pm_id)
  */
 class etemplate_widget_nextmatch extends etemplate_widget
 {
@@ -134,6 +136,13 @@ class etemplate_widget_nextmatch extends etemplate_widget
 					$label['label'] = html_entity_decode($label['label'], ENT_NOQUOTES,'utf-8');
 				}
 			}
+		}
+
+		// Favorite group for admins
+		if($GLOBALS['egw_info']['apps']['admin'] && $value['favorites'])
+		{
+			self::$request->sel_options[$form_name]['favorite']['group'] = array('all' => lang('All users')) +
+				etemplate_widget_menupopup::typeOptions('select-account',',groups');
 		}
 		foreach($value as $name => $_value)
 		{
@@ -735,6 +744,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value = self::get_array($content, $form_name);
+		list($app) = explode('.',$this->attrs['template']);
 
 		// On client, rows does not get its own namespace, but all apps are expecting it
 		$value['rows'] = $value;
@@ -750,7 +760,6 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		if($value['as_default'])
 		{
 			unset($value['as_default']);
-			list($app) = explode('.',$this->attrs['template']);
 			if($GLOBALS['egw_info']['user']['apps']['admin'] && $app)
 			{
 				$pref_name = 'nextmatch-' . (isset($value['columnselection_pref']) ? $value['columnselection_pref'] : $this->attrs['template']);
@@ -768,6 +777,46 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			}
 		}
 		$validated[$form_name] = $value;
+	}
+
+	
+	/**
+	 * Create or delete a favorite for multiple users
+	 *
+	 * Need to be an admin or it will just do nothing quietly
+	 *
+	 * @param $app Current application, needed to save preference
+	 * @param $name String Name of the favorite
+	 * @param $action String add or delete
+	 * @param $group int|String ID of the group to create the favorite for, or All for all users
+	 * @param $filters Array of key => value pairs for the filter
+	 *
+	 * @return boolean Success
+	 */
+	public static function ajax_set_favorite($app, $name, $action, $group, $filters = array())
+	{
+		$pref_name = "favorite_".$name;
+		if($group && $GLOBALS['egw']['apps']['admin'])
+		{
+			$prefs = new preferences(is_numeric($group) ? $group: $GLOBALS['egw_info']['user']['account_id']);
+		}
+		else
+		{
+			$prefs =& $GLOBALS['egw']->preferences;
+			$type = 'user';
+		}
+		$type = $group == "all" ? "default" : "user";
+		if($action == "add")
+		{
+			$prefs->add($app,$pref_name,$filters,$type);
+		}
+		else if ($action == "delete")
+		{
+			$prefs->delete($app,$pref_name, $type);
+		}
+		$prefs->save_repository(false,$type);
+
+		egw_json_response::get()->data(true);
 	}
 
 	/**
