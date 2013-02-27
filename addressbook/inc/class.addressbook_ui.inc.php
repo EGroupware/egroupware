@@ -225,6 +225,7 @@ class addressbook_ui extends addressbook_bo
 				'manual'         => $do_email ? ' ' : false,	// space for the manual icon
 				//'actions'        => $this->get_actions(),		// set on each request, as it depends on some filters
 				'row_id'         => 'id',
+				'favorites'      => true
 			);
 			$csv_export = new addressbook_csv($this);
 			$content['nm']['csv_fields'] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['nextmatch-export-definition'] ?
@@ -1666,7 +1667,7 @@ class addressbook_ui extends addressbook_bo
 					{
 						egw_link::link('addressbook',$content['id'],$links);
 					}
-					$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','addressbook',{$content['id']}); if(opener.egw_getAppName() != 'addressbook') { opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','addressbook',{$content['id']},null,'addressbook');}";
+					$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','addressbook',{$content['id']}, '" . ($content['id'] ? 'update' : 'add') . "', opener.egw_getAppName())";
 
 					if ($button == 'save')
 					{
