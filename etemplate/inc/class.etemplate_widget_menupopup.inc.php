@@ -144,15 +144,18 @@ class etemplate_widget_menupopup extends etemplate_widget
 
 		// Make sure &nbsp;s, etc.  are properly encoded when sent, and not double-encoded
 		$options = (self::$request->sel_options[$form_name] ? $form_name : $this->id);
-		foreach(self::$request->sel_options[$options] as &$label)
+		if(is_array(self::$request->sel_options[$options]))
 		{
-			if(!is_array($label))
+			foreach(self::$request->sel_options[$options] as &$label)
 			{
-				$label = html_entity_decode($label, ENT_NOQUOTES,'utf-8');
-			}
-			elseif($label['label'])
-			{
-				$label['label'] = html_entity_decode($label['label'], ENT_NOQUOTES,'utf-8');
+				if(!is_array($label))
+				{
+					$label = html_entity_decode($label, ENT_NOQUOTES,'utf-8');
+				}
+				elseif($label['label'])
+				{
+					$label['label'] = html_entity_decode($label['label'], ENT_NOQUOTES,'utf-8');
+				}
 			}
 		}
 	}
