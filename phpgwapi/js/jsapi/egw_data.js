@@ -395,6 +395,16 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		},
 
 		/**
+		 * Returns data of a given uid.
+		 *
+		 * @param uid is the uid for which should be checked whether it has some
+		 * 	data.
+		 */
+		dataGetUIDdata: function (_uid) {
+			return typeof localStorage[_uid];
+		},
+
+		/**
 		 * Returns all uids that have the given prefix
 		 * TODO: Improve this
 		 */
@@ -488,7 +498,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 				var nextmatchId = registeredCallbacks[_uid][0].widgetId;
 				var uid = _uid.split("::");
 				var context = {
-					"prefix":uid[0],
+					"prefix":uid[0]
 				};
 				uid = uid[uid.length - 1];
 
@@ -501,5 +511,3 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 	};
 
 });
-
-
