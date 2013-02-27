@@ -2498,34 +2498,13 @@ class calendar_ical extends calendar_boupdate
 								}
 								$vcardData['recur_type'] = MCAL_RECUR_WEEKLY;
 							}
-
-							if (!empty($vcardData['recur_count']))
-							{
-								$vcardData['recur_enddate'] = mktime(
-									date('H', $vcardData['end']),
-									date('i', $vcardData['end']),
-									date('s', $vcardData['end']),
-									date('m', $vcardData['start']),
-									date('d', $vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)*7),
-									date('Y', $vcardData['start']));
-							}
 							break;
 
 						case 'D':	// 1.0
 							if (preg_match('/D(\d+) #(\d+)/', $recurence, $recurenceMatches))
 							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
-								if ($recurenceMatches[2] > 0 && $vcardData['end'])
-								{
-									$vcardData['recur_enddate'] = mktime(
-										date('H', $vcardData['end']),
-										date('i', $vcardData['end']),
-										date('s', $vcardData['end']),
-										date('m', $vcardData['end']),
-										date('d', $vcardData['end']) + ($vcardData['recur_interval']*($recurenceMatches[2]-1)),
-										date('Y', $vcardData['end'])
-									);
-								}
+								$vcardData['recur_count'] = $recurenceMatches[2];
 							}
 							elseif (preg_match('/D(\d+) (.*)/', $recurence, $recurenceMatches))
 							{
@@ -2537,17 +2516,6 @@ class calendar_ical extends calendar_boupdate
 							// fall-through
 						case 'DAILY':	// 2.0
 							$vcardData['recur_type'] = MCAL_RECUR_DAILY;
-
-							if (!empty($vcardData['recur_count']))
-							{
-								$vcardData['recur_enddate'] = mktime(
-									date('H', $vcardData['end']),
-									date('i', $vcardData['end']),
-									date('s', $vcardData['end']),
-									date('m', $vcardData['start']),
-									date('d', $vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)),
-									date('Y', $vcardData['start']));
-							}
 							break;
 
 						case 'M':
@@ -2555,17 +2523,7 @@ class calendar_ical extends calendar_boupdate
 							{
 								$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_MDAY;
 								$vcardData['recur_interval'] = $recurenceMatches[1];
-								if ($recurenceMatches[2] > 0 && $vcardData['end'])
-								{
-									$vcardData['recur_enddate'] = mktime(
-										date('H', $vcardData['end']),
-										date('i', $vcardData['end']),
-										date('s', $vcardData['end']),
-										date('m', $vcardData['end']) + ($vcardData['recur_interval']*($recurenceMatches[2]-1)),
-										date('d', $vcardData['end']),
-										date('Y', $vcardData['end'])
-									);
-								}
+								$vcardData['recur_count'] = $recurenceMatches[2];
 							}
 							elseif (preg_match('/MD(\d+)(?: [^ ]+)? ([0-9TZ]+)/',$recurence, $recurenceMatches))
 							{
@@ -2579,16 +2537,7 @@ class calendar_ical extends calendar_boupdate
 								$vcardData['recur_interval'] = $recurenceMatches[1];
 								if (preg_match('/#(\d+)/',$recurenceMatches[4],$recurenceMatches))
 								{
-									if ($recurenceMatches[1])
-									{
-										$vcardData['recur_enddate'] = mktime(
-											date('H', $vcardData['end']),
-											date('i', $vcardData['end']),
-											date('s', $vcardData['end']),
-											date('m', $vcardData['start']) + ($vcardData['recur_interval']*($recurenceMatches[1]-1)),
-											date('d', $vcardData['start']),
-											date('Y', $vcardData['start']));
-									}
+									$vcardData['recur_count'] = $recurenceMatches[1];
 								}
 								else
 								{
@@ -2599,34 +2548,13 @@ class calendar_ical extends calendar_boupdate
 						case 'MONTHLY':
 							$vcardData['recur_type'] = strpos($recurence,'BYDAY') !== false ?
 									MCAL_RECUR_MONTHLY_WDAY : MCAL_RECUR_MONTHLY_MDAY;
-
-							if (!empty($vcardData['recur_count']))
-							{
-								$vcardData['recur_enddate'] = mktime(
-									date('H', $vcardData['end']),
-									date('i', $vcardData['end']),
-									date('s', $vcardData['end']),
-									date('m', $vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)),
-									date('d', $vcardData['start']),
-									date('Y', $vcardData['start']));
-							}
 							break;
 
 						case 'Y':		// 1.0
 							if (preg_match('/YM(\d+)(?: [^ ]+)? #(\d+)/', $recurence, $recurenceMatches))
 							{
 								$vcardData['recur_interval'] = $recurenceMatches[1];
-								if ($recurenceMatches[2] > 0 && $vcardData['end'])
-								{
-									$vcardData['recur_enddate'] = mktime(
-										date('H', $vcardData['end']),
-										date('i', $vcardData['end']),
-										date('s', $vcardData['end']),
-										date('m', $vcardData['end']),
-										date('d', $vcardData['end']),
-										date('Y', $vcardData['end']) + ($recurenceMatches[2] * $vcardData['recur_interval'])
-									);
-								}
+								$vcardData['recur_count'] = $recurenceMatches[2];
 							}
 							elseif (preg_match('/YM(\d+)(?: [^ ]+)? ([0-9TZ]+)/',$recurence, $recurenceMatches))
 							{
@@ -2637,17 +2565,6 @@ class calendar_ical extends calendar_boupdate
 							// fall-through
 						case 'YEARLY':	// 2.0
 							$vcardData['recur_type'] = MCAL_RECUR_YEARLY;
-
-							if (!empty($vcardData['recur_count']))
-							{
-								$vcardData['recur_enddate'] = mktime(
-									date('H', $vcardData['end']),
-									date('i', $vcardData['end']),
-									date('s', $vcardData['end']),
-									date('m', $vcardData['start']),
-									date('d', $vcardData['start']),
-									date('Y', $vcardData['start']) + ($vcardData['recur_interval']*($vcardData['recur_count']-1)));
-							}
 							break;
 					}
 					break;
@@ -2986,6 +2903,7 @@ class calendar_ical extends calendar_boupdate
 				case 'recur_enddate':
 				case 'recur_data':
 				case 'recur_exception':
+				case 'recur_count':
 					// not handled here
 					break;
 
@@ -2994,7 +2912,7 @@ class calendar_ical extends calendar_boupdate
 					if ($event['recur_type'] != MCAL_RECUR_NONE)
 					{
 						$event['reference'] = 0;
-						foreach (array('recur_interval','recur_enddate','recur_data','recur_exception') as $r)
+						foreach (array('recur_interval','recur_enddate','recur_data','recur_exception','recur_count') as $r)
 						{
 							if (isset($vcardData[$r]))
 							{
@@ -3027,6 +2945,15 @@ class calendar_ical extends calendar_boupdate
 			//$last->modify('+' . $delta . ' seconds');
 			$last->setTime(0, 0, 0);
 			$event['recur_enddate'] = egw_time::to($last, 'server');
+		}
+		// translate COUNT into an enddate, as we only store enddates
+		elseif($event['recur_count'])
+		{
+			$rriter = calendar_rrule::event2rrule($event, false);
+			$last = $rriter->count2date($event['recur_count']);
+			$last->setTime(0, 0, 0);
+			$event['recur_enddate'] = egw_time::to($last, 'server');
+			unset($event['recur_count']);
 		}
 
 		// Apple iCal on OS X uses X-CALENDARSERVER-ACCESS: CONFIDENTIAL on VCALANDAR (not VEVENT!)
