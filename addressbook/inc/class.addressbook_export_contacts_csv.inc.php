@@ -55,7 +55,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		$old_app = $GLOBALS['egw_info']['flags']['currentapp'];
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
 
-		if ($options['selection'] == 'use_all' || $options['selection'] == 'all') {
+		if ($options['selection'] == 'search') {
 			// uicontacts selection with checkbox 'use_all'
 			$query = $GLOBALS['egw']->session->appsession('index','addressbook');
 			$query['num_rows'] = -1;	// all
@@ -63,7 +63,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			if(!array_key_exists('filter',$query)) $query['filter'] = $GLOBALS['egw_info']['user']['account_id'];
 			$this->ui->get_rows($query,$selection,$readonlys, true);	// only return the ids
 		}
-		elseif ( $options['selection'] == 'all_contacts' ) {
+		elseif ( $options['selection'] == 'all' ) {
 			if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) {
 				$col_filter['account_id'] = null;
 			}
