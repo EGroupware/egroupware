@@ -2447,6 +2447,24 @@ class calendar_ical extends calendar_boupdate
 					$vcardData['recur_data'] = 0;
 					switch($type)
 					{
+						case 'D':	// 1.0
+							if (preg_match('/D(\d+) #(\d+)/', $recurence, $recurenceMatches))
+							{
+								$vcardData['recur_interval'] = $recurenceMatches[1];
+								$vcardData['recur_count'] = $recurenceMatches[2];
+							}
+							elseif (preg_match('/D(\d+) (.*)/', $recurence, $recurenceMatches))
+							{
+								$vcardData['recur_interval'] = $recurenceMatches[1];
+								$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime(trim($recurenceMatches[2]));
+							}
+							else break;
+							// fall-through
+						case 'DAILY':	// 2.0
+							$vcardData['recur_type'] = MCAL_RECUR_DAILY;
+							if (stripos($recurence, 'BYDAY') === false) break;
+							// hack to handle TYPE=DAILY;BYDAY= as WEEKLY, which is true as long as there's no interval
+							// fall-through
 						case 'W':
 						case 'WEEKLY':
 							$days = array();
@@ -2496,24 +2514,6 @@ class calendar_ical extends calendar_boupdate
 							}
 							break;
 
-						case 'D':	// 1.0
-							if (preg_match('/D(\d+) #(\d+)/', $recurence, $recurenceMatches))
-							{
-								$vcardData['recur_interval'] = $recurenceMatches[1];
-								$vcardData['recur_count'] = $recurenceMatches[2];
-							}
-							elseif (preg_match('/D(\d+) (.*)/', $recurence, $recurenceMatches))
-							{
-								$vcardData['recur_interval'] = $recurenceMatches[1];
-								$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime(trim($recurenceMatches[2]));
-							}
-							else break;
-
-							// fall-through
-						case 'DAILY':	// 2.0
-							$vcardData['recur_type'] = MCAL_RECUR_DAILY;
-							break;
-
 						case 'M':
 							if (preg_match('/MD(\d+)(?: [^ ]+)? #(\d+)/', $recurence, $recurenceMatches))
 							{
@@ -2541,10 +2541,6 @@ class calendar_ical extends calendar_boupdate
 								}
 							}
 							break;
-						case 'MONTHLY':
-							$vcardData['recur_type'] = strpos($recurence,'BYDAY') !== false ?
-									MCAL_RECUR_MONTHLY_WDAY : MCAL_RECUR_MONTHLY_MDAY;
-							break;
 
 						case 'Y':		// 1.0
 							if (preg_match('/YM(\d+)(?: [^ ]+)? #(\d+)/', $recurence, $recurenceMatches))
@@ -2557,10 +2553,21 @@ class calendar_ical extends calendar_boupdate
 								$vcardData['recur_interval'] = $recurenceMatches[1];
 								$vcardData['recur_enddate'] = $this->vCalendar->_parseDateTime($recurenceMatches[2]);
 							} else break;
-
 							// fall-through
 						case 'YEARLY':	// 2.0
-							$vcardData['recur_type'] = MCAL_RECUR_YEARLY;
+							if (strpos($recurence, 'BYDAY') === false)
+							{
+								$vcardData['recur_type'] = MCAL_RECUR_YEARLY;
+								break;
+							}
+							// handle FREQ=YEARLY;BYDAY= as FREQ=MONTHLY;BYDAY= with 12*INTERVAL
+							$vcardData['recur_interval'] = $vcardData['recur_interval'] ?
+								12*$vcardData['recur_interval'] : 12;
+							// fall-through
+						case 'MONTHLY':
+							// does currently NOT parse BYDAY or BYMONTH, it has to be specified/identical to DTSTART
+							$vcardData['recur_type'] = strpos($recurence,'BYDAY') !== false ?
+								MCAL_RECUR_MONTHLY_WDAY : MCAL_RECUR_MONTHLY_MDAY;
 							break;
 					}
 					break;
@@ -2926,20 +2933,18 @@ class calendar_ical extends calendar_boupdate
 				break;
 			}
 		}
-		if (!empty($event['recur_enddate']))
+		if ($event['recur_enddate'])
 		{
 			// reset recure_enddate to 00:00:00 on the last day
 			$rriter = calendar_rrule::event2rrule($event, false);
 			$rriter->rewind();
-			$last = clone $rriter->time;
-			while ($rriter->current <= $rriter->enddate)
+			while ($rriter->current < $rriter->enddate)
 			{
-				$last = clone $rriter->current;
 				$rriter->next_no_exception();
 			}
-			//$delta = $event['end'] - $event['start'];
-			//$last->modify('+' . $delta . ' seconds');
+			$last = clone $rriter->current;
 			$last->setTime(0, 0, 0);
+			//error_log(__METHOD__."() rrule=$recurence --> ".array2string($rriter)." --> enddate=".array2string($last).'='.egw_time::to($last, ''));
 			$event['recur_enddate'] = egw_time::to($last, 'server');
 		}
 		// translate COUNT into an enddate, as we only store enddates
