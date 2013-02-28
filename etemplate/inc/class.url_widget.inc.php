@@ -62,7 +62,8 @@ class url_widget
 	 * has to be used case insensitive: /i
 	 */
 	//const EMAIL_PREG = '([a-z0-9][a-z0-9._-]*)?[a-z0-9]@([a-z0-9](|[a-z0-9_-]*[a-z0-9])\.)+[a-z]{2,6}';
-	const EMAIL_PREG = '([a-z0-9][a-z0-9._\&\+-]*)?[a-z0-9_]@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}';
+	//const EMAIL_PREG = '([a-z0-9][a-z0-9._\'\&\+-]*)?[a-z0-9_]@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}';
+	const EMAIL_PREG = '^[^\x00-\x20()<>@,;:\\"\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}';
 
 	/**
 	 * pre-processing of the extension
@@ -100,7 +101,8 @@ class url_widget
 						{
 							$cell['size'] .= '|[^<]+ ?<'.self::EMAIL_PREG.'>';
 						}
-						$cell['size'] .= ')$/i,email';
+						//$cell['size'] .= ')$/iu,email';// ,email causes browser-side validation. browser is more restrictive, so we disable browserside validation
+						$cell['size'] .= ')$/iu';
 					}
 					#_debug_array($cell);
 					break;
