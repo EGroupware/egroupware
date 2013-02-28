@@ -21,7 +21,7 @@ class etemplate_widget_url extends etemplate_widget
 	/**
 	 * Regexes for validating
 	 */
-	const EMAIL_PREG = '([a-z0-9][a-z0-9._\&\+-]*)?[a-z0-9_]@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}';
+	const EMAIL_PREG = '^[^\x00-\x20()<>@,;:\\".\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}';
 
 	/**
 	 * Validate input
@@ -66,7 +66,7 @@ class etemplate_widget_url extends etemplate_widget
 						}
 						break;
 					case 'url-email':
-						$this->attrs['preg'] = '/^('.self::EMAIL_PREG.')?$/';
+						$this->attrs['preg'] = '/('.self::EMAIL_PREG.')?$/iu';
 						break;
 				}
 			}
