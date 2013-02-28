@@ -547,7 +547,7 @@ class mail_bo
 		static $folderOpened;
 		//if (empty($folderOpened) || $folderOpened!=$_foldername)
 		//{
-			//error_log( "------------------------reopen- $_foldername <br>");
+			//error_log( __METHOD__.__LINE__." $_foldername ".function_backtrace());
 			//error_log(__METHOD__.__LINE__.' Connected with icServer for Profile:'.$this->profileID.'?'.print_r($this->icServer->_connected,true));
 			if (!($this->icServer->_connected == 1)) {
 				$tretval = $this->openConnection($this->profileID,false);
@@ -2330,6 +2330,134 @@ class mail_bo
 	}
 
 	/**
+	 * delete a Message
+	 *
+	 * @param mixed array/string _messageUID array of ids to flag, or 'all'
+	 * @param string _folder foldername
+	 * @param string _forceDeleteMethod - "no", or deleteMethod like 'move_to_trash',"mark_as_deleted","remove_immediately"
+	 *
+	 * @return bool true, as we do not handle return values yet
+	 */
+	function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no')
+	{
+		//error_log(__METHOD__.__LINE__.'->'.array2string($_messageUID).','.array2string($_folder));
+		$msglist = '';
+		$oldMailbox = '';
+		if (is_null($_folder) || empty($_folder)) $_folder = $this->sessionData['mailbox'];
+		if(!is_array($_messageUID) || count($_messageUID) === 0)
+		{
+			if ($_messageUID=='all')
+			{
+				$_messageUID= null;
+			}
+			else
+			{
+				if (self::$debug) error_log(__METHOD__." no messages Message(s): ".implode(',',$_messageUID));
+				return false;
+			}
+		}
+		$deleteOptions = $_forceDeleteMethod; // use forceDeleteMethod if not "no", or unknown method
+		if ($_forceDeleteMethod === 'no' || !in_array($_forceDeleteMethod,array('move_to_trash',"mark_as_deleted","remove_immediately"))) $deleteOptions  = $this->mailPreferences->preferences['deleteOptions'];
+		//error_log(__METHOD__.__LINE__.'->'.array2string($_messageUID).','.$_folder.'/'.$this->sessionData['mailbox'].' Option:'.$deleteOptions);
+		$trashFolder    = $this->getTrashFolder();
+		$draftFolder	= $this->getDraftFolder(); //$GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
+		$templateFolder = $this->getTemplateFolder(); //$GLOBALS['egw_info']['user']['preferences']['felamimail']['templateFolder'];
+		if(($_folder == $trashFolder && $deleteOptions == "move_to_trash") ||
+		   ($_folder == $draftFolder)) {
+			$deleteOptions = "remove_immediately";
+		}
+		if($this->icServer->getCurrentMailbox() != $_folder) {
+			$oldMailbox = $this->icServer->getCurrentMailbox();
+			$this->icServer->selectMailbox($_folder);
+		}
+		$updateCache = false;
+		switch($deleteOptions) {
+			case "move_to_trash":
+				$updateCache = true;
+				if(!empty($trashFolder)) {
+					if (self::$debug) error_log(implode(' : ', $_messageUID));
+					if (self::$debug) error_log("$trashFolder <= ". $this->sessionData['mailbox']);
+					// copy messages
+					$retValue = $this->icServer->copyMessages($trashFolder, $_messageUID, $_folder, true);
+					if ( PEAR::isError($retValue) ) {
+						if (self::$debug) error_log(__METHOD__." failed to copy Message(s) from $_folder to $trashFolder: ".implode(',',$_messageUID));
+						throw new egw_exception("failed to copy Message(s) from $_folder to $trashFolder: ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
+						return false;
+					}
+					// mark messages as deleted
+					$retValue = $this->icServer->deleteMessages($_messageUID, true);
+					if ( PEAR::isError($retValue)) {
+						if (self::$debug) error_log(__METHOD__." failed to delete Message(s) from $_folder: ".implode(',',$_messageUID)." due to:".$retValue->message);
+						throw new egw_exception("failed to delete Message(s) from $_folder: ".implode(',',$_messageUID)." due to:".array2string($retValue->message));
+						return false;
+					}
+					// delete the messages finaly
+					$rv = $this->icServer->expunge();
+					if ( PEAR::isError($rv)) error_log(__METHOD__." failed to expunge Message(s) from Folder: ".$_folder.' due to:'.$rv->message);
+				}
+				break;
+
+			case "mark_as_deleted":
+				// mark messages as deleted
+				foreach((array)$_messageUID as $key =>$uid)
+				{
+					//flag messages, that are flagged for deletion as seen too
+					$this->flagMessages('read', $uid, $_folder);
+					$flags = $this->getFlags($uid);
+					//error_log(__METHOD__.__LINE__.array2string($flags));
+					if (strpos( array2string($flags),'Deleted')!==false) $undelete[] = $uid;
+					unset($flags);
+				}
+				$retValue = PEAR::isError($this->icServer->deleteMessages($_messageUID, true));
+				foreach((array)$undelete as $key =>$uid)
+				{
+					$this->flagMessages('undelete', $uid, $_folder);
+				}
+				if ( PEAR::isError($retValue)) {
+					if (self::$debug) error_log(__METHOD__." failed to mark as deleted for Message(s) from $_folder: ".implode(',',$_messageUID));
+					throw new egw_exception("failed to mark as deleted for Message(s) from $_folder: ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
+					return false;
+				}
+				break;
+
+			case "remove_immediately":
+				$updateCache = true;
+				// mark messages as deleted
+				$retValue = $this->icServer->deleteMessages($_messageUID, true);
+				if ( PEAR::isError($retValue)) {
+					if (self::$debug) error_log(__METHOD__." failed to remove immediately Message(s) from $_folder: ".implode(',',$_messageUID));
+					throw new egw_exception("failed to remove immediately Message(s) from $_folder: ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
+					return false;
+				}
+				// delete the messages finaly
+				$this->icServer->expunge();
+				break;
+		}
+		if ($updateCache)
+		{
+			$structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+			$cachemodified = false;
+			foreach ((array)$_messageUID as $k => $_uid)
+			{
+				if (isset($structure[$this->icServer->ImapServerId][$_folder][$_uid]) || $_uid=='all')
+				{
+					$cachemodified = true;
+					if ($_uid=='all')
+						unset($structure[$this->icServer->ImapServerId][$_folder]);
+					else
+						unset($structure[$this->icServer->ImapServerId][$_folder][$_uid]);
+				}
+			}
+			if ($cachemodified) egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
+		}
+		if($oldMailbox != '') {
+			$this->icServer->selectMailbox($oldMailbox);
+		}
+
+		return true;
+	}
+
+	/**
 	 * flag a Message
 	 *
 	 * @param string _flag (readable name)
@@ -2523,6 +2651,87 @@ class mail_bo
 		egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
 		//error_log(__METHOD__.__LINE__.' Using query for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid." in Folder:".$_folder.'->'.array2string($structure[$this->icServer->ImapServerId][$_folder][$_uid]));
 		return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
+	}
+
+	/**
+	 * getMessageRawHeader
+	 * get parsed headers from message
+	 * @param string/int $_uid the messageuid,
+	 * @param string/int $_partID='' , the partID, may be omitted
+	 * @param boolean $decode flag to do the decoding on the fly
+	 * @return string the message header
+	 */
+	function getMessageHeader($_uid, $_partID = '',$decode=false)
+	{
+		$retValue = $this->icServer->getParsedHeaders($_uid, true, $_partID, true);
+		if (PEAR::isError($retValue))
+		{
+			error_log(__METHOD__.__LINE__.array2string($retValue->message));
+			$retValue = null;
+		}
+		return ($decode ? self::decode_header($retValue,true):$retValue);
+	}
+
+	/**
+	 * getMessageRawHeader
+	 * get messages raw header data
+	 * @param string/int $_uid the messageuid,
+	 * @param string/int $_partID='' , the partID, may be omitted
+	 * @return string the message header
+	 */
+	function getMessageRawHeader($_uid, $_partID = '')
+	{
+		static $rawHeaders;
+		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		//error_log(__METHOD__.__LINE__." Try Using Cache for raw Header $_uid, $_partID in Folder $_folder");
+
+		if (is_null($rawHeaders)) $rawHeaders = egw_cache::getCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+		if (isset($rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)]))
+		{
+			//error_log(__METHOD__.__LINE__." Using Cache for raw Header $_uid, $_partID in Folder $_folder");
+			return $rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)];
+		}
+
+		$retValue = $this->icServer->getRawHeaders($_uid, $_partID, true);
+		if (PEAR::isError($retValue))
+		{
+			error_log(__METHOD__.__LINE__.array2string($retValue->message));
+			$retValue = "Could not retrieve RawHeaders in ".__METHOD__.__LINE__." PEAR::Error:".array2string($retValue->message);
+		}
+		$rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)]=$retValue;
+		egw_cache::setCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$rawHeaders,$expiration=60*60*1);
+		return $retValue;
+	}
+
+	/**
+	 * getMessageRawBody
+	 * get the message raw body
+	 * @param string/int $_uid the messageuid,
+	 * @param string/int $_partID='' , the partID, may be omitted
+	 * @return string the message body
+	 */
+	function getMessageRawBody($_uid, $_partID = '')
+	{
+		//TODO: caching einbauen static!
+		static $rawBody;
+		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		if (isset($rawBody[$_folder][$_uid][($_partID==''?'NIL':$_partID)]))
+		{
+			//error_log(__METHOD__.__LINE__." Using Cache for raw Body $_uid, $_partID in Folder $_folder");
+			return $rawBody[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)];
+		}
+		if($_partID != '') {
+			$body = $this->icServer->getBody($_uid, true);
+		} else {
+			$body = $this->icServer->getBodyPart($_uid, $_partID, true);
+		}
+		if (PEAR::isError($body))
+		{
+			error_log(__METHOD__.__LINE__.' failed:'.$body->message);
+			return false;
+		}
+		$rawBody[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)] = $body;
+		return $body;
 	}
 
 	/**

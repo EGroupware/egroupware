@@ -23,6 +23,8 @@ class mail_ui
 	var $public_functions = array
 	(
 		'index' => True,
+		'displayHeader'	=> True,
+		'saveMessage'	=> True,
 		'TestConnection' => True,
 	);
 
@@ -66,12 +68,12 @@ class mail_ui
 		}
 		if ($connectionReset)
 		{
-			error_log(__METHOD__.__LINE__.' Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.self::$icServerID);
+			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.self::$icServerID);
 			emailadmin_bo::unsetCachedObjects(self::$icServerID);
 		}
 
 		$this->mail_bo = mail_bo::getInstance(false,$icServerID);
-		error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
+		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
 		if (!($this->mail_bo->icServer->_connected == 1)) $this->mail_bo->openConnection(self::$icServerID);
@@ -85,10 +87,10 @@ class mail_ui
 	function changeProfile($_icServerID)
 	{
 		self::$icServerID = $_icServerID;
-		error_log(__METHOD__.__LINE__.'->'.self::$icServerID);
+		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.'->'.self::$icServerID);
 		emailadmin_bo::unsetCachedObjects(self::$icServerID);
 		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
-		error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
+		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
 		/*if (!($this->mail_bo->icServer->_connected == 1))*/ $this->mail_bo->openConnection(self::$icServerID);
@@ -397,7 +399,7 @@ class mail_ui
 			{
 				if ($_profileID && $_profileID != $this->mail_bo->profileID)
 				{
-					error_log(__METHOD__.__LINE__.' change Profile to ->'.$_profileID);
+					//error_log(__METHOD__.__LINE__.' change Profile to ->'.$_profileID);
 					$this->changeProfile($_profileID);
 				}
 			}
@@ -434,7 +436,7 @@ class mail_ui
 					'im1' => 'thunderbird.png',
 					'im2' => 'thunderbird.png',
 					'path'=> array($icServer->ImapServerId),
-					'child'=> 1,
+					'child'=> 1, // dynamic loading on unfold
 					'parent' => ''
 				);
 				$this->setOutStructure($oA,$out,self::$delimiter);
@@ -484,13 +486,13 @@ class mail_ui
 			}
 			$path = $this->mail_bo->profileID.self::$delimiter.$key; //$obj->folderName; //$obj->delimiter
 			$oA['id'] = $path; // ID holds the PATH
-			if (stripos(array2string($fS['attributes']),'\noselect')!== false)
+			if (!empty($fS['attributes']) && stripos(array2string($fS['attributes']),'\noselect')!== false)
 			{
 				$oA['im0'] = "folderNoSelectClosed.gif"; // one Level
 				$oA['im1'] = "folderNoSelectOpen.gif";
 				$oA['im2'] = "folderNoSelectClosed.gif"; // has Children
 			}
-			if (stripos(array2string($fS['attributes']),'\hasnochildren')=== false)
+			if (!empty($fS['attributes']) && stripos(array2string($fS['attributes']),'\hasnochildren')=== false)
 			{
 				$oA['child']=1; // translates to: hasChildren -> dynamicLoading
 			}
@@ -923,7 +925,7 @@ class mail_ui
 unset($query['actions']);
 //error_log(__METHOD__.__LINE__.array2string($query));
 //error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
-$starttime = microtime(true);
+		//$starttime = microtime(true);
 		//error_log(__METHOD__.__LINE__.array2string($query['search']));
 		//$query['search'] is the phrase in the searchbox
 
@@ -943,7 +945,7 @@ $starttime = microtime(true);
 		{
 			if ($_profileID && $_profileID != $this->mail_bo->profileID)
 			{
-				error_log(__METHOD__.__LINE__.' change Profile to ->'.$_profileID);
+				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$_profileID);
 				$this->changeProfile($_profileID);
 			}
 			$_folderName = $folderName;
@@ -1031,8 +1033,8 @@ $starttime = microtime(true);
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
 		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType,$previewMessage);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
-$endtime = microtime(true) - $starttime;
-error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].' Took:'.$endtime);
+		//$endtime = microtime(true) - $starttime;
+		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].' Took:'.$endtime);
 
 		return $rowsFetched['messages'];
 	}
@@ -1374,6 +1376,102 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 	}
 
 	/**
+	 * display messages header lines
+	 *
+	 * all params are passed as GET Parameters
+	 */
+	function displayHeader()
+	{
+		if(isset($_GET['id'])) $rowID	= $_GET['id'];
+		if(isset($_GET['part'])) $partID = $_GET['part'];
+
+		$hA = $this->splitRowID($rowID);
+		$uid = $hA['msgUID'];
+		$mailbox = $hA['folder'];
+
+		//$transformdate	=& CreateObject('felamimail.transformdate');
+		//$htmlFilter	=& CreateObject('felamimail.htmlfilter');
+		//$uiWidgets	=& CreateObject('felamimail.uiwidgets');
+		$this->mail_bo->reopen($mailbox);
+		$rawheaders	= $this->mail_bo->getMessageRawHeader($uid, $partID);
+
+		$webserverURL	= $GLOBALS['egw_info']['server']['webserver_url'];
+
+		#$nonDisplayAbleCharacters = array('[\016]','[\017]',
+		#		'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
+		#		'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
+
+		#print "<pre>";print_r($rawheaders);print"</pre>";exit;
+
+		// add line breaks to $rawheaders
+		$newRawHeaders = explode("\n",$rawheaders);
+		reset($newRawHeaders);
+
+		// reset $rawheaders
+		$rawheaders 	= "";
+		// create it new, with good line breaks
+		reset($newRawHeaders);
+		while(list($key,$value) = @each($newRawHeaders)) {
+			$rawheaders .= wordwrap($value, 90, "\n     ");
+		}
+
+		$this->mail_bo->closeConnection();
+
+		header('Content-type: text/html; charset=iso-8859-1');
+		print '<pre>'. htmlspecialchars($rawheaders, ENT_NOQUOTES, 'iso-8859-1') .'</pre>';
+
+	}
+
+	/**
+	 * save messages on disk or filemanager, or display it in popup
+	 *
+	 * all params are passed as GET Parameters
+	 */
+	function saveMessage()
+	{
+		$display = false;
+		if(isset($_GET['id'])) $rowID	= $_GET['id'];
+		if(isset($_GET['part'])) $partID		= $_GET['part'];
+		if (isset($_GET['location'])&& ($_GET['location']=='display'||$_GET['location']=='filemanager')) $display	= $_GET['location'];
+
+		$hA = $this->splitRowID($rowID);
+		$uid = $hA['msgUID'];
+		$mailbox = $hA['folder'];
+
+		$this->mail_bo->reopen($mailbox);
+
+		$message = $this->mail_bo->getMessageRawBody($uid, $partID);
+		$headers = $this->mail_bo->getMessageHeader($uid, $partID);
+
+		$this->mail_bo->closeConnection();
+
+		$GLOBALS['egw']->session->commit_session();
+		if ($display==false)
+		{
+			$subject = str_replace('$$','__',mail_bo::decode_header($headers['SUBJECT']));
+			header ("Content-Type: message/rfc822; name=\"". $subject .".eml\"");
+			header ("Content-Disposition: attachment; filename=\"". $subject .".eml\"");
+			header("Expires: 0");
+			// the next headers are for IE and SSL
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			header("Pragma: public");
+
+			echo $message;
+
+			$GLOBALS['egw']->common->egw_exit();
+			exit;
+		}
+		//elseif ($display=='filemanager') // done in vfsSaveMessage
+		//{
+		//}
+		else
+		{
+			header('Content-type: text/html; charset=iso-8859-1');
+			print '<pre>'. htmlspecialchars($message, ENT_NOQUOTES, 'iso-8859-1') .'</pre>';
+		}
+	}
+
+	/**
 	 * getFolderStatus - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 * gets the counters and sets the text of a treenode if needed (unread Messages found)
 	 * @return nothing
@@ -1420,7 +1518,7 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 	function ajax_changeProfile($icServerID)
 	{
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
-		error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+		//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
 		$this->changeProfile($icServerID);
 		$response = egw_json_response::get();
 		$response->call('egw_refresh',lang('changed profile'),'mail');
@@ -1470,7 +1568,7 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 	 */
 	function ajax_flagMessages($_flag, $_messageList)
 	{
-		if($this->_debug) error_log(__METHOD__."->".$_flag.':'.print_r($_messageList,true));
+		if(mail_bo::$debug) error_log(__METHOD__."->".$_flag.':'.print_r($_messageList,true));
 		if ($_messageList=='all' || !empty($_messageList['msg']))
 		{
 			if ($_messageList=='all')
@@ -1492,7 +1590,7 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 		}
 		else
 		{
-			if($this->_debug) error_log(__METHOD__."-> No messages selected.");
+			if(mail_bo::$debug) error_log(__METHOD__."-> No messages selected.");
 		}
 
 		// unset preview, as refresh would mark message again read
@@ -1507,4 +1605,40 @@ error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Star
 		$response->call('egw_refresh',lang('flagged %1 messages as %2 in %3',count($_messageList['msg']),$_flag,$folder),'mail');
 	}
 
+	/**
+	 * delete messages
+	 *
+	 * @param array _messageList list of UID's
+	 *
+	 * @return xajax response
+	 */
+	function ajax_deleteMessages($_messageList)
+	{
+		if(mail_bo::$debug) error_log(__METHOD__."->".$_flag.':'.print_r($_messageList,true));
+		if ($_messageList=='all' || !empty($_messageList['msg']))
+		{
+			if ($_messageList=='all')
+			{
+				// we have no folder information
+				$folder=null;
+			}
+			else
+			{
+				$uidA = $this->splitRowID($_messageList['msg'][0]);
+				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
+			}
+			foreach($_messageList['msg'] as $rowID)
+			{
+				$hA = $this->splitRowID($rowID);
+				$messageList[] = $hA['msgUID'];
+			}
+			$this->mail_bo->deleteMessages(($_messageList=='all' ? 'all':$messageList),$folder);
+		}
+		else
+		{
+			if(mail_bo::$debug) error_log(__METHOD__."-> No messages selected.");
+		}
+		$response = egw_json_response::get();
+		$response->call('egw_refresh',lang('deleted %1 messages in %2',count($_messageList['msg']),$folder),'mail');
+	}
 }

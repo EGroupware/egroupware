@@ -453,11 +453,12 @@ class mail_hooks
 				'admin'  => False,
 				'default'=> 50,
 			),
-			'PreViewFrameHeight' => array(
-				'type'   => 'input',
-				'label'  => 'Message preview size',
-				'help'   => 'If you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here. 300 seems to be a good working value. The preview will be displayed at the end of the message list when a message is selected.',
-				'name'   => 'PreViewFrameHeight',
+			'enablePreViewArea' => array(
+				'type'   => 'select',
+				'label'  => 'Message preview area',
+				'help'   => 'If you want to see a preview of a mail by single clicking onto the subject, enable this.',
+				'name'   => 'enablePreViewArea',
+				'values' => $no_yes_copy,
 				'xmlrpc' => True,
 				'admin'  => False,
 				'forced' => '300',

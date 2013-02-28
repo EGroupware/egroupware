@@ -161,6 +161,44 @@ function mail_setMsg(myMsg)
 }
 
 /**
+ * Delete mails
+ * takes in all arguments
+ * @param _action
+ * @param _elems
+ */
+function mail_delete(_action,_elems)
+{
+	var msg = mail_getFormData(_elems);
+	//alert(_action.id+','+ msg);
+	app_refresh(egw.lang('delete messages'), 'mail');
+	mail_setRowClass(_elems,'deleted');
+	var request = new egw_json_request('mail.mail_ui.ajax_deleteMessages',[msg]);
+	request.sendRequest(false);
+	mail_refreshMessageGrid()
+}
+
+/**
+ * UnDelete mailMessages
+ * 
+ * @param _messageList
+ */
+function mail_undeleteMessages(_messageList) {
+// setting class of row, the old style
+/*
+		for(var i=0;i<_messageList['msg'].length;i++) {
+			_id = _messageList['msg'][i];
+			var dataElem = egw_appWindow('felamimail').mailGrid.dataRoot.getElementById(_id);
+			if (dataElem)
+			{
+				//dataElem.clearData();
+				//dataElem.addClass('deleted');
+				dataElem.removeClass('deleted');
+			}
+		}
+*/
+}
+
+/**
  * mail_emptyTrash
  */
 function mail_emptyTrash() {
@@ -272,6 +310,47 @@ function mail_flagMessages(_flag, _elems)
 }
 
 /**
+ * display header lines, or source of mail, depending on the url given
+ * 
+ * @param _url
+ */
+function mail_displayHeaderLines(_url) {
+	// only used by right clickaction
+	egw_openWindowCentered(_url,'mail_display_headerLines','700','600',window.outerWidth/2,window.outerHeight/2);
+}
+
+/**
+ * View header of a message
+ * 
+ * @param _action
+ * @param _elems _elems[0].id is the row-id
+ */
+function mail_header(_action, _elems)
+{
+	//alert('mail_header('+_elems[0].id+')');
+	var url = window.egw_webserverUrl+'/index.php?';
+	url += 'menuaction=mail.mail_ui.displayHeader';	// todo compose for Draft folder
+	url += '&id='+_elems[0].id;
+	mail_displayHeaderLines(url);
+}
+
+/**
+ * View message source
+ * 
+ * @param _action
+ * @param _elems _elems[0].id is the row-id
+ */
+function mail_mailsource(_action, _elems)
+{
+	//alert('mail_mailsource('+_elems[0].id+')');
+	var url = window.egw_webserverUrl+'/index.php?';
+	url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
+	url += '&id='+_elems[0].id;
+	url += '&location=display';
+	mail_displayHeaderLines(url);
+}
+
+/**
  * mail_getFormData
  * 
  * @param _actionObjects, the senders
@@ -293,6 +372,26 @@ function mail_getFormData(_actionObjects) {
 	}
 
 	return messages;
+}
+
+/**
+ * mail_setRowClass
+ * 
+ * @param _actionObjects, the senders
+ */
+function mail_setRowClass(_actionObjects,_class) {
+	if (typeof _class == 'undefined') return false;
+
+	for (var i = 0; i < _actionObjects.length; i++) 
+	{
+		if (_actionObjects[i].id.length>0)
+		{
+			var _id = _actionObjects[i].id;
+			var dataElem = $j(_actionObjects[i].iface.getDOMNode());
+			dataElem.addClass(_class);
+
+		}
+	}
 }
 
 // Tree widget stubs
