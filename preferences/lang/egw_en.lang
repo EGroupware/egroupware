@@ -21,6 +21,7 @@ charset for the csv export/import	preferences	en	Character set
 click to select a color	preferences	en	Click to select a color
 color	preferences	en	Color
 country	preferences	en	Country
+data exchange settings	preferences	en	Data exchange settings
 date format	preferences	en	Date format
 default	preferences	en	Default
 default application	preferences	en	Default application
@@ -47,6 +48,7 @@ features of the editor	preferences	en	Features of the editor
 font size unit	preferences	en	Font size unit
 forced preferences	preferences	en	Forced preferences
 formatting & general settings	preferences	en	Formatting & general settings
+general settings	preferences	en	General settings
 help off	preferences	en	Help off
 holding ctrl/cmd key and click on the line	preferences	en	holding Ctrl/Cmd key and click on the line
 hours	preferences	en	Hours
@@ -72,6 +74,7 @@ no default	preferences	en	No default
 no user-selection at all	common	en	No user selection at all
 note: this feature does *not* change your email password. this will	preferences	en	note: This feature does *not* change your email password. This will
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	en	Note: This feature does NOT change your email password. It needs to be done manually.
+notification settings	preferences	en	Notification settings
 number format	preferences	en	Number format
 office 2003 theme	preferences	en	Office 2003 theme
 old password and new password are the same. this is invalid. you must enter a new password	preferences	en	Old password and new password are the same. You must enter a new password!
