@@ -71,7 +71,7 @@
 						$preference = $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'];
 					}
 					$required = $options['charset'] == 'user' || !$options['charset'] ? $preference : $options['charset'];
-					$encoding = translation::detect_encoding($sample);
+					$encoding = translation::detect_encoding($sample, $required);
 					if($encoding && strtoupper($required) != strtoupper($encoding))
 					{
 						$this->message = lang("Encoding mismatch.  Expected %1 file, you uploaded %2.<br />\n",
@@ -79,7 +79,7 @@
 							$encoding
 						);
 					}
-					
+
 					$file = fopen($content['file']['tmp_name'], 'rb');
 					$count = 0;
 
@@ -158,7 +158,7 @@
 							'import_'.md5($content['file']['name'].$GLOBALS['egw_info']['user']['account_id'])));
 						unset($dst_file);
 					}
-					
+
 				} catch (Exception $e) {
 					$this->message .= $e->getMessage();
 				}
