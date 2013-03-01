@@ -712,7 +712,7 @@ class addressbook_sql extends so_sql_cf
 
 		if (!is_array($keys) && !is_numeric($keys))
 		{
-			$keys = array('contact_uid' => $keys);
+			$keys = array('uid' => $keys);
 		}
 		$contact = parent::read($keys,$extra_cols,$join);
 
