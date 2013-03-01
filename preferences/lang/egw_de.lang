@@ -21,6 +21,7 @@ charset for the csv export/import	preferences	de	Zeichensatz
 click to select a color	preferences	de	Anklicken um eine Farbe auszuwählen
 color	preferences	de	Farbe
 country	preferences	de	Land
+data exchange settings	preferences	de	Einstellungen für den Datenaustausch
 date format	preferences	de	Datumsformat
 default	preferences	de	Vorgabe
 default application	preferences	de	Standard-Anwendung
@@ -47,6 +48,7 @@ features of the editor	preferences	de	Funktionsauswahl des Editors
 font size unit	preferences	de	Einheit der Schriftgröße
 forced preferences	preferences	de	Erzwungene Einstellungen
 formatting & general settings	preferences	de	Formatierung & allgemeine Einstellungen
+general settings	preferences	de	Allgemeine Einstellungen
 help off	preferences	de	Keine Hilfe
 holding ctrl/cmd key and click on the line	preferences	de	halten der Strg/Cmd Taste und anklicken der Zeile
 hours	preferences	de	Stunden
@@ -72,6 +74,7 @@ no default	preferences	de	Keine Vorgabe
 no user-selection at all	common	de	Überhaupt keine Benutzerauswahl
 note: this feature does *not* change your email password. this will	preferences	de	Anmerkung: Diese Funktion ändert nicht Ihr E-Mail Passwort.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	de	Hinweis: Diese Funktion ändert *nicht* Ihr Passwort auf dem E-Mail-Server. Dies müssen Sie separat tun.
+notification settings	preferences	de	Einstellungen der Benachrichtigungen
 number format	preferences	de	Format von Zahlen
 office 2003 theme	preferences	de	Office 2003
 old password and new password are the same. this is invalid. you must enter a new password	preferences	de	Altes Passwort und Neues Passwort sind gleich. Dies ist ungültig. Sie müssen ein neues Passwort vergeben.

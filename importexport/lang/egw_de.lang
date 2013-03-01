@@ -129,5 +129,5 @@ users allowed to share their own definitions	importexport	de	Benutzer dürfen Ih
 warnings	importexport	de	Warnungen
 which useres are allowed for this definition	importexport	de	Welche Benutzer dürfen diese Definition verwenden?
 which users are allowed to use this definition	importexport	de	Welche Benutzer dürfen die Definition benutzen?
-you may want to <a href="%1" target="_new">backup</a> first.	importexport	de	Erstellen Sie eine <a href="%1" target="_new">Sicherung Ihrer bestehenden Daten</a> bevor Sie den Impost starten.
+you may want to <a href="%1" target="_new">backup</a> first.	importexport	de	Erstellen Sie eine <a href="%1" target="_new">Sicherung Ihrer bestehenden Daten</a> bevor Sie den Import starten.
 you need to select an app and format first!	importexport	de	Sie müssen zuerst eine Anwendung und ein Format auswählen

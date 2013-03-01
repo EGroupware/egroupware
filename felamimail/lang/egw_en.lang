@@ -79,6 +79,7 @@ compose as new	felamimail	en	Compose as new
 compress folder	felamimail	en	Compress folder
 condition	felamimail	en	Condition
 configuration	felamimail	en	Configuration
+configuration settings	felamimail	en	Configuration settings
 configure a valid imap server in emailadmin for the profile you are using.	felamimail	en	Configure a valid IMAP server in eMailAdmin for the profile you are using.
 confirm attach message	felamimail	en	Confirm attach to message
 confirm move to folder	felamimail	en	Confirm move to folder
@@ -259,6 +260,7 @@ from	felamimail	en	From
 from(a->z)	felamimail	en	From (A->Z)
 from(z->a)	felamimail	en	From (Z->A)
 full name	felamimail	en	Full Name
+general settings	felamimail	en	General settings
 greater than	felamimail	en	Greater than
 have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	en	Have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about Squirrelmail.<br>
 header lines	felamimail	en	Header lines
@@ -283,6 +285,7 @@ if to contains	felamimail	en	If to contains
 if using ssl or tls, you must have the php openssl extension loaded.	felamimail	en	If using SSL or TLS, you must have the PHP openssl extension loaded.
 if you leave this page without saving to draft, the message will be discarded completely	felamimail	en	If you leave this page without saving to draft, the message will be discarded completely
 if you select all messages there will be no pagination for mail message list. beware, as some actions on all selected messages may be problematic depending on the amount of selected messages.	felamimail	en	If you select all messages there will be no pagination for mail message list. Beware, as some actions on all selected messages may be problematic depending on the amount of selected messages.
+if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here. 300 seems to be a good working value. the preview will be displayed at the end of the message list when a message is selected.	felamimail	en	If you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here. 300 seems to be a good working value. The preview will be displayed at the end of the message list when a message is selected.
 if you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here. 300 seems to be a good working value. the preview will be displayed at the end of the message when a message is selected.	felamimail	en	If you want to see a preview of a mail by single clicking onto the subject, set the height for the message-list and the preview area here. 300 seems to be a good working value. The preview will be displayed at the end of the message list when a message is selected.
 illegal folder name.  please select a different name.	felamimail	en	Invalid folder name. Please select a different name.
 imap	felamimail	en	IMAP
@@ -438,6 +441,7 @@ prevent managing filters	felamimail	en	Prevent managing filters
 prevent managing folders	felamimail	en	Prevent managing folders
 prevent managing forwards	felamimail	en	Prevent managing forwards
 prevent managing notifications	felamimail	en	Prevent managing notifications
+prevent managing vacation notice	felamimail	en	Prevent managing vacation notice
 preview disabled for folder:	felamimail	en	Preview disabled for folder:
 previous	felamimail	en	Previous
 previous message	felamimail	en	Previous message
@@ -573,15 +577,16 @@ to	felamimail	en	To
 to do	felamimail	en	to do
 to mail sent to	felamimail	en	To mail sent to
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	felamimail	en	To use a TLS connection, you must be running a version of PHP 5.1.0 or higher.
-turn off horizontal line between signature and composed message (this is not according to RFC).\nIf you use templates, this option is only applied to the text part of the message.	felamimail	en	Turn off horizontal line between signature and composed message (this is not according to RFC).\nIf you use templates, this option is only applied to the text part of the message.
 translation preferences	felamimail	en	Translation preferences
 translation server	felamimail	en	Translation server
 trash	felamimail	en	Trash
 trash fold	felamimail	en	Trash folder
 trash folder	felamimail	en	Trash folder
-trust servers seen / unseen info	felamimail	en	Trust server's SEEN / UNSEEN info
+trust servers seen / unseen info	felamimail	en	trust servers SEEN / UNSEEN info
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	felamimail	en	Trust the server when retrieving the folder status. if you select no, we will search for the UNSEEN messages and count them ourselves
 trying to recover from session data	felamimail	en	Trying to recover from session data
+turn off horizontal line between signature and composed message (this is not according to rfc).<br>if you use templates, this option is only applied to the text part of the message.	felamimail	en	Turn off horizontal line between signature and composed message (this is not according to RFC).<br>If you use templates, this option is only applied to the text part of the message.
+turn off horizontal line between signature and composed message (this is not according to rfc).\nif you use templates, this option is only applied to the text part of the message.	felamimail	en	Turn off horizontal line between signature and composed message (this is not according to RFC).\nIf you use templates, this option is only applied to the text part of the message.
 type	felamimail	en	Type
 undelete	felamimail	en	Undelete
 unexpected response from server to authenticate command.	felamimail	en	Unexpected response from server to AUTHENTICATE command.
@@ -627,14 +632,13 @@ view message	felamimail	en	View message
 viewing full header	felamimail	en	Viewing full header
 viewing message	felamimail	en	Viewing message
 viewing messages	felamimail	en	Viewing messages
+what do do with html email	felamimail	en	What do do with html email
 what order the list columns are in	felamimail	en	What order the list columns are in
 what to do when you delete a message	felamimail	en	What to do when you delete a message
 what to do when you send a message	felamimail	en	What to do when you send a message
 what to do with html email	felamimail	en	What to do with HTML email
 when deleting messages	felamimail	en	When deleting messages
-when displaying messages in a popup, re-use the same popup for all or open a new popup for each 
-message	felamimail	en	When displaying messages in a popup, re-use the same popup for all or open a new popup for each 
-message
+when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	felamimail	en	When displaying messages in a popup, re-use the same popup for all or open a new popup for each message
 when saving messages as item of a different app	felamimail	en	When saving messages as item of a different app
 when sending messages	felamimail	en	When sending messages
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	en	Which folders in addition to the Sent folder should be displayed using the Sent Folder View Schema
