@@ -839,20 +839,37 @@ class translation
  	/**
 	 * detect_encoding - try to detect the encoding
 	 *    only to be used if the string in question has no structure that determines his encoding
+	 *
 	 * @param string - to be evaluated
+	 * @param string $verify=null encoding to verify, get checked first and have a match for only ascii or no detection available
 	 * @return string - encoding
 	 */
-	static function detect_encoding($string) {
-		static $list = array('utf-8', 'iso-8859-1', 'windows-1251'); // list may be extended
+	static function detect_encoding($string, $verify=null)
+	{
 		if (function_exists('iconv'))
 		{
-			foreach ($list as $item) {
+			$list = array('utf-8', 'iso-8859-1', 'windows-1251'); // list may be extended
+
+			if ($verify) array_unshift($list, $verify);
+
+			foreach ($list as $item)
+			{
 				$sample = iconv($item, $item, $string);
-				if (md5($sample) == md5($string))
+				if ($sample == $string)
+				{
 					return $item;
+				}
 			}
 		}
-		return self::$mbstring ? strtolower(mb_detect_encoding($string)) : 'iso-8859-1'; // we choose to return iso-8859-1 as default
+		if (self::$mbstring)
+		{
+			$detected = strtolower(mb_detect_encoding($string));
+		}
+		if ($verify && (!isset($detected) || $detected === 'ascii'))
+		{
+			return $verify;	// ascii matches all charsets
+		}
+		return isset($detected) ? $detected : 'iso-8859-1'; // we choose to return iso-8859-1 as default
 	}
 
 	/**
