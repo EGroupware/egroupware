@@ -125,12 +125,7 @@ class infolog_merge extends bo_merge
 		}
 
 		// Links
-		$array += $this->get_all_links('infolog', $id, $content);
-		// Need to set each app, to make sure placeholders are removed
-		foreach(array_keys($GLOBALS['egw_info']['user']['apps']) as $app)
-		{
-			$array["links/$app"] = $this->get_links('infolog',$id,$app, array($array['info_link']['id']));
-		}
+		$array += $this->get_all_links('infolog', $id, $prefix, $content);
 
 		// Check for linked project ID
 		$links = egw_link::get_links('infolog', $id, 'projectmanager');
@@ -215,7 +210,9 @@ class infolog_merge extends bo_merge
 			'links' => lang('Titles of any entries linked to the current record, excluding attached files'),
 			'attachments' => lang('List of files linked to the current record'),
 			'links_attachments' => lang('Links and attached files'),
-			'links/[appname]' => lang('Links to specified application.  Example: {{links/addressbook}}'),
+			'links/[appname]' => lang('Links to specified application.  Example: {{links/infolog}}'),
+			'links/href' => lang('Links wrapped in an HREF tag with download link'),
+			'links/link' => lang('Download url for links'),
 			'date' => lang('Date'),
 			'user/n_fn' => lang('Name of current user, all other contact fields are valid too'),
 			'user/account_lid' => lang('Username'),
