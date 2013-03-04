@@ -765,11 +765,20 @@ label input, label span, label div, label select, label textarea {
 	vertical-align: middle;
 }
 #nm_favorites_popup_filters  .filter_id, #nm_favorites_popup_filters  .filter_value {
-	width: 10ex;
+	width: 45%;
 	display: inline-block;
+}
+#favorite\[button\]_menu li a {
 }
 #favorite\[button\]_menu input, #favorite\[button\]_menu img {
 	margin-right: 2ex;
+}
+#favorite\[button\]_menu div.ui-icon {
+	float:right;
+	display:none;
+}
+#favorite\[button\]_menu li:hover div.ui-icon {
+	display:block;
 }
 
 .nextmatch_sortheader {

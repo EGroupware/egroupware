@@ -267,7 +267,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		this.iterateOver(function(column) {
 			if(typeof column.set_value != "undefined" && column.id)
 			{
-				column.set_value(typeof this[column.id] == "undefined" ? "" : this[column.id]);
+				column.set_value(typeof this[column.id] == "undefined" || this[column.id] == null ? "" : this[column.id]);
 			}
 			if (column.id && typeof column.get_value == "function")
 			{
@@ -1362,6 +1362,11 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 	/**
 	 * Set up the favorites UI control
 	 *
+	 * The control is a split/dropdown button.  Clicking on the left side of the button filters the 
+	 * nextmatch list by the user's default filter.  The right side of the button gives a list of
+	 * saved filters, pulled from preferences.  Clicking a filter from the dropdown list sets the
+	 * filters as saved.
+	 *
 	 * Favorites are implemented by saving the values for [column] filters.  Filters are stored
 	 * in preferences, with the name favorite_<name>.  The favorite favorite used for clicking on
 	 * the filter button is stored in nextmatch-<columnselection_pref>-favorite.
@@ -1376,6 +1381,9 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 		var nm_div = this.nextmatch.div;
 		var favorite_prefix = "favorite_";
 		var favorite_preference = "nextmatch-" + nextmatch.options.settings.columnselection_pref + "-favorite";
+
+		var apps = this.egw().user('apps');
+		var is_admin = (typeof apps['admin'] != "undefined");
 
 		if(typeof filters == "undefined")
 		{
@@ -1394,7 +1402,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 		{
 			if(pref_name.indexOf(favorite_prefix) == 0)
 			{
-				stored_filters[pref_name.substr(favorite_prefix.length)] = preferences[pref_name];
+				var name = pref_name.substr(favorite_prefix.length);
+				stored_filters[name] = preferences[pref_name];
 			}
 		}
 		if(typeof stored_filters == "undefined" || !stored_filters)
@@ -1402,16 +1411,22 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			stored_filters = {};
 		}
 
-		// Create filter options
-		var init_filters = function()
+		// Create & set filter options for dropdown menu
+		var init_filters = function(widget)
 		{
 			var options = {};
 			for(var name in stored_filters)
 			{
-				options[name] = "<input type='radio' name='favorite[button][favorite]' value='"+name+"'/>"+name;
+				options[name] = "<input type='radio' name='favorite[button][favorite]' value='"+name+"' title='" + header.egw().lang('Set as default') + "'/>"+
+					name + (stored_filters[name].group != false ? " ♦" :"") +
+					(stored_filters[name].group != false && !is_admin ? "" :
+					"<div class='ui-icon ui-icon-trash' title='" + header.egw().lang('Delete') + "'/>");
 			}
 			options.add = "<img src='"+header.egw().image("new") +"'/>Add current";
-			return options;
+			widget.set_select_options(options);
+
+			// Set radio to current value
+			$j("input[value='"+ preferred +"']:radio", header.favorites.menu).attr("checked",true);
 		};
 
 		// Favorite dropdown button
@@ -1425,13 +1440,21 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 		
 		this.favorites.onclick= function(node) {
 			// Apply preferred filter - make sure it's an object, and not a reference
-			nextmatch.activeFilters = jQuery.extend({},stored_filters[header.egw().preference(favorite_preference,app)]);
-			nextmatch.applyFilters();
+			var favorite = header.egw().preference(favorite_preference,app);
+			if(favorite && stored_filters[favorite])
+			{
+				nextmatch.activeFilters = jQuery.extend({},stored_filters[favorite].filter);
+				nextmatch.applyFilters();
+			}
+			else
+			{
+				alert(this.egw().lang("No default set"));
+			}
 		};
 
 		var preferred = this.egw().preference(favorite_preference, app);
 		this.favorites.set_value(preferred && stored_filters[preferred] ? preferred : "");
-		this.favorites.set_select_options(init_filters());
+		init_filters(this.favorites);
 
 		// Apply the favorite when you pick from the list
 		this.favorites.change = function(selected_node) {
@@ -1448,12 +1471,16 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 						header.favorites_popup.current_filters[filters[i]] = nextmatch.options.settings[filters[i]];
 					}
 				}
+			
 				// Remove some internal values
 				delete header.favorites_popup.current_filters[header.favorites.id];
-				delete header.favorites_popup.current_filters[header.favorites_popup.group.id];
+				if(header.favorites_popup.group != undefined)
+				{
+					delete header.favorites_popup.current_filters[header.favorites_popup.group.id];
+				}
 
-				// Make sure it's an object
-				header.favorites_popup.current_filters = jQuery.extend({},header.favorites_popup.current_filters);
+				// Make sure it's an object - deep copy to prevent references in sub-objects (col_filters)
+				header.favorites_popup.current_filters = jQuery.extend(true,{},header.favorites_popup.current_filters);
 
 				// Update popup with current set filters (more for debug than user)
 				var filter_list = [];
@@ -1473,6 +1500,10 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 					.replaceWith(
 						$j(filter_list.join("")).attr("id","nm_favorites_popup_filters")
 					);
+				$j("#nm_favorites_popup_filters",header.favorites_popup)
+					.hide()
+					.siblings(".ui-icon-circle-plus")
+					.removeClass("ui-icon-circle-minus");
 				
 				// Popup
 				header.favorites_popup.dialog("open");
@@ -1480,13 +1511,11 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			else if(stored_filters[this.get_value()])
 			{
 				// Apply selected filter - make sure it's an object, and not a reference
-				nextmatch.activeFilters = jQuery.extend({},stored_filters[this.get_value()]);
+				nextmatch.activeFilters = jQuery.extend(true, {},stored_filters[this.get_value()].filter);
 				nextmatch.applyFilters();
 			}
 		};
 
-		// Set radio to current value
-		$j("input[value='"+ preferred +"']:radio", this.favorites.menu).attr("checked",true);
 		
 		// Add a listener on the radio buttons to set default filter
 		$j(this.favorites.menu).on("click","input:radio",function(event){
@@ -1503,12 +1532,41 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			header.favorites.button.addClass("ui-state-active", 500,"swing",function(){
 				header.favorites.button.removeClass("ui-state-active",2000);
 			});
-			
 		});
+
+		// Add a listener on the delete to remove
+		$j(this.favorites.menu).on("click","div.ui-icon-trash", function(event) {
+			// Don't do the menu
+			event.stopImmediatePropagation();
+
+			// Hide the trash
+			$j(this).hide();
+
+			var name = $j(this).parentsUntil("li").parent().attr("id");
+
+			// Delete preference server side
+			var request = new egw_json_request("etemplate_widget_nextmatch::ajax_set_favorite::etemplate",
+				[app, name, "delete", stored_filters[name].group ? stored_filters[name].group : '', ''],
+				header
+			);
+			request.sendRequest(true, function(result) {
+				if(result)
+				{
+					// Remove line from list
+					this.slideUp("slow", function() {header.favorites.menu.hide();});
+					delete stored_filters[name];
+					init_filters(header.favorites);
+				}
+			}, $j(this).parentsUntil("li").parent());
+	
+		})
+		// Wrap and unwrap because jQueryUI styles use a parent, and we don't want to change the state of the menu item
+		// Use a span instead of a div because div gets a border
+		.on("mouseenter","div.ui-icon-trash", function() {$j(this).wrap("<span class='ui-state-active'/>");})
+		.on("mouseleave","div.ui-icon-trash", function() {$j(this).unwrap();});
 
 		// Add into header
 		$j(this.favorites.getDOMNode(this.favorites)).insertAfter(this.count).css("float","right");
-
 
 		// Create popup
 		this.favorites_popup = $j('<div id="nm_favorites_popup" title="' + egw().lang("New favorite") + '">\
@@ -1519,14 +1577,20 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 
 	'<input type="text" name="name" id="name"/>\
 	<div id="nm_favorites_popup_admin"/>\
+	<span>'+ this.egw().lang("Details") + '</span><span style="float:left;" class="ui-icon ui-icon-circle-plus" />\
 	<ul id="nm_favorites_popup_filters"/>\
 </form>\
 </div>');
+		$j(".ui-icon-circle-plus",this.favorites_popup).prev().andSelf().click(function() {
+			var details = $j("#nm_favorites_popup_filters",header.favorites_popup)
+				.slideToggle()
+				.siblings(".ui-icon-circle-plus")
+				.toggleClass("ui-icon-circle-minus");
+		});
 		this.favorites_popup.name = et2_createWidget("text",{id:"favorite[name]"},this);
 		$j("name",this.favorites_popup).replaceWith(this.favorites_popup.name.getDOMNode());
 
 		// Add some controls if user is an admin
-		var apps = this.egw().user('apps');
 		if(apps['admin'])
 		{
 			this.favorites_popup.group = et2_createWidget("select-account",{
@@ -1548,8 +1612,11 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			{
 
 				// Add to the list
-				stored_filters[name.val()] = header.favorites_popup.current_filters;
-				header.favorites.set_select_options(init_filters());
+				stored_filters[name.val()] = {
+					group: (typeof header.favorites_popup.group != "undefined" ? header.favorites_popup.group.get_value() != "": false),
+					filter: header.favorites_popup.current_filters
+				};
+				init_filters(header.favorites);
 	
 				var favorite_pref = favorite_prefix+name.val();
 
@@ -1558,7 +1625,13 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 				{
 					// Admin stuff - save preference server side
 					var request = new egw_json_request("etemplate_widget_nextmatch::ajax_set_favorite::etemplate",
-						[app, name.val(), "add", header.favorites_popup.group.get_value(), header.favorites_popup.current_filters],
+						[
+							app,
+							name.val(),
+							"add",
+							header.favorites_popup.group.get_value(),
+							header.favorites_popup.current_filters
+						],
 						header
 					);
 					request.sendRequest(true, function(result) {
@@ -1567,17 +1640,17 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 							// Do something nice and confirmy if result is true - not really needed
 						}
 					}, header);
+					header.favorites_popup.group.set_value("");
 				}
 				else
 				{
 					// Normal user - just save to preferences client side
-					header.egw().set_preference(app,favorite_pref,header.favorites_popup.current_filters);
+					header.egw().set_preference(app,favorite_pref,{filter:header.favorites_popup.current_filters});
 				}
 				delete header.favorites_popup.current_filters;
 			}
 			// Reset form
 			name.val("");
-			header.favorites_popup.group.set_value("");
 			$j("#filters",header.favorites_popup).empty();
 
 			$j(this).dialog("close");
@@ -1607,7 +1680,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 		this.iterateOver(function(child) {
 			if(typeof child.set_value != "undefined" && child.id)
 			{
-				child.set_value(typeof this[child.id] == "undefined" ? "" : this[child.id]);
+				child.set_value(typeof this[child.id] == "undefined" || this[child.id] == null ? "" : this[child.id]);
 			}
 			if(typeof child.get_value == "function" && child.id)
 			{
@@ -1629,7 +1702,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 		if(typeof this.favorites != "undefined")
 		{
 			delete filters[this.favorites.id];
-			delete filters[this.favorites_popup.group.id];
+			if(this.favorites_popup.group != undefined) delete filters[this.favorites_popup.group.id];
 		}
 	},
 
