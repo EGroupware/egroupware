@@ -519,10 +519,11 @@ class html
 	* @param string $_width='100%'
 	* @param string $_start_path='' if passed activates the browser for image at absolute path passed
 	* @param boolean $_purify=true run $_content through htmlpurifier before handing it to fckEditor
+	* @param mixed (boolean/string) $_focusToBody USED only for CKEDIOR true means yes, focus on top, you may specify TOP or BOTTOM (to focus on the end of the editor area)
 	* @return string the necessary html for the textarea
 	*/
 	static function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'),
-		$_height='400px', $_width='100%',$_start_path='',$_purify=true)
+		$_height='400px', $_width='100%',$_start_path='',$_purify=true, $_focusToBody=false)
 	{
 		if (!self::htmlarea_availible() || $_mode == 'ascii')
 		{
@@ -562,6 +563,16 @@ class html
 		"instanceReady",
 		function (ev)
 		{
+'.($_focusToBody?'
+			ev.editor.focus();
+			var d = ev.editor.document;
+			var r = new CKEDITOR.dom.range(d);
+			r.collapse(true);
+			r.selectNodeContents(d.getBody());
+			r.collapse('.($_focusToBody==='BOTTOM'?'false':'true').');
+			r.select();
+':'').
+'
 			ev.editor.resize("100%", '.str_replace('px', '', $pxheight).');
 		}
 	);'.
@@ -582,9 +593,10 @@ class html
 	* @param string $_width='100%'
 	* @param boolean $_purify=true
 	* @param string $_border='0px' NOT used for CKEditor
+	* @param mixed (boolean/string) $_focusToBody USED only for CKEDIOR true means yes, focus on top, you may specify TOP or BOTTOM (to focus on the end of the editor area)
 	* @return string the necessary html for the textarea
 	*/
-	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%',$_purify=true, $_border='0px')
+	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%',$_purify=true, $_border='0px',$_focusToBody=false)
 	{
 		if (!self::htmlarea_availible() || $_mode == 'ascii')
 		{
@@ -593,7 +605,7 @@ class html
 		}
 		else
 		{
-			return self::fckEditor($_name, $_content, $_mode, array(), $_height, $_width,'',$_purify);
+			return self::fckEditor($_name, $_content, $_mode, array(), $_height, $_width,'',$_purify,$_focusToBody);
 		}
 	}
 
