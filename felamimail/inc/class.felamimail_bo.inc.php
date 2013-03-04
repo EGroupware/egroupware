@@ -1729,14 +1729,19 @@ class felamimail_bo
 				// no folder info, but there is a status returned for the folder: something is wrong, try to cope with it
 				$folderInfo = array(0 => (is_array($folderInfo)?$folderInfo:array('HIERACHY_DELIMITER'=>$this->getHierarchyDelimiter(),
 					'ATTRIBUTES' => '')));
+				if (empty($folderInfo[0]['HIERACHY_DELIMITER']) || (isset($folderInfo[0]['delimiter']) && empty($folderInfo[0]['delimiter'])))
+				{
+					//error_log(__METHOD__.__LINE__.array2string($folderInfo));
+					$folderInfo[0]['HIERACHY_DELIMITER'] = $this->getHierarchyDelimiter();
+				}
 			}
 		}
 		#if(!is_array($folderInfo[0])) {
 		#	return false;
 		#}
 
-		$retValue['delimiter']		= $folderInfo[0]['HIERACHY_DELIMITER'];
-		$retValue['attributes']		= $folderInfo[0]['ATTRIBUTES'];
+		$retValue['delimiter']		= ($folderInfo[0]['HIERACHY_DELIMITER']?$folderInfo[0]['HIERACHY_DELIMITER']:$folderInfo[0]['delimiter']);
+		$retValue['attributes']		= ($folderInfo[0]['ATTRIBUTES']?$folderInfo[0]['ATTRIBUTES']:$folderInfo[0]['attributes']);
 		$shortNameParts			= explode($retValue['delimiter'], $_folderName);
 		$retValue['shortName']		= array_pop($shortNameParts);
 		$retValue['displayName']	= $this->encodeFolderName($_folderName);
