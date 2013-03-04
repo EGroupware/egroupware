@@ -100,7 +100,7 @@
 					<hbox span="all">
 						<button label="Save" id="button[save]"/>
 						<button label="Apply" id="button[apply]"/>
-						<button align="right" label="Cancel" id="button[cancel]"/>
+						<button label="Cancel" id="button[cancel]"/>
 					</hbox>
 				</row>
 			</rows>
