@@ -403,7 +403,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 * 	data.
 		 */
 		dataGetUIDdata: function (_uid) {
-			return typeof localStorage[_uid];
+			return localStorage[_uid];
 		},
 
 		/**
