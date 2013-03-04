@@ -739,7 +739,7 @@
 				#if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck'])) $mode = 'egw_simple_spellcheck';
 				$style="border:0px; width:100%; height:400px;";
 				// dont run purify, as we already did that (getCleanHTML).
-				$this->t->set_var('tinymce', html::fckEditorQuick('body', $mode, $sessionData['body'],'400px','100%',false));
+				$this->t->set_var('tinymce', html::fckEditorQuick('body', $mode, $sessionData['body'],'400px','100%',false,'0px',($_focusElement=='body'?true:false)));
 				$this->t->set_var('mimeType', 'html');
 				$ishtml=1;
 			} else {

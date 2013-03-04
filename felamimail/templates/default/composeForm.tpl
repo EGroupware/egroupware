@@ -230,23 +230,12 @@ if (toFocus=='body')
 			{
 				'instanceReady': function (ev) {
 					CKEDITOR.instances.body.focus();
-					var ckeditor = CKEDITOR.instances['body'];
-					var s = ckeditor.getSelection();
-					if (typeof s != 'undefined')
-					{
-						var selected_ranges = s.getRanges()[0]; // save selected range
-						// do something
-						//var spanCont = selected_ranges.startContainer.getAscendant({ span: 1, div: 1});
-						//var newRange = new CKEDIOR.dom.range(selected_ranges);
-						//newRange.setStart(spanCont,selected_ranges.StartOffset);
-						//newRange.setEnd(spanCont,selected_ranges.StartOffset+50);
-						//newRange.select();
-						//s.selectRanges(selected_ranges); // restore it
-					}
-					else
-					{
-						document.doit.fm_compose_subject.focus();
-					}
+					var d = CKEDITOR.document;
+					var r = new CKEDITOR.dom.range(d);
+					r.collapse(true);
+					r.selectNodeContents(d.getBody());
+					r.collapse(true);
+					r.select();
 				}
 			}
 		});
@@ -256,26 +245,12 @@ if (toFocus=='body')
 			{
 				'pluginsLoaded': function (ev) {
 					CKEDITOR.instances.body.focus();
-					var ckeditor = CKEDITOR.instances['body'];
-					var s = ckeditor.getSelection();
-					if (typeof s != 'undefined')
-					{
-						var selected_ranges = s.getRanges()[0]; // save selected range
-						// do something
-						if (typeof selected_ranges != undefined)
-						{
-							//var spanCont = selected_ranges.startContainer.getAscendant({ span: 1, div: 1});
-							//var newRange = new CKEDIOR.dom.range(selected_ranges);
-							//newRange.setStart(spanCont,selected_ranges.StartOffset);
-							//newRange.setEnd(spanCont,selected_ranges.StartOffset+50);
-							//newRange.select();
-							//s.selectRanges(selected_ranges); // restore it
-						}
-					}
-					else
-					{
-						document.doit.fm_compose_subject.focus();
-					}
+					var d = CKEDITOR.document;
+					var r = new CKEDITOR.dom.range(d);
+					r.collapse(true);
+					r.selectNodeContents(d.getBody());
+					r.collapse(true);
+					r.select();
 				}
 			}
 		});
