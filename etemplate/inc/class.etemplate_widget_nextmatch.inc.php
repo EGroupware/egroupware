@@ -796,7 +796,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	public static function ajax_set_favorite($app, $name, $action, $group, $filters = array())
 	{
 		$pref_name = "favorite_".$name;
-		if($group && $GLOBALS['egw']['apps']['admin'])
+		if($group && $GLOBALS['egw_info']['apps']['admin'])
 		{
 			$prefs = new preferences(is_numeric($group) ? $group: $GLOBALS['egw_info']['user']['account_id']);
 		}
@@ -808,15 +808,24 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$type = $group == "all" ? "default" : "user";
 		if($action == "add")
 		{
-			$prefs->add($app,$pref_name,$filters,$type);
+			$filters = array(
+				'group' => $group,
+				'filter' => $filters
+			);
+			$result = $prefs->add($app,$pref_name,$filters,$type);
+			$prefs->save_repository(false,$type);
+
+			egw_json_response::get()->data(isset($result[$app][$pref_name]));
+			return isset($result[$app][$pref_name]);
 		}
 		else if ($action == "delete")
 		{
-			$prefs->delete($app,$pref_name, $type);
-		}
-		$prefs->save_repository(false,$type);
+			$result = $prefs->delete($app,$pref_name, $type);
+			$prefs->save_repository(false,$type);
 
-		egw_json_response::get()->data(true);
+			egw_json_response::get()->data(!isset($result[$app][$pref_name]));
+			return !isset($result[$app][$pref_name]);
+		}
 	}
 
 	/**
