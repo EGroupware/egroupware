@@ -1727,8 +1727,8 @@ class felamimail_bo
 			if (!is_array($folderInfo[0]))
 			{
 				// no folder info, but there is a status returned for the folder: something is wrong, try to cope with it
-				$folderInfo = array(0 => array('HIERACHY_DELIMITER'=>$this->getHierarchyDelimiter(),
-					'ATTRIBUTES' => ''));
+				$folderInfo = array(0 => (is_array($folderInfo)?$folderInfo:array('HIERACHY_DELIMITER'=>$this->getHierarchyDelimiter(),
+					'ATTRIBUTES' => '')));
 			}
 		}
 		#if(!is_array($folderInfo[0])) {
@@ -1752,7 +1752,7 @@ class felamimail_bo
 		}
 		if (!($folderInfo instanceof PEAR_Error)) $folderBasicInfo[$this->profileID][$_folderName]=$retValue;
 		egw_cache::setCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderBasicInfo,$expiration=60*60*1);
-		if ($basicInfoOnly || stripos(array2string($retValue['attributes']),'noselect')!==false)
+		if ($basicInfoOnly || (isset($retValue['attributes']) && stripos(array2string($retValue['attributes']),'noselect')!==false))
 		{
 			return $retValue;
 		}
