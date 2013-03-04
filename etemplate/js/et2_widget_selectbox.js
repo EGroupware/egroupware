@@ -408,7 +408,7 @@ var et2_selectbox = et2_inputWidget.extend({
 		if(typeof _value != 'string' && jQuery(this.value).not(_value).length == 0 && jQuery(_value).not(this.value).length == 0)
 		{
 			// Unchanged
-			return;
+			if(_value == this.value) return;
 		}
 		jQuery("option",this.input).attr("selected", false);
 		if(typeof _value == "array")
