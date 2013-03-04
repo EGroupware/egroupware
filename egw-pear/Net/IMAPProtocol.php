@@ -917,7 +917,7 @@ class Net_IMAPProtocol {
         {
             $this->currentMailbox = self::$mailboxSelected = null;
         }
-		
+
         return $ret;
     }
 
@@ -1190,7 +1190,7 @@ class Net_IMAPProtocol {
         if (!PEAR::isError($ret) && isset($ret['PARSED'])) {
             foreach ($ret['PARSED'] as &$parsed)
             {
-                if (!empty($parsed['EXT']))
+                if (!empty($parsed['EXT']) && $parsed['COMMAND']=='STATUS')
                 {
                     if(empty($ret['RESPONSE']['CODE'])) $ret['RESPONSE']['CODE'] ='OK';
                     $ret['PARSED'] =  $parsed['EXT'];
