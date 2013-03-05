@@ -122,34 +122,36 @@ class setup
 
 		if ($connect_and_setcharset)
 		{
-			$this->db->Halt_On_Error = 'no';	// table might not be created at that stage
+			try {
+				$this->set_table_names();		// sets/checks config- and applications-table-name
 
-			$this->set_table_names();		// sets/checks config- and applications-table-name
-
-			// Set the DB's client charset if a system-charset is set
-			$this->db->select($this->config_table,'config_value',array(
-				'config_app'  => 'phpgwapi',
-				'config_name' => 'system_charset',
-			),__LINE__,__FILE__);
-			if ($this->db->next_record() && $this->db->f(0))
-			{
-				$this->system_charset = $this->db->f(0);
-				$this->db_charset_was = $this->db->Link_ID->GetCharSet();	// needed for the update
-
-				// we can NOT set the DB charset for mysql, if the api version < 1.0.1.019, as it would mess up the DB content!!!
-				if (substr($this->db->Type,0,5) == 'mysql')	// we need to check the api version
+				// Set the DB's client charset if a system-charset is set
+				$this->db->select($this->config_table,'config_value',array(
+					'config_app'  => 'phpgwapi',
+					'config_name' => 'system_charset',
+				),__LINE__,__FILE__);
+				if ($this->db->next_record() && $this->db->f(0))
 				{
-					$this->db->select($this->applications_table,'app_version',array(
-						'app_name'  => 'phpgwapi',
-					),__LINE__,__FILE__);
-					$api_version = $this->db->next_record() ? $this->db->f(0) : false;
-				}
-				if (!$api_version || !$this->alessthanb($api_version,'1.0.1.019'))
-				{
-					$this->db->Link_ID->SetCharSet($this->system_charset);
+					$this->system_charset = $this->db->f(0);
+					$this->db_charset_was = $this->db->Link_ID->GetCharSet();	// needed for the update
+
+					// we can NOT set the DB charset for mysql, if the api version < 1.0.1.019, as it would mess up the DB content!!!
+					if (substr($this->db->Type,0,5) == 'mysql')	// we need to check the api version
+					{
+						$this->db->select($this->applications_table,'app_version',array(
+							'app_name'  => 'phpgwapi',
+						),__LINE__,__FILE__);
+						$api_version = $this->db->next_record() ? $this->db->f(0) : false;
+					}
+					if (!$api_version || !$this->alessthanb($api_version,'1.0.1.019'))
+					{
+						$this->db->Link_ID->SetCharSet($this->system_charset);
+					}
 				}
 			}
-			$this->db->Halt_On_Error = 'yes';	// setting the default again
+			catch (egw_exception_db $e) {
+				// table might not be created at that stage
+			}
 		}
 	}
 
@@ -651,7 +653,7 @@ class setup
 		// Remove categories
 		$this->db->delete(categories::TABLE, array('cat_appname'=>$appname),__LINE__,__FILE__);
 		categories::invalidate_cache($appname);
-		
+
 		// Remove config
 		$this->db->delete(config::TABLE, array('config_app'=>$appname),__LINE__,__FILE__);
 		//echo 'DELETING application: ' . $appname;

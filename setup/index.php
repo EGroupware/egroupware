@@ -284,91 +284,91 @@ switch($GLOBALS['egw_info']['setup']['stage']['db'])
 		$db_filled_block = $setup_tpl->get_var('V_db_stage_6_pre');
 		$setup_tpl->set_var('tableshave',lang('If you did not receive any errors, your applications have been'));
 
-		// FIXME : CAPTURE THIS OUTPUT
-		$GLOBALS['egw_setup']->db->Halt_On_Error = 'report';
-
-		switch ($GLOBALS['egw_info']['setup']['currentver']['phpgwapi'])
-		{
-			case 'dbcreate':
-				$GLOBALS['egw_setup']->db->create_database($_POST['db_root'], $_POST['db_pass'], 'utf8',	// create all new db's with utf8
-					!preg_match('/^[0-9.a-z_]+$/i', $_POST['db_grant_host']) ? 'localhost' : $_POST['db_grant_host']);
-				break;
-			case 'drop':
-				$setup_info = $GLOBALS['egw_setup']->detection->get_versions($setup_info);
-				$setup_info = $GLOBALS['egw_setup']->process->droptables($setup_info);
-				break;
-			case 'new':
-				// use uploaded backup, instead installing from scratch
-				if ($_POST['upload'])
-				{
-					$db_backup = new db_backup();
-					if (is_array($_FILES['uploaded']) && !$_FILES['uploaded']['error'] &&
-						is_uploaded_file($_FILES['uploaded']['tmp_name']))
+		try {	// catch DB errors to report them
+			switch ($GLOBALS['egw_info']['setup']['currentver']['phpgwapi'])
+			{
+				case 'dbcreate':
+					$GLOBALS['egw_setup']->db->create_database($_POST['db_root'], $_POST['db_pass'], 'utf8',	// create all new db's with utf8
+						!preg_match('/^[0-9.a-z_]+$/i', $_POST['db_grant_host']) ? 'localhost' : $_POST['db_grant_host']);
+					break;
+				case 'drop':
+					$setup_info = $GLOBALS['egw_setup']->detection->get_versions($setup_info);
+					$setup_info = $GLOBALS['egw_setup']->process->droptables($setup_info);
+					break;
+				case 'new':
+					// use uploaded backup, instead installing from scratch
+					if ($_POST['upload'])
 					{
-						if (preg_match('/\.(bz2|gz)$/i',$_FILES['uploaded']['name'],$matches))
+						$db_backup = new db_backup();
+						if (is_array($_FILES['uploaded']) && !$_FILES['uploaded']['error'] &&
+							is_uploaded_file($_FILES['uploaded']['tmp_name']))
 						{
-							$ext = '.'.$matches[1];
-							move_uploaded_file($_FILES['uploaded']['tmp_name'],$_FILES['uploaded']['tmp_name'].$ext);
-							$_FILES['uploaded']['tmp_name'] .= $ext;
+							if (preg_match('/\.(bz2|gz)$/i',$_FILES['uploaded']['name'],$matches))
+							{
+								$ext = '.'.$matches[1];
+								move_uploaded_file($_FILES['uploaded']['tmp_name'],$_FILES['uploaded']['tmp_name'].$ext);
+								$_FILES['uploaded']['tmp_name'] .= $ext;
+							}
+							if (is_resource($f = $db_backup->fopen_backup($_FILES['uploaded']['tmp_name'],true)))
+							{
+								echo '<p align="center">'.lang('restore started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
+								$db_backup->restore($f,$_POST['convert_charset'],$_FILES['uploaded']['tmp_name'],false);
+								fclose($f);
+								echo '<p align="center">'.lang('restore finished')."</p>\n";
+								unlink($_FILES['uploaded']['tmp_name']);
+							}
+							else	// backup failed ==> dont start the upgrade
+							{
+								$setup_tpl->set_var('submsg',lang('Restore failed'));
+								$setup_tpl->set_var('tableshave','<b>'.$f.'</b>');
+								$setup_tpl->set_var('subaction','');
+							}
 						}
-						if (is_resource($f = $db_backup->fopen_backup($_FILES['uploaded']['tmp_name'],true)))
+					}
+					else
+					{
+						$setup_info = $GLOBALS['egw_setup']->detection->upgrade_exclude($setup_info);
+						// Set the DB's client charset if a system-charset is set
+						if ($_REQUEST['system_charset'])
 						{
-							echo '<p align="center">'.lang('restore started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
-							$db_backup->restore($f,$_POST['convert_charset'],$_FILES['uploaded']['tmp_name'],false);
+							$GLOBALS['egw_setup']->system_charset = $_REQUEST['system_charset'];
+							$GLOBALS['egw_setup']->db->Link_ID->SetCharSet($_REQUEST['system_charset']);
+						}
+						$setup_info = $GLOBALS['egw_setup']->process->pass($setup_info,'new',$_REQUEST['debug'],True);
+						$GLOBALS['egw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
+					}
+					break;
+				case 'oldversion':
+					// create a backup, before upgrading the tables
+					if ($_POST['backup'])
+					{
+						$db_backup =& CreateObject('phpgwapi.db_backup');
+						if (is_resource($f = $db_backup->fopen_backup()))
+						{
+							echo '<p align="center">'.lang('backup started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
+							$db_backup->backup($f);
 							fclose($f);
-							echo '<p align="center">'.lang('restore finished')."</p>\n";
-							unlink($_FILES['uploaded']['tmp_name']);
+							echo '<p align="center">'.lang('backup finished')."</p>\n";
 						}
 						else	// backup failed ==> dont start the upgrade
 						{
-							$setup_tpl->set_var('submsg',lang('Restore failed'));
+							$setup_tpl->set_var('submsg',lang('Backup failed'));
 							$setup_tpl->set_var('tableshave','<b>'.$f.'</b>');
 							$setup_tpl->set_var('subaction','');
 						}
 					}
-				}
-				else
-				{
-					$setup_info = $GLOBALS['egw_setup']->detection->upgrade_exclude($setup_info);
-					// Set the DB's client charset if a system-charset is set
-					if ($_REQUEST['system_charset'])
+					if (!@$_POST['backup'] || !is_string($f))
 					{
-						$GLOBALS['egw_setup']->system_charset = $_REQUEST['system_charset'];
-						$GLOBALS['egw_setup']->db->Link_ID->SetCharSet($_REQUEST['system_charset']);
+						$setup_info = $GLOBALS['egw_setup']->process->pass($setup_info,'upgrade',$_REQUEST['debug']);
+						$GLOBALS['egw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					}
-					$setup_info = $GLOBALS['egw_setup']->process->pass($setup_info,'new',$_REQUEST['debug'],True);
-					$GLOBALS['egw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
-				}
-				break;
-			case 'oldversion':
-				// create a backup, before upgrading the tables
-				if ($_POST['backup'])
-				{
-					$db_backup =& CreateObject('phpgwapi.db_backup');
-					if (is_resource($f = $db_backup->fopen_backup()))
-					{
-						echo '<p align="center">'.lang('backup started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
-						$db_backup->backup($f);
-						fclose($f);
-						echo '<p align="center">'.lang('backup finished')."</p>\n";
-					}
-					else	// backup failed ==> dont start the upgrade
-					{
-						$setup_tpl->set_var('submsg',lang('Backup failed'));
-						$setup_tpl->set_var('tableshave','<b>'.$f.'</b>');
-						$setup_tpl->set_var('subaction','');
-					}
-				}
-				if (!@$_POST['backup'] || !is_string($f))
-				{
-					$setup_info = $GLOBALS['egw_setup']->process->pass($setup_info,'upgrade',$_REQUEST['debug']);
-					$GLOBALS['egw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
-				}
-				break;
+					break;
+			}
 		}
-
-		$GLOBALS['egw_setup']->db->Halt_On_Error = 'no';
-
+		catch (egw_exception_db $e)
+		{
+			echo "<pre>".$e->getMessage()."</pre>\n";
+		}
 		$setup_tpl->set_var('re-check_my_installation',lang('Re-Check My Installation'));
 		$setup_tpl->set_var('system_charset',$GLOBALS['egw']->system_charset);
 		$setup_tpl->parse('V_db_stage_6_post','B_db_stage_6_post');

@@ -90,30 +90,32 @@ class egw extends egw_minimal
 		// check if eGW is already setup, if not redirect to setup/
 		try {
 			$this->db->connect();
-			if (!($num_config = $this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__)->fetchColumn()))
-			{
+			$num_config = $this->db->select(config::TABLE,'COUNT(config_name)',false,__LINE__,__FILE__)->fetchColumn();
+		}
+		catch(egw_exception_db_connection $e) {
+			// ignore exception, get handled below
+		}
+		catch(egw_exception_db_invalid_sql $e1) {
+			try {
 				$phpgw_config = $this->db->select('phpgw_config','COUNT(config_name)',false,__LINE__,__FILE__)->fetchColumn();
 			}
+			catch (egw_exception_db_invalid_sql $e2) {
+				// ignor error, get handled below
+			}
 		}
-		catch(Exception $e) {
-			//echo "<pre>Connection to DB failed (".$e->getMessage().")!\n".$e->getTraceAsString();
-		}
-		if ($e || !$num_config)
+		if (!$num_config)
 		{
-			$setup_dir = str_replace(array('home/index.php','index.php'),'setup/',$_SERVER['PHP_SELF']);
-
 			// we check for the old table too, to not scare updating users ;-)
 			if ($phpgw_config)
 			{
-				throw new Exception('<center><b>Fatal Error:</b> You need to <a href="' . $setup_dir .
-					'">update eGroupWare</a> before you can continue using it.</center>',999);
+				throw new Exception('You need to update EGroupware before you can continue using it.',999);
 			}
-			else
+			if ($e)
 			{
-				throw new Exception('<center><b>Fatal Error:</b> It appears that you have not created the database tables for '
-					.'eGroupWare.  Click <a href="' . $setup_dir . '">here</a> to run setup.</center>',999);
+				throw new egw_exception_db_setup('Connection with '.$e->getMessage()."\n\n".
+					'Maybe you not created a database for EGroupware yet.',999);
 			}
-			exit;
+			throw new egw_exception_db_setup('It appears that you have not created the database tables for EGroupware.',999);
 		}
 		// Set the DB's client charset if a system-charset is set and some other values needed by egw_cache (used in config::read)
 		foreach($GLOBALS['egw_info']['server']['system_charset'] = $this->db->select(config::TABLE,'config_name,config_value',array(
@@ -213,7 +215,7 @@ class egw extends egw_minimal
 	}
 
 	/**
-	 * wakeup2 funcontion needs to be called after unserializing the egw-object
+	 * wakeup2 function needs to be called after unserializing the egw-object
 	 *
 	 * It adapts the restored object/enviroment to the changed (current) application / page-request
 	 *

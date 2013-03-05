@@ -138,8 +138,7 @@ class egw_exception_wrong_parameter extends egw_exception_assertion_failed { }
 class egw_exception_wrong_userinput extends egw_exception_assertion_failed { }
 
 /**
- * Exceptions thrown by the egw_db class
- *
+ * Exception thrown by the egw_db class for everything not covered by extended classed below
  */
 class egw_exception_db extends egw_exception
 {
@@ -159,6 +158,25 @@ class egw_exception_db extends egw_exception
 
 /**
  * Storing the row violates a unique key constrain
- *
  */
 class egw_exception_db_not_unique extends egw_exception_db { }
+
+/**
+ *  Can not connect to database: eg. database down, wrong host, name or credentials
+ */
+class egw_exception_db_connection extends egw_exception_db { }
+
+/**
+ * PHP lackst support for configured database type
+ */
+class egw_exception_db_support extends egw_exception_db { }
+
+/**
+ * Classic invalid SQL error
+ */
+class egw_exception_db_invalid_sql extends egw_exception_db { }
+
+/**
+ * EGroupware not (fully) installed, visit setup
+ */
+class egw_exception_db_setup extends egw_exception_db { }

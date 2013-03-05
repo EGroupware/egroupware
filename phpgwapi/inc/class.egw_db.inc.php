@@ -108,12 +108,6 @@ class egw_db
 	var $Debug         = 0;
 
 	/**
-	* @deprecated use exceptions (try/catch block) to handle failed connections or sql errors
-	* @var string $Halt_On_Error "yes" (halt with message), "no" (ignore errors quietly), "report" (ignore errror, but spit a warning)
-	*/
-	var $Halt_On_Error = 'yes';
-
-	/**
 	* @var array $Record current record
 	*/
 	var $Record   = array();
@@ -400,8 +394,7 @@ class egw_db
 			{
 				if (!check_load_extension($php_extension))
 				{
-					$this->halt("Necessary php database support for $this->Type (".PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX.") not loaded and can't be loaded, exiting !!!");
-					return null;	// in case error-reporting = 'no'
+					throw new egw_exception_db_connection("Necessary php database support for $this->Type (".PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX.") not loaded and can't be loaded, exiting !!!");
 				}
 				if (!isset($GLOBALS['egw']->ADOdb))	// use the global object to store the connection
 				{
@@ -414,8 +407,7 @@ class egw_db
 				$this->Link_ID = ADONewConnection($type);
 				if (!$this->Link_ID)
 				{
-					$this->halt("No ADOdb support for '$type' ($this->Type) !!!");
-					return null;	// in case error-reporting = 'no'
+					throw new egw_exception_db_connection("No ADOdb support for '$type' ($this->Type) !!!");
 				}
 				$connect = $GLOBALS['egw_info']['server']['db_persistent'] ? 'PConnect' : 'Connect';
 				if (($Ok = $this->Link_ID->$connect($Host, $User, $Password)))
@@ -430,8 +422,7 @@ class egw_db
 				if (!$Ok)
 				{
 					$Host = preg_replace('/password=[^ ]+/','password=$Password',$Host);	// eg. postgres dsn contains password
-					$this->halt("ADOdb::$connect($Host, $User, \$Password, $Database) failed.");
-					return null;	// in case error-reporting = 'no'
+					throw new egw_exception_db_connection("ADOdb::$connect($Host, $User, \$Password, $Database) failed.");
 				}
 				if ($this->Debug)
 				{
@@ -671,9 +662,8 @@ class egw_db
 		}
 		if (!$this->Query_ID)
 		{
-			$this->halt("Invalid SQL: ".(is_array($Query_String)?$Query_String[0]:$Query_String).
-				($inputarr ? "<br>Parameters: '".implode("','",$inputarr)."'":''),
-				$line, $file);
+			throw new egw_exception_db_invalid_sql("Invalid SQL: ".(is_array($Query_String)?$Query_String[0]:$Query_String).
+				($inputarr ? "<br>Parameters: '".implode("','",$inputarr)."'":''));
 		}
 		return $this->Query_ID;
 	}
@@ -707,8 +697,7 @@ class egw_db
 	{
 		if (!$this->Query_ID)
 		{
-			$this->halt('next_record called with no query pending.');
-			return 0;
+			throw new egw_exception_db('next_record called with no query pending.');
 		}
 		if ($this->Row)	// first row is already fetched
 		{
@@ -763,10 +752,7 @@ class egw_db
 	{
 		if (!$this->Query_ID  || !$this->Query_ID->Move($this->Row = $pos))
 		{
-			$this->halt("seek($pos) failed: resultset has " . $this->num_rows() . " rows");
-			$this->Query_ID->Move( $this->num_rows() );
-			$this->Row = $this->num_rows();
-			return False;
+			throw new egw_exception_db("seek($pos) failed: resultset has " . $this->num_rows() . " rows");
 		}
 		return True;
 	}
@@ -974,65 +960,6 @@ class egw_db
 	}
 
 	/**
-	* Error handler
-	*
-	* @param string $msg error message
-	* @param int $line line of calling method/function (optional)
-	* @param string $file file of calling method/function (optional)
-	*/
-	function halt($msg, $line = '', $file = '')
-	{
-		if ($this->Link_ID)		// only if we have a link, else infinite loop
-		{
-			$this->Error = $this->Link_ID->ErrorMsg();	// need to be BEFORE unlock,
-			$this->Errno = $this->Link_ID->ErrorNo();	// else we get its error or none
-
-			$this->unlock();	/* Just in case there is a table currently locked */
-		}
-		if ($this->Halt_On_Error == "no")
-		{
-			return;
-		}
-		if ($this->Halt_On_Error == 'yes')
-		{
-			throw new egw_exception_db($msg.($this->Error?":\n".$this->Error:''),$this->Errno);
-		}
-		$this->haltmsg($msg);
-
-		if ($file)
-		{
-			printf("<br /><b>File:</b> %s",$file);
-		}
-		if ($line)
-		{
-			printf("<br /><b>Line:</b> %s",$line);
-		}
-		printf("<br /><b>Function:</b> %s</p>\n",function_backtrace(2));
-
-		if ($this->Halt_On_Error != "report")
-		{
-			echo "<p><b>Session halted.</b></p>";
-			if (is_object($GLOBALS['egw']->common))
-			{
-				$GLOBALS['egw']->common->egw_exit(True);
-			}
-			else	// happens eg. in setup
-			{
-				exit();
-			}
-		}
-	}
-
-	function haltmsg($msg)
-	{
-		printf("<p><b>Database error:</b> %s<br>\n", $msg);
-		if (($this->Errno || $this->Error) && $this->Error != "()")
-		{
-			printf("<b>$this->Type Error</b>: %s (%s)<br>\n",$this->Errno,$this->Error);
-		}
-	}
-
-	/**
 	* Get description of a table
 	*
 	* Beside the column-name all other data depends on the db-type !!!
@@ -1061,7 +988,6 @@ class egw_db
 			if($column->primary_key) $flags .= "primary_key ";
 			if($column->binary) $flags .= "binary ";
 
-//				_debug_array($column);
 			$metadata[$i] = array(
 				'table' => $table,
 				'name'  => $column->name,
@@ -1523,8 +1449,7 @@ class egw_db
 
 				if (!is_int($key) && is_array($column_definitions) && !isset($column_definitions[$key]))
 				{
-					// give a warning that we have no column-type
-					$this->halt("db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre><b>nothing known about column '$key'!</b>");
+					throw new egw_exception_db_invalid_sql("db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre><b>nothing known about column '$key'!</b>");
 				}
 				$column_type = is_array($column_definitions) ? @$column_definitions[$key]['type'] : False;
 				$not_null = is_array($column_definitions) && isset($column_definitions[$key]['nullable']) ? !$column_definitions[$key]['nullable'] : false;
@@ -1912,7 +1837,7 @@ class egw_db
 			{
 				$ret = $this->Link_ID->UpdateBlob($table,$col,$val,$where,$table_def['fd'][$col]['type'] == 'blob' ? 'BLOB' : 'CLOB');
 				if ($this->Debug) echo "<p>adodb::UpdateBlob('$table','$col','$val','$where') = '$ret'</p>\n";
-				if (!$ret) $this->halt("Error in UpdateBlob($table,$col,\$val,$where)",$line,$file);
+				if (!$ret) throw new egw_exception_db_invalid_sql("Error in UpdateBlob($table,$col,\$val,$where)",$line,$file);
 			}
 		}
 		return $ret;

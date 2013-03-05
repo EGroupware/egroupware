@@ -1589,7 +1589,12 @@ function egw_exception_handler(Exception $e)
 			$message .= html::htmlspecialchars($e->getTraceAsString());
 		}
 		$message .= "</pre>\n";
-		if (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->session) && method_exists($GLOBALS['egw'],'link'))
+		if (is_a($e, 'egw_exception_db_setup'))
+		{
+			$setup_dir = str_replace(array('home/index.php','index.php'),'setup/',$_SERVER['PHP_SELF']);
+			$message .= '<a href="'.$setup_dir.'">Run setup to install or configure EGroupware.</a>';
+		}
+		elseif (is_object($GLOBALS['egw']) && isset($GLOBALS['egw']->session) && method_exists($GLOBALS['egw'],'link'))
 		{
 			$message .= '<p><a href="'.$GLOBALS['egw']->link('/index.php').'">'.try_lang('Click here to resume your eGroupWare Session.').'</a></p>';
 		}
