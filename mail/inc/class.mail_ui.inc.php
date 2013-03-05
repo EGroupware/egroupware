@@ -25,6 +25,7 @@ class mail_ui
 		'index' => True,
 		'displayHeader'	=> True,
 		'saveMessage'	=> True,
+		'vfsSaveMessage' => True,
 		'TestConnection' => True,
 	);
 
@@ -504,7 +505,7 @@ class mail_ui
 		if ($_nodeID)
 		{
 			$node = self::findNode($out,$_nodeID);
-			error_log(__METHOD__.__LINE__.array2string($node));
+			//error_log(__METHOD__.__LINE__.array2string($node));
 			return $node;
 		}
 		return ($c?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
@@ -1057,11 +1058,11 @@ unset($query['actions']);
 	 * @param string $_rowID, string - a colon separated string in the form accountID:profileID:folder:message_uid
 	 * @return array populated named result array (accountID,profileID,folder,msgUID)
 	 */
-	function splitRowID($_rowID)
+	static function splitRowID($_rowID)
 	{
 		$res = explode(self::$delimiter,$_rowID);
-		// as a rowID is perceeded by app::, we ignore the first part
-		return array('accountID'=>$res[1], 'profileID'=>$res[2], 'folder'=>base64_decode($res[3]), 'msgUID'=>$res[4]);
+		// as a rowID is perceeded by app::, should be mail!
+		return array('app'=>$res[0], 'accountID'=>$res[1], 'profileID'=>$res[2], 'folder'=>base64_decode($res[3]), 'msgUID'=>$res[4]);
 	}
 
 	/**
@@ -1385,7 +1386,7 @@ unset($query['actions']);
 		if(isset($_GET['id'])) $rowID	= $_GET['id'];
 		if(isset($_GET['part'])) $partID = $_GET['part'];
 
-		$hA = $this->splitRowID($rowID);
+		$hA = self::splitRowID($rowID);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
 
@@ -1434,7 +1435,7 @@ unset($query['actions']);
 		if(isset($_GET['part'])) $partID		= $_GET['part'];
 		if (isset($_GET['location'])&& ($_GET['location']=='display'||$_GET['location']=='filemanager')) $display	= $_GET['location'];
 
-		$hA = $this->splitRowID($rowID);
+		$hA = self::splitRowID($rowID);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
 
@@ -1469,6 +1470,41 @@ unset($query['actions']);
 			header('Content-type: text/html; charset=iso-8859-1');
 			print '<pre>'. htmlspecialchars($message, ENT_NOQUOTES, 'iso-8859-1') .'</pre>';
 		}
+	}
+
+	/**
+	 * Save an Message in the vfs
+	 *
+	 * @param string|array $ids use splitRowID, to separate values
+	 * @param string $path path in vfs (no egw_vfs::PREFIX!), only directory for multiple id's ($ids is an array)
+	 * @return string javascript eg. to close the selector window
+	 */
+	function vfsSaveMessage($ids,$path)
+	{
+		return "alert('".__METHOD__.'("'.array2string($id).'","'.$path."\")'); window.close();";
+/*
+		if (is_array($ids) && !egw_vfs::is_writable($path) || !is_array($ids) && !egw_vfs::is_writable(dirname($path)))
+		{
+			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); window.close();';
+		}
+		foreach((array)$ids as $id)
+		{
+			$hA = self::splitRowID($id);
+			$uid = $hA['msgUID'];
+			$mailbox = $hA['folder'];
+			if ($mb != $this->mail_bo->mailbox) $this->mail_bo->reopen($mb = $mailbox);
+			$message = $this->mail_bo->getMessageRawBody($uid, $partID='');
+			if (!($fp = egw_vfs::fopen($file=$path.($name ? '/'.$name : ''),'wb')) ||
+				!fwrite($fp,$message))
+			{
+				$err .= 'alert("'.addslashes(lang('Error saving %1!',$file)).'");';
+			}
+			if ($fp) fclose($fp);
+		}
+		$this->mail_bo->closeConnection();
+
+		return $err.'window.close();';
+*/
 	}
 
 	/**
@@ -1578,12 +1614,12 @@ unset($query['actions']);
 			}
 			else
 			{
-				$uidA = $this->splitRowID($_messageList['msg'][0]);
+				$uidA = self::splitRowID($_messageList['msg'][0]);
 				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 			}
 			foreach($_messageList['msg'] as $rowID)
 			{
-				$hA = $this->splitRowID($rowID);
+				$hA = self::splitRowID($rowID);
 				$messageList[] = $hA['msgUID'];
 			}
 			$this->mail_bo->flagMessages($_flag, ($_messageList=='all' ? 'all':$messageList),$folder);
@@ -1624,12 +1660,12 @@ unset($query['actions']);
 			}
 			else
 			{
-				$uidA = $this->splitRowID($_messageList['msg'][0]);
+				$uidA = self::splitRowID($_messageList['msg'][0]);
 				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 			}
 			foreach($_messageList['msg'] as $rowID)
 			{
-				$hA = $this->splitRowID($rowID);
+				$hA = self::splitRowID($rowID);
 				$messageList[] = $hA['msgUID'];
 			}
 			$this->mail_bo->deleteMessages(($_messageList=='all' ? 'all':$messageList),$folder);

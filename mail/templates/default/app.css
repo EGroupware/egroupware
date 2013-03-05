@@ -1,3 +1,9 @@
+textarea
+{
+	font-family: monospace, sans-serif;
+	font-size: 110%;
+}
+
 .defaultProfile { color:#000000; font-weight:bold !important; }
 	
 			
@@ -217,6 +223,9 @@ pre {
 	color: #666;
 	white-space: nowrap;
 }
+.dtree div {
+	width: 100%;
+}
 .dtree img {
 	border: 0px;
 	vertical-align: middle;
@@ -254,12 +263,14 @@ pre {
 }
 /*
  avoid the vertical scrollbar within the sidebox section (triggered by the vertical dimension of the tree)
-*/.divSidebox {
+*/
+.divSidebox {
 	overflow: hidden;
 }
 /*
  avoid the vertical scrollbar within the actual tablecontainer (of the tree)
 */
 .containerTableStyle {
+	width: 100%;
 	overflow: hidden;
 }

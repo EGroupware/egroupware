@@ -51,6 +51,13 @@ class mail_bo
 	var $htmlOptions;
 
 	/**
+	 * Active mimeType
+	 *
+	 * @var string
+	 */
+	var $activeMimeType;
+
+	/**
 	 * Active incomming (IMAP) Server Object
 	 *
 	 * @var object
@@ -886,16 +893,21 @@ class mail_bo
 			if (!is_array($folderInfo[0]))
 			{
 				// no folder info, but there is a status returned for the folder: something is wrong, try to cope with it
-				$folderInfo = array(0 => array('HIERACHY_DELIMITER'=>$this->getHierarchyDelimiter(),
-					'ATTRIBUTES' => ''));
+				$folderInfo = array(0 => (is_array($folderInfo)?$folderInfo:array('HIERACHY_DELIMITER'=>$this->getHierarchyDelimiter(),
+					'ATTRIBUTES' => '')));
+				if (empty($folderInfo[0]['HIERACHY_DELIMITER']) || (isset($folderInfo[0]['delimiter']) && empty($folderInfo[0]['delimiter'])))
+				{
+					//error_log(__METHOD__.__LINE__.array2string($folderInfo));
+					$folderInfo[0]['HIERACHY_DELIMITER'] = $this->getHierarchyDelimiter();
+				}
 			}
 		}
 		#if(!is_array($folderInfo[0])) {
 		#	return false;
 		#}
 
-		$retValue['delimiter']		= $folderInfo[0]['HIERACHY_DELIMITER'];
-		$retValue['attributes']		= $folderInfo[0]['ATTRIBUTES'];
+		$retValue['delimiter']		= ($folderInfo[0]['HIERACHY_DELIMITER']?$folderInfo[0]['HIERACHY_DELIMITER']:$folderInfo[0]['delimiter']);
+		$retValue['attributes']		= ($folderInfo[0]['ATTRIBUTES']?$folderInfo[0]['ATTRIBUTES']:$folderInfo[0]['attributes']);
 		$shortNameParts			= explode($retValue['delimiter'], $_folderName);
 		$retValue['shortName']		= array_pop($shortNameParts);
 		$retValue['displayName']	= $this->encodeFolderName($_folderName);
@@ -911,7 +923,7 @@ class mail_bo
 		}
 		if (!($folderInfo instanceof PEAR_Error)) $folderBasicInfo[$this->profileID][$_folderName]=$retValue;
 		egw_cache::setCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderBasicInfo,$expiration=60*60*1);
-		if ($basicInfoOnly || stripos(array2string($retValue['attributes']),'noselect')!==false)
+		if ($basicInfoOnly || (isset($retValue['attributes']) && stripos(array2string($retValue['attributes']),'noselect')!==false))
 		{
 			return $retValue;
 		}
@@ -2360,8 +2372,8 @@ class mail_bo
 		if ($_forceDeleteMethod === 'no' || !in_array($_forceDeleteMethod,array('move_to_trash',"mark_as_deleted","remove_immediately"))) $deleteOptions  = $this->mailPreferences->preferences['deleteOptions'];
 		//error_log(__METHOD__.__LINE__.'->'.array2string($_messageUID).','.$_folder.'/'.$this->sessionData['mailbox'].' Option:'.$deleteOptions);
 		$trashFolder    = $this->getTrashFolder();
-		$draftFolder	= $this->getDraftFolder(); //$GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
-		$templateFolder = $this->getTemplateFolder(); //$GLOBALS['egw_info']['user']['preferences']['felamimail']['templateFolder'];
+		$draftFolder	= $this->getDraftFolder(); //$GLOBALS['egw_info']['user']['preferences']['mail']['draftFolder'];
+		$templateFolder = $this->getTemplateFolder(); //$GLOBALS['egw_info']['user']['preferences']['mail']['templateFolder'];
 		if(($_folder == $trashFolder && $deleteOptions == "move_to_trash") ||
 		   ($_folder == $draftFolder)) {
 			$deleteOptions = "remove_immediately";
@@ -2613,8 +2625,122 @@ class mail_bo
 		if ($_charset===false) $_charset = self::$displayCharset;
 		$_stringORG = $_string;
 		$_string = @htmlentities($_string,ENT_QUOTES,$_charset, false);
-		if (empty($_string) && !empty($_stringORG)) $_string = @htmlentities(translation::convert($_stringORG,self::detect_encoding($_stringORG),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
+		if (empty($_string) && !empty($_stringORG)) $_string = @htmlentities(translation::convert($_stringORG,translation::detect_encoding($_stringORG),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
 		return $_string;
+	}
+
+	/**
+	 * htmlspecialchars
+	 * helperfunction to cope with wrong encoding in strings
+	 * @param string $_string  input to be converted
+	 * @param mixed $charset false or string -> Target charset, if false mail displayCharset will be used
+	 * @return string
+	 */
+	static function htmlspecialchars($_string, $_charset=false)
+	{
+		//setting the charset (if not given)
+		if ($_charset===false) $_charset = self::$displayCharset;
+		$_stringORG = $_string;
+		$_string = @htmlspecialchars($_string,ENT_QUOTES,$_charset, false);
+		if (empty($_string) && !empty($_stringORG)) $_string = @htmlspecialchars(translation::convert($_stringORG,self::detect_encoding($_stringORG),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
+		return $_string;
+	}
+
+	/**
+	 * strip tags out of the message completely with their content
+	 * param $_body is the text to be processed
+	 * param $tag is the tagname which is to be removed. Note, that only the name of the tag is to be passed to the function
+	 *            without the enclosing brackets
+	 * param $endtag can be different from tag  but should be used only, if begin and endtag are known to be different e.g.: <!-- -->
+	 */
+	static function replaceTagsCompletley(&$_body,$tag,$endtag='',$addbracesforendtag=true)
+	{
+		translation::replaceTagsCompletley($_body,$tag,$endtag,$addbracesforendtag);
+	}
+
+	/**
+	 * clean a message from elements regarded as potentially harmful
+	 * param string/reference $_html is the text to be processed
+	 * param boolean $usepurify - obsolet, as we always use htmlLawed
+	 * param boolean $cleanTags - use tidy (if available) to clean/balance tags
+	 * return nothing
+	 */
+	static function getCleanHTML(&$_html, $usepurify = false, $cleanTags=true)
+	{
+		// remove CRLF and TAB as it is of no use in HTML.
+		// but they matter in <pre>, so we rather don't
+		//$_html = str_replace("\r\n",' ',$_html);
+		//$_html = str_replace("\t",' ',$_html);
+		//error_log($_html);
+		//repair doubleencoded ampersands, and some stuff htmLawed stumbles upon with balancing switched on
+		$_html = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>','</td></font>','<br><td>','<tr></tr>','<o:p></o:p>','<o:p>','</o:p>'),
+							 array('&amp;',    '<BR>',           '<BR>',             '<BR>',             '</font></td>','<td>',    '',         '',           '',  ''),$_html);
+		//$_html = str_replace(array('&amp;amp;'),array('&amp;'),$_html);
+		if (stripos($_html,'style')!==false) self::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
+		if (stripos($_html,'head')!==false) self::replaceTagsCompletley($_html,'head'); // Strip out stuff in head
+		//if (stripos($_html,'![if')!==false && stripos($_html,'<![endif]>')!==false) self::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs
+		//if (stripos($_html,'!--[if')!==false && stripos($_html,'<![endif]-->')!==false) self::replaceTagsCompletley($_html,'!--\[if','<!\[endif\]-->',false); // Strip out stuff in ifs
+		//error_log(__METHOD__.__LINE__.$_html);
+		// force the use of kses, as it is still have the edge over purifier with some stuff
+		$usepurify = true;
+		if ($usepurify)
+		{
+			// we need a customized config, as we may allow external images, $GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalIMGs']
+			if (get_magic_quotes_gpc() === 1) $_html = stripslashes($_html);
+			// Strip out doctype in head, as htmlLawed cannot handle it TODO: Consider extracting it and adding it afterwards
+			if (stripos($_html,'!doctype')!==false) self::replaceTagsCompletley($_html,'!doctype');
+			if (stripos($_html,'?xml:namespace')!==false) self::replaceTagsCompletley($_html,'\?xml:namespace','/>',false);
+			if (stripos($_html,'?xml version')!==false) self::replaceTagsCompletley($_html,'\?xml version','\?>',false);
+			if (strpos($_html,'!CURSOR')!==false) self::replaceTagsCompletley($_html,'!CURSOR');
+			// htmLawed filter only the 'body'
+			//preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $_html, $matches);
+			//if ($matches[2])
+			//{
+			//	$hasOther = true;
+			//	$_html = $matches[2];
+			//}
+			// purify got switched to htmLawed
+			// some testcode to test purifying / htmlawed
+			//$_html = "<BLOCKQUOTE>hi <div> there </div> kram <br> </blockquote>".$_html;
+			$_html = html::purify($_html,self::$htmLawed_config,array(),true);
+			//if ($hasOther) $_html = $matches[1]. $_html. $matches[3];
+			// clean out comments , should not be needed as purify should do the job.
+			$search = array(
+				'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
+				'@<!--[\s\S]*?[ \t\n\r]*-->@',         // Strip multi-line comments including CDATA
+			);
+			$_html = preg_replace($search,"",$_html);
+			// remove non printable chars
+			$_html = preg_replace('/([\000-\012])/','',$_html);
+			//error_log(__METHOD__.':'.__LINE__.':'.$_html);
+		}
+		// using purify above should have tidied the tags already sufficiently
+		if ($usepurify == false && $cleanTags==true)
+		{
+			if (extension_loaded('tidy'))
+			{
+				$tidy = new tidy();
+				$cleaned = $tidy->repairString($_html, self::$tidy_config,'utf8');
+				// Found errors. Strip it all so there's some output
+				if($tidy->getStatus() == 2)
+				{
+					error_log(__METHOD__.__LINE__.' ->'.$tidy->errorBuffer);
+				}
+				else
+				{
+					$_html = $cleaned;
+				}
+			}
+			else
+			{
+				//$to = ini_get('max_execution_time');
+				//@set_time_limit(10);
+				$htmLawed = new egw_htmLawed();
+				$_html = $htmLawed->egw_htmLawed($_html);
+				//error_log(__METHOD__.__LINE__.$_html);
+				//@set_time_limit($to);
+			}
+		}
 	}
 
 	/**
@@ -2651,6 +2777,599 @@ class mail_bo
 		egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
 		//error_log(__METHOD__.__LINE__.' Using query for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid." in Folder:".$_folder.'->'.array2string($structure[$this->icServer->ImapServerId][$_folder][$_uid]));
 		return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
+	}
+
+	/**
+	 * getMimePartCharset - fetches the charset mimepart if it exists
+	 * @param $_mimePartObject structure object
+	 * @return mixed mimepart or false if no CHARSET is found, the missing charset has to be handled somewhere else,
+	 *		as we cannot safely assume any charset as we did earlier
+	 */
+	function getMimePartCharset($_mimePartObject)
+	{
+		//$charSet = 'iso-8859-1';//self::$displayCharset; //'iso-8859-1'; // self::displayCharset seems to be asmarter fallback than iso-8859-1
+		$CharsetFound=false;
+		//echo "#".$_mimePartObject->encoding.'#<br>';
+		if(is_array($_mimePartObject->parameters)) {
+			if(isset($_mimePartObject->parameters['CHARSET'])) {
+				$charSet = $_mimePartObject->parameters['CHARSET'];
+				$CharsetFound=true;
+			}
+		}
+		// this one is dirty, but until I find something that does the trick of detecting the encoding, ....
+		//if ($CharsetFound == false && $_mimePartObject->encoding == "QUOTED-PRINTABLE") $charSet = 'iso-8859-1'; //assume quoted-printable to be ISO
+		//if ($CharsetFound == false && $_mimePartObject->encoding == "BASE64") $charSet = 'utf-8'; // assume BASE64 to be UTF8
+		return ($CharsetFound ? $charSet : $CharsetFound);
+	}
+
+	/**
+	 * decodeMimePart - fetches the charset mimepart if it exists
+	 * @param string $_mimeMessage - the message to be decoded
+	 * @param string $_encoding - the encoding used BASE64 and QUOTED-PRINTABLE is supported
+	 * @param string $_charset - not used
+	 * @return string decoded mimePart
+	 */
+	function decodeMimePart($_mimeMessage, $_encoding, $_charset = '')
+	{
+		// decode the part
+		if (self::$debug) error_log(__METHOD__."() with $_encoding and $_charset:".print_r($_mimeMessage,true));
+		switch (strtoupper($_encoding))
+		{
+			case 'BASE64':
+				// use imap_base64 to decode, not any longer, as it is strict, and fails if it encounters invalid chars
+				return base64_decode($_mimeMessage); //imap_base64($_mimeMessage);
+				break;
+			case 'QUOTED-PRINTABLE':
+				// use imap_qprint to decode
+				return quoted_printable_decode($_mimeMessage);
+				break;
+			default:
+				// it is either not encoded or we don't know about it
+				return $_mimeMessage;
+				break;
+		}
+	}
+
+	/**
+	 * getMultipartAlternative
+	 * get part of the message, if its stucture is indicating its of multipart alternative style
+	 * a wrapper for multipartmixed
+	 * @param string/int $_uid the messageuid,
+	 * @param array $_structure='', if given use structure for parsing
+	 * @param string $_htmlMode, how to display a message, html, plain text, ...
+	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
+	 * @return array containing the desired part
+	 */
+	function getMultipartAlternative($_uid, $_structure, $_htmlMode, $_preserveSeen = false)
+	{
+		// a multipart/alternative has exactly 2 parts (text and html  OR  text and something else)
+		// sometimes there are 3 parts, when there is an ics/ical attached/included-> we want to show that
+		// as attachment AND as abstracted ical information (we use our notification style here).
+		$partText = false;
+		$partHTML = false;
+		if (self::$debug) _debug_array(array("METHOD"=>__METHOD__,"LINE"=>__LINE__,"STRUCTURE"=>$_structure));
+		foreach($_structure as $mimePart) {
+			if($mimePart->type == 'TEXT' && ($mimePart->subType == 'PLAIN' || $mimePart->subType == 'CALENDAR') && $mimePart->bytes > 0) {
+				if ($mimePart->subType == 'CALENDAR' && $partText === false) $partText = $mimePart; // only if there is no partText set already
+				if ($mimePart->subType == 'PLAIN') $partText = $mimePart;
+			} elseif($mimePart->type == 'TEXT' && $mimePart->subType == 'HTML' && $mimePart->bytes > 0) {
+				$partHTML = $mimePart;
+			} elseif ($mimePart->type == 'MULTIPART' && ($mimePart->subType == 'RELATED' || $mimePart->subType == 'MIXED') && is_array($mimePart->subParts)) {
+				// in a multipart alternative we treat the multipart/related as html part
+				#$partHTML = array($mimePart);
+				if (self::$debug) error_log(__METHOD__." process MULTIPART/RELATED with array as subparts");
+				$partHTML = $mimePart;
+			} elseif ($mimePart->type == 'MULTIPART' && $mimePart->subType == 'ALTERNATIVE' && is_array($mimePart->subParts)) {
+				//cascading multipartAlternative structure, assuming only the first one is to be used
+				return $this->getMultipartAlternative($_uid,$mimePart->subParts,$_htmlMode, $_preserveSeen);
+			}
+		}
+		//error_log(__METHOD__.__LINE__.$_htmlMode);
+		switch($_htmlMode) {
+			case 'html_only':
+			case 'always_display':
+				if(is_object($partHTML)) {
+					if($partHTML->subType == 'RELATED') {
+						return $this->getMultipartRelated($_uid, $partHTML, $_htmlMode, $_preserveSeen);
+					} elseif($partHTML->subType == 'MIXED') {
+						return $this->getMultipartMixed($_uid, $partHTML, $_htmlMode, $_preserveSeen);
+					} else {
+						return $this->getTextPart($_uid, $partHTML, $_htmlMode, $_preserveSeen);
+					}
+				} elseif(is_object($partText) && $_htmlMode=='always_display') {
+					return $this->getTextPart($_uid, $partText, $_htmlMode, $_preserveSeen);
+				}
+
+				break;
+			case 'only_if_no_text':
+				if(is_object($partText)) {
+					return $this->getTextPart($_uid, $partText, $_htmlMode, $_preserveSeen);
+				} elseif(is_object($partHTML)) {
+					if($partHTML->type) {
+						return $this->getMultipartRelated($_uid, $partHTML, $_htmlMode, $_preserveSeen);
+					} else {
+						return $this->getTextPart($_uid, $partHTML, 'always_display', $_preserveSeen);
+					}
+				}
+
+				break;
+
+			default:
+				if(is_object($partText)) {
+					return $this->getTextPart($_uid, $partText, $_htmlMode, $_preserveSeen);
+				} else {
+					$bodyPart = array(
+						'body'		=> lang("no plain text part found"),
+						'mimeType'	=> 'text/plain',
+						'charSet'	=> self::$displayCharset,
+					);
+				}
+
+				break;
+		}
+
+		return $bodyPart;
+	}
+
+	/**
+	 * getMultipartMixed
+	 * get part of the message, if its stucture is indicating its of multipart mixed style
+	 * @param string/int $_uid the messageuid,
+	 * @param array $_structure='', if given use structure for parsing
+	 * @param string $_htmlMode, how to display a message, html, plain text, ...
+	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
+	 * @return array containing the desired part
+	 */
+	function getMultipartMixed($_uid, $_structure, $_htmlMode, $_preserveSeen = false)
+	{
+		if (self::$debug) echo __METHOD__."$_uid, $_htmlMode<br>";
+		$bodyPart = array();
+		if (self::$debug) _debug_array($_structure);
+		if (!is_array($_structure)) $_structure = array($_structure);
+		foreach($_structure as $part) {
+			if (self::$debug) echo $part->type."/".$part->subType."<br>";
+			switch($part->type) {
+				case 'MULTIPART':
+					switch($part->subType) {
+						case 'ALTERNATIVE':
+							$bodyPart[] = $this->getMultipartAlternative($_uid, $part->subParts, $_htmlMode, $_preserveSeen);
+							break;
+
+						case 'MIXED':
+						case 'SIGNED':
+							$bodyPart = array_merge($bodyPart, $this->getMultipartMixed($_uid, $part->subParts, $_htmlMode, $_preserveSeen));
+							break;
+
+						case 'RELATED':
+							$bodyPart = array_merge($bodyPart, $this->getMultipartRelated($_uid, $part->subParts, $_htmlMode, $_preserveSeen));
+							break;
+					}
+					break;
+
+				case 'TEXT':
+					switch($part->subType) {
+						case 'PLAIN':
+						case 'HTML':
+						case 'CALENDAR': // inline ics/ical files
+							if($part->disposition != 'ATTACHMENT') {
+								$bodyPart[] = $this->getTextPart($_uid, $part, $_htmlMode, $_preserveSeen);
+							}
+							//error_log(__METHOD__.__LINE__.' ->'.$part->type."/".$part->subType.' -> BodyPart:'.array2string($bodyPart[count($bodyPart)-1]));
+							break;
+					}
+					break;
+
+				case 'MESSAGE':
+					if($part->subType == 'delivery-status') {
+						$bodyPart[] = $this->getTextPart($_uid, $part, $_htmlMode, $_preserveSeen);
+					}
+					break;
+
+				default:
+					// do nothing
+					// the part is a attachment
+					#$bodyPart[] = $this->getMessageBody($_uid, $_htmlMode, $part->partID, $part);
+					#if (!($part->type == 'TEXT' && ($part->subType == 'PLAIN' || $part->subType == 'HTML'))) {
+					#	$bodyPart[] = $this->getMessageAttachments($_uid, $part->partID, $part);
+					#}
+			}
+		}
+
+		return $bodyPart;
+	}
+
+	/**
+	 * getMultipartRelated
+	 * get part of the message, if its stucture is indicating its of multipart related style
+	 * a wrapper for multipartmixed
+	 * @param string/int $_uid the messageuid,
+	 * @param array $_structure='', if given use structure for parsing
+	 * @param string $_htmlMode, how to display a message, html, plain text, ...
+	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
+	 * @return array containing the desired part
+	 */
+	function getMultipartRelated($_uid, $_structure, $_htmlMode, $_preserveSeen = false)
+	{
+		return $this->getMultipartMixed($_uid, $_structure, $_htmlMode, $_preserveSeen);
+	}
+
+	/**
+	 * getTextPart
+	 * get Body from message
+	 * @param string/int $_uid the messageuid,
+	 * @param array $_structure='', if given use structure for parsing
+	 * @param string $_htmlMode, how to display a message, html, plain text, ...
+	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
+	 * @return array containing the desired text part, mimeType and charset
+	 */
+	function getTextPart($_uid, $_structure, $_htmlMode = '', $_preserveSeen = false)
+	{
+		//error_log(__METHOD__.__LINE__.'->'.$_uid.':'.array2string($_structure).' '.function_backtrace());
+		$bodyPart = array();
+		if (self::$debug) _debug_array(array($_structure,function_backtrace()));
+		$partID = $_structure->partID;
+		$mimePartBody = $this->icServer->getBodyPart($_uid, $partID, true, $_preserveSeen);
+		if (PEAR::isError($mimePartBody))
+		{
+			error_log(__METHOD__.__LINE__.' failed:'.$mimePartBody->message);
+			return false;
+		}
+		//_debug_array($mimePartBody);
+		//error_log(__METHOD__.__LINE__.' UID:'.$_uid.' PartID:'.$partID.' HTMLMode:'.$_htmlMode.' ->'.array2string($_structure).' body:'.array2string($mimePartBody));
+		if (empty($mimePartBody)) return array(
+				'body'		=> '',
+				'mimeType'  => ($_structure->type == 'TEXT' && $_structure->subType == 'HTML') ? 'text/html' : 'text/plain',
+				'charSet'   => self::$displayCharset,
+			);
+		//_debug_array(preg_replace('/PropertyFile___$/','',$this->decodeMimePart($mimePartBody, $_structure->encoding)));
+		if($_structure->subType == 'HTML' && $_htmlMode!= 'html_only' && $_htmlMode != 'always_display'  && $_htmlMode != 'only_if_no_text') {
+			$bodyPart = array(
+				'error'		=> 1,
+				'body'		=> lang("displaying html messages is disabled"),
+				'mimeType'	=> 'text/html',
+				'charSet'	=> self::$displayCharset,
+			);
+		} elseif ($_structure->subType == 'PLAIN' && $_htmlMode == 'html_only') {
+			$bodyPart = array(
+				'error'		=> 1,
+				'body'      => lang("displaying plain messages is disabled"),
+				'mimeType'  => 'text/plain', // make sure we do not return mimeType text/html
+				'charSet'   => self::$displayCharset,
+			);
+		} else {
+			// some Servers append PropertyFile___ ; strip that here for display
+			$bodyPart = array(
+				'body'		=> preg_replace('/PropertyFile___$/','',$this->decodeMimePart($mimePartBody, $_structure->encoding, $this->getMimePartCharset($_structure))),
+				'mimeType'	=> ($_structure->type == 'TEXT' && $_structure->subType == 'HTML') ? 'text/html' : 'text/plain',
+				'charSet'	=> $this->getMimePartCharset($_structure),
+			);
+			if ($_structure->type == 'TEXT' && $_structure->subType == 'PLAIN' &&
+				is_array($_structure->parameters) && isset($_structure->parameters['FORMAT']) &&
+				trim(strtolower($_structure->parameters['FORMAT']))=='flowed'
+			)
+			{
+				if (self::$debug) error_log(__METHOD__.__LINE__." detected TEXT/PLAIN Format:flowed -> removing leading blank ('\r\n ') per line");
+				$bodyPart['body'] = str_replace("\r\n ","\r\n", $bodyPart['body']);
+			}
+			if ($_structure->subType == 'CALENDAR')
+			{
+				// we get an inline CALENDAR ical/ics, we display it using the calendar notification style
+				$calobj = new calendar_ical;
+				$calboupdate = new calendar_boupdate;
+				// timezone stuff
+				$tz_diff = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'] - $this->common_prefs['tz_offset'];
+				// form an event out of ical
+				$event = $calobj->icaltoegw($bodyPart['body']);
+				$event= $event[0];
+				// preset the olddate
+				$olddate = $calboupdate->format_date($event['start']+$tz_diff);
+				// search egw, if we can find it
+				$eventid = $calobj->find_event(array('uid'=>$event['uid']));
+				if ((int)$eventid[0]>0)
+				{
+					// we found an event, we use the first one
+					$oldevent = $calobj->read($eventid);
+					// we set the olddate, to comply with the possible merge params for the notification message
+					if($oldevent != False && $oldevent[$eventid[0]]['start']!=$event[$eventid[0]]['start']) {
+						$olddate = $calboupdate->format_date($oldevent[$eventid[0]]['start']+$tz_diff);
+					}
+					// we merge the changes and the original event
+					$event = array_merge($oldevent[$eventid[0]],$event);
+					// for some strange reason, the title of the old event is not replaced with the new title
+					// if you klick on the ics and import it into egw, so we dont show the title here.
+					// so if it is a mere reply, we dont use the new title (more detailed info/work needed here)
+					if ($_structure->parameters['METHOD']=='REPLY') $event['title'] = $oldevent[$eventid[0]]['title'];
+				}
+				// we prepare the message
+				$details = $calboupdate->_get_event_details($event,$action,$event_arr);
+				$details['olddate']=$olddate;
+				//_debug_array($_structure);
+				list($subject,$info) = $calboupdate->get_update_message($event,($_structure->parameters['METHOD']=='REPLY'?false:true));
+				$info = $GLOBALS['egw']->preferences->parse_notify($info,$details);
+				// we set the bodyPart, we only show the event, we dont actually do anything, as we expect the user to
+				// click on the attached ics to update his own eventstore
+				$bodyPart['body'] = $subject;
+				$bodyPart['body'] .= "\n".$info;
+				$bodyPart['body'] .= "\n\n".lang('Event Details follow').":\n";
+				foreach($event_arr as $key => $val)
+				{
+					if(strlen($details[$key])) {
+						switch($key){
+					 		case 'access':
+							case 'priority':
+							case 'link':
+								break;
+							default:
+								$bodyPart['body'] .= sprintf("%-20s %s\n",$val['field'].':',$details[$key]);
+								break;
+					 	}
+					}
+				}
+			}
+		}
+		//_debug_array($bodyPart);
+		return $bodyPart;
+	}
+
+	/**
+	 * getMessageBody
+	 * get Body from message
+	 * @param string/int $_uid the messageuid,
+	 * @param string $_htmlOptions, how to display a message, html, plain text, ...
+	 * @param string/int $_partID='' , the partID, may be omitted
+	 * @param array $_structure='', if given use structure for parsing
+	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
+	 * @return array containing the message body, mimeType and charset
+	 */
+	function getMessageBody($_uid, $_htmlOptions='', $_partID='', $_structure = '', $_preserveSeen = false, $_folder = '')
+	{
+		if (self::$debug) echo __METHOD__."$_uid, $_htmlOptions, $_partID<br>";
+		if($_htmlOptions != '') {
+			$this->htmlOptions = $_htmlOptions;
+		}
+		if(is_object($_structure)) {
+			$structure = $_structure;
+		} else {
+			$this->icServer->_cmd_counter = rand($this->icServer->_cmd_counter+1,$this->icServer->_cmd_counter+100);
+			$structure = $this->_getStructure($_uid, true, false, $_folder);
+			if($_partID != '') {
+				$structure = $this->_getSubStructure($structure, $_partID);
+			}
+		}
+		if (self::$debug) _debug_array($structure);
+		switch($structure->type) {
+			case 'APPLICATION':
+				return array(
+					array(
+						'body'		=> '',
+						'mimeType'	=> 'text/plain',
+						'charSet'	=> 'iso-8859-1',
+					)
+				);
+				break;
+			case 'MULTIPART':
+				switch($structure->subType) {
+					case 'ALTERNATIVE':
+						$bodyParts = array($this->getMultipartAlternative($_uid, $structure->subParts, $this->htmlOptions, $_preserveSeen));
+
+						break;
+
+					case 'NIL': // multipart with no Alternative
+					case 'MIXED':
+					case 'REPORT':
+					case 'SIGNED':
+						$bodyParts = $this->getMultipartMixed($_uid, $structure->subParts, $this->htmlOptions, $_preserveSeen);
+						break;
+
+					case 'RELATED':
+						$bodyParts = $this->getMultipartRelated($_uid, $structure->subParts, $this->htmlOptions, $_preserveSeen);
+						break;
+				}
+				return self::normalizeBodyParts($bodyParts);
+				break;
+			case 'VIDEO':
+			case 'AUDIO': // some servers send audiofiles and imagesfiles directly, without any stuff surround it
+			case 'IMAGE': // they are displayed as Attachment NOT INLINE
+				return array(
+					array(
+						'body'      => '',
+						'mimeType'  => $structure->subType,
+					),
+				);
+				break;
+			case 'TEXT':
+				$bodyPart = array();
+				if ( $structure->disposition != 'ATTACHMENT') {
+					switch($structure->subType) {
+						case 'CALENDAR':
+							// this is handeled in getTextPart
+						case 'HTML':
+						case 'PLAIN':
+						default:
+							$bodyPart = array($this->getTextPart($_uid, $structure, $this->htmlOptions, $_preserveSeen));
+					}
+				} else {
+					// what if the structure->disposition is attachment ,...
+				}
+				return self::normalizeBodyParts($bodyPart);
+				break;
+			case 'ATTACHMENT':
+			case 'MESSAGE':
+				switch($structure->subType) {
+					case 'RFC822':
+						$newStructure = array_shift($structure->subParts);
+						if (self::$debug) {echo __METHOD__." Message -> RFC -> NewStructure:"; _debug_array($newStructure);}
+						return self::normalizeBodyParts($this->getMessageBody($_uid, $_htmlOptions, $newStructure->partID, $newStructure));
+						break;
+				}
+				break;
+			default:
+				if (self::$debug) _debug_array($structure);
+				return array(
+					array(
+						'body'		=> lang('The mimeparser can not parse this message.'),
+						'mimeType'	=> 'text/plain',
+						'charSet'	=> 'iso-8859-1',
+					)
+				);
+				break;
+		}
+	}
+
+	/**
+	 * normalizeBodyParts - function to gather and normalize all body Information
+	 * @param _bodyParts - Body Array
+	 * @return array - a normalized Bodyarray
+	 */
+	static function normalizeBodyParts($_bodyParts)
+	{
+		if (is_array($_bodyParts))
+		{
+			foreach($_bodyParts as $singleBodyPart)
+			{
+				if (!isset($singleBodyPart['body'])) {
+					$buff = self::normalizeBodyParts($singleBodyPart);
+					foreach ((array)$buff as $val)	$body2return[] = $val;
+					continue;
+				}
+				$body2return[] = $singleBodyPart;
+			}
+		}
+		else
+		{
+			$body2return = $_bodyParts;
+		}
+		return $body2return;
+	}
+
+	/**
+	 * getdisplayableBody - creates the bodypart of the email as textual representation
+	 * @param object $mailClass the mailClass object to be used
+	 * @param array $bodyParts  with the bodyparts
+	 * @return string a preformatted string with the mails converted to text
+	 */
+	static function &getdisplayableBody(&$mailClass, $bodyParts, $preserveHTML = false)
+	{
+		for($i=0; $i<count($bodyParts); $i++)
+		{
+			if (!isset($bodyParts[$i]['body'])) {
+				$bodyParts[$i]['body'] = self::getdisplayableBody($mailClass, $bodyParts[$i], $preserveHTML);
+				$message .= empty($bodyParts[$i]['body'])?'':$bodyParts[$i]['body'];
+				continue;
+			}
+			if (isset($bodyParts[$i]['error'])) continue;
+			if (empty($bodyParts[$i]['body'])) continue;
+			// some characterreplacements, as they fail to translate
+			$sar = array(
+				'@(\x84|\x93|\x94)@',
+				'@(\x96|\x97|\x1a)@',
+				'@(\x82|\x91|\x92)@',
+				'@(\x85)@',
+				'@(\x86)@',
+				'@(\x99)@',
+				'@(\xae)@',
+			);
+			$rar = array(
+				'"',
+				'-',
+				'\'',
+				'...',
+				'&',
+				'(TM)',
+				'(R)',
+			);
+
+			if(($bodyParts[$i]['mimeType'] == 'text/html' || $bodyParts[$i]['mimeType'] == 'text/plain') &&
+				strtoupper($bodyParts[$i]['charSet']) != 'UTF-8')
+			{
+				$bodyParts[$i]['body'] = preg_replace($sar,$rar,$bodyParts[$i]['body']);
+			}
+
+			if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = translation::detect_encoding($bodyParts[$i]['body']);
+			// add line breaks to $bodyParts
+			//error_log(__METHOD__.__LINE__.' Charset:'.$bodyParts[$i]['charSet'].'->'.$bodyParts[$i]['body']);
+			$newBody  = translation::convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+			//error_log(__METHOD__.__LINE__.' MimeType:'.$bodyParts[$i]['mimeType'].'->'.$newBody);
+			/*
+			// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
+			if (strtoupper(self::$displayCharset) == 'UTF-8')
+			{
+				$test = json_encode($newBody);
+				//error_log(__METHOD__.__LINE__.'#'.$test.'# ->'.strlen($newBody).' Error:'.json_last_error());
+				if (json_last_error() != JSON_ERROR_NONE && strlen($newBody)>0)
+				{
+					// this should not be needed, unless something fails with charset detection/ wrong charset passed
+					error_log(__METHOD__.__LINE__.' Charset Reported:'.$bodyParts[$i]['charSet'].' Carset Detected:'.translation::detect_encoding($bodyParts[$i]['body']));
+					$newBody = utf8_encode($newBody);
+				}
+			}
+			*/
+			//error_log(__METHOD__.__LINE__.' before purify:'.$newBody);
+			$mailClass->activeMimeType = 'text/plain';
+			if ($bodyParts[$i]['mimeType'] == 'text/html') {
+				$mailClass->activeMimeType = $bodyParts[$i]['mimeType'];
+				// as translation::convert reduces \r\n to \n and purifier eats \n -> peplace it with a single space
+				$newBody = str_replace("\n"," ",$newBody);
+				// convert HTML to text, as we dont want HTML in infologs
+				if (extension_loaded('tidy'))
+				{
+					$tidy = new tidy();
+					$cleaned = $tidy->repairString($newBody, self::$tidy_config,'utf8');
+					// Found errors. Strip it all so there's some output
+					if($tidy->getStatus() == 2)
+					{
+						error_log(__METHOD__.__LINE__.' ->'.$tidy->errorBuffer);
+					}
+					else
+					{
+						$newBody = $cleaned;
+					}
+					if (!$preserveHTML)
+					{
+						// filter only the 'body', as we only want that part, if we throw away the html
+						preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches);
+						if ($matches[2])
+						{
+							$hasOther = true;
+							$newBody = $matches[2];
+						}
+					}
+				}
+				else
+				{
+					// htmLawed filter only the 'body'
+					preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches);
+					if ($matches[2])
+					{
+						$hasOther = true;
+						$newBody = $matches[2];
+					}
+					$htmLawed = new egw_htmLawed();
+					// the next line should not be needed
+					$newBody = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>'),array('&amp;','<BR>','<BR>','<BR>'),$newBody);
+					$newBody = $htmLawed->egw_htmLawed($newBody);
+					if ($hasOther && $preserveHTML) $newBody = $matches[1]. $newBody. $matches[3];
+				}
+				//error_log(__METHOD__.__LINE__.' after purify:'.$newBody);
+				if ($preserveHTML==false) $newBody = $mailClass->convertHTMLToText($newBody,true);
+				//error_log(__METHOD__.__LINE__.' after convertHTMLToText:'.$newBody);
+				if ($preserveHTML==false) $newBody = nl2br($newBody); // we need this, as htmLawed removes \r\n
+				$mailClass->getCleanHTML($newBody,false,$preserveHTML); // remove stuff we regard as unwanted
+				if ($preserveHTML==false) $newBody = str_replace("<br />","\r\n",$newBody);
+				//error_log(__METHOD__.__LINE__.' after getClean:'.$newBody);
+				$message .= $newBody;
+				continue;
+			}
+			$newBody =self::htmlspecialchars($newBody);
+			//error_log(__METHOD__.__LINE__.' Body(after specialchars):'.$newBody);
+			$newBody = strip_tags($newBody); //we need to fix broken tags (or just stuff like "<800 USD/p" )
+			//error_log(__METHOD__.__LINE__.' Body(after strip tags):'.$newBody);
+			$newBody = htmlspecialchars_decode($newBody,ENT_QUOTES);
+			//error_log(__METHOD__.__LINE__.' Body (after hmlspc_decode):'.$newBody);
+			$message .= $newBody;
+			//continue;
+		}
+		return $message;
 	}
 
 	/**
@@ -3010,6 +3729,191 @@ class mail_bo
 				}
 			}
 		}
+	}
+
+	/**
+	 * functions to allow access to mails through other apps to fetch content
+	 * used in infolog, tracker
+	 */
+
+	/**
+	 * get_mailcontent - fetches the actual mailcontent, and returns it as well defined array
+	 * @param object mailClass the mailClassobject to be used
+	 * @param uid the uid of the email to be processed
+	 * @param partid the partid of the email
+	 * @param mailbox the mailbox, that holds the message
+	 * @param preserveHTML flag to pass through to getdisplayableBody
+	 * @return array with 'mailaddress'=>$mailaddress,
+	 *				'subject'=>$subject,
+	 *				'message'=>$message,
+	 *				'attachments'=>$attachments,
+	 *				'headers'=>$headers,
+	 */
+	static function get_mailcontent(&$mailClass,$uid,$partid='',$mailbox='', $preserveHTML = false)
+	{
+			//echo __METHOD__." called for $uid,$partid <br>";
+			$headers = $mailClass->getMessageHeader($uid,$partid,true);
+			// dont force retrieval of the textpart, let mailClass preferences decide
+			$bodyParts = $mailClass->getMessageBody($uid,($preserveHTML?'always_display':'only_if_no_text'),$partid);
+			//error_log(array2string($bodyParts));
+			$attachments = $mailClass->getMessageAttachments($uid,$partid);
+
+			if ($mailClass->isSentFolder($mailbox)) $mailaddress = $headers['TO'];
+			elseif (isset($headers['FROM'])) $mailaddress = $headers['FROM'];
+			elseif (isset($headers['SENDER'])) $mailaddress = $headers['SENDER'];
+			if (isset($headers['CC'])) $mailaddress .= ','.$headers['CC'];
+			//_debug_array($headers);
+			$subject = $headers['SUBJECT'];
+
+			$message = self::getdisplayableBody($mailClass, $bodyParts, $preserveHTML);
+			if ($preserveHTML && $mailClass->activeMimeType == 'text/plain') $message = '<pre>'.$message.'</pre>';
+			$headdata = self::createHeaderInfoSection($headers, '',$preserveHTML);
+			$message = $headdata.$message;
+			//echo __METHOD__.'<br>';
+			//_debug_array($attachments);
+			if (is_array($attachments))
+			{
+				foreach ($attachments as $num => $attachment)
+				{
+					if ($attachment['mimeType'] == 'MESSAGE/RFC822')
+					{
+						//_debug_array($mailClass->getMessageHeader($uid, $attachment['partID']));
+						//_debug_array($mailClass->getMessageBody($uid,'', $attachment['partID']));
+						//_debug_array($mailClass->getMessageAttachments($uid, $attachment['partID']));
+						$mailcontent = self::get_mailcontent($mailClass,$uid,$attachment['partID']);
+						$headdata ='';
+						if ($mailcontent['headers'])
+						{
+							$headdata = self::createHeaderInfoSection($mailcontent['headers'],'',$preserveHTML);
+						}
+						if ($mailcontent['message'])
+						{
+							$tempname =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+							$attachedMessages[] = array(
+								'type' => 'TEXT/PLAIN',
+								'name' => $mailcontent['subject'].'.txt',
+								'tmp_name' => $tempname,
+							);
+							$tmpfile = fopen($tempname,'w');
+							fwrite($tmpfile,$headdata.$mailcontent['message']);
+							fclose($tmpfile);
+						}
+						foreach($mailcontent['attachments'] as $tmpattach => $tmpval)
+						{
+							$attachedMessages[] = $tmpval;
+						}
+						unset($attachments[$num]);
+					}
+					else
+					{
+						$attachments[$num] = array_merge($attachments[$num],$mailClass->getAttachment($uid, $attachment['partID']));
+						if (isset($attachments[$num]['charset'])) {
+							if ($attachments[$num]['charset']===false) $attachments[$num]['charset'] = translation::detect_encoding($attachments[$num]['attachment']);
+							translation::convert($attachments[$num]['attachment'],$attachments[$num]['charset']);
+						}
+						$attachments[$num]['type'] = $attachments[$num]['mimeType'];
+						$attachments[$num]['tmp_name'] = tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+						$tmpfile = fopen($attachments[$num]['tmp_name'],'w');
+						fwrite($tmpfile,$attachments[$num]['attachment']);
+						fclose($tmpfile);
+						unset($attachments[$num]['attachment']);
+					}
+				}
+				if (is_array($attachedMessages)) $attachments = array_merge($attachments,$attachedMessages);
+			}
+			return array(
+					'mailaddress'=>$mailaddress,
+					'subject'=>$subject,
+					'message'=>$message,
+					'attachments'=>$attachments,
+					'headers'=>$headers,
+					);
+	}
+
+	/**
+	 * createHeaderInfoSection - creates a textual headersection from headerobject
+	 * @param array header headerarray may contain SUBJECT,FROM,SENDER,TO,CC,BCC,DATE,PRIORITY,IMPORTANCE
+	 * @param string headline Text tom use for headline
+	 * @param bool createHTML do it with HTML breaks
+	 * @return string a preformatted string with the information of the header worked into it
+	 */
+	static function createHeaderInfoSection($header,$headline='', $createHTML = false)
+	{
+		$headdata = null;
+		if ($header['SUBJECT']) $headdata = lang('subject').': '.$header['SUBJECT'].($createHTML?"<br />":"\n");
+		if ($header['FROM']) $headdata .= lang('from').': '.self::convertAddressArrayToString($header['FROM'], $createHTML).($createHTML?"<br />":"\n");
+		if ($header['SENDER']) $headdata .= lang('sender').': '.self::convertAddressArrayToString($header['SENDER'], $createHTML).($createHTML?"<br />":"\n");
+		if ($header['TO']) $headdata .= lang('to').': '.self::convertAddressArrayToString($header['TO'], $createHTML).($createHTML?"<br />":"\n");
+		if ($header['CC']) $headdata .= lang('cc').': '.self::convertAddressArrayToString($header['CC'], $createHTML).($createHTML?"<br />":"\n");
+		if ($header['BCC']) $headdata .= lang('bcc').': '.self::convertAddressArrayToString($header['BCC'], $createHTML).($createHTML?"<br />":"\n");
+		if ($header['DATE']) $headdata .= lang('date').': '.$header['DATE'].($createHTML?"<br />":"\n");
+		if ($header['PRIORITY'] && $header['PRIORITY'] != 'normal') $headdata .= lang('priority').': '.$header['PRIORITY'].($createHTML?"<br />":"\n");
+		if ($header['IMPORTANCE'] && $header['IMPORTANCE'] !='normal') $headdata .= lang('importance').': '.$header['IMPORTANCE'].($createHTML?"<br />":"\n");
+		//if ($mailcontent['headers']['ORGANIZATION']) $headdata .= lang('organization').': '.$mailcontent['headers']['ORGANIZATION']."\
+		if (!empty($headdata))
+		{
+			if (!empty($headline)) $headdata = "---------------------------- $headline ----------------------------".($createHTML?"<br />":"\n").$headdata;
+			if (empty($headline)) $headdata = "--------------------------------------------------------".($createHTML?"<br />":"\n").$headdata;
+			$headdata .= "--------------------------------------------------------".($createHTML?"<br />":"\n");
+		}
+		else
+		{
+			$headdata = "--------------------------------------------------------".($createHTML?"<br />":"\n");
+		}
+		return $headdata;
+	}
+
+	/**
+	 * convertAddressArrayToString - converts an mail envelope Address Array To String
+	 * @param array $rfcAddressArray  an addressarray as provided by mail retieved via egw_pear....
+	 * @return string a comma separated string with the mailaddress(es) converted to text
+	 */
+	static function convertAddressArrayToString($rfcAddressArray, $createHTML = false)
+	{
+		//error_log(__METHOD__.__LINE__.array2string($rfcAddressArray));
+		$returnAddr ='';
+		if (is_array($rfcAddressArray))
+		{
+			foreach((array)$rfcAddressArray as $addressData) {
+				//error_log(__METHOD__.__LINE__.array2string($addressData));
+				if($addressData['MAILBOX_NAME'] == 'NIL') {
+					continue;
+				}
+				if(strtolower($addressData['MAILBOX_NAME']) == 'undisclosed-recipients') {
+					continue;
+				}
+				if ($addressData['RFC822_EMAIL'])
+				{
+					$addressObjectA = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($addressData['RFC822_EMAIL']):$addressData['RFC822_EMAIL']),'');
+				}
+				else
+				{
+					$emailaddress = ($addressData['PERSONAL_NAME']?$addressData['PERSONAL_NAME'].' <'.$addressData['EMAIL'].'>':$addressData['EMAIL']);
+					$addressObjectA = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($emailaddress):$emailaddress),'');
+				}
+				$addressObject = $addressObjectA[0];
+				//error_log(__METHOD__.__LINE__.array2string($addressObject));
+				if ($addressObject->host == '.SYNTAX-ERROR.') continue;
+				//$mb =(string)$addressObject->mailbox;
+				//$h = (string)$addressObject->host;
+				//$p = (string)$addressObject->personal;
+				$returnAddr .= (strlen($returnAddr)>0?',':'');
+				//error_log(__METHOD__.__LINE__.$p.' <'.$mb.'@'.$h.'>');
+				$buff = imap_rfc822_write_address($addressObject->mailbox, self::$idna2->decode($addressObject->host), $addressObject->personal);
+				$buff = str_replace(array('<','>'),array('[',']'),$buff);
+				if ($createHTML) $buff = mail_bo::htmlspecialchars($buff);
+				//error_log(__METHOD__.__LINE__.' Address: '.$returnAddr);
+				$returnAddr .= $buff;
+			}
+		}
+		else
+		{
+			// do not mess with strings, return them untouched /* ToDo: validate string as Address */
+			$rfcAddressArray = self::decode_header($rfcAddressArray,true);
+			$rfcAddressArray = str_replace(array('<','>'),array('[',']'),$rfcAddressArray);
+			if (is_string($rfcAddressArray)) return ($createHTML ? mail_bo::htmlspecialchars($rfcAddressArray) : $rfcAddressArray);
+		}
+		return $returnAddr;
 	}
 
 	/**

@@ -812,7 +812,7 @@ class mail_hooks
 		// Destination div for folder tree
 		$file[] = array(
 			'no_lang' => true,
-			'text'=>'<span id="tree_target" class="dtree"/>',
+			'text'=>'<span id="tree_target" class="dtree" style="width:100%;"/>',
 			'link'=>false,
 			'icon' => false
 		);

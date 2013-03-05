@@ -351,6 +351,78 @@ function mail_mailsource(_action, _elems)
 }
 
 /**
+ * Save a message
+ * 
+ * @param _action
+ * @param _elems _elems[0].id is the row-id
+ */
+function mail_save(_action, _elems)
+{
+	//alert('mail_save('+_elems[0].id+')');
+	var url = window.egw_webserverUrl+'/index.php?';
+	url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
+	url += '&id='+_elems[0].id;
+	//window.open(url,'_blank','dependent=yes,width=100,height=100,scrollbars=yes,status=yes')
+	document.location = url;
+}
+
+/**
+ * Save a message to filemanager
+ * 
+ * @param _action
+ * @param _elems _elems[0].id is the row-id
+ */
+function mail_save2fm(_action, _elems)
+{
+	var _id = _elems[0].id;
+	var dataElem = egw.dataGetUIDdata(_id);
+	var url = window.egw_webserverUrl+'/index.php?';
+	url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
+	url += '&mode=saveas';
+	var filename =dataElem.data.subject.replace(/[\f\n\t\v/\\:*#?<>\|]/g,"_");
+	url += '&name='+encodeURIComponent(filename+'.eml');
+	url += '&mime=message'+encodeURIComponent('/')+'rfc822';
+	url += '&method=mail.mail_ui.vfsSaveMessage'
+	url += '&id='+_elems[0].id;
+	url += '&label=Save';
+	//window.open(url,'_blank','dependent=yes,width=100,height=100,scrollbars=yes,status=yes')
+	//document.location = url;
+	egw_openWindowCentered(url,'vfs_save_message_'+_elems[0].id,'640','570',window.outerWidth/2,window.outerHeight/2);
+
+}
+
+/**
+ * Save message as InfoLog
+ * 
+ * @param _action
+ * @param _elems _elems[0].id is the row-id
+ */
+function mail_infolog(_action, _elems)
+{
+	//alert('mail_infolog('+_elems[0].id+')');return;
+	var url = window.egw_webserverUrl+'/index.php?';
+	url += 'menuaction=infolog.infolog_ui.import_mail';	// todo compose for Draft folder
+	url += '&rowid='+_elems[0].id;
+	egw_openWindowCentered(url,'import_mail_'+_elems[0].id,_action.data.width,_action.data.height);
+}
+
+/**
+ * Save message as ticket
+ * 
+ * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
+ * @param _elems
+ */
+function mail_tracker(_action, _elems)
+{
+	//alert('mail_tracker('+_elems[0].id+')');
+	var url = window.egw_webserverUrl+'/index.php?';
+	url += 'menuaction=tracker.tracker_ui.import_mail';	// todo compose for Draft folder
+	url += '&rowid='+_elems[0].id;
+	egw_openWindowCentered(url,'import_tracker_'+_elems[0].id,_action.data.width,_action.data.height);
+}
+
+
+/**
  * mail_getFormData
  * 
  * @param _actionObjects, the senders
