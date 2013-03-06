@@ -175,6 +175,10 @@ class select_widget
 					if ($value)
 					{
 						if (!is_array($value)) $value = explode(',',$value);
+						// Filter ACL
+						$value = $GLOBALS['egw']->categories->check_list(EGW_ACL_READ,implode(',',$value));
+						$value = explode(',',$value);
+
 						foreach($value as $key => $id)
 						{
 							if ($id && ($name = stripslashes($GLOBALS['egw']->categories->id2name($id))) && $name != '--')

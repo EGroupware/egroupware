@@ -726,6 +726,9 @@ class etemplate extends boetemplate
 	{
 		static $cat2color;
 
+		// ACL check
+		$cats = $GLOBALS['egw']->categories->check_list(EGW_ACL_READ,$cats);
+
 		if (!$cats) return null;
 
 		if (isset($cat2color[$cats]))
