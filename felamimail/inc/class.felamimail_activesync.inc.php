@@ -209,6 +209,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			'name'   => 'felamimail-ActiveSyncProfileID',
 			'help'   => 'eMail Account to sync ',
 			'values' => $identities,
+			'default'=> 'G',
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
@@ -218,9 +219,9 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			'name'   => 'felamimail-allowSendingInvitations',
 			'help'   => 'control the sending of calendar invitations while using this profile',
 			'values' => array(
-							'sendifnocalnotif'=>'only send if there is no notification in calendar',
-							'send'=>'yes, always send',
-							'nosend'=>'no, do not send',
+				'sendifnocalnotif'=>'only send if there is no notification in calendar',
+				'send'=>'yes, always send',
+				'nosend'=>'no, do not send',
 			),
 			'xmlrpc' => True,
 			'default' => 'sendifnocalnotif',
