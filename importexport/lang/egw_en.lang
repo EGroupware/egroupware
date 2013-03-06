@@ -46,6 +46,7 @@ duplicate name, please choose another.	importexport	en	Duplicate name, please ch
 edit conditions	importexport	en	Edit conditions
 edit definition <a href="%1">%2</a> to match your file	importexport	en	Edit definition <a href="%1">%2</a> to match your file
 edit your file to match the definition:	importexport	en	Edit your file to match the definition:
+encoding mismatch. expected %1 file, you uploaded %2.<br />\n	importexport	en	Encoding mismatch. Expected %1 file, you uploaded %2.<br />\n
 errors	importexport	en	Errors
 execute	importexport	en	Execute
 expert options	importexport	en	Expert options
