@@ -570,7 +570,13 @@ class html
 			r.collapse(true);
 			r.selectNodeContents(d.getBody());
 			r.collapse('.($_focusToBody==='BOTTOM'?'false':'true').');
-			r.select();
+			r.select();'.($font_span?'
+			//this stuff is needed, as the above places the caret just before the span tag
+			var sN = r.startContainer.getNextSourceNode();
+			//FF is selecting the span with getNextSourceNode, other browsers need to fetch it with getNext
+			r.selectNodeContents(((typeof sN.getName==="function") && sN.getName()=="span"?r.startContainer.getNextSourceNode():r.startContainer.getNextSourceNode().getNext()));
+			r.collapse(true);
+			r.select();':'').'
 ':'').
 '
 			ev.editor.resize("100%", '.str_replace('px', '', $pxheight).');
