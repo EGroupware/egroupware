@@ -41,6 +41,7 @@ define imports|exports	common	en	Define Imports|Exports
 definition	importexport	en	Definition
 delete all selected definitions	importexport	en	Delete ALL selected definitions
 deleted	importexport	en	Deleted.
+delimiter	importexport	en	Delimiter
 duplicate name, please choose another.	importexport	en	Duplicate name, please choose another.
 edit conditions	importexport	en	Edit conditions
 edit definition <a href="%1">%2</a> to match your file	importexport	en	Edit definition <a href="%1">%2</a> to match your file
@@ -65,6 +66,7 @@ from definition	importexport	en	From definition
 general	preferences	en	General
 general fields:	preferences	en	General fields:
 header lines to skip	importexport	en	Header lines to skip
+how to merge with existing data? for each record, all conditions are evaluated from top to bottom, or stop. for blind insert, leave blank.	importexport	en	How to merge with existing data? For each record, all conditions are evaluated from top to bottom, or stop. For blind insert, leave blank.
 human friendly values	importexport	en	Human friendly values
 if you specify an export definition, it will be used when you export	preferences	en	If you specify an export definition, it will be used when you export.
 import	importexport	en	Import
@@ -87,6 +89,7 @@ next	importexport	en	Next
 next run	importexport	en	Next run
 no matching records	importexport	en	No matching records
 no matches	importexport	en	no matches
+no notifications	importexport	en	No notifications
 no records selected	importexport	en	No records selected!
 none found	importexport	en	None found
 old fixed definition	preferences	en	Old fixed definition
@@ -122,6 +125,7 @@ unable to link to %1 "%2"	importexport	en	Unable to link to %1 "%2"
 unable to schedule	importexport	en	Unable to schedule.
 update categories	importexport	en	Update categories
 use default	importexport	en	Use default
+use field from csv if possible	importexport	en	Use field from CSV if possible
 user preference	importexport	en	User preference
 user template folder	importexport	en	User template folder
 users allowed to create their own definitions	importexport	en	Users allowed to create their own definitions
