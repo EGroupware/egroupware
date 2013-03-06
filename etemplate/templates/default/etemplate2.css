@@ -770,6 +770,9 @@ label input, label span, label div, label select, label textarea {
 }
 .favorites li a {
 }
+.favorites li span.ui-state-active {
+	border: none;
+}
 .favorites input, .favorites img {
 	margin-right: 2ex;
 }
@@ -788,7 +791,7 @@ label input, label span, label div, label select, label textarea {
 }
 #favorite_sidebox .ui-menu .ui-menu-item a {
 	line-height: inherit;
-	padding: 2px 0px;
+	padding: 3px 0px;
 }
 #favorite_sidebox .ui-menu .ui-menu-item a:hover {
 	text-decoration: underline;
