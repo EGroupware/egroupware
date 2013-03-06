@@ -235,6 +235,7 @@ if (toFocus=='body')
 					r.collapse(true);
 					r.selectNodeContents(d.getBody());
 					r.collapse(true);
+					r.moveToElementEditablePosition(r.startContainer.getNextSourceNode().getNext());
 					r.select();
 				}
 			}
@@ -250,6 +251,7 @@ if (toFocus=='body')
 					r.collapse(true);
 					r.selectNodeContents(d.getBody());
 					r.collapse(true);
+					r.moveToElementEditablePosition(r.startContainer.getNextSourceNode().getNext());
 					r.select();
 				}
 			}
