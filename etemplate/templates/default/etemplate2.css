@@ -786,6 +786,13 @@ label input, label span, label div, label select, label textarea {
 	border: none;
 	background: white;
 }
+#favorite_sidebox .ui-menu .ui-menu-item a {
+	line-height: inherit;
+	padding: 2px 0px;
+}
+#favorite_sidebox .ui-menu .ui-menu-item a:hover {
+	text-decoration: underline;
+}
 #favorite_sidebox div.ui-icon-heart{
 	float: left;
 	display:inline-block;
