@@ -322,8 +322,6 @@ class mail_ui
 		if (is_object($preferences)) $activeIdentity =& $preferences->getIdentity($icServerID, true);
 		//_debug_array($activeIdentity);
 		$maxMessages	=  50;
-		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['prefMailGridBehavior']) && (int)$GLOBALS['egw_info']['user']['preferences']['mail']['prefMailGridBehavior'] <> 0)
-			$maxMessages = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['prefMailGridBehavior'];
 		$userPreferences	=&  $GLOBALS['egw_info']['user']['preferences']['mail'];
 
 		// retrieve data for/from user defined accounts
@@ -933,8 +931,6 @@ unset($query['actions']);
 		//error_log(__METHOD__.__LINE__.' Folder:'.array2string($_folderName).' FolderType:'.$folderType.' RowsFetched:'.array2string($rowsFetched)." these Uids:".array2string($uidOnly).' Headers passed:'.array2string($headers));
 		$this->mail_bo->restoreSessionData();
 		$maxMessages = 50; // match the hardcoded setting for data retrieval as inital value
-		if (isset($this->mail_bo->mailPreferences->preferences['prefMailGridBehavior']) && (int)$this->mail_bo->mailPreferences->preferences['prefMailGridBehavior'] <> 0)
-			$maxMessages = (int)$this->mail_bo->mailPreferences->preferences['prefMailGridBehavior'];
 		$previewMessage = $this->mail_bo->sessionData['previewMessage'];
 		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['maibox']=$query['selectedFolder'];
 		$this->mail_bo->saveSessionData();

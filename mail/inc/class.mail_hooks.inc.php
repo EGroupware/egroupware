@@ -193,22 +193,6 @@ class mail_hooks
 			'asmail' => lang('forward as attachment'),
 			'inline' => lang('forward inline'),
 		);
-		$gridViewBehavior = array(
-			'0' => lang('use common preferences max. messages'),
-			'5'	=> 5,
-			'10'=> 10,
-			'15'=> 15,
-			'20'=> 20,
-			'25'=> 25,
-			'50'=> 50,
-			'75'=> 75,
-			'100'=> 100,
-			'200'=> 200,
-			'250'=> 250,
-			'500'=> 500,
-			'999'=> 999,
-			'-1' => lang('show all messages'),
-		);
 		$sortOrder = array(
 			'0' => lang('date(newest first)'),
 			'1' => lang('date(oldest first)'),
@@ -442,16 +426,6 @@ class mail_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 				'default'=> 'mail',
-			),
-			'prefMailGridBehavior' => array(
-				'type'   => 'select',
-				'label'  => 'how many messages should the mail list load',
-				'help'   => 'If you select all messages there will be no pagination for mail message list. Beware, as some actions on all selected messages may be problematic depending on the amount of selected messages.',
-				'name'   => 'prefMailGridBehavior',
-				'values' =>	$gridViewBehavior,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> 50,
 			),
 			'enablePreViewArea' => array(
 				'type'   => 'select',
@@ -812,7 +786,7 @@ class mail_hooks
 		// Destination div for folder tree
 		$file[] = array(
 			'no_lang' => true,
-			'text'=>'<span id="tree_target" class="dtree" style="width:100%;"/>',
+			'text'=>'<span id="tree_target" class="dtree" />',
 			'link'=>false,
 			'icon' => false
 		);

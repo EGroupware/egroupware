@@ -217,6 +217,23 @@ pre {
  width: 99%; 
 }
 
+/*
+ avoid the vertical scrollbar within the sidebox section (triggered by the vertical dimension of the tree)
+*/
+.divSidebox {
+	overflow: hidden;
+}
+.textSidebox {
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+/*
+ avoid the vertical scrollbar within the actual tablecontainer (of the tree)
+*/
+.containerTableStyle {
+	width: 100%;
+	overflow: hidden;
+}
 .dtree {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 11px;
@@ -255,22 +272,13 @@ pre {
  influence the tree display and scrolling behavior
 */
 #tree_target {
-	width: 100%;
+	min-height: 35px;
 	max-height: 450px;
-	display: inline-block;
-	overflow: none;
-	overflow-y: auto;
-}
-/*
- avoid the vertical scrollbar within the sidebox section (triggered by the vertical dimension of the tree)
-*/
-.divSidebox {
-	overflow: hidden;
-}
-/*
- avoid the vertical scrollbar within the actual tablecontainer (of the tree)
-*/
-.containerTableStyle {
+	display: block;
+	display: -moz-inline-stack;
+	display: -moz-box;
 	width: 100%;
 	overflow: hidden;
+	overflow-y: auto;
+	z-index:100;
 }
