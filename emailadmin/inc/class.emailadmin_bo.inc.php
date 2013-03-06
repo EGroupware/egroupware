@@ -824,10 +824,6 @@ class emailadmin_bo extends so_sql
 				'editforwardingaddress' => 'yes',
 				'defaultQuota' => 2048,
 			);
-
-			if (empty($settings['mail_server'])) $profile['userDefinedAccounts'] = 'yes';
-			if (empty($settings['mail_server'])) $profile['userDefinedIdentities'] = 'yes';
-			if (empty($settings['mail_server'])) $profile['ea_user_defined_signatures'] = 'yes';
 		}
 		foreach($to_parse = array(
 			'mail_server' => 'imapServer',
@@ -880,7 +876,16 @@ class emailadmin_bo extends so_sql
 		$profile = array_merge($profile,array_diff_assoc($settings,$to_parse));
 		//error_log(__METHOD__.__LINE__.' Profile to Save:'.array2string($profile));
 		//error_log(__METHOD__.__LINE__.' Profile to Parse:'.array2string($to_parse));
-		$profileID = $this->soemailadmin->updateProfile($profile);
+
+		// ToDo Klaus: use $this->save to store profile and move logic for storing defaultQuota there
+		if (($profileID = $this->soemailadmin->updateProfile($profile)) &&
+			!empty($profile['imapType']) &&
+			($profile['defaultQuota'] > 0 || (string)$profile['defaultQuota'] === '0') &&
+			stripos(constant($profile['imapType'].'::CAPABILITIES'), 'providedefaultquota') !==false)
+		{
+			$classname = $profile['imapType'];
+			$classname::setDefaultQuota($profile['defaultQuota']);
+		}
 		self::$sessionData['profile'] = array();
 		$this->saveSessionData();
 		//echo "<p>EMailAdmin profile update: ".print_r($profile,true)."</p>\n"; exit;
