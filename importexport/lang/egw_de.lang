@@ -41,6 +41,7 @@ define imports|exports	common	de	Profil definieren
 definition	importexport	de	Definition
 delete all selected definitions	importexport	de	Alle ausgewählten Definitionen löschen
 deleted	importexport	de	Gelöscht
+delimiter	importexport	de	Trennzeichen
 duplicate name, please choose another.	importexport	de	Doppelter Name, bitte wählen Sie einen anderen Namen
 edit conditions	importexport	de	Einstellmöglichkeiten bearbeiten
 edit definition <a href="%1">%2</a> to match your file	importexport	de	Importdefinition überarbeiten<a href="%1">%2</a> um Ihre Datei zu Importieren
@@ -66,6 +67,7 @@ from definition	importexport	de	Von der Vorlage
 general	preferences	de	Generell
 general fields:	preferences	de	Allgemeine Felder
 header lines to skip	importexport	de	Kopfzeilen zu überspringen
+how to merge with existing data? for each record, all conditions are evaluated from top to bottom, or stop. for blind insert, leave blank.	importexport	de	Wie möchten Sie mit bestehenden Daten umgehen? EGroupware kann mit einer Definierten ID bestehenden Daten auch aktualisieren. Dazu werden die hier erstellten Regeln von Oben nach unten abgearbeitet. Lassen Sie diese Tabelle leer, wenn Sie Ihre Daten nur einfügen möchten.
 human friendly values	importexport	de	Verwendet die Beschreibungen, anstatt der Internen Bezeichnungen
 if you specify an export definition, it will be used when you export	preferences	de	Wenn Sie  Export Definition erfassen , wird dieses Profil für den Export verwendet.
 import	importexport	de	Import
@@ -88,6 +90,7 @@ next	importexport	de	Weiter
 next run	importexport	de	Nächster Import
 no matches	importexport	de	Keine Übereinstimmungen
 no matching records	importexport	de	Keine passenden Einträge gefunden
+no notifications	importexport	de	Keine Benachrichtigung versenden
 no records selected	importexport	de	Keine Datensätze ausgewählt
 none found	importexport	de	Keine Einträge gefunden
 old fixed definition	preferences	de	Alte feste Definition
@@ -123,6 +126,7 @@ unable to link to %1 "%2"	importexport	de	Verknüpfung nicht möglich %1 "%2"
 unable to schedule	importexport	de	Zeitplan nicht möglich
 update categories	importexport	de	Kategorien aktualisieren
 use default	importexport	de	Standard verwenden
+use field from csv if possible	importexport	de	Verwendet ein Adressbuch Definition aus der CSV-Datein, falls vorhanden.
 user preference	importexport	de	Einstellen verwenden
 user template folder	importexport	de	Vorlagenverzeichnis verwenden
 users allowed to create their own definitions	importexport	de	Benutzern erlauben, Ihre eigenen Definitionen zu erstellen.
@@ -130,5 +134,5 @@ users allowed to share their own definitions	importexport	de	Benutzer dürfen Ih
 warnings	importexport	de	Warnungen
 which useres are allowed for this definition	importexport	de	Welche Benutzer dürfen diese Definition verwenden?
 which users are allowed to use this definition	importexport	de	Welche Benutzer dürfen die Definition benutzen?
-you may want to <a href="%1" target="_new">backup</a> first.	importexport	de	Erstellen Sie eine <a href="%1" target="_new">Sicherung Ihrer bestehenden Daten</a> bevor Sie den Import starten.
+you may want to <a href="%1" target="_new">backup</a> first.	importexport	de	Erstellen Sie eine <a href="%1" target="_new">Sicherung Ihrer bestehenden Daten</a> bevor Sie den Import starten. Für einen erstmaligen Import benötigen Sie ein neues Importprofil.
 you need to select an app and format first!	importexport	de	Sie müssen zuerst eine Anwendung und ein Format auswählen
