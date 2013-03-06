@@ -28,6 +28,20 @@ class addressbook_hooks
 
 		if ($location == 'sidebox_menu')
 		{
+			// Magic etemplate2 favorites menu (from nextmatch widget)
+			$et = new ReflectionClass('etemplate');
+			$is_et2 = ($et->isSubclassOf(new ReflectionClass('etemplate_widget')));
+			if($is_et2)
+			{
+				display_sidebox($appname,lang('Favorites'),array(
+					array(
+						'no_lang' => true,
+						'text'=>'<span id="favorite_sidebox"/>',
+						'link'=>false,
+						'icon' => false
+					)
+				));
+			}
 			$file = array(
 				'Add'             => "javascript:egw_openWindowCentered2('".
 					egw::link('/index.php',array('menuaction' => 'addressbook.addressbook_ui.edit'),false).
