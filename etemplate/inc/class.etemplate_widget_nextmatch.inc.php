@@ -795,7 +795,10 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 */
 	public static function ajax_set_favorite($app, $name, $action, $group, $filters = array())
 	{
-		$pref_name = "favorite_".$name;
+		// Only use alphanumeric for preference name, so it can be used directly as DOM ID
+		$name = strip_tags($name);
+		$pref_name = "favorite_".preg_replace('/[^A-Za-z0-9-_]/','_',$name);
+
 		if($group && $GLOBALS['egw_info']['apps']['admin'])
 		{
 			$prefs = new preferences(is_numeric($group) ? $group: $GLOBALS['egw_info']['user']['account_id']);
@@ -809,7 +812,9 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		if($action == "add")
 		{
 			$filters = array(
-				'group' => $group,
+				// This is the name as user entered it, minus tags
+				'name' => $name,
+				'group' => $group ? $group : false,
 				'filter' => $filters
 			);
 			$result = $prefs->add($app,$pref_name,$filters,$type);

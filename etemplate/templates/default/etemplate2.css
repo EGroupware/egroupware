@@ -768,17 +768,27 @@ label input, label span, label div, label select, label textarea {
 	width: 45%;
 	display: inline-block;
 }
-#favorite\[button\]_menu li a {
+.favorites li a {
 }
-#favorite\[button\]_menu input, #favorite\[button\]_menu img {
+.favorites input, .favorites img {
 	margin-right: 2ex;
 }
-#favorite\[button\]_menu div.ui-icon {
+.favorites div.ui-icon-trash {
 	float:right;
 	display:none;
 }
-#favorite\[button\]_menu li:hover div.ui-icon {
-	display:block;
+.favorites li:hover div.ui-icon {
+	display:inline-block;
+}
+#favorite_sidebox ul {
+	width: 99%;
+	padding: 0px;
+	border: none;
+	background: white;
+}
+#favorite_sidebox div.ui-icon-heart{
+	float: left;
+	display:inline-block;
 }
 
 .nextmatch_sortheader {
