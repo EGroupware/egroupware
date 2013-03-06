@@ -714,7 +714,7 @@ class felamimail_hooks
 				'values' => $saveAsOptions,
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default'=> 'text',
+				'default'=> 'add_raw',
 			),
 		);
 		if (!$GLOBALS['egw_info']['apps']['stylite']) unset($settingsArray['attachVCardAtCompose']);

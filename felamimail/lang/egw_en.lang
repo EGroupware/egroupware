@@ -159,6 +159,7 @@ do you want to prevent the editing/setup of filter rules (, even if sieve is ena
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	felamimail	en	Do you want to prevent the editing/setup of notification by mail to other email addresses if emails arrive, even if SIEVE is enabled?
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	felamimail	en	Do you want to prevent the editing/setup of the absent/vacation notice, even if SIEVE is enabled?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	felamimail	en	Do you want to prevent the managing of folders --creation, access rights AND subscription?
+do you want to show html-part or plain-text of the email	felamimail	en	Do you want to show HTML-part or plain-text of the email
 does not contain	felamimail	en	Does not contain
 does not exist on imap server.	felamimail	en	Does not exist on IMAP server.
 does not match	felamimail	en	Does not match

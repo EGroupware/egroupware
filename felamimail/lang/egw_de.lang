@@ -158,6 +158,7 @@ do you want to prevent the editing/setup of filter rules (, even if sieve is ena
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	felamimail	de	Möchten Sie das Editieren/Einstellen von Benachrichtigungen per E-Mail (via SIEVE), wenn neue Nachrichten eintreffen, unterbinden?
 do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	felamimail	de	Möchten Sie das Editieren/Einstellen einer Abwesenheitsnotiz (via SIEVE) unterbinden?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	felamimail	de	Möchten Sie die Verwaltung von Ordnern verhindern (anlegen, abonnieren, Zugriffsrechte)?
+do you want to show html-part or plain-text of the email	felamimail	de	Möchten Sie eine EMail formatiert oder nur als Text anzeigen
 does not contain	felamimail	de	enthält nicht
 does not exist on imap server.	felamimail	de	existiert nicht auf dem IMAP Server
 does not match	felamimail	de	trifft nicht zu
