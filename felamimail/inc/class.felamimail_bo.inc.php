@@ -3355,6 +3355,11 @@ class felamimail_bo
 
 		//if ( $_uid && $partID) error_log(__METHOD__.__LINE__.array2string($structure).' Uid:'.$_uid.' PartID:'.$partID.' -> '.array2string($this->icServer->getParsedHeaders($_uid, true, $partID, true)));
 		if(isset($structure->parameters['NAME'])) {
+			//error_log(__METHOD__.__LINE__.array2string(substr($structure->parameters['NAME'],0,strlen('data:'))));
+			if (!is_array($structure->parameters['NAME']) && substr($structure->parameters['NAME'],0,strlen('data:'))==='data:') {
+				$namecounter++;
+				return lang("unknown").$namecounter.($structure->subType ? ".".$structure->subType : "");
+			}
 			if (is_array($structure->parameters['NAME'])) $structure->parameters['NAME'] = implode(' ',$structure->parameters['NAME']);
 			return rawurldecode(self::decode_header($structure->parameters['NAME']));
 		} elseif(isset($structure->dparameters['FILENAME'])) {

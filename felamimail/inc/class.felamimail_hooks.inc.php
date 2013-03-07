@@ -737,7 +737,7 @@ class felamimail_hooks
 
 		$file = Array(
 			'Site Configuration' => egw::link('/index.php',array('menuaction'=>'admin.uiconfig.index','appname'=>'felamimail')),
-			'eMailAdmin: Profilemanagement' => egw::link('/index.php','menuaction=felamimail.uifelamimail.redirectToEmailadmin'),
+			'eMailAdmin: Profilemanagement' => egw::link('/index.php','menuaction=emailadmin.emailadmin_ui.index'),
 		);
 		display_section($appname,$title,$file);
 	}
