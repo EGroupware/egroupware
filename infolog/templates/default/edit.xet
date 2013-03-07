@@ -270,7 +270,7 @@
 					<description/>
 					<description/>
 					<description value="Last modified"/>
-					<vbox options="0" orient="0">
+					<vbox options="0">
 						<menulist>
 							<menupopup type="select-account" id="info_modifier" readonly="true"/>
 						</menulist>
