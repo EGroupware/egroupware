@@ -718,7 +718,7 @@ class timesheet_bo extends so_sql_cf
 				'ts_owner' => $new_owner,
 			), array(
 				'ts_owner' => $account_id,
-			), __LINE__, __FILE__);
+			), __LINE__, __FILE__, TIMESHEET_APP);
 		}
 	}
 
