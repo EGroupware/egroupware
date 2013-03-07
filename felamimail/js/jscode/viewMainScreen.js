@@ -1120,11 +1120,14 @@ function fm_readMessage(_url, _windowName, _node) {
 					// Mark the message as read
 					fm_msg_removeClass(windowArray[1], 'unseen');
 					fm_msg_removeClass(windowArray[1], 'recent');
+					egw_appWindow('felamimail').focus();
 				}
 
 			}, felamimail_rm_timeout);
 		}
+		egw_appWindow('felamimail').focus();
 	} else {
+		egw_appWindow('felamimail').focus();
 		window.setTimeout(function() {
 			//alert('Height:'+egw_getWindowOuterHeight());
 			if (!felamimail_abortView) {
