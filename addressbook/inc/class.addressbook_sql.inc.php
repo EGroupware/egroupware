@@ -502,6 +502,18 @@ class addressbook_sql extends so_sql_cf
 		$lists = array();
 		$table_def = $this->db->get_table_definitions('phpgwapi',$this->lists_table);
 		$group_by = 'GROUP BY '.$this->lists_table.'.'.implode(','.$this->lists_table.'.',array_keys($table_def['fd']));
+		// rewriting WHERE clause with list_modified into HAVING, as it's no real column in 11.1
+		if (is_array($uids))
+		{
+			foreach($uids as $n => $sql)
+			{
+				if (strpos($sql, 'list_modified') !== false)
+				{
+					$group_by .= ' HAVING '.$sql;
+					unset($uids[$n]);
+				}
+			}
+		}
 		foreach($this->db->select($this->lists_table,$this->lists_table.'.*,MAX(list_added) AS list_modified',$uid_column?array($uid_column=>$uids):$uids,__LINE__,__FILE__,
 			false,$group_by.' ORDER BY list_owner<>'.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name',false,0,
 			"LEFT JOIN $this->ab2list_table ON $this->ab2list_table.list_id=$this->lists_table.list_id") as $row)
