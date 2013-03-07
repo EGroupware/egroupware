@@ -628,7 +628,7 @@ class infolog_so
 			if ($val)
 			{
 				$this->db->insert($this->extra_table,array(
-						'info_extra_value'=>$val
+						'info_extra_value'	=> is_array($val) ? serialize($val) : $val,
 					),array(
 						'info_id'			=> $info_id,
 						'info_extra_name'	=> substr($key,1),
