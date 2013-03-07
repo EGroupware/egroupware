@@ -1541,10 +1541,10 @@ class infolog_ui
 				if (($button == 'save' || $button == 'apply') && (!$info_id || $edit_acl || $status_only || $undelete))
 				{
 					$operation = $info_id ? 'update' : 'add';
-					if ($content['info_contact'])
+					if ($content['info_contact'] &&
+						(list($app,$id) = explode(':',$content['info_contact'], 2)) && $id)
 					{
 						$old_link_id = (int)$content['info_link_id'];
-						list($app,$id) = explode(':',$content['info_contact'], 2);
 						$content['info_link_id'] = (int)($info_link_id = egw_link::link('infolog',$content['link_to']['to_id'],$app,$id));
 						if ($old_link_id && $old_link_id != $content['info_link_id']) egw_link::unlink($old_link_id);
 					}
@@ -1579,13 +1579,13 @@ class infolog_ui
 						// update links accordingly, if selected project changed
 						if ($content['pm_id'])
 						{
-							//echo "<p>this->link->link('infolog',{$content['link_to']['to_id']},'projectmanager',{$content['pm_id']});</p>";
 							egw_link::link('infolog',$content['link_to']['to_id'],'projectmanager',$content['pm_id']);
 							// making the project the selected link, if no other link selected
 							if (!$info_link_id || $info_link_id == 'projectmanager:'.$content['old_pm_id'])
 							{
 								$info_link_id = 'projectmanager:'.$content['pm_id'];
 							}
+							//echo "<p>this->link->link('infolog',".array2string($content['link_to']['to_id']).", 'projectmanager',{$content['pm_id']}); info_link_id=$info_link_id, info_id=$info_id</p>";
 						}
 						if ($content['old_pm_id'])
 						{
