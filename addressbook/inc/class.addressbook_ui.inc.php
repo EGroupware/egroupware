@@ -1667,7 +1667,7 @@ class addressbook_ui extends addressbook_bo
 					{
 						egw_link::link('addressbook',$content['id'],$links);
 					}
-					$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','addressbook',{$content['id']}, '" . ($content['id'] ? 'update' : 'add') . "', opener.egw_getAppName())";
+					$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','addressbook',{$content['id']}, '" . ($content['id'] ? 'update' : 'add') . "', opener.egw_getAppName());";
 
 					if ($button == 'save')
 					{
