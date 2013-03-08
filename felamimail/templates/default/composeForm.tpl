@@ -221,41 +221,7 @@ if (toFocus=='body')
 		sString = document.doit.fm_compose_subject.value;
 		document.doit.fm_compose_subject.selectionStart = document.doit.fm_compose_subject.selectionEnd = sString.length;
 		document.doit.fm_compose_subject.focus();
-
-		//var ckeditor = CKEDITOR.instances['body'];
-
-		CKEDITOR.appendTo('body',
-		{
-			on:
-			{
-				'instanceReady': function (ev) {
-					CKEDITOR.instances.body.focus();
-					var d = CKEDITOR.document;
-					var r = new CKEDITOR.dom.range(d);
-					r.collapse(true);
-					r.selectNodeContents(d.getBody());
-					r.collapse(true);
-					r.moveToElementEditablePosition(r.startContainer.getNextSourceNode().getNext());
-					r.select();
-				}
-			}
-		});
-		CKEDITOR.appendTo('body',
-		{
-			on:
-			{
-				'pluginsLoaded': function (ev) {
-					CKEDITOR.instances.body.focus();
-					var d = CKEDITOR.document;
-					var r = new CKEDITOR.dom.range(d);
-					r.collapse(true);
-					r.selectNodeContents(d.getBody());
-					r.collapse(true);
-					r.moveToElementEditablePosition(r.startContainer.getNextSourceNode().getNext());
-					r.select();
-				}
-			}
-		});
+		// the actual focussing is done in class.html.inc.php function fckEditor
 	}
 }
 </script>
