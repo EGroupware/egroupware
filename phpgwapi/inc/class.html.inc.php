@@ -564,7 +564,7 @@ class html
 		function (ev)
 		{
 '.($_focusToBody?'
-			ev.editor.focus();
+			ev.editor.focus();':'').'
 			var d = ev.editor.document;
 			var r = new CKEDITOR.dom.range(d);
 			r.collapse(true);
@@ -576,9 +576,7 @@ class html
 			//FF is selecting the span with getNextSourceNode, other browsers need to fetch it with getNext
 			r.selectNodeContents(((typeof sN.getName==="function") && sN.getName()=="span"?r.startContainer.getNextSourceNode():r.startContainer.getNextSourceNode().getNext()));
 			r.collapse(true);
-			r.select();':'').'
-':'').
-'
+			r.select();'.'':'').'
 			ev.editor.resize("100%", '.str_replace('px', '', $pxheight).');
 		}
 	);'.
