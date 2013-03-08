@@ -450,8 +450,10 @@ class Net_IMAP extends Net_IMAPProtocol {
     {
        if( $msg_id != null){
             if(is_array($msg_id)){
+                //error_log(__METHOD__.__LINE__.' Request for Summary of '.count($msg_id).' IDs');
                 $message_set=$this->_getSearchListFromArray($msg_id);
             }else{
+                //error_log(__METHOD__.__LINE__.' Request for Summary of '.count(explode(',',$msg_id)).' IDs:'.$msg_id);
                 $message_set=$msg_id;
             }
         }else{
@@ -471,7 +473,8 @@ class Net_IMAP extends Net_IMAPProtocol {
         #error_log(print_r($ret['PARSED'][0],true));
         #$ret=$this->cmdFetch($message_set,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY[1.MIME])");
         if ((PEAR::isError($ret) || (strtoupper($ret["RESPONSE"]["CODE"]) == "BAD" && stripos($ret["RESPONSE"]["STR_CODE"], "NO MAILBOX SELECTED")!==false) && $message_set=="1:*")) return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
-        if (PEAR::isError($ret) || strtoupper($ret["RESPONSE"]["CODE"]) != "OK") {
+        //if (strtoupper($ret["RESPONSE"]["CODE"]) != "OK" && count($ret['PARSED'])) error_log(__METHOD__.__LINE__.' ResposeCode not OK but found:'.count($ret['PARSED']).' parsed Responses. Number of UIDs Requested:'.(is_array($msg_id)?count($msg_id):count(explode(',',$msg_id))));
+        if (PEAR::isError($ret) || !isset($ret['PARSED']) || (strtoupper($ret["RESPONSE"]["CODE"]) != "OK" && !count($ret['PARSED']))) {
             error_log(__METHOD__."::".__LINE__."->error after Fetch for message(s):".$message_set.' Result retrieved:->'.(PEAR::isError($ret)?$ret->message:array2string($ret))." Trying to retrieve single messages.");
             unset($ret);
             # if there is an error, while retrieving the information for the whole list, try to retrieve the info one by one, to be more error tolerant
