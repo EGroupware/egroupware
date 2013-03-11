@@ -64,6 +64,11 @@
 				$where, __LINE__, __FILE__);
 				
 			if(($data = $db->row(true))) {
+				if (empty($data['fm_description']))
+				{
+					$buff = trim(substr(str_replace(array("\r\n","\r","\n","\t"),array(" "," "," "," "),translation::convertHTMLToText($data['fm_signature'])),0,100));
+					$data['fm_description'] = $buff?$buff:lang('none');
+				}
 				$this->fm_signatureid	= $data['fm_signatureid'];
 				$this->fm_description	= $data['fm_description'];
 				$this->fm_signature	= $data['fm_signature'];
@@ -158,6 +163,12 @@
 				$where, __LINE__, __FILE__);
 
 			while ($data = $db->row(true)) {
+				if (empty($data['fm_description']))
+				{
+					$buff = trim(substr(str_replace(array("\r\n","\r","\n","\t"),array(" "," "," "," "),translation::convertHTMLToText($data['fm_signature'])),0,100));
+					$data['fm_description'] = $buff?$buff:lang('none');
+				}
+
 				$signatureData = array(
 					'fm_signatureid'	=> $data['fm_signatureid'],
 					'fm_description'	=> $data['fm_description'],
