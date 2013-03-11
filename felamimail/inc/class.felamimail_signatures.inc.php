@@ -114,7 +114,11 @@
 				
 				$db->update($this->tableName, $data, $where, __LINE__, __FILE__);
 			}
-
+			if (empty($this->fm_description))
+			{
+				$buff = trim(substr(str_replace(array("\r\n","\r","\n","\t"),array(" "," "," "," "),translation::convertHTMLToText($this->fm_signature)),0,100));
+				$this->fm_description = $buff?$buff:lang('none');
+			}
 			$data = array(
 				'fm_accountid'		=> $this->accountID,
 				'fm_signature'		=> $this->fm_signature,
