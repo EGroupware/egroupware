@@ -806,7 +806,7 @@ class ajaxfelamimail
 					$response->addAssign('quotaDisplay', 'innerHTML', $quotaDisplay);
 				}
 			}
-
+			//error_log(__METHOD__.__LINE__.$_folderName.'->'.array2string($folderStatus));
 			if($folderStatus['unseen'] > 0) {
 				$response->addScript("egw_topWindow().tree.setItemText('$_folderName', '<b>". $folderStatus['shortDisplayName'] ." (". $folderStatus['unseen'] .")</b>');");
 			} else {
@@ -818,6 +818,11 @@ class ajaxfelamimail
 				{
 					$folderStatusT = $this->bofelamimail->getFolderStatus($trashFolder);
 				}
+				else
+				{
+					$folderStatusT = $folderStatus;
+				}
+				//error_log(__METHOD__.__LINE__.$trashFolder.'->'.array2string($folderStatus).function_backtrace());
 				if($folderStatusT['unseen'] > 0) {
 					$response->addScript("egw_topWindow().tree.setItemText('". $trashFolder ."', '<b>". $folderStatusT['shortDisplayName'] ." (". $folderStatusT['unseen'] .")</b>');");
 				} else {
