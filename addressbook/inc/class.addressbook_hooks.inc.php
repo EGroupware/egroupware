@@ -36,7 +36,7 @@ class addressbook_hooks
 				display_sidebox($appname,lang('Favorites'),array(
 					array(
 						'no_lang' => true,
-						'text'=>'<span id="favorite_sidebox"/>',
+						'text'=> etemplate_widget_nextmatch::favorite_list('addressbook','addressbook.addressbook_ui.get_rows'),
 						'link'=>false,
 						'icon' => false
 					)
