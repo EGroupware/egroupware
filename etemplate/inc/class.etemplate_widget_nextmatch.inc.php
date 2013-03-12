@@ -114,8 +114,49 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$value['rows'] = array();
 
 		$send_value = $value;
+
+		// Check for a favorite in URL
+		if($_GET['favorite'] && $value['favorites'])
+		{
+			list($app) = explode('.',$value['get_rows']);
+			$safe_name = preg_replace('/[^A-Za-z0-9-_]/','_',strip_tags($_GET['favorite']));
+			$pref_name = "favorite_" .$safe_name;
+
+			// Do some easy applying of filters server side
+			$favorite = $GLOBALS['egw_info']['user']['preferences'][$app][$pref_name];
+			if(!$favorite && $_GET['favorite'] == 'blank')
+			{
+				// Have to go through each of these
+				foreach(array('search','cat_id','filter','filter2') as $filter)
+				{
+					$send_value[$filter] = '';
+				}
+				unset($send_value['col_filter']);
+			}
+			if($favorite && $favorite['filter'])
+			{
+				$send_value = array_merge($value, $favorite['filter']);
+
+				// Ajax call can handle the saved sort here, but this can't
+				if($favorite['filter']['sort'])
+				{
+					unset($send_value['sort']);
+					$send_value['order'] = $favorite['filter']['sort']['id'];
+					$send_value['sort'] = $favorite['filter']['sort']['asc'] ? 'ASC' : 'DESC';
+				}
+			}
+		}
+		// Make sure it's not set
+		unset($send_value['favorite']);
+
 		$total = self::call_get_rows($send_value, $send_value['rows'], self::$request->readonlys);
 		$value =& self::get_array(self::$request->content, $form_name, true);
+
+		// Add favorite here so app doesn't save it in the session
+		if($_GET['favorite'])
+		{
+			$send_value['favorite'] = $safe_name;
+		}
 		$value = $send_value;
 		$value['total'] = $total;
 
@@ -725,6 +766,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		return $cat_actions;
 	}
 
+
 	/**
 	 * Validate input
 	 *
@@ -746,6 +788,9 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$value = self::get_array($content, $form_name);
 		list($app) = explode('.',$this->attrs['template']);
 
+		unset($value['favorite']);
+_debug_array($value);
+
 		// On client, rows does not get its own namespace, but all apps are expecting it
 		$value['rows'] = $value;
 
@@ -755,6 +800,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		{
 			$validated += $content[$value[$preserve['action_var']].'_popup'];
 		}
+
 
 		// Save current column settings as default (admins only)
 		if($value['as_default'])
@@ -779,6 +825,61 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$validated[$form_name] = $value;
 	}
 
+	
+	/**
+	 * Include favorites when generating the page server-side
+	 *
+	 * Use this function in your sidebox (or anywhere else, I suppose) to
+	 * get the favorite list when a nextmatch is _not_ on the page.  If
+	 * a nextmatch is on the page, it will update / replace this list.
+	 *
+	 * @param $app String Current application, needed to find preferences
+	 * @param $default String Preference name for default favorite
+	 *
+	 * @return String HTML fragment for the list
+	 */
+	public static function favorite_list($app, $default)
+	{
+		if(!$app) return '';
+		$target = 'favorite_sidebox';
+		$pref_prefix = 'favorite_';
+		$filters = array(
+			'blank' => array(
+				'name' => lang('Blank'),
+				'filters' => array()
+			)
+		);
+		$default_filter = $GLOBALS['egw_info']['user']['preferences'][$app][$default];
+		if(!$default_filter) $default_filter = "blank";
+
+		$html = "<span id='$target' class='ui-helper-clearfix'><ul class='ui-menu ui-widget-content ui-corner-all favorites' role='listbox'>\n";
+		foreach($GLOBALS['egw_info']['user']['preferences'][$app] as $pref_name => $pref)
+		{
+			if(strpos($pref_name, $pref_prefix) === 0)
+			{
+				if(!is_array($pref))
+				{
+					$GLOBALS['egw']->preferences->delete($app,$pref_name);
+					$GLOBALS['egw']->preferences->save_repository(false);
+					continue;
+				}
+				$filters[substr($pref_name,strlen($pref_prefix))] = $pref;
+			}
+		}
+		foreach($filters as $name => $filter)
+		{
+			$href = egw::link('/index.php', (array)egw_link::get_registry($app,'list') + array('favorite'=>$name),$app);
+			$html .= "<li id='$name' class='ui-menu-item' role='menuitem'>\n";
+			$html .= "<a href=\"$href\" class='ui-corner-all' tabindex='-1'>";
+			$html .= "<div class='" . ($name == $default_filter ? 'ui-icon ui-icon-heart' : 'sideboxstar') . "'></div>".
+				$filter['name'] .($filter['group'] != false ? " ♦" :"");
+			$html .= "</a></li>\n";
+
+		}
+
+		$html .= '</ul></span>';
+		return $html;
+	}
 	
 	/**
 	 * Create or delete a favorite for multiple users
