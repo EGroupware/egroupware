@@ -730,8 +730,11 @@ abstract class egw_framework
 		self::includeCSS($print_css, null, false);	// false = prepend (add as first) file
 		self::includeCSS($theme_css, null, false);
 
-		// Enhanced selectboxes
+		// Enhanced selectboxes (et1)
 		self::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css');
+
+		// eTemplate2 - load in top so sidebox has styles too
+		self::includeCSS('/etemplate/templates/default/etemplate2.css');
 
 		// search for app specific css file
 		self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app');
