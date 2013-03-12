@@ -783,6 +783,15 @@ label input, label span, label div, label select, label textarea {
 .favorites li:hover div.ui-icon {
 	display:inline-block;
 }
+.favorites .sideboxstar {
+	height: 9px;
+	display: inline-block;
+	padding: 0px 4px;
+	margin: 0px 5px;
+
+	/* TODO: This is template specific */
+	background-image: url(../../../phpgwapi/templates/idots/images/orange-ball.png);
+}
 #favorite_sidebox ul {
 	width: 99%;
 	padding: 0px;
@@ -791,7 +800,7 @@ label input, label span, label div, label select, label textarea {
 }
 #favorite_sidebox .ui-menu .ui-menu-item a {
 	line-height: inherit;
-	padding: 3px 0px;
+	padding-bottom: 4px;
 }
 #favorite_sidebox .ui-menu .ui-menu-item a:hover {
 	text-decoration: underline;
