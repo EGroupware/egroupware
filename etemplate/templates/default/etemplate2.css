@@ -760,7 +760,7 @@ label input, label span, label div, label select, label textarea {
 	margin-top: 8px;
 }
 /* Favorites */
-.nextmatch_header div#favorite\[button\]_wrapper {
+.nextmatch_header div#favorite_wrapper {
 	margin-top: 5px;
 	vertical-align: middle;
 }
