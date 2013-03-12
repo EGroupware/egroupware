@@ -789,7 +789,6 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		list($app) = explode('.',$this->attrs['template']);
 
 		unset($value['favorite']);
-_debug_array($value);
 
 		// On client, rows does not get its own namespace, but all apps are expecting it
 		$value['rows'] = $value;
