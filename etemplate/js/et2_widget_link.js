@@ -847,14 +847,21 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 		if(!_value.title) {
 			var self = this;
 			var node = this.link[0];
-			var title = this.egw().link_title(_value.app, _value.id, function(title) {self.set_title(node, title);}, this);
-			if(title != null) {
-				_value.title = title;
+			if(_value.app && _value.id)
+			{
+				var title = this.egw().link_title(_value.app, _value.id, function(title) {self.set_title(node, title);}, this);
+				if(title != null) {
+					_value.title = title;
+				}
+				else
+				{
+					// Title will be fetched from server and then set
+					return;
+				}
 			}
 			else
 			{
-				// Title will be fetched from server and then set
-				return;
+				_value.title = "";
 			}
 		}
 		this.set_title(this.link, _value.title);
