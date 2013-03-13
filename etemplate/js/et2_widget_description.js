@@ -122,7 +122,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 			var href = this.options.href;
 			var title = this.options.extra_link_title;
 			var popup = this.options.extra_link_popup;
-			jQuery('a',_nodes[0])
+			jQuery('a',this.span)
 				.click(function(e) {
 					egw.open_link(href, title,popup);
 					e.preventDefault();
