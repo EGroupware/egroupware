@@ -452,6 +452,13 @@ pre {
 }
 
 /*
+* we need the the image displayed with our buttons on the left side
+*/
+input[type=button] {
+	background-position: left;
+}
+
+/*
 * new dialog style definitions
 */
 #contentdialog {padding:20px}

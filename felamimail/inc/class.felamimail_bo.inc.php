@@ -1676,7 +1676,7 @@ class felamimail_bo
 		$retval = true;
 		if($folderToSelect && ($folderStatus = $this->getFolderStatus($folderToSelect,false,true))) {
 			if ($folderStatus instanceof PEAR_Error) return false;
-			if (stripos(array2string($folderStatus['attributes']),'noselect')!==false)
+			if (!empty($folderStatus['attributes']) && stripos(array2string($folderStatus['attributes']),'noselect')!==false)
 			{
 				$retval = false;
 			}

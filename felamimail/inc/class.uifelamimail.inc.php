@@ -174,6 +174,7 @@ class uifelamimail
 			{
 				$et_css_file = '/etemplate/templates/default/app.css';
 			}
+
 			echo '
 <style type="text/css">
 <!--

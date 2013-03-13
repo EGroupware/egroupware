@@ -890,7 +890,7 @@ class felamimail_hooks
 					//$identities[0] = $defaultIdentity->realName.' '.$defaultIdentity->organization.' <'.$defaultIdentity->emailAddress.'>';
 				}
 
-				$selectAccount = html::select('accountSelect', $selectedID, $identities, true, 'style="width:100%;" onchange="var appWindow=egw_appWindow(\''.$appname.'\');appWindow.changeActiveAccount(this);"');
+				$selectAccount = html::select('accountSelect', $selectedID, $identities, true, 'id="accountSelect" style="width:99.5%;" onchange="var appWindow=egw_appWindow(\''.$appname.'\');appWindow.changeActiveAccount(this);"',0,false);
 				//error_log(__METHOD__.__LINE__.$selectAccount);
 				$file[] = array(
 					'text' => "<div id=\"divAccountSelect\" style=\" width:100%;\">".$selectAccount."</div>",
@@ -912,7 +912,7 @@ class felamimail_hooks
 				);
 				//$bofelamimail->closeConnection();
 		        $file[] =  array(
-	        	    'text' => "<div id=\"divFolderTree\" class=\"dtree\" style=\"overflow:auto; max-width:400px; width:100%; max-height:450px; margin-bottom: 0px;padding-left: 0px; padding-right: 0px; padding-top:0px; z-index:100; \">
+	        	    'text' => "<div id=\"divFolderTree\" class=\"dtree\" style=\"overflow:auto; max-width:100%; width:100%; max-height:450px; margin-bottom: 0px;padding-left: 0px; padding-right: 0px; padding-top:0px; z-index:100; \">
 					$folderTree
 					</div>
 					<script>
