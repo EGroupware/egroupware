@@ -32,6 +32,8 @@ var et2_nextmatch_rowProvider = Class.extend({
 		this._rowProvider = _rowProvider;
 		this._subgridCallback = _subgridCallback;
 		this._context = _context;
+
+		this._createEmptyPrototype();
 	},
 
 	/**
@@ -178,6 +180,25 @@ var et2_nextmatch_rowProvider = Class.extend({
 		return rowWidget;
 	},
 
+
+	/**
+	 * Placeholder for empty row
+	 *
+	 * The empty row placeholder is used when there are no results to display.
+	 * This allows the user to still have a drop target, or use actions that 
+	 * do not require a row ID, such as 'Add new'.
+	 */
+	_createEmptyPrototype: function() {
+		var label = this._context && this._context.options && this._context.options.settings.placeholder;
+		
+		var placeholder = $j(document.createElement("td"))
+                                .attr("colspan",this._rowProvider.getColumnCount())
+                                .css("height","19px")
+                                .text(typeof label != "undefined" && label ? label : egw().lang("No matches found"))
+		this._rowProvider._prototypes["empty"] = $j(document.createElement("tr"))
+			.addClass("egwGridView_empty")
+			.append(placeholder);
+	},
 
 	/** -- PRIVATE FUNCTIONS -- **/
 

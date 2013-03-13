@@ -72,6 +72,7 @@
  *  'select_all'     =>     //  O boolean value of select_all checkbox, reference to above value for key 'select_all'
  *  'favorites'      =>     //  I boolean|array True to enable favorites, or an array of additional, app specific settings to include
  *					in the saved filters (eg: pm_id)
+ *  'placeholder'    =>     //  I String Optional text to display in the empty row placeholder.  If not provided, it's "No matches found."
  */
 class etemplate_widget_nextmatch extends etemplate_widget
 {

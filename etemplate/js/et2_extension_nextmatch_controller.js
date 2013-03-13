@@ -180,12 +180,31 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 	},
 
 	/**
-	 * Returns the action links for a given data row -- currently these are
+	 * Returns the names of action links for a given data row -- currently these are
 	 * always the same links, as we controll enabled/disabled over the row
-	 * classes.
+	 * classes, unless the row UID is "", then it's an 'empty' row.
+	 *
+	 * The empty row placeholder can still have actions, but nothing that requires
+	 * an actual UID.  
+	 *
+	 * @TODO: Currently empty row is just add, need to actually filter somehow.  Here
+	 * 	might not be the right place.
+	 *
+	 * @param _data Object The data for the row
+	 * @param _idx int The row index
+	 * @param _uid String The row's ID
+	 *
+	 * @return Array List of action names that valid for the row
 	 */
 	_linkCallback: function (_data, _idx, _uid) {
-		return this._actionLinks;
+		if(_uid.trim() != "")
+		{
+			return this._actionLinks;
+		}
+
+		// No UID, so return a filtered list of actions that doesn't need a UID
+		var links = ["add"];
+		return links;
 	},
 
 

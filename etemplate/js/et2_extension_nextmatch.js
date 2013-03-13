@@ -683,6 +683,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 				null,
 				this.options.settings.actions
 		);
+		// Need to trigger empty row the first time
+		if(total == 0) this.controller._emptyRow();
 
 		// Set custom data cache prefix
 		if(this.options.settings.dataStorePrefix)

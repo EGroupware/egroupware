@@ -707,9 +707,49 @@ var et2_dataview_controller = Class.extend({
 		this.self._mergeResult(res, this.start + order.length,
 				idxMap.length - order.length, _response.total);
 
+		if(_response.total == 0)
+		{
+			this.self._emptyRow();
+		}
+		else
+		{
+			var row = $j(".egwGridView_empty",this.self._grid.innerTbody).remove();
+			this.self._selectionMgr.unregisterRow("",0,row.get(0));
+		}
+
 		// Update the total element count in the grid
 		this.self._grid.setTotalCount(_response.total);
 		this.self._selectionMgr.setTotalCount(_response.total);
+	},
+
+	/**
+	 * Insert an empty / placeholder row when there is no data to display
+	 */
+	_emptyRow: function()
+	{
+		$j(".egwGridView_empty",this._grid.innerTbody).remove();
+		if(typeof this._grid._rowProvider != "undefined" && this._grid._rowProvider.getPrototype("empty"))
+                {
+                        var placeholder = this._grid._rowProvider.getPrototype("empty");
+                        if($j("td",placeholder).length == 1)
+                        {
+                                $j("td",placeholder).css("width",this._grid.outerCell.width() + "px")
+                        }
+                        placeholder.appendTo(this._grid.innerTbody);
+
+			// Get the action links if the links callback is set
+			var links = null;
+			if (this._linkCallback)
+			{
+				links = this._linkCallback.call(
+					this._context,
+					{},
+					0,
+					""	
+				);
+			}
+			this._selectionMgr.registerRow("",0,placeholder.get(0), links);
+                }
 	},
 
 	/**
