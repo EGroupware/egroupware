@@ -407,10 +407,13 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 					// cache locally
 					title_cache[app][id] = title;
 					// call callbacks waiting for title of app/id
-					for(var i=0; i < title_queue[app][id].length; ++i)
+					if(typeof title_queue[app][id] != "undefined")
 					{
-						var callback = title_queue[app][id][i];
-						callback.callback.call(callback.context, title);
+						for(var i=0; i < title_queue[app][id].length; ++i)
+						{
+							var callback = title_queue[app][id][i];
+							callback.callback.call(callback.context, title);
+						}
 					}
 					delete title_queue[app][id];
 				}
