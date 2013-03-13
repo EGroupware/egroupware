@@ -844,7 +844,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$pref_prefix = 'favorite_';
 		$filters = array(
 			'blank' => array(
-				'name' => lang('Blank'),
+				'name' => lang('No filters'),
 				'filters' => array()
 			)
 		);

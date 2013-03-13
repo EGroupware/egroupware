@@ -139,14 +139,14 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],{
 			
 			// Save as default favorite - used when you click the button
 			self.egw().set_preference(self.options.app,self.options.favorite_preference,$j(this).val());
-			preferred = $j(this).val();
+			self.preferred = $j(this).val();
 
 			// Update sidebox, if there
 			if(self.sidebox_target.length)
 			{
 				self.sidebox_target.find(".ui-icon-heart")
 					.replaceWith("<img class='sideboxstar'/>");
-				$j("li#"+preferred+" img",self.sidebox_target)
+				$j("li#"+self.preferred+" img",self.sidebox_target)
 					.replaceWith("<div class='ui-icon ui-icon-heart'/>");
 				
 			}
@@ -191,7 +191,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],{
 		// Default blank filter
 		var stored_filters = {
 			'blank': {
-				name: this.egw().lang("Blank"),
+				name: this.egw().lang("No filters"),
 				filters: {},
 			}
 		};
