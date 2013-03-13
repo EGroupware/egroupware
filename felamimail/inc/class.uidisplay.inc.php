@@ -1117,7 +1117,8 @@ blockquote[type=cite] {
 			$frameHtml =
 				$this->get_email_header($this->bofelamimail->getStyles($bodyParts)).
 				$this->showBody($this->getdisplayableBody($bodyParts), false);
-
+			//IE10 eats away linebreaks preceeded by a whitespace in PRE sections
+			$frameHtml = str_replace(" \r\n","\r\n",$frameHtml);
 			// Calculate the hash of that E-Mail for function identification
 			$hash = md5($frameHtml);
 
