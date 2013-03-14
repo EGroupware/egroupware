@@ -127,6 +127,9 @@ class calendar_groupdav extends groupdav_handler
 		return $name;
 	}
 
+	const PAST_LIMIT = 100;
+	const FUTURE_LIMIT = 365;
+
 	/**
 	 * Handle propfind in the calendar folder
 	 *
@@ -152,13 +155,22 @@ class calendar_groupdav extends groupdav_handler
 		// ToDo: add parameter to only return id & etag
 		$filter = array(
 			'users' => $user,
-			'start' => $this->bo->now - 100*24*3600,	// default one month back -30 breaks all sync recurrences
-			'end' => $this->bo->now + 365*24*3600,	// default one year into the future +365
 			'enum_recuring' => false,
 			'daywise' => false,
 			'date_format' => 'server',
 			'no_total' => true,	// we need no total number of rows (saves extra query)
 		);
+		foreach(array(
+			'start' => $GLOBALS['egw_info']['user']['preferences']['groupdav']['calendar-past-limit'],
+			'end' => $GLOBALS['egw_info']['user']['preferences']['groupdav']['calendar-future-limit'],
+		) as $name => $value)
+		{
+			if (!is_numeric($value))
+			{
+				$value = $name == 'start' ? self::PAST_LIMIT : self::FUTURE_LIMIT;
+			}
+			$filter[$name] = $this->bo->now + 24*2600*($name == 'start' ? -1 : 1)*abs($value);
+		}
 		if ($this->client_shared_uid_exceptions)	// do NOT return (non-virtual) exceptions
 		{
 			$filter['query'] = array('cal_reference' => 0);
@@ -1524,6 +1536,22 @@ class calendar_groupdav extends groupdav_handler
 			'name'   => 'calendar-home-set',
 			'help'   => lang('Only supported by a few fully conformant clients (eg. from Apple). If you have to enter a URL, it will most likly not be suppored!').'<br/>'.lang('They will be sub-folders in users home (%1 attribute).','CalDAV "calendar-home-set"'),
 			'values' => $calendars,
+			'xmlrpc' => True,
+			'admin'  => False,
+		);
+		$settings['calendar-past-limit'] = array(
+			'type'   => 'input',
+			'label'  => lang('How many days to sync in the past (default %1)', self::PAST_LIMIT),
+			'name'   => 'calendar-past-limit',
+			'help'   => 'Clients not explicitly stating a limit get limited to these many days. A too high limit may cause problems with some clients.',
+			'xmlrpc' => True,
+			'admin'  => False,
+		);
+		$settings['calendar-future-limit'] = array(
+			'type'   => 'input',
+			'label'  => lang('How many days to sync in the future (default %1)', self::FUTURE_LIMIT),
+			'name'   => 'calendar-future-limit',
+			'help'   => 'Clients not explicitly stating a limit get limited to these many days. A too high limit may cause problems with some clients.',
 			'xmlrpc' => True,
 			'admin'  => False,
 		);

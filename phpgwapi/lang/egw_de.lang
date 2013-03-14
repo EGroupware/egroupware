@@ -170,6 +170,7 @@ click here to resume your egroupware session.	common	de	Hier klicken um die EGro
 click or mouse over to show menus	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen.
 click or mouse over to show menus?	common	de	Klicken oder "mit dem Mauszeiger darüber fahren" um das Menü anzuzeigen?
 click this image on the navbar: %1	common	de	Klicken Sie auf dieses Symbol in der Navigation: %1
+clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	de	Geräte die kein explicites Limit setzen, verwenden die angegebene Anzahl Tage. Ein zu hohes Limit kann bei einigen Geräte zu Problemen führen.
 close	common	de	Schließen
 close sidebox	common	de	Seitenmenü schließen
 cocos (keeling) islands	common	de	COCOS INSELN
@@ -359,6 +360,8 @@ home	common	de	Home
 home email	common	de	private E-Mail
 honduras	common	de	HONDURAS
 hong kong	common	de	HONG KONG
+how many days to sync in the future (default %1)	groupdav	de	Wie viele Tage soll in die Zukunft gesynced werden (Vorgabe %1)
+how many days to sync in the past (default %1)	groupdav	de	Wie viele Tage soll in die Vergangenheit gesynced werden (Vorgabe %1)
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	de	Wie viele Icons sollen in der Navigation angezeigt werden (die obere Navigation). Weitere Applikationen werden über ein Auswahlmenü angeboten. Das Auswahlmenü kann über das rechte Icon geöffnet werden
 how to show the general egroupware menu ?	common	de	Wie soll das allgemeine EGroupware Menü angezeigt werden?
 hungary	common	de	UNGARN
