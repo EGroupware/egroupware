@@ -1187,7 +1187,7 @@ class calendar_groupdav extends groupdav_handler
 	{
 		if (strpos($column=self::$path_attr,'_') === false) $column = 'cal_'.$column;
 
-		$event = $this->bo->read(array($column => $id, 'cal_deleted IS NULL'), null, true, 'server');
+		$event = $this->bo->read(array($column => $id, 'cal_deleted IS NULL', 'cal_reference=0'), null, true, 'server');
 		if ($event) $event = array_shift($event);	// read with array as 1. param, returns an array of events!
 
 		if (!($retval = $this->bo->check_perms(EGW_ACL_FREEBUSY,$event, 0, 'server')))
