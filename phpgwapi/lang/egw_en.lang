@@ -170,6 +170,7 @@ click here to resume your egroupware session.	common	en	Click to resume your EGr
 click or mouse over to show menus	common	en	Click or mouse over to show menus.
 click or mouse over to show menus?	common	en	Click or mouse over to show menus.
 click this image on the navbar: %1	common	en	Click this image on the navbar: %1
+clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	en	Clients not explicitly stating a limit get limited to these many days. A too high limit may cause problems with some clients.
 close	common	en	Close
 close sidebox	common	en	Close side menu
 cocos (keeling) islands	common	en	COCOS (KEELING) ISLANDS
@@ -359,6 +360,8 @@ home	common	en	Home
 home email	common	en	Home email
 honduras	common	en	HONDURAS
 hong kong	common	en	HONG KONG
+how many days to sync in the future (default %1)	groupdav	en	How many days to sync in the future (default %1)
+how many days to sync in the past (default %1)	groupdav	en	How many days to sync in the past (default %1)
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	en	How many icons should be shown in the top navigation bar. Additional icons go into a pull down menu, callable by the icon on the far right side of the navigation bar.
 how to show the general egroupware menu ?	common	en	How to show the general EGroupware menu
 hungary	common	en	HUNGARY
