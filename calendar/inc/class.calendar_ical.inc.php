@@ -1058,7 +1058,7 @@ class calendar_ical extends calendar_boupdate
 	/**
 	 * Import an iCal
 	 *
-	 * @param string $_vcalData
+	 * @param string|resource $_vcalData
 	 * @param int $cal_id=-1 must be -1 for new entries!
 	 * @param string $etag=null if an etag is given, it has to match the current etag or the import will fail
 	 * @param boolean $merge=false	merge data with existing entry
