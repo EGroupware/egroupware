@@ -168,19 +168,18 @@ class egw_ckeditor_config
 			switch ($skin)
 			{
 				case 'silver':
-					$skin = "v2";
-					break;
+				case 'office2003':
 				case 'default':
 					$skin = "kama";
 					break;
-				case 'office2003':
-					$skin = "office2003";
+				case 'moono':
+					$skin = "moono";
 					break;
 			}
 
 			//Check whether the skin actually exists, if not, switch to a default
 			if (!(file_exists($basePath.'skins/'.$skin) || file_exists($skin) || !empty($skin)))
-				$skin = "office2003";
+				$skin = "kama";
 
 			self::$skin = $skin;
 		}
