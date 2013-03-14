@@ -1160,7 +1160,7 @@ class calendar_bo
 					elseif (!is_numeric($uid))
 					{
 						// if the owner only grants EGW_ACL_FREEBUSY we are not interested in the recources explicit rights
-						if ($grant == EGW_ACL_FREEBUSY) break;
+						if ($grant == EGW_ACL_FREEBUSY) continue;
 						// if we have a resource as participant
 						$resource = $this->resource_info($uid);
 						$grant |= $resource['rights'];
