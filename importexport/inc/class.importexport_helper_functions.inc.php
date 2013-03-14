@@ -135,6 +135,18 @@ class importexport_helper_functions {
 				$account_ids[] = (int)$account_lid;
 				continue;
 			}
+			// Check for [username]
+			if(strpos($account_lid,'[') !== false)
+			{
+				if(preg_match('/\[(.+)\]/',$account_lid,$matches))
+				{
+					$account_id = $GLOBALS['egw']->accounts->name2id($matches[1]);
+					unset($account_lids[$key]);
+					$account_ids[] = $account_id;
+				}
+				continue;
+			}
+
 			// Handle users listed as Lastname, Firstname instead of login ID
 			// Do this first, in case their first name matches a username
 			if ( $account_lids[$key+1][0] == ' ' && $account_id = $GLOBALS['egw']->accounts->name2id( trim($account_lids[$key+1]).' ' .$account_lid, 'account_fullname')) {
