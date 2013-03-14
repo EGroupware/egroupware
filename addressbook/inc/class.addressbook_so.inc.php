@@ -551,7 +551,7 @@ class addressbook_so
 	*/
 	function read($contact_id)
 	{
-		if (!is_array($contact_id) && is_numeric($contact_id) && substr($contact_id,0,8) == 'account:')
+		if (!is_array($contact_id) && substr($contact_id,0,8) == 'account:')
 		{
 			$contact_id = array('account_id' => (int) substr($contact_id,8));
 		}
