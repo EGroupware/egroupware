@@ -531,7 +531,7 @@ class html
 		}
 
 		//include the ckeditor js file
-		egw_framework::validate_file('ckeditor3','ckeditor','phpgwapi');
+		egw_framework::validate_file('ckeditor','ckeditor','phpgwapi');
 
 		// run content through htmlpurifier
 		if ($_purify && !empty($_content))
@@ -556,7 +556,7 @@ class html
 		return self::textarea($_name,$_content,'id="'.htmlspecialchars($_name).'"',true).	// true = double encoding
 '
 <script type="text/javascript">
-	window.CKEDITOR_BASEPATH="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor3/";
+	window.CKEDITOR_BASEPATH="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor/";
 	CKEDITOR.replace("'.$_name.'", '.egw_ckeditor_config::get_ckeditor_config($_mode,
 		$pxheight, $expanded, $_start_path).');
 	CKEDITOR.instances["'.$_name.'"].on(
