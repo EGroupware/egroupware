@@ -931,7 +931,7 @@
 			$this->sessionData['stationeryID'] = $_formData['stationeryID'];
 			$this->sessionData['identity']  = $_formData['identity'];
 
-			$identity = $this->preferences->getIdentity((int)$this->sessionData['identity']);
+			$identity = $this->preferences->getIdentity((int)$this->sessionData['identity'],true);
 
 			$flags = '\\Seen \\Draft';
 			$BCCmail = '';
@@ -1037,7 +1037,7 @@
 			   	$messageIsDraft = true;
 			}
 			#error_log(print_r($this->preferences,true));
-			$identity = $this->preferences->getIdentity((int)$this->sessionData['identity']);
+			$identity = $this->preferences->getIdentity((int)$this->sessionData['identity'],true);
 			$signature = $this->bosignatures->getSignature((int)$this->sessionData['signatureID']);
 			//error_log($this->sessionData['identity']);
 			//error_log(print_r($identity,true));
