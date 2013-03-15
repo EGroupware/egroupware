@@ -537,6 +537,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned], {
 					if (cell.disabled)
 					{
 						td.hide();
+						cell.widget.options = cell.disabled;
 					}
 
 					if (cell.width != "auto")
