@@ -29,13 +29,13 @@
 			{
 				$acl_ok['loginscreen'] = True;
 			}
-			if ($_POST['cancel'] && !isset($_POST['message']) || 
+			if ($_POST['cancel'] && !isset($_POST['message']) ||
 					!count($acl_ok) || $_POST['submit'] && !isset($acl_ok[$section]))
 			{
 				$GLOBALS['egw']->redirect_link('/admin/index.php');
 			}
 
-			egw_framework::validate_file('ckeditor3','ckeditor','phpgwapi');
+			egw_framework::validate_file('ckeditor','ckeditor','phpgwapi');
 
 			$GLOBALS['egw']->template->set_file(array('message' => 'mainscreen_message.tpl'));
 			$GLOBALS['egw']->template->set_block('message','form','form');
@@ -46,7 +46,7 @@
 			{
 				$GLOBALS['egw']->translation->write($select_lang,$section,$section.'_message',$message);
 				$feedback_message = '<center>'.lang('message has been updated').'</center>';
-				
+
 				$section = '';
 			}
 			if ($_POST['cancel'])	// back to section/lang-selection
@@ -69,8 +69,8 @@
 			{
 				 $GLOBALS['egw']->common->egw_header();
 				 echo parse_navbar();
-					
-				 
+
+
 				$GLOBALS['egw']->template->set_var('form_action',$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index'));
 				$GLOBALS['egw']->template->set_var('tr_color',$GLOBALS['egw_info']['theme']['th_bg']);
 				$GLOBALS['egw']->template->set_var('value','&nbsp;');
@@ -82,11 +82,11 @@
 				$lang_select = '<select name="select_lang">';
 				foreach($GLOBALS['egw']->translation->get_installed_langs() as $lang => $lang_name)
 				{
-					$lang_select .= '<option value="' . $lang . '"'.($lang == $select_lang ? ' selected="selected"' : '').'>' . 
+					$lang_select .= '<option value="' . $lang . '"'.($lang == $select_lang ? ' selected="selected"' : '').'>' .
 						$lang . ' - ' . $lang_name . "</option>\n";
 				}
 				$lang_select .= '</select>';
-				
+
 				$GLOBALS['egw']->template->set_var('label',lang('Language'));
 				$GLOBALS['egw']->template->set_var('value',$lang_select);
 				$GLOBALS['egw']->template->fp('rows','row',True);
@@ -97,7 +97,7 @@
 				foreach($acl_ok as $key => $val)
 				{
 					$select_section .= ' <option value="'.$key.'"'.
-						($key == $_POST['section'] ? ' selected' : '') . '>' . 
+						($key == $_POST['section'] ? ' selected' : '') . '>' .
 						($key == 'mainscreen' ? lang('Main screen') : lang("Login screen")) . "</option>\n";
 				}
 				$select_section .= '</select>';
@@ -114,7 +114,7 @@
 			else
 			{
 				$current_message = $GLOBALS['egw']->translation->read($select_lang,$section,$section.'_message');
-				if ($_POST['no-htmlarea']) $current_message = strip_tags($current_message);	
+				if ($_POST['no-htmlarea']) $current_message = strip_tags($current_message);
 				if($_POST['htmlarea'] || strlen($current_message) > strlen(strip_tags($current_message)))
 				{
 					 $text_or_htmlarea = html::fckEditorQuick('message','advanced',$current_message,'400px','800px');
@@ -123,7 +123,7 @@
 				}
 				else
 				{
-					 $text_or_htmlarea='<textarea name="message" style="width:100%; min-width:350px; height:300px;" wrap="virtual">' . 
+					 $text_or_htmlarea='<textarea name="message" style="width:100%; min-width:350px; height:300px;" wrap="virtual">' .
 						html::htmlspecialchars($current_message) . '</textarea>';
 					 $htmlarea_button='<input type="submit" name="htmlarea" onclick="self.location.href=\''.
 						$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.
@@ -131,7 +131,7 @@
 				}
 				$GLOBALS['egw']->common->egw_header();
 				echo parse_navbar();
-				
+
 				$GLOBALS['egw']->template->set_var('form_action',$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index'));
 				$GLOBALS['egw']->template->set_var('select_lang',$select_lang);
 				$GLOBALS['egw']->template->set_var('section',$section);
@@ -142,11 +142,11 @@
 				$tr_color = $GLOBALS['egw']->nextmatchs->alternate_row_color($tr_color);
 				$GLOBALS['egw']->template->set_var('tr_color',$tr_color);
 
-				
+
 				$GLOBALS['egw']->template->set_var('value',$text_or_htmlarea);
-				
-				
-				
+
+
+
 				$GLOBALS['egw']->template->fp('rows','row_2',True);
 
 				$tr_color = $GLOBALS['egw']->nextmatchs->alternate_row_color($tr_color);

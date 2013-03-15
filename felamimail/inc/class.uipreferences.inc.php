@@ -175,7 +175,7 @@
 			{
 				case 'felamimail.uipreferences.editSignature':
 					egw_framework::validate_file('jscode','listSignatures','felamimail');
-					egw_framework::validate_file('ckeditor3','ckeditor','phpgwapi');
+					egw_framework::validate_file('ckeditor','ckeditor','phpgwapi');
 					#$GLOBALS['egw']->js->set_onload('fm_initEditLayout();');
 					break;
 				case 'felamimail.uipreferences.listAccountData':
