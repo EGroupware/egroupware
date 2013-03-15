@@ -15,9 +15,9 @@
 /*egw:uses
 	jsapi.jsapi; // Needed for egw_seperateJavaScript
 	jquery.jquery;
-	/phpgwapi/js/ckeditor3/ckeditor.js;
-	/phpgwapi/js/ckeditor3/config.js;
-	/phpgwapi/js/ckeditor3/adapters/jquery.js;
+	/phpgwapi/js/ckeditor/ckeditor.js;
+	/phpgwapi/js/ckeditor/config.js;
+	/phpgwapi/js/ckeditor/adapters/jquery.js;
 	et2_core_baseWidget;
 */
 
