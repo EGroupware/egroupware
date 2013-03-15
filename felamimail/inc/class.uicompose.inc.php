@@ -502,7 +502,7 @@
 			$this->t->set_var("link_action",egw::link('/index.php',$linkData));
 			$this->t->set_var('folder_name',$this->bofelamimail->sessionData['mailbox']);
 			$this->t->set_var('compose_id',$this->composeID);
-			// the editorobject is needed all the time (since we use CKEDITOR3
+			// the editorobject is needed all the time (since we use CKEDITOR
 			//$editorObject = html::initCKEditor('400px','simple');
 			$this->t->set_var('ckeditorConfig', egw_ckeditor_config::get_ckeditor_config('simple-withimage'));//$editorObject->jsEncode($editorObject->config));
 			$this->t->set_var('refreshTimeOut', 3*60*1000); // 3 minutes till a compose messages will be saved as draft;
@@ -824,7 +824,7 @@
 		function display_app_header()
 		{
 			egw_framework::validate_file('jscode','composeMessage','felamimail');
-			egw_framework::validate_file('ckeditor3','ckeditor','phpgwapi');
+			egw_framework::validate_file('ckeditor','ckeditor','phpgwapi');
 
 			$GLOBALS['egw']->js->set_onload('javascript:initAll();');
 			$GLOBALS['egw']->js->set_onbeforeunload("if (do_onunload && justClickedSend==false) if (draftsMayExist) {a = checkunload(browserSupportsOnUnloadConfirm?'".addslashes(lang("Please choose:"))."'+'\\n'+'".addslashes(lang("1) keep drafted message (press OK)"))."'+'\\n'+'".addslashes(lang("2) discard the message completely (press Cancel)"))."':'".addslashes(lang("if you leave this page without saving to draft, the message will be discarded completely"))."');".' if (!browserSupportsOnUnloadConfirm) return a;}');

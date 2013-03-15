@@ -18,7 +18,7 @@ class egw_ckeditor_config
 	private static $enterMode = null;
 	private static $skin = null;
 
-	// Defaults, defined in phpgwapi/js/ckeditor3/_source/plugins/font/plugin.js
+	// Defaults, defined in phpgwapi/js/ckeditor/plugins/font/plugin.js
 	public static $font_options = array(
 		'arial, helvetica, sans-serif' => 'Arial',
 		'Comic Sans MS, cursive' => 'Comic Sans MS',
@@ -120,7 +120,7 @@ class egw_ckeditor_config
 	private static function get_base_path()
 	{
 		//Get the ckeditor base url
-		return $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor3/';
+		return $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor/';
 	}
 
 	/**
@@ -168,19 +168,18 @@ class egw_ckeditor_config
 			switch ($skin)
 			{
 				case 'silver':
-					$skin = "v2";
-					break;
+				case 'office2003':
 				case 'default':
 					$skin = "kama";
 					break;
-				case 'office2003':
-					$skin = "office2003";
+				case 'moono':
+					$skin = "moono";
 					break;
 			}
 
 			//Check whether the skin actually exists, if not, switch to a default
 			if (!(file_exists($basePath.'skins/'.$skin) || file_exists($skin) || !empty($skin)))
-				$skin = "office2003";
+				$skin = "kama";
 
 			self::$skin = $skin;
 		}

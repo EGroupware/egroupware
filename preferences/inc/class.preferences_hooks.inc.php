@@ -69,8 +69,7 @@ class preferences_hooks
 
 		$rich_text_editor_skins = array(
 			'kama'    => lang ('Default theme'),
-			'office2003' => lang ('Office 2003 theme'),
-			'v2'     => lang ('Silver theme')
+			'moono'	=> lang('Moono theme')
 		);
 
 		$account_sels = array(

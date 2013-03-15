@@ -893,7 +893,7 @@ class felamimail_hooks
 				$selectAccount = html::select('accountSelect', $selectedID, $identities, true, 'id="accountSelect" style="width:99.5%;" onchange="var appWindow=egw_appWindow(\''.$appname.'\');appWindow.changeActiveAccount(this);"',0,false);
 				//error_log(__METHOD__.__LINE__.$selectAccount);
 				$file[] = array(
-					'text' => "<div id=\"divAccountSelect\" style=\" width:100%;\">".$selectAccount."</div>",
+					'text' => "<div id=\"divAccountSelect\" style=\" width:100%; overflow:hidden;\">".$selectAccount."</div>",
 					'no_lang' => True,
 					'link' => False,
 					'icon' => False,
