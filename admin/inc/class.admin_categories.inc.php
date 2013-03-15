@@ -336,7 +336,8 @@ class admin_categories
 		{
 			$filter['appname'] = $query['col_filter']['app'];
 		}
-		$cats = new categories($filter['owner'],$query['appname']);
+		$old_cats = $GLOBALS['egw']->categories;
+		$GLOBALS['egw']->categories = $cats = new categories($filter['owner'],$query['appname']);
 		$globalcat = isset($GLOBALS['egw_info']['user']['apps']['admin']) ? 'all_no_acl' : $globalcat;	// ignore acl only for admins
 		$parent = $query['search'] ? false : 0;
 		$rows = $cats->return_sorted_array($query['start'],false,$query['search'],$query['sort'],$query['order'],$globalcat,$parent,true,$filter);
