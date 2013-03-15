@@ -17,6 +17,12 @@
  */
 class etemplate_widget_menupopup extends etemplate_widget
 {
+
+	/**
+	 * If the selectbox has this many rows, give it a search box automatically
+	 */
+	const SEARCH_ROW_LIMIT = 20;
+
 	/**
 	 * @var array
 	 */
@@ -142,6 +148,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			}
 		}
 
+
 		// Make sure &nbsp;s, etc.  are properly encoded when sent, and not double-encoded
 		$options = (self::$request->sel_options[$form_name] ? $form_name : $this->id);
 		if(is_array(self::$request->sel_options[$options]))
@@ -156,6 +163,12 @@ class etemplate_widget_menupopup extends etemplate_widget
 				{
 					$label['label'] = html_entity_decode($label['label'], ENT_NOQUOTES,'utf-8');
 				}
+			}
+
+			// Turn on search, if there's a lot of rows
+			if(count(self::$request->sel_options[$options]) >= self::SEARCH_ROW_LIMIT)
+			{
+				self::setElementAttribute($form_name, "search", true);
 			}
 		}
 	}

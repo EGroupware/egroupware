@@ -15,6 +15,7 @@
 
 /*egw:uses
 	jquery.jquery;
+	/phpgwapi/js/jquery/chosen/chosen.jquery.js;
 	et2_core_xml;
 	et2_core_DOMWidget;
 	et2_core_inputWidget;
@@ -53,8 +54,24 @@ var et2_selectbox = et2_inputWidget.extend({
 			"default": true,
 			"description": "For multi-selects, put the selected options at the top of the list when first loaded"
 		},
+
+		// Chosen options
+		"search": {
+			"name": "Search",
+			"type": "boolean",
+			"default": false,
+			"description": "For single selects, add a search box to the drop-down list"
+		},
+		"tags": {
+			"name": "Tag style",
+			"type": "boolean",
+			"default": false,
+			"description": "For multi-selects, displays selected as a list of tags instead of a big list"
+		},
+
+		// Value can be string or integer
 		"value": {
-			"type": "any" // Can be string or integer
+			"type": "any"
 		},
 		// Type specific legacy options.  Avoid using.
 		"other": {
@@ -97,7 +114,14 @@ var et2_selectbox = et2_inputWidget.extend({
 		if(this.options.rows > 1) 
 		{
 			this.options.multiple = true;
-			this.createMultiSelect();
+			if(this.options.tags)
+			{
+				this.createInputWidget();
+			}
+			else
+			{
+				this.createMultiSelect();
+			}
 		}
 		else
 		{
@@ -372,6 +396,24 @@ var et2_selectbox = et2_inputWidget.extend({
 		this.setDOMNode(node[0]);
 	},
 
+	doLoadingFinished: function() {
+		this._super.apply(this, arguments);
+
+		// Turn on tags, if desired
+		if(this.input != null && (this.options.search || this.options.tags) && !this.options.disabled)
+		{
+			if(this.options.empty_label)
+			{
+				this.input.attr("data-placeholder", this.options.empty_label);
+			}
+			this.input.css("width","100%")
+				.chosen({
+				})
+				.change(this.onchange);
+		}
+		return true;
+	},
+
 	loadFromXML: function(_node) {
 		// Handle special case where legacy option for empty label is used (conflicts with rows), and rows is set as an attribute
 		var legacy;
@@ -400,6 +442,12 @@ var et2_selectbox = et2_inputWidget.extend({
 		if(typeof _value == "string" && this.options.multiple && _value.match(/[,0-9]+$/) !== null)
 		{
 			_value = _value.split(',');
+		}
+		if(this.options.tags)
+		{
+			this.input.val(_value);
+			this.input.trigger("liszt:updated");
+			return;
 		}
 		if(this.input == null)
 		{
