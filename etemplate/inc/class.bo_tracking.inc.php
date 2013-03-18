@@ -635,6 +635,9 @@ abstract class bo_tracking
 			$GLOBALS['egw']->preferences->__construct($GLOBALS['egw_info']['user']['account_id']);
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository(false);	// no session prefs!
 			unset($this->save_prefs);
+
+			// Re-load date/time preferences
+			egw_time::init();
 		}
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'] != translation::$userlang)
 		{
@@ -694,6 +697,9 @@ abstract class bo_tracking
 		{
 			translation::init();
 		}
+
+		// Load date/time preferences into egw_time
+		egw_time::init();
 
 		// Cache message body to not have to re-generate it every time
 		static $body_cache = array();
