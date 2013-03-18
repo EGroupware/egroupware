@@ -240,6 +240,10 @@ class egw_ckeditor_config
 		//error_log(__METHOD__.__LINE__.' Spellcheck:'.$GLOBALS['egw_info']['server']['enabled_spellcheck']);
 		if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck']))
 		{
+			// enable browsers native spellchecker as default, if e.g.: aspell fails
+			// to use browsers native spellchecker, you have to hold CMD/CTRL button on rightclick to
+			// access the browsers spell correction options
+			$config['disableNativeSpellChecker'] = false;
 			$spellchecker_button = 'SpellChecker';
 			if (!empty($GLOBALS['egw_info']['server']['aspell_path']) &&
 				is_executable($GLOBALS['egw_info']['server']['aspell_path']) &&
