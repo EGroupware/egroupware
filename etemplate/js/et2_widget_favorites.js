@@ -122,6 +122,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],{
 		if(this.sidebox_target.length)
 		{
 			this.sidebox_target
+				.off("mouseenter mouseleave click")
 				.on("mouseenter","div.ui-icon-trash", function() {$j(this).wrap("<span class='ui-state-active'/>");})
 				.on("mouseleave","div.ui-icon-trash", function() {$j(this).unwrap();})
 				.on("click","div.ui-icon-trash", this, this.delete_favorite)

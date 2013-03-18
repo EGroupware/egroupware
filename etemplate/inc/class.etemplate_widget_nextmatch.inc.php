@@ -846,7 +846,8 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$filters = array(
 			'blank' => array(
 				'name' => lang('No filters'),
-				'filters' => array()
+				'filters' => array(),
+				'group' => true
 			)
 		);
 		$default_filter = $GLOBALS['egw_info']['user']['preferences'][$app][$default];
