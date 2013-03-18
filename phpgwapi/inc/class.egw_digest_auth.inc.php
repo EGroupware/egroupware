@@ -2,6 +2,13 @@
 /**
  * eGroupWare API: Basic and Digest Auth
  *
+ * For Apache FCGI you need the following rewrite rule:
+ *
+ * 	RewriteEngine on
+ * 	RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
+ *
+ * Otherwise authentication request will be send over and over again, as password is NOT available to PHP!
+ *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api

@@ -2,6 +2,13 @@
 /**
  * FileManger - WebDAV access
  *
+ * For Apache FCGI you need the following rewrite rule:
+ *
+ * 	RewriteEngine on
+ * 	RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
+ *
+ * Otherwise authentication request will be send over and over again, as password is NOT available to PHP!
+ *
  * Using the PEAR HTTP/WebDAV/Server class (which need to be installed!)
  *
  * @link http://www.egroupware.org
