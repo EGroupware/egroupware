@@ -91,6 +91,13 @@ class infolog_ui
 	function __construct()
 	{
 		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'infolog') translation::add_app('infolog');
+
+		// Make sure Global category is infolog - on first load, it may not be
+		if($GLOBALS['egw_info']['flags']['currentapp'] == 'infolog' && !$GLOBALS['egw']->categories->app_name)
+		{
+			$GLOBALS['egw']->categories = new categories();
+		}
+
 		$this->bo = new infolog_bo();
 
 		$this->tmpl = new etemplate();
