@@ -169,12 +169,15 @@ class egw_ckeditor_config
 			{
 				case 'silver':
 				case 'office2003':
+				case 'kama':
 				case 'default':
 					$skin = "kama";
 					break;
 				case 'moono':
 					$skin = "moono";
 					break;
+				default:
+					$skin = "kama";
 			}
 
 			//Check whether the skin actually exists, if not, switch to a default
