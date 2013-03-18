@@ -95,7 +95,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],{
 		var apps = egw().user('apps');
 		this.is_admin = (typeof apps['admin'] != "undefined");
 
-		this.preferred = this.egw().preference(this.options.default_pref,this.options.app);
+		this.preferred = egw.preference(this.options.default_pref,this.options.app);
 		if(!this.preferred || typeof this.stored_filters[this.preferred] == "undefined")
 		{
 			this.preferred = "blank";
@@ -122,7 +122,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],{
 		if(this.sidebox_target.length)
 		{
 			this.sidebox_target
-				.off("mouseenter mouseleave click")
+				.off()
 				.on("mouseenter","div.ui-icon-trash", function() {$j(this).wrap("<span class='ui-state-active'/>");})
 				.on("mouseleave","div.ui-icon-trash", function() {$j(this).unwrap();})
 				.on("click","div.ui-icon-trash", this, this.delete_favorite)
@@ -179,6 +179,12 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],{
 	destroy: function() {
 		this.popup.dialog("destroy");
 		this.popup = null;
+		if(this.sidebox_target.length)
+		{
+			this.sidebox_target
+				.off()
+				.empty();
+		}
 		this._super.apply(this, arguments);
 	},
 
@@ -198,7 +204,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],{
 		};
 
 		// Load saved favorites
-		var preferences = this.egw().preference("*",app);
+		var preferences = egw.preference("*",app);
 		for(var pref_name in preferences)
 		{
 			if(pref_name.indexOf(this.favorite_prefix) == 0)
