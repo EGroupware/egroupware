@@ -1094,6 +1094,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 
 	destroy: function() {
 		this.nextmatch = null;
+
+		this._super.apply(this, arguments);
 		this.div = null;
 	},
 

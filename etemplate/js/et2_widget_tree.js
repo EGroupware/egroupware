@@ -92,7 +92,10 @@ var et2_tree = et2_inputWidget.extend({
 	},
 
 	destroy: function() {
-		this.input.destructor();
+		if(this.input)
+		{
+			this.input.destructor();
+		}
 		this.input = null;
 		this._super.apply(this, arguments);
 	},
