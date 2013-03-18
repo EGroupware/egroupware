@@ -113,6 +113,7 @@
       <option value="">{lang_No}</option>
       <option value="True"{selected_enabled_spellcheck_True}>{lang_Yes}</option>
 	  <option value="YesNoSCAYT"{selected_enabled_spellcheck_YesNoSCAYT}>{lang_Yes,_but_no_SCAYT}</option>
+	  <option value="YesBrowserBased"{selected_enabled_spellcheck_YesBrowserBased}>{lang_Yes,_use_browser_based_spell_checking_engine}</option>
 	  <option value="YesUseWebSpellCheck"{selected_enabled_spellcheck_YesUseWebSpellCheck}>{lang_Yes,_use_WebSpellChecker}</option>
      </select>
     </td>
