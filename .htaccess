@@ -26,3 +26,8 @@ php_value session.gc_probability 1
 php_value session.gc_divisor 10
 # multibyte extension: needed for utf-8
 php_value mbstring.func_overload 7
+#
+#For Apache FCGI (not regular mod_php!) you need the following rewrite rule:
+#RewriteEngine on
+#RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
+#Otherwise authentication request will be send over and over again, as password is NOT available to PHP!
