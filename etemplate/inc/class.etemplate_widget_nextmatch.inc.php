@@ -922,6 +922,12 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			$result = $prefs->add($app,$pref_name,$filters,$type);
 			$prefs->save_repository(false,$type);
 
+			// Update preferences client side, or it could disappear
+			$pref = $GLOBALS['egw']->preferences->read_repository(false);
+			$pref = $pref[$app];
+                        if(!$pref) $pref = Array();
+                        egw_json_response::get()->script('window.egw.set_preferences('.json_encode($pref).', "'.$app.'");');
+
 			egw_json_response::get()->data(isset($result[$app][$pref_name]));
 			return isset($result[$app][$pref_name]);
 		}
@@ -929,6 +935,12 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		{
 			$result = $prefs->delete($app,$pref_name, $type);
 			$prefs->save_repository(false,$type);
+
+			// Update preferences client side, or it could come back
+			$pref = $GLOBALS['egw']->preferences->read_repository(false);
+			$pref = $pref[$app];
+                        if(!$pref) $pref = Array();
+                        egw_json_response::get()->script('window.egw.set_preferences('.json_encode($pref).', "'.$app.'");');
 
 			egw_json_response::get()->data(!isset($result[$app][$pref_name]));
 			return !isset($result[$app][$pref_name]);
