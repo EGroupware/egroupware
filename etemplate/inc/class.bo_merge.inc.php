@@ -346,7 +346,7 @@ abstract class bo_merge
 	protected function get_all_links($app, $id, $prefix, &$content)
 	{
 		$array = array();
-		$pattern = '@\$(links|attachments|links_attachments)\/?(title|href|link)?\/?([a-z]*)\$@';
+		$pattern = '@\$(link|links|attachments|links_attachments)\/?(title|href|link)?\/?([a-z]*)\$@';
 		static $link_cache;
 		if(preg_match_all($pattern, $content, $matches))
 		{
@@ -360,6 +360,33 @@ abstract class bo_merge
 				}
 				switch($matches[1][$i])
 				{
+					case 'link':
+						// Link to current record
+						$title = egw_link::title($app, $id);
+						if(class_exists('stylite_links_stream_wrapper') && $app != egw_link::VFS_APPNAME)
+						{
+							$title = stylite_links_stream_wrapper::entry2name($app, $id, $title);
+						}
+						
+						$link = egw_link::view($app, $id);
+						if($app != egw_link::VFS_APPNAME)
+						{
+							// Set app to false so we always get an external link
+							$link = str_replace(',','%2C',egw::link('/index.php',$link, false));
+						}
+						else
+						{
+							$link = egw::link($link, array());
+						}
+						// Prepend site
+						if ($link{0} == '/')
+						{
+							$link = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
+								($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$link;
+						}
+						$title = html::a_href(html::htmlspecialchars($title), $link);
+						$array[($prefix?$prefix.'/':'').$placeholder] = $title;
+						break;
 					case 'links':
 						$array[($prefix?$prefix.'/':'').$placeholder] = $this->get_links($app, $id, '!'.egw_link::VFS_APPNAME, array(),$matches[2][$i]);
 						break;

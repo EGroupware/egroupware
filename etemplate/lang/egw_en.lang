@@ -218,6 +218,7 @@ hour	etemplate	en	Hour
 hours	etemplate	en	Hours
 how many entries should the list show	etemplate	en	How many entries should the list show
 html	etemplate	en	HTML
+html link to the current record	etemplate	en	HTML link to the current record
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	en	If field is disabled an empty table cell is displayed
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	preferences	en	If you specify a directory, full vfs path, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	preferences	en	If you specify a document, full vfs path, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
