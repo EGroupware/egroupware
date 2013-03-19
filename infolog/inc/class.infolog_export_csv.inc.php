@@ -219,7 +219,6 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 	public function get_selectors_etpl() {
 		return array(
 			'name'	=> 'infolog.export_csv_selectors',
-			'content'	=> 'search'
 		);
 	}
 

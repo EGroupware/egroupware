@@ -88,6 +88,7 @@ class infolog_tracking extends bo_tracking
 		'info_cat'       => 'Category',
 		'info_priority'  => 'Priority',
 		'info_owner'     => 'Owner',
+		'info_modifier'  => 'Modifier',
 		'info_access'    => 'Access',
 		'info_status'    => 'Status',
 		'info_percent'   => 'Completed',
@@ -316,6 +317,22 @@ class infolog_tracking extends bo_tracking
 				{
 					$config = array_merge($config,preg_split('/, ?/',$data['info_cc']));
 				}
+				break;
+			case self::CUSTOM_NOTIFICATION:
+				$info_config = config::read('infolog');
+				if(!$info_config[self::CUSTOM_NOTIFICATION])
+				{
+					return '';
+				}
+				// Per-type notification
+				$config = $info_config[self::CUSTOM_NOTIFICATION][$data['info_type']];
+				$global = $info_config[self::CUSTOM_NOTIFICATION]['~global~'];
+
+				// Disabled
+				if(!$config['use_custom'] && !$global['use_custom']) return '';
+
+				// Type or globabl
+				$config = trim(strip_tags($config['message'])) != '' && $config['use_custom'] ? $config['message'] : $global['message'];
 				break;
 		}
 		return $config;

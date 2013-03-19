@@ -135,13 +135,7 @@ class timesheet_merge extends bo_merge
 		}
 
 		// Links
-		$array['links'] = $this->get_links('timesheet', $id, '!'.egw_link::VFS_APPNAME);
- 		$array['attachments'] = $this->get_links('timesheet', $id, egw_link::VFS_APPNAME);
-		$array['links_attachments'] = $this->get_links('timesheet', $id);
-		foreach(array_keys($GLOBALS['egw_info']['user']['apps']) as $app)
-		{
-			$array["links/{$app}"] = $this->get_links('timesheet',$id, $app);
-		}
+		$array += $this->get_all_links('timesheet', $id, $prefix, $content);
 
 		// Add markers
 		foreach($array as $key => &$value)

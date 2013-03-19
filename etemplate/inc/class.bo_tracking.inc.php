@@ -181,6 +181,11 @@ abstract class bo_tracking
 	const ONE2N_SEPERATOR = '~|~';
 
 	/**
+	 * Config name for custom notification message
+	 */
+	const CUSTOM_NOTIFICATION = 'custom_notification';
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $cf_app=null if set, custom field names get added to $field2history
@@ -271,6 +276,7 @@ abstract class bo_tracking
 	 *  - 'link' string of link to view $data
 	 *  - 'sender' sender of email
 	 *  - 'skip_notify' array of email addresses that should _not_ be notified
+	 *  - CUSTOM_NOTIFICATION string notification body message.  Merge print placeholders are allowed.
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @return mixed
@@ -629,6 +635,9 @@ abstract class bo_tracking
 			$GLOBALS['egw']->preferences->__construct($GLOBALS['egw_info']['user']['account_id']);
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository(false);	// no session prefs!
 			unset($this->save_prefs);
+
+			// Re-load date/time preferences
+			egw_time::init();
 		}
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'] != translation::$userlang)
 		{
@@ -689,6 +698,26 @@ abstract class bo_tracking
 			translation::init();
 		}
 
+		// Load date/time preferences into egw_time
+		egw_time::init();
+
+		// Cache message body to not have to re-generate it every time
+		static $body_cache = array();
+		$lang = translation::$userlang;
+		$date_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] .
+			$GLOBALS['egw_info']['user']['preferences']['common']['timeformat'];
+
+		// Cache text body
+		if(!$body_cache[$lang][$date_format][false])
+		{
+			$body_cache[$lang][$date_format][false] = $this->get_body(false,$data,$old,false,$receiver);
+		}
+		// Cache HTML body
+		if(!$body_cache[$lang][$date_format][true])
+		{
+			$body_cache[$lang][$date_format][true] = $this->get_body(true,$data,$old,false,$receiver);
+		}
+
 		// send over notification_app
 		if ($GLOBALS['egw_info']['apps']['notifications']['enabled']) {
 			// send via notification_app
@@ -696,8 +725,8 @@ abstract class bo_tracking
 			try {
 				$notification = new notifications();
 				$notification->set_receivers(array($receiver));
-				$notification->set_message($this->get_body(false,$data,$old,false,$receiver)); // set message as plaintext
-				$notification->set_message($this->get_body(true,$data,$old,false,$receiver)); // and html
+				$notification->set_message($body_cache[$lang][$date_format][false]);
+				$notification->set_message($body_cache[$lang][$date_format][true]);
 				$notification->set_sender($this->get_sender($data,$old,true,$receiver));
 				$notification->set_subject($this->get_subject($data,$old,$deleted,$receiver));
 				$notification->set_links(array($this->get_notification_link($data,$old,$receiver)));
@@ -707,7 +736,8 @@ abstract class bo_tracking
 				}
 				$notification->send();
 			}
-			catch (Exception $exception) {
+			catch (Exception $exception)
+			{
 				$this->errors[] = $exception->getMessage();
 				return false;
 			}
@@ -902,6 +932,15 @@ abstract class bo_tracking
 	public function get_body($html_email,$data,$old,$integrate_link = true,$receiver=null)
 	{
 		$body = '';
+		if($this->get_config(self::CUSTOM_NOTIFICATION, $data, $old))
+		{
+			$body = $this->get_custom_message($data,$old);
+			if($sig = $this->get_signature($data,$old,$receiver))
+			{
+				$body .= ($html_email ? '<br />':'') . "\n$sig";
+			}
+			return $body;
+		}
 		if ($html_email)
 		{
 			$body = '<table cellspacing="2" cellpadding="0" border="0" width="100%">'."\n";
@@ -1064,5 +1103,44 @@ abstract class bo_tracking
 			return $sig;
 		}
 		return $config['signature'];
+	}
+
+	/**
+	 * Get a custom notification message to be used instead of the standard one.
+	 * It can use merge print placeholders to include data.
+	 */
+	protected function get_custom_message($data, $old, $merge_class = null)
+	{
+		$message = $this->get_config(self::CUSTOM_NOTIFICATION, $data, $old);
+		if(!$message)
+		{
+			return '';
+		}
+
+		// Automatically set merge class from naming conventions
+		if($merge_class == null)
+		{
+			$merge_class = $this->app.'_merge';
+		}
+		if(!isset($data[$this->id_field]))
+		{
+			error_log($this->app . ' did not properly implement bo_tracking->id_field.  Merge skipped.');
+			return $message;
+		}
+		elseif(class_exists($merge_class))
+		{
+			$merge = new $merge_class();
+			$merged_message = $merge->merge_string($message, array($data[$this->id_field]), $error, 'text/html');
+			if($error)
+			{
+				error_log($error);
+				return $message;
+			}
+			return $merged_message;
+		}
+		else
+		{
+			throw new egw_exception_wrong_parameter("Invalid merge class '$merge_class' for {$this->app} custom notification");
+		}
 	}
 }

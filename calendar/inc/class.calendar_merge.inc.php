@@ -215,13 +215,7 @@ class calendar_merge extends bo_merge
 		}
 
 		// Links
-		$replacements['$$'.($prefix?$prefix.'/':'').'links$$'] = $this->get_links('calendar', $event['id'], '!'.egw_link::VFS_APPNAME);
- 		$replacements['$$'.($prefix?$prefix.'/':'').'attachments$$'] = $this->get_links('calendar', $event['id'], egw_link::VFS_APPNAME);
-		$replacements['$$'.($prefix?$prefix.'/':'').'links_attachments$$'] = $this->get_links('calendar', $event['id']);
-		foreach(array_keys($GLOBALS['egw_info']['user']['apps']) as $app)
-                {
-                        $replacements["$$".($prefix?$prefix.'/':'')."links/{$app}$$"] = $this->get_links('calendar',$event['id'], $app);
-                }
+		$replacements += $this->get_all_links('calendar', $event['id'], $prefix, $content);
 
 		return $replacements;
 	}

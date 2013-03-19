@@ -16,7 +16,7 @@
 class infolog_customfields
 {
 	var $public_functions = array(
-		'edit' => True
+		'edit' => True,
 	);
 	/**
 	 * Instance of the infolog BO class

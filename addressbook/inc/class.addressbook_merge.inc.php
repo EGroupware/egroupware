@@ -54,15 +54,7 @@ class addressbook_merge extends bo_merge
 		}
 
 		// Links
-		$replacements += array(
-			'$$links$$'		=> $this->get_links('addressbook', $id, '!'.egw_link::VFS_APPNAME),
-			'$$attachments$$'	=> $this->get_links('addressbook', $id, egw_link::VFS_APPNAME),
-			'$$links_attachments$$'	=> $this->get_links('addressbook', $id)
-		);
-		foreach(array_keys($GLOBALS['egw_info']['user']['apps']) as $app)
-		{
-			$replacements['$$links/'.$app.'$$'] = $this->get_links('addressbook',$id, $app);
-		}
+		$replacements += $this->get_all_links('addressbook', $id, $prefix, $content);
 		if (!(strpos($content,'$$calendar/') === false))
 		{
 			$replacements += $this->calendar_replacements($id,!(strpos($content,'$$calendar/-1/') === false));
