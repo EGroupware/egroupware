@@ -2234,8 +2234,8 @@ class infolog_ui
 
 				if ($content['responsible_edit'])
 				{
-					$extra = array_intersect((array)$content['responsible_edit'],array_keys($fields));
-					$this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
+					$extra = array_intersect(explode(',',$content['responsible_edit']),array_keys($fields));
+					$this->bo->responsible_edit = array_unique(array_merge($this->bo->responsible_edit,$extra));
 				}
 				// some fields like id, uid, created, createdby, modified and modifiedby are excluded by default
 				foreach(array('copy_excludefields','sub_excludefields') as $name)
@@ -2283,7 +2283,6 @@ class infolog_ui
 			$content['sub_excludefields'] = $this->bo->sub_excludefields;
 			$content['history'] = $this->bo->history;
 		}
-
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Site configuration');
 
