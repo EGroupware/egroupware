@@ -73,6 +73,7 @@
  *  'favorites'      =>     //  I boolean|array True to enable favorites, or an array of additional, app specific settings to include
  *					in the saved filters (eg: pm_id)
  *  'placeholder'    =>     //  I String Optional text to display in the empty row placeholder.  If not provided, it's "No matches found."
+ *  'placeholder_actions' =>     //  I String Optional list of actions allowed on the placeholder.  If not provided, it's ["add"].
  */
 class etemplate_widget_nextmatch extends etemplate_widget
 {
@@ -354,7 +355,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				}
 			}*/
 		}
-		foreach($result as $name => $value) if ($name != 'readonlys') error_log(__METHOD__."() result['$name']=".array2string($name == 'data' ? array_keys($value) : $value));
+		//foreach($result as $name => $value) if ($name != 'readonlys') error_log(__METHOD__."() result['$name']=".array2string($name == 'data' ? array_keys($value) : $value));
 		egw_json_response::get()->data($result);
 	}
 
