@@ -300,7 +300,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 	 */
 	refresh: function(_row_ids, _type) {
 		if (typeof _type == 'undefined') _type = 'edit';
-		if (typeof _row_ids == 'string') _rowids = [_row_ids];
+		if (typeof _row_ids == 'string' || typeof _row_ids == 'number') _row_ids = [_row_ids];
 		if (typeof _row_ids == "undefined") 
 		{
 			this.applyFilters();
@@ -317,7 +317,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 			var uid = app + "::" + _row_ids[i];
 			switch(_type)
 			{
-				case "update":
+				case "edit":
 					if(!egw().dataRefreshUID(uid))
 					{
 						// Could not update just that row
@@ -1931,7 +1931,8 @@ var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend({
 		"widget_options": {
 			"name": "Actual options",
 			"type": "any",
-			"description": "The options for the actual widget"
+			"description": "The options for the actual widget",
+			"default": {}
 		},
 	},
 	legacyOptions: ["widget_type","widget_options"],
