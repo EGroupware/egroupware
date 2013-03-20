@@ -45,7 +45,7 @@ function add_cal(_action, _senders)
  */
 function add_task(_action, _senders)
 {
-	if (!_senders[0].id.match(/^[0-9]+$/))
+	if (!_senders[0].id.match(/^(addressbook::)?[0-9]+$/))
 	{
 		// send org-view requests to server
 		_action.data.nm_action = "submit";
