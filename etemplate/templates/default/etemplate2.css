@@ -518,30 +518,29 @@ ul.et2_link_string {
 .et2_link_string li:not(:last-child):after {
     content:           ', ';
 }
-
+.et2_link_list {
+	border-collapse:collapse;
+}
 .et2_link_list tr {
 	cursor: pointer;
 }
 .et2_link_list td.remark {
 	font-style: italic;
 }
-.et2_link_list td.delete {
-	cursor: pointer;
-	width: 16px;
-	height: 16px;
-	float: right;
-	display: none;
+.et2_link_list td div.delete {
+	visibility: hidden;
 	background-image: url("images/close.png");
 	background-position: center;
 	background-repeat: no-repeat;
 	padding: 0px;
 }
-.et2_link_list .icon img, .et2_link_list td.icon {
+.et2_link_list .icon img, .et2_link_list .icon {
 	width: 16px;
 	height: 16px;
+	display: inline-block;
 }
-.et2_link_list tr:hover td.delete {
-	display: inline;
+.et2_link_list tr:hover div.delete {
+	visibility: visible;
 }
 
 .egw_tooltip

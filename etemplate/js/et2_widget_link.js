@@ -130,11 +130,17 @@ var et2_link_to = et2_inputWidget.extend({
 			.appendTo(this.div).addClass("status").hide();
 
 		// Need a div for link-to widget
-		this.link_div = $j(document.createElement("div")).css("margin-bottom", "1ex").appendTo(this.div);
+		this.link_div = $j(document.createElement("div"))
+			.css("margin-bottom", "1ex")
+			// Leave room for link button
+			.css("width", "89%")
+			.appendTo(this.div);
 
 		// Link comment field
 		this.comment = $j(document.createElement("input"))
-			.css("display", "block").css("width","89%")
+			.css("display", "block")
+			// Leave room for link button
+			.css("width","89%")
 			.appendTo(this.div).hide();
 		et2_link_entry.prototype.set_blur(this.egw().lang("Comment..."),this.comment);
 
@@ -188,7 +194,7 @@ var et2_link_to = et2_inputWidget.extend({
 		var link_entry_attrs = {
 			id: this.id + '_link_entry',
 			only_app: this.options.only_app,
-			application_list: this.options.applicaiton_list,
+			application_list: this.options.application_list,
 			blur: this.options.search_label ? this.options.search_label : this.egw().lang('Search...'),
 			query: function() { self.link_button.hide(); self.comment.hide(); return true;},
 			select: function() {self.link_button.show(); self.comment.show(); return true;}
@@ -393,7 +399,10 @@ var et2_link_entry = et2_inputWidget.extend({
 		this.app_select = null;
 		this._oldValue = {id: null, app: this.options.only_app};
 
-		if(typeof this.options.value == 'undefined') this.options.value = {};
+		if(typeof this.options.value == 'undefined' || this.options.value == null)
+		{
+			this.options.value = {};
+		}
 		this.cache = {};
 
 		this.createInputWidget();
@@ -1191,6 +1200,9 @@ var et2_link_list = et2_link_string.extend({
 		// Delete
 		var delete_button = $j(document.createElement("td"))
 			.appendTo(row)
+		$j("<div />")
+			.appendTo(delete_button)
+			// We don't use ui-icon because it assigns a bg image
 			.addClass("delete icon")
 			.bind( 'click', function() {self._delete_link(_link_data.link_id);});
 
@@ -1206,8 +1218,8 @@ var et2_link_list = et2_link_string.extend({
 	},
 	_delete_link: function(link_id) {
 		var row = jQuery('#link_'+link_id, this.list);
-		var delete_button = jQuery('.delete.icon',row);
-		delete_button.addClass("loading").removeClass("delete");
+		var delete_button = jQuery('.delete',row);
+		delete_button.removeClass("delete").addClass("loading");
 		new egw_json_request("etemplate.etemplate_widget_link.ajax_delete", [link_id])
 			.sendRequest(true, function(data) { if(data) {row.slideUp(row.remove);}});
 		
