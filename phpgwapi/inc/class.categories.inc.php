@@ -488,7 +488,7 @@ class categories
 		{
 			foreach($cat_arr as $id=>$cat_id)
 			{
-				if (!$this->check_perms($needed, $cat_id))
+				if (!$this->check_perms($needed, $cat_id, false, $needed == EGW_ACL_READ))	// allow reading all global cats
 				{
 					unset($cat_arr[$id]);
 				}
@@ -507,9 +507,10 @@ class categories
 	 * @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
 	 * @param mixed $category category as array or the category_id
 	 * @param boolean $no_acl_check=false if true, grants are NOT checked, gives access to all non-private categories of all users
+	 * @param boolean $allow_global_read if true, global cats are allowed (independent of app) for reading
 	 * @return boolean true permission granted, false for permission denied, null for category does not exist
 	 */
-	public function check_perms($needed, $category, $no_acl_check=false)
+	public function check_perms($needed, $category, $no_acl_check=false, $allow_global_read=false)
 	{
 		if (!is_array($category) && !($category = self::read($category)))
 		{
@@ -525,9 +526,10 @@ class categories
 		}
 
 		// Read access to global categories
-		if ($needed == EGW_ACL_READ && (array_intersect(explode(',',$category['owner']),$this->global_owners) ||
+		if ($needed == EGW_ACL_READ && (($is_global=array_intersect(explode(',',$category['owner']),$this->global_owners)) ||
 			$no_acl_check && $category['access'] == 'public') &&	// no_acl_check only means public cats
-			($category['appname'] == self::GLOBAL_APPNAME || $category['appname'] == $this->app_name))
+			($category['appname'] == self::GLOBAL_APPNAME || $category['appname'] == $this->app_name ||
+			$is_global && $allow_global_read))
 		{
 			//echo "<p>".__METHOD__."($needed,$category[name]) access because global via memberships</p>\n";
 			return true;
