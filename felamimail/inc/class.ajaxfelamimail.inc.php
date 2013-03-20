@@ -410,8 +410,6 @@ class ajaxfelamimail
 
         function toggleEditor($_composeID, $_content ,$_mode)
         {
-			$_content = utf8_decode($_content);
-
 			if($this->_debug) error_log("ajaxfelamimail::toggleEditor->".$_mode.'->'.$_content);
 	        $bocompose  = CreateObject('felamimail.bocompose', $_composeID);
 			if($_mode == 'simple') {
@@ -433,15 +431,14 @@ class ajaxfelamimail
 					$_content = implode('',$contentArr);
 				}
 				$_content = $bocompose->_getCleanHTML($_content, false, false);
-				//$_content = $bocompose->convertHTMLToText($_content);
-				$_content = translation::convertHTMLToText($_content,'ISO-8859-1',$stripcrl=false,$stripalltags=true);
+				$_content = translation::convertHTMLToText($_content,$charset=false,$stripcrl=false,$stripalltags=true);
 			}
 			if($this->_debug) error_log(__METHOD__.__LINE__.$_content);
 			$this->saveSessionData();
 
 			$response = new xajaxResponse();
 
-			$escaped = utf8_encode(str_replace(array("'", "\r", "\n"), array("\\'", "\\r", "\\n"), $_content));
+			$escaped = str_replace(array("'", "\r", "\n"), array("\\'", "\\r", "\\n"), $_content);
 			if ($_mode == 'simple')
 				$response->addScript("showHTMLEditor('$escaped');");
 			else
