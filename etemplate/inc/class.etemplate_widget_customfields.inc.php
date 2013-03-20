@@ -199,7 +199,10 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		{
 			// This widget has different settings from global
 			$this->setElementAttribute($form_name, 'customfields', $fields);
-			$this->setElementAttribute($form_name, 'fields', array_fill_keys(array_keys($fields), true));
+			$this->setElementAttribute($form_name, 'fields', array_merge(
+				array_fill_keys(array_keys($customfields), false),
+				array_fill_keys(array_keys($fields), true)
+			));
 		}
 		parent::beforeSendToClient($cname);
 

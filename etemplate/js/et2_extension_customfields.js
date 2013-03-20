@@ -103,10 +103,10 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 	destroy: function() {
 		this._super.apply(this, arguments);
+		this.rows = {};
+		this.widgets = {};
+		this.detachedNodes = [];
 		this.tbody = null;
-		this.table = null;
-		this.rows = null;
-		this.widgets = null;
 	},
 
 	/**
@@ -288,6 +288,9 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		if(!this.options.customfields) return;
 		for(var field_name in this.options.customfields)
 		{
+			// Skip fields if we're filtering
+			if(!jQuery.isEmptyObject(this.options.fields) && !this.options.fields[field_name]) continue;
+
 			// Make sure widget is created, and has the needed function
 			if(!this.widgets[field_name] || !this.widgets[field_name].set_value) continue;
 			var value = _value[this.prefix + field_name] ? _value[this.prefix + field_name] : null;
