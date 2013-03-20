@@ -139,16 +139,14 @@ var et2_template = et2_DOMWidget.extend({
 
 	/**
 	 * Override parent to support content attribute
+	 * Templates always have ID set, but seldom do we want them to
+	 * create a namespace based on their ID.
 	 */
 	checkCreateNamespace: function() {
 		if(this.content)
 		{
 			var old_id = this.id;
 			this.id = this.content;
-			this._super.apply(this, arguments);
-		}
-		else
-		{
 			this._super.apply(this, arguments);
 		}
 	},
