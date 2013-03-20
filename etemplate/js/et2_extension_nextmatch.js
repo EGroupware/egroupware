@@ -341,6 +341,20 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 	},
 
 	/**
+	 * Gets the selection
+	 * 
+	 * @return Object { ids: [UIDs], inverted: boolean}
+	 */
+	getSelection: function() {
+		var selected = this.controller._selectionMgr.getSelected();
+		if(typeof selected == "object" && selected != null)
+		{
+			return selected;
+		}
+		return {ids:[],inverted:false};
+	},
+
+	/**
 	 * Generates the column caption for the given column widget
 	 */
 	_genColumnCaption: function(_widget) {
