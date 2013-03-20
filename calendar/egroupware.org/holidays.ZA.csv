@@ -1,0 +1,20 @@
+charset	iso-8859-1
+
+regular (year=0):
+ZA	New Year's Day	1	1	0	0	1
+ZA	Human Rights Day	21	3	0	0	1
+ZA	Freedom Day  	27	4	0	0	1
+ZA	Workers Day	1	5	0	0	1
+ZA	Youth Day	16	6	0	0	1
+ZA	National Woman's Day	9	8	0	0	1
+ZA	Heritage Day	24	9	0	0	1
+ZA	Day of Reconciliation	16	12	0	0	1
+ZA	Christmas Day	25	12	0	0	1
+ZA	Day of Goodwill	26	12	0	0	1
+
+2008:
+ZA		24	10	2008	0	1
+
+2013:
+ZA	Good Friday	29	3	2013	0	0
+ZA	Family Day/Easter Monday	1	4	2013	0	0
