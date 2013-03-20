@@ -57,10 +57,10 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		this._super.apply(this, arguments);
 
 		// Create the table body and the table
-                this.tbody = $j(document.createElement("tbody"));
-                this.table = $j(document.createElement("table"))
-                        .addClass("et2_grid");
-                this.table.append(this.tbody);
+		this.tbody = $j(document.createElement("tbody"));
+		this.table = $j(document.createElement("table"))
+			.addClass("et2_grid");
+		this.table.append(this.tbody);
 
 		this.rows = {};
 		this.widgets = {};
@@ -222,31 +222,29 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		this._super.apply(this, arguments);
 
 		// Add in settings that are objects
-		if(!_attrs.customfields)
+
+		// Customized settings for this widget (unlikely)
+		var data = this.getArrayMgr("modifications").getEntry(this.id);
+		// Check for global settings
+		var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~', true);
+		if(global_data)
 		{
-			// Customized settings for this widget (unlikely)
-			var data = this.getArrayMgr("modifications").getEntry(this.id);
-			// Check for global settings
-			var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~', true);
-			if(global_data)
-			{
-				for(var key in data)
-				{
-					// Don't overwrite fields with global values
-					if(global_data[key] && key !== 'fields')
-					{
-						data[key] = jQuery.extend(true, {}, data[key], global_data[key]);
-					}
-				}
-			}
 			for(var key in data)
 			{
-				if(typeof data[key] === 'object' && ! _attrs[key]) _attrs[key] = data[key];
+				// Don't overwrite fields with global values
+				if(global_data[key] && key !== 'fields')
+				{
+					data[key] = jQuery.extend(true, {}, data[key], global_data[key]);
+				}
 			}
-			for(var key in global_data)
-			{
-				if(typeof global_data[key] === 'object' && ! _attrs[key]) _attrs[key] = global_data[key];
-			}
+		}
+		for(var key in data)
+		{
+			_attrs[key] = data[key];
+		}
+		for(var key in global_data)
+		{
+			if(typeof global_data[key] != 'undefined' && ! _attrs[key]) _attrs[key] = global_data[key];
 		}
 
 		if (this.id)
