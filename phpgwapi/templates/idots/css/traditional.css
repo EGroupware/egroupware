@@ -861,4 +861,9 @@ td.lettersearch {
 	border-left: 2px solid black;
 	border-right: 2px solid black;
 }
+/* Empty placeholder */
+.egwGridView_empty {
+	text-align: center;
+	border-bottom: 1px solid silver;
+}
 
