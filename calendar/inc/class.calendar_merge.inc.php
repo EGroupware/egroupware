@@ -577,6 +577,7 @@ class calendar_merge extends bo_merge
 
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
 		foreach(array(
+			'link' => lang('HTML link to the current record'),
 			'links' => lang('Titles of any entries linked to the current record, excluding attached files'),
 			'attachments' => lang('List of files linked to the current record'),
 			'links_attachments' => lang('Links and attached files'),
