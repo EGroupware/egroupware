@@ -868,7 +868,7 @@ abstract class bo_tracking
 	{
 		if (($link = $this->get_config('link',$data,$old)))
 		{
-			if (strpos($link,$this->id_field.'=') === false && isset($data[$this->id_field]))
+			if (!$this->get_config('link_no_id', $data) && strpos($link,$this->id_field.'=') === false && isset($data[$this->id_field]))
 			{
 				$link .= strpos($link,'?') === false ? '?' : '&';
 				$link .= $this->id_field.'='.$data[$this->id_field];
