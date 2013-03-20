@@ -107,6 +107,44 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 	}
 
     /**
+     * MKCOL method handler
+     *
+     * Reimplemented to NOT use dirname/basename, which has problems with utf-8 chars
+     *
+     * @param  array  general parameter passing array
+     * @return bool   true on success
+     */
+    function MKCOL($options)
+    {
+        $path   = $this->_unslashify($this->base .$options["path"]);
+        $parent = egw_vfs::dirname($path);
+        $name   = egw_vfs::basename($path);
+
+        if (!file_exists($parent)) {
+            return "409 Conflict";
+        }
+
+        if (!is_dir($parent)) {
+            return "403 Forbidden";
+        }
+
+        if ( file_exists($parent."/".$name) ) {
+            return "405 Method not allowed";
+        }
+
+        if (!empty($this->_SERVER["CONTENT_LENGTH"])) { // no body parsing yet
+            return "415 Unsupported media type";
+        }
+
+        $stat = mkdir($parent."/".$name, 0777);
+        if (!$stat) {
+            return "403 Forbidden";
+        }
+
+        return ("201 Created");
+    }
+
+	/**
      * COPY method handler
      *
      * @param  array  general parameter passing array
@@ -296,10 +334,11 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 				$info['props'][] = HTTP_WebDAV_Server::mkprop	('getcontenttype', 'application/x-non-readable');
 			}
 			$info['props'][] = HTTP_WebDAV_Server::mkprop	('getcontentlength', filesize($fspath));
-			// for files generate etag from inode (sqlfs: fs_id), modification time and size
-			$stat = stat($fspath);
-			$info['props'][] = HTTP_WebDAV_Server::mkprop('getetag', '"'.$stat['ino'].':'.$stat['mtime'].':'.$stat['size'].'"');
 		}
+		// generate etag from inode (sqlfs: fs_id), modification time and size
+		$stat = stat($fspath);
+		$info['props'][] = HTTP_WebDAV_Server::mkprop('getetag', '"'.$stat['ino'].':'.$stat['mtime'].':'.$stat['size'].'"');
+
 /*		returning the supportedlock property causes Windows DAV provider and Konqueror to not longer work
 		ToDo: return it only if explicitly requested ($options['props'])
 		// supportedlock property
