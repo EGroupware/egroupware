@@ -49,6 +49,9 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		// Copy the egw reference
 		this.egw = _egw;
 
+		// Keep a reference to the widget
+		this._widget = _widget;
+
 		// Initialize the action and the object manager
 		if (!_objectManager)
 		{
@@ -63,9 +66,6 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		// Call the parent et2_dataview_controller constructor
 		this._super(_parentController, _grid, this, this._rowCallback,
 			this._linkCallback, this, this._objectManager);
-
-		// Keep a reference to the widget
-		this._widget = _widget;
 
 		// Copy the given parameters
 		this._actionLinks = _actionLinks
@@ -123,6 +123,13 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		var gam = egw_getActionManager(this.egw.appName);
 		this._actionManager = gam.addAction("actionManager", uid);
 		this._actionManager.updateActions(_actions);
+		var data = this._actionManager.data;
+		if (data == 'undefined' || !data)
+		{
+			data = {};
+		}
+		data.nextmatch = this._widget;
+		this._actionManager.set_data(data);
 
 		// Set the default execute handler
 		var self = this;

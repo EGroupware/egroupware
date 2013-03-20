@@ -194,7 +194,7 @@ etemplate2.prototype.load = function(_name, _url, _data)
 	var frag = document.createDocumentFragment();
 
 	// Asynchronously load the XET file (code below is executed ahead of the
-	// code in the callback function)
+	// code in the loadXMLFromURL function)
 	et2_loadXMLFromURL(_url, function(_xmldoc) {
 
 		// Scan for templates and store them

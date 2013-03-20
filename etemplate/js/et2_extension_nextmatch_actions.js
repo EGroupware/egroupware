@@ -25,6 +25,27 @@ function nm_action(_action, _senders, _target, _ids)
 	if (typeof _action.data == 'undefined' || !_action.data) _action.data = {};
 	if (typeof _action.data.nm_action == 'undefined') _action.data.nm_action = 'submit';
 
+	if(typeof _ids == 'undefined')
+	{
+		// Get IDs from nextmatch - nextmatch is in the top of the action tree
+		// @see et2_extension_nextmatch_controller._initActions()
+		var nm = null;
+		var action = _action
+		while(nm == null && action != null)
+		{
+			if(action.data != null && action.data.nextmatch)
+			{
+				nm = action.data.nextmatch;
+			}
+			action = action.parent
+		}
+		if(nm)
+		{
+			_ids = nm.getSelection();
+			_action.data.nextmatch = nm;
+		}
+	}
+
 	// ----------------------
 	// TODO: Parse the _ids.inverted flag!
 	// ----------------------
