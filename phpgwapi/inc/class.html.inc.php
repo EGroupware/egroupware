@@ -559,6 +559,7 @@ class html
 	window.CKEDITOR_BASEPATH="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor/";
 	CKEDITOR.replace("'.$_name.'", '.egw_ckeditor_config::get_ckeditor_config($_mode,
 		$pxheight, $expanded, $_start_path).');
+	CKEDITOR.addCss("body { margin: 5px; }");
 	CKEDITOR.instances["'.$_name.'"].on(
 		"instanceReady",
 		function (ev)
