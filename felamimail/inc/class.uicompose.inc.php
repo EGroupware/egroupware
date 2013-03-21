@@ -255,6 +255,46 @@
 				}
 				$_REQUEST['preset']['file'][] = "vfs://default/apps/addressbook/".$GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')."/.entry";
 			}
+			// an app passed the request for fetching and mailing an entry
+			if (isset($_REQUEST['app']) && isset($_REQUEST['method']) && isset($_REQUEST['id']))
+			{
+				$app = $_REQUEST['app'];
+				$mt = $_REQUEST['method'];
+				$id = $_REQUEST['id'];
+				// passed method MUST be registered
+				$method = egw_link::get_registry($app,$mt);
+				//error_log(__METHOD__.__LINE__.array2string($method));
+				if ($method)
+				{
+					$res = ExecMethod($method,array($id,'html'));
+					//_debug_array($res);
+					if (!empty($res))
+					{
+						$insertSigOnTop = 'below';
+						if (isset($res['attachments']) && is_array($res['attachments']))
+						{
+							foreach($res['attachments'] as $f)
+							{
+								$_REQUEST['preset']['file'][] = $f;
+							}
+						}
+						$sessionData['subject'] = lang($app).' #'.$res['id'].': ';
+						foreach(array('subject','body','mimetype') as $name) {
+							$sName = $name;
+							if ($name=='mimetype')
+							{
+								$sName = 'mimeType';
+								$sessionData[$sName] = $res[$name];
+							}
+							else
+							{
+								if ($res[$name]) $sessionData[$sName] .= (strlen($sessionData[$sName])>0 ? ' ':'') .$res[$name];
+							}
+						}
+					}
+				}
+			}
+			// handle preset info/values
 			if (is_array($_REQUEST['preset']))
 			{
 				//_debug_array($_REQUEST);
@@ -293,6 +333,7 @@
 						{
 							$insertSigOnTop = 'below';
 						}
+						//error_log(__METHOD__.__LINE__.$path.'->'.array2string(parse_url($path,PHP_URL_SCHEME == 'vfs')));
 						if (parse_url($path,PHP_URL_SCHEME == 'vfs'))
 						{
 							$type = egw_vfs::mime_content_type($path);
@@ -331,21 +372,22 @@
 						$this->bocompose->addAttachment($formData,($alwaysAttachVCardAtCompose?true:false));
 					}
 					$remember = array();
-					if (isset($_REQUEST['preset']['mailto']))
+					if (isset($_REQUEST['preset']['mailto']) || (isset($_REQUEST['app']) && isset($_REQUEST['method']) && isset($_REQUEST['id'])))
 					{
 						foreach(array_keys($sessionData) as $k)
 						{
-							if (in_array($k,array('to','cc','bcc','subject','body'))) $remember[$k] = $sessionData[$k];
+							if (in_array($k,array('to','cc','bcc','subject','body','mimeType'))) $remember[$k] = $sessionData[$k];
 						}
 					}
 					$sessionData = $this->bocompose->getSessionData();
-					$sessionData = array_merge($sessionData,$remember);
+					if(!empty($remember)) $sessionData = array_merge($sessionData,$remember);
 				}
 				foreach(array('to','cc','bcc','subject','body') as $name)
 				{
 					if ($_REQUEST['preset'][$name]) $sessionData[$name] = $_REQUEST['preset'][$name];
 				}
 			}
+			//_debug_array($sessionData);
 			// is the to address set already?
 			if (!empty($_REQUEST['send_to']))
 			{

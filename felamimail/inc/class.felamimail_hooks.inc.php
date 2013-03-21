@@ -67,7 +67,7 @@ class felamimail_hooks
 	}
 
 	/**
-     * Hook called by link-class to include calendar in the appregistry of the linkage
+     * Hook called by link-class to include felamimail in the appregistry of the linkage
      *
      * @param array/string $location location and other parameters (not used)
      * @return array with method-names
