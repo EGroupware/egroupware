@@ -309,14 +309,12 @@ class egw_ckeditor_config
 			case 'extended': default:
 				$config['toolbar'][] = array('Bold','Italic','Underline');
 				$config['toolbar'][] = array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock');
-				if ($mode == 'simple-withimage') $config['toolbar'][] = array('BulletedList','NumberedList','Image'/*,'Smiley'*/,'Outdent','Indent','Undo','Redo');
-				else $config['toolbar'][] = $config['toolbar'][] = array('BulletedList','NumberedList'/*,'Smiley'*/,'Outdent','Indent','Undo','Redo');
+				$config['toolbar'][] = array('BulletedList','NumberedList'/*,'Smiley'*/,'Outdent','Indent','Undo','Redo');
 				$config['toolbar'][] = array('Cut','Copy','Paste','PasteText','PasteFromWord','-','Print');
 
 				if ($mode == 'extended')
 				{
-					$config['toolbar'][] = array('Link','Unlink','Anchor');
-					$config['toolbar'][] = array('Find', 'Replace');
+					$config['toolbar'][] = array('Image','Link','Unlink','Anchor');
 					if ($spellchecker_button)
 						$config['toolbar'][] = array('Maximize', $spellchecker_button);//, 'Image', 'Table');
 					else
@@ -337,6 +335,7 @@ class egw_ckeditor_config
 
 				$config['toolbar'][] = '/';
 				$config['toolbar'][] = array('Find','Replace','-','SelectAll','RemoveFormat');
+				if ($mode == 'simple-withimage') $config['toolbar'][] = array('Image','Link','Unlink');
 				$config['toolbar'][] = array('Format','Font','FontSize');
 				$config['toolbar'][] = array('TextColor','BGColor');
 				$config['toolbar'][] = array('ShowBlocks','-','About');
