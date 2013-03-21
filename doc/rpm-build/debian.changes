@@ -1,3 +1,43 @@
+egroupware-epl (11.1.20130321-1) hardy; urgency=low
+
+  * SiteMgr: Module to set a from global value different Expries and Cache-Control header for all pages it is contained in
+  * Calendar/CalDAV: fixed iCal parser calculating recurrence-enddate from COUNT parameter, taking into account BY* rules (RRULE:FREQ=WEEKLY;COUNT=4;BYDAY=Mo,Mi runs just 2 weeks!)
+  * Tracker: fix bug regardig nothing known about column mult_queue
+  * eMail: increase fontsize by 10% for compose in plain text (textarea)
+  * eTemplate/Addressbook: switch off client side email address validation as browser rule set seems to be more restrictive than rfc822 rules suggests; implement better rfc822 compliant email address validation
+  * Calendar/CalDAV: fixed iCal import of recurring events to convert (not understood) yearly byday to monthly byday with interval 12 and daily byday to weekly byday, also fixed of by one error in enddate
+  * Addressbook: fixed not working call auf addressbook_ui::(view|edit) with contact_id being a uid
+  * ImportExport: do NOT complain about wrong charset, if text contains only standard ascii chars
+  * eMail/egw-pear: fixed problem with unexpected (but valid) multiline response for STATUS commands
+  * eMail/api: attempt to fix the focus on body issue with FF; thanks to CKEditor support
+  * ProjectManager: fixed caching of ACL check, causing budget in project list not displayed, if first row contains no project with budget rights for current user
+  * Timesheet: fixed SQL error when deleting a user and transfering his data to an other user
+  * CardDAV/Addressbook: fixed SQL error "Unknown column list_modified" if preference "Distributionlists as groups" is checked and client does a sync-collection-report
+  * *eMail: work around losing focus for IE10, on message view, when on single BrowserInstance
+  * CalDAV/InfoLog: fixed SQL error if client has multiple identical X-properties, eg. alarms
+  * eMail: fix for CKEditor fragments shown on reply for IE9+10; focus to body handling is completely moved to html::fckeditor
+  * eMail/IMAP: fix possible missing RESPONSE Code, but available PARSED response in getSummary
+  * eMail: fix missing trashFolder short display name, when refreshing folder on selecting trash folder itself
+  * eMail: enforce signature description if none given, on personal signatures
+  * eMail: style stuff to preserve style of buttons used in eMail which changed after loading et2 Styles on top for framework
+  * eMail: work around a IE10 bug/feature, which is eating away cr/lf if preceded by space in pre sections
+  * ProjectManager: fixed Catchable Fatal Error project list, if you have exactly one template project
+  * Calendar/CalDAV: fixed recuring event disapeared from device, if a rejected recurrence existed and a change from an other user caused a reload (412 Precondition Failed)
+  * Calendar/ImportExport: fixed out-of-memory condition while importing large iCal files
+  * CalDAV: preference to overwrite default on how many days to sync into past or future
+  * API/CKEditor: switch to new major release 4 of CKEditor to solve problems experienced with IE10
+  * eMail: fix bug regarding wrong identity used when changing identity on send
+  * API: enable browsers native spellchecker as default for HTML Editor, if e.g.: aspell fails - to use browsers native spellchecker, you have to hold CMD/CTRL button on rightclick to access the browsers spell correction options
+  * Projectmanager: showing again global categories and their color from all apps, do no remove datasource category when element get stored and no category is selected
+  * Filemanager: fixing problem creating new directory with cyrilic name, also generating etag for directories as required by ownCloud
+  * FMail: when toggeling between html and plain-text in compose, do NOT convert to iso-8859-1, to fix problems with non-western charsets eg. cyrillic
+  * eMail: provide capability to fetch other apps entrys (subject, body, attachments) via registered method, and open compose with the given content
+  * API/CKEditor: allow more space for html-editable area (by setting smaller margin)
+  * Knowledgebase: switch mailing of articles to EGroupware mail application
+  * Filemanager/Notifications: fixed not working link in notifications / subscribtions, if path contains eg. a space
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 21 Mar 2013 17:20:04 +0100
+
 egroupware-epl (11.1.20130226-1) hardy; urgency=low
 
   * Calendar: create index on egw_cal.cal_reference and other fixes on new etag implementation
