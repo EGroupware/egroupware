@@ -80,6 +80,8 @@
  *          	),
  *          	// further mime types supported ...
  *          ),
+ *			'fetch'	=>	'app.class.method',			// method to return entry data for a given id. the method called should support id, and expected mime-type
+ *													// basically you should return something like array(id, title, mimetype, body, linked-files)
  *			'additional' => array(					// allow one app to register sub-types,
  *				'app-sub' => array(					// different from 'types' approach above
  *					// every value defined above
