@@ -351,7 +351,7 @@
 							$formData = array(
 								'name' => $name,
 								'type' => $type,
-								'file' => $path,
+								'file' => urldecode($path),
 								'size' => filesize(urldecode($path)),
 							);
 							if ($formData['type'] == egw_vfs::DIR_MIME_TYPE) continue;	// ignore directories
