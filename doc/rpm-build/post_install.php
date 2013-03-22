@@ -241,7 +241,8 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 	// check for localhost if database server is started and start it (permanent) if not
 	if ($config['db_host'] == 'localhost' && $config['start_db'])
 	{
-		if (exec($config['start_db'].' status',$dummy,$ret) && $ret)
+		exec($config['start_db'].' status',$dummy,$ret);
+		if ($ret)
 		{
 			system($config['start_db'].' start');
 			system($config['autostart_db']);
@@ -325,7 +326,8 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 	// check if webserver is started and start it (permanent) if not
 	if ($config['start_webserver'])
 	{
-		if (exec($config['start_webserver'].' status',$dummy,$ret) && $ret)
+		exec($config['start_webserver'].' status',$dummy,$ret);
+		if ($ret)
 		{
 			system($config['start_webserver'].' start');
 			system($config['autostart_webserver']);
