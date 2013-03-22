@@ -1,3 +1,46 @@
+egroupware (1.8.004.20130322) hardy; urgency=low
+
+  * CalDAV/CardDAV: fix not working logging of errors into traffic log
+  * Knowledgebase: fixed filemanger only showed first N entries
+  * Notifications: activate links when creating a html mail from a plain-text one
+  * eTemplate/all apps: fixed not working display of floating point values in input fields for Chrome or Safarie (browsers supporting html5 input type="number")
+  * eMail: change default filter to ALL UNDELETED
+  * Calendar: ignore (unchangeable) status of groups for setting line-type of events: all users of a group-invitation accepted --> solid line for all accepted
+  * Calendar: sort participants by there name
+  * InfoLog: switching to a group-type resets access to "public" and disables access in edit
+  * Calendar: notify responsible for a resource "participating" in a private event only with privacy-cleared details
+  * Tracker: fixed group selected as responsible in list results in last member selected after next login (same is true for category with subcategories)
+  * eMail: fix problem with failedattachment from vfs
+  * Calendar: added missing holidays for CR (Costa Rica) provided by Rafael Chacon
+  * API: fix fatal error deleting user (LDAP), as reported on list (backport from Trunk)
+  * eMail: support multipart/mixed mails with html parts to display (apple mail does that kind of emails)
+  * CalDAV: backport from Trunk: allow organizer (edit-rights) update with If-Schedule-Tag-Match eg. from iOS or OS X iCal when event series was changed with "this in future" semantics and fix for not working status change of participants
+  * All apps: merged missing translations from other apps or branches
+  * Admin/Setup: fixed restore always converted longtext columns to text and therefore truncating them to 64k on MySQL, also fixed backup to report them correctly in backup of schema
+  * Calendar: added CR moving Holidays for years 2019 to 2023 (provided by R.Chacon)
+  * CardDAV: fixed wrong privileges for accounts addressbook, causing clients to report it read-only even for admins
+  * CardDAV/Addressbook: do NOT allow to delete accounts via CardDAV, was never intended, but as it is allowed in addressbook, it was possible via CardDAV
+  * CalDAV: remove "bind" privilege (create new events right) on other users or groups calendar, if invite requires special ACL grant, which current user does NOT have
+  * CalDAV: fixed accepting event removed it from calendar, because email address of a deleted account was prefered over regular account
+  * Calendar/CalDAV: fixed wrong time in notification mails caused by updates via CalDAV (not web interface), if user-timezone differs from server
+  * Filemanager: removing extended ACL for groups was not immediatly reflected in rights of current user, had to log out and in again
+  * Preferences: if user changed password, update password in session correct, so eg. EMail using that password keeps working
+  * Calendar: copying of events now preservs quantity of resources
+  * CalDAV/CardDAV: removed unnecessary (double) etag generation and improved calendar etag generation for recurring events
+  * Calendar/CalDAV: fixed iCal parser calculating recurrence-enddate from COUNT parameter, taking into account BY* rules (RRULE:FREQ=WEEKLY;COUNT=4;BYDAY=Mo,Mi runs just 2 weeks!)
+  * Calendar/CalDAV: fixed iCal import of recurring events to convert (not understood) yearly byday to monthly byday with interval 12 and daily byday to weekly byday, also fixed of by one error in enddate
+  * Addressbook: fixed not working call auf addressbook_ui::(view|edit) with contact_id being a uid
+  * eMail/egw-pear: fixed problem with unexpected (but valid) multiline response for STATUS commands
+  * Timesheet: fixed SQL error when deleting a user and transfering his data to an other user
+  * CalDAV/InfoLog: fixed SQL error if client has multiple identical X-properties, eg. alarms
+  * eMail/IMAP: fix possible missing RESPONSE Code, but available PARSED response in getSummary
+  * eMail: enforce signature description if none given, on personal signatures
+  * Calendar/CalDAV: fixed recuring event disapeared from device, if a rejected recurrence existed and a change from an other user caused a reload (412 Precondition Failed)
+  * Filemanager: fixing problem creating new directory with cyrilic name, also generating etag for directories as required by ownCloud
+  * Setup: fixed not working install on openSUSE 12.2/3, because last line of output from "service (mysql|apache2) status" is empty
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 22 Mar 2013 12:45:54 +0100
+
 egroupware (1.8.004.20121024) hardy; urgency=low
 
   * eMail: fix problem when forwarding inline some mails containing winmail.dat attachments (HelpDesk Ticket 3810) (all original attachments are probably part of the winmail.dat, so we resolve the data/attachments contained in winmail.dat)
