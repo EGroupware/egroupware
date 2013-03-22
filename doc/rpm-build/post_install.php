@@ -60,6 +60,7 @@ $config = array(
 	'postfix'       => '',	// see setup-cli.php --help config
 	'cyrus'         => '',
 	'sieve'         => '',
+	'install-update-app' => '',	// install or update a single (non-default) app
 	'webserver_user'=> 'apache',	// required to fix permissions
 );
 
@@ -91,8 +92,9 @@ function set_distro_defaults($distro=null)
 	switch (($config['distro'] = $distro))
 	{
 		case 'suse':
-			$config['php'] = '/usr/bin/php5';
-			$config['pear'] = '/usr/bin/pear5';
+			// openSUSE 12.1+ no longer uses php5
+			if (file_exists('/usr/bin/php5')) $config['php'] = '/usr/bin/php5';
+			if (file_exists('/usr/bin/pear5')) $config['pear'] = '/usr/bin/pear5';
 			$config['start_db'] = '/sbin/service mysql';
 			$config['autostart_db'] = '/sbin/chkconfig --level 345 mysql on';
 			$config['start_webserver'] = '/sbin/service apache2';
@@ -239,7 +241,8 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 	// check for localhost if database server is started and start it (permanent) if not
 	if ($config['db_host'] == 'localhost' && $config['start_db'])
 	{
-		if (exec($config['start_db'].' status',$dummy,$ret) && $ret)
+		exec($config['start_db'].' status',$dummy,$ret);
+		if ($ret)
 		{
 			system($config['start_db'].' start');
 			system($config['autostart_db']);
@@ -323,7 +326,8 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 	// check if webserver is started and start it (permanent) if not
 	if ($config['start_webserver'])
 	{
-		if (exec($config['start_webserver'].' status',$dummy,$ret) && $ret)
+		exec($config['start_webserver'].' status',$dummy,$ret);
+		if ($ret)
 		{
 			system($config['start_webserver'].' start');
 			system($config['autostart_webserver']);
@@ -368,7 +372,7 @@ else
 	register_shutdown_function('patch_header',$config['header'],$config['config_user'],$old_password);
 
 	// update egroupware
-	$setup_update = $setup_cli.' --update '.escapeshellarg('all,'.$config['config_user'].','.$config['config_passwd']);
+	$setup_update = $setup_cli.' --update '.escapeshellarg('all,'.$config['config_user'].','.$config['config_passwd'].',,'.$config['install-update-app']);
 	$ret = run_cmd($setup_update,$output,array(4,15));
 
 	switch($ret)
@@ -391,6 +395,10 @@ else
 	check_install_pear_packages();
 	// fix egw_cache evtl. created by root, stoping webserver from accessing it
 	fix_perms();
+
+	// restart running Apache, to force APC to update changed sources and/or Apache configuration
+	$output = array();
+	run_cmd($config['start_webserver'].' status && '.$config['start_webserver'].' restart', $output, true);
 
 	exit($ret);
 }
@@ -425,7 +433,7 @@ function patch_header($filename,&$user,$password)
  *
  * @param string $cmd
  * @param array &$output=null $output of command
- * @param int|array $no_bailout=null exit code(s) to NOT bail out
+ * @param int|array|true $no_bailout=null exit code(s) to NOT bail out, or true to never bail out
  * @return int exit code of $cmd
  */
 function run_cmd($cmd,array &$output=null,$no_bailout=null)
@@ -442,7 +450,7 @@ function run_cmd($cmd,array &$output=null,$no_bailout=null)
 		$output[] = $cmd;
 		exec($cmd,$output,$ret);
 	}
-	if ($ret && !in_array($ret,(array)$no_bailout))
+	if ($ret && $no_bailout !== true && !in_array($ret,(array)$no_bailout))
 	{
 		bail_out($ret,$verbose?null:$output);
 	}
