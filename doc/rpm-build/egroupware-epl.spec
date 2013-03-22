@@ -1,5 +1,5 @@
 Name: egroupware-epl
-Version: 11.1.20110906
+Version: 11.1.20130321
 Release:
 Summary: EGroupware is a web-based groupware suite written in php
 Group: Web/Database
@@ -12,16 +12,33 @@ Prefix: /usr/share
 %define egwdatadir /var/lib/egroupware
 %define egw_packagename eGroupware
 
+# Define opensuse_version to tell opensuse 11.1 (1110) from sles11 (1110) and suse 10.1 from sles 10
+%if "0%{?suse_version:1}%{!?sles_version:0}" == "010"
+    %define opensuse_version %{suse_version}
+%endif
+
 %if 0%{?suse_version}
-	%define php php5
+    %if 0%{?opensuse_version} < 1200
+        %define php php5
+    %else
+        # opensuse 12+ uses /usr/bin/php again
+        %define php php
+    %endif
+
+    %if 0%{?sles_version} < 1210
+        %define php php
+    %endif
+
 	%define httpdconfd /etc/apache2/conf.d
 	%define distribution SUSE Linux %{?suse_version}
-%if 0%{?sles_version}
+
+    %if 0%{?sles_version}
         # sle 10 and 11 does NOT contain libtidy
-	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-openssl php5-zip php5-ctype php5-sqlite
-%else
-	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-openssl php5-zip php5-ctype php5-sqlite php5-tidy
-%endif
+    	%define extra_requires apache2 mod_php_any php_any_db php-dom php-bz2 php-openssl php-zip php-ctype php-sqlite
+    %else
+    	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-openssl php5-zip php5-ctype php5-sqlite php5-tidy
+    %endif
+
 	%define cron cron
 	%define apache_user wwwrun
 	%define apache_group www
@@ -34,6 +51,7 @@ Prefix: /usr/share
 	%define apache_group apache
 	%define pear_dir \\/usr\\/share\\/pear
 %endif
+
 %define install_log /root/%{name}-install.log
 %define post_install /usr/bin/%{php} %{egwdir}/doc/rpm-build/post_install.php --source_dir %{egwdir} --data_dir %{egwdatadir}
 %if 0%{?fedora_version}
@@ -66,13 +84,13 @@ Source0: %{name}-%{version}.tar.gz
 Source1: %{name}-egw-pear-%{version}.tar.bz2
 Source2: %{name}-stylite-%{version}.tar.bz2
 Source3: %{name}-eventmgr-%{version}.tar.bz2
-#Source4: %{name}-phpfreechat-%{version}.tar.bz2
+Source4: %{name}-esyncpro-%{version}.tar.bz2
 Source5: %{name}-jdots-%{version}.tar.bz2
 Source6: phpfreechat_data_public.tar.gz
-Source7: debian.changes
 Source8: %{name}-rpmlintrc
 #Source9: %{name}-gallery-%{version}.tar.bz2
 Patch0: class.uiasyncservice.inc.php.patch
+#Patch1: revert-php-path-suse.patch
 #Patch1: eventmgr-cds.diff
 #Patch2: mandriva_upload_tmp_dir.patch
 BuildRoot: %{_tmppath}/%{name}-buildroot
@@ -143,7 +161,20 @@ Obsoletes: %{egw_packagename}-syncml
 Obsoletes: %{egw_packagename}-timesheet
 Obsoletes: %{egw_packagename}-tracker
 Obsoletes: %{egw_packagename}-wiki
+
 %post
+# Check binary paths and create links for opensuse/sles
+# create symlink for suse to get scripts with /usr/bin/php working
+%if 0%{?suse_version}
+    if [ ! -f /usr/bin/php -a -x /usr/bin/php5 ]; then \
+        echo "Installing php -> php5 alternative"; \
+        /usr/sbin/update-alternatives --install /usr/bin/php php /usr/bin/php5 99; \
+    fi
+    if [ ! -f /usr/bin/pear -a -x /usr/bin/pear5 ]; then \
+        echo "Installing pear -> pear5 alternative"; \
+        /usr/sbin/update-alternatives --install /usr/bin/pear pear /usr/bin/pear5 99; \
+    fi
+%endif
 %if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
 	chcon -R -u user_u -r object_r -t httpd_sys_content_t %{egwdatadir}
 	setsebool -P httpd_can_network_connect=1
@@ -173,11 +204,14 @@ Further contributed applications are available as separate packages.
 %package core
 Summary: The EGroupware core
 Group: Web/Database
-Requires: %{php} >= 5.2.1
+Requires: %{php} >= 5.3.2
 Requires: %{php}-mbstring %{php}-gd %{php}-mcrypt %{php}-pear %{php}-posix %{extra_requires} %{cron} zip %{php}-json %{php}-xsl
 Provides: egw-core %{version}
 Provides: egw-etemplate %{version}
 Provides: egw-addressbook %{version}
+%if 0%{?suse_version}
+Provides: /usr/bin/php
+%endif
 Obsoletes: %{egw_packagename}-core
 Obsoletes: %{egw_packagename}-addressbook
 %description core
@@ -417,6 +451,14 @@ Group: Web/Database
 AutoReqProv: no
 Requires: egw-core >= %{version},
 Requires: jpgraph-epl
+
+%if "0%{?suse_version:1}%{!?sles_version:0}" == "010"
+# suse_version is set, sles_version is not -> opensuse
+Requires: fetchmsttfonts
+%else
+Requires: msttcorefonts
+%endif
+
 Obsoletes: %{egw_packagename}-projectmanager
 %description projectmanager
 The projectmanager is EGroupware's new project management application.
@@ -530,12 +572,30 @@ Requires: egw-core >= %{version}
 The package contains Stylite's EventMgr (Production Schedule)
 for Thomson-Reuters.
 
+%package esyncpro
+Version: %{version}
+Summary: Stylite eSync Provisioning
+License: proprietary
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core >= %{version}, %{name}-esync >= %{version}
+%description esyncpro
+Stylite's eSync Provisioning app allows to edit and assign 
+policies to devices and keeps a central list of syncing devices. 
+It also allows to remote wipe or view sync logs of all devices.
+
+%post esyncpro
+# update/install esyncpro
+%{post_install} --install-update-app esyncpro 2>&1 | tee -a %{install_log}
+
 %prep
+echo "Detected php: %{php}"
+echo "post_install: %{post_install}"
 %setup0 -c -n %{egwdirname}
 %setup1 -T -D -a 1 -n %{egwdirname}
 %setup2 -T -D -a 2 -n %{egwdirname}
 %setup3 -T -D -a 3 -n %{egwdirname}
-#%setup4 -T -D -a 4 -n %{egwdirname}
+%setup4 -T -D -a 4 -n %{egwdirname}
 %setup5 -T -D -a 5 -n %{egwdirname}
 %setup6 -T -D -a 6 -n %{egwdirname}
 #%setup9 -T -D -a 9 -n %{egwdirname}
@@ -558,15 +618,6 @@ cp egroupware/doc/rpm-build/header.inc.php $RPM_BUILD_ROOT%{egwdatadir}
 cp -aRf egroupware/* $RPM_BUILD_ROOT%{egwdir}
 cd %{buildroot}%{egwdir}
 ln -s ../../..%{egwdatadir}/header.inc.php
-# create symlink for suse to get scripts with /usr/bin/php working
-%if 0%{?suse_version}
-	#/usr/sbin/update-alternatives --install /usr/bin/php php /usr/bin/php5 99
-	mkdir %{buildroot}/usr/bin
-	cd %{buildroot}/usr/bin
-	ln -s php5 php
-%endif
-# copy current changelog to doc/rpm-build
-install -m 444 %{SOURCE7} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
@@ -588,9 +639,11 @@ install -m 444 %{SOURCE7} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
 %{egwdir}/login.php
 %{egwdir}/logout.php
 %{egwdir}/redirect.php
+%{egwdir}/remote.php
 %{egwdir}/rpc.php
 %{egwdir}/set_box.php
 %{egwdir}/soap.php
+%{egwdir}/status.php
 %{egwdir}/svn-helper.php
 %{egwdir}/xmlrpc.php
 %{egwdir}/groupdav.php
@@ -600,6 +653,7 @@ install -m 444 %{SOURCE7} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
 %{egwdir}/admin
 %{egwdir}/doc
 %{egwdir}/etemplate
+%{egwdir}/files
 %{egwdir}/home
 %{egwdir}/phpgwapi
 %{egwdir}/preferences
@@ -609,8 +663,6 @@ install -m 444 %{SOURCE7} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
 %if 0%{?suse_version}
 	%dir %attr(0755,root,root) /etc/apache2
 	%dir %attr(0755,root,root) %{httpdconfd}
-	# symlink for suse to get scripts with /usr/bin/php working
-	/usr/bin/php
 %endif
 %dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}
 %dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}/default
@@ -631,7 +683,11 @@ install -m 444 %{SOURCE7} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
 %defattr(-,root,root)
 %{egwdir}/activesync
 
-%files calendar
+%files esyncpro
+%defattr(-,root,root)
+%{egwdir}/esyncpro
+
+%%files calendar
 %defattr(-,root,root)
 %{egwdir}/calendar
 
