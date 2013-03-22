@@ -757,7 +757,7 @@
 			}
 			else
 			{
-				$sessionData['body'] = $font_span.$sessionData['body'];
+				$sessionData['body'] = ($font_span?$font_span:'&nbsp;').$sessionData['body'];
 			}
 			//error_log(__METHOD__.__LINE__.$sessionData['body']);
 			// prepare body
