@@ -11,8 +11,21 @@ Prefix: /usr/share
 %define egwdir %{prefix}/egroupware
 %define egwdatadir /var/lib/egroupware
 
+# Define opensuse_version to tell opensuse 11.1 (1110) from sles11 (1110) and suse 10.1 from sles 10
+%if "0%{?suse_version:1}%{!?sles_version:0}" == "010"
+	%define opensuse_version %{suse_version}
+%endif
+
 %if 0%{?suse_version}
-	%define php php5
+	%if 0%{?opensuse_version} < 1200
+		%define php php5
+	%else
+		# opensuse 12+ uses /usr/bin/php again
+		%define php php
+	%endif
+	%if 0%{?sles_version} < 1210
+		%define php php
+	%endif
 	%define httpdconfd /etc/apache2/conf.d
 	%define distribution SUSE Linux %{?suse_version}
 	%define extra_requires apache2 apache2-mod_php5 php_any_db php5-dom php5-bz2 php5-openssl php5-zip php5-ctype php5-sqlite
@@ -61,7 +74,6 @@ Source1: %{name}-egw-pear-%{version}.tar.bz2
 Source2: %{name}-phpfreechat-%{version}.tar.bz2
 Source3: %{name}-gallery-%{version}.tar.bz2
 Source4: phpfreechat_data_public.tar.gz
-Source5: debian.changes
 Source6: %{name}-rpmlintrc
 Patch0: class.uiasyncservice.inc.php.patch
 BuildRoot: %{_tmppath}/%{name}-buildroot
@@ -100,6 +112,18 @@ Requires: %{name}-timesheet       >= %{version}
 Requires: %{name}-tracker         >= %{version}
 Requires: %{name}-wiki            >= %{version}
 %post
+# Check binary paths and create links for opensuse/sles
+# create symlink for suse to get scripts with /usr/bin/php working
+%if 0%{?suse_version}
+	if [ ! -f /usr/bin/php -a -x /usr/bin/php5 ]; then \
+		echo "Installing php -> php5 alternative"; \
+		/usr/sbin/update-alternatives --install /usr/bin/php php /usr/bin/php5 99; \
+	fi
+	if [ ! -f /usr/bin/pear -a -x /usr/bin/pear5 ]; then \
+		echo "Installing pear -> pear5 alternative"; \
+		/usr/sbin/update-alternatives --install /usr/bin/pear pear /usr/bin/pear5 99; \
+	fi
+%endif
 %if 0%{?rhel_version} || 0%{?fedora_version} || 0%{?centos_version}
 	chcon -R -u user_u -r object_r -t httpd_sys_content_t %{egwdatadir}
 	setsebool -P httpd_can_network_connect=1
@@ -131,6 +155,9 @@ Provides: egw-core %{version}
 Provides: egw-etemplate %{version}
 Provides: egw-addressbook %{version}
 Obsoletes: %{name}-addressbook
+%if 0%{?suse_version}
+Provides: /usr/bin/php
+%endif
 %description core
 This package provides the EGroupware core applications
 (API, admin, etemplate, preferences and setup) plus addressbook.
@@ -423,15 +450,6 @@ cp egroupware/doc/rpm-build/header.inc.php $RPM_BUILD_ROOT%{egwdatadir}
 cp -aRf egroupware/* $RPM_BUILD_ROOT%{egwdir}
 cd %{buildroot}%{egwdir}
 ln -s ../../..%{egwdatadir}/header.inc.php
-# create symlink for suse to get scripts with /usr/bin/php working
-%if 0%{?suse_version}
-	#/usr/sbin/update-alternatives --install /usr/bin/php php /usr/bin/php5 99
-	mkdir %{buildroot}/usr/bin
-	cd %{buildroot}/usr/bin
-	ln -s php5 php
-%endif
-# copy current changelog to doc/rpm-build
-install -m 444 %{SOURCE5} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
@@ -476,8 +494,6 @@ install -m 444 %{SOURCE5} $RPM_BUILD_ROOT%{egwdir}/doc/rpm-build
 %if 0%{?suse_version}
 	%dir %attr(0755,root,root) /etc/apache2
 	%dir %attr(0755,root,root) %{httpdconfd}
-	# symlink for suse to get scripts with /usr/bin/php working
-	/usr/bin/php
 %endif
 %dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}
 %dir %attr(0700,%{apache_user},%{apache_group}) %{egwdatadir}/default
