@@ -648,6 +648,13 @@ abstract class bo_tracking
 	}
 
 	/**
+	 * Cache for notificaton body
+	 *
+	 * Cache is by id, language, date-format and type text/html
+	 */
+	protected $body_cache = array();
+
+	/**
 	 * Sending a notification to the given email-address
 	 *
 	 * Called by track() or externally for sending async notifications
@@ -702,20 +709,20 @@ abstract class bo_tracking
 		egw_time::init();
 
 		// Cache message body to not have to re-generate it every time
-		static $body_cache = array();
 		$lang = translation::$userlang;
 		$date_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] .
 			$GLOBALS['egw_info']['user']['preferences']['common']['timeformat'];
 
 		// Cache text body
-		if(!$body_cache[$lang][$date_format][false])
+		$body_cache =& $this->body_cache[$data[$this->id_field]][$lang][$date_format];
+		if(empty($data[$this->id_field]) || !isset($body_cache['text']))
 		{
-			$body_cache[$lang][$date_format][false] = $this->get_body(false,$data,$old,false,$receiver);
+			$body_cache['text'] = $this->get_body(false,$data,$old,false,$receiver);
 		}
 		// Cache HTML body
-		if(!$body_cache[$lang][$date_format][true])
+		if(empty($data[$this->id_field]) || !isset($body_cache['html']))
 		{
-			$body_cache[$lang][$date_format][true] = $this->get_body(true,$data,$old,false,$receiver);
+			$body_cache['html'] = $this->get_body(true,$data,$old,false,$receiver);
 		}
 
 		// send over notification_app
@@ -725,8 +732,8 @@ abstract class bo_tracking
 			try {
 				$notification = new notifications();
 				$notification->set_receivers(array($receiver));
-				$notification->set_message($body_cache[$lang][$date_format][false]);
-				$notification->set_message($body_cache[$lang][$date_format][true]);
+				$notification->set_message($body_cache['text']);
+				$notification->set_message($body_cache['html']);
 				$notification->set_sender($this->get_sender($data,$old,true,$receiver));
 				$notification->set_subject($this->get_subject($data,$old,$deleted,$receiver));
 				$notification->set_links(array($this->get_notification_link($data,$old,$receiver)));
