@@ -1,3 +1,10 @@
+egroupware-epl (11.1.20130322-1) hardy; urgency=low
+
+  * Setup: fixed not working install on openSUSE 12.2/3, because last line of output from "service (mysql|apache2) status" is empty
+  * API/CKEditor: allow link dialog in simple-with-image feature mode (email)
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 22 Mar 2013 11:38:31 +0100
+
 egroupware-epl (11.1.20130321-1) hardy; urgency=low
 
   * SiteMgr: Module to set a from global value different Expries and Cache-Control header for all pages it is contained in
