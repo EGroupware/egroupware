@@ -666,9 +666,14 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], {
 				for(var i = 0; i < _value.length; i++)
 				{
 					var option = this.optionValues[_value[i]];
-					if(typeof option === "object")
+					if(typeof option === "object" && option != null)
 					{
 						option = option.label;
+					}
+					else if (typeof option == 'undefined')
+					{
+						// Not a valid option
+						continue;
 					}
 					this.span.append("<li>"+option+"</li>");
 				}
