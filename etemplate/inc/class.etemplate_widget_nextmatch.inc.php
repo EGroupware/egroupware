@@ -1029,7 +1029,7 @@ class etemplate_widget_nextmatch_accountfilter extends etemplate_widget_menupopu
 class etemplate_widget_nextmatch_customfilter extends etemplate_widget_transformer
 {
 
-	protected $legacy_options = 'type,options';
+	protected $legacy_options = 'type,widget_options';
 
 	/**
 	 * Fill type options in self::$request->sel_options to be used on the client
@@ -1038,12 +1038,27 @@ class etemplate_widget_nextmatch_customfilter extends etemplate_widget_transform
 	 */
 	public function beforeSendToClient($cname)
 	{
-		self::$transformation['type'] = $this->attrs['type'];
+		switch($this->attrs['type'])
+                {
+                        case "link-entry":
+				self::$transformation['type'] = $this->attrs['type'] = 'nextmatch-entryheader';
+                                break;
+                        default:
+				self::$transformation['type'] = $this->attrs['type'];
+                }
 		$form_name = self::form_name($cname, $this->id, $expand);
-		$this->setElementAttribute($form_name, 'options', $this->attrs['options']);
+		
+		// Don't need simple onchanges, it's ajax
+		if($this->attrs['onchange'] == 1)
+		{
+			$this->setElementAttribute($form_name, 'onchange', false);
+		}
+		
+		$this->setElementAttribute($form_name, 'options', trim($this->attrs['widget_options']) != '' ? $this->attrs['widget_options'] : '');
 
 		parent::beforeSendToClient($cname);
-		$this->setElementAttribute($form_name, 'type', 'nextmatch-filterheader');
+		$this->setElementAttribute($form_name, 'type', $this->attrs['type']);
+
 	}
 }
 
