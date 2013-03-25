@@ -1912,6 +1912,19 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader, {
 	},
 
 	/**
+	 * Override to always return a string appname:id (or just id), parent returns an object
+	 */
+	getValue: function() {
+		var value = this._super.apply(this, arguments);
+		if(typeof value == "object" && value != null)
+		{
+			if(!value.app || !value.id) return null;
+			value = value.app +":"+value.id;
+		}
+		return value
+	},
+
+	/**
 	 * Set nextmatch is the function which has to be implemented for the
 	 * et2_INextmatchHeader interface.
 	 */
@@ -1925,7 +1938,7 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader, {
 
 			// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
 			this.attributes.value.ignore = true;
-			this.attributes.select_options.ignore = true;
+			//this.attributes.select_options.ignore = true;
 		}
 		var self = this;
 		// Fire on lost focus, clear filter if user emptied box
