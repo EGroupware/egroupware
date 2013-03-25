@@ -581,3 +581,36 @@ function etemplate2_handle_validation_error(_type, _response)
 egw(window).registerJSONPlugin(etemplate2_handle_load, null, 'et2_load');
 egw(window).registerJSONPlugin(etemplate2_handle_validation_error, null, 'et2_validation_error');
 
+
+/**
+ * Compatability function for etemplate
+ *
+ * When we're fully on et2, replace each useage with a call to etemplate2 widget.getInstanceManager().submit()
+ * @param obj DOM Node, usually a button
+ * @param widget et2_widget
+ */
+function xajax_eT_wrapper(obj,widget)
+{
+	egw().debug("warn", "xajax_eT_wrapper() is deprecated, replace with widget.getInstanceManager().submit()");
+	if(typeof obj == "object")
+	{
+		$j("div.popupManual div.noPrint").hide();
+		$j("div.ajax-loader").show();
+		if(typeof widget == "undefined" && obj.id)
+		{
+			// Try to find the widget by ID so we don't have to change every call
+			var et2 = etemplate2.getByApplication(egw_getAppName());
+			for(var i = 0; i < et2.length; i++)
+			{
+				widget = et2[i].widgetContainer.getWidgetById(obj.id);
+				if(widget.getInstanceManager) break;
+			}
+		}
+		widget.getInstanceManager().submit(this);
+	}
+	else
+	{
+		$j("div.popupManual div.noPrint").show();
+		$j("div.ajax-loader").hide();
+	}
+}
