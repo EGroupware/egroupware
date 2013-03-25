@@ -668,7 +668,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		}
 		if (($ok = parent::GET($options)) && $this->force_download)
 		{
-			if(html::$user_agent == 'msie' && self::$ua_version < 9.0)
+			if(html::$user_agent == 'msie' && html::$ua_version < 9.0)
 			{
 				$attachment = '';
 			}
