@@ -269,12 +269,12 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			try
 			{
 				var func = new Function(res.data);
-				func.call(window);
+				func.call(req.egw ? req.egw.window : window);
 			}
 			catch (e)
 			{
 				req.egw.debug('error', 'Error while executing script: ',
-					res.data)
+					res.data,e)
 			}
 			return true;
 		}
