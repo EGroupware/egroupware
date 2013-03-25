@@ -221,7 +221,7 @@ class addressbook_ui extends addressbook_bo
 				'lettersearch'   => true,
 				'do_email'       => $do_email ? 1 : 0,
 				'default_cols'   => '!cat_id,contact_created_contact_modified,distribution_list,contact_id,owner,legacy_actions',
-				'filter2_onchange' => "if(this.value=='add') { add_new_list(typeof widget == 'undefined' ? document.getElementById(\"exec[nm][filter]\").value : widget.header.filter.get_value()); this.value='';} else this.form.submit();",
+				'filter2_onchange' => "if(this.value=='add') { add_new_list(typeof widget == 'undefined' ? document.getElementById('exec[nm][filter]').value : widget.header.filter.get_value()); this.value='';} else this.form.submit();",
 				'manual'         => $do_email ? ' ' : false,	// space for the manual icon
 				//'actions'        => $this->get_actions(),		// set on each request, as it depends on some filters
 				'row_id'         => 'id',
