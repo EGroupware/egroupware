@@ -470,6 +470,8 @@ var et2_nextmatch_rowProvider = Class.extend({
 				{
 					// Nextmatch category filter should put them here
 					var categories = _mgrs["sel_options"].getEntry('cat_id');
+					// Or they are in the global - 1 level up
+					if(!categories) categories = _mgrs["sel_options"].parentMgr.getEntry('cat_id');
 					// If not using category (tracker, calendar list) look for sel_options in the rows
 					if(!categories) categories = _mgrs["sel_options"].parentMgr.getEntry(category_location);
 					if(!categories) categories = _mgrs["sel_options"].getEntry("${row}["+category_location + "]");
