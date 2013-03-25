@@ -2232,12 +2232,12 @@ class addressbook_ui extends addressbook_bo
 			egw_session::appsession('advanced_search','addressbook',$query['advanced_search']);
 
 			$response->addScript("
-				var link = opener.location.href;
+				var link = this.opener.location.href;
 				link = link.replace(/#/,'');
-				opener.location.href=link.replace(/\#/,'');
-				xajax_eT_wrapper();
+				this.opener.location.href=link.replace(/\#/,'');
+				this.xajax_eT_wrapper();
 			");
-			if ($_content['button']['cancel']) $response->addScript('window.close();');
+			if ($_content['button']['cancel']) $response->addScript('this.close();');
 
 			return $response->getXML();
 		}
