@@ -481,7 +481,7 @@ var et2_widget = Class.extend({
 				if(_target.id && this.getArrayMgr("modifications").getEntry(_target.id))
 				{
 					var mod = this.getArrayMgr("modifications").getEntry(_target.id);
-					if(mod.options) attrValue = _attrsObj[i].value = mod.options;
+					if(typeof mod.options != "undefined") attrValue = _attrsObj[i].value = mod.options;
 				}
 				// Check for entire legacy options passed in content
 				if(attrValue.charAt(0) == '@' && attrValue.indexOf(',') == -1)
