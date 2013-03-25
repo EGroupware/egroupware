@@ -1227,15 +1227,74 @@ window.egw_link_handler = function(_link, _app)
 /**
  * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
  * 
- * Current implementation ignores all refresh requests for now
- * 
  * @param string _msg message (already translated) to show, eg. 'Entry deleted'
  * @param string _app application name
  * @param string|int _id=null id of entry to refresh
  * @param string _type=null either 'edit', 'delete', 'add' or null
  * @param string _targetapp which app's window should be refreshed, default current
+ * @param string|RegExp _replace regular expression to replace in url
+ * @param string _with
  */
-window.egw_refresh = function(_msg, _app, _id, _type, _target)
+window.egw_refresh = function(_msg, _app, _id, _type, _targetapp, _replace, _with)
 {
-	//alert("egw_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
-}
+	// if window defines an app_refresh method, just call it
+	var framework = egw_getFramework();
+	if(typeof framework.app_refresh == "function" && typeof framework.app_refresh.registered == undefined)
+	{
+		egw().log("error", "An application has overwritten app_refresh() instead of calling register_app_refresh()");
+	}
+	if( typeof framework.app_refresh != "undefined" && framework.app_refresh.registered(_app))
+	{
+		framework.app_refresh(_msg, _app, _id, _type);
+
+		// Just this one app, already handled - safe to return here
+		if(!_targetapp || _app == _targetapp)
+		{
+			return;
+		}
+	}
+	// Check to see if target app needs to be refreshed too
+	if(_targetapp && _app != _targetapp)
+	{
+		if(framework.app_refresh.registered(_targetapp))
+		{
+			framework.app_refresh(_msg, _app, _id, _type, _targetapp);
+			return;
+		}
+	}
+
+	// Call appropriate default / fallback refresh
+	var win = egw_appWindow(_app);
+	if (win == window || typeof win.egw_refresh == 'undefined')
+	{
+		// jDots refresh on just the relevant entry
+		if(typeof etemplate2 == "function" && etemplate2.getByApplication)
+		{
+			var et2 = etemplate2.getByApplication(_app);
+			for(var i = 0; i < et2.length; i++)
+			{
+				et2[i].refresh(_msg,_app,_id,_type);
+			}
+		}
+	}
+	else
+	{
+		// Refresh requested app
+		win.egw_refresh(_msg, _app, _id, _type, _app, _replace, _with);
+	}
+
+	if(_targetapp && _app != _targetapp)
+	{
+		win = egw_appWindow(_targetapp);
+		if (win == window || typeof win.egw_refresh == 'undefined')
+		{
+			// TODO: jDots refresh on just the relevant change (add,edit,delete)
+		}
+		else
+		{
+			// if target given, dispatch to that window
+			// _targetapp must be undefined to avoid getting the current window
+			win.egw_refresh(_msg, _app, _id, _type, undefined, _replace, _with);
+		}
+	}
+};
