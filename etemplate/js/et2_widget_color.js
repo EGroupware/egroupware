@@ -57,12 +57,21 @@ var et2_color = et2_inputWidget.extend({
 		// Translations
 		for(var key in jQuery.fn.jPicker.defaults.localization.text)
 		{
-			jQuery.fn.jPicker.defaults.localization.text[key] = this.egw().lang(jQuery.fn.jPicker.defaults.localization.text[key]);
+			if(jQuery.fn.jPicker.defaults.localization.text[key])
+			{
+				jQuery.fn.jPicker.defaults.localization.text[key] = this.egw().lang(jQuery.fn.jPicker.defaults.localization.text[key]);
+			}
 		}
 		for(var key in jQuery.fn.jPicker.defaults.localization.tooltips)
 		{
-			jQuery.fn.jPicker.defaults.localization.tooltips[key].ok = this.egw().lang(jQuery.fn.jPicker.defaults.localization.tooltips[key].ok);
-			jQuery.fn.jPicker.defaults.localization.tooltips[key].cancel = this.egw().lang(jQuery.fn.jPicker.defaults.localization.tooltips[key].cancel);
+			if(jQuery.fn.jPicker.defaults.localization.tooltips[key].ok)
+			{
+				jQuery.fn.jPicker.defaults.localization.tooltips[key].ok = this.egw().lang(jQuery.fn.jPicker.defaults.localization.tooltips[key].ok);
+			}
+			if(jQuery.fn.jPicker.defaults.localization.tooltips[key].cancel)
+			{
+				jQuery.fn.jPicker.defaults.localization.tooltips[key].cancel = this.egw().lang(jQuery.fn.jPicker.defaults.localization.tooltips[key].cancel);
+			}
 		}
 		this.options = jQuery.extend({}, this.defaults, this.options);
 
@@ -120,14 +129,16 @@ var et2_color = et2_inputWidget.extend({
 				title: self.options.statustext ? self.options.statustext : self.egw().lang('Select color'),
 				autoOpen: false,
 				resizable: false,
-				width: self.get_jPicker() ? self.get_jPicker().width : "auto"
+				width: "auto"
 			});
 
 			// Hide original move bar
 			jQuery('table.jPicker .Move').hide();	
 
 			// Trigger dialog opening
-			jQuery('.Image',self.$node.next()).click(function() {jQuery("table.jPicker").dialog("open")});
+			jQuery('.Image',self.$node.next()).click(function() {
+				jQuery("table.jPicker").dialog("open");
+			});
 		},500);
 		return true;
 	},
