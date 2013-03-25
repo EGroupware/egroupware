@@ -461,9 +461,9 @@ var et2_nextmatch_rowProvider = Class.extend({
 				if(category_location) category_location = category_location[0];
 
 				// Get actual categories, eg. "cat_15" or "123,456,789", make sure to not match numbers inside other class-names
-				cats = classes.match(/(^| |,|cat_)?([0-9]+)( |,|$)/g);
+				cats = classes.match(/(^| |,|cat_)([0-9]+)( |,|$)/g);
 				if (!cats) cats = [];
-				classes = classes.replace(/(^| |,|cat_)?([0-9]+)( |,|$)/g, '');
+				classes = classes.replace(/(^| |,|cat_)([0-9]+)( |,|$)/g, '');
 
 				// Get category info
 				if(!this.categories)
@@ -481,7 +481,7 @@ var et2_nextmatch_rowProvider = Class.extend({
 				{
 					// Need cat_, classes can't start with a number
 					var cat_id = cats[i];
-					cat_id = cat_id.replace(/[^0-9]/, '');
+					cat_id = cat_id.replace(/[^0-9]/g, '');
 					var cat_class = 'cat_'+cat_id;
 
 					// Check for existing class
