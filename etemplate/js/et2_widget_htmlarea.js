@@ -91,11 +91,14 @@ var et2_htmlarea = et2_inputWidget.extend({
 			{
 				CKEDITOR.instances[this.id].destroy();
 			}
-			this.htmlNode.ckeditor(function() {
-				// If value is set, pass it in here.
-				this.setData(self.value);
-				delete self.value;
-			},this.ck_props);
+			if(this.htmlNode.ckeditor)
+			{
+				this.htmlNode.ckeditor(function() {
+					// If value is set, pass it in here.
+					this.setData(self.value);
+					delete self.value;
+				},this.ck_props);
+			}
 		}
 	},
 
