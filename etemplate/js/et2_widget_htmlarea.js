@@ -103,7 +103,15 @@ var et2_htmlarea = et2_inputWidget.extend({
 	},
 
 	destroy: function() {
-		this.htmlNode.ckeditorGet().destroy(true);
+		try
+		{
+			this.htmlNode.ckeditorGet().destroy(true);
+		}
+		catch (e)
+		{
+			this.egw().debug("warn",e);
+			this.htmlNode = null;
+		}
 	},
 	set_value: function(_value) {
 		try {
