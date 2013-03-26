@@ -15,6 +15,7 @@
 /*egw:uses
 	et2_core_interfaces;
 	et2_core_widget;
+	/phpgwapi/js/egw_action/egw_action.js;
 */
 
 /**
@@ -60,7 +61,13 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 			"type": "string",
 			"default": et2_no_init,
 			"description": "Insert into the target DOM node instead of the normal location"
-		}
+		},
+		"actions": {
+			"name": "Actions list",
+			"type": "any",
+			"default": et2_no_init,
+			"description": "List of egw actions that can be done on the widget.  This includes context menu, drag and drop.  TODO: Link to action documentation"
+		},
 	},
 
 	/**
@@ -345,6 +352,100 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 		{
 			$j(node).css("overflow", _value);
 		}
+	},
+
+	/**
+         * Set Actions on the widget
+         *
+         * Each action is defined as an object:
+	 *
+         * move: {
+         *      type: "drop",
+         *      acceptedTypes: "mail",
+         *      icon:   "move",
+         *      caption:        "Move to"
+         *      onExecute:      javascript:mail_move"
+         * }
+         *
+         * This will turn the widget into a drop target for "mail" drag types.  When "mail" drag types are dropped,
+         * the global function mail_move(egwAction action, egwActionObject sender) will be called.  The ID of the
+         * dragged "mail" will be in sender.id, some information about the sender will be in sender.context.  The
+	 * etemplate2 widget involved can typically be found in action.parent.data.widget, so your handler
+	 * can operate in the widget context easily.  The location varies depending on your action though.  It
+	 * might be action.parent.parent.data.widget
+	 *
+	 * To customise how the actions are handled for a particular widget, override _link_actions().  It handles
+	 * the more widget-specific parts.
+         *
+         * @param Object {ID: {attributes..}+} map of egw action information
+	 * @see etemplate/inc/class.etemplate_widget_nextmatch->egw_actions()
+         */
+        set_actions: function(actions)
+	{
+		if(this.id == "" || typeof this.id == "undefined")
+		{
+			this.egw().debug("warn", "Widget should have an ID if you want actions",this);
+			return;
+		}
+
+		// Initialize the action manager and add some actions to it
+                var gam = egw_getAppActionManager();
+                this._actionManager = gam.addAction("actionManager", this.id);
+                // ActionManager wants an array
+                var parsed_actions = [];
+                if(typeof actions == "object" && actions)
+                {
+                        for(var key in actions)
+                        {
+                                actions[key].id = key;
+                                if(typeof actions[key].icon != "undefined" && actions[key].icon)
+                                {
+                                        actions[key].iconUrl = this.egw().image(actions[key].icon);
+                                }
+                                parsed_actions.push(actions[key]);
+                        }
+                }
+                else
+                {
+                        parsed_actions = actions;
+                }
+                this._actionManager.updateActions(parsed_actions);
+
+		// Put a reference to the widget into the action stuff, so we can
+		// easily get back to widget context from the action handler
+		this._actionManager.data = {widget: this};
+
+		// Link the actions to the DOM
+		this._link_actions(parsed_actions);
+	},
+
+	/**
+	 * Link the actions to the DOM nodes / widget bits.
+	 *
+	 */
+	_link_actions: function(parsed_actions)
+	{
+		 // Get the top level element for the tree
+		var objectManager = egw_getAppObjectManager(true);
+		var widget_object = objectManager.getObjectById(this.id);
+		if (widget_object == null) {
+			// Add a new container to the object manager which will hold the widget
+			// objects
+			widget_object = objectManager.addObject(this.id, new et2_action_object_impl(this));
+		}
+
+		// Delete all old objects
+		widget_object.clear();
+
+		// Go over the widget & add links - this is where we decide which actions are
+		// 'allowed' for this widget at this time
+		var action_links = [];
+		for(var i = 0; i < parsed_actions.length; i++)
+		{
+			action_links.push(parsed_actions[i].id);
+		}
+
+		widget_object.updateActionLinks(action_links);
 	}
 });
 
@@ -554,4 +655,41 @@ var et2_surroundingsMgr = Class.extend({
 
 });
 
+/**
+ * The egw_action system requires an egwActionObjectInterface Interface implementation
+ * to tie actions to DOM nodes.  This one can be used by any widget.
+ *
+ * The class extension is different than the widgets
+ *
+ */
+function et2_action_object_impl(widget)
+{
+	var aoi = new egwActionObjectInterface();
+	aoi.doGetDOMNode = function() {
+		return widget.getDOMNode();
+	};
 
+// _outerCall may be used to determine, whether the state change has been
+// evoked from the outside and the stateChangeCallback has to be called
+// or not.
+	aoi.doSetState = function(_state, _outerCall) {
+	};
+
+// The doTiggerEvent function may be overritten by the aoi if it wants to
+// support certain action implementation specific events like EGW_AI_DRAG_OVER
+// or EGW_AI_DRAG_OUT
+	aoi.doTriggerEvent = function(_event, _data) {
+		switch(_event)
+		{
+			case EGW_AI_DRAG_OVER:
+				$j(this.node).addClass("ui-state-active");
+				break;
+			case EGW_AI_DRAG_OUT:
+				$j(this.node).removeClass("ui-state-active");
+				break;
+		}
+	};
+
+
+	return aoi;
+};

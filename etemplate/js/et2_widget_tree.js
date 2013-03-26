@@ -302,33 +302,10 @@ var et2_tree = et2_inputWidget.extend({
 	 * the global function mail_move(egwAction action, egwActionObject sender) will be called.  The ID of the
 	 * dragged "mail" will be in sender.id, some information about the sender will be in sender.context.
 	 *
-	 * @param Object {ID: {attributes..}+} map of egw action information
+	 * @param Array[ {ID, attributes..}+] array of egw action information - this is different from what is passed in to
+	 *	set_actions, which takes a more human-friendly Object map.
 	 */
-	set_actions: function(actions) {
-		// TODO: This goes in the parent, when we're ready to have general actions on anything //
-		// Initialize the action manager and add some actions to it
-		var gam = egw_getAppActionManager();
-		this._actionManager = gam.addAction("actionManager", this.id);
-		// ActionManager wants an array
-		var parsed_actions = [];
-		if(typeof actions == "object" && actions)
-		{
-			for(var key in actions)
-			{
-				actions[key].id = key;
-				if(typeof actions[key].icon != "undefined" && actions[key].icon)
-				{
-					actions[key].iconUrl = this.egw().image(actions[key].icon);
-				}
-				parsed_actions.push(actions[key]);
-			}
-		}
-		else
-		{
-			parsed_actions = actions;
-		}
-		this._actionManager.updateActions(parsed_actions);
-		////
+	_link_actions: function(parsed_actions) {
 
 		// Get the top level element for the tree
 		var objectManager = egw_getAppObjectManager(true);

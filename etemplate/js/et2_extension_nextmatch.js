@@ -1024,6 +1024,11 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		}
 	},
 
+	/**
+	 * Actions are handled by the controller, so ignore these
+	 */
+	set_actions: function(actions) {},
+
 	getDOMNode: function(_sender) {
 		if (_sender == this)
 		{
@@ -1118,6 +1123,11 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 		this.nextmatch = nextmatch;
 		this._createHeader();
 	},
+
+	/**
+	 * Actions are handled by the controller, so ignore these
+	 */
+	set_actions: function(actions) {},
 
 	_createHeader: function() {
 
