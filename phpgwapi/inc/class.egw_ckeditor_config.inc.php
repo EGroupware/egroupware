@@ -215,6 +215,7 @@ class egw_ckeditor_config
 
 		$config['removePlugins'] = 'elementspath';
 
+		$config['toolbarCanCollapse'] = true;
 		$config['toolbarStartupExpanded'] = $expanded_toolbar;
 
 		$config['filebrowserBrowseUrl'] = self::get_filebrowserBrowseUrl($start_path);
