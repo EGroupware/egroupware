@@ -1580,6 +1580,7 @@ function egw_exception_handler(Exception $e)
 	// regular GUI exception
 	if (!isset($GLOBALS['egw_info']['flags']['no_exception_handler']))
 	{
+		header('HTTP/1.1 500 '.$headline);
 		$message = '<h3>'.html::htmlspecialchars($headline)."</h3>\n".
 			'<pre><b>'.html::htmlspecialchars($e->getMessage())."</b>\n\n";
 
