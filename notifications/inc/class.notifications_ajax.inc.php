@@ -239,7 +239,7 @@ class notifications_ajax {
 			// create etemplate
 			$tpl = new etemplate();
 			$tpl->read('notifications.checkmailbox');
-			$notification_message = $tpl->exec(false, $values, false, false, false, 1);
+			$notification_message = $tpl->exec(false, $values, array(), array(), array(), 1);
 
 			// send notification
 			$notification = new notifications();
