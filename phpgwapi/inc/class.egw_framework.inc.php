@@ -1224,6 +1224,11 @@ window.egw.LAB.script(
 		{
 			if (!empty($data))
 			{
+				if($what == 'onLoad')
+				{
+					$js .= '"egw.LAB.wait(function() {'. htmlspecialchars($data).'})"';
+					continue;
+				}
 				$js .= ' '.$what.'="' . htmlspecialchars($data) . '"';
 			}
 		}
