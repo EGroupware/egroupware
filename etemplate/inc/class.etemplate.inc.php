@@ -180,13 +180,16 @@ class etemplate_new extends etemplate_widget_template
 				echo '
 		<div id="container"></div>
 		<script>
-			egw.langRequire(window, '.json_encode($langRequire).');
-			egw(window).includeJS('.json_encode(egw_framework::get_script_links(true, true)).	// return and clear
-				',function() {
-				egw.debug("info", "Instanciating etemplate2 object for '.$this->name.'");
-				var et2 = new etemplate2(document.getElementById("container"), "etemplate::ajax_process_content");
-				et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
-			}, window, egw.webserverUrl);
+			// Wait for all files to be loaded & executed first
+			egw.LAB.wait(function() {
+				egw.langRequire(window, '.json_encode($langRequire).');
+				egw(window).includeJS('.json_encode(egw_framework::get_script_links(true, true)).	// return and clear
+					',function() {
+					egw.debug("info", "Instanciating etemplate2 object for '.$this->name.'");
+					var et2 = new etemplate2(document.getElementById("container"), "etemplate::ajax_process_content");
+					et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
+				}, window, egw.webserverUrl);
+			});
 		</script>
 ';
 			}
@@ -195,11 +198,14 @@ class etemplate_new extends etemplate_widget_template
 				echo '
 		<div id="container"></div>
 		<script>
-			egw.langRequire(window, '.json_encode($langRequire).');
-			egw(window).ready(function() {
-				var et2 = new etemplate2(document.getElementById("container"), "etemplate::ajax_process_content");
-				et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
-			}, null, true);
+			// Wait for all files to be loaded & executed first
+			egw.LAB.wait(function() {
+				egw.langRequire(window, '.json_encode($langRequire).');
+				egw(window).ready(function() {
+					var et2 = new etemplate2(document.getElementById("container"), "etemplate::ajax_process_content");
+					et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
+				}, null, true);
+			});
 		</script>
 ';
 			}

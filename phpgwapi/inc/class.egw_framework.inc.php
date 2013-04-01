@@ -89,7 +89,9 @@ abstract class egw_framework
 	public static function init_static()
 	{
 		self::$js_include_mgr = new egw_include_mgr(array(
-			'/phpgwapi/js/labjs/LAB.src.js',
+			// We need LABjs, but putting it through egw_include_mgr causes it to re-load itself
+			//'/phpgwapi/js/labjs/LAB.src.js',
+
 			// allways load jquery (not -ui) and egw_json first
 			'/phpgwapi/js/jquery/jquery.js',
 			'/phpgwapi/js/./egw_json.js',
@@ -867,17 +869,26 @@ abstract class egw_framework
 			}
 		</script>";
 
-		$java_script .= self::get_script_links();
+		$to_include = self::get_script_links(true);
 
-		$java_script .= '<script type="text/javascript">window.egw_appName = "'.$GLOBALS['egw_info']['flags']['currentapp'].'";'."\n";
+		// Use LABjs to execute this stuff after all the script links are loaded
+		$after = 'window.egw_appName = "'.$GLOBALS['egw_info']['flags']['currentapp'].'";'."\n";
 
 		// add link registry to non-popup windows, if explicit requested (idots_framework::navbar() loads it, if not explicit specified!)
 		if ($GLOBALS['egw_info']['flags']['js_link_registry'])
 		{
-			$java_script .= 'egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences']['common']).', "common");'."\n";
-			$java_script .= 'egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']).');'."\n";
+			$after .= 'egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences']['common']).', "common");'."\n";
+			$after .= 'egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']).');'."\n";
 		}
-		$java_script .= "</script>\n";
+
+		// Load LABjs ONCE here
+		$java_script .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/labjs/LAB.src.js"'." ></script>\n".
+			'<script type="text/javascript">
+// Loads files in parallel, executes serially
+window.egw.LAB = $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['server']['webserver_url'].'/"});
+window.egw.LAB.script(
+'.json_encode(array_map(function($str){return substr($str,1);}, $to_include, array(1))).').wait(function() {'."\n".$after.'});
+</script>';
 
 		if(@isset($_GET['menuaction']))
 		{
@@ -890,8 +901,15 @@ abstract class egw_framework
 		}
 		if (isset($GLOBALS['egw_info']['flags']['java_script']))
 		{
-			$java_script .= $GLOBALS['egw_info']['flags']['java_script'] . "\n";
+			// Strip out any script tags, this needs to be executed as anonymous function
+			$GLOBALS['egw_info']['flags']['java_script'] = preg_replace(array('/(<script[^>]+>)([^<]*)/is','/<\/script>/'),array('$2',''),$GLOBALS['egw_info']['flags']['java_script']);
+			if(trim($GLOBALS['egw_info']['flags']['java_script']) != '')
+			{
+				$java_script .= '<script type="text/javascript">window.egw.LAB.wait(function() {'.$GLOBALS['egw_info']['flags']['java_script'] . "});</script>\n";
+			}
 		}
+
+
 		return $java_script;
 	}
 
@@ -1308,12 +1326,14 @@ abstract class egw_framework
 		return "\n".$start.implode($end.$start, $to_include).$end;
 
 		// using LABjs to load all javascript would require all other script-tags to run in wait() of queue!
-		/*return "\n".$start.'/phpgwapi/js/labjs/LAB.src.js'.$end."\n".
+		/*
+		return "\n".$start.'/phpgwapi/js/labjs/LAB.src.js'.$end."\n".
 			'<script type="text/javascript">
 $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['server']['webserver_url'].'/"}).script(
 '.json_encode(array_map(function($str){return substr($str,1);}, $to_include, array(1))).').wait();
 </script>
-';*/
+';
+		*/
 	}
 
 	/**
