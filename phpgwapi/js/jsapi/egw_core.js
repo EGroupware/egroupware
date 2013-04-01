@@ -617,18 +617,20 @@
 
 						// Check whether the module container for that window
 						// has been found
-						if (mods != null)
+						if (mods != null && typeof mods[_module] != 'undefined')
 						{
-							// If the given module has not been instanciated for
-							// this window, 
-							if (typeof mods[_module] === 'undefined')
-							{
-								var mod = modules[_module];
-								mods[_module] = mod.code.call(this, null, _for);
-							}
-
 							return mods[_module];
 						}
+						// If the given module has not been instanciated for
+						// this window, instanciate it
+						if (mods == null) mods = {};
+						if (typeof mods[_module] === 'undefined')
+						{
+							var mod = modules[_module];
+							mods[_module] = mod.code.call(this, null, _for);
+						}
+						return mods[_module];
+
 					}
 				}
 
