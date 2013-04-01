@@ -969,6 +969,22 @@ class timesheet_ui extends timesheet_bo
 				'prefix' => 'to_status_',
 				'enabled' => (boolean)$this->status_labels,
 			),
+		);
+
+		// Other applications
+		$group++;
+		if (false &&$GLOBALS['egw_info']['user']['apps']['filemanager'])
+		{
+			$actions['filemanager'] = array(
+				'icon' => 'filemanager/navbar',
+				'caption' => 'Filemanager',
+				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/timesheet/$id',
+				'allowOnMultiple' => false,
+				'group' => $group,
+			);
+		}
+		$group++;
+		$actions += array(
 			'documents' => timesheet_merge::document_action(
 				$GLOBALS['egw_info']['user']['preferences']['timesheet']['document_dir'],
 				$group, 'Insert in document', 'document_',
