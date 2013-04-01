@@ -23,7 +23,7 @@ function nm_action(_action, _senders, _target, _ids)
 	if (_action.checkbox && (!_action.data || typeof _action.data.nm_action == 'undefined')) return;
 
 	if (typeof _action.data == 'undefined' || !_action.data) _action.data = {};
-	if (typeof _action.data.nm_action == 'undefined') _action.data.nm_action = 'submit';
+	if (typeof _action.data.nm_action == 'undefined' && _action.type == 'popup') _action.data.nm_action = 'submit';
 
 	if(typeof _ids == 'undefined')
 	{
