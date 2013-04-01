@@ -193,8 +193,29 @@ etemplate2.prototype.load = function(_name, _url, _data)
 	// Create the document fragment into which the HTML will be injected
 	var frag = document.createDocumentFragment();
 
-	// Asynchronously load the XET file (code below is executed ahead of the
-	// code in the loadXMLFromURL function)
+
+	// Clear any existing instance
+	this.clear();
+
+	// Create the basic widget container and attach it to the DOM
+	this.widgetContainer = new et2_container(null);
+	this.widgetContainer.setApiInstance(egw(appname, egw.elemWindow(this.DOMContainer)));
+	this.widgetContainer.setInstanceManager(this);
+	this.widgetContainer.setParentDOMNode(this.DOMContainer);
+
+	// store the id to submit it back to server
+	if(_data) {
+		this.etemplate_exec_id = _data.etemplate_exec_id;
+	}
+	
+	// set app_header
+	if (window.opener) {	// popup
+		document.title = _data.app_header;
+	} else {
+		// todo for idots or jdots framework
+	}
+
+	// Asynchronously load the XET file
 	et2_loadXMLFromURL(_url, function(_xmldoc) {
 
 		// Scan for templates and store them
@@ -223,27 +244,6 @@ etemplate2.prototype.load = function(_name, _url, _data)
 		// Trigger the "resize" event
 		this.resize();
 	}, this);
-
-	// Clear any existing instance
-	this.clear();
-
-	// Create the basic widget container and attach it to the DOM
-	this.widgetContainer = new et2_container(null);
-	this.widgetContainer.setApiInstance(egw(appname, egw.elemWindow(this.DOMContainer)));
-	this.widgetContainer.setInstanceManager(this);
-	this.widgetContainer.setParentDOMNode(this.DOMContainer);
-
-	// store the id to submit it back to server
-	if(_data) {
-		this.etemplate_exec_id = _data.etemplate_exec_id;
-	}
-	
-	// set app_header
-	if (window.opener) {	// popup
-		document.title = _data.app_header;
-	} else {
-		// todo for idots or jdots framework
-	}
 
 	// Split the given data into array manager objects and pass those to the
 	// widget container
