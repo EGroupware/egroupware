@@ -368,6 +368,32 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 	if (data && data.response)
 	{
 		var hasResponse = false;
+		// Try to load files using API
+		if(egw && egw().includeJS)
+		{
+			var js_files = [];
+			var css_files = [];
+			for (var i = data.response.length - 1; i > 0; --i)
+			{
+				var res = data.response[i];
+				if(res.type == 'js' && typeof res.data == 'string')
+				{
+					js_files.unshift(res.data);
+					this.loadedJSFiles[res.data] = false;
+					data.response.splice(i,1);
+				}
+			}
+			if(js_files.length > 0)
+			{
+				egw().includeJS(js_files, function() {
+					for(var i = 0; i < js_files.length; i++)
+					{
+						this.loadedJSFiles[js_files[i]] = true;
+					}
+					this.checkLoadFinish();
+				},this);
+			}
+		}
 		for (var i = 0; i < data.response.length; i++)
 		{
 			try
