@@ -1203,7 +1203,9 @@ egw.LAB.wait(function() {
 		}
 		$html = self::div("\n",'id="'.$tree.'"',$_divClass).$html;
 		$html .= "<script type='text/javascript'>\n";
-		$html .= "var $tree = new dhtmlXTreeObject('$tree','100%','100%',0);\n";
+		$html .= "var $tree;";
+		$html .= "egw.LAB.wait(function() {";
+		$html .= "$tree = new dhtmlXTreeObject('$tree','100%','100%',0);\n";
 		$html .= "$tree.parentObject.style.overflow='auto';\n";	// dhtmlXTree constructor has hidden hardcoded
 		if (translation::charset() == 'utf-8') $html .= "if ($tree.setEscapingMode) $tree.setEscapingMode('utf8');\n";
 		$html .= "$tree.setImagePath('$folderImageDir/dhtmlxtree/');\n";
@@ -1229,6 +1231,7 @@ egw.LAB.wait(function() {
 				if ($_selected) $autoLoading .= '&selected='.urlencode($_selected);
 				unset($_selected);
 				$html .= "$tree.loadXML('$autoLoading');\n";
+				$html .= "});";
 				return $html."</script>\n";
 			}
 		}
@@ -1343,6 +1346,7 @@ egw.LAB.wait(function() {
 		{
 				$html .= "$tree.openItem('$top');\n";
 		}
+		$html .= "});";
 		$html .= "</script>\n";
 
 		return $html;
