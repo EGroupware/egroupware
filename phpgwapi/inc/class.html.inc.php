@@ -556,7 +556,8 @@ class html
 		return self::textarea($_name,$_content,'id="'.htmlspecialchars($_name).'"',true).	// true = double encoding
 '
 <script type="text/javascript">
-	window.CKEDITOR_BASEPATH="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor/";
+window.CKEDITOR_BASEPATH="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor/";
+egw.LAB.wait(function() {
 	CKEDITOR.replace("'.$_name.'", '.egw_ckeditor_config::get_ckeditor_config($_mode,
 		$pxheight, $expanded, $_start_path).');
 	CKEDITOR.addCss("body { margin: 5px; }");
@@ -582,7 +583,8 @@ class html
 		}
 	);'.
 	(trim($_content) == '' && $font_span ? 'CKEDITOR.instances["'.$_name.'"].setData("'.$font_span.'&#8203;</span>");' : '').
-'</script>
+'});
+</script>
 ';
 	}
 
