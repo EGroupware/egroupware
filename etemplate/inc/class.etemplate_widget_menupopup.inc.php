@@ -97,6 +97,10 @@ class etemplate_widget_menupopup extends etemplate_widget
 			}
 			foreach((array) $value as $val)
 			{
+				// array_key_exists() (used below) is inconsistent in how it handles empty/false
+				// It needs a string or integer.
+				if(!$val && $val !== 0) $val = '';
+
 				// Special for select-account - selOptions doesn't always load all accounts
 				if($this->attrs['type'] == 'select-account' && !$GLOBALS['egw']->accounts->visible($val) && !isset($allowed[$val]) ||
 					$this->attrs['type'] != 'select-account' && !array_key_exists($val,$allowed))
