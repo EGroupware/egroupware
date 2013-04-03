@@ -68,7 +68,7 @@ class importexport_export_ui {
 		$content['appname'] = $_appname;
 		$preserv['appname'] = $_appname;
 		if(empty($_appname)) {
-			$this->js->set_onload("set_style_by_class('tr','select_definition','display','none');");
+			$this->js->set_onload('$j("tr.select_definition").css("display","none");');
 		}
 
 		// Check for preferred definition
@@ -112,7 +112,8 @@ class importexport_export_ui {
 				$content['plugin'] = $_plugin;
 				$selected_plugin = $_plugin;
 			}
-			else {
+			else
+			{
 /*
 					$plugins_classnames = array_keys($sel_options['plugin']);
 					$selected_plugin = $plugins_classnames[0];
@@ -122,9 +123,8 @@ class importexport_export_ui {
 			//$this->js->set_onload("set_style_by_class('tr','select_definition','display','none');");
 		}
 		else {
-
-			$this->js->set_onload("set_style_by_class('tr','select_plugin','display','none');");
-			$this->js->set_onload("set_style_by_class('tr','save_definition','display','none');");
+			$readonlys['plugin'] = true;
+			$readonlys['save_definition'] = true;
 
 			$definition = new importexport_definition($content['definition']);
 			if($definition) {
@@ -154,6 +154,7 @@ class importexport_export_ui {
 
 		// handle selector
 		if($selected_plugin) {
+			$content['plugin'] = $selected_plugin;
 			$plugin_object = new $selected_plugin;
 
 			$content['description'] = $plugin_object->get_description();
@@ -253,7 +254,6 @@ class importexport_export_ui {
 		if (empty($apps)) throw new Exception('Error: no application profiles available for export');
 		if (!is_array($apps) && $apps) $apps = (array)$apps;
 		$sel_options['appname'] = array('' => lang('Select one')) + array_combine($apps,$apps);
-		$this->js->set_onload("set_style_by_class('tr','select_plugin','display','none');");
 		if(!$_application && !$selected_plugin) {
 			$content['plugin_selectors_html'] = $content['plugin_options_html'] =
 					lang('You need to select an app and format first!');
@@ -262,7 +262,7 @@ class importexport_export_ui {
 		}
 
 		// disable preview box
-		$this->js->set_onload("set_style_by_class('tr','preview-box','display','none');");
+		$this->js->set_onload('$j(\'tr.preview-box\').hide();');
 
 
 		//xajax_eT_wrapper submit
@@ -432,7 +432,7 @@ class importexport_export_ui {
 			$no_return = true;
 		}
 		if (!$_appname) {
-			$response->addScript("set_style_by_class('tr','select_definition','display','none');");
+			$response->jquery('tr.select_definition','hide');
 			return $no_return ? '' : $response->getXML();
 		}
 
@@ -460,10 +460,10 @@ class importexport_export_ui {
 		if($selected_plugin == 'expert') {
 			$this->ajax_get_plugins($_appname, $response);
 		} else {
-			$response->addScript("set_style_by_class('tr','select_plugin','display','none');");
+			$response->jquery('tr.select_plugin','hide');
 		}
 		$response->addScript('export_dialog.change_definition(document.getElementById("exec[definition]"));');
-		$response->addScript("set_style_by_class('tr','select_definition','display','table-row');");
+		$response->addScript('$j("tr.select_definition").css("display","table-row");');
 		return $no_return ? '' : $response->getXML();
 	}
 
@@ -474,7 +474,7 @@ class importexport_export_ui {
 			$response = new xajaxResponse();
 		}
 		if (!$_appname) {
-			$response->addScript("set_style_by_class('tr','select_plugin','display','none');");
+			$response->jquery('tr.select_plugin','hide');
 			return $no_return ? '' : $response->getXML();
 		}
 
@@ -489,7 +489,7 @@ class importexport_export_ui {
 		$this->ajax_get_plugin_description($selected_plugin,$response);
 		$this->ajax_get_plugin_options($selected_plugin, $response, $_definition);
 		$this->ajax_get_plugin_selectors($selected_plugin, $response, $_definition);
-		$response->addScript("set_style_by_class('tr','select_plugin','display','table-row');");
+		$response->addScript('$j("tr.select_plugin").css("display","table-row");');
 		return $no_return ? '' : $response->getXML();
 	}
 
