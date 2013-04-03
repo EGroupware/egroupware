@@ -341,7 +341,7 @@
 					// Skipped column in definition
 					continue;
 				}
-				elseif($index < count($options['csv_fields']) && strtoupper($options['csv_fields'][$index]) != strtoupper($header))
+				elseif($index < count($options['csv_fields']) && strtoupper($options['csv_fields'][$index]) != strtoupper($header) && strtoupper(lang($options['csv_fields'][$index])) != strtoupper($header))
 				{
 					// Problem
 					$message[] = lang("Column mismatch: %1 should be %2, not %3",
