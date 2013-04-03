@@ -291,7 +291,7 @@ class date_widget
 			if (!$i && $cell['accesskey']) $dcell['accesskey'] = $cell['accesskey'];
 
 			// test if we can use jsCalendar
-			if ($n == 0 && $this->jscal && $tmpl->java_script())
+			if ($n == 0 && $this->jscal)
 			{
 				$dcell['type'] = 'html';
 				$dcell['name'] = 'str';
@@ -326,12 +326,9 @@ class date_widget
 				$dcell['label'] = 'Today';
 				$dcell['help'] = 'sets today as date';
 				$dcell['no_lang'] = True;
-				if (($js = $tmpl->java_script()))
-				{
-					$dcell['needed'] = True;	// to get a button
-					$dcell['onchange'] = "this.form.elements['$name"."[Y]'].value='".adodb_date('Y')."'; this.form.elements['$name"."[m]'].value='".adodb_date('n')."';this.form.elements['$name"."[d]'].value='".(0+adodb_date('d'))."'; return false;";
-				}
-				$dcell['type'] = $js ? 'button' : 'checkbox';
+				$dcell['needed'] = True;	// to get a button
+				$dcell['onchange'] = "this.form.elements['$name"."[Y]'].value='".adodb_date('Y')."'; this.form.elements['$name"."[m]'].value='".adodb_date('n')."';this.form.elements['$name"."[d]'].value='".(0+adodb_date('d'))."'; return false;";
+				$dcell['type'] = 'button';
 				$row[$tpl->num2chrs(++$i)] = &$dcell;
 				unset($dcell);
 			}

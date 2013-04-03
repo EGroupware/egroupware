@@ -113,13 +113,6 @@ class etemplate_old extends boetemplate
 	static protected $validation_errors = array();
 
 	/**
-	 * Flag if the browser has javascript enabled
-	 *
-	 * @var boolean
-	 */
-	static public $java_script;
-
-	/**
 	 * Flag if exec() is called as part of a hook, replaces the 1.6 and earlier $GLOBALS['egw_info']['etemplate']['hooked'] global variable
 	 *
 	 * @var boolean
@@ -202,7 +195,6 @@ class etemplate_old extends boetemplate
 	*/
 	function exec($method,$content,$sel_options='',$readonlys='',$preserv='',$output_mode=0,$ignore_validation='',$changes='')
 	{
-		//echo "<br>globals[java_script] = '".self::$java_script."', this->java_script() = '".$this->java_script()."'\n";
 		if (!$sel_options)
 		{
 			$sel_options = array();
@@ -225,7 +217,7 @@ class etemplate_old extends boetemplate
 		}
 		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'etemplate')
 		{
-			$GLOBALS['egw']->translation->add_app('etemplate');	// some extensions have own texts
+			translation::add_app('etemplate');	// some extensions have own texts
 		}
 		// use different form-names to allows multiple eTemplates in one page, eg. addressbook-view
 		self::$name_form = 'eTemplate';
@@ -258,10 +250,8 @@ class etemplate_old extends boetemplate
 				."<body>\n".$this->show($content)."\n</body>\n</html>";
 		}
 
-		$html = $this->include_java_script(1).
-				$this->show(self::complete_array_merge($content,$changes),$sel_options,$readonlys,self::$name_vars);
+		$html = $this->show(self::complete_array_merge($content,$changes),$sel_options,$readonlys,self::$name_vars);
 
-		self::$request->java_script = self::$java_script;
 		self::$request->java_script_from_flags = $GLOBALS['egw_info']['flags']['java_script'];
 		self::$request->java_script_body_tags = array(
 			'onload'   => egw_framework::set_onload(),
@@ -299,28 +289,20 @@ class etemplate_old extends boetemplate
 			($output_mode != 0 ? '' : ' onsubmit="this.innerWidth.value=window.innerWidth ? window.innerWidth : document.body.clientWidth;"'));
 			//echo "to_process="; _debug_array(self::$request->to_process);
 
+		egw_framework::validate_file('/etemplate/js/etemplate.js');
+
 		//echo '<p>'.__METHOD__."($method,...) etemplate[hooked]=".(int)self::$hooked.", etemplate[hook_app]='".self::$hook_app."', isset(etemplate[content])=".(int)isset(self::$previous_content)."</p>\n";
-		if ($this->sitemgr)
-		{
-			$GLOBALS['egw_info']['flags']['java_script'] .= $this->include_java_script(2);
-		}
-		else
+		if (!$this->sitemgr)
 		{
 			// support the old global var, in case old apps like 1.6 infolog use it
 			if (isset($GLOBALS['egw_info']['etemplate']['hooked'])) self::$hooked = $GLOBALS['egw_info']['etemplate']['hooked'];
 
 			if (!@self::$hooked && (int) $output_mode != 1 && (int) $output_mode != -1)	// not just returning the html
 			{
-				$GLOBALS['egw_info']['flags']['java_script'] .= $this->include_java_script(2);
-
 				if ($GLOBALS['egw_info']['flags']['currentapp'] != 'etemplate')
 				{
 					egw_framework::includeCSS('etemplate', 'app');
 				}
-			}
-			elseif (!isset(self::$previous_content))
-			{
-				$html = $this->include_java_script(2).$html;	// better than nothing
 			}
 			// saving the etemplate content for other hooked etemplate apps (atm. infolog hooked into addressbook)
 			self::$previous_content =& $html;
@@ -364,7 +346,7 @@ class etemplate_old extends boetemplate
 				{
 					echo "</div>\n";
 				}
-				$GLOBALS['egw']->common->egw_footer();
+				common::egw_footer();
 			}
 		}
 		if ($this->sitemgr || (int) $output_mode == 1 || (int) $output_mode == -1)	// return html
@@ -458,8 +440,6 @@ class etemplate_old extends boetemplate
 			$content = array();
 		}
 		$this->init(self::$request->template);
-		self::$java_script = self::$request->java_script || $_POST['java_script'];
-		//echo "globals[java_script] = '".self::$java_script."', session_data[java_script] = '".self::$request->java_script."', _POST[java_script] = '".$_POST['java_script']."'\n";
 		//echo "process_exec($this->name) content ="; _debug_array($content);
 		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'etemplate')
 		{
@@ -1165,61 +1145,59 @@ class etemplate_old extends boetemplate
 		$blur = $cell['blur'][0] == '@' ? $this->get_array($content,substr($cell['blur'],1)) :
 			(strlen($cell['blur']) <= 1 ? $cell['blur'] : lang($cell['blur']));
 
-		if ($this->java_script())
+		if ($blur)
 		{
-			if ($blur)
+			if ((string)$value === '')
 			{
-				if ((string)$value === '')
-				{
-					$value = $blur;
-				}
-				$onFocus .= "if(this.value=='".addslashes(html::htmlspecialchars($blur))."') this.value='';";
-				$onBlur  .= "if(this.value=='') this.value='".addslashes(html::htmlspecialchars($blur))."';";
+				$value = $blur;
 			}
-			if ($help)
+			$onFocus .= "if(this.value=='".addslashes(html::htmlspecialchars($blur))."') this.value='';";
+			$onBlur  .= "if(this.value=='') this.value='".addslashes(html::htmlspecialchars($blur))."';";
+		}
+		if ($help)
+		{
+			if ((int)$cell['no_lang'] < 2 && !$no_lang_on_help)
 			{
-				if ((int)$cell['no_lang'] < 2 && !$no_lang_on_help)
-				{
-					if (($use_tooltip_for_help = $help[0] == '|')) $help = substr($help,1);
-					$help = lang($help);
-				}
-				if (substr($help,0,5) == 'call:')
-				{
-					$options .= ' onMouseOver="'.html::htmlspecialchars(substr($help,5)).'"';
-				}
-				elseif (($use_tooltip_for_help = $use_tooltip_for_help || strpos($help,'<') !== false && strip_tags($help) != $help))	// helptext is html => use a tooltip
-				{
-					$options .= html::tooltip($help);
-				}
-				else	// "regular" help-text in the statusline
-				{
-					$onFocus .= "self.status='".addslashes(html::htmlspecialchars($help))."'; return true;";
-					$onBlur  .= "self.status=''; return true;";
-					if (in_array($cell['type'],array('button','buttononly','file')))	// for button additionally when mouse over button
-					{
-						$options .= " onMouseOver=\"self.status='".addslashes(html::htmlspecialchars($help))."'; return true;\"";
-						$options .= " onMouseOut=\"self.status=''; return true;\"";
-					}
-				}
+				if (($use_tooltip_for_help = $help[0] == '|')) $help = substr($help,1);
+				$help = lang($help);
 			}
-			if ($onBlur)
+			if (substr($help,0,5) == 'call:')
 			{
-				$options .= " onFocus=\"$onFocus\" onBlur=\"$onBlur\"";
+				$options .= ' onMouseOver="'.html::htmlspecialchars(substr($help,5)).'"';
 			}
-			if ($cell['onchange'] && !($cell['type'] == 'button' || $cell['type'] == 'buttononly'))
+			elseif (($use_tooltip_for_help = $use_tooltip_for_help || strpos($help,'<') !== false && strip_tags($help) != $help))	// helptext is html => use a tooltip
 			{
-				$onchange = $cell['onchange'] == '1' ? 'this.form.submit();' : $this->js_pseudo_funcs($cell['onchange'],$cname);
-				// rewriting onchange for checkboxes for IE to an onclick
-				if ($cell['type'] == 'checkbox' && html::$user_agent == 'msie')
+				$options .= html::tooltip($help);
+			}
+			else	// "regular" help-text in the statusline
+			{
+				$onFocus .= "self.status='".addslashes(html::htmlspecialchars($help))."'; return true;";
+				$onBlur  .= "self.status=''; return true;";
+				if (in_array($cell['type'],array('button','buttononly','file')))	// for button additionally when mouse over button
 				{
-					$options .= ' onClick="'.$onchange.'; return true;"';
-				}
-				else
-				{
-					$options .= ' onChange="'.$onchange.'"';
+					$options .= " onMouseOver=\"self.status='".addslashes(html::htmlspecialchars($help))."'; return true;\"";
+					$options .= " onMouseOut=\"self.status=''; return true;\"";
 				}
 			}
 		}
+		if ($onBlur)
+		{
+			$options .= " onFocus=\"$onFocus\" onBlur=\"$onBlur\"";
+		}
+		if ($cell['onchange'] && !($cell['type'] == 'button' || $cell['type'] == 'buttononly'))
+		{
+			$onchange = $cell['onchange'] == '1' ? 'this.form.submit();' : $this->js_pseudo_funcs($cell['onchange'],$cname);
+			// rewriting onchange for checkboxes for IE to an onclick
+			if ($cell['type'] == 'checkbox' && html::$user_agent == 'msie')
+			{
+				$options .= ' onClick="'.$onchange.'; return true;"';
+			}
+			else
+			{
+				$options .= ' onChange="'.$onchange.'"';
+			}
+		}
+
 		if ($form_name != '')
 		{
 			$options = self::get_id($form_name,$cell['name'],$cell['id']).' '.$options;
@@ -1462,7 +1440,7 @@ class etemplate_old extends boetemplate
 					$onclick = $this->js_pseudo_funcs($onclick,$cname);
 				}
 				unset($cell['onclick']);	// otherwise the grid will handle it
-				if ($this->java_script() && ($cell['onchange'] != '' || $img && !$readonly) && !$cell['needed']) // use a link instead of a button
+				if (($cell['onchange'] != '' || $img && !$readonly) && !$cell['needed']) // use a link instead of a button
 				{
 					$onclick = ($onclick ? preg_replace('/^return(.*);$/','if (\\1) ',$onclick) : '').
 						(((string)$cell['onchange'] === '1' || $img) ?
@@ -2467,48 +2445,5 @@ class etemplate_old extends boetemplate
 			}
 			self::$validation_errors[$name] .= $error;
 		}
-	}
-
-	/**
-	* is javascript enabled?
-	*
-	* this should be tested by the api at login
-	*
-	* @return boolean true if javascript is enabled or not yet tested and $consider_not_tested_as_enabled
-	*/
-	function java_script($consider_not_tested_as_enabled = True)
-	{
-		$ret = !!self::$java_script ||
-			$consider_not_tested_as_enabled && !isset(self::$java_script);
-		//echo "<p>java_script($consider_not_tested_as_enabled)='$ret', java_script='".self::$java_script."', isset(java_script)=".isset(self::$java_script)."</p>\n";
-
-		return $ret;
-	}
-
-	/**
-	* returns the javascript to be included by exec
-	*
-	* @param int $what &1 = returns the test, note: has to be included in the body, not the header,
-	*		&2 = returns the common functions, best to be included in the header
-	* @return string javascript
-	*/
-	private function include_java_script($what = 3)
-	{
-		// this is to test if javascript is enabled
-		if ($what & 1 && !isset(self::$java_script))
-		{
-			$js = '<script language="javascript">
-document.write(\''.str_replace("\n",'',html::input_hidden('java_script','1')).'\');
-</script>
-';
-		}
-		// here are going all the necesarry functions if javascript is enabled
-		if ($what & 2 && $this->java_script(True))
-		{
-			$lastmod = filectime(EGW_INCLUDE_ROOT. '/etemplate/js/etemplate.js');
-			$js .= '<script type="text/javascript" src="'.
-				$GLOBALS['egw_info']['server']['webserver_url'].'/etemplate/js/etemplate.js?'. $lastmod.'"></script>'."\n";
-		}
-		return $js;
 	}
 }
