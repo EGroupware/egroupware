@@ -973,7 +973,7 @@ class timesheet_ui extends timesheet_bo
 
 		// Other applications
 		$group++;
-		if (false &&$GLOBALS['egw_info']['user']['apps']['filemanager'])
+		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
 			$actions['filemanager'] = array(
 				'icon' => 'filemanager/navbar',
