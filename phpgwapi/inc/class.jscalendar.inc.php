@@ -130,30 +130,23 @@ class jscalendar
 			" onBlur=\"self.status=''; return true;\"";
 		}
 
-		if ($jsreturn)
-		{
-			$return_array = array(
-				'html' => '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.htmlspecialchars($date).'"'.$options.'/>'.
-					($useicon ? '<img id="'.$name.'-trigger" src="'.common::find_image('phpgwpai','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;"/>' : ''),
-				'js'   => 'Calendar.setup({inputField : "'.$name.'"'.($useicon ? ',button: "'.$name.'-trigger"' : '').' });'
-			);
+		$html = '<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.htmlspecialchars($date).'"'.$options.'/>
+'.($useicon ? '<img id="'.$name.'-trigger" src="'.common::find_image('phpgwapi','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;">' : '');
 
-			return $return_array;
-		}
-		return
-'<input type="text" id="'.$name.'" name="'.$name.'" size="10" value="'.htmlspecialchars($date).'"'.$options.'/>
-'.($useicon ? '<img id="'.$name.'-trigger" src="'.common::find_image('phpgwapi','datepopup').'" title="'.lang('Select date').'" style="cursor:pointer; cursor:hand;">' : '').
-'<script type="text/javascript">
-	'.(!$useicon ? 'document.getElementById("'.$name.'").readOnly=true;' : '').
-	'Calendar.setup(
-		{
+		$js = '<script type="text/javascript">
+'.(!$useicon ? '	document.getElementById("'.$name.'").readOnly=true;' : '').
+'	egw.LAB.wait(function() {
+		Calendar.setup({
 			inputField  : "'.$name.'",'.(!$useicon ? '' : '
 			button      : "'.$name.'-trigger"').',
 			onUpdate    : function(){var input = document.getElementById("'.$name.'"); $j(input).change(); }
-		}
-	);
+		})
+	});
 </script>
 ';
+		if ($jsreturn) return array('html' => $html, 'js' => $js);
+
+		return $html."\n".$js;
 	}
 
 	/**
@@ -234,8 +227,8 @@ function monthClicked(calendar,monthstart) {
 }
 ' : '').'
 
-	Calendar.setup(
-	{
+egw.LAB.wait(function() {
+	Calendar.setup({
   		flat         : "'.$id.'",
   		flatCallback : dateChanged'.($weekUrl ? ',
   		flatWeekCallback : weekClicked' : '').($weekTTip ? ',
@@ -245,9 +238,8 @@ function monthClicked(calendar,monthstart) {
 		flatTodayCallback : todayClicked,
  		date : "'.$date.'"
 		' : '').'
-	}
-	);
-
+	});
+});
 </script>';
 	}
 
