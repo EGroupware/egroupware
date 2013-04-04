@@ -618,12 +618,14 @@
 						{
 							print "vacation update failed<br>";
 							#print $script->errstr."<br>";
+							$this->t->set_var('validation_errors', lang('Vacation notice update failed').': '.$this->bosieve->error);
 						}
 						else
 						{
 							//error_log(__METHOD__.__LINE__.array2string($newVacation));
 							if (!isset($newVacation['scriptName']) || empty($newVacation['scriptName'])) $newVacation['scriptName'] = $this->scriptName;
 							$this->bosieve->setAsyncJob($newVacation);
+							$this->t->set_var('validation_errors', lang('Vacation notice sucessful updated.'));
 						}
 					}
 					else

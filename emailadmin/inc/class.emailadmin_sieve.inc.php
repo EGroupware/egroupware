@@ -164,20 +164,9 @@ class emailadmin_sieve extends Net_Sieve
 
 		if($script->retrieveRules($this)) {
 			$script->vacation = $_vacation;
-			$script->updateScript($this);
-			/*
-			// setting up an async job to enable/disable the vacation message
-			$async = new asyncservice();
-			$user = $GLOBALS['egw_info']['user']['account_id'];
-			$async->delete($async_id ="felamimail-vacation-$user");
-			$end_date = $_vacation['end_date'] + 24*3600;	// end-date is inclusive, so we have to add 24h
-			if ($_vacation['status'] == 'by_date' && time() < $end_date)
-			{
-				$time = time() < $_vacation['start_date'] ? $_vacation['start_date'] : $end_date;
-				$async->set_timer($time,$async_id,'felamimail.bosieve.async_vacation',$_vacation+array('scriptName'=>$_scriptName),$user);
-			}
-			*/
-			return true;
+			$ret = $script->updateScript($this);
+			$this->error = $script->errstr;
+			return $ret;
 		}
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__."($_scriptName,".print_r($_vacation,true).') could not retrieve rules!');
 
@@ -197,11 +186,11 @@ class emailadmin_sieve extends Net_Sieve
 		if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.' User:'.array2string($_euser).' Scriptname:'.array2string($_scriptName).' VacationMessage:'.array2string($_vacation));
 		if (!$_scriptName) $_scriptName = $this->scriptName;
 		if ($this->_connect($this->icServer,$_euser) === true) {
-			$this->setVacation($_scriptName,$_vacation);
+			$ret = $this->setVacation($_scriptName,$_vacation);
 			// we need to logout, so further vacation's get processed
 			$error = $this->_cmdLogout();
 			if ($this->debug) error_log(__CLASS__.'::'.__METHOD__.' logout '.(PEAR::isError($error) ? 'failed: '.$ret->getMessage() : 'successful'));
-			return true;
+			return $ret;
 		}
 		return false;
 	}

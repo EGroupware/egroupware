@@ -507,21 +507,22 @@ class emailadmin_script {
 			}
 		}
 
-		if ($this->vacation) {
-				$vacation = $this->vacation;
-				$newscriptfoot .= "#vacation&&" . $vacation['days'] . "&&";
-				$first = 1;
-				foreach ($vacation['addresses'] as $address) {
-						if (!$first) $newscriptfoot .= ", ";
-						$newscriptfoot .= "\"" . trim($address) . "\"";
-						$first = 0;
-				}
+		if ($this->vacation)
+		{
+			$vacation = $this->vacation;
+			$newscriptfoot .= "#vacation&&" . $vacation['days'] . "&&";
+			$first = 1;
+			foreach ($vacation['addresses'] as $address) {
+				if (!$first) $newscriptfoot .= ", ";
+				$newscriptfoot .= "\"" . trim($address) . "\"";
+				$first = 0;
+			}
 
-				$vacation['text'] = preg_replace("/\r\n/","\\n",$vacation['text']);
-				$newscriptfoot .= "&&" . $vacation['text'] . "&&" .
-					($vacation['status']=='by_date' ? $vacation['start_date'].'-'.$vacation['end_date'] : $vacation['status']);
-				if ($vacation['forwards']) $newscriptfoot .= '&&' . $vacation['forwards'];
-				$newscriptfoot .= "\n";
+			$vacation['text'] = preg_replace("/\r?\n/","\\n",$vacation['text']);
+			$newscriptfoot .= "&&" . $vacation['text'] . "&&" .
+				($vacation['status']=='by_date' ? $vacation['start_date'].'-'.$vacation['end_date'] : $vacation['status']);
+			if ($vacation['forwards']) $newscriptfoot .= '&&' . $vacation['forwards'];
+			$newscriptfoot .= "\n";
 		}
 		if ($this->emailNotification) {
 			$emailNotification = $this->emailNotification;

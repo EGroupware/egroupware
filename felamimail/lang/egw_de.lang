@@ -622,6 +622,8 @@ users can define their own emailaccounts	admin	de	Anwender können ihre eigenen 
 vacation notice	common	de	Abwesenheitsnotiz
 vacation notice is active	felamimail	de	Abwesenheitsnotiz ist aktiv
 vacation notice is not saved yet! (but we filled in some defaults to cover some of the above errors. please correct and check your settings and save again.)	felamimail	de	Die Abwesenheitsnotiz ist noch nicht gespeichert! (Wir haben einige Standartwerte gesetzt, um einige der oben gemeldeten Probleme zu beheben. Bitte prüfen/korrigieren Sie Ihre Einstellungen und speichern diese erneut ab.)
+vacation notice sucessful updated.	felamimail	de	Abwesenheitsnotiz erfolgreich aktualisiert.
+vacation notice update failed	felamimail	de	Aktualisierung der Abwesenheitsnotiz fehlgeschlagen
 vacation start-date must be before the end-date!	felamimail	de	Startdatum der Abwesenheitsnotiz muss VOR dem Enddatum liegen!
 validate certificate	felamimail	de	Zertifikat überprüfen
 validate mail sent to	felamimail	de	Überprüfe die ausgewählten Adressen beim Senden des Formulars
@@ -635,6 +637,7 @@ what do do with html email	felamimail	de	Wie sollen E-Mails im HTML Format angez
 what order the list columns are in	felamimail	de	Wählen Sie die Spaltenanordnung in der E-Mail Liste aus.
 what to do when you delete a message	felamimail	de	Wählen Sie die Methode aus, wenn Sie eine Nachricht löschen. Diese kann entweder direkt gelöscht werden, oder in den Papierkorb verschoben werden.
 what to do when you send a message	felamimail	de	Wählen Sie die Aktion aus, wenn eine Nachricht versendet wird. EGroupware kann  z. B. die Nachricht in den Gesendet Ordner kopieren.
+what to do with html email	felamimail	de	Was soll mit HTML Mail passieren
 when deleting messages	felamimail	de	Wenn Nachrichten gelöscht werden
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	felamimail	de	Dürfen E-Mail in dem gleichen Fenster angezeigt werden, oder wünschen Sie nur jede E-Mail ein neues Fenster?
 when saving messages as item of a different app	felamimail	de	Wählen Sie das Format zur Konvertierung von E-Mails in andere Anwendungen aus. Beispielsweise das Speichern von E-Mails als Infolog. Wir empfehlen .eml, um die Original E-Mail zu erhalten und darauf zu antworten.
