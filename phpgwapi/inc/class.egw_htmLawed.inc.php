@@ -83,7 +83,9 @@ class egw_htmLawed
 		$this->Configuration = array('comment'=>1, //remove comments
 			'make_tag_strict'=>3,//3 is a new own config value, to indicate that transformation is to be performed, but don't transform font, as size transformation of numeric sizes to keywords alters the intended result too much
 			'balance'=>0,//turn off tag-balancing (config['balance']=>0). That will not introduce any security risk; only standards-compliant tag nesting check/filtering will be turned off (basic tag-balance will remain; i.e., there won't be any unclosed tag, etc., after filtering)
-			'tidy'=>1,
+			// tidy eats away even some wanted whitespace, so we switch it off;
+			// we used it for its compacting and beautifying capabilities, which resulted in better html for further processing
+			'tidy'=>0,
 			'elements' => "* -script",
 			'deny_attribute' => 'on*',
 			'schemes'=>'href: file, ftp, http, https, mailto; src: cid, data, file, ftp, http, https; *:file, http, https',
