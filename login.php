@@ -340,11 +340,11 @@ else
 				// redirect to referer on logout
 				$GLOBALS['egw']->session->appsession('referer', 'login', $_SERVER['HTTP_REFERER']);
 			}
-
 			// Check for save passwd
-			if($GLOBALS['egw_info']['server']['check_save_passwd'] && $GLOBALS['egw']->acl->check('changepassword', 1, 'preferences') && $unsave_msg = $GLOBALS['egw']->auth->crackcheck($passwd))
+			if($GLOBALS['egw_info']['server']['check_save_passwd'] && !$GLOBALS['egw']->acl->check('nopasswordchange', 1, 'preferences') &&
+				($unsave_msg = $GLOBALS['egw']->auth->crackcheck($passwd)))
 			{
-				$GLOBALS['egw']->log->write(array('text'=>'D-message, User '. $login. ' authenticated with an unsave password','file' => __FILE__,'line'=>__LINE__));
+				error_log('login::'.__LINE__.' User '. $login. ' authenticated with an unsave password'.' '.$unsave_msg);
 				$message = '<font color="red">'. lang('eGroupWare checked your password for saftyness. You have to change your password for the following reason:').'<br>';
 				$GLOBALS['egw']->redirect_link('/index.php', array('menuaction' => 'preferences.uipassword.change','message' => $message. $unsave_msg. '</font>'));
 			}
