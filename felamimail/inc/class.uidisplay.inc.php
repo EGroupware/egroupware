@@ -1507,7 +1507,7 @@ blockquote[type=cite] {
 					$test = @json_encode($singleBodyPart['body']);
 					//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
 					//if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0)
-					if ($test=="null" && strlen($singleBodyPart['body'])>0)
+					if (($test=="null" || $test === false || is_null($test)) && strlen($singleBodyPart['body'])>0)
 					{
 						// this should not be needed, unless something fails with charset detection/ wrong charset passed
 						error_log(__METHOD__.__LINE__.' Charset Reported:'.$singleBodyPart['charSet'].' Charset Detected:'.felamimail_bo::detect_encoding($singleBodyPart['body']));
@@ -1564,7 +1564,23 @@ blockquote[type=cite] {
 
 					// do the cleanup, set for the use of purifier
 					$usepurifier = true;
+					$newBodyBuff = $newBody;
 					felamimail_bo::getCleanHTML($newBody,$usepurifier);
+					// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
+					if (strtoupper($this->displayCharset) == 'UTF-8')
+					{
+						$test = @json_encode($newBody);
+						//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
+						//if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0)
+						if (($test=="null" || $test === false || is_null($test)) && strlen($newBody)>0)
+						{
+							$newBody = $newBodyBuff;
+							felamimail_bo::$htmLawed_config['tidy'] = 0;
+							felamimail_bo::getCleanHTML($newBody,$usepurifier);
+							felamimail_bo::$htmLawed_config['tidy'] = 1;
+						}
+					}
+
 					// removes stuff between http and ?http
 					$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';    // only http:// gets removed, other protocolls are shown
 					$newBody = preg_replace('~'.$Protocol.'[^>]*\?'.$Protocol.'~sim','$1',$newBody); // removes stuff between http:// and ?http://
