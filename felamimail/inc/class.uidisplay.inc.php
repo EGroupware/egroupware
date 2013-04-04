@@ -1575,9 +1575,10 @@ blockquote[type=cite] {
 						if (($test=="null" || $test === false || is_null($test)) && strlen($newBody)>0)
 						{
 							$newBody = $newBodyBuff;
+							$tv = felamimail_bo::$htmLawed_config['tidy'];
 							felamimail_bo::$htmLawed_config['tidy'] = 0;
 							felamimail_bo::getCleanHTML($newBody,$usepurifier);
-							felamimail_bo::$htmLawed_config['tidy'] = 1;
+							felamimail_bo::$htmLawed_config['tidy'] = $tv;
 						}
 					}
 
