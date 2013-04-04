@@ -308,7 +308,7 @@ class infolog_groupdav extends groupdav_handler
 	 * @param int &$nresult on return limit for number or results or unchanged/null
 	 * @return boolean true if filter could be processed
 	 */
-	function _report_filters($options,&$filters,$id, &$nresults)
+	function _report_filters($options,&$cal_filters,$id, &$nresults)
 	{
 		if ($options['filters'])
 		{
