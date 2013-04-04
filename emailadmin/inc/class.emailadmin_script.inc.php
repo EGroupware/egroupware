@@ -496,7 +496,7 @@ class emailadmin_script {
 			if ($rule['status'] != 'DELETED') {
 				$rule['action_arg'] = addslashes($rule['action_arg']);
 				// we need to handle \r\n here.
-				$rule['action_arg'] = preg_replace("/\r\n/","\\n",$rule['action_arg']);
+				$rule['action_arg'] = preg_replace("/\r?\n/","\\n",$rule['action_arg']);
 				/* reset priority value. note: we only do this
 				* for compatibility with Websieve. */
 				$rule['priority'] = $pcount;
