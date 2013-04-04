@@ -27,7 +27,7 @@ class uipassword
 		$n_passwd   = $_POST['n_passwd'];
 		$n_passwd_2 = $_POST['n_passwd_2'];
 		$o_passwd_2 = $_POST['o_passwd_2'];
-
+		if (isset($_GET['message'])) $_GET['message'] = str_replace("<br />"," ",html::purify($_GET['message']));
 		if($GLOBALS['egw']->acl->check('nopasswordchange', 1) || $_POST['cancel'])
 		{
 			if ($GLOBALS['egw_info']['user']['apps']['preferences'])
