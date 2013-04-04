@@ -368,7 +368,7 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					if(count($new_owner) != count(explode(',',$record[$name])))
 					{
 						// Unable to parse value into account
-						$warnings[] = lang('%1 is not a known user or group', $record[$name]);
+						$warnings[] = $name . ': ' .lang('%1 is not a known user or group', $record[$name]);
 					}
 					if($new_owner != '') {
 						$record[$name] = $new_owner;

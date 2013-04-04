@@ -43,6 +43,11 @@
 			$appname = $_GET['appname'] ? $_GET['appname'] : $content['appname'];
 			$definition = $_GET['definition'] ? $_GET['definition'] : $content['definition'];
 
+			// Load application's translations
+			if($appname)
+			{
+				translation::add_app($appname);
+			}
 			if($content['import'] && $definition) {
 				try {
 					$definition_obj = new importexport_definition($content['definition']);
@@ -356,7 +361,8 @@
 					// Skipped column in definition
 					continue;
 				}
-				elseif($index < count($options['csv_fields']) && strtoupper($options['csv_fields'][$index]) != strtoupper($header) && strtoupper(lang($options['csv_fields'][$index])) != strtoupper($header))
+				// Check column headers, taking into account different translations
+				elseif($index < count($options['csv_fields']) && strtoupper($options['csv_fields'][$index]) != strtoupper($header) && strtoupper(lang($options['csv_fields'][$index])) != strtoupper($header) && strtoupper($options['csv_fields'][$index]) != strtoupper(lang($header)))
 				{
 					// Problem
 					$message[] = lang("Column mismatch: %1 should be %2, not %3",
