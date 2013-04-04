@@ -589,6 +589,11 @@
 						{
 							print "vacation update failed<br>";
 							#print $script->errstr."<br>";
+							$this->t->set_var('validation_errors', lang('Vacation notice update failed').': '.$this->bosieve->error);
+						}
+						else
+						{
+							$this->t->set_var('validation_errors', lang('Vacation notice sucessful updated.'));
 						}
 					}
 					else
