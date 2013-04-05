@@ -35,6 +35,7 @@ acl manager	admin	de	ACL-Manager
 acl rights	common	de	ACL-Rechte
 action	admin	de	Befehl
 actions	admin	de	Befehle
+activate	admin	de	Aktivieren
 activate wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) aktivieren
 add a category	admin	de	Eine Kategorie hinzufügen
 add a group	admin	de	Eine Gruppe hinzufügen
@@ -122,6 +123,7 @@ category saved.	admin	de	Kategorie gespeichert
 change account_id	admin	de	Änderung der account_id
 change acl rights	admin	de	ACL-Rechte ändern
 change config settings	admin	de	Konfiguration der Anwendung ändern
+change domain of email address and aliases	admin	de	ändert Domain von EMail Adressen oder Aliasen
 change main screen message	admin	de	Nachricht der Startseite ändern
 change owner	admin	de	Besitzer ändern
 change password for %1	admin	de	Ändern des Passworts für %1
@@ -158,6 +160,7 @@ data	admin	de	Daten
 day	admin	de	Tag
 day of week<br>(0-6, 0=sun)	admin	de	Wochentag<br>(0-6, 0=Sonntag)
 db backup and restore	admin	de	DB Datensicherung und Wiederherstellung
+deactivate	admin	de	Deaktivieren
 default	admin	de	Vorgabe
 default file system space per user	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer
 default file system space per user/group ?	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer/Gruppe verwenden?
@@ -235,6 +238,7 @@ egroupware version	admin	de	EGroupware Version
 either install id and config password needed or the remote hash!	admin	de	Sie benötigen entweder die Install ID UND das Konfigurationspasswort ODER den Remote Hash!
 email account active	admin	de	E-Mail-Konto aktiv
 email address	admin	de	E-Mail-Adresse
+empty to not change	admin	de	leer lassen um NICHT zu ändern
 enable	admin	de	einschalten
 enable debug-messages	admin	de	Debug-Meldungen einschalten
 enable the soap service	admin	de	soap Service einschalten
@@ -385,6 +389,7 @@ login-status	admin	de	Angemeldet-Status
 loginid	admin	de	Login-ID
 logintime	admin	de	Anmeldezeit
 logoutime	admin	de	Abmeldezeit
+mail account	admin	de	EMail Konto
 mail settings	admin	de	E-Mail-Einstellungen
 main email-address	admin	de	Stamm-E-Mail-Adresse
 main screen message	admin	de	Nachricht der Startseite

@@ -86,7 +86,8 @@ class admin_passwordreset
 			}
 			elseif (!$content['random_pw'] && !$content['hash'] && !$content['notify'] &&
 				(string)$content['changepassword'] === '' && (string)$content['mustchangepassword'] === '' &&
-				(string)$content['mail']['activate'] === '' && (string)$content['mail']['quota'] === '')
+				(string)$content['mail']['activate'] === '' && (string)$content['mail']['quota'] === '' &&
+				strpos($content['mail']['domain'], '.') === false)
 			{
 				$msg = lang('You need to select as least one action!');
 			}
@@ -149,6 +150,41 @@ class admin_passwordreset
 							}
 						}
 						$account['account_password'] = $password;
+
+						if ((string)$content['mail']['activate'] !== '' || (string)$content['mail']['quota'] !== '')
+						{
+							if (!isset($emailadmin))
+							{
+								$emailadmin = new emailadmin_bo();
+								$domain = $GLOBALS['egw_info']['server']['mail_suffix'];
+							}
+							if (($userData = $emailadmin->getUserData ($account_id)))
+							{
+								if ((string)$content['mail']['activate'] !== '')
+								{
+									$userData['accountStatus'] = $content['mail']['activate'] ? 'active' : '';
+								}
+								if ((string)$content['mail']['quota'] !== '')
+								{
+									$userData['quotaLimit'] = $content['mail']['quota'];
+								}
+								if (strpos($content['mail']['domain'], '.') !== false)
+								{
+									$userData['mailLocalAddress'] = preg_replace('/@'.preg_quote($domain).'$/', '@'.$content['mail']['domain'], $userData['mailLocalAddress']);
+
+									foreach($userData['mailAlternateAddress'] as &$alias)
+									{
+										$alias = preg_replace('/@'.preg_quote($domain).'$/', '@'.$content['mail']['domain'], $alias);
+									}
+								}
+								$emailadmin->saveUserData($account_id, $userData);
+							}
+						}
+						else
+						{
+							$msg .= lang('No profile defined for user %1', '#'.$account_id.' '.$account['account_fullname']."\n");
+							continue;
+						}
 						$changed[] = $account;
 
 						if ($content['notify'])
@@ -182,29 +218,6 @@ class admin_passwordreset
 									': '.strip_tags(str_replace('<p>',"\n",$send->ErrorInfo))."\n";
 							}
 						}
-						if ((string)$content['mail']['activate'] !== '' || (string)$content['mail']['quota'] !== '')
-						{
-							if (!isset($emailadmin))
-							{
-								$emailadmin = new emailadmin_bo();
-							}
-							if (($userData = $emailadmin->getUserData ($account_id)))
-							{
-								if ((string)$content['mail']['activate'] !== '')
-								{
-									$userData['accountStatus'] = $content['mail']['activate'] ? 'active' : '';
-								}
-								if ((string)$content['mail']['quota'] !== '')
-								{
-									$userData['quotaLimit'] = $content['mail']['quota'];
-								}
-								$emailadmin->saveUserData($account_id, $userData);
-							}
-						}
-						else
-						{
-							$msg .= lang('No profile defined for user %1', '#'.$account_id.' '.$account['account_fullname']);
-						}
 					}
 				}
 				if ($changed)
@@ -219,6 +232,7 @@ class admin_passwordreset
 		$sel_options['hash'] = $account_repository == 'sql' ?
 			sql_passwdhashes($GLOBALS['egw_info']['server'],true) :
 			passwdhashes($GLOBALS['egw_info']['server'],true);
+		$sel_options['activate'] = array('Deactivate','Activate');
 
 		$content['replacements'] = array();
 		foreach($this->replacements as $name => $label)
