@@ -151,7 +151,8 @@ class admin_passwordreset
 						}
 						$account['account_password'] = $password;
 
-						if ((string)$content['mail']['activate'] !== '' || (string)$content['mail']['quota'] !== '')
+						if ((string)$content['mail']['activate'] !== '' || (string)$content['mail']['quota'] !== '' ||
+							strpos($content['mail']['domain'], '.') !== false)
 						{
 							if (!isset($emailadmin))
 							{
