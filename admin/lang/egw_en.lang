@@ -35,6 +35,7 @@ acl manager	admin	en	ACL manager
 acl rights	common	en	ACL rights
 action	admin	en	Action
 actions	admin	en	Actions
+activate	admin	en	Activate
 activate wysiwyg-editor	admin	en	Activate WYSIWYG-editor
 add a category	admin	en	Add a category
 add a group	admin	en	Add a group
@@ -122,6 +123,7 @@ category saved.	admin	en	Category saved.
 change account_id	admin	en	Change account ID
 change acl rights	admin	en	Change ACL rights
 change config settings	admin	en	Change config settings
+change domain of email address and aliases	admin	en	change domain of email address and aliases
 change main screen message	admin	en	Change main screen message
 change owner	admin	en	Change owner
 change password for %1	admin	en	Change password for %1
@@ -158,6 +160,7 @@ data	admin	en	Data
 day	admin	en	Day
 day of week<br>(0-6, 0=sun)	admin	en	Day of week<br>(0-6, 0=Sun)
 db backup and restore	admin	en	DB backup and restore
+deactivate	admin	en	Deactivate
 default	admin	en	Default
 default file system space per user	admin	en	Default file system space per user
 default file system space per user/group ?	admin	en	Default file system space per user/group?
@@ -236,6 +239,7 @@ egroupware version	admin	en	EGroupware version
 either install id and config password needed or the remote hash!	admin	en	Either install ID AND config password needed OR the remote hash!
 email account active	admin	en	Email account active
 email address	admin	en	Email address
+empty to not change	admin	en	empty to NOT change
 enable	admin	en	Enable
 enable debug-messages	admin	en	Enable debug messages.
 enable the soap service	admin	en	Enable the soap service.
@@ -386,6 +390,7 @@ login-status	admin	en	Login status
 loginid	admin	en	Login ID
 logintime	admin	en	Login time
 logoutime	admin	en	Logout time
+mail account	admin	en	Mail account
 mail settings	admin	en	Mail settings
 main email-address	admin	en	Main email address
 main screen message	admin	en	Main screen message
