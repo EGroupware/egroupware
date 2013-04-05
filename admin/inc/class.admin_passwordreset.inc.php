@@ -179,11 +179,11 @@ class admin_passwordreset
 								}
 								$emailadmin->saveUserData($account_id, $userData);
 							}
-						}
-						else
-						{
-							$msg .= lang('No profile defined for user %1', '#'.$account_id.' '.$account['account_fullname']."\n");
-							continue;
+							else
+							{
+								$msg .= lang('No profile defined for user %1', '#'.$account_id.' '.$account['account_fullname']."\n");
+								continue;
+							}
 						}
 						$changed[] = $account;
 
