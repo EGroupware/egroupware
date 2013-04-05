@@ -85,7 +85,8 @@ class admin_passwordreset
 				$msg = lang('You need to select some users first!');
 			}
 			elseif (!$content['random_pw'] && !$content['hash'] && !$content['notify'] &&
-				(string)$content['changepassword'] === '' && (string)$content['mustchangepassword'] === '')
+				(string)$content['changepassword'] === '' && (string)$content['mustchangepassword'] === '' &&
+				(string)$content['mail']['activate'] === '' && (string)$content['mail']['quota'] === '')
 			{
 				$msg = lang('You need to select as least one action!');
 			}
@@ -180,6 +181,29 @@ class admin_passwordreset
 								$msg .= lang('Notifying account "%1" %2 failed!',$account['account_lid'],$account['account_email']).
 									': '.strip_tags(str_replace('<p>',"\n",$send->ErrorInfo))."\n";
 							}
+						}
+						if ((string)$content['mail']['activate'] !== '' || (string)$content['mail']['quota'] !== '')
+						{
+							if (!isset($emailadmin))
+							{
+								$emailadmin = new emailadmin_bo();
+							}
+							if (($userData = $emailadmin->getUserData ($account_id)))
+							{
+								if ((string)$content['mail']['activate'] !== '')
+								{
+									$userData['accountStatus'] = $content['mail']['activate'] ? 'active' : '';
+								}
+								if ((string)$content['mail']['quota'] !== '')
+								{
+									$userData['quotaLimit'] = $content['mail']['quota'];
+								}
+								$emailadmin->saveUserData($account_id, $userData);
+							}
+						}
+						else
+						{
+							$msg .= lang('No profile defined for user %1', '#'.$account_id.' '.$account['account_fullname']);
 						}
 					}
 				}
