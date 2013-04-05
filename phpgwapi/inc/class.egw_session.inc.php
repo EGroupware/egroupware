@@ -1679,7 +1679,7 @@ class egw_session
 				}
 				else
 				{
-					header('Cache-Control: public, maxage='.$expire);
+					header('Cache-Control: public, max-age='.$expire);
 					header('Expires: ' . gmdate('D, d M Y H:i:s', time()+$expire) . ' GMT');
 					// remove Pragma header, might be set by old header
 					if (function_exists('header_remove'))	// PHP 5.3+
