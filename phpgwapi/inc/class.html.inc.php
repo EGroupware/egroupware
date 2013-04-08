@@ -519,11 +519,12 @@ class html
 	* @param string $_width='100%'
 	* @param string $_start_path='' if passed activates the browser for image at absolute path passed
 	* @param boolean $_purify=true run $_content through htmlpurifier before handing it to fckEditor
-	* @param mixed (boolean/string) $_focusToBody USED only for CKEDIOR true means yes, focus on top, you may specify TOP or BOTTOM (to focus on the end of the editor area)
+	* @param mixed (boolean/string) $_focusToBody=false USED only for CKEDIOR true means yes, focus on top, you may specify TOP or BOTTOM (to focus on the end of the editor area)
+	* @param string $_executeJSAfterInit='' Javascript to be executed after InstanceReady of CKEditor
 	* @return string the necessary html for the textarea
 	*/
 	static function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'),
-		$_height='400px', $_width='100%',$_start_path='',$_purify=true, $_focusToBody=false)
+		$_height='400px', $_width='100%',$_start_path='',$_purify=true, $_focusToBody=false, $_executeJSAfterInit='')
 	{
 		if (!self::htmlarea_availible() || $_mode == 'ascii')
 		{
@@ -565,6 +566,7 @@ egw.LAB.wait(function() {
 		"instanceReady",
 		function (ev)
 		{
+			//alert("CKEditorLoad:"+"'.$_focusToBody.'");
 '.($_focusToBody?'
 			ev.editor.focus();':'').'
 			var d = ev.editor.document;
@@ -580,6 +582,7 @@ egw.LAB.wait(function() {
 			r.collapse(true);
 			r.select();'.'':'').'
 			ev.editor.resize("100%", '.str_replace('px', '', $pxheight).');
+'.($_executeJSAfterInit?$_executeJSAfterInit:'').'
 		}
 	);'.
 	(trim($_content) == '' && $font_span ? 'CKEDITOR.instances["'.$_name.'"].setData("'.$font_span.'&#8203;</span>");' : '').
@@ -600,10 +603,11 @@ egw.LAB.wait(function() {
 	* @param string $_width='100%'
 	* @param boolean $_purify=true
 	* @param string $_border='0px' NOT used for CKEditor
-	* @param mixed (boolean/string) $_focusToBody USED only for CKEDIOR true means yes, focus on top, you may specify TOP or BOTTOM (to focus on the end of the editor area)
+	* @param mixed (boolean/string) $_focusToBody=false USED only for CKEDIOR true means yes, focus on top, you may specify TOP or BOTTOM (to focus on the end of the editor area)
+	* @param string $_executeJSAfterInit='' Javascript to be executed after InstanceReady of CKEditor
 	* @return string the necessary html for the textarea
 	*/
-	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%',$_purify=true, $_border='0px',$_focusToBody=false)
+	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%',$_purify=true, $_border='0px',$_focusToBody=false,$_executeJSAfterInit='')
 	{
 		if (!self::htmlarea_availible() || $_mode == 'ascii')
 		{
@@ -612,7 +616,7 @@ egw.LAB.wait(function() {
 		}
 		else
 		{
-			return self::fckEditor($_name, $_content, $_mode, array(), $_height, $_width,'',$_purify,$_focusToBody);
+			return self::fckEditor($_name, $_content, $_mode, array(), $_height, $_width,'',$_purify,$_focusToBody,$_executeJSAfterInit);
 		}
 	}
 
