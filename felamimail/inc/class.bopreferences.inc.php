@@ -377,10 +377,10 @@
 			{
 				if (!isset($userPrefs['sendOptions']) || empty($userPrefs['sendOptions'])) $userPrefs['sendOptions'] = 'move_to_sent';
 			}
-
+			/* not used anymore
 			if (!empty($userPrefs['email_sig'])) $userPrefs['signature'] = $userPrefs['email_sig'];
-
- 			unset($userPrefs['email_sig']);
+			*/
+ 			if (isset($userPrefs['email_sig'])) unset($userPrefs['email_sig']);
 			return $userPrefs;
 		}
 
