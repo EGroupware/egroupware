@@ -191,39 +191,46 @@
 <!-- BEGIN attachment -->
 <script language="javascript1.2">
 // position cursor in top form field of focusElement
-toFocus = "{focusElement}";
-if (toFocus=='subject')
-{
-	sString = document.doit.fm_compose_subject.value;
-	document.doit.fm_compose_subject.selectionStart = document.doit.fm_compose_subject.selectionEnd = sString.length;
-	document.doit.fm_compose_subject.focus();
-}
-if (toFocus=='to')
-{
-	sString = document.doit.elements["address[]"][0].value;
-	document.doit.elements["address[]"][0].selectionStart = document.doit.elements["address[]"][0].selectionEnd = sString.length;
-	document.doit.elements["address[]"][0].focus();
-}
-if (toFocus=='body')
-{
-	var htmlFlag = document.getElementsByName('_is_html')[0];
+var toFocus = "{focusElement}";
+setToFocus(toFocus);
 
-	// textmode
-	if (htmlFlag.value==0)
+function setToFocus(focusTo)
+{
+//alert(toFocus);
+	if (typeof focusTo == "undefined") focusTo = toFocus;
+	if (focusTo=='subject')
 	{
-		document.doit.body.selectionStart = document.doit.body.selectionEnd = 0;
-		document.doit.body.focus();
-	}
-	//htmlMode
-	if (htmlFlag.value==1) 
-	{
-		// focus on subject as I could not figure out jet how to focus on htmlTextArea of CKEditor
 		sString = document.doit.fm_compose_subject.value;
 		document.doit.fm_compose_subject.selectionStart = document.doit.fm_compose_subject.selectionEnd = sString.length;
 		document.doit.fm_compose_subject.focus();
-		// the actual focussing is done in class.html.inc.php function fckEditor
 	}
-}
+	if (focusTo=='to')
+	{
+		sString = document.doit.elements["address[]"][0].value;
+		document.doit.elements["address[]"][0].selectionStart = document.doit.elements["address[]"][0].selectionEnd = sString.length;
+		document.doit.elements["address[]"][0].focus();
+	}
+	if (focusTo=='body')
+	{
+		var htmlFlag = document.getElementsByName('_is_html')[0];
+
+		// textmode
+		if (htmlFlag.value==0)
+		{
+			document.doit.body.selectionStart = document.doit.body.selectionEnd = 0;
+			document.doit.body.focus();
+		}
+		//htmlMode
+		if (htmlFlag.value==1) 
+		{
+			// focus on subject as I could not figure out jet how to focus on htmlTextArea of CKEditor
+			sString = document.doit.fm_compose_subject.value;
+			document.doit.fm_compose_subject.selectionStart = document.doit.fm_compose_subject.selectionEnd = sString.length;
+			document.doit.fm_compose_subject.focus();
+			// the actual focussing is done in class.html.inc.php function fckEditor
+		}
+	}
+};
 </script>
 
 <fieldset class="bordertop"><legend>{lang_attachments}</legend>
