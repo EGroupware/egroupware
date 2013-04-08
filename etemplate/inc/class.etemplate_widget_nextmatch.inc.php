@@ -192,7 +192,11 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			if(strpos($name, 'options-') !== false)
 			{
 				$select = substr($name, 8);
-				self::$request->sel_options[$select] = $_value;
+				if(!self::$request->sel_options[$select])
+				{
+					self::$request->sel_options[$select] = array();
+				}
+				self::$request->sel_options[$select] += $_value;
 				// The client doesn't need them in content, but we can't unset them because
 				// some apps don't send them on re-load, pulling them from the session
 				//unset($value[$name]);
