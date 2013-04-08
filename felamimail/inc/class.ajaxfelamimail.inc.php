@@ -1490,10 +1490,15 @@ class ajaxfelamimail
 			$htmlConfig['comment'] = 2;
 			$oldSigText = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($oldSigText,$htmlConfig,array(),true):$oldSigText));
 			//error_log(__METHOD__.'Old(clean):'.$oldSigText.'#');
-			$_content = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($_content,$htmlConfig,array(),true):$_content));
 			if ($_currentMode == 'html')
 			{
 				$_content = str_replace("\n",'\n',$_content);	// dont know why, but \n screws up preg_replace
+				$styles = felamimail_bo::getStyles(array(array('body'=>$_content)));
+				if (stripos($_content,'style')!==false) felamimail_bo::replaceTagsCompletley($_content,'style'); // clean out empty or pagewide style definitions / left over tags
+			}
+			$_content = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($_content,$htmlConfig,array(),true):$_content));
+			if ($_currentMode == 'html')
+			{
 				$_content = preg_replace($reg='|'.preg_quote('<!-- HTMLSIGBEGIN -->','|').'.*'.preg_quote('<!-- HTMLSIGEND -->','|').'|u',
 					$rep='<!-- HTMLSIGBEGIN -->'.$sigText.'<!-- HTMLSIGEND -->', $in=$_content, -1, $replaced);
 				$_content = str_replace(array('\n',"\xe2\x80\x93","\xe2\x80\x94","\xe2\x82\xac"),array("\n",'&ndash;','&mdash;','&euro;'),$_content);
@@ -1533,7 +1538,15 @@ class ajaxfelamimail
 				if($this->_debug) error_log(__METHOD__." Compare content:".$_content);
 			}
 			$response = new xajaxResponse();
-			if ($_currentMode == 'html') $_content = utf8_decode($_content);
+			if ($styles)
+			{
+				//error_log($styles);
+				$_content = $styles.$_content;
+			}
+			if ($_currentMode == 'html')
+			{
+				$_content = utf8_decode($_content);
+			}
 
 			$escaped = utf8_encode(str_replace(array("'", "\r", "\n"), array("\\'", "\\r", "\\n"), $_content));
 			//error_log(__METHOD__.$escaped);
