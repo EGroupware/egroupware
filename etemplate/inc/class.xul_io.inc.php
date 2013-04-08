@@ -271,6 +271,7 @@ class xul_io
 				unset($cell['label']);
 			}
 			// fall-through
+		case 'split':
 		case 'vbox':
 		case 'hbox':
 		case 'box':
@@ -664,6 +665,7 @@ class xul_io
 						unset($menulist_attr);
 					}
 					break;
+				case 'split':
 				case 'vbox':
 				case 'hbox':
 				case 'deck':

@@ -78,6 +78,7 @@ class soetemplate
 		'hbox' => 'box',
 		'groupbox' => 'box',
 		'deck' => 'box',
+		'split' => 'box',
 	);
 
 	/**
@@ -242,6 +243,7 @@ class soetemplate
 			case 'groupbox':
 			case 'box':
 			case 'deck':
+			default:
 				list($n,$options) = explode(',',$parent['size'],2);
 				$parent[++$n] = &$cell;
 				$parent['size'] = $n . ($options ? ','.$options : '');
@@ -1171,6 +1173,7 @@ class soetemplate
 		}
 		switch($widget['type'])
 		{
+			case 'split':
 			case 'box':
 			case 'vbox':
 			case 'hbox':

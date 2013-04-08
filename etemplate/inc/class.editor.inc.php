@@ -1371,6 +1371,37 @@ class editor
 		{
 			$editor->set_cell_attribute('etemplate.editor.widget.generic','obj',$type_tmpl);
 		}
+		/*
+		Not a known type, use a generic attribute thing to at least allow working
+		with the attributes provided
+		*/
+		if(!$this->types[$widget['type']] && !$this->extensions[$widget['type']])
+		{
+			$grid =& $editor->get_widget_by_name('etemplate.editor.widget.generic');
+			$grid['type'] = 'grid';
+			$grid['name'] = 'cell';
+			$grid['data'] = array(array());
+			$grid['data'][] = array('A'=>boetemplate::empty_cell('label','',array('label' => 'Type')), 'B' => boetemplate::empty_cell('select','type'));
+			$attributes = array('type'=>$widget_type,'name'=>'');
+			if(is_array($widget))
+			{
+				$attributes += $widget;
+			}
+			foreach($attributes as $attr_name => $attr_value)
+			{
+				if(is_array($attr_value) || in_array($attr_value, array('type','options')))
+				{
+					continue;
+				}
+				else
+				{
+					$attr = boetemplate::empty_cell('text',$attr_name,array());
+				}
+				$grid['data'][] = array('A' => boetemplate::empty_cell('label','',array('label' => $attr_name)),'B'=>$attr);
+				//boetemplate::add_child($grid,$attr);
+				unset($attr);
+			}
+		}
 		if ($parent['type'] == 'grid')
 		{
 			$editor->disable_cells('box_menu');
@@ -1382,6 +1413,7 @@ class editor
 		}
 		$preserv = $this->etemplate->as_array()+array(
 			'path'        => $content['path'],
+			'type'        => $content['type'],
 			'old_version' => $this->etemplate->version,
 			'opener'      => $content['opener'],
 			'cell'        => $content['cell'],
@@ -1392,7 +1424,9 @@ class editor
 		$GLOBALS['egw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Editable Templates - Editor');
 		$editor->exec('etemplate.editor.widget',$content,array(
-				'type'       => array_merge(boetemplate::$types,$this->extensions),
+				'type'       => array_merge(array($widget['type'] => $widget['type'] . ' (?)'),
+					boetemplate::$types,$this->extensions
+				),
 				'align'      => &$this->aligns,
 				'valign'     => &$this->valigns,
 				'part'       => $allowed_parts,

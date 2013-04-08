@@ -1719,6 +1719,9 @@ class etemplate_old extends boetemplate
 					));
 				}
 				break;
+			case 'split':
+				// Render this et2 widget as a box
+				$orient = $cell['orientation'];
 			case 'vbox':
 			case 'hbox':
 			case 'groupbox':
