@@ -285,7 +285,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 				{
 					var name_val = _extravars[i].split('=',2);
 					var name = name_val[0];
-					var val = name_val[1];
+					var val = name_val[1] || '';
 					if (val.indexOf('%26') != -1) val = val.replace(/%26/g,'&');	// make sure to not double encode &
 					if (name.lastIndexOf('[]') == name.length-2)
 					{
