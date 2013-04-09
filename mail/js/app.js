@@ -8,31 +8,55 @@
  * @version $Id$
  */
 
-var mail_doTimedRefresh;
-var mail_refreshTimeOut = 1000*60*3; // initial call
-mail_startTimerFolderStatusUpdate(mail_refreshTimeOut);
-//inital call of refresh folderstatus
-window.setTimeout('mail_refreshFolderStatus()',1000);
+app.mail = AppJS.extend({
+
+appname: 'mail',
+doStatus: null,
+mail_doTimedRefresh: false,
+
+mail_refreshTimeOut: 1000*60*3, // initial call
+mail_queuedFolders: [],
+mail_queuedFoldersIndex: 0,
+
+/**
+ * Initialize javascript for this application
+ */
+init: function() {
+
+	this._super.apply(this,arguments);
+
+	window.register_app_refresh("mail", this.app_refresh);
+
+	this.mail_startTimerFolderStatusUpdate(this.mail_refreshTimeOut);
+	//inital call of refresh folderstatus
+	var self = this;
+	window.setTimeout(function() {self.mail_refreshFolderStatus();},1000);
+},
+
+open: function(action, senders, ids) {
+	console.log("open",action, senders, ids);
+},
 
 /**
  * mail_startTimerFolderStatusUpdate, timer functions, if the counter changes for the current folder
  * refresh the message list
  * @param timeout
  */
-function mail_startTimerFolderStatusUpdate(_refreshTimeOut) {
+mail_startTimerFolderStatusUpdate: function(_refreshTimeOut) {
 	if (typeof _refreshTimeOut == 'undefined')
 	{
 		var minutes = egw.preference('refreshTime','mail');
-		mail_refreshTimeOut = _refreshTimeOut= 1000*60*(minutes?minutes:3); // either the prefs or 3 Minutes
+		this.mail_refreshTimeOut = _refreshTimeOut= 1000*60*(minutes?minutes:3); // either the prefs or 3 Minutes
 	}
-	if (mail_refreshTimeOut > _refreshTimeOut) _refreshTimeOut = mail_refreshTimeOut;
-	if(mail_doTimedRefresh) {
-		window.clearTimeout(mail_doTimedRefresh);
+	if (this.mail_refreshTimeOut > _refreshTimeOut) _refreshTimeOut = this.mail_refreshTimeOut;
+	if(this.mail_doTimedRefresh) {
+		window.clearTimeout(this.mail_doTimedRefresh);
 	}
 	if(_refreshTimeOut > 9999) {//we do not set _refreshTimeOut's less than 10 seconds
-		mail_doTimedRefresh = window.setInterval("mail_refreshFolderStatus()", _refreshTimeOut);
+		var self = this;
+		this.mail_doTimedRefresh = window.setInterval(self.mail_refreshFolderStatus, _refreshTimeOut);
 	}
-}
+},
 
 /**
  * mail_refreshFolderStatus, function to call to read the counters of a folder and apply them
@@ -40,7 +64,7 @@ function mail_startTimerFolderStatusUpdate(_refreshTimeOut) {
  * @param _nodeID
  * @param mode
  */
-function mail_refreshFolderStatus(_nodeID,mode) {
+mail_refreshFolderStatus: function(_nodeID,mode) {
 	var nodeToRefresh = 0;
 	var mode2use = "none";
 	if (_nodeID) nodeToRefresh = _nodeID;
@@ -51,53 +75,51 @@ function mail_refreshFolderStatus(_nodeID,mode) {
 
 	var activeFolders = tree_wdg.getTreeNodeOpenItems(nodeToRefresh,mode2use);
 	//alert(activeFolders.join('#,#'));
-	mail_queueRefreshFolderList(activeFolders);
+	this.mail_queueRefreshFolderList(activeFolders);
 
-	mail_refreshMessageGrid();
-}
+	this.mail_refreshMessageGrid();
+},
 
-var mail_queuedFolders = [];
-var mail_queuedFoldersIndex = 0;
 
 /**
  * Queues a refreshFolderList request for 1ms. Actually this will just execute the
  * code after the calling script has finished.
  */
-function mail_queueRefreshFolderList(_folders)
+mail_queueRefreshFolderList: function(_folders)
 {
-	mail_queuedFolders.push(_folders);
-	mail_queuedFoldersIndex++;
+	this.mail_queuedFolders.push(_folders);
+	this.mail_queuedFoldersIndex++;
 
 	// Copy idx onto the anonymous function scope
-	var idx = mail_queuedFoldersIndex;
+	var idx = this.mail_queuedFoldersIndex;
 	window.setTimeout(function() {
-		if (idx == mail_queuedFoldersIndex)
+		if (idx == this.mail_queuedFoldersIndex)
 		{
 			//var folders = mail_queuedFolders.join(",");
-			mail_queuedFoldersIndex = 0;
-			mail_queuedFolders = [];
+			this.mail_queuedFoldersIndex = 0;
+			this.mail_queuedFolders = [];
 
 			var request = new egw_json_request('mail.mail_ui.ajax_setFolderStatus',[_folders]);
 			request.sendRequest();
 		}
 	}, 10);
-}
+},
 
 /**
  * mail_setFolderStatus, function to set the status for the visible folders
  */
-function mail_setFolderStatus(_status) {
+mail_setFolderStatus: function(_status) {
 	var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
 	for (var i in _status) ftree.setLabel(i,_status[i]);//alert(i +'->'+_status[i]);
-}
+},
 
 /**
  * mail_refreshMessageGrid, function to call to reread ofthe current folder
  */
-function mail_refreshMessageGrid() {
+mail_refreshMessageGrid: function() {
 	var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
 	nm.applyFilters(); // this should refresh the active folder
-}
+},
 
 /**
  * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
@@ -109,11 +131,10 @@ function mail_refreshMessageGrid() {
  * @param string|int _id=null id of entry to refresh
  * @param string _type=null either 'edit', 'delete', 'add' or null
  */
-var doStatus;
-window.register_app_refresh("mail", function(_msg, _app, _id, _type)
+app_refresh: function(_msg, _app, _id, _type)
 {
 	var bufferExists = false;
-	window.clearInterval(doStatus); // whatever message was up to be activated
+	window.clearInterval(this.doStatus); // whatever message was up to be activated
 	//alert("app_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
 	//myCurrentMsg = mail_getMsg();
 	//if (myCurrentMsg.length) {
@@ -128,15 +149,17 @@ window.register_app_refresh("mail", function(_msg, _app, _id, _type)
 
 		// TODO: more actions
 	}
-	if (bufferExists) doStatus = window.setInterval("egw_appWindow('mail').mail_setMsg(myMessageBuffer);", 10000);
-}
-);
+	if (bufferExists)
+	{
+		this.doStatus = window.setInterval("egw_appWindow('mail').mail_setMsg(myMessageBuffer);", 10000);
+	}
+},
 
 /**
  * mail_getMsg - gets the current Message
  * @return string
  */
-function mail_getMsg()
+mail_getMsg: function()
 {
 	var msg_wdg = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('msg');
 	if (msg_wdg)
@@ -144,13 +167,13 @@ function mail_getMsg()
 		return msg_wdg.valueOf().htmlNode[0].innerHTML;
 	}
 	return "";
-}
+},
 
 /**
  * mail_setMsg - sets a Message, with the msg container, and controls if the container is enabled/disabled
  * @param string myMsg - the message
  */
-function mail_setMsg(myMsg)
+mail_setMsg: function(myMsg)
 {
 	var msg_wdg = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('msg');
 	if (msg_wdg)
@@ -158,7 +181,7 @@ function mail_setMsg(myMsg)
 		msg_wdg.set_value(myMsg);
 		msg_wdg.set_disabled(myMsg.trim().length==0);
 	}
-}
+},
 
 /**
  * Delete mails
@@ -166,7 +189,7 @@ function mail_setMsg(myMsg)
  * @param _action
  * @param _elems
  */
-function mail_delete(_action,_elems)
+mail_delete: function(_action,_elems)
 {
 	var msg = mail_getFormData(_elems);
 	//alert(_action.id+','+ msg);
@@ -175,14 +198,14 @@ function mail_delete(_action,_elems)
 	var request = new egw_json_request('mail.mail_ui.ajax_deleteMessages',[msg]);
 	request.sendRequest(false);
 	mail_refreshMessageGrid()
-}
+},
 
 /**
  * UnDelete mailMessages
  * 
  * @param _messageList
  */
-function mail_undeleteMessages(_messageList) {
+mail_undeleteMessages: function(_messageList) {
 // setting class of row, the old style
 /*
 		for(var i=0;i<_messageList['msg'].length;i++) {
@@ -196,46 +219,46 @@ function mail_undeleteMessages(_messageList) {
 			}
 		}
 */
-}
+},
 
 /**
  * mail_emptyTrash
  */
-function mail_emptyTrash() {
+mail_emptyTrash: function() {
 	app_refresh(egw.lang('empty trash'), 'mail');
 	var request = new egw_json_request('mail.mail_ui.ajax_emptyTrash');
 	request.sendRequest();
-}
+},
 
 /**
  * mail_compressFolder
  */
-function mail_compressFolder() {
+mail_compressFolder: function() {
 	app_refresh(egw.lang('compress folder'), 'mail');
 	var request = new egw_json_request('mail.mail_ui.ajax_compressFolder');
 	request.sendRequest();
-}
+},
 
 /**
  * mail_changeProfile
  * @param folder, the ID of the selected Node -> should be an integer
  * @param _widget, handle to the tree widget
  */
-function mail_changeProfile(folder,_widget) {
+mail_changeProfile: function(folder,_widget) {
 //	alert(folder);
 	var request = new egw_json_request('mail.mail_ui.ajax_changeProfile',[folder]);
 	request.sendRequest(false);
 	mail_refreshMessageGrid();
 
 	return true;
-}
+},
 
 /**
  * mail_changeFolder
  * @param folder, the ID of the selected Node
  * @param _widget, handle to the tree widget
  */
-function mail_changeFolder(folder,_widget) {
+mail_changeFolder: function(folder,_widget) {
 	//alert('change Folder called:'+folder);
 	app_refresh(egw.lang('change folder')+'...', 'mail');
 	var img = _widget.getSelectedNode().images[0]; // fetch first image
@@ -265,7 +288,7 @@ function mail_changeFolder(folder,_widget) {
 	var msg = _widget.getRoot().getWidgetById('msg');
 	if (msg)
 	{
-		window.clearInterval(doStatus);
+		window.clearInterval(this.doStatus);
 		displayname = _widget.getSelectedLabel();
 		inBraket = displayname.search(/\(/);
 		if (inBraket!=-1)
@@ -277,9 +300,9 @@ function mail_changeFolder(folder,_widget) {
 		app_refresh(myMsg, 'mail');
 	}
 	//mail_refreshMessageGrid();
-	mail_refreshFolderStatus(folder,'forced');
-	mail_startTimerFolderStatusUpdate(mail_refreshTimeOut);
-}
+	this.mail_refreshFolderStatus(folder,'forced');
+	this.mail_startTimerFolderStatusUpdate(this.mail_refreshTimeOut);
+},
 
 /**
  * Flag mail as 'read', 'unread', 'flagged' or 'unflagged'
@@ -287,13 +310,13 @@ function mail_changeFolder(folder,_widget) {
  * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
  * @param _elems
  */
-function mail_flag(_action, _elems)
+mail_flag: function(_action, _elems)
 {
 	//alert(_action.id+' - '+_elems[0].id);
 	var msg = mail_getFormData(_elems);
 	//
 	mail_flagMessages(_action.id,msg);
-}
+},
 
 /**
  * Flag mail as 'read', 'unread', 'flagged' or 'unflagged'
@@ -301,23 +324,23 @@ function mail_flag(_action, _elems)
  * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
  * @param _elems
  */
-function mail_flagMessages(_flag, _elems)
+mail_flagMessages: function(_flag, _elems)
 {
 	app_refresh(egw.lang('flag messages'), 'mail');
 	var request = new egw_json_request('mail.mail_ui.ajax_flagMessages',[_flag, _elems]);
 	request.sendRequest(false);
 	mail_refreshMessageGrid()
-}
+},
 
 /**
  * display header lines, or source of mail, depending on the url given
  * 
  * @param _url
  */
-function mail_displayHeaderLines(_url) {
+mail_displayHeaderLines: function(_url) {
 	// only used by right clickaction
 	egw_openWindowCentered(_url,'mail_display_headerLines','700','600',window.outerWidth/2,window.outerHeight/2);
-}
+},
 
 /**
  * View header of a message
@@ -325,14 +348,14 @@ function mail_displayHeaderLines(_url) {
  * @param _action
  * @param _elems _elems[0].id is the row-id
  */
-function mail_header(_action, _elems)
+mail_header: function(_action, _elems)
 {
 	//alert('mail_header('+_elems[0].id+')');
 	var url = window.egw_webserverUrl+'/index.php?';
 	url += 'menuaction=mail.mail_ui.displayHeader';	// todo compose for Draft folder
 	url += '&id='+_elems[0].id;
 	mail_displayHeaderLines(url);
-}
+},
 
 /**
  * View message source
@@ -340,7 +363,7 @@ function mail_header(_action, _elems)
  * @param _action
  * @param _elems _elems[0].id is the row-id
  */
-function mail_mailsource(_action, _elems)
+mail_mailsource: function(_action, _elems)
 {
 	//alert('mail_mailsource('+_elems[0].id+')');
 	var url = window.egw_webserverUrl+'/index.php?';
@@ -348,7 +371,7 @@ function mail_mailsource(_action, _elems)
 	url += '&id='+_elems[0].id;
 	url += '&location=display';
 	mail_displayHeaderLines(url);
-}
+},
 
 /**
  * Save a message
@@ -356,7 +379,7 @@ function mail_mailsource(_action, _elems)
  * @param _action
  * @param _elems _elems[0].id is the row-id
  */
-function mail_save(_action, _elems)
+mail_save: function(_action, _elems)
 {
 	//alert('mail_save('+_elems[0].id+')');
 	var url = window.egw_webserverUrl+'/index.php?';
@@ -364,7 +387,7 @@ function mail_save(_action, _elems)
 	url += '&id='+_elems[0].id;
 	//window.open(url,'_blank','dependent=yes,width=100,height=100,scrollbars=yes,status=yes')
 	document.location = url;
-}
+},
 
 /**
  * Save a message to filemanager
@@ -372,7 +395,7 @@ function mail_save(_action, _elems)
  * @param _action
  * @param _elems _elems[0].id is the row-id
  */
-function mail_save2fm(_action, _elems)
+mail_save2fm: function(_action, _elems)
 {
 	var _id = _elems[0].id;
 	var dataElem = egw.dataGetUIDdata(_id);
@@ -389,7 +412,7 @@ function mail_save2fm(_action, _elems)
 	//document.location = url;
 	egw_openWindowCentered(url,'vfs_save_message_'+_elems[0].id,'640','570',window.outerWidth/2,window.outerHeight/2);
 
-}
+},
 
 /**
  * Save message as InfoLog
@@ -397,14 +420,14 @@ function mail_save2fm(_action, _elems)
  * @param _action
  * @param _elems _elems[0].id is the row-id
  */
-function mail_infolog(_action, _elems)
+mail_infolog: function(_action, _elems)
 {
 	//alert('mail_infolog('+_elems[0].id+')');return;
 	var url = window.egw_webserverUrl+'/index.php?';
 	url += 'menuaction=infolog.infolog_ui.import_mail';	// todo compose for Draft folder
 	url += '&rowid='+_elems[0].id;
 	egw_openWindowCentered(url,'import_mail_'+_elems[0].id,_action.data.width,_action.data.height);
-}
+},
 
 /**
  * Save message as ticket
@@ -412,14 +435,14 @@ function mail_infolog(_action, _elems)
  * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
  * @param _elems
  */
-function mail_tracker(_action, _elems)
+mail_tracker: function(_action, _elems)
 {
 	//alert('mail_tracker('+_elems[0].id+')');
 	var url = window.egw_webserverUrl+'/index.php?';
 	url += 'menuaction=tracker.tracker_ui.import_mail';	// todo compose for Draft folder
 	url += '&rowid='+_elems[0].id;
 	egw_openWindowCentered(url,'import_tracker_'+_elems[0].id,_action.data.width,_action.data.height);
-}
+},
 
 
 /**
@@ -428,7 +451,7 @@ function mail_tracker(_action, _elems)
  * @param _actionObjects, the senders
  * @return structured array of message ids: array(msg=>message-ids)
  */
-function mail_getFormData(_actionObjects) {
+mail_getFormData: function(_actionObjects) {
 	var messages = {};
 	if (_actionObjects.length>0)
 	{
@@ -444,14 +467,14 @@ function mail_getFormData(_actionObjects) {
 	}
 
 	return messages;
-}
+},
 
 /**
  * mail_setRowClass
  * 
  * @param _actionObjects, the senders
  */
-function mail_setRowClass(_actionObjects,_class) {
+mail_setRowClass: function(_actionObjects,_class) {
 	if (typeof _class == 'undefined') return false;
 
 	for (var i = 0; i < _actionObjects.length; i++) 
@@ -464,16 +487,16 @@ function mail_setRowClass(_actionObjects,_class) {
 
 		}
 	}
-}
+},
 
 // Tree widget stubs
-mail_dragStart = function(action,sender) {
-console.log(action,sender);
+mail_dragStart: function(action,sender) {
+	console.log(action,sender);
+},
+mail_move: function(action,sender) {
+	console.log(action,sender);
+},
+mail_copy: function(action,sender) {
+	console.log(action,sender);
 }
-mail_move = function(action,sender) {
-console.log(action,sender);
-}
-mail_copy = function(action,sender) {
-console.log(action,sender);
-}
-
+});

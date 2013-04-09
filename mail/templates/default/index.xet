@@ -38,7 +38,7 @@
 		</grid>
 	</template>
 	<template id="mail.index" template="" lang="" group="0" version="1.9.001">
-		<tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="mail_changeFolder(widget.event_args[0],widget);" parent_node="tree_target"/>
+		<tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder(widget.event_args[0],widget);" parent_node="tree_target"/>
 		<html id="msg"/>
 		<split id="splitter" orientation="h" dock_side="bottomDock">
 			<nextmatch id="nm" options="mail.index.rows"/>

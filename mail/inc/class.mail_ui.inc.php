@@ -636,7 +636,7 @@ class mail_ui
 			'open' => array(
 				'caption' => lang('Open'),
 				'group' => ++$group,
-				'onExecute' => 'javaScript:mail_open',
+				'onExecute' => 'javaScript:app.mail.open',
 				'allowOnMultiple' => false,
 				'default' => true,
 			),
