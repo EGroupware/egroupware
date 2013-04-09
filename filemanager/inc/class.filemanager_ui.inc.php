@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -34,7 +34,7 @@ class filemanager_ui
 		'filemanager_ui::listview' => 'Listview',
 	);
 	public static $views_init = false;
-	
+
 	/**
 	 * vfs namespace for document merge properties
 	 *
@@ -127,7 +127,7 @@ class filemanager_ui
 				'group' => $group,
 				'allowOnMultiple' => false,
 				'icon' => 'filesave',
-				'onExecute' => 'javaScript:force_download',
+				'onExecute' => 'javaScript:app.filemanager.force_download',
 				'disableClass' => 'isDir',
 			),
 			'edit' => array(
@@ -141,23 +141,23 @@ class filemanager_ui
 				'caption' => lang('Mail files'),
 				'icon' => 'filemanager/mail_post_to',
 				'group' => $group,
-				'onExecute' => 'javaScript:egw_fileman_mail',
+				'onExecute' => 'javaScript:app.filemanager.mail',
 			),
 			'copy' => array(
 				'caption' => lang('Copy'),
 				'group' => ++$group,
-				'onExecute' => 'javaScript:do_clipboard',
+				'onExecute' => 'javaScript:app.filemanager.clipboard',
 			),
 			'add' => array(
 				'caption' => lang('Add to clipboard'),
 				'group' => $group,
 				'icon' => 'copy',
-				'onExecute' => 'javaScript:do_clipboard',
+				'onExecute' => 'javaScript:app.filemanager.clipboard',
 			),
 			'cut' => array(
 				'caption' => lang('Cut'),
 				'group' => $group,
-				'onExecute' => 'javaScript:do_clipboard',
+				'onExecute' => 'javaScript:app.filemanager.clipboard',
 			),
 			'documents' => filemanager_merge::document_action(
 				$GLOBALS['egw_info']['user']['preferences']['filemanager']['document_dir'],
@@ -176,7 +176,7 @@ class filemanager_ui
 		}
 		return $actions;
 	}
-	
+
 	/**
 	 * Get mergeapp property for given path
 	 *
@@ -211,7 +211,7 @@ class filemanager_ui
 				}
 				break;
 		}
-		
+
 		return $app;
 	}
 
@@ -228,7 +228,7 @@ class filemanager_ui
 			$content = array(
 				'nm' => egw_session::appsession('index','filemanager'),
 			);
-			if (!is_array($content['nm']))
+//			if (!is_array($content['nm']))
 			{
 				$content['nm'] = array(
 					'get_rows'       =>	'filemanager.filemanager_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
@@ -486,91 +486,6 @@ class filemanager_ui
 			'3' => 'Show hidden files',
 			''  => 'Files from subdirectories',
 		);
-		if ($GLOBALS['egw_info']['user']['apps']['felamimail'])
-		{
-			list($width,$height) = explode('x',egw_link::get_registry('felamimail','add_popup'));
-			$GLOBALS['egw_info']['flags']['java_script'] .= "<script type=\"text/javascript\">
-	function open_mail(attachments)
-	{
-		if (typeof attachments == 'undefined') attachments = clipboard_files;
-
-		var link = '".egw::link('/index.php',array('menuaction' => 'felamimail.uicompose.compose'))."';
-		if (!(attachments instanceof Array)) attachments = [ attachments ];
-
-		for(var i=0; i < attachments.length; i++)
-		{
-		   link += '&preset[file][]='+encodeURIComponent('vfs://default'+attachments[i]);
-		}
-		egw_openWindowCentered2(link, '_blank', $width, $height, 'yes');
-	}
-	function egw_fileman_mail(_action, _elems)
-	{
-		var ids = [];
-		for (var i = 0; i < _elems.length; i++)
-		{
-			ids.push(_elems[i].id);
-		}
-		open_mail(ids);
-	}
-	function egw_fileman_setMsg(_msg)
-	{
-		\$j(document.getElementById('nm[msg]')).text(_msg);
-	}
-</script>\n";
-		}
-		$GLOBALS['egw_info']['flags']['java_script'] .= '<script type="text/javascript">
-var clipboard_files = [];
-
-function check_files(upload, path_id)
-{
-	var files = [];
-	if (upload.files)
-	{
-		for(var i = 0; i < upload.files.length; ++i)
-		{
-			files.push(upload.files[i].name || upload.files[i].fileName);
-		}
-	}
-	else if (upload.value)
-	{
-		files = upload.value;
-	}
-	var path = document.getElementById(path_id ? path_id : upload.id.replace(/upload\]\[/,"nm][path"));
-
-	xajax_doXMLHTTP("filemanager_ui::ajax_check_upload_target",upload.id, files, path.value);
-}
-
-function clipboard_tooltip(link)
-{
-	xajax_doXMLHTTP("filemanager_ui::ajax_clipboard_tooltip", link.id);
-
-	window.setTimeout(UnTip, 3000);
-}
-
-function do_clipboard(_action, _elems)
-{
-	if (_action.id != "cut") clipboard_files = [];
-
-	var ids = [];
-	for (var i = 0; i < _elems.length; i++)
-	{
-		clipboard_files.push(_elems[i].id);
-		ids.push(_elems[i].id);
-	}
-	xajax_doXMLHTTP("filemanager_ui::ajax_clipboard", _action.id, ids);
-}
-
-function force_download(_action, _senders)
-{
-	var a_href = $j(_senders[0].iface.getDOMNode()).find("a:first").attr("href");
-
-	if (a_href.indexOf("menuaction=") != -1)
-	{
-		a_href = a_href.replace(/index.php?.*$/, "webdav.php"+_senders[0].id);
-	}
-	window.location = a_href+"?download";
-}
-</script>'."\n";
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
 
@@ -944,6 +859,8 @@ function force_download(_action, _senders)
 			{
 				$readonlys["mail[$path_quoted]"] = true;
 			}
+			$row['download_url'] = egw_vfs::download_url($path);
+
 			$rows[++$n] = $row;
 			$path2n[$path] = $n;
 		}
@@ -1286,7 +1203,7 @@ function force_download(_action, _senders)
 				0 => lang('No access'),
 			);
 		}
-		
+
 		// mergeapp
 		$content['mergeapp'] = self::get_mergeapp($path, 'self');
 		$content['mergeapp_parent'] = self::get_mergeapp($path, 'parents');
@@ -1311,7 +1228,7 @@ function force_download(_action, _senders)
 		$sel_options['mergeapp'] = $sel_options['mergeapp'] + $mergeapp_list;
 		// mergeapp other gui options
 		$content['mergeapp_itempicker_disabled'] = $content['is_dir'] || empty($content['mergeapp_effective']);
-		
+
 		$preserve = $content;
 		if (!isset($preserve['old']))
 		{

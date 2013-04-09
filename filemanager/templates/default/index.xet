@@ -77,7 +77,7 @@
 						<button label="Create a link" id="button[symlink]" onclick="var link = prompt(egw::lang('Link target')); if (!link) return false; document.getElementById(form::name('nm[path]')).value=link;" image="link" ro_image="link_disabled"/>
 						<button statustext="call:clipboard_tooltip(this);" id="button[paste]" onclick="return clipboard_files.length &gt; 0;" image="editpaste" ro_image="editpaste_disabled"/>
 						<button statustext="call:clipboard_tooltip(this);" id="button[linkpaste]" onclick="return clipboard_files.length &gt; 0;" image="linkpaste" ro_image="linkpaste_disabled"/>
-						<button statustext="call:clipboard_tooltip(this);" id="button[mailpaste]" onclick="if (clipboard_files.length) open_mail(); return false;" image="mailpaste" ro_image="mailpaste_disabled"/>
+						<button statustext="call:clipboard_tooltip(this);" id="button[mailpaste]" onclick="if (clipboard_files.length) app.filemanager.open_mail(); return false;" image="mailpaste" ro_image="mailpaste_disabled"/>
 						<button label="File a file" onclick="window.open(egw::link('/index.php','menuaction=stylite.stylite_filemanager.upload'),'_blank','dependent=yes,width=550,height=350,scrollbars=yes,status=yes'); return false;" image="upload"/>
 					</hbox>
 				</row>
@@ -93,7 +93,7 @@
 				</row>
 				<row>
 					<hbox>
-						<file statustext="Select file to upload in current directory" id="upload[]" onchange="check_files(this, form::name('nm[path]'));"/>
+						<file statustext="Select file to upload in current directory" id="upload[]" onchange="check_files(this);"/>
 						<button label="Upload" id="button[upload]"/>
 					</hbox>
 					<description/>
