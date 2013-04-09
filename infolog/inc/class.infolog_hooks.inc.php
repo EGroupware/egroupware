@@ -86,6 +86,20 @@ class infolog_hooks
 
 		if ($location == 'sidebox_menu')
 		{
+			// Magic etemplate2 favorites menu (from nextmatch widget)
+			$et = new ReflectionClass('etemplate');
+			$is_et2 = ($et->isSubclassOf(new ReflectionClass('etemplate_widget')));
+			if($is_et2)
+			{
+				display_sidebox($appname,lang('Favorites'),array(
+					array(
+						'no_lang' => true,
+						'text'=> etemplate_widget_nextmatch::favorite_list('infolog','infolog.infolog_ui.get_rows'),
+						'link'=>false,
+						'icon' => false
+					)
+				));
+			}
 			$file = array(
 				'infolog list' => egw::link('/index.php',array(
 					'menuaction' => 'infolog.infolog_ui.index' )),

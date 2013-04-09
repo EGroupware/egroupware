@@ -881,6 +881,7 @@ else
 		$persist['called_as'] = $called_as;
 		$persist['own_referer'] = $own_referer;
 		$values['nm']['csv_fields'] = true;		// get set in get_rows to not include all custom fields
+		$values['nm']['favorites'] = true;
 
 		// store whole $values[nm] in etemplate request
 		unset($values['nm']['rows']);
