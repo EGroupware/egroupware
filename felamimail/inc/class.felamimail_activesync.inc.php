@@ -315,10 +315,11 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		if (empty($waitOnFailure[self::$profileID])) $waitOnFailure[self::$profileID] = array('howlong'=>$this->waitOnFailureDefault,'lastattempt'=>$hereandnow);
 		if ($connectionFailed)
 		{
-			error_log(__METHOD__.__LINE__."($account) could not open connection!".$this->mail->getErrorMessage());
-			//error_log(date('Y-m-d H:i:s').' '.__METHOD__.__LINE__."($account) can not open connection!".$this->mail->getErrorMessage()."\n",3,'/var/lib/egroupware/esync-imap.log');
-			//error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
-			//	($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\n\n",3,'/var/lib/egroupware/esync-imap.log');
+			//error_log(__METHOD__.__LINE__."($account) could not open connection!".$this->mail->getErrorMessage());
+			error_log(date('Y-m-d H:i:s').' '.__METHOD__.__LINE__."($account) can not open connection!".$this->mail->getErrorMessage()."\n",3,'/var/lib/egroupware/esync-imap.log');
+			error_log("# Can not open connection for Profile:".self::$profileID.' Device should wait '.array2string($waitOnFailure[self::$profileID])."\n",3,'/var/lib/egroupware/esync-imap.log');
+			error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
+				($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\n\n",3,'/var/lib/egroupware/esync-imap.log');
 			if ($waitOnFailure[self::$profileID]['howlong'] > $this->waitOnFailureLimit )
 			{
 				header("HTTP/1.1 500 Internal Server Error");
@@ -326,7 +327,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			}
 			else
 			{
-				error_log(__METHOD__.__LINE__.'# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']." Can not open connection for Profile:".self::$profileID.' Device should wait '.array2string($waitOnFailure[self::$profileID]));
+				//error_log(__METHOD__.__LINE__.'# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']." Can not open connection for Profile:".self::$profileID.' Device should wait '.array2string($waitOnFailure[self::$profileID]));
 				header("HTTP/1.1 503 Service Unavailable");
 				header("Retry-After: ".$waitOnFailure[self::$profileID]['howlong']);
 				$waitOnFailure[self::$profileID] = array('howlong'=>$waitOnFailure[self::$profileID]['howlong'] * 2,'lastattempt'=>$hereandnow);

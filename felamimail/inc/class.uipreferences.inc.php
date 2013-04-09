@@ -226,7 +226,7 @@
 				//_debug_array($_POST);_debug_array($_POST);_debug_array($_POST);
 				$fwdAddr = (!empty($_POST['forwardingAddress'])?explode(';',$_POST['forwardingAddress']):array());
 				foreach($fwdAddr as $k => &$fA) $fwA = trim($fwA);
-				$ogServer->saveSMTPForwarding($GLOBALS['egw_info']['user']['account_id'],$fwdAddr,$_POST['keepLocalCopy']);
+				$ogServer->saveSMTPForwarding($GLOBALS['egw_info']['user']['account_id'],$fwdAddr,($fwdAddr?$_POST['keepLocalCopy']:true));
 			} elseif($_POST['cancel']) {
 				ExecMethod('felamimail.uifelamimail.viewMainScreen');
 				return;
@@ -878,9 +878,9 @@
 			$this->t->set_var('lang_setrecursively',lANG('apply recursively?'));
 			$this->t->set_var('lang_Overview',lang('Overview'));
 			$this->t->set_var('lang_edit_forwarding_address',lang('edit email forwarding address'));
-			$this->t->set_var('lang_forwarding_address',lang('email forwarding address'));
+			$this->t->set_var('lang_forwarding_address','<b>'.lang('email forwarding address').'</b>');
 			$this->t->set_var('lang_accomplish_multiple_forwardaddresses',lang('multiple email forwarding addresses can be accomplished by separating them with a semicolon'));
-			$this->t->set_var('lang_keep_local_copy',lang('keep local copy of email'));
+			$this->t->set_var('lang_keep_local_copy','<b>'.lang('keep local copy of email').'</b><br>'.lang('Note:').lang('if you choose NOT to keep a copy, you are setting your mailbox to FORWARD ONLY!'));
 			$this->t->set_var('hostname_address',lang('hostname / address'));
 			$this->t->set_var('lang_username',lang('username'));
 			$this->t->set_var('lang_password',lang('password'));
