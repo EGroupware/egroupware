@@ -60,10 +60,8 @@ var et2_htmlarea = et2_inputWidget.extend({
 
 	legacyOptions: ['mode','height','width','expand_toolbar','base_href'],
 
-	ck_props: {},
 	init: function(_parent, _attrs) {
-		this.ck_props = _attrs['config'] ? _attrs['config'] : {};
-
+		// _super.apply is responsible for the actual setting of the params (some magic)
 		this._super.apply(this, arguments);
 
 		// Allow no child widgets
@@ -77,13 +75,13 @@ var et2_htmlarea = et2_inputWidget.extend({
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
 		var self = this;
+		var ckeditor;
 		try
 		{
-			this.htmlNode.ckeditor(function() {
-				// If value is set, pass it in here.
-				this.setData(self.value);
-				delete self.value;
-			},this.ck_props);
+			CKEDITOR.replace(this.id,this.options.config);
+			ckeditor = CKEDITOR.instances[this.id];
+			ckeditor.setData(self.value);
+			delete self.value;
 		}
 		catch (e)
 		{
@@ -93,11 +91,10 @@ var et2_htmlarea = et2_inputWidget.extend({
 			}
 			if(this.htmlNode.ckeditor)
 			{
-				this.htmlNode.ckeditor(function() {
-					// If value is set, pass it in here.
-					this.setData(self.value);
-					delete self.value;
-				},this.ck_props);
+				CKEDITOR.replace(this.id,this.options.config);
+				ckeditor = CKEDITOR.instances[this.id];
+				ckeditor.setData(self.value);
+				delete self.value;
 			}
 		}
 	},
@@ -105,7 +102,9 @@ var et2_htmlarea = et2_inputWidget.extend({
 	destroy: function() {
 		try
 		{
-			this.htmlNode.ckeditorGet().destroy(true);
+			//this.htmlNode.ckeditorGet().destroy(true);
+			ckeditor = CKEDITOR.instances[this.id];
+			ckeditor.destroy(true);
 		}
 		catch (e)
 		{
@@ -115,7 +114,9 @@ var et2_htmlarea = et2_inputWidget.extend({
 	},
 	set_value: function(_value) {
 		try {
-			this.htmlNode.ckeditorGet().setData(_value);
+			//this.htmlNode.ckeditorGet().setData(_value);
+			ckeditor = CKEDITOR.instances[this.id];
+			ckeditor.setData(_value);
 		} catch (e) {
 			// CK editor not ready - callback will do it
 			this.value = _value;
@@ -125,7 +126,9 @@ var et2_htmlarea = et2_inputWidget.extend({
 	getValue: function() {
 		try
 		{
-			return this.htmlNode.ckeditorGet().getData();
+			//return this.htmlNode.ckeditorGet().getData();
+			ckeditor = CKEDITOR.instances[this.id];
+			return ckeditor.getData();
 		}
 		catch (e)
 		{
