@@ -181,7 +181,7 @@ etemplate2.prototype._createArrayManagers = function(_data)
 /**
  * Loads the template from the given URL and sets the data object
  */
-etemplate2.prototype.load = function(_name, _url, _data)
+etemplate2.prototype.load = function(_name, _url, _data, _callback)
 {
 
 	egw().debug("info", "Loaded data", _data);
@@ -243,6 +243,11 @@ etemplate2.prototype.load = function(_name, _url, _data)
 
 		// Trigger the "resize" event
 		this.resize();
+
+		if(typeof _callback == "function")
+		{
+			_callback.call(window,this);
+		}
 	}, this);
 
 	// Split the given data into array manager objects and pass those to the

@@ -361,10 +361,21 @@ egwFnct.prototype.setValue = function(_value)
 	         typeof window[_value.substr(11)] == "function")
 	{
 		this.fnct = window[_value.substr(11)];
+		console.log("Global function is bad!", _value);
 	}
 	else if (this.acceptedTypes.indexOf(typeof _value) >= 0)
 	{
 		this.value = _value;
+	}
+	else if (typeof _value == "string" &&
+	         _value.substr(0,15) == "javaScript:app." && window.app)
+	{
+		var parts = _value.split(".");
+		if(parts.length == 3 && typeof window.app[parts[1]] == "object" && 
+			typeof window.app[parts[1]][parts[2]] == "function")
+		{
+			this.fnct = window.app[parts[1]][parts[2]];
+		}
 	}
 }
 

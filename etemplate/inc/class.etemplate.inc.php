@@ -169,9 +169,9 @@ class etemplate_new extends etemplate_widget_template
 			// load translations
 			translation::add_app('etemplate');
 			$langRequire = array();
-			foreach(translation::$loaded_apps as $app => $lang)
+			foreach(translation::$loaded_apps as $l_app => $lang)
 			{
-				$langRequire[] = array('app' => $app, 'lang' => $lang);
+				$langRequire[] = array('app' => $l_app, 'lang' => $lang);
 			}
 
 			// check if we are in an ajax-exec call from jdots template (or future other tabed templates)
@@ -186,8 +186,20 @@ class etemplate_new extends etemplate_widget_template
 				egw(window).includeJS('.json_encode(egw_framework::get_script_links(true, true)).	// return and clear
 					',function() {
 					egw.debug("info", "Instanciating etemplate2 object for '.$this->name.'");
+
+					// Setup callback to initialize application js
+					var callback = null;
+					// Only initialize once
+					if(typeof app["'.$app.'"] == "function")
+					{
+						(function() { new app["'.$app.'"]();}).call();
+					}
+					if(typeof app["'.$app.'"] == "object")
+					{
+						callback = function() {new app["'.$app.'"]()};
+					}
 					var et2 = new etemplate2(document.getElementById("container"), "etemplate::ajax_process_content");
-					et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
+					et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).', callback);
 				}, window, egw.webserverUrl);
 			});
 		</script>
@@ -202,8 +214,19 @@ class etemplate_new extends etemplate_widget_template
 			egw.LAB.wait(function() {
 				egw.langRequire(window, '.json_encode($langRequire).');
 				egw(window).ready(function() {
+					// Initialize application js
+					var callback = null;
+					// Only initialize once
+					if(typeof app["'.$app.'"] == "function")
+					{
+						(function() { new app["'.$app.'"]();}).call();
+					}
+					if(typeof app["'.$app.'"] == "object")
+					{
+						callback = function(et2) {app["'.$app.'"].et2_ready(et2)};
+					}
 					var et2 = new etemplate2(document.getElementById("container"), "etemplate::ajax_process_content");
-					et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).');
+					et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).',callback);
 				}, null, true);
 			});
 		</script>

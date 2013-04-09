@@ -30,6 +30,8 @@
 	egw_calendar;
 	egw_ready;
 	egw_data;
+	egw_inheritance;
 //	egw_jquery;
+	app_base;
 */
 
