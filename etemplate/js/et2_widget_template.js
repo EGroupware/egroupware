@@ -37,7 +37,8 @@ var et2_template = et2_DOMWidget.extend({
 			// TODO: Not implemented
 			"name": "Group",
 			"description":"Not implemented",
-			"default": 0
+			//"default": 0
+			"default": et2_no_init
 		},
 		"version": {
 			"name": "Version",

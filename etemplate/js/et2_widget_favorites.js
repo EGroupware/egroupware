@@ -72,7 +72,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],{
 		label: {"default": ""},
 		label_updates: { default: false},
 		image: {"default": "etemplate/fav_filter"},
-		tooltip: {"default": "Favorite queries"}
+		tooltip: {"default": "Favorite queries", "type": "string"}
 	},
 
 	// Some convenient variables, used in closures / event handlers

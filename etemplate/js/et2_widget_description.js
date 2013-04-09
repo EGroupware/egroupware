@@ -27,7 +27,8 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 			"name": "Value",
 			"type": "string",
 			"description": "Displayed text",
-			"translate": "!no_lang"
+			"translate": "!no_lang",
+			"default": ""
 		},
 
 		/**

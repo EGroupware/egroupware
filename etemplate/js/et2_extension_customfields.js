@@ -25,11 +25,13 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 	attributes: {
 		'customfields': {
 			'name': 'Custom fields',
-			'description': 'Auto filled'
+			'description': 'Auto filled',
+			'type': 'any'
 		},
 		'fields': {
 			'name': 'Custom fields',
-			'description': 'Auto filled'
+			'description': 'Auto filled',
+			'type': 'any'
 		},
 		'value': {
 			'name': 'Custom fields',
