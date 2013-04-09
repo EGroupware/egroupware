@@ -192,14 +192,14 @@ class mail_ui
 				'acceptedTypes' => 'mail',
 				'icon' => 'move',
 				'caption' => 'Move to',
-				'onExecute' => 'javaScript:mail_move'
+				'onExecute' => 'javaScript:app.mail.mail_move'
 			),
 			'drop_copy_mail' => array(
 				'type' => 'drop',
 				'acceptedTypes' => 'mail',
 				'icon' => 'copy',
 				'caption' => 'Copy to',
-				'onExecute' => 'javaScript:mail_copy'
+				'onExecute' => 'javaScript:app.mail.mail_copy'
 			),
 			'drop_cancel' => array(
 				'caption' => 'Cancel',
@@ -1510,7 +1510,7 @@ unset($query['actions']);
 	 */
 	function ajax_setFolderStatus($_folder)
 	{
-		error_log(__METHOD__.__LINE__.array2string($_folder));
+		//error_log(__METHOD__.__LINE__.array2string($_folder));
 		if ($_folder)
 		{
 			$del = $this->mail_bo->getHierarchyDelimiter(false);
@@ -1533,7 +1533,7 @@ unset($query['actions']);
 					}
 				}
 			}
-			error_log(__METHOD__.__LINE__.array2string($oA));
+			//error_log(__METHOD__.__LINE__.array2string($oA));
 			if ($oA)
 			{
 				$response = egw_json_response::get();
@@ -1673,4 +1673,33 @@ unset($query['actions']);
 		$response = egw_json_response::get();
 		$response->call('egw_refresh',lang('deleted %1 messages in %2',count($_messageList['msg']),$folder),'mail');
 	}
+
+	/**
+	 * move messages
+	 *
+	 * @param array _folderName target folder
+	 * @param array _messageList list of UID's
+	 *
+	 * @return xajax response
+	 */
+	function ajax_moveMessages($_folderName, $_messageList)
+	{
+		if(mail_bo::$debug); error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true));
+
+	}
+
+	/**
+	 * copy messages
+	 *
+	 * @param array _folderName target folder
+	 * @param array _messageList list of UID's
+	 *
+	 * @return xajax response
+	 */
+	function ajax_copyMessages($_folderName, $_messageList)
+	{
+		if(mail_bo::$debug); error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true));
+
+	}
+
 }

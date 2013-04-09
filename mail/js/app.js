@@ -491,13 +491,30 @@ mail_setRowClass: function(_actionObjects,_class) {
 },
 
 // Tree widget stubs
-mail_dragStart: function(action,sender) {
-	console.log(action,sender);
+mail_dragStart: function(action,_senders) {
+	//console.log(action,_senders);
+	return $j("<div class=\"ddhelper\">" + _senders.length + " Mails selected </div>")
 },
-mail_move: function(action,sender) {
-	console.log(action,sender);
+mail_move: function(_action,_senders,_target) {
+	//console.log(_action,_senders,_target);
+	var target = _action.id == 'drop_move_mail' ? _target.iface.id : _action.id.substr(5);
+	var messages = this.mail_getFormData(_senders);
+	//alert('mail_move('+messages.msg.join(',')+' --> '+target+')');
+	// TODO: Write move/copy function which cares about doing the same stuff
+	// as the "onNodeSelect" function!
+	var request = new egw_json_request('mail.mail_ui.ajax_moveMessages',[target, messages]);
+	request.sendRequest(false);
+	this.mail_refreshMessageGrid()
 },
-mail_copy: function(action,sender) {
-	console.log(action,sender);
+mail_copy: function(_action,_senders,_target) {
+	//console.log(_action,_senders,_target);
+	var target = _action.id == 'drop_copy_mail' ? _target.id : _action.id.substr(5);
+	var messages = this.mail_getFormData(_senders);
+	//alert('mail_copy('+messages.msg.join(',')+' --> '+target+')');
+	// TODO: Write move/copy function which cares about doing the same stuff
+	// as the "onNodeSelect" function!
+	var request = new egw_json_request('mail.mail_ui.ajax_copyMessages',[target, messages]);
+	request.sendRequest(false);
+	this.mail_refreshMessageGrid()
 }
 });
