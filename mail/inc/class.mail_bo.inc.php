@@ -108,7 +108,9 @@ class mail_bo
 				'balance'=>1,//turn off tag-balancing (config['balance']=>0). That will not introduce any security risk; only standards-compliant tag nesting check/filtering will be turned off (basic tag-balance will remain; i.e., there won't be any unclosed tag, etc., after filtering)
 				'direct_list_nest' => 1,
 				'allow_for_inline' => array('table','div','li','p'),//block elements allowed for nesting when only inline is allowed; Example span does not allow block elements as table; table is the only element tested so far
-				'tidy'=>1,
+				// tidy eats away even some wanted whitespace, so we switch it off;
+				// we used it for its compacting and beautifying capabilities, which resulted in better html for further processing
+				'tidy'=>0,
 				'elements' => "* -script",
 				'deny_attribute' => 'on*',
 				'schemes'=>'href: file, ftp, http, https, mailto; src: cid, data, file, ftp, http, https; *:file, http, https, cid, src',
@@ -820,7 +822,7 @@ class mail_bo
 		$retval = true;
 		if($folderToSelect && ($folderStatus = $this->getFolderStatus($folderToSelect,false,true))) {
 			if ($folderStatus instanceof PEAR_Error) return false;
-			if (stripos(array2string($folderStatus['attributes']),'noselect')!==false)
+			if (!empty($folderStatus['attributes']) && stripos(array2string($folderStatus['attributes']),'noselect')!==false)
 			{
 				$retval = false;
 			}
@@ -2749,7 +2751,7 @@ class mail_bo
 
 	/**
 	 * _getStructure
-	 * fetc the structure of a mail, represented by uid
+	 * fetch the structure of a mail, represented by uid
 	 * @param string/int $_uid the messageuid,
 	 * @param boolean $byUid=true, is the messageuid given by UID or ID
 	 * @param boolean $_ignoreCache=false, use or disregard cache, when fetching
@@ -2777,6 +2779,74 @@ class mail_bo
 		egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
 		//error_log(__METHOD__.__LINE__.' Using query for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid." in Folder:".$_folder.'->'.array2string($structure[$this->icServer->ImapServerId][$_folder][$_uid]));
 		return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
+	}
+
+	/**
+	 * _getSubStructure
+	 * fetch the substructure of a mail, by given structure and partid
+	 * @param array $_structure='', if given use structure for parsing
+	 * @param string/int $_partID the partid,
+	 * @return array  an structured array of information about the mail
+	 */
+	function _getSubStructure($_structure, $_partID)
+	{
+		$tempID = '';
+		$structure = $_structure;
+		if (empty($_partID)) $_partID=1;
+		$imapPartIDs = explode('.',$_partID);
+		#error_log(print_r($structure,true));
+		#error_log(print_r($_partID,true));
+
+		if($_partID != 1) {
+			foreach($imapPartIDs as $imapPartID) {
+				if(!empty($tempID)) {
+					$tempID .= '.';
+				}
+				$tempID .= $imapPartID;
+				#error_log(print_r( "TEMPID: $tempID<br>",true));
+				//_debug_array($structure);
+				if($structure->subParts[$tempID]->type == 'MESSAGE' && $structure->subParts[$tempID]->subType == 'RFC822' &&
+				   count($structure->subParts[$tempID]->subParts) == 1 &&
+				   $structure->subParts[$tempID]->subParts[$tempID]->type == 'MULTIPART' &&
+				   ($structure->subParts[$tempID]->subParts[$tempID]->subType == 'MIXED' ||
+				    $structure->subParts[$tempID]->subParts[$tempID]->subType == 'ALTERNATIVE' ||
+				    $structure->subParts[$tempID]->subParts[$tempID]->subType == 'RELATED' ||
+				    $structure->subParts[$tempID]->subParts[$tempID]->subType == 'REPORT'))
+				{
+					$structure = $structure->subParts[$tempID]->subParts[$tempID];
+				} else {
+					$structure = $structure->subParts[$tempID];
+				}
+			}
+		}
+
+		if($structure->partID != $_partID) {
+			foreach($imapPartIDs as $imapPartID) {
+				if(!empty($tempID)) {
+					$tempID .= '.';
+				}
+				$tempID .= $imapPartID;
+				//print "TEMPID: $tempID<br>";
+				//_debug_array($structure);
+				if($structure->subParts[$tempID]->type == 'MESSAGE' && $structure->subParts[$tempID]->subType == 'RFC822' &&
+				   count($structure->subParts[$tempID]->subParts) == 1 &&
+				   $structure->subParts[$tempID]->subParts[$tempID]->type == 'MULTIPART' &&
+				   ($structure->subParts[$tempID]->subParts[$tempID]->subType == 'MIXED' ||
+				    $structure->subParts[$tempID]->subParts[$tempID]->subType == 'ALTERNATIVE' ||
+				    $structure->subParts[$tempID]->subParts[$tempID]->subType == 'RELATED' ||
+				    $structure->subParts[$tempID]->subParts[$tempID]->subType == 'REPORT')) {
+					$structure = $structure->subParts[$tempID]->subParts[$tempID];
+				} else {
+					$structure = $structure->subParts[$tempID];
+				}
+			}
+			if($structure->partID != $_partID) {
+				error_log(__METHOD__."(". __LINE__ .") partID's don't match");
+				return false;
+			}
+		}
+
+		return $structure;
 	}
 
 	/**
@@ -3636,6 +3706,11 @@ class mail_bo
 
 		//if ( $_uid && $partID) error_log(__METHOD__.__LINE__.array2string($structure).' Uid:'.$_uid.' PartID:'.$partID.' -> '.array2string($this->icServer->getParsedHeaders($_uid, true, $partID, true)));
 		if(isset($structure->parameters['NAME'])) {
+			//error_log(__METHOD__.__LINE__.array2string(substr($structure->parameters['NAME'],0,strlen('data:'))));
+			if (!is_array($structure->parameters['NAME']) && substr($structure->parameters['NAME'],0,strlen('data:'))==='data:') {
+				$namecounter++;
+				return lang("unknown").$namecounter.($structure->subType ? ".".$structure->subType : "");
+			}
 			if (is_array($structure->parameters['NAME'])) $structure->parameters['NAME'] = implode(' ',$structure->parameters['NAME']);
 			return rawurldecode(self::decode_header($structure->parameters['NAME']));
 		} elseif(isset($structure->dparameters['FILENAME'])) {
@@ -3730,6 +3805,80 @@ class mail_bo
 			}
 		}
 	}
+
+	/**
+	 * retrieve a attachment
+	 *
+	 * @param int _uid the uid of the message
+	 * @param string _partID the id of the part, which holds the attachment
+	 * @param int _winmail_nr winmail.dat attachment nr.
+	 *
+	 * @return array
+	 */
+	function getAttachment($_uid, $_partID, $_winmail_nr=0)
+	{
+		// parse message structure
+		$structure = $this->_getStructure($_uid, true);
+		if($_partID != '') {
+			$structure = $this->_getSubStructure($structure, $_partID);
+		}
+		$filename = $this->getFileNameFromStructure($structure, $_uid, $structure->partID);
+		$attachment = $this->icServer->getBodyPart($_uid, $_partID, true, true);
+		if (PEAR::isError($attachment))
+		{
+			error_log(__METHOD__.__LINE__.' failed:'.$attachment->message);
+			return array('type' => 'text/plain',
+						 'filename' => 'error.txt',
+						 'attachment' =>__METHOD__.' failed:'.$attachment->message
+					);
+		}
+
+		if (PEAR::isError($attachment))
+		{
+			error_log(__METHOD__.__LINE__.' failed:'.$attachment->message);
+			return array('type' => 'text/plain',
+						 'filename' => 'error.txt',
+						 'attachment' =>__METHOD__.' failed:'.$attachment->message
+					);
+		}
+		switch ($structure->encoding) {
+			case 'BASE64':
+				// use imap_base64 to decode
+				$attachment = imap_base64($attachment);
+				break;
+			case 'QUOTED-PRINTABLE':
+				// use imap_qprint to decode
+				#$attachment = imap_qprint($attachment);
+				$attachment = quoted_printable_decode($attachment);
+				break;
+			default:
+				// it is either not encoded or we don't know about it
+		}
+		if ($structure->type === 'TEXT' && isset($structure->parameters['CHARSET']) && stripos('UTF-16',$structure->parameters['CHARSET'])!==false)
+		{
+			$attachment = translation::convert($attachment,$structure->parameters['CHARSET'],self::$displayCharset);
+		}
+
+		$attachmentData = array(
+			'type'		=> $structure->type .'/'. $structure->subType,
+			'filename'	=> $filename,
+			'attachment'	=> $attachment
+			);
+		// try guessing the mimetype, if we get the application/octet-stream
+		if (strtolower($attachmentData['type']) == 'application/octet-stream') $attachmentData['type'] = mime_magic::filename2mime($attachmentData['filename']);
+		# if the attachment holds a winmail number and is a winmail.dat then we have to handle that.
+		if ( $filename == 'winmail.dat' && $_winmail_nr > 0 &&
+			( $wmattach = $this->decode_winmail( $_uid, $_partID, $_winmail_nr ) ) )
+		{
+			$attachmentData = array(
+				'type'       => $wmattach['type'],
+				'filename'   => $wmattach['name'],
+				'attachment' => $wmattach['attachment'],
+			);
+		}
+		return $attachmentData;
+	}
+
 
 	/**
 	 * functions to allow access to mails through other apps to fetch content

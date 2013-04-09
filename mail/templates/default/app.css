@@ -268,6 +268,15 @@ pre {
 .dtree table, .dtree tr, .dtree td {
 	border: none;
 }
+.dtree table {
+	overflow: hidden;
+	width: 100%;
+	display: table-row;
+}
+.dtree tbody, .dtree tr, .dtree td, .dtree span {
+	width: 100%;
+	overflow: hidden;
+}
 /*
  influence the tree display and scrolling behavior
 */
@@ -281,4 +290,10 @@ pre {
 	overflow: hidden;
 	overflow-y: auto;
 	z-index:100;
+}
+/*
+ we need the the image displayed with our buttons on the left side
+*/
+input[type=button] {
+	background-position: left;
 }

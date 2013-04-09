@@ -636,7 +636,7 @@ class mail_ui
 			'open' => array(
 				'caption' => lang('Open'),
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.open',
+				'onExecute' => 'javaScript:app.mail.open', //dummy by nathan
 				'allowOnMultiple' => false,
 				'default' => true,
 			),
@@ -644,14 +644,14 @@ class mail_ui
 				'caption' => 'Reply',
 				'icon' => 'mail_reply',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:mail_compose',
+				'onExecute' => 'javaScript:app.mail.mail_compose',
 				'allowOnMultiple' => false,
 			),
 			'reply_all' => array(
 				'caption' => 'Reply All',
 				'icon' => 'mail_replyall',
 				'group' => $group,
-				'onExecute' => 'javaScript:mail_compose',
+				'onExecute' => 'javaScript:app.mail.mail_compose',
 				'allowOnMultiple' => false,
 			),
 			'forward' => array(
@@ -663,14 +663,14 @@ class mail_ui
 						'caption' => 'forward inline',
 						'icon' => 'mail_forward',
 						'group' => $group,
-						'onExecute' => 'javaScript:mail_compose',
+						'onExecute' => 'javaScript:app.mail.mail_compose',
 						'allowOnMultiple' => false,
 					),
 					'forwardasattach' => array(
 						'caption' => 'forward as attachment',
 						'icon' => 'mail_forward',
 						'group' => $group,
-						'onExecute' => 'javaScript:mail_compose',
+						'onExecute' => 'javaScript:app.mail.mail_compose',
 					),
 				),
 			),
@@ -678,14 +678,14 @@ class mail_ui
 				'caption' => 'Compose as new',
 				'icon' => 'new',
 				'group' => $group,
-				'onExecute' => 'javaScript:mail_compose',
+				'onExecute' => 'javaScript:app.mail.mail_compose',
 				'allowOnMultiple' => false,
 			),
 			$moveaction => array(
 				'caption' => lang('Move selected to').': '.(isset($lastFolderUsedForMove['shortDisplayName'])?$lastFolderUsedForMove['shortDisplayName']:''),
 				'icon' => 'move',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:mail_move2folder',
+				'onExecute' => 'javaScript:app.mail.mail_move2folder',
 				'allowOnMultiple' => true,
 			),
 			'infolog' => array(
@@ -693,7 +693,7 @@ class mail_ui
 				'hint' => 'Save as InfoLog',
 				'icon' => 'infolog/navbar',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:mail_infolog',
+				'onExecute' => 'javaScript:app.mail.mail_infolog',
 				'url' => 'menuaction=infolog.infolog_ui.import_mail',
 				'popup' => egw_link::get_registry('infolog', 'add_popup'),
 				'allowOnMultiple' => false,
@@ -703,7 +703,7 @@ class mail_ui
 				'hint' => 'Save as ticket',
 				'group' => $group,
 				'icon' => 'tracker/navbar',
-				'onExecute' => 'javaScript:mail_tracker',
+				'onExecute' => 'javaScript:app.mail.mail_tracker',
 				'url' => 'menuaction=tracker.tracker_ui.import_mail',
 				'popup' => egw_link::get_registry('tracker', 'add_popup'),
 				'allowOnMultiple' => false,
@@ -711,7 +711,7 @@ class mail_ui
 			'print' => array(
 				'caption' => 'Print',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:mail_print',
+				'onExecute' => 'javaScript:app.mail.mail_print',
 				'allowOnMultiple' => false,
 			),
 			'save' => array(
@@ -724,7 +724,7 @@ class mail_ui
 						'hint' => 'Save message to disk',
 						'group' => $group,
 						'icon' => 'fileexport',
-						'onExecute' => 'javaScript:mail_save',
+						'onExecute' => 'javaScript:app.mail.mail_save',
 						'allowOnMultiple' => false,
 					),
 					'save2filemanager' => array(
@@ -732,7 +732,7 @@ class mail_ui
 						'hint' => 'Save message to filemanager',
 						'group' => $group,
 						'icon' => 'filemanager/navbar',
-						'onExecute' => 'javaScript:mail_save2fm',
+						'onExecute' => 'javaScript:app.mail.mail_save2fm',
 						'allowOnMultiple' => false,
 					),
 				),
@@ -747,7 +747,7 @@ class mail_ui
 						'hint' => 'View header lines',
 						'group' => $group,
 						'icon' => 'kmmsgread',
-						'onExecute' => 'javaScript:mail_header',
+						'onExecute' => 'javaScript:app.mail.mail_header',
 						'allowOnMultiple' => false,
 					),
 					'mailsource' => array(
@@ -755,7 +755,7 @@ class mail_ui
 						'hint' => 'View full Mail Source',
 						'group' => $group,
 						'icon' => 'fileexport',
-						'onExecute' => 'javaScript:mail_mailsource',
+						'onExecute' => 'javaScript:app.mail.mail_mailsource',
 						'allowOnMultiple' => false,
 					),
 				),
@@ -777,27 +777,27 @@ class mail_ui
 							'label1' => array(
 								'caption' => "<font color='#ff0000'>".lang('urgent')."</font>",
 								'icon' => 'mail_label1',
-								'onExecute' => 'javaScript:mail_flag',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
 							),
 							'label2' => array(
 								'caption' => "<font color='#ff8000'>".lang('job')."</font>",
 								'icon' => 'mail_label2',
-								'onExecute' => 'javaScript:mail_flag',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
 							),
 							'label3' => array(
 								'caption' => "<font color='#008000'>".lang('personal')."</font>",
 								'icon' => 'mail_label3',
-								'onExecute' => 'javaScript:mail_flag',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
 							),
 							'label4' => array(
 								'caption' => "<font color='#0000ff'>".lang('to do')."</font>",
 								'icon' => 'mail_label4',
-								'onExecute' => 'javaScript:mail_flag',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
 							),
 							'label5' => array(
 								'caption' => "<font color='#8000ff'>".lang('later')."</font>",
 								'icon' => 'mail_label5',
-								'onExecute' => 'javaScript:mail_flag',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
 							),
 						),
 					),
@@ -810,27 +810,27 @@ class mail_ui
 							'unlabel1' => array(
 								'caption' => "<font color='#ff0000'>".lang('urgent')."</font>",
 								'icon' => 'mail_unlabel1',
-								'onExecute' => 'javaScript:mail_flag',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
 							),
 							'unlabel2' => array(
 								'caption' => "<font color='#ff8000'>".lang('job')."</font>",
 								'icon' => 'mail_unlabel2',
-								'onExecute' => 'javaScript:mail_flag',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
 							),
 							'unlabel3' => array(
 								'caption' => "<font color='#008000'>".lang('personal')."</font>",
 								'icon' => 'mail_unlabel3',
-								'onExecute' => 'javaScript:mail_flag',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
 							),
 							'unlabel4' => array(
 								'caption' => "<font color='#0000ff'>".lang('to do')."</font>",
 								'icon' => 'mail_unlabel4',
-								'onExecute' => 'javaScript:mail_flag',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
 							),
 							'unlabel5' => array(
 								'caption' => "<font color='#8000ff'>".lang('later')."</font>",
 								'icon' => 'mail_unlabel5',
-								'onExecute' => 'javaScript:mail_flag',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
 							),
 						),
 					),
@@ -838,7 +838,7 @@ class mail_ui
 						'group' => ++$group,
 						'caption' => 'Flagged',
 						'icon' => 'unread_flagged_small',
-						'onExecute' => 'javaScript:mail_flag',
+						'onExecute' => 'javaScript:app.mail.mail_flag',
 						//'disableClass' => 'flagged',
 						//'enabled' => "javaScript:mail_disabledByClass",
 						'shortcut' => egw_keymanager::shortcut(egw_keymanager::F, true, true),
@@ -847,7 +847,7 @@ class mail_ui
 						'group' => $group,
 						'caption' => 'Unflagged',
 						'icon' => 'read_flagged_small',
-						'onExecute' => 'javaScript:mail_flag',
+						'onExecute' => 'javaScript:app.mail.mail_flag',
 						//'enableClass' => 'flagged',
 						//'enabled' => "javaScript:mail_enabledByClass",
 						'shortcut' => egw_keymanager::shortcut(egw_keymanager::U, true, true),
@@ -856,7 +856,7 @@ class mail_ui
 						'group' => $group,
 						'caption' => 'Read',
 						'icon' => 'read_small',
-						'onExecute' => 'javaScript:mail_flag',
+						'onExecute' => 'javaScript:app.mail.mail_flag',
 						//'enableClass' => 'unseen',
 						//'enabled' => "javaScript:mail_enabledByClass",
 					),
@@ -864,7 +864,7 @@ class mail_ui
 						'group' => $group,
 						'caption' => 'Unread',
 						'icon' => 'unread_small',
-						'onExecute' => 'javaScript:mail_flag',
+						'onExecute' => 'javaScript:app.mail.mail_flag',
 						//'disableClass' => 'unseen',
 						//'enabled' => "javaScript:mail_disabledByClass",
 					),
@@ -872,7 +872,7 @@ class mail_ui
 						'group' => $group,
 						'caption' => 'Undelete',
 						'icon' => 'revert',
-						'onExecute' => 'javaScript:mail_flag',
+						'onExecute' => 'javaScript:app.mail.mail_flag',
 						'enableClass' => 'deleted',
 						'enabled' => "javaScript:mail_enabledByClass",
 					),
@@ -882,12 +882,12 @@ class mail_ui
 				'caption' => 'Delete',
 				'hint' => $deleteOptions[$this->mail_bo->mailPreferences->preferences['deleteOptions']],
 				'group' => ++$group,
-				'onExecute' => 'javaScript:mail_delete',
+				'onExecute' => 'javaScript:app.mail.mail_delete',
 			),
 			'drag_mail' => array(
 				'dragType' => 'mail',
 				'type' => 'drag',
-				'onExecute' => 'javaScript:mail_dragStart',
+				'onExecute' => 'javaScript:app.mail.mail_dragStart',
 			),
 		);
 		// save as tracker, save as infolog, as this are actions that are either available for all, or not, we do that for all and not via css-class disabling
@@ -1510,7 +1510,7 @@ unset($query['actions']);
 	 */
 	function ajax_setFolderStatus($_folder)
 	{
-		//error_log(__METHOD__.__LINE__.array2string($_folder));
+		error_log(__METHOD__.__LINE__.array2string($_folder));
 		if ($_folder)
 		{
 			$del = $this->mail_bo->getHierarchyDelimiter(false);
@@ -1533,11 +1533,11 @@ unset($query['actions']);
 					}
 				}
 			}
-			//error_log(__METHOD__.__LINE__.array2string($oA));
+			error_log(__METHOD__.__LINE__.array2string($oA));
 			if ($oA)
 			{
 				$response = egw_json_response::get();
-				$response->call('mail_setFolderStatus',$oA,'mail');
+				$response->call('app.mail.mail_setFolderStatus',$oA,'mail');
 			}
 		}
 	}

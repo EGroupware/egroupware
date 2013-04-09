@@ -30,7 +30,7 @@ init: function() {
 	this.mail_startTimerFolderStatusUpdate(this.mail_refreshTimeOut);
 	//inital call of refresh folderstatus
 	var self = this;
-	window.setTimeout(function() {self.mail_refreshFolderStatus();},1000);
+	window.setTimeout(function() {self.mail_refreshFolderStatus.apply(self);},1000);
 },
 
 open: function(action, senders, ids) {
@@ -54,7 +54,7 @@ mail_startTimerFolderStatusUpdate: function(_refreshTimeOut) {
 	}
 	if(_refreshTimeOut > 9999) {//we do not set _refreshTimeOut's less than 10 seconds
 		var self = this;
-		this.mail_doTimedRefresh = window.setInterval(self.mail_refreshFolderStatus, _refreshTimeOut);
+		this.mail_doTimedRefresh = window.setInterval(function() {self.mail_refreshFolderStatus.apply(self)}, _refreshTimeOut);
 	}
 },
 
@@ -92,12 +92,13 @@ mail_queueRefreshFolderList: function(_folders)
 
 	// Copy idx onto the anonymous function scope
 	var idx = this.mail_queuedFoldersIndex;
+	var self = this;
 	window.setTimeout(function() {
-		if (idx == this.mail_queuedFoldersIndex)
+		if (idx == self.mail_queuedFoldersIndex)
 		{
 			//var folders = mail_queuedFolders.join(",");
-			this.mail_queuedFoldersIndex = 0;
-			this.mail_queuedFolders = [];
+			self.mail_queuedFoldersIndex = 0;
+			self.mail_queuedFolders = [];
 
 			var request = new egw_json_request('mail.mail_ui.ajax_setFolderStatus',[_folders]);
 			request.sendRequest();
@@ -134,7 +135,7 @@ mail_refreshMessageGrid: function() {
 app_refresh: function(_msg, _app, _id, _type)
 {
 	var bufferExists = false;
-	window.clearInterval(this.doStatus); // whatever message was up to be activated
+	window.clearInterval(app.mail.doStatus); // whatever message was up to be activated
 	//alert("app_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
 	//myCurrentMsg = mail_getMsg();
 	//if (myCurrentMsg.length) {
@@ -142,7 +143,7 @@ app_refresh: function(_msg, _app, _id, _type)
 		myMessageBuffer = ""; //myCurrentMsg;
 		bufferExists = true;
 	//}
-	mail_setMsg('<span style="font-weight: bold;">' +_msg+ '</span>');
+	app.mail.mail_setMsg('<span style="font-weight: bold;">' +_msg+ '</span>');
 	if (_app=='mail')
 	{
 		//we may want to trigger some actions, like modifying the grid, disable preview and stuff
@@ -151,7 +152,7 @@ app_refresh: function(_msg, _app, _id, _type)
 	}
 	if (bufferExists)
 	{
-		this.doStatus = window.setInterval("egw_appWindow('mail').mail_setMsg(myMessageBuffer);", 10000);
+		this.doStatus = window.setInterval("app.mail.mail_setMsg(myMessageBuffer);", 10000);
 	}
 },
 
@@ -191,13 +192,13 @@ mail_setMsg: function(myMsg)
  */
 mail_delete: function(_action,_elems)
 {
-	var msg = mail_getFormData(_elems);
+	var msg = this.mail_getFormData(_elems);
 	//alert(_action.id+','+ msg);
 	app_refresh(egw.lang('delete messages'), 'mail');
-	mail_setRowClass(_elems,'deleted');
+	this.mail_setRowClass(_elems,'deleted');
 	var request = new egw_json_request('mail.mail_ui.ajax_deleteMessages',[msg]);
 	request.sendRequest(false);
-	mail_refreshMessageGrid()
+	this.mail_refreshMessageGrid()
 },
 
 /**
@@ -248,7 +249,7 @@ mail_changeProfile: function(folder,_widget) {
 //	alert(folder);
 	var request = new egw_json_request('mail.mail_ui.ajax_changeProfile',[folder]);
 	request.sendRequest(false);
-	mail_refreshMessageGrid();
+	this.mail_refreshMessageGrid();
 
 	return true;
 },
@@ -266,7 +267,7 @@ mail_changeFolder: function(folder,_widget) {
 	{
 		if (!(img.search(eval('/'+'thunderbird'+'/'))<0))
 		{
-			rv = mail_changeProfile(folder,_widget);
+			rv = this.mail_changeProfile(folder,_widget);
 			if (rv)
 			{
 				return rv;
@@ -313,9 +314,9 @@ mail_changeFolder: function(folder,_widget) {
 mail_flag: function(_action, _elems)
 {
 	//alert(_action.id+' - '+_elems[0].id);
-	var msg = mail_getFormData(_elems);
+	var msg = this.mail_getFormData(_elems);
 	//
-	mail_flagMessages(_action.id,msg);
+	this.mail_flagMessages(_action.id,msg);
 },
 
 /**
@@ -329,7 +330,7 @@ mail_flagMessages: function(_flag, _elems)
 	app_refresh(egw.lang('flag messages'), 'mail');
 	var request = new egw_json_request('mail.mail_ui.ajax_flagMessages',[_flag, _elems]);
 	request.sendRequest(false);
-	mail_refreshMessageGrid()
+	this.mail_refreshMessageGrid()
 },
 
 /**
@@ -354,7 +355,7 @@ mail_header: function(_action, _elems)
 	var url = window.egw_webserverUrl+'/index.php?';
 	url += 'menuaction=mail.mail_ui.displayHeader';	// todo compose for Draft folder
 	url += '&id='+_elems[0].id;
-	mail_displayHeaderLines(url);
+	this.mail_displayHeaderLines(url);
 },
 
 /**
@@ -370,7 +371,7 @@ mail_mailsource: function(_action, _elems)
 	url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
 	url += '&id='+_elems[0].id;
 	url += '&location=display';
-	mail_displayHeaderLines(url);
+	this.mail_displayHeaderLines(url);
 },
 
 /**
