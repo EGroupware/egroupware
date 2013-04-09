@@ -293,10 +293,10 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 			}
 		}
 		// for an url WITHOUT cd=yes --> load framework if not yet loaded:
-		// - check if iframe parent (top) has a framework loaded or
-		// - we are a popup (opener) or
-		// - we are an iframe in a popup (top.opener)
-		// - we are the (remote) manual
+		// - if top has framework object, we are all right
+		// - if not we need to check if we have an opener (are a popup window)
+		// - as popups can open further popups, we need to decend all the way down until we find a framework
+		// - only if we cant find a framework in all openers, we redirect to create a new framework
 		if(!$do_framework)
 		{
 			// for remote manual never check/create framework
@@ -304,9 +304,14 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 			{
 				if (empty($GLOBALS['egw_info']['flags']['java_script'])) $GLOBALS['egw_info']['flags']['java_script']='';
 				$GLOBALS['egw_info']['flags']['java_script'] .= '<script type="text/javascript">
-	if (typeof top.framework == "undefined" && (!top.opener || typeof top.opener.top.framework == "undefined"))
+	if (typeof top.framework == "undefined")
 	{
-		window.location.search += window.location.search ? "&cd=yes" : "?cd=yes";
+		var top_opener = top.opener;
+		while (top_opener && top_opener.opener && !top_opener.top.framework) top_opener = top_opener.opener.top;
+		if (!top_opener || typeof top_opener.top.framework == "undefined")
+		{
+			window.location.search += window.location.search ? "&cd=yes" : "?cd=yes";
+		}
 	}
 	window.egw_appName = "'.$GLOBALS['egw_info']['flags']['currentapp'].'";
 </script>';
