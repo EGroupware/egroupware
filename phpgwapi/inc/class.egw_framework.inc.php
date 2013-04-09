@@ -902,7 +902,7 @@ window.egw.LAB.script(
 		if (isset($GLOBALS['egw_info']['flags']['java_script']))
 		{
 			// Strip out any script tags, this needs to be executed as anonymous function
-			$GLOBALS['egw_info']['flags']['java_script'] = preg_replace(array('/(<script[^>]+>)([^<]*)/is','/<\/script>/'),array('$2',''),$GLOBALS['egw_info']['flags']['java_script']);
+			$GLOBALS['egw_info']['flags']['java_script'] = preg_replace(array('/(<script[^>]*>)([^<]*)/is','/<\/script>/'),array('$2',''),$GLOBALS['egw_info']['flags']['java_script']);
 			if(trim($GLOBALS['egw_info']['flags']['java_script']) != '')
 			{
 				$java_script .= '<script type="text/javascript">window.egw.LAB.wait(function() {'.$GLOBALS['egw_info']['flags']['java_script'] . "});</script>\n";
