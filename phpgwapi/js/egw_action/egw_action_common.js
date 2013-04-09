@@ -375,6 +375,7 @@ egwFnct.prototype.setValue = function(_value)
 			typeof window.app[parts[1]][parts[2]] == "function")
 		{
 			this.fnct = window.app[parts[1]][parts[2]];
+			this.context = window.app[parts[1]];
 		}
 	}
 }
