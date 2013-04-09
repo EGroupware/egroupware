@@ -24,6 +24,7 @@ function egwMenuImpl(_structure)
 	this.dhtmlxmenu = new dhtmlXMenuObject();
 	this.dhtmlxmenu.setSkin("egw");
 	this.dhtmlxmenu.renderAsContextMenu();
+	// TODO: Keyboard navigation of the menu
 
 	var self = this;
 
@@ -179,6 +180,7 @@ egwMenuImpl.prototype.showAt = function(_x, _y, _onHide)
 	var self = this;
 	window.setTimeout(function() {
 		self.dhtmlxmenu.showContextMenu(_x, _y);
+		// TODO: Get keybard focus
 	}, 0);
 }
 

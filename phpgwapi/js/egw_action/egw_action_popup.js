@@ -202,6 +202,13 @@ function egwPopupActionImplementation()
 			}
 		}
 
+		// Menu button
+		if (_key.keyCode == EGW_KEY_MENU && !_key.ctrl)
+		{
+			return this.doExecuteImplementation({posx:0,posy:0}, _selected, _links, _target);
+		}
+			
+
 		// Check whether the given shortcut exists
 		var obj = this._searchShortcutInLinks(_key, _links);
 		if (obj)
@@ -245,7 +252,7 @@ function egwPopupActionImplementation()
 		if (egwIsMobile()) {
 			$j(_node).bind('taphold', contextHandler);
 		} else {
-			_node.oncontextmenu = contextHandler;
+			$j(_node).on('contextmenu', contextHandler);
 		}
 	}
 

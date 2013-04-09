@@ -72,6 +72,8 @@ var EGW_KEY_X = 88;
 var EGW_KEY_Y = 89;
 var EGW_KEY_Z = 90;
 
+var EGW_KEY_MENU = 93;
+
 var EGW_KEY_F1 = 112;
 var EGW_KEY_F2 = 113;
 var EGW_KEY_F3 = 114;
@@ -88,7 +90,7 @@ var EGW_KEY_F12 = 123;
 var EGW_VALID_KEYS = [
 	8, 9, 13, 27, 46, 32, 33, 34, 37, 38, 39, 40, 48, 49, 50, 51, 52, 53, 54,
 	55, 56, 57, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
-	81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 112, 113, 114, 115, 116, 117, 118,
+	81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 93, 112, 113, 114, 115, 116, 117, 118,
 	119, 120, 121, 122, 123
 ]
 
@@ -171,6 +173,18 @@ $j(document).ready(function() {
 			}
 		}
 	});
+});
+
+/**
+ * Required to catch the context menu
+ */
+$j(window).on("contextmenu",document, function(event) {
+	if(egw_keyHandler(EGW_KEY_MENU, event.shiftKey, event.ctrlKey || event.metaKey, event.altKey))
+	{
+		// If the key handler successfully passed the key event to some
+		// sub component, prevent the default action
+		event.preventDefault();
+	}
 });
 
 
