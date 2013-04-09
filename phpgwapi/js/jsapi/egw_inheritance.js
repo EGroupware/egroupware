@@ -7,7 +7,7 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel
  * @copyright Stylite 2011
- * @version $Id: et2_core_inheritance.js 38299 2012-03-07 15:33:21Z igel457 $
+ * @version $Id$
  */
 
 "use strict";
