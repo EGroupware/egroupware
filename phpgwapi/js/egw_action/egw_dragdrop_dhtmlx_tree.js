@@ -33,7 +33,7 @@ function dhtmlxtreeItemAOI(_tree, _itemId)
 
 	// Retrieve the actual node from the tree
 	aoi.node = dhtmlxTree_getNode(_tree, _itemId);
-
+	aoi.id = _itemId;
 	aoi.doGetDOMNode = function() {
 		return aoi.node;
 	}
