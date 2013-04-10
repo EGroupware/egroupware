@@ -5,7 +5,7 @@
 		<hbox span="all">
 			<image href="filemanager.filemanager_ui.index&amp;path=.." label="Up" src="goup"/>
 			<image href="filemanager.filemanager_ui.index&amp;path=~" label="Go to your home directory" src="gohome"/>
-			<vfs-name label="Path" id="nm[path]" onchange="1" options="80" class="address"/>
+			<vfs-name label="Path" id="path" onchange="1" options="80" class="address"/>
 			<button label="Go to" id="button[go]" image="key_enter"/>
 			<image src="buttonseparator"/>
 			<button statustext="Rename, change permissions or ownership" label="Edit settings" id="edit[{$cont[nm][path]}]" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path={$cont[nm][path]}'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;" image="edit"/>
