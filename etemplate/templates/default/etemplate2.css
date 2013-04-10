@@ -765,7 +765,7 @@ label input, label span, label div, label select, label textarea {
 	margin-bottom: 3px;
 }
 .et2_nextmatch .nextmatch_header > .filters {
-	border: 1px solid black;
+	border: 1px solid silver;
 	background-color: #E0E0E0;
 	background-image: url(../../../phpgwapi/templates/default/images/egw_action/header_overlay.png);
 	background-position: center;
@@ -811,11 +811,11 @@ label input, label span, label div, label select, label textarea {
 	border: none;
 	background: white;
 }
-.sidebox-favorites ul .ui-menu .ui-menu-item a {
+.sidebox-favorites .ui-menu .ui-menu-item a {
 	line-height: inherit;
 	padding: 2px 0px;
 }
-.sidebox-favorites ul .ui-menu .ui-menu-item a:hover {
+.sidebox-favorites .ui-menu .ui-menu-item a:hover {
 	text-decoration: underline;
 }
 .sidebox-favorites .favorites div.ui-icon-heart{
