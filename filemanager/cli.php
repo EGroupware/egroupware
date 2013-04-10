@@ -64,6 +64,7 @@ function usage($action=null,$ret=0)
 	echo "\t$cmd mount URL [path] (without path prints out the mounts)\n";
 	echo "\t$cmd umount [-a|--all (restores default mounts)] URL|path\n";
 	echo "\t$cmd eacl URL [rwx-] [user or group]\n";
+	echo "\t$cmd lntree [sqlfs://domain]from to\n";
 	echo "\tsudo -u apache $cmd migrate-db2fs --user root_admin --passwd password [--domain default] (migrates sqlfs content from DB to filesystem)\n";
 
 	echo "\nCommon options: --user user --password password [--domain domain] can be used to pass eGW credentials without using the URL writing.\n";
@@ -240,6 +241,10 @@ switch($cmd)
 
 	case 'find':
 		do_find($argv,$find_options);
+		break;
+
+	case 'lntree':
+		do_lntree($argv[0], $argv[1]);
 		break;
 
 	case 'cp':
@@ -474,7 +479,7 @@ function load_wrapper($url)
 			case 'webdavs':
 				require_once('HTTP/WebDAV/Client.php');
 				break;
-			case '':	// default scheme is file and alsways available
+			case '':	// default scheme is file and always available
 				break;
 			default:
 				if (!isset($GLOBALS['egw']) && !in_array($scheme,array('smb','imap')))
@@ -815,6 +820,55 @@ function do_find($bases,$options)
 	foreach(egw_vfs::find($bases,$options) as $path)
 	{
 		echo "$path\n";
+	}
+}
+
+function do_lntree($from,$to)
+{
+	echo "lntree $from $to\n";
+	if ($from[0] == '/') $from = 'sqlfs://default'.$from;
+	load_wrapper($from);
+
+	if (!file_exists($from) || $to[0] != '/' || file_exists($to) || !is_writable(dirname($to)))
+	{
+		usage(null,4);
+	}
+	egw_vfs::find($from, array(
+		'url' => true,
+	), '_ln', array($to));
+}
+
+function _ln($src, $base, $stat)
+{
+	//echo "_ln('$src', '$base', ".array2string($stat).")\n";
+	$dst = $base.parse_url($src, PHP_URL_PATH);
+
+	if (is_link($src))
+	{
+		if (($target = sqlfs_stream_wrapper::readlink($src)))
+		{
+			if ($target[0] != '/')
+			{
+				$target = egw_vfs::dirname($src).'/'.$target;
+			}
+			echo "_ln('$src', '$base')\tsymlink('$base$target', '$dst')\n";
+			symlink($base.$target, $dst);
+		}
+		else
+		{
+			echo "_ln('$src', '$base')\tsqlfs::readlink('$src') failed\n";
+		}
+	}
+	elseif (is_dir($src))
+	{
+		echo "_ln('$src', '$base')\tmkdir('$dst', 0700, true)\n";
+		mkdir($dst, 0700, true);
+	}
+	else
+	{
+		$target = sqlfs_stream_wrapper::_fs_path($stat['ino']);
+		echo "_ln('$src', '$base')\tlink('$target', '$dst')\n";
+		link($target, $dst);
 	}
 }
 
