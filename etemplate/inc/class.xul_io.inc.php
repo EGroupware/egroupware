@@ -742,6 +742,7 @@ class xul_io
 						case 'image':
 							$attr['name'] = $attr['src'];
 							unset($attr['src']);
+							$this->set_legacy_options($tag, $attr);
 							break;
 						case 'listbox':
 							$attr['size'] = preg_replace('/,*$/','',$attr['rows'].','.$attr['size']);
@@ -755,19 +756,8 @@ class xul_io
 							}
 							break;
 						case 'nextmatch':
-							// re-assemble legacy options in "size" attribute
-							if (empty($attr['size']) && $this->widget2xul[$tag]['size'])
-							{
-								foreach(explode(',', $this->widget2xul[$tag]['size']) as $l_attr)
-								{
-									$attr['size'] .= ($attr['size'] ? ',' : '').$attr[$l_attr];
-									unset($attr[$l_attr]);
-								}
-								while(substr($attr['size'], -1) == ',')
-								{
-									$attr['size'] = substr($attr['size'], 0, -1);
-								}
-							}
+							$this->set_legacy_options($tag, $attr);
+							break;
 					}
 					$attr['help'] = $attr['statustext']; unset($attr['statustext']);
 					$attr['span'] .= $attr['class'] ? ','.$attr['class'] : ''; unset($attr['class']);
@@ -787,5 +777,28 @@ class xul_io
 			}
 		}
 		return $imported;
+	}
+
+	/**
+	 * re-assemble legacy options in "size" attribute
+	 *
+	 * @param string $tag
+	 * @param array &$attr
+	 */
+	function set_legacy_options($tag, &$attr)
+	{
+		// re-assemble legacy options in "size" attribute
+		if (empty($attr['size']) && $this->widget2xul[$tag]['size'])
+		{
+			foreach(explode(',', $this->widget2xul[$tag]['size']) as $l_attr)
+			{
+				$attr['size'] .= ($attr['size'] ? ',' : '').$attr[$l_attr];
+				unset($attr[$l_attr]);
+			}
+			while(substr($attr['size'], -1) == ',')
+			{
+				$attr['size'] = substr($attr['size'], 0, -1);
+			}
+		}
 	}
 }
