@@ -1072,7 +1072,11 @@ class etemplate_old extends boetemplate
 		{
 			$cell['size'] = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 		}
-		if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && in_array($cell['type'],array('button','buttononly','image','progress')) && strpos($cell['size'],',') === false)
+		if ($cell['type'] == 'template' && !$this->check_disabled($cell['disabled'], $content))
+		{
+			// template is NOT disabled (eg. in editor)
+		}
+		elseif ($cell['disabled'] && $readonlys[$name] !== false || $readonly && in_array($cell['type'],array('button','buttononly','image','progress')) && strpos($cell['size'],',') === false)
 		{
 			if ($this->rows == 1)
 			{
