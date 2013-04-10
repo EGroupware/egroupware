@@ -128,7 +128,7 @@ var et2_dynheight = Class.extend({
 			$j(_node).children().each(function() {
 				var $this = $j(this);
 				var top = $this.offset().top;
-				if (this != self.innerNode[0] && top > _bottom)
+				if (this != self.innerNode[0] && top >= _bottom)
 				{
 					self.bottomNodes.push($this);
 				}
