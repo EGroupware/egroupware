@@ -73,12 +73,9 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable], {
 	},
 
 	destroy: function() {
-		// Store current position in preferences
-		if(this.id && this.egw().getAppName())
-		{
-			var size = this.orientation == "v" ? {sizeLeft: this.left.width()} : {sizeTop: this.left.height()};
-			this.egw().set_preference(this.egw().getAppName(), 'splitter-size-' + this.id, size);
-		}
+		// Stop listening
+		this.left.next().off("mouseup");
+		
 		// Destroy splitter, restore children
 		this.div.trigger("destroy");
 
@@ -178,6 +175,17 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable], {
 			.addClass("ui-icon")
 			.addClass(icon)
 			.appendTo(this.left.next());
+
+		// Save preference when size changed
+		if(this.id && this.egw().getAppName())
+		{
+			self = this;
+			this.left.next().on("mouseup", function() {
+				// Store current position in preferences
+				var size = self.orientation == "v" ? {sizeLeft: self.left.width()} : {sizeTop: self.left.height()};
+				self.egw().set_preference(self.egw().getAppName(), 'splitter-size-' + self.id, size);
+			});
+		}
 	},
 
 	/**
