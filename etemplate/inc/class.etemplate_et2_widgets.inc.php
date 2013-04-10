@@ -55,12 +55,12 @@ class etemplate_et2_widgets
 <div id="widget_list"></div>
 <div id="widget_container"></div>
                 <script>
-                        egw(window).ready(function() {
+                        egw.LAB.wait(function() {
 				var wb = new widget_browser(
 					document.getElementById("widget_list"),
 					document.getElementById("widget_container")
 				);
-                        }, null, true);
+                        });
                 </script>';
 		common::egw_footer();
 	}
