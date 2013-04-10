@@ -179,12 +179,14 @@ $j(document).ready(function() {
  * Required to catch the context menu
  */
 $j(window).on("contextmenu",document, function(event) {
-	if(egw_keyHandler(EGW_KEY_MENU, event.shiftKey, event.ctrlKey || event.metaKey, event.altKey))
+	if(!event.ctrlKey && egw_keyHandler(EGW_KEY_MENU, event.shiftKey, event.ctrlKey || event.metaKey, event.altKey))
 	{
 		// If the key handler successfully passed the key event to some
 		// sub component, prevent the default action
 		event.preventDefault();
+		return false;
 	}
+	return true;
 });
 
 

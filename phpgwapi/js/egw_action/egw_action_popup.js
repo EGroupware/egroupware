@@ -235,18 +235,18 @@ function egwPopupActionImplementation()
 			{
 				_egw_active_menu.hide()
 			}
-			else
+			else if (!e.ctrlKey)
 			{
 				_xy = ai._getPageXY(e);
 				_callback.call(_context, _xy, ai);
 			}
 
-			e.cancelBubble = true;
-			if (e.stopPropagation)
+			e.cancelBubble = !e.ctrlKey;
+			if (e.stopPropagation && !e.ctrlKey)
 			{
 				e.stopPropagation();
 			}
-			return false;
+			return e.ctrlKey;
 		}
 
 		if (egwIsMobile()) {
