@@ -75,15 +75,36 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 			"type": "string",
 			"description": "The id of the template which contains the grid layout."
 		},
+		"hide_header": {
+			"name": "Hide header",
+			"type": "boolean",
+			"description": "Hide the header",
+			"default": false
+		},
+		"header_left": {
+			"name": "Left custom template",
+			"type": "string",
+			"description": "Customise the nextmatch - left side.  Provided template becomes a child of nextmatch, and any input widgets with onChange can trigger the nextmatch to refresh by returning true.",
+			"default": ""
+		},
+		"header_right": {
+			"name": "Right custom template",
+			"type": "string",
+			"description": "Customise the nextmatch - right side.  Provided template becomes a child of nextmatch, and any input widgets with onChange can trigger the nextmatch to refresh by returning true.",
+			"default": ""
+		},
 		"settings": {
 			"name": "Settings",
 			"type": "any",
-			"description": "The nextmatch settings"
+			"description": "The nextmatch settings",
+			"default": {}
 		}
 	},
 
-	legacyOptions: ["template"],
+	legacyOptions: ["template","hide_header","header_left","header_right"],
 	createNamespace: true,
+
+	columns: [],
 
 	init: function() {
 		this._super.apply(this, arguments);
@@ -109,6 +130,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		
 		this.div = $j(document.createElement("div"))
 			.addClass("et2_nextmatch");
+
 
 		this.header = new et2_nextmatch_header_bar(this, this.div);
 
@@ -157,6 +179,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		if (this.id)
 		{
 			var entry = this.getArrayMgr("content").data;
+			_attrs["settings"] = {};
 
 			if (entry)
 			{
@@ -166,6 +189,16 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 				if(_attrs["settings"]["actions"] && !_attrs.settings["action_var"])
 				{
 					_attrs.settings.action_var = "action";
+				}
+
+				// Merge settings mess into attributes
+				for(var attr in this.attributes)
+				{
+					if(_attrs.settings[attr])
+					{
+						_attrs[attr] = _attrs.settings[attr];
+						delete _attrs.settings[attr];
+					}
 				}
 			}
 		}
@@ -695,7 +728,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 				this.rowProvider,
 				this.options.settings.action_links,
 				null,
-				this.options.settings.actions
+				this.options.actions
 		);
 		// Need to trigger empty row the first time
 		if(total == 0) this.controller._emptyRow();
@@ -1024,6 +1057,17 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		}
 	},
 
+	set_hide_header: function(hide) {
+		(hide ? this.header.div.hide() : this.header.div.show());
+	},
+
+	set_header_left: function(template) {
+		this.header._build_left_right("left",template);
+	},
+	set_header_right: function(template) {
+		this.header._build_left_right("right",template);
+	},
+
 	/**
 	 * Actions are handled by the controller, so ignore these
 	 */
@@ -1102,6 +1146,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			"default": false
 		}
 	},
+	headers: [],
+	header_div: [],
 
 	init: function(nextmatch, nm_div) {
 		this._super.apply(this, [nextmatch,nextmatch.options.settings]);
@@ -1156,38 +1202,14 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 
 		// Left & Right headers
 		this.headers = [];
-		if(settings.header_left || settings.header_right)
+		if(this.nextmatch.options.header_left || this.nextmatch.options.header_right)
 		{
-			var headers = [settings.header_left, settings.header_right];
+			var headers = [this.nextmatch.options.header_left, this.nextmatch.options.header_right];
 			this.header_div = jQuery(document.createElement("div")).addClass("ui-helper-clearfix ui-helper-reset").prependTo(this.div);
 			for(var i = 0; i < headers.length; i++) {
-				if(headers[i]) {
-					// Load the template
-					var header = et2_createWidget("template", {"id": headers[i]}, this);
-					jQuery(header.getDOMNode()).addClass(i == 0 ? "et2_hbox_left":"et2_hbox_right").addClass("nm_header");
-					this.headers.push(header);
-
-					// Bind onChange to update filter, and refresh if needed
-					header.iterateOver(function(_widget) {
-						// Previously set change function
-						var widget_change = _widget.change;
-						_widget.change = function(_node) {
-							// Call previously set change function
-							var result = widget_change.call(_widget,_node);
-
-							// Update filters
-							var old = self.nextmatch.activeFilters[_widget.id];
-							self.nextmatch.activeFilters[_widget.id] = _widget.getValue();
-
-							if(result && old != _widget.getValue()) {
-								// Filter now
-								self.nextmatch.applyFilters();
-							}
-						}
-
-						// Set activeFilters to current value
-						self.nextmatch.activeFilters[_widget.id] = _widget.getValue();
-					}, this, et2_inputWidget);
+				if(headers[i])
+				{
+					this._build_left_right(i==0?'left':'right',headers[i]);
 				}
 			}
 		}
@@ -1291,6 +1313,45 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 		}
 	},
 
+
+	_build_left_right: function(left_or_right, template_name)
+	{
+		var existing = this.headers[left_or_right == "left" ? 0 : 1];
+		if(existing)
+		{
+			if(existing.id == template_name) return;
+			existing.free();
+			this.headers[this.headers.indexOf(existing)] = '';
+		}
+
+		// Load the template
+		var header = et2_createWidget("template", {"id": template_name}, this);
+		jQuery(header.getDOMNode()).addClass(left_or_right == "left" ? "et2_hbox_left":"et2_hbox_right").addClass("nm_header");
+		this.headers.push(header);
+
+		// Bind onChange to update filter, and refresh if needed
+		var self = this;
+		header.iterateOver(function(_widget) {
+			// Previously set change function
+			var widget_change = _widget.change;
+			_widget.change = function(_node) {
+				// Call previously set change function
+				var result = widget_change.call(_widget,_node);
+
+				// Update filters
+				var old = self.nextmatch.activeFilters[_widget.id];
+				self.nextmatch.activeFilters[_widget.id] = _widget.getValue();
+
+				if(result && old != _widget.getValue()) {
+					// Filter now
+					self.nextmatch.applyFilters();
+				}
+			}
+
+			// Set activeFilters to current value
+			self.nextmatch.activeFilters[_widget.id] = _widget.getValue();
+		}, this, et2_inputWidget);
+	},
 
 	/**
 	 * Build the selectbox filters in the header bar
