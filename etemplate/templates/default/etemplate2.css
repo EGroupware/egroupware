@@ -758,6 +758,20 @@ label input, label span, label div, label select, label textarea {
 .nextmatch_header > .filters .et2_button_icon {
 	margin-top: 8px;
 }
+.et2_nextmatch .nextmatch_header {
+	border: none;
+	background-image: none;
+	background-color: transparent;
+	margin-bottom: 3px;
+}
+.et2_nextmatch .nextmatch_header > .filters {
+	border: 1px solid black;
+	background-color: #E0E0E0;
+	background-image: url(../../../phpgwapi/templates/default/images/egw_action/header_overlay.png);
+	background-position: center;
+	background-repeat: repeat-x;
+	margin-bottom: 3px;
+}
 /* Favorites */
 .nextmatch_header div#favorite_wrapper {
 	margin-top: 5px;
