@@ -89,7 +89,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],{
 		if(this.sidebox_target.length == 0 && egw_getFramework() != null)
 		{
 			var egw_fw = egw_getFramework();
-			this.sidebox_target = $j("#favorite_sidebox",egw_fw.sidemenuDiv);
+			this.sidebox_target = $j("#"+this.options.sidebox_target,egw_fw.sidemenuDiv);
 		}
 
 		var apps = egw().user('apps');

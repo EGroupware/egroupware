@@ -1409,7 +1409,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 		var widget_options = {
 			default_pref: "nextmatch-" + this.nextmatch.options.settings.columnselection_pref + "-favorite",
 			app: list[0],
-			filters: filters
+			filters: filters,
+			sidebox_target:'favorite_sidebox_'+list[0]
 		};
 		this.favorites = et2_createWidget('favorites', widget_options, this);
 

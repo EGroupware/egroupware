@@ -791,25 +791,25 @@ label input, label span, label div, label select, label textarea {
 	/* TODO: This is template specific */
 	background-image: url(../../../phpgwapi/templates/idots/images/orange-ball.png);
 }
-#favorite_sidebox ul {
+.sidebox-favorites ul.favorites {
 	width: 99%;
 	padding: 0px;
 	border: none;
 	background: white;
 }
-#favorite_sidebox .ui-menu .ui-menu-item a {
+.sidebox-favorites ul .ui-menu .ui-menu-item a {
 	line-height: inherit;
 	padding: 2px 0px;
 }
-#favorite_sidebox .ui-menu .ui-menu-item a:hover {
+.sidebox-favorites ul .ui-menu .ui-menu-item a:hover {
 	text-decoration: underline;
 }
-#favorite_sidebox div.ui-icon-heart{
+.sidebox-favorites .favorites div.ui-icon-heart{
 	float: left;
 	display:inline-block;
 	margin: -3px 1px 0px 1px;
 }
-#favorite_sidebox div.ui-icon-trash{
+.sidebox-favorites .favorites div.ui-icon-trash{
 	margin-top: -3px;
 }
 .nextmatch_sortheader {

@@ -846,7 +846,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	public static function favorite_list($app, $default)
 	{
 		if(!$app) return '';
-		$target = 'favorite_sidebox';
+		$target = 'favorite_sidebox_'.$app;
 		$pref_prefix = 'favorite_';
 		$filters = array(
 			'blank' => array(
@@ -858,7 +858,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$default_filter = $GLOBALS['egw_info']['user']['preferences'][$app][$default];
 		if(!$default_filter) $default_filter = "blank";
 
-		$html = "<span id='$target' class='ui-helper-clearfix'><ul class='ui-menu ui-widget-content ui-corner-all favorites' role='listbox'>\n";
+		$html = "<span id='$target' class='ui-helper-clearfix sidebox-favorites'><ul class='ui-menu ui-widget-content ui-corner-all favorites' role='listbox'>\n";
 		foreach($GLOBALS['egw_info']['user']['preferences'][$app] as $pref_name => $pref)
 		{
 			if(strpos($pref_name, $pref_prefix) === 0)
