@@ -197,7 +197,7 @@ class etemplate_new extends etemplate_widget_template
 					else { egw.debug("warn", "Did not load '.$app.' JS object"); }').'
 					if(typeof app["'.$app.'"] == "object")
 					{
-						callback = function() {new app["'.$app.'"]()};
+						callback = function(et2) {app["'.$app.'"].et2_ready(et2)};
 					}
 					var et2 = new etemplate2(document.getElementById("container"), "etemplate::ajax_process_content");
 					et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).', callback);
