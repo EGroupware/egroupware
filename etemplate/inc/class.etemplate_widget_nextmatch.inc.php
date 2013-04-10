@@ -915,6 +915,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			$prefs =& $GLOBALS['egw']->preferences;
 			$type = 'user';
 		}
+		$prefs->read_repository();
 		$type = $group == "all" ? "default" : "user";
 		if($action == "add")
 		{
