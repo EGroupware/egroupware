@@ -494,6 +494,9 @@ var et2_widget = Class.extend({
 
 				for (var j = 0; j < splitted.length && j < _proto.legacyOptions.length; j++)
 				{
+					// Blank = not set
+					if(splitted[j].trim().length == 0) continue;
+
 					// Check to make sure we don't overwrite a current option with a legacy option
 					if(typeof _target[_proto.legacyOptions[j]] === "undefined")
 					{
@@ -508,9 +511,6 @@ var et2_widget = Class.extend({
 							attrValue = splitted.slice(j);
 						}
 						
-						// Blank = not set
-						if(attrValue == "") continue;
-
 						var attr = _proto.attributes[_proto.legacyOptions[j]];
 
 						// If the attribute is marked as boolean, parse the
