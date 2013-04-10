@@ -245,6 +245,7 @@ class filemanager_ui
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 					'actions'        => self::get_actions(),
 					'row_id'         => 'path',
+					'header_left'    => 'filemanager.index.header_left',
 				);
 				$content['nm']['path'] = self::get_home_dir();
 			}
@@ -1332,7 +1333,7 @@ class filemanager_ui
 			}
 			$tooltip = '<p><b>'.$tooltip.':</b><br />'.egw_vfs::decodePath(implode('<br />',$clipboard_files)).'</p>';
 		}
-		$response->script('clipboard_files = '.json_encode($clipboard_files).';');
+		$response->script('app.filemanager.clipboard_files = '.json_encode($clipboard_files).';');
 		$response->script('Tip.call(document.getElementById("'.$id.'"),"'.$tooltip.'");');
 	}
 
@@ -1348,8 +1349,8 @@ class filemanager_ui
 
 		$msg = self::action($action, $selected);
 
-		$response->script('egw_fileman_setMsg("'.$msg.'");');
-		$response->script('clipboard_files = '.json_encode($clipboard_files).';');
+		$response->script('app.filemanager.app_refresh("'.$msg.'");');
+		$response->script('app.filemanager.clipboard_files = '.json_encode($clipboard_files).';');
 	}
 
 	/**

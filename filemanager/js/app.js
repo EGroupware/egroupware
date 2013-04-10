@@ -21,8 +21,29 @@ app.filemanager = AppJS.extend(
 		this._super.apply(this,arguments);
 
 		//window.register_app_refresh("mail", this.app_refresh);
-	}/*,
+	},
 	
+	/**
+	 * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
+	 * 
+	 * Default implementation here only reloads window with it's current url with an added msg=_msg attached
+	 * 
+	 * @param string _msg message (already translated) to show, eg. 'Entry deleted'
+	 * @param string _app application name
+	 * @param string|int _id=null id of entry to refresh
+	 * @param string _type=null either 'edit', 'delete', 'add' or null
+	 */
+	/*app_refresh: function(_msg, _app, _id, _type)
+	{
+		$j(document.getElementById('nm[msg]')).text(_msg);
+		
+		if (_app == this.app)
+		{
+			var et2 = etemplate2.getByApplication(this.app)[0];
+			et2.widgetContainer.getWidgetById('nm').applyFilters();
+		}
+	},*/
+
 	remove_prefix: /^filemanager::/,
 	open_mail: function(attachments)
 	{
@@ -46,11 +67,6 @@ app.filemanager = AppJS.extend(
 		this.open_mail(ids);
 	},
 
-	setMsg: function(_msg)
-	{
-		$j(document.getElementById('nm[msg]')).text(_msg);
-	},
-	
 	clipboard_files: [],
 	
 	check_files: function(upload, path_id)
@@ -98,5 +114,5 @@ app.filemanager = AppJS.extend(
 		var url = data ? data.data.download_url : '/webdav.php'+_senders[0].id.replace(this.remove_prefix,'');
 		if (url[0] == '/') url = egw.link(url);
 		window.location = url+"?download";
-	}*/
+	}
 });
