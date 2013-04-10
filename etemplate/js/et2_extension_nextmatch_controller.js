@@ -215,11 +215,6 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 			links = this._widget.options.settings.placeholder_actions;
 		} catch (e) {
 		}
-		// Default
-		if(typeof links == "undefined")
-		{
-			links = ["add"];
-		}
 
 		return links;
 	},
