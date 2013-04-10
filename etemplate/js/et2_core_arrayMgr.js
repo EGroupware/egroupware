@@ -208,8 +208,8 @@ var et2_arrayMgr = Class.extend({
 		{
 			// Get the content array for the current row
 			var row = this.perspectiveData.row;
-			var cont = this.data;
-			var row_cont = cont[row];
+			var row_cont = this.data[row];
+			var cont = this.getRoot().data;
 
 			// Check whether the expression has already been compiled - if not,
 			// try to compile it first. If an error occurs, the identifier
