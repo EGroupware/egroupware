@@ -106,8 +106,11 @@ var et2_textbox = et2_inputWidget.extend({
 			this.set_readonly(true);
 		}
 		this.input.addClass("et2_textbox");
-
 		this.setDOMNode(this.input[0]);
+		if(this.options.value)
+		{
+			this.set_value(this.options.value);
+		}
 	},
 
 	getValue: function()
