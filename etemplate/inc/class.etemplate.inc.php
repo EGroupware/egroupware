@@ -193,7 +193,8 @@ class etemplate_new extends etemplate_widget_template
 					if(typeof app["'.$app.'"] == "function")
 					{
 						(function() { new app["'.$app.'"]();}).call();
-					}
+					} ' . (!file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js') ? '' :'
+					} else { egw.debug("warn", "Did not load '.$app.' JS object"); }').'
 					if(typeof app["'.$app.'"] == "object")
 					{
 						callback = function() {new app["'.$app.'"]()};
@@ -220,7 +221,8 @@ class etemplate_new extends etemplate_widget_template
 					if(typeof app["'.$app.'"] == "function")
 					{
 						(function() { new app["'.$app.'"]();}).call();
-					}
+					} ' . (!file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js') ? '' :'
+					} else { egw.debug("warn", "Did not load '.$app.' JS object"); }') . '
 					if(typeof app["'.$app.'"] == "object")
 					{
 						callback = function(et2) {app["'.$app.'"].et2_ready(et2)};
