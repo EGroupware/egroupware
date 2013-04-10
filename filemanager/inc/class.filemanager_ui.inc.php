@@ -119,7 +119,7 @@ class filemanager_ui
 				'icon' => '',
 				'group' => $group=1,
 				'allowOnMultiple' => false,
-				'onExecute' => 'javaScript:nm_activate_link',
+				'onExecute' => 'javaScript:app.filemanager.open',
 				'default' => true
 			),
 			'saveas' => array(
@@ -249,6 +249,8 @@ class filemanager_ui
 				);
 				$content['nm']['path'] = self::get_home_dir();
 			}
+			$content['nm']['home_dir'] = self::get_home_dir();
+
 			if (isset($_GET['msg'])) $msg = $_GET['msg'];
 
 			// switch to projectmanager folders
