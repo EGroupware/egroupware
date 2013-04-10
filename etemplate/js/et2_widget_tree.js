@@ -393,6 +393,16 @@ var et2_tree = et2_inputWidget.extend({
 	},
 
 	/**
+	 * getLabel, gets the Label of of an item by id
+	 * @param _id ID of the node
+	 * @return _label
+	 */
+	getLabel: function(_id) {
+		if(this.input == null) return null;
+		return this.input.getItemText(_id);
+	},
+
+	/**
 	 * getSelectedNode, retrieves the full node of the selected Item
 	 * @return string or null
 	 */
