@@ -42,7 +42,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd) {
 				}
 
 				// Add in a trace
-				if (DEBUGLEVEL >= 5 && (_level == "warn" || _level == "error") && typeof (new Error).stack != "undefined")
+				if (DEBUGLEVEL >= 5 && typeof (new Error).stack != "undefined")
 				{
 					var stack = (new Error).stack;
 					args.push(stack);
