@@ -108,6 +108,9 @@ class xul_io
 		'htmlarea' => array(
 			'size' => 'mode,height,width,toolbar,base_href',
 		),
+		'nextmatch' => array(
+			'size' => 'template,hide_header,header_left,header_right',
+		),
 	);
 	/**
 	 * translate xul-widget names to our internal ones, not set ones are identical
@@ -212,14 +215,20 @@ class xul_io
 		switch ($type)
 		{
 		case 'nextmatch':
-			list($tpl) = explode(',',$cell['size']);
-			$embeded = new boetemplate($tpl,$this->load_via);
-			if ($embeded_too)
+			$tpls = $cell['size'] = explode(',', $cell['size']);	// template,hide_header,header_left,header_right
+			unset($tpls[1]);	// hide_header is no template
+			foreach($tpls as $n => $tpl)
 			{
-				$this->add_etempl($embeded,$embeded_too);
+				if (empty($tpl)) continue;
+				$embeded = new boetemplate($tpl,$this->load_via);
+				if ($embeded_too)
+				{
+					$this->add_etempl($embeded,$embeded_too);
+				}
+				$cell['size'][$n] = $embeded->name;
+				unset($embeded);
 			}
-			$cell['size'] = $embeded->name;
-			unset($embeded);
+			$cell['size'] = implode(',', $cell['size']);
 			break;
 		case 'tabbox':
 			$labels = explode('|',$cell['label']);  unset($cell['label']);
@@ -745,6 +754,20 @@ class xul_io
 								unset($attr['image']); unset($attr['ro_image']);
 							}
 							break;
+						case 'nextmatch':
+							// re-assemble legacy options in "size" attribute
+							if (empty($attr['size']) && $this->widget2xul[$tag]['size'])
+							{
+								foreach(explode(',', $this->widget2xul[$tag]['size']) as $l_attr)
+								{
+									$attr['size'] .= ($attr['size'] ? ',' : '').$attr[$l_attr];
+									unset($attr[$l_attr]);
+								}
+								while(substr($attr['size'], -1) == ',')
+								{
+									$attr['size'] = substr($attr['size'], 0, -1);
+								}
+							}
 					}
 					$attr['help'] = $attr['statustext']; unset($attr['statustext']);
 					$attr['span'] .= $attr['class'] ? ','.$attr['class'] : ''; unset($attr['class']);

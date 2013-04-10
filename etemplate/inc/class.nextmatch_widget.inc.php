@@ -17,6 +17,12 @@
  * This widget replaces the old nextmatch-class. It is independent of the UI,
  * as it only uses etemplate-widgets and has therefor no render-function
  *
+ * Following options can be set comma-separated in $cell['size']:
+ * 1. template
+ * 2. hide_header
+ * 3. header_left
+ * 4. header_right
+ *
  * $content[$id] = array(	// I = value set by the app, 0 = value on return / output
  * 	'get_rows'       =>		// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
  * 	'filter_label'   =>		// I  label for filter    (optional)
@@ -66,6 +72,7 @@
  *  'selected'       =>     //  O array with selected id's
  *  'checkboxes'     =>     //  O array with checkbox id as key and boolean checked value
  *  'select_all'     =>     //  O boolean value of select_all checkbox, reference to above value for key 'select_all'
+ *  'hide_header'    =>     // I  do NOT show header row
  * );
  */
 class nextmatch_widget
@@ -329,7 +336,11 @@ class nextmatch_widget
 		$value['rows'] =& $rows;
 		unset($rows);
 
-		list($template,$options) = explode(',',$cell['size']);
+		list($template,$hide_header,$header_left,$header_right) = explode(',',$cell['size']);
+		if ($header_left) $value['header_left'] = $header_left;
+		if ($header_right) $value['header_right'] = $header_right;
+		if ((string)$hide_header !== '') $value['hide_header'] = $hide_header;
+
 		if (!$value['template'] && $template)	// template name can be supplied either in $value['template'] or the options-field
 		{
 			$value['template'] = $template;
@@ -352,7 +363,7 @@ class nextmatch_widget
 		{
 			$value['template']->data[0]['h'.$value['template']->rows] .= ',1';	// disable the last data row
 		}
-		if (!$value['never_hide'] && $total <= $max && $options && $value['search'] == '' &&
+		if (!$value['never_hide'] && $total <= $max && $value['hide_header'] && $value['search'] == '' &&
 			 ($value['no_cat'] || !$value['cat_id']) &&
 			 ($value['no_filter'] || !$value['filter'] || $value['filter'] == 'none') &&
 			 ($value['no_filter2'] || !$value['filter2'] || $value['filter2'] == 'none'))
