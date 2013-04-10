@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package filemanager
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -38,6 +38,9 @@ if (isset($path) && !empty($path))
 		echo ($n > 1 ? ' / ' : '').html::a_href($n ? $part : ' / ','/filemanager/test.php',array('path'=>$p));
 	}
 	echo "</h2>\n";
+
+	echo "<p><b>egw_vfs::propfind('$path')</b>=".array2string(egw_vfs::propfind($path))."</p>\n";
+	echo "<p><b>egw_vfs::resolve_url('$path')</b>=".array2string(egw_vfs::resolve_url($path))."</p>\n";
 
 	$is_dir = egw_vfs::is_dir($path);
 	echo "<p><b>is_dir('$path')</b>=".array2string($is_dir)."</p>\n";
