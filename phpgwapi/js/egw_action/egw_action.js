@@ -367,7 +367,7 @@ egwAction.prototype.execute = function(_senders, _target)
 {
 	if (typeof _target == "undefined")
 	{
-		_target == null;
+		_target = null;
 	}
 
 	return this.onExecute.exec(this, _senders, _target);

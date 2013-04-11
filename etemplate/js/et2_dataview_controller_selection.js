@@ -262,7 +262,7 @@ var et2_dataview_selectionManager = Class.extend({
 		}
 
 		// Connect the the two AOIs
-		dummyAOI.doTriggerEvent = _entry.aoi.doTiggerEvent;
+		dummyAOI.doTriggerEvent = _entry.aoi.doTriggerEvent;
 
 		// Implementation of the getDOMNode function, so that the event
 		// handlers can be properly bound
