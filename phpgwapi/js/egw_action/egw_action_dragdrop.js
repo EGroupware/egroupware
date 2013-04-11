@@ -173,10 +173,13 @@ function egwDragActionImplementation()
 				// Push the dragType of the associated action object onto the
 				// drag type list - this allows an element to support multiple
 				// drag/drop types.
-				var type = _links[k].actionObj.dragType;
-				if (this.ddTypes.indexOf(type) == -1)
+				var type = $j.isArray(_links[k].actionObj.dragType) ? _links[k].actionObj.dragType : [_links[k].actionObj.dragType];
+				for(var i = 0; i < type.length; i++)
 				{
-					this.ddTypes.push(_links[k].actionObj.dragType);
+					if (this.ddTypes.indexOf(type[i]) == -1)
+					{
+						this.ddTypes.push(type[i]);
+					}
 				}
 			}
 		}
@@ -286,13 +289,13 @@ function egwDropActionImplementation()
 
 							for (var i = 0; i < ddTypes.length; i++)
 							{
-								if (accepted.indexOf(ddTypes[i]) == -1)
+								if (accepted.indexOf(ddTypes[i]) != -1)
 								{
-									return false;
+									return true;
 								}
 							}
 
-							return true;
+							return false;
 						}
 					},
 					"drop": function(event, ui) {
@@ -308,15 +311,20 @@ function egwDropActionImplementation()
 						{
 							var accepted = links[k].actionObj.acceptedTypes;
 
+							var enabled = false
 							for (var i = 0; i < ddTypes.length; i++)
 							{
-								if (accepted.indexOf(ddTypes[i]) == -1)
+								if (accepted.indexOf(ddTypes[i]) != -1)
 								{
-									links[k].enabled = false;
-									if (links[k].actionObj.hideOnDisabled)
-									{
-										links[k].visible = true;
-									}
+									enabled = true;
+								}
+							}
+							if(!enabled)
+							{
+								links[k].enabled = false;
+								if (links[k].actionObj.hideOnDisabled)
+								{
+									links[k].visible = true;
 								}
 							}
 						}
@@ -364,7 +372,9 @@ function egwDropActionImplementation()
 					"out": function() {
 						_aoi.triggerEvent(EGW_AI_DRAG_OUT);
 					},
-					"tolerance": "pointer"
+					"tolerance": "pointer",
+					activeClass: "ui-state-hover",
+					hoverClass: "ui-state-active"
 				}
 			);
 
