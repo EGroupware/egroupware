@@ -62,8 +62,8 @@
 			<button label="Go to" id="button[go]" image="key_enter"/>
 			<image src="buttonseparator"/>
 			<button statustext="Rename, change permissions or ownership" label="Edit settings" id="edit[{$cont[nm][path]}]" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path={$cont[nm][path]}'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;" image="edit"/>
-			<button label="Create directory" id="button[createdir]" onclick="var dir = prompt(egw::lang('New directory')); if (!dir) return false; document.getElementById(form::name('nm[path]')).value=dir;" image="button_createdir" ro_image="createdir_disabled"/>
-			<button label="Create a link" id="button[symlink]" onclick="var link = prompt(egw::lang('Link target')); if (!link) return false; document.getElementById(form::name('nm[path]')).value=link;" image="link" ro_image="link_disabled"/>
+			<buttononly label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" options="button_createdir,createdir_disabled"/>
+			<buttononly label="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" options="link,link_disabled"/>
 			<buttononly id="button[paste]" onclick="app.filemanager.paste('paste');" options="editpaste,editpaste_disabled"/>
 			<buttononly id="button[linkpaste]" onclick="app.filemanager.paste('linkpaste');" options="linkpaste,linkpaste_disabled"/>
 			<buttononly id="button[mailpaste]" onclick="app.filemanager.paste('mailpaste');" options="mailpaste,mailpaste_disabled"/>
@@ -71,10 +71,10 @@
 		</hbox>
 	</template>
 	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
-		<description id="nm[msg]" class="redItalic"/>
+		<description id="msg" class="redItalic"/>
 		<nextmatch id="nm" template="filemanager.index.rows" header_left="filemanager.index.header_left"/>
 		<hbox>
-			<file statustext="Select file to upload in current directory" id="upload[]" onchange="app.filemanager.check_files(this);"/>
+			<file statustext="Select file to upload in current directory" id="upload[]" onchange="check_files(this);"/>
 			<button label="Upload" id="button[upload]"/>
 		</hbox>
 		<styles>

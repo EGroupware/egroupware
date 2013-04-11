@@ -168,7 +168,29 @@ class filemanager_ui
 				'caption' => lang('Delete'),
 				'group' => ++$group,
 				'confirm' => 'Delete these files or directories?',
+				'onExecute' => 'javaScript:app.filemanager.action',
 			),
+			// DRAG and DROP events
+			'file_drag' => array(
+				'dragType' => 'file',
+				'type' => 'drag',
+				'onExecute' => 'javaScript:add.filemanager.drag'
+			),
+			'file_drop_move' => array(
+				'icon' => 'stylite/move',
+				'acceptedTypes' => 'file',
+				'caption' => lang('Move into folder'),
+				'type' => 'drop',
+				'onExecute' => 'javaScript:app.filemanager.drop',
+				'default' => true
+			),
+			'file_drop_copy' => array(
+				'icon' => 'stylite/edit_copy',
+				'acceptedTypes' => 'file',
+				'caption' => lang('Copy into folder'),
+				'type' => 'drop',
+				'onExecute' => 'javaScript:app.filemanager.drop'
+			)
 		);
 		if (!isset($GLOBALS['egw_info']['user']['apps']['felamimail']))
 		{
@@ -228,7 +250,7 @@ class filemanager_ui
 			$content = array(
 				'nm' => egw_session::appsession('index','filemanager'),
 			);
-//			if (!is_array($content['nm']))
+			if (!is_array($content['nm']))
 			{
 				$content['nm'] = array(
 					'get_rows'       =>	'filemanager.filemanager_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'

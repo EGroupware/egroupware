@@ -80,7 +80,23 @@ app.filemanager = AppJS.extend(
 		}
 		this.clipboard_tooltips();
 	},
-
+	
+	/**
+	 * Convert array of elems to array of paths
+	 * 
+	 * @param array _elems selected items from actions
+	 * @return array
+	 */
+	_elems2paths: function(_elems)
+	{
+		var paths = [];
+		for (var i = 0; i < _elems.length; i++)
+		{
+			paths.push(_elems[i].id.replace(this.remove_prefix, ''));
+		}
+		return paths;
+	},
+	
 	/**
 	 * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
 	 * 
@@ -104,16 +120,16 @@ app.filemanager = AppJS.extend(
 	/**
 	 * Open compose with already attached files
 	 * 
-	 * @param attachments
+	 * @param string|array attachment path(s)
 	 */
 	open_mail: function(attachments)
 	{
-		if (typeof attachments == 'undefined') attachments = clipboard_files;
+		if (typeof attachments == 'undefined') attachments = this.clipboard_files;
 		var params = {};
 		if (!(attachments instanceof Array)) attachments = [ attachments ];
 		for(var i=0; i < attachments.length; i++)
 		{
-		   params['preset[file]['+i+']'] = 'vfs://default'+attachments[i].replace(this.remove_prefix,'');
+		   params['preset[file]['+i+']'] = 'vfs://default'+attachments[i];
 		}
 		egw.open('', 'felamimail', 'add', params);
 	},
@@ -126,12 +142,7 @@ app.filemanager = AppJS.extend(
 	 */
 	mail: function(_action, _elems)
 	{
-		var ids = [];
-		for (var i = 0; i < _elems.length; i++)
-		{
-			ids.push(_elems[i].id);
-		}
-		this.open_mail(ids);
+		this.open_mail(this._elems2paths(_elems));
 	},
 
 	/**
@@ -183,10 +194,11 @@ app.filemanager = AppJS.extend(
 		this.clipboard_is_cut = _action.id == "cut";
 		if (_action.id != "add") this.clipboard_files = [];
 	
-		for (var i = 0; i < _elems.length; i++)
+		this.clipboard_files = this.clipboard_files.concat(this._elems2paths(_elems));
+		
+		if (_action.id == "add" && this.clipboard_files.length > 1)
 		{
-			var id = _elems[i].id.replace(this.remove_prefix, '');
-			this.clipboard_files.push(id);
+			// ToDo: make sure files are unique
 		}
 		this.clipboard_tooltips();
 		
@@ -204,16 +216,101 @@ app.filemanager = AppJS.extend(
 	 */
 	paste: function(_type)
 	{
+		if (this.clipboard_files.length == 0)
+		{
+			alert(egw.lang('Clipboard is empty!'));
+			return;
+		}
 		switch(_type)
 		{
 			case 'mailpaste':
 				this.open_mail(this.clipboard_files);
 				break;
 				
-			case 'linkpaste':
 			case 'paste':
-				alert('Not yet implemented!');
+				this._do_action(this.clipboard_is_cut ? 'move_files' : 'copy_files', 
+					this.clipboard_files.concat([this.path_widget.getValue()]));
+
+				if (this.clipboard_is_cut)
+				{
+					this.clipboard_is_cut = false;
+					this.clipboard_files = [];
+					this.clipboard_tooltips();
+				}
+				break;
+				
+			case 'linkpaste':
+				this._do_action('symlink', this.clipboard_files.concat([this.path_widget.getValue()]));
+				break;
 		}
+	},
+
+	/**
+	 * Pass action to server
+	 * 
+	 * @param _action
+	 * @param _elems
+	 */
+	action: function(_action, _elems)
+	{
+		if (typeof _action.data.confirm == 'undefined'|| confirm(_action.data.confirm))
+		{
+			this._do_action(_action.id, this._elems2paths(_elems));			
+		}
+	},
+	
+	/**
+	 * Prompt user for directory to create
+	 */
+	createdir: function()
+	{
+		var dir = prompt(egw.lang('New directory'));
+
+		if (dir)
+		{
+			var path = this.path_widget.get_value();
+			this._do_action('createdir', [ path, dir ], true);	// true=synchronous request
+			this.change_dir(path+'/'+dir);
+		}
+	},
+	
+	/**
+	 * Prompt user for directory to create
+	 */
+	symlink: function()
+	{
+		var target = prompt(egw.lang('Link target'));
+
+		if (target)
+		{
+			var path = this.path_widget.get_value();
+			this._do_action('symlink', [ path, target ]);
+		}
+	},
+	
+	/**
+	 * Run a serverside action via an ajax call
+	 * 
+	 * @param _type 'move_file', 'copy_file', ...
+	 * @param _selected selected paths
+	 * @param _sync send a synchronous ajax request
+	 */
+	_do_action: function(_type, _selected, _sync)
+	{
+		var params = [_type];
+		params = params.concat(_selected);
+		var request = new egw_json_request('filemanager_ui::ajax_action', params, this);
+		request.sendRequest(!_sync, this._do_action_callback, this);
+	},
+	
+	/**
+	 * Callback for _do_action ajax call
+	 * 
+	 * @param _data
+	 */
+	_do_action_callback: function(_data)
+	{
+		window.egw_refresh(_data.msg, this.appname);
 	},
 	
 	/**
@@ -254,6 +351,7 @@ app.filemanager = AppJS.extend(
 		}
 		this.path_widget.set_value(_dir);
 		this.path_widget.change();
+		// ToDo: store path on server too, to be able to reload
 	},
 	
 	/**
@@ -274,5 +372,88 @@ app.filemanager = AppJS.extend(
 		{
 			egw.open(path, 'file');
 		}
-	}
+	},
+	
+	/**
+	 * File(s) droped
+	 * 
+	 * @param _action
+	 * @param _elems
+	 * @param _target
+	 * @returns
+	 */
+	drop: function(_action, _elems, _target)
+	{
+		var src = this._elems2paths(_elems);
+		var dst = _target.data;
+		
+		alert(_action.id+': '+src.join(', ')+' --> '+dst);
+
+		if (_action.id == "file_drop_move")
+		{
+			//
+		}
+		else
+		{
+			//
+		}
+	},
+
+	/**
+	 * Get drag helper, called on drag start
+	 * 
+	 * @param _action
+	 * @param _elems
+	 * @return some dome objects
+	 */
+	drag: function(_action, _elems)
+	{
+		var icons = [];
+		for (var i = 0; i < _elems.length; i++)
+		{
+			if (_elems[i].getFocused())
+			{
+				icons.unshift(_elems[i].data.iconUrl);
+			}
+			else
+			{
+				icons.push(_elems[i].data.iconUrl);
+			}
+		}
+
+		// Only take a maximum of 10 icons
+		var maxCnt = 10;
+
+		var div = $j(document.createElement("div"));
+
+		var lastIcon = "";
+		var idx = 0;
+
+		for (var i = 0; i < icons.length; i++)
+		{
+			if (icons[i] != lastIcon)
+			{
+				lastIcon = icons[i];
+
+				// Create a stack of images
+				var img = $j(document.createElement("img"));
+				img.css("position", "absolute");
+				img.css("z-index", 10000-i);
+				img.css("top", idx * 3);
+				img.css("left", idx * 3);
+				img.css("opacity", (maxCnt - idx) / maxCnt);
+
+				img.attr("src", icons[i]);
+				div.append(img);
+
+				idx++;
+				if (idx == maxCnt)
+				{
+					break;
+				}
+			}
+		}
+
+		return div;
+	},
 });
