@@ -121,6 +121,10 @@ div.et2_hbox>div {
 .et2_label {
 	color: #101050;
 }
+#msg,.message {
+	color: red;
+	font-style: italic;
+}
 input.et2_url {
 	margin-right: 6px;
 	padding-right: 8px;
