@@ -178,7 +178,7 @@ class etemplate_new extends etemplate_widget_template
 			if (isset($GLOBALS['egw']->framework->response))
 			{
 				echo '
-		<div id="container"></div>
+		<div id="' . $this->name .'"></div>
 		<script>
 			// Wait for all files to be loaded & executed first
 			egw.LAB.wait(function() {
@@ -199,7 +199,7 @@ class etemplate_new extends etemplate_widget_template
 					{
 						callback = function(et2) {app["'.$app.'"].et2_ready(et2)};
 					}
-					var et2 = new etemplate2(document.getElementById("container"), "etemplate::ajax_process_content");
+					var et2 = new etemplate2(document.getElementById("'.$this->name.'"), "etemplate::ajax_process_content");
 					et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).', callback);
 				}, window, egw.webserverUrl);
 			});
