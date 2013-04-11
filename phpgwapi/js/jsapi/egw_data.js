@@ -168,7 +168,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 			}
 
 			// Store refresh in context to not delete the other entries when server only returns these
-			if (typeof _queriedRange.refresh != undefined)
+			if (typeof _queriedRange.refresh != "undefined")
 			{
 				if(typeof _queriedRange.refresh == "string")
 				{
@@ -266,7 +266,8 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		// Iterate over the local storage
 		for (var uid in localStorage)
 		{
-			if (time - localStorage[uid].timestamp > MAX_AGE)
+			// Expire old data, if there are no callbacks
+			if (time - localStorage[uid].timestamp > MAX_AGE && typeof registeredCallbacks[uid] == "undefined")
 			{
 				// Unregister all registered callbacks for that uid
 				egw.dataUnregisterUID(uid);
@@ -329,12 +330,12 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 					queue[hash] = { "uids": [], "timer": null };
 					queue[hash].timer = window.setTimeout(function () {
 						// Fetch the data
-						self.dataFetch(_execId, {"start": 0, "num_rows": 0, "only_data": true},
-							[], _widgetId, null, null, queue[hash].uids);
+						self.dataFetch(_execId, {"start": 0, "num_rows": 0, "only_data": true, "refresh": queue[hash].uids},
+							[], _widgetId, null, _context, null);
 
 						// Delete the queue entry
 						delete queue[hash];
-					}, 10);
+					}, 100);
 				}
 
 				// Push the uid onto the queue
