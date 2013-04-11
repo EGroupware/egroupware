@@ -228,8 +228,7 @@ app.filemanager = AppJS.extend(
 				break;
 				
 			case 'paste':
-				this._do_action(this.clipboard_is_cut ? 'move_files' : 'copy_files', 
-					this.clipboard_files.concat([this.path_widget.getValue()]));
+				this._do_action(this.clipboard_is_cut ? 'cut_paste' : 'copy_paste', this.clipboard_files);
 
 				if (this.clipboard_is_cut)
 				{
@@ -240,7 +239,7 @@ app.filemanager = AppJS.extend(
 				break;
 				
 			case 'linkpaste':
-				this._do_action('symlink', this.clipboard_files.concat([this.path_widget.getValue()]));
+				this._do_action('link_paste', this.clipboard_files);
 				break;
 		}
 	},
@@ -269,7 +268,7 @@ app.filemanager = AppJS.extend(
 		if (dir)
 		{
 			var path = this.path_widget.get_value();
-			this._do_action('createdir', [ path, dir ], true);	// true=synchronous request
+			this._do_action('createdir', dir, true);	// true=synchronous request
 			this.change_dir(path+'/'+dir);
 		}
 	},
@@ -283,8 +282,7 @@ app.filemanager = AppJS.extend(
 
 		if (target)
 		{
-			var path = this.path_widget.get_value();
-			this._do_action('symlink', [ path, target ]);
+			this._do_action('symlink', target);
 		}
 	},
 	
@@ -297,9 +295,8 @@ app.filemanager = AppJS.extend(
 	 */
 	_do_action: function(_type, _selected, _sync)
 	{
-		var params = [_type];
-		params = params.concat(_selected);
-		var request = new egw_json_request('filemanager_ui::ajax_action', params, this);
+		var path = this.path_widget.get_value();
+		var request = new egw_json_request('filemanager_ui::ajax_action', [_type, _selected, path], this);
 		request.sendRequest(!_sync, this._do_action_callback, this);
 	},
 	
@@ -411,13 +408,16 @@ app.filemanager = AppJS.extend(
 		var icons = [];
 		for (var i = 0; i < _elems.length; i++)
 		{
+			var data = egw.dataGetUIDdata(_elems[i].id);
+			var src = egw.mime_icon(data.data.mime, data.data.path);
+
 			if (_elems[i].getFocused())
 			{
-				icons.unshift(_elems[i].data.iconUrl);
+				icons.unshift(src);
 			}
 			else
 			{
-				icons.push(_elems[i].data.iconUrl);
+				icons.push(src);
 			}
 		}
 
@@ -436,14 +436,15 @@ app.filemanager = AppJS.extend(
 				lastIcon = icons[i];
 
 				// Create a stack of images
-				var img = $j(document.createElement("img"));
-				img.css("position", "absolute");
-				img.css("z-index", 10000-i);
-				img.css("top", idx * 3);
-				img.css("left", idx * 3);
-				img.css("opacity", (maxCnt - idx) / maxCnt);
-
-				img.attr("src", icons[i]);
+				var img = $j(document.createElement('img'));
+				img.css({
+					position: 'absolute', 
+					'z-index': 10000-i, 
+					top: idx*5, 
+					left: idx*5, 
+					opacity: (maxCnt - idx) / maxCnt
+				});
+				img.attr('src', icons[i]);
 				div.append(img);
 
 				idx++;
@@ -453,6 +454,10 @@ app.filemanager = AppJS.extend(
 				}
 			}
 		}
+		var text = $j(document.createElement('div')).css({left: '30px', position: 'absolute'});
+		// add filename or number of files for multiple files
+		text.text(_elems.length > 1 ? _elems.length+' '+egw.lang('files') : _elems[0].id.split('/').pop());
+		div.append(text);
 
 		return div;
 	},

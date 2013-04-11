@@ -174,7 +174,7 @@ class filemanager_ui
 			'file_drag' => array(
 				'dragType' => 'file',
 				'type' => 'drag',
-				'onExecute' => 'javaScript:add.filemanager.drag'
+				'onExecute' => 'javaScript:app.filemanager.drag'
 			),
 			'file_drop_move' => array(
 				'icon' => 'stylite/move',
@@ -614,7 +614,7 @@ class filemanager_ui
 
 			case 'delete':
 				return self::do_delete($selected,$errs,$files,$dirs);
-
+/* done on clientside now
 			case 'add':
 				$files = egw_session::appsession('clipboard_files','filemanager');
 				egw_session::appsession('clipboard_files','filemanager',$files ? array_unique(array_merge($files,$selected)) : $selected);
@@ -626,7 +626,7 @@ class filemanager_ui
 				egw_session::appsession('clipboard_files','filemanager',$selected);
 				egw_session::appsession('clipboard_type','filemanager',$action);
 				return lang('%1 URLs %2 to clipboard.',count($selected),$action=='copy'?lang('copied'):lang('cut'));
-
+*/
 			case 'copy_paste':
 				foreach($selected as $path)
 				{
@@ -716,6 +716,33 @@ class filemanager_ui
 					$ret = lang('%1 errors linking (%2)!',$errs,$ret);
 				}
 				return $ret." egw_vfs::symlink('$to','$path')";
+
+			case 'createdir':
+				$dst = egw_vfs::concat($dir, $selected[0]);
+				if (egw_vfs::mkdir($dst, null, STREAM_MKDIR_RECURSIVE))
+				{
+					$arr['msg'] = lang("Directory successfully created.");
+				}
+				else
+				{
+					$arr['msg'] = lang("Error while creating directory.");
+				}
+				break;
+
+			case 'symlink':	// symlink given file into current dir
+				$target = $selected[0];
+				$link = egw_vfs::concat($dir, egw_vfs::basename($target));
+				$abs_target = $target[0] == '/' ? $target : egw_vfs::concat($dir, $target);
+				if (!egw_vfs::stat($abs_target))
+				{
+					$arr['msg'] = lang('Link target %1 not found!', egw_vfs::decodePath($abs_target));
+					break;
+				}
+				$arr['msg'] = egw_vfs::symlink($target,$link) ?
+					lang('Symlink to %1 created.',$target) :
+					lang('Error creating symlink to target %1!',egw_vfs::decodePath($target));
+				break;
+
 			default:
 				list($action, $settings) = explode('_', $action, 2);
 				switch($action)
@@ -1381,10 +1408,11 @@ class filemanager_ui
 	 * Run given action on given path(es) and return array/object with values for keys 'msg', 'errs', 'dirs', 'files'
 	 *
 	 * @param string $action eg. 'delete', ...
-	 * @param string $path
+	 * @param array $selected selected path(s)
+	 * @param string $dir=null current directory
 	 * @see self::action()
 	 */
-	public static function ajax_action($action,$path)
+	public static function ajax_action($action, $selected, $dir=null)
 	{
 		$response = egw_json_response::get();
 
@@ -1395,78 +1423,9 @@ class filemanager_ui
 			'files' => 0,
 		);
 
-		$selected = func_get_args();
-		$action = array_shift($selected);
-		switch ($action)
-		{
-			case "copy_files":
-				$dst = array_pop($selected);
-				$src = $selected;
-				$copied = array();
+		if (!isset($dir)) $dir = array_pop($selected);
 
-				if (egw_vfs::copy_files($src, $dst, $arr['errs'], $copied))
-				{
-					$arr['msg'] = sprintf(lang("%d files successfully copied."), count($copied));
-				}
-				else
-				{
-					$arr['msg'] = sprintf(lang("%d errors while copying, %d files successfully copied."),
-						$arr['errs'], count($copied));
-				}
-
-				break;
-
-			case "move_files":
-				$dst = array_pop($selected);
-				$src = $selected;
-				$moved = array();
-
-				if (egw_vfs::move_files($src, $dst, $arr['errs'], $moved))
-				{
-					$arr['msg'] = sprintf(lang("%d files successfully moved."), count($moved));
-				}
-				else
-				{
-					$arr['msg'] = sprintf(lang("%d errors while moving, %d files successfully moved."),
-						$arr['errs'], count($moved));
-				}
-
-				break;
-
-			case "createdir":
-				$curdir = $selected[0];
-				$newdir = $selected[1];
-
-				$dst = egw_vfs::concat($curdir, $newdir);
-				if (egw_vfs::mkdir($dst, null, STREAM_MKDIR_RECURSIVE))
-				{
-					$arr['msg'] = lang("Directory successfully created.");
-				}
-				else
-				{
-					$arr['msg'] = lang("Error while creating directory.");
-				}
-				break;
-
-			case "symlink":
-				$curdir = $selected[0];
-				$target = $selected[1];
-
-				$link = egw_vfs::concat($curdir, egw_vfs::basename($target));
-				$abs_target = $target[0] == '/' ? $target : egw_vfs::concat($target, $target);
-				if (!egw_vfs::stat($abs_target))
-				{
-					$arr['msg'] = lang('Link target %1 not found!', egw_vfs::decodePath($abs_target));
-					break;
-				}
-				$arr['msg'] = egw_vfs::symlink($target,$link) ?
-					lang('Symlink to %1 created.',$target) : lang('Error creating symlink to target %1!',egw_vfs::decodePath($target));
-				break;
-
-			default:
-				$arr['msg'] = self::action($action,$selected,null,$arr['errs'],$arr['dirs'],$arr['files']);
-				break;
-		}
+		$arr['msg'] = self::action($action, $selected, $dir, $arr['errs'], $arr['dirs'], $arr['files']);
 
 		$response->data($arr);
 		//error_log(__METHOD__."('$action',".array2string($selected).') returning '.array2string($arr));
