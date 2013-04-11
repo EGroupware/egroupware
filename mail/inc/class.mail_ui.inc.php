@@ -885,7 +885,7 @@ class mail_ui
 				'onExecute' => 'javaScript:app.mail.mail_delete',
 			),
 			'drag_mail' => array(
-				'dragType' => 'mail',
+				'dragType' => array('mail','file'),
 				'type' => 'drag',
 				'onExecute' => 'javaScript:app.mail.mail_dragStart',
 			),
