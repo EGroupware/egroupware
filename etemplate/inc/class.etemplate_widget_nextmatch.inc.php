@@ -579,7 +579,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			}
 
 			// add all first level popup actions plus ones with enabled = 'javaScript:...' to action_links
-			if ((!isset($action['type']) || in_array($action['type'],array('popup','drag'))) &&	// popup is the default
+			if ((!isset($action['type']) || in_array($action['type'],array('popup','drag','drop'))) &&	// popup is the default
 				($first_level || substr($action['enabled'],0,11) == 'javaScript:'))
 			{
 				$action_links[] = $action['id'];
