@@ -91,15 +91,34 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 	set_accesskey: function(key) {
 		jQuery(this.node).attr("accesskey", key);
 	},
-	set_ro_image: function(_image) {
-		if(this.options.readonly)
-		{
-			this.set_image(_image);
-		}
-	},
-
+	/**
+	 * Set image and update current image
+	 * 
+	 * @param _image
+	 */
 	set_image: function(_image) {
+		this.options.image = _image;
+		this.update_image();
+	},
+	/**
+	 * Set readonly image and update current image
+	 * 
+	 * @param _image
+	 */
+	set_ro_image: function(_image) {
+		this.options.ro_image = _image;
+		this.update_image();
+	},
+	/**
+	 * Set current image (dont update options.image)
+	 * 
+	 * @param _image
+	 */
+	update_image: function(_image) {
 		if(!this.isInTree() || this.image == null) return;
+		
+		if (typeof _image == 'undefined') 
+			_image = this.options.readonly ? this.options.ro_image : this.options.image;
 
 		// Silently blank for percentages instead of warning about missing image - use a progress widget
 		if(_image.match(/[0-9]+\%/)) 
@@ -108,10 +127,8 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 			//this.egw().debug("warn", "Use a progress widget instead of percentage images", this);
 		}
 
-		this.options.image = _image;
-
 		var found_image = false;
-		if(this.options.image != "") 
+		if(_image != "") 
 		{
 			var src = this.egw().image(_image);
 			if(src)
@@ -129,6 +146,24 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		if(!found_image)
 		{
 			this.set_label(this.label);
+		}
+	},
+
+	/**
+	 * Set options.readonly and update image
+	 * 
+	 * @param boolean _ro
+	 */
+	set_readonly: function(_ro)
+	{
+		if (_ro != this.options.readonly)
+		{
+			this.options.readonly = _ro;
+			
+			if (this.image)
+			{
+				this.update_image();
+			}
 		}
 	},
 
