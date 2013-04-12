@@ -22,9 +22,7 @@
  *
  * @ToDo supported customized templates stored in DB, currently we only support xet files stored in filesystem
  */
-class etemplate extends etemplate_old {};
 class etemplate_new extends etemplate_widget_template
-//class etemplate extends etemplate_widget_template
 {
 	/**
 	 * Are we running as sitemgr module or not
@@ -557,6 +555,8 @@ class etemplate_new extends etemplate_widget_template
 		return etemplate_old::cats2color($cats);
 	}
 }
+// default etemplate class has to be defined by either extending etemplate_new or etemplate_old
+class etemplate extends etemplate_old {};
 
 // Try to discover all widgets, as names don't always match tags (eg: listbox is in menupopup)
 $files = scandir(EGW_INCLUDE_ROOT . '/etemplate/inc');
