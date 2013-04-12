@@ -7,12 +7,17 @@
 /**
  * Top level
  */
-#container {
+.et2_container {
 	/*margin: 10px;
 	border: 1px solid gray;*/
-	padding: 10px;
+	padding: 0px;
 	background-color: white;
+	height: 100%;
 }
+.et2_container > div:not([class]) {
+	height: 100%;
+}
+
 
 /**
  * Basic rules
