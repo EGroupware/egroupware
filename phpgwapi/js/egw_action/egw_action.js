@@ -1475,7 +1475,7 @@ egwActionObject.prototype.updateSelectedChildren = function(_child, _selected)
 	}
 
 	// Call the setSelectedCallback
-	egwQueueCallback(this.setSelectedCallback, [], this, "setSelectedCallback");
+	egwQueueCallback(this.setSelectedCallback, this.getContainerRoot().getSelectedObjects(), this, "setSelectedCallback");
 }
 
 /**
