@@ -614,20 +614,8 @@ class filemanager_ui
 
 			case 'delete':
 				return self::do_delete($selected,$errs,$files,$dirs);
-/* done on clientside now
-			case 'add':
-				$files = egw_session::appsession('clipboard_files','filemanager');
-				egw_session::appsession('clipboard_files','filemanager',$files ? array_unique(array_merge($files,$selected)) : $selected);
-				egw_session::appsession('clipboard_type','filemanager','copy');	// always switch to copy, to be on the save side
-				return lang('%1 URLs %2 to clipboard.',count($selected),lang('copied'));
 
 			case 'copy':
-			case 'cut':
-				egw_session::appsession('clipboard_files','filemanager',$selected);
-				egw_session::appsession('clipboard_type','filemanager',$action);
-				return lang('%1 URLs %2 to clipboard.',count($selected),$action=='copy'?lang('copied'):lang('cut'));
-*/
-			case 'copy_paste':
 				foreach($selected as $path)
 				{
 					if (!egw_vfs::is_dir($path))
@@ -675,9 +663,6 @@ class filemanager_ui
 				return $dirs ? lang('%1 directories and %2 files copied.',$dirs,$files) : lang('%1 files copied.',$files);
 
 			case 'move':
-				if (!isset($dir)) $dir = array_pop($selected);
-				// fall throught
-			case 'cut_paste':
 				foreach($selected as $path)
 				{
 					$to = egw_vfs::is_dir($dir) || count($selected) > 1 ? egw_vfs::concat($dir,egw_vfs::basename($path)) : $dir;
@@ -690,18 +675,22 @@ class filemanager_ui
 						++$errs;
 					}
 				}
-				if ($action == 'cut_paste') egw_session::appsession('clipboard_files','filemanager',false);	// cant move again
 				if ($errs)
 				{
 					return lang('%1 errors moving (%2 files moved)!',$errs,$files);
 				}
 				return lang('%1 files moved.',$files);
 
-			case 'link_paste':
-				foreach($selected as $path)
+			case 'symlink':	// symlink given files to $dir
+				foreach((array)$selected as $target)
 				{
-					$to = egw_vfs::concat($dir,egw_vfs::basename($path));
-					if ($path != $to && egw_vfs::symlink($path,$to))
+					$link = egw_vfs::concat($dir, egw_vfs::basename($target));
+					if ($target[0] != '/') $target = egw_vfs::concat($dir, $target);
+					if (!egw_vfs::stat($target))
+					{
+						return lang('Link target %1 not found!', egw_vfs::decodePath($target));
+					}
+					if ($target != $link && egw_vfs::symlink($target, $link))
 					{
 						++$files;
 					}
@@ -710,12 +699,17 @@ class filemanager_ui
 						++$errs;
 					}
 				}
-				$ret = lang('%1 elements linked.',$files);
+				if (count((array)$selected) == 1)
+				{
+					return $files ? lang('Symlink to %1 created.', egw_vfs::decodePath($target)) :
+						lang('Error creating symlink to target %1!', egw_vfs::decodePath($target));
+				}
+				$ret = lang('%1 elements linked.', $files);
 				if ($errs)
 				{
-					$ret = lang('%1 errors linking (%2)!',$errs,$ret);
+					$ret = lang('%1 errors linking (%2)!',$errs, $ret);
 				}
-				return $ret." egw_vfs::symlink('$to','$path')";
+				return $ret;//." egw_vfs::symlink('$target', '$link')";
 
 			case 'createdir':
 				$dst = egw_vfs::concat($dir, is_array($selected) ? $selected[0] : $selected);
@@ -724,18 +718,6 @@ class filemanager_ui
 					return lang("Directory successfully created.");
 				}
 				return lang("Error while creating directory.");
-
-			case 'symlink':	// symlink given file into current dir
-				$target = is_array($selected) ? $selected[0] : $selected;
-				$link = egw_vfs::concat($dir, egw_vfs::basename($target));
-				$abs_target = $target[0] == '/' ? $target : egw_vfs::concat($dir, $target);
-				if (!egw_vfs::stat($abs_target))
-				{
-					return lang('Link target %1 not found!', egw_vfs::decodePath($abs_target));
-				}
-				return egw_vfs::symlink($target,$link) ?
-					lang('Symlink to %1 created.',$target) :
-					lang('Error creating symlink to target %1!',egw_vfs::decodePath($target));
 
 			default:
 				list($action, $settings) = explode('_', $action, 2);

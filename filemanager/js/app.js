@@ -228,7 +228,7 @@ app.filemanager = AppJS.extend(
 				break;
 				
 			case 'paste':
-				this._do_action(this.clipboard_is_cut ? 'cut_paste' : 'copy_paste', this.clipboard_files);
+				this._do_action(this.clipboard_is_cut ? 'move' : 'copy', this.clipboard_files);
 
 				if (this.clipboard_is_cut)
 				{
@@ -239,7 +239,7 @@ app.filemanager = AppJS.extend(
 				break;
 				
 			case 'linkpaste':
-				this._do_action('link_paste', this.clipboard_files);
+				this._do_action('symlink', this.clipboard_files);
 				break;
 		}
 	},
@@ -292,11 +292,12 @@ app.filemanager = AppJS.extend(
 	 * @param _type 'move_file', 'copy_file', ...
 	 * @param _selected selected paths
 	 * @param _sync send a synchronous ajax request
+	 * @param _path defaults to current path
 	 */
-	_do_action: function(_type, _selected, _sync)
+	_do_action: function(_type, _selected, _sync, _path)
 	{
-		var path = this.path_widget.get_value();
-		var request = new egw_json_request('filemanager_ui::ajax_action', [_type, _selected, path], this);
+		if (typeof _path == 'undefined') _path = this.path_widget.get_value();
+		var request = new egw_json_request('filemanager_ui::ajax_action', [_type, _selected, _path], this);
 		request.sendRequest(!_sync, this._do_action_callback, this);
 	},
 	
@@ -386,14 +387,7 @@ app.filemanager = AppJS.extend(
 		
 		alert(_action.id+': '+src.join(', ')+' --> '+dst);
 
-		if (_action.id == "file_drop_move")
-		{
-			//
-		}
-		else
-		{
-			//
-		}
+		this._do_action(_action.id == "file_drop_move" ? 'move' : 'copy', src, false, dst);
 	},
 
 	/**
@@ -460,5 +454,5 @@ app.filemanager = AppJS.extend(
 		div.append(text);
 
 		return div;
-	},
+	}
 });
