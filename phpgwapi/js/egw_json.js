@@ -222,7 +222,7 @@ function _egw_json_plugin_handle(_type, _response, _context) {
  *   which handles the actual request. If the menuaction is a full featured
  *   url, this one will be used instead.
  * @param array _parameters which should be passed to the menuaction function.
- * @param object _context is the context which will be used for the callback function 
+ * @param object _context is the context which will be used for the callbacks (not callback of sendRequest!) 
  */
 function egw_json_request(_menuaction, _parameters, _context)
 {
@@ -296,7 +296,7 @@ egw_json_request.prototype._assembleAjaxUrl = function(_menuaction)
  *
  * @param boolean _async specifies whether the request should be handeled asynchronously (true, the sendRequest function immediately returns to the caller) or asynchronously (false, the sendRequest function waits until the request is received)
  * @param _callback is an additional callback function which should be called upon a "data" response is received
- * @param _sender is the reference object the callback function should get
+ * @param _sender context (this) of _callback (different from _context param of constructor used for standard callbacks!)
 */
 egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 {
