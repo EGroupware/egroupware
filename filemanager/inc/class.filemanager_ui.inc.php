@@ -352,7 +352,8 @@ class filemanager_ui
 	 */
 	function listview(array $content=null,$msg=null)
 	{
-		$tpl = new etemplate('filemanager.index');
+		require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php';
+		$tpl = new etemplate_new('filemanager.index');
 
 		$content['nm']['msg'] = $msg;
 
