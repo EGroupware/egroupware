@@ -349,7 +349,6 @@ app.filemanager = AppJS.extend(
 		}
 		this.path_widget.set_value(_dir);
 		this.path_widget.change();
-		// ToDo: store path on server too, to be able to reload
 	},
 	
 	/**
@@ -396,7 +395,7 @@ app.filemanager = AppJS.extend(
 	drop: function(_action, _elems, _target)
 	{
 		var src = this._elems2paths(_elems);
-		var dst = _target.data;
+		var dst = _target.id.replace(this.remove_prefix, '');
 		
 		alert(_action.id+': '+src.join(', ')+' --> '+dst);
 
@@ -467,5 +466,39 @@ app.filemanager = AppJS.extend(
 		div.append(text);
 
 		return div;
+	},
+	
+	/**
+	 * Change readonly state for given directory
+	 * 
+	 * I get call/transported with each get_rows call, but should only by applied to UI if matching curent dir
+	 * 
+	 * @param _path
+	 * @param _ro
+	 */
+	set_readonly: function(_path, _ro)
+	{
+		//alert('set_readonly("'+_path+'", '+_ro+')');
+		var path =  this.path_widget.getValue();
+		
+		if (_path == path)
+		{
+			var ids = ['button[linkpaste]', 'button[paste]', 'button[createdir]', 'button[symlink]', 'upload[]'];
+			for(var i=0; i < ids.length; ++i)
+			{
+				var widget = this.et2.getWidgetById(ids[i]);
+				if (widget) 
+				{
+					if (widget._type == 'button' || widget._type == 'buttononly')
+					{
+						widget.set_readonly(_ro);
+					}
+					else
+					{
+						widget.set_disabled(_ro);
+					}
+				}
+			}
+		}
 	}
 });

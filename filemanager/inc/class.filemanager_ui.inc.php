@@ -844,11 +844,9 @@ class filemanager_ui
 				}
 			}
 		}
-		$dir_is_writable = egw_vfs::is_writable($query['path']);
-		$readonlys['button[linkpaste]'] = $readonlys['button[paste]'] = !$dir_is_writable;
-		$readonlys['button[createdir]'] = !$dir_is_writable;
-		$readonlys['button[symlink]'] = !$dir_is_writable;
-		$readonlys['button[upload]'] = $readonlys['upload'] = !$dir_is_writable;
+		// tell client-side if directory is writeable or not
+		$response = egw_json_response::get();
+		$response->call('app.filemanager.set_readonly', $query['path'], !egw_vfs::is_writable($query['path']));
 
 		//_debug_array($readonlys);
 		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'projectmanager')
