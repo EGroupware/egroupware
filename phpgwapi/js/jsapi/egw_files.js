@@ -67,7 +67,7 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 				}
 			}
 			// setting AlwaysPreserverOrder: true, 'til we have some other means of ensuring dependency resolution
-			$LAB.setOptions({AlwaysPreserveOrder:true,BasePath:_prefix}).script(_jsFiles).wait(function(){
+			(egw.LAB || $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:_prefix})).script(_jsFiles).wait(function(){
 				_callback.call(_context);
 			});
 		},
