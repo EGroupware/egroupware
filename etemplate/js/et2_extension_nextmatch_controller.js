@@ -270,6 +270,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		{
 			senders = [];
 		}
+		if(!this._widget) return;
 		this._widget.onselect.call(this._widget, action,senders);
 	},
 
