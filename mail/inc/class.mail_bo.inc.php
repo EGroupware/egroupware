@@ -312,6 +312,7 @@ class mail_bo
 	 */
 	private function __construct($_displayCharset='utf-8',$_restoreSession=true, $_profileID=0)
 	{
+		if (!empty($_displayCharset)) self::$displayCharset = $_displayCharset;
 		if ($_restoreSession)
 		{
 			//error_log(__METHOD__." Session restore ".function_backtrace());
@@ -2722,18 +2723,6 @@ class mail_bo
 	}
 
 	/**
-	 * strip tags out of the message completely with their content
-	 * param $_body is the text to be processed
-	 * param $tag is the tagname which is to be removed. Note, that only the name of the tag is to be passed to the function
-	 *            without the enclosing brackets
-	 * param $endtag can be different from tag  but should be used only, if begin and endtag are known to be different e.g.: <!-- -->
-	 */
-	static function replaceTagsCompletley(&$_body,$tag,$endtag='',$addbracesforendtag=true)
-	{
-		translation::replaceTagsCompletley($_body,$tag,$endtag,$addbracesforendtag);
-	}
-
-	/**
 	 * clean a message from elements regarded as potentially harmful
 	 * param string/reference $_html is the text to be processed
 	 * param boolean $usepurify - obsolet, as we always use htmlLawed
@@ -2751,10 +2740,10 @@ class mail_bo
 		$_html = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>','</td></font>','<br><td>','<tr></tr>','<o:p></o:p>','<o:p>','</o:p>'),
 							 array('&amp;',    '<BR>',           '<BR>',             '<BR>',             '</font></td>','<td>',    '',         '',           '',  ''),$_html);
 		//$_html = str_replace(array('&amp;amp;'),array('&amp;'),$_html);
-		if (stripos($_html,'style')!==false) self::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
-		if (stripos($_html,'head')!==false) self::replaceTagsCompletley($_html,'head'); // Strip out stuff in head
-		//if (stripos($_html,'![if')!==false && stripos($_html,'<![endif]>')!==false) self::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs
-		//if (stripos($_html,'!--[if')!==false && stripos($_html,'<![endif]-->')!==false) self::replaceTagsCompletley($_html,'!--\[if','<!\[endif\]-->',false); // Strip out stuff in ifs
+		if (stripos($_html,'style')!==false) translation::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
+		if (stripos($_html,'head')!==false) translation::replaceTagsCompletley($_html,'head'); // Strip out stuff in head
+		//if (stripos($_html,'![if')!==false && stripos($_html,'<![endif]>')!==false) translation::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs
+		//if (stripos($_html,'!--[if')!==false && stripos($_html,'<![endif]-->')!==false) translation::replaceTagsCompletley($_html,'!--\[if','<!\[endif\]-->',false); // Strip out stuff in ifs
 		//error_log(__METHOD__.__LINE__.$_html);
 		// force the use of kses, as it is still have the edge over purifier with some stuff
 		$usepurify = true;
@@ -2763,10 +2752,10 @@ class mail_bo
 			// we need a customized config, as we may allow external images, $GLOBALS['egw_info']['user']['preferences']['mail']['allowExternalIMGs']
 			if (get_magic_quotes_gpc() === 1) $_html = stripslashes($_html);
 			// Strip out doctype in head, as htmlLawed cannot handle it TODO: Consider extracting it and adding it afterwards
-			if (stripos($_html,'!doctype')!==false) self::replaceTagsCompletley($_html,'!doctype');
-			if (stripos($_html,'?xml:namespace')!==false) self::replaceTagsCompletley($_html,'\?xml:namespace','/>',false);
-			if (stripos($_html,'?xml version')!==false) self::replaceTagsCompletley($_html,'\?xml version','\?>',false);
-			if (strpos($_html,'!CURSOR')!==false) self::replaceTagsCompletley($_html,'!CURSOR');
+			if (stripos($_html,'!doctype')!==false) translation::replaceTagsCompletley($_html,'!doctype');
+			if (stripos($_html,'?xml:namespace')!==false) translation::replaceTagsCompletley($_html,'\?xml:namespace','/>',false);
+			if (stripos($_html,'?xml version')!==false) translation::replaceTagsCompletley($_html,'\?xml version','\?>',false);
+			if (strpos($_html,'!CURSOR')!==false) translation::replaceTagsCompletley($_html,'!CURSOR');
 			// htmLawed filter only the 'body'
 			//preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $_html, $matches);
 			//if ($matches[2])
@@ -3566,6 +3555,70 @@ class mail_bo
 	}
 
 	/**
+	 * getStyles - extracts the styles from the given bodyparts
+	 * @param array $bodyParts  with the bodyparts
+	 * @return string a preformatted string with the mails converted to text
+	 */
+	static function &getStyles($_bodyParts)
+	{
+		$style = '';
+		if (empty($_bodyParts)) return "";
+		foreach((array)$_bodyParts as $singleBodyPart) {
+			if (!isset($singleBodyPart['body'])) {
+				$singleBodyPart['body'] = self::getStyles($singleBodyPart);
+				$style .= $singleBodyPart['body'];
+				continue;
+			}
+
+			if ($singleBodyPart['charSet']===false) $singleBodyPart['charSet'] = translation::detect_encoding($singleBodyPart['body']);
+			$singleBodyPart['body'] = translation::convert(
+				$singleBodyPart['body'],
+				strtolower($singleBodyPart['charSet'])
+			);
+			$ct = 0;
+
+			if (stripos($singleBodyPart['body'],'<style')!==false)  $ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $singleBodyPart['body'], $newStyle);
+			if ($ct>0)
+			{
+				//error_log(__METHOD__.__LINE__.array2string($newStyle[0]));
+				$style2buffer = implode('',$newStyle[0]);
+			}
+			if ($style2buffer && strtoupper(self::$displayCharset) == 'UTF-8')
+			{
+				//error_log(__METHOD__.__LINE__.array2string($style2buffer));
+				$test = json_encode($style2buffer);
+				//error_log(__METHOD__.__LINE__.'#'.$test.'# ->'.strlen($style2buffer).' Error:'.json_last_error());
+				//if (json_last_error() != JSON_ERROR_NONE && strlen($style2buffer)>0)
+				if ($test=="null" && strlen($style2buffer)>0)
+				{
+					// this should not be needed, unless something fails with charset detection/ wrong charset passed
+					error_log(__METHOD__.__LINE__.' Found Invalid sequence for utf-8 in CSS:'.$style2buffer.' Charset Reported:'.$singleBodyPart['charSet'].' Carset Detected:'.translation::detect_encoding($style2buffer));
+					$style2buffer = utf8_encode($style2buffer);
+				}
+			}
+			$style .= $style2buffer;
+		}
+		// clean out comments and stuff
+		$search = array(
+			'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
+//			'@<!--[\s\S]*?[ \t\n\r]*-->@',   // Strip multi-line comments including CDATA
+//			'@<!--[\s\S]*?[ \t\n\r]*--@',    // Strip broken multi-line comments including CDATA
+		);
+		$style = preg_replace($search,"",$style);
+
+		// CSS Security
+		// http://code.google.com/p/browsersec/wiki/Part1#Cascading_stylesheets
+		$css = preg_replace('/(javascript|expession|-moz-binding)/i','',$style);
+		if (stripos($css,'script')!==false) translation::replaceTagsCompletley($css,'script'); // Strip out script that may be included
+		// we need this, as styledefinitions are enclosed with curly brackets; and template stuff tries to replace everything between curly brackets that is having no horizontal whitespace
+		// as the comments as <!-- styledefinition --> in stylesheet are outdated, and ck-editor does not understand it, we remove it
+		$css = str_replace(array(':','<!--','-->'),array(': ','',''),$css);
+		//error_log(__METHOD__.__LINE__.$css);
+		// TODO: we may have to strip urls and maybe comments and ifs
+		return $css;
+	}
+
+	/**
 	 * getMessageRawBody
 	 * get the message raw body
 	 * @param string/int $_uid the messageuid,
@@ -3952,6 +4005,120 @@ class mail_bo
 		return $attachmentData;
 	}
 
+	/**
+	 * Fetch a specific attachment from a message by it's cid
+	 *
+	 * this function is based on a on "Building A PHP-Based Mail Client"
+	 * http://www.devshed.com
+	 *
+	 * @param string|int $_uid
+	 * @param string $_cid
+	 * @param string $_part
+	 * @return array with values for keys 'type', 'filename' and 'attachment'
+	 */
+	function getAttachmentByCID($_uid, $_cid, $_part)
+	{
+		// some static variables to avoid fetching the same mail multiple times
+		static $uid,$part,$attachments,$structure;
+		//error_log("getAttachmentByCID:$_uid, $_cid, $_part");
+
+		if(empty($_cid)) return false;
+
+		if ($_uid != $uid || $_part != $part)
+		{
+			$attachments = $this->getMessageAttachments($uid=$_uid, $part=$_part);
+			$structure = null;
+		}
+		$partID = false;
+		foreach($attachments as $attachment)
+		{
+			//error_log(print_r($attachment,true));
+			if(isset($attachment['cid']) && (strpos($attachment['cid'], $_cid) !== false || strpos($_cid, $attachment['cid']) !== false))
+			{
+				$partID = $attachment['partID'];
+				break;
+			}
+		}
+		if ($partID == false)
+		{
+			foreach($attachments as $attachment)
+			{
+				// if the former did not match try matching the cid to the name of the attachment
+				if(isset($attachment['cid']) && isset($attachment['name']) && (strpos($attachment['name'], $_cid) !== false || strpos($_cid, $attachment['name']) !== false))
+				{
+					$partID = $attachment['partID'];
+					break;
+				}
+			}
+		}
+		if ($partID == false)
+		{
+			foreach($attachments as $attachment)
+			{
+				// if the former did not match try matching the cid to the name of the attachment, AND there is no mathing attachment with cid
+				if(isset($attachment['name']) && (strpos($attachment['name'], $_cid) !== false || strpos($_cid, $attachment['name']) !== false))
+				{
+					$partID = $attachment['partID'];
+					break;
+				}
+			}
+		}
+		//error_log( "Cid:$_cid PARTID:$partID<bR>"); #exit;
+
+		if($partID == false) {
+			return false;
+		}
+
+		// parse message structure
+		if (is_null($structure))
+		{
+			$structure = $this->_getStructure($_uid, true);
+		}
+		$part_structure = $this->_getSubStructure($structure, $partID);
+		$filename = $this->getFileNameFromStructure($part_structure, $_uid, $_uid, $part_structure->partID);
+		$attachment = $this->icServer->getBodyPart($_uid, $partID, true);
+		if (PEAR::isError($attachment))
+		{
+			error_log(__METHOD__.__LINE__.' failed:'.$attachment->message);
+			return array('type' => 'text/plain',
+						 'filename' => 'error.txt',
+						 'attachment' =>__METHOD__.' failed:'.$attachment->message
+					);
+		}
+
+		if (PEAR::isError($attachment))
+		{
+			error_log(__METHOD__.__LINE__.' failed:'.$attachment->message);
+			return array('type' => 'text/plain',
+						 'filename' => 'error.txt',
+						 'attachment' =>__METHOD__.' failed:'.$attachment->message
+					);
+		}
+
+		switch ($part_structure->encoding) {
+			case 'BASE64':
+				// use imap_base64 to decode
+				$attachment = imap_base64($attachment);
+				break;
+			case 'QUOTED-PRINTABLE':
+				// use imap_qprint to decode
+				#$attachment = imap_qprint($attachment);
+				$attachment = quoted_printable_decode($attachment);
+				break;
+			default:
+				// it is either not encoded or we don't know about it
+		}
+
+		$attachmentData = array(
+			'type'		=> $part_structure->type .'/'. $part_structure->subType,
+			'filename'	=> $filename,
+			'attachment'	=> $attachment
+		);
+		// try guessing the mimetype, if we get the application/octet-stream
+		if (strtolower($attachmentData['type']) == 'application/octet-stream') $attachmentData['type'] = mime_magic::filename2mime($attachmentData['filename']);
+
+		return $attachmentData;
+	}
 
 	/**
 	 * functions to allow access to mails through other apps to fetch content

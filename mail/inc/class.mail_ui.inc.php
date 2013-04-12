@@ -10,6 +10,8 @@
  * @version $Id$
  */
 
+include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php');
+
 /**
  * Mail Interface class
  */
@@ -26,6 +28,7 @@ class mail_ui
 		'displayHeader'	=> True,
 		'saveMessage'	=> True,
 		'vfsSaveMessage' => True,
+		'loadEmailBody'	=> True,
 		'importMessage'	=> True,
 		'TestConnection' => True,
 	);
@@ -183,7 +186,7 @@ class mail_ui
 		$sel_options['cat_id'] = array(1=>'none');
 		if (!isset($content['nm']['cat_id'])) $content['nm']['cat_id'] = 'All';
 
-		$etpl = new etemplate('mail.index');
+		$etpl = new etemplate_new('mail.index');
 
 		// Set tree actions
 		$etpl->set_cell_attribute('nm[foldertree]','actions', array(
@@ -1504,6 +1507,453 @@ unset($query['actions']);
 		return $err.'window.close();';
 	}
 
+
+	function get_load_email_data($uid, $partID, $mailbox)
+	{
+		// seems to be needed, as if we open a mail from notification popup that is
+		// located in a different folder, we experience: could not parse message
+		$this->mail_bo->reopen($mailbox);
+$this->mailbox = $mailbox;
+$this->uid = $uid;
+$this->partID = $partID;
+		$bodyParts	= $this->mail_bo->getMessageBody($uid, '', $partID, '', false, $mailbox);
+		//error_log(__METHOD__.__LINE__.array2string($bodyParts));
+		$meetingRequest = false;
+		$fetchEmbeddedImages = false;
+		if ($this->mail_bo->htmlOptions !='always_display') $fetchEmbeddedImages = true;
+		$attachments    = $this->mail_bo->getMessageAttachments($uid, $partID, '',$fetchEmbeddedImages,true);
+		foreach ((array)$attachments as $key => $attach)
+		{
+			if (strtolower($attach['mimeType']) == 'text/calendar' &&
+				(strtolower($attach['method']) == 'request' || strtolower($attach['method']) == 'reply') &&
+				isset($GLOBALS['egw_info']['user']['apps']['calendar']) &&
+				($attachment = $this->mail_bo->getAttachment($uid, $attach['partID'])))
+			{
+				egw_cache::setSession('calendar', 'ical', array(
+					'charset' => $attach['charset'] ? $attach['charset'] : 'utf-8',
+					'attachment' => $attachment['attachment'],
+					'method' => $attach['method'],
+					'sender' => $sender,
+				));
+				return array("src"=>egw::link('/index.php',array(
+					'menuaction' => 'calendar.calendar_uiforms.meeting',
+					'ical' => 'session',
+				)));
+			}
+		}
+
+		// Compose the content of the frame
+		$frameHtml =
+			$this->get_email_header($this->mail_bo->getStyles($bodyParts)).
+			$this->showBody($this->getdisplayableBody($bodyParts), false);
+		//IE10 eats away linebreaks preceeded by a whitespace in PRE sections
+		$frameHtml = str_replace(" \r\n","\r\n",$frameHtml);
+
+		return $frameHtml;
+	}
+
+	static function get_email_header($additionalStyle='')
+	{
+		//error_log(__METHOD__.__LINE__.$additionalStyle);
+		return '
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+		<style>
+			body, td, textarea {
+				font-family: Verdana, Arial, Helvetica,sans-serif;
+				font-size: 11px;
+			}
+		</style>'.$additionalStyle.'
+		<script type="text/javascript">
+			function GoToAnchor(aname)
+			{
+				window.location.hash=aname;
+			}
+		</script>
+	</head>
+	<body>
+';
+	}
+
+	function showBody(&$body, $print=true)
+	{
+		$BeginBody = '<style type="text/css">
+body,html {
+    height:100%;
+    width:100%;
+    padding:0px;
+    margin:0px;
+}
+.td_display {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 120%;
+    color: black;
+    background-color: #FFFFFF;
+}
+pre {
+	white-space: pre-wrap; /* Mozilla, since 1999 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	width: 99%;
+}
+blockquote[type=cite] {
+	margin: 0;
+	border-left: 2px solid blue;
+	padding-left: 10px;
+	margin-left: 0;
+	color: blue;
+}
+</style>
+<div style="height:100%;width:100%; background-color:white; padding:0px; margin:0px;">
+ <table width="100%" style="table-layout:fixed"><tr><td class="td_display">';
+
+		$EndBody = '</td></tr></table></div>';
+		$EndBody .= "</body></html>";
+		if ($print)	{
+			print $BeginBody. $body .$EndBody;
+		} else {
+			return $BeginBody. $body .$EndBody;
+		}
+	}
+
+	function &getdisplayableBody($_bodyParts,$modifyURI=true)
+	{
+		$bodyParts	= $_bodyParts;
+
+		$webserverURL	= $GLOBALS['egw_info']['server']['webserver_url'];
+
+		$nonDisplayAbleCharacters = array('[\016]','[\017]',
+				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
+				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
+
+		$body = '';
+
+		//error_log(__METHOD__.array2string($bodyParts)); //exit;
+		if (empty($bodyParts)) return "";
+		foreach((array)$bodyParts as $singleBodyPart) {
+			if (!isset($singleBodyPart['body'])) {
+				$singleBodyPart['body'] = $this->getdisplayableBody($singleBodyPart,$modifyURI);
+				$body .= $singleBodyPart['body'];
+				continue;
+			}
+			if(!empty($body)) {
+				$body .= '<hr style="border:dotted 1px silver;">';
+			}
+			//_debug_array($singleBodyPart['charSet']);
+			//_debug_array($singleBodyPart['mimeType']);
+			//error_log($singleBodyPart['body']);
+			//error_log(__METHOD__.__LINE__.' CharSet:'.$singleBodyPart['charSet'].' mimeType:'.$singleBodyPart['mimeType']);
+			// some characterreplacements, as they fail to translate
+			$sar = array(
+				'@(\x84|\x93|\x94)@',
+				'@(\x96|\x97|\x1a)@',
+				'@(\x82|\x91|\x92)@',
+				'@(\x85)@',
+				'@(\x86)@',
+				'@(\x99)@',
+				'@(\xae)@',
+			);
+			$rar = array(
+				'"',
+				'-',
+				'\'',
+				'...',
+				'&',
+				'(TM)',
+				'(R)',
+			);
+
+			if(($singleBodyPart['mimeType'] == 'text/html' || $singleBodyPart['mimeType'] == 'text/plain') &&
+				strtoupper($singleBodyPart['charSet']) != 'UTF-8')
+			{
+				$singleBodyPart['body'] = preg_replace($sar,$rar,$singleBodyPart['body']);
+			}
+			if ($singleBodyPart['charSet']===false) $singleBodyPart['charSet'] = translation::detect_encoding($singleBodyPart['body']);
+			$singleBodyPart['body'] = $GLOBALS['egw']->translation->convert(
+				$singleBodyPart['body'],
+				strtolower($singleBodyPart['charSet'])
+			);
+			// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
+			if (strtoupper(mail_bo::$displayCharset) == 'UTF-8')
+			{
+				$test = @json_encode($singleBodyPart['body']);
+				//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
+				//if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0)
+				if (($test=="null" || $test === false || is_null($test)) && strlen($singleBodyPart['body'])>0)
+				{
+					// this should not be needed, unless something fails with charset detection/ wrong charset passed
+					error_log(__METHOD__.__LINE__.' Charset Reported:'.$singleBodyPart['charSet'].' Charset Detected:'.felamimail_bo::detect_encoding($singleBodyPart['body']));
+					$singleBodyPart['body'] = utf8_encode($singleBodyPart['body']);
+				}
+			}
+			//error_log($singleBodyPart['body']);
+			#$CharSetUsed = mb_detect_encoding($singleBodyPart['body'] . 'a' , strtoupper($singleBodyPart['charSet']).','.strtoupper(mail_bo::$displayCharset).',UTF-8, ISO-8859-1');
+
+			if($singleBodyPart['mimeType'] == 'text/plain')
+			{
+				//$newBody	= $singleBodyPart['body'];
+
+				$newBody	= @htmlentities($singleBodyPart['body'],ENT_QUOTES, strtoupper(mail_bo::$displayCharset));
+				// if empty and charset is utf8 try sanitizing the string in question
+				if (empty($newBody) && strtolower($singleBodyPart['charSet'])=='utf-8') $newBody = @htmlentities(iconv('utf-8', 'utf-8', $singleBodyPart['body']),ENT_QUOTES, strtoupper(mail_bo::$displayCharset));
+				// if the conversion to htmlentities fails somehow, try without specifying the charset, which defaults to iso-
+				if (empty($newBody)) $newBody    = htmlentities($singleBodyPart['body'],ENT_QUOTES);
+				#$newBody	= $this->bofelamimail->wordwrap($newBody, 90, "\n");
+
+				// search http[s] links and make them as links available again
+				// to understand what's going on here, have a look at
+				// http://www.php.net/manual/en/function.preg-replace.php
+
+				// create links for websites
+				if ($modifyURI) $newBody = html::activate_links($newBody);
+				// redirect links for websites if you use no cookies
+				#if (!($GLOBALS['egw_info']['server']['usecookies']))
+				#	$newBody = preg_replace("/href=(\"|\')((http(s?):\/\/)|(www\.))([\w,\-,\/,\?,\=,\.,&amp;,!\n,\%,@,\(,\),\*,#,:,~,\+]+)(\"|\')/ie",
+				#		"'href=\"$webserverURL/redirect.php?go='.@htmlentities(urlencode('http$4://$5$6'),ENT_QUOTES,\"mail_bo::$displayCharset\").'\"'", $newBody);
+
+				// create links for email addresses
+				//TODO:if ($modifyURI) $this->parseEmail($newBody);
+				// create links for inline images
+				if ($modifyURI)
+				{
+					$newBody = preg_replace_callback("/\[cid:(.*)\]/iU",array($this,'image_callback_plain'),$newBody);
+				}
+
+				//TODO:$newBody	= $this->highlightQuotes($newBody);
+				// to display a mailpart of mimetype plain/text, may be better taged as preformatted
+				#$newBody	= nl2br($newBody);
+				// since we do not display the message as HTML anymore we may want to insert good linebreaking (for visibility).
+				//error_log($newBody);
+				// dont break lines that start with > (&gt; as the text was processed with htmlentities before)
+				//TODO:$newBody	= "<pre>".felamimail_bo::wordwrap($newBody,90,"\n",'&gt;')."</pre>";
+				//$newBody   = "<pre>".$newBody."</pre>";
+			}
+			else
+			{
+				$newBody	= $singleBodyPart['body'];
+				//TODO:$newBody	= $this->highlightQuotes($newBody);
+				#error_log(print_r($newBody,true));
+
+				// do the cleanup, set for the use of purifier
+				$usepurifier = true;
+				$newBodyBuff = $newBody;
+				mail_bo::getCleanHTML($newBody,$usepurifier);
+				// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
+				if (strtoupper(mail_bo::$displayCharset) == 'UTF-8')
+				{
+					$test = @json_encode($newBody);
+					//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
+					//if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0)
+					if (($test=="null" || $test === false || is_null($test)) && strlen($newBody)>0)
+					{
+						$newBody = $newBodyBuff;
+						$tv = mail_bo::$htmLawed_config['tidy'];
+						mail_bo::$htmLawed_config['tidy'] = 0;
+						mail_bo::getCleanHTML($newBody,$usepurifier);
+						mail_bo::$htmLawed_config['tidy'] = $tv;
+					}
+				}
+
+				// removes stuff between http and ?http
+				$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';    // only http:// gets removed, other protocolls are shown
+				$newBody = preg_replace('~'.$Protocol.'[^>]*\?'.$Protocol.'~sim','$1',$newBody); // removes stuff between http:// and ?http://
+				// TRANSFORM MAILTO LINKS TO EMAILADDRESS ONLY, WILL BE SUBSTITUTED BY parseEmail TO CLICKABLE LINK
+				$newBody = preg_replace('/(?<!"|href=|href\s=\s|href=\s|href\s=)'.'mailto:([a-z0-9._-]+)@([a-z0-9_-]+)\.([a-z0-9._-]+)/i',
+					"\\1@\\2.\\3",
+					$newBody);
+
+				// redirect links for websites if you use no cookies
+				#if (!($GLOBALS['egw_info']['server']['usecookies'])) { //do it all the time, since it does mask the mailadresses in urls
+					//TODO:if ($modifyURI) $this->parseHREF($newBody);
+				#}
+				// create links for inline images
+				if ($modifyURI)
+				{
+					$newBody = preg_replace_callback("/src=(\"|\')cid:(.*)(\"|\')/iU",array($this,'image_callback'),$newBody);
+					$newBody = preg_replace_callback("/url\(cid:(.*)\);/iU",array($this,'image_callback_url'),$newBody);
+					$newBody = preg_replace_callback("/background=(\"|\')cid:(.*)(\"|\')/iU",array($this,'image_callback_background'),$newBody);
+				}
+
+				// create links for email addresses
+				if ($modifyURI)
+				{
+					$link = $GLOBALS['egw']->link('/index.php',array('menuaction'    => 'felamimail.uicompose.compose'));
+					$newBody = preg_replace("/href=(\"|\')mailto:([\w,\-,\/,\?,\=,\.,&amp;,!\n,\%,@,\*,#,:,~,\+]+)(\"|\')/ie",
+						"'href=\"$link&send_to='.base64_encode('$2').'\"'.' target=\"compose\" onclick=\"window.open(this,this.target,\'dependent=yes,width=700,height=egw_getWindowOuterHeight(),location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;\"'", $newBody);
+					//print "<pre>".htmlentities($newBody)."</pre><hr>";
+				}
+				// replace emails within the text with clickable links.
+				//TODO:$this->parseEmail($newBody);
+			}
+
+			$body .= $newBody;
+			#print "<hr><pre>$body</pre><hr>";
+		}
+		// create links for windows shares
+		// \\\\\\\\ == '\\' in real life!! :)
+		$body = preg_replace("/(\\\\\\\\)([\w,\\\\,-]+)/i",
+			"<a href=\"file:$1$2\" target=\"_blank\"><font color=\"blue\">$1$2</font></a>", $body);
+
+		$body = preg_replace($nonDisplayAbleCharacters,'',$body);
+
+		return $body;
+	}
+
+	/**
+	 * preg_replace callback to replace image cid url's
+	 *
+	 * @param array $matches matches from preg_replace("/src=(\"|\')cid:(.*)(\"|\')/iU",...)
+	 * @return string src attribute to replace
+	 */
+	function image_callback($matches)
+	{
+		static $cache = array();	// some caching, if mails containing the same image multiple times
+		$this->icServer->currentMailbox;
+		$linkData = array (
+			'menuaction'    => 'felamimail.uidisplay.displayImage',
+			'uid'		=> $this->uid,
+			'mailbox'	=> base64_encode($this->mailbox),
+			'cid'		=> base64_encode($matches[2]),
+			'partID'	=> $this->partID,
+		);
+		$imageURL = $GLOBALS['egw']->link('/index.php', $linkData);
+
+		// to test without data uris, comment the if close incl. it's body
+		if (html::$user_agent != 'msie' || html::$ua_version >= 8)
+		{
+			if (!isset($cache[$imageURL]))
+			{
+				$attachment = $this->mail_bo->getAttachmentByCID($this->uid, $matches[2], $this->partID);
+
+				// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
+				if (bytes($attachment['attachment']) < 8192)	// msie=8 allows max 32k data uris
+				{
+					$cache[$imageURL] = 'data:'.$attachment['type'].';base64,'.base64_encode($attachment['attachment']);
+				}
+				else
+				{
+					$cache[$imageURL] = $imageURL;
+				}
+			}
+			$imageURL = $cache[$imageURL];
+		}
+		return 'src="'.$imageURL.'"';
+	}
+
+	/**
+	 * preg_replace callback to replace image cid url's
+	 *
+	 * @param array $matches matches from preg_replace("/src=(\"|\')cid:(.*)(\"|\')/iU",...)
+	 * @return string src attribute to replace
+	 */
+	function image_callback_plain($matches)
+	{
+		static $cache = array();	// some caching, if mails containing the same image multiple times
+		//error_log(__METHOD__.__LINE__.array2string($matches));
+		$linkData = array (
+			'menuaction'    => 'felamimail.uidisplay.displayImage',
+			'uid'		=> $this->uid,
+			'mailbox'	=> base64_encode($this->mailbox),
+			'cid'		=> base64_encode($matches[1]),
+			'partID'	=> $this->partID,
+		);
+		$imageURL = $GLOBALS['egw']->link('/index.php', $linkData);
+
+		// to test without data uris, comment the if close incl. it's body
+		if (html::$user_agent != 'msie' || html::$ua_version >= 8)
+		{
+			if (!isset($cache[$imageURL]))
+			{
+				$attachment = $this->mail_bo->getAttachmentByCID($this->uid, $matches[1], $this->partID);
+
+				// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
+				if (bytes($attachment['attachment']) < 8192)	// msie=8 allows max 32k data uris
+				{
+					$cache[$imageURL] = 'data:'.$attachment['type'].';base64,'.base64_encode($attachment['attachment']);
+				}
+				else
+				{
+					$cache[$imageURL] = $imageURL;
+				}
+			}
+			$imageURL = $cache[$imageURL];
+		}
+		return '<img src="'.$imageURL.'" />';
+	}
+
+	/**
+	 * preg_replace callback to replace image cid url's
+	 *
+	 * @param array $matches matches from preg_replace("/src=(\"|\')cid:(.*)(\"|\')/iU",...)
+	 * @return string src attribute to replace
+	 */
+	function image_callback_url($matches)
+	{
+		static $cache = array();	// some caching, if mails containing the same image multiple times
+		//error_log(__METHOD__.__LINE__.array2string($matches));
+		$linkData = array (
+			'menuaction'    => 'felamimail.uidisplay.displayImage',
+			'uid'		=> $this->uid,
+			'mailbox'	=> base64_encode($this->mailbox),
+			'cid'		=> base64_encode($matches[1]),
+			'partID'	=> $this->partID,
+		);
+		$imageURL = $GLOBALS['egw']->link('/index.php', $linkData);
+
+		// to test without data uris, comment the if close incl. it's body
+		if (html::$user_agent != 'msie' || html::$ua_version >= 8)
+		{
+			if (!isset($cache[$imageURL]))
+			{
+				$attachment = $this->mail_bo->getAttachmentByCID($this->uid, $matches[1], $this->partID);
+
+				// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
+				if (bytes($attachment['attachment']) < 8192)	// msie=8 allows max 32k data uris
+				{
+					$cache[$imageURL] = 'data:'.$attachment['type'].';base64,'.base64_encode($attachment['attachment']);
+				}
+				else
+				{
+					$cache[$imageURL] = $imageURL;
+				}
+			}
+			$imageURL = $cache[$imageURL];
+		}
+		return 'url('.$imageURL.');';
+	}
+
+	/**
+	 * preg_replace callback to replace image cid url's
+	 *
+	 * @param array $matches matches from preg_replace("/src=(\"|\')cid:(.*)(\"|\')/iU",...)
+	 * @return string src attribute to replace
+	 */
+	function image_callback_background($matches)
+	{
+		static $cache = array();	// some caching, if mails containing the same image multiple times
+		$linkData = array (
+			'menuaction'    => 'felamimail.uidisplay.displayImage',
+			'uid'		=> $this->uid,
+			'mailbox'	=> base64_encode($this->mailbox),
+			'cid'		=> base64_encode($matches[2]),
+			'partID'	=> $this->partID,
+		);
+		$imageURL = $GLOBALS['egw']->link('/index.php', $linkData);
+
+		// to test without data uris, comment the if close incl. it's body
+		if (html::$user_agent != 'msie' || html::$ua_version >= 8)
+		{
+			if (!isset($cache[$imageURL]))
+			{
+				$cache[$imageURL] = $imageURL;
+			}
+			$imageURL = $cache[$imageURL];
+		}
+		return 'background="'.$imageURL.'"';
+	}
+
 	/**
 	 * importMessage
 	 */
@@ -1659,6 +2109,26 @@ unset($query['actions']);
 
 			$this->t->pparse("out","fileSelector");
 */
+	}
+
+	/**
+	 * loadEmailBody
+	 *
+	 * @param string _messageID UID
+	 *
+	 * @return xajax response
+	 */
+	function loadEmailBody($_messageID)
+	{
+		if (!$_messageID) $_messageID = $_GET['_messageID'];
+		if(mail_bo::$debug); error_log(__METHOD__."->".$_flag.':'.print_r($_messageID,true));
+		$uidA = self::splitRowID($_messageID);
+		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
+		$messageID = $uidA['msgUID'];
+		$bodyResponse = $this->get_load_email_data($messageID,'',$folder);
+		//error_log(array2string($bodyResponse));
+		echo $bodyResponse;
+
 	}
 
 	/**

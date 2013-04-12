@@ -41,22 +41,22 @@
 		<tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder(widget.event_args[0],widget);" parent_node="tree_target"/>
 		<html id="msg"/>
 		<split dock_side="bottomDock" id="splitter" orientation="h">
-			<nextmatch id="nm" template="mail.index.rows" onselect="app.mail.mail_preview"/>
+			<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows"/>
 			<vbox id="spanMessagePreview">
-				<grid>
+				<grid width="100%">
 					<columns>
 						<column/>
 					</columns>
 					<rows>
 						<row>
-							<grid>
+							<grid width="100%">
 								<columns>
 									<column/>
 									<column/>
 								</columns>
 								<rows>
 									<row>
-										<grid>
+										<grid width="100%">
 											<columns>
 												<column/>
 											</columns>
@@ -91,7 +91,7 @@
 												</row>
 											</rows>
 										</grid>
-										<hbox>
+										<hbox width="275px">
 											<description value="Action Icons"/>
 										</hbox>
 									</row>
@@ -99,7 +99,7 @@
 							</grid>
 						</row>
 						<row class="previewDataArea" valign="top">
-							<iframe frameborder="1" height="auto" id="messageIFRAME" scrolling="auto"/>
+							<iframe frameborder="1" height="auto" id="messageIFRAME" scrolling="auto" width="100%"/>
 						</row>
 					</rows>
 				</grid>

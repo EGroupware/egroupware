@@ -47,13 +47,13 @@ mail_open: function(_action, _senders) {
 },
 
 /**
- * mail_preview - implementation of the copy action
+ * mail_preview - implementation of the preview action
  * 
  * @param nextmatch et2_nextmatch The widget whose row was selected
  * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
  */
 mail_preview: function(nextmatch, selected) {
-	//console.log("mail_preview",_action, _senders);
+	//console.log("mail_preview",nextmatch, selected);
 
 	// Empty values, just in case selected is empty (user cleared selection)
 	var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",date:"",subject:""}};
@@ -62,12 +62,27 @@ mail_preview: function(nextmatch, selected) {
 		var _id = selected[0];
 		dataElem = egw.dataGetUIDdata(_id);
 	}
+	else
+	{
+		return;
+	}
 	console.log("mail_preview",dataElem);
 	var subject =dataElem.data.subject;
 	etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewFromAddress').set_value(dataElem.data.fromaddress);
 	etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewToAddress').set_value(dataElem.data.toaddress);
 	etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewDate').set_value(dataElem.data.date);
 	etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewSubject').set_value(subject);
+	var IframeHandle = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('messageIFRAME');
+	IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
+
+
+//	var request = new egw_json_request('mail.mail_ui.ajax_loadEmailBody',[_id]);
+//	request.sendRequest(false);
+},
+mail_setMailBody: function(content) {
+	console.log('mail_setMailBody',content);
+	var IframeHandle = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('messageIFRAME');
+	IframeHandle.set_value('');
 },
 
 /**
@@ -230,7 +245,7 @@ mail_delete: function(_action,_elems)
 {
 	var msg = this.mail_getFormData(_elems);
 	//alert(_action.id+','+ msg);
-	app_refresh(egw.lang('delete messages'), 'mail');
+	app.mail.app_refresh(egw.lang('delete messages'), 'mail');
 	this.mail_setRowClass(_elems,'deleted');
 	var request = new egw_json_request('mail.mail_ui.ajax_deleteMessages',[msg]);
 	request.sendRequest(false);
@@ -262,7 +277,7 @@ mail_undeleteMessages: function(_messageList) {
  * mail_emptyTrash
  */
 mail_emptyTrash: function() {
-	app_refresh(egw.lang('empty trash'), 'mail');
+	app.mail.app_refresh(egw.lang('empty trash'), 'mail');
 	var request = new egw_json_request('mail.mail_ui.ajax_emptyTrash');
 	request.sendRequest();
 },
@@ -271,7 +286,7 @@ mail_emptyTrash: function() {
  * mail_compressFolder
  */
 mail_compressFolder: function() {
-	app_refresh(egw.lang('compress folder'), 'mail');
+	app.mail.app_refresh(egw.lang('compress folder'), 'mail');
 	var request = new egw_json_request('mail.mail_ui.ajax_compressFolder');
 	request.sendRequest();
 },
@@ -297,7 +312,7 @@ mail_changeProfile: function(folder,_widget) {
  */
 mail_changeFolder: function(folder,_widget) {
 	//alert('change Folder called:'+folder);
-	app_refresh(egw.lang('change folder')+'...', 'mail');
+	app.mail.app_refresh(egw.lang('change folder')+'...', 'mail');
 	var img = _widget.getSelectedNode().images[0]; // fetch first image
 	if (!(img.search(eval('/'+'NoSelect'+'/'))<0) || !(img.search(eval('/'+'thunderbird'+'/'))<0))
 	{
@@ -334,7 +349,7 @@ mail_changeFolder: function(folder,_widget) {
 			if (outBraket!=-1) displayname = displayname.replace(/\((.*?)\)/,"");
 		}
 		myMsg = (displayname?displayname:folder)+' '+egw.lang('selected');
-		app_refresh(myMsg, 'mail');
+		app.mail.app_refresh(myMsg, 'mail');
 	}
 	//mail_refreshMessageGrid();
 	this.mail_refreshFolderStatus(folder,'forced');
@@ -363,7 +378,7 @@ mail_flag: function(_action, _elems)
  */
 mail_flagMessages: function(_flag, _elems)
 {
-	app_refresh(egw.lang('flag messages'), 'mail');
+	app.mail.app_refresh(egw.lang('flag messages'), 'mail');
 	var request = new egw_json_request('mail.mail_ui.ajax_flagMessages',[_flag, _elems]);
 	request.sendRequest(false);
 	this.mail_refreshMessageGrid()
