@@ -385,8 +385,6 @@ class filemanager_ui
 			unset($content['nm']['rows']);
 			egw_session::appsession('index','filemanager',$content['nm']);
 		}
-		$clipboard_files = egw_session::appsession('clipboard_files','filemanager');
-		$clipboard_type = egw_session::appsession('clipboard_type','filemanager');
 
 		// be tolerant with (in previous versions) not correct urlencoded pathes
 		if ($content['nm']['path'][0] == '/' && !egw_vfs::stat($content['nm']['path'],true) && egw_vfs::stat(urldecode($content['nm']['path'])))
@@ -402,56 +400,6 @@ class filemanager_ui
 			}
 			switch($button)
 			{
-				case 'up':
-					if ($content['nm']['path'] != '/')
-					{
-						$content['nm']['path'] = dirname($content['nm']['path']);
-						// switch recusive display off
-						if (!$content['nm']['filter']) $content['nm']['filter'] = '1';
-					}
-					break;
-				case 'home':
-					$content['nm']['path'] = self::get_home_dir();
-					break;
-				case 'createdir':
-					if ($content['nm']['path'][0] != '/')
-					{
-						$ses = egw_session::appsession('index','filemanager');
-						$old_path = $ses['path'];
-						$content['nm']['path'] = egw_vfs::concat($old_path,$content['nm']['path']);
-					}
-					if (!@egw_vfs::mkdir($content['nm']['path'],null,STREAM_MKDIR_RECURSIVE))
-					{
-						$content['nm']['msg'] = !egw_vfs::is_writable(dirname($content['nm']['path'])) ?
-							lang('Permission denied!') : lang('Failed to create directory!');
-						if (!$old_path)
-						{
-							$ses = egw_session::appsession('index','filemanager');
-							$old_path = $ses['path'];
-						}
-						$content['nm']['path'] = $old_path;
-					}
-					break;
-				case 'symlink':
-					$target = $content['nm']['path'];
-					$ses = egw_session::appsession('index','filemanager');
-					$content['nm']['path'] = $ses['path'];
-					$link = egw_vfs::concat($content['nm']['path'],egw_vfs::basename($target));
-					$abs_target = $target[0] == '/' ? $target : egw_vfs::concat($content['nm']['path'],$target);
-					if (!egw_vfs::stat($abs_target))
-					{
-						$content['nm']['msg'] = lang('Link target %1 not found!',egw_vfs::decodePath($abs_target));
-						break;
-					}
-					$content['nm']['msg'] = egw_vfs::symlink($target,$link) ?
-						lang('Symlink to %1 created.',$target) : lang('Error creating symlink to target %1!',egw_vfs::decodePath($target));
-					break;
-				case 'paste':
-					$content['nm']['msg'] = self::action($clipboard_type.'_paste',$clipboard_files,$content['nm']['path']);
-					break;
-				case 'linkpaste':
-					$content['nm']['msg'] = self::action('link_paste',$clipboard_files,$content['nm']['path']);
-					break;
 				case 'upload':
 					if (!$content['upload'])
 					{
@@ -487,23 +435,7 @@ class filemanager_ui
 					break;
 			}
 		}
-		if (!egw_vfs::stat($content['nm']['path'],true) || !egw_vfs::is_dir($content['nm']['path']))
-		{
-			$content['nm']['msg'] .= ' '.lang('Directory not found or no permission to access it!');
-		}
-		else
-		{
-			$dir_is_writable = egw_vfs::is_writable($content['nm']['path']);
-		}
-		$content['mailpaste_files'] = $clipboard_files;
-		$content['upload_size'] = etemplate::max_upload_size_message();
-		//_debug_array($content);
-
-		$readonlys['button[linkpaste]'] = $readonlys['button[paste]'] = !$dir_is_writable;
 		$readonlys['button[mailpaste]'] = !isset($GLOBALS['egw_info']['user']['apps']['felamimail']);
-		$readonlys['button[createdir]'] = !$dir_is_writable;
-		$readonlys['button[symlink]'] = !$dir_is_writable;
-		$readonlys['button[upload]'] = $readonlys['upload'] = !$dir_is_writable;
 
 		$sel_options['filter'] = array(
 			'1' => 'Current directory',
@@ -911,6 +843,12 @@ class filemanager_ui
 				}
 			}
 		}
+		$dir_is_writable = egw_vfs::is_writable($query['path']);
+		$readonlys['button[linkpaste]'] = $readonlys['button[paste]'] = !$dir_is_writable;
+		$readonlys['button[createdir]'] = !$dir_is_writable;
+		$readonlys['button[symlink]'] = !$dir_is_writable;
+		$readonlys['button[upload]'] = $readonlys['upload'] = !$dir_is_writable;
+
 		//_debug_array($readonlys);
 		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'projectmanager')
 		{
@@ -1325,59 +1263,6 @@ class filemanager_ui
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.egw_vfs::decodePath($path);
 
 		$tpl->exec('filemanager.filemanager_ui.file',$content,$sel_options,$readonlys,$preserve,2);
-	}
-
-	/**
-	 * Get tooltip for paste icons containing files currently in clipboard
-	 *
-	 * @param string $id id of button/icon
-	 */
-	public static function ajax_clipboard_tooltip($id)
-	{
-		$response = egw_json_response::get();
-
-		$clipboard_files = egw_session::appsession('clipboard_files','filemanager');
-		$clipboard_type = egw_session::appsession('clipboard_type','filemanager');
-
-		if (!$clipboard_files)
-		{
-			$tooltip = '<p><b>'.lang('Clipboard is empty!').'</b></p>';
-			$clipboard_files = array();
-		}
-		elseif (preg_match('/\[([a-z]+)\]$/',$id,$matches))
-		{
-			switch($matches[1])
-			{
-				case 'paste':
-					$tooltip = lang('%1 the following files into current directory',$clipboard_type=='copy'?lang('Copy'):lang('Move'));
-					break;
-				case 'linkpaste':
-					$tooltip = lang('%1 the following files into current directory',lang('Link'));
-					break;
-				case 'mailpaste':
-					$tooltip = lang('Mail files');
-					break;
-			}
-			$tooltip = '<p><b>'.$tooltip.':</b><br />'.egw_vfs::decodePath(implode('<br />',$clipboard_files)).'</p>';
-		}
-		$response->script('app.filemanager.clipboard_files = '.json_encode($clipboard_files).';');
-		$response->script('Tip.call(document.getElementById("'.$id.'"),"'.$tooltip.'");');
-	}
-
-	/**
-	 * Copy, add or cut files to clipboard
-	 *
-	 * @param string $action 'copy', 'cut' or 'add'
-	 * @param array $selected files
-	 */
-	public static function ajax_clipboard($action, $selected)
-	{
-		$response = egw_json_response::get();
-
-		$msg = self::action($action, $selected);
-
-		$response->script('app.filemanager.app_refresh("'.$msg.'");');
-		$response->script('app.filemanager.clipboard_files = '.json_encode($clipboard_files).';');
 	}
 
 	/**
