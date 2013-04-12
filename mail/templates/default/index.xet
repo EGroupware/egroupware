@@ -40,9 +40,70 @@
 	<template id="mail.index" template="" lang="" group="0" version="1.9.001">
 		<tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder(widget.event_args[0],widget);" parent_node="tree_target"/>
 		<html id="msg"/>
-		<split id="splitter" orientation="h" dock_side="bottomDock">
-			<nextmatch id="nm" options="mail.index.rows"/>
-			<iframe id="preview"/>
+		<split dock_side="bottomDock" id="splitter" orientation="h">
+			<nextmatch id="nm" template="mail.index.rows"/>
+			<vbox id="spanMessagePreview">
+				<grid>
+					<columns>
+						<column/>
+					</columns>
+					<rows>
+						<row>
+							<grid>
+								<columns>
+									<column/>
+									<column/>
+								</columns>
+								<rows>
+									<row>
+										<grid>
+											<columns>
+												<column/>
+											</columns>
+											<rows>
+												<row>
+													<hbox>
+														<description value="From"/>
+														<description value=":"/>
+														<url-email id="previewFromAddress" readonly="true"/>
+													</hbox>
+												</row>
+												<row>
+													<hbox>
+														<description value="To"/>
+														<description value=":"/>
+														<url-email id="previewToAddress" readonly="true"/>
+													</hbox>
+												</row>
+												<row>
+													<hbox>
+														<description value="Date"/>
+														<description value=":"/>
+														<date-time align="left" id="previewDate" readonly="true"/>
+													</hbox>
+												</row>
+												<row>
+													<hbox>
+														<description value="Subject"/>
+														<description value=":"/>
+														<description align="left" id="previewSubject" readonly="true"/>
+													</hbox>
+												</row>
+											</rows>
+										</grid>
+										<hbox>
+											<description value="Action Icons"/>
+										</hbox>
+									</row>
+								</rows>
+							</grid>
+						</row>
+						<row class="previewDataArea" valign="top">
+							<iframe frameborder="1" height="auto" id="messageIFRAME" scrolling="auto"/>
+						</row>
+					</rows>
+				</grid>
+			</vbox>
 		</split>
 	</template>
 </overlay>

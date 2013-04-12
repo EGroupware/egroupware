@@ -26,6 +26,7 @@ class mail_ui
 		'displayHeader'	=> True,
 		'saveMessage'	=> True,
 		'vfsSaveMessage' => True,
+		'importMessage'	=> True,
 		'TestConnection' => True,
 	);
 
@@ -149,7 +150,7 @@ class mail_ui
 			unset($msg);
 			unset($content['msg']);
 		}
-		$content['preview'] = "<html><body style='background-color: pink;'/></html>";
+		//$content['preview'] = "<html><body style='background-color: pink;'/></html>";
 		$this->mail_bo->restoreSessionData();
 
 		// filter is used to choose the mailbox
@@ -209,7 +210,8 @@ class mail_ui
 			// Tree doesn't support this one - yet
 			'rename' => array(
 				'caption' => 'Rename',
-				'type' => 'popup'
+				'type' => 'popup',
+				'onExecute' => 'javaScript:app.mail.mail_RenameFolder'
 			)
 		));
 
@@ -636,7 +638,7 @@ class mail_ui
 			'open' => array(
 				'caption' => lang('Open'),
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.open', //dummy by nathan
+				'onExecute' => 'javaScript:app.mail.mail_preview', //dummy by nathan
 				'allowOnMultiple' => false,
 				'default' => true,
 			),
@@ -1477,8 +1479,8 @@ unset($query['actions']);
 	 */
 	function vfsSaveMessage($ids,$path)
 	{
-		return "alert('".__METHOD__.'("'.array2string($id).'","'.$path."\")'); window.close();";
-/*
+		error_log(__METHOD__.' IDs:'.array2string($ids).' SaveToPath:'.$path);
+
 		if (is_array($ids) && !egw_vfs::is_writable($path) || !is_array($ids) && !egw_vfs::is_writable(dirname($path)))
 		{
 			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); window.close();';
@@ -1497,15 +1499,172 @@ unset($query['actions']);
 			}
 			if ($fp) fclose($fp);
 		}
-		$this->mail_bo->closeConnection();
+		//$this->mail_bo->closeConnection();
 
 		return $err.'window.close();';
+	}
+
+	/**
+	 * importMessage
+	 */
+	function importMessage()
+	{
+		error_log(array2string($_POST));
+/*
+			if (empty($importtype)) $importtype = htmlspecialchars($_POST["importtype"]);
+			if (empty($toggleFS)) $toggleFS = htmlspecialchars($_POST["toggleFS"]);
+			if (empty($importID)) $importID = htmlspecialchars($_POST["importid"]);
+			if (empty($addFileName)) $addFileName =html::purify($_POST['addFileName']);
+			if (empty($importtype)) $importtype = 'file';
+			if (empty($toggleFS)) $toggleFS= false;
+			if (empty($addFileName)) $addFileName = false;
+			if ($toggleFS == 'vfs' && $importtype=='file') $importtype='vfs';
+			if (!$toggleFS && $importtype=='vfs') $importtype='file';
+
+			// get passed messages
+			if (!empty($_GET["msg"])) $alert_message[] = html::purify($_GET["msg"]);
+			if (!empty($_POST["msg"])) $alert_message[] = html::purify($_POST["msg"]);
+			unset($_GET["msg"]);
+			unset($_POST["msg"]);
+			//_debug_array($alert_message);
+			//error_log(__METHOD__." called from:".function_backtrace());
+			$proceed = false;
+			if(is_array($_FILES["addFileName"]))
+			{
+				//phpinfo();
+				//error_log(print_r($_FILES,true));
+				if($_FILES['addFileName']['error'] == $UPLOAD_ERR_OK) {
+					$proceed = true;
+					$formData['name']	= $_FILES['addFileName']['name'];
+					$formData['type']	= $_FILES['addFileName']['type'];
+					$formData['file']	= $_FILES['addFileName']['tmp_name'];
+					$formData['size']	= $_FILES['addFileName']['size'];
+				}
+			}
+			if ($addFileName && $toggleFS == 'vfs' && $importtype == 'vfs' && $importID)
+			{
+				$sessionData = $GLOBALS['egw']->session->appsession('compose_session_data_'.$importID, 'felamimail');
+				//error_log(__METHOD__.__LINE__.array2string($sessionData));
+				foreach((array)$sessionData['attachments'] as $attachment) {
+					//error_log(__METHOD__.__LINE__.array2string($attachment));
+					if ($addFileName == $attachment['name'])
+					{
+						$proceed = true;
+						$formData['name']	= $attachment['name'];
+						$formData['type']	= $attachment['type'];
+						$formData['file']	= $attachment['file'];
+						$formData['size']	= $attachment['size'];
+						break;
+					}
+				}
+			}
+			if ($proceed === true)
+			{
+				$destination = html::purify($_POST['newMailboxMoveName']?$_POST['newMailboxMoveName']:'');
+				try
+				{
+					$messageUid = $this->importMessageToFolder($formData,$destination,$importID);
+				    $linkData = array
+				    (
+				        'menuaction'    => 'felamimail.uidisplay.display',
+						'uid'		=> $messageUid,
+						'mailbox'    => base64_encode($destination),
+				    );
+				}
+				catch (egw_exception_wrong_userinput $e)
+				{
+				    $linkData = array
+				    (
+				        'menuaction'    => 'felamimail.uifelamimail.importMessage',
+						'msg'		=> htmlspecialchars($e->getMessage()),
+				    );
+				}
+				egw::redirect_link('/index.php',$linkData);
+				exit;
+			}
+
+			if(!@is_object($GLOBALS['egw']->js))
+			{
+				$GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
+			}
+			// this call loads js and css for the treeobject
+			html::tree(false,false,false,null,'foldertree','','',false,'/',null,false);
+			$GLOBALS['egw']->common->egw_header();
+
+			#$uiwidgets		=& CreateObject('felamimail.uiwidgets');
+
+			$this->t->set_file(array("importMessage" => "importMessage.tpl"));
+
+			$this->t->set_block('importMessage','fileSelector','fileSelector');
+			$importID =felamimail_bo::getRandomString();
+
+			// prepare saving destination of imported message
+			$linkData = array
+			(
+					'menuaction'    => 'felamimail.uipreferences.listSelectFolder',
+			);
+			$this->t->set_var('folder_select_url',$GLOBALS['egw']->link('/index.php',$linkData));
+
+			// messages that may be passed to the Form
+			if (isset($alert_message) && !empty($alert_message))
+			{
+				$this->t->set_var('messages', implode('; ',$alert_message));
+			}
+			else
+			{
+				$this->t->set_var('messages','');
+			}
+
+			// preset for saving destination, we use draftfolder
+			$savingDestination = $this->mail_bo->getDraftFolder();
+
+			$this->t->set_var('mailboxNameShort', $savingDestination);
+			$this->t->set_var('importtype', $importtype);
+			$this->t->set_var('importid', $importID);
+			if ($toggleFS) $this->t->set_var('toggleFS_preset','checked'); else $this->t->set_var('toggleFS_preset','');
+
+			$this->translate();
+
+			$linkData = array
+			(
+				'menuaction'	=> 'mail.mail_ui.importMessage',
+			);
+			$this->t->set_var('file_selector_url', $GLOBALS['egw']->link('/index.php',$linkData));
+
+			$this->t->set_var('vfs_selector_url', egw::link('/index.php',array(
+				'menuaction' => 'filemanager.filemanager_select.select',
+				'mode' => 'open-multiple',
+				'method' => 'felamimail.uifelamimail.selectFromVFS',
+				'id'	=> $importID,
+				'label' => lang('Attach'),
+			)));
+			if ($GLOBALS['egw_info']['user']['apps']['filemanager'] && $importtype == 'vfs')
+			{
+				$this->t->set_var('vfs_attach_button','
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="fm_import_displayVfsSelector();" title="'.htmlspecialchars(lang('filemanager')).'">
+					<img src="'.$GLOBALS['egw']->common->image('filemanager','navbar').'" height="18">
+				</a>&nbsp;&nbsp;&nbsp;&nbsp;');
+				$this->t->set_var('filebox_readonly','readonly="readonly"');
+			}
+			else
+			{
+				$this->t->set_var('vfs_attach_button','');
+				$this->t->set_var('filebox_readonly','');
+			}
+
+			$maxUploadSize = ini_get('upload_max_filesize');
+			$this->t->set_var('max_uploadsize', $maxUploadSize);
+
+			$this->t->set_var('ajax-loader', $GLOBALS['egw']->common->image('felamimail','ajax-loader'));
+
+			$this->t->pparse("out","fileSelector");
 */
 	}
 
 	/**
-	 * getFolderStatus - its called via json, so the function must start with ajax (or the class-name must contain ajax)
+	 * ajax_setFolderStatus - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 * gets the counters and sets the text of a treenode if needed (unread Messages found)
+	 * @param array $_folder folders to refresh its unseen message counters
 	 * @return nothing
 	 */
 	function ajax_setFolderStatus($_folder)
@@ -1530,6 +1689,55 @@ unset($query['actions']);
 							$oA[$_folderName] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';
 
 						}
+					}
+				}
+			}
+			//error_log(__METHOD__.__LINE__.array2string($oA));
+			if ($oA)
+			{
+				$response = egw_json_response::get();
+				$response->call('app.mail.mail_setFolderStatus',$oA,'mail');
+			}
+		}
+	}
+
+	/**
+	 * ajax_renameFolder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
+	 * @param string $_folderName folder to rename and refresh
+	 * @param string $_newName new foldername
+	 * @return nothing
+	 */
+	function ajax_renameFolder($_folderName, $_newName)
+	{
+		//error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
+		if ($_folderName)
+		{
+			$_folderName = $this->mail_bo->decodeEntityFolderName($_folderName);
+			$_newName = translation::convert($this->mail_bo->decodeEntityFolderName($_newName), $this->charset, 'UTF7-IMAP');
+			$del = $this->mail_bo->getHierarchyDelimiter(false);
+			$oA = array();
+			list($profileID,$folderName) = explode(self::$delimiter,$_folderName,2);
+			if (is_numeric($profileID))
+			{
+				if ($profileID != $this->mail_bo->profileID) return; // only current connection
+				$pA = explode($del,$folderName);
+				array_pop($pA);
+				$parentFolder = implode($del,$pA);
+				if (strtoupper($folderName)!= 'INBOX')
+				{
+					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
+					if($newFolderName = $this->mail_bo->renameFolder($folderName, $parentFolder, $_newName)) {
+						$this->mail_bo->resetFolderObjectCache($profileID);
+						//enforce the subscription to the newly named server, as it seems to fail for names with umlauts
+						$rv = $this->mail_bo->subscribe($newFolderName, true);
+						$rv = $this->mail_bo->subscribe($folderName, false);
+					}
+					$fS = $this->mail_bo->getFolderStatus($newFolderName,false);
+					//error_log(__METHOD__.__LINE__.array2string($fS));
+					if ($fS['unseen'])
+					{
+						$oA[$_folderName] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';
+
 					}
 				}
 			}

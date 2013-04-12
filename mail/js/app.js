@@ -24,7 +24,6 @@ mail_queuedFoldersIndex: 0,
 init: function() {
 
 	this._super.apply(this,arguments);
-
 	window.register_app_refresh("mail", this.app_refresh);
 
 	this.mail_startTimerFolderStatusUpdate(this.mail_refreshTimeOut);
@@ -33,8 +32,36 @@ init: function() {
 	window.setTimeout(function() {self.mail_refreshFolderStatus.apply(self);},1000);
 },
 
-open: function(action, senders, ids) {
-	console.log("open",action, senders, ids);
+/**
+ * mail_open - implementation of the open action
+ * 
+ * @param _action
+ * @param _senders - the representation of the elements(s) the action is to be performed on
+ */
+mail_open: function(_action, _senders) {
+	console.log("mail_open",_action, _senders);
+	var _id = _senders[0].id;
+	var dataElem = egw.dataGetUIDdata(_id);
+	var subject =dataElem.data.subject;
+	var sw = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewSubject');
+},
+
+/**
+ * mail_preview - implementation of the copy action
+ * 
+ * @param _action
+ * @param _senders - the representation of the elements(s) the action is to be performed on
+ */
+mail_preview: function(_action, _senders) {
+	//console.log("mail_preview",_action, _senders);
+	var _id = _senders[0].id;
+	var dataElem = egw.dataGetUIDdata(_id);
+	console.log("mail_preview",dataElem);
+	var subject =dataElem.data.subject;
+	etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewFromAddress').set_value(dataElem.data.fromaddress);
+	etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewToAddress').set_value(dataElem.data.toaddress);
+	etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewDate').set_value(dataElem.data.date);
+	etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewSubject').set_value(subject);
 },
 
 /**
@@ -71,13 +98,16 @@ mail_refreshFolderStatus: function(_nodeID,mode) {
 	if (mode) {
 		if (mode == "forced") {mode2use = mode;}
 	}
-	var tree_wdg = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+	try
+	{
+		var tree_wdg = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
 
-	var activeFolders = tree_wdg.getTreeNodeOpenItems(nodeToRefresh,mode2use);
-	//alert(activeFolders.join('#,#'));
-	this.mail_queueRefreshFolderList(activeFolders);
+		var activeFolders = tree_wdg.getTreeNodeOpenItems(nodeToRefresh,mode2use);
+		//alert(activeFolders.join('#,#'));
+		this.mail_queueRefreshFolderList(activeFolders);
 
-	this.mail_refreshMessageGrid();
+		this.mail_refreshMessageGrid();
+	} catch(e) { } // ignore the error; maybe the template is not loaded yet
 },
 
 
@@ -491,10 +521,24 @@ mail_setRowClass: function(_actionObjects,_class) {
 },
 
 // Tree widget stubs
+/**
+ * mail_dragStart - displays information while dragging
+ * 
+ * @param action
+ * @param _senders - the representation of the elements dragged
+ * @return the ddhelper
+ */
 mail_dragStart: function(action,_senders) {
 	//console.log(action,_senders);
 	return $j("<div class=\"ddhelper\">" + _senders.length + " Mails selected </div>")
 },
+/**
+ * mail_move - implementation of the move action from drag n drop
+ * 
+ * @param _action
+ * @param _senders - the representation of the elements dragged
+ * @param _target - the representation of the target
+ */
 mail_move: function(_action,_senders,_target) {
 	//console.log(_action,_senders,_target);
 	var target = _action.id == 'drop_move_mail' ? _target.iface.id : _action.id.substr(5);
@@ -506,6 +550,13 @@ mail_move: function(_action,_senders,_target) {
 	request.sendRequest(false);
 	this.mail_refreshMessageGrid()
 },
+/**
+ * mail_copy - implementation of the copy action from drag n drop
+ * 
+ * @param _action
+ * @param _senders - the representation of the elements dragged
+ * @param _target - the representation of the target
+ */
 mail_copy: function(_action,_senders,_target) {
 	//console.log(_action,_senders,_target);
 	var target = _action.id == 'drop_copy_mail' ? _target.id : _action.id.substr(5);
@@ -516,5 +567,30 @@ mail_copy: function(_action,_senders,_target) {
 	var request = new egw_json_request('mail.mail_ui.ajax_copyMessages',[target, messages]);
 	request.sendRequest(false);
 	this.mail_refreshMessageGrid()
+},
+/**
+ * mail_RenameFolder - implementation of the RenameFolder action of right click options on the tree
+ * 
+ * @param _action
+ * @param _senders - the representation of the tree leaf to be manipulated
+ */
+mail_RenameFolder: function(action,_senders) {
+	//console.log(action,_senders);
+	//action.id == 'rename'
+	//_senders.iface.id == target leaf / leaf to edit
+	var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+	OldFolderName = ftree.getLabel(_senders[0].iface.id);
+	if (jQuery(OldFolderName).text().length>0) OldFolderName = jQuery(OldFolderName).text();
+	OldFolderName = OldFolderName.trim();
+	OldFolderName = OldFolderName.replace(/\([0-9]*\)/g,'').trim();
+	//console.log(OldFolderName);
+	NewFolderName = prompt(egw.lang("Rename Folder %1 to:",OldFolderName));
+	if (jQuery(NewFolderName).text().length>0) NewFolderName = jQuery(NewFolderName).text();
+	//alert(NewFolderName);
+	if (NewFolderName && NewFolderName.length>0)
+	{
+		var request = new egw_json_request('mail.mail_ui.ajax_renameFolder',[_senders[0].iface.id, NewFolderName]);
+		request.sendRequest(false);
+	}
 }
 });

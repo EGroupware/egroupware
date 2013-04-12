@@ -1564,6 +1564,16 @@ class mail_bo
 	}
 
 	/**
+	 * decodeEntityFolderName - remove html entities
+	 * @param string _folderName the foldername
+	 * @return string the converted string
+	 */
+	function decodeEntityFolderName($_folderName)
+	{
+		return html_entity_decode($_folderName, ENT_QUOTES, self::$displayCharset);
+	}
+
+	/**
 	 * convert a mailboxname from utf7-imap to displaycharset
 	 *
 	 * @param string _folderName the foldername
@@ -1572,6 +1582,69 @@ class mail_bo
 	function encodeFolderName($_folderName)
 	{
 		return translation::convert($_folderName, 'UTF7-IMAP', self::$displayCharset);
+	}
+
+	/**
+	 * convert the foldername from display charset to UTF-7
+	 *
+	 * @param string _parent the parent foldername
+	 * @return ISO-8859-1 / UTF7-IMAP encoded string
+	 */
+	function _encodeFolderName($_folderName) {
+		return translation::convert($_folderName, self::$displayCharset, 'ISO-8859-1');
+		#return translation::convert($_folderName, self::$displayCharset, 'UTF7-IMAP');
+	}
+
+	/**
+	 * rename a folder
+	 *
+	 * @param string _oldFolderName the old foldername
+	 * @param string _parent the parent foldername
+	 * @param string _folderName the new foldername
+	 *
+	 * @return mixed name of the newly created folder or false on error
+	 */
+	function renameFolder($_oldFolderName, $_parent, $_folderName)
+	{
+		$oldFolderName	= $this->_encodeFolderName($_oldFolderName);
+		$parent		= $this->_encodeFolderName($_parent);
+		$folderName	= $this->_encodeFolderName($_folderName);
+
+		if(empty($parent)) {
+			$newFolderName = $folderName;
+		} else {
+			$HierarchyDelimiter = $this->getHierarchyDelimiter();
+			$newFolderName = $parent . $HierarchyDelimiter . $folderName;
+		}
+		if (self::$debug); error_log("create folder: $newFolderName");
+		$rv = $this->icServer->renameMailbox($oldFolderName, $newFolderName);
+		if ( PEAR::isError($rv) ) {
+			if (self::$debug) error_log(__METHOD__." failed for $oldFolderName, $newFolderName with error: ".print_r($rv->message,true));
+			return false;
+		}
+
+		return $newFolderName;
+
+	}
+
+	function subscribe($_folderName, $_status)
+	{
+		if (self::$debug) error_log(__METHOD__."::".($_status?"":"un")."subscribe:".$_folderName);
+		if($_status === true) {
+			$rv = $this->icServer->subscribeMailbox($_folderName);
+			if ( PEAR::isError($rv)) {
+				error_log(__METHOD__."::".($_status?"":"un")."subscribe:".$_folderName." failed:".$rv->message);
+				return false;
+			}
+		} else {
+			$rv = $this->icServer->unsubscribeMailbox($_folderName);
+			if ( PEAR::isError($rv)) {
+				error_log(__METHOD__."::".($_status?"":"un")."subscribe:".$_folderName." failed:".$rv->message);
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
