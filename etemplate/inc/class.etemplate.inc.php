@@ -176,7 +176,7 @@ class etemplate_new extends etemplate_widget_template
 			if (isset($GLOBALS['egw']->framework->response))
 			{
 				echo '
-		<div id="' . $this->name .'"></div>
+		<div id="' . $this->name .'" class="et2_container"></div>
 		<script>
 			// Wait for all files to be loaded & executed first
 			egw.LAB.wait(function() {
@@ -207,7 +207,7 @@ class etemplate_new extends etemplate_widget_template
 			else
 			{
 				echo '
-		<div id="container"></div>
+		<div id="container" class="et2_container"></div>
 		<script>
 			// Wait for all files to be loaded & executed first
 			egw.LAB.wait(function() {
