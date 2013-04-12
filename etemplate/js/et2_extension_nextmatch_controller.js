@@ -64,7 +64,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		}
 		// Add our selection callback to selection manager
 		var self = this;
-		this._objectManager.setSelectedCallback = function() {self._selectCallback(this);};
+		this._objectManager.setSelectedCallback = function() {self._selectCallback.apply(self,[this,arguments]);};
 
 		// Call the parent et2_dataview_controller constructor
 		this._super(_parentController, _grid, this, this._rowCallback,
@@ -264,9 +264,13 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 	/**
 	 * Execute the select callback when the row selection changes
 	 */
-	_selectCallback: function(action)
+	_selectCallback: function(action,senders)
 	{
-		this._widget.onselect.call(this._widget, action);
+		if(typeof senders == "undefined")
+		{
+			senders = [];
+		}
+		this._widget.onselect.call(this._widget, action,senders);
 	},
 
 	/** -- Implementation of et2_IDataProvider -- **/

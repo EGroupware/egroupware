@@ -392,7 +392,20 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		return {ids:[],inverted:false};
 	},
 
-	onselect: function() {
+	/**
+	 * Event handler for when the selection changes
+	 *
+	 * If the onselect attribute was set to a string with javascript code, it will
+	 * be executed "legacy style".  You can get the selected values with getSelection().
+	 * If the onselect attribute is in app.appname.function style, it will be called
+	 * with the nextmatch and an array of selected row IDs.
+	 *
+	 * The array can be empty, if user cleared the selection.
+	 *
+	 * @param action ActionObject From action system.  Ignored.
+	 * @param senders ActionObjectImplemetation From action system.  Ignored.
+	 */
+	onselect: function(action,senders) {
 		// Execute the JS code connected to the event handler
                 if (this.options.onselect)
                 {
@@ -403,12 +416,14 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 				if(parts.length == 3 && typeof window.app[parts[1]] == "object" &&
 					typeof window.app[parts[1]][parts[2]] == "function")
 				{
-					window.app[parts[1]][parts[2]].call(this, this.getSelection());
+					// Call as Action callback
+					//window.app[parts[1]][parts[2]].apply( window.app[parts[1]], arguments);
+					window.app[parts[1]][parts[2]].apply( window.app[parts[1]], [this,this.getSelection().ids]);
 				}
 			}
 
                         // Exectute the legacy JS code
-                        else if (!(et2_compileLegacyJS(this.options.onselect, this, _node))())
+                        else if (!(et2_compileLegacyJS(this.options.onselect, this, this.div))())
                         {
                                 return false;
                         }
