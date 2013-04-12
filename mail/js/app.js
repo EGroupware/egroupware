@@ -49,13 +49,19 @@ mail_open: function(_action, _senders) {
 /**
  * mail_preview - implementation of the copy action
  * 
- * @param _action
- * @param _senders - the representation of the elements(s) the action is to be performed on
+ * @param nextmatch et2_nextmatch The widget whose row was selected
+ * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
  */
-mail_preview: function(_action, _senders) {
+mail_preview: function(nextmatch, selected) {
 	//console.log("mail_preview",_action, _senders);
-	var _id = _senders[0].id;
-	var dataElem = egw.dataGetUIDdata(_id);
+
+	// Empty values, just in case selected is empty (user cleared selection)
+	var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",date:"",subject:""}};
+	if(selected.length > 0)
+	{
+		var _id = selected[0];
+		dataElem = egw.dataGetUIDdata(_id);
+	}
 	console.log("mail_preview",dataElem);
 	var subject =dataElem.data.subject;
 	etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewFromAddress').set_value(dataElem.data.fromaddress);

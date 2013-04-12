@@ -638,7 +638,7 @@ class mail_ui
 			'open' => array(
 				'caption' => lang('Open'),
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.mail_preview', //dummy by nathan
+				'onExecute' => 'javaScript:app.mail.mail_open',
 				'allowOnMultiple' => false,
 				'default' => true,
 			),
@@ -890,7 +890,7 @@ class mail_ui
 				'dragType' => array('mail','file'),
 				'type' => 'drag',
 				'onExecute' => 'javaScript:app.mail.mail_dragStart',
-			),
+			)
 		);
 		// save as tracker, save as infolog, as this are actions that are either available for all, or not, we do that for all and not via css-class disabling
 		if (!isset($GLOBALS['egw_info']['user']['apps']['infolog']))
