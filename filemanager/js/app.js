@@ -171,7 +171,7 @@ app.filemanager = AppJS.extend(
 	},
 	
 	/**
-	 * Update clickboard tooltips in 
+	 * Update clickboard tooltips in buttons
 	 */
 	clipboard_tooltips: function()
 	{
@@ -179,7 +179,7 @@ app.filemanager = AppJS.extend(
 		for(var i=0; i < paste_buttons.length; ++i)
 		{
 			var button = this.et2.getWidgetById(paste_buttons[i]);
-			button.set_statustext(this.clipboard_files.join(",\n"));
+			if (button) button.set_statustext(this.clipboard_files.join(",\n"));
 		}
 	},
 	
@@ -370,6 +370,19 @@ app.filemanager = AppJS.extend(
 		{
 			egw.open(path, 'file');
 		}
+	},
+	
+	/**
+	 * Edit prefs of current directory
+	 */
+	editprefs: function()
+	{
+		var path =  this.path_widget.getValue();
+
+		egw().open_link(egw.link('/index.php', {
+			menuaction: 'filemanager.filemanager_ui.file',
+			path: path,
+		}), 'fileprefs', '495x425');
 	},
 	
 	/**
