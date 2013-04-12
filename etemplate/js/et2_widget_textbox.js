@@ -222,20 +222,20 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 		this.span.text(_value);
 	},
 	/**
-         * Code for implementing et2_IDetachedDOM
-         */
-        getDetachedAttributes: function(_attrs)
-        {
-                _attrs.push("value");
-        },
+	 * Code for implementing et2_IDetachedDOM
+	 */
+	getDetachedAttributes: function(_attrs)
+	{
+		_attrs.push("value");
+	},
 
-        getDetachedNodes: function()
-        {
-                return [this.span[0]];
-        },
+	getDetachedNodes: function()
+	{
+		return [this.span[0]];
+	},
 
-        setDetachedAttributes: function(_nodes, _values)
-        {
+	setDetachedAttributes: function(_nodes, _values)
+	{
 		this.span = jQuery(_nodes[0]);
 		if(typeof _values["value"] != 'undefined')
 		{
