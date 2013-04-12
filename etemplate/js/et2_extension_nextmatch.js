@@ -93,6 +93,11 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 			"description": "Customise the nextmatch - right side.  Provided template becomes a child of nextmatch, and any input widgets with onChange can trigger the nextmatch to refresh by returning true.",
 			"default": ""
 		},
+		"onselect": {
+			"name": "onselect",
+			"type": "string",
+			"description": "JS code which gets executed when rows are selected.  Can also be a app.appname.func(selected) style method"
+		},
 		"settings": {
 			"name": "Settings",
 			"type": "any",
@@ -385,6 +390,29 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 			return selected;
 		}
 		return {ids:[],inverted:false};
+	},
+
+	onselect: function() {
+		// Execute the JS code connected to the event handler
+                if (this.options.onselect)
+                {
+			if (typeof this.options.onselect == "string" &&
+				 this.options.onselect.substr(0,4) == "app." && window.app)
+			{
+				var parts = this.options.onselect.split(".");
+				if(parts.length == 3 && typeof window.app[parts[1]] == "object" &&
+					typeof window.app[parts[1]][parts[2]] == "function")
+				{
+					window.app[parts[1]][parts[2]].call(this, this.getSelection());
+				}
+			}
+
+                        // Exectute the legacy JS code
+                        else if (!(et2_compileLegacyJS(this.options.onselect, this, _node))())
+                        {
+                                return false;
+                        }
+                }
 	},
 
 	/**
@@ -1101,7 +1129,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		if(this.id && path[path.length -1] == this.id) path.pop();
 		return path;
 	},
-
 
 	// Input widget
 	getValue: function() { return null;},

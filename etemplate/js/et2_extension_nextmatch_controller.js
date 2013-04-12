@@ -62,6 +62,9 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 			this._actionManager = null;
 			this._objectManager = _objectManager;
 		}
+		// Add our selection callback to selection manager
+		var self = this;
+		this._objectManager.setSelectedCallback = function() {self._selectCallback(this);};
 
 		// Call the parent et2_dataview_controller constructor
 		this._super(_parentController, _grid, this, this._rowCallback,
@@ -80,6 +83,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		// Directly use the API-Implementation of dataRegisterUID and
 		// dataUnregisterUID
 		this.dataUnregisterUID = _egw.dataUnregisterUID;
+
 	},
 
 	destroy: function () {
@@ -255,6 +259,14 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 
 		// Call the inherited function
 		this._super.apply(this, arguments);
+	},
+
+	/**
+	 * Execute the select callback when the row selection changes
+	 */
+	_selectCallback: function(action)
+	{
+		this._widget.onselect.call(this._widget, action);
 	},
 
 	/** -- Implementation of et2_IDataProvider -- **/

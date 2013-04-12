@@ -52,6 +52,9 @@ var et2_dataview_selectionManager = Class.extend({
 		this._inUpdate = false;
 		this._total = 0;
 		this._children = [];
+
+		// Callback for when the selection changes
+		this.select_callback = null;
 	},
 
 	destroy: function () {
@@ -74,6 +77,7 @@ var et2_dataview_selectionManager = Class.extend({
 		{
 			this.unregisterRow(key, this._registeredRows[key].tr);
 		}
+		this.select_callback = null;
 	},
 
 	setIndexMap: function (_indexMap) {
@@ -417,6 +421,11 @@ var et2_dataview_selectionManager = Class.extend({
 		else if (this._focusedEntry)
 		{
 			this._selectRange(this._focusedEntry.idx, _entry.idx);
+		}
+
+		if(this.select_callback && typeof this.select_callback == "function")
+		{
+			this.select_callback.apply(this._context, arguments);
 		}
 	},
 
