@@ -61,7 +61,7 @@
 			<vfs-name label="Path" id="path" onchange="return true;" options="80" class="address"/>
 			<button label="Go to" id="button[go]" image="key_enter"/>
 			<image src="buttonseparator"/>
-			<button statustext="Rename, change permissions or ownership" label="Edit settings" id="edit[{$cont[nm][path]}]" onclick="window.open(egw::link('/index.php','menuaction=filemanager.filemanager_ui.file&amp;path={$cont[nm][path]}'),'fileprefs','dependent=yes,width=495,height=425,scrollbars=yes,status=yes'); return false;" image="edit"/>
+			<buttononly statustext="Rename, change permissions or ownership" label="Edit settings" id="button[edit]" onclick="app.filemanager.editprefs();" options="edit"/>
 			<buttononly label="Create directory" id="button[createdir]" onclick="app.filemanager.createdir();" options="button_createdir,createdir_disabled"/>
 			<buttononly label="Create a link" id="button[symlink]" onclick="app.filemanager.symlink();" options="link,link_disabled"/>
 			<buttononly id="button[paste]" onclick="app.filemanager.paste('paste');" options="editpaste,editpaste_disabled"/>
