@@ -3504,6 +3504,53 @@ class mail_bo
 		return $message;
 	}
 
+	static function wordwrap($str, $cols, $cut, $dontbreaklinesstartingwith=false)
+	{
+		$lines = explode("\n", $str);
+		$newStr = '';
+		foreach($lines as $line)
+		{
+			// replace tabs by 8 space chars, or any tab only counts one char
+			//$line = str_replace("\t","        ",$line);
+			//$newStr .= wordwrap($line, $cols, $cut);
+			$allowedLength = $cols-strlen($cut);
+			if (strlen($line) > $allowedLength &&
+				($dontbreaklinesstartingwith==false ||
+				 ($dontbreaklinesstartingwith &&
+				  strlen($dontbreaklinesstartingwith)>=1 &&
+				  substr($line,0,strlen($dontbreaklinesstartingwith)) != $dontbreaklinesstartingwith
+				 )
+				)
+			   )
+			{
+				$s=explode(" ", $line);
+				$line = "";
+				$linecnt = 0;
+				foreach ($s as $k=>$v) {
+					$cnt = strlen($v);
+					// only break long words within the wordboundaries,
+					// but it may destroy links, so we check for href and dont do it if we find one
+					// we check for any html within the word, because we do not want to break html by accident
+					if($cnt > $allowedLength && stripos($v,'href=')===false && stripos($v,'onclick=')===false && $cnt == strlen(html_entity_decode($v)))
+					{
+						$v=wordwrap($v, $allowedLength, $cut, true);
+					}
+					// the rest should be broken at the start of the new word that exceeds the limit
+					if ($linecnt+$cnt > $allowedLength) {
+						$v=$cut.$v;
+						#$linecnt = 0;
+						$linecnt =strlen($v)-strlen($cut);
+					} else {
+						$linecnt += $cnt;
+					}
+					if (strlen($v)) $line .= (strlen($line) ? " " : "").$v;
+				}
+			}
+			$newStr .= $line . "\n";
+		}
+		return $newStr;
+	}
+
 	/**
 	 * getMessageRawHeader
 	 * get parsed headers from message

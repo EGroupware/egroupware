@@ -1688,7 +1688,7 @@ blockquote[type=cite] {
 					$singleBodyPart['body'] = utf8_encode($singleBodyPart['body']);
 				}
 			}
-			//error_log($singleBodyPart['body']);
+			//error_log(__METHOD__.__LINE__.array2string($singleBodyPart));
 			#$CharSetUsed = mb_detect_encoding($singleBodyPart['body'] . 'a' , strtoupper($singleBodyPart['charSet']).','.strtoupper(mail_bo::$displayCharset).',UTF-8, ISO-8859-1');
 
 			if($singleBodyPart['mimeType'] == 'text/plain')
@@ -1727,7 +1727,7 @@ blockquote[type=cite] {
 				// since we do not display the message as HTML anymore we may want to insert good linebreaking (for visibility).
 				//error_log($newBody);
 				// dont break lines that start with > (&gt; as the text was processed with htmlentities before)
-				//TODO:$newBody	= "<pre>".felamimail_bo::wordwrap($newBody,90,"\n",'&gt;')."</pre>";
+				$newBody	= "<pre>".mail_bo::wordwrap($newBody,90,"\n",'&gt;')."</pre>";
 				//$newBody   = "<pre>".$newBody."</pre>";
 			}
 			else
@@ -2118,7 +2118,7 @@ blockquote[type=cite] {
 	 *
 	 * @return xajax response
 	 */
-	function loadEmailBody($_messageID)
+	function loadEmailBody($_messageID=null)
 	{
 		if (!$_messageID) $_messageID = $_GET['_messageID'];
 		if(mail_bo::$debug); error_log(__METHOD__."->".$_flag.':'.print_r($_messageID,true));
