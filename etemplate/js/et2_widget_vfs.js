@@ -168,6 +168,28 @@ var et2_vfsName = et2_textbox.extend({
 et2_register_widget(et2_vfsName, ["vfs-name"]);
 
 /**
+ * vfs-name
+ * filename automatically urlencoded on return (urldecoded on display to user)
+ */
+var et2_vfsName_ro = et2_textbox_ro.extend({
+	init: function() {
+		this._super.apply(this, arguments);
+	},
+	set_value: function(_value) {
+		if(_value.path)
+		{
+			_value = _value.path;
+		}
+		_value = egw.decodePath(_value);
+		this._super.apply(this,[_value]);
+	},
+	getValue: function() {
+		return egw.encodePath(this._super.apply(this));
+	}
+});
+et2_register_widget(et2_vfsName_ro, ["vfs-name_ro"]);
+
+/**
  * vfs-mime
  * Icon for mimetype of file, or thumbnail
  */
@@ -296,7 +318,7 @@ var et2_vfsMode = et2_description.extend({
 	// Masks for file types
 	types: {
 		'l': 0xA000, // link
-		's': 0xC000,  // Socket
+		//'s': 0xC000,  // Socket (commented as PHP has that set to for directories)
 		'p': 0x1000, // FIFO pipe
 		'c': 0x2000, // Character special
 		'd': 0x4000, // Directory
