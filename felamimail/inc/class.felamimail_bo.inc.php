@@ -160,6 +160,13 @@ class felamimail_bo
 			{
 				include_once($file);
 			}
+			elseif (strpos($class,'activesync')===0)
+			{
+				//temporary solution/hack to fix the false loading of activesync stuff, even as we may not need it for ui
+				//but trying to load it blocks the mail app
+				//error_log(__METHOD__.__LINE__.' '.$class);
+				include_once(EGW_INCLUDE_ROOT.'/activesync/backend/egw.php');
+			}
 			else
 			{
 				#error_log(__METHOD__."($class) failed!");
