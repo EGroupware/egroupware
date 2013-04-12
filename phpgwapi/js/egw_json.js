@@ -461,37 +461,31 @@ egw_json_request.prototype.handleResponse = function(data, textStatus, XMLHttpRe
 							throw 'Invalid parameters';
 						break;
 					case 'apply':
-						if (typeof res.data.func == 'string' && typeof window[res.data.func] == 'function')
+						if (typeof res.data.func == 'string')
 						{
-							try
+							var parts = res.data.func.split('.');
+							var func = parts.pop();
+							var parent = window;
+							for(var i=0; i < parts.length && typeof parent[parts[i]] != 'undefined'; ++i)
 							{
-								window[res.data.func].apply(window, res.data.parms);
+								parent = parent[parts[i]];
 							}
-							catch (e)
-							{
-								_egw_json_debug_log(e, {'Function': res.data.func, 'Parameters': res.data.parms});
-							}
-							hasResponse = true;
-						} else if (typeof res.data.func == "string" &&
-								 res.data.func.substr(0,4) == "app." && window.app)
-						{
-
-							var parts = res.data.func.split(".");
-							if(parts.length == 3 && typeof window.app[parts[1]] == "object" && 
-								typeof window.app[parts[1]][parts[2]] == "function")
+							if (typeof parent[func] == 'function')
 							{
 								try
 								{
-									this.context = window.app[parts[1]][parts[2]].apply(window.app[parts[1]], res.data.parms);
+									parent[func].apply(parent, res.data.parms);
 								}
 								catch (e)
 								{
 									_egw_json_debug_log(e, {'Function': res.data.func, 'Parameters': res.data.parms});
 								}
+								hasResponse = true;
 							}
-							hasResponse = true;
-
-						} else
+							else
+								throw 'Invalid parameters';
+						}
+						else
 							throw 'Invalid parameters';
 						break;
 					case 'jquery':

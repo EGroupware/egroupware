@@ -283,19 +283,28 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 	// Register the "apply" plugin
 	json.registerJSONPlugin(function(type, res, req) {
-		if (typeof res.data.func == 'string' &&
-		    typeof window[res.data.func] == 'function')
+		if (typeof res.data.func == 'string')
 		{
-			try
+			var parts = res.data.func.split('.');
+			var func = parts.pop();
+			var parent = window;
+			for(var i=0; i < parts.length && typeof parent[parts[i]] != 'undefined'; ++i)
 			{
-				window[res.data.func].apply(window, res.data.parms);
+				parent = parent[parts[i]];
 			}
-			catch (e)
+			if (typeof parent[func] == 'function')
 			{
-				req.egw.debug('error', 'Function', res.data.func,
-					'Parameters', res.data.parms);
+				try
+				{
+					parent[func].apply(parent, res.data.parms);
+				}
+				catch (e)
+				{
+					req.egw.debug('error', 'Function', res.data.func,
+						'Parameters', res.data.parms);
+				}
+				return true;
 			}
-			return true;
 		}
 		throw 'Invalid parameters';
 	}, null, 'apply');
