@@ -267,6 +267,10 @@ class filemanager_ui
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 					'actions'        => self::get_actions(),
 					'row_id'         => 'path',
+					'row_modified'   => 'mtime',
+					'parent_id'      => 'dir',
+					'is_parent'      => 'mime',
+					'is_parent_value'=> egw_vfs::DIR_MIME_TYPE,
 					'header_left'    => 'filemanager.index.header_left',
 				);
 				$content['nm']['path'] = self::get_home_dir();
@@ -786,7 +790,7 @@ class filemanager_ui
 		{
 			$namefilter = '/'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
 		}
-		foreach(egw_vfs::find($query['path'],array(
+		foreach(egw_vfs::find(!empty($query['col_filter']['parent_id']) ? $query['col_filter']['parent_id'] : $query['path'],array(
 			'mindepth' => 1,
 			'maxdepth' => $query['filter'] ? (int)(boolean)$query['filter'] : null,
 			'dirsontop' => $query['filter'] <= 1,
