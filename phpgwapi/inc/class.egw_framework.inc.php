@@ -1405,7 +1405,7 @@ $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['serv
 		{
 			$query = '';
 			list($path,$query) = explode('?',$path,2);
-			$path .= '?'. filectime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
+			$path .= '?'. filemtime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
 			$response->includeCSS($GLOBALS['egw_info']['server']['webserver_url'].$path);
 		}
 
@@ -1418,7 +1418,7 @@ $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['serv
 		{
 			$query = '';
 			list($path,$query) = explode('?',$path,2);
-			$path .= '?'. filectime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
+			$path .= '?'. filemtime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
 			$response->includeScript($GLOBALS['egw_info']['server']['webserver_url'].$path);
 		}
 	}
