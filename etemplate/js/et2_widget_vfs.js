@@ -100,7 +100,7 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], {
 			}
 			var self = this;
 			var data = {path: path, type: i < path_parts.length-1 ? this.DIR_MIME_TYPE : _value.mime };
-			var part = $j(document.createElement("li"))
+			$j(document.createElement("li"))
 				.addClass("vfsFilename")
 				.text(text + (i < path_parts.length-1 ? '/' : ''))
 				//.attr('title', egw.decodePath(path))
@@ -293,7 +293,7 @@ var et2_vfsSize = et2_description.extend({
 	set_value: function(_value) {
 		if(_value.size)
 		{
-			_value = _value.size
+			_value = _value.size;
 		}
 		jQuery(this.node).text(this.human_size(_value));
 	},
@@ -318,7 +318,7 @@ var et2_vfsMode = et2_description.extend({
 	// Masks for file types
 	types: {
 		'l': 0xA000, // link
-		//'s': 0xC000,  // Socket (commented as PHP has that set to for directories)
+		's': 0xC000, // Socket
 		'p': 0x1000, // FIFO pipe
 		'c': 0x2000, // Character special
 		'd': 0x4000, // Directory
@@ -358,7 +358,7 @@ var et2_vfsMode = et2_description.extend({
 		var type = 'u'; // unknown
 		for(var flag in this.types)
 		{
-			if(_value & this.types[flag])
+			if((_value & this.types[flag]) == this.types[flag])
 			{
 				type = flag;
 				break;
@@ -396,7 +396,7 @@ var et2_vfsMode = et2_description.extend({
 	set_value: function(_value) {
 		if(_value.size)
 		{
-			_value = _value.size
+			_value = _value.size;
 		}
 		var text = this.text_mode(_value);
 		jQuery(this.node).text(text);
