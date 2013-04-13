@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS XML Code
+ * EGroupware eTemplate2 - JS XML Code
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate

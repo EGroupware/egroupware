@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Grid object
+ * EGroupware eTemplate2 - JS Grid object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -23,9 +23,11 @@
  * 
  * This also includes repeating the last row in the grid and filling
  * it with content data
+ * 
+ * @augments et2_DOMWidget
  */ 
-var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned], {
-
+var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned], 
+{
 	createNamespace: true,
 
 	attributes: {
@@ -46,6 +48,12 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned], {
 			"ignore": true
 		}
 	},
+	
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_grid
+	 */
 	init: function() {
 		// Create the table body and the table
 		this.tbody = $j(document.createElement("tbody"));
@@ -351,7 +359,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned], {
 							"defined for cell (" + x + "," + y + ")!");
 					}
 				}
-			}
+			};
 
 			// If the node is a row, create the widgets which belong into
 			// the row
@@ -631,32 +639,27 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned], {
 	},
 
 	set_align: function(_value) {
-                this.align = _value;
-        },
+		this.align = _value;
+	},
 
-        get_align: function(_value) {
-                return this.align;
-        },
+	get_align: function(_value) {
+		return this.align;
+	},
 
 	/**
-         * Code for implementing et2_IDetachedDOM
+	 * Code for implementing et2_IDetachedDOM
 	 * This doesn't need to be implemented.
 	 * Individual widgets are detected and handled by the grid, but the interface is needed for this to happen
-         */
-        getDetachedAttributes: function(_attrs)
-        {
-        },
+	 */
+	getDetachedAttributes: function(_attrs) {
+	},
 
-        getDetachedNodes: function()
-        {
-                return [this.getDOMNode()];
-        },
+	getDetachedNodes: function() {
+		return [this.getDOMNode()];
+	},
 
-        setDetachedAttributes: function(_nodes, _values)
-        {
-        }
+	setDetachedAttributes: function(_nodes, _values) {
+	}
 });
-
 et2_register_widget(et2_grid, ["grid"]);
-
 

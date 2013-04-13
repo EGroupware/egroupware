@@ -18,7 +18,9 @@
 */
 
 /**
- * Class which implements the "image" XET-Tag
+ * Class which implements the "progress" XET-Tag
+ * 
+ * @augments et2_valueWidget
  */ 
 var et2_progress = et2_valueWidget.extend([et2_IDetachedDOM], 
 {
@@ -54,6 +56,11 @@ var et2_progress = et2_valueWidget.extend([et2_IDetachedDOM],
 	},
 	legacyOptions: ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"],
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_progress
+	 */
 	init: function() 
 	{
 		this._super.apply(this, arguments);
@@ -131,5 +138,4 @@ var et2_progress = et2_valueWidget.extend([et2_IDetachedDOM],
 		}
 	}
 });
-
 et2_register_widget(et2_progress, ["progress"]);

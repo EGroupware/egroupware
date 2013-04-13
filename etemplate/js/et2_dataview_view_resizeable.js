@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - Functions which allow resizing of table headers
+ * EGroupware eTemplate2 - Functions which allow resizing of table headers
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -43,7 +43,7 @@
 			// Prevent text selection
 			_elem[0].onselectstart = function() {
 				return false;
-			}
+			};
 
 			// Reset the "didResize" flag
 			didResize = false;
@@ -121,12 +121,12 @@
 			}
 
 		});
-	}
+	};
 
 	this.et2_dataview_resetResizeable = function(_elem)
 	{
 		// Remove all events in the ".resize" namespace from the element
 		_elem.unbind(".resize");
-	}
+	};
 }).call(window);
 

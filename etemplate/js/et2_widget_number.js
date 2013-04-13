@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Number object
+ * EGroupware eTemplate2 - JS Number object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -18,9 +18,11 @@
 
 /**
  * Class which implements the "int" and textbox type=float XET-Tags
+ * 
+ * @augments et2_textbox
  */ 
-var et2_number = et2_textbox.extend({
-
+var et2_number = et2_textbox.extend(
+{
 	attributes: {
 		"value": {
 			"type": "float"
@@ -51,6 +53,11 @@ var et2_number = et2_textbox.extend({
 		}
 	},
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_number
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 	},
@@ -80,14 +87,16 @@ var et2_number = et2_textbox.extend({
 		}
 	}
 });
-
 et2_register_widget(et2_number, ["int", "integer", "float"]);
 
 /**
  * Extend read-only to tell it to ignore special attributes, which
  * would cause warnings otherwise
+ * @augments et2_textbox_ro
+ * @class
  */
-var et2_number_ro = et2_textbox_ro.extend({
+var et2_number_ro = et2_textbox_ro.extend(
+{
 	attributes: {
 		"min": {"ignore": true},
 		"max": {"ignore": true},

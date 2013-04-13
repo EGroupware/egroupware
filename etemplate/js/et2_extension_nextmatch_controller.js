@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - Class which contains a the data model for nextmatch widgets
+ * EGroupware eTemplate2 - Class which contains a the data model for nextmatch widgets
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -25,9 +25,11 @@
 	egw_data;
 */
 
-var et2_nextmatch_controller = et2_dataview_controller.extend(
-		et2_IDataProvider, {
-
+/**
+ * @augments et2_dataview_controller
+ */
+var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider, 
+{
 	/**
 	 * Initializes the nextmatch controller.
 	 *
@@ -42,6 +44,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 	 * @param _actionLinks contains the action links
 	 * @param _actions contains the actions, may be null if an object manager
 	 * is given.
+	 * @memberOf et2_nextmatch_controller
 	 */
 	init: function (_parentController, _egw, _execId, _widget, _parentId,
 			_grid, _rowProvider, _actionLinks, _objectManager, _actions) {
@@ -55,7 +58,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 		// Initialize the action and the object manager
 		if (!_objectManager)
 		{
-			this._initActions(_actions)
+			this._initActions(_actions);
 		}
 		else
 		{
@@ -71,7 +74,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 			this._linkCallback, this, this._objectManager);
 
 		// Copy the given parameters
-		this._actionLinks = _actionLinks
+		this._actionLinks = _actionLinks;
 		this._execId = _execId;
 		this._widgetId = _widget.id;
 		this._parentId = _parentId;
@@ -253,7 +256,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(
 			else
 			{
 				var mgr = nm.getArrayMgr('content');
-				mgr.data[i] = _response.rows[i]
+				mgr.data[i] = _response.rows[i];
 			}
 		}
 

@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - Class which contains a the columns model
+ * EGroupware eTemplate2 - Class which contains a the columns model
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -10,7 +10,7 @@
  * @version $Id$
  */
 
-"use strict"
+"use strict";
 
 /*egw:uses
 	et2_inheritance;
@@ -26,6 +26,8 @@ var ET2_COL_VISIBILITY_ALWAYS_NOSELECT = 3;
 
 /**
  * Class which stores the data of a single column.
+ * 
+ * @augments Class
  */
 var et2_dataview_column = Class.extend({
 
@@ -68,6 +70,12 @@ var et2_dataview_column = Class.extend({
 		}
 	},
 
+	/**
+	 * Constructor
+	 * 
+	 * @param _attrs
+	 * @memberOf et2_dataview_column
+	 */
 	init: function(_attrs) {
 		this.fixedWidth = false;
 		this.relativeWidth = false;
@@ -291,7 +299,7 @@ var et2_dataview_columns = Class.extend({
 		// Calculate how many space is - relatively - not occupied with columns with
 		// relative or fixed width
 		var remRelWidth = 1;
-		var noWidthCount = 0
+		var noWidthCount = 0;
 
 		for (var i = 0; i < this.columns.length; i++)
 		{

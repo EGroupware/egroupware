@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - dataview code
+ * EGroupware eTemplate2 - dataview code
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -30,14 +30,17 @@
  * A container does not know where it resides inside the grid, or whether it is
  * currently visible or not -- this information is efficiently managed by the
  * et2_dataview_grid container.
+ * 
+ * @augments Class
  */
-var et2_dataview_container = Class.extend(et2_dataview_IInvalidatable, {
-
+var et2_dataview_container = Class.extend(et2_dataview_IInvalidatable, 
+{
 	/**
 	 * Initializes the container object.
 	 *
 	 * @param _parent is an object which implements the IInvalidatable
 	 * 	interface. _parent may not be null.
+	 * @memberOf et2_dataview_container
 	 */
 	init: function(_parent) {
 		// Copy the given invalidation element
@@ -253,7 +256,7 @@ var et2_dataview_container = Class.extend(et2_dataview_IInvalidatable, {
 		return {
 			"avgHeight": this.getHeight(),
 			"avgCount": 1
-		}
+		};
 	},
 
 	/**
@@ -392,6 +395,6 @@ else
 	et2_dataview_container.prototype._nodeHeight = function(_node)
 	{
 		return _node.offsetHeight;
-	}
+	};
 //}
 

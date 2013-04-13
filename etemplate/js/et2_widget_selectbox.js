@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Selectbox object
+ * EGroupware eTemplate2 - JS Selectbox object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -21,8 +21,11 @@
 	et2_core_inputWidget;
 */
 
-var et2_selectbox = et2_inputWidget.extend({
-
+/**
+ * @augments et2_inputWidget
+ */
+var et2_selectbox = et2_inputWidget.extend(
+{
 	attributes: {
 		"multiple": {
 			"name": "multiple",
@@ -82,6 +85,11 @@ var et2_selectbox = et2_inputWidget.extend({
 
 	legacyOptions: ["rows","other"], // Other is sub-type specific
 
+	/**
+	 * Construtor
+	 * 
+	 * @memberOf et2_selectbox
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -210,7 +218,7 @@ var et2_selectbox = et2_inputWidget.extend({
 			var content_options = this.getArrayMgr('content').getRoot().getEntry(name_parts[name_parts.length-1]);
 			// If that didn't work, check according to ID
 			_attrs["select_options"] = content_options ? content_options : this.getArrayMgr('content')
-				.getEntry("options-" + this.id)
+				.getEntry("options-" + this.id);
 		}
 
 		// Default to an empty object
@@ -270,8 +278,8 @@ var et2_selectbox = et2_inputWidget.extend({
 		var label = jQuery(document.createElement("label"))
 			.attr("for", opt_id)
 			.hover(
-				function() {jQuery(this).addClass("ui-state-hover")},
-				function() {jQuery(this).removeClass("ui-state-hover")}
+				function() {jQuery(this).addClass("ui-state-hover");},
+				function() {jQuery(this).removeClass("ui-state-hover");}
 			);
 		var option = jQuery(document.createElement("input"))
 			.attr("type", "checkbox")
@@ -298,7 +306,7 @@ var et2_selectbox = et2_inputWidget.extend({
 				label.css("background-color",option_data.color);
 			}
 		}
-		label.append(jQuery("<span>"+_label+"</span>"))
+		label.append(jQuery("<span>"+_label+"</span>"));
 		var li = jQuery(document.createElement("li")).append(label);
 		
 		li.appendTo(this.multiOptions);
@@ -375,7 +383,7 @@ var et2_selectbox = et2_inputWidget.extend({
 						jQuery("input",e.data).attr("checked", false);
 					}
 				}
-			}
+			};
 			for(var key in header_controls)
 			{
 				jQuery(document.createElement("li"))
@@ -596,7 +604,6 @@ var et2_selectbox = et2_inputWidget.extend({
 		return this.value;
 	}
 });
-
 et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select", "select-cat",
 	"select-percent", 'select-priority', 'select-access',
 	'select-country', 'select-state', 'select-year', 'select-month',
@@ -605,9 +612,16 @@ et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select", "select-ca
 
 /**
  * et2_selectbox_ro is the readonly implementation of the selectbox.
+ * 
+ * @augments et2_selectbox
  */
-var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], {
-
+var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], 
+{
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_selectbox_ro
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -638,10 +652,10 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], {
 		for (var i = 0; i < options.length; i++)
 		{
 			this.optionValues[et2_readAttrWithDefault(options[i], "value", 0)] =
-				{
-					"label": options[i].textContent,
-					"title": et2_readAttrWithDefault(options[i], "title", "")
-				}
+			{
+				"label": options[i].textContent,
+				"title": et2_readAttrWithDefault(options[i], "title", "")
+			};
 		}
 	},
 
@@ -738,7 +752,6 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], {
                 this.set_value(_values["value"]);
 	}
 });
-
 et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbox_ro", "select_ro", "select-cat_ro",
 	"select-percent_ro", 'select-priority_ro', 'select-access_ro',
 	'select-country_ro', 'select-state_ro', 'select-year_ro', 'select-month_ro',
@@ -814,9 +827,16 @@ et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbox_ro", "select_ro"
 
 /**
  * Class which just implements the menulist container
+ * 
+ * @augments et2_DOMWidget
  */ 
-var et2_menulist = et2_DOMWidget.extend({
-
+var et2_menulist = et2_DOMWidget.extend(
+{
+	/**
+	 * Construtor
+	 * 
+	 * @memberOf et2_menulist
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -839,7 +859,5 @@ var et2_menulist = et2_DOMWidget.extend({
 	}
 
 });
-
 et2_register_widget(et2_menulist, ["menulist"]);
-
 

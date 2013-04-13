@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS URL object
+ * EGroupware eTemplate2 - JS URL object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -20,15 +20,20 @@
 
 /**
  * Class which implements the "url" XET-Tag, which covers URLs, email & phone
+ * 
+ * @augments et2_textbox
  */ 
-var et2_url = et2_textbox.extend({
-
+var et2_url = et2_textbox.extend(
+{
 	attributes: {
 		"multiline": {
 			"ignore": true
 		}
 	},
 
+	/**
+	 * @memberOf et2_url
+	 */
 	createInputWidget: function() {
 		this.input = $j(document.createElement("input"))
 			.blur(this,this.validate)
@@ -191,15 +196,21 @@ var et2_url = et2_textbox.extend({
 		}
 	}
 });
-
 et2_register_widget(et2_url, ["url", "url-email", "url-phone"]);
 
 /**
  * et2_url_ro is the readonly implementation of the url, email & phone.
  * It renders things as links, when possible
+ * 
+ * @augments et2_valueWidget
  */
-var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],{
-
+var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
+{
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_url_ro
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -284,6 +295,5 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],{
                 }
 	}
 });
-
 et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro"]);
 

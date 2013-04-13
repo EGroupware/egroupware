@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS DOM Widget class
+ * EGroupware eTemplate2 - JS DOM Widget class
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -22,9 +22,11 @@
  * Abstract widget class which can be inserted into the DOM. All widget classes
  * deriving from this class have to care about implementing the "getDOMNode"
  * function which has to return the DOM-Node.
+ * 
+ * @augments et2_widget
  */
-var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
-
+var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, 
+{
 	attributes: {
 		"disabled": {
 			"name": "Disabled",
@@ -73,6 +75,8 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 	/**
 	 * When the DOMWidget is initialized, it grabs the DOM-Node of the parent
 	 * object (if available) and passes it to its own "createDOMNode" function
+	 * 
+	 * @memberOf et2_DOMWidget
 	 */
 	init: function() {
 		// Call the inherited constructor
@@ -452,9 +456,17 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, {
 /**
  * The surroundings manager class allows to append or prepend elements around
  * an widget node.
+ * 
+ * @augments Class
  */
-var et2_surroundingsMgr = Class.extend({
-
+var et2_surroundingsMgr = Class.extend(
+{
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_surroundingsMgr
+	 * @param _widget
+	 */
 	init: function(_widget) {
 		this.widget = _widget;
 

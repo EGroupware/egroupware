@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS VFS widgets
+ * EGroupware eTemplate2 - JS VFS widgets
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -22,9 +22,11 @@
 
 /**
  * Class which implements the "vfs" XET-Tag
+ * 
+ * @augments et2_valueWidget
  */
-var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], {
-
+var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], 
+{
 	attributes: {
 		"value": {
 			"type": "any", // Object
@@ -37,6 +39,11 @@ var et2_vfs = et2_valueWidget.extend([et2_IDetachedDOM], {
 	 */
 	DIR_MIME_TYPE: 'httpd/unix-directory',
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_vfs
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -147,8 +154,16 @@ et2_register_widget(et2_vfs, ["vfs"]);
 /**
  * vfs-name
  * filename automatically urlencoded on return (urldecoded on display to user)
+ * 
+ * @augments et2_textbox
  */
-var et2_vfsName = et2_textbox.extend({
+var et2_vfsName = et2_textbox.extend(
+{
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_vfsName
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 		this.input.addClass("et2_vfs");
@@ -170,8 +185,16 @@ et2_register_widget(et2_vfsName, ["vfs-name"]);
 /**
  * vfs-name
  * filename automatically urlencoded on return (urldecoded on display to user)
+ * 
+ * @augments et2_textbox_ro
  */
-var et2_vfsName_ro = et2_textbox_ro.extend({
+var et2_vfsName_ro = et2_textbox_ro.extend(
+{
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_vfsName_ro
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 	},
@@ -192,8 +215,11 @@ et2_register_widget(et2_vfsName_ro, ["vfs-name_ro"]);
 /**
  * vfs-mime
  * Icon for mimetype of file, or thumbnail
+ * 
+ * @augments et2_valueWidget
  */
-var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM], {
+var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM], 
+{
 	attributes: {
 		"value": {
 			"type": "any", // Object
@@ -208,6 +234,11 @@ var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM], {
 
 	legacyOptions:["size"],
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_vfsMime
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 		this.image = jQuery(document.createElement("img"));
@@ -261,6 +292,8 @@ et2_register_widget(et2_vfsMime, ["vfs-mime"]);
 /**
  * vfs-size
  * Human readable file sizes
+ * 
+ * @augments et2_description
  */
 var et2_vfsSize = et2_description.extend({
 	attributes: {
@@ -268,6 +301,11 @@ var et2_vfsSize = et2_description.extend({
 			"type": "integer",
 		}
 	},
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_vfsSize
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 		this.span.addClass("et2_vfs");
@@ -311,8 +349,9 @@ et2_register_widget(et2_vfsSize, ["vfs-size"]);
 
 
 /**
- * vfs-mode
- * Textual representation of permissions + extra bits
+ * vfs-mode: textual representation of permissions + extra bits
+ * 
+ * @augments et2_description
  */
 var et2_vfsMode = et2_description.extend({
 	// Masks for file types
@@ -336,6 +375,12 @@ var et2_vfsMode = et2_description.extend({
 		'w': 0x2, // Write
 		'r': 0x4  // Read
 	},
+	
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_vfsMode
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 		this.span.addClass("et2_vfs");
@@ -416,11 +461,18 @@ et2_register_widget(et2_vfsMode, ["vfs-mode"]);
 
 
 /**
- * vfs-uid / vfs-gid
- * Displays the name for an ID.
+ * vfs-uid / vfs-gid: Displays the name for an ID.
  * Same as read-only selectAccount, except if there's no user it shows "root"
+ * 
+ * @augments et2_selectAccount_ro
  */
-var et2_vfsUid = et2_selectAccount_ro.extend({
+var et2_vfsUid = et2_selectAccount_ro.extend(
+{
+	/**
+	 * @memberOf et2_vfsUid
+	 * @param _node
+	 * @param _value
+	 */
 	set_title: function(_node, _value) {
 		if(_value == "")
 		{
@@ -438,15 +490,24 @@ et2_register_widget(et2_vfsUid, ["vfs-uid","vfs-gid"]);
  *     and calling app is responsible to move content of that dir to entry directory, after entry is saved
  *   + option: required mimetype or regular expression for mimetype to match, eg. '/^text\//i' for all text files
  *   + if path ends in a slash, multiple files can be uploaded, their original filename is kept then
+ *  
+ * @augments et2_file
  */
-var et2_vfsUpload = et2_file.extend({
-	
+var et2_vfsUpload = et2_file.extend(
+{	
 	legacyOptions: ["mime"],
 
 	asyncOptions: {
 		url: egw_json_request.prototype._assembleAjaxUrl("etemplate_widget_vfs::ajax_upload::etemplate")
 	},
 
+	/**
+	 * Constructor
+	 * 
+	 * @param _parent
+	 * @param attrs
+	 * @memberof et2_vfsUpload
+	 */
 	init: function(_parent, attrs) {
 		this._super.apply(this, arguments);
 		this.input.addClass("et2_vfs");

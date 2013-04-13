@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS widget class with value attribute and auto loading
+ * EGroupware eTemplate2 - JS widget class with value attribute and auto loading
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -21,9 +21,11 @@
  * et2_valueWidget is the base class for et2_inputWidget - valueWidget introduces
  * the "value" attribute and automatically loads it from the "content" array
  * after loading from XML.
+ * 
+ * @augments et2_baseWidget
  */
-var et2_valueWidget = et2_baseWidget.extend({
-
+var et2_valueWidget = et2_baseWidget.extend(
+{
 	attributes: {
 		"label": {
 			"name": "Label",
@@ -40,6 +42,12 @@ var et2_valueWidget = et2_baseWidget.extend({
 		}
 	},
 
+	/**
+	 * 
+	 * 
+	 * @memberOf et2_valueWidget
+	 * @param _attrs
+	 */
 	transformAttributes: function(_attrs) {
 		this._super.apply(this, arguments);
 

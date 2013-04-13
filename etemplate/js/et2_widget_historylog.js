@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS History log
+ * EGroupware eTemplate2 - JS History log
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -28,9 +28,11 @@
  *
  * It defers its initialization until the tab that it's on is selected, to avoid
  * wasting time if the user never looks at it.
+ * 
+ * @augments et2_valueWidget
  */
-
-var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
+var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
+{
 	attributes: {
 		"value": {
 			"type": "any"
@@ -52,6 +54,11 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 
 	TIMESTAMP: 0, OWNER: 1, FIELD: 2, NEW_VALUE: 3, OLD_VALUE: 4,
 	
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_historylog
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 		this.div = $j(document.createElement("div"))
@@ -431,7 +438,7 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],{
 			this.egw().debug("warning", "Crazy diff value", value);
 			return false;
 		}
-		return columnName == 'note' || columnName == 'description' || (value && (value.length > 50 || value.match(/\n/g)))
+		return columnName == 'note' || columnName == 'description' || (value && (value.length > 50 || value.match(/\n/g)));
 	},
 });
 et2_register_widget(et2_historylog, ['historylog']);

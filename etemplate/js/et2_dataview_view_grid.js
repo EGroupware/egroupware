@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - Class which contains the "grid" base class
+ * EGroupware eTemplate2 - Class which contains the "grid" base class
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -42,9 +42,11 @@ var ET2_GRID_INVALIDATE_TIMEOUT = 25;
  * range until they get removed.
  */
 var ET2_GRID_HOLD_COUNT = 50;
-
-var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
-
+/**
+ * @augments et2_dataview_container
+ */
+var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, 
+{
 	/**
 	 * Creates the grid.
 	 *
@@ -52,6 +54,7 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 	 * is the outer grid which manages the scrollarea. If not null, all other
 	 * parameters are ignored and copied from the given grid instance.
 	 * @param _avgHeight is the starting average height of the column rows.
+	 * @memberOf et2_dataview_grid
 	 */
 	init: function (_parent, _parentGrid, _egw, _rowProvider, _avgHeight) {
 
@@ -433,7 +436,7 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 			return {
 				"avgCount": this._avgCount,
 				"avgHeight": this._avgHeight
-			}
+			};
 		}
 
 		// Otherwise return the parent average height 
@@ -448,12 +451,9 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange, {
 			return {
 				"avgCount": 1,
 				"avgHeight": this._orgAvgHeight
-			}
+			};
 		}
-		else
-		{
-			return null;
-		}
+		return null;
 	},
 
 	/**

@@ -1,5 +1,6 @@
 /**
- * eGroupWare eTemplate2 - JS Ajax select / auto complete object
+
+ * EGroupware eTemplate2 - JS Ajax select / auto complete object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -26,9 +27,10 @@
  * n is the maximum number of results set in the user's preferences.
  * The user is restricted to selecting values in the list.
  * This widget can get data from any function that can provide data to a nextmatch widget.
+ * @augments et2_inputWidget
  */ 
-var et2_ajaxSelect = et2_inputWidget.extend({
-
+var et2_ajaxSelect = et2_inputWidget.extend(
+{
 	attributes: {
 		'get_rows': {
 			"name": "Data source",
@@ -79,8 +81,8 @@ var et2_ajaxSelect = et2_inputWidget.extend({
 			"description": "Prevent all from looking the same.  Use an icon."
 		},
 
-                // Pass by code only
-                'values': {
+		// Pass by code only
+		'values': {
 			"name": "Values",
 			"type": "any",
 			"default": {},
@@ -88,6 +90,11 @@ var et2_ajaxSelect = et2_inputWidget.extend({
 		}
 	},
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_ajaxSelect
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -127,14 +134,14 @@ var et2_ajaxSelect = et2_inputWidget.extend({
 		}
 	}
 });
-
 et2_register_widget(et2_ajaxSelect, ["ajax_select"]);
 
 /**
  * et2_textbox_ro is the dummy readonly implementation of the textbox.
+ * @augments et2_valueWidget
  */
-var et2_ajaxSelect_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
-
+var et2_ajaxSelect_ro = et2_valueWidget.extend([et2_IDetachedDOM], 
+{
 	/**
 	 * Ignore all more advanced attributes.
 	 */
@@ -144,6 +151,11 @@ var et2_ajaxSelect_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 		}
 	},
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_ajaxSelect_ro
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -181,6 +193,5 @@ var et2_ajaxSelect_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 		}
 	}
 });
-
 et2_register_widget(et2_ajaxSelect_ro, ["ajax_select_ro"]);
 

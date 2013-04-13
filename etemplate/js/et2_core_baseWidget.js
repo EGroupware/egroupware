@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Widget base class
+ * EGroupware eTemplate2 - JS Widget base class
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -22,9 +22,11 @@
  * Class which manages the DOM node itself. The simpleWidget class is derrived
  * from et2_DOMWidget and implements the getDOMNode function. A setDOMNode
  * function is provided, which attatches the given node to the DOM if possible.
+ * 
+ * @augments et2_DOMWidget
  */
-var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
-
+var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, 
+{
 	attributes: {
 		"statustext": {
 			"name": "Tooltip",
@@ -44,7 +46,12 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 			"description": "JS code which is executed when the element is clicked."
 		}
 	},
-
+	
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2BaseWidget
+	 */
 	init: function() {
 		this.align = "left";
 
@@ -81,7 +88,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 		// Preset the parameters
 		if (typeof _type == "undefined")
 		{
-			_type = "hint"
+			_type = "hint";
 		}
 
 		if (typeof _floating == "undefined")
@@ -155,7 +162,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 				{
 					surr.update();
 				}
-			}
+			};
 
 			// Either fade out or directly call the function which removes the div
 			if (_fade)
@@ -280,9 +287,16 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned, {
 
 /**
  * Simple container object
+ * 
+ * @augments et2_baseWidget
  */
-var et2_container = et2_baseWidget.extend({
-
+var et2_container = et2_baseWidget.extend(
+{
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_container
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -314,9 +328,16 @@ var et2_container = et2_baseWidget.extend({
 
 /**
  * Container object for not-yet supported widgets
+ * 
+ * @augments et2_baseWidget
  */
-var et2_placeholder = et2_baseWidget.extend([et2_IDetachedDOM],{
-
+var et2_placeholder = et2_baseWidget.extend([et2_IDetachedDOM],
+{
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_placeholder
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 

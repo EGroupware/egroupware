@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Widget base class
+ * EGroupware eTemplate2 - JS Widget base class
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -231,7 +231,7 @@ function et2_validateAttrib(_id, _attrib)
 	// Default ignore to false.
 	if (typeof _attrib["ignore"] == "undefined")
 	{
-		_attrib["ignore"] = false
+		_attrib["ignore"] = false;
 	}
 
 	// Break if "ignore" is set to true.
@@ -625,7 +625,7 @@ function et2_range(_top, _height)
 	return {
 		"top": _top,
 		"bottom": _top + _height
-	}
+	};
 }
 
 /**
@@ -636,7 +636,7 @@ function et2_bounds(_top, _bottom)
 	return {
 		"top": _top,
 		"bottom": _bottom
-	}
+	};
 }
 
 /**

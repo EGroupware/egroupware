@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Widget base class
+ * EGroupware eTemplate2 - JS Widget base class
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -98,9 +98,11 @@ function et2_createWidget(_name, _attrs, _parent)
 
 /**
  * The et2 widget base class.
+ * 
+ * @augments Class
  */
-var et2_widget = Class.extend({
-
+var et2_widget = Class.extend(
+{
 	attributes: {
 		"id": {
 			"name": "ID",
@@ -161,6 +163,7 @@ var et2_widget = Class.extend({
 	 * 	object. The default constructor always adds the new instance to the
 	 * 	children list of the given parent object. _parent may be NULL.
 	 * @param _attrs is an associative array of attributes.
+	 * @memberOf et2_widget
 	 */
 	init: function(_parent, _attrs) {
 
@@ -640,7 +643,7 @@ var et2_widget = Class.extend({
 			}
 			if(entry && entry.type)
 			{
-				_nodeName = attributes["type"] = entry.type
+				_nodeName = attributes["type"] = entry.type;
 			}
 			entry = null;
 		}

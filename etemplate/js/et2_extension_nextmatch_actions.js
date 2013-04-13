@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Nextmatch object
+ * EGroupware eTemplate2 - JS Nextmatch object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -30,14 +30,14 @@ function nm_action(_action, _senders, _target, _ids)
 		// Get IDs from nextmatch - nextmatch is in the top of the action tree
 		// @see et2_extension_nextmatch_controller._initActions()
 		var nm = null;
-		var action = _action
+		var action = _action;
 		while(nm == null && action != null)
 		{
 			if(action.data != null && action.data.nextmatch)
 			{
 				nm = action.data.nextmatch;
 			}
-			action = action.parent
+			action = action.parent;
 		}
 		if(nm)
 		{

@@ -29,9 +29,11 @@
  * - 'popup'         => No selectbox, just search.  No popup, the search replaces the selectbox
  *
  * Only primary_group and popup need anything different from a normal selectbox
+ * 
+ * @augments et2_selectbox
  */
-var et2_selectAccount = et2_selectbox.extend({
-
+var et2_selectAccount = et2_selectbox.extend(
+{
 	attributes: {
 		'account_type': {
 			'name': 'Account type',
@@ -45,15 +47,23 @@ var et2_selectAccount = et2_selectbox.extend({
 
 	account_types: ['accounts','groups','both','owngroups'],
 
+	/**
+	 * Constructor
+	 * 
+	 * @param _parent
+	 * @param _attrs
+	 * @memberOf et2_selectAccount
+	 * @returns
+	 */
 	init: function(_parent, _attrs) {
 
 		// Type in rows or somewhere else?
 		if(jQuery.inArray(_attrs['empty_label'], this.account_types) > 0 && (
 			jQuery.inArray(_attrs['account_type'], this.account_types) < 0 || 
-			_attrs['account_type'] == this.attributes.account_type.default)
+			_attrs['account_type'] == this.attributes.account_type['default'])
 		)
 		{
-			_attrs['account_type'] = _attrs['empty_label']
+			_attrs['account_type'] = _attrs['empty_label'];
 			_attrs['empty_label'] = '';
 		}
 		if(jQuery.inArray(_attrs['account_type'], this.account_types) < 0)
@@ -89,7 +99,7 @@ var et2_selectAccount = et2_selectbox.extend({
 			var button = jQuery(document.createElement("span"))
 				.addClass("et2_clickable")
 				.click(this, this._open_search)
-				.append('<span class="ui-icon ui-icon-search" style="display:inline-block"/>')
+				.append('<span class="ui-icon ui-icon-search" style="display:inline-block"/>');
 
 			this.getSurroundings().insertDOMNode(button[0]);
 		}
@@ -109,7 +119,7 @@ var et2_selectAccount = et2_selectbox.extend({
 				this.set_value = function(_value) {
 					this.value = _value;
 					this.search_widget.set_value(_value);
-				}
+				};
 				this.search_widget.search.change(this, function(event) {
 					var value = event.data.search_widget.getValue();
 					event.data.value = typeof value == 'object' && value ? value.id : value;
@@ -350,7 +360,7 @@ var et2_selectAccount = et2_selectbox.extend({
 			jQuery.each(items, function (index, item) {
 					self._add_search_result(results, item);
 			});
-		}
+		};
 
 		return search;
 	},
@@ -447,10 +457,10 @@ var et2_selectAccount = et2_selectbox.extend({
 			.addClass("loading")
 			.appendTo(node);
 		this.egw().link_title('home-accounts', item.value, function(name) {
-			label.text(name).removeClass("loading")
+			label.text(name).removeClass("loading");
 		}, label);
 
-		node.appendTo(list)
+		node.appendTo(list);
 	},
 
 	_create_selected: function() {
@@ -518,19 +528,20 @@ var et2_selectAccount = et2_selectbox.extend({
 		var label = jQuery(document.createElement('label'))
 			.addClass("loading")
 			.appendTo(option);
-		this.egw().link_title('home-accounts', value, function(name) {this.text(name).removeClass("loading")}, label);
+		this.egw().link_title('home-accounts', value, function(name) {this.text(name).removeClass("loading");}, label);
 	}
 });
 et2_register_widget(et2_selectAccount, ["select-account"]);
-
 
 /**
  * et2_selectAccount_ro is the readonly implementation of select account
  * It extends et2_link to avoid needing the whole user list on the client.
  * Instead, it just asks for the names of the ones needed, as needed.
+ * 
+ * @augments et2_link_string
  */
-var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM], {
-
+var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM], 
+{
 	attributes: {
 		"empty_label": {
                         "name": "Empty label",
@@ -542,6 +553,13 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM], {
 
 	legacyOptions: ["empty_label"],
 
+	/**
+	 * Constructor
+	 * 
+	 * @param _parent
+	 * @param options
+	 * @memberOf et2_selectAccount_ro
+	 */
 	init: function(_parent, options) {
 		/**
 		Resolve some circular dependency problems here

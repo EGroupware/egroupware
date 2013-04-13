@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS HRule object
+ * EGroupware eTemplate2 - JS HRule object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -18,16 +18,21 @@
 
 /**
  * Class which implements the hrule tag
+ * 
+ * @augments et2_baseWidget
  */ 
-var et2_hrule = et2_baseWidget.extend({
-
+var et2_hrule = et2_baseWidget.extend(
+{
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_hrule
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
 		this.setDOMNode(document.createElement("hr"));
 	}
-
 });
-
 et2_register_widget(et2_hrule, ["hrule"]);
 

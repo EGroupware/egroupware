@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - A simple PHP expression parser written in JS
+ * EGroupware eTemplate2 - A simple PHP expression parser written in JS
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -415,7 +415,7 @@
 
 		// Create the function and return it
 		return (Function.apply(Function, attrs));
-	}
+	};
 
 }).call(window);
 

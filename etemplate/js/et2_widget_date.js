@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Date object
+ * EGroupware eTemplate2 - JS Date object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -22,9 +22,11 @@
 
 /**
  * Class which implements the "date" XET-Tag
+ * 
+ * @augments et2_inputWidget
  */ 
-var et2_date = et2_inputWidget.extend({
-
+var et2_date = et2_inputWidget.extend(
+{
 	attributes: {
 		"value": {
 			"type": "any"
@@ -40,6 +42,11 @@ var et2_date = et2_inputWidget.extend({
 
 	legacyOptions: ["data_format"],
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_date
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -47,7 +54,6 @@ var et2_date = et2_inputWidget.extend({
 		this.date.setHours(0);
 		this.date.setMinutes(0);
 		this.date.setSeconds(0);
-		this.date
 		this.input = null;
 
 		this.createInputWidget();
@@ -203,10 +209,13 @@ var et2_date = et2_inputWidget.extend({
 		}
 	}
 });
-
 et2_register_widget(et2_date, ["date", "date-time", "date-timeonly"]);
 
-var et2_date_duration = et2_date.extend({
+/**
+ * @augments et2_date
+ */
+var et2_date_duration = et2_date.extend(
+{
 	attributes: {
 		"data_format": {
 			"name": "Data format",
@@ -250,6 +259,11 @@ var et2_date_duration = et2_date.extend({
 
 	time_formats: {"d":"d","h":"h","m":"m"},
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_date_duration
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -448,8 +462,14 @@ var et2_date_duration = et2_date.extend({
 });
 et2_register_widget(et2_date_duration, ["date-duration"]);
 
-
-var et2_date_duration_ro = et2_date_duration.extend([et2_IDetachedDOM],{
+/**
+ * @augments et2_date_duration
+ */
+var et2_date_duration_ro = et2_date_duration.extend([et2_IDetachedDOM],
+{
+	/**
+	 * @memberOf et2_date_duration_ro
+	 */
 	createInputWidget: function() {
 
 		this.node = $j(document.createElement("span"));
@@ -515,9 +535,10 @@ et2_register_widget(et2_date_duration_ro, ["date-duration_ro"]);
 
 /**
  * et2_date_ro is the readonly implementation of some date widget.
+ * @augments et2_valueWidget
  */
-var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
-
+var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], 
+{
 	/**
 	 * Ignore all more advanced attributes.
 	 */
@@ -541,6 +562,11 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 	 */
 	date: new Date(),
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_date_ro
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -630,7 +656,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 						break;
 					}
 				}
-				break
+				break;
 		}
 		this.span.attr("datetime", date("Y-m-d H:i:s",this.date)).text(display);
 	},
@@ -671,20 +697,25 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 			this.span.addClass(_values["class"]);
 		}
 	}
-
-
 });
-
 et2_register_widget(et2_date_ro, ["date_ro", "date-time_ro", "date-since", "date-time_today"]);
 
-
-var et2_date_timeonly_ro = et2_date_ro.extend({
-
+/**
+ * @augments et2_date_ro
+ */
+var et2_date_timeonly_ro = et2_date_ro.extend(
+{
 	attributes: {
 		"value": {
 			"type": "string"
 		}
 	},
+	/**
+	 * Construtor
+	 * 
+	 * @param _value
+	 * @memberOf et2_date_timeonly_ro
+	 */
 	set_value: function(_value) {
 		if(this.egw().preference("timeformat") == "12" && _value.indexOf(":") > 0) {
 			var parts = _value.split(":");

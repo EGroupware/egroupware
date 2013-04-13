@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Diff object
+ * EGroupware eTemplate2 - JS Diff object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -22,14 +22,22 @@
 
 /**
  * Class that displays the diff between two [text] values
+ * 
+ * @augments et2_valueWidget
  */ 
-var et2_diff = et2_valueWidget.extend([et2_IDetachedDOM], {
-
+var et2_diff = et2_valueWidget.extend([et2_IDetachedDOM], 
+{
 	attributes: {
 		"value": {
 			"type": "any"
 		}
 	},
+	
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_diff
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 		this.mini = true;

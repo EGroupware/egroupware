@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Box object
+ * EGroupware eTemplate2 - JS Box object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -19,9 +19,10 @@
 
 /**
  * Class which implements the hbox and vbox tag
+ * @augments et2_baseWidget
  */ 
-var et2_box = et2_baseWidget.extend([et2_IDetachedDOM], {
-
+var et2_box = et2_baseWidget.extend([et2_IDetachedDOM], 
+{
 	attributes: {
 		// Not needed
 		"rows": {"ignore": true},
@@ -30,6 +31,11 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM], {
 
 	createNamespace: true,
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_box
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -59,6 +65,5 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM], {
         }
 
 });
-
 et2_register_widget(et2_box, ["vbox", "box"]);
 

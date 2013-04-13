@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS content array manager
+ * EGroupware eTemplate2 - JS content array manager
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -18,10 +18,20 @@
 	et2_core_phpExpressionCompiler;
 */
 
-var et2_arrayMgr = Class.extend({
-
+/**
+ * @augments Class
+ */
+var et2_arrayMgr = Class.extend(
+{
 	splitIds: true,
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_arrayMgr
+	 * @param _data
+	 * @param _parentMgr
+	 */
 	init: function(_data, _parentMgr) {
 		if (typeof _parentMgr == "undefined")
 		{
@@ -73,7 +83,7 @@ var et2_arrayMgr = Class.extend({
 			"owner": null,
 			"key": null,
 			"row": null
-		}
+		};
 	},
 
 	/**
@@ -350,10 +360,20 @@ var et2_arrayMgr = Class.extend({
 
 });
 
-var et2_readonlysArrayMgr = et2_arrayMgr.extend({
-
+/**
+ * @augments et2_arrayMgr
+ */
+var et2_readonlysArrayMgr = et2_arrayMgr.extend(
+{
 	splitIds: false,
 
+	/**
+	 * @memberOf et2_readonlysArrayMgr
+	 * @param _id
+	 * @param _attr
+	 * @param _parent
+	 * @returns
+	 */
 	isReadOnly: function(_id, _attr, _parent) {
 		var entry = null;
 

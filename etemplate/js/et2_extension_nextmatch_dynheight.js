@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Dynheight object
+ * EGroupware eTemplate2 - JS Dynheight object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -10,7 +10,7 @@
  * @version $Id$
  */
 
-"use strict"
+"use strict";
 
 /*egw:use
 	jquery.jquery;
@@ -21,9 +21,11 @@
  * Object which resizes an inner node to the maximum extend of an outer node
  * (without creating a scrollbar) - it achieves that by performing some very
  * nasty and time consuming calculations.
+ * 
+ * @augments Class
  */
-var et2_dynheight = Class.extend({
-
+var et2_dynheight = Class.extend(
+{
 	/**
 	 * Constructor for the dynheight object
 	 *
@@ -33,6 +35,7 @@ var et2_dynheight = Class.extend({
 	 * @param _innerNode is the node which should be scaled. Call update to
 	 * 	scale the node.
 	 * @param _minHeight is the minimum height the inner node should have
+	 * @memberOf et2_dynheight
 	 */
 	init: function(_outerNode, _innerNode, _minHeight) {
 		this.outerNode = $j(_outerNode);

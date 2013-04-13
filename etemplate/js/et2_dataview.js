@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - dataview code
+ * EGroupware eTemplate2 - dataview code
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -10,7 +10,7 @@
  * @version $Id$
  */
 
-"use strict"
+"use strict";
 
 /*egw:uses
 	jquery.jquery;
@@ -28,6 +28,8 @@
  * header, etc.) and contains the root container: an instance of
  * et2_dataview_view_grid, which can be accessed using the "grid" property of
  * this object.
+ * 
+ * @augments Class
  */
 var et2_dataview = Class.extend({
 
@@ -54,6 +56,7 @@ var et2_dataview = Class.extend({
 	/**
 	 * Constructor for the grid container
 	 * @param object _parentNode is the DOM-Node into which the grid view will be inserted
+	 * @memberOf et2_dataview
 	 */
 	init: function(_parentNode, _egw) {
 
@@ -362,7 +365,7 @@ var et2_dataview = Class.extend({
 	_buildHeader: function() {
 		var self = this;
 		var handler = function(event) {
-		}
+		};
 		for (var i = 0; i < this.columns.length; i++)
 		{
 			var col = this.columns[i];
@@ -402,14 +405,14 @@ var et2_dataview = Class.extend({
 	_buildSelectCol: function() {
 		// Build the "select columns" icon
 		this.selectColIcon = $j(document.createElement("span"))
-			.addClass("selectcols")
+			.addClass("selectcols");
 
 		// Build the option column
 		this.selectCol = $j(document.createElement("th"))
 			.addClass("optcol")
 			.append(this.selectColIcon)
 			// Toggle display of option popup
-			.click(this, function(e) {if(e.data.selectColumnsClick) e.data.selectColumnsClick(e)})
+			.click(this, function(e) {if(e.data.selectColumnsClick) e.data.selectColumnsClick(e);})
 			.appendTo(this.headTr);
 
 		this.selectCol.css("width", this.scrollbarWidth - this.selectCol.outerWidth()

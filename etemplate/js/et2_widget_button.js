@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Button object
+ * EGroupware eTemplate2 - JS Button object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -20,9 +20,10 @@
 
 /**
  * Class which implements the "button" XET-Tag
+ * @augments et2_baseWidget
  */ 
-var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
-
+var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], 
+{
 	attributes: {
 		"label": {
 			"name": "caption",
@@ -65,6 +66,11 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 
 	legacyOptions: ["image", "ro_image"],
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_button
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -293,7 +299,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 		{
 			this.options.onclick = _values["onclick"];
 		}
-		var type = this._type
+		var type = this._type;
 		var attrs = jQuery.extend(_values, this.options);
 		var parent = this._parent;
 		jQuery(this.getDOMNode()).bind("click.et2_baseWidget", this, function(e) {
@@ -302,9 +308,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM], {
 			e.data.set_id(_values["id"]);
 			return e.data.click.call(e.data,e);
 		});
-
 	}
 });
-
 et2_register_widget(et2_button, ["button", "buttononly"]);
 

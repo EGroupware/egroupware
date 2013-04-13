@@ -23,7 +23,7 @@ function widget_browser(list_div, widget_div)
 	this.et2 = new etemplate2(widget_div, "etemplate::ajax_process_content");
 
 	// Normally this would be passed from app
-	var _data = {}
+	var _data = {};
 
 	// Create the basic widget container and attach it to the DOM
 	// Not really needed, but let's be consitent with et2
@@ -74,7 +74,7 @@ widget_browser.prototype._init_list = function()
 			.attr('id', 'widget_attributes')
 			.append(attribute_table)
 	);
-}
+};
 
 /**
  * User selected a widget from the list
@@ -122,9 +122,7 @@ widget_browser.prototype.select_widget = function(e,f)
 				.appendTo(this.attribute_list);
 		}
 	}
-
-}
-
+};
 
 
 /**
@@ -184,7 +182,7 @@ widget_browser.prototype.create_attribute = function(name, settings)
 			value.text(this.widget.options[name]);
 			return row;
 	}
-	input.appendTo(value)
+	input.appendTo(value);
 
 	return row;
-}
+};

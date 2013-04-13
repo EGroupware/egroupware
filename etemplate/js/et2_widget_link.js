@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Link object
+ * EGroupware eTemplate2 - JS Link object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -19,14 +19,16 @@
 	et2_core_valueWidget;
 
 	// Include menu system for list context menu
-        egw_action.egw_menu_dhtmlx;
+	egw_action.egw_menu_dhtmlx;
 */
 
 /**
  * UI widgets for Egroupware linking system
+ * 
+ * @augments et2_inputWidget
  */ 
-var et2_link_to = et2_inputWidget.extend({
-
+var et2_link_to = et2_inputWidget.extend(
+{
 	attributes: {
 		"only_app": {
 			"name": "Application",
@@ -73,6 +75,11 @@ var et2_link_to = et2_inputWidget.extend({
 	search_timeout: 200, //ms after change to send query
 	minimum_characters: 2, // Don't send query unless there's at least this many chars
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_link_to
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -171,7 +178,7 @@ var et2_link_to = et2_inputWidget.extend({
 										}
 									},
 									self, et2_link_list
-								)
+								);
 								self.egw().window.clearInterval(poll);
 							}
 						},1000);
@@ -198,7 +205,7 @@ var et2_link_to = et2_inputWidget.extend({
 			blur: this.options.search_label ? this.options.search_label : this.egw().lang('Search...'),
 			query: function() { self.link_button.hide(); self.comment.hide(); return true;},
 			select: function() {self.link_button.show(); self.comment.show(); return true;}
-		}
+		};
 		this.link_entry = et2_createWidget("link-entry", link_entry_attrs,this);
 
 		// File upload
@@ -303,7 +310,11 @@ var et2_link_to = et2_inputWidget.extend({
 });
 et2_register_widget(et2_link_to, ["link-to"]);
 
-var et2_link_apps = et2_selectbox.extend({
+/**
+ * @augments et2_selectbox
+ */
+var et2_link_apps = et2_selectbox.extend(
+{
 	attributes: {
 		"only_app": {
 			"name": "Application",
@@ -319,6 +330,11 @@ var et2_link_apps = et2_selectbox.extend({
 		}
 	},
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_link_apps
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -335,7 +351,7 @@ var et2_link_apps = et2_selectbox.extend({
 			if (select_options == null)
 			{
 				select_options = this.getArrayMgr('content')
-					.getEntry("options-" + this.id)
+					.getEntry("options-" + this.id);
 			}
 
 			// Default to an empty object
@@ -349,8 +365,11 @@ var et2_link_apps = et2_selectbox.extend({
 });
 et2_register_widget(et2_link_apps, ["link-apps"]);
 
-var et2_link_entry = et2_inputWidget.extend({
-
+/**
+ * @augments et2_inputWidget
+ */
+var et2_link_entry = et2_inputWidget.extend(
+{
 	attributes: {
 		"value": {
 			"type": "any",
@@ -392,6 +411,11 @@ var et2_link_entry = et2_inputWidget.extend({
 	search_timeout: 200, //ms after change to send query
 	minimum_characters: 2, // Don't send query unless there's at least this many chars
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_link_entry
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -570,7 +594,7 @@ var et2_link_entry = et2_inputWidget.extend({
 		if (_attrs["select_options"] == null)
 		{
 			_attrs["select_options"] = this.getArrayMgr('content')
-				.getEntry("options-" + this.id)
+				.getEntry("options-" + this.id);
 		}
 
 		// Default to an empty object
@@ -794,8 +818,11 @@ et2_register_widget(et2_link_entry, ["link-entry"]);
 
 /**
  * UI widget for a single (read-only) link
+ * 
+ * @augments et2_valueWidget
  */ 
-var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
+var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], 
+{
 	attributes: {
 		"application": {
 			"name": "Application",
@@ -812,6 +839,12 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], {
 		}
 	},
 	legacyOptions: ["application"],
+	
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_link
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -935,8 +968,11 @@ et2_register_widget(et2_link, ["link", "link-entry_ro"]);
 
 /**
  * UI widget for one or more links, comma separated
+ * 
+ * @augments et2_valueWidget
  */ 
-var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
+var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], 
+{
 	attributes: {
 		"application": {
 			"name": "Application",
@@ -961,6 +997,12 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM], {
 			"description": "Sub-type key to list only entries of that type"
 		}
 	},
+	
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_link_string
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -1085,8 +1127,11 @@ et2_register_widget(et2_link_string, ["link-string"]);
 
 /**
  * UI widget for one or more links in a list (table)
+ * 
+ * @augments et2_link_string
  */ 
-var et2_link_list = et2_link_string.extend({
+var et2_link_list = et2_link_string.extend(
+{
 	attributes: {
 		"show_deleted": {
 			"name": "Show deleted",
@@ -1095,6 +1140,12 @@ var et2_link_list = et2_link_string.extend({
 			"description": "Show links that are marked as deleted, being held for purge"
 		}
 	},
+	
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_link_list
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -1152,7 +1203,7 @@ var et2_link_list = et2_link_string.extend({
 	_add_link: function(_link_data) {
 		var row = $j(document.createElement("tr"))
 			.attr("id", "link_"+_link_data.link_id)
-			.appendTo(this.list)
+			.appendTo(this.list);
 
 		// Icon
 		var icon = $j(document.createElement("td"))
@@ -1200,7 +1251,7 @@ var et2_link_list = et2_link_string.extend({
 
 		// Delete
 		var delete_button = $j(document.createElement("td"))
-			.appendTo(row)
+			.appendTo(row);
 		$j("<div />")
 			.appendTo(delete_button)
 			// We don't use ui-icon because it assigns a bg image
@@ -1231,9 +1282,11 @@ et2_register_widget(et2_link_list, ["link-list"]);
 
 /**
  * UI widget for one or more links in a list (table)
+ * 
+ * @augments et2_inputWidget
  */ 
-var et2_link_add = et2_inputWidget.extend({
-
+var et2_link_add = et2_inputWidget.extend(
+{
 	attributes: {
 		"application": {
 			"name": "Application",
@@ -1242,6 +1295,11 @@ var et2_link_add = et2_inputWidget.extend({
 			"description": "Limit to the listed application or applications (comma seperated)"
 		}
 	},
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_link_add
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 

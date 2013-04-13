@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Textbox object
+ * EGroupware eTemplate2 - JS Textbox object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -20,9 +20,11 @@
 
 /**
  * Class which implements the "textbox" XET-Tag
+ * 
+ * @augments et2_inputWidget
  */ 
-var et2_textbox = et2_inputWidget.extend({
-
+var et2_textbox = et2_inputWidget.extend(
+{
 	attributes: {
 		"multiline": {
 			"name": "multiline",
@@ -65,6 +67,11 @@ var et2_textbox = et2_inputWidget.extend({
 
 	legacyOptions: ["size", "maxlength"],
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_textbox
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -170,14 +177,15 @@ var et2_textbox = et2_inputWidget.extend({
 		}
 	}
 });
-
 et2_register_widget(et2_textbox, ["textbox", "passwd"]);
 
 /**
  * et2_textbox_ro is the dummy readonly implementation of the textbox.
+ * 
+ * @augments et2_valueWidget
  */
-var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
-
+var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM], 
+{
 	/**
 	 * Ignore all more advanced attributes.
 	 */
@@ -205,6 +213,11 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 		}
 	},
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_textbox_ro
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -243,6 +256,5 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 		}
 	}
 });
-
 et2_register_widget(et2_textbox_ro, ["textbox_ro"]);
 

@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Description object
+ * EGroupware eTemplate2 - JS Description object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -19,9 +19,11 @@
 
 /**
  * Class which implements the "description" XET-Tag
+ * 
+ * @augments et2_baseWidget
  */ 
-var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
-
+var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], 
+{
 	attributes: {
 		"value": {
 			"name": "Value",
@@ -79,6 +81,11 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 	legacyOptions: ["font_style", "href", "activate_links", "for", 
 		"extra_link_target", "extra_link_popup", "extra_link_title"],
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_description
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -204,7 +211,5 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], {
 		}
 	}
 });
-
 et2_register_widget(et2_description, ["description", "label"]);
-
 

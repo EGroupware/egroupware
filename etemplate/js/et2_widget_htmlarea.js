@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS widget for HTML editing
+ * EGroupware eTemplate2 - JS widget for HTML editing
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -21,8 +21,11 @@
 	et2_core_baseWidget;
 */
 
-var et2_htmlarea = et2_inputWidget.extend({
-
+/**
+ * @augments et2_inputWidget
+ */
+var et2_htmlarea = et2_inputWidget.extend(
+{
 	attributes: {
 		'mode': {
 			'name': 'Mode',
@@ -60,6 +63,13 @@ var et2_htmlarea = et2_inputWidget.extend({
 
 	legacyOptions: ['mode','height','width','expand_toolbar','base_href'],
 
+	/**
+	 * Constructor
+	 * 
+	 * @param _parent
+	 * @param _attrs
+	 * @memberOf et2_htmlarea
+	 */
 	init: function(_parent, _attrs) {
 		// _super.apply is responsible for the actual setting of the params (some magic)
 		this._super.apply(this, arguments);
@@ -138,7 +148,5 @@ var et2_htmlarea = et2_inputWidget.extend({
 		}
 	}
 });
-
 et2_register_widget(et2_htmlarea, ["htmlarea"]);
-
 

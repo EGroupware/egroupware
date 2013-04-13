@@ -24,8 +24,13 @@
 //	/phpgwapi/js/dhtmlxtree/dhtmlxTree/sources/ext/dhtmlxtree_start.js;
 */
 
-var et2_tree = et2_inputWidget.extend({
-
+/**
+ * Tree widget
+ * 
+ * @augments et2_inputWidget
+ */
+var et2_tree = et2_inputWidget.extend(
+{
 	attributes: {
 		"multiple": {
 			"name": "multiple",
@@ -82,6 +87,11 @@ var et2_tree = et2_inputWidget.extend({
 		}
 	},
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_tree
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -138,7 +148,7 @@ var et2_tree = et2_inputWidget.extend({
 			var content_options = this.getArrayMgr('content').getRoot().getEntry(name_parts[name_parts.length-1]);
 			// If that didn't work, check according to ID
 			_attrs["select_options"] = content_options ? content_options : this.getArrayMgr('content')
-				.getEntry("options-" + this.id)
+				.getEntry("options-" + this.id);
 		}
 
 		// Default to an empty object
@@ -251,7 +261,7 @@ var et2_tree = et2_inputWidget.extend({
 						f(data.item[j],f);
 					}
 				}
-			}
+			};
 			f(data,f);
 			options = data;
 		}
@@ -428,15 +438,15 @@ var et2_tree = et2_inputWidget.extend({
 		var rv;
 		var returnValue = [_nodeID];
 		var modetorun = "none";
-		if (mode) { modetorun = mode }
-		PoS = this.input.getOpenState(_nodeID)
+		if (mode) { modetorun = mode; }
+		PoS = this.input.getOpenState(_nodeID);
 		if (modetorun == "forced") PoS = 1;
 		if (PoS == 1) {
 			for(var i=0;i<z.length;i++) {
-				oS = this.input.getOpenState(z[i])
+				oS = this.input.getOpenState(z[i]);
 				//alert(z[i]+' OpenState:'+oS);
-				if (oS == -1) { returnValue.push(z[i]) }
-				if (oS == 0) { returnValue.push(z[i]) }
+				if (oS == -1) { returnValue.push(z[i]); }
+				if (oS == 0) { returnValue.push(z[i]); }
 				if (oS == 1) {
 					//alert("got here")
 					rv = this.getTreeNodeOpenItems(z[i]);
@@ -446,7 +456,7 @@ var et2_tree = et2_inputWidget.extend({
 			}
 		}
 		//alert(returnValue.join('#,#'));
-		return returnValue
+		return returnValue;
 	}
 });
 et2_register_widget(et2_tree, ["tree","tree-cat"]);

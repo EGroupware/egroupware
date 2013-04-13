@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS widget class containing raw HTML
+ * EGroupware eTemplate2 - JS widget class containing raw HTML
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -18,11 +18,14 @@
 	et2_core_baseWidget;
 */
 
-var et2_html = et2_valueWidget.extend([et2_IDetachedDOM], {
-
+/**
+ * @augments et2_valueWidget
+ */
+var et2_html = et2_valueWidget.extend([et2_IDetachedDOM], 
+{
 	attributes: {
 		'label': {
-			default: "",
+			'default': "",
 			description: "The label is displayed by default in front (for radiobuttons behind) each widget (if not empty). If you want to specify a different position, use a '%s' in the label, which gets replaced by the widget itself. Eg. '%s Name' to have the label Name behind a checkbox. The label can contain variables, as descript for name. If the label starts with a '@' it is replaced by the value of the content-array at this index (with the '@'-removed and after expanding the variables).",
 			ignore: false,
 			name: "Label",
@@ -33,6 +36,12 @@ var et2_html = et2_valueWidget.extend([et2_IDetachedDOM], {
 			"ignore": true
 		}
 	},
+	
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_html
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -92,7 +101,5 @@ var et2_html = et2_valueWidget.extend([et2_IDetachedDOM], {
 	}
 
 });
-
 et2_register_widget(et2_html, ["html","htmlarea_ro"]);
-
 

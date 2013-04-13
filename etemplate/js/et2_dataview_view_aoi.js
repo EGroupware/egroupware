@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - Contains interfaces used inside the dataview
+ * EGroupware eTemplate2 - Contains interfaces used inside the dataview
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -42,13 +42,17 @@ function et2_dataview_rowAOI(_node)
 	// Rows without a checkbox OR an id set are unselectable
 	aoi.doGetDOMNode = function() {
 		return aoi.node;
-	}
+	};
 
 	// Prevent the browser from selecting the content of the element, when
 	// a special key is pressed.
 	$j(_node).mousedown(egwPreventSelect);
 
-	// Now append some action code to the node
+	/**
+	 * Now append some action code to the node
+	 * 
+	 * @memberOf et2_dataview_rowAOI
+	 */
 	var selectHandler = function(e) {
 		// Reset the focus so that keyboard navigation will work properly
 		// after the element has been clicked
@@ -100,7 +104,7 @@ function et2_dataview_rowAOI(_node)
 			egwBitIsSet(_state, EGW_AO_STATE_FOCUSED));
 		$j(this.node).toggleClass('selected',
 			selected);
-	}
+	};
 
 	return aoi;
 }

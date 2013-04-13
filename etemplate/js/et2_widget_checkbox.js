@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Checkbox object
+ * EGroupware eTemplate2 - JS Checkbox object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -20,9 +20,11 @@
 
 /**
  * Class which implements the "checkbox" XET-Tag
+ * 
+ * @augments et2_inputWidget
  */ 
-var et2_checkbox = et2_inputWidget.extend({
-
+var et2_checkbox = et2_inputWidget.extend(
+{
 	attributes: {
 		"selected_value": {
 			"name": "Set value",
@@ -56,6 +58,11 @@ var et2_checkbox = et2_inputWidget.extend({
 
 	legacyOptions: ["selected_value", "unselected_value", "ro_true", "ro_false"],
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_checkbox
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -99,14 +106,14 @@ var et2_checkbox = et2_inputWidget.extend({
 		}
 	}
 });
-
 et2_register_widget(et2_checkbox, ["checkbox"]);
 
 /**
  * et2_checkbox_ro is the dummy readonly implementation of the checkbox
+ * @augments et2_checkbox
  */
-var et2_checkbox_ro = et2_checkbox.extend({
-
+var et2_checkbox_ro = et2_checkbox.extend(
+{
 	/**
 	 * Ignore unset value
 	 */
@@ -116,6 +123,11 @@ var et2_checkbox_ro = et2_checkbox.extend({
 		}
 	},
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_checkbox_ro
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -134,7 +146,5 @@ var et2_checkbox_ro = et2_checkbox.extend({
 			this.span.text(this.options.ro_false);
 		}
 	}
-
 });
-
 et2_register_widget(et2_checkbox_ro, ["checkbox_ro"]);

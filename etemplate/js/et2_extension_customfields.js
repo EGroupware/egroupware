@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Custom fields object
+ * EGroupware eTemplate2 - JS Custom fields object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -20,8 +20,11 @@
 	et2_core_inputWidget;
 */
 
-var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput], {
-
+/**
+ * @augments et2_dataview
+ */
+var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput], 
+{
 	attributes: {
 		'customfields': {
 			'name': 'Custom fields',
@@ -52,6 +55,11 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 	DEFAULT_ID: "custom_fields",
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_customfields_list
+	 */
 	init: function() {
 		// Some apps (infolog edit) don't give ID, so assign one to get settings
 		if(!arguments[1].id) arguments[1].id = this.DEFAULT_ID;

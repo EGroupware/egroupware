@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Color picker object
+ * EGroupware eTemplate2 - JS Color picker object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -21,9 +21,11 @@
 
 /**
  * Class which implements the "colorpicker" XET-Tag
+ * 
+ * @augments et2_inputWidget
  */ 
-var et2_color = et2_inputWidget.extend({
-
+var et2_color = et2_inputWidget.extend(
+{
 	attributes: {
 		"alphaSupport": {
 			"name": "Transparancy",
@@ -48,6 +50,11 @@ var et2_color = et2_inputWidget.extend({
 		}
 	},
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_color
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -116,7 +123,7 @@ var et2_color = et2_inputWidget.extend({
 			function(color) {
 				jQuery("table.jPicker").dialog("close");
 			}
-		)
+		);
 		jQuery.jPicker.List[list_id].id = this.id + "_jPicker";
 
 		// Make it look better - plugin defers initialization, so we have to also
@@ -183,14 +190,19 @@ var et2_color = et2_inputWidget.extend({
 		}
 	}
 });
-
 et2_register_widget(et2_color, ["colorpicker"]);
 
 /**
  * et2_textbox_ro is the dummy readonly implementation of the textbox.
+ * @augments et2_valueWidget
  */
-var et2_color_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
-
+var et2_color_ro = et2_valueWidget.extend([et2_IDetachedDOM], 
+{
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_color_ro
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 

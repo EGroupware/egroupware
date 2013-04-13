@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Itempicker object
+ * EGroupware eTemplate2 - JS Itempicker object
  * derived from et2_link_entry widget @copyright 2011 Nathan Gray
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -25,9 +25,11 @@
 
 /**
  * Class which implements the "itempicker" XET-Tag
+ * 
+ * @augments et2_inputWidget
  */ 
-var et2_itempicker = et2_inputWidget.extend({
-
+var et2_itempicker = et2_inputWidget.extend(
+{
 	attributes: {
 		"action": {
 			"name": "Action callback",
@@ -74,6 +76,11 @@ var et2_itempicker = et2_inputWidget.extend({
 	action: null,		// Action function for button
 	current_app: "",	// Remember currently chosen application
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_itempicker
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 

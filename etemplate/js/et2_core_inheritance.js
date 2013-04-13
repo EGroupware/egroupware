@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS code for implementing inheritance
+ * EGroupware eTemplate2 - JS code for implementing inheritance
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate

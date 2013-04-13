@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Widget base class
+ * EGroupware eTemplate2 - JS Widget base class
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -22,9 +22,11 @@
  * et2_inputWidget derrives from et2_simpleWidget and implements the IInput
  * interface. When derriving from this class, call setDOMNode with an input
  * DOMNode.
+ * 
+ * @augments et2_valueWidget
  */
-var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
-
+var et2_inputWidget = et2_valueWidget.extend(et2_IInput, 
+{
 	attributes: {
 		"required": {
 			"name":	"Required",
@@ -58,6 +60,11 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput, {
 		}
 	},
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_inputWidget
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 

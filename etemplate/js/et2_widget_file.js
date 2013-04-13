@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Number object
+ * EGroupware eTemplate2 - JS Number object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -19,9 +19,11 @@
 
 /**
  * Class which implements file upload
+ * 
+ * @augments et2_inputWidget
  */ 
-var et2_file = et2_inputWidget.extend({
-
+var et2_file = et2_inputWidget.extend(
+{
 	attributes: {
 		"multiple": {
 			"name": "Multiple files",
@@ -42,10 +44,10 @@ var et2_file = et2_inputWidget.extend({
 			"description": "Mime type (eg: image/png) or regex (eg: /^text\//i) for allowed file types"
 		},
 		"blur": {
-                        "name": "Placeholder",
-                        "type": "string",
-                        "default": "",
-                        "description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text."
+			"name": "Placeholder",
+			"type": "string",
+			"default": "",
+			"description": "This text get displayed if an input-field is empty and does not have the input-focus (blur). It can be used to show a default value or a kind of help-text."
 		},
 		"progress": {
 			"name": "Progress node",
@@ -69,8 +71,13 @@ var et2_file = et2_inputWidget.extend({
 
 	asyncOptions: {},
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_file
+	 */
 	init: function() {
-		this._super.apply(this, arguments)
+		this._super.apply(this, arguments);
 
 		this.node = null;
 		this.input = null;
@@ -197,7 +204,7 @@ var et2_file = et2_inputWidget.extend({
 		else
 		{
 			// Convert into a js regex
-			var parts = mime.substr(1).match(/(.*)\/([igm]?)$/)
+			var parts = mime.substr(1).match(/(.*)\/([igm]?)$/);
 			this.options.mime = new RegExp(parts[1],parts.length > 2 ? parts[2] : "");
 		}
 	},

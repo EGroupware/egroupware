@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Groupbox object
+ * EGroupware eTemplate2 - JS Groupbox object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -17,29 +17,44 @@
 */
 
 /**
- * Class which implements the hrule tag
+ * Class which implements the groupbox tag
+ * 
+ * @augments et2_baseWidget
  */ 
-var et2_groupbox = et2_baseWidget.extend({
-
+var et2_groupbox = et2_baseWidget.extend(
+{
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_groupbox
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
 		this.setDOMNode(document.createElement("fieldset"));
 	}
 });
-
 et2_register_widget(et2_groupbox, ["groupbox"]);
 
-var et2_groupbox_legend = et2_baseWidget.extend({
+/**
+ * @augments et2_baseWidget
+ */
+var et2_groupbox_legend = et2_baseWidget.extend(
+{
 	attributes: {
 		"label": {
-                        "name": "Label",
-                        "type": "string",
-                        "default": "",
-                        "description": "Label for group box"
-                }
+			"name": "Label",
+			"type": "string",
+			"default": "",
+			"description": "Label for group box"
+		}
 	},
-
+	
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_groupbox_legend
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 

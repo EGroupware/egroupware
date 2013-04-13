@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Favorite widget
+ * EGroupware eTemplate2 - JS Favorite widget
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -41,9 +41,11 @@
  * Favorites are implemented by saving the values for [column] filters.  Filters are stored
  * in preferences, with the name favorite_<name>.  The favorite favorite used for clicking on
  * the filter button is stored in nextmatch-<columnselection_pref>-favorite.
+ * 
+ * @augments et2_dropdown_button
  */
-
-var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],{
+var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
+{
 	attributes: {
 		"default_pref": {
 			"name": "Default preference key",
@@ -70,7 +72,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],{
 		// These are particular to favorites
 		id: {"default": "favorite"},
 		label: {"default": ""},
-		label_updates: { default: false},
+		label_updates: { "default": false},
 		image: {"default": "etemplate/fav_filter"},
 		tooltip: {"default": "Favorite queries", "type": "string"}
 	},
@@ -83,6 +85,11 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],{
 	// If filter was set server side, we need to remember it until nm is created
 	nm_filter: false,
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_favorites
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 		this.sidebox_target = $j("#"+this.options.sidebox_target);

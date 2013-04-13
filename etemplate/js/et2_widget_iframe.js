@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS widget class for an iframe
+ * EGroupware eTemplate2 - JS widget class for an iframe
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -16,11 +16,14 @@
         et2_core_valueWidget;
 */
 
-var et2_iframe = et2_valueWidget.extend({
-
+/**
+ * @augments et2_valueWidget
+ */
+var et2_iframe = et2_valueWidget.extend(
+{
 	attributes: {
 		'label': {
-			default: "",
+			'default': "",
 			description: "The label is displayed by default in front (for radiobuttons behind) each widget (if not empty). If you want to specify a different position, use a '%s' in the label, which gets replaced by the widget itself. Eg. '%s Name' to have the label Name behind a checkbox. The label can contain variables, as descript for name. If the label starts with a '@' it is replaced by the value of the content-array at this index (with the '@'-removed and after expanding the variables).",
 			ignore: false,
 			name: "Label",
@@ -32,13 +35,18 @@ var et2_iframe = et2_valueWidget.extend({
 		},
 		"seamless": {
 			name: "Seamless",
-			default: true,
+			'default': true,
 			description: "Specifies that the iframe should be rendered in a manner that makes it appear to be part of the containing document",
 			translate: false,
 			type: "boolean"
 		},
 	},
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_iframe
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -59,7 +67,7 @@ var et2_iframe = et2_valueWidget.extend({
 	 * @param _seamless boolean
 	 */
 	set_seamless: function(_seamless) {
-		this.options.seamless = _seamless
+		this.options.seamless = _seamless;
 		this.htmlNode.attr("seamless", _seamless);
 	},
 

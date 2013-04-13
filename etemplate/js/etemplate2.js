@@ -88,7 +88,7 @@ function etemplate2(_container, _menuaction)
 	this.templates = {};
 
 	// Connect to the window resize event
-	$j(window).resize(this, function(e) {e.data.resize()});
+	$j(window).resize(this, function(e) {e.data.resize();});
 }
 
 /**
@@ -104,7 +104,7 @@ etemplate2.prototype.resize = function()
 			_widget.resize();
 		}, this, et2_IResizeable);
 	}
-}
+};
 
 /**
  * Clears the current instance.
@@ -131,7 +131,7 @@ etemplate2.prototype.clear = function()
 		}
 	}
 	this.templates = {};
-}
+};
 
 /**
  * Creates an associative array containing the data array managers for each part
@@ -176,7 +176,7 @@ etemplate2.prototype._createArrayManagers = function(_data)
 	}
 
 	return result;
-}
+};
 
 /**
  * Loads the template from the given URL and sets the data object
@@ -253,7 +253,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	// Split the given data into array manager objects and pass those to the
 	// widget container
 	this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
-}
+};
 
 etemplate2.prototype.submit = function(button)
 {
@@ -285,7 +285,7 @@ etemplate2.prototype.submit = function(button)
 		// I'm just not sure how.
 		if(button && !values.button)
 		{
-			values.button = button.id
+			values.button = button.id;
 			var path = button.getPath();
 			var target = values;
 			for(var i = 0; i < path.length; i++)
@@ -328,7 +328,7 @@ etemplate2.prototype.submit = function(button)
 			egw.debug("info", "Form got submitted with values: ", values);
 		}
 	}
-}
+};
 
 /**
  * Does a full form post submit.
@@ -366,7 +366,7 @@ etemplate2.prototype.postSubmit = function()
 		form.append(input);
 		form.appendTo(jQuery('body')).submit();
 	}
-}
+};
 
 /**
  * Fetches all input element values and returns them in an associative
@@ -459,7 +459,7 @@ etemplate2.prototype.getValues = function(_root)
 		else if (jQuery.isEmptyObject(_target))
 		{
 			// Avoid sending back empty sub-arrays
-			_target = result
+			_target = result;
 			for (var i = 0; i < path.length-1; i++)
 			{
 				_target = _target[path[i]];
@@ -472,7 +472,7 @@ etemplate2.prototype.getValues = function(_root)
 
 	egw().debug("info", "Value", result);
 	return result;
-}
+};
 
 
 /**
@@ -508,8 +508,7 @@ etemplate2.prototype.refresh = function(msg, app, id, type)
 		// Trigger refresh
 		_widget.refresh(id,type);
 	}, this, et2_nextmatch);
-
-}
+};
 
 // Some static things to make getting into widget context a little easier //
 
@@ -559,7 +558,7 @@ etemplate2.getByApplication = function(app)
 		}
 	}
 	return list;
-}
+};
 
 function etemplate2_handle_load(_type, _response)
 {

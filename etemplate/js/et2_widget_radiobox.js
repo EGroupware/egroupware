@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Radiobox object
+ * EGroupware eTemplate2 - JS Radiobox object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -19,9 +19,11 @@
 
 /**
  * Class which implements the "radiobox" XET-Tag
+ * 
+ * @augments et2_inputWidget
  */ 
-var et2_radiobox = et2_inputWidget.extend({
-
+var et2_radiobox = et2_inputWidget.extend(
+{
 	attributes: {
 		"set_value": {
 			"name": "Set value",
@@ -45,6 +47,11 @@ var et2_radiobox = et2_inputWidget.extend({
 	
 	legacyOptions: ["set_value", "ro_true", "ro_false"],
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_radiobox
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -94,11 +101,13 @@ var et2_radiobox = et2_inputWidget.extend({
 		return null;
 	}
 });
-
 et2_register_widget(et2_radiobox, ["radio"]);
 
-var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
-
+/**
+ * @augments et2_valueWidget
+ */
+var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM], 
+{
 	attributes: {
 		"set_value": {
 			"name": "Set value",
@@ -124,6 +133,12 @@ var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 			"type": "string",
 		}
 	},
+
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_radiobox_ro
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -165,15 +180,16 @@ var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM], {
 		this.set_value(_values["value"]);
 	}
 });
-
 et2_register_widget(et2_radiobox_ro, ["radio_ro"]);
 
 
 /**
  * A group of radio buttons
+ * 
+ * @augments et2_box
  */ 
-var et2_radioGroup = et2_box.extend({
-
+var et2_radioGroup = et2_box.extend(
+{
 	attributes: {
 		"value": {
 			"name": "Value",
@@ -203,6 +219,13 @@ var et2_radioGroup = et2_box.extend({
 
 	createNamespace: false,
 
+	/**
+	 * Constructor
+	 * 
+	 * @param parent
+	 * @param attrs
+	 * @memberOf et2_radioGroup
+	 */
 	init: function(parent, attrs) {
 		attrs.type = "vbox";
 		this._super.apply(this, arguments);
@@ -232,7 +255,7 @@ var et2_radioGroup = et2_box.extend({
 				ro_true: this.options.ro_true,
 				ro_false: this.options.ro_false,
 				readonly: this.options.readonly
-			}
+			};
 			var radio = et2_createWidget("radio", attrs, this);
 //			radio.set_name(this.id);
 		}

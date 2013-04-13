@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Nextmatch object
+ * EGroupware eTemplate2 - JS Nextmatch object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -66,9 +66,11 @@ var et2_INextmatchSortable = new Interface({
 
 /**
  * Class which implements the "nextmatch" XET-Tag
+ * 
+ * @augments et2_DOMWidget
  */ 
-var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
-
+var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
+{
 	attributes: {
 		"template": {
 			"name": "Template",
@@ -111,6 +113,11 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 
 	columns: [],
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_nextmatch
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -124,7 +131,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		{
 			if(prefs.visible[i].indexOf(et2_nextmatch_customfields.prototype.prefix) == 0)
 			{
-				cfs[prefs.visible[i].substr(1)] = !prefs.negated
+				cfs[prefs.visible[i].substr(1)] = !prefs.negated;
 			}
 		}
 		var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~');
@@ -256,7 +263,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 		this.activeFilters["sort"] = {
 			"id": _id,
 			"asc": _asc
-		}
+		};
 
 		// Set the sortmode display
 		this.iterateOver(function(_widget) {
@@ -596,7 +603,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 	 * for next time
 	 */
 	_updateUserPreferences: function() {
-		var colMgr = this.dataview.getColumnMgr()
+		var colMgr = this.dataview.getColumnMgr();
 		if(!this.options.settings.columnselection_pref) {
 			this.options.settings.columnselection_pref = this.options.template;
 		}
@@ -982,7 +989,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 			cancelButton.set_label(this.egw().lang("cancel"));
 			cancelButton.onclick = function() {
 				self.selectPopup.toggle();
-			}
+			};
 
 			this.selectPopup = jQuery(document.createElement("div"))
 				.addClass("colselection ui-dialog ui-widget-content")
@@ -998,7 +1005,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 			var apps = this.egw().user('apps');
 			if(apps['admin'])
 			{
-				this.selectPopup.append(defaultCheck.getSurroundings().getDOMNode(defaultCheck.getDOMNode()))
+				this.selectPopup.append(defaultCheck.getSurroundings().getDOMNode(defaultCheck.getDOMNode()));
 			}
 		}
 		else	
@@ -1150,7 +1157,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput], {
 	resetDirty: function() {},
 	isDirty: function() { return false;}
 });
-
 et2_register_widget(et2_nextmatch, ["nextmatch"]);
 
 /**
@@ -1158,8 +1164,10 @@ et2_register_widget(et2_nextmatch, ["nextmatch"]);
  *
  * Unable to use an existing template for this because parent (nm) doesn't, and template widget doesn't
  * actually load templates from the server.
+ * @augments et2_DOMWidget
  */
-var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
+var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, 
+{
 	attributes: {
 		"filter_label": {
 			"name": "Filter label",
@@ -1191,6 +1199,13 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 	headers: [],
 	header_div: [],
 
+	/**
+	 * Constructor
+	 * 
+	 * @param nextmatch
+	 * @param nm_div
+	 * @memberOf et2_nextmatch_header_bar
+	 */
 	init: function(nextmatch, nm_div) {
 		this._super.apply(this, [nextmatch,nextmatch.options.settings]);
 		this.nextmatch = nextmatch;
@@ -1309,7 +1324,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 		
 		this.search_button = et2_createWidget("button", {"label":">"}, this);
 		this.search_button.onclick = function(event) {
-			self.nextmatch.activeFilters.search = self.search.getValue()
+			self.nextmatch.activeFilters.search = self.search.getValue();
 			self.nextmatch.applyFilters();
 		};
 
@@ -1388,7 +1403,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 					// Filter now
 					self.nextmatch.applyFilters();
 				}
-			}
+			};
 
 			// Set activeFilters to current value
 			self.nextmatch.activeFilters[_widget.id] = _widget.getValue();
@@ -1473,7 +1488,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			});
 
 			// Get the onchange function string
-			var onchange = this.nextmatch.options.settings[name+"_onchange"]
+			var onchange = this.nextmatch.options.settings[name+"_onchange"];
 
 			// Real submits cause all sorts of problems
 			if(onchange.match(/this\.form\.submit/))
@@ -1551,7 +1566,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader, {
 			$j(filters.searchletter ? "td#"+filters.searchletter : "td.lettersearch[id='']").addClass("lettersearch_active");
 
 			// Set activeFilters to current value
-			filters.searchletter = $j("td.lettersearch_active").attr("id")
+			filters.searchletter = $j("td.lettersearch_active").attr("id");
 		}
 	},
 
@@ -1580,9 +1595,11 @@ et2_register_widget(et2_nextmatch_header_bar, ["nextmatch_header_bar"]);
 
 /**
  * Classes for the nextmatch sortheaders etc.
+ * 
+ * @augments et2_baseWidget
  */
-var et2_nextmatch_header = et2_baseWidget.extend(et2_INextmatchHeader, {
-
+var et2_nextmatch_header = et2_baseWidget.extend(et2_INextmatchHeader, 
+{
 	attributes: {
 		"label": {
 			"name": "Caption",
@@ -1597,6 +1614,11 @@ var et2_nextmatch_header = et2_baseWidget.extend(et2_INextmatchHeader, {
 		}
 	},
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_nextmatch_header
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -1629,8 +1651,11 @@ et2_register_widget(et2_nextmatch_header, ['nextmatch-header']);
 
 /**
  * Extend header to process customfields
+ * 
+ * @augments et2_customfields_list
  */
-var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHeader, {
+var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHeader, 
+{
 	attributes: {
 		'customfields': {
 			'name': 'Custom fields',
@@ -1642,6 +1667,11 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 		}
 	},
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_nextmatch_customfields
+	 */
 	init: function() {
 		this.nextmatch = null;
 		this._super.apply(this, arguments);
@@ -1827,8 +1857,16 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 });
 et2_register_widget(et2_nextmatch_customfields, ['nextmatch-customfields']);
 
-var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortable, {
-
+/**
+ * @augments et2_nextmatch_header
+ */
+var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortable, 
+{
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_nextmatch_sortheader
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -1859,14 +1897,17 @@ var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortabl
 	}
 
 });
-
 et2_register_widget(et2_nextmatch_sortheader, ['nextmatch-sortheader']);
 
-
-var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2_IResizeable], {
-
+/**
+ * @augments et2_selectbox
+ */
+var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2_IResizeable], 
+{
 	/**
 	 * Override to add change handler
+	 * 
+	 * @memberOf et2_nextmatch_filterheader
 	 */
 	createInputWidget: function() {
 		// Make sure there's an option for all
@@ -1886,7 +1927,7 @@ var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2
 				event.data.nextmatch.activeFilters.col_filter = {};
 			if(event.data.input.val())
 			{
-				event.data.nextmatch.activeFilters["col_filter"][event.data.id] = event.data.input.val()
+				event.data.nextmatch.activeFilters["col_filter"][event.data.id] = event.data.input.val();
 			}
 			else
 			{
@@ -1923,13 +1964,17 @@ var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2
 	}
 
 });
-
 et2_register_widget(et2_nextmatch_filterheader, ['nextmatch-filterheader']);
 
-var et2_nextmatch_accountfilterheader = et2_selectAccount.extend([et2_INextmatchHeader, et2_IResizeable], {
-
+/**
+ * @augments et2_selectAccount
+ */
+var et2_nextmatch_accountfilterheader = et2_selectAccount.extend([et2_INextmatchHeader, et2_IResizeable], 
+{
 	/**
 	 * Override to add change handler
+	 * 
+	 * @memberOf et2_nextmatch_accountfilterheader
 	 */
 	createInputWidget: function() {
 		// Make sure there's an option for all
@@ -1997,10 +2042,15 @@ var et2_nextmatch_accountfilterheader = et2_selectAccount.extend([et2_INextmatch
 });
 et2_register_widget(et2_nextmatch_accountfilterheader, ['nextmatch-accountfilter']);
 
-var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader, {
-
+/**
+ * @augments et2_link_entry
+ */
+var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader, 
+{
 	/**
 	 * Override to add change handler
+	 * 
+	 * @memberOf et2_link_entry
 	 */
 	select: function(event, selected) {
 		this._super.apply(this, arguments);
@@ -2035,7 +2085,7 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader, {
 			if(!value.app || !value.id) return null;
 			value = value.app +":"+value.id;
 		}
-		return value
+		return value;
 	},
 
 	/**
@@ -2061,8 +2111,11 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader, {
 });
 et2_register_widget(et2_nextmatch_entryheader, ['nextmatch-entryheader']);
 
-
-var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend({
+/**
+ * @augments et2_nextmatch_filterheader
+ */
+var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend(
+{
 	attributes: {
 		"widget_type": {
 			"name": "Actual type",
@@ -2080,6 +2133,13 @@ var et2_nextmatch_customfilter = et2_nextmatch_filterheader.extend({
 
 	real_node: null,
 
+	/**
+	 * Constructor
+	 * 
+	 * @param _parent
+	 * @param _attrs
+	 * @memberOf et2_nextmatch_customfilter
+	 */
 	init: function(_parent, _attrs) {
 		this._super.apply(this, arguments);
 

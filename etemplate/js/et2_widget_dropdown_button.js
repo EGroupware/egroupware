@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Dropdown Button object
+ * EGroupware eTemplate2 - JS Dropdown Button object
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -29,9 +29,11 @@
  *
  * Menu options are passed via the select_options.  They are normally ID => Title pairs, 
  * as for a select box, but the title can also be full HTML if needed.
+ * 
+ * @augments et2_inputWidget
  */ 
-var et2_dropdown_button = et2_inputWidget.extend({
-
+var et2_dropdown_button = et2_inputWidget.extend(
+{
 	attributes: {
 		"label": {
 			"name": "caption",
@@ -111,6 +113,11 @@ var et2_dropdown_button = et2_inputWidget.extend({
 	<li id="opt_1.5"><a href="javascript:void(0);">Option-1.5</a></li>\
 </ul>',
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_dropdown_button
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 
@@ -179,7 +186,7 @@ var et2_dropdown_button = et2_inputWidget.extend({
 			);
 	
 		// Icon
-		this.image = jQuery(document.createElement("img"))
+		this.image = jQuery(document.createElement("img"));
 
 		this.setDOMNode(this.div[0]);
 	},
@@ -361,6 +368,5 @@ var et2_dropdown_button = et2_inputWidget.extend({
 		return this.value;
 	}
 });
-
 et2_register_widget(et2_dropdown_button, ["dropdown_button"]);
 

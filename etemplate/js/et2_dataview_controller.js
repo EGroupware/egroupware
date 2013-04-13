@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2
+ * EGroupware eTemplate2
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate

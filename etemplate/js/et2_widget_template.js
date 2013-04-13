@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - JS Template base class
+ * EGroupware eTemplate2 - JS Template base class
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -24,9 +24,11 @@
  * inserted in place of this template.
  * 
  * TODO: Check whether this widget behaves as it should.
+ * 
+ * @augments et2_DOMWidget
  */ 
-var et2_template = et2_DOMWidget.extend({
-
+var et2_template = et2_DOMWidget.extend(
+{
 	attributes: {
 		"template": {
 			"name": "Template",
@@ -60,6 +62,8 @@ var et2_template = et2_DOMWidget.extend({
 
 	/**
 	 * Initializes this template widget as a simple container.
+	 * 
+	 * @memberOf et2_template
 	 */
 	init: function(_parent, _attrs) {
 		// Set this early, so it's available for creating namespace
@@ -156,7 +160,5 @@ var et2_template = et2_DOMWidget.extend({
 		return this.div;
 	}
 });
-
 et2_register_widget(et2_template, ["template"]);
-
 

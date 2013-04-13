@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - dataview
+ * EGroupware eTemplate2 - dataview
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -18,13 +18,17 @@
 	et2_dataview_view_container;
 */
 
-var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IViewRange, {
-
+/**
+ * @augments et2_dataview_container
+ */
+var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IViewRange, 
+{
 	/**
 	 * Creates the row container. Use the "setRow" function to load the actual
 	 * row content.
 	 *
 	 * @param _parent is the row parent container.
+	 * @memberOf et2_dataview_row
 	 */
 	init: function(_parent) {
 		// Call the inherited constructor
@@ -125,13 +129,13 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IViewRange, {
 
 	getAvgHeightData: function() {
 		// Only take the height of the own tr into account
-		var oldVisible = this.expansionVisible;
+		//var oldVisible = this.expansionVisible;
 		this.expansionVisible = false;
 
 		var res = {
 			"avgHeight": this.getHeight(),
 			"avgCount": 1
-		}
+		};
 
 		this.expansionVisible = true;
 
@@ -179,7 +183,7 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IViewRange, {
 		    && this.expansionContainer.implements(et2_dataview_IViewRange))
 		{
 			// Substract the height of the own row from the container
-			var oh = $j(this._nodes[0]).height()
+			var oh = $j(this._nodes[0]).height();
 			_range.top -= oh;
 
 			// Proxy the setViewRange call to the expansion container

@@ -20,9 +20,11 @@
 
 /**
  * Class which implements the tabbox-tag
+ * 
+ * @augments et2_DOMWidget
  */ 
-var et2_tabbox = et2_DOMWidget.extend({
-
+var et2_tabbox = et2_DOMWidget.extend(
+{
 	attributes: {
 		'tabs': {
 			'name': 'Tabs',
@@ -35,6 +37,12 @@ var et2_tabbox = et2_DOMWidget.extend({
 	 * Currently selected tab
 	 */
 	selected_index: 0,
+	
+	/**
+	 * Construtor
+	 * 
+	 * @memberOf et2_tabbox
+	 */
 	init: function() {
 		// Create the outer tabbox container
 		this.container = $j(document.createElement("div"))
@@ -176,7 +184,7 @@ var et2_tabbox = et2_DOMWidget.extend({
 			}
 
 			// Create the tab DOM-Nodes
-			this.createTabs(tabData)
+			this.createTabs(tabData);
 		}
 		else
 		{
@@ -270,5 +278,4 @@ var et2_tabbox = et2_DOMWidget.extend({
 	}
 
 });
-
 et2_register_widget(et2_tabbox, ["tabbox"]);

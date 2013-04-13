@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - Class which contains a factory method for rows
+ * EGroupware eTemplate2 - Class which contains a factory method for rows
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -21,9 +21,17 @@
 /**
  * The row provider contains prototypes (full clonable dom-trees) 
  * for all registered row types.
+ * 
+ * @augments Class
  */
-var et2_dataview_rowProvider = Class.extend({
-
+var et2_dataview_rowProvider = Class.extend(
+{
+	/**
+	 * 
+	 * @param _outerId
+	 * @param _columnIds
+	 * @memberOf et2_dataview_rowProvider
+	 */
 	init: function(_outerId, _columnIds) {
 		// Copy the given parameters
 		this._outerId = _outerId;

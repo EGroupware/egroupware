@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - Class which contains the spacer container
+ * EGroupware eTemplate2 - Class which contains the spacer container
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -17,8 +17,18 @@
 	et2_dataview_view_container;
 */
 
-var et2_dataview_spacer = et2_dataview_container.extend({
-
+/**
+ * @augments et2_dataview_container
+ */
+var et2_dataview_spacer = et2_dataview_container.extend(
+{
+	/**
+	 * Constructor
+	 * 
+	 * @param _parent
+	 * @param _rowProvider
+	 * @memberOf et2_dataview_spacer
+	 */
 	init: function (_parent, _rowProvider) {
 		// Call the inherited container constructor
 		this._super(_parent);

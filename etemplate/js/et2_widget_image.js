@@ -20,9 +20,11 @@
 
 /**
  * Class which implements the "image" XET-Tag
+ * 
+ * @augments et2_baseWidget
  */ 
-var et2_image = et2_baseWidget.extend([et2_IDetachedDOM], {
-
+var et2_image = et2_baseWidget.extend([et2_IDetachedDOM], 
+{
 	attributes: {
 		"src": {
 			"name": "Image",
@@ -58,6 +60,11 @@ var et2_image = et2_baseWidget.extend([et2_IDetachedDOM], {
 	},
 	legacyOptions: ["href", "extra_link_target", "imagemap", "extra_link_popup", "id"],
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_image
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 

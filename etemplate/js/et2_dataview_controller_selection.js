@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2
+ * EGroupware eTemplate2
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -24,9 +24,22 @@
  * manage an external action object interface for each visible row and proxy all
  * state changes between an dummy action object, that does no selection handling,
  * and the external action object interface.
+ * 
+ * @augments Class
  */
-var et2_dataview_selectionManager = Class.extend({
-
+var et2_dataview_selectionManager = Class.extend(
+{
+	/**
+	 * Constructor
+	 * 
+	 * @param _parent
+	 * @param _indexMap
+	 * @param _actionObjectManager
+	 * @param _queryRangeCallback
+	 * @param _makeVisibleCallback
+	 * @param _context
+	 * @memberOf et2_dataview_selectionManager
+	 */
 	init: function (_parent, _indexMap, _actionObjectManager,
 			_queryRangeCallback, _makeVisibleCallback, _context) {
 
@@ -103,7 +116,7 @@ var et2_dataview_selectionManager = Class.extend({
 		if (!entry.tr && _links)
 		{
 			this._attachActionObjectInterface(entry, _tr, _uid);
-			this._attachActionObject(entry, _tr, _uid, _links, _idx)
+			this._attachActionObject(entry, _tr, _uid, _links, _idx);
 		}
 
 		// Update the entry
@@ -215,7 +228,7 @@ var et2_dataview_selectionManager = Class.extend({
 		return {
 			"inverted": this._invertSelection,
 			"ids": ids
-		}
+		};
 	},
 
 
@@ -263,7 +276,7 @@ var et2_dataview_selectionManager = Class.extend({
 		// controller
 		dummyAOI.doMakeVisible = function () {
 			self._makeVisibleCallback.call(self._context, _idx);
-		}
+		};
 
 		// Connect the the two AOIs
 		dummyAOI.doTriggerEvent = _entry.aoi.doTriggerEvent;

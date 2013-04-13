@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - File which contains all interfaces
+ * EGroupware eTemplate2 - File which contains all interfaces
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -10,7 +10,7 @@
  * @version $Id$
  */
 
-"use strict"
+"use strict";
 
 /*egw:uses
 	et2_core_inheritance;

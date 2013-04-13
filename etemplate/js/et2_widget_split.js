@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - Split panel
+ * EGroupware eTemplate2 - Split panel
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -26,9 +26,10 @@
  * turn on double-click docking to minimize one of the children.
  *
  * @see http://methvin.com/splitter/ Uses Splitter
+ * @augments et2_DOMWidget
  */
-var et2_split = et2_DOMWidget.extend([et2_IResizeable], {
-
+var et2_split = et2_DOMWidget.extend([et2_IResizeable], 
+{
 	attributes: {
 		"orientation": {
 			"name": "Orientation",
@@ -58,6 +59,11 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable], {
 		"cols": {"ignore": true}
 	},
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_split
+	 */
 	init: function() {
 		this._super.apply(this, arguments);
 

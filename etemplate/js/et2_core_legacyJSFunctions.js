@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - Execution layer for legacy event code
+ * EGroupware eTemplate2 - Execution layer for legacy event code
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -127,7 +127,7 @@
 			var func = new Function('egw', 'widget', 'window', 'document', _code);
 		} catch(e) {
 			_widget.egw().debug('error', 'Error while compiling JS code ', _code);
-			return (function() {return false});
+			return (function() {return false;});
 		}
 
 		// Execute the code and return its results, pass the egw instance and
@@ -142,8 +142,8 @@
 			// Return the result of the called function
 			return func.call(context, egw, _widget, egw.window,
 				egw.window.document);
-		}
-	}
+		};
+	};
 
 }).call(window);
 

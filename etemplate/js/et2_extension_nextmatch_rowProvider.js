@@ -1,5 +1,5 @@
 /**
- * eGroupWare eTemplate2 - Class which contains a factory method for rows
+ * EGroupware eTemplate2 - Class which contains a factory method for rows
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -21,11 +21,15 @@
 /**
  * The row provider contains prototypes (full clonable dom-trees) 
  * for all registered row types.
+ * 
+ * @augments Class
  */
-var et2_nextmatch_rowProvider = Class.extend({
-
+var et2_nextmatch_rowProvider = Class.extend(
+{
 	/**
 	 * Creates the nextmatch row provider.
+	 * 
+	 * @memberOf et2_nextmatch_rowProvider
 	 */
 	init: function (_rowProvider, _subgridCallback, _context) {
 		// Copy the arguments
@@ -165,7 +169,7 @@ var et2_nextmatch_rowProvider = Class.extend({
 		tr.appendChild(row);
 
 		// Make the row expandable
-		if (typeof _data.content["is_parent"] !== "undefined"
+		if (typeof _data.content["is_parent"] !== "undefined" 
 		    && _data.content["is_parent"])
 		{
 			_row.makeExpandable(true, function () {
@@ -194,7 +198,7 @@ var et2_nextmatch_rowProvider = Class.extend({
 		var placeholder = $j(document.createElement("td"))
                                 .attr("colspan",this._rowProvider.getColumnCount())
                                 .css("height","19px")
-                                .text(typeof label != "undefined" && label ? label : egw().lang("No matches found"))
+                                .text(typeof label != "undefined" && label ? label : egw().lang("No matches found"));
 		this._rowProvider._prototypes["empty"] = $j(document.createElement("tr"))
 			.addClass("egwGridView_empty")
 			.append(placeholder);
@@ -510,8 +514,18 @@ var et2_nextmatch_rowProvider = Class.extend({
 
 });
 
-var et2_nextmatch_rowWidget = et2_widget.extend(et2_IDOMNode, {
-
+/**
+ * @augments et2_widget
+ */
+var et2_nextmatch_rowWidget = et2_widget.extend(et2_IDOMNode, 
+{
+	/**
+	 * Constructor
+	 * 
+	 * @param _mgrs
+	 * @param _row
+	 * @memberOf et2_nextmatch_rowWidget
+	 */
 	init: function(_mgrs, _row) {
 		// Call the parent constructor with some dummy attributes
 		this._super(null, {"id": "", "type": "rowWidget"});
@@ -560,8 +574,18 @@ var et2_nextmatch_rowWidget = et2_widget.extend(et2_IDOMNode, {
 
 });
 
-var et2_nextmatch_rowTemplateWidget = et2_widget.extend(et2_IDOMNode, {
-
+/**
+ * @augments et2_widget
+ */
+var et2_nextmatch_rowTemplateWidget = et2_widget.extend(et2_IDOMNode, 
+{
+	/**
+	 * Constructor
+	 * 
+	 * @param _root
+	 * @param _row
+	 * @memberOf et2_nextmatch_rowTemplateWidget
+	 */
 	init: function(_root, _row) {
 		// Call the parent constructor with some dummy attributes
 		this._super(null, {"id": "", "type": "rowTemplateWidget"});
@@ -612,5 +636,4 @@ var et2_nextmatch_rowTemplateWidget = et2_widget.extend(et2_IDOMNode, {
 	}
 
 });
-
 
