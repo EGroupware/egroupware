@@ -1250,7 +1250,7 @@ abstract class egw_framework
 		{
 			$query = '';
 			list($path,$query) = explode('?',$path,2);
-			$path .= '?'. filectime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
+			$path .= '?'. filemtime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
 			$response->includeCSS($GLOBALS['egw_info']['server']['webserver_url'].$path);
 		}
 
@@ -1262,7 +1262,7 @@ abstract class egw_framework
 		{
 			$query = '';
 			list($path,$query) = explode('?',$path,2);
-			$path .= '?'. filectime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
+			$path .= '?'. filemtime(EGW_SERVER_ROOT.$path).($query ? '&'.$query : '');
 			$response->includeScript($GLOBALS['egw_info']['server']['webserver_url'].$path);
 		}
 	}
