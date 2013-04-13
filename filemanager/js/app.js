@@ -397,8 +397,7 @@ app.filemanager = AppJS.extend(
 		var src = this._elems2paths(_elems);
 		var dst = _target.id.replace(this.remove_prefix, '');
 		
-		alert(_action.id+': '+src.join(', ')+' --> '+dst);
-
+		//alert(_action.id+': '+src.join(', ')+' --> '+dst);
 		this._do_action(_action.id == "file_drop_move" ? 'move' : 'copy', src, false, dst);
 	},
 
