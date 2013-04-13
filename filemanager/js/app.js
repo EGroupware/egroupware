@@ -1,5 +1,5 @@
 /**
- * EGroupware - Filemanager - Javascript actions
+ * EGroupware - Filemanager - Javascript UI
  *
  * @link http://www.egroupware.org
  * @package filemanager
@@ -9,6 +9,11 @@
  * @version $Id$
  */
 
+/**
+ * UI for filemanager
+ * 
+ * @augments AppJS
+ */
 app.filemanager = AppJS.extend(
 {
 	appname: 'filemanager',
@@ -29,23 +34,19 @@ app.filemanager = AppJS.extend(
 	 */
 	clipboard_is_cut: false,
 	/**
-	 * Regexp to convert id to a path
-	 */
-	remove_prefix: /^filemanager::/,
-	/**
 	 * Key for storing clipboard in browser localstorage
 	 */
 	clipboard_localstore_key: 'filemanager.clipboard',
 
 	/**
 	 * Constructor
+	 * 
+	 * @memberOf app.filemanager
 	 */
 	init: function() 
 	{
 		// call parent
 		this._super.apply(this, arguments);
-		
-		//window.register_app_refresh("mail", this.app_refresh);
 	},
 	
 	/**
@@ -82,6 +83,21 @@ app.filemanager = AppJS.extend(
 	},
 	
 	/**
+	 * Regexp to convert id to a path, use this.id2path(_id)
+	 */
+	remove_prefix: /^filemanager::/,
+	/**
+	 * Convert id to path (remove "filemanager::" prefix)
+	 * 
+	 * @param string _id
+	 * @returns string
+	 */
+	id2path: function(_id)
+	{
+		return _id.replace(this.remove_prefix, '');
+	},
+
+	/**
 	 * Convert array of elems to array of paths
 	 * 
 	 * @param array _elems selected items from actions
@@ -92,31 +108,45 @@ app.filemanager = AppJS.extend(
 		var paths = [];
 		for (var i = 0; i < _elems.length; i++)
 		{
-			paths.push(_elems[i].id.replace(this.remove_prefix, ''));
+			paths.push(this.id2path(_elems[i].id));
 		}
 		return paths;
 	},
 	
 	/**
-	 * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
+	 * Get directory of a path
 	 * 
-	 * Default implementation here only reloads window with it's current url with an added msg=_msg attached
-	 * 
-	 * @param string _msg message (already translated) to show, eg. 'Entry deleted'
-	 * @param string _app application name
-	 * @param string|int _id=null id of entry to refresh
-	 * @param string _type=null either 'edit', 'delete', 'add' or null
+	 * @param string _path
+	 * @returns string
 	 */
-	/*app_refresh: function(_msg, _app, _id, _type)
+	dirname: function(_path)
 	{
-		$j(document.getElementById('nm[msg]')).text(_msg);
-		
-		if (_app == this.appname)
-		{
-			this.et2.getWidgetById('nm').applyFilters();
-		}
-	},*/
-
+		var parts = _path.split('/');
+		parts.pop();
+		return parts.join('/') || '/';
+	},
+	
+	/**
+	 * Get name of a path
+	 * 
+	 * @param string _path
+	 * @returns string
+	 */
+	basename: function(_path)
+	{
+		return _path.split('/').pop();
+	},
+	
+	/**
+	 * Get current working directory
+	 * 
+	 * @return string
+	 */
+	get_path: function()
+	{
+		return this.path_widget ? this.path_widget.get_value() : null;
+	},
+	
 	/**
 	 * Open compose with already attached files
 	 * 
@@ -150,10 +180,13 @@ app.filemanager = AppJS.extend(
 	 * 
 	 * @param upload
 	 * @param path_id
+	 * @Todo whole upload need to be modified to use server-side callback to move file in place,
+	 * if it does NOT overwrite anything, or send prompt to override / change filename back to client
 	 */
 	check_files: function(upload, path_id)
 	{
-		var files = [];
+		alert('ToDo ;-)');
+		/*var files = [];
 		if (upload.files)
 		{
 			for(var i = 0; i < upload.files.length; ++i)
@@ -167,7 +200,7 @@ app.filemanager = AppJS.extend(
 		}
 		var path = document.getElementById(path_id ? path_id : upload.id.replace(/upload\]\[/,"nm][path"));
 	
-		xajax_doXMLHTTP("filemanager_ui::ajax_check_upload_target",upload.id, files, path.value);
+		xajax_doXMLHTTP("filemanager_ui::ajax_check_upload_target",upload.id, files, path.value);*/
 	},
 	
 	/**
@@ -267,7 +300,7 @@ app.filemanager = AppJS.extend(
 
 		if (dir)
 		{
-			var path = this.path_widget.get_value();
+			var path = this.get_path();
 			this._do_action('createdir', dir, true);	// true=synchronous request
 			this.change_dir(path+'/'+dir);
 		}
@@ -296,7 +329,7 @@ app.filemanager = AppJS.extend(
 	 */
 	_do_action: function(_type, _selected, _sync, _path)
 	{
-		if (typeof _path == 'undefined') _path = this.path_widget.get_value();
+		if (typeof _path == 'undefined') _path = this.get_path();
 		var request = new egw_json_request('filemanager_ui::ajax_action', [_type, _selected, _path], this);
 		request.sendRequest(!_sync, this._do_action_callback, this);
 	},
@@ -320,7 +353,7 @@ app.filemanager = AppJS.extend(
 	force_download: function(_action, _senders)
 	{
 		var data = egw.dataGetUIDdata(_senders[0].id);
-		var url = data ? data.data.download_url : '/webdav.php'+_senders[0].id.replace(this.remove_prefix,'');
+		var url = data ? data.data.download_url : '/webdav.php'+this.id2path(_senders[0].id);
 		if (url[0] == '/') url = egw.link(url);
 		window.location = url+"?download";
 	},
@@ -335,13 +368,7 @@ app.filemanager = AppJS.extend(
 		switch (_dir)
 		{
 			case '..':
-				_dir = this.path_widget.getValue();
-				if (_dir != '/')
-				{
-					var parts = _dir.split('/');
-					parts.pop();
-					_dir = parts.length > 1 ? parts.join('/') : '/';
-				}
+				_dir = this.dirname(this.path_widget.getValue());
 				break;
 			case '~':
 				_dir = this.et2.getWidgetById('nm').options.settings.home_dir;
@@ -360,7 +387,7 @@ app.filemanager = AppJS.extend(
 	open: function(_action, _senders)
 	{
 		var data = egw.dataGetUIDdata(_senders[0].id);
-		var path = _senders[0].id.replace(this.remove_prefix, '');
+		var path = this.id2path(_senders[0].id);
 		if (data.data.mime == 'httpd/unix-directory')
 		{
 			this.change_dir(path);
@@ -395,9 +422,16 @@ app.filemanager = AppJS.extend(
 	drop: function(_action, _elems, _target)
 	{
 		var src = this._elems2paths(_elems);
-		var dst = _target.id.replace(this.remove_prefix, '');
-		
+		var dst = this.id2path(_target.id);
 		//alert(_action.id+': '+src.join(', ')+' --> '+dst);
+		
+		// check if target is a file --> use it's directory instead
+		var data = egw.dataGetUIDdata(_target.id);
+		if (data.data.mime != 'httpd/unix-directory')
+		{
+			dst = this.dirname(dst);
+		}
+
 		this._do_action(_action.id == "file_drop_move" ? 'move' : 'copy', src, false, dst);
 	},
 
@@ -461,7 +495,7 @@ app.filemanager = AppJS.extend(
 		}
 		var text = $j(document.createElement('div')).css({left: '30px', position: 'absolute'});
 		// add filename or number of files for multiple files
-		text.text(_elems.length > 1 ? _elems.length+' '+egw.lang('files') : _elems[0].id.split('/').pop());
+		text.text(_elems.length > 1 ? _elems.length+' '+egw.lang('files') : this.basename(_elems[0].id));
 		div.append(text);
 
 		return div;
