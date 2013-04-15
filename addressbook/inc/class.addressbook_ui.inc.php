@@ -226,7 +226,7 @@ class addressbook_ui extends addressbook_bo
 				//'actions'        => $this->get_actions(),		// set on each request, as it depends on some filters
 				'row_id'         => 'id',
 				'favorites'      => true,
-				'placeholder_actions' => array('add','delete_list')
+				'placeholder_actions' => array('add')
 			);
 			$csv_export = new addressbook_csv($this);
 			$content['nm']['csv_fields'] = $GLOBALS['egw_info']['user']['preferences']['addressbook']['nextmatch-export-definition'] ?
@@ -244,6 +244,11 @@ class addressbook_ui extends addressbook_bo
 			{
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
+		}
+		// Delete list action depends on permissions
+		if($this->get_lists(EGW_ACL_EDIT))
+		{
+			$content['nm']['placeholder_actions'][] = 'delete_list';
 		}
 
 		// Search parameter passed in
