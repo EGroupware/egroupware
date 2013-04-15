@@ -470,23 +470,37 @@ class Net_IMAP extends Net_IMAPProtocol {
 		  #error_log("egw-pear::NET::IMAP:getSummary->fetch message ".$message_set);
           $ret=$this->cmdFetch($message_set,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY.PEEK[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)])");
         }
-        #error_log(print_r($ret['PARSED'][0],true));
+        //error_log(print_r($ret,true));
         #$ret=$this->cmdFetch($message_set,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY[1.MIME])");
         if ((PEAR::isError($ret) || (strtoupper($ret["RESPONSE"]["CODE"]) == "BAD" && stripos($ret["RESPONSE"]["STR_CODE"], "NO MAILBOX SELECTED")!==false) && $message_set=="1:*")) return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
-        //if (strtoupper($ret["RESPONSE"]["CODE"]) != "OK" && count($ret['PARSED'])) error_log(__METHOD__.__LINE__.' ResposeCode not OK but found:'.count($ret['PARSED']).' parsed Responses. Number of UIDs Requested:'.(is_array($msg_id)?count($msg_id):count(explode(',',$msg_id))));
-        if (PEAR::isError($ret) || !isset($ret['PARSED']) || (strtoupper($ret["RESPONSE"]["CODE"]) != "OK" && !count($ret['PARSED']))) {
-            error_log(__METHOD__."::".__LINE__."->error after Fetch for message(s):".$message_set.' Result retrieved:->'.(PEAR::isError($ret)?$ret->message:array2string($ret))." Trying to retrieve single messages.");
-            unset($ret);
+        if (strtoupper($ret["RESPONSE"]["CODE"]) != "OK" && count($ret['PARSED'])) error_log(__METHOD__.__LINE__.' ResposeCode not OK but found:'.count($ret['PARSED']).' parsed Responses. Number of UIDs Requested:'.(is_array($msg_id)?count($msg_id):count(explode(',',$msg_id))).'. Trying to recover!');
+        $num_requested = (is_array($msg_id)?count($msg_id):count(explode(',',$msg_id)));
+        if (PEAR::isError($ret) || !isset($ret['PARSED']) ||
+            (strtoupper($ret["RESPONSE"]["CODE"]) != "OK" && !count($ret['PARSED'])) ||
+            (strtoupper($ret["RESPONSE"]["CODE"]) != "OK" && count($ret['PARSED']) < $num_requested)) {
+            //error_log(__METHOD__."::".__LINE__."->error after Fetch for message(s):".$message_set.' Result retrieved:->'.(PEAR::isError($ret)?$ret->message:count($ret['PARSED']))." Trying to retrieve (remaining) single messages.");
+            if (PEAR::isError($ret) || !isset($ret['PARSED'])) unset($ret);
+            else
+            {
+                //reduce message set, by the messages found
+                $mtR = explode(',',$message_set);
+				$mtR = array_flip($mtR);
+                for($i=0; $i<count($ret["PARSED"]) ; $i++){
+                    if (isset($ret["PARSED"][$i]['EXT']['UID']) && isset($mtR[$ret["PARSED"][$i]['EXT']['UID']])) unset($mtR[$ret["PARSED"][$i]['EXT']['UID']]);
+                }
+				if (!empty($mtR)) $message_set = $this->_getSearchListFromArray(array_keys($mtR));
+            }
             # if there is an error, while retrieving the information for the whole list, try to retrieve the info one by one, to be more error tolerant
             foreach (explode(',',$message_set) as $msgid) {
                 $retloop=$this->cmdUidFetch($msgid,"(RFC822.SIZE UID FLAGS ENVELOPE INTERNALDATE BODY.PEEK[HEADER.FIELDS (CONTENT-TYPE X-PRIORITY)])");
-                if (PEAR::isError($retloop)|| strtoupper($retloop["RESPONSE"]["CODE"]) != "OK") {
+                if (PEAR::isError($retloop)|| (strtoupper($retloop["RESPONSE"]["CODE"]) != "OK" && !count($ret['PARSED']))) {
                     # log the error, and create a dummy-message as placeholder, this may hold the possibility to read the message anyway
                     //error_log("egw-pear::NET::IMAP:getSummary->error after Fetch for message with id:".$msgid);
                     error_log(__METHOD__.__LINE__."error after Fetch for message with id:".$msgid.' Error:'.$retloop["RESPONSE"]["CODE"] . ", " . $retloop["RESPONSE"]["STR_CODE"]);
                     $ret['PARSED'][]=array('COMMAND'=>"FETCH",'EXT'=>array('UID'=>$msgid,'ENVELOPE'=>array('SUBJECT'=>"[FELAMIMAIL:ERROR]can not parse this message(header).",)));
                 } else {
-                    #error_log(print_r($retloop['PARSED'][0],true));
+                    //error_log(print_r($retloop['PARSED'][0],true));
+                    //error_log(__METHOD__.__LINE__.' Fetched:'.$retloop["PARSED"][0]['EXT']['UID']);
                     # renew the response for every message retrieved, since the returnvalue is structured that way
                     $ret['RESPONSE']=$retloop['RESPONSE'];
                     $ret['PARSED'][]=$retloop['PARSED'][0];
@@ -496,7 +510,7 @@ class Net_IMAP extends Net_IMAPProtocol {
             #return $ret;
         }
         // this seems to be obsolet, since errors while retrieving header informations are 'covered' above
-        if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK")
+        if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK" && !empty($ret["RESPONSE"]["CODE"]))
         {
             error_log(__METHOD__."::".__LINE__."->ResponseCode not OK ->".$ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"].function_backtrace());
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
@@ -1578,7 +1592,7 @@ class Net_IMAP extends Net_IMAPProtocol {
      */
     function getMailboxes($reference = '', $restriction_search = 0, $returnAttributes=false)
     {
-		#echo (__METHOD__.$reference."#".$restriction_search.'#'.function_backtrace()."<br>");
+		//echo (__METHOD__.$reference."#".$restriction_search.'#'.function_backtrace()."<br>");
         if ( is_bool($restriction_search) ){
             $restriction_search = (int) $restriction_search;
         }
