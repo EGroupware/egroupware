@@ -344,6 +344,30 @@ span.et2_date span {
 	font-size: 9pt;
 }
 
+/**
+ * Dialog widget
+ * It uses jQueryUI, so this is just our little bits - icon on left
+ */
+.ui-dialog-content .dialog_icon {
+	margin-right: 2ex;
+	vertical-align: middle;
+}
+.ui-dialog-content  {
+	vertical-align: middle;
+}
+/* These change button alignment, but it seems the standard is right-aligned for
+action buttons, left aligned for "extra" controls
+.ui-dialog .ui-dialog-buttonpane {
+	text-align: left;
+}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+	float: none;
+}
+.ui-dialog .ui-dialog-buttonpane button {
+	float: none;
+}
+*/
+
 /** 
  * Diff widget
  */
