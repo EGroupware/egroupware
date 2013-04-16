@@ -1730,7 +1730,7 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 		
 		// Check for global setting changes (visibility)
 		var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~');
-		if(global_data.fields) this.options.fields = global_data.fields;
+		if(global_data != null && global_data.fields) this.options.fields = global_data.fields;
 
 		var apps = egw.link_app_list();
 		for(var field_name in this.options.customfields)
@@ -1846,7 +1846,7 @@ var et2_nextmatch_customfields = et2_customfields_list.extend(et2_INextmatchHead
 		// Check for custom stuff (unlikely)
 		var data = this.getArrayMgr("modifications").getEntry(this.id);
 		// Check for global settings
-		if(!data) data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~', true);
+		if(!data) data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~', true) || {};
 		if(!data.fields) data.fields = {};
 		for(var field in this.options.customfields)
 		{
