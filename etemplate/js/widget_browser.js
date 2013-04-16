@@ -108,7 +108,7 @@ widget_browser.prototype.select_widget = function(e,f)
 	var attrs = {};
 
 
-	this.widget = et2_createWidget(type, attrs, this.et2.widgetContainer);
+	window.wb_widget = this.widget = et2_createWidget(type, attrs, this.et2.widgetContainer);
 	this.widget.loadingFinished();
 
 	// Attribute list
