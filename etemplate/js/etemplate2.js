@@ -209,7 +209,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	}
 	
 	// set app_header
-	if (window.opener) {	// popup
+	if (window.opener && _data) {	// popup
 		document.title = _data.app_header;
 	} else {
 		// todo for idots or jdots framework
@@ -223,10 +223,11 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			var template = _xmldoc.childNodes[i];
 			if(template.nodeName.toLowerCase() != "template") continue;
 			this.templates[template.getAttribute("id")] = template;
+			if(!_name) missing_name = template.getAttribute("id");
 		}
 
 		// Read the XML structure of the requested template
-		this.widgetContainer.loadFromXML(this.templates[_name]);
+		this.widgetContainer.loadFromXML(this.templates[_name || missing_name]);
 
 		// Inform the widget tree that it has been successfully loaded.
 		this.widgetContainer.loadingFinished();
