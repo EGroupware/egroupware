@@ -209,6 +209,40 @@ function et2_checkType(_val, _type, _attr, _cname)
 		return _err();
 	}
 
+	// Javascript
+	if (_type == "js")
+	{
+		if (typeof _val == "function")
+		{
+			return _val;
+		}
+
+		// Check to see if it's a string in app.appname.function format, and wrap it in
+		// a closure to make sure context is preserved
+		if(typeof _val == "string" && _val.substr(0,4) == "app." && window.app)
+		{
+			var parts = res.data.func.split('.');
+			var func = parts.pop();
+			var parent = window;
+			for(var i=0; i < parts.length && typeof parent[parts[i]] != 'undefined'; ++i)
+			{
+				parent = parent[parts[i]];
+			}
+			if (typeof parent[func] == 'function')
+			{
+				try
+				{
+					return jQuery.proxy(parent,parent[func]);
+				}
+				catch (e)
+				{
+					req.egw.debug('error', 'Function', _val);
+					return _err();
+				}
+			}
+		}
+	}
+
 	// We should never come here
 	throw("Invalid type identifier '" + _attr + ": " + _type + "' supplied by '" + _cname + "'");
 }
