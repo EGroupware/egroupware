@@ -212,11 +212,12 @@ dd.getWH = function(d_o)
 	d_o.h = dd.getDivH(d_o);
 	if(d_o.css)
 	{
-		d_o.css.width = d_o.w + dd.px;
+		// dont set the width at the beginning
+		//d_o.css.width = d_o.w + dd.px;
 		d_o.css.height = d_o.h + dd.px;
 		d_o.dw = dd.getDivW(d_o)-d_o.w;
 		d_o.dh = dd.getDivH(d_o)-d_o.h;
-		d_o.css.width = (d_o.w-d_o.dw) + dd.px;
+		//d_o.css.width = (d_o.w-d_o.dw) + dd.px;
 		d_o.css.height = (d_o.h-d_o.dh) + dd.px;
 	}
 	else d_o.dw = d_o.dh = 0;
@@ -380,6 +381,9 @@ dd.addProps = function(d_o)
 	d_o._setCrs(d_o.nodrag? 'auto' : d_o.cursor);
 	d_o.diaphan = d_o.diaphan || dd.diaphan || 0;
 	d_o.opacity = 1.0;
+	d_o.focus_x = 'center';
+	d_o.focus_y = 'center';
+	d_o.focus_border = 0;
 	d_o.visible = true;
 };
 dd.initz = function()
@@ -874,6 +878,12 @@ DDObj.prototype._setOpaRel = function(d_x, d_kd, d_y, d_o)
 			if(!(d_o = this.children[--d_i]).detached) d_o._setOpaRel(d_x, 1);
 	}
 };
+DDObj.prototype.setFocus = function(d_y, d_x,d_b)
+{
+	this.focus_y = d_y;
+	this.focus_x = d_x;
+	this.focus_border = d_b;
+};
 DDObj.prototype.setCursor = function(d_x)
 {
 	this._setCrs(this.cursor = (d_x.indexOf('c:')+1)? d_x.substring(2) : d_x);
@@ -907,11 +917,37 @@ DDObj.prototype.setVertical = function(d_x)
 };
 DDObj.prototype.getEltBelow = function(d_ret, d_x, d_y)
 {
+	switch(this.focus_y)
+	{
+		case 'top':
+			var f_y = 0 + this.focus_border;
+			break;
+		case 'bottom':
+			var f_y = this.h - this.focus_border;
+			break;
+		case 'center':
+		default:
+			var f_y = this.h/2;
+			break;
+	}
+	switch(this.focus_x)
+	{
+		case 'left':
+			var f_x = 0 + this.focus_border;
+			break;
+		case 'right':
+			var f_x = this.w - this.focus_border;
+			break;
+		case 'center':
+		default:
+			var f_x = this.w/2;
+			break;
+	}
 	var d_o, d_cmp = -1, d_i = dd.elements.length; while(d_i--)
 	{
 		d_o = dd.elements[d_i];
-		d_x = d_o.x-this.w/2;
-		d_y = d_o.y-this.h/2;
+		d_x = d_o.x-f_x;
+		d_y = d_o.y-f_y;
 		if(d_o.visible && d_o.z < this.z && this.x >= d_x && this.x <= d_x+d_o.w && this.y >= d_y && this.y <= d_y+d_o.h)
 		{
 			if(d_o.z > d_cmp)
@@ -1344,9 +1380,9 @@ function SET_DHTML()
 }
 function ADD_DHTML() // layers only!
 {
-	var d_a = arguments, d_o, d_i = d_a.length; while(d_i)
+	var d_a = arguments, d_o, d_i = d_a.length; while(d_i--)
 	{
-		d_o = new DDObj(d_a[--d_i]);
+		d_o = new DDObj(d_a[d_i]);
 		dd.addElt(d_o);
 		dd.addProps(d_o);
 	}
