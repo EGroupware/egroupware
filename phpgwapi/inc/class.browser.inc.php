@@ -36,7 +36,7 @@ class browser
 		/*
 			Determine browser and version
 		*/
-		if(preg_match('/MSIE ([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version))
+		if(preg_match('/MSIE ([0-9]*[0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version))
 		{
 			self::$version = $log_version[1];
 			self::$agent = 'IE';
