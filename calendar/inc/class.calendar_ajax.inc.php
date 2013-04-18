@@ -77,7 +77,8 @@ class calendar_ajax {
 		$response = new xajaxResponse();
 		if(!is_array($conflicts))
 		{
-			$response->addRedirect('');
+			//$response->addRedirect(''); // old method, triggers IE on dragndrop to jump to the default app (idots/jerryr)
+			$response->addRedirect($GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.calendar_uiviews.index');
 		}
 		else
 		{

@@ -1,21 +1,20 @@
-/* This notice must be untouched at all times.
+/* This notice must be untouched at all times, and must not be removed.
 
-wz_dragdrop.js	v. 4.87
+wz_dragdrop.js	v. 4.91
 The latest version is available at
 http://www.walterzorn.com
 or http://www.devira.com
 or http://www.walterzorn.de
 
-Copyright (c) 2002-2003 Walter Zorn. All rights reserved.
+Copyright (c) Walter Zorn. All rights reserved.
 Created 26. 8. 2002 by Walter Zorn (Web: http://www.walterzorn.com )
-Last modified: 29. 11. 2006
+Last modified: 10.10.2008
 
-This DHTML & Drag&Drop Library adds Drag&Drop functionality
-to the following types of html-elements:
-- images, even if not positioned via layers,
-  nor via stylesheets or any other kind of "hard-coding"
+This DHTML & Drag&Drop Library adds Drag&Drop functionality to:
+- images, even those not positioned via layers,
+  nor via stylesheets or any other kind of "hard-coding";
 - relatively and absolutely positioned layers (DIV elements).
-Moreover, it provides extended DHTML abilities.
+Moreover, it provides extended DHTML capabilities.
 
 LICENSE: LGPL
 
@@ -104,7 +103,8 @@ function WZDD()
 	this.w3c = !!(!this.op && !this.ie && !this.n6 && document.getElementById);
 	this.ce = !!(document.captureEvents && document.releaseEvents && !this.n6);
 	this.px = this.n4? '' : 'px';
-	this.tiv = this.w3c? 40 : 10;
+	this.tWait = this.w3c? 40 : 10;
+	this.noRecalc = false;
 }
 var dd = new WZDD();
 
@@ -212,12 +212,11 @@ dd.getWH = function(d_o)
 	d_o.h = dd.getDivH(d_o);
 	if(d_o.css)
 	{
-		// dont set the width at the beginning
-		//d_o.css.width = d_o.w + dd.px;
+		d_o.css.width = d_o.w + dd.px;
 		d_o.css.height = d_o.h + dd.px;
 		d_o.dw = dd.getDivW(d_o)-d_o.w;
 		d_o.dh = dd.getDivH(d_o)-d_o.h;
-		//d_o.css.width = (d_o.w-d_o.dw) + dd.px;
+		d_o.css.width = (d_o.w-d_o.dw) + dd.px;
 		d_o.css.height = (d_o.h-d_o.dh) + dd.px;
 	}
 	else d_o.dw = d_o.dh = 0;
@@ -353,7 +352,9 @@ dd.addProps = function(d_o)
 		if(!d_o.noalt && !dd.noalt && d_o.nimg && d_o.oimg)
 		{
 			d_o.nimg.alt = d_o.oimg.alt || '';
-			if(d_o.oimg.title) d_o.nimg.title = d_o.oimg.title;
+			d_o.nimg.title = d_o.oimg.title;
+			d_o.nimg.onmouseover = d_o.oimg.onmouseover;
+			d_o.nimg.onmouseout = d_o.oimg.onmouseout;
 		}
 		d_o.bgColor = '';
 	}
@@ -379,9 +380,6 @@ dd.addProps = function(d_o)
 	d_o._setCrs(d_o.nodrag? 'auto' : d_o.cursor);
 	d_o.diaphan = d_o.diaphan || dd.diaphan || 0;
 	d_o.opacity = 1.0;
-	d_o.focus_x = 'center';
-	d_o.focus_y = 'center';
-	d_o.focus_border = 0;
 	d_o.visible = true;
 };
 dd.initz = function()
@@ -400,8 +398,10 @@ dd.finlz = function()
 {
 	if(dd.ie && dd.elements)
 	{
+		dd.noRecalc = true;
 		for(var d_i = dd.elements.length; d_i;)
 			dd.elements[--d_i].del();
+		dd.noRecalc = false;
 	}
 	if(dd.uloadFunc) dd.uloadFunc();
 };
@@ -471,6 +471,7 @@ dd.getEventTarget = function(d_e, d_s, d_n)
 };
 dd.recalc = function(d_x)
 {
+	if(dd.noRecalc) return;
 	for(var d_o, d_i = dd.elements.length; d_i;)
 	{
 		if(!(d_o = dd.elements[--d_i]).is_image && d_o.div)
@@ -580,7 +581,7 @@ function DDObj(d_o, d_i)
 		if(this.div)
 		{
 			this.div.ddObj = this;
-			this.div.pos_rel = ("" + (this.div.parentNode? this.div.parentNode.tagName : this.div.parentElement? this.div.parentElement.tagName : '').toLowerCase().indexOf('body') < 0);
+			this.div.pos_rel = dd.getCssProp(this.div, 'position','position','position') == "relative";
 		}
 		dd.getPageXY(this.div);
 		this.defx = this.x = dd.x;
@@ -807,10 +808,10 @@ DDObj.prototype.addChild = function(d_kd, detach, defp)
 		d_kd.defz = d_kd.defz+this.defz-(d_kd.parent? d_kd.parent.defz : 0)+(!d_kd.is_image*1);
 		d_kd.setZ(d_kd.z+this.z-(d_kd.parent? d_kd.parent.z : 0)+(!d_kd.is_image*1), 1);
 	}
-	if(d_kd.parent) d_kd.parent._removeChild(d_kd, 1);
+	if(d_kd.parent) d_kd.parent.removeChild(d_kd, 1);
 	d_kd.parent = this;
 };
-DDObj.prototype._removeChild = function(d_kd, d_newp)
+DDObj.prototype.removeChild = function(d_kd, d_newp)
 {
 	if(typeof d_kd != "object") d_kd = this.children[d_kd];
 	var d_oc = this.children, d_nc = new Array();
@@ -866,18 +867,12 @@ DDObj.prototype._setOpaRel = function(d_x, d_kd, d_y, d_o)
 	{
 		d_y = this.opacity*d_x;
 		if(typeof this.css.MozOpacity != dd_u) this.css.MozOpacity = d_y;
+		else if (typeof this.css.opacity != dd_u) this.css.opacity = d_y;
 		else if(typeof this.css.filter != dd_u)
 			this.css.filter = "Alpha(opacity="+parseInt(100*d_y)+")";
-		else this.css.opacity = d_y;
 		for(var d_i = this.children.length; d_i;)
 			if(!(d_o = this.children[--d_i]).detached) d_o._setOpaRel(d_x, 1);
 	}
-};
-DDObj.prototype.setFocus = function(d_y, d_x,d_b)
-{
-	this.focus_y = d_y;
-	this.focus_x = d_x;
-	this.focus_border = d_b;
 };
 DDObj.prototype.setCursor = function(d_x)
 {
@@ -912,37 +907,11 @@ DDObj.prototype.setVertical = function(d_x)
 };
 DDObj.prototype.getEltBelow = function(d_ret, d_x, d_y)
 {
-	switch(this.focus_y)
-	{
-		case 'top':
-			var f_y = 0 + this.focus_border;
-			break;
-		case 'bottom':
-			var f_y = this.h - this.focus_border;
-			break;
-		case 'center':
-		default:
-			var f_y = this.h/2;
-			break;
-	}
-	switch(this.focus_x)
-	{
-		case 'left':
-			var f_x = 0 + this.focus_border;
-			break;
-		case 'right':
-			var f_x = this.w - this.focus_border;
-			break;
-		case 'center':
-		default:
-			var f_x = this.w/2;
-			break;
-	}
 	var d_o, d_cmp = -1, d_i = dd.elements.length; while(d_i--)
 	{
 		d_o = dd.elements[d_i];
-		d_x = d_o.x-f_x;
-		d_y = d_o.y-f_y;
+		d_x = d_o.x-this.w/2;
+		d_y = d_o.y-this.h/2;
 		if(d_o.visible && d_o.z < this.z && this.x >= d_x && this.x <= d_x+d_o.w && this.y >= d_y && this.y <= d_y+d_o.h)
 		{
 			if(d_o.z > d_cmp)
@@ -957,7 +926,7 @@ DDObj.prototype.getEltBelow = function(d_ret, d_x, d_y)
 DDObj.prototype.del = function(d_os, d_o)
 {
 	var d_i, d_l;
-	if(this.parent && this.parent._removeChild) this.parent._removeChild(this);
+	if(this.parent && this.parent.removeChild) this.parent.removeChild(this);
 	if(this.original)
 	{
 		this.hide();
@@ -1247,7 +1216,7 @@ function DRAG(d_ev)
 	{
 		if(dd.wait) return false;
 		dd.wait = 1;
-		setTimeout('dd.wait = 0;', dd.tiv);
+		setTimeout('dd.wait = 0;', dd.tWait);
 	}
 	dd.e = new dd.evt(d_ev);
 	if(dd.ie && !dd.e.but)
@@ -1271,7 +1240,7 @@ function RESIZE(d_ev)
 	if(!dd.obj || !dd.obj.visible) return true;
 	if(dd.wait) return false;
 	dd.wait = 1;
-	setTimeout('dd.wait = 0;', dd.tiv);
+	setTimeout('dd.wait = 0;', dd.tWait);
 	dd.e = new dd.evt(d_ev);
 	if(dd.ie && !dd.e.but)
 	{
@@ -1375,9 +1344,9 @@ function SET_DHTML()
 }
 function ADD_DHTML() // layers only!
 {
-	var d_a = arguments, d_o, d_i = d_a.length; while(d_i--)
+	var d_a = arguments, d_o, d_i = d_a.length; while(d_i)
 	{
-		d_o = new DDObj(d_a[d_i]);
+		d_o = new DDObj(d_a[--d_i]);
 		dd.addElt(d_o);
 		dd.addProps(d_o);
 	}
