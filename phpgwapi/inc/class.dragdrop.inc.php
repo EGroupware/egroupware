@@ -206,7 +206,7 @@ class dragdrop
 				}
 				if($element['dragAction']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setDragFunc('.$element['dragAction'].');'."\n"; }
 				if($element['dropAction']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setDropFunc('.$element['dropAction'].');'."\n"; }
-				//if($element['focus']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setFocus('.$element['focus'].');'."\n"; }
+				if($element['focus']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setFocus('.$element['focus'].');'."\n"; }
 			}
 			$GLOBALS['egw_info']['flags']['need_footer'] .= '</script>'."\n";
 		}
