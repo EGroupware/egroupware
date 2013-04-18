@@ -1,13 +1,13 @@
 <?php
 /**
- * PHPGWAPI Dragdrop - generates javascript for Walter Zorns dragdrop class 
+ * PHPGWAPI Dragdrop - generates javascript for Walter Zorns dragdrop class
  *
  * @link www.egroupware.org
  * @author Christian Binder <christian.binder@freakmail.de>
  * @copyright (c) 2006 by Christian Binder <christian.binder@freakmail.de>
  * @package phpgwapi
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 require_once(EGW_INCLUDE_ROOT. '/phpgwapi/inc/class.browser.inc.php');
@@ -24,46 +24,46 @@ class dragdrop
 {
 	/**
 	 * draggable Objects
-	 * 
+	 *
 	 * @var array
 	 */
 	var $draggables;
 
 	/**
 	 * droppable Objects
-	 * 
+	 *
 	 * @var array
 	 */
 	var $droppables;
 
 	/**
 	 * custom DHTML Objects
-	 * 
+	 *
 	 * @var array
 	 */
 	var $customs;
-	
+
 	/**
 	 * ensures that function setJSCode is only run once
-	 * 
+	 *
 	 * @var boolean
 	 */
 	var $setCodeDone = false;
 
 	/**
 	 * JavaScript(s) to include which contains the actions while dragging or dropping
-	 * 
+	 *
 	 * @var array
 	 */
 	var $actionScripts;
 
 	/**
 	 * enables class for all browsers - use this for testing still not validated browsers
-	 * 
+	 *
 	 * @var boolean
 	 */
 	var $browserTestMode = false;
-	
+
 	function dragdrop()
 	{
 	}
@@ -121,7 +121,7 @@ class dragdrop
 	/**
 	 * generates the appropriate JSCode for all defined objects
 	 *
-	 * @return boolean true if all actions succeed or false if the function was called more than once 
+	 * @return boolean true if all actions succeed or false if the function was called more than once
 	 */
 	function setJSCode()
 	{
@@ -139,7 +139,7 @@ class dragdrop
 			error_log('phpgwapi.dragdrop::setJSCode called more than once - aborting');
 			return false;
 		}
-		
+
 		$GLOBALS['egw_info']['flags']['need_footer'] .= "<!-- BEGIN JavaScript for wz_dragdrop.js -->\n";
 
 		// include wz_dragdrop once
@@ -148,7 +148,7 @@ class dragdrop
 			$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_dragdrop/wz_dragdrop.js"></script>'."\n";
 			$GLOBALS['egw_info']['flags']['wz_dragdrop_included'] = true;
 		}
-		
+
 		// include actionScripts
 		if(is_array($this->actionScripts))
 		{
@@ -157,7 +157,7 @@ class dragdrop
 				$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.$actionScript['file'].'"></script>'."\n";
 			}
 		}
-		
+
 		// register all elements to wz_dragdrop
 		if(is_array($this->draggables))
 		{
@@ -187,7 +187,7 @@ class dragdrop
 			$GLOBALS['egw_info']['flags']['need_footer'] .= $this->DHTMLcommand().'('.$element_names.')'."\n";
 			$GLOBALS['egw_info']['flags']['need_footer'] .= '</script>'."\n";
 		}
-		
+
 		// set special params for draggable elements
 		if(is_array($this->draggables))
 		{
@@ -206,7 +206,7 @@ class dragdrop
 				}
 				if($element['dragAction']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setDragFunc('.$element['dragAction'].');'."\n"; }
 				if($element['dropAction']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setDropFunc('.$element['dropAction'].');'."\n"; }
-				if($element['focus']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setFocus('.$element['focus'].');'."\n"; }
+				//if($element['focus']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setFocus('.$element['focus'].');'."\n"; }
 			}
 			$GLOBALS['egw_info']['flags']['need_footer'] .= '</script>'."\n";
 		}
@@ -255,10 +255,10 @@ class dragdrop
 		}
 
 		$GLOBALS['egw_info']['flags']['need_footer'] .= "<!-- END JavaScript for wz_dragdrop.js -->\n";
-		return $this->setCodeDone = true;	
+		return $this->setCodeDone = true;
 	}
 
-	
+
 	/**
 	 * checks if the given name of an object is unique in all draggable,droppable and custom objects
 	 *
@@ -318,7 +318,7 @@ class dragdrop
 		{
 			error_log('dragdrop::validateBrowser, agent: ' . $clientBrowser->get_agent());
 		}
- 
+
 		foreach(array('MOZILLA') as $id=>$validatedBrowser)
 		{
 			if($this->browserTestMode || $clientBrowser->get_agent() == $validatedBrowser)
@@ -326,10 +326,10 @@ class dragdrop
 				egw_framework::validate_file('wz_dragdrop', 'wz_dragdrop');
 				return true;
 			}
-			
+
 			return false;
 		}
-			
+
 	}
 
 	/**
@@ -345,7 +345,7 @@ class dragdrop
 		$script = $appname.'.'.$scriptname;
 		$serverFile = EGW_INCLUDE_ROOT.'/'.$appname.'/js/'.$scriptname.'.js';
 		$browserFile = $GLOBALS['egw_info']['server']['webserver_url'].'/'.$appname.'/js/'.$scriptname.'.js';
-	
+
 		// check if file exists otherwise exit
 		if(!file_exists($serverFile))
 		{
@@ -359,7 +359,7 @@ class dragdrop
 				if($actionScript['script'] == $script) { return $functionname; }
 			}
 		}
-	
+
 		$this->actionScripts[] = array('script' => $script,'file' => $browserFile);
 		return $functionname;
 	}
