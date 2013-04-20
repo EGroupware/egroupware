@@ -557,7 +557,7 @@ class etemplate_new extends etemplate_widget_template
 	}
 }
 // default etemplate class has to be defined by either extending etemplate_new or etemplate_old
-class etemplate extends etemplate_new {};
+class etemplate extends etemplate_old {};
 
 // Try to discover all widgets, as names don't always match tags (eg: listbox is in menupopup)
 $files = scandir(EGW_INCLUDE_ROOT . '/etemplate/inc');
