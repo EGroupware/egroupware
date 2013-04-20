@@ -213,8 +213,18 @@ var et2_vfsName_ro = et2_textbox_ro.extend(
 et2_register_widget(et2_vfsName_ro, ["vfs-name_ro"]);
 
 /**
- * vfs-mime
- * Icon for mimetype of file, or thumbnail
+ * vfs-mime: icon for mimetype of file, or thumbnail
+ * incl. optional link overlay icon, if file is a symlink
+ * 
+ * Creates following structure
+ * <span class="iconOverlayContainer">
+ *   <img class="et2_vfs vfsMimeIcon" src="..."/>
+ *   <span class="overlayContainer">
+ *      <img class="overlay" src="etemplate/templates/default/images/link.png"/>
+ *   </span>
+ * </span>
+ * 
+ * span.overlayContainer is optional and only generated for symlinks
  * 
  * @augments et2_valueWidget
  */
@@ -241,9 +251,11 @@ var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM],
 	 */
 	init: function() {
 		this._super.apply(this, arguments);
+		this.iconOverlayContainer = jQuery(document.createElement('span')).addClass('iconOverlayContainer');
 		this.image = jQuery(document.createElement("img"));
 		this.image.addClass("et2_vfs vfsMimeIcon");
-		this.setDOMNode(this.image[0]);
+		this.iconOverlayContainer.append(this.image);
+		this.setDOMNode(this.iconOverlayContainer[0]);
 	},
 	set_value: function(_value) {
 		if (typeof _value !== 'object')
@@ -265,6 +277,23 @@ var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM],
 			}
 			this.image.attr("src", src);
 		}
+		// add/remove link icon, if file is (not) a symlink
+		if ((_value.mode & et2_vfsMode.prototype.types.l) == et2_vfsMode.prototype.types.l)
+		{
+			if (typeof this.overlayContainer == 'undefined')
+			{
+				
+				this.overlayContainer = jQuery(document.createElement('span')).addClass('overlayContainer');
+				this.overlayContainer.append(jQuery(document.createElement('img'))
+					.addClass('overlay').attr('src', this.egw().image('link', 'etemplate')));
+				this.iconOverlayContainer.append(this.overlayContainer);
+			}
+		}
+		else if (typeof this.overlayContainer != 'undefined')
+		{
+			this.overlayContainer.remove();
+			delete this.overlayContainer;
+		}
 	},
 	/**
 	 * Implementation of "et2_IDetachedDOM" for fast viewing in gridview
@@ -274,11 +303,13 @@ var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM],
 		_attrs.push("value", "class");
 	},
 	getDetachedNodes: function() {
-		return [this.image[0]];
+		return [this.iconOverlayContainer[0]];
 	},
 
 	setDetachedAttributes: function(_nodes, _values) {
-		this.image = jQuery(_nodes[0]);
+		this.iconOverlayContainer = jQuery(_nodes[0]);
+		this.image = jQuery(_nodes[0].children[0]);
+		this.overlayContainer = _nodes[0].children[1];
 		if(typeof _values['class'] != "undefined") {
 			this.image.addClass(_values['class']);
 		}

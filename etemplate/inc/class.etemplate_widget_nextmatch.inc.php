@@ -61,6 +61,7 @@
  *  'row_modified'   =>		// I  key into row content for modification date or state of a row, to not query it again
  *  'parent_id'      =>		// I  key into row content of children linking them to their parent
  *  'is_parent'      =>		// I  key into row content to mark a row to have children
+ *  'is_parent_value'=>     // I  if set value of is_parent, otherwise is_parent is evaluated as boolean
  *  'dataStorePrefix'	=>	// I Optional prefix for client side cache to prevent collisions in applications that have more than one data set, such as ProjectManager / Project elements.  Defaults to appname if not set.
  *  'actions'        =>     // I  array with actions, see nextmatch_widget::egw_actions
  *  'action_links'   =>     // I  array with enabled actions or ones which should be checked if they are enabled
@@ -283,7 +284,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$row_id = isset($value['row_id']) ? $value['row_id'] : 'id';
 		$row_modified = $value['row_modified'];
 		$is_parent = $value['is_parent'];
-
+		$is_parent_value = $value['is_parent_value'];
 
 		foreach($rows as $n => $row)
 		{
@@ -302,8 +303,9 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				{
 					if ($parent_id)	// if app supports parent_id / hierarchy, set parent_id and is_parent
 					{
-						$row['is_parent'] = $row[$is_parent];
-						$row['parent_id'] = $row[$parent_id];
+						$row['is_parent'] = isset($is_parent_value) ?
+							$row[$is_parent] == $is_parent_value : (boolean)$row[$is_parent];
+						$row['parent_id'] = $row[$parent_id];	// seems NOT used on client!
 					}
 					$result['data'][$id] = $row;
 				}
@@ -830,7 +832,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$validated[$form_name] = $value;
 	}
 
-	
+
 	/**
 	 * Include favorites when generating the page server-side
 	 *
@@ -886,7 +888,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$html .= '</ul></span>';
 		return $html;
 	}
-	
+
 	/**
 	 * Create or delete a favorite for multiple users
 	 *
@@ -1052,13 +1054,13 @@ class etemplate_widget_nextmatch_customfilter extends etemplate_widget_transform
 				self::$transformation['type'] = $this->attrs['type'];
                 }
 		$form_name = self::form_name($cname, $this->id, $expand);
-		
+
 		// Don't need simple onchanges, it's ajax
 		if($this->attrs['onchange'] == 1)
 		{
 			$this->setElementAttribute($form_name, 'onchange', false);
 		}
-		
+
 		$this->setElementAttribute($form_name, 'options', trim($this->attrs['widget_options']) != '' ? $this->attrs['widget_options'] : '');
 
 		parent::beforeSendToClient($cname);
