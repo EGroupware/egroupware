@@ -448,6 +448,9 @@ class filemanager_ui
 			'3' => 'Show hidden files',
 			''  => 'Files from subdirectories',
 		);
+		$tpl->setElementAttribute('nm[upload]', 'onFinish', 'app.filemanager.upload');
+		$tpl->setElementAttribute('nm[upload]', 'multiple', true);
+
 		$tpl->exec('filemanager.filemanager_ui.index',$content,$sel_options,$readonlys,array('nm' => $content['nm']));
 	}
 
@@ -1292,8 +1295,65 @@ class filemanager_ui
 
 		if (!isset($dir)) $dir = array_pop($selected);
 
-		$arr['msg'] = self::action($action, $selected, $dir, $arr['errs'], $arr['dirs'], $arr['files']);
+		switch($action)
+		{
+			case 'upload':
+				$script_error = 0;
+				foreach($selected as $tmp_name => &$data)
+				{
+					$path = egw_vfs::concat($dir, egw_vfs::encodePathComponent($data['name']));
 
+					if(egw_vfs::deny_script($path))
+					{
+						if (!isset($script_error))
+						{
+							$arr['msg'] .= ($arr['msg'] ? "\n" : '').lang('You are NOT allowed to upload a script!');
+						}
+						++$script_error;
+						++$arr['errs'];
+						unset($selected[$tmp_name]);
+					}
+					elseif (!$data['confirmed'] && egw_vfs::stat($path))
+					{
+						$data['confirm'] = true;
+					}
+					else
+					{
+						if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
+						{
+							$tmp_path = $GLOBALS['egw_info']['server']['temp_dir'] . '/' . basename($tmp_name);
+						}
+						else
+						{
+							$tmp_path = ini_get('upload_tmp_dir').'/'.basename($tmp_name);
+						}
+
+						if (egw_vfs::copy_uploaded($tmp_path, $path, null, false))
+						{
+							++$arr['files'];
+							$uploaded[] = $data['name'];
+						}
+						else
+						{
+							++$arr['errs'];
+						}
+					}
+				}
+				if ($arr['errs'] > $script_error)
+				{
+					$arr['msg'] .= ($arr['msg'] ? "\n" : '').lang('Error uploading file!');
+				}
+				if ($arr['files'])
+				{
+					$arr['msg'] .= ($arr['msg'] ? "\n" : '').lang('%1 successful uploaded.', implode(', ', $uploaded));
+				}
+				$arr['uploaded'] = $selected;
+				$arr['path'] = $dir;
+				break;
+
+			default:
+				$arr['msg'] = self::action($action, $selected, $dir, $arr['errs'], $arr['dirs'], $arr['files']);
+		}
 		$response->data($arr);
 		//error_log(__METHOD__."('$action',".array2string($selected).') returning '.array2string($arr));
 	}

@@ -176,31 +176,57 @@ app.filemanager = AppJS.extend(
 	},
 
 	/**
-	 * Check if file would overwrite a file on server
+	 * Send names of uploaded files (again) to server, to process them: either copy to vfs or ask overwrite/rename
 	 * 
-	 * @param upload
-	 * @param path_id
-	 * @Todo whole upload need to be modified to use server-side callback to move file in place,
-	 * if it does NOT overwrite anything, or send prompt to override / change filename back to client
+	 * @param _event
+	 * @param _file_count
 	 */
-	check_files: function(upload, path_id)
+	upload: function(_event, _file_count)
 	{
-		alert('ToDo ;-)');
-		/*var files = [];
-		if (upload.files)
+		if (_file_count)
 		{
-			for(var i = 0; i < upload.files.length; ++i)
+			var widget = _event.data;
+			var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', widget.options.value, this.get_path()], this);
+			widget.progress.remove();
+			widget.set_value('');
+			request.sendRequest(false, this._upload_callback, this);
+		}
+	},
+	
+	/**
+	 * Callback for server response to upload request:
+	 * - display message and refresh list
+	 * - ask use to confirm overwritting existing files or rename upload
+	 * 
+	 * @param object _data values for attributes msg, files, ...
+	 */
+	_upload_callback: function(_data)
+	{
+		// give an error: EGW JSON Error: Internal JSON handler error
+		// seems to be caused by upload being part of nextmatch namespace "nm"
+		if (_data.msg) window.egw_refresh(_data.msg, this.appname);
+
+		var send_confirmation_back = false;
+		for(var file in _data.uploaded)
+		{
+			if (_data.uploaded[file].confirm && !_data.uploaded[file].confirmed)
 			{
-				files.push(upload.files[i].name || upload.files[i].fileName);
+				if (confirm(egw.lang('Overwrite %1?', _data.uploaded[file].name)))
+				{
+					send_confirmation_back = true;
+					_data.uploaded[file].confirmed = true;
+				}
+			}
+			else
+			{
+				delete _data.uploaded[file];
 			}
 		}
-		else if (upload.value)
+		if (send_confirmation_back)
 		{
-			files = upload.value;
+			var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', _data.uploaded, _data.path], this);
+			request.sendRequest(false, this._upload_callback, this);
 		}
-		var path = document.getElementById(path_id ? path_id : upload.id.replace(/upload\]\[/,"nm][path"));
-	
-		xajax_doXMLHTTP("filemanager_ui::ajax_check_upload_target",upload.id, files, path.value);*/
 	},
 	
 	/**

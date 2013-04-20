@@ -68,7 +68,7 @@
 			<buttononly id="button[linkpaste]" onclick="app.filemanager.paste('linkpaste');" options="linkpaste,linkpaste_disabled"/>
 			<buttononly id="button[mailpaste]" onclick="app.filemanager.paste('mailpaste');" options="mailpaste,mailpaste_disabled"/>
 			<button label="File a file" onclick="window.open(egw::link('/index.php','menuaction=stylite.stylite_filemanager.upload'),'_blank','dependent=yes,width=550,height=350,scrollbars=yes,status=yes'); return false;" image="upload"/>
-			<file statustext="Select file to upload in current directory" id="upload[]" onchange="app.filemanager.check_files(this);"/>
+			<file statustext="Select file to upload in current directory" id="upload"/>
 		</hbox>
 	</template>
 	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
