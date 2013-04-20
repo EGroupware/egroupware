@@ -199,6 +199,11 @@ var et2_dialog = et2_widget.extend({
 	// Define this as null to avoid breaking any hierarchies (eg: destroy())
 	_parent: null,
 
+	/**
+	 * Constructor
+	 * 
+	 * @memberOf et2_dialog
+	 */
 	init: function() {
 		// Call the inherited constructor
 		this._super.apply(this, arguments);
@@ -212,7 +217,7 @@ var et2_dialog = et2_widget.extend({
 				this._buttons[i][j].click = (function(id) {
 					return function(event) {
 						self.click(event.target,id);
-					}
+					};
 				})(this._buttons[i][j].button_id);
 			}
 		}
@@ -239,7 +244,7 @@ var et2_dialog = et2_widget.extend({
 		this.div = null;
 
 		// Call the inherited constructor
-		this._super.apply(this, arguments)
+		this._super.apply(this, arguments);
 	},
 
 	/**
@@ -393,7 +398,7 @@ var et2_dialog = et2_widget.extend({
 				// Focus default button so enter works
 				$j(this).parents('.ui-dialog-buttonpane button[default]').focus(); 
 			},
-			close: jQuery.proxy(function() {this.destroy()},this)
+			close: jQuery.proxy(function() {this.destroy();},this)
 		});
 	}
 });
