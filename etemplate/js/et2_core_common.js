@@ -733,3 +733,35 @@ function et2_rangeSubstract(_ar1, _ar2)
 	return res;
 }
 
+/**
+ * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
+ * 
+ * @param string func dot-separated function name
+ * @param arguments variable number of arguments
+ * @returns {Boolean}
+ */
+function et2_call(_func)
+{
+	var args = [].slice.call(arguments);	// convert arguments to array
+	var func = args.shift();
+	var parent = window;
+
+	if (typeof _func == 'string')
+	{
+		var parts = _func.split('.');
+		func = parts.pop();
+		for(var i=0; i < parts.length && typeof parent[parts[i]] != 'undefined'; ++i)
+		{
+			parent = parent[parts[i]];
+		}
+		if (typeof parent[func] == 'function')
+		{
+			func = parent[func];
+		}
+	}
+	if (typeof func != 'function')
+	{
+		throw _func+" is not a function!";
+	}
+	return func.apply(parent, args);
+}

@@ -258,7 +258,7 @@ var et2_file = et2_inputWidget.extend(
 		this.disabled_buttons = $j("input[type='submit'], button").not("[disabled]").attr("disabled", true);
 
 		event.data = this;
-		if(this.options.onStart && typeof this.options.onStart == 'function') return this.options.onStart(event,file_count);
+		if(this.options.onStart) return et2_call(this.options.onStart, event, file_count);
 		return true;
 	},
 
@@ -268,7 +268,7 @@ var et2_file = et2_inputWidget.extend(
 	onFinish: function(event, file_count) {
 		this.disabled_buttons.attr("disabled", false);
 		event.data = this;
-		if(this.options.onFinish && typeof this.options.onFinish == 'function') return this.options.onFinish(event,file_count);
+		if(this.options.onFinish) return et2_call(this.options.onFinish, event, file_count);
 	},
 
 	
@@ -326,7 +326,6 @@ console.warn(event,name,error);
 				if(typeof response.response[0].data[key] == "string")
 				{
 					// Message from server - probably error
-					
 					$j("[file='"+name+"']",this.progress)
 						.addClass("error")
 						.css("display", "block")
@@ -349,9 +348,9 @@ console.warn(event,name,error);
 				.css("display", "block")
 				.text(this.egw().lang("Server error"));
 		}
-		if(this.options.onFinishOne && typeof this.options.onFinishOne == 'function')
+		if(this.options.onFinishOne)
 		{
-			return this.options.onFinishOne(event,response,name,number,total);
+			return et2_call(this.options.onFinishOne,event,response,name,number,total);
 		}
 		return true;
 	},
