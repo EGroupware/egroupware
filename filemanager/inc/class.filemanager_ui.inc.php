@@ -756,8 +756,11 @@ class filemanager_ui
 		{
 			$GLOBALS['egw_info']['flags']['currentapp'] = 'projectmanager';
 		}
-		egw_session::appsession('index','filemanager',$query);
-
+		// do NOT store query, if hierarchical data / children are requested
+		if (empty($query['col_filter']['parent_id']))
+		{
+			egw_session::appsession('index','filemanager',$query);
+		}
 		// be tolerant with (in previous versions) not correct urlencoded pathes
 		if (!egw_vfs::stat($query['path'],true) && egw_vfs::stat(urldecode($query['path'])))
 		{
