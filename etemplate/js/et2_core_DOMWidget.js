@@ -359,32 +359,32 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 	},
 
 	/**
-         * Set Actions on the widget
-         *
-         * Each action is defined as an object:
+	 * Set Actions on the widget
 	 *
-         * move: {
-         *      type: "drop",
-         *      acceptedTypes: "mail",
-         *      icon:   "move",
-         *      caption:        "Move to"
-         *      onExecute:      javascript:mail_move"
-         * }
-         *
-         * This will turn the widget into a drop target for "mail" drag types.  When "mail" drag types are dropped,
-         * the global function mail_move(egwAction action, egwActionObject sender) will be called.  The ID of the
-         * dragged "mail" will be in sender.id, some information about the sender will be in sender.context.  The
+	 * Each action is defined as an object:
+	 *
+	 * move: {
+	 *      type: "drop",
+	 *      acceptedTypes: "mail",
+	 *      icon:   "move",
+	 *      caption:	"Move to"
+	 *      onExecute:      javascript:mail_move"
+	 * }
+	 *
+	 * This will turn the widget into a drop target for "mail" drag types.  When "mail" drag types are dropped,
+	 * the global function mail_move(egwAction action, egwActionObject sender) will be called.  The ID of the
+	 * dragged "mail" will be in sender.id, some information about the sender will be in sender.context.  The
 	 * etemplate2 widget involved can typically be found in action.parent.data.widget, so your handler
 	 * can operate in the widget context easily.  The location varies depending on your action though.  It
 	 * might be action.parent.parent.data.widget
 	 *
 	 * To customise how the actions are handled for a particular widget, override _link_actions().  It handles
 	 * the more widget-specific parts.
-         *
-         * @param Object {ID: {attributes..}+} map of egw action information
+	 *
+	 * @param Object {ID: {attributes..}+} map of egw action information
 	 * @see etemplate/inc/class.etemplate_widget_nextmatch->egw_actions()
-         */
-        set_actions: function(actions)
+	 */
+	set_actions: function(actions)
 	{
 		if(this.id == "" || typeof this.id == "undefined")
 		{
@@ -393,27 +393,27 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 		}
 
 		// Initialize the action manager and add some actions to it
-                var gam = egw_getAppActionManager();
-                this._actionManager = gam.addAction("actionManager", this.id);
-                // ActionManager wants an array
-                var parsed_actions = [];
-                if(typeof actions == "object" && actions)
-                {
-                        for(var key in actions)
-                        {
-                                actions[key].id = key;
-                                if(typeof actions[key].icon != "undefined" && actions[key].icon)
-                                {
-                                        actions[key].iconUrl = this.egw().image(actions[key].icon);
-                                }
-                                parsed_actions.push(actions[key]);
-                        }
-                }
-                else
-                {
-                        parsed_actions = actions;
-                }
-                this._actionManager.updateActions(parsed_actions);
+		var gam = egw_getAppActionManager();
+		this._actionManager = gam.addAction("actionManager", this.id);
+		// ActionManager wants an array
+		var parsed_actions = [];
+		if(typeof actions == "object" && actions)
+		{
+			for(var key in actions)
+			{
+				actions[key].id = key;
+				if(typeof actions[key].icon != "undefined" && actions[key].icon)
+				{
+					actions[key].iconUrl = this.egw().image(actions[key].icon);
+				}
+				parsed_actions.push(actions[key]);
+			}
+		}
+		else
+		{
+			parsed_actions = actions;
+		}
+		this._actionManager.updateActions(parsed_actions);
 
 		// Put a reference to the widget into the action stuff, so we can
 		// easily get back to widget context from the action handler
