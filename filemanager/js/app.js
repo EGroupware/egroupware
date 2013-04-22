@@ -186,7 +186,7 @@ app.filemanager = AppJS.extend(
 		if (_file_count)
 		{
 			var widget = _event.data;
-			var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', widget.options.value, this.get_path()], this);
+			var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', widget.getValue(), this.get_path()], this);
 			widget.progress.remove();
 			widget.set_value('');
 			request.sendRequest(false, this._upload_callback, this);
@@ -202,31 +202,58 @@ app.filemanager = AppJS.extend(
 	 */
 	_upload_callback: function(_data)
 	{
-		// give an error: EGW JSON Error: Internal JSON handler error
-		// seems to be caused by upload being part of nextmatch namespace "nm"
 		if (_data.msg) window.egw_refresh(_data.msg, this.appname);
 
-		var send_confirmation_back = false;
+		//var send_confirmation_back = false;
+		var that = this;
 		for(var file in _data.uploaded)
 		{
 			if (_data.uploaded[file].confirm && !_data.uploaded[file].confirmed)
 			{
-				if (confirm(egw.lang('Overwrite %1?', _data.uploaded[file].name)))
+				et2_createWidget("dialog",{
+					callback: function(button_id, value) {
+						alert('button='+button_id+', value='+JSON.serialize(value));
+						if (button_id == "overwrite")
+						{
+							value.data.confirmed = true;
+							var uploaded = {};
+							uploaded[value.file] = value.data;
+							var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', uploaded, value.path], that);
+							request.sendRequest(false, that._upload_callback, that);
+						}
+					},
+					buttons: [
+						{text: egw.lang("Overwrite"), id: "overwrite", class: "ui-priority-primary", "default": true},
+						//{text: egw.lang("Rename"), id:"rename"},
+						{text: egw.lang("Cancel"), id:"cancel"},
+					].reverse(),
+					title: egw.lang('File already exists', _data.uploaded[file].name),
+					//template:"/egroupware/addressbook/templates/default/edit.xet",
+					value: { content: {
+						name: _data.uploaded[file].name, 
+						file: file, 
+						data: _data.uploaded[file],
+						path: _data.path
+					}, sel_options: {}},
+					message: egw.lang('Do you want to overwrite existing file <b>%1</b> in directory <b>%2</b>?', _data.uploaded[file].name, _data.path),
+					dialog_type: et2_dialog.QUESTION_MESSAGE
+				});
+				/*if (confirm(egw.lang('Overwrite %1?', _data.uploaded[file].name)))
 				{
 					send_confirmation_back = true;
 					_data.uploaded[file].confirmed = true;
-				}
+				}*/
 			}
-			else
+			/*else
 			{
 				delete _data.uploaded[file];
-			}
+			}*/
 		}
-		if (send_confirmation_back)
+		/*if (send_confirmation_back)
 		{
 			var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', _data.uploaded, _data.path], this);
 			request.sendRequest(false, this._upload_callback, this);
-		}
+		}*/
 	},
 	
 	/**
