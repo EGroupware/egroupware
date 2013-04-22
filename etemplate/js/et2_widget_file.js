@@ -185,7 +185,37 @@ var et2_file = et2_inputWidget.extend(
 		var value = this.options.value ? this.options.value : this.input.val();
 		return value;
 	},
-	
+
+	/**
+	 * You can't actually set value, but clearing works
+	 */
+	set_value: function(value) {
+		if(!value || typeof value == "undefined")
+		{
+			value = {};
+		}
+		if(jQuery.isEmptyObject(value))
+		{
+			this.options.value = {};
+			this.progress.empty();
+
+			// Reset the HTML element
+			this.input.wrap('<form>').closest('form').get(0).reset();
+			this.input.unwrap();
+
+			return;
+		}
+		
+		/*
+		// This would only look like it worked
+		var i = 0;
+		for(var key in value)
+		{
+			this.createStatus(null,value.name,i++);
+		}
+		*/
+	},
+
 	getInputNode: function() {
 		return this.input[0];
 	},
@@ -356,21 +386,31 @@ console.warn(event,name,error);
 	},
 
 	/**
-	 * Cancel a file
+	 * Remove a file from the list of values
 	 */
-	cancel: function(e) {
-		e.preventDefault();
-		// Look for file name in list
-		var target = $j(e.target).parents("li.message");
-console.info(target);
-		for(var key in e.data.options.value) {
-			if(e.data.options.value[key].name == target.attr("file"))
+	remove_file: function(filename)
+	{
+console.info(filename);
+		for(var key in this.options.value)
+		{
+			if(this.options.value[key].name == filename)
 			{
-				delete e.data.options.value[key];
-				target.remove();
+				delete this.options.value[key];
+				$j('[file="'+filename+'"]',this.node).remove();
 				return;
 			}
 		}
+	},
+
+	/**
+	 * Cancel a file - event callback
+	 */
+	cancel: function(e)
+	{
+		e.preventDefault();
+		// Look for file name in list
+		var target = $j(e.target).parents("li.message");
+		e.data.remove_file.apply(e.data,target.attr("file"));
 		// In case it didn't make it to the list (error)
 		target.remove();
 		$j(e.target).remove();
