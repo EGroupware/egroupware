@@ -324,13 +324,13 @@ var et2_dialog = et2_widget.extend({
 		{
 			this.div.dialog("option", "buttons", this._buttons[buttons]);
 		}
-		else if (typeof buttons == "array")
+		else if (buttons instanceof Array)
 		{
 			for (var i = 0; i < buttons.length; i++)
 			{
 				if(!buttons[i].click)
 				{
-					buttons[i].click = jQuery.proxy(this.click,this,buttons[i].id);
+					buttons[i].click = jQuery.proxy(this.click,this,null,buttons[i].id);
 				}
 			}
 			this.options.buttons = buttons;
@@ -388,6 +388,7 @@ var et2_dialog = et2_widget.extend({
 			this.set_message(this.options.message);
 			this.set_dialog_type(this.options.dialog_type);
 		}
+		this.set_buttons(this.options.buttons);
 		this.div.dialog({
 			// Pass the internal object, not the option
 			buttons: typeof this.options.buttons == "number" ? this._buttons[this.options.buttons] : this.options.buttons,
