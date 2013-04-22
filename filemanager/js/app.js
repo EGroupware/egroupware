@@ -212,7 +212,6 @@ app.filemanager = AppJS.extend(
 			{
 				et2_createWidget("dialog",{
 					callback: function(button_id, value) {
-						alert('button='+button_id+', value='+JSON.serialize(value));
 						if (button_id == "overwrite")
 						{
 							value.data.confirmed = true;
@@ -229,12 +228,12 @@ app.filemanager = AppJS.extend(
 					].reverse(),
 					title: egw.lang('File already exists', _data.uploaded[file].name),
 					//template:"/egroupware/addressbook/templates/default/edit.xet",
-					value: { content: {
+					value: { 
 						name: _data.uploaded[file].name, 
 						file: file, 
 						data: _data.uploaded[file],
 						path: _data.path
-					}, sel_options: {}},
+					},
 					message: egw.lang('Do you want to overwrite existing file <b>%1</b> in directory <b>%2</b>?', _data.uploaded[file].name, _data.path),
 					dialog_type: et2_dialog.QUESTION_MESSAGE
 				});
