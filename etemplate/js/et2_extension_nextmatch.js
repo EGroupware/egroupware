@@ -731,10 +731,19 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			self.iterateOver(function(widget) {widget.resize();}, self, et2_IResizeable);
 		};
 
-		// Register handler for column selection popup
-		this.dataview.selectColumnsClick = function(event) {
-			self._selectColumnsClick(event);
-		};
+		// Register handler for column selection popup, or disable
+		if(this.options.settings.no_columnselection)
+		{
+			this.dataview.selectColumnsClick = function() {return false;};
+			$j('span.selectcols',this.dataview.headTr).hide();
+		}
+		else
+		{
+			$j('span.selectcols',this.dataview.headTr).show();
+			this.dataview.selectColumnsClick = function(event) {
+				self._selectColumnsClick(event);
+			};
+		}
 	},
 
 	_parseDataRow: function(_row, _rowData, _colData) {
@@ -920,9 +929,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			});
 			autoRefresh.set_value(this._get_autorefresh());
 
-			var defaultCheck = et2_createWidget("checkbox", {}, this);
-			defaultCheck.set_id('as_default');
-			defaultCheck.set_label(this.egw().lang("As default"));
+			var defaultCheck = et2_createWidget("select", {"empty_label":"Preference"}, this);
+			defaultCheck.set_id('nm_col_preference');
+			defaultCheck.set_select_options({
+				'default': {label: 'Default',title:'Set these columns as the default'},
+				'reset':   {label: 'Reset', title:"Reset all user's column preferences"},
+				'force':   {label: 'Force', title:'Force column preference so users cannot change it'}
+			});
 
 			var okButton = et2_createWidget("buttononly", {}, this);
 			okButton.set_label(this.egw().lang("ok"));
@@ -971,6 +984,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					}
 				}
 				columnMgr.setColumnVisibilitySet(visibility);
+
+				// Hide popup
 				self.selectPopup.toggle();
 
 				self.dataview.updateColumns();
@@ -979,7 +994,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				self._set_autorefresh(autoRefresh.get_value());
 
 				// Set default?
-				if(defaultCheck.get_value() == "true")
+				if(defaultCheck.get_value())
 				{
 					self.getInstanceManager().submit();
 				}

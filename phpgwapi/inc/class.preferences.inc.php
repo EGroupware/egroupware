@@ -188,10 +188,6 @@ class preferences
 		return $prefs;
 	}
 
-	/**************************************************************************\
-	* These are the standard $this->account_id specific functions              *
-	\**************************************************************************/
-
 	/**
 	 * parses a notify and replaces the substitutes
 	 *
@@ -657,6 +653,55 @@ class preferences
 			$this->delete($this->table,array('preference_owner' => $accountid+self::DEFAULT_ID),__LINE__,__FILE__);
 		}
 	}
+
+	/**
+	 * Completely delete the specified preference name from all users
+	 *
+	 * @param string $app Application name
+	 * @param string $name Preference name
+	 * @param string $type='user' of preference to set: forced, default, user
+	 */
+	public function delete_preference($app, $name, $type='user')
+	{
+		$GLOBALS['egw']->db->transaction_begin();
+		$where = array(
+			'preference_app' => $app,
+			'preference_value ' . $this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE].' ' .
+				$this->db->quote("%$name%")
+		);
+		switch($type)
+		{
+			case 'forced':
+				$where['preference_owner'] = self::FORCED_ID;
+				break;
+			case 'default':
+				$where['preference_owner'] = self::DEFAULT_ID;
+				break;
+			case 'user':
+				$where[] = 'preference_owner > 0';
+				break;
+		}
+		foreach($this->db->select($this->table,'*',$where,__LINE__,__FILE__) as $row)
+		{
+			$value = unserialize($row['preference_value']);
+			if($value[$name])
+			{
+				unset($value[$name]);
+				$this->quote($value);	// this quote-ing is for serialize, not for the db
+				$GLOBALS['egw']->db->insert($this->table,array(
+					'preference_value' => serialize($value),
+				),array(
+					'preference_owner' => $row['preference_owner'],
+					'preference_app'   => $row['preference_app'],
+				),__LINE__,__FILE__);
+			}
+		}
+		$GLOBALS['egw']->db->transaction_commit();
+	}
+
+	/**************************************************************************\
+	* These are the standard $this->account_id specific functions              *
+	\**************************************************************************/
 
 	/**
 	 * add complex array data preference to $app_name a particular app

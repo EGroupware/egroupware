@@ -118,10 +118,11 @@ class etemplate_widget_nextmatch extends etemplate_widget
 
 		$send_value = $value;
 
+		list($app) = explode('.',$value['get_rows']);
+
 		// Check for a favorite in URL
 		if($_GET['favorite'] && $value['favorites'])
 		{
-			list($app) = explode('.',$value['get_rows']);
 			$safe_name = preg_replace('/[^A-Za-z0-9-_]/','_',strip_tags($_GET['favorite']));
 			$pref_name = "favorite_" .$safe_name;
 
@@ -208,6 +209,14 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			self::$request->sel_options = array_merge(self::$request->sel_options,$value['rows']['sel_options']);
 			unset($value['rows']['sel_options']);
 		}
+
+		// If column selection preference is forced, set a flag to turn off UI
+		$pref_name = 'nextmatch-' . (isset($value['columnselection_pref']) ? $value['columnselection_pref'] : $this->attrs['template']);
+		$value['no_columnselection'] = $value['no_columnselection'] || (
+			$GLOBALS['egw']->preferences->forced[$app][$pref_name] &&
+			// Need to check admin too, or it will be impossible to turn off
+			!$GLOBALS['egw_info']['user']['apps']['admin']
+		);
 
 		// todo: no need to store rows in request, it's enought to send them to client
 
@@ -809,26 +818,43 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		}
 
 
-		// Save current column settings as default (admins only)
-		if($value['as_default'])
+		// Save current column settings as default, clear, or force (admins only)
+		if($GLOBALS['egw_info']['user']['apps']['admin'] && $app)
 		{
-			unset($value['as_default']);
-			if($GLOBALS['egw_info']['user']['apps']['admin'] && $app)
+			$pref_name = 'nextmatch-' . (isset($value['columnselection_pref']) ? $value['columnselection_pref'] : $this->attrs['template']);
+			$refresh_pref_name = $pref_name.'-autorefresh';
+			$pref_level = $value['nm_col_preference'] == 'force' ? 'forced' : 'default';
+
+			// Clear forced pref before setting default
+			if($pref_level != 'forced')
 			{
-				$pref_name = 'nextmatch-' . (isset($value['columnselection_pref']) ? $value['columnselection_pref'] : $this->attrs['template']);
-				// Columns already saved to user's preferences, use from there
-				$prefs = $GLOBALS['egw']->preferences->read();
-				$cols = $prefs[$app][$pref_name];
-				$GLOBALS['egw']->preferences->add($app,$pref_name,is_array($cols) ? implode(',',$cols) : $cols,'default');
+				$GLOBALS['egw']->preferences->delete($app,$pref_name,'forced');
+				$GLOBALS['egw']->preferences->delete($app,$refresh_pref_name,'forced');
+				$GLOBALS['egw']->preferences->save_repository(false,'forced');
+			}
 
-				// Autorefresh
-				$refresh = $prefs[$app][$pref_name."-autorefresh"];
-				$GLOBALS['egw']->preferences->add($app,$pref_name."-autorefresh",(int)$refresh,'default');
+			// Set columns + refresh as default for all users
 
-				$GLOBALS['egw']->preferences->save_repository(false,'default');
-				$prefs = $GLOBALS['egw']->preferences->read();
+			// Columns already saved to current user's preferences, use from there
+			$prefs = $GLOBALS['egw']->preferences->read();
+			$cols = $prefs[$app][$pref_name];
+			$GLOBALS['egw']->preferences->add($app,$pref_name,is_array($cols) ? implode(',',$cols) : $cols, $pref_level);
+
+			// Autorefresh
+			$refresh = $prefs[$app][$refresh_pref_name];
+			$GLOBALS['egw']->preferences->add($app,$refresh_pref_name,(int)$refresh,$pref_level);
+
+			$GLOBALS['egw']->preferences->save_repository(false,$pref_level);
+			$prefs = $GLOBALS['egw']->preferences->read();
+
+			if($value['nm_col_preference'] == 'reset')
+			{
+				// Clear column + refresh preference so users go back to default
+				$GLOBALS['egw']->preferences->delete_preference($app,$pref_name);
 			}
 		}
+		unset($value['nm_col_preference']);
+
 		$validated[$form_name] = $value;
 	}
 
