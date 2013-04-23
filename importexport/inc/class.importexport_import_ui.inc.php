@@ -361,15 +361,44 @@
 					// Skipped column in definition
 					continue;
 				}
-				// Check column headers, taking into account different translations
-				elseif($index < count($options['csv_fields']) && strtoupper($options['csv_fields'][$index]) != strtoupper($header) && strtoupper(lang($options['csv_fields'][$index])) != strtoupper($header) && strtoupper($options['csv_fields'][$index]) != strtoupper(lang($header)))
+				else if ($index > count($options['csv_fields']))
 				{
-					// Problem
-					$message[] = lang("Column mismatch: %1 should be %2, not %3",
-						$index,$options['csv_fields'][$index], $header);
-					// But can still continue
-					// $ok = false;
+					// File has extra columns - already warned, above
+					break;
 				}
+
+				// Check for matching headers
+				if($options['csv_fields'][$index] == $header)
+				{
+					// Simple match
+					continue;
+				}
+				// Check column headers, taking into account different translations - make sure no *
+				$lang_defn = mb_strtoupper(translation::translate($options['csv_fields'][$index],false,''));
+				$lang_file = mb_strtoupper(translation::translate($header,false,''));
+
+				if($lang_defn == $lang_file ||
+					$lang_defn == mb_strtoupper($header) ||
+					$lang_file == mb_strtoupper($options['csv_fields'][$index])
+				)
+				{
+					continue;
+				}
+
+				// Try to go back to translation message ID for a match
+				$file_message_id = translation::get_message_id($header, $definition->application);
+				$defn_message_id = translation::get_message_id($options['csv_fields'][$index], $definition->application);
+
+				if($file_message_id && $defn_message_id && $file_message_id == $defn_message_id)
+				{
+					continue;
+				}
+		
+				// Problem
+				$message[] = lang("Column mismatch: %1 should be %2, not %3",
+					$index,$options['csv_fields'][$index], $header);
+				// But can still continue
+				// $ok = false;
 			}
 			if(!$ok || count($message) != $message_count)
 			{
