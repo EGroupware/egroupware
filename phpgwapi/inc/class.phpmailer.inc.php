@@ -405,7 +405,14 @@ class PHPMailer {
    * @return boolean true on success, false if address already used
    */
   public function AddAddress($address, $name = '') {
-    return $this->AddAnAddress('to', $address, $name);
+	try
+	{
+    	return $this->AddAnAddress('to', $address, $name);
+	} catch (phpmailerException $e)
+	{
+		//$this->SetError(__METHOD__.__LINE__.$e->getMessage());
+		return false;
+	}
   }
 
   /**
@@ -416,7 +423,14 @@ class PHPMailer {
    * @return boolean true on success, false if address already used
    */
   public function AddCC($address, $name = '') {
-    return $this->AddAnAddress('cc', $address, $name);
+	try
+	{
+    	return $this->AddAnAddress('cc', $address, $name);
+	} catch (phpmailerException $e)
+	{
+		//$this->SetError(__METHOD__.__LINE__.$e->getMessage());
+		return false;
+	}
   }
 
   /**
@@ -427,7 +441,14 @@ class PHPMailer {
    * @return boolean true on success, false if address already used
    */
   public function AddBCC($address, $name = '') {
-    return $this->AddAnAddress('bcc', $address, $name);
+	try
+	{
+		return $this->AddAnAddress('bcc', $address, $name);
+	} catch (phpmailerException $e)
+	{
+		//$this->SetError(__METHOD__.__LINE__.$e->getMessage());
+		return false;
+	}
   }
 
   /**
@@ -437,7 +458,14 @@ class PHPMailer {
    * @return boolean
    */
   public function AddReplyTo($address, $name = '') {
-    return $this->AddAnAddress('ReplyTo', $address, $name);
+	try
+	{
+		return $this->AddAnAddress('ReplyTo', $address, $name);
+	} catch (phpmailerException $e)
+	{
+		//$this->SetError(__METHOD__.__LINE__.$e->getMessage());
+		return false;
+	}
   }
 
   /**
