@@ -2035,7 +2035,7 @@ class PHPMailer {
         $msg .= '<p>' . $this->Lang('smtp_error') . $lasterror['smtp_msg'] . "</p>\n";
       }
     }
-    $this->ErrorInfo = $msg;
+    if (empty($this->ErrorInfo) || strpos($this->ErrorInfo,$msg)===false) $this->ErrorInfo .= (empty($this->ErrorInfo)?'':'<br>').$msg;
   }
 
   /**

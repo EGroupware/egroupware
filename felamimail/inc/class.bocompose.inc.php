@@ -989,7 +989,18 @@
 				}
 				catch(phpmailerException $e) {
 					$this->errorInfo = $e->getMessage();
-					#error_log($this->errorInfo);
+					if ($mail->ErrorInfo) // use the complete mailer ErrorInfo, for full Information
+					{
+						if (stripos($mail->ErrorInfo, $this->errorInfo)===false)
+						{
+							$this->errorInfo = $mail->ErrorInfo.'<br>'.$this->errorInfo;
+						}
+						else
+						{
+							$this->errorInfo = $mail->ErrorInfo;
+						}
+					}
+					error_log(__METHOD__.__LINE__.array2string($this->errorInfo));
 					return false;
 				}
 			} else {
