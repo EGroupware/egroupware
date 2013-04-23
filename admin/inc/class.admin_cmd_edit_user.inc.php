@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -123,6 +123,8 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 
 		if ($this->account)
 		{
+			// invalidate account, before reading it, to code with changed to DB or LDAP outside EGw
+			accounts::cache_invalidate($data['account_id']);
 			if (!($old = admin_cmd::$accounts->read($data['account_id'])))
 			{
 				throw new egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);

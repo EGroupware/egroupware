@@ -5,9 +5,9 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package admin
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 /**
@@ -35,7 +35,7 @@ class admin_cmd_edit_group extends admin_cmd
 
 	/**
 	 * change the password of a given user
-	 * 
+	 *
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws egw_exception_no_admin
@@ -66,7 +66,7 @@ class admin_cmd_edit_group extends admin_cmd
 		{
 			throw new egw_exception_wrong_userinput(lang('You must enter a group name.'),9);
 		}
-		if (!is_null($data['account_lid']) && ($id = admin_cmd::$accounts->name2id($data['account_lid'],'account_lid','g')) && 
+		if (!is_null($data['account_lid']) && ($id = admin_cmd::$accounts->name2id($data['account_lid'],'account_lid','g')) &&
 			$id !== $data['account_id'])
 		{
 			throw new egw_exception_wrong_userinput(lang('That loginid has already been taken'),999);
@@ -80,9 +80,11 @@ class admin_cmd_edit_group extends admin_cmd
 			$data['account_members'] = admin_cmd::parse_accounts($data['account_members'],true);
 		}
 		if ($check_only) return true;
-		
+
 		if ($this->account)
 		{
+			// invalidate account, before reading it, to code with changed to DB or LDAP outside EGw
+			accounts::cache_invalidate($data['account_id']);
 			if (!($old = admin_cmd::$accounts->read($data['account_id'])))
 			{
 				throw new egw_exception_wrong_userinput(lang("Unknown account: %1 !!!",$this->account),15);
@@ -102,7 +104,7 @@ class admin_cmd_edit_group extends admin_cmd
 		$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
 			'location' => $this->account ? 'editgroup' : 'addgroup'
 		),False,True);	// called for every app now, not only enabled ones)
-		
+
 		if ($data['account_members'])
 		{
 			admin_cmd::$accounts->set_members($data['account_members'],$data['account_id']);
