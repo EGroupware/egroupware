@@ -146,8 +146,6 @@ class ldap
 		// give visible error, only if we cant connect to any ldap server
 		if ($this->exception_on_error) throw new egw_exception_no_permission("Can't connect/bind to LDAP server '$host' and dn='$dn'!");
 
-		echo "<p><b>Error: Can't connect/bind to LDAP server '$host' and dn='$dn'!</b><br />".function_backtrace()."</p>\n";
-
 		return false;
 	}
 
