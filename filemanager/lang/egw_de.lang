@@ -76,6 +76,7 @@ directory successfully created.	filemanager	de	Verzeichnis erfolgreich angelegt.
 directory with documents to insert entries	filemanager	de	Verzeichnis mit Dokumenten zum Einfügen von Daten
 display and modification of content	filemanager	de	Anzeigen und Verändern des Inhaltes
 display of content	filemanager	de	Anzeigen des Inhaltes
+do you want to overwrite existing file <b>%1</b> in directory <b>%2</b>?	filemanager	de	Wollen Sie die bestehende Datei <b>%1</b> im Verzeichnis <b>%2</b> überschreiben?
 do you want to overwrite the existing file %1?	filemanager	de	Wollen Sie die existierende Datei %1 überschreiben?
 download	filemanager	de	Herunterladen
 edit comments	filemanager	de	Kommentare bearbeiten
@@ -103,6 +104,7 @@ favorites	filemanager	de	Favoriten
 file	filemanager	de	Datei
 file %1 could not be created.	filemanager	de	Die Datei %1 konnte nicht erzeugt werden
 file %1 may be too big. contact your systemadministrator for further info	filemanager	de	Die Datei %1 ist eventuell zu gross. Kontaktieren Sie Ihren Systemadministrator für weiterreichende Informationen.
+file <b>%1</b> already exists	filemanager	de	Es gibt schon eine Datei <b>%1</b>
 file deleted.	filemanager	de	Datei gelöscht.
 file names cannot contain "%1"	filemanager	de	Dateinamen dürfen "%1" nicht enthalten
 file or directory not found!	filemanager	de	Datei oder Verzeichnis nicht gefunden!

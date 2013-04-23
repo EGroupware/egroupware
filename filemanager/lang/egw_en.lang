@@ -76,6 +76,7 @@ directory successfully created.	filemanager	en	Directory successfully created.
 directory with documents to insert entries	filemanager	en	Directory with documents to insert entries
 display and modification of content	filemanager	en	Display and modification of content
 display of content	filemanager	en	Display of content
+do you want to overwrite existing file <b>%1</b> in directory <b>%2</b>?	filemanager	en	Do you want to overwrite existing file <b>%1</b> in directory <b>%2</b>?
 do you want to overwrite the existing file %1?	filemanager	en	Do you want to overwrite the existing file %1?
 download	filemanager	en	Download
 edit comments	filemanager	en	Edit comments
@@ -103,6 +104,7 @@ favorites	filemanager	en	Favorites
 file	filemanager	en	File
 file %1 could not be created.	filemanager	en	File %1 could not be created.
 file %1 may be too big. contact your systemadministrator for further info	filemanager	en	File %1 might be too big.
+file <b>%1</b> already exists	filemanager	en	File <b>%1</b> already exists
 file deleted.	filemanager	en	File deleted.
 file names cannot contain "%1"	filemanager	en	File names cannot contain "%1"
 file or directory not found!	filemanager	en	File or directory not found!

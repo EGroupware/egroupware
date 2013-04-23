@@ -455,62 +455,6 @@ class filemanager_ui
 	}
 
 	/**
-	 * Check if a file upload would overwrite an existing file and get a user confirmation in that case
-	 *
-	 * @param string $id id of the input
-	 * @param string|array $names name(s) (incl. client-path) of the file(s) to upload
-	 * @param string $dir current vfs directory
-	 * @return string xajax output
-	 */
-	static function ajax_check_upload_target($id,$names,$dir)
-	{
-		$response = new xajaxResponse();
-
-		//$response->addAlert(__METHOD__."('$id',".array2string($name).",'$dir')");
-
-		$ask_overwrite = array();
-		foreach((array)$names as $name)
-		{
-			$name = explode('/',str_replace('\\','/',$name));	// in case of win clients
-			$name = array_pop($name);
-
-			// encode chars which special meaning in url/vfs (some like / get removed!)
-			$path = egw_vfs::concat($dir,egw_vfs::encodePathComponent($name));
-
-			if(egw_vfs::deny_script($path))
-			{
-				$response->addAlert(lang('You are NOT allowed to upload a script!'));
-				$response->addScript("document.getElementById('$id').value='';");
-				$ask_overwrite = array();
-				break;
-			}
-			elseif (egw_vfs::stat($path))
-			{
-				if (egw_vfs::is_dir($path))
-				{
-					$response->addAlert(lang("There's already a directory with that name!"));
-					$response->addScript("document.getElementById('$id').value='';");
-					$ask_overwrite = array();
-					break;
-				}
-				else
-				{
-					$ask_overwrite[] = egw_vfs::decodePath($path);
-				}
-			}
-			else
-			{
-				// do nothing new file
-			}
-		}
-		if ($ask_overwrite)
-		{
-			$response->addScript("if (!confirm('".addslashes(lang('Do you want to overwrite the existing file %1?',implode(', ',$ask_overwrite)))."')) document.getElementById('$id').value='';");
-		}
-		return $response->getXML();
-	}
-
-	/**
 	 * Get the configured start directory for the current user
 	 *
 	 * @return string
@@ -1312,6 +1256,10 @@ class filemanager_ui
 						++$script_error;
 						++$arr['errs'];
 						unset($selected[$tmp_name]);
+					}
+					elseif (egw_vfs::is_dir($path))
+					{
+						$data['confirm'] = 'is_dir';
 					}
 					elseif (!$data['confirmed'] && egw_vfs::stat($path))
 					{

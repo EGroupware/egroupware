@@ -204,55 +204,48 @@ app.filemanager = AppJS.extend(
 	{
 		if (_data.msg) window.egw_refresh(_data.msg, this.appname);
 
-		//var send_confirmation_back = false;
 		var that = this;
 		for(var file in _data.uploaded)
 		{
 			if (_data.uploaded[file].confirm && !_data.uploaded[file].confirmed)
 			{
-				et2_createWidget("dialog",{
-					callback: function(button_id, value) {
-						if (button_id == "overwrite")
-						{
-							value.data.confirmed = true;
-							var uploaded = {};
-							uploaded[value.file] = value.data;
-							var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', uploaded, value.path], that);
+				var buttons = [
+					{text: egw.lang("Yes"), id: "overwrite", class: "ui-priority-primary", "default": true},
+					{text: egw.lang("Rename"), id:"rename"},
+					{text: egw.lang("Cancel"), id:"cancel"},
+				];
+				if (_data.uploaded[file].confirm === "is_dir")
+					buttons.shift();
+				var dialog = et2_dialog.show_prompt(function(_button_id, _value) {
+					var uploaded = {};
+					uploaded[this.my_data.file] = this.my_data.data;
+					switch (_button_id)
+					{
+						case "overwrite":
+							uploaded[this.my_data.file].confirmed = true;
+							// fall through
+						case "rename":
+							uploaded[this.my_data.file].name = _value;
+							delete uploaded[this.my_data.file].confirm;
+							// send overwrite-confirmation and/or rename request to server
+							var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', uploaded, this.my_data.path], that);
 							request.sendRequest(false, that._upload_callback, that);
-						}
-					},
-					buttons: [
-						{text: egw.lang("Overwrite"), id: "overwrite", class: "ui-priority-primary", "default": true},
-						//{text: egw.lang("Rename"), id:"rename"},
-						{text: egw.lang("Cancel"), id:"cancel"},
-					].reverse(),
-					title: egw.lang('File already exists', _data.uploaded[file].name),
-					//template:"/egroupware/addressbook/templates/default/edit.xet",
-					value: { 
-						name: _data.uploaded[file].name, 
-						file: file, 
-						data: _data.uploaded[file],
-						path: _data.path
-					},
-					message: egw.lang('Do you want to overwrite existing file <b>%1</b> in directory <b>%2</b>?', _data.uploaded[file].name, _data.path),
-					dialog_type: et2_dialog.QUESTION_MESSAGE
-				});
-				/*if (confirm(egw.lang('Overwrite %1?', _data.uploaded[file].name)))
-				{
-					send_confirmation_back = true;
-					_data.uploaded[file].confirmed = true;
-				}*/
+							return;
+					}
+				},
+				_data.uploaded[file].confirm === "is_dir" ?
+					egw.lang("There's already a directory with that name!") :
+					egw.lang('Do you want to overwrite existing file <b>%1</b> in directory <b>%2</b>?', _data.uploaded[file].name, _data.path),
+				egw.lang('File <b>%1</b> already exists', _data.uploaded[file].name),
+				_data.uploaded[file].name, buttons, file);
+				// setting required data for callback in as my_data
+				dialog.my_data = {
+					file: file,
+					path: _data.path,
+					data: _data.uploaded[file]
+				};
 			}
-			/*else
-			{
-				delete _data.uploaded[file];
-			}*/
 		}
-		/*if (send_confirmation_back)
-		{
-			var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', _data.uploaded, _data.path], this);
-			request.sendRequest(false, this._upload_callback, this);
-		}*/
 	},
 	
 	/**
@@ -337,9 +330,22 @@ app.filemanager = AppJS.extend(
 	 */
 	action: function(_action, _elems)
 	{
-		if (typeof _action.data.confirm == 'undefined'|| confirm(_action.data.confirm))
+		var paths = this._elems2paths(_elems);
+		if (typeof _action.data.confirm != 'undefined')
 		{
-			this._do_action(_action.id, this._elems2paths(_elems));			
+			var that = this;
+			var action_id = _action.id;
+			et2_dialog.show_dialog(function(button_id,value)
+			{
+				if (button_id != et2_dialog.NO_BUTTON)
+				{
+					that._do_action(action_id, paths);	
+				}
+			}, _action.data.confirm, egw.lang('Confirmation required'), et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
+		}
+		else
+		{
+			this._do_action(_action.id, paths);			
 		}
 	},
 	
@@ -568,7 +574,7 @@ app.filemanager = AppJS.extend(
 		
 		if (_path == path)
 		{
-			var ids = ['button[linkpaste]', 'button[paste]', 'button[createdir]', 'button[symlink]', 'upload[]'];
+			var ids = ['button[linkpaste]', 'button[paste]', 'button[createdir]', 'button[symlink]', 'upload'];
 			for(var i=0; i < ids.length; ++i)
 			{
 				var widget = this.et2.getWidgetById(ids[i]);
