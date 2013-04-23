@@ -612,6 +612,7 @@ use <a href="%1">emailadmin</a> to create profiles	felamimail	en	Use <a href="%1
 use a signature	felamimail	en	Use signature
 use a signature?	felamimail	en	Use signature
 use addresses	felamimail	en	Use addresses
+use as default identity	felamimail	en	use as default identity
 use common preferences max. messages	felamimail	en	Use common preferences max. messages
 use custom identities	felamimail	en	Use custom identities
 use custom settings	felamimail	en	Use custom settings

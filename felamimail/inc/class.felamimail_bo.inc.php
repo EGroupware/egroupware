@@ -247,6 +247,11 @@ class felamimail_bo
 			{
 				$loadfailed=true;
 			}
+			if ($_profileID>0 && empty(self::$instances[$_profileID]->icServer->host))
+			{
+				$_profileID = emailadmin_bo::getUserDefaultProfileID();
+				$loadfailed=true;
+			}
 			if ($loadfailed)
 			{
 				error_log(__METHOD__.__LINE__." ReRead of the Prefs for ProfileID ".$_profileID.' failed for icServer; trigger new instance. called from:'.function_backtrace());

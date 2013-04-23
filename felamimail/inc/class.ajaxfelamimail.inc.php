@@ -563,7 +563,7 @@ class ajaxfelamimail
 
 		function changeActiveAccount($accountData)
 		{
-			if($this->_debug) error_log("ajaxfelamimail::changeActiveAccount");
+			if($this->_debug) error_log("ajaxfelamimail::changeActiveAccount".array2string($accountData));
 			require_once(EGW_INCLUDE_ROOT.'/felamimail/inc/class.bopreferences.inc.php');
 			$boPreferences  = CreateObject('felamimail.bopreferences');
 			$boPreferences->setProfileActive(false);

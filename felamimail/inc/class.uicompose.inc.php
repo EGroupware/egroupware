@@ -569,7 +569,16 @@
 			// not set? -> use default, means full display of all available data
 			if (!isset(felamimail_bo::$felamimailConfig['how2displayIdentities'])) felamimail_bo::$felamimailConfig['how2displayIdentities'] ='';
 			$globalIds = 0;
-			foreach($allIdentities as $key => $singleIdentity) {if ($singleIdentity->id<0){ $globalIds++; }/*else{ unset($allIdentities[$key]);}*/};
+			$defaultIds = array();
+			foreach($allIdentities as $key => $singleIdentity) {
+				if ($singleIdentity->id<0){ $globalIds++; }/*else{ unset($allIdentities[$key]);}*/
+				// there could be up to 2 default IDS. the activeProfile and another on marking the desired Identity to choose
+				if(!empty($singleIdentity->default) && $singleIdentity->default==1) $defaultIds[$singleIdentity->id] = $singleIdentity->id;
+			}
+			//error_log(__METHOD__.__LINE__.' Identities regarded/marked as default:'.array2string($defaultIds). ' MailProfileActive:'.$this->bofelamimail->profileID);
+			// if there are 2 defaultIDs, its most likely, that the user choose to set
+			// the one not being the activeServerProfile to be his default Identity
+			if (count($defaultIds)>1) unset($defaultIds[$this->bofelamimail->profileID]);
 			$defaultIdentity = 0;
 			$identities = array();
 			foreach($allIdentities as $key => $singleIdentity) {
@@ -583,9 +592,9 @@
 				{
 					$id_prepend = '('.$singleIdentity->id.') ';
 				}
-				//error_log(__METHOD__.__LINE__.':'.$presetId.'->'.$key.'('.$singleIdentity->id.')'.'#'.$iS.'#');
+				//if ($singleIdentity->default) error_log(__METHOD__.__LINE__.':'.$presetId.'->'.$key.'('.$singleIdentity->id.')'.'#'.$iS.'#');
 				if (array_search($id_prepend.$iS,$identities)===false) $identities[$singleIdentity->id] = $id_prepend.$iS;
-				if(!empty($singleIdentity->default) && $singleIdentity->default==1 && $defaultIdentity==0)
+				if(in_array($singleIdentity->id,$defaultIds) && $defaultIdentity==0)
 				{
 					//_debug_array($singleIdentity);
 					$defaultIdentity = $singleIdentity->id;

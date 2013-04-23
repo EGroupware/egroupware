@@ -363,13 +363,20 @@
 
 
 				$newID = $this->bopreferences->saveAccountData($icServer, $ogServer, $identity);
+				$identityOnly = empty($icServer->host);
+				// if you are only allowed to do Identities: everything will be regarded as Identity
+				if(!$preferences->userDefinedAccounts && $preferences->userDefinedIdentities) $identityOnly = true;
 				if ($identity->id == 'new') $identity->id = $newID;
 				if((int)$_POST['active']) {
 					#$boPreferences->saveAccountData($icServer, $ogServer, $identity);
-					$this->bopreferences->setProfileActive(false);
-					$this->bopreferences->setProfileActive(true,$identity->id);
+					if (($preferences->userDefinedAccounts && !$identityOnly) ||
+						($preferences->userDefinedIdentities && !$preferences->userDefinedAccounts))
+					{
+						$this->bopreferences->setProfileActive(false, NULL,$identityOnly);
+						$this->bopreferences->setProfileActive(true,$identity->id,$identityOnly);
+					}
 				} else {
-					$this->bopreferences->setProfileActive(false,$identity->id);
+					$this->bopreferences->setProfileActive(false,$identity->id,$identityOnly);
 				}
 
 				if($_POST['save']) {
@@ -388,6 +395,8 @@
 			$this->t->set_block('body','main');
 			if ($msg) $this->t->set_var("message", $msg); else $this->t->set_var("message", '');
 			$this->translate();
+			if(!$preferences->userDefinedAccounts && $preferences->userDefinedIdentities) $this->t->set_var('lang_use_costum_settings',lang('use as default identity'));
+
 			// initalize the folderList array
 			$folderList = array();
 

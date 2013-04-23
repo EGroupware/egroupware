@@ -612,6 +612,7 @@ use <a href="%1">emailadmin</a> to create profiles	felamimail	de	benutzen Sie <a
 use a signature	felamimail	de	Signatur benutzen
 use a signature?	felamimail	de	Eine Signatur benutzen?
 use addresses	felamimail	de	Adresse benutzen
+use as default identity	felamimail	de	als Standardidentität verwenden
 use common preferences max. messages	felamimail	de	Verwende die allgemeine Einstellung für max. Treffer pro Seite
 use custom identities	felamimail	de	benutze benutzerdefinierte Identitäten
 use custom settings	felamimail	de	benutze angepasste Einstellungen

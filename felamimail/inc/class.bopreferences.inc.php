@@ -420,7 +420,7 @@
 			parent::deleteAccountData($GLOBALS['egw_info']['user']['account_id'], $identity);
 		}
 
-		function setProfileActive($_status, $_identity=NULL)
+		function setProfileActive($_status, $_identity=NULL, $_identityOnly=false)
 		{
 			$this->sessionData = array();
 			$this->saveSessionData();
@@ -428,11 +428,12 @@
 			{
 				//error_log(__METHOD__.__LINE__.' change status of Profile '.$_identity.' to '.$_status);
 				// globals preferences add appname varname value
-				$GLOBALS['egw']->preferences->add('felamimail','ActiveProfileID',$_identity,'user');
+				if (!$_identityOnly) $GLOBALS['egw']->preferences->add('felamimail','ActiveProfileID',$_identity,'user');
 				// save prefs
-				$GLOBALS['egw']->preferences->save_repository(true);
-				egw_cache::setSession('felamimail','activeProfileID',$_identity);
+				if (!$_identityOnly) $GLOBALS['egw']->preferences->save_repository(true);
+				if (!$_identityOnly) egw_cache::setSession('felamimail','activeProfileID',$_identity);
 			}
+			// the parentCall only saves the database value
 			parent::setProfileActive($GLOBALS['egw_info']['user']['account_id'], $_status, $_identity);
 		}
 	}
