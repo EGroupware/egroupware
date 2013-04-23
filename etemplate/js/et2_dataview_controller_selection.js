@@ -360,8 +360,6 @@ var et2_dataview_selectionManager = Class.extend(
 
 	_updateEntryState: function (_entry, _state) {
 
-		// Update the state of the entry
-		_entry.state = _state;
 
 		if (this._invertSelection)
 		{
@@ -372,12 +370,6 @@ var et2_dataview_selectionManager = Class.extend(
 		if ((_entry.aoi && _entry.aoi.getState() !== _state) || _entry.state != _state)
 		{
 			this._inUpdate = true; // Recursion prevention
-
-			// Update the visual state
-			if (_entry.aoi)
-			{
-				_entry.aoi.setState(_state);
-			}
 
 			// Update the state of the action object
 			if (_entry.ao)
@@ -395,6 +387,15 @@ var et2_dataview_selectionManager = Class.extend(
 				delete this._registeredRows[_entry.uid];
 			}
 		}
+
+		// Update the visual state
+		if (_entry.aoi && _entry.aoi.doSetState)
+		{
+			_entry.aoi.doSetState(_state);
+		}
+
+		// Update the state of the entry
+		_entry.state = _state;
 	},
 
 	_getRegisteredRowsEntry: function (_uid) {
