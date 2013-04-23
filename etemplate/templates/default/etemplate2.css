@@ -1061,3 +1061,21 @@ div.et2_progress > div {
 	color: #ffffff;
 	background-color: #3875d7;
 }
+
+/**
+ * et2_dialog: EGroupware left aligns all buttons, but [Delete]
+ */
+div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+	float: left;
+}
+div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
+	float: left;
+	margin-right: 1em;
+}
+.et2_prompt #message {
+	white-space: pre-wrap;
+	padding-bottom: 10px;
+}
+.et2_prompt #value {
+	width: 100%;
+}

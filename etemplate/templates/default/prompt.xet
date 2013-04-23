@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="etemplate.prompt" template="" lang="" group="0" version="1.9.001">
+		<hbox class="et2_prompt">
+			<image src="dialog_help" class="dialog_icon"/>
+			<vbox class="ui-dialog-content">
+				<html id="message"/>
+				<textbox id="value"/>
+			</vbox>
+		</hbox>
+	</template>
+</overlay>

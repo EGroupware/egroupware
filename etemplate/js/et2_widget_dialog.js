@@ -177,22 +177,22 @@ var et2_dialog = et2_widget.extend({
 		 - button ids copied from et2_dialog static, since the constants are not defined yet
 		*/
 		//BUTTONS_OK: 0,
-		[{"button_id": 1,"text": egw.lang('ok'),"default":true}],
+		[{"button_id": 1,"text": 'ok', "default":true}],
 		//BUTTONS_OK_CANCEL: 1,
 		[
-			{"button_id": 1,"text": egw.lang('ok'), "default":true},
-			{"button_id": 0,"text": egw.lang('cancel')}
+			{"button_id": 1,"text": 'ok', "default":true},
+			{"button_id": 0,"text": 'cancel'}
 		],
 		//BUTTONS_YES_NO: 2,
 		[
-			{"button_id": 2,"text": egw.lang('yes'),"default":true},
-			{"button_id": 3,"text": egw.lang('no')}
+			{"button_id": 2,"text": 'yes', "default":true},
+			{"button_id": 3,"text": 'no'}
 		],
 		//BUTTONS_YES_NO_CANCEL: 3,
 		[
-			{"button_id": 2,"text": egw.lang('yes'),"default":true},
-			{"button_id": 3,"text": egw.lang('no')},
-			{"button_id": 0,"text": egw.lang('cancel')}
+			{"button_id": 2,"text": 'yes', "default":true},
+			{"button_id": 3,"text": 'no'},
+			{"button_id": 0,"text": 'cancel'}
 		]
 	],
 
@@ -219,6 +219,8 @@ var et2_dialog = et2_widget.extend({
 						self.click(event.target,id);
 					};
 				})(this._buttons[i][j].button_id);
+				// translate button texts, as translations are not available before
+				this._buttons[i][j].text = egw.lang(this._buttons[i][j].text);
 			}
 		}
 
@@ -394,6 +396,8 @@ var et2_dialog = et2_widget.extend({
 			buttons: typeof this.options.buttons == "number" ? this._buttons[this.options.buttons] : this.options.buttons,
 			modal: this.options.modal,
 			resizable: this.options.resizable,
+			width: "auto",
+			maxWidth: 640,
 			title: this.options.title,
 			open: function() {
 				// Focus default button so enter works
@@ -436,28 +440,58 @@ jQuery.extend(et2_dialog,
 	/**
 	 * Show a confirmation dialog
 	 *
-	 * @param function callback Function called when the user clicks a button.  The context will be the et2_dialog widget, and the button constant is passed in.
-	 * @param String message Message to be place in the dialog.  Usually just text, but DOM nodes will work too.
-	 * @param String title Text in the top bar of the dialog.
-	 * @param integer buttons One of the BUTTONS_ constants defining the set of buttons at the bottom of the box
-	 * @param integer type One of the message constants.  This defines the style of the message.
-	 * @param String icon URL of an icon to display.  If not provided, a type-specific icon will be used.
-	 * @param Object value Default values for display
+	 * @param function _callback Function called when the user clicks a button.  The context will be the et2_dialog widget, and the button constant is passed in.
+	 * @param String _message Message to be place in the dialog.  Usually just text, but DOM nodes will work too.
+	 * @param String _title Text in the top bar of the dialog.
+	 * @param any _value passed unchanged to callback as 2. parameter
+	 * @param integer|Array _buttons One of the BUTTONS_ constants defining the set of buttons at the bottom of the box
+	 * @param integer _type One of the message constants.  This defines the style of the message.
+	 * @param String _icon URL of an icon to display.  If not provided, a type-specific icon will be used.
 	 */
-	show_dialog: function(callback, message, title, buttons, type, icon, value) {
-		if(!callback || typeof callback == "undefined")
-		{
-			callback = function() {return;};
-		}
+	show_dialog: function(_callback, _message, _title, _value, _buttons, _type, _icon){
 		// Just pass them along, widget handles defaults & missing
 		return et2_createWidget("dialog", {
-			callback: callback,
-			message: message,
-			title: title,
-			buttons: buttons,
-			dialog_type: type,
-			icon: icon,
-			value: value
+			callback: _callback||function(){},
+			message: _message,
+			title: _title||egw.lang('Confirmation required'),
+			buttons: _buttons||et2_dialog.BUTTONS_YES_NO,
+			dialog_type: _type||et2_dialog.QUESTION_MESSAGE,
+			icon: _icon,
+			value: _value
 		});
+	},
+	
+	/**
+	 * Show a prompt dialog
+	 *
+	 * @param function _callback Function called when the user clicks a button.  The context will be the et2_dialog widget, and the button constant is passed in.
+	 * @param String _message Message to be place in the dialog.  Usually just text, but DOM nodes will work too.
+	 * @param String _title Text in the top bar of the dialog.
+	 * @param String _value for prompt, passed to callback as 2. parameter
+	 * @param integer|Array _buttons One of the BUTTONS_ constants defining the set of buttons at the bottom of the box
+	 */
+	show_prompt: function(_callback, _message, _title, _value, _buttons) 
+	{
+		var callback = _callback;
+		// Just pass them along, widget handles defaults & missing
+		return et2_createWidget("dialog", {
+			callback: function(_button_id, _value) {
+				if (typeof callback == "function")
+				{
+					callback.call(this, _button_id, _value.value);
+				}
+			},
+			title: _title||egw.lang('Input required'),
+			buttons: _buttons||et2_dialog.BUTTONS_OK_CANCEL,
+			value: {
+				content: {
+					value: _value,
+					message: _message
+				}
+			},
+			template: egw.webserverUrl+'/etemplate/templates/default/prompt.xet',
+			class: "et2_prompt"
+		});
+		
 	}
 });

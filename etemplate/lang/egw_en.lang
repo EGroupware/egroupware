@@ -89,6 +89,7 @@ comment	etemplate	en	Comment
 confirm	etemplate	en	Confirm
 confirmation message or custom javascript (returning true or false)	etemplate	en	Confirmation message or custom javascript, returning true or false.
 confirmation necesary or custom java-script	etemplate	en	Confirmation necessary or custom java-script
+confirmation required	etemplate	en	Confirmation required
 contact	etemplate	en	Contact
 contact field to show	etemplate	en	Contact field to show
 contact fields	etemplate	en	Contact fields
@@ -231,6 +232,7 @@ increment version to not overwrite the existing template	etemplate	en	Increment 
 index/name of returned content (name of the template, link / method for image)	etemplate	en	Index/name of returned content, name of the Template, link / method for image.
 indexed	etemplate	en	Indexed.
 indexoptions	etemplate	en	Index options
+input required	etemplate	en	Input required
 insert a column before	etemplate	en	Insert a column before
 insert a column behind	etemplate	en	Insert a column after
 insert a row above	etemplate	en	Insert a row above

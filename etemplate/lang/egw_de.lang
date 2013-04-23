@@ -89,6 +89,7 @@ comment	etemplate	de	Kommentar
 confirm	etemplate	de	bestätigen
 confirmation message or custom javascript (returning true or false)	etemplate	de	Bestätigungsmeldung oder spezielles Javascript (true oder false zurückliefernd)
 confirmation necesary or custom java-script	etemplate	de	Bestätigung notwendig oder spezielles Javascript
+confirmation required	etemplate	de	Bestätigung erforderlich
 contact	etemplate	de	Kontakt
 contact field to show	etemplate	de	Kontaktfeld zum Anzeigen
 contact fields	etemplate	de	Kontaktfelder
@@ -229,6 +230,7 @@ increment version to not overwrite the existing template	etemplate	de	Version er
 index/name of returned content (name of the template, link / method for image)	etemplate	de	Index / Name des zurückgelieferten Inhalts (Name des eTemplates oder Link/Methode für Grafik)
 indexed	etemplate	de	Indiziert
 indexoptions	etemplate	de	Indexoptionen
+input required	etemplate	de	Eingabe erforderlich
 insert a column before	etemplate	de	eine Spalte davor einfügen
 insert a column behind	etemplate	de	eine Spalte dahinter einfügen
 insert a row above	etemplate	de	eine Zeile darüber einfügen
