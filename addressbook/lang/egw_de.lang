@@ -37,6 +37,7 @@ address book	common	de	Adressbuch
 address book - vcard in	addressbook	de	Adressbuch - VCard in
 address book - view	addressbook	de	Adressbuch - Anzeigen
 address line 2	addressbook	de	Adresszeile 2
+address line 2 (private)	addressbook	de	Adresszeile 2 (Privat)
 address type	addressbook	de	Adresstyp
 addressbook	common	de	Adressbuch
 addressbook csv export	addressbook	de	Adressbuch CSV Export
@@ -68,8 +69,10 @@ birthdays	common	de	Geburtstage
 blank	addressbook	de	Leer
 business	common	de	Geschäftlich
 business address	addressbook	de	Geschäftsadresse
+business address line 2	addressbook	de	Straße Zeile 2 geschäftl.
 business city	addressbook	de	Stadt geschäftl.
 business country	addressbook	de	Land geschäftl.
+business country code	addressbook	de	Ländervorwahl geschäftl.
 business email	addressbook	de	E-Mail geschäftl.
 business fax	addressbook	de	Fax geschäftl.
 business phone	addressbook	de	Tel. geschäftl.
@@ -100,6 +103,7 @@ choose export options	addressbook	de	Wählen Sie die Export Optionen
 choose owner of imported data	addressbook	de	Wählen Sie den Besitzer der importierten Daten
 chosse an etemplate for this contact type	admin	de	Wählen Sie ein eTemplate für diesen Kontakt Typ
 city	common	de	Stadt
+city (private)	addressbook	de	Stadt (Privat)
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	de	Bereinige Adressbuch Felder (anwenden, wenn die Synchronisation Duplikate erzeugt)
 company	common	de	Firma
 company name	addressbook	de	Firmenname
@@ -128,7 +132,9 @@ copied by %1, from record #%2.	addressbook	de	Kopiert von %1, vom Datensatz Nr. 
 copy a contact and edit the copy	addressbook	de	Kopiert einen Kontakt und bearbeitet dann die Kopie
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	de	Kopieren Sie Ihre Änderungen in die Zwischenablage, %1laden Sie den Eintrag neu%2 und fügen diese wieder ein.
 country	common	de	Land
+country (private)	addressbook	de	Land (Privat)
 country code	addressbook	de	Länderkennung
+country code (private)	addressbook	de	Länderkennung (Privat)
 create new links	addressbook	de	Neue Verknüpfung erstellen
 created	addressbook	de	Angelegt
 credit	addressbook	de	Darlehen
@@ -393,7 +399,9 @@ stadt	addressbook	de	Stadt
 start	admin	de	Starten
 startrecord	addressbook	de	Startdatensatz
 state	common	de	Bundesland
+state (private)	addressbook	de	Bundesland (Privat)
 street	common	de	Straße
+street (private)	addressbook	de	Straße (Privat)
 subject for email	addressbook	de	Betreff der E-Mail
 successfully imported %1 records into your addressbook.	addressbook	de	%1 Kontakte wurden erfolgreich in Ihr Adressbuch importiert
 suffix	addressbook	de	Zusatz
@@ -477,4 +485,5 @@ you must select at least 1 column to display	addressbook	de	Sie müssen mindeste
 you need to select a distribution list	addressbook	de	Sie müssen eine Verteilerliste auswählen
 you need to select some contacts first	addressbook	de	Sie müssen zuerst Kontakte auswählen
 zip code	common	de	PLZ
+zip code (private)	addressbook	de	PLZ (Privat)
 zip_note	addressbook	de	<p><b>Notiz:</b>Die Datei kann ein zip Archiv sein, bestehend aus .csv, .vcf oder .ldif Dateien. Sie dürfen die Dateitypen pro Import nicht mischen!
