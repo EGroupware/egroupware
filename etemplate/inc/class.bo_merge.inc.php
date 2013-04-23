@@ -825,8 +825,9 @@ abstract class bo_merge
 				case 'text/rtf':
 					return $contentstart.implode('\\par \\page\\pard\\plain',$contentrepeatpages).$contentend;
 				case 'application/vnd.oasis.opendocument.text':
-				case 'application/vnd.oasis.opendocument.spreadsheet':
 					return $contentstart.implode('<text:line-break />',$contentrepeatpages).$contentend;
+				case 'application/vnd.oasis.opendocument.spreadsheet':
+					return $contentstart.implode('</text:p><text:p>',$contentrepeatpages).$contentend;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
 				case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
 					return $contentstart.implode('<w:br w:type="page" />',$contentrepeatpages).$contentend;
@@ -1045,7 +1046,7 @@ abstract class bo_merge
 					$break = '<text:line-break/>';
 					break;
 				case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
-					$break = '<text:line-break/>';
+					$break = '</text:p><text:p>';
 					break;
 				case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':	// ms word 2007
 					$break = '</w:t><w:br/><w:t>';
@@ -1339,8 +1340,10 @@ abstract class bo_merge
 					$LF = '}\par \pard\plain{';
 					break;
 				case 'application/vnd.oasis.opendocument.text':
-				case 'application/vnd.oasis.opendocument.spreadsheet':
 					$LF ='<text:line-break/>';
+					break;
+				case 'application/vnd.oasis.opendocument.spreadsheet':		// open office calc
+					$LF = '</text:p><text:p>';
 					break;
 				case 'application/xmlExcel.Sheet':	// Excel 2003
 					$LF = '&#10;';
