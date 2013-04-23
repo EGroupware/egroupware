@@ -994,8 +994,9 @@
 
 			$t->parse('password_fields','form_logininfo',True);
 
-			$account =& CreateObject('phpgwapi.accounts',(int)$_GET['account_id'],'u');
-			$userData = $account->read_repository();
+			// invalidate account, before reading it, to code with changed to DB or LDAP outside EGw
+			accounts::cache_invalidate((int)$_GET['account_id']);
+			$userData = $GLOBALS['egw']->accounts->read((int)$_GET['account_id'],'u');
 
 			$var['account_lid']       = $userData['account_lid'];
 			$var['account_firstname'] = $userData['firstname'];
@@ -1053,7 +1054,7 @@
 			}
 
 			// Find out which groups they are members of
-			$usergroups = $account->membership((int)$_GET['account_id']);
+			$usergroups = $GLOBALS['egw']->accounts->membership((int)$_GET['account_id']);
 			if(!@is_array($usergroups))
 			{
 				$var['groups_select'] = lang('None');
@@ -1174,8 +1175,10 @@
 			$p->set_file(Array('edit' => 'group_form.tpl'));
 			$p->set_block('edit','select');
 			$p->set_block('edit','popwin');
-//fix from Maanus 280105
-			$accounts =& CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
+
+			// invalidate account, before reading it, to code with changed to DB or LDAP outside EGw
+			accounts::cache_invalidate((int)$_GET['account_id']);
+			$group_repository = $GLOBALS['egw']->accounts->read((int)$_GET['account_id'],'u');
 
 			$p->set_var('accounts',$GLOBALS['egw']->uiaccountsel->selection('account_user[]','admin_uiaccounts_user',$group_info['account_user'],'accounts',min(3+count($group_info['account_user']),10),false,'style="width: 300px;"'));
 
@@ -1190,7 +1193,6 @@
 			);
 			$p->set_var($var);
 
-			$group_repository = $accounts->read_repository();
 			if (!$group_repository['file_space'])
 			{
 				$group_repository['file_space'] = $GLOBALS['egw_info']['server']['vfs_default_account_size_number'] . "-" . $GLOBALS['egw_info']['server']['vfs_default_account_size_type'];
