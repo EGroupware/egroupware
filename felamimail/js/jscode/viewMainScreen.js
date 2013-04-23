@@ -757,7 +757,7 @@ function selectedGridChange(_selectAll) {
 						focused.iface.getDOMNode());
 				}
 			}
-			egw_appWindow('felamimail').focus();
+			if (navigator.userAgent.search(/MSIE/i) != -1) egw_appWindow('felamimail').focus();
 			return;
 		}
 	}
@@ -1121,14 +1121,14 @@ function fm_readMessage(_url, _windowName, _node) {
 					// Mark the message as read
 					fm_msg_removeClass(windowArray[1], 'unseen');
 					fm_msg_removeClass(windowArray[1], 'recent');
-					egw_appWindow('felamimail').focus();
+					if (navigator.userAgent.search(/MSIE/i) != -1) egw_appWindow('felamimail').focus();
 				}
 
 			}, felamimail_rm_timeout);
 		}
-		egw_appWindow('felamimail').focus();
+		if (navigator.userAgent.search(/MSIE/i) != -1) egw_appWindow('felamimail').focus();
 	} else {
-		egw_appWindow('felamimail').focus();
+		if (navigator.userAgent.search(/MSIE/i) != -1) egw_appWindow('felamimail').focus();
 		window.setTimeout(function() {
 			//alert('Height:'+egw_getWindowOuterHeight());
 			if (!felamimail_abortView) {
@@ -1172,7 +1172,7 @@ function fm_handleAttachmentClick(_double, _url, _windowName, _node)
 }
 
 function fm_readAttachments(_url, _windowName, _node) {
-	egw_appWindow('felamimail').focus();
+	if (navigator.userAgent.search(/MSIE/i) != -1) egw_appWindow('felamimail').focus();
 	egw_openWindowCentered(_url, _windowName, 750, 260);
 	egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshFolder");
 	mailGrid.dataRoot.actionObject.setAllSelected(false);
