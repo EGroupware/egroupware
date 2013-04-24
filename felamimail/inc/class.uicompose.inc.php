@@ -1058,8 +1058,8 @@
 				lang('IMAP Server'),
 				$mailPreferences['username'].'@'.$mailPreferences['imapServerAddress'],
 				'divFolderTree',
-				false,
-				true
+				false//,
+				//true
 			);
 			print '<div id="divFolderTree" style="overflow:auto; width:320px; height:450px; margin-bottom:0px; padding-left:0px; padding-top:0px; z-index:100; border:1px solid Silver;"></div>';
 			print $folderTree;

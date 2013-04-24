@@ -41,6 +41,7 @@ var do_onunload=false;
 var draftsMayExist=false;
 var justSavedAsDraftManually; // no value yet, as it should indicate that the message was just saved, before another autosave kicked in
 var justClickedSend=false;
+var decodedFolder;
 
 function initAll()
 {
@@ -672,7 +673,9 @@ function fm_compose_changeSignature(_oldSig,_signatureID) {
 
 function fm_compose_setFolderSelectValue(_folderName) {
 	if(currentFolderSelectField) {
-		currentFolderSelectField.value = _folderName;
+		xajax_doXMLHTTPsync("felamimail.ajax_contacts.decodeFolderName",_folderName);
+
+		currentFolderSelectField.value = (decodedFolder?decodedFolder:_folderName);
 		if(!currentFolderSelectField.parentNode.parentNode.nextSibling) {
 			addAddressRow(currentFolderSelectField.parentNode.parentNode);
 		}
