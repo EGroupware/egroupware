@@ -498,7 +498,18 @@ var et2_dataview_controller = Class.extend({
 			var d = this.self.getDepth();
 			if (d > 0)
 			{
-				$j(tr).addClass("subentry level_" + d);
+				$j(tr).addClass("subentry");
+				$j("td:first",tr).children("div").last().addClass("level_" + d + " indentation");
+				
+				if(this.entry.idx == 0)
+				{
+					// Set the CSS for the level - required so columns line up
+					var indent = $j("<span class='indentation'/>").appendTo(tr);
+					egw.css(".subentry td div.innerContainer.level_"+d,
+						"margin-right:" + (parseInt(indent.css("margin-right")) * d) + "px"
+					);
+					indent.remove();
+				}
 			}
 
 			var links = null;

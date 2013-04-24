@@ -772,8 +772,7 @@ label input, label span, label div, label select, label textarea {
 
 .nextmatch_header .header_count {
 	padding: 0px 20px;
-	margin: 0px 20px;
-	margin-top: 5px;
+	margin: 5px 20px 0px;
 	border: 1px solid #E0E0E0;
 	float:right;
 	font-size: 150%;
@@ -807,20 +806,28 @@ label input, label span, label div, label select, label textarea {
 }
 /* Favorites */
 .nextmatch_header div#favorite_wrapper {
-	margin-top: 5px;
+	margin-top: 8px;
 	vertical-align: middle;
 }
 #nm_favorites_popup_filters  .filter_id, #nm_favorites_popup_filters  .filter_value {
 	width: 45%;
 	display: inline-block;
 }
-.favorites li a {
+.nextmatch_header ul.favorites {
+	min-width: 20ex;
+}
+.nextmatch_header .favorites li a {
+	text-indent: -22px;
+	margin-left: 21px;
+}
+.nextmatch_header .favorites.ui-menu li.ui-menu-item a.ui-state-hover {
+	margin-left: 20px;
 }
 .favorites li span.ui-state-active {
 	border: none;
 }
 .favorites input, .favorites img {
-	margin-right: 2ex;
+	margin-right: 1ex;
 }
 .favorites div.ui-icon-trash {
 	float:right;
@@ -888,6 +895,33 @@ label input, label span, label div, label select, label textarea {
 	background-color: gray;
 	opacity: 0.5;
 }
+
+/**
+ * Grid / nextmatch Hierarchy 
+ */
+/* Make sure arrow & cell content don't overlap */
+.egwGridView_grid span.arrow {
+	margin: 6px -12px 4px 4px;
+	float: left;
+	position:relative;
+}
+.egwGridView_grid span.arrow ~ div.innerContainer {
+	display: inline-block;
+}
+/* Indent the sub-grid */
+.egwGridView_grid .egwGridView_grid {
+	margin-left: 10px;
+	border-left: 1px solid silver;
+}
+/** 
+ * This class' margin-right is used to line up columns at each indent level
+ * Classes level_# are created programmatically with margin-right * depth
+ * Margin-right = -(indent + border)
+ */
+.indentation { margin-right:-11px; }
+
+/* End of hierarchy */
+
 
 .et2_clickable {
 	cursor: pointer;

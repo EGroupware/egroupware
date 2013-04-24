@@ -69,14 +69,15 @@ var et2_dataview_row = et2_dataview_container.extend(et2_dataview_IViewRange,
 			{
 				this.expansionButton = $j(document.createElement("span"));
 				this.expansionButton.addClass("arrow closed");
-
-				var self = this;
-				this.expansionButton.click(function () {
-						self._handleExpansionButtonClick(_callback, _context);
-				});
-
-				$j("td:first", this.tr).prepend(this.expansionButton);
 			}
+
+			// Update context
+			var self = this;
+			this.expansionButton.off("click").on("click", function () {
+					self._handleExpansionButtonClick(_callback, _context);
+			});
+
+			$j("td:first", this.tr).prepend(this.expansionButton);
 		}
 		else
 		{
