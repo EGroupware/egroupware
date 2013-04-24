@@ -13,7 +13,7 @@
 	/* $Id$ */
 
 	class uicompose
-	{	
+	{
 		var $public_functions = array
 		(
 			'action'		=> True,
@@ -424,14 +424,14 @@
 			foreach($signatures as $signature) {
 				$selectSignatures[$signature['fm_signatureid']] = lang('Signature').': '.$signature['fm_description'];
 			}
-			
+
 			$bostationery = new felamimail_bostationery();
 			$selectStationeries = array(
 				'0' => lang('no stationery')
 			);
 			$showStationaries = false;
 			$validStationaries = $bostationery->get_valid_templates();
-			if (is_array($validStationaries) && count($validStationaries)>0) 
+			if (is_array($validStationaries) && count($validStationaries)>0)
 			{
 				$showStationaries = true;
 				$selectStationeries += $validStationaries;
@@ -640,8 +640,8 @@
 				lang('IMAP Server'),
 				$mailPreferences['username'].'@'.$mailPreferences['imapServerAddress'],
 				'divFolderTree',
-				false,
-				true
+				false//,
+				//true
 			);
 			print '<div id="divFolderTree" style="overflow:auto; width:320px; height:450px; margin-bottom: 0px;padding-left: 0px; padding-top:0px; z-index:100; border : 1px solid Silver;"></div>';
 			print $folderTree;

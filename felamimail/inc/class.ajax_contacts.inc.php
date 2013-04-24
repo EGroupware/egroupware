@@ -20,6 +20,13 @@
 			$this->charset	= $GLOBALS['egw']->translation->charset();
 		}
 		
+		function decodeFolderName($_folderName) {
+			$folderName = translation::convert(html_entity_decode($_folderName, ENT_QUOTES, $this->charset),'UTF7-IMAP', $this->charset);
+			$response = new xajaxResponse();
+			$response->addScript("decodedFolder ='".$folderName."'");
+			return $response->getXML();
+		}
+
 		function searchAddress($_searchString) {
 			if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
 				if (method_exists($GLOBALS['egw']->contacts,'search')) {

@@ -36,6 +36,7 @@ var KEYCODE_DOWN=40;
 // quickserach input field
 var disabledKeys1 = new Array(KEYCODE_TAB, KEYCODE_ENTER, KEYCODE_UP, KEYCODE_DOWN);
 //var disabledKeys1 = new Array(KEYCODE_ENTER, KEYCODE_UP, KEYCODE_DOWN);
+var decodedFolder;
 
 function initAll()
 {
@@ -522,7 +523,9 @@ function fm_compose_changeInputType(_selectBox) {
 
 function fm_compose_setFolderSelectValue(_folderName) {
 	if(currentFolderSelectField) {
-		currentFolderSelectField.value = _folderName;
+		xajax_doXMLHTTPsync("felamimail.ajax_contacts.decodeFolderName",_folderName);
+
+		currentFolderSelectField.value = (decodedFolder?decodedFolder:_folderName);
 		if(!currentFolderSelectField.parentNode.parentNode.nextSibling) {
 			addAddressRow(currentFolderSelectField.parentNode.parentNode);
 		}
