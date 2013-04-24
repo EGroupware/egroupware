@@ -682,9 +682,18 @@ function quickSearch() {
 
 }
 
+function isHiddenSupported(){
+     return typeof (document.hidden || document.msHidden || document.webkitHidden) != "undefined";
+}
+
+function isPageHidden(){
+     return document.hidden || document.msHidden || document.webkitHidden;
+}
+
 function mail_focusGridElement(_uid)
 {
 //alert('mail_focusGridElement'+_uid);
+	if (isHiddenSupported() && isPageHidden()) return;
 	var allElements = mailGrid.dataRoot.actionObject.flatList();
 	if (allElements.length>0) 
 	{
@@ -725,6 +734,7 @@ var fm_previewMessageID = null;
 
 function selectedGridChange(_selectAll) {
 	// Get the currently focused object
+	if (isHiddenSupported() && isPageHidden()) return;
 	if (mailGrid)
 	{
 		var focused = mailGrid.dataRoot.actionObject.getFocusedObject();
