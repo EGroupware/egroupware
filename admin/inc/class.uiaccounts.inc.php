@@ -1371,9 +1371,11 @@
 			{
 				if($_account_id)
 				{
-					$account =& CreateObject('phpgwapi.accounts',(int)$_account_id,'u');
-					$userData = $account->read_repository();
-					$userGroups = $account->membership($_account_id);
+					// invalidate account, before reading it, to cope with changes to DB or LDAP outside EGw
+					accounts::cache_invalidate((int)$_account_id);
+					$userData = $GLOBALS['egw']->accounts->read((int)$_account_id,'u');
+
+					$userGroups = $GLOBALS['egw']->accounts->membership($_account_id);
 					$acl =& CreateObject('phpgwapi.acl',$_account_id);
 					$acl->read_repository();
 					$userData['anonymous'] = $acl->check('anonymous',1,'phpgwapi');
@@ -1394,7 +1396,7 @@
 					$userData['changepassword'] = (bool)$GLOBALS['egw_info']['server']['change_pwd_every_x_days'];
 					$userData['mustchangepassword'] = false;
 				}
-				$allGroups = $account->get_list('groups');
+				$allGroups = $GLOBALS['egw']->accounts->get_list('groups');
 			}
 			$page_params['menuaction'] = 'admin.uiaccounts.'.($_account_id?'edit':'add').'_user';
 			if($_account_id)

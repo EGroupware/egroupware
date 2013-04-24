@@ -639,6 +639,7 @@ wrong account type: %1 is no %2 !!!	admin	en	Wrong account type: %1 is NO %2 !
 wrong admin-account or -password !!!	admin	en	Wrong admin account or password!
 xml-rpc	admin	en	XML-RPC
 yes, but no scayt	admin	en	Yes, but no Spell Check As You Type (online)
+yes, use browser based spell checking engine	admin	en	Yes, use browser based spell checking engine
 yes, use webspellchecker	admin	en	Yes, use online WebSpellChecker
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	en	You can change the hash only, if you set a random password or currently use plaintext passwords!
 you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date!
