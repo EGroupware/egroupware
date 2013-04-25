@@ -1027,6 +1027,17 @@ class translation
 		}
 	}
 
+	static function transform_url2text($matches)
+	{
+		//error_log(__METHOD__.__LINE__.array2string($matches));
+		$linkTextislink = false;
+		// this is the actual url
+		$matches[2] = trim(strip_tags($matches[2]));
+		if ($matches[2]==$matches[1]) $linkTextislink = true;
+		$matches[1] = str_replace(' ','%20',$matches[1]);
+		return ($linkTextislink?' ':'[ ').$matches[1].($linkTextislink?'':' -> '.$matches[2]).($linkTextislink?' ':' ]');
+	}
+
 	/**
 	 * convertHTMLToText
 	 * @param string $_html : Text to be stripped down
@@ -1146,7 +1157,8 @@ class translation
 		// replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
 		self::replaceEmailAdresses($_html);
 		//convert hrefs to description -> URL
-		$_html = preg_replace('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*)</a>~si','[$2 -> $1]',$_html);
+		//$_html = preg_replace('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*)</a>~si','[$2 -> $1]',$_html);
+		$_html = preg_replace_callback('~<a[^>]+href=\"([^"]+)\"[^>]*>(.*)</a>~si','self::transform_url2text',$_html);
 
 		// reducing double \r\n to single ones, dont mess with pre sections
 		if ($stripcrl === true && $isHTML)
