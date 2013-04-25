@@ -60,6 +60,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 			$query = $GLOBALS['egw']->session->appsession('index','addressbook');
 			$query['num_rows'] = -1;	// all
 			$query['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
+			$query['order'] = 'contact_id';
 			if(!array_key_exists('filter',$query)) $query['filter'] = $GLOBALS['egw_info']['user']['account_id'];
 			$this->ui->get_rows($query,$selection,$readonlys, true);	// only return the ids
 		}
@@ -99,7 +100,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 					}
 					continue;
 				}
-					
+
 				if(strpos($field, '#') !== 0)
 				{
 					$field = 'contact_'.$field;
@@ -362,7 +363,7 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 		}
 	}
 
-	
+
 	protected function get_selects()
 	{
 		$this->selects = array(
