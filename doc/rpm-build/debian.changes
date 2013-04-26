@@ -1,3 +1,27 @@
+egroupware-epl (11.1.20130426-1) hardy; urgency=low
+
+  * Filemanager: fixed not working "Save as" for Internet Explorer (all versions), gave PHP Fatal Error
+  * eMail: increases font-size by 10% to 120% for display and textarea
+  * API/Auth: when required by setup check password strength upon login; strength must be specified, and user must be allowed to change password
+  * API/eMail/HTMLawed/CKEditor: tidy eats away even some wanted whitespace, so we switch it off;we used it for its compacting and beautifying capabilities, which resulted in better html for further processing
+  * EMail: fixed not working update of vacation notice using IE 10 and show a failure or success message
+  * InfoLog/CalDAV: fixed initial sync of more then 60 contacts created duplicates (no REPORT filters were used)
+  * WiKi: attempt to make those WiKi Links who include html-special-chars work
+  * eMail: handle IE10 focus issue (open attachment link on list view; multiple select on list view) when on single BrowserInstance
+  * API: introduce optional parameter to pass java script to be executed after CKEDITOR instance ready
+  * eMail: handle focus problem experienced under IE10 (single BrowserInstance) for forward
+  * eMail: fix problem with signature change on html with styles (left over style fragments)
+  * eMail: handle not checked keep local copy on message forward when no mailaddress is set; make clear not keeping a copy means: FORWARD ONLY for the mailbox in question
+  * eMail/IMAP-API: trying to recover when fetching mailheaders, but resultset retrieved does not match the expected amount of message headers
+  * Calendar/DragDrop: Add drag n drop capability for IE Version >=10;
+  * eMail: reintroduce the ability to set a identity as default;(available only for userDefinedAccounts=false); userDefinedAccounts=true are not longer allowed to save a profile without host as active
+  * eMail: handle problem popup foldertree does not show subfolders of folders with umlauts
+  * eMail: handle Focus Issues (browser pops in front when in background on mail list refresh)
+  * Addressbook/Export: fix fatal error regarding order by for postgresql on addressbook export
+  * Stylite template: fixed not displayed framework, if a link with target was used to open it
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 26 Apr 2013 09:15:41 +0200
+
 egroupware-epl (11.1.20130322-1) hardy; urgency=low
 
   * Setup: fixed not working install on openSUSE 12.2/3, because last line of output from "service (mysql|apache2) status" is empty
