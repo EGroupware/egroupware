@@ -212,7 +212,7 @@ var et2_selectbox = et2_inputWidget.extend(
 
 		// Check whether the options entry was found, if not read it from the
 		// content array.
-		if (_attrs["select_options"] == null)
+		if (jQuery.isEmptyObject(_attrs["select_options"]))
 		{
 			// Again, try last name part at top level
 			var content_options = this.getArrayMgr('content').getRoot().getEntry(name_parts[name_parts.length-1]);
