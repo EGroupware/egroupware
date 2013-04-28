@@ -659,6 +659,19 @@ var et2_widget = Class.extend(
 
 		// Parse the attributes from the given XML attributes object
 		this.parseXMLAttrs(_node.attributes, attributes, constructor.prototype);
+		
+		// check if parseXMLAttrs gives a different type attribute eg. type="@${row}[type]"
+		if (attributes.type && attributes.type != _nodeName)
+		{
+			// set _nodeName and constructor accordingly
+			_nodeName = attributes.type;
+			constructor = typeof et2_registry[_nodeName] == "undefined" ?
+				et2_placeholder : et2_registry[_nodeName];
+			if (readonly && typeof et2_registry[_nodeName + "_ro"] != "undefined")
+			{
+				constructor = et2_registry[_nodeName + "_ro"];
+			}			
+		}
 
 		// Do an sanity check for the attributes
 		constructor.prototype.generateAttributeSet(attributes);
