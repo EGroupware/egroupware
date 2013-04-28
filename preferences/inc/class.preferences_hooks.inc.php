@@ -446,6 +446,8 @@ class preferences_hooks
 		}
 		$file['common preferences'] = $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname=preferences');
 
+		$file['new settings'] = $GLOBALS['egw']->link('/index.php','menuaction=preferences.preferences_settings.index&appname=preferences');
+
 		display_section('preferences',$file);
 	}
 

@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="preferences.settings.tab1" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" class="prefTable egwGridView_grid">
+			<columns>
+				<column width="50%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="prefRow">
+					<box class="prefName">
+						<description id="${row}[label]"/>
+						<description id="${row}[help]" class="prefHelp"/>
+					</box>
+					<widget type="@${row}[type]" id="${row}[value]" size="@${row}[size]" class="prefValue"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="preferences.settings.tab2" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" class="prefTable egwGridView_grid">
+			<columns>
+				<column width="50%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="prefRow">
+					<box class="prefName">
+						<description id="${row}[label]"/>
+						<description id="${row}[help]" class="prefHelp"/>
+					</box>
+					<widget type="@${row}[type]" id="${row}[value]" size="@${row}[size]" class="prefValue"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="preferences.settings.tab3" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" class="prefTable egwGridView_grid">
+			<columns>
+				<column width="50%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="prefRow">
+					<box class="prefName">
+						<description id="${row}[label]"/>
+						<description id="${row}[help]" class="prefHelp"/>
+					</box>
+					<widget type="@${row}[type]" id="${row}[value]" size="@${row}[size]" class="prefValue"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="preferences.settings.tab4" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" class="prefTable egwGridView_grid">
+			<columns>
+				<column width="50%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="prefRow">
+					<box class="prefName">
+						<description id="${row}[label]"/>
+						<description id="${row}[help]" class="prefHelp"/>
+					</box>
+					<widget type="@${row}[type]" id="${row}[value]" size="@${row}[size]" class="prefValue"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="preferences.settings.tab5" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" class="prefTable egwGridView_grid">
+			<columns>
+				<column width="50%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="prefRow">
+					<box class="prefName">
+						<description id="${row}[label]"/>
+						<description id="${row}[help]" class="prefHelp"/>
+					</box>
+					<widget type="@${row}[type]" id="${row}[value]" size="@${row}[size]" class="prefValue"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="preferences.settings" template="" lang="" group="0" version="1.9.001">
+		<description id="msg" class="redItalic"/>
+		<tabbox id="tabs">
+			<tabs>
+				<tab id="tab1" label="Tab 1"/>
+				<tab id="tab2" label="Tab 2"/>
+				<tab id="tab3" label="Tab 3"/>
+				<tab id="tab4" label="Tab 4"/>
+				<!-- tab id="tab5" label="Tab 5"/ -->
+			</tabs>
+			<tabpanels>
+				<template id="preferences.settings.tab1" content="tab1"/>
+				<template id="preferences.settings.tab2" content="tab2"/>
+				<template id="preferences.settings.tab3" content="tab3"/>
+				<template id="preferences.settings.tab4" content="tab4"/>
+				<!-- template id="preferences.settings.tab4" content="tab5"/ -->
+			</tabpanels>
+		</tabbox>
+		<hbox>
+			<button label="Save" id="button[save]"/>
+			<button label="Apply" id="button[apply]"/>
+			<button label="Cancel" id="button[cancel]"/>
+		</hbox>
+	</template>
+</overlay>

@@ -1,0 +1,33 @@
+/**
+ * EGroupware - CSS Styles used by preferences app
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package preferences
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @version $Id$
+ */
+
+table.prefTable {
+	width: 100%;
+}
+tr.prefRow {
+	position: relative;
+}
+td.prefName, td.prefValue {
+	width: 50%;
+}
+.prefHelp {
+	position: absolute;
+	display: none;
+	width: 98%;
+	background-color: lightyellow;
+	border: 1px solid black;
+	border-radius: 10px;
+	padding: 5px;
+	margin-top: 5px;
+}
+tr.prefRow:hover .prefHelp {
+	display: block;
+	z-index: 10;	/* FF: displays it under next prefName without */
+}
