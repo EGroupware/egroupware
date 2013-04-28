@@ -157,22 +157,33 @@ class etemplate_widget_menupopup extends etemplate_widget
 		$options = (self::$request->sel_options[$form_name] ? $form_name : $this->id);
 		if(is_array(self::$request->sel_options[$options]))
 		{
-			foreach(self::$request->sel_options[$options] as &$label)
-			{
-				if(!is_array($label))
-				{
-					$label = html_entity_decode($label, ENT_NOQUOTES,'utf-8');
-				}
-				elseif($label['label'])
-				{
-					$label['label'] = html_entity_decode($label['label'], ENT_NOQUOTES,'utf-8');
-				}
-			}
+			self::fix_encoded_options(self::$request->sel_options[$options]);
 
 			// Turn on search, if there's a lot of rows
 			if(count(self::$request->sel_options[$options]) >= self::SEARCH_ROW_LIMIT)
 			{
 				self::setElementAttribute($form_name, "search", true);
+			}
+		}
+	}
+
+	/**
+	 * Fix already html-encoded options, eg. "&nbps"
+	 *
+	 * @param array $options
+	 */
+	public static function fix_encoded_options(array &$options)
+	{
+		foreach($options as &$label)
+		{
+			// optgroup or values for keys "label" and "title"
+			if(is_array($label))
+			{
+				self::fix_encoded_options($label);
+			}
+			else
+			{
+				$label = html_entity_decode($label, ENT_NOQUOTES, 'utf-8');
 			}
 		}
 	}
