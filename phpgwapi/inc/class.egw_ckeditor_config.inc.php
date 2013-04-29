@@ -212,6 +212,8 @@ class egw_ckeditor_config
 		$config['entities_latin'] = false;
 		$config['editingBlock'] = true;
 		$config['disableNativeSpellChecker'] = true;
+		// we set allowedContent to true as the 4.1 contentFiltering system allows only activated features as content
+		$config['allowedContent'] = true;
 
 		$config['removePlugins'] = 'elementspath';
 
