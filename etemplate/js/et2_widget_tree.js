@@ -392,6 +392,19 @@ var et2_tree = et2_inputWidget.extend(
 	},
 
 	/**
+	 * renameItem, renames an item by id
+	 * @param _id ID of the node
+	 * @param _newid ID of the node
+	 * @param _label label to set
+	 * @return void
+	 */
+	renameItem: function(_id, _newItemId, _label) {
+		if(this.input == null) return null;
+		this.input.changeItemId(_id,_newItemId);
+		if (typeof _label != 'undefined') this.input.setItemText(_newItemId,_label);
+	},
+
+	/**
 	 * setLabel, sets the Label of of an item by id
 	 * @param _id ID of the node
 	 * @param _label label to set

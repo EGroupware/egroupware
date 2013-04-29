@@ -182,10 +182,10 @@ var et2_dataview_selectionManager = Class.extend(
 							false));
 			this._focusedEntry = null;
 		}
-
 		// Mark the new given uid as focused
 		if (_focused)
 		{
+		console.log('et2_dataview_controller_selection::setFocused -> UID:'+_uid+' is focused by:'+this._actionObjectManager.name);
 			var entry = this._focusedEntry = this._getRegisteredRowsEntry(_uid);
 			this._updateEntryState(entry,
 					egwSetBit(entry.state, EGW_AO_STATE_FOCUSED, true));
