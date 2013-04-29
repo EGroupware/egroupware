@@ -2181,11 +2181,11 @@ blockquote[type=cite] {
 		//error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
 		if ($_folderName)
 		{
-			$_folderName = $this->mail_bo->decodeEntityFolderName($_folderName);
+			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
 			$_newName = translation::convert($this->mail_bo->decodeEntityFolderName($_newName), $this->charset, 'UTF7-IMAP');
 			$del = $this->mail_bo->getHierarchyDelimiter(false);
 			$oA = array();
-			list($profileID,$folderName) = explode(self::$delimiter,$_folderName,2);
+			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
 			if (is_numeric($profileID))
 			{
 				if ($profileID != $this->mail_bo->profileID) return; // only current connection
@@ -2195,18 +2195,25 @@ blockquote[type=cite] {
 				if (strtoupper($folderName)!= 'INBOX')
 				{
 					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
+					$this->mail_bo->reopen('INBOX');
 					if($newFolderName = $this->mail_bo->renameFolder($folderName, $parentFolder, $_newName)) {
 						$this->mail_bo->resetFolderObjectCache($profileID);
 						//enforce the subscription to the newly named server, as it seems to fail for names with umlauts
 						$rv = $this->mail_bo->subscribe($newFolderName, true);
 						$rv = $this->mail_bo->subscribe($folderName, false);
 					}
+					$this->mail_bo->reopen($newFolderName);
 					$fS = $this->mail_bo->getFolderStatus($newFolderName,false);
 					//error_log(__METHOD__.__LINE__.array2string($fS));
+					$oA[$_folderName]['id'] = $profileID.self::$delimiter.$newFolderName;
 					if ($fS['unseen'])
 					{
-						$oA[$_folderName] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';
+						$oA[$_folderName]['desc'] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';
 
+					}
+					else
+					{
+						$oA[$_folderName]['desc'] = $fS['shortDisplayName'];
 					}
 				}
 			}
@@ -2214,7 +2221,7 @@ blockquote[type=cite] {
 			if ($oA)
 			{
 				$response = egw_json_response::get();
-				$response->call('app.mail.mail_setFolderStatus',$oA,'mail');
+				$response->call('app.mail.mail_setLeaf',$oA,'mail');
 			}
 		}
 	}
@@ -2361,8 +2368,36 @@ blockquote[type=cite] {
 	 */
 	function ajax_moveMessages($_folderName, $_messageList)
 	{
-		if(mail_bo::$debug); error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true));
+		if(mail_bo::$debug) error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true));
+		$_folderName = $this->mail_bo->decodeEntityFolderName($_folderName);
+		list($profileID,$targetFolder) = explode(self::$delimiter,$_folderName,2);
 
+		if ($_messageList=='all' || !empty($_messageList['msg']))
+		{
+			if ($_messageList=='all')
+			{
+				// we have no folder information
+				$folder=null;
+			}
+			else
+			{
+				$uidA = self::splitRowID($_messageList['msg'][0]);
+				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
+			}
+			foreach($_messageList['msg'] as $rowID)
+			{
+				$hA = self::splitRowID($rowID);
+				$messageList[] = $hA['msgUID'];
+			}
+
+			$this->mail_bo->moveMessages($targetFolder,$messageList,true,$folder);
+			$response = egw_json_response::get();
+			$response->call('egw_refresh',lang('moved %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder),'mail');
+		}
+		else
+		{
+			if(mail_bo::$debug) error_log(__METHOD__."-> No messages selected.");
+		}
 	}
 
 	/**
@@ -2376,7 +2411,35 @@ blockquote[type=cite] {
 	function ajax_copyMessages($_folderName, $_messageList)
 	{
 		if(mail_bo::$debug); error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true));
+		$_folderName = $this->mail_bo->decodeEntityFolderName($_folderName);
+		list($profileID,$targetFolder) = explode(self::$delimiter,$_folderName,2);
 
+		if ($_messageList=='all' || !empty($_messageList['msg']))
+		{
+			if ($_messageList=='all')
+			{
+				// we have no folder information
+				$folder=null;
+			}
+			else
+			{
+				$uidA = self::splitRowID($_messageList['msg'][0]);
+				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
+			}
+			foreach($_messageList['msg'] as $rowID)
+			{
+				$hA = self::splitRowID($rowID);
+				$messageList[] = $hA['msgUID'];
+			}
+
+			$this->mail_bo->moveMessages($targetFolder,$messageList,false,$folder);
+			$response = egw_json_response::get();
+			$response->call('egw_refresh',lang('copied %1 message(s) from %2 to %3',count($messageList),$folder,$targetFolder),'mail');
+		}
+		else
+		{
+			if(mail_bo::$debug) error_log(__METHOD__."-> No messages selected.");
+		}
 	}
 
 }

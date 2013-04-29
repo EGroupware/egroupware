@@ -1617,7 +1617,7 @@ class mail_bo
 			$HierarchyDelimiter = $this->getHierarchyDelimiter();
 			$newFolderName = $parent . $HierarchyDelimiter . $folderName;
 		}
-		if (self::$debug); error_log("create folder: $newFolderName");
+		if (self::$debug) error_log("create folder: $newFolderName");
 		$rv = $this->icServer->renameMailbox($oldFolderName, $newFolderName);
 		if ( PEAR::isError($rv) ) {
 			if (self::$debug) error_log(__METHOD__." failed for $oldFolderName, $newFolderName with error: ".print_r($rv->message,true));
@@ -2660,6 +2660,61 @@ class mail_bo
 		$this->saveSessionData();
 		//error_log(__METHOD__.__LINE__.'->' .$_flag." ".array2string($_messageUID).",".($_folder?$_folder:$this->sessionData['mailbox']));
 		return true; // as we do not catch/examine setFlags returnValue
+	}
+
+	/**
+	 * move Message(s)
+	 *
+	 * @param string _foldername target folder
+	 * @param mixed array/string _messageUID array of ids to flag, or 'all'
+	 * @param boolean $deleteAfterMove - decides if a mail is moved (true) or copied (false)
+	 * @param string $currentFolder
+	 * @param boolean $returnUIDs - control wether or not the action called should return the new uids
+	 *						caveat: not all servers do support that
+	 *
+	 * @return mixed/bool true,false or new uid
+	 */
+	function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true, $currentFolder = Null, $returnUIDs = false)
+	{
+		$msglist = '';
+
+		$deleteOptions  = $GLOBALS['egw_info']["user"]["preferences"]["mail"]["deleteOptions"];
+		$retUid = $this->icServer->copyMessages($_foldername, $_messageUID, (!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox']), true, $returnUIDs);
+		if ( PEAR::isError($retUid) ) {
+			error_log(__METHOD__.__LINE__."Copying to Folder $_foldername failed! PEAR::Error:".array2string($retUid->message));
+			throw new egw_exception("Copying to Folder $_foldername failed! PEAR::Error:".array2string($retUid->message));
+			return false;
+		}
+		if ($deleteAfterMove === true)
+		{
+			$retValue = $this->icServer->deleteMessages($_messageUID, true);
+			if ( PEAR::isError($retValue))
+			{
+				error_log(__METHOD__.__LINE__."Delete After Move PEAR::Error:".array2string($retValue->message));
+				throw new egw_exception("Delete After Move PEAR::Error:".array2string($retValue->message));
+				return false;
+			}
+
+			if($deleteOptions != "mark_as_deleted")
+			{
+				$structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+				$cachemodified = false;
+				foreach ((array)$_messageUID as $k => $_uid)
+				{
+					if (isset($structure[$this->icServer->ImapServerId][(!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox'])][$_uid]))
+					{
+						$cachemodified = true;
+						unset($structure[$this->icServer->ImapServerId][(!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox'])][$_uid]);
+					}
+				}
+				if ($cachemodified) egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
+
+				// delete the messages finaly
+				$this->icServer->expunge();
+			}
+		}
+		//error_log(__METHOD__.__LINE__.array2string($retUid));
+		return ($returnUIDs ? $retUid : true);
 	}
 
 	/**

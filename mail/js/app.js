@@ -170,6 +170,19 @@ app.mail = AppJS.extend(
 	},
 	
 	/**
+	 * mail_setLeaf, function to set the id and description for the folder given by status key
+	 */
+	mail_setLeaf: function(_status) {
+		//console.log('mail_setLeaf',_status);
+		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+		for (var i in _status)
+		{
+			ftree.renameItem(i,_status[i]['id'],_status[i]['desc']);
+			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
+		}
+	},
+
+	/**
 	 * mail_refreshMessageGrid, function to call to reread ofthe current folder
 	 */
 	mail_refreshMessageGrid: function() {
@@ -583,7 +596,7 @@ app.mail = AppJS.extend(
 	 */
 	mail_copy: function(_action,_senders,_target) {
 		//console.log(_action,_senders,_target);
-		var target = _action.id == 'drop_copy_mail' ? _target.id : _action.id.substr(5);
+		var target = _action.id == 'drop_copy_mail' ? _target.iface.id : _action.id.substr(5);
 		var messages = this.mail_getFormData(_senders);
 		//alert('mail_copy('+messages.msg.join(',')+' --> '+target+')');
 		// TODO: Write move/copy function which cares about doing the same stuff

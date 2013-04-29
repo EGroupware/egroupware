@@ -47,7 +47,6 @@ class mail_bopreferences extends mail_sopreferences
 	 * constructor
 	 *
 	 * @param boolean $_restoreSession=true
-
 	 */
 	function __construct($_restoreSession = true)
 	{
@@ -438,7 +437,15 @@ class mail_bopreferences extends mail_sopreferences
 		parent::deleteAccountData($GLOBALS['egw_info']['user']['account_id'], $identity);
 	}
 
-	function setProfileActive($_status, $_identity=NULL)
+	/**
+	 * setProfileActive
+	 * sets the profile given as active; updates database via parent call
+	 * @param boolean $_status
+	 * @param int $_identityID=NULL Identity to update.
+	 * @param boolean $_identityOnly indicates, that the profile represented by id ($_identity) is an identity only (true), or a full mailprofile (false)
+	 * @return void
+	 */
+	function setProfileActive($_status, $_identity=NULL, $_identityOnly=false)
 	{
 		$this->sessionData = array();
 		$this->saveSessionData();
@@ -446,11 +453,12 @@ class mail_bopreferences extends mail_sopreferences
 		{
 			//error_log(__METHOD__.__LINE__.' change status of Profile '.$_identity.' to '.$_status);
 			// globals preferences add appname varname value
-			$GLOBALS['egw']->preferences->add('mail','ActiveProfileID',$_identity,'user');
+			if (!$_identityOnly) $GLOBALS['egw']->preferences->add('mail','ActiveProfileID',$_identity,'user');
 			// save prefs
-			$GLOBALS['egw']->preferences->save_repository(true);
-			egw_cache::setSession('mail','activeProfileID',$_identity);
+			if (!$_identityOnly) $GLOBALS['egw']->preferences->save_repository(true);
+			if (!$_identityOnly) egw_cache::setSession('mail','activeProfileID',$_identity);
 		}
+		// the parentCall only saves the database value
 		parent::setProfileActive($GLOBALS['egw_info']['user']['account_id'], $_status, $_identity);
 	}
 }
