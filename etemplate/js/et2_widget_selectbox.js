@@ -231,16 +231,17 @@ var et2_selectbox = et2_inputWidget.extend(
 	/**
 	 * Add an option to regular drop-down select
 	 */
-	_appendOptionElement: function(_value, _label, _title) {
+	_appendOptionElement: function(_value, _label, _title, dom_element) {
 		if(_value == "" && (_label == null || _label == "")) {
 			_label = this.options.empty_label;
 		}
 
 		if(this.input == null)
 		{
-			return this._appendMultiOption(_value, _label, _title);
+			return this._appendMultiOption(_value, _label, _title, dom_element);
 		}
 
+		
 		var option = $j(document.createElement("option"))
 			.attr("value", _value)
 			.text(_label+"");
@@ -256,14 +257,14 @@ var et2_selectbox = et2_inputWidget.extend(
 		}
 		else 
 		{
-			option.appendTo(this.input);
+			option.appendTo(dom_element || this.input);
 		}
 	},
 
 	/**
 	 * Append a value to multi-select 
 	 */
-	_appendMultiOption: function(_value, _label, _title) {
+	_appendMultiOption: function(_value, _label, _title, dom_element) {
 		var option_data = null;
 		if(typeof _label == "object")
 		{
@@ -309,7 +310,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		label.append(jQuery("<span>"+_label+"</span>"));
 		var li = jQuery(document.createElement("li")).append(label);
 		
-		li.appendTo(this.multiOptions);
+		li.appendTo(dom_element || this.multiOptions);
 	},
 
 	/**
@@ -568,7 +569,36 @@ var et2_selectbox = et2_inputWidget.extend(
 
 			if (typeof _options[key] === 'object')
 			{
-				if(this.input == null)
+				// Optgroup
+				if(typeof _options[key]["label"] == 'undefined' && typeof _options[key]["title"] == "undefined")
+				{
+					var group = $j(document.createElement("optgroup"))
+						.attr("label", this.options.no_lang ? key : this.egw().lang(key))
+						.appendTo(this.input);
+					if(this.input == null)
+					{
+						group = jQuery(document.createElement("ul"))
+							.append('<li class="ui-widget-header"><span>'+key+'</span></li>')
+							.appendTo(this.multiOptions);
+					}
+						
+					for(var sub in _options[key])
+					{
+						if (typeof _options[key][sub] === 'object')
+						{
+							this._appendOptionElement(sub, 
+								_options[key][sub]["label"] ? _options[key][sub]["label"] : "",
+								_options[key][sub]["title"] ? _options[key][sub]["title"] : "",
+								group
+							);
+						}
+						else
+						{
+							this._appendOptionElement(key, _options[key][sub],undefined,group);
+						}
+					}
+				}
+				else if(this.input == null)
 				{
 					// Allow some special extras for objects by passing the whole thing
 					_options[key]["label"] = _options[key]["label"] ? _options[key]["label"] : "";
