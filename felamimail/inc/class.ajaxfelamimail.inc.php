@@ -465,14 +465,14 @@ class ajaxfelamimail
 			if($folderName == 'INBOX' || $folderName == '--topfolder--') {
 				return $response->getXML();
 			}
-
+			$this->bofelamimail->reopen('INBOX');
 			if($this->bofelamimail->deleteFolder($folderName)) {
 				$folderName = $this->_encodeFolderName($folderName);
 				$response->addScript("tree.deleteItem('$folderName',1);");
 			}
 			//reset folderObject cache, to trigger reload
 			felamimail_bo::resetFolderObjectCache($this->imapServerID);
-
+			$this->bofelamimail->reopen('INBOX');
 			return $response->getXML();
 		}
 
@@ -1373,6 +1373,7 @@ class ajaxfelamimail
 			if($this->_debug) error_log("ajaxfelamimail::renameFolder work with ($oldFolderName, $parentFolder, $folderName)");
 
 			$response = new xajaxResponse();
+			$this->bofelamimail->reopen('INBOX');
 			if(strtoupper($_oldFolderName) != 'INBOX' ) {
 				if($newFolderName = $this->bofelamimail->renameFolder($oldFolderName, $parentFolder, $folderName)) {
 					//enforce the subscription to the newly named server, as it seems to fail for names with umlauts
@@ -1398,6 +1399,7 @@ class ajaxfelamimail
 			}
 			//reset folderObject cache, to trigger reload
 			felamimail_bo::resetFolderObjectCache($this->imapServerID);
+			$this->bofelamimail->reopen($newFolderName);
 
 			return $response->getXML();
 		}
