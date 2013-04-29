@@ -50,6 +50,7 @@ function initAll()
 		if (fm_height >= 750) window.resizeBy(0,resizeHeight);
 	}
 	if (egw_getWindowOuterHeight()>screen.availHeight) window.resizeBy(0,screen.availHeight-egw_getWindowOuterHeight());
+	if (screen.height>screen.availHeight) window.moveBy(0,screen.availHeight-screen.height);
 	var headerTable = document.getElementById('headerTable');
 	var headerDIV = document.getElementById('headerDIV');
 	if (headerTable) {
