@@ -788,15 +788,15 @@
 				$mode = 'simple-withimage';
 				//$mode ='advanced';// most helpful for debuging
 				#if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck'])) $mode = 'egw_simple_spellcheck';
-				$style="border:0px; width:100%; height:400px;";
+				$style="border:0px; width:100%; height:500px;";
 				// dont run purify, as we already did that (getCleanHTML).
-				$this->t->set_var('tinymce', html::fckEditorQuick('body', $mode, $sessionData['body'],'400px','100%',false,'0px',($_focusElement=='body'?true:false),($_focusElement!='body'?'parent.setToFocus("'.$_focusElement.'");':'')));
+				$this->t->set_var('tinymce', html::fckEditorQuick('body', $mode, $sessionData['body'],'500px','100%',false,'0px',($_focusElement=='body'?true:false),($_focusElement!='body'?'parent.setToFocus("'.$_focusElement.'");':'')));
 				$this->t->set_var('mimeType', 'html');
 				$ishtml=1;
 			} else {
 				$border="1px solid gray; margin:1px";
 				// initalize the CKEditor Object to enable switching back and force
-				$editor = html::fckEditorQuick('body', 'ascii', $sessionData['body'],'400px','99%',false,$border);
+				$editor = html::fckEditorQuick('body', 'ascii', $sessionData['body'],'500px','99%',false,$border);
 				$this->t->set_var('tinymce', $editor); //html::fckEditorQuick('body', 'ascii', $sessionData['body'],'400px','99%'));
 				$this->t->set_var('mimeType', 'text');
 				$ishtml=0;
