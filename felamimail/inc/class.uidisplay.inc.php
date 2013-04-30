@@ -93,7 +93,7 @@
 			#$atext = '([a-z0-9!#$&%*+/=?^_`{|}~-]|&amp;)';
 			$atext = '([a-zA-Z0-9_\-\.])';
 			$dot_atom = $atext.'+(\.'.$atext.'+)*';
-			$Email_RegExp_Match = '~'.$dot_atom.'(%'.$Host_RegExp_Match.')?@'.$Host_RegExp_Match.'~i';
+			$Email_RegExp_Match = '~(\[|<|>|\&lt;|\s)+('.$dot_atom.'(%'.$Host_RegExp_Match.')?@'.$Host_RegExp_Match.')(\]|>|<|\&gt;|\s)+~i';
 
 			$this->t 		= CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$this->displayCharset   = $GLOBALS['egw']->translation->charset();
@@ -152,9 +152,12 @@
 			$i = 0;
 			/* Find all the email addresses in the body */
 			// stop cold after 100 adresses, as this is very time consuming
+			//error_log(__METHOD__.__LINE__.'->'.$Email_RegExp_Match);
+			//error_log(__METHOD__.__LINE__.'->'.$sbody);
 			while(preg_match($Email_RegExp_Match, $sbody, $regs) && $i<=100) {
-				//_debug_array($regs);
-				$addresses[$regs[0]] = strtr($regs[0], array('&amp;' => '&'));
+				//error_log(array2string($regs));
+				// regs[0] is what we found; regs[2] is the emailaddress in question
+				$addresses[$regs[0]] = strtr($regs[2], array('&amp;' => '&'));
 				$start = strpos($sbody, $regs[0]) + strlen($regs[0]);
 				$sbody = substr($sbody, $start);
 				$i++;
@@ -167,15 +170,16 @@
 				if ($lmail == $email) next($addresses);
 				//echo __METHOD__.' Text:'.$text."#<br>";
 				//echo $email."#<br>";
-				$comp_uri = $this->makeComposeLink($email, $text);
+				$comp_uri = $this->makeComposeLink($email, $email);
 				//echo __METHOD__.' Uri:'.$comp_uri.'#<br>';
-				$body = str_replace($text, $comp_uri, $body);
+				$body = str_replace($text, str_replace($email,$comp_uri,$text), $body);
 				$lmail=$email;
 			}
 
 			/* Return number of unique addresses found */
 			return count($addresses);
 		}
+
 		function parseHREF (&$body) {
 			#echo __METHOD__."called<br>";
 			$webserverURL   = $GLOBALS['egw_info']['server']['webserver_url'];
