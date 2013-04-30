@@ -212,6 +212,26 @@ class addressbook_import_contacts_csv extends importexport_basic_import_csv  {
 		switch ($_action) {
 			case 'none' :
 				return true;
+			case 'delete':
+				if($_data['id'])
+				{
+					if ( $this->dry_run ) {
+						//print_r($_data);
+						$this->results[$_action]++;
+						return true;
+					}
+					$result = $this->bocontacts->delete($_data);
+					if($result && $result === true)
+					{
+						$this->results[$_action]++;
+					}
+					else
+					{
+						// Failure of some kind - unknown cause
+						$this->errors[$record_num] = lang('unable to delete');
+					}
+				}
+				break;
 			case 'update' :
 				// Only update if there are changes
 				$old = $this->bocontacts->read($_data['id']);
