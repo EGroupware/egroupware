@@ -2120,7 +2120,8 @@ blockquote[type=cite] {
 	function loadEmailBody($_messageID=null)
 	{
 		if (!$_messageID) $_messageID = $_GET['_messageID'];
-		if(mail_bo::$debug); error_log(__METHOD__."->".$_flag.':'.print_r($_messageID,true));
+		if(mail_bo::$debug) error_log(__METHOD__."->".$_flag.':'.print_r($_messageID,true));
+		if (empty($_messageID)) return "";
 		$uidA = self::splitRowID($_messageID);
 		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 		$messageID = $uidA['msgUID'];

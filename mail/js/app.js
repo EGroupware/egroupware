@@ -64,11 +64,18 @@ app.mail = AppJS.extend(
 			var _id = selected[0];
 			dataElem = egw.dataGetUIDdata(_id);
 		}
-		else
+		if(typeof selected == 'undefined' || selected.length == 0 || typeof dataElem =='undefined')
 		{
+			var subject ="";
+			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewFromAddress').set_value("");
+			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewToAddress').set_value("");
+			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewDate').set_value("");
+			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewSubject').set_value("");
+			var IframeHandle = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('messageIFRAME');
+			IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:""}));
 			return;
 		}
-		console.log("mail_preview",dataElem);
+		//console.log("mail_preview",dataElem);
 		var subject =dataElem.data.subject;
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewFromAddress').set_value(dataElem.data.fromaddress);
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewToAddress').set_value(dataElem.data.toaddress);
@@ -266,6 +273,7 @@ app.mail = AppJS.extend(
 		this.mail_setRowClass(_elems,'deleted');
 		var request = new egw_json_request('mail.mail_ui.ajax_deleteMessages',[msg]);
 		request.sendRequest(false);
+		for (var i = 0; i < msg['msg'].length; i++)  egw.dataDeleteUID(msg['msg'][i]);
 		this.mail_refreshMessageGrid();
 	},
 	
@@ -527,7 +535,7 @@ app.mail = AppJS.extend(
 			messages['msg'] = [];
 		}
 	
-		for (var i = 0; i < _actionObjects.length; i++) 
+		for (var i = 0; i < _actionObjects.length; i++)
 		{
 			if (_actionObjects[i].id.length>0)
 			{
@@ -585,6 +593,7 @@ app.mail = AppJS.extend(
 		// as the "onNodeSelect" function!
 		var request = new egw_json_request('mail.mail_ui.ajax_moveMessages',[target, messages]);
 		request.sendRequest(false);
+		for (var i = 0; i < messages['msg'].length; i++)  egw.dataDeleteUID(messages['msg'][i]);
 		this.mail_refreshMessageGrid();
 	},
 	/**
