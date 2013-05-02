@@ -321,6 +321,77 @@
 						if ($_REQUEST[$name]) $sessionData[$name] .= (strlen($sessionData[$name])>0 ? ( $name == 'cc' || $name == 'bcc' ? ',' : ' ') : '') . $_REQUEST[$name];
 					}
 				}
+
+				if ($_REQUEST['preset']['mailtocontactbyid']) {
+					if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
+						$addressbookprefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
+						if (method_exists($GLOBALS['egw']->contacts,'search')) {
+
+							$addressArray = split(',',$_REQUEST['preset']['mailtocontactbyid']);
+							foreach ((array)$addressArray as $id => $addressID)
+							{
+								$addressID = (int) $addressID;
+								if (!($addressID>0))
+								{
+									unset($addressArray[$id]);
+								}
+							}
+							if (count($addressArray))
+							{
+								$_searchCond = array('contact_id'=>$addressArray);
+								//error_log(__METHOD__.__LINE__.$_searchString);
+								if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $showAccounts=false;
+								$filter = ($showAccounts?array():array('account_id' => null));
+								$filter['cols_to_search']=array('n_fn','email','email_home');
+								$contacts = $GLOBALS['egw']->contacts->search($_searchCond,array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),$filter);
+								// additionally search the accounts, if the contact storage is not the account storage
+								if ($showAccounts &&
+									$GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
+									$GLOBALS['egw_info']['server']['contact_repository'] == 'sql')
+								{
+									$accounts = $GLOBALS['egw']->contacts->search($_searchCond,array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),array('owner' => 0));
+			
+									if ($contacts && $accounts)
+									{
+										$contacts = array_merge($contacts,$accounts);
+										usort($contacts,create_function('$a,$b','return strcasecmp($a["n_fn"],$b["n_fn"]);'));
+									}
+									elseif($accounts)
+									{
+										$contacts =& $accounts;
+									}
+									unset($accounts);
+								}
+							}
+							if(is_array($contacts)) {
+								$mailtoArray = array();
+								$primary = $addressbookprefs['distributionListPreferredMail'];
+								if ($primary != 'email' && $primary != 'email_home') $primary = 'email';
+								$secondary = ($primary == 'email'?'email_home':'email');
+								//error_log(__METHOD__.__LINE__.array2string($contacts));
+								foreach($contacts as $contact) {
+									$innerCounter=0;
+									foreach(array($contact[$primary],$contact[$secondary]) as $email) {
+										// use pref distributionListPreferredMail for the primary address
+										// avoid wrong addresses, if an rfc822 encoded address is in addressbook
+										$email = preg_replace("/(^.*<)([a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-\.]+)(.*)/",'$2',$email);
+										$contact['n_fn'] = str_replace(array(',','@'),' ',$contact['n_fn']);
+										$completeMailString = addslashes(trim($contact['n_fn'] ? $contact['n_fn'] : $contact['fn']) .' <'. trim($email) .'>');
+										if($innerCounter==0 && !empty($email) && in_array($completeMailString ,$mailtoArray) === false) {
+											$i++;
+											$innerCounter++;
+											$str = $GLOBALS['egw']->translation->convert(trim($contact['n_fn'] ? $contact['n_fn'] : $contact['fn']) .' <'. trim($email) .'>', $this->charset, 'utf-8');
+											$mailtoArray[$i] = $completeMailString;
+										}
+									}
+								}
+							}
+							//error_log(__METHOD__.__LINE__.array2string($mailtoArray));
+							$sessionData['to']=$mailtoArray;
+						}
+					}
+				}
+
 				if (isset($_REQUEST['preset']['file']))
 				{
 					$names = (array)$_REQUEST['preset']['name'];
