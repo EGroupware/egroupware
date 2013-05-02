@@ -470,7 +470,7 @@ renamed successfully!	felamimail	de	Erfolgreich umbenannt
 replied	felamimail	de	beantwortet
 reply	felamimail	de	Antworten
 reply all	felamimail	de	allen Antworten
-reply message type	felamimail	de	Format Ihrer E-Mail beim Antworten
+reply message type	felamimail	de	Format Ihrer E-Mail beim Antworten/Weiterleiten
 reply to	felamimail	de	Antwort an
 replyto	felamimail	de	Antwort an
 required pear class mail/mimedecode.php not found.	felamimail	de	Die benötigte PEAR Klasse Mail/mimeDecode.php konnte nicht gefunden werden.
@@ -543,7 +543,7 @@ small view	felamimail	de	schmale Ansicht
 smtp settings	admin	de	SMTP Einstellungen
 sort order	felamimail	de	Sortierreihenfolge
 start new messages with mime type plain/text or html?	felamimail	de	Sollen neue E-Mails als plain/text oder HTML Nachrichten verfasst werden?
-start reply messages with mime type plain/text or html or try to use the displayed format (default)?	felamimail	de	Antworten auf E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die Email vom Sender ursprünglich verfasst wurde.
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	felamimail	de	Antworten auf und Inline-Weiterleiten von E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die Email vom Sender ursprünglich verfasst wurde.
 stationery	felamimail	de	Briefkopf
 subject	felamimail	de	Betreff
 subject(a->z)	felamimail	de	Betreff (A->Z)

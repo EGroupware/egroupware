@@ -994,7 +994,8 @@
 				// this fill the session data with the values from the original email
 				$this->bocompose->getForwardData($icServer, $folder, $replyID, $partID, $mode);
 			}
-			$this->compose();
+			$handleAsReply = ($mode?$mode=='inline':$this->bocompose->preferencesArray['message_forwarding'] == 'inline');
+			$this->compose('to',false, $handleAsReply);
 		}
 
 		function getAttachment()

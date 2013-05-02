@@ -471,7 +471,7 @@ renamed successfully!	felamimail	en	Renamed successfully!
 replied	felamimail	en	Replied
 reply	felamimail	en	Reply
 reply all	felamimail	en	Reply All
-reply message type	felamimail	en	Reply message type
+reply message type	felamimail	en	Reply/Forward message type
 reply to	felamimail	en	Reply To
 replyto	felamimail	en	Reply To
 required pear class mail/mimedecode.php not found.	felamimail	en	Required PEAR class Mail / mimeDecode.php not found.
@@ -544,7 +544,7 @@ small view	felamimail	en	Small view
 smtp settings	admin	en	SMTP settings
 sort order	felamimail	en	Sort order
 start new messages with mime type plain/text or html?	felamimail	en	Start new messages with mime type plain/text or HTML?
-start reply messages with mime type plain/text or html or try to use the displayed format (default)?	felamimail	en	Start reply messages with mime type plain/text or html or try to use the displayed format?
+start reply messages with mime type plain/text or html or try to use the displayed format (default)?	felamimail	en	Start reply and inline forwarding messages with mime type plain/text or html or try to use the displayed format?
 stationery	felamimail	en	Stationery
 subject	felamimail	en	Subject
 subject(a->z)	felamimail	en	Subject (A->Z)
