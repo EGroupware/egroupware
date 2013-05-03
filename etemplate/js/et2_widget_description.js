@@ -121,6 +121,8 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 
 	set_value: function(_value) {
 		if(!_value) _value = "";
+		else 
+			if (!this.options.no_lang) _value = this.egw().lang(_value);
 		et2_insertLinkText(this._parseText(_value),
 			this.span[0],
 			this.options.extra_link_target
