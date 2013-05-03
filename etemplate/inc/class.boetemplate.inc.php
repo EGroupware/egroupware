@@ -301,9 +301,9 @@ class boetemplate extends soetemplate
 	 * @param string $attr attribute-name
 	 * @return mixed the attribute or False if named cell not found
 	 */
-	function &get_cell_attribute($name,$attr)
+	function &getElementAttribute($name,$attr)
 	{
-		return $this->set_cell_attribute($name,$attr,NULL);
+		return $this->setElementAttribute($name,$attr,NULL);
 	}
 
 	/**
@@ -314,7 +314,7 @@ class boetemplate extends soetemplate
 	 * @param mixed $val if not NULL sets attribute else returns it
 	 * @return mixed number of changed cells or False, if none changed
 	 */
-	function &set_cell_attribute($name,$attr,$val)
+	function &setElementAttribute($name,$attr,$val)
 	{
 		//echo "<p>set_cell_attribute(tpl->name=$this->name, name='$name', attr='$attr',val='$val')</p>\n";
 
@@ -335,9 +335,52 @@ class boetemplate extends soetemplate
 	 * @param boolean $disabled=true disable or enable a cell, default true=disable
 	 * @return mixed number of changed cells or False, if none changed
 	 */
-	function disable_cells($name,$disabled=True)
+	function disableElement($name,$disabled=True)
 	{
 		return $this->set_cell_attribute($name,'disabled',$disabled);
+	}
+
+	/**
+	 * Returns reference to an attribute in a named cell
+	 *
+	 * Currently we always return a reference to an not set value, unless it was set before.
+	 * We do not return a reference to the actual cell, as it get's contructed on client-side!
+	 *
+	 * @param string $name cell-name
+	 * @param string $attr attribute-name
+	 * @return mixed reference to attribute, usually NULL
+	 * @deprecated use getElementAttribute($name, $attr)
+	 */
+	public function &get_cell_attribute($name,$attr)
+	{
+		return self::getElementAttribute($name, $attr);
+	}
+
+	/**
+	 * set an attribute in a named cell if val is not NULL else return the attribute
+	 *
+	 * @param string $name cell-name
+	 * @param string $attr attribute-name
+	 * @param mixed $val if not NULL sets attribute else returns it
+	 * @return reference to attribute
+	 * @deprecated use setElementAttribute($name, $attr, $val)
+	 */
+	public function &set_cell_attribute($name,$attr,$val)
+	{
+		return self::setElementAttribute($name, $attr, $val);
+	}
+
+	/**
+	 *  disables all cells with name == $name
+	 *
+	 * @param sting $name cell-name
+	 * @param boolean $disabled=true disable or enable a cell, default true=disable
+	 * @return reference to attribute
+	 * @deprecated use disableElement($name, $disabled=true)
+	 */
+	public function disable_cells($name,$disabled=True)
+	{
+		return self::disableElement($name, $disabled);
 	}
 
 	/**
@@ -1097,7 +1140,7 @@ if (!function_exists('set_cell_attribute_helper'))
 	function &set_cell_attribute_helper(&$widget,&$extra)
 	{
 		// extra = array(0=>n,1=>name,2=>attr,3=>value)
-		if ($widget['name'] == $extra[1])
+		if ($widget['name'] == $extra[1] || $widget['type'] == 'tab' && strpos($widget['name'], $extra[1].'=') === 0)
 		{
 			if (is_null($extra[3]))
 			{

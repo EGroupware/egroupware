@@ -312,7 +312,7 @@ class etemplate_old extends boetemplate
 		if($output_mode == 2)
 		{
 			$html .= "\n".'<script language="javascript">'."\n";
-			$html .= 'egw.LAB.wait(function() { popup_resize();});'."\n";
+			$html .= 'egw.LAB.wait($j(document).ready(function() { popup_resize();}));'."\n";
 			$html .= '</script>';
 		}
 
@@ -788,7 +788,7 @@ class etemplate_old extends boetemplate
 			if (!(list($r_key) = each($data)))	// no further row
 			{
 				if (!(($this->autorepeat_idx($cols['A'],0,$r,$idx,$idx_cname,false,$content) && $idx_cname) ||
-						(substr($cols['A']['type'],1) == 'box' && $this->autorepeat_idx($cols['A'][1],0,$r,$idx,$idx_cname,false,$content) && $idx_cname) ||
+						(in_array($cols['A']['type'], array('vbox','hbox','box')) && $this->autorepeat_idx($cols['A'][1],0,$r,$idx,$idx_cname,false,$content) && $idx_cname) ||
 					($this->autorepeat_idx($cols['B'],1,$r,$idx,$idx_cname,false,$content) && $idx_cname)) ||
 					!$this->isset_array($content,$idx_cname))
 				{
@@ -1091,6 +1091,10 @@ class etemplate_old extends boetemplate
 		{
 			$cell['onchange'] = $this->expand_name($cell['onchange'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 		}
+		if ($cell['type'][0] == '@')
+		{
+			$cell['type'] = $this->expand_name($t=$cell['type'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
+		}
 		// the while loop allows to build extensions from other extensions
 		// please note: only the first extension's post_process function is called !!!
 		list($type,$sub_type) = explode('-',$cell['type']);
@@ -1270,6 +1274,7 @@ class etemplate_old extends boetemplate
 			case 'hidden':
 			case 'passwd':
 			case 'text':		// size: [length][,maxLength[,preg[,html5type]]]
+			case 'textbox':
 				$autocompletion_off='';
 				if ($type == 'passwd') $autocompletion_off='autocomplete="off"';
 				$cell_opts = $c = self::csv_split($cell_options);	// allows to enclose preg in quote to allow comma
@@ -2058,9 +2063,9 @@ class etemplate_old extends boetemplate
 				$sels += $cell['sel_options'];
 			}
 		}
-		if (isset($this->sel_options[$name]) && is_array($this->sel_options[$name]))
+		if (($options = self::get_array($this->sel_options, $name)) && is_array($options))
 		{
-			$sels += $this->sel_options[$name];
+			$sels += $options;
 		}
 		else
 		{
@@ -2082,6 +2087,7 @@ class etemplate_old extends boetemplate
 		{
 			$sels += $content["options-$name"];
 		}
+		//error_log(__METHOD__."(, '$name') returning ".array2string($sels));
 		return $sels;
 	}
 
@@ -2266,6 +2272,7 @@ class etemplate_old extends boetemplate
 				case 'float':
 				case 'passwd':
 				case 'text':
+				case 'textbox':
 				case 'hidden':
 				case 'textarea':
 				case 'colorpicker':
