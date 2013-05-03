@@ -144,7 +144,7 @@ class preferences_hooks
 				'type'   => 'select',
 				'label'  => 'Theme (colors/fonts) Selection',
 				'name'   => 'theme',
-				'values' => isset($GLOBALS['egw']->framework) ? $GLOBALS['egw']->framework->list_themes() : array(),
+				'values' => !$hook_data['setup'] ? $GLOBALS['egw']->framework->list_themes() : array(),
 				'help'   => 'A theme defines the colors and fonts used by the template.',
 				'xmlrpc' => True,
 				'admin'  => False,

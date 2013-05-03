@@ -14,7 +14,7 @@ table.prefTable {
 tr.prefRow {
 	position: relative;
 }
-td.prefName, td.prefValue {
+td.prefName {
 	width: 50%;
 }
 .prefHelp {
@@ -30,4 +30,10 @@ td.prefName, td.prefValue {
 tr.prefRow:hover .prefHelp {
 	display: block;
 	z-index: 10;	/* FF: displays it under next prefName without */
+}
+.prefDefault, .prefValue {
+	float: left;
+}
+.prefValue {
+	margin-right: 5px;
 }

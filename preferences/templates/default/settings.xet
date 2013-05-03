@@ -10,10 +10,13 @@
 			<rows>
 				<row class="prefRow">
 					<box class="prefName">
-						<description id="${row}[label]"/>
+						<description for="@${row}[name]" id="${row}[label]"/>
 						<description id="${row}[help]" class="prefHelp"/>
 					</box>
-					<widget type="@${row}[type]" id="${row}[value]" size="@${row}[size]" class="prefValue"/>
+					<box>
+						<widget type="@${row}[type]" id="@${row}[name]" no_lang="1" class="prefValue"/>
+						<description id="${row}[default]" no_lang="1" class="prefDefault"/>
+					</box>
 				</row>
 			</rows>
 		</grid>
@@ -27,10 +30,13 @@
 			<rows>
 				<row class="prefRow">
 					<box class="prefName">
-						<description id="${row}[label]"/>
+						<description for="@${row}[name]" id="${row}[label]"/>
 						<description id="${row}[help]" class="prefHelp"/>
 					</box>
-					<widget type="@${row}[type]" id="${row}[value]" size="@${row}[size]" class="prefValue"/>
+					<box>
+						<widget type="@${row}[type]" id="@${row}[name]" no_lang="1" class="prefValue"/>
+						<description id="${row}[default]" no_lang="1" class="prefDefault"/>
+					</box>
 				</row>
 			</rows>
 		</grid>
@@ -44,10 +50,13 @@
 			<rows>
 				<row class="prefRow">
 					<box class="prefName">
-						<description id="${row}[label]"/>
+						<description for="@${row}[name]" id="${row}[label]"/>
 						<description id="${row}[help]" class="prefHelp"/>
 					</box>
-					<widget type="@${row}[type]" id="${row}[value]" size="@${row}[size]" class="prefValue"/>
+					<box>
+						<widget type="@${row}[type]" id="@${row}[name]" no_lang="1" class="prefValue"/>
+						<description id="${row}[default]" no_lang="1" class="prefDefault"/>
+					</box>
 				</row>
 			</rows>
 		</grid>
@@ -61,10 +70,13 @@
 			<rows>
 				<row class="prefRow">
 					<box class="prefName">
-						<description id="${row}[label]"/>
+						<description for="@${row}[name]" id="${row}[label]"/>
 						<description id="${row}[help]" class="prefHelp"/>
 					</box>
-					<widget type="@${row}[type]" id="${row}[value]" size="@${row}[size]" class="prefValue"/>
+					<box>
+						<widget type="@${row}[type]" id="@${row}[name]" no_lang="1" class="prefValue"/>
+						<description id="${row}[default]" no_lang="1" class="prefDefault"/>
+					</box>
 				</row>
 			</rows>
 		</grid>
@@ -78,16 +90,25 @@
 			<rows>
 				<row class="prefRow">
 					<box class="prefName">
-						<description id="${row}[label]"/>
+						<description for="@${row}[name]" id="${row}[label]"/>
 						<description id="${row}[help]" class="prefHelp"/>
 					</box>
-					<widget type="@${row}[type]" id="${row}[value]" size="@${row}[size]" class="prefValue"/>
+					<box>
+						<widget type="@${row}[type]" id="@${row}[name]" no_lang="1" class="prefValue"/>
+						<description id="${row}[default]" no_lang="1" class="prefDefault"/>
+					</box>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="preferences.settings" template="" lang="" group="0" version="1.9.001">
 		<description id="msg" class="redItalic"/>
+		<menulist>
+			<menupopup id="type" onchange="1"/>
+		</menulist>
+		<menulist>
+			<menupopup label="Application" id="appname" onchange="1" options="Common preferences"/>
+		</menulist>
 		<tabbox id="tabs">
 			<tabs>
 				<tab id="tab1" label="Tab 1"/>
@@ -101,7 +122,7 @@
 				<template id="preferences.settings.tab2" content="tab2"/>
 				<template id="preferences.settings.tab3" content="tab3"/>
 				<template id="preferences.settings.tab4" content="tab4"/>
-				<!-- template id="preferences.settings.tab4" content="tab5"/ -->
+				<!-- template id="preferences.settings.tab5" content="tab5"/ -->
 			</tabpanels>
 		</tabbox>
 		<hbox>
