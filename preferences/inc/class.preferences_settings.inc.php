@@ -46,7 +46,7 @@ class preferences_settings
 		$tpl = new etemplate_old('preferences.settings');
 		if (!is_array($content))
 		{
-			$appname = isset($_GET['appname']) ? $_GET['appname'] : 'preferences';
+			$appname = isset($_GET['appname']) && $_GET['appname'] != 'preferences' ? $_GET['appname'] : 'common';
 			$type = 'user';
 			$account_id = $GLOBALS['egw_info']['user']['account_id'];
 			if ($GLOBALS['egw_info']['user']['apps']['admin'] &&
@@ -60,9 +60,6 @@ class preferences_settings
 		else
 		{
 			//_debug_array($content);
-			$appname = $content['appname'] ? $content['appname'] : 'preferences';
-			list($type,$account_id) = explode(':', $content['type']);
-			$prefs = array_merge($content['tab1'], $content['tab2'], $content['tab3'], $content['tab4']);
 			if ($content['button'])
 			{
 				list($button) = each($content['button']);
@@ -71,15 +68,35 @@ class preferences_settings
 					case 'save':
 					case 'apply':
 						// ToDo: save preferences
-
-						$msg = lang('Preferences saved.').array2string($prefs);
+						$appname = $content['old_appname'] ? $content['old_appname'] : 'common';
+						list($type,$account_id) = explode(':', $content['old_type']);
+						$prefs = array_merge($content['tab1'], $content['tab2'], $content['tab3'], $content['tab4']);
+						if ($account_id && $account_id != $GLOBALS['egw']->preferences->account_id)
+						{
+							$GLOBALS['egw']->preferences->account_id = $account_id;
+							$GLOBALS['egw']->preferences->read_repository();
+						}
+						$attribute = $type == 'group' ? 'user' : $type;
+						if (!($msg=$this->process_array($GLOBALS['egw']->preferences->$attribute, $prefs, null, $appname, $attribute)))
+						{
+							$msg = lang('Preferences saved.');	//.array2string($prefs);
+						}
 						if ($button == 'apply') break;
 						// fall throught
 					case 'cancel':
 						egw::redirect_link('/preferences/index.php');
 				}
 			}
+			$appname = $content['appname'] ? $content['appname'] : 'common';
+			list($type,$account_id) = explode(':', $content['type']);
 			//_debug_array($prefs);
+		}
+		// if not just saved, call validation before, to be able to show failed validation of current prefs
+		if (!isset($button))
+		{
+			$attribute = $type == 'group' ? 'user' : $type;
+			$msg = $this->process_array($GLOBALS['egw']->preferences->$attribute,
+				$GLOBALS['egw']->preferences->{$attribute}[$appname], null, $appname, $attribute, true);
 		}
 		if ($account_id && $account_id != $GLOBALS['egw']->preferences->account_id)
 		{
@@ -92,13 +109,134 @@ class preferences_settings
 		$tpl->exec('preferences.preferences_settings.index', $content, $sel_options, $readonlys, array(
 			'appname' => $content['appname'],
 			'type' => $content['type'],
+			'old_appname' => $content['appname'],
+			'old_type' => $content['type'],
 		));
+	}
+
+	/**
+	 * Verify and save preferences
+	 *
+	 * @param array &$repository
+	 * @param array $values
+	 * @param array $notifies
+	 * @param string $appname appname or 'common'
+	 * @param string $type
+	 * @param boolean $only_verify=false
+	 * @return string with verification error or null on success
+	 */
+	function process_array(&$repository, $values, $notifies, $appname, $type, $only_verify=false)
+	{
+		//_debug_array($repository);
+		$prefs = &$repository[$appname];
+
+		unset($prefs['']);
+		//_debug_array($values);exit;
+		foreach($values as $var => $value)
+		{
+			if(isset($value) && $value !== '' && $value !== '**NULL**')
+			{
+				if (is_array($value))
+				{
+					if (isset($value['pw']))
+					{
+						$value = $value['pw'];
+						if(empty($value))
+						{
+							continue;	// dont write empty password-fields
+						}
+					}
+					elseif(isset($value[$vfs_type='vfs_file']) || isset($value[$vfs_type='vfs_dir']) || isset($value[$vfs_type='vfs_dirs']))
+					{
+						$value = $value[$vfs_type];
+						if ($value === '')
+						{
+							// empty is always allowed
+
+							// If forced, empty == not set
+							if($type == 'forced')
+							{
+								unset($prefs[$var]);
+								// need to call preferences::delete, to also set affective prefs!
+								if (!$only_verify) $GLOBALS['egw']->preferences->delete($appname, $var, $type);
+								continue;
+							}
+						}
+						elseif ($vfs_type == 'vfs_file')
+						{
+							if ($value[0] != '/' || !egw_vfs::stat($value))
+							{
+								$error = lang('%1 is no existing vfs file!',htmlspecialchars($value));
+							}
+						}
+						else
+						{
+							// split multiple comma or whitespace separated directories
+							// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
+							foreach($vfs_type == 'vfs_dir' ? array($value) : preg_split('/[,\s]+\//', $value) as $n => $dir)
+							{
+								if ($n) $dir = '/'.$dir;	// re-adding trailing slash removed by split
+								if ($dir[0] != '/' || !egw_vfs::stat($dir) || !egw_vfs::is_dir($dir))
+								{
+									$error .= ($error ? ' ' : '').lang('%1 is no existing vfs directory!',$dir);
+								}
+							}
+						}
+					}
+					else
+					{
+						$value = implode(',',$value);	// multiselect
+					}
+				}
+				$prefs[$var] = $value;
+
+				if(is_array($notifies) && isset($notifies[$var]))	// need to translate the key-words back
+				{
+					$prefs[$var] = $GLOBALS['egw']->preferences->lang_notify($prefs[$var],$notifies[$var],True);
+				}
+				// need to call preferences::add, to also set affective prefs!
+				if (!$only_verify) $GLOBALS['egw']->preferences->add($appname, $var, $prefs[$var], $type);
+			}
+			else
+			{
+				unset($prefs[$var]);
+				// need to call preferences::delete, to also set affective prefs!
+				if (!$only_verify) $GLOBALS['egw']->preferences->delete($appname, $var, $type);
+			}
+		}
+		//echo "prefix='$prefix', prefs=<pre>"; print_r($repository[$appname]); echo "</pre>\n";
+
+		// the following hook can be used to verify the prefs
+		// if you return something else than False, it is treated as an error-msg and
+		// displayed to the user (the prefs are not saved)
+		//
+		if(($error .= $GLOBALS['egw']->hooks->single(array(
+			'location' => 'verify_settings',
+			'prefs'    => $repository[$appname],
+			'prefix'   => $prefix,
+			'type'     => $type
+			),
+			$appname
+		)))
+		{
+			return $error;
+		}
+
+		if (!$only_verify) $GLOBALS['egw']->preferences->save_repository(True,$type);
+
+		// certain common prefs (language, template, ...) require the session to be re-created
+		if ($appname == 'common' && !$only_verify)
+		{
+			egw::invalidate_session_cache();
+		}
+
+		return null;
 	}
 
 	/**
 	 * Get content, sel_options and readonlys for given appname and type
 	 *
-	 * @param string $appname
+	 * @param string $appname appname or 'common'
 	 * @param string $type
 	 * @param array &$sel_options
 	 * @param array &$readonlys
@@ -110,9 +248,8 @@ class preferences_settings
 	{
 		if (!$this->call_hook($appname, $type))
 		{
-			throw new egw_exception_wrong_parameter("Could not find settings for application: ".$_GET['appname']);
+			throw new egw_exception_wrong_parameter("Could not find settings for application: ".$appname);
 		}
-		if ($appname == 'preferences') $appname = 'common';
 		$attribute = $type == 'group' ? 'user' : $type;
 		//error_log(__METHOD__."('$appname', '$type' ) attribute='$attribute', preferences->account_id=".$GLOBALS['egw']->preferences->account_id);
 
@@ -141,11 +278,13 @@ class preferences_settings
 				case 'subsection':	// is in old code, but never seen it used
 					continue 2;
 
+				case 'password':
 				case 'vfs_file':
 				case 'vfs_dir':
 				case 'vfs_dirs':
 				case 'notify':
 					// ToDo: implementation ...
+					error_log(__METHOD__."('$appname', '$type') NOT implemented settings type '$old_type'!");
 					// handle as input for now
 				case 'input':
 					$setting['type'] = 'textbox';
@@ -177,8 +316,12 @@ class preferences_settings
 						case 'user':
 							$setting['values'] = array('' => lang('Use default'))+$setting['values'];
 							break;
+						case 'default':
+						case 'group':
+							$setting['values'] = array('' => lang('No default'))+$setting['values'];
+							break;
 						case 'forced';
-							$setting['values'] = array('' => lang('Users choice'))+$setting['values'];
+							$setting['values'] = array('**NULL**' => lang('Users choice'))+$setting['values'];
 							break;
 					}
 				}
@@ -234,13 +377,13 @@ class preferences_settings
 		}
 		natcasesort($sel_options['appname']);
 
+		$sel_options['type'] = array(
+			'user' => 'Your preferences',
+			'default' => 'Default preferences',
+			'forced' => 'Forced preferences',
+		);
 		if ($GLOBALS['egw_info']['apps']['admin'])
 		{
-			$sel_options['type'] = array(
-				'user' => 'Your preferences',
-				'default' => 'Default preferences',
-				'forced' => 'Forced preferences',
-			);
 			$content['type'] = $type;
 			if ($GLOBALS['egw']->preferences->account_id != $GLOBALS['egw_info']['user']['account_id'])
 			{
@@ -249,12 +392,13 @@ class preferences_settings
 			}
 			foreach($GLOBALS['egw']->accounts->search(array('type' => 'groups', 'sort' => 'account_lid')) as $account_id => $group)
 			{
-				$sel_options['type']['group:'.$account_id] = common::display_fullname($group['account_lid'], '', '', $account_id);
+				$sel_options['type']['group:'.$account_id] = lang('Preferences').' '.common::display_fullname($group['account_lid'], '', '', $account_id);
 			}
 		}
 		else
 		{
 			$content['type'] = 'user';
+			$readonlys['type'] = true;
 		}
 		//_debug_array($content); exit;
 		//_debug_array($sel_options); //exit;
@@ -266,12 +410,13 @@ class preferences_settings
 	 *
 	 * Sets $this->appname and $this->settings
 	 *
-	 * @param string $appname
+	 * @param string $appname appname or 'common'
+	 * @param string $type='user' 'default' or 'forced'
 	 * @return boolean
 	 */
 	protected function call_hook($appname, $type='user')
 	{
-		$this->appname = $appname;
+		$this->appname = $appname == 'common' ? 'preferences' : $appname;
 
 		translation::add_app($this->appname);
 		if($this->appname != 'preferences')
@@ -332,7 +477,6 @@ class preferences_settings
 		// check if we have a default/forced value from the settings hook,
 		// which is NOT stored as default currently
 		// --> store it as default, to allow to propagate defaults to existing installations
-		if ($appname == 'preferences') $appname = 'common';
 		foreach ($this->settings as $name => $data)
 		{
 			// only set not yet set default prefs, so user is able to unset it again with ""

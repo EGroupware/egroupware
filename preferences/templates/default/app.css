@@ -37,3 +37,8 @@ tr.prefRow:hover .prefHelp {
 .prefValue {
 	margin-right: 5px;
 }
+.prefType, .prefApp {
+	font-size: 150%;
+	display: inline-block;
+	padding-bottom: 5px;
+}

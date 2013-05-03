@@ -104,10 +104,10 @@
 	<template id="preferences.settings" template="" lang="" group="0" version="1.9.001">
 		<description id="msg" class="redItalic"/>
 		<menulist>
-			<menupopup id="type" onchange="1"/>
+			<menupopup id="type" onchange="1" class="prefType"/>
 		</menulist>
 		<menulist>
-			<menupopup label="Application" id="appname" onchange="1" options="Common preferences"/>
+			<menupopup id="appname" onchange="1" options="Common preferences" class="prefApp"/>
 		</menulist>
 		<tabbox id="tabs">
 			<tabs>
