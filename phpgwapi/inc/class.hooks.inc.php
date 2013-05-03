@@ -202,6 +202,18 @@ class hooks
 	}
 
 	/**
+	 * check which apps implement a given hook
+	 *
+	 * @param string $location location-name
+	 * @return array of apps implementing given hook
+	 */
+	function hook_implemented($location)
+	{
+		//error_log(__METHOD__.__LINE__.array2string($this->locations[$location]));
+		return isset($this->locations[$location]) ? array_keys($this->locations[$location]) : array();
+	}
+
+	/**
 	 * Register and/or de-register an application's hooks
 	 *
 	 * First all existing hooks of $appname get deleted in the db and then the given ones get registered.
