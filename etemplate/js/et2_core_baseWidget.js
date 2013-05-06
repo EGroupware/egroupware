@@ -352,7 +352,7 @@ var et2_placeholder = et2_baseWidget.extend([et2_IDetachedDOM],
 			.addClass("et2_placeholder");
 
 		var headerNode = $j(document.createElement("span"))
-			.text(this._type)
+			.text(this._type || "")
 			.addClass("et2_caption")
 			.appendTo(this.placeDiv);
 
