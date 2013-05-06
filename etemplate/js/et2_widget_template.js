@@ -33,7 +33,8 @@ var et2_template = et2_DOMWidget.extend(
 		"template": {
 			"name": "Template",
 			"type": "string",
-			"description": "Name / ID of template"
+			"description": "Name / ID of template",
+			"default": et2_no_init
 		},
 		"group": {
 			// TODO: Not implemented
@@ -75,11 +76,13 @@ var et2_template = et2_DOMWidget.extend(
 
 		this.div = document.createElement("div");
 
-		if (this.id != "")
+		if (this.id != "" || this.options.template)
 		{
+			var template_name = this.options.template || this.id;
+
 			// Set the api instance to the first part of the name of the
 			// template, if it's in app.function.template format
-			var splitted = this.id.split('.');
+			var splitted = template_name.split('.');
 			if(splitted.length >= 3)
 			{
 				this.setApiInstance(egw(splitted[0], this._parent.egw().window));
@@ -88,14 +91,14 @@ var et2_template = et2_DOMWidget.extend(
 			// Check to see if XML is known
 			var xml = null;
 			var templates = this.getRoot().getInstanceManager().templates;
-			if(!(xml = templates[this.id]))
+			if(!(xml = templates[template_name]))
 			{
 				// Check to see if ID is short form
 				// eg: row instead of app.something.row
 				for(var key in templates)
 				{
 					splitted = key.split('.');
-					if(splitted[splitted.length-1] == this.id)
+					if(splitted[splitted.length-1] == template_name)
 					{
 						xml = templates[key];
 						break;
@@ -104,7 +107,7 @@ var et2_template = et2_DOMWidget.extend(
 				if(!xml)
 				{
 					// Ask server
-					splitted = this.id.split('.');
+					splitted = template_name.split('.');
 					var path = this.egw().webserverUrl + "/" + splitted.shift() + "/templates/default/" + splitted.join('.') + ".xet";
 
 					if(splitted.length)
@@ -119,7 +122,7 @@ var et2_template = et2_DOMWidget.extend(
 							}
 
 							// Read the XML structure of the requested template
-							this.loadFromXML(templates[this.id]);
+							this.loadFromXML(templates[template_name]);
 
 							// Inform the widget tree that it has been successfully loaded.
 							this.loadingFinished();
@@ -130,14 +133,14 @@ var et2_template = et2_DOMWidget.extend(
 			}
 			if(xml !== null && typeof xml !== "undefined")
 			{
-				this.egw().debug("log", "Loading template from XML: ", this.id);
+				this.egw().debug("log", "Loading template from XML: ", template_name);
 				this.loadFromXML(xml);
 				// Don't call this here - premature
 				//this.loadingFinished();
 			}
 			else
 			{
-				this.egw().debug("warn", "Unable to find XML for ", this.id);
+				this.egw().debug("warn", "Unable to find XML for ", template_name);
 			}
 		}
 	},
