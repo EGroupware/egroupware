@@ -853,7 +853,7 @@ class addressbook_ui extends addressbook_bo
 						'menuaction' => 'importexport.importexport_export_ui.export_dialog',
 						'appname' => 'addressbook',
 						'plugin' => 'addressbook_export_contacts_csv',
-						'selection' => $use_all ? 'use_all' : implode(',',$checked)
+						'selection' => $use_all ? 'all' : implode(',',$checked)
 					))."','_blank',850,440);");
 				$success = count($checked);
 				return true;
