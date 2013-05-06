@@ -1236,7 +1236,7 @@ class PHPMailer {
         break;
       case 'attachments':
       case 'alt_attachments':
-        if($this->InlineImageExists()){
+        if($this->InlineImageExists(true)){
           $result .= sprintf("Content-Type: %s;%s\ttype=\"text/html\";%s\tboundary=\"%s\"%s", 'multipart/related', $this->LE, $this->LE, $this->boundary[1], $this->LE);
         } else {
           $result .= $this->HeaderLine('Content-Type', 'multipart/mixed;');
@@ -1968,15 +1968,21 @@ class PHPMailer {
   /**
    * Returns true if an inline attachment is present.
    * @access public
+   * @param bool $matchall - matchall attachments to decide. Helpful if you want to decide this is a multipart/mixed or multipart/related mail
    * @return bool
    */
-  public function InlineImageExists() {
+  public function InlineImageExists($matchall = false) {
+	$i=0;
     foreach($this->attachment as $attachment) {
       if ($attachment[6] == 'inline') {
-        return true;
+        if ($matchall) {
+          $i++;
+        } else {
+          return true;
+        }
       }
     }
-    return false;
+    return ($matchall?($i===count($this->attachment)):false);
   }
 
   /////////////////////////////////////////////////
