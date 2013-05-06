@@ -37,6 +37,7 @@ address book	common	en	Address Book
 address book - vcard in	addressbook	en	Address book - vCard in
 address book - view	addressbook	en	Address book - view
 address line 2	addressbook	en	Address line 2
+address line 2 (private)	addressbook	en	Address line 2 (private)
 address type	addressbook	en	Address type
 addressbook	common	en	Address Book
 addressbook csv export	addressbook	en	Address Book CSV export
@@ -68,8 +69,10 @@ birthdays	common	en	Birthdays
 blank	addressbook	en	Blank
 business	common	en	Business
 business address	addressbook	en	Business address
+business address line 2	addressbook	en	Business address line 2
 business city	addressbook	en	Business city
 business country	addressbook	en	Business country
+business country code	addressbook	en	Business country code
 business email	addressbook	en	Business email
 business fax	addressbook	en	Business fax
 business phone	addressbook	en	Business phone
@@ -100,6 +103,7 @@ choose export options	addressbook	en	Choose export options
 choose owner of imported data	addressbook	en	Choose owner of imported data
 chosse an etemplate for this contact type	admin	en	Chose an eTemplate for this contact type
 city	common	en	City
+city (private)	addressbook	en	City (private)
 cleanup addressbook fields (apply if synchronization creates duplicates)	addressbook	en	Cleanup address book fields, apply if synchronization creates duplicates.
 company	common	en	Company
 company name	addressbook	en	Company name
@@ -128,7 +132,9 @@ copied by %1, from record #%2.	addressbook	en	Copied by %1, from record #%2.
 copy a contact and edit the copy	addressbook	en	Copy a contact and edit the copy
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	en	Copy your changes to the clipboard, %1reload the entry%2 and merge them.
 country	common	en	Country
+country (private)	addressbook	en	Country (private)
 country code	addressbook	en	Country code
+country code (private)	addressbook	en	Country code (private)
 create new links	addressbook	en	Create new links
 created	addressbook	en	Created
 credit	addressbook	en	Credit
@@ -393,7 +399,9 @@ stadt	addressbook	en	City
 start	admin	en	Start
 startrecord	addressbook	en	Start record
 state	common	en	State
+state (private)	addressbook	en	State (private)
 street	common	en	Street
+street (private)	addressbook	en	Street (private)
 subject for email	addressbook	en	Subject for email
 successfully imported %1 records into your addressbook.	addressbook	en	Imported %1 record(s) successfully into address book.
 suffix	addressbook	en	Suffix
@@ -477,4 +485,5 @@ you must select at least 1 column to display	addressbook	en	Select at least 1 co
 you need to select a distribution list	addressbook	en	Select a distribution list
 you need to select some contacts first	addressbook	en	Select some contacts first
 zip code	common	en	ZIP code
+zip code (private)	addressbook	en	ZIP code (private)
 zip_note	addressbook	en	<p><b>Note:</b> The file may be a zip file collection of .csv, .vcf, or .ldif files. Do not mix file types per import.

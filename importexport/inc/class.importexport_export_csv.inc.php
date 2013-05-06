@@ -172,6 +172,8 @@ class importexport_export_csv implements importexport_iface_export_record
 						foreach($this->mapping as $field => &$label)
 						{
 							if($fields[$field]) $label = $fields[$field];
+							// Make sure no *
+							if(substr($label,-1) == '*') $label = substr($label,0,-1);
 						}
 					} catch (Exception $e) {
 						translation::add_app($appname);
