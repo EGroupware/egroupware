@@ -401,6 +401,18 @@ var et2_tree = et2_inputWidget.extend(
 	renameItem: function(_id, _newItemId, _label) {
 		if(this.input == null) return null;
 		this.input.changeItemId(_id,_newItemId);
+
+		// Update action
+		// since the action ID has to = this.id, getObjectById() won't work
+		var treeObj = egw_getAppObjectManager().getObjectById(this.id);
+		for(var i=0; i < treeObj.children.length; i++)
+		{
+			if(treeObj.children[i].iface && treeObj.children[i].iface.id == _id)
+			{
+				treeObj.children[i].iface.id = _newItemId;
+			}
+		}
+		
 		if (typeof _label != 'undefined') this.input.setItemText(_newItemId,_label);
 	},
 
