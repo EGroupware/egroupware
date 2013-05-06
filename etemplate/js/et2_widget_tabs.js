@@ -29,7 +29,7 @@ var et2_tabbox = et2_DOMWidget.extend(
 		'tabs': {
 			'name': 'Tabs',
 			'default': et2_no_init,
-			'description': "Array of [extra] tabs.  Each tab needs {label:..., template:...}"
+			'description': "Array of [extra] tabs.  Each tab needs {label:..., template:...}.  Additional optional keys are hidden and id, for access into content array"
 		}
 	},
 
@@ -166,30 +166,37 @@ var et2_tabbox = et2_DOMWidget.extend(
 
 			// Read and create the widgets defined in the "tabpanels"
 			this._readTabPanels(tabData, tabpanels);
-
-			// Add any extra tabs
-			if(this.options.tabs)
-			{
-				for(var i = 0; i < this.options.tabs.length; i++)
-				{
-					var tab = this.options.tabs[i];
-					tabData.push({
-						"label": this.egw().lang(tab.label),
-						"widget": et2_createWidget('template',{id:tab.template},this),
-						"contentDiv": null,
-						"flagDiv": null,
-						"hidden": false
-					});
-				}
-			}
-
-			// Create the tab DOM-Nodes
-			this.createTabs(tabData);
 		}
 		else
 		{
-			throw("Error while parsing tabbox, none or multiple tabs or tabpanels tags!");
+			this.egw().debug("error","Error while parsing tabbox, none or multiple tabs or tabpanels tags!",this);
 		}
+
+		// Add any extra tabs
+		if(this.options.tabs.length)
+		{
+			var readonly = this.getArrayMgr("readonlys").getEntry(this.id) || {};
+			for(var i = 0; i < this.options.tabs.length; i++)
+			{
+				var tab = this.options.tabs[i];
+				var tab_id = tab.id || tab.template;
+				var tab_options = {id: tab_id, template:tab.template};
+				if(tab.id)
+				{
+					tab_options.content = tab.id;
+				}
+				tabData.push({
+					"label": this.egw().lang(tab.label),
+					"widget": et2_createWidget('template',tab_options,this),
+					"contentDiv": null,
+					"flagDiv": null,
+					"hidden": typeof tab.hidden != "undefined" ? tab.hidden : readonly[tab_id] || false
+				});
+			}
+		}
+
+		// Create the tab DOM-Nodes
+		this.createTabs(tabData);
 	},
 
 	/**
