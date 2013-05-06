@@ -81,6 +81,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 	header: null,
 	nextmatch: null,
 	favorite_prefix: "favorite_",
+	stored_filters: {},
 
 	// If filter was set server side, we need to remember it until nm is created
 	nm_filter: false,
@@ -102,13 +103,13 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		var apps = egw().user('apps');
 		this.is_admin = (typeof apps['admin'] != "undefined");
 
+		this.stored_filters = this.load_favorites(this.options.app);
+
 		this.preferred = egw.preference(this.options.default_pref,this.options.app);
 		if(!this.preferred || typeof this.stored_filters[this.preferred] == "undefined")
 		{
 			this.preferred = "blank";
 		}
-		
-		this.stored_filters = this.load_favorites(this.options.app);
 
 		this.init_filters(this);
 
@@ -146,7 +147,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			event.stopImmediatePropagation();
 			
 			// Save as default favorite - used when you click the button
-			self.egw().set_preference(self.options.app,self.options.favorite_preference,$j(this).val());
+			self.egw().set_preference(self.options.app,self.options.default_pref,$j(this).val());
 			self.preferred = $j(this).val();
 
 			// Update sidebox, if there
