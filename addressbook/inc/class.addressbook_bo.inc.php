@@ -1448,7 +1448,7 @@ class addressbook_bo extends addressbook_so
 			$options['filter'] = (array)$options['filter'];
 		}
 		// return only contacts with email set
-		$options['filter'][] = "contact_email LIKE '%@%'";
+		$options['filter'][] = "contact_email ".$this->db->capabilities[egw_db::CAPABILITY_CASE_INSENSITIV_LIKE]." '%@%'";
 
 		// let link query know, to append email to list
 		$options['type'] = 'email';
