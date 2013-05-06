@@ -134,7 +134,7 @@ class infolog_bo
 	 * @var array filter => label pairs
 	 */
 	var $filters = array(
-		'none'                     => 'no Filter',
+		''                     => 'no Filter',
 		'done'                     => 'done',
 		'responsible'              => 'responsible',
 		'responsible-open-today'   => 'responsible open',

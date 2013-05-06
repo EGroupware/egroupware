@@ -181,7 +181,7 @@ class infolog_so
 	/**
 	 * generate sql to be AND'ed into a query to ensure ACL is respected (incl. _PRIVATE)
 	 *
-	 * @param string $filter: none|all - list all entrys user have rights to see<br>
+	 * @param string $filter: ''|all - list all entrys user have rights to see<br>
 	 * 	private|own - list only his personal entrys (incl. those he is responsible for !!!),
 	 *  responsible|my = entries the user is responsible for
 	 *  delegated = entries the user delegated to someone else
@@ -189,7 +189,7 @@ class infolog_so
 	 */
 	function aclFilter($filter = False)
 	{
-		preg_match('/(my|responsible|delegated|own|privat|private|all|none|user)([0-9,-]*)/',$filter_was=$filter,$vars);
+		preg_match('/(my|responsible|delegated|own|privat|private|all|user)([0-9,-]*)/',$filter_was=$filter,$vars);
 		$filter = $vars[1];
 		$f_user = $vars[2];
 
