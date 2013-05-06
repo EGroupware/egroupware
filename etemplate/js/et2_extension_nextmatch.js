@@ -110,6 +110,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 	legacyOptions: ["template","hide_header","header_left","header_right"],
 	createNamespace: true,
+	activeFilters: {col_filter:{}},
 
 	columns: [],
 
@@ -165,8 +166,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		// instance, which can first be created once we have the columns
 		this.controller = null;
 		this.rowProvider = null;
-
-		this.activeFilters = {};
 	},
 
 	/**
@@ -1967,6 +1966,9 @@ var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2
 		if(this.nextmatch.options.settings.col_filter && this.nextmatch.options.settings.col_filter[this.id])
 		{
 			this.set_value(this.nextmatch.options.settings.col_filter[this.id]);
+
+			// Make sure it's set in the nextmatch
+			_nextmatch.activeFilters.col_filter[this.id] = this.getValue();
 
 			// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
 			this.attributes.value.ignore = true;
