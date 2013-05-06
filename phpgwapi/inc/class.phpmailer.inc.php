@@ -1972,7 +1972,7 @@ class PHPMailer {
    * @return bool
    */
   public function InlineImageExists($matchall = false) {
-	$i=0;
+    $i=0;
     foreach($this->attachment as $attachment) {
       if ($attachment[6] == 'inline') {
         if ($matchall) {
@@ -1982,7 +1982,7 @@ class PHPMailer {
         }
       }
     }
-    return ($matchall?($i===count($this->attachment)):false);
+    return ($matchall?($i>0 && $i===count($this->attachment)):false);
   }
 
   /////////////////////////////////////////////////
