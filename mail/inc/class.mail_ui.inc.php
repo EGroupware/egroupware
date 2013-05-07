@@ -2196,6 +2196,7 @@ blockquote[type=cite] {
 				if (strtoupper($folderName)!= 'INBOX')
 				{
 					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
+					$oldFolderInfo = $this->mail_bo->getFolderStatus($folderName,false);
 					$this->mail_bo->reopen('INBOX');
 					if($newFolderName = $this->mail_bo->renameFolder($folderName, $parentFolder, $_newName)) {
 						$this->mail_bo->resetFolderObjectCache($profileID);
@@ -2207,6 +2208,7 @@ blockquote[type=cite] {
 					$fS = $this->mail_bo->getFolderStatus($newFolderName,false);
 					//error_log(__METHOD__.__LINE__.array2string($fS));
 					$oA[$_folderName]['id'] = $profileID.self::$delimiter.$newFolderName;
+					$oA[$_folderName]['olddesc'] = $oldFolderInfo['shortDisplayName'];
 					if ($fS['unseen'])
 					{
 						$oA[$_folderName]['desc'] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';

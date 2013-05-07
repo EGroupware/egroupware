@@ -178,14 +178,25 @@ app.mail = AppJS.extend(
 	
 	/**
 	 * mail_setLeaf, function to set the id and description for the folder given by status key
+	 * @param array _status status array with the required data (new id, desc, old desc)
+	 *		key is the original id of the leaf to change
+	 *		multiple sets can be passed to mail_setLeaf
 	 */
 	mail_setLeaf: function(_status) {
 		//console.log('mail_setLeaf',_status);
 		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
 		{
+			app.mail.app_refresh(egw.lang("Renamed Folder %1 to %2",_status[i]['olddesc'],_status[i]['desc'], 'mail'));
 			ftree.renameItem(i,_status[i]['id'],_status[i]['desc']);
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
+			if (_status[i]['id']==selectedNode.id)
+			{
+				var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
+				nm.activeFilters["selectedFolder"] = _status[i]['id'];
+				nm.applyFilters();
+			}
 		}
 	},
 
@@ -635,8 +646,9 @@ app.mail = AppJS.extend(
 		//alert(NewFolderName);
 		if (NewFolderName && NewFolderName.length>0)
 		{
+			app.mail.app_refresh(egw.lang("Renaming Folder %1 to %2",OldFolderName,NewFolderName, 'mail'));
 			var request = new egw_json_request('mail.mail_ui.ajax_renameFolder',[_senders[0].iface.id, NewFolderName]);
-			request.sendRequest(false);
+			request.sendRequest(true);
 		}
 	}
 });
