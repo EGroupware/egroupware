@@ -470,11 +470,24 @@ class felamimail_bo
 		return $bofelamimail;
 	}
 
-	public static function forcePrefReload()
+	public static function forcePrefReload($hook_data=null)
 	{
 		// unset the fm_preferences session object, to force the reload/rebuild
 		$GLOBALS['egw']->session->appsession('fm_preferences','felamimail',serialize(array()));
 		$GLOBALS['egw']->session->appsession('session_data','emailadmin',serialize(array()));
+		// this section takes care for setting the ActiveProfileID accordingly
+		if (!empty($hook_data) && $hook_data['type']=='user')
+		{
+			if (isset($hook_data['prefs']['ActiveProfileID']) && $hook_data['prefs']['ActiveProfileID'] != $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'])
+			{
+				//error_log(__METHOD__.__LINE__.array2string(array_keys($hook_data['prefs'])));
+				$icServerID = $hook_data['prefs']['ActiveProfileID'];
+				$bopreferences	= CreateObject('felamimail.bopreferences',true);
+				$bopreferences->setProfileActive(false);
+				if ($icServerID>0) $bopreferences->setProfileActive(true,$icServerID);
+			}
+			if (empty($hook_data['prefs']['ActiveProfileID'])) return lang('Error').': '.lang("Active ProfileID should not be empty");
+		}
 	}
 
 	function _getNameSpaces()

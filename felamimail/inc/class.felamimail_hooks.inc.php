@@ -118,7 +118,40 @@ class felamimail_hooks
 				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
 
 			$bofelamimail = felamimail_bo::getInstance(true,$profileID);
+			$identities = array();
+			if ($GLOBALS['type'] === 'user')
+			{
+				// gather profile data
+				$imapServer =& $bofelamimail->icServer;
+				//error_log(__METHOD__.__LINE__.array2string($imapServer));
+				// account select box
+				$selectedID = $bofelamimail->getIdentitiesWithAccounts($identities);
+			}
 			$profileID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $bofelamimail->profileID;
+			if ($GLOBALS['type'] === 'user')
+			{
+				$preferences =& $bofelamimail->mailPreferences;
+				$activeIdentity =& $preferences->getIdentity($profileID, true);
+				//error_log(__METHOD__.__LINE__.' ActiveIdentity for profileID'.$icServerID.'->'.array2string($activeIdentity));
+				// the data needed here are collected at the start of this function
+				if (!isset($activeIdentity->id) && $selectedID == $profileID) {
+					$identities[$profileID] = $activeIdentity->realName.' '.$activeIdentity->organization.' <'.$activeIdentity->emailAddress.'>';
+				}
+				// if you use user defined accounts you may want to access the profile defined with the emailadmin available to the user
+				if ($activeIdentity->id) {
+					$boemailadmin = new emailadmin_bo();
+					$defaultProfile = $boemailadmin->getUserProfile() ;
+					//error_log(__METHOD__.__LINE__.array2string($defaultProfile));
+					$identitys =& $defaultProfile->identities;
+					$icServers =& $defaultProfile->ic_server;
+					foreach ($identitys as $tmpkey => $identity)
+					{
+						if (empty($icServers[$tmpkey]->host)) continue;
+						$identities[$identity->id] = $identity->realName.' '.$identity->organization.' <'.$identity->emailAddress.'>';
+					}
+					//$identities[0] = $defaultIdentity->realName.' '.$defaultIdentity->organization.' <'.$defaultIdentity->emailAddress.'>';
+				}
+			}
 			if($bofelamimail->openConnection($profileID)) {
 				$folderObjects = $bofelamimail->getFolderObjects(true, false);
 				foreach($folderObjects as $folderName => $folderInfo) {
@@ -321,6 +354,16 @@ class felamimail_hooks
 				'no_lang'=> true,
 				'xmlrpc' => False,
 				'admin'  => False
+			),
+			'ActiveProfileID' => array(
+				'type'   => 'select',
+				'label'  => 'Active Mail Profile',
+				'help'   => 'view / select your currently active mailprofile (this is a user only setting)',
+				'name'   => 'ActiveProfileID',
+				'values' => $identities,
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> $profileID,
 			),
 			'message_forwarding' => array(
 				'type'   => 'select',
@@ -718,6 +761,7 @@ class felamimail_hooks
 			),
 		);
 		if (!$GLOBALS['egw_info']['apps']['stylite']) unset($settingsArray['attachVCardAtCompose']);
+		if (!($GLOBALS['type'] === 'user')) unset($settingsArray['ActiveProfileID']);
 		return $settingsArray;
 	}
 
