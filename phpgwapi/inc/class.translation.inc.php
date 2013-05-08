@@ -1079,6 +1079,7 @@ class translation
 			'@&(trade|#8482);@i',             //   trade
 			'@&#39;@i',                       //   singleQuote
 			'@(\xc2\xa0)@',                   //   nbsp or tab (encoded windows-style)
+			'@(\xe2\x80\x8b)@',               //   ZERO WIDTH SPACE
 		);
 		$Replace = array ('',
 			'"',
@@ -1094,6 +1095,7 @@ class translation
 			'(TM)',// trade
 			"'",
 			' ',
+			'',
 		);
 		$_html = preg_replace($Rules, $Replace, $_html);
 
