@@ -59,7 +59,7 @@ class preferences_settings
 		}
 		else
 		{
-			//_debug_array($content);
+			//error_log(__METHOD__."(".array2string($content).")");
 			if ($content['button'])
 			{
 				list($button) = each($content['button']);
@@ -352,6 +352,7 @@ class preferences_settings
 					'help' => preg_replace('|<br[ /]*>|i', "\n", $setting['help']),
 					'size' => $setting['size'],	// old eT
 					'default' => !empty($default) ? lang('Default').': '.$default : null,
+					'onchange' => $setting['onchange'],
 			);
 			$content[$tab][$setting['name']] = $GLOBALS['egw']->preferences->{$attribute}[$appname][$setting['name']];
 			//if ($old_type == 'multiselect') $content[$tab][$setting['name']] = explode(',', $content[$tab][$setting['name']]);
