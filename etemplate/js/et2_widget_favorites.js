@@ -242,26 +242,30 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		var name = $j(this).parentsUntil("li").parent().attr("id");
 
 		// Make sure first
-		if(!confirm(header.egw().lang("Delete") + " " +header.stored_filters[name].name +"?")) return;
+		var do_delete = function(button_id)
+		{
+			if(button_id != et2_dialog.YES_BUTTON) return;
 
-		// Hide the trash
-		$j(this).hide();
+			// Hide the trash
+			$j(this).hide();
 
-		// Delete preference server side
-		var request = new egw_json_request("etemplate_widget_nextmatch::ajax_set_favorite::etemplate",
-			[header.app, name, "delete", header.stored_filters[name].group ? header.stored_filters[name].group : '', ''],
-			header
-		);
-		request.sendRequest(true, function(result) {
-			if(result)
-			{
-				// Remove line from list
-				this.slideUp("slow", function() { header.menu.hide();});
-				delete header.stored_filters[name];
-				header.init_filters(header);
-			}
-		}, $j(this).parentsUntil("li").parent());
-
+			// Delete preference server side
+			var request = new egw_json_request("etemplate_widget_nextmatch::ajax_set_favorite::etemplate",
+				[header.app, name, "delete", header.stored_filters[name].group ? header.stored_filters[name].group : '', ''],
+				header
+			);
+			request.sendRequest(true, function(result) {
+				if(result)
+				{
+					// Remove line from list
+					this.slideUp("slow", function() { header.menu.hide();});
+					delete header.stored_filters[name];
+					header.init_filters(header);
+				}
+			}, $j(this).parentsUntil("li").parent());
+		}
+		et2_dialog.show_dialog(do_delete, (header.egw().lang("Delete") + " " +header.stored_filters[name].name +"?"),
+			"Delete", et2_dialog.YES_NO, et2_dialog.QUESTION_MESSAGE);
 	},
 
 	// Create & set filter options for dropdown menu

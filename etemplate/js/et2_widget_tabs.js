@@ -173,7 +173,7 @@ var et2_tabbox = et2_DOMWidget.extend(
 		}
 
 		// Add any extra tabs
-		if(this.options.tabs.length)
+		if(this.options.tabs)
 		{
 			var readonly = this.getArrayMgr("readonlys").getEntry(this.id) || {};
 			for(var i = 0; i < this.options.tabs.length; i++)
