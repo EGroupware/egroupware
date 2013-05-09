@@ -17,6 +17,9 @@ tr.prefRow {
 td.prefName {
 	width: 50%;
 }
+tr.prefRow > td {
+	vertical-align: bottom;	/* otherwise help will cover bigger prefValue */
+}
 .prefHelp {
 	position: absolute;
 	display: none;
