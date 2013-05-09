@@ -333,6 +333,7 @@ class calendar_uilist extends calendar_ui
 		if ($label)
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$label;
+			$params['options-filter'] = $this->date_filters;
 			$params['options-filter'][$params['filter']] = $label; // Add it in, or it will be cleared
 		}
 		if ((int) $params['col_filter']['participant'])
@@ -521,6 +522,17 @@ class calendar_uilist extends calendar_ui
 			@set_time_limit(0);				// switch off the execution time limit, as for big selections it's too small
 			$query['num_rows'] = -1;		// all
 			$this->get_rows($query,$checked,$readonlys,!in_array($action,array('ical','document')));	   // true = only return the id's
+			// Get rid of any extras (rows that aren't events)
+			if(in_array($action,array('ical','document')))
+			{
+				foreach($checked as $key => $event)
+				{
+					if(!is_numeric($key))
+					{
+						unset($checked[$key]);
+					}
+				}
+			}
 		}
 		// for calendar integration we have to fetch all rows and unset the not selected ones, as we can not filter by id
 		elseif(in_array($action,array('ical','document')))
