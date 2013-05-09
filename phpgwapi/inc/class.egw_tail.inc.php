@@ -206,12 +206,14 @@ function resize_'.$id.'()
 {
 	$j("#'.$id.'").width(egw_getWindowInnerWidth()-20).height(egw_getWindowInnerHeight()-33);
 }
-$j(document).ready(function()
-{
-	resize_'.$id.'();
-	refresh_'.$id.'();
+egw.LAB.wait(function() {
+	$j(document).ready(function()
+	{
+		resize_'.$id.'();
+		refresh_'.$id.'();
+	});
+	$j(window).resize(resize_'.$id.');
 });
-$j(window).resize(resize_'.$id.');
 </script>
 <p style="float: left; margin: 5px"><b>'.htmlspecialchars($header).'</b></p>
 <div style="float: right; margin: 2px; margin-right: 5px">
