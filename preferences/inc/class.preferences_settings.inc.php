@@ -268,12 +268,11 @@ class preferences_settings
 			{
 				case 'section':
 					$tab = 'tab'.(1+count($tabs));
-					$tabs[$tab] = $setting['title'];
-					$tpl->setElementAttribute($tab, 'label', $setting['title']);
-					if (count($tabs) > 5)
-					{
-						throw new egw_exception_assertion_failed("App $appname has more then 4 preference tabs!");
-					}
+					$tabs[] = array(
+						'id' => $tab,
+						'template' => 'preferences.settings.tab1',
+						'label' => $setting['title'],
+					);
 					// fall through
 				case 'subsection':	// is in old code, but never seen it used
 					continue 2;
@@ -357,14 +356,8 @@ class preferences_settings
 			$content[$tab][$setting['name']] = $GLOBALS['egw']->preferences->{$attribute}[$appname][$setting['name']];
 			//if ($old_type == 'multiselect') $content[$tab][$setting['name']] = explode(',', $content[$tab][$setting['name']]);
 		}
-		// disabling not used tabs, does NOT work in new eT
-		$readonlys['tabs'] = array(
-			'tab2' => !isset($tabs['tab2']),
-			'tab3' => !isset($tabs['tab3']),
-			'tab4' => !isset($tabs['tab4']),
-			'tab5' => !isset($tabs['tab5']),
-		);
-		$tpl->setElementAttribute('tabs', 'label', implode('|', $tabs));	// old eT
+		// defining used tabs on run-time
+		if ($tabs) $tpl->setElementAttribute('tabs', 'tabs', $tabs);
 
 		$content['appname'] = $appname;
 		$sel_options['appname'] = array();
