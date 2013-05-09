@@ -348,8 +348,8 @@ class preferences_settings
 			$content[$tab][] = array(
 					'name' => $setting['name'],
 					'type' => $setting['type'],
-					'label' => str_replace('<br>', "\n", $setting['label']),
-					'help' => str_replace('<br>', "\n", $setting['help']),
+					'label' => preg_replace('|<br[ /]*>|i', "\n", $setting['label']),
+					'help' => preg_replace('|<br[ /]*>|i', "\n", $setting['help']),
 					'size' => $setting['size'],	// old eT
 					'default' => !empty($default) ? lang('Default').': '.$default : null,
 			);
