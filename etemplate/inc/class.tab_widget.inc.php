@@ -13,6 +13,13 @@
 	/**
 	 * eTemplate Extension: widget that shows one row of tabs and an other row with the eTemplate of the selected tab
 	 *
+	 * You can use etemplate::setElementAttributes($name, 'tabs', array $tabs) to define tabs on runtime.
+	 * $tabs is an array containing an array for each tab with following (eT2 compatible) values:
+	 * - 'label' label of tab
+	 * - 'help' title/helptext of tab label
+	 * - 'template' name of template
+	 * - 'id' optional namespace for template (actually 1. grid in template)
+	 *
 	 * See the example in 'etemplate.tab_widget.test'
 	 *
 	 * This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function
@@ -64,14 +71,30 @@
 			{
 				$dom_enabled = true;
 			}
-			$labels = explode('|',$cell['label']);
-			$helps = explode('|',$cell['help']);
 			if (strpos($cell_name=$tab_names=$cell['name'],'=') !== false)
 			{
 				list($cell_name,$tab_names) = explode('=',$cell['name']);
 				$cell['name'] = $cell_name;
 			}
-			$names = explode('|',$tab_names);
+			$labels = $helps = $names = $templates = $ids = array();
+			if ($cell['tabs'])	// set via etemplate::setElementAttribute()
+			{
+				foreach($cell['tabs'] as $tab)
+				{
+					$labels[] = $tab['label'];
+					$helps[] = $tab['help'];
+					$names[] = $tab['id'] ? $tab['id'] : $tab['template'];
+					if ($tab['template']) $templates[count($names)-1] = $tab['template'];
+					if ($tab['id']) $ids[count($names)-1] = $tab['id'];
+				}
+			}
+			else
+			{
+				$labels = explode('|',$cell['label']);
+				$helps = explode('|',$cell['help']);
+				$names = explode('|',$tab_names);
+			}
+
 			// disable tab mentioned in readonlys
 			foreach(is_array($readonlys) ? $readonlys : array($readonlys => true) as $name => $disable)
 			{
@@ -83,6 +106,11 @@
 					$helps = array_values($helps);
 					unset($labels[$key]);
 					$labels = array_values($labels);
+					if ($templates)
+					{
+						unset($templates[$key]);
+						$templates = array_values($templates);
+					}
 				}
 			}
 			$tab_widget = new etemplate_old('etemplate.tab_widget');
@@ -151,7 +179,12 @@
 				foreach($names as $n => $name)
 				{
 					$bcell = boetemplate::empty_cell('template',$name);
-					$bcell['obj'] = new etemplate_old($name,$tmpl->as_array());
+					$bcell['obj'] = new etemplate_old(empty($templates[$n]) ? $name : $templates[$n],$tmpl->as_array());
+					// hack to set id / content attribute on first grid, as it's not supported on template itself
+					if (!empty($ids[$n]) && $bcell['obj']->children[0]['type'] == 'grid')
+					{
+						$bcell['obj']->children[0]['name'] = $ids[$n];
+					}
 					$tab_widget->set_cell_attribute('body',$n+1,$bcell);
 				}
 				$tab_widget->set_cell_attribute('body','type','deck');

@@ -145,34 +145,16 @@ var et2_tabbox = et2_DOMWidget.extend(
 		// Get the tabs and tabpanels tags
 		var tabsElems = et2_directChildrenByTagName(_node, "tabs");
 		var tabpanelsElems = et2_directChildrenByTagName(_node, "tabpanels");
+		var tabData = [];
 
-		if (tabsElems.length == 1 && tabpanelsElems.length == 1)
+		// Check for a parent height, we'll apply it to tab panels
+		var height = et2_readAttrWithDefault(_node.parentNode, "height",null);
+		if(height)
 		{
-
-			// Check for a parent height, we'll apply it to tab panels
-			var height = et2_readAttrWithDefault(_node.parentNode, "height",null);
-			if(height)
-			{
-				this.tabContainer.css("height", height);
-			}
-
-			var tabs = tabsElems[0];
-			var tabpanels = tabpanelsElems[0];
-
-			var tabData = [];
-
-			// Parse the "tabs" tag
-			this._readTabs(tabData, tabs);
-
-			// Read and create the widgets defined in the "tabpanels"
-			this._readTabPanels(tabData, tabpanels);
-		}
-		else
-		{
-			this.egw().debug("error","Error while parsing tabbox, none or multiple tabs or tabpanels tags!",this);
+			this.tabContainer.css("height", height);
 		}
 
-		// Add any extra tabs
+		// either use tabs defined via modification or xml (not both)
 		if(this.options.tabs)
 		{
 			var readonly = this.getArrayMgr("readonlys").getEntry(this.id) || {};
@@ -193,6 +175,21 @@ var et2_tabbox = et2_DOMWidget.extend(
 					"hidden": typeof tab.hidden != "undefined" ? tab.hidden : readonly[tab_id] || false
 				});
 			}
+		}
+		else if (tabsElems.length == 1 && tabpanelsElems.length == 1)
+		{
+			var tabs = tabsElems[0];
+			var tabpanels = tabpanelsElems[0];
+
+			// Parse the "tabs" tag
+			this._readTabs(tabData, tabs);
+
+			// Read and create the widgets defined in the "tabpanels"
+			this._readTabPanels(tabData, tabpanels);
+		}
+		else
+		{
+			this.egw().debug("error","Error while parsing tabbox, none or multiple tabs or tabpanels tags!",this);
 		}
 
 		// Create the tab DOM-Nodes
