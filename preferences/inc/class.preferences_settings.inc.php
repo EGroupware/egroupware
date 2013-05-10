@@ -192,7 +192,7 @@ class preferences_settings
 						}
 					}
 					break;
-				case 'Array':	// notifies
+				case 'Array':	// notify
 					$value = $GLOBALS['egw']->preferences->lang_notify($value, $types[$var], True);
 					break;
 			}
@@ -291,9 +291,23 @@ class preferences_settings
 					continue 2;
 
 				case 'notify':
-					// ToDo: implementation ...
-					error_log(__METHOD__."('$appname', '$type') NOT implemented settings type '$old_type'!");
-					// handle as textarea for now
+					$vars = $GLOBALS['egw']->preferences->vars;
+					if (is_array($setting['values'])) $vars += $setting['values'];
+					$GLOBALS['egw']->preferences->{$attribute}[$appname][$setting['name']] =
+						$GLOBALS['egw']->preferences->lang_notify($GLOBALS['egw']->preferences->{$attribute}[$appname][$setting['name']], $vars);
+					$types[$setting['name']] = $vars;	// store vars for re-translation, instead type "notify"
+					if ($setting['help'] && !$setting['no_lang'])
+					{
+						$setting['help'] = lang($setting['help']);
+					}
+					$setting['help'] .= '<p><b>'.lang('Substitutions and their meanings:').'</b>';
+					foreach($vars as $var => $var_help)
+					{
+						$lname = ($lname = lang($var)) == $var.'*' ? $var : $lname;
+						$setting['help'] .= "<br>\n".'<b>$$'.$lname.'$$</b>: '.$var_help;
+					}
+					$setting['help'] .= "</p>\n";
+					// handle as textarea
 				case 'textarea':
 					$setting['type'] = is_a($tpl, 'etemplate_old') ? 'textarea' : 'textbox';
 					$tpl->setElementAttribute($tab.'['.$setting['name'].']', 'multiline', 'true');
@@ -327,7 +341,7 @@ class preferences_settings
 			// move values/options to sel_options array
 			if (isset($setting['values']) && is_array($setting['values']))
 			{
-				if ($old_type != 'multiselect')
+				if ($old_type != 'multiselect' && $old_type != 'notify')
 				{
 					switch($type)
 					{
@@ -368,7 +382,7 @@ class preferences_settings
 				'name' => $setting['name'],
 				'type' => $setting['type'],
 				'label' => preg_replace('|<br[ /]*>|i', "\n", $setting['label']),
-				'help' => $setting['help'],	// is html
+				'help' => lang($setting['help']),	// is html
 				'size' => $setting['size'],	// old eT
 				'default' => !empty($default) ? lang('Default').': '.$default : null,
 				'onchange' => $setting['onchange'],
