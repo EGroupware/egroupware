@@ -112,10 +112,9 @@ class preferences_settings
 			'old_type' => $content['type'],
 			'types' => array(),
 		);
-		if ($button == 'apply') $old_tab = $content['tabs'];
+		if ($content['old_appname'] == $content['appname']) $old_tab = $content['tabs'];
 		$content = $this->get_content($appname, $type, $sel_options, $readonlys, $preserve['types'], $tpl);
-		error_log(__METHOD__."() preserve=".array2string($preserve));
-		if ($button == 'apply') $content['tabs'] = $old_tab;
+		if (isset($old_tab)) $content['tabs'] = $old_tab;
 
 		// if not just saved, call validation before, to be able to show failed validation of current prefs
 		if (!isset($button))
@@ -298,7 +297,12 @@ class preferences_settings
 				case 'textarea':
 					$setting['type'] = is_a($tpl, 'etemplate_old') ? 'textarea' : 'textbox';
 					$tpl->setElementAttribute($tab.'['.$setting['name'].']', 'multiline', 'true');
-					// ignoring rows and cols in favor of hardcoded: width: 100%, height: 5em
+					// anyway setting via css: width: 99%, height: 5em
+					// for old eT use size attribute
+					if (is_a($tpl, 'etemplate_old') && (!empty($setting['cols']) || !empty($setting['rows'])))
+					{
+						$setting['size'] = $setting['rows'].','.$setting['cols'];
+					}
 					break;
 				case 'password':
 				case 'vfs_file':
