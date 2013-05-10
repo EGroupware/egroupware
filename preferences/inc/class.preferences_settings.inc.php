@@ -79,10 +79,10 @@ class preferences_settings
 								$prefs = array_merge($prefs, $val);
 							}
 						}
-						error_log(__METHOD__."() button=$button, content=".array2string($content).' --> prefs='.array2string($prefs));;;
-						if ($account_id && $account_id != $GLOBALS['egw']->preferences->account_id)
+						//error_log(__METHOD__."() button=$button, content=".array2string($content).' --> prefs='.array2string($prefs));;;
+						if ($account_id && $account_id != $GLOBALS['egw']->preferences->get_account_id())
 						{
-							$GLOBALS['egw']->preferences->account_id = $account_id;
+							$GLOBALS['egw']->preferences->set_account_id($account_id);
 							$GLOBALS['egw']->preferences->read_repository();
 						}
 						$attribute = $type == 'group' ? 'user' : $type;
@@ -100,9 +100,9 @@ class preferences_settings
 			list($type,$account_id) = explode(':', $content['type']);
 			//_debug_array($prefs);
 		}
-		if ($account_id && $account_id != $GLOBALS['egw']->preferences->account_id)
+		if ($account_id && $account_id != $GLOBALS['egw']->preferences->get_account_id())
 		{
-			$GLOBALS['egw']->preferences->account_id = $account_id;
+			$GLOBALS['egw']->preferences->set_account_id($account_id);
 			$GLOBALS['egw']->preferences->read_repository();
 		}
 		$preserve = array(
@@ -121,7 +121,7 @@ class preferences_settings
 		{
 			$attribute = $type == 'group' ? 'user' : $type;
 			$msg = $this->process_array($GLOBALS['egw']->preferences->$attribute,
-				$GLOBALS['egw']->preferences->{$attribute}[$appname], $preserve['types'], $appname, $attribute, true);
+				(array)$GLOBALS['egw']->preferences->{$attribute}[$appname], $preserve['types'], $appname, $attribute, true);
 		}
 		$content['msg'] = $msg;
 
@@ -148,7 +148,6 @@ class preferences_settings
 		//_debug_array($values);exit;
 		foreach($values as $var => $value)
 		{
-			error_log(__METHOD__."() types[var='$var']='{$types[$var]}', value=".array2string($value));
 			// type specific validation
 			switch((string)$types[$var])
 			{
@@ -262,7 +261,7 @@ class preferences_settings
 			throw new egw_exception_wrong_parameter("Could not find settings for application: ".$appname);
 		}
 		$attribute = $type == 'group' ? 'user' : $type;
-		//error_log(__METHOD__."('$appname', '$type' ) attribute='$attribute', preferences->account_id=".$GLOBALS['egw']->preferences->account_id);
+		//error_log(__METHOD__."('$appname', '$type' ) attribute='$attribute', preferences->account_id=".$GLOBALS['egw']->preferences->get_account_id());
 
 		//_debug_array($this->settings); exit;
 		$sel_options = $readonlys = $content = $tabs = array();
@@ -364,7 +363,10 @@ class preferences_settings
 			}
 			if ($type == 'user')
 			{
-				$default = $GLOBALS['egw']->preferences->default[$appname][$setting['name']];
+				$default = $GLOBALS['egw']->preferences->group[$appname][$setting['name']] ?
+					$GLOBALS['egw']->preferences->group[$appname][$setting['name']] :
+					$GLOBALS['egw']->preferences->default[$appname][$setting['name']];
+
 				if (isset($setting['values']) && (string)$setting['values'][$default] !== '')
 				{
 					$default = $setting['values'][$default];
@@ -421,9 +423,9 @@ class preferences_settings
 		if ($GLOBALS['egw_info']['apps']['admin'])
 		{
 			$content['type'] = $type;
-			if ($GLOBALS['egw']->preferences->account_id != $GLOBALS['egw_info']['user']['account_id'])
+			if (($id = $GLOBALS['egw']->preferences->get_account_id()) != $GLOBALS['egw_info']['user']['account_id'])
 			{
-				$content['type'] .= ':'.$GLOBALS['egw']->preferences->account_id;
+				$content['type'] .= ':'.$id;
 				$sel_options['type'][$content['type']] = common::grab_owner_name($GLOBALS['egw']->preferences->account_id);
 			}
 			foreach($GLOBALS['egw']->accounts->search(array('type' => 'groups', 'sort' => 'account_lid')) as $account_id => $group)
