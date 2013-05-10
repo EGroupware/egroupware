@@ -11,7 +11,7 @@
 				<row class="prefRow">
 					<box class="prefName">
 						<description for="@${row}[name]" id="${row}[label]"/>
-						<description id="${row}[help]" class="prefHelp"/>
+						<html id="${row}[help]" class="prefHelp"/>
 					</box>
 					<box>
 						<widget type="@${row}[type]" id="@${row}[name]" onchange="@${row}[onchange]" size="@${row}[size]"  no_lang="1" class="prefValue"/>

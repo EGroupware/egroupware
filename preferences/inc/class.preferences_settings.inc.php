@@ -70,14 +70,23 @@ class preferences_settings
 						// ToDo: save preferences
 						$appname = $content['old_appname'] ? $content['old_appname'] : 'common';
 						list($type,$account_id) = explode(':', $content['old_type']);
-						$prefs = array_merge($content['tab1'], $content['tab2'], $content['tab3'], $content['tab4']);
+						// merge prefs of all tabs together again
+						$prefs = array();
+						foreach($content as $name => $val)
+						{
+							if (is_array($val) && strpos($name, 'tab') === 0)
+							{
+								$prefs = array_merge($prefs, $val);
+							}
+						}
+						error_log(__METHOD__."() button=$button, content=".array2string($content).' --> prefs='.array2string($prefs));;;
 						if ($account_id && $account_id != $GLOBALS['egw']->preferences->account_id)
 						{
 							$GLOBALS['egw']->preferences->account_id = $account_id;
 							$GLOBALS['egw']->preferences->read_repository();
 						}
 						$attribute = $type == 'group' ? 'user' : $type;
-						if (!($msg=$this->process_array($GLOBALS['egw']->preferences->$attribute, $prefs, null, $appname, $attribute)))
+						if (!($msg=$this->process_array($GLOBALS['egw']->preferences->$attribute, $prefs, $content['types'], $appname, $attribute)))
 						{
 							$msg = lang('Preferences saved.');	//.array2string($prefs);
 						}
@@ -91,41 +100,47 @@ class preferences_settings
 			list($type,$account_id) = explode(':', $content['type']);
 			//_debug_array($prefs);
 		}
-		// if not just saved, call validation before, to be able to show failed validation of current prefs
-		if (!isset($button))
-		{
-			$attribute = $type == 'group' ? 'user' : $type;
-			$msg = $this->process_array($GLOBALS['egw']->preferences->$attribute,
-				$GLOBALS['egw']->preferences->{$attribute}[$appname], null, $appname, $attribute, true);
-		}
 		if ($account_id && $account_id != $GLOBALS['egw']->preferences->account_id)
 		{
 			$GLOBALS['egw']->preferences->account_id = $account_id;
 			$GLOBALS['egw']->preferences->read_repository();
 		}
-		$content = $this->get_content($appname, $type, $sel_options, $readonlys, $tpl);
-		$content['msg'] = $msg;
-
-		$tpl->exec('preferences.preferences_settings.index', $content, $sel_options, $readonlys, array(
+		$preserve = array(
 			'appname' => $content['appname'],
 			'type' => $content['type'],
 			'old_appname' => $content['appname'],
 			'old_type' => $content['type'],
-		));
+			'types' => array(),
+		);
+		if ($button == 'apply') $old_tab = $content['tabs'];
+		$content = $this->get_content($appname, $type, $sel_options, $readonlys, $preserve['types'], $tpl);
+		error_log(__METHOD__."() preserve=".array2string($preserve));
+		if ($button == 'apply') $content['tabs'] = $old_tab;
+
+		// if not just saved, call validation before, to be able to show failed validation of current prefs
+		if (!isset($button))
+		{
+			$attribute = $type == 'group' ? 'user' : $type;
+			$msg = $this->process_array($GLOBALS['egw']->preferences->$attribute,
+				$GLOBALS['egw']->preferences->{$attribute}[$appname], $preserve['types'], $appname, $attribute, true);
+		}
+		$content['msg'] = $msg;
+
+		$tpl->exec('preferences.preferences_settings.index', $content, $sel_options, $readonlys, $preserve);
 	}
 
 	/**
 	 * Verify and save preferences
 	 *
-	 * @param array &$repository
-	 * @param array $values
-	 * @param array $notifies
+	 * @param array &$repository values get updated here
+	 * @param array $values new values
+	 * @param array $types setting-name => type
 	 * @param string $appname appname or 'common'
-	 * @param string $type
+	 * @param string $type 'user', 'default', 'forced'
 	 * @param boolean $only_verify=false
 	 * @return string with verification error or null on success
 	 */
-	function process_array(&$repository, $values, $notifies, $appname, $type, $only_verify=false)
+	function process_array(array &$repository, array $values, array $types=null, $appname, $type, $only_verify=false)
 	{
 		//_debug_array($repository);
 		$prefs = &$repository[$appname];
@@ -134,72 +149,68 @@ class preferences_settings
 		//_debug_array($values);exit;
 		foreach($values as $var => $value)
 		{
-			if(isset($value) && $value !== '' && $value !== '**NULL**')
+			error_log(__METHOD__."() types[var='$var']='{$types[$var]}', value=".array2string($value));
+			// type specific validation
+			switch((string)$types[$var])
 			{
-				if (is_array($value))
-				{
-					if (isset($value['pw']))
+				case 'password':	// dont write empty password-fields
+					if (empty($value)) continue 2;
+					break;
+				case 'vfs_file':
+				case 'vfs_dir':
+				case 'vfs_dirs':
+					if ($value === '')
 					{
-						$value = $value['pw'];
-						if(empty($value))
+						// empty is always allowed
+
+						// If forced, empty == not set
+						if($type == 'forced')
 						{
-							continue;	// dont write empty password-fields
+							unset($prefs[$var]);
+							// need to call preferences::delete, to also set affective prefs!
+							if (!$only_verify) $GLOBALS['egw']->preferences->delete($appname, $var, $type);
+							continue 2;
 						}
 					}
-					elseif(isset($value[$vfs_type='vfs_file']) || isset($value[$vfs_type='vfs_dir']) || isset($value[$vfs_type='vfs_dirs']))
+					elseif ($types[$var] == 'vfs_file')
 					{
-						$value = $value[$vfs_type];
-						if ($value === '')
+						if ($value[0] != '/' || !egw_vfs::stat($value) || egw_vfs::is_dir($value))
 						{
-							// empty is always allowed
-
-							// If forced, empty == not set
-							if($type == 'forced')
-							{
-								unset($prefs[$var]);
-								// need to call preferences::delete, to also set affective prefs!
-								if (!$only_verify) $GLOBALS['egw']->preferences->delete($appname, $var, $type);
-								continue;
-							}
-						}
-						elseif ($vfs_type == 'vfs_file')
-						{
-							if ($value[0] != '/' || !egw_vfs::stat($value))
-							{
-								$error = lang('%1 is no existing vfs file!',htmlspecialchars($value));
-							}
-						}
-						else
-						{
-							// split multiple comma or whitespace separated directories
-							// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
-							foreach($vfs_type == 'vfs_dir' ? array($value) : preg_split('/[,\s]+\//', $value) as $n => $dir)
-							{
-								if ($n) $dir = '/'.$dir;	// re-adding trailing slash removed by split
-								if ($dir[0] != '/' || !egw_vfs::stat($dir) || !egw_vfs::is_dir($dir))
-								{
-									$error .= ($error ? ' ' : '').lang('%1 is no existing vfs directory!',$dir);
-								}
-							}
+							$error = lang('%1 is no existing vfs file!',htmlspecialchars($value));
 						}
 					}
 					else
 					{
-						$value = implode(',',$value);	// multiselect
+						// split multiple comma or whitespace separated directories
+						// to still allow space or comma in dirnames, we also use the trailing slash of all pathes to split
+						foreach($types[$var] == 'vfs_dir' ? array($value) : preg_split('/[,\s]+\//', $value) as $n => $dir)
+						{
+							if ($n) $dir = '/'.$dir;	// re-adding trailing slash removed by split
+							if ($dir[0] != '/' || !egw_vfs::stat($dir) || !egw_vfs::is_dir($dir))
+							{
+								$error .= ($error ? ' ' : '').lang('%1 is no existing vfs directory!',$dir);
+							}
+						}
 					}
-				}
+					break;
+				case 'Array':	// notifies
+					$value = $GLOBALS['egw']->preferences->lang_notify($value, $types[$var], True);
+					break;
+			}
+
+			if (isset($value) && $value !== '' && $value !== '**NULL**')
+			{
+				if (is_array($value)) $value = implode(',',$value);	// multiselect
+
 				$prefs[$var] = $value;
 
-				if(is_array($notifies) && isset($notifies[$var]))	// need to translate the key-words back
-				{
-					$prefs[$var] = $GLOBALS['egw']->preferences->lang_notify($prefs[$var],$notifies[$var],True);
-				}
 				// need to call preferences::add, to also set affective prefs!
 				if (!$only_verify) $GLOBALS['egw']->preferences->add($appname, $var, $prefs[$var], $type);
 			}
 			else
 			{
 				unset($prefs[$var]);
+
 				// need to call preferences::delete, to also set affective prefs!
 				if (!$only_verify) $GLOBALS['egw']->preferences->delete($appname, $var, $type);
 			}
@@ -240,11 +251,12 @@ class preferences_settings
 	 * @param string $type
 	 * @param array &$sel_options
 	 * @param array &$readonlys
+	 * @param array &$types on return setting-name => setting-type
 	 * @param etemplate $tpl
 	 * @throws egw_exception_wrong_parameter
 	 * @return array content
 	 */
-	function get_content($appname, $type, &$sel_options, &$readonlys, $tpl)
+	function get_content($appname, $type, &$sel_options, &$readonlys, &$types, $tpl)
 	{
 		if (!$this->call_hook($appname, $type))
 		{
@@ -264,7 +276,9 @@ class preferences_settings
 			{
 				continue;	// forced preferences are not displayed, unless we edit them
 			}
-			switch($old_type = $setting['type'])
+			$types[$setting['name']] = $old_type = $setting['type'];
+
+			switch($old_type)
 			{
 				case 'section':
 					$tab = 'tab'.(1+count($tabs));
@@ -277,20 +291,21 @@ class preferences_settings
 				case 'subsection':	// is in old code, but never seen it used
 					continue 2;
 
+				case 'notify':
+					// ToDo: implementation ...
+					error_log(__METHOD__."('$appname', '$type') NOT implemented settings type '$old_type'!");
+					// handle as textarea for now
+				case 'textarea':
+					$setting['type'] = is_a($tpl, 'etemplate_old') ? 'textarea' : 'textbox';
+					$tpl->setElementAttribute($tab.'['.$setting['name'].']', 'multiline', 'true');
+					// ignoring rows and cols in favor of hardcoded: width: 100%, height: 5em
+					break;
 				case 'password':
 				case 'vfs_file':
 				case 'vfs_dir':
 				case 'vfs_dirs':
-				case 'notify':
-					// ToDo: implementation ...
-					error_log(__METHOD__."('$appname', '$type') NOT implemented settings type '$old_type'!");
-					// handle as input for now
 				case 'input':
 					$setting['type'] = 'textbox';
-					if (isset($setting['size']))
-					{
-						$tpl->setElementAttribute($tab.'['.$setting['name'].']', 'size', $setting['size']);
-					}
 					break;
 				case 'check':
 					$setting['type'] = 'select';
@@ -346,13 +361,13 @@ class preferences_settings
 				}
 			}
 			$content[$tab][] = array(
-					'name' => $setting['name'],
-					'type' => $setting['type'],
-					'label' => preg_replace('|<br[ /]*>|i', "\n", $setting['label']),
-					'help' => preg_replace('|<br[ /]*>|i', "\n", $setting['help']),
-					'size' => $setting['size'],	// old eT
-					'default' => !empty($default) ? lang('Default').': '.$default : null,
-					'onchange' => $setting['onchange'],
+				'name' => $setting['name'],
+				'type' => $setting['type'],
+				'label' => preg_replace('|<br[ /]*>|i', "\n", $setting['label']),
+				'help' => $setting['help'],	// is html
+				'size' => $setting['size'],	// old eT
+				'default' => !empty($default) ? lang('Default').': '.$default : null,
+				'onchange' => $setting['onchange'],
 			);
 			$content[$tab][$setting['name']] = $GLOBALS['egw']->preferences->{$attribute}[$appname][$setting['name']];
 			//if ($old_type == 'multiselect') $content[$tab][$setting['name']] = explode(',', $content[$tab][$setting['name']]);

@@ -39,6 +39,11 @@ tr.prefRow:hover .prefHelp {
 }
 .prefValue {
 	margin-right: 5px;
+	width: 100%;
+}
+.prefValue textarea, textarea.prefValue {
+	width: 99%;
+	height: 5em;
 }
 .prefType, .prefApp {
 	font-size: 150%;
