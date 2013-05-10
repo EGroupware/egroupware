@@ -23,7 +23,7 @@
  * 
  * @augments et2_DOMWidget
  */ 
-var et2_tabbox = et2_DOMWidget.extend(
+var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 {
 	attributes: {
 		'tabs': {
@@ -108,6 +108,7 @@ var et2_tabbox = et2_DOMWidget.extend(
 					}
 				}
 				tabData.push({
+					"id": index_name,
 					"label": this.egw().lang(et2_readAttrWithDefault(node, "label", "Tab")),
 					"widget": null,
 					"contentDiv": null,
@@ -168,6 +169,7 @@ var et2_tabbox = et2_DOMWidget.extend(
 					tab_options.content = tab.id;
 				}
 				tabData.push({
+					"id": tab.id,
 					"label": this.egw().lang(tab.label),
 					"widget": et2_createWidget('template',tab_options,this),
 					"contentDiv": null,
@@ -221,8 +223,8 @@ var et2_tabbox = et2_DOMWidget.extend(
 			var entry = this.tabData[i];
 			entry.flagDiv = $j(document.createElement("span"))
 				.addClass("et2_tabflag")
-				.text(entry.label)
-				.appendTo(this.flagContainer);
+				.appendTo(this.flagContainer)
+			entry.flagDiv.text(entry.label || "Tab");
 			if(entry.hidden)
 			{
 				entry.flagDiv.hide();
@@ -279,7 +281,29 @@ var et2_tabbox = et2_DOMWidget.extend(
 		this.height = _value;
 
 		this.tabContainer.css("height", _value);
-	}
+	},
 
+	/**
+	 * getValue has to return the value of the input widget
+	 */
+	getValue: function() {
+		return this.tabData[this.selected_index].id;
+	},
+
+	/**
+	 * Is dirty returns true if the value of the widget has changed since it
+	 * was loaded.
+	 */
+	isDirty: function() {
+		return this.selected_index != this.value;
+	},
+
+	/**
+	 * Causes the dirty flag to be reseted.
+	 */
+	resetDirty: function() 
+	{
+		this.value = this.selected_index;
+	}
 });
 et2_register_widget(et2_tabbox, ["tabbox"]);
