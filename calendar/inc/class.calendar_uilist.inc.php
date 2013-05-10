@@ -820,6 +820,17 @@ class calendar_uilist extends calendar_ui
 				'disableClass' => 'rowNoView',
 			);
 		}
+		if ($GLOBALS['egw_info']['user']['apps']['infolog'])
+		{
+			$actions['infolog_app'] = array(
+				'caption' => 'InfoLog',
+				'icon' => 'infolog/navbar',
+				'group' => $group,
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=infolog.infolog_ui.edit&type=task&action=calendar&action_id=$id',
+				'popup' => egw_link::get_registry('infolog', 'add_popup'),
+			);
+		}
 		if ($GLOBALS['egw_info']['user']['apps']['timesheet'])
 		{
 			$actions['timesheet'] = array(	// interactive add for a single event

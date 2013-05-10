@@ -85,7 +85,12 @@ class calendar_bo
 	 * @var array $common_prefs common preferences
 	 */
 	var $common_prefs;
-
+	/**
+	 * Custom fields read from the calendar config
+	 *
+	 * @var array
+	 */
+	var $customfields = array();
 	/**
 	 * @var int $user nummerical id of the current user-id
 	 */
@@ -246,6 +251,8 @@ class calendar_bo
 		$this->require_acl_invite = $GLOBALS['egw_info']['server']['require_acl_invite'];
 
 		$this->categories = new categories($this->user,'calendar');
+
+		$this->customfields = config::get_customfields('calendar');
 	}
 
 	/**
@@ -1958,6 +1965,58 @@ class calendar_bo
 
 		if ($this->debug > 1) error_log(__METHOD__. "($user, '$filter') = $ctag = ".date('Y-m-d H:i:s',$ctag)." took ".(microtime(true)-$startime)." secs");
 		return $ctag;
+	}
+
+	/**
+	 * Hook for infolog  to set some extra data and links
+	 *
+	 * @param array $data event-array preset by infolog plus
+	 * @param int $data[id] cal_id
+	 * @return array with key => value pairs to set in new event and link_app/link_id arrays
+	 */
+	function infolog_set($data)
+	{
+		if (!($calendar = $this->read($data['id'])))
+		{
+			return array();
+		}
+
+		$content = array(
+			'info_cat'       => $GLOBALS['egw']->categories->check_list(EGW_ACL_READ, $calendar['category']),
+			'info_priority'  => $calendar['priority'] ,
+			'info_public'    => $calendar['public'] != 'private',
+			'info_subject'   => $calendar['title'],
+			'info_des'       => $calendar['description'],
+			'info_location'  => $calendar['location'],
+			'info_startdate' => $calendar['range_start'],
+			//'info_enddate' => $calendar['range_end'] ? $calendar['range_end'] : $calendar['uid']
+			'info_contact'   => 'calendar:'.$data['id'],
+		);
+
+		unset($content['id']);
+		// Add calendar link to infolog entry
+		$content['link_app'][] = $calendar['info_link']['app'];
+		$content['link_id'][]  = $calendar['info_link']['id'];
+		// Copy claendar's links
+		foreach(egw_link::get_links('calendar',$calendar['id'],'','link_lastmod DESC',true) as $link)
+		{
+			if ($link['app'] != egw_link::VFS_APPNAME)
+			{
+				$content['link_app'][] = $link['app'];
+				$content['link_id'][]  = $link['id'];
+			}
+			if ($link['app'] == 'addressbook')	// prefering contact as primary contact over calendar entry set above
+			{
+				$content['info_contact'] = 'addressbook:'.$link['id'];
+			}
+		}
+		// Copy same custom fields
+		foreach(config::get_customfields('infolog') as $name => $settings)
+		{
+			if ($this->customfields[$name]) $content['#'.$name] = $calendar['#'.$name];
+		}
+		//error_log(__METHOD__.'('.array2string($data).') calendar='.array2string($calendar).' returning '.array2string($content));
+		return $content;
 	}
 
 	/**
