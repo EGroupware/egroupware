@@ -501,6 +501,21 @@ class uiwidgets
 							'onExecute' => 'javaScript:mail_mailsource',
 							'allowOnMultiple' => false,
 						),
+						'openastext' => array(
+							'caption' => lang('Open in Text mode'),
+							'group' => ++$group,
+							'icon' => egw_vfs::mime_icon('text/plain'),
+							'onExecute' => 'javaScript:mail_openAsText',
+							'allowOnMultiple' => false,
+						),
+						'openashtml' => array(
+							'caption' => lang('Open in HTML mode'),
+							'group' => $group,
+							'icon' => egw_vfs::mime_icon('text/html'),
+							'onExecute' => 'javaScript:mail_openAsHtml',
+							'allowOnMultiple' => false,
+						),
+
 					),
 				),
 /*

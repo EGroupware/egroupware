@@ -293,6 +293,11 @@
 		{
 			$partID		= $this->partID = $_GET['part'];
 			if (!empty($_GET['mailbox'])) $this->mailbox  = base64_decode($_GET['mailbox']);
+
+			$htmlOptions = $this->bofelamimail->htmlOptions;
+			if (!empty($_GET['tryastext'])) $htmlOptions  = "only_if_no_text";
+			if (!empty($_GET['tryashtml'])) $htmlOptions  = "always_display";
+
 			$deleteDraftOnClose = false;
 			if (!empty($_GET['deleteDraftOnClose']) && $this->bofelamimail->isDraftFolder($this->mailbox)) $deleteDraftOnClose = true;
 			//$transformdate	=& CreateObject('felamimail.transformdate');
@@ -316,7 +321,7 @@
 			$rawheaders	= $this->bofelamimail->getMessageRawHeader($this->uid, $partID);
 			//_debug_array($rawheaders);exit;
 			$fetchEmbeddedImages = false;
-			if ($this->bofelamimail->htmlOptions !='always_display') $fetchEmbeddedImages = true;
+			if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
 			$attachments	= $this->bofelamimail->getMessageAttachments($this->uid, $partID, '',$fetchEmbeddedImages);
 			//_debug_array($attachments); //exit;
 			$envelope	= $this->bofelamimail->getMessageEnvelope($this->uid, $partID,true);
@@ -521,13 +526,17 @@
 					'part'		=> $partID,
 					'mailbox'	=>  base64_encode($this->mailbox)
 				);
+			if ($htmlOptions != $this->bofelamimail->htmlOptions)
+			{
+				$linkData[($htmlOptions=='only_if_no_text'?'tryastext':'tryashtml')] = 1;
+			}
 			$this->t->set_var('url_displayBody', $GLOBALS['egw']->link('/index.php',$linkData));
 
 			// if browser supports data uri: ie<8 does NOT and ie>=8 does NOT support html as content :-(
 			// --> use it to send the mail as data uri
 			if (!isset($_GET['printable']))
 			{
-				$mailData = $this->get_load_email_data($this->uid, $partID, $envelope['SENDER'][0]['EMAIL']);
+				$mailData = $this->get_load_email_data($this->uid, $partID, $envelope['SENDER'][0]['EMAIL'],$htmlOptions);
 
 				$this->t->set_var('url_displayBody', $mailData['src']."\" onload=\"".$mailData['onload']);
 				$this->t->set_var('mail_dataScript', $mailData['script']);
@@ -707,9 +716,12 @@
 			$partID		= $_GET['part'];
 			if (empty($this->uid) && !empty($_GET['uid']) ) $this->uid = 9247;//$_GET['uid'];
 			if (!empty($_GET['mailbox'])) $this->mailbox  = base64_decode($_GET['mailbox']);
+			$htmlOptions = $this->bofelamimail->htmlOptions;
+			if (!empty($_GET['tryastext'])) $htmlOptions  = "only_if_no_text";
+			if (!empty($_GET['tryashtml'])) $htmlOptions  = "always_display";
 
 			$this->bofelamimail->reopen($this->mailbox);
-			$bodyParts	= $this->bofelamimail->getMessageBody($this->uid,'',$partID, '', false, $this->mailbox);
+			$bodyParts	= $this->bofelamimail->getMessageBody($this->uid,$htmlOptions,$partID, '', false, $this->mailbox);
 			$this->bofelamimail->closeConnection();
 
 			$this->display_app_header();
@@ -1085,17 +1097,17 @@ blockquote[type=cite] {
 ';
 		}
 
-		function get_load_email_data($uid, $partID, $sender)
+		function get_load_email_data($uid, $partID, $sender, $htmlOptions=null)
 		{
 			// seems to be needed, as if we open a mail from notification popup that is
 			// located in a different folder, we experience: could not parse message
 			$this->bofelamimail->reopen($this->mailbox);
-
-			$bodyParts	= $this->bofelamimail->getMessageBody($uid, '', $partID, '', false, $this->mailbox);
+			if (empty($htmlOptions)) $htmlOptions = $this->bofelamimail->htmlOptions;
+			$bodyParts	= $this->bofelamimail->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, '', false, $this->mailbox);
 			//error_log(__METHOD__.__LINE__.array2string($bodyParts));
 			$meetingRequest = false;
 			$fetchEmbeddedImages = false;
-			if ($this->bofelamimail->htmlOptions !='always_display') $fetchEmbeddedImages = true;
+			if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
 			$attachments    = $this->bofelamimail->getMessageAttachments($uid, $partID, '',$fetchEmbeddedImages,true);
 			foreach ((array)$attachments as $key => $attach)
 			{

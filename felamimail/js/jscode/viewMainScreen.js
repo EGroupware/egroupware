@@ -169,6 +169,58 @@ function mail_open(_action, _elems)
 }
 
 /**
+ * Open a single message in html mode
+ * 
+ * @param _action
+ * @param _elems _elems[0].id is the row-id
+ */
+function mail_openAsHtml(_action, _elems)
+{
+	//alert('mail_open('+_elems[0].id+')');
+	if (activeFolderB64 == draftFolderB64 || activeFolderB64 == templateFolderB64)
+	{
+		_action.id='composefromdraft';
+		mail_compose(_action,_elems);
+	}
+	else
+	{
+		var url = window.egw_webserverUrl+'/index.php?';
+		url += 'menuaction=felamimail.uidisplay.display';	// todo compose for Draft folder
+		url += '&mailbox='+egw_appWindow('felamimail').activeFolderB64;
+		url += '&uid='+_elems[0].id;
+		url += '&tryashtml=1';
+
+		fm_readMessage(url, 'displayMessage_'+_elems[0].id, _elems[0].iface.getDOMNode());
+	}
+}
+
+/**
+ * Open a single message in plain text mode
+ * 
+ * @param _action
+ * @param _elems _elems[0].id is the row-id
+ */
+function mail_openAsText(_action, _elems)
+{
+	//alert('mail_open('+_elems[0].id+')');
+	if (activeFolderB64 == draftFolderB64 || activeFolderB64 == templateFolderB64)
+	{
+		_action.id='composefromdraft';
+		mail_compose(_action,_elems);
+	}
+	else
+	{
+		var url = window.egw_webserverUrl+'/index.php?';
+		url += 'menuaction=felamimail.uidisplay.display';	// todo compose for Draft folder
+		url += '&mailbox='+egw_appWindow('felamimail').activeFolderB64;
+		url += '&uid='+_elems[0].id;
+		url += '&tryastext=1';
+
+		fm_readMessage(url, 'displayMessage_'+_elems[0].id, _elems[0].iface.getDOMNode());
+	}
+}
+
+/**
  * Compose, reply or forward a message
  * 
  * @param _action _action.id is 'compose', 'composeasnew', 'reply', 'reply_all' or 'forward' (forward can be multiple messages)
