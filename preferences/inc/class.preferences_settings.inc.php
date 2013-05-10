@@ -105,15 +105,11 @@ class preferences_settings
 			$GLOBALS['egw']->preferences->set_account_id($account_id);
 			$GLOBALS['egw']->preferences->read_repository();
 		}
-		$preserve = array(
-			'appname' => $content['appname'],
-			'type' => $content['type'],
-			'old_appname' => $content['appname'],
-			'old_type' => $content['type'],
-			'types' => array(),
-		);
+		$preserve = array('types' => array());
 		if ($content['old_appname'] == $content['appname']) $old_tab = $content['tabs'];
 		$content = $this->get_content($appname, $type, $sel_options, $readonlys, $preserve['types'], $tpl);
+		$preserve['appname'] = $preserve['old_appname'] = $content['appname'];
+		$preserve['type'] = $preserve['old_type'] = $content['type'];
 		if (isset($old_tab)) $content['tabs'] = $old_tab;
 
 		// if not just saved, call validation before, to be able to show failed validation of current prefs
@@ -398,6 +394,7 @@ class preferences_settings
 				'default' => !empty($default) ? lang('Default').': '.$default : null,
 				'onchange' => $setting['onchange'],
 			);
+			//error_log("appname=$appname, attribute=$attribute, setting=".array2string($setting));
 			$content[$tab][$setting['name']] = $GLOBALS['egw']->preferences->{$attribute}[$appname][$setting['name']];
 			//if ($old_type == 'multiselect') $content[$tab][$setting['name']] = explode(',', $content[$tab][$setting['name']]);
 		}
