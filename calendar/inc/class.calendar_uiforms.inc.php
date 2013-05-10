@@ -540,6 +540,7 @@ class calendar_uiforms extends calendar_ui
 		case 'save':
 		case 'print':
 		case 'apply':
+		case 'infolog':
 			if ($event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event))
 			{
 				switch ($button)
@@ -550,6 +551,9 @@ class calendar_uiforms extends calendar_ui
 						break 2;
 					case 'print':	// just print without edit-rights is ok
 						$js = $this->custom_print($event,false);
+						break 2;
+					case 'infolog':	// create infolog without edit-rights is ok
+						$this->create_infolog($event['id']);
 						break 2;
 				}
 				$msg = lang('Permission denied');
@@ -877,6 +881,11 @@ class calendar_uiforms extends calendar_ui
 				{
 					$js = $this->custom_mail($event,!$content['id'],($button=='sendrequest'))."\n".$js;	// first open the new window and then update the view
 				}
+
+				if ($button == 'infolog')
+				{
+					$this->create_infolog($event['id']);
+				}
 			}
 			else
 			{
@@ -1098,12 +1107,27 @@ class calendar_uiforms extends calendar_ui
 	 */
 	function custom_print($event,$added)
 	{
-			$vars = array(
+		$vars = array(
 			'menuaction'      => 'calendar.calendar_uiforms.edit',
 			'cal_id'      => $event['id'],
 			'print' => true,
-			);
+		);
 		return "window.open('".egw::link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
+	}
+
+	/**
+	 * Open new infolog window to convert event to an infolog
+	 *
+	 * @param array|int $event event or id
+	 */
+	function create_infolog($event,$added)
+	{
+		$vars = array(
+			'menuaction' => 'infolog.infolog_ui.edit',
+			'action'     => 'calendar',
+			'action_id'  => is_array($event) ? $event['id'] : $event,
+		);
+		egw::redirect_link('/index.php', $vars);
 	}
 
 	/**
@@ -1162,8 +1186,9 @@ class calendar_uiforms extends calendar_ui
 				'copy' => array('label' => 'Copy', 'title' => 'Copy this event'),
 				'ical' => array('label' => 'Export', 'title' => 'Download this event as iCal'),
 				'print' => array('label' => 'Print', 'title' => 'Print this event'),
-				'mail' => array('label' => 'Mail all participants', 'title' => 'compose a mail to all participants after the event is saved'),
-				'sendrequest' => array('label' => 'Send meetingrequest to all participants', 'title' => 'Send meetingrequest to all participants after the event is saved'),
+				'infolog' => array('label' => 'InfoLog', 'title' => 'Create an InfoLog from this event'),
+				'mail' => array('label' => 'Mail all participants', 'title' => 'Compose a mail to all participants after the event is saved'),
+				'sendrequest' => array('label' => 'Meetingrequest to all participants', 'title' => 'Send meetingrequest to all participants after the event is saved'),
 			),
 		);
 		unset($sel_options['status']['G']);

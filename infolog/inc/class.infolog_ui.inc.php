@@ -1863,49 +1863,29 @@ else
 					unset($action);	// it get stored in $content and will cause an other copy after [apply]
 					break;
 
-				case 'tracker':
-					if ($action_id)
-					{
-						egw_link::link('infolog',$content['link_to']['to_id'],$action,$action_id);
-						$content['blur_title']   = egw_link::title($action,$action_id);
-					}
-					$content['info_contact'] = $action.':'.$action_id;
-					$t_bo = new tracker_bo();
-					$tracker = $t_bo->read($action_id);
-					$content['info_subject'] = $tracker['tr_summary'];
-					$content['info_des'] = $tracker['tr_description'];
-					foreach($this->bo->customfields as $name => $value)
-					{
-						if(array_key_exists('#'.$name, $tracker)) {
-							$content['#'.$name] = $tracker['#'.$name];
-						}
-					}
-					break;
-
 				case 'projectmanager':
 					$pm_links = array($action_id);
-				case 'addressbook':
-				case 'projects':
-				case 'calendar':
 				default:	// to allow other apps to participate
-					if (strpos($action_id,',') !== false)
-					{
-						foreach (explode(',',$action_id) as $id)
-						{
-							egw_link::link('infolog',$content['link_to']['to_id'],$action,$id);
-						}
-						$content['blur_title']   = egw_link::title($action,'$id').",...";
-					}
-					else
-					{
-						if ($action_id)
-						{
-							egw_link::link('infolog',$content['link_to']['to_id'],$action,$action_id);
-							$content['blur_title']   = egw_link::title($action,$action_id);
-						}
-					}
+					$content['info_subject'] = egw_link::title($action, $id);
 					$content['info_contact'] = $action.':'.$action_id;
+					foreach (explode(',', $action_id) as $n => $id)
+					{
+						egw_link::link('infolog', $content['link_to']['to_id'], $action, $id);
 
+						// calling "infolog_set" hook for first, in case app wants to set some more values
+						if (!$n && ($set = $GLOBALS['egw']->hooks->single(array('location'=>'infolog_set','id'=>$action_id),$action)))
+						{
+							foreach((array)$set['link_app'] as $i => $l_app)
+							{
+								if (($l_id=$set['link_id'][$i])) egw_link::link('infolog',$content['link_to']['to_id'],$l_app,$l_id);
+							}
+							unset($set['link_app']);
+							unset($set['link_id']);
+
+							$content = array_merge($content, $set);
+						}
+					}
+					// fall through
 				case '':
 					if ($info_id)
 					{
@@ -1915,16 +1895,16 @@ else
 						}
 						break;	// normal edit
 					}
-				case 'new':		// new entry
-					$content['info_startdate'] = (int) $_GET['startdate'] ? (int) $_GET['startdate'] : $set_startdate;
-					$content['info_priority'] = 1; // normal
+				case 'new':		// new entry, set some defaults, if not set by infolog_set hook
+					if (empty($content['info_startdate'])) $content['info_startdate'] = (int) $_GET['startdate'] ? (int) $_GET['startdate'] : $set_startdate;
+					if (empty($content['info_priority'])) $content['info_priority'] = 1; // normal
 					$content['info_owner'] = $this->user;
-					if ($type != '')
+					if ($type != '' && empty($content['info_type']))
 					{
 						$content['info_type'] = $type;
 					}
-					$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
-					$content['info_percent'] = $content['info_status'] == 'done' ? '100%' : '0%';
+					if (empty($content['info_status'])) $content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
+					if (empty($content['info_percent'])) $content['info_percent'] = $content['info_status'] == 'done' ? '100%' : '0%';
 					break;
 			}
 			if (!isset($this->bo->enums['type'][$content['info_type']]))
@@ -2351,7 +2331,7 @@ else
 				$notifications[$content['notification_type']] = $content['notification'];
 				config::save_value(infolog_tracking::CUSTOM_NOTIFICATION, $notifications,'infolog');
 			}
-			
+
 			if($button == 'save' || $button == 'cancel')
 			{
 				egw::redirect_link('/infolog/index.php');

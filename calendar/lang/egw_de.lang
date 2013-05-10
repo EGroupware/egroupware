@@ -98,6 +98,7 @@ countries	calendar	de	Länder
 country	calendar	de	Land
 create a new series	calendar	de	Neue Serie anlegen
 create an exception for the given date	calendar	de	Erzeugt eine Ausnahme am angegebenen Datum
+create an infolog from this event	calendar	de	Erstelle ein InfoLog von diesem Termin
 create exception	calendar	de	Ausnahme erzeugen
 create new links	calendar	de	Neue Verknüpfung erstellen
 created	calendar	de	Angelegt
@@ -286,6 +287,7 @@ make freebusy information available to not loged in persons?	calendar	de	Die fre
 max. number of entries to show (leave empty for no restriction)	calendar	de	Max. Anzahl von Einträgen die angezeigt werden sollen (Kein Eintrag = Keine Beschränkung)
 maximum available quantity of %1 exceeded!	calendar	de	Maximale Anzahl von %1 erreicht!
 meeting request	calendar	de	Terminanfrage
+meetingrequest to all participants	calendar	de	Terminanforderung an alle Teilnehmer
 merge document...	calendar	de	Dokument einfügen...
 minutes	calendar	de	Minuten
 modified	calendar	de	Geändert
@@ -410,7 +412,6 @@ select resources	calendar	de	Ressourcen auswählen
 select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	de	Wählen Sie aus, in welchem Fall der Teilnehmerstatus von Teilnehmern zurückgesetzt werden soll, wenn ein Termin verschoben wird.
 select who should get the alarm	calendar	de	Auswählen wer den Alarm erhalten soll
 selected range	calendar	de	Ausgewählter Zeitraum
-send meetingrequest to all participants	calendar	de	Terminanforderung an alle Teilnehmer senden
 send meetingrequest to all participants after the event is saved	calendar	de	Terminanforderung an alle Teilnehmer senden nachdem der Termin gespeichert wurde
 series deleted	calendar	de	Serientermin wurde gelöscht
 set a year only for one-time / non-regular holidays.	calendar	de	Nur für einmalige bzw. unregelmäßige Feiertage das Jahr angeben.
