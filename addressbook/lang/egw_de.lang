@@ -18,6 +18,7 @@ accounts	addressbook	de	Benutzerkonten
 actions	addressbook	de	Befehle
 add %1	addressbook	de	%1 hinzufügen
 add a contact to this organisation	addressbook	de	Einen Kontakt zu dieser Organisation hinzufügen
+add a customfield to link title	addressbook	de	Benutzerdefiniertes Feld zu Link-Titel hinzufügen
 add a new contact	addressbook	de	Neuen Kontakt anlegen
 add a new infolog	addressbook	de	Neuen Infolog Eintrag hinzufügen
 add a new list	addressbook	de	Neuen Verteiler hinzufügen
@@ -25,6 +26,7 @@ add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einze
 add appointment	addressbook	de	Termin hinzufügen
 add business email of whole distribution list?	addressbook	de	E-Mail geschäftl. der kompletten Liste hinzufügen?
 add custom field	addressbook	de	Benutzerdefiniertes Feld hinzufügen
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	de	Fügt ein benutzerdefiniertes Feld zum Titel der Verknüpfung eines Kontakts hinzu. Dieser wird in anderen Anwendungen angezeigt. Die Vorgabe ist kein benutzerdefiniertes Feld hinzuzufügen.
 add emails of whole distribution list?	addressbook	de	E-Mails der gesamten Verteilerliste hinzufügen?
 add or delete categories	addressbook	de	Kategorien hinzufügen oder löschen
 add to distribution list	addressbook	de	Zu Verteilerliste hinzufügen

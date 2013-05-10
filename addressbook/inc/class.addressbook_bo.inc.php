@@ -436,6 +436,22 @@ class addressbook_bo extends addressbook_so
 	}
 
 	/**
+	 * get selectbox options for the customfields
+	 *
+	 * @param array $field=null
+	 * @return array with options:
+	 */
+	public static function cf_options()
+	{
+		$cf_fields = config::get_customfields('addressbook',TRUE);
+		foreach ($cf_fields as $key => $value )
+		{
+			$options[$key]= $value['label'];
+		}
+		return $options;
+	}
+
+	/**
 	 * get selectbox options for the fileas types with translated labels, or real content
 	 *
 	 * @param array $contact=null real content to use, default none
@@ -1359,7 +1375,12 @@ class addressbook_bo extends addressbook_so
 			if ($contact['n_fileas']) return $contact['n_fileas'];
 			$type = null;
 		}
-		return $this->fileas($contact,$type);
+		$title =  $this->fileas($contact,$type);
+		if ($this->prefs['link_title_cf'] && $contact['#'.$this->prefs['link_title_cf']])
+		{
+			$title .= ' ' . $contact['#'.$this->prefs['link_title_cf']];
+		}
+		return $title ;
 	}
 
 	/**
@@ -1375,9 +1396,15 @@ class addressbook_bo extends addressbook_so
 		$titles = array();
 		if (($contacts =& $this->search(array('contact_id' => $ids),false)))
 		{
+			$ids = array();
 			foreach($contacts as $contact)
 			{
-				$titles[$contact['id']] = $this->link_title($contact);
+				$ids[] = $contact['id'];
+			}
+			$cfs = $this->read_customfields($ids);
+			foreach($contacts as $contact)
+			{
+			   	$titles[$contact['id']] = $this->link_title($contact+(array)$cfs[$contact['id']]);
 			}
 		}
 		// we assume all not returned contacts are not readable for the user (as we report all deleted contacts to egw_link)
@@ -1416,9 +1443,15 @@ class addressbook_bo extends addressbook_so
 		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $filter['account_id'] = null;
 		if (($contacts =& parent::search($criteria,false,'org_name,n_family,n_given,cat_id,contact_email','','%',false,'OR', $limit, $filter)))
 		{
+			$ids = array();
 			foreach($contacts as $contact)
 			{
-				$result[$contact['id']] = $this->link_title($contact).
+				$ids[] = $contact['id'];
+			}
+			$cfs = $this->read_customfields($ids);
+			foreach($contacts as $contact)
+			{
+				$result[$contact['id']] = $this->link_title($contact+(array)$cfs[$contact['id']]).
 					($options['type'] === 'email' ? ' <'.$contact['email'].'>' : '');
 				// show category color
 				if ($contact['cat_id'] && ($color = etemplate::cats2color($contact['cat_id'])))
