@@ -18,6 +18,7 @@ accounts	addressbook	en	Accounts
 actions	addressbook	en	Actions
 add %1	addressbook	en	Add %1
 add a contact to this organisation	addressbook	en	Add a contact to this organisation
+add a customfield to link title	addressbook	en	Add a customfield to link title
 add a new contact	addressbook	en	Add a new contact
 add a new infolog	addressbook	en	Add a new InfoLog
 add a new list	addressbook	en	Add a new list
@@ -25,6 +26,7 @@ add a single entry by passing the fields.	addressbook	en	Add a single entry by p
 add appointment	addressbook	en	Add appointment
 add business email of whole distribution list?	addressbook	en	Add business email of whole distribution list?
 add custom field	addressbook	en	Add custom field
+add customfield to links of addressbook, which displays in other applications. the default value is none customfield.	addressbook	en	Add customfield to links of addressbook, which displays in other applications. The default value is none customfield.
 add emails of whole distribution list?	addressbook	en	Add emails of whole distribution list?
 add or delete categories	addressbook	en	Add or delete categories
 add to distribution list	addressbook	en	Add to distribution list

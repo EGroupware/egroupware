@@ -193,6 +193,15 @@ class addressbook_hooks
 			'admin'  => false,
 			'default'=> 'org_name: n_family, n_given',
 		);
+    	$settings['link_title_cf'] = array(
+			'type'  => 'select',
+			'label' => 'Add a customfield to link title',
+			'name'  => 'link_title_cf',
+			'values' => addressbook_bo::cf_options(),
+			'help'  =>  'Add customfield to links of addressbook, which displays in other applications. The default value is none customfield.',
+			'xmlrpc' => True,
+			'admin'  => false,
+		);
 		$settings['addr_format'] = array(
 			'type'   => 'select',
 			'label'  => 'Default address format',
@@ -302,7 +311,7 @@ class addressbook_hooks
 				'values' => $options,
 				'label'  => 'Export definition to use for nextmatch export',
 				'name'   => 'nextmatch-export-definition',
-				'help'   => lang('If you specify an export definition, it will be used when you export'),
+				'help'   => 'If you specify an export definition, it will be used when you export',
 				'run_lang' => false,
 				'xmlrpc' => True,
 				'admin'  => False,
