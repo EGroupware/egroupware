@@ -188,7 +188,8 @@ app.mail = AppJS.extend(
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
 		{
-			app.mail.app_refresh(egw.lang("Renamed Folder %1 to %2",_status[i]['olddesc'],_status[i]['desc'], 'mail'));
+			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
+			if (typeof _status[i]['olddesc'] !== 'undefined' && _status[i]['olddesc'] !== '#skip-user-interaction-message#') app.mail.app_refresh(egw.lang("Renamed Folder %1 to %2",_status[i]['olddesc'],_status[i]['desc'], 'mail'));
 			ftree.renameItem(i,_status[i]['id'],_status[i]['desc']);
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
 			if (_status[i]['id']==selectedNode.id)

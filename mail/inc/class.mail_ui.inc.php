@@ -2187,6 +2187,7 @@ blockquote[type=cite] {
 			$del = $this->mail_bo->getHierarchyDelimiter(false);
 			$oA = array();
 			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
+			$hasChildren = false;
 			if (is_numeric($profileID))
 			{
 				if ($profileID != $this->mail_bo->profileID) return; // only current connection
@@ -2197,6 +2198,32 @@ blockquote[type=cite] {
 				{
 					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
 					$oldFolderInfo = $this->mail_bo->getFolderStatus($folderName,false);
+					//error_log(__METHOD__.__LINE__.array2string($oldFolderInfo));
+					if (!empty($oldFolderInfo['attributes']) && stripos(array2string($oldFolderInfo['attributes']),'\hasnochildren')=== false)
+					{
+						$hasChildren=true; // translates to: hasChildren -> dynamicLoading
+						$delimiter = $this->mail_bo->getHierarchyDelimiter();
+						$nameSpace = $this->mail_bo->_getNameSpaces();
+						$prefix = $this->mail_bo->getFolderPrefixFromNamespace($nameSpace, $folderName);
+						//error_log(__METHOD__.__LINE__.'->'."$_folderName, $delimiter, $prefix");
+						$fragments = array();
+						$subFolders = $this->mail_bo->getMailBoxesRecursive($folderName, $delimiter, $prefix);
+						foreach ($subFolders as $k => $folder)
+						{
+							// we do not monitor failure or success on subfolders
+							if ($folder == $folderName)
+							{
+								unset($subFolders[$k]);
+							}
+							else
+							{
+								$rv = $this->mail_bo->subscribe($folder, false);
+								$fragments[$profileID.self::$delimiter.$folder] = substr($folder,strlen($folderName));
+							}
+						}
+						//error_log(__METHOD__.__LINE__.' Fetched Subfolders->'.array2string($fragments));
+					}
+
 					$this->mail_bo->reopen('INBOX');
 					if($newFolderName = $this->mail_bo->renameFolder($folderName, $parentFolder, $_newName)) {
 						$this->mail_bo->resetFolderObjectCache($profileID);
@@ -2207,6 +2234,24 @@ blockquote[type=cite] {
 					$this->mail_bo->reopen($newFolderName);
 					$fS = $this->mail_bo->getFolderStatus($newFolderName,false);
 					//error_log(__METHOD__.__LINE__.array2string($fS));
+					if ($hasChildren)
+					{
+						$subFolders = $this->mail_bo->getMailBoxesRecursive($newFolderName, $delimiter, $prefix);
+						foreach ($subFolders as $k => $folder)
+						{
+							// we do not monitor failure or success on subfolders
+							if ($folder == $folderName)
+							{
+								unset($subFolders[$k]);
+							}
+							else
+							{
+								$rv = $this->mail_bo->subscribe($folder, true);
+							}
+						}
+						//error_log(__METHOD__.__LINE__.' Fetched Subfolders->'.array2string($subFolders));
+					}
+
 					$oA[$_folderName]['id'] = $profileID.self::$delimiter.$newFolderName;
 					$oA[$_folderName]['olddesc'] = $oldFolderInfo['shortDisplayName'];
 					if ($fS['unseen'])
@@ -2217,6 +2262,22 @@ blockquote[type=cite] {
 					else
 					{
 						$oA[$_folderName]['desc'] = $fS['shortDisplayName'];
+					}
+					foreach($fragments as $oldFolderName => $fragment)
+					{
+						//error_log(__METHOD__.__LINE__.':'.$oldFolderName.'->'.$profileID.self::$delimiter.$newFolderName.$fragment);
+						$oA[$oldFolderName]['id'] = $profileID.self::$delimiter.$newFolderName.$fragment;
+						$oA[$oldFolderName]['olddesc'] = '#skip-user-interaction-message#';
+						$fS = $this->mail_bo->getFolderStatus($newFolderName.$fragment,false);
+						if ($fS['unseen'])
+						{
+							$oA[$oldFolderName]['desc'] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';
+
+						}
+						else
+						{
+							$oA[$oldFolderName]['desc'] = $fS['shortDisplayName'];
+						}
 					}
 				}
 			}
