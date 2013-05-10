@@ -147,9 +147,9 @@ class emailadmin_sieve extends Net_Sieve
 
 		if($script->retrieveRules($this)) {
 			$script->rules = $_rules;
-			$script->updateScript($this);
-
-			return true;
+			$ret = $script->updateScript($this);
+			$this->error = $script->errstr;
+			return $ret;
 		}
 
 		return false;
@@ -205,7 +205,9 @@ class emailadmin_sieve extends Net_Sieve
     	$script = new emailadmin_script($_scriptName);
     	if ($script->retrieveRules($this)) {
     		$script->emailNotification = $_emailNotification;
-    		return $script->updateScript($this);
+			$ret = $script->updateScript($this);
+			$this->error = $script->errstr;
+			return $ret;
     	}
     	return false;
 	}
