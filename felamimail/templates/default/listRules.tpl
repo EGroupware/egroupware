@@ -11,7 +11,7 @@ var refreshURL='{refreshURL}';
 
 </script>
 <center>
-
+<div style="color:red;">{message}</div>
 <table border='0' width='100%'>
 <tr class="text_small">
 <td>

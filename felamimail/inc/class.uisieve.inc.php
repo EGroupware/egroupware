@@ -295,7 +295,7 @@
 			}
 			else
 			{
-				 $this->errorStack['message'] = lang('Vacation notice is not saved yet! (But we filled in some defaults to cover some of the above errors. Please correct and check your settings and save again.)');
+				$this->errorStack['message'] = lang('Vacation notice is not saved yet! (But we filled in some defaults to cover some of the above errors. Please correct and check your settings and save again.)');
 				return false;
 			}
 		}
@@ -509,7 +509,11 @@
 
 					$this->rules[$ruleID] = $newRule;
 
-					$this->bosieve->setRules($this->scriptName, $this->rules);
+					$ret = $this->bosieve->setRules($this->scriptName, $this->rules);
+					if (!$ret && !empty($this->bosieve->error))
+					{
+						$msg .= lang("Saving the rule failed:")."<br />".$this->bosieve->error."<br />";
+					}
 
 					$this->saveSessionData();
 				} else {
@@ -517,7 +521,7 @@
 					$error++;
 				}
 				// refresh the list
-				$js = "opener.location.href = '".addslashes(egw::link('/index.php','menuaction=felamimail.uisieve.listRules'))."';";
+				$js = "opener.location.href = '".addslashes(egw::link('/index.php',array('menuaction'=>'felamimail.uisieve.listRules','message'=>$msg)))."';";
 				if(isset($_POST['save']) && $error == 0) {
 					echo "<script type=\"text/javascript\">$js\nwindow.close();\n</script>\n";
 				} else {
@@ -853,7 +857,17 @@
 
 			// translate most of the parts
 			$this->translate();
-
+			$errorMessage = get_var('message',array('GET'));
+			if (!empty($errorMessage))
+			{
+				$errorMessage = html::purify($errorMessage);
+				$this->t->set_var('message',$errorMessage);
+				unset($_GET['message']);
+			}
+			else
+			{
+				$this->t->set_var('message','');
+			}
 			#if(!empty($this->scriptToEdit))
 			#{
 				$listOfImages = array(
