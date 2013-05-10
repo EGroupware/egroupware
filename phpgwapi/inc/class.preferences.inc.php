@@ -107,6 +107,18 @@ class preferences
 			$this->db = $GLOBALS['egw_setup']->db;
 			$this->table = $GLOBALS['egw_setup']->prefs_table;
 		}
+		$this->set_account_id($account_id);
+	}
+
+	/**
+	 * Set account_id for class
+	 *
+	 * Takes care of offset for groups.
+	 *
+	 * @param int $account_id
+	 */
+	function set_account_id($account_id)
+	{
 		// if we got instancated for a group, need to set offset of DEFAULT_ID!
 		if ($account_id < 0 && $GLOBALS['egw']->accounts->exists($account_id) == 2)
 		{
@@ -116,6 +128,25 @@ class preferences
 		{
 			$this->account_id = get_account_id($account_id);
 		}
+	}
+
+	/**
+	 * Return account_id class is instanciated for or "default" or "forced"
+	 *
+	 * Takes care of offset for groups.
+	 *
+	 * @return string|int
+	 */
+	function get_account_id()
+	{
+		switch ($this->account_id)
+		{
+			case self::DEFAULT_ID:
+				return 'default';
+			case self::FORCED_ID:
+				return 'forced';
+		}
+		return $this->account_id < self::DEFAULT_ID ? $this->account_id-self::DEFAULT_ID : $this->account_id;
 	}
 
 	/**
