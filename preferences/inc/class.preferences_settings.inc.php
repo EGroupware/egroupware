@@ -296,7 +296,7 @@ class preferences_settings
 					$GLOBALS['egw']->preferences->{$attribute}[$appname][$setting['name']] =
 						$GLOBALS['egw']->preferences->lang_notify($GLOBALS['egw']->preferences->{$attribute}[$appname][$setting['name']], $vars);
 					$types[$setting['name']] = $vars;	// store vars for re-translation, instead type "notify"
-					if ($setting['help'] && !$setting['no_lang'])
+					if ($setting['help'] && ($setting['run_lang'] || !isset($setting['run_lang'])))
 					{
 						$setting['help'] = lang($setting['help']);
 					}
@@ -307,6 +307,7 @@ class preferences_settings
 						$setting['help'] .= "<br>\n".'<b>$$'.$lname.'$$</b>: '.$var_help;
 					}
 					$setting['help'] .= "</p>\n";
+					$setting['run_lang'] = false;	// already done now
 					// handle as textarea
 				case 'textarea':
 					$setting['type'] = is_a($tpl, 'etemplate_old') ? 'textarea' : 'textbox';
@@ -377,6 +378,14 @@ class preferences_settings
 					}
 					if ($values) $default = implode(', ', $values);
 				}
+				if (is_array($types[$setting['name']]))	// translate the substitution names
+				{
+					$default = $GLOBALS['egw']->preferences->lang_notify($default, $types[$setting['name']]);
+				}
+			}
+			if ($setting['help'] && ($setting['run_lang'] || !isset($setting['run_lang'])))
+			{
+				$setting['help'] = lang($setting['help']);
 			}
 			$content[$tab][] = array(
 				'name' => $setting['name'],

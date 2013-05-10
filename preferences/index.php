@@ -57,6 +57,8 @@ function section_item($pref_link='',$pref_text='')
 {
 	global $pref_tpl;
 
+	$pref_link = str_replace('preferences.uisettings.index', 'preferences.preferences_settings.index', $pref_link);
+
 	$pref_tpl->set_var('pref_link',$pref_link);
 
 	if (strtolower($pref_text) == 'grant access' && $GLOBALS['egw_info']['server']['deny_user_grants_access'])

@@ -1484,10 +1484,11 @@ if (!function_exists('display_sidebox'))
 	/**
 	 * echo's out a sidebox menu
 	 *
-	 * @deprecated use $GLOBALS['egw']->framework::sidebox()
+	 * @deprecated use $GLOBALS['egw']->framework->sidebox()
 	 */
 	function display_sidebox($appname,$menu_title,$file)
 	{
+		$file = str_replace('preferences.uisettings.index', 'preferences.preferences_settings.index', $file);
 		$GLOBALS['egw']->framework->sidebox($appname,$menu_title,$file);
 	}
  }
