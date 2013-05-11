@@ -467,4 +467,18 @@ class preferences_hooks
 			$GLOBALS['egw']->preferences->delete_group($account_id);
 		}
 	}
+
+	/**
+	 * Preferences link to Admin >> Edit user
+	 */
+	public static function edit_user()
+	{
+		global $menuData;
+
+		$menuData[] = array(
+				'description'   => 'Preferences',
+				'url'           => '/index.php',
+				'extradata'     => 'menuaction=preferences.preferences_settings.index'
+		);
+	}
 }
