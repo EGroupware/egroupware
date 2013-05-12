@@ -15,6 +15,28 @@
  * eTemplate tree widget
  *
  * @see /phpgwapi/js/dhtmlxtree/docsExplorer/dhtmlxtree/dhtmlxtree___syntax_templates.html Tree syntax
+ *
+ * Example initialisation of tree via $sel_options array:
+ *
+ * 	$sel_options['tree'] = array(
+ * 		'id' => 0, 'item' => array(
+ * 			array('id' => '/INBOX', 'text' => 'INBOX', 'tooltip' => 'Your inbox', 'open' => 1, 'im1' => 'kfm_home.png', 'im2' => 'kfm_home.png', 'child' => '1', 'item' => array(
+ * 				array('id' => '/INBOX/sub', 'text' => 'sub', 'im0' => 'folderClosed.gif'),
+ * 				array('id' => '/INBOX/sub2', 'text' => 'sub2', 'im0' => 'folderClosed.gif'),
+ * 			)),
+ * 			array('id' => '/user', 'text' => 'user', 'child' => '1', 'item' => array(
+ * 				array('id' => '/user/birgit', 'text' => 'birgit', 'im0' => 'folderClosed.gif'),
+ * 			)),
+ * 	));
+ *
+ * Please note:
+ * - id of root-item has to be 0, ids of sub-items can be strings or numbers
+ * - item has to be an array (not json object: numerical keys 0, 1, ...)
+ * - im0: leaf image (default: leaf.gif), im1: open folder image (default: folderOpen.gif), im2: closed folder (default: folderClosed.gif)
+ * - for arbitrary image eg. $icon = common::image($app, 'navbar') use following code:
+ * 		list(,$icon) = explode($GLOBALS['egw_info']['server']['webserver_url'], $icon);
+ *		$icon = '../../../../..'.$icon;
+ * - json autoloading uses identical data-structur
  */
 egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/css/dhtmlXTree.css');
 class etemplate_widget_tree extends etemplate_widget

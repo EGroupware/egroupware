@@ -27,6 +27,8 @@
 /**
  * Tree widget
  * 
+ * For syntax of nodes supplied via sel_optons or autoloading refer to etemplate_widget_tree class.
+ * 
  * @augments et2_inputWidget
  */
 var et2_tree = et2_inputWidget.extend(
@@ -265,8 +267,11 @@ var et2_tree = et2_inputWidget.extend(
 			f(data,f);
 			options = data;
 		}
-
-		this.input.loadJSONObject(options);
+		// if no options given, but autoloading url, use that to load initial nodes
+		if (!options.id && this.input.XMLsource)
+			this.input.loadJSON(this.input.XMLsource);
+		else
+			this.input.loadJSONObject(options);
 	},
 
 	set_value: function(new_value) {
