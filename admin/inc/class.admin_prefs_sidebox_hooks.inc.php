@@ -40,7 +40,7 @@ class admin_prefs_sidebox_hooks
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'admins')
 		{
-
+$file['new admin'] = egw::link('/index.php', array('menuaction' => 'admin.admin_ui.index'));
 			if (! $GLOBALS['egw']->acl->check('site_config_access',1,'admin'))
 			{
 				$file['Site Configuration']         = egw::link('/index.php','menuaction=admin.uiconfig.index&appname=admin');
@@ -54,7 +54,11 @@ class admin_prefs_sidebox_hooks
 			*/
 			if (! $GLOBALS['egw']->acl->check('account_access',1,'admin'))
 			{
-				$file['User Accounts']              = egw::link('/index.php','menuaction=admin.uiaccounts.list_users');
+				$file['User Accounts']              = array(
+					'id' => '/accounts',
+					'icon' => common::image('addressbook', 'accounts'),
+					'link' => egw::link('/index.php','menuaction=admin.uiaccounts.list_users'),
+				);
 			}
 
 			if (! $GLOBALS['egw']->acl->check('account_access',16,'admin'))
@@ -64,7 +68,12 @@ class admin_prefs_sidebox_hooks
 
 			if (! $GLOBALS['egw']->acl->check('group_access',1,'admin'))
 			{
-				$file['User Groups']                = egw::link('/index.php','menuaction=admin.uiaccounts.list_groups');
+				$file['User Groups']                = array(
+					'id' => '/groups',
+					'icon' => common::image('addressbook', 'group'),
+					'child' => 1,
+					'link' => egw::link('/index.php','menuaction=admin.uiaccounts.list_groups'),
+				);
 			}
 
 			if (! $GLOBALS['egw']->acl->check('applications_access',1,'admin'))
@@ -127,6 +136,7 @@ class admin_prefs_sidebox_hooks
 			}
 			else
 			{
+				foreach($file as &$url) if (is_array($url)) $url = $url['link'];
 				display_sidebox($appname,lang('Admin'),$file);
 			}
 		}

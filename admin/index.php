@@ -86,6 +86,7 @@ function display_section($appname,$file,$file2=False)
 
 		while(list($text,$url) = each($file))
 		{
+			if (is_array($url)) $url = $url['link'];
 			// If user doesn't have application configuration access, then don't show the configuration links
 			if (strpos($url, 'admin.uiconfig') === False || !$GLOBALS['egw']->acl->check('site_config_access',1,'admin'))
 			{
