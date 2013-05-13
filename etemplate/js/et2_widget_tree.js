@@ -268,7 +268,7 @@ var et2_tree = et2_inputWidget.extend(
 			options = data;
 		}
 		// if no options given, but autoloading url, use that to load initial nodes
-		if (!options.id && this.input.XMLsource)
+		if (typeof options.id == 'undefined' && this.input.XMLsource)
 			this.input.loadJSON(this.input.XMLsource);
 		else
 			this.input.loadJSONObject(options);
