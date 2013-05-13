@@ -210,11 +210,16 @@ class mail_ui
 				'acceptedTypes' => 'mail',
 				'type' => 'drop',
 			),
-			// Tree doesn't support this one - yet
+			// Tree does support this one
 			'rename' => array(
 				'caption' => 'Rename',
 				'type' => 'popup',
 				'onExecute' => 'javaScript:app.mail.mail_RenameFolder'
+			),
+			'delete' => array(
+				'caption' => 'Delete',
+				'type' => 'popup',
+				'onExecute' => 'javaScript:app.mail.mail_DeleteFolder'
 			)
 		));
 
@@ -761,6 +766,20 @@ class mail_ui
 						'group' => $group,
 						'icon' => 'fileexport',
 						'onExecute' => 'javaScript:app.mail.mail_mailsource',
+						'allowOnMultiple' => false,
+					),
+					'openastext' => array(
+						'caption' => lang('Open in Text mode'),
+						'group' => ++$group,
+						'icon' => egw_vfs::mime_icon('text/plain'),
+						'onExecute' => 'javaScript:app.mail.mail_openAsText',
+						'allowOnMultiple' => false,
+					),
+					'openashtml' => array(
+						'caption' => lang('Open in HTML mode'),
+						'group' => $group,
+						'icon' => egw_vfs::mime_icon('text/html'),
+						'onExecute' => 'javaScript:app.mail.mail_openAsHtml',
 						'allowOnMultiple' => false,
 					),
 				),
@@ -2286,6 +2305,70 @@ blockquote[type=cite] {
 			{
 				$response = egw_json_response::get();
 				$response->call('app.mail.mail_setLeaf',$oA,'mail');
+			}
+		}
+	}
+
+	/**
+	 * ajax_deleteFolder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
+	 * @param string $_folderName folder to delete
+	 * @return nothing
+	 */
+	function ajax_deleteFolder($_folderName)
+	{
+		error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName));
+		$success = false;
+		if ($_folderName)
+		{
+			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
+			$del = $this->mail_bo->getHierarchyDelimiter(false);
+			$oA = array();
+			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
+			$hasChildren = false;
+			if (is_numeric($profileID))
+			{
+				if ($profileID != $this->mail_bo->profileID) return; // only current connection
+				$pA = explode($del,$folderName);
+				array_pop($pA);
+				$parentFolder = implode($del,$pA);
+				if (strtoupper($folderName)!= 'INBOX')
+				{
+					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
+					$oA = array();
+					$oldFolderInfo = $this->mail_bo->getFolderStatus($folderName,false);
+					//error_log(__METHOD__.__LINE__.array2string($oldFolderInfo));
+					if (!empty($oldFolderInfo['attributes']) && stripos(array2string($oldFolderInfo['attributes']),'\hasnochildren')=== false)
+					{
+						$hasChildren=true; // translates to: hasChildren -> dynamicLoading
+						$msg = lang("refused to delete folder with subfolders");
+					}
+					else
+					{
+						$success = $this->mail_bo->deleteFolder($folderName);
+						if (PEAR::isError($success))
+						{
+							$msg = $success->message;
+							$success = false;
+						}
+						else
+						{
+							$oA[$_folderName] = $oldFolderInfo['shortDisplayName'];
+						}
+					}
+				}
+				else
+				{
+					$msg = lang("refused to delete folder INBOX");
+				}
+			}
+			$response = egw_json_response::get();
+			if ($success)
+			{
+				$response->call('app.mail.mail_removeLeaf',$oA,'mail');
+			}
+			else
+			{
+				$response->call('egw_refresh',lang('failed to delete %1 ! Reason: %2',$oldFolderInfo['shortDisplayName'],$msg),'mail');
 			}
 		}
 	}

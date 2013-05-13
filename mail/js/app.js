@@ -49,6 +49,56 @@ app.mail = AppJS.extend(
 	},
 	
 	/**
+	 * Open a single message in html mode
+	 * 
+	 * @param _action
+	 * @param _elems _elems[0].id is the row-id
+	 */
+	mail_openAsHtml: function(_action, _elems)
+	{
+		//alert('mail_open('+_elems[0].id+')');
+		if (activeFolderB64 == draftFolderB64 || activeFolderB64 == templateFolderB64)
+		{
+//			_action.id='composefromdraft';
+//			mail_compose(_action,_elems);
+		}
+		else
+		{
+			var url = window.egw_webserverUrl+'/index.php?';
+			url += 'menuaction=felamimail.uidisplay.display';	// todo compose for Draft folder
+			url += '&uid='+_elems[0].id;
+			url += '&tryashtml=1';
+
+			egw_openWindowCentered(_url,'displayMessage_'+_elems[0].id,'700','600',window.outerWidth/2,window.outerHeight/2);
+		}
+	},
+
+	/**
+	 * Open a single message in plain text mode
+	 * 
+	 * @param _action
+	 * @param _elems _elems[0].id is the row-id
+	 */
+	mail_openAsText: function(_action, _elems)
+	{
+		//alert('mail_open('+_elems[0].id+')');
+		if (activeFolderB64 == draftFolderB64 || activeFolderB64 == templateFolderB64)
+		{
+//			_action.id='composefromdraft';
+//			mail_compose(_action,_elems);
+		}
+		else
+		{
+			var url = window.egw_webserverUrl+'/index.php?';
+			url += 'menuaction=felamimail.uidisplay.display';	// todo compose for Draft folder
+			url += '&uid='+_elems[0].id;
+			url += '&tryastext=1';
+
+			egw_openWindowCentered(_url,'displayMessage_'+_elems[0].id,'700','600',window.outerWidth/2,window.outerHeight/2);
+		}
+	},
+
+	/**
 	 * mail_preview - implementation of the preview action
 	 * 
 	 * @param nextmatch et2_nextmatch The widget whose row was selected
@@ -196,6 +246,32 @@ app.mail = AppJS.extend(
 			{
 				var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
 				nm.activeFilters["selectedFolder"] = _status[i]['id'];
+				nm.applyFilters();
+			}
+		}
+	},
+
+	/**
+	 * mail_removeLeaf, function to remove the leaf represented by the given ID
+	 * @param array _status status array with the required data (KEY id, VALUE desc)
+	 *		key is the id of the leaf to delete
+	 *		multiple sets can be passed to mail_deleteLeaf
+	 */
+	mail_removelLeaf: function(_status) {
+		//console.log('mail_setLeaf',_status);
+		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+		var selectedNode = ftree.getSelectedNode();
+		for (var i in _status)
+		{
+			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
+			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') app.mail.app_refresh(egw.lang("Removed Folder %1 ",_status[i], 'mail'));
+			ftree.deleteItem(i,(selectedNode.id==i));
+			var selectedNodeAfter = ftree.getSelectedNode();
+			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
+			if (selectedNodeAfter.id!=selectedNode.id && selectedNode.id==i)
+			{
+				var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
+				nm.activeFilters["selectedFolder"] = selectedNodeAfter.id;
 				nm.applyFilters();
 			}
 		}
@@ -649,6 +725,31 @@ app.mail = AppJS.extend(
 		{
 			app.mail.app_refresh(egw.lang("Renaming Folder %1 to %2",OldFolderName,NewFolderName, 'mail'));
 			var request = new egw_json_request('mail.mail_ui.ajax_renameFolder',[_senders[0].iface.id, NewFolderName]);
+			request.sendRequest(true);
+		}
+	},
+
+	/**
+	 * mail_DeleteFolder - implementation of the DeleteFolder action of right click options on the tree
+	 * 
+	 * @param _action
+	 * @param _senders - the representation of the tree leaf to be manipulated
+	 */
+	mail_DeleteFolder: function(action,_senders) {
+		//console.log(action,_senders);
+		//action.id == 'delete'
+		//_senders.iface.id == target leaf / leaf to edit
+		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+		OldFolderName = ftree.getLabel(_senders[0].iface.id);
+		if (jQuery(OldFolderName).text().length>0) OldFolderName = jQuery(OldFolderName).text();
+		OldFolderName = OldFolderName.trim();
+		OldFolderName = OldFolderName.replace(/\([0-9]*\)/g,'').trim();
+		//console.log(OldFolderName);
+		reallyDelete = confirm(egw.lang("Do you really want to DELETE Folder %1 ? \r\nAll messages in the folder will be lost",OldFolderName));
+		if (reallyDelete)
+		{
+			app.mail.app_refresh(egw.lang("Deleting Folder %1",OldFolderName, 'mail'));
+			var request = new egw_json_request('mail.mail_ui.ajax_deleteFolder',[_senders[0].iface.id]);
 			request.sendRequest(true);
 		}
 	}

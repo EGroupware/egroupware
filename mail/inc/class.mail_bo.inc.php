@@ -1628,6 +1628,27 @@ class mail_bo
 
 	}
 
+	/**
+	 * delete an existing folder
+	 *
+	 * @param string _folderName the name of the folder to be deleted
+	 *
+	 * @return bool true on success, PEAR Error on failure
+	 */
+	function deleteFolder($_folderName)
+	{
+		$folderName = $this->_encodeFolderName($_folderName);
+
+		$this->icServer->unsubscribeMailbox($folderName);
+		$rv = $this->icServer->deleteMailbox($folderName);
+		if ( PEAR::isError($rv) ) {
+			if (self::$debug) error_log(__METHOD__." failed for $folderName with error: ".print_r($rv->message,true));
+			return $rv;
+		}
+
+		return true;
+	}
+
 	function subscribe($_folderName, $_status)
 	{
 		if (self::$debug) error_log(__METHOD__."::".($_status?"":"un")."subscribe:".$_folderName);
