@@ -65,9 +65,6 @@
           <entry type="string" name="10">Modifier</entry>
           <entry type="string" name="11">Status</entry>
           <entry type="string" name="12">Projectid</entry>
-          <entry type="string" name="13">Text</entry>
-          <entry type="string" name="14">Selectbox</entry>
-          <entry type="string" name="15">Address</entry>
         </entry>
         <entry type="array" name="field_mapping">
           <entry type="string" name="0">ts_id</entry>
@@ -110,7 +107,7 @@
         <entry type="string" name="translate_status">0</entry>
         <entry type="string" name="translate_cat_id">0</entry>
       </entry>
-      <entry type="string" name="modified">2012-10-09 11:00:00</entry>
+      <entry type="string" name="modified">2013-05-13 11:00:00</entry>
     </entry>
   </entry>
 </entry>
