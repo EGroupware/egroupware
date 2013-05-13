@@ -459,3 +459,15 @@ function phpgwapi_upgrade1_9_017()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.018';
 }
 
+
+function phpgwapi_upgrade1_9_018()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','carddav_name',array(
+		'type' => 'varchar',
+		'precision' => '200',
+		'comment' => 'name part of CardDAV URL, if specified by client'
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.019';
+}
+

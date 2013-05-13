@@ -703,3 +703,14 @@ WHERE parent.caldav_name=sub.caldav_name',__LINE__,__FILE__) as $row)
 	}
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.9.003';
 }
+function infolog_upgrade1_9_003()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_infolog','caldav_name',array(
+		'type' => 'varchar',
+		'precision' => '200',
+		'comment' => 'name part of CalDAV URL, if specified by client'
+	));
+
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.9.004';
+}
+

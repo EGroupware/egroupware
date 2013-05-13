@@ -44,7 +44,7 @@ $phpgw_baseline = array(
 			'info_custom_from' => array('type' => 'int','precision' => '1','comment' => 'tick-box to show infolog_from'),
 			'info_uid' => array('type' => 'varchar','precision' => '255','comment' => 'unique id of the infolog-entry'),
 			'info_cc' => array('type' => 'varchar','precision' => '255','comment' => 'textfield for email-adress to be notified via email of changes'),
-			'caldav_name' => array('type' => 'varchar','precision' => '64','comment' => 'name part of CalDAV URL, if specified by client'),
+			'caldav_name' => array('type' => 'varchar','precision' => '200','comment' => 'name part of CalDAV URL, if specified by client'),
 			'info_etag' => array('type' => 'int','precision' => '4','default' => '0','comment' => 'etag, not yet used'),
 			'info_created' => array('type' => 'int','precision' => '8','comment' => 'timestamp of the creation date'),
 			'info_creator' => array('type' => 'int','precision' => '4','comment' => 'account id of the creator')

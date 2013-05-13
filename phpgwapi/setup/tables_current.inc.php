@@ -343,7 +343,7 @@ $phpgw_baseline = array(
 			'contact_uid' => array('type' => 'varchar','precision' => '255','comment' => 'unique id of the contact'),
 			'adr_one_countrycode' => array('type' => 'varchar','precision' => '2','comment' => 'countrycode (business)'),
 			'adr_two_countrycode' => array('type' => 'varchar','precision' => '2','comment' => 'countrycode (private)'),
-			'carddav_name' => array('type' => 'varchar','precision' => '64','comment' => 'name part of CardDAV URL, if specified by client')
+			'carddav_name' => array('type' => 'varchar','precision' => '200','comment' => 'name part of CardDAV URL, if specified by client')
 		),
 		'pk' => array('contact_id'),
 		'fk' => array(),

@@ -2279,3 +2279,15 @@ function calendar_upgrade1_9_009()
 	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.011';
 }
 */
+
+function calendar_upgrade1_9_010()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_cal','caldav_name',array(
+		'type' => 'varchar',
+		'precision' => '200',
+		'comment' => 'name part of CalDAV URL, if specified by client'
+	));
+
+	return $GLOBALS['setup_info']['calendar']['currentver'] = '1.9.011';
+}
+
