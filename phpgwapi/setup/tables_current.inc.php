@@ -96,7 +96,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('sessionid'),
 		'fk' => array(),
-		'ix' => array('li','lo','session_dla','notification_heartbeat'),
+		'ix' => array('li','lo','session_dla','session_php','notification_heartbeat',array('account_id','ip','li'),array('account_id','loginid','li')),
 		'uc' => array()
 	),
 	'egw_hooks' => array(
@@ -227,7 +227,7 @@ $phpgw_baseline = array(
 		),
 		'pk' => array('history_id'),
 		'fk' => array(),
-		'ix' => array(array('history_appname','history_record_id','history_status','history_timestamp')),
+		'ix' => array(array('history_appname','history_record_id','history_id')),
 		'uc' => array()
 	),
 	'egw_async' => array(
@@ -341,11 +341,11 @@ $phpgw_baseline = array(
 			'contact_uid' => array('type' => 'varchar','precision' => '255','comment' => 'unique id of the contact'),
 			'adr_one_countrycode' => array('type' => 'varchar','precision' => '2','comment' => 'countrycode (business)'),
 			'adr_two_countrycode' => array('type' => 'varchar','precision' => '2','comment' => 'countrycode (private)'),
-			'carddav_name' => array('type' => 'varchar','precision' => '64','comment' => 'name part of CardDAV URL, if specified by client')
+			'carddav_name' => array('type' => 'varchar','precision' => '200','comment' => 'name part of CardDAV URL, if specified by client')
 		),
 		'pk' => array('contact_id'),
 		'fk' => array(),
-		'ix' => array('contact_owner','cat_id','n_fileas','contact_uid','carddav_name',array('n_family','n_given'),array('n_given','n_family'),array('org_name','n_family','n_given')),
+		'ix' => array('contact_owner','cat_id','n_fileas','contact_modified','contact_uid','carddav_name',array('n_family','n_given'),array('n_given','n_family'),array('org_name','n_family','n_given')),
 		'uc' => array('account_id')
 	),
 	'egw_addressbook_extra' => array(

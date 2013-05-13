@@ -32,7 +32,7 @@ $phpgw_baseline = array(
 			'cal_recurrence' => array('type' => 'int','precision' => '8','nullable' => False,'default' => '0','comment' => 'cal_start of original recurrence for exception'),
 			'tz_id' => array('type' => 'int','precision' => '4','comment' => 'key into egw_cal_timezones'),
 			'cal_deleted' => array('type' => 'int','precision' => '8','comment' => 'ts when event was deleted'),
-			'caldav_name' => array('type' => 'varchar','precision' => '64','comment' => 'name part of CalDAV URL, if specified by client'),
+			'caldav_name' => array('type' => 'varchar','precision' => '200','comment' => 'name part of CalDAV URL, if specified by client'),
 			'range_start' => array('type' => 'int','precision' => '8','nullable' => False,'comment' => 'startdate (of range)'),
 			'range_end' => array('type' => 'int','precision' => '8','comment' => 'enddate (of range, UNTIL of RRULE)')
 		),

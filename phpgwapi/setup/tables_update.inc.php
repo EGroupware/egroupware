@@ -338,3 +338,50 @@ function phpgwapi_upgrade1_9_010()
 
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.011';
 }
+
+
+/**
+ * Original Trunk update 1.9.018 (does not matter to run again)
+ *
+ * Trunk update 1.9.011 was already run by 1.9.010 directly above.
+ */
+function phpgwapi_upgrade1_9_011()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','carddav_name',array(
+		'type' => 'varchar',
+		'precision' => '200',
+		'comment' => 'name part of CardDAV URL, if specified by client'
+	));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.012';
+}
+
+
+/**
+ * Add index for contact_modified to improve performance of ctag generation on big installtions
+ *
+ * Original Trunk update 1.9.016: Some index to speed up access/update of huge access-logs (does not matter to run again)
+ *
+ * ALTER TABLE `egw_access_log` ADD INDEX `egw_access_log_session_php` ( `session_php` )
+ * ALTER TABLE `egw_access_log` ADD INDEX `egw_access_log_account_id_ip_li` ( `account_id` , `ip` , `li` )
+ * ALTER TABLE `egw_access_log` ADD INDEX `egw_access_log_account_id_loginid_li` ( `account_id` , `loginid` , `li` )
+ *
+ * Original Trunk update 1.9.017: Some index to speed up access/update of huge history-logs (does not matter to run again)
+ *
+ * ALTER TABLE `egw_history_log` ADD INDEX `egw_history_log_appname_record_id_id` (`history_appname`, `history_record_id`, `history_id`)
+ * DROP INDEX `egw_history_log_appname_record_id_status_timestamp` ON `egw_history_log`
+ */
+function phpgwapi_upgrade1_9_012()
+{
+	// 1.9.012
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_addressbook','contact_modified');
+	// 1.9.016
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_access_log','session_php');
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_access_log',array('account_id','ip','li'));
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_access_log',array('account_id','loginid','li'));
+	// 1.9.017
+	$GLOBALS['egw_setup']->oProc->CreateIndex('egw_history_log', array('history_appname','history_record_id','history_id'));
+	$GLOBALS['egw_setup']->oProc->DropIndex('egw_history_log', array('history_appname','history_record_id','history_status','history_timestamp'));
+
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.9.013';
+}
