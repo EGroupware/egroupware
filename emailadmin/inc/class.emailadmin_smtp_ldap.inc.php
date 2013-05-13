@@ -531,7 +531,16 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 					{
 						$newData[$this->config['forward_attr']] = $allValues[0][$this->config['forward_attr']];
 						unset($newData[$this->config['forward_attr']]['count']);
-						$newData[$this->config['forward_attr']][0] = $_forwardingAddress;
+						if (!is_array($_forwardingAddress))
+						{
+							// replace the first forwarding address (old behavior)
+							$newData[$this->config['forward_attr']][0] = $_forwardingAddress;
+						}
+						else
+						{
+							// replace all forwarding Addresses
+							$newData[$this->config['forward_attr']] = $_forwardingAddress;
+						}
 					}
 					else
 					{
