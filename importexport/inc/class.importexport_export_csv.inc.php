@@ -171,7 +171,10 @@ class importexport_export_csv implements importexport_iface_export_record
 						$fields = $wizard->get_export_fields();
 						foreach($this->mapping as $field => &$label)
 						{
-							if($fields[$field]) $label = $fields[$field];
+							if($fields[$field])
+							{
+								$label = $label != $fields[$field] ? $fields[$field] : lang($label);
+							}
 							// Make sure no *
 							if(substr($label,-1) == '*') $label = substr($label,0,-1);
 						}
