@@ -402,7 +402,20 @@ function popup_resize()
 	  }
 	  else
 	  {
-		window.moveBy(0, -(height2grow / 2));
+		var positionY = (document.all?window.screenTop:window.screenY);
+		var moveMe = height2grow / 2; 
+		if ( moveMe <= positionY )
+		{
+			moveMe = -(moveMe);
+		}
+		else
+		{
+			moveMe = 0;
+			if (positionY > 0) moveMe = -(positionY);
+		}
+		//moveMe = -(height2grow / 2);
+		//alert('hallo:'+positionY+' moveMe:'+moveMe);
+		window.moveBy(0, moveMe);
 		window.resizeBy(0, height2grow);
 	  }
 	}
