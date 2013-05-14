@@ -297,3 +297,34 @@ pre {
 input[type=button] {
 	background-position: left;
 }
+
+#messageIFRAME {
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+
+#mailPreview {
+	position: relative;
+	margin-top: 3px;
+}
+#mailPreviewIcons {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+#mailPreviewContainer {
+	position: absolute;
+	border: 1px solid silver;
+	top: 55px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+div.mailPreviewHeaders > span:first-child {
+	width: 5em;
+	display: inline-block;
+}
+div.mailPreviewHeaders > * {
+	margin-left: 3px;
+}
