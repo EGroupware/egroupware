@@ -326,9 +326,12 @@
 			// Only CSV files
 			if(!$options['csv_fields']) return true;
 
+			$preference = $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'];
+			$charset = $options['charset'] == 'user' || !$options['charset'] ? $preference : $options['charset'];
+
 			$data = fgetcsv($file, 8000, $options['fieldsep']);
 			rewind($file);
-			$data = translation::convert($data,$options['charset']);
+			$data = translation::convert($data,$charset);
 
 			$ok = true;
 			if(count($data) != count($options['csv_fields']) && max(array_keys($data)) != max(array_keys($options['csv_fields'])))
@@ -378,6 +381,7 @@
 				{
 					continue;
 				}
+				//error_log("Raw[Defn: {$options['csv_fields'][$index]} File: $header] Lang[Defn: $lang_defn File: $lang_file] MSG_ID[Defn: $defn_message_id File: $file_message_id]");
 		
 				// Problem
 				$message[] = lang("Column mismatch: %1 should be %2, not %3",
