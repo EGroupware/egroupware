@@ -2063,7 +2063,8 @@ class etemplate_old extends boetemplate
 				$sels += $cell['sel_options'];
 			}
 		}
-		if (($options = self::get_array($this->sel_options, $name)) && is_array($options))
+		if (($options = $this->sel_options[$name]) && is_array($options) ||
+			($options = self::get_array($this->sel_options, $name)) && is_array($options))
 		{
 			$sels += $options;
 		}
