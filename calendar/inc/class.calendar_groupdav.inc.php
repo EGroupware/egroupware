@@ -169,7 +169,7 @@ class calendar_groupdav extends groupdav_handler
 			{
 				$value = $name == 'start' ? self::PAST_LIMIT : self::FUTURE_LIMIT;
 			}
-			$filter[$name] = $this->bo->now + 24*2600*($name == 'start' ? -1 : 1)*abs($value);
+			$filter[$name] = $this->bo->now + 24*3600*($name == 'start' ? -1 : 1)*abs($value);
 		}
 		if ($this->client_shared_uid_exceptions)	// do NOT return (non-virtual) exceptions
 		{
