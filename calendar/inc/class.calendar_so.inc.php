@@ -300,18 +300,19 @@ class calendar_so
 			$events[$row['cal_id']]['#'.$row['cal_extra_name']] = $row['cal_extra_value'];
 		}
 
-		// alarms, atm. we read all alarms in the system, as this can be done in a single query
-		foreach((array)$this->async->read('cal'.(is_array($ids) ? '' : ':'.(int)$ids).':%') as $id => $job)
+		// alarms
+		if (is_array($ids))
 		{
-			list(,$cal_id) = explode(':',$id);
-			if (!isset($events[$cal_id])) continue;	// not needed
-
-			$alarm         = $job['data'];	// text, enabled
-			$alarm['id']   = $id;
-			$alarm['time'] = $job['next'];
-
-			$events[$cal_id]['alarm'][$id] = $alarm;
+			foreach($this->read_alarms((array)$ids) as $cal_id => $alarms)
+			{
+				$events[$cal_id]['alarm'] = $alarms;
+			}
 		}
+		else
+		{
+			$events[$ids]['alarm'] = $this->read_alarms($ids);
+		}
+
 		//echo "<p>socal::read(".print_r($ids,true).")=<pre>".print_r($events,true)."</pre>\n";
 		return $events;
 	}
@@ -815,24 +816,21 @@ class calendar_so
 					}
 				}
 			}
-			// alarms, atm. we read all alarms in the system, as this can be done in a single query
-			foreach((array)$this->async->read('cal'.(is_array($ids) ? '' : ':'.(int)$ids).':%') as $id => $job)
+			// alarms
+			foreach($this->read_alarms($ids) as $cal_id => $alarms)
 			{
-				list(,$cal_id) = explode(':',$id);
-
-				$alarm         = $job['data'];	// text, enabled
-				$alarm['id']   = $id;
-				$alarm['time'] = $job['next'];
-
-				$event_start = $alarm['time'] + $alarm['offset'];
-
-				if (isset($events[$cal_id]))	// none recuring event
+				foreach($alarms as $id => $alarm)
 				{
-					$events[$cal_id]['alarm'][$id] = $alarm;
-				}
-				elseif (isset($events[$cal_id.'-'.$event_start]))	// recuring event
-				{
-					$events[$cal_id.'-'.$event_start]['alarm'][$id] = $alarm;
+					$event_start = $alarm['time'] + $alarm['offset'];
+
+					if (isset($events[$cal_id]))	// none recuring event
+					{
+						$events[$cal_id]['alarm'][$id] = $alarm;
+					}
+					elseif (isset($events[$cal_id.'-'.$event_start]))	// recuring event
+					{
+						$events[$cal_id.'-'.$event_start]['alarm'][$id] = $alarm;
+					}
 				}
 			}
 		}
@@ -1808,17 +1806,76 @@ ORDER BY cal_user_type, cal_usre_id
 	}
 
 	/**
-	 * read the alarms of a calendar-event specified by $cal_id
+	 * Caches all alarms read from async table to not re-read them in same request
+	 *
+	 * @var array cal_id => array(async_id => data)
+	 */
+	static $alarm_cache;
+
+	/**
+	 * read the alarms of one or more calendar-event(s) specified by $cal_id
 	 *
 	 * alarm-id is a string of 'cal:'.$cal_id.':'.$alarm_nr, it is used as the job-id too
 	 *
-	 * @param int $cal_id
-	 * @return array of alarms with alarm-id as key
+	 * @param int|array $cal_id
+	 * @param boolean $update_cache=null true: re-read given $cal_id, false: delete given $cal_id
+	 * @return array of (cal_id => array of) alarms with alarm-id as key
 	 */
-	function read_alarms($cal_id)
+	function read_alarms($cal_id, $update_cache=null)
 	{
+		if (!isset(self::$alarm_cache) && is_array($cal_id))
+		{
+			self::$alarm_cache = array();
+			if ($jobs = $this->async->read('cal:%'))
+			{
+				foreach($jobs as $id => $job)
+				{
+					$alarm         = $job['data'];	// text, enabled
+					$alarm['id']   = $id;
+					$alarm['time'] = $job['next'];
+
+					self::$alarm_cache[$alarm['cal_id']][$id] = $alarm;
+				}
+			}
+			unset($update_cache);	// just done
+		}
 		$alarms = array();
 
+		if (isset(self::$alarm_cache))
+		{
+			if (isset($update_cache))
+			{
+				foreach((array)$cal_id as $id)
+				{
+					if ($update_cache === false)
+					{
+						unset(self::$alarm_cache[$cal_id]);
+					}
+					elseif($update_cache === true)
+					{
+						self::$alarm_cache[$cal_id] = $this->read_alarms_nocache($cal_id);
+					}
+				}
+			}
+			if (!is_array($cal_id))
+			{
+				$alarms = (array)self::$alarm_cache[$cal_id];
+			}
+			else
+			{
+				foreach($cal_id as $id)
+				{
+					$alarms[$id] = (array)self::$alarm_cache[$id];
+				}
+			}
+			error_log(__METHOD__."(".array2string($cal_id).", ".array2string($update_cache).") returning from cache ".array2string($alarms));
+			return $alarms;
+		}
+		return $this->read_alarms_nocache($cal_id);
+	}
+
+	private function read_alarms_nocache($cal_id)
+	{
 		if ($jobs = $this->async->read('cal:'.(int)$cal_id.':%'))
 		{
 			foreach($jobs as $id => $job)
@@ -1830,6 +1887,7 @@ ORDER BY cal_user_type, cal_usre_id
 				$alarms[$id] = $alarm;
 			}
 		}
+		error_log(__METHOD__."(".array2string($cal_id).") returning ".array2string($alarms));
 		return $alarms;
 	}
 
@@ -1892,6 +1950,9 @@ ORDER BY cal_user_type, cal_usre_id
 		// update the modification information of the related event
 		if ($update_modified) $this->updateModified($cal_id, true);
 
+		// update cache, if used
+		if (isset(self::$alarm_cache)) $this->read_alarms($cal_id, true);
+
 		return $id;
 	}
 
@@ -1911,6 +1972,9 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			$this->async->cancel_timer($id);
 		}
+		// update cache, if used
+		if (isset(self::$alarm_cache)) $this->read_alarms($cal_id, false);
+
 		return count($alarms);
 	}
 
@@ -1928,7 +1992,12 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			$this->updateModified($cal_id, true);
 		}
-		return $this->async->cancel_timer($id);
+		$ret = $this->async->cancel_timer($id);
+
+		// update cache, if used
+		if (isset(self::$alarm_cache)) $this->read_alarms($cal_id, true);
+
+		return $ret;
 	}
 
 	/**
