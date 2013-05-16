@@ -1854,7 +1854,7 @@ ORDER BY cal_user_type, cal_usre_id
 					$alarms[$id] = (array)self::$alarm_cache[$id];
 				}
 			}
-			error_log(__METHOD__."(".array2string($cal_id).", ".array2string($update_cache).") returning from cache ".array2string($alarms));
+			//error_log(__METHOD__."(".array2string($cal_id).", ".array2string($update_cache).") returning from cache ".array2string($alarms));
 			return $alarms;
 		}
 		return $this->read_alarms_nocache($cal_id);
@@ -1873,7 +1873,7 @@ ORDER BY cal_user_type, cal_usre_id
 				$alarms[$id] = $alarm;
 			}
 		}
-		error_log(__METHOD__."(".array2string($cal_id).") returning ".array2string($alarms));
+		//error_log(__METHOD__."(".array2string($cal_id).") returning ".array2string($alarms));
 		return $alarms;
 	}
 
