@@ -515,7 +515,6 @@ class uiwidgets
 							'onExecute' => 'javaScript:mail_openAsHtml',
 							'allowOnMultiple' => false,
 						),
-
 					),
 				),
 /*

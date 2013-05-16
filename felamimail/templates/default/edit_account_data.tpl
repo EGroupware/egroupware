@@ -159,6 +159,9 @@ div.inactivetab{ display:none; }
 			<input type="text" style="width: 5em;" id="ic[sievePort]" name="ic[sievePort]" value="{ic[sievePort]}" maxlength="5">
 		</td>
 	</tr>
+	<tr>
+		<td colspan='2'>{lang_sieve_ssl_usage_message}</td>
+	</tr>
   </table>
  </fieldset>
 </div>

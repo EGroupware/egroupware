@@ -245,7 +245,7 @@
 				'menuaction'    => 'felamimail.uipreferences.editForwardingAddress'
 			);
 			$this->t->set_var('form_action',$GLOBALS['egw']->link('/index.php',$linkData));
-			$this->t->set_var('forwarding_address',(count($userData['mailForwardingAddress'])>1?implode(';',$userData['mailForwardingAddress']):$userData['mailForwardingAddress'][0]));
+			$this->t->set_var('forwarding_address',(count($userData['mailForwardingAddress'])>1?implode(';',$userData['mailForwardingAddress']):(!empty($userData['mailForwardingAddress'][0])?$userData['mailForwardingAddress'][0]:'')));
 
 			#deliveryMode checked_keep_local_copy
 			if($userData['deliveryMode'] != 'forwardOnly') {
@@ -894,6 +894,7 @@
 			$this->t->set_var('lang_username',lang('username'));
 			$this->t->set_var('lang_password',lang('password'));
 			$this->t->set_var('lang_port',lang('port'));
+			$this->t->set_var('lang_sieve_ssl_usage_message',lang('note:').' '.lang('if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)'));
 			$this->t->set_var('lang_apply',lang('apply'));
 			$this->t->set_var('lang_use_costum_settings',lang('use custom settings'));
 			$this->t->set_var('lang_use_custom_ids',lang('use custom identities'));
