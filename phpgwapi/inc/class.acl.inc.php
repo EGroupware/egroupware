@@ -714,8 +714,8 @@ class acl
 				if ($GLOBALS['egw']->accounts->get_type($grantor) == 'g' && $enum_group_acls &&
 					(!is_array($enum_group_acls) || !in_array($grantor,$enum_group_acls)))
 				{
-					// return the grant for each member of the group
-					foreach((array)$GLOBALS['egw']->accounts->members($grantor, true) as $grantor)
+					// return the grant for each member of the group (false = also for no longer active users)
+					foreach((array)$GLOBALS['egw']->accounts->members($grantor, true, false) as $grantor)
 					{
 						if (!$grantor) continue;	// can happen if group has no members
 
