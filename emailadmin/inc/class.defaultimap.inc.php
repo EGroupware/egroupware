@@ -277,17 +277,22 @@ class defaultimap extends Net_IMAP
 	/**
 	 * Create transport string
 	 *
+	 * @param string $host - you may overwrite classvar
+	 * @param string $_encryption - you may overwrite classvar
 	 * @return string the transportstring
 	 */
-	function _getTransportString()
+	function _getTransportString($host = null, $_encryption = null)
 	{
-		if($this->encryption == 2) {
-			$connectionString = "tls://". $this->host;
-		} elseif($this->encryption == 3) {
-			$connectionString = "ssl://". $this->host;
+		if ($this->debug && $_encryption) error_log(__METHOD__.__LINE__.'->'.$host.', '.$_encryption);
+		$encryption = $this->encryption;
+		if ($_encryption) $encryption = $_encryption;
+		if($encryption == 2) {
+			$connectionString = "tls://". ($host?$host:$this->host);
+		} elseif($encryption == 3) {
+			$connectionString = "ssl://". ($host?$host:$this->host);
 		} else {
 			// no tls
-			$connectionString = $this->host;
+			$connectionString = ($host?$host:$this->host);
 		}
 
 		return $connectionString;
@@ -296,19 +301,23 @@ class defaultimap extends Net_IMAP
 	/**
 	 * Create the options array for SSL/TLS connections
 	 *
+	 * @param string $_encryption - you may overwrite classvar
 	 * @return string the transportstring
 	 */
-	function _getTransportOptions()
+	function _getTransportOptions($_encryption = null)
 	{
+		if ($this->debug && $_encryption) error_log(__METHOD__.__LINE__.'->'.$_encryption);
+		$encryption = $this->encryption;
+		if ($_encryption) $encryption = $_encryption;
 		if($this->validatecert === false) {
-			if($this->encryption == 2) {
+			if($encryption == 2) {
 				 return array(
 					'tls' => array(
 						'verify_peer' => false,
 						'allow_self_signed' => true,
 					)
 				);
-			} elseif($this->encryption == 3) {
+			} elseif($encryption == 3) {
 				return array(
 					'ssl' => array(
 						'verify_peer' => false,
@@ -317,14 +326,14 @@ class defaultimap extends Net_IMAP
 				);
 			}
 		} else {
-			if($this->encryption == 2) {
+			if($encryption == 2) {
 				return array(
 					'tls' => array(
 						'verify_peer' => true,
 						'allow_self_signed' => false,
 					)
 				);
-			} elseif($this->encryption == 3) {
+			} elseif($encryption == 3) {
 				return array(
 					'ssl' => array(
 						'verify_peer' => true,
