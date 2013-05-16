@@ -56,6 +56,7 @@ forward email's to	emailadmin	en	Forward email's to
 forward only	emailadmin	en	Forward only
 global options	emailadmin	en	Global options
 if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	en	If using SSL or TLS, you must have the PHP openssl extension loaded.
+if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	emailadmin	en	if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)
 imap admin password	admin	en	IMAP admin password
 imap admin user	admin	en	IMAP admin user
 imap c-client version < 2001	emailadmin	en	IMAP C-Client Version < 2001

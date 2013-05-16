@@ -56,6 +56,7 @@ forward email's to	emailadmin	de	E-Mails weiterleiten an
 forward only	emailadmin	de	nur weiterleiten
 global options	emailadmin	de	Globale Optionen
 if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	de	Wenn Sie SSL oder TLS benutzen, müssen Sie die openssl PHP Erweiterung geladen haben.
+if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	emailadmin	de	Wenn Sie als SIEVE Server Port 5190 eintragen, wird für die Kommunikation mit dem SIEVE-Server eine SSL-Verbindung verwendet (der Server muss das natürlich unterstützen)
 imap admin password	admin	de	IMAP Administrator Passwort
 imap admin user	admin	de	IMAP Administrator Benutzer
 imap c-client version < 2001	emailadmin	de	IMAP C-Client Version < 2001
