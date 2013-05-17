@@ -437,7 +437,8 @@ var et2_tree = et2_inputWidget.extend(
 		{
 			if(treeObj.children[i].iface && treeObj.children[i].iface.id == _id)
 			{
-				delete treeObj.children[i].iface;
+				delete treeObj.children[i].iface.id;
+				delete treeObj.children[i].iface.node;
 			}
 		}
 	},
