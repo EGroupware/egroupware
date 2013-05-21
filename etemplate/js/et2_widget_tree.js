@@ -444,6 +444,26 @@ var et2_tree = et2_inputWidget.extend(
 	},
 
 	/**
+	 * refreshItem, refreshes an item by id
+	 * @param _id ID of the node
+	 * @return void
+	 */
+	refreshItem: function(_id, _selectParent) {
+		if(this.input == null) return null;
+		this.input.setDataMode('JSON');
+		this.input.refreshItem(_id);
+		// Update action
+		// since the action ID has to = this.id, getObjectById() won't work
+		var treeObj = egw_getAppObjectManager().getObjectById(this.id);
+		for(var i=0; i < treeObj.children.length; i++)
+		{
+			if(treeObj.children[i].iface && treeObj.children[i].iface.id == _id)
+			{
+			}
+		}
+	},
+
+	/**
 	 * setLabel, sets the Label of of an item by id
 	 * @param _id ID of the node
 	 * @param _label label to set
