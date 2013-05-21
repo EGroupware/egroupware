@@ -42,7 +42,7 @@
  *		}
  *	}.
  *	var dialog = et2_dialog.show_dialog(
- *		callback, "Erase the entire database?","Break things",
+ *		callback, "Erase the entire database?","Break things", {} // value
  *		et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE
  *	);
  * </code>
@@ -54,10 +54,10 @@
  *		The callback is _not_ called if the user closes the dialog with the X in the corner, or presses ESC.
  * 	message - text to display
  *	title - Dialog title
- *	dialog_type - et2_dialog *_MESSAGE constant
- *	buttons - et2_dialog BUTTONS_* constant, or an array of button settings
- *	icon - URL of icon
  *	value (for prompt)
+ *	buttons - et2_dialog BUTTONS_* constant, or an array of button settings
+ *	dialog_type - et2_dialog *_MESSAGE constant
+ *	icon - URL of icon
  *
  * Note that these methods will _not_ block program flow while waiting for user input.  
  * The user's input will be provided to the callback.
