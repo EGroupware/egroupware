@@ -111,7 +111,7 @@
 			$icServer->password	= $accountData['ic_password'];
 			$icServer->enableSieve	= isset($accountData['ic_enable_sieve']) ? (bool)$accountData['ic_enable_sieve'] : 1;
 			$icServer->sieveHost	= $accountData['ic_sieve_server'];
-			$icServer->sievePort	= isset($accountData['ic_sieve_port']) ? $accountData['ic_sieve_port'] : 2000;
+			$icServer->sievePort	= isset($accountData['ic_sieve_port']) && !empty($accountData['ic_sieve_port']) ? $accountData['ic_sieve_port'] : 4190;
 			if ($accountData['ic_folderstoshowinhome']) $icServer->folderstoshowinhome	= $accountData['ic_folderstoshowinhome'];
 			if ($accountData['ic_trashfolder']) $icServer->trashfolder = $accountData['ic_trashfolder'];
 			if ($accountData['ic_sentfolder']) $icServer->sentfolder = $accountData['ic_sentfolder'];
@@ -161,7 +161,7 @@
 				$icServer->password	= $accountData['ic_password'];
 				$icServer->enableSieve	= isset($accountData['ic_enable_sieve']) ? (bool)$accountData['ic_enable_sieve'] : 1;
 				$icServer->sieveHost	= $accountData['ic_sieve_server'];
-				$icServer->sievePort	= isset($accountData['ic_sieve_port']) ? $accountData['ic_sieve_port'] : 2000;
+				$icServer->sievePort	= isset($accountData['ic_sieve_port']) && !empty($accountData['ic_sieve_port']) ? $accountData['ic_sieve_port'] : 4190;
 				if ($accountData['ic_folderstoshowinhome']) $icServer->folderstoshowinhome = $accountData['ic_folderstoshowinhome'];
 				if ($accountData['ic_trashfolder']) $icServer->trashfolder = $accountData['ic_trashfolder'];
 				if ($accountData['ic_sentfolder']) $icServer->sentfolder = $accountData['ic_sentfolder'];
