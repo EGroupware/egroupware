@@ -47,8 +47,11 @@ app.mail = AppJS.extend(
 		// reinitialize the buffer-info on selected mails
 		if (_reset == true || typeof _selected == 'undefined')
 		{
-			if (this.mail_currentlyFocussed!='') egw.dataDeleteUID(this.mail_currentlyFocussed);
-			for(var k = 0; k < this.mail_selectedMails.length; k++) egw.dataDeleteUID(this.mail_selectedMails[k]);
+			if (_reset == true)
+			{
+				if (this.mail_currentlyFocussed!='') egw.dataDeleteUID(this.mail_currentlyFocussed);
+				for(var k = 0; k < this.mail_selectedMails.length; k++) egw.dataDeleteUID(this.mail_selectedMails[k]);
+			}
 			this.mail_selectedMails = [];
 			this.mail_currentlyFocussed = '';
 			return '';
@@ -152,7 +155,7 @@ app.mail = AppJS.extend(
 			dataElem = egw.dataGetUIDdata(_id);
 			previewarea.visible = true;
 		}
-		if(typeof selected == 'undefined' || selected.length == 0 || typeof dataElem =='undefined')
+		if(typeof selected == 'undefined' || selected.length == 0 || selected.length > 1 || typeof dataElem =='undefined')
 		{
 			this.mail_fetchCurrentlyFocussed();
 			splitter.dock();
@@ -536,6 +539,7 @@ app.mail = AppJS.extend(
 		//mail_refreshMessageGrid();
 		this.mail_refreshFolderStatus(folder,'forced');
 		this.mail_startTimerFolderStatusUpdate(this.mail_refreshTimeOut);
+		this.mail_fetchCurrentlyFocussed(null,true);
 		this.mail_preview();
 	},
 	
