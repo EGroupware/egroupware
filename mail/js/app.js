@@ -158,7 +158,7 @@ app.mail = AppJS.extend(
 		if(typeof selected == 'undefined' || selected.length == 0 || selected.length > 1 || typeof dataElem =='undefined')
 		{
 			this.mail_fetchCurrentlyFocussed();
-			splitter.dock();
+			//splitter.dock();
 			previewarea.visible = false;
 			var subject ="";
 			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewFromAddress').set_value("");
@@ -170,7 +170,7 @@ app.mail = AppJS.extend(
 			return;
 		}
 		//console.log("mail_preview",dataElem);
-		splitter.undock();
+		//splitter.undock();
 		this.mail_selectedMails.push(_id);
 		var subject =dataElem.data.subject;
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewFromAddress').set_value(dataElem.data.fromaddress);
