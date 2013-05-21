@@ -546,7 +546,7 @@ setup main menu	setup	en	Setup main menu
 setup the database	setup	en	Setup the database
 setup/config admin login	setup	en	Setup / config admin login
 show 'powered by' logo on	setup	en	Show 'powered by' logo on
-sieve: host[,port(2000)]	setup	en	Sieve: Host[,Port(2000)]
+sieve: host[,port(4190)]	setup	en	Sieve: Host[,Port(4190)]
 size	setup	en	Size
 skip the installation tests (not recommended)	setup	en	Skip the installation tests (not recommended)
 smtp server hostname or ip address	setup	en	SMTP server hostname or IP address

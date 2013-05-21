@@ -482,7 +482,7 @@ setup main menu	setup	ru	Главное Меню Установки
 setup the database	setup	ru	Установка базы данных
 setup/config admin login	setup	ru	Учетная запись Администратора Установки/Конфигурирования
 show 'powered by' logo on	setup	ru	Показывать надпись "на основе"
-sieve: host[,port(2000)]	setup	ru	Sieve: ИмяКомп[,Порт(2000)]
+sieve: host[,port(4190)]	setup	ru	Sieve: ИмяКомп[,Порт(4190)]
 size	setup	ru	размер
 skip the installation tests (not recommended)	setup	ru	Пропустить тесты установки (не рекомендуется)
 smtp server hostname or ip address	setup	ru	Имя или IP адрес сервера SMTP

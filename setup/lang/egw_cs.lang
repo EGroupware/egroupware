@@ -527,7 +527,7 @@ setup main menu	setup	cs	Hlavní menu instalátoru
 setup the database	setup	cs	Nastavit databáze
 setup/config admin login	setup	cs	Přihlášení administrátora konfigurace (aplikační správce)
 show 'powered by' logo on	setup	cs	Zobrazovat logo 'založeno na' na
-sieve: host[,port(2000)]	setup	cs	Sieve: Server[,Port(2000)]
+sieve: host[,port(4190)]	setup	cs	Sieve: Server[,Port(4190)]
 size	setup	cs	velikost
 skip the installation tests (not recommended)	setup	cs	Přeskočit instalační testy (nedoporučuje se)
 smtp server hostname or ip address	setup	cs	DNS jméno nebo IP adresa SMTP serveru

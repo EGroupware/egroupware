@@ -472,7 +472,7 @@ setup main menu	setup	zh	安装主菜单
 setup the database	setup	zh	安装数据库
 setup/config admin login	setup	zh	安装/设定管理员登入
 show 'powered by' logo on	setup	zh	显示 'powered by' 徽标
-sieve: host[,port(2000)]	setup	zh	Sieve: Host[,Port(2000)]
+sieve: host[,port(4190)]	setup	zh	Sieve: Host[,Port(4190)]
 size	setup	zh	大小
 skip the installation tests (not recommended)	setup	zh	跳过安装测试(不建议)
 smtp server hostname or ip address	setup	zh	SMTP 服务器主机名或IP地址

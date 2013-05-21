@@ -519,7 +519,7 @@ setup	setup	pl	Setup
 setup the database	setup	pl	Setup bazy danych
 setup/config admin login	setup	pl	Logowanie do konfiguracji domeny eGW
 show 'powered by' logo on	setup	pl	Wyświetlaj logo 'działa w oparciu o'
-sieve: host[,port(2000)]	setup	pl	Nawiąż połączenie do: Host[,Port(2000)]
+sieve: host[,port(4190)]	setup	pl	Nawiąż połączenie do: Host[,Port(4190)]
 size	setup	pl	Wielkość
 skip the installation tests (not recommended)	setup	pl	Pomiń test poprawności instalacji
 smtp server hostname or ip address	setup	pl	Adres lub IP serwera SMTP

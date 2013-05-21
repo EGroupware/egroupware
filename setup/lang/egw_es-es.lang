@@ -531,7 +531,7 @@ setup main menu	setup	es-es	Menú principal de la instalación
 setup the database	setup	es-es	Instalar la base de datos
 setup/config admin login	setup	es-es	Usuario administrador para Instalación/Configuración
 show 'powered by' logo on	setup	es-es	Mostrar el logo en
-sieve: host[,port(2000)]	setup	es-es	Sieve: servidor[,puerto(2000)]
+sieve: host[,port(4190)]	setup	es-es	Sieve: servidor[,puerto(4190)]
 size	setup	es-es	tamaño
 skip the installation tests (not recommended)	setup	es-es	Omitir las pruebas de instalación (no se recomienda)
 smtp server hostname or ip address	setup	es-es	Nombre del servidor SMTP o dirección IP

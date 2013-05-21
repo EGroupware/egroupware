@@ -502,7 +502,7 @@ setup main menu	setup	sl	Namesti glavni meni
 setup the database	setup	sl	Namesti podatkovno bazo
 setup/config admin login	setup	sl	Namesti/Konfiguriraj prijavo upravljalca
 show 'powered by' logo on	setup	sl	Pokaži "teče na" logotip na
-sieve: host[,port(2000)]	setup	sl	Sieve: Gostitelj[,Vrata(2000)]
+sieve: host[,port(4190)]	setup	sl	Sieve: Gostitelj[,Vrata(4190)]
 size	setup	sl	Velikost
 skip the installation tests (not recommended)	setup	sl	Preskoči namestitveni test (ni priporočeno)
 smtp server hostname or ip address	setup	sl	Ime ali naslov IP strežnika SMTP
