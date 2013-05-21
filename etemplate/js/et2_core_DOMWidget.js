@@ -394,20 +394,42 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 
 		// Initialize the action manager and add some actions to it
 		var gam = egw_getAppActionManager();
-		this._actionManager = gam.addAction("actionManager", this.id);
+		if(typeof this._actionManager != "object")
+		{
+			if(gam.getActionById(this.id) != null)
+			{
+				this._actionManager = gam.getActionById(this.id);
+			}
+			else
+			{
+				this._actionManager = gam.addAction("actionManager", this.id);
+			}
+		}
 		// ActionManager wants an array
 		var parsed_actions = [];
 		if(typeof actions == "object" && actions)
 		{
-			for(var key in actions)
+			var parse = function(actions)
 			{
-				actions[key].id = key;
-				if(typeof actions[key].icon != "undefined" && actions[key].icon)
+				var parsed = [];
+				for(var key in actions)
 				{
-					actions[key].iconUrl = this.egw().image(actions[key].icon);
+					actions[key].id = key;
+					if(typeof actions[key].icon != "undefined" && actions[key].icon)
+					{
+						actions[key].iconUrl = this.egw().image(actions[key].icon);
+					}
+					if(typeof actions[key].children != "undefined")
+					{
+						actions[key].children = parse(actions[key].children);
+					}
+					parsed.push(actions[key]);
 				}
-				parsed_actions.push(actions[key]);
-			}
+				return parsed;
+			};
+			// Don't make changes to original
+			var action = jQuery.extend(true, {}, actions);
+			parsed_actions = parse.call(this, action);
 		}
 		else
 		{
@@ -435,7 +457,10 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 		if (widget_object == null) {
 			// Add a new container to the object manager which will hold the widget
 			// objects
-			widget_object = objectManager.addObject(this.id, new et2_action_object_impl(this));
+			widget_object = objectManager.insertObject(false, new egwActionObject(
+				this.id, objectManager, new et2_action_object_impl(this),
+				objectManager.manager.getActionById(this.id) || objectManager.manager
+			));
 		}
 
 		// Delete all old objects
