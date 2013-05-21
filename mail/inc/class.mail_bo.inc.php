@@ -866,7 +866,7 @@ class mail_bo
 	 */
 	function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false)
 	{
-		if (self::$debug) error_log(__METHOD__." called with:".$_folderName);
+		if (self::$debug) error_log(__METHOD__." called with:$_folderName,$ignoreStatusCache,$basicInfoOnly");
 		if (!is_string($_folderName) || empty($_folderName)) // something is wrong. Do not proceed
 		{
 			return false;

@@ -385,7 +385,10 @@ class mail_ui
 		if (!is_null($_nodeID)) $nodeID = $_nodeID;
 		//error_log(__METHOD__.__LINE__.'->'.array2string($_REQUEST));
 		//error_log(__METHOD__.__LINE__.'->'.array2string($_GET));
-		$data = $this->getFolderTree(!is_null($_nodeID), $nodeID);
+		$fetchCounters = !is_null($_nodeID);
+		list($_profileID,$_folderName) = explode(self::$delimiter,$nodeID,2);
+		if (!empty($_folderName)) $fetchCounters = true;
+		$data = $this->getFolderTree($fetchCounters, $nodeID);
 		//error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($data));
 		if (!is_null($_nodeID)) return $data;
 		header('Content-Type: application/json; charset=utf-8');
@@ -433,6 +436,7 @@ class mail_ui
 		$out = array('id' => 0);
 		//_debug_array($this->mail_bo->mailPreferences);
 		//if($this->mail_bo->mailPreferences->userDefinedAccounts) $allAccountData = $this->mail_bo->bopreferences->getAllAccountData($this->mail_bo->mailPreferences);
+		//$starttime = microtime(true);
 		if (count($this->mail_bo->mailPreferences->ic_server)) {
 			foreach ($this->mail_bo->mailPreferences->ic_server as $tmpkey => $accountData)
 			{
@@ -458,6 +462,9 @@ class mail_ui
 				$this->setOutStructure($oA,$out,self::$delimiter);
 			}
 		}
+		//$endtime = microtime(true) - $starttime;
+		//error_log(__METHOD__.__LINE__.' Fetching identities Took:'.$endtime);
+
 
 		//_debug_array($folderObjects);
 		$c = 0;
@@ -465,6 +472,7 @@ class mail_ui
 		{
 			$fS = $this->mail_bo->getFolderStatus($key,false,($_fetchCounters?false:true));
 			//_debug_array($fS);
+			//error_log(__METHOD__.__LINE__.array2string($fS));
 			$fFP = $folderParts = explode($obj->delimiter, $key);
 
 			//get rightmost folderpart
@@ -520,7 +528,7 @@ class mail_ui
 		if ($_nodeID)
 		{
 			$node = self::findNode($out,$_nodeID);
-			error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.array2string($node));
+			//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.array2string($node));
 			return $node;
 		}
 		return ($c?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
@@ -584,8 +592,10 @@ class mail_ui
 			
 			if (!is_array($insert) || !isset($insert['item']))
 			{
-				//break;
-				throw new egw_exception_assertion_failed(__METHOD__.':'.__LINE__." id=$data[id]: Parent '$parent' '$component' not found! out=".array2string($out));
+				// throwing an exeption here seems to be unrecoverable, even if the cause is a something that can be handeled by the mailserver
+				error_log(__METHOD__.':'.__LINE__." id=$data[id]: Parent '$parent' of '$component' not found!");
+				break;
+				//throw new egw_exception_assertion_failed(__METHOD__.':'.__LINE__." id=$data[id]: Parent '$parent' '$component' not found! out=".array2string($out));
 			}
 			foreach($insert['item'] as &$item)
 			{
@@ -2219,7 +2229,7 @@ blockquote[type=cite] {
 	 */
 	function ajax_addFolder($_parentFolderName, $_newName)
 	{
-		error_log(__METHOD__.__LINE__.' ParentFolderName:'.array2string($_parentFolderName).' NewName/Folder:'.array2string($_newName));
+		//error_log(__METHOD__.__LINE__.' ParentFolderName:'.array2string($_parentFolderName).' NewName/Folder:'.array2string($_newName));
 		if ($_parentFolderName)
 		{
 			$created = false;
@@ -2230,9 +2240,7 @@ blockquote[type=cite] {
 			if (is_numeric($profileID))
 			{
 				if ($profileID != $this->mail_bo->profileID) return; // only current connection
-				$pA = explode($del,$parentFolderName);
-				array_pop($pA);
-				$parentFolder = implode($del,$pA);
+				$nA = explode($del,$_newName);
 				//if (strtoupper($parentFolderName)!= 'INBOX')
 				{
 					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
@@ -2240,16 +2248,27 @@ blockquote[type=cite] {
 					//error_log(__METHOD__.__LINE__.array2string($oldFolderInfo));
 
 					$this->mail_bo->reopen('INBOX');
-					if($newFolderName = $this->mail_bo->createFolder($parentFolderName, $_newName, true)) {
-						$this->mail_bo->resetFolderObjectCache($profileID);
-						$created=true;
+					$parentName = $parentFolderName;
+					// if newName has delimiter ($del) in it, we need to create the subtree
+					if (!empty($nA))
+					{
+						$c=0;
+						foreach($nA as $sTName)
+						{
+							if($parentFolderName = $this->mail_bo->createFolder($parentFolderName, $sTName, true))
+							{
+								$c++;
+							}
+						}
+						if ($c==count($nA)) $created=true;
 					}
-					$this->mail_bo->reopen($parentFolderName);
+					$this->mail_bo->reopen($parentName);
 				}
 			}
 			//error_log(__METHOD__.__LINE__.array2string($oA));
 			if ($created===true)
 			{
+				$this->mail_bo->resetFolderObjectCache($profileID);
 				$response = egw_json_response::get();
 				$response->call('app.mail.mail_reloadNode',array($_parentFolderName=>$oldFolderInfo['shortDisplayName']),'mail');
 			}
