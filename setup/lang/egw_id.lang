@@ -171,7 +171,7 @@ sessions handler	setup	id	Sessions Handler
 set	setup	id	set
 settings	setup	id	Seting
 setup	setup	id	Setup
-sieve: host[,port(2000)]	setup	id	Sieve: Host[,Port(2000)]
+sieve: host[,port(4190)]	setup	id	Sieve: Host[,Port(4190)]
 size	setup	id	size
 sources deleted/missing	setup	id	Sources deleted/missing
 ssl validation:	setup	id	SSL validation:

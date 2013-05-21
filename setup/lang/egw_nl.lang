@@ -503,7 +503,7 @@ setup main menu	setup	nl	Setup Hoofdmenu
 setup the database	setup	nl	Setup de database
 setup/config admin login	setup	nl	Setup/Configureer beheerders login
 show 'powered by' logo on	setup	nl	Toon "draait op" logo op
-sieve: host[,port(2000)]	setup	nl	Sieve: Host[,Port(2000)]
+sieve: host[,port(4190)]	setup	nl	Sieve: Host[,Port(4190)]
 size	setup	nl	grootte
 skip the installation tests (not recommended)	setup	nl	Sla de installatie tests over (niet aanbevolen)
 smtp server hostname or ip address	setup	nl	SMTP server hostnaam of IP adres

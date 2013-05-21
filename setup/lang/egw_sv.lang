@@ -464,7 +464,7 @@ setup main menu	setup	sv	Installation huvudmeny
 setup the database	setup	sv	Databaskonfiguration
 setup/config admin login	setup	sv	Installera/konfigurera Admin login
 show 'powered by' logo on	setup	sv	Visa "Powered by" logotyp
-sieve: host[,port(2000)]	setup	sv	Sieve: Värd[,Port(2000)]
+sieve: host[,port(4190)]	setup	sv	Sieve: Värd[,Port(4190)]
 size	setup	sv	Storlek
 skip the installation tests (not recommended)	setup	sv	Hoppa över installations testen (rekomenderas inte)
 smtp server hostname or ip address	setup	sv	SMTP server värdnamn eller IP adress

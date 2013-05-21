@@ -545,7 +545,7 @@ setup main menu	setup	de	Setup-Hauptmenü
 setup the database	setup	de	Datenbank einzurichten
 setup/config admin login	setup	de	Setup-/Konfigurationsadmin-Login
 show 'powered by' logo on	setup	de	Zeige "powered by" Logo
-sieve: host[,port(2000)]	setup	de	Sieve: Rechner[,Port(2000)]
+sieve: host[,port(4190)]	setup	de	Sieve: Rechner[,Port(4190)]
 size	setup	de	Größe
 skip the installation tests (not recommended)	setup	de	Installationstests überspringen (nicht empfohlen)
 smtp server hostname or ip address	setup	de	SMTP Server Hostname oder IP Adresse

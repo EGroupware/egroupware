@@ -480,7 +480,7 @@ setup main menu	setup	fr	Menu principal de configuration
 setup the database	setup	fr	Configurer la base de données
 setup/config admin login	setup	fr	Page de connexion pour la configuration et l'installation
 show 'powered by' logo on	setup	fr	Montrer le logo 'motorisé par' sur
-sieve: host[,port(2000)]	setup	fr	Sieve: Host[,Port(2000)]
+sieve: host[,port(4190)]	setup	fr	Sieve: Host[,Port(4190)]
 size	setup	fr	taille
 skip the installation tests (not recommended)	setup	fr	Eviter les tests d'installation (non recommandé)
 smtp server hostname or ip address	setup	fr	Nom d'hôte ou adresse IP du serveur SMTP

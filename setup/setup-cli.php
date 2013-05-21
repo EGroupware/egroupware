@@ -477,7 +477,7 @@ function do_usage($what='')
 		echo '	--smtpserver '.lang('host,[smtp port],[smtp user],[smtp password]')."\n";
 		echo '	--postfix '.lang('Postfix with LDAP: [yes(user edit forwarding)]')."\n";
 		echo '	--cyrus '.lang('Cyrus IMAP: Admin user,Password')."\n";
-		echo '	--sieve '.lang('Sieve: Host[,Port(2000)]')."\n";
+		echo '	--sieve '.lang('Sieve: Host[,Port(4190)]')."\n";
 		echo '	--account-auth '.lang('account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]')."\n";
 		echo '	--ldap-host  --ldap-root-dn  --ldap-root-pw  --ldap-context  --ldap-group-context'."\n";
 	}

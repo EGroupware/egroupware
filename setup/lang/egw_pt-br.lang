@@ -488,7 +488,7 @@ setup main menu	setup	pt-br	Menu principal de configuração
 setup the database	setup	pt-br	Configurar a base de dados
 setup/config admin login	setup	pt-br	Definir/Configurar a conexão do Administrador
 show 'powered by' logo on	setup	pt-br	Área para exibição 'powered by  eGroupWare'
-sieve: host[,port(2000)]	setup	pt-br	Sieve: servidor[,port(2000)]
+sieve: host[,port(4190)]	setup	pt-br	Sieve: servidor[,port(4190)]
 size	setup	pt-br	tamanho
 skip the installation tests (not recommended)	setup	pt-br	Pular os testes de instalação (não recomendado)
 smtp server hostname or ip address	setup	pt-br	Endereço IP ou nome do servidor SMTP
