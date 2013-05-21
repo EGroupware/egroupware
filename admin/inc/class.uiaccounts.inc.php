@@ -1523,7 +1523,8 @@
 			// set primary group to default, if there is no primary group set; this may fail, if no group "Default" exists
 			if (!$userData['account_primary_group'])
 			{
-				$userData['account_primary_group'] = @$userGroups[0]['account_id'] ? @$userGroups[0]['account_id'] : $account->name2id('Default');
+				$userData['account_primary_group'] = @$userGroups[0]['account_id'] ?
+					@$userGroups[0]['account_id'] : $GLOBALS['egw']->accounts->name2id('Default');
 			}
 			// prepare the allGroups array for use with the checkbox-multiselect use
 			$allGroupsBuff=array();
