@@ -56,10 +56,17 @@ widget_browser.prototype._init_list = function()
 		.attr('id', 'widgets')
 		.click(function(e) {self.select_widget(e);})
 		.appendTo(this.list_div);
+
+	// Sort the registry
+	var types = [];
 	for(var type in et2_registry)
 	{
-		var class_name = et2_registry[type];
-		list.append('<li>'+type+'</li>');
+		types.push(type);
+	}
+	types.sort();
+	for(var i = 0; i < types.length; i++)
+	{
+		list.append('<li>'+types[i]+'</li>');
 	}
 
 	// Build attribute table
