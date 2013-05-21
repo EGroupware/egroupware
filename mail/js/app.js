@@ -17,6 +17,9 @@ app.mail = AppJS.extend(
 	mail_refreshTimeOut: 1000*60*3, // initial call
 	mail_queuedFolders: [],
 	mail_queuedFoldersIndex: 0,
+
+	mail_selectedMails: [],
+	mail_currentlyFocussed: '',
 	
 	/**
 	 * Initialize javascript for this application
@@ -24,7 +27,6 @@ app.mail = AppJS.extend(
 	 * @memberOf app.mail
 	 */
 	init: function() {
-	
 		this._super.apply(this,arguments);
 		window.register_app_refresh("mail", this.app_refresh);
 	
@@ -35,6 +37,35 @@ app.mail = AppJS.extend(
 	},
 	
 	/**
+	 * mail_fetchCurrentlyFocussed - implementation to decide wich mail of all the selected ones is the current
+	 * 
+	 * @param _selected array of the selected mails
+	 * @param _reset bool - tell the function to reset the global vars used
+	 */
+	mail_fetchCurrentlyFocussed: function(_selected, _reset) {
+		//console.log("mail_fetchCurrentlyFocussed",_selected, _reset);
+		// reinitialize the buffer-info on selected mails
+		if (_reset == true || typeof _selected == 'undefined')
+		{
+			if (this.mail_currentlyFocussed!='') egw.dataDeleteUID(this.mail_currentlyFocussed);
+			for(var k = 0; k < this.mail_selectedMails.length; k++) egw.dataDeleteUID(this.mail_selectedMails[k]);
+			this.mail_selectedMails = [];
+			this.mail_currentlyFocussed = '';
+			return '';
+		}
+		for(var k = 0; k < _selected.length; k++)
+		{
+			if (jQuery.inArray(_selected[k],this.mail_selectedMails)==-1)
+			{
+				this.mail_currentlyFocussed = _selected[k];
+				break;
+			}
+		}
+		this.mail_selectedMails = _selected;
+		return this.mail_currentlyFocussed;
+	},
+
+	/**
 	 * mail_open - implementation of the open action
 	 * 
 	 * @param _action
@@ -43,6 +74,11 @@ app.mail = AppJS.extend(
 	mail_open: function(_action, _senders) {
 		console.log("mail_open",_action, _senders);
 		var _id = _senders[0].id;
+		// reinitialize the buffer-info on selected mails
+		this.mail_selectedMails = [];
+		this.mail_selectedMails.push(_id);
+		this.mail_currentlyFocussed = _id;
+
 		var dataElem = egw.dataGetUIDdata(_id);
 		var subject = dataElem.data.subject;
 		var sw = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewSubject');
@@ -105,17 +141,22 @@ app.mail = AppJS.extend(
 	 * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
 	 */
 	mail_preview: function(nextmatch, selected) {
-		//console.log("mail_preview",nextmatch, selected);
-	
+		console.log("mail_preview",nextmatch, selected);
+		var splitter = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailSplitter');
+		var previewarea = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreview');
 		// Empty values, just in case selected is empty (user cleared selection)
 		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",date:"",subject:""}};
-		if(selected.length > 0)
+		if(typeof selected != 'undefined' && selected.length > 0)
 		{
-			var _id = selected[0];
+			var _id = this.mail_fetchCurrentlyFocussed(selected);
 			dataElem = egw.dataGetUIDdata(_id);
+			previewarea.visible = true;
 		}
 		if(typeof selected == 'undefined' || selected.length == 0 || typeof dataElem =='undefined')
 		{
+			this.mail_fetchCurrentlyFocussed();
+			splitter.dock();
+			previewarea.visible = false;
 			var subject ="";
 			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewFromAddress').set_value("");
 			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewToAddress').set_value("");
@@ -126,6 +167,8 @@ app.mail = AppJS.extend(
 			return;
 		}
 		//console.log("mail_preview",dataElem);
+		splitter.undock();
+		this.mail_selectedMails.push(_id);
 		var subject =dataElem.data.subject;
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewFromAddress').set_value(dataElem.data.fromaddress);
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewToAddress').set_value(dataElem.data.toaddress);
@@ -133,8 +176,7 @@ app.mail = AppJS.extend(
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewSubject').set_value(subject);
 		var IframeHandle = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('messageIFRAME');
 		IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
-	
-	
+
 	//	var request = new egw_json_request('mail.mail_ui.ajax_loadEmailBody',[_id]);
 	//	request.sendRequest(false);
 	},
@@ -257,8 +299,8 @@ app.mail = AppJS.extend(
 	 *		key is the id of the leaf to delete
 	 *		multiple sets can be passed to mail_deleteLeaf
 	 */
-	mail_removelLeaf: function(_status) {
-		//console.log('mail_setLeaf',_status);
+	mail_removeLeaf: function(_status) {
+		console.log('mail_removeLeaf',_status);
 		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
@@ -266,6 +308,32 @@ app.mail = AppJS.extend(
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') app.mail.app_refresh(egw.lang("Removed Folder %1 ",_status[i], 'mail'));
 			ftree.deleteItem(i,(selectedNode.id==i));
+			var selectedNodeAfter = ftree.getSelectedNode();
+			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
+			if (selectedNodeAfter.id!=selectedNode.id && selectedNode.id==i)
+			{
+				var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
+				nm.activeFilters["selectedFolder"] = selectedNodeAfter.id;
+				nm.applyFilters();
+			}
+		}
+	},
+
+	/**
+	 * mail_reloadNode, function to reload the leaf represented by the given ID
+	 * @param array _status status array with the required data (KEY id, VALUE desc)
+	 *		key is the id of the leaf to delete
+	 *		multiple sets can be passed to mail_deleteLeaf
+	 */
+	mail_reloadNode: function(_status) {
+		console.log('mail_reloadNode',_status);
+		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+		var selectedNode = ftree.getSelectedNode();
+		for (var i in _status)
+		{
+			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
+			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') app.mail.app_refresh(egw.lang("Reloaded Folder %1 ",_status[i], 'mail'));
+			ftree.refreshItem(i);
 			var selectedNodeAfter = ftree.getSelectedNode();
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
 			if (selectedNodeAfter.id!=selectedNode.id && selectedNode.id==i)
@@ -363,6 +431,7 @@ app.mail = AppJS.extend(
 		request.sendRequest(false);
 		for (var i = 0; i < msg['msg'].length; i++)  egw.dataDeleteUID(msg['msg'][i]);
 		this.mail_refreshMessageGrid();
+		this.mail_preview();
 	},
 	
 	/**
@@ -467,6 +536,7 @@ app.mail = AppJS.extend(
 		//mail_refreshMessageGrid();
 		this.mail_refreshFolderStatus(folder,'forced');
 		this.mail_startTimerFolderStatusUpdate(this.mail_refreshTimeOut);
+		this.mail_preview();
 	},
 	
 	/**
@@ -702,6 +772,34 @@ app.mail = AppJS.extend(
 		request.sendRequest(false);
 		this.mail_refreshMessageGrid();
 	},
+
+	/**
+	 * mail_AddFolder - implementation of the AddFolder action of right click options on the tree
+	 * 
+	 * @param _action
+	 * @param _senders - the representation of the tree leaf to be manipulated
+	 */
+	mail_AddFolder: function(action,_senders) {
+		//console.log(action,_senders);
+		//action.id == 'add'
+		//_senders.iface.id == target leaf / leaf to edit
+		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+		OldFolderName = ftree.getLabel(_senders[0].iface.id);
+		if (jQuery(OldFolderName).text().length>0) OldFolderName = jQuery(OldFolderName).text();
+		OldFolderName = OldFolderName.trim();
+		OldFolderName = OldFolderName.replace(/\([0-9]*\)/g,'').trim();
+		//console.log(OldFolderName);
+		NewFolderName = prompt(egw.lang("Add a new Folder to %1:",OldFolderName));
+		if (jQuery(NewFolderName).text().length>0) NewFolderName = jQuery(NewFolderName).text();
+		//alert(NewFolderName);
+		if (NewFolderName && NewFolderName.length>0)
+		{
+			app.mail.app_refresh(egw.lang("Adding Folder %1 to %2",NewFolderName, OldFolderName, 'mail'));
+			var request = new egw_json_request('mail.mail_ui.ajax_addFolder',[_senders[0].iface.id, NewFolderName]);
+			request.sendRequest(true);
+		}
+	},
+
 	/**
 	 * mail_RenameFolder - implementation of the RenameFolder action of right click options on the tree
 	 * 

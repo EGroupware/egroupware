@@ -1597,6 +1597,47 @@ class mail_bo
 	}
 
 	/**
+	 * create a new folder under given parent folder
+	 *
+	 * @param string _parent the parent foldername
+	 * @param string _folderName the new foldername
+	 * @param bool _subscribe subscribe to the new folder
+	 *
+	 * @return mixed name of the newly created folder or false on error
+	 */
+	function createFolder($_parent, $_folderName, $_subscribe=false)
+	{
+		if (self::$debug) error_log(__METHOD__.__LINE__."->"."$_parent, $_folderName, $_subscribe");
+		$parent		= $this->_encodeFolderName($_parent);
+		$folderName	= $this->_encodeFolderName($_folderName);
+
+		if(empty($parent)) {
+			$newFolderName = $folderName;
+		} else {
+			$HierarchyDelimiter = $this->getHierarchyDelimiter();
+			$newFolderName = $parent . $HierarchyDelimiter . $folderName;
+		}
+		if (self::$debug) error_log(__METHOD__.__LINE__.'->'.$newFolderName);
+		if (self::folderExists($newFolderName,true))
+		{
+			error_log(__METHOD__.__LINE__." Folder $newFolderName already exists.");
+			return $newFolderName;
+		}
+		$rv = $this->icServer->createMailbox($newFolderName);
+		if ( PEAR::isError($rv ) ) {
+			error_log(__METHOD__.__LINE__.' create Folder '.$newFolderName.'->'.$rv->message.' Namespace:'.array2string($this->icServer->getNameSpaces()));
+			return false;
+		}
+		$srv = $this->icServer->subscribeMailbox($newFolderName);
+		if ( PEAR::isError($srv ) ) {
+			error_log(__METHOD__.__LINE__.' subscribe to new folder '.$newFolderName.'->'.$srv->message);
+			return false;
+		}
+
+		return $newFolderName;
+	}
+
+	/**
 	 * rename a folder
 	 *
 	 * @param string _oldFolderName the old foldername

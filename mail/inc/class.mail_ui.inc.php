@@ -211,13 +211,18 @@ class mail_ui
 				'type' => 'drop',
 			),
 			// Tree does support this one
+			'add' => array(
+				'caption' => 'Add Folder',
+				'type' => 'popup',
+				'onExecute' => 'javaScript:app.mail.mail_AddFolder'
+			),
 			'rename' => array(
-				'caption' => 'Rename',
+				'caption' => 'Rename Folder',
 				'type' => 'popup',
 				'onExecute' => 'javaScript:app.mail.mail_RenameFolder'
 			),
 			'delete' => array(
-				'caption' => 'Delete',
+				'caption' => 'Delete Folder',
 				'type' => 'popup',
 				'onExecute' => 'javaScript:app.mail.mail_DeleteFolder'
 			)
@@ -374,13 +379,15 @@ class mail_ui
 	 *
 	 * @param string $_GET[id] if of node whos children are requested
 	 */
-	public function ajax_foldertree()
+	public function ajax_foldertree($_nodeID = null)
 	{
 		$nodeID = $_GET['id'];
+		if (!is_null($_nodeID)) $nodeID = $_nodeID;
 		//error_log(__METHOD__.__LINE__.'->'.array2string($_REQUEST));
 		//error_log(__METHOD__.__LINE__.'->'.array2string($_GET));
-		$data = $this->getFolderTree(false, $nodeID);
-
+		$data = $this->getFolderTree(!is_null($_nodeID), $nodeID);
+		//error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($data));
+		if (!is_null($_nodeID)) return $data;
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($data);
 		common::egw_exit();
@@ -513,7 +520,7 @@ class mail_ui
 		if ($_nodeID)
 		{
 			$node = self::findNode($out,$_nodeID);
-			//error_log(__METHOD__.__LINE__.array2string($node));
+			error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.array2string($node));
 			return $node;
 		}
 		return ($c?$out:array('id'=>0, 'item'=>array('text'=>'INBOX','tooltip'=>'INBOX'.' '.lang('(not connected)'),'im0'=>'kfm_home.png')));
@@ -522,7 +529,7 @@ class mail_ui
 	/**
 	 * findNode - helper function to return only a branch of the tree
 	 *
-	 * @param array &$out, out array (to be processed)
+	 * @param array $out, out array (to be searched)
 	 * @param string $_nodeID, node to search for
 	 * @param boolean $childElements=true return node itself, or only its child items
 	 * @return array structured subtree
@@ -531,9 +538,15 @@ class mail_ui
 	{
 		foreach($_out['item'] as $node)
 		{
-			if ($node['id']==$_nodeID)
+			//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.$node['id']);
+			if ($node['id']===$_nodeID)
 			{
 				return ($childElements?$node['item']:$node);
+			}
+			elseif (is_array($node['item']) && strncmp($node['id'],$_nodeID,strlen($node['id']))===0 && strlen($_nodeID)>strlen($node['id']))
+			{
+				//error_log(__METHOD__.__LINE__.' descend into '.$node['id']);
+				return self::findNode($node,$_nodeID,$childElements);
 			}
 		}
 	}
@@ -978,7 +991,15 @@ unset($query['actions']);
 		$offset = $query['start']+1; // we always start with 1
 		$maxMessages = $query['num_rows'];
 		$sort = $query['order'];
-		$filter = array();
+		if (!empty($query['search']))
+		{
+			//([filterName] => Schnellsuche[type] => quick[string] => ebay[status] => any
+			$filter = array('filterName' => lang('quicksearch'),'type' => 'quick','string' => $query['search'],'status' => 'any');
+		}
+		else
+		{
+			$filter = array();
+		}
 		$reverse = ($query['order']=='ASC'?false:true);
 		//error_log(__METHOD__.__LINE__.' maxMessages:'.$maxMessages.' Offset:'.$offset.' Filter:'.array2string($this->sessionData['messageFilter']));
 		if ($maxMessages > 75)
@@ -2191,6 +2212,51 @@ blockquote[type=cite] {
 	}
 
 	/**
+	 * ajax_addFolder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
+	 * @param string $_parentFolderName folder to add a folder to
+	 * @param string $_newName new foldername
+	 * @return nothing
+	 */
+	function ajax_addFolder($_parentFolderName, $_newName)
+	{
+		error_log(__METHOD__.__LINE__.' ParentFolderName:'.array2string($_parentFolderName).' NewName/Folder:'.array2string($_newName));
+		if ($_parentFolderName)
+		{
+			$created = false;
+			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_parentFolderName);
+			$_newName = translation::convert($this->mail_bo->decodeEntityFolderName($_newName), $this->charset, 'UTF7-IMAP');
+			$del = $this->mail_bo->getHierarchyDelimiter(false);
+			list($profileID,$parentFolderName) = explode(self::$delimiter,$decodedFolderName,2);
+			if (is_numeric($profileID))
+			{
+				if ($profileID != $this->mail_bo->profileID) return; // only current connection
+				$pA = explode($del,$parentFolderName);
+				array_pop($pA);
+				$parentFolder = implode($del,$pA);
+				//if (strtoupper($parentFolderName)!= 'INBOX')
+				{
+					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
+					$oldFolderInfo = $this->mail_bo->getFolderStatus($parentFolderName,false);
+					//error_log(__METHOD__.__LINE__.array2string($oldFolderInfo));
+
+					$this->mail_bo->reopen('INBOX');
+					if($newFolderName = $this->mail_bo->createFolder($parentFolderName, $_newName, true)) {
+						$this->mail_bo->resetFolderObjectCache($profileID);
+						$created=true;
+					}
+					$this->mail_bo->reopen($parentFolderName);
+				}
+			}
+			//error_log(__METHOD__.__LINE__.array2string($oA));
+			if ($created===true)
+			{
+				$response = egw_json_response::get();
+				$response->call('app.mail.mail_reloadNode',array($_parentFolderName=>$oldFolderInfo['shortDisplayName']),'mail');
+			}
+		}
+	}
+
+	/**
 	 * ajax_renameFolder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 * @param string $_folderName folder to rename and refresh
 	 * @param string $_newName new foldername
@@ -2316,7 +2382,7 @@ blockquote[type=cite] {
 	 */
 	function ajax_deleteFolder($_folderName)
 	{
-		error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName));
+		//error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName));
 		$success = false;
 		if ($_folderName)
 		{
@@ -2364,6 +2430,7 @@ blockquote[type=cite] {
 			$response = egw_json_response::get();
 			if ($success)
 			{
+				//error_log(__METHOD__.__LINE__.array2string($oA));
 				$response->call('app.mail.mail_removeLeaf',$oA,'mail');
 			}
 			else
