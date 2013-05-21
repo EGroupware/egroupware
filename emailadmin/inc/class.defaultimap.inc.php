@@ -164,7 +164,7 @@ class defaultimap extends Net_IMAP
 	 *
 	 * @var int
 	 */
-	var $sievePort = 2000;
+	var $sievePort = 4190;
 
 	/**
 	 * the construtor
@@ -699,7 +699,7 @@ class defaultimap extends Net_IMAP
 			$time = time() < $_vacation['start_date'] ? $_vacation['start_date'] : $end_date;
 			$async->set_timer($time,$async_id,'felamimail.bosieve.async_vacation',$_vacation+array('scriptName'=>$_scriptName),$user);
 		}
-		if ($_reschedule===true)	
+		if ($_reschedule===true)
 		{
 			$time = time() + 60*3;
 			unset($_vacation['next']);
