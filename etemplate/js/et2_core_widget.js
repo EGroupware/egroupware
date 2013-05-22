@@ -571,6 +571,12 @@ var et2_widget = Class.extend(
 			if(this.getArrayMgr("modifications"))
 			{
 				var data = this.getArrayMgr("modifications").getEntry(this.id);
+
+				// Check for already inside namespace
+				if(this.createNamespace && this.getArrayMgr("modifications").perspectiveData.owner == this)
+				{
+					data = this.getArrayMgr("modifications").data;
+				}
 				if (typeof data === 'object')
 				{
 					for (var key in data)

@@ -62,6 +62,12 @@ var et2_valueWidget = et2_baseWidget.extend(
 					_attrs["value"] = val;
 				}
 			}
+			// Check for already inside namespace
+			if(this.createNamespace && this.getArrayMgr("content").perspectiveData.owner == this)
+			{
+				_attrs["value"] = this.getArrayMgr("content").data;
+			}
+
 		}
 	}
 
