@@ -58,19 +58,41 @@ class home_ui
 	 */
 	protected function get_actions()
 	{
+		$portlets = $this->get_portlet_list();
 		$actions = array(
 			'add' => array(
 				'type'	=> 'popup',
 				'caption'	=> 'Add',
 				'onExecute'	=> 'javaScript:app.home.add',
-				'children'	=> $this->get_portlet_list()
+				'children'	=> $portlets
 			),
 			'drop_create'	=> array(
+				'caption'	=> 'Add',
 				'type'	=> 'drop',
-				//'acceptedTypes'	=>	'apps?'
-				'onExecute'	=> 'javaScript:app.home.add'
+				'acceptedTypes' => array('file') + array_keys($GLOBALS['egw_info']['apps']),
+				'onExecute'	=> 'javaScript:app.home.add_from_drop',
 			)
 		);
+
+		foreach($portlets as $app => $children)
+		{
+			// Home portlets
+			if(!$children['children'])
+			{
+				$children['onExecute'] = $actions['drop_create']['onExecute'];
+				$children['acceptedTypes'] = egw_link::app_list();
+				$actions[$app] = $children;
+			}
+			else
+			{
+				foreach($children as $portlet => $app_portlets)
+				{
+					$app_portlets['onExecute'] = $actions['drop_create']['onExecute'];
+					$app_portlet['acceptedTypes'] = $app;
+					$actions[$portlet] = $app_portlets;
+				}
+			}
+		}
 		
 		return $actions;
 	}
@@ -199,7 +221,6 @@ class home_ui
 
 					$add_to[$portlet] = array(
 						'id'	=> $portlet,
-						'type'	=> 'popup',
 						'caption' => $desc['displayName'],
 						'hint' => $desc['description'],
 						'onExecute' => 'javaScript:app.home.add'
@@ -238,6 +259,8 @@ class home_ui
 			}
 			else
 			{
+error_log(array2string($attributes));
+error_log(array2string($values));
 				// Get portlet settings, and merge new with old
 				$content = '';
 				$portlet = $this->get_portlet(array_merge((array)$attributes, $values), $content, $attributes);

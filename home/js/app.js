@@ -37,41 +37,41 @@ app.home = AppJS.extend(
 
 	/**
 	 * Constructor
-         * 
-         * @memberOf app.home
-         */
-        init: function()
-        {
-                // call parent
-                this._super.apply(this, arguments);
-        },
+	 * 
+	 * @memberOf app.home
+	 */
+	init: function()
+	{
+		// call parent
+		this._super.apply(this, arguments);
+	},
 
-        /**
-         * Destructor
-         * @memberOf app.home
-         */
-        destroy: function()
-        {
-                delete this.et2;
+	/**
+	 * Destructor
+	 * @memberOf app.home
+	 */
+	destroy: function()
+	{
+		delete this.et2;
 		delete this.portlet_container;
 
-                // call parent
-                this._super.apply(this, arguments);
-        },
-
-        /**
-         * This function is called when the etemplate2 object is loaded
-         * and ready.  If you must store a reference to the et2 object,
-         * make sure to clean it up in destroy().
-         *
-         * @param et2 etemplate2 Newly ready object
-         */
-        et2_ready: function(et2)
-        {
 		// call parent
-                this._super.apply(this, arguments);
+		this._super.apply(this, arguments);
+	},
 
-                this.et2 = et2.widgetContainer;
+	/**
+	 * This function is called when the etemplate2 object is loaded
+	 * and ready.  If you must store a reference to the et2 object,
+	 * make sure to clean it up in destroy().
+	 *
+	 * @param et2 etemplate2 Newly ready object
+	 */
+	et2_ready: function(et2)
+	{
+		// call parent
+		this._super.apply(this, arguments);
+
+		this.et2 = et2.widgetContainer;
 		this.portlet_container = this.et2.getWidgetById("portlets");
 
 		// Add portlets
@@ -90,10 +90,9 @@ app.home = AppJS.extend(
 	},
 
 	/**
-	 * Add a new portlet
+	 * Add a new portlet from the context menu
 	 */
 	add: function(action) {
-		var content = this.et2.getArrayMgr("content").getEntry("portlets");
 		var attrs = {id: this._create_id(), class: action.id};
 		var portlet = et2_createWidget('portlet',attrs, this.portlet_container);
 		portlet.loadingFinished();
@@ -106,6 +105,30 @@ app.home = AppJS.extend(
 		$portlet_container.data("gridster").add_widget(
 			portlet.getDOMNode()
 		);
+	},
+
+	/**
+	 * User dropped something on home.  Add a new portlet
+	 */
+	add_from_drop: function(action,source,target_action) {
+		var attrs = {id: this._create_id(), class: action.id};
+		var portlet = et2_createWidget('portlet',attrs, this.portlet_container);
+		portlet.loadingFinished();
+
+		// Get actual attributes & settings, since they're not available client side yet
+		var drop_data = [];
+		for(var i = 0; i < source.length; i++)
+		{
+			if(source[i].id) drop_data.push(source[i].id);
+		}
+		portlet._process_edit(et2_dialog.OK_BUTTON, {dropped_data: drop_data});
+
+		// Set up sorting/grid of new portlet
+		var $portlet_container = $j(this.portlet_container.getDOMNode());
+		$portlet_container.data("gridster").add_widget(
+			portlet.getDOMNode()
+		);
+	console.log(this,arguments);
 	},
 
 	/**
@@ -130,7 +153,7 @@ app.home = AppJS.extend(
 			egw().log("warning", "Could not find widget");
 			return;
 		}
-		egw().open(widget.options.settings.entry, false, 'view');
+		egw().open(widget.options.settings.entry, "", 'edit');
 	},
 
 	/**
@@ -145,7 +168,6 @@ app.home = AppJS.extend(
 			.shapeshift();
 			*/
 			/* Gridster */
-			.wrap("<div />")
 			.gridster({
 				widget_selector: 'div.et2_portlet',
 				widget_base_dimensions: [45, 45],

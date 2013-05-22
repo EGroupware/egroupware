@@ -30,11 +30,17 @@ class home_link_portlet extends home_portlet
 	 */
 	public function __construct(Array &$context = array())
 	{
-		$this->context = $context;
+		// Process dropped data into something useable
+		if($context['dropped_data'])
+		{
+			list($context['entry']['app'], $context['entry']['id']) = explode('::', $context['dropped_data'][0], 2);
+			unset($context['dropped_data']);
+		}
 		if($context['entry'])
 		{
 			$this->title = $context['entry']['title'] = egw_link::title($context['entry']['app'], $context['entry']['id']);
 		}
+		$this->context = $context;
 	}
 
 	/**
