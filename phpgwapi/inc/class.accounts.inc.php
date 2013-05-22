@@ -319,8 +319,7 @@ class accounts
 			$account_search[$serial]['total'] = $this->total;
 		}
 		// search via ldap backend
-		elseif ($this->config['account_repository'] == 'ldap')
-		//not correct for php<5.1 elseif ((method_exists($this,'search'))	// implements its on search function ==> use it
+		elseif (method_exists($this->backend, 'search'))	// implements its on search function ==> use it
 		{
 			$account_search[$serial]['data'] = $this->backend->search($param);
 			$account_search[$serial]['total'] = $this->total = $this->backend->total;
@@ -1048,11 +1047,11 @@ class accounts
 				{
 					if ($instance->get_type($account_id) == 'u')
 					{
-						$account['memberships'] = $instance->backend->memberships($account_id);
+						if (!isset($account['memberships'])) $account['memberships'] = $instance->backend->memberships($account_id);
 					}
 					else
 					{
-						$account['members'] = $instance->backend->members($account_id);
+						if (!isset($account['members'])) $account['members'] = $instance->backend->members($account_id);
 					}
 					egw_cache::setInstance(__CLASS__, 'account-'.$account_id, $account, self::READ_CACHE_TIMEOUT);
 				}

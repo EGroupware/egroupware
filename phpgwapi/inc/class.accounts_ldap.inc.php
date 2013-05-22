@@ -638,7 +638,7 @@ class accounts_ldap
 	function search($param)
 	{
 		//echo "<p>accounts_ldap::search(".print_r($param,true)."): ".microtime()."</p>\n";
-		$account_search = &$this->cache['account_search'];
+		$account_search =& accounts::$cache['account_search'];
 
 		// check if the query is cached
 		$serial = serialize($param);
@@ -919,7 +919,7 @@ class accounts_ldap
 		if ($which == 'account_lid' && $account_type !== 'u') // groups only support account_lid
 		{
 
-			$sri = ldap_search($this->ds, $this->group_context, '(&(cn=' . $name . ')(objectclass=posixgroup))');
+			$sri = ldap_search($this->ds, $this->group_context, '(&(cn=' . $name . ')(objectclass=posixgroup))', array('gidNumber'));
 			$allValues = ldap_get_entries($this->ds, $sri);
 
 			if (@$allValues[0]['gidnumber'][0])
@@ -936,7 +936,7 @@ class accounts_ldap
 		    return False;
 		}
 
-		$sri = ldap_search($this->ds, $this->user_context, '(&('.$to_ldap[$which].'=' . $name . ')(objectclass=posixaccount))');
+		$sri = ldap_search($this->ds, $this->user_context, '(&('.$to_ldap[$which].'=' . $name . ')(objectclass=posixaccount))', array('uidNumber'));
 
 		$allValues = ldap_get_entries($this->ds, $sri);
 

@@ -276,7 +276,7 @@
      <select name="newsettings[account_repository]">
       <option value="sql"{selected_account_repository_sql}>SQL</option>
       <option value="ldap"{selected_account_repository_ldap}>LDAP</option>
-      <!--<option value="contacts"{selected_account_repository_contacts}>Contacts - EXPERIMENTAL</option>-->
+      <option value="ads"{selected_account_repository_ads}>Active Directory</option>
      </select>
     </td>
    </tr>
@@ -538,6 +538,29 @@
    <tr class="row_on">
      <td>{lang_Domain_name}:</td>
      <td><input name="newsettings[ads_domain]" value="{value_ads_domain}" size="40" /></td>
+   </tr>
+   <tr class="row_off">
+     <td>{lang_Admin_user}<br/>{lang_optional,_if_only_authentication_AND_anonymous_search_is_enabled}:</td>
+     <td><input name="newsettings[ads_admin_user]" value="{value_ads_admin_user}" size="40" /></td>
+   </tr>
+   <tr class="row_on">
+     <td>{lang_Password}:</td>
+     <td><input type="password" name="newsettings[ads_admin_passwd]" value="{value_ads_admin_passwd}" size="40" /></td>
+   </tr>
+   <tr class="row_off">
+     <td>{lang_use_TLS_or_SSL} {lang_required_to_change_passwords}<br/>
+     	<a href="http://adldap.sourceforge.net/wiki/doku.php?id=ldap_over_ssl" target="_blank">{lang_needs_extra_configuration_on_DC_and_webserver!}</a>:</td>
+     <td>
+     	<select name="newsettings[ads_connection]">
+			<option value="">{lang_No}</option>
+			<option value="tls"{selected_ads_connection_tls}>TLS</option>
+			<option value="ssl"{selected_ads_connection_ssl}>SSL</option>
+     	</select>	
+     </td>
+   </tr>
+   <tr class="row_on">
+     <td>{lang_Context_to_create_users}:<br/>{lang_eg._"CN=Users,DC=domain,DC=com"_for_ADS_domain_"domain.com"}</td>
+     <td><input name="newsettings[ads_context]" value="{value_ads_context}" size="80" /></td>
    </tr>
 
    <tr class="row_off">

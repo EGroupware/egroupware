@@ -115,16 +115,6 @@ class addressbook_so
 	var $memberships;
 
 	/**
-	 * LDAP searches only a limited set of attributes for performance reasons,
-	 * you NEED an index for that columns, ToDo: make it configurable
-	 * minimum: $this->columns_to_search = array('n_family','n_given','org_name','email');
-	 */
-	var $ldap_search_attributes = array(
-		'n_family','n_middle','n_given','org_name','org_unit',
-		'adr_one_location','adr_two_location','note',
-		'email','mozillasecondemail','uidnumber',
-	);
-	/**
 	 * In SQL we can search all columns, though a view make on real sense
 	 */
 	var $sql_cols_not_to_search = array(
@@ -232,8 +222,7 @@ class addressbook_so
 		{
 			$this->contact_repository = 'ldap';
 			$this->somain = new addressbook_ldap();
-
-			$this->columns_to_search = $this->ldap_search_attributes;
+			$this->columns_to_search = $this->somain->search_attributes;
 		}
 		else	// sql or sql->ldap
 		{
@@ -250,12 +239,13 @@ class addressbook_so
 		{
 			$this->grants = $this->get_grants($this->user,$contact_app);
 		}
-		if ($this->account_repository == 'ldap' && $this->contact_repository == 'sql')
+		if ($this->account_repository != 'sql' && $this->contact_repository == 'sql')
 		{
 			if ($this->account_repository != $this->contact_repository)
 			{
-				$this->so_accounts = new addressbook_ldap();
-				$this->account_cols_to_search = $this->ldap_search_attributes;
+				$class = 'addressbook_'.$this->account_repository;
+				$this->so_accounts = new $class();
+				$this->account_cols_to_search = $this->so_accounts->search_attributes;
 			}
 			else
 			{
