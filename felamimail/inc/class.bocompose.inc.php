@@ -616,7 +616,11 @@
 					}
 					if ($bodyParts[$i]['charSet']===false) $bodyParts[$i]['charSet'] = felamimail_bo::detect_encoding($bodyParts[$i]['body']);
 
+					$_htmlConfig = felamimail_bo::$htmLawed_config;
+					felamimail_bo::$htmLawed_config['comment'] = 2;
+					felamimail_bo::$htmLawed_config['transform_anchor'] = false;
 					$this->sessionData['body'] .= "<br>".self::_getCleanHTML(translation::convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']));
+					felamimail_bo::$htmLawed_config = $_htmlConfig;
 					#error_log( "GetReplyData (HTML) CharSet:".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				}
 

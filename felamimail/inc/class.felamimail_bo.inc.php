@@ -56,6 +56,7 @@ class felamimail_bo
 				'deny_attribute' => 'on*',
 				'schemes'=>'href: file, ftp, http, https, mailto; src: cid, data, file, ftp, http, https; *:file, http, https, cid, src',
 				'hook_tag' =>"hl_email_tag_transform",
+				'transform_anchor' => true,
 			);
 
 	/**

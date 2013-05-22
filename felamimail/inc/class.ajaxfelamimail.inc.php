@@ -1488,8 +1488,9 @@ class ajaxfelamimail
 			//error_log(__METHOD__.'Old+:'.$oldSigText.'#');
 			$sigText = felamimail_bo::merge($sigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
 			//error_log(__METHOD__.'new+:'.$sigText.'#');
-			$htmlConfig = felamimail_bo::$htmLawed_config;
-			$htmlConfig['comment'] = 2;
+			$_htmlConfig = felamimail_bo::$htmLawed_config;
+			felamimail_bo::$htmLawed_config['comment'] = 2;
+			felamimail_bo::$htmLawed_config['transform_anchor'] = false;
 			$oldSigText = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($oldSigText,$htmlConfig,array(),true):$oldSigText));
 			//error_log(__METHOD__.'Old(clean):'.$oldSigText.'#');
 			if ($_currentMode == 'html')
@@ -1498,7 +1499,8 @@ class ajaxfelamimail
 				$styles = felamimail_bo::getStyles(array(array('body'=>$_content)));
 				if (stripos($_content,'style')!==false) felamimail_bo::replaceTagsCompletley($_content,'style'); // clean out empty or pagewide style definitions / left over tags
 			}
-			$_content = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($_content,$htmlConfig,array(),true):$_content));
+			$_content = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($_content,felamimail_bo::$htmLawed_config,array(),true):$_content));
+			felamimail_bo::$htmLawed_config = $_htmlConfig;
 			if ($_currentMode == 'html')
 			{
 				$_content = preg_replace($reg='|'.preg_quote('<!-- HTMLSIGBEGIN -->','|').'.*'.preg_quote('<!-- HTMLSIGEND -->','|').'|u',
