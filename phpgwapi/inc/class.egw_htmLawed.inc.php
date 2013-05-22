@@ -190,6 +190,20 @@ function hl_my_tag_transform($element, $attribute_array=0)
 	}
 	*/
 	if (isset($attribute_array['style']) && stripos($attribute_array['style'],'script')!==false) $attribute_array['style'] = str_ireplace('script','',$attribute_array['style']);
+	if($element == 'a')
+	{
+		//error_log(__METHOD__.__LINE__.array2string($attribute_array));
+		// rebuild Anchors, if processed by hl_email_tag_transform
+		if (strpos($attribute_array['href'],"denied:javascript:GoToAnchor('")===0)
+		{
+			$attribute_array['href']=str_ireplace("');",'',str_ireplace("denied:javascript:GoToAnchor('","#",$attribute_array['href']));
+		}
+		if (strpos($attribute_array['href'],"javascript:GoToAnchor('")===0)
+		{
+			$attribute_array['href']=str_ireplace("');",'',str_ireplace("javascript:GoToAnchor('","#",$attribute_array['href']));
+		}
+		if (strpos($attribute_array['href'],'denied:javascript')===0) $attribute_array['href']='';
+	}
 
 	// Build the attributes string
 	$attributes = '';
@@ -300,11 +314,11 @@ function hl_email_tag_transform($element, $attribute_array=0)
 	}
 	if($element == 'a')
 	{
-		//error_log(array2string($attribute_array));
+		//error_log(__METHOD__.__LINE__.array2string($attribute_array));
 		if (strpos($attribute_array['href'],'denied:javascript')===0) $attribute_array['href']='';
 		if (isset($attribute_array['name']) && isset($attribute_array['id'])) $attribute_array['id'] = $attribute_array['name'];
 		if (strpos($attribute_array['href'],'@')!==false) $attribute_array['href'] = str_replace('@','%40',$attribute_array['href']);
-		if (strpos($attribute_array['href'],'#')===0)
+		if (strpos($attribute_array['href'],'#')===0 && (isset(felamimail_bo::$htmLawed_config['transform_anchor']) && felamimail_bo::$htmLawed_config['transform_anchor']===true))
 		{
 			$attribute_array['href'] = "javascript:GoToAnchor('".trim(substr($attribute_array['href'],1))."');";
 		}
