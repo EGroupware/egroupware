@@ -77,7 +77,6 @@ class etemplate_widget_link extends etemplate_widget
 
 		if($attrs['type'] == 'link-list') {
 			$links = egw_link::get_links($app,$id,'','link_lastmod DESC',true, $value['show_deleted']);
-	_debug_array($links);
 			foreach($links as $link) {
 				$value[] = $link;
 			}
