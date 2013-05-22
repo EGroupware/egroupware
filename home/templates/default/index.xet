@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="home.index" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@mainscreen_message">
+					<html id="mainscreen_message"/>
+				</row>
+				<row>
+					<box id="portlets">
+					</box>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

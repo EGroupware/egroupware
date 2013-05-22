@@ -1,0 +1,49 @@
+/**
+ * Home CSS
+ */
+
+#portlets {
+	border: 1px solid silver;
+	width: 100%;
+	min-width: 100px;
+	min-height: 100px;
+	position: relative;
+}
+
+.home .et2_portlet > .ui-widget-header {
+	cursor: pointer;
+}
+
+.et2_portlet.ui-widget-content {
+	overflow: hidden;
+}
+
+/* Shapeshift
+#portlets {
+	position: relative;
+}
+.home .et2_portlet {
+	position: absolute;
+}
+#portlets .ss-placeholder-child {
+	background: transparent;
+	border: 1px dashed silver;
+	position: absolute;
+}
+*/
+
+/* Gridster */
+#portlets {
+	position: relative;
+}
+.home .et2_portlet {
+	position: absolute;
+	margin: 5px;
+}
+#portlets .preview-holder {
+	margin: 5px;
+	list-style: none;
+	background: transparent;
+	border: 1px dashed silver;
+	position: absolute;
+}

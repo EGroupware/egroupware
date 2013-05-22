@@ -927,6 +927,29 @@ label input, label span, label div, label select, label textarea {
 	cursor: pointer;
 }
 
+/**
+ * et2_portlet
+ */
+div.et2_portlet {
+	min-width: 100px;
+}
+.et2_portlet .ui-widget-header {
+	margin: 0em;
+	padding-bottom: 4px;
+	padding-left: 0.2em;
+}
+.et2_portlet .ui-widget-header span.ui-icon {
+	display: inline-block;
+	float: right; 
+}
+.et2_portlet .ui-widget-header span.ui-icon.ui-icon-gear {
+	display: inline-block;
+	float: left; 
+}
+
+/**
+ * et2_progress
+ */
 div.et2_progress {
 	display: inline-block;
 	border: 1px solid black;
@@ -1113,3 +1136,4 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 .et2_prompt #value {
 	width: 100%;
 }
+

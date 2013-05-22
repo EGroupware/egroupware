@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="home.edit" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<label for="@${row}[name]" value="@${row}[label]"/>
+					<widget type="@${row}[type]" id="@${row}[name]" no_lang="1" options="@${row}[size]"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

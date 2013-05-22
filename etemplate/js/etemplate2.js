@@ -44,6 +44,7 @@
 	et2_widget_file;
 	et2_widget_link;
 	et2_widget_progress;
+	et2_widget_portlet;
 	et2_widget_selectAccount;
 	et2_widget_ajaxSelect;
 	et2_widget_vfs;

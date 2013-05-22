@@ -26,8 +26,12 @@
 	);
 
 	include('../header.inc.php');
-	auth::check_password_age('home','index');
 	$GLOBALS['egw_info']['flags']['nonavbar']=false;
+
+	// Home is treated specially, so a redirect won't work.
+	$home = new home_ui();
+	echo $home->index();
+exit;
 
 	/*
 	** Initializing the template
