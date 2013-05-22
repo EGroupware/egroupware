@@ -67,6 +67,21 @@ function et2_loadXMLFromURL(_url, _callback, _context)
 					var xmldoc = xmlhttp.responseXML.documentElement;
 					_callback.call(_context, xmldoc);
 				}
+				// Sometimes it's not recogized as XML - reason unknown
+				else if (xmlhttp.response)
+				{
+					egw().debug("log","File was not recogized as XML, trying to parse text...");
+					var response = xmlhttp.response.replace(/^\s+|\s+$/g,'');
+					// Manually parse from text
+					var parser = new DOMParser();
+					try {
+						var xmldoc = parser.parseFromString(response, "text/xml");
+						egw().debug("log","Parsed OK");
+						_callback.call(_context, xmldoc.documentElement);
+					} catch (e) {
+						egw().debug("log", "Well, that didn't work");
+					}
+				}
 			}
 		}
 
