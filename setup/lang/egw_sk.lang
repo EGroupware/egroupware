@@ -24,7 +24,6 @@
 ==> different group '%1' under that gidnumber %2, not setting memberships!	setup	sk	==> odlišná skupina '%1' pod týmto číslom gidNumber %2, NEnastavujem členstvo!
 access denied: wrong username or password for manage-header !!!	setup	sk	Prístup bol odmietnutý: chybné používateľské meno alebo heslo pre správu hlavičiek!!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	sk	Prístup bol odmietnutý: chybné používateľské meno alebo heslo pre konfiguráciu domény '%1(%2)' !!!
-account repository need to be set to the one you migrate to!	setup	sk	Zdroj účtov musí byť nastavený na jeden z tých, do ktorých migrujete!
 accounts existing	setup	sk	Existujúce účty
 actions	setup	sk	Akcie
 activate safe password check	setup	sk	Aktivovať voľbu ukladania hesla
@@ -668,7 +667,6 @@ you must enter a username for the admin	setup	sk	Musíte zadať používateľsk�
 you need to add at least one egroupware domain / database instance.	setup	sk	Musíte pridať aspoň jednu doménu / databázovú inštanciu EGroupware.
 you need to configure egroupware:	setup	sk	Musíte konfigurovať EGroupware:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	sk	Uvedené chyby musíte opraviť, až potom sa zapíše súbor header.inc.php !
-you need to save the settings you made here first!	setup	sk	Musíte najprv uložiť zmeny, ktoré ste vykonali!
 you need to select your current charset!	setup	sk	Treba zadať vašu súčasnú znakovú sadu!
 you need to specify a password!	setup	sk	Musíte zadať heslo!
 you should %1log out%2 and in again, to update your current session!	setup	sk	Mali by ste sa %1odhlásiť%2 a znovu prihlásiť kvôli aktualizácii vašej súčasnej relácie!

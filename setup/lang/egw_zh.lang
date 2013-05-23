@@ -16,7 +16,6 @@
 [header-password],[header-user],[new-password],[new-user]	setup	zh	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	zh	登录失败：错误的 manage-header 帐户或密码！
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	zh	登录失败：域'%1(%2)'的设置帐户或密码有误！
-account repository need to be set to the one you migrate to!	setup	zh	必须为您的帐户迁移设置帐户储存库！
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	zh	帐户储存库{sql (默认) | ldap},[认证{sql | ldap | mail | ads | http | ...}],[sql 加密方式{md5 | blowfish_crypt | md5_crypt | crypt}],[检查储存密码{ (默认)|True}],[允许通过 cookie 认证{ (默认)|True}]
 accounts existing	setup	zh	帐户已存在
 actions	setup	zh	操作
@@ -606,7 +605,6 @@ you must enter a username for the admin	setup	zh	您必须为管理员输入一�
 you need to add at least one egroupware domain / database instance.	setup	zh	您必须至少添加一个 eGroupWare 域/数据库实例。
 you need to configure egroupware:	setup	zh	您需要配置 eGroupWare：
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	zh	您必须先修复上面的错误以便配置文件 header.inc.php 能够写入！
-you need to save the settings you made here first!	setup	zh	您必须首先保存您所作的设置！
 you need to select your current charset!	setup	zh	您必须选择当前系统编码！
 you should either install the sources or uninstall it, to get rid of the tables	setup	zh	You should either install the sources or uninstall it, to get rid of the tables
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	zh	您应该卸载后重新安装，或者尝试手动修复

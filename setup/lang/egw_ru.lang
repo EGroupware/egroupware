@@ -18,7 +18,6 @@
 [header-password],[header-user],[new-password],[new-user]	setup	ru	[пароль заголовка],[пароль пльзователя],[новый пароль],[новый пользователь]
 access denied: wrong username or password for manage-header !!!	setup	ru	Доступ запрещен: неверное имя пользователя или пароль для управления заголовком !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	ru	Доступ запрещен: неверное имя пользователя или пароль для настройки домена '%1(%2)'!!!
-account repository need to be set to the one you migrate to!	setup	ru	Нужно хранилище учетных записей для его установки в качестве цели миграции!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	ru	хранилище учетных записей{sql(по умолчанию) | ldap},[верификация{sql | ldap | mail | ads | http | ...}],[шифрование sql{md5 | blowfish_crypt | md5_crypt | crypt}],[проверка сохранения? пароля{ (по умолчанию)|True}],[разрешить авторизацию по куки{ (по умолчанию)|True}]
 accounts existing	setup	ru	Существующие учетные записи
 actions	setup	ru	Действия
@@ -624,7 +623,6 @@ you must enter a username for the admin	setup	ru	Вы должны ввести 
 you need to add at least one egroupware domain / database instance.	setup	ru	Вам нужно добавить хоть одну запись домена/базы данных в ваш файл header.inc.php.
 you need to configure egroupware:	setup	ru	Вам нужно настроить eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	ru	Вам необходимо исправить вышеуказанные ошибки, прежде чем файл настроек header.inc.php можно будет записывать!
-you need to save the settings you made here first!	setup	ru	Вам необходимо предварительно сохранить ранее сделанные настройки!
 you need to select your current charset!	setup	ru	Вы должны выбрать свою текущую кодировку!
 you need to specify a password!	setup	ru	Вы должны определить пароль!
 you should either install the sources or uninstall it, to get rid of the tables	setup	ru	Вы должны либо установить исходники, либо деинсталлировать их to get rid of the tables

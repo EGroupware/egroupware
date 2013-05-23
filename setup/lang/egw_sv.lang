@@ -14,7 +14,6 @@
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	sv	<b>teckentabell som skall användas</b> (använd utf-8 om du skall ha stöd för språk med olika teckentabeller)
 access denied: wrong username or password for manage-header !!!	setup	sv	Åtkomst nekas: fel användarnamn eller lösenord för att hantera header!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	sv	Åtkomst nekas: fel användarnamn eller lösenord för att hantera domänen '%1(%2)'!
-account repository need to be set to the one you migrate to!	setup	sv	Kontodatabasen måste sättas till den som du vill migrera till!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	sv	Kontodatabasen {sql(standard) | ldap},[autenticering{sql | ldap | mail | ads | http | ...}],[sql kryptering{md5 | blowfish_crypt | md5_crypt | crypt}],[check spara lösenord{ (standard)|True}],[tillåt cookie auth{ (standard)|True}]
 accounts existing	setup	sv	Befintliga konton
 actions	setup	sv	Åtgärder
@@ -595,7 +594,6 @@ you must enter a username for the admin	setup	sv	Du måste ange ett lösenord f�
 you need to add at least one egroupware domain / database instance.	setup	sv	Du måste lägga till en eGroupWare domän/database instans.
 you need to configure egroupware:	setup	sv	Du behöver konfigurera eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	sv	Du måste rätta till felen ovanför, innan header.inc.php kan skrivas!
-you need to save the settings you made here first!	setup	sv	Du måste spara ändringarna så här långt först!
 you need to select your current charset!	setup	sv	Du måste välja teckenuppsättning
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	sv	Du måste antingen avinstallera och installera om, eller reparera manuellt.
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	sv	Du kan inte använda PHP sessioner i eGroupWare: "sessionen kunde inte verifieras"!
