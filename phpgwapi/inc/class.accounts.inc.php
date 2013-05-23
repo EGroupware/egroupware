@@ -139,14 +139,14 @@ class accounts
 	 *
 	 * @return accounts
 	 */
-    public static function getInstance()
-    {
-        if (self::$_instance === NULL)
-        {
-            self::$_instance = new accounts;
-        }
-        return self::$_instance;
-    }
+	public static function getInstance()
+	{
+		if (self::$_instance === NULL)
+		{
+			self::$_instance = new accounts;
+		}
+		return self::$_instance;
+	}
 
 	/**
 	 * Constructor

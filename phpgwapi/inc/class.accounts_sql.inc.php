@@ -214,7 +214,7 @@ class accounts_sql
 			}
 		}
 		// store group-email in mailaccounts table
-		if ($data['account_id'] < 0 && class_exists('emailadmin_smtp_sql', false))
+		if ($data['account_id'] < 0 && class_exists('emailadmin_smtp_sql', isset($data['account_email'])))
 		{
 			try {
 				if (empty($data['account_email']))
@@ -235,7 +235,7 @@ class accounts_sql
 				}
 			}
 			// ignore not (yet) existing mailaccounts table
-			catch (egw_exception_db $e) { }
+			catch (egw_exception_db $e) {}
 		}
 		return $data['account_id'];
 	}
