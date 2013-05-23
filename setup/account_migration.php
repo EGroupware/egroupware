@@ -64,6 +64,7 @@ $cmd = new setup_cmd_ldap(array(
 	'ldap_admin' => !empty($_POST['ldap_admin']) ? $_POST['ldap_admin'] : $GLOBALS['egw_info']['server']['ldap_root_dn'],
 	'ldap_admin_pw' => !empty($_POST['ldap_admin']) ? $_POST['ldap_admin_pw'] : $GLOBALS['egw_info']['server']['ldap_root_pw'],
 	'ldap_base' => implode(',',$base_parts),
+	'truncate_egw_accounts' => !empty($_POST['truncate_egw_accounts']),
 )+$GLOBALS['egw_info']['server']);
 
 if (!$_POST['migrate'])
@@ -77,6 +78,7 @@ if (!$_POST['migrate'])
 	$setup_tpl->set_block('migration','ldap_admin','ldap_admin');
 	$setup_tpl->set_block('migration','submit','submit');
 	$setup_tpl->set_block('migration','footer','footer');
+	$setup_tpl->set_block('migration','truncate_egw_accounts','truncate_egw_accounts');
 
 	foreach($accounts as $account_id => $account)
 	{
@@ -99,7 +101,7 @@ if (!$_POST['migrate'])
 	$setup_tpl->set_var('users',$user_list);
 	$setup_tpl->set_var('groups',$group_list);
 
-	$setup_tpl->set_var('description',lang('Migration between eGroupWare account repositories').': '.$direction);
+	$setup_tpl->set_var('description',lang('Migration between EGroupware account repositories').': '.$direction);
 	$setup_tpl->set_var('select_users',lang('Select which user(s) will be exported'));
 	$setup_tpl->set_var('select_groups',lang('Select which group(s) will be exported'));
 	$setup_tpl->set_var('memberships',$identical_account_id_warning ?
@@ -123,6 +125,11 @@ if (!$_POST['migrate'])
 	if ($to == 'ldap')
 	{
 		$setup_tpl->pfp('out','ldap_admin');
+	}
+	if ($to == 'sql')
+	{
+		$setup_tpl->set_var('truncate_egw_accounts_message', lang('Delete all existing accounts from SQL database'));
+		$setup_tpl->pfp('out','truncate_egw_accounts');
 	}
 	$setup_tpl->pfp('out','submit');
 	$setup_tpl->pfp('out','footer');
