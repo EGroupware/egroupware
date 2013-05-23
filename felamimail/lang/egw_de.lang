@@ -1,6 +1,7 @@
 %1 is not writable by you!	felamimail	de	%1 ist von Ihnen NICHT beschreibbar!
 (no subject)	felamimail	de	(kein Betreff)
 (only cc/bcc)	felamimail	de	(nur Kopie/Blindkopie)
+(see wikipedia for information on POSIX regular expressions)	felamimail	de	(siehe Wikipedia Artikel bzgl. POSIX Regular Expressions)
 (select mails by clicking on the line, like a checkbox)	felamimail	de	(auswählen von E-Mails durch anklicken der Zeile (wie Auswahl über eine Checkbox))
 (separate multiple addresses by comma)	felamimail	de	(mehrere Adressen durch Komma trennen)
 (unknown sender)	felamimail	de	(unbekannter Absender)
@@ -277,7 +278,7 @@ identifying name	felamimail	de	Identifizierender Name
 identity	felamimail	de	Identität
 if	felamimail	de	Wenn
 if from contains	felamimail	de	wenn Von enthält
-if mail header	felamimail	de	wenn E-Mail-Header enthält
+if mail header	felamimail	de	wenn E-Mail-Header
 if message size	felamimail	de	wenn Nachrichtengröße
 if shown, which folders should appear on the home page	felamimail	de	Welche E-Mail Ordner sollen auf der Startseite dargestellt werden (gelesene/ungelesene Nachrichten)
 if subject contains	felamimail	de	wenn Betreff enthält
@@ -379,6 +380,7 @@ new message type	felamimail	de	Neue E-Mails verfassen als
 next	felamimail	de	nächste
 next message	felamimail	de	nächste Nachricht
 no (valid) send folder set in preferences	felamimail	de	Es ist kein gültiger Gesendet Ordner hinterlegt.
+no action defined!	felamimail	de	Keine Aktion ausgewählt!
 no active imap server found!!	felamimail	de	Kein aktiver IMAP Server gefunden!!
 no address to/cc/bcc supplied, and no folder to save message to provided.	felamimail	de	Keine Empfänger Adresse (To/CC/BCC ) angegeben und kein Ordner zur Ablage der E-Mail spezifiziert.
 no encryption	felamimail	de	keine Verschlüsselung
@@ -648,6 +650,7 @@ when sending messages	felamimail	de	Wenn Nachrichten versendet werden
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	de	Welche E-Mailordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners  dargestellt werden (Empfänger-Adresse, anstatt der Absender-Adresse).
 which folders - in general - should not be automatically created, if not existing	felamimail	de	Welche E-Mailordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren? Wählen Sie hier die Ordner aus, die NICHT von EGroupware automatisch angelegt werden dürfen.
 which method to use when forwarding a message	felamimail	de	Wählen Sie die Methode zum Weiterleiten von Nachrichten.
+wildcards (*,?) may be used. If you check "%1" you must use valid regular expressions.	felamimail	de	Platzhalter (*,?) können verwendet werden. Wenn Sie "%1" aktivieren, dann müssen Sie jedoch gültige reguläre Ausdrücke angeben.
 with message	felamimail	de	mit folgender Nachricht
 with message "%1"	felamimail	de	mit der Nachricht "%1"
 wrap incoming text at	felamimail	de	Text umbrechen nach

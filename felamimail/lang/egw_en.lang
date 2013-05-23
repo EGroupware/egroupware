@@ -1,6 +1,7 @@
 %1 is not writable by you!	felamimail	en	%1 is NOT writable by you!
 (no subject)	felamimail	en	No subject
 (only cc/bcc)	felamimail	en	Only Cc/Bcc
+(see wikipedia for information on POSIX regular expressions)	felamimail	en	(see wikipedia for information on POSIX regular expressions)
 (select mails by clicking on the line, like a checkbox)	felamimail	en	(select mails by clicking on the line, like a checkbox)
 (separate multiple addresses by comma)	felamimail	en	Separate multiple addresses by comma
 the folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.	felamimail	en	The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.
@@ -380,6 +381,7 @@ new message type	felamimail	en	New message type
 next	felamimail	en	Next
 next message	felamimail	en	Next message
 no (valid) send folder set in preferences	felamimail	en	No (valid) Send Folder set in preferences
+no action defined!	felamimail	en	No action defined!
 no active imap server found!!	felamimail	en	No active IMAP server found!
 no address to/cc/bcc supplied, and no folder to save message to provided.	felamimail	en	No address TO/CC/BCC supplied and no folder to save message provided
 no encryption	felamimail	en	No encryption
@@ -648,6 +650,7 @@ when sending messages	felamimail	en	When sending messages
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	en	Which folders in addition to the Sent folder should be displayed using the Sent Folder View Schema
 which folders - in general - should not be automatically created, if not existing	felamimail	en	Which folders - in general - should NOT be automatically created, if not existing
 which method to use when forwarding a message	felamimail	en	Which method to use when forwarding a message
+wildcards (*,?) may be used. If you check "%1" you must use valid regular expressions.	felamimail	en	wildcards (*,?) may be used. If you check "%1" you must use valid regular expressions.
 with message	felamimail	en	With message
 with message "%1"	felamimail	en	With message "%1"
 wrap incoming text at	felamimail	en	Wrap incoming text at

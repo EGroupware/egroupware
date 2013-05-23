@@ -30,7 +30,7 @@ function SubmitForm(a)
 				</tr>
 				<tr CLASS="sieveRowActive">
 					<td NOWRAP="nowrap">
-						{lang_if_from_contains}: 
+						{lang_if_from_contains}:<sup><small>(*)</small></sup>
 					</td>
 					<td>
 						<input class="input_text" TYPE="text" NAME="from" SIZE="50" value="{value_from}">
@@ -38,7 +38,7 @@ function SubmitForm(a)
 				</tr>
 				<tr CLASS="sieveRowActive">
 					<td>
-						{lang_if_to_contains}: 
+						{lang_if_to_contains}:<sup><small>(*)</small></sup>
 					</td>
 					<td>
 						<input class="input_text" TYPE="text" NAME="to" SIZE="50" value="{value_to}">
@@ -46,7 +46,7 @@ function SubmitForm(a)
 				</tr>
 				<tr CLASS="sieveRowActive">
 					<td>
-						{lang_if_subject_contains}: 
+						{lang_if_subject_contains}:<sup><small>(*)</small></sup>
 					</td>
 					<td>
 						<input class="input_text" TYPE="text" NAME="subject" SIZE="50" value="{value_subject}">
@@ -66,15 +66,16 @@ function SubmitForm(a)
 				</tr>
 				<tr CLASS="sieveRowActive">
 					<td>
-						{lang_if_mail_header}:
+						{lang_if_mail_header}
 					</td>
 					<td>
 						<input class="input_text" TYPE="text" NAME="field" SIZE="20" value="{value_field}"> 
-						{lang_contains}:
+						{lang_contains}<sup><small>(*)</small></sup>
 						<input class="input_text" TYPE="text" NAME="field_val" SIZE="30" value="{value_field_val}">
 					</td>
 				</tr>
 			</table>
+(*) <small>{lang_wildcards_can_be_used}</small>
 	</fieldset>
 	<fieldset style="width:680px;" class="row_on"><legend>{lang_action}</legend>
 		<table WIDTH="100%" CELLPADDING="2" CELLSPACING="1" style="border: 1px solid silver;">
@@ -117,7 +118,7 @@ function SubmitForm(a)
 				<td>
 					<input TYPE="checkbox" NAME="continue" id="continue" VALUE="continue" {continue_checked}><label for="continue">{lang_check_message_against_next_rule_also}</label><br>
 					<input TYPE="checkbox" NAME="keep" id="keep" VALUE="keep" {keep_checked}><label for="keep">{lang_keep_a_copy_of_the_message_in_your_inbox}</label><br>
-					<input TYPE="checkbox" NAME="regexp" id="regexp" VALUE="regexp" {regexp_checked}><label for="regexp">{lang_use_regular_expressions}</label>
+					<input TYPE="checkbox" NAME="regexp" id="regexp" VALUE="regexp" {regexp_checked}><label for="regexp">{lang_use_regular_expressions}</label> <a href="https://{lang_langcode}.wikipedia.org/wiki/Regular_Expression" target='_blank'>{lang_see_regex_info}</a>
 				</td>
 			</tr>
 		</table>

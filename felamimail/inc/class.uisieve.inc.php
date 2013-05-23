@@ -517,7 +517,7 @@
 
 					$this->saveSessionData();
 				} else {
-					$msg .= "\n".lang("Error: Could not save rule");
+					$msg .= "\n".lang("Error: Could not save rule").' '.lang("No action defined!");
 					$error++;
 				}
 				// refresh the list
@@ -1056,6 +1056,7 @@
 
 		function translate()
 		{
+			$this->t->set_var("lang_langcode",translation::$userlang);
 			$this->t->set_var("lang_message_list",lang('Message List'));
 			$this->t->set_var("lang_from",lang('from'));
 			$this->t->set_var("lang_to",lang('to'));
@@ -1096,9 +1097,12 @@
 			$this->t->set_var("lang_check_message_against_next_rule_also",lang('check message against next rule also'));
 			$this->t->set_var("lang_keep_a_copy_of_the_message_in_your_inbox",lang('keep a copy of the message in your inbox'));
 			$this->t->set_var("lang_use_regular_expressions",lang('use regular expressions'));
+			$this->t->set_var("lang_wildcards_can_be_used",lang('wildcards (*,?) may be used. If you check "%1" you must use valid regular expressions.',lang('use regular expressions')));
+			$this->t->set_var("lang_see_regex_info",lang('(see wikipedia for information on POSIX regular expressions)'));
 			$this->t->set_var("lang_match",lang('match'));
 			$this->t->set_var("lang_all_of",lang('all of'));
 			$this->t->set_var("lang_any_of",lang('any of'));
+			$this->t->set_var("lang_contains",lang('contains'));
 			$this->t->set_var("lang_if_from_contains",lang('if from contains'));
 			$this->t->set_var("lang_if_to_contains",lang('if to contains'));
 			$this->t->set_var("lang_if_subject_contains",lang('if subject contains'));
