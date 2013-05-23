@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare  eTemplate Extension - InfoLog Widget
+ * EGroupware  eTemplate extension - InfoLog widget
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -11,7 +11,7 @@
  */
 
 /**
- * eTemplate Extension: InfoLog widget
+ * eTemplate extension: InfoLog widget
  *
  * This widget can be used to display data from an InfoLog specified by it's id
  *
@@ -41,9 +41,9 @@ class infolog_widget
 		'infolog-fields' => 'InfoLog fields',
 	);
 	/**
-	 * Instance of the boinfolog class
+	 * Instance of the infolog_bo class
 	 *
-	 * @var boinfolog
+	 * @var infolog_bo
 	 */
 	var $infolog;
 	/**
@@ -51,13 +51,14 @@ class infolog_widget
 	 *
 	 * @var array
 	 */
+	var $data;
 
 	/**
 	 * Constructor of the extension
 	 *
 	 * @param string $ui '' for html
 	 */
-	function infolog_widget($ui)
+	function __construct($ui)
 	{
 		$this->ui = $ui;
 		$this->infolog = new infolog_bo();
@@ -81,8 +82,8 @@ class infolog_widget
 		switch($cell['type'])
 		{
 			case 'infolog-fields':
-				$GLOBALS['egw']->translation->add_app('addressbook');
-				$cell['sel_options'] = $this->_get_info_fields();
+				translation::add_app('addressbook');
+				$cell['sel_options'] = $this->_get_fields();
 				$cell['type'] = 'select';
 				$cell['no_lang'] = 1;
 				break;
@@ -90,15 +91,15 @@ class infolog_widget
 			case 'infolog-value':
 			default:
 				if (substr($value,0,8) == 'infolog:') $value = substr($value,8);	// link-entry syntax
-				if (!$value || !$cell['size'] || (!is_array($this->info) || $this->info['info_id'] != $value) &&
-					!($this->info = $this->infolog->read($value)))
+				if (!$value || !$cell['size'] || (!is_array($this->data) || $this->data['info_id'] != $value) &&
+					!($this->data = $this->infolog->read($value)))
 				{
 					$cell = $tmpl->empty_cell();
 					$value = '';
 					break;
 				}
 				list($type,$compare,$alternatives,$contactfield,$regex,$replace) = explode(',',$cell['size'],6);
-				$value = $this->info[$type];
+				$value = $this->data[$type];
 				$cell['size'] = '';
 				$cell['no_lang'] = 1;
 				$cell['readonly'] = true;
@@ -111,7 +112,7 @@ class infolog_widget
 						$value = 0.0;
 						foreach(explode(':',$alternatives) as $name)
 						{
-							$value += str_replace(array(' ',','),array('','.'),$this->info[$name]);
+							$value += str_replace(array(' ',','),array('','.'),$this->data[$name]);
 						}
 						$alternatives = '';
 						break;
@@ -147,7 +148,7 @@ class infolog_widget
 						break;
 
 					case 'info_status':
-						$cell['sel_options'] = $this->infolog->status[$this->info['info_type']];
+						$cell['sel_options'] = $this->infolog->status[$this->data['info_type']];
 						$cell['type'] = 'select';
 						break;
 
@@ -171,7 +172,7 @@ class infolog_widget
 				{
 					foreach(explode(':',$alternatives) as $name)
 					{
-						if (($value = $this->info[$name])) break;
+						if (($value = $this->data[$name])) break;
 					}
 				}
 				if (!empty($compare))				// compare with value and print a X is equal and nothing otherwise
@@ -203,7 +204,7 @@ class infolog_widget
 		return True;	// extra label ok
 	}
 
-	function _get_info_fields()
+	function _get_fields()
 	{
 		static $fields;
 
@@ -241,14 +242,10 @@ class infolog_widget
 //			'info_id_parent' => lang('Parent'),
 //			'info_confirm' => lang('Confirm'),
 //			'info_custom_from' => lang('Custom from'),
-
 		);
-		if ($this->infolog->customfields)
+		foreach(config::get_customfields('infolog') as $name => $data)
 		{
-			foreach($this->infolog->customfields as $name => $data)
-			{
-				$fields['#'.$name] = lang($data['label']);
-			}
+			$fields['#'.$name] = lang($data['label']);
 		}
 		return $fields;
 	}
