@@ -37,6 +37,14 @@
    </tr>
 <!-- END ldap_admin -->
 
+<!-- BEGIN truncate_egw_accounts -->
+   <tr bgcolor="#e6e6e6">
+    <td colspan="2" align="center">
+      <label><input type="checkbox" name="truncate_egw_accounts">{truncate_egw_accounts_message}</label>
+    </td>
+   </tr>
+<!-- END truncate_egw_accounts -->
+
 <!-- BEGIN submit -->
    </tr>
    <tr bgcolor="#e6e6e6">
