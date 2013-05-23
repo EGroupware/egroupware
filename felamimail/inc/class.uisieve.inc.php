@@ -25,7 +25,6 @@
 			'editRule'		=> True,
 			'editScript'		=> True,
 			'editVacation'		=> True,
-			'increaseFilter'	=> True,
 			'listScripts'		=> True,
 			'listRules'		=> True,
 			'updateRules'		=> True,
@@ -298,44 +297,6 @@
 				$this->errorStack['message'] = lang('Vacation notice is not saved yet! (But we filled in some defaults to cover some of the above errors. Please correct and check your settings and save again.)');
 				return false;
 			}
-		}
-
-#		// RalfBecker: that does obviously nothing
-#		function deactivateScript()
-#		{
-#			$scriptName = get_var('scriptname',array('GET'));
-#			if(!empty($scriptName))
-#			{
-#				#if($this->sieve->activatescript($scriptName))
-#				#{
-#				#	#print "Successfully changed active script!<br>";
-#				#}
-#				#else
-#				#{
-#				#	#print "Unable to change active script!<br>";
-#				#	/* we could display the full output here */
-#				#}
-#			}
-#
-#			$this->listScripts();
-#		}
-
-		function decreaseFilter()
-		{
-			$this->getRules();	/* ADDED BY GHORTH */
-			$ruleID = get_var('ruleID',array('GET'));
-			if ($this->rules[$ruleID] && $this->rules[$ruleID+1])
-			{
-				$tmp = $this->rules[$ruleID+1];
-				$this->rules[$ruleID+1] = $this->rules[$ruleID];
-				$this->rules[$ruleID] = $tmp;
-			}
-
-			$this->updateScript();
-
-			$this->saveSessionData();
-
-			$this->listRules();
 		}
 
 		function display_app_header() {
@@ -815,22 +776,22 @@
 			$this->t->pfp('out','email_notification');
 		}
 
-		function increaseFilter()
+		/**
+		 * Move rule to an other position in list
+		 *
+		 * @param int $from 0, 1, ...
+		 * @param int $to   0, 1, ...
+		 */
+		function ajax_moveRule($from, $to)
 		{
-			$this->getRules();	/* ADDED BY GHORTH */
-			$ruleID = get_var('ruleID',array('GET'));
-			if ($this->rules[$ruleID] && $this->rules[$ruleID-1])
-			{
-				$tmp = $this->rules[$ruleID-1];
-				$this->rules[$ruleID-1] = $this->rules[$ruleID];
-				$this->rules[$ruleID] = $tmp;
-			}
+			$this->getRules();
+
+			$from_rule = $this->rules[$from];
+			unset($this->rules[$from]);
+			$this->rules = array_merge(array_slice($this->rules, 0, $to), array($from_rule), array_slice($this->rules, $to, count($this->rules)-$to));
 
 			$this->updateScript();
-
 			$this->saveSessionData();
-
-			$this->listRules();
 		}
 
 		function listRules()
@@ -882,9 +843,8 @@
 				$linkData = array
 				(
 					'menuaction'	=> 'felamimail.uisieve.editRule',
-					'ruletype'	=> 'filter'
 				);
-				$this->t->set_var('url_add_rule',$GLOBALS['egw']->link('/index.php',$linkData));
+				$this->t->set_var('url_edit_rule',$GLOBALS['egw']->link('/index.php',$linkData));
 
 				$linkData = array
 				(
@@ -907,27 +867,6 @@
 
 					$this->t->set_var('filter_text',htmlspecialchars($this->buildRule($rule),ENT_QUOTES,$GLOBALS['egw']->translation->charset()));
 					$this->t->set_var('ruleID',$ruleID);
-
-					$linkData = array
-					(
-						'menuaction'	=> 'felamimail.uisieve.editRule',
-						'ruleID'	=> $ruleID,
-					);
-					$this->t->set_var('url_edit_rule',$GLOBALS['egw']->link('/index.php',$linkData));
-
-					$linkData = array
-					(
-						'menuaction'	=> 'felamimail.uisieve.increaseFilter',
-						'ruleID'	=> $ruleID,
-					);
-					$this->t->set_var('url_increase',$GLOBALS['egw']->link('/index.php',$linkData));
-
-					$linkData = array
-					(
-						'menuaction'	=> 'felamimail.uisieve.decreaseFilter',
-						'ruleID'	=> $ruleID,
-					);
-					$this->t->set_var('url_decrease',$GLOBALS['egw']->link('/index.php',$linkData));
 
 					$linkData = array
 					(

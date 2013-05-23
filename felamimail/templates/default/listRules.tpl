@@ -4,8 +4,29 @@
 function submitRuleList(action)
 {
 	document.rulelist.rulelist_action.value = action;
+	$j( "#sortable input[type=checkbox]").each(function(){
+		this.value = $j(this).parent().parent().index();
+	});
 	document.rulelist.submit();
 }
+egw.LAB.wait(function() {
+	$j(document).ready(function() {
+		$j( "#sortable tbody" ).sortable({
+			start: function(e, ui) {
+				ui.item.data('start-pos', ui.item.index());
+			},
+			update: function(e, ui) {
+				var request = new egw_json_request('felamimail.uisieve.ajax_moveRule', [ui.item.data('start-pos'), ui.item.index()]);
+				request.sendRequest(true);
+			}
+		});
+		$j( "#sortable tbody" ).disableSelection();
+		$j( "#sortable tbody a" ).on("click", function(e){
+			fm_sieve_displayRuleEditWindow('{url_edit_rule}&ruleID='+$j(this).parent().parent().index()); 
+			return false;
+		});
+	})
+});
 
 var refreshURL='{refreshURL}';
 
@@ -20,24 +41,22 @@ var refreshURL='{refreshURL}';
 <a href="javascript:submitRuleList('delete');">{lang_delete}</a>
 </td>
 <td style='text-align : right;'>
-<!-- <a href="{url_add_rule}">{lang_add_rule}</a> -->
-<a href="#" onclick="fm_sieve_displayRuleEditWindow('{url_add_rule}'); return false;">{lang_add_rule}</a>
+<a href="#" onclick="fm_sieve_displayRuleEditWindow('{url_edit_rule}'); return false;">{lang_add_rule}</a>
 </td>
 </tr>
 </table>
 <form name='rulelist' method='post' action='{action_rulelist}'>
 <input type='hidden' name='rulelist_action' value='unset'>
-<table width="100%" border="0" cellpadding="2" cellspacing="1">
+<table width="100%" border="0" cellpadding="2" cellspacing="1" id="sortable">
 	<thead class="th">
 		<tr>
 			<th width="3%">&nbsp;</th>
 			<th width="10%">Status</th>
 			<th width="80%">{lang_rule}</th>
-			<th width="5%">Order</th>
 		</tr>
 	</thead>
-		{filterrows}
 	<tbody>
+		{filterrows}
 	</tbody>
 </table>
 </form>
@@ -48,17 +67,13 @@ var refreshURL='{refreshURL}';
 <!-- BEGIN filterrow -->
 <tr class="{ruleCSS}">
 	<td style="text-align: center;">
-		<input type="checkbox" name="ruleID[]" value="{ruleID}">
+		<input type="checkbox" name="ruleID[]" value="x">
 	</td>
 	<td style="text-align: center;">
 		{filter_status}
 	</td>
 	<td>
-		<a class="{ruleCSS}" href="#" onclick="fm_sieve_displayRuleEditWindow('{url_edit_rule}'); return false;" onmouseover="window.status='Edit This Rule'; return true;" onmouseout="window.status='';">{filter_text}</a>
-	</td>
-	<td nowrap="nowrap" style="text-align: center;">
-		<a href="{url_increase}"><img src="{url_up}" alt="Move rule up" border="0" onmouseover="window.status='Move rule up'; return true;" onmouseout="window.status='';"></a>
-		<a href="{url_decrease}"><img src="{url_down}" alt="Move rule down" border="0" onmouseover="window.status='Move rule down'; return true;" onmouseout="window.status='';"></a>
+		<a class="{ruleCSS}" href="#" onmouseover="window.status='Edit This Rule'; return true;" onmouseout="window.status='';">{filter_text}</a>
 	</td>
 </tr>
 <!-- END filterrow -->
