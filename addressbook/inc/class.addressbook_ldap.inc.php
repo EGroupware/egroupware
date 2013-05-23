@@ -258,7 +258,7 @@ class addressbook_ldap
 		}
 		$this->personalContactsDN	= 'ou=personal,ou=contacts,'. $this->ldap_config['ldap_contact_context'];
 		$this->sharedContactsDN		= 'ou=shared,ou=contacts,'. $this->ldap_config['ldap_contact_context'];
-		$this->accountsContactsDN	= $this->ldap_config['ldap_context'];
+		$this->accountContactsDN	= $this->ldap_config['ldap_context'];
 		$this->allContactsDN		= $this->ldap_config['ldap_contact_context'];
 
 		if ($ds)
