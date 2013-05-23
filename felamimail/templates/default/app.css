@@ -168,40 +168,32 @@ body
 }
 */
 
-TR.sieveRowActive, A.sieveRowInActive
+TR.sieveRowActive, TR.sieveRowInActive
 {
 	FONT-SIZE: 11px;
 	height : 20px;
 	padding: 0;
 	background-color: White;
 }
-TR.sieveRowActive:hover, A.sieveRowInActive:hover
+TR.sieveRowInActive
+{
+	color: Silver;
+}
+TR.sieveRowActive:hover, TR.sieveRowInActive
 {
 	background-color: #F6F7F4;
+}
+
+A.sieveRowActive
+{
+	height : 14px;
+	padding: 0;
 }
 A.sieveRowInActive
 {
 	height : 14px;
 	color: Silver;
 }
-
-A.sieveRowActive
-{
-	FONT-SIZE: 11px;
-	height : 14px;
-	padding: 0;
-}
-
-TR.sieveRowInActive
-{
-	FONT-SIZE: 11px;
-	height : 20px;
-	padding: 0;
-	background : White;
-	color: Silver;
-}
-
-
 
 .dtree {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
