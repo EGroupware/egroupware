@@ -12,7 +12,7 @@
 			<rows>
 				<row class="row" disabled="@ts_viewtype">
 					<description value="Title" options=",,,ts_title"/>
-					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" span="all" class="fullWidth"/>
+					<textbox blur="@ts_title_blur" id="ts_title" size="65" maxlength="80" span="all" class="fullWidth" tabindex="1"/>
 					<description/>
 					<description/>
 				</row>
@@ -187,7 +187,7 @@
 					</hbox>
 				</row>
 				<row>
-					<hbox span="2">
+					<hbox orient="0" span="2">
 						<hbox>
 							<button statustext="Edit this entry" label="Edit" id="button[edit]"/>
 							<button statustext="Saves this entry and add a new one" label="Save &amp; New" id="button[save_new]"/>
