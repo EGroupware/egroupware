@@ -63,7 +63,7 @@
 			</columns>
 			<rows>
 				<row class="row" valign="top">
-					<description value="Description" for="description"/>
+					<description for="description" value="Description"/>
 					<textbox multiline="true" id="description" rows="12" cols="70"/>
 				</row>
 			</rows>
@@ -89,8 +89,8 @@
 						<link-entry id="resource" options="@cal_resources"/>
 					</vbox>
 					<textbox type="integer" align="center" id="quantity" min="1" size="3"/>
-					<menulist class="selectRole">
-						<menupopup id="role"/>
+					<menulist>
+						<menupopup class="selectRole" id="role"/>
 					</menulist>
 					<button align="center" label="Add" id="add"/>
 					<description/>
@@ -105,13 +105,13 @@
 				</row>
 				<row valign="top">
 					<description id="${row}[app]"/>
-					<description cols="2" id="${row}[title]" no_lang="1" rows="1"/>
+					<description id="${row}[title]" no_lang="1"/>
 					<textbox type="integer" align="center" id="${row}[quantity]" readonly="true" min="1" size="3"/>
 					<description id="${row}[role_label]"/>
 					<menulist>
 						<menupopup id="${row}[status]" onchange="1"/>
 					</menulist>
-					<button align="center" cols="2" label="Delete" id="delete[$row_cont[delete_id]]" onchange="1" rows="1" image="delete"/>
+					<button align="center" label="Delete" id="delete[$row_cont[delete_id]]" onchange="1" image="delete"/>
 				</row>
 			</rows>
 		</grid>
@@ -139,27 +139,30 @@
 					<description/>
 					<description/>
 					<description/>
+					<description/>
+					<description/>
+					<description/>
 				</row>
 				<row class="row" height="12">
-					<description value="Repeat type" for="recur_type"/>
+					<description for="recur_type" value="Repeat type"/>
 					<menulist>
 						<menupopup id="recur_type" onchange="check_recur_type('recur_type', 2);"/>
 					</menulist>
-					<description value="Interval" for="recur_interval"/>
+					<description for="recur_interval" value="Interval"/>
 					<menulist>
 						<menupopup type="select-number" statustext="repeating interval, eg. 2 to repeat every second week" id="recur_interval" options="None,2,31"/>
 					</menulist>
 				</row>
 				<row class="row" height="12">
-					<description value="End date" for="recur_enddate"/>
+					<description for="recur_enddate" value="End date"/>
 					<date statustext="repeat the event until which date (empty means unlimited)" id="recur_enddate" onclick="if(window.calendar.params.inputField.value == '') window.calendar.parseDate(document.getElementById(form::name('start')+'[str]').value);"/>
-					<description value="Timezone" for="tzid"/>
+					<description for="tzid" value="Timezone"/>
 					<menulist>
 						<menupopup type="select-timezone" statustext="Timezone in which recurrences have identical time" id="tzid"/>
 					</menulist>
 				</row>
 				<row class="row" valign="top">
-					<description value="Repeat days" for="recur_data"/>
+					<description for="recur_data" value="Repeat days"/>
 					<listbox type="select-dow" statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6" options="1"/>
 					<vbox options="0,0">
 						<description value="Exceptions"/>
@@ -230,15 +233,15 @@
 						<menulist>
 							<menupopup type="select-number" statustext="days" id="new_alarm[days]" options=",0,7"/>
 						</menulist>
-						<description value="days" for="new_alarm[days]"/>
+						<description for="new_alarm[days]" value="days"/>
 						<menulist>
 							<menupopup type="select-number" statustext="hours" id="new_alarm[hours]" options=",0,23"/>
 						</menulist>
-						<description value="hours" for="new_alarm[hours]"/>
+						<description for="new_alarm[hours]" value="hours"/>
 						<menulist>
 							<menupopup type="select-number" statustext="Minutes" id="new_alarm[mins]" options=",0,55,5"/>
 						</menulist>
-						<description value="Minutes" for="new_alarm[mins]"/>
+						<description for="new_alarm[mins]" value="Minutes"/>
 						<menulist>
 							<menupopup statustext="Select who should get the alarm" label="for" id="new_alarm[owner]" no_lang="1"/>
 						</menulist>
@@ -291,7 +294,7 @@
 		</grid>
 	</template>
 	<template id="calendar.delete_series" template="" lang="" group="0" version="1.7.003">
-		<vbox cols="1" id="#delete_series" rows="1">
+		<vbox id="#delete_series">
 			<hbox id="#dialog-header" class="promptheader">
 				<description value="This event is part of a series"/>
 			</hbox>
@@ -312,6 +315,9 @@
 				<column width="300"/>
 				<column/>
 				<column/>
+				<column/>
+				<column/>
+				<column/>
 			</columns>
 			<rows>
 				<row disabled="!@msg">
@@ -319,25 +325,28 @@
 					<description/>
 					<description/>
 					<description/>
+					<description/>
+					<description/>
+					<description/>
 				</row>
 				<row class="th" height="28">
 					<description value="Title"/>
 					<hbox needed="1" options="0,0" span="all">
-						<textbox id="title" needed="1" size="75" maxlength="255"/>
-						<description value="#%s" id="id" font_style="b"/>
+						<textbox id="title" needed="1" size="75" maxlength="255" tabindex="1"/>
+						<description font_style="b" value="#%s" id="id"/>
 					</hbox>
 				</row>
 				<row>
-					<tabbox id="tabs" span="all">
+					<tabbox id="calendar.edit.general|calendar.edit.description|calendar.edit.participants|calendar.edit.recurrence|calendar.edit.custom|calendar.edit.links|calendar.edit.alarms|calendar.edit.history" span="all">
 						<tabs>
-							<tab id="general" label="General" statustext="Location, Start- and Endtimes, ..."/>
-							<tab id="description" label="Description" statustext="Full description"/>
-							<tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>
-							<tab id="recurrence" label="Recurrence" statustext="Repeating Event Information"/>
-							<tab id="custom" label="Custom" statustext="Custom fields"/>
-							<tab id="links" label="Links" statustext="Links, Attachments"/>
-							<tab id="alarms" label="Alarms" statustext="Alarm management"/>
-							<tab id="history" label="History" statustext="Change history"/>
+							<tab id="calendar.edit.general" label="General" statustext="Location, Start- and Endtimes, ..."/>
+							<tab id="calendar.edit.description" label="Description" statustext="Full description"/>
+							<tab id="calendar.edit.participants" label="Participants" statustext="Participants, Resources, ..."/>
+							<tab id="calendar.edit.recurrence" label="Recurrence" statustext="Repeating Event Information"/>
+							<tab id="calendar.edit.custom" label="Custom" statustext="Custom fields"/>
+							<tab id="calendar.edit.links" label="Links" statustext="Links, Attachments"/>
+							<tab id="calendar.edit.alarms" label="Alarms" statustext="Alarm management"/>
+							<tab id="calendar.edit.history" label="History" statustext="Change history"/>
 						</tabs>
 						<tabpanels>
 							<template id="calendar.edit.general"/>

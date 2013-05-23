@@ -22,6 +22,8 @@ jQuery().ready(function() {
 		});
 		activate_tab(tab.attr("id"), alltabs.join('|'));
 	});
+	// focus on input with tabindex=1
+	jQuery('input[tabindex="1"],select[tabindex="1"],textarea[tabindex="1"]').focus();
 });
 function submitit(form,name)
 {

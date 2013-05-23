@@ -206,7 +206,7 @@
 				</row>
 				<row class="row">
 					<description value="Subject" for="info_subject"/>
-					<textbox statustext="a short subject for the entry" id="info_subject" size="80" maxlength="255" span="all"/>
+					<textbox statustext="a short subject for the entry" id="info_subject" size="80" maxlength="255" span="all" tabindex="1"/>
 				</row>
 				<row valign="top" height="250">
 					<tabbox id="tabs" span="all">
