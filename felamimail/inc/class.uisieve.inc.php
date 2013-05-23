@@ -808,6 +808,9 @@
 
 			$this->saveSessionData();
 
+			// need jquery-ui for drag-n-drop
+			egw_framework::validate_file('jquery', 'jquery-ui');
+
 			// display the header
 			$this->display_app_header();
 

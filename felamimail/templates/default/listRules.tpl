@@ -9,7 +9,7 @@ function submitRuleList(action)
 	});
 	document.rulelist.submit();
 }
-egw.LAB.wait(function() {
+//egw.LAB.wait(function() {
 	$j(document).ready(function() {
 		$j( "#sortable tbody" ).sortable({
 			start: function(e, ui) {
@@ -25,8 +25,8 @@ egw.LAB.wait(function() {
 			fm_sieve_displayRuleEditWindow('{url_edit_rule}&ruleID='+$j(this).parent().parent().index()); 
 			return false;
 		});
-	})
-});
+	});
+// });
 
 var refreshURL='{refreshURL}';
 
