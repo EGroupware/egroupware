@@ -1560,6 +1560,12 @@ class mail_bo
 			return 'No Subject';
 		}
 		if ($decode) $_string = self::decode_header($_string);
+		// make sure its utf-8
+		$test = @json_encode($_string);
+		if (($test=="null" || $test === false || is_null($test)) && strlen($_string)>0)
+		{
+			$_string = utf8_encode($_string);
+		}
 		return $_string;
 
 	}

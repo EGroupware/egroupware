@@ -411,7 +411,7 @@ class mail_ui
 	 */
 	function getFolderTree($_fetchCounters=false, $_nodeID=null)
 	{
-		if ($_nodeID)
+		if (!is_null($_nodeID) && $_nodeID !=0)
 		{
 			list($_profileID,$_folderName) = explode(self::$delimiter,$_nodeID,2);
 			if (is_numeric($_profileID))
@@ -465,8 +465,7 @@ class mail_ui
 		//$endtime = microtime(true) - $starttime;
 		//error_log(__METHOD__.__LINE__.' Fetching identities Took:'.$endtime);
 
-
-		//_debug_array($folderObjects);
+		//error_log(__METHOD__.__LINE__.array2string($folderObjects));
 		$c = 0;
 		foreach($folderObjects as $key => $obj)
 		{
@@ -525,7 +524,7 @@ class mail_ui
 			$this->setOutStructure($oA,$out,$obj->delimiter);
 			$c++;
 		}
-		if ($_nodeID)
+		if (!is_null($_nodeID) && $_nodeID !=0)
 		{
 			$node = self::findNode($out,$_nodeID);
 			//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.array2string($node));
@@ -546,9 +545,9 @@ class mail_ui
 	{
 		foreach($_out['item'] as $node)
 		{
-			//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.$node['id']);
-			if ($node['id']===$_nodeID)
+			if ($node['id']==$_nodeID)
 			{
+				//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.$node['id']);
 				return ($childElements?$node['item']:$node);
 			}
 			elseif (is_array($node['item']) && strncmp($node['id'],$_nodeID,strlen($node['id']))===0 && strlen($_nodeID)>strlen($node['id']))
