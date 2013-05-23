@@ -650,7 +650,7 @@ when sending messages	felamimail	de	Wenn Nachrichten versendet werden
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	de	Welche E-Mailordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners  dargestellt werden (Empfänger-Adresse, anstatt der Absender-Adresse).
 which folders - in general - should not be automatically created, if not existing	felamimail	de	Welche E-Mailordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren? Wählen Sie hier die Ordner aus, die NICHT von EGroupware automatisch angelegt werden dürfen.
 which method to use when forwarding a message	felamimail	de	Wählen Sie die Methode zum Weiterleiten von Nachrichten.
-wildcards (*,?) may be used. If you check "%1" you must use valid regular expressions.	felamimail	de	Platzhalter (*,?) können verwendet werden. Wenn Sie "%1" aktivieren, dann müssen Sie jedoch gültige reguläre Ausdrücke angeben.
+wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "%1" you must use valid regular expressions.	felamimail	de	Platzhalter (*,?) können verwendet werden. Wenn Sie * oder ? selbst finden wollen, dann müssen Sie diesen Zeichen je einen Backslash (\) voranstellen. Wenn Sie "%1" aktivieren, dann müssen Sie jedoch gültige reguläre Ausdrücke angeben.
 with message	felamimail	de	mit folgender Nachricht
 with message "%1"	felamimail	de	mit der Nachricht "%1"
 wrap incoming text at	felamimail	de	Text umbrechen nach

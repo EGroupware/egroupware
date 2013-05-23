@@ -1097,7 +1097,7 @@
 			$this->t->set_var("lang_check_message_against_next_rule_also",lang('check message against next rule also'));
 			$this->t->set_var("lang_keep_a_copy_of_the_message_in_your_inbox",lang('keep a copy of the message in your inbox'));
 			$this->t->set_var("lang_use_regular_expressions",lang('use regular expressions'));
-			$this->t->set_var("lang_wildcards_can_be_used",lang('wildcards (*,?) may be used. If you check "%1" you must use valid regular expressions.',lang('use regular expressions')));
+			$this->t->set_var("lang_wildcards_can_be_used",lang('wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "%1" you must use valid regular expressions.',lang('use regular expressions')));
 			$this->t->set_var("lang_see_regex_info",lang('(see wikipedia for information on POSIX regular expressions)'));
 			$this->t->set_var("lang_match",lang('match'));
 			$this->t->set_var("lang_all_of",lang('all of'));

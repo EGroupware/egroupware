@@ -650,7 +650,7 @@ when sending messages	felamimail	en	When sending messages
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	en	Which folders in addition to the Sent folder should be displayed using the Sent Folder View Schema
 which folders - in general - should not be automatically created, if not existing	felamimail	en	Which folders - in general - should NOT be automatically created, if not existing
 which method to use when forwarding a message	felamimail	en	Which method to use when forwarding a message
-wildcards (*,?) may be used. If you check "%1" you must use valid regular expressions.	felamimail	en	wildcards (*,?) may be used. If you check "%1" you must use valid regular expressions.
+wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "%1" you must use valid regular expressions.	felamimail	en	wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check "%1" you must use valid regular expressions.
 with message	felamimail	en	With message
 with message "%1"	felamimail	en	With message "%1"
 wrap incoming text at	felamimail	en	Wrap incoming text at
