@@ -48,10 +48,11 @@ class setup_cmd_ldap extends setup_cmd
 	 * @param string $ldap_group_context=null ou for groups, default "ou=groups,$base"
 	 * @param string $sub_command='create_ldap' 'create_ldap', 'test_ldap', 'test_ldap_root', see exec method
 	 * @param string $ldap_encryption_type='des'
+	 * @param boolean $truncate_egw_accounts=false truncate accounts table before migration to SQL
 	 */
 	function __construct($domain,$ldap_host=null,$ldap_suffix=null,$ldap_admin=null,$ldap_admin_pw=null,
 		$ldap_base=null,$ldap_root_dn=null,$ldap_root_pw=null,$ldap_context=null,$ldap_search_filter=null,
-		$ldap_group_context=null,$sub_command='create_ldap',$ldap_encryption_type='des')
+		$ldap_group_context=null,$sub_command='create_ldap',$ldap_encryption_type='des',$truncate_egw_accounts=false)
 	{
 		if (!is_array($domain))
 		{
@@ -69,6 +70,7 @@ class setup_cmd_ldap extends setup_cmd
 				'ldap_group_context' => $ldap_group_context,
 				'sub_command'   => $sub_command,
 				'ldap_encryption_type' => $ldap_encryption_type,
+				'truncate_egw_accounts' => $truncate_egw_accounts,
 			);
 		}
 		//echo __CLASS__.'::__construct()'; _debug_array($domain);
@@ -144,6 +146,16 @@ class setup_cmd_ldap extends setup_cmd
 		}
 		// read accounts from old store
 		$accounts = $this->accounts(!$to_ldap);
+
+		// clean up SQL before migration
+		if (!$to_ldap && $this->truncate_egw_accounts)
+		{
+		        $GLOBALS['egw']->db->query('TRUNCATE TABLE egw_accounts', __LINE__, __FILE__);
+		        $GLOBALS['egw']->db->query('DELETE FROM egw_addressbook WHERE account_id IS NOT NULL', __LINE__, __FILE__);
+		}
+
+		// add egw-pear to include_path, as setup does NOT do it (only includes common_functions.inc.php from API)
+		set_include_path(EGW_SERVER_ROOT.'/egw-pear'.PATH_SEPARATOR.get_include_path());
 
 		// instanciate accounts obj for new store
 		$accounts_obj = $this->accounts_obj($to_ldap);
