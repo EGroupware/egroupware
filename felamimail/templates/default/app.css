@@ -168,12 +168,21 @@ body
 }
 */
 
-TR.sieveRowActive
+TR.sieveRowActive, A.sieveRowInActive
 {
 	FONT-SIZE: 11px;
 	height : 20px;
 	padding: 0;
-	background : White;
+	background-color: White;
+}
+TR.sieveRowActive:hover, A.sieveRowInActive:hover
+{
+	background-color: #F6F7F4;
+}
+A.sieveRowInActive
+{
+	height : 14px;
+	color: Silver;
 }
 
 A.sieveRowActive
@@ -192,13 +201,6 @@ TR.sieveRowInActive
 	color: Silver;
 }
 
-A.sieveRowInActive
-{
-	FONT-SIZE: 11px;
-	height : 14px;
-	padding: 0;	
-	color: Silver;
-}
 
 
 .dtree {

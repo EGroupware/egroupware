@@ -46,7 +46,7 @@ var refreshURL='{refreshURL}';
 <!-- END header -->
 
 <!-- BEGIN filterrow -->
-<tr class="{ruleCSS}" onmouseover="javascript:style.backgroundColor='#F6F7F4'" onmouseout="javascript:style.backgroundColor='#FFFFFF'" style="background-color: rgb(255, 255, 255);">
+<tr class="{ruleCSS}">
 	<td style="text-align: center;">
 		<input type="checkbox" name="ruleID[]" value="{ruleID}">
 	</td>
