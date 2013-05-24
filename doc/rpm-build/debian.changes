@@ -1,3 +1,38 @@
+egroupware-epl (11.1.20130524-1) hardy; urgency=low
+
+  * eMail/Sieve: sort filter rules via drag-n-drop
+  * eMail/Sieve: tell user of errors while saving rules
+  * eMail/Sieve: fix bug that prevented the ssl communication with a sieve-server; if port 5190 is configured, we switch communicating to the sieve server to use ssl
+  * eMail/Sieve/eMailAdmin: give hint about server port usage and its impact on connection
+  * eMail/Sieve: small modification of user interface for editing sieve rules to clarify the use of :matches , :contains or :regex
+  * eMail: fix bug unable to delete/rename/move selected folder
+  * eMail: make sure all of an compose/view window is shown and not hidden by e.g. the taskbar
+  * eMail: rework parsing of email adresses and making compose links out of them
+  * eMail: handle inline forward as reply as we decide about starting the compose-dialog in text OR html mode; so for the startupmode of the editor for forwards: inline forwards are handled as replys, forwards as attachments as a new mail
+  * eMail: introduce method to preset emailaddress by contact-ids (preferred emailaddress setting will be used)
+  * eMail: allow user to view / change its ActiveProfileID (quite useful if you have a basic misconfiguration)
+  * eMail: allow open as HTML/Plain Text on right click action
+  * eMail/forwarding: fix bug in smtp_ldap backend regarding broken change of forwarding addresses introduced with capability of setting multiple forwardingaddresses
+  * eMail: fix problem on compose when changing signatures, when html-mail contained anchors
+  * API/phpmailer: introduce optional parameter to InlineImageExists, to be able to determine if all attachments are inline, or only some; this will be used to decide on the mimetype of the message to be sent (multipart/ related (all) or mixed (some))
+  * Addressbook: allow to add a customfield to link title of addressbook
+  * Calendar: create InfoLog from event
+  * Calendar/CalDAV: fixed typo causing time range for sync into past and future to be shorter then default or explicilty set in preferences
+  * Calendar/CalDAV: reduced memory foot-print by caching alarms, calendars with lots of alarms and recurring events sync now with 128MB memory_limit
+  * CalDAV/CardDAV/Calendar/InfoLog/Addressbook: changed database schema to allow for up to 200 char name-part in url to support eg. Bynari WebDAV Collaborator Outlook client, plus some new indexes to speed up huge installs
+  * Calendar/InfoLog/Timesheet/Tracker/ProjectManager: edit focuses now automatic on title input
+  * Tracker: widget to fetch tracker-data for custom print templates
+  * Tracker: fix bug regarding the save of replys that could be regarded as empty (only span with style, no content)
+  * Timesheet: allow to add timesheets starting yesterday and end today (no warning end-time before start-time)
+  * eSync: kill HandlePing / sync if device reports a lifetime bolow 60s
+  * All apps: group grants now again return inactive users, was broken since inactive users are no longer shown in user-selections
+  * API: fallback auth checks and - if necessary - updates passwords on fallback on successful primary authentication or password change, to ensure they are kept up to date
+  * Admin: fixed fatal error when creating new users
+  * LDAP: only check for matching system users, if a new account get added, as existing accounts can be reported - depending on configuration - as system users too
+  * EventMgr: fixed typo causing an uncaught exception, when used with PHP 5.4
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 24 May 2013 09:14:24 +0200
+
 egroupware-epl (11.1.20130426-1) hardy; urgency=low
 
   * Filemanager: fixed not working "Save as" for Internet Explorer (all versions), gave PHP Fatal Error
