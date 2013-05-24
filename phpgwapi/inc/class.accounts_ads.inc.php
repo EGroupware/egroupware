@@ -19,7 +19,16 @@ require_once EGW_API_INC.'/adldap/adLDAP.php';
  * RID (realtive id / last part of string-SID) is used as nummeric account-id (negativ for groups).
  * SID for queries get reconstructed from account_id by prepending domain-SID.
  *
+ * Easiest way to enable SSL on a win2008r2 DC is to install role "Active Director Certificate Services"
+ * or in German "Active Directory-Zertificatsdienste" AND reboot.
+ *
+ * Changing passwords currently requires ads_admin user (configured in setup) to have "Reset Password"
+ * priveledges, as PHP can not delete unicodePwd attribute with old password and set it in same
+ * operation with new password!
+ *
  * @access internal only use the interface provided by the accounts class
+ * @link http://www.selfadsi.org/user-attributes-w2k8.htm
+ * @link http://www.selfadsi.org/attributes-e2k7.htm
  */
 class accounts_ads
 {
@@ -625,6 +634,11 @@ class accounts_ads
 			$attributes = array();
 			foreach($new2adldap as $egw => $adldap)
 			{
+				if ($egw == 'account_passwd' && (empty($data[$egw]) ||
+					!$this->adldap->getUseSSL() && !$this->adldap->getUseTLS()))
+				{
+					continue;	// do not try to set password, if no SSL or TLS, whole user creation will fail
+				}
 				if (isset($data[$egw])) $attributes[$adldap] = $data[$egw];
 			}
 			$attributes['enabled'] = !isset($data['account_status']) || $data['account_status'] === 'A';
@@ -673,6 +687,12 @@ class accounts_ads
 			{
 				switch($egw)
 				{
+					case 'account_passwd':
+						if (!empty($data[$egw]) && ($this->adldap->getUseSSL() || $this->adldap->getUseTLS()))
+						{
+							$attributes[$adldap] = $data[$egw];	// only try to set password, if no SSL or TLS
+						}
+						break;
 					case 'account_primary_group':
 						// setting a primary group seems to fail, if user is no member of that group
 						if (isset($old['memberships'][$data[$egw]]) ||
@@ -684,13 +704,14 @@ class accounts_ads
 						break;
 					case 'account_lid':
 						$ldap[$adldap] = $data[$egw];
+						$ldap['userPrincipalName'] = $data[$egw].'@'.$this->frontend->config['ads_domain'];
 						break;
 					case 'account_expires':
 						$attributes[$adldap] = $data[$egw] == -1 ? self::EXPIRES_NEVER :
 							self::convertUnixTimeToWindowsTime($data[$egw]);
 						break;
 					case 'account_status':
-						$attributes[$adldap] = $data[$egw] != 'A';
+						$attributes[$adldap] = $data[$egw] == 'A';
 						break;
 					default:
 						$attributes[$adldap] = $data[$egw];
@@ -710,6 +731,8 @@ class accounts_ads
 			error_log(__METHOD__."(".array2string($data).") ldap_modify($ds, '$old[account_dn]', ".array2string($ldap).') returned '.array2string($ret));
 			return false;
 		}
+		else error_log(__METHOD__."(".array2string($data).") ldap_modify($ds, '$old[account_dn]', ".array2string($ldap).') returned '.array2string($ret));
+
 		return $old['account_id'];
 	}
 
@@ -979,7 +1002,7 @@ class accounts_ads
 		}
 		else if (self::$debug) error_log(__METHOD__.'('.array2string($attr_filter).", '$account_type') ldap_search($ds, '$context', '$filter')=$sri allValues=".array2string($allValues));
 
-		error_log(__METHOD__.'('.array2string($attr_filter).", '$account_type') ldap_search($ds, '$context', '$filter') returning ".array2string($accounts).' '.function_backtrace());
+		//error_log(__METHOD__.'('.array2string($attr_filter).", '$account_type') ldap_search($ds, '$context', '$filter') returning ".array2string($accounts).' '.function_backtrace());
 		return $accounts;
 	}
 
@@ -1147,7 +1170,7 @@ class adLDAP_egw extends adLDAP
 	 *
 	 * @var string
 	 */
-	protected $charset = 'iso-8859-1';
+	public $charset = 'iso-8859-1';
 
 	function __construct(array $options=array())
 	{
@@ -1225,6 +1248,11 @@ class adLDAPUsers_egw extends adLDAPUsers
 	 *
 	 * Extended to allow to specify $attribute["container"] as string, because array hardcodes "OU=", while Samba4 and win2008r2 uses "CN=Users"
 	 *
+	 * Extended to ensure following creating order required by at least win2008r2:
+	 * - new user without password and deactivated
+	 * - add password, see new method setPassword
+	 * - activate user
+	 *
 	 * @param array $attributes The attributes to set to the user account
 	 * @return bool
 	 */
@@ -1252,6 +1280,7 @@ class adLDAPUsers_egw extends adLDAPUsers
 		// Additional stuff only used for adding accounts
 		$add["cn"][0] = $attributes["display_name"];
 		$add["samaccountname"][0] = $attributes["username"];
+		$add["userPrincipalName"][0] = $attributes["username"].$this->adldap->getAccountSuffix();
 		$add["objectclass"][0] = "top";
 		$add["objectclass"][1] = "person";
 		$add["objectclass"][2] = "organizationalPerson";
@@ -1259,10 +1288,7 @@ class adLDAPUsers_egw extends adLDAPUsers
 		//$add["name"][0]=$attributes["firstname"]." ".$attributes["surname"];
 
 		// Set the account control attribute
-		$control_options = array("NORMAL_ACCOUNT");
-		if (!$attributes["enabled"]) {
-			$control_options[] = "ACCOUNTDISABLE";
-		}
+		$control_options = array("NORMAL_ACCOUNT", "ACCOUNTDISABLE");
 		$add["userAccountControl"][0] = $this->accountControl($control_options);
 
 		// Determine the container
@@ -1270,10 +1296,29 @@ class adLDAPUsers_egw extends adLDAPUsers
 			$attributes["container"] = array_reverse($attributes["container"]);
 			$attributes["container"] = "OU=" . implode(",OU=",$attributes["container"]);
 		}
+		// we can NOT set password with ldap_add or ldap_modify, it needs ldap_mod_replace, at least under Win2008r2
+		unset($add['unicodePwd']);
+
 		// Add the entry
-		$result = @ldap_add($this->adldap->getLdapConnection(), "CN=" . $add["cn"][0] . "," . $attributes["container"] . "," . $this->adldap->getBaseDn(), $add);
+		$result = ldap_add($ds=$this->adldap->getLdapConnection(), $dn="CN=" . $add["cn"][0] . "," . $attributes["container"] . "," . $this->adldap->getBaseDn(), $add);
 		if ($result != true) {
+			error_log(__METHOD__."(".array2string($attributes).") ldap_add($ds, '$dn', ".array2string($add).") returned ".array2string($result)." ldap_error()=".ldap_error($ds));
 			return false;
+		}
+
+		// now password can be added to still disabled account
+		if (array_key_exists("password",$attributes))
+		{
+			if (!$this->setPassword($dn, $attributes['password'])) return false;
+
+			// now account can be enabled
+			if ($attributes["enabled"])
+			{
+				$control_options = array("NORMAL_ACCOUNT");
+				$mod = array("userAccountControl" => $this->accountControl($control_options));
+				$result = ldap_modify($ds, $dn, $mod);
+				if (!$result) error_log(__METHOD__."(".array2string($attributes).") ldap_modify($ds, '$dn', ".array2string($mod).") returned ".array2string($result)." ldap_error()=".ldap_error($ds));
+			}
 		}
 
 		return true;
@@ -1292,12 +1337,91 @@ class adLDAPUsers_egw extends adLDAPUsers
         $password="\"".$password."\"";
         if (function_exists('mb_convert_encoding'))
         {
-			return mb_convert_encoding($password, 'UTF-16LE', $this->adldap->charset);
+            return mb_convert_encoding($password, 'UTF-16LE', $this->adldap->charset);
         }
         $encoded="";
         for ($i=0; $i <strlen($password); $i++){ $encoded.="{$password{$i}}\000"; }
         return $encoded;
     }
+
+    /**
+     * Set a password
+     *
+     * Requires "Reset password" priviledges from bind user!
+     *
+	 * We can NOT set password with ldap_add or ldap_modify, it needs ldap_mod_replace, at least under Win2008r2!
+	 *
+     * @param string $dn
+     * @param string $password
+     * @return boolean
+     */
+    public function setPassword($dn, $password)
+    {
+    	$result = ldap_mod_replace($ds=$this->adldap->getLdapConnection(), $dn, array(
+    		'unicodePwd' => $this->encodePassword($password),
+    	));
+    	if (!$result) error_log(__METHOD__."('$dn', '$password') ldap_mod_replace($ds, '$dn', \$password) returned FALSE: ".ldap_error($ds));
+    	return $result;
+    }
+
+    /**
+    * Modify a user
+    *
+    * @param string $username The username to query
+    * @param array $attributes The attributes to modify.  Note if you set the enabled attribute you must not specify any other attributes
+    * @param bool $isGUID Is the username passed a GUID or a samAccountName
+    * @return bool
+    */
+    public function modify($username, $attributes, $isGUID = false)
+    {
+        if ($username === NULL) { return "Missing compulsory field [username]"; }
+        if (array_key_exists("password", $attributes) && !$this->adldap->getUseSSL() && !$this->adldap->getUseTLS()) {
+            throw new adLDAPException('SSL/TLS must be configured on your webserver and enabled in the class to set passwords.');
+        }
+
+        // Find the dn of the user
+        $userDn = $this->dn($username, $isGUID);
+        if ($userDn === false) {
+            return false;
+        }
+
+        // Translate the update to the LDAP schema
+        $mod = $this->adldap->adldap_schema($attributes);
+
+        // Check to see if this is an enabled status update
+        if (!$mod && !array_key_exists("enabled", $attributes)){
+            return false;
+        }
+
+        // Set the account control attribute (only if specified)
+        if (array_key_exists("enabled", $attributes)){
+            if ($attributes["enabled"]){
+                $controlOptions = array("NORMAL_ACCOUNT");
+            }
+            else {
+                $controlOptions = array("NORMAL_ACCOUNT", "ACCOUNTDISABLE");
+            }
+            $mod["userAccountControl"][0] = $this->accountControl($controlOptions);
+        }
+		// we can NOT set password with ldap_add or ldap_modify, it needs ldap_mod_replace, at least under Win2008r2
+		unset($mod['unicodePwd']);
+
+		if ($mod)
+		{
+	        // Do the update
+	        $result = @ldap_modify($ds=$this->adldap->getLdapConnection(), $userDn, $mod);
+			$mod['unicodePwd'] = '***';
+			error_log(__METHOD__."(".array2string($attributes).") ldap_modify($ds, '$userDn', ".array2string($mod).") returned ".array2string($result)." ldap_error()=".ldap_error($ds));
+	        if ($result == false) {
+	            return false;
+	        }
+		}
+        if (array_key_exists("password",$attributes) && !$this->setPassword($userDn, $attributes['password']))
+		{
+			return false;
+		}
+		return true;
+	}
 }
 
 /**

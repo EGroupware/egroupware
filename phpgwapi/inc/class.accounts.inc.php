@@ -473,8 +473,7 @@ class accounts
 		if (($id = $this->backend->save($data)) && $data['account_type'] != 'g')
 		{
 			// if we are not on a pure LDAP system, we have to write the account-date via the contacts class now
-			if (($this->config['account_repository'] != 'ldap' ||
-				$this->config['contact_repository'] == 'sql-ldap') &&
+			if (($this->config['account_repository'] == 'sql' || $this->config['contact_repository'] == 'sql-ldap') &&
 				(!($old = $this->read($data['account_id'])) ||	// only for new account or changed contact-data
 				$old['account_firstname'] != $data['account_firstname'] ||
 				$old['account_lastname'] != $data['account_lastname'] ||

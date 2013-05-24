@@ -540,7 +540,11 @@
      <td><input name="newsettings[ads_domain]" value="{value_ads_domain}" size="40" /></td>
    </tr>
    <tr class="row_off">
-     <td>{lang_Admin_user}<br/>{lang_optional,_if_only_authentication_AND_anonymous_search_is_enabled}:</td>
+     <td>
+     	{lang_Admin_user}:<br/>
+     	({lang_optional,_if_only_authentication_AND_anonymous_search_is_enabled})<br/>
+     	{lang_Requires_"Reset_Password"_priviledges,_to_change_passwords!}
+     </td>
      <td><input name="newsettings[ads_admin_user]" value="{value_ads_admin_user}" size="40" /></td>
    </tr>
    <tr class="row_on">
@@ -548,8 +552,11 @@
      <td><input type="password" name="newsettings[ads_admin_passwd]" value="{value_ads_admin_passwd}" size="40" /></td>
    </tr>
    <tr class="row_off">
-     <td>{lang_use_TLS_or_SSL} {lang_required_to_change_passwords}<br/>
-     	<a href="http://adldap.sourceforge.net/wiki/doku.php?id=ldap_over_ssl" target="_blank">{lang_needs_extra_configuration_on_DC_and_webserver!}</a>:</td>
+     <td>
+     	{lang_use_TLS_or_SSL} {lang_required_to_change_passwords}:<br/>
+     	{lang_Needs_extra_configuration_on_DC_and_webserver!}<br/>
+     	{lang_On_win2008r2_easiest_way_is_to_enable_"Active_Directory_Certivicate_Services"_and_reboot.}
+     </td>
      <td>
      	<select name="newsettings[ads_connection]">
 			<option value="">{lang_No}</option>
