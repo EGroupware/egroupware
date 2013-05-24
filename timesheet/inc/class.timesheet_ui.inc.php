@@ -132,6 +132,16 @@ class timesheet_ui extends timesheet_bo
 			if ($end && $start)	// start- & end-time --> calculate the duration
 			{
 				$content['ts_duration'] = ($end->format('ts') - $start->format('ts')) / 60;
+				// check if negative duration is caused by wrap over midnight
+				if ($content['ts_duration'] < 0 && $content['ts_duration'] > -24*60)
+				{
+					$yesterday = new egw_time();
+					$yesterday->modify('-1day');
+					if ($start->format('Y-m-d') == $yesterday->format('Y-m-d'))
+					{
+						$content['ts_duration'] += 24*60;
+					}
+				}
 				//echo "<p>end_time=$content[end_time], start_time=$content[start_time] --> duration=$content[ts_duration]</p>\n";
 			}
 			elseif ($content['ts_duration'] && $end)	// no start, calculate from end and duration
