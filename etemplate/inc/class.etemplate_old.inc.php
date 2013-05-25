@@ -2195,7 +2195,7 @@ class etemplate_old extends boetemplate
 	* @param array $to_process list of widgets/form-fields to process
 	* @param string $cname='' basename of our returnt content (same as in call to show)
 	* @param string $_type='regular' type of request
-	* @return int number of validation errors (the adjusted content is returned by the var-param &$content !)
+	* @return array with validation errors
 	*/
 	function process_show(&$content,$to_process,$cname='',$_type='regular')
 	{
@@ -2432,7 +2432,7 @@ class etemplate_old extends boetemplate
 				echo "<p>validation_errors = "; _debug_array(self::$validation_errors);
 			}
 		}
-		return count(self::$validation_errors);
+		return self::$validation_errors;
 	}
 
 	/**
