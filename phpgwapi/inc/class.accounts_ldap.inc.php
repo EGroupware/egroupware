@@ -1141,6 +1141,10 @@ class accounts_ldap
 		$min = $this->frontend->config['account_min_id'] ? $this->frontend->config['account_min_id'] : 0;
 		$max = $this->frontend->config['account_max_id'] ? $this->frontend->config['account_max_id'] : 0;
 
+		// prefer ids above 1000 (below reserved for system users under AD or Linux),
+		// if that's possible within what is configured, or nothing is configured
+		if ($min < 1000 && (!$max || $max > 1000)) $min = 1000;
+
 		if ($account_type == 'g')
 		{
 			$type = 'groups';
@@ -1154,12 +1158,15 @@ class accounts_ldap
 		/* Loop until we find a free id */
 		do
 		{
-			$account_id = (int) $GLOBALS['egw']->common->next_id($type,$min,$max);
+			$account_id = (int) common::next_id($type,$min,$max);
 		}
-		while ($account_id && ($this->frontend->exists($sign * $account_id) || $this->frontend->exists(-1 * $sign * $account_id)));	// check need to include the sign!
+		while ($account_id && ($this->frontend->exists($sign * $account_id) ||	// check need to include the sign!
+			$this->frontend->exists(-1 * $sign * $account_id) ||
+			// if sambaadmin is installed, call it to check there's not yet a relative id (last part of SID) with that number
+			// to ease migration to AD or Samba4
+			$GLOBALS['egw_info']['apps']['sambaadmin'] && ExecMethod2('sambaadmin.sosambaadmin.sidExists', $account_id)));
 
-		if	(!$account_id || $this->frontend->config['account_max_id'] &&
-			$account_id > $this->frontend->config['account_max_id'])
+		if	(!$account_id || $max && $account_id > $max)
 		{
 			return False;
 		}

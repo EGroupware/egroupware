@@ -727,6 +727,7 @@ class accounts
 		{
 			$this->backend->set_memberships($groups, $account_id);
 
+			if (!$old_memberships) $old_memberships = array();
 			self::cache_invalidate(array_unique(array_merge(
 				array($account_id),
 				array_diff($old_memberships, $groups),
