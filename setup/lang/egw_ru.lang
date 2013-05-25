@@ -284,7 +284,7 @@ http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	ru
 if no acl records for user or any group the user is a member of	setup	ru	Если нет записей ACL для пользователя или группы, пользователь входит в
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ru	Если безопасный режим включен, у eGW нет возможностии менять некоторые настройки при запуске так же как и нет возможности запускать любые еще не загруженные модули.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	ru	Если приложение не имеет заранее определенных таблиц, выбор модернизации скорее всего вызовет ряд проблем
-if using ads (active directory) authentication	setup	ru	Используя ADS (Active Directory) идентификацию
+if using ads (active directory)	setup	ru	Используя ADS (Active Directory) идентификацию
 if using ldap	setup	ru	Используя LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ru	При использовании LDAP,желаете ли вы управлять атрибутами домашних папок  и параметрами входа?
 if you did not receive any errors, your applications have been	setup	ru	Если вы не получили уведомлений об ошибках,ваше приложение успешно

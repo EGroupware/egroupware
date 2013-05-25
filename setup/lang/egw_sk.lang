@@ -313,7 +313,7 @@ http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	sk
 if no acl records for user or any group the user is a member of	setup	sk	Ak pre používateľa neexistujú ACL záznamy, používateľom je členom
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	sk	Ak je bezpečný režim zapnutý, eGW nedokáže zmeniť niektoré veci za behu, ani nahrať nejaký nenahratý modul.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	sk	Ak aplikácia nemá tabuľky definícií, voľba "aktualizácia" by mala problém vyriešiť
-if using ads (active directory) authentication	setup	sk	Ak používate ADS (ActiveDirectory) autentifikáciu
+if using ads (active directory)	setup	sk	Ak používate ADS (ActiveDirectory) autentifikáciu
 if using cas (central authentication service):	setup	sk	Ak používate cas (Centrálnu Autentifikačnú Službu):
 if using ldap	setup	sk	Ak používate LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	sk	Ak používate LDAP, chcete spravovať domovský adresár a atribúty login shell?

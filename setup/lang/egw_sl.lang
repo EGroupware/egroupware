@@ -295,7 +295,7 @@ http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	sl
 if no acl records for user or any group the user is a member of	setup	sl	Če ni ACL zapisov za uporabnika ali katerokoli skupino, katere član je
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	sl	Če je vključen način "safe_mode", eGW med delovanjem ne more spremeniti nekaterih nastavitev  niti ne more naložiti novih modulov.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	sl	Če aplikacija nima definiranih tabel, potem bi nadgrajevanje moralo rešiti težave.
-if using ads (active directory) authentication	setup	sl	Če uporabljate ADS (Aktivni Direktorij ) overovljenje
+if using ads (active directory)	setup	sl	Če uporabljate ADS (Aktivni Direktorij ) overovljenje
 if using cas (central authentication service):	setup	sl	Če uporabljate cas (Central Authentication Service):
 if using ldap	setup	sl	Če uporabljate LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	sl	Če uporabljate LDAP, ali želite upravljati domači direktorij in lastnosti prijavne lupine?

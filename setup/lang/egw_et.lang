@@ -110,7 +110,7 @@ grant access	setup	et	Luba Ligipääs
 group	setup	et	grupp
 host information	setup	et	Hosti informatsioon
 hostname/ip of database server	setup	et	Hostinimi/IP või andmebaasi server
-if using ads (active directory) authentication	setup	et	kui kasutad ADS (Active Directory) audentimist
+if using ads (active directory)	setup	et	kui kasutad ADS (Active Directory) audentimist
 if using ldap	setup	et	kui kasutad LDAP
 image type selection order	setup	et	Piltide tüübi sisestamise järjekord
 import has been completed!	setup	et	Importimine on lõpetatud!

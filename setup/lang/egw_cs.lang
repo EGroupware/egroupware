@@ -314,7 +314,7 @@ http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	cs
 if no acl records for user or any group the user is a member of	setup	cs	Pokud nejsou ACL záznamy pro uživatele nebo libovolnou skupinu, které je členem
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	cs	Pokud je zapnutý režim safe_mode, eGW nemůže za běhu měnit některá nastavení ani načítat dosud nenačtené moduly
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	cs	Pokud aplikace nemá definovány tabulky, aktualizace by měla problém napravit
-if using ads (active directory) authentication	setup	cs	Při použití ADS (Active Directory) autentikace
+if using ads (active directory)	setup	cs	Při použití ADS (Active Directory) autentikace
 if using cas (central authentication service):	setup	cs	Při použití CAS (Central Authentication Service):
 if using ldap	setup	cs	Při použití LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	cs	Chcete při použití LDAP spravovat atributy pro domovský adresář a loginshell?

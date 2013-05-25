@@ -281,7 +281,7 @@ however, the application may still work	setup	fi	Sovellus voi toimia tästä huo
 if no acl records for user or any group the user is a member of	setup	fi	Jos käyttäjällä tai käyttäjän ryhmillä ei ole ACL-tietueita, käyttäjä on tämän ryhmän jäsen:
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	fi	Jos safe_mode on päällä, eGW ei voi muuttaa kaikkia asetuksia ajon aikana, eikä ladata uusia moduuleita.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	fi	Jos sovelluksella ei ole määriteltyjä tauluja, päivittämisen pitäisi korjata ongelma
-if using ads (active directory) authentication	setup	fi	Jos käytetään ADS (Active Directory) -tunnistusta
+if using ads (active directory)	setup	fi	Jos käytetään ADS (Active Directory) -tunnistusta
 if using cas (central authentication service):	setup	fi	Jos käytetään CAS (Central Authentication Service):
 if using ldap	setup	fi	Jos käytetään LDAP-tunnistusta
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	fi	Jos käytät LDAP-tunnistusta, haluatko hallita kotihakemisto- ja shellattribuutteja?

@@ -199,7 +199,7 @@ however, the application may still work	setup	no	Det kan hende programmet fortsa
 if no acl records for user or any group the user is a member of	setup	no	Om inga åtkomstregler finns för användaren eller de grupper användaren är medlem av
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	no	Om Safe Mode är aktiverat kan inte eGW ändra vissa inställningar medans den kör, eller ladda  en modul som inte redan är laddad.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	no	Om applikationen saknar definerade tabeller bör du välja att uppgradera den.
-if using ads (active directory) authentication	setup	no	Dersom det benyttes ADS (Active Directory) autentisering.
+if using ads (active directory)	setup	no	Dersom det benyttes ADS (Active Directory) autentisering.
 if using ldap	setup	no	Om LDAP används
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	no	Om LDAP används, vill du hantera attribut för hemktalog och programskal?
 if you did not receive any errors, your applications have been	setup	no	Om du inte såg några fel så har dina applikationer blivit

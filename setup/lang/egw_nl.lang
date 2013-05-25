@@ -296,7 +296,7 @@ http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	nl
 if no acl records for user or any group the user is a member of	setup	nl	Als er ACL records voor de gebruiker of een willekeurige groep zijn is de gebruiker lid van
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	nl	Indien safe_mode ingeschakeld is kan eGW bepaalde instellingen niet tijdens runtime wijzen, bovendien kunnen we geen enkele nog niet geladen module laden.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	nl	Indien de toepassing geen tabellen heeft gedefinieerd is het kiezen voor upgrade de oplossing voor dit problemen
-if using ads (active directory) authentication	setup	nl	Indien ADS (Active Directory) authenticatie gebruikt wordt
+if using ads (active directory)	setup	nl	Indien ADS (Active Directory) authenticatie gebruikt wordt
 if using cas (central authentication service):	setup	nl	indien cas gebruikt wordt (Centrale Authenticatie Service)
 if using ldap	setup	nl	Indien LDAP gebruikt wordt
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	nl	Indien LDAP gebruikt wordt, wilt u dan de homedirectory en loginshell attributen beheren?

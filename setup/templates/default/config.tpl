@@ -396,7 +396,7 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td colspan="2">&nbsp;</td>
    </tr>
 
@@ -405,8 +405,11 @@
    </tr>
 
    <tr class="row_on">
-    <td>{lang_LDAP_host}:</td>
-    <td><input name="newsettings[ldap_host]" value="{value_ldap_host}" /></td>
+    <td>
+    	{lang_LDAP_host} {lang_IP_or_URL}: (ldap|ldaps|tls)://IP[:port]/<br/>
+    	({lang_use_space_to_separate_multiple}):
+    </td>
+    <td><input name="newsettings[ldap_host]" value="{value_ldap_host}" size="40" /></td>
    </tr>
 
    <tr class="row_off">
@@ -479,11 +482,65 @@
     </td>
    </tr>
 
+   <tr class="row_off">
+    <td colspan="2">&nbsp;</td>
+   </tr>
+
+   <tr class="th">
+    <td colspan="2"><b>{lang_If_using_ADS_(Active_Directory)}:</b></td>
+   </tr>
+   <tr class="row_off">
+     <td>{lang_Host/IP_Domain_controler} ({lang_use_space_to_separate_multiple}):</td>
+     <td><input name="newsettings[ads_host]" value="{value_ads_host}" size="40" /></td>
+   </tr>
+   <tr class="row_on">
+     <td>{lang_Domain_name}:</td>
+     <td><input name="newsettings[ads_domain]" value="{value_ads_domain}" size="40" /></td>
+   </tr>
+   <tr class="row_off">
+     <td>
+     	{lang_Admin_user}:<br/>
+     	({lang_optional,_if_only_authentication_AND_anonymous_search_is_enabled})<br/>
+     	{lang_Requires_"Reset_Password"_privilege,_to_change_passwords!}
+     </td>
+     <td><input name="newsettings[ads_admin_user]" value="{value_ads_admin_user}" size="40" /></td>
+   </tr>
+   <tr class="row_on">
+     <td>{lang_Password}:</td>
+     <td><input type="password" name="newsettings[ads_admin_passwd]" value="{value_ads_admin_passwd}" size="40" /></td>
+   </tr>
+   <tr class="row_off">
+     <td>
+     	{lang_Use_TLS_or_SSL_encryption} ({lang_required_to_change_passwords}):<br/>
+     	{lang_Needs_extra_configuration_on_DC_and_webserver!}<br/>
+     	({lang_Easiest_way_under_win2008r2_is_to_add_role_"Active_Directory_Certificate_Services"_and_reboot.})
+     </td>
+     <td>
+     	<select name="newsettings[ads_connection]">
+			<option value="">{lang_No}</option>
+			<option value="tls"{selected_ads_connection_tls}>TLS</option>
+			<option value="ssl"{selected_ads_connection_ssl}>SSL</option>
+     	</select>	
+     </td>
+   </tr>
+   <tr class="row_on">
+     <td>
+     	{lang_Context_to_create_users}:<br/>
+     	{lang_eg._"CN=Users,DC=domain,DC=com"_for_ADS_domain_"domain.com"}<br/>
+     	({lang_leave_empty_to_use_default})
+     </td>
+     <td><input name="newsettings[ads_context]" value="{value_ads_context}" size="80" /></td>
+   </tr>
+
+   <tr class="row_off">
+    <td colspan="2">&nbsp;</td>
+   </tr>
+
    <tr class="th">
     <td colspan="2"><b>{lang_If_using_CAS_(Central_Authentication_Service):}</b></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_CAS_server_host_name:<br />Example:_sso-cas.univ-rennes1.fr}</td>
     <td><input name="newsettings[cas_server_host_name]" value="{value_cas_server_host_name}" size="40" /></td>
    </tr>
@@ -493,7 +550,7 @@
     <td><input name="newsettings[cas_server_port]" value="{value_cas_server_port}" size="40" /></td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_CAS_server_uri:}</td>
     <td><input name="newsettings[cas_server_uri]" value="{value_cas_server_uri}" size="40" /></td>
    </tr>
@@ -508,7 +565,7 @@
     </td>
    </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_SSL_validation:}</td>
     <td>
      <select name="newsettings[cas_ssl_validation]">
@@ -526,48 +583,6 @@
 
    <tr class="row_on">
     <td colspan="2">&nbsp;</td>
-   </tr>
-
-   <tr class="th">
-    <td colspan="2"><b>{lang_If_using_ADS_(Active_Directory)_authentication}:</b></td>
-   </tr>
-   <tr class="row_off">
-     <td>{lang_Host/IP_Domain_controler}:</td>
-     <td><input name="newsettings[ads_host]" value="{value_ads_host}" size="40" /></td>
-   </tr>
-   <tr class="row_on">
-     <td>{lang_Domain_name}:</td>
-     <td><input name="newsettings[ads_domain]" value="{value_ads_domain}" size="40" /></td>
-   </tr>
-   <tr class="row_off">
-     <td>
-     	{lang_Admin_user}:<br/>
-     	({lang_optional,_if_only_authentication_AND_anonymous_search_is_enabled})<br/>
-     	{lang_Requires_"Reset_Password"_priviledges,_to_change_passwords!}
-     </td>
-     <td><input name="newsettings[ads_admin_user]" value="{value_ads_admin_user}" size="40" /></td>
-   </tr>
-   <tr class="row_on">
-     <td>{lang_Password}:</td>
-     <td><input type="password" name="newsettings[ads_admin_passwd]" value="{value_ads_admin_passwd}" size="40" /></td>
-   </tr>
-   <tr class="row_off">
-     <td>
-     	{lang_use_TLS_or_SSL} {lang_required_to_change_passwords}:<br/>
-     	{lang_Needs_extra_configuration_on_DC_and_webserver!}<br/>
-     	{lang_On_win2008r2_easiest_way_is_to_enable_"Active_Directory_Certivicate_Services"_and_reboot.}
-     </td>
-     <td>
-     	<select name="newsettings[ads_connection]">
-			<option value="">{lang_No}</option>
-			<option value="tls"{selected_ads_connection_tls}>TLS</option>
-			<option value="ssl"{selected_ads_connection_ssl}>SSL</option>
-     	</select>	
-     </td>
-   </tr>
-   <tr class="row_on">
-     <td>{lang_Context_to_create_users}:<br/>{lang_eg._"CN=Users,DC=domain,DC=com"_for_ADS_domain_"domain.com"}</td>
-     <td><input name="newsettings[ads_context]" value="{value_ads_context}" size="80" /></td>
    </tr>
 
    <tr class="row_off">

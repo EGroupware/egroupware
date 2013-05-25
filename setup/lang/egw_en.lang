@@ -41,6 +41,7 @@ admin first name	setup	en	Admin first name
 admin last name	setup	en	Admin last name
 admin password	setup	en	Admin password
 admin password to header manager	setup	en	Admin password to header manager
+admin user	setup	en	Admin user
 admin user for header manager	setup	en	Admin user for header manager
 admin username	setup	en	Admin username
 admins	setup	en	Admins
@@ -168,6 +169,7 @@ configuration user	setup	en	Configuration user
 configure now	setup	en	Configure now
 confirm to delete this backup?	setup	en	Confirm to delete this backup?
 contain	setup	en	Contain
+context to create users	setup	en	Context to create users
 continue	setup	en	Continue
 continue to the header admin	setup	en	Continue to the Header Admin
 convert	setup	en	Convert
@@ -243,9 +245,11 @@ domain-name	setup	en	Domain name
 don't change, if you already stored files! you will loose them!	setup	en	Don't change, if you already stored files! You will loose them!
 dont touch my data	setup	en	Don't touch my data
 download	setup	en	Download
+easiest way under win2008r2 is to add role "active directory certificate services" and reboot.	setup	en	Easiest way under win2008r2 is to add role "Active Directory Certificate Services" and reboot.
 edit current configuration	setup	en	Edit current configuration
 edit your existing header.inc.php	setup	en	Edit your existing header.inc.php
 edit your header.inc.php	setup	en	Edit your header.inc.php
+eg. "cn=users,dc=domain,dc=com" for ads domain "domain.com"	setup	en	eg. "CN=Users,DC=domain,DC=com" for ADS domain "domain.com"
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	en	eg. /egroupware or http://domain.com/egroupware, default: %1
 egroupware administration manual	setup	en	EGroupware administration manual
 egroupware api needs a database (schema) update from version %1 to %2!	setup	en	EGroupware API needs a database (schema) update from version %1 to %2!
@@ -327,7 +331,7 @@ http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	en
 if no acl records for user or any group the user is a member of	setup	en	If no ACL records for user or any group the user is a member of
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	en	If safe_mode is turned on, eGW is not able to change certain settings on runtime, nor can we load any not yet loaded module.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	en	If the application has no defined tables, selecting upgrade should remedy the problem
-if using ads (active directory) authentication	setup	en	If using ADS (Active Directory) authentication
+if using ads (active directory)	setup	en	If using ADS (Active Directory) authentication
 if using cas (central authentication service):	setup	en	if using cas (Central Authentication Service):
 if using ldap	setup	en	If using LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage home directory and login shell attributes?
@@ -353,6 +357,7 @@ invalid argument '%1' !!!	setup	en	Invalid argument '%1' !
 invalid ip address	setup	en	Invalid IP address!
 invalid mcrypt algorithm/mode combination	setup	en	Invalid Mcrypt Algorithm/Mode combination
 invalid password	setup	en	Invalid password!
+ip or url	setup	en	IP or URL
 is broken	setup	en	is broken
 is disabled	setup	en	is disabled
 is in the webservers docroot	setup	en	is in the web servers docroot
@@ -373,6 +378,7 @@ ldap root password	setup	en	LDAP root password
 ldap rootdn	setup	en	LDAP rootdn
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	en	LDAP search filter for accounts, default: "(uid=%user)", %domain=eGW-domain
 leave empty to keep current.	setup	en	Leave empty to keep current.
+leave empty to use default	setup	en	leave empty to use default
 limit access	setup	en	Limit access
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	en	Limit access to setup to the following addresses, networks or host names (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)
 list availible values	setup	en	List available values
@@ -411,6 +417,7 @@ mount backup directory to %1	setup	en	Mount backup directory to %1
 multi-language support setup	setup	en	Multi language support setup
 name of database	setup	en	Name of database
 name of db user egroupware uses to connect	setup	en	Name of db user EGroupware uses to connect
+needs extra configuration on dc and webserver!	setup	en	Needs extra configuration on DC and webserver!
 never	setup	en	Never
 new	setup	en	New
 next run	setup	en	Next run
@@ -440,6 +447,7 @@ one month	setup	en	One month
 one week	setup	en	One week
 only add languages that are not in the database already	setup	en	Only add languages that are not in the database already
 only add new phrases	setup	en	Only add new phrases
+optional, if only authentication and anonymous search is enabled	setup	en	optional, if only authentication AND anonymous search is enabled
 or	setup	en	or
 or %1continue to the header admin%2	setup	en	or %1Continue to the Header Admin%2
 or http://webdav.domain.com (webdav)	setup	en	or http://webdav.domain.com (WebDAV)
@@ -496,6 +504,8 @@ rejected lines	setup	en	Rejected lines
 remove	setup	en	Remove
 remove all	setup	en	Remove all
 rename	setup	en	Rename
+required to change passwords	setup	en	required to change passwords
+requires "reset password" privilege, to change passwords!	setup	en	Requires "Reset Password" privilege, to change passwords!
 requires reinstall or manual repair	setup	en	Requires reinstall or manual repair
 requires upgrade	setup	en	Requires upgrade
 resolve	setup	en	Resolve
@@ -648,6 +658,8 @@ use cookies to pass sessionid	setup	en	Use cookies to pass session ID
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	en	Use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]
 use persistent db connections: {on(default) | off}	setup	en	Use persistent db connections: {on(default) | off}
 use pure html compliant code (not fully working yet)	setup	en	Use pure HTML compliant code
+use space to separate multiple	setup	en	use space to separate multiple
+use tls or ssl encryption	setup	en	Use TLS or SSL encryption
 user	setup	en	User
 user account prefix	setup	en	User account prefix
 user for smtp-authentication (leave it empty if no auth required)	setup	en	User for SMTP-authentication (leave it empty if no auth required)

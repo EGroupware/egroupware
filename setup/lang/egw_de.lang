@@ -14,7 +14,7 @@
 '%1' is no valid domain name!	setup	de	'%1' ist kein gültiger Domainname!
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	de	'%1' ist nicht erlaubt als %2. Parameter für die Option %3 !!!
 '%1' must be integer	setup	de	%1 muß ein Integer-Wert sein.
-(searching accounts and changing passwords)	setup	de	Benutzerkonten suchen und Passwörter ändern)
+(searching accounts and changing passwords)	setup	de	(Benutzerkonten suchen und Passwörter ändern)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	de	*** Updaten Sie NICHT Ihre Datenbank via Setup, da das Update von der max_execution_time (max. Ausführungszeit für Skripte) unterbrochen werden kann. Ihre Datenbank ist dann in einem nicht mehr wiederherstellbaren Zustand (Ihre Daten sind VERLOREN)!!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	de	*** Sie müssen die Änderungen manuell in Ihrer php.ini Datei (üblicherweise in /etc unter Linux) durchführen, um EGroupware vollständig/fehlerfrei ausführen zu können!!!
 00 (disable)	setup	de	00 (abgeschaltet/empfohlen)
@@ -41,6 +41,7 @@ admin first name	setup	de	Admin Vorname
 admin last name	setup	de	Admin Nachname
 admin password	setup	de	Admin Passwort
 admin password to header manager	setup	de	Admin Passwort für Headerverwaltung
+admin user	setup	de	Administrator Konto
 admin user for header manager	setup	de	Admin Benutzer für Headerverwaltung
 admin username	setup	de	Admin Benutzername
 admins	setup	de	Administratoren
@@ -168,6 +169,7 @@ configuration user	setup	de	Konfigurationsbenutzer
 configure now	setup	de	Jetzt konfigurieren
 confirm to delete this backup?	setup	de	Bestätigen Sie diese Datensicherung zu löschen?
 contain	setup	de	enthält
+context to create users	setup	de	Kontext um Benutzer anzulegen
 continue	setup	de	Weiter
 continue to the header admin	setup	de	Weiter zur Headerverwaltung
 convert	setup	de	Konvertieren
@@ -243,9 +245,11 @@ domain-name	setup	de	Domainname
 don't change, if you already stored files! you will loose them!	setup	de	Nicht ändern, wenn Sie bereits Dateien gespeichert haben! Sie werden Sie verlieren!
 dont touch my data	setup	de	Meine Daten nicht verändern
 download	setup	de	Herunterladen
+easiest way under win2008r2 is to add role "active directory certificate services" and reboot.	setup	de	Unter Win2008r2 geht das am einfachsten durch hinzufügen der Rolle "Active Directory-Zertifikatsdienste" und neu starten.
 edit current configuration	setup	de	Gegenwärtige Konfiguration überarbeiten
 edit your existing header.inc.php	setup	de	Bearbeiten Ihrer existierenden header.inc.php
 edit your header.inc.php	setup	de	Bearbeiten Ihrer header.inc.php
+eg. "cn=users,dc=domain,dc=com" for ads domain "domain.com"	setup	de	z.B. "CN=Users,DC=domain,DC=com" für die ADS Domaine "domain.com"
 eg. /egroupware or http://domain.com/egroupware, default: %1	setup	de	zB. /egroupware oder http://domain.com/egroupware, Vorgabe: %1
 egroupware administration manual	setup	de	EGroupware Administrationsmanual (nur in englisch)
 egroupware api needs a database (schema) update from version %1 to %2!	setup	de	EGroupware API benötigt eine Datenbank (Schema) Aktualisierung von Version %1 auf %2!
@@ -296,7 +300,7 @@ filesystem	setup	de	Dateisystem
 filesystem (default)	setup	de	Dateisystem (Vorgabe)
 force selectbox	setup	de	Auswahl erzwingen
 give admin access to all installed apps	setup	de	Admin Zugang zu allen installierten Anwendungen geben
-give ldap root dn and password, if you need to create an instance specific admin user, user- or group-context	setup	de	Tragen Sie das LDAP root DN und Passwort ein, wenn Sie einen Instanzspeziefischen Adminbenutzer oder Gruppen-Kontext benötigen
+give ldap root dn and password, if you need to create an instance specific admin user, user- or group-context	setup	de	Tragen Sie das LDAP root DN und Passwort ein, wenn Sie einen Instanzspezifischen Adminbenutzer oder Gruppen-Kontext benötigen
 gives further options	setup	de	gibt zusätzliche Optionen
 go back	setup	de	Zurück gehen
 go to	setup	de	Gehen zu
@@ -326,7 +330,7 @@ http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	de
 if no acl records for user or any group the user is a member of	setup	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder eine Gruppe, der er angehört gibt
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	de	Wenn safe_mode eingeschaltet ist, kann eGW verschiedene Einstellungen nicht mehr zur Laufzeit ändern, noch können wir nicht geladene Erweiterungen (php extensions) laden.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	de	Wenn die Anwendung keine definierten Tabellen hat, wählen Sie überarbeiten. Das Problem sollte damit behoben werden.
-if using ads (active directory) authentication	setup	de	Wenn Sie ADS (Active Directory) Authentifizierung benutzen
+if using ads (active directory)	setup	de	Wenn Sie ADS (Active Directory) benutzen
 if using cas (central authentication service):	setup	de	Wenn Sie CAS (Central Authentication Service) benutzen
 if using ldap	setup	de	Wenn Sie LDAP verwenden
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	de	Wenn Sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Kommandointerpreter verwalten ?
@@ -352,6 +356,7 @@ invalid argument '%1' !!!	setup	de	Ungültiges Argument '%1' !!!
 invalid ip address	setup	de	Ungültige IP Adresse
 invalid mcrypt algorithm/mode combination	setup	de	Ungültige MCrypt Algorithmus/Modus Kombination
 invalid password	setup	de	Ungültiges Passwort
+ip or url	setup	de	IP oder URL
 is broken	setup	de	ist kaputt
 is disabled	setup	de	ist nicht aktiv
 is in the webservers docroot	setup	de	ist im Dokumentenverzeichnis (Documentroot) des Webservers
@@ -364,14 +369,15 @@ ldap config	setup	de	LDAP-Konfiguration
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	de	LDAP-Vorgabewert für Benutzerverzeichnisse (z.B. /home für /home/username)
 ldap default shell (e.g. /bin/bash)	setup	de	LDAP-Vorgabewert für Kommandointerpreter (shell) (z.B. /bin/bash)
 ldap dn="%1" with %2 entries deleted.	setup	de	LDAP dn="%1" mit %2 Einträgen gelöscht.
-ldap encryption type	setup	de	LDAP-Verschlüsselungstyp
-ldap groups context	setup	de	LDAP-Kontext für Gruppe
-ldap host	setup	de	LDAP-Host
-ldap import	setup	de	LDAP-Import
-ldap root password	setup	de	LDAP-Root-Passwort
-ldap rootdn	setup	de	LDAP rootdn
+ldap encryption type	setup	de	LDAP Verschlüsselungstyp
+ldap groups context	setup	de	LDAP Kontext für Gruppe
+ldap host	setup	de	LDAP Host
+ldap import	setup	de	LDAP Import
+ldap root password	setup	de	LDAP Root Passwort
+ldap rootdn	setup	de	LDAP Root DN
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	de	LDAP Suchfilter für Benutzerkonten, Vorgabe "(uid=%user)", %domain=eGW Domain
 leave empty to keep current.	setup	de	Leer lassen um das existierende Password zu behalten.
+leave empty to use default	setup	de	leer lassen um Standard zu benutzen
 limit access	setup	de	Zugang beschränken
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	de	Zugang zu Setup auf die folgenden IP Adressen, Netzwerke oder Hostnamen beschränken (z.B. 127.0.0.1,10.1.1,myhost.dnydns.org)
 list availible values	setup	de	Listen der verfügbaren Werte
@@ -410,6 +416,7 @@ mount backup directory to %1	setup	de	Datensicherungsverzeichnis unter %1 mounte
 multi-language support setup	setup	de	Mehr-Sprachen Unterstützung einrichten
 name of database	setup	de	Name der Datenbank
 name of db user egroupware uses to connect	setup	de	Name des Datenbank-Benutzers den EGroupware verwendet
+needs extra configuration on dc and webserver!	setup	de	Benötigt extra Konfiguration auf Domain Controller und Webserver!
 never	setup	de	niemals
 new	setup	de	Neu
 next run	setup	de	nächste Ausführung
@@ -439,6 +446,7 @@ one month	setup	de	ein Monat
 one week	setup	de	eine Woche
 only add languages that are not in the database already	setup	de	Nur Sprachen hinzufügen, die noch nicht in der Datenbank sind
 only add new phrases	setup	de	Nur neue Begriffe hinzufügen
+optional, if only authentication and anonymous search is enabled	setup	de	optional, wenn nur Authentifizierung UND anonymes Suchen erlaubt ist
 or	setup	de	oder
 or %1continue to the header admin%2	setup	de	oder %1mit der Headerverwaltung weiter machen%2
 or http://webdav.domain.com (webdav)	setup	de	oder http://webdav.domain.com (für WebDAV)
@@ -495,6 +503,8 @@ rejected lines	setup	de	Zurückgewiesene Zeilen
 remove	setup	de	Entfernen
 remove all	setup	de	Alle Entfernen
 rename	setup	de	Umbenennen
+required to change passwords	setup	de	erforderlich um Passwörter zu ändern
+requires "reset password" privilege, to change passwords!	setup	de	Benötigt "Passwort zurücksetzen" Recht, um Passwörter zu ändern!
 requires reinstall or manual repair	setup	de	Erfordert Neuinstallation oder manuelle Reparatur
 requires upgrade	setup	de	Erfordert Aktualisierung
 resolve	setup	de	Lösen
@@ -647,6 +657,8 @@ use cookies to pass sessionid	setup	de	SitzungsId in einem Cookie speichern
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	de	benutze mcrypt zur Verschlüsselung der Sitzungsdaten: {off(Vorgabe) | on},[mcrypt Initialisierung(Vorgabe ist zufällig erzeugt)],[mcrypt Version]
 use persistent db connections: {on(default) | off}	setup	de	benutze permanente Datenbankverbindung: {on(Vorgabe) | off}
 use pure html compliant code (not fully working yet)	setup	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
+use space to separate multiple	setup	de	Leerzeichen benutzen um mehrere anzugeben
+use tls or ssl encryption	setup	de	Benutze TLS oder SSL Verschlüsselung
 user	setup	de	Benutzer
 user account prefix	setup	de	Präfix für Benutzernamen
 user for smtp-authentication (leave it empty if no auth required)	setup	de	Benutzer für SMTP-Authentifizierung (leer lassen wenn keine notwendig ist)

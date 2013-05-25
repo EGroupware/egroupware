@@ -214,7 +214,7 @@ however, the application may still work	setup	fa	کاربرد ممکن از هن
 if no acl records for user or any group the user is a member of	setup	fa	اگر هیچ لیست حق دسترسی برای کاربر یا هیچ گروهی نباشد کابر عضوی خواهد بود از
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	fa	اگر safe_mode روشن باشد، گروه افزار نمی تواند تغییرات را در زمان اجرا اعمال کند و همچنین نمی توانیم پیمانه های بارگذاری نشده را بارگذاری کنیم
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	fa	اگر کاربرد جداول تعریف شده ای نداشته باشد
-if using ads (active directory) authentication	setup	fa	اگر از تصدیق بر اساس ADS(Active Directory) استفاده میکنید
+if using ads (active directory)	setup	fa	اگر از تصدیق بر اساس ADS(Active Directory) استفاده میکنید
 if using ldap	setup	fa	اگر از LDAP استفاده می کنید
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	fa	اگر از LDAP  استفاده می کنید ، آیا می خواهید مشخصات پوشه خانه و پوسته ورود را تنظیم نمائید؟
 if you did not receive any errors, your applications have been	setup	fa	اگر شما هیچ پیام خطائی دریافت نکردید کاربرد شما
