@@ -410,14 +410,10 @@ class egw_db
 					throw new egw_exception_db_connection("No ADOdb support for '$type' ($this->Type) !!!");
 				}
 				$connect = $GLOBALS['egw_info']['server']['db_persistent'] ? 'PConnect' : 'Connect';
-				if (($Ok = $this->Link_ID->$connect($Host, $User, $Password)))
+				if (($Ok = $this->Link_ID->$connect($Host, $User, $Password, $Database)))
 				{
 					$this->ServerInfo = $this->Link_ID->ServerInfo();
 					$this->set_capabilities($type,$this->ServerInfo['version']);
-					if($Database)
-					{
-					   $Ok = $this->Link_ID->SelectDB($Database);
-					}
 				}
 				if (!$Ok)
 				{
@@ -447,8 +443,7 @@ class egw_db
 				$this->Link_ID =& $GLOBALS['egw']->ADOdb;
 			}
 		}
-		// next ADOdb version: if (!$this->Link_ID->isConnected()) $this->Link_ID->Connect();
-		if (!$this->Link_ID->_connectionID) $this->Link_ID->Connect();
+		if (!$this->Link_ID->isConnected()) $this->Link_ID->Connect();
 
 		if ($new_connection)
 		{
