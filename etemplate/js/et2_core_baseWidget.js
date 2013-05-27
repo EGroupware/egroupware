@@ -176,7 +176,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 		}
 	},
 
-	detatchFromDOM: function() {
+	detachFromDOM: function() {
 		// Detach this node from the tooltip node
 		if (this._tooltipElem)
 		{
@@ -212,7 +212,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 		if (_node != this.node)
 		{
 			// Deatch the old node from the DOM
-			this.detatchFromDOM();
+			this.detachFromDOM();
 
 			// Set the new DOM-Node
 			this.node = _node;

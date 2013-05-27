@@ -99,7 +99,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 	 */
 	destroy: function() {
 
-		this.detatchFromDOM();
+		this.detachFromDOM();
 		this.parentNode = null;
 		this._attachSet = {};
 
@@ -136,12 +136,16 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 	 * Detaches the widget from the DOM tree, if it had been attached to the
 	 * DOM-Tree using the attachToDOM method.
 	 */
-	detatchFromDOM: function() {
+	detachFromDOM: function() {
 
 		if (this._attachSet.node && this._attachSet.parent)
 		{
 			// Remove the current node from the parent node
-			this._attachSet.parent.removeChild(this._attachSet.node);
+			try {
+				this._attachSet.parent.removeChild(this._attachSet.node);
+			} catch (e) {
+				// Don't throw a DOM error if the node wasn't in the parent
+			}
 
 			// Reset the "attachSet"
 			this._attachSet = {
@@ -235,7 +239,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 		if (_node != this.parentNode)
 		{
 			// Detatch this element from the DOM tree
-			this.detatchFromDOM();
+			this.detachFromDOM();
 
 			this.parentNode = _node;
 
@@ -647,7 +651,7 @@ var et2_surroundingsMgr = Class.extend(
 			// and trigger the _rebuildContainer function.
 			if (attached && this.widget)
 			{
-				this.widget.detatchFromDOM();
+				this.widget.detachFromDOM();
 				this.widget.attachToDOM();
 			}
 		}
