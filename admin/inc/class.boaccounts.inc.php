@@ -355,7 +355,7 @@
 			// Check if an account already exists as system user, and if it does deny creation
 			// (increase the totalerrors counter and the message thereof)
 			if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
-				!$GLOBALS['egw_info']['server']['ldap_allow_systemusernames'] &&
+				!$GLOBALS['egw_info']['server']['ldap_allow_systemusernames'] && !$_userData['account_id'] &&
 				function_exists('posix_getpwnam') && posix_getpwnam($_userData['account_lid']))
 			{
 				$error[$totalerrors] = lang('There already is a system-user with this name. User\'s should not have the same name as a systemuser');
