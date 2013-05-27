@@ -138,6 +138,28 @@ app.mail = AppJS.extend(
 	},
 
 	/**
+	 * mail_disablePreviewArea - implementation of the disablePreviewArea action
+	 * 
+	 * @param _value
+	 */
+	mail_disablePreviewArea: function(_value) {
+		var splitter = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailSplitter');
+		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersFrom').set_disabled(_value);
+		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersTo').set_disabled(_value);
+		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersDate').set_disabled(_value);
+		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersSubject').set_disabled(_value);
+		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreview').set_disabled(_value);
+		if (_value==true)
+		{
+			//splitter.dock();
+		}		
+		else
+		{
+			//splitter.undock();
+		}
+	},
+
+	/**
 	 * mail_preview - implementation of the preview action
 	 * 
 	 * @param nextmatch et2_nextmatch The widget whose row was selected
@@ -145,21 +167,16 @@ app.mail = AppJS.extend(
 	 */
 	mail_preview: function(nextmatch, selected) {
 		console.log("mail_preview",nextmatch, selected);
-		var splitter = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailSplitter');
-		var previewarea = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreview');
 		// Empty values, just in case selected is empty (user cleared selection)
 		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",date:"",subject:""}};
 		if(typeof selected != 'undefined' && selected.length > 0)
 		{
 			var _id = this.mail_fetchCurrentlyFocussed(selected);
 			dataElem = egw.dataGetUIDdata(_id);
-			previewarea.visible = true;
 		}
 		if(typeof selected == 'undefined' || selected.length == 0 || selected.length > 1 || typeof dataElem =='undefined')
 		{
 			this.mail_fetchCurrentlyFocussed();
-			//splitter.dock();
-			previewarea.visible = false;
 			var subject ="";
 			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewFromAddress').set_value("");
 			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewToAddress').set_value("");
@@ -167,12 +184,13 @@ app.mail = AppJS.extend(
 			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewSubject').set_value("");
 			var IframeHandle = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('messageIFRAME');
 			IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:""}));
+			this.mail_disablePreviewArea(true);
 			return;
 		}
 		//console.log("mail_preview",dataElem);
-		//splitter.undock();
 		this.mail_selectedMails.push(_id);
 		var subject =dataElem.data.subject;
+		this.mail_disablePreviewArea(false);
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewFromAddress').set_value(dataElem.data.fromaddress);
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewToAddress').set_value(dataElem.data.toaddress);
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewDate').set_value(dataElem.data.date);
@@ -183,6 +201,7 @@ app.mail = AppJS.extend(
 	//	var request = new egw_json_request('mail.mail_ui.ajax_loadEmailBody',[_id]);
 	//	request.sendRequest(false);
 	},
+
 	mail_setMailBody: function(content) {
 		console.log('mail_setMailBody',content);
 		var IframeHandle = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('messageIFRAME');
@@ -430,13 +449,49 @@ app.mail = AppJS.extend(
 		//alert(_action.id+','+ msg);
 		app.mail.app_refresh(egw.lang('delete messages'), 'mail');
 		this.mail_setRowClass(_elems,'deleted');
-		var request = new egw_json_request('mail.mail_ui.ajax_deleteMessages',[msg]);
+		this.mail_deleteMessages(msg);
+	},
+
+	/**
+	 * Delete mails - actually calls the backend function for deletion
+	 * takes in all arguments
+	 * @param _msg - message list
+	 * @param _action - optional action
+	 */
+	mail_deleteMessages: function(_msg,_action)
+	{
+		app.mail.app_refresh(egw.lang('delete messages'), 'mail');
+		var request = new egw_json_request('mail.mail_ui.ajax_deleteMessages',[_msg,(typeof _action == 'undefined'?'no':_action)]);
 		request.sendRequest(false);
-		for (var i = 0; i < msg['msg'].length; i++)  egw.dataDeleteUID(msg['msg'][i]);
+		for (var i = 0; i < _msg['msg'].length; i++)  egw.dataDeleteUID(_msg['msg'][i]);
 		this.mail_refreshMessageGrid();
 		this.mail_preview();
 	},
-	
+
+	/**
+	 * retry to Delete mails
+	 * @param responseObject ->
+	 * 	 reason - reason to report
+	 * 	 messageList
+	 */
+	mail_retryForcedDelete: function(responseObject)
+	{
+		var reason = responseObject['response'];
+		var messageList = responseObject['messageList'];
+		Check = confirm(reason);
+		if (Check==true)
+		{
+			this.mail_deleteMessages(messageList,'remove_immediately');
+		}
+		else
+		{
+			app.mail.app_refresh(egw.lang('canceled deletion due to userinteraction'), 'mail');
+			this.mail_removeRowClass(messageList,'deleted');
+		}
+		this.mail_refreshMessageGrid();
+		this.mail_preview();
+	},
+
 	/**
 	 * UnDelete mailMessages
 	 * 
@@ -727,6 +782,46 @@ app.mail = AppJS.extend(
 		}
 	},
 	
+	/**
+	 * mail_removeRowClass
+	 * 
+	 * @param _actionObjects, the senders, or a messages object
+	 * @param _class, the class to be removed
+	 */
+	mail_removeRowClass: function(_actionObjects,_class) {
+		if (typeof _class == 'undefined') return false;
+
+		if (typeof _actionObjects['msg'] == 'undefined')
+		{
+			for (var i = 0; i < _actionObjects.length; i++) 
+			{
+				if (_actionObjects[i].id.length>0)
+				{
+					var dataElem = $j(_actionObjects[i].iface.getDOMNode());
+					dataElem.removeClass(_class);
+	
+				}
+			}
+		}
+		else
+		{
+			var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
+			var aO = nm.controller._objectManager.selectedChildren;
+			for (var i = 0; i < _actionObjects['msg'].length; i++) 
+			{
+				for (var i = 0; i < aO.length; i++) 
+				{
+					if (aO[i].id==_actionObjects['msg'][i])
+					{
+						var dataElem = $j(aO[i].iface.getDOMNode());
+						dataElem.removeClass(_class);
+	
+					}
+				}	
+			}
+		}
+	},
+
 	// Tree widget stubs
 	/**
 	 * mail_dragStart - displays information while dragging

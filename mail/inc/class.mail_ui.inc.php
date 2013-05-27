@@ -2557,12 +2557,13 @@ blockquote[type=cite] {
 	 * delete messages
 	 *
 	 * @param array _messageList list of UID's
-	 *
+	 * @param string _forceDeleteMethod - method of deletion to be enforced
 	 * @return xajax response
 	 */
-	function ajax_deleteMessages($_messageList)
+	function ajax_deleteMessages($_messageList,$_forceDeleteMethod=null)
 	{
-		if(mail_bo::$debug) error_log(__METHOD__."->".$_flag.':'.print_r($_messageList,true));
+		if(mail_bo::$debug) error_log(__METHOD__."->".print_r($_messageList,true).' Method:'.$_forceDeleteMethod);
+		$error = null;
 		if ($_messageList=='all' || !empty($_messageList['msg']))
 		{
 			if ($_messageList=='all')
@@ -2580,14 +2581,29 @@ blockquote[type=cite] {
 				$hA = self::splitRowID($rowID);
 				$messageList[] = $hA['msgUID'];
 			}
-			$this->mail_bo->deleteMessages(($_messageList=='all' ? 'all':$messageList),$folder);
+			try
+			{
+				$this->mail_bo->deleteMessages(($_messageList=='all' ? 'all':$messageList),$folder,(empty($_forceDeleteMethod)?'no':$_forceDeleteMethod));
+			}
+			catch (egw_exception $e)
+			{
+				$error = str_replace('"',"'",$e->getMessage());
+			}
+			$response = egw_json_response::get();
+			if (empty($error))
+			{
+				$response->call('egw_refresh',lang('deleted %1 messages in %2',count($_messageList['msg']),$folder),'mail');
+			}
+			else
+			{
+				$error = str_replace('\n',"\n",lang('mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)',$error));
+				$response->call('app.mail.mail_retryForcedDelete',array('response'=>$error,'messageList'=>$_messageList),'mail');
+			}
 		}
 		else
 		{
 			if(mail_bo::$debug) error_log(__METHOD__."-> No messages selected.");
 		}
-		$response = egw_json_response::get();
-		$response->call('egw_refresh',lang('deleted %1 messages in %2',count($_messageList['msg']),$folder),'mail');
 	}
 
 	/**

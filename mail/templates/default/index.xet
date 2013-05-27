@@ -43,19 +43,19 @@
 		<split dock_side="bottomDock" id="mailSplitter" orientation="h">
 			<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows"/>
 			<vbox id="mailPreview" width="100%">
-				<hbox width="100%" class="mailPreviewHeaders">
+				<hbox width="100%" id="mailPreviewHeadersFrom" class="mailPreviewHeaders">
 					<description value="From"/>
 					<url-email id="previewFromAddress" readonly="true"/>
 				</hbox>
-				<hbox width="100%" class="mailPreviewHeaders">
+				<hbox width="100%" id="mailPreviewHeadersTo" class="mailPreviewHeaders">
 					<description value="To"/>
 					<url-email id="previewToAddress" readonly="true"/>
 				</hbox>
-				<hbox width="100%" class="mailPreviewHeaders">
+				<hbox width="100%" id="mailPreviewHeadersDate" class="mailPreviewHeaders">
 					<description value="Date"/>
 					<date-time align="left" id="previewDate" readonly="true"/>
 				</hbox>
-				<hbox width="100%" class="mailPreviewHeaders">
+				<hbox width="100%" id="mailPreviewHeadersSubject" class="mailPreviewHeaders">
 					<description value="Subject"/>
 					<description align="left" id="previewSubject" readonly="true"/>
 				</hbox>
