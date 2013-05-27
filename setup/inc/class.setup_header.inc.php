@@ -26,10 +26,10 @@ class setup_header
 	 * @var array with php-extension / ADOdb drive names => describtiv label
 	 */
 	var $db_fullnames = array(
+		'mysqli' => 'MySQLi (recommended, incl. transactions)',
+		'mysql'  => 'MySQL (deprecated)',
+		'mysqlt' => 'MySQL (deprecated, transactions)',
 		'pgsql'  => 'PostgreSQL',
-		'mysql'  => 'MySQL',
-		'mysqli' => 'MySQLi (php5)',
-		'mysqlt' => 'MySQL (with transactions)',
 		'mssql'  => 'MS SQL Server',
 		'odbc_mssql'  => 'MS SQL Server via ODBC',
 		'oracle' => 'Oracle',
@@ -84,7 +84,7 @@ class setup_header
 	function domain_defaults($user='admin',$passwd='',$supported_db=null)
 	{
 		if (is_null($supported_db)) $supported_db = $this->check_db_support($null);
-		$default_db = count($supported_db) ? $supported_db[0] : 'mysql';
+		$default_db = count($supported_db) ? $supported_db[0] : 'mysqli';
 
 		return array(
 			'db_host' => 'localhost',
@@ -232,8 +232,8 @@ class setup_header
 		$supported_db = $detected = array();
 		foreach(array(
 			// short => array(extension,func_to_check,supported_db(s))
-			'mysql'  => array('mysql','mysql_connect','mysql'),
 			'mysqli' => array('mysql','mysqli_connect','mysqli'),
+			'mysql'  => array('mysql','mysql_connect','mysql'),
 			'mysqlt' => array('mysql','mysql_connect','mysqlt'),
 			'pgsql'  => array('pgsql','pg_connect','pgsql'),
 			'mssql'  => array('mssql','mssql_connect','mssql'),

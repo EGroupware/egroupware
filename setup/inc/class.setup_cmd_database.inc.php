@@ -19,10 +19,10 @@ class setup_cmd_database extends setup_cmd
 	 * Allow to run this command via setup-cli
 	 */
 	const SETUP_CLI_CALLABLE = true;
-	
+
 	/**
 	 * Maximum length of database name (at least for MySQL this is the limit)
-	 * 
+	 *
 	 * @var int
 	 */
 	const MAX_DB_NAME_LEN = 16;
@@ -68,7 +68,7 @@ class setup_cmd_database extends setup_cmd
 				'db_root_pw' => $db_root_pw,
 				'sub_command' => $sub_command,
 				'db_grant_host' => $db_grant_host,
-				'make_db_name_unique' => $make_db_name_unique, 
+				'make_db_name_unique' => $make_db_name_unique,
 			);
 		}
 		//error_log(__METHOD__.'('.array2string($domain).") make_db_name_unique=".array2string($domain['make_db_name_unique']));
@@ -163,7 +163,7 @@ class setup_cmd_database extends setup_cmd
 	 * Check and if does not yet exist create the new database and user
 	 *
 	 * The check will fail if the database exists, but already contains tables
-	 * 
+	 *
 	 * if $this->make_db_name_unique is set, a decrementing nummeric prefix gets
 	 * added to $this->db_name AND $this->db_user, if db already exists.
 	 *
@@ -177,7 +177,7 @@ class setup_cmd_database extends setup_cmd
 		// shorten db-name/-user to self::MAX_DB_NAME_LEN chars
 		if ($this->make_db_name_unique && strlen($this->db_name) > self::MAX_DB_NAME_LEN)
 		{
-			$this->set_defaults['db_name'] = $this->db_name = 
+			$this->set_defaults['db_name'] = $this->db_name =
 			$this->set_defaults['db_user'] = $this->db_user = // change user too (otherwise existing user/db could not connect any more!)
 				substr($this->db_name,0,self::MAX_DB_NAME_LEN);
 		}
@@ -193,7 +193,7 @@ class setup_cmd_database extends setup_cmd
 			catch(egw_exception_db $e) {	// catches failed to create database
 				// try connect as root to check if wrong root/root_pw is the problem
 				$this->connect($this->db_root,$this->db_root_pw,$this->db_meta);
-				
+
 				// if we should create a db with a unique name (try it only N times, not endless!)
 				if ($this->make_db_name_unique && $try_make_unique++ < 20)
 				{
@@ -209,10 +209,10 @@ class setup_cmd_database extends setup_cmd
 						{
 							$num = '2';
 						}
-						$this->set_defaults['db_name'] = $this->db_name = 
+						$this->set_defaults['db_name'] = $this->db_name =
 						$this->set_defaults['db_user'] = $this->db_user = // change user too (otherwise existing user/db could not connect any more!)
 							substr($this->db_name,0,self::MAX_DB_NAME_LEN-strlen($num)).$num;
-	
+
 						return $this->create();
 					}
 					catch (egw_exception_wrong_userinput $e2)
@@ -270,7 +270,7 @@ class setup_cmd_database extends setup_cmd
 	 * @param string $db_type='mysql'
 	 * @return array
 	 */
-	static function defaults($db_type='mysql')
+	static function defaults($db_type='mysqli')
 	{
 		switch($db_type)
 		{
@@ -312,7 +312,7 @@ class setup_cmd_database extends setup_cmd
 			if (strpos($this->$name,'$domain') !== false)
 			{
 				// limit names to 16 chars (16 char is user-name limit in MySQL)
-				$this->set_defaults[$name] = $this->$name = 
+				$this->set_defaults[$name] = $this->$name =
 					substr(str_replace(array('$domain','.','-'),array($this->domain,'_','_'),$this->$name),
 					0,self::MAX_DB_NAME_LEN);
 			}
