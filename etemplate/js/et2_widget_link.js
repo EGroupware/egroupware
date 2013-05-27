@@ -1256,7 +1256,7 @@ var et2_link_list = et2_link_string.extend(
 			.appendTo(delete_button)
 			// We don't use ui-icon because it assigns a bg image
 			.addClass("delete icon")
-			.bind( 'click', function() {self._delete_link(_link_data.link_id);});
+			.bind( 'click', function() {self._delete_link(_link_data.link_id, row);});
 
 		// Context menu
 		row.bind("contextmenu", function(e) {
@@ -1268,13 +1268,14 @@ var et2_link_list = et2_link_string.extend(
 			e.preventDefault();
 		});
 	},
-	_delete_link: function(link_id) {
-		var row = jQuery('#link_'+link_id, this.list);
+	_delete_link: function(link_id, row) {
 		var delete_button = jQuery('.delete',row);
 		delete_button.removeClass("delete").addClass("loading");
-		new egw_json_request("etemplate.etemplate_widget_link.ajax_delete", [link_id])
-			.sendRequest(true, function(data) { if(data) {row.slideUp(row.remove);}});
-		
+		if(link_id)
+		{
+			new egw_json_request("etemplate.etemplate_widget_link.ajax_delete", [link_id])
+				.sendRequest(true, function(data) { if(data) {row.slideUp(row.remove);}});
+		}
 	}
 });
 et2_register_widget(et2_link_list, ["link-list"]);
