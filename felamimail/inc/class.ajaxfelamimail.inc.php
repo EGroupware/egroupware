@@ -483,14 +483,14 @@ class ajaxfelamimail
 		*
 		* @return xajax response
 		*/
-		function deleteMessages($_messageList,$_refreshMessageList=true)
+		function deleteMessages($_messageList,$_refreshMessageList=true,$_forceDeleteMethod=null)
 		{
-			if($this->_debug) error_log(__METHOD__." called with Messages ".print_r($_messageList,true));
+			if($this->_debug) error_log(__METHOD__." called with Messages ".print_r($_messageList,true).' Method:'.$_forceDeleteMethod);
 			$messageCount = 0;
 			if(is_array($_messageList) && count($_messageList['msg']) > 0) $messageCount = count($_messageList['msg']);
 			try
 			{
-				$this->bofelamimail->deleteMessages(($_messageList == 'all'? 'all':$_messageList['msg']));
+				$this->bofelamimail->deleteMessages(($_messageList == 'all'? 'all':$_messageList['msg']),null,(empty($_forceDeleteMethod)?'no':$_forceDeleteMethod));
 				unset($this->sessionData['previewMessage']);
 				$this->saveSessionData();
 			}
@@ -498,9 +498,17 @@ class ajaxfelamimail
 			{
 				$error = str_replace('"',"'",$e->getMessage());
 				$response = new xajaxResponse();
-				$response->addScript('resetMessageSelect();');
-				$response->addScript('tellUser("'.$error.'");');
-				$response->addScript('onNodeSelect("'.$this->sessionData['mailbox'].'");');
+				if (stripos($error,'[OVERQUOTA]')=== false)
+				{
+					$response->addScript('resetMessageSelect();');
+					$response->addScript('tellUser("'.$error.'");');
+					$response->addScript('onNodeSelect("'.$this->sessionData['mailbox'].'");');
+				}
+				else
+				{
+					$error = str_replace('\n',"\n",lang('mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)',$e->getMessage()));
+					$response->addScript('mail_retryforceddelete('.json_encode($error).','.json_encode($_messageList).');');
+				}
 				return $response->getXML();
 			}
 			if ($_refreshMessageList === false)

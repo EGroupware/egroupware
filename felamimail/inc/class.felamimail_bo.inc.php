@@ -980,7 +980,7 @@ class felamimail_bo
 
 	function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no')
 	{
-		//error_log(__METHOD__.__LINE__.'->'.array2string($_messageUID).','.$_folder);
+		//error_log(__METHOD__.__LINE__.'->'.array2string($_messageUID).','.$_folder,','.$_forceDeleteMethod);
 		$msglist = '';
 		$oldMailbox = '';
 		if (is_null($_folder) || empty($_folder)) $_folder = $this->sessionData['mailbox'];

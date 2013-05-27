@@ -456,7 +456,21 @@ function mail_delete(_action, _elems)
 	mail_deleteMessages(messageList);
 }
 
-function mail_deleteMessages(_messageList) {
+/**
+ * retry to Delete mails
+ * 
+ * @param messageList
+ */
+function mail_retryforceddelete(reason,messageList)
+{
+	Check = confirm(reason);
+	if (Check==true)
+	{
+		mail_deleteMessages(messageList,'remove_immediately');
+	}
+}
+
+function mail_deleteMessages(_messageList,_method) {
 	var Check = true;
 	var cbAllMessages = document.getElementById('selectAllMessagesCheckBox').checked;
 
@@ -489,7 +503,7 @@ function mail_deleteMessages(_messageList) {
 				}
 			}
 		}
-		egw_appWindow('felamimail').xajax_doXMLHTTPsync("felamimail.ajaxfelamimail.deleteMessages",_messageList,false);
+		egw_appWindow('felamimail').xajax_doXMLHTTPsync("felamimail.ajaxfelamimail.deleteMessages",_messageList,false,(typeof _method == undefined?null:_method));
 		egw_appWindow('felamimail').setStatusMessage(curStatus,true);
 		egw_appWindow('felamimail').refresh();
 	} else {

@@ -339,6 +339,7 @@ loading	felamimail	en	Loading
 location of buttons when composing	felamimail	en	Location of buttons when composing
 look up the name of the mailbox (but not its contents).	felamimail	en	Look up the name of the mailbox (but not its contents).
 mail server login type	admin	en	Mail server login type
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	felamimail	en	Mailserver reported:\n%1 \nDo you want to proceed by deleting the selected messages immediately (Click OK)?\nIf not, please try to empty your trashfolder before continuing. (Click Cancel)
 mail settings	felamimail	en	Mail settings
 mail source	felamimail	en	Mail source
 mainmessage	felamimail	en	Main message

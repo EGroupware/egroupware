@@ -338,6 +338,7 @@ loading	felamimail	de	lade
 location of buttons when composing	felamimail	de	Ort der Knöpfe beim E-Mail schreiben
 look up the name of the mailbox (but not its contents).	felamimail	de	Prüfen des Namens der Mailbox (jedoch nicht deren Inhalt).
 mail server login type	admin	de	Typ der Mailserver Anmeldung
+mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)	felamimail	de	Mailserver Meldung:\n%1 \nWollen Sie fortfahren, indem Sie die ausgewählten Nachrichten sofort löschen (Klicken Sie OK)?\nWenn nicht, dann versuchen Sie Platz freizugeben indem Sie Ihren Papierkorb leeren. (Klicken Sie Abbrechen)
 mail settings	felamimail	de	E-Mail-Einstellungen
 mail source	felamimail	de	Nachrichtenquelltext
 mainmessage	felamimail	de	Hauptnachricht
