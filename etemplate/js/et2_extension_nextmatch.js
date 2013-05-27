@@ -1100,7 +1100,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				return;
 			}
 
-			// Free the template again
+			// Free the template again, it's no longer needed
+			this.removeChild(template);
 			template.free();
 
 			// Call the "setNextmatch" function of all registered
