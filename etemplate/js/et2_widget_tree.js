@@ -199,6 +199,7 @@ var et2_tree = et2_inputWidget.extend(
 					url = '/json.php?menuaction='+url;
 				}
 				if (url.charAt(0) == '/') url = egw.webserverUrl+url;
+				this.autoloading_url = url;
 				widget.input.setXMLAutoLoading(url);
 				widget.input.setDataMode('JSON');
 			}
@@ -232,6 +233,7 @@ var et2_tree = et2_inputWidget.extend(
 				}
 				// Item color - not working
 				if(options[key].data && typeof options[key].data.color !== 'undefined' && options[key].data.color)
+				this.autoloading_url = url;
 				{
 					options[key].style += "background-color ='"+options[key].data.color+"';";
 				} 
@@ -444,23 +446,26 @@ var et2_tree = et2_inputWidget.extend(
 	},
 
 	/**
-	 * refreshItem, refreshes an item by id
+	 * Updates a leaf of the tree by requesting new information from the server using the
+	 * autoloading attribute.
+	 *
 	 * @param _id ID of the node
 	 * @return void
 	 */
-	refreshItem: function(_id, _selectParent) {
+	refreshItem: function(_id) {
 		if(this.input == null) return null;
+		this.input.deleteChildItems(_id);
 		this.input.setDataMode('JSON');
+		/* Can't use this, it doesn't allow a callback
 		this.input.refreshItem(_id);
-		// Update action
-		// since the action ID has to = this.id, getObjectById() won't work
-		var treeObj = egw_getAppObjectManager().getObjectById(this.id);
-		for(var i=0; i < treeObj.children.length; i++)
+		*/
+		var self = this;
+		var actions = this.options.actions;
+		this.input.loadJSON(this.egw().link(this.autoloading_url, {id: _id}), function()
 		{
-			if(treeObj.children[i].iface && treeObj.children[i].iface.id == _id)
-			{
-			}
-		}
+			// Update actions by just re-setting them
+			self.set_actions(actions);
+		});
 	},
 
 	/**
