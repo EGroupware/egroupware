@@ -118,7 +118,10 @@ div.et2_hbox>div {
 	margin-top: -6px;
 	left: 47%;
 }
-
+/* Make sure there's no overflow, or hidden bits still appear */
+* > .et2_split {
+	overflow: hidden;
+}
 
 /**
  * Label widget, and labels for other widgets
