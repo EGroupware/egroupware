@@ -506,7 +506,7 @@ class ajaxfelamimail
 				}
 				else
 				{
-					$error = str_replace('\n',"\n",lang('mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)',$e->getMessage()));
+					$error = str_replace('\n',"\n",lang('mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)',$error));
 					$response->addScript('mail_retryforceddelete('.json_encode($error).','.json_encode($_messageList).');');
 				}
 				return $response->getXML();
