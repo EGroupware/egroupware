@@ -65,7 +65,7 @@ class admin_cmd_edit_user extends admin_cmd_change_pw
 		}
 		// Check if an account already exists as system user, and if it does deny creation
 		if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
-			!$GLOBALS['egw_info']['server']['ldap_allow_systemusernames'] &&
+			!$GLOBALS['egw_info']['server']['ldap_allow_systemusernames'] && !$data['account_id'] &&
 			function_exists('posix_getpwnam') && posix_getpwnam($data['account_lid']))
 		{
 			throw new egw_exception_wrong_userinput(lang('There already is a system-user with this name. User\'s should not have the same name as a systemuser'),99);
