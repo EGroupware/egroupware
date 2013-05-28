@@ -374,7 +374,9 @@ function egwDropActionImplementation()
 					},
 					"tolerance": "pointer",
 					activeClass: "ui-state-hover",
-					hoverClass: "ui-state-active"
+					hoverClass: "ui-state-active",
+					// Greedy is for nested droppables - children consume the action
+					greedy: true,
 				}
 			);
 
