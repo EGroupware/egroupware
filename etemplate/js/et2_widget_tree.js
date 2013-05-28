@@ -456,16 +456,49 @@ var et2_tree = et2_inputWidget.extend(
 		if(this.input == null) return null;
 		this.input.deleteChildItems(_id);
 		this.input.setDataMode('JSON');
+
 		/* Can't use this, it doesn't allow a callback
 		this.input.refreshItem(_id);
 		*/
+
 		var self = this;
-		var actions = this.options.actions;
-		this.input.loadJSON(this.egw().link(this.autoloading_url, {id: _id}), function()
+		this.input.loadJSON(this.egw().link(this.autoloading_url, {id: _id}), 
+			function() { self._dhtmlxtree_json_callback(JSON.parse(this.response), _id);}
+		);
+	},
+
+	/**
+	 * Callback for after using dhtmlxtree's AJAX loading
+	 * The tree has visually already been updated at this point, we just need
+	 * to update the internal data.
+	 *
+	 * @param Object new_data Fresh data for the tree
+	 * @param Object update_option_id optional If provided, only update that node (and children) with the
+	 *	provided data instead of the whole thing.  Allows for partial updates.
+	 * @return void
+	 */
+	_dhtmlxtree_json_callback: function(new_data, update_option_id) {
+		// Find the option to update
+		var option = this.options.select_options;
+		if(typeof update_option_id != "undefined")
 		{
-			// Update actions by just re-setting them
-			self.set_actions(actions);
-		});
+			var queue = []
+			do
+			{
+				for(var i in option.item)
+				{
+					queue.push(option.item[i]);
+				}
+				option = queue.pop();
+			}
+			while(option.id != update_option_id && queue.length > 0)
+		}
+
+		// Update select options
+		jQuery.extend(option,new_data || {});
+		
+		// Update actions by just re-setting them
+		this.set_actions(this.options.actions);
 	},
 
 	/**
