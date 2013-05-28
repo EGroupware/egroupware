@@ -274,7 +274,6 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 			//echo __METHOD__.__LINE__.' do framework ...'.'<br>';
 			// framework javascript classes only need for framework
 			self::validate_file('jquery','jquery-ui');
-			self::validate_file('.','widgets','etemplate');
 			self::validate_file('.','egw_fw','jdots');
 			self::validate_file('.','egw_fw_ui','jdots');
 			self::validate_file('.','egw_fw_classes','jdots');
