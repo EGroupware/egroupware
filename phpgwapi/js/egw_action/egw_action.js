@@ -878,6 +878,9 @@ egwActionObject.prototype.clear = function() {
 	// Delete all other references
 	this.selectedChildren = [];
 	this.focusedChild = null;
+
+	// Remove links
+	this.actionLinks = [];
 }
 
 /**
