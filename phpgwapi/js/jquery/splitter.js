@@ -271,6 +271,9 @@ var splitterCounter = 0;
 				.bind("dock"+opts.eventNamespace, function(){
 					var pw = A[0][opts.pxSplit]; 
 					if ( !pw ) return;
+					// Don't try to dock twice
+					if (bar.hasClass("splitter-bar-horizontal-docked") || bar.hasClass("splitter-bar-vertical-docked"))
+						return;
 					bar._pos = pw;
 					var x={}; 
 					x[opts.origin] = opts.dockPane==A? 0 :
