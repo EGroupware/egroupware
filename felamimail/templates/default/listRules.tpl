@@ -73,7 +73,7 @@ var refreshURL='{refreshURL}';
 		{filter_status}
 	</td>
 	<td>
-		<a class="{ruleCSS}" href="#" onmouseover="window.status='Edit This Rule'; return true;" onmouseout="window.status='';">{filter_text}</a>
+		<a class="{ruleCSS}" href="#" ondblclick="fm_sieve_displayRuleEditWindow('{url_edit_rule}'); return false;" onmouseover="window.status='Edit This Rule'; return true;" onmouseout="window.status='';">{filter_text}</a>
 	</td>
 </tr>
 <!-- END filterrow -->

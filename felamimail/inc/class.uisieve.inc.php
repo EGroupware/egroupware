@@ -870,6 +870,12 @@
 
 					$this->t->set_var('filter_text',htmlspecialchars($this->buildRule($rule),ENT_QUOTES,$GLOBALS['egw']->translation->charset()));
 					$this->t->set_var('ruleID',$ruleID);
+					$linkData = array
+					(
+						'menuaction'	=> 'felamimail.uisieve.editRule',
+						'ruleID'	=> $ruleID,
+					);
+					$this->t->set_var('url_edit_rule',$GLOBALS['egw']->link('/index.php',$linkData));
 
 					$linkData = array
 					(
