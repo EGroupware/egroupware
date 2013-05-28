@@ -144,6 +144,7 @@ class mail_ui
 				//$content['nm']['path'] = self::get_home_dir();
 			}
 		}
+		$content['nm']['csv_fields'] = false;
 		if ($msg)
 		{
 			$content['msg'] = $msg;
@@ -545,7 +546,7 @@ class mail_ui
 	{
 		foreach($_out['item'] as $node)
 		{
-			if ($node['id']==$_nodeID)
+			if (strcmp($node['id'],$_nodeID)===0)
 			{
 				//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.$node['id']);
 				return ($childElements?$node['item']:$node);
@@ -970,7 +971,7 @@ class mail_ui
 unset($query['actions']);
 //error_log(__METHOD__.__LINE__.array2string($query));
 //error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
-		//$starttime = microtime(true);
+		$starttime = microtime(true);
 		//error_log(__METHOD__.__LINE__.array2string($query['search']));
 		//$query['search'] is the phrase in the searchbox
 
@@ -1084,7 +1085,7 @@ unset($query['actions']);
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
 		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType,$previewMessage);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
-		//$endtime = microtime(true) - $starttime;
+		$endtime = microtime(true) - $starttime;
 		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].' Took:'.$endtime);
 
 		return $rowsFetched['messages'];

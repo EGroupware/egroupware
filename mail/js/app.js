@@ -151,11 +151,11 @@ app.mail = AppJS.extend(
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreview').set_disabled(_value);
 		if (_value==true)
 		{
-			//splitter.dock();
+			splitter.dock();
 		}		
 		else
 		{
-			//splitter.undock();
+			splitter.undock();
 		}
 	},
 
