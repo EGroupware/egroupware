@@ -1309,7 +1309,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		this._setup_favorites(settings['favorites']);
 
 		// Export
-		if(!settings.no_csv_export)
+		if(typeof settings.csv_fields == "undefined" || settings.csv_fields != false)
 		{
 			var definition = settings.csv_fields;
 			if(settings.csv_fields === true)
