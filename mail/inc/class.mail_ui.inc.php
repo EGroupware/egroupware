@@ -1086,7 +1086,7 @@ unset($query['actions']);
 		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType,$previewMessage);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
 		$endtime = microtime(true) - $starttime;
-		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].' Took:'.$endtime);
+		error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].' Took:'.$endtime);
 
 		return $rowsFetched['messages'];
 	}

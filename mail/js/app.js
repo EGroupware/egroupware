@@ -576,7 +576,7 @@ app.mail = AppJS.extend(
 		}
 		var nm = _widget.getRoot().getWidgetById('nm');
 		nm.activeFilters["selectedFolder"] = folder;
-		nm.applyFilters();
+		//nm.applyFilters();// its done in refrefreshMessageGrid
 		var msg = _widget.getRoot().getWidgetById('msg');
 		if (msg)
 		{
@@ -591,7 +591,7 @@ app.mail = AppJS.extend(
 			myMsg = (displayname?displayname:folder)+' '+egw.lang('selected');
 			app.mail.app_refresh(myMsg, 'mail');
 		}
-		//mail_refreshMessageGrid();
+		//mail_refreshMessageGrid();// its done in refreshFolderStatus already
 		this.mail_refreshFolderStatus(folder,'forced');
 		this.mail_startTimerFolderStatusUpdate(this.mail_refreshTimeOut);
 		this.mail_fetchCurrentlyFocussed(null,true);
