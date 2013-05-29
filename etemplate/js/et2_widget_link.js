@@ -421,7 +421,10 @@ var et2_link_entry = et2_inputWidget.extend(
 
 		this.search = null;
 		this.app_select = null;
-		this._oldValue = {id: null, app: this.options.only_app};
+		this._oldValue = {
+			id: null,
+			app: this.options.value && this.options.value.app ? this.options.value.app : this.options.only_app
+		};
 
 		if(typeof this.options.value == 'undefined' || this.options.value == null)
 		{
@@ -461,9 +464,17 @@ var et2_link_entry = et2_inputWidget.extend(
 				.text(this.options.select_options[key]);
 			option.appendTo(this.app_select);
 		}
-		this.app_select.val(this.options.only_app ? this.options.only_app : this.options.application_list[0]);
+		if(self.options.value && self.options.value.app)
+		{
+			this.app_select.val(self.options.value.app);
+		}
+		else
+		{
+			this.app_select.val(this.options.application_list[0]);
+		}
 		if(this.options.only_app) 
 		{
+			this.app_select.val(this.options.only_app);
 			this.app_select.hide();
 			this.div.addClass("no_app");
 		}
