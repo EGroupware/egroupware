@@ -21,15 +21,15 @@
  * 	'no_filter'      => True// I  disable the 1. filter
  * 	'no_filter2'     => True// I  disable the 2. filter (params are the same as for filter)
  * 	'no_cat'         => True// I  disable the cat-selectbox
- *  'cat_app'        =>     // I  application the cat's should be from, default app in get_rows
- *  'cat_is_select'  =>     // I  true||'no_lang' use selectbox instead of category selection, default null
+ *	'cat_app'        =>     // I  application the cat's should be from, default app in get_rows
+ *	'cat_is_select'  =>     // I  true||'no_lang' use selectbox instead of category selection, default null
  * 	'template'       =>		// I  template to use for the rows, if not set via options
  * 	'header_left'    =>		// I  template to show left of the range-value, left-aligned (optional)
  * 	'header_right'   =>		// I  template to show right of the range-value, right-aligned (optional)
  * 	'bottom_too'     => True// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
  *	'never_hide'     => True// I  never hide the nextmatch-line if less then maxmatch entries
- *  'lettersearch'   => True// I  show a lettersearch
- *  'searchletter'   =>     // IO active letter of the lettersearch or false for [all]
+ *	'lettersearch'   => True// I  show a lettersearch
+ *	'searchletter'   =>     // IO active letter of the lettersearch or false for [all]
  * 	'start'          =>		// IO position in list
  *	'num_rows'       =>     // IO number of rows to show, defaults to maxmatches from the general prefs
  * 	'cat_id'         =>		// IO category, if not 'no_cat' => True
@@ -53,8 +53,8 @@
  * 	'columnselection-pref' => // I  name of the preference (plus 'nextmatch-' prefix), default = template-name
  * 	'default_cols'   => 	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
  * 	'options-selectcols' => // I  array with name/label pairs for the column-selection, this gets autodetected by default. A name => false suppresses a column completly.
- *  'return'         =>     // IO allows to return something from the get_rows function if $query is a var-param!
- *  'csv_fields'     =>		// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames or preferred importexport definition,
+ *	'return'         =>     // IO allows to return something from the get_rows function if $query is a var-param!
+ *	'csv_fields'     =>		// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames or preferred importexport definition,
  * 		array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
  *		or name of import/export definition
  *  'row_id'         =>     // I  key into row content to set it's value as row-id, eg. 'id'

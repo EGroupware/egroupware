@@ -164,45 +164,45 @@ var et2_tree = et2_inputWidget.extend(
 	onclick: function(_node) {},
 
 	createTree: function(widget) {
-			widget.input = new dhtmlXTreeObject({
-				parent:		widget.div[0],
-				width:		'100%',
-				height:		'100%',
-				image_path:	widget.options.image_path,
-				checkbox:	widget.options.multiple,
-			});
-			// attach all event handlers (attributs starting with "on"), if they are set
-			for(var name in widget.options)
+		widget.input = new dhtmlXTreeObject({
+			parent:		widget.div[0],
+			width:		'100%',
+			height:		'100%',
+			image_path:	widget.options.image_path,
+			checkbox:	widget.options.multiple,
+		});
+		// attach all event handlers (attributs starting with "on"), if they are set
+		for(var name in widget.options)
+		{
+			if (name.substr(0,2) == 'on' && widget.options[name])
 			{
-				if (name.substr(0,2) == 'on' && widget.options[name])
-				{
-					// automatic convert onChange event to oncheck or onSelect depending on multiple is used or not
-					if (name == 'onchange') name = widget.options.multiple ? 'oncheck' : 'onselect';
-					widget.input.attachEvent(widget.attributes[name].name, function(_args){
-						var _widget = widget;	// closure to pass in et2 widget (1. param of event handler)
-						// use widget attributes to pass arguments and name of event to handler
-						_widget.event_args = arguments;
-						_widget.event_name = this.callEvent.arguments[0].substr(3);
-						var _js = _widget.options[_widget.event_name] || _widget.options.onchange;
-						(et2_compileLegacyJS(_js, _widget, this))();
-						delete _widget.event_args;
-						delete _widget.event_name;
-					});
-					
-				}
+				// automatic convert onChange event to oncheck or onSelect depending on multiple is used or not
+				if (name == 'onchange') name = widget.options.multiple ? 'oncheck' : 'onselect';
+				widget.input.attachEvent(widget.attributes[name].name, function(_args){
+					var _widget = widget;	// closure to pass in et2 widget (1. param of event handler)
+					// use widget attributes to pass arguments and name of event to handler
+					_widget.event_args = arguments;
+					_widget.event_name = this.callEvent.arguments[0].substr(3);
+					var _js = _widget.options[_widget.event_name] || _widget.options.onchange;
+					(et2_compileLegacyJS(_js, _widget, this))();
+					delete _widget.event_args;
+					delete _widget.event_name;
+				});
+				
 			}
-			if (widget.options.autoloading)
+		}
+		if (widget.options.autoloading)
+		{
+			var url = widget.options.autoloading;
+			if (url.charAt(0) != '/' && url.substr(0,4) != 'http')
 			{
-				var url = widget.options.autoloading;
-				if (url.charAt(0) != '/' && url.substr(0,4) != 'http')
-				{
-					url = '/json.php?menuaction='+url;
-				}
-				if (url.charAt(0) == '/') url = egw.webserverUrl+url;
-				this.autoloading_url = url;
-				widget.input.setXMLAutoLoading(url);
-				widget.input.setDataMode('JSON');
+				url = '/json.php?menuaction='+url;
 			}
+			if (url.charAt(0) == '/') url = egw.webserverUrl+url;
+			this.autoloading_url = url;
+			widget.input.setXMLAutoLoading(url);
+			widget.input.setDataMode('JSON');
+		}
 	},
 
 	set_select_options: function(options) {
