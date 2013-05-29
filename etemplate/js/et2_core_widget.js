@@ -233,8 +233,8 @@ var et2_widget = Class.extend(
 			this._children[i].free();
 		}
 
-		// Remove this element from the parent
-		if (this._parent !== null)
+		// Remove this element from the parent, if it exists
+		if (typeof this._parent != "undefined" && this._parent !== null)
 		{
 			this._parent.removeChild(this);
 		}
