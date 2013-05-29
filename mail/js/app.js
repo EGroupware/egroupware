@@ -148,6 +148,8 @@ app.mail = AppJS.extend(
 		var splitterDN = splitter.getDOMNode();
 		// check if DOM Node has class that contains docked; then we assume the bar docked, whatever our class var states
 		for (var i=0; i < splitterDN.childNodes[1].classList.length;i++) if (splitterDN.childNodes[1].classList[i].search(/docked/)>=0) this.mail_previewAreaActive = false;
+		//if this.mail_previewAreaActive but clientHeight of childNode is 0, assume this.mail_previewAreaActive incorrect
+		if ( this.mail_previewAreaActive && splitterDN.childNodes[2].clientHeight == 0) this.mail_previewAreaActive=false;
 		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersFrom').set_disabled(_value);
 		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersTo').set_disabled(_value);
 		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersDate').set_disabled(_value);
