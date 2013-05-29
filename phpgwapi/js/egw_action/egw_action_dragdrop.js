@@ -319,6 +319,11 @@ function egwDropActionImplementation()
 									enabled = true;
 								}
 							}
+							// Check for allowing multiple selected
+							if(!links[k].actionObj.allowOnMultiple && selected.length > 1)
+							{
+								enabled = false;
+							}
 							if(!enabled)
 							{
 								links[k].enabled = false;
@@ -338,14 +343,15 @@ function egwDropActionImplementation()
 							{
 								lnk = links[k];
 								cnt += 1 + links[k].actionObj.children.length;
+
+								// Add ui, so you know what happened where
+								lnk.actionObj.ui = ui;
+
 							}
 						}
 
 						if (cnt == 1)
 						{
-							// Add ui, so you know what happened where
-							lnk.actionObj.ui = ui;
-
 							window.setTimeout(function() {
 								lnk.actionObj.execute(selected, _context);
 							},0);
