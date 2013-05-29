@@ -889,7 +889,8 @@ class infolog_so
 			if (is_null($index_load_cfs) && $query['col_filter']['info_type'])
 			{
 				$config_data = config::read('infolog');
-				$index_load_cfs = (array)$config_data['index_load_cfs'];
+				$index_load_cfs = $config_data['index_load_cfs'];
+				if (!is_array($index_load_cfs)) $index_load_cfs = explode(',', $index_load_cfs);
 			}
 			// if no specific custom field is selected, show/query all custom fields
 			if ($ids && ($query['custom_fields'] || $query['csv_export'] ||
