@@ -20,6 +20,7 @@ app.mail = AppJS.extend(
 
 	mail_selectedMails: [],
 	mail_currentlyFocussed: '',
+	mail_previewAreaActive: true, // we start with the area active
 	
 	/**
 	 * Initialize javascript for this application
@@ -144,6 +145,9 @@ app.mail = AppJS.extend(
 	 */
 	mail_disablePreviewArea: function(_value) {
 		var splitter = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailSplitter');
+		var splitterDN = splitter.getDOMNode();
+		// check if DOM Node has class that contains docked; then we assume the bar docked, whatever our class var states
+		for (var i=0; i < splitterDN.childNodes[1].classList.length;i++) if (splitterDN.childNodes[1].classList[i].search(/docked/)>=0) this.mail_previewAreaActive = false;
 		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersFrom').set_disabled(_value);
 		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersTo').set_disabled(_value);
 		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersDate').set_disabled(_value);
@@ -151,11 +155,13 @@ app.mail = AppJS.extend(
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreview').set_disabled(_value);
 		if (_value==true)
 		{
-			splitter.dock();
+			if (this.mail_previewAreaActive) splitter.dock();
+			this.mail_previewAreaActive = false;
 		}		
 		else
 		{
-			splitter.undock();
+			if (!this.mail_previewAreaActive) splitter.undock();
+			this.mail_previewAreaActive = true;
 		}
 	},
 
