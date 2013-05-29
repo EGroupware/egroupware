@@ -55,7 +55,8 @@ var et2_template = et2_DOMWidget.extend(
 		},
 		"content": {
 			"name": "Content index",
-			"default": et2_no_init
+			"default": et2_no_init,
+			"description": "Used for passing in specific content to the template other than what it would get by ID."
 		},
 	},
 
