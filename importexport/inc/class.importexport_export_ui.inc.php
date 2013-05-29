@@ -79,7 +79,8 @@ class importexport_export_ui {
 		$sel_options['definition'] = array('' => lang('Select'));
 		$definitions = new importexport_definitions_bo(array(
 			'type' => 'export',
-			'application' => isset($content['appname']) ? $content['appname'] : '%'
+			'application' => isset($content['appname']) ? $content['appname'] : '*',
+			'plugin' => $_plugin ? $_plugin : '*'
 		));
 		foreach ((array)$definitions->get_definitions() as $identifier) {
 			try {
