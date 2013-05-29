@@ -45,12 +45,12 @@ var et2_portlet = et2_valueWidget.extend(
 		},
 		"settings": {
 			"name": "Customization settings",
-			"description": "Array of customization settings, similar to preference settings",
+			"description": "Array of customization settings, similar in structure to preference settings",
 			"type": "any",
 			"default": et2_no_init
 		},
 		"width": { "default": 2, "ignore": true},
-		"height": { "default": 1, "ignore": true},
+		"height": { "default": 1, "type": "integer"},
 		"rows": {"ignore": true},
 		"cols": {"ignore": true},
 		"row": { "default": 1},
@@ -58,7 +58,6 @@ var et2_portlet = et2_valueWidget.extend(
 	},
 
 	createNamespace: true,
-	RESIZE_TIMEOUT: 5000,
 	GRID: 50,
 
 	/**
@@ -102,12 +101,6 @@ var et2_portlet = et2_valueWidget.extend(
 			.attr("data-row", this.options.row)
 			.attr("data-col", this.options.col)
 
-			// Shapeshift
-			.width(this.options.width * this.GRID)
-			.height(this.options.height * this.GRID)
-			.attr("data-ss-rowspan", this.options.row)
-			.attr("data-ss-colspan", this.options.col)
-
 			.resizable( {
 				autoHide: true,
 				grid:	this.GRID,
@@ -115,13 +108,13 @@ var et2_portlet = et2_valueWidget.extend(
 				stop: function(event, ui) {
 					self.set_width(Math.round(ui.size.width / self.GRID));
 					self.set_height(Math.round(ui.size.height / self.GRID));
-					self.egw().json("home.home_ui.ajax_set_properties",[self.id, self.options.settings,{
+					self.egw().jsonq("home.home_ui.ajax_set_properties",[self.id, self.options.settings,{
 							width: self.options.width,
 							height: self.options.height
 						}],
 						null,
 						self, true, self
-					).sendRequest();
+					);
 				}
 			});
 		this.header = $j(document.createElement("div"))
@@ -129,8 +122,7 @@ var et2_portlet = et2_valueWidget.extend(
 			.appendTo(this.div)
 			.html(this.options.title);
 		this.content = $j(document.createElement("div"))
-			.appendTo(this.div)
-			.html(this.options.value);
+			.appendTo(this.div);
 
 		this.setDOMNode(this.div[0]);
 	},
@@ -138,6 +130,17 @@ var et2_portlet = et2_valueWidget.extend(
 	destroy: function()
 	{
 		this._super.apply(this, arguments);
+	},
+
+	/**
+	 * If anyone asks, return the content node, so content goes inside
+	 */
+	getDOMNode: function(_sender) {
+		if(typeof _sender != 'undefined' && _sender != this)
+		{
+			return this.content[0];
+		}
+		return this._super.apply(this, arguments);
 	},
 
 	/**
@@ -229,7 +232,7 @@ var et2_portlet = et2_valueWidget.extend(
 		
 		// Save settings - server will reply with new content, if the portlet needs an update
 		this.div.addClass("loading");
-		this.egw().json("home.home_ui.ajax_set_properties",[this.id, this.options.settings || {}, value], 
+		this.egw().jsonq("home.home_ui.ajax_set_properties",[this.id, this.options.settings || {}, value], 
 			function(data) {
 				this.div.removeClass("loading");
 				this.set_value(data.content);
@@ -252,7 +255,7 @@ var et2_portlet = et2_valueWidget.extend(
 				}
 			},
 			this, true, this
-		).sendRequest();
+		);
 
 		// Extend, not replace, because settings has types while value has just value
 		jQuery.extend(this.options.settings, value);
@@ -295,6 +298,15 @@ var et2_portlet = et2_valueWidget.extend(
 	},
 
 	/**
+	 * Let this portlet stand out a little by allowing a custom color
+	 */
+	set_color: function(color)
+	{
+		this.header.css("backgroundColor", color);
+		this.content.css("backgroundColor", color);
+	},
+
+	/**
 	 * Set the number of grid cells this widget spans
 	 * 
 	 * @param value int Number of horizontal grid cells
@@ -314,6 +326,10 @@ var et2_portlet = et2_valueWidget.extend(
 	{
 		this.options.height = value;
 		this.div.attr("data-sizey", value);
+
+		// Explicitly set the height of the content, so it can properly scroll.  Sometimes set_height()
+		// is called before everything is in the DOM though, so use a magic 18px in that case.
+		this.content.height(value * this.GRID - (this.header.outerHeight() > 0 ? this.header.outerHeight() : 18));
 	}
 	
 });
