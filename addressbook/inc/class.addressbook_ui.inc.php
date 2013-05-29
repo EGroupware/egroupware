@@ -605,6 +605,8 @@ class addressbook_ui extends addressbook_bo
 					'csv'    => array(
 						'caption' => 'Export as CSV',
 						'allowOnMultiple' => true,
+						'url' => 'menuaction=importexport.importexport_export_ui.export_dialog&appname=addressbook&plugin=addressbook_export_contacts_csv&selection=$id',
+						'popup' => '850x440'
 					),
 					'vcard'  => 'Export as VCard',
 				),
@@ -853,18 +855,6 @@ class addressbook_ui extends addressbook_bo
 				$vcard->export($checked);
 				// does not return!
 				$Ok = false;
-				break;
-			case 'csv':
-				$action_msg = lang('exported');
-				egw_framework::set_onload(
-					"egw_openWindowCentered2('".egw::link('/index.php',array(
-						'menuaction' => 'importexport.importexport_export_ui.export_dialog',
-						'appname' => 'addressbook',
-						'plugin' => 'addressbook_export_contacts_csv',
-						'selection' => $use_all ? 'all' : implode(',',$checked)
-					))."','_blank',850,440);");
-				$success = count($checked);
-				return true;
 				break;
 
 			case 'infolog':
