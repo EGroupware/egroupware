@@ -343,6 +343,9 @@ function egwDropActionImplementation()
 
 						if (cnt == 1)
 						{
+							// Add ui, so you know what happened where
+							lnk.actionObj.ui = ui;
+
 							window.setTimeout(function() {
 								lnk.actionObj.execute(selected, _context);
 							},0);
