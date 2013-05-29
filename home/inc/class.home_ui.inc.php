@@ -65,31 +65,29 @@ class home_ui
 				'caption'	=> 'Add',
 				'onExecute'	=> 'javaScript:app.home.add',
 				'children'	=> $portlets
-			),
-			'drop_create'	=> array(
-				'caption'	=> 'Add',
-				'type'	=> 'drop',
-				'acceptedTypes' => array('file') + array_keys($GLOBALS['egw_info']['apps']),
-				'onExecute'	=> 'javaScript:app.home.add_from_drop',
 			)
 		);
 
+		// Add all known portlets as drop actions too.  If there are multiple matches, there will be a menu
+		$drop_execute = 'javaScript:app.home.add_from_drop';
 		foreach($portlets as $app => $children)
 		{
-			// Home portlets
+			// Home portlets - uses link system, so all apps that support that are accepted
 			if(!$children['children'])
 			{
-				$children['onExecute'] = $actions['drop_create']['onExecute'];
-				$children['acceptedTypes'] = egw_link::app_list();
-				$actions[$app] = $children;
+				$children['onExecute'] = $drop_execute;
+				$children['acceptedTypes'] = array_keys(egw_link::app_list());
+				$children['type'] = 'drop';
+				$actions["drop_$app"] = $children;
 			}
 			else
 			{
 				foreach($children as $portlet => $app_portlets)
 				{
-					$app_portlets['onExecute'] = $actions['drop_create']['onExecute'];
+					$app_portlets['onExecute'] = $drop_execute;
 					$app_portlet['acceptedTypes'] = $app;
-					$actions[$portlet] = $app_portlets;
+					$app_portlet['type'] = 'drop';
+					$actions["drop_$portlet"] = $app_portlets;
 				}
 			}
 		}
@@ -117,7 +115,7 @@ class home_ui
 		{
 			$content = '';
 			$attrs = array();
-			$this->get_portlet($context, $content, $attrs);
+			$this->get_portlet($id, $context, $content, $attrs);
 			$portlets[$id] = $content;
 			$attributes[$id] = $attrs;
 
@@ -138,7 +136,7 @@ class home_ui
 	 * @param attributes Array Settings that can be customized on a per-portlet basis - will be set
 	 * @return home_portlet The portlet object that created the content
 	 */
-	protected function get_portlet(&$context, &$content, &$attributes)
+	protected function get_portlet($id, &$context, &$content, &$attributes)
 	{
 		if(!$context['class']) $context['class'] = 'home_link_portlet';
 
@@ -146,14 +144,20 @@ class home_ui
 		$portlet = new $classname($context);
 
 		$desc = $portlet->get_description();
-		$content = $portlet->get_content();
+		$content = $portlet->get_content($id);
 
-		// Exclude common attributes changed through UI
-		$settings = $portlet->get_properties() + $context;
+		// Exclude common attributes changed through UI and settings lacking a type
+		$settings = $portlet->get_properties();
+		foreach($settings as $key => $setting)
+		{
+			if(is_array($setting) && !array_key_exists('type',$setting)) unset($settings[$key]);
+		}
+		$settings += $context;
 		foreach(home_portlet::$common_attributes as $attr)
 		{
 			unset($settings[$attr]);
 		}
+
 		$attributes = array(
 			'title' => $desc['title'],
 			'settings' => $settings,
@@ -223,7 +227,8 @@ class home_ui
 						'id'	=> $portlet,
 						'caption' => $desc['displayName'],
 						'hint' => $desc['description'],
-						'onExecute' => 'javaScript:app.home.add'
+						'onExecute' => 'javaScript:app.home.add',
+						'allowOnMultiple' => $instance->accept_multiple()
 					);
 				}
 			}
@@ -259,12 +264,12 @@ class home_ui
 			}
 			else
 			{
-error_log(array2string($attributes));
-error_log(array2string($values));
 				// Get portlet settings, and merge new with old
 				$content = '';
-				$portlet = $this->get_portlet(array_merge((array)$attributes, $values), $content, $attributes);
-				$context = array('class' => get_class($portlet));
+				$context = $values+(array)$portlets[$portlet_id]; //array('class'=>$attributes['class']);
+				$portlet = $this->get_portlet($portlet_id, $context,$content, $attributes);
+
+				$context['class'] = get_class($portlet);
 				foreach($portlet->get_properties() as $property)
 				{
 					if($values[$property['name']])
@@ -277,14 +282,12 @@ error_log(array2string($values));
 					}
 				}
 
+
 				// Update client side
 				$update = array('content' => $content, 'attributes' => $attributes);
 
 				// New portlet?  Flag going straight to edit mode
-				if(!array_key_exists($portlet_id,$portlets) && $attributes['settings'])
-				{
-					$update['edit_settings'] = true;
-				}
+				//$update['edit_settings'] = true;
 				$response->data($update);
 
 				// Store for preference update

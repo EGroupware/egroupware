@@ -49,11 +49,11 @@ abstract class home_portlet
 	/**
 	 * Get a fragment of HTML for display
 	 *
-	 * @param content Array Values returned from a submit, if any
-	 * @param context Settings for customizing the portlet
+	 * @param id String unique ID, provided to the portlet so it can make sure content is
+	 * 	unique, if needed.
 	 * @return string HTML fragment for display
 	 */
-	public abstract function get_content();
+	public abstract function get_content($id = null);
 
 	/**
 	 * Return a list of settings to customize the portlet.
@@ -71,7 +71,8 @@ abstract class home_portlet
 	 * - help: Description of the setting, and what it does
 	 * - default: Default value, for when it's not set yet
 	 */
-	public function get_properties() {
+	public function get_properties()
+	{
 		// Include the common attributes, or they won't get saved
 		$properties = array();
 		foreach(self::$common_attributes as $prop)
@@ -84,8 +85,18 @@ abstract class home_portlet
 	/**
 	 * Return a list of allowable actions for the portlet.
 	 *
-	 * These actions will be merged with the default porlet actions.  Use the
+	 * These actions will be merged with the default portlet actions.  Use the
 	 * same id / key to override the default action.
 	 */
 	public abstract function get_actions();
+
+	/**
+	 * If this portlet can accept, display, or otherwise handle multiple
+	 * EgroupWare entries.  Used for drag and drop processing.  How the entries
+	 * are handled are up to the portlet.
+	 */
+	public function accept_multiple()
+	{
+		return false;
+	}
 }

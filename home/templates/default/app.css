@@ -17,6 +17,9 @@
 .et2_portlet.ui-widget-content {
 	overflow: hidden;
 }
+.et2_portlet.ui-widget-content > div:last-of-type {
+	height: 100%;
+}
 
 /* Shapeshift
 #portlets {

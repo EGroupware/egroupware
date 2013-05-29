@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware - Home - A simple portlet for displaying an entry
+ * EGroupware - Home - A simple portlet for displaying a list of entries
  *
  * @link www.egroupware.org
  * @author Nathan Gray
@@ -11,7 +11,15 @@
  * @version $Id$
  */
 
-class home_link_portlet extends home_portlet
+
+/**
+ * The home_list_portlet uses the link system and its associated link-list widget
+ * to display a list of entries.  This is a simple static list that the user can manually
+ * add to and remove from.
+ *
+ * Any application that supports the link system should be able to be added into the list.
+ */
+class home_list_portlet extends home_portlet
 {
 
 	/**
@@ -22,7 +30,7 @@ class home_link_portlet extends home_portlet
 	/**
 	 * Title of entry
 	 */
-	protected $title = 'Link';
+	protected $title = 'List';
 
 	/**
 	 * Construct the portlet
@@ -30,16 +38,34 @@ class home_link_portlet extends home_portlet
 	 */
 	public function __construct(Array &$context = array())
 	{
-		// Process dropped data into something useable
+		if(!is_array($context['list'])) $context['list'] = array();
+
+		// Process dropped data (Should be GUIDs) into something useable
 		if($context['dropped_data'])
 		{
-			list($context['entry']['app'], $context['entry']['id']) = explode('::', $context['dropped_data'][0], 2);
+			foreach((Array)$context['dropped_data'] as $dropped)
+			{
+				$add = array();
+				list($add['app'], $add['id']) = explode('::', $dropped, 2);
+				if($add['app'] && $add['id'])
+				{
+					$context['list'][] = $add;
+				}
+			}
+			unset($add);
 			unset($context['dropped_data']);
 		}
-		if($context['entry'])
+		if($context['title'])
 		{
-			$this->title = $context['entry']['title'] = egw_link::title($context['entry']['app'], $context['entry']['id']);
+			$this->title = $context['title'];
 		}
+		// Add a new entry to the list
+		if($context['add'])
+		{
+			$context['list'][] = $context['add'];
+			unset($context['add']);
+		}
+
 		$this->context = $context;
 	}
 
@@ -57,9 +83,9 @@ class home_link_portlet extends home_portlet
 	public function get_description()
 	{
 		return array(
-			'displayName'=> 'Single Entry',
-			'title'=>	$this->context['entry'] ? lang($this->context['entry']['app']) : lang('None'),
-			'description'=>	lang('Show one entry')
+			'displayName'=> 'List of entries',
+			'title'=>	$this->title,
+			'description'=>	lang('Show a list of entries')
 		);
 	}
 
@@ -72,7 +98,17 @@ class home_link_portlet extends home_portlet
 	 */
 	public function get_content($id = null)
 	{
-		return $this->title;
+		$list = array();
+		foreach($this->context['list'] as $link_id => $link)
+		{
+			$list[] = $link + array(
+				'title' => egw_link::title($link['app'], $link['id']),
+				'icon'	=> egw_link::get_registry($link['app'], 'icon')
+			);
+		}
+
+		// Find the portlet widget, and add a link-list to it
+		return "<script>app.home.List.set_content('$id', ".json_encode($list).")</script>";
 	}
 
 	/**
@@ -95,9 +131,13 @@ class home_link_portlet extends home_portlet
 	{
 		return array(
 			array(
-				'name'	=>	'entry',
-				'type'	=>	'link-entry',
-				'label'	=>	lang('Entry'),
+				'name'	=>	'title',
+				'type'	=>	'textbox',
+				'label'	=>	lang('Title'),
+			),
+			// Internal
+			array(
+				'name'	=>	'list'
 			)
 		) + parent::get_properties();
 	}
@@ -112,19 +152,27 @@ class home_link_portlet extends home_portlet
 	public function get_actions()
 	{
 		$actions = array(
-			'view' => array(
-				'icon' => 'view',
-				'caption' => lang('open'),
-				'default' => true,
+			'add' => array(
+				'icon' => 'add',
+				'caption' => lang('add'),
 				'hideOnDisabled' => false,
-				'onExecute' => 'javaScript:app.home.open_link',
+				'onExecute' => 'javaScript:app.home.add_link',
 			),
-			'edit_settings' => array(
-				'default' => false
+			'add_drop' => array(
+				'type' => 'drop',
+				'caption' => lang('add'),
+				'onExecute' => 'javaScript:app.home.add_link',
+				'acceptedTypes' => array('file') + array_keys($GLOBALS['egw_info']['apps']),
 			)
 		);
-		$actions['view']['enabled'] = (bool)$this->context['entry'];
-
 		return $actions;
+	}
+
+	/**
+	 * List portlet displays multiple entries, so it makes sense to accept multiple dropped entries
+	 */
+	public function accept_multiple()
+	{
+		return true;
 	}
 }
