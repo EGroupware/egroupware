@@ -1,3 +1,18 @@
+egroupware (1.8.004.20130531) hardy; urgency=low
+
+  * MySQL: got mysqli extension working and make it default for EGroupware, as mysql is now officially deprecated, existing installs need to be switched manually in header.inc.php or Setup >> Manage header
+  * Filemanager: fixed not working "Save as" for Internet Explorer (all versions), gave PHP Fatal Error
+  * Timesheet: allow to add timesheets starting yesterday and end today (no warning end-time before start-time)
+  * eMail/IMAP-API: trying to recover when fetching mailheaders, but resultset retrieved does not match the expected amount of message headers
+  * eMail: handle problem popup foldertree does not show subfolders of folders with umlauts
+  * Calendar/CalDAV: reduced memory foot-print by caching alarms, calendars with lots of alarms and recurring events sync now with 128MB memory_limit
+  * API/Auth: when required by setup check password strength upon login; user must be allowed to change password
+  * API: fallback auth checks and - if necessary - updates passwords on fallback on successful primary authentication or password change, to ensure they are kept up to date
+  * LDAP: only check for matching system users, if a new account get added, as existing accounts can be reported - depending on configuration - as system users too
+  * Sambaadmin: create new users/groups in LDAP with uidNumber/gidNumber matching relative id (last part of SID) to ease migration to AD or Samba4
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 31 May 2013 10:41:41 +0200
+
 egroupware (1.8.004.20130322) hardy; urgency=low
 
   * CalDAV/CardDAV: fix not working logging of errors into traffic log
