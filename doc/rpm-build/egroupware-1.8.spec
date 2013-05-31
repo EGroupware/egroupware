@@ -1,5 +1,5 @@
 Name: eGroupware
-Version: 1.8.004.20120405
+Version: 1.8.004.20130531
 Release: 1
 Summary: EGroupware is a web-based groupware suite written in php.
 Group: Web/Database
@@ -465,6 +465,7 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %dir %{egwdir}
 %{egwdir}/about.php
 %{egwdir}/anon_wrapper.php
+%{egwdir}/files
 %{egwdir}/header.inc.php
 %{egwdir}/header.inc.php.template
 %{egwdir}/index.php
@@ -475,6 +476,7 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %{egwdir}/rpc.php
 %{egwdir}/set_box.php
 %{egwdir}/soap.php
+%{egwdir}/status.php
 %{egwdir}/svn-helper.php
 %{egwdir}/xajax.php
 %{egwdir}/xmlrpc.php

@@ -11,7 +11,7 @@ egroupware (1.8.004.20130531) hardy; urgency=low
   * LDAP: only check for matching system users, if a new account get added, as existing accounts can be reported - depending on configuration - as system users too
   * Sambaadmin: create new users/groups in LDAP with uidNumber/gidNumber matching relative id (last part of SID) to ease migration to AD or Samba4
 
- -- Ralf Becker <rb@stylite.de>  Fri, 31 May 2013 10:41:41 +0200
+ -- Ralf Becker <rb@stylite.de>  Fri, 31 May 2013 10:54:10 +0200
 
 egroupware (1.8.004.20130322) hardy; urgency=low
 
@@ -54,7 +54,7 @@ egroupware (1.8.004.20130322) hardy; urgency=low
   * Filemanager: fixing problem creating new directory with cyrilic name, also generating etag for directories as required by ownCloud
   * Setup: fixed not working install on openSUSE 12.2/3, because last line of output from "service (mysql|apache2) status" is empty
 
- -- Ralf Becker <rb@stylite.de>  Fri, 22 Mar 2013 12:45:54 +0100
+ -- Ralf Becker <rb@stylite.de>  Fri, 22 Mar 2013 13:43:14 +0100
 
 egroupware (1.8.004.20121024) hardy; urgency=low
 
@@ -79,7 +79,7 @@ egroupware (1.8.004.20121024) hardy; urgency=low
   * CalDAV: show created and updated by user and date in iOS 6: new CalendarServer:(created|updated)-by properties
   * CalDAV/CardDAV: return urn:uuid as last record in calendar-user-address-set, as according to iCal4OL developer, some clients might have problems with it, also adding both full uri and just path of principal url, as calendarserver does it
 
- -- Ralf Becker <rb@stylite.de>  Wed, 24 Oct 2012 09:26:01 +0200
+ -- Ralf Becker <rb@stylite.de>  Wed, 24 Oct 2012 09:43:05 +0200
 
 egroupware (1.8.004.20120822) hardy; urgency=low
 
@@ -99,7 +99,7 @@ egroupware (1.8.004.20120822) hardy; urgency=low
   * SyncML: fix Funambol vCard issues (community bug #1999)
   * InfoLog: remove accidently backported preferences, not used in 1.8
 
- -- Ralf Becker <rb@stylite.de>  Wed, 22 Aug 2012 08:49:40 +0200
+ -- Ralf Becker <rb@stylite.de>  Wed, 22 Aug 2012 08:57:15 +0200
 
 egroupware (1.8.004.20120718) hardy; urgency=low
 
@@ -116,7 +116,7 @@ egroupware (1.8.004.20120718) hardy; urgency=low
   * Addressbook: fixed not working resize or conversation of non-jpeg images in newer php versions
   * Admin/Setup: fixing high memory usage in registering all hooks
 
- -- Ralf Becker <rb@stylite.de>  Wed, 18 Jul 2012 19:53:42 +0200
+ -- Ralf Becker <rb@stylite.de>  Wed, 18 Jul 2012 20:06:36 +0200
 
 egroupware (1.8.004.20120613) hardy; urgency=low
 
@@ -126,7 +126,7 @@ egroupware (1.8.004.20120613) hardy; urgency=low
   * InfoLog/CalDAV: set status of new tasks to NEEDS-ACTION (not started), if client does not specify a status or completion (was set to DONE before)
   * Api: use autocomplete=off on all etemplate password fields (not all browsers support that), to avoid filling in wrong passwords while administering
 
- -- Ralf Becker <rb@stylite.de>  Wed, 13 Jun 2012 09:39:40 +0200
+ -- Ralf Becker <rb@stylite.de>  Wed, 13 Jun 2012 09:46:51 +0200
 
 egroupware (1.8.004.20120530) hardy; urgency=low
 
@@ -136,7 +136,7 @@ egroupware (1.8.004.20120530) hardy; urgency=low
   * SyncML: Fix country name issue during SyncML slowsync (community bug #3146)
   * Timesheet: if linked via ProjectManager, behave identical as if project was set in own GUI, fixed setting project to none to also unset project-title and blur
 
- -- Ralf Becker <rb@stylite.de>  Wed, 30 May 2012 18:23:37 +0200
+ -- Ralf Becker <rb@stylite.de>  Wed, 30 May 2012 18:30:26 +0200
 
 egroupware (1.8.004.20120515) hardy; urgency=low
 
@@ -150,17 +150,7 @@ egroupware (1.8.004.20120515) hardy; urgency=low
   * InfoLog: if searching do not suppress sub-entries (user preference "List no subs/childs" set)
   * Addressbook: fixed not working changing of organisation members
 
- -- Ralf Becker <rb@stylite.de>  Tue, 15 May 2012 19:03:48 +0200
-
-egroupware (1.8.004.20120507) hardy; urgency=low
-
-  * resources: fix for missing/not loaded pictures for resources in default/images/resource_icons/
-  * calendar: use possible attribute values regarding X-MICROSOFT-CDO-ALLDAYEVENT
-  * CalDAV/Calendar: copied events need to get new name-part in CalDAV URL, otherwise sync fails
-  * Addressbook/LDAP: documented how to get ACL for group-addressbooks working without deprecated rfc2307bis schema
-  * Addressbook/LDAP|SQL->LDAP: fixed error during creation of new contacts, SQL->LDAP now also displays LDAP errors
-
- -- Ralf Becker <rb@stylite.de>  Mon, 07 May 2012 09:29:33 +0200
+ -- Ralf Becker <rb@stylite.de>  Tue, 15 May 2012 19:21:40 +0200
 
 egroupware (1.8.004.20120423) hardy; urgency=low
 
@@ -172,7 +162,7 @@ egroupware (1.8.004.20120423) hardy; urgency=low
   * CalDAV: fixed PHP Fatal Error when iCal contains invalid participant url like Lighttnings "invalid:noemail"
   * Wiki: fixed Fatal error: Unsupported operand types in class.wiki_ui.inc.php on line 188, if no languages are installed
 
- -- Ralf Becker <rb@stylite.de>  Mon, 23 Apr 2012 10:00:47 +0200
+ -- Ralf Becker <rb@stylite.de>  Mon, 23 Apr 2012 10:08:01 +0200
 
 egroupware (1.8.004.20120410) hardy; urgency=low
 
@@ -180,7 +170,7 @@ egroupware (1.8.004.20120410) hardy; urgency=low
   * Setup: fixed failed install under Ubuntu 10.04 (include ./hook_config.inc.php failed)
   * Addressbook: fixed sql error when sorting by a custom field and not displayed custom field content
 
- -- Ralf Becker <rb@stylite.de>  Tue, 10 Apr 2012 14:51:08 +0200
+ -- Ralf Becker <rb@stylite.de>  Tue, 10 Apr 2012 14:56:16 +0200
 
 egroupware (1.8.004.20120407) hardy; urgency=low
 
@@ -188,7 +178,7 @@ egroupware (1.8.004.20120407) hardy; urgency=low
   * CalDAV: fix error nothing known about column "id"
   * CalDAV/CardDAV: add API version to pseudo session-id used to invalidate all sessions from the previous version (which eg. give database errors, because using old schema)
 
- -- Ralf Becker <rb@stylite.de>  Sat, 07 Apr 2012 08:54:56 +0200
+ -- Ralf Becker <rb@stylite.de>  Sat, 07 Apr 2012 09:02:17 +0200
 
 egroupware (1.8.004.20120405) hardy; urgency=low
 
@@ -243,7 +233,7 @@ egroupware (1.8.004.20120405) hardy; urgency=low
   * CardDAV: fixed not working deleting of existing fields and cell phone numbers for Apple clients
   * eMail: supporting deprecated text/directory mimetype (if filename extension is of type text/vcard) for opening in addressbook edit dialog.
 
- -- Ralf Becker <rb@stylite.de>  Thu, 05 Apr 2012 15:10:11 +0200
+ -- Ralf Becker <rb@stylite.de>  Thu, 05 Apr 2012 15:17:21 +0200
 
 egroupware (1.8.002.20111111) hardy; urgency=low
 
@@ -253,7 +243,7 @@ egroupware (1.8.002.20111111) hardy; urgency=low
   * Filemanager/eTemplate: fix for MyStylite bug #2495: deleting files containing [ as first char deletes whole directory
   * GroupDAV/CalDAV/CardDAV: removed alternative approach from groupdav.htaccess, as it is not suffient for iOS 4.3+ iCal
 
- -- Ralf Becker <rb@stylite.de>  Fri, 11 Nov 2011 09:54:17 +0100
+ -- Ralf Becker <rb@stylite.de>  Fri, 11 Nov 2011 10:09:16 +0100
 
 egroupware (1.8.002.20111011) hardy; urgency=low
 
@@ -280,7 +270,7 @@ egroupware (1.8.002.20111011) hardy; urgency=low
   * CalDAV/GroupDAV: return empty collection, as iCal under iOS 5 had problems with returning "404 Not found" status
   * Calendar: added windows timezones to all installations (was added in calendar update 1.7.005, but not to new installs)
 
- -- Ralf Becker <rb@stylite.de>  Tue, 11 Oct 2011 08:37:23 +0200
+ -- Ralf Becker <rb@stylite.de>  Tue, 11 Oct 2011 08:49:02 +0200
 
 egroupware (1.8.002.20110811) hardy; urgency=low
 
@@ -290,7 +280,7 @@ egroupware (1.8.002.20110811) hardy; urgency=low
 
  -- Ralf Becker <rb@stylite.de>  Thu, 11 Aug 2011 21:05:35 +0200
 
-egroupware (1.8.001.20110805) hardy; urgency=low
+egroupware (1.8.001.20110805) hardy; urgency=high
 
   * Security issues fixed: local file inclusion, sql injection, refelected xss and open redirect  
   --> we recommend to update ASAP
@@ -332,26 +322,6 @@ egroupware (1.8.001.20110805) hardy; urgency=low
 
  -- Ralf Becker <rb@stylite.de>  Fri, 05 Aug 2011 15:35:39 +0200
 
-egroupware (1.8.001.20110421) hardy; urgency=low
-
-  * Addressbook: lettersearch was not working for addressbooks in LDAP if PostgreSQL database was used (bug #2851)
-  * Calendar: fixed not working "use event TZ" pref for iCal exports and allways use event TZ for calendar notifications (NOT use file export pref.)
-  * SyncML/Calendar/PostgreSQL: fixed SQL error when searching participants (SELECT DISTINCT requires ORDER-BY-expressions to be in SELECT-list)
-  * Wiki/PostgreSQL: fixed SQL error when viewing history (#2927), PostgreSQL needs mixed case names quoted
-  * PostgreSQL: when importing/updating timezones, only query last insert id, if not already in database (gives warning for PostgreSQL)
-  * Addressbook/PostgreSQL: lettersearch in organisation-view allways returned empty
-  * Preferences: fixed not working setting of preferences without a logout
-  * addressbook: enable advanced search for addressbook org view
-  * eMail: fix for styliteTracker Bug#1471 (adding more than 4 lines of addresses to a mail in compose-dialog shrinks the address-area to a height of 0 with IE9)
-  * eMail: make sure the quotaDisplay is refreshed on Message List refresh
-  * Admin: fix for reported error regarding wrong count of lines in Admin -> view error log (note, not all errors are logged there, only some. Its only used for some error logging, most of error logging is done/directed to the webservers error log)
-  * Addressbook/PostgreSQL: fixed SQL error when checking "use whole query"
-  * SiteMgr: fixed detection of downloaded content, using Content-Type header now and adding style="white-space: pre-wrap; text-aling: left;" to pre-tag for textfiles
-  * Preference: fixed PHP Fatal error:  Cannot use string offset as an array on line 550, by importing preference class from trunk
-  * PostgreSQL/Addressbook: fixed SQL error when listing account, groups or querying birthdays
-
- -- Ralf Becker <rb@stylite.de>  Thu, 21 Apr 2011 16:45:58 +0200
-
 egroupware (1.8.001.20110409) hardy; urgency=low
 
   * updated phpfreechat to version 1.3 to fix php 5.3 depricated warnings
@@ -392,7 +362,7 @@ egroupware (1.8.001.20110409) hardy; urgency=low
   * check quantity of resource to book against maximum, as conflict check only fails if other events are involved
   * Calendar: fixed status of all recurrences get set to "unknown", if status of a single recurrence get changed (#2916)
 
- -- Ralf Becker <rb@stylite.de>  Sat, 09 Apr 2011 20:10:00 +0200
+ -- Ralf Becker <rb@stylite.de>  Sat, 09 Apr 2011 21:11:28 +0200
 
 egroupware (1.8.001.20110216) hardy; urgency=low
 
@@ -400,33 +370,7 @@ egroupware (1.8.001.20110216) hardy; urgency=low
   * WiKi: Admin functionality to rebuild wiki internal link table to enable the rework of links on connected pages, when renaming a page
   * removed accidently commited rpm patch, causing admin >> async service no longer to display correct cronline and to choose
 
- -- Ralf Becker <rb@stylite.de>  Wed, 16 Feb 2011 11:11:53 +0100
-
-egroupware (1.8.001.20110214) hardy; urgency=low
-
-  * eMail: fix for a problem reported with FreeBSD regarding the generation of random strings for temp-filenames
-  * Notifications: fix dont try to notify when none is set/forced for folders to check for new mails; dont try to notify when email as module is not enabled for the particular user
-  * eMail: remove invalid -at- when occurring in full name, when adding address to email; skip addresses that produce a parse error while parsed with imap_rfc822_parse_adrlist
-  * eMail: fixed error reported with the user-list: Warning on Felamimail, error array_merge in line 1600
-  * fixed birthday of contacts/accounts in LDAP could not be modified in addressbook
-  * WiKi: Edit permissions now do imply read permissions
-  * ImportExport: Replace CRLF with LF so excel does not break lines early (myStylite#974)
-  * CSV Export: Replace CRLF with LF so excel does not break lines early (myStylite#974)
-  * ProjectManager config allow non-admin to change working times was not working
-  * Calendar: invite rights, should NOT implicate a freebusy rights (users with invite rights could see freebusy times of other users)
-  * JSCalendar: fixed week containing 4th Jan is shown as 52th instead 1st week, if week starts on sunday is selected
-  * dont give sql error in gathering statistic data, if table does not exists (eg. Gallery is not installed)
-  * Weeknumbers in calendar views, were wrong for week-start-day other then Monday
-  * addressbook: check if typefilter is valid (type available), if not remove it
-  * addressbook: postgres compatibility for distributionlists
-  * eMail: not filtering own(ed) emailaddresses out of drafts while reopening them for continued processing
-  * calendar: PANAMA holidays provided by rafael chacon
-  * eMail: preview now requires user action (click on)
-  * fixed "undefined function lang_select" issue, if no cookies are allowed, also showing again language selection for new installs
-  * Calendar: fixed overlapping columns to result in equally wide visible parts for unlimited number of columns
-  * SambaAdmin: try binded as $accountDN with $_newPassword, in case root DN has no rights to modify anything
-
- -- Ralf Becker <rb@stylite.de>  Mon, 14 Feb 2011 15:04:52 +0100
+ -- Ralf Becker <rb@stylite.de>  Wed, 16 Feb 2011 11:29:06 +0100
 
 egroupware (1.8.001.20101201) hardy; urgency=low
 
@@ -441,7 +385,7 @@ egroupware (1.8.001.20101201) hardy; urgency=low
   * fixed not working automatic install (stalls after installing core apps, because existing tables get NOT refreshed)
   * WiKi: fix broken rename, (links in other pages, that refered to the given wiki page, did not get updated, as the reference list in egw_wiki_links did not get updated since Rev16219 (7th Aug 2004)
 
- -- Ralf Becker <rb@stylite.de>  Wed, 01 Dec 2010 15:03:28 +0100
+ -- Ralf Becker <rb@stylite.de>  Wed, 01 Dec 2010 15:14:26 +0100
 
 egroupware (1.8.001.20101111) hardy; urgency=low
 
@@ -462,7 +406,7 @@ egroupware (1.8.001.20101111) hardy; urgency=low
   * telling IE via X-UA-Compatible IE=edge never to use compatibility modes with old versions (if set eg. via group policy for whole intranet zone)
   * fixed conflict check of resource quantity and storage of changed quantity in existing events
 
- -- Ralf Becker <rb@stylite.de>  Thu, 11 Nov 2010 11:05:32 +0100
+ -- Ralf Becker <rb@stylite.de>  Thu, 11 Nov 2010 11:15:19 +0100
 
 egroupware (1.8.001.20101026) hardy; urgency=low
 
@@ -470,7 +414,7 @@ egroupware (1.8.001.20101026) hardy; urgency=low
   * CardDAV pref which addressbooks to sync and many fixes for iPhone OS 4.0, 4.1, 4.2beta and Mac iCal and contact app
   * InfoLog/*DAV: do NOT set current user for PUT in /infolog/ and do not allow to change owner of existing entries
 
- -- Ralf Becker <rb@stylite.de>  Tue, 26 Oct 2010 15:36:19 +0200
+ -- Ralf Becker <rb@stylite.de>  Tue, 26 Oct 2010 15:48:06 +0200
 
 egroupware (1.8.001.20101013) hardy; urgency=low
 
@@ -488,7 +432,7 @@ egroupware (1.8.001.20101013) hardy; urgency=low
   * fix for egw.org bug #2729: extended search for recipients filtered by categories does not work
   * fix for mystylite bug #818: planner by user only with read rights (should work with freebusy rights too)
 
- -- Ralf Becker <rb@stylite.de>  Wed, 13 Oct 2010 17:24:26 +0200
+ -- Ralf Becker <rb@stylite.de>  Wed, 13 Oct 2010 17:32:24 +0200
 
 egroupware (1.8.001.20100929) hardy; urgency=low
 
@@ -516,7 +460,13 @@ egroupware (1.8.001.20100929) hardy; urgency=low
   * added valid timezone set in php.ini check
   * show package changelog inside EGroupware under about
 
- -- Ralf Becker <rb@stylite.de>  Wed, 29 Sep 2010 15:06:36 +0200
+ -- Ralf Becker <rb@stylite.de>  Wed, 29 Sep 2010 15:17:17 +0200
+
+egroupware (1.8.001.20100920) hardy; urgency=low
+
+  * fixed accounts SQL error
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 20 Sep 2010 21:00:00 +0200
 
 egroupware (1.8.001.20100916) hardy; urgency=low
 
