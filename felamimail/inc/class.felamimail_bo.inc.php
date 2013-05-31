@@ -487,7 +487,7 @@ class felamimail_bo
 				$bopreferences->setProfileActive(false);
 				if ($icServerID>0) $bopreferences->setProfileActive(true,$icServerID);
 			}
-			if (empty($hook_data['prefs']['ActiveProfileID'])) return lang('Error').': '.lang("Active ProfileID should not be empty");
+			if (empty($hook_data['prefs']['ActiveProfileID'])&&empty($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'])) return lang('Error').': '.lang("Active ProfileID should not be empty");
 		}
 	}
 
