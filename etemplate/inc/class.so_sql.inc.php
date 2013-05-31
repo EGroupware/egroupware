@@ -6,7 +6,7 @@
  * @package etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-9 by RalfBecker@outdoor-training.de
+ * @copyright 2002-13 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -890,15 +890,19 @@ class so_sql
 					elseif (strpos($db_col,'.') !== false)	// we have a table-name specified
 					{
 						list($table,$only_col) = explode('.',$db_col);
-
+						$type = $this->db->get_column_attribute($only_col, $table, true, 'type');
+						if (empty($type))
+						{
+							throw new egw_exception_db("Can not determine type of column '$only_col' in table '$table'!");
+						}
 						if (is_array($val) && count($val) > 1)
 						{
-							array_walk($val,array($this->db,'quote'),$this->table_def['fd'][$only_col]['type']);
+							foreach($val as &$v) $v = $this->db->quote($v, $type);
 							$query[] = $sql = $db_col.' IN (' .implode(',',$val).')';
 						}
 						else
 						{
-							$query[] = $db_col.'='.$this->db->quote(is_array($val)?array_shift($val):$val,$this->table_def['fd'][$only_col]['type']);
+							$query[] = $db_col.'='.$this->db->quote(is_array($val)?array_shift($val):$val,$type);
 						}
 					}
 					else
