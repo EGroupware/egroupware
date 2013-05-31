@@ -44,9 +44,9 @@ Index: egroupware/admin/inc/class.uiasyncservice.inc.php
  		echo "<hr><table border=0><tr>\n";
 Index: egroupware/phpgwapi/inc/class.egw.inc.php
 ===================================================================
---- egroupware/phpgwapi/inc/class.egw.inc.php	(Revision 38128)
+--- egroupware/phpgwapi/inc/class.egw.inc.php	(Revision 41023)
 +++ egroupware/phpgwapi/inc/class.egw.inc.php	(Arbeitskopie)
-@@ -536,10 +536,12 @@
+@@ -535,10 +535,12 @@
  			}
  			// call the asyncservice check_run function if it is not explicitly set to cron-only
  			//
