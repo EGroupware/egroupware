@@ -1,3 +1,13 @@
+egroupware-epl (11.1.20130531-1) hardy; urgency=low
+
+  * eMail/Sieve/API: updated to jquery version from Trunk 1.7.1, to fix not working edit of Sieve rules and ease backporting
+  * MySQL: got mysqli extension working and make it default for EGroupware, as mysql is now officially deprecated, existing installs need to be switched manually in header.inc.php or Setup >> Manage header
+  * eMail: allow to delete messages immediately (on userinteraction), if OVERQUOTA error is encountered
+  * eMail: reenable edit of existing sieve rules; needs doubleclick to open edit window
+  * Sambaadmin: create new users/groups in LDAP with uidNumber/gidNumber matching relative id (last part of SID) to ease migration to AD or Samba4
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 31 May 2013 10:35:14 +0200
+
 egroupware-epl (11.1.20130524-1) hardy; urgency=low
 
   * eMail/Sieve: sort filter rules via drag-n-drop
