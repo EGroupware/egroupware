@@ -206,7 +206,7 @@ class uifelamimail
 
 			_debug_array('Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.self::$icServerID);
 			emailadmin_bo::unsetCachedObjects(self::$icServerID);
-
+/*
 			if (felamimail_bo::$idna2)
 			{
 				_debug_array('Umlautdomains supported (see Example below)');
@@ -214,7 +214,7 @@ class uifelamimail
 				$encDom = felamimail_bo::$idna2->encode($dom);
 				_debug_array(array('source'=>$dom,'result'=>array('encoded'=>$encDom,'decoded'=>felamimail_bo::$idna2->decode($encDom))));
 			}
-
+*/
 			if ($preferences->preferences['prefcontroltestconnection'] == 'reset') exit;
 
 			echo "<hr /><h3 style='color:red'>".lang('IMAP Server')."</h3>";
