@@ -76,6 +76,13 @@ class addressbook_ldap
 	var $allContactsDN;
 
 	/**
+	 * Attribute used for DN
+	 *
+	 * @var string
+	 */
+	var $dn_attribute='uid';
+
+	/**
 	* @var int $total holds the total count of found rows
 	*/
 	var $total;
@@ -238,6 +245,13 @@ class addressbook_ldap
 	private $ldap_config;
 
 	/**
+	 * LDAP connection
+	 *
+	 * @var resource
+	 */
+	var $ds;
+
+	/**
 	 * constructor of the class
 	 *
 	 * @param array $ldap_config=null default use from $GLOBALS['egw_info']['server']
@@ -256,10 +270,10 @@ class addressbook_ldap
 		{
 			$this->ldap_config =& $GLOBALS['egw_info']['server'];
 		}
-		$this->personalContactsDN	= 'ou=personal,ou=contacts,'. $this->ldap_config['ldap_contact_context'];
-		$this->sharedContactsDN		= 'ou=shared,ou=contacts,'. $this->ldap_config['ldap_contact_context'];
 		$this->accountContactsDN	= $this->ldap_config['ldap_context'];
 		$this->allContactsDN		= $this->ldap_config['ldap_contact_context'];
+		$this->personalContactsDN	= 'ou=personal,ou=contacts,'. $this->allContactsDN;
+		$this->sharedContactsDN		= 'ou=shared,ou=contacts,'. $this->allContactsDN;
 
 		if ($ds)
 		{
@@ -303,7 +317,7 @@ class addressbook_ldap
 		elseif (substr($GLOBALS['egw_info']['server']['contact_repository'],-4) != 'ldap')	// not (ldap or sql-ldap)
 		{
 			$this->ldap_config['ldap_contact_host'] = $this->ldap_config['ldap_host'];
-			$this->ldap_config['ldap_contact_context'] = $this->ldap_config['ldap_context'];
+			$this->allContactsDN = $this->ldap_config['ldap_context'];
 			$this->ds = $GLOBALS['egw']->ldap->ldapConnect();
 		}
 		else
@@ -341,6 +355,37 @@ class addressbook_ldap
 	}
 
 	/**
+	 * Return LDAP filter for contact id
+	 *
+	 * @param string $id
+	 * @return string
+	 */
+	protected function id_filter($id)
+	{
+		return '(|(entryUUID='.ldap::quote($id).')(uid='.ldap::quote($id).'))';
+	}
+
+	/**
+	 * Return LDAP filter for (multiple) contact ids
+	 *
+	 * @param array|string $ids
+	 * @return string
+	 */
+	protected function ids_filter($ids)
+	{
+		if (!is_array($ids) || count($ids) == 1)
+		{
+			return $this->id_filter(is_array($ids) ? array_shift($ids) : $ids);
+		}
+		$filter = array();
+		foreach($ids as $id)
+		{
+			$filter[] = $this->id_filter($id);
+		}
+		return '(|'.implode('', $filter).')';
+	}
+
+	/**
 	 * reads contact data
 	 *
 	 * @param string/array $contact_id contact_id or array with values for id or account_id
@@ -355,14 +400,28 @@ class addressbook_ldap
 		}
 		else
 		{
-			$contact_id = ldap::quote(!is_array($contact_id) ? $contact_id :
-				(isset ($contact_id['id']) ? $contact_id['id'] : $contact_id['uid']));
-			$filter = "(|(entryUUID=$contact_id)(uid=$contact_id))";
+			if (is_array($contact_id)) $contact_id = isset ($contact_id['id']) ? $contact_id['id'] : $contact_id['uid'];
+			$filter = $this->id_filter($contact_id);
 		}
-		$rows = $this->_searchLDAP($this->ldap_config['ldap_contact_context'],
+		$rows = $this->_searchLDAP($this->allContactsDN,
 			$filter, $this->all_attributes, ADDRESSBOOK_ALL);
 
 		return $rows ? $rows[0] : false;
+	}
+
+	/**
+	 * Remove attributes we are not allowed to update
+	 *
+	 * @param array $attributes
+	 */
+	function sanitize_update(array &$ldapContact)
+	{
+		// never allow to change the uidNumber (account_id) on update, as it could be misused by eg. xmlrpc or syncml
+		unset($ldapContact['uidnumber']);
+
+		unset($ldapContact['entryuuid']);	// not allowed to modify that, no need either
+
+		unset($ldapContact['objectClass']);
 	}
 
 	/**
@@ -403,7 +462,7 @@ class addressbook_ldap
 			$baseDN = $this->accountContactsDN;
 			$cn	= false;
 			// we need an admin connection
-			$this->ds = $this->connect(true);
+			$this->connect(true);
 
 			// for sql-ldap we need to account_lid/uid as id, NOT the contact_id in id!
 			if ($GLOBALS['egw_info']['server']['contact_repository'] == 'sql-ldap')
@@ -416,7 +475,6 @@ class addressbook_ldap
 			error_log("Permission denied, to write: data[owner]=$data[owner], data[account_id]=$data[account_id], account_id=".$GLOBALS['egw_info']['user']['account_id']);
 			return lang('Permission denied !!!');	// only admin or the user itself is allowd to write accounts!
 		}
-
 		// check if $baseDN exists. If not create it
 		if (($err = $this->_check_create_dn($baseDN)))
 		{
@@ -424,11 +482,11 @@ class addressbook_ldap
 		}
 		// check the existing objectclasses of an entry, none = array() for new ones
 		$oldObjectclasses = array();
-		$attributes = array('dn','cn','objectClass','uid','mail');
+		$attributes = array('dn','cn','objectClass',$this->dn_attribute,'mail');
+
 		$contactUID	= $this->data[$this->contacts_id];
-		if(!empty($contactUID) &&
-			($result = ldap_search($this->ds, $this->ldap_config['ldap_contact_context'],
-				'(|(entryUUID='.ldap::quote($contactUID).')(uid='.ldap::quote($contactUID).'))', $attributes)) &&
+		if (!empty($contactUID) &&
+			($result = ldap_search($this->ds, $base=$this->allContactsDN, $filter=$this->id_filter($contactUID), $attributes)) &&
 			($oldContactInfo = ldap_get_entries($this->ds, $result)) && $oldContactInfo['count'])
 		{
 			unset($oldContactInfo[0]['objectclass']['count']);
@@ -438,13 +496,12 @@ class addressbook_ldap
 			}
 		   	$isUpdate = true;
 		}
-		if(!$contactUID)
+
+		if(empty($contactUID))
 		{
-			$this->data[$this->contacts_id] = $contactUID = md5($GLOBALS['egw']->common->randomstring(15));
+			$ldapContact[$this->contacts_id] = $this->data[$this->contacts_id] = $contactUID = md5($GLOBALS['egw']->common->randomstring(15));
 		}
-
-		$ldapContact['uid'] = $contactUID;
-
+		//error_log(__METHOD__."() contactUID='$contactUID', isUpdate=".array2string($isUpdate).", oldContactInfo=".array2string($oldContactInfo));
 		// add for all supported objectclasses the objectclass and it's attributes
 		foreach($this->schema2egw as $objectclass => $mapping)
 		{
@@ -484,7 +541,7 @@ class addressbook_ldap
 				$this->$egw2objectclass($ldapContact,$data,$isUpdate);
 			}
 		}
-		if($isUpdate)
+		if ($isUpdate)
 		{
 			// make sure multiple email-addresses in the mail attribute "survive"
 			if (isset($ldapContact['mail']) && $oldContactInfo[0]['mail']['count'] > 1)
@@ -497,9 +554,6 @@ class addressbook_ldap
 			// update entry
 			$dn = $oldContactInfo[0]['dn'];
 			$needRecreation = false;
-			// never allow to change the uidNumber (account_id) on update, as it could be misused by eg. xmlrpc or syncml
-			unset($ldapContact['uidnumber']);
-			unset($ldapContact['entryuuid']);	// not allowed to modify that, no need either
 
 			// add missing objectclasses
 			if($ldapContact['objectClass'] && array_diff($ldapContact['objectClass'],$oldObjectclasses))
@@ -522,9 +576,9 @@ class addressbook_ldap
 			}
 
 			// check if we need to rename the DN or need to recreate the contact
-			$newRDN = 'uid='. ldap::quote($contactUID);
+			$newRDN = $this->dn_attribute.'='. ldap::quote($ldapContact[$this->dn_attribute]);
 			$newDN = $newRDN .','. $baseDN;
-			if(strtolower($dn) != strtolower($newDN) || $needRecreation)
+			if ($needRecreation)
 			{
 				$result = ldap_read($this->ds, $dn, 'objectclass=*');
 				$oldContact = ldap_get_entries($this->ds, $result);
@@ -536,7 +590,7 @@ class addressbook_ldap
 						$newContact[$key] = $value;
 					}
 				}
-				$newContact['uid'] = $contactUID;
+				$newContact[$this->dn_attribute] = $ldapContact[$this->dn_attribute];
 
 				if(is_array($ldapContact['objectClass']) && count($ldapContact['objectClass']) > 0)
 				{
@@ -559,7 +613,21 @@ class addressbook_ldap
 				}
 				$dn = $newDN;
 			}
-			unset($ldapContact['objectClass']);
+			// try renaming entry if content of dn-attribute changed
+			if (strtolower($dn) != strtolower($newDN) || $ldapContact[$this->dn_attribute] != $oldContactInfo[$this->dn_attribute])
+			{
+				if (@ldap_rename($this->ds, $dn, $newRDN, null, true))
+				{
+					$dn = $newDN;
+				}
+				else
+				{
+					error_log(__METHOD__."() ldap_rename or $dn to $newRDN failed! ".ldap_error($this->ds));
+				}
+			}
+			unset($ldapContact[$this->dn_attribute]);
+
+			$this->sanitize_update($ldapContact);
 
 			if (!@ldap_modify($this->ds, $dn, $ldapContact))
 			{
@@ -571,7 +639,7 @@ class addressbook_ldap
 		}
 		else
 		{
-			$dn = 'uid='. ldap::quote($ldapContact['uid']) .','. $baseDN;
+			$dn = $this->dn_attribute.'='. ldap::quote($ldapContact[$this->dn_attribute]) .','. $baseDN;
 			unset($ldapContact['entryuuid']);	// trying to write it, gives an error
 
 			if (!@ldap_add($this->ds, $dn, $ldapContact))
@@ -608,7 +676,7 @@ class addressbook_ldap
 		foreach($keys as $entry)
 		{
 			$entry = ldap::quote(is_array($entry) ? $entry['id'] : $entry);
-			if($result = ldap_search($this->ds, $this->ldap_config['ldap_contact_context'],
+			if($result = ldap_search($this->ds, $this->allContactsDN,
 				"(|(entryUUID=$entry)(uid=$entry))", $attributes))
 			{
 				$contactInfo = ldap_get_entries($this->ds, $result);
@@ -715,6 +783,11 @@ class addressbook_ldap
 			$searchFilter = '';
 			foreach($criteria as $egwSearchKey => $searchValue)
 			{
+				if (in_array($egwSearchKey, array('id','contact_id')))
+				{
+					$searchFilter .= $this->ids_filter($searchValue);
+					continue;
+				}
 				foreach($this->schema2egw as $mapping)
 				{
 					if(($ldapSearchKey = $mapping[$egwSearchKey]))
@@ -736,7 +809,6 @@ class addressbook_ldap
 		}
 		$colFilter = $this->_colFilter($filter);
 		$ldapFilter = "(&$objectFilter$searchFilter$colFilter)";
-
 		if (!($rows = $this->_searchLDAP($searchDN, $ldapFilter, $this->all_attributes, $addressbookType)))
 		{
 			return $rows;
@@ -847,6 +919,11 @@ class addressbook_ldap
 						}
 						if (count($cats) > 1) $filters .= ')';
 					}
+					break;
+
+				case 'id':
+				case 'contact_id':
+					$filter .= $this->ids_filter($value);
 					break;
 
 				default:
@@ -1020,7 +1097,7 @@ class addressbook_ldap
 	/**
 	 * check if $baseDN exists. If not create it
 	 *
-	 * @param string $baseDN cn=xxx,ou=yyy,ou=contacts,$this->ldap_config['ldap_contact_context']
+	 * @param string $baseDN cn=xxx,ou=yyy,ou=contacts,$this->allContactsDN
 	 * @return boolean/string false on success or string with error-message
 	 */
 	function _check_create_dn($baseDN)
@@ -1042,8 +1119,8 @@ class addressbook_ldap
 
 		list(,$ou) = explode(',',$baseDN);
 		foreach(array(
-			'ou=contacts,'.$this->ldap_config['ldap_contact_context'],
-			$ou.',ou=contacts,'.$this->ldap_config['ldap_contact_context'],
+			'ou=contacts,'.$this->allContactsDN,
+			$ou.',ou=contacts,'.$this->allContactsDN,
 			$baseDN,
 		) as $dn)
 		{

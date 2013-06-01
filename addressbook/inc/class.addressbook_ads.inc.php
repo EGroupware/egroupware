@@ -12,12 +12,15 @@
 /**
  * Active directory backend for accounts (not yet AD contacts)
  *
- * We use ADS objectGUID as contact ID and UID.
+ * We use ADS string representation of objectGUID as contact ID and UID.
+ *
+ * Unfortunatly Samba4 and active directory of win2008r2 differn on how to search for an objectGUID:
+ * - Samba4 can only search for string representation eg. (objectGUID=2336A3FC-EDBD-42A2-9EEB-BD7A5DD2804E)
+ * - win2008r2 can only search for hex representation eg. (objectGUID=\FC\A3\36\23\BD\ED\A2\42\9E\EB\BD\7A\5D\D2\80\4E)
+ * We could use both filters or-ed together, for now we detect Samba4 and use string GUID for it.
  *
  * All values used to construct filters need to run through ldap::quote(),
  * to be save against LDAP query injection!!!
- *
- * @todo get saving of contacts working: fails while checking of container exists ...
  */
 class addressbook_ads extends addressbook_ldap
 {
@@ -38,11 +41,26 @@ class addressbook_ads extends addressbook_ldap
 	var $accountsFilter = '(objectclass=user)';
 
 	/**
+	 * Attribute used for DN
+	 *
+	 * @var string
+	 */
+	var $dn_attribute='cn';
+
+	/**
 	 * Accounts ADS object
 	 *
 	 * @var accounts_ads
 	 */
 	protected $accounts_ads;
+
+	/**
+	 * ADS is Samba4 (true), otherwise false
+	 *
+	 * @var boolean
+	 */
+	public $is_samba4 = false;
+
 
 	/**
 	 * constructor of the class
@@ -78,6 +96,7 @@ class addressbook_ads extends addressbook_ldap
 			$this->connect();
 		}
 		$this->ldapServerInfo = ldapserverinfo::get($this->ds, $this->ldap_config['ads_host']);
+		$this->is_samba4 = $this->ldapServerInfo->serverType == SAMBA4_LDAPSERVER;
 
 		// AD seems to use user, instead of inetOrgPerson
 		$this->schema2egw['user'] = $this->schema2egw['inetorgperson'];
@@ -107,6 +126,25 @@ class addressbook_ads extends addressbook_ldap
 	}
 
 	/**
+	 * Return LDAP filter for contact id
+	 *
+	 * @param string $contact_id
+	 * @return string
+	 */
+	protected function id_filter($contact_id)
+	{
+		// check that GUID eg. from URL contains only valid hex characters and dash
+		// we cant use ldap::quote() for win2008r2 hex GUID, as it contains backslashes
+		if (!preg_match('/^[0-9A-Fa-f-]+/', $contact_id))
+		{
+			throw new egw_exception_assertion_failed("'$contact_id' is NOT a valid GUID!");
+		}
+
+		// samba4 can only search by string representation of objectGUID, while win2008r2 requires hex representation
+		return '(objectguid='.($this->is_samba4 ? $contact_id : $this->accounts_ads->objectguid2hex($contact_id)).')';
+	}
+
+	/**
 	 * reads contact data
 	 *
 	 * @param string/array $contact_id contact_id or array with values for id or account_id
@@ -120,11 +158,11 @@ class addressbook_ads extends addressbook_ldap
 			$account_id = (int)(is_array($contact_id) ? $contact_id['account_id'] : substr($contact_id,8));
 			$contact_id = $GLOBALS['egw']->accounts->id2name($account_id, 'person_id');
 		}
-		$contact_id = ldap::quote(!is_array($contact_id) ? $contact_id :
-			(isset ($contact_id['id']) ? $contact_id['id'] : $contact_id['uid']));
+		$contact_id = !is_array($contact_id) ? $contact_id :
+			(isset ($contact_id['id']) ? $contact_id['id'] : $contact_id['uid']);
 
-		$rows = $this->_searchLDAP($this->allContactsDN, "(objectguid=$contact_id)", $this->all_attributes, ADDRESSBOOK_ALL);
-
+		$rows = $this->_searchLDAP($this->allContactsDN, $filter=$this->id_filter($contact_id), $this->all_attributes, ADDRESSBOOK_ALL);
+		//error_log(__METHOD__."('$contact_id') _searchLDAP($this->allContactsDN, '$filter',...)=".array2string($rows));
 		return $rows ? $rows[0] : false;
 	}
 
@@ -147,4 +185,19 @@ class addressbook_ads extends addressbook_ldap
 
 		$this->_inetorgperson2egw($contact, $data);
 	}
+
+	/**
+	 * Remove attributes we are not allowed to update
+	 *
+	 * @param array $attributes
+	 */
+	function sanitize_update(array &$ldapContact)
+	{
+		// not allowed and not need to update these in AD
+		unset($ldapContact['objectguid']);
+		unset($ldapContact['objectsid']);
+
+		parent::sanitize_update($ldapContact);
+	}
+
 }

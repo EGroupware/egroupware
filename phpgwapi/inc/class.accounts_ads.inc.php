@@ -29,6 +29,7 @@ require_once EGW_API_INC.'/adldap/adLDAP.php';
  * @access internal only use the interface provided by the accounts class
  * @link http://www.selfadsi.org/user-attributes-w2k8.htm
  * @link http://www.selfadsi.org/attributes-e2k7.htm
+ * @link http://msdn.microsoft.com/en-us/library/ms675090(v=vs.85).aspx
  */
 class accounts_ads
 {
@@ -296,6 +297,17 @@ class accounts_ads
 	public function objectguid2str($objectguid)
 	{
 		return $this->adldap->utilities()->decodeGuid(is_array($objectguid) ? $objectguid[0] : $objectguid);
+	}
+
+	/**
+	 * Convert a string GUID to hex string used in filter
+	 *
+	 * @param string $strGUID
+	 * @return int
+	 */
+	public function objectguid2hex($strGUID)
+	{
+		return $this->adldap->utilities()->strGuidToHex($strGUID);
 	}
 
 	/**
@@ -841,6 +853,8 @@ class accounts_ads
 			}
 			if ($param['type'] == 'groups' || $param['type'] == 'both')
 			{
+				$query = ldap::quote(strtolower($param['query']));
+
 				$filter = null;
 				if(!empty($query) && $query != '*')
 				{

@@ -13,6 +13,7 @@
 
 define('UNKNOWN_LDAPSERVER',0);
 define('OPENLDAP_LDAPSERVER',1);
+define('SAMBA4_LDAPSERVER',2);
 
 /**
  * Class to store and retrieve information (eg. supported object classes) of a connected ldap server
@@ -139,5 +140,93 @@ class ldapserverinfo
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Query given ldap connection for available information
+	 *
+	 * @param resource $ds
+	 * @param string $host
+	 * @param int $version 2 or 3
+	 * @return ldapserverinfo
+	 */
+	public static function get($ds, $host, $version=3)
+	{
+		$filter='(objectclass=*)';
+		$justthese = array('structuralObjectClass','namingContexts','supportedLDAPVersion','subschemaSubentry','vendorname');
+		if(($sr = @ldap_read($ds, '', $filter, $justthese)))
+		{
+			if($info = ldap_get_entries($ds, $sr))
+			{
+				$ldapServerInfo = new ldapserverinfo($host);
+				$ldapServerInfo->setVersion($version);
+
+				// check for naming contexts
+				if($info[0]['namingcontexts'])
+				{
+					for($i=0; $i<$info[0]['namingcontexts']['count']; $i++)
+					{
+						$namingcontexts[] = $info[0]['namingcontexts'][$i];
+					}
+					$ldapServerInfo->setNamingContexts($namingcontexts);
+				}
+
+				// check for ldap server type
+				if($info[0]['structuralobjectclass'])
+				{
+					switch($info[0]['structuralobjectclass'][0])
+					{
+						case 'OpenLDAProotDSE':
+							$ldapServerType = OPENLDAP_LDAPSERVER;
+							break;
+						default:
+							$ldapServerType = UNKNOWN_LDAPSERVER;
+							break;
+					}
+					$ldapServerInfo->setServerType($ldapServerType);
+				}
+				if ($info[0]['vendorname'] && stripos($info[0]['vendorname'][0], 'samba') !== false)
+				{
+					$ldapServerInfo->setServerType(SAMBA4_LDAPSERVER);
+				}
+
+				// check for subschema entry dn
+				if($info[0]['subschemasubentry'])
+				{
+					$subschemasubentry = $info[0]['subschemasubentry'][0];
+					$ldapServerInfo->setSubSchemaEntry($subschemasubentry);
+				}
+
+				// create list of supported objetclasses
+				if(!empty($subschemasubentry))
+				{
+					$filter='(objectclass=*)';
+					$justthese = array('objectClasses');
+
+					if($sr=ldap_read($ds, $subschemasubentry, $filter, $justthese))
+					{
+						if($info = ldap_get_entries($ds, $sr))
+						{
+							if($info[0]['objectclasses']) {
+								for($i=0; $i<$info[0]['objectclasses']['count']; $i++)
+								{
+									$pattern = '/^\( (.*) NAME \'(\w*)\' /';
+									if(preg_match($pattern, $info[0]['objectclasses'][$i], $matches))
+									{
+										#_debug_array($matches);
+										if(count($matches) == 3)
+										{
+											$supportedObjectClasses[$matches[1]] = strtolower($matches[2]);
+										}
+									}
+								}
+								$ldapServerInfo->setSupportedObjectClasses($supportedObjectClasses);
+							}
+						}
+					}
+				}
+			}
+		}
+		return $ldapServerInfo;
 	}
 }
