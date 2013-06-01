@@ -1663,7 +1663,7 @@ class addressbook_ui extends addressbook_bo
 					{
 						egw_link::link('addressbook',$content['id'],$links);
 					}
-					$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','addressbook',{$content['id']}, '" . ($content['id'] ? 'update' : 'add') . "', opener.egw_getAppName());";
+					$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','addressbook','{$content['id']}', '" . ($content['id'] ? 'update' : 'add') . "', opener.egw_getAppName());";
 
 					if ($button == 'save')
 					{
@@ -1678,7 +1678,7 @@ class addressbook_ui extends addressbook_bo
 				case 'delete':
 					if($this->action('delete',array($content['id']),false,$success,$failed,$action_msg,'',$content['msg']))
 					{
-						$js = "opener.egw_refresh('".str_replace("'","\\'",lang('Contact deleted'))."','addressbook',{$content['id']},'delete'); if(opener.egw_getAppName() != 'addressbook') { opener.egw_refresh('".str_replace("'","\\'",lang('Contact deleted'))."','addressbook',{$content['id']},null,'addressbook');} window.close();";
+						$js = "opener.egw_refresh('".str_replace("'","\\'",lang('Contact deleted'))."','addressbook','{$content['id']}','delete'); if(opener.egw_getAppName() != 'addressbook') { opener.egw_refresh('".str_replace("'","\\'",lang('Contact deleted'))."','addressbook','{$content['id']}',null,'addressbook');} window.close();";
 						echo '<html><body onload="'.$js.'"></body></html>';
 						common::egw_exit();
 					}
