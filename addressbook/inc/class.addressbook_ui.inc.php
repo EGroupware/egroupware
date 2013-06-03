@@ -649,6 +649,14 @@ class addressbook_ui extends addressbook_bo
 		if (isset($actions['export']['children']['csv']) && !importexport_helper_functions::has_definitions('addressbook','export')) unset($actions['export']['children']['csv']);
 
 		//echo "<p>".__METHOD__."($do_email, $tid_filter, $org_view)</p>\n"; _debug_array($actions);
+
+		// Allow contacts to be dragged
+		/*
+		$actions['drag'] = array(
+			'type' => 'drag',
+			'dragType' => 'addressbook'
+		);
+		*/
 		return $actions;
 	}
 
@@ -1587,6 +1595,8 @@ class addressbook_ui extends addressbook_bo
 			$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
 			$content['owner'] = (string) (int) $content['owner'];
 			$content['cat_id'] = $content['cat_id_tree'] ? $content['cat_id_tree'] : $content['cat_id'];
+			$content += $content['private_cfs'];
+			unset($content['private_cfs']);
 
 			switch($button)
 			{
@@ -1822,6 +1832,9 @@ class addressbook_ui extends addressbook_bo
 		}
 		// Avoid ID conflict with tree & selectboxes
 		$content['cat_id_tree'] = $content['cat_id'];
+
+		// Avoid setting conflicts with private custom fields
+		$content['private_cfs'] = $content;
 
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);

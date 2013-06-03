@@ -382,7 +382,7 @@
 					<description value="Custom fields"/>
 				</row>
 				<row height="100%">
-					<customfields options="$cont[tid],1"/>
+					<customfields id="private_cfs" options="$cont[tid],1"/>
 				</row>
 			</rows>
 		</grid>
@@ -499,7 +499,7 @@
 				</row>
 				<row>
 					<menulist class="fileas">
-						<menupopup blur="Name" cols="3" statustext="own sorting" id="fileas_type" no_lang="1" rows="1"/>
+						<menupopup blur="Name" statustext="own sorting" id="fileas_type" no_lang="1"/>
 					</menulist>
 					<grid>
 						<columns>
