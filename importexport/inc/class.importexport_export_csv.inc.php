@@ -264,7 +264,8 @@ class importexport_export_csv implements importexport_iface_export_record
 					$selects[$name] = $c_field['values'];
 					break;
 				default:
-					if(in_array($c_field['type'], array_keys($GLOBALS['egw_info']['apps']))) {
+					list($type) = explode('-',$c_field['type'],2);
+					if(in_array($type, array_keys($GLOBALS['egw_info']['apps']))) {
 						$fields['links'][] = $name;
 						$links[$name] = $c_field['type'];
 					}
