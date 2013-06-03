@@ -309,7 +309,7 @@ class addressbook_ui extends addressbook_bo
 			$content['nm']['header_right'] = 'addressbook.index.right_addplus';
 			foreach($this->content_types as $tid => $data)
 			{
-				$sel_options['col_filter[tid]'][$tid] = $data['name'];
+				$sel_options['tid'][$tid] = $data['name'];
 			}
 		}
 		// get the availible org-views plus the label of the contacts view of one org
