@@ -192,7 +192,7 @@
 
 			$sel_options = self::get_select_options($data);
 
-			$data['message'] = $this->message;
+			$data['msg'] = $this->message;
 			$GLOBALS['egw']->js->validate_file('.','importexport','importexport');
 
 			if($_GET['appname']) $readonlys['appname'] = true;
