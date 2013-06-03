@@ -716,7 +716,7 @@ label input, label span, label div, label select, label textarea {
  */
 
 /* Style used for a generic message (such as success messages or validation errors) */
-.message {
+div.message {
 	display: block;
 	border: 1px solid gray;
 	padding: 3px 3px 3px 22px;
@@ -730,7 +730,7 @@ label input, label span, label div, label select, label textarea {
 	max-width: 500px;
 }
 
-.message.floating {
+div.message.floating {
 	display: inline-block;
 	margin: 0px 5px 0px 5px;
 }
