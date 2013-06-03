@@ -171,6 +171,9 @@ var et2_tree = et2_inputWidget.extend(
 			image_path:	widget.options.image_path,
 			checkbox:	widget.options.multiple,
 		});
+		// Add in the callback so we can keep the two in sync
+		widget.input.AJAX_callback = function() { widget._dhtmlxtree_json_callback(JSON.parse(this.response), widget.input.lastLoadedXMLId);};
+
 		// attach all event handlers (attributs starting with "on"), if they are set
 		for(var name in widget.options)
 		{

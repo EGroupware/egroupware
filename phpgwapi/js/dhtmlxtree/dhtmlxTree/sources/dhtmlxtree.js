@@ -435,6 +435,7 @@ function dhtmlXTreeItemObject(itemId,itemText,parentObject,treeObject,actionHand
 *     @topic: 0
 */
 	dhtmlXTreeObject.prototype.loadXML=function(file,afterCall){ 
+          afterCall = afterCall || this.AJAX_callback;
 	  if (this._datamode && this._datamode!="xml") return this["load"+this._datamode.toUpperCase()](file,afterCall);
         var that=this;
       if (!this.parsCount) this.callEvent("onXLS",[that,this._ld_id]);
