@@ -202,7 +202,7 @@ class infolog_hooks
 				'help'   => 'This is the filter InfoLog uses when you enter the application. Filters limit the entries to show in the actual view. There are filters to show only finished, still open or futures entries of yourself or all users.',
 				'xmlrpc' => True,
 				'admin'  => False,
-				'default'=> 'none',
+				'default'=> '',
 			),
 			'homeShowEvents' => array(
 				'type'   => 'select',
