@@ -1705,19 +1705,27 @@ function replace_eTemplate_onsubmit()
 	 * Display for FMail an iCal meeting request and allow to accept, tentative or reject it or a reply and allow to apply it
 	 *
 	 * @todo Handle situation when user is NOT invited, but eg. can view that mail ...
-	 * @param array $event=null
+	 * @param array $event=null; special usage if $event is array('event'=>null,'msg'=>'','useSession'=>true) we
+	 * 		are called by new mail-app; and we intend to use the stuff passed on by session
 	 * @param string $msg=''
 	 */
 	function meeting(array $event=null, $msg='')
 	{
 		$user = $GLOBALS['egw_info']['user']['account_id'];
-
 		$readonlys['button[apply]'] = true;
+		$_usesession=!is_array($event);
+		//special usage if $event is array('event'=>null,'msg'=>'','useSession'=>true) we
+		//are called by new mail-app; and we intend to use the stuff passed on by session
+		if ($event == array('event'=>null,'msg'=>'','useSession'=>true))
+		{
+			$event=null; // set to null
+			$_usesession=true; // trigger session read
+		}
 		if (!is_array($event))
 		{
 			$ical_charset = 'utf-8';
 			$ical_string = $_GET['ical'];
-			if ($ical_string == 'session')
+			if ($ical_string == 'session' || $_usesession)
 			{
 				$session_data = egw_cache::getSession('calendar', 'ical');
 				$ical_string = $session_data['attachment'];
