@@ -229,16 +229,17 @@ function hl_my_tag_transform($element, $attribute_array=0)
  */
 function hl_email_tag_transform($element, $attribute_array=0)
 {
+	//error_log(__METHOD__.__LINE__.$element.array2string($attribute_array));
 	static $lastelement;
 	static $throwawaycounter;
 	if (is_null($lastelement)) $lastelement='';
 	if (is_null($throwawaycounter)) $throwawaycounter = 0;
-	//if ($throwawaycounter>250) error_log(__METHOD__.__LINE__.' '.$throwawaycounter);
+	//if ($throwawaycounter>1) error_log(__METHOD__.__LINE__.' '.$throwawaycounter.$element.array2string($attribute_array));
 	if ($element=='div' && $element==$lastelement && ($attribute_array==0 || empty($attribute_array)))
 	{
 		if (is_array($attribute_array)) $throwawaycounter++;
 		if ($attribute_array==0 && $throwawaycounter>0) $throwawaycounter--;
-		if ($throwawaycounter>0) return '';
+		if ($throwawaycounter>1) return '';
 	}
 	if ($lastelement=='div' && $element!=$lastelement && is_array($attribute_array)) $throwawaycounter = 0;
 	if (is_array($attribute_array) && !empty($attribute_array) && $element=='div')
