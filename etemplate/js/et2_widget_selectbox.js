@@ -327,7 +327,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		// Add the empty label
 		if(this.options.empty_label)
 		{
-			this._appendOptionElement("" == this.getValue() ? "selected" : "",
+			this._appendOptionElement("" == this.value ? "selected" : "",
 				this.options.empty_label);
 		}
 
@@ -567,7 +567,7 @@ var et2_selectbox = et2_inputWidget.extend(
 				}
 			}
 
-			if (typeof _options[key] === 'object')
+			if (typeof _options[key] === 'object' && _options[key] != null)
 			{
 				// Optgroup
 				if(typeof _options[key]["label"] == 'undefined' && typeof _options[key]["title"] == "undefined")
