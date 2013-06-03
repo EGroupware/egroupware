@@ -1579,16 +1579,16 @@ $this->partID = $partID;
 				isset($GLOBALS['egw_info']['user']['apps']['calendar']) &&
 				($attachment = $this->mail_bo->getAttachment($uid, $attach['partID'])))
 			{
+				//error_log(__METHOD__.__LINE__.array2string($attachment));
 				egw_cache::setSession('calendar', 'ical', array(
 					'charset' => $attach['charset'] ? $attach['charset'] : 'utf-8',
 					'attachment' => $attachment['attachment'],
 					'method' => $attach['method'],
 					'sender' => $sender,
 				));
-				return array("src"=>egw::link('/index.php',array(
-					'menuaction' => 'calendar.calendar_uiforms.meeting',
-					'ical' => 'session',
-				)));
+				return ExecMethod( 'calendar.calendar_uiforms.meeting',
+					array('event'=>null,'msg'=>'','useSession'=>true)
+				);
 			}
 		}
 
