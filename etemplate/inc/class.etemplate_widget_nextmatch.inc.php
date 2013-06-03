@@ -191,7 +191,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		}
 		foreach($value as $name => $_value)
 		{
-			if(strpos($name, 'options-') !== false)
+			if(strpos($name, 'options-') !== false && $_value)
 			{
 				$select = substr($name, 8);
 				if(!self::$request->sel_options[$select])
