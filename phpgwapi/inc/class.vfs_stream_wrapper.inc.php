@@ -199,7 +199,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 		{
 			$defaults = array(
 				'user' => $GLOBALS['egw_info']['user']['account_lid'],
-				'pass' => $GLOBALS['egw_info']['user']['passwd'],
+				'pass' => urlencode($GLOBALS['egw_info']['user']['passwd']),
 				'host' => $GLOBALS['egw_info']['user']['domain'],
 				'home' => str_replace(array('\\\\','\\'),array('','/'),$GLOBALS['egw_info']['user']['homedirectory']),
 			);
