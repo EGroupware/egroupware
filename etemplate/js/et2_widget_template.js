@@ -157,6 +157,7 @@ var et2_template = et2_DOMWidget.extend(
 			var old_id = this.id;
 			this.id = this.content;
 			this._super.apply(this, arguments);
+			this.id = old_id;
 		}
 	},
 
