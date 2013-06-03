@@ -180,8 +180,8 @@ class importexport_helper_functions {
 				continue;
 			}
 		}
-		$_account_lids = (is_array($_account_lids) ? $account_lids : implode(',',$account_lids));
-		return is_array( $_account_lids ) ? $account_ids : implode( ',', (array)$account_ids );
+		$_account_lids = (is_array($_account_lids) ? $account_lids : implode(',',array_unique($account_lids)));
+		return is_array( $_account_lids ) ? array_unique($account_ids) : implode( ',', array_unique((array)$account_ids ));
 
 	} // end of member function account_lid2id
 
