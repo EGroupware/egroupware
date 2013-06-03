@@ -344,7 +344,7 @@ app.home = AppJS.extend(
 				}
 				action = action.parent;
 			}
-			if(typeof source == undefined)
+			if(target_action == null)
 			{
 				var link = et2_createWidget('link-entry', {label: egw.lang('Add')}, this.portlet_container);
 				var dialog = et2_dialog.show_dialog(
