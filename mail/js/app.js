@@ -50,8 +50,11 @@ app.mail = AppJS.extend(
 		{
 			if (_reset == true)
 			{
+				//var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
+				//if (this.mail_currentlyFocussed!='') nm.refresh([this.mail_currentlyFocussed],'delete');//egw.dataDeleteUID(this.mail_currentlyFocussed);
 				if (this.mail_currentlyFocussed!='') egw.dataDeleteUID(this.mail_currentlyFocussed);
 				for(var k = 0; k < this.mail_selectedMails.length; k++) egw.dataDeleteUID(this.mail_selectedMails[k]);
+				//nm.refresh(this.mail_selectedMails,'delete');
 			}
 			this.mail_selectedMails = [];
 			this.mail_currentlyFocussed = '';
@@ -177,7 +180,7 @@ app.mail = AppJS.extend(
 		console.log("mail_preview",nextmatch, selected);
 		// Empty values, just in case selected is empty (user cleared selection)
 		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",date:"",subject:""}};
-		if(typeof selected != 'undefined' && selected.length > 0)
+		if(typeof selected != 'undefined' && selected.length == 1)
 		{
 			var _id = this.mail_fetchCurrentlyFocussed(selected);
 			dataElem = egw.dataGetUIDdata(_id);
@@ -259,7 +262,9 @@ app.mail = AppJS.extend(
 			var activeFolders = tree_wdg.getTreeNodeOpenItems(nodeToRefresh,mode2use);
 			//alert(activeFolders.join('#,#'));
 			this.mail_queueRefreshFolderList(activeFolders);
-	
+			// maybe to use the mode forced as trigger for grid reload and using the grids own autorefresh
+			// would solve the refresh issue more accurately
+			//if (mode == "forced") this.mail_refreshMessageGrid();
 			this.mail_refreshMessageGrid();
 		} catch(e) { } // ignore the error; maybe the template is not loaded yet
 	},
@@ -858,7 +863,10 @@ app.mail = AppJS.extend(
 		// as the "onNodeSelect" function!
 		var request = new egw_json_request('mail.mail_ui.ajax_moveMessages',[target, messages]);
 		request.sendRequest(false);
-		for (var i = 0; i < messages['msg'].length; i++)  egw.dataDeleteUID(messages['msg'][i]);
+		var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
+		this.mail_setRowClass(_senders,'deleted');
+		nm.refresh(messages['msg'],'delete')
+		//for (var i = 0; i < messages['msg'].length; i++) egw.dataDeleteUID(messages['msg'][i]);
 		this.mail_refreshMessageGrid();
 	},
 	/**

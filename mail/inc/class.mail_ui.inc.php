@@ -89,11 +89,12 @@ class mail_ui
 	 *
 	 * @param int $icServerID
 	 */
-	function changeProfile($_icServerID)
+	function changeProfile($_icServerID,$unsetCache=false)
 	{
+		//if (self::$icServerID != $_icServerID) $unsetCache = true;
+		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.'->'.self::$icServerID.'<->'.$_icServerID);
 		self::$icServerID = $_icServerID;
-		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.'->'.self::$icServerID);
-		emailadmin_bo::unsetCachedObjects(self::$icServerID);
+		if ($unsetCache) emailadmin_bo::unsetCachedObjects(self::$icServerID);
 		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
@@ -260,7 +261,7 @@ class mail_ui
 
 		_debug_array('Connection Reset triggered:'.$connectionReset.' for Profile with ID:'.$icServerID);
 		emailadmin_bo::unsetCachedObjects($icServerID);
-
+/*
 		if (mail_bo::$idna2)
 		{
 			_debug_array('Umlautdomains supported (see Example below)');
@@ -268,7 +269,7 @@ class mail_ui
 			$encDom = mail_bo::$idna2->encode($dom);
 			_debug_array(array('source'=>$dom,'result'=>array('encoded'=>$encDom,'decoded'=>mail_bo::$idna2->decode($encDom))));
 		}
-
+*/
 		if ($preferences->preferences['prefcontroltestconnection'] == 'reset') exit;
 
 		echo "<hr /><h3 style='color:red'>".lang('IMAP Server')."</h3>";
