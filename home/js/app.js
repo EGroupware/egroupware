@@ -104,8 +104,11 @@ app.home = AppJS.extend(
 	/**
 	 * Add a new portlet from the context menu
 	 */
-	add: function(action) {
-		var attrs = {id: this._create_id()};
+	add: function(action, source) {
+		// Put it in the last row, first column, since the mouse position is unknown
+		var max_row = Math.max.apply(null,$j('div',this.portlet_container.div).map(function() {return $j(this).attr('data-row');}));
+		var attrs = {id: this._create_id(), row: max_row + 1, col: 1};
+
 		var portlet = et2_createWidget('portlet',attrs, this.portlet_container);
 		portlet.loadingFinished();
 
@@ -115,7 +118,9 @@ app.home = AppJS.extend(
 		// Set up sorting/grid of new portlet
 		var $portlet_container = $j(this.portlet_container.getDOMNode());
 		$portlet_container.data("gridster").add_widget(
-			portlet.getDOMNode()
+			portlet.getDOMNode(),
+			this.DEFAULT.WIDTH, this.DEFAULT.HEIGHT,
+			attrs.col, attrs.row
 		);
 	},
 
