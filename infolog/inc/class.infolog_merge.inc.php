@@ -101,6 +101,17 @@ class infolog_merge extends bo_merge
 			$this->cf_link_to_expand($record->get_record_array(), $content, $info);
 		}
 
+		foreach($this->bo->customfields as $name => $field)
+		{
+			if ($field['type'] == 'select-account')
+			{
+				$record_name = '#'.$name;
+				$info += $this->contact_replacements(
+					array('account_id' => $record->$record_name),
+					($prefix ? $prefix . '/' : '')."#$name"
+				);
+			}
+		}
 		importexport_export_csv::convert($record, $types, 'infolog', $selects);
 		if($record->info_contact)
 		{
@@ -121,7 +132,10 @@ class infolog_merge extends bo_merge
 		$array = $record->get_record_array();
 		foreach($this->bo->customfields as $name => $field)
 		{
-			if(!$array['#'.$name]) $array['#'.$name] = '';
+			if(!$array['#'.$name])
+			{
+				$array['#'.$name] = '';
+			}
 		}
 
 		// Links
@@ -177,9 +191,15 @@ class infolog_merge extends bo_merge
 		}
 
 		echo '<tr><td colspan="4"><h3>'.lang('Custom fields').":</h3></td></tr>";
+		$contact_custom = false;
 		foreach($this->bo->customfields as $name => $field)
 		{
-			echo '<tr><td>{{#'.$name.'}}</td><td colspan="3">'.$field['label']."</td></tr>\n";
+			echo '<tr><td>{{#'.$name.'}}</td><td colspan="3">'.$field['label'].($field['type'] == 'select-account' ? '*':'')."</td></tr>\n";
+			if($field['type'] == 'select-account') $contact_custom = true;
+		}
+		if($contact_custom)
+		{
+			echo '<tr><td /><td colspan="3">* '.lang('Addressbook placeholders available'). '</td></tr>';
 		}
 
 		echo '<tr><td colspan="4"><h3>'.lang('Contact fields').':</h3></td></tr>';
