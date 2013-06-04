@@ -100,6 +100,7 @@ create a new series	calendar	de	Neue Serie anlegen
 create an exception for the given date	calendar	de	Erzeugt eine Ausnahme am angegebenen Datum
 create an infolog from this event	calendar	de	Erstelle ein InfoLog von diesem Termin
 create exception	calendar	de	Ausnahme erzeugen
+create links for participants from addressbook	calendar	de	Erzeuge Verknüpfungen für Teilnehmer aus dem Adressbuch
 create new links	calendar	de	Neue Verknüpfung erstellen
 created	calendar	de	Angelegt
 creator	calendar	de	Ersteller

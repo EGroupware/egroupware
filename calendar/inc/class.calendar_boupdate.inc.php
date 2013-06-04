@@ -1168,6 +1168,19 @@ class calendar_boupdate extends calendar_bo
 		}
 		if ($updateTS) $GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, $event['id'] ? 'modify' : 'add', $this->now);
 
+		// create links for new participants from addressbook, if configured
+		if ($cal_id && $GLOBALS['egw_info']['server']['link_contacts'])
+		{
+			foreach($event['participants'] as $uid => $status)
+			{
+				calendar_so::split_user($uid, $user_type, $user_id);
+				if ($user_type == 'c' && (!$old_event || !isset($old_event['participants'][$uid])))
+				{
+					egw_link::link('calendar', $cal_id, 'addressbook', $user_id);
+				}
+			}
+		}
+
 		// Update history
 		$tracking = new calendar_tracking($this);
 		if (empty($event['id']) && !empty($cal_id)) $event['id']=$cal_id;
