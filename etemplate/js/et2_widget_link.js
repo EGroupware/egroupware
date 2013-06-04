@@ -261,16 +261,19 @@ var et2_link_to = et2_inputWidget.extend(
 		}
 		
 		// Files
-		for(var file in self.file_upload.options.value) {
-			
-			links.push({
-				app: 'file',
-				id: file,
-				name: self.file_upload.options.value[file].name,
-				type: self.file_upload.options.value[file].type,
-				remark: jQuery("li[file='"+self.file_upload.options.value[file].name+"'] > input", self.file_upload.progress)
-					.filter(function() { return jQuery(this).attr("placeholder") != jQuery(this).val();}).val()
-			});
+		if(!self.options.no_files)
+		{
+			for(var file in self.file_upload.options.value) {
+				
+				links.push({
+					app: 'file',
+					id: file,
+					name: self.file_upload.options.value[file].name,
+					type: self.file_upload.options.value[file].type,
+					remark: jQuery("li[file='"+self.file_upload.options.value[file].name+"'] > input", self.file_upload.progress)
+						.filter(function() { return jQuery(this).attr("placeholder") != jQuery(this).val();}).val()
+				});
+			}
 		}
 		
 		var request = new egw_json_request("etemplate_widget_link::ajax_link::etemplate", 
@@ -306,6 +309,21 @@ var et2_link_to = et2_inputWidget.extend(
 				this, et2_link_list
 			);
 		}
+	},
+
+	set_no_files: function(no_files)
+	{
+		if(no_files)
+		{
+			this.file_div.hide();
+			this.filemanager_button.hide();
+		}
+		else
+		{
+			this.file_div.show();
+			this.filemanager_button.show();
+		}
+		this.options.no_files = no_files;
 	}
 });
 et2_register_widget(et2_link_to, ["link-to"]);
