@@ -714,7 +714,7 @@
 		function displayBody()
 		{
 			$partID		= $_GET['part'];
-			if (empty($this->uid) && !empty($_GET['uid']) ) $this->uid = 9247;//$_GET['uid'];
+			if (empty($this->uid) && !empty($_GET['uid']) ) $this->uid = $_GET['uid'];
 			if (!empty($_GET['mailbox'])) $this->mailbox  = base64_decode($_GET['mailbox']);
 			$htmlOptions = $this->bofelamimail->htmlOptions;
 			if (!empty($_GET['tryastext'])) $htmlOptions  = "only_if_no_text";
