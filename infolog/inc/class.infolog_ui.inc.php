@@ -651,6 +651,8 @@ class infolog_ui
 						$values[$multi_action] = implode(',',$values[$multi_action]);
 					}
 					$values['nm']['multi_action'] .= '_' . $values[$multi_action];
+					unset($values[$multi_action.'_popup']);
+					unset($values[$multi_action]);
 				}
 				if ($this->action($values['nm']['multi_action'], $values['nm']['selected'], $values['nm']['select_all'],
 					$success, $failed, $action_msg, $values['nm'], $msg, $values['nm']['checkboxes']['no_notifications']))
