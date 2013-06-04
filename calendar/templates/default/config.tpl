@@ -119,6 +119,15 @@
     <td>&nbsp;{lang_Calendar_recurrence_horizont_in_days_(default_1000)}:</td>
     <td><input size="5" name="newsettings[calendar_horizont]" value="{value_calendar_horizont}"></td>
    </tr>
+   <tr class="row_off">
+    <td>&nbsp;{lang_Create_links_for_participants_from_addressbook}:</td>
+    <td>
+     <select name="newsettings[link_contacts]">
+      <option value="">{lang_No}</option>
+      <option value="yes"{selected_link_contacts_yes}>{lang_Yes}</option>
+     </select>
+    </td>
+   </tr>
 
 <!-- END body -->
 

@@ -100,6 +100,7 @@ create a new series	calendar	en	Create a new series
 create an exception for the given date	calendar	en	Create an exception for the given date
 create an infolog from this event	calendar	en	Create an InfoLog from this event
 create exception	calendar	en	Create exception
+create links for participants from addressbook	calendar	en	Create links for participants from addressbook
 create new links	calendar	en	Create new links
 created	calendar	en	Created
 creator	calendar	en	Creator
