@@ -1246,20 +1246,40 @@ abstract class bo_merge
 
 		foreach($cf as $index => $field)
 		{
-			if($cfs[$field] && in_array($cfs[$field]['type'],array_keys($GLOBALS['egw_info']['apps'])) )
+			if($cfs[$field])
 			{
+				if(in_array($cfs[$field]['type'],array_keys($GLOBALS['egw_info']['apps'])))
+				{
+					$field_app = $cfs[$field]['type'];
+				}
+				else if ($cfs[$field]['type'] == 'home-accounts' || $cfs[$field]['type'] == 'select-account')
+				{
+					// Special case for home-accounts -> contact
+					$field_app = 'addressbook';
+					$account = $GLOBALS['egw']->accounts->read($values['#'.$field]);
+					$app_replacements[$field] = $this->contact_replacements($account['person_id']);
+				}
+				else if ($list = explode('-',$cfs[$field]['type']) && in_array($list[0], array_keys($GLOBALS['egw_info']['apps'])))
+				{
+					// Sub-type - use app
+					$field_app = $list[0];
+				}
+				else
+				{
+					continue;
+				}
+
 				// Get replacements for that application
-				$field_app = $cfs[$field]['type'];
-				if(!$app_replacements[$field_app])
+				if(!$app_replacements[$field])
 				{
 					$classname = "{$field_app}_merge";
 					$class = new $classname();
 					// If we send the real content, it can result in infinite loop of lookups
 					// This means you can't do {{#other_app/#other_app_cf/n_fn}}
 					$content = '';
-					$app_replacements[$field_app] = $class->get_replacements($values['#'.$field], $content);
+					$app_replacements[$field] = $class->get_replacements($values['#'.$field], $content);
 				}
-				$replacements[$placeholders[$index]] = $app_replacements[$field_app]['$$'.$sub[$index].'$$'];
+				$replacements[$placeholders[$index]] = $app_replacements[$field]['$$'.$sub[$index].'$$'];
 			}
 			else
 			{

@@ -101,17 +101,6 @@ class infolog_merge extends bo_merge
 			$this->cf_link_to_expand($record->get_record_array(), $content, $info);
 		}
 
-		foreach($this->bo->customfields as $name => $field)
-		{
-			if ($field['type'] == 'select-account')
-			{
-				$record_name = '#'.$name;
-				$account = $GLOBALS['egw']->accounts->read($record->$record_name);
-				$info += $this->contact_replacements($account['person_id'],
-					($prefix ? $prefix . '/' : '')."#$name"
-				);
-			}
-		}
 		importexport_export_csv::convert($record, $types, 'infolog', $selects);
 		if($record->info_contact)
 		{
