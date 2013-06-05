@@ -1,5 +1,7 @@
 <!-- BEGIN header -->
+<p style="text-align: center; color: red; font-weight: bold;">{error}</p>
 <form method="POST" action="{action_url}">
+{hidden_vars}
 <table border="0" align="center">
    <tr class="th">
     <td colspan="2"><font color="{th_text}">&nbsp;<b>{title}</b></font></td>

@@ -728,9 +728,9 @@ function calendar_purge_old($config)
 			'calendar.calendar_boupdate.purge',
 			(float)$config
 		);
-	}
-	if(!$result)
-	{
-		$GLOBALS['config_error'] = 'Unable to schedule purge';
+		if(!$result)
+		{
+			$GLOBALS['config_error'] = 'Unable to schedule purge';
+		}
 	}
 }
