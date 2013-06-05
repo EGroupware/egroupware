@@ -496,6 +496,10 @@ var et2_link_entry = et2_inputWidget.extend(
 			this.app_select.hide();
 			this.div.addClass("no_app");
 		}
+		if(typeof self.options.value != "object")
+		{
+			self.options.value = {id: self.options.value};
+		}
 		self.options.value.app = this.app_select.val();
 
 		// Search input
