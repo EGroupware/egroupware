@@ -106,8 +106,8 @@ class infolog_merge extends bo_merge
 			if ($field['type'] == 'select-account')
 			{
 				$record_name = '#'.$name;
-				$info += $this->contact_replacements(
-					array('account_id' => $record->$record_name),
+				$account = $GLOBALS['egw']->accounts->read($record->$record_name);
+				$info += $this->contact_replacements($account['person_id'],
 					($prefix ? $prefix . '/' : '')."#$name"
 				);
 			}
