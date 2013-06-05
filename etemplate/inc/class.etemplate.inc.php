@@ -1234,7 +1234,7 @@ class etemplate extends boetemplate
 		{
 			case 'label':	//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size],[link_title]
 				if (is_array($value)) break;
-if($cell_options)
+				if($cell_options)
 				{
 					 list($style,$extra_link,$activate_links,$label_for,$extra_link_target,$extra_link_popup,$extra_link_title) = self::csv_split($cell_options,7);
 				}
@@ -1259,9 +1259,8 @@ if($cell_options)
 				{
 					$class = array(
 						'class'       => $class,
-						'onmouseover' => "self.status='".addslashes(html::htmlspecialchars($help))."'; return true;",
-						'onmouseout'  => "self.status=''; return true;",
 					);
+					list($class['onmouseover'],$class['onmouseout']) = html::tooltip($help, False, False,  true);
 				}
 				break;
 			case 'html':	//  size: [link],[link_target],[link_popup_size],[link_title],[activate_links]
