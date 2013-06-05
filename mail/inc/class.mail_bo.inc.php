@@ -2626,6 +2626,47 @@ class mail_bo
 	}
 
 	/**
+	 * get flags for a Message
+	 *
+	 * @param mixed string _messageUID array of id to retrieve the flags for
+	 *
+	 * @return null/array flags
+	 */
+	function getFlags ($_messageUID) {
+		$flags =  $this->icServer->getFlags($_messageUID, true);
+		if (PEAR::isError($flags)) {
+			error_log(__METHOD__.__LINE__.'Failed to retrieve Flags for Messages with UID(s)'.array2string($_messageUID).' Server returned:'.$flags->message);
+			return null;
+		}
+		return $flags;
+	}
+
+	/**
+	 * get and parse the flags response for the Notifyflag for a Message
+	 *
+	 * @param string _messageUID array of id to retrieve the flags for
+	 * @param array flags - to avoid additional server call
+	 *
+	 * @return null/boolean
+	 */
+	function getNotifyFlags ($_messageUID, $flags=null)
+	{
+		if($flags===null) $flags =  $this->icServer->getFlags($_messageUID, true);
+		if (self::$debug) error_log(__METHOD__.$_messageUID.' Flags:'.array2string($flags));
+		if (PEAR::isError($flags))
+		{
+			return null;
+		}
+		if ( stripos( array2string($flags),'MDNSent')!==false)
+			return true;
+
+		if ( stripos( array2string($flags),'MDNnotSent')!==false)
+			return false;
+
+		return null;
+	}
+
+	/**
 	 * flag a Message
 	 *
 	 * @param string _flag (readable name)
@@ -3789,12 +3830,72 @@ class mail_bo
 	}
 
 	/**
-	 * getMessageRawHeader
+	 * getMessageEnvelope
 	 * get parsed headers from message
 	 * @param string/int $_uid the messageuid,
 	 * @param string/int $_partID='' , the partID, may be omitted
 	 * @param boolean $decode flag to do the decoding on the fly
-	 * @return string the message header
+	 * @return array the message header
+	 */
+	function getMessageEnvelope($_uid, $_partID = '',$decode=false)
+	{
+		if($_partID == '') {
+			if( PEAR::isError($envelope = $this->icServer->getEnvelope('', $_uid, true)) ) {
+				return false;
+			}
+			//if ($decode) _debug_array($envelope[0]);
+			return ($decode ? self::decode_header($envelope[0],true): $envelope[0]);
+		} else {
+			if( PEAR::isError($headers = $this->icServer->getParsedHeaders($_uid, true, $_partID, true)) ) {
+				return false;
+			}
+			//_debug_array($headers);
+			$newData = array(
+				'DATE'		=> $headers['DATE'],
+				'SUBJECT'	=> ($decode ? self::decode_header($headers['SUBJECT']):$headers['SUBJECT']),
+				'MESSAGE_ID'	=> $headers['MESSAGE-ID']
+			);
+			//_debug_array($newData);
+			$recepientList = array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY_TO');
+			foreach($recepientList as $recepientType) {
+				if(isset($headers[$recepientType])) {
+					if ($decode) $headers[$recepientType] =  self::decode_header($headers[$recepientType],true);
+					$addresses = imap_rfc822_parse_adrlist($headers[$recepientType], '');
+					foreach($addresses as $singleAddress) {
+						$addressData = array(
+							'PERSONAL_NAME'		=> $singleAddress->personal ? $singleAddress->personal : 'NIL',
+							'AT_DOMAIN_LIST'	=> $singleAddress->adl ? $singleAddress->adl : 'NIL',
+							'MAILBOX_NAME'		=> $singleAddress->mailbox ? $singleAddress->mailbox : 'NIL',
+							'HOST_NAME'		=> $singleAddress->host ? $singleAddress->host : 'NIL',
+							'EMAIL'			=> $singleAddress->host ? $singleAddress->mailbox.'@'.$singleAddress->host : $singleAddress->mailbox,
+						);
+						if($addressData['PERSONAL_NAME'] != 'NIL') {
+							$addressData['RFC822_EMAIL'] = imap_rfc822_write_address($singleAddress->mailbox, $singleAddress->host, $singleAddress->personal);
+						} else {
+							$addressData['RFC822_EMAIL'] = 'NIL';
+						}
+						$newData[$recepientType][] = $addressData;
+					}
+				} else {
+					if($recepientType == 'SENDER' || $recepientType == 'REPLY_TO') {
+						$newData[$recepientType] = $newData['FROM'];
+					} else {
+						$newData[$recepientType] = array();
+					}
+				}
+			}
+			//if ($decode) _debug_array($newData);
+			return $newData;
+		}
+	}
+
+	/**
+	 * getMessageHeader
+	 * get parsed headers from message
+	 * @param string/int $_uid the messageuid,
+	 * @param string/int $_partID='' , the partID, may be omitted
+	 * @param boolean $decode flag to do the decoding on the fly
+	 * @return array the message header
 	 */
 	function getMessageHeader($_uid, $_partID = '',$decode=false)
 	{

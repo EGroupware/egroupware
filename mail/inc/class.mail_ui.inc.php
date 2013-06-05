@@ -26,6 +26,7 @@ class mail_ui
 	(
 		'index' => True,
 		'displayHeader'	=> True,
+		'displayMessage'	=> True,
 		'saveMessage'	=> True,
 		'vfsSaveMessage' => True,
 		'loadEmailBody'	=> True,
@@ -1087,7 +1088,7 @@ unset($query['actions']);
 		$rows = $this->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType,$previewMessage);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
 		$endtime = microtime(true) - $starttime;
-		error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].' Took:'.$endtime);
+		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].' Took:'.$endtime);
 
 		return $rowsFetched['messages'];
 	}
@@ -1476,6 +1477,73 @@ unset($query['actions']);
 	}
 
 	/**
+	 * display messages
+	 *
+	 * all params are passed as GET Parameters
+	 */
+	function displayMessage()
+	{
+		if(isset($_GET['id'])) $rowID	= $_GET['id'];
+		if(isset($_GET['part'])) $partID = $_GET['part'];
+
+		$hA = self::splitRowID($rowID);
+		$uid = $hA['msgUID'];
+		$mailbox = $hA['folder'];
+
+		//$transformdate	=& CreateObject('felamimail.transformdate');
+		//$htmlFilter	=& CreateObject('felamimail.htmlfilter');
+		//$uiWidgets	=& CreateObject('felamimail.uiwidgets');
+		$this->mail_bo->reopen($mailbox);
+		// retrieve the flags of the message, before touching it.
+		$headers	= $this->mail_bo->getMessageHeader($uid, $partID);
+		if (PEAR::isError($headers)) {
+			$error_msg[] = lang("ERROR: Message could not be displayed.");
+			$error_msg[] = lang("In Mailbox: %1, with ID: %2, and PartID: %3",$mailbox,$uid,$partID);
+			$error_msg[] = $headers->message;
+			$error_msg[] = array2string($headers->backtrace[0]);
+		}
+		if (!empty($uid)) $flags = $this->mail_bo->getFlags($uid);
+		$envelope	= $this->mail_bo->getMessageEnvelope($uid, $partID,true);
+		$rawheaders	= $this->mail_bo->getMessageRawHeader($uid, $partID);
+		$fetchEmbeddedImages = false;
+		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
+		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, '',$fetchEmbeddedImages);
+//_debug_array($headers);
+		$webserverURL	= $GLOBALS['egw_info']['server']['webserver_url'];
+
+		$nonDisplayAbleCharacters = array('[\016]','[\017]',
+				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
+				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
+
+		#print "<pre>";print_r($rawheaders);print"</pre>";exit;
+		$mailBody = $this->get_load_email_data($uid, $partID, $mailbox,false);
+		$this->mail_bo->closeConnection();
+		$etpl = new etemplate_new('mail.display');
+
+		// Set cell attributes directly
+/*
+		$etpl->set_cell_attribute('nm[foldertree]','actions', array(
+			'drop_move_mail' => array(
+				'type' => 'drop',
+				'acceptedTypes' => 'mail',
+				'icon' => 'move',
+				'caption' => 'Move to',
+				'onExecute' => 'javaScript:app.mail.mail_move'
+			),
+		));
+*/
+		$subject = mail_bo::htmlspecialchars($this->mail_bo->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false),
+            mail_bo::$displayCharset);
+		if (empty($subject)) $subject = lang('no subject');
+
+$content['msg'] = (is_array($error_msg)?implode("<br>",$error_msg):$error_msg);
+$content['mail_displaysubject'] = $subject;
+$content['mail_displaybody'] = $mailBody;
+$readonlys = $preserv = $content;
+		echo $etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
+	}
+
+	/**
 	 * save messages on disk or filemanager, or display it in popup
 	 *
 	 * all params are passed as GET Parameters
@@ -1559,7 +1627,7 @@ unset($query['actions']);
 	}
 
 
-	function get_load_email_data($uid, $partID, $mailbox)
+	function get_load_email_data($uid, $partID, $mailbox,$fullHeader=true)
 	{
 		// seems to be needed, as if we open a mail from notification popup that is
 		// located in a different folder, we experience: could not parse message
@@ -1595,22 +1663,22 @@ $this->partID = $partID;
 
 		// Compose the content of the frame
 		$frameHtml =
-			$this->get_email_header($this->mail_bo->getStyles($bodyParts)).
-			$this->showBody($this->getdisplayableBody($bodyParts), false);
+			$this->get_email_header($this->mail_bo->getStyles($bodyParts),$fullHeader).
+			$this->showBody($this->getdisplayableBody($bodyParts), false,$fullHeader);
 		//IE10 eats away linebreaks preceeded by a whitespace in PRE sections
 		$frameHtml = str_replace(" \r\n","\r\n",$frameHtml);
 
 		return $frameHtml;
 	}
 
-	static function get_email_header($additionalStyle='')
+	static function get_email_header($additionalStyle='',$fullHeader=true)
 	{
 		//error_log(__METHOD__.__LINE__.$additionalStyle);
-		return '
+		$header = ($fullHeader?'
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<head>
-		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />':'').'
 		<style>
 			body, td, textarea {
 				font-family: Verdana, Arial, Helvetica,sans-serif;
@@ -1622,13 +1690,14 @@ $this->partID = $partID;
 			{
 				window.location.hash=aname;
 			}
-		</script>
+		</script>'.($fullHeader?'
 	</head>
 	<body>
-';
+':'');
+		return $header;
 	}
 
-	function showBody(&$body, $print=true)
+	function showBody(&$body, $print=true,$fullPageTags=true)
 	{
 		$BeginBody = '<style type="text/css">
 body,html {
@@ -1661,7 +1730,7 @@ blockquote[type=cite] {
  <table width="100%" style="table-layout:fixed"><tr><td class="td_display">';
 
 		$EndBody = '</td></tr></table></div>';
-		$EndBody .= "</body></html>";
+		if ($fullPageTags) $EndBody .= "</body></html>";
 		if ($print)	{
 			print $BeginBody. $body .$EndBody;
 		} else {

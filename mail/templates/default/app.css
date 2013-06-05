@@ -304,7 +304,7 @@ input[type=button] {
 	border: 0;
 }
 
-#mailPreview {
+.mailDisplay, #mailPreview {
 	position: relative;
 	margin-top: 3px;
 }
@@ -313,7 +313,7 @@ input[type=button] {
 	right: 0;
 	top: 0;
 }
-#mailPreviewContainer {
+.mailDisplayContainer, #mailPreviewContainer {
 	position: absolute;
 	border: 1px solid silver;
 	top: 55px;
@@ -321,10 +321,10 @@ input[type=button] {
 	left: 0;
 	right: 0;
 }
-div.mailPreviewHeaders > span:first-child {
+div.mailDisplayHeaders > span:first-child, div.mailPreviewHeaders > span:first-child {
 	width: 5em;
 	display: inline-block;
 }
-div.mailPreviewHeaders > * {
+div.mailDisplayHeaders > span:first-child, div.mailPreviewHeaders > * {
 	margin-left: 3px;
 }

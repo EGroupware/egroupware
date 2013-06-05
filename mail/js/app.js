@@ -88,8 +88,11 @@ app.mail = AppJS.extend(
 
 		var dataElem = egw.dataGetUIDdata(_id);
 		var subject = dataElem.data.subject;
-		var sw = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewSubject');
-		alert('Open Message:'+_id+' '+subject);
+		//alert('Open Message:'+_id+' '+subject);
+		egw().open_link(egw.link('/index.php', {
+			menuaction: 'mail.mail_ui.displayMessage',
+			id: _id,
+		}), 'view'+_id, '495x425');
 	},
 	
 	/**

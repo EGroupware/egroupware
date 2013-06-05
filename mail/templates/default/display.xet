@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.display" template="" lang="" group="0" version="1.9.001">
+		<html id="msg"/>
+		<vbox class="mailDisplay" width="100%">
+			<hbox class="mailDisplayHeaders" width="100%">
+				<description value="From"/>
+				<url-email id="mail_displayfromaddress" readonly="true"/>
+			</hbox>
+			<hbox class="mailDisplayHeaders" width="100%">
+				<description value="To"/>
+				<url-email id="mail_displaytoaddress" readonly="true"/>
+			</hbox>
+			<hbox class="mailDisplayHeaders" width="100%">
+				<description value="Date"/>
+				<date-time align="left" id="mail_displaydate" readonly="true"/>
+			</hbox>
+			<hbox  class="mailDisplayHeaders" width="100%">
+				<description value="Subject"/>
+				<description align="left" id="mail_displaysubject" readonly="true"/>
+			</hbox>
+			<hbox class="mail_displayicons">
+				<html id="mail_displayicons"/>
+			</hbox>
+			<box class="mailDisplayContainer">
+				<html id="mail_displaybody"/>
+			</box>
+		</vbox>
+	</template>
+</overlay>
