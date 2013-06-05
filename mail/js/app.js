@@ -89,6 +89,7 @@ app.mail = AppJS.extend(
 		var dataElem = egw.dataGetUIDdata(_id);
 		var subject = dataElem.data.subject;
 		var sw = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewSubject');
+		alert('Open Message:'+_id+' '+subject);
 	},
 	
 	/**
@@ -152,7 +153,7 @@ app.mail = AppJS.extend(
 		// check if DOM Node has class that contains docked; then we assume the bar docked, whatever our class var states
 		for (var i=0; i < splitterDN.childNodes[1].classList.length;i++) if (splitterDN.childNodes[1].classList[i].search(/docked/)>=0) this.mail_previewAreaActive = false;
 		//if this.mail_previewAreaActive but clientHeight of childNode is 0, assume this.mail_previewAreaActive incorrect
-		if ( this.mail_previewAreaActive && splitterDN.childNodes[2].clientHeight == 0) this.mail_previewAreaActive=false;
+		if ( this.mail_previewAreaActive && splitterDN.childNodes[2].clientHeight < 15) this.mail_previewAreaActive=false;
 		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersFrom').set_disabled(_value);
 		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersTo').set_disabled(_value);
 		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersDate').set_disabled(_value);
@@ -208,7 +209,9 @@ app.mail = AppJS.extend(
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewSubject').set_value(subject);
 		var IframeHandle = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('messageIFRAME');
 		IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
-
+		var messages = {};
+		messages['msg'] = [_id];
+		this.mail_removeRowClass(messages,'unseen');
 	//	var request = new egw_json_request('mail.mail_ui.ajax_loadEmailBody',[_id]);
 	//	request.sendRequest(false);
 	},
