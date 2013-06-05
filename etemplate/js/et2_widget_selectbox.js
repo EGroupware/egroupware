@@ -374,16 +374,10 @@ var et2_selectbox = et2_inputWidget.extend(
 					icon_class: 'ui-icon-check',
 					label:	'Check all',
 					click: function(e) {
-						jQuery("input",e.data).attr("checked", true);
+						var all_set = jQuery("input[type='checkbox']",e.data).prop("checked");
+						jQuery("input[type='checkbox']",e.data).prop("checked", !all_set);
 					}
 				},
-				uncheck: {
-					icon_class: 'ui-icon-closethick',
-					label:	'Uncheck all',
-					click: function(e) {
-						jQuery("input",e.data).attr("checked", false);
-					}
-				}
 			};
 			for(var key in header_controls)
 			{
@@ -391,15 +385,27 @@ var et2_selectbox = et2_inputWidget.extend(
 					.addClass("et2_clickable")
 					.click(options, header_controls[key].click)
 					.append('<span class="ui-icon ' + header_controls[key].icon_class + '"/>')
-					.append("<span>"+this.egw().lang(header_controls[key].label)+"</span>")
 					.appendTo(controls);
 			}
 
 		}
-		else if (header[0].childNodes.length == 0)
+		
+		// Hide the header, only show it on hover / focus, but show it out of flow, above
+		// the list of options so it doesn't reflow the page
+		var hide_header = !this.options.empty_label && !this.options.label;
+		if(hide_header)
 		{
-			// Hide header - nothing there but padding
+			// Hide header
 			header.hide();
+
+			// Show / hide again
+			node.on('mouseenter focusin', function() {
+				header.show();
+				header.css("width", header.css("width"));
+				header.css("position", "absolute");
+				header.css("top", options.position().top - header.outerHeight());
+			});
+			node.on('mouseleave focusout', function() {if(hide_header) header.hide();});
 		}
 
 		this.setDOMNode(node[0]);

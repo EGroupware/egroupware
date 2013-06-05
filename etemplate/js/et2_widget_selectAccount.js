@@ -71,18 +71,30 @@ var et2_selectAccount = et2_selectbox.extend(
 			this.egw().debug("warn", "Invalid account_type: %s Valid options:",_attrs['account_type'], this.account_types);
 		}
 
-		this._super.apply(this, arguments);
-
 		// Holder for search jQuery nodes
 		this.search = null;
 
 		// Reference to object with dialog
 		this.dialog = null;
+
+		this._super.apply(this, arguments);
 	},
 
 	destroy: function() {
                 this._super.apply(this, arguments);
 	},
+
+	/**
+	 * Tell et2 widget framework where to go
+	 */
+	getDOMNode: function(_sender) {
+		if(_sender == this.search_widget)
+		{
+			return this.search != null ? this.search[0] : this.search_widget._parent.getDOMNode();
+		}
+		return this._super.apply(this, arguments);
+	},
+
 
 	/**
 	 *  Single selection - override to add search button
@@ -141,18 +153,38 @@ var et2_selectAccount = et2_selectbox.extend(
 		var type = this.egw().preference('account_selection', 'common');
 		if(type == 'primary_group')
 		{
+			// Allow search 'inside' this widget
+			this.supportedWidgetClasses = [et2_link_entry];
 
+			// Add quick search - turn off multiple to get normal result list
+			this.options.multiple = false;
+			this._create_search();
+
+			// Clear search box after select
+			var old_select = this.search_widget.select;
+			this.search_widget.select = function() {
+				old_select.apply(this, arguments);
+				this.search.val('');
+			};
+
+			// Put search results as a DOM sibling of the options, for proper display
+			this.search_widget.search.on("autocompleteopen", jQuery.proxy(function() {
+				this.search_widget.search.data("autocomplete").menu.element.appendTo(this.node);
+			},this));
+			this.search = jQuery(document.createElement("li"))
+				.appendTo(this.multiOptions.prev().find('ul'));
+			this.options.multiple = true;
+			
 			// Add search button
 			var button = jQuery(document.createElement("li"))
 				.addClass("et2_clickable")
 				.click(this, this._open_multi_search)
 				.append('<span class="ui-icon ui-icon-search"/>')
-				.append("<span>"+this.egw().lang('search')+"</span>");
 			var type = this.egw().preference('account_selection', 'common');
 
-			// Put it first so check/uncheck don't move around
-			this.multiOptions.prev().show().find('ul')
-				.prepend(button);
+			// Put it last so check/uncheck doesn't move around
+			this.multiOptions.prev().find('ul')
+				.append(button);
 		}
 		else if (type == 'popup')
 		{
@@ -490,7 +522,6 @@ var et2_selectAccount = et2_selectbox.extend(
 			.addClass("et2_clickable")
 			.click(selected, function(e) {jQuery("li",e.data).remove();})
 			.append('<span class="ui-icon ui-icon-closethick"/>')
-			.append("<span>"+this.egw().lang('Remove all')+"</span>")
 			.appendTo(controls);
 
 		// Add in currently selected
@@ -513,7 +544,7 @@ var et2_selectAccount = et2_selectbox.extend(
 		var option = jQuery(document.createElement('li'))
 			.attr("id",'sel_'+value)
 			.appendTo(list);
-		jQuery('<span class="ui-icon ui-icon-close et2_clickable"/>')
+		jQuery('<div class="ui-icon ui-icon-close et2_clickable"/>')
 			.css("float", "right")
 			.appendTo(option)
 			.click(function() {
