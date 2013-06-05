@@ -1803,6 +1803,8 @@ class etemplate_old extends boetemplate
 				elseif ($box_item_class && $box_anz == 1)
 				{
 					$class = ($class ? $class . ' ' : '') . $box_item_class;
+					// if we have onclick or tooltip, add it to an extra div around single cell
+					if (!empty($rows[$box_row]['.'.$box_col])) $html = html::div($html, $rows[$box_row]['.'.$box_col]);
 				}
 				if ($type == 'groupbox')
 				{
