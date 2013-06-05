@@ -76,6 +76,27 @@ class uiconfig
 		$t->set_unknowns('keep');
 		$t->set_file(array('config' => 'config.tpl'));
 		$t->set_block('config','header','header');
+
+		// fix header templates missing essential parts like display of validation errors
+		$header = $t->get_var('header');
+		if (strpos($header, '{error}') === false)
+		{
+			$header = '<p style="text-align: center; color: red; font-weight: bold;">{error}</p>'."\n".$header;
+		}
+		if (strpos($header, '{hidden_vars}') === false)
+		{
+			if (strpos($header, '<table'))
+			{
+				list($header, $table) = explode('<table', $header);
+				$header .= "{hidden_vars}\n<table".$table;
+			}
+			else
+			{
+				$header .= "{hidden_vars}\n";
+			}
+		}
+		$t->set_var('header', $header);
+
 		$t->set_block('config','body','body');
 		$t->set_block('config','footer','footer');
 
