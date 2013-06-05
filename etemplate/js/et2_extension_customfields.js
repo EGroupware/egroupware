@@ -441,7 +441,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		delete(attrs.label);
 
 		attrs.type = "link-entry";
-		attrs.application = field.type;
+		attrs.only_app = field.type;
 		return true;
 	},
 
