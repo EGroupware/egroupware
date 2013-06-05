@@ -1298,6 +1298,17 @@ class mail_bo
 
 		} else {
 			$try2useCache = false;
+			// control HeaderCache
+			if (isset($this->sessionData['folderStatus'][$this->profileID][$_folderName]['uidValidity']) &&
+				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['uidValidity'] != $folderStatus['UIDVALIDITY'])
+			{
+				$summary = egw_cache::getCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+				if (isset($summary[$this->profileID][$_folderName]))
+				{
+					unset($summary[$this->profileID][$_folderName]);
+					egw_cache::setCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$summary, $expiration=60*60*1);
+				}
+			}
 			//error_log(__METHOD__." USE NO CACHE for Profile:". $this->profileID." Folder:".$_folderName.'->'.($setSession?'setSession':'checkrun'));
 			if (self::$debug) error_log(__METHOD__." USE NO CACHE for Profile:". $this->profileID." Folder:".$_folderName." Filter:".array2string($_filter).function_backtrace());
 			$filter = $this->createIMAPFilter($_folderName, $_filter);
@@ -3017,7 +3028,7 @@ class mail_bo
 		if (!empty($toFetch))
 		{
 			//error_log(__METHOD__.__LINE__.':'.$GLOBALS['egw_info']['user']['account_id'].'::'.$this->icServer->ImapServerId.'::'. $_folder.':QS:'.$queryString.'->'.array2string(array_keys((array)$summary[$this->icServer->ImapServerId][$_folder])));
-			error_log(__METHOD__.__LINE__.' fetch Summary for'.':'.$GLOBALS['egw_info']['user']['account_id'].'::'.$this->icServer->ImapServerId.'::'. $_folder.'::for headers with uids ToFetch:'.implode(',',$toFetch));
+			error_log(__METHOD__.__LINE__.':UserID:'.$GLOBALS['egw_info']['user']['account_id'].':ServerID:'.$this->icServer->ImapServerId.'::'.' fetch Summary for Headers in Folder:'.$_folder.' with:'.implode(',',$toFetch));
 			if (!isset($summary[$this->icServer->ImapServerId])) $summary[$this->icServer->ImapServerId]=array();
 			if (!isset($summary[$this->icServer->ImapServerId][$_folder])) $summary[$this->icServer->ImapServerId][$_folder]=array();
 			$result = $this->icServer->getSummary(implode(',',$toFetch), $byUid);
@@ -3044,7 +3055,7 @@ class mail_bo
 			}
 			if ($fetched==false)
 			{
-				error_log(__METHOD__.__LINE__.' fetch Summary for Header of Mail with:'.$_uid);
+				error_log(__METHOD__.__LINE__.':UserID:'.$GLOBALS['egw_info']['user']['account_id'].':ServerID:'.$this->icServer->ImapServerId.'::'.' fetch Summary for Header in Folder:'.$_folder.' with:'.$_uid);
 				$result = $this->icServer->getSummary($_uid, $byUid);
 				$summary[$this->icServer->ImapServerId][$_folder][$_uid] = $result[0];
 				$rv[] = $summary[$this->icServer->ImapServerId][$_folder][$_uid];
