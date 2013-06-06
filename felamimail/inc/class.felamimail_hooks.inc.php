@@ -355,16 +355,6 @@ class felamimail_hooks
 				'xmlrpc' => False,
 				'admin'  => False
 			),
-			'ActiveProfileID' => array(
-				'type'   => 'select',
-				'label'  => 'Active Mail Profile',
-				'help'   => 'view / select your currently active mailprofile (this is a user only setting)',
-				'name'   => 'ActiveProfileID',
-				'values' => $identities,
-				'xmlrpc' => True,
-				'admin'  => False,
-				'default'=> $profileID,
-			),
 			'message_forwarding' => array(
 				'type'   => 'select',
 				'label'  => 'how to forward messages',
@@ -556,6 +546,16 @@ class felamimail_hooks
 				'values' => $folderList,
 				'xmlrpc' => True,
 				'admin'  => False,
+			),
+			'ActiveProfileID' => array(
+				'type'   => 'select',
+				'label'  => 'Active Mail Profile',
+				'help'   => 'view / select your currently active mailprofile (this is a user only setting)',
+				'name'   => 'ActiveProfileID',
+				'values' => $identities,
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default'=> $profileID,
 			),
 			array(
 				'type'  => 'section',
