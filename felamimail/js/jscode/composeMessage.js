@@ -93,7 +93,12 @@ function checkunload(checkBrowser)
 			return checkBrowser; 	
 		}
 	}
-	if (do_onunload) xajax_doXMLHTTPsync('felamimail.ajaxfelamimail.removeLastDraftedVersion',composeID);
+	if (do_onunload)
+	{
+		xajax_doXMLHTTPsync('felamimail.ajaxfelamimail.removeLastDraftedVersion',composeID);
+		// try triggering refresh of draftFolder
+		if (typeof window.opener.refreshDraftFolderIfActive =='function') window.opener.refreshDraftFolderIfActive();
+	}
 }
 
 function fm_startTimerSaveAsDraft(_refreshTimeOut) {
@@ -151,6 +156,8 @@ function fm_compose_saveAsDraftBG(autoSave)
 		do_onunload=true;
 		justSavedAsDraftManually = false;
 	}
+	// try triggering refresh of draftFolder
+	if (typeof window.opener.refreshDraftFolderIfActive =='function') window.opener.refreshDraftFolderIfActive();
 }
 
 function addEmail(to,email)

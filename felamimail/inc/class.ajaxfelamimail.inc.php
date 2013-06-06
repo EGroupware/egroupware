@@ -1177,9 +1177,16 @@ class ajaxfelamimail
 			return $response->getXML();
 		}
 
-		function refreshMessageList()
+		function refreshMessageList($folderTypeToCheckIfActive=null)
 		{
-			return $this->generateMessageList($this->sessionData['mailbox'],0,$listOnly=true);
+			if ($this->_debug) error_log(__METHOD__.__LINE__.array2string($folderTypeToCheckIfActive));
+			$mailboxToCheck = $this->sessionData['mailbox'];
+			if (!is_null($folderTypeToCheckIfActive))
+			{
+				if ($folderTypeToCheckIfActive=='Draft')	$mailboxToCheck	= $this->bofelamimail->getDraftFolder();
+				if ($folderTypeToCheckIfActive=='Template')	$mailboxToCheck	= $this->bofelamimail->getTemplateFolder();
+			}
+			if ($this->sessionData['mailbox']==$mailboxToCheck) return $this->generateMessageList($this->sessionData['mailbox'],0,$listOnly=true);
 		}
 
 		function refreshFolder($injectIntoResponse = false)

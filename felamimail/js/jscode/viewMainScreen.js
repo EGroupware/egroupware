@@ -1001,6 +1001,10 @@ function refresh() {
 	egw_appWindow('felamimail').xajax_doXMLHTTP('felamimail.ajaxfelamimail.refreshMessageList');
 }
 
+function refreshDraftFolderIfActive() {
+	egw_appWindow('felamimail').xajax_doXMLHTTP('felamimail.ajaxfelamimail.refreshMessageList','Draft');
+}
+
 function refreshFolderStatus(_nodeID,mode) {
 	var nodeToRefresh = 0;
 	var mode2use = "none";
