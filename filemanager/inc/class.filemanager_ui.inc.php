@@ -86,15 +86,17 @@ class filemanager_ui
 	 */
 	public static function get_view()
 	{
-		$view =& egw_cache::getSession('filemanager', 'view');
-		if (isset($_GET['view']))
-		{
-			$view = $_GET['view'];
-		}
+		$view = !empty($_GET['view']) ? $_GET['view'] : $GLOBALS['egw_info']['user']['preferences']['filemanager']['view'];
+
 		if (!isset(self::$views[$view]))
 		{
 			reset(self::$views);
 			$view = key(self::$views);
+		}
+		if ($view != $GLOBALS['egw_info']['user']['preferences']['filemanager']['view'])
+		{
+			$GLOBALS['egw']->preferences->add('filemanager', 'view', $view);
+			$GLOBALS['egw']->preferences->save_repository(false,'user',false);
 		}
 		return $view;
 	}
