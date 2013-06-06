@@ -21,4 +21,4 @@
 .selectMime select { width: 100%; }
 /*.selectIcon img { height: 16px; }*/
 .displayNone input { display: none; }
-.selectFiles td div { border-style: groove; }
+tr.selectFiles > td > div { border-style: groove; }
