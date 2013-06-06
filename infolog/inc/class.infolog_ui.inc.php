@@ -792,6 +792,7 @@ class infolog_ui
 		switch ($action)
 		{
 			case 'sp':
+				if (!is_array($action_id) && strpos($action_id, 'infolog:') === 0) $action_id = (int)substr($action_id, 8);
 				if ((is_array($action_id) && !$this->bo->read(current($action_id))) || !$this->bo->read($action_id))
 				{
 					$action = '';
