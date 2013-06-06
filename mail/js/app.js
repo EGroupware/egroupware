@@ -89,10 +89,7 @@ app.mail = AppJS.extend(
 		var dataElem = egw.dataGetUIDdata(_id);
 		var subject = dataElem.data.subject;
 		//alert('Open Message:'+_id+' '+subject);
-		egw().open_link(egw.link('/index.php', {
-			menuaction: 'mail.mail_ui.displayMessage',
-			id: _id,
-		}), 'view'+_id, '495x425');
+		egw().open( _id,'mail','view',null,'view'+_id );
 	},
 	
 	/**

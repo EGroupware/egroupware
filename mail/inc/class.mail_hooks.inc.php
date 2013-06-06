@@ -78,9 +78,11 @@ class mail_hooks
     {
         return array(
 			'view'  => array(
-//				'menuaction' => 'mail.uidisplay.display',
+				'menuaction' => 'mail.mail_ui.displayMessage',
 			),
+			'view_id'    => 'id',
 			'view_popup' => '850xegw_getWindowOuterHeight()',
+			'view_list'	=>	'mail.mail_ui.index',
 			'add'        => array(
 //				'menuaction' => 'mail.uicompose.compose',
 			),
