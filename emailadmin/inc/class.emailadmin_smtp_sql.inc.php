@@ -5,7 +5,7 @@
  * @link http://www.stylite.de
  * @package emailadmin
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2012 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2012-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -15,6 +15,11 @@
  */
 class emailadmin_smtp_sql extends emailadmin_smtp
 {
+	/**
+	 * Label shown in EMailAdmin
+	 */
+	const DESCRIPTION = 'SQL';
+
 	/**
 	 * Capabilities of this class (pipe-separated): default, forward
 	 */

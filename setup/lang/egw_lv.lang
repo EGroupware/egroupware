@@ -183,7 +183,7 @@ hostname/ip of database server	setup	lv	Datubāzes zrvera hostvārds/IP
 hour (0-24)	setup	lv	stundas (0-24)
 however, the application may still work	setup	lv	Kaut gan aplikācija joprojām var strādāt
 if no acl records for user or any group the user is a member of	setup	lv	Ja nav ACL ierakstu lietotājam vai kādai grupai, lietotājs pieder
-if using ads (active directory) authentication	setup	lv	Ja lieto ADS (aktīvā direktorija) autentifikāciju
+if using ads (active directory)	setup	lv	Ja lieto ADS (aktīvā direktorija) autentifikāciju
 if using ldap	setup	lv	Ja lieto LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	lv	Ja lieto LDAP, vai vēlies pārvaldīt mājasdirektoriju un pieteikuma ailes atribūtus?
 if you did not receive any errors, your applications have been	setup	lv	Ja nesaņēmi kļūdu paziņojumus, tava aplikācija ir

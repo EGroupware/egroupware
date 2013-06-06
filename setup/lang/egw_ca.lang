@@ -245,7 +245,7 @@ however, the application may still work	setup	ca	Tanmateix, l'aplicació encara 
 if no acl records for user or any group the user is a member of	setup	ca	Si no hi han registres ACL ni grup per a l'usuari, aleshores és membre de
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ca	Si mode_segur està activat, eGW no pot canviar determinades configuracions en temps d'execució ni tampoc podem carregar cap mòdul que no estigui carregat.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	ca	Si l'aplicació no ha definit taules, seleccionant actualitzar hauria de resoldre el problema
-if using ads (active directory) authentication	setup	ca	Si feu servir autentificació ADS (Activer Directory)
+if using ads (active directory)	setup	ca	Si feu servir autentificació ADS (Activer Directory)
 if using ldap	setup	ca	Si feu servir LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ca	Si utilitzeu LDAP, voleu administrar els atributs del directori personal i l'interpret d'ordres?
 if you did not receive any errors, your applications have been	setup	ca	Si no heu rebut cap error, les aplicacions han estat

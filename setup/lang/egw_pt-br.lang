@@ -289,7 +289,7 @@ http auth types (comma-separated) to use without login-page, eg. "ntlm"	setup	pt
 if no acl records for user or any group the user is a member of	setup	pt-br	Caso não exista registro de permissões ou grupo para o usuário ele é membro do
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	pt-br	Se o modo de segurança estiver ligado, o eGroupware não será capaz de modificar automáticamente determinados valores de configuração, não será possível carregar módulos que ainda não estejam carregados.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	pt-br	Se o aplicativo não têm tabelas definidas, selecionar atualizar deve resolver o problema
-if using ads (active directory) authentication	setup	pt-br	Se estiver usando autenticação por ADS (Active Directory)
+if using ads (active directory)	setup	pt-br	Se estiver usando autenticação por ADS (Active Directory)
 if using ldap	setup	pt-br	Se estiver usando LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	pt-br	Se estiver usando LDAP, você deseja definir atributos de diretório base e  do interpretador de comandos?
 if you did not receive any errors, your applications have been	setup	pt-br	Se não foi exibido nenhum erro, suas aplicações foram

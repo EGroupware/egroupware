@@ -96,10 +96,14 @@ else
 	if($_POST['delete_all'])
 	{
 		/* Now, clear out existing tables */
-		foreach(array($GLOBALS['egw_setup']->accounts_table,$GLOBALS['egw_setup']->prefs_table,$GLOBALS['egw_setup']->acl_table,'egw_access_log') as $table)
+		foreach(array($GLOBALS['egw_setup']->accounts_table,$GLOBALS['egw_setup']->acl_table,'egw_access_log') as $table)
 		{
 			$GLOBALS['egw_setup']->db->delete($table,'1=1',__LINE__,__FILE__);
 		}
+		// keep default and forced prefs from installed apps
+		$GLOBALS['egw_setup']->db->delete($GLOBALS['egw_setup']->prefs_table,'preferences_owner NOT IN (-1,-2)',__LINE__,__FILE__);
+		// remove accounts from addressbook
+		$GLOBALS['egw_setup']->db->delete('egw_addressbook','account_id IS NOT NULL',__LINE__,__FILE__);
 	}
 	/* Create the demo groups */
 	$defaultgroupid = (int)$GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);

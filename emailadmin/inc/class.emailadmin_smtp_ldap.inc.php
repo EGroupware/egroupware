@@ -5,7 +5,7 @@
  * @link http://www.stylite.de
  * @package emailadmin
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2010-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2010-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -18,8 +18,13 @@
  * Aliases are stored as aditional mail Attributes. The primary mail address is the first one.
  * This schema does NOT support forwarding or disabling of an account for mail.
  *
- * Please do NOT copy this class! Extend it and set the constants different
- * (incl. protected config var as long as we can not require PHP5.3 for LSB).
+ * Aliases, forwards, forward-only and quota attribute can be stored in same multivalued attribute
+ * with different prefixes.
+ *
+ * Please do NOT copy this class! Extend it and set the constants different.
+ *
+ * Please note: schema names muse use correct case (eg. "inetOrgPerson"),
+ * while attribute name muse use lowercase, as LDAP returns them as keys in lowercase!
  */
 class emailadmin_smtp_ldap extends emailadmin_smtp
 {
@@ -27,6 +32,16 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	 * Name of schema, has to be in the right case!
 	 */
 	const SCHEMA = 'inetOrgPerson';
+
+	/**
+	 * Filter for users
+	 */
+	const USER_FILTER = '(objectClass=posixAccount)';
+
+	/**
+	 * Name of schema for groups, has to be in the right case!
+	 */
+	const GROUP_SCHEMA = 'posixGroup';
 
 	/**
 	 * Attribute to enable mail for an account, OR false if existence of ALIAS_ATTR is enough for mail delivery
@@ -39,9 +54,14 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	const ALIAS_ATTR = false;
 
 	/**
+	 * Caseinsensitive prefix for aliases (eg. "smtp:"), aliases get added with it and only aliases with it are reported
+	 */
+	const ALIAS_PREFIX = '';
+
+	/**
 	 * Primary mail address required as an alias too: true or false
 	 */
-	const REQUIRE_MAIL_AS_ALIAS=false;
+	const REQUIRE_MAIL_AS_ALIAS = false;
 
 	/**
 	 * Attribute for forwards OR false if not possible
@@ -49,9 +69,19 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	const FORWARD_ATTR = false;
 
 	/**
+	 * Caseinsensitive prefix for forwards (eg. "forward:"), forwards get added with it and only forwards with it are reported
+	 */
+	const FORWARD_PREFIX = '';
+
+	/**
 	 * Attribute to only forward mail, OR false if not available
 	 */
 	const FORWARD_ONLY_ATTR = false;
+
+	/**
+	 * Value of forward-only attribute, if empty any value will switch forward only on (checked with =*)
+	 */
+	const FORWARD_ONLY = 'forwardOnly';
 
 	/**
 	 * Attribute for mailbox, to which mail gets delivered OR false if not supported
@@ -64,54 +94,91 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	const QUOTA_ATTR = false;
 
 	/**
+	 * Caseinsensitive prefix for quota (eg. "quota:"), quota get added with it and only quota with it are reported
+	 */
+	const QUOTA_PREFIX = '';
+
+	/**
+	 * Internal quota in MB is multiplicated with this factor before stored in LDAP
+	 */
+	const QUOTA_FACTOR = 1048576;
+
+	/**
+	 * Attribute for user name
+	 */
+	const USER_ATTR = 'uid';
+
+	/**
+	 * Attribute for numeric user id (optional)
+	 */
+	const USERID_ATTR = 'uidnumber';
+
+	/**
+	 * Base for all searches, defaults to $GLOBALS['egw_info']['server']['ldap_context'] and can be set via setBase($base)
+	 *
+	 * @var string
+	 */
+	protected $search_base;
+
+	/**
+	 * Special search filter for getUserData only
+	 *
+	 * @var string
+	 */
+	protected  $search_filter;
+
+	/**
 	 * Log all LDAP writes / actions to error_log
 	 */
 	var $debug = false;
-
-	/**
-	 * LDAP schema configuration
-	 *
-	 * Parent can NOT use constants direct as we have no late static binding in currenlty required PHP 5.2
-	 *
-	 * @var array
-	 */
-	protected $config = array(
-		'schema' => self::SCHEMA,
-		'mail_enable_attr' => self::MAIL_ENABLE_ATTR,
-		'mail_enabled' => self::MAIL_ENABLED,
-		'alias_attr' => self::ALIAS_ATTR,
-		'require_mail_as_alias' => self::REQUIRE_MAIL_AS_ALIAS,
-		'forward_attr' => self::FORWARD_ATTR,
-		'forward_only_attr' => self::FORWARD_ONLY_ATTR,
-		'forward_only' => self::FORWARD_ONLY,
-		'mailbox_attr' => self::MAILBOX_ATTR,
-		'quota_attr' => self::QUOTA_ATTR,
-		'search_filter' => null,
-		'search_base' => null,
-	);
 
 	/**
 	 * from here on implementation, please do NOT copy but extend it!
 	 */
 
 	/**
-	 * Set ldap search filter for aliases and forwards
+	 * Constructor
+	 *
+	 * @param string $defaultDomain=null
+	 */
+	function __construct($defaultDomain=null)
+	{
+		parent::__construct($defaultDomain);
+
+		if (empty($this->search_base))
+		{
+			$this->setBase($GLOBALS['egw_info']['server']['ldap_context']);
+		}
+	}
+
+	/**
+	 * Return description for EMailAdmin
+	 *
+	 * @return string
+	 */
+	public static function description()
+	{
+		return 'LDAP ('.static::SCHEMA.')';
+	}
+
+	/**
+	 * Set ldap search filter for aliases and forwards (getUserData)
 	 *
 	 * @param string $filter
 	 */
 	function setFilter($filter)
 	{
-		$this->config['search_filter'] = $filter;
+		$this->search_filter = $filter;
 	}
 
 	/**
-	 * Set ldap search base for aliases and forwards
+	 * Set ldap search base, default $GLOBALS['egw_info']['server']['ldap_context']
 	 *
 	 * @param string $base
 	 */
 	function setBase($base)
 	{
-		$this->config['search_base'] = $base;
+		$this->search_base = $base;
 	}
 
 	/**
@@ -126,11 +193,11 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 			common::email_address($_hookValues['account_firstname'],
 				$_hookValues['account_lastname'],$_hookValues['account_lid'],$this->defaultDomain);
 
-		$ds = $GLOBALS['egw']->ldap->ldapConnect();
+		$ds = $this->getLdapConnection();
 
-		$filter = "uid=".$_hookValues['account_lid'];
+		$filter = static::USER_ATTR."=".ldap::quote($_hookValues['account_lid']);
 
-		if (!($sri = @ldap_search($ds,$GLOBALS['egw_info']['server']['ldap_context'],$filter)))
+		if (!($sri = @ldap_search($ds, $this->search_base, $filter)))
 		{
 			return false;
 		}
@@ -140,9 +207,9 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 		unset($objectClasses['count']);
 
 		// add our mail schema, if not already set
-		if(!in_array($this->config['schema'],$objectClasses) && !in_array(strtolower($this->config['schema']),$objectClasses))
+		if(!in_array(static::SCHEMA,$objectClasses) && !in_array(strtolower(static::SCHEMA),$objectClasses))
 		{
-			$objectClasses[]	= $this->config['schema'];
+			$objectClasses[]	= static::SCHEMA;
 		}
 		// the new code for postfix+cyrus+ldap
 		$newData = array(
@@ -150,19 +217,19 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 			'objectclass'	  => $objectClasses
 		);
 		// does schema have explicit alias attribute AND require mail added as alias too
-		if ($this->config['alias_attr'] && $this->config['require_mail_as_alias'] && $this->config['alias_attr'])
+		if (static::ALIAS_ATTR && static::REQUIRE_MAIL_AS_ALIAS)
 		{
-			$newData[$this->config['alias_attr']] = $mailLocalAddress;
+			$newData[static::ALIAS_ATTR] = static::ALIAS_PREFIX.$mailLocalAddress;
 		}
 		// does schema support enabling/disabling mail via attribute
-		if ($this->config['mail_enable_attr'])
+		if (static::MAIL_ENABLE_ATTR)
 		{
-			$newData[$this->config['mail_enable_attr']] = $this->config['mail_enabled'];
+			$newData[static::MAIL_ENABLE_ATTR] = static::MAIL_ENABLED;
 		}
 		// does schema support an explicit mailbox name --> set it
-		if ($this->config['mailbox_attr'])
+		if (static::MAILBOX_ATTR)
 		{
-			$newData[$this->config['mailbox_attr']] = self::mailbox_addr($_hookValues);
+			$newData[static::MAILBOX_ATTR] = self::mailbox_addr($_hookValues);
 		}
 
 		if (!($ret = ldap_mod_replace($ds, $accountDN, $newData)) || $this->debug)
@@ -183,10 +250,10 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	function getAccountEmailAddress($_accountName)
 	{
 		$emailAddresses	= array();
-		$ds = $GLOBALS['egw']->ldap->ldapConnect();
-		$filter 	= sprintf("(&(uid=%s)(objectclass=posixAccount))",$_accountName);
-		$attributes	= array('dn','mail',$this->config['alias_attr']);
-		$sri = @ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter, $attributes);
+		$ds = $this->getLdapConnection();
+		$filter = '(&'.static::USER_FILTER.'('.static::USER_ATTR.'='.ldap::quote($_accountName).'))';
+		$attributes	= array('dn', 'mail', static::ALIAS_ATTR);
+		$sri = @ldap_search($ds, $this->search_base, $filter, $attributes);
 
 		if ($sri)
 		{
@@ -206,12 +273,10 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 					);
 				}
 			}
-			if ($this->config['alias_attr'] && isset($allValues[0][$this->config['alias_attr']]))
+			if (static::ALIAS_ATTR && isset($allValues[0][static::ALIAS_ATTR]))
 			{
-				foreach($allValues[0][$this->config['alias_attr']] as $key => $value)
+				foreach(self::getAttributePrefix($allValues[0][static::ALIAS_ATTR], static::ALIAS_PREFIX) as $value)
 				{
-					if ($key === 'count') continue;
-
 					$emailAddresses[] = array(
 						'name'		=> $realName,
 						'address'	=> $value,
@@ -239,24 +304,29 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	 */
 	function getUserData($user, $match_uid_at_domain=false)
 	{
-		$userData = array();
+		$userData = array(
+			'mailbox' => array(),
+			'forward' => array(),
 
-		$ldap = $GLOBALS['egw']->ldap->ldapConnect();
+		);
 
-		if (is_numeric($user))
+		$ldap = $this->getLdapConnection();
+
+		if (is_numeric($user) && static::USERID_ATTR)
 		{
-			$filter = '(uidnumber='.(int)$user.')';
+			$filter = '('.static::USERID_ATTR.'='.(int)$user.')';
 		}
 		elseif (strpos($user, '@') === false)
 		{
-			$filter = '(uid='.ldap::quote($user).')';
+			if (is_numeric($user)) $user = $GLOBALS['egw']->accounts->id2name($user);
+			$filter = '(&'.static::USER_FILTER.'('.static::USER_ATTR.'='.ldap::quote($user).'))';
 		}
 		else	// email address --> build filter by attributes defined in config
 		{
 			list($namepart, $domain) = explode('@', $user);
-			if (!empty($this->config['search_filter']))
+			if (!empty($this->search_filter))
 			{
-				$filter = strtr($this->config['search_filter'], array(
+				$filter = strtr($this->search_filter, array(
 					'%s' => ldap::quote($user),
 					'%u' => ldap::quote($namepart),
 					'%d' => ldap::quote($domain),
@@ -265,57 +335,67 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 			else
 			{
 				$filter = array('(mail='.ldap::quote($user).')');
-				if ($match_uid_at_domain) $filter[] = '(uid='.ldap::quote($namepart).')';
-				if ($this->config['alias_attr'])
+				if ($match_uid_at_domain) $filter[] = '('.static::USER_ATTR.'='.ldap::quote($namepart).')';
+				if (static::ALIAS_ATTR)
 				{
-					$filter[] = '('.$this->config['alias_attr'].'='.ldap::quote($user).')';
+					$filter[] = '('.static::ALIAS_ATTR.'='.static::ALIAS_PREFIX.ldap::quote($user).')';
 				}
 				$filter = count($filter) > 1 ? '(|'.explode('', $filter).')' : $filter[0];
 
 				// if an enable attribute is set, only return enabled accounts
-				if ($this->config['mail_enable_attr'])
+				if (static::MAIL_ENABLE_ATTR)
 				{
-					$filter = '(&('.$this->config['mail_enable_attr'].'='.
-						($this->config['mail_enabled'] ? $this->config['mail_enabled'] : '*').")$filter)";
+					$filter = '(&('.static::MAIL_ENABLE_ATTR.'='.
+						(static::MAIL_ENABLED ? static::MAIL_ENABLED : '*').")$filter)";
 				}
 			}
 		}
-		$base = empty($this->config['search_base']) ?
-			$GLOBALS['egw_info']['server']['ldap_context'] : $this->config['search_base'];
-		$sri = ldap_search($ldap, $base, $filter, array($this->config['schema']));
+		$attributes = array_values(array_diff(array(
+			'mail', 'objectclass', static::USER_ATTR, static::MAIL_ENABLE_ATTR, static::ALIAS_ATTR,
+			static::MAILBOX_ATTR, static::FORWARD_ATTR, static::FORWARD_ONLY_ATTR, static::QUOTA_ATTR,
+		), array(false, '')));
+
+		$sri = ldap_search($ldap, $this->search_base, $filter, $attributes);
 
 		if ($sri)
 		{
 			$allValues = ldap_get_entries($ldap, $sri);
-			if ($this->debug) error_log(__METHOD__."('$user') --> ldap_search(, '$base', '$filter') --> ldap_get_entries=".array2string($allValues[0]));
+			if ($this->debug) error_log(__METHOD__."('$user') --> ldap_search(, '$this->search_base', '$filter') --> ldap_get_entries=".array2string($allValues[0]));
 
 			foreach($allValues as $key => $values)
 			{
 				if ($key === 'count') continue;
 
 				// groups are always active (if they have an email) and allways forwardOnly
-				if (in_array('posixGroup', $values['objectclass']))
+				if (in_array(static::GROUP_SCHEMA, $values['objectclass']))
 				{
 					$accountStatus = emailadmin_smtp::MAIL_ENABLED;
 					$deliveryMode = emailadmin_smtp::FORWARD_ONLY;
 				}
 				else	// for users we have to check the attributes
 				{
-					if ($this->config['mail_enable_attr'])
+					if (static::MAIL_ENABLE_ATTR)
 					{
-						$accountStatus = isset($values[$this->config['mail_enable_attr']]) &&
-							($this->config['mail_enabled'] && !strcasecmp($values[$this->config['mail_enable_attr']][0], $this->config['mail_enabled']) ||
-							!$this->config['mail_enabled'] && $values[$this->config['alias_attr']]['count'] > 0) ? emailadmin_smtp::MAIL_ENABLED : '';
+						$accountStatus = isset($values[static::MAIL_ENABLE_ATTR]) &&
+							(static::MAIL_ENABLED && !strcasecmp($values[static::MAIL_ENABLE_ATTR][0], static::MAIL_ENABLED) ||
+							!static::MAIL_ENABLED && $values[static::ALIAS_ATTR]['count'] > 0) ? emailadmin_smtp::MAIL_ENABLED : '';
 					}
 					else
 					{
-						$accountStatus = $values[$this->config['alias_attr']]['count'] > 0 ? emailadmin_smtp::MAIL_ENABLED : '';
+						$accountStatus = $values[static::ALIAS_ATTR]['count'] > 0 ? emailadmin_smtp::MAIL_ENABLED : '';
 					}
-					if ($this->config['forward_only_attr'])
+					if (static::FORWARD_ONLY_ATTR)
 					{
-						$deliveryMode = isset($values[$this->config['forward_only_attr']]) &&
-							($this->config['forward_only'] && !strcasecmp($values[$this->config['forward_only_attr']][0], $this->config['forward_only']) ||
-							!$this->config['forward_only'] && $values[$this->config['forward_only_attr']]['count'] > 0) ? emailadmin_smtp::FORWARD_ONLY : '';
+						if (static::FORWARD_ONLY)	// check caseinsensitiv for existence of that value
+						{
+							$deliveryMode = self::getAttributePrefix($values[static::FORWARD_ONLY_ATTR], static::FORWARD_ONLY) ?
+								emailadmin_smtp::FORWARD_ONLY : '';
+						}
+						else	// check for existence of any value
+						{
+							$deliveryMode = $values[static::FORWARD_ONLY_ATTR]['count'] > 0 ?
+								emailadmin_smtp::FORWARD_ONLY : '';
+						}
 					}
 					else
 					{
@@ -329,29 +409,28 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 					// groups never have a mailbox, accounts can have a deliveryMode of "forwardOnly"
 					if ($deliveryMode != emailadmin_smtp::FORWARD_ONLY)
 					{
-						$userData['uid'][] = $values['uid'][0];
-						if ($this->config['mailbox_attr'] && isset($values[$this->config['mailbox_attr']]))
+						$userData[static::USER_ATTR][] = $values[static::USER_ATTR][0];
+						if (static::MAILBOX_ATTR && isset($values[static::MAILBOX_ATTR]))
 						{
-							$userData['mailbox'][] = $values[$this->config['mailbox_attr']][0];
+							$userData['mailbox'][] = $values[static::MAILBOX_ATTR][0];
 						}
 					}
-					if ($this->config['forward_attr'] && $values[$this->config['forward_attr']])
+					if (static::FORWARD_ATTR && $values[static::FORWARD_ATTR])
 					{
-						$userData['forward'] = array_merge((array)$userData['forward'], $values[$this->config['forward_attr']]);
-						unset($userData['forward']['count']);
+						$userData['forward'] = array_merge($userData['forward'],
+							self::getAttributePrefix($values[static::FORWARD_ATTR], static::FORWARD_PREFIX, false));
 					}
 				}
 
 				// regular user-data can only be from users, NOT groups
-				if (in_array('posixGroup', $values['objectclass'])) continue;
+				if (in_array(static::GROUP_SCHEMA, $values['objectclass'])) continue;
 
 				$userData['mailLocalAddress'] = $values['mail'][0];
 				$userData['accountStatus'] = $accountStatus;
 
-				if ($this->config['alias_attr'])
+				if (static::ALIAS_ATTR)
 				{
-					$userData['mailAlternateAddress']	= (array)$values[$this->config['alias_attr']];
-					unset($userData['mailAlternateAddress']['count']);
+					$userData['mailAlternateAddress'] = self::getAttributePrefix($values[static::ALIAS_ATTR], static::ALIAS_PREFIX);
 				}
 				else
 				{
@@ -361,31 +440,27 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 					$userData['mailAlternateAddress']	= array_values($userData['mailAlternateAddress']);
 				}
 
-				$userData['mailForwardingAddress']	= $this->config['forward_attr'] ? $values[$this->config['forward_attr']] : array();
-				unset($userData['mailForwardingAddress']['count']);
-
-				if ($this->config['mailbox_attr']) $userData['mailMessageStore']	= $values[$this->config['mailbox_attr']][0];
-
-				if ($this->config['forward_only_attr'])
+				if (static::FORWARD_ATTR)
 				{
-					$userData['deliveryMode'] = isset($values[$this->config['forward_only_attr']]) &&
-						($this->config['forward_only'] && !strcasecmp($values[$this->config['forward_only_attr']][0], $this->config['forward_only']) ||
-						!$this->config['forward_only'] && $values[$this->config['forward_only_attr']]['count'] > 0) ? emailadmin_smtp::FORWARD_ONLY : '';
+					$userData['mailForwardingAddress']	= self::getAttributePrefix($values[static::FORWARD_ATTR], static::FORWARD_PREFIX);
 				}
-				else
-				{
-					$userData['deliveryMode'] = '';
-				}
+
+				if (static::MAILBOX_ATTR) $userData['mailMessageStore']	= $values[static::MAILBOX_ATTR][0];
+
+				$userData['deliveryMode'] = $deliveryMode;
+
 				// eg. suse stores all email addresses as aliases
-				if ($this->config['require_mail_as_alias'] &&
+				if (static::REQUIRE_MAIL_AS_ALIAS &&
 					($k = array_search($userData['mailLocalAddress'],$userData['mailAlternateAddress'])) !== false)
 				{
 					unset($userData['mailAlternateAddress'][$k]);
 				}
 
-				if ($this->config['quota_attr'] && isset($values[$this->config['quota_attr']]))
+				if (static::QUOTA_ATTR && isset($values[static::QUOTA_ATTR]))
 				{
-					$userData['quotaLimit'] = $values[$this->config['quota_attr']][0] / 1048576;
+					$userData['quotaLimit'] = self::getAttributePrefix($values[static::QUOTA_ATTR], static::QUOTA_PREFIX);
+					$userData['quotaLimit'] = array_shift($userData['quotaLimit']);
+					$userData['quotaLimit'] = $userData['quotaLimit'] ? $userData['quotaLimit'] / static::QUOTA_FACTOR : null;
 				}
 			}
 		}
@@ -411,25 +486,32 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	function setUserData($_uidnumber, array $_mailAlternateAddress, array $_mailForwardingAddress, $_deliveryMode,
 		$_accountStatus, $_mailLocalAddress, $_quota, $_forwarding_only=false, $_setMailbox=null)
 	{
-		$filter = 'uidnumber='.(int)$_uidnumber;
+		if (static::USERID_ATTR)
+		{
+			$filter = static::USERID_ATTR.'='.(int)$_uidnumber;
+		}
+		else
+		{
+			$uid = $GLOBALS['egw']->accounts->id2name($_uidnumber);
+			$filter = static::USER_ATTR.'='.ldap::quote($uid);
+		}
+		$ldap = $this->getLdapConnection();
 
-		$ldap = $GLOBALS['egw']->ldap->ldapConnect();
-
-		if (!($sri = @ldap_search($ldap,$GLOBALS['egw_info']['server']['ldap_context'],$filter)))
+		if (!($sri = @ldap_search($ldap, $this->search_base, $filter)))
 		{
 			return false;
 		}
 		$allValues 	= ldap_get_entries($ldap, $sri);
 
 		$accountDN 	= $allValues[0]['dn'];
-		$uid	   	= $allValues[0]['uid'][0];
+		$uid	   	= $allValues[0][static::USER_ATTR][0];
 		$objectClasses	= $allValues[0]['objectclass'];
 
 		unset($objectClasses['count']);
 
-		if(!in_array($this->config['schema'],$objectClasses) && !in_array(strtolower($this->config['schema']),$objectClasses))
+		if(!in_array(static::SCHEMA,$objectClasses) && !in_array(strtolower(static::SCHEMA),$objectClasses))
 		{
-			$objectClasses[]	= $this->config['schema'];
+			$objectClasses[]	= static::SCHEMA;
 			$newData['objectclass']	= $objectClasses;
 		}
 
@@ -438,53 +520,61 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 
 		$newData['mail'] = $_mailLocalAddress;
 		// does schema have explicit alias attribute
-		if ($this->config['alias_attr'])
+		if (static::ALIAS_ATTR)
 		{
-			$newData[$this->config['alias_attr']] = (array)$_mailAlternateAddress;
+			self::setAttributePrefix($newData[static::ALIAS_ATTR], $_mailAlternateAddress, static::ALIAS_PREFIX);
 
 			// all email must be stored as alias for suse
-			if ($this->config['require_mail_as_alias'] && !in_array($_mailLocalAddress,(array)$_mailAlternateAddress))
+			if (static::REQUIRE_MAIL_AS_ALIAS && !in_array($_mailLocalAddress,(array)$_mailAlternateAddress))
 			{
-				$newData[$this->config['alias_attr']][] = $_mailLocalAddress;
+				self::setAttributePrefix($newData[static::ALIAS_ATTR], $_mailLocalAddress, static::ALIAS_PREFIX);
 			}
 		}
 		// or de we add them - if existing - to mail attr
 		elseif ($_mailAlternateAddress)
 		{
-			$newData['mail'] = array_merge((array)$newData['mail'],(array)$_mailAlternateAddress);
+			self::setAttributePrefix($newData['mail'], $_mailAlternateAddress, static::ALIAS_PREFIX);
 		}
 		// does schema support to store forwards
-		if ($this->config['forward_attr'])
+		if (static::FORWARD_ATTR)
 		{
-			$newData[$this->config['forward_attr']] = (array)$_mailForwardingAddress;
+			self::setAttributePrefix($newData[static::FORWARD_ATTR], $_mailForwardingAddress, static::FORWARD_PREFIX);
 		}
 		// does schema support only forwarding incomming mail
-		if ($this->config['forward_only_attr'])
+		if (static::FORWARD_ONLY_ATTR)
 		{
-			$newData[$this->config['forward_only_attr']]	= $_deliveryMode ? $this->config['forward_only'] : array();
-		}
-		// does schema support enabling/disabling mail via attribute
-		if ($this->config['mail_enable_attr'])
-		{
-			$newData[$this->config['mail_enable_attr']]	= $_accountStatus ? $this->config['mail_enabled'] : array();
+			self::setAttributePrefix($newData[static::FORWARD_ONLY_ATTR],
+				$_deliveryMode ? (static::FORWARD_ONLY ? static::FORWARD_ONLY : 'forwardOnly') : array());
 		}
 		// does schema support an explicit mailbox name --> set it with $uid@$domain
-		if ($this->config['mailbox_attr'] && empty($allValues[0][$this->config['mailbox_attr']][0]))
+		if (static::MAILBOX_ATTR && empty($allValues[0][static::MAILBOX_ATTR][0]))
 		{
-			$newData[$this->config['mailbox_attr']] = $this->mailbox_addr(array(
+			$newData[static::MAILBOX_ATTR] = $this->mailbox_addr(array(
 				'account_id' => $_uidnumber,
 				'account_lid' => $uid,
 				'account_email' => $_mailLocalAddress,
 			));
 		}
-		if ($this->config['quota_attr'])
+		if (static::QUOTA_ATTR)
 		{
-			$newData[$this->config['quota_attr']]	= (int)$_quota >= 0 ? (int)$_quota*1048576 : array();
+			self::setAttributePrefix($newData[static::QUOTA_ATTR],
+				(int)$_quota > 0 ? (int)$_quota*static::QUOTA_FACTOR : array(), static::QUOTA_PREFIX);
+		}
+		// does schema support enabling/disabling mail via attribute
+		if (static::MAIL_ENABLE_ATTR)
+		{
+			$newData[static::MAIL_ENABLE_ATTR]	= $_accountStatus ? static::MAIL_ENABLED : array();
+		}
+		// if we have no mail-enabled attribute, but require primary mail in aliases-attr
+		// we do NOT write aliases, if mail is not enabled
+		if (!$_accountStatus && !static::MAIL_ENABLE_ATTR && static::REQUIRE_MAIL_AS_ALIAS)
+		{
+			$newData[static::ALIAS_ATTR] = array();
 		}
 		// does schema support an explicit mailbox name --> set it, $_setMailbox is given
-		if ($this->config['mailbox_attr'] && $_setMailbox)
+		if (static::MAILBOX_ATTR && $_setMailbox)
 		{
-			$newData[$this->config['mailbox_attr']] = $_setMailbox;
+			$newData[static::MAILBOX_ATTR] = $_setMailbox;
 		}
 		if ($this->debug) error_log(__METHOD__.'('.array2string(func_get_args()).") --> ldap_mod_replace(,'$accountDN',".array2string($newData).')');
 
@@ -501,14 +591,22 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 	 */
 	function saveSMTPForwarding($_accountID, $_forwardingAddress, $_keepLocalCopy)
 	{
-		$ds = $GLOBALS['egw']->ldap->ldapConnect();
-		$filter 	= sprintf('(&(uidnumber=%d)(objectclass=posixAccount))',$_accountID);
-		$attributes	= array('dn',$this->config['forward_attr'],'objectclass');
-		if ($this->config['forward_only_attr'])
+		$ds = $this->getLdapConnection();
+		if (static::USERID_ATTR)
 		{
-			$attributes[] = $this->config['forward_only_attr'];
+			$filter = '(&'.static::USER_FILTER.'('.static::USERID_ATTR.'='.(int)$_accountID.'))';
 		}
-		$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter, $attributes);
+		else
+		{
+			$uid = $GLOBALS['egw']->accounts->id2name($_accountID);
+			$filter = '(&'.static::USER_FILTER.'('.static::USER_ATTR.'='.ldap::quote($uid).'))';
+		}
+		$attributes	= array('dn', static::FORWARD_ATTR, 'objectclass');
+		if (static::FORWARD_ONLY_ATTR)
+		{
+			$attributes[] = static::FORWARD_ONLY_ATTR;
+		}
+		$sri = ldap_search($ds, $this->search_base, $filter, $attributes);
 
 		if ($sri)
 		{
@@ -519,46 +617,163 @@ class emailadmin_smtp_ldap extends emailadmin_smtp
 
 			unset($newData['objectclass']['count']);
 
-			if(!in_array($this->config['schema'],$objectClasses))
+			if(!in_array(static::SCHEMA,$objectClasses))
 			{
-				$newData['objectclass'][] = $this->config['schema'];
+				$newData['objectclass'][] = static::SCHEMA;
 			}
-			if ($this->config['forward_attr'])
+			if (static::FORWARD_ATTR)
 			{
+				// copy all non-forward data (different prefix) to newData, all existing forwards to $forwards
+				$newData[static::FORWARD_ATTR] = $allValues[0][static::FORWARD_ATTR];
+				$forwards = self::getAttributePrefix($newData[static::FORWARD_ATTR], static::FORWARD_PREFIX);
+
 				if(!empty($_forwardingAddress))
 				{
-					if(is_array($allValues[0][$this->config['forward_attr']]))
+					if($forwards)
 					{
-						$newData[$this->config['forward_attr']] = $allValues[0][$this->config['forward_attr']];
-						unset($newData[$this->config['forward_attr']]['count']);
 						if (!is_array($_forwardingAddress))
 						{
 							// replace the first forwarding address (old behavior)
-							$newData[$this->config['forward_attr']][0] = $_forwardingAddress;
+							$forwards[0] = $_forwardingAddress;
 						}
 						else
 						{
 							// replace all forwarding Addresses
-							$newData[$this->config['forward_attr']] = $_forwardingAddress;
+							$forwards = $_forwardingAddress;
 						}
 					}
 					else
 					{
-						$newData[$this->config['forward_attr']] = (array)$_forwardingAddress;
+						$forwards = (array)$_forwardingAddress;
 					}
-					if ($this->config['forward_only_attr'])
+					if (static::FORWARD_ONLY_ATTR)
 					{
-						$newData['deliverymode'] = $_keepLocalCopy == 'yes' ? array() : $this->config['forward_only'];
+						self::getAttributePrefix($newData[static::FORWARD_ONLY_ATTR], static::FORWARD_ONLY);
+						self::setAttributePrefix($newData[static::FORWARD_ONLY_ATTR],
+							$_keepLocalCopy == 'yes' ? array() : static::FORWARD_ONLY);
 					}
 				}
 				else
 				{
-					$newData[$this->config['forward_attr']] = array();
+					$forwards = array();
 				}
+				// merge in again all new set forwards incl. opt. prefix
+				self::getAttributePrefix($newData[static::FORWARD_ATTR], $forwards, static::FORWARD_PREFIX);
 			}
 			if ($this->debug) error_log(__METHOD__.'('.array2string(func_get_args()).") --> ldap_mod_replace(,'$accountDN',".array2string($newData).')');
 
 			return ldap_modify ($ds, $allValues[0]['dn'], $newData);
 		}
+	}
+
+	/**
+	 * Get configured mailboxes of a domain
+	 *
+	 * @param boolean $return_inactive return mailboxes NOT marked as accountStatus=active too
+	 * @return array uid => name-part of mailMessageStore
+	 */
+	function getMailboxes($return_inactive)
+	{
+		$ds = $this->getLdapConnection();
+		$filter = array("(mail=*)");
+		$attrs = array(static::USER_ATTR, 'mail');
+		if (static::MAILBOX_ATTR)
+		{
+			$filter[] = '('.static::MAILBOX_ATTR.'=*)';
+			$attrs[] = static::MAILBOX_ATTR;
+		}
+		if (!$return_inactive && static::MAIL_ENABLE_ATTR)
+		{
+			$filter[] = '('.static::MAIL_ENABLE_ATTR.'='.static::MAIL_ENABLED.')';
+		}
+		if (count($filter) > 1)
+		{
+			$filter = '(&'.implode('', $filter).')';
+		}
+		else
+		{
+			$filter = $filter[0];
+		}
+		if (!($sr = @ldap_search($ds, $this->search_base, $filter, $attrs)))
+		{
+			//error_log("Error ldap_search(\$ds, '$base', '$filter')!");
+			return array();
+		}
+		$entries = ldap_get_entries($ds, $sr);
+
+		unset($entries['count']);
+
+		$mailboxes = array();
+		foreach($entries as $entry)
+		{
+			if ($entry[static::USER_ATTR][0] == 'anonymous') continue;	// anonymous is never a mail-user!
+			list($mailbox) = explode('@', $entry[static::MAILBOX_ATTR ? static::MAILBOX_ATTR : 'mail'][0]);
+			$mailboxes[$entry[static::USER_ATTR][0]] = $mailbox;
+		}
+		return $mailboxes;
+	}
+
+	/**
+	 * Set values in a given LDAP attribute using an optional prefix
+	 *
+	 * @param array &$attribute on return array with values set and existing values preseved
+	 * @param string|array $values value(s) to set
+	 * @param string $prefix='' prefix to use or ''
+	 */
+	protected static function setAttributePrefix(&$attribute, $values, $prefix='')
+	{
+		$attribute_in = $attribute;
+		if (!isset($attribute)) $attribute = array();
+		if (!is_array($attribute)) $attribute = array($attribute);
+
+		foreach((array)$values as $value)
+		{
+			$attribute[] = $prefix.$value;
+		}
+		//error_log(__METHOD__."(".array2string($attribute_in).", ".array2string($values).", '$prefix') attribute=".array2string($attribute));
+	}
+
+	/**
+	 * Get values having an optional prefix from a given LDAP attribute
+	 *
+	 * @param array &$attribute only "count" and prefixed values get removed, get's reindexed, if values have been removed
+	 * @param string $prefix='' prefix to use or ''
+	 * @param boolean $remove=true remove returned values from $attribute
+	 * @return array with values (prefix removed) or array() if nothing found
+	 */
+	protected static function getAttributePrefix(&$attribute, $prefix='', $remove=true)
+	{
+		$attribute_in = $attribute;
+		$values = array();
+
+		if (isset($attribute))
+		{
+			unset($attribute['count']);
+
+			foreach($attribute as $key => $value)
+			{
+				if (!$prefix || stripos($value, $prefix) === 0)
+				{
+					if ($remove) unset($attribute[$key]);
+					$values[] = substr($value, strlen($prefix));
+				}
+			}
+			// reindex $attribute, if neccessary
+			if ($values && $attribute) $attribute = array_values($attribute);
+		}
+		//error_log(__METHOD__."(".array2string($attribute_in).", '$prefix', $remove) attribute=".array2string($attribute).' returning '.array2string($values));
+		return $values;
+	}
+
+	/**
+	 * Return LDAP connection
+	 */
+	protected function getLdapConnection()
+	{
+		static $ldap;
+
+		if (is_null($ldap)) $ldap = $GLOBALS['egw']->ldap->ldapConnect();
+
+		return $ldap;
 	}
 }

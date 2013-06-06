@@ -34,11 +34,16 @@ include_once(EGW_SERVER_ROOT."/emailadmin/inc/class.defaultimap.inc.php");
 class pleskimap extends defaultimap
 {
 	/**
+	 * Label shown in EMailAdmin
+	 */
+	const DESCRIPTION = 'Plesk (Courier)';
+
+	/**
 	 * @var string $psa_mail_script full path to Plesk's mail.sh (Linux including sudo!) or mail.exe (Windows) interface
 	 */
 	var $psa_mail_script = '/usr/bin/sudo /usr/local/psa/bin/mail.sh';	// 'C:/psa/bin/mail.exe'
 	/**
-	 * @var boolean $allways_create_mailbox true = allways create a mailbox on user creation, 
+	 * @var boolean $allways_create_mailbox true = allways create a mailbox on user creation,
 	 *	false = only if a local email (no forward) is given. To use felamimail you need a mailbox!
 	 */
 	var $allways_create_mailbox = true;
@@ -114,14 +119,14 @@ class pleskimap extends defaultimap
 	function deleteAccount($hookValues)
 	{
 		//echo "<p>pleskimap::deleteAccount(".print_r($hookValues,true).")</p>\n";
-		
+
 		return $this->plesk_mail('remove',$hookValues['account_lid']);
 	}
 
 	function updateAccount($hookValues)
 	{
 		//echo "<p>pleskimap::updateAccount(".print_r($hookValues,true).")</p>\n";
-		
+
 		if($hookValues['account_lid'] != $hookValues['old_loginid'])
 		{
 			$this->error = lang("Plesk can't rename users --> request ignored");
@@ -142,7 +147,7 @@ class pleskimap extends defaultimap
 
 		if (!($info = $this->plesk_mail('info',$accountID))) return false;
 		//_debug_array($info);
-		
+
 		$data = array(
 			'mailLocalAddress'     => $info['Mailname'].'@'.$info['Domain'],
 			'mailAlternateAddress' => $info['Alias(es)'] ? explode(' ',$info['Alias(es)']) : array(),
@@ -156,7 +161,7 @@ class pleskimap extends defaultimap
 		//_debug_array($data);
 		return $data;
 	}
-	
+
 	/**
 	 * Save mail account data
 	 *
@@ -167,14 +172,14 @@ class pleskimap extends defaultimap
 	function saveUserData($accountID, $accountData)
 	{
 		//echo "<p>pleskimap::saveUserData('$accountID',".print_r($accountData,true).")</p>\n";
-		
+
 		// not used: $accountData['accountStatus']=='active', $accountData['qmailDotMode'], $accountData['deliveryProgramPath']
 		$info = $this->plesk_mail('update',$accountID,null,
 			$accountData['mailAlternateAddress'] ? $accountData['mailAlternateAddress'] : array(),
 			$accountData['mailRoutingAddress'] ? $accountData['mailRoutingAddress'] : array(),
 			empty($accountData['deliveryMode']),
 			1024*(float)$accountData['quotaLimit'],$accountData['accountStatus']=='active');
-			
+
 		if (!$info['SUCCSESS'])
 		{
 			if ($info) $this->error = implode(', ',$info);
@@ -182,12 +187,12 @@ class pleskimap extends defaultimap
 		}
 		return true;
 	}
-	
+
 	/**
 	 * call plesk's mail command line interface
 	 *
 	 * 	Usage: mail.sh command <mail_name> [options]
-	 * 
+	 *
 	 *     Available commands:
 	 *     --create or -c     <mail>@<domain> creates mail account
 	 *     --update or -u     <mail>@<domain> updates mail account parameters
@@ -196,7 +201,7 @@ class pleskimap extends defaultimap
 	 *     --on               <domain>        enables mail service for domain
 	 *     --off              <domain>        disables mail service for domain
 	 *     --help or -h                       displays this help page
-	 * 
+	 *
 	 *     Available options:
 	 *     -cp_access         <true|false>    enables control panel access (default:
 	 *                                        true)
@@ -271,7 +276,7 @@ class pleskimap extends defaultimap
 	 *                                        all incoming mail to [deprecated, use
 	 *                                       autoresponder.sh]
 	 *     -multiple-sessions <true|false>    allow multiple sessions
-	 * 
+	 *
 	 * Note:
 	 *  For security reasons, you can transfer not encrypted passwords via environment
 	 *  variable PSA_PASSWORD, by specifying the empty value in the command line for
@@ -281,7 +286,7 @@ class pleskimap extends defaultimap
 	 *  PSA_CRYPTED_PASSWORD, by specifying the empty value in the command line for
 	 *  the passwd arguments (like " -passwd ''") and by setting the password value in
 	 *  the PSA_CRYPTED_PASSWORD variable.
-	 * 
+	 *
 	 * Version: psa v7.5.0_build75041208.07 os_SuSE 9.1
 	 *
 	 * 		mail.sh --info account@domain.com
@@ -299,12 +304,12 @@ class pleskimap extends defaultimap
 	 * 		Autoresponder:      false
 	 * 		Antivirus mail
 	 * 		checking:           Disabled
-	 * 		
+	 *
 	 * 		SUCCESS: Gathering information for 'account@domain.com' complete
-	 * 		
+	 *
 	 * 		mail.sh --info bogus@domain.com
 	 * 		An error occured during getting mailname information: Mailname 'bogus@domain.com' doesn't exists
-	 * 
+	 *
 	 * @param string $action 'info', 'create', 'update' or 'remove'
 	 * @param string/int $account account_lid or numerical account_id
 	 * @param string $password=null string with password or null to not change
@@ -442,7 +447,7 @@ class pleskimap extends defaultimap
 		}
 		return $values;
 	}
-	
+
 	/**
 	 * checks for valid email addresse (local mail address dont need a domain!)
 	 *

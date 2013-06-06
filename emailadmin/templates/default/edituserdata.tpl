@@ -79,7 +79,7 @@ var langModifyAddress="{lang_update_current_address}";
 						</td>
 					</tr>
 					<tr bgcolor="{tr_color2}">
-						<td width="200">{lang_qoutainmbyte}</td>
+						<td width="200">{lang_quotainmbyte}</td>
 						<td colspan="2">
 							<input name="quotaLimit" value="{quotaLimit}" style="width:350px;"> ({lang_0forunlimited})
 						</td>

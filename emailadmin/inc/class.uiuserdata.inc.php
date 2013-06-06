@@ -116,7 +116,7 @@ class uiuserdata
 				"style='width: 100%;' id='mailRoutingAddress'",
 				5)
 			);
-			if (isset($userData["quotaUsed"]) && $userData["quotaUsed"]>0) $this->t->set_var('lang_qoutainmbyte',lang('qouta size in MByte').'<br><b><i>('.(int)$userData["quotaUsed"].' '.lang('MB used').')</i></b>');
+			if (isset($userData["quotaUsed"]) && $userData["quotaUsed"]>0) $this->t->set_var('lang_quotainmbyte',lang('Quota size in MByte').'<br><b><i>('.(int)$userData["quotaUsed"].' '.lang('MB used').')</i></b>');
 			$this->t->set_var("quotaLimit",$userData["quotaLimit"]);
 
 			$this->t->set_var("mailLocalAddress",$userData["mailLocalAddress"]);
@@ -209,7 +209,7 @@ class uiuserdata
 		$this->t->set_var('lang_qmaildotmode',lang('qmaildotmode'));
 		$this->t->set_var('lang_default',lang('default'));
 		$this->t->set_var('lang_quota_settings',lang('quota settings'));
-		$this->t->set_var('lang_qoutainmbyte',lang('qouta size in MByte'));
+		$this->t->set_var('lang_quotainmbyte',lang('Quota size in MByte'));
 		$this->t->set_var('lang_inmbyte',lang('in MByte'));
 		$this->t->set_var('lang_0forunlimited',lang('leave empty for no quota'));
 		$this->t->set_var('lang_forward_only',lang('forward only'));

@@ -10,36 +10,41 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
-	
+
 include_once(EGW_SERVER_ROOT."/emailadmin/inc/class.defaultimap.inc.php");
 
 /**
  * Support for DBMail IMAP with qmailUser LDAP schema
- * 
+ *
  * @todo base this class on dbmaildbmailuser or the other way around
  */
-class dbmailqmailuser extends defaultimap 
+class dbmailqmailuser extends defaultimap
 {
+	/**
+	 * Label shown in EMailAdmin
+	 */
+	const DESCRIPTION = 'dbmail (qmailUser Schema)';
+
 	/**
 	 * Capabilities of this class (pipe-separated): default, sieve, admin, logintypeemail
 	 */
 	const CAPABILITIES = 'default|sieve';
-	
+
 	function addAccount($_hookValues) {
 		return $this->updateAccount($_hookValues);
 	}
-	
+
 	#function deleteAccount($_hookValues) {
 	#}
 	function getUserData($_username) {
 		$userData = array();
-		
+
 		$ds = $GLOBALS['egw']->ldap->ldapConnect(
 			$GLOBALS['egw_info']['server']['ldap_host'],
 			$GLOBALS['egw_info']['server']['ldap_root_dn'],
 			$GLOBALS['egw_info']['server']['ldap_root_pw']
 		);
-		
+
 		if(!is_resource($ds)) {
 			return false;
 		}
@@ -61,13 +66,13 @@ class dbmailqmailuser extends defaultimap
 		if(!$uidnumber = (int)$_hookValues['account_id']) {
 			return false;
 		}
-		
+
 		$ds = $GLOBALS['egw']->ldap->ldapConnect(
 			$GLOBALS['egw_info']['server']['ldap_host'],
 			$GLOBALS['egw_info']['server']['ldap_root_dn'],
 			$GLOBALS['egw_info']['server']['ldap_root_pw']
 		);
-		
+
 		if(!is_resource($ds)) {
 			return false;
 		}
@@ -75,7 +80,7 @@ class dbmailqmailuser extends defaultimap
 		$filter		= '(&(objectclass=posixaccount)(uidnumber='. $uidnumber .'))';
 		$justthese	= array('dn', 'objectclass', 'qmailUID', 'qmailGID', 'mail');
 		$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter, $justthese);
-		
+
 		if($info = ldap_get_entries($ds, $sri)) {
 			if(!in_array('qmailuser',$info[0]['objectclass']) && $info[0]['email']) {
 				$newData['objectclass'] = $info[0]['objectclass'];
@@ -84,9 +89,9 @@ class dbmailqmailuser extends defaultimap
 				sort($newData['objectclass']);
 				$newData['qmailGID']	= sprintf("%u", crc32($GLOBALS['egw_info']['server']['install_id']));
 				#$newData['qmailUID']	= (!empty($this->domainName)) ? $_username .'@'. $this->domainName : $_username;
-				
+
 				ldap_modify($ds, $info[0]['dn'], $newData);
-				
+
 				return true;
 			} else {
 				$newData = array();
@@ -109,7 +114,7 @@ class dbmailqmailuser extends defaultimap
 			$GLOBALS['egw_info']['server']['ldap_root_dn'],
 			$GLOBALS['egw_info']['server']['ldap_root_pw']
 		);
-		
+
 		if(!is_resource($ds)) {
 			return false;
 		}
@@ -126,7 +131,7 @@ class dbmailqmailuser extends defaultimap
 				$newData['objectclass'][] = 'qmailuser';
 				sort($newData['objectclass']);
 				$newData['qmailGID']	= sprintf("%u", crc32($GLOBALS['egw_info']['server']['install_id']));
-				
+
 				ldap_modify($ds, $info[0]['dn'], $newData);
 			} else {
 				if (in_array('qmailuser',$info[0]['objectclass']) && !$info[0]['qmailgid']) {
@@ -139,20 +144,20 @@ class dbmailqmailuser extends defaultimap
 					}
 				}
 			}
-				
+
 			$newData = array();
-			
+
 			if((int)$_quota >= 0) {
 				$newData['mailQuota'] = (int)$_quota * 1048576;
 			} else {
 				$newData['mailQuota'] = array();
 			}
-			
+
 			if(!ldap_modify($ds, $info[0]['dn'], $newData)) {
 				#print ldap_error($ds);
 				return false;
 			}
-			
+
 			return true;
 		}
 

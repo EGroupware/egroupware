@@ -19,6 +19,11 @@ include_once(EGW_SERVER_ROOT."/emailadmin/inc/class.defaultimap.inc.php");
 class cyrusimap extends defaultimap
 {
 	/**
+	 * Label shown in EMailAdmin
+	 */
+	const DESCRIPTION = 'Cyrus';
+
+	/**
 	 * Capabilities of this class (pipe-separated): default, sieve, admin, logintypeemail
 	 */
 	const CAPABILITIES = 'default|sieve|timedsieve|admin|logintypeemail';

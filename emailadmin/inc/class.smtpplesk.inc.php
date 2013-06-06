@@ -26,6 +26,11 @@ include_once(EGW_SERVER_ROOT."/emailadmin/inc/class.pleskimap.inc.php");
 class smtpplesk extends defaultsmtp
 {
 	/**
+	 * Label shown in EMailAdmin
+	 */
+	const DESCRIPTION = 'Plesk (Qmail)';
+
+	/**
 	 * Capabilities of this class (pipe-separated): default, forward
 	 */
 	const CAPABILITIES = 'default|forward';
@@ -64,7 +69,7 @@ class smtpplesk extends defaultsmtp
 	{
 		// account is added via pleskimap::addAccount();
 	}
-	
+
 	/**
 	 * Returns the email address of the current user
 	 *
@@ -74,7 +79,7 @@ class smtpplesk extends defaultsmtp
 	function getAccountEmailAddress()
 	{
 		//echo "<p>smtpplesk::getAccountEmailAddress()</p>\n";
-		
+
 		return array(array(
 			'name'		=> $GLOBALS['egw_info']['user']['fullname'],
 			'address'	=> $GLOBALS['egw_info']['user']['email'],

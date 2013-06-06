@@ -36,42 +36,22 @@ class auth_ads implements auth_backend
 			return False;
 		}
 
-		if(!$ldap = @ldap_connect($GLOBALS['egw_info']['server']['ads_host']))
-		{
-			//echo "<p>Failed connecting to ADS server '".$GLOBALS['egw_info']['server']['ads_host']."' for authenication, execution stopped</p>\n";
-			$GLOBALS['egw']->log->message('F-Abort, Failed connecting to ADS server for authenication, execution stopped');
-			$GLOBALS['egw']->log->commit();
-			return False;
-		}
-		//echo "<p>Connected to LDAP server '".$GLOBALS['egw_info']['server']['ads_host']."' for authenication</p>\n";
-
-		ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
-		ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
-
+		$adldap = accounts_ads::get_adldap();
 		// bind with username@ads_domain, only if a non-empty password given, in case anonymous search is enabled
-		if(empty($passwd) || !@ldap_bind($ldap,$username.'@'.$GLOBALS['egw_info']['server']['ads_domain'],$passwd))
+		if(empty($passwd) || !$adldap->authenticate($username, $passwd))
 		{
-			//echo "<p>Cant bind with '$username@".$GLOBALS['egw_info']['server']['ads_domain']."' with PW '$passwd' !!!</p>\n";
+			//error_log(__METHOD__."('$username', ".(empty($passwd) ? "'') passwd empty" : '$passwd) adldap->authenticate() returned false')." --> returning false");
 			return False;
 		}
-		//echo "<p>Bind with '$username@".$GLOBALS['egw_info']['server']['ads_domain']."' with PW '$passwd'.</p>\n";
 
 		$attributes	= array('samaccountname','givenName','sn','mail','homeDirectory');
-		$filter = "(samaccountname=$username)";
-		// automatic create dn from domain: domain.com ==> DC=domain,DC=com
-		$base_dn = array();
-		foreach(explode('.',$GLOBALS['egw_info']['server']['ads_domain']) as $dc)
+		if (($allValues = $adldap->user()->info($username, $attributes)))
 		{
-			$base_dn[] = 'DC='.$dc;
+			$allValues[0]['objectsid'][0] = $adldap->utilities()->getTextSID($allValues[0]['objectsid'][0]);
 		}
-		$base_dn = implode(',',$base_dn);
+		//error_log(__METHOD__."('$username', \$passwd) allValues=".array2string($allValues));
 
-		//echo "<p>Trying ldap_search(,$base_dn,$filter,".print_r($attributes,true)."</p>\n";
-		$sri = ldap_search($ldap, $base_dn, $filter, $attributes);
-		$allValues = ldap_get_entries($ldap, $sri);
-		//_debug_array($allValues);
-
-		if ($allValues['count'] > 0)
+		if ($allValues && $allValues['count'] > 0)
 		{
 			if($GLOBALS['egw_info']['server']['case_sensitive_username'] == true)
 			{
@@ -92,6 +72,8 @@ class auth_ads implements auth_backend
 			}
 			if ($GLOBALS['egw_info']['server']['auto_create_acct'])
 			{
+				$GLOBALS['auto_create_acct']['account_id'] = accounts_ads::sid2account_id($allValues[0]['objectsid'][0]);
+
 				// create a global array with all availible info about that account
 				foreach(array(
 					'givenname' => 'firstname',
@@ -102,6 +84,7 @@ class auth_ads implements auth_backend
 					$GLOBALS['auto_create_acct'][$acct_name] =
 						translation::convert($allValues[0][$ldap_name][0],'utf-8');
 				}
+				//error_log(__METHOD__."() \$GLOBALS[auto_create_acct]=".array2string($GLOBALS['auto_create_acct']));
 				return True;
 			}
 		}
@@ -109,8 +92,38 @@ class auth_ads implements auth_backend
 		return False;
 	}
 
+	/**
+	 * changes password
+	 *
+	 * @param string $old_passwd must be cleartext
+	 * @param string $new_passwd must be cleartext
+	 * @param int $account_id account id of user whose passwd should be changed
+	 * @return boolean true if password successful changed, false otherwise
+	 */
 	function change_password($old_passwd, $new_passwd, $_account_id=0)
 	{
-		return false;		// Cant change passwd in ADS
+		if (!($adldap = accounts_ads::get_adldap()) || !($adldap->getUseSSL() || $adldap->getUseTLS()))
+		{
+			error_log(__METHOD__."('$old_passwd', '$new_passwd', $account_id) adldap=".array2string($adldap)." returning false");
+			return false;		// Cant change passwd in ADS
+		}
+
+		if(!$account_id || $GLOBALS['egw_info']['flags']['currentapp'] == 'login')
+		{
+			$admin = false;
+			$username = $GLOBALS['egw_info']['user']['account_lid'];
+		}
+		else
+		{
+			$admin = true;
+			$username = $GLOBALS['egw']->accounts->id2name($account_id);
+		}
+		// Check the old_passwd to make sure this is legal
+		if(!$admin && !$adldap->authenticate($username, $old_passwd))
+		{
+			//error_log(__METHOD__."() old password '$old_passwd' for '$username' is wrong!");
+			return false;
+		}
+		return $adldap->user()->password($username, $new_passwd);
 	}
 }

@@ -412,7 +412,7 @@ class emailadmin_bo extends so_sql
 	static public function getSMTPServerTypes($extended=true)
 	{
 		$retData = array();
-		foreach(self::$SMTPServerType as $key => $value)
+/*		foreach(self::$SMTPServerType as $key => $value)
 		{
 			if ($extended)
 			{
@@ -420,14 +420,22 @@ class emailadmin_bo extends so_sql
 				$retData[$key]['description']	= isset($value['description'])?$value['description']:$key;
 				$retData[$key]['classname']	= isset($value['classname'])?$value['classname']:$key;
 			}
-		}
+		}*/
 		foreach($GLOBALS['egw']->hooks->process(array(
 			'location' => 'smtp_server_types',
 			'extended' => $extended,
-		),array(),true) as $app => $data)
+		), array('managementserver', 'emailadmin'), true) as $app => $data)
 		{
 			if ($data) $retData += $data;
 		}
+		uksort($retData, function($a, $b) {
+			static $prio = array(	// not explicitly mentioned get 0
+				'emailadmin_smtp' => 9,
+				'emailadmin_smtp_sql' => 8,
+				'smtpplesk' => -1,
+			);
+			return (int)$prio[$b] - (int)$prio[$a];
+		});
 		return $retData;
 	}
 
@@ -442,7 +450,7 @@ class emailadmin_bo extends so_sql
 	static public function getIMAPServerTypes($extended=true)
 	{
 		$retData = array();
-		foreach(self::$IMAPServerType as $key => $value)
+/*		foreach(self::$IMAPServerType as $key => $value)
 		{
 			if ($extended)
 			{
@@ -455,14 +463,24 @@ class emailadmin_bo extends so_sql
 			{
 				$retData[$key]	= $value['description'];
 			}
-		}
+		}*/
 		foreach($GLOBALS['egw']->hooks->process(array(
 			'location' => 'imap_server_types',
 			'extended' => $extended,
-		),array(),true) as $app => $data)
+		), array('managementserver', 'emailadmin'), true) as $app => $data)
 		{
 			if ($data) $retData += $data;
 		}
+		uksort($retData, function($a, $b) {
+			static $prio = array(	// not explicitly mentioned get 0
+				'defaultimap' => 9,
+				'managementserver_imap' => 8,
+				'emailadmin_dovecot' => 7,
+				'cyrusimap' => 6,
+				'pleskimap' => -1,
+			);
+			return (int)$prio[$b] - (int)$prio[$a];
+		});
 		return $retData;
 	}
 

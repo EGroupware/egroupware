@@ -28,6 +28,11 @@ define('IMAP_NAMESPACE_ALL'	, 'all');
 class defaultimap extends Net_IMAP
 {
 	/**
+	 * Label shown in EMailAdmin
+	 */
+	const DESCRIPTION = 'standard IMAP server';
+
+	/**
 	 * Capabilities of this class (pipe-separated): default, sieve, admin, logintypeemail
 	 */
 	const CAPABILITIES = 'default|sieve';
@@ -181,6 +186,16 @@ class defaultimap extends Net_IMAP
 
 		// construtor for Net_IMAP stuff
 		$this->Net_IMAPProtocol();
+	}
+
+	/**
+	 * Return description for EMailAdmin
+	 *
+	 * @return string
+	 */
+	public static function description()
+	{
+		return static::DESCRIPTION;
 	}
 
 	/**

@@ -16,6 +16,11 @@
 class emailadmin_smtp
 {
 	/**
+	 * Label shown in EMailAdmin
+	 */
+	const DESCRIPTION = 'standard SMTP-Server';
+
+	/**
 	 * Capabilities of this class (pipe-separated): default, forward
 	 */
 	const CAPABILITIES = 'default';
@@ -72,6 +77,16 @@ class emailadmin_smtp
 		$this->defaultDomain = $defaultDomain ? $defaultDomain : $GLOBALS['egw_info']['server']['mail_suffix'];
 
 		$this->accounts = $GLOBALS['egw']->accounts;
+	}
+
+	/**
+	 * Return description for EMailAdmin
+	 *
+	 * @return string
+	 */
+	public static function description()
+	{
+		return static::DESCRIPTION;
 	}
 
 	/**

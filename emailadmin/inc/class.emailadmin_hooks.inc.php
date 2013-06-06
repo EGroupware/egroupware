@@ -119,7 +119,7 @@ class emailadmin_hooks
 	}
 
 	/**
-	 * Add further imap and smtp server plugins to emailadmin
+	 * Detect imap and smtp server plugins from EMailAdmin's inc directory
 	 *
 	 * @param string|array $data location string or array with key 'location' and other params
 	 * @return array
@@ -129,74 +129,37 @@ class emailadmin_hooks
 		$location = is_array($data) ? $data['location'] : $data;
 		$extended = is_array($data) ? $data['extended'] : false;
 
-		switch($location)
+		$types = array();
+		foreach(scandir($dir=EGW_INCLUDE_ROOT.'/emailadmin/inc') as $file)
 		{
-			case 'imap_server_types':
-				return array(
-					'defaultimap' 	=> $extended ? array(
-						'description'	=> 'standard IMAP server',
-						'protocol'	=> 'imap',
-						'classname'	=> 'defaultimap'
-					) : 'standard IMAP server',
-					'emailadmin_dovecot' => $extended ? array(
-						'description' => 'Dovecot',
-						'classname' => 'emailadmin_dovecot',
-						'protocol' => 'imap',
-					) : 'Dovecot',
-					'cyrusimap' 	=> $extended ? array(
-						'description'	=> 'Cyrus IMAP Server',
-						'protocol'	=> 'imap',
-						'classname'	=> 'cyrusimap'
-					) : 'Cyrus IMAP Server',
-					'dbmailqmailuser' 	=> $extended ? array(
-						'description'	=> 'DBMail (qmailUser schema)',
-						'protocol'	=> 'imap',
-						'classname'	=> 'dbmailqmailuser'
-					) : 'DBMail (qmailUser schema)',
-					'pleskimap'     => $extended ? array(
-						'description'   => 'Plesk IMAP Server (Courier)',
-						'protocol'      => 'imap',
-						'classname'     => 'pleskimap'
-					) : 'Plesk IMAP Server (Courier)',
-					'dbmaildbmailuser' 	=> $extended ? array(
-						'description'	=> 'DBMail (dbmailUser schema)',
-						'protocol'	=> 'imap',
-						'classname'	=> 'dbmaildbmailuser'
-					) : 'DBMail (dbmailUser schema)',
+			if (!preg_match('/^class\.([^.]*(smtp|imap|postfix|dovecot|dbmail)[^.*]*)\.inc\.php$/', $file, $matches)) continue;
+			$class_name = $matches[1];
+			include_once($dir.'/'.$file);
+			if (!class_exists($class_name)) continue;
+
+			$is_imap = $class_name == 'defaultimap' || is_subclass_of($class_name, 'defaultimap');
+			$is_smtp = $class_name == 'emailadmin_smtp' || is_subclass_of($class_name, 'emailadmin_smtp') && $class_name != 'defaultsmtp';
+
+			if ($is_smtp && $location == 'smtp_server_types' || $is_imap && $location == 'imap_server_types')
+			{
+				$type = array(
+					'classname' => $class_name,
+					'description' => is_callable($function=$class_name.'::description') ? call_user_func($function) : $class_name,
 				);
 
-			case 'smtp_server_types':	// nothing yet
-				return array(
-					'emailadmin_smtp' 	=> $extended ? array(
-						'description'	=> 'standard SMTP-Server',
-						'classname'	=> 'emailadmin_smtp'
-					) : 'standard SMTP-Server',
-					'emailadmin_smtp_sql' => $extended ? array(
-						'description' => 'Postfix (SQL)',
-						'classname' => 'emailadmin_smtp_sql',
-					) : 'Postfix (SQL)',
-					'postfixldap' 	=> $extended ? array(
-						'description'	=> 'Postfix (qmail Schema)',
-						'classname'	=> 'postfixldap'
-					) : 'Postfix (qmail Schema)',
-					'emailadmin_smtp_qmail' 	=> $extended ? array(
-						'description'	=> 'Postfix (new qmail Schema)',
-						'classname'	=> 'emailadmin_smtp_qmail'
-					) : 'Postfix (new qmail Schema)',
-					'postfixinetorgperson'     => $extended ? array(
-						'description'   => 'Postfix (inetOrgPerson Schema)',
-						'classname'     => 'postfixinetorgperson'
-					) : 'Postfix (inetOrgPerson Schema)',
-					'smtpplesk'     => $extended ? array(
-						'description'   => 'Plesk SMTP-Server (Qmail)',
-						'classname'     => 'smtpplesk'
-					) : 'Plesk SMTP-Server (Qmail)',
-					'postfixdbmailuser' 	=> $extended ? array(
-						'description'   => 'Postfix (dbmail Schema)',
-						'classname'     => 'postfixdbmailuser'
-					) : 'Postfix (dbmail Schema)',
-				);
-				break;
+				if ($is_imap) $type['protocol'] = 'imap';
+
+				$types[$class_name] = $type;
+			}
 		}
+		if (!$extended)
+		{
+			foreach($types as $class_name => &$type)
+			{
+				$type = $type['description'];
+			}
+		}
+		//error_log(__METHOD__."(".array2string($data).") returning ".array2string($types));
+		return $types;
 	}
 }
