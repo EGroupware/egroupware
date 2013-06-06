@@ -140,7 +140,7 @@ class customfields
 				$content_types = array_keys($this->content_types);
 				$this->content_type = $content_types[0];
 			}
-			$content['use_private'] = (boolean)$_GET['use_private'];
+			$content['use_private'] = !isset($_GET['use_private']) || (boolean)$_GET['use_private'];
 
 			$referer = $GLOBALS['egw']->common->get_referer();
 		}
