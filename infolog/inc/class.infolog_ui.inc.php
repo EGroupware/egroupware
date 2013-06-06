@@ -395,6 +395,8 @@ class infolog_ui
 		// Check to see if we need to remove description
 		$et = new ReflectionClass('etemplate');
 		$is_et2 = ($et->isSubclassOf(new ReflectionClass('etemplate_widget')));
+		$parent_first = count($parents) == 1;
+		$parent_index = 0;
 		foreach($infos as $id => $info)
 		{
 			if (!(strpos($info['info_addr'],',')===false) && strpos($info['info_addr'],', ')===false) $info['info_addr'] = str_replace(',',', ',$info['info_addr']);
@@ -411,7 +413,8 @@ class infolog_ui
 				}
 			}
 			// for subs view ('sp') add parent(s) in front of subs once(!)
-			if ($parents && ($parent_index = array_search($info['info_id_parent'], $parents)) !== false &&
+			if ($parent_first &&  ($main = $this->bo->read($query['action_id'])) ||
+				$parents && ($parent_index = array_search($info['info_id_parent'], $parents)) !== false &&
 				($main = $this->bo->read($info['info_id_parent'])))
 			{
 				$main = $this->get_info($main, $readonlys);
@@ -432,6 +435,7 @@ class infolog_ui
 						}
 					}
 				}
+				$parent_first = false;
 				array_splice($rows, $id, 0, array($main));
 				unset($parents[$parent_index]);
 				// et2 nextmatch listens to total, and only displays that many rows
