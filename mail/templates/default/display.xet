@@ -3,7 +3,7 @@
 <overlay>
 	<template id="mail.display" template="" lang="" group="0" version="1.9.001">
 		<html id="msg"/>
-		<vbox class="mailDisplay" width="100%">
+		<vbox class="mailDisplay mailDisplayHeaderSection" width="100%">
 			<hbox class="mailDisplayHeaders" width="100%">
 				<description value="From"/>
 				<url-email id="mail_displayfromaddress" readonly="true"/>
@@ -23,8 +23,13 @@
 			<hbox class="mail_displayicons">
 				<html id="mail_displayicons"/>
 			</hbox>
+		</vbox>
+		<vbox class="mailDisplay" width="100%">
 			<box class="mailDisplayContainer">
 				<html id="mail_displaybody"/>
+			</box>
+			<box class="mailDisplayAttachments">
+				<html id="mail_displayattachments"/>
 			</box>
 		</vbox>
 	</template>

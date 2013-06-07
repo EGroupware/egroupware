@@ -1509,6 +1509,160 @@ unset($query['actions']);
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
 		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, '',$fetchEmbeddedImages);
 //_debug_array($headers);
+			// attachments
+/*			if(is_array($attachments) && count($attachments) > 0 && count($attachments) > 4) {
+				// this is to account for maxheight minheight of the attachment div
+				$this->t->set_var('attachment_div_height',' bottom:'.(count($attachments)>4?(count($attachments)*20<=240?count($attachments)*20:240):80).'px');
+			} else {
+				$this->t->set_var('attachment_div_height',''); // app.css bodyDIVAttachment
+			}
+*/
+			if (is_array($attachments) && count($attachments) > 0) {
+				$url_img_vfs = html::image('filemanager','navbar', lang('Filemanager'), ' height="16"');
+				$url_img_vfs_save_all = html::image('felamimail','save_all', lang('Save all'));
+
+				$detectedCharSet=$charset2use=mail_bo::$displayCharset;
+				foreach ($attachments as $key => $value)
+				{
+					#$detectedCharSet = mb_detect_encoding($value['name'].'a',strtoupper($this->displayCharset).",UTF-8, ISO-8559-1");
+					if (function_exists('mb_convert_variables')) mb_convert_variables("UTF-8","ISO-8559-1",$value['name']); # iso 2 UTF8
+					//if (mb_convert_variables("ISO-8859-1","UTF-8",$value['name'])){echo "Juhu utf8 2 ISO\n";};
+					//echo $value['name']."\n";
+					$filename=htmlentities($value['name'], ENT_QUOTES, $detectedCharSet);
+/*
+					$this->t->set_var('row_color',$this->rowColor[($key+1)%2]);
+					$this->t->set_var('filename',($value['name'] ? ( $filename ? $filename : $value['name'] ) : lang('(no subject)')));
+					$this->t->set_var('mimetype',mime_magic::mime2label($value['mimeType']));
+					$this->t->set_var('size',egw_vfs::hsize($value['size']));
+					$this->t->set_var('attachment_number',$key);
+*/
+					switch(strtoupper($value['mimeType']))
+					{
+						case 'MESSAGE/RFC822':
+							$linkData = array
+							(
+								'menuaction'	=> 'mail.mail_ui.displayMessage',
+								'id'		=> $rowID,
+								'part'		=> $value['partID'],
+								'mailbox'	=> base64_encode($mailbox),
+								'is_winmail'    => $value['is_winmail']
+							);
+							$windowName = 'displayMessage_'. $rowID.'_'.$value['partID'];
+							$linkView = "egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','$windowName',700,egw_getWindowOuterHeight());";
+							break;
+						case 'IMAGE/JPEG':
+						case 'IMAGE/PNG':
+						case 'IMAGE/GIF':
+						case 'IMAGE/BMP':
+						case 'APPLICATION/PDF':
+						case 'TEXT/PLAIN':
+						case 'TEXT/HTML':
+						case 'TEXT/DIRECTORY':
+							$sfxMimeType = $value['mimeType'];
+							$buff = explode('.',$value['name']);
+							$suffix = '';
+							if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+							if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
+							if (strtoupper($sfxMimeType) == 'TEXT/VCARD' || strtoupper($sfxMimeType) == 'TEXT/X-VCARD')
+							{
+								$attachments[$key]['mimeType'] = $sfxMimeType;
+								$value['mimeType'] = strtoupper($sfxMimeType);
+							}
+						case 'TEXT/X-VCARD':
+						case 'TEXT/VCARD':
+						case 'TEXT/CALENDAR':
+						case 'TEXT/X-VCALENDAR':
+							$linkData = array
+							(
+								'menuaction'	=> 'mail.mail_ui.getAttachment',
+								'uid'		=> $rowID,
+								'part'		=> $value['partID'],
+								'is_winmail'    => $value['is_winmail'],
+								'mailbox'   => base64_encode($mailbox),
+							);
+							$windowName = 'displayAttachment_'. $uid;
+							$reg = '800x600';
+							// handle calendar/vcard
+							if (strtoupper($value['mimeType'])=='TEXT/CALENDAR')
+							{
+								$windowName = 'displayEvent_'. $rowID;
+								$reg2 = egw_link::get_registry('calendar','view_popup');
+							}
+							if (strtoupper($value['mimeType'])=='TEXT/X-VCARD' || strtoupper($value['mimeType'])=='TEXT/VCARD')
+							{
+								$windowName = 'displayContact_'. $rowID;
+								$reg2 = egw_link::get_registry('addressbook','add_popup');
+							}
+							// apply to action
+							list($width,$height) = explode('x',(!empty($reg2) ? $reg2 : $reg));
+							$linkView = "egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','$windowName',$width,$height);";
+							break;
+						default:
+							$linkData = array
+							(
+								'menuaction'	=> 'mail.mail_ui.getAttachment',
+								'uid'		=> $rowID,
+								'part'		=> $value['partID'],
+								'is_winmail'    => $value['is_winmail'],
+								'mailbox'   => base64_encode($mailbox),
+							);
+							$linkView = "window.location.href = '".$GLOBALS['egw']->link('/index.php',$linkData)."';";
+							break;
+					}
+//					$this->t->set_var("link_view",$linkView);
+//					$this->t->set_var("target",$target);
+
+					$linkData = array
+					(
+						'menuaction'	=> 'mail.mail_ui.getAttachment',
+						'mode'		=> 'save',
+						'uid'		=> $rowID,
+						'part'		=> $value['partID'],
+						'is_winmail'    => $value['is_winmail'],
+						'mailbox'   => base64_encode($mailbox),
+					);
+					//$this->t->set_var("link_save",$GLOBALS['egw']->link('/index.php',$linkData));
+
+					if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
+					{
+						$link_vfs_save = egw::link('/index.php',array(
+							'menuaction' => 'filemanager.filemanager_select.select',
+							'mode' => 'saveas',
+							'name' => $value['name'],
+							'mime' => strtolower($value['mimeType']),
+							'method' => 'felamimail.uidisplay.vfsSaveAttachment',
+							'id' => $mailbox.'::'.$uid.'::'.$value['partID'].'::'.$value['is_winmail'],
+							'label' => lang('Save'),
+						));
+						$vfs_save = "<a href='#' onclick=\"egw_openWindowCentered('$link_vfs_save','vfs_save_attachment','640','570',window.outerWidth/2,window.outerHeight/2); return false;\">$url_img_vfs</a>";
+						// add save-all icon for first attachment
+						if (!$key && count($attachments) > 1)
+						{
+							foreach ($attachments as $key => $value)
+							{
+								//$rowID
+								$ids["id[$key]"] = $rowID.'::'.$value['partID'].'::'.$value['is_winmail'].'::'.$value['name'];
+							}
+							$link_vfs_save = egw::link('/index.php',array(
+								'menuaction' => 'filemanager.filemanager_select.select',
+								'mode' => 'select-dir',
+								'method' => 'mail.mail_ui.vfsSaveAttachment',
+								'label' => lang('Save all'),
+							)+$ids);
+							$vfs_save .= "\n<a href='#' onclick=\"egw_openWindowCentered('$link_vfs_save','vfs_save_attachment','640','530',window.outerWidth/2,window.outerHeight/2); return false;\">$url_img_vfs_save_all</a>";
+						}
+						//$this->t->set_var('vfs_save',$vfs_save);
+					}
+					else
+					{
+						//$this->t->set_var('vfs_save','');
+					}
+					//$this->t->parse('attachment_rows','message_attachement_row',True);
+				}
+			} else {
+				//$this->t->set_var('attachment_rows','');
+			}
+
 		$webserverURL	= $GLOBALS['egw_info']['server']['webserver_url'];
 
 		$nonDisplayAbleCharacters = array('[\016]','[\017]',
@@ -1535,10 +1689,11 @@ unset($query['actions']);
 		$subject = mail_bo::htmlspecialchars($this->mail_bo->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false),
             mail_bo::$displayCharset);
 		if (empty($subject)) $subject = lang('no subject');
-
-$content['msg'] = (is_array($error_msg)?implode("<br>",$error_msg):$error_msg);
+$content['msg'] = $subject.(is_array($error_msg)?implode("<br>",$error_msg):$error_msg);
 $content['mail_displaysubject'] = $subject;
 $content['mail_displaybody'] = $mailBody;
+//_debug_array($attachments);
+$content['mail_displayattachments'] = array2string($attachments);
 $readonlys = $preserv = $content;
 		echo $etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
 	}

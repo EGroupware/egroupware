@@ -305,6 +305,7 @@ input[type=button] {
 }
 
 .mailDisplay, #mailPreview {
+	overflow: hidden;
 	position: relative;
 	margin-top: 3px;
 }
@@ -313,13 +314,66 @@ input[type=button] {
 	right: 0;
 	top: 0;
 }
-.mailDisplayContainer, #mailPreviewContainer {
+#mailPreviewContainer {
 	position: absolute;
 	border: 1px solid silver;
 	top: 55px;
 	bottom: 0;
-	left: 0;
+	left: 3px;
 	right: 0;
+}
+.mailDisplayContainer, .mailDisplayAttachments {
+	display: block;
+	display: -moz-inline-stack;
+	display: -moz-box;
+	width: 99%;
+	overflow: hidden;
+	overflow-x: auto;
+	left: 3px;
+	right: 3px;
+}
+.mailDisplayContainer {
+	position: fixed;
+	overflow: hidden;
+	overflow-y: auto;
+	border: 1px solid silver;
+	top: 60px;
+	bottom: 100px;	
+}
+.mailDisplayAttachments {
+	background-color:#efefdf; 
+	max-height: 10%;
+	position: fixed;
+	bottom: 26px;
+	border: 1px solid red;
+	border-bottom: 0px;
+	opacity: 1;
+	-moz-opacity:1:
+	filter: Alpha(opacity=100);
+}
+#divGenTime {
+	background-color:#efefdf; 
+	max-height: 10%;
+	position: fixed;
+	bottom: 1px;
+	border: 1px solid red;
+	border-top: 1px solid black;
+	left: 3px;
+	right: 3px;
+	opacity: 1;
+	-moz-opacity:1:
+	filter: Alpha(opacity=100);
+}
+.mailDisplayHeaders {
+	overflow: hidden;
+}
+.mailDisplayHeaderSection {
+	position: absolute;
+	top: 0px;
+
+}
+div.mailDisplayHeaders > div:first-parent {
+	overflow: hidden;
 }
 div.mailDisplayHeaders > span:first-child, div.mailPreviewHeaders > span:first-child {
 	width: 5em;
