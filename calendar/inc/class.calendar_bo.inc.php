@@ -743,7 +743,7 @@ class calendar_bo
 			if ($event['whole_day'])
 			{
 				$time = new egw_time($event['end'], egw_time::$user_timezone);
-				$time =& $this->so->startOfDay($time);
+				$time = $this->so->startOfDay($time);
 				$time->setTime(23, 59, 59);
 				$end = $this->date2ts($time,true);
 			}
@@ -938,7 +938,7 @@ class calendar_bo
 	{
 		if ((int) $this->debug >= 3 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_recurrences')
 		{
-			$this->debug_message(__METHOD__.'(%1,%2,%3,&$event)',true,$event,$start,$end);
+			$this->debug_message(__METHOD__.'(%1,%2,%3,&$events)',true,$event,$start,$end);
 		}
 		$start_in = $start; $end_in = $end;
 
@@ -965,7 +965,6 @@ class calendar_bo
 			}
 
 			$ts_end = $ts + $event_length;
-
 			// adjust ts_end for whole day events in case it does not fit due to
 			// spans over summer/wintertime adjusted days
 			if($event['whole_day'] && ($arr_end = $this->date2array($ts_end)) &&

@@ -999,27 +999,27 @@ class calendar_boupdate extends calendar_bo
 			if (!empty($event['start']))
 			{
 				$time = new egw_time($event['start'], egw_time::$user_timezone);
-				$time =& $this->so->startOfDay($time);
+				$time = $this->so->startOfDay($time);
 				$event['start'] = egw_time::to($time, 'ts');
 				$save_event['start'] = $time;
 			}
 			if (!empty($event['end']))
 			{
 				$time = new egw_time($event['end'], egw_time::$user_timezone);
-				$time =& $this->so->startOfDay($time);
 				$time->setTime(23, 59, 59);
 				$event['end'] = egw_time::to($time, 'ts');
+				$save_event['end'] = $time;
 			}
 			if (!empty($event['recurrence']))
 			{
 				$time = new egw_time($event['recurrence'], egw_time::$user_timezone);
-				$time =& $this->so->startOfDay($time);
+				$time = $this->so->startOfDay($time);
 				$event['recurrence'] = egw_time::to($time, 'ts');
 			}
 			if (!empty($event['recur_enddate']))
 			{
 				$time = new egw_time($event['recur_enddate'], egw_time::$user_timezone);
-				$time =& $this->so->startOfDay($time);
+				$time = $this->so->startOfDay($time);
 				$event['recur_enddate'] = egw_time::to($time, 'ts');
 				$time->setUser();
 				$save_event['recur_enddate'] = egw_time::to($time, 'ts');
