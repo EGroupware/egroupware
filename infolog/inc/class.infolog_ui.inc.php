@@ -503,9 +503,9 @@ class infolog_ui
 		}
 		if (!$action)
 		{
-			$action = $values['action'] ? $values['action'] : get_var('action',array('POST','GET'));
-			$action_id = $values['action_id'] ? $values['action_id'] : get_var('action_id',array('POST','GET'));
-			$action_title = $values['action_title'] ? $values['action_title'] : get_var('action_title',array('POST','GET'));
+			$action = (is_array($values) && $values['action']) ? $values['action'] : get_var('action',array('POST','GET'));
+			$action_id = (is_array($values) && $values['action_id']) ? $values['action_id'] : get_var('action_id',array('POST','GET'));
+			$action_title = (is_array($values) && $values['action_title']) ? $values['action_title'] : get_var('action_title',array('POST','GET'));
 
 			if ($values === 'reset_action_view')	// only read action from session, if not called by index.php
 			{
