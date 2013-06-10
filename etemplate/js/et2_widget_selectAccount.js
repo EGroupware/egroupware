@@ -88,7 +88,7 @@ var et2_selectAccount = et2_selectbox.extend(
 	 * Tell et2 widget framework where to go
 	 */
 	getDOMNode: function(_sender) {
-		if(_sender == this.search_widget)
+		if(this.search_widget != null && _sender == this.search_widget)
 		{
 			return this.search != null ? this.search[0] : this.search_widget._parent.getDOMNode();
 		}
