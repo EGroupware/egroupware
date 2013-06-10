@@ -265,8 +265,8 @@ app.home = AppJS.extend(
 			.on("resizestop", function(event, ui) {
 				$portlet_container.data("gridster").resize_widget(
 					ui.element,
-					Math.round(ui.size.width / this.GRID),
-					Math.round(ui.size.height / this.GRID)
+					Math.round(ui.size.width / app.home.GRID),
+					Math.round(ui.size.height / app.home.GRID)
 				);
 			});
 	},
