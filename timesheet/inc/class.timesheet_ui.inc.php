@@ -391,10 +391,16 @@ class timesheet_ui extends timesheet_bo
 				),
 		);
 		$sel_options['status'] = $this->field2label;
+		if (empty($content['ts_title']))
+		{
+			$content['ts_title'] = $content['ts_title_blur'] = ($preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur']);
+		}
 
 		// the actual title-blur is either the preserved title blur (if we are called from infolog entry),
 		// or the preserved project-blur comming from the current selected project
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
+		// make sure that ts_title is shown (if set), by unsetting the blur text
+		if (!empty($content['ts_title']) && $content['ts_title']==$content['ts_title_blur']) unset($content['ts_title_blur']);
 		$readonlys = array(
 			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(EGW_ACL_DELETE),
 			'button[edit]'     => !$view || !$this->check_acl(EGW_ACL_EDIT),
