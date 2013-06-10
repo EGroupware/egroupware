@@ -861,7 +861,7 @@ class felamimail_hooks
 			$_GET['menuaction'] != 'felamimail.uifelamimail.redirectToEmailadmin') {
 			if (isset($_GET["mailbox"]))
 			{
-				$bofelamimail->sessionData['mailbox'] = urldecode($_GET["mailbox"]);
+				$bofelamimail->sessionData['mailbox'] = (!empty($_GET["mailbox"])?urldecode($_GET["mailbox"]):'INBOX');
 				$bofelamimail->sessionData['startMessage']= 1;
 				$bofelamimail->sessionData['sort']    = $preferences->preferences['sortOrder'];
 				$bofelamimail->sessionData['activeFilter']= -1;
@@ -888,7 +888,7 @@ class felamimail_hooks
 		// select account box, treeview, we use a whileloop as we may want to break out
 		while($showMainScreenStuff) {
 			$bofelamimail->restoreSessionData();
-			$mailbox 		= $bofelamimail->sessionData['mailbox'];
+			$mailbox 		= (!empty($bofelamimail->sessionData['mailbox'])?$bofelamimail->sessionData['mailbox']:'INBOX');
 			//_debug_array($mailbox);
 
 			$icServerID = (int)$bofelamimail->profileID;
