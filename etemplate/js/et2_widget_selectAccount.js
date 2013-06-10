@@ -162,9 +162,20 @@ var et2_selectAccount = et2_selectbox.extend(
 
 			// Clear search box after select
 			var old_select = this.search_widget.select;
-			this.search_widget.select = function() {
+			var self = this;
+			this.search_widget.select =  function(e, selected) {
+				var current = self.getValue();
+				
+				// This one is important, it makes sure the option is there
 				old_select.apply(this, arguments);
+
+				// Add quick search selection into current selection
+				current.push(selected.item.value);
+
+				// Clear search
 				this.search.val('');
+
+				self.set_value(current);
 			};
 
 			// Put search results as a DOM sibling of the options, for proper display
