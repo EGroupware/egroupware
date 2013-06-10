@@ -918,7 +918,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			select.set_select_options(columns);
 			select.set_value(columns_selected);
 
-			var autoRefresh = et2_createWidget("select", {"empty_label":"Refresh"}, this);
+			var autoRefresh = et2_createWidget("select", {
+				"empty_label":"Refresh",
+			}, this);
 			autoRefresh.set_id("nm_autorefresh");
 			autoRefresh.set_select_options({
 				'': "off",
@@ -927,6 +929,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				300: "5 Minutes"
 			});
 			autoRefresh.set_value(this._get_autorefresh());
+			autoRefresh.set_statustext(egw.lang("Automatically refresh list"));
 
 			var defaultCheck = et2_createWidget("select", {"empty_label":"Preference"}, this);
 			defaultCheck.set_id('nm_col_preference');
