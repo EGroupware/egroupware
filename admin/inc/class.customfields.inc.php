@@ -145,6 +145,7 @@ class customfields
 			$referer = $GLOBALS['egw']->common->get_referer();
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$this->appname]['title'].' - '.lang('Custom fields');
+		$sel_options = array();
 		$readonlys = array();
 
 		if($this->manage_content_types)
@@ -155,8 +156,15 @@ class customfields
 				$this->types2[$type] = $entry['name'];
 			}
 			$content['content_types']['options-types'] = $this->types2;
-			$this->tmpl->children[0]['data'][3]['A']['name'] = $this->appname.'.admin.types';
-			$this->tmpl->children[0]['data'][3]['A']['size'] = 'content_type_options';
+			$sel_options['types'] = $this->types2;
+			if($this->tmpl instanceof etemplate_widget)
+			{
+			}
+			else
+			{
+				$this->tmpl->children[0]['data'][3]['A']['name'] = $this->appname.'.admin.types';
+				$this->tmpl->children[0]['data'][3]['A']['size'] = 'content_type_options';
+			}
 			$content['content_type_options'] = $this->content_types[$this->content_type]['options'];
 			$content['content_type_options']['type'] = $this->content_types[$this->content_type]['name'];
 			if ($this->content_types[$this->content_type]['non_deletable'])
@@ -205,9 +213,8 @@ class customfields
 		$readonlys['fields']["delete[]"] = True;
 		//echo '<p>uicustomfields.edit(content = <pre style="text-align: left;">'; print_r($content); echo "</pre>\n";
 		//echo 'readonlys = <pre style="text-align: left;">'; print_r($readonlys); echo "</pre>\n";
-		$sel_options = array(
-			'type2' => $this->types2 + array('tmpl' => 'template'),
-		);
+		$sel_options['type2'] = $this->types2 + array('tmpl' => 'template');
+
 		// do NOT allow to delete original contact content-type for addressbook,
 		// as it only creates support problems as users incidently delete it
 		if ($this->appname == 'addressbook' && $this->content_type == 'n')
