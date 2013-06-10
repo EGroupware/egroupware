@@ -506,6 +506,11 @@ class addressbook_ui extends addressbook_bo
 					'fieldValue' => '!',	// enable if list != ''
 				),
 			);
+			if(is_subclass_of('etemplate', 'etemplate_new'))
+			{
+				$actions['lists']['children']['remove_from_list']['fieldId'] = 'filter2';
+				$actions['lists']['children']['delete_list']['fieldId'] = 'filter2';
+			}
 		}
 		// move to AB
 		if (($move2addressbooks = $this->get_addressbooks(EGW_ACL_ADD)))	// do we have addressbooks, we should

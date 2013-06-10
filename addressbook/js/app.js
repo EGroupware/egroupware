@@ -185,6 +185,6 @@ function add_new_list(owner)
 			'menuaction': 'addressbook.addressbook_ui.index',
 			'add_list': name,
 			'owner': owner
-		}));
+		}), '_self');
 	}
 }
