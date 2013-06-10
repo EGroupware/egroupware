@@ -249,11 +249,31 @@ function nm_enableId(_action, _senders, _target)
  */
 function nm_compare_field(_action, _senders, _target)
 {
+	var value = false;
+
+	// This probably won't work...
 	var field = document.getElementById(_action.data.fieldId);
 
+	// Use widget
+	if (!field)
+	{
+		var nextmatch = _action.data.nextmatch;
+		if(!nextmatch && _senders.length)
+		{
+			// Pull it from deep within, where it was stuffed in et2_dataview_controller_selection._attachActionObject()
+			nextmatch = _senders[0]._context._widget;
+		}
+		if(!nextmatch) return false;
+
+		field = nextmatch.getWidgetById(_action.data.fieldId);
+		value = field.getValue();
+	}
+	else
+	{
+		value = $j(field).val();
+	}
 	if (!field) return false;
 
-	var value = $j(field).val();
 	
 	if (_action.data.fieldValue.substr(0,1) == '!')
 		return value != _action.data.fieldValue.substr(1);
