@@ -7,7 +7,7 @@
  * @package api
  * @subpackage cache
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2009-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2009-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -74,6 +74,13 @@ class egw_cache
 	static $default_provider;	// = array('egw_cache_files');// array('egw_cache_memcache','localhost');
 
 	/**
+	 * Maximum expiration time, if set unlimited expiration (=0) or bigger expiration times are replaced with that time
+	 *
+	 * @var int
+	 */
+	static $max_expiration;
+
+	/**
 	 * Set some data in the cache
 	 *
 	 * @param string $level use egw_cache::(TREE|INSTANCE|SESSION|REQUEST)
@@ -97,6 +104,11 @@ class egw_cache
 				if (!($provider = self::get_provider($level)))
 				{
 					return false;
+				}
+				// limit expiration to configured maximum time
+				if (isset(self::$max_expiration) && (!$expiration || $expiration > self::$max_expiration))
+				{
+					$expiration = self::$max_expiration;
 				}
 				return $provider->set(self::keys($level,$app,$location),$data,$expiration);
 		}
@@ -160,6 +172,11 @@ class egw_cache
 						if (is_null($data) && !is_null($callback))
 						{
 							$data = call_user_func_array($callback,$callback_params);
+							// limit expiration to configured maximum time
+							if (isset(self::$max_expiration) && (!$expiration || $expiration > self::$max_expiration))
+							{
+								$expiration = self::$max_expiration;
+							}
 							$provider->set($keys,$data,$expiration);
 						}
 					}
