@@ -454,7 +454,7 @@ var et2_selectbox = et2_inputWidget.extend(
 	},
 
 	set_value: function(_value) {
-		if(typeof _value == "string" && this.options.multiple && _value.match(/[,0-9]+$/) !== null)
+		if(typeof _value == "string" && this.options.multiple && _value.match(/[,0-9A-Za-z]+$/) !== null)
 		{
 			_value = _value.split(',');
 		}
