@@ -214,11 +214,11 @@ var et2_selectbox = et2_inputWidget.extend(
 		// content array.
 		if (jQuery.isEmptyObject(_attrs["select_options"]))
 		{
-			// Again, try last name part at top level
-			var content_options = this.getArrayMgr('content').getRoot().getEntry(name_parts[name_parts.length-1]);
 			// If that didn't work, check according to ID
 			_attrs["select_options"] = content_options ? content_options : this.getArrayMgr('content')
 				.getEntry("options-" + this.id);
+			// Again, try last name part at top level - this is usually just the value
+			var content_options = this.getArrayMgr('content').getRoot().getEntry(name_parts[name_parts.length-1]);
 		}
 
 		// Default to an empty object
