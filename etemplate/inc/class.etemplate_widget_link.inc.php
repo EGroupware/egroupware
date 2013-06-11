@@ -63,6 +63,8 @@ class etemplate_widget_link extends etemplate_widget
 			if(!is_array(explode(':',$value))) {
 				throw new egw_exception_wrong_parameter("Wrong value sent to link widget, needs to be an array. ".array2string($value));
 			}
+			list($app, $id) = explode(':', $value,2);
+			$value = array('app' => $app, 'id' => $id);
 		}
 		elseif (!$value)
 		{
