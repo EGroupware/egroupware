@@ -277,6 +277,11 @@ class etemplate_widget
 				$class_name = 'etemplate_widget';
 			}
 		}
+
+		if(!$xml)
+		{
+			$xml = "<$type id='$id'/>";
+		}
 		//error_log(__METHOD__."('$type', ..., '$id') using $class_name");
 
 		// currently only overlays can contain templates, other widgets can only reference to templates via id
@@ -380,6 +385,19 @@ class etemplate_widget
 		}
 		foreach($this->children as $child)
 		{
+			// If type has something that can be expanded, we need to expand it so the correct method is run
+			if(strpos($child->attrs['type'], '@') !== false || strpos($child->attrs['type'], '$') !== false)
+			{
+				$type = self::expand_name($child->attrs['type'],$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+				$id = self::expand_name($child->id,$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+				$attrs = $child->attrs;
+				unset($attrs['type']);
+				$expanded_child = self::factory($type, false,$id);
+				$expanded_child->id = $id;
+				$expanded_child->type = $type;
+				$expanded_child->attrs = $attrs + array('type' => $type);
+				$child = $expanded_child;
+			}
 			$child->run($method_name, $params, $respect_disabled);
 		}
 	}
@@ -791,6 +809,7 @@ class etemplate_widget
 	public function &setElementAttribute($name,$attr,$val)
 	{
 		$ref =& self::$request->modifications[$name][$attr];
+		$this->attrs[$attr] = $val;
 		if (!is_null($val)) $ref = $val;
 
 		//error_log(__METHOD__."('$name', '$attr', ".array2string($val).')');

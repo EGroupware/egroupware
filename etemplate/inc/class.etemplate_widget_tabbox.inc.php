@@ -14,8 +14,35 @@
 /**
  * eTemplate Tabs widget stacks multiple sub-templates and lets you switch between them
  */
-class etemplate_widget_tabbox extends etemplate_widget_box
+class etemplate_widget_tabbox extends etemplate_widget
 {
+	/**
+         * Fill additional tabs
+         *
+         * @param string $cname
+         */
+        public function beforeSendToClient($cname)
+        {
+		if($this->attrs['tabs'])
+		{
+			$this->children[1]->children = array();
+			foreach($this->attrs['tabs'] as $tab)
+			{
+				if($tab['id'])
+				{
+					$template= clone etemplate_widget_template::instance($tab['template']);
+					$template->attrs['content'] = $tab['id'];
+					$this->children[1]->children[] = $template;
+					unset($template);
+					/* This doesn't work for some reason
+					$tab_valid =& self::get_array($validated, $tab['id'], true);
+					$tab_valid = $content[$tab['id']];
+					*/
+				}
+			}
+		}
+	}
+
 	/**
 	 * Validate input - just pass through, tabs doesn't care
 	 *
@@ -41,16 +68,19 @@ class etemplate_widget_tabbox extends etemplate_widget_box
 			}
 
 			// Make sure additional tabs are processed
+			$this->children[1]->children = array();
 			foreach($this->attrs['tabs'] as $tab)
 			{
 				if($tab['id'] && $content[$tab['id']])
 				{
+					$template= clone etemplate_widget_template::instance($tab['template']);
+					$template->attrs['content'] = $tab['id'];
+					$this->children[1]->children[] = $template;
+					unset($template);
 					/* This doesn't work for some reason
-					$template = etemplate_widget_template::instance($tab['template']);
-					$template->run('validate', array($tab['id'], $expand, $content, &$validated), true);
-					*/
 					$tab_valid =& self::get_array($validated, $tab['id'], true);
 					$tab_valid = $content[$tab['id']];
+					*/
 				}
 			}
 			$valid = $value;
