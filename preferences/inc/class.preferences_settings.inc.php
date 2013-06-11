@@ -327,7 +327,7 @@ class preferences_settings
 					break;
 				case 'multiselect':
 					$setting['type'] = 'select';
-					$tpl->setElementAttribute($tab.'['.$setting['name'].']', 'multiple', 5);
+					$tpl->setElementAttribute($tab.'['.$setting['name'].']', 'rows', 5);
 					if (!isset($setting['size'])) $setting['size'] = '5';	// old eT
 					break;
 				case 'color':
