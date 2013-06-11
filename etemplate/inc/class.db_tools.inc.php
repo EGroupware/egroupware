@@ -4,7 +4,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-9 by RalfBecker@outdoor-training.de
+ * @copyright 2002-13 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage tools
@@ -70,6 +70,26 @@ class db_tools
 		'timestamp'	=> 'timestamp',
 		'bool'      => 'boolean',
 //		'abstime'   => 'abstime (mysql:timestamp)',
+	);
+	/**
+	 * Available meta-types
+	 *
+	 * @var array
+	 */
+	protected static $meta_types = array(
+		'' => '',
+		'account' => 'user or group',
+		'account-commasep' => 'multiple comma-separated users or groups',
+		'account-abs' => 'user or group (with positiv id)',
+		'user' => 'a single user',
+		'user-commasep' => 'multiple comma-separated users',
+		'user-serialized' => 'multiple serialized users or groups (do NOT use!)',
+		'group' => 'a single group',
+		'group-commasep' => 'multiple comma-separated groups',
+		'group-abs' => 'single group (with positive id)',
+		'timestamp' => 'unix timestamp',
+		'category' => 'category id',
+		'percent' => '0 - 100',
 	);
 
 	/**
@@ -223,8 +243,32 @@ class db_tools
 		}
 		$sel_options = array(
 			'table_name' => $table_names,
-			'type' => $this->types
+			'type' => $this->types,
 		);
+		foreach(self::$meta_types as $value => $title)
+		{
+			$sel_options['meta'][$value] = $value ? array(
+				'label' => $value,
+				'title' => $title,
+			) : $title;
+		}
+		foreach($this->data[$this->table]['fd'] as $col => $data)
+		{
+			$meta = $title = $data['meta'];
+			if (empty($meta)) continue;
+			if (is_array($meta))
+			{
+				$this->data[$this->table]['fd'][$col]['meta'] = $meta = serialize($meta);
+				$title = $this->write_array($data['meta'], 0);
+			}
+			if (!isset($sel_options['meta'][$meta]))
+			{
+				$sel_options['meta'][$meta] = array(
+					'label' => lang('Custom'),
+					'title' => $title,
+				);
+			}
+		}
 		if ($this->table != '' && isset($this->data[$this->table]))
 		{
 			$content += $this->table2content($this->data[$this->table],$sel_options['Index'],$add_index);
@@ -492,6 +536,7 @@ class db_tools
 					{
 						case 'default':
 						case 'type':	// selectbox ensures type is not empty
+						case 'meta':
 						case 'precision':
 						case 'scale':
 						case 'comment':
@@ -625,7 +670,20 @@ class db_tools
 		{
 			if (!is_int($key))
 			{
-				$def .= "'$key' => ";
+				if (strpos($key, "'") !== false && strpos($key, '"') === false)
+				{
+					$def .= '"'.$key.'"';
+				}
+				else
+				{
+					$def .= "'".addslashes($key)."'";
+				}
+				$def .= ' => ';
+			}
+			// unserialize custom meta values
+			if ($key === 'meta' && is_string($val) && (($v = @unserialize($val)) !== false || $val === serialize(false)))
+			{
+				$val = $v;
 			}
 			if (is_array($val))
 			{
@@ -637,9 +695,13 @@ class db_tools
 				{
 					$def .= $val ? 'True' : 'False';
 				}
+				elseif (strpos($val, "'") !== false && strpos($val, '"') === false)
+				{
+					$def .= '"'.$val.'"';
+				}
 				else
 				{
-					$def .= "'$val'";
+					$def .= "'".addslashes($val)."'";
 				}
 			}
 			if ($n < count($arr)-1)
@@ -1044,6 +1106,7 @@ function $app"."_upgrade$old_version_()
 				'nullable' => !isset($props['nullable']) || !!$props['nullable'],
 				'default' => (string)$props['default'],
 				'comment' => (string)$props['comment'],
+				'meta' => is_array($props['meta']) ? serialize($props['meta']) : $props['meta'],
 			);
 		}
 		return array(
