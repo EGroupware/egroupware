@@ -857,7 +857,7 @@ et2_register_widget(et2_link_entry, ["link-entry"]);
 var et2_link = et2_valueWidget.extend([et2_IDetachedDOM], 
 {
 	attributes: {
-		"application": {
+		"only_app": {
 			"name": "Application",
 			"type": "string",
 			"default": "",
@@ -871,7 +871,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 			"ignore": true
 		}
 	},
-	legacyOptions: ["application"],
+	legacyOptions: ["only_app"],
 	
 	/**
 	 * Constructor
@@ -894,7 +894,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 	},
 
 	set_value: function(_value) {
-		if(typeof _value != 'object' && _value && !this.options.application)
+		if(typeof _value != 'object' && _value && !this.options.only_app)
 		{
 			if(_value.indexOf(':') >= 0)
 			{
@@ -912,7 +912,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 		else if (typeof _value != "object")
 		{
 			_value = {
-				app:	this.options.application,
+				app:	this.options.only_app,
 				id:	_value
 			};
 		}
