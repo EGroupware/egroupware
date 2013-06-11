@@ -129,8 +129,10 @@ class etemplate_widget_template extends etemplate_widget
 	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
 		$cname =& $params[0];
+		$old_cname = $params[0];
 		if ($this->attrs['content']) $cname = self::form_name($cname, $this->attrs['content'], $params[1]);
 		parent::run($method_name, $params, $respect_disabled);
+		$params[0] = $old_cname;
 	}
 }
 
