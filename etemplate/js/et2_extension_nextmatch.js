@@ -938,6 +938,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				'reset':   {label: 'Reset', title:"Reset all user's column preferences"},
 				'force':   {label: 'Force', title:'Force column preference so users cannot change it'}
 			});
+			defaultCheck.set_value(this.options.settings.columns_forced ? 'force': '');
 
 			var okButton = et2_createWidget("buttononly", {}, this);
 			okButton.set_label(this.egw().lang("ok"));
@@ -995,7 +996,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				// Auto refresh
 				self._set_autorefresh(autoRefresh.get_value());
 
-				// Set default?
+				// Set default or clear forced?
 				if(defaultCheck.get_value())
 				{
 					self.getInstanceManager().submit();

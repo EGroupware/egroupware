@@ -217,6 +217,8 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			// Need to check admin too, or it will be impossible to turn off
 			!$GLOBALS['egw_info']['user']['apps']['admin']
 		);
+		// Use this flag to indicate to the admin that columns are forced (and that's why they can't change)
+		$value['columns_forced'] = (boolean)$GLOBALS['egw']->preferences->forced[$app][$pref_name];
 
 		// todo: no need to store rows in request, it's enought to send them to client
 
@@ -830,7 +832,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			{
 				$GLOBALS['egw']->preferences->delete($app,$pref_name,'forced');
 				$GLOBALS['egw']->preferences->delete($app,$refresh_pref_name,'forced');
-				$GLOBALS['egw']->preferences->save_repository(false,'forced');
+				$GLOBALS['egw']->preferences->save_repository(true,'forced');
 			}
 
 			// Set columns + refresh as default for all users
@@ -841,16 +843,18 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			$GLOBALS['egw']->preferences->add($app,$pref_name,is_array($cols) ? implode(',',$cols) : $cols, $pref_level);
 
 			// Autorefresh
-			$refresh = $prefs[$app][$refresh_pref_name];
+			$refresh = $value['nm_autorefresh'];
 			$GLOBALS['egw']->preferences->add($app,$refresh_pref_name,(int)$refresh,$pref_level);
 
-			$GLOBALS['egw']->preferences->save_repository(false,$pref_level);
-			$prefs = $GLOBALS['egw']->preferences->read();
+			$GLOBALS['egw']->preferences->save_repository(true,$pref_level);
+			$prefs = $GLOBALS['egw']->preferences->read(true);
 
 			if($value['nm_col_preference'] == 'reset')
 			{
 				// Clear column + refresh preference so users go back to default
 				$GLOBALS['egw']->preferences->delete_preference($app,$pref_name);
+				$GLOBALS['egw']->preferences->delete_preference($app,$pref_name.'-size');
+				$GLOBALS['egw']->preferences->delete_preference($app,$refresh_pref_name);
 			}
 		}
 		unset($value['nm_col_preference']);
