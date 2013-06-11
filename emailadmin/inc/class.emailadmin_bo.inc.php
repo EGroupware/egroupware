@@ -412,15 +412,6 @@ class emailadmin_bo extends so_sql
 	static public function getSMTPServerTypes($extended=true)
 	{
 		$retData = array();
-/*		foreach(self::$SMTPServerType as $key => $value)
-		{
-			if ($extended)
-			{
-				$retData[$key]['fieldNames']	= isset($value['fieldNames'])?$value['fieldNames']:self::$supportedSMTPFields;
-				$retData[$key]['description']	= isset($value['description'])?$value['description']:$key;
-				$retData[$key]['classname']	= isset($value['classname'])?$value['classname']:$key;
-			}
-		}*/
 		foreach($GLOBALS['egw']->hooks->process(array(
 			'location' => 'smtp_server_types',
 			'extended' => $extended,
@@ -450,20 +441,6 @@ class emailadmin_bo extends so_sql
 	static public function getIMAPServerTypes($extended=true)
 	{
 		$retData = array();
-/*		foreach(self::$IMAPServerType as $key => $value)
-		{
-			if ($extended)
-			{
-				$retData[$key]['fieldNames']	= isset($value['fieldNames'])?$value['fieldNames']:self::$supportedIMAPFields;
-				$retData[$key]['description']	= isset($value['description'])?$value['description']:$key;
-				$retData[$key]['protocol']	= isset($value['protocol'])?$value['protocol']:'imap';
-				$retData[$key]['classname']	= isset($value['classname'])?$value['classname']:$key;
-			}
-			else
-			{
-				$retData[$key]	= $value['description'];
-			}
-		}*/
 		foreach($GLOBALS['egw']->hooks->process(array(
 			'location' => 'imap_server_types',
 			'extended' => $extended,

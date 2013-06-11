@@ -102,6 +102,10 @@
 			{
 				if (isset($this->db_cols[$key])) $key = $this->db_cols[$key];
 
+				if ($key == 'smtpType' && substr($val, 8) == 'stylite_')	// convert old epl names
+				{
+					$val = $val == 'stylite_postfixsuse' ? 'emailadmin_smtp_suse' : 'emailadmin_smtp_mandriva';
+				}
 				$vals[$key] = $val;
 			}
 			return $vals;
