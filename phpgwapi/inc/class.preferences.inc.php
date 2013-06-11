@@ -310,6 +310,7 @@ class preferences
 		//
 		foreach($this->data as $app => $data)
 		{
+			if(!is_array($data)) continue;
 			foreach($data as $key => $val)
 			{
 				if (!is_array($val) && strpos($val,'$$') !== False)
@@ -715,7 +716,7 @@ class preferences
 		foreach($this->db->select($this->table,'*',$where,__LINE__,__FILE__) as $row)
 		{
 			$value = unserialize($row['preference_value']);
-			if($value[$name])
+			if(array_key_exists($name, $value))
 			{
 				unset($value[$name]);
 				$this->quote($value);	// this quote-ing is for serialize, not for the db
@@ -725,6 +726,8 @@ class preferences
 					'preference_owner' => $row['preference_owner'],
 					'preference_app'   => $row['preference_app'],
 				),__LINE__,__FILE__);
+				// update instance-wide cache
+				egw_cache::setInstance(__CLASS__, $row['preference_owner'], $value);
 			}
 		}
 		$GLOBALS['egw']->db->transaction_commit();
