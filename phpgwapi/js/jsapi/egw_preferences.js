@@ -88,8 +88,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function() {
 		 */
 		set_preference: function(_app, _name, _val)
 		{
-			// TODO: Queue
-			xajax_doXMLHTTP('home.egw_framework.ajax_set_preference.template', _app, _name, _val);
+			this.jsonq('home.egw_framework.ajax_set_preference.template',[_app, _name, _val]);
 
 			// update own preference cache, if _app prefs are loaded (dont update otherwise, as it would block loading of other _app prefs!)
 			if (typeof prefs[_app] != 'undefined') prefs[_app][_name] = _val;
