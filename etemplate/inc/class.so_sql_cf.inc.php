@@ -1,12 +1,12 @@
 <?php
 /**
- * eGroupWare generalized SQL Storage Object with build in custom field support
+ * EGroupware generalized SQL Storage Object with build in custom field support
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2009 by RalfBecker@outdoor-training.de
+ * @copyright 2009-13 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -206,16 +206,17 @@ class so_sql_cf extends so_sql
 	* saves custom field data
 	*
 	* @param array $data data to save (cf's have to be prefixed with self::CF_PREFIX = #)
+	* @param array $extra_cols=array()
 	* @return bool false on success, errornumber on failure
 	*/
-	function save_customfields($data)
+	function save_customfields($data, array $extra_cols=array())
 	{
 		foreach ((array)$this->customfields as $name => $options)
 		{
 			if (!isset($data[$field = $this->get_cf_field($name)])) continue;
 
 			$where = array(
-				$this->extra_id    => $data[$this->autoinc_id],
+				$this->extra_id    => isset($data[$this->autoinc_id]) ? $data[$this->autoinc_id] : $data[$this->db_key_cols[$this->autoinc_id]],
 				$this->extra_key   => $name,
 			);
 			$is_multiple = $this->is_multiple($name);
@@ -226,9 +227,11 @@ class so_sql_cf extends so_sql
 				$this->db->delete($this->extra_table,$where,__LINE__,__FILE__,$this->app);
 				if (empty($data[$field])) continue;	// nothing else to do for empty values
 			}
-			foreach($is_multiple && !is_array($data[$field]) ? explode(',',$data[$field]) : (array)$data[$field] as $value)
+			foreach($is_multiple && !is_array($data[$field]) ? explode(',',$data[$field]) :
+				// regular custom fields (!$is_multiple) eg. addressbook store multiple values comma-separated
+				(array)(!$is_multiple && is_array($data[$field]) ? implode(',', $data[$field]) : $data[$field]) as $value)
 			{
-				if (!$this->db->insert($this->extra_table,array($this->extra_value => $value),$where,__LINE__,__FILE__,$this->app))
+				if (!$this->db->insert($this->extra_table,array($this->extra_value => $value)+$extra_cols,$where,__LINE__,__FILE__,$this->app))
 				{
 					return $this->db->Errno;
 				}
@@ -590,11 +593,11 @@ class so_sql_cf extends so_sql
 				elseif(is_int($name) && $this->is_cf($val))	// lettersearch: #cfname LIKE 's%'
 				{
 					$_cf = explode(' ',$val);
-					foreach($_cf as $ci => $cf_np) 
+					foreach($_cf as $ci => $cf_np)
 					{
 						// building cf_name by glueing parts together (, in case someone used whitespace in their custom field names)
 						$tcf_name = ($tcf_name?$tcf_name.' ':'').$cf_np;
-						// reacts on the first one found that matches an existing customfield, should be better then the old behavior of 
+						// reacts on the first one found that matches an existing customfield, should be better then the old behavior of
 						// simply splitting by " " and using the first part
 						if ($this->is_cf($tcf_name) && ($cfn = $this->get_cf_name($tcf_name)) && array_search($cfn,(array)$_cfnames,true)!==false )
 						{
