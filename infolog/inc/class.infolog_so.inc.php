@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -599,7 +599,8 @@ class infolog_so
 			if ($val)
 			{
 				$this->db->insert($this->extra_table,array(
-						'info_extra_value'	=> is_array($val) ? serialize($val) : $val,
+						// store multivalued CalDAV properties as serialized array, everything else get comma-separated
+						'info_extra_value'	=> is_array($val) ? ($key[1] == '#' ? serialize($val) : implode(',',$val)) : $val,
 					),array(
 						'info_id'			=> $info_id,
 						'info_extra_name'	=> substr($key,1),

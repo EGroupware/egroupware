@@ -1,11 +1,11 @@
 <?php
 /**
- * Addressbook - SQL backend
+ * EGroupware : Addressbook - SQL backend
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2006-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -843,31 +843,7 @@ class addressbook_sql extends so_sql_cf
 	 */
 	function save_customfields($data)
 	{
-		foreach ((array)$this->customfields as $name => $options)
-		{
-			if (!isset($data[$field = $this->get_cf_field($name)])) continue;
-
-			$where = array(
-					$this->extra_id    => $data['id'],
-					$this->extra_key   => $name,
-				);
-			$is_multiple = $this->is_multiple($name);
-
-			// we explicitly need to delete fields, if value is empty or field allows multiple values or we have no unique index
-			if(empty($data[$field]) || $is_multiple || !$this->extra_has_unique_index)
-			{
-				$this->db->delete($this->extra_table,$where,__LINE__,__FILE__,$this->app);
-				if (empty($data[$field])) continue;     // nothing else to do for empty values
-			}
-			foreach($is_multiple && !is_array($data[$field]) ? explode(',',$data[$field]) : (array)$data[$field] as $value)
-			{
-				if (!$this->db->insert($this->extra_table,array($this->extra_value => $value, 'contact_owner' => $data['owner']),$where,__LINE__,__FILE__,$this->app))
-				{
-					return $this->db->Errno;
-				}
-			}
-		}
-		return false;   // no error
+		return parent::save_customfields($data, array('contact_owner' => $data['owner']));
 	}
 
 	/**
