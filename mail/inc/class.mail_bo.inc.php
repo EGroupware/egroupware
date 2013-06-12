@@ -4412,7 +4412,7 @@ class mail_bo
 	{
 		// some static variables to avoid fetching the same mail multiple times
 		static $uid,$part,$attachments,$structure;
-		//error_log("getAttachmentByCID:$_uid, $_cid, $_part");
+		//error_log(__METHOD__.__LINE__.":$_uid, $_cid, $_part");
 
 		if(empty($_cid)) return false;
 

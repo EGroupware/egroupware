@@ -11,6 +11,10 @@
 app.mail = AppJS.extend(
 {
 	appname: 'mail',
+	/**
+	 * et2 widget container
+	 */
+	et2: null,
 	doStatus: null,
 	mail_doTimedRefresh: false,
 	
@@ -37,6 +41,34 @@ app.mail = AppJS.extend(
 		window.setTimeout(function() {self.mail_refreshFolderStatus.apply(self);},1000);
 	},
 	
+	/**
+	 * Destructor
+	 */
+	destroy: function()
+	{
+		delete this.et2;
+		// call parent
+		this._super.apply(this, arguments);
+	},
+	
+	/**
+	 * This function is called when the etemplate2 object is loaded
+	 * and ready.  If you must store a reference to the et2 object,
+	 * make sure to clean it up in destroy().
+	 *
+	 * @param et2 etemplate2 Newly ready object
+	 */
+	et2_ready: function(et2)
+	{
+		// call parent
+		this._super.apply(this, arguments);
+
+		this.et2 = et2.widgetContainer;
+		var isMainView = false;
+		for (var t in et2.templates) if (t=='mail.index') {isMainView=true;break;};
+		if (isMainView) this.mail_disablePreviewArea(true);
+	},
+
 	/**
 	 * mail_fetchCurrentlyFocussed - implementation to decide wich mail of all the selected ones is the current
 	 * 
@@ -149,11 +181,12 @@ app.mail = AppJS.extend(
 	 */
 	mail_disablePreviewArea: function(_value) {
 		var splitter = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailSplitter');
+		if (typeof splitter == 'undefined' || splitter == null) return;
 		var splitterDN = splitter.getDOMNode();
 		// check if DOM Node has class that contains docked; then we assume the bar docked, whatever our class var states
 		for (var i=0; i < splitterDN.childNodes[1].classList.length;i++) if (splitterDN.childNodes[1].classList[i].search(/docked/)>=0) this.mail_previewAreaActive = false;
 		//if this.mail_previewAreaActive but clientHeight of childNode is 0, assume this.mail_previewAreaActive incorrect
-		if ( this.mail_previewAreaActive && splitterDN.childNodes[2].clientHeight < 15) this.mail_previewAreaActive=false;
+		if ( this.mail_previewAreaActive && splitterDN.childNodes.length > 2 && splitterDN.childNodes[2].clientHeight < 15) this.mail_previewAreaActive=false;
 		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersFrom').set_disabled(_value);
 		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersTo').set_disabled(_value);
 		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersDate').set_disabled(_value);

@@ -27,6 +27,8 @@ class mail_ui
 		'index' => True,
 		'displayHeader'	=> True,
 		'displayMessage'	=> True,
+		'displayImage'		=> True,
+		'getAttachment'		=> True,
 		'saveMessage'	=> True,
 		'vfsSaveMessage' => True,
 		'loadEmailBody'	=> True,
@@ -1483,6 +1485,7 @@ unset($query['actions']);
 	 */
 	function displayMessage()
 	{
+//_debug_array($_REQUEST);
 		if(isset($_GET['id'])) $rowID	= $_GET['id'];
 		if(isset($_GET['part'])) $partID = $_GET['part'];
 
@@ -1524,6 +1527,7 @@ unset($query['actions']);
 				$detectedCharSet=$charset2use=mail_bo::$displayCharset;
 				foreach ($attachments as $key => $value)
 				{
+//_debug_array($value);
 					#$detectedCharSet = mb_detect_encoding($value['name'].'a',strtoupper($this->displayCharset).",UTF-8, ISO-8559-1");
 					if (function_exists('mb_convert_variables')) mb_convert_variables("UTF-8","ISO-8559-1",$value['name']); # iso 2 UTF8
 					//if (mb_convert_variables("ISO-8859-1","UTF-8",$value['name'])){echo "Juhu utf8 2 ISO\n";};
@@ -1575,7 +1579,7 @@ unset($query['actions']);
 							$linkData = array
 							(
 								'menuaction'	=> 'mail.mail_ui.getAttachment',
-								'uid'		=> $rowID,
+								'id'		=> $rowID,
 								'part'		=> $value['partID'],
 								'is_winmail'    => $value['is_winmail'],
 								'mailbox'   => base64_encode($mailbox),
@@ -1601,7 +1605,7 @@ unset($query['actions']);
 							$linkData = array
 							(
 								'menuaction'	=> 'mail.mail_ui.getAttachment',
-								'uid'		=> $rowID,
+								'id'		=> $rowID,
 								'part'		=> $value['partID'],
 								'is_winmail'    => $value['is_winmail'],
 								'mailbox'   => base64_encode($mailbox),
@@ -1609,6 +1613,10 @@ unset($query['actions']);
 							$linkView = "window.location.href = '".$GLOBALS['egw']->link('/index.php',$linkData)."';";
 							break;
 					}
+error_log(__METHOD__.__LINE__.$linkView);
+					$attachmentHTML[] = '<a href="#" onclick="'.$linkView.' return false;"><b>'.
+						($value['name'] ? ( $filename ? $filename : $value['name'] ) : lang('(no subject)')).
+						'</b></a>';
 //					$this->t->set_var("link_view",$linkView);
 //					$this->t->set_var("target",$target);
 
@@ -1616,7 +1624,7 @@ unset($query['actions']);
 					(
 						'menuaction'	=> 'mail.mail_ui.getAttachment',
 						'mode'		=> 'save',
-						'uid'		=> $rowID,
+						'id'		=> $rowID,
 						'part'		=> $value['partID'],
 						'is_winmail'    => $value['is_winmail'],
 						'mailbox'   => base64_encode($mailbox),
@@ -1671,6 +1679,7 @@ unset($query['actions']);
 
 		#print "<pre>";print_r($rawheaders);print"</pre>";exit;
 		$mailBody = $this->get_load_email_data($uid, $partID, $mailbox,false);
+//error_log(__METHOD__.__LINE__.$mailBody);
 		$this->mail_bo->closeConnection();
 		$etpl = new etemplate_new('mail.display');
 
@@ -1686,6 +1695,7 @@ unset($query['actions']);
 			),
 		));
 */
+egw_framework::set_onload("");
 		$subject = mail_bo::htmlspecialchars($this->mail_bo->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false),
             mail_bo::$displayCharset);
 		if (empty($subject)) $subject = lang('no subject');
@@ -1693,10 +1703,148 @@ $content['msg'] = $subject.(is_array($error_msg)?implode("<br>",$error_msg):$err
 $content['mail_displaysubject'] = $subject;
 $content['mail_displaybody'] = $mailBody;
 //_debug_array($attachments);
-$content['mail_displayattachments'] = array2string($attachments);
+$content['mail_displayattachments'] = (count($attachments)?implode('<br>',$attachmentHTML):'');
 $readonlys = $preserv = $content;
 		echo $etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
 	}
+
+	/**
+	 * display image
+	 *
+	 * all params are passed as GET Parameters
+	 */
+	function displayImage()
+	{
+		$uid	= $_GET['uid'];
+		$cid	= base64_decode($_GET['cid']);
+		$partID = urldecode($_GET['partID']);
+		if (!empty($_GET['mailbox'])) $mailbox  = base64_decode($_GET['mailbox']);
+		//error_log(__METHOD__.__LINE__.":$uid, $cid, $partID");
+		$this->mail_bo->reopen($mailbox);
+
+		$attachment 	= $this->mail_bo->getAttachmentByCID($uid, $cid, $partID);
+
+		$this->mail_bo->closeConnection();
+
+		$GLOBALS['egw']->session->commit_session();
+
+		if(is_array($attachment)) {
+			//error_log("Content-Type: ".$attachment['type']."; name=\"". $attachment['filename'] ."\"");
+			header ("Content-Type: ". strtolower($attachment['type']) ."; name=\"". $attachment['filename'] ."\"");
+			header ('Content-Disposition: inline; filename="'. $attachment['filename'] .'"');
+			header("Expires: 0");
+			// the next headers are for IE and SSL
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			header("Pragma: public");
+
+			echo trim($attachment['attachment']);
+			exit;
+		}
+
+		$GLOBALS['egw']->common->egw_exit();
+
+		exit;
+	}
+
+	function getAttachment()
+	{
+
+		if(isset($_GET['id'])) $rowID	= $_GET['id'];
+		if(isset($_GET['part'])) $partID = $_GET['part'];
+
+		$hA = self::splitRowID($rowID);
+		$uid = $hA['msgUID'];
+		$mailbox = $hA['folder'];
+		$part		= $_GET['part'];
+		$is_winmail = $_GET['is_winmail'] ? $_GET['is_winmail'] : 0;
+
+		$this->mail_bo->reopen($mailbox);
+		#$attachment 	= $this->bofelamimail->getAttachment($this->uid,$part);
+		$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail);
+		$this->mail_bo->closeConnection();
+
+		$GLOBALS['egw']->session->commit_session();
+		if ($_GET['mode'] != "save")
+		{
+			if (strtoupper($attachment['type']) == 'TEXT/DIRECTORY')
+			{
+				$sfxMimeType = $attachment['type'];
+				$buff = explode('.',$attachment['filename']);
+				$suffix = '';
+				if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+				if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
+				$attachment['type'] = $sfxMimeType;
+				if (strtoupper($sfxMimeType) == 'TEXT/VCARD' || strtoupper($sfxMimeType) == 'TEXT/X-VCARD') $attachment['type'] = strtoupper($sfxMimeType);
+			}
+			//error_log(__METHOD__.print_r($attachment,true));
+			if (strtoupper($attachment['type']) == 'TEXT/CALENDAR' || strtoupper($attachment['type']) == 'TEXT/X-VCALENDAR')
+			{
+				//error_log(__METHOD__."about to call calendar_ical");
+				$calendar_ical = new calendar_ical();
+				$eventid = $calendar_ical->search($attachment['attachment'],-1);
+				//error_log(__METHOD__.array2string($eventid));
+				if (!$eventid) $eventid = -1;
+				$event = $calendar_ical->importVCal($attachment['attachment'],(is_array($eventid)?$eventid[0]:$eventid),null,true);
+				//error_log(__METHOD__.$event);
+				if ((int)$event > 0)
+				{
+					$vars = array(
+						'menuaction'      => 'calendar.calendar_uiforms.edit',
+						'cal_id'      => $event,
+					);
+					$GLOBALS['egw']->redirect_link('../index.php',$vars);
+				}
+				//Import failed, download content anyway
+			}
+			if (strtoupper($attachment['type']) == 'TEXT/X-VCARD' || strtoupper($attachment['type']) == 'TEXT/VCARD')
+			{
+				$addressbook_vcal = new addressbook_vcal();
+				// double \r\r\n seems to end a vcard prematurely, so we set them to \r\n
+				//error_log(__METHOD__.__LINE__.$attachment['attachment']);
+				$attachment['attachment'] = str_replace("\r\r\n", "\r\n", $attachment['attachment']);
+				$vcard = $addressbook_vcal->vcardtoegw($attachment['attachment']);
+				if ($vcard['uid'])
+				{
+					$vcard['uid'] = trim($vcard['uid']);
+					//error_log(__METHOD__.__LINE__.print_r($vcard,true));
+					$contact = $addressbook_vcal->find_contact($vcard,false);
+				}
+				if (!$contact) $contact = null;
+				// if there are not enough fields in the vcard (or the parser was unable to correctly parse the vcard (as of VERSION:3.0 created by MSO))
+				if ($contact || count($vcard)>2)
+				{
+					$contact = $addressbook_vcal->addVCard($attachment['attachment'],(is_array($contact)?array_shift($contact):$contact),true);
+				}
+				if ((int)$contact > 0)
+				{
+					$vars = array(
+						'menuaction'	=> 'addressbook.addressbook_ui.edit',
+						'contact_id'	=> $contact,
+					);
+					$GLOBALS['egw']->redirect_link('../index.php',$vars);
+				}
+				//Import failed, download content anyway
+			}
+		}
+		header ("Content-Type: ".$attachment['type']."; name=\"". $attachment['filename'] ."\"");
+		if($_GET['mode'] == "save") {
+			// ask for download
+			header ("Content-Disposition: attachment; filename=\"". $attachment['filename'] ."\"");
+		} else {
+			// display it
+			header ("Content-Disposition: inline; filename=\"". $attachment['filename'] ."\"");
+		}
+		header("Expires: 0");
+		// the next headers are for IE and SSL
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		header("Pragma: public");
+
+		echo $attachment['attachment'];
+
+		$GLOBALS['egw']->common->egw_exit();
+		exit;
+	}
+
 
 	/**
 	 * save messages on disk or filemanager, or display it in popup
@@ -2084,9 +2232,9 @@ blockquote[type=cite] {
 	function image_callback($matches)
 	{
 		static $cache = array();	// some caching, if mails containing the same image multiple times
-		$this->icServer->currentMailbox;
+		
 		$linkData = array (
-			'menuaction'    => 'felamimail.uidisplay.displayImage',
+			'menuaction'    => 'mail.mail_ui.displayImage',
 			'uid'		=> $this->uid,
 			'mailbox'	=> base64_encode($this->mailbox),
 			'cid'		=> base64_encode($matches[2]),
@@ -2127,7 +2275,7 @@ blockquote[type=cite] {
 		static $cache = array();	// some caching, if mails containing the same image multiple times
 		//error_log(__METHOD__.__LINE__.array2string($matches));
 		$linkData = array (
-			'menuaction'    => 'felamimail.uidisplay.displayImage',
+			'menuaction'    => 'mail.mail_ui.displayImage',
 			'uid'		=> $this->uid,
 			'mailbox'	=> base64_encode($this->mailbox),
 			'cid'		=> base64_encode($matches[1]),
@@ -2168,7 +2316,7 @@ blockquote[type=cite] {
 		static $cache = array();	// some caching, if mails containing the same image multiple times
 		//error_log(__METHOD__.__LINE__.array2string($matches));
 		$linkData = array (
-			'menuaction'    => 'felamimail.uidisplay.displayImage',
+			'menuaction'    => 'mail.mail_ui.displayImage',
 			'uid'		=> $this->uid,
 			'mailbox'	=> base64_encode($this->mailbox),
 			'cid'		=> base64_encode($matches[1]),
@@ -2208,7 +2356,7 @@ blockquote[type=cite] {
 	{
 		static $cache = array();	// some caching, if mails containing the same image multiple times
 		$linkData = array (
-			'menuaction'    => 'felamimail.uidisplay.displayImage',
+			'menuaction'    => 'mail.mail_ui.displayImage',
 			'uid'		=> $this->uid,
 			'mailbox'	=> base64_encode($this->mailbox),
 			'cid'		=> base64_encode($matches[2]),
