@@ -256,7 +256,11 @@ class egw_json_response
 			}
 		}
 
-		echo $inst->getJSON();
+		if($inst->haveJSONResponse())
+		{
+			echo $inst->getJSON();
+			$inst->initResponseArray();
+		}
 	}
 
 	/**
