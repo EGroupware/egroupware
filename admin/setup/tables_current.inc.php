@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Setup
+ * EGroupware - Setup
  *
  * Created by eTemplates DB-Tools written by ralfbecker@outdoor-training.de
  *
@@ -15,16 +15,16 @@
 $phpgw_baseline = array(
 	'egw_admin_queue' => array(
 		'fd' => array(
-			'cmd_id' => array('type' => 'auto'),
+			'cmd_id' => array('type' => 'auto','nullable' => False),
 			'cmd_uid' => array('type' => 'varchar','precision' => '255','nullable' => False),
-			'cmd_creator' => array('type' => 'int','precision' => '4','nullable' => False),
+			'cmd_creator' => array('type' => 'int','meta' => 'user','precision' => '4','nullable' => False),
 			'cmd_creator_email' => array('type' => 'varchar','precision' => '128','nullable' => False),
-			'cmd_created' => array('type' => 'int','precision' => '8','nullable' => False),
+			'cmd_created' => array('type' => 'int','meta' => 'timestamp','precision' => '8','nullable' => False),
 			'cmd_type' => array('type' => 'varchar','precision' => '32','nullable' => False,'default' => 'admin_cmd'),
 			'cmd_status' => array('type' => 'int','precision' => '1'),
-			'cmd_scheduled' => array('type' => 'int','precision' => '8'),
-			'cmd_modified' => array('type' => 'int','precision' => '8'),
-			'cmd_modifier' => array('type' => 'int','precision' => '4'),
+			'cmd_scheduled' => array('type' => 'int','meta' => 'timestamp','precision' => '8'),
+			'cmd_modified' => array('type' => 'int','meta' => 'timestamp','precision' => '8'),
+			'cmd_modifier' => array('type' => 'int','meta' => 'user','precision' => '4'),
 			'cmd_modifier_email' => array('type' => 'varchar','precision' => '128'),
 			'cmd_error' => array('type' => 'varchar','precision' => '255'),
 			'cmd_errno' => array('type' => 'int','precision' => '4'),
@@ -41,7 +41,7 @@ $phpgw_baseline = array(
 	),
 	'egw_admin_remote' => array(
 		'fd' => array(
-			'remote_id' => array('type' => 'auto'),
+			'remote_id' => array('type' => 'auto','nullable' => False),
 			'remote_name' => array('type' => 'varchar','precision' => '64','nullable' => False),
 			'remote_hash' => array('type' => 'varchar','precision' => '32','nullable' => False),
 			'remote_url' => array('type' => 'varchar','precision' => '128','nullable' => False),

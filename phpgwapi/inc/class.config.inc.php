@@ -269,6 +269,63 @@ class config
 		return (boolean) array_intersect($private,$user_and_memberships);
 	}
 
+
+	/**
+	 * Change account_id's of private custom-fields
+	 *
+	 * @param string $app
+	 * @param array $ids2change from-id => to-id pairs
+	 * @return int number of changed ids
+	 */
+	static function change_account_ids($app, array $ids2change)
+	{
+		$changed = 0;
+		if (($cfs = self::get_customfields($app, true)))
+		{
+			foreach($cfs as $name => &$data)
+			{
+				if ($data['private'])
+				{
+					foreach($data['private'] as &$id)
+					{
+						if (isset($ids2change[$id]))
+						{
+							$id = $ids2change[$id];
+							++$changed;
+						}
+					}
+				}
+			}
+			if ($changed)
+			{
+				self::save_value('customfields', $cfs, $app);
+			}
+		}
+		return $changed;
+	}
+
+	/**
+	 * Return names of custom fields containing account-ids
+	 *
+	 * @param string $app
+	 * @return array account[-commasep] => array of name(s) pairs
+	 */
+	static function get_account_cfs($app)
+	{
+		$types = array();
+		if (($cfs = self::get_customfields($app, true)))
+		{
+			foreach($cfs as $name => $data)
+			{
+				if ($data['type'] == 'select-account' || $data['type'] == 'home-accounts')
+				{
+					$types['account'.($data['rows'] > 1 ? '-commasep' : '')][] = $name;
+				}
+			}
+		}
+		return $types;
+	}
+
 	/**
 	 * get_content_types of using application
 	 *

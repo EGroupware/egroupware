@@ -90,6 +90,8 @@ class db_tools
 		'timestamp' => 'unix timestamp',
 		'category' => 'category id',
 		'percent' => '0 - 100',
+		'cfname' => 'custom field name',
+		'cfvalue' => 'custom field value',
 	);
 
 	/**
