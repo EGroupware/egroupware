@@ -302,7 +302,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 	},
 
 	set_disabled: function(_value) {
-		var node = this.getDOMNode(this);
+		var node = this._surroundingsMgr != null ? this._surroundingsMgr.getDOMNode(this.getDOMNode(this)) : this.getDOMNode(this);
 		if (node && this.disabled != _value)
 		{
 			this.disabled = _value;
