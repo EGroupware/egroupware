@@ -233,6 +233,18 @@ class etemplate_new extends etemplate_widget_template
 		</script>
 ';
 			}
+			ob_flush();
+			
+			// Send any accumulated json responses - after flush to avoid sending the buffer as a response
+			if(egw_json_response::isJSONResponse())
+			{
+				$response = egw_json_response::get();
+				echo '<script>egw.LAB.wait(function() {egw_json_request.prototype.handleResponse(';
+				ob_flush();
+				$response->sendResult();
+				unset($response);
+				echo ')});</script>';
+			}
 			common::egw_footer();
 		}
 	}
