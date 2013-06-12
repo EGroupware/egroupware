@@ -172,19 +172,14 @@ function show_custom_country(selectbox)
 	}
 }
 
-function add_new_list(owner)
+function add_new_list()
 {
-	if(typeof owner == 'undefined')
-	{
-		owner = egw.user('account_id');
-	}
 	var name = window.prompt(egw.lang('Name for the distribution list'));
 	if (name)
 	{
-		egw.open_link(egw.link('/index.php',{
-			'menuaction': 'addressbook.addressbook_ui.index',
+		egw.open('','addressbook', 'list', {
 			'add_list': name,
-			'owner': owner
-		}), '_self');
+			'owner': egw.user('account_id')
+		},'_self');
 	}
 }
