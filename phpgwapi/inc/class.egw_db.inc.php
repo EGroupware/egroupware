@@ -7,7 +7,7 @@
  * @package api
  * @subpackage db
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2003-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -112,6 +112,13 @@ class egw_db
 	* @var string $Halt_On_Error "yes" (halt with message), "no" (ignore errors quietly), "report" (ignore errror, but spit a warning)
 	*/
 	var $Halt_On_Error = 'yes';
+
+	/**
+	 * Log update querys to error_log, do not run them
+	 *
+	 * @var boolean
+	 */
+	var $log_updates = false;
 
 	/**
 	* @var array $Record current record
@@ -642,6 +649,11 @@ class egw_db
 		{
 			$num_rows = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 		}
+		if ($this->log_updates && stripos($Query_String, 'SELECT') !== 0)
+		{
+			error_log($Query_String);
+			return 0;
+		}
 		if ($num_rows > 0)
 		{
 			$this->Query_ID = $this->Link_ID->SelectLimit($Query_String,$num_rows,(int)$offset,$inputarr);
@@ -866,6 +878,8 @@ class egw_db
 	*/
 	function affected_rows()
 	{
+		if ($this->log_updates) return 0;
+
 		if (!$this->Link_ID && !$this->connect())
 		{
 			return False;

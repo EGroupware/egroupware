@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="etemplate.db-tools.cols" template="" lang="" group="0" version="1.7.001">
+	<template id="etemplate.db-tools.cols" template="" lang="" group="0" version="1.9.001">
 		<grid>
 			<columns>
+				<column/>
 				<column/>
 				<column/>
 				<column/>
@@ -21,9 +22,10 @@
 			</columns>
 			<rows>
 				<row class="nmh">
-					<description value="#" no_lang="1" align="center"/>
+					<description align="center" value="#" no_lang="1"/>
 					<description value="ColumnName"/>
 					<description value="Type"/>
+					<description value="Meta-type"/>
 					<description value="Precision"/>
 					<description value="Scale"/>
 					<description value="NOT NULL"/>
@@ -34,25 +36,28 @@
 					<description value="Comment"/>
 					<description value="Indexoptions"/>
 					<description value="Foreign Key"/>
-					<button label="Add Column" align="center" id="add_column" statustext="Add a new column (after the existing ones)"/>
+					<button align="center" statustext="Add a new column (after the existing ones)" label="Add Column" id="add_column"/>
 				</row>
 				<row class="nmr">
-					<description no_lang="1" align="center" id="Row${row}[n]"/>
-					<textbox size="15" no_lang="1" id="Row${row}[name]" statustext="need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'"/>
+					<description align="center" id="Row${row}[n]" no_lang="1"/>
+					<textbox statustext="need to be unique in the table and no reseved word from SQL, best prefix all with a common 2-digit short for the app, eg. 'et_'" id="Row${row}[name]" no_lang="1" size="15"/>
 					<menulist>
-						<menupopup no_lang="1" id="Row${row}[type]" statustext="type of the column"/>
+						<menupopup statustext="type of the column" id="Row${row}[type]" no_lang="1"/>
 					</menulist>
-					<int align="center" id="Row${row}[precision]" statustext="length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8"/>
-					<int id="Row${row}[scale]" statustext="scale for float"/>
-					<checkbox align="center" id="Row${row}[notnull]" statustext="can not have special SQL-value NULL"/>
-					<checkbox align="center" id="Row${row}[pk]" statustext="Primary key for the table, gets automaticaly indexed"/>
-					<checkbox align="center" id="Row${row}[uc]" statustext="DB ensures that every row has a unique value in that column"/>
-					<checkbox align="center" id="Row${row}[ix]" statustext="an indexed column speeds up querys using that column (cost space on the disk !!!)"/>
-					<textbox size="8" id="Row${row}[default]" statustext="enter '' for an empty default, nothing mean no default"/>
-					<textbox size="20" id="Row${row}[comment]"/>
-					<textbox size="8" id="Row${row}[options]" statustext="DB-specific index options (comma-sep.), eg. mysql(FULLTEXT) or mysql(100) for the indexed length of a col"/>
-					<textbox size="8" align="center" id="Row${row}[fk]" statustext="name of other table where column is a key from"/>
-					<button label="Delete Column" align="center" id="delete[$row]" statustext="Deletes this column"/>
+					<menulist class="selectboxFullWidth">
+						<menupopup statustext="meta-type of the column" id="Row${row}[meta]" no_lang="1" options=",,,,,,,0"/>
+					</menulist>
+					<textbox type="integer" align="center" statustext="length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8" id="Row${row}[precision]"/>
+					<textbox type="integer" statustext="scale for float" id="Row${row}[scale]"/>
+					<checkbox align="center" statustext="can not have special SQL-value NULL" id="Row${row}[notnull]"/>
+					<checkbox align="center" statustext="Primary key for the table, gets automaticaly indexed" id="Row${row}[pk]"/>
+					<checkbox align="center" statustext="DB ensures that every row has a unique value in that column" id="Row${row}[uc]"/>
+					<checkbox align="center" statustext="an indexed column speeds up querys using that column (cost space on the disk !!!)" id="Row${row}[ix]"/>
+					<textbox statustext="enter '' for an empty default, nothing mean no default" id="Row${row}[default]" size="8"/>
+					<textbox id="Row${row}[comment]" size="20"/>
+					<textbox statustext="DB-specific index options (comma-sep.), eg. mysql(FULLTEXT) or mysql(100) for the indexed length of a col" id="Row${row}[options]" size="8"/>
+					<textbox align="center" statustext="name of other table where column is a key from" id="Row${row}[fk]" size="8"/>
+					<button align="center" statustext="Deletes this column" label="Delete Column" id="delete[$row]"/>
 				</row>
 			</rows>
 		</grid>
@@ -73,10 +78,10 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description span="all" value="Multicolumn Indices"/>
+					<description value="Multicolumn Indices" span="all"/>
 				</row>
 				<row class="th">
-					<description value="#" no_lang="1" align="center"/>
+					<description align="center" value="#" no_lang="1"/>
 					<description value="ColumnName"/>
 					<description value="ColumnName"/>
 					<description value="ColumnName"/>
@@ -85,33 +90,33 @@
 					<description value="ColumnName"/>
 					<description value="ColumnName"/>
 					<description value="Unique"/>
-					<button label="Add Index" align="center" id="add_index" statustext="Add a new multi-column index"/>
+					<button align="center" statustext="Add a new multi-column index" label="Add Index" id="add_index"/>
 				</row>
 				<row class="row">
-					<description no_lang="1" align="center" id="Index[$row][n]"/>
+					<description align="center" id="Index[$row][n]" no_lang="1"/>
 					<menulist>
-						<menupopup options="none" no_lang="1" id="Index[$row][0]" statustext="Select the indexed columns in their desired order"/>
+						<menupopup statustext="Select the indexed columns in their desired order" id="Index[$row][0]" no_lang="1" options="none"/>
 					</menulist>
 					<menulist>
-						<menupopup options="none" no_lang="1" align="center" id="Index[$row][1]" statustext="Select the indexed columns in their desired order"/>
+						<menupopup align="center" statustext="Select the indexed columns in their desired order" id="Index[$row][1]" no_lang="1" options="none"/>
 					</menulist>
 					<menulist>
-						<menupopup options="none" no_lang="1" id="Index[$row][2]" statustext="Select the indexed columns in their desired order"/>
+						<menupopup statustext="Select the indexed columns in their desired order" id="Index[$row][2]" no_lang="1" options="none"/>
 					</menulist>
 					<menulist>
-						<menupopup options="none" no_lang="1" align="center" id="Index[$row][3]" statustext="Select the indexed columns in their desired order"/>
+						<menupopup align="center" statustext="Select the indexed columns in their desired order" id="Index[$row][3]" no_lang="1" options="none"/>
 					</menulist>
 					<menulist>
-						<menupopup options="none" no_lang="1" id="Index[$row][4]" statustext="Select the indexed columns in their desired order"/>
+						<menupopup statustext="Select the indexed columns in their desired order" id="Index[$row][4]" no_lang="1" options="none"/>
 					</menulist>
 					<menulist>
-						<menupopup options="none" no_lang="1" id="Index[$row][5]" statustext="Select the indexed columns in their desired order"/>
+						<menupopup statustext="Select the indexed columns in their desired order" id="Index[$row][5]" no_lang="1" options="none"/>
 					</menulist>
 					<menulist>
-						<menupopup options="none" no_lang="1" id="Index[$row][6]" statustext="Select the indexed columns in their desired order"/>
+						<menupopup statustext="Select the indexed columns in their desired order" id="Index[$row][6]" no_lang="1" options="none"/>
 					</menulist>
-					<checkbox align="center" id="Index[$row][unique]" statustext="DB ensures that every row has a unique value in that column"/>
-					<button label="Delete Index" align="center" id="delete_index[$row]" statustext="Deletes this index"/>
+					<checkbox align="center" statustext="DB ensures that every row has a unique value in that column" id="Index[$row][unique]"/>
+					<button align="center" statustext="Deletes this index" label="Delete Index" id="delete_index[$row]"/>
 				</row>
 			</rows>
 		</grid>
@@ -129,7 +134,7 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" id="msg"/>
+					<description id="msg" span="all" class="redItalic"/>
 					<description/>
 					<description/>
 					<description/>
@@ -139,22 +144,22 @@
 				</row>
 				<row>
 					<menulist>
-						<menupopup type="select-app" options="Select one ...,,all" label="Application" no_lang="1" id="app" onchange="1" statustext="Select an application, (*) = uninstalled"/>
+						<menupopup type="select-app" statustext="Select an application, (*) = uninstalled" label="Application" id="app" no_lang="1" onchange="1" options="Select one ...,,all"/>
 					</menulist>
 					<menulist>
-						<menupopup label="TableName" no_lang="1" id="table_name" onchange="1" statustext="Select an table of the application"/>
+						<menupopup statustext="Select an table of the application" label="TableName" id="table_name" no_lang="1" onchange="1"/>
 					</menulist>
-					<textbox size="20" align="right" id="new_table_name" statustext="Name of table to add"/>
-					<button label="Add Table" id="add_table" statustext="Create a new table for the application"/>
-					<button label="Import" id="import" statustext="Import table-definitions from existing db-table"/>
-					<button label="Drop Table" id="drop_table" disabled="true" statustext="Drop a table - this can NOT be undone"/>
-					<button label="Write Tables" id="write_tables" statustext="Write &lt;app&gt;/setup/tables_current.inc.php"/>
+					<textbox align="right" statustext="Name of table to add" id="new_table_name" size="20"/>
+					<button statustext="Create a new table for the application" label="Add Table" id="add_table"/>
+					<button statustext="Import table-definitions from existing db-table" label="Import" id="import"/>
+					<button disabled="true" statustext="Drop a table - this can NOT be undone" label="Drop Table" id="drop_table"/>
+					<button statustext="Write &lt;app&gt;/setup/tables_current.inc.php" label="Write Tables" id="write_tables"/>
 				</row>
 				<row>
-					<template span="all" id="etemplate.db-tools.cols"/>
+					<template id="etemplate.db-tools.cols" span="all"/>
 				</row>
 				<row>
-					<template span="all" id="etemplate.db-tools.indices"/>
+					<template id="etemplate.db-tools.indices" span="all"/>
 				</row>
 			</rows>
 		</grid>

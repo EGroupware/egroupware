@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @package admin
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -136,8 +136,12 @@ function run_command(admin_cmd $cmd)
 				$cmd->remote_id = admin_cmd::parse_remote(array_shift($arguments));
 				break;
 
-			case '--skip-checks':	//do not yet run the checks for scheduled local commands
+			case '--skip-checks':	// do not yet run the checks for scheduled local commands
 				$skip_checks = true;
+				break;
+
+			case '--dry-run':	// only run checks
+				$dry_run = true;
 				break;
 
 			case '--header-access':
@@ -155,8 +159,19 @@ function run_command(admin_cmd $cmd)
 				break;
 		}
 	}
+	if ($dry_run && $skip_checks)
+	{
+		echo lang('You can NOT use --dry-run together with --skip-checks!')."\n\n";
+		usage('', 99);
+	}
 	//_debug_array($cmd);
-	print_r($cmd->run($time,true,$skip_checks));
+	try {
+		print_r($cmd->run($time, true, $skip_checks, $dry_run));
+	}
+	catch (egw_exception_wrong_userinput $e) {
+		echo "\n".$e->getMessage()."\n\n";
+		exit($e->getCode());
+	}
 	echo "\n";
 
 	exit(0);
@@ -272,20 +287,23 @@ function _check_pw($hash_or_cleartext,$pw)
 function usage($action=null,$ret=0)
 {
 	$cmd = basename($_SERVER['argv'][0]);
-	echo "Usage: $cmd --command admin-account[@domain],admin-password,options,... [--schedule {YYYY-mm-dd|+1 week|+5 days}] [--requested 'Name <email>'] [--comment 'comment ...'] [--remote {id|name}] [--skip-checks]\n\n";
+	echo "Usage: $cmd --command admin-account[@domain],admin-password,options,... [--schedule {YYYY-mm-dd|+1 week|+5 days}] [--requested 'Name <email>'] [--comment 'comment ...'] [--remote {id|name}] [--skip-checks] [--dry-run]\n\n";
+
+	echo "\n\t--skip-checks\tdo NOT run checks\n";
+	echo "\t--dry-run\tonly run checks\n";
 
 	echo "\tAlternativly you can also use a setup user and password by prefixing it with 'root_', eg. 'root_admin' for setup user 'admin'.\n\n";
 
 	echo "--edit-user admin-account[@domain],admin-password,account[=new-account-name],first-name,last-name,password,email,expires{never(default)|YYYY-MM-DD|already},can-change-pw{yes(default)|no},anon-user{yes|no(default)},primary-group{Default(default)|...}[,groups,...][,homedirectory,loginshell]\n";
-	echo "	Edit or add a user to eGroupWare. If you specify groups, they *replace* the exiting memberships! homedirectory+loginshell are supported only for LDAP and must start with a slash!\n";
+	echo "	Edit or add a user to EGroupware. If you specify groups, they *replace* the exiting memberships! homedirectory+loginshell are supported only for LDAP and must start with a slash!\n";
 	echo "--change-pw admin-account[@domain],admin-password,account,password\n";
 	echo "  Change/set the password for a given user\n";
 	echo "--delete-user admin-account[@domain],admin-password,account-to-delete[,account-to-move-data]\n";
-	echo "	Deletes a user from eGroupWare. It's data can be moved to an other user or it get deleted too.\n";
+	echo "	Deletes a user from EGroupware. It's data can be moved to an other user or it get deleted too.\n";
 	echo "--edit-group admin-account[@domain],admin-password,group[=new-group-name],email[,members,...]\n";
-	echo "	Edit or add a group to eGroupWare. If you specify members, they *replace* the exiting members!\n";
+	echo "	Edit or add a group to EGroupware. If you specify members, they *replace* the exiting members!\n";
 	echo "--delete-group admin-account[@domain],admin-password,group-to-delete\n";
-	echo "	Deletes a group from eGroupWare.\n";
+	echo "	Deletes a group from EGroupware.\n";
 	echo "--allow-app admin-account[@domain],admin-password,account,application,...\n";
 	echo "--deny-app admin-account[@domain],admin-password,account,application,...\n";
 	echo "	Give or deny an account (user or group specified by account name or id) run rights for the given applications.\n";
@@ -319,7 +337,7 @@ function do_account_app($args,$allow)
 }
 
 /**
- * Edit or add a group to eGroupWare. If you specify members, they *replace* the exiting member!
+ * Edit or add a group to EGroupware. If you specify members, they *replace* the exiting member!
  *                    1:                     2:             3:                     4:     5:
  * @param array $args admin-account[@domain],admin-password,group[=new-group-name],email[,members,...]
  */
@@ -365,7 +383,7 @@ function do_change_pw($args)
 }
 
 /**
- * Edit or add a user to eGroupWare. If you specify groups, they *replace* the exiting memberships!
+ * Edit or add a user to EGroupware. If you specify groups, they *replace* the exiting memberships!
  *                    1:                     2:             3:                         4:         5:        6:       7:    8:                                         9:                                 10:                            11:                                  12
  * @param array $args admin-account[@domain],admin-password,account[=new-account-name],first-name,last-name,password,email,expires{never(default)|YYYY-MM-DD|already},can-change-pw{true(default)|false},anon-user{true|false(default)},primary-group{Default(default)|...}[,groups,...][,homedirectory,loginshell]
  * @param boolean $run_addaccount_hook=null default run hook depending on account existence, true=allways run addaccount hook
