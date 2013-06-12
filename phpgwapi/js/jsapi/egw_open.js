@@ -157,6 +157,11 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = egw_getWindowOuterHeight();
 				return _wnd.egw_openWindowCentered2(url, _target, w_h[0], w_h[1],false,false,true);
 			}
+			else if (typeof _wnd.egw_link_handler == 'function' && typeof target == 'undefined')
+			{
+				// Use framework's link handler, if present
+				return _wnd.egw_link_handler(url,_target);
+			}
 			else
 			{
 				return _wnd.open(url, _target);
