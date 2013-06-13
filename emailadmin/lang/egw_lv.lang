@@ -15,6 +15,7 @@ email address	emailadmin	lv	e-pasta adrese
 enable cyrus imap server administration	emailadmin	lv	atļaut Cyrus IMAP servera administrēšanu
 enable sieve	emailadmin	lv	atļaut Sieve
 enter your default mail domain (from: user@domain)	emailadmin	lv	Ievadi noklusēto pasta domēnu (no: lietotājs@domēns)
+entry saved	emailadmin	lv	Ieraksts saglabāts
 forward also to	emailadmin	lv	pārsūtīt arī
 forward email's to	emailadmin	lv	pārsūtīt e-pasta vēstules
 forward only	emailadmin	lv	tikai pārsūtīt

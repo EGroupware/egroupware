@@ -21,6 +21,8 @@ enable cyrus imap server administration	emailadmin	pt	Activar administração do
 enable sieve	emailadmin	pt	Activar Sieve
 encryption settings	emailadmin	pt	Definições de cifragem
 enter your default mail domain (from: user@domain)	emailadmin	pt	Insira o seu domínio de correio electrónico por omissão (de: utilizador@domínio)
+entry saved	emailadmin	pt	Registo guardado
+error saving the entry!!!	emailadmin	pt	Erro ao guardar o registo!!!
 forward also to	emailadmin	pt	Reencaminhar também para
 forward email's to	emailadmin	pt	Reencaminhar mensagens para
 forward only	emailadmin	pt	Reencaminhar apenas
@@ -54,8 +56,8 @@ profile access rights	emailadmin	pt	Perfil de direitos de acesso
 profile list	emailadmin	pt	Lista de perfis
 profile name	emailadmin	pt	Nome do perfil
 qmaildotmode	emailadmin	pt	Quota do correio electrónico no modo Idot
-qouta size in mbyte	emailadmin	pt	Quota em MBytes
 quota settings	emailadmin	pt	Configurações da quota
+quota size in mbyte	emailadmin	pt	tamanho da quota em MBytes
 remove	emailadmin	pt	Remover
 select type of imap/pop3 server	emailadmin	pt	Seleccionar tipo de servidor IMAP/POP3
 select type of smtp server	emailadmin	pt	Seleccionar tipo de servidor SMTP

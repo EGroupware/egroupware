@@ -42,8 +42,10 @@ enable sieve	emailadmin	pl	aktywuj sito (Sieve)
 encrypted connection	emailadmin	pl	połączenie szyfrowane
 encryption settings	emailadmin	pl	ustawienia szyfrowania
 enter your default mail domain (from: user@domain)	emailadmin	pl	Wprowadź domyślną domenę pocztową (z użytkownik@domena)
+entry saved	emailadmin	pl	Wpis zachowany
 error connecting to imap server. %s : %s.	emailadmin	pl	Błąd połączenia do serwera IMAP. %s : %s
 error connecting to imap server: [%s] %s.	emailadmin	pl	Błąd połączenia do serwera IMAP. [%s]  %s
+error saving the entry!!!	emailadmin	pl	Błąd przy zachowywaniu wpisu !!!
 filtered by account	emailadmin	pl	Filtrowane przez konto
 filtered by group	emailadmin	pl	Filtrowane przez grupe
 forward also to	emailadmin	pl	Prześlij również do
@@ -94,8 +96,8 @@ profile is active	emailadmin	pl	Profil jest aktywny
 profile list	emailadmin	pl	Lista profili
 profile name	emailadmin	pl	Nazwa Profilu
 qmaildotmode	emailadmin	pl	qmaildotmode
-qouta size in mbyte	emailadmin	pl	rozmiar quoty w megabajtach
 quota settings	emailadmin	pl	ustawnienia quoty
+quota size in mbyte	emailadmin	pl	ograniczenie w megabajtach
 remove	emailadmin	pl	Usuń
 reset filter	emailadmin	pl	Resetuj filtr
 select type of imap server	emailadmin	pl	Wybierz rodzaj serwera IMAP
@@ -131,6 +133,7 @@ use predefined username and password defined below	emailadmin	pl	Skorzystaj z pr
 use smtp auth	emailadmin	pl	Skorzystaj z autentykacji SMTP
 use tls authentication	emailadmin	pl	Skorzystaj z autentykacji TLS
 use tls encryption	emailadmin	pl	Skorzystaj z szyfrowania TLS
+use users email-address (as seen in useraccount)	emailadmin	pl	użyj adresu użytkownika (taki jak widoczny w opcjach konta)
 user can edit forwarding address	emailadmin	pl	Użytkownik może zmieniać adres przekazywania
 username (standard)	emailadmin	pl	login (standardowo)
 username/password defined by admin	emailadmin	pl	Nazwa uzytkownika/Hasło określone przez administratora
@@ -139,5 +142,5 @@ users can define their own emailaccounts	emailadmin	pl	Użytkownicy mogą defini
 users can define their own identities	emailadmin	pl	Użytkownicy mogą definiować swoje własne tożsamości
 users can define their own signatures	emailadmin	pl	Użytkownicy mogą definiować swoje własne podpisy
 users can utilize these stationery templates	emailadmin	pl	Użytkownicy mogą użyć tych szablonów stacjonarnych
-vaction messages with start- and end-date require an admin account to be set!	emailadmin	pl	Wiadomość urlopowa z datą początkową i końcową wymaga uprawnień administratora!
 virtual mail manager	emailadmin	pl	Wirtualny Serwer Pocztowy - zarządca
+you have received a new message on the	emailadmin	pl	Otrzymałeś nową wiadomość o

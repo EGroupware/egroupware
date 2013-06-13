@@ -29,21 +29,21 @@
 			'toggleFilter'		=> True,
 			'viewMainScreen'	=> True
 		);
-		
+
 		var $mailbox;		// the current folder in use
 		var $startMessage;	// the first message to show
 		var $sort;		// how to sort the messages
 		var $moveNeeded;	// do we need to move some messages?
 
 		var $timeCounter;
-		
+
 		// the object storing the data about the incoming imap server
 		var $icServerID=0;
 		var $connectionStatus = false;
 		var $bofelamimail;
 		var $bofilter;
 		var $bopreferences;
-	
+
 		function uifelamimail()
 		{
 			//error_log(__METHOD__);
@@ -90,25 +90,25 @@
 			$messageID 	= $_GET['messageID'];
 			$partID 	= $_GET['partID'];
 			$attachment = $this->bofelamimail->getAttachment($messageID,$partID);
-			
+
 			$tmpfname = tempnam ($GLOBALS['egw_info']['server']['temp_dir'], "egw_");
 			$fp = fopen($tmpfname, "w");
 			fwrite($fp, $attachment['attachment']);
 			fclose($fp);
-			
+
 			$vcard = CreateObject('phpgwapi.vcard');
 			$entry = $vcard->in_file($tmpfname);
 			$entry['owner'] = $GLOBALS['egw_info']['user']['account_id'];
 			$entry['access'] = 'private';
 			$entry['tid'] = 'n';
-			
+
 			print quoted_printable_decode($entry['fn'])."<br>";
-			
+
 			unlink($tmpfname);
-			
+
 			$GLOBALS['egw']->common->egw_exit();
 		}
-		
+
 		function changeFilter()
 		{
 			error_log(__METHOD__." called from:".function_backtrace());
@@ -125,7 +125,7 @@
 			}
 			$this->viewMainScreen();
 		}
-		
+
 		function changeFolder()
 		{
 			// change folder
@@ -135,13 +135,13 @@
 			$this->bofelamimail->sessionData['activeFilter']= -1;
 
 			$this->bofelamimail->saveSessionData();
-			
+
 			$this->mailbox 		= $this->bofelamimail->sessionData['mailbox'];
 			$this->startMessage 	= $this->bofelamimail->sessionData['startMessage'];
 			$this->sort 		= $this->bofelamimail->sessionData['sort'];
-			
+
 			$this->connectionStatus = $this->bofelamimail->openConnection();
-			
+
 			$this->viewMainScreen();
 		}
 
@@ -153,10 +153,10 @@
 			{
 				$this->bofelamimail->sessionData['sort']	= $_GET["sort"];
 				$this->sort					= $_GET["sort"];
-	
+
 				$this->bofelamimail->saveSessionData();
 			}
-			
+
 			$this->viewMainScreen();
 		}
 
@@ -219,17 +219,17 @@
 
 		function importMessageToFolder($_formData,$_folder='')
 		{
-			if ($_formData['size'] != 0 && (is_uploaded_file($_formData['file']) || 
+			if ($_formData['size'] != 0 && (is_uploaded_file($_formData['file']) ||
 				realpath(dirname($_formData['file'])) == realpath($GLOBALS['egw_info']['server']['temp_dir'])))
 			{
 				// ensure existance of eGW temp dir
-				// note: this is different from apache temp dir, 
+				// note: this is different from apache temp dir,
 				// and different from any other temp file location set in php.ini
 				if (!file_exists($GLOBALS['egw_info']['server']['temp_dir']))
 				{
 					@mkdir($GLOBALS['egw_info']['server']['temp_dir'],0700);
 				}
-				
+
 				// if we were NOT able to create this temp directory, then make an ERROR report
 				if (!file_exists($GLOBALS['egw_info']['server']['temp_dir']))
 				{
@@ -239,7 +239,7 @@
 						.'Please check your configuration'.'<br>'
 						.'<br>';
 				}
-				
+
 				// sometimes PHP is very clue-less about MIME types, and gives NO file_type
 				// rfc default for unknown MIME type is:
 				$mime_type_default = 'message/rfc';
@@ -250,12 +250,12 @@
 					error_log("Message rejected, no message/rfc. Is:".$_formData['type']);
 					return false;
 				}
-				
+
 				$tmpFileName = $GLOBALS['egw_info']['server']['temp_dir'].
 					SEP.
 					$GLOBALS['egw_info']['user']['account_id'].
 					basename($_formData['file']);
-				
+
 				if (is_uploaded_file($_formData['file']))
 				{
 					move_uploaded_file($_formData['file'],$tmpFileName);	// requirement for safe_mode!
@@ -292,7 +292,7 @@
 			$message[] = $_GET["message"];
 			$mailfolder = NULL;
 			if (!empty($_GET['folder'])) $mailfolder  = base64_decode($_GET['folder']);
-	
+
 			$this->bofelamimail->deleteMessages($message,$mailfolder);
 
 			// set the url to open when refreshing
@@ -306,7 +306,7 @@
 			opener.location.href = '" .$refreshURL. "';
 			window.close();</script>";
 		}
-		
+
 		function display_app_header()
 		{
 			#$GLOBALS['egw']->js->validate_file('foldertree','foldertree');
@@ -319,7 +319,7 @@
 
 			echo parse_navbar();
 		}
-	
+
 		function handleButtons()
 		{
 			error_log(__METHOD__." called from:".function_backtrace());
@@ -328,37 +328,37 @@
 				$this->bofelamimail->moveMessages($_POST["mailbox"],
 									$_POST["msg"]);
 			}
-			
+
 			elseif(!empty($_POST["mark_deleted"]) &&
 				is_array($_POST["msg"]))
 			{
 				$this->bofelamimail->deleteMessages($_POST["msg"]);
 			}
-			
+
 			elseif(!empty($_POST["mark_unread"]) &&
 				is_array($_POST["msg"]))
 			{
 				$this->bofelamimail->flagMessages("unread",$_POST["msg"]);
 			}
-			
+
 			elseif(!empty($_POST["mark_read"]) &&
 				is_array($_POST["msg"]))
 			{
 				$this->bofelamimail->flagMessages("read",$_POST["msg"]);
 			}
-			
+
 			elseif(!empty($_POST["mark_unflagged"]) &&
 				is_array($_POST["msg"]))
 			{
 				$this->bofelamimail->flagMessages("unflagged",$_POST["msg"]);
 			}
-			
+
 			elseif(!empty($_POST["mark_flagged"]) &&
 				is_array($_POST["msg"]))
 			{
 				$this->bofelamimail->flagMessages("flagged",$_POST["msg"]);
 			}
-			
+
 
 			$this->viewMainScreen();
 		}
@@ -374,24 +374,24 @@
 				$GLOBALS['egw']->log->commit();
 				$GLOBALS['egw']->common->egw_exit();
 			}
-			
+
 			if(!empty($_POST['profileID']) && is_int(intval($_POST['profileID'])))
 			{
 				$profileID = intval($_POST['profileID']);
 				$this->bofelamimail->setEMailProfile($profileID);
 			}
-			
+
 			$boemailadmin = new emailadmin_bo();
-			
+
 			$profileList = $boemailadmin->getProfileList();
 			$profileID = $this->bofelamimail->getEMailProfile();
-			
+
 			$this->display_app_header();
-			
+
 			$this->t->set_file(array("body" => "selectprofile.tpl"));
 			$this->t->set_block('body','main');
 			$this->t->set_block('body','select_option');
-			
+
 			$this->t->set_var('lang_select_email_profile',lang('select emailprofile'));
 			$this->t->set_var('lang_site_configuration',lang('site configuration'));
 			$this->t->set_var('lang_save',lang('save'));
@@ -402,15 +402,15 @@
 				'menuaction'	=> 'felamimail.uifelamimail.hookAdmin'
 			);
 			$this->t->set_var('action_url',$GLOBALS['egw']->link('/index.php',$linkData));
-			
+
 			$linkData = array
 			(
 				'menuaction'	=> 'emailadmin.emailadmin_ui.listProfiles'
 			);
 			$this->t->set_var('lang_go_emailadmin', lang('use <a href="%1">EmailAdmin</a> to create profiles', $GLOBALS['egw']->link('/index.php',$linkData)));
-			
+
 			$this->t->set_var('back_url',$GLOBALS['egw']->link('/admin/index.php'));
-			
+
 			if(isset($profileList) && is_array($profileList))
 			{
 				foreach($profileList as $key => $value)
@@ -430,10 +430,10 @@
 					$this->t->parse('select_options','select_option',True);
 				}
 			}
-			
+
 			$this->t->parse("out","main");
 			print $this->t->get('out','main');
-			
+
 		}
 
 		function viewMainScreen()
@@ -475,13 +475,13 @@
 				}
 			}
 
-			if (empty($imapServer->host) && count($identities)==0 && $this->preferences->userDefinedAccounts) 
+			if (empty($imapServer->host) && count($identities)==0 && $this->preferences->userDefinedAccounts)
 			{
 				// redirect to new personal account
 				egw::redirect_link('/index.php',array('menuaction'=>'felamimail.uipreferences.editAccountData',
 					'accountID'=>"new",
 					'msg'	=> lang("There is no IMAP Server configured.")." - ".lang("Please configure access to an existing individual IMAP account."),
-				));	
+				));
 			}
 			$this->display_app_header();
 
@@ -505,7 +505,7 @@
 				}
 				if($this->preferences->userDefinedAccounts)
 						$errormessage .= "<br>".lang('or configure an valid IMAP Server connection using the Manage Accounts/Identities preference in the Sidebox Menu.');
-		
+
 				$this->t->set_var('connection_error_message', $errormessage);
 				$this->t->set_var('message', '&nbsp;');
 				$this->t->parse('header_rows','error_message',True);
@@ -517,7 +517,7 @@
 				exit;
 			}
 			$this->t->set_var('activeFolder',$urlMailbox);
-			$this->t->set_var('activeFolderB64',base64_encode($this->mailbox));	
+			$this->t->set_var('activeFolderB64',base64_encode($this->mailbox));
 			$this->t->set_var('oldMailbox',$urlMailbox);
 			$this->t->set_var('image_path',EGW_IMAGES);
 			#printf ("this->uifelamimail->viewMainScreen() Line 272: %s<br>",date("H:i:s",mktime()));
@@ -529,7 +529,7 @@
 			$this->t->set_var('reloadView',$refreshURL);
 			// display a warning if vacation notice is active
 			if(($imapServer instanceof defaultimap) && $imapServer->enableSieve) {
-				$this->bosieve		= CreateObject('felamimail.bosieve',$imapServer);
+				$this->bosieve		= $imapServer;
 				$this->bosieve->retrieveRules($this->bosieve->scriptName);
 				$vacation = $this->bosieve->getVacation($this->bosieve->scriptName);
 				//_debug_array($vacation);
@@ -615,14 +615,14 @@
 			// other settings
 			$prefaskformove = intval($userPreferences['prefaskformove']) ? intval($userPreferences['prefaskformove']) : 0;
 
-			$this->t->set_var('prefaskformove',$prefaskformove);	
+			$this->t->set_var('prefaskformove',$prefaskformove);
 			#// set the url to open when refreshing
 			#$linkData = array
 			#(
 			#	'menuaction'	=> 'felamimail.uifelamimail.viewMainScreen'
 			#);
 			#$this->t->set_var('refresh_url',$GLOBALS['egw']->link('/index.php',$linkData));
-			
+
 			// define the sort defaults
 			$dateSort	= '0';
 			$dateCSS	= 'text_small';
@@ -657,21 +657,21 @@
 
 			// sort by date
 			$this->t->set_var('css_class_date', $dateCSS);
-		
+
 			// sort by from
 			$this->t->set_var('css_class_from', $fromCSS);
-		
+
 			// sort by subject
 			$this->t->set_var('css_class_subject', $subjectCSS);
-			
+
 			// sort by size
 			$this->t->set_var('css_class_size', $sizeCSS);
-			
+
 			#_debug_array($this->bofelamimail->sessionData['messageFilter']);
 			if(!empty($this->bofelamimail->sessionData['messageFilter']['string'])) {
 				$this->t->set_var('quicksearch', $this->bofelamimail->sessionData['messageFilter']['string']);
 			}
-			
+
 			$defaultSearchType = (isset($this->bofelamimail->sessionData['messageFilter']['type']) ? $this->bofelamimail->sessionData['messageFilter']['type'] : 'quick');
 			$defaultSelectStatus = (isset($this->bofelamimail->sessionData['messageFilter']['status']) ? $this->bofelamimail->sessionData['messageFilter']['status'] : 'any');
 
@@ -685,7 +685,7 @@
 			);
 			$selectSearchType = html::select('searchType', $defaultSearchType, $searchTypes, false, "style='width:100%;' id='searchType' onchange='document.getElementById(\"quickSearch\").focus(); document.getElementById(\"quickSearch\").value=\"\" ;return false;'");
 			$this->t->set_var('select_search', $selectSearchType);
-			
+
 			$statusTypes = array(
 				'any'		=> 'any status',
 				'flagged'	=> 'flagged',
@@ -705,24 +705,24 @@
 				$headers = $this->bofelamimail->getHeaders($this->mailbox, $this->startMessage, $maxMessages, $this->sort, $this->sortReverse, $this->bofelamimail->sessionData['messageFilter']);
 
  				$headerCount = count($headers['header']);
-					
- 				// if there aren't any messages left (eg. after delete or move) 
- 				// adjust $this->startMessage  
+
+ 				// if there aren't any messages left (eg. after delete or move)
+ 				// adjust $this->startMessage
  				if ($headerCount==0 && $this->startMessage > $maxMessages) {
  					$this->startMessage = $this->startMessage - $maxMessages;
 					#$headers = $this->bofelamimail->getHeaders($this->startMessage, $maxMessages, $this->sort);
 					$headerCount = count($headers['header']);
 				}
-				
-				if ($this->bofelamimail->isSentFolder($this->mailbox) 
-					|| $this->bofelamimail->isDraftFolder($this->mailbox) 
+
+				if ($this->bofelamimail->isSentFolder($this->mailbox)
+					|| $this->bofelamimail->isDraftFolder($this->mailbox)
 					|| $this->bofelamimail->isTemplateFolder($this->mailbox)) {
 					$this->t->set_var('lang_from',lang("to"));
 				} else {
 					$this->t->set_var('lang_from',lang("from"));
 				}
 				$msg_icon_sm = $GLOBALS['egw']->common->image('felamimail','msg_icon_sm');
-				// determine how to display the current folder: as sent folder (to address visible) or normal (from address visible) 
+				// determine how to display the current folder: as sent folder (to address visible) or normal (from address visible)
 				$sentFolderFlag =$this->bofelamimail->isSentFolder($this->mailbox);
 				$folderType = 0;
 				if($sentFolderFlag ||
@@ -735,7 +735,7 @@
 				} elseif($this->bofelamimail->isTemplateFolder($this->mailbox)) {
 					$folderType = 3;
 				}
-					
+
 				$this->t->set_var('header_rows',
 					$uiwidgets->messageTable(
 						$headers,
@@ -745,19 +745,19 @@
 						$userPreferences['rowOrderStyle']
 					)
 				);
-				
+
 				$firstMessage = $headers['info']['first'];
 				$lastMessage = $headers['info']['last'];
 				$totalMessage = $headers['info']['total'];
-				$langTotal = lang("total");		
-			
+				$langTotal = lang("total");
+
 				$this->t->set_var('maxMessages',$i);
 				if($_GET["select_all"] == "select_all") {
 					$this->t->set_var('checkedCounter',$i);
 				} else {
 					$this->t->set_var('checkedCounter','0');
 				}
-			
+
 				// set the select all/nothing link
 				if($_GET["select_all"] == "select_all") {
 					// link to unselect all messages
@@ -820,7 +820,7 @@
 			//$this->t->set_var('folder_tree',$folderTree);
 
 			$this->t->set_var('options_folder',$options_folder);
-			
+
 			$linkData = array
 			(
 				'menuaction'    => 'felamimail.uicompose.compose'
@@ -858,34 +858,34 @@
 					break;
 			}
 			//print __LINE__ . ': ' . (microtime(true) - $this->timeCounter) . '<br>';
-			
+
 			$this->t->parse("out","main");
 			print $this->t->get('out','main');
-			
+
 			$GLOBALS['egw']->common->egw_footer();
 		}
 
-		function array_merge_replace( $array, $newValues ) 
+		function array_merge_replace( $array, $newValues )
 		{
-			foreach ( $newValues as $key => $value ) 
+			foreach ( $newValues as $key => $value )
 			{
-				if ( is_array( $value ) ) 
+				if ( is_array( $value ) )
 				{
-					if ( !isset( $array[ $key ] ) ) 
+					if ( !isset( $array[ $key ] ) )
 					{
 						$array[ $key ] = array();
 					}
 					$array[ $key ] = $this->array_merge_replace( $array[ $key ], $value );
-				} 
-				else 
+				}
+				else
 				{
-					if ( isset( $array[ $key ] ) && is_array( $array[ $key ] ) ) 
+					if ( isset( $array[ $key ] ) && is_array( $array[ $key ] ) )
 					{
 						$array[ $key ][ 0 ] = $value;
-					} 
-					else 
+					}
+					else
 					{
-						if ( isset( $array ) && !is_array( $array ) ) 
+						if ( isset( $array ) && !is_array( $array ) )
 						{
 							$temp = $array;
 							$array = array();
@@ -903,13 +903,13 @@
 		{
 			$bytes /= 1024;
 			$type = 'k';
-			
+
 			if ($bytes / 1024 > 1)
 			{
 				$bytes /= 1024;
 				$type = 'M';
 			}
-			
+
 			if ($bytes < 10)
 			{
 				$bytes *= 10;
@@ -918,10 +918,10 @@
 			}
 			else
 				settype($bytes, 'integer');
-			
+
 			return $bytes . '&nbsp;' . $type ;
 		}
-		
+
 		function toggleFilter()
 		{
 			error_log(__METHOD__." called from:".function_backtrace());

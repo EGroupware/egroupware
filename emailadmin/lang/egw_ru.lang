@@ -1,3 +1,4 @@
+%1 entries deleted.	emailadmin	ru	%1 записи удалены.
 account '%1' not found !!!	emailadmin	ru	Учетная запись '%1' не найдена !!!
 active templates	emailadmin	ru	Активные шаблоны
 add new email address:	emailadmin	ru	Добавить новый адрес эл. почты:
@@ -42,8 +43,11 @@ enable sieve	emailadmin	ru	Включить Sieve
 encrypted connection	emailadmin	ru	зашифрованное соединение
 encryption settings	emailadmin	ru	Настройки шифрования
 enter your default mail domain (from: user@domain)	emailadmin	ru	Укажите ваш почтовый домен по умолчанию (от: user@domain)
+entry saved	emailadmin	ru	Запись сохранена.
 error connecting to imap server. %s : %s.	emailadmin	ru	Ошибка соединения с сервером IMAP. %s : %s.
 error connecting to imap server: [%s] %s.	emailadmin	ru	Ошибка соединения с сервером IMAP: [%s] %s.
+error deleting entry!	emailadmin	ru	Ошибка при удалении записи!
+error saving the entry!!!	emailadmin	ru	Ошибка при сохранении записи!
 filtered by account	emailadmin	ru	отфильтровано по Учетной записи
 filtered by group	emailadmin	ru	отфильтровано по группе
 forward also to	emailadmin	ru	Переслать также в
@@ -94,8 +98,8 @@ profile is active	emailadmin	ru	профиль активен
 profile list	emailadmin	ru	Список профиля
 profile name	emailadmin	ru	Название профиля
 qmaildotmode	emailadmin	ru	режим qmaildot
-qouta size in mbyte	emailadmin	ru	Размер квоты МБайт
 quota settings	emailadmin	ru	Настройки квотирования
+quota size in mbyte	emailadmin	ru	Размер квоты МБайт
 remove	emailadmin	ru	Удалить
 reset filter	emailadmin	ru	очистить фильтр
 select type of imap server	emailadmin	ru	выбор типа сервера IMAP
@@ -116,6 +120,7 @@ standard	emailadmin	ru	Стандартный
 standard imap server	emailadmin	ru	Стандартный IMAP сервер
 standard pop3 server	emailadmin	ru	Стандартный POP3 сервер
 standard smtp-server	emailadmin	ru	Стандартный SMTP сервер
+starts with	emailadmin	ru	Начинается с
 stationery	emailadmin	ru	Бланк
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	ru	Сервер IMAP не сообщил о поддержке выбранного метода авторизации. Пожалуйста свяжитесь со своим системным администратором.
 this php has no imap support compiled in!!	emailadmin	ru	Эта версия PHP собрана без поддержки IMAP!!
@@ -131,7 +136,9 @@ use predefined username and password defined below	emailadmin	ru	Использ�
 use smtp auth	emailadmin	ru	Использовать авторизацию SMTP
 use tls authentication	emailadmin	ru	Использовать авторизацию TLS
 use tls encryption	emailadmin	ru	Использовать шифрование TLS
+use users email-address (as seen in useraccount)	emailadmin	ru	Используйте адреса эл.почты пользователя, как указано в настройках аккаунта пользователя.
 user can edit forwarding address	emailadmin	ru	Ползователь может редактировать адрес пересылки.
+userid@domain eg. u1234@domain	emailadmin	ru	UserId@domain например u1234@domain
 username (standard)	emailadmin	ru	имя пользователя (стандартное)
 username/password defined by admin	emailadmin	ru	Имя пользователя/Пароль установлены администратором
 username@domainname (virtual mail manager)	emailadmin	ru	username@domainname (Менеджер Виртуальной почты)
@@ -139,5 +146,8 @@ users can define their own emailaccounts	emailadmin	ru	Пользователь 
 users can define their own identities	emailadmin	ru	пользователи могут устанавливать свои собственные данные идентификации
 users can define their own signatures	emailadmin	ru	пользователи могут устанавливать свои собственные подписи
 users can utilize these stationery templates	emailadmin	ru	Пользователи могут использовать эти бланки шаблонов
-vaction messages with start- and end-date require an admin account to be set!	emailadmin	ru	Vaction-сообщения (сообщения об отпуске? вакансиях? высвобождении? незанятых периодах? вовсе сообщения от объекта Java VAction? сообщения виртуальных действий?) с датами начала и окончания требуют установленной учетной записи администратора!
+vacation messages with start- and end-date require an admin account to be set	emailadmin	ru	Сообщения автоответчика с датами начала и окончания требуют установленной учетной записи администратора!
 virtual mail manager	emailadmin	ru	Менеджер Виртуальной почты
+yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	ru	Да, использовать учётные данные, указанные ниже только для предупреждений и напоминаний, в остальных случаях использовать учётные данные текущего пользователя.
+yes, use credentials of current user or if given credentials below	emailadmin	ru	Да, использовать учётные данные текущего пользователя, или если указаны учётные данные ниже.
+you have received a new message on the	emailadmin	ru	Вы получили сообщения на

@@ -16,6 +16,7 @@ email address	emailadmin	ca	Adreça de correu electrònic
 enable cyrus imap server administration	emailadmin	ca	activar administració del servidor Cyrus IMAP
 enable sieve	emailadmin	ca	Activar Sieve
 enter your default mail domain (from: user@domain)	emailadmin	ca	Entreu el domini predeterminat (de usuari@domini)
+entry saved	emailadmin	ca	Entrada guardada
 forward also to	emailadmin	ca	Reenviar també a
 forward email's to	emailadmin	ca	Reenviar correus a
 forward only	emailadmin	ca	Només reenviar
@@ -47,8 +48,8 @@ postfix with ldap	emailadmin	ca	Postfix amb LDAP
 profile list	emailadmin	ca	Llista de perfils
 profile name	emailadmin	ca	Nom del perfil
 qmaildotmode	emailadmin	ca	Modus de punt de qmail
-qouta size in mbyte	emailadmin	ca	Mida de la quota en MBytes
 quota settings	emailadmin	ca	Configuració de les quotas
+quota size in mbyte	emailadmin	ca	mida de la cita en MByte
 remove	emailadmin	ca	Esborrar
 select type of imap/pop3 server	emailadmin	ca	Seleccioneu el tipus de servidor IMAP/POP3
 select type of smtp server	emailadmin	ca	Seleccioneu el tipus de servidor SMTP

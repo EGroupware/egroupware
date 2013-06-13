@@ -16,6 +16,8 @@ email address	emailadmin	no	E-mailadresse
 enable cyrus imap server administration	emailadmin	no	Tillat Cyrus IMAP-tjener administrasjon
 enable sieve	emailadmin	no	Tillat Sieve
 enter your default mail domain (from: user@domain)	emailadmin	no	Registrer ditt standard Emaildomene (fra: bruker@domene)
+entry saved	emailadmin	no	Registrering lagret
+error saving the entry!!!	emailadmin	no	Feil ved lagring av forekomst!
 forward also to	emailadmin	no	videresend også til
 forward email's to	emailadmin	no	videresend e-mailer til
 forward only	emailadmin	no	bare videresending
@@ -47,8 +49,8 @@ postfix with ldap	emailadmin	no	Postfix med LDAP
 profile list	emailadmin	no	Profilliste
 profile name	emailadmin	no	Profilnavn
 qmaildotmode	emailadmin	no	qmaildotmodus
-qouta size in mbyte	emailadmin	no	Grense Str. i Mbyte
 quota settings	emailadmin	no	Grenseinstillinger
+quota size in mbyte	emailadmin	no	Grense Str. i Mbyte
 remove	emailadmin	no	fjern
 select type of imap/pop3 server	emailadmin	no	Velg type for IMAP/POP3 Tjener
 select type of smtp server	emailadmin	no	Velg type SMTP Tjener

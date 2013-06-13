@@ -30,6 +30,7 @@ no supported imap authentication method could be found.	emailadmin	el	Δεν β�
 order	emailadmin	el	Ταξινόμηση
 organisation	emailadmin	el	οργανισμός
 quota settings	emailadmin	el	ρυθμίσεις ποσοστών
+quota size in mbyte	emailadmin	el	μέγεθος ποσοστών σε MByte
 remove	emailadmin	el	αφαίρεση
 sieve settings	emailadmin	el	Ρυθμίσεις Sieve
 smtp settings	emailadmin	el	Ρυθμίσεις SMTP

@@ -41,8 +41,10 @@ enable sieve	emailadmin	sl	Omogoči Sieve
 encrypted connection	emailadmin	sl	Kodirana povezava
 encryption settings	emailadmin	sl	Nastavitve šifriranja
 enter your default mail domain (from: user@domain)	emailadmin	sl	Vnesite privzeto domeno (oblika: uporabnik@domena)
+entry saved	emailadmin	sl	Vnos shranjen
 error connecting to imap server. %s : %s.	emailadmin	sl	Napaka pri povezavi s strežnikom IMAP. %s: %s.
 error connecting to imap server: [%s] %s.	emailadmin	sl	Napaka pri povezavi s strežnikom IMAP: [%s] %s.
+error saving the entry!!!	emailadmin	sl	Napaka pri shranjevanju vnosa!
 filtered by account	emailadmin	sl	Filtrirano s strani računa
 filtered by group	emailadmin	sl	Filtrirano s strani skupine
 forward also to	emailadmin	sl	Posreduj tudi
@@ -92,8 +94,8 @@ profile is active	emailadmin	sl	Profil je aktiven
 profile list	emailadmin	sl	Seznam profilov
 profile name	emailadmin	sl	Ime profila
 qmaildotmode	emailadmin	sl	Način za qmaildot
-qouta size in mbyte	emailadmin	sl	Kvota v MB
 quota settings	emailadmin	sl	Nastavitvev kvote
+quota size in mbyte	emailadmin	sl	Velikost kvote v MB
 remove	emailadmin	sl	Odstrani
 reset filter	emailadmin	sl	Ponastavi filter
 select type of imap server	emailadmin	sl	Izberite vrsto strežnika IMAP
@@ -135,5 +137,5 @@ username@domainname (virtual mail manager)	emailadmin	sl	uporabnik@domena (Virtu
 users can define their own emailaccounts	emailadmin	sl	Uporabniki lahko določajo lastne E-poštne predale
 users can define their own identities	emailadmin	sl	Uporabniki lahko določijo lastne identitete
 users can define their own signatures	emailadmin	sl	Uporabniki lahko določijo lastne podpise
-vaction messages with start- and end-date require an admin account to be set!	emailadmin	sl	Nastavitev sporočila o odsotnosti z začetnim in končnim datumom zahteva nastavljen administratorski račun!
 virtual mail manager	emailadmin	sl	Virtualni upravljalec E-pošte
+you have received a new message on the	emailadmin	sl	Prejeli ste novo sporočilo na

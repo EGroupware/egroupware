@@ -46,7 +46,6 @@
 			'ea_organisation_name'		=> 'organisationName',
 			'ea_user_defined_identities'  => 'userDefinedIdentities',
 			'ea_user_defined_accounts'	=> 'userDefinedAccounts',
-			'ea_imapoldcclient'		=> 'imapoldcclient',
 			'ea_order'			=> 'ea_order',
 			'ea_active'			=> 'ea_active',
 			'ea_group'			=> 'ea_group',
@@ -103,6 +102,10 @@
 			{
 				if (isset($this->db_cols[$key])) $key = $this->db_cols[$key];
 
+				if ($key == 'smtpType' && substr($val, 8) == 'stylite_')	// convert old epl names
+				{
+					$val = $val == 'stylite_postfixsuse' ? 'emailadmin_smtp_suse' : 'emailadmin_smtp_mandriva';
+				}
 				$vals[$key] = $val;
 			}
 			return $vals;
@@ -176,7 +179,9 @@
 				$globalDefaults = $this->getProfile($data['ea_profile_id'], $this->db_cols);
 				$anyValues++;
 			} else {
-				error_log("emailadmin::emailadmin_so->getUserProfile, no Default configured");
+				error_log(__METHOD__.__LINE__.", no Default configured");
+				error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
+					($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 				$globalDefaults = array();
 			}
 			// retrieve application settings if set
@@ -229,7 +234,7 @@
 					} else {
 						if (array_key_exists($key, $toMerge) && !empty($toMerge[$key]))
 						{
-							#error_log($key.'->'.$toMerge[$key]);
+							//error_log($key.'->'.$toMerge[$key]);
 							switch ($key) {
 								case 'imapLoginType':
 									// if the logintype is admin, it will be added to the default value
@@ -248,7 +253,10 @@
 								case 'imapEnableCyrusAdmin':
 								case 'imapAdminUsername':
 								case 'imapAdminPW':
-									if (strlen($toMerge['imapServer'])>0) $mergeInTo[$key]=$toMerge[$key];
+									if (strlen($toMerge['imapServer'])>0 && $toMerge[$key]!='no')
+									{
+										$mergeInTo[$key]=$toMerge[$key];
+									}
 									break;
 								case 'smtpPort':
 								case 'smtpType':
@@ -269,7 +277,9 @@
 									if (strlen($testVal)>10 || $testVal != '<br>' || $testVal != '<br />') $mergeInTo[$key]=$toMerge[$key];
 									break;
 								default:
-									$mergeInTo[$key]=$toMerge[$key];
+									//you may allow stuff, but you should not be able to remove an already granted right
+									//error_log($key.'->'.$toMerge[$key].' '.function_backtrace());
+									if ($toMerge[$key]!='no') $mergeInTo[$key]=$toMerge[$key];
 							}
 						}
 					}
@@ -303,6 +313,7 @@
 			{
 				$where['ea_user'] = (int) $_accountID;
 			}
+			//error_log(__METHOD__.__LINE__.' Where Condition:'.array2string($where).' Backtrace:'.function_backtrace());
 			$this->db->select($this->table,'*',$where, __LINE__,__FILE__,false,(int) $_profileID ? '' : 'ORDER BY ea_order');
 
 			$serverList = false;
@@ -457,18 +468,6 @@
 				);
 			}
 			return true;
-		}
-		
-		function setOrder($_order)
-		{
-			foreach($_order as $order => $profileID)
-			{
-				$this->db->update($this->table,array(
-					'ea_order'  => $order,
-				),array(
-					'ea_profile_id' => $profileID,
-				),__LINE__, __FILE__);
-			}
 		}
 	}
 ?>

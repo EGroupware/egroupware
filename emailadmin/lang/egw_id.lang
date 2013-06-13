@@ -1,3 +1,4 @@
+%1 entries deleted.	emailadmin	id	%1 entri dihapus.
 account '%1' not found !!!	emailadmin	id	Akoun '%1' tidak ditemukan !!!
 active templates	emailadmin	id	Templat yang aktif
 add new email address:	emailadmin	id	Tambah alamat email baru:
@@ -31,6 +32,8 @@ enable sieve	emailadmin	id	Bolehkan Sieve
 encrypted connection	emailadmin	id	koneksi ter-enkripsi
 encryption settings	emailadmin	id	Pengaturan Enkripsi
 enter your default mail domain (from: user@domain)	emailadmin	id	Berikan nama domain email anda (dari: pengguna@domain)
+entry saved	emailadmin	id	Entri disimpan
+error saving the entry!!!	emailadmin	id	Error saving the entry!!!
 filtered by account	emailadmin	id	saringan menurut Akoun
 filtered by group	emailadmin	id	saringan menurut Kelompok
 forward only	emailadmin	id	Hanya Forward
@@ -54,8 +57,8 @@ postfix with ldap	emailadmin	id	Postfix with LDAP
 profile list	emailadmin	id	Daftar Profil
 profile name	emailadmin	id	Nama Profil
 qmaildotmode	emailadmin	id	qmaildotmode
-qouta size in mbyte	emailadmin	id	Kuota dalam MByte
 quota settings	emailadmin	id	Pengaturan Kuota
+quota size in mbyte	emailadmin	id	ukuran kuota dalam MByte
 remove	emailadmin	id	Buang
 reset filter	emailadmin	id	ulangi penyaringan
 select type of imap server	emailadmin	id	Pilih tipe Server IMAP
@@ -76,6 +79,7 @@ standard	emailadmin	id	Standar
 standard imap server	emailadmin	id	Server IMAP Standar
 standard pop3 server	emailadmin	id	Server POP3 Standar
 standard smtp-server	emailadmin	id	Server SMTP Standar
+starts with	emailadmin	id	diawali dengan
 stationery	emailadmin	id	Stationery
 unexpected response from server to login command.	emailadmin	id	Unexpected response from server to LOGIN command.
 update current email address:	emailadmin	id	Memperbarui alamat email saat ini:

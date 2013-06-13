@@ -16,6 +16,7 @@ email address	emailadmin	hr	email address
 enable cyrus imap server administration	emailadmin	hr	enable Cyrus IMAP server administration
 enable sieve	emailadmin	hr	enable Sieve
 enter your default mail domain (from: user@domain)	emailadmin	hr	Enter your default mail domain (from: user@domain)
+entry saved	emailadmin	hr	Entry saved
 forward also to	emailadmin	hr	forward also to
 forward email's to	emailadmin	hr	forward email's to
 forward only	emailadmin	hr	forward only
@@ -46,7 +47,6 @@ postfix with ldap	emailadmin	hr	Postfix with LDAP
 profile list	emailadmin	hr	Profile List
 profile name	emailadmin	hr	Profile Name
 qmaildotmode	emailadmin	hr	qmaildotmode
-qouta size in mbyte	emailadmin	hr	qouta size in MByte
 quota settings	emailadmin	hr	quota settings
 remove	emailadmin	hr	remove
 select type of imap/pop3 server	emailadmin	hr	Select type of IMAP/POP3 server

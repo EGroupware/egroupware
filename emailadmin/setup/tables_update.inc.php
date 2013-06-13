@@ -278,32 +278,142 @@ function emailadmin_upgrade1_6_001()
 		'type' => 'text'
 	));
 
-	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.7.003';
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.8';	// was '1.7.003';
 }
 
 function emailadmin_upgrade1_7_003()
 {
-	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.8';
-}
-
-/**
- * Downgrade from Trunk (modified columns do not matter for using Sitemgr)
- * 
- * @return string
- */
-function emailadmin_upgrade1_7_004()
-{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_emailadmin','ea_imap_type',array(
+		'type' => 'varchar',
+		'precision' => 56,
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_emailadmin','ea_smtp_type',array(
+		'type' => 'varchar',
+		'precision' => 56,
+	));
 	foreach (array('1'=>'defaultsmtp', '2'=>'postfixldap', '3'=>'postfixinetorgperson', '4'=>'smtpplesk', '5' =>'postfixdbmailuser') as $id => $newtype)
 	{
-		$GLOBALS['egw_setup']->oProc->query('update egw_emailadmin set ea_smtp_type=\''.$id.'\' where ea_smtp_type=\''.$newtype.'\'',__LINE__,__FILE__);
+		$GLOBALS['egw_setup']->oProc->query('update egw_emailadmin set ea_smtp_type=\''.$newtype.'\' where ea_smtp_type=\''.$id.'\'',__LINE__,__FILE__);
 	}
 	foreach (array('2'=>'defaultimap', '3'=>'cyrusimap', '4'=>'dbmailqmailuser', '5'=>'pleskimap', '6' =>'dbmaildbmailuser') as $id => $newtype)
 	{
-		$GLOBALS['egw_setup']->oProc->query('update egw_emailadmin set ea_imap_type=\''.$id.'\' where ea_imap_type=\''.$newtype.'\'',__LINE__,__FILE__);
+		$GLOBALS['egw_setup']->oProc->query('update egw_emailadmin set ea_imap_type=\''.$newtype.'\' where ea_imap_type=\''.$id.'\'',__LINE__,__FILE__);
 	}
-	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.8';
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.9.001';	// was '1.7.004';
 }
+
+function emailadmin_upgrade1_8()
+{
+	emailadmin_upgrade1_7_003();
+
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.9.001';
+}
+
+function emailadmin_upgrade1_7_004()
+{
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.9.001';
+}
+
 function emailadmin_upgrade1_9_001()
 {
-	return emailadmin_upgrade1_7_004();
+	$GLOBALS['egw_setup']->oProc->RefreshTable('egw_emailadmin',array(
+		'fd' => array(
+				'ea_profile_id' => array('type' => 'auto','nullable' => False),
+				'ea_smtp_server' => array('type' => 'varchar','precision' => '80'),
+				'ea_smtp_type' => array('type' => 'varchar','precision' => '56'),
+				'ea_smtp_port' => array('type' => 'int','precision' => '4'),
+				'ea_smtp_auth' => array('type' => 'varchar','precision' => '3'),
+				'ea_editforwardingaddress' => array('type' => 'varchar','precision' => '3'),
+				'ea_smtp_ldap_server' => array('type' => 'varchar','precision' => '80'),
+				'ea_smtp_ldap_basedn' => array('type' => 'varchar','precision' => '200'),
+				'ea_smtp_ldap_admindn' => array('type' => 'varchar','precision' => '200'),
+				'ea_smtp_ldap_adminpw' => array('type' => 'varchar','precision' => '30'),
+				'ea_smtp_ldap_use_default' => array('type' => 'varchar','precision' => '3'),
+				'ea_imap_server' => array('type' => 'varchar','precision' => '80'),
+				'ea_imap_type' => array('type' => 'varchar','precision' => '56'),
+				'ea_imap_port' => array('type' => 'int','precision' => '4'),
+				'ea_imap_login_type' => array('type' => 'varchar','precision' => '20'),
+				'ea_imap_tsl_auth' => array('type' => 'varchar','precision' => '3'),
+				'ea_imap_tsl_encryption' => array('type' => 'varchar','precision' => '3'),
+				'ea_imap_enable_cyrus' => array('type' => 'varchar','precision' => '3'),
+				'ea_imap_admin_user' => array('type' => 'varchar','precision' => '40'),
+				'ea_imap_admin_pw' => array('type' => 'varchar','precision' => '40'),
+				'ea_imap_enable_sieve' => array('type' => 'varchar','precision' => '3'),
+				'ea_imap_sieve_server' => array('type' => 'varchar','precision' => '80'),
+				'ea_imap_sieve_port' => array('type' => 'int','precision' => '4'),
+				'ea_description' => array('type' => 'varchar','precision' => '200'),
+				'ea_default_domain' => array('type' => 'varchar','precision' => '100'),
+				'ea_organisation_name' => array('type' => 'varchar','precision' => '100'),
+				'ea_user_defined_identities' => array('type' => 'varchar','precision' => '3'),
+				'ea_user_defined_accounts' => array('type' => 'varchar','precision' => '3'),
+				'ea_order' => array('type' => 'int','precision' => '4'),
+				'ea_appname' => array('type' => 'varchar','precision' => '80'),
+				'ea_group' => array('type' => 'varchar','precision' => '80'),
+				'ea_user' => array('type' => 'varchar','precision' => '80'),
+				'ea_active' => array('type' => 'int','precision' => '4'),
+				'ea_smtp_auth_username' => array('type' => 'varchar','precision' => '80'),
+				'ea_smtp_auth_password' => array('type' => 'varchar','precision' => '80'),
+				'ea_user_defined_signatures' => array('type' => 'varchar','precision' => '3'),
+				'ea_default_signature' => array('type' => 'text'),
+				'ea_imap_auth_username' => array('type' => 'varchar','precision' => '80'),
+				'ea_imap_auth_password' => array('type' => 'varchar','precision' => '80'),
+				'ea_stationery_active_templates' => array('type' => 'text')
+		),
+		'pk' => array('ea_profile_id'),
+		'fk' => array(),
+		'ix' => array('ea_appname','ea_group'),
+		'uc' => array()
+	));
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.9.002';
 }
+
+function emailadmin_upgrade1_9_002()
+{
+	// convert serialized stationery templates setting to eTemplate store style
+	foreach($GLOBALS['egw_setup']->db->query('SELECT ea_profile_id,ea_stationery_active_templates FROM egw_emailadmin
+		WHERE ea_stationery_active_templates IS NOT NULL',__LINE__,__FILE__) as $row)
+	{
+		if(is_array(($templates=unserialize($row['ea_stationery_active_templates']))))
+		{
+			$GLOBALS['egw_setup']->db->query('UPDATE egw_emailadmin SET ea_stationery_active_templates="'.implode(',',$templates).'"'
+				.' WHERE ea_profile_id='.(int)$row['ea_profile_id'],__LINE__,__FILE__);
+		}
+		unset($templates);
+	}
+
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.9.003';
+}
+
+function emailadmin_upgrade1_9_003()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_emailadmin','ea_smtp_auth_username',array(
+		'type' => 'varchar',
+		'precision' => '128',
+	));
+
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.9.004';
+}
+
+function emailadmin_upgrade1_9_004()
+{
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.9.005';
+}
+
+function emailadmin_upgrade1_9_005()
+{
+	$GLOBALS['egw_setup']->oProc->CreateTable('egw_mailaccounts',array(
+		'fd' => array(
+			'mail_id' => array('type' => 'auto','nullable' => False),
+			'account_id' => array('type' => 'int','precision' => '4','nullable' => False),
+			'mail_type' => array('type' => 'int','precision' => '1','nullable' => False,'comment' => '0=active, 1=alias, 2=forward, 3=forwardOnly, 4=quota'),
+			'mail_value' => array('type' => 'varchar','precision' => '128','nullable' => False)
+		),
+		'pk' => array('mail_id'),
+		'fk' => array(),
+		'ix' => array('mail_value',array('account_id','mail_type')),
+		'uc' => array()
+	));
+
+	return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.9.006';
+}
+

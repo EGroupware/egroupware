@@ -63,18 +63,23 @@
 			$this->t 		=& CreateObject('phpgwapi.Template',EGW_APP_TPL);
  			$this->botranslation	= $GLOBALS['egw']->translation;
 
-			$this->bopreferences    =& CreateObject('felamimail.bopreferences');
+			$this->bofelamimail     = CreateObject('felamimail.bofelamimail',$this->displayCharset,true);
+			$this->bopreferences    =& $this->bofelamimail->bopreferences;
 			$this->mailPreferences  = $this->bopreferences->getPreferences();
 
 			$this->felamimailConfig	= config::read('felamimail');
 
 			$this->restoreSessionData();
 
-			$icServer = $this->mailPreferences->getIncomingServer(0);
+			$icServer =& $this->bofelamimail->icServer;
 
 			if(($icServer instanceof defaultimap) && $icServer->enableSieve) {
-				$this->bosieve		=& CreateObject('felamimail.bosieve',$icServer);
-				$this->timed_vacation = ($icServer instanceof cyrusimap) && $icServer->enableCyrusAdmin &&
+				$this->bosieve		=& $icServer;
+				$serverclass = get_class($icServer);
+				$classsupportstimedsieve = false;
+				if (!empty($serverclass) && stripos(constant($serverclass.'::CAPABILITIES'),'timedsieve') !== false) $classsupportstimedsieve = true;
+
+				$this->timed_vacation = $classsupportstimedsieve && $icServer->enableCyrusAdmin &&
 					$icServer->adminUsername && $icServer->adminPassword;
 			} else {
 				die('Sieve not activated');

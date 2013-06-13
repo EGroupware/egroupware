@@ -116,12 +116,13 @@
 			//$this->sofelamimail	= new sofelamimail;
 
 			$this->mailPreferences	= $this->bopreferences->getPreferences();
+
 			if ($this->mailPreferences) {
 				$this->icServer = $this->mailPreferences->getIncomingServer(0);
 				$this->ogServer = $this->mailPreferences->getOutgoingServer(0);
 				$this->htmlOptions  = $this->mailPreferences->preferences['htmlOptions'];
 			}
-			#_debug_array($this->mailPreferences->preferences);
+			//_debug_array($this->mailPreferences->preferences);
 			$this->imapBaseDir	= '';
 
 			self::$displayCharset	= $_displayCharset;

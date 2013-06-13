@@ -25,8 +25,10 @@ enable cyrus imap server administration	emailadmin	sv	Aktivera Cyrus IMAP server
 enable sieve	emailadmin	sv	Aktivera Sieve
 encrypted connection	emailadmin	sv	Krypterad anslutning
 enter your default mail domain (from: user@domain)	emailadmin	sv	Standard e-post domän (från: user@domain)
+entry saved	emailadmin	sv	Post sparad
 error connecting to imap server. %s : %s.	emailadmin	sv	Kunde inte ansluta till IMAP server %s : %s
 error connecting to imap server: [%s] %s.	emailadmin	sv	Kunde inte ansluta till IMAP server [%s] %s
+error saving the entry!!!	emailadmin	sv	Fel uppstod vid sparandet av posten!
 forward also to	emailadmin	sv	Vidarebefodra även till
 forward email's to	emailadmin	sv	Vidarebefodra e-post till
 forward only	emailadmin	sv	Vidarebefodra endast
@@ -64,8 +66,8 @@ postfix with ldap	emailadmin	sv	Postfix med LDAP
 profile list	emailadmin	sv	Profil lista
 profile name	emailadmin	sv	Profil namn
 qmaildotmode	emailadmin	sv	qmaildotmode
-qouta size in mbyte	emailadmin	sv	Kvot storlek i Mb
 quota settings	emailadmin	sv	Kvot alternativ
+quota size in mbyte	emailadmin	sv	Kvotstorlek i Mb
 remove	emailadmin	sv	Radera
 select type of imap/pop3 server	emailadmin	sv	Välj typ av IMAP/POP3 server
 select type of smtp server	emailadmin	sv	Välj typ av SMTP Server

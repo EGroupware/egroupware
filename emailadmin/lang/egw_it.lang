@@ -1,3 +1,4 @@
+%1 entries deleted.	emailadmin	it	%1 inserimenti cancellati
 account '%1' not found !!!	emailadmin	it	Account '%1' non trovato !!!
 active templates	emailadmin	it	Modelli attivi
 add new email address:	emailadmin	it	Aggiungi un nuovo indirizzo di posta elettronica
@@ -42,8 +43,11 @@ enable sieve	emailadmin	it	abilita Sieve
 encrypted connection	emailadmin	it	Connessione criptata
 encryption settings	emailadmin	it	impostazioni cifratura
 enter your default mail domain (from: user@domain)	emailadmin	it	Inserisci il tuo dominio di posta predefinito (da: utente@dominio)
+entry saved	emailadmin	it	Inserimento salvato
 error connecting to imap server. %s : %s.	emailadmin	it	Errore in connessione al server IMAP. %s : %s.
 error connecting to imap server: [%s] %s.	emailadmin	it	Errore in connessione al server IMAP: [%s] %s.
+error deleting entry!	emailadmin	it	Errore durante l'eliminazione dell'inserimento!
+error saving the entry!!!	emailadmin	it	Errore durante il salvataggio dell'inserimento
 filtered by account	emailadmin	it	Filtrati per account
 filtered by group	emailadmin	it	Filtrati per gruppo
 forward also to	emailadmin	it	Inoltra anche a
@@ -94,8 +98,8 @@ profile is active	emailadmin	it	Il profilo è attivo
 profile list	emailadmin	it	Elenco Profili
 profile name	emailadmin	it	Nome Profilo
 qmaildotmode	emailadmin	it	qmaildotmode
-qouta size in mbyte	emailadmin	it	dimensione quota in MByte
 quota settings	emailadmin	it	impostazioni quota
+quota size in mbyte	emailadmin	it	dimensione quota in MByte
 remove	emailadmin	it	rimuovi
 reset filter	emailadmin	it	Reimposta filtro
 select type of imap server	emailadmin	it	Seleziona il tipo di server IMAP
@@ -116,6 +120,7 @@ standard	emailadmin	it	Standard
 standard imap server	emailadmin	it	Server IMAP standard
 standard pop3 server	emailadmin	it	Server POP3 standard
 standard smtp-server	emailadmin	it	Server SMTP standard
+starts with	emailadmin	it	Comincia con
 stationery	emailadmin	it	Modeillo
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	it	Il server IMAP sembra non supportare il metodo di autenticazione scelto. Contatta il tuo amministratore di sistema.
 this php has no imap support compiled in!!	emailadmin	it	PHP non è stato compilato con supporto IMAP!
@@ -131,7 +136,9 @@ use predefined username and password defined below	emailadmin	it	Utilizza il nom
 use smtp auth	emailadmin	it	usa autenticazione SMTP
 use tls authentication	emailadmin	it	usa autenticazione TLS
 use tls encryption	emailadmin	it	usa crittografia TLS
+use users email-address (as seen in useraccount)	emailadmin	it	Utilizza l'indirizzo email come impostato nell'account utente
 user can edit forwarding address	emailadmin	it	l'utente può modificare indirizzo di inoltro
+userid@domain eg. u1234@domain	emailadmin	it	UserId@dominio p.es. u1234@dominio
 username (standard)	emailadmin	it	Nome utente (standard)
 username/password defined by admin	emailadmin	it	Nome utente / password definiti dall'amministratore
 username@domainname (virtual mail manager)	emailadmin	it	nomeutente@nome dominio (ManaGeR MAIL Virtuale)
@@ -139,5 +146,7 @@ users can define their own emailaccounts	emailadmin	it	Gli utenti possono defini
 users can define their own identities	emailadmin	it	Gli utenti possono definire le loro identità personali
 users can define their own signatures	emailadmin	it	Gli utenti possono definire le loro firme personali
 users can utilize these stationery templates	emailadmin	it	Gli utenti possono utilizzare questi modelli
-vaction messages with start- and end-date require an admin account to be set!	emailadmin	it	Il messaggio di "vacanze" con data inizio e data fine può essere impostato da un account amministrativo!
 virtual mail manager	emailadmin	it	ManaGeR MAIL Virtuale
+yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	it	Sì, utilizza le credenziali sottostanti solo per allarmi e notifiche, altrimenti usa le credenziali dell'utente attuale
+yes, use credentials of current user or if given credentials below	emailadmin	it	Sì, utilizza le credenziali dell'utente attuale oppure, se date, e credenziali qui sotto
+you have received a new message on the	emailadmin	it	Hai ricevuto un nuovo messaggio sul

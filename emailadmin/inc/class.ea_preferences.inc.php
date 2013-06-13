@@ -14,139 +14,158 @@
 	{
 		// users identities
 		var $identities = array();
-		
-		// users incoming server(imap/pop3)
+
+		// users incoming server(imap)
 		var $ic_server = array();
-		
+
 		// users outgoing server(smtp)
 		var $og_server = array();
-		
+
 		// users preferences
 		var $preferences = array();
-		
+
 		// enable userdefined accounts
 		var $userDefinedAccounts = false;
-		
+
 		// enable userdefined signatures
 		var $ea_user_defined_signatures = false;
-		
-		function getIdentity($_id = -1)
+
+		function getIdentity($_id = false, $_byProfileID=false)
 		{
-			if($_id != -1)
+			if($_id !== false)
 			{
+				if ($_byProfileID===true)
+				{
+					foreach ((array)$this->identities as $id => $ident) if ($ident->id==$_id) return $ident;
+				}
 				return $this->identities[$_id];
 			}
 			else
 			{
+				//error_log(__METHOD__.__LINE__.' called with $_id=-1 ->'.function_backtrace());
 				return $this->identities;
 			}
 		}
-		
-		function getIncomingServer($_id = -1)
+
+		function getIncomingServer($_id = false)
 		{
-			if($_id != -1)
+			if($_id !== false)
 			{
+				//error_log(__METHOD__.__LINE__.' called with $_id='.$_id.' ->'.function_backtrace());
 				return $this->ic_server[$_id];
 			}
 			else
 			{
+				//error_log(__METHOD__.__LINE__.' called with $_id=false ->'.function_backtrace());
 				return $this->ic_server;
 			}
 		}
-		
-		function getOutgoingServer($_id = -1)
+
+		function getOutgoingServer($_id = false)
 		{
-			if($_id != -1)
+			if($_id !== false )
 			{
 				return $this->og_server[$_id];
 			}
 			else
 			{
+				//error_log(__METHOD__.__LINE__.' called with $_id=false ->'.function_backtrace());
 				return $this->og_server;
 			}
 		}
-		
+
 		function getPreferences() {
 			return $this->preferences;
 		}
-		
+
 		function getUserEMailAddresses() {
 			$identities = $this->getIdentity();
 
 			if(count($identities) == 0) {
 				return false;
 			}
-			
+
 			$userEMailAdresses = array();
-			
+
 			foreach($identities as $identity) {
 				$userEMailAdresses[$identity->emailAddress] = $identity->realName;
 			}
-			
+
 			return $userEMailAdresses;
 		}
 
-		function setIdentity($_identityObject, $_id = -1)
+		function setIdentity($_identityObject, $_id = false)
 		{
+			//error_log(__METHOD__.__LINE__.' called with ID '.$_id.' ->'.array2string($_identityObject).function_backtrace());
 			if(($_identityObject instanceof ea_identity))
 			{
-				if($_id != -1)
+				if($_id !== false)
 				{
 					$this->identities[$_id] = $_identityObject;
 				}
 				else
 				{
-					$this->identities[] = $_identityObject;
+					//error_log(__METHOD__.__LINE__.' called with $_id=false ->'.function_backtrace());
+					if ($_identityObject->id)
+					{
+						$this->identities[$_identityObject->id] = $_identityObject;
+					}
+					else
+					{
+						$this->identities[] = $_identityObject;
+					}
 				}
 
 				return true;
 			}
-			
+
 			return false;
 		}
-		
-		function setIncomingServer($_serverObject, $_id = -1)
+
+		function setIncomingServer($_serverObject, $_id = false)
 		{
 			if(($_serverObject instanceof defaultimap))
 			{
-				if($_id != -1)
+				if($_id !== false)
 				{
 					$this->ic_server[$_id] = $_serverObject;
 				}
 				else
 				{
+					//error_log(__METHOD__.__LINE__.' called with $_id=false ->'.function_backtrace());
 					$this->ic_server[] = $_serverObject;
 				}
-				
+
 				return true;
 			}
-			
+
 			return false;
 		}
 
-		function setOutgoingServer($_serverObject, $_id = -1)
+		function setOutgoingServer($_serverObject, $_id = false)
 		{
-			if(($_serverObject instanceof defaultsmtp))
+			if(($_serverObject instanceof emailadmin_smtp))
 			{
-				if($_id != -1)
+				if($_id !== false)
 				{
 					$this->og_server[$_id] = $_serverObject;
 				}
 				else
 				{
+					//error_log(__METHOD__.__LINE__.' called with $_id=false ->'.function_backtrace());
 					$this->og_server[] = $_serverObject;
 				}
-				
+
 				return true;
 			}
-			
+
 			return false;
 		}
 
 		function setPreferences($_preferences)
 		{
 			$this->preferences = $_preferences;
-			
+
 			return true;
 		}
 	}

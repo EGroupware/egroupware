@@ -1,3 +1,5 @@
+%1 entries deleted.	emailadmin	de	%1 Einträge gelöscht
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	emailadmin	de	(Die IMAP Klasse muss dieses Verfahren unterstützen indem es den entsprechenden Konfig Wert der Instanz ausliest und als Default Quota an den IMAP Server meldet.)
 account '%1' not found !!!	emailadmin	de	Benutzerkonto '%1' nicht gefunden !!!
 active templates	emailadmin	de	Aktive Vorlagen
 add new email address:	emailadmin	de	Neue E-Mailadresse hinzufügen
@@ -42,8 +44,11 @@ enable sieve	emailadmin	de	Sieve aktivieren
 encrypted connection	emailadmin	de	verschlüsselte Verbindung
 encryption settings	emailadmin	de	Verschlüsselungseinstellungen
 enter your default mail domain (from: user@domain)	emailadmin	de	Standard E-Mail-Domain (Von: benutzer@domain)
+entry saved	emailadmin	de	Eintrag gespeichert
 error connecting to imap server. %s : %s.	emailadmin	de	Fehler beim Verbinden mit dem IMAP Server. %s : %s.
 error connecting to imap server: [%s] %s.	emailadmin	de	Fehler beim Verbinden mit dem IMAP Server. [%s] %s.
+error deleting entry!	emailadmin	de	Fehler beim Löschen des Eintrags
+error saving the entry!!!	emailadmin	de	Fehler beim Speichern !!!
 filtered by account	emailadmin	de	Suche nach Benutzerprofilen
 filtered by group	emailadmin	de	Suche nach Gruppenprofilen
 forward also to	emailadmin	de	zusätzlich weiterleiten
@@ -51,6 +56,7 @@ forward email's to	emailadmin	de	E-Mails weiterleiten an
 forward only	emailadmin	de	nur weiterleiten
 global options	emailadmin	de	Globale Optionen
 if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	de	Wenn Sie SSL oder TLS benutzen, müssen Sie die openssl PHP Erweiterung geladen haben.
+if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	emailadmin	de	Wenn Sie als SIEVE Server Port 5190 eintragen, wird für die Kommunikation mit dem SIEVE-Server eine SSL-Verbindung verwendet (der Server muss das natürlich unterstützen)
 imap admin password	admin	de	IMAP Administrator Passwort
 imap admin user	admin	de	IMAP Administrator Benutzer
 imap c-client version < 2001	emailadmin	de	IMAP C-Client Version < 2001
@@ -73,6 +79,7 @@ ldap settings	emailadmin	de	LDAP-Einstellungen
 leave empty for no quota	emailadmin	de	leer lassen um Quota zu deaktivieren
 mail settings	admin	de	E-Mail-Einstellungen
 manage stationery templates	emailadmin	de	Briefpapiervorlagen verwalten
+mb used	emailadmin	de	MB belegt
 name of organisation	emailadmin	de	Name der Organisation
 no alternate email address	emailadmin	de	keine zusätzlichen E-Mail-Adressen
 no encryption	emailadmin	de	keine Verschlüsselung
@@ -94,8 +101,8 @@ profile is active	emailadmin	de	Profil ist aktiv
 profile list	emailadmin	de	Profilliste
 profile name	emailadmin	de	Profilname
 qmaildotmode	emailadmin	de	qmaildotmode
-qouta size in mbyte	emailadmin	de	Quota Größe in MByte
 quota settings	emailadmin	de	Quota Einstellungen
+quota size in mbyte	emailadmin	de	Quota Größe in MByte
 remove	emailadmin	de	Entfernen
 reset filter	emailadmin	de	Filter zurücksetzen
 select type of imap server	emailadmin	de	IMAP-Server Typ auswählen
@@ -116,6 +123,7 @@ standard	emailadmin	de	Vorgabe
 standard imap server	emailadmin	de	Standard IMAP-Server
 standard pop3 server	emailadmin	de	Standard POP3-Server
 standard smtp-server	emailadmin	de	Standard SMTP-Server
+starts with	emailadmin	de	startet mit
 stationery	emailadmin	de	Briefpapier
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	de	Der IMAP Server scheint die eingestellte Authentifizierungsmethode nicht zu unterstützen. Bitte fragen Sie Ihren Systemadministrator.
 this php has no imap support compiled in!!	emailadmin	de	Dieses PHP hat keine IMAP Unterstützung!!!
@@ -131,7 +139,9 @@ use predefined username and password defined below	emailadmin	de	Verwende den un
 use smtp auth	emailadmin	de	SMTP Authentifizierung benutzen
 use tls authentication	emailadmin	de	TLS Authentifizierung benutzen
 use tls encryption	emailadmin	de	TLS Verschlüsselung benutzen
+use users email-address (as seen in useraccount)	emailadmin	de	Benutzt E-Mail Adresse des Benutzers (Die unter seinem Benutzerkonto angezeigt wird)
 user can edit forwarding address	emailadmin	de	Anwender können ihre Weiterleitungsadresse bearbeiten
+userid@domain eg. u1234@domain	emailadmin	de	UserId@domain z.B. u1234@domain
 username (standard)	emailadmin	de	Benutzername (Standard)
 username/password defined by admin	emailadmin	de	Benutzername / Passwort vordefiniert
 username@domainname (virtual mail manager)	emailadmin	de	Benutzername@Domänenname (Virtual MAIL ManaGeR)
@@ -139,5 +149,8 @@ users can define their own emailaccounts	emailadmin	de	Anwender können ihre eig
 users can define their own identities	emailadmin	de	Anwender können ihre eigenen Identitäten definieren
 users can define their own signatures	emailadmin	de	Anwender können ihre eigenen Signaturen definieren
 users can utilize these stationery templates	emailadmin	de	Benutzer können diese Briefpapiervorlagen verwenden
-vaction messages with start- and end-date require an admin account to be set!	emailadmin	de	Abwesenheitsnotizen mit Start- und Enddatum benötigen einen gesetzten Administrator Benutzer!
+vacation messages with start- and end-date require an admin account to be set	emailadmin	de	Abwesenheitsnotizen mit Start- und Enddatum benötigen einen gesetzten Administrator Benutzer!
 virtual mail manager	emailadmin	de	Virtual MAIL ManaGeR
+yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	de	Ja, die Daten darunter nur für Alarme und Benachrichtigungen verwenden, ansonsten die Daten des aktiven Benutzers.
+yes, use credentials of current user or if given credentials below	emailadmin	de	Ja, benutze Daten des aktuellen Benutzers oder wenn angegeben die Daten darunter
+you have received a new message on the	emailadmin	de	Sie haben eine neue Nachricht erhalten.

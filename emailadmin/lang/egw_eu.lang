@@ -4,6 +4,8 @@ bad login name or password.	emailadmin	eu	Izen edo pasahitz okerra
 default	emailadmin	eu	Lehenetsia
 email address	emailadmin	eu	Helbide elektronikoa
 encrypted connection	emailadmin	eu	konexioa enkriptatua
+entry saved	emailadmin	eu	Sarrera gordeta
+error saving the entry!!!	emailadmin	eu	Errorea sarrera gordetzerakoan
 imap server closed the connection.	emailadmin	eu	IMAP zerbitzariak konexioa itxi du
 in mbyte	emailadmin	eu	MByte-sen
 leave empty for no quota	emailadmin	eu	zurian utzi kuotarik ez badago
@@ -14,6 +16,7 @@ order	emailadmin	eu	Ordena
 organisation	emailadmin	eu	antolaketa
 postfix with ldap	emailadmin	eu	Postfix-ak LDAP-arekin
 quota settings	emailadmin	eu	kuotaren konfigurazioa
+quota size in mbyte	emailadmin	eu	kuotaren tamaina MBytes-etan
 remove	emailadmin	eu	ezabatu
 sieve settings	emailadmin	eu	SIEVE ren lehentasunak
 smtp settings	emailadmin	eu	SMTP lehentasunak

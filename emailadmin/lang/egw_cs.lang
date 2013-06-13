@@ -42,8 +42,10 @@ enable sieve	emailadmin	cs	Povolit Sieve
 encrypted connection	emailadmin	cs	Šifrované připojení
 encryption settings	emailadmin	cs	Nastavení šifrování
 enter your default mail domain (from: user@domain)	emailadmin	cs	Zadejte Vaši výchozí poštovní doménu (z: uživatel@doména)
+entry saved	emailadmin	cs	Záznam uložen
 error connecting to imap server. %s : %s.	emailadmin	cs	Chyba spojení na IMAP server. %s : %s.
 error connecting to imap server: [%s] %s.	emailadmin	cs	Chyba spojení na IMAP server: [%s] %s.
+error saving the entry!!!	emailadmin	cs	Chyba při ukládání záznamu!!!
 filtered by account	emailadmin	cs	filtrováno podle účtu
 filtered by group	emailadmin	cs	filtrováno podle skupiny
 forward also to	emailadmin	cs	Přeposlat také na
@@ -94,8 +96,8 @@ profile is active	emailadmin	cs	Profil je aktivní
 profile list	emailadmin	cs	Seznam profilů
 profile name	emailadmin	cs	Název profilu
 qmaildotmode	emailadmin	cs	Tečkový režim Qmail
-qouta size in mbyte	emailadmin	cs	Velikost kvóty v MBytech
 quota settings	emailadmin	cs	Nastavení kvóty
+quota size in mbyte	emailadmin	cs	velikost kvóty v MBytech
 remove	emailadmin	cs	Odstranit
 reset filter	emailadmin	cs	vyresetovat filtr
 select type of imap server	emailadmin	cs	Vyberte typ IMAP serveru
@@ -139,5 +141,5 @@ users can define their own emailaccounts	emailadmin	cs	Uživatelé smí definova
 users can define their own identities	emailadmin	cs	Uživatelé smí definovat své vlastní identity
 users can define their own signatures	emailadmin	cs	Uživatelé smí definovat své vlastní podpisy
 users can utilize these stationery templates	emailadmin	cs	Uživatelé mohou využívat tyto šablony dopisů
-vaction messages with start- and end-date require an admin account to be set!	emailadmin	cs	Automatické odpovědi v nepřítomnosti, které mají určeno počáteční a koncové datum, vyžadují nastavení administrátorského účtu.
 virtual mail manager	emailadmin	cs	Virtuální správce pošty
+you have received a new message on the	emailadmin	cs	Přišla Vám nová zpráva na

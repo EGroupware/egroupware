@@ -31,9 +31,9 @@
 		{
 			//error_log(__METHOD__." called ".print_r($_restoreSession,true).function_backtrace());
 			parent::sopreferences();
-			$this->boemailadmin = new emailadmin_bo(-1,$_restoreSession);
+			$this->boemailadmin = new emailadmin_bo(false,$_restoreSession);
 			if ($_restoreSession && !(is_array($this->sessionData) && (count($this->sessionData)>0))  ) $this->restoreSessionData();
-			if ($_restoreSession===false && (is_array($this->sessionData) && (count($this->sessionData)>0))  ) 
+			if ($_restoreSession===false && (is_array($this->sessionData) && (count($this->sessionData)>0))  )
 			{
 				//error_log(__METHOD__." Unset Session ".function_backtrace());
 				//make sure session data will be reset
@@ -82,6 +82,7 @@
 		{
 			$GLOBALS['egw']->session->appsession('fm_preferences','felamimail',serialize($this->sessionData));
 		}
+
 		// get the first active user defined account
 		function getAccountData(&$_profileData, $_accountID=NULL)
 		{
@@ -92,9 +93,10 @@
 
 			// currently we use only the first profile available
 			$accountData = array_shift($accountData);
-			#_debug_array($accountData);
+			//_debug_array($accountData);
 
 			$icServer = CreateObject('emailadmin.defaultimap');
+			$icServer->ImapServerId	= $accountData['id'];
 			$icServer->encryption	= isset($accountData['ic_encryption']) ? $accountData['ic_encryption'] : 1;
 			$icServer->host		= $accountData['ic_hostname'];
 			$icServer->port 	= isset($accountData['ic_port']) ? $accountData['ic_port'] : 143;
@@ -104,14 +106,15 @@
 			$icServer->password	= $accountData['ic_password'];
 			$icServer->enableSieve	= isset($accountData['ic_enable_sieve']) ? (bool)$accountData['ic_enable_sieve'] : 1;
 			$icServer->sieveHost	= $accountData['ic_sieve_server'];
-			$icServer->sievePort	= isset($accountData['ic_sieve_port']) ? $accountData['ic_sieve_port'] : 2000;
+			$icServer->sievePort	= isset($accountData['ic_sieve_port']) && !empty($accountData['ic_sieve_port']) ? $accountData['ic_sieve_port'] : 4190;
 			if ($accountData['ic_folderstoshowinhome']) $icServer->folderstoshowinhome	= $accountData['ic_folderstoshowinhome'];
 			if ($accountData['ic_trashfolder']) $icServer->trashfolder = $accountData['ic_trashfolder'];
 			if ($accountData['ic_sentfolder']) $icServer->sentfolder = $accountData['ic_sentfolder'];
 			if ($accountData['ic_draftfolder']) $icServer->draftfolder = $accountData['ic_draftfolder'];
 			if ($accountData['ic_templatefolder']) $icServer->templatefolder = $accountData['ic_templatefolder'];
 
-			$ogServer = CreateObject('emailadmin.defaultsmtp');
+			$ogServer = new emailadmin_smtp();
+			$ogServer->SmtpServerId	= $accountData['id'];
 			$ogServer->host		= $accountData['og_hostname'];
 			$ogServer->port		= isset($accountData['og_port']) ? $accountData['og_port'] : 25;
 			$ogServer->smtpAuth	= (bool)$accountData['og_smtpauth'];
@@ -143,6 +146,7 @@
 			foreach ($AllAccountData as $key => $accountData)
 			{
 				$icServer = CreateObject('emailadmin.defaultimap');
+				$icServer->ImapServerId	= $accountData['id'];
 				$icServer->encryption	= isset($accountData['ic_encryption']) ? $accountData['ic_encryption'] : 1;
 				$icServer->host		= $accountData['ic_hostname'];
 				$icServer->port 	= isset($accountData['ic_port']) ? $accountData['ic_port'] : 143;
@@ -152,14 +156,15 @@
 				$icServer->password	= $accountData['ic_password'];
 				$icServer->enableSieve	= isset($accountData['ic_enable_sieve']) ? (bool)$accountData['ic_enable_sieve'] : 1;
 				$icServer->sieveHost	= $accountData['ic_sieve_server'];
-				$icServer->sievePort	= isset($accountData['ic_sieve_port']) ? $accountData['ic_sieve_port'] : 2000;
+				$icServer->sievePort	= isset($accountData['ic_sieve_port']) && !empty($accountData['ic_sieve_port']) ? $accountData['ic_sieve_port'] : 4190;
 				if ($accountData['ic_folderstoshowinhome']) $icServer->folderstoshowinhome = $accountData['ic_folderstoshowinhome'];
 				if ($accountData['ic_trashfolder']) $icServer->trashfolder = $accountData['ic_trashfolder'];
 				if ($accountData['ic_sentfolder']) $icServer->sentfolder = $accountData['ic_sentfolder'];
 				if ($accountData['ic_draftfolder']) $icServer->draftfolder = $accountData['ic_draftfolder'];
 				if ($accountData['ic_templatefolder']) $icServer->templatefolder = $accountData['ic_templatefolder'];
 
-				$ogServer = CreateObject('emailadmin.defaultsmtp');
+				$ogServer = new emailadmin_smtp();
+				$ogServer->SmtpServerId	= $accountData['id'];
 				$ogServer->host		= $accountData['og_hostname'];
 				$ogServer->port		= isset($accountData['og_port']) ? $accountData['og_port'] : 25;
 				$ogServer->smtpAuth	= (bool)$accountData['og_smtpauth'];
@@ -177,21 +182,24 @@
 				$identity->signature = $accountData['signatureid'];
 				$identity->id  = $accountData['id'];
 				$isActive = (bool)$accountData['active'];
-				$out[] = array('icServer' => $icServer, 'ogServer' => $ogServer, 'identity' => $identity, 'active' => $isActive);
+				$out[$accountData['id']] = array('icServer' => $icServer, 'ogServer' => $ogServer, 'identity' => $identity, 'active' => $isActive);
 			}
 			return $out;
 		}
 
 		function getUserDefinedIdentities()
 		{
+			$profileID = emailadmin_bo::getUserDefaultProfileID();
 			$profileData        = $this->boemailadmin->getUserProfile('felamimail');
-			if(!($profileData instanceof ea_preferences) || !($profileData->ic_server[0] instanceof defaultimap)) {
+			if(!($profileData instanceof ea_preferences) || !($profileData->ic_server[$profileID] instanceof defaultimap)) {
 				return false;
 			}
-			if($profileData->userDefinedAccounts || $profileData->userDefinedIdentities) {
+			if($profileData->userDefinedAccounts || $profileData->userDefinedIdentities)
+			{
 				// get user defined accounts
 				$allAccountData = $this->getAllAccountData($profileData);
-				if ($allAccountData) {
+				if ($allAccountData)
+				{
 					foreach ($allAccountData as $tmpkey => $accountData)
 					{
 						$accountArray[] = $accountData['identity'];
@@ -202,101 +210,182 @@
 			return array();
 		}
 
-		function getPreferences($getUserDefinedProfiles=true)
+		/**
+		 * getPreferences - fetches the active profile for a user
+		 *
+		 * @param boolean $getUserDefinedProfiles
+		 * @param int $_profileID - use this profile to be set its prefs as active profile (0)
+		 * @param string $_appName - the app the profile is fetched for
+		 * @param int $_singleProfileToFetch - single Profile to fetch no merging of profileData; emailadminprofiles only; for Administrative use only (by now)
+		 * @return object ea_preferences object with the active emailprofile set to ID = 0
+		 */
+		function getPreferences($getUserDefinedProfiles=true,$_profileID=0,$_appName='felamimail',$_singleProfileToFetch=0)
 		{
-			if (isset($this->sessionData['profileData']) && ($this->sessionData['profileData'] instanceof ea_preferences)) {
+			if (isset($this->sessionData['profileData']) && ($this->sessionData['profileData'] instanceof ea_preferences))
+			{
 				$this->profileData = $this->sessionData['profileData'];
 			}
-			if(!($this->profileData instanceof ea_preferences)) {
-				$imapServerTypes	= $this->boemailadmin->getIMAPServerTypes();
-				$profileData		= $this->boemailadmin->getUserProfile('felamimail');
 
-				if(!($profileData instanceof ea_preferences) || !($profileData->ic_server[0] instanceof defaultimap)) {
+			if((!($this->profileData instanceof ea_preferences) && $_singleProfileToFetch==0) || ($_singleProfileToFetch!=0 && !isset($this->profileData->icServer[$_singleProfileToFetch])))
+			{
+				$GLOBALS['egw']->preferences->read_repository();
+				$userPreferences = $GLOBALS['egw_info']['user']['preferences']['felamimail'];
+				$imapServerTypes	= $this->boemailadmin->getIMAPServerTypes();
+				$profileData = $this->boemailadmin->getUserProfile($_appName,'',($_singleProfileToFetch<0?-$_singleProfileToFetch:'')); // by now we assume only one profile to be returned
+				$icServerKeys = array_keys((array)$profileData->ic_server);
+				$icProfileID = array_shift($icServerKeys);
+				$ogServerKeys = array_keys((array)$profileData->og_server);
+				$ogProfileID = array_shift($ogServerKeys);
+				//error_log(__METHOD__.__LINE__.' ServerProfile(s)Fetched->'.array2string(count($profileData->ic_server)).':'.array2string($icProfileID));
+				//may be needed later on, as it may hold users Identities connected to MailAlternateAdresses
+				$IdIsDefault = 0;
+				$rememberIdentities = $profileData->identities;
+				foreach ($rememberIdentities as $adkey => $ident)
+				{
+					if ($ident->default) $IdIsDefault = $ident->id;
+					$profileData->identities[$adkey]->default = false;
+				}
+
+				if(!($profileData instanceof ea_preferences) || !($profileData->ic_server[$icProfileID] instanceof defaultimap))
+				{
 					return false;
 				}
-				if($profileData->userDefinedAccounts && $GLOBALS['egw_info']['user']['apps']['felamimail'] && $getUserDefinedProfiles) {
-					// get user defined accounts
-					$accountData = $this->getAccountData($profileData);
-
-					if($accountData['active']) {
-
-						// replace the global defined IMAP Server
+				// set the emailadminprofile as profile 0; it will be assumed the active one (if no other profiles are active)
+				$profileData->setIncomingServer($profileData->ic_server[$icProfileID],0);
+				$profileID = $icProfileID;
+				$profileData->setOutgoingServer($profileData->og_server[$ogProfileID],0);
+				$profileData->setIdentity($profileData->identities[$icProfileID],0);
+				$userPrefs = $this->mergeUserAndProfilePrefs($userPreferences,$profileData,$icProfileID);
+				$rememberID = array(); // there may be more ids to be rememered
+				$maxId = $icProfileID>0?$icProfileID:0;
+				$minId = $icProfileID<0?$icProfileID:0;
+				//$profileData->setPreferences($userPrefs,0);
+				if($profileData->userDefinedAccounts && $GLOBALS['egw_info']['user']['apps']['felamimail'] && $getUserDefinedProfiles)
+				{
+					// get user defined accounts (only fetch the active one(s), as we call it without second parameter)
+					// we assume only one account may be active at once
+					$allAccountData = $this->getAllAccountData($profileData);
+					foreach ((array)$allAccountData as $k => $accountData)
+					{
+						// set defined IMAP server
 						if(($accountData['icServer'] instanceof defaultimap))
-							$profileData->setIncomingServer($accountData['icServer'],0);
+						{
+							$profileData->setIncomingServer($accountData['icServer'],$k);
+							$userPrefs = $this->mergeUserAndProfilePrefs($userPreferences,$profileData,$k);
+							//$profileData->setPreferences($userPrefs,$k);
+						}
+						// set defined SMTP Server
+						if(($accountData['ogServer'] instanceof emailadmin_smtp))
+							$profileData->setOutgoingServer($accountData['ogServer'],$k);
 
-						// replace the global defined SMTP Server
-						if(($accountData['ogServer'] instanceof defaultsmtp))
-							$profileData->setOutgoingServer($accountData['ogServer'],0);
+						if(($accountData['identity'] instanceof ea_identity))
+						{
+							$profileData->setIdentity($accountData['identity'],$k);
+							$rememberID[] = $k; // remember Identity as already added
+							if ($k>0 && $k>$maxId) $maxId = $k;
+							if ($k<0 && $k<$minId) $minId = $k;
+						}
 
-						// replace the global defined identity
-						if(($accountData['identity'] instanceof ea_identity)) {
-							//_debug_array($profileData);
-							$rememberIdentities = $profileData->identities;
-							$profileData->setIdentity($accountData['identity'],0);
-							$rememberID = $accountData['identity']->id;
+						if (empty($_profileID))
+						{
+							$setAsActive = $accountData['active'];
+							//if($setAsActive) error_log(__METHOD__.__LINE__." Setting Profile with ID=$k (using Active Info) for ActiveProfile");
+						}
+						else
+						{
+							$setAsActive = ($_profileID==$k);
+							//if($setAsActive) error_log(__METHOD__.__LINE__." Setting Profile with ID=$_profileID for ActiveProfile");
+						}
+						if($setAsActive)
+						{
+							// replace the global defined IMAP Server
+							if(($accountData['icServer'] instanceof defaultimap))
+							{
+								$profileID = $k;
+								$profileData->setIncomingServer($accountData['icServer'],0);
+								$userPrefs = $this->mergeUserAndProfilePrefs($userPreferences,$profileData,$k);
+								//$profileData->setPreferences($userPrefs,0);
+							}
+
+							// replace the global defined SMTP Server
+							if(($accountData['ogServer'] instanceof emailadmin_smtp))
+								$profileData->setOutgoingServer($accountData['ogServer'],0);
+
+							// replace the global defined identity
+							if(($accountData['identity'] instanceof ea_identity)) {
+								//_debug_array($profileData);
+								$profileData->setIdentity($accountData['identity'],0);
+								$profileData->identities[0]->default = true;
+								$rememberID[] = $IdIsDefault = $accountData['identity']->id;
+							}
 						}
 					}
 				}
-				if($profileData->userDefinedIdentities && $GLOBALS['egw_info']['user']['apps']['felamimail']) 
+				if($profileData->userDefinedIdentities && $GLOBALS['egw_info']['user']['apps']['felamimail'])
 				{
 					$allUserIdentities = $this->getUserDefinedIdentities();
-					if (is_array($allUserIdentities)) 
+					if (is_array($allUserIdentities))
 					{
-						$i=count($allUserIdentities);
-						$y=-1;
+						$i=$maxId+1;
+						$y=$minId-1;
 						foreach ($allUserIdentities as $tmpkey => $id)
 						{
-							if ($id->id != $rememberID) 
+							if (!in_array($id->id,$rememberID))
 							{
 								$profileData->setIdentity($id,$i);
 								$i++;
 							}
-							else
-							{	
-								foreach ($rememberIdentities as $adkey => $ident)
-								{
-									$profileData->setIdentity($ident,$i);
-									$profileData->identities[$i]->default = false;
-									$profileData->identities[$i]->id = $y;
-									$i++;
-									$y--;
-								}
-							}
 						}
 					}
 				}
-
-				$GLOBALS['egw']->preferences->read_repository();
-				$userPrefs = $GLOBALS['egw_info']['user']['preferences']['felamimail'];
-				# echo "<p>backtrace: ".function_backtrace()."</p>\n";
-				if (is_array($profileData->ic_server[0]->folderstoshowinhome) && !empty($profileData->ic_server[0]->folderstoshowinhome[0])) {
-					$userPrefs['mainscreen_showfolders'] = implode(',',$profileData->ic_server[0]->folderstoshowinhome);
+				// make sure there is one profile marked as default (either 0 or the one found)
+				$markedAsDefault = false;
+				foreach ($profileData->identities as &$id)
+				{
+					if ($id->id == $idIsDefault)
+					{
+						$id->default = true;
+						$markedAsDefault = true;
+					}
 				}
-				if (!empty($profileData->ic_server[0]->sentfolder)) $userPrefs['sentFolder'] = $profileData->ic_server[0]->sentfolder;
-				if (!empty($profileData->ic_server[0]->trashfolder)) $userPrefs['trashFolder'] = $profileData->ic_server[0]->trashfolder;
-				if (!empty($profileData->ic_server[0]->draftfolder)) $userPrefs['draftFolder'] = $profileData->ic_server[0]->draftfolder;
-				if (!empty($profileData->ic_server[0]->templatefolder)) $userPrefs['templateFolder'] = $profileData->ic_server[0]->templatefolder;
-				if(empty($userPrefs['deleteOptions']))
-					$userPrefs['deleteOptions'] = 'mark_as_deleted';
+				if ($markedAsDefault == false) $profileData->identities[0]->default = true;
 
-				if (!empty($userPrefs['trash_folder']))
-					$userPrefs['move_to_trash'] 	= True;
-				if (!empty($userPrefs['sent_folder']))
-					$userPrefs['move_to_sent'] 	= True;
+				$userPrefs = $this->mergeUserAndProfilePrefs($userPreferences,$profileData,$profileID);
+				$profileData->setPreferences($userPrefs);
 
-				$userPrefs['signature']		= $userPrefs['email_sig'];
-
-	 			unset($userPrefs['email_sig']);
-
- 				$profileData->setPreferences($userPrefs);
-
-				#_debug_array($profileData);#exit;
-
+				//_debug_array($profileData);#exit;
 				$this->sessionData['profileData'] = $this->profileData = $profileData;
 				$this->saveSessionData();
-				#_debug_array($this->profileData);
+				//_debug_array($this->profileData);
 			}
 			return $this->profileData;
+		}
+
+		function mergeUserAndProfilePrefs($userPrefs, &$profileData, $profileID)
+		{
+			// echo "<p>backtrace: ".function_backtrace()."</p>\n";
+			if (is_array($profileData->ic_server[$profileID]->folderstoshowinhome) && !empty($profileData->ic_server[$profileID]->folderstoshowinhome[0]))
+			{
+				$userPrefs['mainscreen_showfolders'] = implode(',',$profileData->ic_server[$profileID]->folderstoshowinhome);
+			}
+			if (!empty($profileData->ic_server[$profileID]->sentfolder)) $userPrefs['sentFolder'] = $profileData->ic_server[$profileID]->sentfolder;
+			if (!empty($profileData->ic_server[$profileID]->trashfolder)) $userPrefs['trashFolder'] = $profileData->ic_server[$profileID]->trashfolder;
+			if (!empty($profileData->ic_server[$profileID]->draftfolder)) $userPrefs['draftFolder'] = $profileData->ic_server[$profileID]->draftfolder;
+			if (!empty($profileData->ic_server[$profileID]->templatefolder)) $userPrefs['templateFolder'] = $profileData->ic_server[$profileID]->templatefolder;
+			if(empty($userPrefs['deleteOptions']))
+				$userPrefs['deleteOptions'] = 'mark_as_deleted';
+
+			if (!empty($userPrefs['trash_folder']))
+				$userPrefs['move_to_trash'] 	= True;
+			if (!empty($userPrefs['sent_folder']))
+			{
+				if (!isset($userPrefs['sendOptions']) || empty($userPrefs['sendOptions'])) $userPrefs['sendOptions'] = 'move_to_sent';
+			}
+			/* not used anymore
+			if (!empty($userPrefs['email_sig'])) $userPrefs['signature'] = $userPrefs['email_sig'];
+			*/
+ 			if (isset($userPrefs['email_sig'])) unset($userPrefs['email_sig']);
+			return $userPrefs;
 		}
 
 		function ggetSignature($_signatureID, $_unparsed = false)

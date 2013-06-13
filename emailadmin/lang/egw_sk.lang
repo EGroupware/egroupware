@@ -1,3 +1,4 @@
+%1 entries deleted.	emailadmin	sk	%1 položiek odstránených.
 account '%1' not found !!!	emailadmin	sk	Účet '%1' sa nenašiel !!!
 active templates	emailadmin	sk	Aktívne šablóny
 add new email address:	emailadmin	sk	Pridať novú E-mailovú adresu:
@@ -42,8 +43,11 @@ enable sieve	emailadmin	sk	zapnúť Sieve
 encrypted connection	emailadmin	sk	šifrované spojenie
 encryption settings	emailadmin	sk	nastavenia šifrovania
 enter your default mail domain (from: user@domain)	emailadmin	sk	Zadajte vašu predvolenú doménu (z tvaru: user@domain)
+entry saved	emailadmin	sk	Položka bola uložená
 error connecting to imap server. %s : %s.	emailadmin	sk	Chyba počas pripájania k IMAP serveru. %s : %s.
 error connecting to imap server: [%s] %s.	emailadmin	sk	Chyba počas pripájania k IMAP serveru: [%s] %s.
+error deleting entry!	emailadmin	sk	Chyba pri odstraňovaní položky!
+error saving the entry!!!	emailadmin	sk	Chyba pri ukladaní položky!!!
 filtered by account	emailadmin	sk	filtrované podľa Účtu
 filtered by group	emailadmin	sk	filtrované podľa Skupiny
 forward also to	emailadmin	sk	preposlať taktiež (komu)
@@ -93,8 +97,8 @@ profile is active	emailadmin	sk	profil je aktívny
 profile list	emailadmin	sk	Zoznam profilov
 profile name	emailadmin	sk	Názov profilu
 qmaildotmode	emailadmin	sk	qmail bodkový režim
-qouta size in mbyte	emailadmin	sk	Neľkosť kvóty v Megabajtoch
 quota settings	emailadmin	sk	Nastavenia kvóty
+quota size in mbyte	emailadmin	sk	veľkosť kvóty v Megabajtoch
 remove	emailadmin	sk	Odstrániť
 reset filter	emailadmin	sk	vynulovať filter
 select type of imap server	emailadmin	sk	Vyberte typ IMAP servera
@@ -115,6 +119,7 @@ standard	emailadmin	sk	Štandard
 standard imap server	emailadmin	sk	Štandardný IMAP server
 standard pop3 server	emailadmin	sk	Štandardný POP3 server
 standard smtp-server	emailadmin	sk	Štandardný SMTP server
+starts with	emailadmin	sk	začať s
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	emailadmin	sk	Tento IMAP server, zdá sa, nepodporuje zvolenú overovaciu metódu. Prosím kontaktujte správcu systému.
 this php has no imap support compiled in!!	emailadmin	sk	Toto PHP nemá zakompilovanú podporu pre IMAP !!
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	emailadmin	sk	Ak chcete používať pripojenie TLS, musíte fungovať na verzii PHP 5.1.0 alebo vyššej.
@@ -129,6 +134,7 @@ use predefined username and password defined below	emailadmin	sk	Použiť predde
 use smtp auth	emailadmin	sk	Použiť SMTP overovanie
 use tls authentication	emailadmin	sk	Použiť TLS overovanie
 use tls encryption	emailadmin	sk	Použiť TLS šifrovanie
+use users email-address (as seen in useraccount)	emailadmin	sk	použiť emailové adresy používateľov (ako vidno v používateľskom účte)
 user can edit forwarding address	emailadmin	sk	Používateľ môže upraviť adresu preposielania
 username (standard)	emailadmin	sk	používateľské meno (štandardné)
 username/password defined by admin	emailadmin	sk	Používateľské meno/heslo definované správcom
@@ -136,5 +142,7 @@ username@domainname (virtual mail manager)	emailadmin	sk	používateľ@doména (
 users can define their own emailaccounts	emailadmin	sk	Používatelia môžu definovať ich vlastné E-mailové účty
 users can define their own identities	emailadmin	sk	Používatelia môžu definovať svoje vlastné identity
 users can define their own signatures	emailadmin	sk	Používatelia môžu definovať svoje vlastné podpisy
-vaction messages with start- and end-date require an admin account to be set!	emailadmin	sk	Správy v neprítomnosti s počiatočným a koncovým dátumom vyžadujú, aby bol nastavený účet správcu!
 virtual mail manager	emailadmin	sk	Virtuálny MAIL ManaGeR
+yes, use credentials below only for alarms and notifications, otherwise use credentials of current user	emailadmin	sk	Áno, použiť nižšieuvedené prístupové údaje iba pre upozornenia, ináč použiť prístupové údaje aktuálneho používateľa
+yes, use credentials of current user or if given credentials below	emailadmin	sk	Áno, použiť prístupové údaje aktuálneho používateľa, alebo prístupové údaje uvedené nižšie ak sú vyplnené
+you have received a new message on the	emailadmin	sk	Obdržali ste novú správu ohľadom

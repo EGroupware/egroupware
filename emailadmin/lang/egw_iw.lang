@@ -16,6 +16,7 @@ email address	emailadmin	iw	כתובת דואר אלקטרוני
 enable cyrus imap server administration	emailadmin	iw	Cyrus IMAP איפשור ניהול שרת
 enable sieve	emailadmin	iw	Sieve אישפור
 enter your default mail domain (from: user@domain)	emailadmin	iw	(user@domain :ציין את דומיין דואר המחדלי שלך (לדוגמא
+entry saved	emailadmin	iw	הרשומה נשמרה
 forward also to	emailadmin	iw	להעביר גם אל
 forward email's to	emailadmin	iw	להעביר דואר אלקטרוני אל
 forward only	emailadmin	iw	העבר בלבד
@@ -47,7 +48,6 @@ postfix with ldap	emailadmin	iw	LDAP עם Postfix
 profile list	emailadmin	iw	רשימת פרופילים
 profile name	emailadmin	iw	שם פרופיל
 qmaildotmode	emailadmin	iw	qmaildotmode
-qouta size in mbyte	emailadmin	iw	MB-גודל הקצאה ב
 quota settings	emailadmin	iw	הגדרות הקצאה
 remove	emailadmin	iw	הסר
 select type of imap/pop3 server	emailadmin	iw	IMAP/POP3 בחר סוג שרת

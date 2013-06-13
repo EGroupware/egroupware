@@ -19,6 +19,8 @@ emailadmin	emailadmin	fa	مدیر رایانامه
 enable sieve	emailadmin	fa	فعالسازی Sieve
 encryption settings	emailadmin	fa	تنظیمات رمز نگاری
 enter your default mail domain (from: user@domain)	emailadmin	fa	حوزه پیش فرض خود را وارد کنید:(مثلا: fgpars.net)
+entry saved	emailadmin	fa	ورودی ذخیره شد
+error saving the entry!!!	emailadmin	fa	خطای ذخیره ورودی!!!
 forward also to	emailadmin	fa	همچنین ارسال به
 forward email's to	emailadmin	fa	ارسال نامه ها به
 forward only	emailadmin	fa	فقط ارسال به
@@ -42,8 +44,8 @@ pop3 server port	emailadmin	fa	درگاه کارگزار POP3
 profile access rights	emailadmin	fa	حقوق دسترسی مجموعه تنظیمات
 profile list	emailadmin	fa	لیست مجموعه تنظیمات
 profile name	emailadmin	fa	نام مجموعه تنظیمات
-qouta size in mbyte	emailadmin	fa	اندازه سهمیه به مگابایت
 quota settings	emailadmin	fa	تنظیمات سهمیه
+quota size in mbyte	emailadmin	fa	سهمیه به مگابایت
 remove	emailadmin	fa	حذف
 select type of imap/pop3 server	emailadmin	fa	نوع کارگزار IMAP/POP3 را انتخاب کنید
 select type of smtp server	emailadmin	fa	نوع کارگزار SMTP را انتخاب کنید

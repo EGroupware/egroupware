@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -138,28 +138,30 @@ class setup_cmd_config extends setup_cmd
 		'--webserver-url' => 'webserver_url',
 		'--mailserver' => array(	//server,{IMAP|IMAPS|POP|POPS},[domain],[{standard(default)|vmailmgr = add domain for mailserver login|email = use email of user (Standard Maildomain should be set)}]
 			'mail_server',
-			array('name' => 'mail_server_type','allowed' => array('imap','imaps','pop3','pop3s'),'default'=>'imap'),
+			array('name' => 'mail_server_type','allowed' => array('imap','imaps'),'default'=>'imap'),
 			'mail_suffix',
 			array('name' => 'mail_login_type','allowed'  => array(
 				'username (standard)' => 'standard',
 				'username@domain (virtual mail manager)' => 'vmailmgr',
+				'Username/Password defined by admin' => 'admin',
+				'userId@domain eg. u123@domain' => 'uidNumber',
 				'email (Standard Maildomain should be set)' => 'email',
 			),'default'=>'standard'),
 		),
 		'--cyrus' => array(
 			'imapAdminUsername',
 			'imapAdminPW',
-			array('name' => 'imapType','default' => 3),
+			array('name' => 'imapType','default' => 'cyrusimap'),
 			array('name' => 'imapEnableCyrusAdmin','default' => 'yes'),
 		),
 		'--sieve' => array(
-			array('name' => 'imapSieveServer','default' => 'localhost'),
+			array('name' => 'imapSieveServer'),
 			array('name' => 'imapSievePort','default' => 2000),
 			array('name' => 'imapEnableSieve','default' => 'yes'),	// null or yes
 		),
 		'--postfix' => array(
 			array('name' => 'editforwardingaddress','allowed' => array('yes',null)),
-			array('name' => 'smtpType','default' => 2),
+			array('name' => 'smtpType','default' => 'postfixldap'),
 		),
 		'--smtpserver' => array(	//smtp server,[smtp port],[smtp user],[smtp password]
 			'smtp_server',array('name' => 'smtp_port','default' => 25),'smtp_auth_user','smtp_auth_passwd',''
@@ -289,7 +291,7 @@ class setup_cmd_config extends setup_cmd
 		}
 		$config['smtpAuth'] = $config['smtp_auth_user'] ? 'yes' : null;
 
-		$emailadmin = new emailadmin_bo(-1,false);	// false=no session stuff
+		$emailadmin = new emailadmin_bo(false,false);	// false=no session stuff
 		$emailadmin->setDefaultProfile($config);
 
 		if ($this->verbose)
@@ -413,8 +415,8 @@ class setup_cmd_config extends setup_cmd
 		$defaults['mail_suffix'] = '$domain';
 		$defaults['imapAdminUsername'] = 'cyrus@$domain';
 		$defaults['imapAdminPW'] = self::randomstring();
-		$defaults['imapType'] = 2;	// standard IMAP
-		$defaults['smtpType'] = 1;	// standard SMTP
+		$defaults['imapType'] = 'defaultimap';	// standard IMAP
+		$defaults['smtpType'] = 'defaultsmtp';	// standard SMTP
 
 		return $defaults;
 	}
@@ -435,7 +437,7 @@ class setup_cmd_config extends setup_cmd
 			}
 			if (strpos($this->$name,'$') !== false)
 			{
-				$this->$name = str_replace(array(
+				$this->set_defaults[$name] = $this->$name = str_replace(array(
 					'$domain',
 				),array(
 					$this->domain,

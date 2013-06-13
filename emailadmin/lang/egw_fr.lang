@@ -34,8 +34,10 @@ enable sieve	emailadmin	fr	Activer Sieve
 encrypted connection	emailadmin	fr	connexion chiffrée
 encryption settings	emailadmin	fr	Paramètres de chiffrement
 enter your default mail domain (from: user@domain)	emailadmin	fr	Introduisez votre domaine par défaut (utilisateur@domaine.com)
+entry saved	emailadmin	fr	Entrée enregistrée
 error connecting to imap server. %s : %s.	emailadmin	fr	Erreur de connexion avec le serveur IMAP. %s: %s.
 error connecting to imap server: [%s] %s.	emailadmin	fr	Erreur de connexion avec le serveur IMAP. [%s] %s.
+error saving the entry!!!	emailadmin	fr	Erreur lors de l'enregistrement de l'entrée !!!
 forward also to	emailadmin	fr	Transférer aussi à
 forward email's to	emailadmin	fr	Transférer les emails à
 forward only	emailadmin	fr	Seulement transférer
@@ -81,8 +83,8 @@ profile access rights	emailadmin	fr	droits d'accès du profil
 profile list	emailadmin	fr	Liste des profils
 profile name	emailadmin	fr	Nom de profil
 qmaildotmode	emailadmin	fr	qmaildotmode
-qouta size in mbyte	emailadmin	fr	Taille du quota en Mo
 quota settings	emailadmin	fr	Paramètres de quota
+quota size in mbyte	emailadmin	fr	Taille des quota en Mo
 remove	emailadmin	fr	Supprimer
 select type of imap server	emailadmin	fr	Sélectionner le type de serveur IMAP
 select type of imap/pop3 server	emailadmin	fr	Sélectionner le type de serveur IMAP/POP3
@@ -121,3 +123,4 @@ username@domainname (virtual mail manager)	emailadmin	fr	utilisateur@domaine (Vi
 users can define their own emailaccounts	emailadmin	fr	Les utilisateurs peuvent définir leurs propres comptes de messagerie
 users can define their own signatures	emailadmin	fr	les utilisateurs peuvent définir leurs propres signatures
 virtual mail manager	emailadmin	fr	Virtual MAIL ManaGeR
+you have received a new message on the	emailadmin	fr	Vous avez reçu un nouveau message sur le

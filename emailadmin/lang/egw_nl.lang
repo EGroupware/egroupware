@@ -41,8 +41,10 @@ enable sieve	emailadmin	nl	activeer Sieve
 encrypted connection	emailadmin	nl	versleutelde verbinding
 encryption settings	emailadmin	nl	encryptie instellingen
 enter your default mail domain (from: user@domain)	emailadmin	nl	Voer uw standaard emaildomein in (uit: gebruiker@domein)
+entry saved	emailadmin	nl	Record opgeslagen
 error connecting to imap server. %s : %s.	emailadmin	nl	Fout verbinden met de IMAP server. %s : %s
 error connecting to imap server: [%s] %s.	emailadmin	nl	Fout verbinden met de IMAP server: [%s] %s
+error saving the entry!!!	emailadmin	nl	Fout bij het bewaren van de invoer!!!
 filtered by account	emailadmin	nl	gefilterd op Account
 filtered by group	emailadmin	nl	gefilterd op Groep
 forward also to	emailadmin	nl	Ook doorsturen naar
@@ -92,8 +94,8 @@ profile is active	emailadmin	nl	profiel is actief
 profile list	emailadmin	nl	Profiellijst
 profile name	emailadmin	nl	Profielnaam
 qmaildotmode	emailadmin	nl	qmaildotmode
-qouta size in mbyte	emailadmin	nl	quota grootte in MBytes
 quota settings	emailadmin	nl	Quota-installingen
+quota size in mbyte	emailadmin	nl	quota grootte in MByte
 remove	emailadmin	nl	Verwijderen
 reset filter	emailadmin	nl	filter opnieuw instellen
 select type of imap server	emailadmin	nl	selecteer IMAP servertype
@@ -135,5 +137,5 @@ username@domainname (virtual mail manager)	emailadmin	nl	gebruikersnaam@domeinna
 users can define their own emailaccounts	emailadmin	nl	Gebruikers kunnen hun eigen emailaccounts definiëren
 users can define their own identities	emailadmin	nl	gebruikers kunnen hun eigen identiteit instellen
 users can define their own signatures	emailadmin	nl	gebruikers kunnen hun eigen ondertekening instellen
-vaction messages with start- and end-date require an admin account to be set!	emailadmin	nl	Afwezigheidsmeldingen met een start- en einddatum vereisen dat een beheerders account is ingesteld!
 virtual mail manager	emailadmin	nl	Virtual MAIL ManaGeR
+you have received a new message on the	emailadmin	nl	U heeft een nieuw bericht ontvangen op de
