@@ -1,3 +1,21 @@
+egroupware-epl (11.1.20130613-1) hardy; urgency=low
+
+  * API/Addressbook/EMailAdmin: full support for active directory as account storage, tested with Samba4 and win2008r2
+  * Admin/All apps: enable private custom-fields
+  * Filemanager: urlencode password to cope with url special chars like forward slash or @ in passwords, requires smbcw version 1.2
+  * Filemanager: store last view as implicit preference and restore it from there
+  * eMail: while composing try refreshing listview for Draftfolder (this is, when email app is open, and draft folder is selected)
+  * eMail/Addressbook: adapt search for emailaddresses to search in prefix, given-, familyname, org and emailaddresses as addressbook
+  * ProjectManager: view all sub-entries of an InfoLog by context menu
+  * Calendar: configuration to automatic create links for participants from addressbook
+  * Calendar: changing an existing, recurring event to whole-day, caused an end-time on day before start
+  * Calendar/CalDAV: updated timezone database to 1.2013c
+  * API: allow to set a maximum caching time used instead of unlimited caching or a bigger time, eg. in header.inc.php: egw_caching::$max_expiration = 864000; // 10days
+  * Timesheet: fix for missing preset title
+  * Tracker/Filemanager: new not-closed folder in VFS
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 13 Jun 2013 17:19:42 +0200
+
 egroupware-epl (11.1.20130531-1) hardy; urgency=low
 
   * eMail/Sieve/API: updated to jquery version from Trunk 1.7.1, to fix not working edit of Sieve rules and ease backporting
