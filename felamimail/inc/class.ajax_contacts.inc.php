@@ -39,18 +39,21 @@ class ajax_contacts {
 				//error_log(__METHOD__.__LINE__.$_searchString);
 				if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $showAccounts=false;
 				$filter = ($showAccounts?array():array('account_id' => null));
-				$filter['cols_to_search']=array('n_fn','email','email_home');
-				$contacts = $GLOBALS['egw']->contacts->search(implode(' +',$seStAr),array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),$filter);
+				$filter['cols_to_search']=array('n_prefix','n_given','n_family','org_name','email','email_home');
+				$contacts = $GLOBALS['egw']->contacts->search(implode(' +',$seStAr),array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),'n_fn','','%',false,'OR',array(0,100),$filter);
 				// additionally search the accounts, if the contact storage is not the account storage
 				if ($showAccounts &&
 					$GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
 					$GLOBALS['egw_info']['server']['contact_repository'] == 'sql')
 				{
 					$accounts = $GLOBALS['egw']->contacts->search(array(
-						'n_fn'       => $_searchString,
+						'n_prefix'       => $_searchString,
+						'n_given'       => $_searchString,
+						'n_family'       => $_searchString,
+						'org_name'       => $_searchString,
 						'email'      => $_searchString,
 						'email_home' => $_searchString,
-					),array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),array('owner' => 0));
+					),array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),'n_fn','','%',false,'OR',array(0,100),array('owner' => 0));
 					
 					if ($contacts && $accounts)
 					{
@@ -83,7 +86,19 @@ class ajax_contacts {
 				foreach(array($contact['email'],$contact['email_home']) as $email) {
 					// avoid wrong addresses, if an rfc822 encoded address is in addressbook
 					$email = preg_replace("/(^.*<)([a-zA-Z0-9_\-]+@[a-zA-Z0-9_\-\.]+)(.*)/",'$2',$email);
-					$contact['n_fn'] = str_replace(array(',','@'),' ',$contact['n_fn']);
+					if (method_exists($GLOBALS['egw']->contacts,'search'))
+					{
+						$contact['n_fn']='';
+						if (!empty($contact['n_prefix'])) $contact['n_fn'] = $contact['n_prefix'];
+						if (!empty($contact['n_given'])) $contact['n_fn'] .= ($contact['n_fn']?' ':'').$contact['n_given'];
+						if (!empty($contact['n_family'])) $contact['n_fn'] .= ($contact['n_fn']?' ':'').$contact['n_family'];
+						if (!empty($contact['org_name'])) $contact['n_fn'] .= ($contact['n_fn']?' ':'').'('.$contact['org_name'].')';
+						$contact['n_fn'] = str_replace(array(',','@'),' ',$contact['n_fn']);
+					}
+					else
+					{
+						$contact['n_fn'] = str_replace(array(',','@'),' ',$contact['n_fn']);
+					}
 					$completeMailString = addslashes(trim($contact['n_fn'] ? $contact['n_fn'] : $contact['fn']) .' <'. trim($email) .'>');
 					if(!empty($email) && in_array($completeMailString ,$jsArray) === false) {
 						$i++;
