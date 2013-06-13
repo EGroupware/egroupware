@@ -1,0 +1,24 @@
+advanced options	emailadmin	lo	ການຕັ້ງຄ່າແບບພິເສດ
+alternate email address	emailadmin	lo	ທີ່ຢູ່ email ອື່ນ
+cyrus imap server	emailadmin	lo	Cyrus IMAP Server
+default	emailadmin	lo	ຄ່າເລີ່ມຕົ້ນ
+deliver extern	emailadmin	lo	ສົ່ງ extern
+edit email settings	emailadmin	lo	ແກ້ໄຂການຕັ້ງຄ່າ email
+email account active	emailadmin	lo	email ບັນຊີທີ່ໃຊ້ຢູ່
+email address	emailadmin	lo	ທີ່ຢູ່ email
+forward also to	emailadmin	lo	ສົ່ງຕໍ່ໄປຫາ
+forward only	emailadmin	lo	ສົ່ງຕໍ່ເທົ່ານັ້ນ
+in mbyte	emailadmin	lo	ໃນ Mbyte
+leave empty for no quota	emailadmin	lo	ອອກຈາກລະບົບສໍາລັບບໍ່ມີໂກຕ້າ
+mail settings	admin	lo	ຕັ້ງຄ່າ mail
+no alternate email address	emailadmin	lo	ບໍ່ມີ email ສະຫຼັບກັນ
+order	emailadmin	lo	Order
+postfix with ldap	emailadmin	lo	Postfix ດ້ວຍ LDAP
+qmaildotmode	emailadmin	lo	qmaildotmode
+quota settings	emailadmin	lo	ໂກຕ້າການຕັ້ງຄ່າ
+quota size in mbyte	emailadmin	lo	ຂະໜາດໂກຕ້າໃນ ເມກະໄບທ
+remove	emailadmin	lo	ລຶບອອກ
+standard	emailadmin	lo	ມາດຕະຖານ
+standard imap server	emailadmin	lo	ມາດຕະຖານ IMAP ເຊີເວີ້
+standard pop3 server	emailadmin	lo	ມາດຕະຖານ POP3 ເຊີເວີ້
+standard smtp-server	emailadmin	lo	ມາດຕະຖານ SMTP-ເຊີເວີ້
