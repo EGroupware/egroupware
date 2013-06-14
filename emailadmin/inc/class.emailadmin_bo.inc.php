@@ -593,6 +593,8 @@ class emailadmin_bo extends so_sql
 			// restore the default loginType and check if there are forced/predefined user access Data ($imapAuthType may be set to admin)
 			//error_log(__METHOD__.__LINE__.' ServerID:'.$icServer->ImapServerId.' Logintype:'.array2string($data['imapLoginType']));
 			list($data['imapLoginType'],$imapAuthType) = explode('#',$data['imapLoginType'],2);
+			if (empty($data['imapLoginType'])) $data['imapLoginType'] = 'standard';
+			if (empty($imapAuthType)) $imapAuthType = $data['imapLoginType'];
 			//error_log(__METHOD__.__LINE__.' ServerID:'.$icServer->ImapServerId.' Logintype:'.array2string($data['imapLoginType']).' AuthType:'.$imapAuthType);
 			$icServer->loginType	= $data['imapLoginType'];
 			$icServer->domainName	= $data['defaultDomain'];
