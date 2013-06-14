@@ -242,7 +242,7 @@
 										// take the first value found by explode, which is assumed the default value
 										list($mergeInTo[$key],$rest) = explode('#',$mergeInTo[$key],2);
 										$mergeInTo[$key] = $mergeInTo[$key].'#'.$toMerge[$key];
-										#error_log($mergeInTo[$key]);
+										//error_log($mergeInTo[$key]);
 										break;
 									}
 								case 'imapServer':
@@ -250,6 +250,14 @@
 								case 'imapPort':
 								case 'imapTLSEncryption':
 								case 'imapTLSAuthentication':
+									// whatever it is, if the server is set and the imapTLSAuthentication option is checked,
+									// then the user wanted that (checked results in a value "no")
+									if (strlen($toMerge['imapServer'])>0 && $toMerge[$key]=='no')
+									{
+										//error_log(__METHOD__.__LINE__." $key $mergeInTo[$key] = $toMerge[$key]");
+										$mergeInTo[$key]=$toMerge[$key];
+										break;
+									}
 								case 'imapEnableCyrusAdmin':
 								case 'imapAdminUsername':
 								case 'imapAdminPW':

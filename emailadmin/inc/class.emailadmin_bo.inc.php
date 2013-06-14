@@ -213,6 +213,7 @@ class emailadmin_bo extends so_sql
 				//echo "<p>eGW configuration update: ".print_r($new_config,true)."</p>\n";
 			}
 		}
+		if (empty($this->data['ea_stationery_active_templates'])) $this->data['ea_stationery_active_templates']='';
 		//error_log(__METHOD__.__LINE__.' Content to save:'.array2string($this->data));
 		if (is_numeric($this->data['ea_profile_id'])) self::unsetCachedObjects($this->data['ea_profile_id']*-1);
 		if (!($result = parent::save()))
@@ -476,7 +477,7 @@ class emailadmin_bo extends so_sql
 	static function unsetCachedObjects($_profileID=null)
 	{
 		if (is_null($_profileID)) $_profileID = self::getUserDefaultProfileID();
-
+		//error_log(__METHOD__.__LINE__.' called with ProfileID:'.$_profileID.' from '.function_backtrace());
 		if (!is_array($_profileID) && is_numeric($_profileID))
 		{
 			felamimail_bo::resetConnectionErrorCache($_profileID);
@@ -607,6 +608,8 @@ class emailadmin_bo extends so_sql
 			// restore the default loginType and check if there are forced/predefined user access Data ($imapAuthType may be set to admin)
 			//error_log(__METHOD__.__LINE__.' ServerID:'.$icServer->ImapServerId.' Logintype:'.array2string($data['imapLoginType']));
 			list($data['imapLoginType'],$imapAuthType) = explode('#',$data['imapLoginType'],2);
+			if (empty($data['imapLoginType'])) $data['imapLoginType'] = 'standard';
+			if (empty($imapAuthType)) $imapAuthType = $data['imapLoginType'];
 			//error_log(__METHOD__.__LINE__.' ServerID:'.$icServer->ImapServerId.' Logintype:'.array2string($data['imapLoginType']).' AuthType:'.$imapAuthType);
 			$icServer->loginType	= $data['imapLoginType'];
 			$icServer->domainName	= $data['defaultDomain'];
@@ -783,6 +786,7 @@ class emailadmin_bo extends so_sql
 				//error_log(__METHOD__.__LINE__.' '.$class);
 				include_once(EGW_INCLUDE_ROOT.'/activesync/backend/egw.php');
 			}
+
 		}
 	}
 
