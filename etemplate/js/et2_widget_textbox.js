@@ -194,7 +194,7 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 			"ignore": true
 		},
 		"maxlength": {
-			"igore": true
+			"ignore": true
 		},
 		"onchange": {
 			"ignore": true

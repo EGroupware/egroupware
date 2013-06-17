@@ -35,11 +35,15 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 {
 	attributes: {
 		"value": {
-			"type": "any"
+			"name": "Value",
+			"type": "any",
+			"description": "Object {app: ..., id: ..., status-widgets: {}} where status-widgets is a map of fields to widgets used to display those fields"
 		},
 		"status_id":{
+			"name": "status_id",
 			"type": "string",
-			"default": "status"
+			"default": "status",
+			"description": "The history widget is traditionally named 'status'.  If you name another widget in the same template 'status', you can use this attribute to re-name the history widget.  "
 		}
 	},
 

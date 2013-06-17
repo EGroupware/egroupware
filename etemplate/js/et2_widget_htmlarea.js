@@ -47,6 +47,7 @@ var et2_htmlarea = et2_inputWidget.extend(
 			'name': 'Expand Toolbar',
 			'default': true,
 			'type':'any',
+			'description': 'Have the toolbar expanded (visible)'
 		},
 		'base_href': {
 			'name': 'Image base path',
@@ -56,8 +57,10 @@ var et2_htmlarea = et2_inputWidget.extend(
 		},
 		'config': {
 			// internal default configuration
+			'name': 'Internal configuration',
 			'type':'any',
-			'default': et2_no_init
+			'default': et2_no_init,
+			'description': 'Internal configuration - managed by preferences & framework, passed in here'
 		},
 	},
 
