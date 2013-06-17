@@ -32,6 +32,7 @@ acl manager	admin	it	Gestione ACL
 acl rights	common	it	Diritti ACL
 action	admin	it	Azione
 actions	admin	it	Azioni
+activate	admin	it	Attiva
 activate wysiwyg-editor	admin	it	attiva editor WYSIWYG
 add a category	admin	it	aggiungi una categoria
 add a group	admin	it	aggiungi un gruppo

@@ -124,6 +124,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	i
 enter a textual description of the log-entry	infolog	it	inserisci una descrizione testuale per il log della voce
 enter the query pattern	infolog	it	Inserisci la stringa di ricerca
 entry and all files	infolog	it	Inserimenti e tutti i files
+error: importing the ical	infolog	it	Errore: importando iCal
 error: saving the entry	infolog	it	Errore: durante il salvataggio della voce
 error: the entry has been updated since you opened it for editing!	infolog	it	Errore: la voce è stata aggiornata da quando l'hai aperta per la modifica!
 execute a further action for this entry	infolog	it	Esegui ancora una azione per questo inserimento
@@ -179,6 +180,7 @@ list no subs/childs	infolog	it	Non elencare Sub/figli
 location	infolog	it	Localizzazione
 longer textual description	infolog	it	descrizione testuale più lunga
 low	infolog	it	Bassa
+manage mapping	infolog	it	Gestisci la mappatura
 max length of the input [, length of the inputfield (optional)]	infolog	it	massima lunghezza di inserimento [, lunghezza dal campo di inserimento (opzionale)]
 name must not be empty !!!	infolog	it	Il nome deve essere vuoto !!!
 name of current user, all other contact fields are valid too	infolog	it	Nome dell'utente corrente, tutti gli altri campi di contatto sono validi pure.

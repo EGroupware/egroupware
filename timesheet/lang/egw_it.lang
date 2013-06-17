@@ -34,6 +34,7 @@ for serial letter use this tag. put the content, you want to repeat between two 
 full: use only projectmanager	admin	it	Pieno: usa solo Gestione Progetti
 global categories	timesheet	it	Categorie Globali
 history	timesheet	it	Storico
+history logging	admin	it	Registrazione dello storico
 id	timesheet	it	ID
 ignore	timesheet	it	Ignora
 insert	timesheet	it	Inserisci

@@ -404,7 +404,6 @@ select resources	calendar	it	Seleziona risorse
 select whether you want the pariticpant stati reset to unkown, if an event is shifted later on.	calendar	it	Seleziona se vuoi reimpostare lo stato dei partecipanti a "sconosciuto", se un appuntamento viene spostato a più tardi
 select who should get the alarm	calendar	it	Seleziona chi dovrà avere la sveglia
 selected range	calendar	it	Intervallo di selezione
-send meetingrequest to all participants	calendar	it	Invia richiesta meeting a tutti i partecipanti
 send meetingrequest to all participants after the event is saved	calendar	it	Invia richiesta meeting a tutti i partecipanti a evento salvato.
 series deleted	calendar	it	Serie cancellata
 set a year only for one-time / non-regular holidays.	calendar	it	Imposta un Anno solo per festività occasionali / non regolari.
