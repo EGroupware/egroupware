@@ -153,8 +153,8 @@ function add_whole_list(list)
 function show_custom_country(selectbox)
 {
 	if(!selectbox) return;
-	custom_field_name = selectbox.name.replace("countrycode", "countryname");
-	custom_field = document.getElementById(custom_field_name);
+	var custom_field_name = selectbox.name.replace("countrycode", "countryname");
+	var custom_field = document.getElementById(custom_field_name);
 	if(custom_field && selectbox.value == "-custom-") {
 		custom_field.style.display = "inline";
 	}
@@ -163,6 +163,9 @@ function show_custom_country(selectbox)
 		if((selectbox.value == "" || selectbox.value == null) && custom_field.value != "")
 		{
 			selectbox.value = "-custom-";
+			// Chosen needs this to update
+			$j(selectbox).trigger("liszt:updated");
+
 			custom_field.style.display = "inline";
 		}
 		else
@@ -183,3 +186,12 @@ function add_new_list()
 		},'_self');
 	}
 }
+
+/**
+ * et2 specific initialization - can be moved to init() when addressbook gets converted to et2
+ */
+$j('.et2_container').on('load',function() {
+	
+	$j('select[id*="adr_one_countrycode"]').each(function() {show_custom_country(this);});
+	$j('select[id*="adr_two_countrycode"]').each(function() {show_custom_country(this);});
+});
