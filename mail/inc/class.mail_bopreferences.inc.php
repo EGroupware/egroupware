@@ -361,7 +361,17 @@ class mail_bopreferences extends mail_sopreferences
 				}
 			}
 			// make sure there is one profile marked as default (either 0 or the one found)
-			$profileData->identities[$IdIsDefault]->default = true;
+			$markedAsDefault = false;
+			foreach ($profileData->identities as &$id)
+			{
+				if ($id->id == $idIsDefault)
+				{
+					$id->default = true;
+					$markedAsDefault = true;
+				}
+			}
+			// none found; mark identity 0 as default
+			if ($markedAsDefault == false) $profileData->identities[0]->default = true;
 
 			$userPrefs = $this->mergeUserAndProfilePrefs($userPreferences,$profileData,$profileID);
 			$profileData->setPreferences($userPrefs);

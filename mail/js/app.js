@@ -65,7 +65,12 @@ app.mail = AppJS.extend(
 
 		this.et2 = et2.widgetContainer;
 		var isMainView = false;
-		for (var t in et2.templates) if (t=='mail.index') {isMainView=true;break;};
+		var isDisplay = false;
+		for (var t in et2.templates)
+		{
+			if (t=='mail.index') {isMainView=true;break;};
+			if (t=='mail.display') {isDisplay=true;break;};
+		}
 		if (isMainView) this.mail_disablePreviewArea(true);
 	},
 

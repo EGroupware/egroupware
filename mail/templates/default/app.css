@@ -351,6 +351,7 @@ input[type=button] {
 	-moz-opacity:1:
 	filter: Alpha(opacity=100);
 }
+/*
 #divGenTime {
 	background-color:#efefdf; 
 	max-height: 10%;
@@ -364,6 +365,7 @@ input[type=button] {
 	-moz-opacity:1:
 	filter: Alpha(opacity=100);
 }
+*/
 .mailDisplayHeaders {
 	overflow: hidden;
 }
