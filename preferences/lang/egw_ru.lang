@@ -27,7 +27,9 @@ div	preferences	ru	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	ru	Какой временной формат вы предпочитаете: 24 часовой или 12 часовой.
 edit custom fields	preferences	ru	Редактировать дополн. поля
 enable drag and drop functionality (experimental)	preferences	ru	Разрешить функциональность drug-n--drop (экспериментальное)
+enable selectbox dropdown resizing for ie (experimental)	preferences	ru	Выберите выпадающее меню для изменения размера
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	ru	Разрешить или запретить функции drug-n-drop во всех приложениях. Если браузер не поддерживает drug-n-drop, это будет запрещено автоматически. Эта возможность - экспериментальная на данный момент.
+enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	ru	Не существует или не работает выпадающее меню для изменения размера для Интернет Эксплорера во всех приложениях. Если браузер другой, опция не применена.
 enter your new password	preferences	ru	Введите новый пароль
 enter your old password	preferences	ru	введите прежний пароль
 failed to change password.  please contact your administrator.	preferences	ru	Ошибка при смене пароля. Обратитесь к администратору.
@@ -52,15 +54,19 @@ no default	preferences	ru	Нет умолчаний
 no user-selection at all	common	ru	Нет выбора пользователя вообще
 note: this feature does *not* change your email password. this will	preferences	ru	примечание: Эта настройка *не* изменит ваш пароль на электронной почте.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	ru	Примечание: Эта настройка *не* изменит ваш пароль на электронной почте.Это нужно выполнить вручную.
+number format	preferences	ru	Формат числа
 office 2003 theme	preferences	ru	Тема Офис 2003
 p: paragraph	preferences	ru	p: Параграф
+permanent time zone selection	preferences	ru	Постоянный часовой пояс
+please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	ru	Выберите часовой пояс для переключения между ними. Переключение не показывается, если выбрано менее двух часовых поясов.
+please select your timezone.	preferences	ru	Выберите ваш часовой пояс.
 please, select a new theme	preferences	ru	Пожалуйста, выбирите новую тему
 popup with search	preferences	ru	Всплывающее окна поиска
 re-enter your password	preferences	ru	Введите пароль еще раз
 read prefs for the specified application.	preferences	ru	Прочтите настройки для указанных приложений
 rich text editor enter mode	preferences	ru	Режим входа в расширенный редактор текста
 rich text editor theme	preferences	ru	Тема расширенного редактора текста
-select different theme	preferences	ru	Выбирите другую тему
+select different theme	preferences	ru	Выберите другую тему
 select how the rich text editor will generate the enter (linebreak) tag.	preferences	ru	Выберите - как расширенный редактор текста будет генерировать тэг перевода строки.
 select one	preferences	ru	Выберите одно
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	ru	Выбирите язык текстов и сообщений в eGroupWare. Некоторые языки могут не содержать все сообщения, в этом случае вы увидите сообщение на английском языке.
@@ -84,10 +90,12 @@ text only	preferences	ru	Только текст
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	ru	Приложение по умолчанию будет запущено когда вы входите в eGroupWare или кликните на значок Домой.<br>Также вы можете иметь не одно приложение на домашней странице (Домой), если вы не выбрали здесь определенного приложения (может быть настроено в свойствах каждого приложения).
 the old password is not correct	preferences	ru	Старый пароль неверен
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	ru	Показывает всех доступных пользователей (может быть довольно медленно при большом числе пользователей) . Можно искать пользователей по имени или группе.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	ru	Меню показывает всех доступных пользователей (может быть очень медленным при большом количестве пользователей). В меню можно искать пользователей по имени или группе. Две последние возможности ограничивают видимость других пользователей. Таким образом они должны быть ускорены и применяться не к администраторам.
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	ru	Два последних параметра ограничивают видимость других пользователей. В связи с этим их НЕ СЛЕДУЕТ применять на администраторах.
 the two passwords are not the same	preferences	ru	Два пароля не одинаковы
 theme (colors/fonts) selection	preferences	ru	выбор темы(цвета/фоны)
 this server is located in the %1 timezone	preferences	ru	Данный сервер расположен во временной зоне %1
+thousands separator is only used for displaying and not for editing numbers.	preferences	ru	Тысячи разделителей используются только для отображения, но не для редактирования чисел.
 time format	preferences	ru	Формат времени
 use default	preferences	ru	использовать по умолчанию
 users choice	preferences	ru	Выбор Пользователей

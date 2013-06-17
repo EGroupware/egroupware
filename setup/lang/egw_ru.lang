@@ -1,20 +1,27 @@
-%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	ru	%1 '%2' НЕ СУЩЕСТВУЕТ, не может быть прочитан веб-сервером или не содержит установленного eGroupWare!
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	ru	%1 '%2' не существует, не может быть прочитан веб-сервером или не содержит установленного EGroupware!
 %1 already exists in %2.	setup	ru	%1 уже имеется в %2
 %1 created in %2.	setup	ru	%1 создан в %2
 %1 database %2 on %3 already contains the following tables:	setup	ru	%1 база данных %2 yf %3 уже содержит следующие таблицы:
-%1 does not exist !!!	setup	ru	%1 не  существует !!!
-%1 is %2%3 !!!	setup	ru	%1 это %2%3 !!!
-%1 is needed by: %2.	setup	ru	%1 нужен для: %2.
-%1, %2 or %3 the configuration file.	setup	ru	%1, %2 или %3 файл конфигурации
-'%1' is no valid domain name!	setup	ru	'%1' - неправильное имя домена!
-'%1' is not allowed as %2. arguments of option %3 !!!	setup	ru	'%1' недопустим как %2. аргумены операции %3 !!!
-(searching accounts and changing passwords)	setup	ru	(поиск акаунтов и смена паролей)
+%1 does not exist !!!	setup	ru	%1 не существует!
+%1 entries modified.	setup	ru	%1 записей изменено
+%1 entries would have been modified.	setup	ru	%1 записей будет изменено
+%1 is %2%3 !!!	setup	ru	%1 это %2%3 !
+%1 is needed by: %2.	setup	ru	%1 нужен для: %2
+%1 is set to %2, you will not be able to upload or attach files bigger then that!	setup	ru	%1 установлено в %2, вы не сможете выгружать или прикреплять файлы большего размера!
+%1 is set to %2. this is not recommeded for a production system, as displayed error messages can contain passwords or other sensitive information!	setup	ru	%1 установлено в  %2. Это не рекомендуется для производственных систем, поскольку служебные сообщения могут содержать пароли и другую чувствительную информацию
+%1 users and %2 groups created, %3 errors	setup	ru	Создано %1 пользователей и %2 групп, ошибок %3.
+%1, %2 or %3 the configuration file.	setup	ru	%1, %2 или %3 файла(ов) конфигурации
+'%1' is no valid domain name!	setup	ru	'%1' - неверное имя домена!
+'%1' is not allowed as %2. arguments of option %3 !!!	setup	ru	'%1' недопустим как %2. Возможны аргументы %3 !
+'%1' must be integer	setup	ru	%1 должно быть целым числом.
+(searching accounts and changing passwords)	setup	ru	Поиск учетных записей и смена паролей
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	ru	*** НЕ обновляйте базу данных с помощью модуля установки, так-как обновление может быть прервано в связи с исчерпанием максимального времени запуска, что приведет вышу БД в невосстаноимое состояние (все данные будут утеряны) !!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	ru	*** Сделайте изменения вручную в вашем php.ini (в линуксе обычно находится в /etc), чтобы привести eGW в полную работоспособность !!!
 00 (disable)	setup	ru	00 (отключить  / рекомендовано)
 13 (ntp)	setup	ru	13 (ntp)
 80 (http)	setup	ru	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	ru	<b>используемая таблица символов</b> (используйте UTF-8 если планируете использовать языки с различающимися таблицами символов):
+==> different group '%1' under that gidnumber %2, not setting memberships!	setup	ru	==> Под этим gidNumber %2 другая группа '%1', членство не задано!
 [header-password],[header-user],[new-password],[new-user]	setup	ru	[пароль заголовка],[пароль пльзователя],[новый пароль],[новый пользователь]
 access denied: wrong username or password for manage-header !!!	setup	ru	Доступ запрещен: неверное имя пользователя или пароль для управления заголовком !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	ru	Доступ запрещен: неверное имя пользователя или пароль для настройки домена '%1(%2)'!!!
@@ -46,6 +53,7 @@ all languages (incl. not listed ones)	setup	ru	все языки
 all users	setup	ru	Все пользователи
 allow authentication via cookie	setup	ru	Разрешить идентификацию по куки
 allow password migration	setup	ru	Разрешить перемещение паролей
+allow usernames identical to system users?	setup	ru	Разрешить имена пользователей, идентичные системным?
 allowed migration types (comma-separated)	setup	ru	Разрешить типы перемещений
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	ru	К добавочным доменам можно получить доступ при входе как <i>имяпользователя@домен</i>.
 and is up to date	setup	ru	и последней версии
@@ -72,6 +80,7 @@ at your request, this script is going to take the evil action of uninstalling al
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	ru	Пытаться использовать корректный тип MIME для FTP вместо используемого обычно 'application/octet-stream'
 authentication / accounts	setup	ru	Авторизация / Учетные записи
 authentication type for application	setup	ru	Тип авторизации для приложения
+authentification mode:	setup	ru	Режим аутентификации:
 auto create account records for authenticated users	setup	ru	Автоматическое создание учетных записей для идентифицированных пользователей
 auto login anonymous user	setup	ru	Автоматический вход анонимных пользователей
 auto-created user accounts expire	setup	ru	Автоматически созданные учетные записи истекают
@@ -79,16 +88,20 @@ available version	setup	ru	Доступная версия
 back to the previous screen	setup	ru	Вернуться к предыдущему
 back to user login	setup	ru	Назад к логину пользователя
 back's up your db now, this might take a few minutes	setup	ru	Сохраняет вашу БД сейчас же, может занять несколько минут
-backup '%1' deleted	setup	ru	резервная копия '%1' удалена
-backup '%1' renamed to '%2'	setup	ru	резервная копия '%1' переименованная в '%2'
-backup '%1' restored	setup	ru	резервная копия '%1' восстановлена
-backup and restore	setup	ru	создать резервную копию и восстановить
-backup failed	setup	ru	ошибка при создании резервной копии
+backup '%1' deleted	setup	ru	Резервная копия '%1' удалена.
+backup '%1' renamed to '%2'	setup	ru	Резервная копия '%1' переименованная в '%2'
+backup '%1' restored	setup	ru	Резервная копия '%1' восстановлена.
+backup and restore	setup	ru	Резервное копирование и восстановление
+backup failed	setup	ru	Ошибка резервного копирования.
+backup files (needs ziparchive)	setup	ru	Файлы резервной копии (требуется ZipArchive)
 backup finished	setup	ru	создание резервной копии завершено
+backup housekeeping	setup	ru	Резервные копии со стандартными именами затираются автоматически. Переименование файлов резервных копий исключает их затирание.
+backup min count	setup	ru	Минимальное число резервных копий
 backup now	setup	ru	создать резервную копию сейчас
 backup sets	setup	ru	резервная копия устанавливается
 backup skipped!	setup	ru	Резервное копирование пропущено!
 backup started, this might take a few minutes ...	setup	ru	резервное копирование запущено, это может занять несколько минут
+base dn "%1" not found!	setup	ru	Базовый dn "%1" не найден!
 because an application it depends upon was upgraded	setup	ru	в связи с тем, что приложение от которго имеется зависимость было обновлено
 because it depends upon	setup	ru	в связи с тем, что зависит от
 because it is not a user application, or access is controlled via acl	setup	ru	в связи с тем, что это не пользовательское приложение, либо доступ ограничен ACL
@@ -97,27 +110,35 @@ because it was manually disabled	setup	ru	т.к. отключено вручну
 because its sources are missing	setup	ru	т.к. его исходники отсутствуют
 because of a failed upgrade or install	setup	ru	т.к. произошла ошибка обновления или установки
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	ru	т.к. произошла ошибка обновления, либо база данных новее, чем установленная версия данного приложения
-because the enable flag for this app is set to 0, or is undefined	setup	ru	в связи с тем, что флаг включения этого приложения установлен в 0 либо не установлен вовсе
-bottom	setup	ru	низ
+because the enable flag for this app is set to 0, or is undefined	setup	ru	В связи с тем, что флаг включения этого приложения установлен в 0 либо не установлен вовсе
+bottom	setup	ru	Низ
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	ru	но мы<u>крайне рекомендуем сделать резервную копию</u>ваших таблиц на случай если скрипт повредит ваши данные.<br /><strong>Этот автоматческий сценарий может с легкостью уничтожить все ваши данные.</strong>
+ca certificate	setup	ru	Сертификат УЦ
 can not connect to %1 database %2 on host %3 using user %4!	setup	ru	Невозможно соединиться с %1 базой данных %2 на компьютере %3, используя пользователя %4!
 can not connect to ldap server on host %1 using dn %2!	setup	ru	Невозможно соединиться с сервером LDAP на компьютере %1, используя DN %2!
 can not create %1 database %2 on %3 for user %4!	setup	ru	Невозможно создать %1 базу данных %2 на %3 для пользователя %4!
 can not create dn %1!	setup	ru	Невозможно создать DN %1!
+can not instancate accounts object for %1	setup	ru	Невозможно исключить объект учетных данных %1
 cancel	setup	ru	Отменить
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	ru	Нет возможности создать header.inc.php в связи с ограничением доступа.<br />Взамен вы можете %1 или %2 файл.
+cas server host name:<br />example: sso-cas.univ-rennes1.fr	setup	ru	Имя сервера CAS<br />Пример: sso-cas.univ-rennes1.fr
+cas server port:<br />example: 443	setup	ru	Порт CAS сервера<br />Пример: 443
+cas server uri:	setup	ru	URI CAS сервера:
+certificate (pem or ca):	setup	ru	Сертификат (PEM или CA)
 change system-charset	setup	ru	Изменить кодировку
 charset	setup	ru	utf-8
 charset to convert to	setup	ru	Конвертировать в кодировку
-charsets used by the different languages	setup	ru	кодировки используемые разными языками
+charsets used by the different languages	setup	ru	Кодировки используемые разными языками
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	ru	Проверка может производться только если вызывается с помощью веб-сервера пользователем с именем не известным веб-серверу.
 check installation	setup	ru	Проверка установки
-check ip address of all sessions	setup	ru	проверить ip адреса всех сессий
+check ip address of all sessions	setup	ru	Проверить ip адреса всех сессий
+check to backup and restore the files directory (may use a lot of space, make sure to configure housekeeping accordingly)	setup	ru	Проверить файловый каталог на резервное копирование и восстановление. Использует дополнительное место, убедитесь в его наличии.
 checking extension %1 is loaded or loadable	setup	ru	Проверка расширения %1 загружена или загружаема
 checking file-permissions of %1 for %2 %3: %4	setup	ru	Проверка доступа к файлам %1 для %2 %3: %4
 checking for gd support...	setup	ru	Проверка графической (GD) поддержки...
-checking function %1 exists	setup	ru	Проверка функции %1 на существование
-checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	ru	Проверка возможности записи веб-сервером пути указанного в php.ini в параметре session.save_path='%1'
+checking for jpgraph in %1	setup	ru	Проверка наличия JPGraph в %1
+checking function %1 exists	setup	ru	Проверка функции %1
+checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	ru	Проверка доступности на запись веб-сервером пути, указанного в php.ini параметром session.save_path='%1'
 checking pear%1 is installed	setup	ru	Проверка наличия установленного PEAR %1
 checking php.ini	setup	ru	Проверка php.ini
 checking required php version %1 (recommended %2)	setup	ru	Проверка наличия PHP требуемой версии %1 (рекомендовано %2)
@@ -156,21 +177,24 @@ create or edit the egroupware configuration file: header.inc.php:	setup	ru	Со�
 create the empty database -	setup	ru	Создать пустую базу данных -
 create the empty database and grant user permissions -	setup	ru	Создать пустую базу данных и предоставить пользовательские права -
 create your header.inc.php	setup	ru	Создать свой файл header.inc.php
-created	setup	ru	создан
-created header.inc.php!	setup	ru	Header.inc.php создан!!
+created	setup	ru	Создан
+created header.inc.php!	setup	ru	header.inc.php создан!
 creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	ru	Создает пользователя-администратора: домен(по умолчанию),[пользователь конфигуратора(админ)],пароль,имя пользователя,пароль,[Имя],[Фамилия],[эл.почта]
 creating tables	setup	ru	Создание таблиц
-creation of %1 in %2 failed !!!	setup	ru	Создание %1 в %2 не удалось !!!
+creation of %1 in %2 failed !!!	setup	ru	Создание %1 в %2 не удалось!
 current configuration:	setup	ru	Текущая конфигурация:
 current system-charset	setup	ru	Текущий набор символов
 current system-charset is %1.	setup	ru	Текущий набор символов %1
 current version	setup	ru	Текущая версия
 currently installed languages: %1 <br />	setup	ru	Установленные языки: %1
-cyrus imap: admin user,password	setup	ru	Cyrus IMAP: Имя входа администратора,Пароль
+custom handler: %1	setup	ru	Пользовательский обработчик: %1
+custom set via %1	setup	ru	Пользовательский набор через %1
+cyrus imap: admin user,password	setup	ru	Cyrus IMAP: имя входа администратора, пароль
 database	setup	ru	База данных
-database instance (egw domain)	setup	ru	Операция базы данных (домен eGW)
-database is version %1 and up to date.	setup	ru	Версия базы данных %1 (последняя)
+database instance (egw domain)	setup	ru	Экземпляр базы данных (домен eGW)
+database is version %1 and up to date.	setup	ru	Версия базы данных %1 актуальна
 database successfully converted from '%1' to '%2'	setup	ru	База данных успешно  преобразована из %1 в %2
+datebase %1 droped.	setup	ru	База данных %1 удалена
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	ru	Порт точного времени.<br />При использовании порта 13, прежде чем подтверждать и отправлять эту страницу, пожалуйста удостоверьтесь что соответствующие настройки файерволлов корректно проведены.<br />(Порт: 13 / Хост: 129.6.15.28)
 day	setup	ru	день
 day of week<br />(0-6, 0=sunday)	setup	ru	день недели<br />(0-6, 0=воскресенье)
@@ -209,6 +233,7 @@ domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_back
 domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]	setup	ru	домен(по умолчанию),[пользователь конфигуратора(администратор)],пароль,[для инсталляции сделать резервную копию],[кодировка(выставленная по умолчанию зависит от выбранного языка)]
 domain(default),[config user(admin)],password,[name=value,...] sets config values beside:	setup	ru	домен(по умолчанию),[пользователь конфигуратора(администратор)],пароль,[название=значение,...] устанавливает значения конфигурации на основе():
 domain-name	setup	ru	имя-домена
+don't change, if you already stored files! you will loose them!	setup	ru	Не изменяйте, если уже сохранили файлы! Вы можете их потерять!
 dont touch my data	setup	ru	Не использовать мои данные
 download	setup	ru	Получить
 edit current configuration	setup	ru	редактировать текущую конфигурацию
@@ -224,11 +249,12 @@ egroupware configuration file header.inc.php already exists, you need to use --e
 egroupware domain/instance %1(%2):	setup	ru	Домен/запись eGroupWare %1(%2)
 egroupware is already installed!	setup	ru	eGroupWare уже установлен!
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	ru	Исходники eGroupWare неполные, файл '%2' отсутствует!!!
+email (standard maildomain should be set)	setup	ru	E-mail (стандартный почтовый домен должен быть установлен)
 emailadmin profile updated:	setup	ru	изменен профиль EMailAdmin
 enable for extra debug-messages	setup	ru	включить для получения расширенных отладочных сообщений
 enable mcrypt	setup	ru	Включить MCrypt
-enter some random text for app session encryption	setup	ru	Введите какой-нибудь случайный текст для шифрования сеансов приложений
-enter some random text for app_session <br />encryption (requires mcrypt)	setup	ru	Введите какой-нибудь случайный текст для шифрования<br />сеансов приложений (требуется mcrypt)
+enter some random text for app session encryption	setup	ru	Введите какой-нибудь случайный текст для шифрования приложения session
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	ru	Введите какой-нибудь случайный текст для шифрования<br />app_session (требуется mcrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	ru	Введите полный путь до временных файлов. <br /> Примеры: /tmp, C:\TEMP
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	ru	Введите полный путь до временных файлов. <br /> Примеры: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	ru	Введите полный путь до файлов пользователей и групп. <br /> Примеры: /files, E:\FILES
@@ -244,16 +270,21 @@ enter your http proxy server	setup	ru	Укажите HTTP прокси серв�
 enter your http proxy server password	setup	ru	Введите пароль HTTP прокси сервера
 enter your http proxy server port	setup	ru	Введите порт HTTP прокси сервера
 enter your http proxy server username	setup	ru	Введите имя пользователя HTTP прокси сервера
+error deleting "dn=%1"!	setup	ru	Ошибка удаления "dn=%1"!
+error dropping user!	setup	ru	Ошибка удаления пользователя!
 error in admin-creation !!!	setup	ru	Ошибка при создании администратора !!!
 error in group-creation !!!	setup	ru	Ошибка при создании группы
+error listing "dn=%1"!	setup	ru	Ошибка отображения "dn=%1"!
+error modifying dn=%1: %2='%3'!	setup	ru	Ошибка изменения dn=%1: %2='%3'!
 export has been completed!	setup	ru	Экспорт завершен!
-failed writing configuration file header.inc.php, check the permissions !!!	setup	ru	Ошибка записи файла конфигурации header.inc.php, проверьте возможность доступа !!!
+failed writing configuration file header.inc.php, check the permissions !!!	setup	ru	Ошибка записи файла конфигурации header.inc.php, проверьте возможность доступа!
 false	setup	ru	Ошибка
 file	setup	ru	ФАЙЛ
-file type, size, version, etc.	setup	ru	тип файла,размер,версия,и т.д.
+file type, size, version, etc.	setup	ru	Тип файла, размер, версия, и т.д.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	ru	Публикация файлов отключена: Вы НЕ можете использовать какие-либе файловые менеджеры, равно как и использовать вложения файлов в нескольких приложениях!
-filename	setup	ru	имя файла
+filename	setup	ru	Имя файла
 filesystem	setup	ru	Файловая система
+filesystem (default)	setup	ru	Файловая система по умолчанию
 force selectbox	setup	ru	Принудительный список выбора
 give admin access to all installed apps	setup	ru	Выдать полный доступ ко всем установленным приложениям
 gives further options	setup	ru	в дальнейшем дает дополнительные параметры(?)
@@ -269,10 +300,11 @@ header username	setup	ru	Имя пользователя-администрат�
 header-password[,header-user(admin)]	setup	ru	Пароль заголовка[,пользователь заголовка(администратор)]
 header.inc.php successful written.	setup	ru	header.inc.php успешно записан
 historylog removed	setup	ru	Журнал истории удален
-hooks deregistered	setup	ru	зацепки отключены
-hooks registered	setup	ru	зацепки зарегистрированы
+hooks deregistered	setup	ru	Хуки отключены
+hooks registered	setup	ru	Хуки зарегистрированы
 host information	setup	ru	Информация о  хосте
 host,[smtp port],[smtp user],[smtp password]	setup	ru	Имя сервера,[порт SMTP],[пользователь SMTP],[пароль SMTP]
+host,{imap | imaps },[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	ru	Имя сервера,{imap | imaps },[домен],[{standard(по умолчанию)|vmailmgr = другой домен для подключения почтового сервера}]
 host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	ru	Имя сервера,{imap | pop3 | imaps | pop3s},[домен],[{стандартный(по умолчанию)|vmailmgr = добавить домен для входа в сервер почты}]
 host/ip domain controler	setup	ru	Имя сервера/IP адрес контроллера Домена
 hostname/ip of database server	setup	ru	Имя/ IP адрес сервера базы данных
@@ -285,12 +317,14 @@ if no acl records for user or any group the user is a member of	setup	ru	Есл�
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	ru	Если безопасный режим включен, у eGW нет возможностии менять некоторые настройки при запуске так же как и нет возможности запускать любые еще не загруженные модули.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	ru	Если приложение не имеет заранее определенных таблиц, выбор модернизации скорее всего вызовет ряд проблем
 if using ads (active directory) authentication	setup	ru	Используя ADS (Active Directory) идентификацию
-if using ldap	setup	ru	Используя LDAP
+if using cas (central authentication service):	setup	ru	При использовании CAS (Central Authentication Service)
+if using ldap	setup	ru	При использовании LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ru	При использовании LDAP,желаете ли вы управлять атрибутами домашних папок  и параметрами входа?
-if you did not receive any errors, your applications have been	setup	ru	Если вы не получили уведомлений об ошибках,ваше приложение успешно
-if you did not receive any errors, your tables have been	setup	ru	Если вы не получили уведомлений об ошибках,ваши таблицы успешны
-if you running this the first time, don't forget to manualy %1 !!!	setup	ru	Работая с этим в первый раз,не забудьте вручную %1 !!!
-if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	ru	Если вы используете языки того же набора,вам не нужно устанавливать систему наборов языков
+if you can only access the docroot choose <b>database</b> for where to store the file content and use same path as for temporary files.	setup	ru	Если вы имеете доступ только в docroot, выберите <b>Database</b> для сохранения файлов и используйте тот же путь, что и для временных файлов.
+if you did not receive any errors, your applications have been	setup	ru	Если вы не получили сообщения об ошибке, ваше приложение успешно
+if you did not receive any errors, your tables have been	setup	ru	Если вы не получили уведомления об ошибке, ваши таблицы успешно
+if you running this the first time, don't forget to manualy %1 !!!	setup	ru	В первый раз не забудьте вручную %1 !
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	ru	Если вы используете языки с  тем же набором символов, вам не нужно устанавливать системный набор!
 image type selection order	setup	ru	Порядок выбора типов изображений
 import has been completed!	setup	ru	Импорт завершен!
 include_path need to contain "." - the current directory	setup	ru	параметр include_path должен содержать "." - текущую папку
@@ -319,6 +353,7 @@ ldap accounts context	setup	ru	LDAP контекст
 ldap config	setup	ru	LDAP конфигурация
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	ru	Префикс домашней папки LDAP по уполчанию (напр. /home для /home/username
 ldap default shell (e.g. /bin/bash)	setup	ru	LDAP оболочка по умолчанию (напр. /bin/bash)
+ldap dn="%1" with %2 entries deleted.	setup	ru	LDAP dn="%1" и %2 записей удалено.
 ldap encryption type	setup	ru	Тип шифрования LDAP
 ldap groups context	setup	ru	Контекст групп LDAP
 ldap host	setup	ru	Имя сервера LDAP
@@ -351,6 +386,7 @@ mcrypt mode (default cbc)	setup	ru	Режим MCrypt (по умолчанию CB
 mcrypt settings (requires mcrypt php extension)	setup	ru	Настройки MCrypt (требуется расширение PHP mcrypt)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ru	паараметр ограничения памяти (memory_limit) установлен менее чем на %1: некоторым приложениям eGroupWare требуется больше чем рекомендованные 8М, за исключением случающихся сбоев
 migration between egroupware account repositories	setup	ru	Перемещение между хранилищами учетных записей eGroupWare
+min backup count	setup	ru	Число резервных копий для сохранения (ноль: все/без ограничений)
 minimum account id (e.g. 500 or 100, etc.)	setup	ru	Минимальныйидентификатор учетных записей (напр.500 или 100, и т.п.)
 minute	setup	ru	минута
 missing or uncomplete mailserver configuration	setup	ru	Неверная или неполная настройка сервера почты
@@ -358,7 +394,7 @@ modifications have been completed!	setup	ru	Изменения завершен�
 modified	setup	ru	Изменено
 modify	setup	ru	Изменить
 month	setup	ru	месяц
-multi-language support setup	setup	ru	Много-Языковая поддержка установки
+multi-language support setup	setup	ru	Установка многояыковой поддержки
 name of database	setup	ru	Имя базы данных
 name of db user egroupware uses to connect	setup	ru	Имя пользователя БД используемое eGroupWare для подключения
 never	setup	ru	никогда
@@ -372,14 +408,15 @@ no egroupware domains / database instances exist! use --edit-header --domain to 
 no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	ru	Не установлен пароль администратора заголовка(header)! Используйте --edit-header <пароль>[,<пользователь>] для его установки ( использование -- дает больше настроек)
 no modes available	setup	ru	Нет доступных режимов
 no update necessary, domain %1(%2) is up to date.	setup	ru	В обновлении нет необходимости, домен %1(%2) последней версии
-no xml support found. disabling	setup	ru	Не найдена поддержка XML. Отключение.
-not	setup	ru	не
+no valid timezone set! ("%1" is not sufficient, you have to use a timezone identifer like "%2", see %3full list of valid identifers%4)	setup	ru	Неверное указание временной зоны! ("%1" недостаточно, следует использовать идентификатор вида "%2", смотрите %3 полный список допустимых значений %4)
+no xml support found. disabling	setup	ru	Не найдена поддержка XML. Отключено.
+not	setup	ru	Не
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	ru	Не все алгоритмы и режимы модуля mcrypt работают в eGroupWaare. Если вы встречаете неполадки, попробуйте отключить.
-not complete	setup	ru	не завершено
-not completed	setup	ru	Не Завершено
-not ready for this stage yet	setup	ru	Еще нет готовности к этой стадии
-not set	setup	ru	не установлено
-note: you will be able to customize this later	setup	ru	К сведению: У вас будет возможность настроить это позже
+not complete	setup	ru	Незавершенный
+not completed	setup	ru	Не завершено
+not ready for this stage yet	setup	ru	К этой стадии пока не готово
+not set	setup	ru	Не установлено
+note: you will be able to customize this later	setup	ru	Примечание: у вас будет возможность настроить это позже
 nothing to change.	setup	ru	Нечего менять.
 now guessing better values for defaults...	setup	ru	А сейчас попробуем угадать наилучшие величины значений по умолчанию...
 odbc / maxdb: dsn (data source name) to use	setup	ru	ODBC / MaxDB: DSN (data source name - название источника данных) для использования
@@ -404,12 +441,18 @@ path of egroupware install directory (default auto-detected)	setup	ru	путь �
 path to user and group files has to be outside of the webservers document-root!!!	setup	ru	Путь к файлам пользователей и групп ДОЛЖЕН БЫТЬ ВНЕ корневой папки веб-сервера !!!
 path to various directories: have to exist and be writeable by the webserver	setup	ru	путь к различным папкам: должен существовать и веб-сервер должен иметь возможность записи туда
 pear (%1) is a php repository and is usually in a package called %2.	setup	ru	PEAR (%1) - храниличе PHP и обычно идет в пакете называемом %2
+pear extensions are required by many egroupware applications, pear itself is the required basis for each extension!	setup	ru	Расширения PEAR требуются многим приложениям EGroupware, а сам PEAR требуется каждому из расширений!
 pear%1 is needed by: %2.	setup	ru	%2 нуждается в PEAR%1
+pem certificate	setup	ru	Сертификат PEM
 persistent connections	setup	ru	Постоянные соединения
+php client	setup	ru	PHP клиент
+php proxy	setup	ru	PHP прокси
+php session handler enabled in php.ini	setup	ru	Обработчик PHP session включен в php.ini
 please check for sql scripts within the application's directory	setup	ru	Пожалуйста проверьте наличие скриптов SQL в папке приложений.
 please check read/write permissions on directories, or back up and use another option.	setup	ru	Пожалуйста проверьте доступность папок на чтение и запись либо вернитесь и используйте другую настройку.
 please configure egroupware for your environment	setup	ru	Пожалуйста настройте eGroupWare для вашего окружения
 please consult the %1.	setup	ru	Пожалуйста проконсультируйтесь о %1
+please download a recent version from %1 and install it as %2.	setup	ru	Пожалуйста загрузите свежую версию из %1 и загрузите ей как %2
 please fix the above errors (%1) and warnings(%2)	setup	ru	Пожалуйста исправьте указанные выше ошибки (%1) и предупеждения (%2)
 please install	setup	ru	Пожалуйста установите
 please login	setup	ru	Пожалуйста войдите
@@ -432,6 +475,7 @@ re-enter password	setup	ru	Введите пароль повторно
 read translations from	setup	ru	Прочитать переводы из
 readable by the webserver	setup	ru	веб-сервер может читать
 really uninstall all applications	setup	ru	Действительно деинсталировать все приложения?
+refusing to delete dn "%1"!	setup	ru	Отказано в удалении dn "%1"!
 register_globals is turned on, egroupware does not require it and it's generaly more secure to have it turned off	setup	ru	параметр   register_globals  включен, eGroupWare этого НЕ требует и в основном защищенность выше когда он выключен
 registered	setup	ru	зарегистрировано
 rejected lines	setup	ru	Отклоненные строки
@@ -452,8 +496,8 @@ run installation tests	setup	ru	Запуск тестов установки
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	ru	параметр safe_mode включен, в основном это хорошо,так как делает вашу установку более защищенной.
 save	setup	ru	Сохранить
 save this text as contents of your header.inc.php	setup	ru	Сохранить этот текст как содержимое вашего файла header.inc.php
-schedule	setup	ru	запланировать
-scheduled backups	setup	ru	запланированное резервное копирование
+schedule	setup	ru	Запланировать
+scheduled backups	setup	ru	Запланированное резервное копирование
 select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	ru	Выберите приложение, введите конечную версию, после чего передайте процесс этой версии.<br/> Если вы не введете версию,для приложения будут установлены только базовые таблицы.<br/><blink>В ПЕРВУЮ ОЧЕРЕДЬ ЭТА ОПЕРАЦИЯ ОЧИСТИТ ВСЕ ТАБЛИЦЫ ПРИЛОЖЕНИЯ!</blink>
 select one...	setup	ru	выберите один...
 select the default applications to which your users will have access	setup	ru	Выберите приложения по умолчанию к которым будут иметь доступ ваши пользоватиели
@@ -464,7 +508,7 @@ select which group(s) will be exported	setup	ru	Выберите какая(ие
 select which group(s) will be imported (group membership will be maintained)	setup	ru	Выберите какая(ие) группа(ы) будет(ут) импортирована(ы)(членство в группах будет обработано(?))
 select which group(s) will be modified (group membership will be maintained)	setup	ru	Выберите какая(ие) группа(ы) будет(ут) изменена(ы)(членство в группах будет обработано(?))
 select which languages you would like to use	setup	ru	Выберите языки которые вам хотелось бы использовать
-select which method of upgrade you would like to do	setup	ru	Выберите метод обновления который вы желаете провести
+select which method of upgrade you would like to do	setup	ru	Выберите какой метод обновления вы желаете использовать
 select which type of authentication you are using	setup	ru	Выберите используемый вами тип идентификации
 select which user(s) will also have admin privileges	setup	ru	Выберите пользователя(ей) которые также будут обладать привелегиями администратора
 select which user(s) will be exported	setup	ru	Выберите пользователя(ей) для экспорта
@@ -474,7 +518,10 @@ select which user(s) will have admin privileges	setup	ru	Выберите пол
 select your old version	setup	ru	Выберите свою прежнюю версию
 selectbox	setup	ru	Список выбора
 server root	setup	ru	Корневая папка сервера
-set	setup	ru	установка
+session handler class used.	setup	ru	Использован обработчик класса session
+sessions handler	setup	ru	Обработчик session
+set	setup	ru	Установка
+set and not	setup	ru	Установка и не
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	ru	Установка системного набора символов (кодировки) в UTF-8(юникод) позволяет достичь корректного совместного существования данных на языках с различным набором символов.
 settings	setup	ru	Настройки
 setup	setup	ru	Установка
@@ -490,6 +537,7 @@ smtp server port	setup	ru	Порт сервера SMTP
 some or all of its tables are missing	setup	ru	Некоторые а тои все таблицы отсутствуют
 sources deleted/missing	setup	ru	Исходники удалены/отсутствуют
 sql encryption type	setup	ru	Тип шифрования SQL Для пароля (по умолчанию - md5)
+ssl validation:	setup	ru	Проверка SSL:
 standard (login-name identical to egroupware user-name)	setup	ru	стандарт (имя входа идентично имени пользователя eGroupWare
 standard mailserver settings (used for mail authentication too)	setup	ru	Стандартные настройки сервера почты (используются также для авторизации в почте)
 standard, as defined above	setup	ru	Стандарт, как определено выше
@@ -518,17 +566,23 @@ tcp port number of database server	setup	ru	Номер порта TCP серве
 text entry	setup	ru	Текстовая Запись
 the %1 extension is needed from: %2.	setup	ru	%2 нуждается в расширении %1
 the %1 extension is needed, if you plan to use a %2 database.	setup	ru	Если вы планируете использовать базу данных %2, то необходимо расширение %1
+the ctype extension is needed by htmlpurifier to check content of fckeditor agains cross site skripting.	setup	ru	Расширение ctype требуется HTMLpurifier для проверки содержимого FCKeditor на Cross Site Sсripting
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	ru	Тип БД по умолчанию (%1) не поддерживается на этом сервере. Используем первый поддерживаемый тип.
 the file	setup	ru	файл
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	ru	Первый шаг при установке eGroupWare заключается в проверке окружения на наличие корректно выставленных параметров и необходимых настроек для запуска приложения.
 the following applications are not installed:	setup	ru	Следующие приложения НЕ установлены:
+the following applications are required, but not installed:	setup	ru	Следующие приложения затребованы, но не установлены:
 the following applications need to be upgraded:	setup	ru	Следующие приложения следует обновить:
 the function %1 is needed from: %2.	setup	ru	%2 нуждается в функции %1
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	ru	Функция создания изображения из jpeg предоставляется расширением GD (собранным с поддержкой jpeg). Они необходимы для публикации фотографий в контактах.
+the json extension is required by egroupware for ajax.	setup	ru	Расширение json требуется EGroupware для поддержки AJAX
 the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	ru	Расширение LDAP требуется в случае когда вы используете ldap как хранилище контактов или учетных записей, либо проводите авторизацию с помощью LDAP или Active Directory/
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	ru	Расширение mbstring требуется для полной поддержки юникода (UTF-8) и других многобайтовых наборов символов.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	ru	Параметр mbstring.func_overload = 7 требуется для полной поддержки юникода (UTF-8) и других многобайтовых наборов символов.
+the mcrypt extension is used, to store etemplate form state on the client, which is the prefered way to store it.	setup	ru	Расширение mcrypt используется для сохранения форм eTemplate на клиенте, как предпочтительный способ сохранения
+the pdo extension plus a database specific driver is needed by the vfs (virtual file system)!	setup	ru	Расширение PDO и СУБД-специфический драйвер нужны VFS (виртуальной файловой системе)!
 the session extension is needed to use php sessions (db-sessions work without).	setup	ru	Расширение session требуется для использования сессий PHP (сессии БД могут работать без него).
+the session extension is required!	setup	ru	Требуется расширение session!
 the table definition was correct, and the tables were installed	setup	ru	Определение таблиц корректно, таблыцы установлены.
 the tables	setup	ru	таблицы
 the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	ru	Имя_пользователя/пароль такие: demo/guest, demo2/guest and demo3/guest.
@@ -576,6 +630,7 @@ use pure html compliant code (not fully working yet)	setup	ru	Использов
 user	setup	ru	пользователь
 user account prefix	setup	ru	Префикс учетной записи пользователя
 user for smtp-authentication (leave it empty if no auth required)	setup	ru	Пользователь для идентификации SMTP (оставить пустым, если идентификация не требуется)
+usernames (comma-separated) which can get vfs root access (beside setup user)	setup	ru	Имена пользователей, которые могут получать root доступ к VFS (в установках пользователя), разделенные запятой
 usernames are casesensitive	setup	ru	Имена пользователей чувствительны к регистру
 users choice	setup	ru	На выбор пользователя
 usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	ru	Обычно более надоедливо<br/>Администраторы могут использовать Администрирование >> Управление учетными записями или группами чтобы дать доступ к приложениям.
@@ -584,6 +639,7 @@ validation errors	setup	ru	Ошибки при проверке
 version	setup	ru	версия
 version mismatch	setup	ru	Несовпадение Версий
 view	setup	ru	Вид
+virtual filesystem	setup	ru	Виртуальная файловая система
 virtual mail manager (login-name includes domain)	setup	ru	Виртуальный почтовый сервер (имя для входа включает домен)
 warning!	setup	ru	Внимание!
 we can proceed	setup	ru	Мы можем приступать
@@ -591,6 +647,7 @@ we could not determine the version of %1, please make sure it is at least %2	set
 we will automatically update your tables/records to %1	setup	ru	Мы автоматически обновим ваши таблицы и записи на %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	ru	Сейчас будет запущен ряд тестов, которые могут занять некоторое время. Нажмите на ссылку внизу для продолжения.
 welcome to the egroupware installation	setup	ru	Добро пожаловать в установку eGroupWare
+where should egroupware store file content	setup	ru	Где EGroupware будет хранить файлы
 which database type do you want to use with egroupware?	setup	ru	Какой тип базы данных вы желаете использовать с eGroupWare?
 world readable	setup	ru	доступно для чтения всему миру
 world writable	setup	ru	доступно для записи всему миру
@@ -617,6 +674,7 @@ you didn't enter a config username for domain %1	setup	ru	Вы не ввели �
 you didn't enter a header admin password	setup	ru	Вы не ввели пароль администратора заголовка
 you didn't enter a header admin username	setup	ru	Вы не ввели имя входа администратора заголовка
 you do not have any languages installed. please install one now <br />	setup	ru	У вас не установлен ни один язык. Пожалуйста, установите их сейчас<br />
+you dont have jpgraph version %1 or higher installed! it is needed from projectmanager for ganttcharts.	setup	ru	У вас не установлен JPGraph версии %1 и выше! Требуется в Проектах для диаграмм Гантта.
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	ru	Вы еще не создали свой файл header.inc.php!,br />Вы можете создать его сейчас.
 you have successfully logged out	setup	ru	Вы успешно вышли
 you must enter a username for the admin	setup	ru	Вы должны ввести имя пользователя для администрирования
@@ -625,6 +683,7 @@ you need to configure egroupware:	setup	ru	Вам нужно настроить 
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	ru	Вам необходимо исправить вышеуказанные ошибки, прежде чем файл настроек header.inc.php можно будет записывать!
 you need to select your current charset!	setup	ru	Вы должны выбрать свою текущую кодировку!
 you need to specify a password!	setup	ru	Вы должны определить пароль!
+you should %1log out%2 and in again, to update your current session!	setup	ru	Следует отсоединиться и подключиться заново, чтобы обновить текущую сессию!
 you should either install the sources or uninstall it, to get rid of the tables	setup	ru	Вы должны либо установить исходники, либо деинсталлировать их to get rid of the tables
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	ru	Вы должны либо деинсталлировать это а потом установить заново, либо попытаться внести исправления вручную
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	ru	У вас НЕТ возможноси войти в eGroupWare используя сеанс PHP: "сессия не может бать удостоверена"!!!

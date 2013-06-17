@@ -1,6 +1,8 @@
 %1 days in advance	infolog	ru	%1 дней(я) до
 %1 deleted	infolog	ru	%1 удален
 %1 deleted by %2 at %3	infolog	ru	%1 удален %2 в %3
+%1 entries %2	infolog	ru	%1 записей %2
+%1 entries %2, %3 failed because of insufficent rights !!!	infolog	ru	%1 записей %2, %3 не выполнено из-за недостаточности прав !!!
 %1 modified	infolog	ru	%1 изменен
 %1 modified by %2 at %3	infolog	ru	%1 изменен %2 в %3
 %1 records imported	infolog	ru	%1 записей импортировано
@@ -29,6 +31,7 @@ action	infolog	ru	Действие
 actions...	infolog	ru	Действия...
 actual date and time	infolog	ru	актуальные дата и время
 add	infolog	ru	Добавить
+add / remove link	infolog	ru	Добавить / удалить ссылку
 add a file	infolog	ru	Добавить файл
 add a new entry	infolog	ru	Добавить новую Запись
 add a new note	infolog	ru	Добавить новую Заметку
@@ -36,17 +39,21 @@ add a new phonecall	infolog	ru	Добавить новый Телефонный 
 add a new sub-task, -note, -call to this entry	infolog	ru	Добавить новую подзадачу, -заметку, -звонок к этой записи
 add a new todo	infolog	ru	Добавить новое Задание
 add file	infolog	ru	Добавить файл
-add sub	infolog	ru	Добавить Под...
+add or delete links	infolog	ru	Добавить или удалить ссылку
+add sub	infolog	ru	Добавить дочернюю запись
 add timesheet entry	infolog	ru	Добавить запись табеля учета времени
 add:	infolog	ru	Добавить:
-added	infolog	ru	добавлено
+added	infolog	ru	Добавлено
 all	infolog	ru	Все
 all links and attachments	infolog	ru	все ссылки и вложения
 all projects	infolog	ru	Все проекты
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	ru	позволяет установить состояние записи, напр. установить Задание в состояние "выполнено" если оно окончено (значение зависит от типа записи)
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	ru	Позволяет установить состояние записи, например, установить Задание в состояние "выполнено" если оно окончено (значение зависит от типа записи)
+alternatives	infolog	ru	Альтернативы
+apply the action on the whole query, not only the shown entries!!!	infolog	ru	Применить действие ко всему запросу, НЕ ТОЛЬКО к показываемым записям !!!
 apply the changes	infolog	ru	Применить изменения
-archive	infolog	ru	Архив
-are you shure you want to delete this entry ?	infolog	ru	Вы уверены, что хотите удалить эту запись ?
+archive	infolog	ru	Архивировать
+are you shure you want to close this entry ?	infolog	ru	Уверены, что хотите закрыть эту запись ?
+are you shure you want to delete this entry ?	infolog	ru	Уверены, что хотите удалить эту запись ?
 at the moment the following document-types are supported:	infolog	ru	В настоящий момент поддерживаются следующие типы документов:
 attach a file	infolog	ru	Прикрепить файл
 attach file	infolog	ru	Прикрепить файл
@@ -55,29 +62,43 @@ back to main list	infolog	ru	Назад к основному списку
 billed	infolog	ru	оплачно
 both	infolog	ru	оба
 call	infolog	ru	звонок
-can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	ru	Может быть использовано для показа будущих типов ИнфоЖурнала или для ограничения показываемого например только задачами.
+can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	ru	Может быть использовано для показа будущих типов Журнала или для ограничения показываемого например только задачами.
 cancel	infolog	ru	Отмена
 cancelled	infolog	ru	отменено
 categories	infolog	ru	Категории
 category	infolog	ru	Категория
-change the status of an entry, eg. close it	infolog	ru	Изменить состояние записи, например - закрыть ее.
+change category	infolog	ru	Изменить категорию
+change completed	infolog	ru	Изменения завершены.
+change completion	infolog	ru	Завершение изменений
+change history	infolog	ru	Изменить историю
+change owner when updating	infolog	ru	Изменит владельца при обновлении
+change the status of an entry, eg. close it	infolog	ru	Изменить состояние записи, например, закрыть ее
+changed category to %1	infolog	ru	Изменена категория на %1
+changed completion to %1%	infolog	ru	Завершено изменение на %1
+changed status to %1	infolog	ru	Изменено состояния на %1
+changed type	infolog	ru	Изменен тип
 charset of file	infolog	ru	Кодировка файла
 check all	infolog	ru	Отметить все
-check to set startday	infolog	ru	отметить, чтобы установить дату начала
+check to set startday	infolog	ru	Отметить, чтобы установить дату начала
 check to specify custom contact	infolog	ru	Отметить для указания пользовательского контакта
-choose owner of imported data	infolog	ru	Выберите владельца импортированных данных
+choose owner of imported data	infolog	ru	Выбрать владельца импортируемых данных
 click here to create the link	infolog	ru	Нажмите здесь для создания Ссылки
 click here to start the search	infolog	ru	Нажмите здесь для начала поиска
 close	infolog	ru	Закрыть
-close all	infolog	ru	закрыть все
-closed	infolog	ru	Закрыто
+close all	infolog	ru	Закрыть все
+close this entry and all listed sub-entries	infolog	ru	Закрыть эту запись и все перечисленные дочерние записи
+closed	infolog	ru	Закрыто.
+colon (:) separated list of field names to use if value is empty or to sum up	infolog	ru	использовать (:) для разделения названий полей, если величины пустые или для суммирования
 comment	infolog	ru	Комментарий
+compare	infolog	ru	Сравнить
 completed	infolog	ru	Завершено
 configuration	infolog	ru	Конфигурация
 confirm	infolog	ru	Подтвердить
 contact	infolog	ru	Контакт
-contact fields	infolog	ru	Поля Контакта
-copy of:	infolog	ru	Копия
+contact cf	infolog	ru	Контакт CF
+contact fields	infolog	ru	Поля контакта
+contactfield	infolog	ru	Поле контакта
+copy of:	infolog	ru	Копия:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	ru	Скопируйте изменения в буфер обмена, %1перезагрузите запись%2 и объедините их.
 create new links	infolog	ru	Создать новые ссылки
 creates a new field	infolog	ru	Создать новое поле
@@ -100,29 +121,32 @@ date completed	infolog	ru	Дата завершения
 date completed (leave it empty to have it automatic set if status is done or billed)	infolog	ru	Дата завершения (оставьте незаполненным, если хотите чтобы она автоматически установилась если состояние будет "сделано" или "оплачено")
 datecreated	infolog	ru	дата создания
 dates, status, access	infolog	ru	Даты, Состояние, Доступ
-days	infolog	ru	дни
-default category for new infolog entries	infolog	ru	Категория по умолчанию для новых записей ИнфоЖурнала
-default document to insert entries	infolog	ru	Документ по умолчанию для вставки записей
-default filter for infolog	infolog	ru	Фильтр по Умолчанию для ИнфоЖурнала
-default status for a new log entry	infolog	ru	статус по умолчанию для новой записи журнала
-delegated	infolog	ru	назначеные
-delegated open	infolog	ru	открытые назначенные
-delegated overdue	infolog	ru	просроченные назначенные
-delegated upcomming	infolog	ru	назначенные приближающиеся
+days	infolog	ru	Дни
+default category for new infolog entries	infolog	ru	Категория по умолчанию для новых записей Журнала
+default document to insert entries	infolog	ru	Документ для записи по умолчанию
+default filter for infolog	infolog	ru	Фильтр по умолчанию для Журнала
+default status for a new log entry	infolog	ru	Статус по умолчанию для новой записи журнала
+delegated	infolog	ru	Назначеные
+delegated open	infolog	ru	Открытые назначенные
+delegated open and upcoming	infolog	ru	Назначенные открытые и приближающиеся
+delegated overdue	infolog	ru	Просроченные назначенные
+delegated upcomming	infolog	ru	Назначенные приближающиеся
 delegation	infolog	ru	Назначение
 delete	infolog	ru	Удалить
 delete one record by passing its id.	infolog	ru	Удалить одну запись по ее идентификатору
+delete selected entries?	infolog	ru	Удалить выбранные записи?
 delete the entry	infolog	ru	Удалить запись
 delete this entry and all listed sub-entries	infolog	ru	Удалить эту запись и все перечисленные под-записи
-deleted	infolog	ru	удален
-deletes the selected typ	infolog	ru	удаляет выбранный тип
-deletes this field	infolog	ru	удаляет это поле
-deletes this status	infolog	ru	удаляет это состояние
+deleted	infolog	ru	Удалено
+deletes the selected typ	infolog	ru	Удаляет выбранный тип
+deletes this field	infolog	ru	Удаляет это поле
+deletes this status	infolog	ru	Удаляет это состояние
 description	infolog	ru	Описание
-determines the order the fields are displayed	infolog	ru	оперделяет порядок, в котором отображаются поля
-directory with documents to insert entries	infolog	ru	Каталог с документами для вставки
-disables a status without deleting it	infolog	ru	отключает состояние без удаления его
-do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	ru	хотите ли Вы подтверждения принятия под ответственность на: принятие, завершение задания или на оба.
+determines the order the fields are displayed	infolog	ru	Определяет порядок отображения полей
+directory with documents to insert entries	infolog	ru	Каталог с документами для записи
+disables a status without deleting it	infolog	ru	Отключает состояние без удаления его
+do not notify of these changes	infolog	ru	Не уведомлять об этих изменениях
+do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	ru	Хотите ли Вы подтверждения принятия под ответственность на: принятие, завершение задания или на оба.
 do you want a notification, if items get assigned to you or assigned items get updated?	infolog	ru	Вы желаете получать напоминания, при назначении вам заданий(записей) или при их изменении?
 do you want a notification, if items you are responsible for are about to start?	infolog	ru	Вы желаете получать напоминания при запуске задач(записей) за которые вы отвечаете?
 do you want a notification, if items you are responsible for are due?	infolog	ru	Вы желаете получать напоминания, если задачи за которые вы отвечаете должны быть уже завершены?
@@ -130,92 +154,117 @@ do you want a notification, if items you created get updated?	infolog	ru	Вы ж
 do you want a notification, if items you delegated are about to start?	infolog	ru	Вы желаете получать напоминания при запуске задач(записей) которые вам назначены?
 do you want a notification, if items you delegated are due?	infolog	ru	Вы желаете получать напоминания, если задачи которые вы назначили должны быть уже завершены?
 do you want to receive notifications as html-mails or plain text?	infolog	ru	Вы желаете получать напоминания в виде HTML или обычного текста?
-document '%1' does not exist or is not readable for you!	infolog	ru	Документ %1 не может быть прочитан либо не существует
+document '%1' does not exist or is not readable for you!	infolog	ru	Документ '%1' не существует или недоступен для чтения Вам!
 don't show infolog	infolog	ru	НЕ показывать ИнфоЖурнал
-done	common	ru	сделано
-download	infolog	ru	Получить
+done	common	ru	Выполнено
+download	infolog	ru	Загрузить
+due %1	infolog	ru	Выполнено %1
 duration	infolog	ru	Продолжительность
-each value is a line like <id>[=<label>]	infolog	ru	каждое значение - это строка вида <идентификатор>[=<метка>]
+e-mail:	infolog	ru	Адрес электронной почты:
+each value is a line like <id>[=<label>]	infolog	ru	Каждое значение - это строка вида <идентификатор>[=<метка>]
 edit	infolog	ru	Редактировать
-edit or create categories for ingolog	infolog	ru	Редактировать или созадть категории для ИнфоЖурнала
+edit or create categories for ingolog	infolog	ru	Редактировать или созадть категории для Журнала
 edit rights (full edit rights incl. making someone else responsible!)	infolog	ru	редактировать права (полное редактирование прав, вкл. назначение кого-то еще ответственным!)
 edit status	infolog	ru	Редактировать состояние
 edit the entry	infolog	ru	Редактировать запись
 edit this entry	infolog	ru	Редактировать эту запись
 empty for all	infolog	ru	пусто для всех
-end	infolog	ru	Конец
+end	infolog	ru	Завершение
 enddate	infolog	ru	До даты
 enddate can not be before startdate	infolog	ru	До даты не может быть раньше даты начала
-enter a custom contact, leave empty if linked entry should be used	infolog	ru	введите пользовательский контакт, оставьте незаполненным, если должна использоваться связанная запись
-enter a custom phone/email, leave empty if linked entry should be used	infolog	ru	введите пользовательский телефон/электронный адрес, оставьте незаполненным, если должна использоваться связанная запись
-enter a textual description of the log-entry	infolog	ru	введите текстовое описание для записи журнала
+enter a custom contact, leave empty if linked entry should be used	infolog	ru	Введите пользовательский контакт, оставьте незаполненным, если должна использоваться связанная запись
+enter a custom phone/email, leave empty if linked entry should be used	infolog	ru	Введите пользовательский телефон/электронный адрес, оставьте незаполненным, если должна использоваться связанная запись
+enter a textual description of the log-entry	infolog	ru	Введите текстовое описание для записи журнала
 enter the query pattern	infolog	ru	Введите шаблон вопроса
 entry and all files	infolog	ru	Запись и все файлы
 error: saving the entry	infolog	ru	Ошибка: сохраниние записи
-error: the entry has been updated since you opened it for editing!	infolog	ru	Ошибака: запись была обновлена с тех пор, как Вы открыли её для редактирования!
-execute a further action for this entry	infolog	ru	Выполнить дальнейшее действие для этой записи
+error: the entry has been updated since you opened it for editing!	infolog	ru	Ошибка: запись была обновлена с тех пор, как Вы открыли её для редактирования!
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	infolog	ru	Пример: {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}}— поиск по полю "n_prefix" значения "Mr", если найдено, пишет Hello Mr., иначе пишет Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	infolog	ru	Пример: {{LETTERPREFIXCUSTOM n_prefix title n_family}}. Результат: Mr. Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	infolog	ru	Пример: {{NELF role}} — если поле «роль» не пусто, получает новую строку со значением поля «роль»
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	infolog	ru	Пример: {{NELFNV role}} — если поле «роль» не пусто, устанавливает поле LF пустым
+execute a further action for this entry	infolog	ru	Выполнит дальнейшие действия для этой записи
 existing links	infolog	ru	Существующие ссылки
+exists	infolog	ru	Существует
+export definitition to use for nextmatch export	infolog	ru	Определение экспорта для последующего использования
+exports infolog entries into a csv file.	infolog	ru	Экспорт записей ИнфоЖурнала в файл CSV.
 fax	infolog	ru	Факс
 field must not be empty !!!	infolog	ru	Поле должно быть заполнено !!!
 fieldseparator	infolog	ru	Разделитель полей
-finish	infolog	ru	окончание
-for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	ru	Для последовательности писем используйте эту метку. Поместите текст, который вы желаете повторять между двух меток.
+finish	infolog	ru	Окончание
+first argument for preg_replace	infolog	ru	Первый аргумент для preg_replace
+for serial letter use this tag. put the content, you want to repeat between two tags.	infolog	ru	Для серии писем используйте этот тэг. Поместите содержание, которое вы хотите повторить, между двумя тэгами.
 for which types should this field be used	infolog	ru	для каких типов это поле должно быть использовано
 from	infolog	ru	Из
-general	infolog	ru	Общее
-general fields:	infolog	ru	Основные поля:
-global categories	infolog	ru	Общие Категории
+general	infolog	ru	Общие
+general fields:	infolog	ru	Общие поля:
+global categories	infolog	ru	Общие категории
 group owner for	infolog	ru	Группа-владелец для
-high	infolog	ru	высокий
+high	infolog	ru	Высокий
 history	infolog	ru	История
 history logging	infolog	ru	Запись истории
 history logging and deleting of items	infolog	ru	Журналирование истории и удаление записей
-how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	ru	Сколько строк будет видно сразу. Следующие строки видны через полосу прокрутки
-id	infolog	ru	Ид
-id#	infolog	ru	Ид№
+how many describtion lines should be directly visible. further lines are available via a scrollbar.	infolog	ru	Сколько строк описания должно быть непосредственно видно. Оставшиеся строки доступны через меню прокрутки.
+how wide should the description area be. this value is numeric and interpreted as em; 60 works reasonably well.	infolog	ru	Какова должна быть ширина области описания. Цифровая величина, например, 60.
+id	infolog	ru	ID идентификатор
+id#	infolog	ru	ID # идентификатор
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	ru	Если тип имеет группу-владельца, все записи этого типа будут иметь владельцем данную группу, а НЕ пользователя, который их создал!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	ru	Если не установлено, строка с поиском и фильтрами скрыта для количества записей меньшего, чем "макс. совпадений на страницу" (как определено в ваших общих настройках)
-if you specify an export definition, it will be used when you export	infolog	ru	если вы укажете оперделения для экспорта, оно будет использоваться при экспорте
+if you specify an export definition, it will be used when you export	infolog	ru	Если указать определение экспорта, оно будет использовано при последующем экспорте
 import	infolog	ru	Импорт
 import next set	infolog	ru	Импортировать следующий набор
-importance	infolog	ru	Значение
+importance	infolog	ru	Важность
+imports entries into the infolog from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	infolog	ru	Импорт записей в ИнфоЖурнал из файла формата CSV. CSV означает "величины, разделенные запятой". На вкладке "Дополнительно" можно выбрать другой разделитель.
 info log	common	ru	ИнфоЖурнал
 infolog	common	ru	ИнфоЖурнал
-infolog - delete	infolog	ru	ИнфоЖурнал - Удаление
-infolog - edit	infolog	ru	ИнфоЖурнал - Редактирование
-infolog - import csv-file	infolog	ru	ИнфоЖурнал - импорт файла CSV
-infolog - new	infolog	ru	ИнфоЖурнал - Новый
-infolog - new subproject	infolog	ru	ИнфоЖурнал - Новый Подпроект
-infolog - subprojects from	infolog	ru	ИнфоЖурнал - Подпроект из
-infolog entry deleted	infolog	ru	Запись ИнфоЖурнала удалена
-infolog entry saved	infolog	ru	Запись ИнфоЖурнала сохранена
-infolog filter for the main screen	infolog	ru	Фильтр ИнфоЖурнала для основного экрана
-infolog list	infolog	ru	Список ИнфоЖурнала
-infolog preferences	common	ru	Настройки ИнфоЖурнала
-infolog-fieldname	infolog	ru	Название поля ИнфоЖурнала
+infolog - delete	infolog	ru	Журнал - Удаление
+infolog - edit	infolog	ru	Журнал - Редактирование
+infolog - import csv-file	infolog	ru	Журнал - импорт файла CSV
+infolog - new	infolog	ru	Журнал - Новый
+infolog - new subproject	infolog	ru	Журнал - Новый Подпроект
+infolog - subprojects from	infolog	ru	Журнал - Подпроект из
+infolog copied - the copy can now be edited	infolog	ru	ИнфоЖурнал скопирован - теперь копию можно редактировать
+infolog csv export	infolog	ru	Экспорт ИнфоЖурнала в формате CSV
+infolog csv import	infolog	ru	Bcgjhn в ИнфоЖурнал в формате CSV
+infolog entry deleted	infolog	ru	Запись Журнала удалена
+infolog entry saved	infolog	ru	Запись Журнала сохранена
+infolog fields:	infolog	ru	Поля ИнфоЖурнала:
+infolog filter for the main screen	infolog	ru	Фильтр Журнала для основного экрана
+infolog id	infolog	ru	ID записи ИнфоЖурнала
+infolog list	infolog	ru	Список Журнала
+infolog preferences	common	ru	Настройки Журнала
+infolog-fieldname	infolog	ru	Название поля Журнала
+insert	infolog	ru	Вставить
 insert in document	infolog	ru	Вставить в документ
 invalid filename	infolog	ru	Неправильное имя файла
+invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	ru	Неправильный ID владельца: %1. Вместо него использовано %2.
+invalid status for entry type %1.	infolog	ru	Неверный статус для записи типа %1.
 label<br>helptext	infolog	ru	Метка<br>Текст помощи
 last changed	infolog	ru	Последние изменения
 last modified	infolog	ru	Последние изменения
-leave it empty	infolog	ru	оставьте это незаполненным
-leave it empty for a full week	infolog	ru	Оставьте незаполненным для всей недели
+leave blank to get the used time calculated by timesheet entries	infolog	ru	Оставьте пустым для получения использованного времени, подсчитанного по записям Табеля
+leave it empty	infolog	ru	Оставьте это незаполненным
+leave it empty for a full week	infolog	ru	Оставьте пустым для полной недели
 leave without saveing the entry	infolog	ru	выйти без сохранения записи
 leaves without saveing	infolog	ru	выйти без сохранения
 length<br>rows	infolog	ru	Длина<br>Строк
+limit number of description lines (default 5, 0 for no limit)	infolog	ru	Количество строк описания. По умолчанию = 5, 0 = без ограничения.
+limit width of description column ((effective only if lines limit is set), 0 for no limit)	infolog	ru	Ширина столбца описания. Работает только если количество строк установлено 0 = без ограничения
 link	infolog	ru	Ссылка
+linked to %1	infolog	ru	Ссылка на %1
 links	infolog	ru	Ссылки
 links of this entry	infolog	ru	Ссылки этой записи
 list all categories	infolog	ru	Список всех категорий
 list no subs/childs	infolog	ru	Не пролистывать Подчиненные/Порожденные
 location	infolog	ru	Местоположение
-longer textual description	infolog	ru	более полное текстовое описание
-low	infolog	ru	низкий
-manage mapping	infolog	ru	Управление отобажением
+longer textual description	infolog	ru	Более полное текстовое описание
+low	infolog	ru	Низкий
+manage mapping	infolog	ru	Управление отображениями
 max length of the input [, length of the inputfield (optional)]	infolog	ru	максимальная длина ввода [, длина поля ввода (необязательно)]
+modifier	infolog	ru	Кто изменил
 modifierer	infolog	ru	Кто изменил
 name must not be empty !!!	infolog	ru	Имя не должно быть пустым !!!
-name of current user, all other contact fields are valid too	infolog	ru	Имя текущего пользователя, все остальные поля контакта также действительны.
+name of current user, all other contact fields are valid too	infolog	ru	Имя текущего пользователя, все остальные поля контакта также верны
 name of new type to create	infolog	ru	имя вновь создаваемого типа
 never hide search and filters	infolog	ru	никогда не скрывать поиск и фильтры
 new %1	infolog	ru	Новый %1
@@ -229,38 +278,43 @@ no entries found, try again ...	infolog	ru	не найдены записи, п�
 no filter	infolog	ru	без Фильтра
 no links or attachments	infolog	ru	без ссылок или приложений
 no project	infolog	ru	Нет проекта
-nonactive	infolog	ru	неактивен
+nonactive	infolog	ru	Неактивен
 none	infolog	ru	Ничего
-normal	infolog	ru	нормальный
-not	infolog	ru	нет
-not assigned	infolog	ru	не назначено
-not-started	infolog	ru	не начато
+normal	infolog	ru	Нормальный
+not	infolog	ru	Нет
+not assigned	infolog	ru	Не назначено
+not-started	infolog	ru	Не начато
 note	infolog	ru	Заметка
-number of records to read (%1)	infolog	ru	количество записей к чтению (%1)
+number of records to read (%1)	infolog	ru	Количество записей к чтению (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	ru	количество строк в многострочном поле ввода или списке с множественным выбором
-offer	infolog	ru	предложено
-one day after	infolog	ru	через один день
-one day in advance	infolog	ru	за один день до
-ongoing	infolog	ru	в работе
+offer	infolog	ru	Предложено
+one day after	infolog	ru	Через один день
+one day in advance	infolog	ru	За один день до
+ongoing	infolog	ru	В работе
 only for details	infolog	ru	Только для подробностей
 only if i get assigned or removed	infolog	ru	Только если Я  присоединен или отсоединен
-only the attachments	infolog	ru	только вложения
-only the links	infolog	ru	только ссылки
-optional note to the link	infolog	ru	необязательная заметка к Ссылке
+only the attachments	infolog	ru	Только вложения
+only the links	infolog	ru	Только ссылки
+open and upcoming	infolog	ru	Открытые и наступающие
+optional note to the link	infolog	ru	Необязательная заметка к Ссылке
 order	infolog	ru	Порядок
 organization	infolog	ru	Организация
-overdue	infolog	ru	просроченные
-own	infolog	ru	свои
-own open	infolog	ru	свои открытые
-own overdue	infolog	ru	свои просроченные
-own upcoming	infolog	ru	свои ожидаемые
+overdue	infolog	ru	Просроченные
+own	infolog	ru	Свои
+own open	infolog	ru	Свои открытые
+own open and upcoming	infolog	ru	Свои открытые и наступающие
+own overdue	infolog	ru	Свои просроченные
+own upcoming	infolog	ru	Свои ожидаемые
+owner does not have edit rights	infolog	ru	Владелец не имеет прав на редактирование
 parent	infolog	ru	Родитель
+parent infolog	infolog	ru	Родительская запись ИнфоЖурнала
 path on (web-)serverside<br>eg. /var/samba/share	infolog	ru	путь на (веб-)сервере<br>напр. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	ru	Путь к файлам пользователя или группы должен быть ВНЕ корневого каталога для документов веб-сервера!!!
-pattern for search in addressbook	infolog	ru	шаблон поиска в Адресной книге
-pattern for search in projects	infolog	ru	шаблон для поиска в Проектах
+pattern for search in addressbook	infolog	ru	Шаблон поиска в Адресной книге
+pattern for search in projects	infolog	ru	Шаблон для поиска в Проектах
 percent completed	infolog	ru	Завершено процентов
-permission denied	infolog	ru	Доступ запрещен
+permission denied	infolog	ru	Доступ запрещен!
+permissions error - %1 could not %2	infolog	ru	Ошибка доступа - %1 не может %2
 phone	infolog	ru	Телефонный Звонок
 phone/email	infolog	ru	Телефон/E-mail
 phonecall	infolog	ru	Телефонный Звонок
@@ -268,13 +322,15 @@ planned	infolog	ru	запланировано
 planned time	infolog	ru	запланированное время
 price	infolog	ru	Цена
 pricelist	infolog	ru	Прайслист
-primary link	infolog	ru	первичная ссылка
+primary link	infolog	ru	Первичная ссылка
 priority	infolog	ru	Приоритет
 private	infolog	ru	Личный
 project	infolog	ru	Проект
-project settings: price, times	infolog	ru	Установки проекта: цена, времена
+project settings: price, times	infolog	ru	Установки проекта: цена, время
 projectmanager	infolog	ru	Управление Проектами
-re:	infolog	ru	Re:
+re-planned	infolog	ru	Повторно запланировано
+re-planned time	infolog	ru	Повторно запланированное время
+re:	infolog	ru	На:
 read one record by passing its id.	infolog	ru	Прочитать одну запись указанием её идентификатора
 read rights (default)	infolog	ru	права на чтение (по умолчанию)
 receive notifications about due entries you are responsible for	infolog	ru	Получать напоминания о необходимости завершения работ за которые вы отвечаете
@@ -285,21 +341,27 @@ receive notifications about starting entries you are responsible for	infolog	ru	
 receive notifications about starting entries you delegated	infolog	ru	Получать сообщения о запуске записей которые вам назначены
 receive notifications as html-mails	infolog	ru	Получать сообщения в виде HTML-писем
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	ru	рег. выр. для локальных IP<br>напр. ^192\.168\.1\.
+regular expression	infolog	ru	Постоянное выражение
 remark	infolog	ru	Примечание
 remove this link (not the entry itself)	infolog	ru	Удалить эту ссылку (не саму запись)
+removed	infolog	ru	Удалено.
+replacement	infolog	ru	Замена
+replacements for inserting entries into documents	infolog	ru	Замены для вставки записей в документы
 responsible	infolog	ru	Ответственный
-responsible open	infolog	ru	ответственного открытые
-responsible overdue	infolog	ru	ответственного просроченные
-responsible upcoming	infolog	ru	ответственного ожидаемые
-responsible user, priority	infolog	ru	ответственный пользователь, приоритет
-returns a list / search for records.	infolog	ru	Возврщает список / поиск для записей.
+responsible open	infolog	ru	Ответственного открытые
+responsible open and upcoming	infolog	ru	Ответственного открытые и наступающие
+responsible overdue	infolog	ru	Ответственного просроченные
+responsible upcoming	infolog	ru	Ответственного ожидаемые
+responsible user, priority	infolog	ru	Ответственный пользователь, приоритет
+returns a list / search for records.	infolog	ru	Возвращает список / поиск для записей.
 rights for the responsible	infolog	ru	Права для ответственного
-same day	infolog	ru	этот же день
+same day	infolog	ru	Этот же день
 save	infolog	ru	Сохранить
-saves the changes made and leaves	infolog	ru	сохраняет сделанные изменения и выходит
+saves the changes made and leaves	infolog	ru	Сохраняет сделанные изменения и выходит
 saves this entry	infolog	ru	Сохраняет эту запись
 search	infolog	ru	Поиск
 search for:	infolog	ru	Искать:
+second parameter for preg_replace	infolog	ru	Второй параметр для preg_replace
 select	infolog	ru	Выбрать
 select a category for this entry	infolog	ru	выбрать категорию для этой записи
 select a price	infolog	ru	Выбрать цену
@@ -307,49 +369,62 @@ select a priority for this task	infolog	ru	выбрать приоритет д�
 select a project	infolog	ru	Выбрать проект
 select a responsible user: a person you want to delegate this task	infolog	ru	выбрать ответственного пользователя: человека, которому вы хотите поручить эту задачу
 select a typ to edit it's status-values or delete it	infolog	ru	выбрать тип для редактирования значения статуса или удалить
+select an action	infolog	ru	Выберите действие
+select an action...	infolog	ru	Выберите действие...
 select an app to search in	infolog	ru	Выбрать Приложение, в котором надо искать
 select an entry to link with	infolog	ru	Выбрать запись, с которой нужна связь
-select multiple contacts for a further action	infolog	ru	Выбрать несколько контактов для дальнейшего действия
-select to filter by owner	infolog	ru	выбрать для фильтрации по владельцу
-select to filter by responsible	infolog	ru	выбрать для фильтрации по ответственному
+select multiple contacts for a further action	infolog	ru	Выбрать несколько контактов для дальнейших действий
+select new category	infolog	ru	Выбрать новую категорию
+select to filter by owner	infolog	ru	Выбрать для фильтрации по владельцу
+select to filter by responsible	infolog	ru	Выбрать для фильтрации по ответственному
+select users or groups	infolog	ru	Выбрать пользователей или группы
+selection cf	infolog	ru	Выбор CF
 sender	infolog	ru	Отправитель
-sets the status of this entry and its subs to done	infolog	ru	Устанавливает состояние этой записи и ей подчиненных в "сделано"
-should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	ru	Должен ли ИнфоЖурнал показывает подзадания, -звонки или -заметки в нормальном виде или нет. Вы всегда можете посмотреть подэлементы через их родителей.
-should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	ru	Должен ли ИнфоЖурнал показывать ссылки на другие приложения и/или прикрепленные файлы в списке ИнфоЖурнала (нормальный вид при входе в ИнфоЖурнал)
-should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	ru	Должен ли ИнфоЖурнал отображаться на основной странице и с каким фильтром. Работает только если Вы не выбрали приложение для основной страницы (в Ваших настройках).
-should infolog use full names (surname and familyname) or just the loginnames.	infolog	ru	Должен ли ИнфоЖурнал использовать полные имена (имя и фамилия) или только имена для входа
-should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	ru	Должен ли список ИнфоЖурнала показывать уникальные числовые идентификаторы, которые могут быть использованы, например, как идентификаторы талонов
-should the infolog list show the column "last modified".	infolog	ru	Должен ли список ИнфоЖурнала показывать колонку "последнее изменение"
-should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	ru	Должен ли список ИнфоЖурнала показывать процент выполнения только статуса в работе или две разных пиктограммы.
+set status to done	infolog	ru	Установить статус на "Выполнено"
+set status to done for all entries	infolog	ru	Установить статус на "Выполнено" для всех записей
+sets the status of this entry and its subs to done	infolog	ru	Устанавливает статус этой записи и ей подчиненных на "Выполнено"
+sets the status of this entry to done	infolog	ru	Устанавливает статус этой записи на "Выполнено"
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	ru	Должен ли Журнал показывает подзадания, -звонки или -заметки в нормальном виде или нет. Вы всегда можете посмотреть подэлементы через их родителей.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	ru	Должен ли Журнал показывать ссылки на другие приложения и/или прикрепленные файлы в списке Журнала (нормальный вид при входе в Журнал)
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	ru	Должен ли Журнал отображаться на основной странице и с каким фильтром. Работает только если Вы не выбрали приложение для основной страницы (в Ваших настройках).
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	ru	Должен ли Журнал использовать полные имена (имя и фамилия) или только имена для входа
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	ru	Должен ли список Журнала показывать уникальные числовые идентификаторы, которые могут быть использованы, например, как идентификаторы талонов
+should the infolog list show the column "last modified".	infolog	ru	Должен ли список Журнала показывать колонку "последнее изменение"
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	ru	Должен ли список Журнала показывать процент выполнения только статуса в работе или две разных пиктограммы.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	ru	должна ли эта запись быть видима только для вас и тех, кому вы дали личный доступ через ACL
 show a column for used and planned times in the list.	infolog	ru	Показывать колонку для использованного и запланированого времени в списке.
+show a x if content equals this compare value, otherwise show nothing	infolog	ru	Показывает Х, если содержимое равно сравниваемой величине, иначе не показывает ничего
 show full usernames	infolog	ru	Показывать полные имена пользователей
-show in the infolog list	infolog	ru	Показывать в списке ИнфоЖурнала
+show in the infolog list	infolog	ru	Показывать в списке Журнала
 show last modified	infolog	ru	Показывать последнее изменение
 show status and percent done separate	infolog	ru	Показывать состояние и процент выполнения отдельно
 show ticket id	infolog	ru	Показывать идентификатор талона
 show times	infolog	ru	Показывать количество раз (времена?)
-small view	infolog	ru	мелкий вид
+small view	infolog	ru	Мелкий вид
 start	infolog	ru	Начало
 start a new search, cancel this link	infolog	ru	начать новый поиск, отменить эту ссылку
 startdate	infolog	ru	Дата Начала
 startdate enddate	infolog	ru	Дата Начала До Даты
 startdate for new entries	infolog	ru	Дата начала для новых записей
+starting %1	infolog	ru	Начиная с %1
 startrecord	infolog	ru	Начальная запись
 status	infolog	ru	Состояние
 status ...	infolog	ru	Состояние ...
 sub	infolog	ru	Под
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	ru	Под-записи становятся подзаписями родительских или главных записей если нет родителей
+sub-entries will not be closed	infolog	ru	Дочерние записи не будут закрыты
 subject	infolog	ru	Предмет
 sum	infolog	ru	Сумма
+tag to mark positions for address labels	infolog	ru	Тэг для отметки позиции для меток адресов
 task	infolog	ru	Задание
+tasks of	infolog	ru	Задание
 template	infolog	ru	Шаблон
 test import (show importable records <u>only</u> in browser)	infolog	ru	Тест Импорта (показывает импортируемые записи <u>только</u> в браузере)
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	ru	имя, используется внутри (<=10 символов), его изменение делает существующие данные недоступными
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	ru	имя, используется внутри (<=20 символов), его изменение делает существующие данные недоступными
-the text displayed to the user	infolog	ru	текст, показываемый пользователю
-this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	ru	Это фильтр, который ИнфоЖурнал использует, когда вы входите в приложение. Фильтры ограничивают записи, которые надо показать, в текущем режиме показа. Есть фильтры для показа только завершенных, открытых или будущих записей - ваших или всех пользователей.
-til when should the todo or phonecall be finished	infolog	ru	до того как Задание или Звонок будет завершено
+the text displayed to the user	infolog	ru	Текст, показываемый пользователю
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	ru	Это фильтр, который Журнал использует, когда вы входите в приложение. Фильтры ограничивают записи, которые надо показать, в текущем режиме показа. Есть фильтры для показа только завершенных, открытых или будущих записей - ваших или всех пользователей.
+til when should the todo or phonecall be finished	infolog	ru	До того как Задание или Звонок будет завершено
 times	infolog	ru	Количество раз (времена?)
 to many might exceed your execution-time-limit	infolog	ru	слишком много превысит ваше ограничение на время исполнения
 to what should the startdate of new entries be set.	infolog	ru	Как должна устанавливаться дата начала новой записи.
@@ -363,35 +438,44 @@ type	infolog	ru	Тип
 type ...	infolog	ru	Тип ...
 type of customfield	infolog	ru	Тип пользовательского поля
 type of the log-entry: note, phonecall or todo	infolog	ru	Тип записи: Заметка, Телефонный звонок или Задание
-unlink	infolog	ru	Расцепить ссылку
-upcoming	infolog	ru	приход
-urgency	infolog	ru	срочность
-urgent	infolog	ru	срочное
-used time	infolog	ru	использованное время
+unlink	infolog	ru	Удалить ссылку
+unlinked from %1	infolog	ru	Удалить ссылку из %1
+upcoming	infolog	ru	Наступающие
+urgency	infolog	ru	Срочность
+urgent	infolog	ru	Срочно
+use all	infolog	ru	Использовать все
+use field from csv if possible	infolog	ru	Использовать поля из CSV, если возможно
+use search results	infolog	ru	Использовать результаты поиска
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	infolog	ru	Используйте этот тэг для меток адресов. Поместите содержимое, которое нужно повторить, между двумя тэгами.
+used time	infolog	ru	Использованное время
 valid path on clientside<br>eg. \\server\share or e:\	infolog	ru	действительный путь на стороне клиента.<br>напр. \\Server\Share или e:\
 values for selectbox	infolog	ru	Значения для списка выбора
-view all subs of this entry	infolog	ru	Смотреть все подзаписи этой записи
-view other subs	infolog	ru	смотреть другие подзаписи
-view parent	infolog	ru	смотреть родительскую запись
-view subs	infolog	ru	смотреть Подзаписи
+view all subs of this entry	infolog	ru	Смотреть все дочерние записи этой записи
+view other subs	infolog	ru	Смотреть другие дочерние записи
+view parent	infolog	ru	Смотреть родительскую запись
+view subs	infolog	ru	Смотреть дочерние записи
 view the parent of this entry and all his subs	infolog	ru	Показать родительскую запись данной записи и всех подзаписей
-view this linked entry in its application	infolog	ru	показать данную запись в ее приложении
+view this linked entry in its application	infolog	ru	Показать данную запись в ее приложении
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	ru	когда Задание или Телефонный Звонок должны начаться, они показываются с этой даты при открытии фильтра или просто открытии (стартовая страница) (?..)
 which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	ru	Какие дополнительные поля должен мочь редактировать ответственный, не имея прав на редактирование?<br/>Состояние, процент и дата завершения уже разрешены.
 which implicit acl rights should the responsible get?	infolog	ru	Какие подразумеваемые права ACL должен получить ответственный?
 which types should the calendar show	infolog	ru	Какие типы календарь должен показывать
-will-call	infolog	ru	позвонит
+will-call	infolog	ru	Позвонит
 write (add or update) a record by passing its fields.	infolog	ru	Запишите (добавьте или обновите) запись прохождением её полей.
+yes - close	infolog	ru	Да - Закрыть
+yes - close including sub-entries	infolog	ru	Да - Закрыть, включая дочерние записи
 yes - delete	infolog	ru	Да - Удалить
-yes - delete including sub-entries	infolog	ru	Да - Удалить включая подзаписи
+yes - delete including sub-entries	infolog	ru	Да - Удалить включая дочерние записи
 yes, noone can purge deleted items	infolog	ru	Да, никто не может уничтожить удаленые записи
 yes, only admins can purge deleted items	infolog	ru	Да, только администраторы могут уничтожить удаленые записи
 yes, with larger fontsize	infolog	ru	Да, с бо`льшим размером шрифта
 yes, with purging of deleted items possible	infolog	ru	Да, с возможностью уничтожения удаленых записей
-you can choose a categorie to be preselected, when you create a new infolog entry	infolog	ru	Вы можете выбратькатегорию, которая будет выбрана заранее при создании новой записи ИнфоЖурнала
+you can choose a categorie to be preselected, when you create a new infolog entry	infolog	ru	Вы можете выбратькатегорию, которая будет выбрана заранее при создании новой записи Журнала
 you can't delete one of the stock types !!!	infolog	ru	Вы не можете удалить один из основных типов!!!
 you have entered an invalid ending date	infolog	ru	Вы ввели неверную дату окончания
 you have entered an invalid starting date	infolog	ru	Вы ввели неверную дату начала
 you have to enter a name, to create a new typ!!!	infolog	ru	Вы должны ввести имя, чтобы создать новый тип!!!
 you must enter a subject or a description	infolog	ru	Вы должны ввести тему или описание
+you need to select an entry for linking.	infolog	ru	Необходимо выбрать запись для ссылки.
+you need to select some entries first	infolog	ru	Необходимо сначала выбрать записи.
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	ru	Ваша база данных устарела (%1 вместо %2),запустите %3установка%4 для обновления вашей базы данныхх.

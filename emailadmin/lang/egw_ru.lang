@@ -1,4 +1,5 @@
 %1 entries deleted.	emailadmin	ru	%1 записи удалены.
+(imapclass must support this feature by querying the corresponding config value and pass it as defaultquota to the imapserver)	emailadmin	ru	(класс IMAP должен поддерживать возможность запроса соответствующего параметра конфигурации и передачи серверу IMAP как квоту по умолчанию)
 account '%1' not found !!!	emailadmin	ru	Учетная запись '%1' не найдена !!!
 active templates	emailadmin	ru	Активные шаблоны
 add new email address:	emailadmin	ru	Добавить новый адрес эл. почты:
@@ -62,27 +63,28 @@ imap server closed the connection.	emailadmin	ru	Сервер IMAP разорв�
 imap server closed the connection. server responded: %s	emailadmin	ru	Сервер IMAP разорвал соединение. Сервер сообщил: %s
 imap server hostname or ip address	emailadmin	ru	Имя сервера IMAP или его ip-адрес
 imap server logintyp	emailadmin	ru	Тип входа сервера IMAP
-imap server name	emailadmin	ru	имя сервера imap
-imap server port	emailadmin	ru	порт сервера IMAP
-imap/pop3 server name	emailadmin	ru	имя сервера IMAP/POP3
-in mbyte	emailadmin	ru	в МБайтах
-inactive	emailadmin	ru	неактивно
-ldap basedn	emailadmin	ru	начальный DN LDAP
-ldap server	emailadmin	ru	сервер LDAP
+imap server name	emailadmin	ru	Имя сервера imap
+imap server port	emailadmin	ru	Порт сервера IMAP
+imap/pop3 server name	emailadmin	ru	Имя сервера IMAP/POP3
+in mbyte	emailadmin	ru	В мегабайтах
+inactive	emailadmin	ru	Неактивно
+ldap basedn	emailadmin	ru	Начальный DN LDAP
+ldap server	emailadmin	ru	Сервер LDAP
 ldap server accounts dn	emailadmin	ru	DN учетных записей сервера LDAP
 ldap server admin dn	emailadmin	ru	DN администратора сервера LDAP
 ldap server admin password	emailadmin	ru	Пароль администратора сервера LDAP
 ldap server hostname or ip address	emailadmin	ru	Имя сервера LDAP или его ip-адрес
 ldap settings	emailadmin	ru	Настройки LDAP
-leave empty for no quota	emailadmin	ru	оставьте пустым для отключения квотирования
+leave empty for no quota	emailadmin	ru	Оставьте пустым для отключения квот
 mail settings	admin	ru	Настройки почты
 manage stationery templates	emailadmin	ru	Управление бланками шаблонов
+mb used	emailadmin	ru	Испоьлзуется MB
 name of organisation	emailadmin	ru	Название организации
 no alternate email address	emailadmin	ru	Нет дополнительного эл. адреса
-no encryption	emailadmin	ru	без шифрования
-no forwarding email address	emailadmin	ru	нет адреса перенаправления
-no message returned.	emailadmin	ru	И никакого сообщения в ответ
-no supported imap authentication method could be found.	emailadmin	ru	Не может быть найден поддерживаемый метод авторизации IMAP.
+no encryption	emailadmin	ru	Без шифрования
+no forwarding email address	emailadmin	ru	Нет адреса перенаправления
+no message returned.	emailadmin	ru	Нет ответа
+no supported imap authentication method could be found.	emailadmin	ru	Поддерживаемый метод авторизации IMAP не найден
 order	emailadmin	ru	Упорядочить
 organisation	emailadmin	ru	Организация
 plesk can't rename users --> request ignored	emailadmin	ru	Plesk не может переименовать пользователей --> запрос проигнорирован
@@ -99,15 +101,15 @@ profile list	emailadmin	ru	Список профиля
 profile name	emailadmin	ru	Название профиля
 qmaildotmode	emailadmin	ru	режим qmaildot
 quota settings	emailadmin	ru	Настройки квотирования
-quota size in mbyte	emailadmin	ru	Размер квоты МБайт
+quota size in mbyte	emailadmin	ru	Размер квоты в МБ
 remove	emailadmin	ru	Удалить
-reset filter	emailadmin	ru	очистить фильтр
-select type of imap server	emailadmin	ru	выбор типа сервера IMAP
-select type of imap/pop3 server	emailadmin	ru	Выбор типасервера IMAP/POP3
+reset filter	emailadmin	ru	Очистить фильтр
+select type of imap server	emailadmin	ru	Выбор типа сервера IMAP
+select type of imap/pop3 server	emailadmin	ru	Выбор типа сервера IMAP/POP3
 select type of smtp server	emailadmin	ru	Выбор типа сервера SMTP
-send using this email-address	emailadmin	ru	Отправить с этого адреса эл.почты
+send using this email-address	emailadmin	ru	Отправить с этого адреса eMail
 server settings	emailadmin	ru	Настройки сервера
-sieve server hostname or ip address	emailadmin	ru	Имя компьютера или IP-адрес сервера Sieve
+sieve server hostname or ip address	emailadmin	ru	Имя компьютера или IP сервера Sieve
 sieve server port	emailadmin	ru	Порт сервера Sieve
 sieve settings	emailadmin	ru	Настройки Sieve
 smtp authentication	emailadmin	ru	Авторизация SMTP
@@ -139,12 +141,12 @@ use tls encryption	emailadmin	ru	Использовать шифрование T
 use users email-address (as seen in useraccount)	emailadmin	ru	Используйте адреса эл.почты пользователя, как указано в настройках аккаунта пользователя.
 user can edit forwarding address	emailadmin	ru	Ползователь может редактировать адрес пересылки.
 userid@domain eg. u1234@domain	emailadmin	ru	UserId@domain например u1234@domain
-username (standard)	emailadmin	ru	имя пользователя (стандартное)
+username (standard)	emailadmin	ru	Имя пользователя (стандартное)
 username/password defined by admin	emailadmin	ru	Имя пользователя/Пароль установлены администратором
 username@domainname (virtual mail manager)	emailadmin	ru	username@domainname (Менеджер Виртуальной почты)
 users can define their own emailaccounts	emailadmin	ru	Пользователь может назначать свои собственные учетные записи эл. почты.
-users can define their own identities	emailadmin	ru	пользователи могут устанавливать свои собственные данные идентификации
-users can define their own signatures	emailadmin	ru	пользователи могут устанавливать свои собственные подписи
+users can define their own identities	emailadmin	ru	Пользователи могут устанавливать свои собственные данные идентификации
+users can define their own signatures	emailadmin	ru	Пользователи могут устанавливать свои собственные подписи
 users can utilize these stationery templates	emailadmin	ru	Пользователи могут использовать эти бланки шаблонов
 vacation messages with start- and end-date require an admin account to be set	emailadmin	ru	Сообщения автоответчика с датами начала и окончания требуют установленной учетной записи администратора!
 virtual mail manager	emailadmin	ru	Менеджер Виртуальной почты

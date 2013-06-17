@@ -1,6 +1,6 @@
 %1 email addresses inserted	common	ru	Вставлен адрес e-mail: %1
 %1 file	common	ru	%1 файл
-%1 is not executable by the webserver !!!	common	ru	%1 не может быть запущен Веб-сервером!!!
+%1 is not executable by the webserver !!!	common	ru	%1 не может быть исполнен Веб-сервером!
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	ru	%1Выберите другой каталог%2<br />или дайте веб-серверу права на запись в %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ru	%1eGroupWare%2 - многопользовательская, web-ориентированная среда коллективной работы,  написанная на %3PHP%4.
 (session restored in %1 seconds)	common	ru	(сессия восстановлена за %1 секунд)
@@ -39,7 +39,7 @@ add %1 category for	common	ru	Добавить %1 категорию для
 add category	common	ru	Добавить категорию
 add shortcut	common	ru	Добавить ярлык
 add sub	common	ru	Добавить подпункт
-addressbook	common	ru	Адресная книга
+addressbook	common	ru	Контакты
 admin	common	ru	Администратор
 administration	common	ru	Администрирование
 afghanistan	common	ru	Афганистан
@@ -388,7 +388,7 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	ru	Список
 list members	common	ru	Список участников
 lithuania	common	ru	Литва
-local	common	ru	Локальный
+local	common	ru	Местный
 login	common	ru	Вход
 loginid	common	ru	LoginID
 logout	common	ru	Выход
@@ -471,7 +471,7 @@ not assigned	common	ru	не назначено
 not readable %1 entry of user %2	common	ru	Запись %1 не может быть прочитана пользователем %2
 note	common	ru	Заметка
 notes	common	ru	Заметки
-notifications	common	ru	уведомления
+notifications	common	ru	Уведомления
 notify window	common	ru	Окно извещения
 notify your administrator to correct this situation	common	ru	Свяжитесь с Вашим системным администратором для исправления этой ситуации.
 november	common	ru	Ноябрь
@@ -605,11 +605,11 @@ send	common	ru	Отправить
 senegal	common	ru	Сенегал
 september	common	ru	Сентябрь
 serbia	common	ru	Сербия
-server %1 has been added	common	ru	Добавлен Сервер %1
-server answered. processing response...	common	ru	Получен ответ Сервера.  Обработка ответа...
-server contacted. waiting for response...	common	ru	Контакт с Сервером. Ожидание ответа...
-server name	common	ru	Имя Сервера
-session has been killed	common	ru	Сессия уничтожена
+server %1 has been added	common	ru	Добавлен сервер %1
+server answered. processing response...	common	ru	Получен ответ сервера.  Обработка ответа...
+server contacted. waiting for response...	common	ru	Контакт с сервером. Ожидание ответа...
+server name	common	ru	Имя сервера
+session has been killed	common	ru	Сессия прекращена
 setup	common	ru	Установка
 setup main menu	common	ru	Главное меню установки
 seychelles	common	ru	Сейшельские о-ва
