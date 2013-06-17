@@ -548,7 +548,7 @@ var et2_selectbox = et2_inputWidget.extend(
 			{
 				this.input.attr("data-placeholder", this.options.empty_label);
 			}
-			this.input.css("width","100%")
+			this.input.css("width",this.options.tags ? "100%":'')
 				.chosen({
 				})
 				.change(this.onchange);
