@@ -328,7 +328,7 @@ input[type=button] {
 	display: -moz-box;
 	width: 99%;
 	overflow: hidden;
-	overflow-x: auto;
+	overflow-y: auto;
 	left: 3px;
 	right: 3px;
 }
