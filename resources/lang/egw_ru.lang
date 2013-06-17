@@ -1,13 +1,15 @@
-accessories of	resources	ru	комплектующие к
+accessories	resources	ru	Комплектующие
+accessories of	resources	ru	Комплектующие к
 accessories:	resources	ru	Комплектующие:
 actions	resources	ru	Действия
 add accessory	resources	ru	Добавить комплектующее
 add resource	resources	ru	добавить ресурс
 add resources	resources	ru	Добавить ресурсы
 administrator	resources	ru	Администратор
-all categories	resources	ru	все категории
+all categories	resources	ru	Все категории
 book	resources	ru	Бронь
-book selected resources	resources	ru	бронировать выбранные ресурсы
+book resource	resources	ru	Бронировать ресурсы
+book selected resources	resources	ru	Бронировать выбранные ресурсы
 book this resource	resources	ru	Бронировать этот ресурс
 bookable	resources	ru	Бронируемый
 buy this article	resources	ru	Купить эту статью
@@ -21,27 +23,33 @@ clear selection	resources	ru	очистить выбор
 configure access permissions	admin	ru	Настроить разрешения доступа
 create new accessory for this resource	resources	ru	Создать новое комплектующее для этого ресурса
 create new links	resources	ru	Создать новые ссылки
-delete selected resources	resources	ru	удалить выбранные ресурсы
+delete selected resources	resources	ru	Удалить выбранные ресурсы
 delete this entry	resources	ru	Удалить эту запись
 description (short)	resources	ru	Описание (краткое)
 direct booking permissions	resources	ru	Разрешения прямого бронирования
 don't use vfs (this will need a symlink --> see readme)	resources	ru	Не использовать vfs (это требует применеия символических ссылок --> см. README)
 edit this entry	resources	ru	Редактировать эту запись
 existing links	resources	ru	Существующие ссылки
+exists	resources	ru	Существуют
+export definitition to use for nextmatch export	resources	ru	Экспортное определение для использование при последующем экспорте
+exports a list of resources to a csv file.	resources	ru	Экспортирует список ресурсов в файл формата CSV.
 general	resources	ru	Общий
 general informations about resource	resources	ru	Общая информация о ресурсе
-gernal resource	resources	ru	общий ресурс
-global categories	resources	ru	Общие Категории
-hours	resources	ru	часы
+gernal resource	resources	ru	Общий ресурс
+global categories	resources	ru	Общие категории
+history logging	admin	ru	История записей
+hours	resources	ru	Часы
 how many of the resources are useable?	resources	ru	Сколько ресурсов доступно?
 how many of them are useable?	resources	ru	Сколько из них доступно?
 how many of this resource are usable	resources	ru	Сколько этого ресурса доступно?
 how many of this resource exists	resources	ru	Сколько этого ресурса есть?
-if you specify an export definition, it will be used when you export	resources	ru	если вы укажете оперделения для экспорта, оно будет использоваться при экспорте
-implies booking permission	resources	ru	подразумевает права на бронирование
-implies read permission	resources	ru	подразумевает права на чтение
+if you specify an export definition, it will be used when you export	resources	ru	Если укажете экспортное определение, оно будет использовано, когда будет экспортировать
+implies booking permission	resources	ru	Подразумевает права на бронирование
+implies read permission	resources	ru	Подразумевает права на чтение
+imports a list of resources from a csv file.	resources	ru	Импорт списка ресурсов из файла формата CSV.
 information about storage	resources	ru	Информация о хранилище
 informations about the location of resource	resources	ru	Информация о местоположении ресурса
+insert	resources	ru	Вставить
 inventory number	resources	ru	Инвентаризационный номер
 inventory number:	resources	ru	Инвентаризационный номер:
 is resource bookable?	resources	ru	Ресурс бронируемый?
@@ -52,40 +60,49 @@ links	resources	ru	Ссылки
 location	resources	ru	Местоположение
 location of resource	resources	ru	Местоположение ресурса
 location:	resources	ru	Местоположение:
-manage mapping	resources	ru	Управление отобажением
+locations / rooms	resources	ru	Местоположение / комната
+long description	resources	ru	Подробное описание
+manage mapping	resources	ru	Управление отображениями
 name of resource	resources	ru	Имя ресурса
 name:	resources	ru	Имя:
+new accessory	resources	ru	Новое комплектующее
 no description available	resources	ru	описание недоступно
 no resources selected	resources	ru	Ресурсы не выбраны
 notify your administrator to correct this situation	resources	ru	Сообщите Вашему администратору для исправления этой ситуации
 picture	resources	ru	Изображение
-picture source	resources	ru	источник изображения
-picture type is not supported, sorry!	resources	ru	формат изображения не поддерживается, извините!
+picture source	resources	ru	Источник изображения
+picture type is not supported, sorry!	resources	ru	Формат изображения не поддерживается, извините!
 pictures or resource	resources	ru	Изображение или ресурс
-planer	resources	ru	планировщик
-prizeing information for booking or buying	resources	ru	Информация для бронирования или покупки
+planer	resources	ru	Планировщик
+prize	resources	ru	Цена
+prizeing information for booking or buying	resources	ru	Информация о цене для бронирования или покупки
 quantity	resources	ru	Количество
 quantity of resource	resources	ru	Количество ресурса
 quantity:	resources	ru	Количество:
 read calendar permissions	resources	ru	Читать разрешения доступа к Календарю
 read permissions	resources	ru	Прочитать разрешения доступа
 related links	resources	ru	Связанные ссылки
+resource id	resources	ru	Идентификатор ресурса ID
 resources	common	ru	Ресурсы
-resources list	resources	ru	список ресурсов
+resources and accessories	resources	ru	Ресурсы и Комплектующие
+resources csv export	resources	ru	Экспорт ресурсов CVS
+resources csv import	resources	ru	Импорт ресурсов CVS
+resources list	resources	ru	Список ресурсов
 responsible:	resources	ru	Ответственный:
 saves entry and exits	resources	ru	Сохраняет запись и выходит
 select a category	resources	ru	Выбрать категорию
-select resource	resources	ru	выбрать ресурс
+select resource	resources	ru	Выбрать ресурс
 select resources	common	ru	Выбрать ресурсы
-select/deselect all	resources	ru	выбрать/отменить выбор все
+select/deselect all	resources	ru	Выбрать/отменить выбор все
 short description	resources	ru	Краткое описание
-short description of resource	resources	ru	Краткое описание русурса
+short description of resource	resources	ru	Краткое описание ресурса
 show calendar of resource	resources	ru	Показать календарь ресурса
 something went wrong by deleting resource	resources	ru	Что-то пошло не так при удалении ресурса
 something went wrong by saving resource	resources	ru	Что-то пошло не так при сохранении ресурса
+storage	resources	ru	Хранилище
 storage information	resources	ru	Информация о хранилище:
 storage information:	resources	ru	Информация о хранилище:
-the calendar of this resource	resources	ru	Календарь этого Ресурса
+the calendar of this resource	resources	ru	Календарь этого ресурса
 this module displays the resources app	resources	ru	Этот модуль показывает приложение ресурсов
 use general resources icon	resources	ru	Использовать общую пиктограмму ресурсов
 use own picture	resources	ru	Использовать своё изображение
@@ -93,11 +110,14 @@ use the category's icon	resources	ru	Использовать пиктограм
 useable	resources	ru	доступный
 useable:	resources	ru	Доступный:
 view accessories for this resource	resources	ru	Посмотреть комплетующие этого ресурса
+view calendar	resources	ru	Обзор календаря
 view this entry	resources	ru	Показать эту запись
 web-page of resource	resources	ru	Веб-Страница ресурса
 web-site for this resource	resources	ru	Веб-Сайт этого ресурса
-where to find this resource?	resources	ru	Где искать этот ресурса
+where to find this resource?	resources	ru	Где искать этот ресурс
 which category does this resource belong to?	resources	ru	К какой категории относится этот ресурс
 write permissions	resources	ru	Разрешение на запись
+you are not permitted to delete this resource!	resources	ru	У вас нет прав на удаление этого ресурса!
+you are not permitted to edit this resource!	resources	ru	У вас нет прав на редактирование этого ресурса!
 you are not permitted to get information about this resource!	resources	ru	Вам не разрешено получать информацию об этом ресурсе!
 you chose more resources than available	resources	ru	Вы выбрали больше ресурсов, чем возможно

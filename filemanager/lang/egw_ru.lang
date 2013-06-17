@@ -1,52 +1,229 @@
-%1 starts with '%2'	filemanager	ru	%1 начинается с %2
+%1 already exists as a file	filemanager	ru	%1 уже существует как файл.
+%1 directories and %2 files copied.	filemanager	ru	%1 каталоги и %2 файлы скопированы.
+%1 directories and %2 files deleted.	filemanager	ru	%1 каталоги и %2 файлы удалены.
+%1 elements linked.	filemanager	ru	%1 элементов связаны.
+%1 errors copying (%2 diretories and %3 files copied)!	filemanager	ru	%1 ошибок при копировании, %2 каталогов и %3 файлов скопировано!
+%1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	ru	%1 ошибок при удалении, %2 каталогов и %3 файлов удалено!
+%1 errors linking (%2)!	filemanager	ru	%1 ошибок при ссылках (%2)!
+%1 errors moving (%2 files moved)!	filemanager	ru	%1 ошибок при перемещении. %2 файлов перемещено!
+%1 failed, %2 succeded	filemanager	ru	%1 завершилось неудачно, %2 - удачно.
+%1 files	common	ru	%1 файлов
+%1 files copied.	filemanager	ru	%1 файлов скопировано.
+%1 files deleted.	filemanager	ru	%1 файлов удалено.
+%1 files moved.	filemanager	ru	%1 файлов перемещено.
+%1 starts with '%2'	filemanager	ru	%1 началось с '%2'
+%1 successful uploaded.	filemanager	ru	%1 успешно загружено.
+%1 the following files into current directory	filemanager	ru	%1 следующих файлов в текущий каталог
+%1 urls %2 to clipboard.	filemanager	ru	%1 URL %2 в буфер обмена
+%d errors while copying, %d files successfully copied.	filemanager	ru	%d ошибок при копировании, %d файлов успешно скопировано.
+%d errors while moving, %d files successfully moved.	filemanager	ru	%d ошибок при перемещении,  %d файлов успешно перемещено.
+%d erros while copying, %d files successfully copied.	filemanager	ru	%d ошибок при копировании, %d файлов успешно скопировано.
+%d erros while moving, %d files successfully moved.	filemanager	ru	%d ошибок при перемещении,  %d файлов успешно перемещено.
+%d files successfully copied.	filemanager	ru	%d файлов успешно скопировано.
+%d files successfully moved.	filemanager	ru	%d файлов успешно перемещено.
+accessrights	filemanager	ru	Права доступа
+acl added.	filemanager	ru	Права доступа ACL добавлены.
+acl deleted.	filemanager	ru	Права доступа ACL удалены.
 actions	filemanager	ru	Действия
+add to clipboard	filemanager	ru	Добавить буфер обмена
 all files	common	ru	Все файлы
-applications	common	ru	Действия
-check all	filemanager	ru	Отметить все
+allow a maximum of the above configured folderlinks to be configured in settings	admin	ru	Максимальное количество папок для связи, отраженных в настройках
+and all it's childeren	filemanager	ru	и все дочерние записи
+application fields	filemanager	ru	Поля приложения
+applications	common	ru	Приложения
+basedirectory	filemanager	ru	Основной каталог
+can't open directory %1!	filemanager	ru	Невозможно открыть каталог %1
+cancel editing %1 without saving	filemanager	ru	Редактирование прервано %1 без сохранения
+cannot create directory because it begins or ends in a space	filemanager	ru	Невозможно создание каталога в связи с отсутствием дискового пространства.
+cautiously rejecting to remove folder '%1'!	filemanager	ru	Отказано в перемещении папки %1
+check all	filemanager	ru	Проверить все
 check virtual filesystem	filemanager	ru	Проверить файловую систему
-clear search	filemanager	ru	очистить поиск
+clear search	filemanager	ru	Очистить результаты поиска
+clipboard is empty!	filemanager	ru	Буфер обмена пуст!
 comment	filemanager	ru	Комментарий
-copied	filemanager	ru	Скопировано.
-copy to	filemanager	ru	Копия
+copied	filemanager	ru	Скопировано
+copied %1 to %2	filemanager	ru	Скопировано %1 в %2
+copy	filemanager	ru	Копировать
+copy to	filemanager	ru	Копировать в
+copy to clipboard	filemanager	ru	Копировать в буфер обмена
+could not copy %1 to %2	filemanager	ru	Невозможно скопировать %1 в %2
+could not create %1	filemanager	ru	Невозможно создать %1
+could not delete %1	filemanager	ru	Невозможно удалить %1
+could not move %1 to %2	filemanager	ru	Невозможно переместить %1 в %2
+could not rename %1 to %2	filemanager	ru	Невозможно переименовать %1 в %2
+create a link	filemanager	ru	Создать ссылку
+create directory	filemanager	ru	Создать каталог
+create file	filemanager	ru	Создать файл
 create folder	filemanager	ru	Создать папку
 created	filemanager	ru	Создано
-current directory	filemanager	ru	Этот каталог
-custom fields	filemanager	ru	Пользовательские Поля
+created %1,%2	filemanager	ru	Создано %1, %2
+created directory %1	filemanager	ru	Создан каталог %1
+current directory	filemanager	ru	Текущий каталог
+custom fields	filemanager	ru	Пользовательские поля
 cut	filemanager	ru	Вырезать
+cut to clipboard	filemanager	ru	Вырезать в буфер обмена
+default behavior is no. the link will not be shown, but you are still able to navigate to this location, or configure this paricular location as startfolder or folderlink.	filemanager	ru	По умолчанию = No. Ссылка будет показана, но все еще можно перейти к этому положению или назначить это положение как начальная папка или папка для ссылки.
 default document to insert entries	filemanager	ru	Документ по умолчанию для вставки записей
-directories sorted in	filemanager	ru	Файлы и подкаталоги
-directory with documents to insert entries	filemanager	ru	Каталог с документами для вставки
+delete these files or directories?	filemanager	ru	Удалить эти файлы или каталоги?
+delete this file or directory	filemanager	ru	Удалить этот файл или каталог
+deleted %1	filemanager	ru	Удалено %1
+directories sorted in	filemanager	ru	Каталоги отсортированы в
+directory	filemanager	ru	Каталог
+directory %1 already exists	filemanager	ru	Каталог %1 уже существует.
+directory %1 does not exist	filemanager	ru	Каталог %1 не существует.
+directory not found or no permission to access it!	filemanager	ru	Катало не найден или нет полномочий для доступа к нему!
+directory successfully created.	filemanager	ru	Каталог успешно создан.
+directory with documents to insert entries	filemanager	ru	Каталог с документами для вставки записей
+display and modification of content	filemanager	ru	Показ и модификация содержания
+display of content	filemanager	ru	Показ содержания
+do you want to overwrite the existing file %1?	filemanager	ru	Хотите перезаписать существующий файл %1?
 download	filemanager	ru	Загрузить
-export definition to use for nextmatch export	filemanager	ru	Экспорт определения для использования при следующем экспорте
+edit comments	filemanager	ru	Редактировать комментарии
+edit settings	filemanager	ru	Редактировать настройки
+enter setup user and password	filemanager	ru	Введите имя пользователя и пароль
+enter setup user and password to get root rights	filemanager	ru	Введите имя пользователя и пароль для получения прав root
+enter the complete vfs path to specify a fast access link to a folder	filemanager	ru	Введите полный путь для быстрого доступа к ссылке на папку
+enter the complete vfs path to specify your desired start folder.	filemanager	ru	Введите полный путь для указания вашей начальной папки
+error adding the acl!	filemanager	ru	Ошибка добавления прав доступа ACL!
+error creating symlink to target %1!	filemanager	ru	Ошибка создания простой ссылки на цель %1!
+error deleting the acl entry!	filemanager	ru	Ошибка уничтожения записи ACL!
+error uploading file!	filemanager	ru	Ошибка обновления файла!
+error while creating directory.	filemanager	ru	Ошибка при создании каталога
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	ru	Пример {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - поиск по полю "n_prefix" подслова  "Mr". Если найдено, пишет Hello Mr., иначе пишет Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	ru	Пример {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Пример: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	ru	Пример {{NELF role}} - если поле Роль не пусто, получите новую строку с величиной поля Роль
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	ru	Пример {{NELFNV role}} - если поле Роль не пусто, установит поле  LF без значения поля
+executable	filemanager	ru	Выполнимо
+export definition to use for nextmatch export	filemanager	ru	Определение экспорта для следующего экспорта
+extended access control list	filemanager	ru	Расширенный лист контроля доступа
+extended acl	filemanager	ru	Расширенный ACL контроль доступа
+failed to change permissions of %1!	filemanager	ru	Неудача при изменении разрешений %1!
+failed to create directory!	filemanager	ru	Неудача при создании каталога!
 favorites	filemanager	ru	Избранное
 file	filemanager	ru	Файл
-filemanager	common	ru	Файл
-files from subdirectories	filemanager	ru	Файлы в подкаталогах
-for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	ru	Для последовательности писем используйте эту метку. Поместите текст, который вы желаете повторять между двух меток.
-general	filemanager	ru	Общее
-general fields:	filemanager	ru	Основные поля:
-go to	filemanager	ru	Перейти к
-id	filemanager	ru	Ид
-if you specify an export definition, it will be used when you export	filemanager	ru	если вы укажете оперделения для экспорта, оно будет использоваться при экспорте
+file %1 could not be created.	filemanager	ru	Файл %1 не может быть создан.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	ru	Файл %1 может быть очень большим.
+file deleted.	filemanager	ru	Файл удален.
+file names cannot contain "%1"	filemanager	ru	Имя файла не может содержать "%1"
+file or directory not found!	filemanager	ru	Файл или каталог не найден!
+file successful uploaded.	filemanager	ru	Файл успешно обновлен.
+filemanager	common	ru	ФайлМенеджер
+filemanager configuration	admin	ru	Конфигурация ФайлМенеджера
+filemanager fields:	filemanager	ru	Поля ФайлМенеджера:
+filename must not be empty!	filemanager	ru	Имя файла не должно быть пустым!
+files from subdirectories	filemanager	ru	Файлы из подкаталогов
+files in this directory	filemanager	ru	Файлы в этом каталоге
+filesystem check reported no problems.	filemanager	ru	Проверка файловой системы проблем не выявила
+fix reported problems	filemanager	ru	Зафиксировано сообщение о проблемах
+folder up	filemanager	ru	Папка на один уровень выше
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	ru	Для файлов, ссылающихся на запись приложения (inside /apps/appname/id/)  местоположение для приложения также доступно. Смотрите само приложение для списка возможных местоположений.
+for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	ru	Для файлов, ссылающихся на запись приложения (inside /apps/appname/id/)  местоположение для приложения также доступно. Смотрите само приложение для списка возможных местоположений.
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	ru	Для серии писем используйте этот тэг. Поместите содержание, которое нужно повторить, между двумя тэгами
+general	filemanager	ru	Общие
+general fields:	filemanager	ru	Общие поля:
+go home	filemanager	ru	Переход Домой
+go to	filemanager	ru	Переход к
+go to your home directory	filemanager	ru	Переход к домашнему каталогу
+go up	filemanager	ru	Переход выше
+id	filemanager	ru	Идентификатор ID
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	ru	Если здесь указать каталог с полным путем, %1 покажет действие для каждого документа. Действие позволит загрузить указанный документ с %1 вставленными данными.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	ru	Если здесь указать документ с полным путем, %1 покажет пиктограмму внешнего документа для каждой записи. Эта пиктограмма позволит загрузить указанный документ с вставленными данными.
+if you specify an export definition, it will be used when you export	filemanager	ru	Если указать экспортное определение, оно будет использовано при экспорте
+if you specify an export definition, it will be used when you export*	filemanager	ru	Если указать экспортное определение, оно будет использовано при экспорте
+inherited	filemanager	ru	Унаследованный
 link	filemanager	ru	Ссылка
-location	filemanager	ru	Расположени
+link %1: %2	filemanager	ru	Ссылка %1: %2
+link target	filemanager	ru	Целевая ссылка
+link target %1 not found!	filemanager	ru	Целевая ссылка %1 не найдена!
+location	filemanager	ru	Положение
+log out as superuser	filemanager	ru	Выход из режима суперпользователь
+mail files	filemanager	ru	Отправить файлы
+max folderlinks	admin	ru	Максимальные связи папки
 mime type	filemanager	ru	Тип Mime
 modified	filemanager	ru	Изменено
-move	filemanager	ru	переместить
-move to	filemanager	ru	переместить выбранное в
-name of current user, all other contact fields are valid too	filemanager	ru	Имя текущего пользователя, все остальные поля контакта также действительны.
-open	filemanager	ru	открытые
+modified between	filemanager	ru	Изменено между
+modify all subdirectories and their content	filemanager	ru	Изменены все каталоги и их содержимое
+move	filemanager	ru	Переместить
+move to	filemanager	ru	Переместить в
+moved %1 to %2	filemanager	ru	Перемещено %1 в %2
+name of current user, all other contact fields are valid too	filemanager	ru	Имя текущего пользователя, все остальные поля контакта также верны
+new directory	filemanager	ru	Новый каталог
+no access	filemanager	ru	Нет доступа
+no files in this directory.	filemanager	ru	Нет файлов в этом каталоге.
+no preview available	filemanager	ru	Предварительный просмотр невозможен.
+no version history for this file/directory	filemanager	ru	Нет истории версий для этого файла/каталога.
+only owner can rename or delete the content	filemanager	ru	Только владелец может переименовать или удалить содержимое.
+open	filemanager	ru	Открыть
+operation	filemanager	ru	Операция
+permission denied!	filemanager	ru	Отсутствует разрешение!
 permissions	filemanager	ru	Разрешения
-preview	filemanager	ru	Предварительный просмотр
-projectmanager	filemanager	ru	Управление Проектами
+permissions of %1 changed.	filemanager	ru	Разрешения %1 изменены.
+please select a file to delete.	filemanager	ru	Выберите файл для удаления
+preview	filemanager	ru	Просмотр
+preview %1	filemanager	ru	Просмотр %1
+preview of %1	filemanager	ru	Просмотр %1
+projectmanager	filemanager	ru	Проекты
+properties saved.	filemanager	ru	Свойства сохранены.
+quick jump to	filemanager	ru	Быстрый переход к
+read & write access	filemanager	ru	Доступ к чтению/записи
+read access only	filemanager	ru	Доступ только к чтению
 reload	filemanager	ru	Перезагрузка
+rename of %1 to %2 failed!	filemanager	ru	Переименование %1 в %2 закончилось неудачно!
+rename, change permissions or ownership	filemanager	ru	Переименование, изменение разрешений или владельца
+renamed %1 to %2	filemanager	ru	Переименовано %1 в %2
+renamed %1 to %2.	filemanager	ru	Переименовано %1 в %2
+replaced %1	filemanager	ru	Заменено %1
+replacements for inserting entries into documents	filemanager	ru	Замены для вставляемых в документы записей
+rights	filemanager	ru	Права
+root	filemanager	ru	Рут (root)
+root access granted.	filemanager	ru	Доступ с правами root предоставлен.
+root access stopped.	filemanager	ru	Доступ с правами root прекращен.
+save %1	filemanager	ru	Сохранить %1
+save %1, and go back to file listing	filemanager	ru	Сохранить %1 и вернуться к списку файлов.
 save as	filemanager	ru	Сохранить как
-save changes	filemanager	ru	сохранить изменения
-search for '%1'	filemanager	ru	Искать '%1'
+save changes	filemanager	ru	Сохранить изменения
+saved %1	filemanager	ru	Сохранено %1
+saving properties failed!	filemanager	ru	Сохранение свойств завершилось неудачно!
+search for '%1'	filemanager	ru	Поиск %1
+searchstring	filemanager	ru	Срока поиска
+select action...	filemanager	ru	Выберите действие...
+select file to upload in current directory	filemanager	ru	Выберите файл для загрузки в текущий каталог
 show	filemanager	ru	Показать
 show hidden files	filemanager	ru	Показывать скрытые файлы
+show link "%1" in side box menu?	filemanager	ru	Показывать ссылку %1 в боковом меню?
+show link "users and groups*" in side box menu?*	filemanager	ru	Показывать ссылку "Пользователи и группы" в боковом меню?
+show link "your home directory*" in side box menu?*	filemanager	ru	Показывать ссылку "Ваш домашний каталог" в боковом меню?
+show link to filemanagers basedirectory (/) in side box menu?	filemanager	ru	Показывать ссылку на базовый каталог ФайлМенеджера в боковом меню?
 size	filemanager	ru	Размер
-up	filemanager	ru	вверх
+start search	filemanager	ru	Начать поиск
+startfolder	filemanager	ru	Начальная папка
+superuser	filemanager	ru	Суперпользователь
+symlink to %1 created.	filemanager	ru	Простая ссылка на %1 создана.
+tag to mark positions for address labels	filemanager	ru	Тэг для отметки позиций для адресных меток
+the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	ru	Начальная папка по умолчанию - ваша персональная папка. Значение по умолчанию используется, если поле пусто, путь не существует или у вас нет права доступа.
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	ru	Документ может содержать местоположение типа {{%3}} для замены данными (%1 полный список имен местоположений %2).
+the following document-types are supported:	filemanager	ru	Поддерживаются следующие типы документов:
+the requested path %1 is not available.	filemanager	ru	Затребованный путь %1 не доступен!
+there's already a directory with that name!	filemanager	ru	Каталог с таким именем уже существует!
+there's already a file with that name!	filemanager	ru	Файл с таким именем уже существует!
+to overwrite the existing file store again.	filemanager	ru	Перезаписать еще раз существующее файловое хранилище
+total files	filemanager	ru	Всего файлов
+unused space	filemanager	ru	Неиспользовано пространство
+up	filemanager	ru	Вверх
+updated comment for %1	filemanager	ru	Обновлен комментарий для %1
+upload fields	filemanager	ru	Загружены поля
+upload files	filemanager	ru	Загружены файлы
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	ru	Используйте этот тэг для адресных меток. Поместите содержимое, которое нужно повторить, между двумя тэгами.
+used space	filemanager	ru	Использовано пространство
 users and groups	filemanager	ru	Пользователи и группы
 versioning	filemanager	ru	Управление версиями
+wrong username or password!	filemanager	ru	Неправильное имя или пароль!
+you are not allowed to upload a script!	filemanager	ru	Вам НЕ разрешено загружать скрипты!
+you can only grant additional rights, you can not take rights away!	filemanager	ru	Вы можете только дать дополнительные права, вы НЕ сможет забрать их обратно!
+you do not have access to %1	filemanager	ru	У Вас нет доступа к %1
+you need to select an owner!	filemanager	ru	Необходимо выбрать владельца!
+you need to select some files first!	filemanager	ru	Сначала необходимо выбрать файлы!
+you will be redirected to your home directory.	filemanager	ru	Вы будете перенаправлены в домашний каталог.
+you will be redirected to your start folder.	filemanager	ru	Вы будет перенаправлены в начальную папку.
+your home dir did not exist, egroupware created a new one.	filemanager	ru	Ваш домашний каталог не существует, EGroupware создаст его.
 your home directory	filemanager	ru	Домашний каталог

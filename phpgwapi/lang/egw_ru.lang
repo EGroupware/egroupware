@@ -1,6 +1,7 @@
 %1 email addresses inserted	common	ru	Вставлен адрес e-mail: %1
 %1 file	common	ru	%1 файл
-%1 is not executable by the webserver !!!	common	ru	%1 не может быть запущен Веб-сервером!!!
+%1 is not executable by the webserver !!!	common	ru	%1 не может быть исполнен Веб-сервером!
+%1 to sync	groupdav	ru	%1 синхронизировать
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	ru	%1Выберите другой каталог%2<br />или дайте веб-серверу права на запись в %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	ru	%1eGroupWare%2 - многопользовательская, web-ориентированная среда коллективной работы,  написанная на %3PHP%4.
 (session restored in %1 seconds)	common	ru	(сессия восстановлена за %1 секунд)
@@ -33,6 +34,7 @@ account is expired	common	ru	Учетная запись просрочена
 accounts	common	ru	Учетные записи
 acl	common	ru	ACL
 action	common	ru	Действие
+action when category is an email address	groupdav	ru	Действие, если категория - адрес e-mail
 actions	common	ru	Действия
 active	common	ru	Активно
 add	common	ru	Добавить
@@ -40,7 +42,9 @@ add %1 category for	common	ru	Добавить %1 категорию для
 add category	common	ru	Добавить категорию
 add shortcut	common	ru	Добавить ярлык
 add sub	common	ru	Добавить подпункт
-addressbook	common	ru	Адресная книга
+add user to responsibles	groupdav	ru	добавить пользователя к ответственным
+add user to responsibles, removing evtl. previous category user	groupdav	ru	добавить пользователя к ответственным, удалив пользователя категории
+addressbook	common	ru	Контакты
 addressbooks to sync in addition to personal addressbook	groupdav	ru	Адресная книга для синхронизации в дополнение к личной адресной книге
 admin	common	ru	Администратор
 administration	common	ru	Администрирование
@@ -52,6 +56,7 @@ all addressbooks	groupdav	ru	Все адресные книги
 all fields	common	ru	все поля
 all in one	groupdav	ru	Всё в одном
 all languages	common	ru	Все языки
+allows to modify responsible users from devices not supporting them, by setting email address of a user as category.	groupdav	ru	Позволяет менять ответственных пользователей с не поддерживающих это устройств установкой e-mail адреса пользователя как категории.
 alphabet	common	ru	а,б,в,г,д,е,ж,з,и,й,к,л,м,н,о,п,р,с,т,у,ф,х,ц,ч,ш,щ,ъ,ы,ь,э,ю,я
 alternate style-sheet:	common	ru	Альтернативная таблица стилей:
 american samoa	common	ru	Американское Самоа
@@ -413,8 +418,9 @@ line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored
 list	common	ru	Список
 list members	common	ru	Список участников
 lithuania	common	ru	Литва
-local	common	ru	Локальный
-locations	common	ru	местонахождения
+local	common	ru	Местный
+location calendars	groupdav	ru	Местные календари
+locations	common	ru	Местоположения
 logging / debuging	groupdav	ru	Журналирование/отладка
 login	common	ru	Вход
 loginid	common	ru	LoginID
@@ -498,7 +504,7 @@ not assigned	common	ru	не назначено
 not readable %1 entry of user %2	common	ru	Запись %1 не может быть прочитана пользователем %2
 note	common	ru	Заметка
 notes	common	ru	Заметки
-notifications	common	ru	уведомления
+notifications	common	ru	Уведомления
 notify window	common	ru	Окно извещения
 notify your administrator to correct this situation	common	ru	Свяжитесь с Вашим системным администратором для исправления этой ситуации.
 november	common	ru	Ноябрь
@@ -593,8 +599,9 @@ replace	common	ru	Замена
 replace with	common	ru	Заменить на
 requests and full responses to files directory	common	ru	Запросы и полные ответы на файловые каталоги
 requests and truncated responses to apache error-log	groupdav	ru	Запросы и короткие ответы  к логу ошибок apache
+resource calendars	groupdav	ru	Календари ресурса
 resource type	common	ru	Тип ресурсов
-resources	common	ru	ресурсы
+resources	common	ru	Ресурсы
 restore failed	common	ru	Восстановление не удалось
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	ru	Показать список учетных записей пользователей в системе. ВНИМАНИЕ: Список может быть весьма большим.
 returns an array of todo items	common	ru	показать массив заданий
@@ -643,11 +650,13 @@ send	common	ru	Отправить
 senegal	common	ru	Сенегал
 september	common	ru	Сентябрь
 serbia	common	ru	Сербия
-server %1 has been added	common	ru	Добавлен Сервер %1
-server answered. processing response...	common	ru	Получен ответ Сервера.  Обработка ответа...
-server contacted. waiting for response...	common	ru	Контакт с Сервером. Ожидание ответа...
-server name	common	ru	Имя Сервера
-session has been killed	common	ru	Сессия уничтожена
+server %1 has been added	common	ru	Добавлен сервер %1
+server answered. processing response...	common	ru	Получен ответ сервера.  Обработка ответа...
+server contacted. waiting for response...	common	ru	Контакт с сервером. Ожидание ответа...
+server name	common	ru	Имя сервера
+session has been killed	common	ru	Сессия прекращена
+set user as only responsible user, but keeping groups	groupdav	ru	установить пользователя как ответственного, но сохранить группы
+set user as only responsible, removing all existing responsibles	groupdav	ru	Сделать пользователя ответственным, удалив всех остальных
 setup	common	ru	Установка
 setup main menu	common	ru	Главное меню установки
 seychelles	common	ru	Сейшельские о-ва
