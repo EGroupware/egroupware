@@ -276,6 +276,7 @@ type	addressbook	it	Tipo
 update a single entry by passing the fields.	addressbook	it	Aggiorna una singola voce passando i campi.
 updated	addressbook	it	Aggiornato
 upload or delete the photo	addressbook	it	Carica o cancella la foto
+use addressbooks "own sorting" attribute	addressbook	it	usare il "proprio ordinamento" della rubrica
 use country list	addressbook	it	Usa la lista delle nazioni
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	addressbook	it	Usa questo tag per le etichette di indirizzo. Posiziona il contenuto da ripetere, tra due tag.
 used for links and for the own sorting of the list	addressbook	it	usato per collegamenti e per il proprio ordinamento della lista
