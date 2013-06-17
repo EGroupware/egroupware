@@ -414,18 +414,8 @@ var et2_selectbox = et2_inputWidget.extend(
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
 
-		// Turn on tags, if desired
-		if(this.input != null && (this.options.search || this.options.tags) && !this.options.disabled)
-		{
-			if(this.options.empty_label)
-			{
-				this.input.attr("data-placeholder", this.options.empty_label);
-			}
-			this.input.css("width","100%")
-				.chosen({
-				})
-				.change(this.onchange);
-		}
+		this.set_tags(this.options.tags);
+
 		return true;
 	},
 
@@ -532,6 +522,36 @@ var et2_selectbox = et2_inputWidget.extend(
 		if(this.selected_first)
 		{
 			this.multiOptions.find("li:has(input:checked)").prependTo(this.multiOptions);
+		}
+	},
+
+	/**
+	 * Turn tag style on and off
+	 */
+	set_tags: function(tags) {
+		this.options.tags = tags;
+		
+		// Can't actually do chosen until attached, loadingFinished should call again
+		if(!this.isAttached()) return;
+
+		if(this.input != null && !this.options.tags && !this.options.search)
+		{
+			this.input.unchosen().css('width', '');
+			
+			return;
+		}
+
+		// Turn on tags, if desired
+		if(this.input != null && (this.options.search || this.options.tags) && !this.options.disabled)
+		{
+			if(this.options.empty_label)
+			{
+				this.input.attr("data-placeholder", this.options.empty_label);
+			}
+			this.input.css("width","100%")
+				.chosen({
+				})
+				.change(this.onchange);
 		}
 	},
 
