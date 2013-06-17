@@ -251,6 +251,8 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 		{
 			_callback.call(window,this);
 		}
+
+		$j(this.DOMContainer).trigger('load', this);
 	}, this);
 
 	// Split the given data into array manager objects and pass those to the
