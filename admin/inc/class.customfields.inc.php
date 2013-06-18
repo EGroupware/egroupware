@@ -73,7 +73,6 @@ class customfields
 		$this->tmpl = new etemplate();
 		// do we manage content-types?
 		if($this->tmpl->read($this->appname.'.admin.types')) $this->manage_content_types = true;
-
 		$this->fields = config::get_customfields($this->appname,true);
 		$this->tmpl->read('admin.customfields');
 
@@ -95,7 +94,7 @@ class customfields
 		elseif(method_exists($this->tmpl, 'disableElement'))
 		{
 			// et2
-			$this->tmpl->disableElement('admin.customfields.type', true);
+			$this->tmpl->disableElement('content_types', true);
 		}
 		if (is_array($content))
 		{
