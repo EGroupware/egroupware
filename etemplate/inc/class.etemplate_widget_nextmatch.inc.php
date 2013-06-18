@@ -153,6 +153,12 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		// Make sure it's not set
 		unset($send_value['favorite']);
 
+		// Parse sort into something that get_rows functions are expecting: db_field in order, ASC/DESC in sort
+		if(is_array($send_value['sort']))
+		{
+			$send_value['order'] = $send_value['sort']['id'];
+			$send_value['sort'] = $send_value['sort']['asc'] ? 'ASC' : 'DESC';
+		}
 		$total = self::call_get_rows($send_value, $send_value['rows'], self::$request->readonlys);
 		$value =& self::get_array(self::$request->content, $form_name, true);
 
