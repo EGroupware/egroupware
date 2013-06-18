@@ -408,6 +408,12 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 			if(options.length > 2) attrs.config.toolbarStartupExpanded = options[2];
 		}
 		attrs.config.height = ((field.rows ? field.rows : 5) *16) +'px';
+
+		// We have to push the config modifications into the modifications array, or they'll
+		// be overwritten by the site config from the server
+		var data = this.getArrayMgr("modifications").getEntry(this.prefix+field_name);
+		if(data) jQuery.extend(data.config, attrs.config);
+
 		return true;
 	},
 	_setup_radio: function(field_name, field, attrs) {
