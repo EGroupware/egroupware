@@ -189,7 +189,7 @@ class accounts_ldap
 			}
 			else
 			{
-				$old = $this->_ldap2array($old[0]);
+				$old = ldap::result2array($old[0]);
 				foreach($old['objectclass'] as $n => $class)
 				{
 					$old['objectclass'][$n] = strtolower($class);
@@ -361,36 +361,6 @@ class accounts_ldap
 		}
 		return $data['account_id'];
 	}
-
-	/**
-	 * Convert a single ldap value into a associative array
-	 *
-	 * @param array $ldap array with numerical and associative indexes and count's
-	 * @return array with only associative index and no count's
-	 */
-	function _ldap2array($ldap)
-	{
-		if (!is_array($ldap)) return false;
-
-		$arr = array();
-		foreach($ldap as $var => $val)
-		{
-			if (is_int($var) || $var == 'count') continue;
-
-			if (is_array($val) && $val['count'] == 1)
-			{
-				$arr[$var] = $val[0];
-			}
-			else
-			{
-				if (is_array($val)) unset($val['count']);
-
-				$arr[$var] = $val;
-			}
-		}
-		return $arr;
-	}
-
 
 	/**
 	 * Delete one account, deletes also all acl-entries for that account

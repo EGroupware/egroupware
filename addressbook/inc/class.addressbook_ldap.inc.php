@@ -115,7 +115,8 @@ class addressbook_ldap
 	var $schema2egw = array(
 		'posixaccount' => array(
 			'account_id'	=> 'uidnumber',
-			'account_lid'	=> 'uid',
+//			'account_lid'	=> 'uid',
+			'id'    		=> 'uid',
 			'shadowexpire',
 		),
 		'inetorgperson' => array(
@@ -432,6 +433,7 @@ class addressbook_ldap
 	 */
 	function save($keys=null)
 	{
+		//error_log(__METHOD__."(".array2string($keys).") this->data=".array2string($this->data));
 		if(is_array($keys))
 		{
 			$this->data = is_array($this->data) ? array_merge($this->data,$keys) : $keys;
@@ -505,7 +507,7 @@ class addressbook_ldap
 		// add for all supported objectclasses the objectclass and it's attributes
 		foreach($this->schema2egw as $objectclass => $mapping)
 		{
-			if(!$this->ldapServerInfo->supportsObjectClass($objectclass) || $objectclass == 'posixaccount') continue;
+			if(!$this->ldapServerInfo->supportsObjectClass($objectclass)) continue;
 
 			if(!in_array($objectclass, $oldObjectclasses))
 			{
@@ -523,6 +525,7 @@ class addressbook_ldap
 			}
 			foreach($mapping as $egwFieldName => $ldapFieldName)
 			{
+				if (is_int($egwFieldName)) continue;
 				if(!empty($data[$egwFieldName]))
 				{
 					// dont convert the (binary) jpegPhoto!
@@ -533,6 +536,7 @@ class addressbook_ldap
 				{
 					$ldapContact[$ldapFieldName] = array();
 				}
+				//error_log(__METHOD__."() ".__LINE__." objectclass=$objectclass, data['$egwFieldName']=".array2string($data[$egwFieldName])." --> ldapContact['$ldapFieldName']=".array2string($ldapContact[$ldapFieldName]));
 			}
 			// handling of special attributes, like cat_id in evolutionPerson
 			$egw2objectclass = '_egw2'.$objectclass;
@@ -556,7 +560,7 @@ class addressbook_ldap
 			$needRecreation = false;
 
 			// add missing objectclasses
-			if($ldapContact['objectClass'] && array_diff($ldapContact['objectClass'],$oldObjectclasses))
+			if($ldapContact['objectClass'] && ($missing=array_diff($ldapContact['objectClass'],$oldObjectclasses)))
 			{
 				if (!@ldap_mod_add($this->ds, $dn, array('objectClass' => $ldapContact['objectClass'])))
 				{
@@ -564,12 +568,12 @@ class addressbook_ldap
 					{
 						// need to modify structural objectclass
 						$needRecreation = true;
-
+						//error_log(__METHOD__."() ".__LINE__." could not add objectclasses ".array2string($missing)." --> need to recreate contact");
 					}
 					else
 					{
 						//echo "<p>ldap_mod_add($this->ds,'$dn',array(objectClass =>".print_r($ldapContact['objectClass'],true)."))</p>\n";
-						error_log('class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
+						error_log(__METHOD__.'() '.__LINE__.' update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
 						return $this->_error(__LINE__);
 					}
 				}
@@ -582,14 +586,10 @@ class addressbook_ldap
 			{
 				$result = ldap_read($this->ds, $dn, 'objectclass=*');
 				$oldContact = ldap_get_entries($this->ds, $result);
-				foreach($oldContact[0] as $key => $value)
-				{
-					if(is_array($value))
-					{
-						unset($value['count']);
-						$newContact[$key] = $value;
-					}
-				}
+				$oldContact = ldap::result2array($oldContact[0]);
+				unset($oldContact['dn']);
+
+				$newContact = $oldContact;
 				$newContact[$this->dn_attribute] = $ldapContact[$this->dn_attribute];
 
 				if(is_array($ldapContact['objectClass']) && count($ldapContact['objectClass']) > 0)
@@ -600,15 +600,14 @@ class addressbook_ldap
 
 				if(!ldap_delete($this->ds, $dn))
 				{
-					error_log('class.so_ldap.inc.php ('. __LINE__ .') delete of old '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
+					error_log(__METHOD__.'() '.__LINE__.' delete of old '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
 					return $this->_error(__LINE__);
 				}
 				if(!@ldap_add($this->ds, $newDN, $newContact))
 				{
-					//echo "<p>recreate: ldap_add($this->ds,'$newDN',".print_r($newContact,true).")</p>\n";
-					//print 'class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')';_debug_array($newContact);exit;
-					error_log('class.so_ldap.inc.php ('. __LINE__ .') re-create contact as '. $newDN .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
-					error_log(print_r($newContact,true));
+					error_log(__METHOD__.'() '.__LINE__.' re-create contact as '. $newDN .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .') newContact='.array2string($newContact));
+					// if adding with new objectclass or dn fails, re-add deleted contact
+					@ldap_add($this->ds, $dn, $oldContact);
 					return $this->_error(__LINE__);
 				}
 				$dn = $newDN;
@@ -622,7 +621,7 @@ class addressbook_ldap
 				}
 				else
 				{
-					error_log(__METHOD__."() ldap_rename or $dn to $newRDN failed! ".ldap_error($this->ds));
+					error_log(__METHOD__.'() '.__LINE__." ldap_rename of $dn to $newRDN failed! ".ldap_error($this->ds));
 				}
 			}
 			unset($ldapContact[$this->dn_attribute]);
@@ -631,9 +630,7 @@ class addressbook_ldap
 
 			if (!@ldap_modify($this->ds, $dn, $ldapContact))
 			{
-				//echo "<p>ldap_modify($this->ds,'$dn',".print_r($ldapContact,true).') failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .")</p>\n";
-				error_log('class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
-				error_log(print_r($ldapContact,true));
+				error_log(__METHOD__.'() '.__LINE__.' update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .') ldapContact='.array2string($ldapContact));
 				return $this->_error(__LINE__);
 			}
 		}
@@ -644,9 +641,7 @@ class addressbook_ldap
 
 			if (!@ldap_add($this->ds, $dn, $ldapContact))
 			{
-				//echo "<p>ldap_add($this->ds,'$dn',".array2string($ldapContact).") failed errorcode: ".ldap_errno($this->ds) .' ('. ldap_error($this->ds) .")</p>\n";
-				error_log('class.so_ldap.inc.php ('. __LINE__ .') add of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
-				error_log(array2string($ldapContact));
+				error_log(__METHOD__.'() '.__LINE__.' add of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .') ldapContact='.array2string($ldapContact));
 				return $this->_error(__LINE__);
 			}
 		}
