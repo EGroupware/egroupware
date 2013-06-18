@@ -420,17 +420,19 @@ class emailadmin_bo extends so_sql
 		{
 			if ($data) $retData += $data;
 		}
-		uksort($retData, function($a, $b) {
-			static $prio = array(	// not explicitly mentioned get 0
-				'emailadmin_smtp' => 9,
-				'emailadmin_smtp_sql' => 8,
-				'smtpplesk' => -1,
-			);
-			return (int)$prio[$b] - (int)$prio[$a];
-		});
+		uksort($retData, array(__CLASS__, 'smtp_sort'));
 		return $retData;
 	}
 
+	static function smtp_sort($a, $b)
+	{
+		static $prio = array(	// not explicitly mentioned get 0
+			'emailadmin_smtp' => 9,
+			'emailadmin_smtp_sql' => 8,
+			'smtpplesk' => -1,
+		);
+		return (int)$prio[$b] - (int)$prio[$a];
+	}
 	/**
 	 * Get a list of supported IMAP servers
 	 *
@@ -449,17 +451,20 @@ class emailadmin_bo extends so_sql
 		{
 			if ($data) $retData += $data;
 		}
-		uksort($retData, function($a, $b) {
-			static $prio = array(	// not explicitly mentioned get 0
-				'defaultimap' => 9,
-				'managementserver_imap' => 8,
-				'emailadmin_dovecot' => 7,
-				'cyrusimap' => 6,
-				'pleskimap' => -1,
-			);
-			return (int)$prio[$b] - (int)$prio[$a];
-		});
+		uksort($retData, array(__CLASS__, 'imap_sort'));
 		return $retData;
+	}
+
+	static function imap_sort($a, $b)
+	{
+		static $prio = array(	// not explicitly mentioned get 0
+			'defaultimap' => 9,
+			'managementserver_imap' => 8,
+			'emailadmin_dovecot' => 7,
+			'cyrusimap' => 6,
+			'pleskimap' => -1,
+		);
+		return (int)$prio[$b] - (int)$prio[$a];
 	}
 
 	/**
