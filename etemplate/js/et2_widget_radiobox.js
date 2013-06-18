@@ -81,6 +81,19 @@ var et2_radiobox = et2_inputWidget.extend(
 	},
 
 	/**
+	 * Default for radio buttons is label after button
+	 *
+	 * @param _label String New label for radio button.  Use %s to locate the radio button somewhere else in the label
+	 */
+	set_label: function(_label) {
+		if(_label.length > 0 && _label.indexOf('%s')==-1)
+		{
+			_label = '%s'+_label;
+		}
+		this._super.apply(this, [_label]);
+	},
+
+	/**
 	 * Override default to match against set/unset value
 	 */
 	set_value: function(_value) {
