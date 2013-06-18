@@ -380,7 +380,13 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 		field.type = 'textbox';
 		attrs.rows = field.rows;
-		attrs.size = field.len;
+
+		if(field.len)
+		{
+			var size = field.len.split(',');
+			attrs.maxlength = size[0];
+			attrs.size = size.length > 1 ? size[1] : size[0];
+		}
 		return true;
 	},
 	_setup_select: function(field_name, field, attrs) {
