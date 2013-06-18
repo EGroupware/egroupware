@@ -61,8 +61,8 @@ class etemplate_widget_checkbox extends etemplate_widget
 			// defaults for set and unset values
 			if (!$this->attrs['set_val'] && !$this->attrs['unset_val'])
 			{
-				$set_val = 1;
-				$unset_val = 0;
+				$set_val = 'true';
+				$unset_val = 'false';
 			}
 			else
 			{

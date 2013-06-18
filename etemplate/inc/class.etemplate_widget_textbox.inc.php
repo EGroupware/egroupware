@@ -150,7 +150,7 @@ class etemplate_widget_textbox extends etemplate_widget
 				}
 			}
 			$valid = $value;
-			error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value));
+			//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value));
 		}
 	}
 }
