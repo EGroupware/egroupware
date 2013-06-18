@@ -1,11 +1,11 @@
 <?php
 /**
- * eGgroupWare setup - test or create the ldap connection and hierarchy
+ * EGroupware setup - test or create the ldap connection and hierarchy
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -15,8 +15,17 @@
  *
  * All commands can be run via setup-cli eg:
  *
- * setup/setup-cli.php --setup_cmd_ldap stylite.de,config-user,config-pw sub_command=set_mailbox \
- * 	ldap_base=dc=local ldap_admin=cn=admin,dc=local ldap_admin_pw=secret ldap_host=localhost test=1
+ * setup/setup-cli.php [--dry-run] --setup_cmd_ldap <domain>,<config-user>,<config-pw> sub_command=set_mailbox \
+ * 	ldap_base=dc=local ldap_root_dn=cn=admin,dc=local ldap_root_pw=secret ldap_host=localhost
+ *
+ * Changing uid/gidNumber to match SID in preparation to Samba4 migration:
+ *
+ * setup/setup-cli.php [--dry-run] --setup_cmd_ldap <domain>,<config-user>,<config-pw> sub_command=sid2uidnumber \
+ * 	ldap_base=dc=local ldap_root_dn=cn=admin,dc=local ldap_root_pw=secret ldap_host=localhost
+ *
+ * - First run it with --dry-run to get ids to change / admin-cli command to change ids in EGroupware.
+ * - Then run admin/admin-cli.php --change-account-id and after this command again without --dry-run.
+ * - After that you need to run the given setup/doc/chown.php command to change filesystem uid/gid in samba share.
  */
 class setup_cmd_ldap extends setup_cmd
 {
@@ -91,8 +100,10 @@ class setup_cmd_ldap extends setup_cmd
 		{
 			throw new egw_exception_wrong_userinput(lang("'%1' is no valid domain name!",$this->domain));
 		}
-		if ($this->remote_id && $check_only) return true;	// further checks can only done locally
-
+		if ($this->remote_id && $check_only && !in_array($this->sub_command, array('set_mailbox', 'sid2uidnumber')))
+		{
+			return true;	// further checks can only done locally
+		}
 		$this->_merge_defaults();
 		//_debug_array($this->as_array());
 
@@ -115,7 +126,10 @@ class setup_cmd_ldap extends setup_cmd
 				$msg = $this->migrate($this->sub_command == 'migrate_to_ldap');
 				break;
 			case 'set_mailbox':
-				$msg = $this->set_mailbox();
+				$msg = $this->set_mailbox($check_only);
+				break;
+			case 'sid2uidnumber':
+				$msg = $this->sid2uidnumber($check_only);
 				break;
 			case 'create_ldap':
 			default:
@@ -123,6 +137,97 @@ class setup_cmd_ldap extends setup_cmd
 				break;
 		}
 		return $msg;
+	}
+
+	const sambaSID = 'sambasid';
+
+	/**
+	 * Change uidNumber and gidNumber to match rid (last part of sambaSID)
+	 *
+	 * First run it with --dry-run to get ids to change / admin-cli command to change ids in EGroupware.
+	 * Then run admin/admin-cli.php --change-account-id and after this command again without --dry-run.
+	 * After that you need to run the given chown.php command to change filesystem uid/gid in samba share.
+	 *
+	 * @param boolean $check_only=false true: only connect and output necessary commands
+	 */
+	private function sid2uidnumber($check_only=false)
+	{
+		$msg = array();
+		$this->connect();
+
+		// check if base does exist
+		if (!@ldap_read($this->test_ldap->ds,$this->ldap_base,'objectClass=*'))
+		{
+			throw new egw_exception_wrong_userinput(lang('Base dn "%1" NOT found!',$this->ldap_base));
+		}
+
+		if (!($sr = ldap_search($this->test_ldap->ds,$this->ldap_base,
+			'(&(|(objectClass=posixAccount)(objectClass=posixGroup))('.$search=self::sambaSID.'=*)(!(gecos=*)))',
+			array('uidNumber','gidNumber','uid','cn', 'objectClass',self::sambaSID))) ||
+			!($entries = ldap_get_entries($this->test_ldap->ds, $sr)))
+		{
+			throw new egw_exception(lang('Error searching "dn=%1" for "%2"!',$this->ldap_base, $search));
+		}
+		$change = $accounts = array();
+		$cmd_change_account_id = 'admin/admin-cli.php --change-account-id <admin>@<domain>,<adminpw>';
+		$change_account_id = '';
+		foreach($entries as $key => $entry)
+		{
+			if ($key === 'count') continue;
+
+			$entry = self::ldap2array($entry);
+			$accounts[$entry['dn']] = $entry;
+			//print_r($entry);
+
+			$parts = explode('-', $entry[self::sambaSID]);
+			$rid = array_pop($parts);
+
+			if (in_array('posixAccount', $entry['objectclass']))
+			{
+				$id = $entry['uidnumber'];
+			}
+			else
+			{
+				$id = -$entry['gidnumber'];
+				$rid *= -1;
+			}
+			if ($id != $rid)
+			{
+				$change[$id] = $rid;
+				$change_account_id .= ','.$id.','.$rid;
+			}
+		}
+		//print_r($change); die('Stop');
+
+		// change account-ids inside EGroupware
+		if ($check_only) $msg[] = "You need to run now:\n$cmd_change_account_id $change_account_id";
+		//$cmd = new admin_cmd_change_account_id($change);
+		//$msg[] = $cmd->run($time=null, $set_modifier=false, $skip_checks=false, $check_only);
+
+		// now change them in LDAP
+		$changed = 0;
+		foreach($accounts as $dn => $account)
+		{
+			$modify = array();
+			if (!empty($account['uidnumber']) && isset($change[$account['uidnumber']]))
+			{
+				$modify['uidnumber'] = $change[$account['uidnumber']];
+			}
+			if (isset($change[-$account['gidnumber']]))
+			{
+				$modify['gidnumber'] = -$change[-$account['gidnumber']];
+			}
+			if (!$check_only && $modify && !ldap_modify($this->test_ldap->ds, $dn, $modify))
+			{
+				throw new egw_exception("Failed to modify ldap: !ldap_modify({$this->test_ldap->ds}, '$dn', ".array2string($modify).") ".ldap_error($this->test_ldap->ds).
+					"\n- ".implode("\n- ", $msg));	// EGroupware change already run successful
+			}
+			if ($modify) ++$changed;
+		}
+		$msg[] = "You need to run now on your samba share(s):\nsetup/doc/chown.php -R $change_account_id <share>";
+
+		return ($check_only ? 'Need to update' : 'Updated')." $changed entries with new uid/gidNumber in LDAP".
+			"\n- ".implode("\n- ", $msg);
 	}
 
 	/**
@@ -384,6 +489,35 @@ class setup_cmd_ldap extends setup_cmd
 	}
 
 	/**
+	 * Convert a single ldap value into a associative array
+	 *
+	 * @param array $ldap array with numerical and associative indexes and count's
+	 * @return array with only associative index and no count's
+	 */
+	public static function ldap2array($ldap)
+	{
+		if (!is_array($ldap)) return false;
+
+		$arr = array();
+		foreach($ldap as $var => $val)
+		{
+			if (is_int($var) || $var === 'count') continue;
+
+			if (is_array($val) && $val['count'] == 1)
+			{
+				$arr[$var] = $val[0];
+			}
+			else
+			{
+				if (is_array($val)) unset($val['count']);
+
+				$arr[$var] = $val;
+			}
+		}
+		return $arr;
+	}
+
+	/**
 	 * Read all accounts from sql or ldap
 	 *
 	 * @param boolean $from_ldap=true true: ldap, false: sql
@@ -602,7 +736,7 @@ class setup_cmd_ldap extends setup_cmd
 	 * @return string with success message N entries modified
 	 * @throws egw_exception if dn not found, not listable or delete fails
 	 */
-	private function set_mailbox()
+	private function set_mailbox($check_only=false)
 	{
 		$this->connect($this->ldap_admin,$this->ldap_admin_pw);
 
@@ -639,16 +773,16 @@ class setup_cmd_ldap extends setup_cmd
 
 			if ($mbox === $entry[$mbox_attr][0]) continue;	// nothing to change
 
-			if (!$this->test && !ldap_modify($this->test_ldap->ds,$entry['dn'],array(
+			if (!$check_only && !ldap_modify($this->test_ldap->ds,$entry['dn'],array(
 				$mbox_attr => $mbox,
 			)))
 			{
 				throw new egw_exception(lang("Error modifying dn=%1: %2='%3'!",$dn,$mbox_attr,$mbox));
 			}
 			++$modified;
-			if ($this->test) echo "$modified: $entry[dn]: $mbox_attr={$entry[$mbox_attr][0]} --> $mbox\n";
+			if ($check_only) echo "$modified: $entry[dn]: $mbox_attr={$entry[$mbox_attr][0]} --> $mbox\n";
 		}
-		return $this->test ? lang('%1 entries would have been modified.',$modified) :
+		return $check_only ? lang('%1 entries would have been modified.',$modified) :
 			lang('%1 entries modified.',$modified);
 	}
 
