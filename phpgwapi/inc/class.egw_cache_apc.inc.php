@@ -54,6 +54,8 @@ class egw_cache_apc extends egw_cache_provider_check implements egw_cache_provid
 		if (function_exists('apc_fetch') && (PHP_SAPI != 'cli' || ini_get('apc.enable_cli')))
 		{
 			$size = ini_get('apc.shm_size');
+			// ancent APC (3.1.3) in Debian 6/Squezze has size in MB without a unit
+			if (is_numeric($size) && $size <= 1048576) $size .= 'M';
 
 			switch(strtoupper(substr($size, -1)))
 			{
@@ -67,7 +69,7 @@ class egw_cache_apc extends egw_cache_provider_check implements egw_cache_provid
 			$size *= ini_get('apc.shm_segments');
 
 			// only cache in APC, if we have at least 64M available (default is 32M)
-			$available = $size >= 64*1024*1024;
+			$available = $size >= 67108864;
 		}
 		//error_log(__METHOD__."() size=$size returning ".array2string($available));
 		return $available;
