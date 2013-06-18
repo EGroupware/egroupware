@@ -64,6 +64,12 @@ class etemplate_widget_template extends etemplate_widget
 					if($name == $c_sub) return $c_template;
 				}
 			}
+			// Template not found, try again with content expansion
+			if (is_array(self::$request->content))
+			{
+				$expand_name = self::expand_name($name, '','','','',self::$cont);
+				if($expand_name && $expand_name != $name) return self::instance($expand_name, $template_set, $version, $load_via);
+			}
 
 			error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') template NOT found!");
 			return false;

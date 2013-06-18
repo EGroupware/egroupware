@@ -76,6 +76,17 @@ class etemplate_widget
 	static protected $response;
 
 	/**
+	 * Namespaced content array, used when trying to initialize
+	 *
+	 * This is pretty much a global static variable, used when reading
+	 * a template with the content set.  This allows variable expansion
+	 * in the constructor.
+	 *
+	 * @protected $cont
+	 */
+	static protected $cont = null;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string|XMLReader $xml string with xml or XMLReader positioned on the element to construct
@@ -89,6 +100,15 @@ class etemplate_widget
 
 		$this->id = $reader->getAttribute('id');
 
+		// Update content?
+		if(self::$cont == null)
+			self::$cont = is_array(self::$request->content) ? self::$request->content : array();
+		if($this->id && is_array(self::$cont[$this->id]))
+		{
+			$old_cont = self::$cont;
+			self::$cont = self::$cont[$this->id];
+		}
+
 		// read all attributes
 		$this->set_attrs($reader);
 
@@ -98,6 +118,11 @@ class etemplate_widget
 			{
 				$this->children[] = self::factory($reader->name, $reader, $reader->getAttribute('id'));
 			}
+		}
+
+		// Reset content as we leave
+		if($old_cont) {
+			self::$cont = $old_cont;
 		}
 	}
 
