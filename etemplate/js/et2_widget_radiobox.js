@@ -172,6 +172,7 @@ var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 			this.span.text(this.options.ro_false);
 		}
 	},
+
 	/**
 	 * Code for implementing et2_IDetachedDOM
 	 */
@@ -199,11 +200,18 @@ et2_register_widget(et2_radiobox_ro, ["radio_ro"]);
 /**
  * A group of radio buttons
  * 
- * @augments et2_box
+ * @augments et2_valueWidget
  */ 
-var et2_radioGroup = et2_box.extend(
+var et2_radioGroup = et2_valueWidget.extend(
 {
 	attributes: {
+		"label": {
+                        "name": "Label",
+                        "default": "",
+                        "type": "string",
+                        "description": "The label is displayed above the list of radio buttons. The label can contain variables, as descript for name. If the label starts with a '@' it is replaced by the value of the content-array at this index (with the '@'-removed and after expanding the variables).",
+                        "translate": true
+                },
 		"value": {
 			"name": "Value",
 			"type": "string",
@@ -240,8 +248,15 @@ var et2_radioGroup = et2_box.extend(
 	 * @memberOf et2_radioGroup
 	 */
 	init: function(parent, attrs) {
-		attrs.type = "vbox";
 		this._super.apply(this, arguments);
+		this.node = $j(document.createElement("div"))
+			.addClass("et2_vbox")
+			.addClass("et2_box_widget");
+		this.setDOMNode(this.node[0]);
+
+		// The supported widget classes array defines a whitelist for all widget
+                // classes or interfaces child widgets have to support.
+                this.supportedWidgetClasses = [et2_radiobox];
 	},
 
 	set_value: function(_value) {
@@ -251,6 +266,10 @@ var et2_radioGroup = et2_box.extend(
                         var radio = this._children[i];
 			radio.set_value(_value);
                 }
+	},
+
+	getValue: function() {
+		return jQuery("input:checked", this.getDOMNode()).val();
 	},
 
 	/**
@@ -270,10 +289,51 @@ var et2_radioGroup = et2_box.extend(
 				readonly: this.options.readonly
 			};
 			var radio = et2_createWidget("radio", attrs, this);
-//			radio.set_name(this.id);
 		}
 		this.set_value(this.value);
+	},
+
+	/**
+	 * Set a label on the group of radio buttons
+	 */
+	set_label: function(_value) {
+		// Abort if ther was no change in the label
+		if (_value == this.label)
+		{
+			return;
+		}
+
+		if (_value)
+		{
+			// Create the label container if it didn't exist yet
+			if (this._labelContainer == null)
+			{
+				this._labelContainer = $j(document.createElement("label"))
+				this.getSurroundings().insertDOMNode(this._labelContainer[0]);
+			}
+
+			// Clear the label container.
+			this._labelContainer.empty();
+
+			// Create the placeholder element and set it
+			var ph = document.createElement("span");
+			this.getSurroundings().setWidgetPlaceholder(ph);
+
+			this._labelContainer
+				.append(document.createTextNode(_value))
+				.append(ph);
+		}
+		else
+		{
+			// Delete the labelContainer from the surroundings object
+			if (this._labelContainer)
+			{
+				this.getSurroundings().removeDOMNode(this._labelContainer[0]);
+			}
+			this._labelContainer = null;
+		}
 	}
+
 });
 // No such tag as 'radiogroup', but it needs something
 et2_register_widget(et2_radioGroup, ["radiogroup"]);

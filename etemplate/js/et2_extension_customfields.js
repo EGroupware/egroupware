@@ -411,8 +411,14 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		return true;
 	},
 	_setup_radio: function(field_name, field, attrs) {
-		// No label on the widget itself
+		// 'Empty' label will be first 
 		delete(attrs.label);
+
+		if(field.values && field.values[''])
+		{
+			attrs.label = field.values[''];
+			delete field.values[''];
+		}
 
 		field.type = 'radiogroup';
 		attrs.options = field.values;
