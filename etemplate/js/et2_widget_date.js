@@ -157,7 +157,7 @@ var et2_date = et2_inputWidget.extend(
 				this.date.setTime(text.valueOf()+localOffset);
 				_value = Math.round(this.date.valueOf() / 1000);
 			}
-		} else if (typeof _value == 'number') {
+		} else if (typeof _value == 'number' || !isNaN(_value)) {
 			// Timestamp
 			// JS dates use milliseconds
 			this.date.setTime(parseInt(_value)*1000);
