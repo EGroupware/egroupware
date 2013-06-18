@@ -211,17 +211,18 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		$field_settings = array();
 		foreach($fields as $fname => $field)
 		{
-			if($field['type'] == 'date' && self::$request->content[self::$prefix.$fname])
+			if($field['type'] == 'date' && ($d_val = self::$request->content[self::$prefix.$fname]) && !is_numeric($d_val))
 			{
-				self::$request->content[self::$prefix.$fname] = strtotime(self::$request->content[self::$prefix.$fname]);
+				self::$request->content[self::$prefix.$fname] = strtotime($d_val);
 			}
 
 			// Run beforeSendToClient for each field
-			$widget = self::factory($field['type'], '<?xml version="1.0"?><'.$field['type'].' type="'.$field['type'].'"/>', self::$prefix.$fname);
+			$widget = self::factory($field['type'], '<'.$field['type'].' type="'.$field['type'].'" id="'.self::$prefix.$fname.'"/>', self::$prefix.$fname);
 			if(method_exists($widget, 'beforeSendToClient'))
 			{
-				$widget->id = "customfields[{$fname}]";
-				$widget->beforeSendToClient($this->id, $fname);
+				$widget->id = self::$prefix.$fname;
+				$widget->attrs['type'] = $field['type'];
+				$widget->beforeSendToClient($this->id == self::GLOBAL_ID ? '':$this->id, $fname);
 			}
 		}
 	}
