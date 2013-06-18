@@ -84,6 +84,35 @@ class ldap
 	}
 
 	/**
+	 * Convert a single ldap result into a associative array
+	 *
+	 * @param array $ldap array with numerical and associative indexes and count's
+	 * @return boolean|array with only associative index and no count's or false on error (parm is no array)
+	 */
+	static function result2array($ldap)
+	{
+		if (!is_array($ldap)) return false;
+
+		$arr = array();
+		foreach($ldap as $var => $val)
+		{
+			if (is_int($var) || $var == 'count') continue;
+
+			if (is_array($val) && $val['count'] == 1)
+			{
+				$arr[$var] = $val[0];
+			}
+			else
+			{
+				if (is_array($val)) unset($val['count']);
+
+				$arr[$var] = $val;
+			}
+		}
+		return $arr;
+	}
+
+	/**
 	 * Connect to ldap server and return a handle
 	 *
 	 * If multiple (space-separated) ldap hosts or urls are given, try them in order and
