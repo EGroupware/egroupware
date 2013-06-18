@@ -393,6 +393,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		// No label on the widget itself
 		delete(attrs.label);
 
+		attrs.rows = field.rows;
 		attrs.select_options = field.values;
 		return true;
 	},
