@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @package setup
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -17,10 +17,17 @@ if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling setup-c
 {
 	die('<h1>setup-cli.php must NOT be called as web-page --> exiting !!!</h1>');
 }
-elseif ($_SERVER['argc'] > 1)
+$dry_run = false;
+array_shift($_SERVER['argv']);
+
+if ($_SERVER['argv'])
 {
+	if ($_SERVER['argv'][0] == '--dry-run')
+	{
+		$dry_run = true;
+		array_shift($_SERVER['argv']);
+	}
 	$arguments = $_SERVER['argv'];
-	array_shift($arguments);
 	$action = array_shift($arguments);
 	if (isset($arguments[0])) list($_POST['FormDomain']) = explode(',',$arguments[0]);	// header include needs that to detects the right domain
 }
@@ -52,7 +59,7 @@ $GLOBALS['egw_setup']->system_charset = $charset;
 
 if ((float) PHP_VERSION < $GLOBALS['egw_setup']->required_php_version)
 {
-	throw new egw_exception_wrong_userinput(lang('You are using PHP version %1. eGroupWare now requires %2 or later, recommended is PHP %3.',PHP_VERSION,$GLOBALS['egw_setup']->required_php_version,$GLOBALS['egw_setup']->recommended_php_version),98);
+	throw new egw_exception_wrong_userinput(lang('You are using PHP version %1. EGroupware now requires %2 or later, recommended is PHP %3.',PHP_VERSION,$GLOBALS['egw_setup']->required_php_version,$GLOBALS['egw_setup']->recommended_php_version),98);
 }
 
 switch($action)
@@ -136,7 +143,7 @@ switch($action)
 				}
 			}
 			$cmd = new $class($args);
-			$msg = $cmd->run();
+			$msg = $cmd->run($time=null, $set_modifier=true, $skip_checks=false, $check_only=$dry_run);
 			if (is_array($msg)) $msg = print_r($msg,true);
 			echo "$msg\n";
 			break;
@@ -146,7 +153,7 @@ switch($action)
 exit(0);
 
 /**
- * Configure eGroupWare
+ * Configure EGroupware
  *
  * @param array $args domain(default),[config user(admin)],password,[,name=value,...] --files-dir --backup-dir --mailserver
  */
@@ -351,7 +358,7 @@ function _check_auth_config($arg,$stop,$set_lang=true)
 }
 
 /**
- * Install eGroupWare
+ * Install EGroupware
  *
  * @param array $args array(0 => "domain,[config user(admin)],password,[backup-file],[charset],[lang]", "name=value", ...)
  */
@@ -461,7 +468,7 @@ function do_usage($what='')
 
 	if (!$what)
 	{
-		echo '--check '.lang('checks eGroupWare\'s installed, it\'s versions and necessary upgrads (return values see --exit-codes)')."\n";
+		echo '--check '.lang('checks EGroupware\'s installed, it\'s versions and necessary upgrads (return values see --exit-codes)')."\n";
 		echo '--install '.lang('domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]')."\n";
 	}
 	if (!$what || $what == 'config')
@@ -491,7 +498,7 @@ function do_usage($what='')
 	}
 	if (!$what || $what == 'header')
 	{
-		echo lang('Create or edit the eGroupWare configuration file: header.inc.php:')."\n";
+		echo lang('Create or edit the EGroupware configuration file: header.inc.php:')."\n";
 		echo '--create-header '.lang('header-password[,header-user(admin)]')."\n";
 		echo '--edit-header '.lang('[header-password],[header-user],[new-password],[new-user]')."\n";
 		if (!$what) echo '	--help header '.lang('gives further options')."\n";
@@ -499,14 +506,14 @@ function do_usage($what='')
 	if ($what == 'header')
 	{
 		echo "\n".lang('Additional options and there defaults (in brackets)')."\n";
-		echo '--server-root '.lang('path of eGroupWare install directory (default auto-detected)')."\n";
+		echo '--server-root '.lang('path of EGroupware install directory (default auto-detected)')."\n";
 		echo '--session-type '.lang('{db | php(default) | php-restore}')."\n";
 		echo '--limit-access '.lang('comma separated ip-addresses or host-names, default access to setup from everywhere')."\n";
 		echo '--mcrypt '.lang('use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]')."\n";
 		echo '--db-persistent '.lang('use persistent db connections: {on(default) | off}')."\n";
 		echo '--domain-selectbox '.lang('{off(default) | on}')."\n";
 
-		echo "\n".lang('Adding, editing or deleting an eGroupWare domain / database instance:')."\n";
+		echo "\n".lang('Adding, editing or deleting an EGroupware domain / database instance:')."\n";
 		echo '--domain '.lang('add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]')."\n";
 		echo '--delete-domain '.lang('domain-name')."\n";
 	}
