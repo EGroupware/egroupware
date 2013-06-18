@@ -295,8 +295,9 @@ class etemplate_widget
 		if (!isset($class_name))
 		{
 			list($basetype) = explode('-',$type);
-			if (!class_exists($class_name = 'etemplate_widget_'.str_replace('-','_',$type)) &&
-				!class_exists($class_name = 'etemplate_widget_'.str_replace('-','_',$basetype)))
+			$class_name = self::$widget_registry[$basetype];
+			if (!$class_name && !(class_exists($class_name = 'etemplate_widget_'.str_replace('-','_',$basetype)) ||
+				class_exists($class_name = 'etemplate_widget_'.str_replace('-','_',$type))))
 			{
 				// default to widget class, we can not ignore it, as the widget may contain other widgets
 				$class_name = 'etemplate_widget';
