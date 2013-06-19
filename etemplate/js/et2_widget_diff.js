@@ -51,8 +51,8 @@ var et2_diff = et2_valueWidget.extend([et2_IDetachedDOM],
 		jQuery(this.div).empty();
 		if(value['old'] && value['new']) {
 			// Build diff
-			var old_text = difflib.stringAsLines(value['old']);
-			var new_text = difflib.stringAsLines(value['new']);
+			var old_text = difflib.stringAsLines(value['old'].toString());
+			var new_text = difflib.stringAsLines(value['new'].toString());
 			var sm = new difflib.SequenceMatcher(old_text, new_text);
 			var opcodes = sm.get_opcodes();
 			var view = diffview.buildView({
