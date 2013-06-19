@@ -8,7 +8,7 @@
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  */
 
-error_reporting(E_ALL & ~E_NOTICE);
+error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 @define('AUTH_HANDLER', true);
 @define('EGW_API_INC', dirname(__FILE__) . '/phpgwapi/inc/');
 @define('HORDE_BASE', EGW_API_INC . '/horde/');
