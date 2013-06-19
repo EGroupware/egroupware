@@ -102,16 +102,30 @@ function getElement(form,pattern)
 function check_value(input, own_id)
 {
 	var values = egw_json_getFormValues(input.form).exec;	// todo use eT2 method, if running under et2
+	if(typeof values == 'undefined' && typeof etemplate2 != 'undefined') {
+		var template = etemplate2.getByApplication('addressbook')[0];
+		values = template.getValues(template.widgetContainer);
+	}
 	
 	if (input.name.match(/n_/))
 	{
+		var value = '';
+		if (values.n_prefix) value += values.n_prefix+" ";
+		if (values.n_given)  value += values.n_given+" ";
+		if (values.n_middle) value += values.n_middle+" ";
+		if (values.n_family) value += values.n_family+" ";
+		if (values.n_suffix) value += values.n_suffix;
+
 		var name = document.getElementById("exec[n_fn]");
-		name.value = "";
-		if (values.n_prefix) name.value += values.n_prefix+" ";
-		if (values.n_given)  name.value += values.n_given+" ";
-		if (values.n_middle) name.value += values.n_middle+" ";
-		if (values.n_family) name.value += values.n_family+" ";
-		if (values.n_suffix) name.value += values.n_suffix;
+		if(name == null && template)
+		{
+			name = template.widgetContainer.getWidgetById('n_fn');
+			name.set_value(value);
+		}
+		else
+		{
+			name.value = value;
+		}
 	}
 	var req = new egw_json_request('addressbook.addressbook_ui.ajax_check_values', [values, input.name, own_id]);
 	req.sendRequest(true, function(data) {
@@ -132,6 +146,10 @@ function check_value(input, own_id)
 				{
 					selbox.options[i].text = data.fileas_options[i];
 				}
+			}
+			else
+			{
+				template.widgetContainer.getWidgetById('fileas_type').set_select_options(data.fileas_sel_options);
 			}
 		}
 	});

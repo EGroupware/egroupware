@@ -2011,6 +2011,8 @@ class addressbook_ui extends addressbook_bo
 		{
 			// only set fileas-options if other then email changed
 			$ret['fileas_options'] = array_values($this->fileas_options($values));
+			// Full options for et2
+			$ret['fileas_sel_options'] = $this->fileas_options($values);
 
 			// if name, firstname or org changed and at least 2 are specified, check for doublicates
 			if (in_array($name, array('n_given', 'n_family', 'org_name')) &&
