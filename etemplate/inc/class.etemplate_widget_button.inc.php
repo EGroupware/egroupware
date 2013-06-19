@@ -59,3 +59,4 @@ class etemplate_widget_button extends etemplate_widget
 		}
 	}
 }
+etemplate_widget::registerWidget('etemplate_widget_button', array('button','buttononly'));

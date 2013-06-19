@@ -209,6 +209,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		// Re-format date custom fields from Y-m-d
 		$field_settings =& self::get_array(self::$request->modifications, "{$this->id}[customfields]",true);
 		$field_settings = array();
+		$link_types = egw_link::app_list();
 		foreach($fields as $fname => $field)
 		{
 			if($field['type'] == 'date' && ($d_val = self::$request->content[self::$prefix.$fname]) && !is_numeric($d_val))
@@ -217,11 +218,21 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 			}
 
 			// Run beforeSendToClient for each field
-			$widget = self::factory($field['type'], '<'.$field['type'].' type="'.$field['type'].'" id="'.self::$prefix.$fname.'"/>', self::$prefix.$fname);
+			$type = $field['type'];
+			// Link-tos needs to change from appname to link-to
+			if($link_types[$field['type']])
+			{
+				$type = 'link-to';
+			}
+			$widget = self::factory($type, '<'.$type.' type="'.$type.'" id="'.self::$prefix.$fname.'"/>', self::$prefix.$fname);
 			if(method_exists($widget, 'beforeSendToClient'))
 			{
 				$widget->id = self::$prefix.$fname;
-				$widget->attrs['type'] = $field['type'];
+				$widget->attrs['type'] = $type;
+				if($type == 'link-to')
+				{
+					$widget->attrs['only_app'] = $field['type'];
+				}
 				$widget->beforeSendToClient($this->id == self::GLOBAL_ID ? '':$this->id, $fname);
 			}
 		}

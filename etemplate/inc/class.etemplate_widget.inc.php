@@ -295,12 +295,20 @@ class etemplate_widget
 		if (!isset($class_name))
 		{
 			list($basetype) = explode('-',$type);
-			$class_name = self::$widget_registry[$basetype];
-			if (!$class_name && !(class_exists($class_name = 'etemplate_widget_'.str_replace('-','_',$basetype)) ||
-				class_exists($class_name = 'etemplate_widget_'.str_replace('-','_',$type))))
+			if (!class_exists($class_name = 'etemplate_widget_'.str_replace('-','_',$type)) &&
+				!class_exists($class_name = 'etemplate_widget_'.str_replace('-','_',$basetype)))
 			{
-				// default to widget class, we can not ignore it, as the widget may contain other widgets
-				$class_name = 'etemplate_widget';
+				// Try for base type, it's probably better than the root
+				if(self::$widget_registry[$basetype] && self::$widget_registry[$basetype] != $class_name)
+				{
+					$class_name = self::$widget_registry[$basetype];
+				}
+				else
+				{
+					// Fall back to widget class, we can not ignore it, as the widget may contain other widgets
+					$class_name = 'etemplate_widget';
+					//trigger_error("Could not find a class for $type, using $class_name", E_USER_NOTICE);
+				}
 			}
 		}
 

@@ -57,10 +57,10 @@ class etemplate_widget_link extends etemplate_widget
 		$form_name = self::form_name($cname, $this->id);
 		$value =& self::get_array(self::$request->content, $form_name, true);
 
-		if($value && !is_array($value))
+		if($value && !is_array($value) && !$this->attrs['only_app'])
 		{
 			// Try to explode
-			if(!is_array(explode(':',$value))) {
+			if(count(explode(':',$value)) < 2) {
 				throw new egw_exception_wrong_parameter("Wrong value sent to link widget, needs to be an array. ".array2string($value));
 			}
 			list($app, $id) = explode(':', $value,2);
@@ -71,13 +71,13 @@ class etemplate_widget_link extends etemplate_widget
 			return;
 		}
 
-		$app = $value['to_app'];
-		$id  = $value['to_id'];
 
 		// ToDo: implement on client-side
 		if (!$attrs['help']) self::setElementAttribute($form_name, 'help', 'view this linked entry in its application');
 
 		if($attrs['type'] == 'link-list') {
+			$app = $value['to_app'];
+			$id  = $value['to_id'];
 			$links = egw_link::get_links($app,$id,'','link_lastmod DESC',true, $value['show_deleted']);
 			foreach($links as $link) {
 				$value[] = $link;
