@@ -25,7 +25,14 @@
  *
  * - First run it with --dry-run to get ids to change / admin-cli command to change ids in EGroupware.
  * - Then run admin/admin-cli.php --change-account-id and after this command again without --dry-run.
- * - After that you need to run the given setup/doc/chown.php command to change filesystem uid/gid in samba share.
+ * - After that you can run the given setup/doc/chown.php command to change filesystem uid/gid in samba share.
+ *
+ * setup/setup-cli.php [--dry-run] --setup-cmd-ldap <domain>,<config-user>,<config-pw> sub_command=copy2ad \
+ * 	ldap_base=dc=local ldap_root_dn=cn=admin,dc=local ldap_root_pw=secret ldap_host=localhost \
+ * 	ads_domain=samba4.intern [ads_admin_user=Administrator] ads_admin_pw=secret ads_host=ad.samba4.intern [ads_connection=(ssl|tls)] \
+ * 	attributes=@inetOrgPerson,{smtp:}proxyAddresses=mail,{smtp:}proxyAddresses=mailalias,{quota:}proxyAddresses=mailuserquota,{forward:}proxyaddresses=maildrop
+ *
+ * - copies from samba-tool clasicupgrade not copied inetOrgPerson attributes and mail attributes to AD
  */
 class setup_cmd_ldap extends setup_cmd
 {
@@ -100,7 +107,7 @@ class setup_cmd_ldap extends setup_cmd
 		{
 			throw new egw_exception_wrong_userinput(lang("'%1' is no valid domain name!",$this->domain));
 		}
-		if ($this->remote_id && $check_only && !in_array($this->sub_command, array('set_mailbox', 'sid2uidnumber')))
+		if ($this->remote_id && $check_only && !in_array($this->sub_command, array('set_mailbox', 'sid2uidnumber', 'copy2ad')))
 		{
 			return true;	// further checks can only done locally
 		}
@@ -130,6 +137,9 @@ class setup_cmd_ldap extends setup_cmd
 				break;
 			case 'sid2uidnumber':
 				$msg = $this->sid2uidnumber($check_only);
+				break;
+			case 'copy2ad':
+				$msg = $this->copy2ad($check_only);
 				break;
 			case 'create_ldap':
 			default:
@@ -162,7 +172,7 @@ class setup_cmd_ldap extends setup_cmd
 		}
 
 		if (!($sr = ldap_search($this->test_ldap->ds,$this->ldap_base,
-			'(&(|(objectClass=posixAccount)(objectClass=posixGroup))('.$search=self::sambaSID.'=*)(!(gecos=*)))',
+			$search='(&(|(objectClass=posixAccount)(objectClass=posixGroup))('.self::sambaSID.'=*)(!(uid=*$)))',
 			array('uidNumber','gidNumber','uid','cn', 'objectClass',self::sambaSID))) ||
 			!($entries = ldap_get_entries($this->test_ldap->ds, $sr)))
 		{
@@ -175,7 +185,7 @@ class setup_cmd_ldap extends setup_cmd
 		{
 			if ($key === 'count') continue;
 
-			$entry = self::ldap2array($entry);
+			$entry = ldap::result2array($entry);
 			$accounts[$entry['dn']] = $entry;
 			//print_r($entry);
 
@@ -228,6 +238,140 @@ class setup_cmd_ldap extends setup_cmd
 
 		return ($check_only ? 'Need to update' : 'Updated')." $changed entries with new uid/gidNumber in LDAP".
 			"\n- ".implode("\n- ", $msg);
+	}
+
+	/**
+	 * Copy given attributes of accounts of one ldap to active directory
+	 *
+	 * @param boolean $check_only=false true: only connect and output necessary commands
+	 */
+	private function copy2ad($check_only=false)
+	{
+		$msg = array();
+		$attrs = $rename = array();
+		foreach(explode(',', $this->attributes) as $attr)
+		{
+			if ($attr[0] == '@' ||	// copy whole objectclass without renaming, eg. @inetOrgPerson
+				strpos($attr, '=') === false)
+			{
+				$attrs[] = $attr;
+			}
+			else
+			{
+				list($to, $from) = explode('=', $attr);
+				$attrs[] = $from;
+				$rename[strtolower($from)] = $to;
+			}
+		}
+		$attrs[] = 'uid';	// need to match account
+
+		// connect to destination ads
+		if (empty($this->ads_context))
+		{
+			$this->ads_context = 'CN=Users,DC='.implode(',DC=', explode('.', $this->ads_domain));
+		}
+		if (empty($this->ads_admin_user)) $this->ads_admin_user = 'Administrator';
+		$admin_dn = strpos($this->ads_admin_user, '=') !== false ? $this->ads_admin_user :
+			'CN='.$this->ads_admin_user.','.$this->ads_context;
+		switch($this->ads_connection)
+		{
+			case 'ssl':
+				$url = 'ldaps://'.$this->ads_host.'/';
+				break;
+			case 'tls':
+				$url = 'tls://'.$this->ads_host.'/';
+				break;
+			default:
+				$url = 'ldap://'.$this->ads_host.'/';
+				break;
+		}
+		$this->connect($admin_dn, $this->ads_admin_pw, $url);
+		$ads = $this->test_ldap; unset($this->test_ldap);
+
+		// check if ads base does exist
+		if (!@ldap_read($ads->ds, $this->ads_context, 'objectClass=*'))
+		{
+			throw new egw_exception_wrong_userinput(lang('Ads dn "%1" NOT found!',$this->ads_context));
+		}
+
+		// connect to source ldap
+		$this->connect();
+
+		// check if ldap base does exist
+		if (!@ldap_read($this->test_ldap->ds,$this->ldap_base,'objectClass=*'))
+		{
+			throw new egw_exception_wrong_userinput(lang('Base dn "%1" NOT found!',$this->ldap_base));
+		}
+
+		if (!($sr = ldap_search($this->test_ldap->ds,$this->ldap_base,
+			$search='(&(objectClass=posixAccount)('.self::sambaSID.'=*)(!(uid=*$)))', $attrs)) ||
+			!($entries = ldap_get_entries($this->test_ldap->ds, $sr)))
+		{
+			throw new egw_exception(lang('Error searching "dn=%1" for "%2"!',$this->ldap_base, $search));
+		}
+
+		$changed = 0;
+		foreach($entries as $key => $entry)
+		{
+			if ($key === 'count') continue;
+
+			$entry = ldap::result2array($entry);
+			$uid = $entry['uid'];
+			$entry = array_diff_key($entry, array_flip(array('dn', 'uid', 'objectclass', 'cn', 'userpassword')));
+
+			if (!($sr = ldap_search($ads->ds, $this->ads_context,
+				$search='(&(objectClass=user)(sAMAccountName='.ldap::quote($uid).'))', array('dn'))) ||
+				!($dest = ldap_get_entries($ads->ds, $sr)))
+			{
+				$msg[] = lang('User "%1" not found!', $uid);
+				continue;
+			}
+			$dn = $dest[0]['dn'];
+			$update = array();
+			foreach($entry as $attr => $value)
+			{
+				if ($value)
+				{
+					$to = isset($rename[$attr]) ? $rename[$attr] : $attr;
+					unset($prefix);
+					if ($to[0] == '{')	// eg. {smtp:}proxyAddresses=forwardTo
+					{
+						list($prefix, $to) = explode('}', substr($to, 1));
+					}
+					foreach((array)$value as $val)
+					{
+						if (isset($update[$to]))
+						{
+							if (!is_array($update[$to])) $update[$to] = array($update[$to]);
+							$update[$to][] = $prefix.$val;
+						}
+						else
+						{
+							$update[$to] = $prefix.$val;
+						}
+					}
+				}
+			}
+			if ($check_only)
+			{
+				print_r($dn);
+				print_r($update);
+				continue;
+			}
+			if ($update && !ldap_modify($ads->ds, $dn, $update))
+			{
+				error_log(lang('Failed updating user "%1" dn="%2"!', $uid, $dn).' '.ldap_error($ads->ds));
+			}
+			else
+			{
+				print_r(lang('User "%1" dn="%2" successful updated.', $uid, $dn)."\n");
+				$changed++;
+			}
+		}
+		if ($check_only) return lang("%1 accounts to copy found.", count($entries));
+
+		return "Copied data of $changed accounts from LDAP to AD ".
+			(count($msg) > $changed ? ' ('.(count($msg)-$changed).' errors!)' : '');
 	}
 
 	/**
@@ -489,35 +633,6 @@ class setup_cmd_ldap extends setup_cmd
 	}
 
 	/**
-	 * Convert a single ldap value into a associative array
-	 *
-	 * @param array $ldap array with numerical and associative indexes and count's
-	 * @return array with only associative index and no count's
-	 */
-	public static function ldap2array($ldap)
-	{
-		if (!is_array($ldap)) return false;
-
-		$arr = array();
-		foreach($ldap as $var => $val)
-		{
-			if (is_int($var) || $var === 'count') continue;
-
-			if (is_array($val) && $val['count'] == 1)
-			{
-				$arr[$var] = $val[0];
-			}
-			else
-			{
-				if (is_array($val)) unset($val['count']);
-
-				$arr[$var] = $val;
-			}
-		}
-		return $arr;
-	}
-
-	/**
 	 * Read all accounts from sql or ldap
 	 *
 	 * @param boolean $from_ldap=true true: ldap, false: sql
@@ -589,12 +704,14 @@ class setup_cmd_ldap extends setup_cmd
 	 *
 	 * @param string $dn=null default $this->ldap_root_dn
 	 * @param string $pw=null default $this->ldap_root_pw
+	 * @param string $host=null default $this->ldap_host, hostname, ip or ldap-url
 	 * @throws egw_exception_wrong_userinput Can not connect to ldap ...
 	 */
-	private function connect($dn=null,$pw=null)
+	private function connect($dn=null,$pw=null,$host=null)
 	{
 		if (is_null($dn)) $dn = $this->ldap_root_dn;
 		if (is_null($pw)) $pw = $this->ldap_root_pw;
+		if (is_null($host)) $host = $this->ldap_host;
 
 		if (!$pw)	// ldap::ldapConnect use the current eGW's pw otherwise
 		{
@@ -605,14 +722,14 @@ class setup_cmd_ldap extends setup_cmd
 		$error_rep = error_reporting();
 		error_reporting($error_rep & ~E_WARNING);	// switch warnings of, in case they are on
 		ob_start();
-		$ds = $this->test_ldap->ldapConnect($this->ldap_host,$dn,$pw);
+		$ds = $this->test_ldap->ldapConnect($host,$dn,$pw);
 		ob_end_clean();
 		error_reporting($error_rep);
 
 		if (!$ds)
 		{
 			throw new egw_exception_wrong_userinput(lang('Can not connect to LDAP server on host %1 using DN %2!',
-				$this->ldap_host,$dn).($this->test_ldap->ds ? ' ('.ldap_error($this->test_ldap->ds).')' : ''));
+				$host,$dn).($this->test_ldap->ds ? ' ('.ldap_error($this->test_ldap->ds).')' : ''));
 		}
 		return lang('Successful connected to LDAP server on %1 using DN %2.',$this->ldap_host,$dn);
 	}
