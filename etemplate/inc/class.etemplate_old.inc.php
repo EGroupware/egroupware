@@ -2065,12 +2065,21 @@ class etemplate_old extends boetemplate
 				$sels += $cell['sel_options'];
 			}
 		}
+		$explode_needed = true;
 		if (($options = $this->sel_options[$name]) && is_array($options) ||
 			($options = self::get_array($this->sel_options, $name)) && is_array($options))
 		{
-			$sels += $options;
+			if(count($options) == 2 && $options['label'] && $options['title'])
+			{
+				// In too far - need to back up
+			}
+			else
+			{
+				$sels += $options;
+				$explode_needed = false;
+			}
 		}
-		else
+		if($explode_needed)
 		{
 			$name_parts = explode('[',str_replace(']','',$name));
 			if (count($name_parts))
