@@ -32,7 +32,7 @@ Prefix: /usr/share
 	%define cron cron
 	%define apache_user wwwrun
 	%define apache_group www
-	%define pear_dir \\/usr\\/share\\/php5\\/PEAR
+	%define pear_dir \\/usr\\/share\\/php5\\/PEAR:\\/etc\\/php5
 %else
 	%define php php
 	%define httpdconfd /etc/httpd/conf.d
