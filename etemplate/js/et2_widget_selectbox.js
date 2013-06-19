@@ -448,7 +448,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			_value = _value.split(',');
 		}
-		if(this.options.tags)
+		if(this.options.tags || this.options.search)
 		{
 			this.input.val(_value);
 			this.input.trigger("liszt:updated");
@@ -642,6 +642,7 @@ var et2_selectbox = et2_inputWidget.extend(
 				this._appendOptionElement(key, _options[key]);
 			}
 		}
+
 		// Sometimes value gets set before options
 		if(this.value || this.options.empty_label) this.set_value(this.value);
 	},
