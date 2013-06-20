@@ -115,7 +115,6 @@ class addressbook_ldap
 	var $schema2egw = array(
 		'posixaccount' => array(
 			'account_id'	=> 'uidnumber',
-//			'account_lid'	=> 'uid',
 			'id'    		=> 'uid',
 			'shadowexpire',
 		),
@@ -509,7 +508,7 @@ class addressbook_ldap
 		{
 			if(!$this->ldapServerInfo->supportsObjectClass($objectclass)) continue;
 
-			if(!in_array($objectclass, $oldObjectclasses))
+			if($objectclass != 'posixaccount' && !in_array($objectclass, $oldObjectclasses))
 			{
 				$ldapContact['objectClass'][] = $objectclass;
 			}
