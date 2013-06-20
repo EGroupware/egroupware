@@ -113,7 +113,6 @@ class addressbook_ads extends addressbook_ldap
 			'account_id'	=> 'objectsid',
 			'account_lid'	=> 'samaccountname',
 			'contact_uid'   => 'objectguid',
-			'cn' => 'cn',
 			'accountexpires', 'useraccountcontrol',	// needed to exclude deactivated or expired accounts
 		);
 		$this->schema2egw['user']['n_fn'] = 'displayname';	// leave CN used in DN untouched
