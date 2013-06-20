@@ -642,7 +642,7 @@ class addressbook_groupdav extends groupdav_handler
 	 *
 	 * @param array $contact
 	 * @param array|false $oldContact
-	 * @param int|boolean $list_id or false on error
+	 * @return int|boolean $list_id or false on error
 	 */
 	function save_group(array &$contact, $oldContact=null)
 	{
