@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -148,7 +148,13 @@ class setup_cmd_config extends setup_cmd
 				'email (Standard Maildomain should be set)' => 'email',
 			),'default'=>'standard'),
 		),
-		'--cyrus' => array(
+		'--imap' => array(
+			'imapAdminUsername',
+			'imapAdminPW',
+			array('name' => 'imapType','default' => 'defaultimap'),
+			array('name' => 'imapEnableCyrusAdmin','default' => 'yes'),
+		),
+		'--cyrus' => array(	// deprecated use --imap ,,cyrusimap
 			'imapAdminUsername',
 			'imapAdminPW',
 			array('name' => 'imapType','default' => 'cyrusimap'),
@@ -159,7 +165,11 @@ class setup_cmd_config extends setup_cmd
 			array('name' => 'imapSievePort','default' => 2000),
 			array('name' => 'imapEnableSieve','default' => 'yes'),	// null or yes
 		),
-		'--postfix' => array(
+		'--smtp' => array(
+			array('name' => 'editforwardingaddress','allowed' => array('yes',null)),
+			array('name' => 'smtpType','default' => 'defaultsmtp'),
+		),
+		'--postfix' => array(	// deprecated use --smtp ,postfixldap
 			array('name' => 'editforwardingaddress','allowed' => array('yes',null)),
 			array('name' => 'smtpType','default' => 'postfixldap'),
 		),
@@ -167,7 +177,7 @@ class setup_cmd_config extends setup_cmd
 			'smtp_server',array('name' => 'smtp_port','default' => 25),'smtp_auth_user','smtp_auth_passwd',''
 		),
 		'--account-auth' => array(
-			array('name' => 'account_repository','allowed' => array('sql','ldap'),'default'=>'sql'),
+			array('name' => 'account_repository','allowed' => array('sql','ldap','ads'),'default'=>'sql'),
 			array('name' => 'auth_type','allowed' => array('sql','ldap','mail','ads','http','sqlssl','nis','pam'),'default'=>'sql'),
 			array('name' => 'sql_encryption','allowed' => array('sha512_crypt','sha256_crypt','blowfish_crypt','md5_crypt','crypt','ssha','smd5','md5'),'default'=>'sha512_crypt'),
 			'check_save_password','allow_cookie_auth'),
@@ -179,6 +189,14 @@ class setup_cmd_config extends setup_cmd
 		'--ldap-group-context' => 'ldap_group_context',
 		'--allow-remote-admin' => 'allow_remote_admin',
 		'--install-id' => 'install_id',
+		'--ads-host' => 'ads_host',
+		'--ads-domain' => 'ads_domain',
+		'--ads-admin-user' => 'ads_domain_admin',	// eg. Administrator
+		'--ads-admin-pw' => 'ads_admin_pw',
+		'--ads-connection' => array(
+			array('name' => 'ads_connection', 'allowed' => array('ssl', 'tls'))
+		),
+		'--ads-context' => 'ads_context',
 	);
 
 	/**
@@ -273,7 +291,7 @@ class setup_cmd_config extends setup_cmd
 		}
 		$values[$name] = $value;
 
-		return in_array($arg,array('--mailserver','--smtpserver','--cyrus','--postfix','--sieve'));
+		return in_array($arg,array('--mailserver','--smtpserver','--imap','--cyrus','--smtp','--postfix','--sieve'));
 	}
 
 	/**
