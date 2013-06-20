@@ -57,9 +57,11 @@ $config = array(
 	'ldap_group_context' => 'ou=groups,$base',
 	'mailserver'    => '',
 	'smtpserver'    => 'localhost,25',
-	'postfix'       => '',	// see setup-cli.php --help config
-	'cyrus'         => '',
+	'smtp'          => '',	// see setup-cli.php --help config
+	'imap'          => '',
 	'sieve'         => '',
+	'postfix'       => '',	// deprecated use 'smtp'
+	'cyrus'         => '',	// deprecated use 'imap'
 	'install-update-app' => '',	// install or update a single (non-default) app
 	'webserver_user'=> 'apache',	// required to fix permissions
 );
@@ -312,7 +314,7 @@ if (!file_exists($config['header']) || filesize($config['header']) < 200)	// def
 	}
 	// create mailserver config (fmail requires at least minimal config given as default, otherwise fatal error)
 	$setup_mailserver = $setup_cli.' --config '.escapeshellarg($config['domain'].','.$config['config_user'].','.$config['config_passwd']);
-	foreach(array('account-auth','smtpserver','postfix','mailserver','cyrus','sieve') as $name)
+	foreach(array('account-auth','smtpserver','smtp','postfix','mailserver','imap','cyrus','sieve') as $name)
 	{
 		if (!empty($config[$name])) $setup_mailserver .= ' --'.$name.' '.escapeshellarg($config[$name]);
 	}
@@ -508,6 +510,7 @@ function usage($error=null)
 	echo "options and their defaults:\n";
 	foreach($config as $name => $default)
 	{
+		if (in_array($name, array('postfix','cyrus'))) continue;	// do NOT report deprecated options
 		if (in_array($name,array('config_passwd','db_pass','admin_passwd','ldap_root_pw')))
 		{
 			$default = '<16 char random string>';
