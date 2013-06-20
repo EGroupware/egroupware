@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package setup
- * @copyright (c) 2007-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -148,7 +148,13 @@ class setup_cmd_config extends setup_cmd
 				'email (Standard Maildomain should be set)' => 'email',
 			),'default'=>'standard'),
 		),
-		'--cyrus' => array(
+		'--imap' => array(
+			'imapAdminUsername',
+			'imapAdminPW',
+			array('name' => 'imapType','default' => 'defaultimap'),
+			array('name' => 'imapEnableCyrusAdmin','default' => 'yes'),
+		),
+		'--cyrus' => array(	// deprecated use --imap ,,cyrusimap
 			'imapAdminUsername',
 			'imapAdminPW',
 			array('name' => 'imapType','default' => 'cyrusimap'),
@@ -159,7 +165,11 @@ class setup_cmd_config extends setup_cmd
 			array('name' => 'imapSievePort','default' => 2000),
 			array('name' => 'imapEnableSieve','default' => 'yes'),	// null or yes
 		),
-		'--postfix' => array(
+		'--smtp' => array(
+			array('name' => 'editforwardingaddress','allowed' => array('yes',null)),
+			array('name' => 'smtpType','default' => 'defaultsmtp'),
+		),
+		'--postfix' => array(	// deprecated use --smtp ,postfixldap
 			array('name' => 'editforwardingaddress','allowed' => array('yes',null)),
 			array('name' => 'smtpType','default' => 'postfixldap'),
 		),
@@ -273,7 +283,7 @@ class setup_cmd_config extends setup_cmd
 		}
 		$values[$name] = $value;
 
-		return in_array($arg,array('--mailserver','--smtpserver','--cyrus','--postfix','--sieve'));
+		return in_array($arg,array('--mailserver','--smtpserver','--imap','--cyrus','--smtp','--postfix','--sieve'));
 	}
 
 	/**

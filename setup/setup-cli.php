@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @package setup
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006-9 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -498,10 +498,10 @@ function do_usage($what='')
 		echo '	--webserver-url '.lang('eg. /egroupware or http://domain.com/egroupware, default: %1',str_replace('/setup/setup-cli.php','',$_SERVER['PHP_SELF']))."\n";
 		echo '	--mailserver '.lang('host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]')."\n";
 		echo '	--smtpserver '.lang('host,[smtp port],[smtp user],[smtp password]')."\n";
-		echo '	--postfix '.lang('Postfix with LDAP: [yes(user edit forwarding)]')."\n";
-		echo '	--cyrus '.lang('Cyrus IMAP: Admin user,Password')."\n";
+		echo '	--smtp '.lang('MTA (with LDAP): [yes(user edit forwarding)],(defaultsmtp|postfix(ldap|dbmailuser)|emailadmin_smtp_(ldap|ads|mandriva|suse|sql))')."\n";
+		echo '	--imap '.lang('IMAP: Admin user,Password,(defaultimap|cyrusimap|emailadmin_dovecot)')."\n";
 		echo '	--sieve '.lang('Sieve: Host[,Port(2000)]')."\n";
-		echo '	--account-auth '.lang('account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]')."\n";
+		echo '	--account-auth '.lang('account repository{sql(default) | ldap},[authentication{sql | ldap | ads | mail | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]')."\n";
 		echo '	--ldap-host  --ldap-root-dn  --ldap-root-pw  --ldap-context  --ldap-group-context'."\n";
 	}
 	if (!$what)
