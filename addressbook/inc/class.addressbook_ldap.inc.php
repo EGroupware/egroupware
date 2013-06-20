@@ -705,15 +705,7 @@ class addressbook_ldap
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
-		#$order_by = explode(',',$order_by);
-		#$order_by = explode(' ',$order_by);
-		#$sort = $order_by[0];
-		#$order = $order_by[1];
-		#$query = $criteria;
-		#$fields = $only_keys ? ($only_keys === true ? $this->contacts_id : $only_keys) : '';
-		#$limit = $need_full_no_count ? 0 : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
-		#return parent::read($start,$limit,$fields,$query,$filter,$sort,$order);
-
+		error_log(__METHOD__."(".array2string($criteria).", ".array2string($only_keys).", '$order_by', ".array2string($extra_cols).", '$wildcard', '$empty', '$op', ".array2string($start).", ".array2string($filter).")");
 		if (is_array($filter['owner']))
 		{
 			if (count($filter['owner']) == 1)
@@ -769,7 +761,7 @@ class addressbook_ldap
 		// exclude expired accounts
 		//$shadowExpireNow = floor((time()+date('Z'))/86400);
 		//$objectFilter .= "(|(!(shadowExpire=*))(shadowExpire>=$shadowExpireNow))";
-		// shadowExpire>= does NOT work, as shadow schema only specifies intergerMatch and not integerOrderingMatch :-(
+		// shadowExpire>= does NOT work, as shadow schema only specifies integerMatch and not integerOrderingMatch :-(
 
 		$searchFilter = '';
 		if(is_array($criteria) && count($criteria) > 0)
@@ -979,9 +971,9 @@ class addressbook_ldap
 		$_attributes[] = 'creatorsName';
 		$_attributes[] = 'modifiersName';
 
-		//echo "<p>ldap_search($this->ds, '$_ldapContext', '$_filter', ".array2string($_attributes).", 0, $this->ldapLimit)</p>\n";
+		//error_log(__METHOD__."('$_ldapContext', '$_filter', ".array2string($_attributes).", $_addressbooktype)");
 
-		if($_addressbooktype == ADDRESSBOOK_ALL)
+		if($_addressbooktype == ADDRESSBOOK_ALL || $_ldapContext == $this->allContactsDN)
 		{
 			$result = ldap_search($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit);
 		}
@@ -990,6 +982,7 @@ class addressbook_ldap
 			$result = @ldap_list($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit);
 		}
 		if(!$result || !$entries = ldap_get_entries($this->ds, $result)) return array();
+		//error_log(__METHOD__."('$_ldapContext', '$_filter', ".array2string($_attributes).", $_addressbooktype) result of $entries[count]");
 
 		$this->total = $entries['count'];
 		foreach($entries as $i => $entry)

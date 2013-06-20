@@ -38,7 +38,7 @@ class addressbook_ads extends addressbook_ldap
 	 * Filter used for accounts addressbook
 	 * @var string
 	 */
-	var $accountsFilter = '(objectclass=user)';
+	var $accountsFilter = '(objectCategory=person)';
 
 	/**
 	 * Attribute used for DN
@@ -70,7 +70,6 @@ class addressbook_ads extends addressbook_ldap
 	 */
 	function __construct(array $ldap_config=null, $ds=null)
 	{
-		//$this->db_data_cols 	= $this->stock_contact_fields + $this->non_contact_fields;
 		$this->accountName 		= $GLOBALS['egw_info']['user']['account_lid'];
 
 		if ($ldap_config)
