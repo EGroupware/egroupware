@@ -83,6 +83,13 @@ class addressbook_ldap
 	var $dn_attribute='uid';
 
 	/**
+	 * Do NOT attempt to change DN (dn-attribute can NOT be part of schemas used in addressbook!)
+	 *
+	 * @var boolean
+	 */
+	var $never_change_dn = false;
+
+	/**
 	* @var int $total holds the total count of found rows
 	*/
 	var $total;
@@ -115,7 +122,6 @@ class addressbook_ldap
 	var $schema2egw = array(
 		'posixaccount' => array(
 			'account_id'	=> 'uidnumber',
-			'id'    		=> 'uid',
 			'shadowexpire',
 		),
 		'inetorgperson' => array(
@@ -453,7 +459,7 @@ class addressbook_ldap
 				error_log('Unknown owner');
 				return true;
 			}
-			$baseDN = 'cn='. ldap::quote($cn) .','.($data['owner'] < 0 ? $this->sharedContactsDN : $this->personalContactsDN);
+			$baseDN = 'cn='. $cn .','.($data['owner'] < 0 ? $this->sharedContactsDN : $this->personalContactsDN);
 		}
 		// only an admin or the user itself is allowed to change the data of an account
 		elseif ($data['account_id'] && ($GLOBALS['egw_info']['user']['apps']['admin'] ||
@@ -500,7 +506,7 @@ class addressbook_ldap
 
 		if(empty($contactUID))
 		{
-			$ldapContact[$this->contacts_id] = $this->data[$this->contacts_id] = $contactUID = md5($GLOBALS['egw']->common->randomstring(15));
+			$ldapContact[$this->dn_attribute] = $this->data[$this->contacts_id] = $contactUID = md5($GLOBALS['egw']->common->randomstring(15));
 		}
 		//error_log(__METHOD__."() contactUID='$contactUID', isUpdate=".array2string($isUpdate).", oldContactInfo=".array2string($oldContactInfo));
 		// add for all supported objectclasses the objectclass and it's attributes
@@ -579,7 +585,7 @@ class addressbook_ldap
 			}
 
 			// check if we need to rename the DN or need to recreate the contact
-			$newRDN = $this->dn_attribute.'='. ldap::quote($ldapContact[$this->dn_attribute]);
+			$newRDN = $this->dn_attribute.'='. $ldapContact[$this->dn_attribute];
 			$newDN = $newRDN .','. $baseDN;
 			if ($needRecreation)
 			{
@@ -611,8 +617,12 @@ class addressbook_ldap
 				}
 				$dn = $newDN;
 			}
+			if ($this->never_change_dn)
+			{
+				// do NOT change DN, set by addressbook_ads, as accounts can be stored in different containers
+			}
 			// try renaming entry if content of dn-attribute changed
-			if (strtolower($dn) != strtolower($newDN) || $ldapContact[$this->dn_attribute] != $oldContactInfo[$this->dn_attribute])
+			elseif (strtolower($dn) != strtolower($newDN) || $ldapContact[$this->dn_attribute] != $oldContactInfo[$this->dn_attribute][0])
 			{
 				if (@ldap_rename($this->ds, $dn, $newRDN, null, true))
 				{
@@ -635,7 +645,7 @@ class addressbook_ldap
 		}
 		else
 		{
-			$dn = $this->dn_attribute.'='. ldap::quote($ldapContact[$this->dn_attribute]) .','. $baseDN;
+			$dn = $this->dn_attribute.'='. $ldapContact[$this->dn_attribute] .','. $baseDN;
 			unset($ldapContact['entryuuid']);	// trying to write it, gives an error
 
 			if (!@ldap_add($this->ds, $dn, $ldapContact))
@@ -1129,7 +1139,7 @@ class addressbook_ldap
 	 */
 	function _error($line,$ds=null)
 	{
-		return ldap_error($ds ? $ds : $this->ds).': so_ldap: '.$line;
+		return ldap_error($ds ? $ds : $this->ds).': '.__CLASS__.': '.$line;
 	}
 
 	/**

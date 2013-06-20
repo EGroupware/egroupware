@@ -48,6 +48,15 @@ class addressbook_ads extends addressbook_ldap
 	var $dn_attribute='cn';
 
 	/**
+	 * Do NOT attempt to change DN (dn-attribute can NOT be part of schemas used in addressbook!)
+	 *
+	 * Set here to true, as accounts can be stored in different containers and CN is not used as n_fn (displayName is)
+	 *
+	 * @var boolean
+	 */
+	var $never_change_dn = true;
+
+	/**
 	 * Accounts ADS object
 	 *
 	 * @var accounts_ads
@@ -98,13 +107,16 @@ class addressbook_ads extends addressbook_ldap
 		$this->is_samba4 = $this->ldapServerInfo->serverType == SAMBA4_LDAPSERVER;
 
 		// AD seems to use user, instead of inetOrgPerson
+		unset($this->schema2egw['posixaccount']);
 		$this->schema2egw['user'] = $this->schema2egw['inetorgperson'];
 		$this->schema2egw['user'] += array(
 			'account_id'	=> 'objectsid',
 			'account_lid'	=> 'samaccountname',
 			'contact_uid'   => 'objectguid',
+			'cn' => 'cn',
 			'accountexpires', 'useraccountcontrol',	// needed to exclude deactivated or expired accounts
 		);
+		$this->schema2egw['user']['n_fn'] = 'displayname';	// leave CN used in DN untouched
 
 		foreach($this->schema2egw as $schema => $attributes)
 		{
