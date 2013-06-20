@@ -30,7 +30,7 @@
  * setup/setup-cli.php [--dry-run] --setup-cmd-ldap <domain>,<config-user>,<config-pw> sub_command=copy2ad \
  * 	ldap_base=dc=local ldap_root_dn=cn=admin,dc=local ldap_root_pw=secret ldap_host=localhost \
  * 	ads_domain=samba4.intern [ads_admin_user=Administrator] ads_admin_pw=secret ads_host=ad.samba4.intern [ads_connection=(ssl|tls)] \
- * 	attributes=@inetOrgPerson,{smtp:}proxyAddresses=mail,{smtp:}proxyAddresses=mailalias,{quota:}proxyAddresses=mailuserquota,{forward:}proxyaddresses=maildrop
+ * 	attributes=@inetOrgPerson,accountExpires=shadowExpire,{smtp:}proxyAddresses=mail,{smtp:}proxyAddresses=mailalias,{quota:}proxyAddresses=mailuserquota,{forward:}proxyaddresses=maildrop
  *
  * - copies from samba-tool clasicupgrade not copied inetOrgPerson attributes and mail attributes to AD
  */
@@ -333,6 +333,14 @@ class setup_cmd_ldap extends setup_cmd
 				if ($value)
 				{
 					$to = isset($rename[$attr]) ? $rename[$attr] : $attr;
+					// special handling for copying shadowExpires to accountExpires (not set or 0 is handled by classicupgrade!)
+					if ($attr == 'shadowexpire' && strtolower($to) == 'accountexpires')
+					{
+						if (is_null($utc_diff)) $utc_diff = date('Z');
+						$value = $value*24*3600+$utc_diff;	// ldap time to unixTime
+						$update['accountexpires'] = accounts_ads::convertUnixTimeToWindowsTime($value);
+						continue;
+					}
 					unset($prefix);
 					if ($to[0] == '{')	// eg. {smtp:}proxyAddresses=forwardTo
 					{

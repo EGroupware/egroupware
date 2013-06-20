@@ -103,6 +103,7 @@ class addressbook_ads extends addressbook_ldap
 			'account_id'	=> 'objectsid',
 			'account_lid'	=> 'samaccountname',
 			'contact_uid'   => 'objectguid',
+			'accountexpires', 'useraccountcontrol',	// needed to exclude deactivated or expired accounts
 		);
 
 		foreach($this->schema2egw as $schema => $attributes)
@@ -181,6 +182,9 @@ class addressbook_ads extends addressbook_ldap
 
 		// ignore system accounts
 		if ($contact['account_id'] < accounts_ads::MIN_ACCOUNT_ID) return false;
+
+		// ignore deactivated or expired accounts
+		if (!$this->accounts_ads->user_active($data)) return false;
 
 		$this->_inetorgperson2egw($contact, $data);
 	}
