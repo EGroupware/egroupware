@@ -452,7 +452,12 @@ class egw_db
 				$this->Link_ID =& $GLOBALS['egw']->ADOdb;
 			}
 		}
-		if (!$this->Link_ID->isConnected()) $this->Link_ID->Connect();
+		if (!$this->Link_ID->isConnected() && !$this->Link_ID->Connect())
+		{
+			$Host = preg_replace('/password=[^ ]+/','password=$Password',$this->Host);	// eg. postgres dsn contains password
+			$this->halt("ADOdb::$connect($Host, $this->User, \$Password, $this->Database) reconnect failed.");
+			return null;	// in case error-reporting = 'no'
+		}
 
 		if ($new_connection)
 		{
