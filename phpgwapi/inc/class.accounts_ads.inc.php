@@ -783,8 +783,8 @@ class accounts_ads
 	 */
 	function search($param)
 	{
-		//echo "<p>accounts_ldap::search(".print_r($param,true)."): ".microtime()."</p>\n";
-		$account_search = array();//&$this->cache['account_search'];
+		//error_log(__METHOD__.'('.array2string($param).')');
+		$account_search = &$this->cache['account_search'];
 
 		// check if the query is cached
 		$serial = serialize($param);
@@ -892,9 +892,11 @@ class accounts_ads
 		if(is_numeric($start) && is_numeric($offset))
 		{
 			$account_search[$serial]['data'] = array_slice($sortedAccounts, $start, $offset);
-			$account_search[$serial]['total'] = $this->total = count($account_search[$serial]['data']);
+			$account_search[$serial]['total'] = $this->total;
+			//error_log(__METHOD__.'('.array2string($param).") returning $offset/$this->total entries from $start ".array2string($account_search[$serial]['data']));
 			return $account_search[$serial]['data'];
 		}
+		//error_log(__METHOD__.'('.array2string($param).') returning all '.array2string($sortedAccounts));
 		return $sortedAccounts;
 	}
 
