@@ -705,7 +705,7 @@ class addressbook_ldap
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
-		error_log(__METHOD__."(".array2string($criteria).", ".array2string($only_keys).", '$order_by', ".array2string($extra_cols).", '$wildcard', '$empty', '$op', ".array2string($start).", ".array2string($filter).")");
+		//error_log(__METHOD__."(".array2string($criteria).", ".array2string($only_keys).", '$order_by', ".array2string($extra_cols).", '$wildcard', '$empty', '$op', ".array2string($start).", ".array2string($filter).")");
 		if (is_array($filter['owner']))
 		{
 			if (count($filter['owner']) == 1)
@@ -1041,19 +1041,6 @@ class addressbook_ldap
 				$contact['owner'] = 0;
 				$contact['private'] = 0;
 			}
-			#########################################
-			## this piece of code could never have been working, as the call to $GLOBALS['egw']->accounts->name2id is wrong
-			#########################################
-			#foreach(array(
-			#	'creatorsname' => 'creator',
-			#	'modifiersname' => 'modifier',
-			#) as $ldapFieldName => $egwFieldName)
-			#{
-			#	if (!empty($entry[$ldapFieldName][0]) && preg_match('/^cn=([^,]+),/',$entry[$ldapFieldName][0],$matches))
-			#	{
-			#		$contact[$egwFieldName] = $GLOBALS['egw']->accounts->name2id($matches[1],'u');
-			#	}
-			#}
 			foreach(array(
 				'createtimestamp' => 'created',
 				'modifytimestamp' => 'modified',
