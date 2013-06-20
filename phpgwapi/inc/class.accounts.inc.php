@@ -544,6 +544,8 @@ class accounts
 	/**
 	 * test if an account is expired
 	 *
+	 * Can be used static if array with user-data is supplied
+	 *
 	 * @param array $data=null array with account data, not specifying the account is depricated!!!
 	 * @return boolean true=expired (no more login possible), false otherwise
 	 */
@@ -559,6 +561,8 @@ class accounts
 	/**
 	 * Test if an account is active - NOT deactivated or expired
 	 *
+	 * Can be used static if array with user-data is supplied
+	 *
 	 * @param int|array $data account_id or array with account-data
 	 * @return boolean false if account does not exist, is expired or decativated, true otherwise
 	 */
@@ -566,7 +570,7 @@ class accounts
 	{
 		if (!is_array($data)) $data = $this->read($data);
 
-		return $data && !($this->is_expired($data) || $data['account_status'] != 'A');
+		return $data && !(self::is_expired($data) || $data['account_status'] != 'A');
 	}
 
 	/**

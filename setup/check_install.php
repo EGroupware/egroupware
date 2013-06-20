@@ -400,7 +400,7 @@ function pear_check($package,$args)
 		}
 		if ($pear_available && $package)
 		{
-			$file = str_replace('_','/',$package).'.php';
+			$file = str_replace('_','/',$package == 'Mail_Mime' ? 'Mail_mime' : $package).'.php';
 
 			$available = @include_once($file);
 

@@ -486,9 +486,28 @@ class accounts_ads
 			'account_modified' => !isset($data['whenchanged'][0]) ? null :
 				self::_when2ts($data['whenchanged'][0]),
 		);
+		// expired accounts are NOT active
+		if ($user['account_expires'] !== -1 && $user['account_expires'] < time())
+		{
+			$user['account_status'] = false;
+		}
 		$user['person_id'] = $user['account_guid'];	// id of contact
 		//error_log(__METHOD__."(".array2string($data).") returning ".array2string($user));
 		return $user;
+	}
+
+	/**
+	 * Check if user is active
+	 *
+	 * @param array $data values for attributes 'useraccountcontrol' and 'accountexpires'
+	 * @return boolean true if user is active, false otherwise
+	 */
+	public function user_active(array $data)
+	{
+		$user = $this->_ldap2user($data);
+		$active = accounts::is_active($user);
+		//error_log(__METHOD__."(cn={$data['cn'][0]}, useraccountcontrol={$data['useraccountcontrol'][0]}, accountexpires={$data['accountexpires'][0]}) user=".array2string($user)." returning ".array2string($active));
+		return $active;
 	}
 
 	/**
