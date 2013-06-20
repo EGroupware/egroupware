@@ -1,3 +1,17 @@
+egroupware-epl (11.1.20130620-1) hardy; urgency=low
+
+  * Addressbook/LDAP: recreation of contact (eg. because of missing objectclass) failed and lead to deleted contact or account
+  * Setup: typo caused admin account creation to fail, if "delete all users and acl" was checked
+  * Setup/LDAP/ADS: script to change uidNumber and gidNumber in LDAP to match relative id (last part of SID) in preparation of Samba4 migration and using ActiveDirectory
+  * Setup/LDAP/ADS: script to copy from samba-tool classicupgrade not copied inetOrgPerson and mail-server attributes
+  * Addressbook/ActiveDirectory: accounts addressbook was empty, if not explicit context was set
+  * Admin/ActiveDirectory: fixed only first N accounts where shown and turned accidently switched off caching in session on again
+  * Setup: allow to enable account in AD via setup-cli.php and renamed --postfix and --cyrus options to more generic names --smtp and --imap
+  * API: if re-connect to database fails for an existing session, stop execution with an exception, as otherwise eg. preferences can get lost
+  * API: ancient APC (3.1.3) in Debian 6/Squezze has size in MB without a unit, this caused APC not to be used because of to small cache size
+
+ -- Ralf Becker <rb@stylite.de>  Thu, 20 Jun 2013 19:27:59 +0200
+
 egroupware-epl (11.1.20130613-1) hardy; urgency=low
 
   * API/Addressbook/EMailAdmin: full support for active directory as account storage, tested with Samba4 and win2008r2
