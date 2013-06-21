@@ -506,10 +506,13 @@ class calendar_uiforms extends calendar_ui
 			}
 
 			// Copy alarms
-			foreach($event['alarm'] as $n => &$alarm)
+			if (is_array($event['alarm']))
 			{
-				unset($alarm['id']);
-				unset($alarm['cal_id']);
+				foreach($event['alarm'] as $n => &$alarm)
+				{
+					unset($alarm['id']);
+					unset($alarm['cal_id']);
+				}
 			}
 
 			// Get links to be copied
