@@ -626,7 +626,18 @@ class addressbook_groupdav extends groupdav_handler
 
 		if (!isset($contact['etag']))
 		{
-			$contact = $this->bo->read($save_ok);
+			if ($is_group)
+			{
+				if (($contact = $this->bo->read_list($save_ok)))
+				{
+					$contact = egw_db::strip_array_keys($contact, 'list_');
+				}
+			}
+			else
+			{
+				$contact = $this->bo->read($save_ok);
+			}
+			//error_log(__METHOD__."(, $id, '$user') read(_list)($save_ok) returned ".array2string($contact));
 		}
 
 		// send evtl. necessary respose headers: Location, etag, ...
@@ -699,7 +710,6 @@ class addressbook_groupdav extends groupdav_handler
 				if ($to_add_ids) $this->bo->add2list($to_add_ids, $list_id, array());
 				if ($to_delete_ids) $this->bo->remove_from_list($to_delete_ids, $list_id);
 			}
-			$list_id = $data['list_carddav_name'];
 		}
 		if ($this->debug > 1) error_log(__METHOD__.'('.array2string($contact).', '.array2string($oldContact).') on return contact='.array2string($data).' returning '.array2string($list_id));
  		$contact = $data;
