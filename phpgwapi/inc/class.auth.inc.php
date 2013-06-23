@@ -679,6 +679,7 @@ interface auth_backend
 	 * @param string $old_passwd must be cleartext
 	 * @param string $new_passwd must be cleartext
 	 * @param int $account_id account id of user whose passwd should be changed
+	 * @throws Exception to give a verbose error, why changing password failed
 	 * @return boolean true if password successful changed, false otherwise
 	 */
 	function change_password($old_passwd, $new_passwd, $account_id=0);

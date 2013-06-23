@@ -63,8 +63,9 @@ class uipassword
 				//_debug_array($bofelamimail->ogServer);
 				$smtpClassName = get_class($bofelamimail->ogServer);
 			}
-			$GLOBALS['egw']->template->set_var('sql_message',($smtpClassName!='emailadmin_smtp_sql'?lang('note: This feature does *not* change your email password. This will '
-				. 'need to be done manually.'):''));
+			$GLOBALS['egw']->template->set_var('sql_message',
+				$smtpClassName != 'defaultsmtp' ? '' :
+					lang('note: This feature does *not* change your email password. This will need to be done manually.'));
 		}
 
 		if($_POST['change'])
@@ -102,19 +103,20 @@ class uipassword
 				$errors[] = $error_msg;
 			}
 
-			if(is_array($errors))
-			{
-				common::egw_header();
-				echo parse_navbar();
-				$GLOBALS['egw']->template->set_var('messages',common::error_list($errors));
-				$GLOBALS['egw']->template->pfp('out','form');
-				common::egw_exit(True);
+			// allow auth backends to throw exceptions and display there message
+			try {
+				$passwd_changed = $this->bo->changepass($o_passwd, $n_passwd);
+			}
+			catch (Exception $e) {
+				$errors[] = $e->getMessage();
 			}
 
-			$passwd_changed = $this->bo->changepass($o_passwd, $n_passwd);
 			if(!$passwd_changed)
 			{
-				$errors[] = lang('Failed to change password.  Please contact your administrator.');
+				if (!$errors)	// if we have no specific error, add general message
+				{
+					$errors[] = lang('Failed to change password.  Please contact your administrator.');
+				}
 				common::egw_header();
 				echo parse_navbar();
 				$GLOBALS['egw']->template->set_var('messages',common::error_list($errors));
