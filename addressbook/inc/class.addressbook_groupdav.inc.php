@@ -561,7 +561,7 @@ class addressbook_groupdav extends groupdav_handler
 
 		if (!isset($contact['etag']))
 		{
-			$contact = $this->read($save_ok,$options['path']);
+			$contact = $this->bo->read($save_ok);
 		}
 
 		// send evtl. necessary respose headers: Location, etag, ...
