@@ -128,7 +128,7 @@ class accounts_ldap
 		// enable the caching in the session, done by the accounts class extending this class.
 		$this->use_session_cache = true;
 
-		$this->ldap = new ldap();
+		$this->ldap = new ldap(true);
 		$this->ds = $this->ldap->ldapConnect($this->frontend->config['ldap_host'],
 			$this->frontend->config['ldap_root_dn'],$this->frontend->config['ldap_root_pw']);
 

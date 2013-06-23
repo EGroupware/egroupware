@@ -1005,15 +1005,15 @@ class setup
 					$GLOBALS['egw_info']['server'][$row['config_name']] = $config[$row['config_name']] = $row['config_value'];
 				}
 			}
-			$this->accounts = new accounts($config);
-			if (!isset($GLOBALS['egw']->accounts)) $GLOBALS['egw']->accounts = $this->accounts;
-			accounts::cache_invalidate();	// the cache is shared for all instances of the class
-
-			if($this->accounts->backend instanceof accounts_ldap && !$this->accounts->backend->ds)
-			{
-				printf("<b>Error: Error connecting to LDAP server %s!</b><br>",$config['ldap_host']);
+			try {
+				$this->accounts = new accounts($config);
+			}
+			catch (Exception $e) {
+				echo "<p><b>".$e->getMessage()."</b></p>\n";
 				return false;
 			}
+			if (!isset($GLOBALS['egw']->accounts)) $GLOBALS['egw']->accounts = $this->accounts;
+			accounts::cache_invalidate();	// the cache is shared for all instances of the class
 		}
 		return true;
 	}
