@@ -102,6 +102,7 @@ class accounts_ads
 	 * Constructor
 	 *
 	 * @param accounts $frontend reference to the frontend class, to be able to call it's methods if needed
+	 * @throws adLDAPException
 	 * @return accounts_ldap
 	 */
 	function __construct(accounts $frontend)
