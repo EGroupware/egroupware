@@ -99,6 +99,7 @@ class auth_ads implements auth_backend
 	 * @param string $new_passwd must be cleartext
 	 * @param int $account_id account id of user whose passwd should be changed
 	 * @return boolean true if password successful changed, false otherwise
+	 * @throws egw_exception_wrong_userinput
 	 */
 	function change_password($old_passwd, $new_passwd, $_account_id=0)
 	{
@@ -124,6 +125,20 @@ class auth_ads implements auth_backend
 			//error_log(__METHOD__."() old password '$old_passwd' for '$username' is wrong!");
 			return false;
 		}
-		return $adldap->user()->password($username, $new_passwd);
+		try {
+			return $adldap->user()->password($username, $new_passwd);
+		}
+		catch (Exception $e) {
+			// as we cant (todo) detect what the problem is, we do a password strength check and throw it's message, if it fails
+			if (($error = auth::crackcheck($new_passwd)))
+			{
+				throw new egw_exception_wrong_userinput($error);
+			}
+			else
+			{
+				throw new egw_exception(lang('Failed to change password.  Please contact your administrator.').' ('.$e->getMessage().')');
+			}
+		}
+		return false;
 	}
 }
