@@ -384,7 +384,8 @@ class idots_framework extends egw_framework
 		$tmpl->set_var('website_title', $GLOBALS['egw_info']['server']['site_title']);
 		$tmpl->set_var('template_set',$this->template);
 
-		if (substr($GLOBALS['egw_info']['server']['login_logo_file'],0,4) == 'http')
+		if (substr($GLOBALS['egw_info']['server']['login_logo_file'], 0, 4) == 'http' ||
+			strpos($GLOBALS['egw_info']['server']['login_logo_file'], '//') !== false)
 		{
 			$var['logo_file'] = $GLOBALS['egw_info']['server']['login_logo_file'];
 		}
