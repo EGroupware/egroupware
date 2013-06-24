@@ -1082,13 +1082,18 @@ class etemplate_widget_nextmatch_customfilter extends etemplate_widget_transform
 	public function beforeSendToClient($cname)
 	{
 		switch($this->attrs['type'])
-                {
-                        case "link-entry":
+		{
+			case "link-entry":
 				self::$transformation['type'] = $this->attrs['type'] = 'nextmatch-entryheader';
-                                break;
-                        default:
+				break;
+			default:
+				list($type, $subtype) = explode('-',$this->attrs['type'],2);
+				if($type == 'select')
+				{
+					$this->attrs['type'] = 'nextmatch-filterheader';
+				}
 				self::$transformation['type'] = $this->attrs['type'];
-                }
+		}
 		$form_name = self::form_name($cname, $this->id, $expand);
 
 		// Don't need simple onchanges, it's ajax
