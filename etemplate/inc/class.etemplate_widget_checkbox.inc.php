@@ -61,8 +61,8 @@ class etemplate_widget_checkbox extends etemplate_widget
 			// defaults for set and unset values
 			if (!$this->attrs['set_val'] && !$this->attrs['unset_val'])
 			{
-				$set_val = 'true';
-				$unset_val = 'false';
+				$set_val = true;
+				$unset_val = false;
 			}
 			else
 			{
@@ -91,6 +91,11 @@ class etemplate_widget_checkbox extends etemplate_widget
 				if ($multiple)
 				{
 					if (!isset($valid)) $valid = array();
+				}
+				elseif ($value === 'true')
+				{
+					// 'true' != true
+					$valid = $set_val;
 				}
 				else
 				{
