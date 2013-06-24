@@ -343,7 +343,10 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 				}
 
 				// Create the element
-				var widget = this.createElementFromNode(node, nodeName);
+				if(!cell.disabled)
+				{
+					var widget = this.createElementFromNode(node, nodeName);
+				}
 
 				// Fill all cells the widget is spanning
 				for (var i = 0; i < span && x < cells[y].length; i++, x++)
