@@ -965,6 +965,7 @@ class importexport_definitions_ui
 		}
 		else
 		{
+			$content = array();
 			$etpl = new etemplate(self::_appname.'.import_definition');
 			return $etpl->exec(self::_appname.'.importexport_definitions_ui.import_definition',$content,array(),$readonlys,$preserv);
 		}
