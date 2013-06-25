@@ -7,7 +7,7 @@
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2010-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2010-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -69,6 +69,10 @@ class groupdav_hooks
 			$class_name = $app.'_groupdav';
 			if (class_exists($class_name, true))
 			{
+				$settings[] = array(
+					'type'  => 'section',
+					'title' => $app,
+				);
 				$settings += call_user_func(array($class_name,'get_settings'), $hook_data);
 			}
 		}
