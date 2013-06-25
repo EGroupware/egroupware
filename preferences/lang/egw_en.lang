@@ -13,6 +13,7 @@ automatically start with this font	preferences	en	Automatically start with this 
 automatically start with this font size	preferences	en	Automatically start with this font size
 br	preferences	en	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	en	Change a user password by passing the old and new passwords.  Returns TRUE on success, FALSE on failure.
+change password	preferences	en	Change password
 change your password	preferences	en	Change password
 change your profile	preferences	en	Change profile
 change your settings	preferences	en	Change settings

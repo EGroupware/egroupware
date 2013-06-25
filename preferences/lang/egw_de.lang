@@ -13,6 +13,7 @@ automatically start with this font	preferences	de	Startet automatisch mit dieser
 automatically start with this font size	preferences	de	Startet automatisch mit dieser Schriftgröße
 br	preferences	de	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	de	Ändern Sie Ihr Passwort, indem Sie Ihr altes und neues Passwort angeben. Es wird TRUE zurückgegeben für eine erfolgreiche Änderung und FALSE wenn es nicht erfolgreich war.
+change password	preferences	de	Passwort ändern
 change your password	preferences	de	Passwort ändern
 change your profile	preferences	de	Profil ändern
 change your settings	preferences	de	Einstellungen ändern

@@ -30,6 +30,10 @@
 			'set_group_managers' => True
 		);
 
+		/**
+		 * Instance of boaccounts
+		 * @var boaccounts
+		 */
 		var $bo;
 		var $nextmatchs;
 		var $apps_with_acl = array(
@@ -51,7 +55,7 @@
 			'timesheet'   => True
 		);
 
-		function uiaccounts()
+		function __construct()
 		{
 			$this->bo =& CreateObject('admin.boaccounts');
 			$this->nextmatchs =& CreateObject('phpgwapi.nextmatchs');
@@ -131,7 +135,7 @@
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
 			$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['admin']['title'].' - '.
 				lang('User groups');
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 
 			$p =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$p->set_file(
@@ -333,7 +337,7 @@
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
 			$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['admin']['title'].' - '.
 				lang('User accounts');
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 
 			$p =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 
@@ -370,7 +374,7 @@
 			$uiaccountsel =& CreateObject('phpgwapi.uiaccountsel');
 			$p->set_var(array(
 				'left_next_matchs'   => $this->nextmatchs->left('/index.php',$start,$total,$link_data),
-				'lang_showing' => ($_REQUEST['group_id'] ? $GLOBALS['egw']->common->grab_owner_name($_REQUEST['group_id']).': ' : '').
+				'lang_showing' => ($_REQUEST['group_id'] ? common::grab_owner_name($_REQUEST['group_id']).': ' : '').
 					($GLOBALS['query'] ? lang("Search %1 '%2'",lang($uiaccountsel->query_types[$_REQUEST['query_type']]),
 					html::htmlspecialchars($GLOBALS['query'])).': ' : '')
 					.$this->nextmatchs->show_hits($total,$start),
@@ -458,9 +462,9 @@
 						$account['account_status'] = '<font color="red">' . lang('Disabled') . '</font>';
 					}
 					if (isset($account['account_created']))
-						$account['account_status'].= '<br>'.$GLOBALS['egw']->common->show_date($account['account_created'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
+						$account['account_status'].= '<br>'.common::show_date($account['account_created'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
 					if (isset($account['account_modified']))
-						$account['account_status'].= '<br>'.$GLOBALS['egw']->common->show_date($account['account_modified'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
+						$account['account_status'].= '<br>'.common::show_date($account['account_modified'],$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
 
 
 					$p->set_var($account);
@@ -529,7 +533,7 @@
 				if(is_array($errors))
 				{
 					$this->create_edit_group($group_info,$errors);
-					$GLOBALS['egw']->common->egw_exit();
+					common::egw_exit();
 				}
 				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
 			}
@@ -547,61 +551,7 @@
 
 		function add_user()
 		{
-			if ($GLOBALS['egw']->acl->check('account_access',4,'admin'))
-			{
-				$this->list_users();
-				return;
-			}
-
-			if($_POST['submit'])
-			{
-				if(!($email = $_POST['account_email']))
-				{
-					$email = $GLOBALS['egw']->common->email_address($_POST['account_firstname'],$_POST['account_lastname'],$_POST['account_lid']);
-				}
-				$userData = array(
-					'account_type'          => 'u',
-					'account_lid'           => $_POST['account_lid'],
-					'account_firstname'     => $_POST['account_firstname'],
-					'account_lastname'      => $_POST['account_lastname'],
-					'account_passwd'        => $_POST['account_passwd'],
-					'status'                => ($_POST['account_status'] ? 'A' : ''),
-					'account_status'        => ($_POST['account_status'] ? 'A' : ''),
-					'old_loginid'           => ($_GET['old_loginid']?rawurldecode($_GET['old_loginid']):''),
-					'account_id'            => ($_GET['account_id']?$_GET['account_id']:0),
-					'account_primary_group' => $_POST['account_primary_group'],
-					'account_passwd_2'      => $_POST['account_passwd_2'],
-					'account_groups'        => $_POST['account_groups'],
-					'anonymous'             => $_POST['anonymous'],
-					'changepassword'        => $_POST['changepassword'],
-					'mustchangepassword'        => $_POST['mustchangepassword'],
-					'account_permissions'   => $_POST['account_permissions'],
-					'homedirectory'         => $_POST['homedirectory'],
-					'loginshell'            => $_POST['loginshell'],
-					'account_expires_never' => $_POST['never_expires'],
-					'account_email'         => $email
-					/* 'file_space' => $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'] */
-				);
-				if ($userData['mustchangpassword']) $userData['account_lastpwd_change']=0;
-				/* when does the account expire */
-				if ($_POST['expires'] !== '' && !$_POST['never_expires'])
-				{
-					$jscal =& CreateObject('phpgwapi.jscalendar',False);
-					$userData += $jscal->input2date($_POST['expires'],False,'account_expires_day','account_expires_month','account_expires_year');
-				}
-
-				$errors = $this->bo->add_user($userData);
-				if(is_array($errors))
-				{
-					$this->create_edit_user(0,$userData,$errors);
-					$GLOBALS['egw']->common->egw_exit();
-				}
-				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
-			}
-			else
-			{
-				$this->create_edit_user(0);
-			}
+			return $this->edit_user('', '', 4);
 		}
 
 		function delete_group()
@@ -618,7 +568,7 @@
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
 
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 
 			$p =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$p->set_file(
@@ -647,7 +597,7 @@
 							'menuaction' => 'admin.uiaccounts.edit_user',
 							'account_id' => $id
 						)
-					) . '">' . $GLOBALS['egw']->common->grab_owner_name($id) . '</a><br>';
+					) . '">' . common::grab_owner_name($id) . '</a><br>';
 				}
 				$p->set_var('message_display',$user_list);
 				$p->parse('messages','message_row',True);
@@ -695,7 +645,7 @@
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 
 			$t =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$t->set_file(
@@ -767,7 +717,7 @@
 				if(is_array($errors))
 				{
 					$this->create_edit_group($group_info,$errors);
-					$GLOBALS['egw']->common->egw_exit();
+					common::egw_exit();
 				}
 				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
 			}
@@ -838,9 +788,9 @@
 			//NDEE
 		}
 
-		function edit_user($cd='',$account_id='')
+		function edit_user($cd='',$account_id='', $required_account_access=16)
 		{
-			if($GLOBALS['egw']->acl->check('account_access',16,'admin'))
+			if($GLOBALS['egw']->acl->check('account_access',$required_account_access,'admin') || isset($_POST['cancel']))
 			{
 				$this->list_users();
 				return False;
@@ -850,9 +800,10 @@
 			{
 				if(!($email = $_POST['account_email']))
 				{
-					$email = $GLOBALS['egw']->common->email_address($_POST['account_firstname'],$_POST['account_lastname'],$_POST['account_lid']);
+					$email = common::email_address($_POST['account_firstname'],$_POST['account_lastname'],$_POST['account_lid']);
 				}
 				$userData = array(
+					'account_type'          => 'u',
 					'account_lid'           => $_POST['account_lid'],
 					'account_firstname'     => $_POST['account_firstname'],
 					'account_lastname'      => $_POST['account_lastname'],
@@ -894,10 +845,10 @@
 				}
 				if($_POST['expires'] !== '' && !$_POST['never_expires'])
 				{
-					$jscal =& CreateObject('phpgwapi.jscalendar',False);
+					$jscal = new jscalendar(False);
 					$userData += $jscal->input2date($_POST['expires'],False,'account_expires_day','account_expires_month','account_expires_year');
 				}
-				$errors = $this->bo->edit_user($userData);
+				$errors = $this->bo->edit_user($userData, $required_account_access);
 
 				if(!@is_array($errors))
 				{
@@ -939,12 +890,12 @@
 
 				// todo
 				// not needed if i use the same file for new users too
-				if(!$account_id)
+				/*if(!$account_id)
 				{
 					$this->list_users();
 					return False;
 				}
-				else
+				else*/
 				{
 					$this->create_edit_user($account_id);
 				}
@@ -960,7 +911,7 @@
 			}
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 
 			$t =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$t->set_unknowns('remove');
@@ -1019,14 +970,14 @@
 			{
 				$var['account_status'] = '<b>' . lang('Disabled') . '</b>';
 			}
-			if (isset($userData['account_created'])) $var['account_status'].= '<br>'.lang('Created').': '.$GLOBALS['egw']->common->show_date($userData['account_created']);
-			if (isset($userData['account_modified'])) $var['account_status'].= '<br>'.lang('Modified').': '.$GLOBALS['egw']->common->show_date($userData['account_modified']);
+			if (isset($userData['account_created'])) $var['account_status'].= '<br>'.lang('Created').': '.common::show_date($userData['account_created']);
+			if (isset($userData['account_modified'])) $var['account_status'].= '<br>'.lang('Modified').': '.common::show_date($userData['account_modified']);
 
 
 			// Last login time
 			if ($userData['lastlogin'])
 			{
-				$var['account_lastlogin'] = $GLOBALS['egw']->common->show_date($userData['lastlogin']);
+				$var['account_lastlogin'] = common::show_date($userData['lastlogin']);
 			}
 			else
 			{
@@ -1046,7 +997,7 @@
 			// Account expires
 			if ($userData['expires'] != -1)
 			{
-				$var['input_expires'] = $GLOBALS['egw']->common->show_date($userData['expires']);
+				$var['input_expires'] = common::show_date($userData['expires']);
 			}
 			else
 			{
@@ -1169,7 +1120,7 @@
 		{
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 
 			$p =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$p->set_file(Array('edit' => 'group_form.tpl'));
@@ -1188,7 +1139,7 @@
 				'lang_group_name'   => lang('group name'),
 				'group_name_value'  => $group_info['account_name'],
 				'lang_include_user' => lang('Select users for inclusion'),
-				'error'             => (!$_errors?'':'<center>'.$GLOBALS['egw']->common->error_list($_errors).'</center>'),
+				'error'             => (!$_errors?'':'<center>'.common::error_list($_errors).'</center>'),
 				'lang_permissions'  => lang('Permissions this group has')
 			);
 			$p->set_var($var);
@@ -1265,7 +1216,7 @@
 					. '<td><input type="checkbox" name="account_apps['
 					. $perm_display[$i][0] . ']" value="True"'.($group_info['account_apps'][$app]?' checked':'').'> '
 					. ($acl_action?'<a href="'.$acl_action.'"'.$options
-					. '><img src="'.$GLOBALS['egw']->common->image('phpgwapi','edit').'" border="0" hspace="3" align="absmiddle" title="'
+					. '><img src="'.common::image('phpgwapi','edit').'" border="0" hspace="3" align="absmiddle" title="'
 					. lang('Grant Access').': '.lang("edit group ACL's").'"></a>':'&nbsp;').'</td>'.($i & 1?'</tr>':'')."\n";
 			}
 			if($i & 1)
@@ -1330,18 +1281,16 @@
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
 
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 
 			$t =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$t->set_unknowns('remove');
 
-			if ($GLOBALS['egw_info']['server']['ldap_extra_attributes'] && ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap'))
+			$t->set_file(array('account' => 'account_form.tpl'));
+			$t->set_block('account', 'ldap_extra');
+			if (!$GLOBALS['egw_info']['server']['ldap_extra_attributes'] || $GLOBALS['egw_info']['server']['account_repository'] != 'ldap')
 			{
-				$t->set_file(array('account' => 'account_form_ldap.tpl'));
-			}
-			else
-			{
-				$t->set_file(array('account' => 'account_form.tpl'));
+				$t->set_var('ldap_extra', '');
 			}
 			$t->set_block('account','form','form');
 			$t->set_block('account','form_passwordinfo','form_passwordinfo');
@@ -1356,16 +1305,13 @@
 			{
 				$userData = Array();
 				$userData=$_userData;
-//				$userData['firstname'] = $userData['account_firstname'];
-//				$userData['lastname']  = $userData['account_lastname'];
 				@reset($userData['account_groups']);
 				while (list($key, $value) = @each($userData['account_groups']))
 				{
 					$userGroups[$key]['account_id'] = $value;
 				}
 
-				$account =& CreateObject('phpgwapi.accounts');
-				$allGroups = $account->get_list('groups');
+				$allGroups = $GLOBALS['egw']->accounts->get_list('groups');
 			}
 			elseif(is_string($_userData) && $_userData=='')
 			{
@@ -1388,7 +1334,6 @@
 				}
 				else
 				{
-					$account =& CreateObject('phpgwapi.accounts');
 					$userData = Array();
 					$userData['status'] = 'A';
 					$userGroups = Array();
@@ -1407,7 +1352,7 @@
 
 			$var = Array(
 				'form_action'    		=> $GLOBALS['egw']->link('/index.php',$page_params),
-				'error_messages' 		=> (!$_errors?'':'<center>'.$GLOBALS['egw']->common->error_list($_errors).'</center>'),
+				'error_messages' 		=> (!$_errors?'':'<div style="color: red; font-style: italics">'.common::error_list($_errors).'</div>'),
 				'th_bg'          		=> $GLOBALS['egw_info']['theme']['th_bg'],
 				'tr_color1'      		=> $GLOBALS['egw_info']['theme']['row_on'],
 				'tr_color2'      		=> $GLOBALS['egw_info']['theme']['row_off'],
@@ -1427,6 +1372,8 @@
 				'lang_mustchangepassword'=> lang('Must change password upon next login'),
 				'lang_button'    		=> ($_account_id?lang('Save'):lang('Add')),
 				'lang_passwds_unequal'  => lang('The two passwords are not the same'),
+				'lang_cancel'           => lang('Cancel'),
+				'cancel_action'         => "document.location='".egw::link('/index.php', array('menuaction' => 'admin.uiaccounts.list_users'))."';",
 			/* 'lang_file_space' 		=> lang('File Space') */
 			);
 			$t->set_var($var);
@@ -1496,16 +1443,16 @@
 				'changepassword'	=> '<input type="checkbox" name="changepassword" value="1"'.($userData['changepassword'] ? ' checked' : '').'>',
 				'mustchangepassword'    => '<input type="checkbox" name="mustchangepassword" value="1"'.($userData['mustchangepassword'] ? ' checked' : '').'>',
 				'account_status'    => '<input type="checkbox" name="account_status" value="A"'.($userData['status']?' checked':'').'>',
-				'account_firstname' => '<input id="firstname" onchange="check_account_email(this.id);" name="account_firstname" maxlength="50" value="' . $userData['firstname'] . '">',
-				'account_lastname'  => '<input id="lastname" onchange="check_account_email(this.id);" name="account_lastname" maxlength="50" value="' . $userData['lastname'] . '">',
-				'account_email'     => '<input id="email" onchange="email_set=0; check_account_email(this.id);" name="account_email" size="32" maxlength="100" value="' . $userData['email'] . '">',
+				'account_firstname' => '<input id="firstname" onchange="check_account_email(this.id);" name="account_firstname" maxlength="50" value="' . $userData['account_firstname'] . '">',
+				'account_lastname'  => '<input id="lastname" onchange="check_account_email(this.id);" name="account_lastname" maxlength="50" value="' . $userData['account_lastname'] . '">',
+				'account_email'     => '<input id="email" onchange="email_set=0; check_account_email(this.id);" name="account_email" size="32" maxlength="100" value="' . $userData['account_email'] . '">',
 				'account_passwd'    => $userData['account_passwd'],
 				'account_passwd_2'  => $userData['account_passwd_2'],
 				'account_file_space' => $account_file_space,
 				'account_id'        => (int) $userData['account_id']
 			);
-            if (isset($userData['account_created'])) $var['account_status'].= '<br>'.lang('Created').': '.$GLOBALS['egw']->common->show_date($userData['account_created']);
-            if (isset($userData['account_modified'])) $var['account_status'].= '<br>'.lang('Modified').': '.$GLOBALS['egw']->common->show_date($userData['account_modified']);
+            if (isset($userData['account_created'])) $var['account_status'].= '<br>'.lang('Created').': '.common::show_date($userData['account_created']);
+            if (isset($userData['account_modified'])) $var['account_status'].= '<br>'.lang('Modified').': '.common::show_date($userData['account_modified']);
 
 
 			if($userData['expires'] == -1)
@@ -1576,7 +1523,7 @@
 				$part[$i&1] = sprintf('<td>%s</td><td><input type="checkbox" name="account_permissions[%s]" value="True"%s>',
 					$data['title'],$app,$checked).
 					($acl_action?'<a href="'.$acl_action.'"'.$options
-					. '><img src="'.$GLOBALS['egw']->common->image('phpgwapi','edit').'" border="0" hspace="3" align="absmiddle" title="'
+					. '><img src="'.common::image('phpgwapi','edit').'" border="0" hspace="3" align="absmiddle" title="'
 					. lang('Grant Access').'"></a>':'&nbsp;').'</td>';
 
 				if ($i & 1)
@@ -1624,7 +1571,7 @@
 //			$menuClass =& CreateObject('admin.uimenuclass');
 			// This is now using ExecMethod()
 			$GLOBALS['account_id'] = $_account_id;
-			$t->set_var('rows',ExecMethod('admin.uimenuclass.createHTMLCode','edit_user'));
+			$t->set_var('rows', $_account_id ? ExecMethod('admin.uimenuclass.createHTMLCode','edit_user') : '');
 
 			echo $t->fp('out','form');
 		}
@@ -1634,7 +1581,7 @@
 			$response = new xajaxResponse();
 			if (!$email)
 			{
-				$response->addAssign('email','value',$GLOBALS['egw']->common->email_address($first,$last,$account_lid));
+				$response->addAssign('email','value',common::email_address($first,$last,$account_lid));
 			}
 			$id_account_lid = (int) $GLOBALS['egw']->accounts->name2id($account_lid);
 			if ($id == 'account' && $id_account_lid && $id_account_lid != (int) $account_id)
@@ -1665,13 +1612,13 @@
 			{
 				$user_list .= '<option value="' . $entry['account_id'] . '"'
 					. $group_info['account_managers'][(int)$entry['account_id']] . '>'
-					. $GLOBALS['egw']->common->grab_owner_name($entry['account_id'])
+					. common::grab_owner_name($entry['account_id'])
 					. '</option>'."\n";
 			}
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			$GLOBALS['egw']->common->egw_header();
+			common::egw_header();
 
 			$t =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 			$t->set_unknowns('remove');
@@ -1708,7 +1655,7 @@
 			if($GLOBALS['egw']->acl->check('group_access',16,'admin') || $_POST['cancel'])
 			{
 				$GLOBALS['egw']->redirect_link('/index.php','menuaction=admin.uiaccounts.list_groups');
-				$GLOBALS['egw']->common->egw_exit();
+				common::egw_exit();
 			}
 			elseif($_POST['submit'])
 			{
@@ -1728,7 +1675,7 @@
 				}
 			}
 			$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
-			$GLOBALS['egw']->common->egw_exit();
+			common::egw_exit();
 		}
 
 		/**

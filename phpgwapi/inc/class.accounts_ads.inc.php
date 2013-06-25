@@ -754,17 +754,19 @@ class accounts_ads
 		// check if we need to update something
 		if ($attributes && !($ret = $this->adldap->user()->modify($data['account_lid'], $attributes)))
 		{
-			error_log(__METHOD__."(".array2string($data).") adldap->user()->modify('$data[account_lid]', ".array2string($attributes).') returned '.array2string($ret));
+			error_log(__METHOD__."(".array2string($data).") adldap->user()->modify('$data[account_lid]', ".array2string($attributes).') returned '.array2string($ret).' '.function_backtrace());
 			return false;
 		}
+		//elseif ($attributes) error_log(__METHOD__."(".array2string($data).") adldap->user()->modify('$data[account_lid]', ".array2string($attributes).') returned '.array2string($ret).' '.function_backtrace());
 		// attributes not (yet) suppored by adldap
 		if ($ldap && !($ret = @ldap_modify($ds=$this->ldap_connection(), $old['account_dn'], $ldap)))
 		{
-			error_log(__METHOD__."(".array2string($data).") ldap_modify($ds, '$old[account_dn]', ".array2string($ldap).') returned '.array2string($ret));
+			error_log(__METHOD__."(".array2string($data).") ldap_modify($ds, '$old[account_dn]', ".array2string($ldap).') returned '.array2string($ret).' '.function_backtrace());
 			return false;
 		}
-		else error_log(__METHOD__."(".array2string($data).") ldap_modify($ds, '$old[account_dn]', ".array2string($ldap).') returned '.array2string($ret));
+		//elseif ($ldap) error_log(__METHOD__."(".array2string($data).") ldap_modify($ds, '$old[account_dn]', ".array2string($ldap).') returned '.array2string($ret).' '.function_backtrace());
 
+		//error_log(__METHOD__."(".array2string($data).") returning ".array2string($old['account_id']));
 		return $old['account_id'];
 	}
 

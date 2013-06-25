@@ -231,13 +231,34 @@
    </tr>
 
    <tr class="row_off">
-    <td>{lang_Force_password_strength_(1-5,_default_empty: no check against rules for a strong password)?}:</td>
+    <td>{lang_Passwords_require_a_minimum_number_of_characters}:</td>
     <td>
-     <input name="newsettings[force_pwd_strength]" value="{value_force_pwd_strength}" size="5">
+     <select name="newsettings[force_pwd_length]">
+     	<option value="">{lang_None}</options>
+     	<option value="6"{selected_force_pwd_length_6}>6</option>
+     	<option value="7"{selected_force_pwd_length_7}>7</option>
+     	<option value="8"{selected_force_pwd_length_8}>8</option>
+     	<option value="10"{selected_force_pwd_length_10}>10</option>
+     	<option value="12"{selected_force_pwd_length_12}>12</option>
+     	<option value="14"{selected_force_pwd_length_14}>14</option>
+     	<option value="16"{selected_force_pwd_length_16}>16</option>
+     </select>
     </td>
    </tr>
 
    <tr class="row_on">
+    <td>{lang_Passwords_requires_this_number_of_different_character_classes}:<br/>({lang_Uppercase,_lowercase,_number,_special_char})</td>
+    <td>
+     <select name="newsettings[force_pwd_strength]">
+     	<option value="">{lang_None}</option>
+     	<option value="2"{selected_force_pwd_strength_2}>2</option>
+     	<option value="3"{selected_force_pwd_strength_3}>3</option>
+     	<option value="4"{selected_force_pwd_strength_4}>4</option>
+     </select>
+    </td>
+   </tr>
+
+   <tr class="row_off">
     <td>{lang_Admin_email_addresses_(comma-separated)_to_be_notified_about_the_blocking_(empty_for_no_notify)}:</td>
     <td>
      <input name="newsettings[admin_mails]" value="{value_admin_mails}" size="40">
@@ -254,7 +275,7 @@
     </td>
    </tr>
 -->
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Enable_the_xmlrpc_service} {lang_(default_No,_leave_it_off_if_you_dont_use_it)}:</td>
     <td>
       <select name="newsettings[xmlrpc_enabled]">
@@ -264,7 +285,7 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Enable_the_soap_service} {lang_(default_No,_leave_it_off_if_you_dont_use_it)}:</td>
     <td>
       <select name="newsettings[soap_enabled]">
@@ -273,19 +294,19 @@
        </select>
     </td>
    </tr>
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_How_many_entries_should_non-admins_be_able_to_export_(empty_=_no_limit,_no_=_no_export)}:<br />{lang_This_controls_exports_and_merging.}</td>
     <td><input name="newsettings[export_limit]" value="{value_export_limit}" size="5"></td>
    </tr>
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Group_excepted_from_above_export_limit_(admins_are_always_excepted)}:</td>
     <td>{call_bo_merge::hook_export_limit_excepted}</td>
    </tr>
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Allow_remote_administration_from_following_install_ID's_(comma_separated)}:<br />{lang_Own_install_ID:_}{value_install_id}</td>
     <td><input name="newsettings[allow_remote_admin]" value="{value_allow_remote_admin}" size="40"></td>
    </tr>
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Should_exceptions_contain_a_trace_(including_function_arguments)}:</td>
     <td>
       <select name="newsettings[exception_show_trace]">
@@ -294,7 +315,7 @@
        </select>
     </td>
    </tr>
-   <tr class="row_off">
+   <tr class="row_on">
     <td>{lang_Disable_minifying_of_javascript_and_CSS_files}:</td>
     <td>
       <select name="newsettings[debug_minify]">

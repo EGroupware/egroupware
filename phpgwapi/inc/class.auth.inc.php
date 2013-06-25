@@ -215,15 +215,21 @@ class auth
 	}
 
 	/**
-	 * changes password in sql datababse
+	 * Calls crackcheck to enforce password strength (if configured) and changes password
 	 *
 	 * @param string $old_passwd must be cleartext
 	 * @param string $new_passwd must be cleartext
 	 * @param int $account_id account id of user whose passwd should be changed
+	 * @throws egw_exception_wrong_userinput if configured password strength is not meat
+	 * @throws Exception from backends having extra requirements
 	 * @return boolean true if password successful changed, false otherwise
 	 */
 	function change_password($old_passwd, $new_passwd, $account_id=0)
 	{
+		if (($err = self::crackcheck($new_passwd)))
+		{
+			throw new egw_exception_wrong_userinput($err);
+		}
 		if (($ret = $this->backend->change_password($old_passwd, $new_passwd, $account_id)) &&
 			($account_id == $GLOBALS['egw_info']['user']['account_id']))
 		{
@@ -518,28 +524,45 @@ class auth
 	/**
 	 * Checks if a given password is "safe"
 	 *
-	 * @param string $login
-	 * @abstract atm a simple check in length, #digits, #uppercase and #lowercase
-	 * 				could be made more safe using e.g. pecl library cracklib
-	 * 				but as pecl dosn't run on any platform and isn't GPL'd
-	 * 				i haven't implemented it yet
-	 *				Windows compatible check is: 7 char lenth, 1 Up, 1 Low, 1 Num and 1 Special
+	 * atm a simple check in length, #digits, #uppercase and #lowercase
+	 * Could be made more safe using e.g. pecl library cracklib.
+	 * But as pecl dosn't run on any platform and isn't GPL'd, I haven't implemented it yet.
+	 * Windows compatible check is: 7 char length, 1 Up, 1 Low, 1 Num and 1 Special
+	 *
+	 * @param string $password
+	 * @param int $reqstrength=null defaults to whatever set in config for "force_pwd_strength"
+	 * @param int $minlength=null defaults to whatever set in config for "check_save_passwd"
 	 * @author cornelius weiss <egw at von-und-zu-weiss.de>
-	 * @return mixed false if password is considered "safe" or a string $message if "unsafe"
+	 * @return mixed false if password is considered "safe" (or no requirements) or a string $message if "unsafe"
 	 */
-	static function crackcheck($passwd,$reqstrength=5)
+	static function crackcheck($passwd, $reqstrength=null, $minlength=null)
 	{
-		if (!preg_match('/.{'. ($noc=7). ',}/',$passwd))
+		if (!isset($reqstrength)) $reqstrength = $GLOBALS['egw_info']['server']['force_pwd_strength'];
+		if (!isset($minlength)) $minlength = $GLOBALS['egw_info']['server']['force_pwd_length'];
+
+		// check for and if necessary convert old values True and 5 to new separate values for length and char-classes
+		if ($GLOBALS['egw_info']['server']['check_save_passwd'] || $reqstrength == 5)
 		{
-			$message[] = lang('Password must have at least %1 characters',$noc). '<br>';
+			if (!isset($reqstrength) || $reqstrength == 5)
+			{
+				config::save_value('force_pwd_strength', $reqstrength=4, 'phpgwapi');
+			}
+			if (!isset($minlength))
+			{
+				config::save_value('force_pwd_length', $minlength=7, 'phpgwapi');
+			}
+			config::save_value('check_save_passwd', null, 'phpgwapi');
 		}
-		else
+
+		if (!$reqstrength && !$minlength)
 		{
-			$strength++;
+			return false;	// nothing to check
 		}
+
+		$strength = 0;
 		if(!preg_match('/(.*\d.*){'. ($non=1). ',}/',$passwd))
 		{
-			$message[] = lang('Password must contain at least %1 numbers',$non). '<br>';
+			$message[] = lang('Password must contain at least %1 numbers',$non);
 		}
 		else
 		{
@@ -547,7 +570,7 @@ class auth
 		}
 		if(!preg_match('/(.*[[:upper:]].*){'. ($nou=1). ',}/',$passwd))
 		{
-			$message[] = lang('Password must contain at least %1 uppercase letters',$nou). '<br>';
+			$message[] = lang('Password must contain at least %1 uppercase letters',$nou);
 		}
 		else
 		{
@@ -555,30 +578,32 @@ class auth
 		}
 		if(!preg_match('/(.*[[:lower:]].*){'. ($nol=1). ',}/',$passwd))
 		{
-			$message[] = lang('Password must contain at least %1 lowercase letters',$nol). '<br>';
+			$message[] = lang('Password must contain at least %1 lowercase letters',$nol);
 		}
 		else
 		{
 			$strength++;
 		}
-		if(!preg_match('/(.*[\\!"#$%&\'()*+,-.\/:;<=>?@\[\]\^_ {|}~`].*){'. ($nol=1). ',}/',$passwd))
+		if(!preg_match('/(.*[\\!"#$%&\'()*+,-.\/:;<=>?@\[\]\^_ {|}~`].*){'. ($nos=1). ',}/',$passwd))
 		{
-			$message[] = lang('Password must contain at least %1 special characters',$nol). '<br>';
+			$message[] = lang('Password must contain at least %1 special characters',$nos);
 		}
 		else
 		{
 			$strength++;
 		}
-		if (count($message)>0 && $reqstrength>$strength)
+		if (!preg_match('/.{'. ($minlength=7). ',}/',$passwd))
 		{
-			$outmessage = lang('Your Password does not meet the required strength.<br> You must meet %1 criteria. You met only %2 criteria. <br>Your Password failed the following criteria:',$reqstrength,$strength);
-			$outmessage .= '<br>'.implode(' ',$message);
+			$message[] = lang('Password must have at least %1 characters', $minlength);
+			$strength = 0;
 		}
-		else
+		if ($reqstrength <= $strength)
 		{
-			$outmessage =false;
+			return false;
 		}
-		return $outmessage ? $outmessage : false;
+		return lang('Your password does not have required strength of %1 character classes and minimum length of %2 characters.',
+			$reqstrength, $minlength).
+			"<br/>\n- ".implode("<br/>\n- ", $message);
 	}
 
 	/**

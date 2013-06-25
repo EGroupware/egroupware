@@ -32,11 +32,6 @@
 			)
 		);
 
-		function boaccounts()
-		{
-			$this->so =& CreateObject('admin.soaccounts');
-		}
-
 		function delete_group($account_id='')
 		{
 			if(!$account_id || $GLOBALS['egw']->acl->check('group_access',32,'admin'))
@@ -144,63 +139,6 @@
 			return False;
 		}
 
-		function add_user($userData)
-		{
-			if($GLOBALS['egw']->acl->check('account_access',4,'admin'))
-			{
-				return False;
-			}
-
-			$accountPrefix = '';
-			if(isset($GLOBALS['egw_info']['server']['account_prefix']))
-			{
-				$accountPrefix = $GLOBALS['egw_info']['server']['account_prefix'];
-			}
-			if($accountPrefix)
-			{
-				$userData['account_lid'] = $accountPrefix . $userData['account_lid'];
-			}
-
-			// add the primary group, to the users other groups, if not already added
-			if(is_array($userData['account_groups']))
-			{
-				if(!in_array($userData['account_primary_group'],$userData['account_groups']))
-				{
-					$userData['account_groups'][] = (int)$userData['account_primary_group'];
-				}
-			}
-			else
-			{
-				$userData['account_groups'] = array((int)$userData['account_primary_group']);
-			}
-
-			// do we have all needed data??
-			if(!($errors = $this->validate_user($userData)) &&
-				($userData['account_id'] = $account_id = $this->so->add_user($userData)))	// no error in the creation
-			{
-				if($userData['anonymous'])
-				{
-					$GLOBALS['egw']->acl->add_repository('phpgwapi','anonymous',$account_id,1);
-				}
-				else
-				{
-					$GLOBALS['egw']->acl->delete_repository('phpgwapi','anonymous',$account_id);
-				}
-				// make this information for the hooks available
-				$GLOBALS['hook_values'] = $userData + array('new_passwd' => $userData['account_passwd']);
-				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-					'location' => 'addaccount'
-				),False,True);	// called for every app now, not only enabled ones
-
-				return True;
-			}
-			else
-			{
-				return $errors;
-			}
-			return False;
-		}
-
 		function edit_group($group_info)
 		{
 			if($GLOBALS['egw']->acl->check('group_access',16,'admin'))
@@ -254,9 +192,16 @@
 			return True;
 		}
 
-		function edit_user($userData)
+		/**
+		 * Process a user edit
+		 *
+		 * @param array $userData
+		 * @param int $required_account_access=16 can be set to 4 for add user
+		 * @return boolean|array with errors or true on success, false on acl failure
+		 */
+		function edit_user(&$userData, $required_account_access=16)
 		{
-			if($GLOBALS['egw']->acl->check('account_access',16,'admin'))
+			if($GLOBALS['egw']->acl->check('account_access',$required_account_access,'admin'))
 			{
 				return False;
 			}
@@ -272,21 +217,17 @@
 			}
 
 			$errors = $this->validate_user($userData);
-			if(@is_array($errors))
+
+			if(!$errors)
 			{
-				return $errors;
-			}
-			else
-			{
-				$this->save_user($userData);
+				$errors = $this->save_user($userData);
 				$GLOBALS['hook_values'] = $userData;
 				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
 					'location' => 'editaccount'
 				),False,True);	// called for every app now, not only enabled ones)
-
-				return True;
 			}
-			return True;
+			error_log(__METHOD__."(".array2string($userData).") returning ".array2string($errors ? $errors : true));
+			return $errors ? $errors : true;
 		}
 
 		function validate_group($group_info)
@@ -326,31 +267,29 @@
 			}
 		}
 
-		/* checks if the userdata are valid
-		 returns FALSE if the data are correct
-		 otherwise the error array
-		*/
+		/**
+		 * checks if the userdata are valid
+		 *
+		 * @return array with errors or empty array if there are none
+		 */
 		function validate_user(&$_userData)
 		{
-			$totalerrors = 0;
+			$errors = array();
 
 			if($GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
 				(!$_userData['account_lastname'] && !$_userData['lastname']))
 			{
-				$error[$totalerrors] = lang('You must enter a lastname');
-				$totalerrors++;
+				$errors[] = lang('You must enter a lastname');
 			}
 
 			if(!$_userData['account_lid'])
 			{
-				$error[$totalerrors] = lang('You must enter a loginid');
-				$totalerrors++;
+				$errors[] = lang('You must enter a loginid');
 			}
 
 			if(!in_array($_userData['account_primary_group'],$_userData['account_groups']))
 			{
-				$error[$totalerrors] = lang('The groups must include the primary group');
-				$totalerrors++;
+				$errors[] = lang('The groups must include the primary group');
 			}
 			// Check if an account already exists as system user, and if it does deny creation
 			// (increase the totalerrors counter and the message thereof)
@@ -358,8 +297,7 @@
 				!$GLOBALS['egw_info']['server']['ldap_allow_systemusernames'] && !$_userData['account_id'] &&
 				function_exists('posix_getpwnam') && posix_getpwnam($_userData['account_lid']))
 			{
-				$error[$totalerrors] = lang('There already is a system-user with this name. User\'s should not have the same name as a systemuser');
-				$totalerrors++;
+				$errors[] = lang('There already is a system-user with this name. User\'s should not have the same name as a systemuser');
 			}
 			if($_userData['old_loginid'] != $_userData['account_lid'])
 			{
@@ -367,13 +305,12 @@
 				{
 					if($GLOBALS['egw']->accounts->exists($_userData['account_lid']) && $GLOBALS['egw']->accounts->get_type($_userData['account_lid'])=='g')
 					{
-						$error[$totalerrors] = lang('There already is a group with this name. Userid\'s can not have the same name as a groupid');
+						$errors[] = lang('There already is a group with this name. Userid\'s can not have the same name as a groupid');
 					}
 					else
 					{
-						$error[$totalerrors] = lang('That loginid has already been taken');
+						$errors[] = lang('That loginid has already been taken');
 					}
-					$totalerrors++;
 				}
 			}
 
@@ -381,15 +318,13 @@
 			{
 				if($_userData['account_passwd'] != $_userData['account_passwd_2'])
 				{
-					$error[$totalerrors] = lang('The two passwords are not the same');
-					$totalerrors++;
+					$errors[] = lang('The two passwords are not the same');
 				}
 			}
 
 			if(!count($_userData['account_permissions']) && !count($_userData['account_groups']))
 			{
-				$error[$totalerrors] = lang('You must add at least 1 permission or group to this account');
-				$totalerrors++;
+				$errors[] = lang('You must add at least 1 permission or group to this account');
 			}
 
 			if($_userData['account_expires_month'] || $_userData['account_expires_day'] || $_userData['account_expires_year'] || $_userData['account_expires_never'])
@@ -403,8 +338,7 @@
 				{
 					if(! checkdate($_userData['account_expires_month'],$_userData['account_expires_day'],$_userData['account_expires_year']))
 					{
-						$error[$totalerrors] = lang('You have entered an invalid expiration date');
-						$totalerrors++;
+						$errors[] = lang('You have entered an invalid expiration date');
 					}
 					else
 					{
@@ -423,49 +357,64 @@
 			$check_account_file_space = explode('-', $_userData['file_space']);
 			if(preg_match("/\D/", $check_account_file_space[0]))
 			{
-				$error[$totalerrors] = lang('File space must be an integer');
-				$totalerrors++;
+				$errors[] = lang('File space must be an integer');
 			}
 		*/
 
-			if($totalerrors == 0)
-			{
-				return False;
-			}
-			else
-			{
-				return $error;
-			}
+			return $errors;
 		}
 
-		/* stores the userdata */
-		function save_user($_userData)
+		/**
+		 * stores the userdata
+		 *
+		 * @param array &$_userData "account_id" got set for new accounts
+		 * @return array with error-messages
+		 */
+		function save_user(array &$_userData)
 		{
-			//error_log(__METHOD__.array2string($_userData));
-			//error_log(__METHOD__.array2string($old_passwd));
-			$account =& CreateObject('phpgwapi.accounts',$_userData['account_id'],'u');
-			$account->update_data($_userData);
-			$account->save_repository();
+			error_log(__METHOD__."(".array2string($_userData).")");
+			$errors = array();
 
-			$account->set_memberships($_userData['account_groups'],$_userData['account_id']);
-
-			if($_userData['account_passwd'])
+			// do NOT save password via accounts::save, as pw policy violation can happen and we cant/dont report that way
+			$passwd = $_userData['account_passwd'];
+			unset($_userData['account_passwd']);
+			unset($_userData['account_passwd_2']);
+			if (!$GLOBALS['egw']->accounts->save($_userData))
 			{
-				$auth =& CreateObject('phpgwapi.auth');
-				$auth->change_password($old_passwd, $_userData['account_passwd'], $_userData['account_id']);
-				$GLOBALS['hook_values']['account_id'] = $_userData['account_id'];
-				$GLOBALS['hook_values']['old_passwd'] = $old_passwd;
-				$GLOBALS['hook_values']['new_passwd'] = $_userData['account_passwd'];
+				$errors[] = lang('Failed to save user!');
+				return $errors;
+			}
 
-				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-					'location' => 'changepassword'
-				),False,True);	// called for every app now, not only enabled ones)
-				if ($_userData['account_lastpwd_change']==0)
-				{
-					// change password sets the shadow_timestamp/account_lastpwd_change timestamp
-					// so we need to reset that to 0 as Admin required the change of password upon next login
-					unset($_userData['account_passwd']);
-					$this->save_user($_userData);
+			$GLOBALS['egw']->accounts->set_memberships($_userData['account_groups'],$_userData['account_id']);
+
+			if ($passwd)
+			{
+				try {
+					$auth = new auth();
+					if ($auth->change_password('', $passwd, $_userData['account_id']))
+					{
+						$GLOBALS['hook_values']['account_id'] = $_userData['account_id'];
+						$GLOBALS['hook_values']['old_passwd'] = '';
+						$GLOBALS['hook_values']['new_passwd'] = $_userData['account_passwd'];
+
+						$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+							'location' => 'changepassword'
+						),False,True);	// called for every app now, not only enabled ones)
+						if ($_userData['account_lastpwd_change']==0)
+						{
+							// change password sets the shadow_timestamp/account_lastpwd_change timestamp
+							// so we need to reset that to 0 as Admin required the change of password upon next login
+							unset($_userData['account_passwd']);
+							$this->save_user($_userData);
+						}
+					}
+					else
+					{
+						$errors[] = lang('Failed to change password.  Please contact your administrator.');
+					}
+				}
+				catch(Exception $e) {
+					$errors[] = $e->getMessage();
 				}
 			}
 			if ($_userData['account_lastpwd_change']==0)
@@ -475,7 +424,7 @@
 				$auth->setLastPwdChange($_userData['account_id'],NULL, $_userData['account_lastpwd_change']);
 			}
 
-			$apps =& CreateObject('phpgwapi.applications',(int)$_userData['account_id']);
+			$apps = new applications((int)$_userData['account_id']);
 			if($_userData['account_permissions'])
 			{
 				foreach($_userData['account_permissions'] as $app => $enabled)
@@ -488,7 +437,7 @@
 			}
 			$apps->save_repository();
 
-			$acl =& CreateObject('phpgwapi.acl',$_userData['account_id']);
+			$acl = new acl($_userData['account_id']);
 			if($_userData['anonymous'])
 			{
 				$acl->add_repository('phpgwapi','anonymous',$_userData['account_id'],1);
@@ -506,6 +455,9 @@
 				$GLOBALS['egw']->acl->delete_repository('preferences','nopasswordchange',$_userData['account_id']);
 			}
 			$GLOBALS['egw']->session->delete_cache((int)$_userData['account_id']);
+
+			error_log(__METHOD__."(".array2string($_userData).") returning ".array2string($errors));
+			return $errors;
 		}
 
 		function load_group_managers($account_id)
@@ -540,22 +492,4 @@
 			@reset($account_apps);
 			return $account_apps;
 		}
-
-		// xmlrpc functions
-
-		function rpc_add_user($data)
-		{
-			exit;
-
-			if(!$errors = $this->validate_user($data))
-			{
-				$result = $this->so->add_user($data);
-			}
-			else
-			{
-				$result = $errors;
-			}
-			return $result;
-		}
 	}
-?>
