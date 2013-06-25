@@ -143,7 +143,7 @@ var et2_radiobox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		"label": {
 			"name": "Label",
 			"default": "",
-			"type": "string",
+			"type": "string"
 		}
 	},
 
@@ -202,16 +202,16 @@ et2_register_widget(et2_radiobox_ro, ["radio_ro"]);
  * 
  * @augments et2_valueWidget
  */ 
-var et2_radioGroup = et2_valueWidget.extend(
+var et2_radioGroup = et2_valueWidget.extend([et2_IDetachedDOM], 
 {
 	attributes: {
 		"label": {
-                        "name": "Label",
-                        "default": "",
-                        "type": "string",
-                        "description": "The label is displayed above the list of radio buttons. The label can contain variables, as descript for name. If the label starts with a '@' it is replaced by the value of the content-array at this index (with the '@'-removed and after expanding the variables).",
-                        "translate": true
-                },
+			"name": "Label",
+			"default": "",
+			"type": "string",
+			"description": "The label is displayed above the list of radio buttons. The label can contain variables, as descript for name. If the label starts with a '@' it is replaced by the value of the content-array at this index (with the '@'-removed and after expanding the variables).",
+			"translate": true
+		},
 		"value": {
 			"name": "Value",
 			"type": "string",
@@ -235,6 +235,12 @@ var et2_radioGroup = et2_valueWidget.extend(
 			"type": "any",
 			"default": {},
 			"description": "Options for radio buttons.  Should be {value: label, ...}"
+		},
+		"required": {
+			"name":	"Required",
+			"default": false,
+			"type": "boolean",
+			"description": "If required, the user must select one of the options before the form can be submitted"
 		}
 	},
 
@@ -252,20 +258,25 @@ var et2_radioGroup = et2_valueWidget.extend(
 		this.node = $j(document.createElement("div"))
 			.addClass("et2_vbox")
 			.addClass("et2_box_widget");
+		if(this.options.required)
+		{
+			// This isn't strictly allowed, but it works
+			this.node.attr("required","required");
+		}
 		this.setDOMNode(this.node[0]);
 
 		// The supported widget classes array defines a whitelist for all widget
-                // classes or interfaces child widgets have to support.
-                this.supportedWidgetClasses = [et2_radiobox];
+		// classes or interfaces child widgets have to support.
+		this.supportedWidgetClasses = [et2_radiobox,et2_radiobox_ro];
 	},
 
 	set_value: function(_value) {
 		this.value = _value;
 		for (var i = 0; i < this._children.length; i++)
-                {
-                        var radio = this._children[i];
+		{
+			var radio = this._children[i];
 			radio.set_value(_value);
-                }
+		}
 	},
 
 	getValue: function() {
@@ -286,7 +297,8 @@ var et2_radioGroup = et2_valueWidget.extend(
 				label: _options[key],
 				ro_true: this.options.ro_true,
 				ro_false: this.options.ro_false,
-				readonly: this.options.readonly
+				readonly: this.options.readonly,
+				required: this.options.required
 			};
 			var radio = et2_createWidget("radio", attrs, this);
 		}
@@ -332,6 +344,24 @@ var et2_radioGroup = et2_valueWidget.extend(
 			}
 			this._labelContainer = null;
 		}
+	},
+		
+	/**
+	 * Code for implementing et2_IDetachedDOM
+	 * This doesn't need to be implemented.
+	 * Individual widgets are detected and handled by the grid, but the interface is needed for this to happen
+	 */
+	getDetachedAttributes: function(_attrs)
+	{
+	},
+
+	getDetachedNodes: function()
+	{
+		return [this.getDOMNode()];
+	},
+
+	setDetachedAttributes: function(_nodes, _values)
+	{
 	}
 
 });
