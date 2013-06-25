@@ -53,8 +53,16 @@ var et2_portlet = et2_valueWidget.extend(
 		"height": { "default": 1, "type": "integer"},
 		"rows": {"ignore": true},
 		"cols": {"ignore": true},
-		"row": { "default": 1},
-		"col": {"default": 1}
+		"row": {
+			"name": "Row",
+			"description": "Home page location (row) - handled by home app",
+			"default": 1
+		},
+		"col": {
+			"name": "Column",
+			"description": "Home page location(column) - handled by home app",
+			"default": 1
+		}
 	},
 
 	createNamespace: true,
