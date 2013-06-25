@@ -46,7 +46,7 @@ class uipassword
 		$GLOBALS['egw']->template->set_var('lang_enter_password',lang('Enter your new password'));
 		$GLOBALS['egw']->template->set_var('lang_reenter_password',lang('Re-enter your password'));
 		$GLOBALS['egw']->template->set_var('lang_enter_old_password',lang('Enter your old password'));
-		$GLOBALS['egw']->template->set_var('lang_change',lang('Change'));
+		$GLOBALS['egw']->template->set_var('lang_change',lang('Change password'));
 		$GLOBALS['egw']->template->set_var('lang_cancel',lang('Cancel'));
 		$GLOBALS['egw']->template->set_var('form_action',
 			$GLOBALS['egw_info']['user']['apps']['preferences'] ?
@@ -91,19 +91,8 @@ class uipassword
 			{
 				$errors[] = lang('You must enter a password');
 			}
-			$strength = ($GLOBALS['egw_info']['server']['force_pwd_strength']?$GLOBALS['egw_info']['server']['force_pwd_strength']:false);
-			//error_log(__METHOD__.__LINE__.' Strength:'.$strength);
 
-			if ($strength && $strength>5) $strength =5;
-			if ($strength && $strength<0) $strength = false;
-			if($GLOBALS['egw_info']['server']['check_save_passwd'] && $strength==false) $strength=5;//old behavior
-			//error_log(__METHOD__.__LINE__.' Strength:'.$strength);
-			if(($GLOBALS['egw_info']['server']['check_save_passwd'] || $strength) && $error_msg = $GLOBALS['egw']->auth->crackcheck($n_passwd,$strength))
-			{
-				$errors[] = $error_msg;
-			}
-
-			// allow auth backends to throw exceptions and display there message
+			// allow auth backends or configured password strenght to throw exceptions and display there message
 			try {
 				$passwd_changed = $this->bo->changepass($o_passwd, $n_passwd);
 			}

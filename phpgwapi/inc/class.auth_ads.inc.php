@@ -101,7 +101,7 @@ class auth_ads implements auth_backend
 	 * @return boolean true if password successful changed, false otherwise
 	 * @throws egw_exception_wrong_userinput
 	 */
-	function change_password($old_passwd, $new_passwd, $_account_id=0)
+	function change_password($old_passwd, $new_passwd, $account_id=0)
 	{
 		if (!($adldap = accounts_ads::get_adldap()) || !($adldap->getUseSSL() || $adldap->getUseTLS()))
 		{
@@ -126,11 +126,13 @@ class auth_ads implements auth_backend
 			return false;
 		}
 		try {
-			return $adldap->user()->password($username, $new_passwd);
+			$ret = $adldap->user()->password($username, $new_passwd);
+			//error_log(__METHOD__."('$old_passwd', '$new_passwd', $account_id) admin=$admin adldap->user()->password('$username', '$new_passwd') returned ".array2string($ret));
+			return $ret;
 		}
 		catch (Exception $e) {
 			// as we cant (todo) detect what the problem is, we do a password strength check and throw it's message, if it fails
-			if (($error = auth::crackcheck($new_passwd)))
+			if (($error = auth::crackcheck($new_passwd, 4, 8)))	// 4 char classes and 8 chars min
 			{
 				throw new egw_exception_wrong_userinput($error);
 			}

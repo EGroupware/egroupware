@@ -61,7 +61,14 @@ function check_password(id)
 			    </tr>
 			
 			    {password_fields}
-
+<!-- BEGIN ldap_extra -->
+			    <tr class="row_off">
+				 <td>{lang_homedir}</td>
+				 <td>{homedirectory}&nbsp;</td>
+				 <td>{lang_shell}</td>
+				 <td>{loginshell}&nbsp;</td>
+				</tr>
+<!-- END ldap_extra -->
 				<tr class="row_on">
 					<td>{lang_mustchangepassword}</td>
 					<td>{mustchangepassword}</td>
@@ -120,7 +127,10 @@ function check_password(id)
 
 <!-- BEGIN form_buttons_ -->
     <tr class="row_off">
-     <td colspan="4" align="right"><input type="submit" name="submit" value="{lang_button}"></td>
+     <td colspan="4" align="right">
+      <input type="submit" name="submit" value="{lang_button}">
+      <input type="submit" name="cancel" value="{lang_cancel}" onclick="{cancel_action}; return false;">
+     </td>
     </tr>
 <!-- END form_buttons_ -->
 
