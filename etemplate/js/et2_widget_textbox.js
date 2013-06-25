@@ -231,8 +231,16 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 	set_value: function(_value) {
 		this.value = _value;
 
-		if(!_value) _value = "";
-		this.span.text(_value);
+		if(!_value)
+		{
+			_value = "";
+		}
+		else
+		{
+			_value = _value.replace(/\n/g,'<br />');
+		}
+		// Use html() or the <br /> gets stripped
+		this.span.html(_value);
 	},
 	/**
 	 * Code for implementing et2_IDetachedDOM
