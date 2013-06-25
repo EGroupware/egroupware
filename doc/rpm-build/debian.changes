@@ -1,3 +1,10 @@
+egroupware-epl (11.1.20130625-1) hardy; urgency=low
+
+  * Addressbook/CardDAV: PUT returned empty ETag, proably causing unnecessary reloads of contacts
+  * Admin: split password strength config in minimum length and number of character types, allow account backends specially AD to report password policy failures
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 25 Jun 2013 19:35:42 +0200
+
 egroupware-epl (11.1.20130620-1) hardy; urgency=low
 
   * Addressbook/LDAP: recreation of contact (eg. because of missing objectclass) failed and lead to deleted contact or account
