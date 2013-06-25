@@ -448,7 +448,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			_value = _value.split(',');
 		}
-		if(this.options.tags || this.options.search)
+		if(this.input !== null && (this.options.tags || this.options.search))
 		{
 			this.input.val(_value);
 			this.input.trigger("liszt:updated");
