@@ -267,11 +267,14 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 		if (!$this->is_readonly($cname, $form_name))
 		{
 			$value_in = self::get_array($content, $form_name);
+			$app =& $this->getElementAttribute(self::GLOBAL_VALS, 'app');
+			$customfields =& $this->getElementAttribute(self::GLOBAL_VALS, 'customfields');
 			if(is_array($value_in))
 			{
 				foreach($value_in as $field => $value)
 				{
-					if ((string)$value === '' && $this->attrs['needed'])
+					$field_settings = $customfields[substr($field,1)];
+					if ((string)$value === '' && $field_settings['needed'])
 					{
 						self::set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 					}
