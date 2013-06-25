@@ -719,6 +719,19 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 	set_select_options: function(_options) {
 		for (var key in _options)
 		{
+			// Translate the options
+			if(!this.options.no_lang)
+			{
+				if (typeof _options[key] === 'object')
+				{
+					if(_options[key]["label"]) _options[key]["label"] = this.egw().lang(_options[key]["label"]);
+					if(_options[key]["title"]) _options[key]["title"] = this.egw().lang(_options[key]["title"]);
+				}
+				else
+				{
+					_options[key] = this.egw().lang(_options[key]);
+				}
+			}
 			this.optionValues[key] = _options[key];
 		}
 	},
@@ -730,7 +743,7 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 		}
 		this.value = _value;
 		if(typeof _value == "object")
-                {
+		{
 			this.span.empty();
 			if(_value)
 			{
@@ -750,7 +763,7 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 				}
 			}
 			return;
-                }
+		}
 		var option = this.optionValues[_value];
 		if (typeof option === 'object' && option != null)
 		{
