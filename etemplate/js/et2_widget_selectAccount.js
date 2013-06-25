@@ -70,6 +70,12 @@ var et2_selectAccount = et2_selectbox.extend(
 		{
 			this.egw().debug("warn", "Invalid account_type: %s Valid options:",_attrs['account_type'], this.account_types);
 		}
+		
+		// If not required, make sure there's an empty label
+		if(_attrs['rows'] == 1 && !_attrs['empty_label'] && !_attrs['required'])
+		{
+			_attrs['empty_label'] = 'None';
+		}
 
 		// Holder for search jQuery nodes
 		this.search = null;
