@@ -238,6 +238,9 @@ button.et2_button_text:focus, input[type=button]:focus {
 .et2_textbox {
 	resize: none;
 }
+.et2_textbox_ro {
+	white-space: pre-wrap;
+}
 
 .et2_bold {
 	font-weight: bold;
@@ -678,10 +681,10 @@ ul.et2_vfs {
 /**
 * Validation
 */
-input[required] {
+[required] {
 	background-color: #ffffd0;
 }
-input.invalid {
+.invalid {
 	border: 1px solid #a6261d;
 	background-color: #faecec;
 }
