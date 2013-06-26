@@ -1173,7 +1173,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	// Input widget
 	getValue: function() { return null;},
 	resetDirty: function() {},
-	isDirty: function() { return false;}
+	isDirty: function() { return false;},
+	isValid: function() { return true;}
 });
 et2_register_widget(et2_nextmatch, ["nextmatch"]);
 
