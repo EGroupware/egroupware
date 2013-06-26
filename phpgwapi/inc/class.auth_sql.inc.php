@@ -214,7 +214,6 @@ class auth_sql implements auth_backend
 		if (($pw = $this->db->select($this->table,'account_pwd',array(
 			'account_id'     => $account_id,
 			'account_type'   => 'u',
-			'account_status' => 'A',
 		),__LINE__,__FILE__)->fetchColumn()) === false)
 		{
 			return false;	// account not found
@@ -244,16 +243,17 @@ class auth_sql implements auth_backend
 		$update = array('account_pwd' => $encrypted_passwd);
 		if ($update_lastpw_change) $update['account_lastpwd_change'] = time();
 
-		$this->db->update($this->table,$update,array(
+		if (!$this->db->update($this->table,$update,array(
 			'account_id' => $account_id,
-		),__LINE__,__FILE__);
-
-		if(!$this->db->affected_rows()) return false;
+		),__LINE__,__FILE__))
+		{
+			return false;
+		}
 
 		if(!$admin)
 		{
 			egw_cache::setSession('phpgwapi','auth_alpwchange_val',$update['account_lastpwd_change']);
 		}
-		return $encrypted_passwd;
+		return true;
 	}
 }
