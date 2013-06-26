@@ -1967,7 +1967,7 @@ var et2_nextmatch_filterheader = et2_selectbox.extend([et2_INextmatchHeader, et2
 		this.nextmatch = _nextmatch;
 
 		// Set current filter value from nextmatch settings
-		if(this.nextmatch.options.settings.col_filter && this.nextmatch.options.settings.col_filter[this.id])
+		if(this.nextmatch.options.settings.col_filter && typeof this.nextmatch.options.settings.col_filter[this.id] != "undefined")
 		{
 			this.set_value(this.nextmatch.options.settings.col_filter[this.id]);
 
