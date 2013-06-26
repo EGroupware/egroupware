@@ -112,7 +112,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 			.addClass("message")
 			.addClass(_type)
 			.addClass(_floating ? "floating" : "")
-			.text(_text);
+			.text(_text.valueOf() + "");
 
 		// Decide whether to prepend or append the div
 		if (_prepend)
@@ -152,10 +152,11 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 		{
 			var surr = this.getSurroundings();
 			var self = this;
+			var messageDiv = this._messageDiv;
+			self._messageDiv = null;
 
 			var _done = function() {
-				surr.removeDOMNode(self._messageDiv[0]);
-				self._messageDiv = null;
+				surr.removeDOMNode(messageDiv[0]);
 
 				// Update the surroundings manager
 				if (!_noUpdate)
@@ -167,7 +168,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 			// Either fade out or directly call the function which removes the div
 			if (_fade)
 			{
-				this._messageDiv.fadeOut("fast", _done);
+				messageDiv.fadeOut("fast", _done);
 			}
 			else
 			{

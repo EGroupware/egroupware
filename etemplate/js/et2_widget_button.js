@@ -248,6 +248,9 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 		// array.
 		return null;
 	},
+	isValid: function() {
+		return true;
+	},
 
 	/**
 	 * et2_IDetachedDOM

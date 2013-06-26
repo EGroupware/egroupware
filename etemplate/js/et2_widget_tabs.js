@@ -304,6 +304,9 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 	resetDirty: function() 
 	{
 		this.value = this.selected_index;
+	},
+	isValid: function(messages) {
+		return true;
 	}
 });
 et2_register_widget(et2_tabbox, ["tabbox"]);

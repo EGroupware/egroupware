@@ -867,7 +867,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 			description: "Array with keys app, id, and optionally title",
 			type: "any"
 		},
-		"required": {
+		"needed": {
 			"ignore": true
 		}
 	},

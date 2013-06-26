@@ -208,7 +208,7 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		"size": {
 			"ignore": true
 		},
-		"required": {
+		"needed": {
 			"ignore": true
 		}
 	},

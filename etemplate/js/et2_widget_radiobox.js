@@ -236,7 +236,7 @@ var et2_radioGroup = et2_valueWidget.extend([et2_IDetachedDOM],
 			"default": {},
 			"description": "Options for radio buttons.  Should be {value: label, ...}"
 		},
-		"required": {
+		"needed": {
 			"name":	"Required",
 			"default": false,
 			"type": "boolean",
@@ -258,7 +258,7 @@ var et2_radioGroup = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.node = $j(document.createElement("div"))
 			.addClass("et2_vbox")
 			.addClass("et2_box_widget");
-		if(this.options.required)
+		if(this.options.needed)
 		{
 			// This isn't strictly allowed, but it works
 			this.node.attr("required","required");
@@ -298,7 +298,7 @@ var et2_radioGroup = et2_valueWidget.extend([et2_IDetachedDOM],
 				ro_true: this.options.ro_true,
 				ro_false: this.options.ro_false,
 				readonly: this.options.readonly,
-				required: this.options.required
+				needed: this.options.needed
 			};
 			var radio = et2_createWidget("radio", attrs, this);
 		}

@@ -190,7 +190,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 				var attrs = {
 					'id': 		id,
 					'statustext':	field.help,
-					'required':	field.needed,
+					'needed':	field.needed,
 					'readonly':	this.options.readonly,
 					'value':	this.options.value[this.prefix+field_name]
 				};
@@ -369,6 +369,11 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 				this.widgets[field_name].resetDirty();
 			}
 		}
+	},
+		
+	isValid: function() {
+		// Individual customfields will handle themselves
+		return true;
 	},
 
 	/**

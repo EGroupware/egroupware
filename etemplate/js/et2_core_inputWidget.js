@@ -25,10 +25,10 @@
  * 
  * @augments et2_valueWidget
  */
-var et2_inputWidget = et2_valueWidget.extend(et2_IInput, 
+var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener], 
 {
 	attributes: {
-		"required": {
+		"needed": {
 			"name":	"Required",
 			"default": false,
 			"type": "boolean",
@@ -124,10 +124,17 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput,
 	},
 
 	change: function(_node) {
-		if (this.onchange)
+		var messages = [];
+		var valid = this.isValid(messages);
+		
+		// Passing false will clear any set messages
+		this.set_validation_error(valid ? false : messages);
+		
+		if (valid && this.onchange)
 		{
 			return et2_compileLegacyJS(this.onchange, this, _node)();
 		}
+		return valid;
 	},
 
 	set_value: function(_value) {
@@ -218,7 +225,7 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput,
 		this.label = _value;
 	},
 
-	set_required: function(_value) {
+	set_needed: function(_value) {
 		var node = this.getInputNode();
 		if (node)
 		{
@@ -281,7 +288,34 @@ var et2_inputWidget = et2_valueWidget.extend(et2_IInput,
 
 	resetDirty: function() {
 		this._oldValue = this.getValue();
-	}
+	},
+		
+	isValid: function(messages) {
+		var ok = true;
+		
+		// Check for required
+		if(this.options.needed && (this.getValue() == null || this.getValue().valueOf() == ''))
+		{
+			messages.push(this.egw().lang('input required'));
+			ok = false;
+		}
+		return ok;
+	},
 
+	/**
+	 * Called whenever the template gets submitted. We return false if the widget
+	 * is not valid, which cancels the submission.
+	 * 
+	 * @param _values contains the values which will be sent to the server.
+	 * 	Listeners may change these values before they get submitted.
+	 */
+	submit: function(_values) {
+		var messages = [];
+		var valid = this.isValid(messages);
+		
+		// Passing false will clear any set messages
+		this.set_validation_error(valid ? false : messages);
+		return valid;
+	}
 });
 

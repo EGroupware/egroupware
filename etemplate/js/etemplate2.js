@@ -88,7 +88,7 @@ function etemplate2(_container, _menuaction)
 
 	// List of templates (XML) that are known, but not used.  Indexed by id.
 	this.templates = {};
-
+	
 	// Connect to the window resize event
 	$j(window).resize(this, function(e) {e.data.resize();});
 }
@@ -115,11 +115,10 @@ etemplate2.prototype.clear = function()
 {
 	if (this.widgetContainer != null)
 	{
-//		$j(':input',this.DOMContainer).validator().data("validator").destroy();
 		this.widgetContainer.free();
 		this.widgetContainer = null;
 	}
-
+	
 	// Remove self from the index
 	for(name in this.templates)
 	{
@@ -262,15 +261,6 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 
 etemplate2.prototype.submit = function(button)
 {
-	// Validator
-	/*var valid = true;
-	var inputs = $j(':input',this.DOMContainer).each(function() {
-		if(typeof $j(this).data("validator") == "undefined") return true;
-		valid = valid && $j(this).data("validator").checkValidity();
-		return true;
-	});
-	if(!valid) return false;*/
-
 	// Get the form values
 	var values = this.getValues(this.widgetContainer);
 

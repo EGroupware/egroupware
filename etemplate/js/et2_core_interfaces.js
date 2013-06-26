@@ -57,7 +57,23 @@ var et2_IInput = new Interface({
 	/**
 	 * Causes the dirty flag to be reseted.
 	 */
-	resetDirty: function() {}
+	resetDirty: function() {},
+	
+	/**
+	 * Checks the data to see if it is valid, as far as the client side can tell.
+	 * Return true if it's not possible to tell on the client side, because the server
+	 * will have the chance to validate also.
+	 * 
+	 * The messages array is to be populated with everything wrong with the data,
+	 * so don't stop checking after the first problem unless it really makes sense
+	 * to ignore other problems.
+	 * 
+	 * @param {String[]} messages List of messages explaining the failure(s). 
+	 *	messages should be fairly short, and already translated.
+	 * 
+	 * @return {boolean} True if the value is valid (enough), false to fail
+	 */
+	isValid: function(messages) {}
 });
 
 /**
