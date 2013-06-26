@@ -61,7 +61,7 @@ class auth_fallback implements auth_backend
 				$GLOBALS['egw_info']['flags']['currentapp'] = 'admin';	// otherwise
 				$ret = $this->fallback_backend->change_password('', $passwd, $account_id);
 				$GLOBALS['egw_info']['flags']['currentapp'] = $backup_currentapp;
-				error_log(__METHOD__."('$username', \$passwd) updated password for #$account_id on fallback ".($ret ? 'successfull' : 'failed!'));
+				//error_log(__METHOD__."('$username', \$passwd) updated password for #$account_id on fallback ".($ret ? 'successfull' : 'failed!'));
 			}
 			return true;
 		}
