@@ -26,6 +26,8 @@
  */
 var et2_htmlarea = et2_inputWidget.extend(
 {
+	modes: ['ascii','simple','extended','advanced'],
+	
 	attributes: {
 		'mode': {
 			'name': 'Mode',
@@ -79,19 +81,37 @@ var et2_htmlarea = et2_inputWidget.extend(
 
 		// Allow no child widgets
 		this.supportedWidgetClasses = [];
-
-		
-		this.htmlNode = $j(document.createElement("div"));
+		this.htmlNode = $j(document.createElement("textarea"))
+			.attr('id', this.id)
+			.css('height', this.options.height)
+			.addClass('et2_textbox_ro');
 		this.setDOMNode(this.htmlNode[0]);
 	},
+		
+	transformAttributes: function(_attrs) {
 
+		// Check mode, some apps jammed everything in there
+		if(jQuery.inArray(_attrs['mode'], this.modes) < 0)
+		{
+			this.egw().debug("warn", "Invalid mode for '%s': %s Valid options:", _attrs['id'],_attrs['mode'], this.modes);
+			var list = _attrs['mode'].split(',');
+			for(var i = 0; i < list.length && i < this.legacyOptions.length; i++)
+			{
+				_attrs[this.legacyOptions[i]] = list[i];
+			}
+		}
+		this._super.apply(this, arguments);
+	},
+		
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
+		if(this.mode == 'ascii') return;
+		
 		var self = this;
 		var ckeditor;
 		try
 		{
-			CKEDITOR.replace(this.id,this.options.config);
+			CKEDITOR.replace(this.id,jQuery.extend({},this.options.config,this.options));
 			ckeditor = CKEDITOR.instances[this.id];
 			ckeditor.setData(self.value);
 			delete self.value;
@@ -126,6 +146,11 @@ var et2_htmlarea = et2_inputWidget.extend(
 		}
 	},
 	set_value: function(_value) {
+		if(this.htmlNode.is('textarea'))
+		{
+			this.htmlNode.val(_value);
+			return;
+		}
 		try {
 			//this.htmlNode.ckeditorGet().setData(_value);
 			ckeditor = CKEDITOR.instances[this.id];
@@ -137,6 +162,10 @@ var et2_htmlarea = et2_inputWidget.extend(
 	},
 
 	getValue: function() {
+		if(this.htmlNode.is('textarea'))
+		{
+			return this.htmlNode.val();
+		}
 		try
 		{
 			//return this.htmlNode.ckeditorGet().getData();

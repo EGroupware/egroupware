@@ -49,6 +49,10 @@ var et2_html = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.supportedWidgetClasses = [];
 
 		this.htmlNode = $j(document.createElement("span"));
+		if(this._type == 'htmlarea')
+		{
+			this.htmlNode.addClass('et2_textbox_ro');
+		}
 		if(this.options.label)
 		{
 			this.htmlNode.append('<span class="et2_label">'+this.options.label+'</span>');
