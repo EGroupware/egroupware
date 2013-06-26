@@ -737,7 +737,7 @@ class accounts_ldap
 						);
 						if ($param['active'] && !$this->frontend->is_active($account))
 						{
-							--$totalcount;
+							if (isset($totalcount)) --$totalcount;
 							continue;
 						}
 						$account['account_fullname'] = common::display_fullname($account['account_lid'],$account['account_firstname'],$account['account_lastname'],$allVals['uidnumber'][0]);
@@ -798,9 +798,14 @@ class accounts_ldap
 			$this->_callback_order = empty($param['order']) ? array('account_lid') : explode(',',$param['order']);
 			$sortedAccounts = $accounts;
 			uasort($sortedAccounts,array($this,'_sort_callback'));
-			$account_search[$unl_serial]['data'] = $sortedAccounts;
+			$this->total = isset($totalcount) ? $totalcount : count($accounts);
 
-			$account_search[$unl_serial]['total'] = $this->total = isset($totalcount) ? $totalcount : count($accounts);
+			// if totalcount is set, $sortedAccounts is NOT the full set, but already a limited set!
+			if (!isset($totalcount))
+			{
+				$account_search[$unl_serial]['data'] = $sortedAccounts;
+				$account_search[$unl_serial]['total'] = $this->total;
+			}
 		}
 		//echo "<p>accounts_ldap::search() found $this->total: ".microtime()."</p>\n";
 		// return only the wanted accounts
