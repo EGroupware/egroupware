@@ -420,6 +420,7 @@ class accounts_ads
 			'account_modified'  => !isset($data['whenchanged'][0]) ? null :
 				self::_when2ts($data['whenchanged'][0]),
 			'account_description' => $data['description'][0],
+			'mailAllowed'       => true,
 		);
 		//error_log(__METHOD__."(".array2string($data).") returning ".array2string($group));
 		return $group;
