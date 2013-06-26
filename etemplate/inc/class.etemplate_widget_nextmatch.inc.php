@@ -472,6 +472,16 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			}
 			elseif(!is_numeric($n))	// rows with string-keys, after numeric rows
 			{
+				if($n == 'sel_options')
+				{
+					foreach($row as $name => &$options)
+					{
+						foreach($options as $key => &$label)
+						{
+							$label = html_entity_decode($label, ENT_NOQUOTES,'utf-8');
+						}
+					}
+				}
 				$rows[$n] = $row;
 			}
 		}
