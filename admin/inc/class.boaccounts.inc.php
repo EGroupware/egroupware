@@ -220,13 +220,17 @@
 
 			if(!$errors)
 			{
+				$new_user = !$userData['account_id'];
+				$passwd = $userData['account_passwd'];
 				$errors = $this->save_user($userData);
-				$GLOBALS['hook_values'] = $userData;
+				$GLOBALS['hook_values'] = $userData + ($new_user ? array(
+					'new_password' => $passwd,
+				) : array());
 				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-					'location' => 'editaccount'
+					'location' => $new_user ? 'addaccount' : 'editaccount',
 				),False,True);	// called for every app now, not only enabled ones)
 			}
-			error_log(__METHOD__."(".array2string($userData).") returning ".array2string($errors ? $errors : true));
+			//error_log(__METHOD__."(".array2string($userData).") returning ".array2string($errors ? $errors : true));
 			return $errors ? $errors : true;
 		}
 

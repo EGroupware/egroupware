@@ -1561,7 +1561,7 @@
 //			$menuClass =& CreateObject('admin.uimenuclass');
 			// This is now using ExecMethod()
 			$GLOBALS['account_id'] = $_account_id;
-			$t->set_var('rows', $_account_id ? ExecMethod('admin.uimenuclass.createHTMLCode','edit_user') : '');
+			$t->set_var('rows', $_account_id ? ExecMethod2('admin.uimenuclass.createHTMLCode','edit_user',$_account_id) : '');
 
 			echo $t->fp('out','form');
 		}

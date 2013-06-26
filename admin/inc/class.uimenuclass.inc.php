@@ -8,14 +8,14 @@
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
- 
+
 	/* $Id$ */
 
 	class uimenuclass
 	{
 		var $t;
 		var $rowColor = Array();
-		
+
 		function uimenuclass()
 		{
 			$this->t =& CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir('admin'));
@@ -42,7 +42,7 @@
 		//  'Login History' => array('/index.php','menuaction=admin.uiaccess_history.list')
 		// );
 		// This allows extra data to be sent along
-		function display_section($_menuData)
+		function display_section($_menuData, $_account_id)
 		{
 			$i=0;
 
@@ -53,11 +53,11 @@
 			{
 				if (!empty($value['extradata']))
 				{
-					$link = $GLOBALS['egw']->link($value['url'],'account_id=' . get_var('account_id',array('GET','POST')) . '&' . $value['extradata']);
+					$link = egw::link($value['url'],'account_id=' . $_account_id . '&' . $value['extradata']);
 				}
 				else
 				{
-					$link = $GLOBALS['egw']->link($value['url'],'account_id=' . get_var('account_id',array('GET','POST')));
+					$link = egw::link($value['url'],'account_id=' . get_var('account_id',array('GET','POST')));
 				}
 				$this->section_item($link,lang($value['description']),($i%2) ? "row_on": "row_off",$value['options']);
 				$i++;
@@ -77,14 +77,17 @@
 			$this->t->set_var('row_on',$this->rowColor[0]);
 
 			$this->t->parse('out','menu_links');
-			
+
 			return $this->t->get('out','menu_links');
 		}
 
 		// create the html code for the menu
-		function createHTMLCode($_hookname)
+		function createHTMLCode($_hookname, $_account_id=null)
 		{
-			$hook['location'] = $_hookname;
+			$hook = array('location' => $_hookname);
+			if (!$_account_id) $_account_id = get_var('account_id',array('GET','POST'));
+			if ($_account_id) $hook['account_id'] = $_account_id;
+
 			switch ($_hookname)
 			{
 				case 'edit_user':
@@ -93,7 +96,6 @@
 						'url'         => '/index.php',
 						'extradata'   => 'menuaction=admin.uiaccounts.edit_user'
 					);
-					if (get_var('account_id',array('GET','POST'))) $hook['account_id'] = get_var('account_id',array('GET','POST'));
 					break;
 				case 'view_user':
 					$GLOBALS['menuData'][] = array(
@@ -101,7 +103,6 @@
 						'url'         => '/index.php',
 						'extradata'   => 'menuaction=admin.uiaccounts.view_user'
 					);
-					//if (get_var('account_id',array('GET','POST'))) $hook['account_id'] = get_var('account_id',array('GET','POST'));
 					break;
 				case 'edit_group':
 					$GLOBALS['menuData'][] = array(
@@ -120,9 +121,9 @@
 			}
 			//_debug_array($hook);
 			$GLOBALS['egw']->hooks->process($hook);
-			if (count($GLOBALS['menuData']) >= 1) 
+			if (count($GLOBALS['menuData']) >= 1)
 			{
-				$result = $this->display_section($GLOBALS['menuData']);
+				$result = $this->display_section($GLOBALS['menuData'], $_account_id);
 				//clear $menuData
 				$GLOBALS['menuData'] = '';
 				return $result;
@@ -135,4 +136,3 @@
 			}
 		}
 	}
-?>
