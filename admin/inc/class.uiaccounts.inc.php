@@ -888,17 +888,7 @@
 				settype($account_id,'integer');
 				$account_id = (int)($_GET['account_id'] ? $_GET['account_id'] : $accountid);
 
-				// todo
-				// not needed if i use the same file for new users too
-				/*if(!$account_id)
-				{
-					$this->list_users();
-					return False;
-				}
-				else*/
-				{
-					$this->create_edit_user($account_id);
-				}
+				$this->create_edit_user($account_id);
 			}
 		}
 
@@ -962,7 +952,7 @@
 			$var['mustchangepassword']= (isset($userData['account_lastpwd_change']) && ((is_string($userData['account_lastpwd_change']) && $userData['account_lastpwd_change']==="0")||(is_int($userData['account_lastpwd_change']) && $userData['account_lastpwd_change']===0)) ? '&nbsp;&nbsp;X' : '&nbsp;');
 			unset($acl);
 
-			if ($userData['status'])
+			if ($userData['account_status'])
 			{
 				$var['account_status'] = lang('Enabled');
 			}
@@ -1335,7 +1325,7 @@
 				else
 				{
 					$userData = Array();
-					$userData['status'] = 'A';
+					$userData['account_status'] = 'A';
 					$userGroups = Array();
 					$userData['anonymous'] = False;
 					$userData['changepassword'] = (bool)$GLOBALS['egw_info']['server']['change_pwd_every_x_days'];
@@ -1442,7 +1432,7 @@
 				'anonymous'     	=> '<input type="checkbox" name="anonymous" value="1"'.($userData['anonymous'] ? ' checked' : '').'>',
 				'changepassword'	=> '<input type="checkbox" name="changepassword" value="1"'.($userData['changepassword'] ? ' checked' : '').'>',
 				'mustchangepassword'    => '<input type="checkbox" name="mustchangepassword" value="1"'.($userData['mustchangepassword'] ? ' checked' : '').'>',
-				'account_status'    => '<input type="checkbox" name="account_status" value="A"'.($userData['status']?' checked':'').'>',
+				'account_status'    => '<input type="checkbox" name="account_status" value="A"'.($userData['account_status']?' checked':'').'>',
 				'account_firstname' => '<input id="firstname" onchange="check_account_email(this.id);" name="account_firstname" maxlength="50" value="' . $userData['account_firstname'] . '">',
 				'account_lastname'  => '<input id="lastname" onchange="check_account_email(this.id);" name="account_lastname" maxlength="50" value="' . $userData['account_lastname'] . '">',
 				'account_email'     => '<input id="email" onchange="email_set=0; check_account_email(this.id);" name="account_email" size="32" maxlength="100" value="' . $userData['account_email'] . '">',

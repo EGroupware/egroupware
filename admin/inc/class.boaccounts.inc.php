@@ -372,7 +372,7 @@
 		 */
 		function save_user(array &$_userData)
 		{
-			error_log(__METHOD__."(".array2string($_userData).")");
+			//error_log(__METHOD__."(".array2string($_userData).")");
 			$errors = array();
 
 			// do NOT save password via accounts::save, as pw policy violation can happen and we cant/dont report that way
@@ -456,7 +456,7 @@
 			}
 			$GLOBALS['egw']->session->delete_cache((int)$_userData['account_id']);
 
-			error_log(__METHOD__."(".array2string($_userData).") returning ".array2string($errors));
+			//error_log(__METHOD__."(".array2string($_userData).") returning ".array2string($errors));
 			return $errors;
 		}
 
