@@ -861,7 +861,8 @@ you need to set enable logging to "%1" to create/update a log.	groupdav	en	You n
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	en	You have no permission to access application  %1 !
 your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!<br>
 your message has been sent	common	en	Your message has been sent.
-your password does not meet the required strength.<br> you must meet %1 criteria. you met only %2 criteria. <br>your password failed the following criteria:	common	en	Your password does not meet the required strength.<br>You must meet %1 criteria, but you met only %2 criteria. <br>Your Password failed the following criteria:
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	en	Your password does not have required strength of %1 character classes and minimum length of %2 characters.
+your password failed the following criteria:	common	en	Your password failed the following criteria:
 your password is about to expire in %1 days, you may change your password now	common	en	Your password is about to expire in %1 days, you may change your password now.
 your search returned %1 matchs	common	en	Search returned %1 matches
 your search returned 1 match	common	en	Search returned 1 match
