@@ -1144,6 +1144,11 @@ class calendar_groupdav extends groupdav_handler
 		$privileges = parent::current_user_privileges($path, $user);
 		//error_log(__METHOD__."('$path', $user) parent gave ".array2string($privileges));
 
+		if (!$user || $user == $GLOBALS['egw_info']['user']['account_id'])
+		{
+			$privileges['all'] = 'all';
+		}
+
 		if ($this->bo->check_perms(EGW_ACL_FREEBUSY, 0, $user))
 		{
 			$privileges['read-free-busy'] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV, 'read-free-busy', '');

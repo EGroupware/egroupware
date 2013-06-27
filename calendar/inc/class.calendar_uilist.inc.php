@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005-12 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2005-13 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -77,7 +77,7 @@ class calendar_uilist extends calendar_ui
 		$this->__construct(array(
 			'date'	   => $this->bo->date2string($this->bo->now_su),
 			'cat_id'	 => 0,
-			'filter'	 => 'all',
+			'filter'	 => 'default',
 			'owner'	  => $this->user,
 			'multiple'   => 0,
 			'view'	   => $this->bo->cal_prefs['mainscreen_showevents'],
