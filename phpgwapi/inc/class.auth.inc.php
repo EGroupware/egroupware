@@ -592,7 +592,7 @@ class auth
 		{
 			$strength++;
 		}
-		if (!preg_match('/.{'. ($minlength=7). ',}/',$passwd))
+		if (!preg_match('/.{'. ($minlength). ',}/',$passwd))
 		{
 			$message[] = lang('Password must have at least %1 characters', $minlength);
 			$strength = 0;
