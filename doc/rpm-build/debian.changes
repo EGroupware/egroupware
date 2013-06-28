@@ -1,3 +1,14 @@
+egroupware-epl (11.1.20130628-1) hardy; urgency=low
+
+  * Admin/API/LDAP: fixed not working pagination of accounts for 2. or further pages introduced by enabling caching again in last package
+  * EMailAdmin: Postfix tcp-map and Dovecot checkpassword scripts supporting ActiveDirectory using multivalued proxyAddresses attribute as implemented by emailadmin_smtp_ads
+  * ProjectManager: reverted fix "role_acl in list view seems not to be used ...", as it influences visibility of projects
+  * ProjectManager: fixed project shown multiple times in project-list, if user had multiple roles (eg. assigned to himself and 2. one to one of his memberhips)
+  * ProjectManager/Timesheet: automatic change a changed project-title in Timesheet too
+  * Calendar: use "default" filter for home screen, instead of "all" which shows canceled events too
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 28 Jun 2013 13:37:03 +0200
+
 egroupware-epl (11.1.20130625-1) hardy; urgency=low
 
   * Addressbook/CardDAV: PUT returned empty ETag, proably causing unnecessary reloads of contacts
