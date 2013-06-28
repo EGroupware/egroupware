@@ -107,7 +107,6 @@ class setup_cmd_update extends setup_cmd
 					echo "\n".$app_title . ' ' . lang('hooks registered') . '.';
 				}
 			}
-			self::$egw_setup->process->translation->drop_add_all_langs(false,$this->app);
 		}
 		else
 		{
