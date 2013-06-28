@@ -674,7 +674,8 @@ class egw_db
 		if (!$this->Query_ID)
 		{
 			throw new egw_exception_db_invalid_sql("Invalid SQL: ".(is_array($Query_String)?$Query_String[0]:$Query_String).
-				($inputarr ? "<br>Parameters: '".implode("','",$inputarr)."'":''));
+				"\n$this->Error ($this->Errno)".
+				($inputarr ? "\nParameters: '".implode("','",$inputarr)."'":''));
 		}
 		return $this->Query_ID;
 	}
@@ -1174,6 +1175,37 @@ class egw_db
 	}
 
 	/**
+	 * Concat grouped values of an expression with optional order and separator
+	 *
+	 * @param string $expr column-name or expression optional prefixed with "DISTINCT"
+	 * @param string $order_by='' optional order
+	 * @param string $separator=',' optional separator, default is comma
+	 * @return string
+	 */
+	function group_concat($expr, $order_by='', $separator=',')
+	{
+		switch($this->Type)
+		{
+			case 'mysql':
+				$sql = 'GROUP_CONCAT('.$expr;
+				if ($order_by) $sql .= ' ORDER BY '.$order_by;
+				if ($separator != ',') $sql .= ' SEPARATOR '.$this->quote($separator);
+				$sql .= ')';
+				break;
+
+			case 'pgsql':	// requires for Postgresql < 8.4 to have a custom ARRAY_AGG method installed!
+				$sql = 'ARRAY_TO_STRING(ARRAY_AGG('.$expr;
+				if ($order_by) $sql .= ' ORDER BY '.$order_by;
+				$sql .= '), '.$this->quote($separator).')';
+				break;
+
+			default:	// probably gives an sql error anyway
+				$sql = $expr;
+		}
+		return $sql;
+	}
+
+	/**
 	 * Convert a DB specific timestamp in a unix timestamp stored as integer, like MySQL: UNIX_TIMESTAMP(ts)
 	 *
 	 * @param string $expr name of an integer column or integer expression
@@ -1192,7 +1224,6 @@ class egw_db
 			case 'mssql':
 				return "DATEDIFF(second,'1970-01-01',($expr))";
 		}
-
 	}
 
 	/**
