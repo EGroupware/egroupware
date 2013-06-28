@@ -970,8 +970,6 @@ class so_sql
 			{
 				$column = $this->table_name . '.' . $column;
 			}
-			$colums = implode(',',$colums);
-			if (!empty($colums)) $colums = ' DISTINCT '.$colums;
 		}
 		elseif (is_array($only_keys))
 		{
@@ -980,8 +978,6 @@ class so_sql
 			{
 				$colums[] = ($db_col = array_search($col,$this->db_cols)) ? $db_col : $col;
 			}
-			$colums = implode(',',$colums);
-			if (!empty($colums)) $colums = ' DISTINCT '.$colums;
 		}
 		elseif (!$only_keys)
 		{
@@ -991,19 +987,45 @@ class so_sql
 		{
 			$colums = $only_keys;
 		}
-		if ($extra_cols) $colums .= ($colums ? ',' : '').(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols);
+		if ($extra_cols)
+		{
+			if (!is_array($colums))
+			{
+				$colums .= ','.(is_array($extra_cols) ? implode(',', $extra_cols) : $extra_cols);
+			}
+			else
+			{
+				$colums = array_merge($colums, is_array($extra_cols) ? $extra_cols : explode(',', $extra_cols));
+			}
+		}
 
 		// add table-name to otherwise ambiguous id over which we join (incl. "AS id" to return it with the right name)
-		if ($join && $this->autoinc_id && strpos($colums,$this->autoinc_id) !== false)
+		if ($join && $this->autoinc_id)
 		{
-			$colums = preg_replace('/(?<! AS)([ ,]+)'.preg_quote($this->autoinc_id).'([ ,]+)/','\\1'.$this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id.'\\2',$colums);
+			if (is_array($colums) && ($key = array_search($this->autoinc_id, $colums) !== false))
+			{
+				$colums[$key] = $this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id;
+			}
+			elseif (!is_array($colums) && strpos($colums,$this->autoinc_id) !== false)
+			{
+				$colums = preg_replace('/(?<! AS)([ ,]+)'.preg_quote($this->autoinc_id).'([ ,]+)/','\\1'.$this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id.'\\2',$colums);
+			}
 		}
 		$num_rows = 0;	// as spec. in max_matches in the user-prefs
 		if (is_array($start)) list($start,$num_rows) = $start;
 
-		if ($order_by && stripos($order_by,'ORDER BY')===false && stripos($order_by,'GROUP BY')===false && stripos($order_by,'HAVING')===false)
+		// fix GROUP BY clause to contain all non-aggregate selected columns
+		if ($order_by && stripos($order_by,'GROUP BY') !== false && $this->db->Type != 'mysql')
+		{
+			$order_by = self::fix_group_by_columns($order_by, $colums);
+		}
+		elseif ($order_by && stripos($order_by,'ORDER BY')===false && stripos($order_by,'GROUP BY')===false && stripos($order_by,'HAVING')===false)
 		{
 			$order_by = 'ORDER BY '.$order_by;
+		}
+		if (is_array($colums))
+		{
+			$colums = implode(',', $colums);
 		}
 		static $union = array();
 		static $union_cols = array();
@@ -1088,6 +1110,60 @@ class so_sql
 			$n++;
 		}
 		return $n ? $arr : null;
+	}
+
+	/**
+	 * Fix GROUP BY clause to contain all non-aggregate selected columns
+	 *
+	 * No need to call for MySQL because MySQL does NOT give an error in above case.
+	 * (Of cause developer has to make sure to group by enough columns, eg. a unique key, for selected columns to be defined.)
+	 *
+	 * MySQL also does not allow to use [tablename.]* in GROUP BY, which PostgreSQL allows!
+	 * (To use this for MySQL too, we would have to replace * with all columns of a table.)
+	 *
+	 * @param string $group_by [GROUP BY ...[HAVING ...]][ORDER BY ...]
+	 * @param string|array $columns better provide an array as exploding by comma can lead to error with functions containing one
+	 * @return string
+	 */
+	public static function fix_group_by_columns($group_by, $columns)
+	{
+		if (!preg_match('/(GROUP BY .*)(HAVING.*|ORDER BY.*)?$/iU', $group_by, $matches))
+		{
+			return $group_by;	// nothing to do
+		}
+		$changes = 0;
+		$group_by_cols = preg_split('/, */', trim(substr($matches[1], 9)));
+
+		if (!is_array($columns))
+		{
+			$columns = preg_split('/, */', $columns);
+		}
+		foreach($columns as $col)
+		{
+			// only check columns and non-aggregate functions
+			if (strpos($col, '(') === false || !preg_match('/(COUNT|MIN|MAX|AVG|SUM|BIT_[A-Z]+|STD[A-Z_]*|VAR[A-Z_]*)\(/i', $col))
+			{
+				if (($pos = stripos($col, 'DISTINCT ')) !== false)
+				{
+					$col = substr($col, $pos+9);
+				}
+				$alias = $col;
+				if (stripos($col, ' AS ')) list($col, $alias) = preg_split('/ +AS +/i', $col);
+				if (!in_array($col, $group_by_cols) && !in_array($alias, $group_by_cols))
+				{
+					$group_by_cols[] = $col;
+					//error_log(__METHOD__."() col=$col, alias=$alias --> group_by_cols=".array2string($group_by_cols));
+					++$changes;
+				}
+			}
+		}
+		$ret = $group_by;
+		if ($changes)
+		{
+			$ret = str_replace($matches[1], 'GROUP BY '.implode(',', $group_by_cols).' ',  $group_by);
+			//error_log(__METHOD__."('$group_by', ".array2string($columns).") group_by_cols=".array2string($group_by_cols)." changed to $ret");
+		}
+		return $ret;
 	}
 
 	/**
