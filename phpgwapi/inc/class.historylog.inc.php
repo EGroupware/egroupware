@@ -153,7 +153,7 @@ class historylog
 	 */
 	function search($filter,$order='history_id',$sort='DESC')
 	{
-		if (!is_array($filter)) $filter = (int)$filter ? array('history_record_id' => $filter) : array();
+		if (!is_array($filter)) $filter = is_numeric($filter) ? array('history_record_id' => $filter) : array();
 
 		if (!$_orderby || !preg_match('/^[a-z0-9_]+$/i',$_orderby) || !preg_match('/^(asc|desc)?$/i',$sort))
 		{
@@ -172,6 +172,9 @@ class historylog
 			}
 		}
 		if (!isset($filter['history_appname'])) $filter['history_appname'] = $this->appname;
+
+		// do not try to read all history entries of an app
+		if (!$filter['history_record_id']) return array();
 
 		$rows = array();
 		foreach($this->db->select(self::TABLE,'*',$filter,__LINE__,__FILE__,false,$orderby) as $row)
@@ -274,7 +277,10 @@ class historylog
 	 */
 	function return_array($filter_out,$only_show,$_orderby,$sort, $record_id)
 	{
-
+		if (!is_numeric($record_id))
+		{
+			return array();
+		}
 		if (!$_orderby || !preg_match('/^[a-z0-9_]+$/i',$_orderby) || !preg_match('/^(asc|desc)?$/i',$sort))
 		{
 			$orderby = 'ORDER BY history_timestamp,history_id';
