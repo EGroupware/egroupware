@@ -150,6 +150,7 @@ class addressbook_ldap
 			'label'			=> 'postaladdress',
 			'pubkey'		=> 'usersmimecertificate',
 			'uid'			=> 'entryuuid',
+			'id'			=> 'uid',
 		),
 
 		#displayName
