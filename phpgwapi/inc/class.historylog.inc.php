@@ -132,7 +132,7 @@ class historylog
 	 */
 	function search($filter,$order='history_id',$sort='DESC')
 	{
-		if (!is_array($filter)) $filter = (int)$filter ? array('history_record_id' => $filter) : array();
+		if (!is_array($filter)) $filter = is_numeric($filter) ? array('history_record_id' => $filter) : array();
 
 		if (!$_orderby || !preg_match('/^[a-z0-9_]+$/i',$_orderby) || !preg_match('/^(asc|desc)?$/i',$sort))
 		{
@@ -152,6 +152,9 @@ class historylog
 		}
 		if (!isset($filter['history_appname'])) $filter['history_appname'] = $this->appname;
 
+		// do not try to read all history entries of an app
+		if (!$filter['history_record_id']) return array();
+
 		$rows = array();
 		foreach($this->db->select(self::TABLE,'*',$filter,__LINE__,__FILE__,false,$orderby) as $row)
 		{
@@ -163,7 +166,7 @@ class historylog
 
 	/**
 	 * Get a slice of history records
-	 * 
+	 *
 	 * Similar to search(), except this one can take a start and a number of records
 	 */
 	public static function get_rows(&$query, &$rows) {
@@ -188,9 +191,9 @@ class historylog
 			self::TABLE,
 			$mysql_calc_rows.'*',
 			$filter,
-			__LINE__, __FILE__, 
+			__LINE__, __FILE__,
 			$query['start'],
-			'ORDER BY ' . ($query['order'] ? $query['order'] : 'history_id') . ' ' . ($query['sort'] ? $query['sort'] : 'DESC'), 
+			'ORDER BY ' . ($query['order'] ? $query['order'] : 'history_id') . ' ' . ($query['sort'] ? $query['sort'] : 'DESC'),
 			'phpgwapi',
 			$query['num_rows']
 		) as $row) {
@@ -218,7 +221,10 @@ class historylog
 	 */
 	function return_array($filter_out,$only_show,$_orderby,$sort, $record_id)
 	{
-
+		if (!is_numeric($record_id))
+		{
+			return array();
+		}
 		if (!$_orderby || !preg_match('/^[a-z0-9_]+$/i',$_orderby) || !preg_match('/^(asc|desc)?$/i',$sort))
 		{
 			$orderby = 'ORDER BY history_timestamp,history_id';
