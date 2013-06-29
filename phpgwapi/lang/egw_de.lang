@@ -40,6 +40,7 @@ action	common	de	Aktion
 action when category is an email address	groupdav	de	Aktion wenn Kategorie eine E-Mail Adresse ist
 actions	common	de	Befehle
 active	common	de	Aktiv
+active directory requires ssl or tls to change passwords!	common	de	Active Directory benötigt eine SSL oder TLS Verbindung um Passwörter zu ändern!
 add	common	de	Hinzufügen
 add %1 category for	common	de	%1 Kategorie hinzufügen für
 add category	common	de	Kategorie hinzufügen
