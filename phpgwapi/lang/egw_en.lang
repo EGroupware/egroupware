@@ -40,6 +40,7 @@ action	common	en	Action
 action when category is an email address	groupdav	en	Action when category is an EMail address
 actions	common	en	Actions
 active	common	en	Active
+active directory requires ssl or tls to change passwords!	common	en	Active directory requires SSL or TLS to change passwords!
 add	common	en	Add
 add %1 category for	common	en	Add %1 category for
 add category	common	en	Add category

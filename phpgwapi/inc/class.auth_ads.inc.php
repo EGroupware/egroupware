@@ -103,10 +103,15 @@ class auth_ads implements auth_backend
 	 */
 	function change_password($old_passwd, $new_passwd, $account_id=0)
 	{
-		if (!($adldap = accounts_ads::get_adldap()) || !($adldap->getUseSSL() || $adldap->getUseTLS()))
+		if (!($adldap = accounts_ads::get_adldap()))
 		{
-			error_log(__METHOD__."('$old_passwd', '$new_passwd', $account_id) adldap=".array2string($adldap)." returning false");
-			return false;		// Cant change passwd in ADS
+			error_log(__METHOD__."(\$old_passwd, \$new_passwd, $account_id) accounts_ads::get_adldap() returned false");
+			return false;
+		}
+
+		if (!($adldap->getUseSSL() || $adldap->getUseTLS()))
+		{
+			throw new egw_exception(lang('Failed to change password.  Please contact your administrator.').' '.lang('Active directory requires SSL or TLS to change passwords!'));
 		}
 
 		if(!$account_id || $GLOBALS['egw_info']['flags']['currentapp'] == 'login')
