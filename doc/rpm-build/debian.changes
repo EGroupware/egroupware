@@ -1,3 +1,11 @@
+egroupware-epl (11.1.20130629-1) hardy; urgency=low
+
+  * Admin/API/ADS: account creation did not set initial password
+  * Admin/Preferences/ADS: give explicit error, that AD requires SSL or TLS to change passwords (not just failing with unspecific error)
+  * Debian/RPM: fixed "PHP Fatal error:  Call to a member function drop_add_all_langs() on a non-object" on install/update of a non-default package
+
+ -- Ralf Becker <rb@stylite.de>  Sat, 29 Jun 2013 11:37:41 +0200
+
 egroupware-epl (11.1.20130628-1) hardy; urgency=low
 
   * Admin/API/LDAP: fixed not working pagination of accounts for 2. or further pages introduced by enabling caching again in last package
