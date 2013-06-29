@@ -108,15 +108,13 @@ class addressbook_ads extends addressbook_ldap
 
 		// AD seems to use user, instead of inetOrgPerson
 		unset($this->schema2egw['posixaccount']);
-		$this->schema2egw['user'] = $this->schema2egw['inetorgperson'];
-		$this->schema2egw['user'] += array(
+		$this->schema2egw['user'] = array_merge($this->schema2egw['inetorgperson'], array(
 			'account_id'	=> 'objectsid',
-			'account_lid'	=> 'samaccountname',
-			'contact_uid'   => 'objectguid',
+			'id'            => 'objectguid',
+			'uid'			=> 'objectguid',
+			'n_fn'          => 'displayname',	// leave CN used in DN untouched
 			'accountexpires', 'useraccountcontrol',	// needed to exclude deactivated or expired accounts
-		);
-		$this->schema2egw['user']['n_fn'] = 'displayname';	// leave CN used in DN untouched
-
+		));
 		foreach($this->schema2egw as $schema => $attributes)
 		{
 			$this->all_attributes = array_merge($this->all_attributes,array_values($attributes));
@@ -189,7 +187,7 @@ class addressbook_ads extends addressbook_ldap
 	function _user2egw(&$contact, $data)
 	{
 		$contact['account_id'] = $this->accounts_ads->objectsid2account_id($data['objectsid']);
-		$contact['id'] = $contact['contact_uid'] = $this->accounts_ads->objectguid2str($data['objectguid']);
+		$contact['id'] = $contact['uid'] = $this->accounts_ads->objectguid2str($data['objectguid']);
 
 		// ignore system accounts
 		if ($contact['account_id'] < accounts_ads::MIN_ACCOUNT_ID) return false;
