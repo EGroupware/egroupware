@@ -688,6 +688,7 @@ class accounts_ads
 				error_log(__METHOD__."(".array2string($data).") newly created user NOT found!");
 				return false;
 			}
+			$data['account_id'] = $old['account_id'];
 		}
 		// check if DN/account_fullname changed (not yet supported by adLDAP)
 		if (isset($data['account_fullname']) && $old['account_fullname'] !== $data['account_fullname'])
@@ -1449,10 +1450,10 @@ class adLDAPUsers_egw extends adLDAPUsers
 		{
 	        // Do the update
 	        $result = @ldap_modify($ds=$this->adldap->getLdapConnection(), $userDn, $mod);
-			$mod['unicodePwd'] = '***';
-			error_log(__METHOD__."(".array2string($attributes).") ldap_modify($ds, '$userDn', ".array2string($mod).") returned ".array2string($result)." ldap_error()=".ldap_error($ds));
 	        if ($result == false) {
-	            return false;
+				if (isset($mod['unicodePwd'])) $mod['unicodePwd'] = '***';
+				error_log(__METHOD__."(".array2string($attributes).") ldap_modify($ds, '$userDn', ".array2string($mod).") returned ".array2string($result)." ldap_error()=".ldap_error($ds));
+	        	return false;
 	        }
 		}
         if (array_key_exists("password",$attributes) && !$this->setPassword($userDn, $attributes['password']))
