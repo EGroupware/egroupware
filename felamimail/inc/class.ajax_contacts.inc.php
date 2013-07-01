@@ -19,7 +19,7 @@ class ajax_contacts {
 		$GLOBALS['egw']->session->commit_session();
 		$this->charset	= $GLOBALS['egw']->translation->charset();
 	}
-	
+
 	function decodeFolderName($_folderName) {
 		$folderName = translation::convert(html_entity_decode($_folderName, ENT_QUOTES, $this->charset),'UTF7-IMAP', $this->charset);
 		$response = new xajaxResponse();
@@ -43,7 +43,7 @@ class ajax_contacts {
 				$contacts = $GLOBALS['egw']->contacts->search(implode(' +',$seStAr),array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),'n_fn','','%',false,'OR',array(0,100),$filter);
 				// additionally search the accounts, if the contact storage is not the account storage
 				if ($showAccounts &&
-					$GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
+					$GLOBALS['egw_info']['server']['account_repository'] != 'sql' &&
 					$GLOBALS['egw_info']['server']['contact_repository'] == 'sql')
 				{
 					$accounts = $GLOBALS['egw']->contacts->search(array(
@@ -54,7 +54,7 @@ class ajax_contacts {
 						'email'      => $_searchString,
 						'email_home' => $_searchString,
 					),array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),'n_fn','','%',false,'OR',array(0,100),array('owner' => 0));
-					
+
 					if ($contacts && $accounts)
 					{
 						$contacts = array_merge($contacts,$accounts);
@@ -81,7 +81,7 @@ class ajax_contacts {
 			$innerHTML	= '';
 			$jsArray	= array();
 			$i		= 0;
-			
+
 			foreach($contacts as $contact) {
 				foreach(array($contact['email'],$contact['email_home']) as $email) {
 					// avoid wrong addresses, if an rfc822 encoded address is in addressbook
