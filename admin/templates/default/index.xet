@@ -2,8 +2,8 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="admin.index" template="" lang="" group="0" version="1.9.001">
-		<tree autoloading="admin_ui::ajax_tree" id="tree"/><!-- onclick="app.admin.run(widget.event_args[0],widget);" parent_node="tree_target"/ -->
+		<tree autoloading="admin_ui::ajax_tree" id="admin_tree" onclick="app.admin.run(widget.event_args[0],widget);" parent_node="admin_tree_target"/>
 		<html id="msg"/>
-		<!-- iframe frameborder="1" height="auto" id="iframe" scrolling="auto" width="100%"/ -->
+		<iframe frameborder="1" height="500px" id="admin_iframe" scrolling="auto" width="100%"/>
 	</template>
 </overlay>

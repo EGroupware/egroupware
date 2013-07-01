@@ -127,6 +127,12 @@ class idots_framework extends egw_framework
 	function navbar()
 	{
 		if (self::$navbar_done) return '';
+
+		if (!empty($_GET['nonavbar']) || $GLOBALS['egw_info']['flags']['currentapp'] == 'admin' && empty($_GET['ajax']))
+		{
+			if (!self::$header_done) return $this->header();
+			return '';
+		}
 		self::$navbar_done = true;
 
 		// the navbar
@@ -722,7 +728,8 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 				$this->tpl->set_var($this->_get_footer());
 				$content .= $this->tpl->fp('out','footer');
 			}
-			elseif (!isset($GLOBALS['egw_info']['flags']['noheader']) || !$GLOBALS['egw_info']['flags']['noheader'])
+			elseif (!isset($GLOBALS['egw_info']['flags']['noheader']) || !$GLOBALS['egw_info']['flags']['noheader'] ||
+				!empty($_GET['nonavbar']) || $GLOBALS['egw_info']['flags']['currentapp'] == 'admin' && empty($_GET['ajax']))
 			{
 				$content .= "</body>\n</html>\n";	// close body and html tag, eg. for popups
 			}

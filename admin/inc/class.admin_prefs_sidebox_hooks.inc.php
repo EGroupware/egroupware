@@ -31,6 +31,8 @@ class admin_prefs_sidebox_hooks
 	 */
 	static function all_hooks($args)
 	{
+		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
+
 		if (!isset($_GET['menuaction']) && substr($_SERVER['PHP_SELF'],-16) == '/admin/index.php')
 		{
 			admin_statistics::check();
@@ -38,9 +40,21 @@ class admin_prefs_sidebox_hooks
 		$appname = 'admin';
 		$location = is_array($args) ? $args['location'] : $args;
 
+		if ($location == 'sidebox_menu')
+		{
+			// Destination div for folder tree
+			$file[] = array(
+				'no_lang' => true,
+				'text' => '<span id="admin_tree_target" class="admin_tree" />',
+				'link' => false,
+				'icon' => false
+			);
+			display_sidebox($appname,lang('Admin'),$file);
+			return;
+		}
 		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'admins')
 		{
-$file['new admin'] = egw::link('/index.php', array('menuaction' => 'admin.admin_ui.index'));
+
 			if (! $GLOBALS['egw']->acl->check('site_config_access',1,'admin'))
 			{
 				$file['Site Configuration']         = egw::link('/index.php','menuaction=admin.uiconfig.index&appname=admin');
@@ -136,7 +150,7 @@ $file['new admin'] = egw::link('/index.php', array('menuaction' => 'admin.admin_
 			}
 			else
 			{
-				foreach($file as &$url) if (is_array($url)) $url = $url['link'];
+				foreach($file as &$url) if (is_array($url) && $url['link']) $url = $url['link'];
 				display_sidebox($appname,lang('Admin'),$file);
 			}
 		}

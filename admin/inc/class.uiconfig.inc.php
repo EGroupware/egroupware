@@ -259,7 +259,7 @@ class uiconfig
 		$t->set_var('lang_cancel', lang('Cancel'));
 
 		// set currentapp to our calling app, to show the right sidebox-menu
-		$GLOBALS['egw_info']['flags']['currentapp'] = $show_app;
+//		$GLOBALS['egw_info']['flags']['currentapp'] = $show_app;
 
 		// render the page
 		$GLOBALS['egw']->framework->render(

@@ -33,10 +33,10 @@ class admin_ui
 	 */
 	public function index(array $content=null, $msg='')
 	{
-		$tpl = new etemplate('admin.index');
+		$tpl = new etemplate_new('admin.index');
 
 		$content = array();
-		$content['msg'] = 'Hi Ralf ;-)';
+		//$content['msg'] = 'Hi Ralf ;-)';
 		$sel_options['tree'] = $this->tree_data();
 		$tpl->exec('admin.admin_ui.index', $content, $sel_options);
 	}
@@ -106,6 +106,7 @@ class admin_ui
 							$data['im0'] = $icon;
 						}
 					}
+					unset($data['icon']);
 					$parent =& $tree['item'];
 					$parts = explode('/', $data['id']);
 					if ($data['id'][0] == '/') array_shift($parts);	// remove root
@@ -128,12 +129,14 @@ class admin_ui
 								'item' => array(),
 								'child' => 1,
 							);
+							if ($path == '/admin') $parent[$path]['open'] = true;
 						}
 						$parent =& $parent[$path]['item'];
 					}
 					$data['text'] = lang($data['text']);
-					if (!empty($data['title'])) $data['title'] = lang($data['title']);
-					$parent[$data['id']] = $data;
+					if (!empty($data['tooltip'])) $data['tooltip'] = lang($data['tooltip']);
+
+					$parent[$data['id']] = self::fix_userdata($data);
 				}
 			}
 		}
@@ -151,6 +154,28 @@ class admin_ui
 		self::strip_item_keys($tree['item']);
 		//_debug_array($tree); exit;
 		return $tree;
+	}
+
+	/**
+	 * Fix userdata as understood by tree
+	 *
+	 * @param array $data
+	 * @return array
+	 */
+	private static function fix_userdata(array $data)
+	{
+		// store link as userdata, maybe we should store everything not directly understood by tree this way ...
+		foreach(array_diff_key($data, array_flip(array(
+			'id','text','tooltip','im0','im1','im2','item','child','select','open','call',
+		))) as $name => $content)
+		{
+			$data['userdata'][] = array(
+				'name' => $name,
+				'content' => $content,
+			);
+			unset($data[$name]);
+		}
+		return $data;
 	}
 
 	private static function strip_item_keys(&$items)
@@ -177,7 +202,7 @@ class admin_ui
 		function display_section($appname,$file,$file2=False)
 		{
 			admin_ui::$hook_data[$appname] = $file2 ? $file2 : $file;
-			error_log(__METHOD__."(".array2string(func_get_args()).")");
+			//error_log(__METHOD__."(".array2string(func_get_args()).")");
 		}
 		return array_merge($GLOBALS['egw']->hooks->process('admin', array('admin')), self::$hook_data);
 	}

@@ -1,0 +1,21 @@
+/**
+ * EGroupware - CSS Styles used by admin app
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @version $Id$
+ */
+
+.admin_tree table, .admin_tree tr, .admin_tree td {
+	border: none;
+}
+
+div#divAppbox {
+	padding: 0;
+}
+
+body {
+	background-image: none;
+}

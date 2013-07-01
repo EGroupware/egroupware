@@ -570,6 +570,66 @@ var et2_tree = et2_inputWidget.extend(
 		}
 		//alert(returnValue.join('#,#'));
 		return returnValue;
+	},
+	
+	/**
+	 * Fetch user-data stored in specified node under given name
+	 * 
+	 * User-data need to be stored in json as follows:
+	 * 
+	 * {"id": "node-id", "im0": ..., "userdata": [{"name": "user-name", "content": "user-value"},...]}
+	 * 
+	 * In above example getUserData("node-id", "user-name") will return "user-value"
+	 * 
+	 * @param _nodeId
+	 * @param _name
+	 * @returns
+	 */
+	getUserData: function(_nodeId, _name)
+	{
+		if(this.input == null) return null;
+		return this.input.getUserData(_nodeId, _name);
+	},
+	
+	/**
+	 * Stores / updates user-data in specified node and name
+	 * 
+	 * @param _nodeId
+	 * @param _name
+	 * @param _value
+	 * @returns
+	 */
+	setUserData: function(_nodeId, _name, _value)
+	{
+		if(this.input == null) return null;
+		return this.input.setUserData(_nodeId, _name, _value);
+	},
+	
+	/**
+	 * Query nodes open state and optinal change it
+	 * 
+	 * @param _id node-id
+	 * @param _open specify to change true: open, false: close, everything else toggle
+	 * @returns true if open, false if closed
+	 */
+	openItem: function(_id, _open)
+	{
+		if (this.input == null) return null;
+
+		var is_open = this.input.getOpenState(_id) == 1;
+			
+		if (typeof _open != 'undefined' && is_open !== _open)
+		{
+			if(is_open)
+			{
+				this.input.closeItem(_id);
+			}
+			else
+			{
+				this.input.openItem(_id);
+			}
+		}
+		return is_open;
 	}
 });
 et2_register_widget(et2_tree, ["tree","tree-cat"]);
