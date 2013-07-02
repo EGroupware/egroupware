@@ -142,14 +142,19 @@ class admin_ui
 		}
 		elseif ($root == '/groups')
 		{
-			$tree['item'][] = array(
-				'text' => 'Admins',
-				'id' => '/groups/Admins',
-			);
-			$tree['item'][] = array(
-				'text' => 'Default',
-				'id' => '/groups/Default',
-			);
+			foreach($GLOBALS['egw']->accounts->search(array(
+				'type' => 'groups',
+			)) as $group)
+			{
+				$tree['item'][] = self::fix_userdata(array(
+					'text' => $group['account_lid'],
+					'id' => $root.'/'.$group['account_id'],
+					'link' => egw::link('/index.php', array(
+						'menuaction' => 'admin.uiaccounts.edit_group',
+						'account_id' => $group['account_id'],
+					)),
+				));
+			}
 		}
 		self::strip_item_keys($tree['item']);
 		//_debug_array($tree); exit;
