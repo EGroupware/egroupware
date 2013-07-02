@@ -317,7 +317,14 @@ class uiaccountsel
 				' title="'.html::htmlspecialchars(lang('Select multiple accounts')).'"','users','phpgwapi');
 		}
 		// jDots needs a little re-do, since it plays with the layout
-		$html .= "<script>egw.LAB.wait(function() {window.setTimeout(function() {\$j('#$element_id').unchosen().chosen({placeholder_text: '".lang('Select multiple accounts')."'});},200);}); </script>";
+		$html .= "<script>
+		egw.LAB.wait(function() {
+			if (\$j().chosen)
+				window.setTimeout(function() {
+					\$j('#$element_id').unchosen().chosen({placeholder_text: '".lang('Select multiple accounts')."'});
+				},200);
+		});
+</script>";
 		if($need_js_popup && !$GLOBALS['egw_info']['flags']['uiaccountsel']['addOption_installed'])
 		{
 			$html .= '<script language="JavaScript">
