@@ -86,6 +86,12 @@ var et2_tree = et2_inputWidget.extend(
 			"type": "string",
 			"default": "",
 			"description": "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, GET parameter selected contains node-id"
+		},
+		"std_images": {
+			"name": "Standard images",
+			"type": "string",
+			"default": "",
+			"descripton": "comma-separated names of icons for a leaf, closed and opend folder (default: leaf.gif,folderClosed.gif,folderOpen.gif), images with extension get loaded from image_path, just 'image' or 'appname/image' are allowed too"
 		}
 	},
 
@@ -171,6 +177,10 @@ var et2_tree = et2_inputWidget.extend(
 			image_path:	widget.options.image_path,
 			checkbox:	widget.options.multiple,
 		});
+		if (widget.options.std_images)
+		{
+			widget.setImages.apply(widget, widget.options.std_images.split(','));
+		}
 		// Add in the callback so we can keep the two in sync
 		widget.input.AJAX_callback = function() { widget._dhtmlxtree_json_callback(JSON.parse(this.response), widget.input.lastLoadedXMLId);};
 
@@ -208,8 +218,8 @@ var et2_tree = et2_inputWidget.extend(
 		}
 	},
 
-	set_select_options: function(options) {
-
+	set_select_options: function(options) 
+	{
 		var custom_images = false;
 		this.options.select_options = options;
 
@@ -325,8 +335,8 @@ var et2_tree = et2_inputWidget.extend(
 	 * @param Array[ {ID, attributes..}+] array of egw action information - this is different from what is passed in to
 	 *	set_actions, which takes a more human-friendly Object map.
 	 */
-	_link_actions: function(parsed_actions) {
-
+	_link_actions: function(parsed_actions) 
+	{
 		// Get the top level element for the tree
 		var objectManager = egw_getAppObjectManager(true);
 		var treeObj = objectManager.getObjectById(this.id);
@@ -481,27 +491,45 @@ var et2_tree = et2_inputWidget.extend(
 	 * @return void
 	 */
 	_dhtmlxtree_json_callback: function(new_data, update_option_id) {
-		// Find the option to update
-		var option = this.options.select_options;
-		if(typeof update_option_id != "undefined")
+		// not sure if it makes sense to try update_option_id, so far I only seen it to be -1
+		var parent_id = typeof update_option_id != 'undefined' && update_option_id != -1 ? update_option_id : new_data.id;
+		// find root of loaded data to merge it there
+		var option = this._find_in_item(parent_id, this.options.select_options);
+		// if we found it, merge it
+		if (option)
 		{
-			var queue = []
-			do
-			{
-				for(var i in option.item)
-				{
-					queue.push(option.item[i]);
-				}
-				option = queue.pop();
-			}
-			while(option.id != update_option_id && queue.length > 0)
+			jQuery.extend(option,new_data || {});
 		}
-
-		// Update select options
-		jQuery.extend(option,new_data || {});
-		
+		else	// else store it in root
+		{
+			this.options.select_options = new_data;
+		}
 		// Update actions by just re-setting them
-		this.set_actions(this.options.actions);
+		this.set_actions(this.options.actions || {});
+	},
+	
+	/**
+	 * Recursive search item object for given id
+	 * 
+	 * @param string _id
+	 * @param object _item
+	 * @returns
+	 */
+	_find_in_item: function(_id, _item)
+	{
+		if (_item && _item.id == _id)
+		{
+			return _item;
+		}
+		if (_item && typeof _item.item != 'undefined')
+		{
+			for(var i=0; i < _item.item.length; ++i)
+			{
+				var found = this._find_in_item(_id, _item.item[i]);
+				if (found) return found;
+			}
+		}
+		return null;
 	},
 
 	/**
@@ -630,6 +658,67 @@ var et2_tree = et2_inputWidget.extend(
 			}
 		}
 		return is_open;
+	},
+	
+	/**
+	 * Set images for a specific node or all new nodes (default)
+	 * 
+	 * If images contain an extension eg. "leaf.gif" they are asumed to be in image path (/phpgwapi/templates/default/images/dhtmlxtree/).
+	 * Otherwise they get searched via egw.image() in current app, phpgwapi or can be specified as "app/image".
+	 * 
+	 * @param string _leaf leaf image, default "leaf.gif"
+	 * @param string _closed closed folder image, default "folderClosed.gif"
+	 * @param string _open opened folder image, default "folderOpen.gif"
+	 * @param _id if not given, standard images for new nodes are set
+	 */
+	setImages: function(_leaf, _closed, _open, _id)
+	{
+		var images = [_leaf || 'leaf.gif', _closed || 'folderClosed.gif', _open || 'folderOpen.gif'];
+		var image_extensions = /\.(gif|png|jpe?g)/i;
+		for(var i=0; i < 3; ++i)
+		{
+			var image = images[i];
+			if (!image.match(image_extensions))
+			{
+				images[i] = this._rel_url(this.egw().image(image));
+			}
+		}
+		if (typeof _id == 'undefined')
+		{
+			this.input.setStdImages.apply(this.input, images);
+		}
+		else
+		{
+			images.unshift(_id);
+			this.input.setItemImage2.apply(this.input, images);
+		}
+	},
+	
+	/**
+	 * Get URL relative to image_path option
+	 * 
+	 * Both URL start with EGroupware webserverUrl and image_path gets allways appended to images by tree.
+	 * 
+	 * @param string _url
+	 * @return string relativ url
+	 */
+	_rel_url: function(_url)
+	{
+		var path_parts = this.options.image_path.split(this.egw().webserverUrl);
+		path_parts = path_parts[1].split('/');
+		var url_parts = _url.split(this.egw().webserverUrl);
+		url_parts = url_parts[1].split('/');
+		
+		for(var i=0; i < path_parts.length; ++i)
+		{
+			if (path_parts[i] != url_parts[i])
+			{
+				while(++i < path_parts.length) url_parts.unshift('..');
+				break;
+			}
+			url_parts.shift();
+		}
+		return url_parts.join('/');
 	}
 });
 et2_register_widget(et2_tree, ["tree","tree-cat"]);
