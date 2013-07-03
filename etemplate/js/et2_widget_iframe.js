@@ -40,6 +40,12 @@ var et2_iframe = et2_valueWidget.extend(
 			translate: false,
 			type: "boolean"
 		},
+		"name": {
+			name: "Name",
+			"default": "",
+			description: "Specifies name of frame, to be used as target for links",
+			type: "string"
+		}
 	},
 
 	/**
@@ -50,16 +56,25 @@ var et2_iframe = et2_valueWidget.extend(
 	init: function() {
 		this._super.apply(this, arguments);
 
-                // Allow no child widgets
-                this.supportedWidgetClasses = [];
+		// Allow no child widgets
+		this.supportedWidgetClasses = [];
 
-                this.htmlNode = $j(document.createElement("iframe"));
-                if(this.options.label)
-                {
-                        this.htmlNode.append('<span class="et2_label">'+this.options.label+'</span>');
-                }
-                this.setDOMNode(this.htmlNode[0]);
-        },
+		this.htmlNode = $j(document.createElement("iframe"));
+		if(this.options.label)
+		{
+			this.htmlNode.append('<span class="et2_label">'+this.options.label+'</span>');
+		}
+		this.setDOMNode(this.htmlNode[0]);
+	},
+
+	/**
+	 * Set name of iframe (to be used as target for links)
+	 * 
+	 * @param _name
+	 */
+	set_name: function(_name) {
+		this.htmlNode.attr('name', this.htmlNode.name = _name);
+	},
 
 	/**
 	 * Make it look like part of the containing document
@@ -84,7 +99,7 @@ var et2_iframe = et2_valueWidget.extend(
 			// Value is content
 			this.set_srcdoc(_value);
 		}
-        },
+	},
 
 	/**
 	 * Set the URL for the iframe
