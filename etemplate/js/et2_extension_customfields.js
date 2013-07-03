@@ -185,6 +185,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 					.appendTo(this.tbody);
 				var cf = jQuery(document.createElement("td"))
 					.appendTo(row);
+				if(!field.type) field.type = 'text";'
 				var setup_function = '_setup_'+(apps[field.type] ? 'link_entry' : field.type.replace("-","_"));
 					
 				var attrs = {
