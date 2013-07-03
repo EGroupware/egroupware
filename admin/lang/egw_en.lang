@@ -283,6 +283,7 @@ error setting timer, wrong syntax or maybe there's one already running !!!	admin
 error! no appname found	admin	en	Error: No app name found!
 error: %1 not found or other error !!!	admin	en	Error: %1 not found or other error!
 exists	admin	en	Exists
+expired	admin	en	Expired
 expires	admin	en	Expires
 explanation of ldapman	admin	en	This module has been tested so far for POSTFIX, LDAP, Courier-IMAP and need the schemas  CORE and QMAIL (OID7914). More details about using and configuring this system can be found in README.ldapman in the doc folder of ADMIN.
 exports groups into a csv file.	admin	en	Exports groups into a CSV file.

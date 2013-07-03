@@ -1,9 +1,53 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
+	<template id="admin.index.rows" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column/>
+				<column width="30"/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<nextmatch-sortheader label="Login-ID" id="account_lid"/>
+					<nextmatch-sortheader label="ID" id="account_id"/>
+					<nextmatch-sortheader label="Firstname" id="account_firstname"/>
+					<nextmatch-sortheader label="Lastname" id="account_lastname"/>
+					<nextmatch-sortheader label="EMail" id="account_email"/>
+					<nextmatch-sortheader label="Primary group" id="account_primary_group"/>
+					<nextmatch-sortheader label="Expires" id="account_expires"/>
+					<nextmatch-sortheader label="Created" id="account_created"/>
+					<nextmatch-sortheader label="Last modified" id="account_modified"/>
+				</row>
+				<row class="$row_cont[status_class]">
+					<description id="${row}[account_lid]" no_lang="1"/>
+					<description id="${row}[account_id]" no_lang="1"/>
+					<description id="${row}[account_firstname]" no_lang="1"/>
+					<description id="${row}[account_lastname]" no_lang="1"/>
+					<url-email id="${row}[account_email]" readonly="true" class="adminOverflowEllipsis"/>
+					<menulist>
+						<menupopup id="${row}[account_primary_group]" no_lang="1" readonly="true"/>
+					</menulist>
+					<description id="${row}[status]" no_lang="1" class="adminStatus"/>
+					<date-time id="${row}[account_created]" readonly="true"/>
+					<date-time id="${row}[account_modified]" readonly="true"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="admin.index" template="" lang="" group="0" version="1.9.001">
-		<tree autoloading="admin_ui::ajax_tree" id="admin_tree" onclick="app.admin.run(widget.event_args[0],widget);" parent_node="admin_tree_target"/>
+		<tree autoloading="admin_ui::ajax_tree" id="admin_tree" onclick="app.admin.run(widget.event_args[0],widget);" parent_node="admin_tree_target" std_images="bullet"/>
 		<html id="msg"/>
-		<iframe frameborder="1" height="500px" id="admin_iframe" scrolling="auto" width="100%"/>
+		<split dock_side="topDock" id="admin_splitter" orientation="h">
+			<nextmatch id="admin_nm" template="admin.index.rows"/>
+			<iframe frameborder="1" height="500px" id="admin_iframe" scrolling="auto" width="100%"/>
+		</split>
 	</template>
 </overlay>

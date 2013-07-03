@@ -21,6 +21,15 @@ app.admin = AppJS.extend(
 	 * et2 widget container
 	 */
 	et2: null,
+	/**
+	 * reference to splitter
+	 */
+	splitter: null,
+
+	/**
+	 * reference to splitter
+	 */
+	iframe: null,
 
 	/**
 	 * Constructor
@@ -57,8 +66,30 @@ app.admin = AppJS.extend(
 
 		this.et2 = _et2.widgetContainer;
 		
-		var iframe = this.et2.getWidgetById('admin_iframe');
+		var iframe = this.iframe = this.et2.getWidgetById('admin_iframe');
 		if (iframe) iframe.set_src(egw.webserverUrl+'/admin/index.php');
+		
+		var splitter = this.splitter = this.et2.getWidgetById('admin_splitter');
+		if (splitter) 
+		{
+			window.setTimeout(function(){
+				splitter.dock();
+			}, 1);
+		}
+	},
+	
+	/**
+	 * Set location of iframe for given _action and _sender (row)
+	 * 
+	 * @param _action
+	 * @param _senders
+	 */
+	iframe_location: function(_action, _senders)
+	{
+		var id = _senders[0].id.split('::');
+		var url = _action.data.url.replace(/(%24|\$)id/, id[1]);
+
+		this.iframe.set_src(url);
 	},
 	
 	/**
@@ -70,15 +101,21 @@ app.admin = AppJS.extend(
 	run: function(_id, _widget)
 	{
 		var link = _widget.getUserData(_id, 'link');
-		var iframe = this.et2.getWidgetById('admin_iframe');
 		
-		if (typeof link == 'undefined')
+		if (_id == '/accounts' || _id.substr(0, 8) == '/groups/')
+		{
+			this.splitter.undock();
+			var parts = _id.split('/');
+			this.et2.getWidgetById('admin_nm').applyFilters({ filter: parts[2] ? parts[2] : '', search: ''});
+		}
+		else if (typeof link == 'undefined')
 		{
 			_widget.openItem(_id, 'toggle');	
 		}
 		else if (link[0] == '/' || link.substr(0,4) == 'http')
 		{
-			iframe.set_src(link+'&nonavbar=1');
+			this.splitter.dock();
+			this.iframe.set_src(link+'&nonavbar=1');
 		}
 		else if (link.substr(0,11) == 'javascript:')
 		{

@@ -282,7 +282,8 @@ error setting timer, wrong syntax or maybe there's one already running !!!	admin
 error! no appname found	admin	de	Fehler: Kein Anwendungsname gefunden
 error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder anderer Fehler!
 exists	admin	de	existiert
-expires	admin	de	abgelaufen
+expired	admin	de	abgelaufen
+expires	admin	de	läuft ab
 explanation of ldapman	admin	de	Dieses Modul ist derzeit nur für folgende Konfiguration getestet: Postfix, LDAP, Courier-Imap, Procmail und erfordert die Schemas: core und qmail(OID 7914). Weitere Konfigurationshinweise sind im README.ldapman im DOC Verzeichnis des Moduls ADMIN zu finden.
 exports groups into a csv file.	admin	de	Benutzergruppen in eine CSV-Datei exportieren.
 exports users into a csv file.	admin	de	Benutzer in eine CSV-Datei exportieren.

@@ -26,6 +26,13 @@ class admin_ui
 	);
 
 	/**
+	 * Reference to global accounts object
+	 *
+	 * @var accounts
+	 */
+	private static $accounts;
+
+	/**
 	 * New index page
 	 *
 	 * @param array $content
@@ -36,9 +43,154 @@ class admin_ui
 		$tpl = new etemplate_new('admin.index');
 
 		$content = array();
+		$content['admin_nm'] = array(
+			'get_rows' => 'admin_ui::get_users',
+			'no_cat' => true,
+			'no_filter2' => true,
+			'filter_label' => 'Group',
+			'filter_no_lang' => true,
+			'lettersearch' => true,
+			'order' => 'account_lid',
+			'sort' => 'ASC',
+			'row_id' => 'account_id',
+			'default_cols' => '!account_id,account_created',
+			'actions' => self::user_actions(),
+		);
 		//$content['msg'] = 'Hi Ralf ;-)';
 		$sel_options['tree'] = $this->tree_data();
+		$sel_options['filter'] = array('' => lang('All'));
+		foreach(self::$accounts->search(array(
+			'type' => 'groups',
+			'start' => false,
+			'order' => 'account_lid',
+			'sort' => 'ASC',
+		)) as $account_id => $data)
+		{
+			$sel_options['filter'][$data['account_id']] = empty($data['account_description']) ? $data['account_lid'] : array(
+				'label' => $data['account_lid'],
+				'title' => $data['account_description'],
+			);
+		}
+		$sel_options['account_primary_group'] = $sel_options['filter'];
+		unset($sel_options['account_primary_group']['']);
+
 		$tpl->exec('admin.admin_ui.index', $content, $sel_options);
+	}
+
+	/**
+	 * Actions on users
+	 *
+	 * @return array
+	 */
+	public static function user_actions()
+	{
+		$actions = array(
+			'edit' => array(
+				'caption' => 'Open',
+				'default' => true,
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=admin.uiaccounts.edit_user&account_id=$id',
+				'group' => $group=0,
+				'onExecute' => 'javaScript:app.admin.iframe_location',
+			),
+			'view' => array(
+				'caption' => 'View',
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=admin.uiaccounts.view_user&account_id=$id',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.admin.iframe_location',
+			),
+		);
+		++$group;
+		// supporting both old way using $GLOBALS['menuData'] and new just returning data in hook
+		$apps = array_unique(array_merge(array('admin'), $GLOBALS['egw']->hooks->hook_implemented('edit_user')));
+		foreach($apps as $n => $app)
+		{
+if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole admin, dono why
+			$GLOBALS['menuData'] = $data = array();
+			$data = $GLOBALS['egw']->hooks->single('edit_user', $app, true);
+			if (!$data) $data = $GLOBALS['menuData'];
+			foreach($data as $item)
+			{
+				// allow hook to return "real" actions, but still support legacy: description, url, extradata, options
+				if (empty($item['caption']))
+				{
+					$item['caption'] = $item['description'];
+					unset($item[$description]);
+				}
+				if (isset($item['url']) && isset($item['extradata']))
+				{
+					$item['url'] = $item['extradata'].'&account_id=$id';
+					$item['id'] = substr($item['extradata'], 11);
+					unset($item['extradata']);
+					if ($item['options'] && preg_match('/(egw_openWindowCentered2?|window.open)\([^)]+,(\d+),(\d+).*(title="([^"]+)")?/', $item['options'], $matches))
+					{
+						$item['popup'] = $matches[2].'x'.$matches[3];
+						$item['onExecute'] = 'javaScript:nm_action';
+						if (isset($matches[5])) $item['tooltip'] = $matches[5];
+						unset($item['options']);
+					}
+				}
+				if (empty($item['icon'])) $item['icon'] = $app.'/navbar';
+				if (empty($item['group'])) $item['group'] = $group;
+				if (empty($item['onExecute'])) $item['onExecute'] = 'javaScript:app.admin.iframe_location';
+
+				$actions[$item['id']] = $item;
+			}
+		}
+		$actions['delete'] = array(
+			'caption' => 'Delete',
+			'group' => ++$group,
+			'url' => 'menuaction=admin.uiaccounts.delete_user&account_id=$id',
+			'onExecute' => 'javaScript:app.admin.iframe_location',
+		);
+		//error_log(__METHOD__."() actions=".array2string($actions));
+		return $actions;
+	}
+
+	/**
+	 * Callback for nextmatch to fetch users
+	 *
+	 * @param array $query
+	 * @param array &$rows=null
+	 * @return int total number of rows available
+	 */
+	public static function get_users(array $query, array &$rows=null)
+	{
+		$params = array(
+			'type' => (int)$query['filter'] ? (int)$query['filter'] : 'accounts',
+			'start' => $query['start'],
+			'offset' => $query['num_rows'],
+			'order' => $query['order'],
+			'sort' => $query['sort'],
+			'active' => false,
+		);
+		if ($query['searchletter'])
+		{
+			$params['query'] = $query['searchletter'];
+			$params['query_type'] = 'start';
+		}
+		elseif($query['search'])
+		{
+			$params['query'] = $query['search'];
+			$params['query_type'] = 'all';
+		}
+
+		$rows = self::$accounts->search($params);
+		error_log(__METHOD__."() accounts->search(".array2string($params).") total=".self::$accounts->total);
+
+		foreach($rows as &$row)
+		{
+			$row['status'] = self::$accounts->is_expired($row) ?
+				lang('Expired').' '.egw_time::to($row['account_expires'], true) :
+					(!self::$accounts->is_active($row) ? lang('Disabled') :
+						($row['account_expires'] != -1 ? lang('Expires').' '.egw_time::to($row['account_expires'], true) :
+							lang('Enabled')));
+
+			if (!self::$accounts->is_active($row)) $row['status_class'] = 'adminAccountInactive';
+		}
+
+		return self::$accounts->total;
 	}
 
 	/**
@@ -144,6 +296,8 @@ class admin_ui
 		{
 			foreach($GLOBALS['egw']->accounts->search(array(
 				'type' => 'groups',
+				'order' => 'account_lid',
+				'sort' => 'ASC',
 			)) as $group)
 			{
 				$tree['item'][] = self::fix_userdata(array(
@@ -183,7 +337,12 @@ class admin_ui
 		return $data;
 	}
 
-	private static function strip_item_keys(&$items)
+	/**
+	 * Attribute 'item' has to be an array
+	 *
+	 * @param array $items
+	 */
+	private static function strip_item_keys(array &$items)
 	{
 		$items = array_values($items);
 		foreach($items as &$item)
@@ -211,4 +370,13 @@ class admin_ui
 		}
 		return array_merge($GLOBALS['egw']->hooks->process('admin', array('admin')), self::$hook_data);
 	}
+
+	/**
+	 * Init static variables
+	 */
+	public static function init_static()
+	{
+		self::$accounts = $GLOBALS['egw']->accounts;
+	}
 }
+admin_ui::init_static();

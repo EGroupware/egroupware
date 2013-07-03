@@ -19,3 +19,20 @@ div#divAppbox {
 body {
 	background-image: none;
 }
+
+/* otherwise it is transparent */
+#admin_iframe {
+	background-color: white;
+}
+
+tr.adminAccountInactive .adminStatus {
+	color: red;
+}
+
+.adminOverflowEllipsis {
+	width: 100%;
+	white-space: nowrap;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
