@@ -46,6 +46,12 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 		},
 		"padding": {
 			"ignore": true
+		},
+		"sortable": {
+			"name": "Sortable callback",
+			"type": "string",
+			"default": et2_no_init,
+			"description": "PHP function called when user sorts the grid.  Setting this enables sorting the grid rows.  The callback will be passed the ID of the grid and the new order of the rows."
 		}
 	},
 	
@@ -648,6 +654,47 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 	get_align: function(_value) {
 		return this.align;
 	},
+	
+	/**
+	 * Sortable allows you to reorder grid rows using the mouse.
+	 * The new order is returned as part of the value of the 
+	 * grid, in 'sort_order'.
+	 * 
+	 * @param {boolean|function} sortable Callback or false to disable
+	 */	
+	set_sortable: function(sortable) {
+		if(!sortable)
+		{
+			this.tbody.sortable("destroy");
+			return;
+		}
+		
+		// Make sure rows have IDs, so sortable has something to return
+		$j('tr', this.tbody).each(function(index) {
+			var $this = $j(this);
+			
+			// Header does not participate in sorting
+			if($this.hasClass('th')) return;
+			
+			// If row doesn't have an ID, assign the index as ID
+			if(!$this.attr("id")) $this.attr("id", index);
+		});
+		
+		var self = this;
+		
+		// Set up sortable
+		this.tbody.sortable({
+			// Header does not participate in sorting
+			items: "tr:not(.th)",
+			distance: 15,
+			stop: function(event, ui) {
+				self.egw().jsonq(sortable,[self.id, self.tbody.sortable("toArray")],
+					null,
+					self
+				);
+			}
+		});
+	},
 
 	/**
 	 * Code for implementing et2_IDetachedDOM
@@ -665,4 +712,3 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 	}
 });
 et2_register_widget(et2_grid, ["grid"]);
-

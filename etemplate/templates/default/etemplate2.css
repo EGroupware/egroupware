@@ -725,6 +725,12 @@ table.et2_grid {
 .et2_grid td {
 /*	border: 1px dashed silver;*/
 }
+/**
+ * Sortable grid
+ */
+table.et2_grid tbody.ui-sortable > tr:not(.th)  {
+	cursor: ns-resize;
+}
 
 /**
  * Create some spacing for widgets inside labels
