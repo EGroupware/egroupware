@@ -31,20 +31,17 @@ class ajax_contacts {
 		if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
 			if (method_exists($GLOBALS['egw']->contacts,'search')) {
 				// 1.3+
-				$showAccounts = true;
+				$showAccounts = empty($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']);
 				//error_log(__METHOD__.__LINE__.$_searchString);
 				$seStAr = explode(' ',$_searchString);
 				foreach ($seStAr as $k => $v) if (strlen($v)<3) unset($seStAr[$k]);
 				$_searchString = trim(implode(' AND ',$seStAr));
 				//error_log(__METHOD__.__LINE__.$_searchString);
-				if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts']) $showAccounts=false;
 				$filter = ($showAccounts?array():array('account_id' => null));
 				$filter['cols_to_search']=array('n_prefix','n_given','n_family','org_name','email','email_home');
 				$contacts = $GLOBALS['egw']->contacts->search(implode(' +',$seStAr),array('n_fn','n_prefix','n_given','n_family','org_name','email','email_home'),'n_fn','','%',false,'OR',array(0,100),$filter);
 				// additionally search the accounts, if the contact storage is not the account storage
-				if ($showAccounts &&
-					$GLOBALS['egw_info']['server']['account_repository'] != 'sql' &&
-					$GLOBALS['egw_info']['server']['contact_repository'] == 'sql')
+				if ($showAccounts && $GLOBALS['egw']->contacts->so_accounts)
 				{
 					$accounts = $GLOBALS['egw']->contacts->search(array(
 						'n_prefix'       => $_searchString,
