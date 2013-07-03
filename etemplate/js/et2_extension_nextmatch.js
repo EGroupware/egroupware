@@ -294,7 +294,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		}
 	},
 
-	applyFilters: function() {
+	/**
+	 * Apply current or modified filters on NM widget (updating rows accordingly)
+	 * 
+	 * @param _set filter(s) to set eg. { filter: '' } to reset filter in NM header
+	 */
+	applyFilters: function(_set) {
 		this.egw().debug("info", "Changing nextmatch filters to ", this.activeFilters);
 		
 		if(typeof this.activeFilters == "undefined")
@@ -304,6 +309,24 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		if(typeof this.activeFilters.col_filter == "undefined")
 		{
 			this.activeFilters.col_filter = {};
+		}
+		
+		if (typeof _set == 'object')
+		{
+			for(var s in _set)
+			{
+				if (s == 'col_filter')
+				{
+					for(var c in _set.col_filter)
+					{
+						this.activeFilters.col_filter[c] = _set.col_filter[c];
+					}
+				}
+				else
+				{
+					this.activeFilters[s] = _set[s];
+				}
+			}
 		}
 
 		// Update the filters in the grid controller
@@ -1437,6 +1460,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		var widget_options = {
 			"id": name,
 			"label": this.nextmatch.options.settings[name+"_label"],
+			"no_lang": lang
 		};
 
 		// Set select options
