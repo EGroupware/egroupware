@@ -1194,7 +1194,7 @@ class preferences
 		// the user does not directly manipulate this pref for the default email account
 		if ((string)$acctnum == '0')
 		{
-			$prefs['email']['fullname'] = $GLOBALS['egw_info']['user']['fullname'];
+			$prefs['email']['fullname'] = $GLOBALS['egw_info']['user']['account_fullname'];
 		}
 
 		// = = = =  SIMPLER PREFS  = = = =
