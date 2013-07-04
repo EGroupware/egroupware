@@ -2231,29 +2231,13 @@ class infolog_ui
 					$extra = array_intersect(explode(',',$content['responsible_edit']),array_keys($fields));
 					$this->bo->responsible_edit = array_unique(array_merge($this->bo->responsible_edit,$extra));
 				}
-				// some fields like id, uid, created, createdby, modified and modifiedby are excluded by default
-				foreach(array('copy_excludefields','sub_excludefields') as $name)
-				{
-					$efs = array_keys($name == 'sub_excludefields' ? $sub_excludefields : $excludefields);
-					$this->bo->$name = array_unique(array_diff($this->bo->$name, $efs, 	// restore default from bo
-						$name == 'sub_excludefields' ? $this->bo->default_sub_excludefields : array()));
-
-					if ($content[$name])
-					{
-						$this->bo->$name = array_merge($this->bo->$name, array_intersect((array)$content[$name], $efs));
-					}
-					elseif ($name == 'sub_excludefields' && !in_array('explicit-set',$this->bo->sub_excludefields))
-					{
-						$this->bo->sub_excludefields[] = 'explicit-set';	// otherwise we can NOT unset default info_des
-					}
-				}
-				config::save_value('copy_excludefields',$this->bo->copy_excludefields,'infolog');
-				config::save_value('sub_excludefields',$this->bo->sub_excludefields,'infolog');
-				config::save_value('responsible_edit',$this->bo->responsible_edit,'infolog');
-				config::save_value('implicit_rights',$this->bo->implicit_rights = $content['implicit_rights'] == 'edit' ? 'edit' : 'read','infolog');
-				config::save_value('history',$this->bo->history = $content['history'],'infolog');
-				config::save_value('index_load_cfs',$config_data['index_load_cfs'] = $content['index_load_cfs'],'infolog');
-				config::save_value('sub_prefix',$config_data['sub_prefix'] = $content['sub_prefix'],'infolog');
+				config::save_value('copy_excludefields', $content['copy_excludefields'] ? explode(',', $content['copy_excludefields']) : null, 'infolog');
+				config::save_value('sub_excludefields', $content['sub_excludefields'] ? explode(',', $content['sub_excludefields']) : array('*NONE*'), 'infolog');
+				config::save_value('responsible_edit', $this->bo->responsible_edit, 'infolog');
+				config::save_value('implicit_rights', $this->bo->implicit_rights = $content['implicit_rights'] == 'edit' ? 'edit' : 'read', 'infolog');
+				config::save_value('history', $this->bo->history = $content['history'], 'infolog');
+				config::save_value('index_load_cfs', implode(',', (array)$content['index_load_cfs']), 'infolog');
+				config::save_value('sub_prefix', $content['sub_prefix'], 'infolog');
 
 				// Notifications
 				$notifications =& $config[infolog_tracking::CUSTOM_NOTIFICATION];
