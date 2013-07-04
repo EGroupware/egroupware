@@ -11,7 +11,7 @@
  */
 
 include('./inc/functions.inc.php');
-//error_log(include('./inc/functions.inc.php'));
+
 /*
 Authorize the user to use setup app and load the database
 Does not return unless user is authorized
