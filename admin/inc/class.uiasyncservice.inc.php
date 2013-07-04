@@ -55,7 +55,7 @@ class uiasyncservice
 
 			if ($_POST['test'])
 			{
-				if (strpos($GLOBALS['egw_info']['user']['email'],'@') === false)
+				if (strpos($GLOBALS['egw_info']['user']['account_email'],'@') === false)
 				{
 					echo '<p><b>'.lang("You have no email address for your user set !!!")."</b></p>\n";
 				}
