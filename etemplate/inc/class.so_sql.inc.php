@@ -1002,7 +1002,7 @@ class so_sql
 		// add table-name to otherwise ambiguous id over which we join (incl. "AS id" to return it with the right name)
 		if ($join && $this->autoinc_id)
 		{
-			if (is_array($colums) && ($key = array_search($this->autoinc_id, $colums) !== false))
+			if (is_array($colums) && ($key = array_search($this->autoinc_id, $colums)) !== false)
 			{
 				$colums[$key] = $this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id;
 			}
