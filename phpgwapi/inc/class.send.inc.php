@@ -120,8 +120,8 @@ class send extends egw_mailer
 		$this->ClearAttachments();
 		$this->ClearCustomHeaders();
 
-		$this->FromName = $GLOBALS['egw_info']['user']['fullname'];
-		$this->From = $GLOBALS['egw_info']['user']['email'];
+		$this->FromName = $GLOBALS['egw_info']['user']['account_fullname'];
+		$this->From = $GLOBALS['egw_info']['user']['account_email'];
 		$this->Sender = '';
 
 		$this->AddCustomHeader('X-Mailer:eGroupWare (http://www.eGroupWare.org)');

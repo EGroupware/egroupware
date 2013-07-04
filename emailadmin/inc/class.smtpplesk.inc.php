@@ -81,8 +81,8 @@ class smtpplesk extends defaultsmtp
 		//echo "<p>smtpplesk::getAccountEmailAddress()</p>\n";
 
 		return array(array(
-			'name'		=> $GLOBALS['egw_info']['user']['fullname'],
-			'address'	=> $GLOBALS['egw_info']['user']['email'],
+			'name'		=> $GLOBALS['egw_info']['user']['account_fullname'],
+			'address'	=> $GLOBALS['egw_info']['user']['account_email'],
 			'type'		=> 'default'
 		));
 	}
