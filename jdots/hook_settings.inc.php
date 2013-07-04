@@ -90,6 +90,15 @@ $GLOBALS['settings'] = array(
 		'admin'  => False,
 		'default' => 'addressbook,calendar',
 	),
+	'active_tab' => array(
+		'type'   => 'select',
+		'label'  => 'Active application tab',
+		'name'   => 'active_tab',
+		'values' => $apps,
+		'help'   => 'Allows to set a default or force the active application tab for new logins.',
+		'xmlrpc' => True,
+		'admin'  => False,
+	),
 	'template_color' => array(
 		'type' => 'select',
 		'label' => 'Template color',
