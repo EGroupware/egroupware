@@ -354,7 +354,9 @@ app.home = AppJS.extend(
 				var link = et2_createWidget('link-entry', {label: egw.lang('Add')}, this.portlet_container);
 				var dialog = et2_dialog.show_dialog(
 					function(button_id) {
-						widget._process_edit(button_id,{list: widget.options.settings.list || {}, add: link.getValue()});
+						var new_list = widget.options.settings.list || [];
+						new_list.push(link.getValue());
+						widget._process_edit(button_id,{list: new_list || [],add: link.getValue()});
 						link.destroy();
 					},
 					'Add',
