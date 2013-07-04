@@ -45,24 +45,95 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM],
 
 		this.setDOMNode(this.div[0]);
 	},
-
+	
 	/**
-         * Code for implementing et2_IDetachedDOM
+	 * Overriden so we can check for autorepeating children.  We only check for
+	 * $ in the immediate children & grandchildren of this node.
+	 */
+	loadFromXML: function(_node) {
+		if(this._type != "box") 
+		{
+			return this._super.apply(this, arguments);
+		}
+		// Load the child nodes.
+		var childIndex = 0;
+		var repeatNode = null;
+		for (var i=0; i < _node.childNodes.length; i++)
+		{
+			var node = _node.childNodes[i];
+			var widgetType = node.nodeName.toLowerCase();
+
+			if (widgetType == "#comment")
+			{
+				continue;
+			}
+
+			if (widgetType == "#text")
+			{
+				if (node.data.replace(/^\s+|\s+$/g, ''))
+				{
+					this.loadContent(node.data);
+				}
+				continue;
+			}
+
+			// Create the new element, if no expansion needed
+			var id = et2_readAttrWithDefault(node, "id", "");
+			if(id.indexOf('$') < 0)
+			{
+				this.createElementFromNode(node);
+				childIndex++;
+			}
+			else
+			{
+				repeatNode = node;
+			}
+		}
+		
+		// Only the last child repeats(?)
+		if(repeatNode != null)
+		{
+			var currentPerspective = this.getArrayMgr("content").perspectiveData;
+			// Extra content
+			for(childIndex; typeof this.getArrayMgr("content").data[childIndex] != "undefined" && this.getArrayMgr("content").data[childIndex]; childIndex++) {
+				// Adjust for the row
+				var mgrs = this.getArrayMgrs();
+				for(var name in mgrs)
+				{
+					if(this.getArrayMgr(name).getEntry(childIndex))
+					{
+						this.getArrayMgr(name).perspectiveData.row = childIndex;
+					}
+				}
+
+				this.createElementFromNode(repeatNode);
+			}
+		
+			// Reset
+			for(var name in this.getArrayMgrs())
+			{
+				this.getArrayMgr(name).perspectiveData = currentPerspective;
+			}
+		}		
+	},
+		
+	/**
+	 * Code for implementing et2_IDetachedDOM
 	 * This doesn't need to be implemented.
 	 * Individual widgets are detected and handled by the grid, but the interface is needed for this to happen
-         */
-        getDetachedAttributes: function(_attrs)
-        {
-        },
+	 */
+	getDetachedAttributes: function(_attrs)
+	{
+	},
 
-        getDetachedNodes: function()
-        {
+	getDetachedNodes: function()
+	{
 		return [this.getDOMNode()];
-        },
+	},
 
-        setDetachedAttributes: function(_nodes, _values)
-        {
-        }
+	setDetachedAttributes: function(_nodes, _values)
+	{
+	}
 
 });
 et2_register_widget(et2_box, ["vbox", "box"]);

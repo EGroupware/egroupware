@@ -892,11 +892,87 @@ class etemplate_widget_box extends etemplate_widget
 	public function run($method_name, $params=array(''), $respect_disabled=false)
 	{
 		$cname =& $params[0];
+		$expand =& $params[1];
 		$old_cname = $params[0];
+		$old_expand = $params[1];
+		
 		if ($this->id) $cname = self::form_name($cname, $this->id, $params[1]);
-
-		parent::run($method_name, $params, $respect_disabled);
+		if ($expand['cname'] !== $cname && $cname)
+		{
+			$expand['cont'] =& self::get_array(self::$request->content, $cname);
+			$expand['cname'] = $cname;
+		}
+		if ($respect_disabled && ($disabled = $this->attrs['disabled'] || $disabled = self::check_disabled($disabled, $expand)))
+		{
+			if ($disabled)
+			{
+				error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'='$disabled': NOT running");
+				return;
+			}
+		}
+		if (method_exists($this, $method_name))
+		{
+			call_user_func_array(array($this, $method_name), $params);
+		}
+		
+		// Expand children
+		for($n = 0; ; ++$n)
+		{
+			// maintain $expand array name-expansion
+			$expand['row'] = $n;
+			
+			if (isset($this->children[$n]))
+			{
+				$child = $this->children[$n];
+			}
+			// check if we need to autorepeat last row ($child)
+			elseif (isset($child) && $this->need_autorepeat($child, $cname, $expand))
+			{
+				// not breaking repeats last row/column ($child)
+			}
+			else
+			{
+				break;
+			}
+			//error_log('Running ' . $method_name . ' on child ' . $n . '(' . $child . ') ['.$expand['row'] . ','.$expand['c'] . ']');
+			$disabled = $child->run($method_name, $params, $respect_disabled, $columns_disabled) === false;
+		}
+		
 		$params[0] = $old_cname;
+		$params[1] = $old_expand;
+		
+		return true;
+	}
+	
+	/**
+	 * Check if a box child needs autorepeating, because still content left
+	 *
+	 * We only check passed widget and direct children.
+	 *
+	 * @param string $cname
+	 * @param array $expand
+	 */
+	private function need_autorepeat(etemplate_widget &$widget, $cname, array $expand)
+	{
+		foreach(array($widget) + $widget->children as $check_widget)
+		{
+			$pat = $check_widget->id;
+			while(($pat = strstr($pat, '$')))
+			{
+				$pat = substr($pat,$pat[1] == '{' ? 2 : 1);
+
+				$Ok = $pat[0] == 'r' && !(substr($pat,0,2) == 'r_' || substr($pat,0,4) == 'row_');
+
+				if ($Ok && ($value = self::get_array(self::$request->content,
+					$fname=self::form_name($cname, $check_widget->id, $expand))) !== false && isset($value))
+				{
+					error_log(__METHOD__."($widget,$cname) $this autorepeating row $expand[row] because of $check_widget->id = '$fname' is ".array2string($value));
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 }
 // register class for layout widgets, which can have an own namespace
