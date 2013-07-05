@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="importexport.schedule_index" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description id="@msg" span="all" class="message"/>
+				</row>
+				<row>
+					<grid width="100%" id="scheduled">
+						<columns>
+							<column width="50"/>
+							<column width="60"/>
+							<column width="200"/>
+							<column width="100"/>
+							<column width="200"/>
+							<column width="100"/>
+							<column width="*"/>
+							<column width="44"/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description value="Type"/>
+								<description value="Application"/>
+								<description value="Plugin"/>
+								<description value="Definition"/>
+								<description value="Target"/>
+								<description value="Last Run"/>
+								<vbox options="0,0">
+									<description value="Next Run"/>
+									<description value="Schedule"/>
+								</vbox>
+								<description/>
+							</row>
+							<row valign="top">
+								<grid width="100%" class="schedule" id="{$row}">
+									<columns>
+										<column width="50"/>
+										<column width="60"/>
+										<column width="200"/>
+										<column width="100"/>
+										<column width="200"/>
+										<column width="100"/>
+										<column width="*"/>
+										<column width="44"/>
+									</columns>
+									<rows>
+										<row valign="top">
+											<menulist>
+												<menupopup id="type" readonly="true"/>
+											</menulist>
+											<menulist>
+												<menupopup type="select-app" id="appname" readonly="true"/>
+											</menulist>
+											<menulist>
+												<menupopup id="plugin" no_lang="1" readonly="true"/>
+											</menulist>
+											<menulist>
+												<menupopup id="definition" readonly="true"/>
+											</menulist>
+											<description id="target" no_lang="1"/>
+											<vbox>
+												<date-time id="last_run" readonly="true"/>
+												<description id="record_count" no_lang="1"/>
+												<date-duration id="run_time" readonly="true" options="m,m"/>
+											</vbox>
+											<vbox options="0,0">
+												<date-time id="next" readonly="true"/>
+												<description id="times" no_lang="1"/>
+											</vbox>
+											<hbox options="0,0">
+												<button id="edit[{$cont[id]}]" onclick="window.open(egw::link('/index.php','menuaction=importexport.importexport_schedule_ui.edit&amp;id={$cont[id]}'),'_blank','dependent=yes,width=600,height=450,scrollbars=yes,status=yes'); return false;" image="edit"/>
+												<button id="delete[{$cont[id]}]" image="delete"/>
+											</hbox>
+										</row>
+										<row class="th" disabled="!@result">
+											<description value="Results" span="all"/>
+										</row>
+										<row valign="top" disabled="!@result">
+											<grid width="100%" id="result">
+												<columns>
+													<column width="50%"/>
+													<column width="*"/>
+												</columns>
+												<rows>
+													<row class="nmr" valign="top">
+														<description id="${row}[target]"/>
+														<description id="${row}[message]" no_lang="1"/>
+													</row>
+												</rows>
+											</grid>
+										</row>
+										<row class="th" disabled="!@warnings">
+											<description value="Warnings" span="all"/>
+										</row>
+										<row>
+											<grid width="100%" id="warnings">
+												<columns>
+													<column width="50%"/>
+													<column/>
+												</columns>
+												<rows>
+													<row class="nmr" valign="top">
+														<description id="${row}[target]" no_lang="1"/>
+														<description id="${row}[message]" no_lang="1"/>
+													</row>
+												</rows>
+											</grid>
+										</row>
+										<row class="th" disabled="!@errors">
+											<description value="Errors" span="all"/>
+										</row>
+										<row valign="top" disabled="!@errors">
+											<grid width="100%" id="errors">
+												<columns>
+													<column width="50%"/>
+													<column/>
+												</columns>
+												<rows>
+													<row class="nmr" valign="top">
+														<description id="${row}[target]" no_lang="1"/>
+														<description id="${row}[message]" no_lang="1"/>
+													</row>
+												</rows>
+											</grid>
+										</row>
+									</rows>
+								</grid>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<hbox span="all">
+						<button label="add" id="add" onclick="window.open(egw::link('/index.php','menuaction=importexport.importexport_schedule_ui.edit'),'_blank','dependent=yes,width=600,height=450,scrollbars=yes,status=yes'); return false;"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			table.schedule {
+  border-bottom: 1px solid black;
+}
+		</styles>
+	</template>
+</overlay>

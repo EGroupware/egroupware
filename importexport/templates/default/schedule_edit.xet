@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="importexport.schedule_edit" template="" lang="" group="0" version="1.9.003">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@message">
+					<description id="message" span="all" class="message"/>
+					<description/>
+				</row>
+				<row>
+					<description value="Type"/>
+					<menulist>
+						<menupopup id="type" onchange="1"/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Application"/>
+					<menulist>
+						<menupopup id="appname" onchange="xajax_doXMLHTTP('importexport.importexport_schedule_ui.ajax_get_plugins', document.getElementById(form::name('type')).value, this.value);"/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Plugin"/>
+					<menulist>
+						<menupopup id="plugin" onchange="xajax_doXMLHTTP('importexport.importexport_schedule_ui.ajax_get_definitions', document.getElementById(form::name('appname')).value, this.value);" options="Select..."/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Definition"/>
+					<menulist>
+						<menupopup id="definition" options="Select..."/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Target"/>
+					<textbox id="target" size="50"/>
+				</row>
+				<row class="help">
+					<description value="Target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv" span="all"/>
+				</row>
+				<row disabled="@no_delete_files">
+					<checkbox label="Delete files after import" id="delete_files" span="all"/>
+				</row>
+				<row>
+					<grid id="schedule">
+						<columns>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description value="Year"/>
+								<description value="Month"/>
+								<description value="Day"/>
+								<description value="Day of week"/>
+								<description value="Hour"/>
+								<description value="Minute"/>
+							</row>
+							<row>
+								<textbox id="year" size="5"/>
+								<textbox id="month" size="5"/>
+								<textbox id="day" size="5"/>
+								<textbox align="center" id="dow" size="5"/>
+								<textbox id="hour" size="5"/>
+								<textbox id="min" size="5"/>
+							</row>
+							<row>
+								<description value="(* for all)" span="3"/>
+								<description value="(0-6, 0=Sun)"/>
+								<description value="(0-23)"/>
+								<description/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<date-time label="Schedule times are server time!  Currently %s." id="current_time" readonly="true" span="all" class="message"/>
+					<description/>
+				</row>
+				<row>
+					<hbox span="all">
+						<button label="Save" id="save"/>
+						<button label="Cancel" id="cancel" onclick="self.close();"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
