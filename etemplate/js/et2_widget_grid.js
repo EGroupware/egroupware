@@ -609,7 +609,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 	getDOMNode: function(_sender) {
 		// If the parent class functions are asking for the DOM-Node, return the
 		// outer table.
-		if (_sender == this)
+		if (_sender == this || typeof _sender == 'undefined')
 		{
 			return this.table[0];
 		}
@@ -696,6 +696,46 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 		});
 	},
 
+	/**
+	 * Override parent to apply actions on each row
+	 */
+	_link_actions: function(parsed_actions)
+	{
+		 // Get the top level element for the tree
+		var objectManager = egw_getAppObjectManager(true);
+		var widget_object = objectManager.getObjectById(this.id);
+		if (widget_object == null) {
+			// Add a new container to the object manager which will hold the widget
+			// objects
+			widget_object = objectManager.insertObject(false, new egwActionObject(
+				this.id, objectManager, new et2_action_object_impl(this),
+				objectManager.manager.getActionById(this.id) || objectManager.manager
+			));
+		}
+
+		// Delete all old objects
+		widget_object.clear();
+
+		// Go over the widget & add links - this is where we decide which actions are
+		// 'allowed' for this widget at this time
+		var action_links = [];
+		for(var i = 0; i < parsed_actions.length; i++)
+		{
+			action_links.push(parsed_actions[i].id);
+		}
+
+		// Deal with each row
+		for(var i = 0; i < this.rowData.length; i++)
+		{
+			// Add a new action object to the object manager
+			var aoi = new et2_action_object_impl(this);
+			var row = $j('tr', this.tbody)[i];
+			aoi.doGetDOMNode = function() { return row;};
+			var obj = widget_object.addObject("row_"+i, aoi);
+			obj.updateActionLinks(action_links);
+		}
+	},
+		
 	/**
 	 * Code for implementing et2_IDetachedDOM
 	 * This doesn't need to be implemented.
