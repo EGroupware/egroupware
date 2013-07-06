@@ -259,12 +259,16 @@ class setup_cmd_ldap extends setup_cmd
 			else
 			{
 				list($to, $from) = explode('=', $attr);
-				$attrs[] = $from;
+				if ($from) $attrs[] = $from;
 				$rename[strtolower($from)] = $to;
 			}
 		}
-		$attrs[] = 'uid';	// need to match account
-
+		$ignore_attr = array_flip(array('dn', 'objectclass', 'cn', 'userpassword'));
+		if (!in_array('uid', $attrs))
+		{
+			$attrs[] = 'uid';	// need to match account
+			$ignore_attr['uid'] = true;
+		}
 		// connect to destination ads
 		if (empty($this->ads_context))
 		{
@@ -309,7 +313,6 @@ class setup_cmd_ldap extends setup_cmd
 		{
 			throw new egw_exception(lang('Error searching "dn=%1" for "%2"!',$this->ldap_base, $search));
 		}
-
 		$changed = 0;
 		foreach($entries as $key => $entry)
 		{
@@ -317,7 +320,7 @@ class setup_cmd_ldap extends setup_cmd
 
 			$entry = ldap::result2array($entry);
 			$uid = $entry['uid'];
-			$entry = array_diff_key($entry, array_flip(array('dn', 'uid', 'objectclass', 'cn', 'userpassword')));
+			$entry = array_diff_key($entry, $ignore_attr);
 
 			if (!($sr = ldap_search($ads->ds, $this->ads_context,
 				$search='(&(objectClass=user)(sAMAccountName='.ldap::quote($uid).'))', array('dn'))) ||
@@ -327,10 +330,11 @@ class setup_cmd_ldap extends setup_cmd
 				continue;
 			}
 			$dn = $dest[0]['dn'];
+			if (isset($rename[''])) $entry[''] = '';
 			$update = array();
 			foreach($entry as $attr => $value)
 			{
-				if ($value)
+				if ($value || $attr === '')
 				{
 					$to = isset($rename[$attr]) ? $rename[$attr] : $attr;
 					// special handling for copying shadowExpires to accountExpires (not set or 0 is handled by classicupgrade!)
