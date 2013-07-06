@@ -280,7 +280,7 @@ function quote($string)
 	return str_replace(array('\\','*','(',')','\0',' '),array('\\\\','\*','\(','\)','\\0','\20'),$string);
 }
 
-function respond($request, $map, $extra='')
+function respond($request, $map, $extra='', $reconnect=false)
 {
 	static $ds;
 	global $ldap_uri, $version, $use_tls, $bind_dn, $bind_pw;
@@ -290,7 +290,7 @@ function respond($request, $map, $extra='')
 	{
 		return "500 No domain aliases yet\n";
 	}
-	if (!isset($ds))
+	if (!isset($ds) || $reconnect)
 	{
 		$ds = ldap_connect($ldap_uri);
 		if ($version) ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, $version);
@@ -340,6 +340,9 @@ function respond($request, $map, $extra='')
 
 		if ($errno == -1)		// eg. -1 lost connection to ldap
 		{
+			// as DC closes connections quickly, first try to reconnect once, before returning a temp. failure
+			if (!$reconnect) return respond($request, $map, $extra, true);
+
 			error_log("$map: get '$username' --> 400 $error: !ldap_search(\$ds, '$base', '$filter')");
 			ldap_close($ds);
 			$ds = null;	// force new connection on next lookup
