@@ -195,7 +195,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			self::$request->sel_options[$form_name]['favorite']['group'] = array('all' => lang('All users')) +
 				etemplate_widget_menupopup::typeOptions('select-account',',groups');
 		}
-		foreach($value as $name => $_value)
+		foreach($value as $name => &$_value)
 		{
 			if(strpos($name, 'options-') !== false && $_value)
 			{
@@ -203,6 +203,17 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				if(!self::$request->sel_options[$select])
 				{
 					self::$request->sel_options[$select] = array();
+				}
+				foreach($_value as &$label)
+				{
+					if(!is_array($label))
+					{
+						$label = html_entity_decode($label, ENT_NOQUOTES,'utf-8');
+					}
+					elseif($label['label'])
+					{
+						$label['label'] = html_entity_decode($label['label'], ENT_NOQUOTES,'utf-8');
+					}
 				}
 				self::$request->sel_options[$select] += $_value;
 				// The client doesn't need them in content, but we can't unset them because
