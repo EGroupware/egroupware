@@ -473,7 +473,7 @@ class categories
 		if (is_array($cat_list))
 		{
 			$cat_list = implode(',',$cat_list);
-			error_log(__METHOD__.__LINE__.' string expected, array found for cat_list. Converted to:'.$cat_list);
+			//error_log(__METHOD__.__LINE__.' string expected, array found for cat_list. Converted to:'.$cat_list);
 		}
 		$cat_arr = explode(',',$cat_list);
 		if (!empty($cat_arr) && is_array($cat_arr) && count($cat_arr) > 0)
