@@ -79,7 +79,7 @@ var et2_box = et2_baseWidget.extend([et2_IDetachedDOM],
 
 			// Create the new element, if no expansion needed
 			var id = et2_readAttrWithDefault(node, "id", "");
-			if(id.indexOf('$') < 0)
+			if(id.indexOf('$') < 0 || widgetType != 'box')
 			{
 				this.createElementFromNode(node);
 				childIndex++;
