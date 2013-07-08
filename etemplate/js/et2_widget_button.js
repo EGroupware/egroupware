@@ -127,7 +127,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 			_image = this.options.readonly ? this.options.ro_image : this.options.image;
 
 		// Silently blank for percentages instead of warning about missing image - use a progress widget
-		if(_image.match(/[0-9]+\%/)) 
+		if(_image.match(/^[0-9]+\%$/)) 
 		{
 			_image = "";
 			//this.egw().debug("warn", "Use a progress widget instead of percentage images", this);
