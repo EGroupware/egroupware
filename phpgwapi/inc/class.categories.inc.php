@@ -344,7 +344,7 @@ class categories
 		{
 			$parents[] = $cat['id'];
 		}
-		
+
 		if($parent_id || !$cats) // Avoid wiping search results
 		{
 			// Go find the children
@@ -470,7 +470,11 @@ class categories
 	function check_list($needed, $cat_list)
  	{
 		if (empty($cat_list)) return $cat_list;
-
+		if (is_array($cat_list))
+		{
+			$cat_list = implode(',',$cat_list);
+			error_log(__METHOD__.__LINE__.' string expected, array found for cat_list. Converted to:'.$cat_list);
+		}
 		$cat_arr = explode(',',$cat_list);
 		if (!empty($cat_arr) && is_array($cat_arr) && count($cat_arr) > 0)
 		{
