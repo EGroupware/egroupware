@@ -420,19 +420,31 @@ class etemplate_widget
 		foreach($this->children as $child)
 		{
 			// If type has something that can be expanded, we need to expand it so the correct method is run
-			if(strpos($child->attrs['type'], '@') !== false || strpos($child->attrs['type'], '$') !== false)
-			{
-				$type = self::expand_name($child->attrs['type'],$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
-				$id = self::expand_name($child->id,$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
-				$attrs = $child->attrs;
-				unset($attrs['type']);
-				$expanded_child = self::factory($type, false,$id);
-				$expanded_child->id = $id;
-				$expanded_child->type = $type;
-				$expanded_child->attrs = $attrs + array('type' => $type);
-				$child = $expanded_child;
-			}
+			$this->expand_widget($child, $expand);
 			$child->run($method_name, $params, $respect_disabled);
+		}
+	}
+	
+	/**
+	 * If a widget's type is expandable, we need to expand it to make sure we have
+	 * the right class before running the method on it
+	 *
+	 * @param etemplate_widget $child Widget to check & expand if needed
+	 * @param Array $expand Expansion array
+	 */
+	protected function expand_widget(etemplate_widget &$child, Array &$expand)
+	{
+		if(strpos($child->attrs['type'], '@') !== false || strpos($child->attrs['type'], '$') !== false)
+		{
+			$type = self::expand_name($child->attrs['type'],$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+			$id = self::expand_name($child->id,$expand['c'], $expand['row'], $expand['c_'], $expand['row_'], $expand['cont']);
+			$attrs = $child->attrs;
+			unset($attrs['type']);
+			$expanded_child = self::factory($type, false,$id);
+			$expanded_child->id = $id;
+			$expanded_child->type = $type;
+			$expanded_child->attrs = $attrs + array('type' => $type);
+			$child = $expanded_child;
 		}
 	}
 
@@ -918,16 +930,17 @@ class etemplate_widget_box extends etemplate_widget
 		// Expand children
 		for($n = 0; ; ++$n)
 		{
-			// maintain $expand array name-expansion
-			$expand['row'] = $n;
-			
 			if (isset($this->children[$n]))
 			{
-				$child = $this->children[$n];
+				$child =& $this->children[$n];
+				// If type has something that can be expanded, we need to expand it so the correct method is run
+				$this->expand_widget($child, $expand);
 			}
 			// check if we need to autorepeat last row ($child)
-			elseif (isset($child) && $this->need_autorepeat($child, $cname, $expand))
+			elseif (isset($child) && $child->type == 'box' && $this->need_autorepeat($child, $cname, $expand))
 			{
+				// Set row for repeating
+				$expand['row'] = $n;
 				// not breaking repeats last row/column ($child)
 			}
 			else
