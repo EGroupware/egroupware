@@ -157,14 +157,14 @@ var et2_date = et2_inputWidget.extend(
 				this.date.setTime(text.valueOf()+localOffset);
 				_value = Math.round(this.date.valueOf() / 1000);
 			}
-		} else if (typeof _value == 'number' || !isNaN(_value)) {
-			// Timestamp
-			// JS dates use milliseconds
-			this.date.setTime(parseInt(_value)*1000);
 		} else if (typeof _value == 'object' && _value.date) {
 			this.date = _value.date;
 		} else if (typeof _value == 'object' && _value.valueOf) {
 			this.date = _value;
+		} else if (typeof _value == 'number' || !isNaN(_value)) {
+			// Timestamp
+			// JS dates use milliseconds
+			this.date.setTime(parseInt(_value)*1000);
 		}
 
 		// Update input - popups do, but framework doesn't
