@@ -13,7 +13,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.002">
+	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -54,7 +54,7 @@
 					</hbox>
 				</row>
 				<row class="nmr $row_cont[class]" valign="top">
-					<button align="center" id="${row}[picture_thumb]" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.show&amp;res_id=$row_cont[res_id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes');return false;" image="$row_cont[picture_thumb]" class="thumb"/>
+					<button align="center" id="${row}[picture_thumb]" onclick="if('${row_cont[picture_src]}' == 'own_src') {egw.open('/apps/resources/${row_cont[res_id]}/.picture.jpg','file');} return false;" image="$row_cont[picture_thumb]" class="thumb"/>
 					<vbox>
 						<description id="${row}[name]" no_lang="1"/>
 						<description id="${row}[short_description]" no_lang="1"/>
@@ -128,7 +128,7 @@
 					<template align="right" id="nm_right"/>
 				</row>
 				<row>
-					<nextmatch id="nm" no_lang="1" options="resources.show.rows"/>
+					<nextmatch id="nm" no_lang="1" template="resources.show.rows"/>
 				</row>
 				<row disabled="!@nm[selectcols]=/legacy_actions/">
 					<hbox align="right" span="all">
