@@ -510,7 +510,8 @@ class resources_ui
 					$msg = $this->bo->delete($content['res_id']);
 					break;
 			}
-			$js = "opener.egw_refresh('".str_replace("'","\\'",$msg)."','resources',{$content['res_id']});";
+			$js = "var win = opener || egw.window; win.egw_refresh('".str_replace("'","\\'",$msg)."','resources',{$content['res_id']}, '" .
+			($button == 'delete' ? 'delete' : 'edit') . "');";
 			if($button != 'apply' && !$msg)
 			{
 				$js .= 'window.close();';
@@ -570,14 +571,6 @@ class resources_ui
 		{
 			$content['acc_count'] = count($this->bo->get_acc_list($content['res_id']));
 		}
-		$content['history'] = array(
-			'id' => $res_id,
-			'app' => 'resources',
-			'status-widgets' => array(
-				'accessory_of' => 'link-entry:resources',
-				'long_description' => 'html'
-			)
-		);
 		$sel_options['status'] = resources_bo::$field2label;
 
 		$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
@@ -590,6 +583,15 @@ class resources_ui
 		}
 		$search_options = array('accessory_of' => -1);
 		$sel_options['accessory_of'] = array(-1 => lang('none')) + (array)$this->bo->link_query('',$search_options);
+		
+		$content['history'] = array(
+			'id' => $res_id,
+			'app' => 'resources',
+			'status-widgets' => array(
+				'accessory_of' => $sel_options['accessory_of'],
+				'long_description' => 'html'
+			)
+		);
 		if($res_id) unset($sel_options['accessory_of'][$res_id]);
 
 // 		$content['general|page|pictures|links'] = 'resources.edit_tabs.page';  //debug
