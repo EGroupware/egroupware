@@ -187,6 +187,19 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 			{
 				this.showMessage(_value, "validation_error");
 				$j(node).addClass("invalid");
+				
+				// If on a tab, switch to that tab so user can see it
+				var widget = this;
+				var tab = this;
+				while(widget._parent && widget._type !='tabbox')
+				{
+					tab = widget;
+					widget = widget._parent;
+				}
+				if(!widget || typeof widget.setActiveTab == 'undefined') return;
+				var index = widget._children.indexOf(tab);
+				widget.setActiveTab(index);
+				console.log(widget);
 			}
 		}
 	},
