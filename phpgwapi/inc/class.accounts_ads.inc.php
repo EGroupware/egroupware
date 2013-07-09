@@ -74,7 +74,7 @@ class accounts_ads
 	 */
 	protected static $user_attributes = array(
 		'objectsid', 'samaccounttype', 'samaccountname',
-		'primarygroupid', 'givenname', 'sn', 'mail', 'cn', 'telephonenumber',
+		'primarygroupid', 'givenname', 'sn', 'mail', 'displayname', 'telephonenumber',
 		'objectguid', 'useraccountcontrol', 'accountexpires', 'pwdlastset', 'whencreated', 'whenchanged',
 	);
 
@@ -476,7 +476,7 @@ class accounts_ads
 			'account_firstname' => $data['givenname'][0],
 			'account_lastname'  => $data['sn'][0],
 			'account_email'     => $data['mail'][0],
-			'account_fullname'  => $data['cn'][0],
+			'account_fullname'  => $data['displayname'][0],
 			'account_phone'     => $data['telephonenumber'][0],
 			'account_status'    => $data['useraccountcontrol'][0] & 2 ? false : 'A',
 			'account_expires'   => !isset($data['accountexpires']) || $data['accountexpires'][0] == self::EXPIRES_NEVER ? -1 :
@@ -653,7 +653,7 @@ class accounts_ads
 			$data['account_fullname'] = $data['account_firstname'].' '.$data['account_lastname'];
 		}
 
-		if (!$old)	// new entry
+		if (($new_entry = !$old))	// new entry
 		{
 			static $new2adldap = array(
 				'account_lid'       => 'username',
@@ -690,17 +690,18 @@ class accounts_ads
 			}
 			$data['account_id'] = $old['account_id'];
 		}
-		// check if DN/account_fullname changed (not yet supported by adLDAP)
-		if (isset($data['account_fullname']) && $old['account_fullname'] !== $data['account_fullname'])
+		// check if DN/account_lid changed (not yet supported by adLDAP)
+		/* disabled as AD does NOT allow to change user-name (account_lid), which is used for DN
+		if (isset($data['account_lid']) && $old['account_lid'] !== $data['account_lid'] ||
+			(stripos($old['account_dn'], 'CN='.$data['account_lid'].',') !== 0))
 		{
 			if (!($ret = ldap_rename($ds=$this->ldap_connection(), $old['account_dn'],
-				'CN='.$this->adldap->utilities()->ldapSlashes($data['account_fullname']), null, true)))
+				'CN='.$this->adldap->utilities()->ldapSlashes($data['account_lid']), null, true)))
 			{
 				error_log(__METHOD__."(".array2string($data).") rename to new CN failed!");
 				return false;
 			}
-			$old['account_fullname'] = $data['account_fullname'];
-		}
+		}*/
 		static $egw2adldap = array(
 			'account_lid'       => 'samaccountname',
 			'account_firstname' => 'firstname',
@@ -715,6 +716,17 @@ class accounts_ads
 			//'account_phone'   => 'telephone',	not updated by accounts, only read so far
 		);
 		$attributes = $ldap = array();
+		// for a new entry set certain values (eg. profilePath) to in setup configured value
+		if ($new_entry)
+		{
+			foreach($this->frontend->config as $name => $value)
+			{
+				if (substr($name, 0, 8) == 'ads_new_')
+				{
+					$ldap[substr($name, 8)] = str_replace('%u', $data['account_lid'], $value);
+				}
+			}
+		}
 		foreach($egw2adldap as $egw => $adldap)
 		{
 			if (isset($data[$egw]) && (string)$data[$egw] != (string)$old[$egw])
@@ -1318,7 +1330,7 @@ class adLDAPUsers_egw extends adLDAPUsers
 		$add = $this->adldap->adldap_schema($attributes);
 
 		// Additional stuff only used for adding accounts
-		$add["cn"][0] = $attributes["display_name"];
+		$add["cn"][0] = $attributes["username"];
 		$add["samaccountname"][0] = $attributes["username"];
 		$add["userPrincipalName"][0] = $attributes["username"].$this->adldap->getAccountSuffix();
 		$add["objectclass"][0] = "top";
