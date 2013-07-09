@@ -26,13 +26,24 @@
  * - First run it with --dry-run to get ids to change / admin-cli command to change ids in EGroupware.
  * - Then run admin/admin-cli.php --change-account-id and after this command again without --dry-run.
  * - After that you can run the given setup/doc/chown.php command to change filesystem uid/gid in samba share.
+ *   This is usually not needed as samba-tool clasicupgrade takes care of existing filesystem uid/gid by installing
+ *   rfc2307 schema with uidNumber attributes.
  *
  * setup/setup-cli.php [--dry-run] --setup-cmd-ldap <domain>,<config-user>,<config-pw> sub_command=copy2ad \
  * 	ldap_base=dc=local ldap_root_dn=cn=admin,dc=local ldap_root_pw=secret ldap_host=localhost \
  * 	ads_domain=samba4.intern [ads_admin_user=Administrator] ads_admin_pw=secret ads_host=ad.samba4.intern [ads_connection=(ssl|tls)] \
- * 	attributes=@inetOrgPerson,accountExpires=shadowExpire,{smtp:}proxyAddresses=mail,{smtp:}proxyAddresses=mailalias,{quota:}proxyAddresses=mailuserquota,{forward:}proxyaddresses=maildrop
+ * 	attributes=@inetOrgPerson,accountExpires=shadowExpire
  *
  * - copies from samba-tool clasicupgrade not copied inetOrgPerson attributes and mail attributes to AD
+ *
+ * setup/setup-cli.php [--dry-run] --setup-cmd-ldap <domain>,<config-user>,<config-pw> sub_command=copy2ad \
+ * 	ldap_base=dc=local ldap_root_dn=cn=admin,dc=local ldap_root_pw=secret ldap_host=localhost \
+ * 	ads_domain=samba4.intern [ads_admin_user=Administrator] ads_admin_pw=secret \
+ * 	ads_host=ad.samba4.intern [ads_connection=(ssl|tls)] [no_sid_check=1] \
+ * 	attributes={smtp:}proxyAddresses=mail,{smtp:}proxyAddresses=mailalias,{quota:}proxyAddresses=mailuserquota,{forward:}proxyaddresses=maildrop
+ *
+ * - copies mail-attributes from ldap to AD (example is from Mandriva mailAccount schema, need to adapt to other schema!)
+ *   (no_sid_check=1 uses all objectClass=posixAccount, not checking for having a SID and uid not ending in $ for computer accounts)
  */
 class setup_cmd_ldap extends setup_cmd
 {
@@ -308,7 +319,8 @@ class setup_cmd_ldap extends setup_cmd
 		}
 
 		if (!($sr = ldap_search($this->test_ldap->ds,$this->ldap_base,
-			$search='(&(objectClass=posixAccount)('.self::sambaSID.'=*)(!(uid=*$)))', $attrs)) ||
+			$search = $this->no_sid_check ? '(objectClass=posixAccount)' :
+				'(&(objectClass=posixAccount)('.self::sambaSID.'=*)(!(uid=*$)))', $attrs)) ||
 			!($entries = ldap_get_entries($this->test_ldap->ds, $sr)))
 		{
 			throw new egw_exception(lang('Error searching "dn=%1" for "%2"!',$this->ldap_base, $search));
@@ -355,6 +367,12 @@ class setup_cmd_ldap extends setup_cmd
 						if (isset($update[$to]))
 						{
 							if (!is_array($update[$to])) $update[$to] = array($update[$to]);
+							// we need to check (caseinsensitive) if value already exists in set
+							// as AD chokes on doublicate values "Type or value exists"
+							foreach($update[$to] as $v)
+							{
+								if (!strcasecmp($v, $prefix.$val)) continue 2;
+							}
 							$update[$to][] = $prefix.$val;
 						}
 						else
