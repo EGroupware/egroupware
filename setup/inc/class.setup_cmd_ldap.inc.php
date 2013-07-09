@@ -343,20 +343,27 @@ class setup_cmd_ldap extends setup_cmd
 			}
 			$dn = $dest[0]['dn'];
 			if (isset($rename[''])) $entry[''] = '';
+			// special handling for copying shadowExpires to accountExpires
+			if (strtolower($rename['shadowexpire']) === 'accountexpires')
+			{
+				// need to write accountExpires for never expiring account, as samba-tool classicupgrade sets it to 2038-01-19
+				if (!isset($entry['shadowexpire']) || !$entry['shadowexpire'])
+				{
+					$entry['shadowexpire'] = accounts_ads::EXPIRES_NEVER;
+				}
+				else
+				{
+					if (is_null($utc_diff)) $utc_diff = date('Z');
+					$entry['shadowexpire'] = $value*24*3600+$utc_diff;	// ldap time to unixTime
+					$entry['shadowexpire'] = accounts_ads::convertUnixTimeToWindowsTime($entry['shadowexpire']);
+				}
+			}
 			$update = array();
 			foreach($entry as $attr => $value)
 			{
 				if ($value || $attr === '')
 				{
 					$to = isset($rename[$attr]) ? $rename[$attr] : $attr;
-					// special handling for copying shadowExpires to accountExpires (not set or 0 is handled by classicupgrade!)
-					if ($attr == 'shadowexpire' && strtolower($to) == 'accountexpires')
-					{
-						if (is_null($utc_diff)) $utc_diff = date('Z');
-						$value = $value*24*3600+$utc_diff;	// ldap time to unixTime
-						$update['accountexpires'] = accounts_ads::convertUnixTimeToWindowsTime($value);
-						continue;
-					}
 					unset($prefix);
 					if ($to[0] == '{')	// eg. {smtp:}proxyAddresses=forwardTo
 					{
