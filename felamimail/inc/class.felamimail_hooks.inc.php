@@ -152,6 +152,10 @@ class felamimail_hooks
 					//$identities[0] = $defaultIdentity->realName.' '.$defaultIdentity->organization.' <'.$defaultIdentity->emailAddress.'>';
 				}
 			}
+			foreach ($identities as $tmpkey => $identity)
+			{
+				$identities[$tmpkey] = str_replace(array('<','>'),array('&lt;','&gt;'),$identity);
+			}
 			if (isset($GLOBALS['egw']->preferences->default['felamimail']['ActiveProfileID'])) unset($GLOBALS['egw']->preferences->default['felamimail']['ActiveProfileID']);
 			if($bofelamimail->openConnection($profileID)) {
 				$folderObjects = $bofelamimail->getFolderObjects(true, false);
