@@ -521,6 +521,26 @@
      </td>
      <td><input name="newsettings[ads_context]" value="{value_ads_context}" size="80" /></td>
    </tr>
+   <tr class="row_off">
+     <td><b>{lang_Attributes_for_new_users}</b><br/></td>
+     <td>{lang_use_%u_for_username,_leave_empty_to_no_set}</td>
+   </tr>
+   <tr class="row_on">
+     <td>profilePath</td>
+     <td><input name="newsettings[ads_new_profilePath]" value="{value_ads_new_profilePath}" size="40" /></td>
+   </tr>
+   <tr class="row_off">
+     <td>homeDirectory</td>
+     <td><input name="newsettings[ads_new_homeDirectory]" value="{value_ads_new_homeDirectory}" size="40" /></td>
+   </tr>
+   <tr class="row_on">
+     <td>homeDrive</td>
+     <td><input name="newsettings[ads_new_homeDrive]" value="{value_ads_new_homeDrive}" size="40" /></td>
+   </tr>
+   <tr class="row_off">
+     <td>scriptPath</td>
+     <td><input name="newsettings[ads_new_scriptPath]" value="{value_ads_new_scriptPath}" size="40" /></td>
+   </tr>
 
    <tr class="row_off">
     <td colspan="2">&nbsp;</td>
