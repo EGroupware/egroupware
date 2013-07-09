@@ -1424,13 +1424,21 @@ function handleResize()
 	var iframe = document.getElementById('messageIFRAME');
 	if (typeof iframe != 'undefined' && iframe)
 	{
-		iframe.height = resultIframeHeight;
+		iframe.height = (resultIframeHeight>0?resultIframeHeight:1);
+		if (resultIframeHeight<=0) {
+			console.log('the calculated iframe height ('+resultIframeHeight+'px) is too small!');
+			iframe.parentElement.parentElement.parentElement.hidden=true;
+		}
 	}
 
 	var tdiframe = document.getElementById('tdmessageIFRAME');
 	if (tdiframe != 'undefined' && tdiframe)
 	{
-		tdiframe.height = resultIframeHeight;
+		tdiframe.height = (resultIframeHeight>0?resultIframeHeight:1);
+		if (resultIframeHeight<=0) {
+			console.log('the calculated iframe height ('+resultIframeHeight+'px) is too small!');
+			tdiframe.parentElement.parentElement.parentElement.hidden=true;
+		}
 	}
 }
 
