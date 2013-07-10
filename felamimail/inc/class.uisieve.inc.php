@@ -551,6 +551,7 @@
 			if(isset($_POST["vacationStatus"]))
 			{
 				$newVacation['text']		= get_var('vacation_text',array('POST'));
+				if (strpos($newVacation['text'],"\r\n")===false) $newVacation['text'] = str_replace("\n\n","\r\n",$newVacation['text']);
 				$newVacation['text']		= $this->botranslation->convert($newVacation['text'],$this->displayCharset,'UTF-8');
 				$newVacation['days']		= get_var('days',array('POST'));
 				$newVacation['addresses']	= get_var('vacationAddresses',array('POST'));
