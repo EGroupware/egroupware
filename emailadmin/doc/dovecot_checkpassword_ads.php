@@ -175,7 +175,7 @@ else
 	$filter = $userdb_filter;
 	putenv('AUTHORIZED=2');
 }
-$filter = strtr($filter, $replace);
+$filter = strtr($filter, quote($replace));
 
 // remove prefixes eg. "{quota:}proxyaddresses"
 $attrs = $user_attrs;
@@ -241,7 +241,7 @@ foreach($user_attrs as $placeholder => $attr)
 if (isset($group_base) && $group_filter && $group_attr)
 {
 	$base = strtr($group_base, $replace);
-	$filter = strtr($group_filter, $replace);
+	$filter = strtr($group_filter, quote($replace));
 	$append = strtr($group_append, $replace);
 	if (($sr = ldap_search($ds, $base, $filter, array($group_attr))) &&
 		($groups = ldap_get_entries($ds, $sr)) && $groups['count'])
@@ -264,7 +264,7 @@ if (isset($group_base) && $group_filter && $group_attr)
 // set host attribute for director to old imap
 if (isset($host_base) && isset($host_filter))
 {
-	if (!($sr = ldap_search($ds, $host_base, $filter=strtr($host_filter,$replace), array($host_attr))))
+	if (!($sr = ldap_search($ds, $host_base, $filter=strtr($host_filter, quote($replace)), array($host_attr))))
 	{
 		error_log("Error ldap_search(\$ds, '$host_base', '$filter')!");
 		exit(111);	// 111 = temporary problem
@@ -312,3 +312,18 @@ if ($extra)
 passthru($cmd, $ret);
 
 exit($ret);
+
+/**
+ * escapes a string for use in searchfilters meant for ldap_search.
+ *
+ * Escaped Characters are: '*', '(', ')', ' ', '\', NUL
+ * It's actually a PHP-Bug, that we have to escape space.
+ * For all other Characters, refer to RFC2254.
+ *
+ * @param string|array $string either a string to be escaped, or an array of values to be escaped
+ * @return string
+ */
+function quote($string)
+{
+	return str_replace(array('\\','*','(',')','\0',' '),array('\\\\','\*','\(','\)','\\0','\20'),$string);
+}
