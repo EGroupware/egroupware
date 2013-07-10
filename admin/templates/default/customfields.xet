@@ -46,7 +46,10 @@
 					<description value="Type"/>
 					<description value="Private"/>
 					<description statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]" value="Options"/>
-					<description value="Length&lt;br&gt;Rows"/>
+					<vbox>
+						<description value="Length"/>
+						<description value="Rows"/>
+					</vbox>
 					<description value="Order"/>
 					<description align="center" statustext="deletes this field" value="Action"/>
 				</row>
@@ -67,9 +70,9 @@
 					<textbox multiline="true" statustext="each value is a line like id[=label]" id="${row}[values]" rows="2" cols="30"/>
 					<vbox>
 						<textbox statustext="max length of the input [, length of the inputfield (optional)]" id="${row}[len]" size="5"/>
-						<int blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="${row}[rows]" options="0,10,2"/>
+						<textbox type="integer" blur="1" statustext="number of row for a multiline inputfield or line of a multi-select-box" id="${row}[rows]" min="0" max="10" size="2"/>
 					</vbox>
-					<int statustext="determines the order the fields are displayed" id="${row}[order]" options="1,,3"/>
+					<textbox type="integer" statustext="determines the order the fields are displayed" id="${row}[order]" min="1" size="3"/>
 					<hbox>
 						<button statustext="deletes this field" label="Delete" id="delete[$row_cont[name]]"/>
 						<button statustext="creates a new field" label="Create" id="create$row_cont[name]"/>
