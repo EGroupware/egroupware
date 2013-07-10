@@ -304,6 +304,20 @@ function stopCapturingEvents() {
 	hideResultBox();
 }
 
+function scrollIntoPosition(pos)
+{
+	if (typeof pos =='undefined') pos =0;
+	if (pos>0) pos = pos -1;
+	var resultBox = document.getElementById('resultBox');
+	if (typeof resultBox.childNodes[pos] == 'undefined') return;
+	if (typeof(resultBox.childNodes[pos].scrollIntoViewIfNeeded)=='function')
+	{
+		resultBox.childNodes[selectedSuggestion].scrollIntoViewIfNeeded(true);
+	} else {
+		resultBox.childNodes[pos].scrollIntoView(true);
+	}
+}
+
 function keypressed(keycode, keyvalue) {
 	if(liveSearchTimer) {
 		window.clearTimeout(liveSearchTimer);
@@ -316,8 +330,10 @@ function keypressed(keycode, keyvalue) {
 		case KEYCODE_UP:
 			if(selectedSuggestion > 0) {
 				selectSuggestion(selectedSuggestion-1);
+				scrollIntoPosition(selectedSuggestion-1);
 			} else {
 				selectSuggestion(resultRows.length-1);
+				scrollIntoPosition(resultRows.length-1);
 			}
 			break;
 
@@ -329,8 +345,10 @@ function keypressed(keycode, keyvalue) {
 				//document.title='is selected';
 				if(selectedSuggestion < resultRows.length-1) {
 					selectSuggestion(selectedSuggestion+1);
+					scrollIntoPosition(selectedSuggestion+1);
 				} else {
 					selectSuggestion(0);
+					scrollIntoPosition(0);
 				}
 			}
 			break;
