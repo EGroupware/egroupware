@@ -70,6 +70,8 @@ if ($GLOBALS['egw_info']['user']['apps']['addressbook'] &&
 			$portalbox->set_controls($key,$contactue);
 		}
 		$portalbox->data = Array();
+		foreach($bdays as $contact) $buff[$contact['id']] = $contact;
+		$bdays=$buff;
 		for($n = 0; $n <= $days; ++$n)
 		{
 			$day = date('-m-d',$contacts->now_su+$n*24*3600);
