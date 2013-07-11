@@ -1249,6 +1249,7 @@ class etemplate_old extends boetemplate
 				$html .= $value;
 				break;
 			case 'int':		// size: [min],[max],[len],[precision/sprint format],[step]
+			case 'integer':
 			case 'float':
 				list($min,$max,$cell_options,$pre,$step) = explode(',',$cell_options);
 				// a few html5 options
@@ -1261,7 +1262,7 @@ class etemplate_old extends boetemplate
 				}
 				if ($cell_options == '' && !$readonly)
 				{
-					$cell_options = $cell['type'] == 'int' ? 5 : 8;
+					$cell_options = $cell['type'] != 'float' ? 5 : 8;
 				}
 				// html5 input type=nummeric seems to ignore size, setting a width instead
 				$options .= ' style="width: '.(3+abs($cell_options)).'ex"';
@@ -1269,7 +1270,7 @@ class etemplate_old extends boetemplate
 				{
 					$value = is_numeric($pre) ? self::number_format($value,$pre,$readonly) : sprintf($pre,$value);
 				}
-				$cell_options .= ',,'.($cell['type'] == 'int' ? '/^-?[0-9]*$/' : '"/^-?[0-9]*[,.]?[0-9]*$/"').',number';
+				$cell_options .= ',,'.($cell['type'] != 'float' ? '/^-?[0-9]*$/' : '"/^-?[0-9]*[,.]?[0-9]*$/"').',number';
 				// fall-through
 			case 'hidden':
 			case 'passwd':
@@ -2281,6 +2282,7 @@ class etemplate_old extends boetemplate
 					}
 					// fall-throught for mode 'ascii', which is identical to textarea
 				case 'int':
+				case 'integer':
 				case 'float':
 				case 'passwd':
 				case 'text':
@@ -2301,6 +2303,7 @@ class etemplate_old extends boetemplate
 						switch($type)
 						{
 							case 'int':
+							case 'integer':
 								self::set_validation_error($form_name,lang("'%1' is not a valid integer !!!",$value),'');
 								break;
 							case 'float':
@@ -2311,21 +2314,21 @@ class etemplate_old extends boetemplate
 								break;
 						}
 					}
-					elseif ($type == 'int' || $type == 'float')	// cast int and float and check range
+					elseif (in_array($type, array('int', 'integer', 'float')))	// cast int and float and check range
 					{
 						if ((string)$value !== '' || $attr['needed'])	// empty values are Ok if needed is not set
 						{
-							$value = $type == 'int' ? (int) $value : (float) str_replace(',','.',$value);	// allow for german (and maybe other) format
+							$value = $type != 'float' ? (int) $value : (float) str_replace(',','.',$value);	// allow for german (and maybe other) format
 
 							if (!empty($attr['min']) && $value < $attr['min'])
 							{
 								self::set_validation_error($form_name,lang("Value has to be at least '%1' !!!",$attr['min']),'');
-								$value = $type == 'int' ? (int) $attr['min'] : (float) $attr['min'];
+								$value = $type != 'float' ? (int) $attr['min'] : (float) $attr['min'];
 							}
 							if (!empty($attr['max']) && $value > $attr['max'])
 							{
 								self::set_validation_error($form_name,lang("Value has to be at maximum '%1' !!!",$attr['max']),'');
-								$value = $type == 'int' ? (int) $attr['max'] : (float) $attr['max'];
+								$value = $type != 'float' ? (int) $attr['max'] : (float) $attr['max'];
 							}
 						}
 					}
