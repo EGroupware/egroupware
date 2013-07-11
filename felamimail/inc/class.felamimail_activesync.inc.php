@@ -952,13 +952,13 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 						}
 						catch (egw_exception_wrong_userinput $e)
 						{
-							$asf = false;
+							//$asf = false;
 							debugLog(__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Could not save message to folder %2 due to: %3",$mailObject->Subject,$folderName,$e->getMessage()));
 						}
 					}
 					else
 					{
-						$asf = false;
+						//$asf = false;
 						debugLog(__METHOD__.__LINE__.'->'.lang("Import of message %1 failed. Destination Folder %2 does not exist.",$mailObject->Subject,$folderName));
 					}
 			        debugLog("IMAP-SendMail: Outgoing mail saved in configured 'Sent' folder '".$folderName."': ". (($asf)?"success":"failed"));
