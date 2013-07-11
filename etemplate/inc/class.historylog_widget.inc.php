@@ -190,6 +190,7 @@ class historylog_widget
 		// Add in links
 		self::$status_widgets['~link~'] = 'link-entry';
 		$tmpl->sel_options[$status]['~link~'] = lang('link');
+		$tmpl->sel_options[$status]['user_agent_action'] = lang('User-agent & action');
 
 		// adding custom fields automatically to status-widgets, no need for each app to do that
 		foreach(config::get_customfields($app,true) as $cf_name => $cf_data)

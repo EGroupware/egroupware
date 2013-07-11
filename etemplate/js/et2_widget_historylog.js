@@ -221,6 +221,12 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 			this.options.value['status-widgets']['~file~'] = 'vfs';
 		}
 
+		// Add in handling for user-agent & action
+		if(typeof this.options.value['status-widgets']['user_agent_action'] == 'undefined')
+		{
+			this.columns[this.FIELD].widget.optionValues['user_agent_action'] = this.egw().lang('User-agent & action');
+		}
+
 		// Per-field widgets - new value & old value
 		this.fields = {};
 

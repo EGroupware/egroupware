@@ -437,6 +437,7 @@ unlink	etemplate	en	Unlink
 update a single entry by passing the fields.	etemplate	en	Update a single entry by passing the fields
 update from version '%s' to	etemplate	en	Update from version '%s' to
 upload	etemplate	en	Upload
+user-agent & action	etemplate	en	User-agent & action
 valign	etemplate	en	vAlign
 value	etemplate	en	Value
 value has to be at least '%1' !!!	etemplate	en	Value has to be at least '%1' !

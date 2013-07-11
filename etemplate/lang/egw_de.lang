@@ -434,6 +434,7 @@ unlink	etemplate	de	Lösen
 update a single entry by passing the fields.	etemplate	de	Aktualisiert einen einzelnen Eintrag über seine Felder.
 update from version '%s' to	etemplate	de	Update von Version '%s' auf
 upload	etemplate	de	Hochladen
+user-agent & action	etemplate	de	Browser-Typ & Aktion
 valign	etemplate	de	vAlign
 value	etemplate	de	Wert
 value has to be at least '%1' !!!	etemplate	de	Der Wert muss mindestens '%1' betragen !!!
