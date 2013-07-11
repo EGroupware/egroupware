@@ -3060,8 +3060,8 @@ class felamimail_bo
 		$queryString = implode(',', $sortResult);
 		// fetch the data for the selected messages
 		if (self::$debug) $starttime = microtime(true);
-		$headersNew = $this->_getSummary($queryString, $rByUid);
-		//$headersNew = $this->icServer->getSummary($queryString, $rByUid);
+		//$headersNew = $this->_getSummary($queryString, $rByUid);
+		$headersNew = $this->icServer->getSummary($queryString, $rByUid);
 		if (PEAR::isError($headersNew) && empty($queryString))
 		{
 			$headersNew = array();
