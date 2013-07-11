@@ -115,6 +115,9 @@ class addressbook_ads extends addressbook_ldap
 			'n_fn'          => 'displayname',	// leave CN used in DN untouched
 			'accountexpires', 'useraccountcontrol',	// needed to exclude deactivated or expired accounts
 		));
+		unset($this->schema2egw['user']['n_fileas']);
+		unset($this->schema2egw['inetorgperson']);
+
 		foreach($this->schema2egw as $schema => $attributes)
 		{
 			$this->all_attributes = array_merge($this->all_attributes,array_values($attributes));
@@ -195,7 +198,7 @@ class addressbook_ads extends addressbook_ldap
 		// ignore deactivated or expired accounts
 		if (!$this->accounts_ads->user_active($data)) return false;
 
-		$this->_inetorgperson2egw($contact, $data);
+		$this->_inetorgperson2egw($contact, $data, 'displayname');
 	}
 
 	/**

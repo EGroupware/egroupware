@@ -1825,13 +1825,14 @@ class addressbook_ui extends addressbook_bo
 		{
 			$readonlys[$field] = true;
 		}
+		if ($readonlys['n_fileas']) $readonlys['fileas_type'] = true;
 		// disable not needed tabs
 		$readonlys['tabs']['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
 		$readonlys['tabs']['custom'] = !$this->customfields || $this->get_backend($content['id'],$content['owner']) == $this->so_accounts;
 		$readonlys['tabs']['custom_private'] = $readonlys['tabs']['custom'] || !$this->config['private_cf_tab'];
 		$readonlys['tabs']['distribution_list'] = !$content['distrib_lists'];#false;
-		$readonlys['tabs']['history'] = $this->contact_repository == 'ldap' || !$content['id'] ||
-			$this->account_repository == 'ldap' && $content['account_id'];
+		$readonlys['tabs']['history'] = $this->contact_repository != 'sql' || !$content['id'] ||
+			$this->account_repository != 'sql' && $content['account_id'];
 		$readonlys['button[delete]'] = !$content['id'];
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 		$readonlys['change_org'] = empty($content['org_name']) || $view;
@@ -2112,8 +2113,8 @@ class addressbook_ui extends addressbook_bo
 		$readonlys['tabs']['custom'] = !$this->customfields;
 		$readonlys['tabs']['custom_private'] = !$this->customfields || !$this->config['private_cf_tab'];
 		$readonlys['tabs']['distribution_list'] = !$content['distrib_lists'];#false;
-		$readonlys['tabs']['history'] = $this->contact_repository == 'ldap' || !$content['id'] ||
-			$this->account_repository == 'ldap' && $content['account_id'];
+		$readonlys['tabs']['history'] = $this->contact_repository != 'sql' || !$content['id'] ||
+			$this->account_repository != 'sql' && $content['account_id'];
 		if ($this->config['private_cf_tab']) $content['no_private_cfs'] = 0;
 
 		// last and next calendar date
