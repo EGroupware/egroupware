@@ -147,9 +147,9 @@ function check_value(input, own_id)
 					selbox.options[i].text = data.fileas_options[i];
 				}
 			}
-			else
+			else if (template && (selbox = template.widgetContainer.getWidgetById('fileas_type')))
 			{
-				template.widgetContainer.getWidgetById('fileas_type').set_select_options(data.fileas_sel_options);
+				selbox.set_select_options(data.fileas_sel_options);
 			}
 		}
 	});
