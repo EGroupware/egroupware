@@ -469,7 +469,8 @@ class emailadmin_bo extends so_sql
 	 * 2) icServerSIEVE_connectionError
 	 * 3) defaultimap_nameSpace
 	 * 4) StructureCache (emailStructure Objects)
-	 * 5) INSTANCE OF FELAMIMAIL_BO
+	 * 5) SummaryCache (emailSummary Objects)
+	 * 6) INSTANCE OF FELAMIMAIL_BO
 	 *
 	 * @param int $_profileID=null default profile of user as returned by getUserDefaultProfileID
 	 * @return void
@@ -486,6 +487,12 @@ class emailadmin_bo extends so_sql
 			{
 				unset($structure[$_profileID]);
 				egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure, $expiration=60*60*1);
+			}
+			$summary = egw_cache::getCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+			if (isset($summary[$_profileID]))
+			{
+				unset($summary[$_profileID]);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$summary, $expiration=60*60*1);
 			}
 			$rawHeadersCache = egw_cache::getCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 			if (isset($rawHeadersCache[$_profileID]))
