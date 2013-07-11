@@ -57,7 +57,17 @@
 
    <tr class="row_on">
     <td>{lang_Enter_the_VFS-Path_where_additional_images,_icons_or_logos_can be_placed_(and_found_by_EGroupwares_applications)._The_path_MUST_start_with_/,and_be_readable_by_all_users}:</td>
-    <td><input name="newsettings[vfs_image_dir]" value="{value_vfs_image_dir}"></td>
+    <td><input name="newsettings[vfs_image_dir]" value="{value_vfs_image_dir}" size="40"></td>
+   </tr>
+
+   <tr class="row_off">
+    <td>{lang_Log_user-agent_and_action_of_changes_in_history-log_of_entries}:</td>
+    <td>
+     <select name="newsettings[log_user_agent_action]">
+      <option value="">{lang_No}</option>
+      <option value="True"{selected_log_user_agent_action_True}>{lang_Yes}</option>
+     </select>
+    </td>
    </tr>
 
   <tr class="th">

@@ -395,11 +395,17 @@ abstract class bo_tracking
 			$changed_fields = self::changed_fields($data,$old);
 			//error_log(__METHOD__.__LINE__.' Changedfields:'.array2string($changed_fields));
 		}
-		if (!$changed_fields) return 0;
+		if (!$changed_fields && ($old || !$GLOBALS['egw_info']['server']['log_user_agent_action'])) return 0;
 
 		if (!is_object($this->historylog) || $this->historylog->user != $this->user)
 		{
 			$this->historylog = new historylog($this->app,$this->user);
+		}
+		// log user-agent and session-action
+		if ($GLOBALS['egw_info']['server']['log_user_agent_action'] && ($changed_fields || !$old))
+		{
+			$this->historylog->add('user_agent_action', $data[$this->id_field],
+				$_SERVER['HTTP_USER_AGENT'], $_SESSION[egw_session::EGW_SESSION_VAR]['session_action']);
 		}
 		foreach($changed_fields as $name)
 		{

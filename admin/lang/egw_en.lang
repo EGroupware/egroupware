@@ -378,6 +378,7 @@ limit to members of	admin	en	Limit to members of
 list config settings	admin	en	List config settings
 list current sessions	admin	en	List current sessions
 list of current users	admin	en	List of current users
+log user-agent and action of changes in history-log of entries	admin	en	Log user-agent and action of changes in history-log of entries
 logged out	admin	en	Logged out
 login history	admin	en	Login history
 login message	admin	en	Login message

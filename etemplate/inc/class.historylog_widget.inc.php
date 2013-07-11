@@ -187,6 +187,8 @@ class historylog_widget
 				$row[$status] = $row['status'];
 			}
 		}
+		$tmpl->sel_options[$status]['user_agent_action'] = lang('User-agent & action');
+
 		// adding custom fields automatically to status-widgets, no need for each app to do that
 		foreach(config::get_customfields($app,true) as $cf_name => $cf_data)
 		{
