@@ -81,7 +81,8 @@
 				//fetch the imapClass
 				//_debug_array($bofelamimail->icServer);
 				$imapClassName = get_class($bofelamimail->icServer);
-
+				$alllowercase = false;
+				if (!empty($imapClassName) && stripos(constant($imapClassName.'::CAPABILITIES'),'lowercaseloginname') !== false) $alllowercase=true;
 				//fetch the smtpClass
 				//_debug_array($bofelamimail->ogServer);
 				$smtpClassName = get_class($bofelamimail->ogServer);
@@ -105,8 +106,14 @@
 					$accounts = $GLOBALS['egw']->accounts->search(array('type'=>'accounts'));
 					$groups = array();
 					if ($imapClassName=='managementserver_imap') $groups = $GLOBALS['egw']->accounts->search(array('type'=>'groups'));
+					$domainName = $bofelamimail->icServer->domainName;
+					if ($alllowercase)
+					{
+						$domainName = lcase($domainName);
+					}
 					foreach ($accounts as $k => $v)
 					{
+						if ($alllowercase) $v['account_lid']=lcase($v['account_lid']);
 						$isgroup=$v['account_id']<0?constant("$imapClassName::ACL_GROUP_PREFIX"):'';
 						$dfn = common::display_fullname($v['account_lid']);
 						if ($bofelamimail->icServer->loginType=='standard') // means username
@@ -119,16 +126,17 @@
 						}
 						elseif ($bofelamimail->icServer->loginType=='vmailmgr') // means username + domainname
 						{
-							$accountList[$isgroup.trim($v['account_lid'].'@'.$bofelamimail->icServer->domainName)] = $dfn;
+							$accountList[$isgroup.trim($v['account_lid'].'@'.$domainName)] = $dfn;
 						}
 						elseif ($bofelamimail->icServer->loginType=='uidNumber') // userid + domain
 						{
-							$accountList[$isgroup.trim($v['account_id'].'@'.$bofelamimail->icServer->domainName)] = $dfn;
+							$accountList[$isgroup.trim($v['account_id'].'@'.$domainName)] = $dfn;
 						}
 					}
 					natcasesort($accountList);
 					foreach ($groups as $k => $v)
 					{
+						if ($alllowercase) $v['account_lid']=lcase($v['account_lid']);
 						$isgroup=$v['account_id']<0?constant("$imapClassName::ACL_GROUP_PREFIX"):'';
 						$dfn = common::display_fullname($v['account_lid']);
 						if ($bofelamimail->icServer->loginType=='standard') // means username
@@ -141,11 +149,11 @@
 						}
 						elseif ($bofelamimail->icServer->loginType=='vmailmgr') // means username + domainname
 						{
-							$groupList[$isgroup.trim($v['account_lid'].'@'.$bofelamimail->icServer->domainName)] = $dfn;
+							$groupList[$isgroup.trim($v['account_lid'].'@'.$domainName)] = $dfn;
 						}
 						elseif ($bofelamimail->icServer->loginType=='uidNumber') // userid + domain
 						{
-							$groupList[$isgroup.trim($v['account_id'].'@'.$bofelamimail->icServer->domainName)] = $dfn;
+							$groupList[$isgroup.trim($v['account_id'].'@'.$domainName)] = $dfn;
 						}
 					}
 					natcasesort($groupList);
