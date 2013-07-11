@@ -479,6 +479,8 @@ class felamimail_bo
 		// this section takes care for setting the ActiveProfileID accordingly
 		if (!empty($hook_data) && $hook_data['type']=='user')
 		{
+			if (empty($hook_data['prefs']['ActiveProfileID'])&&!empty($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'])) $hook_data['prefs']['ActiveProfileID'] = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
+			if (empty($hook_data['prefs']['ActiveProfileID'])) $hook_data['prefs']['ActiveProfileID'] = emailadmin_bo::getUserDefaultProfileID();
 			if (isset($hook_data['prefs']['ActiveProfileID']) && $hook_data['prefs']['ActiveProfileID'] != $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'])
 			{
 				//error_log(__METHOD__.__LINE__.array2string(array_keys($hook_data['prefs'])));
@@ -1260,6 +1262,20 @@ class felamimail_bo
 				$this->flagMessages($_flag, array_slice($_messageUID,$h),($_folder?$_folder:$this->sessionData['mailbox']));
 			}
 		}
+		$summary = egw_cache::getCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+		$cachemodified = false;
+		foreach ((array)$_messageUID as $k => $_uid)
+		{
+			if (isset($summary[$this->icServer->ImapServerId][(!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox'])][$_uid]))
+			{
+				$cachemodified = true;
+				unset($summary[$this->icServer->ImapServerId][(!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox'])][$_uid]);
+			}
+		}
+		if ($cachemodified)
+		{
+			egw_cache::setCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$summary,$expiration=60*60*1);
+		}
 
 		$this->sessionData['folderStatus'][$this->profileID][$this->sessionData['mailbox']]['uidValidity'] = 0;
 		$this->saveSessionData();
@@ -1300,6 +1316,55 @@ class felamimail_bo
 		egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
 		//error_log(__METHOD__.__LINE__.' Using query for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid." in Folder:".$_folder.'->'.array2string($structure[$this->icServer->ImapServerId][$_folder][$_uid]));
 		return $structure[$this->icServer->ImapServerId][$_folder][$_uid];
+	}
+
+	function _getSummary($queryString, $byUid=true, $_ignoreCache=false, $_folder = '')
+	{
+		static $summary;
+		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		//error_log(__METHOD__.__LINE__.'User:'.trim($GLOBALS['egw_info']['user']['account_id'])." UID: $_uid, ".$this->icServer->ImapServerId.','.$_folder);
+		if (is_null($summary)) $summary = egw_cache::getCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+		$_uids = explode(',', $queryString);
+		$uidsCached = (is_array($summary[$this->icServer->ImapServerId][$_folder])?array_keys($summary[$this->icServer->ImapServerId][$_folder]):array());
+		$toFetch = array_diff($_uids,(array)$uidsCached);
+		$saveNeeded = false;
+		if (!empty($toFetch))
+		{
+			error_log(__METHOD__.__LINE__.':UserID:'.$GLOBALS['egw_info']['user']['account_id'].':ServerID:'.$this->icServer->ImapServerId.'::'.' fetch Summary for Headers in Folder:'.$_folder.' with:'.implode(',',$toFetch));
+			$result = $this->icServer->getSummary(implode(',',$toFetch), $byUid);
+			foreach ($result as $sum)
+			{
+				$summary[$this->icServer->ImapServerId][$_folder][$sum['UID']]=$sum;
+			}
+			$saveNeeded = true;
+		}
+		foreach ($_uids as $_uid)
+		{
+			$fetched=false;
+			//error_log(__METHOD__.__LINE__." UID: $_uid, ".$this->icServer->ImapServerId.','.$_folder.'->'.array2string($summary[$this->icServer->ImapServerId][$_folder][$_uid]));
+			if (isset($summary[$this->icServer->ImapServerId]) && !empty($summary[$this->icServer->ImapServerId]) &&
+				isset($summary[$this->icServer->ImapServerId][$_folder]) && !empty($summary[$this->icServer->ImapServerId][$_folder]) &&
+				isset($summary[$this->icServer->ImapServerId][$_folder][$_uid]) && !empty($summary[$this->icServer->ImapServerId][$_folder][$_uid]))
+			{
+				if ($_ignoreCache===false)
+				{
+					//error_log(__METHOD__.__LINE__.' Using cache for structure on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid." in Folder:".$_folder.'->'.array2string($structure[$this->icServer->ImapServerId][$_folder][$_uid]));
+					$rv[] = $summary[$this->icServer->ImapServerId][$_folder][$_uid];
+					$fetched=true;
+				}
+			}
+			if ($fetched==false)
+			{
+				error_log(__METHOD__.__LINE__.':UserID:'.$GLOBALS['egw_info']['user']['account_id'].':ServerID:'.$this->icServer->ImapServerId.'::'.' fetch Summary for Header in Folder:'.$_folder.' with:'.$_uid);
+				$result = $this->icServer->getSummary($_uid, $byUid);
+				$summary[$this->icServer->ImapServerId][$_folder][$_uid] = $result[0];
+				$rv[] = $summary[$this->icServer->ImapServerId][$_folder][$_uid];
+				$saveNeeded = true;
+			}
+		}
+		if ($saveNeeded ) egw_cache::setCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$summary,$expiration=60*60*1);
+		//error_log(__METHOD__.__LINE__.' Using query for summary on Server:'.$this->icServer->ImapServerId.' for uid:'.$_uid." in Folder:".$_folder.'->'.array2string($structure[$this->icServer->ImapServerId][$_folder][$_uid]));
+		return $rv;
 	}
 
 	function _getSubStructure($_structure, $_partID)
@@ -2737,6 +2802,7 @@ class felamimail_bo
 			error_log(__METHOD__.__LINE__.' Profile:'.$this->profileID.' Folder:'.$_folderName.' -> EXISTS/SessStat:'.array2string($folderStatus['EXISTS']).'/'.$this->sessionData['folderStatus'][$this->profileID][$_folderName]['messages'].' ListContDelMsg/SessDeleted:'.$eMailListContainsDeletedMessages[$this->profileID][$_folderName].'/'.$this->sessionData['folderStatus'][$this->profileID][$_folderName]['deleted']);
 			error_log(__METHOD__.__LINE__.' CachedFolderStatus:'.array2string($this->sessionData['folderStatus'][$this->profileID][$_folderName]));
 		}
+		//error_log(__METHOD__.__LINE__.'->'.$folderStatus['UIDVALIDITY'].'<-');
 		if($try2useCache && (is_array($this->sessionData['folderStatus'][$this->profileID][$_folderName]) &&
 			$this->sessionData['folderStatus'][$this->profileID][$_folderName]['uidValidity']	=== $folderStatus['UIDVALIDITY'] &&
 			$this->sessionData['folderStatus'][$this->profileID][$_folderName]['messages']	== $folderStatus['EXISTS'] &&
@@ -2752,6 +2818,17 @@ class felamimail_bo
 
 		} else {
 			$try2useCache = false;
+			// control HeaderCache
+			if (isset($this->sessionData['folderStatus'][$this->profileID][$_folderName]['uidValidity']) &&
+				$this->sessionData['folderStatus'][$this->profileID][$_folderName]['uidValidity'] != $folderStatus['UIDVALIDITY'])
+			{
+				$summary = egw_cache::getCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+				if (isset($summary[$this->profileID][$_folderName]))
+				{
+					unset($summary[$this->profileID][$_folderName]);
+					egw_cache::setCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$summary, $expiration=60*60*1);
+				}
+			}
 			//error_log(__METHOD__." USE NO CACHE for Profile:". $this->profileID." Folder:".$_folderName.'->'.($setSession?'setSession':'checkrun'));
 			if (self::$debug) error_log(__METHOD__." USE NO CACHE for Profile:". $this->profileID." Folder:".$_folderName." Filter:".array2string($_filter).function_backtrace());
 			$filter = $this->createIMAPFilter($_folderName, $_filter);
@@ -2983,7 +3060,8 @@ class felamimail_bo
 		$queryString = implode(',', $sortResult);
 		// fetch the data for the selected messages
 		if (self::$debug) $starttime = microtime(true);
-		$headersNew = $this->icServer->getSummary($queryString, $rByUid);
+		$headersNew = $this->_getSummary($queryString, $rByUid);
+		//$headersNew = $this->icServer->getSummary($queryString, $rByUid);
 		if (PEAR::isError($headersNew) && empty($queryString))
 		{
 			$headersNew = array();
@@ -3446,6 +3524,10 @@ class felamimail_bo
 		if($_htmlOptions != '') {
 			$this->htmlOptions = $_htmlOptions;
 		}
+		if ($_folder=='')
+		{
+			$_folder = $this->sessionData['mailbox'];
+		}
 		if(is_object($_structure)) {
 			$structure = $_structure;
 		} else {
@@ -3456,7 +3538,20 @@ class felamimail_bo
 			}
 		}
 		if (self::$debug) _debug_array($structure);
-
+		if ($_preserveSeen==false)
+		{
+			$summary = egw_cache::getCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+			$cachemodified = false;
+			if (isset($summary[$this->icServer->ImapServerId][$_folder][$_uid]))
+			{
+				$cachemodified = true;
+				unset($summary[$this->icServer->ImapServerId][$_folder][$_uid]);
+			}
+			if ($cachemodified)
+			{
+				egw_cache::setCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$summary,$expiration=60*60*1);
+			}
+		}
 		switch($structure->type) {
 			case 'APPLICATION':
 				return array(
@@ -3519,7 +3614,7 @@ class felamimail_bo
 					case 'RFC822':
 						$newStructure = array_shift($structure->subParts);
 						if (self::$debug) {echo __METHOD__." Message -> RFC -> NewStructure:"; _debug_array($newStructure);}
-						return self::normalizeBodyParts($this->getMessageBody($_uid, $_htmlOptions, $newStructure->partID, $newStructure));
+						return self::normalizeBodyParts($this->getMessageBody($_uid, $_htmlOptions, $newStructure->partID, $newStructure, $_preserveSeen, $_folder));
 						break;
 				}
 				break;
@@ -3917,11 +4012,28 @@ class felamimail_bo
 						unset($structure[$this->icServer->ImapServerId][(!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox'])][$_uid]);
 					}
 				}
-				if ($cachemodified) egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
+				if ($cachemodified)
+				{
+					egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
+				}
 
 				// delete the messages finaly
 				$this->icServer->expunge();
 			}
+		}
+		$summary = egw_cache::getCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
+		$cachemodified = false;
+		foreach ((array)$_messageUID as $k => $_uid)
+		{
+			if (isset($summary[$this->icServer->ImapServerId][(!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox'])][$_uid]))
+			{
+				$cachemodified = true;
+				unset($summary[$this->icServer->ImapServerId][(!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox'])][$_uid]);
+			}
+		}
+		if ($cachemodified)
+		{
+			egw_cache::setCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$summary,$expiration=60*60*1);
 		}
 		//error_log(__METHOD__.__LINE__.array2string($retUid));
 		return ($returnUIDs ? $retUid : true);

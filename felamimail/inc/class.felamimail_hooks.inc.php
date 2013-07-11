@@ -906,6 +906,7 @@ class felamimail_hooks
 				$selectedID = $bofelamimail->getIdentitiesWithAccounts($identities);
 
 				if (empty($selectedID) && isset($imapServer->ImapServerId)) $selectedID = $imapServer->ImapServerId;
+				if ($selectedID !== $profileID) $selectedID = $profileID;
 				//error_log(__METHOD__.__LINE__.' SelectedID:'.$selectedID.' IcServerID:'.$imapServer->ImapServerId);
 				// if nothing valid is found return to user defined account definition
 				if (empty($imapServer->host) && count($identities)==0 && $preferences->userDefinedAccounts)
@@ -938,7 +939,6 @@ class felamimail_hooks
 					}
 					//$identities[0] = $defaultIdentity->realName.' '.$defaultIdentity->organization.' <'.$defaultIdentity->emailAddress.'>';
 				}
-
 				$selectAccount = html::select('accountSelect', $selectedID, $identities, true, 'id="accountSelect" style="width:99.5%;" onchange="var appWindow=egw_appWindow(\''.$appname.'\');appWindow.changeActiveAccount(this);"',0,false);
 				//error_log(__METHOD__.__LINE__.$selectAccount);
 				$file[] = array(
