@@ -358,7 +358,7 @@ function respond($request, $map, $extra='', $reconnect=false)
 
 	if (!$entries['count'])
 	{
-		if ($log_verbose) error_log("$map: get '$username' --> 500 not found");
+		if ($log_verbose) error_log("$map: get '$username' --> 500 not found ldap_search(\$ds, '$base', '$filter') no entries");
 		return "500 Not found\n";	// 500: Query returned no result
 	}
 	$response = array();
@@ -395,7 +395,7 @@ function respond($request, $map, $extra='', $reconnect=false)
 	}
 	if (!$response)
 	{
-		if ($log_verbose) error_log("$map: get '$username' --> 500 not found");
+		if ($log_verbose) error_log("$map: get '$username' --> 500 not found ldap_search(\$ds, '$base', '$filter') no response");
 		return "500 Not found\n";	// 500: Query returned no result
 	}
 	if (isset($maps[$map]['filter'.(1+$extra)]) && isset($maps[$map]['attrs'.(1+$extra)]))
