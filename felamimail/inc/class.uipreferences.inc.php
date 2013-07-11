@@ -109,11 +109,11 @@
 					$domainName = $bofelamimail->icServer->domainName;
 					if ($alllowercase)
 					{
-						$domainName = lcase($domainName);
+						$domainName = strtolower($domainName);
 					}
 					foreach ($accounts as $k => $v)
 					{
-						if ($alllowercase) $v['account_lid']=lcase($v['account_lid']);
+						if ($alllowercase) $v['account_lid']=strtolower($v['account_lid']);
 						$isgroup=$v['account_id']<0?constant("$imapClassName::ACL_GROUP_PREFIX"):'';
 						$dfn = common::display_fullname($v['account_lid']);
 						if ($bofelamimail->icServer->loginType=='standard') // means username
@@ -136,7 +136,7 @@
 					natcasesort($accountList);
 					foreach ($groups as $k => $v)
 					{
-						if ($alllowercase) $v['account_lid']=lcase($v['account_lid']);
+						if ($alllowercase) $v['account_lid']=strtolower($v['account_lid']);
 						$isgroup=$v['account_id']<0?constant("$imapClassName::ACL_GROUP_PREFIX"):'';
 						$dfn = common::display_fullname($v['account_lid']);
 						if ($bofelamimail->icServer->loginType=='standard') // means username
