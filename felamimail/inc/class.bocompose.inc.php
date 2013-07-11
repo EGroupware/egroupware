@@ -141,12 +141,12 @@
 			return 1;
 		}
 
-		function convertHTMLToText(&$_html,$sourceishtml = true)
+		function convertHTMLToText(&$_html,$sourceishtml = true, $stripcrl=false)
 		{
 			$stripalltags = true;
 			// third param is stripalltags, we may not need that, if the source is already in ascii
 			if (!$sourceishtml) $stripalltags=false;
-			return felamimail_bo::convertHTMLToText($_html,false,$stripalltags);
+			return felamimail_bo::convertHTMLToText($_html,$stripcrl,$stripalltags);
 		}
 
 		function convertHTMLToTextTiny($_html)
@@ -828,9 +828,9 @@
 							($disableRuler ?'<br>':'<hr style="border:1px dotted silver; width:90%;">').
 							$signature;
 					}
-					$_mailObject->AltBody = $this->convertHTMLToText($_formData['body']).
+					$_mailObject->AltBody = $this->convertHTMLToText($_formData['body'],true,true).
 						($disableRuler ?"\r\n":"\r\n-- \r\n").
-						$this->convertHTMLToText($signature);
+						$this->convertHTMLToText($signature,true,true);
 					#print "<pre>$_mailObject->AltBody</pre>";
 					#print htmlentities($_signature['signature']);
 				} else {
@@ -840,7 +840,7 @@
 					} else {
 						$_mailObject->Body	= $_formData['body'];
 					}
-					$_mailObject->AltBody	= $this->convertHTMLToText($_formData['body']);
+					$_mailObject->AltBody	= $this->convertHTMLToText($_formData['body'],true,true);
 				}
 				// convert URL Images to inline images - if possible
 				if ($_convertLinks) felamimail_bo::processURL2InlineImages($_mailObject, $_mailObject->Body);
@@ -854,7 +854,7 @@
 				#$_mailObject->Body = $_formData['body'];
 				if(!empty($signature)) {
 					$_mailObject->Body .= ($disableRuler ?"\r\n":"\r\n-- \r\n").
-						$this->convertHTMLToText($signature);
+						$this->convertHTMLToText($signature,true,true);
 				}
 			}
 

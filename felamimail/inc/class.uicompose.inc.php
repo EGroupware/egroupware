@@ -782,7 +782,7 @@
 			$signature = $boSignatures->getSignature(($presetSig ? $presetSig : $sessionData['signatureID']));
 			if ((isset($this->bocompose->preferencesArray['disableRulerForSignatureSeparation']) &&
 				$this->bocompose->preferencesArray['disableRulerForSignatureSeparation']) ||
-				empty($signature->fm_signature) || trim($this->bocompose->convertHTMLToText($signature->fm_signature)) =='')
+				empty($signature->fm_signature) || trim($this->bocompose->convertHTMLToText($signature->fm_signature,true,true)) =='')
 			{
 				$disableRuler = true;
 			}
@@ -828,11 +828,11 @@
 
 				if ($insertSigOnTop === 'below')
 				{
-					$sessionData['body'] = $font_span.$sessionData['body'].$before.($sessionData['mimeType'] == 'html'?$sigText:$this->bocompose->convertHTMLToText($sigText));
+					$sessionData['body'] = $font_span.$sessionData['body'].$before.($sessionData['mimeType'] == 'html'?$sigText:$this->bocompose->convertHTMLToText($sigText,true,true));
 				}
 				else
 				{
-					$sessionData['body'] = $before.($sessionData['mimeType'] == 'html'?$sigText:$this->bocompose->convertHTMLToText($sigText)).$inbetween.$sessionData['body'];
+					$sessionData['body'] = $before.($sessionData['mimeType'] == 'html'?$sigText:$this->bocompose->convertHTMLToText($sigText,true,true)).$inbetween.$sessionData['body'];
 				}
 			}
 			else

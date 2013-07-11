@@ -1493,8 +1493,8 @@ class ajaxfelamimail
 			//error_log(__METHOD__.'New:'.$sigText.'#');
 			if ($_currentMode == 'plain')
 			{
-				$oldSigText = utf8_decode($bocompose->convertHTMLToText($oldSigText));
-				$sigText = utf8_decode($bocompose->convertHTMLToText($sigText));
+				$oldSigText = utf8_decode($bocompose->convertHTMLToText($oldSigText,true,true));
+				$sigText = utf8_decode($bocompose->convertHTMLToText($sigText,true,true));
 				$_content = utf8_decode($_content);
 				if($this->_debug) error_log(__METHOD__." Old signature:".$oldSigText);
 			}
@@ -1537,7 +1537,7 @@ class ajaxfelamimail
 				$found = strpos($_content,trim($oldSigText));
 			}
 
-			if ($found !== false && $_oldSig != -2 && !(empty($oldSigText) || trim($bocompose->convertHTMLToText($oldSigText)) ==''))
+			if ($found !== false && $_oldSig != -2 && !(empty($oldSigText) || trim($bocompose->convertHTMLToText($oldSigText,true,true)) ==''))
 			{
 				//error_log(__METHOD__.'Old Content:'.$_content.'#');
 				$_oldSigText = preg_quote($oldSigText,'~');
@@ -1546,7 +1546,7 @@ class ajaxfelamimail
 				//error_log(__METHOD__.'new Content:'.$_content.'#');
 			}
 
-			if ($_oldSig == -2 && (empty($oldSigText) || trim($bocompose->convertHTMLToText($oldSigText)) ==''))
+			if ($_oldSig == -2 && (empty($oldSigText) || trim($bocompose->convertHTMLToText($oldSigText,true,true)) ==''))
 			{
 				// if there is no sig selected, there is no way to replace a signature
 			}
