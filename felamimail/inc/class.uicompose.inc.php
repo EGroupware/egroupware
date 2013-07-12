@@ -849,9 +849,19 @@
 				//if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0)
 				if ($test=="null" && strlen($sessionData['body'])>0)
 				{
-					// this should not be needed, unless something fails with charset detection/ wrong charset passed
-					error_log(__METHOD__.__LINE__.' Charset problem detected; Charset Detected:'.felamimail_bo::detect_encoding($sessionData['body']));
-					$sessionData['body'] = utf8_encode($sessionData['body']);
+					// try to fix broken utf8
+					$x = (function_exists('mb_convert_encoding')?mb_convert_encoding($sessionData['body'],'UTF-8','UTF-8'):(function_exists('iconv')?@iconv("UTF-8","UTF-8//IGNORE",$sessionData['body']):$sessionData['body']));
+					$test = @json_encode($x);
+					if ($test=="null" && strlen($sessionData['body'])>0)
+					{
+						// this should not be needed, unless something fails with charset detection/ wrong charset passed
+						error_log(__METHOD__.__LINE__.' Charset problem detected; Charset Detected:'.felamimail_bo::detect_encoding($sessionData['body']));
+						$sessionData['body'] = utf8_encode($sessionData['body']);
+					}
+					else
+					{
+						$sessionData['body'] = $x;
+					}
 				}
 			}
 			//error_log(__METHOD__.__LINE__.$sessionData['body']);
