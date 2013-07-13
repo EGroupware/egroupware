@@ -948,6 +948,18 @@ class accounts
 		return $this->backend->update_lastlogin($account_id, $ip);
 	}
 
+	/**
+	 * Query if backend allows to change username aka account_lid
+	 *
+	 * @return boolean false if backend does NOT allow it (AD), true otherwise (SQL, LDAP)
+	 */
+	function change_account_lid_allowed()
+	{
+		$change_account_lid = constant(get_class($this->backend).'::CHANGE_ACCOUNT_LID');
+		if (!isset($change_account_lid)) $change_account_lid = true;
+		return $change_account_lid;
+	}
+
 	function list_methods($_type='xmlrpc')
 	{
 		if (is_array($_type))
