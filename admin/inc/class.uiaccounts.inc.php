@@ -948,7 +948,7 @@
 			$var['changepassword']    = !$acl->check('nopasswordchange',1,'preferences') ? '&nbsp;&nbsp;X' : '&nbsp;';
 			if (!isset($auth)) $auth =& CreateObject('phpgwapi.auth');
 			$accLPWDC = $auth->getLastPwdChange($userData['account_lid']);
-			if ($accLPWC !== false) $userData['account_lastpwd_change'] = $accLPWDC;
+			if ($accLPWDC !== false) $userData['account_lastpwd_change'] = $accLPWDC;
 			$var['mustchangepassword']= (isset($userData['account_lastpwd_change']) && ((is_string($userData['account_lastpwd_change']) && $userData['account_lastpwd_change']==="0")||(is_int($userData['account_lastpwd_change']) && $userData['account_lastpwd_change']===0)) ? '&nbsp;&nbsp;X' : '&nbsp;');
 			unset($acl);
 
@@ -1318,7 +1318,7 @@
 					$userData['changepassword'] = !$acl->check('nopasswordchange',1,'preferences');
 					if (!isset($auth)) $auth =& CreateObject('phpgwapi.auth');
 					$accLPWDC = $auth->getLastPwdChange($userData['account_lid']);
-					if ($accLPWC !== false) $userData['account_lastpwd_change'] = $accLPWDC;
+					if ($accLPWDC !== false) $userData['account_lastpwd_change'] = $accLPWDC;
 					$userData['mustchangepassword'] = (isset($userData['account_lastpwd_change']) && ((is_string($userData['account_lastpwd_change']) && $userData['account_lastpwd_change']==="0")||(is_int($userData['account_lastpwd_change']) && $userData['account_lastpwd_change']===0))?true:false);
 					unset($acl);
 				}

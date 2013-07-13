@@ -481,8 +481,8 @@ class accounts_ads
 			'account_status'    => $data['useraccountcontrol'][0] & 2 ? false : 'A',
 			'account_expires'   => !isset($data['accountexpires']) || $data['accountexpires'][0] == self::EXPIRES_NEVER ? -1 :
 				$this->adldap->utilities()->convertWindowsTimeToUnixTime($data['accountexpires'][0]),
-			'account_lastpwd_change' => !isset($data['pwdlastset']) ? null :
-				$this->adldap->utilities()->convertWindowsTimeToUnixTime($data['pwdlastset'][0]),
+			'account_lastpwd_change' => !isset($data['pwdlastset']) ? null : (!$data['pwdlastset'][0] ? 0 :
+				$this->adldap->utilities()->convertWindowsTimeToUnixTime($data['pwdlastset'][0])),
 			'account_created' => !isset($data['whencreated'][0]) ? null :
 				self::_when2ts($data['whencreated'][0]),
 			'account_modified' => !isset($data['whenchanged'][0]) ? null :
@@ -712,7 +712,8 @@ class accounts_ads
 			'account_status'    => 'enabled',
 			'account_primary_group' => 'primarygroupid',
 			'account_expires'   => 'expires',
-			'mustchangepassword'=> 'change_password',
+			//'mustchangepassword'=> 'change_password',	// can only set it, but not reset it, therefore we set pwdlastset direct
+			'account_lastpwd_change' => 'pwdlastset',
 			//'account_phone'   => 'telephone',	not updated by accounts, only read so far
 		);
 		$attributes = $ldap = array();
@@ -759,6 +760,9 @@ class accounts_ads
 					case 'account_status':
 						$attributes[$adldap] = $data[$egw] == 'A';
 						break;
+					case 'account_lastpwd_change':	// AD only allows to set 0 (force pw change) and -1 (reset time)
+						$ldap[$adldap] = !$data[$egw] ? 0 : -1;
+						break;
 					default:
 						$attributes[$adldap] = $data[$egw];
 						break;
@@ -775,7 +779,7 @@ class accounts_ads
 		// attributes not (yet) suppored by adldap
 		if ($ldap && !($ret = @ldap_modify($ds=$this->ldap_connection(), $old['account_dn'], $ldap)))
 		{
-			error_log(__METHOD__."(".array2string($data).") ldap_modify($ds, '$old[account_dn]', ".array2string($ldap).') returned '.array2string($ret).' '.function_backtrace());
+			error_log(__METHOD__."(".array2string($data).") ldap_modify($ds, '$old[account_dn]', ".array2string($ldap).') returned '.array2string($ret).' ('.ldap_error($ds).') '.function_backtrace());
 			return false;
 		}
 		//elseif ($ldap) error_log(__METHOD__."(".array2string($data).") ldap_modify($ds, '$old[account_dn]', ".array2string($ldap).') returned '.array2string($ret).' '.function_backtrace());
