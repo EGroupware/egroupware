@@ -1424,7 +1424,10 @@
 			$var = Array(
 				'input_expires' 	=> $jscal->input('expires',$userData['expires']<0?'':($userData['expires']?$userData['expires']:time()+(60*60*24*7))),
 				'lang_never'    	=> lang('Never'),
-				'account_lid'   	=> $accountPrefix.'<input id="account" onchange="check_account_email(this.id);" name="account_lid" maxlength="64" value="' . $userData['account_lid'] . '">',
+				'account_lid'   	=> $accountPrefix.html::input('account_lid', $userData['account_lid'], '',
+					'id="account" onchange="check_account_email(this.id);" maxlength="64"'.
+					// disable account_lid input, if backend does not allow to change it
+					($GLOBALS['egw']->accounts->change_account_lid_allowed() ? '' : ' disabled="disabled"')),
 				'lang_homedir'  	=> $lang_homedir,
 				'lang_shell'    	=> $lang_shell,
 				'homedirectory' 	=> $homedirectory,

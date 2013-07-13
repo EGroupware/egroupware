@@ -59,6 +59,11 @@ class accounts_ads
 	const EXPIRES_NEVER = '9223372036854775807';
 
 	/**
+	 * AD does NOT allow to change sAMAccountName / account_lid
+	 */
+	const CHANGE_ACCOUNT_LID = false;
+
+	/**
 	 * Attributes to query to be able to generate account_id and account_lid
 	 *
 	 * @var array
