@@ -25,7 +25,7 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	it	modifica campi personalizzati
 enter your new password	preferences	it	Inserisci la tua nuova password
 enter your old password	preferences	it	Inserisci la tua vecchia password
-failed to change password.  please contact your administrator.	preferences	it	Impossibile cambiare la password. Prego contatta l'amministratore.
+failed to change password.	preferences	it	Impossibile cambiare la password.
 forced preferences	preferences	it	Preferenze Forzate
 help off	preferences	it	Nessun Aiuto
 hours	preferences	it	ore

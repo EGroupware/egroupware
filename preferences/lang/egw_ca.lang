@@ -27,7 +27,7 @@ enable drag and drop functionality (experimental)	preferences	ca	Habilita funcio
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	ca	Habilita o deshabilita funcions d'arrossegar i deixar anar a totes les aplicacions. Si el navegador no permet l'arrossegar i deixar anar, serà inhabilitat automàticament. Aquesta funció és experimental de moment.
 enter your new password	preferences	ca	Entreu la nova contrasenya
 enter your old password	preferences	ca	Escriu la contrasenya antiga
-failed to change password.  please contact your administrator.	preferences	ca	Error al canviar la contrasenya. Contacteu amb el vostre Administrador.
+failed to change password.	preferences	ca	Error al canviar la contrasenya.
 forced preferences	preferences	ca	Preferències forçades
 help off	preferences	ca	Sense ajuda
 hours	preferences	ca	hores

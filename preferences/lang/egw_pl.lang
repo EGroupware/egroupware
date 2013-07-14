@@ -34,7 +34,7 @@ enables or disables dropdown selectbox resizing for ie in all applications. if t
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	pl	Aktywuj lub deaktywuj skalowanie pola wyboru dla IE we wszystkich aplikacjach. Jeśli przeglądarką  nie jest IE, opcja nie zadziała. To funkcja eksperymentalna.
 enter your new password	preferences	pl	Wprowadź nowe hasło
 enter your old password	preferences	pl	Wprowadź stare hasło
-failed to change password.  please contact your administrator.	preferences	pl	Zmiana hasła nieudana. Proszę skontaktować się z administratorem.
+failed to change password.	preferences	pl	Zmiana hasła nieudana.
 forced preferences	preferences	pl	Ustawienia wymuszone
 help off	preferences	pl	Wyłącz wyświetlanie pomocy
 hours	preferences	pl	godzin

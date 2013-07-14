@@ -211,7 +211,7 @@
 			{
 				$accountPrefix = $GLOBALS['egw_info']['server']['account_prefix'];
 			}
-			if($accountPrefix)
+			if($accountPrefix && strpos($userData['account_lid'], $accountPrefix) !== 0)
 			{
 				$userData['account_lid'] = $accountPrefix . $userData['account_lid'];
 			}

@@ -32,7 +32,7 @@ enables or disables drag and drop functions in all applications. if the browser 
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	cs	Povoluje nebo zakazuje změnu velikosti rozbalovacích nabídek v IE pro všechny aplikace. Ostatních prohlížečů se tato volba nedotkne. V současné době se jedná o experimentální funkci.
 enter your new password	preferences	cs	Zadejte Vaše nové heslo
 enter your old password	preferences	cs	Zadejte Vaše staré heslo
-failed to change password.  please contact your administrator.	preferences	cs	Nepodařilo se změnit heslo. Kontaktujte prosím Vašeho administrátora.
+failed to change password.	preferences	cs	Nepodařilo se změnit heslo.
 forced preferences	preferences	cs	Vynucené předvolby
 help off	preferences	cs	Vypnout nápovědu
 hours	preferences	cs	hodiny

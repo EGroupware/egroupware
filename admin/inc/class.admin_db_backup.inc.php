@@ -1,57 +1,49 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare - Admin - DB backup and restore                               *
-	* http://www.egroupware.org                                                *
-	* Written by RalfBecker@outdoor-training.de                                *
-	* --------------------------------------------                             *
-	*  This program is free software; you can redistribute it and/or modify it *
-	*  under the terms of the GNU General Public License as published by the   *
-	*  Free Software Foundation; either version 2 of the License, or (at your  *
-	*  option) any later version.                                              *
-	\**************************************************************************/
+/**
+ * EGroupware - Admin - DB backup and restore
+ *
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package admin
+ * @version $Id$
+ */
 
- 	/* $Id$ */
+class admin_db_backup
+{
+	var $public_functions = array(
+		'index' => true,
+	);
+	var $db_backup;
 
-		class admin_db_backup
-		{
-			var $public_functions = array(
-				'do_backup' => true,
-				'index' => true,
-		);
-		var $db_backup;
+	/**
+	 * Method for sheduled backups, called via asynservice
+	 */
+	function do_backup()
+	{
+		$this->db_backup = new db_backup();
 
-		function admin_db_backup()
-		{
-		}
-
-		/**
-		 * Method for sheduled backups, called via asynservice
-		 */
-		function do_backup()
-		{
-			$this->db_backup =& CreateObject('phpgwapi.db_backup');
-
-	 		if ($f = $this->db_backup->fopen_backup())
-	 		{
-				$this->db_backup->backup($f);
-				if(is_resource($f))
-					fclose($f);
-				/* Remove old backups. */
-				$this->db_backup->housekeeping();
-			}
-		}
-		
-		/**
-		 * includes setup's db_backup to display/access it inside admin
-		 */
-		function index()
-		{
-			$tpl_root = EGW_SERVER_ROOT.'/setup/templates/default';
-			$self = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'admin.admin_db_backup.index'));
-			$GLOBALS['egw']->translation->add_app('setup');
-	
-			include EGW_SERVER_ROOT.'/setup/db_backup.php';
-
-			$GLOBALS['egw']->common->egw_footer();
+ 		if ($f = $this->db_backup->fopen_backup())
+ 		{
+			$this->db_backup->backup($f);
+			if(is_resource($f))
+				fclose($f);
+			/* Remove old backups. */
+			$this->db_backup->housekeeping();
 		}
 	}
+
+	/**
+	 * includes setup's db_backup to display/access it inside admin
+	 */
+	function index()
+	{
+		$tpl_root = EGW_SERVER_ROOT.'/setup/templates/default';
+		$self = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'admin.admin_db_backup.index'));
+		translation::add_app('setup');
+
+		include EGW_SERVER_ROOT.'/setup/db_backup.php';
+
+		common::egw_footer();
+	}
+}

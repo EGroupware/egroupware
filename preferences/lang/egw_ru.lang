@@ -37,7 +37,7 @@ enables or disables dropdown selectbox resizing for ie in all applications. if t
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	ru	Не существует или не работает выпадающее меню для изменения размера для Интернет Эксплорера во всех приложениях. Если браузер другой, опция не применена. В данный момент эта функция работает в экспериментальном режиме.
 enter your new password	preferences	ru	Введите новый пароль
 enter your old password	preferences	ru	введите прежний пароль
-failed to change password.  please contact your administrator.	preferences	ru	Ошибка при смене пароля. Обратитесь к администратору.
+failed to change password.	preferences	ru	Ошибка при смене пароля
 forced preferences	preferences	ru	Принудительные настройки
 help off	preferences	ru	Убрать подсказки
 holding ctrl/cmd key and click on the line	preferences	ru	удерживайте клавишу Cntr/Cmd и одновременно нажмите на строку

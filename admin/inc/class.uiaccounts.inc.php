@@ -798,6 +798,9 @@
 
 			if($_POST['submit'])
 			{
+				// use old_loginid, if account_lid is not set in post, because input is disabled
+				if (!isset($_POST['account_lid'])) $_POST['account_lid'] = $_GET['old_loginid'];
+
 				if(!($email = $_POST['account_email']))
 				{
 					$email = common::email_address($_POST['account_firstname'],$_POST['account_lastname'],$_POST['account_lid']);
@@ -808,9 +811,9 @@
 					'account_firstname'     => $_POST['account_firstname'],
 					'account_lastname'      => $_POST['account_lastname'],
 					'account_passwd'        => $_POST['account_passwd'],
-					'account_status'        => ($_POST['account_status'] ? 'A' : ''),
-					'old_loginid'           => ($_GET['old_loginid']?rawurldecode($_GET['old_loginid']):''),
-					'account_id'            => ($_GET['account_id']?$_GET['account_id']:0),
+					'account_status'        => $_POST['account_status'] ? 'A' : '',
+					'old_loginid'           => $_GET['old_loginid'] ? $_GET['old_loginid'] : '',
+					'account_id'            => $_GET['account_id'] ? $_GET['account_id'] : 0,
 					'account_passwd_2'      => $_POST['account_passwd_2'],
 					'account_groups'        => $_POST['account_groups'],
 					'account_primary_group'	=> $_POST['account_primary_group'],
@@ -1337,7 +1340,7 @@
 			if($_account_id)
 			{
 				$page_params['account_id']  = $_account_id;
-				$page_params['old_loginid'] = rawurlencode($userData['account_lid']);
+				$page_params['old_loginid'] = $userData['account_lid'];
 			}
 
 			$var = Array(
@@ -1427,7 +1430,7 @@
 				'account_lid'   	=> $accountPrefix.html::input('account_lid', $userData['account_lid'], '',
 					'id="account" onchange="check_account_email(this.id);" maxlength="64"'.
 					// disable account_lid input, if backend does not allow to change it
-					($GLOBALS['egw']->accounts->change_account_lid_allowed() ? '' : ' disabled="disabled"')),
+					($GLOBALS['egw']->accounts->change_account_lid_allowed() || !$_account_id ? '' : ' disabled="disabled"')),
 				'lang_homedir'  	=> $lang_homedir,
 				'lang_shell'    	=> $lang_shell,
 				'homedirectory' 	=> $homedirectory,

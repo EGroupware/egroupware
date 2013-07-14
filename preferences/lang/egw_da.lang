@@ -24,7 +24,7 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	da	Ret valgfrie felter
 enter your new password	preferences	da	Indtast din nye adgangskode
 enter your old password	preferences	da	Indtast din gamle adgangskode
-failed to change password.  please contact your administrator.	preferences	da	Det lykkedes ikke at ændre adgangskoden. Kontakt din administrator.
+failed to change password.	preferences	da	Det lykkedes ikke at ændre adgangskoden.
 forced preferences	preferences	da	Tvungne præferencer
 help off	preferences	da	Ingen Hjælp
 hours	preferences	da	timer

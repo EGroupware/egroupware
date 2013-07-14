@@ -22,7 +22,7 @@ description can not exceed 255 characters in length !	preferences	ko	설명은 2
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	ko	24시간 시간 형식이 좋으신가요? 아니면 12시간 시간형식에 am/pm 이 덧붙혀 표기되는 형식이 좋으신가요?
 edit custom fields	preferences	ko	사용자정의 필드를 편집
 enter your new password	preferences	ko	새로운 암호를 입력
-failed to change password.  please contact your administrator.	preferences	ko	암호를 바꾸는데 실패했습니다. 관리자에게 문의하세요
+failed to change password.	preferences	ko	암호를 바꾸는데 실패했습니다. 관리자에게 문의하세요
 forced preferences	preferences	ko	강제 환경설정
 help off	preferences	ko	도움말 끄기
 hours	preferences	ko	시간

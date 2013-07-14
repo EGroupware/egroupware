@@ -25,7 +25,7 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	fr	Modifier les champs personnalisés
 enter your new password	preferences	fr	Entrez votre nouveau mot de passe
 enter your old password	preferences	fr	Entrez votre ancien mot de passe
-failed to change password.  please contact your administrator.	preferences	fr	Erreur lors du changement de mot de passe. Veuillez contacter votre administrateur.
+failed to change password.	preferences	fr	Erreur lors du changement de mot de passe.
 forced preferences	preferences	fr	Préférences forcées
 help off	preferences	fr	Aide désactivée
 hours	preferences	fr	Heures

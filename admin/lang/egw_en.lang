@@ -484,6 +484,7 @@ quota size in mbyte	admin	en	Quota size in MByte
 re-enter password	admin	en	Re-enter password
 read this list of methods.	admin	en	Read this list of methods.
 register application hooks	admin	en	Register application hooks
+reject passwords containing part of username or full name (3 or more characters long)	admin	en	Reject passwords containing part of username or full name (3 or more characters long)
 remote administration instances	admin	en	Remote administration instances
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	en	Remote administration need to be enabled in the remote instance under Admin > Site configuration!
 remote instance saved	admin	en	Remote instance saved.

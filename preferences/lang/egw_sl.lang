@@ -31,7 +31,7 @@ enable drag and drop functionality (experimental)	preferences	sl	Omogoči "povle
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	sl	Omogoči ali onemogoči "povleci in spusti" v vseh aplikacijah. Če brskalnik tega ne podpira, bo samodejno onemogočeno. Ta funkcionalnost je trenutno v testni fazi.
 enter your new password	preferences	sl	Vpišite novo geslo
 enter your old password	preferences	sl	Vpišite staro geslo
-failed to change password.  please contact your administrator.	preferences	sl	Napaka pri spreminjanju gesla. Obvestite oskrbnika.
+failed to change password.	preferences	sl	Napaka pri spreminjanju gesla.
 forced preferences	preferences	sl	Vsiljene nastavitve
 help off	preferences	sl	Izključi pomoč
 hours	preferences	sl	Ure

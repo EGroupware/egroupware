@@ -25,7 +25,7 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	eu	Eremu pertsonalizatuak editatu
 enter your new password	preferences	eu	Zure pasahitz berria sartu
 enter your old password	preferences	eu	Zure pasahitz zaharra sartu
-failed to change password.  please contact your administrator.	preferences	eu	Akatsa pasahitza aldatzerakoan. Mesedez jarri zure administratzailearekin kontaktuan.
+failed to change password.	preferences	eu	Akatsa pasahitza aldatzerakoan.
 forced preferences	preferences	eu	Behartutako hobespenak
 help off	preferences	eu	Laguntza desaktibatu
 hours	preferences	eu	orduak
