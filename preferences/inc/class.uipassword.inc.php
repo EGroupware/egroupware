@@ -68,6 +68,7 @@ class uipassword
 					lang('note: This feature does *not* change your email password. This will need to be done manually.'));
 		}
 
+		$errors = array();
 		if($_POST['change'])
 		{
 			$o_passwd = $GLOBALS['egw_info']['user']['passwd'];
@@ -93,18 +94,20 @@ class uipassword
 			}
 
 			// allow auth backends or configured password strenght to throw exceptions and display there message
-			try {
-				$passwd_changed = $this->bo->changepass($o_passwd, $n_passwd);
+			if (!$errors)
+			{
+				try {
+					$passwd_changed = $this->bo->changepass($o_passwd, $n_passwd);
+				}
+				catch (Exception $e) {
+					$errors[] = $e->getMessage();
+				}
 			}
-			catch (Exception $e) {
-				$errors[] = $e->getMessage();
-			}
-
 			if(!$passwd_changed)
 			{
 				if (!$errors)	// if we have no specific error, add general message
 				{
-					$errors[] = lang('Failed to change password.  Please contact your administrator.');
+					$errors[] = lang('Failed to change password.');
 				}
 				common::egw_header();
 				echo parse_navbar();

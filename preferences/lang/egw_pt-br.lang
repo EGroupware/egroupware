@@ -31,7 +31,7 @@ enable drag and drop functionality (experimental)	preferences	pt-br	Habilitar a 
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	pt-br	Habilitar ou desabilitar funções de arrastar e soltar em todos os aplicativos. Se o navegador não suportar tal funcionalidade, esta será desabilitada automaticamente. Esta função é experimental no momento.
 enter your new password	preferences	pt-br	Digite sua nova senha
 enter your old password	preferences	pt-br	Digite sua antiga senha
-failed to change password.  please contact your administrator.	preferences	pt-br	Erro ao moudar a senha. Por favor contate seu administrador.
+failed to change password.	preferences	pt-br	Erro ao moudar a senha.
 forced preferences	preferences	pt-br	Preferências obrigatórias
 help off	preferences	pt-br	Desligar ajuda
 hours	preferences	pt-br	horas

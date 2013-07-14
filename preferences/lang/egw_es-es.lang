@@ -32,7 +32,7 @@ enables or disables drag and drop functions in all applications. if the browser 
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	es-es	Activa o desactiva el menú desplegable redimensionable para IE en todas las aplicaciones. Si el navegador no es IE, la opción no se aplica. Esta característica es experimental en este instante.
 enter your new password	preferences	es-es	Introduzca la contraseña nueva
 enter your old password	preferences	es-es	Introduzca la contraseña anterior
-failed to change password.  please contact your administrator.	preferences	es-es	Fallo al cambiar la contraseña. Por favor, póngase en contacto con su administrador.
+failed to change password.	preferences	es-es	Fallo al cambiar la contraseña.
 forced preferences	preferences	es-es	Preferencias forzadas
 help off	preferences	es-es	Desactivar ayuda
 hours	preferences	es-es	horas

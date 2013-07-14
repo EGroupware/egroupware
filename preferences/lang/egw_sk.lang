@@ -35,7 +35,7 @@ enables or disables dropdown selectbox resizing for ie in all applications. if t
 enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	sk	Povolí alebo zakáže zmenu veľkosti pre výberovú roletu v prehliadači IE pre všetky aplikácie EGroupware. Ak prehliadačom nie je IE, táto voľba sa neuplatní. Táto funkcia je v súčasnosti experimentálna.
 enter your new password	preferences	sk	Zadajte vaše heslo
 enter your old password	preferences	sk	Zadajte staré heslo
-failed to change password.  please contact your administrator.	preferences	sk	Nepodarilo sa zmeniť heslo. Prosím kontaktujte správcu systému.
+failed to change password.	preferences	sk	Nepodarilo sa zmeniť heslo.
 forced preferences	preferences	sk	Vynútené nastavenia
 help off	preferences	sk	Skryť Pomocníka
 holding ctrl/cmd key and click on the line	preferences	sk	držaním klávesy Ctrl/Cmd a kliknutím na riadok

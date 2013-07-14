@@ -29,7 +29,7 @@ enable drag and drop functionality (experimental)	preferences	hu	Drag and Drop f
 enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	hu	Engedélyezi vagy tiltja a Drag and Drop funkciókat az összes alkalmazásban. Ha a böngésző nem támogatja a Drag and Drop-ot, akkor automatikusan le lesz tiltva. Ez a tulajdonság egyelőre haladó.
 enter your new password	preferences	hu	Új jelszó megadása
 enter your old password	preferences	hu	Régi jelszó megadása
-failed to change password.  please contact your administrator.	preferences	hu	Sikertelen jelszó változtatás. Lépjen kapcsolatba az adminisztrátorral.
+failed to change password.	preferences	hu	Sikertelen jelszó változtatás.
 forced preferences	preferences	hu	Kényszerített Tulajdonságok
 help off	preferences	hu	Segítség kikapcsolása
 hours	preferences	hu	órák

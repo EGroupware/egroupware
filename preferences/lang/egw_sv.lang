@@ -25,7 +25,7 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	sv	Ändra anpassade fält
 enter your new password	preferences	sv	Nytt lösenord
 enter your old password	preferences	sv	Gamla lösenordet
-failed to change password.  please contact your administrator.	preferences	sv	Kunde inte ändra lösenordet. Vänligen kontakta administratör.
+failed to change password.	preferences	sv	Kunde inte ändra lösenordet.
 forced preferences	preferences	sv	Tvingade inställningar
 help off	preferences	sv	Hjälp av
 hours	preferences	sv	timmar

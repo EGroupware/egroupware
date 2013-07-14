@@ -32,7 +32,7 @@ enables or disables drag and drop functions in all applications. if the browser 
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	lo	ເປີດ ຫຼື ປິດໃຊ້ງານການປັບຂະໜາດຊ່ອງເລືອກ-ເມນູແບບເລື່ອນລົງສຳຫຼັບ IE ໃນທຸກແອບພຼິເຄຊັນ. ຖ້າໜ້າຕ່າງບໍ່ແມ່ນ IE, ຕົວເລືອກຈະນໍາໃຊ້ບໍ່ໄດ້. ຄຸນລັກສະນະມີການທົດລອງໃນຕອນນີ້
 enter your new password	preferences	lo	ໃສ່ລະຫັດຜ່ານໃໝ່ຂອງທ່ານ
 enter your old password	preferences	lo	ໃສ່ລະຫັດຜ່ານເກົ່າຂອງທ່ານ
-failed to change password.  please contact your administrator.	preferences	lo	ການປ່ຽນລະຫັດລົ້ມເຫຼວ. ກະລຸນາຕິດຕໍ່ຜູ້ເບິ່ງແຍງລະບົບຂອງທ່ານ
+failed to change password.	preferences	lo	ການປ່ຽນລະຫັດລົ້ມເຫຼວ. ກະລຸນາຕິດຕໍ່ຜູ້ເບິ່ງແຍງລະບົບຂອງທ່ານ
 forced preferences	preferences	lo	ການຕັ້ງຄ່າແບບບັງຄັບ
 help off	preferences	lo	ປິດຄວາມຊ່ວຍເຫຼືອ
 hours	preferences	lo	ຊົ່ວໂມງ

@@ -24,7 +24,7 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	fa	ویرایش فیلدهای سفارشی
 enter your new password	preferences	fa	گذرواژه جدبد را وارد کنید
 enter your old password	preferences	fa	گذرواژه قبلی خود را وارد کنید
-failed to change password.  please contact your administrator.	preferences	fa	ناتوان از تغییر گذرواژه. لطفا با مدیر سیستم تماس بگیرید
+failed to change password.	preferences	fa	ناتوان از تغییر گذرواژه. لطفا با مدیر سیستم تماس بگیرید
 forced preferences	preferences	fa	تنظیمات اجباری
 help off	preferences	fa	کمک خاموش
 hours	preferences	fa	ساعت

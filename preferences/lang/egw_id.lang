@@ -29,7 +29,7 @@ do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	prefe
 edit custom fields	preferences	id	edit custom fields
 enter your new password	preferences	id	Masukan password baru anda
 enter your old password	preferences	id	Masukan password lama anda
-failed to change password.  please contact your administrator.	preferences	id	Gagal mengubah password. Silahkan hubungi administrator anda.
+failed to change password.	preferences	id	Gagal mengubah password.
 forced preferences	preferences	id	Kesukaan Dipaksakan
 help off	preferences	id	Help off
 hours	preferences	id	jam

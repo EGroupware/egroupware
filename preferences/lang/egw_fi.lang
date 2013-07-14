@@ -40,7 +40,7 @@ enables or disables drag and drop functions in all applications. if the browser 
 enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	fi	Ota käyttöön valintalaatikon pudotusvalikon koonmääritys toiminto kaikissa sovelluksissa IE:lle. Jos selain ei ole IE, toiminto otetaan pois käytöstä automaattisesti.
 enter your new password	preferences	fi	Anna uusi salasana
 enter your old password	preferences	fi	Anna vanha salasana
-failed to change password.  please contact your administrator.	preferences	fi	Salasanan vaihto ei onnistunut.
+failed to change password.	preferences	fi	Salasanan vaihto ei onnistunut.
 features of the editor	preferences	fi	Editorin asetukset
 forced preferences	preferences	fi	Pakotetut asetukset
 help off	preferences	fi	Piilota ohjeet
