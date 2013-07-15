@@ -84,7 +84,7 @@ class mail_hooks
 			'view_popup' => '850xegw_getWindowOuterHeight()',
 			'view_list'	=>	'mail.mail_ui.index',
 			'add'        => array(
-//				'menuaction' => 'mail.uicompose.compose',
+				'menuaction' => 'felamimail.uicompose.compose',
 			),
 			'add_popup'  => '850xegw_getWindowOuterHeight()',
 			// register fmail as handler for .eml files

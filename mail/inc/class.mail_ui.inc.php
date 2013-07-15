@@ -1445,9 +1445,6 @@ unset($query['actions']);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
 
-		//$transformdate	=& CreateObject('felamimail.transformdate');
-		//$htmlFilter	=& CreateObject('felamimail.htmlfilter');
-		//$uiWidgets	=& CreateObject('felamimail.uiwidgets');
 		$this->mail_bo->reopen($mailbox);
 		$rawheaders	= $this->mail_bo->getMessageRawHeader($uid, $partID);
 
@@ -1493,9 +1490,6 @@ unset($query['actions']);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
 
-		//$transformdate	=& CreateObject('felamimail.transformdate');
-		//$htmlFilter	=& CreateObject('felamimail.htmlfilter');
-		//$uiWidgets	=& CreateObject('felamimail.uiwidgets');
 		$this->mail_bo->reopen($mailbox);
 		// retrieve the flags of the message, before touching it.
 		$headers	= $this->mail_bo->getMessageHeader($uid, $partID);
@@ -1507,6 +1501,7 @@ unset($query['actions']);
 		}
 		if (!empty($uid)) $flags = $this->mail_bo->getFlags($uid);
 		$envelope	= $this->mail_bo->getMessageEnvelope($uid, $partID,true);
+//_debug_array($headers);
 		$rawheaders	= $this->mail_bo->getMessageRawHeader($uid, $partID);
 		$fetchEmbeddedImages = false;
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
@@ -1540,14 +1535,36 @@ unset($query['actions']);
 		egw_framework::set_onload("");
 		$subject = mail_bo::htmlspecialchars($this->mail_bo->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false),
             mail_bo::$displayCharset);
+		if($envelope['FROM'][0] != $envelope['SENDER'][0]) {
+			$content['mail_displayfromaddress'] = self::emailAddressToHTML($envelope['SENDER'],'',false,true,false);
+			$content['mail_displayonbehalfofaddress'] = self::emailAddressToHTML($envelope['FROM'], $organization,false,true,false);
+		} else {
+			$content['mail_displayfromaddress'] = self::emailAddressToHTML($envelope['FROM'], $organization,false,true,false);
+		}
+
+		// parse the to header
+		$content['mail_displaytoaddress'] = self::emailAddressToHTML($envelope['TO'],'',false,true,false);
+
+		// parse the cc header
+		if(count($envelope['CC'])) {
+			$content['mail_displayccaddress'] = self::emailAddressToHTML($envelope['CC'],'',false,true,false);
+		}
+
+		// parse the bcc header
+		if(count($envelope['BCC'])) {
+			$content['mail_displaybccaddress'] = self::emailAddressToHTML($envelope['BCC'],'',false,true,false);
+		}
+
 		if (empty($subject)) $subject = lang('no subject');
 		$content['msg'] = $subject.(is_array($error_msg)?implode("<br>",$error_msg):$error_msg);
+		$content['mail_displaydate'] = mail_bo::_strtotime($headers['DATE'],'ts',true);
 		$content['mail_displaysubject'] = $subject;
 		$content['mail_displaybody'] = $mailBody;
 		//_debug_array($attachments);
 		$content['mail_displayattachments'] = $attachmentHTMLBlock;
+//_debug_array($content);
 		$readonlys = $preserv = $content;
-		echo $etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
+		$etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
 	}
 
 	/**
@@ -1678,7 +1695,7 @@ unset($query['actions']);
 						'mode' => 'saveas',
 						'name' => $value['name'],
 						'mime' => strtolower($value['mimeType']),
-						'method' => 'felamimail.uidisplay.vfsSaveAttachment',
+						'method' => 'mail.mail_ui.vfsSaveAttachment',
 						'id' => $mailbox.'::'.$uid.'::'.$value['partID'].'::'.$value['is_winmail'],
 						'label' => lang('Save'),
 					));
@@ -1714,6 +1731,136 @@ unset($query['actions']);
 			$attachmentHTMLBlock .= "</table>";
 		}
 		return $attachmentHTMLBlock;
+	}
+
+	static function emailAddressToHTML($_emailAddress, $_organisation='', $allwaysShowMailAddress=false, $showAddToAdrdessbookLink=true, $decode=true) {
+		//_debug_array($_emailAddress);
+		// create some nice formated HTML for senderaddress
+
+		if(is_array($_emailAddress)) {
+			$senderAddress = '';
+			foreach($_emailAddress as $addressData) {
+				#_debug_array($addressData);
+				if($addressData['MAILBOX_NAME'] == 'NIL') {
+					continue;
+				}
+
+				if(!empty($senderAddress)) $senderAddress .= ', ';
+
+				if(strtolower($addressData['MAILBOX_NAME']) == 'undisclosed-recipients') {
+					$senderAddress .= 'undisclosed-recipients';
+					continue;
+				}
+				if($addressData['PERSONAL_NAME'] != 'NIL') {
+					$newSenderAddressORG = $newSenderAddress = $addressData['RFC822_EMAIL'] != 'NIL' ? $addressData['RFC822_EMAIL'] : $addressData['EMAIL'];
+					$decodedPersonalNameORG = $decodedPersonalName = $addressData['PERSONAL_NAME'];
+					if ($decode)
+					{
+						$newSenderAddress = mail_bo::decode_header($newSenderAddressORG);
+						$decodedPersonalName = mail_bo::decode_header($decodedPersonalName);
+						$addressData['EMAIL'] = mail_bo::decode_header($addressData['EMAIL'],true);
+					}
+					$realName =  $decodedPersonalName;
+					// add mailaddress
+					if ($allwaysShowMailAddress) {
+						$realName .= ' <'.$addressData['EMAIL'].'>';
+						$decodedPersonalNameORG .= ' <'.$addressData['EMAIL'].'>';
+					}
+					// add organization
+					if(!empty($_organisation)) {
+						$realName .= ' ('. $_organisation . ')';
+						$decodedPersonalNameORG .= ' ('. $_organisation . ')';
+					}
+					$addAction = egw_link::get_registry('mail','add');
+					$linkData = array (
+						'menuaction'	=> $addAction,
+						'send_to'	=> base64_encode($newSenderAddress)
+					);
+					$link = $GLOBALS['egw']->link('/index.php',$linkData);
+
+					$newSenderAddress = mail_bo::htmlentities($newSenderAddress);
+					$realName = mail_bo::htmlentities($realName);
+
+					$senderAddress .= sprintf('<a href="%s" title="%s">%s</a>',
+								$link,
+								$newSenderAddress,
+								$realName);
+
+					$linkData = array (
+						'menuaction'		=> 'addressbook.addressbook_ui.edit',
+						'presets[email]'	=> $addressData['EMAIL'],
+						'presets[org_name]'	=> $_organisation,
+						'referer'		=> $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']
+					);
+
+					$decodedPersonalName = $realName;
+					if (!empty($decodedPersonalName)) {
+						if($spacePos = strrpos($decodedPersonalName, ' ')) {
+							$linkData['presets[n_family]']	= substr($decodedPersonalName, $spacePos+1);
+							$linkData['presets[n_given]'] 	= substr($decodedPersonalName, 0, $spacePos);
+						} else {
+							$linkData['presets[n_family]']	= $decodedPersonalName;
+						}
+						$linkData['presets[n_fn]']	= $decodedPersonalName;
+					}
+
+					if ($showAddToAdrdessbookLink && $GLOBALS['egw_info']['user']['apps']['addressbook']) {
+						$urlAddToAddressbook = $GLOBALS['egw']->link('/index.php',$linkData);
+						$onClick = "window.open(this,this.target,'dependent=yes,width=850,height=440,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;";
+						$image = $GLOBALS['egw']->common->image('felamimail','sm_envelope');
+						$senderAddress .= sprintf('<a href="%s" onClick="%s">
+							<img src="%s" width="10" height="8" border="0"
+							align="absmiddle" alt="%s"
+							title="%s"></a>',
+							$urlAddToAddressbook,
+							$onClick,
+							$image,
+							lang('add to addressbook'),
+							lang('add to addressbook'));
+					}
+				} else {
+					$addrEMailORG = $addrEMail = $addressData['EMAIL'];
+					$addAction = egw_link::get_registry('mail','add');
+					if ($decode) $addrEMail = mail_bo::decode_header($addrEMail,true);
+					$linkData = array (
+						'menuaction'	=> $addAction,
+						'send_to'	=> base64_encode($addressData['EMAIL'])
+					);
+					$link = $GLOBALS['egw']->link('/index.php',$linkData);
+					$senderEMail = mail_bo::htmlentities($addrEMail);
+					$senderAddress .= sprintf('<a href="%s">%s</a>',
+								$link,$senderEMail);
+					//TODO: This uses old addressbook code, which should be removed in Version 1.4
+					//Please use addressbook.addressbook_ui.edit with proper paramenters
+					$linkData = array
+					(
+						'menuaction'		=> 'addressbook.addressbook_ui.edit',
+						'presets[email]'	=> $senderEMail, //$addressData['EMAIL'],
+						'presets[org_name]'	=> $_organisation,
+						'referer'		=> $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']
+					);
+
+					if ($showAddToAdrdessbookLink && $GLOBALS['egw_info']['user']['apps']['addressbook']) {
+						$urlAddToAddressbook = $GLOBALS['egw']->link('/index.php',$linkData);
+						$onClick = "window.open(this,this.target, 'dependent=yes, width=850, height=440, location=no, menubar=no, toolbar=no, scrollbars=yes, status=yes'); return false;";
+						$image = $GLOBALS['egw']->common->image('felamimail','sm_envelope');
+						$senderAddress .= sprintf('<a href="%s" onClick="%s">
+							<img src="%s" width="10" height="8" border="0"
+							align="absmiddle" alt="%s"
+							title="%s"></a>',
+							$urlAddToAddressbook,
+							$onClick,
+							$image,
+							lang('add to addressbook'),
+							lang('add to addressbook'));
+					}
+				}
+			}
+			return $senderAddress;
+		}
+
+		// if something goes wrong, just return the original address
+		return $_emailAddress;
 	}
 
 	/**
@@ -1767,7 +1914,6 @@ unset($query['actions']);
 		$is_winmail = $_GET['is_winmail'] ? $_GET['is_winmail'] : 0;
 
 		$this->mail_bo->reopen($mailbox);
-		#$attachment 	= $this->bofelamimail->getAttachment($this->uid,$part);
 		$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail);
 		$this->mail_bo->closeConnection();
 
@@ -2114,9 +2260,19 @@ blockquote[type=cite] {
 				//if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0)
 				if (($test=="null" || $test === false || is_null($test)) && strlen($singleBodyPart['body'])>0)
 				{
-					// this should not be needed, unless something fails with charset detection/ wrong charset passed
-					error_log(__METHOD__.__LINE__.' Charset Reported:'.$singleBodyPart['charSet'].' Charset Detected:'.felamimail_bo::detect_encoding($singleBodyPart['body']));
-					$singleBodyPart['body'] = utf8_encode($singleBodyPart['body']);
+					// try to fix broken utf8
+					$x = (function_exists('mb_convert_encoding')?mb_convert_encoding($singleBodyPart['body'],'UTF-8','UTF-8'):(function_exists('iconv')?@iconv("UTF-8","UTF-8//IGNORE",$singleBodyPart['body']):$singleBodyPart['body']));
+					$test = @json_encode($x);
+					if (($test=="null" || $test === false || is_null($test)) && strlen($singleBodyPart['body'])>0)
+					{
+						// this should not be needed, unless something fails with charset detection/ wrong charset passed
+						error_log(__METHOD__.__LINE__.' Charset Reported:'.$singleBodyPart['charSet'].' Charset Detected:'.translation::detect_encoding($singleBodyPart['body']));
+						$singleBodyPart['body'] = utf8_encode($singleBodyPart['body']);
+					}
+					else
+					{
+						$singleBodyPart['body'] = $x;
+					}
 				}
 			}
 			//error_log(__METHOD__.__LINE__.array2string($singleBodyPart));
@@ -2205,11 +2361,11 @@ blockquote[type=cite] {
 					$newBody = preg_replace_callback("/url\(cid:(.*)\);/iU",array($this,'image_callback_url'),$newBody);
 					$newBody = preg_replace_callback("/background=(\"|\')cid:(.*)(\"|\')/iU",array($this,'image_callback_background'),$newBody);
 				}
-
+				$addAction = egw_link::get_registry('mail','add');
 				// create links for email addresses
 				if ($modifyURI)
 				{
-					$link = $GLOBALS['egw']->link('/index.php',array('menuaction'    => 'felamimail.uicompose.compose'));
+					$link = $GLOBALS['egw']->link('/index.php',array('menuaction'    => $addAction));
 					$newBody = preg_replace("/href=(\"|\')mailto:([\w,\-,\/,\?,\=,\.,&amp;,!\n,\%,@,\*,#,:,~,\+]+)(\"|\')/ie",
 						"'href=\"$link&send_to='.base64_encode('$2').'\"'.' target=\"compose\" onclick=\"window.open(this,this.target,\'dependent=yes,width=700,height=egw_getWindowOuterHeight(),location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;\"'", $newBody);
 					//print "<pre>".htmlentities($newBody)."</pre><hr>";
@@ -2522,7 +2678,7 @@ blockquote[type=cite] {
 			{
 				$this->t->set_var('vfs_attach_button','
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="fm_import_displayVfsSelector();" title="'.htmlspecialchars(lang('filemanager')).'">
-					<img src="'.$GLOBALS['egw']->common->image('filemanager','navbar').'" height="18">
+					<img src="'.html::image('filemanager','navbar').'" height="18">
 				</a>&nbsp;&nbsp;&nbsp;&nbsp;');
 				$this->t->set_var('filebox_readonly','readonly="readonly"');
 			}
@@ -2535,7 +2691,7 @@ blockquote[type=cite] {
 			$maxUploadSize = ini_get('upload_max_filesize');
 			$this->t->set_var('max_uploadsize', $maxUploadSize);
 
-			$this->t->set_var('ajax-loader', $GLOBALS['egw']->common->image('felamimail','ajax-loader'));
+			$this->t->set_var('ajax-loader', html::image('felamimail','ajax-loader'));
 
 			$this->t->pparse("out","fileSelector");
 */

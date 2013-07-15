@@ -6,11 +6,19 @@
 		<vbox class="mailDisplay mailDisplayHeaderSection" width="100%">
 			<hbox class="mailDisplayHeaders" width="100%">
 				<description value="From"/>
-				<url-email id="mail_displayfromaddress" readonly="true"/>
+				<html id="mail_displayfromaddress" readonly="true"/>
 			</hbox>
 			<hbox class="mailDisplayHeaders" width="100%">
-				<description value="To"/>
-				<url-email id="mail_displaytoaddress" readonly="true"/>
+				<description value="on behalf of"/>
+				<html id="mail_displayonbehalfofaddress" readonly="true"/>
+			</hbox>
+			<hbox class="mailDisplayHeaders" width="100%">
+				<description value="Cc"/>
+				<html id="mail_displayccaddress" readonly="true"/>
+			</hbox>
+			<hbox class="mailDisplayHeaders" width="100%">
+				<description value="Bcc"/>
+				<html id="mail_displaybccaddress" readonly="true"/>
 			</hbox>
 			<hbox class="mailDisplayHeaders" width="100%">
 				<description value="Date"/>
