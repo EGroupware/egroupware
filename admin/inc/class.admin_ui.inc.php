@@ -109,7 +109,7 @@ class admin_ui
 if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole admin, dono why
 			$GLOBALS['menuData'] = $data = array();
 			$data = $GLOBALS['egw']->hooks->single('edit_user', $app, true);
-			if (!$data) $data = $GLOBALS['menuData'];
+			if (!is_array($data)) $data = $GLOBALS['menuData'];
 			foreach($data as $item)
 			{
 				// allow hook to return "real" actions, but still support legacy: description, url, extradata, options
