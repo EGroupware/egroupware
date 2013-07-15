@@ -64,6 +64,11 @@ class accounts_ads
 	const CHANGE_ACCOUNT_LID = false;
 
 	/**
+	 * Backend requires password to be set, before allowing to enable an account
+	 */
+	const REQUIRE_PASSWORD_FOR_ENABLE = true;
+
+	/**
 	 * Attributes to query to be able to generate account_id and account_lid
 	 *
 	 * @var array
@@ -763,6 +768,7 @@ class accounts_ads
 							self::convertUnixTimeToWindowsTime($data[$egw]);
 						break;
 					case 'account_status':
+						if ($new_entry && empty($data['account_passwd'])) continue;	// cant active new account without passwd!
 						$attributes[$adldap] = $data[$egw] == 'A';
 						break;
 					case 'account_lastpwd_change':	// AD only allows to set 0 (force pw change) and -1 (reset time)

@@ -111,7 +111,7 @@ class auth_ads implements auth_backend
 
 		if (!($adldap->getUseSSL() || $adldap->getUseTLS()))
 		{
-			throw new egw_exception(lang('Failed to change password.  Please contact your administrator.').' '.lang('Active directory requires SSL or TLS to change passwords!'));
+			throw new egw_exception(lang('Failed to change password.').' '.lang('Active directory requires SSL or TLS to change passwords!'));
 		}
 
 		if(!$account_id || $GLOBALS['egw_info']['flags']['currentapp'] == 'login')
@@ -137,7 +137,6 @@ class auth_ads implements auth_backend
 			return $ret;
 		}
 		catch (Exception $e) {
-			error_log(__METHOD__."('$old_passwd', '$new_passwd', $account_id) admin=$admin adldap->user()->password('$username', '$new_passwd') returned ".array2string($ret).' ('.ldap_error($adldap->getLdapConnection()).')');
 			// as we cant detect what the problem is, we do a password strength check and throw it's message, if it fails
 			$error = auth::crackcheck($new_passwd,
 				// if admin has nothing configured use windows default of 3 char classes, 7 chars min and name-part-check
@@ -150,7 +149,6 @@ class auth_ads implements auth_backend
 				'Error' => lang('Error'),
 				'Server is unwilling to perform.' => lang('Server is unwilling to perform.'),
 				'Your password might not match the password policy.' => lang('Your password might not match the password policy.'),
-				'SSL must be configured on your webserver and enabled in the class to set passwords.' => lang('Encrypted LDAP connection is required to change passwords, but it is not configured in your installation.'),
 			));
 			throw new egw_exception('<p><b>'.lang('Failed to change password.')."</b></p>\n".$msg.($error ? "\n<p>".$error."</p>\n" : ''));
 		}

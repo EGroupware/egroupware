@@ -960,6 +960,16 @@ class accounts
 		return $change_account_lid;
 	}
 
+	/**
+	 * Query if backend requires password to be set, before allowing to enable an account
+	 *
+	 * @return boolean true if backend requires a password (AD), false or null otherwise (SQL, LDAP)
+	 */
+	function require_password_for_enable()
+	{
+		return constant(get_class($this->backend).'::REQUIRE_PASSWORD_FOR_ENABLE');
+	}
+
 	function list_methods($_type='xmlrpc')
 	{
 		if (is_array($_type))
