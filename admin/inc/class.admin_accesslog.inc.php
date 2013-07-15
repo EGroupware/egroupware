@@ -181,9 +181,10 @@ class admin_accesslog
 				unset($content['delete']);
 				$sessionid = $content['nm']['rows']['selected'];
 			}
-			if ($sessionid && $this->so->delete(array('sessionid' => $sessionid)))
+			$del_msg= $this->so->delete(array('sessionid' => $sessionid));
+			if ($sessionid && $del_msg)
 			{
-				$msg = lang('%1 log entries deleted.',1);
+				$msg = lang('%1 log entries deleted.',$del_msg);
 			}
 			else
 			{
