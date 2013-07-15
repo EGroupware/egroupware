@@ -8,6 +8,7 @@
  * 	RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
  *
  * Otherwise authentication request will be send over and over again, as password is NOT available to PHP!
+ * (This makes authentication details available in PHP as $_SERVER['REDIRECT_HTTP_AUTHORIZATION']
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -80,9 +81,9 @@ class egw_digest_auth
 
 		$username = $_SERVER['PHP_AUTH_USER']; $password = $_SERVER['PHP_AUTH_PW'];
 		// Support for basic auth when using PHP CGI (what about digest auth?)
-		if (!isset($username) && !empty($_SERVER['Authorization']) && strpos($_SERVER['Authorization'],'Basic ') === 0)
+		if (!isset($username) && !empty($_SERVER['REDIRECT_HTTP_AUTHORIZATION']) && strpos($_SERVER['REDIRECT_HTTP_AUTHORIZATION'],'Basic ') === 0)
 		{
-			$hash = base64_decode(substr($_SERVER['Authorization'],6));
+			$hash = base64_decode(substr($_SERVER['REDIRECT_HTTP_AUTHORIZATION'],6));
 			if (strpos($hash, ':') !== false)
 			{
 				list($username, $password) = explode(':', $hash, 2);
