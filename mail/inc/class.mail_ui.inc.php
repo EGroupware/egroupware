@@ -30,6 +30,7 @@ class mail_ui
 		'displayImage'		=> True,
 		'getAttachment'		=> True,
 		'saveMessage'	=> True,
+		'vfsSaveAttachment' => True,
 		'vfsSaveMessage' => True,
 		'loadEmailBody'	=> True,
 		'importMessage'	=> True,
@@ -1696,7 +1697,7 @@ unset($query['actions']);
 						'name' => $value['name'],
 						'mime' => strtolower($value['mimeType']),
 						'method' => 'mail.mail_ui.vfsSaveAttachment',
-						'id' => $mailbox.'::'.$uid.'::'.$value['partID'].'::'.$value['is_winmail'],
+						'id' => $rowID.'::'.$value['partID'].'::'.$value['is_winmail'],
 						'label' => lang('Save'),
 					));
 					$vfs_save = "<a href='#' onclick=\"egw_openWindowCentered('$link_vfs_save','vfs_save_attachment','640','570',window.outerWidth/2,window.outerHeight/2); return false;\">$url_img_vfs</a>";
@@ -2079,6 +2080,43 @@ unset($query['actions']);
 			if ($fp) fclose($fp);
 		}
 		//$this->mail_bo->closeConnection();
+
+		return $err.'window.close();';
+	}
+
+	/**
+	 * Save an attachment in the vfs
+	 *
+	 * @param string|array $ids '::' delimited mailbox::uid::part-id::is_winmail::name (::name for multiple id's)
+	 * @param string $path path in vfs (no egw_vfs::PREFIX!), only directory for multiple id's ($ids is an array)
+	 * @return string javascript eg. to close the selector window
+	 */
+	function vfsSaveAttachment($ids,$path)
+	{
+		error_log(__METHOD__.__LINE__.'("'.array2string($ids).'","'.$path."\")');");
+
+		if (is_array($ids) && !egw_vfs::is_writable($path) || !is_array($ids) && !egw_vfs::is_writable(dirname($path)))
+		{
+			return 'alert("'.addslashes(lang('%1 is NOT writable by you!',$path)).'"); window.close();';
+		}
+		foreach((array)$ids as $id)
+		{
+			list($app,$user,$serverID,$mailbox,$uid,$part,$is_winmail,$name) = explode('::',$id,8);
+			$lId = implode('::',array($app,$user,$serverID,$mailbox,$uid));
+			$hA = self::splitRowID($lId);
+			$uid = $hA['msgUID'];
+			$mailbox = $hA['folder'];
+			if ($mb != $mailbox) $this->mail_bo->reopen($mb = $mailbox);
+			$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail);
+
+			if (!($fp = egw_vfs::fopen($file=$path.($name ? '/'.$name : ''),'wb')) ||
+				!fwrite($fp,$attachment['attachment']))
+			{
+				$err .= 'alert("'.addslashes(lang('Error saving %1!',$file)).'");';
+			}
+			if ($fp) fclose($fp);
+		}
+		$this->mail_bo->closeConnection();
 
 		return $err.'window.close();';
 	}
