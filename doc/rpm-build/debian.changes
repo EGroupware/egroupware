@@ -1,3 +1,29 @@
+egroupware-epl (11.1.20130715-1) hardy; urgency=low
+
+  * eMail/ActiveDirectory: fixed not working autocomplete of accounts
+  * PostgreSQL: automatic fix GROUP BY clause to contain all non-aggregate selected columns, to work around SQL errors, caused by this MySQL "optimisation"
+  * InfoLog: fixed storing of InfoLog site config: fields to exclude when copying or creating subs and load custom fields in index for types
+  * API: fix for wrong (unexpected array) type passed in check_list
+  * eMail: reset possible default ActiveProfileID in preferences
+  * eMail: if available show emailaddress of defaultprofile
+  * Setup/Active Directory: setup_cmd_ldap sub_command=copy2ad now checks multivalue attributes caseinsensitive for doublicate values and new parameter no_sid_check=1 allow to use it for migrating mail-attributes without Samaba checks
+  * eMail: handle problem when calculated IFrame height for preview area is too small (negative)
+  * Admin/Active Directory: create new users with CN=<username> as Windows does and allow to configure profilePath, homeDirectory, homeDrive and scriptPath for new users (in setup)
+  * Addressbook/Home: mend issue regarding the display of multiple birthdays of the same contact in the home area
+  * eMail/Sieve: when editing sieve rules mend double linefeeds returned by IE10 on edit of the vacation-message
+  * eMail/Compose: make address suggestion selectbox scrollable
+  * eMail/ActiveSync: if copy to sent folder fails, for whatever reason, only log to debugLog, do not consider the send action as failed as this would cause the mobile device to resend the mail in question
+  * eMail: handle excess linebreaks in signatures when compose as plainText (when using div for linebreak mode for ck-editor)
+  * All apps: allow to log user-agent and action of all changes in history-log of entries (enable in Admin >> Site configuration)
+  * Addressbook/Active Directory: got prefix, middle name and suffix working for AD account, file as got disabled (as well as not supported history tab)
+  * Admin/Active Directory: fixed not working display, setting and removing of "must change password upon next login"
+  * Admin/Preferences/Active Directory: more understandable password policy errors and using windows defaults only, if admin has not configured something else
+  * WebDAV/CalDAV/CardDAV: fixed basic authentication via redirect-rule to use $_SERVER["REDIRECT_HTTP_AUTHORIZATION"] as it is used by newer Apache versions
+  * Active Directory: allow to do a forced password change in EGroupware and handle reset of that flag for Samba4 too
+  * Stylite template: allow to force an application to be the active one after each new login, eg. home
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 15 Jul 2013 22:32:34 +0200
+
 egroupware-epl (11.1.20130629-1) hardy; urgency=low
 
   * Admin/API/ADS: account creation did not set initial password
