@@ -207,7 +207,7 @@ class auth_ads implements auth_backend
 			$username = $GLOBALS['egw']->accounts->id2name($account_id);
 		}
 		// Check the old_passwd to make sure this is legal
-		if(!$admin && !$adldap->authenticate($username, $old_passwd))
+		if(!$admin && !$this->authenticate($username, $old_passwd))
 		{
 			//error_log(__METHOD__."() old password '$old_passwd' for '$username' is wrong!");
 			return false;
