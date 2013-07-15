@@ -173,8 +173,9 @@ class setup_cmd_config extends setup_cmd
 			array('name' => 'editforwardingaddress','allowed' => array('yes',null)),
 			array('name' => 'smtpType','default' => 'postfixldap'),
 		),
-		'--smtpserver' => array(	//smtp server,[smtp port],[smtp user],[smtp password]
-			'smtp_server',array('name' => 'smtp_port','default' => 25),'smtp_auth_user','smtp_auth_passwd',''
+		'--smtpserver' => array(	//smtp server,[smtp port],[smtp user],[smtp password],[auth=no|yes|ann]
+			'smtp_server',array('name' => 'smtp_port','default' => 25),'smtp_auth_user','smtp_auth_passwd',
+			array('name' => 'smtpAuth', 'default' => 'no', 'allowed' => array('no', 'yes', 'ann')),
 		),
 		'--account-auth' => array(
 			array('name' => 'account_repository','allowed' => array('sql','ldap'),'default'=>'sql'),
@@ -299,7 +300,7 @@ class setup_cmd_config extends setup_cmd
 		{
 			$config[$row['config_name']] = $row['config_value'];
 		}
-		$config['smtpAuth'] = $config['smtp_auth_user'] ? 'yes' : null;
+		if (!$config['smtpAuth']) $config['smtpAuth'] = $config['smtp_auth_user'] ? 'yes' : null;
 
 		$emailadmin = new emailadmin_bo(false,false);	// false=no session stuff
 		$emailadmin->setDefaultProfile($config);
