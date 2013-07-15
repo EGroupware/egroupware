@@ -76,11 +76,11 @@ class auth
 		// retrieve the timestamp regarding the last change of the password from auth system and store it with the session
 		static $alpwchange_val;
 		static $pwdTsChecked;
-		if (is_null($pwdTsChecked) && is_null($alpwchange_val))
+		if (is_null($pwdTsChecked) && is_null($alpwchange_val) || (string)$alpwchange_val === '0')
 		{
 			$alpwchange_val =& egw_cache::getSession('phpgwapi','auth_alpwchange_val'); // set that one with the session stored value
 			// initalize statics - better readability of conditions
-			if (is_null($alpwchange_val))
+			if (is_null($alpwchange_val) || (string)$alpwchange_val === '0')
 			{
 				$backend_class = 'auth_'.$GLOBALS['egw_info']['server']['auth_type'];
 				$backend = new $backend_class;
