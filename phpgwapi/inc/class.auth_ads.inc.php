@@ -40,8 +40,22 @@ class auth_ads implements auth_backend
 		// bind with username@ads_domain, only if a non-empty password given, in case anonymous search is enabled
 		if(empty($passwd) || !$adldap->authenticate($username, $passwd))
 		{
-			//error_log(__METHOD__."('$username', ".(empty($passwd) ? "'') passwd empty" : '$passwd) adldap->authenticate() returned false')." --> returning false");
-			return False;
+			$authenticated = false;
+			// check if password need to be set on next login (AD will not authenticate user!)
+			if (!empty($passwd) && ($data = $adldap->user()->info($username, array('pwdlastset'))) &&
+				((string)$data[0]['pwdlastset'][0] === '0') &&
+				// reset pwdlastset, to we can check authentication
+				ldap_modify($adldap->getLdapConnection(), $data[0]['dn'], array('pwdlastset' => -1)))
+			{
+				$authenticated = $adldap->authenticate($username, $passwd);
+				// set pwdlastset=0 again
+				ldap_modify($adldap->getLdapConnection(), $data[0]['dn'], array('pwdlastset' => 0));
+			}
+			if (!$authenticated)
+			{
+				error_log(__METHOD__."('$username', ".(empty($passwd) ? "'') passwd empty" : '$passwd) adldap->authenticate() returned false')." --> returning false");
+				return False;
+			}
 		}
 
 		$attributes	= array('samaccountname','givenName','sn','mail','homeDirectory');
@@ -90,6 +104,73 @@ class auth_ads implements auth_backend
 		}
 		/* dn not found or password wrong */
 		return False;
+	}
+
+	/**
+	 * Fetch the last pwd change for the user
+	 *
+	 * Required by EGroupware to force user to change password.
+	 *
+	 * @param string $username username of account to authenticate
+	 * @return mixed false on error, 0 if user must change on next login, or timestamp of last change
+	 */
+	static function getLastPwdChange($username)
+	{
+		$ret = false;
+		if (($adldap = accounts_ads::get_adldap()) &&
+			($data = $adldap->user()->info($username, array('pwdlastset'))))
+		{
+			$ret = !$data[0]['pwdlastset'][0] ? 0 :
+				$adldap->utilities()->convertWindowsTimeToUnixTime($data[0]['pwdlastset'][0]);
+		}
+		//error_log(__METHOD__."('$username') returned ".array2string($ret));
+		return $ret;
+	}
+
+	/**
+	 * changes account_lastpwd_change in ldap datababse
+	 *
+	 * Samba4 does not understand -1 for current time, but Win2008r2 only allows to set -1 (beside 0).
+	 *
+	 * @param int $account_id account id of user whose passwd should be changed
+	 * @param string $passwd must be cleartext, usually not used, but may be used to authenticate as user to do the change -> ldap
+	 * @param int $lastpwdchange must be a unixtimestamp or 0 (force user to change pw) or -1 for current time
+	 * @param boolean $return_mod=false true return ldap modification instead of executing it
+	 * @return boolean|array true if account_lastpwd_change successful changed, false otherwise or array if $return_mod
+	 */
+	static function setLastPwdChange($account_id=0, $passwd=NULL, $lastpwdchange=NULL, $return_mod=false)
+	{
+		if (!($adldap = accounts_ads::get_adldap())) return false;
+
+		if ($lastpwdchange)
+		{
+			// Samba4 can NOT set -1 for current time
+			$ldapServerInfo = ldapserverinfo::get($adldap->getLdapConnection(), $GLOBALS['egw_info']['server']['ads_host']);
+			if ($ldapServerInfo->serverType == SAMBA4_LDAPSERVER)
+			{
+				if ($lastpwdchange == -1) $lastpwdchange = time();
+			}
+			// while Windows only allows to set -1 for current time (or 0 to force user to change password)
+			else
+			{
+				$lastpwdchange = -1;
+			}
+		}
+		if ($lastpwdchange && $lastpwdchange != -1)
+		{
+			$lastpwdchange = accounts_ads::convertUnixTimeToWindowsTime($lastpwdchange);
+		}
+		$mod = array('pwdlastset' => $lastpwdchange);
+		if ($return_mod) return $mod;
+
+		$ret = false;
+		if ($account_id && ($username = accounts::id2name($account_id, 'account_lid')) &&
+			($data = $adldap->user()->info($username, array('pwdlastset'))))
+		{
+			$ret = ldap_modify($adldap->getLdapConnection(), $data[0]['dn'], $mod);
+			//error_log(__METHOD__."($account_id, $passwd, $lastpwdchange, $return_mod) ldap_modify(, '{$data[0]['dn']}', array('pwdlastset' => $lastpwdchange)) returned ".array2string($ret));
+		}
+		return $ret;
 	}
 
 	/**

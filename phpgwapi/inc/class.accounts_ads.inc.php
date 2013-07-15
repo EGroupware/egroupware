@@ -765,8 +765,10 @@ class accounts_ads
 					case 'account_status':
 						$attributes[$adldap] = $data[$egw] == 'A';
 						break;
-					case 'account_lastpwd_change':	// AD only allows to set 0 (force pw change) and -1 (reset time)
-						$ldap[$adldap] = !$data[$egw] ? 0 : -1;
+					case 'account_lastpwd_change':
+						// Samba4 does not understand -1 for current time, but Win2008r2 only allows to set -1 (beside 0)
+						// call auth_ads::setLastPwdChange with true to get correct modification for both
+						$ldap = array_merge($ldap, auth_ads::setLastPwdChange($data['account_lid'], null, $data[$egw], true));
 						break;
 					default:
 						$attributes[$adldap] = $data[$egw];
