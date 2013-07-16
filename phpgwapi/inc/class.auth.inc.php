@@ -226,7 +226,7 @@ class auth
 	 */
 	function change_password($old_passwd, $new_passwd, $account_id=0)
 	{
-		if (($err = self::crackcheck($new_passwd)))
+		if (($err = self::crackcheck($new_passwd,null,null,null,$account_id)))
 		{
 			throw new egw_exception_wrong_userinput($err);
 		}

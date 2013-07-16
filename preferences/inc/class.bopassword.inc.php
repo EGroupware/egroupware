@@ -31,7 +31,7 @@
 
 		function changepass($old,$new)
 		{
-			if (($ret = $GLOBALS['egw']->auth->change_password($old, $new)))
+			if (($ret = $GLOBALS['egw']->auth->change_password($old, $new, $GLOBALS['egw_info']['user']['account_id'])))
 			{
 				$GLOBALS['hook_values']['account_id'] = $GLOBALS['egw_info']['user']['account_id'];
 				$GLOBALS['hook_values']['old_passwd'] = $old;
