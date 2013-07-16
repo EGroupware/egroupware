@@ -196,6 +196,12 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 				rowDataEntry["class"] = et2_readAttrWithDefault(node, "class", "");
 				rowDataEntry["valign"] = et2_readAttrWithDefault(node, "valign", "");
 				rowDataEntry["span"] = et2_readAttrWithDefault(node, "span", "1");
+				
+				var id = et2_readAttrWithDefault(node, "id", "");
+				if(id)
+				{
+					rowDataEntry["id"] = id;
+				}
 			}
 			else
 			{
@@ -216,7 +222,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 			{
 				if(content.data[rowIndex])
 				{
-					rowData[rowIndex] = rowDataEntry;
+					rowData[rowIndex] = jQuery.extend({}, rowDataEntry);
 				
 					rowIndex++;
 				}
@@ -385,6 +391,10 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 					//this.getArrayMgr(name).perspectiveData.row = y;
 				}
 
+				if(this._getCell(cells, x,y).rowData.id)
+				{
+					this.getArrayMgr("content").expandName(this.rowData[y].id);
+				}
 				// If row disabled, just skip it
 				var disabled = false;
 				if(node.getAttribute("disabled") == "1")
@@ -416,7 +426,11 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 					this.getArrayMgr(name).perspectiveData.row = y;
 				}
 			}
-
+			if(this._getCell(cells, x, y).rowData.id)
+			{
+				this._getCell(cells, x, y).rowData.id = this.getArrayMgr("content").expandName(this._getCell(cells, x, y).rowData.id);
+			}
+	
 			et2_filteredNodeIterator(this.lastRowNode, readRowNode, this);
 		}
 		// Reset
@@ -537,6 +551,11 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 			if (this.rowData[y].valign)
 			{
 				tr.attr("valign", this.rowData[y].valign);
+			}
+			
+			if(this.rowData[y].id)
+			{
+				tr.attr("id", this.rowData[y].id);
 			}
 			// Create the cells. x is incremented by the colSpan value of the
 			// cell.
