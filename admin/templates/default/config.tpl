@@ -270,8 +270,8 @@
     <td>{lang_Reject_passwords_containing_part_of_username_or_full_name_(3_or_more_characters_long)}:</td>
     <td>
      <select name="newsettings[passwd_forbid_name]">
-     	<option value="">{lang_No}</option>
-     	<option value="True"{selected_True}>{lang_Yes}</option>
+     	<option value="no">{lang_No}</option>
+     	<option value="yes"{selected_passwd_forbid_name_yes}>{lang_Yes}</option>
      </select>
     </td>
    </tr>

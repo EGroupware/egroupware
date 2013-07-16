@@ -532,7 +532,7 @@ class auth
 	 * @param string $password
 	 * @param int $reqstrength=null defaults to whatever set in config for "force_pwd_strength"
 	 * @param int $minlength=null defaults to whatever set in config for "check_save_passwd"
-	 * @param boolean $forbid_name=null if true username or full-name split by delimiters AND longer then 3 chars are
+	 * @param string $forbid_name=null if "yes" username or full-name split by delimiters AND longer then 3 chars are
 	 *  forbidden to be included in password, default to whatever set in config for "passwd_forbid_name"
 	 * @param array|int $account=null array with account_lid and account_fullname or account_id for $forbid_name check
 	 * @return mixed false if password is considered "safe" (or no requirements) or a string $message if "unsafe"
@@ -567,7 +567,7 @@ class auth
 			$errors[] = lang('password must have at least %1 characters', $minlength);
 		}
 
-		if ($forbid_name)
+		if ($forbid_name === 'yes')
 		{
 			if (!$account || !is_array($account) && !($account = $GLOBALS['egw']->accounts->read($account)))
 			{
