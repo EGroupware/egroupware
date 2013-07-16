@@ -541,7 +541,7 @@ weekview with weekend	calendar	de	Wochenansicht mit Wochenende
 weekview without weekend	calendar	de	Wochenansicht ohne Wochenende
 when selected, birthdays and/or holidays will be displayed as events in your calendar. please note that this option only changes the appereance inside of egroupware, but does not change the information being sent via ical or other calendar interfaces.	calendar	de	Wenn ausgewählt werden Geburts- und/oder Feiertage als Ereignisse in Ihrem Kalender angezeigt. Bitte beachten Sie, dass diese Option nur die Erscheinung innerhalb von EGroupware verändert, nicht aber die Informationen, die via iCal oder über andere Kalender-Schnittstellen gesendet werden.
 which view to show on home page	calendar	de	Welche Ansicht soll auf der Startseite angezeigt werden
-while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	de	Für diese Ansicht steht Ihnen nur eine begrenzte Anzahl von Benutzer zur Verfügung.
+while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	de	Ab der hier eingestellten Anzahl von Benutzern wird die nach Benutzern aufgeteilte Tages- und Wochenansicht in einer Ansicht zusammengefasst
 whole day	calendar	de	ganztägig
 with credentials included	calendar	de	Mit Zugangsdaten im URL
 wk	calendar	de	KW
