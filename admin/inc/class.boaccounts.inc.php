@@ -381,15 +381,15 @@
 
 			// do NOT save password via accounts::save, as pw policy violation can happen and we cant/dont report that way
 			$passwd = $_userData['account_passwd'];
+			$new_account = !$_userData['account_id'];
 			unset($_userData['account_passwd']);
 			unset($_userData['account_passwd_2']);
-			if (!$GLOBALS['egw']->accounts->save($_userData))
+
+			if ($new_account && !$GLOBALS['egw']->accounts->save($_userData))
 			{
 				$errors[] = lang('Failed to save user!');
 				return $errors;
 			}
-
-			$GLOBALS['egw']->accounts->set_memberships($_userData['account_groups'],$_userData['account_id']);
 
 			if ($passwd)
 			{
@@ -404,23 +404,32 @@
 						$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
 							'location' => 'changepassword'
 						),False,True);	// called for every app now, not only enabled ones)
-						if ($_userData['account_lastpwd_change']==0)
+
+						if ($_userData['account_lastpwd_change']==0 ||	// AD requires to activate account AFTER setting pw
+							$new_account && $_userData['account_status'] == 'A' && $GLOBALS['egw']->accounts->require_password_for_enable())
 						{
 							// change password sets the shadow_timestamp/account_lastpwd_change timestamp
 							// so we need to reset that to 0 as Admin required the change of password upon next login
-							unset($_userData['account_passwd']);
-							$this->save_user($_userData);
+							$GLOBALS['egw']->accounts->save($_userData);
 						}
 					}
 					else
 					{
-						$errors[] = lang('Failed to change password.  Please contact your administrator.');
+						$errors[] = lang('Failed to change password.');
 					}
 				}
 				catch(Exception $e) {
 					$errors[] = $e->getMessage();
 				}
 			}
+			$GLOBALS['egw']->accounts->set_memberships($_userData['account_groups'],$_userData['account_id']);
+
+			if (!$new_account && !$GLOBALS['egw']->accounts->save($_userData))
+			{
+				$errors[] = lang('Failed to save user!');
+				return $errors;
+			}
+
 			if ($_userData['account_lastpwd_change']==0)
 			{
 				if (!isset($auth)) $auth =& CreateObject('phpgwapi.auth');
