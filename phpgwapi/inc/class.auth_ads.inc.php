@@ -223,7 +223,7 @@ class auth_ads implements auth_backend
 				// if admin has nothing configured use windows default of 3 char classes, 7 chars min and name-part-check
 				$GLOBALS['egw_info']['server']['force_pwd_strength'] ? $GLOBALS['egw_info']['server']['force_pwd_strength'] : 3,
 				$GLOBALS['egw_info']['server']['force_pwd_length'] ? $GLOBALS['egw_info']['server']['force_pwd_length'] : 7,
-				$GLOBALS['egw_info']['server']['passwd_forbid_name'] ? $GLOBALS['egw_info']['server']['passwd_forbid_name'] : true,
+				$GLOBALS['egw_info']['server']['passwd_forbid_name'] ? $GLOBALS['egw_info']['server']['passwd_forbid_name'] : 'yes',
 				$account_id);
 			$msg = $e->getMessage();
 			$msg = strtr($msg, $tr=array(		// translate possible adLDAP and LDAP error
