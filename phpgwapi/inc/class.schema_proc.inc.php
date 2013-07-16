@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Setup - db-schema-processor
+ * EGroupware - Setup - db-schema-processor
  *
  * Originaly written by
  *  - Michael Dean <mdean@users.sourceforge.net>
@@ -394,8 +394,8 @@ class schema_proc
 	{
 		if ($this->sType != 'pgsql') return false;
 
-		$seq = $this->adodb->GetOne("SELECT d.adsrc FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$sTableName' AND c.oid=d.adrelid AND d.adsrc LIKE '%seq_$sTableName\'::text)' AND a.attrelid=c.oid AND d.adnum=a.attnum");
-		$seq2 = $this->adodb->GetOne("SELECT d.adsrc FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$sTableName' AND c.oid=d.adrelid AND d.adsrc LIKE '%$sTableName%_seq\'::text)' AND a.attrelid=c.oid AND d.adnum=a.attnum");
+		$seq = $this->adodb->GetOne("SELECT d.adsrc FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$sTableName' AND c.oid=d.adrelid AND d.adsrc LIKE '%seq_$sTableName''::text)' AND a.attrelid=c.oid AND d.adnum=a.attnum");
+		$seq2 = $this->adodb->GetOne("SELECT d.adsrc FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$sTableName' AND c.oid=d.adrelid AND d.adsrc LIKE '%$sTableName%_seq''::text)' AND a.attrelid=c.oid AND d.adnum=a.attnum");
 
 		if ($seq && preg_match('/^nextval\(\'(.*)\'/',$seq,$matches))
 		{
