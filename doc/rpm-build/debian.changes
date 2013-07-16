@@ -1,3 +1,10 @@
+egroupware-epl (11.1.20130716-1) hardy; urgency=low
+
+  * Active Directory: several small fixes around account creation and setting passwords
+  * PostgreSQL: fix for SQL error eg. on update from 1.8.001 to 1.8.004 from 9.1 on
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 16 Jul 2013 17:31:56 +0200
+
 egroupware-epl (11.1.20130715-1) hardy; urgency=low
 
   * eMail/ActiveDirectory: fixed not working autocomplete of accounts
