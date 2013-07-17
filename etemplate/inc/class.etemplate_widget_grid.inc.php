@@ -95,6 +95,7 @@ class etemplate_widget_grid extends etemplate_widget_box
 			call_user_func_array(array($this, $method_name), $params);
 		}
 		//foreach($this->children as $n => $child)
+		$repeat_child = null;
 		for($n = 0; ; ++$n)
 		{
 			// maintain $expand array name-expansion
@@ -110,11 +111,23 @@ class etemplate_widget_grid extends etemplate_widget_box
 			if (isset($this->children[$n]))
 			{
 				$child = $this->children[$n];
+				if($this->type == 'rows' || $this->type == 'columns')
+				{
+					/*
+					 * We store a clone of the repeated child, because at the end
+					 * of this loop the function $method_name is run on $child.
+					 * We want to run the function again each repeat, on an unmodified
+					 * row / column.
+					 */
+					$repeat_child = clone $child;
+				}
 			}
 			// check if we need to autorepeat last row ($child)
 			elseif (isset($child) && ($this->type == 'rows' || $this->type == 'columns') && $child->need_autorepeat($cname, $expand))
 			{
 				// not breaking repeats last row/column ($child)
+				// Clone the repeating child, to avoid modifying it
+				$child = clone $repeat_child;
 			}
 			else
 			{

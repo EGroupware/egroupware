@@ -620,6 +620,16 @@ class etemplate_widget
 		return '['.get_class($this).'] ' .
 			$this->type.($this->attrs['type'] && $this->attrs['type'] != $this->type ? '('.$this->attrs['type'].')' : '').'#'.$this->id;
 	}
+	
+	/**
+	 * When cloning a widget, we also clone children
+	 */
+	public function __clone()
+	{
+		foreach($this->children as $child_num => $child) {
+			$this->children[$child_num] = clone $child;
+		}
+	}
 
 	/**
 	 * Convert widget (incl. children) to xml

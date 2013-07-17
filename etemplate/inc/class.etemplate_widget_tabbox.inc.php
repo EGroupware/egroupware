@@ -54,8 +54,7 @@ class etemplate_widget_tabbox extends etemplate_widget
 	 */
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
-		$form_name = $cname;
-
+		$form_name = self::form_name($cname, $this->id, $expand);
 		if (!$this->is_readonly($cname, $form_name))
 		{
 			$value = self::get_array($content, $form_name);
