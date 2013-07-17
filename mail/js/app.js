@@ -116,7 +116,7 @@ app.mail = AppJS.extend(
 	 * @param _senders - the representation of the elements(s) the action is to be performed on
 	 */
 	mail_open: function(_action, _senders) {
-		console.log("mail_open",_action, _senders);
+		//console.log("mail_open",_action, _senders);
 		var _id = _senders[0].id;
 		// reinitialize the buffer-info on selected mails
 		this.mail_selectedMails = [];
@@ -126,7 +126,10 @@ app.mail = AppJS.extend(
 		var dataElem = egw.dataGetUIDdata(_id);
 		var subject = dataElem.data.subject;
 		//alert('Open Message:'+_id+' '+subject);
-		egw().open( _id,'mail','view',null,'view'+_id );
+		var h = egw().open( _id,'mail','view','view'+_id );
+		egw(h).ready(function() {
+			h.document.title = subject;
+		});
 	},
 	
 	/**
@@ -216,7 +219,7 @@ app.mail = AppJS.extend(
 	 * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
 	 */
 	mail_preview: function(nextmatch, selected) {
-		console.log("mail_preview",nextmatch, selected);
+		//console.log("mail_preview",nextmatch, selected);
 		// Empty values, just in case selected is empty (user cleared selection)
 		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",date:"",subject:""}};
 		if(typeof selected != 'undefined' && selected.length == 1)
@@ -255,7 +258,7 @@ app.mail = AppJS.extend(
 	},
 
 	mail_setMailBody: function(content) {
-		console.log('mail_setMailBody',content);
+		//console.log('mail_setMailBody',content);
 		var IframeHandle = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('messageIFRAME');
 		IframeHandle.set_value('');
 	},
@@ -376,7 +379,7 @@ app.mail = AppJS.extend(
 	 *		multiple sets can be passed to mail_deleteLeaf
 	 */
 	mail_removeLeaf: function(_status) {
-		console.log('mail_removeLeaf',_status);
+		//console.log('mail_removeLeaf',_status);
 		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
@@ -402,7 +405,7 @@ app.mail = AppJS.extend(
 	 *		multiple sets can be passed to mail_deleteLeaf
 	 */
 	mail_reloadNode: function(_status) {
-		console.log('mail_reloadNode',_status);
+		//console.log('mail_reloadNode',_status);
 		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)

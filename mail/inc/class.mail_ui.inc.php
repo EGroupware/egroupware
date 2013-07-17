@@ -59,12 +59,44 @@ class mail_ui
 	var $mail_bo;
 
 	/**
+	 * definition of available / supported search types
+	 *
+	 * @var array
+	 */
+	var $searchTypes = array(
+		'quick'		=> 'quicksearch',
+		'subject'	=> 'subject',
+		'body'		=> 'message body',
+		'from'		=> 'from',
+		'to'		=> 'to',
+		'cc'		=> 'cc',
+	);
+
+	/**
+	 * definition of available / supported status types
+	 *
+	 * @var array
+	 */
+	var $statusTypes = array(
+		'any'		=> 'any status',
+		'flagged'	=> 'flagged',
+		'unseen'	=> 'unread',
+		'answered'	=> 'replied',
+		'seen'		=> 'read',
+		'deleted'	=> 'deleted',
+	);
+
+	/**
 	 * Constructor
 	 *
 	 */
 	function __construct()
 	{
-
+		if (!isset($GLOBALS['egw_info']['flags']['js_link_registry']))
+		{
+			error_log(__METHOD__.__LINE__.' js_link_registry not set, force it:'.array2string($GLOBALS['egw_info']['flags']['js_link_registry']));
+			$GLOBALS['egw_info']['flags']['js_link_registry']=true;
+		}
 		// no autohide of the sidebox, as we use it for folderlist now.
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 		if (!empty($_GET["resetConnection"])) $connectionReset = html::purify($_GET["resetConnection"]);
@@ -190,6 +222,7 @@ class mail_ui
 		if (!isset($content['nm']['selectedFolder'])) $content['nm']['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
 		$content['nm']['foldertree'] = $content['nm']['selectedFolder'];
 		$sel_options['cat_id'] = array(1=>'none');
+		$sel_options['filter2'] = $this->searchTypes;
 		if (!isset($content['nm']['cat_id'])) $content['nm']['cat_id'] = 'All';
 
 		$etpl = new etemplate_new('mail.index');
@@ -233,7 +266,9 @@ class mail_ui
 				'onExecute' => 'javaScript:app.mail.mail_DeleteFolder'
 			)
 		));
-
+//error_log(__METHOD__.__LINE__.array2string($content));
+		if (empty($content['nm']['filter2']) || empty($content['nm']['search'])) $content['nm']['filter2']='quick';
+		$readonlys = $preserv = $sel_options;
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
 
@@ -974,6 +1009,7 @@ class mail_ui
 	function get_rows($query,&$rows,&$readonlys)
 	{
 unset($query['actions']);
+//_debug_array($query);
 //error_log(__METHOD__.__LINE__.array2string($query));
 //error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
 		$starttime = microtime(true);
@@ -1009,7 +1045,7 @@ unset($query['actions']);
 		if (!empty($query['search']))
 		{
 			//([filterName] => Schnellsuche[type] => quick[string] => ebay[status] => any
-			$filter = array('filterName' => lang('quicksearch'),'type' => 'quick','string' => $query['search'],'status' => 'any');
+			$filter = array('filterName' => lang('quicksearch'),'type' => ($query['filter2']?$query['filter2']:'quick'),'string' => $query['search'],'status' => 'any');
 		}
 		else
 		{
@@ -1557,7 +1593,7 @@ unset($query['actions']);
 		}
 
 		if (empty($subject)) $subject = lang('no subject');
-		$content['msg'] = $subject.(is_array($error_msg)?implode("<br>",$error_msg):$error_msg);
+		$content['msg'] = (is_array($error_msg)?implode("<br>",$error_msg):$error_msg);
 		$content['mail_displaydate'] = mail_bo::_strtotime($headers['DATE'],'ts',true);
 		$content['mail_displaysubject'] = $subject;
 		$content['mail_displaybody'] = $mailBody;
