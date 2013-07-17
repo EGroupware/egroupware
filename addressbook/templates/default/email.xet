@@ -2,17 +2,17 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="addressbook.email.left" template="" lang="" group="0" version="1.5.001">
-		<hbox class="bold" cols="1" no_lang="1" rows="1">
-			<radio cols="1" statustext="where to add the email address" label="To" id="to" no_lang="1" rows="1" options="to" class="bold"/>
-			<radio cols="1" statustext="where to add the email address" label="Cc" id="to" no_lang="1" rows="1" options="cc" class="bold"/>
-			<radio cols="1" statustext="where to add the email address" label="Bcc" id="to" no_lang="1" rows="1" options="bcc" class="bold"/>
+		<hbox no_lang="1" class="bold">
+			<radio statustext="where to add the email address" label="To" id="to" no_lang="1" options="to" class="bold"/>
+			<radio statustext="where to add the email address" label="Cc" id="to" no_lang="1" options="cc" class="bold"/>
+			<radio statustext="where to add the email address" label="Bcc" id="to" no_lang="1" options="bcc" class="bold"/>
 		</hbox>
-		<hbox class="bold" no_lang="1">
+		<hbox no_lang="1" class="bold">
 			<radio statustext="preferred type of email address to add for distribution lists" label="Business email" id="email_type" no_lang="1" options="email" class="bold"/>
 			<radio statustext="preferred type of email address to add for distribution lists" label="Home email" id="email_type" no_lang="1" options="email_home" class="bold"/>
 		</hbox>
 	</template>
-	<template id="addressbook.email.rows" template="" lang="" group="0" version="1.9.002">
+	<template id="addressbook.email.rows" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -53,7 +53,7 @@
 						<description value=" " id="${row}[n_given]" no_lang="1"/>
 						<description id="${row}[n_family]" no_lang="1" class="leftPad5"/>
 					</hbox>
-					<hbox options="0,0" orient="0">
+					<hbox options="0,0">
 						<description id="${row}[n_family]" no_lang="1"/>
 						<description value=" " id="${row}[n_given]" no_lang="1" class="leftPad5"/>
 					</hbox>
@@ -63,12 +63,12 @@
 						<description value=" " id="${row}[n_given]" no_lang="1" class="leftPad5"/>
 					</hbox>
 					<box no_lang="1" options="0,0" class="emailCol">
-						<description id="${row}[email]" no_lang="1" href="&quot;javascript:var nfn='$row_cont[n_fn]';nfn=nfn.replace(/" activate_links="|@/g" for="'');addEmail(nfn+' &lt;$row_cont[email]&gt;');&quot;" extra_link_title=",,$row_cont[email]"/>
+						<description id="${row}[email]" no_lang="1" href="&quot;javascript:var nfn='$row_cont[n_fn]';nfn=nfn.replace(/" activate_links="|@/g" for="'');this.addEmail(nfn+' &lt;$row_cont[email]&gt;');&quot;" extra_link_title=",,$row_cont[email]"/>
 					</box>
 					<box no_lang="1" options="0,0" class="emailCol">
-						<description id="${row}[email_home]" no_lang="1" href="&quot;javascript:var nfn='$row_cont[n_fn]';nfn=nfn.replace(/" activate_links="|@/g" for="'');addEmail(nfn+' &lt;$row_cont[email_home]&gt;');&quot;" extra_link_title=",,$row_cont[email_home]"/>
+						<description id="${row}[email_home]" no_lang="1" href="&quot;javascript:var nfn='$row_cont[n_fn]';nfn=nfn.replace(/" activate_links="|@/g" for="'');this.addEmail(nfn+' &lt;$row_cont[email_home]&gt;');&quot;" extra_link_title=",,$row_cont[email_home]"/>
 					</box>
-					<hbox options="0" class="noPrint" orient="0">
+					<hbox options="0" class="noPrint">
 						<button label="Edit" id="edit[$row_cont[id]]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit&amp;contact_id=$row_cont[id]'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" image="edit"/>
 						<button statustext="Delete this contact" label="Delete" id="delete[$row_cont[id]]" onclick="return confirm('Delete this contact');" image="delete"/>
 						<checkbox align="right" statustext="Select multiple contacts for a further action" id="checked[]" options="$row_cont[id]"/>
@@ -82,10 +82,12 @@
 			<columns>
 				<column/>
 				<column/>
+				<column/>
 			</columns>
 			<rows>
 				<row disabled="!@msg">
 					<description align="center" id="msg" no_lang="1" span="all" class="redItalic"/>
+					<description/>
 					<description/>
 				</row>
 				<row disabled="1">
@@ -93,7 +95,7 @@
 					<description align="right"/>
 				</row>
 				<row>
-					<nextmatch id="nm" options="addressbook.email.rows" span="all"/>
+					<nextmatch id="nm" template="addressbook.email.rows" span="all"/>
 				</row>
 				<row class="noPrint">
 					<button statustext="Add a new contact" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=addressbook.uicontacts.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>

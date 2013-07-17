@@ -675,23 +675,13 @@ class addressbook_ui extends addressbook_bo
 	{
 		if (strpos($GLOBALS['egw_info']['flags']['java_script'],'addEmail') === false)
 		{
-			if ($_GET['compat'])	// 1.2 felamimail or old email
-			{
-				$handler = "if (opener.document.doit[to].value != '')
-		{
-			opener.document.doit[to].value += ',';
-		}
-		opener.document.doit[to].value += email";
-			}
-			else	// 1.3+ felamimail
-			{
-				$handler = 'opener.addEmail(to,email)';
-			}
+			$handler = 'opener.addEmail(to,email)';
 			$GLOBALS['egw_info']['flags']['java_script'].= "
 <script>
+window.egw_LAB.wait(function() {
 	window.focus();
 
-	function addEmail(email)
+	window.addEmail = function(email)
 	{
 		var to = 'to';
 		splitter = email.indexOf(' <');
@@ -711,7 +701,8 @@ class addressbook_ui extends addressbook_bo
 			}
 		}
 		$handler;
-	}
+	};
+});
 </script>
 ";
 		}
@@ -2262,7 +2253,7 @@ class addressbook_ui extends addressbook_bo
 			$do_email = strpos($_SERVER['HTTP_REFERER'],'emailpopup') !== false;
 		}
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>window.focus()</script>";
+		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>window.egw_LAB.wait(function() {window.focus();});</script>";
 		$GLOBALS['egw_info']['etemplate']['advanced_search'] = true;
 
 		// initialize etemplate arrays
@@ -2357,6 +2348,7 @@ class addressbook_ui extends addressbook_bo
 		list($width,$height) = explode('x',egw_link::get_registry('felamimail','add_popup'));
 
 		return '<script LANGUAGE="JavaScript">
+window.egw_LAB.wait(function() {
 		function adb_mail_vcard(_action, _elems)
 		{
 			var link = "'.egw::link('/index.php',array('menuaction' => 'felamimail.uicompose.compose')).'";
@@ -2414,6 +2406,7 @@ class addressbook_ui extends addressbook_bo
 			}
 
 		}
+});
 		</script>';
 	}
 
