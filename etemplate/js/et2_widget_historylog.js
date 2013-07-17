@@ -351,8 +351,11 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 
 
 	dataFetch: function (_queriedRange, _callback, _context) {
+		// Skip getting data if there's no ID
+		if(!this.value.id) return;
+		
 		// Pass the fetch call to the API
-                this.egw().dataFetch(
+		this.egw().dataFetch(
 			this.getInstanceManager().etemplate_exec_id,
 			_queriedRange,
 			this._filters,
