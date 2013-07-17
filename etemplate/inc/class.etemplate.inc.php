@@ -286,8 +286,16 @@ class etemplate_new extends etemplate_widget_template
 		}
 		error_log(__METHOD__."(,".array2string($content).')');
 		error_log(' validated='.array2string($validated));
-
-		return ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
+		$content = ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
+		if (isset($GLOBALS['egw_info']['flags']['java_script']))
+		{
+			// Strip out any script tags
+			$GLOBALS['egw_info']['flags']['java_script'] = preg_replace(array('/(<script[^>]*>)([^<]*)/is','/<\/script>/'),array('$2',''),$GLOBALS['egw_info']['flags']['java_script']);
+			self::$response->script($GLOBALS['egw_info']['flags']['java_script']);
+			error_log($app .' added javascript to $GLOBALS[egw_info][flags][java_script] - use egw_json_response->script() instead.');
+		}
+	
+		return $content;
 	}
 
 	/**
