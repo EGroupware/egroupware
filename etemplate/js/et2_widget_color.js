@@ -59,7 +59,7 @@ var et2_color = et2_inputWidget.extend(
 		this._super.apply(this, arguments);
 
 		this.egw().includeCSS("phpgwapi/js/jquery/jpicker/css/jPicker-1.1.6.min.css");
-		this.input = this.$node = jQuery(document.createElement("span")).attr("id", this.options.id);
+		this.input = this.$node = jQuery(document.createElement("span"));
 
 		// Translations
 		for(var key in jQuery.fn.jPicker.defaults.localization.text)
