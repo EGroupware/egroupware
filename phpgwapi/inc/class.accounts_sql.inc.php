@@ -369,7 +369,6 @@ class accounts_sql
 	 */
 	function get_list($_type='both', $start = null,$sort = '', $order = '', $query = '', $offset = null, $query_type='', $active=false)
 	{
-		//echo "<p>accounts_sql($_type,$start,$sort,$order,$query,$offset,$query_type)</p>\n";
 		static $order2contact = array(
 			'account_firstname' => 'n_given',
 			'account_lastname'  => 'n_family',
@@ -442,7 +441,7 @@ class accounts_sql
 		$accounts = array();
 		foreach((array) $GLOBALS['egw']->contacts->search($criteria,"1,n_given,n_family,email,id,created,modified,$this->table.account_id AS account_id",
 			$order,"account_lid,account_type,account_status,account_expires,account_primary_group",
-			$wildcard,false,$query[0] == '!' ? 'AND' : 'OR',$offset ? array($start,$offset) : is_null($start) ? false : $start,
+			$wildcard,false,$query[0] == '!' ? 'AND' : 'OR',$offset ? array($start,$offset) : (is_null($start) ? false : $start),
 			$filter,$this->contacts_join) as $contact)
 		{
 			if ($contact)
@@ -465,7 +464,7 @@ class accounts_sql
 			}
 		}
 		$this->total = $GLOBALS['egw']->contacts->total;
-
+		//error_log(__METHOD__."('$_type', $start, '$sort', '$order', '$query', $offset, '$query_type') returning ".count($accounts).'/'.$this->total);
 		return $accounts;
 	}
 
