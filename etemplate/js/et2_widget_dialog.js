@@ -225,7 +225,6 @@ var et2_dialog = et2_widget.extend({
 		}
 
 		this.div = $j(document.createElement("div"));
-		this.div.attr("id", this.id);
 
 		this._createDialog();
 	},

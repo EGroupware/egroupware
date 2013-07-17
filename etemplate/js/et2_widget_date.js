@@ -344,7 +344,7 @@ var et2_date_duration = et2_date.extend(
 		{
 			if (_value != "")
 			{
-				node.setAttribute("id", _value);
+				node.setAttribute("id", this.getInstanceManager().uniqueId+'_'+this.id);
 			}
 			else
 			{

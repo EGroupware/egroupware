@@ -292,7 +292,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 		{
 			if (_value != "")
 			{
-				node.setAttribute("id", _value);
+				node.setAttribute("id", this.getInstanceManager().uniqueId+'_'+this.id);
 			}
 			else
 			{

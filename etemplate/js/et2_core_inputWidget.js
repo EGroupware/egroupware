@@ -148,9 +148,10 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 		var node = this.getInputNode();
 		if (node)
 		{
+			// Unique ID to prevent DOM collisions across multiple templates
 			if (_value != "")
 			{
-				node.setAttribute("id", _value);
+				node.setAttribute("id", this.getInstanceManager().uniqueId+'_'+this.id);
 				node.setAttribute("name", _value);
 			}
 			else

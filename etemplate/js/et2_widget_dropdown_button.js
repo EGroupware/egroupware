@@ -212,9 +212,9 @@ var et2_dropdown_button = et2_inputWidget.extend(
 		// Update internal IDs - not really needed since we refer by internal 
 		// javascript reference, but good to keep up to date
 		this.internal_ids = {
-			div:	this.id + "_wrapper",
-			button:	this.id,
-			menu:	this.id + "_menu"
+			div:	this.getInstanceManager().uniqueId+'_'+this.id + "_wrapper",
+			button:	this.getInstanceManager().uniqueId+'_'+this.id,
+			menu:	this.getInstanceManager().uniqueId+'_'+this.id + "_menu"
 		};
 		for(var key in this.internal_ids)
 		{
