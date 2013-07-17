@@ -318,7 +318,7 @@ class uiaccountsel
 		}
 		// jDots needs a little re-do, since it plays with the layout
 		$html .= "<script>
-		egw.LAB.wait(function() {
+		egw_LAB.wait(function() {
 			if (\$j().chosen)
 				window.setTimeout(function() {
 					\$j('#$element_id').unchosen().chosen({placeholder_text: '".lang('Select multiple accounts')."'});

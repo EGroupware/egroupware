@@ -206,7 +206,7 @@ function resize_'.$id.'()
 {
 	$j("#'.$id.'").width(egw_getWindowInnerWidth()-20).height(egw_getWindowInnerHeight()-33);
 }
-egw.LAB.wait(function() {
+egw_LAB.wait(function() {
 	$j(document).ready(function()
 	{
 		resize_'.$id.'();

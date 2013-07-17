@@ -135,7 +135,7 @@ class jscalendar
 
 		$js = '<script type="text/javascript">
 '.(!$useicon ? '	document.getElementById("'.$name.'").readOnly=true;' : '').
-'	egw.LAB.wait(function() {
+'	egw_LAB.wait(function() {
 		Calendar.setup({
 			inputField  : "'.$name.'",'.(!$useicon ? '' : '
 			button      : "'.$name.'-trigger"').',
@@ -227,7 +227,7 @@ function monthClicked(calendar,monthstart) {
 }
 ' : '').'
 
-egw.LAB.wait(function() {
+egw_LAB.wait(function() {
 	Calendar.setup({
   		flat         : "'.$id.'",
   		flatCallback : dateChanged'.($weekUrl ? ',

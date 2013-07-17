@@ -295,7 +295,7 @@ class html
 		if($enhanced) {
 			egw_framework::validate_file('/phpgwapi/js/jquery/chosen/chosen.jquery.js');
 			egw_framework::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css',null,false);
-			$out .= "<script>var lab = egw.LAB || \$LAB; lab.wait(function() {\$j(function() {if(\$j().chosen) \$j('select[name=\"$name\"]').chosen();});})</script>\n";
+			$out .= "<script>var lab = egw_LAB || \$LAB; lab.wait(function() {\$j(function() {if(\$j().chosen) \$j('select[name=\"$name\"]').chosen();});})</script>\n";
 		}
 		return $out;
 	}
@@ -558,7 +558,7 @@ class html
 '
 <script type="text/javascript">
 window.CKEDITOR_BASEPATH="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/ckeditor/";
-egw.LAB.wait(function() {
+egw_LAB.wait(function() {
 	CKEDITOR.replace("'.$_name.'", '.egw_ckeditor_config::get_ckeditor_config($_mode,
 		$pxheight, $expanded, $_start_path).');
 	CKEDITOR.addCss("body { margin: 5px; }");
@@ -1208,7 +1208,7 @@ egw.LAB.wait(function() {
 		$html = self::div("\n",'id="'.$tree.'"',$_divClass).$html;
 		$html .= "<script type='text/javascript'>\n";
 		$html .= "var $tree;";
-		$html .= "egw.LAB.wait(function() {";
+		$html .= "egw_LAB.wait(function() {";
 		$html .= "$tree = new dhtmlXTreeObject('$tree','100%','100%',0);\n";
 		$html .= "$tree.parentObject.style.overflow='auto';\n";	// dhtmlXTree constructor has hidden hardcoded
 		if (translation::charset() == 'utf-8') $html .= "if ($tree.setEscapingMode) $tree.setEscapingMode('utf8');\n";

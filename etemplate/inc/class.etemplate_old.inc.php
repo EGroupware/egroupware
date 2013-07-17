@@ -312,7 +312,7 @@ class etemplate_old extends boetemplate
 		if($output_mode == 2)
 		{
 			$html .= "\n".'<script language="javascript">'."\n";
-			$html .= 'egw.LAB.wait($j(document).ready(function() { popup_resize();}));'."\n";
+			$html .= 'egw_LAB.wait($j(document).ready(function() { popup_resize();}));'."\n";
 			$html .= '</script>';
 		}
 

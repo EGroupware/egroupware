@@ -885,8 +885,8 @@ abstract class egw_framework
 		$java_script .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/labjs/LAB.src.js"'." ></script>\n".
 			'<script type="text/javascript">
 // Loads files in parallel, executes serially
-window.egw.LAB = $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['server']['webserver_url'].'/"});
-window.egw.LAB.script(
+window.egw_LAB = $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['server']['webserver_url'].'/"});
+window.egw_LAB.script(
 '.json_encode(array_map(function($str){return substr($str,1);}, $to_include, array(1))).').wait(function() {'."\n".$after.'});
 </script>';
 
@@ -905,7 +905,7 @@ window.egw.LAB.script(
 			$GLOBALS['egw_info']['flags']['java_script'] = preg_replace(array('/(<script[^>]*>)([^<]*)/is','/<\/script>/'),array('$2',''),$GLOBALS['egw_info']['flags']['java_script']);
 			if(trim($GLOBALS['egw_info']['flags']['java_script']) != '')
 			{
-				$java_script .= '<script type="text/javascript">window.egw.LAB.wait(function() {'.$GLOBALS['egw_info']['flags']['java_script'] . "});</script>\n";
+				$java_script .= '<script type="text/javascript">window.egw_LAB.wait(function() {'.$GLOBALS['egw_info']['flags']['java_script'] . "});</script>\n";
 			}
 		}
 
@@ -1226,7 +1226,7 @@ window.egw.LAB.script(
 			{
 				if($what == 'onLoad')
 				{
-					$js .= 'onLoad="egw.LAB.wait(function() {'. htmlspecialchars($data).'})"';
+					$js .= 'onLoad="egw_LAB.wait(function() {'. htmlspecialchars($data).'})"';
 					continue;
 				}
 				$js .= ' '.$what.'="' . htmlspecialchars($data) . '"';

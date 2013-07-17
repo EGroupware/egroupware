@@ -920,7 +920,7 @@ class nextmatch_widget
 
 		return '
 <script type="text/javascript">
-	egw.LAB.wait(function() {$j(document).ready(function() {
+	egw_LAB.wait(function() {$j(document).ready(function() {
 		// Initialize the action manager and add some actions to it
 		var actionManager = egw_getActionManager("'.$app.'");
 		var objectManager = egw_getObjectManager("'.$app.'");

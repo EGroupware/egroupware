@@ -180,7 +180,7 @@ class etemplate_new extends etemplate_widget_template
 		<div id="' . $this->name .'" class="et2_container"></div>
 		<script>
 			// Wait for all files to be loaded & executed first
-			egw.LAB.wait(function() {
+			egw_LAB.wait(function() {
 				egw.langRequire(window, '.json_encode($langRequire).');
 				egw(window).includeJS('.json_encode(egw_framework::get_script_links(true, true)).	// return and clear
 					',function() {
@@ -211,7 +211,7 @@ class etemplate_new extends etemplate_widget_template
 		<div id="container" class="et2_container"></div>
 		<script>
 			// Wait for all files to be loaded & executed first
-			egw.LAB.wait(function() {
+			egw_LAB.wait(function() {
 				egw.langRequire(window, '.json_encode($langRequire).');
 				egw(window).ready(function() {
 					// Initialize application js
@@ -239,7 +239,7 @@ class etemplate_new extends etemplate_widget_template
 			if(egw_json_response::isJSONResponse())
 			{
 				$response = egw_json_response::get();
-				echo '<script>egw.LAB.wait(function() {egw_json_request.prototype.handleResponse(';
+				echo '<script>egw_LAB.wait(function() {egw_json_request.prototype.handleResponse(';
 				ob_flush();
 				$response->sendResult();
 				unset($response);
