@@ -36,6 +36,7 @@
 	et2_widget_html;
 	et2_widget_htmlarea;
 	et2_widget_tabs;
+	et2_widget_taglist;
 	et2_widget_tree;
 	et2_widget_historylog;
 	et2_widget_hrule;
