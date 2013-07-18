@@ -82,7 +82,10 @@ function etemplate2(_container, _menuaction)
 	// Copy the given parameters
 	this.DOMContainer = _container;
 	this.menuaction = _menuaction;
-
+	
+	// Unique ID to prevent DOM collisions across multiple templates
+	this.uniqueId = egw().uid() + "-" + _container.getAttribute("id");
+	
 	// Preset the object variable
 	this.widgetContainer = null;
 
