@@ -113,9 +113,7 @@ var splitterCounter = 0;
 			A.css(opts.origin, 0).css(opts.split, pos).css(opts.fixed,  splitter._DF);
 			B.css(opts.origin, pos+bar._DA)
 				.css(opts.split, splitter._DA-bar._DA-pos).css(opts.fixed,  splitter._DF);
-			// IE fires resize for us; all others pay cash
-			if ( !$.browser.msie )
-				panes.trigger("resize");
+			panes.trigger("resize");
 		}
 		function dimSum(jq, dims) {
 			// Opera returns -1 for missing min/max width, turn into 0
@@ -181,7 +179,7 @@ var splitterCounter = 0;
 		// Focuser element, provides keyboard support; title is shown by Opera accessKeys
 		var focuser = $('<a href="javascript:void(0)"></a>')
 			.attr({accessKey: opts.accessKey, tabIndex: opts.tabIndex, title: opts.splitbarClass})
-			.bind(($.browser.opera?"click":"focus")+opts.eventNamespace, 
+			.bind(("focus")+opts.eventNamespace, 
 				function(){ this.focus(); bar.addClass(opts.barActiveClass) })
 			.bind("keydown"+opts.eventNamespace, function(e){
 				var key = e.which || e.keyCode;
@@ -252,10 +250,10 @@ var splitterCounter = 0;
 				var top = splitter.offset().top;
 				var eh = $(opts.resizeTo).height();
 				splitter.css("height", Math.max(eh-top-splitter._hadjust, splitter._hmin)+"px");
-				if ( !$.browser.msie ) splitter.trigger("resize");
+				splitter.trigger("resize");
 			}).trigger("resize"+opts.eventNamespace);
 		}
-		else if ( opts.resizeToWidth && !$.browser.msie ) {
+		else if ( opts.resizeToWidth ) {
 			$(window).bind("resize"+opts.eventNamespace, function(){
 				splitter.trigger("resize");
 			});
@@ -296,7 +294,7 @@ var splitterCounter = 0;
 			if ( opts.dockKey )
 				$('<a title="'+opts.splitbarClass+' toggle dock" href="javascript:void(0)"></a>')
 					.attr({accessKey: opts.dockKey, tabIndex: -1}).appendTo(bar)
-					.bind($.browser.opera?"click":"focus", function(){ 
+					.bind("focus", function(){ 
 						splitter.trigger("toggleDock"); this.blur();
 					});
 			bar.bind("dblclick", function(){ splitter.trigger("toggleDock"); })
