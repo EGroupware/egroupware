@@ -163,7 +163,7 @@ class mail_ui
 			{
 				$content['nm'] = array(
 					'get_rows'       =>	'mail.mail_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
-					'filter'         => 'INBOX',	// filter is used to choose the mailbox
+					'filter'         => 'any',	// filter is used to choose the mailbox
 					'no_filter2'     => false,	// I  disable the 2. filter (params are the same as for filter)
 					'no_cat'         => true,	// I  disable the cat-selectbox
 					//'cat_is_select'	 => 'no_lang', // true or no_lang
@@ -221,9 +221,10 @@ class mail_ui
 		if (!isset($content['nm']['foldertree'])) $content['nm']['foldertree'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
 		if (!isset($content['nm']['selectedFolder'])) $content['nm']['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
 		$content['nm']['foldertree'] = $content['nm']['selectedFolder'];
-		$sel_options['cat_id'] = array(1=>'none');
+		//$sel_options['cat_id'] = array(1=>'none');
 		$sel_options['filter2'] = $this->searchTypes;
-		if (!isset($content['nm']['cat_id'])) $content['nm']['cat_id'] = 'All';
+		$sel_options['filter'] = $this->statusTypes;
+		//if (!isset($content['nm']['cat_id'])) $content['nm']['cat_id'] = 'All';
 
 		$etpl = new etemplate_new('mail.index');
 
@@ -1050,6 +1051,10 @@ unset($query['actions']);
 		else
 		{
 			$filter = array();
+		}
+		if ($query['filter'])
+		{
+			$filter['status'] = $query['filter'];
 		}
 		$reverse = ($query['order']=='ASC'?false:true);
 		//error_log(__METHOD__.__LINE__.' maxMessages:'.$maxMessages.' Offset:'.$offset.' Filter:'.array2string($this->sessionData['messageFilter']));
