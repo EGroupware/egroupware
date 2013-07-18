@@ -303,6 +303,7 @@ var et2_dataview = Class.extend({
 				// right (collapsed) border of the row differently
 				var subBorder = 0;
 				var subHBorder = 0;
+				/*
 				if ($j.browser.mozilla)
 				{
 					var maj = $j.browser.version.split(".")[0];
@@ -322,6 +323,7 @@ var et2_dataview = Class.extend({
 				{
 					subBorder = -1;
 				}
+				*/
 
 				// Make the last columns one pixel smaller, to prevent a horizontal
 				// scrollbar from showing up

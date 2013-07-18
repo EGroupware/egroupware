@@ -39,7 +39,7 @@ class etemplate_et2_widgets
 
                 // Include the jQuery-UI CSS - many more complex widgets use it
                 $theme = 'redmond';
-		egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.8.21.custom.css");
+		egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.10.3.custom.css");
 
 		egw_framework::includeCSS('/etemplate/templates/default/etemplate2.css');
 
