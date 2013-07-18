@@ -216,6 +216,18 @@ class mail_ui
 		if ($this->mail_bo->folderExists($sessionFolder))
 		{
 			$content['nm']['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.$this->mail_bo->sessionData['maibox'];
+			$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
+		}
+		// since we are connected,(and selected the folder) we check for capabilities SUPPORTS_KEYWORDS to eventually add the keyword filters
+		if ($this->mail_bo->icServer->_connected == 1 && $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
+		{
+			$this->statusTypes = array_merge($this->statusTypes,array(
+				'keyword1'	=> 'urgent',
+				'keyword2'	=> 'job',
+				'keyword3'	=> 'personal',
+				'keyword4'	=> 'to do',
+				'keyword5'	=> 'later',
+			));
 		}
 
 		if (!isset($content['nm']['foldertree'])) $content['nm']['foldertree'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
@@ -313,7 +325,14 @@ class mail_ui
 		if ($preferences->preferences['prefcontroltestconnection'] == 'reset') exit;
 
 		echo "<hr /><h3 style='color:red'>".lang('IMAP Server')."</h3>";
-		if($imapServer->_connectionErrorObject) $eO = $imapServer->_connectionErrorObject;
+		if($imapServer->_connectionErrorObject)
+		{
+			$eO = $imapServer->_connectionErrorObject;
+		}
+		else
+		{
+			$this->mail_bo->reopen('INBOX');
+		}
 		unset($imapServer->_connectionErrorObject);
 		$sieveServer = clone $imapServer;
 		if (!empty($imapServer->adminPassword)) $imapServer->adminPassword='**********************';
