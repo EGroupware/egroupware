@@ -4524,16 +4524,17 @@ class mail_bo
 	 * @param partid the partid of the email
 	 * @param mailbox the mailbox, that holds the message
 	 * @param preserveHTML flag to pass through to getdisplayableBody
-	 * @return array with 'mailaddress'=>$mailaddress,
+	 * @return array/bool with 'mailaddress'=>$mailaddress,
 	 *				'subject'=>$subject,
 	 *				'message'=>$message,
 	 *				'attachments'=>$attachments,
-	 *				'headers'=>$headers,
+	 *				'headers'=>$headers,; boolean false on failure
 	 */
 	static function get_mailcontent(&$mailClass,$uid,$partid='',$mailbox='', $preserveHTML = false)
 	{
 			//echo __METHOD__." called for $uid,$partid <br>";
 			$headers = $mailClass->getMessageHeader($uid,$partid,true);
+			if (empty($headers)) return false;
 			// dont force retrieval of the textpart, let mailClass preferences decide
 			$bodyParts = $mailClass->getMessageBody($uid,($preserveHTML?'always_display':'only_if_no_text'),$partid);
 			//error_log(array2string($bodyParts));

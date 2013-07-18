@@ -94,7 +94,7 @@ class mail_ui
 	{
 		if (!isset($GLOBALS['egw_info']['flags']['js_link_registry']))
 		{
-			error_log(__METHOD__.__LINE__.' js_link_registry not set, force it:'.array2string($GLOBALS['egw_info']['flags']['js_link_registry']));
+			//error_log(__METHOD__.__LINE__.' js_link_registry not set, force it:'.array2string($GLOBALS['egw_info']['flags']['js_link_registry']));
 			$GLOBALS['egw_info']['flags']['js_link_registry']=true;
 		}
 		// no autohide of the sidebox, as we use it for folderlist now.
