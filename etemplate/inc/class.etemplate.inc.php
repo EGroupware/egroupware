@@ -173,11 +173,12 @@ class etemplate_new extends etemplate_widget_template
 				$langRequire[] = array('app' => $l_app, 'lang' => $lang);
 			}
 
+			$dom_id = str_replace('.','-',$this->name);
 			// check if we are in an ajax-exec call from jdots template (or future other tabed templates)
 			if (isset($GLOBALS['egw']->framework->response))
 			{
 				echo '
-		<div id="' . $this->name .'" class="et2_container"></div>
+		<div id="' . $dom_id .'" class="et2_container"></div>
 		<script>
 			// Wait for all files to be loaded & executed first
 			egw_LAB.wait(function() {
@@ -198,7 +199,7 @@ class etemplate_new extends etemplate_widget_template
 					{
 						callback = function(et2) {app["'.$app.'"].et2_ready(et2)};
 					}
-					var et2 = new etemplate2(document.getElementById("'.$this->name.'"), "etemplate::ajax_process_content");
+					var et2 = new etemplate2(document.getElementById("'.$dom_id.'"), "etemplate::ajax_process_content");
 					et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).', callback);
 				}, window, egw.webserverUrl);
 			});
@@ -208,7 +209,7 @@ class etemplate_new extends etemplate_widget_template
 			else
 			{
 				echo '
-		<div id="container" class="et2_container"></div>
+		<div id="'.$dom_id.'" class="et2_container"></div>
 		<script>
 			// Wait for all files to be loaded & executed first
 			egw_LAB.wait(function() {
@@ -226,7 +227,7 @@ class etemplate_new extends etemplate_widget_template
 					{
 						callback = function(et2) {app["'.$app.'"].et2_ready(et2)};
 					}
-					var et2 = new etemplate2(document.getElementById("container"), "etemplate::ajax_process_content");
+					var et2 = new etemplate2(document.getElementById("'.$dom_id.'"), "etemplate::ajax_process_content");
 					et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).',callback);
 				}, null, true);
 			});
