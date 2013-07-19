@@ -834,23 +834,17 @@ abstract class egw_framework
 		{
 			$java_script .= $GLOBALS['egw_info']['flags']['java_script_thirst'] . "\n";
 		}
-		// add configuration and link-registry for non-popup windows
+		// add configuration, link-registry, images, user-data and -perferences for non-popup windows
 		if ($GLOBALS['egw_info']['flags']['js_link_registry'])
 		{
 			self::validate_file('/phpgwapi/config.php');
 			self::validate_file('/phpgwapi/images.php',array('template' => $GLOBALS['egw_info']['user']['preferences']['common']['template_set']));
+			self::validate_file('/phpgwapi/user.php',array('user' => $GLOBALS['egw_info']['user']['account_lid']));
 		}
 
 		$extra['url'] = $GLOBALS['egw_info']['server']['webserver_url'];
 		$extra['include'] = array_map(function($str){return substr($str,1);}, self::get_script_links(true), array(1));
 		$extra['app'] = $GLOBALS['egw_info']['flags']['currentapp'];
-
-		// add link registry to non-popup windows, if explicit requested (idots_framework::navbar() loads it, if not explicit specified!)
-		if ($GLOBALS['egw_info']['flags']['js_link_registry'])
-		{
-			$extra['preferences'] = array('common' => $GLOBALS['egw_info']['user']['preferences']['common']);
-			$extra['user'] = $GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']);
-		}
 
 		// Load LABjs ONCE here
 		$java_script .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/labjs/LAB.src.js"'." ></script>\n".
@@ -1267,7 +1261,7 @@ abstract class egw_framework
 		$files = '';
 		$to_include = $to_minify = array();
 		$max_modified = 0;
-		foreach(self::$js_include_mgr->get_included_files() as $path)
+		foreach(self::$js_include_mgr->get_included_files($clear_files) as $path)
 		{
 			$query = '';
 			list($path,$query) = explode('?',$path,2);
