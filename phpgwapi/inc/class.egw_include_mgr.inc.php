@@ -379,7 +379,7 @@ class egw_include_mgr
 	public function get_included_files($clear_files=false)
 	{
 		$ret = array_keys($this->included_files);
-		if ($clear_files) self::$included_files = array();
+		if ($clear_files) $this->included_files = array();
 		return $ret;
 	}
 
@@ -397,17 +397,25 @@ class egw_include_mgr
 	}
 }
 
-/*
 // Small test for this class
-
-define("EGW_SERVER_ROOT", "/home/andreas/www/egroupware/trunk/egroupware");
-
-$mgr = new egw_include_mgr();
-$mgr->include_js_file('filemanager', 'filemanager', 'stylite');
-$files = $mgr->get_included_files();
-
-foreach ($files as $file)
+// specify one or more files in url, eg. path[]=/phpgwapi/js/jsapi/egw.js&path[]=/etemplate/js/etemplate2.js
+if (isset($_SERVER['SCRIPT_FILENAME']) && $_SERVER['SCRIPT_FILENAME'] == __FILE__)
 {
-	echo($file."<br>\n");
+	define('EGW_SERVER_ROOT', dirname(dirname(__DIR__)));
+
+	$mgr = new egw_include_mgr();
+	echo "<html>\n<head>\n\t<title>Dependencies</title>\n</head>\n<body>\n";
+
+	$paths = !empty($_GET['path']) ? (array)$_GET['path'] : (array)'/stylite/js/filemanager/filemanager.js';
+
+	foreach($paths as $path)
+	{
+		echo "\t<h1>".htmlspecialchars($path)."</h1>\n";
+		$mgr->include_js_file($path);
+		foreach ($mgr->get_included_files(true) as $file)
+		{
+			echo "\t<a href='".$_SERVER['PHP_SELF'].'?path='.$file."'>$file</a><br/>\n";
+		}
+	}
+	echo "</body>\n</html>\n";
 }
-*/
