@@ -6,7 +6,7 @@
 		<vbox class="mailDisplay mailDisplayHeaderSection" width="100%">
 			<hbox class="mailDisplayHeaders" width="100%">
 				<description value="From"/>
-				<html id="mail_displayfromaddress" readonly="true"/>
+				<taglist id="FROM" readonly="true" onclick="app.mail.address_click"/>
 			</hbox>
 			<hbox class="mailDisplayHeaders" width="100%">
 				<description value="on behalf of"/>

@@ -739,6 +739,14 @@ app.mail = AppJS.extend(
 		//window.open(url,'_blank','dependent=yes,width=100,height=100,scrollbars=yes,status=yes');
 		document.location = url;
 	},
+		
+	/**
+	 * User clicked an address (FROM, TO, etc)
+	 */
+	address_click: function(DOMNode, tag_info, widget)
+	{
+		console.log(this, arguments);
+	},
 	
 	/**
 	 * Save a message to filemanager

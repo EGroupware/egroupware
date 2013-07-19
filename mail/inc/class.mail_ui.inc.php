@@ -1616,6 +1616,25 @@ unset($query['actions']);
 			$content['mail_displaybccaddress'] = self::emailAddressToHTML($envelope['BCC'],'',false,true,false);
 		}
 
+		// Set up data for taglist widget(s)
+		foreach(array('SENDER','FROM','TO','CC','BCC') as $field)
+		{
+			foreach($envelope[$field] as $field_data)
+			{
+				$content[$field][] = $field_data['EMAIL'];
+				$sel_options[$field][] = array(
+					// taglist requires these
+					'id' => $field_data['EMAIL'],
+					'label' => $field_data['PERSONAL_NAME'],
+					// Optional
+					'title' => $field_data['RFC822_EMAIL']
+				)
+				// Add all other data, will be preserved & passed to js onclick
+				// Also available in widget.options.select_options
+				+ $field_data;
+			}
+		}
+		
 		if (empty($subject)) $subject = lang('no subject');
 		$content['msg'] = (is_array($error_msg)?implode("<br>",$error_msg):$error_msg);
 		$content['mail_displaydate'] = mail_bo::_strtotime($headers['DATE'],'ts',true);
