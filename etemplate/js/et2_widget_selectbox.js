@@ -166,7 +166,7 @@ var et2_selectbox = et2_inputWidget.extend(
 			// Try first according to ID
 			content_options = this.getArrayMgr("sel_options").getEntry(this.id);
 			// ID can get set to an array with 0 => ' ' - not useful
-			if(content_options && content_options.length == 1 && typeof content_options[0] != 'undefined' && content_options[0].trim() == '')
+			if(content_options && content_options.length == 1 && typeof content_options[0] == 'string' && content_options[0].trim() == '')
 			{
 				content_options = null;
 			}
