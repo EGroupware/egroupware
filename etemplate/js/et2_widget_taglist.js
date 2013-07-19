@@ -22,11 +22,11 @@
  * 
  * A cross between auto complete, selectbox and chosen multiselect
  * 
- * Uses xoxco tagsinput library
- * @see http://xoxco.com/projects/code/tagsinput/
+ * Uses MagicSuggest library
+ * @see http://nicolasbize.github.io/magicsuggest/
  * @augments et2_inputWidget
  */
-var et2_taglist = et2_inputWidget.extend(
+var et2_taglist = et2_selectbox.extend(
 {
 	attributes: {
 		"empty_label": {
@@ -46,6 +46,8 @@ var et2_taglist = et2_inputWidget.extend(
 		"value": {
 			"type": "any"
 		},
+		
+		// These default parameters set it to read the addressbook via the link system
 		"autocomplete_url": {
 			"name": "Autocomplete source",
 			"type": "string",
@@ -55,30 +57,48 @@ var et2_taglist = et2_inputWidget.extend(
 		"autocomplete_params": {
 			"name": "Autocomplete parameters",
 			"type": "any",
-			"default": {},
+			"default": {app:"addressbook"},
 			"description": "Extra parameters passed to autocomplete URL"
 		},
-		"onAddTag": {
-			"name": "onAddTag",
-			"type": "js",
-			"default": et2_no_init,
-			"description": "Callback when a tag is added",
+		
+		allowFreeEntries: {
+			"name": "Allow free entries",
+			"type": "boolean",
+			"default": true,
+			"description": "Restricts or allows the user to type in arbitrary entries"
 		},
-		"onRemoveTag": {
-			"name": "onRemoveTag",
-			"type": "js",
-			"default": et2_no_init,
-			"description": "Callback when a tag is removed",
-		},
+		
 		"onchange": {
 			"name": "onChange",
 			"type": "js",
 			"default": et2_no_init,
-			"description": "Callback when tags are changed",
+			"description": "Callback when tags are changed.  Argument is the new selection.",
+		},
+		"onclick": {
+			"name": "onClick",
+			"type": "js",
+			"default": et2_no_init,
+			"description": "Callback when a tag is clicked.  The clicked tag is passed."
+		},
+		"tagRenderer": {
+			"name": "Tag renderer",
+			"type": "js",
+			"default": et2_no_init,
+			"description": "Callback to provide a custom renderer for what's _inside_ each tag.  Function parameter is the select_option data for that ID."
+		},
+		"listRenderer": {
+			"name": "List renderer",
+			"type": "js",
+			"default": et2_no_init,
+			"description": "Callback to provide a custom renderer for each suggested item.  Function parameter is the select_option data for that ID."
 		},
 		"width": {
-			default: "150px"
-		}
+			default: "100%"
+		},
+		// Selectbox attributes that are not applicable
+		"multiple": { ignore: true},
+		"rows": { ignore: true},
+		"tags": { ignore: true}
 	},
 	
 	/**
@@ -113,20 +133,57 @@ var et2_taglist = et2_inputWidget.extend(
 		// Initialize magicSuggest here
 		if(this.taglist != null) return;
 		
-		this.taglist = this.div.magicSuggest({
-			id: this.getInstanceManager().uniqueId + '_' + this.id,
-			data: this.options.select_options ? this.options.select_options : this.options.autocomplete_url,
+		
+		// MagicSuggest would replaces our div, so add a wrapper instead
+		this.taglist = $j('<div/>').appendTo(this.div);
+		
+		this.taglist = this.taglist.magicSuggest({
+			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ? this.options.select_options : this.options.autocomplete_url,
 			dataUrlParams: this.options.autocomplete_params,
+			value: this.options.value,
 			method: 'GET',
 			displayField: "label",
+			invalidCls: 'invalid ui-state-error',
 			emptyText: this.options.empty_label,
 			hideTrigger: true,
 			noSuggestionText: this.egw().lang("No suggestions"),
-			required: this.options.required
+			required: this.options.required,
+			allowFreeEntries: this.options.allowFreeEntries,
+			disabled: this.options.disabled || this.options.readonly,
+			editable: !(this.options.disabled || this.options.readonly),
+			selectionRenderer: this.options.tagRenderer || this.selectionRenderer,
+			renderer: this.options.listRenderer || null
 		});
+		
+		// Display / hide a loading icon while fetching
+		$j(this.taglist)
+			.on("beforeload", function() {this.container.prepend('<div class="ui-icon loading"/>')})
+			.on("load", function() {$j('.loading',this.container).remove()});
+
+		// onChange
+		if(this.options.onchange)
+		{
+			$j(this.taglist).on("selectionchange", jQuery.proxy(this.change,this));
+		}
+		
+		// onClick - pass more than baseWidget, so unbind it to avoid double callback
+		if(this.options.onclick)
+		{
+			this.div.unbind("click.et2_baseWidget")
+				.on("click.et2_baseWidget", '.ms-sel-item', jQuery.proxy(function(event) { 
+				var widget = this;
+				// Pass the target as expected, but also the data for that tag
+				this.click(event.target, $j(event.target).parent().data("json"));
+			},this));
+		}
 		return true;
 	},
 	
+	selectionRenderer: function(item)
+	{
+		var label = '<span title="'+(typeof item.title != "undefined" ?item.title:'')+'">'+item.label+'</span>';
+		return label;
+	},
 	set_autocomplete_url: function(source)
 	{
 		if(source.indexOf('http') != 0)
@@ -173,8 +230,19 @@ var et2_taglist = et2_inputWidget.extend(
 		this.taglist.setData(this.options.select_options);
 	},
 		
+	set_disabled: function(disabled)
+	{
+		this.options.disabled = disabled;
+		
+		if(this.taglist == null) return;
+		disabled ? this.taglist.disable() : this.taglist.enable();
+	},
+		
 	set_value: function(value) {
-	
+		if(this.options.readonly && !this.options.select_options)
+		{
+			this.options.select_options = value;
+		}
 		if(this.taglist == null) return;
 		this.taglist.clear(true);
 		this.taglist.setValue(value);
@@ -187,5 +255,6 @@ var et2_taglist = et2_inputWidget.extend(
 });
 et2_register_widget(et2_taglist, ["taglist"]);
 
-// Require css - merge into etemplate2.css with all other widgets when done
+// Require css
+// TODO: merge into etemplate2.css with all other widgets when done
 if(typeof egw != 'undefined') egw(window).includeCSS(egw.webserverUrl + "/phpgwapi/js/jquery/magicsuggest/src/magicsuggest-1.3.0.css");
