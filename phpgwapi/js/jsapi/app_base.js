@@ -12,7 +12,7 @@
 "use strict";
 
 /*egw:uses
-        egw_core;
+        egw_inheritance;
 */
 
 window.app = {};
