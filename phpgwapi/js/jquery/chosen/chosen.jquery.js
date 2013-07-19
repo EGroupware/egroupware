@@ -419,6 +419,10 @@
       } else {
         return "" + this.form_field.offsetWidth + "px";
       }
+    }
+
+    AbstractChosen.prototype.generate_field_id = function() {
+      return this.generate_random_id();
     };
 
     AbstractChosen.browser_is_supported = function() {
@@ -465,6 +469,18 @@
         if (!$this.hasClass("chzn-done")) {
           return $this.data('chosen', new Chosen(this, options));
         }
+      });
+    },
+    unchosen: function() {
+      return $(this).each(function(input_field) {
+        var chosen, element;
+        element = $(this);
+        chosen = element.data("chosen");
+        if (chosen) {
+          chosen.remove();
+          element.data("chosen", null);
+        }
+        return element;
       });
     }
   });
@@ -598,6 +614,15 @@
     Chosen.prototype.remove_html = function() {	 
       this.form_field_jq.show().removeClass('chzn-done');	 
       return this.container.remove();	 
+    };
+
+    Chosen.prototype.unregister_observers = function() {
+	return this.form_field_jq.unbind();
+    };
+
+    Chosen.prototype.remove_html = function() {
+	this.form_field_jq.show().removeClass('chzn-done');
+	return this.container.remove();
     };
 
     Chosen.prototype.search_field_disabled = function() {
@@ -806,6 +831,13 @@
           }
         });
       }
+    };
+
+    Chosen.prototype.reset_tab_index = function() {
+	var tabbed_item;
+	tabbed_item = this.is_multiple ? this.search_field : this.selected_item;
+	this.form_field_jq.attr("tabindex",tabbed_item.attr("tabindex"));
+	return tabbed_item.attr("tabindex") - 1;
     };
 
     Chosen.prototype.show_search_field_default = function() {
@@ -1020,10 +1052,10 @@
       return this.search_results.find(".no-results").remove();
     };
 
-    Chosen.prototype.remove = function() {	 
-      this.reset_tab_index();	 
-      this.unregister_observers();	 
-      return this.remove_html();	 
+    Chosen.prototype.remove = function() {
+	this.reset_tab_index();
+	this.unregister_observers();
+	return this.remove_html();
     };
 
     Chosen.prototype.keydown_arrow = function() {
