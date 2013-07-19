@@ -18,6 +18,7 @@ div#divAppbox {
 
 body {
 	background-image: none;
+	background-color: white;
 }
 
 /* otherwise it is transparent */
