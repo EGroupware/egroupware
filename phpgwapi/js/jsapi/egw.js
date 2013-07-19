@@ -66,7 +66,7 @@
 			if (debug) console.log('creating new egw object');
 		}
 	}
-	else console.log('found injected egw object');
+	else if (debug) console.log('found injected egw object');
 	
 	// check for a framework object
 	if (typeof window.framework == 'undefined')
