@@ -527,7 +527,7 @@ var et2_link_entry = et2_inputWidget.extend(
 		});
 		
 		// Custom display (colors)
-		this.search.data("autocomplete")._renderItem = function(ul, item) {
+		this.search.data("uiAutocomplete")._renderItem = function(ul, item) {
 			var li = jQuery(document.createElement('li'))
 				.data("item.autocomplete", item);
 			var extra = {};
