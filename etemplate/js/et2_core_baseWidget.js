@@ -238,7 +238,11 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 		{
 			if(typeof this.onclick == 'function')
 			{
-				return this.onclick(_node);
+				// Make sure function gets a reference to the widget
+				var args = Array.prototype.slice.call(arguments);
+				if(args.indexOf(this) == -1) args.push(this);
+				
+				return this.onclick.apply(this, args);
 			} else {
 				return (et2_compileLegacyJS(this.options.onclick, this, _node))();
 			}
