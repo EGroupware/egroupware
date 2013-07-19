@@ -11,16 +11,6 @@
  * @version $Id$
  */
 
-// Loading of the egw object, if it already is loaded in an upper window
-if (window.opener && typeof window.opener.egw !== 'undefined')
-{
-	window['egw'] = window.opener.egw;
-}
-else if (window.top && typeof window.top.egw !== 'undefined')
-{
-	window['egw'] = window.top.egw;
-}
-
 /***********************************************\
 *               INITIALIZATION                  *
 \***********************************************/
@@ -43,7 +33,7 @@ else if (document.getElementById)
 else if (document.layers)
 {
 	is_ie = false;
-	is_ie5 = false
+	is_ie5 = false;
 	is_moz1_6 = false;
 	is_mozilla = false;
 	is_ns4 = true;
@@ -405,6 +395,9 @@ function egw_openWindowCentered2(_url, _windowName, _width, _height, _status, _a
 		",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
 		",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status="+_status);
 
+	// inject egw object
+	windowID.egw = window.egw;
+	
 	// returning something, replaces whole window in FF, if used in link as "javascript:egw_openWindowCentered2()"
 	if (_returnID === false)
 	{

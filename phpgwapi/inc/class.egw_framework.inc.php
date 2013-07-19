@@ -289,9 +289,10 @@ abstract class egw_framework
 	/**
 	 * Get header as array to eg. set as vars for a template (from idots' head.inc.php)
 	 *
+	 * @param array $extra=array() extra attributes passed as data-attribute to egw.js
 	 * @return array
 	 */
-	protected function _get_header()
+	protected function _get_header(array $extra=array())
 	{
 		// get used language code (with a little xss check, if someone tries to sneak something in)
 		if (preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$GLOBALS['egw_info']['user']['preferences']['common']['lang']))
@@ -366,7 +367,7 @@ abstract class egw_framework
 			'charset'       	=> translation::charset(),
 			'website_title' 	=> strip_tags($GLOBALS['egw_info']['server']['site_title']. ($app ? " [$app]" : '')),
 			'body_tags'     	=> self::_get_body_attribs(),
-			'java_script'   	=> self::_get_js(),
+			'java_script'   	=> self::_get_js($extra),
 			'meta_robots'		=> $robots,
 			'dir_code'			=> lang('language_direction_rtl') != 'rtl' ? '' : ' dir="rtl"',
 			'include_wz_tooltip'=> $include_wz_tooltip,
@@ -814,10 +815,10 @@ abstract class egw_framework
 	 * in eGW.  One change then all templates will support it (as long as they
 	 * include a call to this method).
 	 *
-	 * @author Dave Hall (*vaguely based* on verdilak? css inclusion code)
+	 * @param array $extra=array() extra data to pass to egw.js as data-parameter
 	 * @return string the javascript to be included
 	 */
-	public static function _get_js()
+	public static function _get_js(array $extra=array())
 	{
 		$java_script = '';
 
@@ -840,55 +841,26 @@ abstract class egw_framework
 			self::validate_file('/phpgwapi/images.php',array('template' => $GLOBALS['egw_info']['user']['preferences']['common']['template_set']));
 		}
 
-		// set webserver_url for json
-		$java_script .= "<script type=\"text/javascript\">
-			var url = '".
-			($GLOBALS['egw_info']['server']['enforce_ssl'] && substr($GLOBALS['egw_info']['server']['webserver_url'],0,8) != 'https://' ? 'https://'.$_SERVER['HTTP_HOST'] : '').
-			$GLOBALS['egw_info']['server']['webserver_url']."';
-
-			// legacy code
-			egw_webserverUrl = url;
-
-			// reference the egw object from the parent window or set the
-			// webserver url
-			if (window.opener && typeof window.opener.egw != 'undefined')
-			{
-				window['egw'] = window.opener.egw;
-			}
-			else if (window.top && typeof window.top.egw != 'undefined')
-			{
-				window['egw'] = window.top.egw;
-			}
-			else
-			{
-				// Create a \"preferences only\" egw object
-				window['egw'] = {
-					'prefsOnly': true,
-					'webserverUrl': url
-				};
-			}
-		</script>";
-
-		$to_include = self::get_script_links(true);
-
-		// Use LABjs to execute this stuff after all the script links are loaded
-		$after = 'window.egw_appName = "'.$GLOBALS['egw_info']['flags']['currentapp'].'";'."\n";
+		$extra['url'] = $GLOBALS['egw_info']['server']['webserver_url'];
+		$extra['include'] = array_map(function($str){return substr($str,1);}, self::get_script_links(true), array(1));
+		$extra['app'] = $GLOBALS['egw_info']['flags']['currentapp'];
 
 		// add link registry to non-popup windows, if explicit requested (idots_framework::navbar() loads it, if not explicit specified!)
 		if ($GLOBALS['egw_info']['flags']['js_link_registry'])
 		{
-			$after .= 'egw.set_preferences('.json_encode($GLOBALS['egw_info']['user']['preferences']['common']).', "common");'."\n";
-			$after .= 'egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']).');'."\n";
+			$extra['preferences'] = array('common' => $GLOBALS['egw_info']['user']['preferences']['common']);
+			$extra['user'] = $GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['account_id']);
 		}
 
 		// Load LABjs ONCE here
 		$java_script .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/labjs/LAB.src.js"'." ></script>\n".
-			'<script type="text/javascript">
-// Loads files in parallel, executes serially
-window.egw_LAB = $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:"'.$GLOBALS['egw_info']['server']['webserver_url'].'/"});
-window.egw_LAB.script(
-'.json_encode(array_map(function($str){return substr($str,1);}, $to_include, array(1))).').wait(function() {'."\n".$after.'});
-</script>';
+			'<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/jsapi/egw.js" id="egw_script_id"';
+		foreach($extra as $name => $value)
+		{
+			if (is_array($value)) $value = json_encode($value);
+			$java_script .= ' data-'.$name."='".str_replace("'", '\\\'', $value)."'";
+		}
+		$java_script .= "></script>\n";
 
 		if(@isset($_GET['menuaction']))
 		{
@@ -908,7 +880,6 @@ window.egw_LAB.script(
 				$java_script .= '<script type="text/javascript">window.egw_LAB.wait(function() {'.$GLOBALS['egw_info']['flags']['java_script'] . "});</script>\n";
 			}
 		}
-
 
 		return $java_script;
 	}
