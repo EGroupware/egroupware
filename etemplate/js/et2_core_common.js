@@ -221,7 +221,7 @@ function et2_checkType(_val, _type, _attr, _cname)
 		// a closure to make sure context is preserved
 		if(typeof _val == "string" && _val.substr(0,4) == "app." && window.app)
 		{
-			var parts = res.data.func.split('.');
+			var parts = _val.split('.');
 			var func = parts.pop();
 			var parent = window;
 			for(var i=0; i < parts.length && typeof parent[parts[i]] != 'undefined'; ++i)
