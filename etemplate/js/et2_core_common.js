@@ -232,7 +232,7 @@ function et2_checkType(_val, _type, _attr, _cname)
 			{
 				try
 				{
-					return jQuery.proxy(parent,parent[func]);
+					return jQuery.proxy(parent[func],parent);
 				}
 				catch (e)
 				{
