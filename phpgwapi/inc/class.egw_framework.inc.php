@@ -168,7 +168,7 @@ abstract class egw_framework
 	 *
 	 * @return string with html
 	 */
-	abstract function header();
+	abstract function header(array $extra=array());
 
 	/**
 	 * Returns the html from the body-tag til the main application area (incl. opening div tag)

@@ -82,9 +82,10 @@ class idots_framework extends egw_framework
 	/**
 	* Returns the html-header incl. the opening body tag
 	*
+	* @param array $extra=array() extra attributes passed as data-attribute to egw.js
 	* @return string with html
 	*/
-	function header()
+	function header(array $extra=array())
 	{
 		// make sure header is output only once
 		if (self::$header_done) return '';
@@ -110,7 +111,7 @@ class idots_framework extends egw_framework
 			// hide location bar
 			egw_framework::set_onload('window.setTimeout(function(){window.scrollTo(0, 1);}, 100);');
 		}
-		$this->tpl->set_var($this->_get_header());
+		$this->tpl->set_var($this->_get_header($extra));
 
 		$content .= $this->tpl->fp('out','head');
 
