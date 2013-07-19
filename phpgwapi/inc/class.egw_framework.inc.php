@@ -852,7 +852,7 @@ abstract class egw_framework
 		foreach($extra as $name => $value)
 		{
 			if (is_array($value)) $value = json_encode($value);
-			$java_script .= ' data-'.$name."='".str_replace("'", '\\\'', $value)."'";
+			$java_script .= ' data-'.$name."=\"". html::htmlspecialchars($value)."\"";
 		}
 		$java_script .= "></script>\n";
 
