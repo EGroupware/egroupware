@@ -214,18 +214,18 @@ egwGridViewOuter.prototype.updateColumns = function(_columns)
 			// Ugly browser dependant code - each browser seems to treat the 
 			// right (collapsed) border of the row differently
 			addBorder = 0;
-			if ($j.browser.mozilla)
-			{
-				var maj = $j.browser.version.split(".")[0];
-				if (maj < 2) {
-					addBorder = 1; // Versions <= FF 3.6
-				}
-			}
-			if ($j.browser.webkit && !first)
+			//if ($j.browser.mozilla)
+			//{
+			//	var maj = $j.browser.version.split(".")[0];
+			//	if (maj < 2) {
+			//		addBorder = 1; // Versions <= FF 3.6
+			//	}
+			//}
+			if (/*$j.browser.webkit &&*/ !first)
 			{
 				addBorder = 1;
 			}
-			if (($j.browser.msie || $j.browser.opera) && first)
+			if (/*($j.browser.msie || $j.browser.opera) &&*/ first)
 			{
 				addBorder = -1;
 			}
@@ -682,7 +682,7 @@ egwGridViewContainer.prototype.setPosition = function(_top)
  * of the mostly called functions in the whole grid code and should stay
  * quite fast.
  */
-if ($j.browser.mozilla)
+if (navigator.userAgent.match(/Mozilla /) && !navigator.userAgent.match(/WebKit /))
 {
 	egwGridViewContainer.prototype.getHeight = function(_update)
 	{
