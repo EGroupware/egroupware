@@ -457,7 +457,10 @@ var et2_link_entry = et2_inputWidget.extend(
 		this._super.apply(this, arguments);
 
 		this.div = null;
-		this.search.autocomplete("destroy");
+		if(this.search.data("ui-autocomplete"))
+		{
+			this.search.autocomplete("destroy");
+		}
 		this.search = null;
 		this.app_select = null;
 	},
