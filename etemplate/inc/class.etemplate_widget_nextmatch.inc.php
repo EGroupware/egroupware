@@ -537,19 +537,6 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * - string 'confirm' confirmation message
 	 * - string 'confirm_multiple' confirmation message for multiple selected, defaults to 'confirm'
 	 *
-	 * That's what we should return looks JSON encoded like
-	 * [
-	 * 		{
-	 *			"id": "folder_open",
-	 *			"iconUrl": "imgs/folder.png",
-	 *			"caption": "Open folder",
-	 *			"onExecute": "javaScript:nm_action",
-	 *			"allowOnMultiple": false,
-	 *			"type": "popup",
-	 *			"default": true
-	 *		},
-	 * ]
-	 *
 	 * @param array $actions id indexed array of actions / array with valus for keys: 'iconUrl', 'caption', 'onExecute', ...
 	 * @param string $template_name='' name of the template, used as default for app name of images
 	 * @param string $prefix='' prefix for ids
@@ -562,23 +549,6 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$max_length=self::DEFAULT_MAX_MENU_LENGTH, array $default_attrs=null)
 	{
 		//echo "<p>".__METHOD__."(\$actions, '$template_name', '$prefix', \$action_links, $max_length) \$actions="; _debug_array($actions);
-		// default icons for some common actions
-		static $default_icons = array(
-			'view' => 'view',
-			'edit' => 'edit',
-			'open' => 'edit',	// does edit if possible, otherwise view
-			'add'  => 'new',
-			'new'  => 'new',
-			'delete' => 'delete',
-			'cat'  => 'attach',		// add as category icon to api
-			'document' => 'etemplate/merge',
-			'print'=> 'print',
-			'copy' => 'copy',
-			'move' => 'move',
-			'cut'  => 'cut',
-			'paste'=> 'editpaste',
-		);
-
 		$first_level = !$action_links;	// add all first level actions
 
 		//echo "actions="; _debug_array($actions);
@@ -603,59 +573,12 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				// we break at end of foreach loop, as rest of actions is already dealt with
 				// by putting them as children
 			}
-			$action['id'] = $prefix.$id;
-
-			// set certain enable functions
-			foreach(array(
-				'enableClass'  => 'javaScript:nm_enableClass',
-				'disableClass' => 'javaScript:nm_not_disableClass',
-				'enableId'     => 'javaScript:nm_enableId',
-			) as $attr => $check)
-			{
-				if (isset($action[$attr]) && !isset($action['enabled']))
-				{
-					$action['enabled'] = $check;
-				}
-			}
 
 			// add all first level popup actions plus ones with enabled = 'javaScript:...' to action_links
 			if ((!isset($action['type']) || in_array($action['type'],array('popup','drag','drop'))) &&	// popup is the default
 				($first_level || substr($action['enabled'],0,11) == 'javaScript:'))
 			{
-				$action_links[] = $action['id'];
-			}
-
-			// set default icon, if no other is specified
-			if (!isset($action['icon']) && isset($default_icons[$id]))
-			{
-				$action['icon'] = $default_icons[$id];
-			}
-			// use common eTemplate image semantics
-			if (!isset($action['iconUrl']) && !empty($action['icon']))
-			{
-				list($app,$img) = explode('/',$action['icon'],2);
-				if (!$app || !$img || !is_dir(EGW_SERVER_ROOT.'/'.$app) || strpos($img,'/')!==false)
-				{
-					$img = $action['icon'];
-					list($app) = explode('.', $template_name);
-				}
-				$action['iconUrl'] = common::find_image($app, $img);
-				unset($action['icon']);	// no need to submit it
-			}
-			// translate labels
-			if (!$action['no_lang'])
-			{
-				$action['caption'] = lang($action['caption']);
-				if ($action['hint']) $action['hint'] = lang($action['hint']);
-			}
-			unset($action['no_lang']);
-
-			foreach(array('confirm','confirm_multiple') as $confirm)
-			{
-				if (isset($action[$confirm]))
-				{
-					$action[$confirm] = lang($action[$confirm]).(substr($action[$confirm],-1) != '?' ? '?' : '');
-				}
+				$action_links[] = $prefix.$id;
 			}
 
 			// add sub-menues
@@ -689,23 +612,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				$action['data']['nm_action'] = 'egw_open';
 			}
 
-			// give all delete actions a delete shortcut
-			if ($id === 'delete' && !isset($action['shortcut']))
-			{
-				$action['shortcut'] = egw_keymanager::shortcut(egw_keymanager::DELETE);
-			}
-
-			static $egw_action_supported = array(	// attributes supported by egw_action
-				'id','caption','iconUrl','type','default','onExecute','group',
-				'enabled','allowOnMultiple','hideOnDisabled','data','children',
-				'hint','checkbox','checked','radioGroup','acceptedTypes','dragType',
-				'shortcut'
-			);
-			// add all not egw_action supported attributes to data
-			$action['data'] = array_merge(array_diff_key($action, array_flip($egw_action_supported)),(array)$action['data']);
-			if (!$action['data']) unset($action['data']);
-			// only add egw_action attributes
-			$egw_actions[] = array_intersect_key($action, array_flip($egw_action_supported));
+			$egw_actions[$prefix.$id] = $action;
 
 			if (!$first_level && $n++ == $max_length) break;
 		}
