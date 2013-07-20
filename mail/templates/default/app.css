@@ -280,7 +280,7 @@ pre {
 /*
  influence the tree display and scrolling behavior
 */
-#tree_target {
+#mail-tree_target {
 	min-height: 35px;
 	max-height: 450px;
 	display: block;
@@ -298,23 +298,32 @@ input[type=button] {
 	background-position: left;
 }
 
-#messageIFRAME {
+#mail-index_messageIFRAME {
 	width: 100%;
 	height: 100%;
 	border: 0;
 }
 
-.mailDisplay, #mailPreview {
+#mail-index_button\[mailcreate\] {
+	width: 99%;
+	text-align: left;
+	padding-left: 25px;
+	background-image: url(images/write_mail.png) !important;
+	background-position: left;
+	background-repeat: no-repeat;
+}
+
+.mailDisplay, #mail-index_mailPreview {
 	overflow: hidden;
 	position: relative;
 	margin-top: 3px;
 }
-#mailPreviewIcons {
+#mail-index_mailPreviewIcons {
 	position: absolute;
 	right: 0;
 	top: 0;
 }
-#mailPreviewContainer {
+#mail-index_mailPreviewContainer {
 	position: absolute;
 	border: 1px solid silver;
 	top: 55px;

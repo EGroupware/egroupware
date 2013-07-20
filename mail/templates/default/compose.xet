@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.compose" template="" lang="" group="0" version="1.9.001">
+		<html id="msg"/>
+		<vbox class="mailCompose mailComposeHeaderSection" width="100%">
+			<hbox class="mailComposeHeaders" width="100%">
+				<description value="From"/>
+				<html id="mail_composefromaddress" readonly="true"/>
+			</hbox>
+			<hbox class="mailComposeHeaders" width="100%">
+				<description value="on behalf of"/>
+				<html id="mail_composeonbehalfofaddress" readonly="true"/>
+			</hbox>
+			<hbox class="mailComposeHeaders" width="100%">
+				<description value="Cc"/>
+				<html id="mail_composeccaddress" readonly="true"/>
+			</hbox>
+			<hbox class="mailComposeHeaders" width="100%">
+				<description value="Bcc"/>
+				<html id="mail_composebccaddress" readonly="true"/>
+			</hbox>
+			<hbox class="mailComposeHeaders" width="100%">
+				<description value="Date"/>
+				<date-time align="left" id="mail_composedate" readonly="true"/>
+			</hbox>
+			<hbox  class="mailComposeHeaders" width="100%">
+				<description value="Subject"/>
+				<description align="left" id="mail_composesubject" readonly="true"/>
+			</hbox>
+			<hbox class="mail_Composeicons">
+				<html id="mail_composeicons"/>
+			</hbox>
+		</vbox>
+		<vbox class="mailCompose" width="100%">
+			<hbox disabled="!@is_html">
+				<htmlarea span="all" id="mailtext" mode="$cont[rtfEditorFeatures]" height="320px" width="100%" toolbar="true" base_href="$cont[upload_dir]"/>
+			</hbox>
+			<hbox disabled="@is_html">
+				<textbox multiline="true" rows="15" cols="120" span="all" id="mailtext"/>
+			</hbox>
+		<box class="mailComposeAttachments">
+				<html id="mail_composeattachments"/>
+			</box>
+		</vbox>
+	</template>
+</overlay>

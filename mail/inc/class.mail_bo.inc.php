@@ -535,6 +535,36 @@ class mail_bo
 	}
 
 	/**
+	 * generateIdentityString
+	 * construct the string representing an Identity passed by $identity
+	 * @var array/object $identity, identity object that holds realname, organization, emailaddress and signatureid
+	 * @var boolean $fullString full or false=NamePart only is returned
+	 * @return string - constructed of identity object data as defined in mailConfig
+	 */
+	static function generateIdentityString($identity, $fullString=true)
+	{
+		if (is_null(self::$mailConfig)) self::$mailConfig = config::read('mail');
+		// not set? -> use default, means full display of all available data
+		if (!isset(self::$mailConfig['how2displayIdentities'])) self::$mailConfig['how2displayIdentities']='';
+		switch (self::$mailConfig['how2displayIdentities'])
+		{
+			case 'email';
+				//$retData = str_replace('@',' ',$identity->emailAddress).($fullString===true?' <'.$identity->emailAddress.'>':'');
+				$retData = $identity->emailAddress.($fullString===true?' <'.$identity->emailAddress.'>':'');
+				break;
+			case 'nameNemail';
+				$retData = (!empty($identity->realName)?$identity->realName:substr_replace($identity->emailAddress,'',strpos($identity->emailAddress,'@'))).($fullString===true?' <'.$identity->emailAddress.'>':'');
+				break;
+			case 'orgNemail';
+				$retData = (!empty($identity->organization)?$identity->organization:substr_replace($identity->emailAddress,'',0,strpos($identity->emailAddress,'@')+1)).($fullString===true?' <'.$identity->emailAddress.'>':'');
+				break;
+			default:
+				$retData = $identity->realName.(!empty($identity->organization)?' '.$identity->organization:'').($fullString===true?' <'.$identity->emailAddress.'>':'');
+		}
+		return $retData;
+	}
+
+	/**
 	 * closes a connection on the active Server ($this->icServer)
 	 *
 	 * @return void
@@ -4510,6 +4540,16 @@ class mail_bo
 		if (strtolower($attachmentData['type']) == 'application/octet-stream') $attachmentData['type'] = mime_magic::filename2mime($attachmentData['filename']);
 
 		return $attachmentData;
+	}
+
+	/**
+	 * getRandomString - function to be used to fetch a random string and md5 encode that one
+	 * @param none
+	 * @return string - a random number which is md5 encoded
+	 */
+	static function getRandomString() {
+		mt_srand((float) microtime() * 1000000);
+		return md5(mt_rand (100000, 999999));
 	}
 
 	/**

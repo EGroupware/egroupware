@@ -64,12 +64,12 @@ class mail_ui
 	 * @var array
 	 */
 	var $searchTypes = array(
-		'quick'		=> 'quicksearch',
-		'subject'	=> 'subject',
-		'body'		=> 'message body',
-		'from'		=> 'from',
-		'to'		=> 'to',
-		'cc'		=> 'cc',
+		'quick'		=> 'quicksearch',	// lang('quicksearch')
+		'subject'	=> 'subject',		// lang('subject')
+		'body'		=> 'message body',	// lang('message body')
+		'from'		=> 'from',			// lang('from')
+		'to'		=> 'to',			// lang('to')
+		'cc'		=> 'cc',			// lang('cc')
 	);
 
 	/**
@@ -78,12 +78,12 @@ class mail_ui
 	 * @var array
 	 */
 	var $statusTypes = array(
-		'any'		=> 'any status',
-		'flagged'	=> 'flagged',
-		'unseen'	=> 'unread',
-		'answered'	=> 'replied',
-		'seen'		=> 'read',
-		'deleted'	=> 'deleted',
+		'any'		=> 'any status',// lang('any status')
+		'flagged'	=> 'flagged',	// lang('flagged')	
+		'unseen'	=> 'unread',	// lang('unread')
+		'answered'	=> 'replied',	// lang('replied')
+		'seen'		=> 'read',		// lang('read')
+		'deleted'	=> 'deleted',	// lang('deleted')
 	);
 
 	/**
@@ -222,11 +222,11 @@ class mail_ui
 		if ($this->mail_bo->icServer->_connected == 1 && $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
 		{
 			$this->statusTypes = array_merge($this->statusTypes,array(
-				'keyword1'	=> 'urgent',
-				'keyword2'	=> 'job',
-				'keyword3'	=> 'personal',
-				'keyword4'	=> 'to do',
-				'keyword5'	=> 'later',
+				'keyword1'	=> 'urgent',//lang('urgent'),
+				'keyword2'	=> 'job',	//lang('job'),
+				'keyword3'	=> 'personal',//lang('personal'),
+				'keyword4'	=> 'to do',	//lang('to do'),
+				'keyword5'	=> 'later',	//lang('later'),
 			));
 		}
 
@@ -1546,6 +1546,9 @@ unset($query['actions']);
 //_debug_array($_REQUEST);
 		if(isset($_GET['id'])) $rowID	= $_GET['id'];
 		if(isset($_GET['part'])) $partID = $_GET['part'];
+		$htmlOptions = $this->mail_bo->htmlOptions;
+		if (!empty($_GET['tryastext'])) $htmlOptions  = "only_if_no_text";
+		if (!empty($_GET['tryashtml'])) $htmlOptions  = "always_display";
 
 		$hA = self::splitRowID($rowID);
 		$uid = $hA['msgUID'];
@@ -1576,7 +1579,7 @@ unset($query['actions']);
 				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
 
 		#print "<pre>";print_r($rawheaders);print"</pre>";exit;
-		$mailBody = $this->get_load_email_data($uid, $partID, $mailbox,false);
+		$mailBody = $this->get_load_email_data($uid, $partID, $mailbox, $htmlOptions,false);
 		//error_log(__METHOD__.__LINE__.$mailBody);
 		$this->mail_bo->closeConnection();
 		$etpl = new etemplate_new('mail.display');
@@ -2201,7 +2204,7 @@ unset($query['actions']);
 	}
 
 
-	function get_load_email_data($uid, $partID, $mailbox,$fullHeader=true)
+	function get_load_email_data($uid, $partID, $mailbox,$htmlOptions=null,$fullHeader=true)
 	{
 		// seems to be needed, as if we open a mail from notification popup that is
 		// located in a different folder, we experience: could not parse message
@@ -2209,11 +2212,13 @@ unset($query['actions']);
 $this->mailbox = $mailbox;
 $this->uid = $uid;
 $this->partID = $partID;
-		$bodyParts	= $this->mail_bo->getMessageBody($uid, '', $partID, '', false, $mailbox);
+		$bufferHtmlOptions = $this->mail_bo->htmlOptions;
+		if (empty($htmlOptions)) $htmlOptions = $this->mail_bo->htmlOptions;
+		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, '', false, $mailbox);
 		//error_log(__METHOD__.__LINE__.array2string($bodyParts));
 		$meetingRequest = false;
 		$fetchEmbeddedImages = false;
-		if ($this->mail_bo->htmlOptions !='always_display') $fetchEmbeddedImages = true;
+		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
 		$attachments    = $this->mail_bo->getMessageAttachments($uid, $partID, '',$fetchEmbeddedImages,true);
 		foreach ((array)$attachments as $key => $attach)
 		{
@@ -2229,6 +2234,7 @@ $this->partID = $partID;
 					'method' => $attach['method'],
 					'sender' => $sender,
 				));
+				$this->mail_bo->htmlOptions = $bufferHtmlOptions;
 				return ExecMethod( 'calendar.calendar_uiforms.meeting',
 					array('event'=>null,'msg'=>'','useSession'=>true)
 				);
@@ -2241,6 +2247,7 @@ $this->partID = $partID;
 			$this->showBody($this->getdisplayableBody($bodyParts), false,$fullHeader);
 		//IE10 eats away linebreaks preceeded by a whitespace in PRE sections
 		$frameHtml = str_replace(" \r\n","\r\n",$frameHtml);
+		$this->mail_bo->htmlOptions = $bufferHtmlOptions;
 
 		return $frameHtml;
 	}

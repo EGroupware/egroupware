@@ -114,11 +114,13 @@ app.mail = AppJS.extend(
 	 * 
 	 * @param _action
 	 * @param _senders - the representation of the elements(s) the action is to be performed on
+	 * @param _mode - you may pass the mode. if not given view is used (tryastext|tryashtml are supported)
 	 */
-	mail_open: function(_action, _senders) {
+	mail_open: function(_action, _senders, _mode) {
 		//console.log("mail_open",_action, _senders);
 		var _id = _senders[0].id;
 		// reinitialize the buffer-info on selected mails
+		if (!(_mode == 'tryastext' || _mode == 'tryashtml' || _mode == 'view')) _mode = 'view';
 		this.mail_selectedMails = [];
 		this.mail_selectedMails.push(_id);
 		this.mail_currentlyFocussed = _id;
@@ -126,7 +128,7 @@ app.mail = AppJS.extend(
 		var dataElem = egw.dataGetUIDdata(_id);
 		var subject = dataElem.data.subject;
 		//alert('Open Message:'+_id+' '+subject);
-		var h = egw().open( _id,'mail','view','view'+_id );
+		var h = egw().open( _id,'mail','view',_mode+'='+_id.replace(/=/g,"_") );
 		egw(h).ready(function() {
 			h.document.title = subject;
 		});
@@ -140,21 +142,7 @@ app.mail = AppJS.extend(
 	 */
 	mail_openAsHtml: function(_action, _elems)
 	{
-		//alert('mail_open('+_elems[0].id+')');
-		if (activeFolderB64 == draftFolderB64 || activeFolderB64 == templateFolderB64)
-		{
-//			_action.id='composefromdraft';
-//			mail_compose(_action,_elems);
-		}
-		else
-		{
-			var url = window.egw_webserverUrl+'/index.php?';
-			url += 'menuaction=felamimail.uidisplay.display';	// todo compose for Draft folder
-			url += '&uid='+_elems[0].id;
-			url += '&tryashtml=1';
-
-			egw_openWindowCentered(_url,'displayMessage_'+_elems[0].id,'700','600',window.outerWidth/2,window.outerHeight/2);
-		}
+		this.mail_open(_action, _elems,'tryashtml');
 	},
 
 	/**
@@ -165,21 +153,146 @@ app.mail = AppJS.extend(
 	 */
 	mail_openAsText: function(_action, _elems)
 	{
-		//alert('mail_open('+_elems[0].id+')');
-		if (activeFolderB64 == draftFolderB64 || activeFolderB64 == templateFolderB64)
+		this.mail_open(_action, _elems,'tryastext');
+	},
+
+	/**
+	 * Compose, reply or forward a message
+	 * 
+	 * @param _action _action.id is 'compose', 'composeasnew', 'reply', 'reply_all' or 'forward' (forward can be multiple messages)
+	 * @param _elems _elems[0].id is the row-id
+	 */
+	mail_compose: function(_action, _elems)
+	{
+		var idsToProcess = '';
+		var multipleIds = false;
+		var url = window.egw_webserverUrl+'/index.php?';
+		if (typeof _elems == 'undefined')
 		{
-//			_action.id='composefromdraft';
-//			mail_compose(_action,_elems);
+			var h = egw().open('','mail','add');
+			return true;
+		}
+		if (_elems.length > 1) multipleIds = true;
+		//for (var i=0; i<_elems.length; i++)
+		//{
+		//	if (i>0) idsToProcess += ',';
+		//	idsToProcess += _elems[i].id;
+		//}
+		//alert('mail_'+_action.id+'('+idsToProcess+')');
+		if (_action.id == 'compose')
+		{
+			if (multipleIds == false)
+			{
+				if (_elems.length == 1) mail_parentRefreshListRowStyle(_elems[0].id,_elems[0].id);
+				url += 'menuaction=mail.mail_compose.compose';
+				this.mail_openComposeWindow(url)
+			}
+			else
+			{
+				this.mail_compose('forward',_elems);
+			}
+		}
+		if (_action.id == 'composefromdraft')
+		{
+			url += 'menuaction=mail.mail_compose.composeFromDraft';
+			url += '&id='+_elems[0].id;
+			egw_openWindowCentered(url,'composeasnew_'+_elems[0].id,700,egw_getWindowOuterHeight());
+		}
+		if (_action.id == 'composeasnew')
+		{
+			url += 'menuaction=mail.mail_compose.composeAsNew';
+			url += '&reply_id='+_elems[0].id;
+			egw_openWindowCentered(url,'composeasnew_'+_elems[0].id,700,egw_getWindowOuterHeight());
+		}
+		if (_action.id == 'reply')
+		{
+			url += 'menuaction=mail.mail_compose.reply';
+			url += '&reply_id='+_elems[0].id;
+			egw_openWindowCentered(url,'reply_'+_elems[0].id,700,egw_getWindowOuterHeight());
+		}
+		if (_action.id == 'reply_all')
+		{
+			url += 'menuaction=mail.mail_compose.replyAll';
+			url += '&reply_id='+_elems[0].id;
+			egw_openWindowCentered(url,'replyAll_'+_elems[0].id,700,egw_getWindowOuterHeight());
+		}
+		if (_action.id == 'forward'||_action.id == 'forwardinline'||_action.id == 'forwardasattach')
+		{
+			if (multipleIds||_action.id == 'forwardasattach')
+			{
+				url += 'menuaction=mail.mail_compose.compose';
+				mail_openComposeWindow(url,_action.id == 'forwardasattach');
+			}
+			else
+			{
+				url += 'menuaction=mail.mail_compose.forward';
+				url += '&reply_id='+_elems[0].id;
+				url += '&mode=forwardinline';
+				egw_openWindowCentered(url,'forward_'+_elems[0].id,700,egw_getWindowOuterHeight());
+			}
+		}
+	},
+
+	/**
+	 * Compose, reply or forward a message
+	 * 
+	 * @param _url url to open
+	 * @param forwardByCompose boolean to decide about the method
+	 */
+	mail_openComposeWindow: function(_url,forwardByCompose,_elems) {
+		var Check=true;
+		var alreadyAsked=false;
+		var _messageList;
+		var sMessageList='';
+		//var cbAllMessages = document.getElementById('selectAllMessagesCheckBox').checked;
+		// check if mailgrid exists, before accessing it
+		var cbAllVisibleMessages;
+		if (typeof forwardByCompose == 'undefined') forwardByCompose = true;
+		if (forwardByCompose == false)
+		{
+			cbAllMessages = cbAllVisibleMessages = Check = false;
+		}
+		if (typeof prefAskForMultipleForward == 'undefined') prefAskForMultipleForward = egw.preference('prefaskformultipleforward','mail');
+		if (cbAllMessages == true || cbAllVisibleMessages == true)
+		{
+			Check = confirm(egw.lang('multiple forward of all mesages'));
+			alreadyAsked=true;
+		}
+
+		if ((cbAllMessages == true || cbAllVisibleMessages == true ) && Check == true)
+		{
+			//_messageList = 'all'; // all is not supported by now, only visibly selected messages are chosen
+			_messageList = this.mail_getFormData(_elems);
 		}
 		else
 		{
-			var url = window.egw_webserverUrl+'/index.php?';
-			url += 'menuaction=felamimail.uidisplay.display';	// todo compose for Draft folder
-			url += '&uid='+_elems[0].id;
-			url += '&tryastext=1';
-
-			egw_openWindowCentered(_url,'displayMessage_'+_elems[0].id,'700','600',window.outerWidth/2,window.outerHeight/2);
+			if (Check == true) _messageList = this.mail_getFormData(_elems);
 		}
+		if (typeof _messageList != 'undefined')
+		{
+			for (var i in _messageList['msg']) {
+				//alert('eigenschaft:'+_messageList['msg'][i]);
+				sMessageList=sMessageList+_messageList['msg'][i]+',';
+				//sMessageList.concat(',');
+			}
+		}
+		if (prefAskForMultipleForward == 1 && Check == true && alreadyAsked == false && sMessageList.length >0 && _messageList['msg'].length>1)
+		{
+			askme = egw.lang('multipleforward');
+			//if (cbAllMessages == true || cbAllVisibleMessages == true) askme = egw_appWindow('felamimail').lang_confirm_all_messages; // not supported
+			Check = confirm(askme);
+		}
+		//alert("Check:"+Check+" MessageList:"+sMessageList+"#");
+		if (Check != true) sMessageList=''; // deny the appending off selected messages to new compose -> reset the sMessageList
+		if (Check == true || sMessageList=='')
+		{
+			if (sMessageList.length >0) {
+				sMessageList= 'AsForward&forwardmails=1&folder='+activeFolderB64+'&reply_id='+sMessageList.substring(0,sMessageList.length-1);
+			}
+			//alert(sMessageList);
+			egw_openWindowCentered(_url+sMessageList,'compose',700,egw_getWindowOuterHeight());
+		}
+		//ToDo: reset message selection
 	},
 
 	/**

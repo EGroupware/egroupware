@@ -84,9 +84,14 @@ class mail_hooks
 			'view_popup' => '850xegw_getWindowOuterHeight()',
 			'view_list'	=>	'mail.mail_ui.index',
 			'add'        => array(
-				'menuaction' => 'felamimail.uicompose.compose',
+				'menuaction' => 'mail.mail_compose.compose',
 			),
 			'add_popup'  => '850xegw_getWindowOuterHeight()',
+			'edit'        => array(
+				'menuaction' => 'mail.mail_compose.compose',
+			),
+			'edit_id'    => 'id',
+			'edit_popup'  => '850xegw_getWindowOuterHeight()',
 			// register fmail as handler for .eml files
 			'mime' => array(
 				'message/rfc822' => array(
@@ -788,7 +793,13 @@ class mail_hooks
 		// Destination div for folder tree
 		$file[] = array(
 			'no_lang' => true,
-			'text'=>'<span id="tree_target" class="dtree" />',
+			'text'=>'<span id="mail-index_buttonmailcreate" class="button" />',
+			'link'=>false,
+			'icon' => false
+		);
+		$file[] = array(
+			'no_lang' => true,
+			'text'=>'<span id="mail-tree_target" class="dtree" />',
 			'link'=>false,
 			'icon' => false
 		);

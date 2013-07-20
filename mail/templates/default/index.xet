@@ -38,7 +38,8 @@
 		</grid>
 	</template>
 	<template id="mail.index" template="" lang="" group="0" version="1.9.001">
-		<tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder(widget.event_args[0],widget);" parent_node="tree_target"/>
+		<tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder(widget.event_args[0],widget);" parent_node="mail-tree_target"/>
+		<buttononly id="button[mailcreate]" onclick="app.mail.mail_compose(false);" label="Compose" parent_node="mail-index_buttonmailcreate"/>
 		<html id="msg"/>
 		<split dock_side="bottomDock" id="mailSplitter" orientation="h">
 			<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows"/>
