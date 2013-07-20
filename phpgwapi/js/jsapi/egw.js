@@ -102,13 +102,34 @@
 		}
 	}
 	window.egw_LAB.script(include).wait(function(){
-		var data = egw_script.getAttribute('data-preferences');
+		var data = egw_script.getAttribute('data-etemplate');
 		if (data)
 		{
 			data = JSON.parse(data) || {};
-			for(var app in data)
+			// Initialize application js
+			var callback = null;
+			// Only initialize once
+			if(typeof app[window.egw_appName] == "function")
 			{
-				window.egw.set_preferences(data[app], app);
+				(function() { new app[window.egw_appName]();}).call();
+			}
+			else
+			{
+				egw.debug("warn", "Did not load '%s' JS object",window.egw_appName); 
+			}
+			if(typeof app[window.egw_appName] == "object")
+			{
+				callback = function(et2) {app["'.$app.'"].et2_ready(et2)};
+			}
+			var node = document.getElementById(data.DOMNodeID);
+			if(!node)
+			{
+				egw.debug("error", "Could not find target node %s", data.DOMNodeID);
+			}
+			else
+			{
+				var et2 = new etemplate2(node, "etemplate::ajax_process_content");
+				et2.load(data.name,data.url,data.data,callback);
 			}
 		}
 		if (data = egw_script.getAttribute('data-user'))
