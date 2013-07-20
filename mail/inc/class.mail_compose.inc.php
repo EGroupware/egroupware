@@ -2515,7 +2515,7 @@ $content['mailtext'] = 'garbage';
 			$searchString = translation::convert($_searchString, mail_bo::$displayCharset,'UTF7-IMAP');
 			foreach ($folderObjects as $k =>$fA)
 			{
-				error_log(__METHOD__.__LINE__.$_searchString.'/'.$searchString.' in '.$k.'->'.$fA->displayName);
+				//error_log(__METHOD__.__LINE__.$_searchString.'/'.$searchString.' in '.$k.'->'.$fA->displayName);
 				$f=false;
 				if (stripos($fA->displayName,$_searchString)!==false)
 				{
@@ -2529,8 +2529,6 @@ $content['mailtext'] = 'garbage';
 			}
 		}
 		//error_log(__METHOD__.__LINE__.' IcServer:'.$this->mail_bo->icServer->ImapServerId.':'.array2string($results));
-		//$folderName = translation::convert(html_entity_decode($_folderName, ENT_QUOTES, $this->charset),'UTF7-IMAP', $this->charset);
-		//$response->add("decodedFolder ='".$folderName."'");
 
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($results);
@@ -2612,7 +2610,7 @@ $content['mailtext'] = 'garbage';
 			}
 
 		}
-//error_log(__METHOD__.__LINE__.array2string($jsArray));
+		//error_log(__METHOD__.__LINE__.array2string($jsArray));
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($results);
 		common::egw_exit();
