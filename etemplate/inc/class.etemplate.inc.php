@@ -133,13 +133,19 @@ class etemplate_new extends etemplate_widget_template
 			'modifications' => self::$request->modifications,
 			'validation_errors' => self::$validation_errors,
 		);
+		
+		// Info required to load the etemplate client-side
+		$dom_id = str_replace('.','-',$this->name);
+		$load_array = array(
+			'name' => $this->name,
+			'url' => $GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path,
+			'data' => $data,
+			'DOMNodeID' => $dom_id
+		);
 		if (self::$response)	// call is within an ajax event / form submit
 		{
-			self::$response->generic('et2_load', array(
-				'name' => $this->name,
-				'url' => $GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path,
-				'data' => $data,
-			));
+			//error_log("Ajax " . __LINE__);
+			self::$response->generic('et2_load', $load_array);
 		}
 		else	// first call
 		{
@@ -148,8 +154,7 @@ class etemplate_new extends etemplate_widget_template
 
 			// Include the jQuery-UI CSS - many more complex widgets use it
 			$theme = 'redmond';
-			egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.8.21.custom.css");
-
+			egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.10.3.custom.css");
 			// Load our CSS after jQuery-UI, so we can override it
 			egw_framework::includeCSS('/etemplate/templates/default/etemplate2.css');
 
@@ -160,11 +165,7 @@ class etemplate_new extends etemplate_widget_template
 				egw_framework::validate_file('.','app',$app,false);
 			}
 
-			common::egw_header();
-			if ($output_mode != 2)
-			{
-				parse_navbar();
-			}
+
 			// load translations
 			translation::add_app('etemplate');
 			$langRequire = array();
@@ -173,66 +174,27 @@ class etemplate_new extends etemplate_widget_template
 				$langRequire[] = array('app' => $l_app, 'lang' => $lang);
 			}
 
-			$dom_id = str_replace('.','-',$this->name);
-			// check if we are in an ajax-exec call from jdots template (or future other tabed templates)
+			$header = $GLOBALS['egw']->framework->header(array(
+				'etemplate' => $load_array
+			));
+			// check if we are in an ajax-exec call from jdots template (or future other tabbed templates)
 			if (isset($GLOBALS['egw']->framework->response))
 			{
-				echo '
-		<div id="' . $dom_id .'" class="et2_container"></div>
-		<script>
-			// Wait for all files to be loaded & executed first
-			egw_LAB.wait(function() {
-				egw.langRequire(window, '.json_encode($langRequire).');
-				egw(window).includeJS('.json_encode(egw_framework::get_script_links(true, true)).	// return and clear
-					',function() {
-					egw.debug("info", "Instanciating etemplate2 object for '.$this->name.'");
-
-					// Setup callback to initialize application js
-					var callback = null;
-					// Only initialize once
-					if(typeof app["'.$app.'"] == "function")
-					{
-						(function() { new app["'.$app.'"]();}).call();
-					} ' . (!file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js') ? '' :'
-					else { egw.debug("warn", "Did not load '.$app.' JS object"); }').'
-					if(typeof app["'.$app.'"] == "object")
-					{
-						callback = function(et2) {app["'.$app.'"].et2_ready(et2)};
-					}
-					var et2 = new etemplate2(document.getElementById("'.$dom_id.'"), "etemplate::ajax_process_content");
-					et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).', callback);
-				}, window, egw.webserverUrl);
-			});
-		</script>
-';
+				//error_log("Ajax " . __LINE__);
+				$GLOBALS['egw']->framework->response->generic("data", array('<div id="'.$dom_id.'" class="et2_container"></div>'));
+				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array);
+				return;
 			}
 			else
 			{
-				echo '
-		<div id="'.$dom_id.'" class="et2_container"></div>
-		<script>
-			// Wait for all files to be loaded & executed first
-			egw_LAB.wait(function() {
-				egw.langRequire(window, '.json_encode($langRequire).');
-				egw(window).ready(function() {
-					// Initialize application js
-					var callback = null;
-					// Only initialize once
-					if(typeof app["'.$app.'"] == "function")
-					{
-						(function() { new app["'.$app.'"]();}).call();
-					} ' . (!file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js') ? '' :'
-					 else { egw.debug("warn", "Did not load '.$app.' JS object"); }') . '
-					if(typeof app["'.$app.'"] == "object")
-					{
-						callback = function(et2) {app["'.$app.'"].et2_ready(et2)};
-					}
-					var et2 = new etemplate2(document.getElementById("'.$dom_id.'"), "etemplate::ajax_process_content");
-					et2.load("'.$this->name.'","'.$GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path.'",'.json_encode($data).',callback);
-				}, null, true);
-			});
-		</script>
-';
+				//error_log("NON-Ajax " . __LINE__);
+				echo $header;
+				if ($output_mode != 2)
+				{
+					parse_navbar();
+				}
+				echo '<div id="'.$dom_id.'" class="et2_container"></div>';
+				$GLOBALS['egw']->framework->footer();
 			}
 			ob_flush();
 			
@@ -246,7 +208,6 @@ class etemplate_new extends etemplate_widget_template
 				unset($response);
 				echo ')});</script>';
 			}
-			common::egw_footer();
 		}
 	}
 
@@ -578,7 +539,7 @@ class etemplate_new extends etemplate_widget_template
 	}
 }
 // default etemplate class has to be defined by either extending etemplate_new or etemplate_old
-class etemplate extends etemplate_old {};
+class etemplate extends etemplate_new {};
 
 // Try to discover all widgets, as names don't always match tags (eg: listbox is in menupopup)
 $files = scandir(EGW_INCLUDE_ROOT . '/etemplate/inc');

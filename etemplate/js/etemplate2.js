@@ -135,7 +135,6 @@ etemplate2.prototype.clear = function()
 			}
 		}
 	}
-	this.templates = {};
 };
 
 /**
@@ -195,6 +194,22 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	var split = _name.split('.');
 	var appname = split[0];
 
+	// Initialize application js
+	var app_callback = null;
+	// Only initialize once
+	if(typeof app[appname] == "function")
+	{
+		(function() { new app[appname]();}).call();
+	}
+	else
+	{
+		egw.debug("warn", "Did not load '%s' JS object",appname); 
+	}
+	if(typeof app[appname] == "object")
+	{
+		app_callback = function(et2) {app[appname].et2_ready(et2)};
+	}
+	
 	// Create the document fragment into which the HTML will be injected
 	var frag = document.createDocumentFragment();
 
@@ -219,18 +234,8 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	} else {
 		// todo for idots or jdots framework
 	}
-
-	// Asynchronously load the XET file
-	et2_loadXMLFromURL(_url, function(_xmldoc) {
-
-		// Scan for templates and store them
-		for(var i = 0; i < _xmldoc.childNodes.length; i++) {
-			var template = _xmldoc.childNodes[i];
-			if(template.nodeName.toLowerCase() != "template") continue;
-			this.templates[template.getAttribute("id")] = template;
-			if(!_name) missing_name = template.getAttribute("id");
-		}
-
+	
+	var _load = function() {
 		// Read the XML structure of the requested template
 		this.widgetContainer.loadFromXML(this.templates[_name || missing_name]);
 
@@ -254,13 +259,46 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 		{
 			_callback.call(window,this);
 		}
+		if(_callback != app_callback)
+		{
+			app_callback.call(window,this);
+		}
 
 		$j(this.DOMContainer).trigger('load', this);
-	}, this);
+	};
+	
 
-	// Split the given data into array manager objects and pass those to the
-	// widget container
-	this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
+	
+	// Load & process
+	if(!this.templates[_name])
+	{
+		// Asynchronously load the XET file	
+		et2_loadXMLFromURL(_url, function(_xmldoc) {
+
+			// Scan for templates and store them
+			for(var i = 0; i < _xmldoc.childNodes.length; i++) {
+				var template = _xmldoc.childNodes[i];
+				if(template.nodeName.toLowerCase() != "template") continue;
+				this.templates[template.getAttribute("id")] = template;
+				if(!_name) missing_name = template.getAttribute("id");
+			}
+			_load.apply(this,[]);
+		}, this);
+		
+		// Split the given data into array manager objects and pass those to the
+		// widget container - do this here because file is loaded async
+		this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
+	}
+	else
+	{
+		// Set array managers first, or errors will happen
+		this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
+		
+		// Already have it
+		_load.apply(this,[]);
+	}
+	
+
 };
 
 etemplate2.prototype.submit = function(button)
@@ -565,8 +603,27 @@ function etemplate2_handle_load(_type, _response)
 	var data = _response.data;
 	if (typeof data.url == "string" && typeof data.data === 'object')
 	{
-		this.load(data.name, data.url, data.data);
-		return true;
+		if(typeof this.load == 'function')
+		{
+			// Called from etemplate
+			this.load(data.name, data.url, data.data);
+			return true;
+		}
+		else
+		{
+			// Not etemplate
+			var node = document.getElementById(data.DOMNodeID);
+			if(node)
+			{
+				var et2 = new etemplate2(node, "etemplate::ajax_process_content");
+				et2.load(data.name, data.url, data.data);
+				return true;
+			}
+			else
+			{
+				egw.debug("error", "Could not find target node %s", data.DOMNodeId);
+			}
+		}
 	}
 
 	throw("Error while parsing et2_load response");
