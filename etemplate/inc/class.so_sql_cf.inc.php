@@ -500,6 +500,11 @@ class so_sql_cf extends so_sql
 					$col = $this->table_name .'.'.array_search($col, $this->db_cols).' AS '.$col;
 				}
 			}
+			$only_keys[0] = 'DISTINCT '.$only_keys[0];
+		}
+		else
+		{
+			$only_keys = 'DISTINCT '.$only_keys;
 		}
 		// check if we order by a custom field --> join cf table for given cf and order by it's value
 		if (strpos($order_by,self::CF_PREFIX) !== false)
