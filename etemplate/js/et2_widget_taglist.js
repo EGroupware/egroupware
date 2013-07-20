@@ -95,6 +95,12 @@ var et2_taglist = et2_selectbox.extend(
 		"width": {
 			default: "100%"
 		},
+		"maxSelection": {
+			"name": "max Selection",
+			"type": "integer",
+			"default": null,
+			"description": "The maximum number of items the user can select if multiple selection is allowed."
+		},
 		// Selectbox attributes that are not applicable
 		"multiple": { ignore: true},
 		"rows": { ignore: true},
@@ -152,7 +158,8 @@ var et2_taglist = et2_selectbox.extend(
 			disabled: this.options.disabled || this.options.readonly,
 			editable: !(this.options.disabled || this.options.readonly),
 			selectionRenderer: this.options.tagRenderer || this.selectionRenderer,
-			renderer: this.options.listRenderer || null
+			renderer: this.options.listRenderer || null,
+			maxSelection: this.options.maxSelection
 		});
 		
 		// Display / hide a loading icon while fetching
