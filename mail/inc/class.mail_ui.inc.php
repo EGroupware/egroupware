@@ -1620,6 +1620,7 @@ unset($query['actions']);
 		}
 
 		// Set up data for taglist widget(s)
+		if ($envelope['FROM']==$envelope['SENDER']) unset($envelope['SENDER']);
 		foreach(array('SENDER','FROM','TO','CC','BCC') as $field)
 		{
 			foreach($envelope[$field] as $field_data)

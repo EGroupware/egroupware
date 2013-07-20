@@ -6,19 +6,15 @@
 		<vbox class="mailCompose mailComposeHeaderSection" width="100%">
 			<hbox class="mailComposeHeaders" width="100%">
 				<description value="From"/>
-				<html id="mail_composefromaddress" readonly="true"/>
-			</hbox>
-			<hbox class="mailComposeHeaders" width="100%">
-				<description value="on behalf of"/>
-				<html id="mail_composeonbehalfofaddress" readonly="true"/>
+				<taglist id="TO" autocomplete_url='mail.mail_compose.ajax_searchAddress' autocomplete_params='' onclick="app.mail.address_click"/>
 			</hbox>
 			<hbox class="mailComposeHeaders" width="100%">
 				<description value="Cc"/>
-				<html id="mail_composeccaddress" readonly="true"/>
+				<taglist id="CC" onclick="app.mail.address_click"/>
 			</hbox>
 			<hbox class="mailComposeHeaders" width="100%">
 				<description value="Bcc"/>
-				<html id="mail_composebccaddress" readonly="true"/>
+				<taglist id="BCC" onclick="app.mail.address_click"/>
 			</hbox>
 			<hbox class="mailComposeHeaders" width="100%">
 				<description value="Date"/>
