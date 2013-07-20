@@ -321,11 +321,7 @@ var et2_dialog = et2_widget.extend({
 	 */
 	set_buttons: function(buttons) {
 		this.options.buttons = buttons;
-		if(typeof buttons == "number" && typeof this._buttons[buttons] != "undefined")
-		{
-			this.div.dialog("option", "buttons", this._buttons[buttons]);
-		}
-		else if (buttons instanceof Array)
+		if (buttons instanceof Array)
 		{
 			for (var i = 0; i < buttons.length; i++)
 			{
@@ -335,10 +331,16 @@ var et2_dialog = et2_widget.extend({
 				}
 			}
 			this.options.buttons = buttons;
-			this.div.dialog("option", "buttons", buttons);
 		}
-		// Focus default button so enter works
-		$j('.ui-dialog-buttonpane button[default]',this.div.parent()).focus(); 
+		
+		// If dialog already created, update buttons
+		if(this.div.data('uiDialog'))
+		{
+			this.div.dialog("option", "buttons", buttons);
+		
+			// Focus default button so enter works
+			$j('.ui-dialog-buttonpane button[default]',this.div.parent()).focus(); 
+		}
 	},
 
 	/**
