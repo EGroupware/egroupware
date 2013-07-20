@@ -334,7 +334,7 @@ var et2_dialog = et2_widget.extend({
 		}
 		
 		// If dialog already created, update buttons
-		if(this.div.data('uiDialog'))
+		if(this.div.data('ui-dialog'))
 		{
 			this.div.dialog("option", "buttons", buttons);
 		

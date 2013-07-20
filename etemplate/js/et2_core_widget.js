@@ -733,7 +733,14 @@ var et2_widget = Class.extend(
 			// Descend recursively into the tree
 			for (var i = 0; i < this._children.length; i++)
 			{
-				this._children[i].loadingFinished();
+				try
+				{
+					this._children[i].loadingFinished();
+				}
+				catch (e)
+				{
+					egw.debug("error", "There was an error with a widget:\nError:%s\nProblem widget:%o",e.message,this._children[i]);
+				}
 			}
 		}
 	},
