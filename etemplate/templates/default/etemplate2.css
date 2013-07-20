@@ -1169,3 +1169,18 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	width: 100%;
 }
 
+/**
+* et2_taglist
+*/
+.ms-ctn,.ms-res-ctn {
+	/* It doesn't really work smaller than this */
+	min-width: 150px;
+}
+.ms-ctn .loading {
+	position: relative;
+	margin: 0px auto -16px auto;
+	top: 5px;
+}
+.ms-res-ctn {
+	overflow-x: hidden;
+}
