@@ -4,25 +4,29 @@
 	<template id="mail.compose" template="" lang="" group="0" version="1.9.001">
 		<html id="msg"/>
 		<vbox class="mailCompose mailComposeHeaderSection" width="100%">
-			<hbox class="mailComposeHeaders" width="100%">
-				<description value="From"/>
-				<taglist id="TO" autocomplete_url='mail.mail_compose.ajax_searchAddress' autocomplete_params='' onclick="app.mail.address_click"/>
+			<hbox class="mailComposeHeaders" width="99%">
+				<description value="To"/>
+				<taglist id="TO" width="98%" autocomplete_url='mail.mail_compose.ajax_searchAddress' autocomplete_params='' onclick="app.mail.address_click"/>
 			</hbox>
-			<hbox class="mailComposeHeaders" width="100%">
+			<hbox class="mailComposeHeaders" width="99%">
 				<description value="Cc"/>
-				<taglist id="CC" onclick="app.mail.address_click"/>
+				<taglist id="CC" width="98%" autocomplete_url='mail.mail_compose.ajax_searchAddress' autocomplete_params='' onclick="app.mail.address_click"/>
 			</hbox>
-			<hbox class="mailComposeHeaders" width="100%">
+			<hbox class="mailComposeHeaders" width="99%">
 				<description value="Bcc"/>
-				<taglist id="BCC" onclick="app.mail.address_click"/>
+				<taglist id="BCC" width="98%" autocomplete_url='mail.mail_compose.ajax_searchAddress' autocomplete_params='' onclick="app.mail.address_click"/>
 			</hbox>
-			<hbox class="mailComposeHeaders" width="100%">
-				<description value="Date"/>
-				<date-time align="left" id="mail_composedate" readonly="true"/>
+			<hbox class="mailComposeHeaders" width="99%">
+				<description value="Reply To"/>
+				<taglist id="REPLYTO" width="98%" autocomplete_url='mail.mail_compose.ajax_searchIdentities' autocomplete_params='' onclick="app.mail.address_click"/>
 			</hbox>
-			<hbox  class="mailComposeHeaders" width="100%">
+			<hbox class="mailComposeHeaders" width="99%">
+				<description value="Store to Folder"/>
+				<taglist id="FOLDER" width="98%" autocomplete_url='mail.mail_compose.ajax_searchFolder' autocomplete_params='' onclick="app.mail.address_click"/>
+			</hbox>
+			<hbox  class="mailComposeHeaders" width="99%">
 				<description value="Subject"/>
-				<description align="left" id="mail_composesubject" readonly="true"/>
+				<textbox align="left" width="95%" id="mail_composesubject"/>
 			</hbox>
 			<hbox class="mail_Composeicons">
 				<html id="mail_composeicons"/>

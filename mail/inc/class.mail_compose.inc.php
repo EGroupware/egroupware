@@ -80,11 +80,12 @@ class mail_compose
 		}
 		$this->displayCharset   = $GLOBALS['egw']->translation->charset();
 		$profileID = 0;
-		if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
-				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
+		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
+				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 		$this->bosignatures	= new felamimail_bosignatures();
 		$this->mail_bo	= mail_bo::getInstance(true,$profileID);
-		$profileID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $this->mail_bo->profileID;
+
+		$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->mail_bo->profileID;
 		$this->bopreferences =& $this->mail_bo->bopreferences;
 		$this->preferences	=& $this->mail_bo->mailPreferences; // $this->bopreferences->getPreferences();
 		// we should get away from this $this->preferences->preferences should hold the same info
@@ -2489,10 +2490,48 @@ $content['mailtext'] = 'garbage';
 			return $_string;
 		}
 	}
-	function ajax_decodeFolderName($_folderName) {
-		$folderName = translation::convert(html_entity_decode($_folderName, ENT_QUOTES, $this->charset),'UTF7-IMAP', $this->charset);
-		//$response->add("decodedFolder ='".$folderName."'");
+
+	function ajax_searchIdentities() {
+	}
+
+	function ajax_searchFolder() {
+		static $useCacheIfPossible;
+		if (is_null($useCacheIfPossible)) $useCacheIfPossible = true;
+		$_searchString = trim($_REQUEST['query']);
 		$results = array();
+		if (strlen($_searchString)>=2 && isset($this->mail_bo->icServer))
+		{
+			//error_log(__METHOD__.__LINE__.':'.$this->mail_bo->icServer->ImapServerId);
+			if (!($this->mail_bo->icServer->_connected == 1)) $this->mail_bo->openConnection($this->mail_bo->icServer->ImapServerId);
+			//error_log(__METHOD__.__LINE__.array2string($_searchString).'<->'.$searchString);
+			$folderObjects = $this->mail_bo->getFolderObjects(true,false,true,$useCacheIfPossible);
+			if (count($folderObjects)<=1) {
+				$useCacheIfPossible = false;
+			}
+			else
+			{
+				$useCacheIfPossible = true;
+			}
+			$searchString = translation::convert($_searchString, mail_bo::$displayCharset,'UTF7-IMAP');
+			foreach ($folderObjects as $k =>$fA)
+			{
+				error_log(__METHOD__.__LINE__.$_searchString.'/'.$searchString.' in '.$k.'->'.$fA->displayName);
+				$f=false;
+				if (stripos($fA->displayName,$_searchString)!==false)
+				{
+					$f=true;
+					$results[] = array('id'=>$k, 'label' => htmlspecialchars($fA->displayName));
+				}
+				if ($f==false && stripos($k,$searchString)!==false)
+				{
+					$results[] = array('id'=>$k, 'label' => htmlspecialchars($fA->displayName));
+				}
+			}
+		}
+		//error_log(__METHOD__.__LINE__.' IcServer:'.$this->mail_bo->icServer->ImapServerId.':'.array2string($results));
+		//$folderName = translation::convert(html_entity_decode($_folderName, ENT_QUOTES, $this->charset),'UTF7-IMAP', $this->charset);
+		//$response->add("decodedFolder ='".$folderName."'");
+
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($results);
 		common::egw_exit();

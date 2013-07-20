@@ -1769,17 +1769,18 @@ class mail_bo
 	 * @param boolean _getCounters   get get messages counters
 	 * @param boolean _alwaysGetDefaultFolders  this triggers to ignore the possible notavailableautofolders - preference
 	 *			as activeSync needs all folders like sent, trash, drafts, templates and outbox - if not present devices may crash
+	 * @param boolean _useCacheIfPossible  - if set to false cache will be ignored and reinitialized
 	 *
 	 * @return array with folder objects. eg.: INBOX => {inbox object}
 	 */
-	function getFolderObjects($_subscribedOnly=false, $_getCounters=false, $_alwaysGetDefaultFolders=false)
+	function getFolderObjects($_subscribedOnly=false, $_getCounters=false, $_alwaysGetDefaultFolders=false,$_useCacheIfPossible=true)
 	{
 		if (self::$debug) error_log(__METHOD__.__LINE__.' '."subscribedOnly:$_subscribedOnly, getCounters:$_getCounters, alwaysGetDefaultFolders:$_alwaysGetDefaultFolders");
 		static $folders2return;
 		if ($_subscribedOnly && $_getCounters===false)
 		{
 			if (is_null($folders2return)) $folders2return = egw_cache::getCache(egw_cache::INSTANCE,'email','folderObjects'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
-			if (isset($folders2return[$this->icServer->ImapServerId]) && !empty($folders2return[$this->icServer->ImapServerId]))
+			if ($_useCacheIfPossible && isset($folders2return[$this->icServer->ImapServerId]) && !empty($folders2return[$this->icServer->ImapServerId]))
 			{
 				//error_log(__METHOD__.__LINE__.' using Cached folderObjects');
 				return $folders2return[$this->icServer->ImapServerId];

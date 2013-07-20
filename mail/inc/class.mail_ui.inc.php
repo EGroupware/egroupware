@@ -113,7 +113,7 @@ class mail_ui
 			emailadmin_bo::unsetCachedObjects(self::$icServerID);
 		}
 
-		$this->mail_bo = mail_bo::getInstance(false,$icServerID);
+		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
@@ -1623,6 +1623,7 @@ unset($query['actions']);
 		if ($envelope['FROM']==$envelope['SENDER']) unset($envelope['SENDER']);
 		foreach(array('SENDER','FROM','TO','CC','BCC') as $field)
 		{
+			if (!isset($envelope[$field])) continue;
 			foreach($envelope[$field] as $field_data)
 			{
 				//error_log(__METHOD__.__LINE__.array2string($field_data));
