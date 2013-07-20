@@ -1628,7 +1628,7 @@ unset($query['actions']);
 				$sel_options[$field][] = array(
 					// taglist requires these
 					'id' => $field_data['EMAIL'],
-					'label' => $field_data['PERSONAL_NAME'],
+					'label' => ($field_data['PERSONAL_NAME'] && $field_data['PERSONAL_NAME']!='NIL') ? $field_data['PERSONAL_NAME']:$field_data['EMAIL'],
 					// Optional
 					'title' => $field_data['RFC822_EMAIL']
 				)
