@@ -413,7 +413,7 @@ class resources_ui
 							$promoted_accessories++;
 							continue;
 						}
-						
+
 						// Make associated accessories into resources - include deleted
 						$accessories = $this->bo->get_acc_list($id,true);
 						foreach($accessories as $acc_id => $name)
@@ -560,7 +560,7 @@ class resources_ui
 		}
 
 		if ($_GET['msg']) $content['msg'] = strip_tags($_GET['msg']);
-	
+
 		// some presetes
 		$content['resource_picture'] = $this->bo->get_picture($content['res_id'],$content['picture_src'],$size=true);
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
@@ -583,7 +583,7 @@ class resources_ui
 		}
 		$search_options = array('accessory_of' => -1);
 		$sel_options['accessory_of'] = array(-1 => lang('none')) + (array)$this->bo->link_query('',$search_options);
-		
+
 		$content['history'] = array(
 			'id' => $res_id,
 			'app' => 'resources',
@@ -844,7 +844,7 @@ class resources_ui
 			return array(
 				array(
 					// Add some jQuery to make sure dropdown is displayed
-					'text' => $selectbox . "<script>\$j('select[name=\"owner\[\]\"]').parent('td').css('overflow','visible').parents('div.divSidebox').css('overflow','visible');</script>",
+					'text' => $selectbox . "<script>var lab = egw_LAB || \$LAB; lab.wait(function(){ \$j('select[name=\"owner\[\]\"]').parent('td').css('overflow','visible').parents('div.divSidebox').css('overflow','visible');});</script>",
 					'no_lang' => True,
 					'link' => False
 				)
