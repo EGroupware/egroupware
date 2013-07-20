@@ -128,6 +128,24 @@ function egwDragActionImplementation()
 					"iframeFix": true
 				}
 			);
+				
+			// Native DnD - Doesn't play nice with jQueryUI Sortable
+			// Tell jQuery to include this property
+			jQuery.event.props.push('dataTransfer');
+			$j(node).attr("draggable", "true")
+				.on("dragstart", function(evt) {
+					if(evt.dataTransfer == null) {
+						console.log("Not a native DND");
+						return;
+					}
+					evt.dataTransfer.effectAllowed="copy"; 
+					var data = egw.dataGetUIDdata(_context.id);
+					var url = data ? data.data.download_url : '/webdav.php'+app.filemanager.id2path(_context.id);
+					if (url[0] == '/') url = 'http://nathan.dev'+egw.link(url);
+					evt.dataTransfer.setData("DownloadURL", data.data.mime+':'+data.data.name+':'+url);
+					console.log(data);
+				});
+			
 
 			return true;
 		}
@@ -138,7 +156,7 @@ function egwDragActionImplementation()
 	{
 		var node = _aoi.getDOMNode();
 
-		if (node) {
+		if (node && $j(node).data("uiDraggable")){
 			$j(node).draggable("destroy");
 		}
 	}
@@ -398,7 +416,7 @@ function egwDropActionImplementation()
 	{
 		var node = _aoi.getDOMNode();
 
-		if (node) {
+		if (node && $j(node).data("uiDroppable")) {
 			$j(node).droppable("destroy");
 		}
 	}
