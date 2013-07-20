@@ -196,48 +196,6 @@ function nm_action(_action, _senders, _target, _ids)
 }
 
 /**
- * Callback to check if none of _senders rows has disableClass set
- * 
- * @param _action egwAction object, we use _action.data.disableClass to check
- * @param _senders array of egwActionObject objects
- * @param _target egwActionObject object, get's called for every object in _senders
- * @returns boolean true if none has disableClass, false otherwise
- */
-function nm_not_disableClass(_action, _senders, _target)
-{
-	return !$j(_target.iface.getDOMNode()).hasClass(_action.data.disableClass);
-}
-
-/**
- * Callback to check if all of _senders rows have enableClass set
- * 
- * @param _action egwAction object, we use _action.data.enableClass to check
- * @param _senders array of egwActionObject objects
- * @param _target egwActionObject object, get's called for every object in _senders
- * @returns boolean true if none has disableClass, false otherwise
- */
-function nm_enableClass(_action, _senders, _target)
-{
-	return $j(_target.iface.getDOMNode()).hasClass(_action.data.enableClass);
-}
-
-/**
- * Enable an _action, if it matches a given regular expresstion in _action.data.enableId
- * 
- * @param _action egwAction object, we use _action.data.enableId to check
- * @param _senders array of egwActionObject objects
- * @param _target egwActionObject object, get's called for every object in _senders
- * @returns boolean true if _target.id matches _action.data.enableId
- */
-function nm_enableId(_action, _senders, _target)
-{
-	if (typeof _action.data.enableId == 'string')
-		_action.data.enableId = new RegExp(_action.data.enableId);
-	
-	return _target.id.match(_action.data.enableId);
-}
-
-/**
  * Callback to check if a certain field (_action.data.fieldId) is (not) equal to given value (_action.data.fieldValue)
  * 
  * If field is not found, we return false too!

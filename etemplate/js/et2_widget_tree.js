@@ -317,25 +317,11 @@ var et2_tree = et2_inputWidget.extend(
 	},
 
 	/**
-	 * Set Actions on the tree
+	 * Links actions to tree nodes
 	 *
-	 * Each action is defined as an object:
-	 * move: {
-	 *	type: "drop",
-	 *	acceptedTypes: "mail",
-	 *	icon:	"move",
-	 *	caption:	"Move to"
-	 *	onExecute:	javascript:mail_move"
-	 * }
-	 *
-	 * This will turn all the tree nodes into drop targets.  When "mail" drag types are dropped,
-	 * the global function mail_move(egwAction action, egwActionObject sender) will be called.  The ID of the
-	 * dragged "mail" will be in sender.id, some information about the sender will be in sender.context.
-	 *
-	 * @param Array[ {ID, attributes..}+] array of egw action information - this is different from what is passed in to
-	 *	set_actions, which takes a more human-friendly Object map.
+	 * @param Object[ {ID: attributes..}+] as for set_actions
 	 */
-	_link_actions: function(parsed_actions) 
+	_link_actions: function(actions) 
 	{
 		// Get the top level element for the tree
 		var objectManager = egw_getAppObjectManager(true);
@@ -350,11 +336,8 @@ var et2_tree = et2_inputWidget.extend(
 		treeObj.clear();
 
 		// Go over the tree parts & add links
-		var action_links = [];
-		for(var i = 0; i < parsed_actions.length; i++)
-		{
-			action_links.push(parsed_actions[i].id);
-		}
+		var action_links = this._get_action_links(actions);
+
 		if (typeof this.options.select_options != 'undefined')
 		{
 

@@ -409,51 +409,40 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 				this._actionManager = gam.addAction("actionManager", this.id);
 			}
 		}
-		// ActionManager wants an array
-		var parsed_actions = [];
-		if(typeof actions == "object" && actions)
-		{
-			var parse = function(actions)
-			{
-				var parsed = [];
-				for(var key in actions)
-				{
-					actions[key].id = key;
-					if(typeof actions[key].icon != "undefined" && actions[key].icon)
-					{
-						actions[key].iconUrl = this.egw().image(actions[key].icon);
-					}
-					if(typeof actions[key].children != "undefined")
-					{
-						actions[key].children = parse(actions[key].children);
-					}
-					parsed.push(actions[key]);
-				}
-				return parsed;
-			};
-			// Don't make changes to original
-			var action = jQuery.extend(true, {}, actions);
-			parsed_actions = parse.call(this, action);
-		}
-		else
-		{
-			parsed_actions = actions;
-		}
-		this._actionManager.updateActions(parsed_actions);
+		this._actionManager.updateActions(actions);
 
 		// Put a reference to the widget into the action stuff, so we can
 		// easily get back to widget context from the action handler
 		this._actionManager.data = {widget: this};
 
 		// Link the actions to the DOM
-		this._link_actions(parsed_actions);
+		this._link_actions(actions);
+	},
+	
+	/**
+	 * Get all action-links / id's of 1.-level actions from a given action object
+	 * 
+	 * This can be overwritten to not allow all actions, by not returning them here.
+	 * 
+	 * @param actions
+	 * @returns {Array}
+	 */
+	_get_action_links: function(actions)
+	{
+		var action_links = [];
+		for(var i in actions)
+		{
+			var action = actions[i];
+			action_links.push(typeof action.id != 'undefined' ? action.id : i);
+		}
+		return action_links;
 	},
 
 	/**
 	 * Link the actions to the DOM nodes / widget bits.
 	 *
 	 */
-	_link_actions: function(parsed_actions)
+	_link_actions: function(actions)
 	{
 		 // Get the top level element for the tree
 		var objectManager = egw_getAppObjectManager(true);
@@ -472,12 +461,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 
 		// Go over the widget & add links - this is where we decide which actions are
 		// 'allowed' for this widget at this time
-		var action_links = [];
-		for(var i = 0; i < parsed_actions.length; i++)
-		{
-			action_links.push(parsed_actions[i].id);
-		}
-
+		var action_links = this._get_action_links(actions);
 		widget_object.updateActionLinks(action_links);
 	}
 });

@@ -120,7 +120,7 @@ function egwActionHandler(_executeEvent)
  * Associative array where action classes may register themselves
  */
 if (typeof window._egwActionClasses == "undefined")
-	window._egwActionClasses = {}
+	window._egwActionClasses = {};
 
 _egwActionClasses["default"] = {
 	"actionConstructor": egwAction,
@@ -151,7 +151,7 @@ function egwAction(_parent, _id, _caption, _iconUrl, _onExecute, _allowOnMultipl
 	this.allowOnMultiple = _allowOnMultiple;
 	this.enabled = new egwFnct(this, true);
 	this.hideOnDisabled = false;
-	this.data = null; // Data which can be freely assigned to the action
+	this.data = {}; // Data which can be freely assigned to the action
 
 	this.type = "default"; //All derived classes have to override this!
 	this.canHaveChildren = false; //Has to be overwritten by inherited action classes
@@ -274,23 +274,119 @@ egwAction.prototype.addAction = function(_type, _id, _caption, _iconUrl,
 	}
 	else
 	{
-		throw "This action does not allow child elements!"
+		throw "This action does not allow child elements!";
 	}
-}
+};
+
+/**
+ * Default icons for given id
+ */
+egwAction.prototype.defaultIcons = {
+	view: 'view',
+	edit: 'edit',
+	open: 'edit',	// does edit if possible, otherwise view
+	add: 'new',
+	"new": 'new',
+	"delete": 'delete',
+	cat: 'attach',		// add as category icon to api
+	document: 'etemplate/merge',
+	print: 'print',
+	copy: 'copy',
+	move: 'move',
+	cut: 'cut',
+	paste: 'editpaste',
+};
 
 /**
  * Updates the children of this element
+ * 
+ * @param Object _actions { id: action, ...}
+ * @param string _app defaults to egw_getAppname()
  */
-egwAction.prototype.updateActions = function(_actions)
+egwAction.prototype.updateActions = function(_actions, _app)
 {
 	if (this.canHaveChildren)
 	{
-		for (var i = 0 ; i < _actions.length; i++)
+		if (typeof _app == "undefined") _app = egw_getAppName();	// this can probably be queried from actionObjectManager ...
+		var egw = window.egw(_app);
+
+		if (jQuery.isArray(_actions))
 		{
-			//Check whether the given action is already part of this action manager instance
+			_actions = jQuery.extend({}, _actions);
+		}
+		for (var i in _actions)
+		{
 			var elem = _actions[i];
-			if (typeof elem == "object" && typeof elem.id == "string" && elem.id)
+
+			if (typeof elem == "string") elem = { caption: elem };
+
+			if (typeof elem == "object")
 			{
+				// use attr name as id, if none given
+				if (typeof elem.id != "string") elem.id = i;
+
+				// if no iconUrl given, check icon and default icons
+				if (typeof elem.iconUrl == "undefined")
+				{
+					if (typeof elem.icon == "undefined") elem.icon = this.defaultIcons[elem.id];
+					if (typeof elem.icon != "undefined")
+					{
+						var parts = elem.icon.split('/', 2);	// app/image syntax to search icon in different app
+						if (parts.length == 2)
+						{
+							elem.iconUrl = egw.image(parts[1], parts[0]);
+						}
+						else
+						{
+							elem.iconUrl = egw.image(elem.icon);
+						}
+					}
+					delete elem.icon;
+				}
+				
+				// allways add shortcut for delete
+				if (elem.id == "delete" && typeof elem.shortcut == "undefined")
+				{
+					elem.shortcut = { keyCode: 46, shift: false, ctrl: false, alt: false, caption: egw.lang('Del') };
+				}
+				
+				// translate caption
+				if (typeof elem.no_lang == "undefined" || !elem.no_lang)
+				{
+					elem.caption = egw.lang(elem.caption);
+					if (typeof elem.hint == "string") elem.hint = egw.lang(elem.hint);
+				}
+				delete elem.no_lang;
+
+				// translate confirm messages
+				for(var attr in {confirm: '', confirm_multiple: ''})
+				{
+					if (typeof elem[attr] == "string")
+					{
+						elem[attr] = egw.lang(elem[attr])+(elem[attr].substr(-1) != '?' ? '?' : '');
+					}
+				}
+
+				if (typeof elem.confirm != "undefined") elem.confirm = egw.lang(elem.confirm);
+				if (typeof elem.confirm_multiple != "undefined") elem.confirm_multiple = egw.lang(elem.confirm_multiple);
+				
+				// set certain enabled functions
+				if (typeof elem.enabled == "undefined")
+				{
+					if (typeof elem.enableClass != "undefined")
+					{
+						elem.enabled = this.enableClass;
+					}
+					else if (typeof elem.disableClass != "undefined")
+					{
+						elem.enabled = this.not_disableClass;
+					}
+					else if (typeof elem.enableId != "undefined")
+					{
+						elem.enabled = this.enableId;
+					}
+				}
+
 				//Check whether the action already exists, and if no, add it to the
 				//actions list
 				var action = this.getActionById(elem.id);
@@ -305,7 +401,7 @@ egwAction.prototype.updateActions = function(_actions)
 					// array
 					if (this.canHaveChildren !== true && this.canHaveChildren.indexOf(elem.type) == -1)
 					{
-						throw "This child type '" + elem.type + "' is not allowed!"
+						throw "This child type '" + elem.type + "' is not allowed!";
 					}
 
 					if (typeof _egwActionClasses[elem.type] != "undefined")
@@ -324,7 +420,7 @@ egwAction.prototype.updateActions = function(_actions)
 				// Add sub-actions to the action
 				if (elem.children)
 				{
-					action.updateActions(elem.children);
+					action.updateActions(elem.children, _app);
 				}
 			}
 		}
@@ -333,7 +429,49 @@ egwAction.prototype.updateActions = function(_actions)
 	{
 		throw "This action element cannot have children!";
 	}
-}
+};
+
+/**
+ * Callback to check if none of _senders rows has disableClass set
+ * 
+ * @param _action egwAction object, we use _action.data.disableClass to check
+ * @param _senders array of egwActionObject objects
+ * @param _target egwActionObject object, get's called for every object in _senders
+ * @returns boolean true if none has disableClass, false otherwise
+ */
+egwAction.prototype.not_disableClass = function(_action, _senders, _target)
+{
+	return !$j(_target.iface.getDOMNode()).hasClass(_action.data.disableClass);
+};
+
+/**
+ * Callback to check if all of _senders rows have enableClass set
+ * 
+ * @param _action egwAction object, we use _action.data.enableClass to check
+ * @param _senders array of egwActionObject objects
+ * @param _target egwActionObject object, get's called for every object in _senders
+ * @returns boolean true if none has disableClass, false otherwise
+ */
+egwAction.prototype.enableClass = function(_action, _senders, _target)
+{
+	return $j(_target.iface.getDOMNode()).hasClass(_action.data.enableClass);
+};
+
+/**
+ * Enable an _action, if it matches a given regular expresstion in _action.data.enableId
+ * 
+ * @param _action egwAction object, we use _action.data.enableId to check
+ * @param _senders array of egwActionObject objects
+ * @param _target egwActionObject object, get's called for every object in _senders
+ * @returns boolean true if _target.id matches _action.data.enableId
+ */
+egwAction.prototype.enableId = function(_action, _senders, _target)
+{
+	if (typeof _action.data.enableId == 'string')
+		_action.data.enableId = new RegExp(_action.data.enableId);
+	
+	return _target.id.match(_action.data.enableId);
+};
 
 /**
  * Applys the same onExecute handler to all actions which don't have an execute
@@ -370,8 +508,21 @@ egwAction.prototype.execute = function(_senders, _target)
 		_target = null;
 	}
 
+	// check if actions needs to be confirmed first
+	if (this.data && this.data.confirm && this.onExecute.fcnt != window.nm_action)
+	{
+		var self = this;
+		et2_dialog.show_dialog(function(_button)
+		{
+			if (_button == et2_dialog.YES_BUTTON)
+			{
+				return self.onExecute.exec(self, _senders, _target);
+			}
+		}, self.data.confirm, self.data.hint, {}, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
+		return;
+	}
 	return this.onExecute.exec(this, _senders, _target);
-}
+};
 
 /**
  * The set_onExecute function is the setter function for the onExecute event of
@@ -427,7 +578,7 @@ egwAction.prototype.set_data = function(_value)
 
 egwAction.prototype.updateAction = function(_data)
 {
-	egwActionStoreJSON(_data, this, true);
+	egwActionStoreJSON(_data, this, "data");
 }
 
 function _egwActionTreeContains(_tree, _elem)

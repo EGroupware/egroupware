@@ -17,6 +17,7 @@
  * @param object _data may be an object with data that will be stored inside the
  * 	given object.
  * @param object _obj is the object where the data will be stored.
+ * @param mixed _setterOnly false: store everything, true: only store when setter exists, "data" store rest in data property
  */
 function egwActionStoreJSON(_data, _obj, _setterOnly)
 {
@@ -32,6 +33,10 @@ function egwActionStoreJSON(_data, _obj, _setterOnly)
 			else if (typeof _obj[key] != "undefined" && !_setterOnly)
 			{
 				_obj[key] = _data[key];
+			}
+			else if (_setterOnly === 'data')
+			{
+				_obj.data[key] = _data[key];
 			}
 		}
 	}

@@ -70,8 +70,8 @@ var et2_split = et2_DOMWidget.extend([et2_IResizeable],
 		this.div = $j(document.createElement("div"));
 
 		// Create the dynheight component which dynamically scales the inner
-                // container.
-                this.dynheight = new et2_dynheight(this.egw().window,this.div, 100);
+		// container.
+		this.dynheight = new et2_dynheight(this.egw().window,this.div, 100);
 
 		// Add something so we can see it - will be replaced if there's children
 		this.left = $j("<div>Top / Left</div>").appendTo(this.div);
