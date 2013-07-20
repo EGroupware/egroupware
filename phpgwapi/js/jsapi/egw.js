@@ -119,7 +119,7 @@
 			}
 			if(typeof app[window.egw_appName] == "object")
 			{
-				callback = function(et2) {app["'.$app.'"].et2_ready(et2)};
+				callback = function(et2) {app[window.egw_appName].et2_ready(et2)};
 			}
 			var node = document.getElementById(data.DOMNodeID);
 			if(!node)
