@@ -265,17 +265,14 @@ class mail_ui
 			// Tree does support this one
 			'add' => array(
 				'caption' => 'Add Folder',
-				'type' => 'popup',
 				'onExecute' => 'javaScript:app.mail.mail_AddFolder'
 			),
-			'rename' => array(
+			'edit' => array(
 				'caption' => 'Rename Folder',
-				'type' => 'popup',
 				'onExecute' => 'javaScript:app.mail.mail_RenameFolder'
 			),
 			'delete' => array(
 				'caption' => 'Delete Folder',
-				'type' => 'popup',
 				'onExecute' => 'javaScript:app.mail.mail_DeleteFolder'
 			)
 		));
@@ -649,7 +646,7 @@ class mail_ui
 				$parent = implode(self::$delimiter, $parents);
 				if ($parent) $parent .= self::$delimiter;
 			}
-			
+
 			if (!is_array($insert) || !isset($insert['item']))
 			{
 				// throwing an exeption here seems to be unrecoverable, even if the cause is a something that can be handeled by the mailserver
@@ -1640,7 +1637,7 @@ unset($query['actions']);
 				+ $field_data;
 			}
 		}
-		
+
 		if (empty($subject)) $subject = lang('no subject');
 		$content['msg'] = (is_array($error_msg)?implode("<br>",$error_msg):$error_msg);
 		$content['mail_displaydate'] = mail_bo::_strtotime($headers['DATE'],'ts',true);
@@ -2523,7 +2520,7 @@ blockquote[type=cite] {
 	function image_callback($matches)
 	{
 		static $cache = array();	// some caching, if mails containing the same image multiple times
-		
+
 		$linkData = array (
 			'menuaction'    => 'mail.mail_ui.displayImage',
 			'uid'		=> $this->uid,
