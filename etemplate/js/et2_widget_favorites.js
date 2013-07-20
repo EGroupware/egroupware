@@ -185,8 +185,11 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 	},
 
 	destroy: function() {
-		this.popup.dialog("destroy");
-		this.popup = null;
+		if(this.popup != null)
+		{
+			this.popup.dialog("destroy");
+			this.popup = null;
+		}
 		if(this.sidebox_target.length)
 		{
 			this.sidebox_target

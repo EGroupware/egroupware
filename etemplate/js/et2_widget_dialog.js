@@ -233,16 +233,19 @@ var et2_dialog = et2_widget.extend({
 	 * Clean up dialog
 	 */
 	destroy: function() {
-		// Un-dialog the dialog
-		this.div.dialog("destroy");
-
-		if(this.template)
+		if(this.div != null)
 		{
-			this.template.clear();
-			this.template = null;
-		}
+			// Un-dialog the dialog
+			this.div.dialog("destroy");
 
-		this.div = null;
+			if(this.template)
+			{
+				this.template.clear();
+				this.template = null;
+			}
+
+			this.div = null;
+		}
 
 		// Call the inherited constructor
 		this._super.apply(this, arguments);

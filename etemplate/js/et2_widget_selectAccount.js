@@ -186,7 +186,7 @@ var et2_selectAccount = et2_selectbox.extend(
 
 			// Put search results as a DOM sibling of the options, for proper display
 			this.search_widget.search.on("autocompleteopen", jQuery.proxy(function() {
-				this.search_widget.search.data("autocomplete").menu.element.appendTo(this.node);
+				this.search_widget.search.data("ui-autocomplete").menu.element.appendTo(this.node);
 			},this));
 			this.search = jQuery(document.createElement("li"))
 				.appendTo(this.multiOptions.prev().find('ul'));
@@ -405,7 +405,7 @@ var et2_selectAccount = et2_selectbox.extend(
 		
 		// Override link-entry auto-complete for custom display
 		// Don't show normal drop-down
-		search_widget.search.data("autocomplete")._suggest = function(items) {
+		search_widget.search.data("ui-autocomplete")._suggest = function(items) {
 			jQuery.each(items, function (index, item) {
 					self._add_search_result(results, item);
 			});

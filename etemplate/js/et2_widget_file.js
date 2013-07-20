@@ -140,6 +140,7 @@ var et2_file = et2_inputWidget.extend(
 	},
 
 	destroy: function() {
+		this._super.apply(this, arguments);
 		this.node = null;
 		this.input = null;
 		this.progress = null;

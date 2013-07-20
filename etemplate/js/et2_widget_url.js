@@ -53,6 +53,7 @@ var et2_url = et2_textbox.extend(
 			this.input.unbind();
 		}
 		this._button = null;
+		this._super.apply(this);
 	},
 
 	/**

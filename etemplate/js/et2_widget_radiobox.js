@@ -98,9 +98,9 @@ var et2_radiobox = et2_inputWidget.extend(
 	 */
 	set_value: function(_value) {
 		if(_value == this.options.set_value) {
-			this.input.attr("checked", "checked");
+			this.input.prop("checked", true);
 		} else {
-			this.input.removeAttr("checked");
+			this.input.prop("checked", false);
 		}
 	},
 

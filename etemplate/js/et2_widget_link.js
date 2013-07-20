@@ -526,7 +526,8 @@ var et2_link_entry = et2_inputWidget.extend(
 				return false;
 			},
 			minLength: self.minimum_characters,
-			disabled: self.options.disabled
+			disabled: self.options.disabled,
+			appendTo: self.div
 		});
 		
 		// Custom display (colors)
@@ -711,7 +712,7 @@ var et2_link_entry = et2_inputWidget.extend(
 		}
 		this.options.value = _value;
 		
-		jQuery("option[value='"+_value.app+"']",this.app_select).attr("selected",true);
+		jQuery("option[value='"+_value.app+"']",this.app_select).prop("selected",true);
 		this.app_select.hide();
 		this.div.addClass("no_app");
 	},

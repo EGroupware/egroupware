@@ -85,7 +85,7 @@ var et2_diff = et2_valueWidget.extend([et2_IDetachedDOM],
 							buttons: [{text: self.egw().lang('ok'), click: function() {jQuery(this).dialog("close");}}],
 							close: function(event, ui) {
 								// Need to destroy the dialog, etemplate widget needs divs back where they were
-								diff.dialog("destroy");
+								dialog_div.dialog("destroy");
 								self.minify(this);
 
 								// Put it back where it came from, or et2 will error when clear() is called

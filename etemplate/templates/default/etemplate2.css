@@ -804,7 +804,7 @@ div.message.floating {
 
 .nextmatch_header .header_count {
 	padding: 0px 20px;
-	margin: 5px 20px 0px;
+	margin: 6px 20px 0px;
 	border: 1px solid #E0E0E0;
 	float:right;
 	font-size: 150%;
@@ -837,8 +837,8 @@ div.message.floating {
 	margin-bottom: 3px;
 }
 /* Favorites */
-.nextmatch_header div#favorite_wrapper {
-	margin-top: 8px;
+.nextmatch_header div[id$=favorite_wrapper] {
+	margin-top: 6px;
 	vertical-align: middle;
 }
 #nm_favorites_popup_filters  .filter_id, #nm_favorites_popup_filters  .filter_value {
@@ -848,7 +848,7 @@ div.message.floating {
 .nextmatch_header ul.favorites {
 	min-width: 20ex;
 }
-.nextmatch_header .favorites li a {
+.nextmatch_header .favorites li .ui-menu .ui-menu-item a {
 	text-indent: -22px;
 	margin-left: 21px;
 }
@@ -862,6 +862,7 @@ div.message.floating {
 	margin-right: 1ex;
 }
 .favorites div.ui-icon-trash {
+	position: relative;
 	float:right;
 	display:none;
 }
@@ -891,12 +892,14 @@ div.message.floating {
 	text-decoration: underline;
 }
 .sidebox-favorites .favorites div.ui-icon-heart{
+	position: relative;
 	float: left;
 	display:inline-block;
 	margin: -3px 1px 0px 1px;
 }
 .sidebox-favorites .favorites div.ui-icon-trash{
-	margin-top: -3px;
+	margin-top: -5px;
+	margin-right: 2px;
 }
 .nextmatch_sortheader {
 	color: #003075;

@@ -88,9 +88,9 @@ var et2_checkbox = et2_inputWidget.extend(
 			if(_value == this.options.selected_value || 
 					_value && this.options.selected_value == this.__proto__.attributes.selected_value["default"] &&
 					_value != this.options.unselected_value) {
-				this.input.attr("checked", "checked");
+				this.input.prop("checked", true);
 			} else {
-				this.input.removeAttr("checked");
+				this.input.prop("checked", false);
 			}
 		}
 	},
@@ -99,7 +99,7 @@ var et2_checkbox = et2_inputWidget.extend(
 	 * Override default to return unchecked value
 	 */
 	getValue: function() {
-		if(this.input.attr("checked")) {
+		if(this.input.prop("checked")) {
 			return this.options.selected_value;
 		} else {
 			return this.options.unselected_value;

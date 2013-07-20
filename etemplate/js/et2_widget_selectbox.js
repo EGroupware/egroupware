@@ -467,24 +467,24 @@ var et2_selectbox = et2_inputWidget.extend(
 			// Unchanged
 			if(_value == this.value) return;
 		}
-		jQuery("option",this.input).attr("selected", false);
+		jQuery("option",this.input).prop("selected", false);
 		if(typeof _value == "array")
 		{
 			for(var i = 0; i < _value.length; i++)
 			{
-				jQuery("option[value='"+_value[i]+"']", this.input).attr("selected", true);
+				jQuery("option[value='"+_value[i]+"']", this.input).prop("selected", true);
 			}
 		}
 		else if (typeof _value == "object")
 		{
 			for(var i in _value)
 			{
-				jQuery("option[value='"+_value[i]+"']", this.input).attr("selected", true);
+				jQuery("option[value='"+_value[i]+"']", this.input).prop("selected", true);
 			}
 		}
 		else
 		{
-			if(jQuery("option[value='"+_value+"']", this.input).attr("selected", true).length == 0)
+			if(jQuery("option[value='"+_value+"']", this.input).prop("selected", true).length == 0)
 			{
 				if(this.options.select_options[_value])
 				{
@@ -499,24 +499,24 @@ var et2_selectbox = et2_inputWidget.extend(
 	},
 
 	set_multi_value: function(_value) {
-		jQuery("input",this.multiOptions).attr("checked", false);
+		jQuery("input",this.multiOptions).prop("checked", false);
 		if(typeof _value == "array")
 		{
 			for(var i = 0; i < _value.length; i++)
 			{
-				jQuery("input[value='"+_value[i]+"']", this.multiOptions).attr("checked", true);
+				jQuery("input[value='"+_value[i]+"']", this.multiOptions).prop("checked", true);
 			}
 		}
 		else if (typeof _value == "object")
 		{
 			for(var i in _value)
 			{
-				jQuery("input[value='"+_value[i]+"']", this.multiOptions).attr("checked", true);
+				jQuery("input[value='"+_value[i]+"']", this.multiOptions).prop("checked", true);
 			}
 		}
 		else
 		{
-			if(jQuery("input[value='"+_value+"']", this.multiOptions).attr("checked", true).length == 0)
+			if(jQuery("input[value='"+_value+"']", this.multiOptions).prop("checked", true).length == 0)
 			{
 				this.egw().debug("warning", "Tried to set value that isn't an option", this, _value);
 			}
@@ -726,7 +726,7 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 			// Translate the options
 			if(!this.options.no_lang)
 			{
-				if (typeof _options[key] === 'object')
+				if (typeof _options[key] === 'object' && _options[key] != null)
 				{
 					if(_options[key]["label"]) _options[key]["label"] = this.egw().lang(_options[key]["label"]);
 					if(_options[key]["title"]) _options[key]["title"] = this.egw().lang(_options[key]["title"]);

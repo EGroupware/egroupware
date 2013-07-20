@@ -115,7 +115,11 @@ var et2_historylog = et2_valueWidget.extend([et2_IDataProvider],
 	 * Finish initialization which was skipped until tab was selected
 	 */
 	finishInit: function() {
-
+		// No point with no ID
+		if(!this.options.value || !this.options.value.id)
+		{
+			return;
+		}
 		this._filters = {
 			record_id: this.options.value.id,
 			appname: this.options.value.app,
