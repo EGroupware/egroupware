@@ -717,8 +717,10 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 
 	/**
 	 * Override parent to apply actions on each row
+	 * 
+	 * @param Object[ {ID: attributes..}+] as for set_actions
 	 */
-	_link_actions: function(parsed_actions)
+	_link_actions: function(actions)
 	{
 		 // Get the top level element for the tree
 		var objectManager = egw_getAppObjectManager(true);
@@ -737,11 +739,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 
 		// Go over the widget & add links - this is where we decide which actions are
 		// 'allowed' for this widget at this time
-		var action_links = [];
-		for(var i = 0; i < parsed_actions.length; i++)
-		{
-			action_links.push(parsed_actions[i].id);
-		}
+		var action_links = this._link_actions(actions);
 
 		// Deal with each row
 		for(var i = 0; i < this.rowData.length; i++)

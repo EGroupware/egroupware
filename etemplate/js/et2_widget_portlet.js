@@ -77,7 +77,7 @@ var et2_portlet = et2_valueWidget.extend(
 		edit_settings: {
 			icon:	"edit",
 			caption: "Configure",
-			default: true,
+			"default": true,
 			hideOnDisabled: true,
 			group:	"portlet"
 		},
@@ -174,8 +174,10 @@ var et2_portlet = et2_valueWidget.extend(
 
 	/**
 	 * Override _link_actions to remove edit action, if there is no settings
+	 *
+	 * @param Object[ {ID: attributes..}+] as for set_actions
 	 */
-	_link_actions: function(parsed_actions)
+	_link_actions: function(actions) 
 	{
 		// Get the top level element
 		var objectManager = egw_getAppObjectManager(true);
@@ -195,15 +197,16 @@ var et2_portlet = et2_valueWidget.extend(
 		// Go over the widget & add links - this is where we decide which actions are
 		// 'allowed' for this widget at this time
 		var action_links = [];
-		for(var i = 0; i < parsed_actions.length; i++)
+		for(var i in actions)
 		{
+			var id = typeof actions[i].id != 'undefined' ? actions[i].id : i;
 			var action = {
-				actionId: parsed_actions[i].id,
+				actionId: id,
 				enabled: true
 			};
 
 			// If there are no settings, there can be no customization, so remove the edit action
-			if(parsed_actions[i].id == 'edit_settings' && (!this.options.settings || jQuery.isEmptyObject(this.options.settings)))
+			if(id == 'edit_settings' && (!this.options.settings || jQuery.isEmptyObject(this.options.settings)))
 			{
 				this.egw().debug("log", "No settings for portlet %o, edit_settings action removed", this);
 				action.enabled = false;
