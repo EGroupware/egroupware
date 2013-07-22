@@ -1,8 +1,5 @@
 <!-- BEGIN navbar_header -->
 <div style="position:relative"><div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" title="{logo_title}" alt="EGroupware"/></a></div></div>
-<script language="javascript">
-	var currentapp = '{currentapp}';
-</script>
 
 <!-- BEGIN app_extra_icons_div -->
 <script language="javascript">
