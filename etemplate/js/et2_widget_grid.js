@@ -739,7 +739,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 
 		// Go over the widget & add links - this is where we decide which actions are
 		// 'allowed' for this widget at this time
-		var action_links = this._link_actions(actions);
+		var action_links = this._get_action_links(actions);
 
 		// Deal with each row
 		for(var i = 0; i < this.rowData.length; i++)
