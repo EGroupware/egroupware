@@ -345,8 +345,8 @@ var et2_tree = et2_inputWidget.extend(
 			var apply_actions = function(treeObj, option)
 			{
 				// Add a new action object to the object manager
-				var obj = treeObj.addObject(this.id, new dhtmlxtreeItemAOI(this.input, option.id));
-                                obj.updateActionLinks(action_links);
+				var obj = treeObj.addObject(option.id, new dhtmlxtreeItemAOI(this.input, option.id));
+				obj.updateActionLinks(action_links);
 
 				if(option.item && option.item.length > 0)
 				{
