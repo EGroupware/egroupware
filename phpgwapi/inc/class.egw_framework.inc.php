@@ -510,15 +510,8 @@ abstract class egw_framework
 	 */
 	protected static function _get_notification_bell()
 	{
-		return html::div(
-			html::a_href(
-				html::image('notifications','notificationbell',lang('notifications')),
-				'javascript: egwpopup_display();'
-			),
-			'id="notificationbell"', // options
-			'', // class
-			'display: none' //style
-		);
+		return html::image('notifications', 'notificationbell', lang('notifications'),
+			'id="notificationbell" style="display: none"');
 	}
 
 	/**

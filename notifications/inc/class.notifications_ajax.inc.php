@@ -7,16 +7,13 @@
  * @subpackage ajaxpopup
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>, Christian Binder <christian@jaytraxx.de>
+ * @version $Id$
  */
 
 /**
  * Ajax methods for notifications
  */
 class notifications_ajax {
-	public $public_functions = array(
-		'get_notification'	=> true
-	);
-
 	/**
 	 * Appname
 	 */
@@ -107,12 +104,6 @@ class notifications_ajax {
 
 		$this->db = $GLOBALS['egw']->db;
 	}
-
-	/**
-	 * destructor
-	 *
-	 */
-	public function __destruct() {}
 
 	/**
 	 * public AJAX trigger function to be called by the JavaScript client
@@ -283,20 +274,20 @@ class notifications_ajax {
 
 					$message = 'data:text/html;charset=' . translation::charset() .';base64,'.base64_encode($message);
 				}
-				$this->response->addScriptCall('append_notification_message',$notification['notify_id'],$notification['notify_message'],$message);
+				$this->response->addScriptCall('app.notifications.append',$notification['notify_id'],$notification['notify_message'],$message);
 			}
 
 			switch($this->preferences[self::_appname]['egwpopup_verbosity']) {
 				case 'low':
-					$this->response->addScript('notificationbell_switch("active");');
+					$this->response->addScriptCall('app.notifications.bell', 'active');
 					break;
 				case 'high':
-					$this->response->addAlert(lang('eGroupWare has notifications for you'));
-					$this->response->addScript('egwpopup_display();');
+					$this->response->addAlert(lang('EGroupware has notifications for you'));
+					$this->response->addScriptCall('app.notifications.display');
 					break;
 				case 'medium':
 				default:
-					$this->response->addScript('egwpopup_display();');
+					$this->response->addScriptCall('app.notifications.display');
 					break;
 			}
 		}
