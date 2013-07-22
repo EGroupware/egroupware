@@ -16,6 +16,9 @@
 	egw_core;
 */
 
+/**
+ * @augments Class
+ */
 egw.extend('links', egw.MODULE_GLOBAL, function() {
 
 	/**
@@ -54,6 +57,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 		 * @param string $app app-name
 		 * @param string $name name / key in the registry, eg. 'view'
 		 * @return boolean|string false if $app is not registered, otherwise string with the value for $name
+		 * @memberOf egw
 		 */
 		link_get_registry: function(_app, _name)
 		{
@@ -418,6 +422,35 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 					delete title_queue[app][id];
 				}
 			}
+		},
+		
+		/**
+		 * Create quick add selectbox
+		 * 
+		 * @param _parent parent to create selectbox in
+		 * @returns
+		 */
+		link_quick_add: function(_parent)
+		{
+			var select = jQuery(document.createElement('select'));
+			jQuery(typeof _parent == 'string' ? '#'+_parent : _parent).append(select);
+			
+			var self = this;
+			// bind change handler
+			select.change(function(){
+				if (this.value) self.open('', this.value, 'add');
+				this.value = '';
+			});
+			// need to load common translations for app-names
+			this.includeJS([this.webserverUrl+'/phpgwapi/lang.php?app=common&lang='+this.preference('lang')], function(){
+				select.append(jQuery(document.createElement('option')).attr('value', '').text(self.lang('Add')+' ...'));
+				var apps = self.link_app_list('add');
+				for(var app in apps)
+				{
+					var option = jQuery(document.createElement('option')).attr('value', app).text(self.lang(apps[app]));
+					select.append(option);
+				}
+			});
 		}
 	};
 

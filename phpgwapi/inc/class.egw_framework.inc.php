@@ -481,26 +481,7 @@ abstract class egw_framework
 	 */
 	protected static function _get_quick_add()
 	{
-		$apps = egw_link::app_list('add');
-		asort($apps);	// sort them alphabetic
-
-		$options = array(lang('Add').' ...');
-		foreach($apps as $app => $label)
-		{
-			$link = egw::link('/index.php',egw_link::add($app,$GLOBALS['egw_info']['flags']['currentapp'],$GLOBALS['egw_info']['flags']['currentid'])+
-				(is_array($GLOBALS['egw_info']['flags']['quick_add']) ? $GLOBALS['egw_info']['flags']['quick_add'] : array()));
-			if (($popup = egw_link::is_popup($app,'add')))
-			{
-				list($w,$h) = explode('x',$popup);
-				$action = "egw_openWindowCentered2('$link','_blank',$w,$h,'yes','$app');";
-			}
-			else
-			{
-				$action = "egw_link_handler('$link','$app');";
-			}
-			$options[$action] = $label;
-		}
-		return html::select('quick_add','',$options,true,$options=' onchange="eval(this.value); this.value=0; return false;"');
+		return '<span id="quick_add" />';
 	}
 
 	/**

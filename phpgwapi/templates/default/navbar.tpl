@@ -4,6 +4,7 @@
 <!-- BEGIN app_extra_icons_div -->
 <script language="javascript">
 	new ypSlideOutMenu("menu1", "down", 10, {menu1top}, 180, 200,'right');
+	egw_LAB.wait(function(){egw.link_quick_add('quick_add');});
 </script>
 
 <div id="menu1Container">
