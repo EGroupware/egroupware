@@ -178,8 +178,8 @@ function refresh_'.$id.'()
 	ajax.sendRequest(true,function(_data) {
 		if (_data.length) {
 			'.$id.'_tail_start = _data.next;
-			var log = $j("#'.$id.'").append(_data.content.replace(/</g,"&lt;"));
-			log.animate({ scrollTop: log.attr("scrollHeight") - log.height() + 20 }, 500);
+			var log = $j("#'.$id.'").append(_data.content.replace("<","&lt;"));
+			log.animate({ scrollTop: log.prop("scrollHeight") - log.height() + 20 }, 500);
 		}
 		if (_data.size === false)
 		{
