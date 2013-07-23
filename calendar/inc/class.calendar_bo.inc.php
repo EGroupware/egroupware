@@ -1716,7 +1716,7 @@ class calendar_bo
 				$extra_accounts_search = $contacts->account_repository == 'ldap' && !is_null($contacts->so_accounts) &&
 					!$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'];
 				if ($extra_accounts_search && ($bdays2 =& $contacts->search('',array('id','n_family','n_given','n_prefix','n_middle','bday'),
-					'bday ASC',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter+array('owner' => 0))))
+					'contact_bday ASC',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter+array('owner' => 0))))
 				{
 					$bdays = !$bdays ? $bdays2 : array_merge($bdays,$bdays2);
 				}
