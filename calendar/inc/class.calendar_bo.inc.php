@@ -1711,7 +1711,7 @@ class calendar_bo
 					'bday' => "!''",
 				);
 				$bdays =& $contacts->search('',array('id','n_family','n_given','n_prefix','n_middle','bday'),
-					'bday ASC',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter);
+					'contact_bday ASC',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter);
 				// search accounts too, if not stored in contacts repository
 				$extra_accounts_search = $contacts->account_repository == 'ldap' && !is_null($contacts->so_accounts) &&
 					!$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'];
