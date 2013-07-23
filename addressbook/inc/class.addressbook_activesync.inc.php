@@ -729,9 +729,9 @@ class addressbook_activesync implements activesync_plugin_write, activesync_plug
 			}
 		}
 		if ($owner == self::PRIVATE_AB)
-                {
-                        $owner = $GLOBALS['egw_info']['user']['account_id'];
-                }
+		{
+			$owner = $GLOBALS['egw_info']['user']['account_id'];
+		}
 		$ctag = $this->addressbook->get_ctag($owner);
 
 		$changes = array();	// no change
