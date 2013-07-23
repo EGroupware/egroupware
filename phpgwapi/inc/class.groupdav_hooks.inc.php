@@ -154,7 +154,7 @@ class groupdav_hooks
 			throw new egw_exception_wrong_parameter("Access denied to file '$filename'!");
 		}
 		$GLOBALS['egw_info']['flags']['css'] = '
-body { background-color: #e0e0e0; }
+body { background-color: #e0e0e0; overflow: hidden; }
 pre.tail { background-color: white; padding-left: 5px; margin-left: 5px; }
 ';
 		$header = str_replace('!','/',substr($filename,10+strlen($GLOBALS['egw_info']['user']['account_lid']),-4));
