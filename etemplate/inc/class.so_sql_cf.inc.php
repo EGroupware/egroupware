@@ -503,7 +503,8 @@ class so_sql_cf extends so_sql
 			}
 			// add DISTINCT as by joining custom fields for search a row can be returned multiple times
 			$only_keys = array_values($only_keys);
-			$only_keys[0] = 'DISTINCT '.$only_keys[0];
+			$only_keys[0] = 'DISTINCT '.($only_keys[0] != $this->autoinc_id ? $only_keys[0] :
+				$this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id);
 		}
 		else
 		{
