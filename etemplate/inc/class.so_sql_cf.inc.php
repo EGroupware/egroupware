@@ -415,6 +415,10 @@ class so_sql_cf extends so_sql
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
 		//error_log(__METHOD__.'('.array2string(array_combine(array_slice(array('criteria','only_keys','order_by','extra_cols','wildcard','empty','op','start','filter','join','need_full_no_count'), 0, count(func_get_args())), func_get_args())).')');
+		if (!$this->customfields)
+		{
+			return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
+		}
 		if ($only_keys === false)
 		{
 			$only_keys = $this->table_name.'.*';
@@ -487,7 +491,8 @@ class so_sql_cf extends so_sql
 			}
 			if ($cfcriteria && $op =='OR') $criteria[] = implode(' OR ',$cfcriteria);
 		}
-		if($only_keys === true) {
+		if($only_keys === true)
+		{
 			// Expand to keys here, so table_name can be prepended below
 			$only_keys = array_values($this->db_key_cols);
 		}
@@ -501,13 +506,6 @@ class so_sql_cf extends so_sql
 					$col = $this->table_name .'.'.array_search($col, $this->db_cols).' AS '.$col;
 				}
 			}
-			// add DISTINCT as by joining custom fields for search a row can be returned multiple times
-			$only_keys = array_values($only_keys);
-			$only_keys[0] = 'DISTINCT '.$only_keys[0];
-		}
-		else
-		{
-			$only_keys = 'DISTINCT '.$only_keys;
 		}
 		// check if we order by a custom field --> join cf table for given cf and order by it's value
 		if (strpos($order_by,self::CF_PREFIX) !== false)
@@ -548,7 +546,8 @@ class so_sql_cf extends so_sql
 				elseif (is_string($name) && $val!=null && in_array($name, $this->db_cols))
 				{
 					$extra_columns = $this->db->get_table_definitions($app, $this->extra_table);
-					if($extra_columns['fd'][array_search($name, $this->db_cols)]) {
+					if ($extra_columns['fd'][array_search($name, $this->db_cols)])
+					{
 						$filter[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
 							array_search($name, $this->db_cols) => $val,
 						));
@@ -621,8 +620,20 @@ class so_sql_cf extends so_sql
 				}
 			}
 		}
-		if (!empty($join) && !is_array($only_keys)) $only_keys = 'DISTINCT '.$only_keys;	// otherwise join returns rows more then once
-
+		// add DISTINCT as by joining custom fields for search a row can be returned multiple times
+		if ($join && strpos($join, $this->extra_join) !== false)
+		{
+			if (is_array($only_keys))
+			{
+				$only_keys = array_values($only_keys);
+				$only_keys[0] = 'DISTINCT '.($only_keys[0] != $this->autoinc_id ? $only_keys[0] :
+					$this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id);
+			}
+			else
+			{
+				$only_keys = 'DISTINCT '.$only_keys;
+			}
+		}
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 	}
 
@@ -654,7 +665,7 @@ class so_sql_cf extends so_sql
 		}
 
 		// Add in custom field column, if it is not already there
-		if(!in_array($this->extra_table.'.'.$this->extra_value, $search_cols))
+		if($this->customfields && !in_array($this->extra_table.'.'.$this->extra_value, $search_cols))
 		{
 			$search_cols[] = $this->extra_table.'.'.$this->extra_value;
 		}

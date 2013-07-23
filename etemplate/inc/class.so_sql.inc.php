@@ -1406,8 +1406,14 @@ class so_sql
 		else
 		{
 			$cols = array();
-			foreach(is_array($only_keys) ? $only_keys : explode(',',str_replace(array('DISTINCT ','distinct '),'',$only_keys)) as $col)
+			$distinct_checked = false;
+			foreach(is_array($only_keys) ? $only_keys : explode(',', $only_keys) as $col)
 			{
+				if (!$distinct_checked)
+				{
+					if (stripos($col, 'DISTINCT ') === 0) $col = substr($col, 9);
+					$distinct_checked = true;
+				}
 				if (!$col || $col == '*' || $col == $this->table_name.'.*')	// all columns
 				{
 					$cols = array_merge($cols,$this->db_cols);
