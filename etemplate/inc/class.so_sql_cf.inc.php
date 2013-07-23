@@ -414,6 +414,7 @@ class so_sql_cf extends so_sql
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
+		//error_log(__METHOD__.'('.array2string(array_combine(array_slice(array('criteria','only_keys','order_by','extra_cols','wildcard','empty','op','start','filter','join','need_full_no_count'), 0, count(func_get_args())), func_get_args())).')');
 		if ($only_keys === false)
 		{
 			$only_keys = $this->table_name.'.*';
@@ -500,6 +501,8 @@ class so_sql_cf extends so_sql
 					$col = $this->table_name .'.'.array_search($col, $this->db_cols).' AS '.$col;
 				}
 			}
+			// add DISTINCT as by joining custom fields for search a row can be returned multiple times
+			$only_keys = array_values($only_keys);
 			$only_keys[0] = 'DISTINCT '.$only_keys[0];
 		}
 		else
