@@ -1059,7 +1059,7 @@ class accounts
 		{
 			$instance = self::getInstance();
 			$account['members-active'] = array();
-			foreach($account['members'] as $id => $lid)
+			foreach((array)$account['members'] as $id => $lid)
 			{
 				if ($instance->is_active($id)) $account['members-active'][$id] = $lid;
 			}
