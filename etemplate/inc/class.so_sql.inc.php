@@ -793,6 +793,7 @@ class so_sql
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
+		//error_log(__METHOD__.'('.array2string(array_combine(array_slice(array('criteria','only_keys','order_by','extra_cols','wildcard','empty','op','start','filter','join','need_full_no_count'), 0, count(func_get_args())), func_get_args())).')');
 		if ((int) $this->debug >= 4) echo "<p>so_sql::search(".print_r($criteria,true).",'$only_keys','$order_by',".print_r($extra_cols,true).",'$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 
 		// if extending class or instanciator set columns to search, convert string criteria to array
@@ -1292,8 +1293,14 @@ class so_sql
 		else
 		{
 			$cols = array();
-			foreach(is_array($only_keys) ? $only_keys : explode(',',str_replace(array('DISTINCT ','distinct '),'',$only_keys)) as $col)
+			$distinct_checked = false;
+			foreach(is_array($only_keys) ? $only_keys : explode(',', $only_keys) as $col)
 			{
+				if (!$distinct_checked)
+				{
+					if (stripos($col, 'DISTINCT ') === 0) $col = substr($col, 9);
+					$distinct_checked = true;
+				}
 				if (!$col || $col == '*' || $col == $this->table_name.'.*')	// all columns
 				{
 					$cols = array_merge($cols,$this->db_cols);
