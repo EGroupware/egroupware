@@ -324,6 +324,8 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			{
 				header("HTTP/1.1 500 Internal Server Error");
 				$waitOnFailure[self::$profileID] = array('howlong'=>$this->waitOnFailureDefault,'lastattempt'=>$hereandnow);
+				egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
+				throw new egw_exception_not_found(__METHOD__."($account) can not open connection on Profile #".self::$profileID."!");
 			}
 			else
 			{
@@ -331,10 +333,11 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 				header("HTTP/1.1 503 Service Unavailable");
 				header("Retry-After: ".$waitOnFailure[self::$profileID]['howlong']);
 				$waitOnFailure[self::$profileID] = array('howlong'=>$waitOnFailure[self::$profileID]['howlong'] * 2,'lastattempt'=>$hereandnow);
+				$ethrown = new egw_exception_not_found(__METHOD__."($account) can not open connection on Profile #".self::$profileID."!");
+				_egw_log_exception($ethrown);
+				exit;
 			}
 			//die('Mail not or mis-configured!');
-			egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
-			throw new egw_exception_not_found(__METHOD__."($account) can not open connection on Profile #".self::$profileID."!");
 		}
 		else
 		{
