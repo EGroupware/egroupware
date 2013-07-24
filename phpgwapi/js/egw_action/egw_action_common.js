@@ -36,7 +36,9 @@ function egwActionStoreJSON(_data, _obj, _setterOnly)
 			}
 			else if (_setterOnly === 'data')
 			{
-				_obj.data[key] = _data[key];
+				if (typeof _data.data == 'undefined') _data.data = {};
+				_data.data[key] = _data[key];
+				_obj.set_data(_data.data);
 			}
 		}
 	}
