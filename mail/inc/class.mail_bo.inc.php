@@ -1168,24 +1168,7 @@ class mail_bo
 				$retValue['header'][$sortOrder[$uid]]['uid']		= $headerObject['UID'];
 				$retValue['header'][$sortOrder[$uid]]['priority']		= ($headerObject['PRIORITY']?$headerObject['PRIORITY']:3);
 				if (is_array($headerObject['FLAGS'])) {
-					$retValue['header'][$sortOrder[$uid]]['recent']		= in_array('\\Recent', $headerObject['FLAGS']);
-					$retValue['header'][$sortOrder[$uid]]['flagged']	= in_array('\\Flagged', $headerObject['FLAGS']);
-					$retValue['header'][$sortOrder[$uid]]['answered']	= in_array('\\Answered', $headerObject['FLAGS']);
-					$retValue['header'][$sortOrder[$uid]]['forwarded']   = in_array('$Forwarded', $headerObject['FLAGS']);
-					$retValue['header'][$sortOrder[$uid]]['deleted']	= in_array('\\Deleted', $headerObject['FLAGS']);
-					$retValue['header'][$sortOrder[$uid]]['seen']		= in_array('\\Seen', $headerObject['FLAGS']);
-					$retValue['header'][$sortOrder[$uid]]['draft']		= in_array('\\Draft', $headerObject['FLAGS']);
-					$retValue['header'][$sortOrder[$uid]]['mdnsent']	= in_array('MDNSent', $headerObject['FLAGS']);
-					$retValue['header'][$sortOrder[$uid]]['mdnnotsent']	= in_array('MDNnotSent', $headerObject['FLAGS']);
-					if (is_array($headerObject['FLAGS'])) $headerFlags = array_map('strtolower',$headerObject['FLAGS']);
-					if (!empty($headerFlags))
-					{
-						$retValue['header'][$sortOrder[$uid]]['label1']   = in_array('$label1', $headerFlags);
-						$retValue['header'][$sortOrder[$uid]]['label2']   = in_array('$label2', $headerFlags);
-						$retValue['header'][$sortOrder[$uid]]['label3']   = in_array('$label3', $headerFlags);
-						$retValue['header'][$sortOrder[$uid]]['label4']   = in_array('$label4', $headerFlags);
-						$retValue['header'][$sortOrder[$uid]]['label5']   = in_array('$label5', $headerFlags);
-					}
+					$retValue['header'][$sortOrder[$uid]] = array_merge($retValue['header'][$sortOrder[$uid]],self::prepareFlagsArray($headerObject));
 				}
 				if(is_array($headerObject['FROM']) && is_array($headerObject['FROM'][0])) {
 					if($headerObject['FROM'][0]['HOST_NAME'] != 'NIL') {
@@ -1266,6 +1249,36 @@ class mail_bo
 			$retValue['info']['last']   = 0;
 			return $retValue;
 		}
+	}
+
+	/**
+	 * static function prepareFlagsArray
+	 * prepare headerObject to return some standardized array to tell which flags are set for a message
+	 * @param array $headerObject  - array to process, a full return array from icServer->getSummary
+	 * @return array array of flags
+	 */
+	static function prepareFlagsArray($headerObject)
+	{
+		$retValue = array();
+		$retValue['recent']		= in_array('\\Recent', $headerObject['FLAGS']);
+		$retValue['flagged']	= in_array('\\Flagged', $headerObject['FLAGS']);
+		$retValue['answered']	= in_array('\\Answered', $headerObject['FLAGS']);
+		$retValue['forwarded']   = in_array('$Forwarded', $headerObject['FLAGS']);
+		$retValue['deleted']	= in_array('\\Deleted', $headerObject['FLAGS']);
+		$retValue['seen']		= in_array('\\Seen', $headerObject['FLAGS']);
+		$retValue['draft']		= in_array('\\Draft', $headerObject['FLAGS']);
+		$retValue['mdnsent']	= in_array('MDNSent', $headerObject['FLAGS']);
+		$retValue['mdnnotsent']	= in_array('MDNnotSent', $headerObject['FLAGS']);
+		if (is_array($headerObject['FLAGS'])) $headerFlags = array_map('strtolower',$headerObject['FLAGS']);
+		if (!empty($headerFlags))
+		{
+			$retValue['label1']   = in_array('$label1', $headerFlags);
+			$retValue['label2']   = in_array('$label2', $headerFlags);
+			$retValue['label3']   = in_array('$label3', $headerFlags);
+			$retValue['label4']   = in_array('$label4', $headerFlags);
+			$retValue['label5']   = in_array('$label5', $headerFlags);
+		}
+		return $retValue;
 	}
 
 	/**
@@ -4565,13 +4578,14 @@ class mail_bo
 	 * @param partid the partid of the email
 	 * @param mailbox the mailbox, that holds the message
 	 * @param preserveHTML flag to pass through to getdisplayableBody
+	 * @param addHeaderSection flag to be able to supress headersection
 	 * @return array/bool with 'mailaddress'=>$mailaddress,
 	 *				'subject'=>$subject,
 	 *				'message'=>$message,
 	 *				'attachments'=>$attachments,
 	 *				'headers'=>$headers,; boolean false on failure
 	 */
-	static function get_mailcontent(&$mailClass,$uid,$partid='',$mailbox='', $preserveHTML = false)
+	static function get_mailcontent(&$mailClass,$uid,$partid='',$mailbox='', $preserveHTML = false, $addHeaderSection=true)
 	{
 			//echo __METHOD__." called for $uid,$partid <br>";
 			$headers = $mailClass->getMessageHeader($uid,$partid,true);
@@ -4590,7 +4604,7 @@ class mail_bo
 
 			$message = self::getdisplayableBody($mailClass, $bodyParts, $preserveHTML);
 			if ($preserveHTML && $mailClass->activeMimeType == 'text/plain') $message = '<pre>'.$message.'</pre>';
-			$headdata = self::createHeaderInfoSection($headers, '',$preserveHTML);
+			$headdata = ($addHeaderSection ? self::createHeaderInfoSection($headers, '',$preserveHTML) : '');
 			$message = $headdata.$message;
 			//echo __METHOD__.'<br>';
 			//_debug_array($attachments);
