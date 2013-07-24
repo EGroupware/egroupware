@@ -1231,7 +1231,8 @@ abstract class egw_framework
 	 */
 	static public function get_script_links($return_pathes=false, $clear_files=false)
 	{
-		$debug_minify = (bool)$GLOBALS['egw_info']['server']['debug_minify'];
+		// RB: disabled minifying (debug=true), 'til I found time to fix it
+		$debug_minify = true;//(bool)$GLOBALS['egw_info']['server']['debug_minify'];
 		$files = '';
 		$to_include = $to_minify = array();
 		$max_modified = 0;
