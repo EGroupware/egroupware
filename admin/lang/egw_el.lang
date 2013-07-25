@@ -365,7 +365,6 @@ set preference values.	admin	el	Καθορισμός τιμών προτιμίσ
 should the login page include a language selectbox (useful for demo-sites) ?	admin	el	Θα έπρεπε η σελίδα εισόδου να περιέχει ένα κουτί επιλογής (χρήσιμο για demo-sites);
 show 'powered by' logo on	admin	el	Εμφάνηση λογότυπου 'powered by'
 show access log	admin	el	Εμφάνηση καταγραφής συνδέσεων
-show an asterisk (*) to mark untranslated strings	admin	el	Εμφάνιση αστερίσκου (*) ως σημείωση αμετάφραστων στοιχειοσειρών
 show current action	admin	el	Εμφάνηση τρέχουσας ενέργειας
 show error log	admin	el	Εμφάνηση καταγραφή λαθών
 show phpinfo()	admin	el	Εμφάνηση phpinfo()

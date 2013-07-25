@@ -242,7 +242,7 @@ empty to not change	admin	de	leer lassen um NICHT zu ändern
 enable	admin	de	einschalten
 enable debug-messages	admin	de	Debug-Meldungen einschalten
 enable the soap service	admin	de	soap Service einschalten
-enable the spellcheck in the ritch text editor ?	admin	de	Aktiviere die Rechtschreibprüfung im RichText Editor
+enable spellcheck in rich text editor	admin	de	Aktiviere die Rechtschreibprüfung im RichText Editor
 enable the xmlrpc service	admin	de	xmlrpc Service einschalten
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
 enabled - popup window	admin	de	Verfügbar, Popup-Fenster
@@ -529,7 +529,6 @@ should exceptions contain a trace (including function arguments)	admin	de	Sollen
 should the login page include a language selectbox (useful for demo-sites) ?	admin	de	Soll die Anmeldeseite eine Sprachauswahl beinhalten (nützlich für Demosites) ?
 show 'powered by' logo on	admin	de	Zeige "powered by" Logo
 show access log	admin	de	Zugangsprotokoll anzeigen
-show an asterisk (*) to mark untranslated strings	admin	de	Zeige einen Stern (*) um nicht übersetzte Texte zu markieren
 show current action	admin	de	aktuelle Aktion anzeigen
 show error log	admin	de	Fehlerprotokoll anzeigen
 show phpinfo()	admin	de	phpinfo() anzeigen

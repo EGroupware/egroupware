@@ -375,7 +375,6 @@ set preference values.	admin	ca	Establir valors per a les preferències
 should the login page include a language selectbox (useful for demo-sites) ?	admin	ca	S'hauria d'incloure la selecció d'idioma a la pàgina d'entrada (útil per a llocs de prova) ?
 show 'powered by' logo on	admin	ca	Mostrar logo de 'mantingut per' a
 show access log	admin	ca	Mostrar registre d'accés
-show an asterisk (*) to mark untranslated strings	admin	ca	Mostra un asterisc (*) per marcar sèries no traduïdes
 show current action	admin	ca	Mostrar acció actual
 show error log	admin	ca	Mostrar registre d'errors
 show phpinfo()	admin	ca	Mostrar phpinfo()

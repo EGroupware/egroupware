@@ -100,24 +100,14 @@
    </tr>
 
    <tr class="row_off">
-    <td>{lang_Show_an_asterisk_(*)_to_mark_untranslated_strings}:</td>
-    <td>
-     <select name="newsettings[markuntranslated]">
-      <option value="">{lang_No}</option>
-      <option value="yes" {selected_markuntranslated_yes}>{lang_Yes}</option>
-     </select>
-    </td>
-   </tr>
-
-   <tr class="row_on">
     <td>{lang_How_big_should_thumbnails_for_linked_images_be_(maximum_in_pixels)_?}:</td>
     <td>
      <input name="newsettings[link_list_thumbnail]" value="{value_link_list_thumbnail}" size="5">
     </td>
    </tr>
 
-   <tr class="row_off">
-    <td>{lang_Enable_the_spellcheck_in_the_ritch_text_editor_?}:</td>
+   <tr class="row_on">
+    <td>{lang_Enable_spellcheck_in_rich_text_editor}:</td>
     <td>
      <select name="newsettings[enabled_spellcheck]">
       <option value="">{lang_No}</option>

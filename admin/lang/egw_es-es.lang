@@ -237,7 +237,7 @@ email address	admin	es-es	dirección de correo electrónico
 enable	admin	es-es	Activar
 enable debug-messages	admin	es-es	Activar mensajes de depuración
 enable the soap service	admin	es-es	Activar el servicio soap
-enable the spellcheck in the ritch text editor ?	admin	es-es	¿Activar la corrección ortográfica en el editor de texto enriquecido?
+enable spellcheck in rich text editor	admin	es-es	¿Activar la corrección ortográfica en el editor de texto enriquecido?
 enable the xmlrpc service	admin	es-es	Activar el servicio xmlrpc
 enabled - hidden from navbar	admin	es-es	Habilitado - Esconder de la barra de navegación
 enabled - popup window	admin	es-es	Habilitado - Ventana emergente
@@ -520,7 +520,6 @@ should exceptions contain a trace (including function arguments)	admin	es-es	Las
 should the login page include a language selectbox (useful for demo-sites) ?	admin	es-es	¿Debe incluir la página de inicio de sesión un cuadro de selección de idioma (útil para sitios de demostración)?
 show 'powered by' logo on	admin	es-es	Mostrar logo de 'Diseñado con' en
 show access log	admin	es-es	Mostrar registro de acceso
-show an asterisk (*) to mark untranslated strings	admin	es-es	Mostrar un asterisco (*) para marcar las cadenas sin traducir
 show current action	admin	es-es	Mostrar acción actual
 show error log	admin	es-es	Mostrar registro de errores
 show phpinfo()	admin	es-es	Mostrar phpinfo()

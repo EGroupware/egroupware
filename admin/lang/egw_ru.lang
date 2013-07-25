@@ -243,7 +243,7 @@ empty to not change	admin	ru	Пусто, чтобы НЕ менять
 enable	admin	ru	Разрешить
 enable debug-messages	admin	ru	Разрешить отладочные сообщения
 enable the soap service	admin	ru	Разрешить сервис soap
-enable the spellcheck in the ritch text editor ?	admin	ru	Включить проверку орфографии в редакторе?
+enable spellcheck in rich text editor	admin	ru	Включить проверку орфографии в редакторе?
 enable the xmlrpc service	admin	ru	Разрешить сервис xmlrpc
 enabled - hidden from navbar	admin	ru	Разрешено - скрыть с панели навигации
 enabled - popup window	admin	ru	Разрешено - всплывающее окно
@@ -528,7 +528,6 @@ should exceptions contain a trace (including function arguments)	admin	ru	Иск
 should the login page include a language selectbox (useful for demo-sites) ?	admin	ru	Отображать на входной странице поле выбора языка (полезно для демо-сайта)?
 show 'powered by' logo on	admin	ru	Показать логотип разработчика системы «Под управлением…»
 show access log	admin	ru	Показать журнал доступа
-show an asterisk (*) to mark untranslated strings	admin	ru	Отмечать непереведённые строки звёздочкой (*)
 show current action	admin	ru	Показать текущее действие
 show error log	admin	ru	Показать журнал ошибок
 show phpinfo()	admin	ru	Показать информацию php

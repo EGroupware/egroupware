@@ -213,7 +213,7 @@ email address	admin	pl	adres email
 enable	admin	pl	włącz
 enable debug-messages	admin	pl	Wyświetlaj komunikaty trybu debug
 enable the soap service	admin	pl	Włącz serwis SOAP
-enable the spellcheck in the ritch text editor ?	admin	pl	Włączyć sprawdzanie pisowni w edytorze tekstowym ?
+enable spellcheck in rich text editor	admin	pl	Włączyć sprawdzanie pisowni w edytorze tekstowym ?
 enable the xmlrpc service	admin	pl	Włącz serwis XMLRPC
 enabled - hidden from navbar	admin	pl	Aktywna - ukryta w menu
 enabled - popup window	admin	pl	Aktywna - Okno Popup
@@ -464,7 +464,6 @@ should exceptions contain a trace (including function arguments)	admin	pl	Czy wy
 should the login page include a language selectbox (useful for demo-sites) ?	admin	pl	Czy strona zalogowania powinna zawiera box z wyborem języka (przydatne dla serwerów demo) ?
 show 'powered by' logo on	admin	pl	Wyświetl logo 'powered by'
 show access log	admin	pl	Wyświetl dziennik dostępów
-show an asterisk (*) to mark untranslated strings	admin	pl	Pokazuj gwiazdkę (*) aby oznaczać nieprzetłumaczone frazy
 show current action	admin	pl	Pokaż bieżącą akcję
 show error log	admin	pl	Wśywietl dziennik błędów
 show phpinfo()	admin	pl	Wyświetl phpinfo()
