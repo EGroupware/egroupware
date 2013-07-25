@@ -295,7 +295,7 @@ class html
 		if($enhanced) {
 			egw_framework::validate_file('/phpgwapi/js/jquery/chosen/chosen.jquery.js');
 			egw_framework::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css',null,false);
-			$out .= "<script>var lab = egw_LAB || \$LAB; lab.wait(function() {\$j(function() {if(\$j().chosen) \$j('select[name=\"$name\"]').chosen();});})</script>\n";
+			$out .= "<script>var lab = egw_LAB || \$LAB; lab.wait(function() {\$j(function() {if(\$j().chosen) \$j('select[name=\"$name\"]').chosen({width: '100%'});});})</script>\n";
 		}
 		return $out;
 	}

@@ -777,6 +777,11 @@
       this.form_field_jq.trigger("liszt:showing_dropdown", {
         chosen: this
       });
+	  var windowHeight = $(window).height(),
+		dropdownTop = this.container.offset().top + this.container.height() - $(window).scrollTop()
+		totalHeight = this.dropdown.height() + dropdownTop
+
+	  this.dropdown.toggleClass('chzn-above', totalHeight > windowHeight);
       this.results_showing = true;
       this.search_field.focus();
       this.search_field.val(this.search_field.val());

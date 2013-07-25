@@ -418,3 +418,46 @@
   }
 }
 /* @end */
+
+/**
+ * Egw customizations for Chosen widget 
+ */
+.chzn-container {
+	display: inline-block;
+	font-size: inherit;
+}
+.chzn-container .chzn-single {
+	height: 19px;
+	line-height: 20px;
+}
+.chzn-container .chzn-results {
+	padding: 0 0 0 0px;
+}
+.chzn-container .chzn-results li {
+	line-height: 13px;
+	padding: 3px 6px;
+}
+.chzn-container-multi .chzn-choices .search-field input {
+	height: 12px;
+}
+.chzn-container-multi .chzn-choices .search-choice {
+	line-height: 12px;
+	margin: 2px 0 2px 1px;
+}
+.chzn-container .chzn-drop {
+	border-top-width: 0px;
+}
+.chzn-container-active.chzn-with-drop.chzn-above .chzn-single {
+  border-radius : 0px 0px 4px 4px;
+  border-top-width: 0px;
+}
+
+.chzn-container.chzn-above .chzn-drop {
+  top:auto;
+  bottom:23px;
+  border-width:1px 1px 0px 1px;
+  border-radius: 4px 4px 0px 0px;
+  -webkit-box-shadow: 0 -4px 5px rgba(0,0,0,.15);
+  -moz-box-shadow   : 0 -4px 5px rgba(0,0,0,.15);
+  box-shadow        : 0 -4px 5px rgba(0,0,0,.15);
+}
