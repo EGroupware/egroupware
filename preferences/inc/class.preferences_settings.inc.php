@@ -106,7 +106,12 @@ class preferences_settings
 			$GLOBALS['egw']->preferences->read_repository();
 		}
 		$preserve = array('types' => array());
-		if ($content['old_appname'] == $content['appname']) $old_tab = $content['tabs'];
+		// preserv open tab, if appname is not chanaged
+		if (!isset($content['old_appname']) || $content['old_appname'] == $content['appname'] ||
+			$content['old_appname'] == 'common' && !$content['appname'])
+		{
+			$old_tab = $content['tabs'];
+		}
 		$content = $this->get_content($appname, $type, $sel_options, $readonlys, $preserve['types'], $tpl);
 		$preserve['appname'] = $preserve['old_appname'] = $content['appname'];
 		$preserve['type'] = $preserve['old_type'] = $content['type'];
