@@ -5,6 +5,7 @@
 (separate multiple addresses by comma)	mail	en	Separate multiple addresses by comma
 (unknown sender)	mail	en	Unknown sender
 (with checkbox enforced)	mail	en	with checkbox enforced
+...	mail	en	...
 1) keep drafted message (press ok)	mail	en	1) keep drafted message (press OK)
 2) discard the message completely (press cancel)	mail	en	2) discard the message completely (press Cancel)
 aborted	mail	en	Aborted
@@ -43,6 +44,7 @@ attach	mail	en	Attach
 attach users vcard at compose to every new mail	mail	en	Attach user's VCard at compose to every new mail
 attach vcard	mail	en	Attach vCard
 attachments	mail	en	Attachments
+attachments, ...	mail	en	attachments, ...
 authentication required	mail	en	Authentication required
 auto refresh folder list	mail	en	Auto refresh folder list
 available personal email-accounts/profiles	mail	en	available personal EMail-Accounts/Profiles
@@ -267,8 +269,10 @@ how often to check with the server for new mail	mail	en	How often to check with 
 how should the available information on identities be displayed	mail	en	How should the available information on identities be displayed
 how to forward messages	mail	en	How to forward messages
 html	mail	en	HTML
+icons	mail	en	Icons
 icons and text	mail	en	Icons and text
 icons only	mail	en	Icons only
+id	mail	en	ID
 identifying name	mail	en	Identifying name
 identity	mail	en	Identity
 if	mail	en	IF
@@ -476,6 +480,7 @@ return to options page	mail	en	Return to options page
 right	mail	en	Right
 row order style	mail	en	Row order style
 rule	mail	en	Rule
+rule lists	mail	en	Rule Lists
 save	mail	en	Save
 save all	mail	en	Save all
 save as	mail	en	Save as
@@ -536,6 +541,7 @@ skipping previous	mail	en	Skipping previous
 small view	mail	en	Small view
 smtp settings	admin	en	SMTP settings
 sort order	mail	en	Sort order
+st.	mail	en	St.
 start new messages with mime type plain/text or html?	mail	en	Start new messages with mime type plain/text or HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	en	Start reply messages with mime type plain/text or html or try to use the displayed format?
 stationery	mail	en	Stationery
@@ -572,7 +578,6 @@ to	mail	en	To
 to do	mail	en	to do
 to mail sent to	mail	en	To mail sent to
 to use a tls connection, you must be running a version of php 5.1.0 or higher.	mail	en	To use a TLS connection, you must be running a version of PHP 5.1.0 or higher.
-turn off horizontal line between signature and composed message (this is not according to RFC).\nIf you use templates, this option is only applied to the text part of the message.	mail	en	Turn off horizontal line between signature and composed message (this is not according to RFC).\nIf you use templates, this option is only applied to the text part of the message.
 translation preferences	mail	en	Translation preferences
 translation server	mail	en	Translation server
 trash	mail	en	Trash
@@ -581,6 +586,7 @@ trash folder	mail	en	Trash folder
 trust servers seen / unseen info	mail	en	Trust server's SEEN / UNSEEN info
 trust the server when retrieving the folder status. if you select no, we will search for the unseen messages and count them ourselves	mail	en	Trust the server when retrieving the folder status. if you select no, we will search for the UNSEEN messages and count them ourselves
 trying to recover from session data	mail	en	Trying to recover from session data
+turn off horizontal line between signature and composed message (this is not according to rfc).\nif you use templates, this option is only applied to the text part of the message.	mail	en	Turn off horizontal line between signature and composed message (this is not according to RFC).\nIf you use templates, this option is only applied to the text part of the message.
 type	mail	en	Type
 undelete	mail	en	Undelete
 unexpected response from server to authenticate command.	mail	en	Unexpected response from server to AUTHENTICATE command.
@@ -631,9 +637,6 @@ what to do when you delete a message	mail	en	What to do when you delete a messag
 what to do when you send a message	mail	en	What to do when you send a message
 what to do with html email	mail	en	What to do with HTML email
 when deleting messages	mail	en	When deleting messages
-when displaying messages in a popup, re-use the same popup for all or open a new popup for each 
-message	mail	en	When displaying messages in a popup, re-use the same popup for all or open a new popup for each 
-message
 when saving messages as item of a different app	mail	en	When saving messages as item of a different app
 when sending messages	mail	en	When sending messages
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	en	Which folders in addition to the Sent folder should be displayed using the Sent Folder View Schema

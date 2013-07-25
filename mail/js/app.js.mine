@@ -114,13 +114,11 @@ app.mail = AppJS.extend(
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the elements(s) the action is to be performed on
-	 * @param _mode - you may pass the mode. if not given view is used (tryastext|tryashtml are supported)
 	 */
-	mail_open: function(_action, _senders, _mode) {
-		//console.log("mail_open",_action, _senders);
+	mail_open: function(_action, _senders) {
+		console.log("mail_open",_action, _senders);
 		var _id = _senders[0].id;
 		// reinitialize the buffer-info on selected mails
-		if (!(_mode == 'tryastext' || _mode == 'tryashtml' || _mode == 'view')) _mode = 'view';
 		this.mail_selectedMails = [];
 		this.mail_selectedMails.push(_id);
 		this.mail_currentlyFocussed = _id;
@@ -128,10 +126,7 @@ app.mail = AppJS.extend(
 		var dataElem = egw.dataGetUIDdata(_id);
 		var subject = dataElem.data.subject;
 		//alert('Open Message:'+_id+' '+subject);
-		var h = egw().open( _id,'mail','view',_mode+'='+_id.replace(/=/g,"_") );
-		egw(h).ready(function() {
-			h.document.title = subject;
-		});
+		egw().open( _id,'mail','view',null,'view'+_id );
 	},
 
 	/**
@@ -142,7 +137,21 @@ app.mail = AppJS.extend(
 	 */
 	mail_openAsHtml: function(_action, _elems)
 	{
-		this.mail_open(_action, _elems,'tryashtml');
+		//alert('mail_open('+_elems[0].id+')');
+		if (activeFolderB64 == draftFolderB64 || activeFolderB64 == templateFolderB64)
+		{
+//			_action.id='composefromdraft';
+//			mail_compose(_action,_elems);
+		}
+		else
+		{
+			var url = window.egw_webserverUrl+'/index.php?';
+			url += 'menuaction=felamimail.uidisplay.display';	// todo compose for Draft folder
+			url += '&uid='+_elems[0].id;
+			url += '&tryashtml=1';
+
+			egw_openWindowCentered(_url,'displayMessage_'+_elems[0].id,'700','600',window.outerWidth/2,window.outerHeight/2);
+		}
 	},
 
 	/**
@@ -153,146 +162,21 @@ app.mail = AppJS.extend(
 	 */
 	mail_openAsText: function(_action, _elems)
 	{
-		this.mail_open(_action, _elems,'tryastext');
-	},
-
-	/**
-	 * Compose, reply or forward a message
-	 *
-	 * @param _action _action.id is 'compose', 'composeasnew', 'reply', 'reply_all' or 'forward' (forward can be multiple messages)
-	 * @param _elems _elems[0].id is the row-id
-	 */
-	mail_compose: function(_action, _elems)
-	{
-		var idsToProcess = '';
-		var multipleIds = false;
-		var url = window.egw_webserverUrl+'/index.php?';
-		if (typeof _elems == 'undefined')
+		//alert('mail_open('+_elems[0].id+')');
+		if (activeFolderB64 == draftFolderB64 || activeFolderB64 == templateFolderB64)
 		{
-			var h = egw().open('','mail','add');
-			return true;
-		}
-		if (_elems.length > 1) multipleIds = true;
-		//for (var i=0; i<_elems.length; i++)
-		//{
-		//	if (i>0) idsToProcess += ',';
-		//	idsToProcess += _elems[i].id;
-		//}
-		//alert('mail_'+_action.id+'('+idsToProcess+')');
-		if (_action.id == 'compose')
-		{
-			if (multipleIds == false)
-			{
-				if (_elems.length == 1) mail_parentRefreshListRowStyle(_elems[0].id,_elems[0].id);
-				url += 'menuaction=mail.mail_compose.compose';
-				this.mail_openComposeWindow(url)
-			}
-			else
-			{
-				this.mail_compose('forward',_elems);
-			}
-		}
-		if (_action.id == 'composefromdraft')
-		{
-			url += 'menuaction=mail.mail_compose.composeFromDraft';
-			url += '&id='+_elems[0].id;
-			egw_openWindowCentered(url,'composeasnew_'+_elems[0].id,700,egw_getWindowOuterHeight());
-		}
-		if (_action.id == 'composeasnew')
-		{
-			url += 'menuaction=mail.mail_compose.composeAsNew';
-			url += '&reply_id='+_elems[0].id;
-			egw_openWindowCentered(url,'composeasnew_'+_elems[0].id,700,egw_getWindowOuterHeight());
-		}
-		if (_action.id == 'reply')
-		{
-			url += 'menuaction=mail.mail_compose.reply';
-			url += '&reply_id='+_elems[0].id;
-			egw_openWindowCentered(url,'reply_'+_elems[0].id,700,egw_getWindowOuterHeight());
-		}
-		if (_action.id == 'reply_all')
-		{
-			url += 'menuaction=mail.mail_compose.replyAll';
-			url += '&reply_id='+_elems[0].id;
-			egw_openWindowCentered(url,'replyAll_'+_elems[0].id,700,egw_getWindowOuterHeight());
-		}
-		if (_action.id == 'forward'||_action.id == 'forwardinline'||_action.id == 'forwardasattach')
-		{
-			if (multipleIds||_action.id == 'forwardasattach')
-			{
-				url += 'menuaction=mail.mail_compose.compose';
-				mail_openComposeWindow(url,_action.id == 'forwardasattach');
-			}
-			else
-			{
-				url += 'menuaction=mail.mail_compose.forward';
-				url += '&reply_id='+_elems[0].id;
-				url += '&mode=forwardinline';
-				egw_openWindowCentered(url,'forward_'+_elems[0].id,700,egw_getWindowOuterHeight());
-			}
-		}
-	},
-
-	/**
-	 * Compose, reply or forward a message
-	 *
-	 * @param _url url to open
-	 * @param forwardByCompose boolean to decide about the method
-	 */
-	mail_openComposeWindow: function(_url,forwardByCompose,_elems) {
-		var Check=true;
-		var alreadyAsked=false;
-		var _messageList;
-		var sMessageList='';
-		//var cbAllMessages = document.getElementById('selectAllMessagesCheckBox').checked;
-		// check if mailgrid exists, before accessing it
-		var cbAllVisibleMessages;
-		if (typeof forwardByCompose == 'undefined') forwardByCompose = true;
-		if (forwardByCompose == false)
-		{
-			cbAllMessages = cbAllVisibleMessages = Check = false;
-		}
-		if (typeof prefAskForMultipleForward == 'undefined') prefAskForMultipleForward = egw.preference('prefaskformultipleforward','mail');
-		if (cbAllMessages == true || cbAllVisibleMessages == true)
-		{
-			Check = confirm(egw.lang('multiple forward of all mesages'));
-			alreadyAsked=true;
-		}
-
-		if ((cbAllMessages == true || cbAllVisibleMessages == true ) && Check == true)
-		{
-			//_messageList = 'all'; // all is not supported by now, only visibly selected messages are chosen
-			_messageList = this.mail_getFormData(_elems);
+//			_action.id='composefromdraft';
+//			mail_compose(_action,_elems);
 		}
 		else
 		{
-			if (Check == true) _messageList = this.mail_getFormData(_elems);
+			var url = window.egw_webserverUrl+'/index.php?';
+			url += 'menuaction=felamimail.uidisplay.display';	// todo compose for Draft folder
+			url += '&uid='+_elems[0].id;
+			url += '&tryastext=1';
+
+			egw_openWindowCentered(_url,'displayMessage_'+_elems[0].id,'700','600',window.outerWidth/2,window.outerHeight/2);
 		}
-		if (typeof _messageList != 'undefined')
-		{
-			for (var i in _messageList['msg']) {
-				//alert('eigenschaft:'+_messageList['msg'][i]);
-				sMessageList=sMessageList+_messageList['msg'][i]+',';
-				//sMessageList.concat(',');
-			}
-		}
-		if (prefAskForMultipleForward == 1 && Check == true && alreadyAsked == false && sMessageList.length >0 && _messageList['msg'].length>1)
-		{
-			askme = egw.lang('multipleforward');
-			//if (cbAllMessages == true || cbAllVisibleMessages == true) askme = egw_appWindow('felamimail').lang_confirm_all_messages; // not supported
-			Check = confirm(askme);
-		}
-		//alert("Check:"+Check+" MessageList:"+sMessageList+"#");
-		if (Check != true) sMessageList=''; // deny the appending off selected messages to new compose -> reset the sMessageList
-		if (Check == true || sMessageList=='')
-		{
-			if (sMessageList.length >0) {
-				sMessageList= 'AsForward&forwardmails=1&folder='+activeFolderB64+'&reply_id='+sMessageList.substring(0,sMessageList.length-1);
-			}
-			//alert(sMessageList);
-			egw_openWindowCentered(_url+sMessageList,'compose',700,egw_getWindowOuterHeight());
-		}
-		//ToDo: reset message selection
 	},
 
 	/**
@@ -332,7 +216,7 @@ app.mail = AppJS.extend(
 	 * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
 	 */
 	mail_preview: function(nextmatch, selected) {
-		//console.log("mail_preview",nextmatch, selected);
+		console.log("mail_preview",nextmatch, selected);
 		// Empty values, just in case selected is empty (user cleared selection)
 		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",date:"",subject:""}};
 		if(typeof selected != 'undefined' && selected.length == 1)
@@ -371,7 +255,7 @@ app.mail = AppJS.extend(
 	},
 
 	mail_setMailBody: function(content) {
-		//console.log('mail_setMailBody',content);
+		console.log('mail_setMailBody',content);
 		var IframeHandle = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('messageIFRAME');
 		IframeHandle.set_value('');
 	},
@@ -492,7 +376,7 @@ app.mail = AppJS.extend(
 	 *		multiple sets can be passed to mail_deleteLeaf
 	 */
 	mail_removeLeaf: function(_status) {
-		//console.log('mail_removeLeaf',_status);
+		console.log('mail_removeLeaf',_status);
 		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
@@ -518,7 +402,7 @@ app.mail = AppJS.extend(
 	 *		multiple sets can be passed to mail_deleteLeaf
 	 */
 	mail_reloadNode: function(_status) {
-		//console.log('mail_reloadNode',_status);
+		console.log('mail_reloadNode',_status);
 		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
@@ -854,14 +738,6 @@ app.mail = AppJS.extend(
 	},
 
 	/**
-	 * User clicked an address (FROM, TO, etc)
-	 */
-	address_click: function(DOMNode, tag_info, widget)
-	{
-		console.log(this, arguments);
-	},
-
-	/**
 	 * Save a message to filemanager
 	 *
 	 * @param _action
@@ -1132,6 +1008,28 @@ app.mail = AppJS.extend(
 		}
 	},
 
+	readonlys_action: function(_row)
+	{
+		/*var ids = ['button[linkpaste]', 'button[paste]', 'button[createdir]', 'button[symlink]', 'upload'];
+			for(var i=0; i < ids.length; ++i)
+			{
+
+				var widget = this.et2.getWidgetById(ids[i]);
+				if (widget)
+				{
+					if (widget._type == 'button' || widget._type == 'buttononly')
+					{
+						widget.set_readonly(_ro);
+					}
+					else
+					{
+						widget.set_disabled(_ro);
+					}
+				}
+			}*/
+	},
+
+
 	/**
 	 * action - handling actions on sieve rules
 	 *
@@ -1139,7 +1037,7 @@ app.mail = AppJS.extend(
 	 * @param _selected - selected row from the sieve rule list
 	 * @param _msg - messages
 	 */
-	action: function(_type, _selected)
+	action: function(_type, _selected, _msg)
 	{
 		var  actionData ;
 		var that = this;
@@ -1157,7 +1055,7 @@ app.mail = AppJS.extend(
 						if (button_id == et2_dialog.YES_BUTTON )
 						{
 							actionData = _type.parent.data.widget.getArrayMgr('content');
-							that._do_action(typeId, actionData['data'],ruleID);
+							that._do_action(typeId, actionData['data'],ruleID,egw.lang('deleted'));
 						}
 					}
 					var confirmDeleteDialog = et2_dialog.show_dialog(callbackDeleteDialog, egw.lang("Do you really want to DELETE this Rule"),egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
@@ -1173,37 +1071,55 @@ app.mail = AppJS.extend(
 					break;
 				case 'enable':
 					actionData = _type.parent.data.widget.getArrayMgr('content');
-					this._do_action(typeId,actionData['data'],ruleID);
+					this._do_action(typeId,actionData['data'],ruleID,egw.lang('enabled'));
 					//window.egw_refresh('refreshed',this.appname);
 					break;
 				case 'disable':
 					actionData = _type.parent.data.widget.getArrayMgr('content');
-					this._do_action(typeId,actionData['data'],ruleID);
+					this._do_action(typeId,actionData['data'],ruleID,egw.lang('disabled'));
 					break;
 
 			}
 		}
+/*		if (_selected[0].actionLinks)
+		{
+		for(var key in _selected[0].actionLinks)
+		{
+				if (!_selected[0].actionLinks.hasOwnProperty(key)) continue;
+				if (_selected[0].actionLinks[key].actionId === "enable")
+				{
+					_selected[0].actionLinks[key].visible = false;
+				}else
+					{
+						_selected[0].actionLinks[key].visible = true;
+					}
+					console.log(_selected[0].actionLinks[key]);
+			}
+		}
+		}*/
 
 	},
 
-	_do_action: function(_typeID, _data,_selectedID)
+	_do_action: function(_typeID, _data,_selectedID, _msg)
 	{
 		if (_typeID && _data)
 		{
-			var request = new egw_json_request('mail.mail_sieve.ajax_action', [_typeID,_selectedID]);
+			//this.get_rows();
+			var request = new egw_json_request('mail.mail_sieve.ajax_action', [_typeID,_selectedID, _msg]);
 			console.log(request);
-			request.sendRequest(true,this._callback_do_action,this);
+			request.sendRequest(true,this._callback_do_action(_selectedID, _msg),this);
 		}
 	},
 
-	sieve_refresh: function (_rows,_msg)
+	_callback_do_action: function(_selectedID, _msg)
 	{
-		var grid = this.et2.getWidgetById('rg');
+		_msg = egw.lang('rule ') + _selectedID + egw.lang(' is ') + _msg;
 		window.egw_refresh(_msg,this.appname);
-		if (grid)
-		{
-			grid.set_value(_rows);
-		}
-
 	},
+
+	/*get_rows: function ()
+	{
+		var request = new egw_json_request('mail.mail_sieve.ajax_get_rows');
+			request.sendRequest(false);
+	}*/
 });

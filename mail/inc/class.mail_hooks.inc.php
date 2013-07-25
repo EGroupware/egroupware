@@ -689,6 +689,7 @@ class mail_hooks
 				'admin'  => False,
 				'default'=> 'text',
 			),
+			'add_popup' => '600x425',
 		);
 		if (!$GLOBALS['egw_info']['apps']['stylite']) unset($settingsArray['attachVCardAtCompose']);
 		return $settingsArray;
@@ -734,7 +735,7 @@ class mail_hooks
 		$mailPreferences =& $mail_bo->mailPreferences;
 
 		$file['Preferences'] = egw::link('/index.php','menuaction=preferences.preferences_settings.index&appname=' . $appname);
-/*
+
 		if($mailPreferences->userDefinedAccounts) {
 			$linkData = array
 			(
@@ -751,12 +752,12 @@ class mail_hooks
 
 			if($icServer->enableSieve) {
 				if(empty($mailPreferences->preferences['prefpreventeditfilterrules']) || $mailPreferences->preferences['prefpreventeditfilterrules'] == 0)
-					$file['filter rules'] = egw::link('/index.php', 'menuaction=mail.uisieve.listRules');
+					$file['filter rules'] = egw::link('/index.php', 'menuaction=mail.mail_sieve.index');
 				if(empty($mailPreferences->preferences['prefpreventabsentnotice']) || $mailPreferences->preferences['prefpreventabsentnotice'] == 0)
-					$file['vacation notice'] = egw::link('/index.php','menuaction=mail.uisieve.editVacation');
+					$file['vacation notice'] = egw::link('/index.php','menuaction=mail.mail_sieve.editVacation');
 			}
 		}
-*/
+
 		//Do not modify below this line
 		display_section($appname,$title,$file);
 	}
@@ -878,7 +879,7 @@ class mail_hooks
 */
 			display_sidebox($appname,$menu_title,$file);
 			unset($file);
-/*
+
 			$menu_title = lang('Sieve');
 			if (is_object($preferences)) $icServer = $preferences->getIncomingServer($profileID);
 			if(($icServer instanceof defaultimap)) {
@@ -886,14 +887,14 @@ class mail_hooks
 				{
 					$linkData = array
 					(
-						'menuaction'	=> 'mail.uisieve.listRules',
+						'menuaction'	=> 'mail.mail_sieve.index',
 					);
 					if(empty($preferences->preferences['prefpreventeditfilterrules']) || $preferences->preferences['prefpreventeditfilterrules'] == 0)
 						$file['filter rules']	= egw::link('/index.php',$linkData);
 
 					$linkData = array
 					(
-						'menuaction'	=> 'mail.uisieve.editVacation',
+						'menuaction'	=> 'mail.mail_sieve.editVacation',
 					);
 					if(empty($preferences->preferences['prefpreventabsentnotice']) || $preferences->preferences['prefpreventabsentnotice'] == 0)
 					{
@@ -902,13 +903,13 @@ class mail_hooks
 					if((empty($preferences->preferences['prefpreventnotificationformailviaemail']) ||
 						$preferences->preferences['prefpreventnotificationformailviaemail'] == 0))
 					{
-						$file['email notification'] = egw::link('/index.php','menuaction=mail.uisieve.editEmailNotification'); //Added email notifications
+						$file['email notification'] = egw::link('/index.php','menuaction=mail.mail_sieve.editEmailNotification'); //Added email notifications
 					}
 					if (count($file)) display_sidebox($appname,$menu_title,$file);
 					unset($file);
 				}
 			}
-*/
+
 		}
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
