@@ -307,6 +307,7 @@ class emailadmin_ui extends emailadmin_bo
 				$content['ea_user_defined_signatures'] = 'yes';
 				$content['ea_editforwardingaddress'] = 'yes';
 				$content['ea_smtp_type'] = 'emailadmin_smtp';
+				$content['ea_imap_tsl_auth'] = 'no';	// switch validate certificate off for new profile
 			}
 		}
 		else

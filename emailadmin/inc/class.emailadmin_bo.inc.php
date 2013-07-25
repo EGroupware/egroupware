@@ -835,6 +835,7 @@ class emailadmin_bo extends so_sql
 				'userDefinedIdentities' => 'yes',
 				'ea_user_defined_signatures' => 'yes',
 				'editforwardingaddress' => 'yes',
+				'ea_imap_tsl_auth' => 'no',	// switch validate certificate off for new profile
 				'defaultQuota' => 2048,
 			);
 		}
