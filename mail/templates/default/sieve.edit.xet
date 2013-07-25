@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.sieve.edit" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="100%"/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description id="msg" class="redItalic"/>
+				</row>
+				<row>
+					<groupbox>
+						<caption label="Condition"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row class="th">
+									<description value="Match:"/>
+									<menulist>
+										<menupopup id="anyof"/>
+									</menulist>
+								</row>
+								<row class="sieveRowActive">
+									<description value="If from contains:(*)"/>
+									<textbox id="from"/>
+								</row>
+								<row>
+									<description value="If to contains:(*)"/>
+									<textbox id="to"/>
+								</row>
+								<row>
+									<description value="If subject contains:(*)"/>
+									<textbox id="subject"/>
+								</row>
+								<row>
+									<description value="If message size"/>
+									<hbox>
+										<menulist>
+											<menupopup id="gthan"/>
+										</menulist>
+										<textbox id="size"/>
+										<description value="kilobytes"/>
+									</hbox>
+								</row>
+								<row>
+									<description value="If mail header"/>
+									<hbox>
+										<textbox id="field"/>
+										<description value="Contains(*)"/>
+										<textbox id="field_val"/>
+									</hbox>
+								</row>
+								<row>
+									<description value="If mail body message type"/>
+									<hbox>
+										<menulist>
+											<menupopup id="bodytransform"/>
+										</menulist>
+										<description value="Contains(*)"/>
+										<textbox id="field_bodytransform"/>
+									</hbox>
+								</row>
+								<row>
+									<description value="If mail body content / attachment type"/>
+									<hbox>
+										<menulist>
+											<menupopup id="ctype"/>
+										</menulist>
+										<description value="/"/>
+										<textbox blur="for eg.: mpeg" id="field_ctype_val"/>
+									</hbox>
+								</row>
+							</rows>
+						</grid>
+						<description value="(*) wildcards (*,?) may be used. If you are trying to match * or ? itself, you must escape them with a backslash (\). If you check &quot;Use regular expressions&quot; you must use valid regular expressions."/>
+					</groupbox>
+				</row>
+				<row>
+					<groupbox>
+						<caption label="Action"/>
+						<grid>
+							<columns>
+								<column/>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<radio label="File into:" id="action" options="folder"/>
+									<hbox>
+										<textbox id="action_folder_text"/>
+										<description onclick="javascript:window.open('{folder_select_url}', 'windowName', 'width=400,height=500,toolbar=no,resizable=yes'); return false;"/>
+									</hbox>
+								</row>
+								<row>
+									<radio label="Forward to address:" id="action" options="address"/>
+									<hbox>
+										<textbox id="action_address_text"/>
+									</hbox>
+								</row>
+								<row>
+									<radio label="Send a reject message:" id="action" options="reject"/>
+									<textbox multiline="true" id="action_reject_text"/>
+								</row>
+								<row>
+									<radio label="Discard message" id="action" options="discard"/>
+									<description/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+				<row>
+					<groupbox>
+						<caption label="Extended"/>
+						<grid>
+							<columns>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<checkbox label="Check message against next rule also" id="continue"/>
+								</row>
+								<row>
+									<checkbox label="Keep a copy of the message in your inbox" id="keep"/>
+								</row>
+								<row>
+									<checkbox label="Use regular expressions (see wikipedia for information on POSIX regular expressions)" id="regexp"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+				<row>
+					<hbox>
+						<button statustext="Saves this rule" label="Save" id="button[save]"/>
+						<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
+						<hbox align="right">
+							<button label="Delete" id="button[delete]"/>
+							<button label="Cancel" id="button[cancel]"/>
+						</hbox>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

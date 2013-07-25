@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.sieve.index.rows" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" id="rg" sortable="mail.mail_sieve.ajax_moveRule">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<description value="Rule priority position"/>
+					<description value="Status"/>
+					<description value="rules"/>
+				</row>
+				<row class="mail_sieve_$row_count[status]"  >
+					<description id="${row}[ruleID]" />
+					<menulist>
+						<menupopup id="${row}[status]" readonly= "true"/>
+					</menulist>
+					<description id="${row}[rules]" />
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="mail.sieve.index" template="" lang="" group="0" version="1.9.001">
+		<description align="left" id="msg" no_lang="1" span="all" class="message"/>
+		<grid width="100%">
+			<columns>
+				<column width="100%"/>
+			</columns>
+			<rows>
+				<row>
+					<buttononly align="right" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=mail.mail_sieve.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
+				</row>
+				<row>
+					<template id="rows"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
