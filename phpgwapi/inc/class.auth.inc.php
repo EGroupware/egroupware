@@ -599,7 +599,7 @@ class auth
 			{
 				$missing[] = lang('lowercase letters');
 			}
-			if (!preg_match('/'.preg_quote('~!@#$%^&*_-+=`|\(){}[]:;"\'<>,.?/', '/').'/', $passwd))
+			if (!preg_match('/['.preg_quote('~!@#$%^&*_-+=`|\(){}[]:;"\'<>,.?/', '/').']/', $passwd))
 			{
 				$missing[] = lang('special characters');
 			}
