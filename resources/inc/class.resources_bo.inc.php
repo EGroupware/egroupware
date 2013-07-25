@@ -308,6 +308,7 @@ class resources_bo
 				if($resource['own_file']['size'] > 0)
 				{
 					$msg = $this->save_picture($resource['own_file'],$resource['res_id']);
+					unset($resource['own_file']);
 					break;
 				}
 				elseif(@egw_vfs::stat('/apps/resources/'.$resource['res_id'].'/'.self::PICTURE_NAME))
