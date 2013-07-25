@@ -428,6 +428,15 @@ class asyncservice
 				}
 				list($app) = explode('.',$job['method']);
 				$GLOBALS['egw']->translation->add_app($app);
+				// update job before running it, to cope with jobs taking longer then async-frequency
+				if (($job['next'] = $this->next_run($job['times'])))
+				{
+					$this->write($job, True);
+				}
+				else	// no further runs
+				{
+					$this->delete($job['id']);
+				}
 				try
 				{
 					ExecMethod($job['method'],$job['data']);
@@ -436,21 +445,6 @@ class asyncservice
 				{
 					// log the exception to error_log, but continue running other async jobs
 					_egw_log_exception($e);
-				}
-				// re-read job, in case it had been updated or even deleted in the method
-				$updated = $this->read($id);
-				if ($updated && isset($updated[$id]))
-				{
-					$job = $updated[$id];
-
-					if ($job['next'] = $this->next_run($job['times']))
-					{
-						$this->write($job,True);
-					}
-					else	// no further runs
-					{
-						$this->delete($job['id']);
-					}
 				}
 			}
 		}
