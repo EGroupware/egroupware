@@ -221,7 +221,7 @@ email address	admin	fi	Sähköpostiosoite
 enable	admin	fi	Ota käyttöön
 enable debug-messages	admin	fi	Näytä virheenjäljitysviestit
 enable the soap service	admin	fi	Salli SOAP palvelut
-enable the spellcheck in the ritch text editor ?	admin	fi	Salli oikolukuohjelma Rich text editorissa.
+enable spellcheck in rich text editor	admin	fi	Salli oikolukuohjelma Rich text editorissa.
 enable the xmlrpc service	admin	fi	Salli XMLRPC palvelut
 enabled - hidden from navbar	admin	fi	Käytössä - Ei näy työkalupalkissa
 enabled - popup window	admin	fi	Käytössä - Ponnahdusikkuna
@@ -492,7 +492,6 @@ set preference values.	admin	fi	Tee asetukset.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	fi	Näytetäänkö kirjautumisnäytöllä kielien valintalista (käytännöllinen esittelyjä varten) ?
 show 'powered by' logo on	admin	fi	'Tämä on' -logon paikka
 show access log	admin	fi	Näytä käyttöloki
-show an asterisk (*) to mark untranslated strings	admin	fi	Näytä tähti (*) merkki kääntämättön osion kohdalla
 show current action	admin	fi	Näytä viimeisin toimi
 show error log	admin	fi	Näytä virheloki
 show phpinfo()	admin	fi	Näytä phpinfo()

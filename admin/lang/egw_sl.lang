@@ -385,7 +385,6 @@ set preference values.	admin	sl	Vnesite vrednosti nastavitev.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	sl	Ali naj vstopna stran vsebuje možnost izbire jezika (uporabno za demo-strani) ?
 show 'powered by' logo on	admin	sl	Pokaži 'teče na' logotip na
 show access log	admin	sl	Pokaži evidenco dostopov
-show an asterisk (*) to mark untranslated strings	admin	sl	Pokaži zvezdico (*) za označitev neprevedenih nizov
 show current action	admin	sl	Pokaži trenutno dejanje
 show error log	admin	sl	Pokaži seznam napak
 show phpinfo()	admin	sl	Pokaži phpinfo() informacije

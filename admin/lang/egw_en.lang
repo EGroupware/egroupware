@@ -243,7 +243,7 @@ empty to not change	admin	en	empty to NOT change
 enable	admin	en	Enable
 enable debug-messages	admin	en	Enable debug messages.
 enable the soap service	admin	en	Enable the soap service.
-enable the spellcheck in the ritch text editor ?	admin	en	Enable the spellcheck in the rich text editor.
+enable spellcheck in rich text editor	admin	en	Enable spellcheck in rich text editor
 enable the xmlrpc service	admin	en	Enable the xmlrpc service.
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 enabled - popup window	admin	en	Enabled - Popup window
@@ -531,7 +531,6 @@ should exceptions contain a trace (including function arguments)	admin	en	Should
 should the login page include a language selectbox (useful for demo-sites) ?	admin	en	Show language select box on login page.
 show 'powered by' logo on	admin	en	Show 'powered by' logo on
 show access log	admin	en	Show access log
-show an asterisk (*) to mark untranslated strings	admin	en	Show an asterisk (*) to mark untranslated strings
 show current action	admin	en	Show current action
 show error log	admin	en	Show error log
 show phpinfo()	admin	en	Show phpinfo()

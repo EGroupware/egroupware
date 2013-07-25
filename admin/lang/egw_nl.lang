@@ -204,7 +204,7 @@ email address	admin	nl	emailadres
 enable	admin	nl	inschakelen
 enable debug-messages	admin	nl	Debugberichten activeren
 enable the soap service	admin	nl	De SOAP service inschakelen
-enable the spellcheck in the ritch text editor ?	admin	nl	Schakel de spellingcontrole in de Rich Text Editor in?
+enable spellcheck in rich text editor	admin	nl	Schakel de spellingcontrole in de Rich Text Editor in?
 enable the xmlrpc service	admin	nl	De XML-RPC service inschakelen
 enabled - hidden from navbar	admin	nl	Ingeschakeld - niet zichtbaar op de navigatiebalk
 enabled - popup window	admin	nl	Ingeschakeld - Popup Window
@@ -424,7 +424,6 @@ should exceptions contain a trace (including function arguments)	admin	nl	Moeten
 should the login page include a language selectbox (useful for demo-sites) ?	admin	nl	Moet de login pagina een taalkeuze box bevatten (handig voor demo sites) ?
 show 'powered by' logo on	admin	nl	''Powered by'-logo weergeven op
 show access log	admin	nl	Toegangslogboek weergeven
-show an asterisk (*) to mark untranslated strings	admin	nl	Toon een sterretje (*) om onvertaalde teksten te markeren
 show current action	admin	nl	Huidige actie weergeven
 show error log	admin	nl	Foutenlogboek weergeven
 show phpinfo()	admin	nl	De uitvoer van phpinfo() weergeven

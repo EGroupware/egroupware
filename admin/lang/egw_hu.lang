@@ -384,7 +384,6 @@ set preference values.	admin	hu	Set preference values.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	hu	A Bejelentkező képernyő tartalmazzon Nyelv választási lehetőséget (hasznos pl. a demo oldal esetén)?
 show 'powered by' logo on	admin	hu	'Powered by' logó megjelenítése
 show access log	admin	hu	Hozzáférési napló megjelenítése
-show an asterisk (*) to mark untranslated strings	admin	hu	Fordítással nem rendelkező szövegek megjelölése csillaggal (*)
 show current action	admin	hu	Jelenlegi művelet megjelenítése
 show error log	admin	hu	Hibanapló megjelenítése
 show phpinfo()	admin	hu	phpinfo() megjelenítése

@@ -112,16 +112,13 @@ class jscalendar
 				static $chars_shortcut;
 				if (is_null($chars_shortcut)) $chars_shortcut = (int)lang('3 number of chars for month-shortcut');	// < 0 to take the chars from the end
 
-				$markuntranslated = translation::$markuntranslated;
-				translation::$markuntranslated = true;		// otherwise we can not detect NOT translated phrases!
-				$short = lang($m = adodb_date('M',$ts));	// check if we have a translation of the short-cut
+				$short = translation::translate($m = adodb_date('M',$ts), null, '*');	// check if we have a translation of the short-cut
 				if ($substr($short,-1) == '*')	// if not generate one by truncating the translation of the long name
 				{
 					$short = $chars_shortcut > 0 ? $substr(lang(adodb_date('F',$ts)),0,$chars_shortcut) :
 						$substr(lang(adodb_date('F',$ts)),$chars_shortcut);
 				}
 				$date = str_replace(adodb_date('M',$ts),$short,$date);
-				translation::$markuntranslated = $markuntranslated;
 			}
 		}
 		if ($helpmsg !== '')
@@ -260,8 +257,6 @@ egw_LAB.wait(function() {
 		{
 			return False;
 		}
-		$markuntranslated = translation::$markuntranslated;
-		translation::$markuntranslated = true;	// otherwise we can not detect NOT translated phrases!
 		$fields = preg_split('/[.\\/-]/',$datestr);
 		foreach(preg_split('/[.\\/-]/',$this->dateformat) as $n => $field)
 		{
@@ -273,7 +268,7 @@ egw_LAB.wait(function() {
 					for($i = 1; $i <= 12; $i++)
 					{
 						$long_name  = lang(adodb_date('F',mktime(12,0,0,$i,1,2000)));
-						$short_name = lang(adodb_date('M',mktime(12,0,0,$i,1,2000)));	// do we have a translation of the short-cut
+						$short_name = translation::translate(adodb_date('M',mktime(12,0,0,$i,1,2000)), null, '*');	// do we have a translation of the short-cut
 						if (substr($short_name,-1) == '*')	// if not generate one by truncating the translation of the long name
 						{
 							$short_name = substr($long_name,0,(int) lang('3 number of chars for month-shortcut'));
@@ -299,7 +294,6 @@ egw_LAB.wait(function() {
 			}
 			$date[$field] = (int)$fields[$n];
 		}
-		translation::$markuntranslated = $markuntranslated;
 
 		$ret = array(
 			$year  => $date['Y'],

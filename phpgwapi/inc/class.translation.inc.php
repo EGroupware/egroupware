@@ -71,12 +71,6 @@ class translation
 	 * @var egw_db
 	 */
 	static $db;
-	/**
-	 * Mark untranslated strings with an asterisk (*)
-	 *
-	 * @var boolean
-	 */
-	static $markuntranslated=false;
 
 	/**
 	 * System charset
@@ -177,7 +171,6 @@ class translation
 				ini_set('mbstring.internal_encoding',self::$system_charset);
 			}
 		}
-		self::$markuntranslated = (boolean) $GLOBALS['egw_info']['server']['markuntranslated'];
 
 		// try loading load_via from tree-wide cache and check if it contains more rules
 		if (($load_via = egw_cache::getTree(__CLASS__, 'load_via')) &&
@@ -226,18 +219,18 @@ class translation
 	 * translates a phrase and evtl. substitute some variables
 	 *
 	 * @param string $key phrase to translate, may contain placeholders %N (N=1,2,...) for vars
-	 * @param array/boolean $vars=false vars to replace the placeholders, or false for none
+	 * @param array $vars=null vars to replace the placeholders, or null for none
 	 * @param string $not_found='*' what to add to not found phrases, default '*'
 	 * @return string with translation
 	 */
-	static function translate($key, $vars=false, $not_found='*' )
+	static function translate($key, $vars=null, $not_found='' )
 	{
 		if (!self::$lang_arr)
 		{
 			self::init();
 		}
 		$ret = $key;				// save key if we dont find a translation
-		if ($not_found && self::$markuntranslated) $ret .= $not_found;
+		if ($not_found) $ret .= $not_found;
 
 		if (isset(self::$lang_arr[$key]))
 		{
