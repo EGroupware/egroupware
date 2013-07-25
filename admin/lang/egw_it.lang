@@ -209,7 +209,7 @@ email account active	admin	it	Account email attivo
 email address	admin	it	Indirizzo email
 enable debug-messages	admin	it	Attiva i messaggi di debug
 enable the soap service	admin	it	Attiva servizio soap
-enable the spellcheck in the ritch text editor ?	admin	it	Abilita il controllo ortografico nell'editor di testo
+enable spellcheck in rich text editor	admin	it	Abilita il controllo ortografico nell'editor di testo
 enable the xmlrpc service	admin	it	Attiva servizio xmlrpc
 enabled - hidden from navbar	admin	it	Attivo - nascosto dalla barra di navigazione
 enabled - popup window	admin	it	Attivo - Finestra Popup
@@ -462,7 +462,6 @@ should exceptions contain a trace (including function arguments)	admin	it	Le ecc
 should the login page include a language selectbox (useful for demo-sites) ?	admin	it	Includere nella pagina di login un elenco a discesa per selezionare la lingua (utile per i siti-demo) ?
 show 'powered by' logo on	admin	it	Visualizza il logo 'creato con'
 show access log	admin	it	Visualizza i log di accesso
-show an asterisk (*) to mark untranslated strings	admin	it	Visualizza con un asterisco le righe non tradotte
 show current action	admin	it	Visualizza l'azione corrente
 show error log	admin	it	Visualizza i log di errore
 show phpinfo()	admin	it	Visualizza phpinfo()

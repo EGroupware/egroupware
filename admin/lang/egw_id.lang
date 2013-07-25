@@ -260,7 +260,6 @@ server url	admin	id	Server URL
 server username	admin	id	Server Username
 set preference values.	admin	id	Set preference values.
 show access log	admin	id	Tampilkan log akses
-show an asterisk (*) to mark untranslated strings	admin	id	Show an asterisk (*) to mark untranslated strings
 show current action	admin	id	Tampilkan tindakan saat ini
 show error log	admin	id	Tampilkan log error
 show phpinfo()	admin	id	Tampilkan phpinfo()

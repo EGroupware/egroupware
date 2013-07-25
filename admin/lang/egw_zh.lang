@@ -415,7 +415,6 @@ set preference values.	admin	zh	设置偏好参数。
 should the login page include a language selectbox (useful for demo-sites) ?	admin	zh	登录页需要包含语言选单吗 (有益于站点演示)？
 show 'powered by' logo on	admin	zh	显示 'Powered by' 标示在
 show access log	admin	zh	显示访问日志
-show an asterisk (*) to mark untranslated strings	admin	zh	在未翻译字串标记星号 (*)
 show current action	admin	zh	显示当前操作
 show error log	admin	zh	显示错误日志
 show phpinfo()	admin	zh	显示 phpinfo()

@@ -209,7 +209,7 @@ email account active	admin	sk	E-mailový účet je aktívny
 email address	admin	sk	E-mailová adresa
 enable debug-messages	admin	sk	Zapnúť ladiace správy
 enable the soap service	admin	sk	Zapnúť službu SOAP
-enable the spellcheck in the ritch text editor ?	admin	sk	Zapnúť kontrolu pravopisu v textovom editore?
+enable spellcheck in rich text editor	admin	sk	Zapnúť kontrolu pravopisu v textovom editore?
 enable the xmlrpc service	admin	sk	Zapnúť službu XMLRPC
 enabled - hidden from navbar	admin	sk	Zapnuté - Skryté v navigačnom paneli
 enabled - popup window	admin	sk	Zapnuté - Vyskakovacie okno
@@ -461,7 +461,6 @@ should exceptions contain a trace (including function arguments)	admin	sk	Chcete
 should the login page include a language selectbox (useful for demo-sites) ?	admin	sk	Chcete, aby sa na prihlasovacej stránke zobrazoval výber jazyka (vhodné pre demo-stránky)?
 show 'powered by' logo on	admin	sk	Kde zobrazovať logo "powered by"
 show access log	admin	sk	Zobraziť prístupové záznamy
-show an asterisk (*) to mark untranslated strings	admin	sk	Použiť hviezdičku (*) na označenie nepreložených fráz
 show current action	admin	sk	Zobraziť aktuálnu akciu
 show error log	admin	sk	Zobraziť záznamy o chybách
 show phpinfo()	admin	sk	Zobraziť phpinfo()

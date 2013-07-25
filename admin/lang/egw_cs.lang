@@ -206,7 +206,7 @@ email account active	admin	cs	e-mailový účet aktivní
 email address	admin	cs	e-mailová adresa
 enable debug-messages	admin	cs	Povolit debugovací zprávy
 enable the soap service	admin	cs	Povolit službu soap
-enable the spellcheck in the ritch text editor ?	admin	cs	Povolit kontrolu pravopisu v richtext editoru?
+enable spellcheck in rich text editor	admin	cs	Povolit kontrolu pravopisu v richtext editoru?
 enable the xmlrpc service	admin	cs	Povolit službu xmlrpc
 enabled - hidden from navbar	admin	cs	Povoleno - Skryto z navigační lišty
 enabled - popup window	admin	cs	Povoleno - Překryvné okno
@@ -454,7 +454,6 @@ should exceptions contain a trace (including function arguments)	admin	cs	Mají 
 should the login page include a language selectbox (useful for demo-sites) ?	admin	cs	Má přihlašovací stránka zobrazovat rozbalovací nabídku s výběrem jazyka (užitečné pro demo stránky)?
 show 'powered by' logo on	admin	cs	Zobrazovat logo 'založeno na' na
 show access log	admin	cs	Zobrazit přístupový protokol
-show an asterisk (*) to mark untranslated strings	admin	cs	Zobrazovat hvězdičku (*) u nepřeložených textů
 show current action	admin	cs	Zobrazit aktuální akci
 show error log	admin	cs	Zobrazit chybový protokol
 show phpinfo()	admin	cs	Zobrazit phpinfo()

@@ -371,7 +371,6 @@ set preference values.	admin	zh-tw	設定偏好值
 should the login page include a language selectbox (useful for demo-sites) ?	admin	zh-tw	登入畫面要不要包含語言選單(利於展示)？
 show 'powered by' logo on	admin	zh-tw	顯示「powered by」圖示位置
 show access log	admin	zh-tw	顯示存取紀錄
-show an asterisk (*) to mark untranslated strings	admin	zh-tw	在未翻譯字串顯示星號 (*)
 show current action	admin	zh-tw	顯示現在動作
 show error log	admin	zh-tw	顯示錯誤紀錄
 show phpinfo()	admin	zh-tw	顯示PHP資訊

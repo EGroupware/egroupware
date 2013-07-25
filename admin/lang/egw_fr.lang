@@ -209,7 +209,7 @@ email account active	admin	fr	compte de messagerie actif
 email address	admin	fr	adresse email
 enable debug-messages	admin	fr	Activer les messages de déboguage
 enable the soap service	admin	fr	Activer le service soap
-enable the spellcheck in the ritch text editor ?	admin	fr	Activer la vérification d'orthographe dans l'éditeur de texte riche.
+enable spellcheck in rich text editor	admin	fr	Activer la vérification d'orthographe dans l'éditeur de texte riche.
 enable the xmlrpc service	admin	fr	Activer le service xmlrp
 enabled - hidden from navbar	admin	fr	Activé - caché de la barre de navigation
 enabled - popup window	admin	fr	Activé - Fenêtre popup
@@ -462,7 +462,6 @@ should exceptions contain a trace (including function arguments)	admin	fr	Les ex
 should the login page include a language selectbox (useful for demo-sites) ?	admin	fr	Est-ce que la page de login doit inclure une zone de sélection linguistique (utile aussi pour les sites de démonstration)
 show 'powered by' logo on	admin	fr	Montrer le logo 'motorisé par' sur
 show access log	admin	fr	Montrer les journaux d'accès
-show an asterisk (*) to mark untranslated strings	admin	fr	Afficher une astérisque (*) pour marquer les chaines non traduites.
 show current action	admin	fr	Montrer les actions en cours
 show error log	admin	fr	Montrer le journal des erreurs
 show phpinfo()	admin	fr	Montrer phpinfo()

@@ -196,7 +196,7 @@ email account active	admin	pt-br	conta de e-mail ativa
 email address	admin	pt-br	e-mail
 enable debug-messages	admin	pt-br	Habilitar menssagens de depuração
 enable the soap service	admin	pt-br	Habilitar o serviço soap
-enable the spellcheck in the ritch text editor ?	admin	pt-br	Habilitar o verificador ortográfico no editor de texto ?
+enable spellcheck in rich text editor	admin	pt-br	Habilitar o verificador ortográfico no editor de texto ?
 enable the xmlrpc service	admin	pt-br	Habilitar o serviço xmlrpc
 enabled - hidden from navbar	admin	pt-br	Habilitado - Escondido da barra de navegação
 enabled - popup window	admin	pt-br	Habilitar Janelas instantâneas
@@ -411,7 +411,6 @@ set preference values.	admin	pt-br	Definir preferências.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	pt-br	A tela de conexão deve incluír uma caixa de seleção de idioma? (útil para sites de demonstração)
 show 'powered by' logo on	admin	pt-br	Área para exibição de 'powered by eGroupWare'
 show access log	admin	pt-br	Exibir registros de acessos
-show an asterisk (*) to mark untranslated strings	admin	pt-br	Exibe um asterisco (*) para marcar as frases não traduzidas
 show current action	admin	pt-br	Exibir ação corrente
 show error log	admin	pt-br	Exibir registro de erros
 show phpinfo()	admin	pt-br	Exibir phpinfo()
