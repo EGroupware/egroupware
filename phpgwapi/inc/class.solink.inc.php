@@ -8,7 +8,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright 2001-2008 by RalfBecker@outdoor-training.de
+ * @copyright 2001-2013 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage link
@@ -44,6 +44,10 @@ class solink
 	 * @var int
 	 */
 	protected static $user;
+	/**
+	 * True if call to get_links or get_3links exceeded limit (contains not all rows)
+	 */
+	public static $limit_exceeded = false;
 
 	/**
 	 * creats a link between $app1,$id1 and $app2,$id2
@@ -113,13 +117,14 @@ class solink
 	 * returns array of links to $app,$id
 	 *
 	 * @param string $app appname
-	 * @param string/array $id id(s) in $app
-	 * @param string $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
-	 * @param string $order defaults to newest links first
-	 * @param boolean $deleted Include links that have been flagged as deleted, waiting for purge of linked record.
+	 * @param string|array $id id(s) in $app
+	 * @param string $only_app='' if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
+	 * @param string $order='link_lastmod DESC' defaults to newest links first
+	 * @param boolean $deleted=false Include links that have been flagged as deleted, waiting for purge of linked record.
+	 * @param int|array $limit=null number of entries to return, default null = all or array(offset, num_rows) to return num_rows starting from offset
 	 * @return array id => links pairs if $id is an array or just the links (only_app: ids) or empty array if no matching links found
 	 */
-	static function get_links( $app,$id,$only_app='',$order='link_lastmod DESC',$deleted=false )
+	static function get_links($app, $id, $only_app='', $order='link_lastmod DESC', $deleted=false, $limit=null)
 	{
 		if (self::DEBUG)
 		{
@@ -129,9 +134,19 @@ class solink
 		{
 			$only_app = substr($only_app,1);
 		}
-		#var_dump($not_only);echo "$only_app<br>";
+
+		$offset = false;
+		if (is_array($limit))
+		{
+			list($offset, $limit) = $limit;
+		}
+		elseif($limit)
+		{
+			$offset = 0;
+		}
+
 		$links = array();
-		foreach(self::$db->select(self::TABLE,'*',self::$db->expression(self::TABLE,'((',array(
+		foreach(self::$db->select(self::TABLE, '*', self::$db->expression(self::TABLE, '((', array(
 					'link_app1'	=> $app,
 					'link_id1'	=> $id,
 				),') OR (',array(
@@ -139,7 +154,7 @@ class solink
 					'link_id2'	=> $id,
 				),'))',
 				$deleted ? '' : ' AND deleted IS NULL'
-			),__LINE__,__FILE__,False,$order ? " ORDER BY $order" : '') as $row)
+			), __LINE__, __FILE__, $offset, $order ? " ORDER BY $order" : '', 'phpgwapi', $limit) as $row)
 		{
 			// check if left side (1) is one of our targets --> add it
 			if ($row['link_app1'] == $app && in_array($row['link_id1'],(array)$id))
@@ -152,6 +167,9 @@ class solink
 				self::_add2links($row,false,$only_app,$not_only,$links);
 			}
 		}
+		// if query returns exactly limit rows, we assume there are more and therefore set self::$limit_exceeded
+		self::$limit_exceeded = $offset !== false && count(is_array($id) ? $links : $links[$id]) == $limit;
+
 		return is_array($id) ? $links : ($links[$id] ? $links[$id] : array());
 	}
 
@@ -361,16 +379,18 @@ class solink
 	 *                  ^                                                                     ^
 	 *                  +---------------------------c-----------------------------------------+
 	 *
-	 * bolink::get_3links('timesheet','projectmanager',$pm_id) returns the links (c) between the timesheet and the project,
+	 * egw_link::get_3links('timesheet','projectmanager',$pm_id) returns the links (c) between the timesheet and the project,
 	 * plus the other app/id in the keys 'app3' and 'id3'
 	 *
 	 * @param string $app app the returned links are linked on one side (atm. this must be link_app1!)
 	 * @param string $target_app app the returned links other side link also to
-	 * @param string/array $target_id=null id(s) the returned links other side link also to
+	 * @param string|array $target_id=null id(s) the returned links other side link also to
 	 * @param boolean $just_app_ids=false return array with link_id => app_id pairs, not the full link record
+	 * @param string $order='link_lastmod DESC' defaults to newest links first
+	 * @param int|array $limit=null number of entries to return, default null = all or array(offset, num_rows) to return num_rows starting from offset
 	 * @return array with links from entries from $app to $target_app/$target_id plus the other (b) link_id/app/id in the keys 'link3'/'app3'/'id3'
 	 */
-	static function get_3links($app,$target_app,$target_id=null,$just_app_ids=false)
+	static function get_3links($app, $target_app, $target_id=null, $just_app_ids=false, $order='link_lastmod DESC', $limit=null)
 	{
 		$table = self::TABLE;
 		$arrayofselects=array(
@@ -402,8 +422,19 @@ class solink
                         		JOIN $table c ON a.link_id2=c.link_id2 AND a.link_app2=c.link_app2 AND a.link_id!=c.link_id AND c.link_app1=b.link_app1 AND c.link_id1=b.link_id1",
 			),
 		);
+
+		$offset = false;
+		if (is_array($limit))
+		{
+			list($offset, $limit) = $limit;
+		}
+		elseif($limit)
+		{
+			$offset = 0;
+		}
+
 		$links = array();
-		foreach(self::$db->union($arrayofselects,__LINE__,__FILE__) as $row)
+		foreach(self::$db->union($arrayofselects, __LINE__, __FILE__, $order, $offset, $limit) as $row)
 		{
 			if ($just_app_ids)
 			{
@@ -421,7 +452,10 @@ class solink
 				$links[] = egw_db::strip_array_keys($row,'link_');
 			}
 		}
- 		return $links;
+		// if query returns exactly limit rows, we assume there are more and therefore set self::$limit_exceeded
+		self::$limit_exceeded = $offset !== false && count($links) == $limit;
+
+		return $links;
 	}
 
 	/**

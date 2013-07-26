@@ -90,6 +90,11 @@ class link_widget
 	const AJAX_NEED_ONCHANGE = 987;
 
 	/**
+	 * Limit display of links to given number to not run into memory_limit for huge number of links
+	 */
+	const LIMIT_LINKS = 1000;
+
+	/**
 	 * Constructor of the extension
 	 *
 	 * @param string $ui '' for html
@@ -206,7 +211,8 @@ class link_widget
 			}
 			if ($value['to_id'] && $value['to_app'])
 			{
-				$value = egw_link::get_links($value['to_app'],$value['to_id'],$only_app = $value['only_app'],'link_lastmod DESC',true, $value['show_deleted']);
+				$value = egw_link::get_links($value['to_app'], $value['to_id'], $only_app = $value['only_app'],
+					'link_lastmod DESC', true, $value['show_deleted'], self::LIMIT_LINKS);
 				if ($only_app)
 				{
 					foreach($value as $key => $id)
@@ -283,7 +289,7 @@ class link_widget
 			{
 				$value['title'] = egw_link::title($app,$id);
 			}
-			$links = egw_link::get_links($app,$id,'','link_lastmod DESC',true, $value['show_deleted']);
+			$links = egw_link::get_links($app, $id, '', 'link_lastmod DESC', true, $value['show_deleted'], self::LIMIT_LINKS);
 			$value['anz_links'] = count($links);
 			$extension_data = $value;
 
