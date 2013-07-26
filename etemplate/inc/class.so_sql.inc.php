@@ -1018,7 +1018,7 @@ class so_sql
 		// fix GROUP BY clause to contain all non-aggregate selected columns
 		if ($order_by && stripos($order_by,'GROUP BY') !== false && $this->db->Type != 'mysql')
 		{
-			$order_by = self::fix_group_by_columns($order_by, $colums);
+			$order_by = $this->fix_group_by_columns($order_by, $colums);
 		}
 		elseif ($order_by && stripos($order_by,'ORDER BY')===false && stripos($order_by,'GROUP BY')===false && stripos($order_by,'HAVING')===false)
 		{
@@ -1126,7 +1126,7 @@ class so_sql
 	 * @param string|array $columns better provide an array as exploding by comma can lead to error with functions containing one
 	 * @return string
 	 */
-	public static function fix_group_by_columns($group_by, $columns)
+	public function fix_group_by_columns($group_by, &$columns)
 	{
 		if (!preg_match('/(GROUP BY .*)(HAVING.*|ORDER BY.*)?$/iU', $group_by, $matches))
 		{
@@ -1139,8 +1139,13 @@ class so_sql
 		{
 			$columns = preg_split('/, */', $columns);
 		}
-		foreach($columns as $col)
+		foreach($columns as $n => $col)
 		{
+			if ($col == '*')
+			{
+				$col = $columns[$n] = $this->table_name.'.*';
+				++$changes;
+			}
 			// only check columns and non-aggregate functions
 			if (strpos($col, '(') === false || !preg_match('/(COUNT|MIN|MAX|AVG|SUM|BIT_[A-Z]+|STD[A-Z_]*|VAR[A-Z_]*)\(/i', $col))
 			{
