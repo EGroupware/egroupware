@@ -90,15 +90,16 @@ class uiwidgets
 		function createHTMLFolder($_folders, $_selected, $_selectedFolderCount, $_topFolderName, $_topFolderDescription, $_divName, $_displayCheckBox, $_useDisplayCharset = false) {
 			$preferences = $this->bofelamimail->mailPreferences;
 			//_debug_array(bofelamimail::$autoFolders);
+			$nameSpace = $this->bofelamimail->_getNameSpaces();
+			$trashFolder = $this->bofelamimail->getTrashFolder();
+			$templateFolder = $this->bofelamimail->getTemplateFolder();
+			$draftFolder = $this->bofelamimail->getDraftFolder();
+			$sentFolder = $this->bofelamimail->getSentFolder();
 			$userDefinedFunctionFolders = array();
-			if (isset($preferences->preferences['trashFolder']) &&
-				$preferences->preferences['trashFolder'] != 'none') $userDefinedFunctionFolders['Trash'] = $preferences->preferences['trashFolder'];
-			if (isset($preferences->preferences['sentFolder']) &&
-				$preferences->preferences['sentFolder'] != 'none') $userDefinedFunctionFolders['Sent'] = $preferences->preferences['sentFolder'];
-			if (isset($preferences->preferences['draftFolder']) &&
-				$preferences->preferences['draftFolder'] != 'none') $userDefinedFunctionFolders['Drafts'] = $preferences->preferences['draftFolder'];
-			if (isset($preferences->preferences['templateFolder']) &&
-				$preferences->preferences['templateFolder'] != 'none') $userDefinedFunctionFolders['Templates'] = $preferences->preferences['templateFolder'];
+			if (isset($trashFolder) && $trashFolder != 'none') $userDefinedFunctionFolders['Trash'] = $trashFolder;
+			if (isset($sentFolder) && $sentFolder != 'none') $userDefinedFunctionFolders['Sent'] = $sentFolder;
+			if (isset($draftFolder) && $draftFolder != 'none') $userDefinedFunctionFolders['Drafts'] = $draftFolder;
+			if (isset($templateFolder) && $templateFolder != 'none') $userDefinedFunctionFolders['Templates'] = $templateFolder;
 			// create a list of all folders, also the ones which are not subscribed
  			foreach($_folders as $key => $obj) {
 				$folderParts = explode($obj->delimiter,$key);

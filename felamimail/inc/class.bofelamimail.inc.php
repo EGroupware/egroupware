@@ -71,6 +71,12 @@
 		static $autoFolders = array('Drafts', 'Templates', 'Sent', 'Trash', 'Junk');
 
 		/**
+		 * Array to cache the specialUseFolders, if existing
+		 * @var array2string
+		 */
+		static $specialUseFolders;
+
+		/**
 		* Autoload classes from emailadmin, 'til they get autoloading conform names
 		*
 		* @param string $class
@@ -311,7 +317,7 @@
 		{
 			$folderName	= ($_folderName ? $_folderName : $this->sessionData['mailbox']);
 			$deleteOptions	= $GLOBALS['egw_info']['user']['preferences']['felamimail']['deleteOptions'];
-			$trashFolder	= $this->mailPreferences->preferences['trashFolder']; //$GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'];
+			$trashFolder	= $this->getTrashFolder(); //$GLOBALS['egw_info']['user']['preferences']['felamimail']['trashFolder'];
 
 			$this->icServer->selectMailbox($folderName);
 
@@ -616,9 +622,9 @@
 			}
 
 			$deleteOptions  = $this->mailPreferences->preferences['deleteOptions'];
-			$trashFolder    = $this->mailPreferences->preferences['trashFolder'];
-			$draftFolder	= $this->mailPreferences->preferences['draftFolder']; //$GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
-			$templateFolder = $this->mailPreferences->preferences['templateFolder']; //$GLOBALS['egw_info']['user']['preferences']['felamimail']['templateFolder'];
+			$trashFolder    = $this->getTrashFolder();
+			$draftFolder	= $this->getDraftFolder(); //$GLOBALS['egw_info']['user']['preferences']['felamimail']['draftFolder'];
+			$templateFolder = $this->getTemplateFolder(); //$GLOBALS['egw_info']['user']['preferences']['felamimail']['templateFolder'];
 
 			if(($this->sessionData['mailbox'] == $trashFolder && $deleteOptions == "move_to_trash") ||
 			   ($this->sessionData['mailbox'] == $draftFolder)) {
@@ -1600,10 +1606,11 @@
 						$folderName = (!empty($personalPrefix)) ? $folderPrefix.$personalFolderName : $personalFolderName;
 						if(!is_array($foldersNameSpace['personal']['all']) || !in_array($folderName, $foldersNameSpace['personal']['all'])) {
 							$createfolder = true;
-							switch($folderName)
+							switch($personalFolderName)
 							{
 								case 'Drafts': // => Entwürfe
-									if ($this->mailPreferences->preferences['draftFolder'] && $this->mailPreferences->preferences['draftFolder']=='none')
+									$draftFolder = $this->getDraftFolder();
+									if ($draftFolder && $draftFolder=='none')
 										$createfolder=false;
 									break;
 								case 'Junk': //] => Spammails
@@ -1611,18 +1618,52 @@
 										$createfolder=false;
 									break;
 								case 'Sent': //] => Gesendet
-									if ($this->mailPreferences->preferences['sentFolder'] && $this->mailPreferences->preferences['sentFolder']=='none')
+									// ToDo: we may need more sophistcated checking here
+									$sentFolder = $this->getSentFolder();
+									if ($sentFolder && $sentFolder=='none')
 										$createfolder=false;
 									break;
 								case 'Trash': //] => Papierkorb
-									if ($this->mailPreferences->preferences['trashFolder'] && $this->mailPreferences->preferences['trashFolder']=='none')
+									$trashFolder = $this->getTrashFolder();
+									if ($trashFolder && $trashFolder=='none')
 										$createfolder=false;
 									break;
 								case 'Templates': //] => Vorlagen
-									if ($this->mailPreferences->preferences['templateFolder'] && $this->mailPreferences->preferences['templateFolder']=='none')
+									$templateFolder = $this->getTemplateFolder();
+									if ($templateFolder && $templateFolder=='none')
 										$createfolder=false;
 									break;
+								case 'Outbox': // Nokia Outbox for activesync
+									//if ($this->mailPreferences->preferences['outboxFolder'] && $this->mailPreferences->preferences['outboxFolder']=='none')
+										$createfolder=false;
+									if ($GLOBALS['egw_info']['user']['apps']['activesync']) $createfolder = true;
+									break;
 							}
+							// check for the foldername as constructed with prefix (or not)
+							if ($createfolder && self::folderExists($folderName))
+							{
+								$createfolder = false;
+							}
+							// check for the folder as it comes (no prefix)
+							if ($createfolder && $personalFolderName != $folderName && self::folderExists($personalFolderName))
+							{
+								$createfolder = false;
+								$folderName = $personalFolderName;
+							}
+							// check for the folder as it comes with INBOX prefixed
+							$folderWithInboxPrefixed = $folderPrefixAsInbox.$personalFolderName;
+							if ($createfolder && $folderWithInboxPrefixed != $folderName && self::folderExists($folderWithInboxPrefixed))
+							{
+								$createfolder = false;
+								$folderName = $folderWithInboxPrefixed;
+							}
+							// now proceed with the folderName that may be altered in the progress of testing for existence
+							if ($createfolder === false && $_alwaysGetDefaultFolders)
+							{
+								if (!in_array($folderName,$foldersNameSpace['personal']['all'])) $foldersNameSpace['personal']['all'][] = $folderName;
+								if (!in_array($folderName,$foldersNameSpace['personal']['subscribed'])) $foldersNameSpace['personal']['subscribed'][] = $folderName;
+							}
+
 							if($createfolder === true && $this->createFolder('', $folderName, true)) {
 								$foldersNameSpace['personal']['all'][] = $folderName;
 								$foldersNameSpace['personal']['subscribed'][] = $folderName;
@@ -1969,10 +2010,49 @@
 			return $bodyPart;
 		}
 
-		function getNameSpace($_icServer)
+		function _getNameSpaces()
 		{
-			$this->icServer->getNameSpaces();
+			static $nameSpace;
+			$foldersNameSpace = array();
+			$delimiter = $this->getHierarchyDelimiter();
+			// TODO: cache by $this->icServer->ImapServerId
+			if (is_null($nameSpace)) $nameSpace = $this->icServer->getNameSpaces();
+			if (is_array($nameSpace)) {
+				foreach($nameSpace as $type => $singleNameSpace) {
+					$prefix_present = false;
+					if($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && ($this->folderExists('Mail')||$this->folderExists('INBOX')))
+					{
+						$foldersNameSpace[$type]['prefix_present'] = 'forced';
+						// uw-imap server with mailbox prefix or dovecot maybe
+						$foldersNameSpace[$type]['prefix'] = ($this->folderExists('Mail')?'Mail':(!empty($singleNameSpace[0]['name'])?$singleNameSpace[0]['name']:''));
+					}
+					elseif($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && $this->folderExists('mail'))
+					{
+						$foldersNameSpace[$type]['prefix_present'] = 'forced';
+						// uw-imap server with mailbox prefix or dovecot maybe
+						$foldersNameSpace[$type]['prefix'] = 'mail';
+					} else {
+						$foldersNameSpace[$type]['prefix_present'] = true;
+						$foldersNameSpace[$type]['prefix'] = $singleNameSpace[0]['name'];
+					}
+					$foldersNameSpace[$type]['delimiter'] = $delimiter;
+					//echo "############## $type->".print_r($foldersNameSpace[$type],true)." ###################<br>";
+				}
+			}
+			//error_log(__METHOD__.__LINE__.array2string($foldersNameSpace));
+			return $foldersNameSpace;
 		}
+
+		function getFolderPrefixFromNamespace($nameSpace, $folderName)
+		{
+			foreach($nameSpace as $type => $singleNameSpace)
+			{
+				//if (substr($singleNameSpace['prefix'],0,strlen($folderName))==$folderName) return $singleNameSpace['prefix'];
+				if (substr($folderName,0,strlen($singleNameSpace['prefix']))==$singleNameSpace['prefix']) return $singleNameSpace['prefix'];
+			}
+			return "";
+		}
+
 
 		function getHierarchyDelimiter()
 		{
@@ -2635,119 +2715,224 @@
 			}
 		}
 
-	#	function imapGetQuota($_username)
-	#	{
-	#		$quota_value = @imap_get_quota($this->mbox, "user.".$_username);
-	#
-	#		if(is_array($quota_value) && count($quota_value) > 0)
-	#		{
-	#			return array('limit' => $quota_value['limit']/1024);
-	#		}
-	#		else
-	#		{
-	#			return false;
-	#		}
-	#	}
 
-	#	function imap_get_quotaroot($_folderName)
-	#	{
-	#		return @imap_get_quotaroot($this->mbox, $_folderName);
-	#	}
-
-	#	function imapSetQuota($_username, $_quotaLimit)
-	#	{
-	#		if(is_numeric($_quotaLimit) && $_quotaLimit >= 0)
-	#		{
-	#			// enable quota
-	#			$quota_value = @imap_set_quota($this->mbox, "user.".$_username, $_quotaLimit*1024);
-	#		}
-	#		else
-	#		{
-	#			// disable quota
-	#			$quota_value = @imap_set_quota($this->mbox, "user.".$_username, -1);
-	#		}
-	#	}
-
-		function isSentFolder($_folderName)
+		/**
+		 * _getSpecialUseFolder
+		 * abstraction layer for getDraftFolder, getTemplateFolder, getTrashFolder and getSentFolder
+		 * @var $type string the type to fetch (Drafts|Template|Trash|Sent)
+		 * @return mixed strin or false
+		 */
+		function _getSpecialUseFolder($_type, $_checkexistance=TRUE)
 		{
-			if(empty($this->mailPreferences->preferences['sentFolder'])) {
+			static $types = array(
+				'Drafts'=>array('prefName'=>'draftFolder','profileKey'=>'draftfolder','autoFolderName'=>'Drafts'),
+				'Template'=>array('prefName'=>'templateFolder','profileKey'=>'templatefolder','autoFolderName'=>'Templates'),
+				'Trash'=>array('prefName'=>'trashFolder','profileKey'=>'trashfolder','autoFolderName'=>'Trash'),
+				'Sent'=>array('prefName'=>'sentFolder','profileKey'=>'sentfolder','autoFolderName'=>'Sent'),
+			);
+			if (!isset($types[$_type]))
+			{
+				error_log(__METHOD__.__LINE__.' '.$_type.' not supported for '.__METHOD__);
+				return false;
+			}
+			if (is_null(self::$specialUseFolders) || empty(self::$specialUseFolders)) self::$specialUseFolders = $this->getSpecialUseFolders();
+
+			//highest precedence
+			$_folderName = $this->mailPreferences->ic_server[$this->profileID]->$types[$_type]['profileKey'];
+			//check prefs next
+			if (empty($_folderName)) $_folderName = $this->mailPreferences->preferences[$types[$_type]['prefName']];
+			// does the folder exist???
+			if ($_checkexistance && $_folderName !='none' && !self::folderExists($_folderName)) {
+				$_folderName = false;
+			}
+			//no (valid) folder found yet; try specialUseFolders
+			if (empty($_folderName) && is_array(self::$specialUseFolders) && ($f = array_search($_type,self::$specialUseFolders))) $_folderName = $f;
+			//no specialUseFolder; try some Defaults
+			if (empty($_folderName) && isset($types[$_type]))
+			{
+				$nameSpace = $this->_getNameSpaces();
+				$prefix='';
+				if (isset($nameSpace['personal'])) $prefix = $nameSpace['personal']['prefix'];
+				if (self::folderExists($prefix.$types[$_type]['autoFolderName'])) $_folderName = $prefix.$types[$_type]['autoFolderName'];
+			}
+			return $_folderName;
+		}
+
+		function getDraftFolder($_checkexistance=TRUE)
+		{
+			return $this->_getSpecialUseFolder('Drafts', $_checkexistance);
+		}
+
+		function getTemplateFolder($_checkexistance=TRUE)
+		{
+			return $this->_getSpecialUseFolder('Template', $_checkexistance);
+		}
+
+		function getTrashFolder($_checkexistance=TRUE)
+		{
+			return $this->_getSpecialUseFolder('Trash', $_checkexistance);
+		}
+
+		function getSentFolder($_checkexistance=TRUE)
+		{
+			return $this->_getSpecialUseFolder('Sent', $_checkexistance);
+		}
+
+		function isSentFolder($_folderName, $_checkexistance=TRUE)
+		{
+			$sentFolder = $this->getSentFolder();
+			if(empty($sentFolder)) {
 				return false;
 			}
 			// does the folder exist???
-			if (!self::folderExists($_folderName)) {
+			if ($_checkexistance && !self::folderExists($_folderName)) {
 				return false;
 			}
 
-			if(false !== stripos($_folderName, $this->mailPreferences->preferences['sentFolder'])) {
+			if(false !== stripos($_folderName, $sentFolder)) {
 				return true;
 			} else {
 				return false;
 			}
 		}
 
-		function isDraftFolder($_folderName)
+		/**
+		 * checks if the Outbox folder exists and is port of the foldername to be checked
+		 */
+		function isOutbox($_folderName, $_checkexistance=TRUE)
 		{
-			if(empty($this->mailPreferences->preferences['draftFolder'])) {
+			if (stripos($_folderName, 'Outbox')===false) {
 				return false;
 			}
 			// does the folder exist???
-			if (!self::folderExists($_folderName)) {
+			if ($_checkexistance && !self::folderExists($_folderName)) {
+				return false;
+			}
+			return true;
+		}
+
+		function isDraftFolder($_folderName, $_checkexistance=TRUE)
+		{
+			$draftFolder = $this->getDraftFolder();
+			if(empty($draftFolder)) {
+				return false;
+			}
+			// does the folder exist???
+			if ($_checkexistance && !self::folderExists($_folderName)) {
 				return false;
 			}
 
-			if(false !== stripos($_folderName, $this->mailPreferences->preferences['draftFolder'])) {
+			if(false !== stripos($_folderName, $draftFolder)) {
 				return true;
 			} else {
 				return false;
 			}
 		}
 
-		function isTemplateFolder($_folderName)
+		function isTrashFolder($_folderName, $_checkexistance=TRUE)
 		{
-			if(empty($this->mailPreferences->preferences['templateFolder'])) {
+			$trashFolder = $this->getTrashFolder();
+			if(empty($trashFolder)) {
 				return false;
 			}
 			// does the folder exist???
-			if (!self::folderExists($_folderName)) {
+			if ($_checkexistance && !self::folderExists($_folderName)) {
 				return false;
 			}
 
-			if(false !== stripos($_folderName, $this->mailPreferences->preferences['templateFolder'])) {
+			if(false !== stripos($_folderName, $trashFolder)) {
 				return true;
 			} else {
 				return false;
 			}
 		}
 
-		function folderExists($_folder, $forceCheck=false)
+		function isTemplateFolder($_folderName, $_checkexistance=TRUE)
+		{
+			$templateFolder = $this->getTemplateFolder();
+			if(empty($templateFolder)) {
+				return false;
+			}
+			// does the folder exist???
+			if ($_checkexistance && !self::folderExists($_folderName)) {
+				return false;
+			}
+
+			if(false !== stripos($_folderName, $templateFolder)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		function folderExists($_folder, $_forceCheck=false)
 		{
 			static $folderInfo;
+			$forceCheck = $_forceCheck;
 			if (empty($_folder))
 			{
-				error_log(__METHOD__.__LINE__.' Called with empty Folder:'.$_folder.function_backtrace());
+				// this error is more or less without significance, unless we force the check
+				if ($_forceCheck===true) error_log(__METHOD__.__LINE__.' Called with empty Folder:'.$_folder.function_backtrace());
 				return false;
 			}
-			// reduce traffic within on request
+			// reduce traffic within the Instance per User; Expire every 5 Minutes
 			//error_log(__METHOD__.__LINE__.' Called with Folder:'.$_folder.function_backtrace());
-			if (isset($folderInfo[$_folder])) return $folderInfo[$_folder];
+			if (is_null($folderInfo)) $folderInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*5);
+			//error_log(__METHOD__.__LINE__.'Cached Info on Folder:'.$_folder.' for Profile:'.$this->profileID.($forceCheck?'(forcedCheck)':'').':'.array2string($folderInfo));
+			if (!empty($folderInfo) && isset($folderInfo[$this->profileID]) && isset($folderInfo[$this->profileID][$_folder]) && $forceCheck===false)
+			{
+				//error_log(__METHOD__.__LINE__.' Using cached Info on Folder:'.$_folder.' for Profile:'.$this->profileID);
+				return $folderInfo[$this->profileID][$_folder];
+			}
+			else
+			{
+				if ($forceCheck === false)
+				{
+					//error_log(__METHOD__.__LINE__.' No cached Info on Folder:'.$_folder.' for Profile:'.$this->profileID.' FolderExistsInfoCache:'.array2string($folderInfo[$this->profileID]));
+					$forceCheck = true; // try to force the check, in case there is no connection, we may need that
+				}
+			}
 
 			// does the folder exist???
-			//error_log(__METHOD__."->Connected?".$this->icServer->_connected.", ".$_folder.", ".$forceCheck);
-			if ((!($this->icServer->_connected == 1)) && $forceCheck) {
-				//error_log(__METHOD__."->NotConnected and forceCheck");
+			//error_log(__METHOD__."->Connected?".$this->icServer->_connected.", ".$_folder.", ".($forceCheck?' forceCheck activated':'dont check on server'));
+			if ((!($this->icServer->_connected == 1)) && $forceCheck || empty($folderInfo) || !isset($folderInfo[$this->profileID]) || !isset($folderInfo[$this->profileID][$_folder])) {
+				//error_log(__METHOD__."->NotConnected and forceCheck with profile:".$this->profileID);
 				//return false;
 				//try to connect
-				if (!$this->icServer->_connected) $this->openConnection();
+				if (!$this->icServer->_connected) $this->openConnection($this->profileID,false);
 			}
-			if(($this->icServer instanceof defaultimap)) $folderInfo[$_folder] = $this->icServer->mailboxExist($_folder);
-			//error_log(__METHOD__.__LINE__.' Folder Exists:'.$folderInfo[$_folder]);
-
-			if(($folderInfo[$_folder] instanceof PEAR_Error) || $folderInfo[$_folder] !== true)
+			if(($this->icServer instanceof defaultimap))
 			{
-				return false;
-			} else {
-				return true;
+				$folderInfo[$this->profileID][$_folder] = $this->icServer->mailboxExist($_folder); //LIST Command, may return OK, but no attributes
+				if ($folderInfo[$this->profileID][$_folder]==false)
+				{
+					// some servers dont serve the LIST command in certain cases; this is a ServerBUG and
+					// we try to work around it here.
+					if ((isset($this->mailPreferences->preferences['trustServersUnseenInfo']) &&
+						$this->mailPreferences->preferences['trustServersUnseenInfo']==false) ||
+						(isset($this->mailPreferences->preferences['trustServersUnseenInfo']) &&
+						$this->mailPreferences->preferences['trustServersUnseenInfo']==2)
+					)
+					{
+						$nameSpace = $this->_getNameSpaces();
+						if (isset($nameSpace['personal'])) unset($nameSpace['personal']);
+						$prefix = $this->getFolderPrefixFromNamespace($nameSpace, $_folder);
+						if ($prefix != '' && stripos($_folder,$prefix) !== false)
+						{
+							if(!PEAR::isError($r = $this->_getStatus($_folder)) && is_array($r)) $folderInfo[$this->profileID][$_folder] = true;
+						}
+					}
+				}
 			}
+			//error_log(__METHOD__.__LINE__.' Folder Exists:'.$folderInfo[$this->profileID][$_folder].function_backtrace());
+
+			if(!empty($folderInfo) && isset($folderInfo[$this->profileID][$_folder]) &&
+				($folderInfo[$this->profileID][$_folder] instanceof PEAR_Error) || $folderInfo[$this->profileID][$_folder] !== true)
+			{
+				$folderInfo[$this->profileID][$_folder] = false; // set to false, whatever it was (to have a valid returnvalue for the static return)
+			}
+			egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,$expiration=60*5);
+			return (!empty($folderInfo) && isset($folderInfo[$this->profileID][$_folder]) ? $folderInfo[$this->profileID][$_folder] : false);
 		}
 
 		function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true)
@@ -2808,7 +2993,73 @@
 				#error_log(__METHOD__." open new Connection ".print_r($this->icServer->_connected,true));
 			}
 			#error_log(print_r($this->icServer->_connected,true));
+			//make sure we are working with the correct hierarchyDelimiter on the current connection, calling getHierarchyDelimiter with false to reset the cache
+			$hD = $this->getHierarchyDelimiter(false);
+			self::$specialUseFolders = $this->getSpecialUseFolders();
 			return $tretval;
+		}
+
+		/**
+		 * getSpecialUseFolders
+		 * @ToDo: could as well be static, when icServer is passed
+		 * @return mixed null/array
+		 */
+		function getSpecialUseFolders()
+		{
+			//error_log(__METHOD__.__LINE__.':'.$this->icServer->ImapServerId.' Connected:'.$this->icServer->_connected);
+			static $_specialUseFolders;
+			if (is_null($_specialUseFolders)||empty($_specialUseFolders)) $_specialUseFolders = egw_cache::getCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*24*5);
+			if (isset($_specialUseFolders[$this->icServer->ImapServerId]) &&!empty($_specialUseFolders[$this->icServer->ImapServerId]))
+			{
+				if(($this->icServer instanceof defaultimap))
+				{
+					//error_log(__METHOD__.__LINE__.array2string($specialUseFolders[$this->icServer->ImapServerId]));
+					// array('Drafts', 'Templates', 'Sent', 'Trash', 'Junk', 'Outbox');
+					if (empty($this->icServer->trashfolder) && ($f = array_search('Trash',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->trashfolder = $f;
+					if (empty($this->icServer->draftfolder) && ($f = array_search('Drafts',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->draftfolder = $f;
+					if (empty($this->icServer->sentfolder) && ($f = array_search('Sent',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->sentfolder = $f;
+					if (empty($this->icServer->templatefolder) && ($f = array_search('Templates',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->templatefolder = $f;
+				}
+				//error_log(__METHOD__.__LINE__.array2string($_specialUseFolders[$this->icServer->ImapServerId]));
+				self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId]; // make sure this one is set on function call
+				return $_specialUseFolders[$this->icServer->ImapServerId];
+			}
+			if(($this->icServer instanceof defaultimap) && $this->icServer->_connected)
+			{
+				//error_log(__METHOD__.__LINE__);
+				if(($this->hasCapability('SPECIAL-USE')))
+				{
+					//error_log(__METHOD__.__LINE__);
+					$ret = $this->icServer->getSpecialUseFolders();
+					if (PEAR::isError($ret))
+					{
+						$_specialUseFolders[$this->icServer->ImapServerId]=array();
+					}
+					else
+					{
+						foreach ($ret as $k => $f)
+						{
+							if (isset($f['ATTRIBUTES']) && !empty($f['ATTRIBUTES']) &&
+								!in_array('\\NonExistent',$f['ATTRIBUTES']))
+							{
+								foreach (self::$autoFolders as $i => $n) // array('Drafts', 'Templates', 'Sent', 'Trash', 'Junk', 'Outbox');
+								{
+									if (in_array('\\'.$n,$f['ATTRIBUTES'])) $_specialUseFolders[$this->icServer->ImapServerId][$f['MAILBOX']] = $n;
+								}
+							}
+						}
+					}
+					egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$_specialUseFolders, $expiration=60*60*24*5);
+				}
+				//error_log(__METHOD__.__LINE__.array2string($_specialUseFolders[$this->icServer->ImapServerId]));
+				if (empty($this->icServer->trashfolder) && ($f = array_search('Trash',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->trashfolder = $f;
+				if (empty($this->icServer->draftfolder) && ($f = array_search('Drafts',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->draftfolder = $f;
+				if (empty($this->icServer->sentfolder) && ($f = array_search('Sent',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->sentfolder = $f;
+				if (empty($this->icServer->templatefolder) && ($f = array_search('Templates',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->templatefolder = $f;
+			}
+			self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId]; // make sure this one is set on function call
+			//error_log(__METHOD__.__LINE__.array2string($_specialUseFolders[$this->icServer->ImapServerId]));
+			return $_specialUseFolders[$this->icServer->ImapServerId];
 		}
 
 		/**

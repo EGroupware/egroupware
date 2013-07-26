@@ -891,14 +891,14 @@
 			// decide where to save the message (default to draft folder, if we find nothing else)
 			// if the current folder is in draft or template folder save it there
 			// if it is called from printview then save it with the draft folder
-			$savingDestination = ($this->preferences->ic_server[0]->draftfolder ? $this->preferences->ic_server[0]->draftfolder : $this->preferencesArray['draftFolder']);
+			$savingDestination = $bofelamimail->getDraftFolder();
 			if (empty($this->sessionData['messageFolder']) && !empty($this->sessionData['mailbox'])) $this->sessionData['messageFolder'] = $this->sessionData['mailbox'];
 			if ($bofelamimail->isDraftFolder($this->sessionData['messageFolder'])
 				|| $bofelamimail->isTemplateFolder($this->sessionData['messageFolder']))
 			{
 				$savingDestination = $this->sessionData['messageFolder'];
 			}
-			if (  !empty($_formData['printit']) && $_formData['printit'] == 0 ) $savingDestination = ($this->preferences->ic_server[0]->draftfolder ? $this->preferences->ic_server[0]->draftfolder : $this->preferencesArray['draftFolder']);
+			if (  !empty($_formData['printit']) && $_formData['printit'] == 0 ) $savingDestination = $bofelamimail->getDraftFolder();
 
 			if (count($mailAddr)>0) $BCCmail = $mail->AddrAppend("Bcc",$mailAddr);
 			$bofelamimail->openConnection();
@@ -1014,14 +1014,17 @@
 			}
 			#error_log("Mail Sent.!");
 			$folder = (array)$this->sessionData['folder'];
-			if(isset($this->preferences->preferences['sentFolder']) &&
-				$this->preferences->preferences['sentFolder'] != 'none' &&
+			$sentFolder = $this->bofelamimail->getSentFolder();
+			if(isset($sentFolder) &&
+				$sentFolder != 'none' &&
 				$messageIsDraft == false) {
-				$folder[] = $this->preferences->preferences['sentFolder'];
+				$folder[] = $sentFolder;
 			}
 			if($messageIsDraft == true) {
-			   	if(!empty($this->preferences->preferences['draftFolder'])) {
-				   	$folder[] = $this->sessionData['folder'] = array($this->preferences->preferences['draftFolder']);
+				$draftFolder = $this->bofelamimail->getDraftFolder();
+			   	if(!empty($draftFolder)) {
+				   	$folder[] = $draftFolder;
+					$this->sessionData['folder'] = array($draftFolder);
 			   	}
 			}
 			$folder = array_unique($folder);

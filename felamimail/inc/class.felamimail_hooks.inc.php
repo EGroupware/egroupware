@@ -52,6 +52,18 @@ class felamimail_hooks
 					#_debug_array($folderData);
 					$folderList[$folderName] = $folderInfo->displayName;
 				}
+				if ($GLOBALS['type'] === 'user')
+				{
+					$trashFolder    = $bofelamimail->getTrashFolder();
+					$draftFolder	= $bofelamimail->getDraftFolder();
+					$templateFolder = $bofelamimail->getTemplateFolder();
+					$sentFolder		= $bofelamimail->getSentFolder();
+					// use displaynames, if available
+					if (isset($folderList[$trashFolder])) $trashFolder = $folderList[$trashFolder];
+					if (isset($folderList[$draftFolder])) $draftFolder = $folderList[$draftFolder];
+					if (isset($folderList[$templateFolder])) $templateFolder = $folderList[$templateFolder];
+					if (isset($folderList[$sentFolder])) $sentFolder = $folderList[$sentFolder];
+				}
 				$bofelamimail->closeConnection();
 			}
 
@@ -357,7 +369,9 @@ class felamimail_hooks
 			),
 			'trashFolder' => array(
 				'type'   => 'select',
-				'label'  => 'trash folder',
+				'label'  => lang('trash folder'),
+				'help'   => (isset($trashFolder) && !empty($trashFolder)?lang('The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.',$trashFolder):''),
+				'no_lang'=> true,
 				'name'   => 'trashFolder',
 				'values' => $trashOptions,
 				'xmlrpc' => True,
@@ -365,7 +379,9 @@ class felamimail_hooks
 			),
 			'sentFolder' => array(
 				'type'   => 'select',
-				'label'  => 'sent folder',
+				'label'  => lang('sent folder'),
+				'help'   => (isset($sentFolder) && !empty($sentFolder)?lang('The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.',$sentFolder):''),
+				'no_lang'=> true,
 				'name'   => 'sentFolder',
 				'values' => $sentOptions,
 				'xmlrpc' => True,
@@ -373,20 +389,24 @@ class felamimail_hooks
 			),
 			'draftFolder' => array(
 				'type'   => 'select',
-				'label'  => 'draft folder',
+				'label'  => lang('draft folder'),
+				'help'   => (isset($draftFolder) && !empty($draftFolder)?lang('The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.',$draftFolder):''),
+				'no_lang'=> true,
 				'name'   => 'draftFolder',
 				'values' => $draftOptions,
 				'xmlrpc' => True,
 				'admin'  => False,
 			),
-		    'templateFolder' => array(
-		        'type'   => 'select',
-		        'label'  => 'template folder',
-		        'name'   => 'templateFolder',
-		        'values' => $templateOptions,
-		        'xmlrpc' => True,
-		        'admin'  => False,
-		    ),
+			'templateFolder' => array(
+				'type'   => 'select',
+				'label'  => lang('template folder'),
+				'help'   => (isset($templateFolder) && !empty($templateFolder)?lang('The folder <b>%1</b> will be used, if there is nothing set here, and no valid predefine given.',$templateFolder):''),
+				'no_lang'=> true,
+				'name'   => 'templateFolder',
+				'values' => $templateOptions,
+				'xmlrpc' => True,
+				'admin'  => False,
+			),
 			'showAllFoldersInFolderPane' => array(
 				'type'   => 'select',
 				'label'  => 'show all Folders (subscribed AND unsubscribed) in Main Screen Folder Pane',
@@ -535,7 +555,7 @@ class felamimail_hooks
 					'tooltip'	=> lang('mark as deleted'),
 				),
 			);
-			
+
 			foreach($navbarImages as $buttonName => $buttonInfo) {
 				$navbarButtons .= $uiwidgets->navbarButton($buttonName, $buttonInfo['action'], $buttonInfo['tooltip']);
 			}
@@ -592,7 +612,7 @@ class felamimail_hooks
 			//_debug_array($mailbox);
 
 			$icServerID = 0;
-			if (is_object($preferences)) 
+			if (is_object($preferences))
 			{
 				// gather profile data
 				$imapServer =& $preferences->getIncomingServer($icServerID);
@@ -625,7 +645,7 @@ class felamimail_hooks
 				if ($imapServer->_connected != 1) $connectionStatus = $bofelamimail->openConnection($icServerID);
 				$folderObjects = $bofelamimail->getFolderObjects(true, false);
 				$folderStatus = $bofelamimail->getFolderStatus($mailbox);
-	
+
 				// the data needed here are collected at the start of this function
 				if (!isset($activeIdentity->id) && $selectedID == 0) {
 					$identities[0] = $activeIdentity->realName.' '.$activeIdentity->organization.' <'.$activeIdentity->emailAddress.'>';
@@ -657,10 +677,10 @@ class felamimail_hooks
 				//_debug_array($folderObjects);
 				$folderTree = $uiwidgets->createHTMLFolder
 				(
-					$folderObjects, 
-					$mailbox, 
+					$folderObjects,
+					$mailbox,
 					$folderStatus['unseen'],
-					lang('IMAP Server'), 
+					lang('IMAP Server'),
 					$imapServer->username.'@'.$imapServer->host,
 					'divFolderTree',
 					FALSE

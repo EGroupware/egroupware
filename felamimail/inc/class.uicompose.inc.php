@@ -128,6 +128,8 @@
 			if((bool)$_POST['saveAsDraft'] == true) {
 				$formData['isDraft'] = 1;
 				// save as draft
+				$folder = $this->bofelamimail->getDraftFolder();
+				$this->bofelamimail->reopen($folder);
 				$messageUid = $this->bocompose->saveAsDraft($formData);
 				if (!$messageUid) {
 					print "<script type=\"text/javascript\">alert('".lang("Error: Could not save Message as Draft")."');</script>";
