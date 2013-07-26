@@ -1180,6 +1180,21 @@ class Net_IMAPProtocol {
 
 
 
+    /**
+     * Send the  LIST  Command for SPECIAL-USE folders
+     *
+     * @return mixed Returns a PEAR_Error with an error message on any
+     *               kind of failure, or true on success.
+     * @access public
+     * @since  1.0
+     */
+    function cmdListSpecialUse($mailbox_base, $mailbox)
+    {
+        $mailbox_name=$this->_createQuotedString($mailbox);
+        $mailbox_base=$this->_createQuotedString($mailbox_base);
+		//error_log(__METHOD__.__LINE__."(SPECIAL-USE) $mailbox_base $mailbox_name");
+        return $this->_genericCommand('LIST', "(SPECIAL-USE) $mailbox_base $mailbox_name" );
+    }
 
 
 
