@@ -344,10 +344,16 @@ class Net_IMAP extends Net_IMAPProtocol {
         if (PEAR::isError($ret)) {
             return $ret;
         }
-        if(strtoupper( $ret["RESPONSE"]["CODE"]) != "OK" ){
+		if (strtoupper($ret["RESPONSE"]["CODE"]) != "OK" && count($ret['PARSED'])) error_log(__METHOD__.__LINE__.' ResposeCode not OK but found:'.count($ret['PARSED']).' parsed Responses for '.$msg_id.' PartId'.$part_id);
+        if(strtoupper( $ret["RESPONSE"]["CODE"]) != "OK" && !empty($ret["RESPONSE"]["CODE"])){
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
-        $ret=$ret["PARSED"][0]["EXT"][$resp_command]["CONTENT"];
+        foreach($ret["PARSED"] as $key => $value)
+        {
+            if (isset($ret["PARSED"][$key]["EXT"][$command]["CONTENT"])) {$found = $key; break;}
+            if (isset($ret["PARSED"][$key]["EXT"][$resp_command]["CONTENT"])) {$found = $key; break;}
+        }
+        $ret=($ret["PARSED"][$found]["EXT"][$resp_command]["CONTENT"]?$ret["PARSED"][$found]["EXT"][$resp_command]["CONTENT"]:$ret["PARSED"][$found]["EXT"][$command]["CONTENT"]);
         return $ret;
     }
 
