@@ -321,7 +321,7 @@ class uiaccountsel
 		egw_LAB.wait(function() {
 			if (\$j().chosen)
 				window.setTimeout(function() {
-					\$j('#$element_id').unchosen().chosen({placeholder_text: '".lang('Select multiple accounts')."'});
+					\$j('#$element_id').unchosen().chosen({width:'90%', placeholder_text: '".lang('Select multiple accounts')."'});
 				},200);
 		});
 </script>";
