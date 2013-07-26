@@ -5,42 +5,55 @@
 		<script type="text/javascript">
 var spellerObject;
 var controlWindowObj;
+initSpellerObject();
 
-if( parent.opener ) {
-	spellerObject = parent.opener.speller;
+function initSpellerObject() {
+	if( parent.opener ) {
+		spellerObject = parent.opener.speller;
+	}
+
+	if( typeof parent.opener == 'undefined' && parent.parent.opener) {
+		spellerObject = parent.parent.opener.speller;
+	}
 }
 
 function ignore_word() {
+	if( !spellerObject ) initSpellerObject();
 	if( spellerObject ) {
 		spellerObject.ignoreWord();
 	}
 }
 
 function ignore_all() {
+	if( !spellerObject ) initSpellerObject();
 	if( spellerObject ) {
 		spellerObject.ignoreAll();
 	}
 }
 
 function replace_word() {
+	if( !spellerObject ) initSpellerObject();
 	if( spellerObject ) {
 		spellerObject.replaceWord();
 	}
 }
 
 function replace_all() {
+	if( !spellerObject ) initSpellerObject();
 	if( spellerObject ) {
 		spellerObject.replaceAll();
 	}
 }
 
 function end_spell() {
+	if( !spellerObject ) initSpellerObject();
 	if( spellerObject ) {
 		spellerObject.terminateSpell();
 	}
 }
 
 function undo() {
+	if( !spellerObject ) initSpellerObject();
 	if( spellerObject ) {
 		spellerObject.undo();
 	}
