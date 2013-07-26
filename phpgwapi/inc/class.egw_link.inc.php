@@ -8,7 +8,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright 2001-2011 by RalfBecker@outdoor-training.de
+ * @copyright 2001-2013 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package api
  * @subpackage link
@@ -370,15 +370,16 @@ class egw_link extends solink
 	 * returns array of links to $app,$id (reimplemented to deal with not yet created items)
 	 *
 	 * @param string $app appname
-	 * @param string/array $id id of entry in $app or array of links if entry not yet created
-	 * @param string $only_app if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
+	 * @param string|array $id id(s) in $app
+	 * @param string $only_app='' if set return only links from $only_app (eg. only addressbook-entries) or NOT from if $only_app[0]=='!'
 	 * @param string $order='link_lastmod DESC' defaults to newest links first
 	 * @param boolean $cache_titles=false should all titles be queryed and cached (allows to query each link app only once!)
 	 * 	This option also removes links not viewable by current user from the result!
-	 * @param boolean $deleted Include links that have been flagged as deleted, waiting for purge.
-	 * @return array of links or empty array if no matching links found
+	 * @param boolean $deleted=false Include links that have been flagged as deleted, waiting for purge of linked record.
+	 * @param int $limit=null number of entries to return, only affects links, attachments are allways reported!
+	 * @return array id => links pairs if $id is an array or just the links (only_app: ids) or empty array if no matching links found
 	 */
-	static function get_links( $app,$id,$only_app='',$order='link_lastmod DESC',$cache_titles=false,$deleted=false )
+	static function get_links($app, $id, $only_app='', $order='link_lastmod DESC',$cache_titles=false, $deleted=false, $limit=null)
 	{
 		if (self::DEBUG) echo "<p>egw_link::get_links(app='$app',id='$id',only_app='$only_app',order='$order',deleted='$deleted')</p>\n";
 
@@ -402,7 +403,7 @@ class egw_link extends solink
 			}
 			return $ids;
 		}
-		$ids = solink::get_links($app,$id,$only_app,$order,$deleted);
+		$ids = solink::get_links($app, $id, $only_app, $order, $deleted, $limit);
 		if (empty($only_app) || $only_app == self::VFS_APPNAME ||
 		    ($only_app[0] == '!' && $only_app != '!'.self::VFS_APPNAME))
 		{
