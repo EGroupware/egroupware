@@ -1,3 +1,20 @@
+egroupware (1.8.004.20130727) hardy; urgency=low
+
+  * WebDAV/CalDAV/CardDAV: fixed basic authentication via redirect-rule to use $_SERVER["REDIRECT_HTTP_AUTHORIZATION"] as it is used by newer Apache versions, also backported fix for non-ascii chars in password from trunk
+  * Async service/Backup: updating job to next scheduled time BEFORE running it, to copy with jobs running longer then async frequency of 5min, eg. backup
+  * PostgreSQL: fix for SQL error eg. on update from 1.8.001 to 1.8.004 from 9.1 on
+  * Addressbook/CardDAV: PUT returned empty ETag, proably causing unnecessary reloads of contacts
+  * Calendar: use "default" filter for home screen, instead of "all" which shows canceled events too
+  * Setup: fixed PHP Fatal error due to missing egw-pear in include path required by new EMailAdmin introduced in last package
+  * eMail/Sieve: when editing sieve rules mend double linefeeds returned by IE10 on edit of the vacation-message
+  * eMail/Compose: make address suggestion selectbox scrollable
+  * eMailAdmin/Setup: disabling certificate validation on imaps connection by default for new profiles (can be enabled in EMailAdmin)
+  * eMail/Net-IMAP: harden get raw response against unexpected return results from server; backport of special-use folder retrieval
+  * eMail: implement (backport of) the usage of SPECIAL-USE folders, if supported and provided by MailServer
+  * All apps/custom fields: fixed multiple identical rows, if custom fields where set (introduced in last package)
+
+ -- Ralf Becker <rb@stylite.de>  Sat, 27 Jul 2013 10:35:46 +0200
+
 egroupware (1.8.004.20130620) hardy; urgency=low
 
   * eMailAdmin/eMail: backport of emailadmin from epl 11.1 to community 1.8 to allow to use mandriva MailAccount and suseMailRecipient LDAP Schema and support of storing email attributes in sql database
