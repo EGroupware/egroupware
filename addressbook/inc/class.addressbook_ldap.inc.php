@@ -893,7 +893,7 @@ class addressbook_ldap
 
 				case 'id':
 				case 'contact_id':
-					$filter .= $this->ids_filter($value);
+					$filters .= $this->ids_filter($value);
 					break;
 
 				default:
