@@ -1,3 +1,21 @@
+egroupware-epl (11.1.20130729-1) hardy; urgency=low
+
+  * eMail/Activesync: improve behavior on connection failure. Return 503 Service unavailable/Retry After on Connection error.
+  * All apps/custom fields: fixed multiple identical rows, if custom fields where set (introduced in last package)
+  * Tracker: preserve edit-mode on automatic mail handling based on original edit-mode of ticket.
+  * Admin/Preferences: fixed not working special char detection in passwords, if you required 4 character classes it always failed
+  * Filemanager/eMail: on attaching files to emails from filemanager; if there is a plus sign within the path, we have to encode it, so the file can be found by filesize after urldecode
+  * EMailAdmin/Setup: disabling certificate validation on imaps connection by default for new profiles (can be enabled in EMailAdmin)
+  * Tracker: fix problem handling preselected tracker-queues when multiple queues are selected
+  * Async service/Backup: updating job to next scheduled time BEFORE running it, to copy with jobs running longer then async frequency of 5min, eg. backup
+  * PostgreSQL/ProjectManager/InfoLog: invalid SQL opening a new entry InfoLog entry
+  * eTemplate/all apps: (silently) limit number of links shown to 1000 newest, to not run into memory_limit or max_execution_time and assuming noone will scroll further down anyway
+  * CKEditor/ASpell: adaption of aspell plugin to work with IE10
+  * eMail/Net-IMAP: harden get raw response against unexpected return results from server
+  * CardDAV/ActiveDirectory/LDAP: fixed typo causing doublication in account-addressbook of eMclient by always returning all accounts in multiget report
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 29 Jul 2013 12:24:54 +0200
+
 egroupware-epl (11.1.20130716-1) hardy; urgency=low
 
   * Active Directory: several small fixes around account creation and setting passwords
