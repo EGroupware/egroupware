@@ -1591,7 +1591,7 @@ window.egw_LAB.wait(function() {
 			$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
 			$content['owner'] = (string) (int) $content['owner'];
 			$content['cat_id'] = $content['cat_id_tree'] ? $content['cat_id_tree'] : $content['cat_id'];
-			$content += $content['private_cfs'];
+			$content += (array)$content['private_cfs'];
 			unset($content['private_cfs']);
 
 			switch($button)
