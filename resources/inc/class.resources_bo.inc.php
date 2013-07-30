@@ -247,6 +247,10 @@ class resources_bo
 			else
 			{
 				$rows[$num]['picture_thumb'] = $this->get_picture($resource);
+				if($rows[$num]['picture_src'] == 'own_src')
+				{
+					$rows[$num]['picture_url'] = $this->get_picture($resource, true);
+				}
 			}
 			$rows[$num]['admin'] = $this->acl->get_cat_admin($resource['cat_id']);
 		}

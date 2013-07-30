@@ -13,7 +13,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.002">
+	<template id="resources.show.rows" template="" lang="" group="0" version="1.9.003">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -54,7 +54,7 @@
 					</hbox>
 				</row>
 				<row class="nmr $row_cont[class]" valign="top">
-					<button align="center" id="${row}[picture_thumb]" onclick="window.open(egw::link('/index.php','menuaction=resources.resources_ui.show&amp;res_id=$row_cont[res_id]'),'','dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes');return false;" image="$row_cont[picture_thumb]" class="thumb"/>
+					<button align="center" id="${row}[picture_thumb]" onclick="if('${row_cont[picture_src]}' == 'own_src') { window.open('{$row_cont[picture_url]}','_blank'); } return false;" image="$row_cont[picture_thumb]" class="thumb"/>
 					<vbox>
 						<description id="${row}[name]" no_lang="1"/>
 						<description id="${row}[short_description]" no_lang="1"/>
@@ -76,14 +76,14 @@
 						<description id="${row}[storage_info]" no_lang="1"/>
 					</vbox>
 					<vbox no_lang="1">
-						<description id="${row}[accessory_of_label]" no_lang="1" href="resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of]" extra_link_popup="850x600"/>
+						<description id="${row}[accessory_of_label]" no_lang="1" options=",resources.resources_ui.edit&amp;res_id=$row_cont[accessory_of],,,,850x600"/>
 						<grid width="100%" id="${row}[accessories]">
 							<columns>
 								<column/>
 							</columns>
 							<rows>
 								<row>
-									<description id="${row}[name]" no_lang="1" href="resources.resources_ui.edit&amp;res_id=$row_cont[acc_id]" extra_link_popup="850x600"/>
+									<description id="${row}[name]" no_lang="1" options=",resources.resources_ui.edit&amp;res_id=$row_cont[acc_id],,,,850x600"/>
 								</row>
 							</rows>
 						</grid>
