@@ -51,4 +51,21 @@ class etemplate_widget_taglist extends etemplate_widget
 		echo json_encode($results);
 		common::egw_exit();
 	}
+	
+	/**
+	 * Search for emails
+	 *
+	 * Uses the mail application if available, or addressbook
+	 */
+	public static function ajax_email() {
+		// If no mail app access, use link system -> addressbook
+		if(!$GLOBALS['egw_info']['apps']['mail'])
+		{
+			$_REQUEST['app'] = 'addressbook-email';
+			return self::ajax_search();
+		}
+		
+		// TODO: this should go to a BO, not a UI object
+		return mail_compose::ajax_searchAddress();
+	}
 }

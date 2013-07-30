@@ -30,7 +30,9 @@ var et2_url = et2_textbox.extend(
 			"ignore": true
 		}
 	},
-
+	
+	// PREG for client-side validation copied from etemplate_widget_url
+	EMAIL_PREG: new RegExp(/^[^\x00-\x20()<>@,;:\".\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}/),
 	/**
 	 * @memberOf et2_url
 	 */
@@ -194,6 +196,11 @@ var et2_url = et2_textbox.extend(
 					e.data.showMessage(e.data.egw().lang("Protocol is required"), "hint", true);
 				}
 				break;
+			case "url-email":
+				if(!e.data.EMAIL_PREG.test(value))
+				{
+					e.data.showMessage("Invalid email","validation_error",true);
+				}
 		}
 	}
 });

@@ -107,6 +107,8 @@ var et2_taglist = et2_selectbox.extend(
 		"tags": { ignore: true}
 	},
 	
+	// Allows sub-widgets to override options to the library
+	lib_options: {},
 	/**
 	 * Construtor
 	 * 
@@ -143,7 +145,7 @@ var et2_taglist = et2_selectbox.extend(
 		// MagicSuggest would replaces our div, so add a wrapper instead
 		this.taglist = $j('<div/>').appendTo(this.div);
 		
-		this.taglist = this.taglist.magicSuggest({
+		var options = jQuery.extend( {
 			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ? this.options.select_options : this.options.autocomplete_url,
 			dataUrlParams: this.options.autocomplete_params,
 			value: this.options.value,
@@ -157,10 +159,11 @@ var et2_taglist = et2_selectbox.extend(
 			allowFreeEntries: this.options.allowFreeEntries,
 			disabled: this.options.disabled || this.options.readonly,
 			editable: !(this.options.disabled || this.options.readonly),
-			selectionRenderer: this.options.tagRenderer || this.selectionRenderer,
+			selectionRenderer: jQuery.proxy(this.options.tagRenderer || this.selectionRenderer,this),
 			renderer: this.options.listRenderer || null,
 			maxSelection: this.options.maxSelection
-		});
+		}, this.lib_options);
+		this.taglist = this.taglist.magicSuggest(options);
 		
 		// Display / hide a loading icon while fetching
 		$j(this.taglist)
@@ -261,6 +264,47 @@ var et2_taglist = et2_selectbox.extend(
 	}
 });
 et2_register_widget(et2_taglist, ["taglist"]);
+
+/**
+ * Taglist customized specifically for emails, which it pulls from the mail application,
+ * or addressbook if mail is not available.  Free entries are allowed, and we render
+ * invalid free entries differently (but still accept them).
+ *
+ * @augments et2_taglist
+ */
+var et2_taglist_email = et2_taglist.extend(
+{
+	attributes: {
+		"autocomplete_url": {
+			"default": "etemplate_widget_taglist::ajax_email::etemplate",
+		},
+		"autocomplete_params": {
+			"default": {},
+		},
+		allowFreeEntries: {
+			"default": true,
+			ignore: true
+		}
+	},
+	lib_options: {
+		// Search function limits to 3 anyway
+		minChars: 3
+	},
+	
+	// PREG for client-side validation copied from etemplate_widget_url
+	EMAIL_PREG: new RegExp(/^[^\x00-\x20()<>@,;:\".\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}/),
+		
+	selectionRenderer: function(item)
+	{
+		// We check free entries for valid email, and render as invalid if it's not.  
+		var valid = item.id != item.label || this.EMAIL_PREG.test(item.id || '');
+		
+		var label = '<span title="'+(typeof item.title != "undefined" ?item.title:'')+'"'+
+			(valid ? '' : 'class="ui-state-error"') + '">'+(item.name ? item.name : item.label)+'</span>';
+		return label;
+	}
+});
+et2_register_widget(et2_taglist_email, ["taglist-email"]);
 
 // Require css
 // TODO: merge into etemplate2.css with all other widgets when done
