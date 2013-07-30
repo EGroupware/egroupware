@@ -856,7 +856,15 @@ class felamimail_bo
 				if (!isset(self::$idna2)) self::$idna2 = new egw_idna;
 				$stringA = array();
 				//$_string = str_replace($rfcAddr[0]->host,self::$idna2->decode($rfcAddr[0]->host),$_string);
-				foreach ((array)$rfcAddr as $_rfcAddr) $stringA[] = imap_rfc822_write_address($_rfcAddr->mailbox,self::$idna2->decode($_rfcAddr->host),$_rfcAddr->personal);
+				foreach ((array)$rfcAddr as $_rfcAddr)
+				{
+					if ($_rfcAddr->host=='.SYNTAX-ERROR.')
+					{
+						$stringA = array();
+						break; // skip idna conversion if we encounter an error here
+					}
+					$stringA[] = imap_rfc822_write_address($_rfcAddr->mailbox,self::$idna2->decode($_rfcAddr->host),$_rfcAddr->personal);
+				}
 				if (!empty($stringA)) $_string = implode(',',$stringA);
 			}
 			if ($_tryIDNConversion==='FORCE')
