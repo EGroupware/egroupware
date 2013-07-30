@@ -131,7 +131,7 @@ var et2_dropdown_button = et2_inputWidget.extend(
 		this.menu = $j(this.default_menu).attr("id",this.internal_ids.menu)
 			.hide()
 			.menu({
-				selected: function(event,ui) {
+				select: function(event,ui) {
 					self.onselect(event,ui.item);
 				}
 			});
