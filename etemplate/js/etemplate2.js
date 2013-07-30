@@ -77,7 +77,7 @@ function etemplate2(_container, _menuaction)
 {
 	if (typeof _menuaction == "undefined")
 	{
-		_menuaction = "etemplate::ajax_process_content";
+		_menuaction = "etemplate_new::ajax_process_content";
 	}
 
 	// Copy the given parameters
@@ -207,7 +207,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	}
 	if(typeof app[appname] == "object")
 	{
-		app_callback = function(et2) {app[appname].et2_ready(et2)};
+		app_callback = function(et2) {app[appname].et2_ready(et2);};
 	}
 	
 	// Create the document fragment into which the HTML will be injected
@@ -615,7 +615,7 @@ function etemplate2_handle_load(_type, _response)
 			var node = document.getElementById(data.DOMNodeID);
 			if(node)
 			{
-				var et2 = new etemplate2(node, "etemplate::ajax_process_content");
+				var et2 = new etemplate2(node, "etemplate_new::ajax_process_content");
 				et2.load(data.name, data.url, data.data);
 				return true;
 			}
