@@ -3675,6 +3675,11 @@ class felamimail_bo
 			error_log(__METHOD__.__LINE__.array2string($retValue->message));
 			$retValue = null;
 		}
+		// if SUBJECT is an array, use thelast one, as we assume something with the unfolding for the subject did not work
+		if (is_array($retValue['SUBJECT']))
+		{
+			$retValue['SUBJECT'] = $retValue['SUBJECT'][count($retValue['SUBJECT'])-1];
+		}
 		return ($decode ? self::decode_header($retValue,true):$retValue);
 	}
 
