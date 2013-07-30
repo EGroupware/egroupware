@@ -393,13 +393,14 @@
 
 			if ($passwd)
 			{
+				$_userData['account_passwd'] = $passwd;
 				try {
 					$auth = new auth();
 					if ($auth->change_password('', $passwd, $_userData['account_id']))
 					{
 						$GLOBALS['hook_values']['account_id'] = $_userData['account_id'];
 						$GLOBALS['hook_values']['old_passwd'] = '';
-						$GLOBALS['hook_values']['new_passwd'] = $_userData['account_passwd'];
+						$GLOBALS['hook_values']['new_passwd'] = $passwd;
 
 						$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
 							'location' => 'changepassword'
