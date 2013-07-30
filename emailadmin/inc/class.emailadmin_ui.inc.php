@@ -375,7 +375,7 @@ class emailadmin_ui extends emailadmin_bo
 								stripos($this->data['imapcapabilities'],'providedefaultquota')!==false))
 					{
 						$classname = $this->data['ea_imap_type'];
-						$classname::setDefaultQuota($this->data['defaultQuota']);
+						call_user_func(array($classname, 'setDefaultQuota'), $this->data['defaultQuota']);
 					}
 					if (parent::save() != 0)
 					{
@@ -411,7 +411,7 @@ class emailadmin_ui extends emailadmin_bo
 		{
 			$preserv['imapcapabilities'] = $content['imapcapabilities'] = str_ireplace(array('providedefaultquota|','|providedefaultquota','providedefaultquota'),'',$preserv['imapcapabilities']);
 		}
-		$content['defaultQuota'] = ((!empty($content['ea_imap_type']) && stripos($content['imapcapabilities'],'providedefaultquota')!==false)?$content['ea_imap_type']::getDefaultQuota():0);
+		$content['defaultQuota'] = ((!empty($content['ea_imap_type']) && stripos($content['imapcapabilities'],'providedefaultquota')!==false)?call_user_func(array($content['ea_imap_type'], 'getDefaultQuota')):0);
 		if (empty($content['defaultQuota'])) unset($content['defaultQuota']);
 		//_debug_array(array(-$content['ea_profile_id']!=$defaultID,$defaultID,-$content['ea_profile_id'],$preserv,$readonlys));
 		if (!empty($msg)) $content['msg'] = $msg;

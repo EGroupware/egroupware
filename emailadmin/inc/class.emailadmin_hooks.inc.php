@@ -134,6 +134,7 @@ class emailadmin_hooks
 		{
 			if (!preg_match('/^class\.([^.]*(smtp|imap|postfix|dovecot|dbmail)[^.*]*)\.inc\.php$/', $file, $matches)) continue;
 			$class_name = $matches[1];
+			if (PHP_VERSION < 5.3 && !in_array($class_name, array('defaultimap', 'cyrusimap', 'emailadmin_dovecot', 'pleskimap', 'emailadmin_smtp', 'smptplesk'))) continue;
 			include_once($dir.'/'.$file);
 			if (!class_exists($class_name)) continue;
 
