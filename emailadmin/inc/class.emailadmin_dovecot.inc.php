@@ -61,6 +61,16 @@ class emailadmin_dovecot extends defaultimap
 	var $user_home;	// = '/var/dovecot/imap/%d/%u';
 
 	/**
+	 * Return description for EMailAdmin
+	 *
+	 * @return string
+	 */
+	public static function description()
+	{
+		return self::DESCRIPTION;
+	}
+
+	/**
 	 * Opens a connection to a imap server
 	 *
 	 * Reimplemented to prefix adminUsername with real username (separated by an asterisk)

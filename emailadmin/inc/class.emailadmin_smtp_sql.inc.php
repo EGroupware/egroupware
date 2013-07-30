@@ -65,6 +65,16 @@ class emailadmin_smtp_sql extends emailadmin_smtp
 	}
 
 	/**
+	 * Return description for EMailAdmin
+	 *
+	 * @return string
+	 */
+	public static function description()
+	{
+		return self::DESCRIPTION;
+	}
+
+	/**
 	 * Get all email addresses of an account
 	 *
 	 * @param string $_accountName

@@ -57,6 +57,16 @@ class pleskimap extends defaultimap
 	var $error = false;
 
 	/**
+	 * Return description for EMailAdmin
+	 *
+	 * @return string
+	 */
+	public static function description()
+	{
+		return self::DESCRIPTION;
+	}
+
+	/**
 	 * Create a full mailbox or just forward, depending on the given email address
 	 * If email matches the default domain, we create a full mailbox, otherwise we create a forward
 	 *

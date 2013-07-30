@@ -195,7 +195,7 @@ class defaultimap extends Net_IMAP
 	 */
 	public static function description()
 	{
-		return static::DESCRIPTION;
+		return self::DESCRIPTION;
 	}
 
 	/**

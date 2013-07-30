@@ -46,6 +46,16 @@ class cyrusimap extends defaultimap
 	var $cyrusAdminPassword;
 
 	/**
+	 * Return description for EMailAdmin
+	 *
+	 * @return string
+	 */
+	public static function description()
+	{
+		return self::DESCRIPTION;
+	}
+
+	/**
 	 * Updates an account
 	 *
 	 * @param array $_hookValues only value for key 'account_lid' and 'new_passwd' is used

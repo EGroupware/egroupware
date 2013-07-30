@@ -30,6 +30,16 @@ class dbmailqmailuser extends defaultimap
 	 */
 	const CAPABILITIES = 'default|sieve';
 
+	/**
+	 * Return description for EMailAdmin
+	 *
+	 * @return string
+	 */
+	public static function description()
+	{
+		return self::DESCRIPTION;
+	}
+
 	function addAccount($_hookValues) {
 		return $this->updateAccount($_hookValues);
 	}

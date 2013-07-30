@@ -86,7 +86,7 @@ class emailadmin_smtp
 	 */
 	public static function description()
 	{
-		return static::DESCRIPTION;
+		return self::DESCRIPTION;
 	}
 
 	/**
