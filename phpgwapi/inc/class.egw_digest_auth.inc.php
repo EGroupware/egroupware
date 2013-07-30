@@ -101,9 +101,8 @@ class egw_digest_auth
 			// replace \x encoded non-ascii chars in password, as they are used eg. by Thunderbird for German umlauts
 			if (strpos($password, '\\x') !== false)
 			{
-				$password = preg_replace_callback('/\\\\x([0-9A-F]{2})/i', function($matches){
-					return chr(hexdec($matches[1]));
-				}, $password);
+				$password = preg_replace_callback('/\\\\x([0-9A-F]{2})/i',
+					create_function('$matches', 'return chr(hexdec($matches[1]));'), $password);
 			}
 			// try translating the password from iso-8859-1 to utf-8
 			$password = translation::convert($password, 'iso-8859-1');
