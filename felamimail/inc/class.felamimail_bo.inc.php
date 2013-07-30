@@ -854,8 +854,10 @@ class felamimail_bo
 			{
 				$rfcAddr = imap_rfc822_parse_adrlist($_string,'');
 				if (!isset(self::$idna2)) self::$idna2 = new egw_idna;
+				$stringA = array();
 				//$_string = str_replace($rfcAddr[0]->host,self::$idna2->decode($rfcAddr[0]->host),$_string);
-				$_string = imap_rfc822_write_address($rfcAddr[0]->mailbox,self::$idna2->decode($rfcAddr[0]->host),$rfcAddr[0]->personal);
+				foreach ((array)$rfcAddr as $_rfcAddr) $stringA[] = imap_rfc822_write_address($_rfcAddr->mailbox,self::$idna2->decode($_rfcAddr->host),$_rfcAddr->personal);
+				if (!empty($stringA)) $_string = implode(',',$stringA);
 			}
 			if ($_tryIDNConversion==='FORCE')
 			{

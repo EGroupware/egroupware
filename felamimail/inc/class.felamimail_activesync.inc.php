@@ -997,16 +997,21 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 	public function GetMessage($folderid, $id, $truncsize, $bodypreference=false, $optionbodypreference=false, $mimesupport = 0)
 	{
 		//$this->debugLevel=4;
-		debugLog (__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference));
+		debugLog(__METHOD__.__LINE__.' FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference));
 		$stat = $this->StatMessage($folderid, $id);
 		if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__.array2string($stat));
 		// StatMessage should reopen the folder in question, so we dont need folderids in the following statements.
 		if ($stat)
 		{
-			debugLog(__METHOD__.__LINE__." Message $id with stat ");
+			debugLog(__METHOD__.__LINE__." Message $id with stat ".array2string($stat));
 			// initialize the object
 			$output = new SyncMail();
 			$headers = $this->mail->getMessageHeader($id,'',true);
+			if (empty($headers))
+			{
+				error_log(__METHOD__.__LINE__.' Retrieval of Headers Failed! for .'.$this->account.' ServerID:'.self::$profileID.'FolderID:'.$folderid.' ID:'.$id.' TruncSize:'.$truncsize.' Bodypreference: '.array2string($bodypreference).' Stat was:'.array2string($stat));
+				return $output;//empty object
+			}
 			//$rawHeaders = $this->mail->getMessageRawHeader($id);
 			// simple style
 			// start AS12 Stuff (bodypreference === false) case = old behaviour
@@ -1270,6 +1275,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 			$output->displayto = ($headers['TO'] ? $headers['TO']:null); //$stat['FETCHED_HEADER']['to_name']
 			// $output->to = $this->messages[$id]['to_address']; //$stat['FETCHED_HEADER']['to_name']
 			// $output->from = $this->messages[$id]['sender_address']; //$stat['FETCHED_HEADER']['sender_name']
+//error_log(__METHOD__.__LINE__.' To:'.$headers['TO']);
 			$output->to = $headers['TO'];
 //error_log(__METHOD__.__LINE__.' From:'.$headers['FROM'].' Charset:'.$this->mail->detect_encoding($headers['FROM']));
 			$output->from = $headers['FROM'];
