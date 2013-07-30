@@ -183,7 +183,11 @@ class boetemplate extends soetemplate
 			// used as name for a button like "delete[$row_cont[something]]" --> quote contained quotes (' or ")
 			if (in_array($name[$pos_var-1],array('[',"'",'{')) && preg_match('/[\'\[]{?('.self::PHP_VAR_PREG.')}?[\'\]]+/',$name,$matches))
 			{
-				eval('$value = '.$matches[1].';');
+				if (eval($code='$value = '.$matches[1].';') === false)
+				{
+					error_log(__METHOD__."(name='$name', c='$c', row=$row, c_='$c_', row_=$row_, ...) line ".__LINE__." ERROR parsing: $code");
+					error_log(function_backtrace());
+				}
 				if (is_array($value) && $name[$pos_var-1] == "'")	// arrays are only supported for '
 				{
 					foreach($value as &$val)
@@ -202,7 +206,11 @@ class boetemplate extends soetemplate
 			// check if name is assigned in an url --> urlendcode contained & as %26, as egw::link explodes it on &
 			if ($name[$pos_var-1] == '=' && preg_match('/[&?]([A-Za-z0-9_]+(\[[A-Za-z0-9_]+\])*)=('.self::PHP_VAR_PREG.')/',$name,$matches))
 			{
-				eval('$value = '.$matches[3].';');
+				if (eval($code='$value = '.$matches[3].';') === false)
+				{
+					error_log(__METHOD__."(name='$name', c='$c', row=$row, c_='$c_', row_=$row_, ...) line ".__LINE__." ERROR parsing: $code");
+					error_log(function_backtrace());
+				}
 				if (is_array($value))	// works only reasonable, if get-parameter uses array notation, eg. &file[]=$cont[filenames]
 				{
 					foreach($value as &$val)
@@ -217,7 +225,11 @@ class boetemplate extends soetemplate
 					$name = str_replace($matches[3],$value,$name);
 				}
 			}
-			eval('$name = "'.str_replace('"','\\"',$name).'";');
+			if (eval($code='$name = "'.str_replace(array('\\', '"'), array('\\\\', '\\"'), $name).'";') === false)
+			{
+					error_log(__METHOD__."(name='$name', c='$c', row=$row, c_='$c_', row_=$row_, ...) line ".__LINE__." ERROR parsing: $code");
+					error_log(function_backtrace());
+			}
 		}
 		if ($is_index_in_content)
 		{
