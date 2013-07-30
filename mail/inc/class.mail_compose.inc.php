@@ -2535,9 +2535,9 @@ $content['mailtext'] = 'garbage';
 		common::egw_exit();
 	}
 
-	function ajax_searchAddress() {
+	public static function ajax_searchAddress() {
 		$_searchString = trim($_REQUEST['query']);
-		if (strlen($_searchString)>=3 && $GLOBALS['egw_info']['user']['apps']['addressbook']) {
+		if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
 			//error_log(__METHOD__.__LINE__.array2string($_searchString));
 			if (method_exists($GLOBALS['egw']->contacts,'search')) {
 				// 1.3+
@@ -2573,13 +2573,6 @@ $content['mailtext'] = 'garbage';
 					}
 					unset($accounts);
 				}
-			} else {
-				// < 1.3
-				$contacts = $GLOBALS['egw']->contacts->read(0,20,array(
-					'fn' => 1,
-					'email' => 1,
-					'email_home' => 1,
-				), $_searchString, 'tid=n', '', 'fn');
 			}
 		}
 		$results = array();
@@ -2603,7 +2596,13 @@ $content['mailtext'] = 'garbage';
 					}
 					$completeMailString = trim($contact['n_fn'] ? $contact['n_fn'] : $contact['fn']) .' <'. trim($email) .'>';
 					if(!empty($email) && in_array($completeMailString ,$results) === false) {
-						$results[] = array('id'=>$completeMailString, 'label' => htmlspecialchars($completeMailString));
+						$results[] = array(
+							'id'=>$completeMailString,
+							'label' => htmlspecialchars($completeMailString),
+							// Add just name for nice display, with title for hover
+							'name' => htmlspecialchars($contact['n_fn']),
+							'title' => $email
+						 );
 					}
 					if ($i > 10) break;	// we check for # of results here, as we might have empty email addresses
 				}
