@@ -880,8 +880,7 @@ class emailadmin_bo extends so_sql
 			($profile['defaultQuota'] > 0 || (string)$profile['defaultQuota'] === '0') &&
 			stripos(constant($profile['imapType'].'::CAPABILITIES'), 'providedefaultquota') !==false)
 		{
-			$classname = $profile['imapType'];
-			$classname::setDefaultQuota($profile['defaultQuota']);
+			call_user_func(array($profile['imapType'], 'setDefaultQuota'), $profile['defaultQuota']);
 		}
 		self::$sessionData['profile'] = array();
 		$this->saveSessionData();
