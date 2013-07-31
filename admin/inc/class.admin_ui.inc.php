@@ -22,7 +22,7 @@ class admin_ui
 	 * @var array
 	 */
 	public $public_functions = array(
-			'index' => true,
+		'index' => true,
 	);
 
 	/**
@@ -73,6 +73,27 @@ class admin_ui
 		}
 		$sel_options['account_primary_group'] = $sel_options['filter'];
 		unset($sel_options['account_primary_group']['']);
+
+		$actions = array(
+			'view' => array(
+				'onExecute' => 'javaScript:app.admin.group',
+				'caption' => 'Show members',
+				'enableId' => '^/groups/-\\d+',
+				'default' => true,
+			),
+			'edit' => array(
+				'onExecute' => 'javaScript:app.admin.group',
+				'caption' => 'Edit group',
+				'enableId' => '^/groups/-\\d+',
+							),
+			'delete' => array(
+				'onExecute' => 'javaScript:app.admin.group',
+				'confirm' => 'Delete this group',
+				'caption' => 'Delete group',
+				'enableId' => '^/groups/-\\d+',
+			),
+		);
+		$tpl->setElementAttribute('tree', 'actions', $actions);
 
 		$tpl->exec('admin.admin_ui.index', $content, $sel_options);
 	}
@@ -177,7 +198,7 @@ if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole
 		}
 
 		$rows = self::$accounts->search($params);
-		error_log(__METHOD__."() accounts->search(".array2string($params).") total=".self::$accounts->total);
+		//error_log(__METHOD__."() accounts->search(".array2string($params).") total=".self::$accounts->total);
 
 		foreach($rows as &$row)
 		{

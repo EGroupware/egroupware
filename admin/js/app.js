@@ -121,5 +121,41 @@ app.admin = AppJS.extend(
 		{
 			eval(link.substr(11));
 		}
-	}
+	},
+	
+	/**
+	 * View, edit or delete a group callback for tree
+	 * 
+	 * @param Object _action egwAction
+	 * @param Object _senders egwActionObject _senders[0].id holds id
+	 */
+	group: function(_action, _senders)
+	{
+		switch(_action.id)
+		{
+			case 'view':
+				this.run(_senders[0].id, this.et2.getWidgetById('tree'));
+				break;
+				
+			case 'edit':
+			case 'delete':
+				this.splitter.dock();
+				this.iframe.set_src(egw.link('/index.php', { 
+					menuaction: _action.id == 'edit' ? 'admin.uiaccounts.edit_group' : 'admin.uiaccounts.delete_group', 
+					account_id: _senders[0].id.split('/')[2]
+				}));
+				break;
+		}
+	},
+	
+	/**
+	 * Delete a group callback for tree
+	 * 
+	 * @param Object _action egwAction
+	 * @param Object _senders egwActionObject _senders[0].iface.id holds the id
+	 */
+	delete_group: function(_action, _senders)
+	{
+		alert('delete_group '+_senders[0].iface.id);
+	},
 });
