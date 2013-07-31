@@ -26,6 +26,8 @@ class etemplate_widget_taglist extends etemplate_widget
 	 */
 	public function __construct($xml = '')
 	{
+		$this->attrs['allowFreeEntries'] = true;
+		
 		if($xml) {
 			parent::__construct($xml);
 		}
@@ -67,5 +69,49 @@ class etemplate_widget_taglist extends etemplate_widget
 		
 		// TODO: this should go to a BO, not a UI object
 		return mail_compose::ajax_searchAddress();
+	}
+	
+	/**
+	 * Validate input
+	 *
+	 * @param string $cname current namespace
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 * @param array $content
+	 * @param array &$validated=array() validated content
+	 */
+	public function validate($cname, array $expand, array $content, &$validated=array())
+	{
+		$form_name = self::form_name($cname, $this->id, $expand);
+
+		$ok = true;
+		if (!$this->is_readonly($cname, $form_name))
+		{
+			$value = $value_in = self::get_array($content, $form_name);
+
+			error_log("Validating " . array2string($value));
+			error_log("Attrs: " . array2string($this->attrs));
+			error_log($this->type);
+			$allowed = etemplate_widget_menupopup::selOptions($form_name);
+			
+			foreach((array) $value as $key => $val)
+			{
+				if(!$this->attrs['allowFreeEntries'] && !array_key_exists($val,$allowed))
+				{
+					self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($allowed))),'');
+					unset($value[$key]);
+				}
+				if($this->type == 'taglist-email' && !preg_match('/('.etemplate_widget_url::EMAIL_PREG.')?/iu',$val))
+				{
+						self::set_validation_error($form_name,lang("'%1' has an invalid format",$val),'');
+				}
+			}
+			if ($ok && $value === '' && $this->attrs['needed'])
+			{
+				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
+			}
+			$valid =& self::get_array($validated, $form_name, true);
+			$valid = $value;
+			error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value).', allowed='.array2string($allowed));
+		}
 	}
 }
