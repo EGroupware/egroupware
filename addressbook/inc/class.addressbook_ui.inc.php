@@ -1590,7 +1590,7 @@ window.egw_LAB.wait(function() {
 			unset($content['button']);
 			$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
 			$content['owner'] = (string) (int) $content['owner'];
-			$content['cat_id'] = $content['cat_id_tree'] ? $content['cat_id_tree'] : $content['cat_id'];
+			$content['cat_id'] = $this->config['cat_tab'] === 'Tree' ? $content['cat_id_tree'] : $content['cat_id'];
 			$content += (array)$content['private_cfs'];
 			unset($content['private_cfs']);
 
