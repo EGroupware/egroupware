@@ -661,6 +661,16 @@ abstract class bo_tracking
 	protected $body_cache = array();
 
 	/**
+	 * method to clear the Cache for notificaton body
+	 *
+	 * Cache is by id, language, date-format and type text/html
+	 */
+	public function ClearBodyCache()
+	{
+		$this->body_cache = array();
+	}
+
+	/**
 	 * Sending a notification to the given email-address
 	 *
 	 * Called by track() or externally for sending async notifications
