@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -105,7 +105,8 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 		{
 			self::_pdo();
 		}
-		$msgs = self::fsck_fix_multiple_active($check_only);
+		$msgs = self::fsck_fix_required_nodes($check_only);
+		$msgs = array_merge($msgs, self::fsck_fix_multiple_active($check_only));
 		$msgs = array_merge($msgs, self::fsck_fix_unconnected($check_only));
 		$msgs = array_merge($msgs, self::fsck_fix_no_content($check_only));
 
@@ -115,6 +116,68 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 		) as $app => $app_msgs)
 		{
 			$msgs = array_merge($msgs, $app_msgs);
+		}
+		return $msgs;
+	}
+
+	/**
+	 * Check and optionally create required nodes: /, /home, /apps
+	 *
+	 * @param boolean $check_only=true
+	 * @return array with messages / found problems
+	 */
+	private static function fsck_fix_required_nodes($check_only=true)
+	{
+		static $dirs = array(
+			'/' => 1,
+			'/home' => 2,
+			'/apps' => 3,
+		);
+		$msgs = array();
+		foreach($dirs as $path => $id)
+		{
+			if (!($stat = self::url_stat($path, STREAM_URL_STAT_LINK)) || ($stat['mode'] & 05) != 05)
+			{
+				if ($check_only)
+				{
+					$msgs[] = lang('Required directory "%1" not found!', $path);
+				}
+				else
+				{
+					if (!isset($stmt))
+					{
+						$stmt = self::$pdo->prepare('INSERT INTO '.self::TABLE.' (fs_id,fs_name,fs_dir,fs_mode,fs_uid,fs_gid,fs_size,fs_mime,fs_created,fs_modified,fs_creator'.
+							') VALUES (:fs_id,:fs_name,:fs_dir,:fs_mode,:fs_uid,:fs_gid,:fs_size,:fs_mime,:fs_created,:fs_modified,:fs_creator)');
+					}
+					if (($ok = $stmt->execute(array(
+						'fs_id' => $id,
+						'fs_name' => substr($path,1),
+						'fs_dir'  => $path == '/' ? 0 : $dirs['/'],
+						'fs_mode' => 05,
+						'fs_uid' => 0,
+						'fs_gid' => 0,
+						'fs_size' => 0,
+						'fs_mime' => 'httpd/unix-directory',
+						'fs_created' => self::_pdo_timestamp(time()),
+						'fs_modified' => self::_pdo_timestamp(time()),
+						'fs_creator' => 0,
+					))))
+					{
+						$msgs[] = lang('Required directory "%1" created.', $path);
+					}
+					else
+					{
+						$msgs[] = lang('Failed to create required directory "%1"!', $path);
+					}
+				}
+			}
+		}
+		if (!$check_only && $msgs)
+		{
+			global $oProc;
+			if (!isset($oProc)) $oProc = new schema_proc();
+			// PostgreSQL seems to require to update the sequenz, after manually inserting id's
+			$oProc->UpdateSequence('egw_sqlfs', 'fs_id');
 		}
 		return $msgs;
 	}
@@ -233,7 +296,7 @@ class sqlfs_utils extends sqlfs_stream_wrapper
 			}
 			else
 			{
-				$msgs[] = lang('Faild to move unconnected %1 %2 to %3!',
+				$msgs[] = lang('Failed to move unconnected %1 %2 to %3!',
 					mime_magic::mime2label($row['fs_mime']), egw_vfs::decodePath($row['fs_name']), self::LOST_N_FOUND);
 			}
 		}
