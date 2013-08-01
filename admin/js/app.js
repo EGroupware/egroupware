@@ -66,15 +66,38 @@ app.admin = AppJS.extend(
 
 		this.et2 = _et2.widgetContainer;
 		
-		var iframe = this.iframe = this.et2.getWidgetById('admin_iframe');
-		if (iframe) iframe.set_src(egw.webserverUrl+'/admin/index.php');
-		
-		var splitter = this.splitter = this.et2.getWidgetById('admin_splitter');
+		var iframe = this.iframe = this.et2.getWidgetById('iframe');
+		if (iframe) 
+		{
+			iframe.set_src(egw.webserverUrl+'/admin/index.php');
+			var self = this;
+			jQuery(iframe.getDOMNode()).bind('load', function(){
+				self._hide_navbar.call(self);
+			});
+		}
+		var splitter = this.splitter = this.et2.getWidgetById('splitter');
 		if (splitter) 
 		{
 			window.setTimeout(function(){
 				splitter.dock();
 			}, 1);
+		}
+	},
+	
+	/**
+	 * Hide navbar for idots template
+	 * 
+	 * Just a hack for old idots, not neccesary for jdots
+	 */
+	_hide_navbar: function()
+	{
+		var document = this.iframe.getDOMNode().contentDocument;
+		// hide navbar elements
+		var ids2hide = ['divLogo', 'topmenu', 'divAppIconBar', 'divStatusBar', 'tdSidebox', 'divAppboxHeader'];
+		for(var i=0; i < ids2hide.length; ++i)
+		{
+			var elem = document.getElementById(ids2hide[i]);
+			if (elem) elem.style.display = 'none';
 		}
 	},
 	
@@ -106,7 +129,7 @@ app.admin = AppJS.extend(
 		{
 			this.splitter.undock();
 			var parts = _id.split('/');
-			this.et2.getWidgetById('admin_nm').applyFilters({ filter: parts[2] ? parts[2] : '', search: ''});
+			this.et2.getWidgetById('nm').applyFilters({ filter: parts[2] ? parts[2] : '', search: ''});
 		}
 		else if (typeof link == 'undefined')
 		{

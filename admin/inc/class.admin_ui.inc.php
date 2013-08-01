@@ -43,7 +43,7 @@ class admin_ui
 		$tpl = new etemplate_new('admin.index');
 
 		$content = array();
-		$content['admin_nm'] = array(
+		$content['nm'] = array(
 			'get_rows' => 'admin_ui::get_users',
 			'no_cat' => true,
 			'no_filter2' => true,
