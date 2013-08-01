@@ -826,7 +826,8 @@ abstract class egw_framework
 		foreach($extra as $name => $value)
 		{
 			if (is_array($value)) $value = json_encode($value);
-			$java_script .= ' data-'.$name."=\"". html::htmlspecialchars($value)."\"";
+			// we need to double encode (html::htmlspecialchars( , TRUE)), as otherwise we get invalid json, eg. for quotes
+			$java_script .= ' data-'.$name."=\"". html::htmlspecialchars($value, true)."\"";
 		}
 		$java_script .= "></script>\n";
 
