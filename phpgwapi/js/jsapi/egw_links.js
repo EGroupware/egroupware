@@ -432,7 +432,10 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 		 */
 		link_quick_add: function(_parent)
 		{
-			var select = jQuery(document.createElement('select'));
+			// check if quick-add selectbox is alread there, only create it again if not
+			if (document.getElementById('quick_add_selectbox')) return;
+
+			var select = jQuery(document.createElement('select')).attr('id', 'quick_add_selectbox');
 			jQuery(typeof _parent == 'string' ? '#'+_parent : _parent).append(select);
 			
 			var self = this;
