@@ -1,5 +1,5 @@
-%1 active file(s) with same name as directory inactivated!	common	en	%1 active file(s) with same name as directory inactivated!
-%1 directories %2 found!	common	en	%1 directories %2 found!
+%1 active file(s) with same name as directory inactivated!	admin	en	%1 active file(s) with same name as directory inactivated!
+%1 directories %2 found!	admin	en	%1 directories %2 found!
 %1 email addresses inserted	common	en	%1 email addresses inserted.
 %1 file	common	en	%1 file
 %1 is not executable by the webserver !!!	common	en	%1 is not executable by the web server!
@@ -128,7 +128,7 @@ calendar	common	en	Calendar
 calendars to sync in addition to personal calendar	groupdav	en	Calendars to sync in addition to personal calendar
 cambodia	common	en	CAMBODIA
 cameroon	common	en	CAMEROON
-can't create directory %1 to connect found unconnected nodes to it!	common	en	Can't create directory %1 to connect found unconnected nodes to it!
+can't create directory %1 to connect found unconnected nodes to it!	admin	en	Can't create directory %1 to connect found unconnected nodes to it!
 canada	common	en	CANADA
 cancel	common	en	Cancel
 cannot replace %1 because it is a directory	common	en	Cannot replace %1 because it is a directory.
@@ -284,8 +284,9 @@ etag	common	en	ETag
 ethiopia	common	en	ETHIOPIA
 everything	common	en	Everything
 exact	common	en	Exact
-faild to move unconnected %1 %2 to %3!	common	en	Faild to move unconnected %1 %2 to %3!
+failed to move unconnected %1 %2 to %3!	admin	en	Faild to move unconnected %1 %2 to %3!
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	en	Failed to contact server or invalid response from server. Try to re-login. Contact administrator in case of failure.
+failed to create required directory "%1"!	admin	en	Failed to create required directory "%1"!
 falkland islands (malvinas)	common	en	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	en	FAROE ISLANDS
 fax number	common	en	Fax number
@@ -293,11 +294,11 @@ features of the editor?	common	en	Features of the editor
 february	common	en	February
 fields	common	en	Fields
 fiji	common	en	FIJI
-file %1 has no content in physical filesystem %2 --> failed to remove file!	common	en	File %1 has no content in physical filesystem %2 --> failed to remove file!
-file %1 has no content in physical filesystem %2 --> file removed!	common	en	File %1 has no content in physical filesystem %2 --> file removed!
-file %1 has no content in physical filesystem %2!	common	en	File %1 has no content in physical filesystem %2!
+file %1 has no content in physical filesystem %2 --> failed to remove file!	admin	en	File %1 has no content in physical filesystem %2 --> failed to remove file!
+file %1 has no content in physical filesystem %2 --> file removed!	admin	en	File %1 has no content in physical filesystem %2 --> file removed!
+file %1 has no content in physical filesystem %2!	admin	en	File %1 has no content in physical filesystem %2!
 files	common	en	Files
-files without content in physical filesystem will be removed.	common	en	Files without content in physical filesystem will be removed.
+files without content in physical filesystem will be removed.	admin	en	Files without content in physical filesystem will be removed.
 filter	common	en	Filter
 finland	common	en	FINLAND
 first name	common	en	First name
@@ -308,7 +309,7 @@ fixme!	common	en	FIXME!
 folder already exists.	common	en	Folder already exists!
 force selectbox	common	en	Force select box
 forever	common	en	Forever
-found unconnected %1 %2!	common	en	Found unconnected %1 %2!
+found unconnected %1 %2!	admin	en	Found unconnected %1 %2!
 france	common	en	FRANCE
 french guiana	common	en	FRENCH GUIANA
 french polynesia	common	en	FRENCH POLYNESIA
@@ -481,10 +482,10 @@ monday	common	en	Monday
 mongolia	common	en	MONGOLIA
 montenegro	common	en	MONTENEGRO
 montserrat	common	en	MONTSERRAT
-more then one active file %1 found, inactivating %2 older revisions!	common	en	More then one active file %1 found, inactivating %2 older revisions!
+more then one active file %1 found, inactivating %2 older revisions!	admin	en	More then one active file %1 found, inactivating %2 older revisions!
 morocco	common	en	MOROCCO
-moved %1 children from directory fs_id=%2 to %3	common	en	Moved %1 children from directory fs_id=%2 to %3
-moved unconnected %1 %2 to %3.	common	en	Moved unconnected %1 %2 to %3.
+moved %1 children from directory fs_id=%2 to %3	admin	en	Moved %1 children from directory fs_id=%2 to %3
+moved unconnected %1 %2 to %3.	admin	en	Moved unconnected %1 %2 to %3.
 mozambique	common	en	MOZAMBIQUE
 multiple	common	en	Multiple
 myanmar	common	en	MYANMAR
@@ -619,12 +620,14 @@ reject	common	en	Reject
 remember me	common	en	Remember me
 remove selected accounts	common	en	Remove selected accounts
 remove shortcut	common	en	Remove shortcut
-removed (now) empty directory fs_id=%1	common	en	Removed (now) empty directory fs_id=%1
+removed (now) empty directory fs_id=%1	admin	en	Removed (now) empty directory fs_id=%1
 rename	common	en	Rename
 replace	common	en	Replace
 replace with	common	en	Replace with
 requests and full responses to files directory	common	en	Requests and full responses to files directory
 requests and truncated responses to apache error-log	groupdav	en	Requests and truncated responses to Apache error-log
+required directory "%1" created.	admin	en	Required directory "%1" created.
+required directory "%1" not found!	admin	en	Required directory "%1" not found!
 resource calendars	groupdav	en	Resource calendars
 resource type	common	en	Resource type
 resources	common	en	Resources
@@ -730,7 +733,7 @@ stretched	common	en	Stretched
 subject	common	en	Subject
 submit	common	en	Submit
 substitutions and their meanings:	common	en	Substitutions and their meanings:
-successful created new directory %1 for unconnected nods.	common	en	Successful created new directory %1 for unconnected nods.
+successful created new directory %1 for unconnected nods.	admin	en	Successful created new directory %1 for unconnected nods.
 sudan	common	en	SUDAN
 sunday	common	en	Sunday
 suriname	common	en	SURINAME
@@ -766,7 +769,7 @@ time zone offset	common	en	Time zone offset
 title	common	en	Title
 to	common	en	To
 to correct this error for the future you will need to properly set the	common	en	To correct this error for the future you will need to properly set the
-to examine or reinstate inactived files, you might need to turn versioning on.	common	en	To examine or reinstate inactived files, you might need to turn versioning on.
+to examine or reinstate inactived files, you might need to turn versioning on.	admin	en	To examine or reinstate inactived files, you might need to turn versioning on.
 to go back to the msg list, click <a href= %1 >here</a>	common	en	To go back to the msg list, click <a href="%1">here</a>
 today	common	en	Today
 todays date, eg. "%1"	common	en	Todays date, eg. "%1"
@@ -788,7 +791,7 @@ tuvalu	common	en	TUVALU
 type	common	en	Type
 uganda	common	en	UGANDA
 ukraine	common	en	UKRAINE
-unconnected nodes will be moved to %1.	common	en	Unconnected nodes will be moved to %1.
+unconnected nodes will be moved to %1.	admin	en	Unconnected nodes will be moved to %1.
 underline	common	en	Underline
 unicode	common	en	Unicode
 united arab emirates	common	en	UNITED ARAB EMIRATES

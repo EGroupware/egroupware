@@ -1,5 +1,5 @@
-%1 active file(s) with same name as directory inactivated!	common	de	%1 aktive Dateien mit dem selben Verzeichnisnamen wurden deaktiviert!
-%1 directories %2 found!	common	de	%1 Verzeichnisse %2 gefunden!
+%1 active file(s) with same name as directory inactivated!	admin	de	%1 aktive Dateien mit dem selben Verzeichnisnamen wurden deaktiviert!
+%1 directories %2 found!	admin	de	%1 Verzeichnisse %2 gefunden!
 %1 email addresses inserted	common	de	%1 E-Mail-Adressen eingefügt
 %1 file	common	de	%1 Datei
 %1 is not executable by the webserver !!!	common	de	%1 ist nicht ausführbar durch den Webserver !!!
@@ -128,7 +128,7 @@ calendar	common	de	Kalender
 calendars to sync in addition to personal calendar	groupdav	de	Kalender die zusätzlich zum persönlichen synchronisiert werden sollen.
 cambodia	common	de	KAMBODSCHA
 cameroon	common	de	KAMERUN
-can't create directory %1 to connect found unconnected nodes to it!	common	de	Das Verzeichnis %1 konnte nicht erstellt werden, da es nicht verbundene Knoten (nodes) für dieses Objekt gibt
+can't create directory %1 to connect found unconnected nodes to it!	admin	de	Das Verzeichnis %1 konnte nicht erstellt werden, da es nicht verbundene Knoten (nodes) für dieses Objekt gibt
 canada	common	de	KANADA
 cancel	common	de	Abbrechen
 cannot replace %1 because it is a directory	common	de	Kann %1 nicht ersetzen, da es ein Verzeichnis ist
@@ -284,8 +284,9 @@ etag	common	de	ETag
 ethiopia	common	de	ÄTHIOPIEN
 everything	common	de	Alles
 exact	common	de	exakt
-faild to move unconnected %1 %2 to %3!	common	de	Verschiebung nicht möglich %1 %2 nach %3!
+failed to move unconnected %1 %2 to %3!	admin	de	Verschiebung nicht möglich %1 %2 nach %3!
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	de	Konnte Server nicht erreichen oder ungültige Antwort vom Server. Versuchen Sie sich nochmals anzumelden. Benachrichtigen Sie Ihren Administrator  wenn dies fehlschlägt.
+failed to create required directory "%1"!	admin	de	Anlegen des benötigten Verzeichnisses "%1" fehlgeschlagen!
 falkland islands (malvinas)	common	de	FALKLAND INSELN (MALVINAS)
 faroe islands	common	de	FAROE INSELN
 fax number	common	de	Fax Nummer
@@ -293,11 +294,11 @@ features of the editor?	common	de	Funktionen des Editors?
 february	common	de	Februar
 fields	common	de	Felder
 fiji	common	de	FIJI
-file %1 has no content in physical filesystem %2 --> failed to remove file!	common	de	Datei %1 ist im Dateisystem nicht verfügbar %2 -> Löschen nicht möglich
-file %1 has no content in physical filesystem %2 --> file removed!	common	de	Datei %1 ist im Dateisystem nicht verfügbar %2 -> Dateieintrag gelöscht
-file %1 has no content in physical filesystem %2!	common	de	Datei %1 ist im Dateisystem nicht vorhanden
+file %1 has no content in physical filesystem %2 --> failed to remove file!	admin	de	Datei %1 ist im Dateisystem nicht verfügbar %2 -> Löschen nicht möglich
+file %1 has no content in physical filesystem %2 --> file removed!	admin	de	Datei %1 ist im Dateisystem nicht verfügbar %2 -> Dateieintrag gelöscht
+file %1 has no content in physical filesystem %2!	admin	de	Datei %1 ist im Dateisystem nicht vorhanden
 files	common	de	Dateien
-files without content in physical filesystem will be removed.	common	de	Dateien ohne Inhalt in dem Dateisystem werden gelöscht
+files without content in physical filesystem will be removed.	admin	de	Dateien ohne Inhalt in dem Dateisystem werden gelöscht
 filter	common	de	Filter
 finland	common	de	FINNLAND
 first name	common	de	Vorname
@@ -308,7 +309,7 @@ fixme!	common	de	KORREGIER MICH!
 folder already exists.	common	de	Verzeichnis existiert bereits.
 force selectbox	common	de	Auswahlfeld erzwingen
 forever	common	de	Für immer
-found unconnected %1 %2!	common	de	Nicht verbundenen Einträge gefunden %1 %2
+found unconnected %1 %2!	admin	de	Nicht verbundenen Einträge gefunden %1 %2
 france	common	de	FRANKREICH
 french guiana	common	de	FRANZÖSISCH GUYANA
 french polynesia	common	de	FRANZÖSISCH POLYNESIEN
@@ -481,10 +482,10 @@ monday	common	de	Montag
 mongolia	common	de	MONGOLEI
 montenegro	common	de	MONTENEGRO
 montserrat	common	de	MONTSERRA
-more then one active file %1 found, inactivating %2 older revisions!	common	de	Mehr als eine Datei %1 verfügbar, %2 ältere Revisionen werden deaktiviert
+more then one active file %1 found, inactivating %2 older revisions!	admin	de	Mehr als eine Datei %1 verfügbar, %2 ältere Revisionen werden deaktiviert
 morocco	common	de	MAROKKO
-moved %1 children from directory fs_id=%2 to %3	common	de	verschoben %1 Kinderelemente vom Verzeichnis fs_id=%2 nach %3
-moved unconnected %1 %2 to %3.	common	de	nicht verbundene Einträge verschoben  %1 %2 nach %3.
+moved %1 children from directory fs_id=%2 to %3	admin	de	verschoben %1 Kinderelemente vom Verzeichnis fs_id=%2 nach %3
+moved unconnected %1 %2 to %3.	admin	de	nicht verbundene Einträge verschoben  %1 %2 nach %3.
 mozambique	common	de	MOZAMBIQUE
 multiple	common	de	mehrere
 myanmar	common	de	MYANMAR
@@ -619,12 +620,14 @@ reject	common	de	Zurückweisen
 remember me	common	de	Mich erinnern
 remove selected accounts	common	de	Ausgewählte Benutzer entfernen
 remove shortcut	common	de	Abkürzung entfernen
-removed (now) empty directory fs_id=%1	common	de	Leeres Verzeichnis fs_id=%1 wurde jetzt gelöscht
+removed (now) empty directory fs_id=%1	admin	de	Leeres Verzeichnis fs_id=%1 wurde jetzt gelöscht
 rename	common	de	Umbenennen
 replace	common	de	Ersetzen
 replace with	common	de	Ersetzen durch
 requests and full responses to files directory	common	de	Anfragen und komplette Antworten in das Dateiverzeichnis
 requests and truncated responses to apache error-log	groupdav	de	Anfragen und gekürzte Antworten ins Apache error-log
+required directory "%1" created.	admin	de	Benötigtes Verzeichnis "%1" angelegt.
+required directory "%1" not found!	admin	de	Benötigtes Verzeichnis "%1" nicht gefunden!
 resource calendars	groupdav	de	Kalender von Ressourcen
 resource type	common	de	Ressource Typ
 resources	common	de	Ressourcen
@@ -730,7 +733,7 @@ stretched	common	de	ausgedehnt
 subject	common	de	Betreff
 submit	common	de	Absenden
 substitutions and their meanings:	common	de	Ersetzungen und ihre Bedeutung
-successful created new directory %1 for unconnected nods.	common	de	Verzeichnis %1 wurde erfolgreich erstellt für nicht verbundene Knoten (nods).
+successful created new directory %1 for unconnected nods.	admin	de	Verzeichnis %1 wurde erfolgreich erstellt für nicht verbundene Knoten (nods).
 sudan	common	de	SUDAN
 sunday	common	de	Sonntag
 suriname	common	de	SURINAME
@@ -766,7 +769,7 @@ time zone offset	common	de	Zeitzonendifferenz
 title	common	de	Titel
 to	common	de	An
 to correct this error for the future you will need to properly set the	common	de	Um diesen Fehler in der Zukunft zu verhindern, müssen sie folgendes setzen:
-to examine or reinstate inactived files, you might need to turn versioning on.	common	de	Um inaktive Dateien zu begutachten, sollten die Sie Versionierung von Dateien aktivieren.
+to examine or reinstate inactived files, you might need to turn versioning on.	admin	de	Um inaktive Dateien zu begutachten, sollten die Sie Versionierung von Dateien aktivieren.
 to go back to the msg list, click <a href= %1 >here</a>	common	de	Um zur Liste der Meldungen zurück zu gehen, <a href="%1">hier</a> anklicken
 today	common	de	Heute
 todays date, eg. "%1"	common	de	heutiges Datum, z.B. "%1"
@@ -788,7 +791,7 @@ tuvalu	common	de	TUVALU
 type	common	de	Typ
 uganda	common	de	UGANDA
 ukraine	common	de	UKRAINE
-unconnected nodes will be moved to %1.	common	de	Nicht Verbundene Knoten werden nach %1 verschoben.
+unconnected nodes will be moved to %1.	admin	de	Nicht Verbundene Knoten werden nach %1 verschoben.
 underline	common	de	Unterstrichen
 unicode	common	de	Unicode
 united arab emirates	common	de	VEREINIGTEN ARABISCHEN EMIRATE
