@@ -240,8 +240,6 @@ class egw_json_response
 			call_user_func_array($proc['proc'], $proc['params']);
 		}
 
-		//$inst->sendHeader();
-
 		// check if application made some direct output
 		if (($output = ob_get_clean()))
 		{
@@ -256,11 +254,8 @@ class egw_json_response
 			}
 		}
 
-		if($inst->haveJSONResponse())
-		{
-			echo $inst->getJSON();
-			$inst->initResponseArray();
-		}
+		echo $inst->getJSON();
+		$inst->initResponseArray();
 	}
 
 	/**
@@ -530,6 +525,25 @@ class egw_json_response
 		$res = array('response' => $inst->responseArray);
 
 		return json_encode($res);	//PHP5.3+, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP);
+	}
+
+	public function json_encode($var)
+	{
+		$ret = json_encode($var);
+
+		if (($err = json_last_error()))
+		{
+			static $json_err2str = array(
+	        	JSON_ERROR_NONE => 'No errors',
+	        	JSON_ERROR_DEPTH => 'Maximum stack depth exceeded',
+	        	JSON_ERROR_STATE_MISMATCH => 'Underflow or the modes mismatch',
+	        	JSON_ERROR_CTRL_CHAR => 'Unexpected control character found',
+	        	JSON_ERROR_SYNTAX => 'Syntax error, malformed JSON',
+	        	JSON_ERROR_UTF8 => 'Malformed UTF-8 characters, possibly incorrectly encoded',
+	        );
+			error_log(__METHOD__.'('.array2string($var).') json_last_error()='.$err.'='.$json_err2str[$err]);
+		}
+		return $ret;
 	}
 
 	/**
