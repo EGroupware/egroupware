@@ -1199,9 +1199,9 @@ egw_LAB.wait(function() {
 		if (!$tree_initialised)
 		{
 			egw_framework::includeCSS('/phpgwapi/js/dhtmlxtree/dhtmlxTree/codebase/dhtmlxtree.css');
-			egw_framework::validate_file('dhtmlxtree','dhtmlxTree/codebase/dhtmlxcommon');
-			egw_framework::validate_file('dhtmlxtree','dhtmlxTree/codebase/dhtmlxtree');
-			if ($autoLoading && $dataMode != 'XML') egw_framework::validate_file('dhtmlxtree','dhtmlxTree/codebase/ext/dhtmlxtree_json');
+			egw_framework::validate_file('dhtmlxtree','dhtmlxTree/sources/dhtmlxcommon');
+			egw_framework::validate_file('dhtmlxtree','dhtmlxTree/sources/dhtmlxtree');
+			if ($autoLoading && $dataMode != 'XML') egw_framework::validate_file('dhtmlxtree','dhtmlxTree/sources/ext/dhtmlxtree_json');
 			$tree_initialised = true;
 			if (!$_folders && !$autoLoading) return $html;
 		}
