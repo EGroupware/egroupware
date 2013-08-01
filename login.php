@@ -228,14 +228,13 @@ else
 	}
 
 	if(isset($passwd_type) || $_POST['submitit_x'] || $_POST['submitit_y'] || $submit)
-	//		isset($_POST['passwd']) && $_POST['passwd']) // enable konqueror to login via Return
 	{
-	   if(getenv('REQUEST_METHOD') != 'POST' && $_SERVER['REQUEST_METHOD'] != 'POST' &&
-	   !isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['SSL_CLIENT_S_DN']))
-	   {
-		  $GLOBALS['egw']->session->egw_setcookie('eGW_remember','',0,'/');
-		  egw::redirect_link('/login.php','cd=5');
-	   }
+		if(getenv('REQUEST_METHOD') != 'POST' && $_SERVER['REQUEST_METHOD'] != 'POST' &&
+			!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['SSL_CLIENT_S_DN']))
+		{
+			$GLOBALS['egw']->session->egw_setcookie('eGW_remember','',0,'/');
+			egw::redirect_link('/login.php','cd=5');
+		}
 		#if(!isset($_COOKIE['eGroupWareLoginTime']))
 		#{
 		#	$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/login.php','cd=4'));
