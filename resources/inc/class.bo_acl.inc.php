@@ -95,6 +95,7 @@ class bo_acl
 		$cats = $this->egw_cats->return_sorted_array(0,false,'','','',true,$parent_id);
 		#_debug_array($cats);
 		if (!is_array($cats)) $cats = array();
+		$perm_cats = array();
 		foreach($cats as $key=>$cat) {
 			#echo "key:$key"._debug_array($value)."<br>";
 			#_debug_array($cat)."hier<br>";
