@@ -243,7 +243,7 @@ class addressbook_groupdav extends groupdav_handler
 			}
 		}
 		// add groups after contacts, but only if enabled and NOT for '/addressbook/' (!isset($filter['owner'])
-		if (in_array('D',$this->home_set_pref) && (!$start || count($contacts) < $start[1]) && isset($filter['owner']))
+		if (in_array('D',$this->home_set_pref) && (!$start || count($contacts) < $start[1]))
 		{
 			$where = array(
 				'list_owner' => isset($filter['owner'])?$filter['owner']:array_keys($this->bo->grants)
@@ -284,9 +284,9 @@ class addressbook_groupdav extends groupdav_handler
 					}
 					$files[] = $this->add_resource($path, $list, $props);
 
-					if ($sync_collection_report && $this->sync_collection_token < $list['list_modified'])
+					if ($sync_collection_report && $this->sync_collection_token < ($ts=$GLOBALS['egw']->db->from_timestamp($list['list_modified'])))
 					{
-						$this->sync_collection_token = $list['list_modified'];
+						$this->sync_collection_token = $ts;
 					}
 				}
 			}
@@ -626,17 +626,8 @@ class addressbook_groupdav extends groupdav_handler
 
 		if (!isset($contact['etag']))
 		{
-			if ($is_group)
-			{
-				if (($contact = $this->bo->read_list($save_ok)))
-				{
-					$contact = egw_db::strip_array_keys($contact, 'list_');
-				}
-			}
-			else
-			{
-				$contact = $this->bo->read($save_ok);
-			}
+			// epl-11.1 does not store carddav_name for lists, so we need to generate it here
+			$contact = $this->read($is_group ? common::generate_uid('addressbook-lists', $save_ok) : $contact['carddav_name'], $options['path']);
 			//error_log(__METHOD__."(, $id, '$user') read(_list)($save_ok) returned ".array2string($contact));
 		}
 
@@ -661,7 +652,7 @@ class addressbook_groupdav extends groupdav_handler
 		if (!isset($contact['owner'])) $contact['owner'] = $GLOBALS['egw_info']['user']['account_id'];
 		foreach(array('id','carddav_name','uid','owner') as $name)
 		{
-			if ($name != self::$path_attr) $data['list_'.$name] = $contact[$name];
+			$data['list_'.$name] = $contact[$name];
 		}
 		//error_log(__METHOD__.'('.array2string($contact).', '.array2string($oldContact).') data='.array2string($data));
 		if (($list_id=$this->bo->add_list(array('list_'.self::$path_attr => $contact[self::$path_attr]),
@@ -711,10 +702,11 @@ class addressbook_groupdav extends groupdav_handler
 				if ($to_add_ids) $this->bo->add2list($to_add_ids, $list_id, array());
 				if ($to_delete_ids) $this->bo->remove_from_list($to_delete_ids, $list_id);
 			}
+			// reread as update of list-members updates etag and modified
+	 		$contact = $this->bo->read_list($list_id);
 		}
 		if ($this->debug > 1) error_log(__METHOD__.'('.array2string($contact).', '.array2string($oldContact).') on return contact='.array2string($data).' returning '.array2string($list_id));
- 		$contact = $data;
-		return $list_id;
+ 		return $list_id;
 	}
 
 	/**
@@ -739,8 +731,8 @@ class addressbook_groupdav extends groupdav_handler
 			$user = array_merge((array)$user,array_keys($this->get_shared(true)));	// true: ignore all-in-one pref
 		}
 		$ctag = $this->bo->get_ctag($user);
-		// include lists-ctag, if enabled and NOT in /addressbook/ (we dont sync distribution-lists/groups there)
-		if (in_array('D',$this->home_set_pref) && $path != '/addressbook/')
+		// include lists-ctag, if enabled
+		if (in_array('D',$this->home_set_pref))
 		{
 			$lists_ctag = $this->bo->lists_ctag($user);
 		}
