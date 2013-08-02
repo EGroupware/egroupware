@@ -1777,6 +1777,13 @@ class addressbook_bo extends addressbook_so
 	}
 
 	/**
+	 * Some caching for lists within request
+	 *
+	 * @var array
+	 */
+	private static $list_cache = array();
+
+	/**
 	 * Check if user has required rights for a list or list-owner
 	 *
 	 * @param int $list
@@ -1807,7 +1814,15 @@ class addressbook_bo extends addressbook_so
 	{
 		if (!$this->check_list(null,EGW_ACL_ADD|EGW_ACL_EDIT,$owner)) return false;
 
-		return parent::add_list($keys,$owner,$contacts,$data);
+		try {
+			$ret = parent::add_list($keys,$owner,$contacts,$data);
+			if ($ret) unset(self::$list_cache[$ret]);
+		}
+		// catch sql error, as creating same name&owner list gives a sql error doublicate key
+		catch(egw_exception_db_invalid_sql $e) {
+			return false;
+		}
+		return $ret;
 	}
 
 	/**
@@ -1821,6 +1836,8 @@ class addressbook_bo extends addressbook_so
 	function add2list($contact,$list,array $existing=null)
 	{
 		if (!$this->check_list($list,EGW_ACL_EDIT)) return false;
+
+		unset(self::$list_cache[$list]);
 
 		return parent::add2list($contact,$list,$existing);
 	}
@@ -1836,6 +1853,15 @@ class addressbook_bo extends addressbook_so
 	{
 		if ($list && !$this->check_list($list,EGW_ACL_EDIT)) return false;
 
+		if ($list)
+		{
+			unset(self::$list_cache[$list]);
+		}
+		else
+		{
+			self::$list_cache = array();
+		}
+
 		return parent::remove_from_list($contact,$list);
 	}
 
@@ -1849,6 +1875,11 @@ class addressbook_bo extends addressbook_so
 	{
 		if (!$this->check_list($list,EGW_ACL_DELETE)) return false;
 
+		foreach((array)$list as $l)
+		{
+			unset(self::$list_cache[$l]);
+		}
+
 		return parent::delete_list($list);
 	}
 
@@ -1860,11 +1891,9 @@ class addressbook_bo extends addressbook_so
 	 */
 	function read_list($list)
 	{
-		static $cache;
+		if (isset(self::$list_cache[$list])) return self::$list_cache[$list];
 
-		if (isset($cache[$list])) return $cache[$list];
-
-		return $cache[$list] = parent::read_list($list);
+		return self::$list_cache[$list] = parent::read_list($list);
 	}
 
 	/**
