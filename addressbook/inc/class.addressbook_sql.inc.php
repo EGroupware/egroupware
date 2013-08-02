@@ -339,7 +339,7 @@ class addressbook_sql extends so_sql_cf
 			unset($filter['list']);
 		}
 		// add join to show only active accounts (only if accounts are shown and in sql and we not already join the accounts table, eg. used by admin)
-		if (!$owner && substr($this->account_repository,0,3) == 'sql' &&
+		if ((is_array($owner) ? in_array(0, $owner) : !$owner) && substr($this->account_repository,0,3) == 'sql' &&
 			strpos($join,$GLOBALS['egw']->accounts->backend->table) === false && !array_key_exists('account_id',$filter))
 		{
 			$join .= self::ACCOUNT_ACTIVE_JOIN;
