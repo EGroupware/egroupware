@@ -489,6 +489,7 @@ abstract class groupdav_handler
 	 */
 	function put_response_headers($entry, $path, $retval, $path_attr_is_name=true, $etag=null)
 	{
+		//error_log(__METHOD__."(".array2string($entry).", '$path', ".array2string($retval).", path_attr_is_name=$path_attr_is_name, etag=".array2string($etag).")");
 		// we should not return an etag here, as EGroupware never stores ical/vcard byte-by-byte
 		// as SOGO Connector requires ETag header to recognice as successful PUT, we are sending them again for it
 		// --> as all clients dislike not getting an ETag for a PUT, we sending it again even not storing byte-by-byte
@@ -498,7 +499,7 @@ abstract class groupdav_handler
 			header('ETag: "'.$etag.'"');
 		}
 		// send Location header only on success AND if we dont use caldav_name as path-attribute or
-		if (!(is_bool($retval) ? $retval : $retval[0] === '2') && (!$path_attr_is_name ||
+		if ((is_bool($retval) ? $retval : $retval[0] === '2') && (!$path_attr_is_name ||
 			// POST with add-member query parameter
 			$_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['add-member'])))
 		{
