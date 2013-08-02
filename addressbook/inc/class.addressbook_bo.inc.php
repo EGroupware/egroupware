@@ -2300,7 +2300,9 @@ class addressbook_bo extends addressbook_so
 		}
 		else
 		{
-			$ctag = $result[0]['modified'];
+			// need to convert modified time back to server-time (was converted to user-time by search)
+			// as we use it direct in server-queries eg. CardDAV sync-report and to be consistent with CalDAV
+			$ctag = egw_time::user2server($result[0]['modified']);
 		}
 		//error_log(__METHOD__.'('.array2string($owner).') returning '.array2string($ctag));
 		return $ctag;
