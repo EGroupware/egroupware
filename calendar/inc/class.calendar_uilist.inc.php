@@ -262,7 +262,8 @@ class calendar_uilist extends calendar_ui
 		if (!$params['csv_export']) egw_session::appsession('calendar_list','calendar',$params);
 
 		// do we need to query custom fields and which
-		$select_cols = explode(',',$params['selectcols']);
+		// Check stored preference if selectcols isn't available (ie: first call)
+		$select_cols = explode(',',$params['selectcols'] ? $params['selectcols'] : $GLOBALS['egw_info']['user']['preferences']['calendar']['nextmatch-calendar.list.rows']);
 		if (in_array('cfs',$select_cols))
 		{
 			$cfs = array();
