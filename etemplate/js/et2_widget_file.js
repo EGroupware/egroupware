@@ -66,6 +66,12 @@ var et2_file = et2_inputWidget.extend(
 			"type": "any",
 			"default": et2_no_init,
 			"description": "A (js) function called when all files to be uploaded are finished."
+		},
+		drop_target: {
+			"name": "Optional, additional drop target for HTML5 uploads",
+			"type": "string",
+			"default": et2_no_init,
+			"description": "The ID of an additional drop target for HTML5 drag-n-drop file uploads"
 		}
 	},
 
@@ -141,6 +147,7 @@ var et2_file = et2_inputWidget.extend(
 
 	destroy: function() {
 		this._super.apply(this, arguments);
+		this.set_drop_target(null);
 		this.node = null;
 		this.input = null;
 		this.progress = null;
@@ -172,6 +179,55 @@ var et2_file = et2_inputWidget.extend(
 		}
 
 		this.setDOMNode(this.node[0]);
+	},
+		
+	/**
+	 * Set a widget or DOM node as a HTML5 file drop target
+	 * 
+	 * @param String new_target widget ID or DOM node ID to be used as a new target
+	 */
+	set_drop_target: function(new_target)
+	{		
+		// Cancel old drop target
+		if(this.options.drop_target)
+		{
+			var widget = this.getRoot().getWidgetById(this.options.drop_target);
+			var drop_target = widget && widget.getDOMNode() || document.getElementById(this.options.drop_target);
+			//$j(drop_target).off("."+this.id);
+		}
+		
+		this.options.drop_target = new_target;
+		
+		// Set up new drop target
+		var widget = this.getRoot().getWidgetById(this.options.drop_target);
+		var drop_target = widget && widget.getDOMNode() || document.getElementById(this.options.drop_target);
+		if(drop_target)
+		{
+			var self = this;
+			drop_target.ondrop =function(event) {
+					return false;
+			};
+			$j(drop_target)
+				.on("drop", jQuery.proxy(function(event) {
+					if(event.dataTransfer && event.dataTransfer.files.length > 0)
+					{
+						this.input[0].files = event.dataTransfer.files;
+						this.input.trigger("start.html5_upload");
+					}
+				}, this))
+				.on("dragenter",function(e) {
+					return !self.disabled;
+					//self.checkMime(this.files[index]))
+				})
+				.on("dragover", function(e) {
+					return !self.disabled;
+				})
+				.on("dragend", false);
+		}
+		else
+		{
+			this.egw().debug("warn", "Did not find file drop target %s", this.options.drop_target);
+		}
 
 	},
 	attachToDOM: function() {
