@@ -87,10 +87,6 @@ class etemplate_widget_taglist extends etemplate_widget
 		if (!$this->is_readonly($cname, $form_name))
 		{
 			$value = $value_in = self::get_array($content, $form_name);
-
-			error_log("Validating " . array2string($value));
-			error_log("Attrs: " . array2string($this->attrs));
-			error_log($this->type);
 			$allowed = etemplate_widget_menupopup::selOptions($form_name);
 			
 			foreach((array) $value as $key => $val)
@@ -111,7 +107,7 @@ class etemplate_widget_taglist extends etemplate_widget
 			}
 			$valid =& self::get_array($validated, $form_name, true);
 			$valid = $value;
-			error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value).', allowed='.array2string($allowed));
+			//error_log(__METHOD__."() $form_name: ".array2string($value_in).' --> '.array2string($value).', allowed='.array2string($allowed));
 		}
 	}
 }
