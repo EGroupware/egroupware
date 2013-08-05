@@ -271,7 +271,9 @@ class egw_mailer extends PHPMailer
 	 * Clears all recipients assigned in the TO, CC and BCC array.  Returns void.
 	 */
 	public function ClearAllRecipients() {
-		$this->addresses = array();
+		$this->addresses['to'] = array();
+		$this->addresses['cc'] = array();
+		$this->addresses['bcc'] = array();
 
 		parent::ClearAllRecipients();
 	}
