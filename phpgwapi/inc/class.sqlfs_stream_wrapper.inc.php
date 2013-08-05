@@ -1571,6 +1571,14 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	public static $case_sensitive_equal = '=';
 
 	/**
+	 * Reconnect to database
+	 */
+	static public function reconnect()
+	{
+		self::$pdo = self::_pdo();
+	}
+
+	/**
 	 * Create pdo object / connection, as long as pdo is not generally used in eGW
 	 *
 	 * @return PDO

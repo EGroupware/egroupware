@@ -873,44 +873,60 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 	 * @param boolean $check_symlink_components=true check if path contains symlinks in path components other then the last one
 	 * @return array
 	 */
-	static function url_stat ( $path, $flags, $try_create_home=false, $check_symlink_components=true, $check_symlink_depth=self::MAX_SYMLINK_DEPTH )
+	static function url_stat ( $path, $flags, $try_create_home=false, $check_symlink_components=true, $check_symlink_depth=self::MAX_SYMLINK_DEPTH, $try_reconnect=true )
 	{
 		if (!($url = self::resolve_url($path,!($flags & STREAM_URL_STAT_LINK), $check_symlink_components)))
 		{
 			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path',$flags) can NOT resolve path!");
 			return false;
 		}
-		if ($flags & STREAM_URL_STAT_LINK)
-		{
-			$stat = @lstat($url);	// suppressed the stat failed warnings
-		}
-		else
-		{
-			$stat = @stat($url);	// suppressed the stat failed warnings
 
-			if ($stat && ($stat['mode'] & self::MODE_LINK))
+		try {
+			if ($flags & STREAM_URL_STAT_LINK)
 			{
-				if (!$check_symlink_depth)
+				$stat = @lstat($url);	// suppressed the stat failed warnings
+			}
+			else
+			{
+				$stat = @stat($url);	// suppressed the stat failed warnings
+
+				if ($stat && ($stat['mode'] & self::MODE_LINK))
 				{
-					if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path',$flags) maximum symlink depth exceeded, might be a circular symlink!");
-					$stat = false;
-				}
-				elseif (($lpath = self::readlink($url)))
-				{
-					if ($lpath[0] != '/')	// concat relative path
+					if (!$check_symlink_depth)
 					{
-						$lpath = egw_vfs::concat(parse_url($path,PHP_URL_PATH),'../'.$lpath);
+						if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$path',$flags) maximum symlink depth exceeded, might be a circular symlink!");
+						$stat = false;
 					}
-					$url = egw_vfs::PREFIX.$lpath;
-					if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$flags) symlif (substr($path,-1) == '/' && $path != '/') $path = substr($path,0,-1);	// remove trailing slash eg. added by WebDAVink found and resolved to $url");
-					// try reading the stat of the link
-					if ($stat = self::url_stat($lpath, STREAM_URL_STAT_QUIET, false, true, $check_symlink_depth-1))
+					elseif (($lpath = self::readlink($url)))
 					{
-						if(isset($stat['url'])) $url = $stat['url'];	// if stat returns an url use that, as there might be more links ...
-						self::symlinkCache_add($path,$url);
+						if ($lpath[0] != '/')	// concat relative path
+						{
+							$lpath = egw_vfs::concat(parse_url($path,PHP_URL_PATH),'../'.$lpath);
+						}
+						$url = egw_vfs::PREFIX.$lpath;
+						if (self::LOG_LEVEL > 1) error_log(__METHOD__."($path,$flags) symlif (substr($path,-1) == '/' && $path != '/') $path = substr($path,0,-1);	// remove trailing slash eg. added by WebDAVink found and resolved to $url");
+						// try reading the stat of the link
+						if ($stat = self::url_stat($lpath, STREAM_URL_STAT_QUIET, false, true, $check_symlink_depth-1))
+						{
+							if(isset($stat['url'])) $url = $stat['url'];	// if stat returns an url use that, as there might be more links ...
+							self::symlinkCache_add($path,$url);
+						}
 					}
 				}
 			}
+		}
+		catch (egw_exception_db $e) {
+			// some long running operations, eg. merge-print, run into situation that DB closes our separate sqlfs connection
+			// we try now to reconnect sqlfs_stream_wrapper once
+			// it's done here in vfs_stream_wrapper as situation can happen in sqlfs, links, stylite.links or stylite.versioning
+			if ($try_reconnect)
+			{
+				// reconnect to db
+				sqlfs_stream_wrapper::reconnect();
+				return self::url_stat($path, $flags, $try_create_home, $check_symlink_components, $check_symlink_depth, false);
+			}
+			// if numer of tries is exceeded, re-throw exception
+			throw $e;
 		}
 		// check if a failed url_stat was for a home dir, in that case silently create it
 		if (!$stat && $try_create_home && egw_vfs::dirname(parse_url($path,PHP_URL_PATH)) == '/home' &&
