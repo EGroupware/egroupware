@@ -923,7 +923,7 @@ class vfs_stream_wrapper implements iface_stream_wrapper
 			{
 				// reconnect to db
 				sqlfs_stream_wrapper::reconnect();
-				return url_stat($path, $flags, $try_create_home, $check_symlink_components, $check_symlink_depth, false);
+				return self::url_stat($path, $flags, $try_create_home, $check_symlink_components, $check_symlink_depth, false);
 			}
 			// if numer of tries is exceeded, re-throw exception
 			throw $e;

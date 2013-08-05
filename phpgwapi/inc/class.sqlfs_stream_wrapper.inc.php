@@ -1575,7 +1575,6 @@ class sqlfs_stream_wrapper implements iface_stream_wrapper
 	 */
 	static public function reconnect()
 	{
-		unset(self::$pdo);
 		self::$pdo = self::_pdo();
 	}
 
