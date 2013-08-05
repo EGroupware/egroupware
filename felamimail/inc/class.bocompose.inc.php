@@ -29,14 +29,19 @@
 		var $displayCharset;
 		var $sessionData;
 
-		function bocompose($_composeID = '', $_charSet = 'iso-8859-1')
+		function bocompose($_composeID = '', $_charSet = 'iso-8859-1', &$mailObject=null)
 		{
 			$profileID = 0;
 			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
 					$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'];
 			$this->displayCharset	= strtolower($_charSet);
 			$this->bosignatures	= new felamimail_bosignatures();
-			$this->bofelamimail	= felamimail_bo::getInstance(true,$profileID);
+			if (!is_null($mailObject))
+			{
+				$this->bofelamimail	=& $mailObject;
+			} else {
+				$this->bofelamimail	=& felamimail_bo::getInstance(true,$profileID);
+			}
 			$profileID = $GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID'] = $this->bofelamimail->profileID;
 			$this->bopreferences =& $this->bofelamimail->bopreferences;
 			$this->preferences	=& $this->bofelamimail->mailPreferences; // $this->bopreferences->getPreferences();
@@ -209,8 +214,9 @@
 		{
 			$this->sessionData['to'] = array();
 
-			$bofelamimail = $this->bofelamimail;
-			$bofelamimail->openConnection();
+			$bofelamimail =& $this->bofelamimail;
+			$existingConnection = $bofelamimail->icServer->_connected;
+			if (!$existingConnection) $bofelamimail->openConnection();//No, establish our own
 			$bofelamimail->reopen($_folder);
 
 			// the array $userEMailAddresses was used for filtering out emailaddresses that are owned by the user, for draft data we should not do this
@@ -356,7 +362,7 @@
 						$attachment['size']);
 				}
 			}
-			$bofelamimail->closeConnection();
+			if (!$existingConnection) $bofelamimail->closeConnection(); // close our own, if not established before
 
 			$this->saveSessionData();
 		}
@@ -382,7 +388,8 @@
 				$this->getReplyData('forward', $_icServer, $_folder, $_uid, $_partID);
 			}
 			$bofelamimail    = $this->bofelamimail;
-			$bofelamimail->openConnection();
+			$existingConnection = $bofelamimail->icServer->_connected;
+			if (!$existingConnection) $bofelamimail->openConnection();//No, establish our own
 			$bofelamimail->reopen($_folder);
 
 			// get message headers for specified message
@@ -420,7 +427,7 @@
 					}
 				}
 			}
-			$bofelamimail->closeConnection();
+			if (!$existingConnection) $bofelamimail->closeConnection(); // close our own, if not established before
 			if ($_mode)
 			{
 				$this->preferencesArray['message_forwarding'] = $modebuff;
@@ -452,8 +459,9 @@
 		{
 			$foundAddresses = array();
 
-			$bofelamimail    = $this->bofelamimail;
-			$bofelamimail->openConnection();
+			$bofelamimail    =& $this->bofelamimail;
+			$existingConnection = $bofelamimail->icServer->_connected;
+			if (!$existingConnection) $bofelamimail->openConnection();//No, establish our own
 			$bofelamimail->reopen($_folder);
 
 			$userEMailAddresses = $this->preferences->getUserEMailAddresses();
@@ -669,7 +677,7 @@
 				}
 			}
 
-			$bofelamimail->closeConnection();
+			if (!$existingConnection) $bofelamimail->closeConnection(); // close our own, if not established before
 
 			$this->saveSessionData();
 		}
@@ -710,7 +718,7 @@
 
 		function createMessage(&$_mailObject, $_formData, $_identity, $_signature = false, $_convertLinks=false)
 		{
-			$bofelamimail	= $this->bofelamimail;
+			$bofelamimail	=& $this->bofelamimail;
 			$_mailObject->PluginDir = EGW_SERVER_ROOT."/phpgwapi/inc/";
 			$activeMailProfile = $this->preferences->getIdentity($this->bofelamimail->profileID, true);
 			$_mailObject->IsSMTP();
@@ -858,8 +866,9 @@
 				}
 			}
 
-			// add the attachments
-			$bofelamimail->openConnection();
+			// add the attachments, on probably existing connection
+			$existingConnection = $bofelamimail->icServer->_connected;
+			if (!$existingConnection) $bofelamimail->openConnection();//No, establish our own
 			if (is_array($this->sessionData) && isset($this->sessionData['attachments']))
 			{
 				$tnfattachments = null;
@@ -920,12 +929,12 @@
 					}
 				}
 			}
-			$bofelamimail->closeConnection();
+			if (!$existingConnection) $bofelamimail->closeConnection(); // close our own
 		}
 
 		function saveAsDraft($_formData, &$savingDestination='')
 		{
-			$bofelamimail	= $this->bofelamimail;
+			$bofelamimail	=& $this->bofelamimail;
 			$mail		= new egw_mailer();
 
 			// preserve the bcc and if possible the save to folder information
@@ -977,7 +986,9 @@
 
 			if (count($mailAddr)>0) $BCCmail = $mail->AddrAppend("Bcc",$mailAddr);
 			//error_log(__METHOD__.__LINE__.$BCCmail.$mail->getMessageHeader().$mail->getMessageBody());
-			$bofelamimail->openConnection();
+			$existingConnection = $bofelamimail->icServer->_connected;
+			if (!$existingConnection) $bofelamimail->openConnection();//No, establish our own
+			//error_log(__METHOD__.__LINE__.' SavingDestination:'.$savingDestination.' ConnectedBefore?:'.$existingConnection.' Socket:'.array2string($bofelamimail->icServer->_socket->fp));
 			if ($bofelamimail->folderExists($savingDestination,true)) {
 				try
 				{
@@ -996,7 +1007,7 @@
 				error_log("felamimail_bo::saveAsDraft->".lang("folder")." ". $savingDestination." ".lang("does not exist on IMAP Server."));
 				return false;
 			}
-			$bofelamimail->closeConnection();
+			if (!$existingConnection) $bofelamimail->closeConnection();//No, close my own
 			return $messageUid;
 		}
 
@@ -1142,8 +1153,9 @@
 			#error_log("Number of Folders to move copy the message to:".count($folder));
 			if ((count($folder) > 0) || (isset($this->sessionData['uid']) && isset($this->sessionData['messageFolder']))
                 || (isset($this->sessionData['forwardFlag']) && isset($this->sessionData['sourceFolder']))) {
-				$bofelamimail = $this->bofelamimail;
-				$bofelamimail->openConnection();
+				$bofelamimail =& $this->bofelamimail;
+				$existingConnection = $bofelamimail->icServer->_connected;
+				if (!$existingConnection) $bofelamimail->openConnection();//No, establish our own
 				//$bofelamimail->reopen($this->sessionData['messageFolder']);
 				#error_log("(re)opened Connection");
 			}
@@ -1211,7 +1223,8 @@
 			if((isset($this->sessionData['uid']) && isset($this->sessionData['messageFolder']))
 				|| (isset($this->sessionData['forwardFlag']) && isset($this->sessionData['sourceFolder']))) {
 				// mark message as answered
-				$bofelamimail->openConnection();
+				$existingConnection = $bofelamimail->icServer->_connected;
+				if (!$existingConnection) $bofelamimail->openConnection();//No, establish our own
 				$bofelamimail->reopen($this->sessionData['messageFolder']);
 				// if the draft folder is a starting part of the messages folder, the draft message will be deleted after the send
 				// unless your templatefolder is a subfolder of your draftfolder, and the message is in there
@@ -1227,7 +1240,7 @@
 				}
 				//$bofelamimail->closeConnection();
 			}
-			if ($bofelamimail) $bofelamimail->closeConnection();
+			if ($bofelamimail && !$existingConnection) $bofelamimail->closeConnection();
 			//error_log("performing Infolog Stuff");
 			//error_log(print_r($this->sessionData['to'],true));
 			//error_log(print_r($this->sessionData['cc'],true));

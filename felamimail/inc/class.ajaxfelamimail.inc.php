@@ -312,7 +312,7 @@ class ajaxfelamimail
 		function saveAsDraft($_composeID, $_data, $_autoSave=true)
 		{
 			if($this->_debug) error_log(__METHOD__.__LINE__.' AutoSave'.$_autoSave.' ID:'.array2string($_composeID).' Data:'.array2string($_data));
-			$bocompose   = CreateObject('felamimail.bocompose',$_composeID,$this->charset);
+			$bocompose   = CreateObject('felamimail.bocompose',$_composeID,$this->charset,$this->bofelamimail);
 			$folder = $messageFolder = $this->bofelamimail->getDraftFolder();
 			// autosave should always save to Draft. Manual Save may Save to templates Folder
 			if ($_autoSave)
