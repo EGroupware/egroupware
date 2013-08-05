@@ -239,4 +239,40 @@ class egw_mailer extends PHPMailer
 			7 => 0
 		);
 	}
+
+	/**
+	 * Clears all recipients assigned in the TO array.  Returns void.
+	 */
+	public function ClearAddresses() {
+		$this->addresses['to'] = array();
+
+		parent::ClearAddresses();
+	}
+
+	/**
+	 * Clears all recipients assigned in the CC array.  Returns void.
+	 */
+	public function ClearCCs() {
+		$this->addresses['cc'] = array();
+
+		parent::ClearCCs();
+	}
+
+	/**
+	 * Clears all recipients assigned in the BCC array.  Returns void.
+	 */
+	public function ClearBCCs() {
+		$this->addresses['bcc'] = array();
+
+		parent::ClearBCCs();
+	}
+
+	/**
+	 * Clears all recipients assigned in the TO, CC and BCC array.  Returns void.
+	 */
+	public function ClearAllRecipients() {
+		$this->addresses = array();
+
+		parent::ClearAllRecipients();
+	}
 }
