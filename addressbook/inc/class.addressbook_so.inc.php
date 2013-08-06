@@ -977,9 +977,10 @@ class addressbook_so
 	 */
 	function read_lists($keys,$member_attr=null,$limit_in_ab=false)
 	{
-		if (!method_exists($this->somain,'get_lists')) return false;
+		$backend = (string)$limit_in_ab === '0' && $this->so_accounts ? $this->so_accounts : $this->somain;
+		if (!method_exists($backend, 'get_lists')) return false;
 
-		return $this->somain->get_lists($keys,null,$member_attr,$limit_in_ab);
+		return $backend->get_lists($keys,null,$member_attr,$limit_in_ab);
 	}
 
 	/**
@@ -993,9 +994,10 @@ class addressbook_so
 	 */
 	function add_list($keys,$owner,$contacts=array(),array &$data=array())
 	{
-		if (!method_exists($this->somain,'add_list')) return false;
+		$backend = (string)$owner === '0' && $this->so_accounts ? $this->so_accounts : $this->somain;
+		if (!method_exists($backend, 'add_list')) return false;
 
-		return $this->somain->add_list($keys,$owner,$contacts,$data);
+		return $backend->add_list($keys,$owner,$contacts,$data);
 	}
 
 	/**

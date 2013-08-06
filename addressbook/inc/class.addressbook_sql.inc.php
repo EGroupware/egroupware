@@ -468,7 +468,7 @@ class addressbook_sql extends so_sql_cf
 	 */
 	function get_lists($uids,$uid_column='list_owner',$member_attr=null,$limit_in_ab=false)
 	{
-		if (is_array($uids) && isset($uids['list_carddav_name']))
+		if (is_array($uids) && (array_key_exists('list_carddav_name', $uids) || array_key_exists('list_id', $uids)))
 		{
 			$ids = array();
 			foreach((array)$uids['list_carddav_name'] as $carddav_name)
@@ -479,6 +479,11 @@ class addressbook_sql extends so_sql_cf
 				}
 			}
 			unset($uids['list_carddav_name']);
+			foreach((array)$uids['list_id'] as $id)
+			{
+				if (is_numeric($id) && $id > 0) $ids[] = $id;
+			}
+			unset($uids['list_id']);
 			if (!$ids) return array();
 			$uids[] = $this->db->expression($this->lists_table, $this->lists_table.'.',array('list_id' => $ids));
 		}
