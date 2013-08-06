@@ -485,6 +485,11 @@ class addressbook_sql extends so_sql_cf
 	 */
 	function get_lists($uids,$uid_column='list_owner',$member_attr=null,$limit_in_ab=false)
 	{
+		if (is_array($uids) && array_key_exists('list_id', $uids))
+		{
+			$uids[] = $this->db->expression($this->lists_table, $this->lists_table.'.',array('list_id' => $uids['list_id']));
+			unset($uids['list_id']);
+		}
 		$lists = array();
 		foreach($this->db->select($this->lists_table,'*',$uid_column?array($uid_column=>$uids):$uids,__LINE__,__FILE__,
 			false,'ORDER BY list_owner<>'.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name') as $row)
