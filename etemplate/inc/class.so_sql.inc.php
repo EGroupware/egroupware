@@ -1143,7 +1143,8 @@ class so_sql
 		{
 			if ($col == '*')
 			{
-				$col = $columns[$n] = $this->table_name.'.*';
+				// MySQL does NOT allow to GROUP BY table.*
+				$col = $columns[$n] = $this->table_name.'.'.($this->db->Type == 'mysql' ? $this->autoinc_id : '*');
 				++$changes;
 			}
 			// only check columns and non-aggregate functions
@@ -1157,7 +1158,7 @@ class so_sql
 				if (stripos($col, ' AS ')) list($col, $alias) = preg_split('/ +AS +/i', $col);
 				if (!in_array($col, $group_by_cols) && !in_array($alias, $group_by_cols))
 				{
-					$group_by_cols[] = $col;
+					$group_by_cols[] = $alias;
 					//error_log(__METHOD__."() col=$col, alias=$alias --> group_by_cols=".array2string($group_by_cols));
 					++$changes;
 				}
