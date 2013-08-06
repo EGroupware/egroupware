@@ -1071,7 +1071,18 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 				if ($this->debugLevel>3) debugLog(__METHOD__.__LINE__."MIME Body".' Type:'.($output->airsyncbasenativebodytype==2?' html ':' plain ').$body);
 				$body = html_entity_decode($body,ENT_QUOTES,$this->mail->detect_encoding($body));
 				// prepare plaintextbody
-				if ($output->airsyncbasenativebodytype == 2) $plainBody = $this->mail->convertHTMLToText($body,true); // always display with preserved HTML
+				if ($output->airsyncbasenativebodytype == 2)
+				{
+					$bodyStructplain = $this->mail->getMessageBody($id,'never_display', '', '', true); //'only_if_no_text');
+					if($bodyStructplain[0]['error']==1)
+					{
+						$plainBody = $this->mail->convertHTMLToText($body,true); // always display with preserved HTML
+					}
+					else
+					{
+						$plainBody = $this->mail->getdisplayableBody($this->mail,$bodyStructplain);//$this->ui->getdisplayableBody($bodyStruct,false);
+					}
+				}
 				//if ($this->debugLevel>0) debugLog("MIME Body".$body);
 				$plainBody = preg_replace("/<style.*?<\/style>/is", "", (strlen($plainBody)?$plainBody:$body));
 				// remove all other html
