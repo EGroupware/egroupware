@@ -2632,6 +2632,7 @@ class felamimail_bo
 				'mimeType'	=> ($_structure->type == 'TEXT' && $_structure->subType == 'HTML') ? 'text/html' : 'text/plain',
 				'charSet'	=> $this->getMimePartCharset($_structure),
 			);
+			//error_log(__METHOD__.__LINE__.array2string($bodyPart));
 			if ($_structure->type == 'TEXT' && $_structure->subType == 'PLAIN' &&
 				is_array($_structure->parameters) && isset($_structure->parameters['FORMAT']) &&
 				trim(strtolower($_structure->parameters['FORMAT']))=='flowed'
@@ -5341,7 +5342,10 @@ class felamimail_bo
 				}
 				foreach ($SendAndMergeTocontacts as $k => $val)
 				{
-					$sendOK = $openComposeWindow = $openAsDraft = false;
+					$mailObject->ErrorInfo = $errorInfo = '';
+					//$mailObject->SMTPDebug = 5;
+					$mailObject->set('error_count',0);
+					$sendOK = $openComposeWindow = $openAsDraft = null;
 					//error_log(__METHOD__.__LINE__.' Id To Merge:'.$val);
 					if ($GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook' &&
 						count($SendAndMergeTocontacts) > 1 &&
@@ -5416,7 +5420,7 @@ class felamimail_bo
 									$errorInfo = $mailObject->ErrorInfo;
 								}
 							}
-							error_log(__METHOD__.__LINE__.array2string($errorInfo));
+							//error_log(__METHOD__.__LINE__.array2string($errorInfo));
 						}
 					}
 					elseif (!$k)	// 1. entry, further entries will fail for apps other then addressbook
@@ -5511,12 +5515,16 @@ class felamimail_bo
 						}
 						if ($sendOK)
 						{
-							$processStats['success'][] = 'Send succeeded to '.$nfn.'<'.$email.'>'.($savefailed?' but failed to store to Folder:'.$_folder:'');
+							$processStats['success'][$val] = 'Send succeeded to '.$nfn.'<'.$email.'>'.($savefailed?' but failed to store to Folder:'.$_folder:'');
 						}
 						else
 						{
-							if (!$openComposeWindow) $processStats['failed'][] = 'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
+							if (!$openComposeWindow) $processStats['failed'][$val] = $errorInfo?$errorInfo:'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
 						}
+					}
+					if (!is_null($sendOK) && $sendOK===false && is_null($openComposeWindow))
+					{
+						$processStats['failed'][$val] = $errorInfo?$errorInfo:'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
 					}
 				}
 			}
@@ -5529,6 +5537,7 @@ class felamimail_bo
 		}
 		else
 		{
+			//error_log(__METHOD__.__LINE__.array2string($processStats));
 			return $processStats;
 		}
 	}
