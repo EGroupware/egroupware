@@ -24,7 +24,7 @@
  * 
  * Uses MagicSuggest library
  * @see http://nicolasbize.github.io/magicsuggest/
- * @augments et2_inputWidget
+ * @augments et2_selectbox
  */
 var et2_taglist = et2_selectbox.extend(
 {
@@ -93,7 +93,7 @@ var et2_taglist = et2_selectbox.extend(
 			"description": "Callback to provide a custom renderer for each suggested item.  Function parameter is the select_option data for that ID."
 		},
 		"width": {
-			default: "100%"
+			"default": "100%"
 		},
 		"maxSelection": {
 			"name": "max Selection",
@@ -167,8 +167,8 @@ var et2_taglist = et2_selectbox.extend(
 		
 		// Display / hide a loading icon while fetching
 		$j(this.taglist)
-			.on("beforeload", function() {this.container.prepend('<div class="ui-icon loading"/>')})
-			.on("load", function() {$j('.loading',this.container).remove()});
+			.on("beforeload", function() {this.container.prepend('<div class="ui-icon loading"/>');})
+			.on("load", function() {$j('.loading',this.container).remove();});
 
 		// onChange
 		if(this.options.onchange)
@@ -194,6 +194,7 @@ var et2_taglist = et2_selectbox.extend(
 		var label = '<span title="'+(typeof item.title != "undefined" ?item.title:'')+'">'+item.label+'</span>';
 		return label;
 	},
+
 	set_autocomplete_url: function(source)
 	{
 		if(source.indexOf('http') != 0)
@@ -220,19 +221,24 @@ var et2_taglist = et2_selectbox.extend(
 		{
 			var option = {id: key};
 			
-			// Translate the options
-			if(!this.options.no_lang)
+			if (typeof _options[key] === 'object')
 			{
-				if (typeof _options[key] === 'object')
-				{
-					if(_options[key]["label"]) option["label"] = this.egw().lang(_options[key]["label"]);
-					if(_options[key]["title"]) option["title"] = this.egw().lang(_options[key]["title"]);
-				}
-				else
-				{
-					option.label = this.egw().lang(_options[key]);
-				}
+				jQuery.extend(option, _options[key]);
 			}
+			else
+			{
+				option.label = _options[key];
+			}
+			// Translate the options
+			if (!this.options.no_lang)
+			{
+				option.label = this.egw().lang(option.label);
+				if (typeof option.title == 'string') option.title = this.egw().lang(option.title);
+			}
+			// for magicsuggest label are html! so we need to do a minimal escaping
+			option.label = option.label.replace(/&/g, '&amp;').replace(/</g, '&lg;');
+			if (typeof option.title == 'string') option.title = option.title.replace(/&/g, '&amp;').replace(/</g, '&lg;');
+
 			this.options.select_options.push(option);
 		}
 		
@@ -247,18 +253,41 @@ var et2_taglist = et2_selectbox.extend(
 		if(this.taglist == null) return;
 		disabled ? this.taglist.disable() : this.taglist.enable();
 	},
-		
-	set_value: function(value) {
-		if(this.options.readonly && !this.options.select_options)
+	
+	/**
+	 * Set value(s) of taglist, add them automatic to select-options, if allowFreeEntries
+	 * 
+	 * @param value (array of) ids
+	 */
+	set_value: function(value) 
+	{
+		if (value && this.options.allowFreeEntries)
 		{
-			this.options.select_options = value;
+			var values = jQuery.isArray(value) ? value : [value];
+			var options = jQuery.isArray(this.options.select_options) ? this.options.select_options : [];
+			outerloop:
+			for(var i=0; i < values.length; ++i)
+			{
+				var v = values[i];
+				for(var j=0; j < options.length; ++j)
+				{
+					var o = options[j];
+					if (o.id == v)
+					{
+						continue outerloop;
+					}
+				}
+				options.push({id: v, label: v.replace(/&/g, '&amp;').replace(/</g, '&lg;')});
+			}
+			this.options.select_options = options;
 		}
 		if(this.taglist == null) return;
 		this.taglist.clear(true);
 		this.taglist.setValue(value);
 	},
-	getValue: function() {
-	
+
+	getValue: function() 
+	{
 		if(this.taglist == null) return null;
 		return this.taglist.getValue();
 	}
