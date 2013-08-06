@@ -119,7 +119,7 @@
 			}
 			if(typeof app[window.egw_appName] == "object")
 			{
-				callback = function(et2) {app[window.egw_appName].et2_ready(et2)};
+				callback = function(et2) {app[window.egw_appName].et2_ready(et2);};
 			}
 			var node = document.getElementById(data.DOMNodeID);
 			if(!node)
@@ -128,7 +128,7 @@
 			}
 			else
 			{
-				var et2 = new etemplate2(node, "etemplate::ajax_process_content");
+				var et2 = new etemplate2(node, "etemplate_new::ajax_process_content");
 				et2.load(data.name,data.url,data.data,callback);
 			}
 		}
