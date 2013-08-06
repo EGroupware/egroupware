@@ -692,7 +692,7 @@ class addressbook_groupdav extends groupdav_handler
 			{
 				$to_add_ids = $to_delete_ids = array();
 				$filter = array('uid' => $to_delete ? array_merge($to_add, $to_delete) : $to_add);
-				if (($contacts =& $this->bo->search(array(),'id,uid','','','',False,'AND',false,$filter)))
+				if (($contacts =& $this->bo->search(array(), array('id', 'uid'),'','','',False,'AND',false,$filter)))
 				{
 					foreach($contacts as $c)
 					{
