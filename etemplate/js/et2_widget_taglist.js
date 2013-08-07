@@ -280,6 +280,7 @@ var et2_taglist = et2_selectbox.extend(
 				options.push({id: v, label: v.replace(/&/g, '&amp;').replace(/</g, '&lg;')});
 			}
 			this.options.select_options = options;
+			if (this.taglist) this.taglist.setData(options);
 		}
 		if(this.taglist == null) return;
 		this.taglist.clear(true);
