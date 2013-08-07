@@ -232,10 +232,11 @@ class felamimail_bo
 		else
 		{
 			// make sure the prefs are up to date for the profile to load
-			$loadfailed = false;
+			$loadfailed = $alreadytriedreloading = false;
 			self::$instances[$_profileID]->mailPreferences	= self::$instances[$_profileID]->bopreferences->getPreferences(true,$_profileID);
 			//error_log(__METHOD__.__LINE__." ReRead the Prefs for ProfileID ".$_profileID.' called from:'.function_backtrace());
-			if (self::$instances[$_profileID]->mailPreferences) {
+			if (self::$instances[$_profileID]->mailPreferences)
+			{
 				self::$instances[$_profileID]->icServer = self::$instances[$_profileID]->mailPreferences->getIncomingServer($_profileID);
 				// if we do not get an icServer object, session restore failed on bopreferences->getPreferences
 				if (!self::$instances[$_profileID]->icServer) $loadfailed=true;
@@ -246,18 +247,29 @@ class felamimail_bo
 			}
 			else
 			{
-				$loadfailed=true;
+				// first try reloading without restore
+				if ($_restoreSession==true) self::$instances[$_profileID] = new felamimail_bo('utf-8',false,$_profileID);
+				if (!self::$instances[$_profileID]->mailPreferences) {
+					if (self::$debug) error_log(__METHOD__.__LINE__.' something wrong:'.array2string($_restoreSession).' mailPreferences could not be loaded!');
+					$loadfailed=$alreadytriedreloading=true;
+				}
 			}
-			if ($_profileID>0 && empty(self::$instances[$_profileID]->icServer->host))
+			if ($_profileID>0 && empty(self::$instances[$_profileID]->icServer->host)&&$alreadytriedreloading==false)
 			{
-				$_profileID = emailadmin_bo::getUserDefaultProfileID();
-				$loadfailed=true;
+				if ($_restoreSession==true) self::$instances[$_profileID] = new felamimail_bo('utf-8',false,$_profileID);
+				if (empty(self::$instances[$_profileID]->icServer->host))
+				{
+					if (self::$debug) error_log(__METHOD__.__LINE__.' something critically wrong for '.$_profileID.' RestoreSession:'.array2string($_restoreSession).'->'.array2string(self::$instances[$_profileID]->icServer).' No Server host set!');
+					$loadfailed=$alreadytriedreloading=true;
+				}
 			}
 			if ($loadfailed)
 			{
-				error_log(__METHOD__.__LINE__." ReRead of the Prefs for ProfileID ".$_profileID.' failed for icServer; trigger new instance. called from:'.function_backtrace());
-				// restore session seems to provide an incomplete session
-				self::$instances[$_profileID] = new felamimail_bo('utf-8',false,$_profileID);
+				$newprofileID = ($alreadytriedreloading ? emailadmin_bo::getUserDefaultProfileID():$_profileID);
+				if ($alreadytriedreloading) error_log(__METHOD__.__LINE__." Loading the Profile for ProfileID ".$_profileID.' failed for icServer; trigger new instance for Default-Profile '.$newprofileID.'. called from:'.function_backtrace());
+				// try loading the default profile for the user
+				self::$instances[$newprofileID] = new felamimail_bo('utf-8',false,$newprofileID);
+				$_profileID = $newprofileID;
 			}
 		}
 		self::$instances[$_profileID]->profileID = $_profileID;
