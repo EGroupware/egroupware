@@ -1440,7 +1440,11 @@ abstract class bo_merge
 				$retString = '';
 				if (count($msgs['success'])>0) $retString .= count($msgs['success']).' '.(count($msgs['success'])+count($msgs['failed'])==1?lang('Message prepared for sending.'):lang('Message(s) send ok.'));//implode('<br />',$msgs['success']);
 				//if (strlen($retString)>0) $retString .= '<br />';
-				if (count($msgs['failed'])>0) $retString .= count($msgs['failed']).' '.lang('Message(s) send failed!').'=>'.implode(', ',$msgs['failed']);
+				foreach($msgs['failed'] as $c =>$e)
+				{
+					$errorString .= lang('contact').' '.lang('id').':'.$c.'->'.$e.'.';
+				}
+				if (count($msgs['failed'])>0) $retString .= count($msgs['failed']).' '.lang('Message(s) send failed!').'=>'.$errorString;
 				return $retString;
 				break;
 			case 'application/vnd.oasis.opendocument.text':
