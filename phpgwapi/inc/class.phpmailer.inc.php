@@ -774,6 +774,7 @@ class PHPMailer {
     }
     $smtp_from = ($this->Sender == '') ? $this->From : $this->Sender;
     if(!$this->smtp->Mail($smtp_from)) {
+      $this->smtp->Reset();
       throw new phpmailerException($this->Lang('from_failed') . $smtp_from, self::STOP_CRITICAL);
     }
 
@@ -818,9 +819,11 @@ class PHPMailer {
 
     if (count($bad_rcpt) > 0 ) { //Create error message for any bad addresses
       $badaddresses = implode(', ', $bad_rcpt);
+      $this->smtp->Reset();
       throw new phpmailerException($this->Lang('recipients_failed') . $badaddresses);
     }
     if(!$this->smtp->Data($header . $body)) {
+      $this->smtp->Reset();
       throw new phpmailerException($this->Lang('data_not_accepted'), self::STOP_CRITICAL);
     }
     if($this->SMTPKeepAlive == true) {

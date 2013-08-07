@@ -576,7 +576,6 @@ class SMTP {
     }
 
     if($code != 250) {
-      $this->Reset();
       $this->error =
         array("error" => "MAIL not accepted from server",
               "smtp_code" => $code,
@@ -672,7 +671,6 @@ class SMTP {
     }
 
     if($code != 250 && $code != 251) {
-      $this->Reset();
       $this->error =
         array("error" => "RCPT not accepted from server",
               "smtp_code" => $code,
