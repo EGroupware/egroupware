@@ -146,7 +146,7 @@ var et2_taglist = et2_selectbox.extend(
 		this.taglist = $j('<div/>').appendTo(this.div);
 		
 		var options = jQuery.extend( {
-			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ? this.options.select_options : this.options.autocomplete_url,
+			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ? this._options2data(this.options.select_options) : this.options.autocomplete_url,
 			dataUrlParams: this.options.autocomplete_params,
 			value: this.options.value,
 			method: 'GET',
@@ -160,7 +160,7 @@ var et2_taglist = et2_selectbox.extend(
 			disabled: this.options.disabled || this.options.readonly,
 			editable: !(this.options.disabled || this.options.readonly),
 			selectionRenderer: jQuery.proxy(this.options.tagRenderer || this.selectionRenderer,this),
-			renderer: this.options.listRenderer || null,
+			renderer: jQuery.proxy(this.options.listRenderer || this.selectionRenderer,this),
 			maxSelection: this.options.maxSelection
 		}, this.lib_options);
 		this.taglist = this.taglist.magicSuggest(options);
@@ -189,9 +189,52 @@ var et2_taglist = et2_selectbox.extend(
 		return true;
 	},
 	
+	/**
+	 * convert _options to taglist data [{id:...,label:...},...] format
+	 * 
+	 * @param object|array _options id: label or id: {label: ..., title: ...} pairs, or array if id's are 0, 1, ...
+	 */
+	_options2data: function(_options)
+	{
+		var options = jQuery.isArray(_options) ? jQuery.extend({}, _options) : _options;
+		var data = [];
+		for(var id in options)
+		{
+			var option = {id: id};
+			if (typeof options[id] == 'object')
+			{
+				jQuery.extend(option, options[id]);
+			}
+			else
+			{
+				option.label = options[id];
+			}
+			data.push(option);
+		}
+		return data;
+	},
+	
+	/**
+	 * Set all options from current static select_options list
+	 */
+	select_all: function()
+	{
+		var all = [];
+		for(var id in this.options.select_options) all.push(id);
+		this.set_value(all);
+	},
+
+	/**
+	 * Render a single item, taking care of correctly escaping html special chars
+	 * 
+	 * @param item
+	 * @returns {String}
+	 */
 	selectionRenderer: function(item)
 	{
-		var label = '<span title="'+(typeof item.title != "undefined" ?item.title:'')+'">'+item.label+'</span>';
+		var label = jQuery('<span>').text(item.label);
+		if (typeof item.title != 'undefined') label.attr('title', item.title);
+
 		return label;
 	},
 
@@ -210,40 +253,14 @@ var et2_taglist = et2_selectbox.extend(
 	/**
 	 * Set the list of suggested options to a static list.
 	 * 
-	 * You can pass either the traditional {id:label, id:label...} or an array of objects,
-	 * and either will be coerced to what is needed.
-	 * 
-	 * $param Array _options
+	 * $param Array _options usual format see _options2data
 	 */
 	set_select_options: function(_options)
 	{
-		for (var key in _options)
-		{
-			var option = {id: key};
-			
-			if (typeof _options[key] === 'object')
-			{
-				jQuery.extend(option, _options[key]);
-			}
-			else
-			{
-				option.label = _options[key];
-			}
-			// Translate the options
-			if (!this.options.no_lang)
-			{
-				option.label = this.egw().lang(option.label);
-				if (typeof option.title == 'string') option.title = this.egw().lang(option.title);
-			}
-			// for magicsuggest label are html! so we need to do a minimal escaping
-			option.label = option.label.replace(/&/g, '&amp;').replace(/</g, '&lg;');
-			if (typeof option.title == 'string') option.title = option.title.replace(/&/g, '&amp;').replace(/</g, '&lg;');
-
-			this.options.select_options.push(option);
-		}
+		this.options.select_options = _options;
 		
 		if(this.taglist == null) return;
-		this.taglist.setData(this.options.select_options);
+		this.taglist.setData(this._options2data(this.options.select_options));
 	},
 		
 	set_disabled: function(disabled)
@@ -264,23 +281,17 @@ var et2_taglist = et2_selectbox.extend(
 		if (value && this.options.allowFreeEntries)
 		{
 			var values = jQuery.isArray(value) ? value : [value];
-			var options = jQuery.isArray(this.options.select_options) ? this.options.select_options : [];
-			outerloop:
+			var need_setdata = false;
 			for(var i=0; i < values.length; ++i)
 			{
 				var v = values[i];
-				for(var j=0; j < options.length; ++j)
+				if (typeof this.options.select_options[v] == 'undefined')
 				{
-					var o = options[j];
-					if (o.id == v)
-					{
-						continue outerloop;
-					}
+					this.options.select_options[v] = v;
+					need_setdata = true;
 				}
-				options.push({id: v, label: v.replace(/&/g, '&amp;').replace(/</g, '&lg;')});
 			}
-			this.options.select_options = options;
-			if (this.taglist) this.taglist.setData(options);
+			if (this.taglist && need_setdata) this.taglist.setData(this._options2data(this.select_options));
 		}
 		if(this.taglist == null) return;
 		this.taglist.clear(true);
@@ -329,8 +340,10 @@ var et2_taglist_email = et2_taglist.extend(
 		// We check free entries for valid email, and render as invalid if it's not.  
 		var valid = item.id != item.label || this.EMAIL_PREG.test(item.id || '');
 		
-		var label = '<span title="'+(typeof item.title != "undefined" ?item.title:'')+'"'+
-			(valid ? '' : 'class="ui-state-error"') + '">'+(item.name ? item.name : item.label)+'</span>';
+		var label = jQuery('<span>').text(item.label);
+		if (typeof item.title != 'undefined') label.attr('title', item.title);
+		if (!valid) label.addClass('ui-state-error');
+
 		return label;
 	}
 });
