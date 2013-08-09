@@ -25,7 +25,7 @@
 						<menupopup type="select-cat" align="center" statustext="select a Category" label="Category" id="cat_id" onchange="1" options="-1,,,$cont[cat_app],$cont[cat_parent]"/>
 					</menulist>
 					<menulist>
-						<menupopup align="center" statustext="@filter_help" label="@filter_label" id="filter" onchange="@filter_onchange"/>
+						<menupopup statustext="@filter_help" label="@filter_label" id="filter" onchange="@filter_onchange"/>
 					</menulist>
 					<menulist>
 						<menupopup align="center" statustext="@filter2_help" label="@filter2_label" id="filter2" onchange="@filter2_onchange"/>
