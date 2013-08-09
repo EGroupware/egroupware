@@ -693,6 +693,7 @@ abstract class bo_tracking
 
 		if (is_numeric($user_or_lang))	// user --> read everything from his prefs
 		{
+			$GLOBALS['egw_info']['user']['account_id'] = $user_or_lang;
 			$GLOBALS['egw']->preferences->__construct($user_or_lang);
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository(false);	// no session prefs!
 
