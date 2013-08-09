@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.sieve.vacation" template="" lang="" group="0" version="1.9.002">
+		<grid>
+			<columns>
+				<column/>
+				<column width="100%"/>
+			</columns>
+			<rows>
+				<row disabled="!@msg" part="header">
+					<description align="center" id="msg" span="all" class="message"/>
+					<description/>
+				</row>
+				<row class="th" valign="top" part="header">
+					<description value="Edit vacation settings"/>
+					<description/>
+				</row>
+				<row>
+					<description value="Status:"/>
+					<hbox>
+						<menulist>
+							<menupopup id="status"/>
+						</menulist>
+					</hbox>
+				</row>
+				<row>
+					<description value="Respond to mail sent to:"/>
+					<hbox>
+						<taglist-email id="addresses" width="40%" allowFreeEntries="true" />
+						<button label="Add all my aliases" id="AllAddresses" onclick='app.mail.sieve_vac_all_aliases()'/>
+					</hbox>
+				</row>
+				<row>
+					<description value="Every:"/>
+					<textbox type="integer" id="days" min="1" max="31"/>
+				</row>
+				<row>
+					<vbox>
+						<description value="With message:"/>
+					</vbox>
+					<textbox multiline="true" id="text" width="40%"/>
+				</row>
+				<row>
+					<description value="Forward messages:"/>
+					<taglist-email id="forwards" width="40%" allowFreeEntries="true"/>
+				</row>
+				<row>
+					<description value="Validate selected addresses on submit: "/>
+					<hbox>
+						<checkbox id="check_mail_sent_to"/>
+					</hbox>
+				</row>
+				<row>
+					<description value="set it as default:"/>
+					<hbox>
+						<checkbox id="set_as_default"/>
+					</hbox>
+				</row>
+				<row>
+					<hbox>
+						<button label="Save" id="button[save]"/>
+						<button label="Apply" id="button[apply]"/>
+						<button label="Cancel" id="button[cancel]"/>
+					</hbox>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

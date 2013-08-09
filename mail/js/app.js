@@ -62,7 +62,7 @@ app.mail = AppJS.extend(
 	{
 		// call parent
 		this._super.apply(this, arguments);
-
+		this.et2_obj = et2;
 		this.et2 = et2.widgetContainer;
 		var isMainView = false;
 		var isDisplay = false;
@@ -1132,6 +1132,23 @@ app.mail = AppJS.extend(
 		}
 	},
 
+	sieve_editRules_radiobtn: function()
+	{
+		console.log("hi i am radiobtn");
+	},
+	/**
+	 *
+	 */
+	sieve_vac_all_aliases: function()
+	{
+
+		var addr = this.et2.getWidgetById('addresses');
+
+		console.log('say something');
+		addr.select_all();
+		//addr.set_autocomplete_url('mail.mail_compose.ajax_searchAddress');
+	},
+
 	/**
 	 * action - handling actions on sieve rules
 	 *
@@ -1186,24 +1203,21 @@ app.mail = AppJS.extend(
 
 	},
 
-	_do_action: function(_typeID, _data,_selectedID)
+	_do_action: function(_typeID, _data,_selectedID,_msg)
 	{
 		if (_typeID && _data)
 		{
-			var request = new egw_json_request('mail.mail_sieve.ajax_action', [_typeID,_selectedID]);
+			var request = egw().json('mail.mail_sieve.ajax_action', [_typeID,_selectedID,_msg],null,null,true);
 			console.log(request);
-			request.sendRequest(true,this._callback_do_action,this);
+			request.sendRequest();
 		}
 	},
 
-	sieve_refresh: function (_rows,_msg)
+	sieve_egw_refresh: function(_execid,_msg)
 	{
-		var grid = this.et2.getWidgetById('rg');
-		window.egw_refresh(_msg,this.appname);
-		if (grid)
-		{
-			grid.set_value(_rows);
-		}
-
+		var request = egw().json('mail.mail_sieve.ajax_sieve_egw_refresh', [this.et2_obj.etemplate_exec_id,_msg],null,this.et2_obj,true);
+		console.log(request);
+		request.sendRequest();
 	},
+
 });

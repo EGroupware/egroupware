@@ -2536,6 +2536,7 @@ $content['mailtext'] = 'garbage';
 	}
 
 	public static function ajax_searchAddress() {
+		error_log(__METHOD__. "request from seachAddress" . $_REQUEST['query']);
 		$_searchString = trim($_REQUEST['query']);
 		if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
 			//error_log(__METHOD__.__LINE__.array2string($_searchString));
@@ -2598,9 +2599,9 @@ $content['mailtext'] = 'garbage';
 					if(!empty($email) && in_array($completeMailString ,$results) === false) {
 						$results[] = array(
 							'id'=>$completeMailString,
-							'label' => htmlspecialchars($completeMailString),
+							'label' => $completeMailString,
 							// Add just name for nice display, with title for hover
-							'name' => htmlspecialchars($contact['n_fn']),
+							'name' => $contact['n_fn'],
 							'title' => $email
 						 );
 					}

@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.sieve.index.rows" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" id="rg" sortable="mail.mail_sieve.ajax_moveRule">
+		<grid width="100%" id="rg" sortable="mail.mail_sieve.ajax_moveRule"  >
 			<columns>
 				<column/>
 				<column/>
@@ -25,7 +25,7 @@
 		</grid>
 	</template>
 	<template id="mail.sieve.index" template="" lang="" group="0" version="1.9.001">
-		<description align="left" id="msg" no_lang="1" span="all" class="message"/>
+		<description id="msg" no_lang="1" class="message" span="all"/>
 		<grid width="100%">
 			<columns>
 				<column width="100%"/>

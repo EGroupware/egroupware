@@ -90,24 +90,23 @@
 							</columns>
 							<rows>
 								<row>
-									<radio label="File into:" id="action" options="folder"/>
+									<radio label="File into:" id="action[]" options="folder"/>
 									<hbox>
-										<textbox id="action_folder_text"/>
-										<description onclick="javascript:window.open('{folder_select_url}', 'windowName', 'width=400,height=500,toolbar=no,resizable=yes'); return false;"/>
+										<taglist id="action_folder_text"  width="40%" autocomplete_url="mail.mail_compose.ajax_searchFolder" autocomplete_params="" allowFreeEntries="false" maxSelection="1" />
 									</hbox>
 								</row>
 								<row>
-									<radio label="Forward to address:" id="action" options="address"/>
+									<radio label="Forward to address:" id="action[]" options="address"/>
 									<hbox>
-										<textbox id="action_address_text"/>
+										<taglist-email allowFreeEntries="true" id="action_address_text" width="40%" maxSelection="1" />
 									</hbox>
 								</row>
 								<row>
-									<radio label="Send a reject message:" id="action" options="reject"/>
+									<radio label="Send a reject message:" id="action[]" options="reject"/>
 									<textbox multiline="true" id="action_reject_text"/>
 								</row>
 								<row>
-									<radio label="Discard message" id="action" options="discard"/>
+									<radio label="Discard message" id="action[]" options="discard"/>
 									<description/>
 								</row>
 							</rows>
@@ -140,7 +139,7 @@
 						<button statustext="Saves this rule" label="Save" id="button[save]"/>
 						<button statustext="Applies the changes made" label="Apply" id="button[apply]"/>
 						<hbox align="right">
-							<button label="Delete" id="button[delete]"/>
+							<button label="Delete" id="button[delete]" />
 							<button label="Cancel" id="button[cancel]"/>
 						</hbox>
 					</hbox>
