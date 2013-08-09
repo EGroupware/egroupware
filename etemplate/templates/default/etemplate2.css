@@ -452,7 +452,6 @@ action buttons, left aligned for "extra" controls
 }
 
 .et2_file .progress li {
-	color: blue;
 	margin: .5ex;
 }
 /* Hide progress bar when completed */

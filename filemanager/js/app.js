@@ -183,11 +183,10 @@ app.filemanager = AppJS.extend(
 	 */
 	upload: function(_event, _file_count)
 	{
-		if (_file_count)
+		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
 		{
 			var widget = _event.data;
 			var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', widget.getValue(), this.get_path()], this);
-			widget.progress.remove();
 			widget.set_value('');
 			request.sendRequest(false, this._upload_callback, this);
 		}

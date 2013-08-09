@@ -113,7 +113,7 @@ var et2_file = et2_inputWidget.extend(
 				return self.onStart(event, file_count); 
 			},
 			onFinish: function(event, file_count) { 
-				self.onFinish(event, file_count);
+				self.onFinish.apply(self, [event, file_count]);
 
 				// Fire legacy change action when done
 				self.change(self.input);
@@ -209,18 +209,38 @@ var et2_file = et2_inputWidget.extend(
 			};
 			$j(drop_target)
 				.on("drop", jQuery.proxy(function(event) {
+					event.stopPropagation();
+					event.preventDefault();
+					this.input.removeClass("ui-state-active");
 					if(event.dataTransfer && event.dataTransfer.files.length > 0)
 					{
 						this.input[0].files = event.dataTransfer.files;
-						this.input.trigger("start.html5_upload");
 					}
+					return false;
 				}, this))
 				.on("dragenter",function(e) {
-					return !self.disabled;
-					//self.checkMime(this.files[index]))
+					// Accept the drop if at least one mimetype matches
+					// Individual files will be rejected later
+					var mime_ok = false;
+					for(var file in e.dataTransfer.files)
+					{
+						mime_ok = mime_ok || self.checkMime(file);
+					}
+					if(!self.disabled && mime_ok)
+					{
+						self.input.addClass("ui-state-active");
+					}
+					// Returning true cancels, return false to allow
+					return self.disabled || !mime_ok;
+				})
+				.on("dragleave", function(e) {
+					self.input.removeClass("ui-state-active");
+					// Returning true cancels, return false to allow
+					return self.disabled
 				})
 				.on("dragover", function(e) {
-					return !self.disabled;
+					// Returning true cancels, return false to allow
+					return self.disabled;
 				})
 				.on("dragend", false);
 		}
@@ -381,7 +401,7 @@ var et2_file = et2_inputWidget.extend(
 			$j("div.remove",status).click(this, this.cancel);
 			if(error != "")
 			{
-				status.addClass("message validation_error");
+				status.addClass("message ui-state-error");
 				status.append("<div>"+error+"</diff>");
 				$j(".progressBar",status).css("display", "none");
 			}
@@ -431,7 +451,7 @@ console.warn(event,name,error);
 		else if (this.progress)
 		{
 			$j("[file='"+name+"']",this.progress)
-				.addClass("error")
+				.addClass("ui-state-error")
 				.css("display", "block")
 				.text(this.egw().lang("Server error"));
 		}
@@ -467,7 +487,7 @@ console.info(filename);
 		e.preventDefault();
 		// Look for file name in list
 		var target = $j(e.target).parents("li.message");
-		e.data.remove_file.apply(e.data,target.attr("file"));
+		e.data.remove_file.apply(e.data,[target.attr("file")]);
 		// In case it didn't make it to the list (error)
 		target.remove();
 		$j(e.target).remove();
