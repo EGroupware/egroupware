@@ -27,7 +27,7 @@ class etemplate_widget_taglist extends etemplate_widget
 	public function __construct($xml = '')
 	{
 		$this->attrs['allowFreeEntries'] = true;
-		
+
 		if($xml) {
 			parent::__construct($xml);
 		}
@@ -43,17 +43,17 @@ class etemplate_widget_taglist extends etemplate_widget
 		$query = $_REQUEST['query'];
 		$options = array();
 		$links = egw_link::query($app, $query, $options);
-		
+
 		$results = array();
 		foreach($links as $id => $name)
 		{
-			$results[] = array('id'=>$id, 'label' => htmlspecialchars($name));
+			$results[] = array('id' => $id, 'label' => $name);
 		}
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($results);
 		common::egw_exit();
 	}
-	
+
 	/**
 	 * Search for emails
 	 *
@@ -66,11 +66,11 @@ class etemplate_widget_taglist extends etemplate_widget
 			$_REQUEST['app'] = 'addressbook-email';
 			return self::ajax_search();
 		}
-		
+
 		// TODO: this should go to a BO, not a UI object
 		return mail_compose::ajax_searchAddress();
 	}
-	
+
 	/**
 	 * Validate input
 	 *
@@ -88,7 +88,7 @@ class etemplate_widget_taglist extends etemplate_widget
 		{
 			$value = $value_in = self::get_array($content, $form_name);
 			$allowed = etemplate_widget_menupopup::selOptions($form_name);
-			
+
 			foreach((array) $value as $key => $val)
 			{
 				if(!$this->attrs['allowFreeEntries'] && !array_key_exists($val,$allowed))

@@ -161,7 +161,8 @@ var et2_taglist = et2_selectbox.extend(
 			editable: !(this.options.disabled || this.options.readonly),
 			selectionRenderer: jQuery.proxy(this.options.tagRenderer || this.selectionRenderer,this),
 			renderer: jQuery.proxy(this.options.listRenderer || this.selectionRenderer,this),
-			maxSelection: this.options.maxSelection
+			maxSelection: this.options.maxSelection,
+			highlight: false	// otherwise renderer have to return strings
 		}, this.lib_options);
 		this.taglist = this.taglist.magicSuggest(options);
 		
