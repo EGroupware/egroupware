@@ -5499,7 +5499,7 @@ class felamimail_bo
 								$alert_msg .= lang("Save of message %1 failed. Could not save message to folder %2 due to: %3",$Subject,$_folder,$e->getMessage());
 							}
 							// no send, save successful, and message_uid present
-							if ($savefailed===false && $messageUid && $sendOK===false)
+							if ($savefailed===false && $messageUid && is_null($sendOK))
 							{
 								$openComposeWindow = true;
 								list($fm_width,$fm_height) = explode('x',egw_link::get_registry('felamimail','view_popup'));
