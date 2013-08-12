@@ -119,11 +119,12 @@ class mail_sieve
 	function index(array $content=null,$msg=null)
 	{
 
-		//Initialize the Grid contents
-		$tmpl = new etemplate('mail.sieve.index');
+		//Instantiate an etemplate_new object
+		$tmpl = new etemplate_new('mail.sieve.index');
 
 		if ($_GET['msg']) $msg = $_GET['msg'];
 
+		//Initializes the Grid contents
 		$content['rg']= $this->get_rows($rows,$readonlys);
 
 		// Set content-menu actions
@@ -148,7 +149,8 @@ class mail_sieve
 	 */
 	function editEmailNotification($content=null, $msg='')
 	{
-		$eNotitmpl = new etemplate('mail.sieve.emailNotification');
+		//Instantiate an etemplate_new object, representing sieve.emailNotification
+		$eNotitmpl = new etemplate_new('mail.sieve.emailNotification');
 
 		$eNotification = $this->getEmailNotification();
 
@@ -233,7 +235,8 @@ class mail_sieve
 	 */
 	function edit ($content=null)
 	{
-		$etmpl = new etemplate('mail.sieve.edit');
+		//Instantiate an etemplate_new object, representing sieve.edit template
+		$etmpl = new etemplate_new('mail.sieve.edit');
 		error_log(__METHOD__.'() content before the action ' .array2string($content));
 		if (!is_array($content))
 		{
@@ -518,7 +521,9 @@ class mail_sieve
 	 */
 	function editVacation($content=null, $msg='')
 	{
-		$vtmpl = new etemplate('mail.sieve.vacation');
+
+		//Instantiate an etemplate_new object, representing the sieve.vacation template
+		$vtmpl = new etemplate_new('mail.sieve.vacation');
 
 		$vacRules = $this->getVacation($vacation,$msg);
 
