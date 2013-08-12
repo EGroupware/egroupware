@@ -84,10 +84,18 @@ function importexport_upgrade1_9_002()
 			// step through each file in defdir of app
 			$d = dir($defdir);
 			while (false !== ($entry = $d->read())) {
-				$file = $defdir. '/'. $entry;
-				list( $filename, $extension) = explode('.',$entry);
-				if ( $extension != 'xml' ) continue;
-				importexport_definitions_bo::import( $file );
+				try
+				{
+					$file = $defdir. '/'. $entry;
+					list( $filename, $extension) = explode('.',$entry);
+					if ( $extension != 'xml' ) continue;
+					importexport_definitions_bo::import( $file );
+				}
+				catch (Exception $e)
+				{
+					error_log($e->getMessage());
+					error_log("Unable to import definition file $file, skipping it.");
+				}
 			}
 		}
 	}
