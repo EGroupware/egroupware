@@ -140,9 +140,8 @@ class etemplate_widget_file extends etemplate_widget
 				// Data to send back to client
 				$temp_name = basename($file['tmp_name']);
 				$file_data[$temp_name] = array(
-					// Prepend space to avoid UTF8 issues, from
-					// http://www.php.net/manual/en/function.basename.php#109518
-					'name' => ltrim(basename(' '.$file['name'])),
+					// Use egw_vfs to avoid UTF8 / non-ascii issues
+					'name' => egw_vfs::basename($file['name']),
 					'type' => $file['type']
 				);
 			}
