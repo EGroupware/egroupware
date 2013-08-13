@@ -769,6 +769,7 @@ div.message.floating {
 	background-color: #f3d4d0;
 	border-color: #a93030;
 	background-image:url(images/error.png);
+	background-repeat: no-repeat;
 }
 
 .message.success {
@@ -777,6 +778,7 @@ div.message.floating {
 	color: #98a930;
 	border-color: #9ea930;
 	background-image:url(images/tick.png);
+	background-repeat: no-repeat;
 }
 
 .message.hint {
@@ -785,6 +787,7 @@ div.message.floating {
 	border-color: #56729a;
 	color: #56729a;
 	background-image:url(images/hint.png);
+	background-repeat: no-repeat;
 }
 
 /**

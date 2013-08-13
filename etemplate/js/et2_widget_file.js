@@ -203,6 +203,8 @@ var et2_file = et2_inputWidget.extend(
 		var drop_target = widget && widget.getDOMNode() || document.getElementById(this.options.drop_target);
 		if(drop_target)
 		{
+			// Tell jQuery to include this property
+			jQuery.event.props.push('dataTransfer');
 			var self = this;
 			drop_target.ondrop =function(event) {
 					return false;

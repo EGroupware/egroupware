@@ -212,6 +212,32 @@ var et2_link_to = et2_inputWidget.extend(
 		var file_attrs = {
 			multiple: true,
 			id: this.id + '_file',
+			
+			// Make the whole template a drop target
+			drop_target: this.getRoot(),
+				
+			// Change to this tab when they drop
+			onStart: function(event, file_count) {
+				// Find the tab widget, if there is one
+				var tabs = self;
+				do {
+					tabs = tabs._parent;
+				} while (tabs != self.getRoot() && tabs._type != 'tabbox');
+				if(tabs != self.getRoot())
+				{
+					// Find the tab index
+					for(var i = 0; i < tabs.tabData.length; i++)
+					{
+						// Find the tab
+						if(tabs.tabData[i].contentDiv.has(self.div).length)
+						{
+							tabs.setActiveTab(i);
+							break;
+						}
+					}
+				}
+				return true;
+			},
 			onFinish: function(event, file_count) {
 				event.data = self;
 				self.filesUploaded(event);
