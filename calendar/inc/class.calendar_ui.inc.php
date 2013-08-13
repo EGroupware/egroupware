@@ -873,7 +873,7 @@ function load_cal(url,id,no_reset) {
 		{
 			$menu_title = lang('Preferences');
 			$file = Array(
-				'Calendar preferences'=>egw::link('/index.php','menuaction=preferences.uisettings.index&appname=calendar'),
+				'Calendar preferences'=>egw::link('/index.php','menuaction=preferences.uisettings.index&appname=calendar','preferences'),
 				'Grant Access'=>egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=calendar'),
 				'Edit Categories' =>egw::link('/index.php','menuaction=preferences.preferences_categories_ui.index&cats_app=calendar&cats_level=True&global_cats=True'),
 			);
