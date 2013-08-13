@@ -102,65 +102,10 @@
 				}
 				if (!($imapClassName == 'defaultimap' || $imapClassName == 'emailadmin_imap'))
 				{
-					//$smtpClass='emailadmin_smtp_sql';
-					$accounts = $GLOBALS['egw']->accounts->search(array('type'=>'accounts'));
-					$groups = array();
-					if ($imapClassName=='managementserver_imap') $groups = $GLOBALS['egw']->accounts->search(array('type'=>'groups'));
-					$domainName = $bofelamimail->icServer->domainName;
-					if ($alllowercase)
-					{
-						$domainName = strtolower($domainName);
-					}
-					foreach ($accounts as $k => $v)
-					{
-						if ($alllowercase) $v['account_lid']=strtolower($v['account_lid']);
-						$isgroup=$v['account_id']<0?constant("$imapClassName::ACL_GROUP_PREFIX"):'';
-						$dfn = common::display_fullname($v['account_lid']);
-						if ($bofelamimail->icServer->loginType=='standard') // means username
-						{
-							$accountList[$isgroup.$v['account_lid']] = $dfn;
-						}
-						elseif ($bofelamimail->icServer->loginType=='email')
-						{
-							if (!empty($v['account_email'])) $accountList[$isgroup.$v['account_email']] = $dfn;
-						}
-						elseif ($bofelamimail->icServer->loginType=='vmailmgr') // means username + domainname
-						{
-							$accountList[$isgroup.trim($v['account_lid'].'@'.$domainName)] = $dfn;
-						}
-						elseif ($bofelamimail->icServer->loginType=='uidNumber') // userid + domain
-						{
-							$accountList[$isgroup.trim($v['account_id'].'@'.$domainName)] = $dfn;
-						}
-					}
-					natcasesort($accountList);
-					foreach ($groups as $k => $v)
-					{
-						if ($alllowercase) $v['account_lid']=strtolower($v['account_lid']);
-						$isgroup=$v['account_id']<0?constant("$imapClassName::ACL_GROUP_PREFIX"):'';
-						$dfn = common::display_fullname($v['account_lid']);
-						if ($bofelamimail->icServer->loginType=='standard') // means username
-						{
-							$groupList[$isgroup.$v['account_lid']] = $dfn;
-						}
-						elseif ($bofelamimail->icServer->loginType=='email')
-						{
-							if (!empty($v['account_email'])) $groupList[$isgroup.$v['account_email']] = $dfn;
-						}
-						elseif ($bofelamimail->icServer->loginType=='vmailmgr') // means username + domainname
-						{
-							$groupList[$isgroup.trim($v['account_lid'].'@'.$domainName)] = $dfn;
-						}
-						elseif ($bofelamimail->icServer->loginType=='uidNumber') // userid + domain
-						{
-							$groupList[$isgroup.trim($v['account_id'].'@'.$domainName)] = $dfn;
-						}
-					}
-					natcasesort($groupList);
-
-					if (count($accountList)>=1) $accountList = array(''=>lang('Select one'))+$accountList+$groupList;
+					//error_log(__METHOD__.__LINE__.$imapClassName);
+					$accountSelection = $GLOBALS['egw']->uiaccountsel->selection('accountName','accountName',array(),'felamimail'.($imapClassName=='managementserver_imap'?'+':''),0,False,
+					' title="'.lang('select a %1',lang('user')).'"','',lang('Select one'),false,null);
 				}
-				if (!empty($accountList)) $accountSelection = html::select('accountName','',$accountList,true, "id=\"accountName\"");
 			}
 
 			$this->t->set_file(array("body" => "preferences_manage_folder.tpl"));
@@ -171,7 +116,7 @@
 			unset($aclShortCuts['custom']);
 			$this->t->set_var('aclSelection',html::select('aclSelection',0,$aclShortCuts,false,'id="aclSelection" style="width:100%"'));
 			$this->translate();
-			if (isset($lprofileID)) $this->bofelamimail = felamimail_bo::getInstance(true, $lprofileID);
+			if (isset($lprofileID)) $this->bofelamimail = felamimail_bo::getInstance(false, $lprofileID);
 			$this->t->pparse("out","add_acl");
 
 		}

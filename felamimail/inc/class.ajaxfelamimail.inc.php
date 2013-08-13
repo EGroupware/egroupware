@@ -82,6 +82,32 @@ class ajaxfelamimail
 		function addACL($_accountName, $_aclData, $_recursive=false)
 		{
 			if($this->_debug) error_log("ajaxfelamimail::addACL for ".$_accountName."->".array2string($_aclData));
+			if (is_numeric($_accountName) && ($account=$GLOBALS['egw']->accounts->read($_accountName)))
+			{
+				//error_log(__METHOD__.__LINE__.array2string($account));
+				$imapClassName = get_class($this->bofelamimail->icServer);
+				$alllowercase = false;
+				if (!empty($imapClassName) && stripos(constant($imapClassName.'::CAPABILITIES'),'lowercaseloginname') !== false) $alllowercase=true;
+				if ($alllowercase) $account['account_lid']=strtolower($account['account_lid']);
+				$isgroup=$account['account_id']<0?constant("$imapClassName::ACL_GROUP_PREFIX"):'';
+				$domainName = $this->bofelamimail->icServer->domainName;
+				if ($this->bofelamimail->icServer->loginType=='standard') // means username
+				{
+					$_accountName = $isgroup.$account['account_lid'];
+				}
+				elseif ($this->bofelamimail->icServer->loginType=='email')
+				{
+					if (!empty($account['account_email'])) $_accountName = $isgroup.$account['account_email'];
+				}
+				elseif ($this->bofelamimail->icServer->loginType=='vmailmgr') // means username + domainname
+				{
+					$_accountName = $isgroup.trim($account['account_lid'].'@'.$domainName);
+				}
+				elseif ($this->bofelamimail->icServer->loginType=='uidNumber') // userid + domain
+				{
+					$_accountName = $isgroup.trim($account['account_id'].'@'.$domainName);
+				}
+			}
 			$response = new xajaxResponse();
 			//$_recursive=false;
 			if(!empty($_accountName)) {
