@@ -130,7 +130,7 @@ class filemanager_hooks
 		if (is_array($location)) $location = $location['location'];
 
 		$file = array(
-			'Preferences' => egw::link('/index.php','menuaction=preferences.uisettings.index&appname='.self::$appname),
+			'Preferences' => egw::link('/index.php','menuaction=preferences.uisettings.index&appname='.self::$appname,'preferences'),
 		);
 		if ($location == 'preferences')
 		{

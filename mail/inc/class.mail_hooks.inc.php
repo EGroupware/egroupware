@@ -734,7 +734,7 @@ class mail_hooks
 		$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $mail_bo->profileID;
 		$mailPreferences =& $mail_bo->mailPreferences;
 
-		$file['Preferences'] = egw::link('/index.php','menuaction=preferences.preferences_settings.index&appname=' . $appname);
+		$file['Preferences'] = egw::link('/index.php','menuaction=preferences.preferences_settings.index&appname=' . $appname,'preferences');
 
 		if($mailPreferences->userDefinedAccounts) {
 			$linkData = array

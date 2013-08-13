@@ -44,7 +44,7 @@ class resources_hooks
 			&& $GLOBALS['egw_info']['user']['apps']['importexport'])	// Only one preference right now, need this to prevent errors
 		{
 			$file = array(
-				'Preferences'     => egw::link('/index.php','menuaction=preferences.uisettings.index&appname='.$appname),
+				'Preferences'     => egw::link('/index.php','menuaction=preferences.uisettings.index&appname='.$appname,'preferences'),
 			// Categories control access, not regular ACL system
 			//	'Grant Access'    => egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
 			//	'Edit Categories' => egw::link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
