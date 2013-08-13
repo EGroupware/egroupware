@@ -841,7 +841,7 @@ class mail_hooks
 			#$mailPreferences = ExecMethod('mail.bopreferences.getPreferences');
 			$menu_title = lang('Preferences');
 			$file = array(
-				'Preferences'		=> egw::link('/index.php','menuaction=preferences.preferences_settings.index&appname=mail'),
+				'Preferences'		=> egw::link('/index.php','menuaction=preferences.preferences_settings.index&appname=mail','preferences'),
 			);
 /*
 			if($preferences->userDefinedAccounts || $preferences->userDefinedIdentities) {
