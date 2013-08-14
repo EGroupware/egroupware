@@ -1530,6 +1530,7 @@ function __autoload($class)
  */
 function _egw_log_exception(Exception $e,&$headline=null)
 {
+	$trace = explode("\n", $e->getTraceAsString());
 	if ($e instanceof egw_exception_no_permission)
 	{
 		$headline = try_lang('Permission denied!');
@@ -1542,6 +1543,11 @@ function _egw_log_exception(Exception $e,&$headline=null)
 	{
 		$headline = '';	// message contains the whole message, it's usually no real error but some input validation
 	}
+	elseif ($e instanceof egw_exception_warning)
+	{
+		$headline = 'PHP Warning';
+		array_shift($trace);
+	}
 	else
 	{
 		$headline = try_lang('An error happened');
@@ -1551,7 +1557,7 @@ function _egw_log_exception(Exception $e,&$headline=null)
 	if(isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] !== 'cli')
 	{
 		error_log($headline.' ('.get_class($e).'): '.$e->getMessage());
-		foreach(explode("\n",$e->getTraceAsString()) as $line) error_log($line);
+		foreach($trace as $line) error_log($line);
 		error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
 			($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 	}
@@ -1637,15 +1643,38 @@ if (!isset($GLOBALS['egw_info']['flags']['no_exception_handler']) || $GLOBALS['e
  * @param string $errstr error message
  * @param string $errfile filename that the error was raised in
  * @param int $errline line number the error was raised at
+ * @link http://www.php.net/manual/en/function.set-error-handler.php
  * @throws ErrorException
  */
 function egw_error_handler ($errno, $errstr, $errfile, $errline)
 {
-	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+	switch ($errno)
+	{
+		case E_RECOVERABLE_ERROR:
+		case E_USER_ERROR:
+			throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+
+		case E_WARNING:
+		case E_USER_WARNING:
+			// skip message for warnings supressed via @-error-control-operator (eg. @is_dir($path))
+			// can be commented out to get suppressed warnings too!
+			if (error_reporting())
+			{
+				_egw_log_exception(new egw_exception_warning($errstr));
+				return false;
+			}
+			break;
+	}
 }
 
-// install our error-handler only for catchable fatal errors
-set_error_handler('egw_error_handler', E_RECOVERABLE_ERROR);
+/**
+ * Used internally to trace warnings
+ */
+class egw_exception_warning extends Exception {};
+
+// install our error-handler only for catchable fatal errors and warnings
+// following error types cannot be handled with a user defined function: E_ERROR, E_PARSE, E_CORE_ERROR, E_CORE_WARNING, E_COMPILE_ERROR, E_COMPILE_WARNING
+set_error_handler('egw_error_handler', E_RECOVERABLE_ERROR|E_USER_ERROR|E_WARNING|E_USER_WARNING);
 
 // some not longer necessary defines
 if (isset($GLOBALS['egw_info']['flags']['phpgw_compatibility']) && $GLOBALS['egw_info']['flags']['phpgw_compatibility'])
