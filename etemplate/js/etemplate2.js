@@ -201,7 +201,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	{
 		(function() { new app[appname]();}).call();
 	}
-	else
+	else if (typeof app[appname] !== "object")
 	{
 		egw.debug("warn", "Did not load '%s' JS object",appname); 
 	}

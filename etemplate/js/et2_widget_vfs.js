@@ -236,6 +236,7 @@ var et2_vfsMime = et2_valueWidget.extend([et2_IDetachedDOM],
 			"description": "Array of (stat) information about the file"
 		},
 		"size": {
+			"name": "Icon size",
 			"type": "integer",
 			"description": "Size of icon / thumbnail, in pixels",
 			"default": et2_no_init

@@ -1905,6 +1905,16 @@ et2_register_widget(et2_nextmatch_customfields, ['nextmatch-customfields']);
  */
 var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortable, 
 {
+	attributes: {
+		"sortmode": {
+			"name": "Sort order",
+			"type": "string",
+			"description": "Default sort order",
+			"translate": false
+		}
+	},
+	legacyOptions: ['sortmode'],
+	
 	/**
 	 * Constructor
 	 * 
@@ -1928,6 +1938,14 @@ var et2_nextmatch_sortheader = et2_nextmatch_header.extend(et2_INextmatchSortabl
 		return false;
 	},
 
+	/**
+	 * Wrapper to join up interface * framework
+	 */
+	set_sortmode: function(_mode)
+	{
+		this.setSortmode(_mode);
+	},
+		
 	/**
 	 * Function which implements the et2_INextmatchSortable function.
 	 */

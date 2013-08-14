@@ -91,7 +91,7 @@ var et2_tree = et2_inputWidget.extend(
 			"name": "Standard images",
 			"type": "string",
 			"default": "",
-			"descripton": "comma-separated names of icons for a leaf, closed and opend folder (default: leaf.gif,folderClosed.gif,folderOpen.gif), images with extension get loaded from image_path, just 'image' or 'appname/image' are allowed too"
+			"description": "comma-separated names of icons for a leaf, closed and opend folder (default: leaf.gif,folderClosed.gif,folderOpen.gif), images with extension get loaded from image_path, just 'image' or 'appname/image' are allowed too"
 		}
 	},
 
