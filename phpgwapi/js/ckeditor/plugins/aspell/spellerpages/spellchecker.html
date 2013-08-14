@@ -16,7 +16,7 @@ function init_spell( spellerWindow ) {
 
 	if( controlWindow && wordWindow ) {
 		// populate the speller object and start it off!
-		if (typeof opener == 'undefined') opener = (this.spellCheckerWin.opener?this.spellCheckerWin.opener:window.parent);
+		if (typeof opener == 'undefined') opener = (this.spellCheckerWin && this.spellCheckerWin.opener?this.spellCheckerWin.opener:window.parent);
 		var speller = opener.speller;
 		wordWindow.speller = speller;
 		speller.startCheck( wordWindow, controlWindow );
@@ -36,7 +36,7 @@ function encodeForPost( str ) {
 // post the text area data to the script that populates the speller
 function postWords() {
 	var bodyDoc = window.frames[0].document;
-	if (typeof opener == 'undefined') opener = (this.spellCheckerWin.opener?this.spellCheckerWin.opener:window.parent);
+	if (typeof opener == 'undefined') opener = (this.spellCheckerWin && this.spellCheckerWin.opener?this.spellCheckerWin.opener:window.parent);
 	bodyDoc.open();
 	bodyDoc.write('<html>');
 	bodyDoc.write('<meta http-equiv="Content-Type" content="text/html; charset=utf-8">');
