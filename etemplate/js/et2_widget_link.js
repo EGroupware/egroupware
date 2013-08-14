@@ -991,7 +991,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * by the calling code.
 	 */
 	getDetachedAttributes: function(_attrs) {
-		_attrs.push("value");
+		_attrs.push("label","value");
 	},
 
 	/**
@@ -999,7 +999,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * passed to the "setDetachedAttributes" function in the same order.
 	 */
 	getDetachedNodes: function() {
-		return [this.node];
+		return [this.node, this._labelContainer ? this._labelContainer[0] : null];
 	},
 
 	/**
@@ -1013,8 +1013,11 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 	 *      given values.
 	 */
 	setDetachedAttributes: function(_nodes, _values) {
+		this.node = _nodes[0];
 		this.link = jQuery(_nodes[0]);
+		this._labelContainer = _nodes[1] != null ? jQuery(_nodes[1]) : null;
 		if(typeof _values["id"] !== "undefined") this.set_id(_values['id']);
+		if(typeof _values["label"] !== "undefined") this.set_label(_values['label']);
 		if(typeof _values["value"] !== "undefined" && typeof _values["value"].title !== "undefined")
 		{
 			// Direct route
