@@ -114,6 +114,9 @@
 			$this->t->set_var('accountSelection',$accountSelection);
 			$aclShortCuts = felamimail_bo::$aclShortCuts;
 			unset($aclShortCuts['custom']);
+			$this->t->set_var('imapClassName',$imapClassName);
+			$this->t->set_var('imapLoginType',$bofelamimail->icServer->loginType);
+			$this->t->set_var('imapDomainName',$bofelamimail->icServer->domainName);
 			$this->t->set_var('aclSelection',html::select('aclSelection',0,$aclShortCuts,false,'id="aclSelection" style="width:100%"'));
 			$this->translate();
 			if (isset($lprofileID)) $this->bofelamimail = felamimail_bo::getInstance(false, $lprofileID);

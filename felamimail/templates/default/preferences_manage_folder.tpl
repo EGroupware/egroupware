@@ -159,6 +159,9 @@
 
 <!-- BEGIN add_acl -->
 	<form id="formAddACL" name="formAddACL">
+		<input type='hidden' id='imapClassName' name='imapClassName' value='{imapClassName}'>
+		<input type='hidden' id='imapLoginType' name='imapLoginType' value='{imapLoginType}'>
+		<input type='hidden' id='imapDomainName' name='imapDomainName' value='{imapDomainName}'>
 		<table border="0" width="100%" bgcolor="#FFFFFF">
 			<tr class="th">
 				<td>
