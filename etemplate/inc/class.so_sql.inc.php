@@ -1295,7 +1295,8 @@ class so_sql
 				$GLOBALS['egw']->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$token).$wildcard);
 
 			// Compare numeric token as equality for numeric columns
-			if(is_numeric(str_replace(array('%','_','*','?'), '', $token)))
+			// skip user-wildcards (*,?) in is_numeric test, but not SQL wildcards, which get escaped and give sql-error
+			if (is_numeric(str_replace(array('*','?'), '', $token)))
 			{
 				$numeric_filter = array();
 				foreach($numeric_columns as $col)
@@ -1305,7 +1306,7 @@ class so_sql
 						// Token has a wildcard from user, use LIKE
 						$numeric_filter[] = "($col IS NOT NULL AND CAST($col AS CHAR) " .
 							$this->db->capabilities['case_insensitive_like'] . ' ' .
-							$GLOBALS['egw']->db->quote(str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$token)) . ')';
+							$GLOBALS['egw']->db->quote(str_replace(array('*','?'), array('%','_'), $token)) . ')';
 					}
 					else
 					{
