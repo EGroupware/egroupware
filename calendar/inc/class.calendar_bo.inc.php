@@ -351,7 +351,7 @@ class calendar_bo
 			// for groups we have to include the members
 			if ($GLOBALS['egw']->accounts->get_type($user) == 'g')
 			{
-				if ($params['filter'] == 'no-enum-groups') continue;
+				if ($no_enum_groups) continue;
 
 				$members = $GLOBALS['egw']->accounts->member($user);
 				if (is_array($members))
