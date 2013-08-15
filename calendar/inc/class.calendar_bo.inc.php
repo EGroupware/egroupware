@@ -737,16 +737,16 @@ class calendar_bo
 		$this->insert_all_recurrences($event,$start,$this->date2usertime($this->config['horizont']),$events);
 
 		$limit = min($this->config['horizont'], $event['end']);
-		$days = $this->so->get_recurrence_exceptions($event, null, $start, $limit);	// content of array is in server-time!
-		//error_log('set_recurrences: days=' . array2string($days) );
+		$exceptions = array();
+		foreach((array)$event['recur_exception'] as $exception)
+		{
+			$exceptions[] = egw_time::to($exception, true);	// true = date
+		}
+		//error_log(__METHOD__."(".array2string($event).", $start) exceptions=".array2string($exceptions));
 		foreach($events as $event)
 		{
+			$is_exception = in_array(egw_time::to($event['start'], true), $exceptions);
 			$start = $this->date2ts($event['start'],true);
-			if (in_array($start, (array)$days))
-			{
-				// we don't change the stati of recurrence exceptions
-				$event['participants'] = array();
-			}
 			if ($event['whole_day'])
 			{
 				$time = new egw_time($event['end'], egw_time::$user_timezone);
@@ -758,7 +758,8 @@ class calendar_bo
 			{
 				$end = $this->date2ts($event['end'],true);
 			}
-			$this->so->recurrence($event['id'],$start,$end,$event['participants']);
+			//error_log(__METHOD__."() start=".egw_time::to($start).", is_exception=".array2string($is_exception));
+			$this->so->recurrence($event['id'], $start, $end, $event['participants'], $is_exception);
 		}
 	}
 
@@ -960,6 +961,8 @@ class calendar_bo
 			// insert at least the event itself, if it's behind the horizont
 			$event['recur_enddate'] = $this->date2ts($end) < $this->date2ts($event['end']) ? $event['end'] : $end;
 		}
+		// unset exceptions, as we need to add them as recurrence too, but marked as exception
+		unset($event['recur_exception']);
 		// loop over all recurrences and insert them, if they are after $start
 		$rrule = calendar_rrule::event2rrule($event, true);	// true = we operate in usertime, like the rest of calendar_bo
 		foreach($rrule as $time)
@@ -1584,9 +1587,13 @@ class calendar_bo
 			}
 			$cat = $id2cat[$cat_id];
 
-			if ($cat['data']['color'] || preg_match('/(#[0-9A-Fa-f]{6})/',$cat['description'],$parts))
+			if (is_array($cat['data']) && !empty($cat['data']['color']))
 			{
-				$color = $cat['data']['color'] ? $cat['data']['color'] : $parts[1];
+				$color = $cat['data']['color'];
+			}
+			elseif(preg_match('/(#[0-9A-Fa-f]{6})/', $cat['description'], $parts))
+			{
+				$color = $parts[1];
 			}
 			$cats[$cat_id] = stripslashes($cat['name']);
 		}

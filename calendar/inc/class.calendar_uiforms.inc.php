@@ -836,16 +836,6 @@ class calendar_uiforms extends calendar_ui
 							$exception['recurrence'] += $offset;
 							$exception['reference'] = $event['id'];
 							$exception['uid'] = $event['uid'];
-							$exception['start'] += $offset;
-							$exception['end'] += $offset;
-							$exception['whole_day'] = $event['whole_day'];
-							$alarms = array();
-							foreach ($exception['alarm'] as $id => &$alarm)
-							{
-								$alarm['time'] = $exception['start'] - $alarm['offset'];
-								$alarms[] = $alarm;
-							}
-							$event['alarm'] = $alarms;
 							$this->bo->update($exception, true, true, true, true, $msg=null, $content['no_notifications']);
 						}
 					}
