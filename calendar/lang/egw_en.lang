@@ -5,6 +5,7 @@
 %1 records imported	calendar	en	%1 records imported.
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	en	%1 records read. Not yet imported, go back and uncheck Test import.
 %1 weeks	calendar	en	%1 weeks
+%s the event	calendar	en	%s the event
 (%1 events in %2 seconds)	calendar	en	(%1 events in %2 seconds)
 , exceptions preserved	calendar	en	, exceptions preserved
 , stati of participants reset	calendar	en	, status of participants reset
