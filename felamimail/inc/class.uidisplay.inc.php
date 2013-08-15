@@ -246,7 +246,7 @@
 			$link = $GLOBALS['egw']->link('/index.php',$linkData);
 			//error_log(__METHOD__." link:".$link.'#<br>');
 			//return "<a href='#' onclick='egw_openWindowCentered2(\"$link\", \"compose\", 700, egw_getWindowOuterHeight(),\"no\",\"felamimail\",false);' ><font color=\"blue\">".$text."</font></a>";
-			return "<a href=\"$link\" target=\"compose\" onclick=\"h=window.open(this,this.target,'dependent=yes,width=700,height=650,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); he=screen.availHeight; h.resizeTo(700,he); return false;\"><font color=\"blue\">".$text."</font></a>";
+			return "<a href=\"$link&cd=no\" target=\"compose\" onclick=\"h=window.open(this,this.target,'dependent=yes,width=700,height=650,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); he=screen.availHeight; h.resizeTo(700,he); return false;\"><font color=\"blue\">".$text."</font></a>";
 		}
 
 		function highlightQuotes($text, $level = 5)
