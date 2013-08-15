@@ -303,7 +303,7 @@ div .egw_fw_ui_sidemenu_entry_content > div {
 			{
 				if (empty($GLOBALS['egw_info']['flags']['java_script'])) $GLOBALS['egw_info']['flags']['java_script']='';
 				$GLOBALS['egw_info']['flags']['java_script'] .= '<script type="text/javascript">
-	if (typeof top.framework == "undefined")
+	if (typeof top.framework == "undefined" && !document.location.href.match(/cd=no/))
 	{
 		var top_opener = top.opener;
 		while (top_opener && top_opener.opener && !top_opener.top.framework) top_opener = top_opener.opener.top;
