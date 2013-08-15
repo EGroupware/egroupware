@@ -601,6 +601,7 @@ class calendar_uiforms extends calendar_ui
 				$event['recurrence'] = $content['edit_single'];
 				unset($event['id']);
 				// modifiy alarms for the exception, unsetting alarm-id to create new alarms
+				if (!is_array($event['alarm'])) $event['alarm'] = array();
 				foreach($event['alarm'] as $n => &$alarm)
 				{
 					unset($alarm['id']);
@@ -783,7 +784,7 @@ class calendar_uiforms extends calendar_ui
 			{
 				if ($edit_series_confirmed)	// series moved by splitting in two
 				{
-					foreach ($old_alarms as $alarm)
+					foreach ((array)$old_alarms as $alarm)
 					{
 						// check if alarms still needed in old event, if not delete it
 						$event_time = $alarm['time'] + $alarm['offset'];
