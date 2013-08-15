@@ -1682,14 +1682,16 @@ ORDER BY cal_user_type, cal_usre_id
 	 * @param int $cal_id
 	 * @param int $start
 	 * @param int $end
+	 * @param boolean $exception=null true or false to set recure_exception flag, null leave it unchanged (new are by default no exception)
 	 * @param array $participants uid => status pairs
 	 */
-	function recurrence($cal_id,$start,$end,$participants)
+	function recurrence($cal_id,$start,$end,$participants,$exception=null)
 	{
-		//echo "<p>socal::recurrence($cal_id,$start,$end,".print_r($participants,true).")</p>\n";
-		$this->db->insert($this->dates_table,array(
-			'cal_end' => $end,
-		),array(
+		//error_log(__METHOD__."($cal_id, $start, $end, ".array2string($participants).", ".array2string($exception));
+		$update = array('cal_end' => $end);
+		if (isset($exception)) $update['recur_exception'] = $exception;
+
+		$this->db->insert($this->dates_table, $update, array(
 			'cal_id' => $cal_id,
 			'cal_start'  => $start,
 		),__LINE__,__FILE__,'calendar');
@@ -1698,24 +1700,27 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			error_log(__METHOD__."($cal_id, $start, $end, ".array2string($participants).") participants is NO array! ".function_backtrace());
 		}
-		foreach($participants as $uid => $status)
+		if ($exception !== true)
 		{
-			if ($status == 'G') continue;	// dont save group-invitations
+			foreach($participants as $uid => $status)
+			{
+				if ($status == 'G') continue;	// dont save group-invitations
 
-			$type = '';
-			$id = null;
-			self::split_user($uid,$type,$id);
-			self::split_status($status,$quantity,$role);
-			$this->db->insert($this->user_table,array(
-				'cal_status'	=> $status,
-				'cal_quantity'	=> $quantity,
-				'cal_role'		=> $role
-			),array(
-				'cal_id'		 => $cal_id,
-				'cal_recur_date' => $start,
-				'cal_user_type'  => $type,
-				'cal_user_id' 	 => $id,
-			),__LINE__,__FILE__,'calendar');
+				$type = '';
+				$id = null;
+				self::split_user($uid,$type,$id);
+				self::split_status($status,$quantity,$role);
+				$this->db->insert($this->user_table,array(
+					'cal_status'	=> $status,
+					'cal_quantity'	=> $quantity,
+					'cal_role'		=> $role
+				),array(
+					'cal_id'		 => $cal_id,
+					'cal_recur_date' => $start,
+					'cal_user_type'  => $type,
+					'cal_user_id' 	 => $id,
+				),__LINE__,__FILE__,'calendar');
+			}
 		}
 	}
 

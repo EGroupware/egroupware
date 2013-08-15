@@ -1112,7 +1112,7 @@ class calendar_boupdate extends calendar_bo
 		// same with the recur exceptions
 		if (isset($event['recur_exception']) && is_array($event['recur_exception']))
 		{
-			foreach($event['recur_exception'] as $n => $date)
+			foreach($event['recur_exception'] as &$date)
 			{
 				if ($event['whole_day'])
 				{
@@ -1122,9 +1122,10 @@ class calendar_boupdate extends calendar_bo
 				}
 				else
 				{
-					$event['recur_exception'][$n] = $this->date2ts($date,true);
+					$date = $this->date2ts($date,true);
 				}
 			}
+			unset($date);
 		}
 		// same with the alarms
 		if (isset($event['alarm']) && is_array($event['alarm']) && isset($event['start']))
