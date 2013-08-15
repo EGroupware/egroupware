@@ -1556,7 +1556,7 @@ function _egw_log_exception(Exception $e,&$headline=null)
 	// which outputs the error_log to stderr and therefore output it twice to the user
 	if(isset($_SERVER['HTTP_HOST']) || $GLOBALS['egw_info']['flags']['no_exception_handler'] !== 'cli')
 	{
-		error_log($headline.' ('.get_class($e).'): '.$e->getMessage());
+		error_log($headline.($e instanceof egw_exception_warning ? ': ' : ' ('.get_class($e).'): ').$e->getMessage());
 		foreach($trace as $line) error_log($line);
 		error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
 			($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
@@ -1660,8 +1660,7 @@ function egw_error_handler ($errno, $errstr, $errfile, $errline)
 			// can be commented out to get suppressed warnings too!
 			if (error_reporting())
 			{
-				_egw_log_exception(new egw_exception_warning($errstr));
-				return false;
+				_egw_log_exception(new egw_exception_warning($errstr.' in '.$errfile.' on line '.$errline));
 			}
 			break;
 	}
