@@ -175,6 +175,9 @@ class admin_prefs_sidebox_hooks
 		{
 			$GLOBALS['egw']->invalidate_session_cache();	// in case with cache the egw_info array in the session
 		}
+		// allow apps to hook into "Admin >> Clear cache and register hooks"
+		$GLOBALS['egw']->hooks->process('clear_cache', array(), true);
+
 		$GLOBALS['egw']->redirect_link('/admin/index.php');
 	}
 }
