@@ -242,8 +242,8 @@ email address	admin	ru	Адрес электронной почты
 empty to not change	admin	ru	Пусто, чтобы НЕ менять
 enable	admin	ru	Разрешить
 enable debug-messages	admin	ru	Разрешить отладочные сообщения
-enable the soap service	admin	ru	Разрешить сервис soap
 enable spellcheck in rich text editor	admin	ru	Включить проверку орфографии в редакторе?
+enable the soap service	admin	ru	Разрешить сервис soap
 enable the xmlrpc service	admin	ru	Разрешить сервис xmlrpc
 enabled - hidden from navbar	admin	ru	Разрешено - скрыть с панели навигации
 enabled - popup window	admin	ru	Разрешено - всплывающее окно
@@ -273,7 +273,6 @@ enter your http proxy server port	admin	ru	Введите порт вашего 
 enter your smtp server hostname or ip address	admin	ru	Введите имя хоста или IP-адрес вашего SMTP-сервера
 enter your smtp server port	admin	ru	Введите порт вашего SMTP-сервера
 error canceling timer, maybe there's none set !!!	admin	ru	Ошибка отмены таймера, возможно таймер не был установлен!
-error changing the password for % !!!	admin	ru	Ошибка изменения пароля для %!
 error changing the password for %1 !!!	admin	ru	Ошибка изменения пароля для %1!
 error deleting log entry!	admin	ru	Ошибка удаления записи журнала!
 error saving	admin	ru	Ошибка сохранения
@@ -297,7 +296,6 @@ file space	admin	ru	Размер файла
 file space must be an integer	admin	ru	Размер файла должен быть целым числом
 for the times above	admin	ru	На время, указанное выше
 for the times below (empty values count as '*', all empty = every minute)	admin	ru	На время, указанное ниже (пустые значения считаются как '*', все пустые = ежеминутно)
-force password strength (1-5, default empty: no check against rules for a strong password)?	admin	ru	Принудительная стойкость пароля (от 1 = слабая, до 5 = очень сильная, по умолчанию = пусто: без проверки по правилам проверки стойкости пароля)
 force selectbox	admin	ru	Принудительно список выбора
 force users to change their password regularily?(empty for no,number for after that number of days	admin	ru	Предписать пользователям менять пароли регулярно (пусто – отмена; число – указывает, через столько дней пароль должен будет меняться)
 forward also to	admin	ru	Перенаправить также на

@@ -66,6 +66,7 @@ manage mapping	resources	ru	Управление отображениями
 name of resource	resources	ru	Имя ресурса
 name:	resources	ru	Имя:
 new accessory	resources	ru	Новое комплектующее
+new resource	resources	ru	Новый ресурс
 no description available	resources	ru	описание недоступно
 no resources selected	resources	ru	Ресурсы не выбраны
 notify your administrator to correct this situation	resources	ru	Сообщите Вашему администратору для исправления этой ситуации
@@ -74,6 +75,7 @@ picture source	resources	ru	Источник изображения
 picture type is not supported, sorry!	resources	ru	Формат изображения не поддерживается, извините!
 pictures or resource	resources	ru	Изображение или ресурс
 planer	resources	ru	Планировщик
+prevent deleting	admin	ru	Предотвращение удаления
 prize	resources	ru	Цена
 prizeing information for booking or buying	resources	ru	Информация о цене для бронирования или покупки
 quantity	resources	ru	Количество
