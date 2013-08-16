@@ -1,3 +1,23 @@
+egroupware-epl (11.1.20130816-1) hardy; urgency=low
+
+  * eMail/eSync: fix cut off of multiple TO/CC addresses in header retrieval (seen in eSync); return empty syncMail Object on header retrieval failure for activesync
+  * eMail/Filemanager: when saving mail to filemanager, add headerdata without subject to file - comment field
+  * Admin/SambaAdmin: fixed not set sambaNTPassword and sambaLMPassword hashes in LDAP (hook changepassword was called without password)
+  * Admin/Filemanager: added filesystem check and repair for missing or broken required directories /, /apps and /home
+  * CardDAV/Addressbook: fixed not working sync-collection report eg. by eMclient, if server-time is different from user
+  * CardDAV/Addressbook: fixed various issues with groups/distribution lists as supported by Apple and eMclient (groups need to be enabled in CalDAV/CardDAV preferences!)
+  * CardDAV/Addressbook/ActiveDirectory: fixes SQL error when clients tries to propfind groups/distribution lists on accounts-addressbook, also return "403 Forbidden" when he tries to create one, as they are not (yet) supported on accounts, if not stored in SQL
+  * PostgreSQL/Addressbook: fix SQL error in addressbook by organisation and department
+  * Tracker/PostgreSQL: fix sql error when sorting be modified date
+  * ProjectManager: fix SQL error if searching for string containing numbers and underscore or percent
+  * CKEditor/ASpell: hardening of jscode for IE10, as spellCheckerWin object may not be defined
+  * Calendar: when moving a series exceptions where lost (regular recurrences shown again) and exceptions where moved too
+  * Calendar: fixed not working filter "only group events", to not include events of members
+  * phpFreeChat: use the clearCache hook to clear freeChats ohn class cache
+  * phpfreechat: enable reconnecting with the same nick, when not properly disconnected before
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 16 Aug 2013 14:01:12 +0200
+
 egroupware-epl (11.1.20130729-1) hardy; urgency=low
 
   * eMail/Activesync: improve behavior on connection failure. Return 503 Service unavailable/Retry After on Connection error.
