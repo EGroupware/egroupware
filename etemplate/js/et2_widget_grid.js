@@ -20,13 +20,13 @@
 
 /**
  * Class which implements the "grid" XET-Tag
- * 
+ *
  * This also includes repeating the last row in the grid and filling
  * it with content data
- * 
+ *
  * @augments et2_DOMWidget
- */ 
-var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned], 
+ */
+var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 {
 	createNamespace: true,
 
@@ -54,10 +54,10 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 			"description": "PHP function called when user sorts the grid.  Setting this enables sorting the grid rows.  The callback will be passed the ID of the grid and the new order of the rows."
 		}
 	},
-	
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_grid
 	 */
 	init: function() {
@@ -196,7 +196,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 				rowDataEntry["class"] = et2_readAttrWithDefault(node, "class", "");
 				rowDataEntry["valign"] = et2_readAttrWithDefault(node, "valign", "");
 				rowDataEntry["span"] = et2_readAttrWithDefault(node, "span", "1");
-				
+
 				var id = et2_readAttrWithDefault(node, "id", "");
 				if(id)
 				{
@@ -223,7 +223,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 				if(content.data[rowIndex])
 				{
 					rowData[rowIndex] = jQuery.extend({}, rowDataEntry);
-				
+
 					rowIndex++;
 				}
 				else
@@ -370,7 +370,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 					}
 					else
 					{
-						throw("Grid cell collision, two elements " + 
+						throw("Grid cell collision, two elements " +
 							"defined for cell (" + x + "," + y + ")!");
 					}
 				}
@@ -430,7 +430,11 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 			{
 				this._getCell(cells, x, y).rowData.id = this.getArrayMgr("content").expandName(this._getCell(cells, x, y).rowData.id);
 			}
-	
+			if(this._getCell(cells, x, y).rowData.class)
+			{
+				this._getCell(cells, x, y).rowData.class = this.getArrayMgr("content").expandName(this._getCell(cells, x, y).rowData.class);
+			}
+
 			et2_filteredNodeIterator(this.lastRowNode, readRowNode, this);
 		}
 		// Reset
@@ -485,8 +489,8 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 
 	/**
 	 * As the does not fit very well into the default widget structure, we're
-	 * overwriting the loadFromXML function and doing a two-pass reading - 
-	 * in the first step the 
+	 * overwriting the loadFromXML function and doing a two-pass reading -
+	 * in the first step the
 	 */
 	loadFromXML: function(_node) {
 		// Get the columns and rows tag
@@ -552,7 +556,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 			{
 				tr.attr("valign", this.rowData[y].valign);
 			}
-			
+
 			if(this.rowData[y].id)
 			{
 				tr.attr("id", this.rowData[y].id);
@@ -673,34 +677,34 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 	get_align: function(_value) {
 		return this.align;
 	},
-	
+
 	/**
 	 * Sortable allows you to reorder grid rows using the mouse.
-	 * The new order is returned as part of the value of the 
+	 * The new order is returned as part of the value of the
 	 * grid, in 'sort_order'.
-	 * 
+	 *
 	 * @param {boolean|function} sortable Callback or false to disable
-	 */	
+	 */
 	set_sortable: function(sortable) {
 		if(!sortable)
 		{
 			this.tbody.sortable("destroy");
 			return;
 		}
-		
+
 		// Make sure rows have IDs, so sortable has something to return
 		$j('tr', this.tbody).each(function(index) {
 			var $this = $j(this);
-			
+
 			// Header does not participate in sorting
 			if($this.hasClass('th')) return;
-			
+
 			// If row doesn't have an ID, assign the index as ID
 			if(!$this.attr("id")) $this.attr("id", index);
 		});
-		
+
 		var self = this;
-		
+
 		// Set up sortable
 		this.tbody.sortable({
 			// Header does not participate in sorting
@@ -717,7 +721,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 
 	/**
 	 * Override parent to apply actions on each row
-	 * 
+	 *
 	 * @param Object[ {ID: attributes..}+] as for set_actions
 	 */
 	_link_actions: function(actions)
@@ -752,7 +756,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 			obj.updateActionLinks(action_links);
 		}
 	},
-		
+
 	/**
 	 * Code for implementing et2_IDetachedDOM
 	 * This doesn't need to be implemented.
