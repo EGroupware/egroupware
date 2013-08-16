@@ -451,7 +451,7 @@ app.filemanager = AppJS.extend(
 		}
 		else
 		{
-			egw.open(path, 'file');
+			egw.open({path: path, type: data.data.mime}, 'file');
 		}
 	},
 	

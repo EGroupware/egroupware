@@ -95,7 +95,8 @@ class mail_hooks
 			// register fmail as handler for .eml files
 			'mime' => array(
 				'message/rfc822' => array(
-//					'menuaction' => 'mail.mail_ui.importMessageFromVFS2DraftAndDisplay',
+					'menuaction' => 'felamimail.uifelamimail.importMessageFromVFS2DraftAndDisplay',
+					//'menuaction' => 'mail.mail_ui.importMessageFromVFS2DraftAndDisplay',
 					'mime_popup' => '850xegw_getWindowOuterHeight()',
 					'mime_url'   => 'formData[file]',
 				),
