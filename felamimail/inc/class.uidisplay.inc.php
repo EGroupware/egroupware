@@ -1367,6 +1367,7 @@ blockquote[type=cite] {
 				if ($fp) fclose($fp);
 				if ($succeeded)
 				{
+					translation::add_app('felamimail');
 					$headers = $this->bofelamimail->getMessageHeader($this->uid,$partID,true);
 					unset($headers['SUBJECT']);//already in filename
 					$infoSection = felamimail_bo::createHeaderInfoSection($headers, 'SUPPRESS', false);
