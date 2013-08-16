@@ -296,11 +296,13 @@ filesystem	setup	ru	Файловая система
 filesystem (default)	setup	ru	Файловая система по умолчанию
 force selectbox	setup	ru	Принудительный список выбора
 give admin access to all installed apps	setup	ru	Выдать полный доступ ко всем установленным приложениям
+give ldap root dn and password, if you need to create an instance specific admin user, user- or group-context	setup	ru	Предоставляет LDAP root DN и пароль, в случае необходимости создания инстанции специального пользователя-администратора (в контексте пользователя или группы)
 gives further options	setup	ru	в дальнейшем дает дополнительные параметры(?)
 go back	setup	ru	Вернуться
 go to	setup	ru	Перейти к
 grant access	setup	ru	Обширный доступ
 group	setup	ru	группа
+group %1 uses identical id %2 as user %3!	setup	ru	Группа %1 использует ID "%2", идентичный используемому пользователем %3
 group memberships will be migrated too.	setup	ru	Входящие в группу также будут перенесены.
 has a version mismatch	setup	ru	имеется несовпадение версий
 header admin login	setup	ru	Вход в администрирование заголовка
@@ -379,6 +381,7 @@ login as user postgres, eg. by using su as root	setup	ru	Войти как по�
 login to mysql -	setup	ru	Вход в mysql -
 loginname needed for domain configuration	setup	ru	Для конфигурирования домена необходимо имя входа
 logout	setup	ru	Выход
+mail account of %1 migraged	setup	ru	Учётная запись %1 перенесена
 mail domain (for virtual mail manager)	setup	ru	Домен почты (для управления Виртуальной почтой)
 mail server login type	setup	ru	Тип входа в сервер почты
 mail server protocol	setup	ru	Протокол связи с сервером почты
@@ -395,6 +398,7 @@ mcrypt mode (default cbc)	setup	ru	Режим MCrypt (по умолчанию CB
 mcrypt settings (requires mcrypt php extension)	setup	ru	Настройки MCrypt (требуется расширение PHP mcrypt)
 memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ru	паараметр ограничения памяти (memory_limit) установлен менее чем на %1: некоторым приложениям eGroupWare требуется больше чем рекомендованные 8М, за исключением случающихся сбоев
 migration between egroupware account repositories	setup	ru	Перемещение между хранилищами учетных записей eGroupWare
+migration of group will fail, as sql does not allow identical ids.	setup	ru	Миграция группы не удалась, поскольку SQL не позволяет записям иметь идентичные ID
 min backup count	setup	ru	Число резервных копий для сохранения (ноль: все/без ограничений)
 minimum account id (e.g. 500 or 100, etc.)	setup	ru	Минимальныйидентификатор учетных записей (напр.500 или 100, и т.п.)
 minute	setup	ru	минута
@@ -501,6 +505,8 @@ restore finished	setup	ru	Восстановление завершено
 restore started, this might take a few minutes ...	setup	ru	Начато восстановление, на это может уйти несколько минут ...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	ru	Восстановление с резервной копии удалит/заменит все содержимое вашей базы данных. Вы уверенны?
 return to setup	setup	ru	Вернуться в Установку
+root dn	setup	ru	Корневой DN (root DN)
+root dn password	setup	ru	Пароль корневого DN
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	ru	запуск обновления схемы базы данных (при необходимости): домен(все),[пользователь конфигуратора(администратор)],пароль
 run installation tests	setup	ru	Запуск тестов установки
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	ru	параметр safe_mode включен, в основном это хорошо,так как делает вашу установку более защищенной.

@@ -92,9 +92,9 @@ error while creating directory.	filemanager	ru	Ошибка при создан�
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	filemanager	ru	Пример {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - поиск по полю "n_prefix" подслова  "Mr". Если найдено, пишет Hello Mr., иначе пишет Hello Ms.
 example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	filemanager	ru	Пример {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Пример: Mr Dr. James Miller
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	filemanager	ru	Пример {{NELF role}} - если поле Роль не пусто, получите новую строку с величиной поля Роль
-example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	ru	Пример {{NELFNV role}} - если поле Роль не пусто, установит поле  LF без значения поля
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	filemanager	ru	Пример: {{NELFNV role}} — если поле «роль» не пусто, устанавливает поле LF пустым
 executable	filemanager	ru	Выполнимо
-export definition to use for nextmatch export	filemanager	ru	Определение экспорта для следующего экспорта
+export definition to use for nextmatch export	filemanager	ru	Определение экспорта для последующего использования
 extended access control list	filemanager	ru	Расширенный лист контроля доступа
 extended acl	filemanager	ru	Расширенный ACL контроль доступа
 failed to change permissions of %1!	filemanager	ru	Неудача при изменении разрешений %1!
@@ -118,7 +118,7 @@ fix reported problems	filemanager	ru	Зафиксировано сообщени
 folder up	filemanager	ru	Папка на один уровень выше
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	ru	Для файлов, ссылающихся на запись приложения (inside /apps/appname/id/)  местоположение для приложения также доступно. Смотрите само приложение для списка возможных местоположений.
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	ru	Для файлов, ссылающихся на запись приложения (inside /apps/appname/id/)  местоположение для приложения также доступно. Смотрите само приложение для списка возможных местоположений.
-for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	ru	Для серии писем используйте этот тэг. Поместите содержание, которое нужно повторить, между двумя тэгами
+for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	ru	Используйте данную метку для регулярных рассылок. Поместите текст, который требуется повторять, между двух меток
 general	filemanager	ru	Общие
 general fields:	filemanager	ru	Общие поля:
 go home	filemanager	ru	Переход Домой
@@ -127,9 +127,9 @@ go to your home directory	filemanager	ru	Переход к домашнему к
 go up	filemanager	ru	Переход выше
 id	filemanager	ru	Идентификатор ID
 if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the %1 data inserted.	filemanager	ru	Если здесь указать каталог с полным путем, %1 покажет действие для каждого документа. Действие позволит загрузить указанный документ с %1 вставленными данными.
-if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	ru	Если здесь указать документ с полным путем, %1 покажет пиктограмму внешнего документа для каждой записи. Эта пиктограмма позволит загрузить указанный документ с вставленными данными.
-if you specify an export definition, it will be used when you export	filemanager	ru	Если указать экспортное определение, оно будет использовано при экспорте
-if you specify an export definition, it will be used when you export*	filemanager	ru	Если указать экспортное определение, оно будет использовано при экспорте
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	filemanager	ru	Если указан документ с полным путем, %1 показывает пиктограмму внешнего документам для каждой записи. Эти пиктограмма позволяет загрузить указанный документ со вставленными данными.
+if you specify an export definition, it will be used when you export	filemanager	ru	Если указать определение экспорта, оно будет использовано при последующем экспорте
+if you specify an export definition, it will be used when you export*	filemanager	ru	Если указать определение экспорта, оно будет использовано при последующем экспорте
 inherited	filemanager	ru	Унаследованный
 link	filemanager	ru	Ссылка
 link %1: %2	filemanager	ru	Ссылка %1: %2
@@ -199,9 +199,9 @@ start search	filemanager	ru	Начать поиск
 startfolder	filemanager	ru	Начальная папка
 superuser	filemanager	ru	Суперпользователь
 symlink to %1 created.	filemanager	ru	Простая ссылка на %1 создана.
-tag to mark positions for address labels	filemanager	ru	Тэг для отметки позиций для адресных меток
+tag to mark positions for address labels	filemanager	ru	Тег отметки позиций адресных меток
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	ru	Начальная папка по умолчанию - ваша персональная папка. Значение по умолчанию используется, если поле пусто, путь не существует или у вас нет права доступа.
-the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	ru	Документ может содержать местоположение типа {{%3}} для замены данными (%1 полный список имен местоположений %2).
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	ru	Документ может содержать местоположение типа {{%3}} для замены данными. %1 полный список местоположений%2.
 the following document-types are supported:	filemanager	ru	Поддерживаются следующие типы документов:
 the requested path %1 is not available.	filemanager	ru	Затребованный путь %1 не доступен!
 there's already a directory with that name!	filemanager	ru	Каталог с таким именем уже существует!
@@ -213,7 +213,7 @@ up	filemanager	ru	Вверх
 updated comment for %1	filemanager	ru	Обновлен комментарий для %1
 upload fields	filemanager	ru	Загружены поля
 upload files	filemanager	ru	Загружены файлы
-use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	ru	Используйте этот тэг для адресных меток. Поместите содержимое, которое нужно повторить, между двумя тэгами.
+use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	ru	Используйте этот тег для адресных меток. Поместите содержимое, которое нужно повторить, между двумя тэгами.
 used space	filemanager	ru	Использовано пространство
 users and groups	filemanager	ru	Пользователи и группы
 versioning	filemanager	ru	Управление версиями

@@ -287,6 +287,7 @@ not	infolog	ru	Нет
 not assigned	infolog	ru	Не назначено
 not-started	infolog	ru	Не начато
 note	infolog	ru	Заметка
+notification settings	infolog	ru	Установки уведомлений
 number of records to read (%1)	infolog	ru	Количество записей к чтению (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	ru	количество строк в многострочном поле ввода или списке с множественным выбором
 offer	infolog	ru	Предложено
