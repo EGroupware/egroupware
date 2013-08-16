@@ -1358,8 +1358,21 @@ blockquote[type=cite] {
 					!fwrite($fp,$message))
 				{
 					$err .= 'alert("'.addslashes(lang('Error saving %1!',$file)).'");';
+					$succeeded = false;
+				}
+				else
+				{
+					$succeeded = true;
 				}
 				if ($fp) fclose($fp);
+				if ($succeeded)
+				{
+					$headers = $this->bofelamimail->getMessageHeader($this->uid,$partID,true);
+					unset($headers['SUBJECT']);//already in filename
+					$infoSection = felamimail_bo::createHeaderInfoSection($headers, 'SUPPRESS', false);
+					$props = array(array('name' => 'comment','val' => $infoSection));
+					egw_vfs::proppatch($file,$props);
+				}
 			}
 			$this->bofelamimail->closeConnection();
 

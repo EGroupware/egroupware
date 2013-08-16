@@ -4914,7 +4914,7 @@ class felamimail_bo
 	/**
 	 * createHeaderInfoSection - creates a textual headersection from headerobject
 	 * @param array header headerarray may contain SUBJECT,FROM,SENDER,TO,CC,BCC,DATE,PRIORITY,IMPORTANCE
-	 * @param string headline Text tom use for headline
+	 * @param string headline Text tom use for headline, if SUPPRESS, supress headline and footerline
 	 * @param bool createHTML do it with HTML breaks
 	 * @return string a preformatted string with the information of the header worked into it
 	 */
@@ -4933,13 +4933,13 @@ class felamimail_bo
 		//if ($mailcontent['headers']['ORGANIZATION']) $headdata .= lang('organization').': '.$mailcontent['headers']['ORGANIZATION']."\
 		if (!empty($headdata))
 		{
-			if (!empty($headline)) $headdata = "---------------------------- $headline ----------------------------".($createHTML?"<br />":"\n").$headdata;
-			if (empty($headline)) $headdata = "--------------------------------------------------------".($createHTML?"<br />":"\n").$headdata;
-			$headdata .= "--------------------------------------------------------".($createHTML?"<br />":"\n");
+			if (!empty($headline) && $headline != 'SUPPRESS') $headdata = "---------------------------- $headline ----------------------------".($createHTML?"<br />":"\n").$headdata;
+			if (empty($headline)) $headdata = ($headline != 'SUPPRESS'?"--------------------------------------------------------".($createHTML?"<br />":"\n"):'').$headdata;
+			$headdata .= ($headline != 'SUPPRESS'?"--------------------------------------------------------".($createHTML?"<br />":"\n"):'');
 		}
 		else
 		{
-			$headdata = "--------------------------------------------------------".($createHTML?"<br />":"\n");
+			$headdata = ($headline != 'SUPPRESS'?"--------------------------------------------------------".($createHTML?"<br />":"\n"):'');
 		}
 		return $headdata;
 	}
