@@ -209,7 +209,6 @@ email account active	admin	ru	Учётная запись электронной
 email address	admin	ru	Адрес электронной почты
 enable debug-messages	admin	ru	Разрешить отладочные сообщения
 enable the soap service	admin	ru	Разрешить сервис soap
-enable spellcheck in rich text editor	admin	ru	Включить проверку орфографии в редакторе?
 enable the xmlrpc service	admin	ru	Разрешить сервис xmlrpc
 enabled - hidden from navbar	admin	ru	Разрешено - скрыть с панели навигации
 enabled - popup window	admin	ru	Разрешено - всплывающее окно
