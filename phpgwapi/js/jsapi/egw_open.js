@@ -17,6 +17,9 @@
 	egw_links;
 */
 
+/**
+ * @augments Class
+ */
 egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 	return {
 		/**
@@ -34,6 +37,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		 * @param string type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
 		 * @param object|string extra extra url parameters to append as object or string
 		 * @param string target target of window to open
+		 * @memberOf egw
 		 */
 		open: function(id_data, app, type, extra, target)
 		{
