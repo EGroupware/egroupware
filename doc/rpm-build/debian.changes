@@ -1,3 +1,16 @@
+egroupware (1.8.004.20130816) hardy; urgency=low
+
+  * EMailAdmin: make imap classes and default smtp class usable with PHP 5.2, LDAP requires 5.3!
+  * CalDAV/CardDAV/WebDAV: get authentication working again with PHP 5.2
+  * Admin/Filemanager: added filesystem check and repair for missing or broken required directories /, /apps and /home
+  * CardDAV/Addressbook: fixed not working sync-collection report eg. by eMclient, if server-time is different from user
+  * CardDAV/Addressbook: fixed various issues with groups/distribution lists as supported by Apple and eMclient (groups need to be enabled in CalDAV/CardDAV preferences!)
+  * CardDAV/Addressbook/ActiveDirectory: fixes SQL error when clients tries to propfind groups/distribution lists on accounts-addressbook, also return "403 Forbidden" when he tries to create one, as they are not (yet) supported on accounts, if not stored in SQL
+  * ProjectManager: fix SQL error if searching for string containing numbers and underscore or percent
+  * Calendar: fixed not working filter "only group events", to not include events of members
+
+ -- Ralf Becker <rb@stylite.de>  Fri, 16 Aug 2013 17:29:01 +0200
+
 egroupware (1.8.004.20130727) hardy; urgency=low
 
   * WebDAV/CalDAV/CardDAV: fixed basic authentication via redirect-rule to use $_SERVER["REDIRECT_HTTP_AUTHORIZATION"] as it is used by newer Apache versions, also backported fix for non-ascii chars in password from trunk
