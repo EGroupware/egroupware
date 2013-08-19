@@ -1,3 +1,9 @@
+egroupware (1.8.004.20130819) hardy; urgency=low
+
+  * Gallery: fix missing files in last package
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 19 Aug 2013 11:50:47 +0200
+
 egroupware (1.8.004.20130816) hardy; urgency=low
 
   * EMailAdmin: make imap classes and default smtp class usable with PHP 5.2, LDAP requires 5.3!
