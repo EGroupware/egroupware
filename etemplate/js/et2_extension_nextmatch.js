@@ -1194,7 +1194,21 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	},
 
 	// Input widget
-	getValue: function() { return null;},
+	getValue: function() {
+		var _ids = this.getSelection();
+		
+		// Translate the internal uids back to server uids
+		var idsArr = _ids.ids;
+		for (var i = 0; i < idsArr.length; i++)
+		{
+			idsArr[i] = idsArr[i].split("::").pop();
+		}
+		var value = {
+			"selected": idsArr,
+		}	
+		jQuery.extend(value, this.activeFilters);
+		return value;
+	},
 	resetDirty: function() {},
 	isDirty: function() { return false;},
 	isValid: function() { return true;}
