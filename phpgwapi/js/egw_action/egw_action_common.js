@@ -359,10 +359,13 @@ egwFnct.prototype.setValue = function(_value)
 	this.value = null;
 	this.fnct = null;
 
+	// Actual function
 	if (typeof _value == "function")
 	{
 		this.fnct = _value;
 	}
+	
+	// Global function (on window)
 	else if (typeof _value == "string" &&
 	         _value.substr(0,11) == "javaScript:" && 
 	         typeof window[_value.substr(11)] == "function")
@@ -374,6 +377,8 @@ egwFnct.prototype.setValue = function(_value)
 	{
 		this.value = _value;
 	}
+	
+	// egw application specific function
 	else if (typeof _value == "string" &&
 	         _value.substr(0,15) == "javaScript:app." && window.app)
 	{
@@ -384,6 +389,12 @@ egwFnct.prototype.setValue = function(_value)
 			this.fnct = window.app[parts[1]][parts[2]];
 			this.context = window.app[parts[1]];
 		}
+	}
+	
+	// Something, but could not figure it out
+	else if (_value)
+	{
+		egw.debug("warn", "Unable to parse Exec function %o for action '%s'",_value, this.context.id);
 	}
 }
 
