@@ -264,21 +264,6 @@ class addressbook_so
 				), 'pk' => array(), 'fk' => array(), 'ix' => array(), 'uc' => array(),
 			);
 		}
-		// add grants for accounts: if account_selection not in ('none','groupmembers'): everyone has read access,
-		// if he has not set the hide_accounts preference
-		// ToDo: be more specific for 'groupmembers', they should be able to see the groupmembers
-		if (!in_array($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'],array('none','groupmembers')))
-		{
-			$this->grants[0] = EGW_ACL_READ;
-		}
-		// add account grants for admins
-		if ($this->is_admin())	// admin rights can be limited by ACL!
-		{
-			$this->grants[0] = EGW_ACL_READ;	// admins always have read-access
-			if (!$GLOBALS['egw']->acl->check('account_access',16,'admin')) $this->grants[0] |= EGW_ACL_EDIT;
-			// no add at the moment if (!$GLOBALS['egw']->acl->check('account_access',4,'admin'))  $this->grants[0] |= EGW_ACL_ADD;
-			if (!$GLOBALS['egw']->acl->check('account_access',32,'admin')) $this->grants[0] |= EGW_ACL_DELETE;
-		}
 		// ToDo: it should be the other way arround, the backend should set the grants it uses
 		$this->somain->grants =& $this->grants;
 
@@ -344,9 +329,21 @@ class addressbook_so
 				// therefor the param false!
 				$grants = $GLOBALS['egw']->acl->get_grants($contact_app,false,$user);
 			}
-			// grants for accounts: everyone read, admins edit, no-one add or delete (only via admin app!)
-			$grants[0] = EGW_ACL_READ;
-			if ($this->is_admin()) $grants[0] |= EGW_ACL_EDIT;
+			// add grants for accounts: if account_selection not in ('none','groupmembers'): everyone has read access,
+			// if he has not set the hide_accounts preference
+			// ToDo: be more specific for 'groupmembers', they should be able to see the groupmembers
+			if (!in_array($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'], array('none','groupmembers')))
+			{
+				$grants[0] = EGW_ACL_READ;
+			}
+			// add account grants for admins
+			if ($this->is_admin())	// admin rights can be limited by ACL!
+			{
+				$grants[0] = EGW_ACL_READ;	// admins always have read-access
+				if (!$GLOBALS['egw']->acl->check('account_access',16,'admin')) $grants[0] |= EGW_ACL_EDIT;
+				// no add at the moment if (!$GLOBALS['egw']->acl->check('account_access',4,'admin'))  $this->grants[0] |= EGW_ACL_ADD;
+				if (!$GLOBALS['egw']->acl->check('account_access',32,'admin')) $grants[0] |= EGW_ACL_DELETE;
+			}
 		}
 		else
 		{
