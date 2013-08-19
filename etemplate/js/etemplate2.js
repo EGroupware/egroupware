@@ -388,7 +388,7 @@ etemplate2.prototype.postSubmit = function()
 	if (canSubmit)
 	{
 		var form = jQuery("<form id='form' action='"+egw().webserverUrl + 
-			"/etemplate/process_exec.php?menuaction=" + this.widgetContainer.egw().getAppName()+ "' method='POST'>");
+			"/etemplate/process_exec.php?menuaction=" + this.widgetContainer.egw().getAppName()+ "&ajax=true' method='POST'>");
 
 		var etemplate_id = jQuery(document.createElement("input"))
 			.attr("name",'etemplate_exec_id')

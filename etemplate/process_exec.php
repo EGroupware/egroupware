@@ -21,4 +21,11 @@ $GLOBALS['egw_info'] = array(
 );
 include('../header.inc.php');
 
-ExecMethod('etemplate.etemplate.process_exec');
+if($_GET['ajax'])
+{
+	ExecMethod('etemplate.etemplate_new.process_exec');
+}
+else
+{
+	ExecMethod('etemplate.etemplate.process_exec');
+}
