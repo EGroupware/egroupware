@@ -388,6 +388,7 @@ var et2_selectbox = et2_inputWidget.extend(
 				jQuery(document.createElement("li"))
 					.addClass("et2_clickable")
 					.click(options, header_controls[key].click)
+					.attr("title", header_controls[key].label)
 					.append('<span class="ui-icon ' + header_controls[key].icon_class + '"/>')
 					.appendTo(controls);
 			}

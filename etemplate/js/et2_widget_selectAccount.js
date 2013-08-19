@@ -117,6 +117,7 @@ var et2_selectAccount = et2_selectbox.extend(
 			var button = jQuery(document.createElement("span"))
 				.addClass("et2_clickable")
 				.click(this, this._open_search)
+				.attr("title", egw.lang("popup with search"))
 				.append('<span class="ui-icon ui-icon-search" style="display:inline-block"/>');
 
 			this.getSurroundings().insertDOMNode(button[0]);
@@ -196,6 +197,7 @@ var et2_selectAccount = et2_selectbox.extend(
 			var button = jQuery(document.createElement("li"))
 				.addClass("et2_clickable")
 				.click(this, this._open_multi_search)
+				.attr("title", egw.lang("popup with search"))
 				.append('<span class="ui-icon ui-icon-search"/>')
 			var type = this.egw().preference('account_selection', 'common');
 
