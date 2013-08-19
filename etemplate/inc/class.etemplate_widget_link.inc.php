@@ -18,6 +18,8 @@
 class etemplate_widget_link extends etemplate_widget
 {
 
+	protected $legacy_options = 'only_app';
+
 	/**
 	 * Constructor
 	 *
@@ -61,7 +63,7 @@ class etemplate_widget_link extends etemplate_widget
 		{
 			// Try to explode
 			if(count(explode(':',$value)) < 2) {
-				throw new egw_exception_wrong_parameter("Wrong value sent to link widget, needs to be an array. ".array2string($value));
+				throw new egw_exception_wrong_parameter("Wrong value sent to $this, needs to be an array. ".array2string($value));
 			}
 			list($app, $id) = explode(':', $value,2);
 			$value = array('app' => $app, 'id' => $id);
