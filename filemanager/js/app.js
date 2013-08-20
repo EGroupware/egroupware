@@ -457,10 +457,13 @@ app.filemanager = AppJS.extend(
 	
 	/**
 	 * Edit prefs of current directory
+	 * 
+	 * @param _action
+	 * @param _senders
 	 */
-	editprefs: function()
+	editprefs: function(_action, _senders)
 	{
-		var path =  this.path_widget.getValue();
+		var path =  typeof _senders != 'undefined' ? this.id2path(_senders[0].id) : this.path_widget.getValue();
 
 		egw().open_link(egw.link('/index.php', {
 			menuaction: 'filemanager.filemanager_ui.file',

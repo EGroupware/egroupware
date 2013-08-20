@@ -134,8 +134,7 @@ class filemanager_ui
 				'caption' => lang('Edit settings'),
 				'group' => $group,
 				'allowOnMultiple' => false,
-				'url' => 'menuaction=filemanager.filemanager_ui.file&path=$id',
-				'popup' => '495x425',
+				'onExecute' => 'javaScript:app.filemanager.editprefs',
 			),
 			'mail' => array(
 				'caption' => lang('Mail files'),
@@ -1047,12 +1046,8 @@ class filemanager_ui
 					}
 				}
 			}
-			$js = "opener.egw_refresh('".str_replace("'","\\'",$msg)."','filemanager','".
-				str_replace("'","\\'",$refresh_path ? $refresh_path : $path)."','edit',null,/&path=[^&]*/);";
-
-			if ($button == 'save') $js .= "window.close();";
-			echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
-			if ($button == 'save') common::egw_exit();
+			egw_framework::refresh_opener($msg, 'filemanager', $refresh_path ? $refresh_path : $path, 'edit', null, '&path=[^&]*');
+			if ($button == 'save') egw_framework::window_close(true);	// true = call common::egw_exit();
 		}
 		if ($content['is_link'] && !egw_vfs::stat($path))
 		{

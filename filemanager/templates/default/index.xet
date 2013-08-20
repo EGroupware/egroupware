@@ -72,7 +72,7 @@
 		</hbox>
 	</template>
 	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
-		<description id="msg" class="redItalic"/>
+		<description id="msg" class="message"/>
 		<nextmatch id="nm" template="filemanager.index.rows" header_left="filemanager.index.header_left"/>
 		<styles>
 			input[type='file'] {

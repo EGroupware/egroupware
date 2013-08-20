@@ -278,7 +278,7 @@
 							<button label="Apply" id="button[apply]"/>
 							<buttononly label="Cancel" id="button[cancel]" onclick="window.close();"/>
 						</hbox>
-						<buttononly align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudo" onclick="set_style_by_class('fieldset','superuser','display','inline'); document.getElementById(form::name('sudo[user]')).focus();"/>
+						<buttononly align="right" statustext="Enter setup user and password to get root rights" label="Superuser" id="sudo" onclick="\$j('.superuser').css('display','inline'); document.getElementById(form::name('sudo[user]')).focus();"/>
 					</hbox>
 				</row>
 				<row>
