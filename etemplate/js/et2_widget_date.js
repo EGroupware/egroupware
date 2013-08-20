@@ -64,8 +64,7 @@ var et2_date = et2_inputWidget.extend(
 		this.span = $j(document.createElement("span")).addClass("et2_date");
 
 		this.input_date = $j(document.createElement("input"));
-		var type=(this._type == "date-timeonly" ? "time" : "text");
-		this.input_date.addClass("et2_date").attr("type", type).attr("size", 5)
+		this.input_date.addClass("et2_date").attr("type", "text").attr("size", 5)
 			.appendTo(this.span);
 
 		this.setDOMNode(this.span[0]);
@@ -77,6 +76,7 @@ var et2_date = et2_inputWidget.extend(
 		}
 		else
 		{
+			this.input_date.addClass("et2_time");
 			this.egw().time(this.input_date);
 		}
 		// Update internal value when changed

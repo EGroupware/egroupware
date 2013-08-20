@@ -353,7 +353,7 @@ span.et2_date input.et2_date {
 	background-position: top right;
 	background-size: contain;
 }
-span.et2_date input[type=time].et2_date {
+span.et2_date input.et2_time {
 	min-width: 6ex;
 }
 span.et2_date span {
