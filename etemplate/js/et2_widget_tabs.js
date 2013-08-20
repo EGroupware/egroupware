@@ -231,7 +231,7 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 			var entry = this.tabData[i];
 			entry.flagDiv = $j(document.createElement("span"))
 				.addClass("et2_tabflag")
-				.appendTo(this.flagContainer)
+				.appendTo(this.flagContainer);
 			entry.flagDiv.text(entry.label || "Tab");
 			if(entry.hidden)
 			{
