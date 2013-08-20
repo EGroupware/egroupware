@@ -185,7 +185,7 @@ abstract class egw_framework
 	 */
 	public static function refresh_opener($msg, $app, $id=null, $type=null, $targetapp=null, $replace=null, $with=null)
 	{
-		error_log(__METHOD__.'('.array2string(func_get_args()).')');
+		//error_log(__METHOD__.'('.array2string(func_get_args()).')');
 		self::$extra['refresh-opener'] = func_get_args();
 	}
 
@@ -194,7 +194,7 @@ abstract class egw_framework
 	 */
 	public static function window_close()
 	{
-		error_log(__METHOD__."()");
+		//error_log(__METHOD__."()");
 		self::$extra['window-close'] = true;
 
 		if ($_GET['menuaction'] === 'etemplate_new::ajax_process_content')
@@ -207,6 +207,15 @@ abstract class egw_framework
 			$GLOBALS['egw']->framework->render('', false, false);
 		}
 		common::egw_exit();
+	}
+
+	/**
+	 * Close (popup) window, use to replace egw_framework::onload('window.close()') in a content security save way
+	 */
+	public static function window_focus()
+	{
+		//error_log(__METHOD__."()");
+		self::$extra['window-focus'] = true;
 	}
 
 	/**

@@ -618,10 +618,16 @@ function etemplate2_handle_load(_type, _response)
 		}
 	}
 
-	// handle egw_framework::close_window(), this will terminate execution
+	// handle egw_framework::window_close(), this will terminate execution
 	if (data['window-close'])
 	{
 		window.close();
+	}
+	
+	// handle egw_framework::window_focus()
+	if (data['window-focus'])
+	{
+		window.focus();
 	}
 	
 	// regular et2 re-load

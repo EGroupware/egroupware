@@ -88,6 +88,28 @@
 			window.location.search += window.location.search ? "&cd=yes" : "?cd=yes";
 		}
 	}
+	
+	// call egw_refresh on opener, if attr specified
+	var refresh_opener = egw_script.getAttribute('data-refresh-opener');
+	if (refresh_opener && window.opener)
+	{
+		refresh_opener = JSON.parse(refresh_opener) || {};
+		window.opener.egw_refresh.apply(window.opener, refresh_opener);
+	}
+	
+	// close window / call window.close(), if data-window-close is specified
+	var window_close = egw_script.getAttribute('data-window-close');
+	if (window_close && JSON.parse(window_close))
+	{
+		window.close();
+	}
+
+	// close window / call window.focus(), if data-window-focus is specified
+	var window_focus = egw_script.getAttribute('data-window-focus');
+	if (window_focus && JSON.parse(window_focus))
+	{
+		window.focus();
+	}
 
 	window.egw_LAB = $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:window.egw_webserverUrl+'/'});
 	var include = JSON.parse(egw_script.getAttribute('data-include'));
@@ -131,10 +153,6 @@
 				var et2 = new etemplate2(node, "etemplate_new::ajax_process_content");
 				et2.load(data.name,data.url,data.data,callback);
 			}
-		}
-		if (data = egw_script.getAttribute('data-user'))
-		{
-			window.egw.set_user(JSON.parse(data));
 		}
 	});
 })();

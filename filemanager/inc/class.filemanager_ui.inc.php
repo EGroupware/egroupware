@@ -1207,7 +1207,7 @@ class filemanager_ui
 				}
 			}
 		}
-		$GLOBALS['egw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
+		egw_framework::window_focus();
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Preferences').' '.egw_vfs::decodePath($path);
 
 		$tpl->exec('filemanager.filemanager_ui.file',$content,$sel_options,$readonlys,$preserve,2);
