@@ -135,7 +135,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
                         $field_filter = explode(',', $this->attrs['field_names']);
                 }
 		$fields = $customfields;
-	
+
 		$use_private = self::expand_name($this->attrs['use-private'],0,0);
 		foreach((array)$fields as $key => $field)
 		{
@@ -281,13 +281,13 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 					$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
 
 					$valid = is_array($value) ? implode(',',$value) : $value;
-					error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
+					//error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
 				}
 			} elseif ($this->type == 'customfields-types') {
 				// Transformation doesn't handle validation
 				$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
 				$valid = $value_in;
-				error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
+				//error_log(__METHOD__."() $form_name $field: ".array2string($value).' --> '.array2string($value));
 			}
 		}
 	}
