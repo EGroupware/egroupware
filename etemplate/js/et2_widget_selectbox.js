@@ -404,11 +404,14 @@ var et2_selectbox = et2_inputWidget.extend(
 			header.hide();
 
 			// Show / hide again
-			node.on('mouseenter focusin', function() {
+			node.on('mouseenter focusin', function(e) {
+				// Don't show if dragging goes over
+				if(e.which != 0) return;
+				
 				header.show();
-				header.css("width", header.css("width"));
-				header.css("position", "absolute");
-				header.css("top", options.position().top - header.outerHeight());
+				header.css("width", options.innerWidth() - (header.outerWidth() - header.width()) + 'px');
+				header.css("position", "fixed");
+				header.css("top", options.offset().top - header.outerHeight());
 			});
 			node.on('mouseleave focusout', function() {if(hide_header) header.hide();});
 		}

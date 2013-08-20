@@ -187,7 +187,9 @@ var et2_selectAccount = et2_selectbox.extend(
 
 			// Put search results as a DOM sibling of the options, for proper display
 			this.search_widget.search.on("autocompleteopen", jQuery.proxy(function() {
-				this.search_widget.search.data("ui-autocomplete").menu.element.appendTo(this.node);
+				this.search_widget.search.data("ui-autocomplete").menu.element
+					.appendTo(this.node)
+					.position({my: 'left top', at: 'left bottom', of: this.multiOptions.prev()})
 			},this));
 			this.search = jQuery(document.createElement("li"))
 				.appendTo(this.multiOptions.prev().find('ul'));

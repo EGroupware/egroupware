@@ -472,6 +472,13 @@ action buttons, left aligned for "extra" controls
 }
 
 /**
+ * Autocomplete in dialogs - fix so they go over/out of the dialog
+ */
+.ui-dialog * ul.ui-autocomplete {
+	position: fixed;
+}
+
+/**
  * Link wiget(s)
  */
 
