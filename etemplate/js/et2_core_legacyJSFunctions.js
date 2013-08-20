@@ -43,7 +43,7 @@
 		{
 			// et2_form_name doesn't care about ][, just [
 			var _cname = widget.getPath() ? widget.getPath().join("[") : false;
-			_val = _val.replace(/form::name\(/g,_cname ? "et2_form_name('"+_cname+"'," : '(');
+			_val = _val.replace(/form::name\(/g, "'"+widget.getRoot()._inst.uniqueId+"_'+"+(_cname ? "et2_form_name('"+_cname+"'," : '('));
 		}
 	
 		if (_val.indexOf('egw::lang(') != -1)
