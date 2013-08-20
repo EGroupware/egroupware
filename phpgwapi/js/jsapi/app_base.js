@@ -78,19 +78,17 @@ var AppJS = Class.extend({
 	/**
 	 * This function is called when the etemplate2 object is loaded
 	 * and ready.  If you must store a reference to the et2 object,
-	 * make sure to clean it up in destroy().
+	 * make sure to clean it up in destroy().  Note that this can be called
+	 * several times, with different et2 objects, as templates are loaded.
 	 *
 	 * @param et2 etemplate2 Newly ready object
 	 */
 	et2_ready: function(et2) {
-		if(this.et2 === null)
+		if(this.et2 !== null)
 		{
-			this.et2 = et2.widgetContainer;
+			egw.debug('log', "Changed et2 object");
 		}
-		else
-		{
-			egw.debug('warn', "Tried to overwrite et2 object");
-		}
+		this.et2 = et2.widgetContainer;
 	},
 		
 	/**
