@@ -254,7 +254,8 @@ var nm_popup_action, nm_popup_ids = null;
  */
 function nm_open_popup(_action, _ids)
 {
-	var popup = jQuery("#"+_action.id+"_popup").first() || jQuery("[id*='" + _action.id + "_popup']").first();
+	// Find the popup div
+	var popup = jQuery("#"+(_action.data.nextmatch.getInstanceManager().uniqueId||"") + "_"+_action.id+"_popup").first() || jQuery("[id*='" + _action.id + "_popup']").first();
 	if (popup) {
 		nm_popup_action = _action;
 		if(_ids.length && typeof _ids[0] == 'object')
@@ -290,15 +291,21 @@ function nm_open_popup(_action, _ids)
 		}
 		if(dialog.length == 1)
 		{
+			// Set up the buttons
 			var dialog_parent = dialog.parent();
 			var d_buttons = [];
 			var action = _action;
 			jQuery('button',popup).each(function(index) {
 				var but = jQuery(this);
-				var button = nm_popup_action.data.nextmatch.getRoot().getWidgetById(but.attr("id"));
+				if(but.attr("id"))
+				{
+					// Find the associated widget
+					var widget_id = but.attr("id").replace(_action.data.nextmatch.getInstanceManager().uniqueId+'_', '');
+					var button = nm_popup_action.data.nextmatch.getRoot().getWidgetById(widget_id);
+				}
 				d_buttons.push({
 					text: but.text(),
-					click: button.onclick ? function(e) {
+					click: button && button.onclick ? function(e) {
 						dialog.dialog("close");
 						nm_popup_action = action;
 						button.onclick.apply(button, e.currentTarget);
@@ -338,7 +345,9 @@ function nm_submit_popup(button)
 	}
 	else if (nm_popup_action.data.nextmatch)
 	{
-		nm_popup_action.data.nextmatch.getRoot().getWidgetById(button.id).clicked = true;
+		// Find the associated widget
+		var widget_id = $j(button).attr("id").replace(nm_popup_action.data.nextmatch.getInstanceManager().uniqueId+'_', '');
+		nm_popup_action.data.nextmatch.getRoot().getWidgetById(widget_id).clicked = true;
 	}
 
 	// Mangle senders to get IDs where nm_action() wants them
