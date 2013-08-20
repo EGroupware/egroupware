@@ -972,7 +972,10 @@ abstract class bo_tracking
 		// new or modified message
 		if (($message = $this->get_message($data,$old,$receiver)))
 		{
-			$body .= $this->format_line($html_email,'message',false,$message);
+			foreach ((array)$message as $k => $_message)
+			{
+				$body .= $this->format_line($html_email,'message',false,($_message=='---'?($html_email?'<hr/>':$_message):$_message));
+			}
 		}
 		if ($integrate_link && ($link = $this->get_link($data,$old,false,$receiver)))
 		{
@@ -1082,7 +1085,7 @@ abstract class bo_tracking
 		}
 		else
 		{
-			$content .= ($content?': ':'').$data;
+			$content .= ($content&&$data?': ':'').$data;
 		}
 		if ($html_mail) $content .= '</td></tr>';
 
