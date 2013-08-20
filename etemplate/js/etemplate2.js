@@ -532,6 +532,10 @@ etemplate2.prototype.refresh = function(msg, app, id, type)
 	var msg_widget = this.widgetContainer.getWidgetById("msg");
 	if(msg_widget)
 	{
+		if(typeof msg != "string")
+		{
+			msg = "";
+		}
 		msg_widget.set_value(msg);
 		msg_widget.set_disabled(msg.trim().length == 0);
 
