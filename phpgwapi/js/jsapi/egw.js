@@ -155,4 +155,15 @@
 			}
 		}
 	});
+	
+	/**
+	 * 
+	 */
+	window.callManual = function()
+	{
+		if (window.framework)
+		{
+			window.framework.callManual.call(window.framework, window.location.href);
+		}
+	};
 })();

@@ -126,17 +126,18 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 				}
 				popup = app_registry[type+'_popup'];
 			}
-			return this.open_link(this.link(url, params), target, popup);
+			return this.open_link(this.link(url, params), undefined, popup, target);
 		},
 		
 		/**
 		 * Open a link, which can be either a menuaction, a EGroupware relative url or a full url
 		 * 
 		 * @param string _link menuaction, EGroupware relative url or a full url (incl. "mailto:" or "javascript:")
-		 * @param string _target optional target
+		 * @param string _target optional target / window name
 		 * @param string _popup widthxheight, if a popup should be used
+		 * @param string _target_app app-name for opener
 		 */
-		open_link: function(_link, _target, _popup)
+		open_link: function(_link, _target, _popup, _target_app)
 		{
 			var url = _link;
 			if (url.indexOf('javascript:') == 0)
@@ -159,7 +160,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			{
 				var w_h = _popup.split('x');
 				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = egw_getWindowOuterHeight();
-				return _wnd.egw_openWindowCentered2(url, _target, w_h[0], w_h[1],false,false,true);
+				return _wnd.egw_openWindowCentered2(url, _target, w_h[0], w_h[1], false, _target_app, true);
 			}
 			else if (typeof _wnd.egw_link_handler == 'function' && (typeof _target == 'undefined' || _target =='_self' || typeof this.link_app_list()[_target] != "undefined"))
 			{

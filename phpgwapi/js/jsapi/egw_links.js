@@ -441,7 +441,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 			var self = this;
 			// bind change handler
 			select.change(function(){
-				if (this.value) self.open('', this.value, 'add');
+				if (this.value) self.open('', this.value, 'add', {}, this.value);
 				this.value = '';
 			});
 			// need to load common translations for app-names
