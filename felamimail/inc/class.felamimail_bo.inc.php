@@ -189,10 +189,18 @@ class felamimail_bo
 	 * @param int $_profileID=0
 	 * @param boolean $_validate=true - flag wether the profileid should be validated or not, if validation is true, you may receive a profile
 	 *                                  not matching the input profileID, if we can not find a profile matching the given ID
+	 * @param object $_icServerObject=null
 	 * @return object instance of felamimail_bo
 	 */
-	public static function getInstance($_restoreSession=true, $_profileID=0, $_validate=true)
+	public static function getInstance($_restoreSession=true, $_profileID=0, $_validate=true, $_icServerObject=null)
 	{
+		//special case; we get the desired object passed as we need it for the occasion.
+		if (!is_null($_icServerObject)&&!isset(self::$instances[$_profileID]) || $_restoreSession===false)
+		{
+			self::$instances[$_profileID] = new felamimail_bo('utf-8',$_restoreSession,$_profileID,$_icServerObject);
+//error_log(__METHOD__.__LINE__.array2string(self::$instances[$_profileID]->mailPreferences->getIncomingServer($_profileID)));
+			return self::$instances[$_profileID];
+		}
 		if ($_profileID == 0)
 		{
 			if (isset($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']) && !empty($GLOBALS['egw_info']['user']['preferences']['felamimail']['ActiveProfileID']))
@@ -354,10 +362,20 @@ class felamimail_bo
 	 * @param string $_displayCharset='utf-8'
 	 * @param boolean $_restoreSession=true
 	 * @param int $_profileID=0
+	 * @param object $_icServerObject=null
 	 */
-	private function __construct($_displayCharset='utf-8',$_restoreSession=true, $_profileID=0)
+	private function __construct($_displayCharset='utf-8',$_restoreSession=true, $_profileID=0, $_icServerObject=null)
 	{
 		$this->profileID = $_profileID;
+		if (!is_null($_icServerObject))
+		{
+			$this->icServer = $_icServerObject;
+			$this->accountid= $_icServerObject->ImapServerId;
+			$this->bopreferences	= CreateObject('felamimail.bopreferences',$_restoreSession);
+			$this->mailPreferences = CreateObject('emailadmin.ea_preferences');
+			$this->mailPreferences->setIncomingServer($this->icServer,$_icServerObject->ImapServerId);
+			return;
+		}
 		if ($_restoreSession)
 		{
 			//error_log(__METHOD__." Session restore ".function_backtrace());
@@ -662,7 +680,7 @@ class felamimail_bo
 
 	function closeConnection() {
 		//if ($icServer->_connected) error_log(__METHOD__.__LINE__.' disconnect from Server');
-		if ($icServer->_connected) $this->icServer->disconnect();
+		if ($this->icServer->_connected) $this->icServer->disconnect();
 	}
 
 	/**
@@ -833,7 +851,9 @@ class felamimail_bo
 				break;
 			case 'QUOTED-PRINTABLE':
 				// use imap_qprint to decode
-				return quoted_printable_decode($_mimeMessage);
+				$_mimeMessage = quoted_printable_decode($_mimeMessage);
+				//error_log($_mimeMessage);
+				return $_mimeMessage;
 				break;
 			default:
 				// it is either not encoded or we don't know about it
@@ -4116,8 +4136,8 @@ class felamimail_bo
 			egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
 			return false;
 		}
-		if(!$this->icServer = $this->mailPreferences->getIncomingServer((int)$_icServerID)) {
-			$this->errorMessage .= lang('No active IMAP server found!!');
+		if(!$this->icServer = $this->mailPreferences->getIncomingServer($_icServerID)) {
+			$this->errorMessage .= lang('No active IMAP server found!! for icServerID='.$_icServerID);
 			$isError[$_icServerID] = $this->errorMessage;
 			egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
 			return false;
@@ -4819,36 +4839,38 @@ class felamimail_bo
 
 	/**
 	 * get_mailcontent - fetches the actual mailcontent, and returns it as well defined array
-	 * @param object bofelamimail the bofelamimailobject to be used
+	 * @param object mailClass the bofelamimailobject to be used
 	 * @param uid the uid of the email to be processed
 	 * @param partid the partid of the email
 	 * @param mailbox the mailbox, that holds the message
 	 * @param preserveHTML flag to pass through to getdisplayableBody
-	 * @return array with 'mailaddress'=>$mailaddress,
+	 * @param addHeaderSection flag to be able to supress headersection
+	 * @return array/bool with 'mailaddress'=>$mailaddress,
 	 *				'subject'=>$subject,
 	 *				'message'=>$message,
 	 *				'attachments'=>$attachments,
-	 *				'headers'=>$headers,
+	 *				'headers'=>$headers,; boolean false on failure
 	 */
-	static function get_mailcontent(&$bofelamimail,$uid,$partid='',$mailbox='', $preserveHTML = false)
+	static function get_mailcontent(&$mailClass,$uid,$partid='',$mailbox='', $preserveHTML = false, $addHeaderSection=true)
 	{
 			//echo __METHOD__." called for $uid,$partid <br>";
-			$headers = $bofelamimail->getMessageHeader($uid,$partid,true);
-			// dont force retrieval of the textpart, let felamimail preferences decide
-			$bodyParts = $bofelamimail->getMessageBody($uid,($preserveHTML?'always_display':'only_if_no_text'),$partid);
+			$headers = $mailClass->getMessageHeader($uid,$partid,true);
+			if (empty($headers)) return false;
+			// dont force retrieval of the textpart, let mailClass preferences decide
+			$bodyParts = $mailClass->getMessageBody($uid,($preserveHTML?'always_display':'only_if_no_text'),$partid);
 			//error_log(array2string($bodyParts));
-			$attachments = $bofelamimail->getMessageAttachments($uid,$partid);
+			$attachments = $mailClass->getMessageAttachments($uid,$partid);
 
-			if ($bofelamimail->isSentFolder($mailbox)) $mailaddress = $headers['TO'];
+			if ($mailClass->isSentFolder($mailbox)) $mailaddress = $headers['TO'];
 			elseif (isset($headers['FROM'])) $mailaddress = $headers['FROM'];
 			elseif (isset($headers['SENDER'])) $mailaddress = $headers['SENDER'];
 			if (isset($headers['CC'])) $mailaddress .= ','.$headers['CC'];
 			//_debug_array($headers);
 			$subject = $headers['SUBJECT'];
 
-			$message = self::getdisplayableBody($bofelamimail, $bodyParts, $preserveHTML);
-			if ($preserveHTML && $bofelamimail->activeMimeType == 'text/plain') $message = '<pre>'.$message.'</pre>';
-			$headdata = self::createHeaderInfoSection($headers, '',$preserveHTML);
+			$message = self::getdisplayableBody($mailClass, $bodyParts, $preserveHTML);
+			if ($preserveHTML && $mailClass->activeMimeType == 'text/plain') $message = '<pre>'.$message.'</pre>';
+			$headdata = ($addHeaderSection ? self::createHeaderInfoSection($headers, '',$preserveHTML) : '');
 			$message = $headdata.$message;
 			//echo __METHOD__.'<br>';
 			//_debug_array($attachments);
@@ -4861,7 +4883,7 @@ class felamimail_bo
 						//_debug_array($bofelamimail->getMessageHeader($uid, $attachment['partID']));
 						//_debug_array($bofelamimail->getMessageBody($uid,'', $attachment['partID']));
 						//_debug_array($bofelamimail->getMessageAttachments($uid, $attachment['partID']));
-						$mailcontent = self::get_mailcontent($bofelamimail,$uid,$attachment['partID']);
+						$mailcontent = self::get_mailcontent($mailClass,$uid,$attachment['partID']);
 						$headdata ='';
 						if ($mailcontent['headers'])
 						{
@@ -4887,7 +4909,7 @@ class felamimail_bo
 					}
 					else
 					{
-						$attachments[$num] = array_merge($attachments[$num],$bofelamimail->getAttachment($uid, $attachment['partID']));
+						$attachments[$num] = array_merge($attachments[$num],$mailClass->getAttachment($uid, $attachment['partID']));
 						if (isset($attachments[$num]['charset'])) {
 							if ($attachments[$num]['charset']===false) $attachments[$num]['charset'] = self::detect_encoding($attachments[$num]['attachment']);
 							translation::convert($attachments[$num]['attachment'],$attachments[$num]['charset']);
@@ -4921,6 +4943,7 @@ class felamimail_bo
 	static function createHeaderInfoSection($header,$headline='', $createHTML = false)
 	{
 		$headdata = null;
+		//error_log(__METHOD__.__LINE__.array2string($header).function_backtrace());
 		if ($header['SUBJECT']) $headdata = lang('subject').': '.$header['SUBJECT'].($createHTML?"<br />":"\n");
 		if ($header['FROM']) $headdata .= lang('from').': '.self::convertAddressArrayToString($header['FROM'], $createHTML).($createHTML?"<br />":"\n");
 		if ($header['SENDER']) $headdata .= lang('sender').': '.self::convertAddressArrayToString($header['SENDER'], $createHTML).($createHTML?"<br />":"\n");
