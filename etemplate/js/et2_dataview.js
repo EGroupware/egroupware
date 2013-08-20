@@ -407,7 +407,8 @@ var et2_dataview = Class.extend({
 	_buildSelectCol: function() {
 		// Build the "select columns" icon
 		this.selectColIcon = $j(document.createElement("span"))
-			.addClass("selectcols");
+			.addClass("selectcols")
+			.css('display', 'inline-block');	// otherwise $j('span.selectcols',this.dataview.headTr).show() set it to "inline" causing it to not show up because 0 height
 
 		// Build the option column
 		this.selectCol = $j(document.createElement("th"))
