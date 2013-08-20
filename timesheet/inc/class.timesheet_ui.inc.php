@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package timesheet
- * @copyright (c) 2005-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -256,7 +256,7 @@ class timesheet_ui extends timesheet_bo
 							egw_link::link(TIMESHEET_APP,$this->data['ts_id'],$content['link_to']['to_id']);
 						}
 					}
-					$js = "opener.egw_refresh('$msg','timesheet','{$this->data['ts_id']}', '" . ($content['ts_id'] ? 'update' : 'add')."');";
+					egw_framework::refresh_opener($msg, 'timesheet', $this->data['ts_id'], $content['ts_id'] ? 'update' : 'add');
 					if ($button == 'apply') break;
 					if ($button == 'save_new')
 					{
@@ -287,7 +287,7 @@ class timesheet_ui extends timesheet_bo
 						if ($this->delete())
 						{
 							$msg = lang('Entry deleted');
-							$js = "opener.egw_refresh('$msg','timesheet','{$this->data['ts_id']}', 'delete');";
+							egw_framework::refresh_opener($msg, 'timesheet', $this->data['ts_id'], 'delete');
 						}
 						else
 						{
@@ -297,10 +297,7 @@ class timesheet_ui extends timesheet_bo
 					}
 					// fall-through for save
 				case 'cancel':
-					$js .= 'window.close();';
-					echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
-					common::egw_exit();
-					break;
+					egw_framework::window_close();
 			}
 		}
 		$preserv = $this->data + array(
@@ -316,7 +313,6 @@ class timesheet_ui extends timesheet_bo
 				'to_id' => $this->data['ts_id'] ? $this->data['ts_id'] : $content['link_to']['to_id'],
 				'to_app' => TIMESHEET_APP,
 			),
-			'js' => "<script>\n$js\n</script>\n",
 			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
 			'start_time' => egw_time::to($this->data['ts_start'],'H:i'),
 			'pm_integration' => $this->pm_integration,
@@ -396,16 +392,10 @@ class timesheet_ui extends timesheet_bo
 				),
 		);
 		$sel_options['status'] = $this->field2label;
-		if (empty($content['ts_title']))
-		{
-			$content['ts_title'] = $content['ts_title_blur'] = ($preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur']);
-		}
 
 		// the actual title-blur is either the preserved title blur (if we are called from infolog entry),
 		// or the preserved project-blur comming from the current selected project
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
-		// make sure that ts_title is shown (if set), by unsetting the blur text
-		if (!empty($content['ts_title']) && $content['ts_title']==$content['ts_title_blur']) unset($content['ts_title_blur']);
 		$readonlys = array(
 			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(EGW_ACL_DELETE) || $this->data['ts_status'] == self::DELETED_STATUS,
 			'button[undelete]' => $this->data['ts_status'] != self::DELETED_STATUS,

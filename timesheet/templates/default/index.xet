@@ -13,7 +13,7 @@
 		</styles>
 	</template>
 	<template id="timesheet.index.add" template="" lang="" group="0" version="1.7.001">
-		<buttononly label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
+		<buttononly label="Add" id="add" onclick="egw.open('timesheet');"/>
 	</template>
 	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
@@ -107,34 +107,7 @@
 		</grid>
 	</template>
 	<template id="timesheet.index" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%">
-			<columns>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row disabled="!@msg">
-					<description align="center" id="msg" no_lang="1" span="all" class="redItalic"/>
-					<description/>
-				</row>
-				<row disabled="1">
-					<hbox>
-						<template id="dates"/>
-						<template align="right" id="add"/>
-					</hbox>
-					<description/>
-				</row>
-				<row>
-					<nextmatch id="nm" options="timesheet.index.rows" span="all"/>
-				</row>
-				<row class="noPrint" disabled="!@nm[selectcols]=/legacy_actions/">
-					<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.timesheet_ui.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
-					<hbox align="right">
-						<buttononly statustext="Select action" label="Select action" id="legacy_actions" onclick="if (!egw_globalObjectManager.getObjectById('timesheet.index.rows').executeActionImplementation(this, 'popup')) alert(egw::lang('You need to select some entries first!')); return false;;"/>
-						<button statustext="Check all" label="Check all" id="check_all" needed="1" onclick="egw_globalObjectManager.getObjectById('timesheet.index.rows').toggleAllSelected(); return false;" image="arrow_ltr" class="checkAllArrow"/>
-					</hbox>
-				</row>
-			</rows>
-		</grid>
+		<description align="center" id="msg" no_lang="1" class="message"/>
+		<nextmatch id="nm" options="timesheet.index.rows" header_left="timesheet.index.dates" header_right="timesheet.index.add"/>
 	</template>
 </overlay>

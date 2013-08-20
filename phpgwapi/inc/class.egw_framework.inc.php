@@ -156,12 +156,68 @@ abstract class egw_framework
 
 		if (!isset($GLOBALS['egw_info']['flags']['nonavbar']) || !$GLOBALS['egw_info']['flags']['nonavbar'])
 		{
-		   echo $this->navbar();
+			echo $this->navbar();
 		}
 		echo $content;
 
 		echo $this->footer();
-	 }
+	}
+
+	/**
+	 * Extra values send as data attributes to script tag of egw.js
+	 *
+	 * @var array
+	 */
+	protected static $extra = array();
+
+	/**
+	 * Refresh given application $targetapp display of entry $app $id, incl. outputting $msg
+	 *
+	 * Calling egw_refresh on opener in a content security save way
+	 *
+	 * @param string $msg message (already translated) to show, eg. 'Entry deleted'
+	 * @param string $app application name
+	 * @param string|int $id=null id of entry to refresh
+	 * @param string $type=null either 'edit', 'delete', 'add' or null
+	 * @param string $targetapp=null which app's window should be refreshed, default current
+	 * @param string|RegExp $replace=null regular expression to replace in url
+	 * @param string $with=null
+	 */
+	public static function refresh_opener($msg, $app, $id=null, $type=null, $targetapp=null, $replace=null, $with=null)
+	{
+		error_log(__METHOD__.'('.array2string(func_get_args()).')');
+		self::$extra['refresh-opener'] = func_get_args();
+	}
+
+	/**
+	 * Close (popup) window, use to replace egw_framework::onload('window.close()') in a content security save way
+	 */
+	public static function window_close()
+	{
+		error_log(__METHOD__."()");
+		self::$extra['window-close'] = true;
+
+		if ($_GET['menuaction'] === 'etemplate_new::ajax_process_content')
+		{
+			$response = egw_json_response::get();
+			$response->generic('et2_load', egw_framework::get_extra());
+		}
+		else
+		{
+			$GLOBALS['egw']->framework->render('', false, false);
+		}
+		common::egw_exit();
+	}
+
+	/**
+	 * Allow eg. ajax to query content set via refresh_opener or window_close
+	 *
+	 * @return array content of egw_framework::$extra
+	 */
+	public static function get_extra()
+	{
+		return self::$extra;
+	}
 
 	/**
 	 * Returns the html-header incl. the opening body tag
@@ -823,7 +879,9 @@ abstract class egw_framework
 		// Load LABjs ONCE here
 		$java_script .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/labjs/LAB.src.js"'." ></script>\n".
 			'<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/jsapi/egw.js" id="egw_script_id"';
-		foreach($extra as $name => $value)
+
+		// add values of extra parameter and class var as data attributes to script tag of egw.js
+		foreach($extra+self::$extra as $name => $value)
 		{
 			if (is_array($value)) $value = json_encode($value);
 			// we need to double encode (html::htmlspecialchars( , TRUE)), as otherwise we get invalid json, eg. for quotes

@@ -133,7 +133,7 @@ class etemplate_new extends etemplate_widget_template
 			'modifications' => self::$request->modifications,
 			'validation_errors' => self::$validation_errors,
 		);
-		
+
 		// Info required to load the etemplate client-side
 		$dom_id = str_replace('.','-',$this->name);
 		$load_array = array(
@@ -145,7 +145,7 @@ class etemplate_new extends etemplate_widget_template
 		if (self::$response)	// call is within an ajax event / form submit
 		{
 			//error_log("Ajax " . __LINE__);
-			self::$response->generic('et2_load', $load_array);
+			self::$response->generic('et2_load', $load_array+egw_framework::get_extra());
 		}
 		else	// first call
 		{
@@ -197,7 +197,7 @@ class etemplate_new extends etemplate_widget_template
 				$GLOBALS['egw']->framework->footer();
 			}
 			ob_flush();
-			
+
 			// Send any accumulated json responses - after flush to avoid sending the buffer as a response
 			if(egw_json_response::isJSONResponse())
 			{
@@ -216,10 +216,10 @@ class etemplate_new extends etemplate_widget_template
 	 */
 	static public function ajax_process_content($etemplate_exec_id, array $content)
 	{
-		error_log(__METHOD__."(".array2string($etemplate_exec_id).', '.array2string($content).")");
+		//error_log(__METHOD__."(".array2string($etemplate_exec_id).', '.array2string($content).")");
 
 		self::$request = etemplate_request::read($etemplate_exec_id);
-		error_log('request='.array2string(self::$request));
+		//error_log('request='.array2string(self::$request));
 
 		self::$response = egw_json_response::get();
 
@@ -246,17 +246,17 @@ class etemplate_new extends etemplate_widget_template
 			self::$response->generic('et2_validation_error', self::$validation_errors);
 			exit;
 		}
-		error_log(__METHOD__."(,".array2string($content).')');
-		error_log(' validated='.array2string($validated));
+		//error_log(__METHOD__."(,".array2string($content).')');
+		//error_log(' validated='.array2string($validated));
 		$content = ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
 		if (isset($GLOBALS['egw_info']['flags']['java_script']))
 		{
 			// Strip out any script tags
 			$GLOBALS['egw_info']['flags']['java_script'] = preg_replace(array('/(<script[^>]*>)([^<]*)/is','/<\/script>/'),array('$2',''),$GLOBALS['egw_info']['flags']['java_script']);
 			self::$response->script($GLOBALS['egw_info']['flags']['java_script']);
-			error_log($app .' added javascript to $GLOBALS[egw_info][flags][java_script] - use egw_json_response->script() instead.');
+			//error_log($app .' added javascript to $GLOBALS[egw_info][flags][java_script] - use egw_json_response->script() instead.');
 		}
-	
+
 		return $content;
 	}
 

@@ -597,10 +597,34 @@ etemplate2.getByApplication = function(app)
 	return list;
 };
 
+/**
+ * Plugin for egw.json type "et2_load"
+ * 
+ * @param _type
+ * @param _response
+ * @returns {Boolean}
+ */
 function etemplate2_handle_load(_type, _response)
 {
 	// Check the parameters
 	var data = _response.data;
+	
+	// handle egw_framework::refresh_opener()
+	if (jQuery.isArray(data['refresh-opener']))
+	{
+		if (window.opener && typeof window.opener.egw_refresh == 'function')
+		{
+			window.opener.egw_refresh.apply(window.opener, data['refresh-opener']);
+		}
+	}
+
+	// handle egw_framework::close_window(), this will terminate execution
+	if (data['window-close'])
+	{
+		window.close();
+	}
+	
+	// regular et2 re-load
 	if (typeof data.url == "string" && typeof data.data === 'object')
 	{
 		if(typeof this.load == 'function')
@@ -629,6 +653,12 @@ function etemplate2_handle_load(_type, _response)
 	throw("Error while parsing et2_load response");
 }
 
+/**
+ * Plugin for egw.json type "et2_validation_error"
+ * 
+ * @param _type
+ * @param _response
+ */
 function etemplate2_handle_validation_error(_type, _response)
 {
 	// Display validation errors
