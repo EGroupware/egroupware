@@ -22,6 +22,9 @@
 	egw_css;
 */
 
+/**
+ * @augments Class
+ */
 egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 	function calendarPreferences(_egw)
@@ -50,7 +53,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			"ampm": (egw.preference("timeformat") == "12"),
 			"hourGrid": 4,
 			"minuteGrid": 10
-		}
+		};
 	};
 
 	function setupCalendar(_egw, _input, _time, _callback, _context)
@@ -68,7 +71,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			showWeek: true, // Week numbers
 			changeMonth: true, // Month selectbox
 			changeYear: true // Year selectbox
-		}
+		};
 
 		// Get the preferences
 		if(_time)
@@ -124,7 +127,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			"dayNamesMin":	2,
 			"monthNames":	false,
 			"monthNamesShort":	3
-		}
+		};
 		var regional = {};
 		var full = [];
 		for(var i in translate_fields)
@@ -176,7 +179,6 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			"closeText": false
 		};
 		var regional = {};
-		var full = [];
 		for(var i in translate_fields)
 		{
 			var trans = _wnd.jQuery.timepicker._defaults[i];
@@ -201,14 +203,29 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	ready.ready(translateTimepicker,this);
 	
 	return {
-
+		/**
+		 * setup a calendar / date-selection
+		 * 
+		 * @member of egw
+		 * @param _input
+		 * @param _time
+		 * @param _callback
+		 * @param _context
+		 * @returns
+		 */
 		calendar: function(_input, _time, _callback, _context) {
 			setupCalendar(this, _input, _time, _callback, _context);
 		},
+		/**
+		 * setup a time-selection
+		 * 
+		 * @param _input
+		 * @param _callback
+		 * @param _context
+		 * @returns
+		 */
 		time: function(_input, _callback, _context) {
 			setupTime(this, _input, _callback, _context);
 		}
-	}
-
+	};
 });
-
