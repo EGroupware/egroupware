@@ -1194,6 +1194,10 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	},
 
 	// Input widget
+
+	/**
+	 * Get the current 'value' for the nextmatch
+	 */
 	getValue: function() {
 		var _ids = this.getSelection();
 		
@@ -1206,12 +1210,16 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		var value = {
 			"selected": idsArr,
 		}	
-		jQuery.extend(value, this.activeFilters);
+		jQuery.extend(value, this.activeFilters, this.value);
 		return value;
 	},
 	resetDirty: function() {},
-	isDirty: function() { return false;},
-	isValid: function() { return true;}
+	isDirty: function() { return typeof this.value !== 'undefined';},
+	isValid: function() { return true;},
+	set_value: function(_value)
+	{
+		this.value = _value;
+	}
 });
 et2_register_widget(et2_nextmatch, ["nextmatch"]);
 
