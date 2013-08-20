@@ -49,7 +49,7 @@ egw.extend('calendar', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	function timePreferences(_egw)
 	{
 		return {
-			"timeFormat": egw.preference("timeformat") == 12 ? "h:mm tt" : "hh:mm",
+			"timeFormat": egw.preference("timeformat") == 12 ? "h:mm tt" : "HH:mm",
 			"ampm": (egw.preference("timeformat") == "12"),
 			"hourGrid": 4,
 			"minuteGrid": 10

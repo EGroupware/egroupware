@@ -179,6 +179,10 @@ var et2_date = et2_inputWidget.extend(
 			{
 				current += " ";
 			}
+			else
+			{
+				current = '';
+			}
 			this.input_date.val(current + jQuery.datepicker.formatTime(this.input_date.datepicker("option","timeFormat"),{
 				hour: this.date.getHours(),
 				minute: this.date.getMinutes(),
@@ -200,7 +204,7 @@ var et2_date = et2_inputWidget.extend(
 		}
 		if(this._type == "date-timeonly")
 		{ 
-			return this.value;
+			return this.input_date.val();
 		}
 		else
 		{
