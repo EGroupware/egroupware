@@ -878,7 +878,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		}
 		else
 		{
-			$prefs =& $GLOBALS['egw']->preferences;
+			$prefs = $GLOBALS['egw']->preferences;
 			$type = 'user';
 		}
 		$prefs->read_repository();
@@ -911,8 +911,8 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			// Update preferences client side, or it could come back
 			$pref = $GLOBALS['egw']->preferences->read_repository(false);
 			$pref = $pref[$app];
-                        if(!$pref) $pref = Array();
-                        egw_json_response::get()->script('window.egw.set_preferences('.json_encode($pref).', "'.$app.'");');
+			if(!$pref) $pref = Array();
+			egw_json_response::get()->script('window.egw.set_preferences('.json_encode($pref).', "'.$app.'");');
 
 			egw_json_response::get()->data(!isset($result[$app][$pref_name]));
 			return !isset($result[$app][$pref_name]);
@@ -988,8 +988,8 @@ class etemplate_widget_nextmatch_filterheader extends etemplate_widget_menupopup
 class etemplate_widget_nextmatch_accountfilter extends etemplate_widget_menupopup
 {
 	public function set_attrs($xml)
-        {
-                parent::set_attrs($xml);
+	{
+		parent::set_attrs($xml);
 		$this->attrs['type'] = 'select-account';
 	}
 }
