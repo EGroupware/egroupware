@@ -1173,9 +1173,14 @@ class filemanager_ui
 			if(method_exists($tpl,'get_widget_by_name'))
 			{
 				$tabs =& $tpl->get_widget_by_name('tabs=general|perms|eacl|preview|custom');
-			} else {
-				// et2
+			}
+			else	// et2
+			{
+				// add to existing tabs in template
+				$tpl->setElementAttribute('tabs', 'add_tabs', true);
+
 				$tabs =& $tpl->getElementAttribute('tabs','tabs');
+				$tabs = array();
 			}
 
 			foreach(isset($extra_tabs[0]) ? $extra_tabs : array($extra_tabs) as $extra_tab)

@@ -30,6 +30,11 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 			'name': 'Tabs',
 			'default': et2_no_init,
 			'description': "Array of [extra] tabs.  Each tab needs {label:..., template:...}.  Additional optional keys are hidden and id, for access into content array"
+		},
+		'add_tabs': {
+			'name': 'Add tabs',
+			'default': false,
+			'description': 'Set to true if tabs should be added to tabs from read from template, default false if not'
 		}
 	},
 
@@ -155,8 +160,26 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 			this.tabContainer.css("height", height);
 		}
 
-		// either use tabs defined via modification or xml (not both)
-		if(this.options.tabs)
+		// if no tabs set or they should be added to tabs from xml
+		if (!this.options.tabs || this.options.add_tabs)
+		{
+			if (tabsElems.length == 1 && tabpanelsElems.length == 1)
+			{
+				var tabs = tabsElems[0];
+				var tabpanels = tabpanelsElems[0];
+	
+				// Parse the "tabs" tag
+				this._readTabs(tabData, tabs);
+	
+				// Read and create the widgets defined in the "tabpanels"
+				this._readTabPanels(tabData, tabpanels);
+			}
+			else
+			{
+				this.egw().debug("error","Error while parsing tabbox, none or multiple tabs or tabpanels tags!",this);
+			}
+		}
+		if (this.options.tabs)
 		{
 			var readonly = this.getArrayMgr("readonlys").getEntry(this.id) || {};
 			for(var i = 0; i < this.options.tabs.length; i++)
@@ -177,21 +200,6 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 					"hidden": typeof tab.hidden != "undefined" ? tab.hidden : readonly[tab_id] || false
 				});
 			}
-		}
-		else if (tabsElems.length == 1 && tabpanelsElems.length == 1)
-		{
-			var tabs = tabsElems[0];
-			var tabpanels = tabpanelsElems[0];
-
-			// Parse the "tabs" tag
-			this._readTabs(tabData, tabs);
-
-			// Read and create the widgets defined in the "tabpanels"
-			this._readTabPanels(tabData, tabpanels);
-		}
-		else
-		{
-			this.egw().debug("error","Error while parsing tabbox, none or multiple tabs or tabpanels tags!",this);
 		}
 
 		// Create the tab DOM-Nodes

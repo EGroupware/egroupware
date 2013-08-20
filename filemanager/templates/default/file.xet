@@ -252,7 +252,7 @@
 					<description id="msg" span="all" class="redItalic"/>
 				</row>
 				<row>
-					<tabbox id="filemanager.file.general|filemanager.file.perms|filemanager.file.eacl|filemanager.file.preview|filemanager.file.custom" span="all">
+					<tabbox id="tabs" span="all">
 						<tabs>
 							<tab id="filemanager.file.general" label="General"/>
 							<tab id="filemanager.file.perms" label="Permissions"/>
