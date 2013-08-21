@@ -331,8 +331,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		// Add the empty label
 		if(this.options.empty_label)
 		{
-			this._appendOptionElement("" == this.value ? "selected" : "",
-				this.options.empty_label);
+			this._appendOptionElement("", this.options.empty_label);
 		}
 
 		// Set multiple
