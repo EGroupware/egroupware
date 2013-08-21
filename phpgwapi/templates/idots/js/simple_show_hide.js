@@ -65,7 +65,7 @@ function ypSlideOutMenu(id, dir, left, top, width, height,pos)
 							strCSS += '}'
 							strCSS += '</style>';
 
-						d.write(strCSS);
+						jQuery('head').append(strCSS);
 						//	alert(strCSS);
 //						this.load()
 

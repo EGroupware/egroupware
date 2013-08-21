@@ -2,15 +2,10 @@
 <div style="position:relative"><div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" title="{logo_title}" alt="EGroupware"/></a></div></div>
 
 <!-- BEGIN app_extra_icons_div -->
-<script language="javascript">
-	new ypSlideOutMenu("menu1", "down", 10, {menu1top}, 180, 200,'right');
-	egw_LAB.wait(function(){egw.link_quick_add('quick_add');});
-</script>
-
-<div id="menu1Container">
+<div id="menu1Container" style="visibility: hidden; position:absolute;">
 	<div id="menu1Content" style="position: relative; left: 0; text-align: left;">
 		<div id="extraIcons">
-			<a id="menu1close" href="#" {show_menu_event}="ypSlideOutMenu.hide('menu1')" title="{lang_close}"><img style="" border="0" src="{img_root}/close.png"/></a>
+			<a id="menu1close" href="#" title="{lang_close}"><img style="" border="0" src="{img_root}/close.png"/></a>
 			<table cellspacing="0" cellpadding="0" border="0" width="100%">
 <!-- BEGIN app_extra_block -->
 				<tr>
@@ -46,7 +41,7 @@
 <!-- BEGIN app_extra_icons_icon -->
 							<td width="26" valign="top" align="right" style="padding-right:3px; padding-top:20px;">
 <!-- BEGIN extra_icons_show -->
-								<a id="extra_icons_show" title="{lang_show_more_apps}" href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu1')"><img src="{img_root}/extra_icons.png" border="0" /></a>
+								<a id="extra_icons_show" title="{lang_show_more_apps}" href="#"><img src="{img_root}/extra_icons.png" border="0" /></a>
 <!-- END extra_icons_show -->
 							</td>
 <!-- END app_extra_icons_icon -->
@@ -64,7 +59,7 @@
 	<div id="divStatusBar"><table width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
 		<td width="33%" align="left" id="user_info">{user_info}</td>
 		<td align="center" id="admin_info">{current_users}</td>
-		<td width="33%"  align="right" id="quick_add">{quick_add}</td>
+		<td width="33%"  align="right" id="quick_add"></td>
 	</tr></table></div>
 <!-- END navbar -->
 <!-- END navbar_header -->
@@ -81,15 +76,11 @@
 
 
 <!-- BEGIN sidebox_hide_header -->
-	<script language="javascript">
-		new ypSlideOutMenu("menu2", "right", 0, {menu2top}, 100, 200)
-	</script>
-
 	<div id="sideboxdragarea">
-		<a href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu2')" title="{lang_show_menu}"><img src="{img_root}/dragarea_right.png" /></a>
+		<a id="menu2show" href="#" title="{lang_show_menu}"><img src="{img_root}/dragarea_right.png" /></a>
 	</div>
 
-	<div id="menu2Container">
+	<div id="menu2Container" style="visibility: hidden; position:absolute;">
 	<!--[if lte IE 6.5]><div class="selectbg" id="dd3"><div class="bdforselection"><![endif]-->
 		<div id="menu2Content" style="position: relative; left: 0; text-align: left;">
 			<table cellspacing="0" cellpadding="0">
@@ -101,7 +92,7 @@
 <!-- BEGIN sidebox_hide_footer -->
 					</div>
 				</td><td id="menu2handle" valign="top">
-					<a href="#" onclick="ypSlideOutMenu.hide('menu2')" ><img src="{img_root}/dragarea_left.png" align="right" /></a>
+					<a id="menu2close" href="#"><img src="{img_root}/dragarea_left.png" align="right" /></a>
 				</td>
 			</tr></table>
 		</div>

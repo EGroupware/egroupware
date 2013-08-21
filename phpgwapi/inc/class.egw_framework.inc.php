@@ -383,19 +383,6 @@ abstract class egw_framework
 			}
 		}
 
-		if(!$GLOBALS['egw_info']['user']['preferences']['common']['disable_slider_effects'])
-		{
-			$slider_effects_src = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/slidereffects.js';
-			$slider_effects = '<script src="'.$slider_effects_src.'" type="text/javascript">
-			</script>';
-		}
-		else
-		{
-			$simple_show_hide_src = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/simple_show_hide.js';
-			$simple_show_hide = '<script src="'.$simple_show_hide_src.'" type="text/javascript">
-			</script>';
-		}
-
 		if ($GLOBALS['egw_info']['flags']['app_header'])
 		{
 			$app = $GLOBALS['egw_info']['flags']['app_header'];
@@ -426,8 +413,6 @@ abstract class egw_framework
 			'img_icon'			=> $var['favicon_file'],
 			'img_shortcut'		=> $var['favicon_file'],
 			'pngfix'        	=> $pngfix,
-			'slider_effects'	=> $slider_effects,
-			'simple_show_hide'	=> $simple_show_hide,
 			'lang_code'			=> $lang_code,
 			'charset'       	=> translation::charset(),
 			'website_title' 	=> strip_tags($GLOBALS['egw_info']['server']['site_title']. ($app ? " [$app]" : '')),

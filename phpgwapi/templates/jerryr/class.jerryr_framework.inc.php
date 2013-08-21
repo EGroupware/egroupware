@@ -66,4 +66,41 @@ class jerryr_framework extends idots_framework
 
 		return $this->tplsav2->fetch('topmenu.tpl.php');
 	}
+
+	/**
+	 * Return slide-out-menu config for idots.js
+	 *
+	 * @param string $show_menu_event='click'
+	 * @return array
+	 */
+	protected function slide_out_menus($show_menu_event='click')
+	{
+		return array(
+			array(
+				'id' => 'menu1',
+				'dir' => 'down',
+				'left' => 45,
+				'top' => 5,
+				'width' => 188,
+				'height' => 300,
+				'pos' => 'right',
+				'bind' => array(
+					'#extra_icons_show' => array('event' => $show_menu_event, 'method' => 'showMenu'),
+					'#menu1close' => array('event' => $show_menu_event, 'method' => 'hide'),
+				),
+			),
+			array(
+				'id' => 'menu2',
+				'dir' => 'right',
+				'left' => 0,
+				'top' => 28,
+				'width' => 160,
+				'height' => 200,
+				'bind' => array(
+					'#menu2show' => array('event' => $show_menu_event, 'method' => 'showMenu'),
+					'#menu2close' => array('event' => 'click', 'method' => 'hide'),
+				),
+			),
+		);
+	}
 }

@@ -13,8 +13,6 @@
 		{meta_robots}
 		<link rel="icon" href="{img_icon}" type="image/x-ico" />
 		<link rel="shortcut icon" href="{img_shortcut}" />
-		{slider_effects}
-		{simple_show_hide}
 		{css_file}
 		<style type="text/css">
 			{app_css}

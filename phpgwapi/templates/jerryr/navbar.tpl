@@ -2,23 +2,19 @@
 <div style="position:relative"><div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" title="{logo_title}" alt="EGroupware"/></a></div></div>
 
 <!-- BEGIN app_extra_icons_div -->
-<script language="javascript">
-	new ypSlideOutMenu("menu1", "down", 45, 5, 188, 300,'right');
-</script>
-
-<div id="menu1Container">
+<div id="menu1Container" style="visibility: hidden; position:absolute;">
 	<div id="menu1Content" class="menuOneBox">
 		<div id="extraIcons">
 			<table cellspacing="0" cellpadding="0" border="0" width="100%">
-			<!-- BEGIN app_extra_block -->
+<!-- BEGIN app_extra_block -->
 				<tr>
 					<td class="extraIconsRowIcon"><a href="{url}" {target}><img src="{icon}" alt="{title}" title="{title}" width="16" border="0" /></a></td>
 					<td align="left" class="extraIconsRow"><a href="{url}" {target}>{title}</a></td>
 				</tr>
-			<!-- END app_extra_block -->
+<!-- END app_extra_block -->
 				<tr><td colspan="2" class="extraIconsHeader" nowrap="nowrap" align="right">
-                                <a href="#" {show_menu_event}="ypSlideOutMenu.hide('menu1')" title="{lang_close}"><img style="" border="0" src="{img_root}/up.button.png"/></a>
-                        </td></tr>
+					<a id="menu1close" href="#" title="{lang_close}"><img style="" border="0" src="{img_root}/up.button.png"/></a>
+				</td></tr>
 			</table>
 		</div>
 	</div>
@@ -50,7 +46,7 @@
 <!-- END app_icon_block -->
 <!-- BEGIN app_extra_icons_icon -->
 							<td width="26" valign="top" align="right" style="padding-right:3px; padding-top:20px;">
-								<a title="{lang_show_more_apps}" href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu1')"><img src="{img_root}/extra_icons.png" border="0" /></a>
+								<a id="extra_icons_show" title="{lang_show_more_apps}" href="#"><img src="{img_root}/extra_icons.png" border="0" /></a>
 							</td>
 <!-- END app_extra_icons_icon -->
 						</tr>
@@ -85,15 +81,11 @@
 
 
 <!-- BEGIN sidebox_hide_header -->
-	<script language="javascript">
-		new ypSlideOutMenu("menu2", "right", 0, 28, 160, 200)
-	</script>
-
 	<div id="sideboxdragarea" style="position:absolute;left:0px;top:38px; z-index: 52;">
-		<a href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu2')" title="{lang_show_menu}"><img src="{img_root}/dragarea_right.png" /></a>
+		<a id="menu2show" href="#" title="{lang_show_menu}"><img src="{img_root}/dragarea_right.png" /></a>
 	</div>
 
-	<div id="menu2Container">
+	<div id="menu2Container" style="visibility: hidden; position:absolute;">
 	<!--[if lte IE 6.5]><div class="selectbg" id="dd3"><div class="bdforselection"><![endif]-->
 		<div id="menu2Content" style="position: relative; left: 0; text-align: left;">
 			<table cellspacing="0" cellpadding="0">
@@ -105,7 +97,7 @@
 <!-- BEGIN sidebox_hide_footer -->
 					</div>
 				</td><td style="padding-top:10px" valign="top">
-					<a href="#" onclick="ypSlideOutMenu.hide('menu2')" ><img src="{img_root}/dragarea_left.png" align="right" /></a>
+					<a id="menu2close" href="#"><img src="{img_root}/dragarea_left.png" align="right" /></a>
 				</td>
 			</tr></table>
 		</div>
