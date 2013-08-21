@@ -52,6 +52,13 @@ class mail_ui
 	static $delimiter = '::';
 
 	/**
+	 * nextMatch name for index
+	 *
+	 * @var string
+	 */
+	static $nm_index = 'nm';
+
+	/**
 	 * instance of mail_bo
 	 *
 	 * @var object
@@ -157,11 +164,11 @@ class mail_ui
 		if (!is_array($content))
 		{
 			$content = array(
-				'nm' => egw_session::appsession('index','mail'),
+				self::$nm_index => egw_session::appsession('index','mail'),
 			);
-			if (!is_array($content['nm']))
+			if (!is_array($content[self::$nm_index]))
 			{
-				$content['nm'] = array(
+				$content[self::$nm_index] = array(
 					'get_rows'       =>	'mail.mail_ui.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
 					'filter'         => 'any',	// filter is used to choose the mailbox
 					'no_filter2'     => false,	// I  disable the 2. filter (params are the same as for filter)
@@ -178,10 +185,10 @@ class mail_ui
 					'actions'        => self::get_actions(),
 					'row_id'         => 'row_id', // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
 				);
-				//$content['nm']['path'] = self::get_home_dir();
+				//$content[self::$nm_index]['path'] = self::get_home_dir();
 			}
 		}
-		$content['nm']['csv_fields'] = false;
+		$content[self::$nm_index]['csv_fields'] = false;
 		if ($msg)
 		{
 			$content['msg'] = $msg;
@@ -195,9 +202,9 @@ class mail_ui
 		$this->mail_bo->restoreSessionData();
 
 		// filter is used to choose the mailbox
-		//if (!isset($content['nm']['foldertree'])) // maybe we fetch the folder here
+		//if (!isset($content[self::$nm_index]['foldertree'])) // maybe we fetch the folder here
 		/*
-		$sel_options['nm']['foldertree'] =  array('id' => 0, 'item' => array(
+		$sel_options[self::$nm_index]['foldertree'] =  array('id' => 0, 'item' => array(
 			array('id' => '/INBOX', 'text' => 'INBOX', 'im0' => 'kfm_home.png', 'child' => '1', 'item' => array(
 				array('id' => '/INBOX/sub', 'text' => 'sub'),
 				array('id' => '/INBOX/sub2', 'text' => 'sub2'),
@@ -207,15 +214,15 @@ class mail_ui
 			)),
 		));
 
-		$content['nm']['foldertree'] = '/INBOX/sub';
+		$content[self::$nm_index]['foldertree'] = '/INBOX/sub';
 		*/
 
-		$sel_options['nm']['foldertree'] = $this->getFolderTree(false);
+		$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree(false);
 
 		$sessionFolder = $this->mail_bo->sessionData['maibox'];
 		if ($this->mail_bo->folderExists($sessionFolder))
 		{
-			$content['nm']['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.$this->mail_bo->sessionData['maibox'];
+			$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.$this->mail_bo->sessionData['maibox'];
 			$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
 		}
 		// since we are connected,(and selected the folder) we check for capabilities SUPPORTS_KEYWORDS to eventually add the keyword filters
@@ -230,19 +237,18 @@ class mail_ui
 			));
 		}
 
-		if (!isset($content['nm']['foldertree'])) $content['nm']['foldertree'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
-		if (!isset($content['nm']['selectedFolder'])) $content['nm']['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
-		$content['nm']['foldertree'] = $content['nm']['selectedFolder'];
+		if (!isset($content[self::$nm_index]['foldertree'])) $content[self::$nm_index]['foldertree'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
+		if (!isset($content[self::$nm_index]['selectedFolder'])) $content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.'INBOX';
+		$content[self::$nm_index]['foldertree'] = $content[self::$nm_index]['selectedFolder'];
 		//$sel_options['cat_id'] = array(1=>'none');
 		$sel_options['filter2'] = $this->searchTypes;
 		$sel_options['filter'] = $this->statusTypes;
-		//if (!isset($content['nm']['cat_id'])) $content['nm']['cat_id'] = 'All';
+		//if (!isset($content[self::$nm_index]['cat_id'])) $content[self::$nm_index]['cat_id'] = 'All';
 
 		$etpl = new etemplate_new('mail.index');
 
 		// Set tree actions
-		$etpl->set_cell_attribute('nm[foldertree]','actions', array(
-
+		$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', array(
 			'drop_move_mail' => array(
 				'type' => 'drop',
 				'acceptedTypes' => 'mail',
@@ -277,7 +283,7 @@ class mail_ui
 			)
 		));
 //error_log(__METHOD__.__LINE__.array2string($content));
-		if (empty($content['nm']['filter2']) || empty($content['nm']['search'])) $content['nm']['filter2']='quick';
+		if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']='quick';
 		$readonlys = $preserv = $sel_options;
 		return $etpl->exec('mail.mail_ui.index',$content,$sel_options,$readonlys,$preserv);
 	}
@@ -686,7 +692,7 @@ class mail_ui
 	/**
 	 * Get actions / context menu for index
 	 *
-	 * Changes here, require to log out, as $content['nm'] get stored in session!
+	 * Changes here, require to log out, as $content[self::$nm_index] get stored in session!
 	 * @var &$action_links
 	 *
 	 * @return array see nextmatch_widget::egw_actions()
@@ -1593,9 +1599,13 @@ unset($query['actions']);
 			),
 		));
 */
-		egw_framework::set_onload("");
-		$subject = mail_bo::htmlspecialchars($this->mail_bo->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false),
-            mail_bo::$displayCharset);
+		egw_framework::set_onload('$j(document).ready(function() {
+var subject = etemplate2.getByApplication(\'mail\')[0].widgetContainer.getWidgetById(\'mail_displaysubject\');
+var body = etemplate2.getByApplication(\'mail\')[0].widgetContainer.getWidgetById(\'mail_displaybody\');
+body.node.parentNode.style.top=subject.node.offsetTop+40+\'px\';
+});');
+		$subject = /*mail_bo::htmlspecialchars(*/$this->mail_bo->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false)/*,
+            mail_bo::$displayCharset)*/;
 		if($envelope['FROM'][0] != $envelope['SENDER'][0]) {
 			$content['mail_displayfromaddress'] = self::emailAddressToHTML($envelope['SENDER'],'',false,true,false);
 			$content['mail_displayonbehalfofaddress'] = self::emailAddressToHTML($envelope['FROM'], $organization,false,true,false);
@@ -2158,8 +2168,22 @@ unset($query['actions']);
 				!fwrite($fp,$message))
 			{
 				$err .= 'alert("'.addslashes(lang('Error saving %1!',$file)).'");';
+				$succeeded = false;
+			}
+			else
+			{
+				$succeeded = true;
 			}
 			if ($fp) fclose($fp);
+			if ($succeeded)
+			{
+				translation::add_app('mail');
+				$headers = $this->bmail_bo->getMessageHeader($uid,$partID,true);
+				unset($headers['SUBJECT']);//already in filename
+				$infoSection = mail_bo::createHeaderInfoSection($headers, 'SUPPRESS', false);
+				$props = array(array('name' => 'comment','val' => $infoSection));
+				egw_vfs::proppatch($file,$props);
+			}
 		}
 		//$this->mail_bo->closeConnection();
 

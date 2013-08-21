@@ -11,6 +11,7 @@
 app.mail = AppJS.extend(
 {
 	appname: 'mail',
+
 	/**
 	 * et2 widget container
 	 */
@@ -25,6 +26,8 @@ app.mail = AppJS.extend(
 	mail_selectedMails: [],
 	mail_currentlyFocussed: '',
 	mail_previewAreaActive: true, // we start with the area active
+
+	nm_index: 'nm', // nm nome of index
 
 	/**
 	 * Initialize javascript for this application
@@ -87,7 +90,7 @@ app.mail = AppJS.extend(
 		{
 			if (_reset == true)
 			{
-				//var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
+				//var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(nm_index);
 				//if (this.mail_currentlyFocussed!='') nm.refresh([this.mail_currentlyFocussed],'delete');//egw.dataDeleteUID(this.mail_currentlyFocussed);
 				if (this.mail_currentlyFocussed!='') egw.dataDeleteUID(this.mail_currentlyFocussed);
 				for(var k = 0; k < this.mail_selectedMails.length; k++) egw.dataDeleteUID(this.mail_selectedMails[k]);
@@ -231,6 +234,19 @@ app.mail = AppJS.extend(
 				egw_openWindowCentered(url,'forward_'+_elems[0].id,700,egw_getWindowOuterHeight());
 			}
 		}
+	},
+
+	/**
+	 * Compose, reply or forward a message
+	 *
+	 * @param _action _action.id is 'compose', 'composeasnew', 'reply', 'reply_all' or 'forward' (forward can be multiple messages)
+	 * @param _elems _elems[0].id is the row-id
+	 */
+	mail_testhtmlarea: function(_action, _elems)
+	{
+		var url = window.egw_webserverUrl+'/index.php?';
+		url += 'menuaction=mail.mail_compose.testhtmlarea';
+		egw_openWindowCentered(url);
 	},
 
 	/**
@@ -414,7 +430,7 @@ app.mail = AppJS.extend(
 		}
 		try
 		{
-			var tree_wdg = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+			var tree_wdg = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
 
 			var activeFolders = tree_wdg.getTreeNodeOpenItems(nodeToRefresh,mode2use);
 			//alert(activeFolders.join('#,#'));
@@ -456,7 +472,7 @@ app.mail = AppJS.extend(
 	 * mail_setFolderStatus, function to set the status for the visible folders
 	 */
 	mail_setFolderStatus: function(_status) {
-		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
 		for (var i in _status) ftree.setLabel(i,_status[i]);//alert(i +'->'+_status[i]);
 	},
 
@@ -468,7 +484,7 @@ app.mail = AppJS.extend(
 	 */
 	mail_setLeaf: function(_status) {
 		//console.log('mail_setLeaf',_status);
-		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
 		{
@@ -478,7 +494,7 @@ app.mail = AppJS.extend(
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
 			if (_status[i]['id']==selectedNode.id)
 			{
-				var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
+				var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
 				nm.activeFilters["selectedFolder"] = _status[i]['id'];
 				nm.applyFilters();
 			}
@@ -493,7 +509,7 @@ app.mail = AppJS.extend(
 	 */
 	mail_removeLeaf: function(_status) {
 		//console.log('mail_removeLeaf',_status);
-		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
 		{
@@ -504,7 +520,7 @@ app.mail = AppJS.extend(
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
 			if (selectedNodeAfter.id!=selectedNode.id && selectedNode.id==i)
 			{
-				var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
+				var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
 				nm.activeFilters["selectedFolder"] = selectedNodeAfter.id;
 				nm.applyFilters();
 			}
@@ -519,7 +535,7 @@ app.mail = AppJS.extend(
 	 */
 	mail_reloadNode: function(_status) {
 		//console.log('mail_reloadNode',_status);
-		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
 		{
@@ -530,7 +546,7 @@ app.mail = AppJS.extend(
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
 			if (selectedNodeAfter.id!=selectedNode.id && selectedNode.id==i)
 			{
-				var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
+				var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
 				nm.activeFilters["selectedFolder"] = selectedNodeAfter.id;
 				nm.applyFilters();
 			}
@@ -541,7 +557,7 @@ app.mail = AppJS.extend(
 	 * mail_refreshMessageGrid, function to call to reread ofthe current folder
 	 */
 	mail_refreshMessageGrid: function() {
-		var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
+		var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
 		nm.applyFilters(); // this should refresh the active folder
 	},
 
@@ -744,7 +760,7 @@ app.mail = AppJS.extend(
 				_widget.set_value('');
 			}
 		}
-		var nm = _widget.getRoot().getWidgetById('nm');
+		var nm = _widget.getRoot().getWidgetById(this.nm_index);
 		nm.activeFilters["selectedFolder"] = folder;
 		//nm.applyFilters();// its done in refrefreshMessageGrid
 		var msg = _widget.getRoot().getWidgetById('msg');
@@ -983,7 +999,7 @@ app.mail = AppJS.extend(
 		}
 		else
 		{
-			var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
+			var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
 			var aO = nm.controller._objectManager.selectedChildren;
 			for (var i = 0; i < _actionObjects['msg'].length; i++)
 			{
@@ -1028,7 +1044,7 @@ app.mail = AppJS.extend(
 		// as the "onNodeSelect" function!
 		var request = new egw_json_request('mail.mail_ui.ajax_moveMessages',[target, messages]);
 		request.sendRequest(false);
-		var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm');
+		var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
 		this.mail_setRowClass(_senders,'deleted');
 		nm.refresh(messages['msg'],'delete')
 		//for (var i = 0; i < messages['msg'].length; i++) egw.dataDeleteUID(messages['msg'][i]);
@@ -1063,7 +1079,7 @@ app.mail = AppJS.extend(
 		//console.log(action,_senders);
 		//action.id == 'add'
 		//_senders.iface.id == target leaf / leaf to edit
-		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
 		OldFolderName = ftree.getLabel(_senders[0].iface.id);
 		if (jQuery(OldFolderName).text().length>0) OldFolderName = jQuery(OldFolderName).text();
 		OldFolderName = OldFolderName.trim();
@@ -1090,7 +1106,7 @@ app.mail = AppJS.extend(
 		//console.log(action,_senders);
 		//action.id == 'rename'
 		//_senders.iface.id == target leaf / leaf to edit
-		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
 		OldFolderName = ftree.getLabel(_senders[0].iface.id);
 		if (jQuery(OldFolderName).text().length>0) OldFolderName = jQuery(OldFolderName).text();
 		OldFolderName = OldFolderName.trim();
@@ -1117,7 +1133,7 @@ app.mail = AppJS.extend(
 		//console.log(action,_senders);
 		//action.id == 'delete'
 		//_senders.iface.id == target leaf / leaf to edit
-		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]');
+		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
 		OldFolderName = ftree.getLabel(_senders[0].iface.id);
 		if (jQuery(OldFolderName).text().length>0) OldFolderName = jQuery(OldFolderName).text();
 		OldFolderName = OldFolderName.trim();

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.testhtmlarea" template="" lang="" group="0" version="1.9.001">
+		<hbox>
+			<button label="Submit" id="button[apply]"/><button label="Save" id="button[save]"/>
+		</hbox>
+		<vbox class="mailComposeBodySection" width="99%">
+			<hbox disabled="@is_plain" class="mailComposeBody">
+				<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" mode="$cont[rtfEditorFeatures]" height="320px" width="100%" toolbar="true" base_href="$cont[upload_dir]"/>
+			</hbox>
+			<hbox disabled="@is_html" class="mailComposeBody">
+				<textbox multiline="true" rows="15" cols="120" width="99%" span="all" name="mail_plaintext" id="mail_plaintext"/>
+			</hbox>
+		</vbox>
+	</template>
+</overlay>

@@ -14,7 +14,7 @@
 					<description value="Status"/>
 					<description value="rules"/>
 				</row>
-				<row class="mail_sieve_$row_count[status]"  >
+				<row class="tr"  >
 					<description id="${row}[ruleID]" />
 					<menulist>
 						<menupopup id="${row}[status]" readonly= "true"/>

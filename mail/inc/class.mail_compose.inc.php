@@ -23,6 +23,7 @@ class mail_compose
 	(
 		'action'		=> True,
 		'compose'		=> True,
+		'testhtmlarea'	=> True,
 		'composeFromDraft'	=> True,
 		'getAttachment'		=> True,
 		'fileSelector'		=> True,
@@ -198,7 +199,7 @@ class mail_compose
 			if (!$messageUid) {
 				print "<script type=\"text/javascript\">alert('".lang("Error: Could not save Message as Draft")." ".lang("Trying to recover from session data")."');</script>";
 				//try to reopen the mail from session data
-				$this->compose('to',true);
+				$this->compose(null,null,'to',true);
 				return;
 			}
 			// saving as draft, does not mean closing the message
@@ -211,7 +212,7 @@ class mail_compose
 			{
 				//error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$messageUid.' in folder:'.$folder);
 				$uicompose->bocompose->getDraftData($uicompose->mail_bo->icServer, $folder, $messageUid);
-				$uicompose->compose('to',true);
+				$uicompose->compose(null,null,'to',true);
 				return;
 			}
 		} else {
@@ -258,25 +259,29 @@ class mail_compose
 				$this->preferencesArray['message_forwarding'] = $buff;
 			}
 		}
-		$this->compose($_focusElement);
+		$this->compose(null,null,$_focusElement);
 	}
 
 	/**
 	 * function compose
 	 * 	this function is used to fill the compose dialog with the content provided by session data
 	 *
+	 * @var content				array the etemplate content array
+	 * @var msg					string a possible message to be passed and displayed to the userinterface
 	 * @var _focusElement		varchar subject, to, body supported
 	 * @var suppressSigOnTop	boolean
 	 * @var isReply				boolean
 	 */
-	function compose($_focusElement='to',$suppressSigOnTop=false, $isReply=false)
+	function compose(array $content=null,$msg=null, $_focusElement='to',$suppressSigOnTop=false, $isReply=false)
 	{
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
+		error_log(__METHOD__.__LINE__.array2string($content));
+
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
 		// read the data from session
 		// all values are empty for a new compose window
 		$insertSigOnTop = false;
-		$sessionData = $this->getSessionData();
+		$sessionData = /*$content; // */$this->getSessionData();
 		$alwaysAttachVCardAtCompose = false; // we use this to eliminate double attachments, if users VCard is already present/attached
 		if ( isset($GLOBALS['egw_info']['apps']['stylite']) && (isset($this->preferencesArray['attachVCardAtCompose']) &&
 			$this->preferencesArray['attachVCardAtCompose']))
@@ -493,9 +498,6 @@ class mail_compose
 				if ($_REQUEST['preset'][$name]) $sessionData[$name] = $_REQUEST['preset'][$name];
 			}
 		}
-		$etpl = new etemplate_new('mail.compose');
-		$content = array();
-		_debug_array($sessionData);
 		// is the to address set already?
 		if (!empty($_REQUEST['send_to']))
 		{
@@ -591,18 +593,6 @@ class mail_compose
 		if (($suppressSigOnTop || $sessionData['isDraft']) && !empty($sessionData['identity'])) $presetId = (int)$sessionData['identity'];
 
 /*
-		$this->t->set_file(array("composeForm" => "composeForm.tpl"));
-		$this->t->set_block('composeForm','header','header');
-		$this->t->set_block('composeForm','body_input');
-		$this->t->set_block('composeForm','attachment','attachment');
-		$this->t->set_block('composeForm','attachment_row','attachment_row');
-		$this->t->set_block('composeForm','attachment_row_bold');
-		$this->t->set_block('composeForm','destination_row');
-		$this->t->set_block('composeForm','simple_text');
-
-		$this->translate();
-		// store the selected Signature
-		$this->t->set_var("mySigID",($presetSig ? $presetSig : $sessionData['signatureID']));
 
 		if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
 			$this->t->set_var("link_addressbook",egw::link('/index.php',array(
@@ -669,101 +659,11 @@ class mail_compose
 			$this->t->set_var('errorInfo','&nbsp;');
 		}
 */
-		// header
-		$allIdentities = $this->mailPreferences->getIdentity();
-		unset($allIdentities[0]);
-		//_debug_array($allIdentities);
-		if (is_null(mail_bo::$mailConfig)) mail_bo::$mailConfig = config::read('mail');
-		// not set? -> use default, means full display of all available data
-		if (!isset(mail_bo::$mailConfig['how2displayIdentities'])) mail_bo::$mailConfig['how2displayIdentities'] ='';
-		$globalIds = 0;
-		$defaultIds = array();
-		foreach($allIdentities as $key => $singleIdentity) {
-			if ($singleIdentity->id<0){ $globalIds++; }/*else{ unset($allIdentities[$key]);}*/
-			// there could be up to 2 default IDS. the activeProfile and another on marking the desired Identity to choose
-			if(!empty($singleIdentity->default) && $singleIdentity->default==1) $defaultIds[$singleIdentity->id] = $singleIdentity->id;
-		}
-		//error_log(__METHOD__.__LINE__.' Identities regarded/marked as default:'.array2string($defaultIds). ' MailProfileActive:'.$this->mail_bo->profileID);
-		// if there are 2 defaultIDs, its most likely, that the user choose to set
-		// the one not being the activeServerProfile to be his default Identity
-		if (count($defaultIds)>1) unset($defaultIds[$this->mail_bo->profileID]);
-		$defaultIdentity = 0;
-		$identities = array();
-		foreach($allIdentities as $key => $singleIdentity) {
-			//$identities[$singleIdentity->id] = $singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>';
-			$iS = mail_bo::generateIdentityString($singleIdentity);
-			if (mail_bo::$mailConfig['how2displayIdentities']=='' || count($allIdentities) ==1 || count($allIdentities) ==$globalIds)
-			{
-				$id_prepend ='';
-			}
-			else
-			{
-				$id_prepend = '('.$singleIdentity->id.') ';
-			}
-			//if ($singleIdentity->default) error_log(__METHOD__.__LINE__.':'.$presetId.'->'.$key.'('.$singleIdentity->id.')'.'#'.$iS.'#');
-			if (array_search($id_prepend.$iS,$identities)===false) $identities[$singleIdentity->id] = $id_prepend.$iS;
-			if(in_array($singleIdentity->id,$defaultIds) && $defaultIdentity==0)
-			{
-				//_debug_array($singleIdentity);
-				$defaultIdentity = $singleIdentity->id;
-				//$defaultIdentity = $key;
-				$sessionData['signatureID'] = (!empty($singleIdentity->signature) ? $singleIdentity->signature : $sessionData['signatureID']);
-			}
-		}
-		$selectFrom = html::select('identity', (!empty($presetId) ? $presetId : $defaultIdentity), $identities, true, "style='width:100%;' onchange='changeIdentity(this);'");
+
 /*
 		$this->t->set_var('select_from', $selectFrom);
 		//error_log(__METHOD__.__LINE__.' DefaultIdentity:'.array2string($identities[($presetId ? $presetId : $defaultIdentity)]));
 		// navbar(, kind of)
-		$this->t->set_var('img_clear_left', common::image('felamimail','clear_left'));
-		$this->t->set_var('img_fileopen', common::image('phpgwapi','fileopen'));
-		$this->t->set_var('img_mail_send', common::image('felamimail','mail_send'));
-		$this->t->set_var('img_attach_file', common::image('felamimail','attach'));
-		$this->t->set_var('ajax-loader', common::image('felamimail','ajax-loader'));
-		$this->t->set_var('img_fileexport', common::image('felamimail','fileexport'));
-		// prepare print url/button
-		$this->t->set_var('img_print_it', common::image('felamimail','print'));
-		$this->t->set_var('lang_print_it', lang('print it'));
-		$this->t->set_var('print_it', $printURL);
-*/
-		// from, to, cc, replyto
-		$destinationRows = 0;
-		foreach(array('to','cc','bcc','replyto','folder') as $destination) {
-			foreach((array)$sessionData[$destination] as $key => $value) {
-				if ($value=="NIL@NIL") continue;
-				if ($destination=='replyto' && str_replace('"','',$value) == str_replace('"','',$identities[($presetId ? $presetId : $defaultIdentity)])) continue;
-				//error_log(__METHOD__.__LINE__.array2string(array('key'=>$key,'value'=>$value)));
-				$selectDestination = html::select('destination[]', $destination, $this->destinations, false, "style='width: 100%;' onchange='fm_compose_changeInputType(this)'");
-				//$this->t->set_var('select_destination', $selectDestination);
-				$value = htmlspecialchars_decode($value,ENT_COMPAT);
-				$value = str_replace("\"\"",'"',$value);
-				$address_array = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($value):$value), '');
-				foreach((array)$address_array as $addressObject) {
-					if ($addressObject->host == '.SYNTAX-ERROR.') continue;
-					$address = imap_rfc822_write_address($addressObject->mailbox,$addressObject->host,$addressObject->personal);
-					$address = mail_bo::htmlentities($address, $this->displayCharset);
-					//$this->t->set_var('address', ($destination=='folder'?$value:$address));
-					//$this->t->parse('destinationRows','destination_row',True);
-					$destinationRows++;
-				}
-			}
-		}
-		while($destinationRows < 3) {
-			// and always add one empty row
-			$selectDestination = html::select('destination[]', 'to', $this->destinations, false, "style='width: 100%;' onchange='fm_compose_changeInputType(this)'");
-/*
-			$this->t->set_var('select_destination', $selectDestination);
-			$this->t->set_var('address', '');
-			$this->t->parse('destinationRows','destination_row',True);
-*/
-			$destinationRows++;
-		}
-		// and always add one empty row
-		$selectDestination = html::select('destination[]', 'to', $this->destinations, false, "style='width: 100%;' onchange='fm_compose_changeInputType(this)'");
-/*
-		$this->t->set_var('select_destination', $selectDestination);
-		$this->t->set_var('address', '');
-		$this->t->parse('destinationRows','destination_row',True);
 */
 		// handle subject
 		$subject = mail_bo::htmlentities($sessionData['subject'],$this->displayCharset);
@@ -798,11 +698,61 @@ class mail_compose
 		$this->t->set_var('lang_no_recipient',lang('No recipient address given!'));
 		$this->t->set_var('lang_no_subject',lang('No subject given!'));
 		$this->t->set_var('lang_infolog_tracker_not_both',lang("You can either choose to save as infolog OR tracker, not both."));
-		$this->t->pparse("out","header");
 */
 		// prepare signatures, the selected sig may be used on top of the body
-		require_once(EGW_INCLUDE_ROOT.'/felamimail/inc/class.felamimail_bosignatures.inc.php');
-		$boSignatures = new felamimail_bosignatures();
+		//identities and signature stuff
+		$allIdentities = $this->preferences->getIdentity();
+		unset($allIdentities[0]);
+		//_debug_array($allIdentities);
+		if (is_null(mail_bo::$mailConfig)) mail_bo::$mailConfig = config::read('mail');
+		// not set? -> use default, means full display of all available data
+		if (!isset(mail_bo::$mailConfig['how2displayIdentities'])) mail_bo::$mailConfig['how2displayIdentities'] ='';
+		$globalIds = 0;
+		$defaultIds = array();
+		foreach($allIdentities as $key => $singleIdentity) {
+			if ($singleIdentity->id<0){ $globalIds++; }/*else{ unset($allIdentities[$key]);}*/
+			// there could be up to 2 default IDS. the activeProfile and another on marking the desired Identity to choose
+			if(!empty($singleIdentity->default) && $singleIdentity->default==1)
+			{
+				$defaultIds[$singleIdentity->id] = $singleIdentity->id;
+				$selectedSender = mail_bo::generateIdentityString($singleIdentity);
+			}
+		}
+		//error_log(__METHOD__.__LINE__.' Identities regarded/marked as default:'.array2string($defaultIds). ' MailProfileActive:'.$this->mail_bo->profileID);
+		// if there are 2 defaultIDs, its most likely, that the user choose to set
+		// the one not being the activeServerProfile to be his default Identity
+		if (count($defaultIds)>1) unset($defaultIds[$this->mail_bo->profileID]);
+		$defaultIdentity = 0;
+		$identities = array();
+		foreach($allIdentities as $key => $singleIdentity) {
+			//$identities[$singleIdentity->id] = $singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>';
+			$iS = mail_bo::generateIdentityString($singleIdentity);
+			$shortIDString = trim(mail_bo::generateIdentityString($singleIdentity,false));
+			if (mail_bo::$mailConfig['how2displayIdentities']=='' || count($allIdentities) ==1 || count($allIdentities) ==$globalIds)
+			{
+				$id_prepend ='';
+			}
+			else
+			{
+				$id_prepend = '('.$singleIdentity->id.') ';
+			}
+			//if ($singleIdentity->default) error_log(__METHOD__.__LINE__.':'.$presetId.'->'.$key.'('.$singleIdentity->id.')'.'#'.$iS.'#');
+			if (array_search($id_prepend.$iS,$identities)===false)
+			{
+				$identities[$singleIdentity->id] = $id_prepend.$iS;
+				$sel_options['SENDER'][$iS] = $id_prepend.$iS;
+			}
+			if(in_array($singleIdentity->id,$defaultIds) && $defaultIdentity==0)
+			{
+				//_debug_array($singleIdentity);
+				$defaultIdentity = $singleIdentity->id;
+				//$defaultIdentity = $key;
+				$sessionData['signatureID'] = (!empty($singleIdentity->signature) ? $singleIdentity->signature : $sessionData['signatureID']);
+			}
+		}
+
+		// fetch the signature, prepare the select box, ...
+		$boSignatures = new mail_signatures();
 		$signatures = $boSignatures->getListOfSignatures();
 
 		if (empty($sessionData['signatureID'])) {
@@ -883,6 +833,7 @@ class mail_compose
 			$sessionData['body'] = ($font_span?$font_span:'&nbsp;').$sessionData['body'];
 		}
 		//error_log(__METHOD__.__LINE__.$sessionData['body']);
+
 		// prepare body
 		// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
 		if (strtoupper($this->displayCharset) == 'UTF-8')
@@ -922,32 +873,12 @@ class mail_compose
 		} else {
 			$border="1px solid gray; margin:1px";
 			// initalize the CKEditor Object to enable switching back and force
-			$editor = html::fckEditorQuick('body', 'ascii', $sessionData['body'],'500px','99%',false,$border);
-/*
-			$this->t->set_var('tinymce', $editor); //html::fckEditorQuick('body', 'ascii', $sessionData['body'],'400px','99%'));
-			$this->t->set_var('mimeType', 'text');
-*/
+			//$editor = html::fckEditorQuick('body', 'ascii', $sessionData['body'],'500px','99%',false,$border);
 			$ishtml=0;
 		}
 
 
-		$bostationery = new felamimail_bostationery();
-		$selectStationeries = array(
-			'0' => lang('no stationery')
-		);
-		$showStationaries = false;
-		$validStationaries = $bostationery->get_valid_templates();
-		if (is_array($validStationaries) && count($validStationaries)>0)
-		{
-			$showStationaries = true;
-			$selectStationeries += $validStationaries;
-		}
-		// if ID of signature Select Box is set, we allow for changing the sig onChange of the signatueSelect
-		$selectBoxSignature  = html::select('signatureID', ($presetSig ? $presetSig : $sessionData['signatureID']), $selectSignatures, true, ($insertSigOnTop?"id='signatureID'":"")." style='width: 35%;' onchange='fm_compose_changeInputType(this)'");
-		$selectBoxStationery = html::select('stationeryID', ($presetStationery ? $presetStationery : 0), $selectStationeries, true, "style='width: 35%;'");
 /*
-		$this->t->set_var("select_signature", $selectBoxSignature);
-		$this->t->set_var("select_stationery", ($showStationaries ? $selectBoxStationery:''));
 		$this->t->set_var("lang_editormode",lang("Editor type"));
 		if (html::htmlarea_availible()===false)
 		{
@@ -958,7 +889,6 @@ class mail_compose
 			// IE seems to need onclick to realize there is a change
 			$this->t->set_var("toggle_editormode", lang("Editor type").":&nbsp;<span><input name=\"_is_html\" value=\"".$ishtml."\" type=\"hidden\" /><input name=\"_editorselect\" onchange=\"fm_toggle_editor(this)\" onclick=\"fm_toggle_editor(this)\" ".($ishtml ? "checked=\"checked\"" : "")." id=\"_html\" value=\"html\" type=\"radio\"><label for=\"_html\">HTML</label><input name=\"_editorselect\" onchange=\"fm_toggle_editor(this)\" onclick=\"fm_toggle_editor(this)\" ".($ishtml ? "" : "checked=\"checked\"")." id=\"_plain\" value=\"plain\" type=\"radio\"><label for=\"_plain\">Plain text</label></span>");
 		}
-		$this->t->pparse("out","body_input");
 */
 		// attachments
 		if (is_array($sessionData['attachments']) && count($sessionData['attachments']) > 0)
@@ -986,10 +916,87 @@ class mail_compose
 //			$this->t->set_var('attachment_rows','');
 		}
 
-//		$this->t->pparse("out","attachment");
-$content['is_html'] = $this->sessionData['mimeType'] == 'html';
-$content['mailtext'] = 'garbage';
+		// signature stuff set earlier
+		$sel_options['signatureID'] = $selectSignatures;
+		$content['signatureID'] = ($presetSig ? $presetSig : $sessionData['signatureID']);
+		// end signature stuff
+
+		// stationery stuff
+		$bostationery = new emailadmin_bostationery();
+		$selectStationeries = array(
+			'0' => lang('no stationery')
+		);
+		$showStationaries = false;
+		$validStationaries = $bostationery->get_valid_templates();
+		if (is_array($validStationaries) && count($validStationaries)>0)
+		{
+			$showStationaries = true;
+			$selectStationeries += $validStationaries;
+		}
+		//_debug_array($selectStationeries);
+		$sel_options['stationeryID'] = $selectStationeries;
+		// if ID of signature Select Box is set, we allow for changing the sig onChange of the signatueSelect
+		$content['stationeryID']  =  ($presetStationery ? $presetStationery : 0);
+		// end stationery stuff
+		//$sessionData['bcc'] = array('kl@stylite.de','kl@leithoff.net');
+		// address stuff like from, to, cc, replyto
+		$destinationRows = 0;
+		foreach(array('to','cc','bcc','replyto','folder') as $destination) {
+			foreach((array)$sessionData[$destination] as $key => $value) {
+				if ($value=="NIL@NIL") continue;
+				if ($destination=='replyto' && str_replace('"','',$value) == str_replace('"','',$identities[($presetId ? $presetId : $defaultIdentity)])) continue;
+				//error_log(__METHOD__.__LINE__.array2string(array('key'=>$key,'value'=>$value)));
+				$selectDestination = html::select('destination[]', $destination, $this->destinations, false, "style='width: 100%;' onchange='fm_compose_changeInputType(this)'");
+				//$this->t->set_var('select_destination', $selectDestination);
+				$value = htmlspecialchars_decode($value,ENT_COMPAT);
+				$value = str_replace("\"\"",'"',$value);
+				$address_array = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($value):$value), '');
+				foreach((array)$address_array as $addressObject) {
+					if ($addressObject->host == '.SYNTAX-ERROR.') continue;
+					$address = imap_rfc822_write_address($addressObject->mailbox,$addressObject->host,$addressObject->personal);
+					//$address = mail_bo::htmlentities($address, $this->displayCharset);
+					$content[strtoupper($destination)][]=$address;
+					$destinationRows++;
+				}
+			}
+		}
+		if ($content)
+		{
+		}
+		else
+		{
+			$content['is_html'] = ($this->sessionData['mimeType'] == 'html'?true:'');
+			$content['is_plain'] = ($this->sessionData['mimeType'] == 'html'?'':true);
+			//error_log(__METHOD__.__LINE__.array2string(array($sel_options['SENDER'],$selectedSender)));
+			$content['SENDER'] = ($selectedSender?(array)$selectedSender:'');
+			//error_log(__METHOD__.__LINE__.$sessionData['body']);
+			$content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text'] = $sessionData['body'];
+		}
+		$etpl = new etemplate_new('mail.compose');
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
+	}
+
+	function testhtmlarea($content=null)
+	{
+		error_log(__METHOD__.__LINE__.array2string($content));
+		if ($content)
+		{
+			$this->sessionData['mimeType'] = 'plain';
+			$content['is_html'] = ($this->sessionData['mimeType'] == 'html'?true:'');
+			$content['is_plain'] = ($this->sessionData['mimeType'] == 'html'?'':true);
+		}
+		else
+		{
+			$sessionData['body'] = 'bla bla bla';
+			$content['is_html'] = ($this->sessionData['mimeType'] == 'html'?true:'');
+			$content['is_plain'] = ($this->sessionData['mimeType'] == 'html'?'':true);
+			//error_log(__METHOD__.__LINE__.array2string(array($sel_options['SENDER'],$selectedSender)));
+			$content['SENDER'] = ($selectedSender?(array)$selectedSender:'');
+			//error_log(__METHOD__.__LINE__.$sessionData['body']);
+			$content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text'] = $sessionData['body'];
+		}
+		$etpl = new etemplate_new('mail.testhtmlarea');
+		$etpl->exec('mail.mail_compose.testhtmlarea',$content,$sel_options,$readonlys,$preserv,2);
 	}
 
 	function composeFromDraft() {
@@ -2492,6 +2499,34 @@ $content['mailtext'] = 'garbage';
 	}
 
 	function ajax_searchIdentities() {
+		$_searchString = trim($_REQUEST['query']);
+		$allIdentities = $this->preferences->getIdentity();
+		foreach($allIdentities as $key => $singleIdentity)
+		{
+			/*
+			if($singleIdentity->default === true)
+			{
+				$selectedAddresses[$singleIdentity->emailAddress] = $singleIdentity->emailAddress;
+			}
+			*/
+			$idString = mail_bo::generateIdentityString($singleIdentity);
+			$shortIDString = mail_bo::generateIdentityString($singleIdentity,false);
+			if (empty($_searchString) || ($_searchString && stripos($idString,$_searchString)!==false))
+			{
+				//error_log(__METHOD__.__LINE__.$idString.'<->'.$shortIDString);
+				$predefinedAddresses[$idString] = array(
+					'id'=>$idString,
+					'label' => $idString,
+					// Add just name for nice display, with title for hover
+					'name' => $shortIDString,
+					'title' => $idString
+				 );
+			}
+		}
+		if (is_array($predefinedAddresses)) asort($predefinedAddresses);
+		header('Content-Type: application/json; charset=utf-8');
+		echo json_encode($predefinedAddresses);
+		common::egw_exit();
 	}
 
 	function ajax_searchFolder() {
@@ -2536,7 +2571,7 @@ $content['mailtext'] = 'garbage';
 	}
 
 	public static function ajax_searchAddress() {
-		error_log(__METHOD__. "request from seachAddress" . $_REQUEST['query']);
+		//error_log(__METHOD__. "request from seachAddress " . $_REQUEST['query']);
 		$_searchString = trim($_REQUEST['query']);
 		if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
 			//error_log(__METHOD__.__LINE__.array2string($_searchString));

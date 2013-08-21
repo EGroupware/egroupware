@@ -213,7 +213,7 @@ class mail_bo
 		else
 		{
 			// make sure the prefs are up to date for the profile to load
-			$loadfailed = false;
+			$loadfailed = $alreadytriedreloading = false;
 			self::$instances[$_profileID]->mailPreferences	= self::$instances[$_profileID]->bopreferences->getPreferences(true,$_profileID);
 			//error_log(__METHOD__.__LINE__." ReRead the Prefs for ProfileID ".$_profileID.' called from:'.function_backtrace());
 			if (self::$instances[$_profileID]->mailPreferences)
@@ -228,13 +228,29 @@ class mail_bo
 			}
 			else
 			{
-				$loadfailed=true;
+				// first try reloading without restore
+				if ($_restoreSession==true) self::$instances[$_profileID] = new mail_bo('utf-8',false,$_profileID);
+				if (!self::$instances[$_profileID]->mailPreferences) {
+					if (self::$debug) error_log(__METHOD__.__LINE__.' something wrong:'.array2string($_restoreSession).' mailPreferences could not be loaded!');
+					$loadfailed=$alreadytriedreloading=true;
+				}
+			}
+			if ($_profileID>0 && empty(self::$instances[$_profileID]->icServer->host)&&$alreadytriedreloading==false)
+			{
+				if ($_restoreSession==true) self::$instances[$_profileID] = new mail_bo('utf-8',false,$_profileID);
+				if (empty(self::$instances[$_profileID]->icServer->host))
+				{
+					if (self::$debug) error_log(__METHOD__.__LINE__.' something critically wrong for '.$_profileID.' RestoreSession:'.array2string($_restoreSession).'->'.array2string(self::$instances[$_profileID]->icServer).' No Server host set!');
+					$loadfailed=$alreadytriedreloading=true;
+				}
 			}
 			if ($loadfailed)
 			{
-				error_log(__METHOD__.__LINE__." ReRead of the Prefs for ProfileID ".$_profileID.' failed for icServer; trigger new instance. called from:'.function_backtrace());
-				// restore session seems to provide an incomplete session
-				self::$instances[$_profileID] = new mail_bo('utf-8',false,$_profileID);
+				$newprofileID = ($alreadytriedreloading ? emailadmin_bo::getUserDefaultProfileID():$_profileID);
+				if ($alreadytriedreloading) error_log(__METHOD__.__LINE__." Loading the Profile for ProfileID ".$_profileID.' failed for icServer; trigger new instance for Default-Profile '.$newprofileID.'. called from:'.function_backtrace());
+				// try loading the default profile for the user
+				self::$instances[$newprofileID] = new mail_bo('utf-8',false,$newprofileID);
+				$_profileID = $newprofileID;
 			}
 		}
 		self::$instances[$_profileID]->profileID = $_profileID;
@@ -571,7 +587,7 @@ class mail_bo
 	 */
 	function closeConnection() {
 		//if ($icServer->_connected) error_log(__METHOD__.__LINE__.' disconnect from Server');
-		if ($icServer->_connected) $this->icServer->disconnect();
+		if ($this->icServer->_connected) $this->icServer->disconnect();
 	}
 
 	/**
@@ -1588,8 +1604,18 @@ class mail_bo
 			{
 				$rfcAddr = imap_rfc822_parse_adrlist($_string,'');
 				if (!isset(self::$idna2)) self::$idna2 = new egw_idna;
+				$stringA = array();
 				//$_string = str_replace($rfcAddr[0]->host,self::$idna2->decode($rfcAddr[0]->host),$_string);
-				$_string = imap_rfc822_write_address($rfcAddr[0]->mailbox,self::$idna2->decode($rfcAddr[0]->host),$rfcAddr[0]->personal);
+				foreach ((array)$rfcAddr as $_rfcAddr)
+				{
+					if ($_rfcAddr->host=='.SYNTAX-ERROR.')
+					{
+						$stringA = array();
+						break; // skip idna conversion if we encounter an error here
+					}
+					$stringA[] = imap_rfc822_write_address($_rfcAddr->mailbox,self::$idna2->decode($_rfcAddr->host),$_rfcAddr->personal);
+				}
+				if (!empty($stringA)) $_string = implode(',',$stringA);
 			}
 			if ($_tryIDNConversion==='FORCE')
 			{
@@ -3956,6 +3982,11 @@ class mail_bo
 			error_log(__METHOD__.__LINE__.array2string($retValue->message));
 			$retValue = null;
 		}
+		// if SUBJECT is an array, use thelast one, as we assume something with the unfolding for the subject did not work
+		if (is_array($retValue['SUBJECT']))
+		{
+			$retValue['SUBJECT'] = $retValue['SUBJECT'][count($retValue['SUBJECT'])-1];
+		}
 		return ($decode ? self::decode_header($retValue,true):$retValue);
 	}
 
@@ -4271,7 +4302,8 @@ class mail_bo
 			//error_log(__METHOD__.__LINE__.array2string(substr($structure->parameters['NAME'],0,strlen('data:'))));
 			if (!is_array($structure->parameters['NAME']) && substr($structure->parameters['NAME'],0,strlen('data:'))==='data:') {
 				$namecounter++;
-				return lang("unknown").$namecounter.($structure->subType ? ".".$structure->subType : "");
+				$ext = mime_magic::mime2ext($structure->Type.'/'.$structure->subType);
+				return lang("unknown").$namecounter.($ext?$ext:($structure->subType ? ".".$structure->subType : ""));
 			}
 			if (is_array($structure->parameters['NAME'])) $structure->parameters['NAME'] = implode(' ',$structure->parameters['NAME']);
 			return rawurldecode(self::decode_header($structure->parameters['NAME']));
@@ -4321,7 +4353,8 @@ class mail_bo
 				}
 			}
 			$namecounter++;
-			return lang("unknown").$namecounter.($structure->subType ? ".".$structure->subType : "");
+			$ext = mime_magic::mime2ext($structure->Type.'/'.$structure->subType);
+			return lang("unknown").$namecounter.($ext?$ext:($structure->subType ? ".".$structure->subType : ""));
 		}
 	}
 
@@ -4420,7 +4453,8 @@ class mail_bo
 		{
 			$attachment = translation::convert($attachment,$structure->parameters['CHARSET'],self::$displayCharset);
 		}
-
+		$ext = mime_magic::mime2ext($structure->type .'/'. $structure->subType);
+		if ($ext && stripos($filename,'.')===false && stripos($filename,$ext)===false) $filename = trim($filename).'.'.$ext;
 		$attachmentData = array(
 			'type'		=> $structure->type .'/'. $structure->subType,
 			'filename'	=> $filename,
@@ -4432,6 +4466,8 @@ class mail_bo
 		if ( $filename == 'winmail.dat' && $_winmail_nr > 0 &&
 			( $wmattach = $this->decode_winmail( $_uid, $_partID, $_winmail_nr ) ) )
 		{
+			$ext = mime_magic::mime2ext($wmattach['type']);
+			if ($ext && stripos($wmattach['name'],'.')===false && stripos($wmattach['name'],$ext)===false) $wmattach['name'] = trim($wmattach['name']).'.'.$ext;
 			$attachmentData = array(
 				'type'       => $wmattach['type'],
 				'filename'   => $wmattach['name'],
@@ -4670,13 +4706,14 @@ class mail_bo
 	/**
 	 * createHeaderInfoSection - creates a textual headersection from headerobject
 	 * @param array header headerarray may contain SUBJECT,FROM,SENDER,TO,CC,BCC,DATE,PRIORITY,IMPORTANCE
-	 * @param string headline Text tom use for headline
+	 * @param string headline Text tom use for headline, if SUPPRESS, supress headline and footerline
 	 * @param bool createHTML do it with HTML breaks
 	 * @return string a preformatted string with the information of the header worked into it
 	 */
 	static function createHeaderInfoSection($header,$headline='', $createHTML = false)
 	{
 		$headdata = null;
+		//error_log(__METHOD__.__LINE__.array2string($header).function_backtrace());
 		if ($header['SUBJECT']) $headdata = lang('subject').': '.$header['SUBJECT'].($createHTML?"<br />":"\n");
 		if ($header['FROM']) $headdata .= lang('from').': '.self::convertAddressArrayToString($header['FROM'], $createHTML).($createHTML?"<br />":"\n");
 		if ($header['SENDER']) $headdata .= lang('sender').': '.self::convertAddressArrayToString($header['SENDER'], $createHTML).($createHTML?"<br />":"\n");
@@ -4689,13 +4726,13 @@ class mail_bo
 		//if ($mailcontent['headers']['ORGANIZATION']) $headdata .= lang('organization').': '.$mailcontent['headers']['ORGANIZATION']."\
 		if (!empty($headdata))
 		{
-			if (!empty($headline)) $headdata = "---------------------------- $headline ----------------------------".($createHTML?"<br />":"\n").$headdata;
-			if (empty($headline)) $headdata = "--------------------------------------------------------".($createHTML?"<br />":"\n").$headdata;
-			$headdata .= "--------------------------------------------------------".($createHTML?"<br />":"\n");
+			if (!empty($headline) && $headline != 'SUPPRESS') $headdata = "---------------------------- $headline ----------------------------".($createHTML?"<br />":"\n").$headdata;
+			if (empty($headline)) $headdata = ($headline != 'SUPPRESS'?"--------------------------------------------------------".($createHTML?"<br />":"\n"):'').$headdata;
+			$headdata .= ($headline != 'SUPPRESS'?"--------------------------------------------------------".($createHTML?"<br />":"\n"):'');
 		}
 		else
 		{
-			$headdata = "--------------------------------------------------------".($createHTML?"<br />":"\n");
+			$headdata = ($headline != 'SUPPRESS'?"--------------------------------------------------------".($createHTML?"<br />":"\n"):'');
 		}
 		return $headdata;
 	}
@@ -4751,6 +4788,26 @@ class mail_bo
 			if (is_string($rfcAddressArray)) return ($createHTML ? mail_bo::htmlspecialchars($rfcAddressArray) : $rfcAddressArray);
 		}
 		return $returnAddr;
+	}
+
+	/**
+	 * Merges a given content with contact data
+	 *
+	 * @param string $content
+	 * @param array $ids array with contact id(s)
+	 * @param string &$err error-message on error
+	 * @return string/boolean merged content or false on error
+	 */
+	function merge($content,$ids,$mimetype='')
+	{
+		$contacts = new addressbook_bo();
+		$mergeobj = new addressbook_merge();
+
+		if (empty($mimetype)) $mimetype = (strlen(strip_tags($content)) == strlen($content) ?'text/plain':'text/html');
+		$rv = $mergeobj->merge_string($content,$ids,$err,$mimetype, array(), self::$displayCharset);
+		if (empty($rv) && !empty($content) && !empty($err)) $rv = $content;
+		if (!empty($err) && !empty($content) && !empty($ids)) error_log(__METHOD__.__LINE__.' Merge failed for Ids:'.array2string($ids).' ContentType:'.$mimetype.' Content:'.$content.' Reason:'.array2string($err));
+		return $rv;
 	}
 
 	/**
