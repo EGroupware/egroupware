@@ -54,7 +54,7 @@ class timesheet_ui extends timesheet_bo
 
 	function edit($content = null,$view = false)
 	{
-		$etpl = new etemplate('timesheet.edit');
+		$etpl = new etemplate_new('timesheet.edit');
 		if (!is_array($content))
 		{
 			if ($_GET['msg']) $msg = strip_tags($_GET['msg']);
@@ -659,10 +659,6 @@ class timesheet_ui extends timesheet_bo
 					$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.common::show_date($query['enddate']+12*60*60,$df,false);
 				}
 			}
-			if ($query['filter'] == 'custom')	// show the custom dates
-			{
-				$GLOBALS['egw']->js->set_onload("jQuery('.custom_hide').css('visibility', 'visible');");
-			}
 		}
 		$total = parent::get_rows($query,$rows,$readonlys);
 
@@ -811,7 +807,7 @@ class timesheet_ui extends timesheet_bo
 	 */
 	function index($content = null,$msg='')
 	{
-		$etpl = new etemplate('timesheet.index');
+		$etpl = new etemplate_new('timesheet.index');
 
 		if ($_GET['msg']) $msg = $_GET['msg'];
 		if ($content['nm']['rows']['delete'])
@@ -873,7 +869,7 @@ class timesheet_ui extends timesheet_bo
 				'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
 				'header_left'    => 'timesheet.index.dates',
 				'header_right'   => 'timesheet.index.add',
-				'filter_onchange' => "jQuery('.custom_hide').css('visibility', this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom' && this.form) this.form.submit();",
+				'filter_onchange' => "app.timesheet.timesheet_filter_change();",
 				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 				'row_id'         => 'ts_id',
 				//'actions'        => $this->get_actions(),
@@ -1033,7 +1029,7 @@ class timesheet_ui extends timesheet_bo
 	 *
 	 * @param string/int $action 'status_to',set status to timeshhets
 	 * @param array $checked timesheet id's to use if !$use_all
-	 * @param boolean $use_all if true use all timesheets of the current selection (in the session)
+	 * @param boolean $use_all if true use all$key timesheets of the current selection (in the session)
 	 * @param int &$success number of succeded actions
 	 * @param int &$failed number of failed actions (not enought permissions)
 	 * @param string &$action_msg translated verb for the actions, to be used in a message like %1 timesheets 'deleted'
@@ -1224,7 +1220,7 @@ class timesheet_ui extends timesheet_bo
 		$content['msg'] = $msg;
 		$preserv = $content;
 		$sel_options['parent'] = $this->status_labels;
-		$etpl = new etemplate('timesheet.editstatus');
+		$etpl = new etemplate_new('timesheet.editstatus');
 		$etpl->exec('timesheet.timesheet_ui.editstatus',$content,$sel_options,$readonlys,$preserv);
 	}
 

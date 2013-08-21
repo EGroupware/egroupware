@@ -8,9 +8,6 @@
 			<description value="End"/>
 			<date statustext="Leave it empty for a full week" id="enddate"/>
 		</hbox>
-		<styles>
-			.custom_hide { visibility: hidden; }
-		</styles>
 	</template>
 	<template id="timesheet.index.add" template="" lang="" group="0" version="1.7.001">
 		<buttononly label="Add" id="add" onclick="egw.open('timesheet');"/>
