@@ -739,7 +739,7 @@ var et2_widget = Class.extend(
 				}
 				catch (e)
 				{
-					egw.debug("error", "There was an error with a widget:\nError:%s\nProblem widget:%o",e.message,this._children[i]);
+					egw.debug("error", "There was an error with a widget:\nError:%o\nProblem widget:%o",e.message,this._children[i],e.stack);
 				}
 			}
 		}
