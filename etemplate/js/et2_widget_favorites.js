@@ -307,6 +307,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			var sidebox_clone = widget.menu.clone();
 			sidebox_clone
 				.appendTo(this.sidebox_target)
+				.removeAttr('style')
 				.menu()
 				.removeClass("ui-widget")
 				.show()
