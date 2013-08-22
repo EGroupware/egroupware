@@ -56,13 +56,12 @@ app.timesheet = AppJS.extend(
 	et2_ready: function(et2)
 	{
 		// call parent
-
 		this._super.apply(this, arguments);
+
 		if (typeof et2.templates['timesheet.index'] != "undefined")
 		{
 			this.timesheet_filter_change();
 		}
-
 	},
 
 	/**
@@ -70,14 +69,12 @@ app.timesheet = AppJS.extend(
 	 */
 	timesheet_filter_change: function()
 	{
-		if (etemplate2.getByApplication('timesheet')[0].widgetContainer.getWidgetById('filter').value === "custom")
+		var filter = this.et2.getWidgetById('filter');
+		var dates = this.et2.getWidgetById('timesheet.index.dates');
+
+		if (filter && dates)
 		{
-			etemplate2.getByApplication('timesheet')[0].widgetContainer.getWidgetById('timesheet.index.dates').set_disabled(false);
-		}
-		else
-		{
-			etemplate2.getByApplication('timesheet')[0].widgetContainer.getWidgetById('timesheet.index.dates').set_disabled(true);
+			dates.set_disabled(filter.value !== "custom");
 		}
 	},
-
 });
