@@ -716,6 +716,42 @@ class addressbook_ldap
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
 		//error_log(__METHOD__."(".array2string($criteria).", ".array2string($only_keys).", '$order_by', ".array2string($extra_cols).", '$wildcard', '$empty', '$op', ".array2string($start).", ".array2string($filter).")");
+
+		if (is_array($filter['owner']))
+		{
+			if (count($filter['owner']) == 1)
+			{
+				$filter['owner'] = array_shift($filter['owner']);
+			}
+			else
+			{
+				// multiple addressbooks happens currently only via CardDAV or eSync
+				// currently we query all contacts and remove not matching ones (not the most efficient way to do it)
+				$owner_filter = $filter['owner'];
+				unset($filter['owner']);
+			}
+		}
+		// search filter for modified date (eg. for CardDAV sync-report)
+		$datefilter = '';
+		static $egw2ldap = array(
+			'created' => 'createtimestamp',
+			'modified' => 'modifytimestamp',
+		);
+		foreach($filter as $key => $value)
+		{
+			if (is_int($key) && preg_match('/^(contact_)?(modified|created)([<=>]+)([0-9]+)$/', $value, $matches))
+			{
+				$append = '';
+				if ($matches[3] == '>')
+				{
+					$matches['3'] = '<=';
+					$datefilter .= '(!';
+					$append = ')';
+				}
+				$datefilter .= '('.$egw2ldap[$matches[2]].$matches[3].self::_ts2ldap($matches[4]).')'.$append;
+			}
+		}
+
 		if((int)$filter['owner'])
 		{
 			if (!($accountName = $GLOBALS['egw']->accounts->id2name($filter['owner']))) return false;
@@ -790,7 +826,8 @@ class addressbook_ldap
 			}
 		}
 		$colFilter = $this->_colFilter($filter);
-		$ldapFilter = "(&$objectFilter$searchFilter$colFilter)";
+		$ldapFilter = "(&$objectFilter$searchFilter$colFilter$datefilter)";
+		//error_log(__METHOD__."(".array2string($criteria).", ".array2string($only_keys).", '$order_by', ".array2string($extra_cols).", '$wildcard', '$empty', '$op', ".array2string($start).", ".array2string($filter).") --> ldapFilter='$ldapFilter'");
 		if (!($rows = $this->_searchLDAP($searchDN, $ldapFilter, $this->all_attributes, $addressbookType)))
 		{
 			return $rows;
@@ -891,6 +928,13 @@ class addressbook_ldap
 					}
 					break;
 
+				case 'carddav_name':
+					if (!is_array($value)) $value = array($value);
+					foreach($value as &$v)
+					{
+						$v = basename($v, '.vcf');
+					}
+					// fall through
 				case 'id':
 				case 'contact_id':
 					$filters .= $this->ids_filter($value);
@@ -1046,10 +1090,21 @@ class addressbook_ldap
 	 * @param string $date YYYYmmddHHiiss
 	 * @return int
 	 */
-	function _ldap2ts($date)
+	static function _ldap2ts($date)
 	{
 		return gmmktime(substr($date,8,2),substr($date,10,2),substr($date,12,2),
 			substr($date,4,2),substr($date,6,2),substr($date,0,4));
+	}
+
+	/**
+	 * Create LDAP date-value from timestamp
+	 *
+	 * @param integer $ts
+	 * @return string
+	 */
+	static function _ts2ldap($ts)
+	{
+		return gmdate('YmdHis', $ts).'.0Z';
 	}
 
 	/**
