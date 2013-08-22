@@ -1079,15 +1079,17 @@ class addressbook_ldap
 			$contact['n_prefix'] = trim($parts[0]);
 			$contact['n_suffix'] = trim($parts[1]);
 		}
+		// iOS addressbook either use "givenname surname" or "surname givenname" depending on contact preference display-order
+		// in full name, so we need to check for both when trying to parse prefix, middle name and suffix form full name
+		elseif (preg_match($preg='/^(.*) *'.preg_quote($data['givenname'][0], '/').' *(.*) *'.preg_quote($data['sn'][0], '/').' *(.*)$/', $data[$cn][0], $matches) ||
+			preg_match($preg='/^(.*) *'.preg_quote($data['sn'][0], '/').'[, ]*(.*) *'.preg_quote($data['givenname'][0], '/').' *(.*)$/', $data[$cn][0], $matches))
+		{
+			list(,$contact['n_prefix'], $contact['n_middle'], $contact['n_suffix']) = $matches;
+			//error_log(__METHOD__."() preg_match('$preg', '{$data[$cn][0]}') = ".array2string($matches));
+		}
 		else
 		{
-			$parts = preg_split('/'. preg_quote($data['givenname'][0],'/') .'.*'. preg_quote($data['sn'][0],'/') .'/', $data['cn'][0]);
-			$contact['n_prefix'] = trim($parts[0]);
-			$contact['n_suffix'] = trim($parts[1]);
-			if(preg_match('/'. preg_quote($data['givenname'][0],'/') .' (.*) '. preg_quote($data['sn'][0],'/') .'/',$data['cn'][0], $matches))
-			{
-				$contact['n_middle'] = $matches[1];
-			}
+			$contact['n_prefix'] = $contact['n_suffix'] = $contact['n_middle'] = '';
 		}
 	}
 
