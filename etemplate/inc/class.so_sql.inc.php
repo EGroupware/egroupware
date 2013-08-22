@@ -15,8 +15,8 @@
  *
  * the class can be used in following ways:
  * 1) by calling the constructor with an app and table-name or
- * 2) by setting the following documented class-vars in a class derifed from this one
- * Of cause can you derife the class and call the constructor with params.
+ * 2) by setting the following documented class-vars in a class derived from this one
+ * Of cause you can derive from the class and call the constructor with params.
  *
  * @package etemplate
  * @subpackage api
@@ -149,6 +149,15 @@ class so_sql
 	var $columns_to_search;
 
 	/**
+	 * Table has boolean fields, which need automatic conversation, got set automatic by call to setup_table
+	 *
+	 * Set it to false, if you dont want automatic conversation
+	 *
+	 * @var boolean
+	 */
+	protected $has_bools = false;
+
+	/**
 	 * Should search return an iterator (true) or an array (false = default)
 	 *
 	 * @var boolean
@@ -252,7 +261,7 @@ class so_sql
 		$this->table_def = $this->db->get_table_definitions($app,$table);
 		if (!$this->table_def || !is_array($this->table_def['fd']))
 		{
-			echo "<p>so_sql::setup_table('$app','$table'): No table definitions found !!!<br>\n".function_backtrace()."</p>\n";
+			throw new egw_exception_wrong_parameter(__METHOD__."('$app','$table'): No table definition for '$table' found !!!");
 		}
 		$this->db_key_cols = $this->db_data_cols = $this->db_cols = array();
 		$this->autoinc_id = '';
@@ -278,6 +287,8 @@ class so_sql
 			{
 				$this->autoinc_id = $col;
 			}
+			if ($def['type'] == 'bool') $this->has_bools = true;
+
 			foreach($this->table_def['uc'] as $k => $uni_index)
 			{
 				if (is_array($uni_index) && in_array($name,$uni_index))
@@ -383,6 +394,25 @@ class so_sql
 					{
 						$data[$name] = egw_time::server2user($data[$name],$this->timestamp_type);
 					}
+				}
+			}
+		}
+		// automatic convert booleans (eg. PostgreSQL stores 't' or 'f', which both evaluate to true!)
+		if ($this->has_bools !== false)
+		{
+			if (!isset($this->table_def))
+			{
+				$this->table_def = $this->db->get_table_definitions($this->app, $this->table);
+				if (!$this->table_def || !is_array($this->table_def['fd']))
+				{
+					throw new egw_exception_wrong_parameter(__METHOD__."(): No table definition for '$this->table' found !!!");
+				}
+			}
+			foreach($this->table_def['fd'] as $col => $def)
+			{
+				if ($def['type'] == 'bool' && isset($data[$col]))
+				{
+					$data[$col] = $this->db->from_bool($data[$col]);
 				}
 			}
 		}
@@ -936,8 +966,11 @@ class so_sql
 		}
 		if ($only_keys === true)
 		{
-			$colums = implode(',',array_keys($this->db_key_cols));
-			if (!empty($colums)) $colums = ' DISTINCT '.$colums;
+			$colums = array_keys($this->db_key_cols);
+			foreach($colums as &$column)
+			{
+				$column = $this->table_name . '.' . $column;
+			}
 		}
 		elseif (is_array($only_keys))
 		{
@@ -946,8 +979,6 @@ class so_sql
 			{
 				$colums[] = ($db_col = array_search($col,$this->db_cols)) ? $db_col : $col;
 			}
-			$colums = implode(',',$colums);
-			if (!empty($colums)) $colums = ' DISTINCT '.$colums;
 		}
 		elseif (!$only_keys)
 		{
@@ -957,19 +988,45 @@ class so_sql
 		{
 			$colums = $only_keys;
 		}
-		if ($extra_cols) $colums .= ($colums ? ',' : '').(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols);
+		if ($extra_cols)
+		{
+			if (!is_array($colums))
+			{
+				$colums .= ','.(is_array($extra_cols) ? implode(',', $extra_cols) : $extra_cols);
+			}
+			else
+			{
+				$colums = array_merge($colums, is_array($extra_cols) ? $extra_cols : explode(',', $extra_cols));
+			}
+		}
 
 		// add table-name to otherwise ambiguous id over which we join (incl. "AS id" to return it with the right name)
-		if ($join && $this->autoinc_id && strpos($colums,$this->autoinc_id) !== false)
+		if ($join && $this->autoinc_id)
 		{
-			$colums = preg_replace('/(?<! AS)([ ,]+)'.preg_quote($this->autoinc_id).'([ ,]+)/','\\1'.$this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id.'\\2',$colums);
+			if (is_array($colums) && ($key = array_search($this->autoinc_id, $colums)) !== false)
+			{
+				$colums[$key] = $this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id;
+			}
+			elseif (!is_array($colums) && strpos($colums,$this->autoinc_id) !== false)
+			{
+				$colums = preg_replace('/(?<! AS)([ ,]+)'.preg_quote($this->autoinc_id).'([ ,]+)/','\\1'.$this->table_name.'.'.$this->autoinc_id.' AS '.$this->autoinc_id.'\\2',$colums);
+			}
 		}
 		$num_rows = 0;	// as spec. in max_matches in the user-prefs
 		if (is_array($start)) list($start,$num_rows) = $start;
 
-		if ($order_by && stripos($order_by,'ORDER BY')===false && stripos($order_by,'GROUP BY')===false && stripos($order_by,'HAVING')===false)
+		// fix GROUP BY clause to contain all non-aggregate selected columns
+		if ($order_by && stripos($order_by,'GROUP BY') !== false && $this->db->Type != 'mysql')
+		{
+			$order_by = $this->fix_group_by_columns($order_by, $colums);
+		}
+		elseif ($order_by && stripos($order_by,'ORDER BY')===false && stripos($order_by,'GROUP BY')===false && stripos($order_by,'HAVING')===false)
 		{
 			$order_by = 'ORDER BY '.$order_by;
+		}
+		if (is_array($colums))
+		{
+			$colums = implode(',', $colums);
 		}
 		static $union = array();
 		static $union_cols = array();
@@ -1003,6 +1060,7 @@ class so_sql
 				}
 			}
 			$rs = $this->db->union($union,__LINE__,__FILE__,$order_by,$start,$num_rows);
+			if ($this->debug) error_log(__METHOD__."() ".$this->db->Query_ID->sql);
 
 			$cols = $union_cols;
 			$union = $union_cols = array();
@@ -1026,6 +1084,7 @@ class so_sql
 			}
 			$rs = $this->db->select($this->table_name,$mysql_calc_rows.$colums,$query,__LINE__,__FILE__,
 				$start,$order_by,$this->app,$num_rows,$join);
+			if ($this->debug) error_log(__METHOD__."() ".$this->db->Query_ID->sql);
 			$cols = $this->_get_columns($only_keys,$extra_cols);
 		}
 		if ((int) $this->debug >= 4) echo "<p>sql='{$this->db->Query_ID->sql}'</p>\n";
@@ -1052,6 +1111,66 @@ class so_sql
 			$n++;
 		}
 		return $n ? $arr : null;
+	}
+
+	/**
+	 * Fix GROUP BY clause to contain all non-aggregate selected columns
+	 *
+	 * No need to call for MySQL because MySQL does NOT give an error in above case.
+	 * (Of cause developer has to make sure to group by enough columns, eg. a unique key, for selected columns to be defined.)
+	 *
+	 * MySQL also does not allow to use [tablename.]* in GROUP BY, which PostgreSQL allows!
+	 * (To use this for MySQL too, we would have to replace * with all columns of a table.)
+	 *
+	 * @param string $group_by [GROUP BY ...[HAVING ...]][ORDER BY ...]
+	 * @param string|array $columns better provide an array as exploding by comma can lead to error with functions containing one
+	 * @return string
+	 */
+	public function fix_group_by_columns($group_by, &$columns)
+	{
+		if (!preg_match('/(GROUP BY .*)(HAVING.*|ORDER BY.*)?$/iU', $group_by, $matches))
+		{
+			return $group_by;	// nothing to do
+		}
+		$changes = 0;
+		$group_by_cols = preg_split('/, */', trim(substr($matches[1], 9)));
+
+		if (!is_array($columns))
+		{
+			$columns = preg_split('/, */', $columns);
+		}
+		foreach($columns as $n => $col)
+		{
+			if ($col == '*')
+			{
+				// MySQL does NOT allow to GROUP BY table.*
+				$col = $columns[$n] = $this->table_name.'.'.($this->db->Type == 'mysql' ? $this->autoinc_id : '*');
+				++$changes;
+			}
+			// only check columns and non-aggregate functions
+			if (strpos($col, '(') === false || !preg_match('/(COUNT|MIN|MAX|AVG|SUM|BIT_[A-Z]+|STD[A-Z_]*|VAR[A-Z_]*)\(/i', $col))
+			{
+				if (($pos = stripos($col, 'DISTINCT ')) !== false)
+				{
+					$col = substr($col, $pos+9);
+				}
+				$alias = $col;
+				if (stripos($col, ' AS ')) list($col, $alias) = preg_split('/ +AS +/i', $col);
+				if (!in_array($col, $group_by_cols) && !in_array($alias, $group_by_cols))
+				{
+					$group_by_cols[] = $alias;
+					//error_log(__METHOD__."() col=$col, alias=$alias --> group_by_cols=".array2string($group_by_cols));
+					++$changes;
+				}
+			}
+		}
+		$ret = $group_by;
+		if ($changes)
+		{
+			$ret = str_replace($matches[1], 'GROUP BY '.implode(',', $group_by_cols).' ',  $group_by);
+			//error_log(__METHOD__."('$group_by', ".array2string($columns).") group_by_cols=".array2string($group_by_cols)." changed to $ret");
+		}
+		return $ret;
 	}
 
 	/**
