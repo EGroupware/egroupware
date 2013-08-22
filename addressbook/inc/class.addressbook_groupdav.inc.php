@@ -188,6 +188,7 @@ class addressbook_groupdav extends groupdav_handler
 	function &propfind_callback($path,array $filter,$start=false)
 	{
 		$starttime = microtime(true);
+		$filter_in = $filter;
 
 		if (($address_data = $filter['address_data']))
 		{
@@ -242,51 +243,70 @@ class addressbook_groupdav extends groupdav_handler
 				$this->sync_collection_token = $contact['modified'];
 			}
 		}
-		// add groups after contacts, but only if enabled and NOT for '/addressbook/' (!isset($filter['owner'])
-		if (in_array('D',$this->home_set_pref) && (!$start || count($contacts) < $start[1]))
+		if (!$start || count($contacts) < $start[1])
 		{
-			$where = array(
-				'list_owner' => isset($filter['owner'])?$filter['owner']:array_keys($this->bo->grants)
-			);
-			// add sync-token to support sync-collection report
-			if ($sync_collection_report)
+			// add accounts after contacts, if enabled and stored in different repository
+			if ($this->bo->so_accounts && is_array($filter['owner']) && in_array('0', $filter['owner']))
 			{
-				list(,$sync_token) = explode('>', $filter[0]);
-				$where[] = 'list_modified>FROM_UNIXTIME('.(int)$sync_token.')';
-			}
-			if (isset($filter[self::$path_attr]))	// multiget report?
-			{
-				$where['list_'.self::$path_attr] = $filter[self::$path_attr];
-			}
-			//error_log(__METHOD__."() filter=".array2string($filter).", do_groups=".in_array('D',$this->home_set_pref).", where=".array2string($where));
-			if (($lists = $this->bo->read_lists($where,'contact_uid',$where['list_owner'])))	// limit to contacts in same AB!
-			{
-				foreach($lists as $list)
+				$accounts_filter = $filter_in;
+				$accounts_filter['owner'] = '0';
+				if ($sync_collection_report) $token_was = $this->sync_collection_token;
+				groupdav_handler::$path_attr = 'id';
+				groupdav_handler::$path_extension = '.vcf';
+				$files = array_merge($files, $this->propfind_callback($path, $accounts_filter));
+				groupdav_handler::$path_attr = 'carddav_name';
+				groupdav_handler::$path_extension = '';
+				if ($sync_collection_report && $token_was > $this->sync_collection_token)
 				{
-					$list['carddav_name'] = $list['list_carddav_name'];
-					$etag = $list['list_id'].':'.$list['list_etag'];
-					// for all-in-one addressbook, add selected ABs to etag
-					if (isset($filter['owner']) && is_array($filter['owner']))
+					$this->sync_collection_token = $token_was;
+				}
+			}
+			// add groups after contacts, but only if enabled and NOT for '/addressbook/' (!isset($filter['owner'])
+			if (in_array('D',$this->home_set_pref) && (string)$filter['owner'] !== '0')
+			{
+				$where = array(
+					'list_owner' => isset($filter['owner'])?$filter['owner']:array_keys($this->bo->grants)
+				);
+				// add sync-token to support sync-collection report
+				if ($sync_collection_report)
+				{
+					list(,$sync_token) = explode('>', $filter[0]);
+					$where[] = 'list_modified>FROM_UNIXTIME('.(int)$sync_token.')';
+				}
+				if (isset($filter[self::$path_attr]))	// multiget report?
+				{
+					$where['list_'.self::$path_attr] = $filter[self::$path_attr];
+				}
+				//error_log(__METHOD__."() filter=".array2string($filter).", do_groups=".in_array('D',$this->home_set_pref).", where=".array2string($where));
+				if (($lists = $this->bo->read_lists($where,'contact_uid',$where['list_owner'])))	// limit to contacts in same AB!
+				{
+					foreach($lists as $list)
 					{
-						$etag .= ':'.implode('-',$filter['owner']);
-					}
-					$props = array(
-						'getcontenttype' => HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/vcard'),
-						'getlastmodified' => egw_time::to($list['list_modified'],'ts'),
-						'displayname' => $list['list_name'],
-						'getetag' => '"'.$etag.'"',
-					);
-					if ($address_data)
-					{
-						$content = $handler->getGroupVCard($list);
-						$props['getcontentlength'] = bytes($content);
-						$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$content,true);
-					}
-					$files[] = $this->add_resource($path, $list, $props);
+						$list['carddav_name'] = $list['list_carddav_name'];
+						$etag = $list['list_id'].':'.$list['list_etag'];
+						// for all-in-one addressbook, add selected ABs to etag
+						if (isset($filter['owner']) && is_array($filter['owner']))
+						{
+							$etag .= ':'.implode('-',$filter['owner']);
+						}
+						$props = array(
+							'getcontenttype' => HTTP_WebDAV_Server::mkprop('getcontenttype', 'text/vcard'),
+							'getlastmodified' => egw_time::to($list['list_modified'],'ts'),
+							'displayname' => $list['list_name'],
+							'getetag' => '"'.$etag.'"',
+						);
+						if ($address_data)
+						{
+							$content = $handler->getGroupVCard($list);
+							$props['getcontentlength'] = bytes($content);
+							$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CARDDAV,'address-data',$content,true);
+						}
+						$files[] = $this->add_resource($path, $list, $props);
 
-					if ($sync_collection_report && $this->sync_collection_token < ($ts=$GLOBALS['egw']->db->from_timestamp($list['list_modified'])))
-					{
-						$this->sync_collection_token = $ts;
+						if ($sync_collection_report && $this->sync_collection_token < ($ts=$GLOBALS['egw']->db->from_timestamp($list['list_modified'])))
+						{
+							$this->sync_collection_token = $ts;
+						}
 					}
 				}
 			}
@@ -737,15 +757,22 @@ class addressbook_groupdav extends groupdav_handler
 		if ($user && $user == $GLOBALS['egw_info']['user']['account_id'] && in_array('O',$this->home_set_pref))
 		{
 			$user = array_merge((array)$user,array_keys($this->get_shared(true)));	// true: ignore all-in-one pref
+
+			// include accounts ctag, if accounts stored different from contacts (eg.in LDAP or ADS)
+			if ($this->bo->so_accounts && in_array('0', $user))
+			{
+				$accounts_ctag = $this->bo->get_ctag('0');
+			}
 		}
 		$ctag = $this->bo->get_ctag($user);
+
 		// include lists-ctag, if enabled
 		if (in_array('D',$this->home_set_pref))
 		{
 			$lists_ctag = $this->bo->lists_ctag($user);
 		}
 		//error_log(__METHOD__."('$path', ".array2string($user_in).") --> user=".array2string($user)." --> ctag=$ctag=".date('Y-m-d H:i:s',$ctag).", lists_ctag=".($lists_ctag ? $lists_ctag.'='.date('Y-m-d H:i:s',$lists_ctag) : '').' returning '.max($ctag,$lists_ctag));
-		return $ctags[$path] = max($ctag,$lists_ctag);
+		return $ctags[$path] = max($ctag, $accounts_ctag, $lists_ctag);
 	}
 
 	/**
@@ -891,6 +918,12 @@ class addressbook_groupdav extends groupdav_handler
 			$non_deleted_tids = array_keys($non_deleted_tids);
 		}
 		$contact = $this->bo->read(array(self::$path_attr => $id, 'tid' => $non_deleted_tids));
+
+		// if contact not found and accounts stored NOT like contacts, try reading it without path-extension as id
+		if (is_null($contact) && $this->bo->so_accounts && ($c = $this->bo->read($test=basename($id, '.vcf'))))
+		{
+			$contact = $c;
+		}
 
 		// see if we have a distribution-list / group with that id
 		// bo->read_list(..., true) limits returned uid to same owner's addressbook, as iOS and OS X addressbooks
