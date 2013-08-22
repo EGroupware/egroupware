@@ -698,6 +698,20 @@ class calendar_uilist extends calendar_ui
 					}
 					$timesheet_bo->data = array();
 					$err = $timesheet_bo->save($timesheet);
+
+					//get the project manager linked to the calnedar entry
+					$calApp_links = egw_link::get_links('calendar', $event['id']);
+					foreach ($calApp_links as $l_app)
+					{
+						if ($l_app['app'] == 'projectmanager')
+						{
+							$prj_links = $l_app;
+							//Links timesheet to projectmanager
+							egw_link::link('timesheet', $timesheet_bo->data['ts_id'], 'projectmanager', $prj_links['id']);
+
+						}
+					}
+
 					if(!$err)
 					{
 						$success++;
