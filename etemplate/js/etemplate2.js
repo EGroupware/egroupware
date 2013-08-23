@@ -301,6 +301,24 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 
 };
 
+/**
+ * Check if template contains any dirty (unsaved) content
+ * 
+ * @returns {Boolean}
+ */
+etemplate2.prototype.isDirty = function()
+{
+	var dirty = false;
+	this.widgetContainer.iterateOver(function(_widget) {
+		if (_widget.isDirty && _widget.isDirty())
+		{
+			dirty = true;
+		}
+	});
+
+	return dirty;
+};
+
 etemplate2.prototype.submit = function(button)
 {
 	// Get the form values

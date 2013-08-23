@@ -145,6 +145,8 @@ var et2_htmlarea = et2_inputWidget.extend(
 		}
 	},
 	set_value: function(_value) {
+		this._oldValue = _value;
+
 		try {
 			//this.htmlNode.ckeditorGet().setData(_value);
 			var ckeditor = CKEDITOR.instances[this.dom_id];
