@@ -904,9 +904,6 @@ class timesheet_ui extends timesheet_bo
 			$sel_options['ts_project'] = $projects + array(lang('No project'));
 		}
 
-		// to be moved in a seperate file if rewrite is over
-		$GLOBALS['egw_info']['flags']['java_script'] .= $this->js();
-
 		// dont show [Export] button if app is not availible to the user or we are on php4
 		$readonlys['export'] = !$GLOBALS['egw_info']['user']['apps']['importexport'] || (int) phpversion() < 5;
 		return $etpl->exec(TIMESHEET_APP.'.timesheet_ui.index',$content,$sel_options,$readonlys,$preserv);
@@ -1222,19 +1219,5 @@ class timesheet_ui extends timesheet_bo
 		$sel_options['parent'] = $this->status_labels;
 		$etpl = new etemplate_new('timesheet.editstatus');
 		$etpl->exec('timesheet.timesheet_ui.editstatus',$content,$sel_options,$readonlys,$preserv);
-	}
-
-	function js()
-	{
-		return '<script LANGUAGE="JavaScript">
-
-		function timesheet_export()
-		{
-			egw_openWindowCentered(
-				"'. $GLOBALS['egw']->link('/index.php','menuaction=importexport.uiexport.export_dialog&appname=timesheet&selection=use_all') . '",
-				"Export",400,400);
-			return false;
-		}
-</script>';
 	}
 }
