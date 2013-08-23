@@ -389,13 +389,10 @@ class etemplate_widget
 			$expand['cont'] =& self::get_array(self::$request->content, $cname);
 			$expand['cname'] = $cname;
 		}
-		if ($respect_disabled && ($disabled = $this->attrs['disabled'] || $disabled = self::check_disabled($disabled, $expand)))
+		if ($respect_disabled && ($disabled = $this->attrs['disabled'] && self::check_disabled($this->attrs['disabled'], $expand)))
 		{
-			if ($disabled)
-			{
-				error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'='$disabled': NOT running");
-				return;
-			}
+			error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'=".array2string($disabled).": NOT running");
+			return;
 		}
 		if (method_exists($this, $method_name))
 		{
@@ -424,7 +421,7 @@ class etemplate_widget
 			$child->run($method_name, $params, $respect_disabled);
 		}
 	}
-	
+
 	/**
 	 * If a widget's type is expandable, we need to expand it to make sure we have
 	 * the right class before running the method on it
@@ -620,7 +617,7 @@ class etemplate_widget
 		return '['.get_class($this).'] ' .
 			$this->type.($this->attrs['type'] && $this->attrs['type'] != $this->type ? '('.$this->attrs['type'].')' : '').'#'.$this->id;
 	}
-	
+
 	/**
 	 * When cloning a widget, we also clone children
 	 */
@@ -771,7 +768,7 @@ class etemplate_widget
 		$readonly = $this->attrs['readonly'] || self::$request->readonlys[$form_name] ||
 			isset(self::$request->readonlys['__ALL__']) && self::$request->readonlys[$form_name] !== false;
 
-		//error_log(__METHOD__."('$cname') this->id='$this->id' --> form_name='$form_name' returning ".array2string($readonly));
+		//error_log(__METHOD__."('$cname') this->id='$this->id' --> form_name='$form_name': attrs[readonly]=".array2string($this->attrs['readonly']).", readonlys['$form_name']=".array2string(self::$request->readonlys[$form_name]).", readonlys['__ALL__']=".array2string(self::$request->readonlys['__ALL__'])." returning ".array2string($readonly));
 		return $readonly;
 	}
 	/**
@@ -917,26 +914,23 @@ class etemplate_widget_box extends etemplate_widget
 		$expand =& $params[1];
 		$old_cname = $params[0];
 		$old_expand = $params[1];
-		
+
 		if ($this->id) $cname = self::form_name($cname, $this->id, $params[1]);
 		if ($expand['cname'] !== $cname && $cname)
 		{
 			$expand['cont'] =& self::get_array(self::$request->content, $cname);
 			$expand['cname'] = $cname;
 		}
-		if ($respect_disabled && ($disabled = $this->attrs['disabled'] || $disabled = self::check_disabled($disabled, $expand)))
+		if ($respect_disabled && ($disabled = $this->attrs['disabled'] && self::check_disabled($this->attrs['disabled'], $expand)))
 		{
-			if ($disabled)
-			{
-				error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'='$disabled': NOT running");
-				return;
-			}
+			error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'=".array2string($disabled).": NOT running");
+			return;
 		}
 		if (method_exists($this, $method_name))
 		{
 			call_user_func_array(array($this, $method_name), $params);
 		}
-		
+
 		// Expand children
 		for($n = 0; ; ++$n)
 		{
@@ -960,13 +954,13 @@ class etemplate_widget_box extends etemplate_widget
 			//error_log('Running ' . $method_name . ' on child ' . $n . '(' . $child . ') ['.$expand['row'] . ','.$expand['c'] . ']');
 			$disabled = $child->run($method_name, $params, $respect_disabled, $columns_disabled) === false;
 		}
-		
+
 		$params[0] = $old_cname;
 		$params[1] = $old_expand;
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Check if a box child needs autorepeating, because still content left
 	 *
@@ -994,7 +988,7 @@ class etemplate_widget_box extends etemplate_widget
 				}
 			}
 		}
-		
+
 		return false;
 	}
 }

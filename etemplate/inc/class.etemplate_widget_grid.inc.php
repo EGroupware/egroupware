@@ -80,15 +80,10 @@ class etemplate_widget_grid extends etemplate_widget_box
 			$columns_disabled = array();
 		}
 
-		if ($respect_disabled && ($disabled = $this->attrs['disabled']))
+		if ($respect_disabled && ($disabled = $this->attrs['disabled'] && self::check_disabled($this->attrs['disabled'], $expand)))
 		{
-			// check if disabled contains @ or !
-			$disabled = self::check_disabled($disabled, $expand);
-			if ($disabled)
-			{
-				error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'='$disabled': NOT running");
-				return false;	// return
-			}
+			error_log(__METHOD__."('$method_name', ".array2string($params).', '.array2string($respect_disabled).") $this disabled='{$this->attrs['disabled']}'=".array2string($disabled).": NOT running");
+			return false;	// return
 		}
 		if (method_exists($this, $method_name))
 		{
