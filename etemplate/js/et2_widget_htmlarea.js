@@ -82,7 +82,6 @@ var et2_htmlarea = et2_inputWidget.extend(
 		// Allow no child widgets
 		this.supportedWidgetClasses = [];
 		this.htmlNode = $j(document.createElement("textarea"))
-			.attr('id', this.id)
 			.css('height', this.options.height)
 			.addClass('et2_textbox_ro');
 		this.setDOMNode(this.htmlNode[0]);
@@ -111,21 +110,21 @@ var et2_htmlarea = et2_inputWidget.extend(
 		var ckeditor;
 		try
 		{
-			CKEDITOR.replace(this.id,jQuery.extend({},this.options.config,this.options));
-			ckeditor = CKEDITOR.instances[this.id];
+			CKEDITOR.replace(this.dom_id,jQuery.extend({},this.options.config,this.options));
+			ckeditor = CKEDITOR.instances[this.dom_id];
 			ckeditor.setData(self.value);
 			delete self.value;
 		}
 		catch (e)
 		{
-			if(CKEDITOR.instances[this.id])
+			if(CKEDITOR.instances[this.dom_id])
 			{
-				CKEDITOR.instances[this.id].destroy();
+				CKEDITOR.instances[this.dom_id].destroy();
 			}
 			if(this.htmlNode.ckeditor)
 			{
-				CKEDITOR.replace(this.id,this.options.config);
-				ckeditor = CKEDITOR.instances[this.id];
+				CKEDITOR.replace(this.dom_id,this.options.config);
+				ckeditor = CKEDITOR.instances[this.dom_id];
 				ckeditor.setData(self.value);
 				delete self.value;
 			}
@@ -136,8 +135,8 @@ var et2_htmlarea = et2_inputWidget.extend(
 		try
 		{
 			//this.htmlNode.ckeditorGet().destroy(true);
-			ckeditor = CKEDITOR.instances[this.id];
-			ckeditor.destroy(true);
+			var ckeditor = CKEDITOR.instances[this.dom_id];
+			if (ckeditor) ckeditor.destroy(true);
 		}
 		catch (e)
 		{
@@ -146,15 +145,18 @@ var et2_htmlarea = et2_inputWidget.extend(
 		}
 	},
 	set_value: function(_value) {
-		if(this.htmlNode.is('textarea'))
-		{
-			this.htmlNode.val(_value);
-			return;
-		}
 		try {
 			//this.htmlNode.ckeditorGet().setData(_value);
-			ckeditor = CKEDITOR.instances[this.id];
-			ckeditor.setData(_value);
+			var ckeditor = CKEDITOR.instances[this.dom_id];
+			if (ckeditor)
+			{
+				ckeditor.setData(_value);
+			}
+			else
+			{
+				this.htmlNode.val(_value);				
+				this.value = _value;
+			}
 		} catch (e) {
 			// CK editor not ready - callback will do it
 			this.value = _value;
@@ -162,15 +164,11 @@ var et2_htmlarea = et2_inputWidget.extend(
 	},
 
 	getValue: function() {
-		if(this.htmlNode.is('textarea'))
-		{
-			return this.htmlNode.val();
-		}
 		try
 		{
 			//return this.htmlNode.ckeditorGet().getData();
-			ckeditor = CKEDITOR.instances[this.id];
-			return ckeditor.getData();
+			var ckeditor = CKEDITOR.instances[this.dom_id];
+			return ckeditor ? ckeditor.getData() : this.htmlNode.val();
 		}
 		catch (e)
 		{

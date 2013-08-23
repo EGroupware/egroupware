@@ -279,7 +279,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		// Already in header
 		if(_label == this.options.empty_label) return;
 		
-		var opt_id = this.getInstanceManager().uniqueId+'_'+ this.id + "_opt_" + _value;
+		var opt_id = this.dom_id + "_opt_" + _value;
 		var label = jQuery(document.createElement("label"))
 			.attr("for", opt_id)
 			.hover(

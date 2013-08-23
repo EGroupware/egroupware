@@ -142,6 +142,7 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 
 	set_id: function(_value) {
 		this.id = _value;
+		this.dom_id = _value ? this.getInstanceManager().uniqueId+'_'+this.id : _value;
 
 		// Set the id of the _input_ node (in contrast to the default
 		// implementation, which sets the base node)
@@ -151,7 +152,7 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 			// Unique ID to prevent DOM collisions across multiple templates
 			if (_value != "")
 			{
-				node.setAttribute("id", this.getInstanceManager().uniqueId+'_'+this.id);
+				node.setAttribute("id", this.dom_id);
 				node.setAttribute("name", _value);
 			}
 			else
