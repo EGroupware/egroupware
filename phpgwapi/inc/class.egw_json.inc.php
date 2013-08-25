@@ -184,6 +184,14 @@ class egw_json_response
 	private static $response = null;
 
 	/**
+	 * Force use of singleton: $response = egw_json_response::get();
+	 */
+	private function __construct()
+	{
+
+	}
+
+	/**
 	 * Singelton for class
 	 *
 	 * @return egw_json_response

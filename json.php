@@ -18,7 +18,7 @@
  */
 function xajax_redirect(&$anon_account)
 {
-	$response = new egw_json_response();
+	$response = egw_json_response::get();
 	$response->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10', true);
 	$response->printOutput();
 
@@ -39,7 +39,7 @@ function ajax_exception_handler(Exception $e)
 	{
 		_egw_log_exception($e,$message);
 	}
-	$response = new egw_json_response();
+	$response = egw_json_response::get();
 	$message .= ($message ? "\n\n" : '').$e->getMessage();
 
 	// only show trace (incl. function arguments) if explicitly enabled, eg. on a development system
