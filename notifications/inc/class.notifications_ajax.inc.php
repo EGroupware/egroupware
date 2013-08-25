@@ -121,8 +121,6 @@ class notifications_ajax {
 		}
 
 		$this->get_egwpopup($browserNotify);
-
-		return $this->response->getXML();
 	}
 
 	/**
