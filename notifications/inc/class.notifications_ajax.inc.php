@@ -81,7 +81,7 @@ class notifications_ajax {
 	/**
 	 * the xml response object
 	 *
-	 * @var xajaxResponse
+	 * @var egw_json_response
 	 */
 	private $response;
 
@@ -90,10 +90,7 @@ class notifications_ajax {
 	 *
 	 */
 	public function __construct() {
-		if(class_exists('xajaxResponse'))
-		{
-			$this->response = new xajaxResponse();
-		}
+		$this->response = egw_json_response::get();
 		$this->recipient = (object)$GLOBALS['egw']->accounts->read($GLOBALS['egw_info']['user']['account_id']);
 
 		$this->config = (object)config::read(self::_appname);

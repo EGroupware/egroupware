@@ -590,26 +590,16 @@ class egw_json_response
 /**
  * Deprecated legacy xajax wrapper functions for the new egw_json interface
  */
-class xajaxResponse extends egw_json_response
+class xajaxResponse
 {
-	public function addScript($script)
+	public function __call($name, $args)
 	{
-		$this->script($script);
-	}
-
-	public function addAlert($message)
-	{
-		$this->alert($message, '');
-	}
-
-	public function addAssign($id, $key, $value)
-	{
-		$this->assign($id, $key, $value);
-	}
-
-	public function addRedirect($url)
-	{
-		$this->redirect($url);
+		if (substr($name, 0, 3) == 'add')
+		{
+			$name = substr($name, 3);
+			$name[0] = strtolower($name[0]);
+		}
+		return call_user_func_array(array(egw_json_response::get(), $name), $args);
 	}
 
 	public function addScriptCall($func)
@@ -617,17 +607,7 @@ class xajaxResponse extends egw_json_response
 		$args = func_get_args();
 		$func = array_shift($args);
 
-		$this->apply($func, $args);
-	}
-
-	public function addIncludeCSS($url)
-	{
-		$this->includeCSS($url);
-	}
-
-	public function addIncludeScript($url)
-	{
-		$this->includeScript($url);
+		return call_user_func(array(egw_json_response::get(), 'apply'), $func, $args);
 	}
 
 	public function getXML()
