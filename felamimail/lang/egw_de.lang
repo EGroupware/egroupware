@@ -24,7 +24,7 @@ all address books	felamimail	de	Alle Adressbücher
 all folders	felamimail	de	Alle Ordner
 all messages in folder	felamimail	de	Alle Nachrichten im Ordner
 all of	felamimail	de	mit allen
-allow images from external sources in html emails	felamimail	de	Erlaube Bilder von externen Quellen in HTML E-Mails
+allow images from external sources in html emails	felamimail	de	Erlaube Bilder von externen Quellen in HTML E-Mails.
 allways a new window	felamimail	de	jede E-Mail in einem neuen Fenster
 always show html emails	felamimail	de	HTML-E-Mails immer anzeigen
 and	felamimail	de	und
@@ -93,7 +93,7 @@ days	felamimail	de	Tage
 deactivate script	felamimail	de	Script abschalten
 default	felamimail	de	Vorgabe
 default signature	felamimail	de	Standard Signatur
-default sorting order	felamimail	de	Standard-Sortierreihenfolge
+default sorting order	felamimail	de	Wählen Sie die Standard-Sortierreihenfolge aus.
 delete all	felamimail	de	alle löschen
 delete folder	felamimail	de	Ordner löschen
 delete script	felamimail	de	Skript löschen
@@ -116,16 +116,16 @@ do it!	felamimail	de	Mach es!
 do not use sent	felamimail	de	Gesendete Objekte (Sent) nicht verwenden
 do not use trash	felamimail	de	Gelöschte Objekte (Trash) nicht verwenden
 do not validate certificate	felamimail	de	Zertifikat nicht überprüfen
-do you really want to delete the '%1' folder?	felamimail	de	Wollen Sie wirklich den '%1' Ordner löschen?
-do you really want to delete the selected accountsettings and the assosiated identity.	felamimail	de	Wollen Sie die ausgewählten Konteneinstellungen und die damit verbundenen Identitäten wirklich löschen?
+do you really want to delete the '%1' folder?	felamimail	de	Möchten Sie wirklich den '%1' Ordner löschen?
+do you really want to delete the selected accountsettings and the assosiated identity.	felamimail	de	Möchten Sie die ausgewählten Konteneinstellungen und die damit verbundenen Identitäten wirklich löschen?
 do you really want to delete the selected signatures?	felamimail	de	Möchten Sie die ausgewählte Signatur wirklich löschen?
-do you really want to move or copy the selected messages to folder:	felamimail	de	Wollen sie die ausgewählten Nachrichten in folgenden Ordner verschieben oder kopieren:
-do you really want to move the selected messages to folder:	felamimail	de	Wollen sie die ausgewählten Nachrichten in folgenden Ordner verschieben:
-do you want to be asked for confirmation before moving selected messages to another folder?	felamimail	de	Wollen Sie vor dem Verschieben von E-Mails in andere Ordner gefragt werden?
-do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	felamimail	de	Wollen Sie das Editieren/Einstellen einer Mailweiterleitung (via SIEVE) unterbinden?
-do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	felamimail	de	Wollen Sie das Editieren/Einstellen von Filterregeln (via SIEVE) unterbinden?
-do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	felamimail	de	Wollen Sie das Editieren/Einstellen von Benachrichtigungen per E-Mail (via SIEVE), wenn neue Nachrichten eintreffen, unterbinden?
-do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	felamimail	de	Wollen Sie das Editieren/Einstellen einer Abwesenheitsnotiz (via SIEVE) unterbinden?
+do you really want to move or copy the selected messages to folder:	felamimail	de	Möchten sie die ausgewählten Nachrichten in folgenden Ordner verschieben oder kopieren:
+do you really want to move the selected messages to folder:	felamimail	de	Möchten sie die ausgewählten Nachrichten in folgenden Ordner verschieben:
+do you want to be asked for confirmation before moving selected messages to another folder?	felamimail	de	Möchten Sie vor dem Verschieben von E-Mails in andere Ordner gefragt werden?
+do you want to prevent the editing/setup for forwarding of mails via settings (, even if sieve is enabled)?	felamimail	de	Möchten Sie das Editieren/Einstellen einer Mailweiterleitung (via SIEVE) unterbinden?
+do you want to prevent the editing/setup of filter rules (, even if sieve is enabled)?	felamimail	de	Möchten Sie das Editieren/Einstellen von Filterregeln (via SIEVE) unterbinden?
+do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	felamimail	de	Möchten Sie das Editieren/Einstellen von Benachrichtigungen per E-Mail (via SIEVE), wenn neue Nachrichten eintreffen, unterbinden?
+do you want to prevent the editing/setup of the absent/vacation notice (, even if sieve is enabled)?	felamimail	de	Möchten Sie das Editieren/Einstellen einer Abwesenheitsnotiz (via SIEVE) unterbinden?
 do you want to prevent the managing of folders (creation, accessrights and subscribtion)?	felamimail	de	Möchten Sie die Verwaltung von Ordnern verhindern (anlegen, abonnieren, Zugriffsrechte)?
 does not contain	felamimail	de	enthält nicht
 does not exist on imap server.	felamimail	de	existiert nicht auf dem IMAP Server
@@ -221,7 +221,7 @@ have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.
 header lines	felamimail	de	Kopfzeilen
 hide header	felamimail	de	Kopfzeilen verbergen
 hostname / address	felamimail	de	Servername / Adresse
-how to forward messages	felamimail	de	Wie wollen Sie Nachrichten weiterleiten?
+how to forward messages	felamimail	de	Wie möchten Sie Nachrichten weiterleiten
 html	felamimail	de	HTML
 icons and text	felamimail	de	Icons und Text
 icons only	felamimail	de	nur Icons
@@ -413,7 +413,7 @@ set as default	felamimail	de	Als Vorgabe setzen
 show all folders (subscribed and unsubscribed) in main screen folder pane	felamimail	de	zeige alle Ordner (subscribed UND unsubscribed) in der Ordnerleiste des Hauptfensters
 show header	felamimail	de	Kopfzeilen anzeigen
 show new messages on main screen	felamimail	de	Neue Nachrichten auf der Startseite anzeigen?
-sieve script name	felamimail	de	Sieve Skript Name
+sieve script name	felamimail	de	Stellen Sie den Sieve Skript Namen ein.
 sieve settings	admin	de	Sieve Einstellungen
 signatur	felamimail	de	Signatur
 signature	felamimail	de	Signatur
@@ -444,7 +444,7 @@ text/plain	felamimail	de	text/plain
 the action will be applied to all messages of the current folder.\ndo you want to proceed?	felamimail	de	Die Aktion wird auf ALLE Nachrichten des aktuellen Ordners angewendet.\nMöchten Sie fortfahren?
 the connection to the imap server failed!!	felamimail	de	Die Verbindung zum IMAP Server ist fehlgeschlagen
 the imap server does not appear to support the authentication method selected. please contact your system administrator.	felamimail	de	Der IMAP Server scheint die ausgewählte Authentifizierungsmethode nicht zu unterstützen. Bitte sprechen Sie mit Ihrem Systemadministrator.
-the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	de	Der Absender der Nachricht hat eine Antwort angefordert welche Ihm anzeigt das Sie seine Nachricht gelesen haben. Wollen Sie diese Antwort senden?
+the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	felamimail	de	Der Absender der Nachricht hat eine Antwort angefordert welche Ihm anzeigt das Sie seine Nachricht gelesen haben. Möchten Sie diese Antwort senden?
 the mimeparser can not parse this message.	felamimail	de	Der MIME Parser versteht diese Nachricht nicht.
 then	felamimail	de	dann
 there is no imap server configured.	felamimail	de	Es ist kein IMAP Server Konfiguriert
@@ -496,9 +496,9 @@ view message	felamimail	de	zeige Nachricht
 viewing full header	felamimail	de	zeige alle Kopfzeilen
 viewing message	felamimail	de	zeige Nachricht
 viewing messages	felamimail	de	zeige Nachrichten
-when deleting messages	felamimail	de	wenn Nachrichten gelöscht werden
-which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	de	Welche E-Mailordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners  dargestellt werden.
-which folders - in general - should not be automatically created, if not existing	felamimail	de	Welche E-Mailordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren?
+when deleting messages	felamimail	de	Wenn Nachrichten gelöscht werden
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	felamimail	de	Welche E-Mailordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners  dargestellt werden (Empfänger-Adresse, anstatt der Absender-Adresse).
+which folders - in general - should not be automatically created, if not existing	felamimail	de	Welche E-Mailordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren? Wählen Sie hier die Ordner aus, die NICHT von EGroupware automatisch angelegt werden dürfen.
 with message	felamimail	de	mit folgender Nachricht
 with message "%1"	felamimail	de	mit der Nachricht "%1"
 wrap incoming text at	felamimail	de	Text umbrechen nach

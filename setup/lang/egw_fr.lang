@@ -298,6 +298,7 @@ installation finished	setup	fr	Installation terminée
 installation started, this might take a few minutes ...	setup	fr	L'installation a démarré, ceci peut prendre quelques minutes
 installed	setup	fr	installé
 instructions for creating the database in %1:	setup	fr	Instructions pour créer la base de données dans %1:
+invalid argument '%1' !!!	setup	fr	Argument invalide '%1' !!!
 invalid ip address	setup	fr	Adresse IP invalide
 invalid mcrypt algorithm/mode combination	setup	fr	Combinaison Algorithme/Mode Mcrypt invalide
 invalid password	setup	fr	Mot de passe invalide
