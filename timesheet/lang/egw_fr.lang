@@ -36,6 +36,7 @@ for serial letter use this tag. put the content, you want to repeat between two 
 full: use only projectmanager	admin	fr	Complet: utiliser seulement le Gestionnaire de projets
 global categories	timesheet	fr	Catégorie globale
 history	timesheet	fr	Historique
+history logging	admin	fr	Enregistrement de l'historique
 id	timesheet	fr	Id
 insert	timesheet	fr	Insérer
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	timesheet	fr	Id de propriétaire invalide: %1. %2 utilisé à la place.

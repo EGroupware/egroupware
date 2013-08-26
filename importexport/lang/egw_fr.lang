@@ -27,4 +27,5 @@ schedule	common	fr	planification
 translation	importexport	fr	Traduction
 true	importexport	fr	Vrai
 use default	importexport	fr	Utiliser le défaut
+use field from csv if possible	importexport	fr	Utiliser le champ du CSV si possible
 which useres are allowed for this definition	importexport	fr	Quels utilisateurs sont autorisés pour cette définition

@@ -535,6 +535,7 @@ remove shortcut	common	fr	Supprimer le raccourci
 rename	common	fr	Renommer
 replace	common	fr	Remplacer
 replace with	common	fr	Remplacer par
+resources	common	fr	Ressources
 restore failed	common	fr	La récupération a échoué
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	fr	Retourne une liste complète des comptes sur le système. Attention: ceci peut être très long
 returns an array of todo items	common	fr	Retourne une liste d'actions à effectuer
