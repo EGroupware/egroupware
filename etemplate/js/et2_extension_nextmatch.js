@@ -579,6 +579,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			RowLoop:
 			for(var i = 0; i < _row.length; i++)
 			{
+				if(_row[i].disabled)
+				{
+					_colData[i].disabled = true;
+					continue;
+				}
+				
 				// Customfields needs special processing
 				if(_row[i].widget.instanceOf(et2_nextmatch_customfields))
 				{
@@ -692,6 +698,17 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	},
 
 	_parseHeaderRow: function(_row, _colData) {
+	
+		// Make sure there's a widget - cols disabled in template can be missing them, and the header really likes to have a widget
+		
+		for (var x = 0; x < _row.length; x++)
+		{
+			if(!_row[x].widget)
+			{
+				_row[x].widget = et2_createWidget("label");
+			}
+		}
+		
 		// Get column display preference
 		this._applyUserPreferences(_row, _colData);
 

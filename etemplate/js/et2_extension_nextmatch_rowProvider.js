@@ -547,6 +547,9 @@ var et2_nextmatch_rowWidget = et2_widget.extend(et2_IDOMNode,
 		this._widgets = new Array(_widgets.length);
 		for (var i = 0; i < _widgets.length; i++)
 		{
+			// Disabled columns might be missing widget - skip it
+			if(!_widgets[i]) continue;
+			
 			this._widgets[i] = _widgets[i].clone(this);
 			this._widgets[i].loadingFinished();
 			// Set column alignment from widget
