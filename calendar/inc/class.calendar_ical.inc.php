@@ -2827,6 +2827,13 @@ class calendar_ical extends calendar_boupdate
 							if (!isset($vcardData['participants'][$uid]) ||
 									$vcardData['participants'][$uid][0] != 'A')
 							{
+								// keep role 'CHAIR' from an external organizer, even if he is a regular participant with a different role
+								// as this is currently the only way to store an external organizer and send him iMip responses
+								if (isset($vcardData['participants'][$uid]) && ($s=$vcardData['participants'][$uid]) &&
+									calendar_so::split_status($s, $q, $r) && $r == 'CHAIR')
+								{
+									$role = 'CHAIR';
+								}
 								// for multiple entries the ACCEPT wins
 								// add quantity and role
 								$vcardData['participants'][$uid] =
