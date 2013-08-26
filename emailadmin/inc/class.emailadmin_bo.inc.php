@@ -479,7 +479,7 @@ class emailadmin_bo extends so_sql
 	{
 		if (is_null($_profileID)) $_profileID = self::getUserDefaultProfileID();
 		//error_log(__METHOD__.__LINE__.' called with ProfileID:'.$_profileID.' from '.function_backtrace());
-		if (!is_array($_profileID) && is_numeric($_profileID))
+		if (!is_array($_profileID) && (is_numeric($_profileID) || !(stripos($_profileID,'tracker_')===false)))
 		{
 			felamimail_bo::resetConnectionErrorCache($_profileID);
 			$structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
