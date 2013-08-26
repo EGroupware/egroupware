@@ -2475,10 +2475,7 @@ class infolog_ui
 				strtotime($mailcontent['headers']['DATE'])
 			));
 		}
-		common::egw_header();
-		echo "<script> window.close(); alert('Error: no mail (Mailbox / UID) given!');</script>";
-		common::egw_exit();
-		exit;
+		egw_framework::window_close(lang('Error: no mail (Mailbox / UID) given!'));
 	}
 
 
@@ -2491,11 +2488,11 @@ class infolog_ui
 	 */
 	function custom_print($content,$added)
 	{
-			$vars = array(
+		$vars = array(
 			'menuaction'      => 'infolog.infolog_ui.edit',
 			'info_id'         => $content['info_id'],
 			'print'           => true,
-			);
+		);
 		return "window.open('".egw::link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
 	}
 

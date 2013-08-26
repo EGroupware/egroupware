@@ -191,11 +191,13 @@ abstract class egw_framework
 
 	/**
 	 * Close (popup) window, use to replace egw_framework::onload('window.close()') in a content security save way
+	 *
+	 * @param string $alert_msg='' optional message to display as alert, before closing the window
 	 */
-	public static function window_close()
+	public static function window_close($alert_msg='')
 	{
 		//error_log(__METHOD__."()");
-		self::$extra['window-close'] = true;
+		self::$extra['window-close'] = $alert_msg ? $alert_msg : true;
 
 		if ($_GET['menuaction'] === 'etemplate_new::ajax_process_content')
 		{

@@ -99,12 +99,16 @@
 	
 	// close window / call window.close(), if data-window-close is specified
 	var window_close = egw_script.getAttribute('data-window-close');
-	if (window_close && JSON.parse(window_close))
+	if (window_close)
 	{
+		if (typeof window_close == 'string' && window_close !== 'true')
+		{
+			alert(window_close);
+		}		
 		window.close();
 	}
 
-	// close window / call window.focus(), if data-window-focus is specified
+	// focus window / call window.focus(), if data-window-focus is specified
 	var window_focus = egw_script.getAttribute('data-window-focus');
 	if (window_focus && JSON.parse(window_focus))
 	{

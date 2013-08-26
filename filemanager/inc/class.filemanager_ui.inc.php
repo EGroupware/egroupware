@@ -1047,7 +1047,7 @@ class filemanager_ui
 				}
 			}
 			egw_framework::refresh_opener($msg, 'filemanager', $refresh_path ? $refresh_path : $path, 'edit', null, '&path=[^&]*');
-			if ($button == 'save') egw_framework::window_close(true);	// true = call common::egw_exit();
+			if ($button == 'save') egw_framework::window_close();
 		}
 		if ($content['is_link'] && !egw_vfs::stat($path))
 		{

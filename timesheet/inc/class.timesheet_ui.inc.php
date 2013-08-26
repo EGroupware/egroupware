@@ -63,9 +63,7 @@ class timesheet_ui extends timesheet_bo
 			{
 				if (!$this->read((int)$_GET['ts_id']))
 				{
-					common::egw_header();
-					echo "<script>alert('".lang('Permission denied!!!')."'); window.close();</script>\n";
-					common::egw_exit();
+					egw_framework::window_close(lang('Permission denied!!!'));
 				}
 				if (!$view && !$this->check_acl(EGW_ACL_EDIT))
 				{
