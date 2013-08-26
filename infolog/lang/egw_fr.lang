@@ -176,6 +176,7 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	f
 enter a textual description of the log-entry	infolog	fr	Entrez une description textuelle de l'entrée de Log
 enter the query pattern	infolog	fr	Entrez le champ de requête
 entry and all files	infolog	fr	Entrée et tous les fichiers
+error: importing the ical	infolog	fr	Erreur: lors de l'importation de l'iCal
 error: saving the entry	infolog	fr	Erreur: lors de l'enregistrement de l'entrée
 error: the entry has been updated since you opened it for editing!	infolog	fr	Erreur: cette entrée a été mise à jour pendant que vous l'aviez ouverte pour la modifier!
 execute a further action for this entry	infolog	fr	Exécuter une action de plus pour cette entrée
@@ -252,6 +253,7 @@ load custom fields in index, if filtered by selected types (eg. to display them 
 location	infolog	fr	Emplacement
 longer textual description	infolog	fr	Description textuelle plus longue
 low	infolog	fr	Bas
+manage mapping	infolog	fr	Gestion des correspondances
 max length of the input [, length of the inputfield (optional)]	infolog	fr	taille max de l´entrée [, taille du champ d´entrée (optionnel)]
 modifier	infolog	fr	Editeur
 modifierer	infolog	fr	Editeur

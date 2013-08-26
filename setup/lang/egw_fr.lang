@@ -120,6 +120,7 @@ checking php.ini	setup	fr	Vérification de php.ini
 checking required php version %1 (recommended %2)	setup	fr	Vérification version PHP %1 requise (%2 recommandée)
 checking the egroupware installation	setup	fr	Vérification de l'installation eGroupWare
 checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	fr	vérification de l'installation d'eGroupWare, sa version et ses mises à jour requises (pour les valeurs de retour voir --exit-codes)
+clear cache and register hooks	setup	fr	Vider le cache et enregistrer les hooks
 click <a href="index.php">here</a> to return to setup.	setup	fr	cliquez <a href="index.php">ici</a> pour revenir au setup.
 click here	setup	fr	Cliquez ici
 click here to re-run the installation tests	setup	fr	Cliquez ici pour rédemarrer la procédure de vérification
@@ -300,6 +301,7 @@ installation finished	setup	fr	Installation terminée
 installation started, this might take a few minutes ...	setup	fr	L'installation a démarré, ceci peut prendre quelques minutes
 installed	setup	fr	installé
 instructions for creating the database in %1:	setup	fr	Instructions pour créer la base de données dans %1:
+invalid argument '%1' !!!	setup	fr	Argument invalide '%1' !!!
 invalid ip address	setup	fr	Adresse IP invalide
 invalid mcrypt algorithm/mode combination	setup	fr	Combinaison Algorithme/Mode Mcrypt invalide
 invalid password	setup	fr	Mot de passe invalide
