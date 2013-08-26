@@ -713,4 +713,10 @@ function infolog_upgrade1_9_003()
 
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.9.004';
 }
-
+/**
+ * Enable ajax=true
+ */
+function infolog_upgrade1_9_004()
+{
+	return $GLOBALS['setup_info']['infolog']['currentver'] = '1.10.001';
+}

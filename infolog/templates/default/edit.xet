@@ -71,7 +71,7 @@
 						<rows>
 							<row>
 								<textbox id="info_cc" maxlength="254" class="inputFullWidth"/>
-								<buttononly label="Add from Addressbook" onclick="return add_email_from_ab(form::name('ab[id]'),form::name('info_cc'));" options="users"/>
+								<buttononly label="Add from Addressbook" onclick="return app.infolog.infolog_add_email_from_ab(form::name('ab[id]'),form::name('info_cc'));" options="users"/>
 							</row>
 							<row class="hiddenRow">
 								<link-entry blur="Search" id="ab" options="addressbook-email" span="all"/>
@@ -242,18 +242,18 @@
 				<row class="row">
 					<description value="Status" for="info_status"/>
 					<menulist>
-						<menupopup statustext="@status_help" id="info_status" onchange="status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
+						<menupopup statustext="@status_help" id="info_status" onchange="app.infolog_status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					</menulist>
 					<description/>
 					<description/>
 					<description value="Completed" for="info_percent"/>
 					<menulist>
-						<menupopup type="select-percent" statustext="Percent completed" id="info_percent" onchange="status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
+						<menupopup type="select-percent" statustext="Percent completed" id="info_percent" onchange="app.infolog_status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					</menulist>
 				</row>
 				<row class="row">
 					<description value="Date completed" for="info_datecompleted"/>
-					<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
+					<date-time statustext="Date completed (leave it empty to have it automatic set if status is done or billed)" id="info_datecompleted" onchange="app.infolog_status_changed(this.id, form::name('info_status'), form::name('info_percent'), form::name('info_datecompleted'))"/>
 					<description/>
 					<description/>
 					<description value="Private" for="info_access"/>
@@ -283,9 +283,8 @@
 						<button statustext="Apply the changes" label="Apply" id="button[apply]"/>
 						<button statustext="leave without saveing the entry" label="Cancel" id="button[cancel]" onclick="window.close();"/>
 						<menulist>
-							<menupopup statustext="Execute a further action for this entry" id="action" onchange="this.form.submit(); this.value='';" options="Actions..."/>
+							<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.infolog.infolog_edit_actions()" options="Actions..."/>
 						</menulist>
-						<html id="js"/>
 					</hbox>
 					<description/>
 					<hbox span="2">

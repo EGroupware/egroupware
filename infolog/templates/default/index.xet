@@ -1,9 +1,13 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="infolog.index.header_left" template="" lang="" group="0" version="1.0.1.001">
-		<description value="InfoLog" class="headertext bold"/>
-		<styles>.bold { font-weight: bold; }</styles>
+	<template id="infolog.index.dates" template="" lang="" group="0" version="1.7.001">
+		<hbox class="custom_hide">
+			<description value="Start"/>
+			<date id="startdate"/>
+			<description value="End"/>
+			<date statustext="Leave it empty for a full week" id="enddate"/>
+		</hbox>
 	</template>
 	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.7.001">
 		<hbox>
@@ -176,11 +180,10 @@
 					<description/>
 				</row>
 				<row disabled="1">
-					<template id="header_left"/>
 					<template id="header_right"/>
 				</row>
 				<row>
-					<nextmatch id="nm" options="infolog.index.rows" span="all"/>
+					<nextmatch id="nm" options="infolog.index.rows" span="all" header_left="infolog.index.dates"/>
 				</row>
 				<row class="noPrint" disabled="!@nm[selectcols]=/actions/">
 					<hbox>

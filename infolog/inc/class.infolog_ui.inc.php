@@ -100,7 +100,7 @@ class infolog_ui
 
 		$this->bo = new infolog_bo();
 
-		$this->tmpl = new etemplate();
+		$this->tmpl = new etemplate_new();
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 
@@ -289,17 +289,6 @@ class infolog_ui
 		}
 		$orginal_colfilter = $query['col_filter'];
 		if (isset($parent_id)) $query['col_filter']['info_id_parent'] = (int)$parent_id;
-		if ($query['filter'] == 'bydate')
-		{
-			$query['header_left'] = 'infolog.index.dates';
-			$GLOBALS['egw']->js->set_onload("set_style_by_class('table','custom_hide','visibility','visible');");
-		}
-		else
-		{
-			unset($query['header_left']);
-			unset($query['startdate']);
-			unset($query['enddate']);
-		}
 
 		//echo "<p>infolog_ui.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).",sort=$query[sort],order=$query[order])</p>\n";
 		if (!isset($query['start'])) $query['start'] = 0;
@@ -327,7 +316,7 @@ class infolog_ui
 		unset($query['custom_fields']);
 		if ($query['col_filter']['info_type'])
 		{
-			$tpl = new etemplate;
+			$tpl = new etemplate_new;
 			if ($tpl->read('infolog.index.rows.'.$query['col_filter']['info_type']))
 			{
 				$query['template'] =& $tpl;
@@ -818,35 +807,13 @@ class infolog_ui
 			'all'            => 'details',
 		);
 		if(!isset($values['nm']['filter2'])) $values['nm']['filter2'] = $this->prefs['show_links'];
-		$values['nm']['filter2_onchange'] = "
-if(typeof widget != 'undefined') {
-	// Show / hide descriptions
-	show_details(jQuery(this).val() == 'all');
 
-	// Change preference location - widget is nextmatch
-	widget.options.settings.columnselection_pref = 'infolog.index.rows'+(jQuery(this).val()=='all'?'-details':'');
+		//apply infolog_filter_change javascript method (hide/show of date filter form) over onchange filter
+		$values['nm']['filter_onchange'] = "app.infolog.infolog_filter_change();";
 
-	// Load new preferences
-	var colData = []
-	for(var i = 0; i < widget.columns.length; i++) colData[i] = {disabled: true, width: '0'};
-	widget._applyUserPreferences(widget.columns, colData);
-	for(var i = 0; i < colData.length; i++)
-	{
-		// Wants a string
-		widget.dataview.getColumnMgr().columns[i].set_width(colData[i].width + 'px');
-		widget.dataview.getColumnMgr().columns[i].set_visibility(!colData[i].disabled);
-	}
+		//apply infolog_filter2_change javascript method (show/hide details each rows) over onchange filter2
+		$values['nm']['filter2_onchange'] = "app.infolog.infolog_filter2_change();";
 
-	widget.dataview.getColumnMgr().updated = true;
-
-	// Update page
-	widget.dataview.updateColumns();
-}
-else
-{
-	this.form.submit();
-}
-";
 		// disable columns for main entry as set in the pref for details or no details
 		if ($action == 'sp')
 		{
@@ -865,19 +832,9 @@ else
 			}
 		}
 		$values['nm']['header_right'] = 'infolog.index.header_right';
-		if ($extra_app_header && $values['nm']['filter']!='bydate')
-		{
-			$values['nm']['header_left'] = 'infolog.index.header_left';
-		}
 		if ($values['nm']['filter']=='bydate')
 		{
 			foreach (array_keys($values['nm']['col_filter']) as $colfk) if (is_int($colfk)) unset($values['nm']['col_filter']);
-			$values['nm']['header_left'] = 'infolog.index.dates';
-			$GLOBALS['egw']->js->set_onload("set_style_by_class('table','custom_hide','visibility','visible');");
-		}
-		if ($values['nm']['filter2'] == 'no_describtion')
-		{
-			$GLOBALS['egw']->js->set_onload("show_details(false);");
 		}
 		$values['nm']['bottom_too'] = True;
 		$values['nm']['never_hide'] = isset($this->prefs['never_hide']) ?
@@ -1170,7 +1127,7 @@ else
 			'caption' => 'Delete',
 			'group' => ++$group,
 			'disableClass' => 'rowNoDelete',
-			'onExecute' => 'javaScript:confirm_delete',
+			'onExecute' => 'app.infolog.infolog_confirm_delete',
 		);
 		if ($query['col_filter']['info_status'] == 'deleted')
 		{
@@ -1595,10 +1552,6 @@ else
 						$button = 'apply';	// need to store infolog first
 					}
 				}
-				if ($button == 'print')
-				{
-					$content['js'] = $this->custom_print($content,!$content['info_id'])."\n".$js;	// first open the new window and then update the view
-				}
 				//echo "<p>infolog_ui::edit(info_id=$info_id) '$button' button pressed, content="; _debug_array($content);
 				if (($button == 'save' || $button == 'apply') && isset($content['info_subject']) && empty($content['info_subject']))
 				{
@@ -1659,7 +1612,7 @@ else
 					else
 					{
 						$content['msg'] = lang('InfoLog entry saved');
-						$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','infolog',$info_id,'$operation');";
+						egw_framework::refresh_opener($content['msg'],'infolog',$info_id,$operation);
 					}
 					$content['tabs'] = $active_tab;
 					if ((int) $content['pm_id'] != (int) $content['old_pm_id'])
@@ -1722,12 +1675,12 @@ else
 					);
 					if (!($content['msg'] = $this->delete($info_id,$referer,'edit'))) return;	// checks ACL first
 
-					$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','infolog',$info_id,'delete');";
+					egw_framework::refresh_opener($content['msg'],'infolog',$info_id,'delete');
 				}
 				// called again after delete confirmation dialog
 				elseif ($button == 'deleted'  && $content['msg'])
 				{
-					$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','infolog',$info_id,'delete');";
+					egw_framework::refresh_opener($content['msg'],'infolog',$info_id,'delete');
 				}
 				if ($button == 'save' || $button == 'cancel' || $button == 'delete' || $button == 'deleted')
 				{
@@ -1735,11 +1688,8 @@ else
 					{
 						egw::redirect_link($referer,array('msg' => $content['msg']));
 					}
-					$content['js'] .= 'window.close();';
-					echo '<html><body onload="'.$content['js'].'"></body></html>';
-					common::egw_exit();
+					egw_framework::window_close();
 				}
-				if ($content['js']) $content['js'] = '<script>'.$content['js'].'</script>';
 			}
 			// on a type-change, set the status to the default status of that type, if the actual status is not supported by the new type
 			if (!array_key_exists($content['info_status'],$this->bo->status[$content['info_type']]))
@@ -2409,7 +2359,6 @@ else
 		if (!empty($_to_emailAddress))
 		{
 			$GLOBALS['egw_info']['flags']['currentapp'] = 'infolog';
-			echo '<script>window.resizeTo(750,550);</script>';
 
 			if (is_array($_attachments))
 			{
