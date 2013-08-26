@@ -73,3 +73,9 @@ function timesheet_upgrade1_7_001()
 {
 	return $GLOBALS['setup_info']['timesheet']['currentver'] = '1.8';
 }
+
+
+function timesheet_upgrade1_8()
+{
+	return $GLOBALS['setup_info']['timesheet']['currentver'] = '1.9.001';
+}
