@@ -81,7 +81,7 @@
  *			}, class="ui-state-error"},
  *	
  *		],
- *		title: 'Why would you want to do <span style="color: red">this</span>?',
+ *		title: 'Why would you want to do this?',
  *		template:"/egroupware/addressbook/templates/default/edit.xet",
  *		value: { content: {...default values}, sel_options: {...}...}
  *	});
