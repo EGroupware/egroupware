@@ -195,8 +195,10 @@ class felamimail_bo
 	public static function getInstance($_restoreSession=true, $_profileID=0, $_validate=true, $_icServerObject=null)
 	{
 		//special case; we get the desired object passed as we need it for the occasion.
-		if (!is_null($_icServerObject)&&!isset(self::$instances[$_profileID]) || $_restoreSession===false)
+		if (!is_null($_icServerObject)&&(!isset(self::$instances[$_profileID]) || $_restoreSession===false))
 		{
+			self::unsetInstance($_profileID); //make sure we reconstruct it
+			emailadmin_bo::unsetCachedObjects($_profileID);
 			self::$instances[$_profileID] = new felamimail_bo('utf-8',$_restoreSession,$_profileID,$_icServerObject);
 //error_log(__METHOD__.__LINE__.array2string(self::$instances[$_profileID]->mailPreferences->getIncomingServer($_profileID)));
 			return self::$instances[$_profileID];
