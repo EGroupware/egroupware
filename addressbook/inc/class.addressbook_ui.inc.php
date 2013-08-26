@@ -1896,6 +1896,7 @@ window.egw_LAB.wait(function() {
 			$content['no_tid'] = true;
 		}
 
+		$content['view'] = false;
 		$content['link_to'] = array(
 			'to_app' => 'addressbook',
 			'to_id'  => $content['link_to']['to_id'],
