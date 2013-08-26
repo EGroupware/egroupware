@@ -509,7 +509,8 @@ egwAction.prototype.execute = function(_senders, _target)
 	}
 
 	// check if actions needs to be confirmed first
-	if (this.data && this.data.confirm && this.onExecute.fcnt != window.nm_action)
+	if (this.data && this.data.confirm && this.onExecute.fcnt != window.nm_action && 
+		typeof et2_dialog != 'undefined')	// let old eTemplate run it's own confirmation from nextmatch_action.js
 	{
 		var self = this;
 		et2_dialog.show_dialog(function(_button)
