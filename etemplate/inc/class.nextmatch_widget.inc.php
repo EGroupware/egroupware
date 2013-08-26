@@ -576,9 +576,9 @@ class nextmatch_widget
 	 * - string 'iconUrl' full url of icon, better use 'icon'
 	 * - boolean|string 'allowOnMultiple' should action be shown if multiple lines are marked, or string 'only', default true!
 	 * - boolean|string 'enabled' is action available, or string with javascript function to call, default true!
-	 * - string 'disableClass' class name to use with enabled='javaScript:nm_not_disableClass'
+	 * - string 'disableClass' class name to disable an action
 	 *   (add that css class in get_rows(), if row lacks rights for an action)
-	 * - boolena 'hideOnDisabled' hide disabled actions, default false
+	 * - boolean 'hideOnDisabled' hide disabled actions, default false
 	 * - string 'type' type of action, default 'popup' for contenxt menus, 'drag' or 'drop'
 	 * - boolean 'default' is that action the default action, default false
 	 * - array  'children' array with actions of submenu
@@ -668,19 +668,6 @@ class nextmatch_widget
 				// by putting them as children
 			}
 			$action['id'] = $prefix.$id;
-
-			// set certain enable functions
-			foreach(array(
-				'enableClass'  => 'javaScript:nm_enableClass',
-				'disableClass' => 'javaScript:nm_not_disableClass',
-				'enableId'     => 'javaScript:nm_enableId',
-			) as $attr => $check)
-			{
-				if (isset($action[$attr]) && !isset($action['enabled']))
-				{
-					$action['enabled'] = $check;
-				}
-			}
 
 			// add all first level popup actions plus ones with enabled = 'javaScript:...' to action_links
 			if ((!isset($action['type']) || in_array($action['type'],array('popup','drag'))) &&	// popup is the default

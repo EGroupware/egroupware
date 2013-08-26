@@ -370,8 +370,8 @@ egwAction.prototype.updateActions = function(_actions, _app)
 				if (typeof elem.confirm != "undefined") elem.confirm = egw.lang(elem.confirm);
 				if (typeof elem.confirm_multiple != "undefined") elem.confirm_multiple = egw.lang(elem.confirm_multiple);
 				
-				// set certain enabled functions
-				if (typeof elem.enabled == "undefined")
+				// set certain enabled functions (if enabled is on it's default of true)
+				if (elem.enabled === true)
 				{
 					if (typeof elem.enableClass != "undefined")
 					{

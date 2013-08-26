@@ -957,7 +957,7 @@ class timesheet_ui extends timesheet_bo
 				'hint' => 'Apply the action on the whole query, NOT only the shown timesheets!!!',
 				'group' => ++$group,
 			),
-			'cat' => nextmatch_widget::category_action(
+			'cat' => etemplate_widget_nextmatch::category_action(
 				'timesheet',++$group,'Change category','cat_'
 			),
 			'status' => array(
@@ -1013,7 +1013,6 @@ class timesheet_ui extends timesheet_bo
 		{
 			if ($actions[$action]['enabled'])
 			{
-				$actions[$action]['enabled'] = 'javaScript:nm_not_disableClass';	// required!
 				$actions[$action]['disableClass'] = 'rowNoEdit';
 			}
 		}
