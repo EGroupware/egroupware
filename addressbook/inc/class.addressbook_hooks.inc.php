@@ -468,4 +468,20 @@ class addressbook_hooks
 	{
 		return true;
 	}
+
+	/**
+	 * ACL rights and labels used
+	 *
+	 * @param string|array string with location or array with parameters incl. "location", specially "owner" for selected acl owner
+	 * @return array acl::(READ|ADD|EDIT|DELETE|PRIVAT|CUSTOM(1|2|3)) => $label pairs
+	 */
+	public static function acl_rights($params)
+	{
+		return array(
+			acl::READ    => 'read',
+			acl::EDIT    => 'edit',
+			acl::ADD     => 'add',
+			acl::DELETE  => 'delete',
+		);
+	}
 }

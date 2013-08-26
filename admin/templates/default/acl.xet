@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.acl.rows" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%">
+			<columns>
+				<column width="24"/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description/>
+					<nextmatch-customfilter id="acl_appname" options="select-app,Application"/>
+					<nextmatch-accountfilter id="acl_location" options="Location"/>
+					<nextmatch-accountfilter id="acl_account" options="All accounts"/>
+					<nextmatch-header label="Rights" span="all"/>
+				</row>
+				<row>
+					<image align="center" src="$row_cont[acl_appname]/navbar" class="admin_aclApp"/>
+					<menulist>
+						<menupopup type="select-app" id="${row}[acl_appname]" readonly="true"/>
+					</menulist>
+					<menulist>
+						<menupopup type="select-account" id="${row}[acl_location]" readonly="true"/>
+					</menulist>
+					<menulist>
+						<menupopup type="select-account" id="${row}[acl_account]" readonly="true"/>
+					</menulist>
+					<description id="${row}[acl1]"/>
+					<description id="${row}[acl2]"/>
+					<description id="${row}[acl4]"/>
+					<description id="${row}[acl8]"/>
+					<description id="${row}[acl16]"/>
+					<description id="${row}[acl64]"/>
+					<description id="${row}[acl128]"/>
+					<description id="${row}[acl256]"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="admin.acl" template="" lang="" group="0" version="1.9.001">
+		<vbox>
+			<description id="msg" class="message"/>
+			<nextmatch id="nm" template="admin.acl.rows"/>
+			<description/>
+		</vbox>
+	</template>
+</overlay>

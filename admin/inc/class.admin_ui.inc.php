@@ -85,7 +85,13 @@ class admin_ui
 				'onExecute' => 'javaScript:app.admin.group',
 				'caption' => 'Edit group',
 				'enableId' => '^/groups/-\\d+',
-							),
+			),
+			'acl' => array(
+				'onExecute' => 'javaScript:app.admin.group',
+				'caption' => 'Access control',
+				'enableId' => '^/groups/-\\d+',
+				'icon' => 'lock',
+			),
 			'delete' => array(
 				'onExecute' => 'javaScript:app.admin.group',
 				'confirm' => 'Delete this group',
@@ -120,6 +126,14 @@ class admin_ui
 				'url' => 'menuaction=admin.uiaccounts.view_user&account_id=$id',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.admin.iframe_location',
+			),
+			'acl' => array(
+				'caption' => 'Access control',
+				'allowOnMultiple' => false,
+				'url' => 'menuaction=admin.admin_acl.index&account_id=$id',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.admin.iframe_location',
+				'icon' => 'lock',
 			),
 		);
 		++$group;

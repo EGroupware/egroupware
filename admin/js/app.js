@@ -168,6 +168,14 @@ app.admin = AppJS.extend(
 					account_id: _senders[0].id.split('/')[2]
 				}));
 				break;
+
+			case 'acl':
+				this.splitter.dock();
+				this.iframe.set_src(egw.link('/index.php', { 
+					menuaction: 'admin.admin_acl.index', 
+					account_id: _senders[0].id.split('/')[2]
+				}));
+				break;
 		}
 	},
 	

@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @package calendar
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004-11 by RalfBecker-At-outdoor-training.de
+ * @copyright (c) 2004-13 by RalfBecker-At-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -707,8 +707,35 @@ class calendar_hooks
 		return $settings;
 	}
 
-	public static function config_validate() {
+	public static function config_validate()
+	{
 		$GLOBALS['egw_info']['server']['found_validation_hook'] = True;
+	}
+
+	/**
+	 * ACL rights and labels used
+	 *
+	 * @param string|array string with location or array with parameters incl. "location", specially "owner" for selected acl owner
+	 * @return array acl::(READ|ADD|EDIT|DELETE|PRIVAT|CUSTOM(1|2|3)) => $label pairs
+	 */
+	public static function acl_rights($params)
+	{
+		$rights = array(
+			acl::CUSTOM2 => 'freebusy',
+			acl::CUSTOM3 => 'invite',
+			acl::READ    => 'read',
+			acl::ADD     => 'add',
+			acl::EDIT    => 'edit',
+			acl::DELETE  => 'delete',
+			acl::PRIVAT  => 'private',
+		);
+		$require_acl_invite = $GLOBALS['egw_info']['server']['require_acl_invite'];
+
+		if (!$require_acl_invite || $require_acl_invite == 'groups' && !($params['owner'] < 0))
+		{
+			unset($rights[acl::CUSTOM3]);
+		}
+		return $rights;
 	}
 }
 

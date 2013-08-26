@@ -37,3 +37,7 @@ tr.adminAccountInactive .adminStatus {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
+img.admin_aclApp {
+	width: 16px;
+}

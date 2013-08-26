@@ -45,6 +45,7 @@ $setup_info['calendar']['hooks']['config_validate'] = 'calendar_hooks::config_va
 $setup_info['calendar']['hooks']['timesheet_set'] = 'calendar.calendar_bo.timesheet_set';
 $setup_info['calendar']['hooks']['infolog_set'] = 'calendar.calendar_bo.infolog_set';
 $setup_info['calendar']['hooks']['export_limit'] = 'calendar_hooks::getAppExportLimit';
+$setup_info['calendar']['hooks']['acl_rights'] = 'calendar_hooks::acl_rights';
 
 /* Dependencies for this app to work */
 $setup_info['calendar']['depends'][] = array(

@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -556,5 +556,22 @@ class infolog_hooks
 				$async->set_timer(array('hour' => 2),'infolog-async-notification','infolog.infolog_bo.async_notification',null);
 			}
 		}
+	}
+
+	/**
+	 * ACL rights and labels used
+	 *
+	 * @param string|array string with location or array with parameters incl. "location", specially "owner" for selected acl owner
+	 * @return array acl::(READ|ADD|EDIT|DELETE|PRIVAT|CUSTOM(1|2|3)) => $label pairs
+	 */
+	public static function acl_rights($params)
+	{
+		return array(
+			acl::READ    => 'read',
+			acl::ADD     => 'add',
+			acl::EDIT    => 'edit',
+			acl::DELETE  => 'delete',
+			acl::PRIVAT  => 'private',
+		);
 	}
 }
