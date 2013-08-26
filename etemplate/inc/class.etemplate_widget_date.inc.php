@@ -91,7 +91,6 @@ class etemplate_widget_date extends etemplate_widget_transformer
 			{
 				$valid = (int)$value;
 			}
-
 			// string with formatting letters like for php's date() method
 			elseif (($valid = date($this->attrs['dataformat'], $value)))
 			{

@@ -202,15 +202,8 @@ var et2_date = et2_inputWidget.extend(
 			// User blanked the box
 			return null;
 		}
-		if(this._type == "date-timeonly")
-		{ 
-			return this.input_date.val();
-		}
-		else
-		{
-			// Convert to timestamp
-			return Math.round(this.date.valueOf() / 1000);
-		}
+		// Convert to timestamp
+		return Math.round(this.date.valueOf() / 1000);
 	}
 });
 et2_register_widget(et2_date, ["date", "date-time", "date-timeonly"]);
