@@ -113,6 +113,7 @@ bulk password reset	admin	en	Bulk password reset
 calculate next run	admin	en	Calculate next run
 calendar recurrence horizont in days (default 1000)	admin	en	Calendar recurrence horizon in days. Default = 1000.
 can change password	admin	en	Can change password
+can not change users into groups, same sign required!	admin	en	Can NOT change users into groups, same sign required!
 cancel testjob!	admin	en	Cancel TestJob!
 cancel this scheduled command	admin	en	Cancel this scheduled command
 categories list	admin	en	Categories list
@@ -201,6 +202,7 @@ deny all users access to create and manage private categories ?	admin	en	Deny al
 deny all users access to grant other users access to their entries ?	admin	en	Deny the right for all users to grant access to their entries
 deny all users access to preferences ?	admin	en	Deny all users access to preferences
 description can not exceed 255 characters in length !	admin	en	Description can not exceed 255 characters in length!
+destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	en	Destination account #%1 does exist and is NOT renamed itself! Can not merge accounts, it will violate unique contains. Delete with transfer of data instead.
 determines the order the fields are displayed	admin	en	Determines the order the fields are displayed
 disable	admin	en	Disable
 disable "auto completion" of the login form	admin	en	Disable "auto completion" of the login form
@@ -242,8 +244,8 @@ email address	admin	en	Email address
 empty to not change	admin	en	empty to NOT change
 enable	admin	en	Enable
 enable debug-messages	admin	en	Enable debug messages.
-enable the soap service	admin	en	Enable the soap service.
 enable spellcheck in rich text editor	admin	en	Enable spellcheck in rich text editor
+enable the soap service	admin	en	Enable the soap service.
 enable the xmlrpc service	admin	en	Enable the xmlrpc service.
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 enabled - popup window	admin	en	Enabled - Popup window
@@ -289,7 +291,9 @@ explanation of ldapman	admin	en	This module has been tested so far for POSTFIX, 
 exports groups into a csv file.	admin	en	Exports groups into a CSV file.
 exports users into a csv file.	admin	en	Exports users into a CSV file.
 failed to change password for account "%1"!	admin	en	Failed to change password for account "%1"!
+failed to change password.	admin	en	Failed to change password.
 failed to mount backup directory!	admin	en	Failed to mount Backup directory!
+failed to save user!	admin	en	Failed to save user!
 fallback (after each pageview)	admin	en	Fallback, after each page view.
 false	admin	en	False
 field '%1' already exists !!!	admin	en	Field '%1' already exists!
@@ -307,6 +311,7 @@ global categories	common	en	Global categories
 go directly to admin menu, returning here the next time you click on administration.	admin	en	Go directly to admin menu, returning here the next time you click on administration.
 governmental: incl. state or municipal authorities or services	admin	en	Governmental: incl. state or municipal authorities or services
 grant	admin	en	Grant
+group #%1 must have negative sign!	admin	en	Group #%1 must have negative sign!
 group ?	admin	en	Group?
 group csv export	admin	en	Group CSV export
 group csv import	admin	en	Group CSV import
@@ -426,6 +431,7 @@ no modes available	admin	en	No modes available!
 no permission to add groups	admin	en	No permission to add groups!
 no permission to add users	admin	en	No permission to add users!
 no permission to create groups	admin	en	No permission to create groups!
+no profile defined for user %1	admin	en	No profile defined for user %1
 non profit: clubs, associations, ...	admin	en	Non profit: Clubs, Associations, ...
 note: ssl available only if php is compiled with curl support	admin	en	Note: SSL available only if PHP is compiled with curl support.
 notification mail	admin	en	Notification mail
@@ -541,6 +547,7 @@ sorry, that group name has already been taken.	admin	en	Sorry, that group name h
 sorry, the above users are still a member of the group %1	admin	en	Sorry, the above users are still a member of the group %1 .
 sorry, the follow users are still a member of the group %1	admin	en	Sorry, the follow users are still a member of the group %1 .
 sort the entries	admin	en	Sort the entries
+source account #%1 does not exist!	admin	en	Source account #%1 does NOT exist!
 ssl	admin	en	ssl
 standard	admin	en	Standard
 standard imap server	admin	en	Standard IMAP server
@@ -644,6 +651,7 @@ xml-rpc	admin	en	XML-RPC
 yes, but no scayt	admin	en	Yes, but no Spell Check As You Type (online)
 yes, use browser based spell checking engine	admin	en	Yes, use browser based spell checking engine
 yes, use webspellchecker	admin	en	Yes, use online WebSpellChecker
+you can not use --dry-run together with --skip-checks!	admin	en	You can NOT use --dry-run together with --skip-checks!
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	en	You can change the hash only, if you set a random password or currently use plaintext passwords!
 you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date!
 you have no email address for your user set !!!	admin	en	You have no email address set for your user!
