@@ -85,7 +85,7 @@ function etemplate2(_container, _menuaction)
 	this.menuaction = _menuaction;
 	
 	// Unique ID to prevent DOM collisions across multiple templates
-	this.uniqueId = _container.getAttribute("id").replace('.','-');
+	this.uniqueId = _container.getAttribute("id") ? _container.getAttribute("id").replace('.','-') : '';
 	
 	// Preset the object variable
 	this.widgetContainer = null;
