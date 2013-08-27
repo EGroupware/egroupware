@@ -41,6 +41,7 @@ how many of the resources are useable?	resources	fr	Combien de ces ressources so
 how many of them are useable?	resources	fr	Combien parmi elle sont utilisables?
 how many of this resource are usable	resources	fr	Combien sont utilisables
 how many of this resource exists	resources	fr	Combien en existe-t-il
+if you specify an export definition, it will be used when you export	resources	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
 implies booking permission	resources	fr	implique la permission de lire le calendrier
 implies read permission	resources	fr	implique la permission de lecture
 information about storage	resources	fr	Informations sur le lieu
