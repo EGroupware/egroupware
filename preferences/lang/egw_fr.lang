@@ -15,6 +15,7 @@ charset for the csv export	addressbook	fr	Jeu de caractères pour l'exportation 
 click to select a color	preferences	fr	Cliquez pour sélectionner une couleur
 color	preferences	fr	Couleur
 country	preferences	fr	Pays
+data exchange settings	preferences	fr	Paramètres d'échange de données
 date format	preferences	fr	Format de date
 default	preferences	fr	Défaut
 default application	preferences	fr	Application par défaut
@@ -27,6 +28,7 @@ enter your new password	preferences	fr	Entrez votre nouveau mot de passe
 enter your old password	preferences	fr	Entrez votre ancien mot de passe
 failed to change password.	preferences	fr	Erreur lors du changement de mot de passe.
 forced preferences	preferences	fr	Préférences forcées
+general settings	preferences	fr	Paramètres principaux
 help off	preferences	fr	Aide désactivée
 hours	preferences	fr	Heures
 how do you like to display accounts	preferences	fr	Comment souhaitez-vous afficher les comptes
@@ -46,6 +48,7 @@ no default	preferences	fr	Pas de défaut
 no user-selection at all	common	fr	L'utilisateur n'a rien sélectionné.
 note: this feature does *not* change your email password. this will	preferences	fr	note: cette fonctionnalité ne change *pas* votre mot de passe de compte EMail. Ceci devra
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	fr	Note: cette fonctionnalité ne change *pas* votre mot de passe de compte EMail. Ceci devra être fait manuellement.
+notification settings	preferences	fr	Paramètres de notification
 please, select a new theme	preferences	fr	SVP, choisissez un nouveau thème
 popup with search	preferences	fr	Ouvre une fenêtre Popup avec la recherche
 re-enter your password	preferences	fr	Ré-entrez votre mot de passe
