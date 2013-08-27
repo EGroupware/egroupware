@@ -867,7 +867,7 @@ class timesheet_ui extends timesheet_bo
 				'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
 				'header_left'    => 'timesheet.index.dates',
 				'header_right'   => 'timesheet.index.add',
-				'filter_onchange' => "app.timesheet.timesheet_filter_change();",
+				'filter_onchange' => "app.timesheet.filter_change();",
 				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 				'row_id'         => 'ts_id',
 				//'actions'        => $this->get_actions(),

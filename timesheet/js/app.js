@@ -60,14 +60,14 @@ app.timesheet = AppJS.extend(
 
 		if (typeof et2.templates['timesheet.index'] != "undefined")
 		{
-			this.timesheet_filter_change();
+			this.filter_change();
 		}
 	},
 
 	/**
 	 *
 	 */
-	timesheet_filter_change: function()
+	filter_change: function()
 	{
 		var filter = this.et2.getWidgetById('filter');
 		var dates = this.et2.getWidgetById('timesheet.index.dates');

@@ -809,10 +809,10 @@ class infolog_ui
 		if(!isset($values['nm']['filter2'])) $values['nm']['filter2'] = $this->prefs['show_links'];
 
 		//apply infolog_filter_change javascript method (hide/show of date filter form) over onchange filter
-		$values['nm']['filter_onchange'] = "app.infolog.infolog_filter_change();";
+		$values['nm']['filter_onchange'] = "app.infolog.filter_change();";
 
 		//apply infolog_filter2_change javascript method (show/hide details each rows) over onchange filter2
-		$values['nm']['filter2_onchange'] = "app.infolog.infolog_filter2_change();";
+		$values['nm']['filter2_onchange'] = "app.infolog.filter2_change();";
 
 		// disable columns for main entry as set in the pref for details or no details
 		if ($action == 'sp')
@@ -1127,7 +1127,7 @@ class infolog_ui
 			'caption' => 'Delete',
 			'group' => ++$group,
 			'disableClass' => 'rowNoDelete',
-			'onExecute' => 'app.infolog.infolog_confirm_delete',
+			'onExecute' => 'app.infolog.confirm_delete',
 		);
 		if ($query['col_filter']['info_status'] == 'deleted')
 		{

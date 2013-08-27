@@ -67,7 +67,7 @@ app.infolog = AppJS.extend(
 	/**
 	 *
 	 */
-	infolog_filter_change: function()
+	filter_change: function()
 	{
 
 		var filter = this.et2.getWidgetById('filter');
@@ -86,7 +86,7 @@ app.infolog = AppJS.extend(
 	 * either 'all' for details or 'no_description' for no details
 	 *
 	 */
-	infolog_filter2_change: function()
+	filter2_change: function()
 	{
 		var nm = this.et2.getWidgetById('nm');
 		var filter2 = this.et2.getWidgetById('filter2');
@@ -133,7 +133,7 @@ app.infolog = AppJS.extend(
 	 *@param _action
 	 *@param _senders
 	 */
-	infolog_confirm_delete: function(_action, _senders)
+	confirm_delete: function(_action, _senders)
 	{
 		var children = false;
 		var child_button = jQuery('#delete_sub').get(0) || jQuery('[id*="delete_sub"]').get(0);
@@ -158,7 +158,7 @@ app.infolog = AppJS.extend(
 	 * @param ab_id
 	 * @param info_cc
 	 */
-	infolog_add_email_from_ab: function(ab_id,info_cc)
+	add_email_from_ab: function(ab_id,info_cc)
 	{
 		var ab = document.getElementById(ab_id);
 
@@ -191,7 +191,7 @@ app.infolog = AppJS.extend(
 	* @param string percent_id
 	* @param string datecompleted_id
 	*/
-	infolog_status_changed: function(changed_id, status_id, percent_id, datecompleted_id)
+	status_changed: function(changed_id, status_id, percent_id, datecompleted_id)
 	{
 		var status = document.getElementById(status_id);
 		var percent = document.getElementById(percent_id);
@@ -248,9 +248,9 @@ app.infolog = AppJS.extend(
 	/**
 	 * handle "print" action from "Actions" selectbox in edit infolog window.
 	 * check if the template is dirty then submit the template otherwise just open new window as print.
-	 * 
+	 *
 	 */
-	infolog_edit_actions: function()
+	edit_actions: function()
 	{
 		var widget = this.et2.getWidgetById('action');
 		var template = this.et2._inst;
