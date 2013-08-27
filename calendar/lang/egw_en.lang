@@ -7,6 +7,7 @@
 %1 weeks	calendar	en	%1 weeks
 %s the event	calendar	en	%s the event
 (%1 events in %2 seconds)	calendar	en	(%1 events in %2 seconds)
+(empty = use global limit, no = no export at all)	admin	en	(empty = use global limit, no = no export at all)
 , exceptions preserved	calendar	en	, exceptions preserved
 , stati of participants reset	calendar	en	, status of participants reset
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	en	<b>Please note</b>: The calendar use the holidays of your country, which is set to %1. You can change it in your %2.<br />Holidays are %3 automatic installed from %4. You can change it in %5.
@@ -20,6 +21,7 @@ action that caused the notify: added, canceled, accepted, rejected, ...	calendar
 actions	calendar	en	Actions
 actions...	calendar	en	Actions...
 add alarm	calendar	en	Add alarm
+add current view as favorite	calendar	en	Add current view as favorite
 add timesheet entry	calendar	en	Add timesheet entry
 added	calendar	en	Added
 added by synchronisation	calendar	en	Added by synchronisation
@@ -87,6 +89,7 @@ category acl only restrict adding a category to an event or changing status of a
 chair	calendar	en	Chair
 change history	calendar	en	Change history
 change your status	calendar	en	Change your status
+charset of file	calendar	en	Charset of file
 check all	calendar	en	Check all
 choose a category	calendar	en	Choose a category
 close the window	calendar	en	Close the window
@@ -173,6 +176,7 @@ enddate / -time of the meeting, eg. for more then one day	calendar	en	End date /
 enddate of the export	calendar	en	End date of the export
 ends	calendar	en	Ends
 error adding the alarm	calendar	en	Error adding the alarm
+error saving the event!	calendar	en	Error saving the event!
 error: can't delete original series!	calendar	en	Error: Can't delete original series!
 error: duration of event longer then recurrence interval!	calendar	en	Error: Duration of event longer then recurrence interval!
 error: importing the ical	calendar	en	Error: importing the iCal!
@@ -188,16 +192,22 @@ event details follow	calendar	en	Event details follow
 event saved	calendar	en	Event saved.
 event will occupy the whole day	calendar	en	Event will occupy the whole day
 every user can invite other users and groups	admin	en	Every user can invite other users and groups
+example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	calendar	en	Example {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - search the field "n_prefix", for "Mr", if found, write Hello Mr., else write Hello Ms.
+example {{letterprefixcustom n_prefix title n_family}} - example: mr dr. james miller	calendar	en	Example {{LETTERPREFIXCUSTOM n_prefix title n_family}} - Example: Mr Dr. James Miller
+example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	calendar	en	Example {{NELF role}} - if field role is not empty, you will get a new line with the value of field role
+example {{nelfnv role}} - if field role is not empty, set a lf without any value of the field	calendar	en	Example {{NELFNV role}} - if field role is not empty, set a LF without any value of the field
 exception	calendar	en	Exception
 exception created - you can now edit or delete it	calendar	en	Exception created - you can now edit or delete it.
 exceptions	calendar	en	Exceptions
 execute a further action for this entry	calendar	en	Execute a further action for this entry
 existing links	calendar	en	Existing links
 exists	calendar	en	Exists
+export definition to use for nextmatch export	calendar	en	Export definition to use for nextmatch export
 exports events from your calendar in ical format.	calendar	en	Exports events from your Calendar in iCal format.
 exports events from your calendar into a csv file.	calendar	en	Exports events from your Calendar into a CSV File.
 extended	calendar	en	Extended.
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	en	Extended updates always include the complete event-details. iCal's can be imported by certain other calendar-applications.
+favorites	calendar	en	Favorites
 fieldseparator	calendar	en	Field separator
 filemanager	calendar	en	Filemanager
 filename	calendar	en	File name
@@ -219,6 +229,8 @@ freetime search	calendar	en	Freetime Search
 fri	calendar	en	Fri
 full description	calendar	en	Full description
 fullname of person to notify	calendar	en	Full name of a person to notify
+general fields:	calendar	en	General fields:
+general settings	calendar	en	General settings
 global categories	calendar	en	Global Categories
 global public and group public	calendar	en	Global public and group public
 global public only	calendar	en	Global public only
@@ -247,6 +259,7 @@ how many describtion lines should be directly visible. further lines are availab
 how many minutes should each interval last?	calendar	en	How many minutes should each interval last?
 how many weeks should the multiple week view show?	calendar	en	How many weeks should the multiple week view show?
 how much entries to skip	calendar	en	How much entries to skip?
+html link to the current record	calendar	en	HTML link to the current record
 ical	calendar	en	iCal
 ical / rfc2445	calendar	en	iCal / rfc2445
 ical export	calendar	en	iCal export
@@ -257,7 +270,11 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if start day differs	calendar	en	If start day differs
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	en	If you don't set a password here, the information is available to everyone, who knows the URL!
 if you select a range (month, week, etc) instead of a list of entries, these extra fields are available	calendar	en	If you select a range (month, week, etc) instead of a list of entries, these extra fields are available.
+if you specify a directory (full vfs path) here, %1 displays an action for each document. that action allows to download the specified document with the data inserted.	calendar	en	If you specify a directory (full vfs path) here, %1 displays an action for each document. That action allows to download the specified document with the data inserted.
+if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	calendar	en	If you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
+if you specify an export definition, it will be used when you export	calendar	en	If you specify an export definition, it will be used when you export
 ignore conflict	calendar	en	Ignore conflict
+import	calendar	en	Import
 import csv-file	common	en	Import CSV file
 imports events into your calendar from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	calendar	en	Imports events into your Calendar from a CSV File. CSV means 'Comma Separated Values'. However in the options tab you can also choose other separators.
 imports events into your calendar from an ical file.	calendar	en	Imports events from an iCal file into your calendar.
@@ -273,19 +290,24 @@ it can not read timezones from sqlite database %1!	calendar	en	It can NOT read t
 keep exceptions	calendar	en	Keep exceptions
 keep the series unchanged.	calendar	en	Keep the series unchanged.
 last	calendar	en	Last
+last changed	calendar	en	Last changed
 lastname of person to notify	calendar	en	Last name of a person to notify
 length of the time interval	calendar	en	Length of the time interval
 limit number of description lines in list view (default 5, 0 for no limit)	calendar	en	Limit number of description lines in list view. Default is 5, 0 for no limit.
 link	calendar	en	Link to event
 link to view the event	calendar	en	Link to view the event
 links	calendar	en	Links
+links and attached files	calendar	en	Links and attached files
+links to specified application.  example: {{links/infolog}}	calendar	en	Links to specified application.  Example: {{links/infolog}}
 links, attachments	calendar	en	Links, Attachments
+list of files linked to the current record	calendar	en	List of files linked to the current record
 listview	calendar	en	List view
 location	calendar	en	Location
 location to autoload from	admin	en	Location to autoload from
 location, start- and endtimes, ...	calendar	en	Location, start and end times, ...
 mail all participants	calendar	en	Mail all participants
 make freebusy information available to not loged in persons?	calendar	en	Make Free/Busy information available to not logged in persons
+manage mapping	calendar	en	Manage mapping
 max. number of entries to show (leave empty for no restriction)	calendar	en	Max. number of entries to show. Leave empty for no restriction.
 maximum available quantity of %1 exceeded!	calendar	en	Maximum available quantity of %1 exceeded!
 meeting request	calendar	en	Meeting request
@@ -312,8 +334,10 @@ no filter	calendar	en	No filter
 no matches found	calendar	en	No matches found.
 no meeting requests	calendar	en	No meeting requests
 no owner selected	calendar	en	No owner selected.
+no preview for ical	calendar	en	No preview for iCal
 no recurrence	calendar	en	No recurrence
 no response	calendar	en	No response
+no rights to export more than %1 entries!	calendar	en	No rights to export more than %1 entries!
 non blocking	calendar	en	Non blocking
 not	calendar	en	Not
 not rejected	calendar	en	Not rejected
@@ -330,6 +354,7 @@ number of records to read (%1)	calendar	en	Number of records to read (%1)
 number of weeks to show	calendar	en	Number of weeks to show
 observance rule	calendar	en	Observance rule
 occurence	calendar	en	Occurrence
+old fixed definition	calendar	en	Old fixed definition
 old startdate	calendar	en	Old start date
 olddate	calendar	en	Original date
 on %1 %2 %3 your meeting request for %4	calendar	en	On %1 %2 %3 your meeting request for %4
@@ -422,6 +447,7 @@ setting lock time calender	admin	en	Setting data lock time for Calendar (default
 shall the date parameter be accepted (e.g. from calendar module)?	calendar	en	Shall the date parameter be accepted, e.g. from calendar module?
 should new events created as private by default ?	calendar	en	Should new events be created as private by default?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is	calendar	en	Should not logged in persons be able to see your FreeBusy information? You can set an extra password, different from your normal password, to protect this information. The FreeBusy information is in iCal format and only include the times when you are busy. It does not include the event names, descriptions or locations. The URL to your FreeBusy information is
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="https://translation.stylite.de/egroupware/calendar/freebusy.php/?user=spirea" target="_blank">https://translation.stylite.de/egroupware/calendar/freebusy.php/?user=spirea</a>	calendar	en	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is <a href="https://translation.stylite.de/egroupware/calendar/freebusy.php/?user=spirea" target="_blank">https://translation.stylite.de/egroupware/calendar/freebusy.php/?user=spirea</a>
 should the grid be shown in the calendar	calendar	en	Should the grid be shown in the calendar
 should the number of weeks be shown on top of the calendar	calendar	en	Should the number of weeks be shown on top of the calendar
 should the number of weeks be shown on top of the calendar (only if offset = 0)	calendar	en	Should the number of weeks be shown on top of the calendar (only if offset = 0)
@@ -468,7 +494,9 @@ tag to mark positions for address labels	calendar	en	Tag to mark positions for a
 tentative	calendar	en	Tentative
 test import (show importable records <u>only</u> in browser)	calendar	en	Test import, show importable records <u>only</u> in browser.
 the apple ical apps use this color to display events from this calendar.	calendar	en	The Apple iCal Apps use this color to display events from this calendar.
+the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	calendar	en	The document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).
 the exceptions are deleted together with the series.	calendar	en	The exceptions are deleted together with the series.
+the following document-types are supported:	calendar	en	The following document-types are supported:
 the original series will be terminated today and a new series be created.	calendar	en	The original series will be terminated today and a new series be created.
 the resource you selected is already overbooked:	calendar	en	The resource you selected is already over-booked:
 this day is shown as first day in the week or month view.	calendar	en	This day is shown as first day in the week or month view.
@@ -500,13 +528,16 @@ timezone	calendar	en	Time zone
 timezone in which recurrences have identical time	calendar	en	Time zone in which recurrences have identical time
 timezone of event exports	calendar	en	Time zone of event exports
 timezone of event ical file import/export	calendar	en	Time zone of event iCal file import|export
+timezones aliases updated to version %1 (%2 records updated).	calendar	en	Timezones aliases updated to version %1 (%2 records updated).
 timezones updated to version %1 (%2 records updated).	calendar	en	Time zones updated to version %1, %2 records updated.
 title of the event	calendar	en	Title of the event
+titles of any entries linked to the current record, excluding attached files	calendar	en	Titles of any entries linked to the current record, excluding attached files
 to many might exceed your execution-time-limit	calendar	en	Too many might exceed your execution time limit
 to-firstname	calendar	en	To first name
 to-fullname	calendar	en	To full name
 to-lastname	calendar	en	To last name
 tomorrow	calendar	en	Tomorrow
+translation	calendar	en	Translation
 tue	calendar	en	Tue
 two weeks	calendar	en	Two weeks
 type of planner	calendar	en	Type of planner
