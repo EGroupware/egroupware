@@ -1,11 +1,16 @@
+%1 timesheets(s) %2	timesheet	fr	%1 feuille(s) de temps %2
+%1 timesheets(s) %2, %3 failed because of insufficent rights !!!	timesheet	fr	%1 feuille(s) de temps %2, %3 en échec pour cause de droits insuffisants !
 --> enter new name	timesheet	fr	--> entrez un nouveau nom
 2 month ago	timesheet	fr	Il y a 2 mois
 2 years ago	timesheet	fr	Il y a 2 ans
 3 years ago	timesheet	fr	Il y a 3 ans
 all projects	timesheet	fr	Tous les projets
+and its members	timesheet	fr	Et ses mebres
 applies the changes	timesheet	fr	appliquer les changements
+apply the action on the whole query, not only the shown timesheets!!!	timesheet	fr	Appliquer l'action sur la requête entière, PAS SEULEMENT sur les feuilles de temps affichés !
 both: allow to use projectmanager and free project-names	admin	fr	Les deux: permettre l'utilisation du Gestionnaire de projets et l'utilisation de noms de projets libres
 by	timesheet	fr	par
+changed status	timesheet	fr	Statut modifié.
 check all	timesheet	fr	Vérifier tout
 comment by %1 at %2:	timesheet	fr	Commentaire par %1 à %2:
 create new links	timesheet	fr	Créer de nouveaux liens
@@ -27,6 +32,8 @@ error deleting the entry!!!	timesheet	fr	Erreur lors de la suppression de l'entr
 error saving the entry!!!	timesheet	fr	Erreur lors de l'enregistrement de l'entrée !!!
 existing links	timesheet	fr	Liens existants
 export	timesheet	fr	Exportation
+export to openoffice spreadsheet	timesheet	fr	Export vers un classeur OpenOffice
+exports entries from your timesheet into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	timesheet	fr	Exporter les éléments de feuilles de temps vers un fichier CSV. CSV tient pour "Comma Separated Values". Dans l'onglet Options, vous pouvez aussi choisir d'autres séparateurs.
 field must not be empty !!!	timesheet	fr	Le champ ne doit pas être vide !!!
 full: use only projectmanager	admin	fr	Complet: utiliser seulement le Gestionnaire de projets
 general	timesheet	fr	Général
@@ -42,10 +49,15 @@ leaves without saveing	timesheet	fr	Quitter sans enregistrer
 length<br>rows	timesheet	fr	Longueur<br>lignes
 links	timesheet	fr	Liens
 max length of the input [, length of the inputfield (optional)]	timesheet	fr	Longueur maximum de l'entrée [, longueur du champ de saisi (optionnel)]
+new ticket submitted by %1 at %2	timesheet	fr	Nouveau ticket soumis par %1 à %2
+new timesheet submitted by %1 at %2	timesheet	fr	Nouvelle feuille de temps soumis par %1 à %2
 no details	timesheet	fr	pas de détails
 no project	timesheet	fr	Pas de projet
+no status	timesheet	fr	Pas de statut
 none: use only free project-names	admin	fr	Aucun: utiliser seulement des noms de projets libres
 number of row for a multiline inputfield or line of a multi-select-box	timesheet	fr	Nombre de lignes pour un champ multiligne ou pour une boîte de sélection multiple.
+only admin	timesheet	fr	Seulement les administrateurs
+only admin can edit this status	timesheet	fr	Seulement les administrateurs peuvent modifier les feuilles de temps avec ce statut
 or endtime	timesheet	fr	ou Date de fin
 order	timesheet	fr	Ordre
 parent	timesheet	fr	Parent
@@ -59,16 +71,30 @@ saves the changes made and leaves	timesheet	fr	Enregistrer les modifications et 
 saves this entry and add a new one	timesheet	fr	Enregistrer cette entrée et en ajouter une nouvelle
 select a price	timesheet	fr	Choisissez un prix
 select a project	timesheet	fr	Choisissez un projet
+select a status of the timesheet	timesheet	fr	Choisissez un statut de la feuille de temps
+select infolog	timesheet	fr	Choisissez un infolog
+select multiple timeshhets for a further action	timesheet	fr	Sélectionner plusieurs feuilles de temps pour un action
+select the predefined status, whan creating a new timesheet	timesheet	fr	Choisissez un statut par défaut pour la création d'une nouvelle entrée.
 start	timesheet	fr	Début
 starttime	timesheet	fr	Heure de début
 starttime has to be before endtime !!!	timesheet	fr	L'heure de début doit être avant l'heure de fin !!!
-sum %1:	timesheet	fr	Somme %1:
+status deleted.	timesheet	fr	Statut supprimé.
+status of created timesheets	timesheet	fr	Statut des feuilles de temps créés.
+status updated.	timesheet	fr	Statut mis à jour.
+sum %1:	timesheet	fr	Somme %1 :
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	fr	Nom utilisé en interne (<= 20 caractères), le changer rendra certaines données inaccessibles.
 the text displayed to the user	timesheet	fr	le texte montré à l'utilisateur
 this month	timesheet	fr	Ce mois
 this week	timesheet	fr	Cette semaine
 this year	timesheet	fr	Cette année
+ticket modified by %1 at %2	timesheet	fr	Ticket modifié par %1 à %2
 timesheet	common	fr	Feuille de temps
+timesheet csv export	timesheet	fr	Export CSV de feuilles de temps
+timesheet modified by %1 at %2	timesheet	fr	Feuille de temps modifié par by %1 à %2
+timesheet openoffice export	timesheet	fr	Export OpenOffice de feuille de temps
+timesheet status-%1 '%2' added.	timesheet	fr	Statut de feuille de temps - %1 '%2' ajouté.
+timesheet-%1 '%2' updated.	timesheet	fr	Feuille de temps - %1 '%2' mis à jour.
+timesheet-%1 deleted.	timesheet	fr	Feuille de temps - %1 supprimé.
 tracker	timesheet	fr	Traqueur
 unitprice	timesheet	fr	Prix à l'unité
 values for selectbox	timesheet	fr	Valeurs des boîtes de sélection
