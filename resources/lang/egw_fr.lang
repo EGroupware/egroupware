@@ -39,6 +39,7 @@ how many of the resources are useable?	resources	fr	Combien de ces ressources so
 how many of them are useable?	resources	fr	Combien parmi elle sont utilisables?
 how many of this resource are usable	resources	fr	Combien sont utilisables
 how many of this resource exists	resources	fr	Combien en existe-t-il
+if you specify an export definition, it will be used when you export	resources	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
 implies booking permission	resources	fr	implique la permission de lire le calendrier
 implies read permission	resources	fr	implique la permission de lecture
 information about storage	resources	fr	Informations sur le lieu
@@ -65,6 +66,7 @@ picture source	resources	fr	source de l'image
 picture type is not supported, sorry!	resources	fr	Type d'image non supporté, désolé!
 pictures or resource	resources	fr	Images ou ressource
 planer	resources	fr	planificateur
+prevent deleting	admin	fr	Empêcher la suppression
 prizeing information for booking or buying	resources	fr	Information de Prix  pour la réservation ou les achats
 quantity	resources	fr	Quantité
 quantity of resource	resources	fr	Quantité de ressource
