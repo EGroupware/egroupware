@@ -101,7 +101,7 @@
 	var window_close = egw_script.getAttribute('data-window-close');
 	if (window_close)
 	{
-		if (typeof window_close == 'string' && window_close !== 'true')
+		if (typeof window_close == 'string' && window_close !== '1')
 		{
 			alert(window_close);
 		}		
