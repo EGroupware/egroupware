@@ -113,6 +113,7 @@ bulk password reset	admin	fr	Réinitailisation en série des mots de passe
 calculate next run	admin	fr	Calculer la prochaine exécution
 calendar recurrence horizont in days (default 1000)	admin	fr	Horizon de la récurrence des calendrier en jours. Défaut = 1000.
 can change password	admin	fr	Peut modifier son mot de passe
+can not change users into groups, same sign required!	admin	fr	Vous ne pouvez pas transformer un utilisateur en groupe ! (valeur id de même signe nécessaire)
 cancel testjob!	admin	fr	Annuler le Travail de test !
 cancel this scheduled command	admin	fr	Annuler cette commande programmée
 categories list	admin	fr	Liste des catégories
@@ -201,7 +202,8 @@ deny all users access to create and manage private categories ?	admin	fr	Refuser
 deny all users access to grant other users access to their entries ?	admin	fr	Refuser à tous les utilisateur le droit d'accorder des accès sur leurs données
 deny all users access to preferences ?	admin	fr	Refuser à tous les utilisateurs l'accès aux préférences
 description can not exceed 255 characters in length !	admin	fr	La description ne peut dépasser 255 caractères de long !
-determines the order the fields are displayed	admin	fr	Détermine l'ordre d'afficahge des champs
+destination account #%1 does exist and is not renamed itself! can not merge accounts, it will violate unique contains. delete with transfer of data instead.	admin	fr	Le compte de destination #%1 existe déjà et ne peut être renommé !  Impossible de fusionner les comptes, cela violerait les contraintes d'intégrité.  Essayez plutôt de supprimer avec transfert de données
+determines the order the fields are displayed	admin	fr	Détermine l'ordre d'affichage des champs
 disable	admin	fr	Désactiver
 disable "auto completion" of the login form	admin	fr	Désactiver l'auto-complétion dans le formulaire de login
 disable minifying of javascript and css files	admin	fr	Désactiver la minification du code javascript et css
@@ -288,6 +290,7 @@ explanation of ldapman	admin	fr	Ce module a été testé avec POSTFIX, LDAP, Cou
 exports groups into a csv file.	admin	fr	Exporter les groupes dans un fichier CSV.
 exports users into a csv file.	admin	fr	Exporter les utilisateurs dans un fichier CSV.
 failed to change password for account "%1"!	admin	fr	Echec du changement de mot de passe pour le compte "%1" !
+failed to change password.	admin	fr	Erreur lors du changement de mot de passe.
 failed to mount backup directory!	admin	fr	Echec du montage du répertoire Backup !
 fallback (after each pageview)	admin	fr	retour au défaut (après chaque prévisualisation)
 false	admin	fr	Faux
@@ -410,21 +413,22 @@ more secure	admin	fr	Plus sécurisé
 mount backup directory to %1	admin	fr	Monter le répertoire de backup sur %1
 must change password upon next login	admin	fr	Doit changer de mot de passe à la prochaine connexion
 name must not be empty !!!	admin	fr	Le nom ne doit pas être vide !
-name of the egroupware instance, eg. default	admin	fr	Nom de l'instance d'EGroupware
+name of the egroupware instance, eg. default	admin	fr	Nom de l'instance d'eGroupware
 new group name	admin	fr	Nouveau nom de groupe
 new name	admin	fr	Nouveau nom
 new password	admin	fr	Nouveau mot de passe
 new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laisser vide pour aucun changement ]
 next run	admin	fr	Prochain démarrage
-no algorithms available	admin	fr	Pas d'algorithme disponible
-no alternate email address	admin	fr	Pas d'adresse email alternative
+no algorithms available	admin	fr	Pas d'algorithme disponible !
+no alternate email address	admin	fr	Pas d'adresse email alternative !
 no jobs in the database !!!	admin	fr	Pas de travaux dans la base de données !
-no login history exists for this user	admin	fr	Aucun historique de connexion n'existe pour cet utilisateur
-no matches found	admin	fr	Aucune occurrence trouvée
-no modes available	admin	fr	Pas de modes disponibles
-no permission to add groups	admin	fr	Aucune permission pour ajouter des groupes
-no permission to add users	admin	fr	Aucune permission pour ajouter des utilisateurs
-no permission to create groups	admin	fr	Aucune permission pour créer des groupes
+no login history exists for this user	admin	fr	Aucun historique de connexion n'existe pour cet utilisateur !
+no matches found	admin	fr	Aucune occurrence trouvée !
+no modes available	admin	fr	Pas de modes disponibles !
+no permission to add groups	admin	fr	Aucune permission pour ajouter des groupes !
+no permission to add users	admin	fr	Aucune permission pour ajouter des utilisateurs !
+no permission to create groups	admin	fr	Aucune permission pour créer des groupes !
+no profile defined for user %1	admin	fr	Aucun profil défini pour l'utilisateur %1
 non profit: clubs, associations, ...	admin	fr	Sans but lucratif : clubs, associations, ...
 note: ssl available only if php is compiled with curl support	admin	fr	Note: SSL disponible si PHP est compilé avec le support de CURL
 notification mail	admin	fr	Email de notification
@@ -433,7 +437,7 @@ notifying account "%1" %2 failed!	admin	fr	Echec de la notification du compte "%
 number applications serially	admin	fr	Numéroter les applications séquentiellement
 number of active users	admin	fr	Nombre d'utilisateurs actifs
 number of row for a multiline inputfield or line of a multi-select-box	admin	fr	Nombre de lignes pour un champ multiligne ou pour une boîte de sélection multiple.
-number of sessions / egroupware logins in the last 30 days	admin	fr	Nombre de sessions / connexions à EGroupware pendant les 30 derniers jours
+number of sessions / egroupware logins in the last 30 days	admin	fr	Nombre de sessions / connexions à eGroupware pendant les 30 derniers jours
 number of users	admin	fr	Nombre d'utilisateurs
 number the applications serially. if they are not numbered serially, sorting the applications could work wrong. this will not change the application's order.	admin	fr	Numéroter les applications séquentiellement. Si elles ne sont pas numérotées séquentiellement, le tri des applications pourrait être erroné. Ceci ne change pas l'ordre des applications.
 nummeric account id	admin	fr	ID numérique du compte
@@ -540,6 +544,7 @@ sorry, that group name has already been taken.	admin	fr	Désolé, ce nom de grou
 sorry, the above users are still a member of the group %1	admin	fr	Désolé, les utilisateurs ci-dessus sont toujours membre du groupe %1
 sorry, the follow users are still a member of the group %1	admin	fr	Désolé, les utilisateurs suivants sont encore membres de ce groupe %1
 sort the entries	admin	fr	Trier les entrées
+source account #%1 does not exist!	admin	fr	Le compte source #%1 n'existe pas !
 ssl	admin	fr	ssl
 standard	admin	fr	standard
 standard imap server	admin	fr	Serveur IMAP standard
@@ -643,6 +648,7 @@ xml-rpc	admin	fr	XML-RPC
 yes, but no scayt	admin	fr	Oui, mais pas de correction automatique au cours de la frappe (en ligne)
 yes, use browser based spell checking engine	admin	fr	Oui, utiliser le moteur de correction orthographique du navigateur
 yes, use webspellchecker	admin	fr	Oui, utiliser le moteur de correcteur orthographique en ligne
+you can not use --dry-run together with --skip-checks!	admin	fr	Vous ne pouvez pas utiliser à la fois  --dry-run et --skip-checks !
 you can only change the hash, if you set a random password or currently use plaintext passwords!	admin	fr	Vous pouvez changer le type de cryptage seulement, si vous définissez un mot de passe aléatoire ou si vous utilisez actuellement des mots de passe texte en clair !
 you have entered an invalid expiration date	admin	fr	Vous avez entré une date d'expiration invalide
 you have no email address for your user set !!!	admin	fr	Vous n'avez pas défini d'adresse email pour votre utilisateur !
