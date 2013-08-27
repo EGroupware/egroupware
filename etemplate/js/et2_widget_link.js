@@ -214,7 +214,7 @@ var et2_link_to = et2_inputWidget.extend(
 			id: this.id + '_file',
 			
 			// Make the whole template a drop target
-			drop_target: this.getRoot(),
+			drop_target: this.getInstanceManager().DOMContainer.getAttribute("id"),
 				
 			// Change to this tab when they drop
 			onStart: function(event, file_count) {
@@ -316,6 +316,7 @@ var et2_link_to = et2_inputWidget.extend(
 		if(success) {
 			this.comment.hide();
 			this.link_button.hide().attr("disabled", false);
+			this.status_span.removeClass("error").addClass("success");
 			this.status_span.fadeIn().delay(1000).fadeOut();
 			delete this.options.value.app;
 			delete this.options.value.id;
@@ -335,6 +336,12 @@ var et2_link_to = et2_inputWidget.extend(
 				this, et2_link_list
 			);
 		}
+		else
+		{
+			this.status_span.removeClass("success").addClass("error")
+				.fadeIn();
+		}
+		this.div.trigger('link.et2_link_to',success);
 	},
 
 	set_no_files: function(no_files)

@@ -537,11 +537,16 @@ div.et2_link_entry input.ui-autocomplete-input {
 .et2_link_to span.status {
 	background-repeat: no-repeat;
 	background-position: 3px center;
-	background-image:url(images/tick.png);
 	width: 22px;
 	height: 22px;
 	display: block;
 	float: right;
+}
+.et2_link_to span.status.success {
+	background-image:url(images/tick.png);
+}
+.et2_link_to span.status.error {
+	background-image:url(images/error.png);
 }
 .et2_link_to .progress {
 	max-height: 12em;
@@ -549,6 +554,9 @@ div.et2_link_entry input.ui-autocomplete-input {
 .et2_link_to .progress > .success input {
 	width: 100%;
 	margin-right: -20px; /* Leave room for remove icon */
+}
+.et2_link_to .progress li {
+	list-style: none;
 }
 .et2_link_to .progress li.success span.ui-icon-comment {
 	display: none;
@@ -777,6 +785,7 @@ div.message.floating {
 	border-color: #a93030;
 	background-image:url(images/error.png);
 	background-repeat: no-repeat;
+	padding-left: 6px;
 }
 
 .message.success {
@@ -786,6 +795,7 @@ div.message.floating {
 	border-color: #9ea930;
 	background-image:url(images/tick.png);
 	background-repeat: no-repeat;
+	padding-left: 6px;
 }
 
 .message.hint {
@@ -795,6 +805,7 @@ div.message.floating {
 	color: #56729a;
 	background-image:url(images/hint.png);
 	background-repeat: no-repeat;
+	padding-left: 6px;
 }
 
 /**
@@ -966,6 +977,14 @@ div.message.floating {
 
 /* End of hierarchy */
 
+/* Mangled link-to widget inside a nextmatch - used for DnD uploads */
+.et2_nextmatch * .et2_link_to {
+	position: fixed;
+	left: 0px;
+	background: white;
+	border: 1px gray;
+	padding: 5px;
+}
 
 .et2_clickable {
 	cursor: pointer;

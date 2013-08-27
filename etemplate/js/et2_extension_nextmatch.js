@@ -100,6 +100,11 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			"type": "string",
 			"description": "JS code which gets executed when rows are selected.  Can also be a app.appname.func(selected) style method"
 		},
+		"onfiledrop": {
+			"name": "onFileDrop",
+			"type": "js",
+			"description": "JS code that gets executed when a _file_ is dropped on a row.  Other drop interactions are handled by the action system.  Return false to prevent the default link action."
+		},
 		"settings": {
 			"name": "Settings",
 			"type": "any",
@@ -213,6 +218,46 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				}
 			}
 		}
+	},	
+		
+	doLoadingFinished: function() {
+		this._super.apply(this, arguments);
+		
+		// Register handler for dropped files, if possible
+		if(this.options.settings.row_id)
+		{
+			// Appname should be first part of the template name
+			var split = this.options.template.split('.');
+			var appname = split[0];
+			
+			// Check link registry
+			if(this.egw().link_get_registry(appname))
+			{
+				var self = this;
+				// Register a handler
+				$j('table.egwGridView_grid',this.div)
+					.on('dragenter','tr',function(e) {
+						var row = self.controller._getIndexEntry($j(this).index());
+						if(!row || !row.uid)
+						{
+							return false;
+						}
+						e.stopPropagation(); e.preventDefault();
+						self.controller._selectionMgr.setFocused(row.uid,true);
+						return false;
+					})
+					.on('dragexit','tr', function(e) {
+						self.controller._selectionMgr.setFocused();
+					})
+					.on('dragover','tr',false).attr("dropzone","copy")
+					
+					.on('drop', 'tr',function(e) {
+						self.handle_drop(e,this);
+						return false;
+					});
+			}
+		}
+		return true;
 	},
 
 	/**
@@ -436,8 +481,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 */
 	onselect: function(action,senders) {
 		// Execute the JS code connected to the event handler
-                if (this.options.onselect)
-                {
+		if (this.options.onselect)
+		{
 			if (typeof this.options.onselect == "string" &&
 				 this.options.onselect.substr(0,4) == "app." && window.app)
 			{
@@ -451,12 +496,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				}
 			}
 
-                        // Exectute the legacy JS code
-                        else if (!(et2_compileLegacyJS(this.options.onselect, this, this.div))())
-                        {
-                                return false;
-                        }
-                }
+			// Exectute the legacy JS code
+			else if (!(et2_compileLegacyJS(this.options.onselect, this, this.div))())
+			{
+				return false;
+			}
+		}
 	},
 
 	/**
@@ -1180,6 +1225,107 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * Actions are handled by the controller, so ignore these
 	 */
 	set_actions: function(actions) {},
+	
+	/**
+	 * Set a different / additional handler for dropped files.
+	 * 
+	 * File dropping doesn't work with the action system, so we handle it in the
+	 * nextmatch by linking automatically to the target row.  This allows an additional handler.
+	 * It should accept a row UID and a File[], and return a boolean Execute the default (link) action
+	 * 
+	 * @param {String|Function} handler
+	 */
+	 set_onfiledrop: function(handler) {
+		this.options.onfiledrop = handler;
+	 },
+		 
+	/**
+	 * Handle drops of files by linking to the row, if possible.
+	 * 
+	 * HTML5 / native file drops conflict with jQueryUI draggable, which handles
+	 * all our drop actions.  So we side-step the issue by registering an additional
+	 * drop handler on the rows parent.  If the row/actions itself doesn't handle
+	 * the drop, it should bubble and get handled here.	
+	 */
+	 handle_drop: function(event, target) {
+		// Check to see if we can handle the link
+		// First, find the UID
+		var row = this.controller._getIndexEntry($j(target).index());
+		if(!row || !row.uid)
+		{
+			return false;
+		}
+		var uid = row.uid;
+		
+		// Get the file information
+		var files = [];
+		if(event.originalEvent && event.originalEvent.dataTransfer && 
+			event.originalEvent.dataTransfer.files && event.originalEvent.dataTransfer.files.length > 0)
+		{
+			files = event.originalEvent.dataTransfer.files;
+		}
+		else
+		{
+			return false;
+		}
+		
+		// Exectute the custom handler code
+		if (this.options.onfiledrop && !this.options.onfiledrop.call(this, uid, files))
+		{
+			return false;
+		}
+		event.stopPropagation();
+		event.preventDefault(); 
+		
+		// Link the file to the row
+		// just use a link widget, it's all already done
+		var split = uid.split('::');
+		var link_value = {
+			to_app: split.shift(),
+			to_id: split.join('::')
+		}
+		// Create widget and mangle to our needs
+		var link = et2_createWidget("link-to", {value: link_value}, this);
+		link.loadingFinished();
+		link.file_upload.set_drop_target(false);
+		
+		if(row.row.tr)
+		{
+			// Ignore most of the UI, just use the status indicators
+			var status = $j(document.createElement("div"))
+				.addClass('et2_link_to')
+				.height(row.row.tr.height())
+				.width(row.row.tr.width())
+				.position({my: "left top", at: "left top", of: row.row.tr})
+				.append(link.status_span)
+				.append(link.file_upload.progress)
+				.appendTo(row.row.tr);
+			
+			// Bind to link event so we can remove when done
+			link.div.on('link.et2_link_to', function(e, linked) {
+				if(!linked)
+				{
+					$j("li.success", link.file_upload.progress)
+						.removeClass('success').addClass('validation_error');
+				}
+				else
+				{
+					// Update row
+					link._parent.refresh(uid,'edit');
+				}
+				// Fade out nicely
+				status.delay(linked ? 1 : 2000)
+					.fadeOut(500, function() {
+						link.free();
+						status.remove();
+					});
+				
+			});
+		}
+		
+		// Upload and link - this triggers the upload, which triggers the link, which triggers the cleanup and refresh
+		link.file_upload.set_value(files);
+	 },
 
 	getDOMNode: function(_sender) {
 		if (_sender == this)
