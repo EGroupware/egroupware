@@ -268,7 +268,11 @@ var et2_file = et2_inputWidget.extend(
 	},
 
 	/**
-	 * You can't actually set value, but clearing works
+	 * Set the value of the file widget.  
+	 * 
+	 * If you pass a FileList or list of files, it will trigger the async upload
+	 * 
+	 * @param {FileList|File[]|false} value List of files to be uploaded, or false to reset.
 	 */
 	set_value: function(value) {
 		if(!value || typeof value == "undefined")
@@ -287,14 +291,10 @@ var et2_file = et2_inputWidget.extend(
 			return;
 		}
 		
-		/*
-		// This would only look like it worked
-		var i = 0;
-		for(var key in value)
+		if(typeof value == 'object' && value.length && typeof value[0] == 'object' && value[0].name)
 		{
-			this.createStatus(null,value.name,i++);
+			this.input[0].files = value;
 		}
-		*/
 	},
 
 	getInputNode: function() {
