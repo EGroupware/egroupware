@@ -1,5 +1,7 @@
 %1 definition(s) %2	importexport	fr	%1 définition(s) %2
 %1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	fr	%1 définition(s) %2, %3 a échoué à cause de droits insuffisants !!!
+addressbook csv import	importexport	fr	Import csv du carnet d'adresses
+addressbook vcard import	importexport	fr	Import vCard du carnet d'adresses
 allowed users	importexport	fr	Utilisateurs autorisés
 changed	importexport	fr	Modifié
 charset of file	importexport	fr	Jeu de caractères du fichier
@@ -9,14 +11,18 @@ choose a plugin	importexport	fr	Choisissez un module enfichable
 choose an application	importexport	fr	Choisissez une application
 choose seperator and charset	importexport	fr	Choisisser le séparateur et l'encodage
 condition	importexport	fr	condition
+copied	importexport	fr	Copié
 created	importexport	fr	Créé(s)
 deleted	importexport	fr	supprimé
 execute	importexport	fr	Exécuter
 export	importexport	fr	Exportation
+export definition to use for nextmatch export	preferences	fr	Définition de l'export à utiliser pour l'export "nextmatch"
 exported	importexport	fr	exporté
 false	importexport	fr	Faux
 finish	importexport	fr	terminer
 general	preferences	fr	Général
+general fields:	preferences	fr	Champs généraux :
+if you specify an export definition, it will be used when you export	preferences	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
 import	importexport	fr	Importation
 manage mapping	importexport	fr	Gestion des correspondances
 next	importexport	fr	prochain
@@ -26,6 +32,8 @@ previous	importexport	fr	précédent
 schedule	common	fr	planification
 translation	importexport	fr	Traduction
 true	importexport	fr	Vrai
+unable to delete	importexport	fr	incapable de supprimer
 use default	importexport	fr	Utiliser le défaut
 use field from csv if possible	importexport	fr	Utiliser le champ du CSV si possible
+user preference	importexport	fr	Préférences de l'utilisateur
 which useres are allowed for this definition	importexport	fr	Quels utilisateurs sont autorisés pour cette définition
