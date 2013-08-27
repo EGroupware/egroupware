@@ -452,7 +452,6 @@ action buttons, left aligned for "extra" controls
 }
 
 .et2_file .progress li {
-	margin: .5ex;
 }
 /* Hide progress bar when completed */
 .et2_file .progress li.success > span.progressBar {
@@ -550,6 +549,7 @@ div.et2_link_entry input.ui-autocomplete-input {
 }
 .et2_link_to .progress {
 	max-height: 12em;
+	overflow-y: scroll;
 }
 .et2_link_to .progress > .success input {
 	width: 100%;
@@ -557,6 +557,8 @@ div.et2_link_entry input.ui-autocomplete-input {
 }
 .et2_link_to .progress li {
 	list-style: none;
+	padding-bottom: 1px;
+	padding-top: 0px;
 }
 .et2_link_to .progress li.success span.ui-icon-comment {
 	display: none;
@@ -785,7 +787,7 @@ div.message.floating {
 	border-color: #a93030;
 	background-image:url(images/error.png);
 	background-repeat: no-repeat;
-	padding-left: 6px;
+	padding-left: 20px;
 }
 
 .message.success {
@@ -795,7 +797,7 @@ div.message.floating {
 	border-color: #9ea930;
 	background-image:url(images/tick.png);
 	background-repeat: no-repeat;
-	padding-left: 6px;
+	padding-left: 20px;
 }
 
 .message.hint {
@@ -805,7 +807,7 @@ div.message.floating {
 	color: #56729a;
 	background-image:url(images/hint.png);
 	background-repeat: no-repeat;
-	padding-left: 6px;
+	padding-left: 20px;
 }
 
 /**
@@ -981,7 +983,7 @@ div.message.floating {
 .et2_nextmatch * .et2_link_to {
 	position: fixed;
 	left: 0px;
-	background: white;
+	background-color: white;
 	border: 1px gray;
 	padding: 5px;
 }

@@ -64,6 +64,9 @@ var et2_dataview_controller = Class.extend({
 		this._rowCallback = _rowCallback;
 		this._linkCallback = _linkCallback;
 		this._context = _context;
+		
+		// Initialize list of child controllers
+		this._children = [];
 
 		// Initialize the "index map" which contains all currently displayed
 		// containers hashed by the "index"
@@ -88,6 +91,12 @@ var et2_dataview_controller = Class.extend({
 				this._makeIndexVisible,
 				this
 		);
+			
+		// Record the child
+		if(this._parentController != null)
+		{
+			this._parentController._children.push(this);
+		}
 	},
 
 	destroy: function () {
@@ -97,7 +106,19 @@ var et2_dataview_controller = Class.extend({
 
 		// Clear the selection timeout
 		this._clearTimer();
+		
+		// Remove the child from the child list
+		if(this._parentController != null)
+		{
+			var idx = this._parentController._children.indexOf(this);
 
+			if (idx >= 0)
+			{
+				// This element is no longer parent of the child
+				this._parentController._children.splice(idx, 1);
+				this._parentController = null;
+			}
+		}
 	},
 
 	/**
@@ -189,6 +210,49 @@ var et2_dataview_controller = Class.extend({
 		this.dataStorePrefix = prefix;
 	},
 
+	/**
+	 * Returns the row information of the passed node, or null if not available
+	 * 
+	 * @param {DOMNode} node
+	 * @return {string|false} UID, or false if not found
+	 */
+	getRowByNode: function(node) {
+		// Whatever the node, find a TR
+		var row_node = $j(node).closest('tr');
+		var row = false
+		
+		// Check index map - simple case
+		var indexed = this._getIndexEntry(row_node.index());
+		if(indexed && indexed.row && indexed.row.getDOMNode() == row_node[0])
+		{
+			row = indexed;
+		}
+		else
+		{
+			// Check whole index map
+			for(var index in this._indexMap)
+			{
+				indexed = this._indexMap[index];
+				if( indexed && indexed.row && indexed.row.getDOMNode() == row_node[0])
+				{
+					row = indexed;
+					break;
+				}
+			}
+		}
+		
+		// Check children
+		for(var i = 0; !row && i < this._children.length; i++)
+		{
+			var child_row = this._children[i].getRowByNode(node);
+			if(child_row !== false) row = child_row;
+		}
+		if(row && !row.controller)
+		{
+			row.controller = this;
+		}
+		return row;
+	},
 
 	/* -- PRIVATE FUNCTIONS -- */
 

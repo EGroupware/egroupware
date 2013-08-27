@@ -237,13 +237,20 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				// Register a handler
 				$j('table.egwGridView_grid',this.div)
 					.on('dragenter','tr',function(e) {
-						var row = self.controller._getIndexEntry($j(this).index());
+						// Figure out _which_ row
+						var row = self.controller.getRowByNode(this);
+							
 						if(!row || !row.uid)
 						{
 							return false;
 						}
 						e.stopPropagation(); e.preventDefault();
-						self.controller._selectionMgr.setFocused(row.uid,true);
+						
+						// Indicate acceptance
+						if(row.controller && row.controller._selectionMgr)
+						{
+							row.controller._selectionMgr.setFocused(row.uid,true);
+						}
 						return false;
 					})
 					.on('dragexit','tr', function(e) {
@@ -1250,11 +1257,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 handle_drop: function(event, target) {
 		// Check to see if we can handle the link
 		// First, find the UID
-		var row = this.controller._getIndexEntry($j(target).index());
-		if(!row || !row.uid)
-		{
-			return false;
-		}
+		var row = this.controller.getRowByNode(target);
+		if(!row || !row.uid) return false;
 		var uid = row.uid;
 		
 		// Get the file information
@@ -1294,7 +1298,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			// Ignore most of the UI, just use the status indicators
 			var status = $j(document.createElement("div"))
 				.addClass('et2_link_to')
-				.height(row.row.tr.height())
 				.width(row.row.tr.width())
 				.position({my: "left top", at: "left top", of: row.row.tr})
 				.append(link.status_span)
