@@ -1,7 +1,13 @@
+%1 active file(s) with same name as directory inactivated!	admin	fr	%1 fichier(s) actif(s) avec le même nom dans le même répertoire marqués inactifs !
+%1 directories %2 found!	admin	fr	%1 répertoire %2 trouvé !
 %1 email addresses inserted	common	fr	%1 adresse(s) email a (ont) été insérée(s)
+%1 file	common	fr	%1 fichier
 %1 is not executable by the webserver !!!	common	fr	%1 n'est pas exécutable par le serveur web !!!
+%1 proxy of %2	common	fr	%1 proxy sur %2
+%1 to sync	groupdav	fr	%1 à synchroniser
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	fr	%1Choisissez un autre répertoire%2<br />ou faites en sorte que le serveur web puisse écrire dans %3
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fr	%1eGroupWare%2 est un progiciel de collaboration multi-utilisateur basé sur le web et écrit en %3PHP%4.
+(session restored in %1 seconds)	common	fr	Session restaurée en %1 secondes
 (shift-)click or drag to change value	jscalendar	fr	(Shift-)Cliquer ou glisser pour changer la valeur
 - click on any of the time parts to increase it	jscalendar	fr	- Cliquer sur les chiffres horaires pour les augmenter
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	fr	- Maintenir le bouton de la souris sur n'importe lequel des boutons ci-dessus pour une sélection plus rapide.
@@ -31,25 +37,36 @@ account is expired	common	fr	Le compte a expiré
 accounts	common	fr	Comptes
 acl	common	fr	Liste de Contrôle d'Accès
 action	common	fr	Action
+action when category is an email address	groupdav	fr	Action lorsque la catégorie est une adresse email
 actions	common	fr	Actions
 active	common	fr	Actif
+active directory requires ssl or tls to change passwords!	common	fr	L'Active Directory nécessite SSL ou TLS pour le changement des mots de passe !
 add	common	fr	Ajouter
 add %1 category for	common	fr	Ajouter la catégorie %1 pour
 add category	common	fr	Ajouter catégorie
 add shortcut	common	fr	Ajouter raccourci
 add sub	common	fr	Ajouter enfant
+add user to responsibles	groupdav	fr	rattacher un utilisateur à des responsables
+add user to responsibles, removing evtl. previous category user	groupdav	fr	rattacher un utilisateur à des responsables, éventuellement supprimer les anciennes catégories de l'utilisateur
 addressbook	common	fr	Carnet d'adresses
+addressbooks to sync in addition to personal addressbook	groupdav	fr	Carnets d'adresses à synchroniser en plus du carnet personnel
 admin	common	fr	Admin
 administration	common	fr	Administration
 afghanistan	common	fr	AFGHANISTAN
 albania	common	fr	ALBANIE
 algeria	common	fr	ALGERIE
 all	common	fr	Tout
+all addressbooks	groupdav	fr	Tous les carnets d'adresses
 all fields	common	fr	tous les champs
+all in one	groupdav	fr	Tout en un
 all languages	common	fr	toutes les langues
 alphabet	common	fr	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alt	common	fr	Alt
 alternate style-sheet:	common	fr	Feuille de style alternative:
 american samoa	common	fr	SAMOA AMERICAINES
+an admin required that you must change your password upon login.	common	fr	L'administrateur requiert que vous changiez de mot de passe à la connexion...
+an error happened	common	fr	Erreur !
+an existing and by the webserver readable directory enables the image browser and upload.	common	fr	Un répertoire doit exister ET être lisible par le serveur web pour permettre la navigation et l'upload d'images.
 and	common	fr	et
 andorra	common	fr	ANDORRE
 angola	common	fr	ANGOLA
@@ -58,6 +75,7 @@ antarctica	common	fr	ANTARCTIQUE
 antigua and barbuda	common	fr	ANTIGUE ET BARBADE
 application	common	fr	Application
 apply	common	fr	Appliquer
+apply the action on the whole query, not only the shown entries	common	fr	Appliquer l'action sur la requête entière, pas seulement sur les entrées affichées
 april	common	fr	Avril
 are you sure you want to delete these entries ?	common	fr	Etes-vous sûr de vouloir supprimer ces entrées ?
 are you sure you want to delete this entry ?	common	fr	Etes-vous sûr de vouloir supprimer cette entrée ?
@@ -102,14 +120,20 @@ brazil	common	fr	BRESIL
 british indian ocean territory	common	fr	TERRITOIRES ANGLAIS DE L'OCEAN INDIEN
 brunei darussalam	common	fr	SULTANAT DE BRUNEI
 bulgaria	common	fr	BULGARIE
+bulgarian	common	fr	Bulgare
 burkina faso	common	fr	BURKINA FASO
 burundi	common	fr	BURUNDI
 calendar	common	fr	Calendrier
+calendars to sync in addition to personal calendar	groupdav	fr	Calendriers à synchroniser en plus du calendrier personnel
 cambodia	common	fr	CAMBODGE
 cameroon	common	fr	CAMEROUN
+can't create directory %1 to connect found unconnected nodes to it!	admin	fr	Ne peut pas créer le répertoire %1 pour y connecter un noeud non-connecté !
 canada	common	fr	CANADA
 cancel	common	fr	Annuler
 cannot replace %1 because it is a directory	common	fr	Impossible de remplacer %1 car est un répertoire
+cannot set a category as parent, which is part of this categorys subtree!	common	fr	Impossible de choisir une catégorie comme parente dans cette sous-arborescence
+cannot set this cat as its own parent!	common	fr	Impossible de définir cette catégorie comme sa propre catégorie mère
+cant open %1, needs ziparchive	common	fr	Impossible d'ouvrir %1, ZipArchive est nécessaire
 cant open '%1' for %2	common	fr	Impossible d'ouvrir '%1' pour %2
 cape verde	common	fr	CAP VERT
 caption	common	fr	Légende
@@ -136,16 +160,22 @@ choose a background style.	common	fr	Choisissez un style de fond
 choose a text color for the icons	common	fr	Choisissez une couleur de texte pour les icônes
 choose the category	common	fr	Choisir la catégorie
 choose the parent category	common	fr	Choisir la catégorie parent
+chosen parent category no longer exists	common	fr	La catégorie mère sélectionnée n'existe plus
 christmas island	common	fr	ILE NOEL
 clear	common	fr	Effacer
 clear form	common	fr	Effacer le formulaire
+clear window	common	fr	Fermer la fenêtre
 click	common	fr	Cliquer
+click here to resume your egroupware session.	common	fr	Cliquer pour relancer votre session eGroupware
 click or mouse over to show menus	common	fr	Cliquer ou passer la souris dessus pour voir les menus
 click or mouse over to show menus?	common	fr	Cliquer ou passer la souris dessus pour voir les menus?
 click this image on the navbar: %1	common	fr	Cliquez cette image sur la barre de navigation: %1
+clients not explicitly stating a limit get limited to these many days. a too high limit may cause problems with some clients.	groupdav	fr	Les clients de synchronisation qui ne définissent pas explicitement une limite se voient limités par ce nombre de jours.  Une limite trop haute peut causer des problèmes avec certains clients.
 close	common	fr	Fermer
 close sidebox	common	fr	Fermer la barre de menu latérale
 cocos (keeling) islands	common	fr	ILES COCOS (KEELING)
+collection empty.	common	fr	Collection vide
+collection listing	common	fr	Liste de collection
 colombia	common	fr	COLOMBIE
 common preferences	common	fr	Préférences communes
 comoros	common	fr	COMORRES
@@ -153,6 +183,7 @@ company	common	fr	Société
 congo	common	fr	CONGO
 congo, the democratic republic of the	common	fr	CONGO, REPUBLIQUE DEMOCRATIQUE DU
 contacting server...	common	fr	Connexion au serveur...
+content type	common	fr	Type de contenu
 cook islands	common	fr	ILES COOK
 copy	common	fr	Copier
 costa rica	common	fr	COSTA RICA
@@ -161,23 +192,29 @@ could not contact server. operation timed out!	common	fr	Impossible de connecter
 create	common	fr	Créer
 created by	common	fr	Créé par
 croatia	common	fr	CROATIE
+ctrl	common	fr	Ctrl
 cuba	common	fr	CUBA
 currency	common	fr	Devise
 current	common	fr	Courant
 current users	common	fr	Utilisateurs connectés
 cyprus	common	fr	CHYPRE
 czech republic	common	fr	REPUBLIQUE TCHEQUE
+database error	common	fr	Erreur de base de données
+database error!	common	fr	Erreur de base de données !
 date	common	fr	Date
 date due	common	fr	Date butoire
 date selection:	jscalendar	fr	Sélection de la date :
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fr	Port Datetime.<br>Si vous utilisez le port 13, adaptez svp les règles de votre pare-feu avant de soumettre cette page.<br>(Port: 13 / Hôte: 129.6.15.28)
 december	common	fr	Décembre
 default category	common	fr	Catégorie par défaut
-default height for the windows	common	fr	Hauteur par défaut de la fenêtre
-default width for the windows	common	fr	Largeur par défaut de la fenêtre
+default height for the windows	common	fr	Hauteur des fenêtres par défaut
+default width for the windows	common	fr	Largeur des fenêtres par défaut
+del	common	fr	Del
 delete	common	fr	Supprimer
-delete category	common	fr	Supprimer catégorie
+delete category	common	fr	Supprimer la catégorie
+delete file	common	fr	Supprimer le fichier
 delete row	common	fr	Supprimer ligne
+delete these entries	common	fr	Supprimer ces entrées
 delete this entry	common	fr	Supprimer cette entrée
 denmark	common	fr	DANEMARK
 description	common	fr	Description
@@ -186,13 +223,16 @@ details	common	fr	Détails
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	Désactiver l'exécution d'un script correcteur pour Internet Explorer 5.5 et plus récent pour montrer la transparence des images PNG?
 direction left to right	common	fr	Direction de gauche à droite
 directory	common	fr	Répertoire
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	fr	Ce répertoire n'existe pas, n'est pas lisible par le serveur web ou n'est pas relatif au "document root" !
 disable internet explorer png-image-bugfix	common	fr	Désactiver png-image-bugfix d'Internet Explorer
 disable slider effects	common	fr	Désactiver les effets de glisse
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fr	Désactiver les effets de glisse animés lors de l´affichage ou le masquage des menus de la page? Les utilisateurs d'Opera et Konqueror devraient sûrement en avoir besoin.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	Désactiver l'exécution d'un script de déboguage visant à afficher la transparence dans les images PNG sous Internet Explorer 5.5 ou plus?
 disabled	common	fr	Désactivé
 display %s first	jscalendar	fr	Affiche %s en premier
+distribution lists as groups	groupdav	fr	Les listes de distribution comme des groupes
 djibouti	common	fr	DJIBOUTI
+do not notify	common	fr	Ne pas modifier
 do not notify of these changes	common	fr	Ne pas notifier de ces changements
 do you also want to delete all subcategories ?	common	fr	Voulez vous également supprimer toutes les sous-catégories ?
 doctype:	common	fr	Type de document
@@ -204,26 +244,33 @@ domestic	common	fr	Intérieur
 dominica	common	fr	DOMINIQUE
 dominican republic	common	fr	REPUBLIQUE DOMINICAINE
 done	common	fr	Fait
+dos international	common	fr	DOS International
 download	common	fr	Télécharger
 drag to move	jscalendar	fr	Glisser pour le déplacer
 e-mail	common	fr	email
-east timor	common	fr	TIMOR EST
-ecuador	common	fr	ECUADOR
+east timor	common	fr	TIMOR ORIENTAL
+eastern european	common	fr	Européen occidental
+ecuador	common	fr	EQUATEUR
 edit	common	fr	Modifier
 edit %1 category for	common	fr	Modifier la catégorie %1 pour
 edit categories	common	fr	Modifier les catégories
 edit category	common	fr	Modifier la catégorie
 egroupware	common	fr	eGroupWare
+egroupware api version	common	fr	Version de l'API eGroupware
 egroupware: login blocked for user '%1', ip %2	common	fr	eGroupWare: login bloqué pour l´utilisateur '%1', IP %2
 egypt	common	fr	EGYPTE
 el salvador	common	fr	SALVADOR
 email	common	fr	E-mail
 email-address of the user, eg. "%1"	common	fr	Adresse e-mail de l'utilisateur, p.ex. "%1"
+empty file	common	fr	Fichier vide
+enable logging	groupdav	fr	Activer la journalisation
 enabled	common	fr	Activé
+enables logging of caldav/carddav traffic to diagnose problems with devices.	groupdav	fr	Activer la journalisation du CalDAV/CardDAV pour diagnostiquer les problèmes de synchronisation
 end date	common	fr	Date de fin
 end time	common	fr	Heure de fin
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	Entrer l´URL d´eGroupWare.<br>Exemple: http://www.domain.com/egroupware   ou   /egroupware<br><b>Pas de slash final</b>
 entry has been deleted sucessfully	common	fr	Entrée supprimée avec succès
+entry not found!	common	fr	Entrée non trouvée !
 entry updated sucessfully	common	fr	Entrée mise à jour avec succès
 equatorial guinea	common	fr	GUINEE EQUATORIALE
 eritrea	common	fr	ERYTHREE
@@ -232,16 +279,25 @@ error creating %1 %2 directory	common	fr	Erreur à la création du répertoire %
 error deleting %1 %2 directory	common	fr	Erreur à la suppression du répertoire %1 %2
 error renaming %1 %2 directory	common	fr	Erreur au renommage du répertoire %1 %2
 estonia	common	fr	ESTONIE
+etag	common	fr	eTag
 ethiopia	common	fr	ETHIOPIE
+everything	common	fr	Tout
 exact	common	fr	exact
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	fr	Impossible de contacter le serveur ou réponse invalide de ce dernier. Essayez de vous reconnecter. En cas de panne contactez votre administrateur.
+failed to create required directory "%1"!	admin	fr	Echec de la création du répertoire "%1"!
+failed to move unconnected %1 %2 to %3!	admin	fr	Echec à la suppression des %1 non connectés %2 à %3!
 falkland islands (malvinas)	common	fr	ILES FALKLAND (MALOUINES)
 faroe islands	common	fr	ILES FAROE
 fax number	common	fr	Numéro de fax
+features of the editor?	common	fr	Fonctionnalités de l'éditeur
 february	common	fr	Février
 fields	common	fr	Champs
 fiji	common	fr	FIDJI
+file %1 has no content in physical filesystem %2 --> failed to remove file!	admin	fr	Le fichier %1 n'a pas de contenu dans le système de fichiers physique %2 --> échec de la suppression du fichier !
+file %1 has no content in physical filesystem %2 --> file removed!	admin	fr	Le fichier %1 n'a pas de contenu dans le système de fichiers physique %2 --> fichier supprimé !
+file %1 has no content in physical filesystem %2!	admin	fr	Le fichier %1 n'a pas de contenu dans le système de fichiers physique %2
 files	common	fr	Fichiers
+files without content in physical filesystem will be removed.	admin	fr	Les fichiers sans contenu dans le système de fichier physique seront supprimés.
 filter	common	fr	Filtrer
 finland	common	fr	FINLANDE
 first name	common	fr	Prénom
@@ -252,6 +308,7 @@ fixme!	common	fr	CORRIGEZ-MOI!
 folder already exists.	common	fr	Le dossier existe déjà.
 force selectbox	common	fr	Forcer la boîte de sélection
 forever	common	fr	Toujours
+found unconnected %1 %2!	admin	fr	%1 %2 non connectés !
 france	common	fr	FRANCE
 french guiana	common	fr	GUYANNE FRANCAISE
 french polynesia	common	fr	POLYNESIE FRANCAISE
@@ -273,6 +330,7 @@ global public	common	fr	Public global
 go today	jscalendar	fr	Aller à aujourd'hui
 grant access	common	fr	Autoriser l'accès
 greece	common	fr	GRECE
+greek	common	fr	Grec
 greenland	common	fr	GROENLANDE
 grenada	common	fr	GRENADE
 group	common	fr	Groupe
@@ -282,6 +340,7 @@ group has been deleted	common	fr	Le groupe a été supprimé
 group has been updated	common	fr	Le groupe a été mis à jour
 group name	common	fr	Nom du groupe
 group public	common	fr	Public par groupe
+groupdav	common	fr	Serveurs CalDAV, CardCAV et GroupDAV
 groups	common	fr	Groupes
 groups with permission for %1	common	fr	Groupes avec la permission pour %1
 groups without permission for %1	common	fr	Groupes sans la permission pour %1
@@ -302,6 +361,8 @@ home	common	fr	Accueil
 home email	common	fr	email privé
 honduras	common	fr	HONDURAS
 hong kong	common	fr	HONG KONG
+how many days to sync in the future (default %1)	groupdav	fr	Combien de jours à synchroniser dans le futur (%1 par défaut)
+how many days to sync in the past (default %1)	groupdav	fr	Combien de jours à synchroniser dans le passé (%1 par défaut)
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	fr	Combien d'icônes devraient être affichées sur la barre de navigation (haut de page). Les icônes suplémentaires seront placées dans une liste que l'on appellera via une icône à droite de la barre de navigation.
 how to show the general egroupware menu ?	common	fr	Comment afficher le menu général d'eGroupWare ?
 hungary	common	fr	HONGRIE
@@ -309,12 +370,16 @@ iceland	common	fr	ISLANDE
 iespell not detected. click ok to go to download page.	common	fr	ieSpell non détecté. Cliquez sur Ok pour aller à la page de téléchargement.
 if the clock is enabled would you like it to update it every second or every minute?	common	fr	Si l'horloge est activée voulez-vous la mettre à jour toutes les secondes ou toutes les minutes?
 if there are some images in the background folder you can choose the one you would like to see.	common	fr	S'il y a des images dans le dossier d'arrière-plan vous pouvez choisir celle que vous voulez voir.
+image directory relative to document root (use / !), example:	common	fr	Répertoire image relative à la racine des documents (utiliser / !), par exemple :
 image url	common	fr	URL de l'Image
 india	common	fr	INDE
 indonesia	common	fr	INDONESIE
+infolog types to sync	common	fr	Types d'infolog à synchroniser
 insert all %1 addresses of the %2 contacts in %3	common	fr	Insérer toutes les %1 adresses des %2 contacts de %3
 insert column after	common	fr	Insérer  une colonne après
 insert column before	common	fr	Insérer une colonne avant
+insert in %1	common	fr	Insérer en %1
+insert in dokument	common	fr	Insérer dans le document
 insert row after	common	fr	Insérer une ligne après
 insert row before	common	fr	Insérer une ligne avant
 international	common	fr	International
@@ -332,6 +397,7 @@ italy	common	fr	ITALIE
 jamaica	common	fr	JAMAIQUE
 january	common	fr	Janvier
 japan	common	fr	JAPON
+japanese	common	fr	Japonais
 jordan	common	fr	JORDANIE
 july	common	fr	Juillet
 jun	common	fr	Jun
@@ -346,6 +412,7 @@ keywords	common	fr	Mots-clés
 kiribati	common	fr	KIRIBATI
 korea, democratic peoples republic of	common	fr	COREE, REPUBLIQUE DEMOCRATIQUE DES PEUPLES DE
 korea, republic of	common	fr	COREE, REPUBLIQUE DE
+korean	common	fr	Coréen
 kuwait	common	fr	KOWAIT
 kyrgyzstan	common	fr	KYRGYZSTAN
 language	common	fr	Langue
@@ -365,12 +432,15 @@ liberia	common	fr	LIBERIA
 libyan arab jamahiriya	common	fr	LIBYE
 license	common	fr	Licence
 liechtenstein	common	fr	LIECHTENSTEIN
+line %1: '%2'<br><b>csv data does contain ##last-check-run## of table %3 ==> ignored</b>	common	fr	Ligne %1: '%2'<br><b>Les données csv contiennent ##last-check-run## de la table %3 ==> ignoré</b>
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	fr	Ligne %1: '%2'<br><b>Les données csv ne correspondent pas au nombre de colonnes de la table %3 ==> ignoré</b>
 list	common	fr	Liste
 list members	common	fr	Liste les membres
 lithuania	common	fr	LITHUANIE
 local	common	fr	Local
-locations	common	fr	localisations
+location calendars	groupdav	fr	Localisations des calendriers
+locations	common	fr	Localisations
+logging / debuging	groupdav	fr	Journalisation / débogage
 login	common	fr	Login
 loginid	common	fr	LoginID
 logout	common	fr	Déconnexion
@@ -409,13 +479,18 @@ moldova, republic of	common	fr	MOLDAVIE, REPUBLIQUE DE
 monaco	common	fr	MONACO
 monday	common	fr	Lundi
 mongolia	common	fr	MONGOLIE
+montenegro	common	fr	MONTENEGRO
 montserrat	common	fr	MONTSERRAT
+more then one active file %1 found, inactivating %2 older revisions!	admin	fr	Plus d'un fichier actif %1, désactivation %2 anciennes révisions !
 morocco	common	fr	MAROC
+moved %1 children from directory fs_id=%2 to %3	admin	fr	Déplacement %1 enfants du répertoire fs_id=%2 vers %3
+moved unconnected %1 %2 to %3.	admin	fr	Déplacement de %1 non connectés %2 vers %3.
 mozambique	common	fr	MOZAMBIQUE
 multiple	common	fr	multiple
 myanmar	common	fr	MYANMAR
 name	common	fr	Nom
 name of the user, eg. "%1"	common	fr	Nom de l'utilisateur, p.ex. "%1"
+namespace	common	fr	Espace de nom
 namibia	common	fr	NAMIBIE
 nauru	common	fr	NAURU
 nepal	common	fr	NEPAL
@@ -441,6 +516,7 @@ no history for this record	common	fr	Pas d'historique pour cet enregistrement
 no savant2 template directories were found in:	common	fr	Pas de  dossier modèle Savant2 n'a été trouvé dans:
 no subject	common	fr	Sans objet
 none	common	fr	Aucun
+none of %1	common	fr	aucun de %1
 norfolk island	common	fr	ILE NORFOLK
 normal	common	fr	Normal
 northern mariana islands	common	fr	ILES MARIANA DU NORD
@@ -448,8 +524,10 @@ norway	common	fr	NORVEGE
 not	common	fr	pas
 not a user yet? register now	common	fr	Pas encore identifié? Enregisrez-vous maintenant
 not assigned	common	fr	non assigné
+not readable %1 entry of user %2	common	fr	L'entrée %1 de l'utilisateur %2 est illisible
 note	common	fr	Note
 notes	common	fr	Notes
+notifications	common	fr	Notifications
 notify window	common	fr	Fenêtre de notification
 notify your administrator to correct this situation	common	fr	Demandez à votre administrateur de corriger la situation
 november	common	fr	Novembre
@@ -460,8 +538,9 @@ oman	common	fr	OMAN
 on *nix systems please type: %1	common	fr	Sur les systèmes *nix SVP tapez: %1
 on mouse over	common	fr	Sur le relâchement du clic de la souris
 only private	common	fr	seulement privés
-only yours	common	fr	seulement les vôtres
-oops! you caught us in the middle of system maintainance.	common	fr	Oups! Vous êtes arrivé en pleine maintenance système.
+only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	groupdav	fr	Seulement supporté par les clients pleinement respectueux de la norme (ie. d'Apple).  Si vous devez entrer une URL, cela ne sera probablement pas supporté.
+only yours	common	fr	Seulement les vôtres
+oops! you caught us in the middle of system maintainance.	common	fr	Oups ! Vous êtes arrivé en pleine maintenance système.
 open	common	fr	Ouvrir
 open notify window	common	fr	Ouvrir une fenêtre de notification
 open popup window	common	fr	Ouvrir une fenêtre de popup
@@ -483,17 +562,21 @@ paraguay	common	fr	PARAGUAY
 parcel	common	fr	Colis
 parent category	common	fr	Catégorie parente
 password	common	fr	Mot de passe
-password could not be changed	common	fr	Le mot de passe n'a pas pu être modifié
+password could not be changed	common	fr	Le mot de passe n'a pas pu être modifié !
 password has been updated	common	fr	Le mot de passe a été mis à jour avec succès
 password must contain at least %1 lowercase letters	common	fr	Le mot de passe doit contenir au moins %1 caractères minuscules
-password must contain at least %1 numbers	common	fr	Le mot de passe doit contenir au moins %1 chiffres
+password must contain at least %1 numbers	common	fr	Le mot de passe doit contenir au moins %1 chiffre(s)
 password must contain at least %1 special characters	common	fr	Le mot de passe doit contenir au moins %1 caractères spéciaux
-password must contain at least %1 uppercase letters	common	fr	Le mot de passe doit contenir au moins %1 caractères majuscules
+password must contain at least %1 uppercase letters	common	fr	Le mot de passe doit contenir au moins %1 caractère(s) majuscule(s)
 password must have at least %1 characters	common	fr	Le mot de passe doit contenir au moins %1 caractères
 path to user and group files has to be outside of the webservers document-root!!!	common	fr	Le chemin vers les fichiers des utilisateurs et groupes DOIT ETRE EN DEHORS de la racine des documents du serveur web!!!
+permission denied!	common	fr	Permission refusée !
 permissions to the files/users directory	common	fr	Permissions sur le répertoire fichiers/utilisateurs
+permisson denied!	common	fr	Permission refusée !
 personal	common	fr	Personnel
-peru	common	fr	PERU
+peru	common	fr	PEROU
+pg down	common	fr	Pg préc.
+pg up	common	fr	Pg suiv.
 philippines	common	fr	PHILIPPINES
 phone number	common	fr	numéro de téléphone
 phpgwapi	common	fr	API eGroupWare
@@ -511,6 +594,7 @@ portugal	common	fr	PORTUGAL
 postal	common	fr	Code postal
 powered by	common	fr	Motorisé par
 preferences	common	fr	Préférences
+preferences for the %1 template set	preferences	fr	Préférences pour le template %1
 prev. month (hold for menu)	jscalendar	fr	Mois précédent (maintenir pour le menu)
 prev. year (hold for menu)	jscalendar	fr	Année précédente (maintenir pour le menu)
 previous page	common	fr	Page précédente
@@ -521,6 +605,7 @@ priority	common	fr	Priorité
 private	common	fr	Privé
 programs	common	fr	Programmes
 project	common	fr	Projet
+properties	common	fr	Propriétés
 public	common	fr	public
 puerto rico	common	fr	PUERTO RICO
 qatar	common	fr	QATAR
@@ -528,13 +613,21 @@ read	common	fr	Lire
 read this list of methods.	common	fr	Lisez cette liste de méthodes.
 reading	common	fr	Lecture
 register	common	fr	S'enregistrer
+regular	common	fr	Régulier
 reject	common	fr	Rejeter
 remember me	common	fr	Se souvenir de moi
 remove selected accounts	common	fr	supprimer les comptes sélectionnés
 remove shortcut	common	fr	Supprimer le raccourci
+removed (now) empty directory fs_id=%1	admin	fr	Répertoire vide fs_id=%1 a été supprimé (maintenant)
 rename	common	fr	Renommer
 replace	common	fr	Remplacer
 replace with	common	fr	Remplacer par
+requests and full responses to files directory	common	fr	Requêtes et réponses complète sur les répertoires de fichiers
+requests and truncated responses to apache error-log	groupdav	fr	Requêtes et réponses tronquées vers les logs d'erreur Apache
+required directory "%1" created.	admin	fr	Répertoire nécessaire "%1" créé.
+required directory "%1" not found!	admin	fr	Répertoire nécessaire "%1" non trouvé !
+resource calendars	groupdav	fr	Calendrier de ressource
+resource type	common	fr	Type de ressource
 resources	common	fr	Ressources
 restore failed	common	fr	La récupération a échoué
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	fr	Retourne une liste complète des comptes sur le système. Attention: ceci peut être très long
@@ -543,6 +636,7 @@ returns struct of users application access	common	fr	Retourne une structure d'ac
 reunion	common	fr	REUNION
 right	common	fr	Droit
 romania	common	fr	ROUMANIE
+russian	common	fr	Russe
 russian federation	common	fr	FEDERATION DE RUSSIE
 rwanda	common	fr	RWANDA
 saint helena	common	fr	SAINTE HELENE
@@ -557,6 +651,8 @@ saturday	common	fr	Samedi
 saudi arabia	common	fr	ARABIE SAOUDITE
 savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	fr	La version de Savant2 n'est pas identique à celle du package Savant2.
 save	common	fr	Enregistrer
+scheduling inbox	common	fr	Plannification inbox
+scheduling outbox	common	fr	Plannification outbox
 search	common	fr	Rechercher
 search %1 '%2'	common	fr	Rechercher %1 '%2'
 search accounts	common	fr	Chercher des comptes
@@ -564,6 +660,9 @@ search or select accounts	common	fr	Rechercher ou sélectionner des comptes
 second	common	fr	seconde
 section	common	fr	Section
 select	common	fr	Sélectionner
+select "%1", if your client does not support multiple addressbooks.	groupdav	fr	Sélectionner "%1" si votre client ne supporte pas plusieurs carnets d'adresses.
+select "%1", if your client support groups, eg. os x or ios addressbook.	groupdav	fr	Sélectionner "%1" si votre client supporte les groupes (ex : OS X ou carnet d'adresses iOS)
+select action	common	fr	Sélectionner une action
 select all %1 %2 for %3	common	fr	Sélectionner tous les %11 %2 pour %3
 select category	common	fr	Sélectionner la catégorie
 select date	common	fr	Sélectionner la date
@@ -579,20 +678,25 @@ selection	common	fr	Sélection
 send	common	fr	Envoyer
 senegal	common	fr	SENEGAL
 september	common	fr	Septembre
+serbia	common	fr	Serbie
 server %1 has been added	common	fr	Le serveur %1 a été ajouté
 server answered. processing response...	common	fr	Le serveur a répondu. Traitement de la réponse...
 server contacted. waiting for response...	common	fr	Le serveur a été contacté. Attente de la réponse...
 server name	common	fr	Nom du serveur
 session has been killed	common	fr	La session a été interrompue
+set user as only responsible user, but keeping groups	groupdav	fr	définir l'utilisateur comme l'unique responsable, mais garder les groupes
+set user as only responsible, removing all existing responsibles	groupdav	fr	définir l'utilisateur comme l'unique responsable, et supprimer les autres responsables existant
 setup	common	fr	Setup
 setup main menu	common	fr	Menu principal du Setup
 seychelles	common	fr	SEYCHELLES
+shift	common	fr	Shift
 show all	common	fr	Afficher tous les éléments
 show all categorys	common	fr	Afficher toutes les catégories
 show as topmenu	common	fr	Afficher en tant que menu supérieur
 show clock?	common	fr	Afficher l'horloge?
 show home and logout button in main application bar?	common	fr	Afficher les boutons Accueil et Déconnexion dans la barre d'application principale?
 show in sidebox	common	fr	Afficher dans la barre de menu latérale
+show log of following device	groupdav	fr	Montrer les logs de l'appareil
 show logo's on the desktop.	common	fr	Afficher le logo sur le bureau?
 show menu	common	fr	Afficher le menu
 show page generation time	common	fr	Afficher le temps de génération de la page
@@ -603,6 +707,7 @@ show_more_apps	common	fr	Voir plus d'applications
 showing %1	common	fr	Montre %1
 showing %1 - %2 of %3	common	fr	Montre %1 - %2 de %3
 sierra leone	common	fr	SIERRA LEONE
+simple	common	fr	Simple
 singapore	common	fr	SINGAPOUR
 site configuration	common	fr	Configuration du site
 size	common	fr	Taille
@@ -613,9 +718,11 @@ somalia	common	fr	SOMALIE
 sorry, your login has expired	login	fr	Désolé, votre login a expiré
 south africa	common	fr	AFRIQUE DU SUD
 south georgia and the south sandwich islands	common	fr	GEORGIE DU SUD ET LES ILES SANDWICH DU SUD
+space	common	fr	Espace
 spain	common	fr	ESPAGNE
 sri lanka	common	fr	SRI LANKA
 start date	common	fr	Date de début
+start directory for image browser of rich text editor in egroupware vfs (filemanager).	common	fr	Répertoire de début pour la navigation d'image dans l'éditeur riche dans le File Manager eGroupware
 start time	common	fr	Heure de début
 start with	common	fr	commence par
 starting up...	common	fr	Démarrage...
@@ -624,6 +731,7 @@ stretched	common	fr	étiré
 subject	common	fr	Objet
 submit	common	fr	Envoyer
 substitutions and their meanings:	common	fr	Substitutions et leurs sens:
+successful created new directory %1 for unconnected nods.	admin	fr	Nouveau répertoire %1  créé avec succès pour les nœuds non connectés.
 sudan	common	fr	SOUDAN
 sunday	common	fr	Dimanche
 suriname	common	fr	SURINAM
@@ -631,7 +739,10 @@ svalbard and jan mayen	common	fr	SVALBARD ETJAN MAYEN
 swaziland	common	fr	SWAZILAND
 sweden	common	fr	SUEDE
 switzerland	common	fr	SUISSE
+sync all selected into one	groupdav	fr	Synchroniser toute la sélection vers un seul
 syrian arab republic	common	fr	SYRIE
+tab	common	fr	Tab
+table %1 is excluded from backup and restore. data will not be restored.	common	fr	La table %1 est exclue de la sauvegarde et de la restauration. Les données ne seront pas restaurées.
 table properties	common	fr	Propriétés du tableau
 taiwan	common	fr	TAIWAN/TAIPEI
 tajikistan	common	fr	TAJIKISTAN
@@ -642,6 +753,8 @@ the api is current	common	fr	L'API est à jour
 the api requires an upgrade	common	fr	L'API nécessite une mise à jour
 the following applications require upgrades	common	fr	Les applications suivantes nécessitent une mise à jour
 the mail server returned	common	fr	Le serveur email a renvoyé
+there already is a system-user with this name. user's should not have the same name as a systemuser	common	fr	Il y a déjà un utilisateur système avec ce nom. Veuillez choisir un autre nom.
+they will be sub-folders in users home (%1 attribute).	common	fr	Il y aura des sous-répertoires dans les répertoires personnels (home) (attribut %1)
 this application is current	common	fr	Cette application est à jour
 this application requires an upgrade	common	fr	Cette application nécessite une mise à jour
 this name has been used already	common	fr	Ce nom est déjà utilisé !
@@ -654,6 +767,7 @@ time zone offset	common	fr	Décalage du fuseau horaire
 title	common	fr	Titre
 to	common	fr	Pour
 to correct this error for the future you will need to properly set the	common	fr	Pour corriger cette erreur dans le futur vous devrez définir correctement le/la
+to examine or reinstate inactived files, you might need to turn versioning on.	admin	fr	Pour examiner ou ré-instancier les fichiers inactifs, vous devez activer le suivi des versions.
 to go back to the msg list, click <a href= %1 >here</a>	common	fr	Pour revenir à la liste des messages, cliquez <a href="%1">ici</a>
 today	common	fr	Aujourd'hui
 todays date, eg. "%1"	common	fr	date d'aujourd'hui, p.ex. "%1"
@@ -675,7 +789,9 @@ tuvalu	common	fr	TUVALU
 type	common	fr	Type
 uganda	common	fr	OUGANDA
 ukraine	common	fr	UKRAINE
+unconnected nodes will be moved to %1.	admin	fr	Les nœuds non connectés seront déplacés vers %1.
 underline	common	fr	Souligné
+unicode	common	fr	Unicode
 united arab emirates	common	fr	EMIRATS ARABES UNIS
 united kingdom	common	fr	ROYAUME UNI
 united states	common	fr	ETATS-UNIS
@@ -685,6 +801,7 @@ update	common	fr	Mettre à jour
 update the clock per minute or per second	common	fr	Mettre à jour l'horloge par minutes ou secondes
 upload	common	fr	Déposer
 upload directory does not exist, or is not writeable by webserver	common	fr	Le répertoire de dépôt n'existe pas ou le serveur web ne peut pas y écrire
+upload requires the directory to be writable by the webserver!	common	fr	L'upload nécessite que le répertoire soit en écriture sur le serveur web !
 url	common	fr	Url
 uruguay	common	fr	URUGUAY
 use button to search for	common	fr	Utilisez le bouton pour rechercher
@@ -702,6 +819,7 @@ value	common	fr	Valeur
 vanuatu	common	fr	VANUATU
 venezuela	common	fr	VENEZUELA
 version	common	fr	version
+vfs upload directory	common	fr	Dossier d'upload VFS
 viet nam	common	fr	VIETNAM
 view	common	fr	Voir
 virgin islands, british	common	fr	ILES VIERGES ANGLAISES
@@ -709,16 +827,18 @@ virgin islands, u.s.	common	fr	ILES VIERGES AMERICAINES
 wallis and futuna	common	fr	WALLIS ET FUTUNA
 wednesday	common	fr	Mercredi
 welcome	common	fr	Bienvenue
-western sahara	common	fr	SAHARA OUEST
+western european	common	fr	Europe occidentale
+western sahara	common	fr	SAHARA OCCIDENTAL
 what color should all the blank space on the desktop have	common	fr	Quelle couleur l'espace vide du bureau doit-il avoir?
 what style would you like the image to have?	common	fr	Quel style  souhaitez-vous pour l'image?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fr	Si vous dites oui, les bouttons Accueil et Déconnexion sont affichés comme des applications dans la barre d'application principale.
 where and how will the egroupware links like preferences, about and logout be displayed.	common	fr	Ou et comment seront affichés les liens comme Préférences, A propos de et Déconnexion.
 which groups	common	fr	Quels groupes
-whole query	common	fr	requête entière
+which infolog types should be synced with the device, default only tasks.	common	fr	Quels types d'infolog doivent-ils être synchronisés avec l'appareil ? (par défaut, les tâches uniquement)
+whole query	common	fr	Requête entière
 width	common	fr	Largeur
-wk	jscalendar	fr	Sem.
-work email	common	fr	email professionnel
+wk	jscalendar	fr	S.
+work email	common	fr	Email professionnel
 would you like to display the page generation time at the bottom of every window?	common	fr	Voulez-vous voir apparaître le temps de génération en bas de chaque fenêtre?
 writing	common	fr	écriture
 written by:	common	fr	Ecrit par:
@@ -726,6 +846,7 @@ year	common	fr	Année
 yemen	common	fr	YEMEN
 yes	common	fr	Oui
 you are required to change your password during your first login	common	fr	Il vous est demandé de changer votre mot de passe lors de votre première connexion
+you can customize how many icons and toolbars the editor shows.	common	fr	Combien d'icônes et de barres d'outils l'éditeur doit-il afficher ?
 you have been successfully logged out	login	fr	Déconnexion réussie
 you have not entered a title	common	fr	Vous n'avez pas entré de titre
 you have not entered a valid date	common	fr	Vous n'avez pas entré une date valide
@@ -734,10 +855,17 @@ you have not entered participants	common	fr	Vous n'avez pas entré de participan
 you have selected an invalid date	common	fr	Vous avez sélectionné une date invalide !
 you have selected an invalid main category	common	fr	Vous avez sélectionné une catégorie principale invalide !
 you have successfully logged out	common	fr	Vous vous êtes correctement déconnecté
+you need to %1set your timezone preference%2.	common	fr	Vous devez %1 définir votre préférence de fuseau horaire %2.
 you need to add the webserver user '%1' to the group '%2'.	common	fr	Vous devez ajouter l'utilisateur du serveur web '%1' au groupe '%2'.
+you need to be an egroupware administrator to access this functionality!	common	fr	Vous devez être administrateur d'eGroupware pour accéder à cette fonction !
+you need to select some entries first!	common	fr	Vous d'abord devez sélectionner des entrées !
+you need to set enable logging to "%1" to create/update a log.	groupdav	fr	Vous devez activer la journalisation pour "%1" pour créer et mettre à jour un log.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fr	Vous avez tenté d'ouvrir l'application eGroupWare: %1, mais vous n'avez aucune permission d'y accéder.
 your message could <b>not</b> be sent!<br>	common	fr	Votre message n'a <b>pas</b> pu être envoyé!<br>
 your message has been sent	common	fr	Votre message a été envoyé
+your password does not have required strength of %1 character classes and minimum length of %2 characters.	common	fr	Votre mot de passe n'a pas la complexité de %1 types de caractères et la longueur minimale de %2 caractères.
+your password failed the following criteria:	common	fr	Votre mot de passe ne respecte pas le critère suivant :
+your password is about to expire in %1 days, you may change your password now	common	fr	Votre mot de passe expire dans %1 jour(s), vous pouvez changer votre mot de passe maintenant.
 your search returned %1 matchs	common	fr	Votre recherche a retourné %1 résultats
 your search returned 1 match	common	fr	Votre recherche a retourné 1 résultat
 your session could not be verified.	login	fr	Votre session n'a pas pu être vérifiée.
