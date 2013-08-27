@@ -45,6 +45,7 @@ before headers	felamimail	fr	Avant les entêtes
 between headers and message body	felamimail	fr	Entre les entêtes et le corps du message
 body part	felamimail	fr	Corps du message
 by date	felamimail	fr	Par date
+can not open imap connection	felamimail	fr	Ne peut pas ouvrir de connexion IMAP
 can not send message. no recipient defined!	felamimail	fr	Impossible d'envoyer le message, il n'y a pas de destinataire
 can't connect to inbox!!	felamimail	fr	Impossible de se connecter au serveur!
 cc	felamimail	fr	Copie à
@@ -174,6 +175,7 @@ error:	felamimail	fr	Erreur:
 error: could not save message as draft	felamimail	fr	Erreur: Impossible d'enregistrer le message comme brouillon
 error: could not save rule	felamimail	fr	Erreur: Impossible d'enregistrer la règle
 error: message could not be displayed.	felamimail	fr	ERREUR: Impossible d'afficher le message.
+esync will fail without a working email configuration!	felamimail	fr	eSync ne peut fonctionner sans une configuration email fonctionnelle !
 event details follow	felamimail	fr	Les détails de l'événement suivent
 every	felamimail	fr	tous
 every %1 days	felamimail	fr	tous les %1 jours
@@ -215,6 +217,7 @@ from	felamimail	fr	De
 from(a->z)	felamimail	fr	De (A->Z)
 from(z->a)	felamimail	fr	De (Z->A)
 full name	felamimail	fr	Nom complet
+general settings	felamimail	fr	Paramètres principaux
 greater than	felamimail	fr	plus grand que
 have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	fr	Jettez un oeil à <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> pour en savoir plus sur Squirrelmail.<br>
 header lines	felamimail	fr	Lignes d'Entête
@@ -233,6 +236,7 @@ if message size	felamimail	fr	Si la taille du message
 if subject contains	felamimail	fr	Si le sujet contient
 if to contains	felamimail	fr	Si A contient
 if using ssl or tls, you must have the php openssl extension loaded.	felamimail	fr	Si vous utilisez SSL ou TLS, l'extension PHP openssl doit être chargée.
+if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	felamimail	fr	Si vous spécifiez le port 5190 comme port du serveur SIEVE, vous forcer le SSL pour SIEVE (et le serveur doit le supporter...)
 illegal folder name.  please select a different name.	felamimail	fr	Nom de dossier illégal. SVP choisissez-en un autre.
 imap	felamimail	fr	IMAP
 imap server	felamimail	fr	Serveur IMAP
@@ -328,6 +332,7 @@ no signature	felamimail	fr	pas de signature
 no stationery	felamimail	fr	aucun entrepôt
 no subject given!	felamimail	fr	Votre message n'a pas de sujet!
 no supported imap authentication method could be found.	felamimail	fr	Aucune méthode d'authentification IMAP n'a été trouvée.
+no valid %1 folder configured!	felamimail	fr	Aucun répertoire %1 valide configuré !
 no valid data to create mailprofile!!	felamimail	fr	Aucune donnée valide pour créer le profil email
 no valid emailprofile selected!!	felamimail	fr	Aucun profil de messagerie selectionné!
 none	felamimail	fr	Aucun
@@ -389,6 +394,7 @@ row order style	felamimail	fr	style d'ordonnancement de ligne
 rule	felamimail	fr	Règle
 save	felamimail	fr	Sauver
 save all	felamimail	fr	Enregistrer tout
+save as	felamimail	fr	Enregistrer comme
 save as draft	felamimail	fr	enregistrer comme brouillon
 save as infolog	felamimail	fr	enregistrer comme infolog
 save changes	felamimail	fr	enregistrer les modifications
