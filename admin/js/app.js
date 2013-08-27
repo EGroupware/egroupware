@@ -180,13 +180,48 @@ app.admin = AppJS.extend(
 	},
 	
 	/**
-	 * Delete a group callback for tree
+	 * Modify an ACL entry
 	 * 
 	 * @param Object _action egwAction
 	 * @param Object _senders egwActionObject _senders[0].iface.id holds the id
 	 */
-	delete_group: function(_action, _senders)
+	acl: function(_action, _senders)
 	{
-		alert('delete_group '+_senders[0].iface.id);
+		var ids = [];
+		for(var i=0; i < _senders.length; ++i)
+		{
+			ids.push(_senders[i].id.substr(7));	// remove "admin::" prefix
+		}
+
+		switch(_action.id)
+		{
+			case 'delete':
+				var request = new egw_json_request('admin_acl::ajax_change_acl', [ids], this);
+				request.sendRequest(false, this._acl_callback, this);
+				break;
+				
+			case 'edit':
+				egw().open_link(egw.link('/index.php', {
+					menuaction: 'admin.admin_acl.acl',
+					id: ids[0],
+				}), 'acl', '300x300');
+				break;
+
+			case 'add':
+				egw().open_link(egw.link('/index.php', {
+					menuaction: 'admin.admin_acl.acl',
+				}), 'acl', '250x250');
+				break;
+		}
+	},
+	
+	/**
+	 * Callback called on successfull call of serverside ACL handling
+	 * 
+	 * @param string _data returned from server
+	 */
+	_acl_callback: function(_data)
+	{
+		window.egw_refresh(_data.msg, this.appname, _data.ids, _data.type);
 	},
 });

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="admin.acl.edit" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row part="header">
+					<description value="Application"/>
+					<menulist>
+						<menupopup id="acl_appname" needed="1" onchange="1" options="Select one"/>
+					</menulist>
+				</row>
+				<row disabled="@acl_location=run" part="header">
+					<description value="From" for="acl_location"/>
+					<menulist>
+						<menupopup type="select-account" id="acl_location" readonly="true"/>
+					</menulist>
+				</row>
+				<row part="header">
+					<description value="To" for="acl_account"/>
+					<menulist>
+						<menupopup type="select-account" id="acl_account" needed="1"/>
+					</menulist>
+				</row>
+				<row valign="top">
+					<description value="Rights"/>
+					<grid>
+						<columns>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<checkbox label="@label[$row]" id="acl[$row]" options="{$cont[right][$row]},0" span="all"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+		<hbox>
+			<button label="Save" id="save"/>
+			<button label="Cancel" id="cancel" onclick="window.close();"/>
+		</hbox>
+	</template>
+</overlay>
