@@ -3,6 +3,7 @@
 %1 deleted by %2 at %3	infolog	fr	%1 supprimé(s) par %2 à %3
 %1 entries %2	infolog	fr	%1 entrées %2
 %1 entries %2, %3 failed because of insufficent rights !!!	infolog	fr	%1 entrées %2, %3 ont échoués par manque de droits suffisants !!!
+%1 entries %2, %3 failed.	infolog	fr	%1 entrées %2, %3 en échec.
 %1 modified	infolog	fr	%1 modifié(s)
 %1 modified by %2 at %3	infolog	fr	%1 modifié(s) par %2 à %3
 %1 records imported	infolog	fr	%1 enregistrements importés
@@ -279,6 +280,7 @@ not	infolog	fr	pas
 not assigned	infolog	fr	Pas attribué
 not-started	infolog	fr	Non démarré
 note	infolog	fr	Note
+notification settings	infolog	fr	Paramètres de notification
 number of records to read (%1)	infolog	fr	Nombre d'enregistrements à lire (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	fr	nombre de lignes pour un champ d´entrées multilignes ou pour une boîte de sélection multiple
 offer	infolog	fr	Offre
