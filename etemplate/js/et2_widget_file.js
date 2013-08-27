@@ -193,10 +193,12 @@ var et2_file = et2_inputWidget.extend(
 		{
 			var widget = this.getRoot().getWidgetById(this.options.drop_target);
 			var drop_target = widget && widget.getDOMNode() || document.getElementById(this.options.drop_target);
-			//$j(drop_target).off("."+this.id);
+			$j(drop_target).off("."+this.id);
 		}
 		
 		this.options.drop_target = new_target;
+		
+		if(!this.options.drop_target) return;
 		
 		// Set up new drop target
 		var widget = this.getRoot().getWidgetById(this.options.drop_target);
@@ -210,7 +212,7 @@ var et2_file = et2_inputWidget.extend(
 					return false;
 			};
 			$j(drop_target)
-				.on("drop", jQuery.proxy(function(event) {
+				.on("drop."+this.id, jQuery.proxy(function(event) {
 					event.stopPropagation();
 					event.preventDefault();
 					this.input.removeClass("ui-state-active");
@@ -220,7 +222,7 @@ var et2_file = et2_inputWidget.extend(
 					}
 					return false;
 				}, this))
-				.on("dragenter",function(e) {
+				.on("dragenter."+this.id,function(e) {
 					// Accept the drop if at least one mimetype matches
 					// Individual files will be rejected later
 					var mime_ok = false;
@@ -235,16 +237,16 @@ var et2_file = et2_inputWidget.extend(
 					// Returning true cancels, return false to allow
 					return self.disabled || !mime_ok;
 				})
-				.on("dragleave", function(e) {
+				.on("dragleave."+this.id, function(e) {
 					self.input.removeClass("ui-state-active");
 					// Returning true cancels, return false to allow
 					return self.disabled
 				})
-				.on("dragover", function(e) {
+				.on("dragover."+this.id, function(e) {
 					// Returning true cancels, return false to allow
 					return self.disabled;
 				})
-				.on("dragend", false);
+				.on("dragend."+this.id, false);
 		}
 		else
 		{
