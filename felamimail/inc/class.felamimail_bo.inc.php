@@ -5228,6 +5228,19 @@ class felamimail_bo
 	}
 
 	/**
+	 * adaptSubjectForImport - strips subject from unwanted Characters, and does some normalization
+	 * to meet expectations
+	 * @param string $subject string to process
+	 * @return string
+	 */
+	static function adaptSubjectForImport($subject)
+	{
+		$subject = str_replace('$$','__',($subject?$subject:lang('(no subject)')));
+		$subject = str_ireplace(array('[FWD]','[',']','{','}','<','>'),array('Fwd:',' ',' ',' ',' ',' ',' '),trim($subject));
+		return $subject;
+	}
+
+	/**
 	 * processURL2InlineImages - parses a html text for images, and adds them as inline attachment
 	 * we do not use the functionality of the phpmailer here, as phpmailers functionality requires
 	 * files to be present within the filesystem, which we do not require as we make this happen
