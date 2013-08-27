@@ -154,6 +154,7 @@ do you want a notification, if items you created get updated?	infolog	fr	Etre no
 do you want a notification, if items you delegated are about to start?	infolog	fr	Etre notifiés si des entrées que vous avez déléguées sont sur le point de commencer.
 do you want a notification, if items you delegated are due?	infolog	fr	Etre notifiés si des entrées que vous avez déléguées sont dues.
 do you want to receive notifications as html-mails or plain text?	infolog	fr	Recevoir les notifications en mail HTML ou texte simple.
+document '%1' does not exist or is not readable for you!	infolog	fr	Le document '%1' n'existe pas ou n'est pas lisible avec votre profil !
 don't show infolog	infolog	fr	NE PAS afficher InfoLog
 done	common	fr	Fait
 download	infolog	fr	Télécharger
@@ -191,6 +192,7 @@ for serial letter use this tag. put the content, you want to repeat between two 
 for which types should this field be used	infolog	fr	pour quels types ce champ devrait être utilisé
 from	infolog	fr	De
 general	infolog	fr	Général
+general fields:	infolog	fr	Champs généraux :
 global categories	infolog	fr	Catégories globales
 group owner for	infolog	fr	Propriétaire de Groupe pour
 high	infolog	fr	Haut
@@ -203,6 +205,7 @@ id	infolog	fr	Id
 id#	infolog	fr	Id#
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	fr	Si un type a un propriétaire de groupe, toutes les entrées de ce type appartiendront à ce groupe, et NON à l'utilisateur qui l'a créé!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	fr	Si non renseigné, la ligne contenant la recherche et les filtres est cachée lorsqu'il y a plus d'entrées que le "Nombre max d'occurences correspondantes par page" (défini dans les préférences).
+if you specify an export definition, it will be used when you export	infolog	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
 import	infolog	fr	Importation
 import next set	infolog	fr	importer l´élément suivant
 importance	infolog	fr	Importance
