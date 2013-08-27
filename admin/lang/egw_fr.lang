@@ -173,7 +173,7 @@ deny access to site configuration	admin	fr	Refuser  l'accès à la configuration
 deny access to user accounts	admin	fr	Refuser l'accès aux comptes utilisateurs
 deny all users access to grant other users access to their entries ?	admin	fr	Refuser à tous les utilisateur le droit d'accorder des accès sur leurs données
 description can not exceed 255 characters in length !	admin	fr	La description ne peut dépasser 255 caractères de long !
-determines the order the fields are displayed	admin	fr	Détermine l'ordre d'afficahge des champs
+determines the order the fields are displayed	admin	fr	Détermine l'ordre d'affichage des champs
 disable "auto completion" of the login form	admin	fr	Désactiver l'auto-complétion dans le formulaire de login
 disable wysiwyg-editor	admin	fr	désactiver l'éditeur WYSIWYG
 disabled (not recomended)	admin	fr	désactivé (pas recommandé)
@@ -359,25 +359,25 @@ modified	admin	fr	Modifié
 month	admin	fr	Mois
 more secure	admin	fr	Plus sécurisé
 name must not be empty !!!	admin	fr	Le nom ne doit pas être vide !
-name of the egroupware instance, eg. default	admin	fr	Nom de l'instance d'EGroupware
+name of the egroupware instance, eg. default	admin	fr	Nom de l'instance d'eGroupware
 new group name	admin	fr	Nouveau nom de groupe
 new name	admin	fr	Nouveau nom
 new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laisser vide pour aucun changement ]
 next run	admin	fr	Prochain démarrage
-no algorithms available	admin	fr	Pas d'algorithme disponible
-no alternate email address	admin	fr	Pas d'adresse email alternative
+no algorithms available	admin	fr	Pas d'algorithme disponible !
+no alternate email address	admin	fr	Pas d'adresse email alternative !
 no jobs in the database !!!	admin	fr	Pas de travaux dans la base de données !
-no login history exists for this user	admin	fr	Aucun historique de connexion n'existe pour cet utilisateur
-no matches found	admin	fr	Aucune occurrence trouvée
-no modes available	admin	fr	Pas de modes disponibles
-no permission to add groups	admin	fr	Aucune permission pour ajouter des groupes
-no permission to add users	admin	fr	Aucune permission pour ajouter des utilisateurs
-no permission to create groups	admin	fr	Aucune permission pour créer des groupes
+no login history exists for this user	admin	fr	Aucun historique de connexion n'existe pour cet utilisateur !
+no matches found	admin	fr	Aucune occurrence trouvée !
+no modes available	admin	fr	Pas de modes disponibles !
+no permission to add groups	admin	fr	Aucune permission pour ajouter des groupes !
+no permission to add users	admin	fr	Aucune permission pour ajouter des utilisateurs !
+no permission to create groups	admin	fr	Aucune permission pour créer des groupes !
 non profit: clubs, associations, ...	admin	fr	Sans but lucratif : clubs, associations, ...
 note: ssl available only if php is compiled with curl support	admin	fr	Note: SSL disponible si PHP est compilé avec le support de CURL
 number of active users	admin	fr	Nombre d'utilisateurs actifs
 number of row for a multiline inputfield or line of a multi-select-box	admin	fr	Nombre de lignes pour un champ multiligne ou pour une boîte de sélection multiple.
-number of sessions / egroupware logins in the last 30 days	admin	fr	Nombre de sessions / connexions à EGroupware pendant les 30 derniers jours
+number of sessions / egroupware logins in the last 30 days	admin	fr	Nombre de sessions / connexions à eGroupware pendant les 30 derniers jours
 number of users	admin	fr	Nombre d'utilisateurs
 official egroupware usage statistic	admin	fr	Statistique officielle d'usage d'EGroupware
 one day	admin	fr	Un jour
