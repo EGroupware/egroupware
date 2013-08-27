@@ -1,19 +1,24 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	fr	%1 (%2 nouveaux) Messages écrits pour l'Application '%3' et les langues '%4'
+%1 entries found, select one ...	etemplate	fr	%1 élément(s) trouvé(s), sélectionnez en un...
 %1 etemplates deleted	etemplate	fr	%1 eTemplates effacé(s)
 %1 etemplates for application '%2' dumped to '%3'	etemplate	fr	%1 eTemplates pour l'Application '%2' écrits dans '%3'
 %1 etemplates found	etemplate	fr	%1 eTemplates trouvé(s)
 %1 matches on search criteria	etemplate	fr	%1 occurences sur les critères de recherche
+%1 more...	etemplate	fr	%1 plus...
 %1 new etemplates imported for application '%2'	etemplate	fr	%1 nouveaux eTemplates importés pour l'Application '%2'
+%1 not implemented for %2!	etemplate	fr	%1 pas implémenté pour %2 !
 %s disabled	etemplate	fr	%s désactivé
 %s needed	etemplate	fr	%s nécessaire
 %s notranslation	etemplate	fr	%s PasDeTraduction
-%s onchange	etemplate	fr	%s surChangement
+%s onchange	etemplate	fr	%s onChange
 %s readonly	etemplate	fr	%s LectureSeule
+'%1' has an invalid format	etemplate	fr	'%1' a un format invalide
 '%1' has an invalid format !!!	etemplate	fr	'%1' a un format invalide !!!
-'%1' is not a valid date !!!	etemplate	fr	'%1'  n'est pas une date valide !!!
-'%1' is not a valid floatingpoint number !!!	etemplate	fr	'%1' n'est pas un nombre à virgule flottante valide !!!
-'%1' is not a valid integer !!!	etemplate	fr	'%1' n'est pas un entier valide !!!
-a pattern to be searched for	etemplate	fr	Une chaine de caractères à rechercher
+'%1' is not a valid date !!!	etemplate	fr	'%1'  n'est pas une date valide !
+'%1' is not a valid floatingpoint number !!!	etemplate	fr	'%1' n'est pas un nombre à virgule flottante valide !
+'%1' is not a valid integer !!!	etemplate	fr	'%1' n'est pas un entier valide !
+'%1' is not allowed ('%2')!	etemplate	fr	'%1' n'est PAS permis ('%2')!
+a pattern to be searched for	etemplate	fr	Chaine de caractères à rechercher
 accesskey	etemplate	fr	Clé d'accès
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	fr	Les clés d'accès peuvent être spécifiées avec un & dans le label (p.ex. &Nom)
 account contactdata	etemplate	fr	Compte contactdata
@@ -21,25 +26,29 @@ add a new column (after the existing ones)	etemplate	fr	Ajouter une nouvelle col
 add a new entry of the selected application	etemplate	fr	Ajouter une nouvelle entrée de l'application sélectionnée
 add a new multi-column index	etemplate	fr	Ajouter un nouvel index multi-colonne
 add column	etemplate	fr	Ajouter une colonne
-add index	etemplate	fr	Ajouter un Index
-add new	etemplate	fr	Ajouter nouveau
+add index	etemplate	fr	Ajouter un index
+add new	etemplate	fr	Ajouter un nouveau
 add table	etemplate	fr	Ajouter une table
 advanced search	etemplate	fr	Recherche avancée
 align	etemplate	fr	Aligner
 alignment of label and input-field in table-cell	etemplate	fr	Alignement du label et du champ de saisie dans la cellule de la table
 alignment of the v/hbox containing table-cell	etemplate	fr	Alignement de la boite H/V contenant la cellule de table
-all days	etemplate	fr	tous les jours
-all operations save the template!	etemplate	fr	toutes les opérations enregistrent le modèle!
-am	etemplate	fr	Matin
-an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	fr	Une colonne indexée accélère les requêtes qui utilisent cette colonne (coûte de l'espace disque !!!)
+all days	etemplate	fr	Tous les jours
+all operations save the template!	etemplate	fr	Toutes les opérations enregistrent le modèle!
+allowed file type: %1	etemplate	fr	Type de fichier autorisé : %1
+am	etemplate	fr	matin
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	fr	Une colonne indexée accélère les requêtes qui utilisent cette colonne (coûte de l'espace disque !)
+and	etemplate	fr	ET
 application	etemplate	fr	Application
-application name needed to write a langfile or dump the etemplates !!!	etemplate	fr	L'application Nom a eu besoin d'écrire un fichier de langue ou de dumper les eTemplates !!!
+application has no etemplates (no file %1) to restore!	etemplate	fr	L'application n'a pas d'eTemplates à restaurer (pas de fichier %1)
+application name needed to restore etemplates!	etemplate	fr	Le nom de l'application dont on a besoin de restaurer les eTemplates !
+application name needed to write a langfile or dump the etemplates !!!	etemplate	fr	Le nom de l'application dont on a besoin d'écrire un fichier de langue ou de dumper les eTemplates !
 applications	etemplate	fr	Applications
 applies the changes made	etemplate	fr	applique les modifications apportées
 applies the changes to the given version of the template	etemplate	fr	applique les modifications à la version mentionnée du modèle
 as default	etemplate	fr	comme défaut
 attach	etemplate	fr	Attacher
-attach file	etemplate	fr	attacher fichier
+attach file	etemplate	fr	Attacher un fichier
 baseline	etemplate	fr	Baseline
 blurtext	etemplate	fr	texteFlou
 border	etemplate	fr	Bord
@@ -47,42 +56,46 @@ border-line-thickness for the table-tag	etemplate	fr	Epaisseur de la ligne de bo
 bottom	etemplate	fr	Bas
 box	etemplate	fr	Boîte
 box...	etemplate	fr	Boîte...
+broken link	etemplate	fr	Lien cassé
 can not have special sql-value null	etemplate	fr	ne peut pas avoir une valeur SQL spéciale NULL
 cancel	etemplate	fr	Annuler
 cant delete a single widget from a grid !!!	etemplate	fr	ne peut pas supprimer un widget d'une grille !!!
 cant delete the only column of a grid !!!	etemplate	fr	ne peut pas supprimer la seule colonne d'une grille !!!
 cant delete the only row in a grid !!!	etemplate	fr	ne peut pas supprimer la seule ligne d'une grille !!!
 category	etemplate	fr	Catégorie
+category tree	etemplate	fr	Arborescence ces catégories
 cellpadding for the table-tag	etemplate	fr	Remplissage de cellule pour le tag de la table
 cells	etemplate	fr	Cellules
 cellspacing for the table-tag	etemplate	fr	Espacement des cellules pour le tag de la table
 center	etemplate	fr	Centre
 changed	etemplate	fr	Modifié
-check all	etemplate	fr	Vérifier tout
+check all	etemplate	fr	Tout cocher
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	fr	vérifier si le contenu devrait être seulement affiché mais non modifié (le contenu n'est alors pas renvoyé!)
-check if field has to be filled by user	etemplate	fr	Vérifier si le champ doit êtr rempli par l'utilisateur
+check if field has to be filled by user	etemplate	fr	Vérifier si le champ doit être rempli par l'utilisateur
 checkbox	etemplate	fr	Case à cocher
 class	etemplate	fr	Classe
-class, valign	etemplate	fr	classe, Valign
+class, valign	etemplate	fr	Vlass, Valign
 click here to attach the file	etemplate	fr	Cliquer ici pour attacher le fichier
 click here to create the link	etemplate	fr	Cliquer ici pour créer le lien
 click here to start the search	etemplate	fr	Cliquer ici pour démarrer la recherche
 click here to upload the file	etemplate	fr	Cliquer ici pour déposer le fichier
-click to order after that criteria	etemplate	fr	cliquez pour trier d'après ce critère
+click to order after that criteria	etemplate	fr	Trier d'après ce critère
 clickable path	etemplate	fr	chemin cliquable
 closes the window without saving the changes	etemplate	fr	ferme la fenêtre sans enregistrer les modifications
 column...	etemplate	fr	Colonne...
-columnname	etemplate	fr	NomDeColonne
+columnname	etemplate	fr	Nom de colonne
 comment	etemplate	fr	Commentaire
 confirm	etemplate	fr	confirmer
 confirmation message or custom javascript (returning true or false)	etemplate	fr	message de confirmation ou script java personnalisé (retournant true ou false)
 confirmation necesary or custom java-script	etemplate	fr	message de confirmation ou script java personnalisé nécessaire
+confirmation required	etemplate	fr	Confirmation requise
 contact	etemplate	fr	Contact
 contact field to show	etemplate	fr	Champ contact à afficher
 contact fields	etemplate	fr	Champs contact
 contains	etemplate	fr	contient
 create a new table for the application	etemplate	fr	Créer une nouvelle table pour l'application
-creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	fr	Crée un fichier de lang anglais ('en') à partir du label et des textes d'aide (pour l'application dans Nom)
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	fr	Crée un fichier lang anglais ('en') à partir du label et des textes d'aide (pour l'application dans Nom)
+creator	preferences	fr	Créateur
 css class for the table-tag	etemplate	fr	Classe CSS pour le tag de la table
 css properties	etemplate	fr	propriétés CSS
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	fr	Nom de la classe CSS pour cette ligne, préréglé: 'nmh' = entête prochaine correspondance, 'nmr' = alterne la ligne prochaine correspondance, 'nmr0'+'nmr1' lignes prochaines correspondances
@@ -90,8 +103,9 @@ css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'ro
 css-styles	etemplate	fr	Styles CSS
 custom	etemplate	fr	personnalisé
 custom fields	etemplate	fr	champs personnalisé
-custom javascript for onchange	etemplate	fr	script java personnalisé pour onChange
+custom javascript for onchange	etemplate	fr	scriptjava personnalisé pour onChange
 cut	etemplate	fr	Couper
+date	preferences	fr	Date
 date+time	etemplate	fr	Date+Heure
 datum	etemplate	fr	Datum
 day	etemplate	fr	Jour
@@ -105,22 +119,24 @@ delete a single entry by passing the id.	etemplate	fr	Effacer une unique entrée
 delete all selected etemplates, without further inquiry	etemplate	fr	Effacer TOUS les eTemplates sélectionnés, SANS demander de confirmation
 delete and cut save the template!	etemplate	fr	supprimer et couper enregistre le modèle!
 delete column	etemplate	fr	Effacer la colonne
-delete index	etemplate	fr	Effacer Index
+delete index	etemplate	fr	Effacer l'index
 delete the spezified etemplate	etemplate	fr	Supprimer l'eTemplate spécifié
-delete this column	etemplate	fr	supprimer cette colonne
+delete this column	etemplate	fr	Supprimer cette colonne
 delete this etemplate	etemplate	fr	Effacer cet eTemplate
 delete this file	etemplate	fr	Supprimer ce fichier
-delete this row	etemplate	fr	supprimer cette ligne
-delete whole column (can not be undone!!!)	etemplate	fr	Effacer la colonne entière (ne peut PAS être annulé!!!)
+delete this row	etemplate	fr	Supprimer cette ligne
+delete whole column (can not be undone!!!)	etemplate	fr	Effacer la colonne entière (ne peut PAS être annulé !)
 deletes the above spez. etemplate from the database, can not be undone	etemplate	fr	Efface le eTemplate spécifié ci-dessus de la base de données, ne peut PAS être annulé
-deletes the etemplate spez. above	etemplate	fr	fface le eTemplate spécifié ci-dessus
+deletes the etemplate spez. above	etemplate	fr	Efface le eTemplate spécifié ci-dessus
 deletes this column	etemplate	fr	Efface cette colonne
 deletes this index	etemplate	fr	Supprimer cet index
 discard changes	etemplate	fr	Annuler les changements
-displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	fr	affiché en face de l'entrée ou l'entrée est insérée pour un '%s' dans le label (le label du Submitbutton ou Image-filename)
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	fr	affiché en face de l'entrée ou l'entrée est insérée pour un '%s' dans le label (le label du bouton Submit ou Image-filename)
 displayed in statusline of browser if input-field gets focus	etemplate	fr	affiché dans la ligne de statut du navigateur si le champ d'entrée a le focus
 displayed in the top line of the groupbox (legend)	etemplate	fr	affiché en ligne de tête de la groupbox (légende)
 do you want to save the changes you made in table %s?	etemplate	fr	Voulez-vous enregistrer les modifications que vous avez effectuées dans la table %s?
+do you want to send the message to all selected entries, without further editing?	etemplate	fr	Voulez-vous envoyer le message à toute la sélection, SANS aucune autre modification ?
+document '%1' does not exist or is not readable for you!	preferences	fr	Le document '%1' n'existe pas ou n'est pas lisible avec votre profil !
 documentation	etemplate	fr	Documentation
 doesn't matter	etemplate	fr	pas d'importance
 drop a table - this can not be undone	etemplate	fr	Supprimer une table - ceci ne peut PAS être annulé
@@ -144,10 +160,14 @@ enter filename to upload and attach, use [browse...] to search for it	etemplate	
 enter the new version number here (> old_version), empty for no update-file	etemplate	fr	Entrez le nouveau numéro de version ici (> ancienne_version), vide pour aucun fichier de mise à jour
 enter the new version number here (has to be > old_version)	etemplate	fr	Entrez le nouveau numéro de version ici (doit être > à la vieille_version)
 entry saved	etemplate	fr	Entrée enregistrée
-error: template not found !!!	etemplate	fr	Erreur: Template non trouvé !!!
+error copying uploaded file to vfs!	etemplate	fr	Erreur à la copie du fichier uploadé vers le VFS !
+error create parent directory %1!	etemplate	fr	Errreur à la création du dossier parent %1 !
+error deleting %1!	etemplate	fr	Erreur à la suppression de %1 !
+error uploading file!	filemanager	fr	Erreur à l'upload du fichier !
+error: template not found !!!	etemplate	fr	Erreur : Template non trouvé !
 error: webserver is not allowed to write into '%1' !!!	etemplate	fr	Erreur: le serveur web n'est pas autorisé à écrire dans '%1' !!!
-error: while saving !!!	etemplate	fr	Erreur: lors de l'enregistrement !!!
-error: writing file (no write-permission for the webserver) !!!	etemplate	fr	Erreur: écriture fichier (pas d'autorisation pour le serveur Web) !!!
+error: while saving !!!	etemplate	fr	Erreur lors de l'enregistrement !
+error: writing file (no write-permission for the webserver) !!!	etemplate	fr	Erreur sur l'écriture du fichier (pas d'autorisation pour le serveur Web) !
 etemplate	common	fr	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	fr	eTemplate '%1' importé, utilisez Enregistrer pour le mettre dans la base de données
 etemplate '%1' written to '%2'	etemplate	fr	eTemplate '%1' écrit dans '%2'
@@ -158,17 +178,20 @@ exchange this row with the one above	etemplate	fr	Echanger cette ligne avec cell
 exchange this two columns	etemplate	fr	Echanger ces deux colonnes
 export the loaded etemplate into a xml-file	etemplate	fr	exporter l'eTemplate chargé dans un fichier XML
 export xml	etemplate	fr	Exporter XML
-extensions loaded:	etemplate	fr	Extensions chargées:
+extensions loaded:	etemplate	fr	Extensions chargées :
 field	etemplate	fr	Champ
-field must not be empty !!!	etemplate	fr	Le champ ne doit pas être vide !!!
+field must not be empty !!!	etemplate	fr	Le champ ne doit pas être vide !
 file	etemplate	fr	Fichier
+file '%1' not found!	etemplate	fr	Fichier  '%1'  non trouvé !
 file contains more than one etemplate, last one is shown !!!	etemplate	fr	Le fichier contient plus d'un eTemplate, le dernier est affiché !!!
+file is of wrong type (%1 != %2)!	etemplate	fr	Le fichier est de mauvais type (%1 != %2) !
 file writen	etemplate	fr	Fichier écrit
 fileupload	etemplate	fr	UploadFichier
 first	etemplate	fr	Premier
 floating point	etemplate	fr	Virgule flottante
 foreign key	etemplate	fr	Clé étrangère
 formatted text (html)	etemplate	fr	Texte Formaté (HTML)
+general fields:	preferences	fr	Champs généraux :
 go to the first entry	etemplate	fr	Aller à la première entrée
 go to the last entry	etemplate	fr	Aller à la dernière entrée
 go to the next page of entries	etemplate	fr	Aller à la page suivante d'entrées
@@ -190,6 +213,7 @@ hour	etemplate	fr	Heure
 hours	etemplate	fr	heures
 how many entries should the list show	etemplate	fr	combien d'entrées la liste doit-elle afficher
 html	etemplate	fr	Html
+html link to the current record	etemplate	fr	Lien HTML vers l'enregistrement courant
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	fr	Si le champ est désactivé, une cellule de table vide est affiché pour suppression (temporaire) d'un champ/cellule
 image	etemplate	fr	Image
 import	etemplate	fr	Importer
@@ -200,16 +224,17 @@ increment version to not overwrite the existing template	etemplate	fr	incrément
 index/name of returned content (name of the template, link / method for image)	etemplate	fr	index/nom du contenu renvoyé (nom du Template, Lien / Méthode pour Image)
 indexed	etemplate	fr	Indexé
 indexoptions	etemplate	fr	Options d'Index
+input required	etemplate	fr	Input nécessaire
 insert a column before	etemplate	fr	insérer une colonne avant
-insert a column behind	etemplate	fr	insérer une colonne entre
+insert a column behind	etemplate	fr	insérer une colonne après
 insert a row above	etemplate	fr	insérer une ligne au-dessus
 insert a row below	etemplate	fr	insérer une ligne au-dessous
 insert a widget before	etemplate	fr	insérer un widget avant
-insert a widget behind	etemplate	fr	insérer un widget entre
+insert a widget behind	etemplate	fr	insérer un widget après
 insert in document	etemplate	fr	Insérer dans un document
-insert new column behind this one	etemplate	fr	Insérer une nouvelle colonne derrière celle-ci
+insert new column behind this one	etemplate	fr	Insérer une nouvelle colonne après celle-ci
 insert new column in front of all	etemplate	fr	Insérer une nouvelle colonne devant toutes les autres
-insert new row after this one	etemplate	fr	Insérer une nouvelle ligne devant celle-ci
+insert new row after this one	etemplate	fr	Insérer une nouvelle ligne après celle-ci
 insert new row in front of first line	etemplate	fr	Insérer une nouvelle ligne devant la première ligne
 integer	etemplate	fr	Nombre entier
 key	etemplate	fr	Clé
@@ -221,17 +246,25 @@ last	etemplate	fr	Dernier
 left	etemplate	fr	Gauche
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	fr	Longueur pour char+varchar, précision d'entiers: 2, 4, 8 et flottants: 4, 8
 link	etemplate	fr	Lien
+link target %1 not found!	etemplate	fr	Cible de lien %1 non trouvé
 linkapps	etemplate	fr	LinkApps
 linkentry	etemplate	fr	LinkEntry
 linklist	etemplate	fr	Liste de liens
+links and attached files	preferences	fr	Liens et fichiers attachés
+links to specified application.  example: {{links/addressbook}}	etemplate	fr	Liens vers une application spécifique. Exemple : {{links/addressbook}}
 linkstring	etemplate	fr	ChaîneDeLien
 linkto	etemplate	fr	LierVers
+list of files linked to the current record	preferences	fr	Listes des fichiers liés à l'enregistrement courant
 load this template into the editor	etemplate	fr	Charger ce template dans l'éditeur
+maximum size for uploads	filemanager	fr	Taille maximale d'un upload
+message ...	etemplate	fr	Message...
 middle	etemplate	fr	Milieu
 minute	etemplate	fr	Minute
 minutes	etemplate	fr	Minutes
+missing: %1	etemplate	fr	Manquant : %1
 modifier	preferences	fr	Editeur
 month	etemplate	fr	Mois
+more than 1 match for '%1'	etemplate	fr	Plusieurs résultats pour  '%1'
 multicolumn indices	etemplate	fr	Indices Multi-colonnes
 name	etemplate	fr	Nom
 name of other table where column is a key from	etemplate	fr	Nom de l'autre table où la colonne est une clé de
@@ -251,7 +284,9 @@ nextmatch sortheader	etemplate	fr	Prochaine occurence Entête de tri
 no column to swap with !!!	etemplate	fr	aucune colonne à échanger !!!
 no file	etemplate	fr	Pas de fichier
 no filename given or selected via browse...	etemplate	fr	Pas de nom de fichier donné ou sélectionnée avec naviguer...
+no filters	etemplate	fr	Pas de filtre
 no matches found	etemplate	fr	Aucune occurrence trouvée
+no rights to export more than %1 entries!	common	fr	Pas de droits pour exporter plus que %1 éléments !
 no row to swap with !!!	etemplate	fr	aucune ligne à échanger !!!
 not null	etemplate	fr	PAS NULL
 nothing	etemplate	fr	rien
@@ -268,6 +303,7 @@ open the online help.	etemplate	fr	Ouvrir l'aide en ligne.
 operator	etemplate	fr	Opérateur
 optional note about the link	etemplate	fr	Note optionnelle à propos du lien
 options	etemplate	fr	Options
+or	etemplate	fr	OU
 order to navigating by tab key through the form	etemplate	fr	Ordre pour la navigation avec la touche tab à travers le formulaire
 overflow	etemplate	fr	Débordement
 padding	etemplate	fr	Remplissage
@@ -289,6 +325,8 @@ readonly	etemplate	fr	lecture seule
 remove row (can not be undone!!!)	etemplate	fr	Enlever la ligne (ne peut PAS être annulé!!!)
 remove this link (not the entry itself)	etemplate	fr	Enlever ce lien (pas l'entrée elle-même)
 required	etemplate	fr	Nécessaire
+restore all	etemplate	fr	Tout restaurer
+restore all application templates, overwriting existing ones with identical version number	etemplate	fr	Restaurer tous les templates d'application, en écrasant les templates existants ayant le même numéro de version
 returns savely, without deleting	etemplate	fr	Revient de manière sûre, sans effacer
 right	etemplate	fr	Droite
 row...	etemplate	fr	Ligne...
@@ -297,9 +335,10 @@ save the changes made and close the window	etemplate	fr	Enregistrer les modifica
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	fr	Enregistrer l'eTemplate sous les clés ci-dessus (nom, ...), changez-les pour un Sauvegarder-sous
 saves changes to tables_current.inc.php	etemplate	fr	Enregistrer les changements dans tables_current.inc.php
 saves the template with given version number and closes the window	etemplate	fr	enregistre le modèle avec la version donnée et ferme la fenêtre
-scale	etemplate	fr	Balance
-scale for float	etemplate	fr	balance pour les flottants
+scale	etemplate	fr	Echelle
+scale for float	etemplate	fr	échelle pour les flottants
 search	etemplate	fr	Rechercher
+search...	etemplate	fr	Rechercher...
 select a category	etemplate	fr	choisissez une catégorie
 select a primary contact, to show in the list	etemplate	fr	Choisissez un contact primaire, à montrer dans la liste
 select access	etemplate	fr	Choisissez l'accès
@@ -338,9 +377,10 @@ sets today as date	etemplate	fr	Fixe la date à aujourd'hui
 should the form be submitted or any custom javascript be executed	etemplate	fr	Est-ce que le formulaire doit être soumis ou un script java doit être exécuté
 show	etemplate	fr	Montrer
 show (no save)	etemplate	fr	Montrer (pas de sauvegarde)
+show all / cancel filter	etemplate	fr	Montrer tout / annuler les filtres
 show values	etemplate	fr	Montrer les valeurs
 showing	etemplate	fr	montre
-shows / allows you to enter values into the etemplate for testing	etemplate	fr	vous montre / autorise à entrer des valeurs dans l'eTemplate pour tester
+shows / allows you to enter values into the etemplate for testing	etemplate	fr	montre / autorise à entrer des valeurs dans l'eTemplate pour tester
 shows/displays etemplate for testing, does not save it before	etemplate	fr	montre/affiche l'eTemplate pour tester, ne l'enregistre pas avant
 spacing	etemplate	fr	Espacement
 span	etemplate	fr	Envergure
@@ -365,6 +405,7 @@ template deleted	etemplate	fr	Template effacé
 template saved	etemplate	fr	Template enregistré
 text	etemplate	fr	Texte
 textarea	etemplate	fr	ChampTexte
+the following document-types are supported:	preferences	fr	Les types de documents suivant sont autorisés :
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	fr	ce texte s'affiche si le champ de saisie est vide et n'a pas le focus (flou)
 time	etemplate	fr	Heure
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	fr	pour désactiver: [! = not]<value>[=<vérification>] p.ex.: '!@data' désactive si les données sont vides
@@ -373,9 +414,11 @@ to start the etemplate editor	etemplate	fr	Pour démarre l'éditeur d'eTemplate
 to start the search	etemplate	fr	Pour démarrer la recherche
 today	etemplate	fr	Aujourd'hui
 top	etemplate	fr	Sommet
+tree	etemplate	fr	Arborescence
 type	etemplate	fr	Type
 type of the column	etemplate	fr	Type de la colonne
 type of the field (select label if field should be empty)	etemplate	fr	Type du champ (choisissez le label si le champ devrait être vide)
+uncheck all	etemplate	fr	Tout décocher
 unique	etemplate	fr	Unique
 unlink	etemplate	fr	Délier
 update a single entry by passing the fields.	etemplate	fr	Mettre à jour une unique entrée en passant les champs.
@@ -407,4 +450,7 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	fr	Fichier XML à importer
 xslt template	etemplate	fr	Template XSLT
 year	etemplate	fr	Année
+you are not allowed to export more than %1 entries!	common	fr	Vous n'êtes pas autorisé à exporter plus que %1 éléments !
 you can respond by visiting:	etemplate	fr	Pour le voir, visitez:
+you need to select a file first!	etemplate	fr	Sélectionner d'abord un fichier !
+your code is incorrect !!!	etemplate	fr	Ce code est incorrect !
