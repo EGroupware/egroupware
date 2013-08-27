@@ -1,6 +1,34 @@
+all possible notification backends	notifications	fr	Tous les backends de notification possibles
+check both (first try (active) user defined account, if none use emailadmin profile)	admin	fr	Cocher les deux. D'abord essayer le compte de utilisateur actif, puis le profil eMailAdmin
+choose from mailsettings used for notification	admin	fr	Utiliser les paramètres email utilisés pour la notification
+do not notify me at all	notifications	fr	Ne pas me notifier du tout.
+e-mail only	notifications	fr	Email seulement
+egroupware has notifications for you	notifications	fr	eGroupware a des notifications pour vous
+egroupware-popup and e-mail	notifications	fr	Popup et email eGroupware
+egroupware-popup and windows-popup	notifications	fr	Popup eGroupware et popup Windows
+egroupware-popup backend	admin	fr	Backend de popup eGroupware
+egroupware-popup only	notifications	fr	Popup eGroupware seulement
+egroupware-popup verbosity	notifications	fr	Verbosité des Popup eGroupware
+emailadmin profile only (do not use user defined (active) mail profiles for notification)	admin	fr	Profil eMailAdmin seulement. Ne pas utiliser les profils mail des utilisateurs pour les notifications.
+enable egroupware-popup backend	admin	fr	Activer le backend des popup eGroupware
+enable sms backend	admin	fr	Activer le backend SMS
+enable windows-popup backend	admin	fr	Activer le backend de popup Windows
 folder	notifications	fr	Dossier
 from	notifications	fr	Depuis
+linked entries:	common	fr	Entrées liées :
+mail backend	admin	fr	Backend email
 message from	notifications	fr	Message de
 minutes	notifications	fr	Minutes
 notification	common	fr	Notification
+notify me by	notifications	fr	Notifier avec mon compte
+optimize e-mails for external mail client	notifications	fr	Optimizer les emails pour des clients de messagerie externes
 preferences for notification	notifications	fr	Préférences de notification
+received	notifications	fr	Reçu
+sms backend	admin	fr	Backend SMS
+sms only	notifications	fr	SMS seulement
+windows-popup and e-mail	notifications	fr	Popup et email Windows
+windows-popup backend	admin	fr	Backend popup Windows
+windows-popup first, if that fails notify me by e-mail	notifications	fr	Popup windows en premier, en cas d'échec, me notifier par email
+windows-popup first, if that fails notify me by sms	notifications	fr	Popup windows en premier,  en cas d'échec, me notifier par SMS
+windows-popup only	notifications	fr	Popup windows seulement
+you've got new mail	notifications	fr	Vous avez un nouveau message
