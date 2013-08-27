@@ -180,13 +180,18 @@ app.filemanager = AppJS.extend(
 	 * 
 	 * @param _event
 	 * @param _file_count
+	 * @param {string} [_path=current directory] Where the file is uploaded to.
 	 */
-	upload: function(_event, _file_count)
+	upload: function(_event, _file_count, _path)
 	{
+		if(typeof _path == 'undefined')
+		{
+			_path = this.get_path();
+		}
 		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
 		{
 			var widget = _event.data;
-			var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', widget.getValue(), this.get_path()], this);
+			var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', widget.getValue(), _path], this);
 			widget.set_value('');
 			request.sendRequest(false, this._upload_callback, this);
 		}
@@ -494,7 +499,37 @@ app.filemanager = AppJS.extend(
 
 		this._do_action(_action.id == "file_drop_move" ? 'move' : 'copy', src, false, dst);
 	},
-
+	
+	/**
+	 * Handle a native / HTML5 file drop from system
+	 * 
+	 * This is a callback from nextmatch to prevent the default link action, and just upload instead.
+	 * 
+	 * @param {string} row_uid UID of the row the files were dropped on
+	 * @param {File[]} Array of Files
+	 */
+	filedrop: function(row_uid, files)
+	{
+		var self = this;
+		var data = egw.dataGetUIDdata(row_uid);
+		
+		var path = data.data.mime == "httpd/unix-directory" ? data.data.path : this.get_path();
+		var widget = this.et2.getWidgetById('upload');
+		
+		// Override finish to specify a potentially different path
+		var old_onfinish = widget.options.onFinish;
+		
+		widget.options.onFinish = function(_event, _file_count) {
+			widget.options.onFinish = old_onfinish;
+			self.upload(_event, _file_count, path);
+		}
+		// This triggers the upload
+		widget.set_value(files);
+		
+		// Return false to prevent the link
+		return false;
+	},
+		
 	/**
 	 * Get drag helper, called on drag start
 	 * 

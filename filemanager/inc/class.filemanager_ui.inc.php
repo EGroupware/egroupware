@@ -447,6 +447,7 @@ class filemanager_ui
 			'3' => 'Show hidden files',
 			''  => 'Files from subdirectories',
 		);
+		$tpl->setElementAttribute('nm', 'onfiledrop', 'app.filemanager.filedrop');
 		$tpl->setElementAttribute('nm[upload]', 'onFinish', 'app.filemanager.upload');
 		$tpl->setElementAttribute('nm[upload]', 'multiple', true);
 
