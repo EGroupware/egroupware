@@ -85,7 +85,106 @@ function egwDragActionImplementation()
 			node.onselectstart = function () {
 				return false;
 			};
+			if (!(window.FileReader && 'draggable' in document.createElement('span')) )
+			{
+				// No DnD support
+				return;
+			}
+			
+			// It shouldn't be so hard to get the action...
+			var action = null;
+			var groups = _context.getActionImplementationGroups();
+			if(!groups.drag) return;
+			for(var i = 0; i < groups.drag.length; i++)
+			{
+				// dragType 'file' says it can be dragged as a file
+				if(groups.drag[i].link.actionObj.dragType == 'file')
+				{
+					action = groups.drag[i].link.actionObj;
+					break;
+				}
+			}
+			if(action)
+			{
+				/**
+				 * We found an action with dragType 'file', so by holding Ctrl
+				 * key & dragging, user can drag from browser to system.
+				 * The global data store must provide a full, absolute URL in 'download_url'
+				 * and a mime in 'mime'.
+				 * 
+				 * Unfortunately, Native DnD to drag the file conflicts with jQueryUI draggable,
+				 * which handles all the other DnD actions.  We get around this by:
+				 * 1.  Require the user indicate a file drag with Ctrl key
+				 * 2.  Disable jQueryUI draggable, then turn on native draggable attribute
+				 * This way we can at least toggle which one is operating, so they 
+				 * both work alternately if not together.
+				 */
+			// Native DnD - Doesn't play nice with jQueryUI Sortable
+			// Tell jQuery to include this property
+			jQuery.event.props.push('dataTransfer');
+			
+			$j(node).off("mousedown")
+				.on("mousedown", function(event) {
+					$j(node).draggable("option","disabled",event.ctrlKey);
+					$j(this).attr("draggable", event.ctrlKey ? "true" : "")
+					
+					// Disabling draggable adds some UI classes, but we don't care so remove them
+					$j(node).removeClass("ui-draggable-disabled ui-state-disabled");
+					if(!event.ctrlKey || !this.addEventListener) return;
+				})
+				.on("dragstart", function(event) {
+					if(event.dataTransfer == null) {
+						return;
+					}
+					event.dataTransfer.effectAllowed="copy"; 
 
+					// Get all selected
+					// Multiples aren't supported by event.dataTransfer, yet, so
+					// select only the row they clicked on.
+					// var selected = _context.getSelectedLinks('drag');
+					var selected = [_context];
+					_context.parent.setAllSelected(false);
+					_context.setSelected(true);
+					
+					// Set file data
+					for(var i = 0; i < selected.length; i++)
+					{
+						var data = egw.dataGetUIDdata(selected[i].id);
+						if(data && data.data.mime && data.data.download_url)
+						{
+							var url = data.data.download_url;
+							if (url[0] == '/') url = window.location.origin+egw.link(url);
+							// Unfortunately, dragging files is currently only supported by Chrome
+							if(navigator && navigator.userAgent.indexOf('Chrome'))
+							{
+								event.dataTransfer.setData("DownloadURL", data.data.mime+':'+data.data.name+':'+url);
+							}
+							else
+							{
+								// Include URL as a fallback
+								event.dataTransfer.setData("text/uri-list", url);
+							}
+						}
+					}
+					if(event.dataTransfer.types.length == 0)
+					{
+						// No file data? Abort: drag does nothing
+						event.preventDefault();
+						return;
+					}
+					
+					// Create drag icon
+					_callback.call(_context, _context, ai);
+					// Drag icon must be visible for setDragImage() - we'll remove it on drag
+					$j("body").append(ai.helper);
+					event.dataTransfer.setDragImage(ai.helper[0],-12,-12);
+				})
+				.on("drag", function(e) {
+					// Remove the helper, it has been copied into the dataTransfer object now
+					// Hopefully user didn't notice it...
+					ai.helper.remove();
+				});
+			}
 			$j(node).draggable(
 				{
 					"distance": 20,
@@ -128,23 +227,6 @@ function egwDragActionImplementation()
 					"iframeFix": true
 				}
 			);
-				
-			// Native DnD - Doesn't play nice with jQueryUI Sortable
-			// Tell jQuery to include this property
-			jQuery.event.props.push('dataTransfer');
-			$j(node).attr("draggable", "true")
-				.on("dragstart", function(evt) {
-					if(evt.dataTransfer == null) {
-						console.log("Not a native DND");
-						return;
-					}
-					evt.dataTransfer.effectAllowed="copy"; 
-					var data = egw.dataGetUIDdata(_context.id);
-					var url = data ? data.data.download_url : '/webdav.php'+app.filemanager.id2path(_context.id);
-					if (url[0] == '/') url = 'http://nathan.dev'+egw.link(url);
-					evt.dataTransfer.setData("DownloadURL", data.data.mime+':'+data.data.name+':'+url);
-					console.log(data);
-				});
 			
 
 			return true;

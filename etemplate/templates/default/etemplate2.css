@@ -1217,3 +1217,17 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 .ms-res-ctn {
 	overflow-x: hidden;
 }
+
+
+/**
+ * Apparently Safari needs this for native DnD
+ * Used by action system.
+ */
+[draggable] {
+	-khtml-user-drag: element;
+	-webkit-user-drag: element;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}

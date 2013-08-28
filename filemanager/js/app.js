@@ -558,7 +558,13 @@ app.filemanager = AppJS.extend(
 		// Only take a maximum of 10 icons
 		var maxCnt = 10;
 
-		var div = $j(document.createElement("div"));
+		var div = $j(document.createElement("div"))
+			.css({
+				position: 'absolute',
+				top: '0px',
+				left: '0px',
+				width: '300px'
+			});
 
 		var lastIcon = "";
 		var idx = 0;
@@ -593,6 +599,12 @@ app.filemanager = AppJS.extend(
 		text.text(_elems.length > 1 ? _elems.length+' '+egw.lang('files') : this.basename(_elems[0].id));
 		div.append(text);
 
+		// Add notice of Ctrl key, if supported
+		if(window.FileReader && 'draggable' in document.createElement('span') && 
+			navigator && navigator.userAgent.indexOf('Chrome') >= 0)
+		{
+			text.append('<br />' + egw.lang('Hold Ctrl to drag files to your computer'));
+		}
 		return div;
 	},
 	
