@@ -420,7 +420,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	refresh: function(_row_ids, _type) {
 		if (typeof _type == 'undefined') _type = 'edit';
 		if (typeof _row_ids == 'string' || typeof _row_ids == 'number') _row_ids = [_row_ids];
-		if (typeof _row_ids == "undefined") 
+		if (typeof _row_ids == "undefined" || _row_ids === null) 
 		{
 			this.applyFilters();
 			return;
