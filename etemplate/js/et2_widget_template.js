@@ -171,7 +171,7 @@ var et2_template = et2_DOMWidget.extend(
 	 * @param _id
 	 */
 	set_id: function(_id) {
-		this._super.call(this, _id.replace('.', '-'));
+		this._super.call(this, _id.replace(/\./g, '-'));
 	}
 });
 et2_register_widget(et2_template, ["template"]);
