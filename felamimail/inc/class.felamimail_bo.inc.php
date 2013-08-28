@@ -5758,10 +5758,10 @@ class felamimail_bo
 			}
 
 			$seemsToBePlainMessage = false;
-			if ($structure->ctype_primary=='text' && $structure->body)
+			if (strtolower($structure->ctype_primary)=='text' && $structure->body)
 			{
-				$mailObject->IsHTML($structure->ctype_secondary=='html'?true:false);
-				if ($structure->ctype_primary == 'text' && $structure->ctype_secondary == 'plain' &&
+				$mailObject->IsHTML(strtolower($structure->ctype_secondary)=='html'?true:false);
+				if (strtolower($structure->ctype_primary) == 'text' && strtolower($structure->ctype_secondary) == 'plain' &&
 					is_array($structure->ctype_parameters) && isset($structure->ctype_parameters['format']) &&
 					trim(strtolower($structure->ctype_parameters['format']))=='flowed'
 				)
@@ -5778,7 +5778,7 @@ class felamimail_bo
 			//echo "Boundary:".$mailObject->FetchBoundary(1).'<br>';
 			//$boundary ='';
 			//if (isset($structure->ctype_parameters['boundary'])) $boundary = ' boundary="'.$mailObject->FetchBoundary(1).'";';
-			if ($seemsToBePlainMessage && !empty($contenttypecalendar) && $mailObject->ContentType=='text/plain')
+			if ($seemsToBePlainMessage && !empty($contenttypecalendar) && strtolower($mailObject->ContentType)=='text/plain')
 			{
 				$Header .= $mailObject->HeaderLine('Content-Transfer-Encoding', $mailObject->Encoding);
 				$Header .= $mailObject->HeaderLine('Content-type', $contenttypecalendar);
@@ -5807,9 +5807,9 @@ class felamimail_bo
 		static $attachmentnumber;
 		static $isHTML;
 		static $alternatebodyneeded;
-		if (is_null($isHTML)) $isHTML = $structure->ctype_secondary=='html'?true:false;
+		if (is_null($isHTML)) $isHTML = strtolower($structure->ctype_secondary)=='html'?true:false;
 		if (is_null($attachmentnumber)) $attachmentnumber = 0;
-		if ($structure->parts && $structure->ctype_primary=='multipart')
+		if ($structure->parts && strtolower($structure->ctype_primary)=='multipart')
 		{
 			if (is_null($alternatebodyneeded)) $alternatebodyneeded = false;
 			foreach($structure->parts as $part)
@@ -5822,17 +5822,17 @@ class felamimail_bo
 				if ($part->headers['content-transfer-encoding']) $mailObject->Encoding = $part->headers['content-transfer-encoding'];
 				//$mailObject->IsHTML($part->ctype_secondary=='html'?true:false); // we do not set this here, as the default is text/plain
 				if (isset($part->ctype_parameters['charset'])) $mailObject->CharSet = trim($part->ctype_parameters['charset']);
-				if (($structure->ctype_secondary=='alternative'||
-					 $structure->ctype_secondary=='mixed' ||
-					// $structure->ctype_secondary=='related' || // may hold text/plain directly ?? I doubt it ??
-					 $structure->ctype_secondary=='signed') && $part->ctype_primary=='text' && $part->ctype_secondary=='plain' && $part->body)
+				if ((strtolower($structure->ctype_secondary)=='alternative'||
+					 strtolower($structure->ctype_secondary)=='mixed' ||
+					// strtolower($structure->ctype_secondary)=='related' || // may hold text/plain directly ?? I doubt it ??
+					 strtolower($structure->ctype_secondary)=='signed') && strtolower($part->ctype_primary)=='text' && strtolower($part->ctype_secondary)=='plain' && $part->body)
 				{
 					//echo __METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.'<br>';
 					//error_log(__METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.' already fetched Content is HTML='.$isHTML.' Body:'.$part->body);
 					$bodyPart = $part->body;
 					if ($decode) $bodyPart = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'));
 /*
-					if ($part->ctype_primary == 'text' && $part->ctype_secondary == 'plain' &&
+					if (strtolower($part->ctype_primary) == 'text' && strtolower($part->ctype_secondary) == 'plain' &&
 						is_array($part->ctype_parameters) && isset($part->ctype_parameters['format']) &&
 						trim(strtolower($part->ctype_parameters['format']))=='flowed'
 					)
@@ -5845,11 +5845,11 @@ class felamimail_bo
 					$mailObject->AltBody .= $bodyPart;
 					$partFetched = true;
 				}
-				if (($structure->ctype_secondary=='alternative'||
-					 $structure->ctype_secondary=='mixed' ||
-					 $structure->ctype_secondary=='related' || // may hold text/html directly
-					 $structure->ctype_secondary=='signed' ) &&
-					$part->ctype_primary=='text' && $part->ctype_secondary=='html' && $part->body)
+				if ((strtolower($structure->ctype_secondary)=='alternative'||
+					 strtolower($structure->ctype_secondary)=='mixed' ||
+					 strtolower($structure->ctype_secondary)=='related' || // may hold text/html directly
+					 strtolower($structure->ctype_secondary)=='signed' ) &&
+					strtolower($part->ctype_primary)=='text' && strtolower($part->ctype_secondary)=='html' && $part->body)
 				{
 					//echo __METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.'<br>';
 					//error_log(__METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.' already fetched Content is HTML='.$isHTML.' Body:'.$part->body);
@@ -5861,10 +5861,10 @@ class felamimail_bo
 					$isHTML=true;
 					$partFetched = true;
 				}
-				if (($structure->ctype_secondary=='alternative'||
-					 $structure->ctype_secondary=='mixed' ||
-					 $structure->ctype_secondary=='signed' ) &&
-					$part->ctype_primary=='text' && $part->ctype_secondary=='calendar' && $part->body)
+				if ((strtolower($structure->ctype_secondary)=='alternative'||
+					 strtolower($structure->ctype_secondary)=='mixed' ||
+					 strtolower($structure->ctype_secondary)=='signed' ) &&
+					strtolower($part->ctype_primary)=='text' && strtolower($part->ctype_secondary)=='calendar' && $part->body)
 				{
 					//error_log(__METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.' BodyPart:'.array2string($part));
 					$bodyPart = $part->body;
@@ -5877,18 +5877,18 @@ class felamimail_bo
 						($part->ctype_parameters['method']?' method='.$part->ctype_parameters['method'].'':'');
 					$partFetched = true;
 				}
-				if (($structure->ctype_secondary=='mixed' ||
-					 $structure->ctype_secondary=='related' ||
-					 $structure->ctype_secondary=='alternative' ||
-					 $structure->ctype_secondary=='signed') && $part->ctype_primary=='multipart')
+				if ((strtolower($structure->ctype_secondary)=='mixed' ||
+					 strtolower($structure->ctype_secondary)=='related' ||
+					 strtolower($structure->ctype_secondary)=='alternative' ||
+					 strtolower($structure->ctype_secondary)=='signed') && strtolower($part->ctype_primary)=='multipart')
 				{
 					//error_log( __METHOD__.__LINE__." Recursion to fetch subparts:".$part->ctype_primary.'/'.$part->ctype_secondary);
 					$this->createBodyFromStructure($mailObject, $part, $parenttype=null, $decode);
 				}
 				//error_log(__METHOD__.__LINE__.$structure->ctype_primary.'/'.$structure->ctype_secondary.' => '.$part->ctype_primary.'/'.$part->ctype_secondary.' Part:'.array2string($part));
-				if ($part->body && (($structure->ctype_secondary=='mixed' && $part->ctype_primary!='multipart') ||
-					trim($part->disposition) == 'attachment' ||
-					trim($part->disposition) == 'inline' ||
+				if ($part->body && ((strtolower($structure->ctype_secondary)=='mixed' && strtolower($part->ctype_primary)!='multipart') ||
+					trim(strtolower($part->disposition)) == 'attachment' ||
+					trim(strtolower($part->disposition)) == 'inline' ||
 					isset($part->headers['content-id'])))
 				{
 					//error_log(__METHOD__.__LINE__.$structure->ctype_secondary.'=>'.$part->ctype_primary.'/'.$part->ctype_secondary.'->'.array2string($part));
@@ -5938,9 +5938,9 @@ class felamimail_bo
 					//error_log(__METHOD__.__LINE__.' '.$filename);
 					//echo $part->headers['content-transfer-encoding'].'#<br>';
 					if ($decode) $part->body = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'));
-					if ((trim($part->disposition)=='attachment' || trim($part->disposition) == 'inline' || isset($part->headers['content-id'])) && $partFetched==false)
+					if ((trim(strtolower($part->disposition))=='attachment' || trim(strtolower($part->disposition)) == 'inline' || isset($part->headers['content-id'])) && $partFetched==false)
 					{
-						if (trim($part->disposition) == 'inline' || $part->headers['content-id'])
+						if (trim(strtolower($part->disposition)) == 'inline' || $part->headers['content-id'])
 						{
 							$part->headers['content-id'] = str_replace(array('<','>'),'',$part->headers['content-id']);
 							$dirname = $this->accountid.'_'.$this->profileID.'_'.$this->sessionData['mailbox'].$part->headers['content-id'];
@@ -5968,7 +5968,7 @@ class felamimail_bo
 													);
 						}
 					}
-					if (!(trim($part->disposition)=='attachment' || trim($part->disposition) == 'inline' || isset($part->headers['content-id'])) && $partFetched==false)
+					if (!(trim(strtolower($part->disposition))=='attachment' || trim(strtolower($part->disposition)) == 'inline' || isset($part->headers['content-id'])) && $partFetched==false)
 					{
 						//error_log(__METHOD__.__LINE__.' Add String '.($part->disposition=='attachment'?'Attachment':'Part').' of type:'.$part->ctype_primary.'/'.$part->ctype_secondary.' Body:'.$part->body);
 						$mailObject->AddStringPart($part->body, //($part->headers['content-transfer-encoding']?base64_decode($part->body):$part->body),
