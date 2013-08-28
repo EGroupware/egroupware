@@ -46,6 +46,19 @@ class acl
 	const TABLE = 'egw_acl';
 
 	/**
+	 * Constants for acl rights, like old EGW_ACL_* defines
+	 */
+	const READ      = 1;	// EGW_ACL_READ
+	const ADD       = 2;	// EGW_ACL_ADD
+	const EDIT      = 4;	// EGW_ACL_EDIT
+	const DELETE    = 8;	// EGW_ACL_DELETE
+	const PRIVAT    = 16;	// EGW_ACL_PRIVATE can NOT use PRIVATE as it is a PHP keyword, using German PRIVAT instead!
+	const GROUPMGRS = 32;	// EGW_ACL_GROUP_MANAGERS
+	const CUSTOM1  = 64;	// EGW_ACL_CUSTOM_1
+	const CUSTOM2  = 128;	// EGW_ACL_CUSTOM_2
+	const CUSTOM3  = 256;	// EGW_ACL_CUSTOM_3
+
+	/**
 	 * ACL constructor for setting account id
 	 *
 	 * Sets the ID for $acl->account_id. Can be used to change a current instances id as well.
@@ -636,9 +649,11 @@ class acl
 	 * get a list of applications a user has rights to
 	 *
 	 * @param int $account_id optional defaults to $GLOBALS['egw_info']['user']['account_id'];
-	 * @return boolean/array containing list of apps or false if there are none
+	 * @param boolean $use_memberships=true true: use memberships too, false: only use given account
+	 * @param boolean $add_implicit_apps=true true: add apps every user has implicit rights
+	 * @return array containing list of apps
 	 */
-	function get_user_applications($accountid = '')
+	function get_user_applications($accountid = '', $use_memberships=true, $add_implicit_apps=true)
 	{
 		static $cache_accountid;
 
@@ -651,10 +666,10 @@ class acl
 			$account_id = get_account_id($accountid,$this->account_id);
 			$cache_accountid[$accountid] = $account_id;
 		}
-		if ((int)$account_id > 0) $memberships = $GLOBALS['egw']->accounts->memberships($account_id, true);
-		$memberships[] = $account_id;
+		if ($use_memberships && (int)$account_id > 0) $memberships = $GLOBALS['egw']->accounts->memberships($account_id, true);
+		$memberships[] = (int)$account_id;
 
-		$apps = false;
+		$apps = array();
 		foreach($this->db->select(acl::TABLE,array('acl_appname','acl_rights'),array(
 			'acl_location' => 'run',
 			'acl_account'  => $memberships,
@@ -667,8 +682,10 @@ class acl
 			}
 			$apps[$app] |= (int) $row['acl_rights'];
 		}
-		$apps['home'] = 1;	// give everyone implicit rights for the home app
-
+		if ($add_implicit_apps)
+		{
+			$apps['home'] = 1;	// give everyone implicit rights for the home app
+		}
 		return $apps;
 	}
 
