@@ -8,7 +8,7 @@
 				<column/>
 			</columns>
 			<rows>
-				<row part="header">
+				<row disabled="@acl_location=run" part="header">
 					<description value="Application"/>
 					<menulist>
 						<menupopup id="acl_appname" needed="1" onchange="1" options="Select one"/>
@@ -26,7 +26,7 @@
 						<menupopup type="select-account" id="acl_account" needed="1"/>
 					</menulist>
 				</row>
-				<row valign="top">
+				<row valign="top" disabled="@acl_location=run">
 					<description value="Rights"/>
 					<grid>
 						<columns>
@@ -38,6 +38,10 @@
 							</row>
 						</rows>
 					</grid>
+				</row>
+				<row disabled="!@acl_location=run">
+					<description value="Applications" for="apps"/>
+					<listbox type="select-app" id="apps" rows="8" options=",enabled,,,,,0"/>
 				</row>
 			</rows>
 		</grid>

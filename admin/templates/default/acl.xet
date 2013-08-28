@@ -23,7 +23,14 @@
 					<nextmatch-customfilter id="acl_appname" options="select-app,All applications"/>
 					<nextmatch-accountfilter label="From" id="acl_location" options="All accounts,both"/>
 					<nextmatch-accountfilter label="To" id="acl_account" options="All accounts,both"/>
-					<nextmatch-header label="Rights" span="all"/>
+					<nextmatch-header label="Read" id="read"/>
+					<nextmatch-header label="Add" id="add"/>
+					<nextmatch-header label="Edit" id="edit"/>
+					<nextmatch-header label="Delete" id="delete"/>
+					<nextmatch-header label="Private" id="private"/>
+					<nextmatch-header label="Custom 1" id="custom1"/>
+					<nextmatch-header label="Custom 2" id="custom2"/>
+					<nextmatch-header label="Custom 3" id="custom3"/>
 				</row>
 				<row>
 					<image align="center" src="$row_cont[acl_appname]/navbar" class="admin_aclApp"/>

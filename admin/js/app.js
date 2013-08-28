@@ -183,7 +183,7 @@ app.admin = AppJS.extend(
 	 * Modify an ACL entry
 	 * 
 	 * @param Object _action egwAction
-	 * @param Object _senders egwActionObject _senders[0].iface.id holds the id
+	 * @param Object _senders egwActionObject _senders[0].id holds the id "admin::app:account:location"
 	 */
 	acl: function(_action, _senders)
 	{
@@ -201,15 +201,19 @@ app.admin = AppJS.extend(
 				break;
 				
 			case 'edit':
-				egw().open_link(egw.link('/index.php', {
+				// need to specify window to get correct opener, as admin has multiple windows open!
+				egw('admin', window).open_link(egw.link('/index.php', {
 					menuaction: 'admin.admin_acl.acl',
 					id: ids[0],
 				}), 'acl', '300x300');
 				break;
 
 			case 'add':
-				egw().open_link(egw.link('/index.php', {
+				var current = ids[0].split(':');
+				egw('admin', window).open_link(egw.link('/index.php', {
 					menuaction: 'admin.admin_acl.acl',
+					app: current[0],
+					account: current[1]
 				}), 'acl', '250x250');
 				break;
 		}

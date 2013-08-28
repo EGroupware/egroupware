@@ -14,6 +14,8 @@ require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php';
 
 /**
  * UI for admin
+ *
+ * @todo acl needs to use etemplate_old, as auto-repeat does not work for acl & label
  */
 class admin_acl
 {
@@ -52,7 +54,8 @@ class admin_acl
 			}
 			else
 			{
-				$app = $state['acl_appname'];
+				$app = !empty($_GET['app']) && isset($GLOBALS['egw_info']['apps'][$_GET['app']]) ?
+					$_GET['app'] : $state['acl_appname'];
 				$location = $state['filter'] == 'run' ? 'run' : $state['account_id'];
 				$account = $state['filter'] == 'run' ? $state['account_id'] : $state['acl_account'];
 				$rights = 1;
@@ -63,6 +66,15 @@ class admin_acl
 				'acl_location' => $location,
 				'acl_account' => $account,
 			);
+			if ($location == 'run')
+			{
+				if (!isset($acl))
+				{
+					$acl = (int)$account == (int)$GLOBALS['egw_info']['user']['account_id'] ?
+						$GLOBALS['egw']->acl : new acl($account);
+				}
+				$content['apps'] = array_keys($acl->get_user_applications($account, false, false));	// false: only direct rights, no memberships
+			}
 		}
 		$acl_rights = $GLOBALS['egw']->hooks->process(array(
 			'location' => 'acl_rights',
@@ -71,62 +83,50 @@ class admin_acl
 		if ($content['save'])
 		{
 			self::check_access($content['acl_location']);
-			$acl = new acl($content['acl_account']);
 
-			// assable rights again
-			$rights = 0;
-			foreach($content['acl'] as $right)
+			if ($content['acl_location'] == 'run')
 			{
-				$rights |= $right;
-			}
-			$id = !empty($content['id']) ? $content['id'] :
-				$content['acl_appname'].':'.$content['acl_account'].':'.$content['acl_location'];
-			//error_log(__METHOD__."() id=$id, acl=".array2string($content['acl'])." --> rights=$rights");
-
-			if ($acl->get_specific_rights($content['acl_location'], $content['acl_appname']) == $rights)
-			{
-				// nothing changed --> nothing to do
-			}
-			elseif (!$rights)	// all rights removed --> delete it
-			{
-				$acl->delete_repository($content['acl_appname'], $content['acl_location'], $content['acl_account']);
-				egw_framework::refresh_opener(lang('ACL deleted.'), 'admin', $id, 'delete');
+				self::save_run_rights($content);
 			}
 			else
 			{
-				$acl->add_repository($content['acl_appname'], $content['acl_location'], $content['acl_account'], $rights);
-				if ($content['id'])
-				{
-					egw_framework::refresh_opener(lang('ACL updated.'), 'admin', $id, 'edit');
-				}
-				else
-				{
-					egw_framework::refresh_opener(lang('ACL added.'), 'admin', $id, 'add');
-				}
+				self::save_rights($content);
 			}
 			egw_framework::window_close();
 		}
-		$content['acl'] = $content['label'] = array();
-		foreach($state['filter'] == 'run' ? array(1 => 'run') : $acl_rights[$content['acl_appname']] as $right => $label)
-		{
-			$content['acl'][] = $rights & $right;
-			$content['right'][] = $right;
-			$content['label'][] = lang($label);
-		}
-		foreach($state['filter'] == 'run' ? $GLOBALS['egw_info']['apps'] : $acl_rights as $app => $data)
-		{
-			$sel_options['acl_appname'][$app] = lang($app);
-		}
-		natcasesort($sel_options['acl_appname']);
-
-		if (!empty($content['id']))
-		{
-			$readonlys['acl_appname'] = $readonlys['acl_account'] = $readonlys['acl_location'] = true;
-		}
-		if ($state['filter'] == 'run')
+		if ($content['location'] == 'run')
 		{
 			$readonlys['acl_account'] = true;
-			$tpl->setElementAttribute('acl_appname', 'onchange', '');
+		}
+		else
+		{
+			$content['acl'] = $content['label'] = array();
+			foreach($state['filter'] == 'run' ? array(1 => 'run') : $acl_rights[$content['acl_appname']] as $right => $label)
+			{
+				$content['acl'][] = $rights & $right;
+				$content['right'][] = $right;
+				$content['label'][] = lang($label);
+			}
+			foreach($state['filter'] == 'run' ? $GLOBALS['egw_info']['apps'] : $acl_rights as $app => $data)
+			{
+				$sel_options['acl_appname'][$app] = lang($app);
+			}
+			natcasesort($sel_options['acl_appname']);
+
+			if (!empty($content['id']))
+			{
+				$readonlys['acl_appname'] = $readonlys['acl_account'] = $readonlys['acl_location'] = true;
+			}
+			// only user himself is allowed to grant private rights!
+			if ($content['acl_location'] != $GLOBALS['egw_info']['user']['account_id'])
+			{
+				$readonlys['acl[5]'] = true;
+				$content['preserve_rights'] = $rights & acl::PRIVAT;
+			}
+			else
+			{
+				unset($content['preserve_rights']);
+			}
 		}
 		// view only, if no rights
 		if (!self::check_access($content['acl_location'], false))
@@ -135,8 +135,93 @@ class admin_acl
 			$readonlys['cancel'] = false;
 		}
 
-		error_log(__METHOD__."() _GET[id]=".array2string($_GET['id'])." --> content=".array2string($content));
+		//error_log(__METHOD__."() _GET[id]=".array2string($_GET['id'])." --> content=".array2string($content));
 		$tpl->exec('admin.admin_acl.acl', $content, $sel_options, $readonlys, $content);
+	}
+
+	/**
+	 * Save run rights and refresh opener
+	 *
+	 * @param array $content
+	 */
+	private static function save_run_rights(array $content)
+	{
+		$acl = new acl($content['acl_account']);
+		$old_apps = array_keys($acl->get_user_applications($content['acl_account'], false, false));
+		$ids = array();
+		// add new apps
+		$added_apps = array_diff($content['apps'], $old_apps);
+		foreach($added_apps as $app)
+		{
+			$acl->add_repository($app, 'run', $content['acl_account'], 1);
+		}
+		// remove no longer checked apps
+		$removed_apps = array_diff($old_apps, $content['apps']);
+		$deleted_ids = array();
+		foreach($removed_apps as $app)
+		{
+			$acl->delete_repository($app, 'run', $content['acl_account']);
+			$deleted_ids[] = $app.':'.$content['acl_account'].':run';
+		}
+		//error_log(__METHOD__."() apps=".array2string($content['apps']).", old_apps=".array2string($old_apps).", added_apps=".array2string($added_apps).", removed_apps=".array2string($removed_apps));
+
+		if (!$added_apps && !$removed_apps)
+		{
+			// nothing changed --> nothing to do/notify
+		}
+		elseif (!$old_apps)
+		{
+			egw_framework::refresh_opener(lang('ACL added.'), 'admin', null, 'add');
+		}
+		elseif (!$added_apps)
+		{
+			egw_framework::refresh_opener(lang('ACL deleted.'), 'admin', $deleted_ids, 'delete');
+		}
+		else
+		{
+			egw_framework::refresh_opener(lang('ACL updated.'), 'admin', null, 'edit');
+		}
+	}
+
+	/**
+	 * Save rights and refresh opener
+	 *
+	 * @param array $content
+	 */
+	private static function save_rights(array $content)
+	{
+		$acl = new acl($content['acl_account']);
+		// assamble rights again
+		$rights = (int)$content['preserve_rights'];
+		foreach($content['acl'] as $right)
+		{
+			$rights |= $right;
+		}
+		$id = !empty($content['id']) ? $content['id'] :
+		$content['acl_appname'].':'.$content['acl_account'].':'.$content['acl_location'];
+		//error_log(__METHOD__."() id=$id, acl=".array2string($content['acl'])." --> rights=$rights");
+
+		if ($acl->get_specific_rights($content['acl_location'], $content['acl_appname']) == $rights)
+		{
+			// nothing changed --> nothing to do
+		}
+		elseif (!$rights)	// all rights removed --> delete it
+		{
+			$acl->delete_repository($content['acl_appname'], $content['acl_location'], $content['acl_account']);
+			egw_framework::refresh_opener(lang('ACL deleted.'), 'admin', $id, 'delete');
+		}
+		else
+		{
+			$acl->add_repository($content['acl_appname'], $content['acl_location'], $content['acl_account'], $rights);
+			if ($content['id'])
+			{
+				egw_framework::refresh_opener(lang('ACL updated.'), 'admin', $id, 'edit');
+			}
+			else
+			{
+				egw_framework::refresh_opener(lang('ACL added.'), 'admin', $id, 'add');
+			}
+		}
 	}
 
 	/**
@@ -223,7 +308,7 @@ class admin_acl
 			// generate a row-id
 			$row['id'] = $row['acl_appname'].':'.$row['acl_account'].':'.$row['acl_location'];
 
-			if ($query['filter'] == 'run')
+			if ($row['acl_location'] == 'run')
 			{
 				$row['acl1'] = lang('run');
 			}
