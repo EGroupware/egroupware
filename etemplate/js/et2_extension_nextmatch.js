@@ -427,7 +427,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		}
 
 		// Use jsapi data module to update
-		var list = et2_csvSplit(this.options.settings.get_rows, 2, ".");
+		var list = this.options.settings.get_rows.split('.', 2);
+		if (list.length < 2) list = this.options.settings.get_rows.split('_', 2);	// support "app_something::method"
 		var app = list[0];
 		
 		id_loop:
