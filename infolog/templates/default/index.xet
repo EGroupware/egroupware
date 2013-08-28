@@ -172,8 +172,6 @@
 				</row>
 				<row>
 					<description align="center" id="msg" no_lang="1" span="all" class="message"/>
-					<description/>
-					<description/>
 				</row>
 				<row disabled="1">
 					<template id="header_left"/>
