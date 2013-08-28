@@ -540,13 +540,17 @@ class etemplate_widget_menupopup extends etemplate_widget
 				$no_lang = True;
 				break;
 
-			case 'select-app':	// type2: ''=users enabled apps, 'installed', 'all' = not installed ones too
+			case 'select-app':	// type2: 'user'=apps of current user, 'enabled', 'installed' (default), 'all' = not installed ones too
 				$apps = array();
 				foreach ($GLOBALS['egw_info']['apps'] as $app => $data)
 				{
-					if (!$type2 || $GLOBALS['egw_info']['user']['apps'][$app])
+					if ($type2 == 'enabled' && (!$data['enabled'] || !$data['status'] || $data['status'] == 3))
 					{
-						$apps[$app] = $data['title'] ? $data['title'] : lang($app);
+						continue;	// app not enabled (user can not have run rights for these apps)
+					}
+					if ($type2 != 'user' || $GLOBALS['egw_info']['user']['apps'][$app])
+					{
+						$apps[$app] = lang($app);
 					}
 				}
 				if ($type2 == 'all')
@@ -562,16 +566,8 @@ class etemplate_widget_menupopup extends etemplate_widget
 					}
 					closedir($dir);
 				}
-				$apps_lower = $apps;	// case-in-sensitve sort
-				foreach ($apps_lower as $app => $title)
-				{
-					$apps_lower[$app] = strtolower($title);
-				}
-				asort($apps_lower);
-				foreach ($apps_lower as $app => $title)
-				{
-					$options[$app] = $apps[$app];
-				}
+				natcasesort($apps);
+				$options = is_array($options) ? $options+$apps : $apps;
 				break;
 
 			case 'select-lang':
