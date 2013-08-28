@@ -163,6 +163,15 @@ var et2_template = et2_DOMWidget.extend(
 
 	getDOMNode: function() {
 		return this.div;
+	},
+	
+	/**
+	 * Replace . in template-ids with - to simplify css usage, as we do it the unique id already
+	 *  
+	 * @param _id
+	 */
+	set_id: function(_id) {
+		this._super.call(this, _id.replace('.', '-'));
 	}
 });
 et2_register_widget(et2_template, ["template"]);
