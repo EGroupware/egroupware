@@ -60,7 +60,7 @@ app.infolog = AppJS.extend(
 
 		if(typeof et2.templates['infolog.index'] != 'undefined')
 		{
-			this.infolog_filter_change();
+			this.filter_change();
 		}
 	},
 
