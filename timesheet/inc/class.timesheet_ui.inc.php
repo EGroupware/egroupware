@@ -894,6 +894,7 @@ class timesheet_ui extends timesheet_bo
 			$sel_options['ts_status'][self::DELETED_STATUS] = 'Deleted';
 		}
 		$content['nm']['no_status'] = count($sel_options['ts_status']) <= 1;	// 1 because of 'No status'
+		$content['nm']['favorites'] = true;		//Enable favorite
 
 		if ($this->pm_integration != 'full')
 		{

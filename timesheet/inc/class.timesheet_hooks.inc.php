@@ -103,6 +103,15 @@ class timesheet_hooks
 
 		if ($location == 'sidebox_menu')
 		{
+			// Magic etemplate2 favorites menu (from nextmatch widget)
+			display_sidebox($appname,lang('Favorites'),array(
+				array(
+					'no_lang' => true,
+					'text'=> etemplate_widget_nextmatch::favorite_list($appname,'timesheet.timesheet_ui.get_rows'),
+					'link'=>false,
+					'icon' => false
+				)
+			));
 			$file = array(
 			);
 			display_sidebox($appname,$GLOBALS['egw_info']['apps'][$appname]['title'].' '.lang('Menu'),$file);
