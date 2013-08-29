@@ -5,6 +5,7 @@
 %1 records imported	calendar	de	%1 Datensätze importiert
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	de	%1 Datensätze gelesen (noch nicht importiert, Sie können zurück gehen und Test Import ausschalten)
 %1 weeks	calendar	de	%1 Wochen
+%s the event	calendar	de	%s dem Termin
 (%1 events in %2 seconds)	calendar	de	(%1 Termine in %2 Sekunden
 , exceptions preserved	calendar	de	und Ausnahmen erhalten
 , stati of participants reset	calendar	de	, Status der Teilnehmer zurückgesetzt

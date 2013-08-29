@@ -425,6 +425,17 @@ class calendar_uiforms extends calendar_ui
 											$js = "opener.location.search += (opener.location.search?'&msg=':'?msg=')+'".
 												addslashes($msg)."';";
 										}
+										if ($status == 'R' && $event['alarm'])
+										{
+											// remove from bo->set_status deleted alarms of rejected users from UI too
+											foreach($event['alarm'] as $alarm_id => $alarm)
+											{
+												if ((string)$alarm['owner'] === (string)$uid)
+												{
+													unset($event['alarm'][$alarm_id]);
+												}
+											}
+										}
 									}
 								}
 								if ($uid && $status != 'G')
