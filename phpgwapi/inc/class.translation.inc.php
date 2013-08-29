@@ -963,7 +963,9 @@ class translation
 		$text = str_replace("\r\n",'<#cr-lf#>',$text);
 		// replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
 		$text = preg_replace("/(<|&lt;a href=\")*(mailto:([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))(>|&gt;)*/ie","'$2 '", $text);
-		$text = preg_replace('~<a[^>]+href=\"(mailto:)+([^"]+)\"[^>]*>~si','$2 ',$text);
+		//$text = preg_replace_callback("/(<|&lt;a href=\")*(mailto:([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))(>|&gt;)*/i",'self::transform_mailto2text',$text);
+		//$text = preg_replace('~<a[^>]+href=\"(mailto:)+([^"]+)\"[^>]*>~si','$2 ',$text);
+		$text = preg_replace_callback('~<a[^>]+href=\"(mailto:)+([^"]+)\"[^>]*>([ @\w\.,-.,_.,0-9.]+)<\/a>~si','self::transform_mailto2text',$text);
 		$text = preg_replace("/(([\w\.,-.,_.,0-9.]+)(@)([\w\.,-.,_.,0-9.]+))( |\s)*(<\/a>)*( |\s)*(>|&gt;)*/ie","'$1 '", $text);
 		$text = preg_replace("/(<|&lt;)*(([\w\.,-.,_.,0-9.]+)@([\w\.,-.,_.,0-9.]+))(>|&gt;)*/ie","'$2 '", $text);
 		$text = str_replace('<#cr-lf#>',"\r\n",$text);
@@ -1018,6 +1020,18 @@ class translation
 				}
 			}
 		}
+	}
+
+	static function transform_mailto2text($matches)
+	{
+		//error_log(__METHOD__.__LINE__.array2string($matches));
+		$linkTextislink = false;
+		// this is the actual url
+		$matches[2] = trim(strip_tags($matches[2]));
+		$matches[3] = trim(strip_tags($matches[3]));
+		$matches[2] = str_replace(array('%40','%20'),array('@',' '),$matches[2]);
+		$matches[3] = str_replace(array('%40','%20'),array('@',' '),$matches[3]);
+		return $matches[1].$matches[2].($matches[2]==$matches[3]?' ':' -> '.$matches[3].' ');
 	}
 
 	static function transform_url2text($matches)
