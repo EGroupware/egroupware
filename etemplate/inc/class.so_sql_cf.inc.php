@@ -501,7 +501,7 @@ class so_sql_cf extends so_sql
 		{
 			foreach($only_keys as $key => &$col)
 			{
-				if(is_numeric($key) && in_array($col, $this->db_cols))
+				if(is_numeric($key) && in_array($col, $this->db_cols, true))
 				{
 					$col = $this->table_name .'.'.array_search($col, $this->db_cols).' AS '.$col;
 				}
