@@ -282,11 +282,13 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 
 	/**
 	 * Sets the id of the DOM-Node.
+	 * 
+	 * DOM id's have dots "." replaced with dashes "-"
 	 */
 	set_id: function(_value) {
 
 		this.id = _value;
-		this.dom_id = _value ? this.getInstanceManager().uniqueId+'_'+_value : _value;
+		this.dom_id = _value ? this.getInstanceManager().uniqueId+'_'+_value.replace(/\./g, '-') : _value;
 
 		var node = this.getDOMNode(this);
 		if (node)
