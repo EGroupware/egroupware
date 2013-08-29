@@ -1067,6 +1067,18 @@ class calendar_boupdate extends calendar_bo
 			{
 				// recalculate alarms to also cope with moved events (beside server time adjustment)
 				$event['alarm'][$id]['time'] = $event['start'] - $alarm['offset'];
+
+				// remove alarms belonging to not longer existing or rejected participants
+				if ($alarm['owner'] && isset($event['participants']))
+				{
+					$status = $event['participants'][$alarm['owner']];
+					if (!isset($status) || calendar_so::split_status($status) === 'R')
+					{
+						unset($event['alarm'][$id]);
+						$this->so->delete_alarm($id);
+						error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
+					}
+				}
 			}
 		}
 		// update all existing alarm times, in case alarm got moved and alarms are not include in $event
@@ -1077,7 +1089,19 @@ class calendar_boupdate extends calendar_bo
 				if (!isset($event['alarm'][$id]))
 				{
 					$alarm['time'] = $event['start'] - $alarm['offset'];
-					$this->so->save_alarm($event['id'],$alarm, $this->now);
+					// remove (not store) alarms belonging to not longer existing or rejected participants
+					$status = isset($event['participants']) ? $event['participants'][$alarm['owner']] :
+						$old_event['participants'][$alarm['owner']];
+					if (!$alarm['owner'] || isset($status) && calendar_so::split_status($status) !== 'R')
+					{
+						$this->so->save_alarm($event['id'], $alarm, $this->now);
+						error_log(__LINE__.': '.__METHOD__."() so->save_alarm($event[id], ".array2string($alarm).", $this->now)");
+					}
+					else
+					{
+						$this->so->delete_alarm($id);
+						error_log(__LINE__.': '.__METHOD__."(".array2string($event).") deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
+					}
 				}
 			}
 		}
@@ -1303,6 +1327,17 @@ class calendar_boupdate extends calendar_bo
 				is_numeric($uid)?$uid:substr($uid,1),$status,
 				$recur_date?$this->date2ts($recur_date,true):0,$role)))
 		{
+			if ($status == 'R')	// remove alarms belonging to rejected participants
+			{
+				foreach(isset($event['alarm']) ? $event['alarm'] : $old_event['alarm'] as $id => $alarm)
+				{
+					if ((string)$alarm['owner'] === (string)$uid)
+					{
+						$this->so->delete_alarm($id);
+						error_log(__LINE__.': '.__METHOD__."(".array2string($event).", '$uid', '$status', ...) deleting alarm=".array2string($alarm).", $status=".array2string($alarm));
+					}
+				}
+			}
 			if ($updateTS)
 			{
 				$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar', $cal_id, 'modify', $this->now);

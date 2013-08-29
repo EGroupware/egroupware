@@ -1020,7 +1020,7 @@ ORDER BY cal_user_type, cal_usre_id
 
 		$old_min = $old_duration = 0;
 
-		//error_log(__METHOD__.'('.array2string($event).",$set_recurrences,$change_since,$etag)");
+		//error_log(__METHOD__.'('.array2string($event).",$set_recurrences,$change_since,$etag) ".function_backtrace());
 
 		$cal_id = (int) $event['id'];
 		unset($event['id']);
@@ -1435,10 +1435,11 @@ ORDER BY cal_user_type, cal_usre_id
 	 * splits the combined status, quantity and role
 	 *
 	 * @param string &$status I: combined value, O: status letter: U, T, A, R
-	 * @param int &$quantity only O: quantity
-	 * @param string &$role only O: role
+	 * @param int &$quantity=null only O: quantity
+	 * @param string &$role=null only O: role
+	 * @return string status U, T, A or R, same as $status parameter on return
 	 */
-	static function split_status(&$status,&$quantity,&$role)
+	static function split_status(&$status,&$quantity=null,&$role=null)
 	{
 		$quantity = 1;
 		$role = 'REQ-PARTICIPANT';
@@ -1453,6 +1454,7 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			$status = 'U';
 		}
+		return $status;
 	}
 
 	/**
@@ -1888,8 +1890,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 */
 	function save_alarm($cal_id, $alarm, $update_modified=true)
 	{
-		//echo "<p>save_alarm(cal_id=$cal_id, alarm="; print_r($alarm); echo ")</p>\n";
-		//error_log(__METHOD__."(.$cal_id,$now,".array2string($alarm).')');
+		//error_log(__METHOD__."($cal_id, ".array2string($alarm).', '.array2string($update_modified).') '.function_backtrace());
 		if (!($id = $alarm['id']))
 		{
 			$alarms = $this->read_alarms($cal_id);	// find a free alarm#
@@ -1932,6 +1933,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 */
 	private function delete_alarms($cal_id)
 	{
+		//error_log(__METHOD__."($cal_id) ".function_backtrace());
 		$alarms = $this->read_alarms($cal_id);
 
 		foreach($alarms as $id => $alarm)
@@ -1952,6 +1954,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 */
 	function delete_alarm($id)
 	{
+		//error_log(__METHOD__."('$id') ".function_backtrace());
 		// update the modification information of the related event
 		list(,$cal_id) = explode(':',$id);
 		if ($cal_id)

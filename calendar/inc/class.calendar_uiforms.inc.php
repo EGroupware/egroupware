@@ -405,6 +405,17 @@ class calendar_uiforms extends calendar_ui
 										{
 											$msg = lang('Status changed');
 										}
+										if ($status == 'R' && $event['alarm'])
+										{
+											// remove from bo->set_status deleted alarms of rejected users from UI too
+											foreach($event['alarm'] as $alarm_id => $alarm)
+											{
+												if ((string)$alarm['owner'] === (string)$uid)
+												{
+													unset($event['alarm'][$alarm_id]);
+												}
+											}
+										}
 									}
 									if (!$preserv['no_popup'])
 									{
