@@ -1156,6 +1156,8 @@ class so_sql
 				}
 				$alias = $col;
 				if (stripos($col, ' AS ')) list($col, $alias) = preg_split('/ +AS +/i', $col);
+				// do NOT group by constant expressions
+				if (preg_match('/^ *(-?[0-9]+|".*"|\'.*\'|NULL) *$/i', $col)) continue;
 				if (!in_array($col, $group_by_cols) && !in_array($alias, $group_by_cols))
 				{
 					$group_by_cols[] = $alias;
