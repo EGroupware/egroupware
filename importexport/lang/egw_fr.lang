@@ -3,6 +3,7 @@
 addressbook csv import	importexport	fr	Import csv du carnet d'adresses
 addressbook vcard import	importexport	fr	Import vCard du carnet d'adresses
 allowed users	importexport	fr	Utilisateurs autorisés
+automatically created by importexport	importexport	fr	Automatiquement créé par l'importexport
 changed	importexport	fr	Modifié
 charset of file	importexport	fr	Jeu de caractères du fichier
 check all	importexport	fr	Vérifier tout
@@ -27,6 +28,7 @@ import	importexport	fr	Importation
 manage mapping	importexport	fr	Gestion des correspondances
 next	importexport	fr	prochain
 next run	importexport	fr	Prochain démarrage
+no notifications	importexport	fr	Aucune notification
 preview	importexport	fr	Aperçu
 previous	importexport	fr	précédent
 schedule	common	fr	planification
