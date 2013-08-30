@@ -1,17 +1,24 @@
 %1 - preferences	preferences	fr	%1 - Préférences
 %1 hours	preferences	fr	%1 heures
+%1 is no existing vfs directory!	preferences	fr	%1 n'est pas un répertoire VFS existant !
+%1 is no existing vfs file!	preferences	fr	%1 n'est pas un fichier VFS existant !
 12 hour	preferences	fr	12 heures
 24 hour	preferences	fr	24 heures
-a template defines the layout of egroupware and it contains icons for each application.	preferences	fr	Un modèle définit la disposition de eGroupWare et contient les icônes pour chaque application.
-a theme defines the colors and fonts used by the template.	preferences	fr	Un thème définit les couleurs et fontes utilisées par le modèle.
+a template defines the layout of egroupware and it contains icons for each application.	preferences	fr	Un modèle définit la disposition d'eGroupWare et contient les icônes pour chaque application.
+a theme defines the colors and fonts used by the template.	preferences	fr	Un thème définit les couleurs et polices utilisées par le modèle.
 acl grants have been updated	preferences	fr	Les droits ACL ont été mis à jour
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fr	Une liste dans eGroupWare vous montrera ce nombre d'entrées ou de lignes par page.<br>Une valeur trop grande ralentit l'affichage, une valeur trop petite empêche une vue d'ensemble.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fr	Une liste dans eGroupWare affichera ce nombre d'entrées ou de lignes par page.<br>Une valeur trop grande ralentit l'affichage, une valeur trop petite empêche une vue d'ensemble.
 are you sure you want to delete this category ?	preferences	fr	Etes-vous sûr de vouloir effacer cette catégorie ?
+automatically start with this font	preferences	fr	Démarrer automatiquement avec cette police
+automatically start with this font size	preferences	fr	Démarrer automatiquement avec cette taille de police
+br	preferences	fr	br
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	fr	Change un mot de passe en fournissant l'ancien et le nouveau mot de passe. Retourne TRUE en cas de réussite, FALSE en cas d'échec.
+change password	preferences	fr	Changer votre mot de passe
 change your password	preferences	fr	Changer votre mot de passe
 change your profile	preferences	fr	Changer votre profil
 change your settings	preferences	fr	Changer vos paramètres
 charset for the csv export	addressbook	fr	Jeu de caractères pour l'exportation CSV
+charset for the csv export/import	preferences	fr	Jeu de caractères
 click to select a color	preferences	fr	Cliquez pour sélectionner une couleur
 color	preferences	fr	Couleur
 country	preferences	fr	Pays
@@ -19,63 +26,116 @@ data exchange settings	preferences	fr	Paramètres d'échange de données
 date format	preferences	fr	Format de date
 default	preferences	fr	Défaut
 default application	preferences	fr	Application par défaut
+default font	preferences	fr	Police par défaut
+default font size	preferences	fr	Taille de police par défaut
 default preferences	preferences	fr	Préférences par défaut
+default theme	preferences	fr	Thème par défaut
 delete categories	preferences	fr	Supprimer les catégories
-description can not exceed 255 characters in length !	preferences	fr	La description ne peut pas faire plus de 255 caractères de long!
+description can not exceed 255 characters in length !	preferences	fr	La description ne peut pas faire plus de 255 caractères !
+display thumbnails for linked images	preferences	fr	Afficher des miniatures pour les images liées
+div	preferences	fr	div
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	fr	Préférez-vous un format d'heure sur 24h, ou un format sur 12h avec indication am/pm.
 edit custom fields	preferences	fr	Modifier les champs personnalisés
+enable drag and drop functionality (experimental)	preferences	fr	Drag & drop
+enable selectbox dropdown resizing for ie (experimental)	preferences	fr	Sélectionner l'ajustement du menu déroulant
+enables or disables drag and drop functions in all applications. if the browser does not support drag and drop, it will be disabled automatically. this feature is experimental at the moment.	preferences	fr	Active ou désactive les fonctions drag & drop dans toutes les applications. Si le navigateur ne supporte pas le drag & drop, cela sera désactivé automatiquement.
+enables or disables dropdown selectbox resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	fr	Active ou désactive l'ajustement des menus déroulants pour Internet Explorer dans toutes les applications.  Si le navigateur n'est pas IE, cette option ne s'applique pas.
+enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie , the option will not apply. this feature is experimental at the moment.	preferences	fr	Active ou désactive l'ajustement automatique des boîtes de sélection pour IE dans toutes les applications.  Si le navigateur n'est pas IE, cette option ne s'applique pas.  Cette fonctionnalité est expérimentale.
+enables or disables selectbox dropdown resizing for ie in all applications. if the browser is not an ie, the option will not apply. this feature is experimental at the moment.	preferences	fr	Active ou désactive l'ajustement automatique des boîtes de sélection pour IE dans toutes les applications.  Si le navigateur n'est pas IE, cette option ne s'applique pas.  Cette fonctionnalité est expérimentale.
+encrypted ldap connection is required to change passwords, but it is not configured in your installation.	preferences	fr	Une connexion LDAP encryptée est nécessaire pour changer les mots de passe, mais n'est pas configurée pour votre installation.
 enter your new password	preferences	fr	Entrez votre nouveau mot de passe
 enter your old password	preferences	fr	Entrez votre ancien mot de passe
+error	preferences	fr	Erreur
 failed to change password.	preferences	fr	Erreur lors du changement de mot de passe.
+features of the editor	preferences	fr	Fonctionnalités de l'éditeur
+font size unit	preferences	fr	Unité de taille de police
 forced preferences	preferences	fr	Préférences forcées
+formatting & general settings	preferences	fr	Formats et paramètres principaux
 general settings	preferences	fr	Paramètres principaux
 help off	preferences	fr	Aide désactivée
+holding ctrl/cmd key and click on the line	preferences	fr	garder la touche ctrl/cmd enfoncée et cliquer sur la ligne
 hours	preferences	fr	Heures
 how do you like to display accounts	preferences	fr	Comment souhaitez-vous afficher les comptes
 how do you like to select accounts	preferences	fr	Comment souhaitez-vous sélectionner les comptes
 how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	fr	Combien d'heures en plus ou en moins vous séparent du fuseau horaire du serveur.<br>Si vous êtes dans le même fuseau horaire que le serveur, choisissez 0 heure, sinon choisissez votre date et heure locales.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	fr	Combien d'icônes devraient-ils apparaître dans la barre de navigation en haut de page. Les icônes excédentaires iront dans un menu déroulant, appelé par l'icône située tout à droite de la barre de navigation.
-how should egroupware display dates for you.	preferences	fr	Comment eGroupWare doit afficher les dates pour vous.
+how many toolbar buttons are available	preferences	fr	Combien de boutons sont disponibles dans la barre d'outils ?
+how should egroupware display dates for you.	preferences	fr	Choisir le format d'affichage des dates
 icon	preferences	fr	Icône
 icons and text	preferences	fr	Icônes et texte
 icons only	preferences	fr	Icônes seulement
-in which country are you. this is used to set certain defaults for you.	preferences	fr	Dans quel pays êtes-vous. Ceci est utilisé pour régler certaines valeurs par défaut pour vous.
+if a line is already selected, further lines get either selected by holding ctrl/cmd key and clicking on them (to not unselect the current selected line), or by just clicking on them as for a checkbox. if no line is selected clicking on one allways selects it. holding down shift key selects everything between current select line and the one clicked.	preferences	fr	Si une ligne est déjà sélectionnée, les autres lignes peuvent être sélectionnées en gardant la touche ctrl/cmd enfoncée et en cliquant sur ces lignes (pour ne pas désélectionner les lignes), ou bien en les cliquant comme sur une case à cocher.  Si aucune ligne est sélectionnée, un clic suffit.  Garder enfoncée la touche shift va tout permettre de sélectionner toutes les lignes depuis la première jusqu'à la seconde lignée cliquée.
+images linked to an entry can be displayed as thumbnails.  you can turn this off to speed up page display.	preferences	fr	Les images liées à un élément peuvent être affichées en miniature. Désactiver cette option va accélérer l'affichage de la page.
+in which country are you. this is used to set certain defaults for you.	preferences	fr	Dans quel pays êtes-vous ? Ceci est utilisé pour définir certaines valeurs par défaut.
 interface/template selection	preferences	fr	Sélection de l'interface/modèle
+just clicking on the line, like a checkbox	preferences	fr	cliquer juste sur la ligne, comme sur un case à cocher
 language	preferences	fr	Langue
-max matches per page	preferences	fr	Nombre max d'occurences correspondantes par page
+lowercase letters	preferences	fr	lettres minuscules
+max matches per page	preferences	fr	Nombre max d'occurences par page
 max number of icons in navbar	preferences	fr	Nombre maximal d'icônes de la barre de navigation
 no default	preferences	fr	Pas de défaut
 no user-selection at all	common	fr	L'utilisateur n'a rien sélectionné.
 note: this feature does *not* change your email password. this will	preferences	fr	note: cette fonctionnalité ne change *pas* votre mot de passe de compte EMail. Ceci devra
-note: this feature does *not* change your email password. this will need to be done manually.	preferences	fr	Note: cette fonctionnalité ne change *pas* votre mot de passe de compte EMail. Ceci devra être fait manuellement.
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	fr	Note: cette fonctionnalité ne change PAS votre mot de passe de compte EMail. Ceci devra être fait manuellement.
 notification settings	preferences	fr	Paramètres de notification
+number format	preferences	fr	Format de nombre
+numbers	preferences	fr	nombres
+office 2003 theme	preferences	fr	Thème office 2003
+old password and new password are the same. this is invalid. you must enter a new password	preferences	fr	L'ancien mot de masse est identique au nouveau. Vous devez entrer un nouveau mot de passe !
+p: paragraph	preferences	fr	p: Paragraphe
+password changed	preferences	fr	Mot de passe changé
+password contains only %1 of required %2 character classes: no %3	preferences	fr	le mot de passe contient seulement %1 sur %2 classes de caractères nécessaires : pas de %3
+password contains with "%1" a parts of your user- or full-name (3 or more characters long)	preferences	fr	le mot de passe contient "%1" ce qui est une partie de votre nom d'utilisateur ou non complet (3 caractères ou plus)
+password must have at least %1 characters	preferences	fr	Le mot de passe doit avoir au moins %1 caractères
+permanent time zone selection	preferences	fr	Fuseau horaire permanent
+please select timezones, you want to be able to quickly switch between. switch is not shown, if less then two are selected.	preferences	fr	Sélectionner les fuseaux horaires
+please select your timezone.	preferences	fr	Chosir votre fuseau horaire
 please, select a new theme	preferences	fr	SVP, choisissez un nouveau thème
 popup with search	preferences	fr	Ouvre une fenêtre Popup avec la recherche
+pt: points (1/72 inch)	preferences	fr	pt: points (1/72 pouces)
+px: display pixels	preferences	fr	px: affiche des pixels
 re-enter your password	preferences	fr	Ré-entrez votre mot de passe
 read prefs for the specified application.	preferences	fr	Lire les préférences pour l'apllication spécifiée.
+rich text editor enter mode	preferences	fr	Mode d'entrer dans l'éditeur de texte riche
+rich text editor theme	preferences	fr	Thème de l'éditeur de texte
+select additional lines in lists by	preferences	fr	Sélectionner des lignes supplémentaires dans les listes en
 select different theme	preferences	fr	Choisissez un thème différent
+select how the rich text editor will generate the enter (linebreak) tag.	preferences	fr	Sélectionner comment l'éditeur de texte avancé va générer une balise de retour à la ligne.
 select one	preferences	fr	Choisissez un(e)
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fr	Choisissez la langue des textes et messages dans eGroupWare.<br>Certaines langues peuvent ne pas contenir toutes les traductions, dans ce cas vous verrez le message en anglais.
+select the language of the spellchecker integrated into the rich text editor.	preferences	fr	Sélectionner la langue du correcteur orthographique intégré à l'éditeur de texte.
+select the theme (visualization) of the rich text editor.	preferences	fr	Sélectionner le thème de l'éditeur de texte.
 selectbox	preferences	fr	Boîte de sélection
 selectbox with groupmembers	common	fr	Boîte de sélection avec membres du groupe
 selectbox with primary group and search	preferences	fr	Boîte de sélection avec groupe primaire et recherche
+server is unwilling to perform.	preferences	fr	Le serveur ne veut pas effectuer cette action...
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	fr	Réglez ceci à votre convenance. Pour des raisons de sécurité, vous pourriez ne pas montrer votre nom d'utilisateur en public.
 should the number of active sessions be displayed for you all the time.	preferences	fr	Le nombre de sessions actives doit-il vous être affiché en permanence?
 should this help messages shown up always, when you enter the preferences or only on request.	preferences	fr	Ces messages d'aide doivent-ils toujours être affichés quand vous entrez dans les préférences, ou seulement à la demande?
 show helpmessages by default	preferences	fr	Afficher les messages d'aide par défaut.
+show links between egroupware aps as	common	fr	Icônes et liens d'application
 show navigation bar as	preferences	fr	Afficher la barre de navigation comme
 show number of current users	preferences	fr	Afficher le nombre d'utilisateurs courants
 show text on navigation icons	preferences	fr	Montrer le texte sur les icônes de navigation
 show_more_apps	common	fr	Montrer plus d'Applications
+silver theme	preferences	fr	Thème Argent
+special characters	preferences	fr	caractères spéciaux
+spellchecker language	addressbook	fr	Language de correcteur orthographique
+text editor settings	preferences	fr	Paramètre de l'éditeur de texte
 text only	preferences	fr	Texte seulement
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fr	L'application par défaut sera exécutée quand vous entrez dans eGroupWare ou cliquez sur l'icône de la page d'accueil.<br>Vous pouvez aussi avoir plus d'une application s'affichant sur la page d'accueil, si vous ne choisissez pas d'application spécifique ici (ceci doit être configuré dans les préférences de chaque application).
 the old password is not correct	preferences	fr	L'ancien mon de passe est erroné
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	fr	La boîte de sélection montre tous les utilisateurs disponibles (ceci peut être très lent lors d'installations importantes avec beaucoup d'utilisateurs). La fenêtre Popup peut rechercher les utilisateurs par nom ou groupe.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group. the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	fr	La boîte de sélection va afficher tous les utilisateurs (cela peut être très long pour les installations avec beaucoup d'utilisateurs).  Le popup permet de recherche sur le nom et le groupe. Les deux dernières options limite la visibilité pour les autres utilisateurs. Ainsi, elle peuvent être forcées et non appliquées pour les administrateurs.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.* the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.*	preferences	fr	La boîte de sélection va afficher tous les utilisateurs (cela peut être très long pour les installations avec beaucoup d'utilisateurs).  Le popup permet de recherche sur le nom et le groupe.* Les deux dernières options limite la visibilité pour les autres utilisateurs. Ainsi, elle peuvent être forcées et non appliquées pour les administrateurs.*
 the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	preferences	fr	Les deux dernières options limitent la visibilité pour les autres utilisateurs. Pour cette raison, elles doivent être forcées et elles ne s'appliquent pas pour les administrateurs.
 the two passwords are not the same	preferences	fr	Les deux mots de passe ne sont pas identiques
 theme (colors/fonts) selection	preferences	fr	Sélection de thème (couleurs/polices)
 this server is located in the %1 timezone	preferences	fr	Ce serveur est situé dans le fuseau horaire %1
+thousands separator is only used for displaying and not for editing numbers.	preferences	fr	Le séparateur des milliers est utilisé seulement pour afficher et non pour modifier les nombres.
 time format	preferences	fr	Format d'heure
+unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as used in text processing.	preferences	fr	Unité des tailles de polices affichées : soit "px" comme pour les des pages web, soit "pt" comme pour les traitements de texte
+uppercase letters	preferences	fr	lettres majuscules
 use default	preferences	fr	Utiliser le défaut
 users choice	preferences	fr	Choix des utilisateurs
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fr	Si vous dites Oui, les boutons Accueil et Déconnexion sont présentés comme des applications dans la barre de navigation.
@@ -83,7 +143,10 @@ which charset should be used for the csv export. the system default is the chars
 which currency symbol or name should be used in egroupware.	preferences	fr	Quel symbole de monnaie ou nom devrait être utilisé dans eGroupWare.
 write prefs for the specified application.	preferences	fr	Ecrire les préférences pour l'apllication spécifiée.
 you can show the applications as icons only, icons with app-name or both.	preferences	fr	Vous pouvez montrer les applications comme des icônes seulement, des icônes avec le nom de l'application ou les deux.
+you can show the linked entries with icons only, icons with app-name or both.	common	fr	Monter les applications avec des icônes seulement, icônes avec des noms d'application ou les deux.
 you do not have permission to set acl's in this mode!	preferences	fr	Vous n'avez pas les droits pour régler les ACLs dans ce mode!
 you must enter a password	preferences	fr	Vous devez entrer un mot de passe
 your current theme is: %1	preferences	fr	Votre thème actuel est: %1
+your password does not have required strength:	preferences	fr	Votre mot de passe n'a pas la complexité requise :
+your password might not match the password policy.	preferences	fr	Votre mot de passe pourrait ne pas répondre à la politique de complexité des mots de passe.
 your preferences	preferences	fr	Vos préférences
