@@ -675,6 +675,10 @@ return array();	// temporary disabling meeting requests from calendar
 				{
 					$uid = $data['account_id'] ? (int)$data['account_id'] : 'c'.$data['id'];
 				}
+				elseif($attendee->name === $attendee->email || empty($attendee->name))	// dont store empty or email as name
+				{
+					$uid = 'e'.$attendee->email;
+				}
 				else	// store just the email
 				{
 					$uid = 'e'.$attendee->name.' <'.$attendee->email.'>';
@@ -687,6 +691,14 @@ return array();	// temporary disabling meeting requests from calendar
 				calendar_so::split_status($status, $quantity, $role);
 				//debugLog("old status for $uid is status=$status, quantity=$quantitiy, role=$role");
 			}
+			// check if just email is an existing attendee (iOS returns email as name too!), keep it to keep status/role if not set
+			elseif ($event['id'] && (isset($event['participants'][$u='e'.$attendee->email]) ||
+				(isset($event['participants'][$u='e'.$attendee->name.' <'.$attendee->email.'>']))))
+			{
+				$status = $event['participants'][$u];
+				calendar_so::split_status($status, $quantity, $role);
+				//debugLog("old status for $uid as $u is status=$status, quantity=$quantitiy, role=$role");
+			}
 			else	// set some defaults
 			{
 				$status = 'U';
@@ -694,6 +706,8 @@ return array();	// temporary disabling meeting requests from calendar
 				$role = 'REQ-PARTICIPANT';
 				//debugLog("default status for $uid is status=$status, quantity=$quantitiy, role=$role");
 			}
+			if ($role == 'CHAIR') $chair_set = true;	// by role from existing participant
+
 			if (isset($attendee->attendeestatus) && ($s = array_search($attendee->attendeestatus,self::$status2as)))
 			{
 				$status = $s;
@@ -703,7 +717,9 @@ return array();	// temporary disabling meeting requests from calendar
 				$role = 'CHAIR';
 				$chair_set = true;
 			}
-			elseif (isset($attendee->attendeetype) && ($r = array_search($attendee->attendeetype,self::$role2as)) &&
+			elseif (isset($attendee->attendeetype) &&
+				!($role == 'CHAIR' && !is_numeric($uid)) &&	// do not override our external ORGANIZER
+				($r = array_search($attendee->attendeetype,self::$role2as)) &&
 				(int)self::$role2as[$role] != $attendee->attendeetype)	// if old role gives same type, use old role, as we have a lot more roles then AS
 			{
 				$role = $r;
@@ -1037,6 +1053,7 @@ return array();	// temporary disabling meeting requests from calendar
 			// AS does NOT want calendar owner as participant
 			if ($uid == $account) continue;
 			calendar_so::split_status($status, $quantity, $role);
+
 			$attendee = new SyncAttendee();
 			$attendee->attendeestatus = (int)self::$status2as[$status];
 			$attendee->attendeetype = (int)self::$role2as[$role];
@@ -1058,6 +1075,14 @@ return array();	// temporary disabling meeting requests from calendar
 				}
 				$attendee->name = empty($info['cn']) ? $info['name'] : $info['cn'];
 				$attendee->email = $info['email'];
+
+				// external organizer: make him AS organizer, to get correct notifications
+				if ($role == 'CHAIR' && $uid[0] == 'e' && !empty($attendee->email))
+				{
+					$message->organizername  = $attendee->name;
+					$message->organizeremail = $attendee->email;
+					debugLog(__METHOD__."($folderid, $id, ...) external organizer detected (role=$role, uid=$uid), set as AS organizer: $message->organizername <$message->organizeremail>");
+				}
 				if ($uid[0] == 'r') $attendee->type = 3;	// 3 = resource
 			}
 			// email must NOT be empty, but MAY be an arbitrary text
