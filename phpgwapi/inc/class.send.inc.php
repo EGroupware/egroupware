@@ -27,8 +27,9 @@ class send extends egw_mailer
 	 *
 	 * To be able to call PHPMailer's Send function, we check if a subject, body or address is set and call it in that case,
 	 * else we do our constructors work.
+	 * @param string $_app the app that is responsible for the sending itself, if available an appspecific profile is fetched/merged
 	 */
-	function send()
+	function send($_app='felamimail')
 	{
 		if ($this->debug && is_numeric($this->debug)) $this->SMTPDebug = $this->debug;
 		if ($this->Subject || $this->Body || count($this->to))
@@ -40,7 +41,7 @@ class send extends egw_mailer
 
 		$this->CharSet = translation::charset();
 		$this->IsSmtp();
-		$restoreSession = $getUserDefinedProfiles = true;
+		$restoreSession = $getUserDefinedProfiles = false; // no caching for profiles used for notification any more
 		// if dontUseUserDefinedProfiles is set to yes/true/1 dont restore the session AND dont retrieve UserdefinedAccount settings
 		$notification_config = config::read('notifications');
 		if ($notification_config['dontUseUserDefinedProfiles']) $restoreSession = $getUserDefinedProfiles = false;
@@ -55,7 +56,8 @@ class send extends egw_mailer
 		if ($bopreferences) {
 			if ($this->debug) error_log(__METHOD__." using felamimail preferences for mailing.");
 			// if dontUseUserDefinedProfiles is set to yes/true/1  dont retrieve UserdefinedAccount settings
-			$preferences  = $bopreferences->getPreferences($getUserDefinedProfiles);
+			$preferences  = $bopreferences->getPreferences($getUserDefinedProfiles,0,$_app);
+			if ($this->debug) error_log(__METHOD__.__LINE__.' Preferences fetched:'.array2string($preferences));
 			if ($preferences) {
 				$ogServer = $preferences->getOutgoingServer(0);
 				if ($ogServer) {

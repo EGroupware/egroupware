@@ -690,25 +690,31 @@ abstract class bo_tracking
 		if (!$email) return false;
 
 		if (!$this->save_prefs) $this->save_prefs = $GLOBALS['egw_info']['user'];
-
+		$save_account_id = $GLOBALS['egw_info']['user']['account_id'];
 		if (is_numeric($user_or_lang))	// user --> read everything from his prefs
 		{
 			$GLOBALS['egw_info']['user']['account_id'] = $user_or_lang;
 			$GLOBALS['egw']->preferences->__construct($user_or_lang);
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository(false);	// no session prefs!
-
+			$returnfalsenow = false;
 			if ($check && $this->check2pref) $check = $this->check2pref[$check];
 			if ($check && !$GLOBALS['egw_info']['user']['preferences'][$this->app][$check])
 			{
-				return false;	// no notification requested
+				$returnfalsenow = true;//return false;	// no notification requested
 			}
-			if ($check && $GLOBALS['egw_info']['user']['preferences'][$this->app][$check] === 'assignment' && !$assignment_changed)
+			if (!$returnfalsenow && $check && $GLOBALS['egw_info']['user']['preferences'][$this->app][$check] === 'assignment' && !$assignment_changed)
 			{
-				return false;	// only notification about changed assignment requested
+				$returnfalsenow = true;//return false;	// only notification about changed assignment requested
 			}
-			if($this->user == $user_or_lang && !$this->notify_current_user)
+			if(!$returnfalsenow && $this->user == $user_or_lang && !$this->notify_current_user)
 			{
-				return false;  // no popup for own actions
+				$returnfalsenow = true;//return false;  // no popup for own actions
+			}
+			if ($returnfalsenow)
+			{
+				$GLOBALS['egw_info']['user']['account_id'] = $save_account_id;
+				$GLOBALS['egw_info']['user'] = $this->save_prefs;
+				return false;
 			}
 		}
 		else
@@ -762,6 +768,8 @@ abstract class bo_tracking
 			}
 			catch (Exception $exception)
 			{
+				$GLOBALS['egw_info']['user']['account_id'] = $save_account_id;
+				$GLOBALS['egw_info']['user'] = $this->save_prefs;
 				$this->errors[] = $exception->getMessage();
 				return false;
 			}
@@ -769,6 +777,8 @@ abstract class bo_tracking
 			error_log('tracking: cannot send any notifications because notifications is not installed');
 		}
 
+		$GLOBALS['egw_info']['user']['account_id'] = $save_account_id;
+		$GLOBALS['egw_info']['user'] = $this->save_prefs;
 		return true;
 	}
 
