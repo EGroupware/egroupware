@@ -193,7 +193,7 @@ var et2_dropdown_button = et2_inputWidget.extend(
 
 	destroy: function() {
 		// Destroy widget
-		if(this.menu) this.menu.menu("destroy");
+		if(this.menu && this.menu.menu("widget")) this.menu.menu("destroy");
 
 		// Null children
 		this.image = null;
