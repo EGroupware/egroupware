@@ -115,7 +115,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 	legacyOptions: ["template","hide_header","header_left","header_right"],
 	createNamespace: true,
-	activeFilters: {col_filter:{}},
 
 	columns: [],
 
@@ -126,7 +125,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 */
 	init: function() {
 		this._super.apply(this, arguments);
-
+		this.activeFilters = {col_filter:{}};
+		
 		/* 
 		Process selected custom fields here, so that the settings are correctly
 		set before the row template is parsed
