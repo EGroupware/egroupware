@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package etemplate
  * @subpackage api
- * @copyright (c) 2007-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -145,13 +145,6 @@ abstract class bo_tracking
 	 */
 	var $user;
 
-	/**
-	 * Saved user preferences, if send_notifications need to set an other language
-	 *
-	 * @access private
-	 * @var array
-	 */
-	var $save_prefs;
 	/**
 	 * Datetime format of the currently notified user (send_notificaton)
 	 *
@@ -632,23 +625,6 @@ abstract class bo_tracking
 				}
 			}
 		}
-
-		// restore the user enviroment
-		if ($this->save_prefs)
-		{
-			$GLOBALS['egw_info']['user'] = $this->save_prefs;
-			// need to call preferences constructor and read_repository, to set user timezone again
-			$GLOBALS['egw']->preferences->__construct($GLOBALS['egw_info']['user']['account_id']);
-			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository(false);	// no session prefs!
-			unset($this->save_prefs);
-
-			// Re-load date/time preferences
-			egw_time::init();
-		}
-		if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'] != translation::$userlang)
-		{
-			translation::init();
-		}
 		$email_notified = $email_sent;
 		return !count($this->errors);
 	}
@@ -675,6 +651,9 @@ abstract class bo_tracking
 	 *
 	 * Called by track() or externally for sending async notifications
 	 *
+	 * Method changes $GLOBALS['egw_info']['user'], so everything called by it, eg. get_(subject|body|links|attachements),
+	 * must NOT store something from user enviroment! By the end of the method, everything get changed back.
+	 *
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @param string $email address to send the notification to
@@ -689,32 +668,23 @@ abstract class bo_tracking
 		//error_log(__METHOD__."(,,'$email',$user_or_lang,$check,$assignment_changed,$deleted)");
 		if (!$email) return false;
 
-		if (!$this->save_prefs) $this->save_prefs = $GLOBALS['egw_info']['user'];
-		$save_account_id = $GLOBALS['egw_info']['user']['account_id'];
+		$save_user = $GLOBALS['egw_info']['user'];
+		$do_notify = true;
+
 		if (is_numeric($user_or_lang))	// user --> read everything from his prefs
 		{
 			$GLOBALS['egw_info']['user']['account_id'] = $user_or_lang;
 			$GLOBALS['egw']->preferences->__construct($user_or_lang);
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository(false);	// no session prefs!
-			$returnfalsenow = false;
+
 			if ($check && $this->check2pref) $check = $this->check2pref[$check];
-			if ($check && !$GLOBALS['egw_info']['user']['preferences'][$this->app][$check])
+
+			if ($check && !$GLOBALS['egw_info']['user']['preferences'][$this->app][$check] ||	// no notification requested
+				// only notification about changed assignment requested
+				$check && $GLOBALS['egw_info']['user']['preferences'][$this->app][$check] === 'assignment' && !$assignment_changed ||
+				$this->user == $user_or_lang && !$this->notify_current_user)  // no popup for own actions
 			{
-				$returnfalsenow = true;//return false;	// no notification requested
-			}
-			if (!$returnfalsenow && $check && $GLOBALS['egw_info']['user']['preferences'][$this->app][$check] === 'assignment' && !$assignment_changed)
-			{
-				$returnfalsenow = true;//return false;	// only notification about changed assignment requested
-			}
-			if(!$returnfalsenow && $this->user == $user_or_lang && !$this->notify_current_user)
-			{
-				$returnfalsenow = true;//return false;  // no popup for own actions
-			}
-			if ($returnfalsenow)
-			{
-				$GLOBALS['egw_info']['user']['account_id'] = $save_account_id;
-				$GLOBALS['egw_info']['user'] = $this->save_prefs;
-				return false;
+				$do_notify = false;	// no notification requested / necessary
 			}
 		}
 		else
@@ -728,28 +698,57 @@ abstract class bo_tracking
 			translation::init();
 		}
 
-		// Load date/time preferences into egw_time
+		if ($do_notify)
+		{
+			// Load date/time preferences into egw_time
+			egw_time::init();
+
+			// Cache message body to not have to re-generate it every time
+			$lang = translation::$userlang;
+			$date_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] .
+				$GLOBALS['egw_info']['user']['preferences']['common']['timeformat'];
+
+			// Cache text body
+			$body_cache =& $this->body_cache[$data[$this->id_field]][$lang][$date_format];
+			if(empty($data[$this->id_field]) || !isset($body_cache['text']))
+			{
+				$body_cache['text'] = $this->get_body(false,$data,$old,false,$receiver);
+			}
+			// Cache HTML body
+			if(empty($data[$this->id_field]) || !isset($body_cache['html']))
+			{
+				$body_cache['html'] = $this->get_body(true,$data,$old,false,$receiver);
+			}
+
+			// get rest of notification message
+			$sender = $this->get_sender($data,$old,true,$receiver);
+			$subject = $this->get_subject($data,$old,$deleted,$receiver);
+			$link = $this->get_notification_link($data,$old,$receiver);
+			$attachments = $this->get_attachments($data,$old,$receiver);
+		}
+
+		// restore user enviroment BEFORE calling notification class or returning
+		$GLOBALS['egw_info']['user'] = $save_user;
+		// need to call preferences constructor and read_repository, to set user timezone again
+		$GLOBALS['egw']->preferences->__construct($GLOBALS['egw_info']['user']['account_id']);
+		$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository(false);	// no session prefs!
+
+		// Re-load date/time preferences
 		egw_time::init();
 
-		// Cache message body to not have to re-generate it every time
-		$lang = translation::$userlang;
-		$date_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] .
-			$GLOBALS['egw_info']['user']['preferences']['common']['timeformat'];
-
-		// Cache text body
-		$body_cache =& $this->body_cache[$data[$this->id_field]][$lang][$date_format];
-		if(empty($data[$this->id_field]) || !isset($body_cache['text']))
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['lang'] != translation::$userlang)
 		{
-			$body_cache['text'] = $this->get_body(false,$data,$old,false,$receiver);
+			translation::init();
 		}
-		// Cache HTML body
-		if(empty($data[$this->id_field]) || !isset($body_cache['html']))
+
+		if (!$do_notify)
 		{
-			$body_cache['html'] = $this->get_body(true,$data,$old,false,$receiver);
+			return false;
 		}
 
 		// send over notification_app
-		if ($GLOBALS['egw_info']['apps']['notifications']['enabled']) {
+		if ($GLOBALS['egw_info']['apps']['notifications']['enabled'])
+		{
 			// send via notification_app
 			$receiver = is_numeric($user_or_lang) ? $user_or_lang : $email;
 			try {
@@ -757,10 +756,10 @@ abstract class bo_tracking
 				$notification->set_receivers(array($receiver));
 				$notification->set_message($body_cache['text']);
 				$notification->set_message($body_cache['html']);
-				$notification->set_sender($this->get_sender($data,$old,true,$receiver));
-				$notification->set_subject($this->get_subject($data,$old,$deleted,$receiver));
-				$notification->set_links(array($this->get_notification_link($data,$old,$receiver)));
-				if (($attachments = $this->get_attachments($data,$old,$receiver)) && is_array($attachments))
+				$notification->set_sender($sender);
+				$notification->set_subject($subject);
+				$notification->set_links(array($link));
+				if ($attachments && is_array($attachments))
 				{
 					$notification->set_attachments($attachments);
 				}
@@ -768,17 +767,15 @@ abstract class bo_tracking
 			}
 			catch (Exception $exception)
 			{
-				$GLOBALS['egw_info']['user']['account_id'] = $save_account_id;
-				$GLOBALS['egw_info']['user'] = $this->save_prefs;
 				$this->errors[] = $exception->getMessage();
 				return false;
 			}
-		} else {
+		}
+		else
+		{
 			error_log('tracking: cannot send any notifications because notifications is not installed');
 		}
 
-		$GLOBALS['egw_info']['user']['account_id'] = $save_account_id;
-		$GLOBALS['egw_info']['user'] = $this->save_prefs;
 		return true;
 	}
 
