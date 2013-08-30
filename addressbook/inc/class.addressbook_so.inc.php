@@ -791,20 +791,17 @@ class addressbook_so
 
 		if (!$new_owner)
 		{
-			$this->somain->delete(array('owner' => $account_id));
+			$this->somain->delete(array('owner' => $account_id));	// so_sql_cf::delete() takes care of cfs too
+
 			if(!($this->somain instanceof addressbook_sql))
 			{
-				$this->soextra->delete_customfields(array($this->extra_owner => $account_id));
+				$lists = $this->somain->get_lists($account_id);
+				$this->somain->delete_list(array_keys($lists));
 			}
 		}
 		else
 		{
 			$this->somain->change_owner($account_id,$new_owner);
-			$this->db->update($this->soextra->table_name,array(
-				$this->extra_owner => $new_owner
-			),array(
-				$this->extra_owner => $account_id
-			),__LINE__,__FILE__);
 		}
 	}
 

@@ -454,7 +454,7 @@ class addressbook_sql extends so_sql_cf
 	}
 
 	/**
-	 * Change the ownership of contacts owned by a given account
+	 * Change the ownership of contacts and distribution-lists owned by a given account
 	 *
 	 * @param int $account_id account-id of the old owner
 	 * @param int $new_owner account-id of the new owner
@@ -463,12 +463,27 @@ class addressbook_sql extends so_sql_cf
 	{
 		if (!$new_owner)	// otherwise we would create an account (contact_owner==0)
 		{
-			die("socontacts_sql::change_owner($account_id,$new_owner) new owner must not be 0");
+			throw egw_exception_wrong_parameter(__METHOD__."($account_id, $new_owner) new owner must not be 0!");
 		}
+		// contacts
 		$this->db->update($this->table_name,array(
 			'contact_owner' => $new_owner,
 		),array(
 			'contact_owner' => $account_id,
+		),__LINE__,__FILE__);
+
+		// cfs
+		$this->db->update($this->soextra->table_name,array(
+			$this->extra_owner => $new_owner
+		),array(
+			$this->extra_owner => $account_id
+		),__LINE__,__FILE__);
+
+		// lists
+		$this->db->update($this->lists_table, array(
+			'list_owner' => $new_owner,
+		),array(
+			'list_owner' => $account_id,
 		),__LINE__,__FILE__);
 	}
 
