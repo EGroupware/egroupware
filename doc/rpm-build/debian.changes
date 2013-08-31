@@ -1,3 +1,14 @@
+egroupware (1.8.004.20130831) hardy; urgency=low
+
+  * Addressbook/CardDAV: fixed not working (forced) preference to display only accounts of groupmembers
+  * Addressbook: fixed sql error caused by multiple DISTINCT by backporting whole so_sql class from Trunk/11.1
+  * CardDAV/Addressbook/LDAP: prefix, middle name, suffix was messed up, if iOS addressbook "Display Order" preferences was set to "lastname firstname"
+  * Calendar: automatic cancel alarms from removed or rejected participants
+  * Calendar/EMail: accepting mail invitations sets now external organizer as role CHAIR (externals can not be event-owners), to send replys back to organizer
+  * FckEditor: re-added EGroupware configuration
+
+ -- Ralf Becker <rb@stylite.de>  Sat, 31 Aug 2013 10:06:52 +0200
+
 egroupware (1.8.004.20130819) hardy; urgency=low
 
   * Gallery: fix missing files in last package
