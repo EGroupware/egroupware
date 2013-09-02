@@ -119,6 +119,7 @@ class etemplate_new extends etemplate_widget_template
 		if (self::$request->output_mode == -1) self::$request->output_mode = 0;
 		self::$request->template = $this->as_array();
 
+		if (empty($this->name)) throw new egw_exception_assertion_failed("Template  name is not set '$this->name' !");
 		// instanciate template to fill self::$request->sel_options for select-* widgets
 		// not sure if we want to handle it this way, thought otherwise we will have a few ajax request for each dialog fetching predefined selectboxes
 		$template = etemplate_widget_template::instance($this->name, $this->template_set, $this->version, $this->laod_via);
