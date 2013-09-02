@@ -37,9 +37,10 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		 * @param string type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
 		 * @param object|string extra extra url parameters to append as object or string
 		 * @param string target target of window to open
+		 * @param string target_app target application to open in that tab
 		 * @memberOf egw
 		 */
-		open: function(id_data, app, type, extra, target)
+		open: function(id_data, app, type, extra, target, target_app)
 		{
 			var id;
 			if(typeof target === 'undefined')
@@ -126,7 +127,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 				}
 				popup = app_registry[type+'_popup'];
 			}
-			return this.open_link(this.link(url, params), undefined, popup, target);
+			return this.open_link(this.link(url, params), target, popup, target_app);
 		},
 		
 		/**
@@ -171,6 +172,10 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 				}
 				// Use framework's link handler, if present
 				return _wnd.egw_link_handler(url,_target);
+			}
+			else if (_target == '_self')
+			{
+				_wnd.location.href = url;
 			}
 			else
 			{
