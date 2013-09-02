@@ -41,7 +41,7 @@ class send extends egw_mailer
 
 		$this->CharSet = translation::charset();
 		$this->IsSmtp();
-		$restoreSession = $getUserDefinedProfiles = false; // no caching for profiles used for notification any more
+		$restoreSession = $getUserDefinedProfiles = true;
 		// if dontUseUserDefinedProfiles is set to yes/true/1 dont restore the session AND dont retrieve UserdefinedAccount settings
 		$notification_config = config::read('notifications');
 		if ($notification_config['dontUseUserDefinedProfiles']) $restoreSession = $getUserDefinedProfiles = false;
