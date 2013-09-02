@@ -56,7 +56,7 @@ class etemplate_widget_template extends etemplate_widget
 				return self::$cache[$name];
 			}
 			// Template not found, try again as if $name were a partial name
-			else if(!$path && strpos('.',$name) === false)
+			else if(!$path && strpos($name,'.') === false)
 			{
 				foreach(self::$cache as $c_name => $c_template)
 				{
