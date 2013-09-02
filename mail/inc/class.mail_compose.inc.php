@@ -266,16 +266,16 @@ class mail_compose
 	 * function compose
 	 * 	this function is used to fill the compose dialog with the content provided by session data
 	 *
-	 * @var content				array the etemplate content array
+	 * @var _content				array the etemplate content array
 	 * @var msg					string a possible message to be passed and displayed to the userinterface
 	 * @var _focusElement		varchar subject, to, body supported
 	 * @var suppressSigOnTop	boolean
 	 * @var isReply				boolean
 	 */
-	function compose(array $content=null,$msg=null, $_focusElement='to',$suppressSigOnTop=false, $isReply=false)
+	function compose(array $_content=null,$msg=null, $_focusElement='to',$suppressSigOnTop=false, $isReply=false)
 	{
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
-		error_log(__METHOD__.__LINE__.array2string($content));
+		error_log(__METHOD__.__LINE__.array2string($_content));
 
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
 		// read the data from session
@@ -946,8 +946,6 @@ class mail_compose
 				if ($value=="NIL@NIL") continue;
 				if ($destination=='replyto' && str_replace('"','',$value) == str_replace('"','',$identities[($presetId ? $presetId : $defaultIdentity)])) continue;
 				//error_log(__METHOD__.__LINE__.array2string(array('key'=>$key,'value'=>$value)));
-				$selectDestination = html::select('destination[]', $destination, $this->destinations, false, "style='width: 100%;' onchange='fm_compose_changeInputType(this)'");
-				//$this->t->set_var('select_destination', $selectDestination);
 				$value = htmlspecialchars_decode($value,ENT_COMPAT);
 				$value = str_replace("\"\"",'"',$value);
 				$address_array = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($value):$value), '');
@@ -960,8 +958,14 @@ class mail_compose
 				}
 			}
 		}
-		if ($content)
+		if ($_content)
 		{
+			$content = array_merge($content,$_content);
+
+			if (!empty($content['FOLDER'])) $sel_options['FOLDER']=$this->ajax_searchFolder(0,true);
+			$content['SENDER'] = (empty($content['SENDER'])?($selectedSender?(array)$selectedSender:''):$content['SENDER']);
+			$content['is_html'] = ($this->sessionData['mimeType'] == 'html'?true:'');
+			$content['is_plain'] = ($this->sessionData['mimeType'] == 'html'?'':true);
 		}
 		else
 		{
@@ -972,6 +976,8 @@ class mail_compose
 			//error_log(__METHOD__.__LINE__.$sessionData['body']);
 			$content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text'] = $sessionData['body'];
 		}
+		$preserv['is_html'] = $content['is_html'];
+		$preserv['is_plain'] = $content['is_plain'];
 		$etpl = new etemplate_new('mail.compose');
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
 	}
@@ -2529,12 +2535,12 @@ class mail_compose
 		common::egw_exit();
 	}
 
-	function ajax_searchFolder() {
+	function ajax_searchFolder($_searchStringLength=2, $_returnList=false) {
 		static $useCacheIfPossible;
 		if (is_null($useCacheIfPossible)) $useCacheIfPossible = true;
 		$_searchString = trim($_REQUEST['query']);
 		$results = array();
-		if (strlen($_searchString)>=2 && isset($this->mail_bo->icServer))
+		if (strlen($_searchString)>=$_searchStringLength && isset($this->mail_bo->icServer))
 		{
 			//error_log(__METHOD__.__LINE__.':'.$this->mail_bo->icServer->ImapServerId);
 			if (!($this->mail_bo->icServer->_connected == 1)) $this->mail_bo->openConnection($this->mail_bo->icServer->ImapServerId);
@@ -2552,7 +2558,12 @@ class mail_compose
 			{
 				//error_log(__METHOD__.__LINE__.$_searchString.'/'.$searchString.' in '.$k.'->'.$fA->displayName);
 				$f=false;
-				if (stripos($fA->displayName,$_searchString)!==false)
+				if ($_searchStringLength<=0)
+				{
+					$f=true;
+					$results[] = array('id'=>$k, 'label' => htmlspecialchars($fA->displayName));
+				}
+				if ($f==false && stripos($fA->displayName,$_searchString)!==false)
 				{
 					$f=true;
 					$results[] = array('id'=>$k, 'label' => htmlspecialchars($fA->displayName));
@@ -2564,7 +2575,11 @@ class mail_compose
 			}
 		}
 		//error_log(__METHOD__.__LINE__.' IcServer:'.$this->mail_bo->icServer->ImapServerId.':'.array2string($results));
-
+		if ($_returnList)
+		{
+			foreach ((array)$results as $k => $_result) {$rL[$_result['id']]=$_result['label'];};
+			return $rL;
+		}
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($results);
 		common::egw_exit();

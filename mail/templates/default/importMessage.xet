@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.importMessage" template="" lang="" group="0" version="1.9.001">
+		<vbox id ="divImportArea">
+			<hbox span="all">
+				<description value="Store to Folder"/>
+				<taglist id="FOLDER" width="50%" autocomplete_url='mail.mail_compose.ajax_searchFolder' autocomplete_params='' maxSelection="1" allowFreeEntries="false" onclick="app.mail.address_click"/>
+			</hbox>
+			<file statustext="Select file to import into Folder" onFinish="app.mail.uploadForImport" mime="message/rfc822" id="uploadForImport" drop_target ="mail-importMessage_divImportArea"/>
+		</vbox>>
+	</template>
+</overlay>

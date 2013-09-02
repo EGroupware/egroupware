@@ -1599,11 +1599,6 @@ unset($query['actions']);
 			),
 		));
 */
-		egw_framework::set_onload('$j(document).ready(function() {
-var subject = etemplate2.getByApplication(\'mail\')[0].widgetContainer.getWidgetById(\'mail_displaysubject\');
-var body = etemplate2.getByApplication(\'mail\')[0].widgetContainer.getWidgetById(\'mail_displaybody\');
-body.node.parentNode.style.top=subject.node.offsetTop+40+\'px\';
-});');
 		$subject = /*mail_bo::htmlspecialchars(*/$this->mail_bo->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false)/*,
             mail_bo::$displayCharset)*/;
 		if($envelope['FROM'][0] != $envelope['SENDER'][0]) {
@@ -2691,9 +2686,12 @@ blockquote[type=cite] {
 	/**
 	 * importMessage
 	 */
-	function importMessage()
+	function importMessage($content)
 	{
-		error_log(array2string($_POST));
+		error_log(array2string($content));
+		if (!is_array($content)) $content = array();
+		$etpl = new etemplate_new('mail.importMessage');
+		$etpl->exec('mail.mail_ui.importMessage',$content,$sel_options,$readonlys,$preserv,2);
 /*
 			if (empty($importtype)) $importtype = htmlspecialchars($_POST["importtype"]);
 			if (empty($toggleFS)) $toggleFS = htmlspecialchars($_POST["toggleFS"]);

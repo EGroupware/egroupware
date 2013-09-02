@@ -799,12 +799,14 @@ class mail_hooks
 			'link'=>false,
 			'icon' => false
 		);
+/*
 		$file[] = array(
 			'no_lang' => true,
 			'text'=>'<span id="mail-index_buttontesthtmlarea" class="button" />',
 			'link'=>false,
 			'icon' => false
 		);
+*/
 		$file[] = array(
 			'no_lang' => true,
 			'text'=>'<span id="mail-tree_target" class="dtree" />',

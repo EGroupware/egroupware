@@ -4738,6 +4738,19 @@ class mail_bo
 	}
 
 	/**
+	 * adaptSubjectForImport - strips subject from unwanted Characters, and does some normalization
+	 * to meet expectations
+	 * @param string $subject string to process
+	 * @return string
+	 */
+	static function adaptSubjectForImport($subject)
+	{
+		$subject = str_replace('$$','__',($subject?$subject:lang('(no subject)')));
+		$subject = str_ireplace(array('[FWD]','[',']','{','}','<','>'),array('Fwd:',' ',' ',' ',' ',' ',' '),trim($subject));
+		return $subject;
+	}
+
+	/**
 	 * convertAddressArrayToString - converts an mail envelope Address Array To String
 	 * @param array $rfcAddressArray  an addressarray as provided by mail retieved via egw_pear....
 	 * @return string a comma separated string with the mailaddress(es) converted to text

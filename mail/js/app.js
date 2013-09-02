@@ -63,7 +63,7 @@ app.mail = AppJS.extend(
 	 */
 	et2_ready: function(et2)
 	{
-		// call parent
+		// call parent; somehow this function is called more often. (twice on a display and compose) why?
 		this._super.apply(this, arguments);
 		this.et2_obj = et2;
 		this.et2 = et2.widgetContainer;
@@ -71,10 +71,24 @@ app.mail = AppJS.extend(
 		var isDisplay = false;
 		for (var t in et2.templates)
 		{
-			if (t=='mail.index') {isMainView=true;break;};
-			if (t=='mail.display') {isDisplay=true;break;};
+			//alert(t); // as we iterate through this more than once, ... we separate trigger and action
+			switch (t) {
+				case 'mail.index':
+					isMainView=true;
+					break;
+				case 'mail.display':
+					isDisplay=true;
+					break;
+			}
 		}
+		//alert('action about to go down');
 		if (isMainView) this.mail_disablePreviewArea(true);
+		if (isDisplay)
+		{
+			var subject = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mail_displaysubject');
+			var body = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mail_displaybody');
+			body.node.parentNode.style.top=subject.node.offsetTop+40+'px';
+		}
 	},
 
 	/**
@@ -1145,6 +1159,29 @@ app.mail = AppJS.extend(
 			app.mail.app_refresh(egw.lang("Deleting Folder %1",OldFolderName, 'mail'));
 			var request = new egw_json_request('mail.mail_ui.ajax_deleteFolder',[_senders[0].iface.id]);
 			request.sendRequest(true);
+		}
+	},
+
+	/**
+	 * Send names of uploaded files (again) to server, to process them: either copy to vfs or ask overwrite/rename
+	 * 
+	 * @param _event
+	 * @param _file_count
+	 * @param {string} [_path=current directory] Where the file is uploaded to.
+	 */
+	uploadForImport: function(_event, _file_count, _path)
+	{
+		console.log(_event,_file_count,_path);
+		if(typeof _path == 'undefined')
+		{
+			//_path = this.get_path();
+		}
+		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
+		{
+//			var widget = _event.data;
+//			var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', widget.getValue(), _path], this);
+//			widget.set_value('');
+//			request.sendRequest(false, this._upload_callback, this);
 		}
 	},
 
