@@ -39,12 +39,6 @@ class solink
 	 */
 	private static $db;
 	/**
-	 * Reference to current user from $GLOBALS['egw_info']['user']['account_id']
-	 *
-	 * @var int
-	 */
-	protected static $user;
-	/**
 	 * True if call to get_links or get_3links exceeded limit (contains not all rows)
 	 */
 	public static $limit_exceeded = false;
@@ -83,7 +77,7 @@ class solink
 		}
 		if (!$owner)
 		{
-			$owner = self::$user;
+			$owner = $GLOBALS['egw_info']['user']['account_id'];
 		}
 		return self::$db->insert(self::TABLE,array(
 				'link_app1'		=> $app1,
@@ -464,7 +458,6 @@ class solink
 	static function init_static( )
 	{
 		self::$db     = $GLOBALS['egw']->db;
-		self::$user   =& $GLOBALS['egw_info']['user']['account_id'];
 	}
 }
 solink::init_static();
