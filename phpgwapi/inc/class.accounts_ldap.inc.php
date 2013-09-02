@@ -116,6 +116,16 @@ class accounts_ldap
 	private $ldap;
 
 	/**
+	 * does backend allow to change account_lid
+	 */
+	const CHANGE_ACCOUNT_LID = true;
+
+	/**
+	 * does backend requires password to be set, before allowing to enable an account
+	 */
+	const REQUIRE_PASSWORD_FOR_ENABLE = false;
+
+	/**
 	 * Constructor
 	 *
 	 * @param accounts $frontend reference to the frontend class, to be able to call it's methods if needed
