@@ -1417,7 +1417,7 @@ class egw_link extends solink
 	static function file_access($app,$id,$required=EGW_ACL_READ,$rel_path=null,$user=null)
 	{
 		// are we called for an other user
-		if ($user && $user != self::$user)
+		if ($user && $user != $GLOBALS['egw_info']['user']['account_id'])
 		{
 			// check if app supports file_access WITH 4th $user parameter --> return false if not
 			if (!self::get_registry($app,'file_access_user') || !($method = self::get_registry($app,'file_access')))
