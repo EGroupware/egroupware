@@ -793,7 +793,7 @@ class addressbook_so
 		{
 			$this->somain->delete(array('owner' => $account_id));	// so_sql_cf::delete() takes care of cfs too
 
-			if(!($this->somain instanceof addressbook_sql))
+			if(method_exists($this->somain, 'get_lists'))
 			{
 				$lists = $this->somain->get_lists($account_id);
 				$this->somain->delete_list(array_keys($lists));

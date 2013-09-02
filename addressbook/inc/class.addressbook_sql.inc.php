@@ -54,6 +54,8 @@ class addressbook_sql extends so_sql_cf
 	 */
 	var $ab2list_table = 'egw_addressbook2list';
 
+	const EXTRA_TABLE = 'egw_addressbook_extra';
+
 	/**
 	 * Constructor
 	 *
@@ -61,7 +63,7 @@ class addressbook_sql extends so_sql_cf
 	 */
 	function __construct(egw_db $db=null)
 	{
-		parent::__construct('phpgwapi','egw_addressbook','egw_addressbook_extra','contact_',
+		parent::__construct('phpgwapi', 'egw_addressbook', self::EXTRA_TABLE, 'contact_',
 			$extra_key='_name',$extra_value='_value',$extra_id='_id',$db);
 
 		// Get custom fields from addressbook instead of phpgwapi
@@ -473,11 +475,11 @@ class addressbook_sql extends so_sql_cf
 		),__LINE__,__FILE__);
 
 		// cfs
-		$this->db->update($this->soextra->table_name,array(
-			$this->extra_owner => $new_owner
+		$this->db->update(self::EXTRA_TABLE, array(
+			'contact_owner' => $new_owner
 		),array(
-			$this->extra_owner => $account_id
-		),__LINE__,__FILE__);
+			'contact_owner' => $account_id
+		), __LINE__, __FILE__);
 
 		// lists
 		$this->db->update($this->lists_table, array(
