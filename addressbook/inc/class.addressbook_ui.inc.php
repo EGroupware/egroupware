@@ -2377,18 +2377,6 @@ window.egw_LAB.wait(function() {
 			return false;
 		}
 
-		function add_new_list(owner)
-		{
-			var name = window.prompt("'.lang('Name for the distribution list').'");
-			if (name)
-			{
-				document.location.href = "'.egw::link('/index.php',array(
-					'menuaction'=>$_GET['menuaction'],//'addressbook.addressbook_ui.index',
-					'add_list'=>'',
-				)).'"+encodeURIComponent(name)+"&owner="+owner;
-			}
-		}
-
 		function do_action(selbox)
 		{
 			if (selbox.value != "") {

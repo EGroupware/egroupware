@@ -193,14 +193,14 @@ function show_custom_country(selectbox)
 	}
 }
 
-function add_new_list()
+function add_new_list(owner)
 {
 	var name = window.prompt(egw.lang('Name for the distribution list'));
 	if (name)
 	{
 		egw.open('','addressbook', 'list', {
 			'add_list': name,
-			'owner': egw.user('account_id')
+			'owner': owner
 		},'_self');
 	}
 }
