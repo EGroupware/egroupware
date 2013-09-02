@@ -1973,15 +1973,15 @@ ORDER BY cal_user_type, cal_usre_id
 	private function delete_alarms($cal_id)
 	{
 		//error_log(__METHOD__."($cal_id) ".function_backtrace());
-		$alarms = $this->read_alarms($cal_id);
-
-		foreach($alarms as $id => $alarm)
+		if (($alarms = $this->read_alarms($cal_id)))
 		{
-			$this->async->cancel_timer($id);
+			foreach($alarms as $id => $alarm)
+			{
+				$this->async->cancel_timer($id);
+			}
+			// update cache, if used
+			if (isset(self::$alarm_cache)) $this->read_alarms($cal_id, false);
 		}
-		// update cache, if used
-		if (isset(self::$alarm_cache)) $this->read_alarms($cal_id, false);
-
 		return count($alarms);
 	}
 
