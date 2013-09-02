@@ -39,13 +39,6 @@ class solink
 	 */
 	private static $db;
 	/**
-	 * Reference to current user from $GLOBALS['egw_info']['user']['account_id']
-	 *
-	 * @var int
-	 */
-	protected static $user;
-
-	/**
 	 * creats a link between $app1,$id1 and $app2,$id2
 	 *
 	 * @param string $app1 appname of 1. endpoint of the link
@@ -79,7 +72,7 @@ class solink
 		}
 		if (!$owner)
 		{
-			$owner = self::$user;
+			$owner = $GLOBALS['egw_info']['user']['account_id'];
 		}
 		return self::$db->insert(self::TABLE,array(
 				'link_app1'		=> $app1,
@@ -391,7 +384,6 @@ class solink
 	static function init_static( )
 	{
 		self::$db     = $GLOBALS['egw']->db;
-		self::$user   =& $GLOBALS['egw_info']['user']['account_id'];
 	}
 }
 solink::init_static();
