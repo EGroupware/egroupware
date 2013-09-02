@@ -21,8 +21,8 @@
 				<row>
 					<description/>
 					<nextmatch-customfilter id="acl_appname" options="select-app,All applications"/>
-					<nextmatch-accountfilter label="From" id="acl_location" options="All accounts,both"/>
-					<nextmatch-accountfilter label="To" id="acl_account" options="All accounts,both"/>
+					<nextmatch-accountfilter label="Data from" id="acl_account" options="All accounts,both"/>
+					<nextmatch-accountfilter label="Access by" id="acl_location" options="All accounts,both"/>
 					<nextmatch-header label="Read" id="read"/>
 					<nextmatch-header label="Add" id="add"/>
 					<nextmatch-header label="Edit" id="edit"/>
@@ -38,10 +38,10 @@
 						<menupopup type="select-app" id="${row}[acl_appname]" readonly="true"/>
 					</menulist>
 					<menulist>
-						<menupopup type="select-account" id="${row}[acl_location]" readonly="true"/>
+						<menupopup type="select-account" id="${row}[acl_account]" readonly="true"/>
 					</menulist>
 					<menulist>
-						<menupopup type="select-account" id="${row}[acl_account]" readonly="true"/>
+						<menupopup type="select-account" id="${row}[acl_location]" readonly="true"/>
 					</menulist>
 					<description id="${row}[acl1]"/>
 					<description id="${row}[acl2]"/>

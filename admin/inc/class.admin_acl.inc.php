@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware: Admin app ACL
+ * EGroupware: Admin ACL
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <rb@stylite.de>
@@ -56,8 +56,8 @@ class admin_acl
 			{
 				$app = !empty($_GET['app']) && isset($GLOBALS['egw_info']['apps'][$_GET['app']]) ?
 					$_GET['app'] : $state['acl_appname'];
-				$location = $state['filter'] == 'run' ? 'run' : $state['account_id'];
-				$account = $state['filter'] == 'run' ? $state['account_id'] : $state['acl_account'];
+				$location = $state['filter'] == 'run' ? 'run' : null;//$state['account_id'];
+				$account = $state['account_id'];//$state['filter'] == 'run' ? $state['account_id'] : $state['acl_account'];
 				$rights = 1;
 			}
 			$content = array(
@@ -82,7 +82,7 @@ class admin_acl
 		));
 		if ($content['save'])
 		{
-			self::check_access($content['acl_location']);
+			self::check_access($content['acl_account'], $content['acl_location']);
 
 			if ($content['acl_location'] == 'run')
 			{
@@ -94,7 +94,7 @@ class admin_acl
 			}
 			egw_framework::window_close();
 		}
-		if ($content['location'] == 'run')
+		if ($content['acl_location'] == 'run')
 		{
 			$readonlys['acl_account'] = true;
 		}
@@ -117,8 +117,12 @@ class admin_acl
 			{
 				$readonlys['acl_appname'] = $readonlys['acl_account'] = $readonlys['acl_location'] = true;
 			}
+			else
+			{
+				$readonlys['acl_account'] = true;
+			}
 			// only user himself is allowed to grant private rights!
-			if ($content['acl_location'] != $GLOBALS['egw_info']['user']['account_id'])
+			if ($content['acl_account'] != $GLOBALS['egw_info']['user']['account_id'])
 			{
 				$readonlys['acl[5]'] = true;
 				$content['preserve_rights'] = $rights & acl::PRIVAT;
@@ -129,7 +133,7 @@ class admin_acl
 			}
 		}
 		// view only, if no rights
-		if (!self::check_access($content['acl_location'], false))
+		if (!self::check_access($content['acl_account'], $content['acl_location'], false))
 		{
 			$readonlys[__ALL__] = true;
 			$readonlys['cancel'] = false;
@@ -270,7 +274,7 @@ class admin_acl
 						$query['col_filter']['acl_account'] = $memberships;
 					}
 					break;
-				case 'own':
+				case 'other':
 					//$query['col_filter'][] = "acl_location!='run'";
 					// remove everything not an account-id in location, like category based acl
 					if ($GLOBALS['egw']->db->Type == 'mysql')
@@ -287,7 +291,7 @@ class admin_acl
 					}
 					break;
 
-				case 'other':
+				case 'own':
 					if (empty($query['col_filter']['acl_location']))
 					{
 						$query['col_filter']['acl_location'] = $memberships;//$query['account_id'];
@@ -323,7 +327,7 @@ class admin_acl
 					}
 				}
 			}
-			if (!self::check_access($row['acl_location'], false))	// false: do NOT throw an exception!
+			if (!self::check_access($row['acl_account'], $row['acl_location'], false))	// false: do NOT throw an exception!
 			{
 				$row['class'] = 'rowNoEdit';
 			}
@@ -336,12 +340,13 @@ class admin_acl
 	/**
 	 * Check if current user has access to ACL setting of a given location
 	 *
-	 * @param int|string $location numeric account-id or "run"
+	 * @param int $account_id numeric account-id
+	 * @param int|string $location=null numeric account-id or "run"
 	 * @param boolean $throw=true if true, throw an exception if no access, instead of just returning false
 	 * @return boolean true if access is granted, false if notification_bo
 	 * @throws egw_exception_no_permission
 	 */
-	public static function check_access($location, $throw=true)
+	public static function check_access($account_id, $location=null, $throw=true)
 	{
 		static $admin_access;
 		static $own_access;
@@ -351,8 +356,8 @@ class admin_acl
 				!$GLOBALS['egw']->acl->check('account_access', 64, 'admin');	// ! because this denies access!
 			$own_access = $admin_access || isset($GLOBALS['egw_info']['user']['apps']['preferences']);
 		}
-		if (!($location === 'run' || (int)$location) ||
-			!((int)$location == (int)$GLOBALS['egw_info']['user']['account_id'] ? $own_access : $admin_access))
+		if (!($location === 'run' || (int)$account_id) ||
+			!((int)$account_id == (int)$GLOBALS['egw_info']['user']['account_id'] ? $own_access : $admin_access))
 		{
 			if ($throw) throw new egw_exception_no_permission(lang('Permission denied!!!'));
 			return false;
@@ -375,7 +380,7 @@ class admin_acl
 		{
 			list($app, $account_id, $location) = explode(':', $id, 3);
 
-			self::check_access($location);	// throws exception, if no rights
+			self::check_access($account_id, $location);	// throws exception, if no rights
 
 			if ((int)$account_id == (int)$GLOBALS['egw_info']['user']['account_id'])
 			{
@@ -451,8 +456,8 @@ class admin_acl
 		}
 		$sel_options = array(
 			'filter' => array(
-				'other' => 'Rights granted to others',
-				'own'   => 'Own rights granted from others',
+				'other' => 'Access to my data by others',
+				'own'   => 'My access to other data',
 				'run'   => 'Run rights for applications',
 			),
 		);
@@ -469,18 +474,18 @@ class admin_acl
 	{
 		return array(
 			'edit' => array(
-				'caption' => 'Edit ACL',
+				'caption' => 'Edit',
 				'default' => true,
 				'allowOnMultiple' => false,
 				'onExecute' => 'javaScript:app.admin.acl',
 			),
 			'add' => array(
-				'caption' => 'Add ACL',
+				'caption' => 'Add',
 				'onExecute' => 'javaScript:app.admin.acl',
 			),
 			'delete' => array(
-				'confirm' => 'Delete this ACL',
-				'caption' => 'Delete ACL',
+				'confirm' => 'Delete this access control',
+				'caption' => 'Delete',
 				'disableClass' => 'rowNoEdit',
 				'onExecute' => 'javaScript:app.admin.acl',
 			),

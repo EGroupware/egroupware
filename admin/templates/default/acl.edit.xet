@@ -14,16 +14,16 @@
 						<menupopup id="acl_appname" needed="1" onchange="1" options="Select one"/>
 					</menulist>
 				</row>
-				<row disabled="@acl_location=run" part="header">
-					<description value="From" for="acl_location"/>
-					<menulist>
-						<menupopup type="select-account" id="acl_location" readonly="true"/>
-					</menulist>
-				</row>
 				<row part="header">
-					<description value="To" for="acl_account"/>
+					<description value="Data from" for="acl_account"/>
 					<menulist>
 						<menupopup type="select-account" id="acl_account" needed="1"/>
+					</menulist>
+				</row>
+				<row disabled="@acl_location=run" part="header">
+					<description value="Access by" for="acl_location"/>
+					<menulist>
+						<menupopup type="select-account" id="acl_location"/>
 					</menulist>
 				</row>
 				<row valign="top" disabled="@acl_location=run">
