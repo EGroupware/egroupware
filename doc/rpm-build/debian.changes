@@ -1,3 +1,18 @@
+egroupware-epl (11.1.20130903-1) hardy; urgency=low
+
+  * Addressbook/eSync/CardDAV: fixed not working (forced) preference to display only accounts of groupmembers, causing eSync to permanently try and fail reading other accounts
+  * Tracker/Mailhandling: process mail using eGroupware Mail Object and functionality (intention is to have the same behavior as mail2tracker in Mail Application)
+  * CardDAV/Addressbook/LDAP/ADS: syncing all addressbooks into one now also allows to include accounts not stored like contacts
+  * CardDAV/Addressbook/LDAP/ADS: prefix, middle name, suffix was messed up, if iOS addressbook "Display Order" preferences was set to "lastname firstname"
+  * Timesheet/PostgreSQL: fix SQL error when selecting a timerange
+  * Calendar: automatic cancel alarms from removed or rejected participants
+  * Calendar/EMail: accepting mail invitations sets now external organizer as role CHAIR (externals can not be event-owners), to send replys back to organizer
+  * Calendar/ActiveSync: keep external organizer and status&role of existing participants, if clients does not send them
+  * Addressbook: deleting an account now also takes care of deleting or changing ownership of distribution lists (beside contacts as before)
+  * EMail/all apps: fixed notifications caused EMail to loose connection to IMAP server
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 03 Sep 2013 08:28:26 +0200
+
 egroupware-epl (11.1.20130816-1) hardy; urgency=low
 
   * eMail/eSync: fix cut off of multiple TO/CC addresses in header retrieval (seen in eSync); return empty syncMail Object on header retrieval failure for activesync
