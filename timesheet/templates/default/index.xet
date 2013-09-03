@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="timesheet.index.dates" template="" lang="" group="0" version="1.2.001">
-		<hbox cols="1" rows="1" class="custom_hide">
+	<template id="timesheet.index.dates" template="" lang="" group="0" version="1.2.001" >
+		<hbox cols="1" rows="1" >
 			<description value="Start"/>
 			<date id="startdate"/>
 			<description value="End"/>

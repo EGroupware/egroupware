@@ -724,7 +724,7 @@ class timesheet_ui extends timesheet_bo
 				$row['ts_start'] = $row['ts_unitprice'] = '';
 				if (!$this->quantity_sum) $row['ts_quantity'] = '';
 				$row['class'] = 'th';
-				$row['titleClass'] = 'titleSum';
+				$row['titleClass'] = 'timesheet_titleSum';
 				unset($row['ts_id']);	// otherwise row would be selectable action-wise
 				continue;
 			}
@@ -770,7 +770,7 @@ class timesheet_ui extends timesheet_bo
 			}
 			else
 			{
-				$row['titleClass'] = 'titleDetails';
+				$row['titleClass'] = 'timesheet_titleDetails';
 			}
 		}
 		if (!$have_cats || $query['cat_id']) $rows['no_cat_id'] = true;

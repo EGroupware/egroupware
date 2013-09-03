@@ -1,5 +1,2 @@
 /* $Id$ */
-.redItalic { color: red; font-style: italics; }
-.titleSum,.titleDetails { font-weight: bold; }
-.noWrap { white-space: nowrap; }
-.width100 { width: 100%; }
+.timesheet_titleSum,.timesheet_titleDetails { font-weight: bold; }
