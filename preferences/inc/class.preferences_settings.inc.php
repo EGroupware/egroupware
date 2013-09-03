@@ -43,7 +43,7 @@ class preferences_settings
 	 */
 	function index(array $content=null, $msg='')
 	{
-		$tpl = new etemplate('preferences.settings');
+		$tpl = new etemplate_new('preferences.settings');
 		if (!is_array($content))
 		{
 			$appname = isset($_GET['appname']) && $_GET['appname'] != 'preferences' ? $_GET['appname'] : 'common';
