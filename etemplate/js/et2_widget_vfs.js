@@ -530,7 +530,7 @@ var et2_vfsUpload = et2_file.extend(
 	legacyOptions: ["mime"],
 
 	asyncOptions: {
-		url: egw_json_request.prototype._assembleAjaxUrl("etemplate_widget_vfs::ajax_upload::etemplate")
+		url: egw.ajaxUrl("etemplate_widget_vfs::ajax_upload::etemplate")
 	},
 
 	/**
