@@ -541,32 +541,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 				break;
 
 			case 'select-app':	// type2: 'user'=apps of current user, 'enabled', 'installed' (default), 'all' = not installed ones too
-				$apps = array();
-				foreach ($GLOBALS['egw_info']['apps'] as $app => $data)
-				{
-					if ($type2 == 'enabled' && (!$data['enabled'] || !$data['status'] || $data['status'] == 3))
-					{
-						continue;	// app not enabled (user can not have run rights for these apps)
-					}
-					if ($type2 != 'user' || $GLOBALS['egw_info']['user']['apps'][$app])
-					{
-						$apps[$app] = lang($app);
-					}
-				}
-				if ($type2 == 'all')
-				{
-					$dir = opendir(EGW_SERVER_ROOT);
-					while ($file = readdir($dir))
-					{
-						if (@is_dir(EGW_SERVER_ROOT."/$file/setup") && $file[0] != '.' &&
-								!isset($apps[$app = basename($file)]))
-						{
-							$apps[$app] = $app . ' (*)';
-						}
-					}
-					closedir($dir);
-				}
-				natcasesort($apps);
+				$apps = self::app_options($type2);
 				$options = is_array($options) ? $options+$apps : $apps;
 				break;
 
@@ -597,6 +572,43 @@ class etemplate_widget_menupopup extends etemplate_widget
 
 		//error_log(__METHOD__."('$widget_type', '$legacy_options', no_lang=".array2string($no_lang).', readonly='.array2string($readonly).", value=$value) returning ".array2string($options));
 		return $options;
+	}
+
+	/**
+	 * Get available apps as options
+	 *
+	 * @param string $type2='installed' 'user'=apps of current user, 'enabled', 'installed' (default), 'all' = not installed ones too
+	 * @return array app => label pairs sorted by label
+	 */
+	public static function app_options($type2)
+	{
+		$apps = array();
+		foreach ($GLOBALS['egw_info']['apps'] as $app => $data)
+		{
+			if ($type2 == 'enabled' && (!$data['enabled'] || !$data['status'] || $data['status'] == 3))
+			{
+				continue;	// app not enabled (user can not have run rights for these apps)
+			}
+			if ($type2 != 'user' || $GLOBALS['egw_info']['user']['apps'][$app])
+			{
+				$apps[$app] = lang($app);
+			}
+		}
+		if ($type2 == 'all')
+		{
+			$dir = opendir(EGW_SERVER_ROOT);
+			while ($file = readdir($dir))
+			{
+				if (@is_dir(EGW_SERVER_ROOT."/$file/setup") && $file[0] != '.' &&
+				!isset($apps[$app = basename($file)]))
+				{
+					$apps[$app] = $app . ' (*)';
+				}
+			}
+			closedir($dir);
+		}
+		natcasesort($apps);
+		return $apps;
 	}
 
 	/**
