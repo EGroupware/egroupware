@@ -20,9 +20,9 @@
 			<rows>
 				<row>
 					<description/>
-					<nextmatch-customfilter id="acl_appname" options="select-app,All applications"/>
-					<nextmatch-accountfilter label="Data from" id="acl_account" options="All accounts,both"/>
-					<nextmatch-accountfilter label="Access by" id="acl_location" options="All accounts,both"/>
+					<nextmatch-sortheader label="Application" id="acl_appname"/>
+					<nextmatch-sortheader label="Data from" id="acl_account"/>
+					<nextmatch-sortheader label="Access by" id="acl_location"/>
 					<nextmatch-header label="Read" id="read"/>
 					<nextmatch-header label="Add" id="add"/>
 					<nextmatch-header label="Edit" id="edit"/>

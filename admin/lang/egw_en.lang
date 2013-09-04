@@ -1,5 +1,6 @@
 %1 - %2 of %3 user accounts	admin	en	%1 - %2 of %3 user accounts
 %1 - %2 of %3 user groups	admin	en	%1 - %2 of %3 user groups
+%1 access to other data	admin	en	%1 access to other data
 %1 acl records of not (longer) existing accounts deleted.	admin	en	%1 ACL records of not longer existing accounts deleted.
 %1 categories of not (longer) existing accounts deleted.	admin	en	%1 categories of not (longer) existing accounts deleted.
 %1 category(s) %2	admin	en	%1 category(s) %2
@@ -11,12 +12,16 @@
 %1 not found or not executable !!!	admin	en	%1 not found or not executable!
 %1 phrases saved.	admin	en	%1 phrases saved.
 %1 rights for %2 and applications %3	admin	en	%1 rights for %2 and applications %3 .
+%1 run rights for applications	admin	en	%1 run rights for applications
 %1 sessions killed	admin	en	%1 sessions killed.
 %1 user %2	admin	en	%1 user %2
 (default no, leave it off if you dont use it)	admin	en	Default = No, leave it off if you dont use it
 (stored password will not be shown here)	admin	en	Stored password will not be shown here!
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	en	To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications]!
 -  type	admin	en	-  type
+access by	admin	en	Access by
+access control	admin	en	Access control
+access to %1 data by others	admin	en	Access to %1 data by others
 accesslog and bruteforce defense	admin	en	AccessLog and BruteForce defense
 account "%1" has no email address --> not notified!	admin	en	Account "%1" has no email address --> not notified!
 account "%1" has no plaintext password!	admin	en	Account "%1" has NO plaintext password!
@@ -158,6 +163,7 @@ custom fields	admin	en	Custom fields
 custom translation	admin	en	Custom translation
 cyrus imap server	admin	en	Cyrus IMAP Server
 data	admin	en	Data
+data from	admin	en	Data from
 day	admin	en	Day
 day of week<br>(0-6, 0=sun)	admin	en	Day of week<br>(0-6, 0=Sun)
 db backup and restore	admin	en	DB backup and restore

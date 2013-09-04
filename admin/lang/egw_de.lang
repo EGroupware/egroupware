@@ -1,5 +1,6 @@
 %1 - %2 of %3 user accounts	admin	de	%1 - %2 von %3 Benutzerkonten
 %1 - %2 of %3 user groups	admin	de	%1 - %2 von %3 Benutzergruppen
+%1 access to other data	admin	de	Zugriff von %1 auf Daten von anderen
 %1 acl records of not (longer) existing accounts deleted.	admin	de	%1 ACL Einträge von nicht (mehr) existierenden Accounts gelöscht.
 %1 categories of not (longer) existing accounts deleted.	admin	de	%1 Kategorien von nicht (mehr) existierenden Accounts gelöscht.
 %1 category(s) %2	admin	de	%1 Kategorie(n) %2
@@ -11,12 +12,16 @@
 %1 not found or not executable !!!	admin	de	%1 nicht gefunden oder nicht ausführbar !!!
 %1 phrases saved.	admin	de	%1 Phrasen gespeichert.
 %1 rights for %2 and applications %3	admin	de	%1 Rechte für %2 und Anwendung(en) %3
+%1 run rights for applications	admin	de	Ausführungsrechte für Anwendungen von %1
 %1 sessions killed	admin	de	%1 Sitzungen beendet
 %1 user %2	admin	de	%1 Benutzer %2
 (default no, leave it off if you dont use it)	admin	de	(Vorgabe Nein, ausgeschaltet lassen, wenn nicht benutzt)
 (stored password will not be shown here)	admin	de	(Gespeichertes Passwort wird hier nicht angezeigt)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
 -  type	admin	de	-Typ
+access by	admin	de	Zugriff durch
+access control	admin	de	Zugriffskontrolle
+access to %1 data by others	admin	de	Zugriff auf Daten von %1 durch andere
 accesslog and bruteforce defense	admin	de	Zugangsprotokoll und Abwehr von Brute-Force-Angriffen
 account "%1" has no email address --> not notified!	admin	de	Benutzer "%1" hat keine EMail Adresse --> nicht benachrichtigt!
 account "%1" has no plaintext password!	admin	de	Benutzer "%1" hat kein Klartext Passwort!
@@ -158,6 +163,7 @@ custom fields	admin	de	Benutzerdefinierte Felder
 custom translation	admin	de	Eigene Übersetzung
 cyrus imap server	admin	de	Cyrus IMAP Server
 data	admin	de	Daten
+data from	admin	de	Daten von
 day	admin	de	Tag
 day of week<br>(0-6, 0=sun)	admin	de	Wochentag<br>(0-6, 0=Sonntag)
 db backup and restore	admin	de	DB Datensicherung und Wiederherstellung
