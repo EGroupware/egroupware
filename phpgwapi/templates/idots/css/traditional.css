@@ -870,3 +870,25 @@ td.lettersearch {
 	border-bottom: 1px solid silver;
 }
 
+/**
+ * Styles for different egw_message-types
+ */
+.success_message, .warning_message, .error_message {
+	color: red;
+	font-weight: normal;
+	font-style: italic;
+	text-align: left;
+	margin-left: 5px;
+	padding-left: 20px;
+	background-image: url(../../default/images/check.png);
+	background-position: left;
+	background-repeat: no-repeat;
+	background-size: 16px;
+}
+.warning_message {
+	background-image: url(../../default/images/dialog_warning.png);
+}
+.error_message {
+	font-weight: bold;
+	background-image: url(../../default/images/dialog_error.png);
+}

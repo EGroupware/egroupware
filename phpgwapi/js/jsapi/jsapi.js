@@ -218,11 +218,14 @@ function egw_getAppName()
  * @param string _targetapp which app's window should be refreshed, default current
  * @param string|RegExp _replace regular expression to replace in url
  * @param string _with
+ * @param string _msg_type 'error', 'warning' or 'success' (default)
  */
-function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with)
+function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type)
 {
 	//alert("egw_refresh(\'"+_msg+"\',\'"+_app+"\',\'"+_id+"\',\'"+_type+"\')");
 	var win = typeof _targetapp != 'undefined' ? egw_appWindow(_targetapp) : window;
+	
+	win.egw_message(_msg, _msg_type);
 
 	// if window registered an app_refresh method or overwritten app_refresh, just call it
 	if(typeof win.app_refresh == "function" && typeof win.app_refresh.registered == "undefined" || 
@@ -261,6 +264,42 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with)
 	//alert('egw_refresh() about to call '+href);
 	win.location.href = href;
 }
+
+/**
+ * Display an error or regular message
+ * 
+ * @param string _msg message to show
+ * @param string _type 'error', 'warning' or 'success' (default)
+ */
+function egw_message(_msg, _type)
+{
+	if (typeof _type == 'undefined')
+		_type = _msg.match(/error/i) ? 'error' : 'success';
+	
+	var framework = egw_getFramework();
+	if (framework)
+	{
+		framework.setMessage.call(window.framework, _msg, _type);
+		return;
+	}
+	
+	// handle message display for non-framework templates, eg. idots or jerryr
+	if (window.egw_message_timer)
+	{
+		window.clearTimeout(window.egw_message_timer);
+		delete window.egw_message_timer;
+	}
+	
+	$j('div#divAppboxHeader div').remove();
+	$j('div#divAppboxHeader').prepend($j(document.createElement('div')).text(_msg).addClass(_type+'_message').css('position', 'absolute'));
+	
+	if (_type != 'error')	// clear message again after some time, if no error
+	{
+		window.egw_message_timer = window.setTimeout(function() {
+			$j('div#divAppboxHeader').text(document.title.replace(/^.*\[(.*)\]$/, '$1'));
+		}, 5000);
+	}
+};
 
 /**
  * View an EGroupware entry: opens a popup of correct size or redirects window.location to requested url

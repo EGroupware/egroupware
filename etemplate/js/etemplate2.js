@@ -537,7 +537,7 @@ etemplate2.prototype.getValues = function(_root)
  * If there's a message provided, we try to find where it goes and set it directly.  Then
  * we look for a nextmatch widget, and tell it to refresh its data based on that ID.
  * 
- * @param msg String Message to try to display.  eg: "Entry added"
+ * @param msg String Message to try to display.  eg: "Entry added" (not used anymore, handeled by egw_refresh and egw_message)
  * @param id String|null Application specific entry ID to try to refresh
  * @param type String|null Type of change.  One of 'edit', 'delete', 'add' or null
  *
@@ -546,22 +546,6 @@ etemplate2.prototype.getValues = function(_root)
  */
 etemplate2.prototype.refresh = function(msg, app, id, type)
 {
-	// We use et2_baseWidget in case the app uses something like HTML instead of label
-	var msg_widget = this.widgetContainer.getWidgetById("msg");
-	if(msg_widget)
-	{
-		if(typeof msg != "string")
-		{
-			msg = "";
-		}
-		msg_widget.set_value(msg);
-		msg_widget.set_disabled(msg.trim().length == 0);
-
-		// In case parent(s) have been disabled, just show it all
-		// TODO: Fix this so messages go in a single, well defined place that don't get disabled
-		$j(msg_widget.getDOMNode()).parents().show();
-	}
-
 	// Refresh nextmatches
 	this.widgetContainer.iterateOver(function(_widget) {
 		// Trigger refresh
