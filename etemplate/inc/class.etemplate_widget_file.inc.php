@@ -119,11 +119,12 @@ class etemplate_widget_file extends etemplate_widget
 			{
 				$type = $file['type'];
 				$is_preg = $mime[0] == '/';
-				if (!$is_preg && strcasecmp($mime[0],$type) ||
+				if (!$is_preg && strcasecmp($mime,$type) ||
 					$is_preg && !preg_match($mime,$type))
 				{
-					$file_data[$file['name']] = lang('File is of wrong type (%1 != %2)!',$type,$mime);
-					continue;
+					$file_data[$file['name']] = $file['name'].':'.lang('File is of wrong type (%1 != %2)!',$type,$mime);
+					//error_log(__METHOD__.__LINE__.array2string($file_data[$file['name']]));
+					return false;
 				}
 			}
 			if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
