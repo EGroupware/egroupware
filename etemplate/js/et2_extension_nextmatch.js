@@ -585,7 +585,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			var list = et2_csvSplit(this.options.settings.columnselection_pref, 2, ".");
 			var app = list[0];
 			// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
-			var pref = this.egw().preference("nextmatch-"+this.options.settings.columnselection_pref, list[0]);
+			var pref = egw.preference("nextmatch-"+this.options.settings.columnselection_pref, list[0]);
 			if(pref) 
 			{
 				negated = (pref[0] == "!");
@@ -724,10 +724,10 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 		// Save visible columns
 		// 'nextmatch-' prefix is there in preference name, but not in setting, so add it in
-		this.egw().set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref, colDisplay.join(","));
+		egw.set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref, colDisplay.join(","));
 
 		// Save adjusted column sizes
-		this.egw().set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref+"-size", colSize);
+		egw.set_preference(app, "nextmatch-"+this.options.settings.columnselection_pref+"-size", colSize);
 
 		// Update query value, so data source can use visible columns to exclude expensive sub-queries
 		var oldCols = this.activeFilters.selectcols ? this.activeFilters.selectcols : [];
