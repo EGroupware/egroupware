@@ -45,7 +45,7 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function() {
 	{
 		if (typeof _data != 'object') throw "jsonq_callback called with NO object as parameter!";
 
-		var json = new egw_json_request('none');
+		var json = egw.json('none');
 		for(var uid in _data)
 		{
 			if (typeof jsonq_queue[uid] == 'undefined')
@@ -57,7 +57,7 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function() {
 			var job = jsonq_queue[uid];
 			var response = _data[uid];
 			
-			// fake egw_json_request object, to call it with the current response
+			// fake egw.json_request object, to call it with the current response
 			json.callback = job.callback;
 			json.sender = job.sender;
 			json.handleResponse({response: response});
@@ -103,8 +103,8 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function() {
 			if (something_to_send)
 			{
 				// TODO: Passing this to the "home" application looks quite ugly
-				var request = new egw_json_request('home.queue', jobs_to_send, this);
-				request.sendRequest(true, jsonq_callback, this);
+				var request = egw.json('home.queue', jobs_to_send, jsonq_callback, this)
+				request.sendRequest();
 			}
 		}
 	}
