@@ -1894,6 +1894,46 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 {
 	var actionLinks = {};
 	var testedSelected = [];
+	
+	var test = function(olink)
+	{
+		// Test whether the action type is of the given implementation type
+		if (olink.actionObj.type == _actionType)
+		{
+			if (typeof actionLinks[olink.actionId] == "undefined")
+			{
+				actionLinks[olink.actionId] = {
+					"actionObj": olink.actionObj,
+					"enabled": (testedSelected.length == 1),
+					"visible": false,
+					"cnt": 0
+				}
+			}
+
+			// Accumulate the action link properties
+			var llink = actionLinks[olink.actionId];
+			llink.enabled = llink.enabled && olink.actionObj.enabled.exec(olink.actionObj, _objs, _objs[i]) &&
+				olink.enabled && olink.visible;
+			llink.visible = (llink.visible || olink.visible);
+			llink.cnt++;
+			
+			// Add in children, so they can get checked for visible / enabled
+			if(olink.actionObj && olink.actionObj.children.length > 0)
+			{
+				for(var j = 0; j < olink.actionObj.children.length; j++)
+				{
+					var child = olink.actionObj.children[j];
+					test({
+						actionObj: child,
+						actionId: child.id,
+						enabled: olink.enabled,
+						visible: olink.visible
+					});
+				}
+			}
+		}
+	};
+	
 	for (var i = 0; i < _objs.length; i++)
 	{
 		var obj = _objs[i];
@@ -1903,28 +1943,7 @@ egwActionObject.prototype._getLinks = function(_objs, _actionType)
 
 			for (var j = 0; j < obj.actionLinks.length; j++)
 			{
-				var olink = obj.actionLinks[j]; //object link
-
-				// Test whether the action type is of the given implementation type
-				if (olink.actionObj.type == _actionType)
-				{
-					if (typeof actionLinks[olink.actionId] == "undefined")
-					{
-						actionLinks[olink.actionId] = {
-							"actionObj": olink.actionObj,
-							"enabled": (testedSelected.length == 1),
-							"visible": false,
-							"cnt": 0
-						}
-					}
-
-					// Accumulate the action link properties
-					var llink = actionLinks[olink.actionId];
-					llink.enabled = llink.enabled && olink.actionObj.enabled.exec(olink.actionObj, _objs, _objs[i]) &&
-						olink.enabled && olink.visible;
-					llink.visible = (llink.visible || olink.visible);
-					llink.cnt++;
-				}
+				test(obj.actionLinks[j]); //object link
 			}
 		}
 	}
