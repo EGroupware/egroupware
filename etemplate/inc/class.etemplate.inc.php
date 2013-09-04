@@ -195,7 +195,6 @@ class etemplate_new extends etemplate_widget_template
 					parse_navbar();
 				}
 				echo '<div id="'.$dom_id.'" class="et2_container"></div>';
-				$GLOBALS['egw']->framework->footer();
 			}
 			ob_flush();
 
