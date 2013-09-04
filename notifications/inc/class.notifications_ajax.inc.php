@@ -269,20 +269,20 @@ class notifications_ajax {
 
 					$message = 'data:text/html;charset=' . translation::charset() .';base64,'.base64_encode($message);
 				}
-				$this->response->addScriptCall('app.notifications.append',$notification['notify_id'],$notification['notify_message'],$message);
+				$this->response->apply('app.notifications.append',array($notification['notify_id'],$notification['notify_message'],$message));
 			}
 
 			switch($this->preferences[self::_appname]['egwpopup_verbosity']) {
 				case 'low':
-					$this->response->addScriptCall('app.notifications.bell', 'active');
+					$this->response->apply('app.notifications.bell', array('active'));
 					break;
 				case 'high':
-					$this->response->addAlert(lang('EGroupware has notifications for you'));
-					$this->response->addScriptCall('app.notifications.display');
+					$this->response->alert(lang('EGroupware has notifications for you'));
+					$this->response->apply('app.notifications.display');
 					break;
 				case 'medium':
 				default:
-					$this->response->addScriptCall('app.notifications.display');
+					$this->response->apply('app.notifications.display');
 					break;
 			}
 		}

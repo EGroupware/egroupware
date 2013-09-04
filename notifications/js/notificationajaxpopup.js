@@ -37,13 +37,11 @@
 	notifications.prototype.setTimeout = function(_i) {
 		var self = this;
 		window.setTimeout(function(){
-			var request = xajax_doXMLHTTP("notifications.notifications_ajax.get_notifications", self.check_browser_notify());
-			request.request.error = function(_xmlhttp,_err){
-				if(console) {
-					console.log(request);
-					console.log(_err);
-				}
-			};
+			var request = egw.json(
+				"notifications.notifications_ajax.get_notifications",
+				self.check_browser_notify()
+			);
+			request.sendRequest();
 			self.setTimeout(_i);
 		}, _i*1000);
 	};
@@ -126,7 +124,8 @@
 		egwpopup_message.scrollTop = 0;
 	
 		for(var confirmed in notifymessages) break;
-		xajax_doXMLHTTP("notifications.notifications_ajax.confirm_message", confirmed);
+		var request = egw.json("notifications.notifications_ajax.confirm_message", confirmed);
+		request.sendRequest();
 		delete notifymessages[confirmed];
 		
 		for(var id in notifymessages) break;
@@ -147,8 +146,8 @@
 		for(var id in notifymessages) {
 			ids.push(id);
 		}
-		xajax_doXMLHTTP("notifications.notifications_ajax.confirm_message", ids);
-	
+		var request = egw.json("notifications.notifications_ajax.confirm_message", ids);
+		request.sendRequest();
 		notifymessages = {};
 		var egwpopup = document.getElementById("egwpopup");
 		var egwpopup_message = document.getElementById("egwpopup_message");
@@ -208,7 +207,8 @@
 					// Confirm when user gets to see it - no close needed
 					// Wait a bit to let it load first, or it might not be there when requested.  
 					window.setTimeout( function() {
-						xajax_doXMLHTTP("notifications.notifications_ajax.confirm_message", _id);
+						var request = egw.json("notifications.notifications_ajax.confirm_message", _id);
+						request.sendRequest();
 					}, 2000);
 				};
 				notice.show();
