@@ -382,6 +382,22 @@ class importexport_export_csv implements importexport_iface_export_record
 			if ($record->$name && is_numeric($record->$name)) $record->$name = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], $record->$name); // User date format
 			if (!$record->$name) $record->$name = '';
 		}
+		foreach((array)$fields['float'] as $name)
+		{
+			static $dec_separator,$thousands_separator;
+			if (is_null($dec_separator))
+			{
+				$dec_separator = $GLOBALS['egw_info']['user']['preferences']['common']['number_format'][0];
+				if (empty($dec_separator)) $dec_separator = '.';
+				$thousands_separator = $GLOBALS['egw_info']['user']['preferences']['common']['number_format'][1];
+			}
+			if($record->name && (string)$record->$name != '')
+			{
+				$record->name = number_format(str_replace(' ','',$record->name), 2,
+					$dec_separator,$thousands_separator
+				);
+			}
+		}
 
 		// Some custom methods for conversion
 		foreach((array)$methods as $name => $method) {
