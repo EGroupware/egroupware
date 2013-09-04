@@ -124,7 +124,7 @@
 		egwpopup_message.scrollTop = 0;
 	
 		for(var confirmed in notifymessages) break;
-		var request = egw.json("notifications.notifications_ajax.confirm_message", confirmed);
+		var request = egw.json("notifications.notifications_ajax.confirm_message", [confirmed]);
 		request.sendRequest();
 		delete notifymessages[confirmed];
 		
