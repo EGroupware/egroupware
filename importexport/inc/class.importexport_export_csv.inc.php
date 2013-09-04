@@ -391,9 +391,13 @@ class importexport_export_csv implements importexport_iface_export_record
 				if (empty($dec_separator)) $dec_separator = '.';
 				$thousands_separator = $GLOBALS['egw_info']['user']['preferences']['common']['number_format'][1];
 			}
-			if($record->name && (string)$record->$name != '')
+			if($record->$name && (string)$record->$name != '')
 			{
-				$record->name = number_format(str_replace(' ','',$record->name), 2,
+				if(!is_numeric($record->$name))
+				{
+					$record->$name = floatval(str_replace($dec_separator, '.', preg_replace('/[^\d'.preg_quote($dec_separator).']/', '', $record->$name)));
+				}
+				$record->$name = number_format(str_replace(' ','',$record->$name), 2,
 					$dec_separator,$thousands_separator
 				);
 			}
