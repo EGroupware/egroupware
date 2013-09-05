@@ -173,7 +173,7 @@ abstract class egw_framework
 	/**
 	 * Refresh given application $targetapp display of entry $app $id, incl. outputting $msg
 	 *
-	 * Calling egw_refresh on opener in a content security save way
+	 * Calling egw_refresh and egw_message on opener in a content security save way
 	 *
 	 * @param string $msg message (already translated) to show, eg. 'Entry deleted'
 	 * @param string $app application name
@@ -182,11 +182,25 @@ abstract class egw_framework
 	 * @param string $targetapp=null which app's window should be refreshed, default current
 	 * @param string|RegExp $replace=null regular expression to replace in url
 	 * @param string $with=null
+	 * @param string $msg_type=null 'error', 'warning' or 'success' (default)
 	 */
-	public static function refresh_opener($msg, $app, $id=null, $type=null, $targetapp=null, $replace=null, $with=null)
+	public static function refresh_opener($msg, $app, $id=null, $type=null, $targetapp=null, $replace=null, $with=null, $msg_type=null)
 	{
 		//error_log(__METHOD__.'('.array2string(func_get_args()).')');
 		self::$extra['refresh-opener'] = func_get_args();
+	}
+
+	/**
+	 * Display an error or regular message
+	 *
+	 * Calls egw_message on client-side in a content security save way
+	 *
+	 * @param string $msg message to show
+	 * @param string $type='success' 'error', 'warning' or 'success' (default)
+	 */
+	function message($msg, $type='success')
+	{
+		self::$extra['message'] = func_get_args();
 	}
 
 	/**
@@ -385,17 +399,15 @@ abstract class egw_framework
 			}
 		}
 
-		if ($GLOBALS['egw_info']['flags']['app_header'])
-		{
-			$app = $GLOBALS['egw_info']['flags']['app_header'];
-		}
-		else
-		{
-			$app = $GLOBALS['egw_info']['flags']['currentapp'];
-			$app = isset($GLOBALS['egw_info']['apps'][$app]) ? $GLOBALS['egw_info']['apps'][$app]['title'] : lang($app);
-		}
-		$var = array();
-		if($app!='wiki') $robots ='<meta name="robots" content="none" />';
+		$app = $GLOBALS['egw_info']['flags']['currentapp'];
+		$app_title = isset($GLOBALS['egw_info']['apps'][$app]) ? $GLOBALS['egw_info']['apps'][$app]['title'] : lang($app);
+		$app_header = $GLOBALS['egw_info']['flags']['app_header'] ? $GLOBALS['egw_info']['flags']['app_header'] : $app_title;
+		$site_title = strip_tags($GLOBALS['egw_info']['server']['site_title'].' ['.($app_header ? $app_header : $app_title).']');
+
+		// send appheader to clientside
+		$extra['app-header'] = $app_header;
+
+		if($GLOBALS['egw_info']['flags']['currentapp'] != 'wiki') $robots ='<meta name="robots" content="none" />';
 		if (substr($GLOBALS['egw_info']['server']['favicon_file'],0,4) == 'http')
 		{
 			$var['favicon_file'] = $GLOBALS['egw_info']['server']['favicon_file'];
@@ -417,7 +429,7 @@ abstract class egw_framework
 			'pngfix'        	=> $pngfix,
 			'lang_code'			=> $lang_code,
 			'charset'       	=> translation::charset(),
-			'website_title' 	=> strip_tags($GLOBALS['egw_info']['server']['site_title']. ($app ? " [$app]" : '')),
+			'website_title' 	=> $site_title,
 			'body_tags'     	=> self::_get_body_attribs(),
 			'java_script'   	=> self::_get_js($extra),
 			'meta_robots'		=> $robots,

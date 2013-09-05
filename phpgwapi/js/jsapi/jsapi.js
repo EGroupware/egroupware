@@ -281,8 +281,7 @@ function egw_message(_msg, _type)
 	{
 		framework.setMessage.call(window.framework, _msg, _type);
 		return;
-	}
-	
+	}	
 	// handle message display for non-framework templates, eg. idots or jerryr
 	if (window.egw_message_timer)
 	{
@@ -299,7 +298,29 @@ function egw_message(_msg, _type)
 			$j('div#divAppboxHeader').text(document.title.replace(/^.*\[(.*)\]$/, '$1'));
 		}, 5000);
 	}
-};
+}
+
+/**
+ * Update app-header and website-title
+ * 
+ * @param _header
+ */
+function egw_app_header(_header)
+{
+	var framework = egw_getFramework();
+	if (framework && !window.opener)	// not for popups
+	{
+		var app = egw_getAppName();
+		var title = document.title.replace(/[.*]$/, '['+_header+']');
+
+		framework.setWebsiteTitle.call(window.framework, app, title, _header);
+		return;
+	}	
+
+	$j('div#divAppboxHeader').text(_header);
+	
+	document.title = document.title.replace(/[.*]$/, '['+_header+']');
+}
 
 /**
  * View an EGroupware entry: opens a popup of correct size or redirects window.location to requested url

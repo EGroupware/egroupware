@@ -226,13 +226,8 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	// store the id to submit it back to server
 	if(_data) {
 		this.etemplate_exec_id = _data.etemplate_exec_id;
-	}
-	
-	// set app_header
-	if (window.opener && _data) {	// popup
-		document.title = _data.app_header;
-	} else {
-		// todo for idots or jdots framework
+		// set app_header
+		window.egw_app_header(_data.app_header);
 	}
 	
 	var _load = function() {

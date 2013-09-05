@@ -115,7 +115,6 @@ class etemplate_new extends etemplate_widget_template
 		self::$request->preserv = $preserv ? $preserv : array();
 		self::$request->method = $method;
 		self::$request->ignore_validation = $ignore_validation;
-		self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'];
 		if (self::$request->output_mode == -1) self::$request->output_mode = 0;
 		self::$request->template = $this->as_array();
 
@@ -124,6 +123,9 @@ class etemplate_new extends etemplate_widget_template
 		// not sure if we want to handle it this way, thought otherwise we will have a few ajax request for each dialog fetching predefined selectboxes
 		$template = etemplate_widget_template::instance($this->name, $this->template_set, $this->version, $this->laod_via);
 		$template->run('beforeSendToClient', array('', array('cont'=>$content)));
+
+		// some apps (eg. InfoLog) set app_header only in get_rows depending on filter settings
+		self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'];
 
 		$data = array(
 			'etemplate_exec_id' => self::$request->id(),
@@ -249,6 +251,7 @@ class etemplate_new extends etemplate_widget_template
 		//error_log(__METHOD__."(,".array2string($content).')');
 		//error_log(' validated='.array2string($validated));
 		$content = ExecMethod(self::$request->method, self::complete_array_merge(self::$request->preserv, $validated));
+
 		if (isset($GLOBALS['egw_info']['flags']['java_script']))
 		{
 			// Strip out any script tags

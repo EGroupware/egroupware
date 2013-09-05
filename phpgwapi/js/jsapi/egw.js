@@ -158,6 +158,16 @@
 				et2.load(data.name,data.url,data.data,callback);
 			}
 		}
+		// set app-header
+		if (window.framework && (data = egw_script.getAttribute('data-app-header')))
+		{
+			window.egw_app_header(data);
+		}
+		// display a message
+		if ((data = egw_script.getAttribute('data-message')) && (data = JSON.parse(data)))
+		{
+			window.egw_message.apply(window, data);
+		}
 	});
 	
 	/**

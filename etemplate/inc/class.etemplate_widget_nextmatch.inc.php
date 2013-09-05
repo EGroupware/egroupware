@@ -299,6 +299,14 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			$value['col_filter']['parent_id'] = $queriedRange['parent_id'];
 		}
 
+		// Set current app for get_rows
+		list($app) = explode('.',self::$request->method);
+		if(!$app) list($app) = explode('::',self::$request->method);
+		if($app)
+		{
+			$GLOBALS['egw_info']['flags']['currentapp'] = $app;
+			translation::add_app($app);
+		}
 		// If specific data requested, just do that
 		if (($row_id = $value['row_id']) && $queriedRange['refresh'])
 		{
@@ -308,6 +316,12 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$rows = $result['data'] = $result['order'] = array();
 		$result['total'] = self::call_get_rows($value, $rows, $result['readonlys']);
 		$result['lastModification'] = egw_time::to('now', 'ts')-1;
+
+		if (isset($GLOBALS['egw_info']['flags']['app_header']) && self::$request->app_header != $GLOBALS['egw_info']['flags']['app_header'])
+		{
+			self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'];
+			egw_json_response::get()->apply('egw_app_header', array($GLOBALS['egw_info']['flags']['app_header']));
+		}
 
 		$row_id = isset($value['row_id']) ? $value['row_id'] : 'id';
 		$row_modified = $value['row_modified'];
@@ -389,6 +403,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				}
 			}*/
 		}
+
 		//foreach($result as $name => $value) if ($name != 'readonlys') error_log(__METHOD__."() result['$name']=".array2string($name == 'data' ? array_keys($value) : $value));
 		egw_json_response::get()->data($result);
 	}
