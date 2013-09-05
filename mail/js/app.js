@@ -88,6 +88,16 @@ app.mail = AppJS.extend(
 			var subject = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mail_displaysubject');
 			var body = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mail_displaybody');
 			body.node.parentNode.style.top=subject.node.offsetTop+40+'px';
+			var app_registry = egw.link_get_registry(this.appname);
+			//console.log(app_registry);
+			w=850;
+			if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
+			{
+				var w_h =app_registry['view_popup'].split('x');
+				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
+			}
+			//alert('resizing to'+(w_h[0]?w_h[0]:850)+','+(w_h[1]?w_h[1]:egw_getWindowOuterHeight()));
+			window.resizeTo((w_h[0]?w_h[0]:850),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
 		}
 	},
 
@@ -1171,17 +1181,20 @@ app.mail = AppJS.extend(
 	 */
 	uploadForImport: function(_event, _file_count, _path)
 	{
-		console.log(_event,_file_count,_path);
+		//console.log(_event,_file_count,_path);
+		// path is probably not needed when uploading for file; maybe it is when from vfs
 		if(typeof _path == 'undefined')
 		{
 			//_path = this.get_path();
 		}
 		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
 		{
-//			var widget = _event.data;
-//			var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', widget.getValue(), _path], this);
+			var widget = _event.data;
+			//console.log(widget.getValue());
+//			var request = new egw_json_request('mail_ui::ajax_importMessage', ['upload', widget.getValue(), _path], this);
 //			widget.set_value('');
-//			request.sendRequest(false, this._upload_callback, this);
+//			request.sendRequest();//false, this._upload_callback, this);
+this.et2_obj.submit();
 		}
 	},
 

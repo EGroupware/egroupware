@@ -4593,6 +4593,42 @@ class mail_bo
 	}
 
 	/**
+	 * save a message in folder
+	 *	throws exception on failure
+	 * @todo set flags again
+	 *
+	 * @param string _folderName the foldername
+	 * @param string _header the header of the message
+	 * @param string _body the body of the message
+	 * @param string _flags the imap flags to set for the saved message
+	 *
+	 * @return the id of the message appended or exception
+	 */
+	function appendMessage($_folderName, $_header, $_body, $_flags)
+	{
+		$header = ltrim(str_replace("\n","\r\n",$_header));
+		$body   = str_replace("\n","\r\n",$_body);
+		$messageid = $this->icServer->appendMessage("$header"."$body", $_folderName, $_flags);
+		if ( PEAR::isError($messageid)) {
+			if (self::$debug) error_log("Could not append Message:".print_r($messageid->message,true));
+			throw new egw_exception_wrong_userinput(lang("Could not append Message:".array2string($messageid->message)));
+			//return false;
+		}
+		//error_log(__METHOD__.__LINE__.' appended UID:'.$messageid);
+		//$messageid = true; // for debug reasons only
+		if ($messageid === true) // try to figure out the message uid
+		{
+			$list = $this->getHeaders($_folderName, $_startMessage=1, $_numberOfMessages=1, $_sort='INTERNALDATE', $_reverse=true, $_filter=array(),$_thisUIDOnly=null, $_cacheResult=false);
+			if ($list)
+			{
+				if (self::$debug) error_log(__METHOD__.__LINE__.' MessageUid:'.$messageid.' but found:'.array2string($list));
+				$messageid = $list['header'][0]['uid'];
+			}
+		}
+		return $messageid;
+	}
+
+	/**
 	 * getRandomString - function to be used to fetch a random string and md5 encode that one
 	 * @param none
 	 * @return string - a random number which is md5 encoded
@@ -4822,6 +4858,873 @@ class mail_bo
 		if (!empty($err) && !empty($content) && !empty($ids)) error_log(__METHOD__.__LINE__.' Merge failed for Ids:'.array2string($ids).' ContentType:'.$mimetype.' Content:'.$content.' Reason:'.array2string($err));
 		return $rv;
 	}
+
+	/**
+	 * checkFileBasics
+	 *	check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
+	 *
+	 * @param array $_formData passed by reference Array with information of name, type, file and size, mimetype may be adapted
+	 * @param string $IDtoAddToFileName id to enrich the returned tmpfilename
+	 * @param string $reqMimeType /(default message/rfc822, if set to false, mimetype check will not be performed
+	 * @return mixed $fullPathtoFile or exception
+	 */
+	static function checkFileBasics(&$_formData, $IDtoAddToFileName='', $reqMimeType='message/rfc822')
+	{
+		//error_log(__METHOD__.__FILE__.array2string($_formData).' Id:'.$IDtoAddToFileName.' ReqMimeType:'.$reqMimeType);
+		$importfailed = $tmpFileName = false;
+		if ($_formData['size'] != 0 && (is_uploaded_file($_formData['file']) ||
+			realpath(dirname($_formData['file'])) == realpath($GLOBALS['egw_info']['server']['temp_dir']) ||
+			parse_url($_formData['file'],PHP_URL_SCHEME) == 'vfs'))
+		{
+			// ensure existance of eGW temp dir
+			// note: this is different from apache temp dir,
+			// and different from any other temp file location set in php.ini
+			if (!file_exists($GLOBALS['egw_info']['server']['temp_dir']))
+			{
+				@mkdir($GLOBALS['egw_info']['server']['temp_dir'],0700);
+			}
+
+			// if we were NOT able to create this temp directory, then make an ERROR report
+			if (!file_exists($GLOBALS['egw_info']['server']['temp_dir']))
+			{
+				$alert_msg .= 'Error:'.'<br>'
+					.'Server is unable to access phpgw tmp directory'.'<br>'
+					.$GLOBALS['egw_info']['server']['temp_dir'].'<br>'
+					.'Please check your configuration'.'<br>'
+					.'<br>';
+			}
+
+			// sometimes PHP is very clue-less about MIME types, and gives NO file_type
+			// rfc default for unknown MIME type is:
+			if ($reqMimeType == 'message/rfc822')
+			{
+				$mime_type_default = 'message/rfc';
+			}
+			else
+			{
+				$mime_type_default = $reqMimeType;
+			}
+			// check the mimetype by extension. as browsers seem to report crap
+			// maybe its application/octet-stream -> this may mean that we could not determine the type
+			// so we check for the suffix too
+			// trust vfs mime-types, trust the mimetype if it contains a method
+			if ((substr($_formData['file'],0,6) !== 'vfs://' || $_formData['type'] == 'application/octet-stream') && stripos($_formData['type'],'method=')===false)
+			{
+				$buff = explode('.',$_formData['name']);
+				$suffix = '';
+				if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+				if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
+				if (!empty($suffix) && !empty($sfxMimeType) &&
+					(strlen(trim($_formData['type']))==0 || (strtolower(trim($_formData['type'])) != $sfxMimeType)))
+				{
+					error_log(__METHOD__.__LINE__.' Data:'.array2string($_formData));
+					error_log(__METHOD__.__LINE__.' Form reported Mimetype:'.$_formData['type'].' but seems to be:'.$sfxMimeType);
+					$_formData['type'] = $sfxMimeType;
+				}
+			}
+			if (trim($_formData['type']) == '')
+			{
+				$_formData['type'] = 'application/octet-stream';
+			}
+			// if reqMimeType is set to false do not test for that
+			if ($reqMimeType)
+			{
+				// so if PHP did not pass any file_type info, then substitute the rfc default value
+				if (substr(strtolower(trim($_formData['type'])),0,strlen($mime_type_default)) != $mime_type_default)
+				{
+					if (!(strtolower(trim($_formData['type'])) == "application/octet-stream" && $sfxMimeType == $reqMimeType))
+					{
+						//error_log("Message rejected, no message/rfc. Is:".$_formData['type']);
+						$importfailed = true;
+						$alert_msg .= lang("File rejected, no %2. Is:%1",$_formData['type'],$reqMimeType);
+					}
+					if ((strtolower(trim($_formData['type'])) != $reqMimeType && $sfxMimeType == $reqMimeType))
+					{
+						$_formData['type'] = mime_magic::ext2mime($suffix);
+					}
+				}
+			}
+			// as FreeBSD seems to have problems with the generated temp names we append some more random stuff
+			$randomString = chr(rand(65,90)).chr(rand(48,57)).chr(rand(65,90)).chr(rand(48,57)).chr(rand(65,90));
+			$tmpFileName = $GLOBALS['egw_info']['server']['temp_dir'].
+				SEP.
+				$GLOBALS['egw_info']['user']['account_id'].
+				trim($IDtoAddToFileName).basename($_formData['file']).'_'.$randomString;
+
+			if (parse_url($_formData['file'],PHP_URL_SCHEME) == 'vfs')
+			{
+				$tmpFileName = $_formData['file'];	// no need to store it somewhere
+			}
+			elseif (is_uploaded_file($_formData['file']))
+			{
+				move_uploaded_file($_formData['file'],$tmpFileName);	// requirement for safe_mode!
+			}
+			else
+			{
+				rename($_formData['file'],$tmpFileName);
+			}
+		} else {
+			//error_log("Import of message ".$_formData['file']." failes to meet basic restrictions");
+			$importfailed = true;
+			$alert_msg .= lang("Processing of file %1 failed. Failed to meet basic restrictions.",$_formData['name']);
+		}
+		if ($importfailed == true)
+		{
+			throw new egw_exception_wrong_userinput($alert_msg);
+		}
+		else
+		{
+			if (parse_url($tmpFileName,PHP_URL_SCHEME) == 'vfs')
+			{
+				egw_vfs::load_wrapper('vfs');
+			}
+			return $tmpFileName;
+		}
+	}
+
+	/**
+	 * processURL2InlineImages - parses a html text for images, and adds them as inline attachment
+	 * we do not use the functionality of the phpmailer here, as phpmailers functionality requires
+	 * files to be present within the filesystem, which we do not require as we make this happen
+	 * (we load the file, and store it temporarily for the use of attaching it to the file send
+	 * @param object $_mailObject instance of the egw_mailer/phpmailer Object to be used
+	 * @param string $_html2parse the html to parse and to be altered, if conditions meet
+	 * @return void
+	 */
+	static function processURL2InlineImages(&$_mailObject, &$_html2parse)
+	{
+		$imageC = 0;
+		preg_match_all("/(src|background)=\"(.*)\"/Ui", $_html2parse, $images);
+		if(isset($images[2])) {
+			foreach($images[2] as $i => $url) {
+				//$isData = false;
+				$basedir = '';
+				$needTempFile = true;
+				//error_log(__METHOD__.__LINE__.$url);
+				//error_log(__METHOD__.__LINE__.$GLOBALS['egw_info']['server']['webserver_url']);
+				//error_log(__METHOD__.__LINE__.array2string($GLOBALS['egw_info']['user']));
+				// do not change urls for absolute images (thanks to corvuscorax)
+				if (!(substr($url,0,strlen('data:'))=='data:')) {
+					//error_log(__METHOD__.__LINE__.' -> '.$i.': '.array2string($images[$i]));
+					$filename = basename($url);
+					$directory = dirname($url);
+					($directory == '.')?$directory='':'';
+					$cid = 'cid:' . md5($filename);
+					$ext = pathinfo($filename, PATHINFO_EXTENSION);
+					$mimeType  = $_mailObject->_mime_types($ext);
+					if ( strlen($directory) > 1 && substr($directory,-1) != '/') { $directory .= '/'; }
+					$myUrl = $directory.$filename;
+					if ($myUrl[0]=='/') // local path -> we only allow path's that are available via http/https (or vfs)
+					{
+						$basedir = ($_SERVER['HTTPS']?'https://':'http://'.$_SERVER['HTTP_HOST']);
+					}
+					// use vfs instead of url containing webdav.php
+					// ToDo: we should test if the webdav url is of our own scope, as we cannot handle foreign
+					// webdav.php urls as vfs
+					if (strpos($myUrl,'webdav.php') !== false) // we have a webdav link, so we build a vfs/sqlfs link of it.
+					{
+						egw_vfs::load_wrapper('vfs');
+						list($garbage,$vfspart) = explode('webdav.php',$myUrl,2);
+						$myUrl = $vfspart;
+						$basedir = 'vfs://default';
+						$needTempFile = false;
+					}
+					if ( strlen($basedir) > 1 && substr($basedir,-1) != '/' && $myUrl[0]!='/') { $basedir .= '/'; }
+					//error_log(__METHOD__.__LINE__.$basedir.$myUrl);
+					if ($needTempFile) $data = file_get_contents($basedir.urldecode($myUrl));
+				}
+				if (substr($url,0,strlen('data:'))=='data:')
+				{
+					//error_log(__METHOD__.__LINE__.' -> '.$i.': '.array2string($images[$i]));
+					// we only support base64 encoded data
+					$tmp = substr($url,strlen('data:'));
+					list($mimeType,$data) = explode(';base64,',$tmp);
+					list($what,$exactly) = explode('/',$mimeType);
+					$needTempFile = true;
+					$filename = ($what?$what:'data').$imageC++.'.'.$exactly;
+					$cid = 'cid:' . md5($filename);
+					$data = base64_decode($data);
+					//$isData = true;
+				}
+				if ($data || $needTempFile === false)
+				{
+					if ($needTempFile)
+					{
+						$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+						$tmpfile = fopen($attachment_file,'w');
+						fwrite($tmpfile,$data);
+						fclose($tmpfile);
+					}
+					else
+					{
+						$attachment_file = $basedir.urldecode($myUrl);
+					}
+					//error_log(__METHOD__.__LINE__.' '.$url.' -> '.$basedir.$myUrl. ' TmpFile:'.$tmpfile);
+					//error_log(__METHOD__.__LINE__.' '.$url.' -> '.$mimeType. ' TmpFile:'.$attachment_file);
+					if ( $_mailObject->AddEmbeddedImage($attachment_file, md5($filename), $filename, 'base64',$mimeType) )
+					{
+						//$_html2parse = preg_replace("/".$images[1][$i]."=\"".preg_quote($url, '/')."\"/Ui", $images[1][$i]."=\"".$cid."\"", $_html2parse);
+						$_html2parse = str_replace($images[1][$i]."=\"".$url."\"", $images[1][$i]."=\"".$cid."\"", $_html2parse);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * importMessageToMergeAndSend
+	 *
+	 * @param object &bo_merge bo_merge object
+	 * @param string $document the full filename
+	 * @param array $SendAndMergeTocontacts array of contact ids
+	 * @param string $_folder (passed by reference) will set the folder used. must be set with a folder, but will hold modifications if
+	 *					folder is modified
+	 * @param string $importID ID for the imported message, used by attachments to identify them unambiguously
+	 * @return mixed array of messages with success and failed messages or exception
+	 */
+	function importMessageToMergeAndSend(bo_merge $bo_merge, $document, $SendAndMergeTocontacts, &$_folder, $importID='')
+	{
+		$importfailed = false;
+		$processStats = array('success'=>array(),'failed'=>array());
+		if (empty($SendAndMergeTocontacts))
+		{
+			$importfailed = true;
+			$alert_msg .= lang("Import of message %1 failed. No Contacts to merge and send to specified.",$_formData['name']);
+		}
+
+		// check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
+		/* as the file is provided by bo_merge, we do not check
+		try
+		{
+			$tmpFileName = mail_bo::checkFileBasics($_formData,$importID);
+		}
+		catch (egw_exception_wrong_userinput $e)
+		{
+			$importfailed = true;
+			$alert_msg .= $e->getMessage();
+		}
+		*/
+		$tmpFileName = $document;
+		// -----------------------------------------------------------------------
+		if ($importfailed === false)
+		{
+			$mailObject = new egw_mailer();
+			try
+			{
+				$this->parseFileIntoMailObject($mailObject,$tmpFileName,$Header,$Body);
+			}
+			catch (egw_exception_assertion_failed $e)
+			{
+				$importfailed = true;
+				$alert_msg .= $e->getMessage();
+			}
+
+			//_debug_array($Body);
+			$this->openConnection();
+			if (empty($_folder))
+			{
+				$_folder = $this->getSentFolder();
+			}
+			$delimiter = $this->getHierarchyDelimiter();
+			if($_folder=='INBOX'.$delimiter) $_folder='INBOX';
+			if ($importfailed === false)
+			{
+				$Subject = $mailObject->Subject;
+				//error_log(__METHOD__.__LINE__.' Subject:'.$Subject);
+				$Body = $mailObject->Body;
+				//error_log(__METHOD__.__LINE__.' Body:'.$Body);
+				//error_log(__METHOD__.__LINE__.' BodyContentType:'.$mailObject->BodyContentType);
+				$AltBody = $mailObject->AltBody;
+				//error_log(__METHOD__.__LINE__.' AltBody:'.$AltBody);
+				//error_log(__METHOD__.__LINE__.array2string($mailObject->GetReplyTo()));
+				// Fetch ReplyTo - Address if existing to check if we are to replace it
+				$replyTo = $mailObject->GetReplyTo();
+				if (isset($replyTo['replace@import.action']))
+				{
+					$mailObject->ClearReplyTos();
+					$activeMailProfile = $this->mailPreferences->getIdentity($this->profileID, true);
+					$mailObject->AddReplyTo(self::$idna2->encode($activeMailProfile->emailAddress),$activeMailProfile->realName);
+				}
+				foreach ($SendAndMergeTocontacts as $k => $val)
+				{
+					$mailObject->ErrorInfo = $errorInfo = '';
+					//$mailObject->SMTPDebug = 5;
+					$mailObject->set('error_count',0);
+					$sendOK = $openComposeWindow = $openAsDraft = null;
+					//error_log(__METHOD__.__LINE__.' Id To Merge:'.$val);
+					if ($GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook' &&
+						count($SendAndMergeTocontacts) > 1 &&
+						is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val)) // do the merge
+					{
+
+						//error_log(__METHOD__.__LINE__.array2string($mailObject));
+						$contact = $bo_merge->contacts->read($val);
+						//error_log(__METHOD__.__LINE__.' ID:'.$val.' Data:'.array2string($contact));
+						$email = ($contact['email'] ? $contact['email'] : $contact['email_home']);
+						$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
+						$activeMailProfile = $this->mailPreferences->getIdentity($this->profileID, true);
+						//error_log(__METHOD__.__LINE__.array2string($activeMailProfile));
+						$mailObject->From = $activeMailProfile->emailAddress;
+						//$mailObject->From  = $_identity->emailAddress;
+						$mailObject->FromName = $mailObject->EncodeHeader(self::generateIdentityString($activeMailProfile,false));
+
+						$mailObject->MessageID = '';
+						$mailObject->ClearAllRecipients();
+						$mailObject->ClearCustomHeaders();
+						$mailObject->AddAddress(self::$idna2->encode($email),$mailObject->EncodeHeader($nfn));
+						$mailObject->Subject = $bo_merge->merge_string($Subject, $val, $e, 'text/plain', array(), self::$displayCharset);
+						if (!empty($AltBody))
+						{
+							$mailObject->IsHTML(true);
+						}
+						elseif (empty($AltBody) && $mailObject->BodyContentType=='text/html')
+						{
+							$mailObject->IsHTML(true);
+							$AltBody = self::convertHTMLToText($Body,false,$stripalltags=true);
+						}
+						else
+						{
+							$mailObject->IsHTML(false);
+						}
+						//error_log(__METHOD__.__LINE__.' ContentType:'.$mailObject->BodyContentType);
+						if (!empty($Body)) $mailObject->Body = $bo_merge->merge_string($Body, $val, $e, $mailObject->BodyContentType, array(), self::$displayCharset);
+						//error_log(__METHOD__.__LINE__.' Result:'.$mailObject->Body.' error:'.array2string($e));
+						if (!empty($AltBody)) $mailObject->AltBody = $bo_merge->merge_string($AltBody, $val, $e, $mailObject->AltBodyContentType, array(), self::$displayCharset);
+
+						$ogServer = $this->mailPreferences->getOutgoingServer($this->profileID);
+						#_debug_array($ogServer);
+						$mailObject->Host     = $ogServer->host;
+						$mailObject->Port = $ogServer->port;
+						// SMTP Auth??
+						if($ogServer->smtpAuth) {
+							$mailObject->SMTPAuth = true;
+							// check if username contains a ; -> then a sender is specified (and probably needed)
+							list($username,$senderadress) = explode(';', $ogServer->username,2);
+							if (isset($senderadress) && !empty($senderadress)) $mailObject->Sender = $senderadress;
+							$mailObject->Username = $username;
+							$mailObject->Password = $ogServer->password;
+						}
+						//error_log(__METHOD__.__LINE__.array2string($mailObject));
+						// set a higher timeout for big messages
+						@set_time_limit(120);
+						$sendOK = true;
+						try {
+							$mailObject->Send();
+						}
+						catch(phpmailerException $e) {
+							$sendOK = false;
+							$errorInfo = $e->getMessage();
+							if ($mailObject->ErrorInfo) // use the complete mailer ErrorInfo, for full Information
+							{
+								if (stripos($mailObject->ErrorInfo, $errorInfo)===false)
+								{
+									$errorInfo = 'Send Failed for '.$mailObject->Subject.' to '.$nfn.'<'.$email.'> Error:'.$mailObject->ErrorInfo.'<br>'.$errorInfo;
+								}
+								else
+								{
+									$errorInfo = $mailObject->ErrorInfo;
+								}
+							}
+							//error_log(__METHOD__.__LINE__.array2string($errorInfo));
+						}
+					}
+					elseif (!$k)	// 1. entry, further entries will fail for apps other then addressbook
+					{
+						$openAsDraft = true;
+						$mailObject->MessageID = '';
+						$mailObject->ClearAllRecipients();
+						$mailObject->ClearCustomHeaders();
+						if ($GLOBALS['egw_info']['flags']['currentapp'] == 'addressbook' &&
+							is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val)) // do the merge
+						{
+							$contact = $bo_merge->contacts->read($val);
+							//error_log(__METHOD__.__LINE__.array2string($contact));
+							$email = ($contact['email'] ? $contact['email'] : $contact['email_home']);
+							$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
+							$mailObject->AddAddress(self::$idna2->encode($email),$mailObject->EncodeHeader($nfn));
+						}
+						$mailObject->Subject = $bo_merge->merge_string($Subject, $val, $e, 'text/plain', array(), self::$displayCharset);
+						if (!empty($AltBody))
+						{
+							$mailObject->IsHTML(true);
+						}
+						elseif (empty($AltBody) && $mailObject->BodyContentType=='text/html')
+						{
+							$mailObject->IsHTML(true);
+							$AltBody = self::convertHTMLToText($Body,false,$stripalltags=true);
+						}
+						else
+						{
+							$mailObject->IsHTML(false);
+						}
+						//error_log(__METHOD__.__LINE__.' ContentType:'.$mailObject->BodyContentType);
+						if (!empty($Body)) $mailObject->Body = $bo_merge->merge_string($Body, $val, $e, $mailObject->BodyContentType, array(), self::$displayCharset);
+						//error_log(__METHOD__.__LINE__.' Result:'.$mailObject->Body.' error:'.array2string($e));
+						if (!empty($AltBody)) $mailObject->AltBody = $bo_merge->merge_string($AltBody, $val, $e, $mailObject->AltBodyContentType, array(), self::$displayCharset);
+						$_folder = $this->getDraftFolder();
+					}
+					if ($sendOK || $openAsDraft)
+					{
+						$BCCmail = '';
+						if ($this->folderExists($_folder,true))
+						{
+						    if($this->isSentFolder($_folder))
+							{
+						        $flags = '\\Seen';
+						    } elseif($this->isDraftFolder($_folder)) {
+						        $flags = '\\Draft';
+						    } else {
+						        $flags = '';
+						    }
+							unset($mailObject->sentHeader);
+							unset($mailObject->sentBody);
+							$savefailed = false;
+							try
+							{
+								$messageUid =$this->appendMessage($_folder,
+									$BCCmail.$mailObject->getMessageHeader(),
+									$mailObject->getMessageBody(),
+									$flags);
+							}
+							catch (egw_exception_wrong_userinput $e)
+							{
+								$savefailed = true;
+								$alert_msg .= lang("Save of message %1 failed. Could not save message to folder %2 due to: %3",$Subject,$_folder,$e->getMessage());
+							}
+							// no send, save successful, and message_uid present
+							if ($savefailed===false && $messageUid && is_null($sendOK))
+							{
+								$openComposeWindow = true;
+								list($fm_width,$fm_height) = explode('x',egw_link::get_registry('felamimail','view_popup'));
+								$linkData = array
+								(
+									'menuaction'    => 'felamimail.uicompose.composeFromDraft',
+									'uid'		=> $messageUid,
+									'folder'    => base64_encode($_folder),
+									'icServer'	=> $this->profileID,
+									'method'	=> 'importMessageToMergeAndSend',
+								);
+								$composeUrl = $GLOBALS['egw']->link('/index.php',$linkData);
+								//error_log(__METHOD__.__LINE__.' ComposeURL:'.$composeUrl);
+								$GLOBALS['egw_info']['flags']['java_script_thirst'] .= '<script language="JavaScript">'.
+									//"egw_openWindowCentered('$composeUrl','composeAsDraft_".$messageUid."',".$fm_width.",".$fm_height.");".
+									"window.open('$composeUrl','_blank','dependent=yes,width=".$fm_width.",height=".$fm_height.",toolbar=no,scrollbars=no,status=no');".
+									"</script>";
+								$processStats['success'][] = lang("Saving of message %1 succeeded. Check Folder %2.",$Subject,$_folder);
+							}
+						}
+						else
+						{
+							$savefailed = true;
+							$alert_msg .= lang("Saving of message %1 failed. Destination Folder %2 does not exist.",$Subject,$_folder);
+						}
+						if ($sendOK)
+						{
+							$processStats['success'][$val] = 'Send succeeded to '.$nfn.'<'.$email.'>'.($savefailed?' but failed to store to Folder:'.$_folder:'');
+						}
+						else
+						{
+							if (!$openComposeWindow) $processStats['failed'][$val] = $errorInfo?$errorInfo:'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
+						}
+					}
+					if (!is_null($sendOK) && $sendOK===false && is_null($openComposeWindow))
+					{
+						$processStats['failed'][$val] = $errorInfo?$errorInfo:'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
+					}
+				}
+			}
+			unset($mailObject);
+		}
+		// set the url to open when refreshing
+		if ($importfailed == true)
+		{
+			throw new egw_exception_wrong_userinput($alert_msg);
+		}
+		else
+		{
+			//error_log(__METHOD__.__LINE__.array2string($processStats));
+			return $processStats;
+		}
+	}
+
+	/**
+	 * functions to allow the parsing of message/rfc files
+	 * used in felamimail to import mails, or parsev a message from file enrich it with addressdata (merge) and send it right away.
+	 */
+
+	/**
+	 * parseFileIntoMailObject - parses a message/rfc mail from file to the mailobject and returns the header and body via reference
+	 *   throws egw_exception_assertion_failed when the required Pear Class is not found/loadable
+	 * @param object $mailObject instance of the SMTP Mailer Object
+	 * @param string $tmpFileName string that points/leads to the file to be imported
+	 * @param string &$Header  reference used to return the imported Mailheader
+	 * @param string &$Body reference to return the imported Body
+	 * @return void Mailheader and body is returned via Reference in $Header $Body
+	 */
+	function parseFileIntoMailObject($mailObject,$tmpFileName,&$Header,&$Body)
+	{
+			$message = file_get_contents($tmpFileName);
+			try
+			{
+				return $this->parseRawMessageIntoMailObject($mailObject,$message,$Header,$Body);
+			}
+			catch (egw_exception_assertion_failed $e)
+			{	// not sure that this is needed to pass on exeptions
+				throw new egw_exception_assertion_failed($e->getMessage());
+			}
+	}
+
+	/**
+	 * parseRawMessageIntoMailObject - parses a message/rfc mail from file to the mailobject and returns the header and body via reference
+	 *   throws egw_exception_assertion_failed when the required Pear Class is not found/loadable
+	 * @param object $mailObject instance of the SMTP Mailer Object
+	 * @param string $message string containing the RawMessage
+	 * @param string &$Header  reference used to return the imported Mailheader
+	 * @param string &$Body reference to return the imported Body
+	 * @return void Mailheader and body is returned via Reference in $Header $Body
+	 */
+	function parseRawMessageIntoMailObject($mailObject,$message,&$Header,&$Body)
+	{
+			/**
+			 * pear/Mail_mimeDecode requires package "pear/Mail_Mime" (version >= 1.4.0, excluded versions: 1.4.0)
+			 * ./pear upgrade Mail_Mime
+			 * ./pear install Mail_mimeDecode
+			 */
+			//echo '<pre>'.$message.'</pre>';
+			//error_log(__METHOD__.__LINE__.$message);
+			if (class_exists('Mail_mimeDecode',false)==false && (@include_once 'Mail/mimeDecode.php') === false) throw new egw_exception_assertion_failed(lang('Required PEAR class Mail/mimeDecode.php not found.'));
+			$mailDecode = new Mail_mimeDecode($message);
+			$structure = $mailDecode->decode(array('include_bodies'=>true,'decode_bodies'=>true,'decode_headers'=>true));
+			//error_log(__METHOD__.__LINE__.array2string($structure));
+			//_debug_array($structure);
+			//exit;
+			// now create a message to view, save it in Drafts and open it
+			$mailObject->PluginDir = EGW_SERVER_ROOT."/phpgwapi/inc/";
+			$mailObject->IsSMTP();
+			$mailObject->CharSet = self::$displayCharset; // some default, may be altered by BodyImport
+			if (isset($structure->ctype_parameters['charset'])) $mailObject->CharSet = trim($structure->ctype_parameters['charset']);
+			$mailObject->Encoding = 'quoted-printable'; // some default, may be altered by BodyImport
+/*
+			$mailObject->AddAddress($emailAddress, $addressObject->personal);
+			$mailObject->AddCC($emailAddress, $addressObject->personal);
+			$mailObject->AddBCC($emailAddress, $addressObject->personal);
+			$mailObject->AddReplyto($emailAddress, $addressObject->personal);
+*/
+			$result ='';
+			$contenttypecalendar = '';
+			$myReplyTo = '';
+			foreach((array)$structure->headers as $key => $val)
+			{
+				//error_log(__METHOD__.__LINE__.$key.'->'.$val);
+				foreach((array)$val as $i => $v)
+				{
+					if ($key!='content-type' && $key !='content-transfer-encoding' &&
+						$key != 'message-id'  &&
+						$key != 'subject' &&
+						$key != 'from' &&
+						$key != 'to' &&
+						$key != 'cc' &&
+						$key != 'bcc' &&
+						$key != 'reply-to' &&
+						$key != 'x-priority') // the omitted values to that will be set at the end
+					{
+						$Header .= $mailObject->HeaderLine($key, trim($v));
+					}
+				}
+				switch ($key)
+				{
+					case 'x-priority':
+						$mailObject->Priority = $val;
+						break;
+					case 'message-id':
+						$mailObject->MessageID  = $val; // ToDo: maybe we want to regenerate the message id all the time
+						break;
+					case 'sender':
+						$mailObject->Sender  = $val;
+						break;
+					case 'to':
+					case 'cc':
+					case 'bcc':
+					case 'from':
+					case 'reply-to':
+						$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($val):$val),'');
+						$i = 0;
+						foreach((array)$address_array as $addressObject)
+						{
+							$mb = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+							$pName = $addressObject->personal;
+							if ($key=='from')
+							{
+								$mailObject->From = $mb;
+								$mailObject->FromName = $pName;
+							}
+							${$key}[$i] = array($mb,$pName);
+							$i++;
+						}
+						if ($key=='reply-to')
+						{
+							$myReplyTo = ${$key};
+							//break; // break early as we add that later
+						}
+						$Header .= $mailObject->TextLine(trim($mailObject->AddrAppend(ucfirst($key),${$key})));
+						break;
+					case 'content-transfer-encoding':
+						$mailObject->Encoding = $val;
+						break;
+					case 'content-type':
+						//error_log(__METHOD__.__LINE__.' '.$key.'->'.$val);
+						if (stripos($val,'calendar')) $contenttypecalendar = $val;
+						break;
+					case 'subject':
+						$mailObject->Subject = $mailObject->EncodeHeader($mailObject->SecureHeader($val));
+						$Header .= $mailObject->HeaderLine('Subject',$mailObject->Subject);
+						break;
+					default:
+						// stuff like X- ...
+						//$mailObject->AddCustomHeader('X-Mailer: FeLaMiMail');
+						if (!strtolower(substr($key,0,2))=='x-') break;
+					//case 'priority': // priority is a cusom header field
+					//	$mailObject->Priority = $val;
+					//	break;
+					case 'disposition-notification-To':
+					case 'organization':
+						foreach((array)$val as $i => $v) $mailObject->AddCustomHeader($key.': '. $v);
+						break;
+				}
+			}
+			// handle reply-to, wich may be set, set the first one found
+			if (!empty($myReplyTo))
+			{
+				$mailObject->ClearReplyTos();
+				$mailObject->AddReplyTo($myReplyTo[0][0],$myReplyTo[0][1]);
+			}
+
+			$seemsToBePlainMessage = false;
+			if (strtolower($structure->ctype_primary)=='text' && $structure->body)
+			{
+				$mailObject->IsHTML(strtolower($structure->ctype_secondary)=='html'?true:false);
+				if (strtolower($structure->ctype_primary) == 'text' && strtolower($structure->ctype_secondary) == 'plain' &&
+					is_array($structure->ctype_parameters) && isset($structure->ctype_parameters['format']) &&
+					trim(strtolower($structure->ctype_parameters['format']))=='flowed'
+				)
+				{
+					if (self::$debug) error_log(__METHOD__.__LINE__." detected TEXT/PLAIN Format:flowed -> removing leading blank ('\r\n ') per line");
+					$structure->body = str_replace("\r\n ","\r\n", $structure->body);
+				}
+				$mailObject->Body = $structure->body;
+				$seemsToBePlainMessage = true;
+			}
+			$this->createBodyFromStructure($mailObject, $structure, $parenttype=null);
+			$mailObject->SetMessageType();
+			$mailObject->CreateHeader(); // this sets the boundary stufff
+			//echo "Boundary:".$mailObject->FetchBoundary(1).'<br>';
+			//$boundary ='';
+			//if (isset($structure->ctype_parameters['boundary'])) $boundary = ' boundary="'.$mailObject->FetchBoundary(1).'";';
+			if ($seemsToBePlainMessage && !empty($contenttypecalendar) && strtolower($mailObject->ContentType)=='text/plain')
+			{
+				$Header .= $mailObject->HeaderLine('Content-Transfer-Encoding', $mailObject->Encoding);
+				$Header .= $mailObject->HeaderLine('Content-type', $contenttypecalendar);
+			}
+			else
+			{
+				$Header .= $mailObject->GetMailMIME();
+			}
+			$Body = $mailObject->getMessageBody(); // this is a method of the egw_mailer/phpmailer class
+			//_debug_array($Header);
+			//_debug_array($Body);
+			//_debug_array($mailObject);
+			//exit;
+	}
+
+	/**
+	 * createBodyFromStructure - fetches/creates the bodypart of the email as textual representation
+	 *   is called recursively to be able to fetch the stuctureparts of the mail parsed from Mail/mimeDecode
+	 * @param object $mailObject instance of the SMTP Mailer Object
+	 * @param array $structure array that represents structure and content of a mail parsed from Mail/mimeDecode
+	 * @param string $parenttype type of the parent node
+	 * @return void Parsed Information is passed to the mailObject to be processed there
+	 */
+	function createBodyFromStructure($mailObject, $structure, $parenttype=null, $decode=false)
+	{
+		static $attachmentnumber;
+		static $isHTML;
+		static $alternatebodyneeded;
+		if (is_null($isHTML)) $isHTML = strtolower($structure->ctype_secondary)=='html'?true:false;
+		if (is_null($attachmentnumber)) $attachmentnumber = 0;
+		if ($structure->parts && strtolower($structure->ctype_primary)=='multipart')
+		{
+			if (is_null($alternatebodyneeded)) $alternatebodyneeded = false;
+			foreach($structure->parts as $part)
+			{
+				//error_log(__METHOD__.__LINE__.' Structure Content Type:'.$structure->ctype_primary.'/'.$structure->ctype_secondary.' Decoding:'.($decode?'on':'off'));
+				//error_log(__METHOD__.__LINE__.' '.$structure->ctype_primary.'/'.$structure->ctype_secondary.' => '.$part->ctype_primary.'/'.$part->ctype_secondary);
+				//error_log(__METHOD__.__LINE__.' Part:'.array2string($part));
+				$partFetched = false;
+				//echo __METHOD__.__LINE__.$structure->ctype_primary.'/'.$structure->ctype_secondary.'<br>';
+				if ($part->headers['content-transfer-encoding']) $mailObject->Encoding = $part->headers['content-transfer-encoding'];
+				//$mailObject->IsHTML($part->ctype_secondary=='html'?true:false); // we do not set this here, as the default is text/plain
+				if (isset($part->ctype_parameters['charset'])) $mailObject->CharSet = trim($part->ctype_parameters['charset']);
+				if ((strtolower($structure->ctype_secondary)=='alternative'||
+					 strtolower($structure->ctype_secondary)=='mixed' ||
+					// strtolower($structure->ctype_secondary)=='related' || // may hold text/plain directly ?? I doubt it ??
+					 strtolower($structure->ctype_secondary)=='signed') && strtolower($part->ctype_primary)=='text' && strtolower($part->ctype_secondary)=='plain' && $part->body)
+				{
+					//echo __METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.'<br>';
+					//error_log(__METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.' already fetched Content is HTML='.$isHTML.' Body:'.$part->body);
+					$bodyPart = $part->body;
+					if ($decode) $bodyPart = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'));
+/*
+					if (strtolower($part->ctype_primary) == 'text' && strtolower($part->ctype_secondary) == 'plain' &&
+						is_array($part->ctype_parameters) && isset($part->ctype_parameters['format']) &&
+						trim(strtolower($part->ctype_parameters['format']))=='flowed'
+					)
+					{
+						if (self::$debug) error_log(__METHOD__.__LINE__." detected TEXT/PLAIN Format:flowed -> removing leading blank ('\r\n ') per line");
+						$bodyPart = str_replace("\r\n ","\r\n", $bodyPart);
+					}
+*/
+					$mailObject->Body = ($isHTML==false?$mailObject->Body:'').$bodyPart;
+					$mailObject->AltBody .= $bodyPart;
+					$partFetched = true;
+				}
+				if ((strtolower($structure->ctype_secondary)=='alternative'||
+					 strtolower($structure->ctype_secondary)=='mixed' ||
+					 strtolower($structure->ctype_secondary)=='related' || // may hold text/html directly
+					 strtolower($structure->ctype_secondary)=='signed' ) &&
+					strtolower($part->ctype_primary)=='text' && strtolower($part->ctype_secondary)=='html' && $part->body)
+				{
+					//echo __METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.'<br>';
+					//error_log(__METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.' already fetched Content is HTML='.$isHTML.' Body:'.$part->body);
+					$bodyPart = $part->body;
+					if ($decode) $bodyPart = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'));
+					$mailObject->IsHTML(true); // we need/want that here, because looping through all message parts may mess up the message body mimetype
+					$mailObject->Body = ($isHTML?$mailObject->Body:'').$bodyPart;
+					$alternatebodyneeded = true;
+					$isHTML=true;
+					$partFetched = true;
+				}
+				if ((strtolower($structure->ctype_secondary)=='alternative'||
+					 strtolower($structure->ctype_secondary)=='mixed' ||
+					 strtolower($structure->ctype_secondary)=='signed' ) &&
+					strtolower($part->ctype_primary)=='text' && strtolower($part->ctype_secondary)=='calendar' && $part->body)
+				{
+					//error_log(__METHOD__.__LINE__.$part->ctype_primary.'/'.$part->ctype_secondary.' BodyPart:'.array2string($part));
+					$bodyPart = $part->body;
+					if ($decode) $bodyPart = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'));
+					$mailObject->AltExtended = $bodyPart;
+					// "text/calendar; charset=utf-8; name=meeting.ics; method=REQUEST"
+					// [ctype_parameters] => Array([charset] => utf-8[name] => meeting.ics[method] => REQUEST)
+					$mailObject->AltExtendedContentType = $part->ctype_primary.'/'.$part->ctype_secondary.';'.
+						($part->ctype_parameters['name']?' name='.$part->ctype_parameters['name'].';':'').
+						($part->ctype_parameters['method']?' method='.$part->ctype_parameters['method'].'':'');
+					$partFetched = true;
+				}
+				if ((strtolower($structure->ctype_secondary)=='mixed' ||
+					 strtolower($structure->ctype_secondary)=='related' ||
+					 strtolower($structure->ctype_secondary)=='alternative' ||
+					 strtolower($structure->ctype_secondary)=='signed') && strtolower($part->ctype_primary)=='multipart')
+				{
+					//error_log( __METHOD__.__LINE__." Recursion to fetch subparts:".$part->ctype_primary.'/'.$part->ctype_secondary);
+					$this->createBodyFromStructure($mailObject, $part, $parenttype=null, $decode);
+				}
+				//error_log(__METHOD__.__LINE__.$structure->ctype_primary.'/'.$structure->ctype_secondary.' => '.$part->ctype_primary.'/'.$part->ctype_secondary.' Part:'.array2string($part));
+				if ($part->body && ((strtolower($structure->ctype_secondary)=='mixed' && strtolower($part->ctype_primary)!='multipart') ||
+					trim(strtolower($part->disposition)) == 'attachment' ||
+					trim(strtolower($part->disposition)) == 'inline' ||
+					isset($part->headers['content-id'])))
+				{
+					//error_log(__METHOD__.__LINE__.$structure->ctype_secondary.'=>'.$part->ctype_primary.'/'.$part->ctype_secondary.'->'.array2string($part));
+					$attachmentnumber++;
+					$filename = trim(($part->ctype_parameters['name']?$part->ctype_parameters['name']:$part->d_parameters['filename']));
+					if (strlen($filename)==0)
+					{
+						//error_log(__METHOD__.__LINE__.$structure->ctype_secondary.'=>'.$part->ctype_primary.'/'.$part->ctype_secondary.'->'.array2string($part));
+						foreach(array('content-type','content-disposition') as $k => $v)
+						{
+							foreach(array('filename','name') as $sk => $n)
+							{
+								if (stripos($part->headers[$v],$n)!== false)
+								{
+									$buff = explode($n,$part->headers[$v]);
+									//error_log(__METHOD__.__LINE__.array2string($buff));
+									$namepart = array_pop($buff);
+									//$disposition = array_pop($buff);
+									//error_log(__METHOD__.__LINE__.$namepart);
+									$fp = strpos($namepart,'"');
+									//error_log(__METHOD__.__LINE__.' Start:'.$fp);
+									if ($fp !== false)
+									{
+										$np = strpos($namepart,'"', $fp+1);
+										//error_log(__METHOD__.__LINE__.' End:'.$np);
+										if ($np !== false)
+										{
+											$filename = trim(substr($namepart,$fp+1,$np-$fp-1));
+											$filename = $mailObject->EncodeHeader($filename);
+											if (!empty($filename))
+											{
+												if (strpos($part->disposition,';')!==false)
+												{
+													//chance is, disposition is broken too
+													$dbuff = explode(';',$part->disposition);
+													$part->disposition = trim($dbuff[0]);
+												}
+												break 2;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					if (strlen($filename)==0) $filename = 'noname_'.$attachmentnumber;
+					//error_log(__METHOD__.__LINE__.' '.$filename);
+					//echo $part->headers['content-transfer-encoding'].'#<br>';
+					if ($decode) $part->body = $this->decodeMimePart($part->body,($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'));
+					if ((trim(strtolower($part->disposition))=='attachment' || trim(strtolower($part->disposition)) == 'inline' || isset($part->headers['content-id'])) && $partFetched==false)
+					{
+						if (trim(strtolower($part->disposition)) == 'inline' || $part->headers['content-id'])
+						{
+							$part->headers['content-id'] = str_replace(array('<','>'),'',$part->headers['content-id']);
+							$dirname = $this->accountid.'_'.$this->profileID.'_'.$this->sessionData['mailbox'].$part->headers['content-id'];
+							if (self::$debug) error_log(__METHOD__.__LINE__.' Dirname:'.$dirname);
+							$dirname = md5($dirname);
+							$dir = $GLOBALS['egw_info']['server']['temp_dir']."/fmail_import/$dirname";
+							if (self::$debug) error_log(__METHOD__.__LINE__.' Dir to save attachment to:'.$dir);
+							if ( !file_exists( "$dir") )
+							{
+								@mkdir( $dir, 0700, true );
+							}
+							$rp = mail_bo::getRandomString();
+							file_put_contents( "$dir/$rp$filename", $part->body);
+							
+							$path = "$dir/$rp$filename";
+							$mailObject->AddEmbeddedImage($path, $part->headers['content-id'], $filename, ($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'), $part->ctype_primary.'/'.$part->ctype_secondary);
+						}
+						else
+						{
+							//error_log(__METHOD__.__LINE__.' Add String '.($part->disposition=='attachment'?'Attachment':'Part').' of type:'.$part->ctype_primary.'/'.$part->ctype_secondary);
+							$mailObject->AddStringAttachment($part->body, //($part->headers['content-transfer-encoding']?base64_decode($part->body):$part->body),
+													 $filename,
+													 ($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'),
+													 $part->ctype_primary.'/'.$part->ctype_secondary
+													);
+						}
+					}
+					if (!(trim(strtolower($part->disposition))=='attachment' || trim(strtolower($part->disposition)) == 'inline' || isset($part->headers['content-id'])) && $partFetched==false)
+					{
+						//error_log(__METHOD__.__LINE__.' Add String '.($part->disposition=='attachment'?'Attachment':'Part').' of type:'.$part->ctype_primary.'/'.$part->ctype_secondary.' Body:'.$part->body);
+						$mailObject->AddStringPart($part->body, //($part->headers['content-transfer-encoding']?base64_decode($part->body):$part->body),
+													 $filename,
+													 ($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'),
+													 $part->ctype_primary.'/'.$part->ctype_secondary
+													);
+					}
+				}
+			}
+			if ($alternatebodyneeded == false) $mailObject->AltBody = '';
+		}
+	}
+
 
 	/**
 	 * Hook stuff

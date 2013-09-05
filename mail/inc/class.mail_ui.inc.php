@@ -1164,11 +1164,12 @@ unset($query['actions']);
 	 *
 	 * @param string $_folderName, used to ensure the uniqueness of the uid over all folders
 	 * @param string $message_uid, the message_Uid to be used for creating the rowID
-	 * @return string - a colon separated string in the form accountID:profileID:folder:message_uid
+	 * @param boolean $_prependApp, flag to indicate that the app 'mail' is to be used for creating the rowID
+	 * @return string - a colon separated string in the form [app:]accountID:profileID:folder:message_uid
 	 */
-	function createRowID($_folderName, $message_uid)
+	function createRowID($_folderName, $message_uid, $_prependApp=false)
 	{
-		return trim($GLOBALS['egw_info']['user']['account_id']).self::$delimiter.$this->mail_bo->profileID.self::$delimiter.base64_encode($_folderName).self::$delimiter.$message_uid;
+		return ($_prependApp?'mail'.self::$delimiter:'').trim($GLOBALS['egw_info']['user']['account_id']).self::$delimiter.$this->mail_bo->profileID.self::$delimiter.base64_encode($_folderName).self::$delimiter.$message_uid;
 	}
 
 	/**
@@ -1181,6 +1182,12 @@ unset($query['actions']);
 	{
 		$res = explode(self::$delimiter,$_rowID);
 		// as a rowID is perceeded by app::, should be mail!
+		//error_log(__METHOD__.__LINE__.array2string($res).' [0] isInt:'.is_int($res[0]).' [0] isNumeric:'.is_numeric($res[0]).' [0] isString:'.is_string($res[0]));
+		if (count($res)==4 && is_numeric($res[0]) )
+		{
+			// we have an own created rowID; prepend app=mail
+			array_unshift($res,'mail');
+		}
 		return array('app'=>$res[0], 'accountID'=>$res[1], 'profileID'=>$res[2], 'folder'=>base64_decode($res[3]), 'msgUID'=>$res[4]);
 	}
 
@@ -1542,11 +1549,17 @@ unset($query['actions']);
 	/**
 	 * display messages
 	 *
-	 * all params are passed as GET Parameters
+	 * all params are passed as GET Parameters, but can be passed via ExecMethod2 as array too
 	 */
-	function displayMessage()
+	function displayMessage($_requesteddata = null)
 	{
-//_debug_array($_REQUEST);
+//error_log(__METHOD__.__LINE__.array2string($_requesteddata));
+//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
+		if (!is_null($_requesteddata) && isset($_requesteddata['id']))
+		{
+			$rowID = $_requesteddata['id'];
+			//unset($_REQUEST);
+		}
 		if(isset($_GET['id'])) $rowID	= $_GET['id'];
 		if(isset($_GET['part'])) $partID = $_GET['part'];
 		$htmlOptions = $this->mail_bo->htmlOptions;
@@ -1556,7 +1569,7 @@ unset($query['actions']);
 		$hA = self::splitRowID($rowID);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
-
+		//error_log(__METHOD__.__LINE__.array2string($hA));
 		$this->mail_bo->reopen($mailbox);
 		// retrieve the flags of the message, before touching it.
 		$headers	= $this->mail_bo->getMessageHeader($uid, $partID);
@@ -1586,7 +1599,6 @@ unset($query['actions']);
 		//error_log(__METHOD__.__LINE__.$mailBody);
 		$this->mail_bo->closeConnection();
 		$etpl = new etemplate_new('mail.display');
-
 		// Set cell attributes directly
 /*
 		$etpl->set_cell_attribute('nm[foldertree]','actions', array(
@@ -2686,161 +2698,203 @@ blockquote[type=cite] {
 	/**
 	 * importMessage
 	 */
-	function importMessage($content)
+	function importMessage($content=null)
 	{
-		error_log(array2string($content));
-		if (!is_array($content)) $content = array();
-		$etpl = new etemplate_new('mail.importMessage');
-		$etpl->exec('mail.mail_ui.importMessage',$content,$sel_options,$readonlys,$preserv,2);
-/*
-			if (empty($importtype)) $importtype = htmlspecialchars($_POST["importtype"]);
-			if (empty($toggleFS)) $toggleFS = htmlspecialchars($_POST["toggleFS"]);
-			if (empty($importID)) $importID = htmlspecialchars($_POST["importid"]);
-			if (empty($addFileName)) $addFileName =html::purify($_POST['addFileName']);
-			if (empty($importtype)) $importtype = 'file';
-			if (empty($toggleFS)) $toggleFS= false;
-			if (empty($addFileName)) $addFileName = false;
-			if ($toggleFS == 'vfs' && $importtype=='file') $importtype='vfs';
-			if (!$toggleFS && $importtype=='vfs') $importtype='file';
-
-			// get passed messages
-			if (!empty($_GET["msg"])) $alert_message[] = html::purify($_GET["msg"]);
-			if (!empty($_POST["msg"])) $alert_message[] = html::purify($_POST["msg"]);
-			unset($_GET["msg"]);
-			unset($_POST["msg"]);
-			//_debug_array($alert_message);
-			//error_log(__METHOD__." called from:".function_backtrace());
-			$proceed = false;
-			if(is_array($_FILES["addFileName"]))
+		//error_log(__METHOD__.__LINE__.$this->mail_bo->getDraftFolder());
+		if (!empty($content))
+		{
+			//error_log(__METHOD__.__LINE__.array2string($content));
+			$destination = html::purify($content['divImportArea']['FOLDER'][0]?$content['divImportArea']['FOLDER'][0]:'');
+			$importID = mail_bo::getRandomString();
+			$importFailed = false;
+			try
 			{
-				//phpinfo();
-				//error_log(print_r($_FILES,true));
-				if($_FILES['addFileName']['error'] == $UPLOAD_ERR_OK) {
-					$proceed = true;
-					$formData['name']	= $_FILES['addFileName']['name'];
-					$formData['type']	= $_FILES['addFileName']['type'];
-					$formData['file']	= $_FILES['addFileName']['tmp_name'];
-					$formData['size']	= $_FILES['addFileName']['size'];
-				}
+				$messageUid = $this->importMessageToFolder($content['divImportArea']['uploadForImport'],$destination,$importID);
+			    $linkData = array
+			    (
+					'id'		=> $this->createRowID($destination, $messageUid, true),
+			    );
 			}
-			if ($addFileName && $toggleFS == 'vfs' && $importtype == 'vfs' && $importID)
+			catch (egw_exception_wrong_userinput $e)
 			{
-				$sessionData = $GLOBALS['egw']->session->appsession('compose_session_data_'.$importID, 'felamimail');
-				//error_log(__METHOD__.__LINE__.array2string($sessionData));
-				foreach((array)$sessionData['attachments'] as $attachment) {
-					//error_log(__METHOD__.__LINE__.array2string($attachment));
-					if ($addFileName == $attachment['name'])
-					{
-						$proceed = true;
-						$formData['name']	= $attachment['name'];
-						$formData['type']	= $attachment['type'];
-						$formData['file']	= $attachment['file'];
-						$formData['size']	= $attachment['size'];
-						break;
-					}
-				}
+					$importFailed=true;
+					$content['msg']		= $e->getMessage();
 			}
-			if ($proceed === true)
+			if (!$importFailed)
 			{
-				$destination = html::purify($_POST['newMailboxMoveName']?$_POST['newMailboxMoveName']:'');
-				try
-				{
-					$messageUid = $this->importMessageToFolder($formData,$destination,$importID);
-				    $linkData = array
-				    (
-				        'menuaction'    => 'felamimail.uidisplay.display',
-						'uid'		=> $messageUid,
-						'mailbox'    => base64_encode($destination),
-				    );
-				}
-				catch (egw_exception_wrong_userinput $e)
-				{
-				    $linkData = array
-				    (
-				        'menuaction'    => 'felamimail.uifelamimail.importMessage',
-						'msg'		=> htmlspecialchars($e->getMessage()),
-				    );
-				}
-				egw::redirect_link('/index.php',$linkData);
+				ExecMethod2('mail.mail_ui.displayMessage',$linkData);
 				exit;
 			}
+		}
+		if (!is_array($content)) $content = array();
+		if (empty($content['divImportArea']['FOLDER'])) $content['divImportArea']['FOLDER']=(array)$this->mail_bo->getDraftFolder();
+		if (!empty($content['divImportArea']['FOLDER'])) $sel_options['FOLDER']=mail_compose::ajax_searchFolder(0,true);
 
-			if(!@is_object($GLOBALS['egw']->js))
+		$etpl = new etemplate_new('mail.importMessage');
+		$etpl->setElementAttribute('uploadForImport','onFinish','app.mail.uploadForImport');
+		$etpl->exec('mail.mail_ui.importMessage',$content,$sel_options,$readonlys,$preserv,2);
+	}
+
+	/**
+	 * importMessageToFolder
+	 *
+	 * @param array $_formData Array with information of name, type, file and size
+	 * @param string $_folder (passed by reference) will set the folder used. must be set with a folder, but will hold modifications if
+	 *					folder is modified
+	 * @param string $importID ID for the imported message, used by attachments to identify them unambiguously
+	 * @return mixed $messageUID or exception
+	 */
+	function importMessageToFolder($_formData,&$_folder,$importID='')
+	{
+		$importfailed = false;
+		//error_log(__METHOD__.__LINE__.array2string($_formData));
+		if (empty($_formData['file'])) $_formData['file'] = $_formData['tmp_name'];
+		// check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
+		try
+		{
+			$tmpFileName = mail_bo::checkFileBasics($_formData,$importID);
+		}
+		catch (egw_exception_wrong_userinput $e)
+		{
+			$importfailed = true;
+			$alert_msg .= $e->getMessage();
+		}
+		// -----------------------------------------------------------------------
+		if ($importfailed === false)
+		{
+			$mailObject = new egw_mailer();
+			try
 			{
-				$GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
+				$this->mail_bo->parseFileIntoMailObject($mailObject,$tmpFileName,$Header,$Body);
 			}
-			// this call loads js and css for the treeobject
-			html::tree(false,false,false,null,'foldertree','','',false,'/',null,false);
-			$GLOBALS['egw']->common->egw_header();
+			catch (egw_exception_assertion_failed $e)
+			{
+				$importfailed = true;
+				$alert_msg .= $e->getMessage();
+			}
+			//_debug_array($Body);
+			$this->mail_bo->openConnection();
+			if (empty($_folder))
+			{
+				$importfailed = true;
+				$alert_msg .= lang("Import of message %1 failed. Destination Folder not set.",$_formData['name']);
+			}
+			$delimiter = $this->mail_bo->getHierarchyDelimiter();
+			if($_folder=='INBOX'.$delimiter) $_folder='INBOX';
+			if ($importfailed === false)
+			{
+				if ($this->mail_bo->folderExists($_folder,true)) {
+					try
+					{
+						$messageUid = $this->mail_bo->appendMessage($_folder,
+							$Header.$mailObject->LE.$mailObject->LE,
+							$Body,
+							$flags);
+					}
+					catch (egw_exception_wrong_userinput $e)
+					{
+						$importfailed = true;
+						$alert_msg .= lang("Import of message %1 failed. Could not save message to folder %2 due to: %3",$_formData['name'],$_folder,$e->getMessage());
+					}
+				}
+				else
+				{
+					$importfailed = true;
+					$alert_msg .= lang("Import of message %1 failed. Destination Folder %2 does not exist.",$_formData['name'],$_folder);
+				}
+			}
+		}
+		// set the url to open when refreshing
+		if ($importfailed == true)
+		{
+			throw new egw_exception_wrong_userinput($alert_msg);
+		}
+		else
+		{
+			return $messageUid;
+		}
+	}
 
-			#$uiwidgets		=& CreateObject('felamimail.uiwidgets');
+	/**
+	 * importMessageFromVFS2DraftAndEdit
+	 *
+	 * @param array $formData Array with information of name, type, file and size; file is required,
+	 *                               name, type and size may be set here to meet the requirements
+	 *						Example: $formData['name']	= 'a_email.eml';
+	 *								 $formData['type']	= 'message/rfc822';
+	 *								 $formData['file']	= 'vfs://default/home/leithoff/a_email.eml';
+	 *								 $formData['size']	= 2136;
+	 * @return void
+	 */
+	function importMessageFromVFS2DraftAndEdit($formData='')
+	{
+		$this->importMessageFromVFS2DraftAndDisplay($formData,'edit');
+	}
 
-			$this->t->set_file(array("importMessage" => "importMessage.tpl"));
-
-			$this->t->set_block('importMessage','fileSelector','fileSelector');
-			$importID =felamimail_bo::getRandomString();
-
-			// prepare saving destination of imported message
+	/**
+	 * importMessageFromVFS2DraftAndDisplay
+	 *
+	 * @param array $formData Array with information of name, type, file and size; file is required,
+	 *                               name, type and size may be set here to meet the requirements
+	 *						Example: $formData['name']	= 'a_email.eml';
+	 *								 $formData['type']	= 'message/rfc822';
+	 *								 $formData['file']	= 'vfs://default/home/leithoff/a_email.eml';
+	 *								 $formData['size']	= 2136;
+	 * @param string $mode mode to open ImportedMessage display and edit are supported
+	 * @return void
+	 */
+	function importMessageFromVFS2DraftAndDisplay($formData='',$mode='display')
+	{
+		if (empty($formData)) if (isset($_REQUEST['formData'])) $formData = $_REQUEST['formData'];
+		//error_log(array2string($formData));
+		$draftFolder = $this->mail_bo->getDraftFolder(false);
+		$importID = mail_bo::getRandomString();
+		// name should be set to meet the requirements of checkFileBasics
+		if (parse_url($formData['file'],PHP_URL_SCHEME) == 'vfs' && (!isset($formData['name']) || empty($formData['name'])))
+		{
+			$buff = explode('/',$formData['file']);
+			$suffix = '';
+			if (is_array($buff)) $formData['name'] = array_pop($buff); // take the last part as name
+		}
+		// type should be set to meet the requirements of checkFileBasics
+		if (parse_url($formData['file'],PHP_URL_SCHEME) == 'vfs' && (!isset($formData['type']) || empty($formData['type'])))
+		{
+			$buff = explode('.',$formData['file']);
+			$suffix = '';
+			if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+			if (!empty($suffix)) $formData['type'] = mime_magic::ext2mime($suffix);
+		}
+		// size should be set to meet the requirements of checkFileBasics
+		if (parse_url($formData['file'],PHP_URL_SCHEME) == 'vfs' && !isset($formData['size']))
+		{
+			$formData['size'] = strlen($formData['file']); // set some size, to meet requirements of checkFileBasics
+		}
+		try
+		{
+			$messageUid = $this->importMessageToFolder($formData,$draftFolder,$importID);
 			$linkData = array
 			(
-					'menuaction'    => 'felamimail.uipreferences.listSelectFolder',
+		        'menuaction'    => ($mode=='display'?'mail.mail_ui.displayMessage':'mail.mail_compose.composeFromDraft'),
+				'id'		=> $this->createRowID($draftFolder,$messageUid,true),
+				'deleteDraftOnClose' => 1,
 			);
-			$this->t->set_var('folder_select_url',$GLOBALS['egw']->link('/index.php',$linkData));
-
-			// messages that may be passed to the Form
-			if (isset($alert_message) && !empty($alert_message))
+			if ($mode!='display')
 			{
-				$this->t->set_var('messages', implode('; ',$alert_message));
+				unset($linkData['deleteDraftOnClose']);
+				$linkData['method']	='importMessageToMergeAndSend';
 			}
-			else
-			{
-				$this->t->set_var('messages','');
-			}
+		}
+		catch (egw_exception_wrong_userinput $e)
+		{
+		    $linkData = array
+		    (
+		        'menuaction'    => 'mail.mail_ui.importMessage',
+				'msg'		=> htmlspecialchars($e->getMessage()),
+		    );
+		}
+		egw::redirect_link('/index.php',$linkData);
+		exit;
 
-			// preset for saving destination, we use draftfolder
-			$savingDestination = $this->mail_bo->getDraftFolder();
-
-			$this->t->set_var('mailboxNameShort', $savingDestination);
-			$this->t->set_var('importtype', $importtype);
-			$this->t->set_var('importid', $importID);
-			if ($toggleFS) $this->t->set_var('toggleFS_preset','checked'); else $this->t->set_var('toggleFS_preset','');
-
-			$this->translate();
-
-			$linkData = array
-			(
-				'menuaction'	=> 'mail.mail_ui.importMessage',
-			);
-			$this->t->set_var('file_selector_url', $GLOBALS['egw']->link('/index.php',$linkData));
-
-			$this->t->set_var('vfs_selector_url', egw::link('/index.php',array(
-				'menuaction' => 'filemanager.filemanager_select.select',
-				'mode' => 'open-multiple',
-				'method' => 'felamimail.uifelamimail.selectFromVFS',
-				'id'	=> $importID,
-				'label' => lang('Attach'),
-			)));
-			if ($GLOBALS['egw_info']['user']['apps']['filemanager'] && $importtype == 'vfs')
-			{
-				$this->t->set_var('vfs_attach_button','
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a onclick="fm_import_displayVfsSelector();" title="'.htmlspecialchars(lang('filemanager')).'">
-					<img src="'.html::image('filemanager','navbar').'" height="18">
-				</a>&nbsp;&nbsp;&nbsp;&nbsp;');
-				$this->t->set_var('filebox_readonly','readonly="readonly"');
-			}
-			else
-			{
-				$this->t->set_var('vfs_attach_button','');
-				$this->t->set_var('filebox_readonly','');
-			}
-
-			$maxUploadSize = ini_get('upload_max_filesize');
-			$this->t->set_var('max_uploadsize', $maxUploadSize);
-
-			$this->t->set_var('ajax-loader', html::image('felamimail','ajax-loader'));
-
-			$this->t->pparse("out","fileSelector");
-*/
 	}
 
 	/**

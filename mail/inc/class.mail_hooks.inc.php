@@ -818,14 +818,14 @@ class mail_hooks
 		{
 			$file += array(
 				'_NewLine_'	=> '', // give a newline
-				'empty trash'	=> "javascript:egw_appWindow('".$appname."').mail_emptyTrash();",
+				'empty trash'	=> "javascript:app.mail.mail_emptyTrash();",
 			);
 		}
 		if($preferences->preferences['deleteOptions'] == 'mark_as_deleted')
 		{
 			$file += array(
 				'_NewLine_'		=> '', // give a newline
-				'compress folder'	=> "javascript:egw_appWindow('".$appname."').mail_compressFolder();",
+				'compress folder'	=> "javascript:app.mail.mail_compressFolder();",
 			);
 		}
 		// import Message link - only when the required library is available
