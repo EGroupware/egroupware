@@ -1494,6 +1494,12 @@ blockquote[type=cite] {
 					$body .= $singleBodyPart['body'];
 					continue;
 				}
+				$bodyPartIsSet = strlen(trim($singleBodyPart['body']));
+				if (!$bodyPartIsSet)
+				{
+					$body .= '';
+					continue;
+				}
 				if(!empty($body)) {
 					$body .= '<hr style="border:dotted 1px silver;">';
 				}
