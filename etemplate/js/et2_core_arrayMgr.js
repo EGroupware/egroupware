@@ -140,7 +140,7 @@ var et2_arrayMgr = Class.extend(
 	 * @param _key is the string index, may contain sub-indices like a[b]
 	 * @param _referenceInto if true none-existing sub-arrays/-indices get created
 	 * 	to be returned as reference, else false is returned. Defaults to false
-	 * @param _skipEmpty returns false if _key is not present in this content array.
+	 * @param _skipEmpty returns null if _key is not present in this content array.
 	 * 	Defaults to false.
 	 */
 	getEntry : function(_key, _referenceInto, _skipEmpty) {
