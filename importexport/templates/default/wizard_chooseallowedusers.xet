@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="importexport.wizard_chooseallowedusers" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description id="msg" no_lang="1"/>
+				</row>
+				<row disabled="@no_just_me">
+					<checkbox label="%s Just me" id="just_me"/>
+				</row>
+				<row disabled="@no_all_users">
+					<checkbox label="%s All users" id="all_users"/>
+				</row>
+				<row>
+					<listbox type="select-account" id="allowed_users" rows="5" options="groups"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
