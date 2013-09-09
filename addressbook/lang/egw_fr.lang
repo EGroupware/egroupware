@@ -49,6 +49,7 @@ addressbook menu	addressbook	fr	Menu de carnet d'adresses
 addressbook of	addressbook	fr	Carnet d'adresse de
 addressbook preferences	addressbook	fr	Préférences du carnet d'adresses
 addressbook the contact should be saved to	addressbook	fr	Le contact du carnet d'adresses doit être sauvegardé vers
+addressbook the contact should be shown	addressbook	fr	Carnet d'adresse à afficher au contact
 addressbook vcard export	addressbook	fr	Import vCard du carnet d'adresses
 addressbook vcard import	addressbook	fr	Import vCard du carnet d'adresses
 addressbook-fieldname	addressbook	fr	Carnet d'adresses - nom du champ

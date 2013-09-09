@@ -1,41 +1,135 @@
 %1 definition(s) %2	importexport	fr	%1 définition(s) %2
 %1 definition(s) %2, %3 failed because of insufficent rights !!!	importexport	fr	%1 définition(s) %2, %3 a échoué à cause de droits insuffisants !!!
+%1 definitions %2	importexport	fr	%1 définitions %2
+%1 is not a known user or group	importexport	fr	%1 n'est pas un utilisateur ou un goupe connu
+%1 is not readable	importexport	fr	%1 n'est pas lisible.
+%1 is not writable	importexport	fr	%1 n'est pas inscriptible.
+%1 records processed	importexport	fr	%1 enregistrements traités.
+%s just me	importexport	fr	%s seulement moi
+(* for all)	importexport	fr	(* pour tous)
+(0-23)	importexport	fr	(0-23)
+(0-6, 0=sun)	importexport	fr	(0-6, 0=Dim=
+*contact id cannot be changed by import	importexport	fr	* l'id du contact ne peut pas être changé par l'import
 addressbook csv import	importexport	fr	Import csv du carnet d'adresses
 addressbook vcard import	importexport	fr	Import vCard du carnet d'adresses
+admin disabled exporting	importexport	fr	L'administrateur a désactivé les exports
+all encodings	importexport	fr	Tous les encodages
 allowed users	importexport	fr	Utilisateurs autorisés
-automatically created by importexport	importexport	fr	Automatiquement créé par l'importexport
+automatically created by importexport	importexport	fr	Automatiquement créé par l' Import | Export
+basic csv import	importexport	fr	Import CSV simple
 changed	importexport	fr	Modifié
+changed allowed_users	importexport	fr	Utilisateurs autorisés modifiés
+changed owner	importexport	fr	Propriétaires modifiés
 charset of file	importexport	fr	Jeu de caractères du fichier
-check all	importexport	fr	Vérifier tout
+check all	importexport	fr	Tout cocher
 choose a name for this definition	importexport	fr	Choisissez un nom pour cette définition
 choose a plugin	importexport	fr	Choisissez un module enfichable
 choose an application	importexport	fr	Choisissez une application
+choose fields to export	importexport	fr	Choisissez des champs à exporter
 choose seperator and charset	importexport	fr	Choisisser le séparateur et l'encodage
-condition	importexport	fr	condition
-copied	importexport	fr	Copié
+column mismatch.  expected %1 columns, your file has %2.	importexport	fr	Erreur de colonnes. %1 colonnes attendues mais votre fichier en présente %2.
+column mismatch: %1 should be %2, not %3	importexport	fr	Erreur de colonnes : %1 devrait être %2 et non pas %3
+condition	importexport	fr	Condition
+copied	importexport	fr	Copié.
+create a <a href="%1">new definition</a> for this file	importexport	fr	Créer une <a href="%1">nouvelle définition</a> pour ce fichier
+create export	importexport	fr	Créer un export
 created	importexport	fr	Créé(s)
-deleted	importexport	fr	supprimé
+csv field	importexport	fr	Champ CSV
+database values	importexport	fr	Valeur de base de données
+day of week	importexport	fr	Jour de la semaine
+define imports|exports	common	fr	Définir Imports|Exports
+definition	importexport	fr	Définition
+delete all selected definitions	importexport	fr	Supprimer toutes les définitions sélectionnées
+deleted	importexport	fr	Supprimé.
+delimiter	importexport	fr	Délimiteur
+duplicate name, please choose another.	importexport	fr	Nom en double, veuillez en choisir un autre.
+edit conditions	importexport	fr	Modifier les conditions
+edit definition <a href="%1">%2</a> to match your file	importexport	fr	Modifier la définition <a href="%1">%2</a> pour la faire correspondre à votre fichier
+edit your file to match the definition:	importexport	fr	Modifier votre fichier pour répondre à la définition :
+errors	importexport	fr	Erreurs
 execute	importexport	fr	Exécuter
+expert options	importexport	fr	Options expert
 export	importexport	fr	Exportation
+export all selected definitions	importexport	fr	Exporter toutes les définitions sélectionnées
+export data as	importexport	fr	Exporter les données comme
 export definition to use for nextmatch export	preferences	fr	Définition de l'export à utiliser pour l'export "nextmatch"
-exported	importexport	fr	exporté
+export spreadsheet	importexport	fr	Exporter vers une feuille de calcul
+exported	importexport	fr	Exporté.
+extra charsets for import / export	importexport	fr	Jeux de caractères supplémentaire pour import / export
+extra encodings	importexport	fr	Encodages supplémentaires
 false	importexport	fr	Faux
-finish	importexport	fr	terminer
+field labels	importexport	fr	Labels de champs
+field names	importexport	fr	Nom de champs
+fieldseperator	importexport	fr	Séparateur de champs
+filters	importexport	fr	Filtres
+finish	importexport	fr	Terminer
+from definition	importexport	fr	Depuis la définition
 general	preferences	fr	Général
 general fields:	preferences	fr	Champs généraux :
+header lines to skip	importexport	fr	Ignorer les lignes de titre
+how to merge with existing data? for each record, all conditions are evaluated from top to bottom, or stop. for blind insert, leave blank.	importexport	fr	Comment fusionner avec les données existantes ? Pour chaque enregistrement, toutes les conditions sont analysées du haut vers le bas, ou bien marquées par un stop. Pour une insertion sans condition, veuillez laisser vide.
 if you specify an export definition, it will be used when you export	preferences	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
 import	importexport	fr	Importation
+import aborted	importexport	fr	Import annulé
+import data is	importexport	fr	L'import des données est
+import definition	importexport	fr	Définition d'import
+import definitions	common	fr	Définitions d'import
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	fr	Importer des définitions. Attention : les définitions avec les mêmes nom seront écrasées !
+imported	importexport	fr	importé
+importexport	common	fr	Import | Export
+importexport wizard finished successfully!	importexport	fr	L'assistant Import|Export s'est terminé avec succès !
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	fr	Importer les informations depuis un fichier CSV. Il s'agit seulement d'une fonction de base, et ne fait rien toute seule.
+include header	importexport	fr	Inclure le header
+just me	importexport	fr	Seulement moi
+last run	importexport	fr	Dernière exécution
+load sample file	importexport	fr	Charger un fichier exemple
 manage mapping	importexport	fr	Gestion des correspondances
 next	importexport	fr	prochain
-next run	importexport	fr	Prochain démarrage
+next run	importexport	fr	Prochaine exécution
+no matches	importexport	fr	pas de résutlat
+no matching records	importexport	fr	Aucun enregistrement correspondant
 no notifications	importexport	fr	Aucune notification
+no records selected	importexport	fr	Aucun enregistrement sélectionné !
+none found	importexport	fr	Aucun trouvé
+old fixed definition	preferences	fr	L'ancienne définition fixe
+please select file to import	importexport	fr	Veuillez sélectionner un fichier à importer
+plugin	importexport	fr	Plugin
 preview	importexport	fr	Aperçu
 previous	importexport	fr	précédent
+problems during import:	importexport	fr	Problèmes pendant l'import :
+save as definition	importexport	fr	Sauvegarder comme une définition
 schedule	common	fr	planification
+schedule import / export	common	fr	Planifier l'import | export
+schedule import | export	importexport	fr	Planifier import | export
+schedule not found	importexport	fr	Planification non trouvée.
+schedule times are server time!  currently %s.	importexport	fr	La planification se base sur le temps du serveur ! Actuellement il est  %s.
+select definition	importexport	fr	Sélectionner une définition
+select plugin	importexport	fr	Sélectionner un plugin
+select...	importexport	fr	Sélectionner...
+skipped	importexport	fr	Ignoré
+some nice text	importexport	fr	Un peu de texte sympathique...
+some records may not have been imported	importexport	fr	Quelques enregistrements n'ont peut-être pas été importés.
+stop	importexport	fr	Stop
+target	importexport	fr	Cible
+target examples: vfs://default/home/user/export.csv or http://server.net/prices.csv	importexport	fr	Exemples de cible : vfs://default/home/user/export.csv ou http://server.net/prices.csv
+target field	importexport	fr	Champ cible
+test only	importexport	fr	Test seulement
+too many matches	importexport	fr	trop de résultats
 translation	importexport	fr	Traduction
 true	importexport	fr	Vrai
+try	importexport	fr	Essayer
 unable to delete	importexport	fr	incapable de supprimer
+unable to link to %1 "%2"	importexport	fr	Incapable de lier %1 "%2"
+unable to schedule	importexport	fr	Incapable d'établir la planification
+update categories	importexport	fr	Mettre à jour les catégories
 use default	importexport	fr	Utiliser le défaut
 use field from csv if possible	importexport	fr	Utiliser le champ du CSV si possible
 user preference	importexport	fr	Préférences de l'utilisateur
-which useres are allowed for this definition	importexport	fr	Quels utilisateurs sont autorisés pour cette définition
+user template folder	importexport	fr	Dossier de modèles utilisateurs
+users allowed to create their own definitions	importexport	fr	Autoriser les utilisateurs à créer leurs propres définitions
+users allowed to share their own definitions	importexport	fr	Utilisateurs autorisés à partager leurs propres définitions
+warnings	importexport	fr	Avertissements
+which useres are allowed for this definition	importexport	fr	Quels utilisateurs sont-ils autorisés pour cette définition
+which users are allowed to use this definition	importexport	fr	Quels utilisateurs sont-ils autorisés pour cette définition
+you may want to <a href="%1" target="_new">backup</a> first.	importexport	fr	Vous souhaitez peut-être d'abord <a href="%1" target="_new">sauvegarder</a>.
+you need to select an app and format first!	importexport	fr	Vous devez d'abord sélectionner une application et un format !

@@ -70,6 +70,7 @@ in which country are you. this is used to set certain defaults for you.	preferen
 interface/template selection	preferences	fr	Sélection de l'interface/modèle
 just clicking on the line, like a checkbox	preferences	fr	cliquer juste sur la ligne, comme sur un case à cocher
 language	preferences	fr	Langue
+look & feel	preferences	fr	Ergonomie
 lowercase letters	preferences	fr	lettres minuscules
 max matches per page	preferences	fr	Nombre max d'occurences par page
 max number of icons in navbar	preferences	fr	Nombre maximal d'icônes de la barre de navigation
