@@ -253,13 +253,13 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 									var ident = content.expandName(value);
 									var regex = new RegExp("\\[" + content.perspectiveData.row + "\\]");
 									
-									if(ident.match(regex))
+									if(ident != null && ident.match(regex))
 									{
 										rowData[rowIndex] = jQuery.extend({}, rowDataEntry);
 										content.perspectiveData.row = ++rowIndex;
 										regex = new RegExp("\\[" + content.perspectiveData.row + "\\]");
 									}
-								} while(ident.match(regex))
+								} while(ident != null && ident.match(regex))
 								return;
 							}
 						}
