@@ -464,6 +464,14 @@ class importexport_import_csv implements importexport_iface_import_record { //, 
 					$record[$name] = null;
 				}
 			}
+			foreach((array)$fields['float'] as $name)
+			{
+				if($record[$name] != null && $record[$name] != '') {
+					$dec_point = $GLOBALS['egw_info']['user']['preferences']['common']['number_format'][0];
+					if (empty($dec_point)) $dec_point = '.';
+					$record[$name] = floatval(str_replace($dec_point, '.', preg_replace('/[^\d'.preg_quote($dec_point).']/', '', $record[$name])));
+				}
+			}
 
 			// Some custom methods for conversion
 			foreach((array)$methods as $name => $method) {
