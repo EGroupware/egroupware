@@ -218,7 +218,8 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 			var rowDataEntry = rowData[rowData.length-1];
 			var rowIndex = rowData.length-1;
 			// Find out if we have any content rows, and how many
-			while(true)
+			var cont = true;
+			while(cont)
 			{
 				if(content.data[rowIndex])
 				{
@@ -226,6 +227,42 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 
 					rowIndex++;
 				}
+				
+				else if (this.lastRowNode != null)
+				{
+					// Have to look through actual widgets to support const[$row]
+					// style names - should be avoided so we can remove this extra check
+					// Old etemplate checked first two widgets, or first two box children
+					var currentPerspective = jQuery.extend({},content.perspectiveData);
+					var check = function(node, nodeName)
+					{
+						if(nodeName == 'box' || nodeName == 'hbox' || nodeName == 'vbox')
+						{
+							return et2_filteredNodeIterator(node, check, this);
+						}
+						content.perspectiveData.row = rowIndex;
+						for(var attr in node.attributes)
+						{
+							var value  = et2_readAttrWithDefault(node, node.attributes[attr].name, "");
+							// Don't include first char, those should be handled by normal means
+							// and it would break nextmatch
+							if(value.indexOf('@') > 0 || value.indexOf('$') > 0)
+							{
+								// Ok, we found something.  How many?
+								while(typeof content.expandName(value) !== 'undefined')
+								{
+									rowData[rowIndex] = jQuery.extend({}, rowDataEntry);
+									content.perspectiveData.row = ++rowIndex;
+								}
+								return;
+							}
+						}
+					};
+					et2_filteredNodeIterator(this.lastRowNode, check,this);
+					cont = false;
+					content.perspectiveData = currentPerspective;
+				}
+				
 				else
 				{
 					// No more rows, stop
@@ -421,10 +458,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 			var mgrs = this.getArrayMgrs();
 			for(var name in mgrs)
 			{
-				if(this.getArrayMgr(name).getEntry(y))
-				{
-					this.getArrayMgr(name).perspectiveData.row = y;
-				}
+				this.getArrayMgr(name).perspectiveData.row = y;
 			}
 			if(this._getCell(cells, x, y).rowData.id)
 			{
