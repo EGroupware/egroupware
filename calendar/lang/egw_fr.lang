@@ -5,6 +5,7 @@
 %1 records imported	calendar	fr	%1 enregistrement(s) importé(s)
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	fr	%1 enregistrements lus (pas encore importés, vous pouvez revenir en arrière et décocher Tester l'import)
 %1 weeks	calendar	fr	%1 semaines
+%s the event	calendar	fr	%s l'événement
 (%1 events in %2 seconds)	calendar	fr	(%1 événement en %2 secondes)
 , exceptions preserved	calendar	fr	, exceptions préservées
 , stati of participants reset	calendar	fr	, statuts des participants remis à zéro
@@ -68,7 +69,7 @@ calendar - planner	calendar	fr	Calendrier - planificateur
 calendar csv export	calendar	fr	Export csv du calendrier
 calendar csv import	calendar	fr	Import cvs du calendrier
 calendar event	calendar	fr	Evénement de Calendrier
-calendar fields:	calendar	fr	Champ calendrier:
+calendar fields:	calendar	fr	Champ calendrier :
 calendar holiday management	admin	fr	Gestion du calendrier des jours fériés
 calendar ical export	calendar	fr	Export iCal du calendrier
 calendar ical import	calendar	fr	Import iCal du calendrier
@@ -80,9 +81,10 @@ calendar-fieldname	calendar	fr	Calendrier - Nom des champs
 can't add alarms in the past !!!	calendar	fr	Impossible d'ajouter des alarmes sur des dates révolues !!!
 can't aquire lock!	calendar	fr	Ne peut prendre le verrou sur l'enregistrement !
 canceled	calendar	fr	Annulé
-category %1 removed because of missing rights	calendar	fr	Catégorie %1 supprimées pour manque de droits
+category %1 removed because of missing rights	calendar	fr	Catégorie %1 supprimée pour manque de droits
 category acl	common	fr	ACL sur les catégories
 category acl only restrict adding a category to an event or changing status of a participant. it does not change the visibility of an event!	calendar	fr	Les ACL sur les catégories restreignent seulement l'ajout d'une catégorie sur un événement ou le changement de statut d'un participant.  Cela ne joue pas sur la visibilité de l'événement.
+chair	calendar	fr	Président
 change history	calendar	fr	Historique des changements
 change your status	calendar	fr	Changer votre statut
 check all	calendar	fr	Vérifier tout
@@ -171,9 +173,9 @@ error adding the alarm	calendar	fr	Erreur lors de l'ajout de l'alarme
 error: can't delete original series!	calendar	fr	Erreur : impossible de supprimer la série d'origine !
 error: duration of event longer then recurrence interval!	calendar	fr	Erreur : la durée de l'événement dépasse celle de l'intervalle de récurrence !
 error: importing the ical	calendar	fr	Erreur lors de l'importation de l'iCal
-error: no participants selected !!!	calendar	fr	Erreur: aucun participant sélectionné !
+error: no participants selected !!!	calendar	fr	Erreur : aucun participant sélectionné !
 error: ressources reservation in private events is not allowed!!!	calendar	fr	Erreur: la réservation de ressources sur les rendez-vous privés n'est pas autorisée !
-error: saving the event !!!	calendar	fr	Erreur: lors de l'enregistrement de l'événement !
+error: saving the event !!!	calendar	fr	Erreur à 'enregistrement de l'événement !
 error: starttime has to be before the endtime !!!	calendar	fr	Erreur : le début doit être antérieur à la fin !!!
 error: the entry has been updated since you opened it for editing!	calendar	fr	Erreur: cette entrée a été mise à jour depuis que vous l'avez ouverte pour la modifier !
 error: you can't shift a series from the past!	calendar	fr	Erreur : vous ne pouvez pas déplacer une série du passé !
@@ -211,7 +213,7 @@ freebusy	common	fr	Libre/Occupé
 freebusy: unknow user '%1', or not available for unauthenticated users!	calendar	fr	Libre/occupé: Utilisateur '%1' inconnu ou indisponible pour les utilisateurs non authentifiés !
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	fr	Libre/occupé: Utilisateur '%1' inconnu, mot de passe incorrect ou non disponible pour les utilisateurs non connectés !!!
 freetime search	calendar	fr	Recherche de Disponibilité
-fri	calendar	fr	Ven
+fri	calendar	fr	Ve
 full description	calendar	fr	Description complète
 fullname of person to notify	calendar	fr	Nom complet de la personne à prévenir
 global categories	calendar	fr	Catégorie globale
@@ -226,7 +228,7 @@ groupmember(s) %1 not included, because you have no access.	calendar	fr	Les memb
 groups: other users can allways be invited, only groups require an invite grant	admin	fr	Groupes : les autres utilisateurs peuvent toujours être invités, seuls les groupes nécessitent une confirmation d'invitation
 h	calendar	fr	h
 here is your requested alarm.	calendar	fr	Voici l'alarme que vous avez demandé.
-hide private events	calendar	fr	Cacher les rv privés
+hide private events	calendar	fr	Cacher les événements privés
 hide private infos	calendar	fr	Cacher les info privées
 high priority	calendar	fr	Priorité haute
 history	calendar	fr	Historique
@@ -288,7 +290,7 @@ merge document...	calendar	fr	Fusionner un document...
 minutes	calendar	fr	Minutes
 modified	calendar	fr	Modifié
 modifier	calendar	fr	Editeur
-mon	calendar	fr	Lun
+mon	calendar	fr	Lu
 month	calendar	fr	Mois
 monthly	calendar	fr	Mensuel
 monthly (by date)	calendar	fr	Mensuel (par date)
@@ -298,18 +300,18 @@ multiple week view	calendar	fr	Vue multi-semaines
 name of current user, all other contact fields are valid too	calendar	fr	Nom de l'utilisateur courant, tous les autres champs de contacts sont valides aussi
 needs action	calendar	fr	Action nécessaire
 new	calendar	fr	Nouveau
-new search with the above parameters	calendar	fr	nouvelle recherche avec les paramètres ci-dessus
+new search with the above parameters	calendar	fr	Nouvelle recherche avec les paramètres ci-dessus
 no automatic purging	admin	fr	Aucune purge automatique
-no events found	calendar	fr	Aucun événement trouvé
+no events found	calendar	fr	Aucun événement trouvé.
 no filter	calendar	fr	Pas de filtre
-no matches found	calendar	fr	aucune occurence trouvée
-no meeting requests	calendar	fr	Pas de demandes de rv
+no matches found	calendar	fr	Aucune occurence trouvée.
+no meeting requests	calendar	fr	Pas les demandes de rendez-vous
 no owner selected	calendar	fr	Pas de propriétaire sélectionné.
 no recurrence	calendar	fr	Pas de récurrence
 no response	calendar	fr	Pas de réponse
 non blocking	calendar	fr	non bloquant
 not	calendar	fr	Pas
-not rejected	calendar	fr	Pas rejeté
+not rejected	calendar	fr	Pas rejetés
 nothing to update, version is already %1.	calendar	fr	Rien à mettre à jour, la version est déjà %1.
 notification messages for added events	calendar	fr	Messages de notification pour les événements ajoutés
 notification messages for canceled events	calendar	fr	Messages de notification pour les événements annulés
@@ -321,7 +323,7 @@ notification settings	calendar	fr	Paramètres de notification
 notify non-egroupware users about event updates	calendar	fr	Notifier les non-utilisateurs d'eGroupware des mises à jour des événements
 number of records to read (%1)	calendar	fr	Nombre d'enregistrements à lire (%1)
 number of weeks to show	calendar	fr	Nombre de semaines à afficher
-observance rule	calendar	fr	Règle d'Observation
+observance rule	calendar	fr	Règle d'observation
 occurence	calendar	fr	Occurence
 old startdate	calendar	fr	Ancienne date de début
 olddate	calendar	fr	Date d'origine
@@ -334,15 +336,15 @@ on time change of more than 4 hours too	calendar	fr	sur le changement de temps d
 one month	calendar	fr	un mois
 one week	calendar	fr	une semaine
 one year	calendar	fr	un an
-only group-events	calendar	fr	Seul les événements de groupe
+only group-events	calendar	fr	Uniquement les evts de groupe
 only the initial date of that recuring event is checked!	calendar	fr	Seule la première date de cet événement récurrent est vérifiée
 open todo's:	calendar	fr	Tâches ouvertes
 optional	calendar	fr	Optionnel
-overlap holiday	calendar	fr	Vacances recouvrantes
-owner too	calendar	fr	Aussi les propriétaires
+overlap holiday	calendar	fr	Jour fériés chevauchant
+owner too	calendar	fr	Aussi les "propriétaires"
 participant table	calendar	fr	Tableau des participants
 participants	calendar	fr	Participants
-participants disinvited from an event	calendar	fr	Invitations annulées pour un événement
+participants disinvited from an event	calendar	fr	Participants dont l'invitation a été retirée
 participants, resources, ...	calendar	fr	Participants, Ressources...
 password for not loged in users to your freebusy information?	calendar	fr	Mot de passe des utilisateurs non connectés pour l'information de disponibilité?
 people holiday	calendar	fr	Vacances des personnes
@@ -498,7 +500,7 @@ to-firstname	calendar	fr	Au prénom
 to-fullname	calendar	fr	Au nom complet
 to-lastname	calendar	fr	Au nom de famille
 tomorrow	calendar	fr	Demain
-tue	calendar	fr	Mar
+tue	calendar	fr	Ma
 two weeks	calendar	fr	deux semaines
 type of planner	calendar	fr	Type de planificateur
 unable to save	calendar	fr	Impossible de sauvegarder
@@ -518,7 +520,7 @@ view series	calendar	fr	Voir la série
 view settings	calendar	fr	Voir les paramètres
 view this event	calendar	fr	Voir cet événement
 views with fixed time intervals	calendar	fr	Vues à intervalles de temps fixes
-wed	calendar	fr	Mer
+wed	calendar	fr	Me
 week	calendar	fr	Semaine
 weekday	calendar	fr	Jour de la semaine
 weekday starts on	calendar	fr	la semaine débute
@@ -535,8 +537,8 @@ while selecting up to x users day- and weekview is not consolidated (5 is used w
 whole day	calendar	fr	Journée entière
 with credentials included	calendar	fr	Avec les droits inclus
 wk	calendar	fr	Sem.
-work day ends on	calendar	fr	Journée de travail finit à
-work day starts on	calendar	fr	Journée de travail démarre à
+work day ends on	calendar	fr	La journée de travail finit à
+work day starts on	calendar	fr	La journée de travail démarre à
 workday	calendar	fr	Jour ouvré
 workdays	calendar	fr	Jour ouvrés
 yearly	calendar	fr	Annuel
