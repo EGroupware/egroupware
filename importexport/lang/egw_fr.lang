@@ -1,16 +1,39 @@
+%1 records processed	importexport	fr	%1 enregistrements traités.
 allowed users	importexport	fr	Utilisateurs autorisés
-automatically created by importexport	importexport	fr	Automatiquement créé par l'importexport
+automatically created by importexport	importexport	fr	Automatiquement créé par l' Import | Export
+basic csv import	importexport	fr	Import CSV simple
 choose a name for this definition	importexport	fr	Choisissez un nom pour cette définition
 choose a plugin	importexport	fr	Choisissez un module enfichable
 choose an application	importexport	fr	Choisissez une application
 choose seperator and charset	importexport	fr	Choisisser le séparateur et l'encodage
+define imports|exports	common	fr	Définir Imports|Exports
+delete all selected definitions	importexport	fr	Supprimer toutes les définitions sélectionnées
+edit conditions	importexport	fr	Modifier les conditions
+expert options	importexport	fr	Options expert
 export	importexport	fr	Exportation
-finish	importexport	fr	terminer
+export all selected definitions	importexport	fr	Exporter toutes les définitions sélectionnées
+finish	importexport	fr	Terminer
 general	importexport	fr	Général
 import	importexport	fr	Importation
+import definitions	common	fr	Définitions d'import
+import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	fr	Importer des définitions. Attention : les définitions avec les mêmes nom seront écrasées !
+importexport	common	fr	Import | Export
+importexport wizard finished successfully!	importexport	fr	L'assistant Import|Export s'est terminé avec succès !
+imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	fr	Importer les informations depuis un fichier CSV. Il s'agit seulement d'une fonction de base, et ne fait rien toute seule.
+load sample file	importexport	fr	Charger un fichier exemple
 manage mapping	importexport	fr	Gestion des correspondances
 next	importexport	fr	prochain
+no records selected	importexport	fr	Aucun enregistrement sélectionné !
 preview	importexport	fr	Aperçu
 previous	importexport	fr	précédent
+save as definition	importexport	fr	Sauvegarder comme une définition
 schedule	common	fr	planification
-which useres are allowed for this definition	importexport	fr	Quels utilisateurs sont autorisés pour cette définition
+schedule import / export	common	fr	Planifier l'import | export
+schedule not found	importexport	fr	Planification non trouvée.
+select definition	importexport	fr	Sélectionner une définition
+select plugin	importexport	fr	Sélectionner un plugin
+some nice text	importexport	fr	Un peu de texte sympathique...
+unable to schedule	importexport	fr	Incapable d'établir la planification
+which useres are allowed for this definition	importexport	fr	Quels utilisateurs sont-ils autorisés pour cette définition
+which users are allowed to use this definition	importexport	fr	Quels utilisateurs sont-ils autorisés pour cette définition
+you need to select an app and format first!	importexport	fr	Vous devez d'abord sélectionner une application et un format !

@@ -41,6 +41,7 @@ addressbook field	addressbook	fr	Champ du carnet d'adresses
 addressbook menu	addressbook	fr	Menu de carnet d'adresses
 addressbook preferences	addressbook	fr	Préférences du carnet d'adresses
 addressbook the contact should be saved to	addressbook	fr	Le contact du carnet d'adresses doit être sauvegardé vers
+addressbook the contact should be shown	addressbook	fr	Carnet d'adresse à afficher au contact
 addressbook-fieldname	addressbook	fr	Carnet d'adresses - nom du champ
 addvcard	addressbook	fr	Ajouter VCard
 advanced search	addressbook	fr	Recherche avancée
@@ -117,6 +118,7 @@ country	common	fr	Pays
 create new links	addressbook	fr	Créer de nouveaux liens
 created	addressbook	fr	Créé(s)
 credit	addressbook	fr	Crédits
+csv field	addressbook	fr	Champ CSV
 csv-fieldname	addressbook	fr	CSV - Nom du champ
 csv-filename	addressbook	fr	CSV - Nom du fichier
 custom	addressbook	fr	Personnalisé
@@ -188,6 +190,7 @@ fields for the csv export	addressbook	fr	Champ pour l'exportation au format CSV
 fields the user is allowed to edit himself	admin	fr	Champs que l'utilisateur peut modifier lui-même
 fields to show in address list	addressbook	fr	Champs à afficher dans la liste des adresses
 fieldseparator	addressbook	fr	Séparateur de champs
+fieldseperator	addressbook	fr	Séparateur de champs
 for read only ldap	admin	fr	pour un LDAP en lecture seule
 for serial letter use this tag. put the content, you want to repeat between two tags.	addressbook	fr	Pour les lettres en série utiliser cette balise. Placer le contenu que vous voulez répéter entre deux balises.
 freebusy uri	addressbook	fr	Freebusy URI
@@ -249,6 +252,7 @@ list all customfields	addressbook	fr	Lister tous les champs spécifiques
 list already exists!	addressbook	fr	La liste existe déjà !
 list created	addressbook	fr	Liste créée
 list creation failed, no rights!	addressbook	fr	La création de la liste a échoué, aucune autorisation!
+load sample file	addressbook	fr	Charger un fichier exemple
 load vcard	addressbook	fr	Charger VCard
 location	addressbook	fr	Emplacement
 locations	addressbook	fr	localisations
