@@ -53,7 +53,7 @@ var et2_file = et2_inputWidget.extend(
 			"name": "Progress node",
 			"type": "string",
 			"default": et2_no_init,
-			"description": "The ID of an alternate node (div) to display progress and results."
+			"description": "The ID of an alternate node (div) to display progress and results.  Either the ID of a box widget or the ID of a specific DOM node will work."
 		},
 		"onStart": {
 			"name": "Start event handler",
@@ -168,9 +168,22 @@ var et2_file = et2_inputWidget.extend(
 		{
 			// This may be a problem submitting via ajax
 		}
-		this.progress = this.options.progress ? 
-			$j(document.getElementById(this.options.progress)) : 
-			$j(document.createElement("div")).appendTo(this.node);
+		if(this.options.progress)
+		{
+			this.progress = $j(document.getElementById(this.options.progress));
+			if(!this.progress)
+			{
+				var widget = this.getRoot().getWidgetById(this.options.progress);
+				if(widget)
+				{
+					this.progress = $j(widget.getDOMNode());
+				}
+			}
+		}
+		if(!this.progress)
+		{
+			this.progress = $j(document.createElement("div")).appendTo(this.node);
+		}
 		this.progress.addClass("progress");
 
 		if(this.options.multiple)
