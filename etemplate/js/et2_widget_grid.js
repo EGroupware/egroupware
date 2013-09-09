@@ -249,11 +249,17 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 							if(value.indexOf('@') > 0 || value.indexOf('$') > 0)
 							{
 								// Ok, we found something.  How many?
-								while(typeof content.expandName(value) !== 'undefined')
-								{
-									rowData[rowIndex] = jQuery.extend({}, rowDataEntry);
-									content.perspectiveData.row = ++rowIndex;
-								}
+								do {
+									var ident = content.expandName(value);
+									var regex = new RegExp("\\[" + content.perspectiveData.row + "\\]");
+									
+									if(ident.match(regex))
+									{
+										rowData[rowIndex] = jQuery.extend({}, rowDataEntry);
+										content.perspectiveData.row = ++rowIndex;
+										regex = new RegExp("\\[" + content.perspectiveData.row + "\\]");
+									}
+								} while(ident.match(regex))
 								return;
 							}
 						}
