@@ -263,13 +263,29 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 							// and it would break nextmatch
 							if(value.indexOf('@') > 0 || value.indexOf('$') > 0)
 							{
-								// Ok, we found something.  How many?
+								// Ok, we found something.  How many? Check for values.
 								var ident = content.expandName(value);
-								while(ident != null)
+								// expandName() handles index into content (@), but we have to look up
+								// regular values
+								if(value.indexOf('@') < 0)
+								{
+									// Returns null if there isn't an actual value
+									ident = content.getEntry(ident,false,true);
+								}
+								while(ident != null && rowIndex < 1000)
 								{
 									rowData[rowIndex] = jQuery.extend({}, rowDataEntry);
 									content.perspectiveData.row = ++rowIndex;
 									ident = content.expandName(value);
+									if(value.indexOf('@') < 0)
+									{
+										// Returns null if there isn't an actual value
+										ident = content.getEntry(ident,false,true);
+									}
+								}
+								if(rowIndex >= 1000)
+								{
+									egw.debug("error", "Problem in autorepeat fallback: too many rows for '%s'.  Use a nextmatch, or start debugging.",value);
 								}
 								return;
 							}
