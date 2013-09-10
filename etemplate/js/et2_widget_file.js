@@ -53,7 +53,7 @@ var et2_file = et2_inputWidget.extend(
 			"name": "Progress node",
 			"type": "string",
 			"default": et2_no_init,
-			"description": "The ID of an alternate node (div) to display progress and results.  Either the ID of a box widget or the ID of a specific DOM node will work."
+			"description": "The ID of an alternate node (div) to display progress and results.  The Node is fetched with et2 getWidgetById so you MUST use the id assigned in XET-File"
 		},
 		"onStart": {
 			"name": "Start event handler",
@@ -170,14 +170,10 @@ var et2_file = et2_inputWidget.extend(
 		}
 		if(this.options.progress)
 		{
-			this.progress = $j(document.getElementById(this.options.progress));
-			if(!this.progress)
+			var widget = this.getRoot().getWidgetById(this.options.progress);
+			if(widget)
 			{
-				var widget = this.getRoot().getWidgetById(this.options.progress);
-				if(widget)
-				{
-					this.progress = $j(widget.getDOMNode());
-				}
+				this.progress = $j(widget.getDOMNode());
 			}
 		}
 		if(!this.progress)
@@ -410,6 +406,7 @@ var et2_file = et2_inputWidget.extend(
 				error = this.egw().lang("File too large.  Maximum %1", et2_vfsSize.prototype.human_size(this.options.max_file_size));
 			}
 		}
+
 		if(this.progress)
 		{
 			var status = $j("<li file='"+file_name+"'>"+file_name
