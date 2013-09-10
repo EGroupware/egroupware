@@ -53,7 +53,7 @@ var et2_file = et2_inputWidget.extend(
 			"name": "Progress node",
 			"type": "string",
 			"default": et2_no_init,
-			"description": "The ID of an alternate node (div) to display progress and results.  The Node is fetched with et2 getWidgetById so you MUST use the id assigned in XET-File"
+			"description": "The ID of an alternate node (div) to display progress and results.  The Node is fetched with et2 getWidgetById so you MUST use the id assigned in XET-File (it may not be available at creation time, so we (re)check on createStatus time)"
 		},
 		"onStart": {
 			"name": "Start event handler",
@@ -173,6 +173,7 @@ var et2_file = et2_inputWidget.extend(
 			var widget = this.getRoot().getWidgetById(this.options.progress);
 			if(widget)
 			{
+				//may be not available at createInputWidget time
 				this.progress = $j(widget.getDOMNode());
 			}
 		}
@@ -406,7 +407,15 @@ var et2_file = et2_inputWidget.extend(
 				error = this.egw().lang("File too large.  Maximum %1", et2_vfsSize.prototype.human_size(this.options.max_file_size));
 			}
 		}
-
+		if(this.options.progress)
+		{
+			var widget = this.getRoot().getWidgetById(this.options.progress);
+			if(widget)
+			{
+				this.progress = $j(widget.getDOMNode());
+				this.progress.addClass("progress");
+			}
+		}
 		if(this.progress)
 		{
 			var status = $j("<li file='"+file_name+"'>"+file_name
@@ -433,7 +442,7 @@ var et2_file = et2_inputWidget.extend(
 	},
 
 	onError: function(event, name, error) {
-console.warn(event,name,error);
+		console.warn(event,name,error);
 	},
 
 	/**
@@ -481,7 +490,7 @@ console.warn(event,name,error);
 	 */
 	remove_file: function(filename)
 	{
-console.info(filename);
+		//console.info(filename);
 		for(var key in this.options.value)
 		{
 			if(this.options.value[key].name == filename)
