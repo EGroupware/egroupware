@@ -68,7 +68,7 @@ var et2_dynheight = Class.extend(
 			var it = this.innerNode.offset().top;
 
 			// Calculate the height of the "bottomNodes"
-			var bminTop = Infinity;
+			var bminTop = this.bottomNodes.length ? Infinity : 0;
 			var bmaxBot = 0;
 			for (var i = 0; i < this.bottomNodes.length; i++)
 			{
