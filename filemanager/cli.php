@@ -17,7 +17,7 @@ chdir(dirname(__FILE__));	// to enable our relative pathes to work
 
 error_reporting(error_reporting() & ~E_NOTICE);
 
-if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling ls as web-page
+if (php_sapi_name() !== 'cli')	// security precaution: forbit calling filemanager/cli.php as web-page
 {
 	die('<h1>'.basename(__FILE__).' must NOT be called as web-page --> exiting !!!</h1>');
 }

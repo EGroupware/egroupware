@@ -12,7 +12,7 @@
  * @version $Id$
  */
 
-if (isset($_SERVER['HTTP_HOST'])) die("This is a commandline ONLY tool!\n");
+if (php_sapi_name() !== 'cli') die("This is a commandline ONLY tool!\n");
 
 /**
  * iSchedule command line client, primary for testing and development purpose

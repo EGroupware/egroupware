@@ -13,7 +13,7 @@
 
 chdir(dirname(__FILE__));	// to enable our relative pathes to work
 
-if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling as web-page
+if (php_sapi_name() !== 'cli')	// security precaution: forbit calling as web-page
 {
 	die('<h1>setup/doc/chown.php must NOT be called as web-page --> exiting !!!</h1>');
 }

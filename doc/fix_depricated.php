@@ -14,7 +14,7 @@
  * @version $Id$
  */
 
-if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling as web-page
+if (php_sapi_name() !== 'cli')	// security precaution: forbit calling as web-page
 {
 	die('<h1>fix_depricated.php must NOT be called as web-page --> exiting !!!</h1>');
 }
@@ -119,7 +119,7 @@ function fix_depricated($file,$replace_file=false)
 
 	// fix call to not longer existing PDO method $result->fetchSingle()
 	$lines = str_replace('->fetchSingle(','->fetchColumn(',$lines);
-	
+
 	// fix calls to deprecated call_user_method(_array)?(method,object[,args])
 	if (preg_match('/call_user_method(_array)?\(/',$lines,$matches))
 	{
