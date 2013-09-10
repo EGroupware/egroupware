@@ -394,8 +394,9 @@ app.filemanager = AppJS.extend(
 	_do_action: function(_type, _selected, _sync, _path)
 	{
 		if (typeof _path == 'undefined') _path = this.get_path();
-		var request = new egw_json_request('filemanager_ui::ajax_action', [_type, _selected, _path], this);
-		request.sendRequest(!_sync, this._do_action_callback, this);
+		var request = egw.json('filemanager_ui::ajax_action', [_type, _selected, _path],
+			this._do_action_callback, this, !_sync, this
+		).sendRequest();
 	},
 	
 	/**
