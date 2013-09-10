@@ -191,9 +191,10 @@ app.filemanager = AppJS.extend(
 		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
 		{
 			var widget = _event.data;
-			var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', widget.getValue(), _path], this);
+			var request = egw.json('filemanager_ui::ajax_action', ['upload', widget.getValue(), _path], 
+				this._upload_callback, this, true, this
+			).sendRequest();
 			widget.set_value('');
-			request.sendRequest(false, this._upload_callback, this);
 		}
 	},
 	
@@ -232,8 +233,9 @@ app.filemanager = AppJS.extend(
 							uploaded[this.my_data.file].name = _value;
 							delete uploaded[this.my_data.file].confirm;
 							// send overwrite-confirmation and/or rename request to server
-							var request = new egw_json_request('filemanager_ui::ajax_action', ['upload', uploaded, this.my_data.path], that);
-							request.sendRequest(false, that._upload_callback, that);
+							egw.json('filemanager_ui::ajax_action', ['upload', uploaded, this.my_data.path],
+								that._upload_callback, that, true, that
+							).sendRequest();
 							return;
 					}
 				},
