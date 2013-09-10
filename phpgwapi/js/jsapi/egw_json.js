@@ -66,7 +66,17 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		};
 	}
 
-	json_request.prototype.sendRequest = function() {
+	/**
+	 * Sends the assembled request to the server
+	 * @param {boolean} [async=false] Overrides async provided in constructor to give an easy way to make simple async requests
+	 * @returns undefined
+	 */
+	json_request.prototype.sendRequest = function(async) {
+		if(typeof async != undefined)
+		{
+			this.async = async;
+		}
+		
 		// Assemble the complete request
 		var request_obj = {
 			'json_data': this.egw.jsonEncode({
