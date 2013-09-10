@@ -104,13 +104,13 @@ var et2_dropdown_button = et2_inputWidget.extend(
 	 * Default menu, so there is something for the widget browser / editor to show
 	 */
 	default_menu: '<ul> \
-	<li id="opt_1.1"><a href="javascript:void(0);"><img src="' + egw().image("navbar") + '"/>Option-1.1</a></li>\
-	<li id="opt_1.2"><a href="javascript:void(0);">Option-1.2</a></li>\
-	<li id="opt_1.3"><a href="javascript:void(0);">Option-1.3</a></li>\
-	<li id="opt_1.4"><a href="javascript:void(0);">Option-1.4<br>\
+	<li data-id="opt_1.1"><a href="javascript:void(0);">Option-1.1</a></li>\
+	<li data-id="opt_1.2"><a href="javascript:void(0);">Option-1.2</a></li>\
+	<li data-id="opt_1.3"><a href="javascript:void(0);">Option-1.3</a></li>\
+	<li data-id="opt_1.4"><a href="javascript:void(0);">Option-1.4<br>\
 		<small>with second line</small>\
 	</a></li>\
-	<li id="opt_1.5"><a href="javascript:void(0);">Option-1.5</a></li>\
+	<li data-id="opt_1.5"><a href="javascript:void(0);">Option-1.5</a></li>\
 </ul>',
 
 	/**
@@ -290,7 +290,7 @@ var et2_dropdown_button = et2_inputWidget.extend(
 	},
 
 	onselect: function(event, selected_node) {
-		this.set_value(selected_node.attr("id"));
+		this.set_value(selected_node.attr("data-id"));
 		this.change(selected_node);
 	},
 
@@ -331,7 +331,7 @@ var et2_dropdown_button = et2_inputWidget.extend(
 		{
 			for(var key in options)
 			{
-				this.menu.first().append("<li id='"+key+"'><a href='javascript:void(0);'>"+options[key]+"</a></li>");
+				this.menu.first().append("<li data-id='"+key+"'><a href='javascript:void(0);'>"+options[key]+"</a></li>");
 			}
 		}
 		this.menu.menu("refresh");
@@ -345,7 +345,7 @@ var et2_dropdown_button = et2_inputWidget.extend(
 	},
 
 	set_value: function(new_value) {
-		var menu_item = $j("[id='"+new_value+"']",this.menu);
+		var menu_item = $j("[data-id='"+new_value+"']",this.menu);
 		if(menu_item.length)
 		{
 			this.value = new_value;
