@@ -302,11 +302,14 @@ var et2_link_to = et2_inputWidget.extend(
 			}
 		}
 		
-		var request = new egw_json_request("etemplate_widget_link::ajax_link::etemplate", 
+		var request = egw.json("etemplate_widget_link::ajax_link::etemplate", 
 			[values.to_app, values.to_id, links],
-			this
+			self._link_result,
+			self,
+			true,
+			self
 		);
-		request.sendRequest(true, self._link_result, self);
+		request.sendRequest();
 	},
 
 	/**
@@ -792,12 +795,13 @@ var et2_link_entry = et2_inputWidget.extend(
 
 		this.search.addClass("loading");
 		this.clear.show();
-		var request = new egw_json_request("etemplate_widget_link::ajax_link_search::etemplate", 
+		var request = egw.json("etemplate_widget_link::ajax_link_search::etemplate", 
 			[this.app_select.val(), '', request.term, request.options],
-			this
+			this._results,
+			this,true,this
 		);
 		this.response = response;
-		request.sendRequest(true, this._results, this);
+		request.sendRequest();
 	},
 
 	/**
@@ -864,11 +868,13 @@ var et2_link_entry = et2_inputWidget.extend(
 		// If a link array was passed in, don't make the ajax call
 		if(typeof _links == 'undefined')
 		{
-			var request = new egw_json_request("etemplate_widget_link::ajax_link::etemplate", 
+			var request = egw.json("etemplate_widget_link::ajax_link::etemplate", 
 				[values.to_app, values.to_id, links],
-				this
+				self._link_result,
+				this,
+				true
 			);
-			request.sendRequest(true, self._link_result, self);
+			request.sendRequest();
 		}
 	},
 
@@ -1232,22 +1238,29 @@ var et2_link_list = et2_link_string.extend(
 		this.context = new egwMenu();
 		this.context.addItem("comment", this.egw().lang("Comment"), "", function() {
 			var link_id = self.context.data.link_id;
-			var comment = prompt(self.egw().lang("Comment"));
-			if(comment !== null)
-			{
-				var remark = jQuery('#link_'+link_id, self.list).children('.remark');
-				remark.addClass("loading");
-				var request = new egw_json_request("etemplate_widget_link::ajax_link_comment::etemplate", 
-					[link_id, comment],
-					this
-				);
-				request.sendRequest(true, function() {
-					if(remark)
-					{
-						remark.removeClass("loading").text(comment+"");
-					}
-				}, self);
-			}
+			
+			et2_dialog.show_prompt(
+				function(button, comment) {
+					if(button != et2_dialog.OK_BUTTON) return;
+					var remark = jQuery('#link_'+link_id, self.list).children('.remark');
+					remark.addClass("loading");
+					var request = egw.json("etemplate_widget_link::ajax_link_comment::etemplate", 
+						[link_id, comment],
+						function() {
+							if(remark)
+							{
+								// Append "" to make sure it's a string, not undefined
+								remark.removeClass("loading").text(comment+"");
+								// Update internal data
+								self.context.data.remark = comment+"";
+							}
+						},
+						this,true
+					).sendRequest();
+				},
+				'',self.egw().lang("Comment"),self.context.data.remark||''
+			);
+			
 		});
 		this.context.addItem("file_info", this.egw().lang("File information"), this.egw().image("edit"), function(menu_item) {
 			var link_data = self.context.data;
@@ -1271,6 +1284,16 @@ var et2_link_list = et2_link_string.extend(
 			var link_id = self.context.data.link_id;
 			self._delete_link(link_id);
 		});
+	},
+		
+	destroy: function() {
+		
+		this._super.apply(this, arguments);
+		if(this.context)
+		{
+			this.context.clear();
+			delete this.context;
+		}
 	},
 
 	_add_link: function(_link_data) {
@@ -1346,8 +1369,9 @@ var et2_link_list = et2_link_string.extend(
 		delete_button.removeClass("delete").addClass("loading");
 		if(link_id)
 		{
-			new egw_json_request("etemplate.etemplate_widget_link.ajax_delete", [link_id])
-				.sendRequest(true, function(data) { if(data) {row.slideUp(row.remove);}});
+			egw.json("etemplate.etemplate_widget_link.ajax_delete", [link_id],
+				function(data) { if(data) {row.slideUp(row.remove);}}
+			).sendRequest();
 		}
 	}
 });
