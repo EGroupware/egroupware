@@ -367,7 +367,7 @@ etemplate2.prototype.submit = function(button)
 		}
 
 		// Create the request object
-		if (typeof egw_json_request != "undefined" && this.menuaction)
+		if (this.menuaction)
 		{
 			var api = this.widgetContainer.egw();
 			var request = api.json(this.menuaction, [this.etemplate_exec_id,values], null, this);
@@ -375,7 +375,7 @@ etemplate2.prototype.submit = function(button)
 		}
 		else
 		{
-			egw.debug("info", "Form got submitted with values: ", values);
+			this.widgetContainer.egw().debug("warn", "Missing menuaction for submit.  Values: ", values);
 		}
 	}
 };

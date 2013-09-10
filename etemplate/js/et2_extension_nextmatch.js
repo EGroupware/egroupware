@@ -13,9 +13,6 @@
 "use strict";
 
 /*egw:uses
-	// Force some base libraries to be loaded
-	jquery.jquery;
-	/phpgwapi/egw_json.js;
 
 	// Include the action system
 	egw_action.egw_action;
