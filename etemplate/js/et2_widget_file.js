@@ -138,7 +138,7 @@ var et2_file = et2_inputWidget.extend(
 			onError: function(event, name, error) { return self.onError(event,name,error);},
 			sendBoundary: window.FormData || jQuery.browser.mozilla,
 			beforeSend: function(form) { return self.beforeSend(form);},
-			url: egw_json_request.prototype._assembleAjaxUrl("etemplate_widget_file::ajax_upload::etemplate"),
+			url: egw.ajaxUrl("etemplate_widget_file::ajax_upload::etemplate"),
 			autoclear: !(this.options.onchange)
 		},this.asyncOptions);
 		this.asyncOptions.fieldName = this.options.id;
