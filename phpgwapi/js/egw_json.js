@@ -85,6 +85,8 @@ function _egw_json_encode_simple(input)
 
 function egw_json_encode(input)
 {
+	egw.debug("warn", "Function %s is deprecated, use egw.jsonEncode() instead", arguments.callee.name);
+	return egw.jsonEncode(input);
 	if (input == null || !input && input.length == 0) return 'null';
 
 	var simple_res = _egw_json_encode_simple(input);
@@ -175,6 +177,7 @@ var _egw_json_plugins = [];
  */
 function egw_json_register_plugin(_callback, _context)
 {
+	egw.debug("warn", "Function %s is deprecated", arguments.callee.name);
 	//Default the context parameter to "window"
 	if (typeof _context == 'undefined') {
 		_context = window;
@@ -226,6 +229,7 @@ function _egw_json_plugin_handle(_type, _response, _context) {
  */
 function egw_json_request(_menuaction, _parameters, _context)
 {
+	egw.debug("warn", "Function %s is deprecated", arguments.callee.name);
 	this.context = window.document;
 	if (typeof _context != 'undefined')
 		this.context = _context;
@@ -300,6 +304,8 @@ egw_json_request.prototype._assembleAjaxUrl = function(_menuaction)
 */
 egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 {
+	egw.debug("warn", "egw_json_request is deprecated\n\
+Use egw.json(menuaction, parameters [,callback, context, async, sender]).sendRequest() instead.");
 	//Store the sender and callback parameter inside this class	
 	this.sender = _sender;
 	if (typeof _callback != "undefined")
@@ -312,7 +318,7 @@ egw_json_request.prototype.sendRequest = function(_async, _callback, _sender)
 
 	//Assemble the actual request object containing the json data string
 	var request_obj = {
-		"json_data": egw_json_encode(
+		"json_data": egw.jsonEncode(
 		{
 			"request": {
 				"parameters": this.parameters
@@ -664,6 +670,7 @@ egw_json_request.prototype.checkLoadFinish = function()
 
 function egw_json_getFormValues(_form, _filterClass)
 {
+	egw.debug("warn", "Function %s is deprecated", arguments.callee.name);
 	var elem = null;
 	if (typeof _form == 'object')
 	{
@@ -691,6 +698,7 @@ function egw_json_getFormValues(_form, _filterClass)
  */
 _xajax_doXMLHTTP = function(_async, _menuaction, _arguments)
 {
+	egw.debug("warn", "Function %s is deprecated", arguments.callee.name);
 	/* Assemble the parameter array */
 	var paramarray = new Array();
 	for (var i = 1; i < _arguments.length; i++)
@@ -741,6 +749,7 @@ window.xajax = {
  */
 function _egw_json_getFormValues(serialized, children, _filterClass)
 {
+	egw.debug("warn", "Function %s is deprecated", arguments.callee.name);
 	//alert('_egw_json_getFormValues(,,'+_filterClass+')');
 	for (var i = 0; i < children.length; ++i) {
 		var child = children[i];
