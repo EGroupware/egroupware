@@ -10,7 +10,7 @@
  * @version $Id$
  */
 
-if (isset($_SERVER['HTTP_HOST'])) die("This is a commandline ONLY tool!\n");
+if (php_sapi_name() !== 'cli') die("This is a commandline ONLY tool!\n");
 
 if ($_SERVER['argc'] <= 1) die('
 Usage: ./svn-helper.php <svn-arguments>
