@@ -233,6 +233,21 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 					// Have to look through actual widgets to support const[$row]
 					// style names - should be avoided so we can remove this extra check
 					// Old etemplate checked first two widgets, or first two box children
+					// This cannot be done inside a nextmatch - nm will do the expansion later
+					var nm = false;
+					var widget = this;
+					while(!nm && widget != this.getRoot())
+					{
+						nm = (widget._type == 'nextmatch');
+						widget = widget.getParent();
+					}
+					if(nm)
+					{
+						// No further checks for repeated rows
+						break;
+					}
+					
+					// Not in a nextmatch, so we can expand with abandon
 					var currentPerspective = jQuery.extend({},content.perspectiveData);
 					var check = function(node, nodeName)
 					{
@@ -249,17 +264,13 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 							if(value.indexOf('@') > 0 || value.indexOf('$') > 0)
 							{
 								// Ok, we found something.  How many?
-								do {
-									var ident = content.expandName(value);
-									var regex = new RegExp("\\[" + content.perspectiveData.row + "\\]");
-									
-									if(ident != null && ident.match(regex))
-									{
-										rowData[rowIndex] = jQuery.extend({}, rowDataEntry);
-										content.perspectiveData.row = ++rowIndex;
-										regex = new RegExp("\\[" + content.perspectiveData.row + "\\]");
-									}
-								} while(ident != null && ident.match(regex))
+								var ident = content.expandName(value);
+								while(ident != null)
+								{
+									rowData[rowIndex] = jQuery.extend({}, rowDataEntry);
+									content.perspectiveData.row = ++rowIndex;
+									ident = content.expandName(value);
+								}
 								return;
 							}
 						}
