@@ -196,8 +196,8 @@ app.admin = AppJS.extend(
 		switch(_action.id)
 		{
 			case 'delete':
-				var request = new egw_json_request('admin_acl::ajax_change_acl', [ids], this);
-				request.sendRequest(false, this._acl_callback, this);
+				var request = egw.json('admin_acl::ajax_change_acl', [ids], this._acl_callback,this,false,this)
+					.sendRequest();
 				break;
 				
 			case 'edit':
