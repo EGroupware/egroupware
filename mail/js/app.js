@@ -486,8 +486,8 @@ app.mail = AppJS.extend(
 				self.mail_queuedFoldersIndex = 0;
 				self.mail_queuedFolders = [];
 
-				var request = new egw_json_request('mail.mail_ui.ajax_setFolderStatus',[_folders]);
-				request.sendRequest();
+				egw.json('mail.mail_ui.ajax_setFolderStatus',[_folders])
+					.sendRequest(true);
 			}
 		}, 10);
 	},
@@ -671,8 +671,8 @@ app.mail = AppJS.extend(
 	mail_deleteMessages: function(_msg,_action)
 	{
 		app.mail.app_refresh(egw.lang('delete messages'), 'mail');
-		var request = new egw_json_request('mail.mail_ui.ajax_deleteMessages',[_msg,(typeof _action == 'undefined'?'no':_action)]);
-		request.sendRequest(false);
+		egw.json('mail.mail_ui.ajax_deleteMessages',[_msg,(typeof _action == 'undefined'?'no':_action)])
+			.sendRequest();
 		for (var i = 0; i < _msg['msg'].length; i++)  egw.dataDeleteUID(_msg['msg'][i]);
 		this.mail_refreshMessageGrid();
 		this.mail_preview();
@@ -728,8 +728,8 @@ app.mail = AppJS.extend(
 	 */
 	mail_emptyTrash: function() {
 		app.mail.app_refresh(egw.lang('empty trash'), 'mail');
-		var request = new egw_json_request('mail.mail_ui.ajax_emptyTrash');
-		request.sendRequest();
+		egw.json('mail.mail_ui.ajax_emptyTrash')
+			.sendRequest(true);
 	},
 
 	/**
@@ -737,8 +737,8 @@ app.mail = AppJS.extend(
 	 */
 	mail_compressFolder: function() {
 		app.mail.app_refresh(egw.lang('compress folder'), 'mail');
-		var request = new egw_json_request('mail.mail_ui.ajax_compressFolder');
-		request.sendRequest();
+		egw.json('mail.mail_ui.ajax_compressFolder')
+			.sendRequest(true);
 	},
 
 	/**
@@ -748,8 +748,8 @@ app.mail = AppJS.extend(
 	 */
 	mail_changeProfile: function(folder,_widget) {
 	//	alert(folder);
-		var request = new egw_json_request('mail.mail_ui.ajax_changeProfile',[folder]);
-		request.sendRequest(false);
+		egw.json('mail.mail_ui.ajax_changeProfile',[folder])
+			.sendRequest();
 		this.mail_refreshMessageGrid();
 
 		return true;
@@ -831,8 +831,8 @@ app.mail = AppJS.extend(
 	mail_flagMessages: function(_flag, _elems)
 	{
 		app.mail.app_refresh(egw.lang('flag messages'), 'mail');
-		var request = new egw_json_request('mail.mail_ui.ajax_flagMessages',[_flag, _elems]);
-		request.sendRequest(false);
+		egw.json('mail.mail_ui.ajax_flagMessages',[_flag, _elems])
+			.sendRequest();
 		this.mail_refreshMessageGrid();
 	},
 
@@ -1066,8 +1066,8 @@ app.mail = AppJS.extend(
 		//alert('mail_move('+messages.msg.join(',')+' --> '+target+')');
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
-		var request = new egw_json_request('mail.mail_ui.ajax_moveMessages',[target, messages]);
-		request.sendRequest(false);
+		egw.json('mail.mail_ui.ajax_moveMessages',[target, messages])
+			.sendRequest();
 		var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
 		this.mail_setRowClass(_senders,'deleted');
 		nm.refresh(messages['msg'],'delete')
@@ -1088,8 +1088,8 @@ app.mail = AppJS.extend(
 		//alert('mail_copy('+messages.msg.join(',')+' --> '+target+')');
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
-		var request = new egw_json_request('mail.mail_ui.ajax_copyMessages',[target, messages]);
-		request.sendRequest(false);
+		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages])
+			.sendRequest();
 		this.mail_refreshMessageGrid();
 	},
 
@@ -1115,8 +1115,8 @@ app.mail = AppJS.extend(
 		if (NewFolderName && NewFolderName.length>0)
 		{
 			app.mail.app_refresh(egw.lang("Adding Folder %1 to %2",NewFolderName, OldFolderName, 'mail'));
-			var request = new egw_json_request('mail.mail_ui.ajax_addFolder',[_senders[0].iface.id, NewFolderName]);
-			request.sendRequest(true);
+			egw.json('mail.mail_ui.ajax_addFolder',[_senders[0].iface.id, NewFolderName])
+				.sendRequest(true);
 		}
 	},
 
@@ -1142,8 +1142,8 @@ app.mail = AppJS.extend(
 		if (NewFolderName && NewFolderName.length>0)
 		{
 			app.mail.app_refresh(egw.lang("Renaming Folder %1 to %2",OldFolderName,NewFolderName, 'mail'));
-			var request = new egw_json_request('mail.mail_ui.ajax_renameFolder',[_senders[0].iface.id, NewFolderName]);
-			request.sendRequest(true);
+			egw.json('mail.mail_ui.ajax_renameFolder',[_senders[0].iface.id, NewFolderName])
+				.sendRequest(true);
 		}
 	},
 
@@ -1167,8 +1167,8 @@ app.mail = AppJS.extend(
 		if (reallyDelete)
 		{
 			app.mail.app_refresh(egw.lang("Deleting Folder %1",OldFolderName, 'mail'));
-			var request = new egw_json_request('mail.mail_ui.ajax_deleteFolder',[_senders[0].iface.id]);
-			request.sendRequest(true);
+			egw.json('mail.mail_ui.ajax_deleteFolder',[_senders[0].iface.id])
+				.sendRequest(true);
 		}
 	},
 
