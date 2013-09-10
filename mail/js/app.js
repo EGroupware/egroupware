@@ -1194,7 +1194,32 @@ app.mail = AppJS.extend(
 //			var request = new egw_json_request('mail_ui::ajax_importMessage', ['upload', widget.getValue(), _path], this);
 //			widget.set_value('');
 //			request.sendRequest();//false, this._upload_callback, this);
-this.et2_obj.submit();
+			this.et2_obj.submit();
+		}
+	},
+
+	/**
+	 * Send names of uploaded files (again) to server, to process them: either copy to vfs or ask overwrite/rename
+	 * 
+	 * @param _event
+	 * @param _file_count
+	 * @param {string} [_path=current directory] Where the file is uploaded to.
+	 */
+	uploadForCompose: function(_event, _file_count, _path)
+	{
+		//console.log(_event,_file_count,_path);
+		// path is probably not needed when uploading for file; maybe it is when from vfs
+		if(typeof _path == 'undefined')
+		{
+			//_path = this.get_path();
+		}
+		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
+		{
+			var widget = _event.data;
+			//console.log(widget.getValue());
+//			var request = new egw_json_request('mail_ui::ajax_importMessage', ['upload', widget.getValue(), _path], this);
+//			widget.set_value('');
+//			request.sendRequest();//false, this._upload_callback, this);
 		}
 	},
 

@@ -10,6 +10,7 @@
 			</hbox>
 			<hbox>
 				<button label="Submit" id="button[apply]"/><button label="Save" id="button[save]"/>
+				<file statustext="Select file to attach to message" multiple='true' progress='mailUploadProgress' onFinish="app.mail.uploadForCompose" id="uploadForCompose" drop_target ="mail-compose_mailUploadSection"/>
 			</hbox>
 			<hbox class="mailComposeHeaders" width="99%">
 				<description value="To"/>
@@ -46,7 +47,7 @@
 			<hbox disabled="@is_html" class="mailComposeBody">
 				<textbox multiline="true" rows="15" cols="120" width="99%" span="all" name="mail_plaintext" id="mail_plaintext"/>
 			</hbox>
-			<box class="mailSignature">
+			<groupbox class="mailSignature">
 				<menulist>
 					<menupopup id="signatureID"/>
 				</menulist>
@@ -54,11 +55,11 @@
 				<menulist>
 					<menupopup id="stationeryID"/>
 				</menulist>
-			</box>
-
-			<box class="mailComposeAttachments">
-				<html id="mail_composeattachments"/>
-			</box>
+			</groupbox>
+			<groupbox class="et2_file" id='mailUploadSection'>
+				<caption label="Files"/>
+				<box class="mailUploadProgress" id="mailUploadProgress" width="97%"/>
+			</groupbox>
 		</vbox>
 	</template>
 </overlay>

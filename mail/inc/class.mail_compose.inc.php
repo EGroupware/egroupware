@@ -979,6 +979,7 @@ class mail_compose
 		$preserv['is_html'] = $content['is_html'];
 		$preserv['is_plain'] = $content['is_plain'];
 		$etpl = new etemplate_new('mail.compose');
+
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
 	}
 
