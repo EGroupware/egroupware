@@ -81,6 +81,16 @@ var et2_checkbox = et2_inputWidget.extend(
 	},
 
 	/**
+	 * Override default to place checkbox before label, if there is no %s in the label
+	 */
+	set_label: function(label) {
+		if(label.length && label.indexOf('%s') < 0)
+		{
+			label = '%s'+label;
+		}
+		this._super.apply(this, [label]);
+	},
+	/**
 	 * Override default to match against set/unset value
 	 */
 	set_value: function(_value) {
