@@ -40,7 +40,7 @@
  */
 
 // protect from being called via HTTP
-if (isset($_SERVER['HTTP_HOST'])) die('This is a command line only script!');
+if (php_sapi_name() !== 'cli') die('This is a command line only script!');
 
 // uncomment to write to log-file, otherwise errors go to stderr
 //$log = '/var/log/dovecot_checkpassword.log';

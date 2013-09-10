@@ -71,7 +71,7 @@
  */
 
 // protect from being called via HTTP
-if (isset($_SERVER['HTTP_HOST'])) die('This is a command line only script!');
+if (php_sapi_name() !== 'cli') die('This is a command line only script!');
 
 // our defaults
 $default_host = 'localhost';

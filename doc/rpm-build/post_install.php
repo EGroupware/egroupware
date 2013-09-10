@@ -9,7 +9,7 @@
  * @version $Id$
  */
 
-if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling post_install as web-page
+if (php_sapi_name() !== 'cli')	// security precaution: forbit calling post_install as web-page
 {
 	die('<h1>rpm_post_install.php must NOT be called as web-page --> exiting !!!</h1>');
 }
