@@ -168,6 +168,16 @@
    </tr>
 
    <tr class="row_on">
+    <td>{lang_Use_secure_cookies_(transmitted_only_via_https)}</td>
+    <td>
+     <select name="newsettings[insecure_cookies]">
+      <option value="">{lang_Yes} - {lang_more_secure}</option>
+      <option value="insecure"{selected_insecure_cookies_insecure}>{lang_No}</option>
+     </select>
+    </td>
+   </tr>
+
+   <tr class="row_off">
     <td>{lang_Deny_all_users_access_to_grant_other_users_access_to_their_entries_?}:</td>
     <td>
      <select name="newsettings[deny_user_grants_access]">

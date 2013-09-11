@@ -536,6 +536,7 @@ updated	admin	en	Updated
 url of the egroupware installation, eg. http://domain.com/egroupware	admin	en	URL of the EGroupware installation, e.g. http://domain.com/egroupware
 usage	admin	en	Usage
 use cookies to pass sessionid	admin	en	Use cookies to pass session ID
+use secure cookies (transmitted only via https)	admin	en	Use secure cookies (transmitted only via https)
 use pure html compliant code (not fully working yet)	admin	en	Use pure HTML compliant code
 use theme	admin	en	Use theme
 user accounts	admin	en	User accounts

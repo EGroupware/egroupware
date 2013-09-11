@@ -536,6 +536,7 @@ url of the egroupware installation, eg. http://domain.com/egroupware	admin	de	UR
 usage	admin	de	Einsatz
 use cookies to pass sessionid	admin	de	Sitzungs-ID in einem Cookie speichern
 use pure html compliant code (not fully working yet)	admin	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
+use secure cookies (transmitted only via https)	admin	de	Benutzer sichere Cookies (werden nur per https übertragen)
 use theme	admin	de	Benutztes Farbschema
 user accounts	admin	de	Benutzerkonten
 user data	common	de	Benutzerdaten
