@@ -313,7 +313,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		{
 			var parts = res.data.func.split('.');
 			var func = parts.pop();
-			var parent = window;
+			var parent = req.egw.window;
 			for(var i=0; i < parts.length && typeof parent[parts[i]] != 'undefined'; ++i)
 			{
 				parent = parent[parts[i]];
