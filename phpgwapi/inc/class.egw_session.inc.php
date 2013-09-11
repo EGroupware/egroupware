@@ -76,6 +76,12 @@ class egw_session
 	const EGW_SESSION_NAME = 'sessionid';
 
 	/**
+	 * Used mcrypt algorithm and mode
+	 */
+	const MCRYPT_ALGO = MCRYPT_RIJNDAEL_128;
+	const MCRYPT_MODE = MCRYPT_MODE_CBC;
+
+	/**
 	* current user login (account_lid@domain)
 	*
 	* @var string
@@ -369,11 +375,11 @@ class egw_session
 	 *
 	 * @param string $kp3 mcrypt key transported via cookie or get parameter like the session id,
 	 *	unlike the session id it's not know on the server, so only the client-request can decrypt the session!
-	 * @param string $algo='tripledes'
-	 * @param string $mode='ecb'
+	 * @param string $algo=self::MCRYPT_ALGO
+	 * @param string $mode=self::MCRYPT_MODE
 	 * @return boolean true if encryption is used, false otherwise
 	 */
-	static private function init_crypt($kp3,$algo='tripledes',$mode='ecb')
+	static private function init_crypt($kp3,$algo=self::MCRYPT_ALGO,$mode=self::MCRYPT_MODE)
 	{
 		if(!$GLOBALS['egw_info']['server']['mcrypt_enabled'])
 		{
@@ -1313,7 +1319,10 @@ class egw_session
 
 		if(!headers_sent())	// gives only a warning, but can not send the cookie anyway
 		{
-			$rv = setcookie($cookiename,$cookievalue,$cookietime,is_null($cookiepath) ? self::$cookie_path : $cookiepath,self::$cookie_domain);
+			$rv = setcookie($cookiename,$cookievalue,$cookietime,
+				is_null($cookiepath) ? self::$cookie_path : $cookiepath,self::$cookie_domain,
+				// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
+				empty($GLOBALS['egw_info']['server']['insecure_cookies']) && !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', true);
 		}
 		//error_log(__METHOD__." $cookiename->$cookievalue".' returned:'.print_r($rv,true).print_r($_COOKIE,true));
 	}
@@ -1350,7 +1359,9 @@ class egw_session
 		}
 		//echo "<p>cookie_path='self::$cookie_path', cookie_domain='self::$cookie_domain'</p>\n";
 
-		session_set_cookie_params(0,$path,$domain);
+		session_set_cookie_params(0, $path, $domain,
+			// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
+			empty($GLOBALS['egw_info']['server']['insecure_cookies']) && !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', true);
 	}
 
 	/**
