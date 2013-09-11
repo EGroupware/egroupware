@@ -160,21 +160,22 @@ class setup
 	*
 	* @return string domain
 	*/
-	function set_cookiedomain()
+	static function cookiedomain()
 	{
 		// Use HTTP_X_FORWARDED_HOST if set, which is the case behind a none-transparent proxy
-		$this->cookie_domain = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ?  $_SERVER['HTTP_X_FORWARDED_HOST'] : $_SERVER['HTTP_HOST'];
+		$cookie_domain = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ?  $_SERVER['HTTP_X_FORWARDED_HOST'] : $_SERVER['HTTP_HOST'];
 
 		// remove port from HTTP_HOST
-		if (preg_match("/^(.*):(.*)$/",$this->cookie_domain,$arr))
+		if (preg_match("/^(.*):(.*)$/",$cookie_domain,$arr))
 		{
-			$this->cookie_domain = $arr[1];
+			$cookie_domain = $arr[1];
 		}
-		if (count(explode('.',$this->cookie_domain)) <= 1)
+		if (count(explode('.',$cookie_domain)) <= 1)
 		{
 			// setcookie dont likes domains without dots, leaving it empty, gets setcookie to fill the domain in
-			$this->cookie_domain = '';
+			$cookie_domain = '';
 		}
+		return $cookie_domain;
 	}
 
 	/**
@@ -188,7 +189,7 @@ class setup
 	{
 		if(!isset($this->cookie_domain))
 		{
-			$this->set_cookiedomain();
+			$this->cookie_domain = self::cookiedomain();
 		}
 		setcookie($cookiename, $cookievalue, $cookietime, '/', $this->cookie_domain,
 			// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
@@ -239,6 +240,10 @@ class setup
 
 		ini_set('session.use_cookie', true);
 		session_name(self::SESSIONID);
+		session_set_cookie_params(0, '/', self::cookiedomain(),
+			// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
+			!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', true);
+
 		if (isset($_COOKIE[self::SESSIONID])) session_id($_COOKIE[self::SESSIONID]);
 
 		return @session_start();	// suppress notice if session already started or warning in CLI
@@ -314,7 +319,7 @@ class setup
 			$_SESSION['ConfigLang'] = self::get_lang();
 			$_SESSION['egw_last_action_time'] = time();
 			session_regenerate_id(true);
-			$this->set_cookie(self::SESSIONID, session_id(), 0);
+
 			return true;
 		}
 		//error_log(__METHOD__."('$auth_type') \$_COOKIE['".self::SESSIONID."'] = ".array2string($_COOKIE[self::SESSIONID]).", \$_SESSION=".array2string($_SESSION));
