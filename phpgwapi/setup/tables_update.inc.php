@@ -370,4 +370,8 @@ function phpgwapi_upgrade1_8_003()
 	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.8.004';
 }
 
+function phpgwapi_upgrade1_8_004()
+{
+	return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.8.005';
+}
 
