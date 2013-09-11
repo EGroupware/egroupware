@@ -201,18 +201,27 @@ class setup
 	}
 
 	/**
-	 * Get configuration language from $_POST or $_COOKIE and validate it
+	 * Get configuration language from $_POST or $_SESSION and validate it
 	 *
 	 * @return string
 	 */
 	static function get_lang()
 	{
-		$ConfigLang   = get_var('ConfigLang',  array('POST','COOKIE'));
-		if (preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$ConfigLang))
+		if (isset($_POST['ConfigLang']))
 		{
-			return $ConfigLang;
+			$ConfigLang = $_POST['ConfigLang'];
 		}
-		return null;	// not returning 'en', as it suppresses the language selection in check_install and manageheader
+		else
+		{
+			if (!isset($_SESSION)) self::session_start();
+			$ConfigLang = $_SESSION['ConfigLang'];
+		}
+		if (!preg_match('/^[a-z]{2}(-[a-z]{2})?$/',$ConfigLang))
+		{
+			$ConfigLang = null;	// not returning 'en', as it suppresses the language selection in check_install and manageheader
+		}
+		//error_log(__METHOD__."() \$_POST['ConfigLang']=".array2string($_POST['ConfigLang']).", \$_SESSION['ConfigLang']=".array2string($_SESSION['ConfigLang'])." returning ".array2string($ConfigLang));
+		return $ConfigLang;
 	}
 
 	/**
@@ -224,6 +233,21 @@ class setup
 	 * Session timeout in secs (1200 = 20min)
 	 */
 	const TIMEOUT = 1200;
+
+	/**
+	 * Start session
+	 */
+	private static function session_start()
+	{
+		// make sure we have session extension available, otherwise fail with exception that we need it
+		check_load_extension('session', true);
+
+		ini_set('session.use_cookie', true);
+		session_name(self::SESSIONID);
+		if (isset($_COOKIE[self::SESSIONID])) session_id($_COOKIE[self::SESSIONID]);
+
+		return @session_start();	// suppress notice if session already started or warning in CLI
+	}
 
 	/**
 	 * authenticate the setup user
@@ -241,14 +265,7 @@ class setup
 			return false;
 		}
 
-		// make sure we have session extension available, otherwise fail with exception that we need it
-		check_load_extension('session', true);
-
-		ini_set('session.use_cookie', true);
-		session_name(self::SESSIONID);
-		if (isset($_COOKIE[self::SESSIONID])) session_id($_COOKIE[self::SESSIONID]);
-
-		if (!session_start() || isset($_REQUEST['FormLogout']) ||
+		if (!self::session_start() || isset($_REQUEST['FormLogout']) ||
 			empty($_SESSION['egw_setup_auth_type']) || $_SESSION['egw_setup_auth_type'] != $auth_type)
 		{
 			//error_log(__METHOD__."('$auth_type') \$_COOKIE['".self::SESSIONID."'] = ".array2string($_COOKIE[self::SESSIONID]).", \$_SESSION=".array2string($_SESSION).", \$_POST=".array2string($_POST));
@@ -299,6 +316,7 @@ class setup
 					break;
 			}
 			$_SESSION['egw_setup_auth_type'] = $auth_type;
+			$_SESSION['ConfigLang'] = self::get_lang();
 			$_SESSION['egw_last_action_time'] = time();
 			session_regenerate_id(true);
 			$this->set_cookie(self::SESSIONID, session_id(), 0);
