@@ -195,7 +195,9 @@ class setup
 		{
 			$this->set_cookiedomain();
 		}
-		setcookie($cookiename,$cookievalue,$cookietime,'/',$this->cookie_domain);
+		setcookie($cookiename, $cookievalue, $cookietime, '/', $this->cookie_domain,
+			// if called via HTTPS, only send cookie for https and only allow cookie access via HTTP (true)
+			!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', true);
 	}
 
 	/**
@@ -214,162 +216,112 @@ class setup
 	}
 
 	/**
+	 * Name of session cookie
+	 */
+	const SESSIONID = 'egw_setup_sessionid';
+
+	/**
+	 * Session timeout in secs (1200 = 20min)
+	 */
+	const TIMEOUT = 1200;
+
+	/**
 	 * authenticate the setup user
 	 *
-	 * @param	$auth_type	???
+	 * @param string $auth_type='config' 'config' or 'header' (caseinsensitiv)
 	 */
-	function auth($auth_type='Config')
+	function auth($auth_type='config')
 	{
-		#phpinfo();
-		$FormLogout = get_var('FormLogout',  array('GET','POST'));
-		$ConfigLang   = self::get_lang();
-		if(!$FormLogout)
+		$auth_type = strtolower($auth_type);
+		$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = $GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = '';
+
+		if(!$this->checkip($_SERVER['REMOTE_ADDR']))
 		{
-			$ConfigLogin  = get_var('ConfigLogin', array('POST'));
-			$HeaderLogin  = get_var('HeaderLogin', array('POST'));
-			$FormDomain   = get_var('FormDomain',  array('POST'));
-			$FormUser     = get_var('FormUser',    array('POST'));
-			$FormPW       = get_var('FormPW',      array('POST'));
-
-			$this->ConfigDomain = get_var('ConfigDomain',array('POST','COOKIE'));
-			$ConfigUser   = get_var('ConfigUser',  array('POST','COOKIE'));
-			$ConfigPW     = get_var('ConfigPW',    array('POST','COOKIE'));
-			$HeaderUser   = get_var('HeaderUser',  array('POST','COOKIE'));
-			$HeaderPW     = get_var('HeaderPW',    array('POST','COOKIE'));
-
-			/* Setup defaults to aid in header upgrade to version 1.26.
-			 * This was the first version to include the following values.
-			 */
-			if(!@isset($GLOBALS['egw_domain'][$FormDomain]['config_user']) && isset($GLOBALS['egw_domain'][$FormDomain]))
-			{
-				@$GLOBALS['egw_domain'][$FormDomain]['config_user'] = 'admin';
-			}
-			if(!@isset($GLOBALS['egw_info']['server']['header_admin_user']))
-			{
-				@$GLOBALS['egw_info']['server']['header_admin_user'] = 'admin';
-			}
+			//error_log(__METHOD__."('$auth_type') invalid IP");
+			return false;
 		}
 
-		$remoteip   = $_SERVER['REMOTE_ADDR'];
-		if(!empty($remoteip) && !$this->checkip($remoteip)) { return False; }
+		// make sure we have session extension available, otherwise fail with exception that we need it
+		check_load_extension('session', true);
 
-		/* If FormLogout is set, simply invalidate the cookies (LOGOUT) */
-		switch(strtolower($FormLogout))
+		ini_set('session.use_cookie', true);
+		session_name(self::SESSIONID);
+		if (isset($_COOKIE[self::SESSIONID])) session_id($_COOKIE[self::SESSIONID]);
+
+		if (!session_start() || isset($_REQUEST['FormLogout']) ||
+			empty($_SESSION['egw_setup_auth_type']) || $_SESSION['egw_setup_auth_type'] != $auth_type)
 		{
-			case 'config':
-				/* config logout */
-				$expire = time() - 86400;
-				$this->set_cookie('ConfigUser','',$expire,'/');
-				$this->set_cookie('ConfigPW','',$expire,'/');
-				$this->set_cookie('ConfigDomain','',$expire,'/');
-				$GLOBALS['egw_info']['setup']['LastDomain'] = $_COOKIE['ConfigDomain'];
-				$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('You have successfully logged out');
-				$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = '';
-				return False;
-			case 'header':
-				/* header admin logout */
-				$expire = time() - 86400;
-				$this->set_cookie('HeaderUser','',$expire,'/');
-				$this->set_cookie('HeaderPW','',$expire,'/');
-				$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = lang('You have successfully logged out');
-				$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = '';
-				return False;
-		}
-
-		/* We get here if FormLogout is not set (LOGIN or subsequent pages) */
-		/* Expire login if idle for 20 minutes.  The cookies are updated on every page load. */
-		$expire = (int)(time() + (1200*9));
-
-		switch(strtolower($auth_type))
-		{
-			case 'header':
-				if(!empty($HeaderLogin))
+			//error_log(__METHOD__."('$auth_type') \$_COOKIE['".self::SESSIONID."'] = ".array2string($_COOKIE[self::SESSIONID]).", \$_SESSION=".array2string($_SESSION).", \$_POST=".array2string($_POST));
+			if (isset($_REQUEST['FormLogout']))
+			{
+				$this->set_cookie(self::SESSIONID, '', time()-86400);
+				session_destroy();
+				if ($_REQUEST['FormLogout'] == 'config')
 				{
-					/* header admin login */
-					/* New test is md5, cleartext version is for header < 1.26 */
-					if ($this->check_auth($FormUser,$FormPW,$GLOBALS['egw_info']['server']['header_admin_user'],
-						$GLOBALS['egw_info']['server']['header_admin_password']))
-					{
-						$this->set_cookie('HeaderUser',$FormUser,$expire,'/');
-						$this->set_cookie('HeaderPW',md5($FormPW),$expire,'/');
-						$this->set_cookie('ConfigLang',$ConfigLang,$expire,'/');
-						return True;
-					}
-					else
-					{
-						$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = lang('Invalid password');
-						$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = '';
-						return False;
-					}
+					$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('You have successfully logged out');
 				}
-				elseif(!empty($HeaderPW) && $auth_type == 'Header')
+				else
 				{
-					// Returning after login to header admin
-					/* New test is md5, cleartext version is for header < 1.26 */
-					if ($this->check_auth($HeaderUser,$HeaderPW,$GLOBALS['egw_info']['server']['header_admin_user'],
-						$GLOBALS['egw_info']['server']['header_admin_password']))
-					{
-						$this->set_cookie('HeaderUser',$HeaderUser,$expire,'/');
-						$this->set_cookie('HeaderPW',$HeaderPW,$expire,'/');
-						$this->set_cookie('ConfigLang',$ConfigLang,$expire,'/');
-						return True;
-					}
-					else
-					{
-						$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = lang('Invalid password');
-						$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = '';
-						return False;
-					}
+					$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = lang('You have successfully logged out');
 				}
-				break;
-			case 'config':
-				if(!empty($ConfigLogin))
-				{
-					/* config login */
-					/* New test is md5, cleartext version is for header < 1.26 */
-					if (isset($GLOBALS['egw_domain'][$FormDomain]) &&
-						$this->check_auth($FormUser,$FormPW,@$GLOBALS['egw_domain'][$FormDomain]['config_user'],
-						@$GLOBALS['egw_domain'][$FormDomain]['config_passwd']))
-					{
-						$this->set_cookie('ConfigUser',$FormUser,$expire,'/');
-						$this->set_cookie('ConfigPW',md5($FormPW),$expire,'/');
-						$this->set_cookie('ConfigDomain',$FormDomain,$expire,'/');
-						/* Set this now since the cookie will not be available until the next page load */
-						$this->ConfigDomain = $FormDomain;
-						$this->set_cookie('ConfigLang',$ConfigLang,$expire,'/');
-						return True;
-					}
-					else
+				return false;
+			}
+			if (!isset($_POST['FormUser']) || !isset($_POST['FormPW']))
+			{
+				return false;
+			}
+			switch($auth_type)
+			{
+				case 'config':
+					if (!isset($GLOBALS['egw_domain'][$_POST['FormDomain']]) ||
+						!$this->check_auth($_POST['FormUser'], $_POST['FormPW'],
+							$GLOBALS['egw_domain'][$_POST['FormDomain']]['config_user'],
+							$GLOBALS['egw_domain'][$_POST['FormDomain']]['config_passwd']) &&
+						!$this->check_auth($_POST['FormUser'], $_POST['FormPW'],
+							$GLOBALS['egw_info']['server']['header_admin_user'],
+							$GLOBALS['egw_info']['server']['header_admin_passwd']))
 					{
 						$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('Invalid password');
-						$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = '';
-						return False;
+						return false;
 					}
-				}
-				elseif(!empty($ConfigPW))
-				{
-					// Returning after login to config
-					/* New test is md5, cleartext version is for header < 1.26 */
-					if ($this->check_auth($ConfigUser,$ConfigPW,@$GLOBALS['egw_domain'][$this->ConfigDomain]['config_user'],
-						@$GLOBALS['egw_domain'][$this->ConfigDomain]['config_passwd']))
-					{
-						$this->set_cookie('ConfigUser',$ConfigUser,$expire,'/');
-						$this->set_cookie('ConfigPW',$ConfigPW,$expire,'/');
-						$this->set_cookie('ConfigDomain',$this->ConfigDomain,$expire,'/');
-						$this->set_cookie('ConfigLang',$ConfigLang,$expire,'/');
-						return True;
-					}
-					else
+					$this->ConfigDomain = $_SESSION['egw_setup_domain'] = $_POST['FormDomain'];
+					break;
+
+				default:
+				case 'header':
+					if (!$this->check_auth($_POST['FormUser'], $_POST['FormPW'],
+								$GLOBALS['egw_info']['server']['header_admin_user'],
+								$GLOBALS['egw_info']['server']['header_admin_password']))
 					{
 						$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('Invalid password');
-						$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = '';
-						return False;
+						return false;
 					}
-				}
-				break;
+					break;
+			}
+			$_SESSION['egw_setup_auth_type'] = $auth_type;
+			$_SESSION['egw_last_action_time'] = time();
+			session_regenerate_id(true);
+			$this->set_cookie(self::SESSIONID, session_id(), 0);
+			return true;
 		}
+		//error_log(__METHOD__."('$auth_type') \$_COOKIE['".self::SESSIONID."'] = ".array2string($_COOKIE[self::SESSIONID]).", \$_SESSION=".array2string($_SESSION));
+		if ($_SESSION['egw_last_action_time'] < time() - self::TIMEOUT)
+		{
+			$this->set_cookie(self::SESSIONID, '', time()-86400);
+			session_destroy();
+			$GLOBALS['egw_info']['setup'][$_SESSION['egw_setup_auth_type'] == 'config' ? 'ConfigLoginMSG' : 'HeaderLoginMSG'] =
+				lang('Session expired');
+			return false;
+		}
+		if ($auth_type == 'config')
+		{
+			$this->ConfigDomain = $_SESSION['egw_setup_domain'];
+		}
+		// update session timeout
+		$_SESSION['egw_last_action_time'] = time();
 
-		return False;
+		// we have a valid session for $auth_type
+		return true;
 	}
 
     /**
@@ -382,34 +334,34 @@ class setup
     * @param string $user the user supplied username
     * @param string $pw the user supplied password
     * @param string $conf_user the configured username
-    * @param string $conf_pw the configured password
-    * @returns bool
+    * @param string $hash hash to check password agains (no {prefix} for plain and md5!)
+    * @returns bool true on success
     */
-	function check_auth($user,$pw,$conf_user,$conf_pw)
+	function check_auth($user, $pw, $conf_user, $hash)
 	{
-		#echo "<p>setup::check_auth('$user','$pw','$conf_user','$conf_pw')</p>\n";exit;
-		if ($user != $conf_user)
+		if ($user !== $conf_user)
 		{
-			return False; // wrong username
+			$ret = false; // wrong username
 		}
-
-		// Verify that $pw is not already encoded as md5
-		if(!preg_match('/^[0-9a-f]{32}$/',$conf_pw))
+		else
 		{
-			$conf_pw = md5($conf_pw);
+			// support for old plain-text passwords without "{plain}" prefix
+			if ($hash[0] !== '{' && !preg_match('/^[0-9a-f]{32}$/', $hash))
+			{
+				$hash = '{plain}'.$hash;
+			}
+			$ret = auth::compare_password($pw, $hash, 'md5');
 		}
-
-
-		// Verify that $pw is not already encoded as md5
-		if(!preg_match('/^[0-9a-f]{32}$/',$pw))
-		{
-			$pw = md5($pw);
-		}
-
-		return $pw == $conf_pw;
-
+		//error_log(__METHOD__."('$user', '$pw', '$conf_user', '$hash') returning ".array2string($ret));
+		return $ret;
 	}
 
+	/**
+	 * Check for correct IP, if an IP address should be enforced
+	 *
+	 * @param string $remoteip
+	 * @return boolean
+	 */
 	function checkip($remoteip='')
 	{
 		//echo "<p>setup::checkip($remoteip) against setup_acl='".$GLOBALS['egw_info']['server']['setup_acl']."'</p>\n";
@@ -439,7 +391,6 @@ class setup
 				return True;	// match
 			}
 		}
-		$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = '';
 		$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('Invalid IP address');
 		error_log(__METHOD__.'-> checking IP failed:'.print_r($remoteip,true));
 		return False;

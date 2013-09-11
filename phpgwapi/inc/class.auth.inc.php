@@ -477,14 +477,17 @@ class auth
 	 * Create a password for storage in the accounts table
 	 *
 	 * @param string $password
+	 * @param string $type=null default $GLOBALS['egw_info']['server']['sql_encryption_type']
 	 * @return string hash
 	 */
-	static function encrypt_sql($password)
+	static function encrypt_sql($password, $type=null)
 	{
 		/* Grab configured type, or default to md5() (old method) */
-		$type = @$GLOBALS['egw_info']['server']['sql_encryption_type'] ?
-			strtolower($GLOBALS['egw_info']['server']['sql_encryption_type']) : 'md5';
-
+		if (is_null($type))
+		{
+			$type = @$GLOBALS['egw_info']['server']['sql_encryption_type'] ?
+				strtolower($GLOBALS['egw_info']['server']['sql_encryption_type']) : 'md5';
+		}
 		switch($type)
 		{
 			case 'plain':
@@ -519,6 +522,59 @@ class auth
 		}
 		//error_log(__METHOD__."('$password') using '$type' returning ".array2string($e_password).(self::$error ? ' error='.self::$error : ''));
 		return $e_password;
+	}
+
+	/**
+	 * Get available password hashes sorted by securest first
+	 *
+	 * @param string &$securest=null on return securest available hash
+	 * @return array hash => label
+	 */
+	public static function passwdhashes(&$securest=null)
+	{
+		$hashes = array();
+
+		/* Check for available crypt methods based on what is defined by php */
+		if(defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1)
+		{
+			$hashes['blowfish_crypt'] = 'blowfish_crypt';
+		}
+		if(defined('CRYPT_SHA512') && CRYPT_SHA512 == 1)
+		{
+			$hashes['sha512_crypt'] = 'sha512_crypt';
+		}
+		if(defined('CRYPT_SHA256') && CRYPT_SHA256 == 1)
+		{
+			$hashes['sha256_crypt'] = 'sha256_crypt';
+		}
+		if(defined('CRYPT_MD5') && CRYPT_MD5 == 1)
+		{
+			$hashes['md5_crypt'] = 'md5_crypt';
+		}
+		if(defined('CRYPT_EXT_DES') && CRYPT_EXT_DES == 1)
+		{
+			$hashes['ext_crypt'] = 'ext_crypt';
+		}
+		$hashes += array(
+			'ssha' => 'ssha',
+			'smd5' => 'smd5',
+			'sha'  => 'sha',
+		);
+		if(@defined('CRYPT_STD_DES') && CRYPT_STD_DES == 1)
+		{
+			$hashes['crypt'] = 'crypt';
+		}
+
+		$hashes += array(
+			'md5' => 'md5',
+			'plain' => 'plain',
+		);
+
+		// mark the securest algorithm for the user
+		list($securest) = each($hashes); reset($hashes);
+		$hashes[$securest] .= ' ('.lang('securest').')';
+
+		return $hashes;
 	}
 
 	/**

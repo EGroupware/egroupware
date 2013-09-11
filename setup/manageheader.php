@@ -15,7 +15,7 @@ include('./inc/functions.inc.php');
 require_once('./inc/class.setup_header.inc.php');
 $GLOBALS['egw_setup']->header = new setup_header();
 
-$setup_tpl = CreateObject('phpgwapi.Template','./templates/default');
+$setup_tpl = new Template('./templates/default', 'keep');	// 'keep' to keep our {hash} prefix of passwords
 $setup_tpl->set_file(array(
 	'T_head' => 'head.tpl',
 	'T_footer' => 'footer.tpl',
@@ -28,6 +28,13 @@ $setup_tpl->set_block('T_login_stage_header','B_multi_domain','V_multi_domain');
 $setup_tpl->set_block('T_login_stage_header','B_single_domain','V_single_domain');
 $setup_tpl->set_block('T_setup_manage','manageheader','manageheader');
 $setup_tpl->set_block('T_setup_manage','domain','domain');
+
+$setup_tpl->set_var(array(
+	'lang_select' => '',
+	'comment_l' => '',
+	'comment_r' => '',
+	'detected' => '',
+));
 
 // authentication phase
 $GLOBALS['egw_info']['setup']['stage']['header'] = $GLOBALS['egw_setup']->detection->check_header();
@@ -66,7 +73,7 @@ switch($GLOBALS['egw_info']['setup']['stage']['header'])
 		break;
 }
 
-if (!file_exists('../header.inc.php') || !is_readable('../header.inc.php') || !defined('EGW_SERVER_ROOT') || EGW_SERVER_ROOT == '..')
+if (!file_exists('../header.inc.php') || filesize('../header.inc.php') < 200 || !is_readable('../header.inc.php') || !defined('EGW_SERVER_ROOT') || EGW_SERVER_ROOT == '..')
 {
 	$GLOBALS['egw_setup']->header->defaults();
 }
@@ -157,7 +164,7 @@ function check_header_form()
 				$GLOBALS['egw_info']['server'][$name] = $value == 'True';
 				break;
 			case 'new_admin_password':
-				if ($value) $GLOBALS['egw_info']['server']['header_admin_password'] = md5($value);
+				if ($value) $GLOBALS['egw_info']['server']['header_admin_password'] = $value;
 				break;
 			default:
 				$GLOBALS['egw_info']['server'][$name] = $value;
@@ -181,7 +188,7 @@ function check_header_form()
 
 			if ($name == 'new_config_passwd')
 			{
-				if ($value) $GLOBALS['egw_domain'][$domain]['config_passwd'] = md5($value);
+				if ($value) $GLOBALS['egw_domain'][$domain]['config_passwd'] = $value;
 				continue;
 			}
 			$GLOBALS['egw_domain'][$domain][$name] = $value;

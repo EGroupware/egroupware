@@ -157,47 +157,7 @@ function passwdhashes($config,$return_hashes=false)
 
 function sql_passwdhashes($config, $return_hashes=false, &$securest=null)
 {
-	$hashes = array();
-
-	/* Check for available crypt methods based on what is defined by php */
-	if(defined('CRYPT_SHA512') && CRYPT_SHA512 == 1)
-	{
-		$hashes['sha512_crypt'] = 'sha512_crypt';
-	}
-	if(defined('CRYPT_SHA256') && CRYPT_SHA256 == 1)
-	{
-		$hashes['sha256_crypt'] = 'sha256_crypt';
-	}
-	if(defined('CRYPT_BLOWFISH') && CRYPT_BLOWFISH == 1)
-	{
-		$hashes['blowfish_crypt'] = 'blowfish_crypt';
-	}
-	if(defined('CRYPT_MD5') && CRYPT_MD5 == 1)
-	{
-		$hashes['md5_crypt'] = 'md5_crypt';
-	}
-	if(defined('CRYPT_EXT_DES') && CRYPT_EXT_DES == 1)
-	{
-		$hashes['ext_crypt'] = 'ext_crypt';
-	}
-	$hashes += array(
-		'ssha' => 'ssha',
-		'smd5' => 'smd5',
-		'sha'  => 'sha',
-	);
-	if(@defined('CRYPT_STD_DES') && CRYPT_STD_DES == 1)
-	{
-		$hashes['crypt'] = 'crypt';
-	}
-
-	$hashes += array(
-		'md5' => 'md5',
-		'plain' => 'plain',
-	);
-
-	// mark the securest algorithm for the user
-	list($securest) = each($hashes); reset($hashes);
-	$hashes[$securest] .= ' ('.lang('securest').')';
+	$hashes = auth::passwdhashes($securest);
 
 	return $return_hashes ? $hashes : _options_from($hashes, $config['sql_encryption_type'] ? $config['sql_encryption_type'] : 'md5');
 }

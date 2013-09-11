@@ -154,9 +154,11 @@ class setup_header
 	 */
 	function generate($egw_info,$egw_domain)
 	{
-		$tpl =& CreateObject('phpgwapi.Template','../');
+		$tpl = new Template('../', 'keep');	// 'keep' to not loose '{hash}' prefix of password-hashes!
 		$tpl->set_file(array('header' => 'header.inc.php.template'));
 		$tpl->set_block('header','domain','domain');
+
+		auth::passwdhashes($most_secure_pw_hash);
 
 		foreach($egw_domain as $domain => $data)
 		{
@@ -166,7 +168,7 @@ class setup_header
 				if ($name == 'db_port' && !$value) $value = $this->default_db_ports[$data['db_type']];
 				if ($name == 'config_passwd')
 				{
-					$var['CONFIG_PASS'] = $this->is_md5($value) ? $value : md5($value);
+					$var['CONFIG_PASS'] = self::is_hashed($value) ? $value : auth::encrypt_sql($value, $most_secure_pw_hash);
 				}
 				else
 				{
@@ -181,7 +183,7 @@ class setup_header
 		$var = Array();
 		foreach($egw_info['server'] as $name => $value)
 		{
-			if ($name == 'header_admin_password' && !$this->is_md5($value)) $value = md5($value);
+			if ($name == 'header_admin_password' && $value && !self::is_hashed($value)) $value = auth::encrypt_sql($value, $most_secure_pw_hash);
 			if ($name == 'versions')
 			{
 				$name = 'mcrypt_version';
@@ -205,12 +207,21 @@ class setup_header
 	}
 
 	/**
-	 * Gernerate a random mcrypt_iv vector
+	 * Generate a random mcrypt_iv vector
 	 *
 	 * @return string
 	 */
 	function generate_mcyrpt_iv()
 	{
+		/*$mcrypt = mcrypt_module_open(egw_session::MCRYPT_ALGO, '', egw_session::MCRYPT_MODE, '');
+		$size = mcrypt_enc_get_iv_size($mcrypt);
+		if (function_exists('mcrypt_create_iv'))	// PHP 5.3+
+		{
+			$iv = mcrypt_create_iv($size, MCRYPT_DEV_URANDOM);
+			error_log(__METHOD__."() size=$size returning ".array2string($iv));
+			return $iv;
+		}*/
+		$size = 30;
 		srand((double)microtime()*1000000);
 		$random_char = array(
 			'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f',
@@ -220,10 +231,11 @@ class setup_header
 		);
 
 		$iv = '';
-		for($i=0; $i<30; $i++)
+		for($i=0; $i < $size; $i++)
 		{
 			$iv .= $random_char[rand(1,count($random_char))];
 		}
+		//error_log(__METHOD__."() size=$size returning ".array2string($iv));
 		return $iv;
 	}
 
@@ -257,9 +269,17 @@ class setup_header
 		return $supported_db;
 	}
 
-	static function is_md5($str)
+	/**
+	 * Check if pw is hashed
+	 *
+	 * @param string $pw
+	 * @return boolean
+	 */
+	static function is_hashed($pw)
 	{
-		return  preg_match('/^[0-9a-f]{32}$/',$str);
+		$ret = $pw[0] == '{' || preg_match('/^[0-9a-f]{32}$/', $pw);
+		//error_log(__METHOD__."('$pw') returning ".array2string($ret));
+		return $ret;
 	}
 }
 

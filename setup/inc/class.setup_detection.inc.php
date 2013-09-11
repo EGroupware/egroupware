@@ -248,7 +248,7 @@ class setup_detection
 	 */
 	function check_header()
 	{
-		if(!file_exists(EGW_SERVER_ROOT.'/header.inc.php'))
+		if(!file_exists(EGW_SERVER_ROOT.'/header.inc.php') || filesize(EGW_SERVER_ROOT.'/header.inc.php') < 200)
 		{
 			$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage One';
 			return '1';
