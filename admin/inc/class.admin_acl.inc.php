@@ -52,7 +52,7 @@ class admin_acl
 	public function acl(array $content=null, $msg='')
 	{
 		$state = (array)egw_cache::getSession(__CLASS__, 'state');
-		$tpl = new etemplate_old('admin.acl.edit');	// auto-repeat of acl & label not working with etemplate_new!
+		$tpl = new etemplate_new('admin.acl.edit');	// auto-repeat of acl & label not working with etemplate_new!
 
 		if (!is_array($content))
 		{
