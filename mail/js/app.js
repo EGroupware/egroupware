@@ -1220,6 +1220,7 @@ app.mail = AppJS.extend(
 //			var request = new egw_json_request('mail_ui::ajax_importMessage', ['upload', widget.getValue(), _path], this);
 //			widget.set_value('');
 //			request.sendRequest();//false, this._upload_callback, this);
+			this.et2_obj.submit();
 		}
 	},
 

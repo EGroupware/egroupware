@@ -10,7 +10,7 @@
 			</hbox>
 			<hbox>
 				<button label="Submit" id="button[apply]"/><button label="Save" id="button[save]"/>
-				<file statustext="Select file to attach to message" multiple='true' progress='mailUploadProgress' onFinish="app.mail.uploadForCompose" id="uploadForCompose" drop_target ="mail-compose_mailUploadSection"/>
+				<file statustext="Select file to attach to message" multiple='true' progress='mailUploadProgress' onFinish="app.mail.uploadForCompose" id="uploadForCompose" drop_target ="mailUploadSection"/>
 			</hbox>
 			<hbox class="mailComposeHeaders" width="99%">
 				<description value="To"/>
@@ -59,6 +59,25 @@
 			<groupbox class="et2_file" id='mailUploadSection'>
 				<caption label="Files"/>
 				<box class="mailUploadProgress" id="mailUploadProgress" width="97%"/>
+				<grid disabled="@no_griddata" id="attachments" width="100%" maxheight="165" overflow="auto">
+				  <columns>
+				   <column disabled="!@showtempname"/>
+				   <column width="50%" />
+				   <column width="25%" />
+				   <column width="15%"/>
+				   <column />
+				  </columns>
+				  <rows>
+				   <row>
+					<description id="${row}[tmp_name]" />
+					<description id="${row}[name]" />
+					<description id="${row}[type]" />
+					<vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
+					<button id="delete[$row_cont[tmp_name]]" value="Delete" image="delete" />
+				   </row>
+				  </rows>
+				</grid>
+
 			</groupbox>
 		</vbox>
 	</template>

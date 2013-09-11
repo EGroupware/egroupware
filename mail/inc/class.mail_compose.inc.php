@@ -976,6 +976,11 @@ class mail_compose
 			//error_log(__METHOD__.__LINE__.$sessionData['body']);
 			$content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text'] = $sessionData['body'];
 		}
+		$content['showtempname']=0;
+		$content['attachments']=(is_array($content['attachments'])&&is_array($content['uploadForCompose'])?array_merge($content['attachments'],$content['uploadForCompose']):(is_array($content['uploadForCompose'])?$content['uploadForCompose']:(is_array($content['attachments'])?$content['attachments']:null)));
+		//if (is_array($content['attachments'])) foreach($content['attachments'] as $k => &$file) $file['delete['.$file['tmp_name'].']']=0;
+		$content['no_griddata'] = empty($content['attachments']);
+		$preserv['attachments'] = $content['attachments'];
 		$preserv['is_html'] = $content['is_html'];
 		$preserv['is_plain'] = $content['is_plain'];
 		$etpl = new etemplate_new('mail.compose');
