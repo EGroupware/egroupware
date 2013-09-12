@@ -223,7 +223,7 @@ class setup
 	/**
 	 * Name of session cookie
 	 */
-	const SESSIONID = 'egw_setup_sessionid';
+	const SESSIONID = 'sessionid';
 
 	/**
 	 * Session timeout in secs (1200 = 20min)
@@ -319,6 +319,7 @@ class setup
 			$_SESSION['ConfigLang'] = self::get_lang();
 			$_SESSION['egw_last_action_time'] = time();
 			session_regenerate_id(true);
+			$this->set_cookie(self::SESSIONID, session_id(), 0);
 
 			return true;
 		}
