@@ -1069,7 +1069,7 @@ class uifelamimail
 			$this->t->set_var('select_search', $selectSearchType);
 
 			$statusTypes = array(
-				'any'		=> 'any status',
+				'any'		=> ($GLOBALS['egw_info']['user']['preferences']['felamimail']['deleteOptions']!='mark_as_deleted'?'any status':'any status (but deleted)'),
 				'flagged'	=> 'flagged',
 				'unseen'	=> 'unread',
 				'answered'	=> 'replied',

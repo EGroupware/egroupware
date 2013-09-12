@@ -39,6 +39,7 @@ always show html emails	felamimail	en	Always show HTML emails
 and	felamimail	en	And
 any of	felamimail	en	Any of
 any status	felamimail	en	Any status
+any status (but deleted)	felamimail	en	Any status (but deleted)
 anyone	felamimail	en	Anyone
 as a subfolder of	felamimail	en	As a sub folder of
 attach	felamimail	en	Attach
