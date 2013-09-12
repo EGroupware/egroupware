@@ -2737,8 +2737,13 @@
 			}
 			if (is_null(self::$specialUseFolders) || empty(self::$specialUseFolders)) self::$specialUseFolders = $this->getSpecialUseFolders();
 
-			//highest precedence
+			//highest precedence (user defined profiles, or set by specialUseFolder routine)
 			$_folderName = $this->mailPreferences->ic_server[$this->profileID]->$types[$_type]['profileKey'];
+			// check if there is a pref, over- writing/ruling the previous (Folder MUST exist)
+			if (!empty($_folderName) && (!empty($this->mailPreferences->preferences[$types[$_type]['prefName']]) &&
+				$this->mailPreferences->preferences[$types[$_type]['prefName']]!='none' &&
+				$_folder != $this->mailPreferences->preferences[$types[$_type]['prefName']] &&
+				self::folderExists($this->mailPreferences->preferences[$types[$_type]['prefName']],true))) $_folderName = false;
 			//check prefs next
 			if (empty($_folderName)) $_folderName = $this->mailPreferences->preferences[$types[$_type]['prefName']];
 			// does the folder exist???
