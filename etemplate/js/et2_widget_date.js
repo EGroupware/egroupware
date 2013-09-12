@@ -22,9 +22,9 @@
 
 /**
  * Class which implements the "date" XET-Tag
- * 
+ *
  * @augments et2_inputWidget
- */ 
+ */
 var et2_date = et2_inputWidget.extend(
 {
 	attributes: {
@@ -44,7 +44,7 @@ var et2_date = et2_inputWidget.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_date
 	 */
 	init: function() {
@@ -103,6 +103,11 @@ var et2_date = et2_inputWidget.extend(
 			{
 				d.setHours(inst.hour);
 				d.setMinutes(inst.minute);
+			}
+			else if(inst && (typeof inst.hour === 'undefined'))
+			{
+				d.setHours(inst.settings.timepicker.hour);
+				d.setMinutes(inst.settings.timepicker.minute);
 			}
 			self.set_value(d);
 		});
@@ -258,7 +263,7 @@ var et2_date_duration = et2_date.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_date_duration
 	 */
 	init: function() {
@@ -288,7 +293,7 @@ var et2_date_duration = et2_date.extend(
 		},
 		this.createInputWidget();
 	},
-	
+
 	createInputWidget: function() {
 		// Create nodes
 		this.node = $j(document.createElement("span"));
@@ -425,7 +430,7 @@ var et2_date_duration = et2_date.extend(
 
 		return {value: _value, unit:_unit};
 	},
-	
+
 	/**
 	 * Change displayed value into storage value and return
 	 */
@@ -476,7 +481,7 @@ var et2_date_duration_ro = et2_date_duration.extend([et2_IDetachedDOM],
 	},
 
 	/**
-	 * Code for implementing et2_IDetachedDOM 
+	 * Code for implementing et2_IDetachedDOM
 	 * Fast-clonable read-only widget that only deals with DOM nodes, not the widget tree
 	 */
 
@@ -516,7 +521,7 @@ var et2_date_duration_ro = et2_date_duration.extend([et2_IDetachedDOM],
 			}
 		}
 		if(typeof _values.value !== 'undefined')
-		{ 
+		{
 			_values.value = parseFloat(_values.value);
 		}
 		if(_values.value)
@@ -534,7 +539,7 @@ et2_register_widget(et2_date_duration_ro, ["date-duration_ro"]);
  * et2_date_ro is the readonly implementation of some date widget.
  * @augments et2_valueWidget
  */
-var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM], 
+var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 {
 	/**
 	 * Ignore all more advanced attributes.
@@ -561,7 +566,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_date_ro
 	 */
 	init: function() {
@@ -620,7 +625,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 				display = date(this.egw().preference('timeformat') == '24' ? 'H:i' : 'g:i a', this.date);
 				break;
 			case "date-time":
-				display = date(this.egw().preference('dateformat') + " " +  
+				display = date(this.egw().preference('dateformat') + " " +
 					(this.egw().preference('timeformat') == '24' ? 'H:i' : 'g:i a'), this.date);
 				break;
 			case "date-since":
@@ -689,7 +694,7 @@ var et2_date_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.span = jQuery(_nodes[0]);
 		this.set_value(_values["value"]);
 
-		if(_values["class"]) 
+		if(_values["class"])
 		{
 			this.span.addClass(_values["class"]);
 		}
@@ -709,7 +714,7 @@ var et2_date_timeonly_ro = et2_date_ro.extend(
 	},
 	/**
 	 * Construtor
-	 * 
+	 *
 	 * @param _value
 	 * @memberOf et2_date_timeonly_ro
 	 */
