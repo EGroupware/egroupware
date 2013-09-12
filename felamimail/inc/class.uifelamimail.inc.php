@@ -278,6 +278,12 @@ class uifelamimail
 					_debug_array(array(lang('Successfully connected'),$rules));
 				}
 			}
+			echo "<hr /><h3 style='color:red'>".lang('Effective Folder Settings')."</h3>";
+			_debug_array(array('sentFolder'=>$this->bofelamimail->getSentFolder(),
+				'trashFolder'=>$this->bofelamimail->getTrashFolder(),
+				'draftFolder'=>$this->bofelamimail->getDraftFolder(),
+				'templateFolder'=>$this->bofelamimail->getTemplateFolder())
+			);
 			echo "<hr /><h3 style='color:red'>".lang('Preferences')."</h3>";
 			_debug_array($preferences->preferences);
 			//error_log(__METHOD__.__LINE__.' ImapServerId:'.$imapServer->ImapServerId.' Prefs:'.array2string($preferences->preferences));
