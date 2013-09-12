@@ -228,7 +228,7 @@ class setup
 	/**
 	 * Name of session cookie
 	 */
-	const SESSIONID = 'egw_setup_sessionid';
+	const SESSIONID = 'sessionid';
 
 	/**
 	 * Session timeout in secs (1200 = 20min)
@@ -324,6 +324,7 @@ class setup
 			$_SESSION['ConfigLang'] = self::get_lang();
 			$_SESSION['egw_last_action_time'] = time();
 			session_regenerate_id(true);
+			$this->set_cookie(self::SESSIONID, session_id(), 0);
 
 			return true;
 		}
@@ -632,7 +633,7 @@ class setup
 		// Remove categories
 		$this->db->delete(categories::TABLE, array('cat_appname'=>$appname),__LINE__,__FILE__);
 		categories::invalidate_cache($appname);
-		
+
 		// Remove config
 		$this->db->delete(config::TABLE, array('config_app'=>$appname),__LINE__,__FILE__);
 		//echo 'DELETING application: ' . $appname;
