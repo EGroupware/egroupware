@@ -1552,6 +1552,16 @@ class infolog_ui
 						$button = 'apply';	// need to store infolog first
 					}
 				}
+				//Validate the enddate must be grather than startdate
+				if (isset($content['info_enddate']) && isset($content['info_startdate']))
+				{
+					$duration_date = $content['info_enddate']-$content['info_startdate'];
+					if (isset($duration_date) && $duration_date < 0 )
+					{
+						$this->tmpl->set_validation_error('info_startdate', lang('Startdate must be before Enddate!!!'));
+						$button = $action = '';	// stop save or apply
+					}
+				}
 				//echo "<p>infolog_ui::edit(info_id=$info_id) '$button' button pressed, content="; _debug_array($content);
 				if (($button == 'save' || $button == 'apply') && isset($content['info_subject']) && empty($content['info_subject']))
 				{
