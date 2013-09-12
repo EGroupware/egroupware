@@ -666,17 +666,27 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 		{
 			return $this->autoindex($options);
 		}
-		if (($ok = parent::GET($options)) && $this->force_download)
+		if (($ok = parent::GET($options)))
 		{
-			if(html::$user_agent == 'msie' && html::$ua_version < 9.0)
+			// mitigate risk of html downloads by using CSP or force download for IE
+			if (!$this->force_download && in_array($options['mimetype'], array('text/html', 'application/xhtml+xml')))
 			{
-				$attachment = '';
+				if (html::$user_agent == 'msie')	// according to http://caniuse.com/contentsecuritypolicy not supported in IE
+				{
+					$this->force_download = true;
+				}
+				else
+				{
+					$csp = "script-src 'none'";	// forbid to execute any javascript
+					header("Content-Security-Policy: $csp");
+					header("X-Webkit-CSP: $csp");	// Chrome: <= 24, Safari incl. iOS
+					header("X-Content-Security-Policy: $csp");	// FF <= 22
+				}
 			}
-			else
+			if ($this->force_download)
 			{
-				$attachment = ' attachment;';
+				header('Content-disposition: attachment; filename="'.egw_vfs::basename($options['path']).'"');
 			}
-			header('Content-disposition:'.$attachment.' filename="'.egw_vfs::basename($options['path']).'"');
 		}
 		return $ok;
 	}
