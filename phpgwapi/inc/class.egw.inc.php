@@ -118,7 +118,7 @@ class egw extends egw_minimal
 			throw new egw_exception_db_setup('It appears that you have not created the database tables for EGroupware.',999);
 		}
 		// Set the DB's client charset if a system-charset is set and some other values needed by egw_cache (used in config::read)
-		foreach($GLOBALS['egw_info']['server']['system_charset'] = $this->db->select(config::TABLE,'config_name,config_value',array(
+		foreach($this->db->select(config::TABLE,'config_name,config_value',array(
 			'config_app'  => 'phpgwapi',
 			'config_name' => array('system_charset','install_id','temp_dir'),
 		),__LINE__,__FILE__) as $row)
