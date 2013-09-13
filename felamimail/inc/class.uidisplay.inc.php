@@ -1854,6 +1854,7 @@ blockquote[type=cite] {
 			$rawheaders	= $this->bofelamimail->getMessageRawHeader($this->uid, $partID);
 			$bodyParts	= $this->bofelamimail->getMessageBody($this->uid,'',$partID);
 			$attachments	= $this->bofelamimail->getMessageAttachments($this->uid,$partID, '',true);
+			$displayableBody= $this->getdisplayableBody($bodyParts);
 			//_debug_array($nextMessage); exit;
 
 			$webserverURL	= $GLOBALS['egw_info']['server']['webserver_url'];
@@ -1959,7 +1960,7 @@ blockquote[type=cite] {
 			//if(isset($organization)) exit;
 			$this->t->parse("header","message_header",True);
 
-			$this->t->set_var('body', $this->getdisplayableBody($bodyParts));
+			$this->t->set_var('body', $displayableBody);
 
 			// attachments
 			/*
