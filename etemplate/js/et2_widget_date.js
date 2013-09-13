@@ -104,7 +104,7 @@ var et2_date = et2_inputWidget.extend(
 				d.setHours(inst.hour);
 				d.setMinutes(inst.minute);
 			}
-			else if(inst && (typeof inst.hour === 'undefined'))
+			else if(inst && (typeof inst.hour === 'undefined') && (typeof inst.settings.timepicker !== 'undefined'))
 			{
 				d.setHours(inst.settings.timepicker.hour);
 				d.setMinutes(inst.settings.timepicker.minute);
