@@ -809,27 +809,30 @@ class Net_Sieve
     */
     function _parseCapability($data)
     {
-        $data = preg_split('/\r?\n/', $data, -1, PREG_SPLIT_NO_EMPTY);
+        if (!is_bool($data)) $this->_capability = array('sasl' => array(),
+                                   'extensions' => array());
+
+        $data = preg_split('/\r?\n/', $this->_toUpper($data), -1, PREG_SPLIT_NO_EMPTY);
 
         for ($i = 0; $i < count($data); $i++) {
-            if (preg_match('/^"([a-z]+)"( "(.*)")?$/i', $data[$i], $matches)) {
-                switch (strtolower($matches[1])) {
-                    case 'implementation':
-                        $this->_capability['implementation'] = $matches[3];
-                        break;
+            if (!preg_match('/^"([A-Z]+)"( "(.*)")?$/', $data[$i], $matches)) {
+                continue;
+            }
+            switch ($matches[1]) {
+            case 'IMPLEMENTATION':
+                $this->_capability['implementation'] = $matches[3];
+                break;
 
-                    case 'sasl':
-                        $this->_capability['sasl'] = preg_split('/\s+/', $matches[3]);
-                        break;
+            case 'SASL':
+                $this->_capability['sasl'] = preg_split('/\s+/', $matches[3]);
+                break;
 
-                    case 'sieve':
-                        $this->_capability['extensions'] = preg_split('/\s+/', $matches[3]);
-                        break;
-
-                    case 'starttls':
-                        $this->_capability['starttls'] = true;
-                        break;
-                }
+            case 'SIEVE':
+                $this->_capability['extensions'] = preg_split('/\s+/', $matches[3]);
+                break;
+            case 'STARTTLS':
+                $this->_capability['starttls'] = true;
+                break;
             }
         }
     }
@@ -1016,14 +1019,13 @@ class Net_Sieve
      */
     function _getBestAuthMethod($userMethod = null)
     {
-       if( isset($this->_capability['sasl']) ){
+        if( isset($this->_capability['sasl']) ){
            $serverMethods=$this->_capability['sasl'];
-       }else{
+        }else{
            // if the server don't send an sasl capability fallback to login auth
            //return 'LOGIN';
            return new PEAR_Error("This server don't support any Auth methods SASL problem?");
-       }
-
+        }
         if($userMethod != null ){
             $methods = array();
             $methods[] = $userMethod;
@@ -1149,6 +1151,16 @@ class Net_Sieve
             echo "STARTTLS Negotiation Successful\n";
         }
 
+        // The server should be sending a CAPABILITY response after
+        // negotiating TLS. Read it, and ignore if it doesn't.
+        // Unfortunately old Cyrus versions are broken and don't send a
+        // CAPABILITY response, thus we would wait here forever. Parse the
+        // Cyrus version and work around this broken behavior.
+        if (!preg_match('/^CYRUS TIMSIEVED V([0-9.]+)/', $this->_capability['implementation'], $matches) ||
+            version_compare($matches[1], '2.3.10', '>=')) {
+            $this->_doCmd();
+        }
+
         // RFC says we need to query the server capabilities again
         if(PEAR::isError($res = $this->_cmdCapability() )) {
             $msg='Failed to connect, server said: ' . $res->getMessage();
@@ -1164,6 +1176,22 @@ class Net_Sieve
         } else {
           return strlen($string);
         }
+    }
+
+    /**
+     * Locale independant strtoupper() implementation.
+     *
+     * @param string $string The string to convert to lowercase.
+     *
+     * @return string  The lowercased string, based on ASCII encoding.
+     */
+    function _toUpper($string)
+    {
+        $language = setlocale(LC_CTYPE, 0);
+        setlocale(LC_CTYPE, 'C');
+        $string = strtoupper($string);
+        setlocale(LC_CTYPE, $language);
+        return $string;
     }
 }
 ?>
