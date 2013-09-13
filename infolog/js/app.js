@@ -274,4 +274,12 @@ app.infolog = AppJS.extend(
 			}
 		}
 	},
+
+	/**
+	 *
+	 */
+	add_link_sidemenu: function()
+	{
+		egw_openWindowCentered2(egw().link('/index.php?menuaction=infolog.infolog_ui.edit',false),'_blank',750,410,'yes');
+	},
 });

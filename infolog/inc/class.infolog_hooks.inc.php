@@ -98,9 +98,7 @@ class infolog_hooks
 			$file = array(
 				'infolog list' => egw::link('/index.php',array(
 					'menuaction' => 'infolog.infolog_ui.index' )),
-				'Add' => "javascript:egw_openWindowCentered2('".egw::link('/index.php',array(
-					'menuaction' => 'infolog.infolog_ui.edit',
-				),false)."','_blank',750,410,'yes');",
+				'Add' => "javascript:app.infolog.add_from_hook()",
 			);
 			display_sidebox($appname,$GLOBALS['egw_info']['apps']['infolog']['title'].' '.lang('Menu'),$file);
 		}
