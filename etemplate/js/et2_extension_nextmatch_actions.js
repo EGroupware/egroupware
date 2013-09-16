@@ -184,8 +184,7 @@ function nm_action(_action, _senders, _target, _ids)
 				}
 				else
 				{
-					// Full POST
-					nextmatch.getInstanceManager().postSubmit();
+					nextmatch.getInstanceManager().submit();
 				}
 			}
 			else

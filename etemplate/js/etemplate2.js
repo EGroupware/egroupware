@@ -122,6 +122,7 @@ etemplate2.prototype.clear = function()
 		this.widgetContainer.free();
 		this.widgetContainer = null;
 	}
+	$j(this.DOMContainer).empty();
 	
 	// Remove self from the index
 	for(name in this.templates)
