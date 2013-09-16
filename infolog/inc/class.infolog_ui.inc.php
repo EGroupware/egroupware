@@ -1128,7 +1128,7 @@ class infolog_ui
 			'caption' => 'Delete',
 			'group' => ++$group,
 			'disableClass' => 'rowNoDelete',
-			'onExecute' => 'app.infolog.confirm_delete',
+			'onExecute' => 'javaScript:app.infolog.confirm_delete',
 		);
 		if ($query['col_filter']['info_status'] == 'deleted')
 		{
