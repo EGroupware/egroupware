@@ -13,7 +13,7 @@
 
 /**
  * Default action for nextmatch rows, runs action specified _action.data.nm_action: see nextmatch_widget::egw_actions()
- * 
+ *
  * @param _action action object with attributes caption, id, nm_action, ...
  * @param _senders array of rows selected
  */
@@ -62,7 +62,7 @@ function nm_action(_action, _senders, _target, _ids)
 	for (var i = 0; i < idsArr.length; i++)
 	{
 		var id = idsArr[i];
-		ids += (id.indexOf(',') >= 0 ? '"'+id.replace(/"/g,'""')+'"' : id) + 
+		ids += (id.indexOf(',') >= 0 ? '"'+id.replace(/"/g,'""')+'"' : id) +
 			((i < idsArr.length - 1) ? "," : "");
 	}
 	//console.log(_action); console.log(_senders);
@@ -70,7 +70,7 @@ function nm_action(_action, _senders, _target, _ids)
 	var mgr = _action.getManager();
 
 	var select_all = mgr.getActionById("select_all");
-	var confirm_msg = (idsArr.length > 1 || select_all && select_all.checked) && 
+	var confirm_msg = (idsArr.length > 1 || select_all && select_all.checked) &&
 		typeof _action.data.confirm_multiple != 'undefined' ?
 			_action.data.confirm_multiple : _action.data.confirm;
 
@@ -83,9 +83,9 @@ function nm_action(_action, _senders, _target, _ids)
 	// in case we only need to confirm multiple selected (only _action.data.confirm_multiple)
 	else if (typeof _action.data.confirm_multiple != 'undefined' &&  (idsArr.length > 1 || select_all && select_all.checked))
 	{
-		if (!confirm(_action.data.confirm_multiple)) return;		
+		if (!confirm(_action.data.confirm_multiple)) return;
 	}
-	
+
 	var url = '#';
 	if (typeof _action.data.url != 'undefined')
 	{
@@ -97,18 +97,18 @@ function nm_action(_action, _senders, _target, _ids)
 	{
 		target = _action.data.target;
 	}
-	
+
 	switch(_action.data.nm_action)
 	{
 		case 'alert':
 			alert(_action.caption + " (\'" + _action.id + "\') executed on rows: " + ids);
 			break;
-			
+
 		case 'location':
 			if (typeof _action.data.targetapp != 'undefined')
 			{
 				top.egw_appWindowOpen(_action.data.targetapp, url);
-			}	
+			}
 			else if(target)
 			{
 				window.open(url, target);
@@ -118,11 +118,11 @@ function nm_action(_action, _senders, _target, _ids)
 				window.location.href = url;
 			}
 			break;
-			
+
 		case 'popup':
 			egw_openWindowCentered2(url,target,_action.data.width,_action.data.height);
 			break;
-			
+
 		case 'egw_open':
 			var params = _action.data.egw_open.split('-');	// type-appname-idNum (idNum is part of id split by :), eg. "edit-infolog"
 			console.log(params);
@@ -130,7 +130,7 @@ function nm_action(_action, _senders, _target, _ids)
 			if (typeof params[2] != 'undefined') egw_open_id = egw_open_id.split(':')[params[2]];
 			egw(params[1],window).open(egw_open_id,params[1],params[0],params[3],target);
 			break;
-			
+
 		case 'open_popup':
 			// open div styled as popup contained in current form and named action.id+'_popup'
 			if (nm_popup_action == null)
@@ -167,7 +167,7 @@ function nm_action(_action, _senders, _target, _ids)
 					"checkboxes": checkboxes_elem ? checkboxes_elem.value : null
 				});
 				value[nextmatch.options.settings.action_var]= _action.id;
-				
+
 				nextmatch.getValue = function() {
 					return value;
 				}
@@ -198,9 +198,9 @@ function nm_action(_action, _senders, _target, _ids)
 
 /**
  * Callback to check if a certain field (_action.data.fieldId) is (not) equal to given value (_action.data.fieldValue)
- * 
+ *
  * If field is not found, we return false too!
- * 
+ *
  * @param _action egwAction object, we use _action.data.fieldId to check agains _action.data.fieldValue
  * @param _senders array of egwActionObject objects
  * @param _target egwActionObject object, get's called for every object in _senders
@@ -233,10 +233,10 @@ function nm_compare_field(_action, _senders, _target)
 	}
 	if (!field) return false;
 
-	
+
 	if (_action.data.fieldValue.substr(0,1) == '!')
 		return value != _action.data.fieldValue.substr(1);
-	
+
 	return value == _action.data.fieldValue;
 }
 
@@ -246,16 +246,22 @@ var nm_popup_action, nm_popup_ids = null;
 
 /**
  * Open popup for a certain action requiring further input
- * 
+ *
  * Popup needs to have eTemplate name of action id plus "_popup"
- * 
+ *
  * @param _action
  * @param _ids
  */
 function nm_open_popup(_action, _ids)
 {
+	//Check if there is nextmatch on _action otherwise gets the uniqueid from _ids
+	var uid;
+	if (typeof _action.data.nextmatch !== 'undefined')
+		uid = _action.data.nextmatch.getInstanceManager().uniqueId;
+	else if(typeof _ids[0] !== 'undefined')
+		uid = _ids[0].manager.data.nextmatch.getInstanceManager().uniqueId;
 	// Find the popup div
-	var popup = jQuery("#"+(_action.data.nextmatch.getInstanceManager().uniqueId||"") + "_"+_action.id+"_popup").first() || jQuery("[id*='" + _action.id + "_popup']").first();
+	var popup = jQuery("#"+(uid||"") + "_"+_action.id+"_popup").first() || jQuery("[id*='" + _action.id + "_popup']").first();
 	if (popup) {
 		nm_popup_action = _action;
 		if(_ids.length && typeof _ids[0] == 'object')
@@ -366,7 +372,7 @@ function nm_submit_popup(button)
 /**
  * Hide popup
  */
-function nm_hide_popup(element, div_id) 
+function nm_hide_popup(element, div_id)
 {
 	var prefix = element.id.substring(0,element.id.indexOf('['));
 	var popup = div_id ? document.getElementById(div_id) : jQuery("#"+prefix+"_popup").get(0) || jQuery("[id*='" + prefix + "_popup']").get(0);
