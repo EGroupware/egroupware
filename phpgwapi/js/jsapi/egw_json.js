@@ -72,7 +72,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	 * @returns undefined
 	 */
 	json_request.prototype.sendRequest = function(async) {
-		if(typeof async != undefined)
+		if(typeof async != "undefined")
 		{
 			this.async = async;
 		}
