@@ -924,6 +924,7 @@ class infolog_ui
 		$types_add = array();
 		foreach($types as $type => &$data)
 		{
+			if ($type=='email') continue;//requirement by sales that it should not be shown in right - click - action dialog
 			$data = array(
 				'caption' => $data,
 				'icon' => $type,
