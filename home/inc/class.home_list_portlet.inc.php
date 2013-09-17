@@ -62,7 +62,19 @@ class home_list_portlet extends home_portlet
 		// Add a new entry to the list
 		if($context['add'])
 		{
-			$context['list'][] = $context['add'];
+			$ok_to_add = true;
+			foreach($context['list'] as $key => $entry)
+			{
+				if($entry == $context['add'])
+				{
+					$ok_to_add = false;
+					break;
+				}
+			}
+			if($ok_to_add)
+			{
+				$context['list'][] = $context['add'];
+			}
 			unset($context['add']);
 		}
 

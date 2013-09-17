@@ -83,8 +83,10 @@ app.home = AppJS.extend(
 		// call parent
 		this._super.apply(this, arguments);
 
-		this.et2 = et2.widgetContainer;
 		this.portlet_container = this.et2.getWidgetById("portlets");
+		
+		// Don't do twice
+		if(this.portlet_container._children.length > 0) return;
 
 		// Add portlets
 		var content = this.et2.getArrayMgr("content").getEntry("portlets");

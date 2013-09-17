@@ -37,7 +37,7 @@ class home_ui
 		// CSS for Gridster grid layout
 		egw_framework::includeCSS('/phpgwapi/js/jquery/gridster/jquery.gridster.css');
 
-		$template = new etemplate('home.index');
+		$template = new etemplate_new('home.index');
 
 		$content = array(
 			'portlets' => $this->get_user_portlets($template)
@@ -101,7 +101,7 @@ class home_ui
 	 * Actual portlet content is provided by each portlet.
 	 * @param template etemplate so attributes can be set
 	 */
-	protected function get_user_portlets(etemplate &$template)
+	protected function get_user_portlets(etemplate_new &$template)
 	{
 		$portlets = array(
 			'Just a hard-coded test',
