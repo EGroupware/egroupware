@@ -557,6 +557,8 @@ var et2_selectbox = et2_inputWidget.extend(
 			}
 			this.input.css("width",this.options.tags ? "100%":'')
 				.chosen({
+					inherit_select_classes: true,
+					search_contains: true
 				})
 				.change(this.onchange);
 		}
