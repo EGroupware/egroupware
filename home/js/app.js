@@ -303,30 +303,30 @@ app.home = AppJS.extend(
 		set_content: function(id, list_values)
 		{
 			var portlet = app.home.portlet_container.getWidgetById(id);
-                        if(portlet != null)
-                        {
-                                var list = portlet.getWidgetById(id+'-list');
-                                if(list)
-                                {
+			if(portlet != null)
+			{
+				var list = portlet.getWidgetById(id+'-list');
+				if(list)
+				{
 					// List was just rudely pulled from DOM by the call to HTML, put it back
-                                        portlet.content.append(list.getDOMNode());
-                                }
-                                else 
-                                {
+					portlet.content.append(list.getDOMNode());
+				}
+				else 
+				{
 					// Create widget
-                                        list = et2_createWidget('link-list', {id: id+'-list'}, portlet);
+					list = et2_createWidget('link-list', {id: id+'-list'}, portlet);
 					list.doLoadingFinished();
-                                        // Abuse link list by overwriting delete handler
-                                        list._delete_link = app.home.List.delete_link;
-                                }
-                                list.set_value(list_values);
+					// Abuse link list by overwriting delete handler
+					list._delete_link = app.home.List.delete_link;
+				}
+			list.set_value(list_values);
 
-                                // Disable link list context menu
-                                $j('tr',list.list).unbind('contextmenu');
+			// Disable link list context menu
+			$j('tr',list.list).unbind('contextmenu');
 
-                                // Allow scroll bars
-                                portlet.content.css('overflow', 'auto');
-                        }
+			// Allow scroll bars
+			portlet.content.css('overflow', 'auto');
+			}
 		},
 
 
@@ -356,10 +356,21 @@ app.home = AppJS.extend(
 				var link = et2_createWidget('link-entry', {label: egw.lang('Add')}, this.portlet_container);
 				var dialog = et2_dialog.show_dialog(
 					function(button_id) {
+						if(button_id == et2_dialog.CANCEL_BUTTON) return;
 						var new_list = widget.options.settings.list || [];
-						new_list.push(link.getValue());
-						widget._process_edit(button_id,{list: new_list || [],add: link.getValue()});
+						var add = link.getValue();
 						link.destroy();
+						for(var i = 0; i < new_list.length; i++)
+						{
+							if(new_list[i].app == add.app && new_list[i].id == add.id)
+							{
+								// Duplicate
+								return;
+							}
+						}
+						
+						new_list.push(add);
+						widget._process_edit(button_id,{list: new_list});
 					},
 					'Add',
 					egw.lang('Add'), {},

@@ -59,25 +59,6 @@ class home_list_portlet extends home_portlet
 		{
 			$this->title = $context['title'];
 		}
-		// Add a new entry to the list
-		if($context['add'])
-		{
-			$ok_to_add = true;
-			foreach($context['list'] as $key => $entry)
-			{
-				if($entry == $context['add'])
-				{
-					$ok_to_add = false;
-					break;
-				}
-			}
-			if($ok_to_add)
-			{
-				$context['list'][] = $context['add'];
-			}
-			unset($context['add']);
-		}
-
 		$this->context = $context;
 	}
 
@@ -120,7 +101,27 @@ class home_list_portlet extends home_portlet
 		}
 
 		// Find the portlet widget, and add a link-list to it
-		return "<script>app.home.List.set_content('$id', ".json_encode($list).")</script>";
+		$script = 'app.home.List.set_content("'.$id.'", '.json_encode($list).');';
+		if(egw_json_response::isJSONResponse())
+		{
+			$response = egw_json_response::get();
+			// This has to go last, after the template is loaded
+			$response->addBeforeSendDataCallback(
+				function($response, $script) {
+					// Bind to load event to make sure template is loaded first
+					$response->script('$j("#home-index").on("load", function() {'.$script.'});');
+					// Or just call it, in the event of a normal ajax change - no load event
+					$response->script("try { $script } catch (e) {egw.debug('error', e.message);}");
+				}
+				,$response, $script
+			);
+		} else {
+			// Not a JSON Response? Probably an idots first load
+			$response = egw_json_response::get();
+			// Bind to load event to make sure template is loaded first
+			$response->script('$j("#home-index").on("load", function() {'.$script.'});');
+		}
+		return '';
 	}
 
 	/**
