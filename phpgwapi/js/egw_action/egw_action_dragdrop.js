@@ -153,7 +153,12 @@ function egwDragActionImplementation()
 						if(data && data.data.mime && data.data.download_url)
 						{
 							var url = data.data.download_url;
-							if (url[0] == '/') url = window.location.origin+egw.link(url);
+							
+							// NEED an absolute URL
+							if (url[0] == '/') url = egw.link(url);
+							// egw.link adds the webserver, but that might not be an absolute URL - try again
+							if (url[0] == '/') url = window.location.origin+url;
+							
 							// Unfortunately, dragging files is currently only supported by Chrome
 							if(navigator && navigator.userAgent.indexOf('Chrome'))
 							{
