@@ -556,7 +556,9 @@ class defaultimap extends Net_IMAP
 			$options	= $_options;
 			$this->isAdminConnection = false;
 		}
-
+		// the buffering of capabilities triggers connections that STARTTLS to use these capabilities at the wrong time
+		// $this->encryption == 1 -> STARTTLS
+		if ($this->encryption == 1) unset($this->_serverSupportedCapabilities);
 		$this->setStreamContextOptions($this->_getTransportOptions());
 		$this->_timeout = $_timeout;
 		if( PEAR::isError($status = parent::connect($this->_getTransportString(), $this->port, $this->encryption == 1)) ) {
