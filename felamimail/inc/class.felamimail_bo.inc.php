@@ -4041,6 +4041,7 @@ class felamimail_bo
 		if(!empty($folderInfo) && isset($folderInfo[$this->profileID][$_folder]) &&
 			($folderInfo[$this->profileID][$_folder] instanceof PEAR_Error) || $folderInfo[$this->profileID][$_folder] !== true)
 		{
+			if ($folderInfo[$this->profileID][$_folder] instanceof PEAR_Error) error_log(__METHOD__.__LINE__.array2string($folderInfo[$this->profileID][$_folder]->message));
 			$folderInfo[$this->profileID][$_folder] = false; // set to false, whatever it was (to have a valid returnvalue for the static return)
 		}
 		egw_cache::setCache(egw_cache::INSTANCE,'email','icServerFolderExistsInfo'.trim($GLOBALS['egw_info']['user']['account_id']),$folderInfo,$expiration=60*5);
@@ -4132,6 +4133,7 @@ class felamimail_bo
 	function openConnection($_icServerID=0, $_adminConnection=false)
 	{
 		static $isError;
+		if ($_icServerID==0 && !empty($this->profileID))$_icServerID = $this->profileID;
 		//error_log(__METHOD__.__LINE__.'->'.$_icServerID.' called from '.function_backtrace());
 		if (is_null($isError)) $isError = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*5);
 		if ( isset($isError[$_icServerID]) || (($this->icServer instanceof defaultimap) && PEAR::isError($this->icServer->_connectionErrorObject)))
