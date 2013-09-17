@@ -302,7 +302,12 @@ app.home = AppJS.extend(
 		 */
 		set_content: function(id, list_values)
 		{
-			var portlet = app.home.portlet_container.getWidgetById(id);
+			try {
+				var portlet = app.home.portlet_container.getWidgetById(id);
+			} catch(e) {
+				egw.debug("log", "Tried to set home list content with no etemplate");
+				return;
+			};
 			if(portlet != null)
 			{
 				var list = portlet.getWidgetById(id+'-list');
@@ -319,13 +324,13 @@ app.home = AppJS.extend(
 					// Abuse link list by overwriting delete handler
 					list._delete_link = app.home.List.delete_link;
 				}
-			list.set_value(list_values);
+				list.set_value(list_values);
 
-			// Disable link list context menu
-			$j('tr',list.list).unbind('contextmenu');
+				// Disable link list context menu
+				$j('tr',list.list).unbind('contextmenu');
 
-			// Allow scroll bars
-			portlet.content.css('overflow', 'auto');
+				// Allow scroll bars
+				portlet.content.css('overflow', 'auto');
 			}
 		},
 
