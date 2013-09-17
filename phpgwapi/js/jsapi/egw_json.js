@@ -326,7 +326,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 				}
 				catch (e)
 				{
-					req.egw.debug('error', 'Function', res.data.func,
+					req.egw.debug('error', e.message, ' in function', res.data.func,
 						'Parameters', res.data.parms);
 				}
 				return true;
