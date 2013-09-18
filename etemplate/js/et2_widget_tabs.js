@@ -248,6 +248,20 @@ var et2_tabbox = et2_valueWidget.extend([et2_IInput],
 				.appendTo(this.tabContainer);
 		}
 
+		// Check for a passed in value
+		if(this.options.value)
+		{
+			this.selected_index = 0;
+			for(var i = 0; i < this.tabData.length; i++)
+			{
+				if(this.tabData[i].id == this.options.value)
+				{
+					this.selected_index = i;
+					break;
+				}
+			}
+		}
+		
 		this.setActiveTab(this.selected_index);
 	},
 
