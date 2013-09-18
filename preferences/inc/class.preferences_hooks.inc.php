@@ -227,15 +227,6 @@ class preferences_hooks
 				'admin'  => True,
 				'forced' => true,
 			),
-			'show_help' => array(
-				'type'   => 'check',
-				'label'  => 'Show helpmessages by default',
-				'name'   => 'show_help',
-				'help'   => 'Should this help messages shown up always, when you enter the preferences or only on request.',
-				'xmlrpc' => False,
-				'admin'  => False,
-				'default'=> True,
-			),
 			'enable_dragdrop' => array(
 				'type'   => 'check',
 				'label'  => 'Enable drag and drop functionality (experimental)',
