@@ -1118,14 +1118,14 @@ class translation
 					if (stripos($elem,'<pre>')===false)
 					{
 						//$elem = str_replace('@(\r\n)@i',' ',$elem);
-						$elem = str_replace(array("\r\n","\n"),' ',$elem);
+						$elem = str_replace(array("\r\n","\n"),($isHTML?'':' '),$elem);
 					}
 				}
 				$_html = implode('',$contentArr);
 			}
 			else
 			{
-				$_html = str_replace(array("\r\n","\n"),' ',$_html);
+				$_html = str_replace(array("\r\n","\n"),($isHTML?'':' '),$_html);
 			}
 		}
 		$tags = array (
