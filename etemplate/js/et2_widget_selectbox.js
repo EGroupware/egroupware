@@ -555,10 +555,12 @@ var et2_selectbox = et2_inputWidget.extend(
 			{
 				this.input.attr("data-placeholder", this.options.empty_label);
 			}
-			this.input.css("width",this.options.tags ? "100%":'')
-				.chosen({
+			// Properly size chosen, even if on a hidden tab
+			var size = egw.getHiddenDimensions(this.input);
+			this.input.chosen({
 					inherit_select_classes: true,
-					search_contains: true
+					search_contains: true,
+					width: size.w + "px"
 				})
 				.change(this.onchange);
 		}
