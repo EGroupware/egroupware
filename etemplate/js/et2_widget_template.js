@@ -164,6 +164,16 @@ var et2_template = et2_DOMWidget.extend(
 	getDOMNode: function() {
 		return this.div;
 	},
+		
+	/**
+	 * Override to trigger a load event, to facilitate processing when the xml file
+	 * is loaded asyncronously
+	 */
+	 doLoadingFinished: function() {
+		 this._super.apply(this, arguments);
+		 $j(this.getDOMNode()).trigger('load');
+		 return true;
+	 }
 });
 et2_register_widget(et2_template, ["template"]);
 
