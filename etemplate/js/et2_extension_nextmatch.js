@@ -349,8 +349,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * @param _set filter(s) to set eg. { filter: '' } to reset filter in NM header
 	 */
 	applyFilters: function(_set) {
-		this.egw().debug("info", "Changing nextmatch filters to ", this.activeFilters);
-		
 		if(typeof this.activeFilters == "undefined")
 		{
 			this.activeFilters = {col_filter: {}};
@@ -378,6 +376,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			}
 		}
 
+		this.egw().debug("info", "Changing nextmatch filters to ", this.activeFilters);
+		
 		// Update the filters in the grid controller
 		this.controller.setFilters(this.activeFilters);
 
@@ -1614,28 +1614,31 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		jQuery(header.getDOMNode()).addClass(left_or_right == "left" ? "et2_hbox_left":"et2_hbox_right").addClass("nm_header");
 		this.headers.push(header);
 
-		// Bind onChange to update filter, and refresh if needed
+		// Bind onChange to update filter, and refresh if needed.  
+		// We need to do on load because the template file might have to be 
+		// fetched from the server, which is async
 		var self = this;
-		header.iterateOver(function(_widget) {
-			// Previously set change function
-			var widget_change = _widget.change;
-			_widget.change = function(_node) {
-				// Call previously set change function
-				var result = widget_change.call(_widget,_node);
+		$j(header.getDOMNode()).on("load", jQuery.proxy(function() {
+			var header = this;
+			header.iterateOver(function(_widget) {
+				// Previously set change function
+				var widget_change = _widget.change;
+				_widget.change = function(_node) {
+					// Call previously set change function
+					var result = widget_change.call(_widget,_node);
 
-				// Update filters
-				var old = self.nextmatch.activeFilters[_widget.id];
-				self.nextmatch.activeFilters[_widget.id] = _widget.getValue();
+					// Update filters
+					if(result && _widget.isDirty()) {
+						var value = this.getInstanceManager().getValues(header);
+						// Filter now
+						self.nextmatch.applyFilters(value[self.nextmatch.id]);
+					}
+				};
 
-				if(result && old != _widget.getValue()) {
-					// Filter now
-					self.nextmatch.applyFilters();
-				}
-			};
-
-			// Set activeFilters to current value
-			self.nextmatch.activeFilters[_widget.id] = _widget.getValue();
-		}, this, et2_inputWidget);
+				// Set activeFilters to current value
+				//self.nextmatch.activeFilters[_widget.id] = _widget.getValue();
+			}, this, et2_inputWidget);
+		}, header));
 	},
 
 	/**
@@ -1774,17 +1777,40 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 	 * @param filters Array Key => Value pairs of current filters
 	 */
 	setFilters: function(filters) {
+		
+		// Use an array mgr to hande non-simple IDs
+		var mgr = new et2_arrayMgr(filters);
+		
 		this.iterateOver(function(child) {
 			// Skip favorites, don't want them in the filter
 			if(typeof child.id != "undefined" && child.id.indexOf("favorite") == 0) return;
-
+			
+			var value = '';
 			if(typeof child.set_value != "undefined" && child.id)
 			{
-				child.set_value(typeof this[child.id] == "undefined" || this[child.id] == null ? "" : this[child.id]);
+				value = mgr.getEntry(child.id);
+				child.set_value(value == null ? "" : value);
 			}
 			if(typeof child.get_value == "function" && child.id)
 			{
-				this[child.id] = child.get_value();
+				// Put data in the proper place
+				var target = this;
+				var value = child.get_value();
+				
+				// Split up indexes
+				var indexes = child.id.replace('&#x5B;','[').split('[');
+
+				if(indexes.length > 1)
+				{
+					for(var i = 0; i < indexes.length; i++) {
+						indexes[i] = indexes[i].replace('&#x5D;','').replace(']','');
+						if(typeof target[indexes[i]] == "undefined") {
+							target[indexes[i]] = i == indexes.length-1 ? value : {};
+						}
+						target = target[indexes[i]];
+					}
+				}
+				target = value;
 			}
 		}, filters);
 
