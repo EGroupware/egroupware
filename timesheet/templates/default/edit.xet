@@ -136,7 +136,7 @@
 						</columns>
 						<rows>
 							<row disabled="@pm_integration=none">
-								<projectmanager-select statustext="Select a project" id="pm_id" onchange="1" options="None" span="all" class="fullWidth"/>
+								<projectmanager-select statustext="Select a project" id="pm_id" onchange="widget.getInstanceManager().submit();" options="None" span="all" class="fullWidth"/>
 							</row>
 							<row disabled="@pm_integration=full">
 								<textbox blur="@ts_project_blur" id="ts_project" size="65" maxlength="80" class="fullWidth"/>
