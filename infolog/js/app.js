@@ -146,7 +146,7 @@ app.infolog = AppJS.extend(
 					{
 						if (button_id == et2_dialog.YES_BUTTON )
 						{
-							
+
 						}
 					}
 		var confirmDeleteDialog = et2_dialog.show_dialog(callbackDeleteDialog, egw.lang("Do you really want to DELETE this Rule"),egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
@@ -307,6 +307,12 @@ app.infolog = AppJS.extend(
 	 */
 	add_link_sidemenu: function()
 	{
-		egw_openWindowCentered2(egw().link('/index.php?menuaction=infolog.infolog_ui.edit',false),'_blank',750,410,'yes');
+		var app_registry = egw.link_get_registry('infolog');
+		if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
+		{
+			var w_h =app_registry['view_popup'].split('x');
+			if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
+			egw_openWindowCentered2(egw().link('/index.php?menuaction=infolog.infolog_ui.edit',false),'_blank',w_h[0], w_h[1],'yes');
+		}
 	},
 });
