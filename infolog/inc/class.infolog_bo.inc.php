@@ -1394,7 +1394,7 @@ class infolog_bo
 				$infos[$row['info_id']] = array(
 					'status' => $row['info_type'] != 'phone' && $row['info_status'] == 'ongoing' ?
 						$row['info_percent'].'%' : 'infolog/'.$this->status[$row['info_type']][$row['info_status']],
-					'class'  => $row['info_id_parent'] ? 'rowHasParent' : null,
+					'class'  => $row['info_id_parent'] ? 'infolog_rowHasParent' : null,
 				);
 				if (common::image('infolog', $icon=$row['info_type'].'_element') ||
 					common::image('infolog', $icon=$row['info_type']))
@@ -1404,7 +1404,7 @@ class infolog_bo
 			}
 			foreach($this->anzSubs(array_keys($infos)) as $info_id => $subs)
 			{
-				if ($subs) $infos[$info_id]['class'] .= ' rowHasSubs';
+				if ($subs) $infos[$info_id]['class'] .= ' infolog_rowHasSubs';
 			}
 		}
 		return $infos;

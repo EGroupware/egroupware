@@ -99,7 +99,7 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<html span="all" class="redItalic" align="center" id="msg" no_lang="1"/>
+					<html span="all" class="message" align="center" id="msg" no_lang="1"/>
 					<description/>
 					<description/>
 					<description/>
@@ -113,7 +113,7 @@
 						<menulist>
 							<menupopup id="info_type" onchange="1" statustext="Type of the log-entry: Note, Phonecall or ToDo" no_lang="1" readonly="true"/>
 						</menulist>
-						<int id="info_number" class="infoId" readonly="true"/>
+						<int id="info_number" class="infolog_infoId" readonly="true"/>
 					</hbox>
 				</row>
 				<row class="row">
@@ -227,7 +227,7 @@
 						<menulist>
 							<menupopup type="select-account" id="info_modifier" readonly="true"/>
 						</menulist>
-						<date-time class="lpadding5" id="info_datemodified" readonly="true"/>
+						<date-time class="infolog_lpadding5" id="info_datemodified" readonly="true"/>
 					</hbox>
 				</row>
 			</rows>

@@ -167,7 +167,7 @@
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<html align="center" id="msg" no_lang="1" span="all" class="redItalic"/>
+					<html align="center" id="msg" no_lang="1" span="all" class="message"/>
 					<description/>
 					<description/>
 					<description/>
@@ -181,7 +181,7 @@
 							<menupopup statustext="Type of the log-entry: Note, Phonecall or ToDo" id="info_type" no_lang="1" onchange="1"/>
 						</menulist>
 					</hbox>
-					<textbox type="integer" id="info_number" readonly="true" span="2" class="infoId"/>
+					<textbox type="integer" id="info_number" readonly="true" span="2" class="infolog_infoId"/>
 				</row>
 				<row class="row" valign="top">
 					<description value="Contact" for="info_from"/>

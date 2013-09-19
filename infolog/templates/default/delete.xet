@@ -45,7 +45,7 @@
 					</vbox>
 					<vbox>
 						<description value="Times"/>
-						<description class="planned" value="planned"/>
+						<description class="infolog_planned" value="planned"/>
 						<description class="replanned" value="Re-planned"/>
 					</vbox>
 					<vbox>
@@ -63,20 +63,20 @@
 						<button image="$row_cont[info_percent]" label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<image label="$row_cont[info_percent2]" src="{$row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 					</hbox>
-					<vbox options="0,0" class="fullWidth">
+					<vbox options="0,0" class="infolog_fullWidth">
 						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
 						<hbox options="0,0">
 							<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
-							<description no_lang="1" align="right" id="{$row}[info_number]" class="infoId"/>
+							<description no_lang="1" align="right" id="{$row}[info_number]" class="infolog_infoId"/>
 						</hbox>
 						<description options=",,1" no_lang="1" id="${row}[info_des]"/>
 						<link-string id="${row}[filelinks]"/>
 					</vbox>
 					<customfields-list class="customfields" id="$row" readonly="true"/>
 					<vbox options="0,0,1" rows="3" cols="1">
-						<date-time options=",8" id="${row}[info_startdate]" readonly="true" class="fixedHeight"/>
-						<date class="$row_cont[end_class] fixedHeight" id="${row}[info_enddate]" readonly="true"/>
-						<date-time id="${row}[info_datecompleted]" readonly="true" class="fixedHeight"/>
+						<date-time options=",8" id="${row}[info_startdate]" readonly="true" class="infolog_fixedHeight"/>
+						<date class="$row_cont[end_class] infolog_fixedHeight" id="${row}[info_enddate]" readonly="true"/>
+						<date-time id="${row}[info_datecompleted]" readonly="true" class="infolog_fixedHeight"/>
 					</vbox>
 					<vbox rows="3" cols="1">
 						<hbox options="1,0" id="l_used_time">
@@ -86,7 +86,7 @@
 						</hbox>
 						<hbox options="1,0" id="lplanified">
 							<image label="planned time" src="k_alarm.png" readonly="true"/>
-							<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
+							<date-duration id="${row}[info_planned_time]" span="all" class="infolog_planned" readonly="true" options="@duration_format"/>
 						</hbox>
 						<hbox options="1,0" id="replanified">
 							<image label="Re-planned time" src="agt_reload.png"/>
@@ -170,12 +170,12 @@
 					</vbox>
 					<vbox rows="2" cols="1" options="2">
 						<nextmatch-sortheader label="Times" id="info_used_time"/>
-						<nextmatch-sortheader id="info_planned_time" class="planned" label="planned"/>
+						<nextmatch-sortheader id="info_planned_time" class="infolog_planned" label="planned"/>
 						<nextmatch-sortheader id="info_replanned_time" class="replanned" label="Re-planned"/>
 					</vbox>
 					<vbox options="0,0">
-						<nextmatch-accountfilter id="info_owner" options="Owner" statustext="Select to filter by owner" class="user_filter"/>
-						<nextmatch-accountfilter id="info_responsible" options="Responsible,both" statustext="Select to filter by responsible" class="user_filter"/>
+						<nextmatch-accountfilter id="info_owner" options="Owner" statustext="Select to filter by owner" class="infolog_user_filter"/>
+						<nextmatch-accountfilter id="info_responsible" options="Responsible,both" statustext="Select to filter by responsible" class="infolog_user_filter"/>
 					</vbox>
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
 					<description value="Sub" class="noPrint"/>
@@ -188,11 +188,11 @@
 						<button image="$row_cont[info_percent]" label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<image label="$row_cont[info_percent2]" src="{$row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 					</hbox>
-					<vbox options="0,0" class="fullWidth">
+					<vbox options="0,0" class="infolog_fullWidth">
 						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
 						<hbox options="0,0">
 							<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
-							<description no_lang="1" align="right" id="{$row}[info_number]" class="infoId"/>
+							<description no_lang="1" align="right" id="{$row}[info_number]" class="infolog_infoId"/>
 						</hbox>
 						<description no_lang="1" id="${row}[info_des]" options=",,1"/>
 						<link-string id="${row}[filelinks]"/>
@@ -202,9 +202,9 @@
 						<menupopup type="select-cat" id="${row}[info_cat]" readonly="true"/>
 					</menulist>
 					<vbox options="0,0,1" rows="3" cols="1">
-						<date-time options=",8" id="${row}[info_startdate]" readonly="true" class="fixedHeight"/>
-						<date class="$row_cont[end_class] fixedHeight" id="${row}[info_enddate]" readonly="true"/>
-						<date-time id="${row}[info_datecompleted]" readonly="true" class="fixedHeight"/>
+						<date-time options=",8" id="${row}[info_startdate]" readonly="true" class="infolog_fixedHeight"/>
+						<date class="$row_cont[end_class] infolog_fixedHeight" id="${row}[info_enddate]" readonly="true"/>
+						<date-time id="${row}[info_datecompleted]" readonly="true" class="infolog_fixedHeight"/>
 					</vbox>
 					<vbox rows="3" cols="1">
 						<hbox options="1,0" id="r_used_time">
@@ -214,7 +214,7 @@
 						</hbox>
 						<hbox options="1,0" id="planified">
 							<image label="planned time" src="k_alarm.png" readonly="true"/>
-							<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
+							<date-duration id="${row}[info_planned_time]" span="all" class="infolog_planned" readonly="true" options="@duration_format"/>
 						</hbox>
 						<hbox options="1,0" id="replanified">
 							<image label="Re-planned time" src="agt_reload.png"/>
@@ -261,7 +261,7 @@
 					<template content="main" align="center" id="infolog.index.rows-noheader"/>
 				</row>
 				<row valign="bottom" height="30">
-					<description class="headertext" value="Are you shure you want to delete this entry ?" align="center"/>
+					<description class="infolog_headertext" value="Are you shure you want to delete this entry ?" align="center"/>
 				</row>
 				<row height="50">
 					<hbox align="center">

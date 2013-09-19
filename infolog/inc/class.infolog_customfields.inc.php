@@ -46,7 +46,7 @@ class infolog_customfields
 	function __construct( )
 	{
 		$this->bo = new infolog_bo();
-		$this->tmpl = new etemplate();
+		$this->tmpl = new etemplate_new();
 		$this->types  = &$this->bo->enums['type'];
 		$this->status = &$this->bo->status;
 		$this->config_data = config::read('infolog');

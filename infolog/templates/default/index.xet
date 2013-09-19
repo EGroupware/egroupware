@@ -2,12 +2,12 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="infolog.index.header_left" template="" lang="" group="0" version="1.0.1.001">
-		<description value="InfoLog" class="headertext bold"/>
+		<description value="InfoLog" class="infolog_headertext bold"/>
 		<styles>.bold { font-weight: bold; }</styles>
 	</template>
 	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.9.001">
 		<hbox>
-			<description value="Add:" class="headertext"/>
+			<description value="Add:" class="infolog_headertext"/>
 			<button statustext="Add a new ToDo" label="ToDo" id="add[task]" onclick="egw.open('','infolog','add',{type:'task',action: '$cont[action]',action_id:'$cont[action_id]',cat_id:widget.getRoot().getWidgetById('cat_id').getValue()})" image="task"/>
 			<button statustext="Add a new Phonecall" label="Phonecall" id="add[phone]" onclick="egw.open('','infolog','add',{type:'phone',action: '$cont[action]',action_id:'$cont[action_id]',cat_id:widget.getRoot().getWidgetById('cat_id').getValue()})" image="phone"/>
 			<button statustext="Add a new Note" label="Note" id="add[note]" onclick="egw.open('','infolog','add',{type:'note',action: '$cont[action]',action_id:'$cont[action_id]',cat_id:widget.getRoot().getWidgetById('cat_id').getValue()})" image="note"/>
@@ -63,16 +63,16 @@
 					</vbox>
 					<vbox>
 						<nextmatch-sortheader label="Times" id="info_used_time"/>
-						<nextmatch-sortheader label="planned" id="info_planned_time" class="planned"/>
+						<nextmatch-sortheader label="planned" id="info_planned_time" class="infolog_planned"/>
 					</vbox>
 					<vbox options="0,0">
 						<nextmatch-sortheader label="Times" id="info_used_time"/>
-						<nextmatch-sortheader label="planned" id="info_planned_time" class="planned"/>
+						<nextmatch-sortheader label="planned" id="info_planned_time" class="infolog_planned"/>
 						<nextmatch-sortheader label="Re-planned" id="info_replanned_time" class="replanned"/>
 					</vbox>
 					<vbox options="0,0">
-						<nextmatch-accountfilter statustext="Select to filter by owner" id="info_owner" options="Owner,both" class="user_filter"/>
-						<nextmatch-accountfilter statustext="Select to filter by responsible" id="info_responsible" options="Responsible,both" class="user_filter"/>
+						<nextmatch-accountfilter statustext="Select to filter by owner" id="info_owner" options="Owner,both" class="infolog_user_filter"/>
+						<nextmatch-accountfilter statustext="Select to filter by responsible" id="info_responsible" options="Responsible,both" class="infolog_user_filter"/>
 					</vbox>
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
 					<nextmatch-header label="Action" id="actions" class="noPrint"/>
@@ -84,11 +84,11 @@
 						<button statustext="Change the status of an entry, eg. close it" label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="$row_cont[info_percent]"/>
 						<progress label="$row_cont[info_percent]" id="{$row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 					</hbox>
-					<vbox options="0,0" class="fullWidth">
+					<vbox options="0,0" class="infolog_fullWidth">
 						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
 						<hbox options="0,0">
 							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class]"/>
-							<description align="right" id="{$row}[info_number]" no_lang="1" class="infoId"/>
+							<description align="right" id="{$row}[info_number]" no_lang="1" class="infolog_infoId"/>
 						</hbox>
 						<box class="infoDes">
 							<description id="${row}[info_des]" no_lang="1" activate_links="1"/>
@@ -100,9 +100,9 @@
 						<menupopup type="select-cat" id="${row}[info_cat]" readonly="true"/>
 					</menulist>
 					<vbox options="0,0,1">
-						<date-time id="${row}[info_startdate]" readonly="true" options=",8" class="fixedHeight"/>
-						<date-time id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class] fixedHeight"/>
-						<date-time id="${row}[info_datecompleted]" readonly="true" class="fixedHeight"/>
+						<date-time id="${row}[info_startdate]" readonly="true" options=",8" class="infolog_fixedHeight"/>
+						<date-time id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class] infolog_fixedHeight"/>
+						<date-time id="${row}[info_datecompleted]" readonly="true" class="infolog_fixedHeight"/>
 					</vbox>
 					<vbox options="0,0">
 						<hbox readonly="true">
@@ -112,7 +112,7 @@
 							</hbox>
 							<description/>
 						</hbox>
-						<date-duration id="${row}[info_planned_time]" readonly="true" options="@duration_format" span="all" class="planned"/>
+						<date-duration id="${row}[info_planned_time]" readonly="true" options="@duration_format" span="all" class="infolog_planned"/>
 					</vbox>
 					<vbox options="0,0">
 						<hbox id="r_used_time" options="1,0">
@@ -122,7 +122,7 @@
 						</hbox>
 						<hbox id="planified" options="1,0">
 							<image label="planned time" src="k_alarm.png"/>
-							<date-duration id="${row}[info_planned_time]" readonly="true" options="@duration_format" span="all" class="planned"/>
+							<date-duration id="${row}[info_planned_time]" readonly="true" options="@duration_format" span="all" class="infolog_planned"/>
 						</hbox>
 						<hbox id="replanified" options="1,0">
 							<image label="Re-planned time" src="agt_reload.png"/>
@@ -153,7 +153,7 @@
 						</hbox>
 						<hbox options="0,0" class="image16">
 							<button label="Insert in document" id="document[$row_cont[info_id]]" image="etemplate/merge"/>
-							<image label="Filemanager" src="filemanager/navbar" href="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/infolog/$row_cont[info_id]" class="image16"/>
+							<image label="Filemanager" src="filemanager/navbar" href="/index.php?menuaction=filemanager.filemanager_ui.index&amp;path=/apps/infolog/$row_cont[info_id]" class="infolog_image16"/>
 						</hbox>
 					</vbox>
 				</row>

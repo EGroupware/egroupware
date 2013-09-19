@@ -118,7 +118,7 @@
 				<row>
 					<hbox options="0,0" span="all">
 						<description value="Group owner for" id="type2" class="header"/>
-						<menulist class="lpadding5">
+						<menulist class="infolog_lpadding5">
 							<menupopup type="select-account" statustext="If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!" id="group_owner" options="None,groups"/>
 						</menulist>
 					</hbox>

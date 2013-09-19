@@ -126,6 +126,33 @@ app.infolog = AppJS.extend(
         egw.css(".et2_box.infoDes","display:" + (show ? "block;" : "none;"));
 	},
 
+	confirm_delete_2: function (_action, _senders)
+	{
+		var children = false;
+		var child_button = jQuery('#delete_sub').get(0) || jQuery('[id*="delete_sub"]').get(0);
+		if(child_button)
+		{
+			for(var i = 0; i < _senders.length; i++)
+			{
+				if ($j(_senders[i].iface.node).hasClass('infolog_rowHasSubs'))
+				{
+					children = true;
+					break;
+				}
+			}
+			child_button.style.display = children ? 'block' : 'none';
+		}
+		var callbackDeleteDialog = function (button_id)
+					{
+						if (button_id == et2_dialog.YES_BUTTON )
+						{
+							
+						}
+					}
+		var confirmDeleteDialog = et2_dialog.show_dialog(callbackDeleteDialog, egw.lang("Do you really want to DELETE this Rule"),egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
+
+	},
+
 	/**
 	 * Confirm delete
 	 * If entry has children, asks if you want to delete children too
@@ -141,7 +168,7 @@ app.infolog = AppJS.extend(
 		{
 			for(var i = 0; i < _senders.length; i++)
 			{
-				if ($j(_senders[i].iface.node).hasClass('rowHasSubs'))
+				if ($j(_senders[i].iface.node).hasClass('infolog_rowHasSubs'))
 				{
 					children = true;
 					break;

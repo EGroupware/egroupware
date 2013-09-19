@@ -166,7 +166,7 @@ class infolog_ui
 		$info['sub_class'] = $this->bo->enums['priority'][$info['info_priority']] . ($done ? '_done' : '');
 		if (!$done && $info['info_enddate'] < $this->bo->user_time_now)
 		{
-			$info['end_class'] = 'overdue';
+			$info['end_class'] = 'infolog_overdue';
 		}
 		if (!isset($info['info_anz_subs'])) $info['info_anz_subs'] = $this->bo->anzSubs($id);
 		$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
@@ -206,8 +206,8 @@ class infolog_ui
 		{
 			$info['class'] .= 'rowNoSubs ';
 		}
-		if ($info['info_id_parent']) $info['class'] .= 'rowHasParent ';
-		if ($info['info_anz_subs'] > 0) $info['class'] .= 'rowHasSubs ';
+		if ($info['info_id_parent']) $info['class'] .= 'infolog_rowHasParent ';
+		if ($info['info_anz_subs'] > 0) $info['class'] .= 'infolog_rowHasSubs ';
 
 		$readonlys["view[$id]"] = $info['info_anz_subs'] < 1;
 		$readonlys['view[0]'] = True;	// no parent
@@ -958,7 +958,7 @@ class infolog_ui
 				'icon' => 'egw_action/arrow_left',
 				'group' => $group,
 				'hint' => 'View all subs of this entry',
-				'enableClass' => 'rowHasSubs',
+				'enableClass' => 'infolog_rowHasSubs',
 			),
 			'parent' => array(
 				'caption' => 'View parent',
@@ -966,7 +966,7 @@ class infolog_ui
 				'group' => $group,
 				'hideOnDisabled' => true,
 				'hint' => 'View the parent of this entry and all his subs',
-				'enableClass' => 'rowHasParent'
+				'enableClass' => 'infolog_rowHasParent'
 			),
 			'add' => array(
 				'caption' => 'Add',
