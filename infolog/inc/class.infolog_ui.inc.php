@@ -995,12 +995,6 @@ class infolog_ui
 					),
 				),
 			),
-			'select_all' => array(
-				'caption' => 'Whole query',
-				'checkbox' => true,
-				'hint' => 'Apply the action on the whole query, NOT only the shown entries',
-				'group' => ++$group,
-			),
 			'no_notifications' => array(
 				'caption' => 'Do not notify',
 				'checkbox' => true,
