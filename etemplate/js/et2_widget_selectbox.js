@@ -670,6 +670,19 @@ var et2_selectbox = et2_inputWidget.extend(
 			this.value = this._super.apply(this, arguments);
 		}
 		return this.value;
+	},
+		
+	isDirty: function() {
+		if(this.input == null)
+		{
+			var value = this.getValue();
+			// Array comparison
+			return !($j(this._oldValue).not(value).length == 0 && $j(value).not(this._oldValue).length == 0);
+		}
+		else
+		{
+			return this._super.apply(this, arguments);
+		}
 	}
 });
 et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select", "select-cat",
