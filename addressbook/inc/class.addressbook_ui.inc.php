@@ -68,20 +68,13 @@ class addressbook_ui extends addressbook_bo
 	{
 		parent::__construct($contact_app);
 
-		$this->tmpl = new etemplate();
+		$this->tmpl = new etemplate_new();
 
 		$this->org_views = array(
 			'org_name'                  => lang('Organisations'),
 			'org_name,adr_one_locality' => lang('Organisations by location'),
 			'org_name,org_unit'         => lang('Organisations by departments'),
 		);
-
-		// our javascript
-		// to be moved in a seperate file if rewrite is over
-		if (strpos($GLOBALS['egw_info']['flags']['java_script'],'add_new_list') === false)
-		{
-			$GLOBALS['egw_info']['flags']['java_script'].= $this->js();
-		}
 
 		// make sure the hook for export_limit is registered
 		if (!$GLOBALS['egw']->hooks->hook_exists('export_limit','addressbook')) $GLOBALS['egw']->hooks->register_single_app_hook('addressbook','export_limit');
@@ -221,7 +214,7 @@ class addressbook_ui extends addressbook_bo
 				'lettersearch'   => true,
 				'do_email'       => $do_email ? 1 : 0,
 				'default_cols'   => '!cat_id,contact_created_contact_modified,distribution_list,contact_id,owner,legacy_actions',
-				'filter2_onchange' => "if(this.value=='add') { add_new_list(typeof widget == 'undefined' ? document.getElementById('exec[nm][filter]').value : widget.header.filter.get_value()); this.value='';} else this.form.submit();",
+				'filter2_onchange' => "app.addressbook.filter2_onchange();",
 				'manual'         => $do_email ? ' ' : false,	// space for the manual icon
 				//'actions'        => $this->get_actions(),		// set on each request, as it depends on some filters
 				'row_id'         => 'id',
@@ -235,9 +228,7 @@ class addressbook_ui extends addressbook_bo
 
 			if ($do_email)
 			{
-				$content['nm']['filter2_onchange'] = str_replace('this.form.submit();',
-					"{ if (this.value && confirm('".lang('Add emails of whole distribution list?')."')) add_whole_list(this.value); else this.form.submit(); }",
-					$content['nm']['filter2_onchange']);
+				$content['nm']['filter2_onchange'] = 'app.addressbook.filter2_onchange_email();';
 			}
 			// use the state of the last session stored in the user prefs
 			if (($state = @unserialize($this->prefs[$do_email ? 'email_state' : 'index_state'])))
@@ -339,7 +330,7 @@ class addressbook_ui extends addressbook_bo
 		}
 		$content['nm']['org_view_label'] = $sel_options['org_view'][(string) $content['nm']['org_view']];
 
-		$this->tmpl->read(/*$do_email ? 'addressbook.email' :*/ 'addressbook.index');
+		$this->tmpl->read($do_email ? 'addressbook.email' : 'addressbook.index');
 		return $this->tmpl->exec($do_email ? 'addressbook.addressbook_ui.emailpopup' : 'addressbook.addressbook_ui.index',
 			$content,$sel_options,$readonlys,$preserv,$do_email ? 2 : 0);
 	}
@@ -427,11 +418,13 @@ class addressbook_ui extends addressbook_bo
 				'email' => array(
 					'caption' => lang('Add %1',lang('business email')),
 					'no_lang' => true,
+					'onExecute' => 'javaScript:app.addressbook.addEmail',
 					'group' => ++$group,
 				),
 				'email_home' => array(
 					'caption' => lang('Add %1',lang('home email')),
 					'no_lang' => true,
+					'onExecute' => 'javaScript:app.addressbook.addEmail',
 					'group' => $group,
 				),
 			);
@@ -473,7 +466,7 @@ class addressbook_ui extends addressbook_bo
 				'list_add' => array(
 					'caption' => 'Add a new list',
 					'icon' => 'new',
-					'onExecute' => 'javaScript:add_new_list',
+					'onExecute' => 'javaScript:app.addressbook.add_new_list',
 				),
 			),
 			'group' => $group,
@@ -493,7 +486,7 @@ class addressbook_ui extends addressbook_bo
 					'caption' => 'Remove from distribution list',
 					'confirm' => 'Remove selected contacts from distribution list',
 					'icon' => 'foldertree_nolines_minus',
-					'enabled' => 'javaScript:nm_compare_field',
+					'enabled' => 'javaScript:app.addressbook.nm_compare_field',
 					'fieldId' => 'exec[nm][filter2]',
 					'fieldValue' => '!',	// enable if list != ''
 				),
@@ -501,7 +494,7 @@ class addressbook_ui extends addressbook_bo
 					'caption' => 'Delete selected distribution list!',
 					'confirm' => 'Delete selected distribution list!',
 					'icon' => 'delete',
-					'enabled' => 'javaScript:nm_compare_field',
+					'enabled' => 'javaScript:app.addressbook.nm_compare_field',
 					'fieldId' => 'exec[nm][filter2]',
 					'fieldValue' => '!',	// enable if list != ''
 				),
@@ -556,7 +549,7 @@ class addressbook_ui extends addressbook_bo
 						'icon' => 'new',
 						'url' => 'menuaction=infolog.infolog_ui.edit&type=task&action=addressbook&action_id=$id',
 						'popup' => egw_link::get_registry('infolog', 'add_popup'),
-						'onExecute' => 'javaScript:add_task',	// call server for org-view only
+						'onExecute' => 'javaScript:app.addressbook.add_task',	// call server for org-view only
 					),
 				)
 			);
@@ -572,7 +565,7 @@ class addressbook_ui extends addressbook_bo
 						'caption' => 'Show',
 						'icon' => 'view',
 						'url' => 'menuaction=calendar.calendar_uilist.listview&filter=all&owner=0,c$id',
-						'onExecute' => 'javaScript:add_cal',	// call server for org-view only
+						'onExecute' => 'javaScript:app.addressbook.add_cal',	// call server for org-view only
 						'targetapp' => 'calendar',	// open in calendar tab
 					),
 					'calendar_add' => array(
@@ -580,7 +573,7 @@ class addressbook_ui extends addressbook_bo
 						'icon' => 'new',
 						'url' => 'menuaction=calendar.calendar_uiforms.edit&participants=c$id',
 						'popup' => egw_link::get_registry('calendar', 'add_popup'),
-						'onExecute' => 'javaScript:add_cal',	// call server for org-view only
+						'onExecute' => 'javaScript:app.addressbook.add_cal',	// call server for org-view only
 					),
 				),
 			);
@@ -628,7 +621,7 @@ class addressbook_ui extends addressbook_bo
 				'caption' => lang('Mail VCard'),
 				'icon' => 'filemanager/mail_post_to',
 				'group' => $group,
-				'onExecute' => 'javaScript:adb_mail_vcard',
+				'onExecute' => 'javaScript:app.addressbook.adb_mail_vcard',
 			);
 		}
 		++$group;
@@ -751,7 +744,7 @@ window.egw_LAB.wait(function() {
 		$query['filter2'] = (int)$list;
 		$this->action($email_type,array(),true,$success,$failed,$action_msg,$query,$msg);
 
-		$response = new xajaxResponse();
+		$response = egw_json_response::get();
 
 		if ($success) $response->addScript(egw_framework::set_onload(''));
 
@@ -771,7 +764,7 @@ window.egw_LAB.wait(function() {
 			$response->addScript("alert('".addslashes($msg)."')");
 			$response->addScript('window.close();');
 		}
-		return $response->getXML();
+
 	}
 
 	/**
@@ -995,6 +988,7 @@ window.egw_LAB.wait(function() {
 
 				case 'email':
 				case 'email_home':
+					error_log(__METHOD__. "() email");
 					$action == 'email' ? $action_fallback = 'email_home' : $action_fallback = 'email';
 					$action_msg = lang('added');
 					if($contact = $this->read($id))
@@ -1669,24 +1663,28 @@ window.egw_LAB.wait(function() {
 					{
 						egw_link::link('addressbook',$content['id'],$links);
 					}
-					$content['js'] = "opener.egw_refresh('".str_replace("'","\\'",$content['msg'])."','addressbook','{$content['id']}', '" . ($content['id'] ? 'update' : 'add') . "', opener.egw_getAppName());";
-
+					$currentApp = $GLOBALS['egw']->currentapp;
+					error_log(__METHOD__. "() currentapp:" . $currentApp);
+					egw_framework::refresh_opener($content['msg'], 'addressbook',$content['id'],  ($content['id'] ? 'update' : 'add'));
 					if ($button == 'save')
 					{
-						$content['js'] .= ' window.close();';
-						echo '<html><body onload="'.$content['js'].'"></body></html>';
-						common::egw_exit();
+						egw_framework::window_close();
 					}
 					$content['link_to']['to_id'] = $content['id'];
-					$GLOBALS['egw_info']['flags']['java_script'] .= "<script>{$content['js']}</script>";
 					break;
 
 				case 'delete':
 					if($this->action('delete',array($content['id']),false,$success,$failed,$action_msg,'',$content['msg']))
 					{
-						$js = "opener.egw_refresh('".str_replace("'","\\'",lang('Contact deleted'))."','addressbook','{$content['id']}','delete'); if(opener.egw_getAppName() != 'addressbook') { opener.egw_refresh('".str_replace("'","\\'",lang('Contact deleted'))."','addressbook','{$content['id']}',null,'addressbook');} window.close();";
-						echo '<html><body onload="'.$js.'"></body></html>';
-						common::egw_exit();
+						if ($GLOBALS['egw']->currentapp == 'addressbook')
+						{
+							egw_framework::refresh_opener(lang('Contact deleted'), 'addressbook', $content['id'], 'delete' );
+						}
+						else
+						{
+							egw_framework::refresh_opener(lang('Contact deleted'), 'addressbook', $content['id'], null, 'addressbook');
+							egw_framework::window_close();
+						}
 					}
 					else
 					{
@@ -1771,7 +1769,7 @@ window.egw_LAB.wait(function() {
 					{
 						if (!empty($content[$field]))
 						{
-							egw_framework::set_onload("check_value(document.getElementById('exec[$field]'),0);");
+							egw_framework::set_onload("app.addressbook.check_value(document.getElementById('exec[$field]'),0);");
 							break;
 						}
 					}
@@ -1839,8 +1837,6 @@ window.egw_LAB.wait(function() {
 		// how to display addresses
 		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
 		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
-		$GLOBALS['egw']->js->set_onload('show_custom_country($j(\'select[id*="adr_one_countrycode"]\').get(0));');
-		$GLOBALS['egw']->js->set_onload('show_custom_country($j(\'select[id*="adr_two_countrycode"]\').get(0));');
 
 		//_debug_array($content);
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);
@@ -1919,7 +1915,7 @@ window.egw_LAB.wait(function() {
 
 		if ($content['private']) $content['owner'] .= 'p';
 
-		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
+		//$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 
 		if (!$this->tmpl->read($this->content_types[$content['tid']]['options']['template'] ? $this->content_types[$content['tid']]['options']['template'] : 'addressbook.edit'))
 		{
@@ -2219,7 +2215,7 @@ window.egw_LAB.wait(function() {
 		if(!empty($_content))
 		{
 			$do_email = $_content['do_email'];
-			$response = new xajaxResponse();
+			$response = egw_json_response::get();
 
 			$query = egw_session::appsession($do_email ? 'email' : 'index','addressbook');
 
@@ -2242,23 +2238,16 @@ window.egw_LAB.wait(function() {
 
 			// store the advanced search in the session to call it again
 			egw_session::appsession('advanced_search','addressbook',$query['advanced_search']);
-
-			$response->addScript("
-				var link = this.opener.location.href;
-				link = link.replace(/#/,'');
-				this.opener.location.href=link.replace(/\#/,'');
-				this.xajax_eT_wrapper();
-			");
-			if ($_content['button']['cancel']) $response->addScript('this.close();');
-
-			return $response->getXML();
+			error_log(__METHOD__. "() call ADV"  );
+			if ($_content['button']['search']) $response->call("app.addressbook.adv_search");
+			if ($_content['button']['cancel']) egw_framework::window_close (); //$response->addScript('this.close();');
 		}
 		else
 		{
 			$do_email = strpos($_SERVER['HTTP_REFERER'],'emailpopup') !== false;
 		}
-		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>window.egw_LAB.wait(function() {window.focus();});</script>";
+		//$GLOBALS['egw_info']['flags']['include_xajax'] = true;
+		//$GLOBALS['egw_info']['flags']['java_script'] .= "<script>window.egw_LAB.wait(function() {window.focus();});</script>";
 		$GLOBALS['egw_info']['etemplate']['advanced_search'] = true;
 
 		// initialize etemplate arrays
@@ -2339,68 +2328,6 @@ window.egw_LAB.wait(function() {
 			echo $contact['jpegphoto'];
 			exit;
 		}
-	}
-
-	/**
-	 * Dynamic javascript functions
-	 *
-	 * All static stuff should go to addressbook/js/app.js
-	 *
-	 * @return string
-	 */
-	function js()
-	{
-		list($width,$height) = explode('x',egw_link::get_registry('felamimail','add_popup'));
-
-		return '<script LANGUAGE="JavaScript">
-window.egw_LAB.wait(function() {
-		function adb_mail_vcard(_action, _elems)
-		{
-			var link = "'.egw::link('/index.php',array('menuaction' => 'felamimail.uicompose.compose')).'";
-			for (var i = 0; i < _elems.length; i++)
-			{
-				link += "&preset[file][]="+encodeURIComponent("vfs://default/apps/addressbook/"+_elems[i].id+"/.entry");
-			}
-			'."egw_openWindowCentered2(link, '_blank', $width, $height, 'yes');".'
-		}
-
-		function adb_get_selection(form)
-		{
-			var use_all = document.getElementById("exec[use_all]");
-			var action = document.getElementById("exec[action]");
-			egw_openWindowCentered(
-				"'. egw::link('/index.php','menuaction=importexport.uiexport.export_dialog&appname=addressbook').
-					'&selection="+( use_all.checked  ? "use_all" : get_selected(form,"[rows][checked][]")),
-				"Export",400,400);
-			action.value="";
-			use_all.checked = false;
-			return false;
-		}
-
-		function do_action(selbox)
-		{
-			if (selbox.value != "") {
-				if (selbox.value == "infolog_add" && (ids = get_selected(selbox.form,"[rows][checked][]")) && !document.getElementById("exec[use_all]").checked) {
-					win=window.open("'.egw::link('/index.php','menuaction=infolog.infolog_ui.edit&type=task&action=addressbook&action_id=').'"+ids,"_blank","width=750,height=550,left=100,top=200");
-					win.focus();
-				} else if (selbox.value == "cat_add") {
-					win=window.open("'.egw::link('/etemplate/process_exec.php','menuaction=addressbook.addressbook_ui.cat_add').'","_blank","width=300,height=400,left=100,top=200");
-					win.focus();
-				} else if (selbox.value == "remove_from_list") {
-					if (confirm("'.lang('Remove selected contacts from distribution list').'")) selbox.form.submit();
-				} else if (selbox.value == "delete_list") {
-					if (confirm("'.lang('Delete selected distribution list!').'")) selbox.form.submit();
-				} else if (selbox.value == "delete") {
-					if (confirm("'.lang('Delete').'")) selbox.form.submit();
-				} else {
-					selbox.form.submit();
-				}
-				selbox.value = "";
-			}
-
-		}
-});
-		</script>';
 	}
 
 	/**

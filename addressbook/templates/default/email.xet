@@ -2,12 +2,12 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="addressbook.email.left" template="" lang="" group="0" version="1.5.001">
-		<hbox no_lang="1" class="bold">
+		<hbox class="bold" no_lang="1">
 			<radio statustext="where to add the email address" label="To" id="to" no_lang="1" options="to" class="bold"/>
 			<radio statustext="where to add the email address" label="Cc" id="to" no_lang="1" options="cc" class="bold"/>
 			<radio statustext="where to add the email address" label="Bcc" id="to" no_lang="1" options="bcc" class="bold"/>
 		</hbox>
-		<hbox no_lang="1" class="bold">
+		<hbox class="bold" no_lang="1">
 			<radio statustext="preferred type of email address to add for distribution lists" label="Business email" id="email_type" no_lang="1" options="email" class="bold"/>
 			<radio statustext="preferred type of email address to add for distribution lists" label="Home email" id="email_type" no_lang="1" options="email_home" class="bold"/>
 		</hbox>
