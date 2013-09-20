@@ -64,7 +64,7 @@
 						<textbox type="float" id="price" readonly="true" precision="2"/>
 					</vbox>
 					<nextmatch-filterheader id="ts_owner" no_lang="1" options="User" class="$cont[ownerClass]"/>
-					<nextmatch-filterheader id="ts_status" onchange="1" options="Status"/>
+					<nextmatch-filterheader id="ts_status" options="Status"/>
 					<nextmatch-customfields id="customfields"/>
 					<hbox class="noPrint">
 						<nextmatch-header align="right" label="Actions" id="legacy_actions" class="noPrint"/>
