@@ -95,9 +95,9 @@ class cyrusimap extends defaultimap
 			return false;
 		}
 
-		// we need a admin connection
-		if($this->_connected === true && !$this->isAdminConnection) {
-			$this->disconnect();
+		// we need a admin connection, but check connected status as well, in case we are not
+		if(($this->_connected === true && !$this->isAdminConnection) || !($this->_connected === true)) {
+			if ($this->_connected === true) $this->disconnect();
 			if(!$this->openConnection(true)) {
 				return false;
 			}
