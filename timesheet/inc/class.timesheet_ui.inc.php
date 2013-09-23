@@ -950,12 +950,6 @@ class timesheet_ui extends timesheet_bo
 				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
 				'group' => $group,
 			),
-			'select_all' => array(
-				'caption' => 'Whole query',
-				'checkbox' => true,
-				'hint' => 'Apply the action on the whole query, NOT only the shown timesheets!!!',
-				'group' => ++$group,
-			),
 			'cat' => etemplate_widget_nextmatch::category_action(
 				'timesheet',++$group,'Change category','cat_'
 			),

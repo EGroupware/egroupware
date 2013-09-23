@@ -405,13 +405,6 @@ class addressbook_ui extends addressbook_bo
 			);
 		}
 
-		$actions['select_all'] = array(
-			'caption' => 'Whole query',
-			'checkbox' => true,
-			'hint' => 'Apply the action on the whole query, NOT only the shown contacts!!!',
-			'group' => ++$group,
-		);
-
 		if ($do_email)
 		{
 			$actions += array(
