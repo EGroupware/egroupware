@@ -7,7 +7,7 @@
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -325,6 +325,8 @@ class groupdav extends HTTP_WebDAV_Server
 			$dav[] = 'calendarserver-principal-property-search';
 			// required by iOS & OS X iCal to show private checkbox (X-CALENDARSERVER-ACCESS: CONFIDENTIAL on VCALENDAR)
 			$dav[] = 'calendarserver-private-events';
+			// managed attachments
+			$dav[] = 'calendar-managed-attachments';
 			// other capabilities calendarserver announces
 			//$dav[] = 'calendar-schedule';
 			//$dav[] = 'calendar-availability';
@@ -1185,24 +1187,189 @@ class groupdav extends HTTP_WebDAV_Server
 			$_GET['add-member'] = '';	// otherwise we give no Location header
 			return $this->PUT($options);
 		}
-		// read the content in a string, if a stream is given
-		if (isset($options['stream']))
-		{
-			$options['content'] = '';
-			while(!feof($options['stream']))
-			{
-				$options['content'] .= fread($options['stream'],8192);
-			}
-		}
 		if ($this->debug) error_log(__METHOD__.'('.array2string($options).')');
 
 		$this->_parse_path($options['path'],$id,$app,$user);
 
-		if (($handler = self::app_handler($app)) &&	method_exists($handler, 'post'))
+		if (($handler = self::app_handler($app)))
 		{
-			return $handler->post($options,$id,$user);
+			// managed attachments
+			if (isset($_GET['action']) && substr($_GET['action'], 0, 11) === 'attachment-')
+			{
+				return $this->managed_attachements($options, $id, $handler, $_GET['action']);
+			}
+
+			if (method_exists($handler, 'post'))
+			{
+				// read the content in a string, if a stream is given
+				if (isset($options['stream']))
+				{
+					$options['content'] = '';
+					while(!feof($options['stream']))
+					{
+						$options['content'] .= fread($options['stream'],8192);
+					}
+				}
+				return $handler->post($options,$id,$user);
+			}
 		}
 		return '501 Not Implemented';
+	}
+
+	/**
+	 * HTTP header containing managed id
+	 */
+	const MANAGED_ID_HEADER = 'Cal-Managed-ID';
+
+	/**
+	 * Add, update or remove attachments
+	 *
+	 * @param array &$options
+	 * @param string|int $id
+	 * @param groupdav_handler $handler
+	 * @param string $action 'attachment-add', 'attachment-update', 'attachment-remove'
+	 * @return string http status
+	 *
+	 * @todo support for rid parameter
+	 * @todo managed-id does NOT change on update
+	 * @todo updates of attachments through vfs need to call $handler->update_tags($id) too
+	 * @todo stripping attachments added via PUT direct and make them managed ones (urls are NOT yet supported too)
+	 * @todo update of attachments via PUT on calendar resource (not sure if I want delete), allows to re-user managed-ids ...
+	 */
+	protected function managed_attachements(&$options, $id, groupdav_handler $handler, $action)
+	{
+		error_log(__METHOD__."(path=$options[path], id=$id, ..., action=$action) _GET=".array2string($_GET));
+		$entry = $handler->_common_get_put_delete('GET', $options, $id);
+
+		if (!is_array($entry))
+		{
+			return $entry ? $entry : "404 Not found";
+		}
+
+		if (!egw_link::file_access($handler->app, $entry['id'], EGW_ACL_EDIT))
+		{
+			return '403 Forbidden';
+		}
+
+		switch($action)
+		{
+			case 'attachment-add':
+				if (isset($this->_SERVER['HTTP_CONTENT_DISPOSITION']) &&
+					substr($this->_SERVER['HTTP_CONTENT_DISPOSITION'], 0, 10) === 'attachment' &&
+					preg_match('/filename="?([^";]+)/', $this->_SERVER['HTTP_CONTENT_DISPOSITION'], $matches))
+				{
+					$filename = $matches[1];
+					$parts = explode('.', $filename);
+					$ext = '.'.array_pop($parts);
+					$filename = implode('.', $parts);
+				}
+				else
+				{
+					$filename = 'attachment';
+					if (isset($options['content_type']) && ($ext = mime_magic::mime2ext($options['content_type'])))
+					{
+						$ext = '.'.$ext;
+					}
+					else
+					{
+						$ext = '';
+					}
+				}
+				for($i = 1; $i < 100; ++$i)
+				{
+					$path = egw_link::vfs_path($handler->app, $handler->get_id($entry), $filename.($i > 1 ? '-'.$i : '').$ext, true);
+					if (!egw_vfs::stat($path)) break;
+				}
+				if (!($to = egw_vfs::fopen($path, 'w')) ||
+					isset($options['stream']) && ($copied=stream_copy_to_stream($options['stream'], $to)) === false ||
+					isset($options['content']) && ($copied=fwrite($to, $options['content'])) === false)
+				{
+					return '403 Forbidden';
+				}
+				fclose($to);
+				error_log(__METHOD__."() content-type=$options[content_type], filename=$filename, ext=$ext: $path created $copied bytes copied");
+				$ret = '201 Created';
+				header(self::MANAGED_ID_HEADER.': '.self::path2managed_id($path));
+				break;
+
+			case 'attachment-remove':
+			case 'attachment-update':
+				if (empty($_GET['managed-id']) || !($path = self::managed_id2path($_GET['managed-id'], $app, $id)))
+				{
+					return '404 Not found';
+				}
+				if ($action == 'attachment-remove')
+				{
+					if (!egw_vfs::unlink($path))
+					{
+						return '403 Forbidden';
+					}
+					$ret = '204 No content';
+				}
+				else
+				{
+					if (!($to = egw_vfs::fopen($path, 'w')) ||
+						isset($options['stream']) && ($copied=stream_copy_to_stream($options['stream'], $to)) === false ||
+						isset($options['content']) && ($copied=fwrite($to, $options['content'])) === false)
+					{
+						return '403 Forbidden';
+					}
+					fclose($to);
+					error_log(__METHOD__."() content-type=$options[content_type], filename=$filename: $path updated $copied bytes copied");
+					$ret = '200 Ok';
+					header(self::MANAGED_ID_HEADER.': '.self::path2managed_id($path));
+				}
+				break;
+
+			default:
+				return '501 Unknown action parameter '.$action;
+		}
+		// update etag/ctag/sync-token by updating modification time
+		$handler->update_tags($entry);
+
+		// check/handle Prefer: return-representation
+		$handler->check_return_representation($options, $id, $user);
+
+		return $ret;
+	}
+
+	/**
+	 * Return managed-id of a vfs-path
+	 *
+	 * @param string $path "/apps/$app/$id/something"
+	 * @return string
+	 */
+	static public function path2managed_id($path)
+	{
+		return base64_encode($path);
+	}
+
+	/**
+	 * Return vfs-path of a managed-id
+	 *
+	 * @param string $managed_id
+	 * @param string $app=null app-name to check against path
+	 * @param string|int $id=null id to check agains path
+	 * @return string|boolean "/apps/$app/$id/something" or false if not found or not belonging to given $app/$id
+	 */
+	static public function managed_id2path($managed_id, $app=null, $id=null)
+	{
+		$path = base64_decode($managed_id);
+
+		if (!$path || substr($path, 0, 6) != '/apps/' || !egw_vfs::stat($path))
+		{
+			$path = false;
+		}
+		elseif (!empty($app) && !empty($id))
+		{
+			list(,,$a,$i) = explode('/', $path);
+			if ($a !== $app || $i !== (string)$id)
+			{
+				$path = false;
+			}
+		}
+		error_log(__METHOD__."('$managed_id', $app, $id) base64_decode('$managed_id')=".array2string(base64_decode($managed_id)).' returning '.array2string($path));
+		return $path;
 	}
 
 	/**
@@ -1313,8 +1480,15 @@ class groupdav extends HTTP_WebDAV_Server
 		if (($handler = self::app_handler($app)))
 		{
 			$status = $handler->put($options,$id,$user,$prefix);
+
 			// set default stati: true --> 204 No Content, false --> should be already handled
 			if (is_bool($status)) $status = $status ? '204 No Content' : '400 Something went wrong';
+
+			// check/handle Prefer: return-representation
+			if ($status[0] === '2')
+			{
+				$handler->check_return_representation($options, $id, $user);
+			}
 			return $status;
 		}
 		return '501 Not Implemented';
@@ -1596,7 +1770,10 @@ class groupdav extends HTTP_WebDAV_Server
 			self::$log_level === 'f' || $this->debug)
 		{
 			self::$request_starttime = microtime(true);
-			$this->store_request = true;
+			// do NOT log non-text attachments
+			$this->store_request = $_SERVER['REQUEST_METHOD'] != 'POST' || !isset($_GET['action']) ||
+				!in_array($_GET['action'], array('attachment-add', 'attachment-update')) ||
+				substr($_SERVER['CONTENT_TYPE'], 0, 5) == 'text/';
 			ob_start();
 		}
 		parent::ServeRequest();

@@ -221,6 +221,7 @@ class calendar_ical extends calendar_boupdate
 			'RECURRENCE-ID' => 'recurrence',
 			'SEQUENCE'		=> 'etag',
 			'STATUS'		=> 'status',
+			'ATTACH'        => 'attachments',
 		);
 
 		if (!is_array($this->supportedFields)) $this->setSupportedFields();
@@ -786,6 +787,31 @@ class calendar_ical extends calendar_boupdate
 							}
 
 							unset($revent);
+						}
+						break;
+
+					case 'ATTACH':
+						static $url_prefix;
+						if (!isset($url_prefix))
+						{
+							$url_prefix = '';
+							if ($GLOBALS['egw_info']['server']['webserver_url'][0] == '/')
+							{
+								$url_prefix = ($_SERVER['HTTPS'] ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'];
+							}
+						}
+						foreach(egw_vfs::find(egw_link::vfs_path('calendar', $event['id'], '', true), array(
+							'type' => 'F',
+							'need_mime' => true,
+						), true) as $path => $stat)
+						{
+							$attributes['ATTACH'][] = $url_prefix.egw::link(egw_vfs::download_url($path));
+							$parameters['ATTACH'][] = array(
+								'MANAGED-ID' => groupdav::path2managed_id($path),
+								'FMTTYP'     => $stat['mime'],
+								'SIZE'       => $stat['size'],
+								'FILENAME'   => egw_vfs::basename($path),
+							);
 						}
 						break;
 

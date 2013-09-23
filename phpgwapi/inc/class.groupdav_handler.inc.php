@@ -7,7 +7,7 @@
  * @package api
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -104,6 +104,13 @@ abstract class groupdav_handler
 	static $path_attr = 'id';
 
 	/**
+	 * New id of put/post stored here by put_response_headers for check_return_representation
+	 *
+	 * @var string
+	 */
+	var $new_id;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'
@@ -183,6 +190,17 @@ abstract class groupdav_handler
 	 * @return array|boolean array with entry, false if no read rights, null if $id does not exist
 	 */
 	abstract function read($id /*,$path=null*/);
+
+	/**
+	 * Get id from entry-array returned by read()
+	 *
+	 * @param int|string|array $entry
+	 * @return int|string
+	 */
+	function get_id($entry)
+	{
+		return is_array($entry) ? $entry['id'] : $entry;
+	}
 
 	/**
 	 * Check if user has the neccessary rights on an entry
@@ -314,6 +332,49 @@ abstract class groupdav_handler
 			}
 		}
 		return $entry;
+	}
+
+	/**
+	 * Return representation, if requested by HTTP Prefer header
+	 *
+	 * @param array $options
+	 * @param int $id
+	 * @param int $user=null account_id
+	 * @return string|boolean http status of get or null if no representation was requested
+	 */
+	public function check_return_representation($options, $id, $user=null)
+	{
+		if (isset($_SERVER['HTTP_PREFER']) && in_array('return-representation', explode(',', $_SERVER['HTTP_PREFER'])))
+		{
+			if ($_SERVER['REQUEST_METHOD'] == 'POST')
+			{
+				$location = $this->groupdav->base_uri.$options['path'];
+				if ($location[0] == '/')
+				{
+					$location = (@$_SERVER['HTTPS'] === 'on' ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'].$location;
+				}
+				header('Content-Location: '.$location);
+			}
+			if (($ret = $this->get($options, $id ? $id : $this->new_id, $user)) && !empty($options['data']))
+			{
+				header('Content-Length: '.$this->groupdav->bytes($options['data']));
+				header('Content-Type: '.$options['mimetype']);
+				echo $options['data'];
+			}
+		}
+		return $ret;
+	}
+
+	/**
+	 * Update etag, ctag and sync-token to reflect changed attachments
+	 *
+	 * Not abstract, as not need to implement for apps not supporting managed attachments
+	 *
+	 * @param array|string|int $entry array with entry data from read, or id
+	 */
+	public function update_tags($entry)
+	{
+
 	}
 
 	/**
@@ -498,6 +559,10 @@ abstract class groupdav_handler
 			if (is_null($etag)) $etag = $this->get_etag($entry);
 			header('ETag: "'.$etag.'"');
 		}
+
+		// store (new) id for check_return_representation
+		$this->new_id = $this->get_path($entry);
+
 		// send Location header only on success AND if we dont use caldav_name as path-attribute or
 		if ((is_bool($retval) ? $retval : $retval[0] === '2') && (!$path_attr_is_name ||
 			// POST with add-member query parameter

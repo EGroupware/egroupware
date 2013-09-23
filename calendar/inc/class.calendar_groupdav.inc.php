@@ -7,7 +7,7 @@
  * @package calendar
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -1019,8 +1019,7 @@ class calendar_groupdav extends groupdav_handler
 				{
 					if ($this->debug) error_log(__METHOD__."() importVCal($eventId) returned false");
 				}
-				// we should not return an etag here, as we never store the ical byte-by-byte
-				//header('ETag: "'.$this->get_etag($eventId).'"');
+				header('ETag: "'.$this->get_etag($eventId).'"');
 			}
 		}
 		return true;
@@ -1319,6 +1318,18 @@ class calendar_groupdav extends groupdav_handler
 	}
 
 	/**
+	 * Update etag, ctag and sync-token to reflect changed attachments
+	 *
+	 * @param array|string|int $entry array with entry data from read, or id
+	 */
+	public function update_tags($entry)
+	{
+		if (!is_array($entry)) $entry = $this->read($entry);
+
+		$this->bo->update($entry, true);
+	}
+
+	/**
 	 * Query ctag for calendar
 	 *
 	 * @return string
@@ -1453,6 +1464,7 @@ class calendar_groupdav extends groupdav_handler
 	{
 		$handler = new calendar_ical();
 		$handler->setSupportedFields('GroupDAV',$this->agent);
+		$handler->supportedFields['attachments'] = true;	// enabling attachments
 		if ($this->debug > 1) error_log("ical Handler called: " . $this->agent);
 		return $handler;
 	}

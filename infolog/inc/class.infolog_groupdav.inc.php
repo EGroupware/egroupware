@@ -7,7 +7,7 @@
  * @package infolog
  * @subpackage groupdav
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2007-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -570,6 +570,18 @@ class infolog_groupdav extends groupdav_handler
 	}
 
 	/**
+	 * Update etag, ctag and sync-token to reflect changed attachments
+	 *
+	 * @param array|string|int $entry array with entry data from read, or id
+	 */
+	public function update_tags($entry)
+	{
+		if (!is_array($entry)) $entry = $this->read($entry);
+
+		$this->bo->write($entry, true);
+	}
+
+	/**
 	 * Callback for infolog_ical::importVTODO to implement infolog-cat-action
 	 *
 	 * @param array $task
@@ -662,6 +674,19 @@ class infolog_groupdav extends groupdav_handler
 	function read($id)
 	{
 		return $this->bo->read(array(self::$path_attr => $id, "info_status!='deleted'"),false,'server');
+	}
+
+	/**
+	 * Get id from entry-array returned by read()
+	 *
+	 * Reimplemented because id uses key 'info_id'
+	 *
+	 * @param int|string|array $entry
+	 * @return int|string
+	 */
+	function get_id($entry)
+	{
+		return is_array($entry) ? $entry['info_id'] : $entry;
 	}
 
 	/**
