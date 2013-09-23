@@ -276,7 +276,7 @@ class mail_compose
 	{
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
 		error_log(__METHOD__.__LINE__.array2string($_content));
-
+$CAtFStart = array2string($_content);
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
 		// read the data from session
 		// all values are empty for a new compose window
@@ -966,6 +966,7 @@ class mail_compose
 			$content['SENDER'] = (empty($content['SENDER'])?($selectedSender?(array)$selectedSender:''):$content['SENDER']);
 			$content['is_html'] = ($this->sessionData['mimeType'] == 'html'?true:'');
 			$content['is_plain'] = ($this->sessionData['mimeType'] == 'html'?'':true);
+$content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text'] =$CAtFStart.$content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text'];
 		}
 		else
 		{

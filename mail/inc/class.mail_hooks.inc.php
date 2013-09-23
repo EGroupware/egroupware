@@ -836,7 +836,7 @@ class mail_hooks
 			);
 
 			$file += array(
-				'import message' => "javascript:egw_openWindowCentered2('".egw::link('/index.php', $linkData,false)."','import',700,125,'no','$appname');",
+				'import message' => "javascript:egw_openWindowCentered2('".egw::link('/index.php', $linkData,false)."','importMessageDialog',700,125,'no','$appname');",
 			);
 
 		}

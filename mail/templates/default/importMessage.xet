@@ -8,7 +8,15 @@
 				<description value="Store to Folder"/>
 				<taglist id="FOLDER" width="50%" autocomplete_url='mail.mail_compose.ajax_searchFolder' autocomplete_params='' maxSelection="1" allowFreeEntries="false" onclick="app.mail.address_click"/>
 			</hbox>
-			<file statustext="Select file to import into Folder" onFinish="app.mail.uploadForImport" mime="/^message\//i" id="uploadForImport" drop_target ="mail-importMessage_divImportArea"/>
+			<hbox span="all">
+				<description value="Local Filestore"/> 
+				<file statustext="Select file to import into Folder" onFinish="app.mail.uploadForImport" mime="/^message\//i" id="uploadForImport" drop_target ="mail-importMessage_divImportArea"/>
+				<description value="or"/> 
+			</hbox>
+			<hbox span="all">
+				<description value="Select from EGroupware Filestore"/> <textbox align="left" width="30%" id="vfsfile" />
+				<buttononly id="selectFromVFSForImport" value="Select" image="filemanager/navbar" onclick="app.mail.import_displayVfsSelector('FOLDER')" />
+			</hbox>
 		</vbox>>
 	</template>
 </overlay>

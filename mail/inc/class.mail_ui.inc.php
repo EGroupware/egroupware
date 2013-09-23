@@ -1033,7 +1033,7 @@ class mail_ui
 	{
 unset($query['actions']);
 //_debug_array($query);
-//error_log(__METHOD__.__LINE__.array2string($query));
+//error_log(__METHOD__.__LINE__.array2string($query['order']).'->'.array2string($query['sort']));
 //error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows']);
 		$starttime = microtime(true);
 		//error_log(__METHOD__.__LINE__.array2string($query['search']));
@@ -1078,7 +1078,7 @@ unset($query['actions']);
 		{
 			$filter['status'] = $query['filter'];
 		}
-		$reverse = ($query['order']=='ASC'?false:true);
+		$reverse = ($query['sort']=='ASC'?false:true);
 		//error_log(__METHOD__.__LINE__.' maxMessages:'.$maxMessages.' Offset:'.$offset.' Filter:'.array2string($this->sessionData['messageFilter']));
 		if ($maxMessages > 75)
 		{
@@ -2701,12 +2701,34 @@ blockquote[type=cite] {
 		return 'background="'.$imageURL.'"';
 	}
 
+	function setImportMessageFromVFS($target, $path=null)
+	{
+		return "opener.app.mail.import_closeVfsSelector('$path');";
+	}
+
+	function importMessageFromVFS($target, $path=null)
+	{
+		//error_log(__METHOD__.__LINE__.array2string(array('target'=>$target,'file'=>$path)));
+		$content['divImportArea']['FOLDER'][0]=$target;
+		$content['divImportArea']['uploadForImport'] = array(
+			'name' => egw_vfs::basename($path),
+			'type' => egw_vfs::mime_content_type($path),
+			'file' => egw_vfs::PREFIX.$path,
+			'size' => filesize(egw_vfs::PREFIX.$path),
+		);
+		//$this->importMessage($content);
+		return "window.close();";
+
+	}
+
 	/**
 	 * importMessage
 	 */
 	function importMessage($content=null)
 	{
 		//error_log(__METHOD__.__LINE__.$this->mail_bo->getDraftFolder());
+error_log(__METHOD__.__LINE__.array2string($_GET));
+error_log(__METHOD__.__LINE__.array2string($content));
 		if (!empty($content))
 		{
 			//error_log(__METHOD__.__LINE__.array2string($content));

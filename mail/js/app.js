@@ -28,6 +28,7 @@ app.mail = AppJS.extend(
 	mail_previewAreaActive: true, // we start with the area active
 
 	nm_index: 'nm', // nm nome of index
+	mail_fileSelectorWindow: null,
 
 	/**
 	 * Initialize javascript for this application
@@ -1170,6 +1171,36 @@ app.mail = AppJS.extend(
 			egw.json('mail.mail_ui.ajax_deleteFolder',[_senders[0].iface.id])
 				.sendRequest(true);
 		}
+	},
+
+	import_displayVfsSelector: function(_ref) {
+		var ref = this.et2.getWidgetById(_ref);
+		//console.log(ref);
+        this.mail_fileSelectorWindow = egw().open_link(egw.link('/index.php', {
+				menuaction: 'filemanager.filemanager_select.select',
+				mode: 'open',
+				method: 'mail.mail_ui.setImportMessageFromVFS',
+				id: ref.value[0],//represents the target where to import to
+        }), 'mail_import_vfsSelector', '640x580');
+	},
+
+	import_closeVfsSelector: function(_ref) {
+		// names used here to access the popupwindows must be available, else it fails
+		// names used here are assigned in app.mail.import_displayVfsSelector and class.mail_hooks.inc.php
+		this.mail_fileSelectorWindow = window.open('','mail_import_vfsSelector');
+		importMessageDialog = window.open('','importMessageDialog');
+		this.mail_fileSelectorWindow.close();
+		var vfsfile = importMessageDialog.app.mail.et2.getWidgetById('vfsfile');
+		//console.log(vfsfile);
+		vfsfile.input[0].value=_ref;
+		var folder = importMessageDialog.app.mail.et2.getWidgetById('FOLDER');
+		//console.log(vfsfile.input[0].value,folder.value[0]);
+		importMessageDialog.close();
+		egw().open_link(egw.link('/index.php', {
+				menuaction: 'mail.mail_ui.importMessage',
+				content: {fi: vfsfile.input[0].value, fo: folder.value[0]},//represents the target where to import to
+		}), 'mail_display', '640x580');
+		//vfsfile._parent._parent._parent.parentNode.et2_obj.submit();
 	},
 
 	/**
