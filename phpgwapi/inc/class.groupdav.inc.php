@@ -1233,8 +1233,6 @@ class groupdav extends HTTP_WebDAV_Server
 	 * @todo support for rid parameter
 	 * @todo managed-id does NOT change on update
 	 * @todo updates of attachments through vfs need to call $handler->update_tags($id) too
-	 * @todo stripping attachments added via PUT direct and make them managed ones (urls are NOT yet supported too)
-	 * @todo update of attachments via PUT on calendar resource (not sure if I want delete), allows to re-user managed-ids ...
 	 */
 	protected function managed_attachements(&$options, $id, groupdav_handler $handler, $action)
 	{
@@ -1258,36 +1256,16 @@ class groupdav extends HTTP_WebDAV_Server
 					substr($this->_SERVER['HTTP_CONTENT_DISPOSITION'], 0, 10) === 'attachment' &&
 					preg_match('/filename="?([^";]+)/', $this->_SERVER['HTTP_CONTENT_DISPOSITION'], $matches))
 				{
-					$filename = $matches[1];
-					$parts = explode('.', $filename);
-					$ext = '.'.array_pop($parts);
-					$filename = implode('.', $parts);
+					$filename = egw_vfs::basename($matches[1]);
 				}
-				else
-				{
-					$filename = 'attachment';
-					if (isset($options['content_type']) && ($ext = mime_magic::mime2ext($options['content_type'])))
-					{
-						$ext = '.'.$ext;
-					}
-					else
-					{
-						$ext = '';
-					}
-				}
-				for($i = 1; $i < 100; ++$i)
-				{
-					$path = egw_link::vfs_path($handler->app, $handler->get_id($entry), $filename.($i > 1 ? '-'.$i : '').$ext, true);
-					if (!egw_vfs::stat($path)) break;
-				}
-				if (!($to = egw_vfs::fopen($path, 'w')) ||
+				if (!($to = self::fopen_attachment($handler->app, $handler->get_id($entry), $filename, $this->_SERVER['CONTENT_TYPE'], $path)) ||
 					isset($options['stream']) && ($copied=stream_copy_to_stream($options['stream'], $to)) === false ||
 					isset($options['content']) && ($copied=fwrite($to, $options['content'])) === false)
 				{
 					return '403 Forbidden';
 				}
 				fclose($to);
-				error_log(__METHOD__."() content-type=$options[content_type], filename=$filename, ext=$ext: $path created $copied bytes copied");
+				error_log(__METHOD__."() content-type=$options[content_type], filename=$filename: $path created $copied bytes copied");
 				$ret = '201 Created';
 				header(self::MANAGED_ID_HEADER.': '.self::path2managed_id($path));
 				break;
@@ -1331,6 +1309,153 @@ class groupdav extends HTTP_WebDAV_Server
 		$handler->check_return_representation($options, $id, $user);
 
 		return $ret;
+	}
+
+	/**
+	 * Handle ATTACH attribute on importing iCals
+	 *
+	 * - turn inline attachments into managed attachments
+	 * - delete NOT included attachments, $delete_via_put is true
+	 * @todo: store URLs not from our managed attachments
+	 *
+	 * @param string $app eg. 'calendar'
+	 * @param int|string $id
+	 * @param array $attach array of array with values for keys 'name', 'params', 'value'
+	 * @param boolean $delete_via_put
+	 */
+	public static function handle_attach($app, $id, $attach, $delete_via_put=false)
+	{
+		error_log(__METHOD__."('$app', $id, attach=".array2string($attach).", delete_via_put=".array2string($delete_via_put).')');
+
+		if (!egw_link::file_access($app, $id, EGW_ACL_EDIT))
+		{
+			error_log(__METHOD__."('$app', $id, ...) no rights to update attachments");
+			return;	// no rights --> nothing to do
+		}
+		if (!is_array($attach)) $attach = array();	// could be PEAR_Error if not set
+
+		if ($delete_via_put)
+		{
+			foreach(egw_vfs::find(egw_link::vfs_path($app, $id, '', true), array('type' => 'F')) as $path)
+			{
+				$found = false;
+				foreach($attach as $key => $attr)
+				{
+					if ($attr['params']['MANAGED-ID'] === self::path2managed_id($path))
+					{
+						$found = true;
+						unset($attach[$key]);
+						break;
+					}
+				}
+				if (!$found)
+				{
+					$ok = egw_vfs::unlink($path);
+					error_log(__METHOD__."('$app', $id, ...) egw_vfs::unlink('$path') returned ".array2string($ok));
+				}
+			}
+		}
+		// turn inline attachments into managed ones
+		foreach($attach as $key => $attr)
+		{
+			if ($attr['params']['VALUE'] === 'BINARY')
+			{
+				if (!($to = self::fopen_attachment($app, $id, $filename=$attr['params']['FILENAME'], $attr['params']['FMTTYPE'], $path)) ||
+					($copied=fwrite($to, $attr['value'])) === false)
+				{
+					error_log(__METHOD__."('$app', $id, ...) failed to add attachment ".array2string($attr).") ");
+					continue;
+				}
+				fclose($to);
+				error_log(__METHOD__."('$app', $id, ...)) content-type={$attr['params']['FMTTYPE']}, filename=$filename: $path created $copied bytes copied");
+			}
+			else
+			{
+				error_log(__METHOD__."('$app', $id, ...) unsupported URI attachment ".array2string($attr));
+			}
+		}
+	}
+
+	/**
+	 * Open attachment for writing
+	 *
+	 * @param string $app
+	 * @param int|string $id
+	 * @param string $filename defaults to 'attachment'
+	 * @param string $mime=null mime-type to generate extension
+	 * @param string &$path=null on return path opened
+	 * @return resource
+	 */
+	protected static function fopen_attachment($app, $id, $filename, $mime=null, &$path=null)
+	{
+		$filename = empty($filename) ? 'attachment' : egw_vfs::basename($filename);
+
+		if (strpos($mime, ';')) list($mime) = explode(';', $mime);	// in case it contains eg. charset info
+
+		$ext = !empty($mime) ? mime_magic::mime2ext($mime) : '';
+
+		if (!$ext || substr($filename, -strlen($ext)-1) == '.'.$ext ||
+			preg_match('/\.([^.]+)$/', $filename, $matches) && mime_magic::ext2mime($matches[1]) == $mime)
+		{
+			$parts = explode('.', $filename);
+			$ext = '.'.array_pop($parts);
+			$filename = implode('.', $parts);
+		}
+		else
+		{
+			$ext = '.'.$ext;
+		}
+		for($i = 1; $i < 100; ++$i)
+		{
+			$path = egw_link::vfs_path($app, $id, $filename.($i > 1 ? '-'.$i : '').$ext, true);
+			if (!egw_vfs::stat($path)) break;
+		}
+		if ($i >= 100) return null;
+
+		if (!egw_vfs::file_exists($dir = egw_vfs::dirname($path)) && !egw_vfs::mkdir($dir))
+		{
+			error_log(__METHOD__."('$app', $id, ...) failed to create entry dir $dir!");
+			return false;
+		}
+
+		return egw_vfs::fopen($path, 'w');
+	}
+
+	/**
+	 * Add ATTACH attribute(s) for iCal
+	 *
+	 * @param string $app eg. 'calendar'
+	 * @param int|string $id
+	 * @param array &$attributes
+	 * @param array &$parameters
+	 */
+	public static function add_attach($app, $id, array &$attributes, array &$parameters)
+	{
+		static $url_prefix;
+		if (!isset($url_prefix))
+		{
+			$url_prefix = '';
+			if ($GLOBALS['egw_info']['server']['webserver_url'][0] == '/')
+			{
+				$url_prefix = ($_SERVER['HTTPS'] ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'];
+			}
+		}
+		foreach(egw_vfs::find(egw_link::vfs_path($app, $id, '', true), array(
+			'type' => 'F',
+			'need_mime' => true,
+		), true) as $path => $stat)
+		{
+			$attributes['ATTACH'][] = $url_prefix.egw::link(egw_vfs::download_url($path));
+			$parameters['ATTACH'][] = array(
+				'MANAGED-ID' => groupdav::path2managed_id($path),
+				'FMTTYP'     => $stat['mime'],
+				'SIZE'       => $stat['size'],
+				'FILENAME'   => egw_vfs::basename($path),
+			);
+		}
+		// if we have attachments, set X-attribute to enable deleting them by put
+		// (works around events synced before without ATTACH attributes)
+		if ($attributes['ATTACH']) $attributes['X-EGROUPWARE-ATTACH-INCLUDED'] = 'TRUE';
 	}
 
 	/**

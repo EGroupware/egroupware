@@ -791,28 +791,7 @@ class calendar_ical extends calendar_boupdate
 						break;
 
 					case 'ATTACH':
-						static $url_prefix;
-						if (!isset($url_prefix))
-						{
-							$url_prefix = '';
-							if ($GLOBALS['egw_info']['server']['webserver_url'][0] == '/')
-							{
-								$url_prefix = ($_SERVER['HTTPS'] ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'];
-							}
-						}
-						foreach(egw_vfs::find(egw_link::vfs_path('calendar', $event['id'], '', true), array(
-							'type' => 'F',
-							'need_mime' => true,
-						), true) as $path => $stat)
-						{
-							$attributes['ATTACH'][] = $url_prefix.egw::link(egw_vfs::download_url($path));
-							$parameters['ATTACH'][] = array(
-								'MANAGED-ID' => groupdav::path2managed_id($path),
-								'FMTTYP'     => $stat['mime'],
-								'SIZE'       => $stat['size'],
-								'FILENAME'   => egw_vfs::basename($path),
-							);
-						}
+						groupdav::add_attach('calendar', $event['id'], $attributes, $parameters);
 						break;
 
 					default:
@@ -1777,6 +1756,12 @@ class calendar_ical extends calendar_boupdate
 						$return_id = $event_info['master_event']['id'] . ':' . $event['recurrence'];
 					}
 					break;
+			}
+
+			// handle ATTACH attribute for managed attachments
+			if ($updated_id)
+			{
+				groupdav::handle_attach('calendar', $updated_id, $event['attach'], $event['attach-delete-by-put']);
 			}
 
 			if ($this->log)
@@ -3010,6 +2995,11 @@ class calendar_ical extends calendar_boupdate
 		}
 
 		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
+
+		// parsing ATTACH attributes for managed attachments
+		$attr = $component->getAttribute('X-EGROUPWARE-ATTACH-INCLUDED');
+		$event['attach-delete-by-put'] = !is_a($attr, PEAR_Error) && $attr === 'TRUE';
+		$event['attach'] = $component->getAllAttributes('ATTACH');
 
 		if ($this->log)
 		{
