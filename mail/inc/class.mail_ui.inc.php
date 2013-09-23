@@ -178,7 +178,7 @@ class mail_ui
 					'searchletter'   =>	false,	// I0 active letter of the lettersearch or false for [all]
 					'start'          =>	0,		// IO position in list
 					'order'          =>	'date',	// IO name of the column to sort after (optional for the sortheaders)
-					'sort'           =>	'ASC',	// IO direction of the sort: 'ASC' or 'DESC'
+					'sort'           =>	'DESC',	// IO direction of the sort: 'ASC' or 'DESC'
 					'default_cols'   => 'status,attachments,subject,fromaddress,date,size',	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 					'csv_fields'     =>	false, // I  false=disable csv export, true or unset=enable it with auto-detected fieldnames,
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
