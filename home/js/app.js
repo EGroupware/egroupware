@@ -245,7 +245,9 @@ app.home = AppJS.extend(
 						for (var key in changed)
 						{
 							if(!changed[key].id) continue;
-							var widget = window.app.home.portlet_container.getWidgetById(changed[key].id);
+							// Changed ID is DOM id
+							var widget_id = changed[key].id.substr(window.app.home.et2.getInstanceManager().uniqueId.length + 1);
+							var widget = window.app.home.portlet_container.getWidgetById(widget_id);
 							if(!widget || widget == window.app.home.portlet_container) continue;
 
 							egw().jsonq("home.home_ui.ajax_set_properties",[widget.id, widget.options.settings,{

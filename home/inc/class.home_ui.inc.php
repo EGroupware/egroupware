@@ -59,12 +59,18 @@ class home_ui
 	protected function get_actions()
 	{
 		$portlets = $this->get_portlet_list();
+		$add_portlets = $portlets;
+		foreach($add_portlets as $id => &$add)
+		{
+			$add['id'] = 'add_' . $id;
+		}
+		error_log(array2string($add_portlets));
 		$actions = array(
 			'add' => array(
 				'type'	=> 'popup',
 				'caption'	=> 'Add',
 				'onExecute'	=> 'javaScript:app.home.add',
-				'children'	=> $portlets
+				'children'	=> $add_portlets
 			)
 		);
 
@@ -267,6 +273,15 @@ class home_ui
 				// Get portlet settings, and merge new with old
 				$content = '';
 				$context = $values+(array)$portlets[$portlet_id]; //array('class'=>$attributes['class']);
+				
+				// Handle add IDs
+				$classname =& $context['class'];
+				if(strpos($classname,'add_') == 0 && !class_exists($classname))
+				{
+					$add = true;
+					$classname = substr($classname, 4);
+				}
+				
 				$portlet = $this->get_portlet($portlet_id, $context,$content, $attributes);
 
 				$context['class'] = get_class($portlet);
@@ -287,7 +302,10 @@ class home_ui
 				$update = array('content' => $content, 'attributes' => $attributes);
 
 				// New portlet?  Flag going straight to edit mode
-				//$update['edit_settings'] = true;
+				if($add)
+				{
+					$update['edit_settings'] = true;
+				}
 				$response->data($update);
 
 				// Store for preference update
