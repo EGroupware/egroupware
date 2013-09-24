@@ -1189,17 +1189,18 @@ app.mail = AppJS.extend(
 		// names used here are assigned in app.mail.import_displayVfsSelector and class.mail_hooks.inc.php
 		this.mail_fileSelectorWindow = window.open('','mail_import_vfsSelector');
 		importMessageDialog = window.open('','importMessageDialog');
-		this.mail_fileSelectorWindow.close();
 		var vfsfile = importMessageDialog.app.mail.et2.getWidgetById('vfsfile');
 		//console.log(vfsfile);
 		vfsfile.input[0].value=_ref;
 		var folder = importMessageDialog.app.mail.et2.getWidgetById('FOLDER');
 		//console.log(vfsfile.input[0].value,folder.value[0]);
-		importMessageDialog.close();
-		egw().open_link(egw.link('/index.php', {
+		importMessageDialog = egw().open_link(egw.link('/index.php', {
 				menuaction: 'mail.mail_ui.importMessage',
-				content: {fi: vfsfile.input[0].value, fo: folder.value[0]},//represents the target where to import to
-		}), 'mail_display', '640x580');
+				file: vfsfile.input[0].value,
+				folder: folder.value[0]
+		}), 'importMessageDialog', '640x580');
+		this.mail_fileSelectorWindow.close();
+		importMessageDialog.focus();
 		//vfsfile._parent._parent._parent.parentNode.et2_obj.submit();
 	},
 

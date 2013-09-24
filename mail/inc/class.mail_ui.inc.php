@@ -2706,29 +2706,25 @@ blockquote[type=cite] {
 		return "opener.app.mail.import_closeVfsSelector('$path');";
 	}
 
-	function importMessageFromVFS($target, $path=null)
-	{
-		//error_log(__METHOD__.__LINE__.array2string(array('target'=>$target,'file'=>$path)));
-		$content['divImportArea']['FOLDER'][0]=$target;
-		$content['divImportArea']['uploadForImport'] = array(
-			'name' => egw_vfs::basename($path),
-			'type' => egw_vfs::mime_content_type($path),
-			'file' => egw_vfs::PREFIX.$path,
-			'size' => filesize(egw_vfs::PREFIX.$path),
-		);
-		//$this->importMessage($content);
-		return "window.close();";
-
-	}
-
 	/**
 	 * importMessage
 	 */
 	function importMessage($content=null)
 	{
 		//error_log(__METHOD__.__LINE__.$this->mail_bo->getDraftFolder());
-error_log(__METHOD__.__LINE__.array2string($_GET));
-error_log(__METHOD__.__LINE__.array2string($content));
+		if (isset($_REQUEST['file']) && isset($_REQUEST['folder']))
+		{
+			$path = $_REQUEST['file'];
+			$target = $_REQUEST['folder'];
+			$content['divImportArea']['FOLDER'][0]=$target;
+			$content['divImportArea']['uploadForImport'] = array(
+				'name' => egw_vfs::basename($path),
+				'type' => egw_vfs::mime_content_type($path),
+				'file' => egw_vfs::PREFIX.$path,
+				'size' => filesize(egw_vfs::PREFIX.$path),
+			);
+		}
+
 		if (!empty($content))
 		{
 			//error_log(__METHOD__.__LINE__.array2string($content));
