@@ -791,7 +791,9 @@ class resources_ui
 		$allowed_list = array();
 		foreach($cats as $cat_id => $cat_name)
 		{
-			if ($resources = $this->bo->so->search(array('cat_id' => $cat_id, 'bookable' => '1'),'res_id'))
+			if ($resources = $this->bo->so->search(array('cat_id' => $cat_id, 'bookable' => '1'),'res_id',
+				'','','',False,'AND',false, array('deleted' => null))
+			)
 			{
 				$keys = array();
 				foreach($resources as $res)
