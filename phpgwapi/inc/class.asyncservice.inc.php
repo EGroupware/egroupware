@@ -512,6 +512,7 @@ class asyncservice
 	 */
 	function write($job,$exists = False,$where=array())
 	{
+		if (isset($job['data']['next']) && isset($job['next'])) $job['data']['next'] = $job['next'];
 		$data = array(
 			'async_next'      => $job['next'],
 			'async_times'     => serialize($job['times']),
