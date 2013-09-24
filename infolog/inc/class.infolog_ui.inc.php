@@ -959,6 +959,7 @@ class infolog_ui
 				'group' => $group,
 				'hint' => 'View all subs of this entry',
 				'enableClass' => 'infolog_rowHasSubs',
+				'enabled' => true,
 			),
 			'parent' => array(
 				'caption' => 'View parent',
@@ -966,6 +967,7 @@ class infolog_ui
 				'group' => $group,
 				'hideOnDisabled' => true,
 				'hint' => 'View the parent of this entry and all his subs',
+				'enabled' => true,
 				'enableClass' => 'infolog_rowHasParent'
 			),
 			'add' => array(
