@@ -344,7 +344,7 @@ abstract class groupdav_handler
 	 */
 	public function check_return_representation($options, $id, $user=null)
 	{
-		if (isset($_SERVER['HTTP_PREFER']) && in_array('return-representation', explode(',', $_SERVER['HTTP_PREFER'])))
+		if (isset($_SERVER['HTTP_PREFER']) && in_array('return=representation', explode(',', $_SERVER['HTTP_PREFER'])))
 		{
 			if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			{

@@ -835,11 +835,11 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 
 		// rfc 5995 (Use POST to add members to WebDAV collections): we use collection path with add-member query param
-		/* leaving it switched off, until further testing, because OS X iCal seem to ignore it and OS X Addressbook uses POST to full URL without ?add-member
+		// leaving it switched off, until further testing, because OS X iCal seem to ignore it and OS X Addressbook uses POST to full URL without ?add-member
 		if ($app && !in_array($app,array('inbox','outbox','principals')))	// not on inbox, outbox or principals
 		{
 			$props['add-member'][] = self::mkprop('href',$this->base_uri.$path.'?add-member');
-		}*/
+		}
 
 		// add props modifyable via proppatch from client, eg. calendar-color, see self::$proppatch_props
 		foreach((array)$GLOBALS['egw_info']['user']['preferences'][$app] as $name => $value)
@@ -1268,6 +1268,7 @@ class groupdav extends HTTP_WebDAV_Server
 				error_log(__METHOD__."() content-type=$options[content_type], filename=$filename: $path created $copied bytes copied");
 				$ret = '201 Created';
 				header(self::MANAGED_ID_HEADER.': '.self::path2managed_id($path));
+				header('Location: '.self::path2location($path));
 				break;
 
 			case 'attachment-remove':
@@ -1422,14 +1423,12 @@ class groupdav extends HTTP_WebDAV_Server
 	}
 
 	/**
-	 * Add ATTACH attribute(s) for iCal
+	 * Get attachment location from path
 	 *
-	 * @param string $app eg. 'calendar'
-	 * @param int|string $id
-	 * @param array &$attributes
-	 * @param array &$parameters
+	 * @param string $path
+	 * @return string
 	 */
-	public static function add_attach($app, $id, array &$attributes, array &$parameters)
+	protected static function path2location($path)
 	{
 		static $url_prefix;
 		if (!isset($url_prefix))
@@ -1440,12 +1439,25 @@ class groupdav extends HTTP_WebDAV_Server
 				$url_prefix = ($_SERVER['HTTPS'] ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'];
 			}
 		}
+		return $url_prefix.egw::link(egw_vfs::download_url($path));
+	}
+
+	/**
+	 * Add ATTACH attribute(s) for iCal
+	 *
+	 * @param string $app eg. 'calendar'
+	 * @param int|string $id
+	 * @param array &$attributes
+	 * @param array &$parameters
+	 */
+	public static function add_attach($app, $id, array &$attributes, array &$parameters)
+	{
 		foreach(egw_vfs::find(egw_link::vfs_path($app, $id, '', true), array(
 			'type' => 'F',
 			'need_mime' => true,
 		), true) as $path => $stat)
 		{
-			$attributes['ATTACH'][] = $url_prefix.egw::link(egw_vfs::download_url($path));
+			$attributes['ATTACH'][] = self::path2location($path);
 			$parameters['ATTACH'][] = array(
 				'MANAGED-ID' => groupdav::path2managed_id($path),
 				'FMTTYP'     => $stat['mime'],
