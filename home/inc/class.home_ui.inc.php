@@ -119,13 +119,19 @@ class home_ui
 
 		foreach((array)$GLOBALS['egw_info']['user']['preferences']['home']['portlets'] as $id => $context)
 		{
+			error_log("Portlet: $id");
+			error_log(array2string($context));
+			if(!$id || in_array($id, array_keys($GLOBALS['egw_info']['user']['apps']))) continue;
 			$content = '';
 			$attrs = array();
 			$this->get_portlet($id, $context, $content, $attrs);
 			$portlets[$id] = $content;
 			$attributes[$id] = $attrs;
-
 		}
+		
+		// Add in legacy HTML home bits
+		$this->get_legacy_portlets($template, $portlets, $attributes);
+		
 		foreach($portlets as $index => $portlet)
 		{
 			$template->setElementAttribute('portlets', $index, (array)$attributes[$index]);
@@ -180,6 +186,50 @@ class home_ui
 		}
 		return $portlet;
 	}
+	
+	/**
+	 * Get a list of pre-etemplate2 home hook content according to the individual
+	 * application preferences.  If we find a preference that indicates the user
+	 * wants some content, we make a portlet for that app using the home_legacy_portlet,
+	 * which fetches content from the home hook.
+	 */
+	protected function get_legacy_portlets(&$etemplate, &$content, &$attributes)
+	{
+		$sorted_apps = array_keys($GLOBALS['egw_info']['user']['apps']);
+		$portal_oldvarnames = array('mainscreen_showevents', 'homeShowEvents','homeShowLatest','mainscreen_showmail','mainscreen_showbirthdays','mainscreen_show_new_updated', 'homepage_display');
+		
+		foreach($sorted_apps as $appname)
+		{
+			// If there's already [new] settings, or no preference, skip it
+			if($content[$appname]) continue;
+			$no_pref = true;
+			foreach($portal_oldvarnames as $varcheck)
+			{
+				$thisd = $GLOBALS['egw_info']['user']['preferences'][$appname][$varcheck];
+				if(!(int)$thisd && $thisd)
+				{
+					$no_pref = false;
+					break;
+				}
+			}
+			if($no_pref || !$GLOBALS['egw']->hooks->hook_exists('home', $appname))
+			{
+				continue;
+			}
+			$context = array(
+				'class' => 'home_legacy_portlet', 'app' => $appname,
+				'width' => 8, 'height' => 3
+			);
+			$_content = '';
+			$_attributes = array();
+			$this->get_portlet($appname, $context, $_content, $_attributes);
+			if(trim($_content))
+			{
+				$content[$appname] = $_content;
+				$attributes[$appname] = $_attributes;
+			}
+		}
+	}
 
 	/**
 	 * Get a list of all available portlets for add menu
@@ -211,7 +261,7 @@ class home_ui
 						}
 					}
 				}
-
+				
 				if(!$classes[$appname]) continue;
 
 				// Build 'Add' actions for each discovered portlet.
