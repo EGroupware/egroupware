@@ -266,11 +266,8 @@ var et2_file = et2_inputWidget.extend(
 	},
 	attachToDOM: function() {
 		this._super.apply(this, arguments);
-		// Override parent's behaviour to fire legacy change when finished
-		if (this.onchange)
-		{
-			this.input.unbind("change.et2_inputWidget");
-		}
+		// Override parent's change, file widget will fire change when finished uploading
+		this.input.unbind("change.et2_inputWidget");
 	},
 	getValue: function() {
 		var value = this.options.value ? this.options.value : this.input.val();
