@@ -307,12 +307,6 @@ app.infolog = AppJS.extend(
 	 */
 	add_link_sidemenu: function()
 	{
-		var app_registry = egw.link_get_registry('infolog');
-		if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
-		{
-			var w_h =app_registry['view_popup'].split('x');
-			if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
-			egw_openWindowCentered2(egw().link('/index.php?menuaction=infolog.infolog_ui.edit',false),'_blank',w_h[0], w_h[1],'yes');
-		}
+		egw.open('','infolog','add');
 	},
 });
