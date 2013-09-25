@@ -1275,12 +1275,14 @@ class groupdav extends HTTP_WebDAV_Server
 			case 'attachment-update':
 				if (empty($_GET['managed-id']) || !($path = self::managed_id2path($_GET['managed-id'], $app, $id)))
 				{
+					self::xml_error(self::mkprop(self::CALDAV, 'valid-managed-id-parameter', ''));
 					return '404 Not found';
 				}
 				if ($action == 'attachment-remove')
 				{
 					if (!egw_vfs::unlink($path))
 					{
+						self::xml_error(self::mkprop(self::CALDAV, 'valid-managed-id-parameter', ''));
 						return '403 Forbidden';
 					}
 					$ret = '204 No content';
@@ -1291,6 +1293,7 @@ class groupdav extends HTTP_WebDAV_Server
 						isset($options['stream']) && ($copied=stream_copy_to_stream($options['stream'], $to)) === false ||
 						isset($options['content']) && ($copied=fwrite($to, $options['content'])) === false)
 					{
+						self::xml_error(self::mkprop(self::CALDAV, 'valid-managed-id-parameter', ''));
 						return '403 Forbidden';
 					}
 					fclose($to);
@@ -1460,7 +1463,7 @@ class groupdav extends HTTP_WebDAV_Server
 			$attributes['ATTACH'][] = self::path2location($path);
 			$parameters['ATTACH'][] = array(
 				'MANAGED-ID' => groupdav::path2managed_id($path),
-				'FMTTYP'     => $stat['mime'],
+				'FMTTYPE'    => $stat['mime'],
 				'SIZE'       => $stat['size'],
 				'FILENAME'   => egw_vfs::basename($path),
 			);
@@ -1958,6 +1961,8 @@ class groupdav extends HTTP_WebDAV_Server
 				$content .= $this->request."\n";
 			}
 			$content .= 'HTTP/1.1 '.$this->_http_status."\n";
+			$content .= 'Date: '.str_replace('+0000', 'GMT', gmdate('r'))."\n";
+			$content .= 'Server: '.$_SERVER['SERVER_SOFTWARE']."\n";
 			foreach(headers_list() as $line) $content .= $line."\n";
 			if (($c = ob_get_flush())) $content .= "\n";
 			if (self::$log_level !== 'f' && strlen($c) > 1536) $c = substr($c,0,1536)."\n*** LOG TRUNKATED\n";
@@ -1979,6 +1984,67 @@ class groupdav extends HTTP_WebDAV_Server
 			{
 				foreach(explode("\n",$content) as $line) error_log($line);
 			}
+		}
+	}
+
+	/**
+	 * Output xml error element
+	 *
+	 * @param string|array $xml_error string with name for empty element in DAV NS or array with props
+	 * @param string $human_readable=null human readable error message
+	 */
+	public static function xml_error($xml_error, $human_readable=null)
+	{
+		header('Content-type: application/xml; charset=utf-8');
+
+		$xml = new XMLWriter;
+		$xml->openMemory();
+		$xml->setIndent(true);
+		$xml->startDocument('1.0', 'utf-8');
+		$xml->startElementNs(null, 'error', 'DAV:');
+
+		self::add_prop($xml, $xml_error);
+
+		if (!empty($human_readable))
+		{
+			$xml->writeElement('responsedescription', $human_readable);
+		}
+
+		$xml->endElement();	// DAV:error
+		$xml->endDocument();
+		echo $xml->outputMemory();
+	}
+
+	/**
+	 * Recursivly add properties to XMLWriter object
+	 *
+	 * @param XMLWriter $xml
+	 * @param string|array $props string with name for empty element in DAV NS or array with props
+	 */
+	protected static function add_prop(XMLWriter $xml, $props)
+	{
+		if (is_string($props)) $props = self::mkprop($props, '');
+		if (isset($props['name'])) $props = array($props);
+
+		foreach($props as $prop)
+		{
+			if (isset($prop['ns']) && $prop['ns'] !== 'DAV:')
+			{
+				$xml->startElementNs(null, $prop['name'], $prop['ns']);
+			}
+			else
+			{
+				$xml->startElement($prop['name']);
+			}
+			if (is_array($prop['val']))
+			{
+				self::add_prop($xml, $prop['val']);
+			}
+			else
+			{
+				$xml->text((string)$prop['val']);
+			}
+			$xml->endElement();
 		}
 	}
 
