@@ -1939,9 +1939,16 @@ class groupdav extends HTTP_WebDAV_Server
 					error_log(__METHOD__."() Could NOT create directory '$msg_file'!");
 					return;
 				}
-				$msg_file .= '/'.$GLOBALS['egw_info']['user']['account_lid'].'-'.
-					str_replace('/','!',$_SERVER['HTTP_USER_AGENT']).'.log';
-
+				$msg_file .= '/'.$GLOBALS['egw_info']['user']['account_lid'].'-';
+				// stop CalDAVTester from creating one log per test-step
+				if (substr($_SERVER['HTTP_USER_AGENT'], 0, 14) == 'scripts/tests/')
+				{
+					$msg_file .= 'CalDAVTester.log';
+				}
+				else
+				{
+					$msg_file .= str_replace('/','!',$_SERVER['HTTP_USER_AGENT']).'.log';
+				}
 				$content = '*** '.$_SERVER['REMOTE_ADDR'].' '.date('c')."\n";
 			}
 			$content .= $_SERVER['REQUEST_METHOD'].' '.$_SERVER['REQUEST_URI'].' HTTP/1.1'."\n";
