@@ -1276,7 +1276,7 @@ class groupdav extends HTTP_WebDAV_Server
 				if (empty($_GET['managed-id']) || !($path = self::managed_id2path($_GET['managed-id'], $app, $id)))
 				{
 					self::xml_error(self::mkprop(self::CALDAV, 'valid-managed-id-parameter', ''));
-					return '404 Not found';
+					return '403 Forbidden';
 				}
 				if ($action == 'attachment-remove')
 				{
@@ -1300,6 +1300,7 @@ class groupdav extends HTTP_WebDAV_Server
 					error_log(__METHOD__."() content-type=$options[content_type], filename=$filename: $path updated $copied bytes copied");
 					$ret = '200 Ok';
 					header(self::MANAGED_ID_HEADER.': '.self::path2managed_id($path));
+					header('Location: '.self::path2location($path));
 				}
 				break;
 
@@ -1310,7 +1311,11 @@ class groupdav extends HTTP_WebDAV_Server
 		$handler->update_tags($entry);
 
 		// check/handle Prefer: return-representation
-		$handler->check_return_representation($options, $id, $user);
+		// we can NOT use 204 No content (forbidds a body) with return=representation, therefore we need to use 200 Ok instead!
+		if ($handler->check_return_representation($options, $id, $user) && (int)$ret == 204)
+		{
+			$ret = '200 Ok';
+		}
 
 		return $ret;
 	}
@@ -1416,7 +1421,7 @@ class groupdav extends HTTP_WebDAV_Server
 		}
 		if ($i >= 100) return null;
 
-		if (!egw_vfs::file_exists($dir = egw_vfs::dirname($path)) && !egw_vfs::mkdir($dir))
+		if (!egw_vfs::file_exists($dir = egw_vfs::dirname($path)) && !egw_vfs::mkdir($dir, 0777, STREAM_MKDIR_RECURSIVE))
 		{
 			error_log(__METHOD__."('$app', $id, ...) failed to create entry dir $dir!");
 			return false;
