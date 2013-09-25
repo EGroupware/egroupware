@@ -254,6 +254,8 @@ class infolog_groupdav extends groupdav_handler
 			$offset = 0;
 		}
 
+		$requested_multiget_ids = $filter[self::$path_attr];
+
 		$files = array();
 		// ToDo: add parameter to only return id & etag
 		$tasks =& $this->bo->search($query);
@@ -261,6 +263,11 @@ class infolog_groupdav extends groupdav_handler
 		{
 			foreach($tasks as $task)
 			{
+				// remove task from requested multiget ids, to be able to report not found urls
+				if ($requested_multiget_ids && ($k = array_search($task[self::$path_attr], $requested_multiget_ids)) !== false)
+				{
+					unset($requested_multiget_ids[$k]);
+				}
 				// sync-collection report: deleted entry need to be reported without properties
 				if ($task['info_status'] == 'deleted')
 				{
@@ -279,6 +286,14 @@ class infolog_groupdav extends groupdav_handler
 					$props[] = HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'calendar-data',$content);
 				}
 				$files[] = $this->add_resource($path, $task, $props);
+			}
+		}
+		// report not found multiget urls
+		if ($requested_multiget_ids)
+		{
+			foreach($requested_multiget_ids as $id)
+			{
+				$files[] = array('path' => $path.$id.self::$path_extension);
 			}
 		}
 		// sync-collection report --> return modified of last contact as sync-token

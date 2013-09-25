@@ -264,12 +264,12 @@ class calendar_groupdav extends groupdav_handler
 			$filter['num_rows'] = $start[1];
 		}
 		$requested_multiget_ids = $filter['query'][self::$path_attr];
+		$sync_collection = strpos($filter['query'][0],'cal_modified>') === 0 && $filter['filter'] == 'everything';
 
 		$events =& $this->bo->search($filter);
+
 		if ($events)
 		{
-			$sync_collection = strpos($filter['query'][0],'cal_modified>') === 0 && $filter['filter'] == 'everything';
-
 			foreach($events as $event)
 			{
 				// remove event from requested multiget ids, to be able to report not found urls
@@ -323,20 +323,21 @@ class calendar_groupdav extends groupdav_handler
 				}*/
 				$files[] = $this->add_resource($path, $event, $props);
 			}
-			// report not found multiget urls
-			if ($requested_multiget_ids)
+		}
+		// report not found multiget urls
+		if ($requested_multiget_ids)
+		{
+			foreach($requested_multiget_ids as $id)
 			{
-				foreach($requested_multiget_ids as $id)
-				{
-					$files[] = array('path' => $path.$id.self::$path_extension);
-				}
-			}
-			// sync-collection report --> return modified of last contact as sync-token
-			if ($sync_collection_report)
-			{
-				$this->sync_collection_token = $event['modified'];
+				$files[] = array('path' => $path.$id.self::$path_extension);
 			}
 		}
+		// sync-collection report --> return modified of last contact as sync-token
+		if ($sync_collection_report)
+		{
+			$this->sync_collection_token = $event['modified'];
+		}
+
 		if ($this->debug)
 		{
 			error_log(__METHOD__."($path) took ".(microtime(true) - $starttime).
