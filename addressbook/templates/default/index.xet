@@ -3,7 +3,7 @@
 <overlay>
 	<template id="addressbook.index.left" template="" lang="" group="0" version="1.3.001">
 		<menulist class="bold">
-			<menupopup cols="1" statustext="Select a view" id="org_view" no_lang="1" onchange="1" rows="1" options="All contacts"/>
+			<menupopup cols="1" statustext="Select a view" id="org_view" no_lang="1" rows="1" options="All contacts"/>
 		</menulist>
 	</template>
 	<template id="addressbook.index.right_add" template="" lang="" group="0" version="1.7.001">
