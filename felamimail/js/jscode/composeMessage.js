@@ -53,8 +53,13 @@ function initAll()
 		if (fm_height >= 750) window.resizeBy(0,resizeHeight);
 	}
 	if (egw_getWindowOuterHeight()>screen.availHeight) window.resizeBy(0,screen.availHeight-egw_getWindowOuterHeight());
-	if (window.outerHeight>1000) window.resizeBy(0,1000-window.outerHeight);
-	if (screen.height>screen.availHeight) window.moveBy(0,screen.availHeight-screen.height);
+	var sizeAdjusted = false;
+	if (window.outerHeight>1000)
+	{
+		sizeAdjusted = true;
+		window.resizeBy(0,1000-window.outerHeight);
+	}
+	if (screen.height>screen.availHeight && !sizeAdjusted) window.resizeBy(0,screen.availHeight-screen.height);
 	//tab.init();
 	//alert(document.onkeydown);
 	var titletext = document.getElementById('fm_compose_subject').value;
