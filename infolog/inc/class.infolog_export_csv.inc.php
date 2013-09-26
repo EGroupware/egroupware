@@ -38,18 +38,6 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 		$export_object = new importexport_export_csv($_stream, (array)$options);
 		$export_object->set_mapping($options['mapping']);
 
-		// do we need to query the cf's
-		foreach($options['mapping'] + (array)$_definition->filter as $field => $map) {
-			if($field[0] == '#') {
-				$query['custom_fields'][] = $field;
-
-				if($GLOBALS['egw_info']['user']['apps'][$this->bo->customfields[substr($field,1)]['type']])
-				{
-					$cf_links[$field] = $this->bo->customfields[substr($field,1)]['type'];
-				}
-			}
-		}
-
 		$ids = array();
 		switch($options['selection'])
 		{
@@ -58,6 +46,19 @@ class infolog_export_csv implements importexport_iface_export_plugin {
 				// Fall through
 			case 'filter':
 			case 'all':
+				// do we need to query the cf's
+				$query['custom_fields'] = false;
+				foreach($options['mapping'] + (array)$_definition->filter as $field => $map) {
+					if($field[0] == '#') {
+						$query['custom_fields'] = true;
+						$query['selectcols'] .= ",$field";
+
+						if($GLOBALS['egw_info']['user']['apps'][$this->bo->customfields[substr($field,1)]['type']])
+						{
+							$cf_links[$field] = $this->bo->customfields[substr($field,1)]['type'];
+						}
+					}
+				}
 				if($options['selection'] == 'filter')
 				{
 					$fields = importexport_helper_functions::get_filter_fields($_definition->application, $this);
