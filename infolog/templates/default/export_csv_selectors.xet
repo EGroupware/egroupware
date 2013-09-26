@@ -14,7 +14,7 @@
 					<radio label="Use search results" id="selection" options="search"/>
 				</row>
 				<row>
-					<radio label="Use definition filter" id="selection" onclick="\$j('div.filters').show();" options="filter"/>
+					<radio label="Use definition filter" id="selection" onclick="jQuery('div.filters').show();" options="filter"/>
 				</row>
 			</rows>
 		</grid>
