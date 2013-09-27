@@ -59,7 +59,8 @@ function initAll()
 		sizeAdjusted = true;
 		window.resizeBy(0,1000-window.outerHeight);
 	}
-	if (screen.height>screen.availHeight && !sizeAdjusted) window.resizeBy(0,screen.availHeight-screen.height);
+	var t = window.outerHeight+screen.availHeight-screen.height;
+	if (screen.height>screen.availHeight && !sizeAdjusted && t>650) window.resizeBy(0,screen.availHeight-screen.height);
 	//tab.init();
 	//alert(document.onkeydown);
 	var titletext = document.getElementById('fm_compose_subject').value;
