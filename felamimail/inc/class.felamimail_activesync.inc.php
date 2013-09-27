@@ -287,6 +287,19 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		$this->_sentID = false;
 
 		$connectionFailed = false;
+
+		if (is_null($waitOnFailure)) $waitOnFailure = egw_cache::getCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*2);
+		if (isset($waitOnFailure[self::$profileID]) && !empty($waitOnFailure[self::$profileID]))
+		{
+			if ($waitOnFailure[self::$profileID]['lastattempt']+$waitOnFailure[self::$profileID]['howlong']<$hereandnow)
+			{
+				if ($this->debugLevel>0); error_log(__METHOD__.__LINE__.'# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']." Refuse to open connection for Profile:".self::$profileID.' Device should still wait '.array2string($waitOnFailure[self::$profileID]));
+				header("HTTP/1.1 503 Service Unavailable");
+				$hL = $waitOnFailure[self::$profileID]['lastattempt']+$waitOnFailure[self::$profileID]['howlong']-$hereandnow;
+				header("Retry-After: ".$hL);
+				exit;
+			}
+		}
 		if (!$this->mail)
 		{
 			$this->account = $account;
@@ -311,21 +324,19 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 				}
 			}
 		}
-		if (is_null($waitOnFailure)) $waitOnFailure = egw_cache::getCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*2);
 		if (empty($waitOnFailure[self::$profileID])) $waitOnFailure[self::$profileID] = array('howlong'=>$this->waitOnFailureDefault,'lastattempt'=>$hereandnow);
 		if ($connectionFailed)
 		{
 			//error_log(__METHOD__.__LINE__."($account) could not open connection!".$this->mail->getErrorMessage());
-			error_log(date('Y-m-d H:i:s').' '.__METHOD__.__LINE__."($account) can not open connection!".$this->mail->getErrorMessage()."\n",3,'/var/lib/egroupware/esync-imap.log');
-			error_log("# Can not open connection for Profile:".self::$profileID.' Device should wait '.array2string($waitOnFailure[self::$profileID])."\n",3,'/var/lib/egroupware/esync-imap.log');
-			error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
-				($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\n\n",3,'/var/lib/egroupware/esync-imap.log');
+			//error_log(date('Y-m-d H:i:s').' '.__METHOD__.__LINE__."($account) can not open connection!".$this->mail->getErrorMessage()."\n",3,'/var/lib/egroupware/esync-imap.log');
+			//error_log('# Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid'].', URL='.
+			//	($_SERVER['HTTPS']?'https://':'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\n\n",3,'/var/lib/egroupware/esync-imap.log');
 			if ($waitOnFailure[self::$profileID]['howlong'] > $this->waitOnFailureLimit )
 			{
 				header("HTTP/1.1 500 Internal Server Error");
 				$waitOnFailure[self::$profileID] = array('howlong'=>$this->waitOnFailureDefault,'lastattempt'=>$hereandnow);
 				egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
-				throw new egw_exception_not_found(__METHOD__."($account) can not open connection on Profile #".self::$profileID."!");
+				throw new egw_exception_not_found(__METHOD__."($account) can not open connection on Profile #".self::$profileID."!".$this->mail->getErrorMessage());
 			}
 			else
 			{
@@ -333,7 +344,8 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 				header("HTTP/1.1 503 Service Unavailable");
 				header("Retry-After: ".$waitOnFailure[self::$profileID]['howlong']);
 				$waitOnFailure[self::$profileID] = array('howlong'=>$waitOnFailure[self::$profileID]['howlong'] * 2,'lastattempt'=>$hereandnow);
-				$ethrown = new egw_exception_not_found(__METHOD__."($account) can not open connection on Profile #".self::$profileID."!");
+				egw_cache::setCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$waitOnFailure,$expiration=60*60*2);
+				$ethrown = new egw_exception_not_found(__METHOD__."($account) can not open connection on Profile #".self::$profileID."!".$this->mail->getErrorMessage());
 				_egw_log_exception($ethrown);
 				exit;
 			}
