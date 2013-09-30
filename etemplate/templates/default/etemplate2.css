@@ -256,6 +256,9 @@ button.et2_button_text:focus, input[type=button]:focus {
 .et2_selectbox .ui-widget-header {
 	padding: 0px 6px 0px 6px;
 	text-align: center;
+	background: white;
+	border:none;
+	color: inherit;
 }
 .et2_selectbox .ui-widget-header ul {
 	float: left;
@@ -269,6 +272,7 @@ button.et2_button_text:focus, input[type=button]:focus {
 .et2_selectbox .ui-widget-header li>span.ui-icon {
 	float: left;
 	margin-top: -2px;
+	background-size: 1.0em;
 }
 .et2_selectbox .ui-widget-header li>div.et2_link_entry {
 	/* Shrink search box to same size as header */
@@ -287,7 +291,7 @@ button.et2_button_text:focus, input[type=button]:focus {
 .et2_selectbox .ui-multiselect-checkboxes li {
 	margin: 0px;
 	clear: both;
-	padding-left: 26px;
+	padding-left: 22px;
 	padding-right: 3px;
 	text-decoration: none;
 	list-style-image: none;
@@ -314,8 +318,7 @@ button.et2_button_text:focus, input[type=button]:focus {
 	margin: 3px;
 }
 .et2_selectbox .ui-multiselect-checkboxes img {
-	float: right;
-	height: 1.8em;
+	height: 1.0em;
 }
 
 .et2_selectbox .ui-multiselect-checkboxes div.ui-icon-close {
@@ -1200,6 +1203,19 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 }
 .et2_prompt #value {
 	width: 100%;
+}
+
+/**
+ * egroupware has its own icons for these - override the images
+ */
+
+span.ui-icon-check, div.ui-icon-check, .ui-widget-header .ui-icon-check {
+	background-image: url(images/check.png);
+	background-position: 0px;
+}
+span.ui-icon-search, div.ui-icon-search, .ui-widget-header .ui-icon-search  {
+	background-image: url(images/search.png);
+	background-position: 0px;
 }
 
 /**

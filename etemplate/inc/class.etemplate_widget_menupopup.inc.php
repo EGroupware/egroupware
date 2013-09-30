@@ -655,7 +655,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 		if($show_type) {
 			$info = array(
 				'label'	=> $info,
-				'icon' => $acc['account_type'] == 'g' ? 'addressbook/group' : 'users'
+				'icon' => $acc['account_type'] == 'g' ? 'addressbook/group' : 'user'
 			);
 		}
 		return $info;
