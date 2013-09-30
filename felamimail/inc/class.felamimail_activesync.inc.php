@@ -289,7 +289,7 @@ class felamimail_activesync implements activesync_plugin_write, activesync_plugi
 		$connectionFailed = false;
 
 		if (is_null($waitOnFailure)||empty($waitOnFailure[self::$profileID])||empty($waitOnFailure[self::$profileID][$this->backend->_devid])) $waitOnFailure = egw_cache::getCache(egw_cache::INSTANCE,'email','ActiveSyncWaitOnFailure'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*2);
-		if (isset($waitOnFailure[self::$profileID]) && !empty($waitOnFailure[self::$profileID]) && !empty($waitOnFailure[self::$profileID][$this->backend->_devid]) && !empty($waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']) && !empty($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']))
+		if (isset($waitOnFailure[self::$profileID]) && !empty($waitOnFailure[self::$profileID]) && !empty($waitOnFailure[self::$profileID][$this->backend->_devid]) && isset($waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']) && !empty($waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']) && isset($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']) && !empty($waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']))
 		{
 			if ($waitOnFailure[self::$profileID][$this->backend->_devid]['lastattempt']+$waitOnFailure[self::$profileID][$this->backend->_devid]['howlong']<$hereandnow)
 			{
