@@ -370,7 +370,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			}
 			else
 			{
-				egw_appWindowOpen(req.app, res.data.url);
+				egw_appWindowOpen(req.egw.getAppName(), res.data.url);
 			}
 			return true;
 		}
