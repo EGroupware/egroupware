@@ -291,7 +291,7 @@ button.et2_button_text:focus, input[type=button]:focus {
 .et2_selectbox .ui-multiselect-checkboxes li {
 	margin: 0px;
 	clear: both;
-	padding-left: 22px;
+	padding-left: 26px;
 	padding-right: 3px;
 	text-decoration: none;
 	list-style-image: none;
@@ -315,7 +315,7 @@ button.et2_button_text:focus, input[type=button]:focus {
 	border: 1px solid transparent;
 }
 .et2_selectbox input[type="checkbox"] {
-	margin: 3px;
+	margin: 3px 3px 3px -1px;
 }
 .et2_selectbox .ui-multiselect-checkboxes img {
 	height: 1.0em;

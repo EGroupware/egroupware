@@ -221,7 +221,7 @@ var et2_selectAccount = et2_selectbox.extend(
 			this.setDOMNode(div[0]);
 
 			var select_col = jQuery('#selection_col',dialog).children();
-			var selected = jQuery('#selected', select_col);
+			var selected = jQuery('#'+this.getInstanceManager().uniqueId + "_selected", select_col);
 
 			// Re-do to get it to work around/through the select box
 			this.set_value = function(_value) {
@@ -243,14 +243,15 @@ var et2_selectAccount = et2_selectbox.extend(
 				// Update widget with selected
 				var ids = [];
 				var data = {};
-				jQuery('#selected li',select_col).each(function() {
-					// Remove sel_ prefix and add to list
-					ids.push(this.id.substr(4));
+				jQuery('#'+this.getInstanceManager().uniqueId + '_selected li',select_col).each(function() {
+					var id = $j(this).attr("data-id");
+					// Add to list
+					ids.push(id);
 
 					// Make sure option is there
-					if(jQuery('input[id$="_opt_'+this.id.substr(4)+'"]',widget.multiOptions).length == 0)
+					if(jQuery('input[data-id="'+id+'"]',widget.multiOptions).length == 0)
 					{
-						widget._appendMultiOption(this.id.substr(4),jQuery('label',this).text());
+						widget._appendMultiOption(id,jQuery('label',this).text());
 					}
 				});
 
@@ -301,14 +302,15 @@ var et2_selectAccount = et2_selectbox.extend(
 			// Update widget with selected
 			var ids = [];
 			var data = {};
-			jQuery('#selected li',select_col).each(function() {
-				// Remove sel_ prefix and add to list
-				ids.push(this.id.substr(4));
+			jQuery('#'+widget.getInstanceManager().uniqueId + '_selected li',select_col).each(function() {
+				var id = $j(this).attr("data-id");
+				// Add to list
+				ids.push(id);
 
 				// Make sure option is there
-				if(jQuery('input[id$="_opt_'+this.id.substr(4)+'"]',widget.multiOptions).length == 0)
+				if(jQuery('input[id$="_opt_'+id+'"]',widget.multiOptions).length == 0)
 				{
-					widget._appendMultiOption(this.id.substr(4),jQuery('label',this).text());
+					widget._appendMultiOption(id,jQuery('label',this).text());
 				}
 			});
 
@@ -427,7 +429,7 @@ var et2_selectAccount = et2_selectbox.extend(
 		var self = this;
 
 		// (containter of) Currently selected users / groups
-		var selected = jQuery('#selected', this.dialog);
+		var selected = jQuery('#'+this.getInstanceManager().uniqueId + "_selected", this.dialog);
 
 		// Group
 		if(item.value && item.value < 0)
@@ -439,39 +441,48 @@ var et2_selectAccount = et2_selectbox.extend(
 				jQuery('<span class="ui-icon ui-icon-circlesmall-plus et2_clickable"/>')
 					.css("float", "left")
 					.appendTo(node)
-					.toggle(function() {
-						jQuery(this).removeClass("ui-icon-circlesmall-plus")
-							.addClass("ui-icon-circlesmall-minus");
-
-						var group = jQuery(this).parent()
-							.addClass("expanded");
-
-						if(group.children("li").length == 0)
+					.click(function() {
+						if(jQuery(this).hasClass("ui-icon-circlesmall-plus"))
 						{
-							// Fetch group members
-							self.search_widget.query({term:"",options: {filter:{group: item.value}}}, function(items) {
-								jQuery(items).each(function(index,item) {
-									self._add_search_result(node, item);
+							jQuery(this).removeClass("ui-icon-circlesmall-plus")
+								.addClass("ui-icon-circlesmall-minus");
+
+							var group = jQuery(this).parent()
+								.addClass("expanded");
+
+							if(group.children("li").length == 0)
+							{
+								// Fetch group members
+								self.search_widget.query({
+										term:"",
+										options: {filter:{group: item.value}},
+										no_cache:true
+									}, function(items) {
+									jQuery(items).each(function(index,item) {
+										self._add_search_result(node, item);
+									});
 								});
-							});
+							}
+							else
+							{
+								group.children("li")
+									// Only show children that are not selected
+									.each(function(index, item) {
+										var j = jQuery(item);
+										if(jQuery('[data-id="'+j.attr("data-id")+'"]',selected).length == 0)
+										{
+											j.show();
+										}
+									});
+							}
 						}
 						else
 						{
-							group.children("li")
-								// Only show children that are not selected
-								.each(function(index, item) {
-									var j = jQuery(item);
-									if(jQuery('#sel_'+j.attr("id").substr(5),selected).length == 0)
-									{
-										j.show();
-									}
-								});
+							jQuery(this).addClass("ui-icon-circlesmall-plus")
+								.removeClass("ui-icon-circlesmall-minus");
+
+							var group = jQuery(this).parent().children("li").hide();
 						}
-					},function() {
-						jQuery(this).addClass("ui-icon-circlesmall-plus")
-							.removeClass("ui-icon-circlesmall-minus");
-						
-						var group = jQuery(this).parent().children("li").hide();
 					});
 			}
 
@@ -481,14 +492,14 @@ var et2_selectAccount = et2_selectbox.extend(
 		{
 			node = jQuery(document.createElement('li'));
 		}
-		node.attr("id", "list_"+item.value);
-
+		node.attr("data-id", item.value);
+		
 		jQuery('<span class="ui-icon ui-icon-arrow-1-e et2_clickable"/>')
 			.css("float", "right")
 			.appendTo(node)
 			.click(function() {
 				var button = jQuery(this);
-				self._add_selected(selected, button.parent().attr("id").substr(5));
+				self._add_selected(selected, button.parent().attr("data-id"));
 				// Hide user, but only hide button for group
 				if(button.parent().is('li'))
 				{
@@ -501,7 +512,7 @@ var et2_selectAccount = et2_selectbox.extend(
 			});
 
 		// If already in list, hide it
-		if(jQuery('#sel_'+item.value,selected).length != 0)
+		if(jQuery('[data-id="'+item.value+'"]',selected).length != 0)
 		{
 			node.hide();
 		}
@@ -509,6 +520,7 @@ var et2_selectAccount = et2_selectbox.extend(
 		var label = jQuery(document.createElement('label'))
 			.addClass("loading")
 			.appendTo(node);
+		
 		this.egw().link_title('home-accounts', item.value, function(name) {
 			label.text(name).removeClass("loading");
 		}, label);
@@ -526,7 +538,7 @@ var et2_selectAccount = et2_selectbox.extend(
 
 		var selected = jQuery(document.createElement("ul"))
 			.addClass("ui-multiselect-checkboxes ui-helper-reset")
-			.attr("id", "selected")
+			.attr("id", this.getInstanceManager().uniqueId + "_selected")
 			.css("height", "230px")
 			.appendTo(node);
 
@@ -562,17 +574,25 @@ var et2_selectAccount = et2_selectbox.extend(
 	 */
 	_add_selected: function(list, value) {
 
+		// Each option only once
+		var there = jQuery('[data-id="' + value + '"]',list);
+		if(there.length)
+		{
+			there.show();
+			return;
+		}
+		
 		var option = jQuery(document.createElement('li'))
-			.attr("id",'sel_'+value)
+			.attr("data-id",value)
 			.appendTo(list);
 		jQuery('<div class="ui-icon ui-icon-close et2_clickable"/>')
 			.css("float", "right")
 			.appendTo(option)
 			.click(function() {
-				var id = jQuery(this).parent().attr("id").substr(4);
+				var id = jQuery(this).parent().attr("data-id");
 				jQuery(this).parent().remove();
 				// Add 'add' button back, if in results list
-				list.parents("tr").find("#list_"+id).show()
+				list.parents("tr").find("[data-id='"+id+"']").show()
 					// Show button(s) for group
 					.children('span').show();
 			});

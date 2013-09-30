@@ -789,7 +789,7 @@ var et2_link_entry = et2_inputWidget.extend(
 			if(!this.options.query(request, response)) return false;
 		}
 
-		if(request.term in this.cache) {
+		if((typeof request.no_cache == 'undefined' && !request.no_cache) && request.term in this.cache) {
 			return response(this.cache[request.term]);
 		}
 
