@@ -263,7 +263,7 @@ class calendar_groupdav extends groupdav_handler
 			$filter['offset'] = $start[0];
 			$filter['num_rows'] = $start[1];
 		}
-		$requested_multiget_ids = $filter['query'][self::$path_attr];
+		$requested_multiget_ids = (array)$filter['query'][self::$path_attr];
 		$sync_collection = strpos($filter['query'][0],'cal_modified>') === 0 && $filter['filter'] == 'everything';
 
 		$events =& $this->bo->search($filter);

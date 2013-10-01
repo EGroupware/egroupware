@@ -254,7 +254,7 @@ class infolog_groupdav extends groupdav_handler
 			$offset = 0;
 		}
 
-		$requested_multiget_ids = $filter[self::$path_attr];
+		$requested_multiget_ids = (array)$filter[self::$path_attr];
 
 		$files = array();
 		// ToDo: add parameter to only return id & etag
