@@ -80,6 +80,8 @@ app.mail = AppJS.extend(
 				case 'mail.display':
 					isDisplay=true;
 					break;
+				case 'mail.compose':
+
 			}
 		}
 		//alert('action about to go down');
@@ -91,14 +93,14 @@ app.mail = AppJS.extend(
 			body.node.parentNode.style.top=subject.node.offsetTop+40+'px';
 			var app_registry = egw.link_get_registry(this.appname);
 			//console.log(app_registry);
-			w=850;
+			w=870;
 			if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
 			{
 				var w_h =app_registry['view_popup'].split('x');
 				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
 			}
-			//alert('resizing to'+(w_h[0]?w_h[0]:850)+','+(w_h[1]?w_h[1]:egw_getWindowOuterHeight()));
-			window.resizeTo((w_h[0]?w_h[0]:850),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
+			//alert('resizing to'+(w_h[0]?w_h[0]:870)+','+(w_h[1]?w_h[1]:egw_getWindowOuterHeight()));
+			window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
 		}
 	},
 
@@ -224,25 +226,25 @@ app.mail = AppJS.extend(
 		{
 			url += 'menuaction=mail.mail_compose.composeFromDraft';
 			url += '&id='+_elems[0].id;
-			egw_openWindowCentered(url,'composeasnew_'+_elems[0].id,700,egw_getWindowOuterHeight());
+			egw_openWindowCentered(url,'composeasnew_'+_elems[0].id,870,egw_getWindowOuterHeight());
 		}
 		if (_action.id == 'composeasnew')
 		{
 			url += 'menuaction=mail.mail_compose.composeAsNew';
 			url += '&reply_id='+_elems[0].id;
-			egw_openWindowCentered(url,'composeasnew_'+_elems[0].id,700,egw_getWindowOuterHeight());
+			egw_openWindowCentered(url,'composeasnew_'+_elems[0].id,870,egw_getWindowOuterHeight());
 		}
 		if (_action.id == 'reply')
 		{
 			url += 'menuaction=mail.mail_compose.reply';
 			url += '&reply_id='+_elems[0].id;
-			egw_openWindowCentered(url,'reply_'+_elems[0].id,700,egw_getWindowOuterHeight());
+			egw_openWindowCentered(url,'reply_'+_elems[0].id,870,egw_getWindowOuterHeight());
 		}
 		if (_action.id == 'reply_all')
 		{
 			url += 'menuaction=mail.mail_compose.replyAll';
 			url += '&reply_id='+_elems[0].id;
-			egw_openWindowCentered(url,'replyAll_'+_elems[0].id,700,egw_getWindowOuterHeight());
+			egw_openWindowCentered(url,'replyAll_'+_elems[0].id,870,egw_getWindowOuterHeight());
 		}
 		if (_action.id == 'forward'||_action.id == 'forwardinline'||_action.id == 'forwardasattach')
 		{
@@ -256,7 +258,7 @@ app.mail = AppJS.extend(
 				url += 'menuaction=mail.mail_compose.forward';
 				url += '&reply_id='+_elems[0].id;
 				url += '&mode=forwardinline';
-				egw_openWindowCentered(url,'forward_'+_elems[0].id,700,egw_getWindowOuterHeight());
+				egw_openWindowCentered(url,'forward_'+_elems[0].id,870,egw_getWindowOuterHeight());
 			}
 		}
 	},
@@ -331,7 +333,7 @@ app.mail = AppJS.extend(
 				sMessageList= 'AsForward&forwardmails=1&folder='+activeFolderB64+'&reply_id='+sMessageList.substring(0,sMessageList.length-1);
 			}
 			//alert(sMessageList);
-			egw_openWindowCentered(_url+sMessageList,'compose',700,egw_getWindowOuterHeight());
+			egw_openWindowCentered(_url+sMessageList,'compose',870,egw_getWindowOuterHeight());
 		}
 		//ToDo: reset message selection
 	},
@@ -381,6 +383,10 @@ app.mail = AppJS.extend(
 			var _id = this.mail_fetchCurrentlyFocussed(selected);
 			dataElem = egw.dataGetUIDdata(_id);
 		}
+		//get_class does not exist yet
+		//var pAAClass = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').get_class();
+		//console.log(pAAClass);
+		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea');
 		if(typeof selected == 'undefined' || selected.length == 0 || selected.length > 1 || typeof dataElem =='undefined')
 		{
 			this.mail_fetchCurrentlyFocussed();
@@ -389,6 +395,8 @@ app.mail = AppJS.extend(
 			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewToAddress').set_value("");
 			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewDate').set_value("");
 			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewSubject').set_value("");
+			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').set_value("");
+			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent');
 			var IframeHandle = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('messageIFRAME');
 			IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:""}));
 			this.mail_disablePreviewArea(true);
@@ -402,7 +410,10 @@ app.mail = AppJS.extend(
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewToAddress').set_value(dataElem.data.toaddress);
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewDate').set_value(dataElem.data.date);
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewSubject').set_value(subject);
+		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').set_value((dataElem.data.attachmentsBlock.length>1?dataElem.data.attachmentsBlock:''));
+		if (dataElem.data.attachmentsBlock.length<1) etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent');
 		var IframeHandle = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('messageIFRAME');
+		//console.log(IframeHandle);
 		IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
 		var messages = {};
 		messages['msg'] = [_id];
@@ -844,7 +855,7 @@ app.mail = AppJS.extend(
 	 */
 	mail_displayHeaderLines: function(_url) {
 		// only used by right clickaction
-		egw_openWindowCentered(_url,'mail_display_headerLines','700','600',window.outerWidth/2,window.outerHeight/2);
+		egw_openWindowCentered(_url,'mail_display_headerLines','870','600',window.outerWidth/2,window.outerHeight/2);
 	},
 
 	/**
@@ -1174,14 +1185,16 @@ app.mail = AppJS.extend(
 	},
 
 	import_displayVfsSelector: function(_ref) {
-		var ref = this.et2.getWidgetById(_ref);
+		//var ref = this.et2.getWidgetById(_ref);
 		//console.log(ref);
+		cInst= this.et2.getInstanceManager();
+		console.log(cInst);
         this.mail_fileSelectorWindow = egw().open_link(egw.link('/index.php', {
 				menuaction: 'filemanager.filemanager_select.select',
-				mode: 'open',
-				method: 'mail.mail_ui.setImportMessageFromVFS',
-				id: ref.value[0],//represents the target where to import to
-        }), 'mail_import_vfsSelector', '640x580');
+				mode: (_ref=='import'?'open':'open-multiple'),
+				method: (_ref=='import'?'mail.mail_ui.setImportMessageFromVFS':'mail.mail_compose.attachFromVFS'),
+				id: _ref,//represents the target where to import to
+        }), 'mail_'+(_ref=='import'?'import':'compose')+'_vfsSelector', '640x580');
 	},
 
 	import_closeVfsSelector: function(_ref) {
@@ -1201,6 +1214,25 @@ app.mail = AppJS.extend(
 		}), 'importMessageDialog', '640x580');
 		this.mail_fileSelectorWindow.close();
 		importMessageDialog.focus();
+		//vfsfile._parent._parent._parent.parentNode.et2_obj.submit();
+	},
+
+	compose_closeVfsSelector: function(_ref) {
+		// names used here to access the popupwindows must be available, else it fails
+		// names used here are assigned in app.mail.import_displayVfsSelector and class.mail_hooks.inc.php
+		this.mail_fileSelectorWindow = window.open('','mail_compose_vfsSelector');
+		this.mail_fileSelectorWindow.close();
+
+		var vfsfile = this.et2.getWidgetById('vfsfile');
+		console.log(vfsfile);
+		console.log(_ref);
+		//vfsfile.input[0].value=_ref;
+		//console.log(vfsfile.input[0].value,folder.value[0]);
+		//composeMessageDialog = egw().open_link(egw.link('/index.php', {
+		//		menuaction: 'mail.mail_compose.compose',
+		//		file: vfsfile.input[0].value
+		//}), 'importMessageDialog', '640x580');
+		//composeMessageDialog.focus();
 		//vfsfile._parent._parent._parent.parentNode.et2_obj.submit();
 	},
 

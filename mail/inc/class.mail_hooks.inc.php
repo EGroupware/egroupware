@@ -81,23 +81,23 @@ class mail_hooks
 				'menuaction' => 'mail.mail_ui.displayMessage',
 			),
 			'view_id'    => 'id',
-			'view_popup' => '850xegw_getWindowOuterHeight()',
+			'view_popup' => '870xegw_getWindowOuterHeight()',
 			'view_list'	=>	'mail.mail_ui.index',
 			'add'        => array(
 				'menuaction' => 'mail.mail_compose.compose',
 			),
-			'add_popup'  => '850xegw_getWindowOuterHeight()',
+			'add_popup'  => '870xegw_getWindowOuterHeight()',
 			'edit'        => array(
 				'menuaction' => 'mail.mail_compose.compose',
 			),
 			'edit_id'    => 'id',
-			'edit_popup'  => '850xegw_getWindowOuterHeight()',
+			'edit_popup'  => '870xegw_getWindowOuterHeight()',
 			// register fmail as handler for .eml files
 			'mime' => array(
 				'message/rfc822' => array(
 					'menuaction' => 'felamimail.uifelamimail.importMessageFromVFS2DraftAndDisplay',
 					//'menuaction' => 'mail.mail_ui.importMessageFromVFS2DraftAndDisplay',
-					'mime_popup' => '850xegw_getWindowOuterHeight()',
+					'mime_popup' => '870xegw_getWindowOuterHeight()',
 					'mime_url'   => 'formData[file]',
 				),
 			),
@@ -836,7 +836,7 @@ class mail_hooks
 			);
 
 			$file += array(
-				'import message' => "javascript:egw_openWindowCentered2('".egw::link('/index.php', $linkData,false)."','importMessageDialog',700,125,'no','$appname');",
+				'import message' => "javascript:egw_openWindowCentered2('".egw::link('/index.php', $linkData,false)."','importMessageDialog',870,125,'no','$appname');",
 			);
 
 		}

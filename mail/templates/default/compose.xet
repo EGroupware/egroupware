@@ -10,6 +10,8 @@
 			</hbox>
 			<hbox>
 				<button label="Submit" id="button[apply]"/><button label="Save" id="button[save]"/>
+				<buttononly id="selectFromVFSForCompose" value="Select" image="filemanager/navbar" onclick="app.mail.import_displayVfsSelector('compose')" />
+				<textbox align="left" width="1px" id="vfsfile" />
 				<file statustext="Select file to attach to message" multiple='true' progress='mailUploadProgress' onFinish="app.mail.uploadForCompose" id="uploadForCompose" drop_target ="mailUploadSection"/>
 			</hbox>
 			<hbox class="mailComposeHeaders" width="99%">
@@ -56,7 +58,7 @@
 					<menupopup id="stationeryID"/>
 				</menulist>
 			</groupbox>
-			<groupbox class="et2_file" id='mailUploadSection'>
+			<groupbox class="et2_file mailUploadSection">
 				<caption label="Files"/>
 				<box class="mailUploadProgress" id="mailUploadProgress" width="97%"/>
 				<grid disabled="@no_griddata" id="attachments" width="100%" maxheight="165" overflow="auto">

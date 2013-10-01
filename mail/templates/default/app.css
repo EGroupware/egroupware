@@ -277,6 +277,12 @@ pre {
 	width: 100%;
 	overflow: hidden;
 }
+.useEllipsis {
+	text-overflow: ellipsis;
+	width: 250px;
+	white-space: nowrap;
+	overflow: hidden;
+}
 /*
  influence the tree display and scrolling behavior
 */
@@ -326,11 +332,29 @@ input[type=button] {
 #mail-index_mailPreviewContainer {
 	position: absolute;
 	border: 1px solid silver;
-	top: 55px;
+	top: 60px;
 	bottom: 0;
 	left: 3px;
 	right: 0;
 }
+#mail-index_previewAttachmentArea {
+	background-color:#efefdf; 
+	max-height: 10%;
+	max-width: 50%;
+	position: absolute;
+	overflow:scroll;
+	overflow-x:hidden;
+	right: 0;
+	top: 25px;
+	border: 1px solid red;
+	opacity: 1;
+	-moz-opacity:1:
+	filter: Alpha(opacity=100);
+}
+#mail-index_previewAttachmentArea.noContent {
+	border:0px !important;
+}
+
 .mailDisplayContainer, .mailDisplayAttachments {
 	display: block;
 	display: -moz-inline-stack;

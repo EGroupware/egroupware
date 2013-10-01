@@ -33,7 +33,7 @@ class mail_compose
 		'reply'			=> True,
 		'replyAll'		=> True,
 		'selectFolder'		=> True,
-		'addAtachment'	=> True,
+		'attachFromVFS'	=> True,
 		'action'	=> True
 	);
 
@@ -129,6 +129,12 @@ class mail_compose
 		$trans_tbl = get_html_translation_table (HTML_ENTITIES);
 		$trans_tbl = array_flip ($trans_tbl);
 		return strtr ($string, $trans_tbl);
+	}
+
+	function attachFromVFS($target, $path=null)
+	{
+		error_log(__METHOD__.__LINE__.array2string($path));
+		return "var path=".json_encode($path)."; opener.app.mail.compose_closeVfsSelector(path);";
 	}
 
 	function action()
@@ -276,8 +282,18 @@ class mail_compose
 	{
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
 		error_log(__METHOD__.__LINE__.array2string($_content));
-$CAtFStart = array2string($_content);
+
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
+		if (is_array($_content['uploadForCompose']))
+		{
+			foreach ($_content['uploadForCompose'] as $i => &$upload)
+			{
+				if (!isset($upload['file'])) $upload['file'] = $upload['tmp_name'];
+				$tmp_filename = mail_bo::checkFileBasics($upload,'compose',false);
+				$upload['file'] = $upload['tmp_name'] = $tmp_filename;
+			}
+		}
+$CAtFStart = array2string($_content);
 		// read the data from session
 		// all values are empty for a new compose window
 		$insertSigOnTop = false;
@@ -890,32 +906,6 @@ $CAtFStart = array2string($_content);
 			$this->t->set_var("toggle_editormode", lang("Editor type").":&nbsp;<span><input name=\"_is_html\" value=\"".$ishtml."\" type=\"hidden\" /><input name=\"_editorselect\" onchange=\"fm_toggle_editor(this)\" onclick=\"fm_toggle_editor(this)\" ".($ishtml ? "checked=\"checked\"" : "")." id=\"_html\" value=\"html\" type=\"radio\"><label for=\"_html\">HTML</label><input name=\"_editorselect\" onchange=\"fm_toggle_editor(this)\" onclick=\"fm_toggle_editor(this)\" ".($ishtml ? "" : "checked=\"checked\"")." id=\"_plain\" value=\"plain\" type=\"radio\"><label for=\"_plain\">Plain text</label></span>");
 		}
 */
-		// attachments
-		if (is_array($sessionData['attachments']) && count($sessionData['attachments']) > 0)
-		{
-			$imgClearLeft	=  common::image('felamimail','clear_left');
-			$tableRows = array();
-			foreach((array)$sessionData['attachments'] as $id => $attachment) {
-				$tempArray = array (
-					'1' => $attachment['name'], '.1' => 'width="40%"',
-					'2' => mime_magic::mime2label($attachment['type']),
-					'3' => egw_vfs::hsize($attachment['size']), '.3' => "style='text-align:right;'",
-					'4' => '&nbsp;', '.4' => 'width="10%"',
-					'5' => "<img src='$imgClearLeft' onclick=\"fm_compose_deleteAttachmentRow(this,'".$this->composeID."','$id')\">",
-				);
-				$tableRows[] = $tempArray;
-			}
-
-			if(count($tableRows) > 0) {
-				$table = html::table($tableRows, "style='width:100%'");
-			}
-//			$this->t->set_var('attachment_rows',$table);
-		}
-		else
-		{
-//			$this->t->set_var('attachment_rows','');
-		}
-
 		// signature stuff set earlier
 		$sel_options['signatureID'] = $selectSignatures;
 		$content['signatureID'] = ($presetSig ? $presetSig : $sessionData['signatureID']);

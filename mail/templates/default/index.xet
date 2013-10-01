@@ -61,6 +61,9 @@
 					<description value="Subject"/>
 					<description align="left" id="previewSubject" readonly="true"/>
 				</hbox>
+				<hbox class="previewAttachmentArea">
+					<html id="previewAttachmentArea"/>
+				</hbox>
 				<hbox id="mailPreviewIcons">
 					<description value="Icons"/>
 				</hbox>

@@ -1155,7 +1155,6 @@ unset($query['actions']);
 		//error_log(__METHOD__.__LINE__.array2string($rows));
 		$endtime = microtime(true) - $starttime;
 		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].' Took:'.$endtime);
-
 		return $rowsFetched['messages'];
 	}
 
@@ -1335,6 +1334,8 @@ unset($query['actions']);
 			}
 
 			//_debug_array($header);
+			$imageTag = '';
+			$imageHTMLBlock = '';
 			if (in_array("attachments", $cols))
 			{
 				if($header['mimetype'] == 'multipart/mixed' ||
@@ -1348,16 +1349,9 @@ unset($query['actions']);
 					substr($header['mimetype'],0,5) == 'video' ||
 					$header['mimetype'] == 'multipart/alternative')
 				{
-					$linkDataAttachments = array (
-						'menuaction'    => 'mail.uidisplay.displayAttachments',
-						'showHeader'	=> 'false',
-						'mailbox'    => base64_encode($_folderName),
-						'uid'		=> $header['uid'],
-						'id'		=> $header['id'],
-					);
-					$windowName =  'displayMessage_'.$header['uid'];
-
 					$image = html::image('mail','attach');
+					$imageTag = '';
+					$imageHTMLBlock = '';
 					if (//$header['mimetype'] != 'multipart/mixed' &&
 						$header['mimetype'] != 'multipart/signed'
 					)
@@ -1368,11 +1362,23 @@ unset($query['actions']);
 							$this->mail_bo->reopen($_folderName);
 						}
 						$attachments = $this->mail_bo->getMessageAttachments($header['uid'],$_partID='', $_structure='', $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=false);
-						if (count($attachments)<1) $image = '&nbsp;';
+						if (count($attachments)<1)
+						{
+							$image = '&nbsp;';
+						}
+						if (count($attachments)==1)
+						{
+							$imageHTMLBlock = self::createAttachmentBlock($attachments, $data['row_id'], $header['uid'], $_folder);
+							$imageTag = json_encode($attachments);
+							$image = html::image('mail','attach',$attachments[0]['name'].(!empty($attachments[0]['mimeType'])?' ('.$attachments[0]['mimeType'].')':''));
+						}
 					}
-					if (count($attachments)>0) $image = "<a name=\"subject_url\" href=\"#\"
-						onclick=\"fm_handleAttachmentClick(false,'".$GLOBALS['egw']->link('/index.php',$linkDataAttachments)."', '".$windowName."', this); return false;\"
-						title=\"".$header['subject']."\">".$image."</a>";
+					if (count($attachments)>1)
+					{
+						$imageHTMLBlock = self::createAttachmentBlock($attachments, $data['row_id'], $header['uid'], $_folder);
+						$imageTag = json_encode($attachments);
+						$image = html::image('mail','attach',lang('%1 attachments',count($attachments)));
+					}
 
 					$attachmentFlag = $image;
 				} else {
@@ -1408,7 +1414,7 @@ unset($query['actions']);
 				}
 				$linkData = array
 				(
-					'menuaction'    => 'mail.uicompose.compose',
+					'menuaction'    => 'mail.mail_compose.compose',
 					'send_to'	=> base64_encode($senderAddress)
 				);
 				$windowName = 'compose_'.$header['uid'];
@@ -1456,7 +1462,7 @@ unset($query['actions']);
 				/*
 				$linkData = array
 				(
-					'menuaction'    => 'mail.uicompose.compose',
+					'menuaction'    => 'mail.mail_compose.compose',
 					'send_to'	=> base64_encode($senderAddress)
 				);
 				$windowName = 'compose_'.$header['uid'];
@@ -1467,14 +1473,6 @@ unset($query['actions']);
 			}
 			if (in_array("date", $cols))
 			{
-				/*
-				if ($dateToday == mail_bo::_strtotime($header['date'],'Y-m-d')) {
- 				    $dateShort = mail_bo::_strtotime($header['date'],($GLOBALS['egw_info']['user']['preferences']['common']['timeformat']==12?'h:i:s a':'H:i:s'));
-				} else {
-					$dateShort = mail_bo::_strtotime($header['date'],str_replace('Y','y',$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).' '.
-						($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i'));
-				}
-				*/
 				$data["date"] = $header['date'];//$dateShort;//'<nobr><span style="font-size:10px" title="'.$dateLong.'">'.$dateShort.'</span></nobr>';
 			}
 			if (in_array("modified", $cols))
@@ -1496,6 +1494,8 @@ unset($query['actions']);
 			//$this->t->set_var('phpgw_images',EGW_IMAGES);
 			//$result["data"] = $data;
 			$data["class"] = implode(' ', $css_styles);
+			$data['attachmentsPresent'] = $imageTag;
+			$data['attachmentsBlock'] = $imageHTMLBlock;
 			$rv[] = $data;
 			//error_log(__METHOD__.__LINE__.array2string($result));
 		}
@@ -1773,7 +1773,7 @@ unset($query['actions']);
 						break;
 				}
 				//error_log(__METHOD__.__LINE__.$linkView);
-				$attachmentHTML[$key]['link_view'] = '<a href="#" onclick="'.$linkView.' return false;"><b>'.
+				$attachmentHTML[$key]['link_view'] = '<a href="#" ." title="'.$attachmentHTML[$key]['filename'].'" onclick="'.$linkView.' return false;"><b>'.
 					($value['name'] ? ( $filename ? $filename : $value['name'] ) : lang('(no subject)')).
 					'</b></a>';
 
@@ -1823,7 +1823,7 @@ unset($query['actions']);
 			$attachmentHTMLBlock="<table width='100%'>";
 			foreach ((array)$attachmentHTML as $row)
 			{
-				$attachmentHTMLBlock .= "<tr><td>".$row['link_view'].'</td>';
+				$attachmentHTMLBlock .= "<tr><td><div class='useEllipsis'>".$row['link_view'].'</div></td>';
 				$attachmentHTMLBlock .= "<td>".$row['mimetype'].'</td>';
 				$attachmentHTMLBlock .= "<td>".$row['size'].'</td>';
 				$attachmentHTMLBlock .= "<td>".$row['link_save'].'</td></tr>';

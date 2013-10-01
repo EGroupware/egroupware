@@ -15,7 +15,7 @@
 			</hbox>
 			<hbox span="all">
 				<description value="Select from EGroupware Filestore"/> <textbox align="left" width="30%" id="vfsfile" />
-				<buttononly id="selectFromVFSForImport" value="Select" image="filemanager/navbar" onclick="app.mail.import_displayVfsSelector('FOLDER')" />
+				<buttononly id="selectFromVFSForImport" value="Select" image="filemanager/navbar" onclick="app.mail.import_displayVfsSelector('import')" />
 			</hbox>
 		</vbox>>
 	</template>
