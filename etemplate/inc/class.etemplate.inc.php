@@ -204,7 +204,7 @@ class etemplate_new extends etemplate_widget_template
 			if(egw_json_response::isJSONResponse())
 			{
 				$response = egw_json_response::get();
-				echo '<script>egw_LAB.wait(function() {egw_json_request.prototype.handleResponse(';
+				echo '<script>egw_LAB.wait(function() {var json = egw.json(); json.handleResponse(';
 				ob_flush();
 				$response->sendResult();
 				unset($response);
@@ -415,7 +415,8 @@ class etemplate_new extends etemplate_widget_template
 			foreach($new as $k => $v)
 			{
 				if (!is_array($v) || !isset($old[$k]) || 	// no array or a new array
-					isset($v[0]) && !is_array($v[0]) && isset($v[count($v)-1]))	// or no associative array, eg. selecting multiple accounts
+					isset($v[0]) && !is_array($v[0]) && isset($v[count($v)-1])	|| // or no associative array, eg. selecting multiple accounts
+					is_array($v) && count($v) == 0 && is_array($old[$k])) // Empty array replacing non-empty
 				{
 					$old[$k] = $v;
 				}
