@@ -219,7 +219,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		// No UID, so return a filtered list of actions that doesn't need a UID
 		var links = [];
 		try {
-			links = this._widget.options.settings.placeholder_actions;
+			links = typeof this._widget.options.settings.placeholder_actions != 'undefined' ? this._widget.options.settings.placeholder_actions : ["add"];
 		} catch (e) {
 		}
 
