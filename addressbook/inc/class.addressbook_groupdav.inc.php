@@ -208,6 +208,10 @@ class addressbook_groupdav extends groupdav_handler
 		// detect sync-collection report
 		$sync_collection_report = isset($filter[0]) && strpos($filter[0], 'contact_modified>') === 0;
 
+		if (isset($filter_in[self::$path_attr]) && !is_array($filter_in[self::$path_attr]))
+		{
+			$filter_in[self::$path_attr] = (array)$filter_in[self::$path_attr];
+		}
 		$requested_multiget_ids =& $filter_in[self::$path_attr];
 
 		$files = array();
