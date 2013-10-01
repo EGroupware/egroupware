@@ -2266,11 +2266,11 @@ class infolog_ui
 
 				if ($content['responsible_edit'])
 				{
-					$extra = array_intersect(explode(',',$content['responsible_edit']),array_keys($fields));
+					$extra = array_intersect($content['responsible_edit'],array_keys($fields));
 					$this->bo->responsible_edit = array_unique(array_merge($this->bo->responsible_edit,$extra));
 				}
-				config::save_value('copy_excludefields', $content['copy_excludefields'] ? explode(',', $content['copy_excludefields']) : null, 'infolog');
-				config::save_value('sub_excludefields', $content['sub_excludefields'] ? explode(',', $content['sub_excludefields']) : array('*NONE*'), 'infolog');
+				config::save_value('copy_excludefields', $content['copy_excludefields'] ? $content['copy_excludefields'] : null, 'infolog');
+				config::save_value('sub_excludefields', $content['sub_excludefields'] ? $content['sub_excludefields'] : array('*NONE*'), 'infolog');
 				config::save_value('responsible_edit', $this->bo->responsible_edit, 'infolog');
 				config::save_value('implicit_rights', $this->bo->implicit_rights = $content['implicit_rights'] == 'edit' ? 'edit' : 'read', 'infolog');
 				config::save_value('history', $this->bo->history = $content['history'], 'infolog');
