@@ -275,7 +275,7 @@ class filemanager_select
 					'mime' => $mime,
 					'onclick' => $is_dir ? "return app.filemanager.select_goto('".addslashes($path)."'".($et2?',widget':'').");" :
 						($content['mode'] != 'open-multiple' ? "return app.filemanager.select_show('".addslashes($name)."');" :
-						"return app.filemanager.select_toggle('".addslashes($name)."');"),
+						"return app.filemanager.select_toggle('".addslashes($name)."',widget);"),
 				);
 				if ($is_dir && $content['mode'] == 'open-multiple')
 				{

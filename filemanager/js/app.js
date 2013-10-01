@@ -673,10 +673,8 @@ app.filemanager = AppJS.extend(
 		editfield.value = file;
 		return false;
 	},
-	select_toggle: function(file)
+	select_toggle: function(file,widget)
 	{
-		checkbox = document.getElementById("exec[dir][selected]["+file+"]");
-		if (checkbox) checkbox.checked = !checkbox.checked;
-		return false;
+		widget._parent.getWidgetById('selected['+file+']').set_value(file);
 	}
 });
