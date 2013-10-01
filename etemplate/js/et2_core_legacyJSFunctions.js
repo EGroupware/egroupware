@@ -124,7 +124,12 @@
 		// Generate the function itself, if it fails, log the error message and
 		// return a function which always returns false
 		try {
-			var func = new Function('egw', 'widget', 'window', 'document', _code);
+			// Code is app.appname.function, add the arguments so it can be executed
+			if (typeof _code == 'string' && _code.indexOf('app') == 0 && _code.split('.').length >= 3 && _code.indexOf('(') == -1)
+			{
+				_code += '(egw,widget,window,document)';
+			}
+			func = new Function('egw', 'widget', 'window', 'document', _code);
 		} catch(e) {
 			_widget.egw().debug('error', 'Error while compiling JS code ', _code);
 			return (function() {return false;});
