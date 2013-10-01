@@ -671,16 +671,23 @@ class vfs_webdav_server extends HTTP_WebDAV_Server_Filesystem
 			// mitigate risk of html downloads by using CSP or force download for IE
 			if (!$this->force_download && in_array($options['mimetype'], array('text/html', 'application/xhtml+xml')))
 			{
-				if (html::$user_agent == 'msie')	// according to http://caniuse.com/contentsecuritypolicy not supported in IE
-				{
-					$this->force_download = true;
-				}
-				else
+				// use CSP only for current user-agents/versions I was able to positivly test
+				if (html::$user_agent == 'chrome' && html::$ua_version >= 24 ||
+					// mobile FF 24 on Android does NOT honor CSP!
+					html::$user_agent == 'firefox' && !html::$ua_mobile && html::$ua_version >= 24 ||
+					html::$user_agent == 'safari' && !html::$ua_mobile && html::$ua_version >= 536 ||	// OS X
+					html::$user_agent == 'safari' && html::$ua_mobile && html::$ua_version >= 9537)	// iOS 7
 				{
 					$csp = "script-src 'none'";	// forbid to execute any javascript
 					header("Content-Security-Policy: $csp");
 					header("X-Webkit-CSP: $csp");	// Chrome: <= 24, Safari incl. iOS
-					header("X-Content-Security-Policy: $csp");	// FF <= 22
+					//header("X-Content-Security-Policy: $csp");	// FF <= 22
+					//error_log(__METHOD__."('$options[path]') ".html::$user_agent.'/'.html::$ua_version.(html::$ua_mobile?'/mobile':'').": using Content-Security-Policy: $csp");
+				}
+				else	// everything else get's a Content-dispostion: attachment, to be on save side
+				{
+					//error_log(__METHOD__."('$options[path]') ".html::$user_agent.'/'.html::$ua_version.(html::$ua_mobile?'/mobile':'').": using Content-disposition: attachment");
+					$this->force_download = true;
 				}
 			}
 			if ($this->force_download)
