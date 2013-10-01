@@ -185,7 +185,7 @@ class addressbook_groupdav extends groupdav_handler
 	 * @param array|boolean $start=false false=return all or array(start,num)
 	 * @return array with "files" array with values for keys path and props
 	 */
-	function &propfind_callback($path,array $filter,$start=false)
+	function &propfind_callback($path,array $filter,$start=false,$report_not_found_multiget_ids=true)
 	{
 		$starttime = microtime(true);
 		$filter_in = $filter;
@@ -208,6 +208,8 @@ class addressbook_groupdav extends groupdav_handler
 		// detect sync-collection report
 		$sync_collection_report = isset($filter[0]) && strpos($filter[0], 'contact_modified>') === 0;
 
+		$requested_multiget_ids =& $filter_in[self::$path_attr];
+
 		$files = array();
 		// we query etag and modified, as LDAP does not have the strong sql etag
 		$cols = array('id','uid','etag','modified','n_fn');
@@ -218,6 +220,11 @@ class addressbook_groupdav extends groupdav_handler
 		{
 			foreach($contacts as &$contact)
 			{
+				// remove contact from requested multiget ids, to be able to report not found urls
+				if ($requested_multiget_ids && ($k = array_search($contacts[self::$path_attr], $requested_multiget_ids)) !== false)
+				{
+					unset($requested_multiget_ids[$k]);
+				}
 				// sync-collection report: deleted entry need to be reported without properties
 				if ($contact['tid'] == addressbook_bo::DELETED_TYPE)
 				{
@@ -253,7 +260,7 @@ class addressbook_groupdav extends groupdav_handler
 				if ($sync_collection_report) $token_was = $this->sync_collection_token;
 				groupdav_handler::$path_attr = 'id';
 				groupdav_handler::$path_extension = '.vcf';
-				$files = array_merge($files, $this->propfind_callback($path, $accounts_filter));
+				$files = array_merge($files, $this->propfind_callback($path, $accounts_filter, false, false));
 				groupdav_handler::$path_attr = 'carddav_name';
 				groupdav_handler::$path_extension = '';
 				if ($sync_collection_report && $token_was > $this->sync_collection_token)
@@ -282,7 +289,7 @@ class addressbook_groupdav extends groupdav_handler
 				{
 					foreach($lists as $list)
 					{
-						$list['carddav_name'] = $list['list_carddav_name'];
+						$list[self::$path_attr] = $list['list_carddav_name'];
 						$etag = $list['list_id'].':'.$list['list_etag'];
 						// for all-in-one addressbook, add selected ABs to etag
 						if (isset($filter['owner']) && is_array($filter['owner']))
@@ -303,6 +310,12 @@ class addressbook_groupdav extends groupdav_handler
 						}
 						$files[] = $this->add_resource($path, $list, $props);
 
+						// remove list from requested multiget ids, to be able to report not found urls
+						if ($requested_multiget_ids && ($k = array_search($list[self::$path_attr], $requested_multiget_ids)) !== false)
+						{
+							unset($requested_multiget_ids[$k]);
+						}
+
 						if ($sync_collection_report && $this->sync_collection_token < ($ts=$GLOBALS['egw']->db->from_timestamp($list['list_modified'])))
 						{
 							$this->sync_collection_token = $ts;
@@ -311,6 +324,15 @@ class addressbook_groupdav extends groupdav_handler
 				}
 			}
 		}
+		// report not found multiget urls
+		if ($report_not_found_multiget_ids && $requested_multiget_ids)
+		{
+			foreach($requested_multiget_ids as $id)
+			{
+				$files[] = array('path' => $path.$id.self::$path_extension);
+			}
+		}
+
 		if ($this->debug) error_log(__METHOD__."($path,".array2string($filter).','.array2string($start).") took ".(microtime(true) - $starttime).' to return '.count($files).' items');
 		return $files;
 	}
