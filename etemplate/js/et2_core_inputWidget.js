@@ -99,7 +99,7 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 		if (node)
 		{
 			$j(node).bind("change.et2_inputWidget", this, function(e) {
-				e.data.change(this);
+				e.data.change.call(e.data, this);
 			});
 		}
 
