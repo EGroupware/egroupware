@@ -1,4 +1,4 @@
-egroupware (1.8.004.20131001) hardy; urgency=low
+egroupware (1.8.005.20131001) hardy; urgency=low
 
   * THIS RELEASE CONTAINS IMPORTANT SECURITY FIXES, PLEASE UPDATE ASAP
   * Security: fixed remote code execution
