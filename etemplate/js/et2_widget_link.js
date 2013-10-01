@@ -119,7 +119,8 @@ var et2_link_to = et2_inputWidget.extend(
 			return this.link_div[0];
 		} else if (_sender._type == 'file') {
 			return this.file_div[0];
-
+		} else if (_sender._type == 'vfs-select') {
+			return this.filemanager_button[0];
 		}
 	},
 
@@ -152,40 +153,8 @@ var et2_link_to = et2_inputWidget.extend(
 		et2_link_entry.prototype.set_blur(this.egw().lang("Comment..."),this.comment);
 
 		// Filemanager link popup
-		var self = this;
-		this.filemanager_button = $j(document.createElement("img"))
-			.attr("src", this.egw().image("filemanager/navbar"))
-			.addClass("et2_button et2_button_icon")
-			.appendTo(this.div)
-			.click(this, function(e) {
-				// Open the filemanager select in a popup
-				var values = e.data.options.value;
-				var popup = e.data.egw().open_link(
-					'/index.php?menuaction=filemanager.filemanager_select.select&mode=open-multiple&method=etemplate_widget_link::link_existing&label=link&id=' + values.to_app + ":" + values.to_id,
-					'link_existing',
-					'640x580'
-				);
-				if(popup)
-				{
-					// Update on close doesn't always (ever, in chrome) work, so poll
-					var poll = self.egw().window.setInterval(
-						function() {
-							if(popup.closed) {
-								self.getRoot().iterateOver(
-									function(widget) {
-										if(widget.id == self.id) {
-											widget._get_links();
-										}
-									},
-									self, et2_link_list
-								);
-								self.egw().window.clearInterval(poll);
-							}
-						},1000);
-					
-				}
-			});
-
+		this.filemanager_button = $j(document.createElement("div")).appendTo(this.div);
+		
 		// Need a div for file upload widget
 		this.file_div = $j(document.createElement("div")).appendTo(this.div);
 
@@ -208,6 +177,24 @@ var et2_link_to = et2_inputWidget.extend(
 		};
 		this.link_entry = et2_createWidget("link-entry", link_entry_attrs,this);
 
+		// Filemanager select
+		var select_attrs = {
+			method: 'etemplate_widget_link::link_existing',
+			method_id: function() { return self.options.value.to_app + ':' + self.options.value.to_id;},
+			button_label: egw.lang('Link')
+		}
+		this.vfs_select = et2_createWidget("vfs-select", select_attrs,this);
+		$j(this.vfs_select.getDOMNode()).change( function() {
+			self.getRoot().iterateOver(
+				function(widget) {
+					if(widget.id == self.id) {
+						widget._get_links();
+					}
+				},
+				self, et2_link_list
+			);
+		});
+		
 		// File upload
 		var file_attrs = {
 			multiple: true,

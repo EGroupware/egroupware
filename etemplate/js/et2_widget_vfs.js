@@ -555,3 +555,157 @@ var et2_vfsUpload = et2_file.extend(
 	}
 });
 et2_register_widget(et2_vfsUpload, ["vfs-upload"]);
+
+
+var et2_vfsSelect = et2_inputWidget.extend(
+{
+	// Allowed mode options
+	modes: ['open','open-multiple','saveas','select-dir'],
+		
+	attributes: {
+		"mode": {
+			name: "Dialog mode",
+			type: "string",
+			description: "One of {open|open-multiple|saveas|select-dir}",
+			default: "open-multiple"
+		},
+		"method": {
+			name: "Server side callback",
+			type: "string",
+			description: "Server side callback to process selected value(s) in app.class.method or class::method format.  The first parameter will be Method ID, the second the file list."
+		},
+		"method_id": {
+			name: "Method ID",
+			type: "any",
+			description: "optional parameter passed to server side callback.  Can be a string or a function.",
+			default: ""
+		},
+		"path": {
+			name: "Path",
+			type: "string",
+			description:"Start path in VFS.  Leave unset to use the last used path."
+		},
+		"mime": {
+			name: "Mime type",
+			type: "string",
+			description: "Limit display to the given mime-type"
+		},
+		"button_label": {
+			name: "Button label",
+			description: "Set the label on the dialog's OK button.",
+			default: "open"
+		},
+		"value": {
+			"type": "any", // Object
+			"description": "Array of paths (strings)"
+		}
+	},
+		
+	/**
+	 * Constructor
+	 * 
+	 * @param _parent
+	 * @param _attrs
+	 * @memberOf et2_vfsSelect
+	 */
+	init: function(_parent, _attrs) {
+		// _super.apply is responsible for the actual setting of the params (some magic)
+		this._super.apply(this, arguments);
+
+		// Allow no child widgets
+		this.supportedWidgetClasses = [];
+
+		this.button = $j(document.createElement("img"))
+			.attr("src", this.egw().image("filemanager/navbar"))
+			.addClass("et2_button et2_button_icon")
+		this.setDOMNode(egw.userData.apps.filemanager ? this.button[0]:document.createElement('span'));
+	},
+
+	click: function(e) {
+	
+	    // No permission
+	    if(typeof egw.userData.apps.filemanager == 'undefined') return;
+		
+		var self = this;
+
+		var attrs = {
+			menuaction: 'filemanager.filemanager_select.select',
+			mode: this.options.mode,
+			method: this.options.method,
+			label: this.options.button_label,
+			id: typeof this.options.method_id == "function" ? this.options.method_id.call(): this.options.method_id
+		};
+		if(this.options.path)
+		{
+			attrs.path = this.options.path;
+		}
+		if(this.options.mime)
+		{
+			attrs.mime = this.options.mime;
+		};
+		
+		// Open the filemanager select in a popup
+		var popup = this.egw().open_link(
+			this.egw().link('/index.php', attrs),
+			'link_existing',
+			'640x580'
+		);
+		if(popup)
+		{
+			// Update on close doesn't always (ever, in chrome) work, so poll
+			var poll = self.egw().window.setInterval(
+				function() {
+					if(popup.closed) {
+						self.egw().window.clearInterval(poll);
+						
+						// Update path to where the user wound up
+						var path = popup.etemplate2.getByApplication('filemanager')[0].widgetContainer.getArrayMgr("content").getEntry('path') || '';
+						self.options.path = path;
+						
+						// Get the selected files
+						var files = popup.selected_files || [];
+						self.value = files;
+						
+						// Fire a change event so any handlers run
+						$j(self.node).change();
+					}
+				},1000
+			);
+		}
+	},
+
+	/**
+	 * Set the dialog's mode.  
+	 * Valid options are in et2_vfsSelect.modes
+	 * 
+	 */
+	set_mode: function(mode) {
+		// Check mode
+		if(jQuery.inArray(mode, this.modes) < 0)
+		{
+			this.egw().debug("warn", "Invalid mode for '%s': %s Valid options:", this.id,mode, this.modes);
+			return;
+		}
+		this.options.mode = mode;
+	},
+
+	/**
+	 * Set the label on the dialog's OK button.
+	 */
+	set_button_label: function(label)
+	{
+		this.options.button_label = label;
+	},
+
+	/**
+	 * Set the ID passed to the server side callback
+	 */
+	set_method_id: function(id) {
+		this.options.method_id = id;
+	},
+
+	get_value: function() {
+		return this.value;
+	}
+});
+et2_register_widget(et2_vfsSelect, ["vfs-select"]);

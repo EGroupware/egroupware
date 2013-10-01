@@ -183,11 +183,11 @@ class filemanager_select
 							break;
 					}
 
-					if ($content['method'] != 'ckeditor_return')
+					if ($content['method'] && $content['method'] != 'ckeditor_return')
 					{
 						$js = ExecMethod2($content['method'],$content['id'],$files);
 					}
-					else
+					else if ($content['method'] == 'ckeditor_return')
 					{
 						$download_url = egw_vfs::download_url(egw_vfs::concat($content['path'],$content['name']));
 						if ($download_url[0] == '/') $download_url = egw::link($download_url);
@@ -196,8 +196,22 @@ class filemanager_select
 							htmlspecialchars($download_url)."',".
 							"'');\nwindow.close();";
 					}
-					header('Content-type: text/html; charset='.translation::charset());
-					echo "<html>\n<head>\n<script type='text/javascript'>\n$js\n</script>\n</head>\n</html>\n";
+					if(egw_json_response::isJSONResponse())
+					{
+						$response = egw_json_response::get();
+						if($js)
+						{
+							$response->script($js);
+						}
+						// Ahh!
+						// The vfs-select widget looks for this
+						$response->script('this.selected_files = '.json_encode($files) . '; this.close();');
+					}
+					else
+					{
+						header('Content-type: text/html; charset='.translation::charset());
+						echo "<html>\n<head>\n<script type='text/javascript'>\n$js\n</script>\n</head>\n</html>\n";
+					}
 					common::egw_exit();
 			}
 		}
@@ -228,7 +242,7 @@ class filemanager_select
 		{
 			$content['path'] = filemanager_ui::get_home_dir();
 		}
-		$tpl = new etemplate('filemanager.select');
+		$tpl = new etemplate_new('filemanager.select');
 		$et2 = class_exists('etemplate_widget', false) && is_a($tpl, 'etemplate_widget');
 
 		if (!($files = egw_vfs::find($content['path'],array(
@@ -259,9 +273,9 @@ class filemanager_select
 					'name' => $name,
 					'path' => $path,
 					'mime' => $mime,
-					'onclick' => $is_dir ? "return select_goto('".addslashes($path)."'".($et2?',widget':'').");" :
-						($content['mode'] != 'open-multiple' ? "return select_show('".addslashes($name)."');" :
-						"return select_toggle('".addslashes($name)."');"),
+					'onclick' => $is_dir ? "return app.filemanager.select_goto('".addslashes($path)."'".($et2?',widget':'').");" :
+						($content['mode'] != 'open-multiple' ? "return app.filemanager.select_show('".addslashes($name)."');" :
+						"return app.filemanager.select_toggle('".addslashes($name)."');"),
 				);
 				if ($is_dir && $content['mode'] == 'open-multiple')
 				{
@@ -273,45 +287,6 @@ class filemanager_select
 		}
 		$readonlys['button[createdir]'] = !egw_vfs::is_writable($content['path']);
 
-		$content['js'] = '<script type="text/javascript">
-function select_goto(to,widget)
-{
-	path = document.getElementById("exec[path]");
-	if(path)
-	{
-		path.value = to;
-		path.form.submit();
-	}
-	else if (widget)
-	{
-		var path = null;
-		// Cannot do this, there are multiple widgets named path
-		// widget.getRoot().getWidgetById("path");
-		widget.getRoot().iterateOver(function(widget) {
-			if(widget.id == "path") path = widget;
-		},null, et2_textbox);
-		if(path)
-		{
-			path.set_value(to);
-			path.getInstanceManager().postSubmit();
-		}
-	}
-	return false;
-}
-function select_show(file)
-{
-	var editfield = document.getElementById("exec[name]");
-	editfield.value = file;
-	return false;
-}
-function select_toggle(file)
-{
-	checkbox = document.getElementById("exec[dir][selected]["+file+"]");
-	if (checkbox) checkbox.checked = !checkbox.checked;
-	return false;
-}
-</script>
-';
 		// scroll to end of path
 		$GLOBALS['egw']->js->set_onload("var p = document.getElementById('exec[path][c". (count(explode('/',$content['path']))-1) ."]'); if (p) p.scrollIntoView();");
 

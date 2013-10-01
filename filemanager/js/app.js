@@ -643,5 +643,40 @@ app.filemanager = AppJS.extend(
 				}
 			}
 		}
+	},
+		
+	/**
+	 * Functions for the select dialog
+	 */
+	select_goto: function(to,widget)
+	{
+		if (widget)
+		{
+			var path = null;
+			// Cannot do this, there are multiple widgets named path
+			// widget.getRoot().getWidgetById("path");
+			widget.getRoot().iterateOver(function(widget) {
+				if(widget.id == "path") path = widget;
+			},null, et2_textbox);
+			if(path)
+			{
+				path.set_value(to);
+				path.getInstanceManager().postSubmit();
+			}
+		}
+		return false;
+	},
+		
+	select_show: function(file)
+	{
+		var editfield = document.getElementById("exec[name]");
+		editfield.value = file;
+		return false;
+	},
+	select_toggle: function(file)
+	{
+		checkbox = document.getElementById("exec[dir][selected]["+file+"]");
+		if (checkbox) checkbox.checked = !checkbox.checked;
+		return false;
 	}
 });

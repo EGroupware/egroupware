@@ -34,9 +34,8 @@
 									<button label="Up" id="button[up]" image="goup"/>
 									<button label="Go to your home directory" id="button[home]" image="gohome"/>
 									<box class="selectPathContainer">
-										<vfs id="path" onclick="path=document.getElementById(form::name('path')); path.value=$path; path.form.submit();" class="selectPath"/>
+										<vfs-name id="path" class="selectPath"/>
 									</box>
-									<hidden id="path"/>
 									<button label="Create directory" id="button[createdir]" onclick="var dir = prompt(egw::lang('New directory')); if (!dir) return false; document.getElementById(form::name('path')).value+='/'+dir;" image="button_createdir" ro_image="createdir_disabled" class="createDir"/>
 								</hbox>
 							</row>
