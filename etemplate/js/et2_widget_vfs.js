@@ -704,7 +704,7 @@ var et2_vfsSelect = et2_inputWidget.extend(
 		this.options.method_id = id;
 	},
 
-	get_value: function() {
+	getValue: function() {
 		return this.value;
 	}
 });
