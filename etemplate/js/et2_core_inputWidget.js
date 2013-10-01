@@ -122,10 +122,19 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 		
 		// Passing false will clear any set messages
 		this.set_validation_error(valid ? false : messages);
-		
+
 		if (valid && this.onchange)
 		{
-			return et2_compileLegacyJS(this.onchange, this, _node)();
+			if(typeof this.onchange == 'function')
+			{
+				// Make sure function gets a reference to the widget
+				var args = Array.prototype.slice.call(arguments);
+				if(args.indexOf(this) == -1) args.push(this);
+				
+				return this.onchange.apply(this, args);
+			} else {
+				return (et2_compileLegacyJS(this.options.onchange, this, _node))();
+			}
 		}
 		return valid;
 	},
