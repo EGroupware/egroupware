@@ -813,6 +813,9 @@ class infolog_ui
 
 		//apply infolog_filter2_change javascript method (show/hide details each rows) over onchange filter2
 		$values['nm']['filter2_onchange'] = "app.infolog.filter2_change();";
+		
+		// Allow add actions even when there's no rows
+		$values['nm']['placeholder_actions'] = array('new');
 
 		// disable columns for main entry as set in the pref for details or no details
 		if ($action == 'sp')
