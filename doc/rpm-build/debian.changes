@@ -1,3 +1,28 @@
+egroupware-epl (11.1.20131001-1) hardy; urgency=low
+
+  * THIS RELEASE CONTAINS IMPORTANT SECURITY FIXES, PLEASE UPDATE ASAP
+  * Security: fixed remote code execution
+  * API: using now httponly and secure cookies (secure only if https is used to login)
+  * API: header.inc.php uses for new installations or on update now secure password hashes like they were used for accounts since some time now
+  * Setup: uses now a session instead of storing credentials in a cookie
+  * Filemanager: html downloads get now either force a download or - if brower supports - use a content-security-policiy header to mitigate risk of session hijacking
+  * THANKS and credits to Marcel Mangold <marcel.mangold@syss.de>, Pascal Uter <pascal.uter@syss.de> from SySS GmbH for notifying us about above problems and hardening possibilities
+  * eMail: fix possible problem when mail-message-body (text or html part) is empty
+  * eMail: fix problem for folder preferences did not overrule folders set by getSpecialUseFolders
+  * eMail/Sieve: improved capability parsing
+  * eMail: fix for inline image not displayed in print preview
+  * eMail/IMAP: fix for failed connection for subsequent connects when using STARTTLS in certain enviroments
+  * Tracker: add default version for mailhandling
+  * Tracker: add possibility to  use a queue-specific template (tracker.edit.xyz), if one exists, otherwise fall back to the generic one
+  * Tracker: implement deleteaccount hook for tracker; support transfer to other user OR (if requested) deleting all entries created by user
+  * Projectmanager: fix broken template selection on first load
+  * eMail: limit compose window height to 1000px
+  * eMail/eSync: control wait sequence for device;
+  * CalDAV/CardDAV: fixed multiget-report to correctly report not found urls
+  * CalDAV/CardDAV: fixed not working propfind-request to single resource in calendar/addressbook collection
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 01 Oct 2013 14:14:54 +0200
+
 egroupware-epl (11.1.20130903-1) hardy; urgency=low
 
   * Addressbook/eSync/CardDAV: fixed not working (forced) preference to display only accounts of groupmembers, causing eSync to permanently try and fail reading other accounts
