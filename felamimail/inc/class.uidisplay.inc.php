@@ -245,8 +245,8 @@
 			);
 			$link = $GLOBALS['egw']->link('/index.php',$linkData);
 			//error_log(__METHOD__." link:".$link.'#<br>');
-			//return "<a href='#' onclick='egw_openWindowCentered2(\"$link\", \"compose\", 700, egw_getWindowOuterHeight(),\"no\",\"felamimail\",false);' ><font color=\"blue\">".$text."</font></a>";
-			return "<a href=\"$link&cd=no\" target=\"compose\" onclick=\"h=window.open(this,this.target,'dependent=yes,width=700,height=650,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); he=screen.availHeight; h.resizeTo(700,he); return false;\"><font color=\"blue\">".$text."</font></a>";
+			//return "<a href='#' onclick='egw_openWindowCentered2(\"$link\", \"compose\", 870, egw_getWindowOuterHeight(),\"no\",\"felamimail\",false);' ><font color=\"blue\">".$text."</font></a>";
+			return "<a href=\"$link&cd=no\" target=\"compose\" onclick=\"h=window.open(this,this.target,'dependent=yes,width=870,height=650,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); he=screen.availHeight; h.resizeTo(870,he); return false;\"><font color=\"blue\">".$text."</font></a>";
 		}
 
 		function highlightQuotes($text, $level = 5)
@@ -586,7 +586,7 @@
 								'is_winmail'    => $value['is_winmail']
 							);
 							$windowName = 'displayMessage_'. $this->uid.'_'.$value['partID'];
-							$linkView = "egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','$windowName',700,egw_getWindowOuterHeight());";
+							$linkView = "egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','$windowName',870,egw_getWindowOuterHeight());";
 							break;
 						case 'IMAGE/JPEG':
 						case 'IMAGE/PNG':
@@ -892,7 +892,7 @@ blockquote[type=cite] {
 								'is_winmail'    => $value['is_winmail']
 							);
 							$windowName = 'displayMessage_'. $this->uid.'_'.$value['partID'];
-							$linkView = "egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','$windowName',700,screen.availHeight-50);";
+							$linkView = "egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','$windowName',870,screen.availHeight-50);";
 							break;
 						case 'IMAGE/JPEG':
 						case 'IMAGE/PNG':
@@ -1653,7 +1653,7 @@ blockquote[type=cite] {
 					{
 						$link = $GLOBALS['egw']->link('/index.php',array('menuaction'    => 'felamimail.uicompose.compose'));
 						$newBody = preg_replace("/href=(\"|\')mailto:([\w,\-,\/,\?,\=,\.,&amp;,!\n,\%,@,\*,#,:,~,\+]+)(\"|\')/ie",
-							"'href=\"$link&send_to='.base64_encode('$2').'\"'.' target=\"compose\" onclick=\"window.open(this,this.target,\'dependent=yes,width=700,height=egw_getWindowOuterHeight(),location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;\"'", $newBody);
+							"'href=\"$link&send_to='.base64_encode('$2').'\"'.' target=\"compose\" onclick=\"window.open(this,this.target,\'dependent=yes,width=870,height=egw_getWindowOuterHeight(),location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;\"'", $newBody);
 						//print "<pre>".htmlentities($newBody)."</pre><hr>";
 					}
 					// replace emails within the text with clickable links.
@@ -1994,7 +1994,7 @@ blockquote[type=cite] {
 								'mailbox'   => base64_encode($folder),
 							);
 							$windowName = 'displayMessage_'.$this->uid;
-							$linkView = "egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','$windowName',700,egw_getWindowOuterHeight());";
+							$linkView = "egw_openWindowCentered('".$GLOBALS['egw']->link('/index.php',$linkData)."','$windowName',870,egw_getWindowOuterHeight());";
 							break;
 						case 'image/jpeg':
 						case 'image/png':

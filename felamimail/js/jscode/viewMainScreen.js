@@ -258,7 +258,7 @@ function mail_compose(_action, _elems)
 		url += '&icServer='+egw_appWindow('felamimail').activeServerID;
 		url += '&folder='+egw_appWindow('felamimail').activeFolderB64;
 		url += '&uid='+_elems[0].id;
-		egw_openWindowCentered(url,'composeasnew_'+_elems[0].id,700,egw_getWindowOuterHeight());
+		egw_openWindowCentered(url,'composeasnew_'+_elems[0].id,870,egw_getWindowOuterHeight());
 	}
 	if (_action.id == 'composeasnew')
 	{
@@ -266,7 +266,7 @@ function mail_compose(_action, _elems)
 		url += '&icServer='+egw_appWindow('felamimail').activeServerID;
 		url += '&folder='+egw_appWindow('felamimail').activeFolderB64;
 		url += '&reply_id='+_elems[0].id;
-		egw_openWindowCentered(url,'composeasnew_'+_elems[0].id,700,egw_getWindowOuterHeight());
+		egw_openWindowCentered(url,'composeasnew_'+_elems[0].id,870,egw_getWindowOuterHeight());
 	}
 	if (_action.id == 'reply')
 	{
@@ -274,7 +274,7 @@ function mail_compose(_action, _elems)
 		url += '&icServer='+egw_appWindow('felamimail').activeServerID;
 		url += '&folder='+egw_appWindow('felamimail').activeFolderB64;
 		url += '&reply_id='+_elems[0].id;
-		egw_openWindowCentered(url,'reply_'+_elems[0].id,700,egw_getWindowOuterHeight());
+		egw_openWindowCentered(url,'reply_'+_elems[0].id,870,egw_getWindowOuterHeight());
 	}
 	if (_action.id == 'reply_all')
 	{
@@ -282,7 +282,7 @@ function mail_compose(_action, _elems)
 		url += '&icServer='+egw_appWindow('felamimail').activeServerID;
 		url += '&folder='+egw_appWindow('felamimail').activeFolderB64;
 		url += '&reply_id='+_elems[0].id;
-		egw_openWindowCentered(url,'replyAll_'+_elems[0].id,700,egw_getWindowOuterHeight());
+		egw_openWindowCentered(url,'replyAll_'+_elems[0].id,870,egw_getWindowOuterHeight());
 	}
 	if (_action.id == 'forward'||_action.id == 'forwardinline'||_action.id == 'forwardasattach')
 	{
@@ -298,7 +298,7 @@ function mail_compose(_action, _elems)
 			url += '&folder='+egw_appWindow('felamimail').activeFolderB64;
 			url += '&reply_id='+_elems[0].id;
 			url += '&mode=forwardinline';
-			egw_openWindowCentered(url,'forward_'+_elems[0].id,700,egw_getWindowOuterHeight());
+			egw_openWindowCentered(url,'forward_'+_elems[0].id,870,egw_getWindowOuterHeight());
 		}
 	}
 }
@@ -316,7 +316,7 @@ function mail_print(_action, _elems)
 	//url += '&icServer='+egw_appWindow('felamimail').activeServerID;
 	url += '&mailbox='+egw_appWindow('felamimail').activeFolderB64;
 	url += '&uid='+_elems[0].id;
-	egw_openWindowCentered(url,'print_'+_elems[0].id,700,egw_getWindowOuterHeight());
+	egw_openWindowCentered(url,'print_'+_elems[0].id,870,egw_getWindowOuterHeight());
 }
 
 /**
@@ -543,12 +543,12 @@ function mail_undeleteMessages(_messageList) {
 }
 
 function displayMessage(_url,_windowName) {
-	egw_openWindowCentered(_url, _windowName, 850, egw_getWindowOuterHeight());
+	egw_openWindowCentered(_url, _windowName, 870, egw_getWindowOuterHeight());
 }
 
 function mail_displayHeaderLines(_url) {
 	// only used by right clickaction
-	egw_openWindowCentered(_url,'fm_display_headerLines','700','600',window.outerWidth/2,window.outerHeight/2);
+	egw_openWindowCentered(_url,'fm_display_headerLines','870','600',window.outerWidth/2,window.outerHeight/2);
 }
 
 function emptyTrash() {
@@ -1111,7 +1111,7 @@ function mail_openComposeWindow(_url,forwardByCompose) {
 			sMessageList= 'AsForward&forwardmails=1&folder='+activeFolderB64+'&reply_id='+sMessageList.substring(0,sMessageList.length-1);
 		}
 		//alert(sMessageList);
-		egw_openWindowCentered(_url+sMessageList,'compose',700,egw_getWindowOuterHeight());
+		egw_openWindowCentered(_url+sMessageList,'compose',870,egw_getWindowOuterHeight());
 	}
 	mailGrid.dataRoot.actionObject.setAllSelected(false);
 }
@@ -1216,7 +1216,7 @@ function fm_readMessage(_url, _windowName, _node) {
 				// message in the preview window
 				window.felamimail_readMessage = null;
 
-				WinId = egw_openWindowCentered(_url, _windowName, 750, egw_getWindowOuterHeight());
+				WinId = egw_openWindowCentered(_url, _windowName, 870, egw_getWindowOuterHeight());
 
 				// Refresh the folder state (count of unread emails)
 				egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshFolder");
@@ -1253,7 +1253,7 @@ function fm_handleAttachmentClick(_double, _url, _windowName, _node)
 
 function fm_readAttachments(_url, _windowName, _node) {
 	if (navigator.userAgent.search(/MSIE/i) != -1) egw_appWindow('felamimail').focus();
-	egw_openWindowCentered(_url, _windowName, 750, 260);
+	egw_openWindowCentered(_url, _windowName, 870, 260);
 	egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshFolder");
 	mailGrid.dataRoot.actionObject.setAllSelected(false);
 }
@@ -1285,7 +1285,7 @@ function fm_handleComposeClick(_double, _url, _windowName, _node)
 }
 
 function fm_compose(_url, _windowName, _node) {
-	egw_openWindowCentered(_url, _windowName, 700, egw_getWindowOuterHeight());
+	egw_openWindowCentered(_url, _windowName, 870, egw_getWindowOuterHeight());
 	//egw_appWindow('felamimail').xajax_doXMLHTTP("felamimail.ajaxfelamimail.refreshFolder");
 	mailGrid.dataRoot.actionObject.setAllSelected(false);
 }

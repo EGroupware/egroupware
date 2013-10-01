@@ -78,22 +78,22 @@ class felamimail_hooks
 			'view'  => array(
 				'menuaction' => 'felamimail.uidisplay.display',
 			),
-			'view_popup' => '850xegw_getWindowOuterHeight()',
+			'view_popup' => '870xegw_getWindowOuterHeight()',
 			'add'        => array(
 				'menuaction' => 'felamimail.uicompose.compose',
 			),
-			'add_popup'  => '850xegw_getWindowOuterHeight()',
+			'add_popup'  => '870xegw_getWindowOuterHeight()',
 			// register fmail as handler for .eml files
 			'mime' => array(
 				'message/rfc822' => array(
 //					'view' => array(
 						'menuaction' => 'felamimail.uifelamimail.importMessageFromVFS2DraftAndDisplay',
-						'mime_popup' => '850xegw_getWindowOuterHeight()',
+						'mime_popup' => '870xegw_getWindowOuterHeight()',
 						'mime_url'   => 'formData[file]',
 /*					),
 					'edit' => array(
 						'menuaction' => 'felamimail.uifelamimail.importMessageFromVFS2DraftAndEdit',
-						'mime_popup' => '850xegw_getWindowOuterHeight()',
+						'mime_popup' => '870xegw_getWindowOuterHeight()',
 						'mime_url'   => 'formData[file]',
 					),
 */				),
@@ -887,7 +887,7 @@ class felamimail_hooks
 				'menuaction'    => 'felamimail.uicompose.compose'
 			);
 			$file += array(
-				'Compose' => "javascript:egw_openWindowCentered2('".egw::link('/index.php', $linkData,false)."','compose',700,750,'no','$appname');",
+				'Compose' => "javascript:egw_openWindowCentered2('".egw::link('/index.php', $linkData,false)."','compose',870,750,'no','$appname');",
 			);
 		}
 		// select account box, treeview, we use a whileloop as we may want to break out
@@ -1052,7 +1052,7 @@ class felamimail_hooks
 			);
 
 			$file += array(
-				'import message' => "javascript:egw_openWindowCentered2('".egw::link('/index.php', $linkData,false)."','import',700,125,'no','$appname');",
+				'import message' => "javascript:egw_openWindowCentered2('".egw::link('/index.php', $linkData,false)."','import',870,125,'no','$appname');",
 			);
 
 		}
