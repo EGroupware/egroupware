@@ -129,7 +129,7 @@
 			{
 				_code += '(egw,widget,window,document)';
 			}
-			func = new Function('egw', 'widget', 'window', 'document', _code);
+			var func = new Function('egw', 'widget', 'window', 'document', _code);
 		} catch(e) {
 			_widget.egw().debug('error', 'Error while compiling JS code ', _code);
 			return (function() {return false;});
