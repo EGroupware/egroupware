@@ -932,6 +932,9 @@ class infolog_bo
 			}
 			$values['info_id'] = $info_id;
 			$to_write['info_id'] = $info_id;
+			
+					error_log(__LINE__);
+					error_log(array2string($values));
 			// if the info responbsible array is not passed, fetch it from old.
 			if (!array_key_exists('info_responsible',$values)) $values['info_responsible'] = $old['info_responsible'];
 			if (!is_array($values['info_responsible']))		// this should not happen, bug it does ;-)
@@ -962,6 +965,15 @@ class infolog_bo
 
 			if ($old && ($missing_fields = array_diff_key($old,$values)))
 			{
+				// Some custom fields (multiselect with nothing selected) will be missing,
+				// and that's OK.  Don't put them back.
+				foreach($missing_fields as $field => $m_value)
+				{
+					if(array_key_exists($field, $values_in))
+					{
+						unset($missing_fields[$field]);
+					}
+				}
 				$values = array_merge($values,$missing_fields);
 			}
 			// Add keys missing in the $to_write array
