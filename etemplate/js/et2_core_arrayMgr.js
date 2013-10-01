@@ -27,7 +27,7 @@ var et2_arrayMgr = Class.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_arrayMgr
 	 * @param _data
 	 * @param _parentMgr
@@ -110,7 +110,7 @@ var et2_arrayMgr = Class.extend(
 	/**
 	 * Returns the path to this content array manager perspective as an array
 	 * containing the key values
-	 * 
+	 *
 	 * @param _path is used internally, do not supply it manually.
 	 */
 	getPath : function(_path) {
@@ -161,7 +161,7 @@ var et2_arrayMgr = Class.extend(
 		{
 			if(typeof _key === "string")
 			{
-				_key = _key.replace("&#x5B;","[").replace("&#x5D;","]");
+				_key = _key.replace(/&#x5B;/g,"[").replace(/&#x5D;/g,"]");
 				indexes = _key.split('[');
 			}
 			if (indexes.length > 1)
