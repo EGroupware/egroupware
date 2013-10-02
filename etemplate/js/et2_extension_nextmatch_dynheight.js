@@ -97,7 +97,7 @@ var et2_dynheight = Class.extend(
 			}
 
 			// Get the height of the bottom container
-			var bh = bmaxBot - bminTop;
+			var bh = Math.max(0,bmaxBot - bminTop);
 
 			// Calculate the new height of the inner container
 			var w = this.innerNode.width();
