@@ -385,7 +385,7 @@ var et2_link_apps = et2_selectbox.extend(
 		if(this.options.only_app) {
 			select_options[_attrs.only_app] = this.egw().lang(_attrs.only_app);
 		} else {
-			select_options = this.options.application_list ? $this.options.applicaiton_list : this.egw().link_app_list('query');
+			select_options = this.options.application_list ? this.options.application_list : this.egw().link_app_list('query');
 
 			// Check whether the options entry was found, if not read it from the
 			// content array.
