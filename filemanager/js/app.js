@@ -675,6 +675,11 @@ app.filemanager = AppJS.extend(
 	},
 	select_toggle: function(file,widget)
 	{
-		widget._parent.getWidgetById('selected['+file+']').set_value(file);
+		widget.getParent().iterateOver(function(widget) {
+				if(widget.options.selected_value == file)
+				{
+					widget.set_value(widget.get_value() == file ? widget.options.unselected_value : file);
+				}
+		}, null, et2_checkbox);
 	}
 });

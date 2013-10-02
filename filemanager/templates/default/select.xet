@@ -50,7 +50,7 @@
 										<row class="row">
 											<vfs-mime align="center" id="$row" options="16" class="selectIcon"/>
 											<vfs id="$row" onclick="$row_cont[onclick]"/>
-											<checkbox align="right" id="selected[{$row_cont[name]}]" options="&quot;$row_cont[name]&quot;"/>
+											<checkbox align="right" id="selected[]" options="&quot;$row_cont[name]&quot;"/>
 										</row>
 									</rows>
 								</grid>
