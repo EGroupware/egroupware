@@ -39,6 +39,12 @@
  *
  * The tree and instance wide cache uses a certain provider class, to store the data
  * eg. in memcached or if there's nothing else configured in the filesystem (eGW's temp_dir).
+ *
+ * "Admin >> clear cache and register hooks" allways only clears instance level cache of
+ * calling instance. It never clears tree level cache, which makes it important to set
+ * resonable expiry times or think about an other means of clearing that particular item.
+ * (Not clearing of tree-level cache is important, as regenerating it is an expensive
+ * operation for a huge scale EGroupware hosting operation.)
  */
 class egw_cache
 {
