@@ -319,6 +319,14 @@ input[type=button] {
 	background-repeat: no-repeat;
 }
 
+#mail-compose_button\[send\] {
+	text-align: left;
+	padding-left: 25px;
+	background-image: url(images/mail_send.png) !important;
+	background-position: left;
+	background-repeat: no-repeat;
+}
+
 .mailDisplay, #mail-index_mailPreview {
 	overflow: hidden;
 	position: relative;

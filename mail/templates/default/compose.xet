@@ -9,9 +9,8 @@
 				<taglist-email id="SENDER" width="88%" allowFreeEntries="false" maxSelection="1" autocomplete_url="mail.mail_compose.ajax_searchIdentities" onclick="app.mail.address_click"/>
 			</hbox>
 			<hbox>
-				<button label="Submit" id="button[apply]"/><button label="Save" id="button[save]"/>
-				<buttononly id="selectFromVFSForCompose" value="Select" image="filemanager/navbar" onclick="app.mail.import_displayVfsSelector('compose')" />
-				<textbox align="left" width="1px" id="vfsfile" />
+				<button label="Send" id="button[send]"/> <buttononly value="saveAsDraft" id="saveAsDraft" image="fileexport" onclick="app.mail.saveAsDraft"/>
+				<vfs-select id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose"/>
 				<file statustext="Select file to attach to message" multiple='true' progress='mailUploadProgress' onFinish="app.mail.uploadForCompose" id="uploadForCompose" drop_target ="mailUploadSection"/>
 			</hbox>
 			<hbox class="mailComposeHeaders" width="99%">
@@ -70,11 +69,11 @@
 				   <column />
 				  </columns>
 				  <rows>
-				   <row>
+				   <row >
 					<description id="${row}[tmp_name]" />
 					<description id="${row}[name]" />
 					<description id="${row}[type]" />
-					<vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
+					<description align="right" id="${row}[size]" />
 					<button id="delete[$row_cont[tmp_name]]" value="Delete" image="delete" />
 				   </row>
 				  </rows>

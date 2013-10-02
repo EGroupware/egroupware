@@ -1288,6 +1288,20 @@ app.mail = AppJS.extend(
 		}
 	},
 
+	vfsUploadForCompose: function(_egw, _widget, _window)
+	{
+		console.log(_egw, _widget, _window);
+		if (!jQuery.isEmptyObject(_widget.getValue()))
+		{
+			this.et2_obj.submit();
+		}
+	},
+
+	saveAsDraft: function(_egw, _widget, _window)
+	{
+		this.et2_obj.submit();
+	},
+
 	sieve_editRules_radiobtn: function()
 	{
 		console.log("hi i am radiobtn");

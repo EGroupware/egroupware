@@ -160,6 +160,12 @@ class mail_ui
 	 */
 	function index(array $content=null,$msg=null)
 	{
+		$this->mail_bo->restoreSessionData();
+		$sessionFolder = $this->mail_bo->sessionData['maibox'];
+		if ($this->mail_bo->folderExists($sessionFolder))
+		{
+			$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
+		}
 		//_debug_array($content);
 		if (!is_array($content))
 		{
@@ -199,7 +205,6 @@ class mail_ui
 			unset($content['msg']);
 		}
 		//$content['preview'] = "<html><body style='background-color: pink;'/></html>";
-		$this->mail_bo->restoreSessionData();
 
 		// filter is used to choose the mailbox
 		//if (!isset($content[self::$nm_index]['foldertree'])) // maybe we fetch the folder here
@@ -219,11 +224,11 @@ class mail_ui
 
 		$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree(false);
 
-		$sessionFolder = $this->mail_bo->sessionData['maibox'];
+		//$sessionFolder = $this->mail_bo->sessionData['maibox'];// already set and tested this earlier
 		if ($this->mail_bo->folderExists($sessionFolder))
 		{
 			$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.$this->mail_bo->sessionData['maibox'];
-			$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
+			//$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities: but did that earlier
 		}
 		// since we are connected,(and selected the folder) we check for capabilities SUPPORTS_KEYWORDS to eventually add the keyword filters
 		if ($this->mail_bo->icServer->_connected == 1 && $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))

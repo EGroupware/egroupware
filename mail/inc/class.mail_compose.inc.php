@@ -115,10 +115,7 @@ class mail_compose
 			else
 				$this->composeID = $_GET['composeid'];
 
-			$this->restoreSessionData();
 		}
-
-
 
 		$this->mailPreferences  =& $this->mail_bo->mailPreferences;
 
@@ -260,12 +257,12 @@ class mail_compose
 				$this->preferencesArray['message_forwarding'] = 'asmail';
 				foreach($replyIds as $key => $id)
 				{
-					$this->getForwardData($icServer, $folder, $id,NULL);
+					$content = $this->getForwardData($icServer, $folder, $id,NULL);
 				}
 				$this->preferencesArray['message_forwarding'] = $buff;
 			}
 		}
-		$this->compose(null,null,$_focusElement);
+		$this->compose($content,null,$_focusElement);
 	}
 
 	/**
@@ -284,20 +281,61 @@ class mail_compose
 		error_log(__METHOD__.__LINE__.array2string($_content));
 
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
+		// VFS Selector was used
+		if (is_array($_content['selectFromVFSForCompose']))
+		{
+			foreach ($_content['selectFromVFSForCompose'] as $i => $path)
+			{
+				$_content['uploadForCompose'][] = array(
+					'name' => egw_vfs::basename($path),
+					'type' => egw_vfs::mime_content_type($path),
+					'file' => egw_vfs::PREFIX.$path,
+					'size' => filesize(egw_vfs::PREFIX.$path),
+				);
+			}
+			unset($_content['selectFromVFSForCompose']);
+		}
+		// check everything that was uploaded
 		if (is_array($_content['uploadForCompose']))
 		{
 			foreach ($_content['uploadForCompose'] as $i => &$upload)
 			{
 				if (!isset($upload['file'])) $upload['file'] = $upload['tmp_name'];
-				$tmp_filename = mail_bo::checkFileBasics($upload,'compose',false);
+				try
+				{
+					$tmp_filename = mail_bo::checkFileBasics($upload,$this->composeID,false);
+				}
+				catch (egw_exception_wrong_userinput $e)
+				{
+					$attachfailed = true;
+					$alert_msg = $e->getMessage();
+				}
 				$upload['file'] = $upload['tmp_name'] = $tmp_filename;
+				$upload['size'] = mail_bo::show_readable_size($upload['size']);
+			}
+		}
+		// check if someone did hit delete on the attachments list
+		$keysToDelete = array();
+		if (!empty($_content['attachments']['delete']))
+		{
+			$toDelete = $_content['attachments']['delete'];
+			unset($_content['attachments']['delete']);
+			$attachments = $_content['attachments'];
+			unset($_content['attachments']);
+			foreach($attachments as $i => $att)
+			{
+				$remove=false;
+				foreach($toDelete as $k =>$pressed)
+				{
+					if ($att['tmp_name']==$k) $remove=true;
+				}
+				if (!$remove) $_content['attachments'][] = $att;
 			}
 		}
 $CAtFStart = array2string($_content);
-		// read the data from session
 		// all values are empty for a new compose window
 		$insertSigOnTop = false;
-		$sessionData = /*$content; // */$this->getSessionData();
+		$content = array();
 		$alwaysAttachVCardAtCompose = false; // we use this to eliminate double attachments, if users VCard is already present/attached
 		if ( isset($GLOBALS['egw_info']['apps']['stylite']) && (isset($this->preferencesArray['attachVCardAtCompose']) &&
 			$this->preferencesArray['attachVCardAtCompose']))
@@ -333,17 +371,17 @@ $CAtFStart = array2string($_content);
 							$_REQUEST['preset']['file'][] = $f;
 						}
 					}
-					$sessionData['subject'] = lang($app).' #'.$res['id'].': ';
+					$content['subject'] = lang($app).' #'.$res['id'].': ';
 					foreach(array('subject','body','mimetype') as $name) {
 						$sName = $name;
 						if ($name=='mimetype')
 						{
 							$sName = 'mimeType';
-							$sessionData[$sName] = $res[$name];
+							$content[$sName] = $res[$name];
 						}
 						else
 						{
-							if ($res[$name]) $sessionData[$sName] .= (strlen($sessionData[$sName])>0 ? ' ':'') .$res[$name];
+							if ($res[$name]) $content[$sName] .= (strlen($content[$sName])>0 ? ' ':'') .$res[$name];
 						}
 					}
 				}
@@ -367,13 +405,13 @@ $CAtFStart = array2string($_content);
 					foreach ($addRequests as $key => $reqval) {
 						// the additional requests should have a =, to separate key from value.
 						$keyValuePair = explode('=',$reqval,2);
-						$sessionData[$keyValuePair[0]] .= (strlen($sessionData[$keyValuePair[0]])>0 ? ' ':'') . $keyValuePair[1];
+						$content[$keyValuePair[0]] .= (strlen($content[$keyValuePair[0]])>0 ? ' ':'') . $keyValuePair[1];
 					}
 				}
-				$sessionData['to']=$mailtoArray[0];
+				$content['to']=$mailtoArray[0];
 				// if the mailto string is not htmlentity decoded the arguments are passed as simple requests
 				foreach(array('cc','bcc','subject','body') as $name) {
-					if ($_REQUEST[$name]) $sessionData[$name] .= (strlen($sessionData[$name])>0 ? ( $name == 'cc' || $name == 'bcc' ? ',' : ' ') : '') . $_REQUEST[$name];
+					if ($_REQUEST[$name]) $content[$name] .= (strlen($content[$name])>0 ? ( $name == 'cc' || $name == 'bcc' ? ',' : ' ') : '') . $_REQUEST[$name];
 				}
 			}
 
@@ -442,7 +480,7 @@ $CAtFStart = array2string($_content);
 							}
 						}
 						//error_log(__METHOD__.__LINE__.array2string($mailtoArray));
-						$sessionData['to']=$mailtoArray;
+						$content['to']=$mailtoArray;
 					}
 				}
 			}
@@ -501,41 +539,40 @@ $CAtFStart = array2string($_content);
 				$remember = array();
 				if (isset($_REQUEST['preset']['mailto']) || (isset($_REQUEST['app']) && isset($_REQUEST['method']) && isset($_REQUEST['id'])))
 				{
-					foreach(array_keys($sessionData) as $k)
+					foreach(array_keys($content) as $k)
 					{
 						if (in_array($k,array('to','cc','bcc','subject','body','mimeType'))) $remember[$k] = $sessionData[$k];
 					}
 				}
-				$sessionData = $this->getSessionData();
-				if(!empty($remember)) $sessionData = array_merge($sessionData,$remember);
+				if(!empty($remember)) $content = array_merge($content,$remember);
 			}
 			foreach(array('to','cc','bcc','subject','body') as $name)
 			{
-				if ($_REQUEST['preset'][$name]) $sessionData[$name] = $_REQUEST['preset'][$name];
+				if ($_REQUEST['preset'][$name]) $content[$name] = $_REQUEST['preset'][$name];
 			}
 		}
 		// is the to address set already?
 		if (!empty($_REQUEST['send_to']))
 		{
-			$sessionData['to'] = base64_decode($_REQUEST['send_to']);
+			$content['to'] = base64_decode($_REQUEST['send_to']);
 			// first check if there is a questionmark or ampersand
-			if (strpos($sessionData['to'],'?')!== false) list($sessionData['to'],$rest) = explode('?',$sessionData['to'],2);
-			$sessionData['to'] = html_entity_decode($sessionData['to']);
-			if (($at_pos = strpos($sessionData['to'],'@')) !== false)
+			if (strpos($content['to'],'?')!== false) list($content['to'],$rest) = explode('?',$content['to'],2);
+			$content['to'] = html_entity_decode($content['to']);
+			if (($at_pos = strpos($content['to'],'@')) !== false)
 			{
-				if (($amp_pos = strpos(substr($sessionData['to'],$at_pos),'&')) !== false)
+				if (($amp_pos = strpos(substr($content['to'],$at_pos),'&')) !== false)
 				{
 					//list($email,$addoptions) = explode('&',$value,2);
-					$email = substr($sessionData['to'],0,$amp_pos+$at_pos);
-					$rest = substr($sessionData['to'], $amp_pos+$at_pos+1);
+					$email = substr($content['to'],0,$amp_pos+$at_pos);
+					$rest = substr($content['to'], $amp_pos+$at_pos+1);
 					//error_log(__METHOD__.__LINE__.$email.' '.$rest);
-					$sessionData['to'] = $email;
+					$content['to'] = $email;
 				}
 			}
-			if (strpos($sessionData['to'],'%40')!== false) $sessionData['to'] = html::purify(str_replace('%40','@',$sessionData['to']));
+			if (strpos($content['to'],'%40')!== false) $content['to'] = html::purify(str_replace('%40','@',$content['to']));
 			$rarr = array(html::purify($rest));
 			if (isset($rest)&&!empty($rest) && strpos($rest,'&')!== false) $rarr = explode('&',$rest);
-			//error_log(__METHOD__.__LINE__.$sessionData['to'].'->'.array2string($rarr));
+			//error_log(__METHOD__.__LINE__.$content['to'].'->'.array2string($rarr));
 			$karr = array();
 			foreach ($rarr as $ri => $rval)
 			{
@@ -547,18 +584,18 @@ $CAtFStart = array2string($_content);
 					$karr[$k] = $v;
 				}
 			}
-			//error_log(__METHOD__.__LINE__.$sessionData['to'].'->'.array2string($karr));
+			//error_log(__METHOD__.__LINE__.$content['to'].'->'.array2string($karr));
 			foreach(array('cc','bcc','subject','body') as $name)
 			{
-				if ($karr[$name]) $sessionData[$name] = $karr[$name];
+				if ($karr[$name]) $content[$name] = $karr[$name];
 			}
-			if (!empty($_REQUEST['subject'])) $sessionData['subject'] = html::purify(trim(html_entity_decode($_REQUEST['subject'])));
+			if (!empty($_REQUEST['subject'])) $content['subject'] = html::purify(trim(html_entity_decode($_REQUEST['subject'])));
 		}
 
 		//is the MimeType set/requested
 		if (!empty($_REQUEST['mimeType']))
 		{
-			$sessionData['mimeType'] = $_REQUEST['mimeType'];
+			$content['mimeType'] = $_REQUEST['mimeType'];
 		}
 		else
 		{
@@ -566,32 +603,32 @@ $CAtFStart = array2string($_content);
 			if ($isReply)
 			{
 				if (!empty($this->preferencesArray['replyOptions']) && $this->preferencesArray['replyOptions']=="text" &&
-					$sessionData['mimeType'] == 'html')
+					$content['mimeType'] == 'html')
 				{
-					$sessionData['mimeType']  = 'plain';
-					$sessionData['body'] = $this->convertHTMLToText(str_replace(array("\n\r","\n"),' ',$sessionData['body']));
+					$content['mimeType']  = 'plain';
+					$content['body'] = $this->convertHTMLToText(str_replace(array("\n\r","\n"),' ',$content['body']));
 				}
 				if (!empty($this->preferencesArray['replyOptions']) && $this->preferencesArray['replyOptions']=="html" &&
-					$sessionData['mimeType'] != 'html')
+					$content['mimeType'] != 'html')
 				{
-					$sessionData['mimeType']  = 'html';
-					$sessionData['body'] = "<pre>".$sessionData['body']."</pre>";
+					$content['mimeType']  = 'html';
+					$content['body'] = "<pre>".$content['body']."</pre>";
 					// take care this assumption is made on the creation of the reply header in bocompose::getReplyData
-					if (strpos($sessionData['body'],"<pre> \r\n \r\n---")===0) $sessionData['body'] = substr_replace($sessionData['body']," <br>\r\n<pre>---",0,strlen("<pre> \r\n \r\n---")-1);
+					if (strpos($content['body'],"<pre> \r\n \r\n---")===0) $content['body'] = substr_replace($content['body']," <br>\r\n<pre>---",0,strlen("<pre> \r\n \r\n---")-1);
 				}
 			}
 		}
-		if ($sessionData['mimeType'] == 'html' && html::htmlarea_availible()===false)
+		if ($content['mimeType'] == 'html' && html::htmlarea_availible()===false)
 		{
-			$sessionData['mimeType'] = 'plain';
-			$sessionData['body'] = $this->convertHTMLToText($sessionData['body']);
+			$content['mimeType'] = 'plain';
+			$content['body'] = $this->convertHTMLToText($content['body']);
 		}
 		// removal of possible script elements in HTML; getCleanHTML is the choice here, if not only for consistence
 		// we use the preg of common_functions (slightly altered) to meet eGroupwares behavior on posted variables
-		if ($sessionData['mimeType'] == 'html')
+		if ($content['mimeType'] == 'html')
 		{
 			// this is now moved to egw_htmLawed (triggered by default config) which is called with ckeditor anyway
-			//mail_bo::getCleanHTML($sessionData['body'],true);
+			//mail_bo::getCleanHTML($content['body'],true);
 		}
 
 		// is a certain signature requested?
@@ -603,10 +640,10 @@ $CAtFStart = array2string($_content);
 		{
 			$presetSig = (strtolower($_REQUEST['signature']) == 'no' ? -2 : -1);
 		}
-		if (($suppressSigOnTop || $sessionData['isDraft']) && !empty($sessionData['signatureID'])) $presetSig = (int)$sessionData['signatureID'];
-		if (($suppressSigOnTop || $sessionData['isDraft']) && !empty($sessionData['stationeryID'])) $presetStationery = $sessionData['stationeryID'];
+		if (($suppressSigOnTop || $content['isDraft']) && !empty($content['signatureID'])) $presetSig = (int)$content['signatureID'];
+		if (($suppressSigOnTop || $content['isDraft']) && !empty($content['stationeryID'])) $presetStationery = $content['stationeryID'];
 		$presetId = NULL;
-		if (($suppressSigOnTop || $sessionData['isDraft']) && !empty($sessionData['identity'])) $presetId = (int)$sessionData['identity'];
+		if (($suppressSigOnTop || $content['isDraft']) && !empty($content['identity'])) $presetId = (int)$content['identity'];
 
 /*
 
@@ -656,7 +693,7 @@ $CAtFStart = array2string($_content);
 			'composeid'	=> $this->composeID
 		);
 		$this->t->set_var("link_action",egw::link('/index.php',$linkData));
-		$this->t->set_var('folder_name',$this->mail_bo->sessionData['mailbox']);
+		$this->t->set_var('folder_name',$this->mail_bo->content['mailbox']);
 		$this->t->set_var('compose_id',$this->composeID);
 		// the editorobject is needed all the time (since we use CKEDITOR
 		//$editorObject = html::initCKEditor('400px','simple');
@@ -682,7 +719,7 @@ $CAtFStart = array2string($_content);
 		// navbar(, kind of)
 */
 		// handle subject
-		$subject = mail_bo::htmlentities($sessionData['subject'],$this->displayCharset);
+		$subject = mail_bo::htmlentities($content['subject'],$this->displayCharset);
 /*
 		$this->t->set_var("subject",$subject);
 
@@ -763,7 +800,7 @@ $CAtFStart = array2string($_content);
 				//_debug_array($singleIdentity);
 				$defaultIdentity = $singleIdentity->id;
 				//$defaultIdentity = $key;
-				$sessionData['signatureID'] = (!empty($singleIdentity->signature) ? $singleIdentity->signature : $sessionData['signatureID']);
+				$content['signatureID'] = (!empty($singleIdentity->signature) ? $singleIdentity->signature : $content['signatureID']);
 			}
 		}
 
@@ -771,12 +808,12 @@ $CAtFStart = array2string($_content);
 		$boSignatures = new mail_signatures();
 		$signatures = $boSignatures->getListOfSignatures();
 
-		if (empty($sessionData['signatureID'])) {
+		if (empty($content['signatureID'])) {
 			if ($signatureData = $boSignatures->getDefaultSignature()) {
 				if (is_array($signatureData)) {
-					$sessionData['signatureID'] = $signatureData['signatureid'];
+					$content['signatureID'] = $signatureData['signatureid'];
 				} else {
-					$sessionData['signatureID'] =$signatureData;
+					$content['signatureID'] =$signatureData;
 				}
 			}
 		}
@@ -788,7 +825,7 @@ $CAtFStart = array2string($_content);
 			$selectSignatures[$signature['fm_signatureid']] = lang('Signature').': '.$signature['fm_description'];
 		}
 		$disableRuler = false;
-		$signature = $boSignatures->getSignature(($presetSig ? $presetSig : $sessionData['signatureID']));
+		$signature = $boSignatures->getSignature(($presetSig ? $presetSig : $content['signatureID']));
 		if ((isset($this->preferencesArray['disableRulerForSignatureSeparation']) &&
 			$this->preferencesArray['disableRulerForSignatureSeparation']) ||
 			empty($signature->fm_signature) || trim($this->convertHTMLToText($signature->fm_signature,true,true)) =='')
@@ -796,7 +833,7 @@ $CAtFStart = array2string($_content);
 			$disableRuler = true;
 		}
 		$font_span ='';
-		if($sessionData['mimeType'] == 'html' /*&& trim($sessionData['body'])==''*/) {
+		if($content['mimeType'] == 'html' /*&& trim($content['body'])==''*/) {
 			// User preferences for style
 			$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
 			$font_size = egw_ckeditor_config::font_size_from_prefs();
@@ -804,7 +841,7 @@ $CAtFStart = array2string($_content);
 			if (empty($font) && empty($font_size)) $font_span = '';
 		}
 		//remove possible html header stuff
-		if (stripos($sessionData['body'],'<html><head></head><body>')!==false) $sessionData['body'] = str_ireplace(array('<html><head></head><body>','</body></html>'),array('',''),$sessionData['body']);
+		if (stripos($content['body'],'<html><head></head><body>')!==false) $content['body'] = str_ireplace(array('<html><head></head><body>','</body></html>'),array('',''),$content['body']);
 		//error_log(__METHOD__.__LINE__.array2string($this->preferencesArray));
 		$blockElements = array('address','blockquote','center','del','dir','div','dl','fieldset','form','h1','h2','h3','h4','h5','h6','hr','ins','isindex','menu','noframes','noscript','ol','p','pre','table','ul');
 		if (isset($this->preferencesArray['insertSignatureAtTopOfMessage']) &&
@@ -814,7 +851,7 @@ $CAtFStart = array2string($_content);
 		{
 			$insertSigOnTop = ($insertSigOnTop?$insertSigOnTop:true);
 			$sigText = mail_bo::merge($signature->fm_signature,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
-			if ($sessionData['mimeType'] == 'html')
+			if ($content['mimeType'] == 'html')
 			{
 				$sigTextStartsWithBlockElement = ($disableRuler?false:true);
 				foreach($blockElements as $e)
@@ -823,73 +860,73 @@ $CAtFStart = array2string($_content);
 					if (stripos(trim($sigText),'<'.$e)===0) $sigTextStartsWithBlockElement = true;
 				}
 			}
-			if($sessionData['mimeType'] == 'html') {
+			if($content['mimeType'] == 'html') {
 				$before = (!empty($font_span) && !($insertSigOnTop === 'below')?$font_span:'&nbsp;').($disableRuler?''/*($sigTextStartsWithBlockElement?'':'<p style="margin:0px;"/>')*/:'<hr style="border:1px dotted silver; width:90%;">');
 				$inbetween = '&nbsp;<br>';
 			} else {
 				$before = ($disableRuler ?"\r\n\r\n":"\r\n\r\n-- \r\n");
 				$inbetween = "\r\n";
 			}
-			if ($sessionData['mimeType'] == 'html')
+			if ($content['mimeType'] == 'html')
 			{
 				$sigText = ($sigTextStartsWithBlockElement?'':"<div>")."<!-- HTMLSIGBEGIN -->".$sigText."<!-- HTMLSIGEND -->".($sigTextStartsWithBlockElement?'':"</div>");
 			}
 
 			if ($insertSigOnTop === 'below')
 			{
-				$sessionData['body'] = $font_span.$sessionData['body'].$before.($sessionData['mimeType'] == 'html'?$sigText:$this->convertHTMLToText($sigText,true,true));
+				$content['body'] = $font_span.$content['body'].$before.($content['mimeType'] == 'html'?$sigText:$this->convertHTMLToText($sigText,true,true));
 			}
 			else
 			{
-				$sessionData['body'] = $before.($sessionData['mimeType'] == 'html'?$sigText:$this->convertHTMLToText($sigText,true,true)).$inbetween.$sessionData['body'];
+				$content['body'] = $before.($content['mimeType'] == 'html'?$sigText:$this->convertHTMLToText($sigText,true,true)).$inbetween.$content['body'];
 			}
 		}
 		else
 		{
-			$sessionData['body'] = ($font_span?$font_span:'&nbsp;').$sessionData['body'];
+			$content['body'] = ($font_span?$font_span:'&nbsp;').$content['body'];
 		}
-		//error_log(__METHOD__.__LINE__.$sessionData['body']);
+		//error_log(__METHOD__.__LINE__.$content['body']);
 
 		// prepare body
 		// in a way, this tests if we are having real utf-8 (the displayCharset) by now; we should if charsets reported (or detected) are correct
 		if (strtoupper($this->displayCharset) == 'UTF-8')
 		{
-			$test = @json_encode($sessionData['body']);
+			$test = @json_encode($content['body']);
 			//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
 			//if (json_last_error() != JSON_ERROR_NONE && strlen($singleBodyPart['body'])>0)
-			if ($test=="null" && strlen($sessionData['body'])>0)
+			if ($test=="null" && strlen($content['body'])>0)
 			{
 				// try to fix broken utf8
-				$x = (function_exists('mb_convert_encoding')?mb_convert_encoding($sessionData['body'],'UTF-8','UTF-8'):(function_exists('iconv')?@iconv("UTF-8","UTF-8//IGNORE",$sessionData['body']):$sessionData['body']));
+				$x = (function_exists('mb_convert_encoding')?mb_convert_encoding($content['body'],'UTF-8','UTF-8'):(function_exists('iconv')?@iconv("UTF-8","UTF-8//IGNORE",$content['body']):$content['body']));
 				$test = @json_encode($x);
-				if ($test=="null" && strlen($sessionData['body'])>0)
+				if ($test=="null" && strlen($content['body'])>0)
 				{
 					// this should not be needed, unless something fails with charset detection/ wrong charset passed
-					error_log(__METHOD__.__LINE__.' Charset problem detected; Charset Detected:'.mail_bo::detect_encoding($sessionData['body']));
-					$sessionData['body'] = utf8_encode($sessionData['body']);
+					error_log(__METHOD__.__LINE__.' Charset problem detected; Charset Detected:'.mail_bo::detect_encoding($content['body']));
+					$content['body'] = utf8_encode($content['body']);
 				}
 				else
 				{
-					$sessionData['body'] = $x;
+					$content['body'] = $x;
 				}
 			}
 		}
-		//error_log(__METHOD__.__LINE__.$sessionData['body']);
-		if($sessionData['mimeType'] == 'html') {
+		//error_log(__METHOD__.__LINE__.$content['body']);
+		if($content['mimeType'] == 'html') {
 			$mode = 'simple-withimage';
 			//$mode ='advanced';// most helpful for debuging
 			#if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck'])) $mode = 'egw_simple_spellcheck';
 			$style="border:0px; width:100%; height:500px;";
 			// dont run purify, as we already did that (getCleanHTML).
 /*
-			$this->t->set_var('tinymce', html::fckEditorQuick('body', $mode, $sessionData['body'],'500px','100%',false,'0px',($_focusElement=='body'?true:false),($_focusElement!='body'?'parent.setToFocus("'.$_focusElement.'");':'')));
+			$this->t->set_var('tinymce', html::fckEditorQuick('body', $mode, $content['body'],'500px','100%',false,'0px',($_focusElement=='body'?true:false),($_focusElement!='body'?'parent.setToFocus("'.$_focusElement.'");':'')));
 			$this->t->set_var('mimeType', 'html');
 */
 			$ishtml=1;
 		} else {
 			$border="1px solid gray; margin:1px";
 			// initalize the CKEditor Object to enable switching back and force
-			//$editor = html::fckEditorQuick('body', 'ascii', $sessionData['body'],'500px','99%',false,$border);
+			//$editor = html::fckEditorQuick('body', 'ascii', $content['body'],'500px','99%',false,$border);
 			$ishtml=0;
 		}
 
@@ -908,7 +945,7 @@ $CAtFStart = array2string($_content);
 */
 		// signature stuff set earlier
 		$sel_options['signatureID'] = $selectSignatures;
-		$content['signatureID'] = ($presetSig ? $presetSig : $sessionData['signatureID']);
+		$content['signatureID'] = ($presetSig ? $presetSig : $content['signatureID']);
 		// end signature stuff
 
 		// stationery stuff
@@ -928,11 +965,11 @@ $CAtFStart = array2string($_content);
 		// if ID of signature Select Box is set, we allow for changing the sig onChange of the signatueSelect
 		$content['stationeryID']  =  ($presetStationery ? $presetStationery : 0);
 		// end stationery stuff
-		//$sessionData['bcc'] = array('kl@stylite.de','kl@leithoff.net');
+		//$content['bcc'] = array('kl@stylite.de','kl@leithoff.net');
 		// address stuff like from, to, cc, replyto
 		$destinationRows = 0;
 		foreach(array('to','cc','bcc','replyto','folder') as $destination) {
-			foreach((array)$sessionData[$destination] as $key => $value) {
+			foreach((array)$content[$destination] as $key => $value) {
 				if ($value=="NIL@NIL") continue;
 				if ($destination=='replyto' && str_replace('"','',$value) == str_replace('"','',$identities[($presetId ? $presetId : $defaultIdentity)])) continue;
 				//error_log(__METHOD__.__LINE__.array2string(array('key'=>$key,'value'=>$value)));
@@ -954,24 +991,27 @@ $CAtFStart = array2string($_content);
 
 			if (!empty($content['FOLDER'])) $sel_options['FOLDER']=$this->ajax_searchFolder(0,true);
 			$content['SENDER'] = (empty($content['SENDER'])?($selectedSender?(array)$selectedSender:''):$content['SENDER']);
-			$content['is_html'] = ($this->sessionData['mimeType'] == 'html'?true:'');
-			$content['is_plain'] = ($this->sessionData['mimeType'] == 'html'?'':true);
-$content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text'] =$CAtFStart.$content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text'];
+			$content['is_html'] = ($this->content['mimeType'] == 'html'?true:'');
+			$content['is_plain'] = ($this->content['mimeType'] == 'html'?'':true);
+$content['mail_'.($this->content['mimeType'] == 'html'?'html':'plain').'text'] =$CAtFStart.$content['mail_'.($this->content['mimeType'] == 'html'?'html':'plain').'text'];
 		}
 		else
 		{
-			$content['is_html'] = ($this->sessionData['mimeType'] == 'html'?true:'');
-			$content['is_plain'] = ($this->sessionData['mimeType'] == 'html'?'':true);
+			$content['is_html'] = ($this->content['mimeType'] == 'html'?true:'');
+			$content['is_plain'] = ($this->content['mimeType'] == 'html'?'':true);
 			//error_log(__METHOD__.__LINE__.array2string(array($sel_options['SENDER'],$selectedSender)));
 			$content['SENDER'] = ($selectedSender?(array)$selectedSender:'');
-			//error_log(__METHOD__.__LINE__.$sessionData['body']);
-			$content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text'] = $sessionData['body'];
+			//error_log(__METHOD__.__LINE__.$content['body']);
+			$content['mail_'.($this->content['mimeType'] == 'html'?'html':'plain').'text'] = $content['body'];
 		}
 		$content['showtempname']=0;
-		$content['attachments']=(is_array($content['attachments'])&&is_array($content['uploadForCompose'])?array_merge($content['attachments'],$content['uploadForCompose']):(is_array($content['uploadForCompose'])?$content['uploadForCompose']:(is_array($content['attachments'])?$content['attachments']:null)));
+error_log(__METHOD__.__LINE__.array2string($content['attachments']));
+		$content['attachments']=(is_array($content['attachments'])&&is_array($content['uploadForCompose'])?array_merge($content['attachments'],(!empty($content['uploadForCompose'])?$content['uploadForCompose']:array())):(is_array($content['uploadForCompose'])?$content['uploadForCompose']:(is_array($content['attachments'])?$content['attachments']:null)));
 		//if (is_array($content['attachments'])) foreach($content['attachments'] as $k => &$file) $file['delete['.$file['tmp_name'].']']=0;
 		$content['no_griddata'] = empty($content['attachments']);
 		$preserv['attachments'] = $content['attachments'];
+
+error_log(__METHOD__.__LINE__.array2string($content['attachments']));
 		$preserv['is_html'] = $content['is_html'];
 		$preserv['is_plain'] = $content['is_plain'];
 		$etpl = new etemplate_new('mail.compose');
@@ -984,19 +1024,19 @@ $content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text
 		error_log(__METHOD__.__LINE__.array2string($content));
 		if ($content)
 		{
-			$this->sessionData['mimeType'] = 'plain';
-			$content['is_html'] = ($this->sessionData['mimeType'] == 'html'?true:'');
-			$content['is_plain'] = ($this->sessionData['mimeType'] == 'html'?'':true);
+			$this->content['mimeType'] = 'plain';
+			$content['is_html'] = ($this->content['mimeType'] == 'html'?true:'');
+			$content['is_plain'] = ($this->content['mimeType'] == 'html'?'':true);
 		}
 		else
 		{
-			$sessionData['body'] = 'bla bla bla';
-			$content['is_html'] = ($this->sessionData['mimeType'] == 'html'?true:'');
-			$content['is_plain'] = ($this->sessionData['mimeType'] == 'html'?'':true);
+			$content['body'] = 'bla bla bla';
+			$content['is_html'] = ($this->content['mimeType'] == 'html'?true:'');
+			$content['is_plain'] = ($this->content['mimeType'] == 'html'?'':true);
 			//error_log(__METHOD__.__LINE__.array2string(array($sel_options['SENDER'],$selectedSender)));
 			$content['SENDER'] = ($selectedSender?(array)$selectedSender:'');
-			//error_log(__METHOD__.__LINE__.$sessionData['body']);
-			$content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text'] = $sessionData['body'];
+			//error_log(__METHOD__.__LINE__.$content['body']);
+			$content['mail_'.($this->content['mimeType'] == 'html'?'html':'plain').'text'] = $content['body'];
 		}
 		$etpl = new etemplate_new('mail.testhtmlarea');
 		$etpl->exec('mail.mail_compose.testhtmlarea',$content,$sel_options,$readonlys,$preserv,2);
@@ -1009,101 +1049,9 @@ $content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text
 
 		if (!empty($folder) && !empty($replyID) ) {
 			// this fill the session data with the values from the original email
-			$this->getDraftData($icServer, $folder, $replyID);
+			$content = $this->getDraftData($icServer, $folder, $replyID);
 		}
-		$this->compose('body',$suppressSigOnTop=true);
-	}
-
-	/**
-	 * Callback for filemanagers select file dialog
-	 *
-	 * @param string $composeid
-	 * @param string|array $files path of file(s) in vfs (no egw_vfs::PREFIX, just the path)
-	 * @return string javascript output by the file select dialog, usually to close it
-	 */
-	function vfsSelector($composeid,$files)
-	{
-		foreach((array) $files as $path)
-		{
-			$formData = array(
-				'name' => egw_vfs::basename($path),
-				'type' => egw_vfs::mime_content_type($path),
-				'file' => egw_vfs::PREFIX.$path,
-				'size' => filesize(egw_vfs::PREFIX.$path),
-			);
-			$this->addAttachment($formData);
-		}
-		return 'window.close();';
-	}
-
-	function fileSelector()
-	{
-		if(is_array($_FILES["addFileName"])) {
-			#phpinfo();
-			//_debug_array($_FILES);
-			$success=false;
-			if (is_array($_FILES["addFileName"]['name']))
-			{
-				// multiple uploads supported by newer firefox (>3.6) and chrome (>4) versions,
-				// upload array information is by key within the attribute (name, type, size, temp_name)
-				foreach($_FILES["addFileName"]['name'] as $key => $filename)
-				{
-					if($_FILES['addFileName']['error'][$key] == $UPLOAD_ERR_OK) {
-						$formData['name']	= $_FILES['addFileName']['name'][$key];
-						$formData['type']	= $_FILES['addFileName']['type'][$key];
-						$formData['file']	= $_FILES['addFileName']['tmp_name'][$key];
-						$formData['size']	= $_FILES['addFileName']['size'][$key];
-						$this->addAttachment($formData);
-						$success = true;
-					}
-				}
-			}
-			else // should not happen as upload form name is defined as addFileName[]
-			{
-				if($_FILES['addFileName']['error'] == $UPLOAD_ERR_OK) {
-					$formData['name']   = $_FILES['addFileName']['name'];
-					$formData['type']   = $_FILES['addFileName']['type'];
-					$formData['file']   = $_FILES['addFileName']['tmp_name'];
-					$formData['size']   = $_FILES['addFileName']['size'];
-					$this->addAttachment($formData);
-					$success = true;
-				}
-			}
-			if ($success == true)
-			{
-				print "<script type='text/javascript'>window.close();</script>";
-			}
-			else
-			{
-				print "<script type='text/javascript'>document.getElementById('fileSelectorDIV1').style.display = 'inline';document.getElementById('fileSelectorDIV2').style.display = 'none';</script>";
-			}
-		}
-
-		// this call loads js and css for the treeobject
-		html::tree(false,false,false,null,'foldertree','','',false,'/',null,false);
-		egw_framework::validate_file('jscode','composeMessage','felamimail');
-
-		#$uiwidgets		=& CreateObject('felamimail.uiwidgets');
-/*
-		$this->t->set_file(array("composeForm" => "composeForm.tpl"));
-		$this->t->set_block('composeForm','fileSelector','fileSelector');
-
-		$this->translate();
-
-		$linkData = array
-		(
-			'menuaction'	=> 'felamimail.uicompose.fileSelector',
-			'composeid'	=> $this->composeID
-		);
-		$this->t->set_var('file_selector_url', egw::link('/index.php',$linkData));
-
-		$maxUploadSize = ini_get('upload_max_filesize');
-		$this->t->set_var('max_uploadsize', $maxUploadSize);
-
-		$this->t->set_var('ajax-loader', common::image('felamimail','ajax-loader'));
-
-		$this->t->pparse("out","fileSelector");
-*/
+		$this->compose($content,null,'body',$suppressSigOnTop=true);
 	}
 
 	function forward() {
@@ -1116,10 +1064,10 @@ $content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text
 		if (!empty($replyID))
 		{
 			// this fill the session data with the values from the original email
-			$this->getForwardData($icServer, $folder, $replyID, $partID, $mode);
+			$content = $this->getForwardData($icServer, $folder, $replyID, $partID, $mode);
 		}
 		$handleAsReply = ($mode?$mode=='inline':$this->preferencesArray['message_forwarding'] == 'inline');
-		$this->compose('to',false, $handleAsReply);
+		$this->compose($content,null,'to',false, $handleAsReply);
 	}
 
 	function getAttachment()
@@ -1197,9 +1145,9 @@ $content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text
 		$partID  = $_GET['part_id'];
 		if (!empty($folder) && !empty($replyID) ) {
 			// this fill the session data with the values from the original email
-			$this->getDraftData($icServer, $folder, $replyID, $partID);
+			$content = $this->getDraftData($icServer, $folder, $replyID, $partID);
 		}
-		$this->compose('body',true);
+		$this->compose($content,null,'body',true);
 	}
 
 	function reply() {
@@ -1209,9 +1157,9 @@ $content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text
 		$partID	 = $_GET['part_id'];
 		if (!empty($folder) && !empty($replyID) ) {
 			// this fill the session data with the values from the original email
-			$this->getReplyData('single', $icServer, $folder, $replyID, $partID);
+			$content = $this->getReplyData('single', $icServer, $folder, $replyID, $partID);
 		}
-		$this->compose('body',false,true);
+		$this->compose($content,null,'body',false,true);
 	}
 
 	function replyAll() {
@@ -1221,82 +1169,14 @@ $content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text
 		$partID	 = $_GET['part_id'];
 		if (!empty($folder) && !empty($replyID) ) {
 			// this fill the session data with the values from the original email
-			$this->getReplyData('all', $icServer, $folder, $replyID, $partID);
+			$content = $this->getReplyData('all', $icServer, $folder, $replyID, $partID);
 		}
-		$this->compose('body',false,true);
+		$this->compose($content,null,'body',false,true);
 	}
 
 	/**
 	 * previous bocompose stuff
 	 */
-
-
-	/**
-	 * adds uploaded files or files in eGW's temp directory as attachments
-	 *
-	 * It also stores the given data in the session
-	 *
-	 * @param array $_formData fields of the compose form (to,cc,bcc,reply_to,subject,body,priority,signature), plus data of the file (name,file,size,type)
-	 */
-	function addAttachment($_formData,$eliminateDoubleAttachments=false)
-	{
-		$attachfailed = false;
-		// to guard against exploits the file must be either uploaded or be in the temp_dir
-		// check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
-		try
-		{
-			$tmpFileName = mail_bo::checkFileBasics($_formData,$this->composeID,false);
-		}
-		catch (egw_exception_wrong_userinput $e)
-		{
-			$attachfailed = true;
-			$alert_msg = $e->getMessage();
-		}
-
-		if ($eliminateDoubleAttachments == true)
-			foreach ((array)$this->sessionData['attachments'] as $k =>$attach)
-				if ($attach['name'] && $attach['name'] == $_formData['name'] &&
-					strtolower($_formData['type'])== strtolower($attach['type']) &&
-					stripos($_formData['file'],'vfs://') !== false) return;
-
-		if ($attachfailed === false)
-		{
-			$buffer = array(
-				'name'	=> $_formData['name'],
-				'type'	=> $_formData['type'],
-				'file'	=> $tmpFileName,
-				'size'	=> $_formData['size']
-			);
-			// trying different ID-ing Method, as getRandomString seems to produce non Random String on certain systems.
-			$attachmentID = md5(time().serialize($buffer));
-			//error_log(__METHOD__." add Attachment with ID:".$attachmentID." (md5 of serialized array)");
-			if (!is_array($this->sessionData['attachments'])) $this->sessionData['attachments']=array();
-			$this->sessionData['attachments'][$attachmentID] = $buffer;
-			unset($buffer);
-		}
-		else
-		{
-			error_log(__METHOD__.__LINE__.array2string($alert_msg));
-		}
-
-		$this->saveSessionData();
-		//print"<pre>";
-		//error_log(__METHOD__.__LINE__.print_r($this->sessionData,true));
-		//print"</pre>";exit;
-	}
-
-	function addMessageAttachment($_uid, $_partID, $_folder, $_name, $_type, $_size)
-	{
-		$this->sessionData['attachments'][]=array (
-			'uid'		=> $_uid,
-			'partID'	=> $_partID,
-			'name'		=> $_name,
-			'type'		=> $_type,
-			'size'		=> $_size,
-			'folder'	=> $_folder
-		);
-		$this->saveSessionData();
-	}
 
 	/**
 	 * replace emailaddresses eclosed in <> (eg.: <me@you.de>) with the emailaddress only (e.g: me@you.de)
@@ -1526,7 +1406,6 @@ $content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text
 		}
 		$mail_bo->closeConnection();
 
-		$this->saveSessionData();
 	}
 
 	function getErrorInfo()
@@ -1593,7 +1472,6 @@ $content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text
 		{
 			$this->preferencesArray['message_forwarding'] = $modebuff;
 		}
-		$this->saveSessionData();
 	}
 
 	/**
@@ -1839,7 +1717,6 @@ $content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text
 
 		$mail_bo->closeConnection();
 
-		$this->saveSessionData();
 	}
 
 	static function _getCleanHTML($_body, $usepurify = false, $cleanTags=true)
@@ -1853,27 +1730,8 @@ $content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text
 		return $_body;
 	}
 
-	function getSessionData()
-	{
-		return $this->sessionData;
-	}
-
 	function removeAttachment($_attachmentID) {
-		if (parse_url($this->sessionData['attachments'][$_attachmentID]['file'],PHP_URL_SCHEME) != 'vfs') {
-			unlink($this->sessionData['attachments'][$_attachmentID]['file']);
-		}
-		unset($this->sessionData['attachments'][$_attachmentID]);
-		$this->saveSessionData();
-	}
 
-	function restoreSessionData()
-	{
-		$this->sessionData = $GLOBALS['egw']->session->appsession('compose_session_data_'.$this->composeID, 'felamimail');
-	}
-
-	function saveSessionData()
-	{
-		$GLOBALS['egw']->session->appsession('compose_session_data_'.$this->composeID,'felamimail',$this->sessionData);
 	}
 
 	function createMessage(&$_mailObject, $_formData, $_identity, $_signature = false, $_convertLinks=false)
@@ -2460,7 +2318,6 @@ $content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text
 		}
 
 		$this->sessionData = '';
-		$this->saveSessionData();
 
 		return true;
 	}
@@ -2472,24 +2329,24 @@ $content['mail_'.($this->sessionData['mimeType'] == 'html'?'html':'plain').'text
 
 		if($signatureData = $boSignatures->getDefaultSignature()) {
 			if (is_array($signatureData)) {
-				$this->sessionData['signatureID'] = $signatureData['signatureid'];
+				$content['signatureID'] = $signatureData['signatureid'];
 			} else {
-				$this->sessionData['signatureID'] = $signatureData;
+				$content['signatureID'] = $signatureData;
 			}
 		} else {
-			$this->sessionData['signatureID'] = -1;
+			$content['signatureID'] = -1;
 		}
 		// retrieve the signature accociated with the identity
 		$accountData    = $this->bopreferences->getAccountData($this->preferences,'active');
-		if ($accountData['identity']->signature) $this->sessionData['signatureID'] = $accountData['identity']->signature;
+		if ($accountData['identity']->signature) $content['signatureID'] = $accountData['identity']->signature;
 		// apply the current mailbox to the compose session data of the/a new email
 		$appsessionData = $GLOBALS['egw']->session->appsession('session_data');
-		$this->sessionData['mailbox'] = $appsessionData['mailbox'];
+		$content['mailbox'] = $appsessionData['mailbox'];
 
-		$this->sessionData['mimeType'] = 'html';
-		if (!empty($this->preferencesArray['composeOptions']) && $this->preferencesArray['composeOptions']=="text") $this->sessionData['mimeType']  = 'plain';
+		$content['mimeType'] = 'html';
+		if (!empty($this->preferencesArray['composeOptions']) && $this->preferencesArray['composeOptions']=="text") $content['mimeType']  = 'plain';
+		return $content;
 
-		$this->saveSessionData();
 	}
 
 	function stripSlashes($_string)

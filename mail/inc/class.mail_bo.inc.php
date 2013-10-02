@@ -398,7 +398,7 @@ class mail_bo
 	 */
 	function restoreSessionData()
 	{
-		$this->sessionData = $GLOBALS['egw']->session->appsession('session_data','mail');
+		$this->sessionData = egw_cache::getCache(egw_cache::SESSION,'mail','session_data',$callback=null,$callback_params=array(),$expiration=60*60*1);
 		$this->sessionData['folderStatus'] = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 	}
 
@@ -412,7 +412,7 @@ class mail_bo
 			egw_cache::setCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$this->sessionData['folderStatus'], $expiration=60*60*1);
 			unset($this->sessionData['folderStatus']);
 		}
-		$GLOBALS['egw']->session->appsession('session_data','mail',$this->sessionData);
+		egw_cache::setCache(egw_cache::SESSION,'mail','session_data',$this->sessionData, $expiration=60*60*1);
 	}
 
 	/**
@@ -4872,6 +4872,35 @@ class mail_bo
 		if (empty($rv) && !empty($content) && !empty($err)) $rv = $content;
 		if (!empty($err) && !empty($content) && !empty($ids)) error_log(__METHOD__.__LINE__.' Merge failed for Ids:'.array2string($ids).' ContentType:'.$mimetype.' Content:'.$content.' Reason:'.array2string($err));
 		return $rv;
+	}
+
+	/**
+	 * Returns a string showing the size of the message/attachment
+	 *
+	 * @param integer $bytes
+	 * @return string formatted string
+	 */
+	static function show_readable_size($bytes)
+	{
+		$bytes /= 1024;
+		$type = 'k';
+
+		if ($bytes / 1024 > 1)
+		{
+			$bytes /= 1024;
+			$type = 'M';
+		}
+
+		if ($bytes < 10)
+		{
+			$bytes *= 10;
+			settype($bytes, 'integer');
+			$bytes /= 10;
+		}
+		else
+			settype($bytes, 'integer');
+
+		return $bytes . ' ' . $type ;
 	}
 
 	/**
