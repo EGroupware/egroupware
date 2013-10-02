@@ -299,6 +299,7 @@ var et2_dataview_columns = Class.extend({
 		// Calculate how many space is - relatively - not occupied with columns with
 		// relative or fixed width
 		var remRelWidth = 1;
+		var fixedTotal = 0;
 		var noWidthCount = 0;
 
 		for (var i = 0; i < this.columns.length; i++)
@@ -312,7 +313,7 @@ var et2_dataview_columns = Class.extend({
 				}
 				else if (col.fixedWidth)
 				{
-					remRelWidth -= col.fixedWidth / tw;
+					fixedTotal += col.fixedWidth;
 				}
 				else
 				{
@@ -320,7 +321,8 @@ var et2_dataview_columns = Class.extend({
 				}
 			}
 		}
-
+		remRelWidth -= fixedTotal / tw;
+		
 		// Check whether the width of columns with relative width is larger than their
 		// maxWidth
 		var done;
@@ -374,31 +376,6 @@ var et2_dataview_columns = Class.extend({
 		// requires other columns to take their maximum width.
 		} while (!done);
 
-
-		// Check whether the columns where a relative width is specified have more
-		// space than the remaining columns - if yes, make the relative ones larger
-		for (var i = 0; i < this.columns.length; i++)
-		{
-			var col = this.columns[i];
-
-			if (col.visibility != ET2_COL_VISIBILITY_INVISIBLE)
-			{
-				if (col.relativeWidth && !col._larger)
-				{
-					if (col.relativeWidth < noWidth)
-					{
-						noWidthCount++;
-						remRelWidth += col.relativeWidth;
-						col._newWidth = true;
-					}
-					else
-					{
-						col._newWidth = false;
-					}
-				}
-			}
-		}
-
 		// Now calculate the absolute width of the columns in pixels
 		this.columnWidths = [];
 		for (var i = 0; i < this.columns.length; i++)
@@ -415,7 +392,7 @@ var et2_dataview_columns = Class.extend({
 				{
 					w = col.fixedWidth;
 				}
-				else if (col.relativeWidth && !col._newWidth)
+				else if (col.relativeWidth)
 				{
 					w = Math.round(tw * col.relativeWidth);
 				}

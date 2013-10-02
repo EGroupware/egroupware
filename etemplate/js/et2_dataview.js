@@ -386,7 +386,7 @@ var et2_dataview = Class.extend({
 			// make column resizable
 			var enc_column = self.columnMgr.getColumnById(col.id);
 			et2_dataview_makeResizeable(column, function(_w) {
-					this.set_width(_w + "px");
+					this.set_width(this.relativeWidth ? (_w / self.columnMgr.totalWidth * 100) + "%" : _w + "px");
 					self.columnMgr.updated = true;
 					self.updateColumns();
 			}, enc_column);

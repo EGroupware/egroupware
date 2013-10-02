@@ -101,6 +101,17 @@ var et2_dynheight = Class.extend(
 
 			// Calculate the new height of the inner container
 			var w = this.innerNode.width();
+			// Some checking to make sure it doesn't overflow the width when user
+			// resizes the window
+			if(w > this.outerNode.width())
+			{
+				w = this.outerNode.width();
+			}
+			if (w > $j(window).width())
+			{
+				// 50px border, totally arbitrary, but we just need to make sure it's inside
+				w = $j(window).width()-50;
+			}
 			var h = Math.max(this.minHeight, oh + ot - it - bh -
 				this.innerMargin - this.outerMargin);
 			this.innerNode.height(h);

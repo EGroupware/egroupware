@@ -154,7 +154,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 		// Create the dynheight component which dynamically scales the inner
 		// container.
-		this.dynheight = new et2_dynheight(this.egw().window,
+		this.dynheight = new et2_dynheight(this.getInstanceManager().DOMContainer,
 				this.innerDiv, 150);
 
 		// Create the outer grid container
@@ -707,8 +707,18 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 					}
 				}
 				if(visibility[colMgr.columns[i].id].visible) colDisplay.push(colName);
-				colSize[colName] = colMgr.getColumnWidth(i);
-			} else if (colMgr.columns[i].fixedWidth) {
+				
+				// When saving sizes, only save columns with explicit values, preserving relative vs fixed
+				// Others will be left to flex if width changes or more columns are added
+				if(colMgr.columns[i].relativeWidth)
+				{
+					colSize[colName] = (colMgr.columns[i].relativeWidth * 100) + "%";
+				}
+				else if (colMgr.columns[i].fixedWidth)
+				{
+					colSize[colName] = colMgr.columns[i].fixedWidth;
+				}
+			} else if (colMgr.columns[i].fixedWidth || colMgr.columns[i].relativeWidth) {
 				this.egw().debug("info", "Could not save column width - no name", colMgr.columns[i].id);
 			}
 		}
@@ -814,7 +824,8 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		// Register handler to update preferences when column properties are changed
 		var self = this;
 		this.dataview.onUpdateColumns = function() {
-			self._updateUserPreferences();
+			// Use apply to make sure context is there
+			self._updateUserPreferences.apply(self);
 
 			// Allow column widgets a chance to resize
 			self.iterateOver(function(widget) {widget.resize();}, self, et2_IResizeable);
