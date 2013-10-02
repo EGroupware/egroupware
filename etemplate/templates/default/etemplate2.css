@@ -46,6 +46,7 @@ div.et2_hbox {
 }
 div.et2_hbox>* {
 	text-align: left;
+	vertical-align: middle;
 }
 
 div.et2_hbox_left {
@@ -183,6 +184,7 @@ a.et2_url.url {
 }
 .et2_button_icon {
 	border: none;
+	height: 20px;
 	background: transparent;
 	padding: 2px;
 }
