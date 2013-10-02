@@ -444,14 +444,15 @@ class admin_acl
 			'get_rows' => 'admin_acl::get_rows',
 			'no_cat' => true,
 			'filter' => !empty($_GET['acl_filter']) ? $_GET['acl_filter'] :
-				$GLOBALS['egw_info']['user']['preferences']['admin']['acl_filter'],
+				($GLOBALS['egw_info']['flags']['currentapp'] != 'admin' ? 'other' :
+					$GLOBALS['egw_info']['user']['preferences']['admin']['acl_filter']),
 			'filter2' => !empty($_GET['acl_app']) ? $_GET['acl_app'] : '',
 			'lettersearch' => false,
 			'order' => 'acl_appname',
 			'sort' => 'ASC',
 			'row_id' => 'id',
 			'account_id' => isset($_GET['account_id']) && (int)$_GET['account_id'] ? (int)(int)$_GET['account_id'] :
-				$GLOBALS['egw_info']['user']['acount_id'],
+				$GLOBALS['egw_info']['user']['account_id'],
 			'actions' => self::get_actions(),
 			'acl_rights' => $GLOBALS['egw']->hooks->process(array(
 				'location' => 'acl_rights',

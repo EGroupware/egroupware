@@ -777,7 +777,7 @@ function dropdown_menu_hack(el)
 			el.contentOptions [el.contentOptions.length] =
 			{
 				"value": el.options[i].value,"text": el.options[i].innerHTML
-			}
+			};
 			if(!el.options[i].selected){el.options[i].removeNode(true);i--;};
 		}
 		el.onkeydown = switchMenu;
@@ -786,3 +786,37 @@ function dropdown_menu_hack(el)
 	}
 }
 
+/**
+ * Dummy link handler, which can be overwritten by templates
+ * 
+ * @param _link
+ * @param _app
+ */
+function egw_link_handler(_link, _app)
+{
+	window.location.href = egw_webserverUrl+_link;
+}
+
+/**
+ * Call context / open app specific preferences function
+ * 
+ * @param string name 'acl', 'prefs', or 'cats' 
+ * @param array apps apps allowing to call that
+ */
+function egw_preferences(name, apps)
+{
+	var current_app = egw_getAppName();
+	if ($j.inArray(current_app, apps) == -1)
+	{
+		egw_message(egw.lang('Not supported by current application!'), 'warning');
+	}
+	else
+	{
+		switch(name)
+		{
+			case 'acl':
+				egw_link_handler(egw_webserverUrl+'/index.php?menuaction=preferences.preferences_acl.index&acl_app='+current_app, current_app);
+				break;
+		}
+	}
+}

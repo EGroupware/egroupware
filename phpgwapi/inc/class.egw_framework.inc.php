@@ -1027,6 +1027,11 @@ abstract class egw_framework
 			));
 		}
 
+		if (($acl = $this->topmenu_acl()))
+		{
+			$this->_add_topmenu_item($acl);
+		}
+
 		if($GLOBALS['egw_info']['user']['apps']['manual'] && isset($apps['manual']))
 		{
 			$this->_add_topmenu_item(array_merge($apps['manual'],array('title' => lang('Help'))));
@@ -1047,6 +1052,32 @@ abstract class egw_framework
 		$this->_add_topmenu_info_item($vars['user_info']);
 		$this->_add_topmenu_info_item($vars['current_users']);
 		$this->_add_topmenu_info_item($vars['quick_add']);
+	}
+
+	/**
+	 * Add ACL link to topmenu using acl_rights-hook to know if an app supports acl
+	 */
+	function topmenu_acl()
+	{
+		if (!$GLOBALS['egw_info']['user']['apps']['preferences'] ||
+			$GLOBALS['egw_info']['server']['deny_acl'] && array_intersect(
+				$GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true),
+				(array)$GLOBALS['egw_info']['server']['deny_acl']))
+		{
+			return;	// user has no access to preferences app
+		}
+		$apps = $GLOBALS['egw']->hooks->process('acl_rights');
+		foreach($apps as $app => $rights)
+		{
+			if (!$rights) unset($apps[$app]);
+		}
+		$apps = array_keys($apps);
+
+		return array(
+			'name' => 'preferences',
+			'title' => lang('Access'),
+			'url' => 'javascript:egw_preferences("acl", '.json_encode($apps).')',
+		);
 	}
 
 	/**

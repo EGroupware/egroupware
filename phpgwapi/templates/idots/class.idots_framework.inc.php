@@ -674,9 +674,9 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 	*/
 	function _add_topmenu_item(array $app_data,$alt_label=null)
 	{
-		$_item['url'] = $app_data['url'];
+		$_item['url'] = htmlspecialchars($app_data['url']);
 		$_item['urlextra'] = $app_data['target'];
-		$_item['label'] = ($alt_label?$alt_label:$app_data['title']);
+		$_item['label'] = $alt_label ? $alt_label : $app_data['title'];
 		$this->tplsav2->menuitems[] = $_item;
 		$this->tplsav2->icon_or_star = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/'.$this->template.'/images'.'/orange-ball.png';
 	}

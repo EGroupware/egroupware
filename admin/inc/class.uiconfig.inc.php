@@ -52,8 +52,7 @@ class uiconfig
 			case 'admin':
 			case 'addressbook':
 			case 'calendar':
-			case 'email':
-			case 'nntp':
+			case 'preferences':
 				/*
 				Other special apps can go here for now, e.g.:
 				case 'bogusappname':

@@ -472,4 +472,57 @@ class preferences_hooks
 				'extradata'     => 'menuaction=preferences.preferences_settings.index'
 		);
 	}
+
+	/**
+	 * hooks to build sidebox-menu plus the admin and preferences sections
+	 *
+	 * @param string|array $args hook args
+	 */
+	static function admin($args)
+	{
+		$appname = 'preferences';
+		$file = Array(
+			'Site configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
+		);
+		display_section($appname, $file);
+	}
+
+	/**
+	 * Hook returning options for deny_acl groups
+	 *
+	 * @param array $config
+	 */
+	public static function deny_prefs($config)
+	{
+		$accountsel = new uiaccountsel();
+
+		return '<input type="hidden" value="" name="newsettings[deny_prefs]" />'.
+			$accountsel->selection('newsettings[deny_prefs]', 'deny_prefs', $config['deny_prefs'], 'groups', 4);
+	}
+
+	/**
+	 * Hook returning options for deny_acl groups
+	 *
+	 * @param array $config
+	 */
+	public static function deny_acl($config)
+	{
+		$accountsel = new uiaccountsel();
+
+		return '<input type="hidden" value="" name="newsettings[deny_acl]" />'.
+			$accountsel->selection('newsettings[deny_acl]', 'deny_acl', $config['deny_acl'], 'groups', 4);
+	}
+
+	/**
+	 * Hook returning options for deny_cats groups
+	 *
+	 * @param array $config
+	 */
+	public static function deny_cats($config)
+	{
+		$accountsel = new uiaccountsel();
+
+		return '<input type="hidden" value="" name="newsettings[deny_cats]" />'.
+			$accountsel->selection('newsettings[deny_cats]', 'deny_cats', $config['deny_cats'], 'groups', 4);
+	}
 }
