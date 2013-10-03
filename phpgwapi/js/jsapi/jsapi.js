@@ -800,23 +800,46 @@ function egw_link_handler(_link, _app)
 /**
  * Call context / open app specific preferences function
  * 
- * @param string name 'acl', 'prefs', or 'cats' 
- * @param array apps apps allowing to call that
+ * @param string name type 'acl', 'prefs', or 'cats' 
+ * @param array|object apps array with apps allowing to call that type, or object/hash with app and boolean or hash with url-params
  */
 function egw_preferences(name, apps)
 {
 	var current_app = egw_getAppName();
-	if ($j.inArray(current_app, apps) == -1)
+	// give warning, if app does not support given type, but all apps link to common prefs, if they dont support prefs themselfs
+	if ($j.isArray(apps) && $j.inArray(current_app, apps) == -1 && name != 'prefs' || 
+		!$j.isArray(apps) && (typeof apps[current_app] == 'undefined' || !apps[current_app]))
 	{
 		egw_message(egw.lang('Not supported by current application!'), 'warning');
 	}
 	else
 	{
+		var url = '/index.php?';
 		switch(name)
 		{
+			case 'prefs':
+				url += 'menuaction=preferences.preferences_settings.index';
+				if ($j.inArray(current_app, apps) != -1) url += '&appname='+current_app;
+				break;
+				
 			case 'acl':
-				egw_link_handler(egw_webserverUrl+'/index.php?menuaction=preferences.preferences_acl.index&acl_app='+current_app, current_app);
+				url += 'menuaction=preferences.preferences_acl.index&acl_app='+current_app;
+				break;
+				
+			case 'cats':
+				if (typeof apps[current_app] == 'object')
+				{
+					for(var key in apps[current_app])
+					{
+						url += key+'='+encodeURIComponent(apps[current_app][key])+'&';
+					}
+				}
+				else
+				{
+					url += 'menuaction=preferences.preferences_categories_ui.index&cats_app='+current_app;
+				}
 				break;
 		}
+		egw_link_handler(egw_webserverUrl+url, current_app);
 	}
 }
