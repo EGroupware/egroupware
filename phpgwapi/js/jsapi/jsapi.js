@@ -794,7 +794,7 @@ function dropdown_menu_hack(el)
  */
 function egw_link_handler(_link, _app)
 {
-	window.location.href = egw_webserverUrl+_link;
+	window.location.href = _link;
 }
 
 /**
