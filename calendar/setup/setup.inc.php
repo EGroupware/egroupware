@@ -37,7 +37,6 @@ $setup_info['calendar']['tables'][] = 'egw_cal_timezones';
 $setup_info['calendar']['hooks']['admin'] = 'calendar_hooks::admin';
 $setup_info['calendar']['hooks']['deleteaccount'] = 'calendar.calendar_so.deleteaccount';
 $setup_info['calendar']['hooks']['home'] = 'calendar_hooks::home';
-$setup_info['calendar']['hooks']['preferences'] = 'calendar_hooks::preferences';
 $setup_info['calendar']['hooks']['settings'] = 'calendar_hooks::settings';
 $setup_info['calendar']['hooks']['sidebox_menu'] = 'calendar.calendar_ui.sidebox_menu';
 $setup_info['calendar']['hooks']['search_link'] = 'calendar_hooks::search_link';
@@ -46,6 +45,7 @@ $setup_info['calendar']['hooks']['timesheet_set'] = 'calendar.calendar_bo.timesh
 $setup_info['calendar']['hooks']['infolog_set'] = 'calendar.calendar_bo.infolog_set';
 $setup_info['calendar']['hooks']['export_limit'] = 'calendar_hooks::getAppExportLimit';
 $setup_info['calendar']['hooks']['acl_rights'] = 'calendar_hooks::acl_rights';
+$setup_info['calendar']['hooks']['categories'] = 'calendar_hooks::categories';
 
 /* Dependencies for this app to work */
 $setup_info['calendar']['depends'][] = array(

@@ -38,7 +38,7 @@ $setup_info[TIMESHEET_APP]['note'] =
 </ul>';
 
 /* The hooks this app includes, needed for hooks registration */
-$setup_info[TIMESHEET_APP]['hooks']['preferences'] = 'timesheet_hooks::all_hooks';
+$setup_info[TIMESHEET_APP]['hooks']['categories'] = 'timesheet_hooks::categories';
 $setup_info[TIMESHEET_APP]['hooks']['settings'] = 'timesheet_hooks::settings';
 $setup_info[TIMESHEET_APP]['hooks']['admin'] = 'timesheet_hooks::all_hooks';
 $setup_info[TIMESHEET_APP]['hooks']['sidebox_menu'] = 'timesheet_hooks::all_hooks';

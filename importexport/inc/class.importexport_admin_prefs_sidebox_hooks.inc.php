@@ -56,17 +56,10 @@ class importexport_admin_prefs_sidebox_hooks
 						'menuaction' => 'importexport.importexport_definitions_ui.index',
 				),$GLOBALS['egw_info']['user']['apps']['admin'] ? 'admin' : 'preferences');
 			}
-			if ($location == 'preferences')
-			{
-				display_section($appname,$file);
-			}
-			else
-			{
-				display_sidebox($appname,lang($appname),$file);
-			}
+			display_sidebox($appname,lang($appname),$file);
 		}
 
-		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
+		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
 				'Site Configuration' => egw::link('/index.php','menuaction=importexport.importexport_definitions_ui.site_config','admin'),

@@ -33,7 +33,6 @@ $setup_info['mail']['hooks']['editaccount']	= 'mail_hooks::accountHooks';
 $setup_info['mail']['hooks']['search_link'] = 'mail_hooks::search_link';
 $setup_info['mail']['hooks']['admin'] = 'mail_hooks::admin';
 $setup_info['mail']['hooks']['settings'] = 'mail_hooks::settings';
-$setup_info['mail']['hooks']['preferences'] = 'mail_hooks::preferences';
 $setup_info['mail']['hooks']['sidebox_menu'] = 'mail_hooks::sidebox_menu';
 $setup_info['mail']['hooks']['session_creation'] = 'mail_bo::resetConnectionErrorCache';
 $setup_info['mail']['hooks']['verify_settings'] = 'mail_bo::forcePrefReload';

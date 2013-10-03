@@ -88,12 +88,9 @@ class preferences_settings
 						$attribute = $type == 'group' ? 'user' : $type;
 						if (!($msg=$this->process_array($GLOBALS['egw']->preferences->$attribute, $prefs, $content['types'], $appname, $attribute)))
 						{
-							$msg = lang('Preferences saved.');	//.array2string($prefs);
+							$msg_type = 'success';
+							$msg = lang('Preferences saved.');
 						}
-						if ($button == 'apply') break;
-						// fall throught
-					case 'cancel':
-						egw::redirect_link('/preferences/index.php');
 				}
 			}
 			$appname = $content['appname'] ? $content['appname'] : 'common';
@@ -124,7 +121,8 @@ class preferences_settings
 			$msg = $this->process_array($GLOBALS['egw']->preferences->$attribute,
 				(array)$GLOBALS['egw']->preferences->{$attribute}[$appname], $preserve['types'], $appname, $attribute, true);
 		}
-		$content['msg'] = $msg;
+
+		if ($msg) egw_framework::message($msg, $msg_type ? $msg_type : 'error');
 
 		$tpl->exec('preferences.preferences_settings.index', $content, $sel_options, $readonlys, $preserve);
 	}
@@ -429,7 +427,7 @@ class preferences_settings
 			{
 				$content['type'] .= ':'.$id;
 				$sel_options['type'][$content['type']] = common::grab_owner_name($GLOBALS['egw']->preferences->account_id);
-				
+
 				// Restrict app list to apps the user has access to
 				$user_apps = $GLOBALS['egw']->acl->get_user_applications($id);
 				$sel_options['appname'] = array_intersect_key($sel_options['appname'], $user_apps);

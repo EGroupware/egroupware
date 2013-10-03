@@ -84,7 +84,6 @@ class filemanager_hooks
 			}
 			display_sidebox(self::$appname,$title,$file);
 		}
-		if ($GLOBALS['egw_info']['user']['apps']['preferences']) self::preferences(self::$appname);
 		if ($GLOBALS['egw_info']['user']['apps']['admin']) self::admin(self::$appname);
 	}
 
@@ -117,28 +116,6 @@ class filemanager_hooks
 		else
 		{
 			display_sidebox(self::$appname,lang('Admin'),$file);
-		}
-	}
-
-	/**
-	 * Entries for filemanagers's preferences menu
-	 *
-	 * @param string|array $location ='preferences' hook name or params
-	 */
-	static function preferences($location = 'preferences')
-	{
-		if (is_array($location)) $location = $location['location'];
-
-		$file = array(
-			'Preferences' => egw::link('/index.php','menuaction=preferences.uisettings.index&appname='.self::$appname,'preferences'),
-		);
-		if ($location == 'preferences')
-		{
-			display_section(self::$appname,$file);
-		}
-		else
-		{
-			display_sidebox(self::$appname,lang('Preferences'),$file);
 		}
 	}
 

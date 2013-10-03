@@ -40,26 +40,7 @@ class resources_hooks
 			display_sidebox($appname,$title,$file);
 		}
 
-		if ($GLOBALS['egw_info']['user']['apps']['preferences'] && $location != 'admin'
-			&& $GLOBALS['egw_info']['user']['apps']['importexport'])	// Only one preference right now, need this to prevent errors
-		{
-			$file = array(
-				'Preferences'     => egw::link('/index.php','menuaction=preferences.uisettings.index&appname='.$appname,'preferences'),
-			// Categories control access, not regular ACL system
-			//	'Grant Access'    => egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
-			//	'Edit Categories' => egw::link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
-			);
-			if ($location == 'preferences')
-			{
-				display_section($appname,$file);
-			}
-			else
-			{
-				display_sidebox($appname,lang('Preferences'),$file);
-			}
-		}
-
-		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
+		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
 				'Site Configuration' => egw::link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
@@ -225,5 +206,24 @@ class resources_hooks
 			);
 		}
 		return $settings;
+	}
+
+	/**
+	 * Hook to tell framework we use only global categories (return link data in that case and false otherwise)
+	 *
+	 * @param string|array $data hook-data or location
+	 * @return boolean|array
+	 */
+	public static function categories($data)
+	{
+		if ($GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			return array(
+				'menuaction' => 'admin.admin_categories.index',
+				'appname'    => $appname,
+				'global_cats'=> true
+			);
+		}
+		return false;
 	}
 }

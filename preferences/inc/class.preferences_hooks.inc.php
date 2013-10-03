@@ -425,22 +425,6 @@ class preferences_hooks
 	}
 
 	/**
-	 * Hook to return preferences menu items
-	 *
-	 * @param string|array $hook_data
-	 */
-	public static function preferences($hook_data)
-	{
-		if (!$GLOBALS['egw']->acl->check('nopasswordchange',1))
-		{
-			$file['Change your Password'] = $GLOBALS['egw']->link('/index.php','menuaction=preferences.uipassword.change');
-		}
-		$file['common preferences'] = $GLOBALS['egw']->link('/index.php','menuaction=preferences.preferences_settings.index&appname=preferences');
-
-		display_section('preferences',$file);
-	}
-
-	/**
 	 * Hook called when a user gets deleted, to delete his preferences
 	 *
 	 * @param string|array $data

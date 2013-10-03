@@ -27,7 +27,7 @@ $setup_info['resources']['maintainer']	= array(
 	'email' => 'egroupware-developers@lists.sf.net'
 );
 
-$setup_info['resources']['hooks']['preferences']	= 'resources.resources_hooks.admin_prefs_sidebox';
+$setup_info['resources']['hooks']['categories']	= 'resources_hooks::categories';
 $setup_info['resources']['hooks']['admin']		= 'resources.resources_hooks.admin_prefs_sidebox';
 $setup_info['resources']['hooks']['sidebox_menu']	= 'resources.resources_hooks.admin_prefs_sidebox';
 $setup_info['resources']['hooks']['search_link']	= 'resources.resources_hooks.search_link';

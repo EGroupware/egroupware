@@ -205,4 +205,7 @@ $tz_aliases = array(
 	'Mexico Standard Time' => 'America/Mexico_City',
 	'Mexico Standard Time 2' => 'America/Chihuahua',
 	'Mid-Atlantic Standard Time' => 'Atlantic/South_Georgia',
+
+	// for CalDAVTester
+	'US/Eastern' => 'America/New_York',
 );

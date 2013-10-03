@@ -41,7 +41,6 @@ $setup_info['admin']['hooks'] = array(
 	'group_manager' => 'admin.uiaccounts.edit_group_hook',
 	'topmenu_info'
 );
-$setup_info['admin']['hooks']['preferences'] =$setup_info['admin']['name'].'.admin_prefs_sidebox_hooks.all_hooks';
 $setup_info['admin']['hooks']['admin'] =$setup_info['admin']['name'].'.admin_prefs_sidebox_hooks.all_hooks';
 $setup_info['admin']['hooks']['sidebox_menu'] =$setup_info['admin']['name'].'.admin_prefs_sidebox_hooks.all_hooks';
 

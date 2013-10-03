@@ -718,52 +718,6 @@ class mail_hooks
 	}
 
 	/**
-	 * Preferences hook
-	 *
-	 * @param array|string $hook_data
-	 */
-	static function preferences($hook_data)
-	{
-		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
-		// Only Modify the $file and $title variables.....
-		$title = $appname = 'mail';
-		$profileID = 0;
-		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
-			$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
-
-		$mail_bo = mail_bo::getInstance(true,$profileID);
-		$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $mail_bo->profileID;
-		$mailPreferences =& $mail_bo->mailPreferences;
-
-		$file['Preferences'] = egw::link('/index.php','menuaction=preferences.preferences_settings.index&appname=' . $appname,'preferences');
-
-		if($mailPreferences->userDefinedAccounts) {
-			$linkData = array
-			(
-				'menuaction' => 'mail.uipreferences.listAccountData',
-			);
-			$file['Manage eMail Accounts and Identities'] = egw::link('/index.php',$linkData);
-		}
-		if(empty($mailPreferences->preferences['prefpreventmanagefolders']) || $mailPreferences->preferences['prefpreventmanagefolders'] == 0) {
-			$file['Manage Folders'] = egw::link('/index.php','menuaction=mail.uipreferences.listFolder');
-		}
-		if (is_object($mailPreferences))
-		{
-			$icServer = $mailPreferences->getIncomingServer($profileID);
-
-			if($icServer->enableSieve) {
-				if(empty($mailPreferences->preferences['prefpreventeditfilterrules']) || $mailPreferences->preferences['prefpreventeditfilterrules'] == 0)
-					$file['filter rules'] = egw::link('/index.php', 'menuaction=mail.mail_sieve.index');
-				if(empty($mailPreferences->preferences['prefpreventabsentnotice']) || $mailPreferences->preferences['prefpreventabsentnotice'] == 0)
-					$file['vacation notice'] = egw::link('/index.php','menuaction=mail.mail_sieve.editVacation');
-			}
-		}
-
-		//Do not modify below this line
-		display_section($appname,$title,$file);
-	}
-
-	/**
 	 * Sidebox menu hook
 	 *
 	 * @param array|string $hook_data
@@ -848,10 +802,8 @@ class mail_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['preferences'])
 		{
 			#$mailPreferences = ExecMethod('mail.bopreferences.getPreferences');
-			$menu_title = lang('Preferences');
-			$file = array(
-				'Preferences'		=> egw::link('/index.php','menuaction=preferences.preferences_settings.index&appname=mail','preferences'),
-			);
+			$menu_title = lang('Preferences');	// ToDo: remove Preferences sub-menu from sidebox
+			$file = array();
 /*
 			if($preferences->userDefinedAccounts || $preferences->userDefinedIdentities) {
 				$linkData = array (

@@ -29,7 +29,6 @@ $setup_info['importexport']['note'] =
 '';
 
 /* The hooks this app includes, needed for hooks registration */
-$setup_info['importexport']['hooks']['preferences'] =
 $setup_info['importexport']['hooks']['admin'] =
 $setup_info['importexport']['hooks']['sidebox_menu'] = 'importexport_admin_prefs_sidebox_hooks::all_hooks';
 $setup_info['importexport']['hooks']['sidebox_all'] = 'importexport_admin_prefs_sidebox_hooks::other_apps';

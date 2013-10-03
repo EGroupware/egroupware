@@ -25,7 +25,7 @@ class admin_prefs_sidebox_hooks
 	);
 
 	/**
-	 * hooks to build projectmanager's sidebox-menu plus the admin and preferences sections
+	 * hooks to build projectmanager's sidebox-menu
 	 *
 	 * @param string/array $args hook args
 	 */
@@ -52,7 +52,7 @@ class admin_prefs_sidebox_hooks
 			display_sidebox($appname,lang('Admin'),$file);
 			return;
 		}
-		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'admins')
+		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 
 			if (! $GLOBALS['egw']->acl->check('site_config_access',1,'admin'))

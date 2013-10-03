@@ -198,7 +198,7 @@ abstract class egw_framework
 	 * @param string $msg message to show
 	 * @param string $type='success' 'error', 'warning' or 'success' (default)
 	 */
-	function message($msg, $type='success')
+	public static function message($msg, $type='success')
 	{
 		self::$extra['message'] = func_get_args();
 	}
@@ -1010,10 +1010,14 @@ abstract class egw_framework
 		{
 			$this->_add_topmenu_item($apps['home']);
 		}
+
 		if($GLOBALS['egw_info']['user']['apps']['preferences'])
 		{
-			$this->_add_topmenu_item($apps['preferences']);
+			$this->add_preferences_topmenu('prefs');
+			$this->add_preferences_topmenu('acl');
+			$this->add_preferences_topmenu('cats');
 		}
+
 		// allways display password in topmenu, if user has rights to change it
 		if((($pw_app = $GLOBALS['egw_info']['user']['apps']['preferences']) ||
 			($pw_app = $GLOBALS['egw_info']['user']['apps']['password'])) &&
@@ -1025,11 +1029,6 @@ abstract class egw_framework
 				'url'   => egw::link($pw_app['name'] == 'password' ? $pw_app['index'] : '/index.php?menuaction=preferences.uipassword.change'),
 				'icon'  => common::image($pw_app['icon'],$pw_app['icon_app']),
 			));
-		}
-
-		if (($acl = $this->topmenu_acl()))
-		{
-			$this->_add_topmenu_item($acl);
 		}
 
 		if($GLOBALS['egw_info']['user']['apps']['manual'] && isset($apps['manual']))
@@ -1055,29 +1054,50 @@ abstract class egw_framework
 	}
 
 	/**
-	 * Add ACL link to topmenu using acl_rights-hook to know if an app supports acl
+	 * Add preferences link to topmenu using settings-hook to know if an app supports preferences
 	 */
-	function topmenu_acl()
+	protected function add_preferences_topmenu($type='prefs')
 	{
-		if (!$GLOBALS['egw_info']['user']['apps']['preferences'] ||
-			$GLOBALS['egw_info']['server']['deny_acl'] && array_intersect(
-				$GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true),
-				(array)$GLOBALS['egw_info']['server']['deny_acl']))
+		static $memberships;
+		if (!isset($memberships)) $memberships = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true);
+		static $types = array(
+			'prefs' => array(
+				'title' => 'Preferences',
+				'hook'  => 'settings',
+			),
+			'acl' => array(
+				'title' => 'Access',
+				'hook'  => 'acl_rights',
+			),
+			'cats' => array(
+				'title' => 'Categories',
+				'hook' => 'categories',
+				'run_hook' => true,	// acturally run hook, not just look it's implemented
+			),
+		);
+		if (!$GLOBALS['egw_info']['user']['apps']['preferences'] || $GLOBALS['egw_info']['server']['deny_'.$type] &&
+			array_intersect($memberships, (array)$GLOBALS['egw_info']['server']['deny_'.$type]))
 		{
 			return;	// user has no access to preferences app
 		}
-		$apps = $GLOBALS['egw']->hooks->process('acl_rights');
-		foreach($apps as $app => $rights)
+		if (isset($types[$type]['run_hook']))
 		{
-			if (!$rights) unset($apps[$app]);
+			$apps = $GLOBALS['egw']->hooks->process($types[$type]['hook']);
+			// as all apps answer, we need to remove none-true responses
+			foreach($apps as $app => $val)
+			{
+				if (!$val) unset($apps[$app]);
+			}
 		}
-		$apps = array_keys($apps);
-
-		return array(
+		else
+		{
+			$apps = $GLOBALS['egw']->hooks->hook_implemented($types[$type]['hook']);
+		}
+		$this->_add_topmenu_item(array(
 			'name' => 'preferences',
-			'title' => lang('Access'),
-			'url' => 'javascript:egw_preferences("acl", '.json_encode($apps).')',
-		);
+			'title' => lang($types[$type]['title']),
+			'url' => "javascript:egw_preferences('$type',".json_encode($apps).')',
+		));
 	}
 
 	/**

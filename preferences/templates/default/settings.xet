@@ -22,7 +22,6 @@
 		</grid>
 	</template>
 	<template id="preferences.settings" template="" lang="" group="0" version="1.9.001">
-		<description id="msg" class="redItalic"/>
 		<menulist>
 			<menupopup id="type" onchange="1" class="prefType"/>
 		</menulist>
@@ -37,10 +36,6 @@
 				<template id="preferences.settings.tab1" content="tab1"/>
 			</tabpanels>
 		</tabbox>
-		<hbox>
-			<button label="Save" id="button[save]"/>
-			<button label="Apply" id="button[apply]"/>
-			<button label="Cancel" id="button[cancel]"/>
-		</hbox>
+		<button label="Apply" id="button[apply]"/>
 	</template>
 </overlay>

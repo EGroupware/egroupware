@@ -33,7 +33,6 @@ $setup_info['addressbook']['tables']  = array();	// addressbook tables are in th
 
 /* The hooks this app includes, needed for hooks registration */
 $setup_info['addressbook']['hooks']['admin'] = 'addressbook_hooks::all_hooks';
-$setup_info['addressbook']['hooks']['preferences'] = 'addressbook_hooks::all_hooks';
 $setup_info['addressbook']['hooks']['sidebox_menu'] = 'addressbook_hooks::all_hooks';
 $setup_info['addressbook']['hooks']['settings'] = 'addressbook_hooks::settings';
 $setup_info['addressbook']['hooks'][] = 'home';
@@ -47,6 +46,7 @@ $setup_info['addressbook']['hooks']['group_acl'] = 'addressbook_hooks::group_acl
 $setup_info['addressbook']['hooks']['not_enum_group_acls'] = 'addressbook_hooks::not_enum_group_acls';
 $setup_info['addressbook']['hooks']['export_limit'] = 'addressbook_hooks::getAppExportLimit';
 $setup_info['addressbook']['hooks']['acl_rights'] = 'addressbook_hooks::acl_rights';
+$setup_info['addressbook']['hooks']['categories'] = 'addressbook_hooks::categories';
 
 /* Dependencies for this app to work */
 $setup_info['addressbook']['depends'][] = array(

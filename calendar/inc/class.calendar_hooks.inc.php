@@ -144,20 +144,6 @@ class calendar_hooks
 	}
 
 	/**
-	 * Entries for calendar's preferences menu
-	 */
-	static function preferences()
-	{
-		$file = array(
-			'Preferences'     => egw::link('/index.php','menuaction=preferences.uisettings.index&appname=calendar'),
-			'Grant Access'    => egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=calendar'),
-			'Edit Categories' => egw::link('/index.php','menuaction=preferences.preferences_categories_ui.index&cats_app=calendar&cats_level=True&global_cats=True'),
-			'Import CSV-File' => egw::link('/calendar/csv_import.php'),
-		);
-		display_section('calendar','calendar',$file);
-	}
-
-	/**
 	 * Calendar preferences
 	 *
 	 * @param array $hook_data
@@ -736,6 +722,17 @@ class calendar_hooks
 			unset($rights[acl::CUSTOM3]);
 		}
 		return $rights;
+	}
+
+	/**
+	 * Hook to tell framework we use standard categories method
+	 *
+	 * @param string|array $data hook-data or location
+	 * @return boolean
+	 */
+	public static function categories($data)
+	{
+		return true;
 	}
 }
 

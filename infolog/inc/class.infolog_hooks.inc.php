@@ -103,24 +103,7 @@ class infolog_hooks
 			display_sidebox($appname,$GLOBALS['egw_info']['apps']['infolog']['title'].' '.lang('Menu'),$file);
 		}
 
-		if ($GLOBALS['egw_info']['user']['apps']['preferences'] && $location != 'admin')
-		{
-			$file = array(
-				'Preferences'     => egw::link('/index.php','menuaction=preferences.uisettings.index&appname='.$appname,'preferences'),
-				'Grant Access'    => egw::link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
-				'Edit Categories' => egw::link('/index.php','menuaction=preferences.preferences_categories_ui.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
-			);
-			if ($location == 'preferences')
-			{
-				display_section($appname,$file);
-			}
-			else
-			{
-				display_sidebox($appname,lang('Preferences'),$file);
-			}
-		}
-
-		if ($GLOBALS['egw_info']['user']['apps']['admin'] && $location != 'preferences')
+		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 			$file = Array(
 				'Site configuration' => egw::link('/index.php',array(
@@ -571,5 +554,16 @@ class infolog_hooks
 			acl::DELETE  => 'delete',
 			acl::PRIVAT  => 'private',
 		);
+	}
+
+	/**
+	 * Hook to tell framework we use standard categories method
+	 *
+	 * @param string|array $data hook-data or location
+	 * @return boolean
+	 */
+	public static function categories($data)
+	{
+		return true;
 	}
 }

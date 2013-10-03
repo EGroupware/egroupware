@@ -45,12 +45,12 @@ $setup_info['infolog']['note'] =
 	<a href="http://www.egroupware.org/wiki/infolog" target="_blank">InfoLog page on our Website</a>.</p>';
 
 /* The hooks this app includes, needed for hooks registration */
-$setup_info['infolog']['hooks']['preferences'] = 'infolog_hooks::all_hooks';
 $setup_info['infolog']['hooks']['settings'] = 'infolog_hooks::settings';
 $setup_info['infolog']['hooks']['verify_settings'] = 'infolog_hooks::verify_settings';
 $setup_info['infolog']['hooks']['admin'] = 'infolog_hooks::all_hooks';
 $setup_info['infolog']['hooks']['not_enum_group_acls'] = 'infolog_hooks::not_enum_group_acls';
 $setup_info['infolog']['hooks']['acl_rights'] = 'infolog_hooks::acl_rights';
+$setup_info['infolog']['hooks']['categories'] = 'infolog_hooks::categories';
 $setup_info['infolog']['hooks']['deleteaccount'] = 'infolog.infolog_so.change_delete_owner';
 $setup_info['infolog']['hooks'][] = 'home';
 $setup_info['infolog']['hooks']['addressbook_view'] = 'infolog.infolog_ui.hook_view';
