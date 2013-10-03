@@ -52,7 +52,7 @@
  *	callback - function called when the dialog closes, or false/null.
  *		The ID of the button will be passed.  Button ID will be one of the et2_dialog.*_BUTTON constants.
  *		The callback is _not_ called if the user closes the dialog with the X in the corner, or presses ESC.
- * 	message - text to display
+ * 	message - (plain) text to display
  *	title - Dialog title
  *	value (for prompt)
  *	buttons - et2_dialog BUTTONS_* constant, or an array of button settings
@@ -102,7 +102,7 @@ var et2_dialog = et2_widget.extend({
 		message: {
 			name: "Message",
 			type: "string",
-			description: "Dialog message",
+			description: "Dialog message (plain text, no html)",
 			"default": "Somebody forgot to set this...",
 		},
 		dialog_type: {
@@ -126,7 +126,7 @@ var et2_dialog = et2_widget.extend({
 		title: {
 			name: "Title",
 			type: "string",
-			description: "Title for the dialog box",
+			description: "Title for the dialog box (plain text, no html)",
 			"default": ""
 		},
 		modal: {
@@ -160,15 +160,15 @@ var et2_dialog = et2_widget.extend({
 	 */
 	_dialog_types: [
 		//PLAIN_MESSAGE: 0
-		{icon: ""},
+		"",
 		//INFORMATION_MESSAGE: 1,
-		{icon: egw.image("dialog_info")},
+		"dialog_info",
 		//QUESTION_MESSAGE: 2,
-		{icon: egw.image("dialog_help")},
+		"dialog_help",
 		//WARNING_MESSAGE: 3,
-		{icon: egw.image("dialog_warning")},
+		"dialog_warning",
 		//ERROR_MESSAGE: 4,
-		{icon: egw.image("dialog_error")},
+		"dialog_error",
 	],
 
 	_buttons: [
@@ -282,8 +282,7 @@ var et2_dialog = et2_widget.extend({
 
 		this.div.empty()
 			.append("<img class='dialog_icon' />")
-			.append(message);
-		
+			.append($j('<div/>').text(message));
 	},
 
 	/**
@@ -292,12 +291,11 @@ var et2_dialog = et2_widget.extend({
 	 * @param integer Type constant from et2_dialog
 	 */
 	set_dialog_type: function(type) {
-		if(this.options.dialog_type != type && typeof this._dialog_types[type] == "object")
+		if(this.options.dialog_type != type && typeof this._dialog_types[type] == "string")
 		{
 			this.options.dialog_type = type;
 		}
-		var type_info = this._dialog_types[type];
-		this.set_icon(type_info.icon);
+		this.set_icon(this._dialog_types[type] ? egw.image(this._dialog_types[type]) : "");
 	},
 
 	/**
@@ -496,6 +494,5 @@ jQuery.extend(et2_dialog,
 			template: egw.webserverUrl+'/etemplate/templates/default/prompt.xet',
 			class: "et2_prompt"
 		});
-		
 	}
 });

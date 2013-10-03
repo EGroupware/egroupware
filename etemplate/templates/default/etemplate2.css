@@ -1199,6 +1199,10 @@ div.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button {
 	float: left;
 	margin-right: 1em;
 }
+div.ui-dialog .ui-dialog-content div {
+	white-space: pre-wrap;
+	display: inline-block;
+}
 .et2_prompt #message {
 	white-space: pre-wrap;
 	padding-bottom: 10px;

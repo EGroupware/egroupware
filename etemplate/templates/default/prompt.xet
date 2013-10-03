@@ -5,7 +5,7 @@
 		<hbox class="et2_prompt">
 			<image src="dialog_help" class="dialog_icon"/>
 			<vbox class="ui-dialog-content">
-				<html id="message"/>
+				<label id="message"/>
 				<textbox id="value"/>
 			</vbox>
 		</hbox>
