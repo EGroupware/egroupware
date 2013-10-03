@@ -468,7 +468,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		{
 			return selected;
 		}
-		return {ids:[],inverted:false};
+		return {ids:[],all:false};
 	},
 
 	/**

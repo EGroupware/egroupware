@@ -46,10 +46,6 @@ function nm_action(_action, _senders, _target, _ids)
 		}
 	}
 
-	// ----------------------
-	// TODO: Parse the _ids.inverted flag!
-	// ----------------------
-
 	// Translate the internal uids back to server uids
 	var idsArr = _ids.ids;
 	for (var i = 0; i < idsArr.length; i++)
@@ -68,23 +64,6 @@ function nm_action(_action, _senders, _target, _ids)
 	//console.log(_action); console.log(_senders);
 
 	var mgr = _action.getManager();
-
-	var select_all = mgr.getActionById("select_all");
-	var confirm_msg = (idsArr.length > 1 || select_all && select_all.checked) &&
-		typeof _action.data.confirm_multiple != 'undefined' ?
-			_action.data.confirm_multiple : _action.data.confirm;
-
-	// let user confirm the action first (if not select_all set and nm_action == 'submit'  --> confirmed later)
-	if (!(select_all && select_all.checked && _action.data.nm_action == 'submit') &&
-		typeof _action.data.confirm != 'undefined')
-	{
-		if (!confirm(confirm_msg)) return;
-	}
-	// in case we only need to confirm multiple selected (only _action.data.confirm_multiple)
-	else if (typeof _action.data.confirm_multiple != 'undefined' &&  (idsArr.length > 1 || select_all && select_all.checked))
-	{
-		if (!confirm(_action.data.confirm_multiple)) return;
-	}
 
 	var url = '#';
 	if (typeof _action.data.url != 'undefined')
@@ -140,11 +119,6 @@ function nm_action(_action, _senders, _target, _ids)
 			}
 			// fall through, if popup is open --> submit form
 		case 'submit':
-			// let user confirm select-all
-			if (select_all && select_all.checked)
-			{
-				if (!confirm((confirm_msg ? confirm_msg : _action.caption.replace(/^(&nbsp;| |	)+/,''))+"\n\n"+select_all.hint)) return;
-			}
 			var checkboxes = mgr.getActionsByAttr("checkbox", true);
 			var checkboxes_elem = document.getElementById(mgr.etemplate_var_prefix+'[nm][checkboxes]');
 			if (checkboxes && checkboxes_elem)
@@ -164,6 +138,7 @@ function nm_action(_action, _senders, _target, _ids)
 				var value = nextmatch.getValue();
 				jQuery.extend(value, this.activeFilters, {
 					"selected": idsArr,
+					"select_all": _ids.all,
 					"checkboxes": checkboxes_elem ? checkboxes_elem.value : null
 				});
 				value[nextmatch.options.settings.action_var]= _action.id;

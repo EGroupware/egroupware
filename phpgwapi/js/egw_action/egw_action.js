@@ -367,9 +367,6 @@ egwAction.prototype.updateActions = function(_actions, _app)
 					}
 				}
 
-				if (typeof elem.confirm != "undefined") elem.confirm = egw.lang(elem.confirm);
-				if (typeof elem.confirm_multiple != "undefined") elem.confirm_multiple = egw.lang(elem.confirm_multiple);
-				
 				// set certain enabled functions (if enabled is on it's default of true)
 				if (elem.enabled === true)
 				{
@@ -512,6 +509,17 @@ egwAction.prototype.execute = function(_senders, _target)
 	if (this.data && this.data.confirm && this.onExecute.fcnt != window.nm_action && 
 		typeof et2_dialog != 'undefined')	// let old eTemplate run it's own confirmation from nextmatch_action.js
 	{
+		var msg = this.data.confirm;
+		if (_senders.length > 1)
+		{
+			if (this.data.confirm_multiple) msg = this.data.confirm_multiple;
+			// check if we have all rows selected
+			var obj_manager = egw_getObjectManager(this.getManager().parent.id, false);
+			if (obj_manager && obj_manager.getAllSelected())
+			{
+				msg += "\n\n"+egw().lang('Attention: action will be applied to all rows, not only visible ones!');
+			}
+		}
 		var self = this;
 		et2_dialog.show_dialog(function(_button)
 		{
@@ -519,7 +527,7 @@ egwAction.prototype.execute = function(_senders, _target)
 			{
 				return self.onExecute.exec(self, _senders, _target);
 			}
-		}, self.data.confirm, self.data.hint, {}, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
+		}, msg, self.data.hint, {}, et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
 		return;
 	}
 	return this.onExecute.exec(this, _senders, _target);

@@ -225,8 +225,11 @@ var et2_dataview_selectionManager = Class.extend(
 		}
 
 		// Return an array containing those ids
+		// RB: we are currently NOT using "inverted" (selectAll is not bound/called), 
+		// but an all attribute comming from objectManager, if Ctrl-A was pressed and nothing deselected later
 		return {
-			"inverted": this._invertSelection,
+			//"inverted": this._invertSelection,
+			"all": this._actionObjectManager.getAllSelected(),
 			"ids": ids
 		};
 	},
