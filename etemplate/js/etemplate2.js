@@ -620,6 +620,12 @@ function etemplate2_handle_load(_type, _response)
 		}
 	}
 
+	// handle egw_framework::message()
+	if (jQuery.isArray(data['message']))
+	{
+		window.egw_message.apply(window, data['message']);
+	}
+
 	// handle egw_framework::window_close(), this will terminate execution
 	if (data['window-close'])
 	{
