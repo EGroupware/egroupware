@@ -307,6 +307,15 @@ var et2_dataview_columns = Class.extend({
 			var col = this.columns[i];
 			if (col.visibility != ET2_COL_VISIBILITY_INVISIBLE)
 			{
+				// Some bounds sanity checking
+				if(col.fixedWidth > tw || col.fixedWidth < 0)
+				{
+					col.fixedWidth = false;
+				}
+				else if (col.relativeWidth > 1 || col.relativeWidth < 0)
+				{
+					col.relativeWidth = false;
+				}
 				if (col.relativeWidth)
 				{
 					remRelWidth -= col.relativeWidth;
@@ -377,6 +386,7 @@ var et2_dataview_columns = Class.extend({
 		} while (!done);
 
 		// Now calculate the absolute width of the columns in pixels
+		var usedTotal = 0;
 		this.columnWidths = [];
 		for (var i = 0; i < this.columns.length; i++)
 		{
@@ -407,6 +417,46 @@ var et2_dataview_columns = Class.extend({
 				}
 			}
 			this.columnWidths.push(w);
+			usedTotal += w;
+		}
+		
+		// Deal with any accumulated rounding errors
+		if(usedTotal != tw)
+		{
+		    var column, columnIndex;
+			var remaining_width = (usedTotal - tw);
+		    
+			// Pick the first relative column and use it
+			for(columnIndex = 0; columnIndex < this.columns.length; columnIndex++)
+			{
+				if(this.columns[columnIndex].visibility == ET2_COL_VISIBILITY_INVISIBLE) continue;
+
+				var col = this.columns[columnIndex];
+				if(col.relativeWidth || !col.fixedWidth)
+				{
+					column = col;
+					break;
+				}
+				else if (!col.fixedWidth)
+				{
+					column = col;
+				}
+			}
+			if(!column)
+			{
+				// No relative width columns, distribute proportionatly over all
+				for(var i = 0; i < this.columns.length; i++)
+				{
+					var col = this.columns[i];
+					col.fixedWidth -= Math.round(this.columnWidths[i] / tw * remaining_width)
+					this.columnWidths[i] = Math.max(0, Math.min(col.fixedWidth,tw));
+				}
+			}
+			else
+			{
+				this.columnWidths[columnIndex] -= remaining_width;
+				column.set_width(column.relativeWidth ? (this.columnWidths[columnIndex] / self.totalWidth * 100) + "%" : this.columnWidths[columnIndex] + "px");
+			}
 		}
 	}
 
