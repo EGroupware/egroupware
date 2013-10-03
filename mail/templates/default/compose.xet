@@ -9,7 +9,7 @@
 				<taglist-email id="SENDER" width="88%" allowFreeEntries="false" maxSelection="1" autocomplete_url="mail.mail_compose.ajax_searchIdentities" onclick="app.mail.address_click"/>
 			</hbox>
 			<hbox>
-				<button label="Send" id="button[send]"/> <buttononly value="saveAsDraft" id="saveAsDraft" image="fileexport" onclick="app.mail.saveAsDraft"/>
+				<button label="Send" id="button[send]"/> <buttononly value="saveAsDraft" id="button[saveAsDraft]" image="fileexport" onclick="app.mail.saveAsDraft"/>
 				<vfs-select id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose"/>
 				<file statustext="Select file to attach to message" multiple='true' progress='mailUploadProgress' onFinish="app.mail.uploadForCompose" id="uploadForCompose" drop_target ="mailUploadSection"/>
 			</hbox>

@@ -1186,7 +1186,7 @@ unset($query['actions']);
 	{
 		$res = explode(self::$delimiter,$_rowID);
 		// as a rowID is perceeded by app::, should be mail!
-		//error_log(__METHOD__.__LINE__.array2string($res).' [0] isInt:'.is_int($res[0]).' [0] isNumeric:'.is_numeric($res[0]).' [0] isString:'.is_string($res[0]));
+		//error_log(__METHOD__.__LINE__.array2string($res).' [0] isInt:'.is_int($res[0]).' [0] isNumeric:'.is_numeric($res[0]).' [0] isString:'.is_string($res[0]).' Count:'.count($res));
 		if (count($res)==4 && is_numeric($res[0]) )
 		{
 			// we have an own created rowID; prepend app=mail
@@ -1357,6 +1357,7 @@ unset($query['actions']);
 					$image = html::image('mail','attach');
 					$imageTag = '';
 					$imageHTMLBlock = '';
+					$datarowid = $this->createRowID($_folderName,$message_uid,true);
 					if (//$header['mimetype'] != 'multipart/mixed' &&
 						$header['mimetype'] != 'multipart/signed'
 					)
@@ -1373,14 +1374,14 @@ unset($query['actions']);
 						}
 						if (count($attachments)==1)
 						{
-							$imageHTMLBlock = self::createAttachmentBlock($attachments, $data['row_id'], $header['uid'], $_folder);
+							$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folder);
 							$imageTag = json_encode($attachments);
 							$image = html::image('mail','attach',$attachments[0]['name'].(!empty($attachments[0]['mimeType'])?' ('.$attachments[0]['mimeType'].')':''));
 						}
 					}
 					if (count($attachments)>1)
 					{
-						$imageHTMLBlock = self::createAttachmentBlock($attachments, $data['row_id'], $header['uid'], $_folder);
+						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folder);
 						$imageTag = json_encode($attachments);
 						$image = html::image('mail','attach',lang('%1 attachments',count($attachments)));
 					}
@@ -2224,7 +2225,8 @@ unset($query['actions']);
 			$hA = self::splitRowID($lId);
 			$uid = $hA['msgUID'];
 			$mailbox = $hA['folder'];
-			if ($mb != $mailbox) $this->mail_bo->reopen($mb = $mailbox);
+			//error_log(__METHOD__.__LINE__.array2string($hA));
+			$this->mail_bo->reopen($mailbox);
 			$attachment = $this->mail_bo->getAttachment($uid,$part,$is_winmail);
 
 			if (!($fp = egw_vfs::fopen($file=$path.($name ? '/'.$name : ''),'wb')) ||

@@ -278,7 +278,7 @@ class mail_compose
 	function compose(array $_content=null,$msg=null, $_focusElement='to',$suppressSigOnTop=false, $isReply=false)
 	{
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
-		error_log(__METHOD__.__LINE__.array2string($_content));
+		error_log(__METHOD__.__LINE__.array2string($_content).function_backtrace());
 
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
 		// VFS Selector was used
@@ -333,9 +333,41 @@ class mail_compose
 			}
 		}
 $CAtFStart = array2string($_content);
+		// someone clicked something like send, or saveAsDraft
+		if ($_content['button']['send'])
+		{
+			$sendOK = true;
+			try
+			{
+			}
+			catch (egw_exception_wrong_userinput $e)
+			{
+				$sendOK = false;
+			}
+			if ($sendOK)
+			{
+				egw_framework::refresh_opener(lang('Message send successfully.'),'mail');
+				egw_framework::window_close();
+			}
+		}
+		if ($_content['button']['saveAsDraft'])
+		{
+			$savedOK = true;
+			try
+			{
+			}
+			catch (egw_exception_wrong_userinput $e)
+			{
+				$savedOK = false;
+			}
+			if ($savedOK)
+			{
+				egw_framework::message(lang('Message saved successfully.'),'mail');
+			}
+		}
 		// all values are empty for a new compose window
 		$insertSigOnTop = false;
-		$content = array();
+		$content = (is_array($_content)?$_content:array());
 		$alwaysAttachVCardAtCompose = false; // we use this to eliminate double attachments, if users VCard is already present/attached
 		if ( isset($GLOBALS['egw_info']['apps']['stylite']) && (isset($this->preferencesArray['attachVCardAtCompose']) &&
 			$this->preferencesArray['attachVCardAtCompose']))
@@ -991,27 +1023,27 @@ $CAtFStart = array2string($_content);
 
 			if (!empty($content['FOLDER'])) $sel_options['FOLDER']=$this->ajax_searchFolder(0,true);
 			$content['SENDER'] = (empty($content['SENDER'])?($selectedSender?(array)$selectedSender:''):$content['SENDER']);
-			$content['is_html'] = ($this->content['mimeType'] == 'html'?true:'');
-			$content['is_plain'] = ($this->content['mimeType'] == 'html'?'':true);
-$content['mail_'.($this->content['mimeType'] == 'html'?'html':'plain').'text'] =$CAtFStart.$content['mail_'.($this->content['mimeType'] == 'html'?'html':'plain').'text'];
+			$content['is_html'] = ($content['mimeType'] == 'html'?true:'');
+			$content['is_plain'] = ($content['mimeType'] == 'html'?'':true);
+			$content['mail_'.($content['mimeType'] == 'html'?'html':'plain').'text'] =($content['body']?$content['body']:$content['mail_'.($this->content['mimeType'] == 'html'?'html':'plain').'text']);
 		}
 		else
 		{
-			$content['is_html'] = ($this->content['mimeType'] == 'html'?true:'');
-			$content['is_plain'] = ($this->content['mimeType'] == 'html'?'':true);
+			$content['is_html'] = ($content['mimeType'] == 'html'?true:'');
+			$content['is_plain'] = ($content['mimeType'] == 'html'?'':true);
 			//error_log(__METHOD__.__LINE__.array2string(array($sel_options['SENDER'],$selectedSender)));
 			$content['SENDER'] = ($selectedSender?(array)$selectedSender:'');
 			//error_log(__METHOD__.__LINE__.$content['body']);
-			$content['mail_'.($this->content['mimeType'] == 'html'?'html':'plain').'text'] = $content['body'];
+			$content['mail_'.($content['mimeType'] == 'html'?'html':'plain').'text'] = $content['body'];
 		}
 		$content['showtempname']=0;
-error_log(__METHOD__.__LINE__.array2string($content['attachments']));
+if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.'before merging content with uploadforCompose:'.array2string($content['attachments']));
 		$content['attachments']=(is_array($content['attachments'])&&is_array($content['uploadForCompose'])?array_merge($content['attachments'],(!empty($content['uploadForCompose'])?$content['uploadForCompose']:array())):(is_array($content['uploadForCompose'])?$content['uploadForCompose']:(is_array($content['attachments'])?$content['attachments']:null)));
 		//if (is_array($content['attachments'])) foreach($content['attachments'] as $k => &$file) $file['delete['.$file['tmp_name'].']']=0;
 		$content['no_griddata'] = empty($content['attachments']);
 		$preserv['attachments'] = $content['attachments'];
 
-error_log(__METHOD__.__LINE__.array2string($content['attachments']));
+if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachments:'.array2string($content['attachments']));
 		$preserv['is_html'] = $content['is_html'];
 		$preserv['is_plain'] = $content['is_plain'];
 		$etpl = new etemplate_new('mail.compose');
@@ -1043,9 +1075,11 @@ error_log(__METHOD__.__LINE__.array2string($content['attachments']));
 	}
 
 	function composeFromDraft() {
-		$icServer = (int)$_GET['icServer'];
-		$folder = (isset($_GET['folder'])?base64_decode($_GET['folder']):base64_decode($_GET['mailbox']));
 		$replyID = $_GET['uid'];
+		$hA = mail_ui::splitRowID($replyID);
+		$replyID = $hA['msgUID'];
+		$folder = $hA['folder'];
+		$icServer = $hA['profileID'];
 
 		if (!empty($folder) && !empty($replyID) ) {
 			// this fill the session data with the values from the original email
@@ -1055,10 +1089,12 @@ error_log(__METHOD__.__LINE__.array2string($content['attachments']));
 	}
 
 	function forward() {
-		$icServer = (int)$_GET['icServer'];
-		$folder = base64_decode($_GET['folder']);
 		$replyID = $_GET['reply_id'];
 		$partID  = $_GET['part_id'];
+		$hA = mail_ui::splitRowID($replyID);
+		$replyID = $hA['msgUID'];
+		$folder = $hA['folder'];
+		$icServer = $hA['profileID'];
 		$mode = false;
 		if (isset($_GET['mode']) && ($_GET['mode']=='forwardasattach'||$_GET['mode']=='forwardinline')) $mode  = ($_GET['mode']=='forwardinline'?'inline':'asattach');
 		if (!empty($replyID))
@@ -1139,10 +1175,12 @@ error_log(__METHOD__.__LINE__.array2string($content['attachments']));
 	}
 
 	function composeAsNew() {
-		$icServer = (int)$_GET['icServer'];
-		$folder = (isset($_GET['folder'])?base64_decode($_GET['folder']):base64_decode($_GET['mailbox']));
 		$replyID = $_GET['reply_id'];
 		$partID  = $_GET['part_id'];
+		$hA = mail_ui::splitRowID($replyID);
+		$replyID = $hA['msgUID'];
+		$folder = $hA['folder'];
+		$icServer = $hA['profileID'];
 		if (!empty($folder) && !empty($replyID) ) {
 			// this fill the session data with the values from the original email
 			$content = $this->getDraftData($icServer, $folder, $replyID, $partID);
@@ -1151,10 +1189,12 @@ error_log(__METHOD__.__LINE__.array2string($content['attachments']));
 	}
 
 	function reply() {
-		$icServer = (int)$_GET['icServer'];
-		$folder = base64_decode($_GET['folder']);
 		$replyID = $_GET['reply_id'];
 		$partID	 = $_GET['part_id'];
+		$hA = mail_ui::splitRowID($replyID);
+		$replyID = $hA['msgUID'];
+		$folder = $hA['folder'];
+		$icServer = $hA['profileID'];
 		if (!empty($folder) && !empty($replyID) ) {
 			// this fill the session data with the values from the original email
 			$content = $this->getReplyData('single', $icServer, $folder, $replyID, $partID);
@@ -1163,10 +1203,12 @@ error_log(__METHOD__.__LINE__.array2string($content['attachments']));
 	}
 
 	function replyAll() {
-		$icServer = (int)$_GET['icServer'];
-		$folder = base64_decode($_GET['folder']);
 		$replyID = $_GET['reply_id'];
 		$partID	 = $_GET['part_id'];
+		$hA = mail_ui::splitRowID($replyID);
+		$replyID = $hA['msgUID'];
+		$folder = $hA['folder'];
+		$icServer = $hA['profileID'];
 		if (!empty($folder) && !empty($replyID) ) {
 			// this fill the session data with the values from the original email
 			$content = $this->getReplyData('all', $icServer, $folder, $replyID, $partID);
@@ -1716,6 +1758,7 @@ error_log(__METHOD__.__LINE__.array2string($content['attachments']));
 		}
 
 		$mail_bo->closeConnection();
+		return $this->sessionData;
 
 	}
 
