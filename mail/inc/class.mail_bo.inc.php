@@ -702,6 +702,33 @@ class mail_bo
 	}
 
 	/**
+	 * getQuotaRoot
+	 * return the qouta of the users INBOX
+	 *
+	 * @return mixed array/boolean
+	 */
+	function getQuotaRoot()
+	{
+		static $quota;
+		if (isset($quota)) return $quota;
+		if(!$this->icServer->hasCapability('QUOTA')) {
+			$quota = false;
+			return false;
+		}
+		$quota = $this->icServer->getStorageQuotaRoot('INBOX');
+		//error_log(__METHOD__.__LINE__.array2string($quota));
+		if(is_array($quota)) {
+			$quota = array(
+				'usage'	=> $quota['USED'],
+				'limit'	=> $quota['QMAX'],
+			);
+		} else {
+			$quota = false;
+		}
+		return $quota;
+	}
+
+	/**
 	 * getTimeOut
 	 *
 	 * @param string _use decide if the use is for IMAP or SIEVE, by now only the default differs

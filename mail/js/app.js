@@ -1184,58 +1184,6 @@ app.mail = AppJS.extend(
 		}
 	},
 
-	import_displayVfsSelector: function(_ref) {
-		//var ref = this.et2.getWidgetById(_ref);
-		//console.log(ref);
-		cInst= this.et2.getInstanceManager();
-		console.log(cInst);
-        this.mail_fileSelectorWindow = egw().open_link(egw.link('/index.php', {
-				menuaction: 'filemanager.filemanager_select.select',
-				mode: (_ref=='import'?'open':'open-multiple'),
-				method: (_ref=='import'?'mail.mail_ui.setImportMessageFromVFS':'mail.mail_compose.attachFromVFS'),
-				id: _ref,//represents the target where to import to
-        }), 'mail_'+(_ref=='import'?'import':'compose')+'_vfsSelector', '640x580');
-	},
-
-	import_closeVfsSelector: function(_ref) {
-		// names used here to access the popupwindows must be available, else it fails
-		// names used here are assigned in app.mail.import_displayVfsSelector and class.mail_hooks.inc.php
-		this.mail_fileSelectorWindow = window.open('','mail_import_vfsSelector');
-		importMessageDialog = window.open('','importMessageDialog');
-		var vfsfile = importMessageDialog.app.mail.et2.getWidgetById('vfsfile');
-		//console.log(vfsfile);
-		vfsfile.input[0].value=_ref;
-		var folder = importMessageDialog.app.mail.et2.getWidgetById('FOLDER');
-		//console.log(vfsfile.input[0].value,folder.value[0]);
-		importMessageDialog = egw().open_link(egw.link('/index.php', {
-				menuaction: 'mail.mail_ui.importMessage',
-				file: vfsfile.input[0].value,
-				folder: folder.value[0]
-		}), 'importMessageDialog', '640x580');
-		this.mail_fileSelectorWindow.close();
-		importMessageDialog.focus();
-		//vfsfile._parent._parent._parent.parentNode.et2_obj.submit();
-	},
-
-	compose_closeVfsSelector: function(_ref) {
-		// names used here to access the popupwindows must be available, else it fails
-		// names used here are assigned in app.mail.import_displayVfsSelector and class.mail_hooks.inc.php
-		this.mail_fileSelectorWindow = window.open('','mail_compose_vfsSelector');
-		this.mail_fileSelectorWindow.close();
-
-		var vfsfile = this.et2.getWidgetById('vfsfile');
-		console.log(vfsfile);
-		console.log(_ref);
-		//vfsfile.input[0].value=_ref;
-		//console.log(vfsfile.input[0].value,folder.value[0]);
-		//composeMessageDialog = egw().open_link(egw.link('/index.php', {
-		//		menuaction: 'mail.mail_compose.compose',
-		//		file: vfsfile.input[0].value
-		//}), 'importMessageDialog', '640x580');
-		//composeMessageDialog.focus();
-		//vfsfile._parent._parent._parent.parentNode.et2_obj.submit();
-	},
-
 	/**
 	 * Send names of uploaded files (again) to server, to process them: either copy to vfs or ask overwrite/rename
 	 * 
@@ -1284,6 +1232,14 @@ app.mail = AppJS.extend(
 //			var request = new egw_json_request('mail_ui::ajax_importMessage', ['upload', widget.getValue(), _path], this);
 //			widget.set_value('');
 //			request.sendRequest();//false, this._upload_callback, this);
+			this.et2_obj.submit();
+		}
+	},
+
+	vfsUploadForImport: function(_egw, _widget, _window) {
+		console.log(_egw, _widget, _window);
+		if (!jQuery.isEmptyObject(_widget.getValue()))
+		{
 			this.et2_obj.submit();
 		}
 	},

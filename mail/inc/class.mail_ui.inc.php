@@ -222,6 +222,21 @@ class mail_ui
 		$content[self::$nm_index]['foldertree'] = '/INBOX/sub';
 		*/
 
+		if($this->mail_bo->connectionStatus !== false) {
+			$quota = $this->mail_bo->getQuotaRoot();
+		} else {
+			$quota['limit'] = 'NOT SET';
+		}
+
+		if($quota !== false && $quota['limit'] != 'NOT SET') {
+			$quotainfo = $this->quotaDisplay($quota['usage'], $quota['limit']);
+			$content[self::$nm_index]['quota'] = $sel_options[self::$nm_index]['quota'] = $quotainfo['text'];
+			$content[self::$nm_index]['quotainpercent'] = $sel_options[self::$nm_index]['quotainpercent'] =  (string)$quotainfo['percent'];
+			$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = $quotainfo['class'];
+		} else {
+			$content[self::$nm_index]['quota'] = $sel_options[self::$nm_index]['quota'] = lang("Quota not provided by server");
+		}
+
 		$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree(false);
 
 		//$sessionFolder = $this->mail_bo->sessionData['maibox'];// already set and tested this earlier
@@ -1066,6 +1081,7 @@ unset($query['actions']);
 		//save selected Folder to sessionData (mailbox)->currentFolder
 		if (isset($query['selectedFolder'])) $this->mail_bo->sessionData['maibox']=$_folderName;
 		$this->mail_bo->saveSessionData();
+
 		$rowsFetched['messages'] = null;
 		$offset = $query['start']+1; // we always start with 1
 		$maxMessages = $query['num_rows'];
@@ -1839,6 +1855,11 @@ unset($query['actions']);
 		return $attachmentHTMLBlock;
 	}
 
+	/**
+	 * emailAddressToHTML
+	 *
+	 *
+	 */
 	static function emailAddressToHTML($_emailAddress, $_organisation='', $allwaysShowMailAddress=false, $showAddToAdrdessbookLink=true, $decode=true) {
 		//_debug_array($_emailAddress);
 		// create some nice formated HTML for senderaddress
@@ -1967,6 +1988,47 @@ unset($query['actions']);
 
 		// if something goes wrong, just return the original address
 		return $_emailAddress;
+	}
+
+	/**
+	 * display image
+	 *
+	 *
+	 */
+	function quotaDisplay($_usage, $_limit)
+	{
+
+		if($_limit == 0) {
+			$quotaPercent=100;
+		} else {
+			$quotaPercent=round(($_usage*100)/$_limit);
+		}
+
+		$quotaLimit=mail_bo::show_readable_size($_limit*1024);
+		$quotaUsage=mail_bo::show_readable_size($_usage*1024);
+
+
+		if($quotaPercent > 90 && $_limit>0) {
+			$quotaBG='mail-index_QuotaRed';
+		} elseif($quotaPercent > 80 && $_limit>0) {
+			$quotaBG='mail-index_QuotaYellow';
+		} else {
+			$quotaBG='mail-index_QuotaGreen';
+		}
+
+		if($_limit > 0) {
+			$quotaText = $quotaUsage .'/'.$quotaLimit;
+		} else {
+			$quotaText = $quotaUsage;
+		}
+
+		if($quotaPercent > 50) {
+		} else {
+		}
+		$quota['class'] = $quotaBG;
+		$quota['text'] = $quotaText;
+		$quota['percent'] = (string)($_usage/$_limit*100);
+		return $quota;
 	}
 
 	/**
@@ -2706,11 +2768,6 @@ blockquote[type=cite] {
 			$imageURL = $cache[$imageURL];
 		}
 		return 'background="'.$imageURL.'"';
-	}
-
-	function setImportMessageFromVFS($target, $path=null)
-	{
-		return "opener.app.mail.import_closeVfsSelector('$path');";
 	}
 
 	/**

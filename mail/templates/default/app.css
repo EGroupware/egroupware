@@ -283,6 +283,32 @@ pre {
 	white-space: nowrap;
 	overflow: hidden;
 }
+#mail-index {
+	position: relative
+}
+.mail-index_quotabox {
+	position: absolute;
+	top:8px;
+	right:74px;
+	width:200px !important;
+	z-index:99;
+}
+.mail-index_QuotaGreen, .mail-index_QuotaYellow, .mail-index_QuotaRed {
+	height:12px !important;
+	width:100px !important;
+}
+.mail-index_QuotaGreen > div {
+	background-color: green !important;
+	height:11px !important;
+}
+.mail-index_QuotaYellow > div {
+	background-color: yellow !important;
+	height:11px !important;
+}
+.mail-index_QuotaRed > div {
+	background-color: red !important;
+	height:11px !important;
+}
 /*
  influence the tree display and scrolling behavior
 */

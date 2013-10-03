@@ -284,6 +284,7 @@ class mail_compose
 		// VFS Selector was used
 		if (is_array($_content['selectFromVFSForCompose']))
 		{
+			$suppressSigOnTop = true;
 			foreach ($_content['selectFromVFSForCompose'] as $i => $path)
 			{
 				$_content['uploadForCompose'][] = array(
@@ -298,6 +299,7 @@ class mail_compose
 		// check everything that was uploaded
 		if (is_array($_content['uploadForCompose']))
 		{
+			$suppressSigOnTop = true;
 			foreach ($_content['uploadForCompose'] as $i => &$upload)
 			{
 				if (!isset($upload['file'])) $upload['file'] = $upload['tmp_name'];
@@ -318,6 +320,7 @@ class mail_compose
 		$keysToDelete = array();
 		if (!empty($_content['attachments']['delete']))
 		{
+			$suppressSigOnTop = true;
 			$toDelete = $_content['attachments']['delete'];
 			unset($_content['attachments']['delete']);
 			$attachments = $_content['attachments'];
@@ -334,8 +337,10 @@ class mail_compose
 		}
 $CAtFStart = array2string($_content);
 		// someone clicked something like send, or saveAsDraft
+		$buttonClicked = false;
 		if ($_content['button']['send'])
 		{
+			$buttonClicked = $suppressSigOnTop = true;
 			$sendOK = true;
 			try
 			{
@@ -352,6 +357,7 @@ $CAtFStart = array2string($_content);
 		}
 		if ($_content['button']['saveAsDraft'])
 		{
+			$buttonClicked = $suppressSigOnTop = true;
 			$savedOK = true;
 			try
 			{
@@ -366,8 +372,12 @@ $CAtFStart = array2string($_content);
 			}
 		}
 		// all values are empty for a new compose window
+		if ($buttonClicked = false)
+		{
+		}
 		$insertSigOnTop = false;
 		$content = (is_array($_content)?$_content:array());
+		$content['body'] = ($content['body'] ? $content['body'] : $content['mail_'.($content['mimeType'] == 'html'?'html':'plain').'text']);
 		$alwaysAttachVCardAtCompose = false; // we use this to eliminate double attachments, if users VCard is already present/attached
 		if ( isset($GLOBALS['egw_info']['apps']['stylite']) && (isset($this->preferencesArray['attachVCardAtCompose']) &&
 			$this->preferencesArray['attachVCardAtCompose']))
@@ -750,10 +760,8 @@ $CAtFStart = array2string($_content);
 		//error_log(__METHOD__.__LINE__.' DefaultIdentity:'.array2string($identities[($presetId ? $presetId : $defaultIdentity)]));
 		// navbar(, kind of)
 */
-		// handle subject
-		$subject = mail_bo::htmlentities($content['subject'],$this->displayCharset);
+
 /*
-		$this->t->set_var("subject",$subject);
 
 		if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
 			$this->t->set_var('addressbookButton','<button class="menuButton" type="button" onclick="addybook();" title="'.lang('addressbook').'">
@@ -1017,25 +1025,23 @@ $CAtFStart = array2string($_content);
 				}
 			}
 		}
+
 		if ($_content)
 		{
 			$content = array_merge($content,$_content);
 
 			if (!empty($content['FOLDER'])) $sel_options['FOLDER']=$this->ajax_searchFolder(0,true);
 			$content['SENDER'] = (empty($content['SENDER'])?($selectedSender?(array)$selectedSender:''):$content['SENDER']);
-			$content['is_html'] = ($content['mimeType'] == 'html'?true:'');
-			$content['is_plain'] = ($content['mimeType'] == 'html'?'':true);
-			$content['mail_'.($content['mimeType'] == 'html'?'html':'plain').'text'] =($content['body']?$content['body']:$content['mail_'.($this->content['mimeType'] == 'html'?'html':'plain').'text']);
 		}
 		else
 		{
-			$content['is_html'] = ($content['mimeType'] == 'html'?true:'');
-			$content['is_plain'] = ($content['mimeType'] == 'html'?'':true);
 			//error_log(__METHOD__.__LINE__.array2string(array($sel_options['SENDER'],$selectedSender)));
 			$content['SENDER'] = ($selectedSender?(array)$selectedSender:'');
 			//error_log(__METHOD__.__LINE__.$content['body']);
-			$content['mail_'.($content['mimeType'] == 'html'?'html':'plain').'text'] = $content['body'];
 		}
+		$content['is_html'] = ($content['mimeType'] == 'html'?true:'');
+		$content['is_plain'] = ($content['mimeType'] == 'html'?'':true);
+		$content['mail_'.($content['mimeType'] == 'html'?'html':'plain').'text'] =$content['body'];
 		$content['showtempname']=0;
 if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.'before merging content with uploadforCompose:'.array2string($content['attachments']));
 		$content['attachments']=(is_array($content['attachments'])&&is_array($content['uploadForCompose'])?array_merge($content['attachments'],(!empty($content['uploadForCompose'])?$content['uploadForCompose']:array())):(is_array($content['uploadForCompose'])?$content['uploadForCompose']:(is_array($content['attachments'])?$content['attachments']:null)));
@@ -1046,6 +1052,7 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.'before merg
 if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachments:'.array2string($content['attachments']));
 		$preserv['is_html'] = $content['is_html'];
 		$preserv['is_plain'] = $content['is_plain'];
+		if (isset($content['mimeType'])) $preserv['mimeType'] = $content['mimeType'];
 		$etpl = new etemplate_new('mail.compose');
 
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);

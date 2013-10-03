@@ -35,7 +35,7 @@
 			</hbox>
 			<hbox  class="mailComposeHeaders" width="99%">
 				<description value="Subject"/>
-				<textbox align="left" width="88%" id="mail_composesubject"/>
+				<textbox align="left" width="88%" id="subject"/>
 			</hbox>
 			<hbox class="mail_Composeicons">
 				<html id="mail_composeicons"/>
