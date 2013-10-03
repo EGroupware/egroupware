@@ -123,7 +123,14 @@ class etemplate_widget_link extends etemplate_widget
 		$response = array();
 		foreach($app_ids as $app => $ids)
 		{
-			$response[$app] = egw_link::titles($app, $ids);
+			if(count($ids))
+			{
+				$response[$app] = egw_link::titles($app, $ids);
+			}
+			else
+			{
+				error_log("Got invalid title request: $app:" . array2string($ids));
+			}
 		}
 		egw_json_response::get()->data($response);
 	}
