@@ -368,7 +368,7 @@ egwAction.prototype.updateActions = function(_actions, _app)
 				}
 
 				// set certain enabled functions (if enabled is on it's default of true)
-				if (elem.enabled === true)
+				if (typeof elem.enabled == 'undefined' || elem.enabled === true)
 				{
 					if (typeof elem.enableClass != "undefined")
 					{
