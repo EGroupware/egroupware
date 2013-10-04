@@ -194,75 +194,62 @@ app.mail = AppJS.extend(
 	 */
 	mail_compose: function(_action, _elems)
 	{
-		var idsToProcess = '';
-		var multipleIds = false;
-		var url = window.egw_webserverUrl+'/index.php?';
+		// Extra info passed to egw.open()
+		var settings = {
+			// 'Source' Mail UID
+			id: '',
+			// How to pull data from the Mail IDs for the compose
+			from: ''
+		};
+		
 		if (typeof _elems == 'undefined')
 		{
-			var h = egw().open('','mail','add');
-			return true;
+			// No ids, try from content
+			settings.id = this.et2.getArrayMgr("content").getEntry('mail_id') || '';
 		}
-		if (_elems.length > 1) multipleIds = true;
-		//for (var i=0; i<_elems.length; i++)
-		//{
-		//	if (i>0) idsToProcess += ',';
-		//	idsToProcess += _elems[i].id;
-		//}
-		//alert('mail_'+_action.id+'('+idsToProcess+')');
-		if (_action.id == 'compose')
+		else
 		{
-			if (multipleIds == false)
-			{
-				if (_elems.length == 1) mail_parentRefreshListRowStyle(_elems[0].id,_elems[0].id);
-				url += 'menuaction=mail.mail_compose.compose';
-				this.mail_openComposeWindow(url)
-			}
-			else
-			{
-				this.mail_compose('forward',_elems);
-			}
+			// We only handle one for everything but forward
+			settings.id = _elems[0].id;
 		}
-		if (_action.id == 'composefromdraft')
+		
+		switch(_action.id)
 		{
-			url += 'menuaction=mail.mail_compose.composeFromDraft';
-			url += '&id='+_elems[0].id;
-			egw_openWindowCentered(url,'composeasnew_'+_elems[0].id,870,egw_getWindowOuterHeight());
+			case 'compose':
+				if (_elems.length == 1)
+				{
+					mail_parentRefreshListRowStyle(settings.id,settings.id);
+				}
+				else
+				{
+					return this.mail_compose('forward',_elems);
+				}
+				break;
+			case 'forward':
+			case 'forwardinline':
+			case 'forwardasattach':
+				if (_elems.length||_action.id == 'forwardasattach')
+				{
+					url = 'menuaction=mail.mail_compose.compose';
+					return this.mail_openComposeWindow(url,_action.id == 'forwardasattach', _elems);
+				}
+				else
+				{
+					settings.from = 'forward';
+					settings.mode = 'forwardinline';
+				}
+				break;
+			default:
+				// No further client side processing needed for these
+				settings.from = _action.id;
 		}
-		if (_action.id == 'composeasnew')
-		{
-			url += 'menuaction=mail.mail_compose.composeAsNew';
-			url += '&reply_id='+_elems[0].id;
-			egw_openWindowCentered(url,'composeasnew_'+_elems[0].id,870,egw_getWindowOuterHeight());
-		}
-		if (_action.id == 'reply')
-		{
-			url += 'menuaction=mail.mail_compose.reply';
-			url += '&reply_id='+_elems[0].id;
-			egw_openWindowCentered(url,'reply_'+_elems[0].id,870,egw_getWindowOuterHeight());
-		}
-		if (_action.id == 'reply_all')
-		{
-			url += 'menuaction=mail.mail_compose.replyAll';
-			url += '&reply_id='+_elems[0].id;
-			egw_openWindowCentered(url,'replyAll_'+_elems[0].id,870,egw_getWindowOuterHeight());
-		}
-		if (_action.id == 'forward'||_action.id == 'forwardinline'||_action.id == 'forwardasattach')
-		{
-			if (multipleIds||_action.id == 'forwardasattach')
-			{
-				url += 'menuaction=mail.mail_compose.compose';
-				mail_openComposeWindow(url,_action.id == 'forwardasattach');
-			}
-			else
-			{
-				url += 'menuaction=mail.mail_compose.forward';
-				url += '&reply_id='+_elems[0].id;
-				url += '&mode=forwardinline';
-				egw_openWindowCentered(url,'forward_'+_elems[0].id,870,egw_getWindowOuterHeight());
-			}
-		}
-	},
 
+		var window_name = settings.from + '_' + settings.id;
+		
+		egw().open('','mail','add',settings,window_name);
+		return true;
+	},
+	
 	/**
 	 * Compose, reply or forward a message
 	 *
@@ -333,7 +320,7 @@ app.mail = AppJS.extend(
 				sMessageList= 'AsForward&forwardmails=1&folder='+activeFolderB64+'&reply_id='+sMessageList.substring(0,sMessageList.length-1);
 			}
 			//alert(sMessageList);
-			egw_openWindowCentered(_url+sMessageList,'compose',870,egw_getWindowOuterHeight());
+			egw_openWindowCentered(window.egw_webserverUrl+'/index.php?'+_url+sMessageList,'compose',870,egw_getWindowOuterHeight());
 		}
 		//ToDo: reset message selection
 	},

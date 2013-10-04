@@ -281,6 +281,20 @@ class mail_compose
 		error_log(__METHOD__.__LINE__.array2string($_content).function_backtrace());
 
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
+		if (!$replyID && isset($_GET['id'])) $replyID = $_GET['id'];
+		if (isset($_GET['part_id'])) $replyID = $_GET['part_id'];
+		
+		// Process different places we can use as a start for composing an email
+		if($_GET['from'] && $replyID)
+		{
+			$_content = array_merge((array)$_content, $this->getComposeFrom(
+				// Parameters needed for fetching appropriate data
+				$replyID, $_GET['part_id'], $_GET['from'],
+				// Additionally may be changed
+				$_focusElement, $suppressSigOnTop, $isReply
+			));
+		}
+		
 		// VFS Selector was used
 		if (is_array($_content['selectFromVFSForCompose']))
 		{
@@ -1114,37 +1128,61 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 		$etpl = new etemplate_new('mail.testhtmlarea');
 		$etpl->exec('mail.mail_compose.testhtmlarea',$content,$sel_options,$readonlys,$preserv,2);
 	}
-
-	function composeFromDraft() {
-		$replyID = $_GET['uid'];
-		$hA = mail_ui::splitRowID($replyID);
-		$replyID = $hA['msgUID'];
+	
+	/**
+	 * Get pre-fill a new compose based on an existing email
+	 *
+	 * @param type $mail_id If composing based on an existing mail, this is the ID of the mail
+	 * @param type $part_id For multi-part mails, indicates which part
+	 * @param type $from Indicates what the mail is based on, and how to extract data.
+	 *	One of 'compose', 'composeasnew', 'reply', 'reply_all' or 'forward'
+	 * @param boolean $_focusElement varchar subject, to, body supported
+	 * @param boolean $suppressSigOnTop
+	 * @param boolean $isReply
+	 *
+	 * @return mixed[] Content array pre-filled according to source mail
+	 */
+	private function getComposeFrom($mail_id, $part_id, $from, &$_focusElement, &$suppressSigOnTop, &$isReply)
+	{
+		$content = array();
+		
+		$hA = mail_ui::splitRowID($mail_id);
+		$msgUID = $hA['msgUID'];
 		$folder = $hA['folder'];
 		$icServer = $hA['profileID'];
 
-		if (!empty($folder) && !empty($replyID) ) {
-			// this fill the session data with the values from the original email
-			$content = $this->getDraftData($icServer, $folder, $replyID);
-		}
-		$this->compose($content,null,'body',$suppressSigOnTop=true);
-	}
-
-	function forward() {
-		$replyID = $_GET['reply_id'];
-		$partID  = $_GET['part_id'];
-		$hA = mail_ui::splitRowID($replyID);
-		$replyID = $hA['msgUID'];
-		$folder = $hA['folder'];
-		$icServer = $hA['profileID'];
-		$mode = false;
-		if (isset($_GET['mode']) && ($_GET['mode']=='forwardasattach'||$_GET['mode']=='forwardinline')) $mode  = ($_GET['mode']=='forwardinline'?'inline':'asattach');
-		if (!empty($replyID))
+		if (!empty($folder) && !empty($msgUID) )
 		{
 			// this fill the session data with the values from the original email
-			$content = $this->getForwardData($icServer, $folder, $replyID, $partID, $mode);
+			switch($from)
+			{
+				case 'composeasnew':
+				case 'composefromdraft':
+					$content = $this->getDraftData($icServer, $folder, $msgUID, $part_id);
+					
+					$_focusElement = 'body';
+					$suppressSigOnTop = true;
+					break;
+				case 'reply':
+				case 'replyAll':
+					$content = $this->getReplyData($from == 'reply' ? 'single' : 'all', $icServer, $folder, $msgUID, $part_id);
+					
+					$_focusElement = 'body';
+					$supressSigOnTop = true;
+					$isReply = true;
+					break;
+				case 'forward':
+					$mode  = ($_GET['mode']=='forwardinline'?'inline':'asattach');
+					$content = $this->getForwardData($icServer, $folder, $msgUID, $part_id, $mode);
+
+					$isReply = ($mode?$mode=='inline':$this->preferencesArray['message_forwarding'] == 'inline');
+					$_focusElement = 'to';
+					break;
+				default:
+					error_log('Unhandled compose source: ' . $from);
+			}
 		}
-		$handleAsReply = ($mode?$mode=='inline':$this->preferencesArray['message_forwarding'] == 'inline');
-		$this->compose($content,null,'to',false, $handleAsReply);
+		return $content;
 	}
 
 	function getAttachment()
@@ -1215,47 +1253,7 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 		print $folderTree;
 	}
 
-	function composeAsNew() {
-		$replyID = $_GET['reply_id'];
-		$partID  = $_GET['part_id'];
-		$hA = mail_ui::splitRowID($replyID);
-		$replyID = $hA['msgUID'];
-		$folder = $hA['folder'];
-		$icServer = $hA['profileID'];
-		if (!empty($folder) && !empty($replyID) ) {
-			// this fill the session data with the values from the original email
-			$content = $this->getDraftData($icServer, $folder, $replyID, $partID);
-		}
-		$this->compose($content,null,'body',true);
-	}
 
-	function reply() {
-		$replyID = $_GET['reply_id'];
-		$partID	 = $_GET['part_id'];
-		$hA = mail_ui::splitRowID($replyID);
-		$replyID = $hA['msgUID'];
-		$folder = $hA['folder'];
-		$icServer = $hA['profileID'];
-		if (!empty($folder) && !empty($replyID) ) {
-			// this fill the session data with the values from the original email
-			$content = $this->getReplyData('single', $icServer, $folder, $replyID, $partID);
-		}
-		$this->compose($content,null,'body',false,true);
-	}
-
-	function replyAll() {
-		$replyID = $_GET['reply_id'];
-		$partID	 = $_GET['part_id'];
-		$hA = mail_ui::splitRowID($replyID);
-		$replyID = $hA['msgUID'];
-		$folder = $hA['folder'];
-		$icServer = $hA['profileID'];
-		if (!empty($folder) && !empty($replyID) ) {
-			// this fill the session data with the values from the original email
-			$content = $this->getReplyData('all', $icServer, $folder, $replyID, $partID);
-		}
-		$this->compose($content,null,'body',false,true);
-	}
 
 	/**
 	 * previous bocompose stuff
@@ -1588,7 +1586,7 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 		$userEMailAddresses = $this->preferences->getUserEMailAddresses();
 
 		// get message headers for specified message
-		#print "AAAA: $_folder, $_uid, $_partID<br>";
+		print "AAAA: $_folder, $_uid, $_partID<br>";
 		$headers	= $mail_bo->getMessageEnvelope($_uid, $_partID);
 		#$headers	= $mail_bo->getMessageHeader($_uid, $_partID);
 		$this->sessionData['uid'] = $_uid;
