@@ -440,7 +440,6 @@ app.filemanager = AppJS.extend(
 				break;
 		}
 		this.path_widget.set_value(_dir);
-		this.path_widget.change();
 	},
 	
 	/**
@@ -622,6 +621,8 @@ app.filemanager = AppJS.extend(
 	set_readonly: function(_path, _ro)
 	{
 		//alert('set_readonly("'+_path+'", '+_ro+')');
+		if(!this.path_widget) return;
+		
 		var path =  this.path_widget.getValue();
 		
 		if (_path == path)
