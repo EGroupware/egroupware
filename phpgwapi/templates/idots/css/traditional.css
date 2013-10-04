@@ -3,6 +3,11 @@
 	allowed attributes: font-family,font-size,color,font-weight
 */
 
+body
+{
+	overflow-x: hidden;
+}
+
 body,td,textarea
 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;

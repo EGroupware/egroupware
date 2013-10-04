@@ -41,4 +41,19 @@
 			}
 		}
 	}
+	
+	/**
+	 * Installing resize handler for divAppbox and et2_container, as et2 otherwise can not correctly size nextmatch
+	 */
+	$j(function()
+	{
+		$j(window).resize(function(){
+			var appbox_height = $j(window).height()-$j('#topmenu').height()-$j('#divAppIconBar').height()-
+				$j('#divStatusBar').height()-$j('#divAppboxHeader').height()-$j('#divPoweredBy').height()-20;
+			//console.log('setting height of '+appbox_height);
+			$j('#divAppbox').css('min-height', appbox_height+'px');
+			$j('.et2_container').height(appbox_height);
+		});
+		$j(window).resize();
+	});
 })();
