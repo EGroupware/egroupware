@@ -1246,7 +1246,7 @@ app.mail = AppJS.extend(
 	},
 
 	vfsUploadForImport: function(_egw, _widget, _window) {
-		console.log(_egw, _widget, _window);
+		//console.log(_egw, _widget, _window);
 		if (!jQuery.isEmptyObject(_widget.getValue()))
 		{
 			this.et2_obj.submit();
@@ -1255,7 +1255,15 @@ app.mail = AppJS.extend(
 
 	vfsUploadForCompose: function(_egw, _widget, _window)
 	{
-		console.log(_egw, _widget, _window);
+		//console.log(_egw, _widget, _window);
+		if (!jQuery.isEmptyObject(_widget.getValue()))
+		{
+			this.et2_obj.submit();
+		}
+	},
+
+	submitOnChange: function(_egw, _widget, _window) {
+		//console.log(_egw, _widget, _window);
 		if (!jQuery.isEmptyObject(_widget.getValue()))
 		{
 			this.et2_obj.submit();

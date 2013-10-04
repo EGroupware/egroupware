@@ -58,7 +58,7 @@
 				</menulist>
 				<description value="Editor type"/>
 				<menulist>
-					<menupopup id="mimeType" onchange="1"/>
+					<menupopup id="mimeType" onchange="app.mail.submitOnChange"/>
 				</menulist>
 			</groupbox>
 			<groupbox class="et2_file mailUploadSection">
