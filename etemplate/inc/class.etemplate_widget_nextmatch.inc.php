@@ -74,7 +74,7 @@
  *  'favorites'      =>     //  I boolean|array True to enable favorites, or an array of additional, app specific settings to include
  *					in the saved filters (eg: pm_id)
  *  'placeholder'    =>     //  I String Optional text to display in the empty row placeholder.  If not provided, it's "No matches found."
- *  'placeholder_actions' =>     //  I String Optional list of actions allowed on the placeholder.  If not provided, it's ["add"].
+ *  'placeholder_actions' =>     //  I Array Optional list of actions allowed on the placeholder.  If not provided, it's ["add"].
  */
 class etemplate_widget_nextmatch extends etemplate_widget
 {
