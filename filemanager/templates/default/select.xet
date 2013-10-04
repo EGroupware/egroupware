@@ -3,7 +3,7 @@
 <overlay>
 	<template id="filemanager.select" template="" lang="" group="0" version="1.9.002">
 		<description align="center" id="msg" class="error"/>
-		<grid width="600">
+		<grid width="100%">
 			<columns>
 				<column width="32"/>
 				<column/>
@@ -64,7 +64,7 @@
 								</menulist>
 							</row>
 							<row disabled="@no_upload">
-								<groupbox id="upload_groupbox">
+								<groupbox>
 									<caption label="File upload"/>
 									<description value="Choose a file for uploading"/>
 									<file id="file_upload"/>

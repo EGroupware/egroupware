@@ -669,8 +669,11 @@ app.filemanager = AppJS.extend(
 		
 	select_show: function(file)
 	{
-		var editfield = document.getElementById("exec[name]");
-		editfield.value = file;
+		var editfield = this.et2.getWidgetById('name');
+		if(editfield)
+		{
+			editfield.set_value(file);
+		}
 		return false;
 	},
 	select_toggle: function(file,widget)

@@ -99,19 +99,21 @@ class filemanager_select
 			$content['label'] = isset($_GET['label']) ? $_GET['label'] : lang('Open');
 			if (($content['options-mime'] = isset($_GET['mime'])))
 			{
-				$content['options-mime'] = array();
+				$sel_options['mime'] = array();
 				foreach((array)$_GET['mime'] as $key => $value)
 				{
 					if (is_numeric($key))
 					{
-						$content['options-mime'][$value] = lang('%1 files',strtoupper(mime_magic::mime2ext($value))).' ('.$value.')';
+						$sel_options['mime'][$value] = lang('%1 files',strtoupper(mime_magic::mime2ext($value))).' ('.$value.')';
 					}
 					else
 					{
-						$content['options-mime'][$key] = lang('%1 files',strtoupper($value)).' ('.$key.')';
+						$sel_options['mime'][$key] = lang('%1 files',strtoupper($value)).' ('.$key.')';
 					}
 				}
-				list($content['mime']) = each($content['options-mime']);
+				
+				list($content['mime']) = each($sel_options['mime']);
+				error_log(array2string($content['options-mime']));
 			}
 		}
 		elseif(isset($content['button']))
@@ -136,7 +138,7 @@ class filemanager_select
 					break;
 				case 'ok':
 					$copy_result = null;
-					if (isset($content['file_upload']['name']) && is_uploaded_file($content['file_upload']['tmp_name']))
+					if (isset($content['file_upload']['name']) && file_exists($content['file_upload']['tmp_name']))
 					{
 						//Set the "content" name filed accordingly to the uploaded file
 						// encode chars which special meaning in url/vfs (some like / get removed!)
@@ -214,6 +216,8 @@ class filemanager_select
 					}
 					common::egw_exit();
 			}
+			
+			$sel_options['mime'] = $content['options-mime'];
 		}
 		elseif(isset($content['apps']))
 		{
@@ -298,7 +302,7 @@ class filemanager_select
 			'id'     => $content['id'],
 			'label'  => $content['label'],
 			'mime'   => $content['mime'],
-			'options-mime' => $content['options-mime'],
+			'options-mime' => $sel_options['mime'],
 			'old_path' => $content['path'],
 		);
 
