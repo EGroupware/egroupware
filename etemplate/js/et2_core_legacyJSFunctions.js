@@ -6,7 +6,7 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Andreas Stöckel
- * @copyright Stylite 2011
+ * @copyright Stylite 2011-13
  * @version $Id: et2_core_phpExpressionCompiler.js 38256 2012-03-05 13:07:38Z igel457 $
  */
 
@@ -30,6 +30,9 @@
 	*
 	* @param string _val onclick, onchange, ... action
 	* @param string _cname name-prefix / name-space
+	* @ToDo replace xajax_doXMLHTTP with egw.json()
+	* @ToDo replace (common) cases of confirm with new dialog, idea: calling function supplys function to call after confirm
+	* @ToDo template::styles(name) inserts the styles of a named template
 	* @return string
 	*/
 	function js_pseudo_funcs(_val,widget)
@@ -81,7 +84,7 @@
 
 		if (_val.indexOf('this.form.submit()') != -1)
 		{
-			_val = _val.replace('this.form.submit()','widget.getInstanceManager().postSubmit()');
+			_val = _val.replace('this.form.submit()','widget.getInstanceManager().submit()');
 		}
 		return _val;
 	}
@@ -93,8 +96,7 @@
 		// Check whether _code is simply "1" -- if yes replace it accordingly
 		if (_code === '1')
 		{
-			_code = 'widget.getInstanceManager().postSubmit(); return true;';
-			egw().debug("warn", "Widget uses 1 as JS.  Full submit used instead, but this should be changed", _widget, _context);
+			_code = 'widget.getInstanceManager().submit(); return true;';
 		}
 
 		// Check whether some pseudo-variables still reside inside of the code,
