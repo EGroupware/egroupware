@@ -2779,28 +2779,22 @@ blockquote[type=cite] {
 	function importMessage($content=null)
 	{
 		//error_log(__METHOD__.__LINE__.$this->mail_bo->getDraftFolder());
-		if (isset($_REQUEST['file']) && isset($_REQUEST['folder']))
-		{
-			$path = $_REQUEST['file'];
-			$target = $_REQUEST['folder'];
-			$content['divImportArea']['FOLDER'][0]=$target;
-			$content['divImportArea']['uploadForImport'] = array(
-				'name' => egw_vfs::basename($path),
-				'type' => egw_vfs::mime_content_type($path),
-				'file' => egw_vfs::PREFIX.$path,
-				'size' => filesize(egw_vfs::PREFIX.$path),
-			);
-		}
 
 		if (!empty($content))
 		{
-			//error_log(__METHOD__.__LINE__.array2string($content));
-			$destination = html::purify($content['divImportArea']['FOLDER'][0]?$content['divImportArea']['FOLDER'][0]:'');
+			error_log(__METHOD__.__LINE__.array2string($content));
+			$content['divImportArea']['vfsfile'] = array(
+				'name' => egw_vfs::basename($content['divImportArea']['vfsfile']),
+				'type' => egw_vfs::mime_content_type($content['divImportArea']['vfsfile']),
+				'file' => egw_vfs::PREFIX.$content['divImportArea']['vfsfile'],
+				'size' => filesize(egw_vfs::PREFIX.$content['divImportArea']['vfsfile']),
+			);
+			$destination = $content['divImportArea']['FOLDER'][0];
 			$importID = mail_bo::getRandomString();
 			$importFailed = false;
 			try
 			{
-				$messageUid = $this->importMessageToFolder($content['divImportArea']['uploadForImport'],$destination,$importID);
+				$messageUid = $this->importMessageToFolder($content['divImportArea']['vfsfile'],$destination,$importID);
 			    $linkData = array
 			    (
 					'id'		=> $this->createRowID($destination, $messageUid, true),
