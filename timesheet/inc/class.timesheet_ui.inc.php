@@ -723,7 +723,7 @@ class timesheet_ui extends timesheet_bo
 				}
 				$row['ts_start'] = $row['ts_unitprice'] = '';
 				if (!$this->quantity_sum) $row['ts_quantity'] = '';
-				$row['class'] = 'th';
+				$row['class'] = 'th rowNoEdit rowNoDelete rowNoUndelete';
 				$row['titleClass'] = 'timesheet_titleSum';
 				unset($row['ts_id']);	// otherwise row would be selectable action-wise
 				continue;
@@ -925,6 +925,7 @@ class timesheet_ui extends timesheet_bo
 				'url' => 'menuaction=timesheet.timesheet_ui.edit&ts_id=$id',
 				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
 				'group' => $group=1,
+				'disableClass' => 'th',
 			),
 /*
 			'view' => array(
@@ -973,6 +974,7 @@ class timesheet_ui extends timesheet_bo
 				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/timesheet/$id',
 				'allowOnMultiple' => false,
 				'group' => $group,
+				'disableClass' => 'th',
 			);
 		}
 		$group++;
@@ -1009,6 +1011,9 @@ class timesheet_ui extends timesheet_bo
 				$actions[$action]['disableClass'] = 'rowNoEdit';
 			}
 		}
+		$actions['documents'] += array(
+			'disableClass' => 'th',
+		);
 		//_debug_array($actions);
 		return $actions;
 	}
