@@ -1680,6 +1680,7 @@ unset($query['actions']);
 			}
 		}
 
+		$etpl->setElementAttribute('toolbar','actions', self::get_actions());
 		if (empty($subject)) $subject = lang('no subject');
 		$content['msg'] = (is_array($error_msg)?implode("<br>",$error_msg):$error_msg);
 		$content['mail_displaydate'] = mail_bo::_strtotime($headers['DATE'],'ts',true);
