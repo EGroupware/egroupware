@@ -380,15 +380,33 @@ $CAtFStart = array2string($_content);
 		// user might have switched desired mimetype, so we should convert
 		if ($content['is_html'] && $content['mimeType']=='plain')
 		{
+			//error_log(__METHOD__.__LINE__.$content['mail_htmltext']);
 			$suppressSigOnTop = true;
+			if (stripos($content['mail_htmltext'],'<pre>')!==false)
+			{
+				$contentArr = html::splithtmlByPRE($content['mail_htmltext']);
+				foreach ($contentArr as $k =>&$elem)
+				{
+					if (stripos($elem,'<pre>')!==false) $elem = str_replace(array("\r\n","\n","\r"),array("<br>","<br>","<br>"),$elem);
+				}
+				$content['mail_htmltext'] = implode('',$contentArr);
+			}
+			$content['mail_htmltext'] = $this->_getCleanHTML($content['mail_htmltext'], false, false);
+			$content['mail_htmltext'] = translation::convertHTMLToText($content['mail_htmltext'],$charset=false,$stripcrl=false,$stripalltags=true);
+
 			$content['body'] = $content['mail_htmltext'];
+			unset($content['mail_htmltext']);
 			$content['is_html'] = false;
 			$content['is_plain'] = true;
 		}
 		if ($content['is_plain'] && $content['mimeType']=='html')
 		{
+			//error_log(__METHOD__.__LINE__.$content['mail_plaintext']);
 			$suppressSigOnTop = true;
+			$content['mail_plaintext'] = str_replace(array("\r\n","\n","\r"),array("<br>","<br>","<br>"),$content['mail_plaintext']);
+			//$this->replaceEmailAdresses($content['mail_plaintext']);
 			$content['body'] = $content['mail_plaintext'];
+			unset($content['mail_plaintext']);
 			$content['is_html'] = true;
 			$content['is_plain'] = false;
 		}
