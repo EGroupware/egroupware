@@ -1226,7 +1226,7 @@ span.ui-icon-check, div.ui-icon-check, .ui-widget-header .ui-icon-check {
 	background-image: url(images/check.png);
 	background-position: 0px;
 }
-span.ui-icon-search, div.ui-icon-search, .ui-widget-header .ui-icon-search  {
+span.ui-icon-search, div.ui-icon-search, .ui-widget-header .ui-icon-search, .ui-widget-content .ui-icon-search  {
 	background-image: url(images/search.png);
 	background-position: 0px;
 }
