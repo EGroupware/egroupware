@@ -190,6 +190,7 @@ class mail_ui
 									//or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 					'actions'        => self::get_actions(),
 					'row_id'         => 'row_id', // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
+					'placeholder_actions' => array('composeasnew')
 				);
 				//$content[self::$nm_index]['path'] = self::get_home_dir();
 			}
@@ -1683,6 +1684,8 @@ unset($query['actions']);
 		$etpl->setElementAttribute('toolbar','actions', self::get_actions());
 		if (empty($subject)) $subject = lang('no subject');
 		$content['msg'] = (is_array($error_msg)?implode("<br>",$error_msg):$error_msg);
+		// Send mail ID so we can use it for actions
+		$content['mail_id'] = $rowID;
 		$content['mail_displaydate'] = mail_bo::_strtotime($headers['DATE'],'ts',true);
 		$content['mail_displaysubject'] = $subject;
 		$content['mail_displaybody'] = $mailBody;
