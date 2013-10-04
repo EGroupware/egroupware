@@ -1310,10 +1310,10 @@ class felamimail_bo
 		$cachemodified = false;
 		foreach ((array)$_messageUID as $k => $_uid)
 		{
-			if (isset($summary[$this->icServer->ImapServerId][(!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox'])][$_uid]))
+			if (isset($summary[$this->icServer->ImapServerId][(!empty($_folder)?$_folder: $this->sessionData['mailbox'])][$_uid]))
 			{
 				$cachemodified = true;
-				unset($summary[$this->icServer->ImapServerId][(!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox'])][$_uid]);
+				unset($summary[$this->icServer->ImapServerId][(!empty($_folder)?$_folder: $this->sessionData['mailbox'])][$_uid]);
 			}
 		}
 		if ($cachemodified)
@@ -1321,7 +1321,7 @@ class felamimail_bo
 			egw_cache::setCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$summary,$expiration=60*60*1);
 		}
 
-		$this->sessionData['folderStatus'][$this->profileID][$this->sessionData['mailbox']]['uidValidity'] = 0;
+		$this->sessionData['folderStatus'][$this->profileID][(!empty($_folder)?$_folder: $this->sessionData['mailbox'])]['uidValidity'] = 0;
 		$this->saveSessionData();
 		//error_log(__METHOD__.__LINE__.'->' .$_flag." ".array2string($_messageUID).",".($_folder?$_folder:$this->sessionData['mailbox']));
 		return true; // as we do not catch/examine setFlags returnValue
@@ -3125,7 +3125,7 @@ class felamimail_bo
 		$queryString = implode(',', $sortResult);
 		// fetch the data for the selected messages
 		if (self::$debug) $starttime = microtime(true);
-		//$headersNew = $this->_getSummary($queryString, $rByUid);
+		//$headersNew = $this->_getSummary($queryString, $rByUidi,false,$_folderName);
 		$headersNew = $this->icServer->getSummary($queryString, $rByUid);
 		if (PEAR::isError($headersNew) && empty($queryString))
 		{
@@ -4277,7 +4277,7 @@ class felamimail_bo
 	{
 		$GLOBALS['egw_info']['flags']['autoload'] = array(__CLASS__,'autoload');
 
-		$this->sessionData = $GLOBALS['egw']->session->appsession('session_data','felamimail');
+		$this->sessionData = egw_cache::getCache(egw_cache::SESSION,'felamimail','session_data',$callback=null,$callback_params=array(),$expiration=60*60*1);
 		$this->sessionData['folderStatus'] = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 	}
 
@@ -4288,7 +4288,7 @@ class felamimail_bo
 			egw_cache::setCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$this->sessionData['folderStatus'], $expiration=60*60*1);
 			unset($this->sessionData['folderStatus']);
 		}
-		$GLOBALS['egw']->session->appsession('session_data','felamimail',$this->sessionData);
+		egw_cache::setCache(egw_cache::SESSION,'felamimail','session_data',$this->sessionData, $expiration=60*60*1);
 	}
 
 	function saveFilter($_formData)

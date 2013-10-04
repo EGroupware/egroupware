@@ -68,8 +68,8 @@ class ajaxfelamimail
 				$folderToSelect = null;
 			}
 
-			$this->sessionDataAjax	=& $GLOBALS['egw']->session->appsession('ajax_session_data','felamimail');
-			$this->sessionData	=& $GLOBALS['egw']->session->appsession('session_data','felamimail');
+			$this->sessionDataAjax = egw_cache::getCache(egw_cache::SESSION,'felamimail','ajax_session_data',$callback=null,$callback_params=array(),$expiration=60*60*1);
+			$this->sessionData = egw_cache::getCache(egw_cache::SESSION,'felamimail','session_data',$callback=null,$callback_params=array(),$expiration=60*60*1);
 			$this->sessionData['folderStatus'] = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 			if (!is_array($this->sessionDataAjax)) $this->sessionDataAjax = array();
 			if (!isset($this->sessionData['mailbox'])) $this->sessionData['mailbox'] = (isset($folderToSelect)?$folderToSelect:(isset($this->sessionDataAjax['folderName'])?$this->sessionDataAjax['folderName']:'INBOX'));
@@ -1449,13 +1449,13 @@ class ajaxfelamimail
 
 		function saveSessionData()
 		{
-			$GLOBALS['egw']->session->appsession('ajax_session_data','felamimail',$this->sessionDataAjax);
+			egw_cache::setCache(egw_cache::SESSION,'felamimail','ajax_session_data',$this->sessionDataAjax, $expiration=60*60*1);
 			if (isset($this->sessionData['folderStatus']) && is_array($this->sessionData['folderStatus']))
 			{
 				egw_cache::setCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$this->sessionData['folderStatus'], $expiration=60*60*1);
 				unset($this->sessionData['folderStatus']);
 			}
-			$GLOBALS['egw']->session->appsession('session_data','felamimail',$this->sessionData);
+			egw_cache::setCache(egw_cache::SESSION,'felamimail','session_data',$this->sessionData, $expiration=60*60*1);
 		}
 
 		function saveSignature($_mode, $_id, $_description, $_signature, $_isDefaultSignature)
