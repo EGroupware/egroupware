@@ -227,7 +227,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 
 					rowIndex++;
 				}
-				
+
 				else if (this.lastRowNode != null)
 				{
 					// Have to look through actual widgets to support const[$row]
@@ -246,7 +246,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 						// No further checks for repeated rows
 						break;
 					}
-					
+
 					// Not in a nextmatch, so we can expand with abandon
 					var currentPerspective = jQuery.extend({},content.perspectiveData);
 					var check = function(node, nodeName)
@@ -295,7 +295,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 					cont = false;
 					content.perspectiveData = currentPerspective;
 				}
-				
+
 				else
 				{
 					// No more rows, stop
@@ -377,6 +377,13 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 		var y = 0;
 		var x = 0;
 		var readRowNode;
+		var nm = false;
+		var widget = this;
+		while(!nm && widget != this.getRoot())
+		{
+			nm = (widget._type == 'nextmatch');
+			widget = widget.getParent();
+		}
 		et2_filteredNodeIterator(rows, function(node, nodeName) {
 
 			readRowNode = function _readRowNode(node, nodeName) {
@@ -427,6 +434,26 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 				// Create the element
 				if(!cell.disabled)
 				{
+					//Skip if it is a nextmatch while the nextmatch handles row adjustment by itself
+					if(!nm)
+					{
+						// Adjust for the row
+						var mgrs = this.getArrayMgrs();
+						for(var name in mgrs)
+						{
+							this.getArrayMgr(name).perspectiveData.row = y;
+						}
+						if(this._getCell(cells, x, y).rowData.id)
+						{
+							this._getCell(cells, x, y).rowData.id = this.getArrayMgr("content").expandName(this._getCell(cells, x, y).rowData.id);
+						}
+						if(this._getCell(cells, x, y).rowData.class)
+						{
+							this._getCell(cells, x, y).rowData.class = this.getArrayMgr("content").expandName(this._getCell(cells, x, y).rowData.class);
+						}
+
+					}
+
 					var widget = this.createElementFromNode(node, nodeName);
 				}
 
@@ -487,20 +514,6 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 		// Extra content rows
 		for(y; y < h; y++) {
 			var x = 0;
-			// Adjust for the row
-			var mgrs = this.getArrayMgrs();
-			for(var name in mgrs)
-			{
-				this.getArrayMgr(name).perspectiveData.row = y;
-			}
-			if(this._getCell(cells, x, y).rowData.id)
-			{
-				this._getCell(cells, x, y).rowData.id = this.getArrayMgr("content").expandName(this._getCell(cells, x, y).rowData.id);
-			}
-			if(this._getCell(cells, x, y).rowData.class)
-			{
-				this._getCell(cells, x, y).rowData.class = this.getArrayMgr("content").expandName(this._getCell(cells, x, y).rowData.class);
-			}
 
 			et2_filteredNodeIterator(this.lastRowNode, readRowNode, this);
 		}
