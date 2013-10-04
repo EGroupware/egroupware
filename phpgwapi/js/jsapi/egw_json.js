@@ -331,6 +331,10 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 				}
 				return true;
 			}
+			else
+			{
+				throw '"' + res.data.func + '" is not a callable function (type is ' + typeof parent[func] + ')';
+			}
 		}
 		throw 'Invalid parameters';
 	}, null, 'apply');
