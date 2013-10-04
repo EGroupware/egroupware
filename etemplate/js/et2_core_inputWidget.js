@@ -140,13 +140,17 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 	},
 
 	set_value: function(_value) {
-		this._oldValue = _value;
 
 		var node = this.getInputNode();
 		if (node)
 		{
 			$j(node).val(_value);
+			if(this.isAttached())
+			{
+				$j(node).change();
+			}
 		}
+		this._oldValue = _value;
 	},
 
 	set_id: function(_value) {
