@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
- * @copyright (c) 2007-11 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2007-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -367,7 +367,7 @@ abstract class bo_merge
 						{
 							$title = stylite_links_stream_wrapper::entry2name($app, $id, $title);
 						}
-						
+
 						$link = egw_link::view($app, $id);
 						if($app != egw_link::VFS_APPNAME)
 						{
@@ -1668,6 +1668,7 @@ abstract class bo_merge
 				'icon' => egw_vfs::mime_icon($file['mime']),
 				'caption' => egw_vfs::decodePath(egw_vfs::basename($default_doc)),
 				'group' => 1,
+				'postSubmit' => true,	// download needs post submit (not Ajax) to work
 			);
 		}
 
@@ -1737,6 +1738,7 @@ abstract class bo_merge
 								'icon'		=> egw_vfs::mime_icon($file['mime']),
 								'caption'	=> egw_vfs::decodePath($name_arr[$count]),
 								'group'		=> 2,
+								'postSubmit' => true,	// download needs post submit (not Ajax) to work
 							);
 							if ($file['mime'] == 'message/rfc822')
 							{
@@ -1788,6 +1790,7 @@ abstract class bo_merge
 					'icon' => egw_vfs::mime_icon($file['mime']),
 					'caption' => egw_vfs::decodePath($file['name']),
 					'group' => 2,
+					'postSubmit' => true,	// download needs post submit (not Ajax) to work
 				);
 				if ($file['mime'] == 'message/rfc822')
 				{

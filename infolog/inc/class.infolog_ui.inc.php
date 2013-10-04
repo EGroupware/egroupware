@@ -813,7 +813,7 @@ class infolog_ui
 
 		//apply infolog_filter2_change javascript method (show/hide details each rows) over onchange filter2
 		$values['nm']['filter2_onchange'] = "app.infolog.filter2_change();";
-		
+
 		// Allow add actions even when there's no rows
 		$values['nm']['placeholder_actions'] = array('new');
 
@@ -1117,8 +1117,9 @@ class infolog_ui
 			$this->prefs['default_document']
 		);
 		$actions['ical'] = array(
-			'icon' => 'calendar/navbar',
+			'icon' => egw_vfs::mime_icon('text/calendar'),
 			'caption' => 'Export iCal',
+			'postSubmit' => true,	// download needs post submit to work
 			'group' => $group,
 			'allowOnMultiple' => true,
 		);

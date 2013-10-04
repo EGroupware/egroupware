@@ -151,15 +151,22 @@ function nm_action(_action, _senders, _target, _ids)
 				{
 					// Force nextmatch to re-load affected rows
 					nextmatch.refresh(idsArr);
-
-					nextmatch.getInstanceManager().submit();
-
-					// Reset action in case there's another one
-					nextmatch.getValue = old_value;
+				}
+				
+				// downloads need a regular submit via POST (no Ajax)
+				if (_action.data.postSubmit)
+				{
+					nextmatch.getInstanceManager().postSubmit();
 				}
 				else
 				{
-					nextmatch.getInstanceManager().submit();
+					nextmatch.getInstanceManager().submit();					
+				}
+
+				if(_action.data.nm_action == 'open_popup')
+				{
+					// Reset action in case there's another one
+					nextmatch.getValue = old_value;
 				}
 			}
 			else

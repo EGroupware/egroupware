@@ -879,11 +879,12 @@ class calendar_uilist extends calendar_ui
 			);
 		}
 		$actions['ical'] = array(
-			'icon' => 'filesave',
-			'caption' => 'Export (iCal)',
+			'icon' => egw_vfs::mime_icon('text/calendar'),
+			'caption' => 'Export iCal',
 			'group' => ++$group,
 			'hint' => 'Download this event as iCal',
 			'disableClass' => 'rowNoView',
+			'postSubmit' => true,	// download needs post submit (not Ajax) to work
 		);
 		$actions['documents'] = calendar_merge::document_action(
 			$this->bo->cal_prefs['document_dir'], ++$group, 'Insert in document', 'document_',

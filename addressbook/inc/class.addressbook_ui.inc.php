@@ -599,7 +599,11 @@ class addressbook_ui extends addressbook_bo
 						'url' => 'menuaction=importexport.importexport_export_ui.export_dialog&appname=addressbook&plugin=addressbook_export_contacts_csv&selection=$id',
 						'popup' => '850x440'
 					),
-					'vcard'  => 'Export as VCard',
+					'vcard'  => array(
+						'caption' => 'Export as VCard',
+						'postSubmit' => true,	// download needs post submit (not Ajax) to work
+						'icon' => egw_vfs::mime_icon('text/vcard'),
+					),
 				),
 			);
 		}
