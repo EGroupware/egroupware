@@ -329,10 +329,33 @@ var et2_dropdown_button = et2_inputWidget.extend(
 		}
 		else
 		{
-			for(var key in options)
+			var add_complex = function(node, options)
 			{
-				this.menu.first().append("<li data-id='"+key+"'><a href='javascript:void(0);'>"+options[key]+"</a></li>");
+				for(var key in options)
+				{
+					var item;
+					if(typeof options[key] == "string")
+					{
+						item = $j("<li data-id='"+key+"'><a href='javascript:void(0);'>"+options[key]+"</a></li>");
+					}
+					else if (options[key]["label"])
+					{
+						item =$j("<li data-id='"+key+"'><a href='javascript:void(0);'>"+options[key]["label"]+"</a></li>");
+					}
+					// Optgroup
+					else
+					{
+						item = $j("<li><a href='javascript:void(0);'>"+key+"</a></li>");
+						add_complex(node.append("<ul>"), options[key]);
+					}
+					node.append(item);
+					if(item && options[key].icon)
+					{
+						$j('a',item).prepend('<img src="' + options[key].icon +'"/>');
+					}
+				}
 			}
+			add_complex(this.menu.first(), options);
 		}
 		this.menu.menu("refresh");
 	},
