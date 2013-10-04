@@ -247,29 +247,14 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 		$this->tpl->set_var($vars);
 		$content .= $this->tpl->fp('out','navbar_header');
 
-		// general (app-unspecific) sidebox menu
+		// general (app-unspecific) sidebox menu, instead of topmenu
 		if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] == 'sidebox')
-		//if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_sideboxmenu']!='no')
 		{
 			$menu_title = lang('General Menu');
 
-			$file['Home'] = $apps['home']['url'];
-			if($GLOBALS['egw_info']['user']['apps']['preferences'])
-			{
-				$file['Preferences'] = $apps['preferences']['url'];
-			}
-			if($GLOBALS['egw_info']['user']['apps']['manual'] && $apps['manual'])
-			{
-				$file['manual'] = array(
-					'text' => 'manual',
-					'no_lang' => false,
-					'target' => $apps['manual']['target'],
-					'link' => $apps['manual']['url']
-				);
-			}
-			$file += array(
-				$GLOBALS['egw_info']['user']['userid'] != 'anonymous' ? 'Logout' : 'Login' =>$apps['logout']['url']
-			);
+			$this->topmenu($vars,$apps);
+			$file = $this->tplsav2->menuitems;
+
 			$this->sidebox('',$menu_title,$file);
 		}
 
@@ -674,9 +659,9 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 	*/
 	function _add_topmenu_item(array $app_data,$alt_label=null)
 	{
-		$_item['url'] = htmlspecialchars($app_data['url']);
-		$_item['urlextra'] = $app_data['target'];
-		$_item['label'] = $alt_label ? $alt_label : $app_data['title'];
+		$_item['link'] = $_item['url'] = htmlspecialchars($app_data['url']);
+		$_item['target'] = $_item['urlextra'] = $app_data['target'];
+		$_item['text'] = $_item['label'] = $alt_label ? $alt_label : $app_data['title'];
 		$this->tplsav2->menuitems[] = $_item;
 		$this->tplsav2->icon_or_star = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/'.$this->template.'/images'.'/orange-ball.png';
 	}
