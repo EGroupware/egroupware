@@ -293,6 +293,9 @@ pre {
 	width:200px !important;
 	z-index:99;
 }
+.mail-index_quotaDisplayNone {
+	display: none !important;
+}
 .mail-index_QuotaGreen, .mail-index_QuotaYellow, .mail-index_QuotaRed {
 	height:12px !important;
 	width:100px !important;

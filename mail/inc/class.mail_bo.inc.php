@@ -2879,6 +2879,7 @@ class mail_bo
 		}
 		if (PEAR::isError($ret))
 		{
+			//error_log(__METHOD__.__LINE__.$ret->message);
 			if (stripos($ret->message,'Too long argument'))
 			{
 				$c = count($_messageUID);
@@ -2892,10 +2893,12 @@ class mail_bo
 		$cachemodified = false;
 		foreach ((array)$_messageUID as $k => $_uid)
 		{
-			if (isset($summary[$this->icServer->ImapServerId][(!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox'])][$_uid]))
+			//error_log(__METHOD__.__LINE__.' try to unset summarycache for:'.$_uid.' in '.(!empty($_folder)?$_folder: $this->sessionData['mailbox']));
+			if (isset($summary[$this->icServer->ImapServerId][(!empty($_folder)?$_folder: $this->sessionData['mailbox'])][$_uid]))
 			{
+				//error_log(__METHOD__.__LINE__.' unset summarycache for:'.$_uid.' in '.(!empty($_folder)?$_folder: $this->sessionData['mailbox']));
 				$cachemodified = true;
-				unset($summary[$this->icServer->ImapServerId][(!empty($currentFolder)?$currentFolder: $this->sessionData['mailbox'])][$_uid]);
+				unset($summary[$this->icServer->ImapServerId][(!empty($_folder)?$_folder: $this->sessionData['mailbox'])][$_uid]);
 			}
 		}
 		if ($cachemodified)
@@ -2903,7 +2906,7 @@ class mail_bo
 			egw_cache::setCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$summary,$expiration=60*60*1);
 		}
 
-		$this->sessionData['folderStatus'][$this->profileID][$this->sessionData['mailbox']]['uidValidity'] = 0;
+		$this->sessionData['folderStatus'][$this->profileID][(!empty($_folder)?$_folder: $this->sessionData['mailbox'])]['uidValidity'] = 0;
 		$this->saveSessionData();
 		//error_log(__METHOD__.__LINE__.'->' .$_flag." ".array2string($_messageUID).",".($_folder?$_folder:$this->sessionData['mailbox']));
 		return true; // as we do not catch/examine setFlags returnValue

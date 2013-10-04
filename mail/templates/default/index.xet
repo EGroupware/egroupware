@@ -42,7 +42,7 @@
 		<html id="msg"/>
 		<buttononly id="button[mailcreate]" onclick="app.mail.mail_compose(false);" label="Compose" parent_node="mail-index_buttonmailcreate"/>
 		<buttononly id="button[testhtmlarea]" onclick="app.mail.mail_testhtmlarea(false);" label="Test HTML Area" parent_node="mail-index_buttontesthtmlarea"/>
-		<hbox class="mail-index_quotabox"><description value="Quota"/><progress id="nm[quotainpercent]" label="@nm[quota]" class="@nm[quotaclass]"/></hbox>
+		<hbox class="mail-index_quotabox"><description value="Quota" class="@nm[quotanotsupported]"/><progress id="nm[quotainpercent]" label="@nm[quota]" class="@nm[quotaclass]"/></hbox>
 		<split dock_side="bottomDock" id="mailSplitter" orientation="h">
 			<nextmatch id="nm" onselect="app.mail.mail_preview" template="mail.index.rows"/>
 			<vbox id="mailPreview" width="100%">

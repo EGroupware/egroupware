@@ -829,8 +829,16 @@ app.mail = AppJS.extend(
 	mail_flag: function(_action, _elems)
 	{
 		//alert(_action.id+' - '+_elems[0].id);
+		//console.log(_action, _elems);
 		var msg = this.mail_getFormData(_elems);
-		//
+		if (_action.id.substring(0,2)=='un') {
+			this.mail_removeRowClass(_elems,_action.id.substring(2));
+		}
+		else
+		{
+			this.mail_removeRowClass(_elems,'un'+_action.id);
+		}
+		this.mail_setRowClass(_elems,_action.id);
 		this.mail_flagMessages(_action.id,msg);
 	},
 
@@ -842,6 +850,7 @@ app.mail = AppJS.extend(
 	 */
 	mail_flagMessages: function(_flag, _elems)
 	{
+		//console.log(_flag, _elems);
 		app.mail.app_refresh(egw.lang('flag messages'), 'mail');
 		egw.json('mail.mail_ui.ajax_flagMessages',[_flag, _elems])
 			.sendRequest();

@@ -377,6 +377,21 @@ $CAtFStart = array2string($_content);
 		}
 		$insertSigOnTop = false;
 		$content = (is_array($_content)?$_content:array());
+		// user might have switched desired mimetype, so we should convert
+		if ($content['is_html'] && $content['mimeType']=='plain')
+		{
+			$suppressSigOnTop = true;
+			$content['body'] = $content['mail_htmltext'];
+			$content['is_html'] = false;
+			$content['is_plain'] = true;
+		}
+		if ($content['is_plain'] && $content['mimeType']=='html')
+		{
+			$suppressSigOnTop = true;
+			$content['body'] = $content['mail_plaintext'];
+			$content['is_html'] = true;
+			$content['is_plain'] = false;
+		}
 		$content['body'] = ($content['body'] ? $content['body'] : $content['mail_'.($content['mimeType'] == 'html'?'html':'plain').'text']);
 		$alwaysAttachVCardAtCompose = false; // we use this to eliminate double attachments, if users VCard is already present/attached
 		if ( isset($GLOBALS['egw_info']['apps']['stylite']) && (isset($this->preferencesArray['attachVCardAtCompose']) &&
@@ -923,7 +938,7 @@ $CAtFStart = array2string($_content);
 		}
 		else
 		{
-			$content['body'] = ($font_span?$font_span:'&nbsp;').$content['body'];
+			$content['body'] = ($font_span?$font_span:/*($content['mimeType'] == 'html'?'&nbsp;':'')*/'').$content['body'];
 		}
 		//error_log(__METHOD__.__LINE__.$content['body']);
 
@@ -1053,6 +1068,7 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 		$preserv['is_html'] = $content['is_html'];
 		$preserv['is_plain'] = $content['is_plain'];
 		if (isset($content['mimeType'])) $preserv['mimeType'] = $content['mimeType'];
+		$sel_options['mimeType'] = array("plain"=>"plain","html"=>"html");
 		$etpl = new etemplate_new('mail.compose');
 
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);

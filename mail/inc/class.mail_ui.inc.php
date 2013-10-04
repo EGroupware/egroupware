@@ -233,8 +233,11 @@ class mail_ui
 			$content[self::$nm_index]['quota'] = $sel_options[self::$nm_index]['quota'] = $quotainfo['text'];
 			$content[self::$nm_index]['quotainpercent'] = $sel_options[self::$nm_index]['quotainpercent'] =  (string)$quotainfo['percent'];
 			$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = $quotainfo['class'];
+			$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "";
 		} else {
 			$content[self::$nm_index]['quota'] = $sel_options[self::$nm_index]['quota'] = lang("Quota not provided by server");
+			$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = "mail-index_quotaDisplayNone";
+			$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail-index_quotaDisplayNone";
 		}
 
 		$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree(false);
@@ -3342,7 +3345,7 @@ blockquote[type=cite] {
 	 */
 	function ajax_flagMessages($_flag, $_messageList)
 	{
-		if(mail_bo::$debug) error_log(__METHOD__."->".$_flag.':'.print_r($_messageList,true));
+		if(mail_bo::$debug) error_log(__METHOD__."->".$_flag.':'.array2string($_messageList));
 		if ($_messageList=='all' || !empty($_messageList['msg']))
 		{
 			if ($_messageList=='all')

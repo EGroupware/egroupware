@@ -56,6 +56,10 @@
 				<menulist>
 					<menupopup id="stationeryID"/>
 				</menulist>
+				<description value="Editor type"/>
+				<menulist>
+					<menupopup id="mimeType" onchange="1"/>
+				</menulist>
 			</groupbox>
 			<groupbox class="et2_file mailUploadSection">
 				<caption label="Files"/>
