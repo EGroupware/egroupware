@@ -29,6 +29,7 @@ app.mail = AppJS.extend(
 
 	nm_index: 'nm', // nm nome of index
 	mail_fileSelectorWindow: null,
+	mail_isMainWindow: true,
 
 	/**
 	 * Initialize javascript for this application
@@ -75,12 +76,14 @@ app.mail = AppJS.extend(
 			//alert(t); // as we iterate through this more than once, ... we separate trigger and action
 			switch (t) {
 				case 'mail.index':
-					isMainView=true;
+					this.mail_isMainWindow = isMainView=true;
 					break;
 				case 'mail.display':
+					this.mail_isMainWindow = false;
 					isDisplay=true;
 					break;
 				case 'mail.compose':
+					this.mail_isMainWindow = false;
 
 			}
 		}
@@ -385,7 +388,14 @@ app.mail = AppJS.extend(
 		//get_class does not exist yet
 		//var pAAClass = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').get_class();
 		//console.log(pAAClass);
-		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea');
+		if (etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea'))
+		{
+			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea');
+		}
+		else
+		{
+			return;
+		}
 		if(typeof selected == 'undefined' || selected.length == 0 || selected.length > 1 || typeof dataElem =='undefined')
 		{
 			this.mail_fetchCurrentlyFocussed();
@@ -627,7 +637,9 @@ app.mail = AppJS.extend(
 			myMessageBuffer = ""; //myCurrentMsg;
 			bufferExists = true;
 		//}
-		app.mail.mail_setMsg('<span style="font-weight: bold;">' +_msg+ '</span>');
+		//app.mail.mail_setMsg('<span style="font-weight: bold;">' +_msg+ '</span>');
+		egw_message(_msg,_type);
+		app.mail.mail_setMsg('');//without that applyFilters is not refreshing the index page
 		if (_app=='mail')
 		{
 			//we may want to trigger some actions, like modifying the grid, disable preview and stuff
@@ -636,7 +648,7 @@ app.mail = AppJS.extend(
 		}
 		if (bufferExists)
 		{
-			this.doStatus = window.setInterval("app.mail.mail_setMsg(myMessageBuffer);", 10000);
+			//this.doStatus = window.setInterval("app.mail.mail_setMsg(myMessageBuffer);", 10000);
 		}
 	},
 
@@ -676,11 +688,22 @@ app.mail = AppJS.extend(
 	 */
 	mail_delete: function(_action,_elems)
 	{
+		var calledFromPopup = false;
+		if (typeof _elems == 'undefined')
+		{
+			calledFromPopup = true;
+			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
+			{
+				var _elems = [];
+				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
+			}
+		}
 		var msg = this.mail_getFormData(_elems);
 		//alert(_action.id+','+ msg);
 		app.mail.app_refresh(egw.lang('delete messages'), 'mail');
-		this.mail_setRowClass(_elems,'deleted');
-		this.mail_deleteMessages(msg);
+		if (!calledFromPopup) this.mail_setRowClass(_elems,'deleted');
+		this.mail_deleteMessages(msg,'no',calledFromPopup);
+		if (calledFromPopup && this.mail_isMainWindow==false) window.close();
 	},
 
 	/**
@@ -689,13 +712,13 @@ app.mail = AppJS.extend(
 	 * @param _msg - message list
 	 * @param _action - optional action
 	 */
-	mail_deleteMessages: function(_msg,_action)
+	mail_deleteMessages: function(_msg,_action,_calledFromPopup)
 	{
 		app.mail.app_refresh(egw.lang('delete messages'), 'mail');
 		egw.json('mail.mail_ui.ajax_deleteMessages',[_msg,(typeof _action == 'undefined'?'no':_action)])
 			.sendRequest();
 		for (var i = 0; i < _msg['msg'].length; i++)  egw.dataDeleteUID(_msg['msg'][i]);
-		this.mail_refreshMessageGrid();
+		this.mail_refreshMessageGrid(_calledFromPopup);
 		this.mail_preview();
 	},
 
@@ -817,7 +840,12 @@ app.mail = AppJS.extend(
 			if (inBraket!=-1)
 			{
 				outBraket = displayname.search(/\)/);
-				if (outBraket!=-1) displayname = displayname.replace(/\((.*?)\)/,"");
+				if (outBraket!=-1)
+				{
+					displayname = displayname.replace(/\((.*?)\)/,"");
+					displayname = displayname.replace(/<b>/,"");
+					displayname = displayname.replace(/<\/b>/,"");
+				}
 			}
 			myMsg = (displayname?displayname:folder)+' '+egw.lang('selected');
 			app.mail.app_refresh(myMsg, 'mail');
