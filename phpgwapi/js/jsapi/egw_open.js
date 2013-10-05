@@ -21,6 +21,46 @@
  * @augments Class
  */
 egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
+	
+	
+	function _storeWindow(appname, popup)
+	{
+		// Don't store if it has no name
+		if(!popup.name || ['_blank'].indexOf(popup.name) >= 0)
+		{
+			return;
+		}
+		
+		var _target_app = appname || this.appName || egw_appName || 'common';
+		var open_windows = JSON.parse(this.getSessionItem(_target_app, 'windows')) || [];
+		if(open_windows.indexOf(popup.name) >= 0)
+		{
+			// Already in there - don't add it again
+			return;
+		}
+		open_windows.push(popup.name);
+		this.setSessionItem(_target_app, 'windows', JSON.stringify(open_windows));
+
+		// Forget window when it closes
+		var _egw = this;
+		(function() {
+			var app = _target_app;
+			var window_name = popup.name;
+			var poll_timer = _wnd.setInterval(function() {
+				if(popup.closed !== false) {
+					this.clearInterval(poll_timer);
+					var open_windows = JSON.parse(_egw.getSessionItem(app, 'windows')) || [];
+					var index = open_windows.indexOf(window_name);
+					if(index >= 0)
+					{
+						open_windows.splice(index,1);
+					}
+					_egw.setSessionItem(app, 'windows', JSON.stringify(open_windows));
+				}
+			},1000);
+		})();
+	}
+	
 	return {
 		/**
 		 * View an EGroupware entry: opens a popup of correct size or redirects window.location to requested url
@@ -161,7 +201,10 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			{
 				var w_h = _popup.split('x');
 				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = egw_getWindowOuterHeight();
-				return _wnd.egw_openWindowCentered2(url, _target, w_h[0], w_h[1], false, _target_app, true);
+				var popup_window =  _wnd.egw_openWindowCentered2(url, _target, w_h[0], w_h[1], false, _target_app, true);
+				
+				// Remember which windows are open
+				_storeWindow.call(this, _target_app, popup_window);
 			}
 			else if (typeof _wnd.egw_link_handler == 'function' && (typeof _target == 'undefined' || _target =='_self' || typeof this.link_app_list()[_target] != "undefined"))
 			{
@@ -181,6 +224,35 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			{
 				return _wnd.open(url, _target);
 			}
+		},
+		
+		/**
+		 * Get a list of the names of open popups
+		 * 
+		 * Using the name, you can get a reference to the popup using:
+		 * window.open('', name);
+		 * Popups that were not given a name when they were opened are not tracked.
+		 * 
+		 * @param {string} appname Application that owns/opened the popup
+		 * @param {string} regex Optionally filter names by the given regular expression
+		 * 
+		 * @returns {string[]} List of window names
+		 */
+		getOpenWindows: function(appname, regex) {
+			var open_windows = JSON.parse(this.getSessionItem(appname, 'windows')) || [];
+			if(typeof regex == 'undefined')
+			{
+				return open_windows;
+			}
+			var list = []
+			for(var i = 0; i < open_windows.length; i++)
+			{
+				if(open_windows[i].match(regex))
+				{
+					list.push(open_windows[i]);
+				}
+			}
+			return list;
 		}
 	};
 });
