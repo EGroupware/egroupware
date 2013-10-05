@@ -52,10 +52,6 @@ class uiaccountsel
 		{
 			$this->account_selection = 'primary_group';
 		}
-
-		// Include these here, framework may have already sent header by the time the account select is made
-		egw_framework::validate_file('/phpgwapi/js/jquery/chosen/chosen.jquery.js');
-		egw_framework::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css',null,false);
 	}
 
 	/**
@@ -96,6 +92,8 @@ class uiaccountsel
 			$multi_size = abs($lines);
 			$lines = 1;
 		}
+		$options .= ' class="uiaccountselection '.$this->account_selection.'"';	// to be able to style and select it with jQuery
+
 		if ($this->account_selection == 'none')	// dont show user-selection at all!
 		{
 			return html::input_hidden($name,$selected);
@@ -249,26 +247,16 @@ class uiaccountsel
 			'element_id'  => $element_id,
 			'multiple' => $lines,	// single selection (multiple=0), closes after the first selection
 		),false);
-		$popup_options = 'width=600,height=420,toolbar=no,scrollbars=yes,resizable=yes';
 		$app = $GLOBALS['egw_info']['flags']['currentapp'];
 		if (!$only_groups && ($lines <= 1 && $this->account_selection == 'popup' || !$lines && $this->account_selection == 'primary_group'))
 		{
 			if (!$lines)
 			{
-				$options .= ' onchange="if (this.value==\'popup\') '."window.open('$link','uiaccountsel','$popup_options');".
-					($onchange ? " else { $onchange }" : '' ).'" onclick="if (this.value==\'popup\') '."window.open('$link','uiaccountsel','$popup_options');\"";
 				$select['popup'] = lang('Search').' ...';
 			}
-			elseif ($onchange)
-			{
-				$options .= ' onchange="if (this.value[0]!=\',\') { '.$onchange.' }"';
-			}
-			$need_js_popup = True;
 		}
-		elseif ($onchange)
-		{
-			$options .= ' onchange="'.$onchange.'"';
-		}
+		if ($onchange) $options .= ' onchange="'.$onchange.'"';	// no working under CSP without 'unsafe-inline'
+
 		if ($extra_label)
 		{
 			//in php5 this put's the extra-label at the end: $select = array($extra_label) + $select;
@@ -286,77 +274,30 @@ class uiaccountsel
 			);
 		}
 		//echo "<p>html::select('$name',".print_r($selected,True).",".print_r($select,True).",True,'$options')</p>\n";
-		$html = html::select($name,$selected,$select,True,$options.' id="'.$element_id.'"',$lines > 1 ? $lines : 0,true);
+		$html = html::select($name,$selected,$select,True,$options.' id="'.$element_id.
+			'" data-popup-link="'.htmlspecialchars($link).'"',$lines > 1 ? $lines : 0,false);
 
 		if (!$only_groups && ($lines > 0 && $this->account_selection == 'popup' || $lines > 1 && $this->account_selection == 'primary_group'))
 		{
-			$js = "window.open('$link','uiaccountsel','$popup_options'); return false;";
 			$html .= html::submit_button('search','Search accounts',$js,false,
-				' title="'.html::htmlspecialchars(lang('Search accounts')).'"','search','phpgwapi');
+				' title="'.html::htmlspecialchars(lang('Search accounts')).
+				'" class="uiaccountselection_trigger" id="'.$element_id.'_popup"','search','phpgwapi','button');
 			$need_js_popup = True;
 		}
 		elseif (!$only_groups && ($lines == 1 || $lines > 0 && $this->account_selection == 'primary_group'))
 		{
-			$js = "if (selectBox = document.getElementById('$element_id')) if (!selectBox.multiple) { if(\$j(selectBox).unchosen) \$j(selectBox).unchosen(); selectBox.size=$multi_size; selectBox.multiple=true; if (selectBox.options[0].value=='') selectBox.options[0] = null;";
-			if(count($select) > html::SELECT_ENHANCED_ROW_COUNT || true)
-			{
-				$js .= "\$j(selectBox).css('width','100%'); ";
-			}
-			if (!in_array($this->account_selection,array('groupmembers','selectbox')))	// no popup!
-			{
-				$js .= " this.src='".common::image('phpgwapi','search')."'; this.title='".
-					html::htmlspecialchars(lang('Search accounts'))."';} else {window.open('$link','uiaccountsel','$popup_options');";
-				$need_js_popup = True;
-			}
-			else
-			{
-				$js .= "this.style.display='none'; selectBox.style.width='100%';";
-			}
-			$js .= "} return false;";
-			$html .= html::submit_button('search','Select multiple accounts',$js,false,
-				' title="'.html::htmlspecialchars(lang('Select multiple accounts')).'"','users','phpgwapi');
-		}
-		// jDots needs a little re-do, since it plays with the layout
-		$html .= "<script>
-		egw_LAB.wait(function() {
-			if (\$j().chosen)
-				window.setTimeout(function() {
-					\$j('#$element_id').unchosen().chosen({width:'90%', placeholder_text: '".lang('Select multiple accounts')."'});
-				},200);
-		});
-</script>";
-		if($need_js_popup && !$GLOBALS['egw_info']['flags']['uiaccountsel']['addOption_installed'])
-		{
-			$html .= '<script language="JavaScript">
-function addOption(id,label,value,do_onchange)
-{
-	selectBox = document.getElementById(id);
-	for (i=0; i < selectBox.length; i++) {
-'.//		check existing entries if they're already there and only select them in that case
-'		if (selectBox.options[i].value == value) {
-			selectBox.options[i].selected = true;
-			break;
-		}
-	}
-	if (i >= selectBox.length) {
-		if (!do_onchange) {
-			if (selectBox.length && selectBox.options[0].value=="") selectBox.options[0] = null;
-			selectBox.multiple=true;
-			selectBox.size='.$multi_size.';
-		}
-		selectBox.options[selectBox.length] = new Option(label,value,false,true);
-	}
-	if (selectBox.onchange && do_onchange) selectBox.onchange();
-	$j(selectBox).trigger("liszt:updated");
-}
-</script>';
-			$GLOBALS['egw_info']['flags']['uiaccountsel']['addOption_installed'] = True;
+			$html .= html::submit_button('search','Select multiple accounts','',false,
+				' title="'.html::htmlspecialchars(lang('Select multiple accounts')).
+				'" class="uiaccountselection_trigger" id="'.$element_id.'_multiple"','users','phpgwapi','button');
 		}
 		return $html;
 	}
 
 	function popup()
 	{
+		// switch CSP to script-src 'unsafe-inline', until code get fixed here to work without
+		egw_framework::csp_script_src_attrs('unsafe-inline');
+
 		global $query;	// nextmatch requires that !!!
 
 		$app = get_var('app',array('POST','GET'));
@@ -477,7 +418,7 @@ function addOption(id,label,value,do_onchange)
 		{
 			$link_data['group_id'] = $group['account_id'];
 
-			$GLOBALS['egw']->template->set_var('onclick',"addOption('$element_id','".
+			$GLOBALS['egw']->template->set_var('onclick',"ownAddOption('$element_id','".
 				addslashes(common::grab_owner_name($group['account_id']))."','$group[account_id]',".(int)($multiple==1).")".
 				(!$multiple ? '; window.close()' : ''));
 
@@ -491,7 +432,7 @@ function addOption(id,label,value,do_onchange)
 				if($use == 'both')	// allow selection of groups
 				{
 					$GLOBALS['egw']->template->fp('cal','group_cal',True);
-					$GLOBALS['egw']->template->set_var('js_addAllGroups',"addOption('$element_id','".
+					$GLOBALS['egw']->template->set_var('js_addAllGroups',"ownAddOption('$element_id','".
 						addslashes(common::grab_owner_name($group['account_id']))."','$group[account_id]',".(int)($multiple==1).")".
 						(!$multiple ? '; window.close();' : ';'));
 					$GLOBALS['egw']->template->fp('selectAllGroups','group_selectAll',True);
@@ -555,12 +496,12 @@ function addOption(id,label,value,do_onchange)
 				'lid'		=> $user['account_lid'],
 				'firstname'	=> $user['account_firstname'] ? $user['account_firstname'] : '&nbsp;',
 				'lastname'	=> $user['account_lastname'] ? $user['account_lastname'] : '&nbsp;',
-				'onclick'	=> "addOption('$element_id','".
+				'onclick'	=> "ownAddOption('$element_id','".
 					addslashes(common::grab_owner_name($user['account_id']))."','$user[account_id]',".(int)($multiple==1).")".
 					(!$multiple ? '; window.close()' : ''),
 			));
 			$GLOBALS['egw']->template->fp('list','accounts_list',True);
-			$GLOBALS['egw']->template->set_var('js_addAllAccounts',"addOption('$element_id','".
+			$GLOBALS['egw']->template->set_var('js_addAllAccounts',"ownAddOption('$element_id','".
 					addslashes(common::grab_owner_name($user['account_id']))."','$user[account_id]',".(int)($multiple==1).")".
 					(!$multiple ? '; window.close()' : ';'));
 			$GLOBALS['egw']->template->fp('selectAllAccounts','accounts_selectAll',True);

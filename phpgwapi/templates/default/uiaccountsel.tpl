@@ -3,7 +3,7 @@
 <script LANGUAGE="JavaScript">
 	window.focus();
 
-	function addOption(id,label,value,multiple)
+	function ownAddOption(id,label,value,multiple)
 	{
 		openerSelectBox = opener.document.getElementById(id);
 
@@ -99,7 +99,7 @@
 		border: 1px solid white;
 		text-align: center;
 		cursor: pointer;
-		cusror: hand;
+		cursor: hand;
 	}
 	.letter_box_active {
 		font-weight: bold;

@@ -91,8 +91,7 @@ class idots_framework extends egw_framework
 		if (self::$header_done) return '';
 		self::$header_done = true;
 
-		// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
-		header('Content-type: text/html; charset='.translation::charset());
+		self::_send_headers();
 
 		// catch error echo'ed before the header, ob_start'ed in the header.inc.php
 		$content = ob_get_contents();

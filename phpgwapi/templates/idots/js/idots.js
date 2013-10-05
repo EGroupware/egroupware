@@ -43,10 +43,11 @@
 	}
 	
 	/**
-	 * Installing resize handler for divAppbox and et2_container, as et2 otherwise can not correctly size nextmatch
+	 * Initialisation, when DOM is ready
 	 */
 	$j(function()
 	{
+		// Installing resize handler for divAppbox and et2_container, as et2 otherwise can not correctly size nextmatch
 		$j(window).resize(function(){
 			var appbox_height = $j(window).height()-$j('#topmenu').height()-$j('#divAppIconBar').height()-
 				$j('#divStatusBar').height()-$j('#divAppboxHeader').height()-$j('#divPoweredBy').height()-20;
@@ -55,5 +56,25 @@
 			$j('.et2_container').height(appbox_height);
 		});
 		$j(window).resize();
+		$j(window).load(function(){	// fixes sometimes not called resize, probably due to timing issues
+			$j(window).resize();
+		});
+		
+		// allowing javascript urls in topmenu and sidebox only under CSP by binding click handlers to them
+		var href_regexp = /^javascript:([^\(]+)\((.*)?\);?$/;
+		jQuery('#topmenu_items,#thesideboxcolumn').on('click','a[href^="javascript:"]',function(){
+			var matches = this.href.match(href_regexp);
+			if (matches && typeof window[matches[1]] == 'function') {
+				var args = [];
+				if (matches.length > 1 && matches[2] !== undefined) args = JSON.parse('['+matches[2].replace(/'/g,'"')+']');
+				window[matches[1]].apply(window.framework, args);
+			}
+			else
+			{
+				alert('Do NOT know how to execute '+this.href);
+			}
+			// return false to not execute link itself, which would violate CSP
+			return false;
+		});
 	});
 })();

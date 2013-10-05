@@ -477,16 +477,7 @@ class calendar_ui
 	*/
 	function _select_box($title,$name,$options,$baseurl='')
 	{
-		if ($baseurl)	// we append the value to the baseurl
-		{
-			if (substr($baseurl,-1) != '=') $baseurl .= strpos($baseurl,'?') === False ? '?' : '&';
-			$onchange="egw_appWindow('calendar').location='$baseurl'+this.value;";
-		}
-		else			// we add $name=value to the actual location
-		{
-			$onchange="var win=egw_appWindow('calendar'); win.location=win.location+(win.location.search.length ? '&' : '?')+'".$name."='+this.value;";
-		}
-		$select = ' <select style="width: 100%;" name="'.$name.'" onchange="'.$onchange.'" title="'.
+		$select = ' <select style="width: 100%;" name="'.$name.'" id="calendar_'.$name.'" title="'.
 			lang('Select a %1',lang($title)).'">'.
 			$options."</select>\n";
 
@@ -665,11 +656,10 @@ class calendar_ui
 
 		// Search
 		$blur = addslashes(html::htmlspecialchars(lang('Search').'...'));
-		$value = @$_POST['keywords'] ? html::htmlspecialchars($_POST['keywords']) : $blur;
+		$value = @$_POST['keywords'] ? html::htmlspecialchars($_POST['keywords']) : '';
 		$file[++$n] = array(
 			'text' => html::form('<input name="keywords" value="'.$value.'" style="width: 97.5%;"'.
-				' onFocus="if(this.value==\''.$blur.'\') this.value=\'\';"'.
-				' onBlur="if(this.value==\'\') this.value=\''.$blur.'\';" title="'.lang('Search').'">',
+				' placeholder="'.$blur.'" title="'.lang('Search').'">',
 				'','/index.php',array('menuaction'=>'calendar.calendar_uilist.listview')),
 			'no_lang' => True,
 			'link' => False,
@@ -717,34 +707,13 @@ class calendar_ui
 		}
 
 		// Category Selection
-		$onchange = "var value = '';
-		if(selectBox = document.getElementById('cat_id')) {
-			for(i=0; i < selectBox.length; ++i) {
-				if (selectBox.options[i].selected) {
-					value += (value ? ',' : '') + selectBox.options[i].value;
-				}
-			}
-		}";
-		if ($baseurl)	// we append the value to the baseurl
-		{
-			$cat_baseurl = $baseurl ? $baseurl.'&cat_id=' : '';
-			if (substr($cat_baseurl,-1) != '=') $cat_baseurl .= strpos($cat_baseurl,'?') === False ? '?' : '&';
-			$onchange.="egw_appWindow('calendar').location='$cat_baseurl'+value;";
-		}
-		else			// we add $name=value to the actual location
-		{
-			$onchange.="var win=egw_appWindow('calendar'); win.location=win.location+(win.location.search.length ? '&' : '?')+'cat_id='+value;";
-		}
-
 		$cat_id = explode(',',$this->cat_id);
 		$options = '<option value="0">'.lang('All categories').'</option>'.
 			$this->categories->formatted_list('select','all',$cat_id,'True');
-		$icon_onclick = "if(selectBox = document.getElementById('cat_id')) {
-		if (!selectBox.multiple) {selectBox.size=4; selectBox.multiple=true;}}";
 
-		$select = ' <select style="width: 87%;" id="cat_id" name="cat_id" onchange="'.$onchange.'" title="'.
+		$select = ' <select style="width: 87%;" id="calendar_cat_id" name="cat_id" title="'.
 			lang('Select a %1',lang('Category')). '"'.($cat_id && count($cat_id) > 1 ? ' multiple=true size=4':''). '>'.
-			$options."</select>\n" . html::image('phpgwapi','attach','','onclick="'.$icon_onclick.'"');
+			$options."</select>\n" . html::image('phpgwapi','attach','','id="calendar_cat_id_multiple"');
 
 		$file[++$n] =  array(
 			'text' => $select,
@@ -790,32 +759,17 @@ class calendar_ui
 			}
 			// we no longer exclude non-accounts from the account-selection: it shows all types of participants
 			$accounts = explode(',',$this->owner);
+			$current_view_url = egw::link('/index.php',array(
+				'menuaction' => $this->view_menuaction,
+				'date' => $this->date,
+			),false);
 			$file[] = array(
 				'text' => "
-<script type=\"text/javascript\">
-function load_cal(url,id,no_reset) {
-	var owner='';
-	var i = 0;
-	selectBox = document.getElementById(id);
-	for(i=0; i < selectBox.length; ++i) {
-		if (selectBox.options[i].selected) {
-			owner += (owner ? ',' : '') + selectBox.options[i].value;
-		}
-	}
-	if (owner) {
-		if (typeof no_reset == 'unknown') no_reset = false;
-		egw_appWindow('calendar').location=url+'&owner='+(no_reset?'':'0,')+owner;
-	}
-}
-</script>
-".
+<script type=\"text/javascript\" src=\"{$GLOBALS['egw_info']['server']['webserver_url']}/calendar/js/navigation.js\" id=\"calendar-navigation-script\" data-current-view-url=\"".htmlspecialchars($current_view_url)."\"/></script>\n".
+
 				$this->accountsel->selection('owner','uical_select_owner',$accounts,'calendar+',count($accounts) > 1 ? 4 : 1,False,
 					' style="width: '.(count($accounts) > 1 && in_array($this->common_prefs['account_selection'],array('selectbox','groupmembers')) ? '100%' : '87%').';"'.
-					' title="'.lang('select a %1',lang('user')).'" onchange="load_cal(\''.
-					egw::link('/index.php',array(
-						'menuaction' => $this->view_menuaction,
-						'date' => $this->date,
-					),false).'\',\'uical_select_owner\');"','',$grants,false,array($this->bo,'participant_name')),
+					' title="'.lang('select a %1',lang('user')).'"','',$grants,false,array($this->bo,'participant_name')),
 				'no_lang' => True,
 				'link' => False
 			);
@@ -839,10 +793,8 @@ function load_cal(url,id,no_reset) {
 			}
 			if($options != '') {
 				$options = '<option value="">'.lang('Insert in document')."</option>\n" . $options;
-				$name = 'merge';
-				$onchange="var win=egw_appWindow('calendar'); win.location=win.location+(win.location.search.length ? '&' : '?')+'".$name."='+this.value;this.value='';";
-				$select = ' <select style="width: 100%;" name="'.$name.'" onchange="'.$onchange.'" title="'.
-					lang('Select a %1',lang('merge document...')).'">'.
+				$select = ' <select style="width: 100%;" name="merge" id="calendar_merge" title="'.
+					html::htmlspecialchars(lang('Select a %1',lang('merge document...'))).'">'.
 					$options."</select>\n";
 
 				$file[] = array(

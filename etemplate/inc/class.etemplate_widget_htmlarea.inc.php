@@ -31,8 +31,10 @@ class etemplate_widget_htmlarea extends etemplate_widget
 	public function beforeSendToClient($cname)
 	{
 		$form_name = self::form_name($cname, $this->id);
-		
-		
+
+		// tell framework CK Editor needs eval and inline javascript :(
+		egw_framework::csp_script_src_attrs(array('unsafe-eval', 'unsafe-inline'));
+
 		$config = egw_ckeditor_config::get_ckeditor_config_array($this->attrs['mode'], $this->attrs['height'],
 			$this->attrs['expand_toolbar'],$this->attrs['base_href']
 		);

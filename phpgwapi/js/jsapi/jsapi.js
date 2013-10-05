@@ -794,7 +794,14 @@ function dropdown_menu_hack(el)
  */
 function egw_link_handler(_link, _app)
 {
-	window.location.href = _link;
+	if (window.framework)
+	{
+		window.framework.linkHandler(_link, _app);
+	}
+	else
+	{
+		window.location.href = _link;
+	}
 }
 
 /**
@@ -843,3 +850,72 @@ function egw_preferences(name, apps)
 		egw_link_handler(egw_webserverUrl+url, current_app);
 	}
 }
+
+/**
+ * Support functions for uiaccountselection class
+ * 
+ * @ToDo: should be removed if uiaccountsel class is no longer in use
+ */
+function addOption(id,label,value,do_onchange)
+{
+	selectBox = document.getElementById(id);
+	for (var i=0; i < selectBox.length; i++) {
+	//		check existing entries if they're already there and only select them in that case
+		if (selectBox.options[i].value == value) {
+			selectBox.options[i].selected = true;
+			break;
+		}
+	}
+	if (i >= selectBox.length) {
+		if (!do_onchange) {
+			if (selectBox.length && selectBox.options[0].value=='') selectBox.options[0] = null;
+			selectBox.multiple=true;
+			selectBox.size=4;
+		}
+		selectBox.options[selectBox.length] = new Option(label,value,false,true);
+	}
+	if (selectBox.onchange && do_onchange) selectBox.onchange();
+}
+/**
+ * Install click handlers for popup and multiple triggers of uiaccountselection
+ */
+$j(function(){
+	$j(document).on('click', 'input.uiaccountselection_trigger',function(){
+		var selectBox = document.getElementById(this.id.replace(/(_multiple|_popup)$/, ''));
+		if (selectBox)
+		{
+			var link = selectBox.getAttribute('data-popup-link');
+
+			if (selectBox.multiple || this.id.match(/_popup$/)) 
+			{
+				window.open(link, 'uiaccountsel', 'width=600,height=420,toolbar=no,scrollbars=yes,resizable=yes');
+			}
+			else
+			{
+				selectBox.size = 4; 
+				selectBox.multiple = true; 
+				if (selectBox.options[0].value=='') selectBox.options[0] = null;
+
+				if (!$j(selectBox).hasClass('groupmembers') && !$j(selectBox).hasClass('selectbox'))	// no popup!
+				{
+					this.src = egw.image('search');
+					this.title = egw.lang('Search accounts');
+				}
+				else
+				{
+					this.style.display = 'none'; 
+					selectBox.style.width = '100%';
+				}
+			}
+		}
+	});
+	$j(document).on('change', 'select.uiaccountselection',function(e){
+		if (this.value == 'popup')
+		{
+			var link = this.getAttribute('data-popup-link');
+			window.open(link, 'uiaccountsel', 'width=600,height=420,toolbar=no,scrollbars=yes,resizable=yes');
+			e.preventDefault();
+		}
+	});
+});
+

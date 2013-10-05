@@ -838,15 +838,14 @@ class resources_ui
 				$selected,
 				array_merge($resources,$res_cats),
 				$no_lang=true,
-				$options='data-placeholder="'.lang('select resources').'" style="width: 100%;" onchange="load_cal(\''.
-					egw::link('/index.php',$param,false).'\',\'uical_select_resource\',true);" id="uical_select_resource"',
+				$options=' style="width: 100%;" id="uical_select_resource"',
 				$multiple=4,
-				true
+				false
 			);
 			return array(
 				array(
 					// Add some jQuery to make sure dropdown is displayed
-					'text' => $selectbox . "<script>var lab = egw_LAB || \$LAB; lab.wait(function(){ \$j('select[name=\"owner\[\]\"]').parent('td').css('overflow','visible').parents('div.divSidebox').css('overflow','visible');});</script>",
+					'text' => $selectbox,
 					'no_lang' => True,
 					'link' => False
 				)

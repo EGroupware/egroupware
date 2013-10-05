@@ -136,6 +136,9 @@ class etemplate_old extends boetemplate
 	*/
 	function __construct($name='',$load_via='')
 	{
+		// tell framework old eTemplate apps needs eval and inline javascript :(
+		egw_framework::csp_script_src_attrs(array('unsafe-eval', 'unsafe-inline'));
+
 		parent::__construct($name,$load_via);
 
 		$this->sitemgr = isset($GLOBALS['Common_BO']) && is_object($GLOBALS['Common_BO']);

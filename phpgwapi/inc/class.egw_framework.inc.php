@@ -84,6 +84,59 @@ abstract class egw_framework
 	}
 
 	/**
+	 * Additional attributes for CSP script-src 'self'
+	 *
+	 * @var array
+	 */
+	private static $csp_script_src_attrs = array('unsafe-eval');
+
+	/**
+	 * Set/get Content-Security-Policy attributes for script-src: 'unsafe-eval' and/or 'unsafe-inline'
+	 *
+	 * Using CK-Editor currently requires both to be set :(
+	 *
+	 * Old pre-et2 apps might need to call egw_framework::csp_script_src_attrs(array('unsafe-eval','unsafe-inline'))
+	 *
+	 * EGroupware itself currently still requires 'unsafe-eval'!
+	 *
+	 * @param string|array $set=array() 'unsafe-eval' and/or 'unsafe-inline' (without quotes!)
+	 * @return string with attributes eg. "'unsafe-eval' 'unsafe-inline'"
+	 */
+	public static function csp_script_src_attrs($set=null)
+	{
+		foreach((array)$set as $attr)
+		{
+			if (!in_array($attr, self::$csp_script_src_attrs))
+			{
+				self::$csp_script_src_attrs[] = $attr;
+				//error_log(__METHOD__."() swiching CSP OFF for script-src '$attr' ".function_backtrace());
+			}
+		}
+		return self::$csp_script_src_attrs ? "'".implode("' '", self::$csp_script_src_attrs)."'" : '';
+	}
+
+	/**
+	 * Send HTTP headers: Content-Type and Content-Security-Policy
+	 */
+	protected function _send_headers()
+	{
+		// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
+		header('Content-type: text/html; charset='.translation::charset());
+
+		// content-security-policy header:
+		// - "script-src 'self' 'unsafe-eval'" allows only self and eval (eg. ckeditor), but forbids inline scripts, onchange, etc
+		// - "connect-src 'self'" allows ajax requests only to self
+		// - "style-src 'self' 'unsave-inline'" allows only self and inline style, which we need
+		// - "frame-src 'self' manual.egroupware.org" allows frame and iframe content only for self or manual.egroupware.org
+		$csp = "script-src 'self' ".($script_attrs=self::csp_script_src_attrs())."; connect-src 'self'; style-src 'self' 'unsafe-inline'; frame-src 'self' manual.egroupware.org";
+		//error_log(__METHOD__."() script_attrs=$script_attrs");
+		//$csp = "default-src * 'unsafe-eval' 'unsafe-inline'";	// allow everything
+		header("Content-Security-Policy: $csp");
+		header("X-Webkit-CSP: $csp");	// Chrome: <= 24, Safari incl. iOS
+		header("X-Content-Security-Policy: $csp");	// FF <= 22
+	}
+
+	/**
 	 * Constructor for static variables
 	 */
 	public static function init_static()
