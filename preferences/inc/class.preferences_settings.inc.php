@@ -121,6 +121,8 @@ class preferences_settings
 			$msg = $this->process_array($GLOBALS['egw']->preferences->$attribute,
 				(array)$GLOBALS['egw']->preferences->{$attribute}[$appname], $preserve['types'], $appname, $attribute, true);
 		}
+		// get sidebox of given app
+		if ($appname != 'common') $GLOBALS['egw_info']['flags']['currentapp'] = $appname;
 
 		if ($msg) egw_framework::message($msg, $msg_type ? $msg_type : 'error');
 
