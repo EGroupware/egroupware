@@ -90,7 +90,7 @@ function nm_action(_action, _senders, _target, _ids)
 			}
 			else if(target)
 			{
-				window.open(url, target);
+				egw.open_link(url, target);
 			}
 			else
 			{
@@ -99,7 +99,7 @@ function nm_action(_action, _senders, _target, _ids)
 			break;
 
 		case 'popup':
-			egw_openWindowCentered2(url,target,_action.data.width,_action.data.height);
+			egw.open_link(url,target,_action.data.width+'x'+_action.data.height);
 			break;
 
 		case 'egw_open':
