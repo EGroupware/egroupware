@@ -1233,6 +1233,30 @@ unset($query['actions']);
 			mktime(date("H"), date("i"), date("s"), date("m"), date("d"), date("Y"));
 		$dateToday = date("Y-m-d");
 		$rv = array();
+		$actions = self::get_actions();
+		foreach(array('composeasnew','reply','reply_all','forward','flagged','unflagged','delete','print','infolog','tracker','save','header') as $a => $act)
+		{
+			//error_log(__METHOD__.__LINE__.' '.$act.'->'.array2string($actions[$act]));
+			switch ($act)
+			{
+				case 'forward':
+					$actionsenabled[$act]=$actions[$act]['children']['forwardinline'];
+					break;
+				case 'save':
+					$actionsenabled[$act]=$actions[$act]['children']['save2disk'];
+					break;
+				case 'header':
+					$actionsenabled[$act]=$actions['view']['children'][$act];
+					break;
+				case 'flagged':
+				case 'unflagged':
+					$actionsenabled[$act]=$actions['mark']['children'][$act];
+					break;
+				default:
+					if (isset($actions[$act])) $actionsenabled[$act]=$actions[$act];
+			}
+		}
+
 		$i=0;
 		$firstuid = null;
 		foreach((array)$_headers as $header)
@@ -1522,6 +1546,7 @@ unset($query['actions']);
 			$data["class"] = implode(' ', $css_styles);
 			$data['attachmentsPresent'] = $imageTag;
 			$data['attachmentsBlock'] = $imageHTMLBlock;
+			$data['toolbaractions'] = json_encode($actionsenabled);
 			$rv[] = $data;
 			//error_log(__METHOD__.__LINE__.array2string($result));
 		}
@@ -1680,8 +1705,13 @@ unset($query['actions']);
 				+ $field_data;
 			}
 		}
-
-		$etpl->setElementAttribute('toolbar','actions', self::get_actions());
+		$actionsenabled = self::get_actions();
+		unset($actionsenabled['mark']['children']['setLabel']);
+		unset($actionsenabled['mark']['children']['unsetLabel']);
+		unset($actionsenabled['mark']['children']['read']);
+		unset($actionsenabled['mark']['children']['unread']);
+		unset($actionsenabled['mark']['children']['undelete']);
+		$etpl->setElementAttribute('toolbar','actions', $actionsenabled);
 		if (empty($subject)) $subject = lang('no subject');
 		$content['msg'] = (is_array($error_msg)?implode("<br>",$error_msg):$error_msg);
 		// Send mail ID so we can use it for actions

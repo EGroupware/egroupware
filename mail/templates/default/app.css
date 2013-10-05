@@ -361,10 +361,32 @@ input[type=button] {
 	position: relative;
 	margin-top: 3px;
 }
+#mail-display_toolbar {
+	padding: 0px;
+}
+#mail-display_toolbar > button > span {
+	padding: .2em .4em;
+}
+#mail-display_toolbar > button > span > img {
+	width: 16px;
+	padding: 0px;
+	height: 16px !important;
+}
 #mail-index_mailPreviewIcons {
 	position: absolute;
 	right: 0;
 	top: 0;
+}
+#mail-index_toolbar {
+	padding: 0px;
+}
+#mail-index_toolbar > button > span {
+	padding: .2em .4em;
+}
+#mail-index_toolbar > button > span > img {
+	width: 16px;
+	padding: 0px;
+	height: 16px !important;
 }
 #mail-index_mailPreviewContainer {
 	position: absolute;

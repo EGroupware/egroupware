@@ -23,7 +23,6 @@ class mail_compose
 	(
 		'action'		=> True,
 		'compose'		=> True,
-		'testhtmlarea'	=> True,
 		'composeFromDraft'	=> True,
 		'getAttachment'		=> True,
 		'fileSelector'		=> True,
@@ -892,7 +891,7 @@ $CAtFStart = array2string($_content);
 			if (array_search($id_prepend.$iS,$identities)===false)
 			{
 				$identities[$singleIdentity->id] = $id_prepend.$iS;
-				$sel_options['SENDER'][$iS] = $id_prepend.$iS;
+				$sel_options['identity'][$iS] = $id_prepend.$iS;
 			}
 			if(in_array($singleIdentity->id,$defaultIds) && $defaultIdentity==0)
 			{
@@ -1090,12 +1089,12 @@ $CAtFStart = array2string($_content);
 			$content = array_merge($content,$_content);
 
 			if (!empty($content['folder'])) $sel_options['folder']=$this->ajax_searchFolder(0,true);
-			$content['sender'] = (empty($content['sender'])?($selectedSender?(array)$selectedSender:''):$content['sender']);
+			$content['identity'] = (empty($content['identity'])?($selectedSender?(array)$selectedSender:''):$content['identity']);
 		}
 		else
 		{
-			//error_log(__METHOD__.__LINE__.array2string(array($sel_options['SENDER'],$selectedSender)));
-			$content['sender'] = ($selectedSender?(array)$selectedSender:'');
+			//error_log(__METHOD__.__LINE__.array2string(array($sel_options['identity'],$selectedSender)));
+			$content['identity'] = ($selectedSender?(array)$selectedSender:'');
 			//error_log(__METHOD__.__LINE__.$content['body']);
 		}
 		$content['is_html'] = ($content['mimeType'] == 'html'?true:'');
@@ -1113,32 +1112,12 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 		$preserv['is_plain'] = $content['is_plain'];
 		if (isset($content['mimeType'])) $preserv['mimeType'] = $content['mimeType'];
 		$sel_options['mimeType'] = array("plain"=>"plain","html"=>"html");
+		$sel_options['priority'] = array(1=>"high",2=>"normal",3=>"low");
+		if (!isset($content['priority']) || empty($content['priority'])) $content['priority']=2;
+		if ($content['mimeType']=='html'); $content['rtfEditorFeatures']='simple-withimage';//egw_ckeditor_config::get_ckeditor_config();
 		$etpl = new etemplate_new('mail.compose');
 
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
-	}
-
-	function testhtmlarea($content=null)
-	{
-		error_log(__METHOD__.__LINE__.array2string($content));
-		if ($content)
-		{
-			$this->content['mimeType'] = 'plain';
-			$content['is_html'] = ($this->content['mimeType'] == 'html'?true:'');
-			$content['is_plain'] = ($this->content['mimeType'] == 'html'?'':true);
-		}
-		else
-		{
-			$content['body'] = 'bla bla bla';
-			$content['is_html'] = ($this->content['mimeType'] == 'html'?true:'');
-			$content['is_plain'] = ($this->content['mimeType'] == 'html'?'':true);
-			//error_log(__METHOD__.__LINE__.array2string(array($sel_options['SENDER'],$selectedSender)));
-			$content['SENDER'] = ($selectedSender?(array)$selectedSender:'');
-			//error_log(__METHOD__.__LINE__.$content['body']);
-			$content['mail_'.($this->content['mimeType'] == 'html'?'html':'plain').'text'] = $content['body'];
-		}
-		$etpl = new etemplate_new('mail.testhtmlarea');
-		$etpl->exec('mail.mail_compose.testhtmlarea',$content,$sel_options,$readonlys,$preserv,2);
 	}
 	
 	/**
@@ -1598,7 +1577,7 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 		$userEMailAddresses = $this->preferences->getUserEMailAddresses();
 
 		// get message headers for specified message
-		print "AAAA: $_folder, $_uid, $_partID<br>";
+		//print "AAAA: $_folder, $_uid, $_partID<br>";
 		$headers	= $mail_bo->getMessageEnvelope($_uid, $_partID);
 		#$headers	= $mail_bo->getMessageHeader($_uid, $_partID);
 		$this->sessionData['uid'] = $_uid;

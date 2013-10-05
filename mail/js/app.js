@@ -91,7 +91,7 @@ app.mail = AppJS.extend(
 			var subject = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mail_displaysubject');
 			var body = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mail_displaybody');
 			body.node.parentNode.style.top=subject.node.offsetTop+40+'px';
-			var app_registry = egw.link_get_registry(this.appname);
+			var app_registry = egw.link_get_registry('mail');//this.appname);
 			//console.log(app_registry);
 			w=870;
 			if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
@@ -411,6 +411,7 @@ app.mail = AppJS.extend(
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewSubject').set_value(subject);
 		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').set_value((dataElem.data.attachmentsBlock.length>1?dataElem.data.attachmentsBlock:''));
 		if (dataElem.data.attachmentsBlock.length<1) etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent');
+		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('toolbar').set_actions(JSON.parse(dataElem.data.toolbaractions));
 		var IframeHandle = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('messageIFRAME');
 		//console.log(IframeHandle);
 		IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));

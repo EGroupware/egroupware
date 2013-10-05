@@ -6,12 +6,25 @@
 		<vbox class="mailCompose mailComposeHeaderSection" width="100%">
 			<hbox class="mailComposeHeaders" width="99%">
 				<description value="Identity"/>
-				<taglist-email id="sender" width="88%" allowFreeEntries="false" maxSelection="1" autocomplete_url="mail.mail_compose.ajax_searchIdentities" onclick="app.mail.address_click"/>
+				<menulist>
+					<menupopup id="identity" onchange="app.mail.submitOnChange"/>
+				</menulist>
 			</hbox>
 			<hbox>
 				<button label="Send" id="button[send]"/> <buttononly value="saveAsDraft" id="button[saveAsDraft]" image="fileexport" onclick="app.mail.saveAsDraft"/>
 				<vfs-select id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose"/>
 				<file statustext="Select file to attach to message" multiple='true' progress='mailUploadProgress' onFinish="app.mail.uploadForCompose" id="uploadForCompose" drop_target ="mailUploadSection"/>
+				<description value="Save:"/>
+				<image class="et2_button_icon" label="Save as infolog on send" src="infolog/navbar" no_lang="1"/>
+				<checkbox statustext="check to save as infolog on send" id="to_infolog" options="$cont[to_infolog]"/>
+				<image class="et2_button_icon" label="Save as tracker on send" src="tracker/navbar" no_lang="1"/>
+				<checkbox statustext="check to save as trackerentry on send" id="to_tracker" options="$cont[to_tracker]"/>
+				<description value="Recieve notification"/>
+				<checkbox statustext="check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)" id="disposition" options="$cont[disposition]"/>
+				<description value="Priority"/>
+				<menulist>
+					<menupopup id="priority"/>
+				</menulist>
 			</hbox>
 			<hbox class="mailComposeHeaders" width="99%">
 				<description value="To"/>
@@ -50,7 +63,7 @@
 			</hbox>
 			<groupbox class="mailSignature">
 				<menulist>
-					<menupopup id="signatureID"/>
+					<menupopup id="signatureID" onchange="app.mail.submitOnChange"/>
 				</menulist>
 				<description value="Stationery"/>
 				<menulist>
