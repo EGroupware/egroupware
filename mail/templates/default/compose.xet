@@ -6,7 +6,7 @@
 		<vbox class="mailCompose mailComposeHeaderSection" width="100%">
 			<hbox class="mailComposeHeaders" width="99%">
 				<description value="Identity"/>
-				<taglist-email id="SENDER" width="88%" allowFreeEntries="false" maxSelection="1" autocomplete_url="mail.mail_compose.ajax_searchIdentities" onclick="app.mail.address_click"/>
+				<taglist-email id="sender" width="88%" allowFreeEntries="false" maxSelection="1" autocomplete_url="mail.mail_compose.ajax_searchIdentities" onclick="app.mail.address_click"/>
 			</hbox>
 			<hbox>
 				<button label="Send" id="button[send]"/> <buttononly value="saveAsDraft" id="button[saveAsDraft]" image="fileexport" onclick="app.mail.saveAsDraft"/>
@@ -15,23 +15,23 @@
 			</hbox>
 			<hbox class="mailComposeHeaders" width="99%">
 				<description value="To"/>
-				<taglist-email id="TO" width="88%" onclick="app.mail.address_click"/>
+				<taglist-email id="to" width="88%" onclick="app.mail.address_click"/>
 			</hbox>
 			<hbox class="mailComposeHeaders" width="99%">
 				<description value="Cc"/>
-				<taglist-email id="CC" width="88%" onclick="app.mail.address_click"/>
+				<taglist-email id="cc" width="88%" onclick="app.mail.address_click"/>
 			</hbox>
 			<hbox class="mailComposeHeaders" width="99%">
 				<description value="Bcc"/>
-				<taglist-email id="BCC" width="88%" onclick="app.mail.address_click"/>
+				<taglist-email id="bcc" width="88%" onclick="app.mail.address_click"/>
 			</hbox>
 			<hbox class="mailComposeHeaders" width="99%">
 				<description value="Reply To"/>
-				<taglist-email id="REPLYTO" width="88%" maxSelection="1" onclick="app.mail.address_click"/>
+				<taglist-email id="replyto" width="88%" maxSelection="1" onclick="app.mail.address_click"/>
 			</hbox>
 			<hbox class="mailComposeHeaders" width="99%">
 				<description value="Store to Folder"/>
-				<taglist id="FOLDER" width="88%" autocomplete_url='mail.mail_compose.ajax_searchFolder' autocomplete_params='' allowFreeEntries="false" onclick="app.mail.address_click"/>
+				<taglist id="folder" width="88%" autocomplete_url='mail.mail_compose.ajax_searchFolder' autocomplete_params='' allowFreeEntries="false" onclick="app.mail.address_click"/>
 			</hbox>
 			<hbox  class="mailComposeHeaders" width="99%">
 				<description value="Subject"/>

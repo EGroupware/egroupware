@@ -358,15 +358,27 @@ $CAtFStart = array2string($_content);
 			$sendOK = true;
 			try
 			{
+				$_content['body'] = ($_content['body'] ? $_content['body'] : $_content['mail_'.($_content['mimeType'] == 'html'?'html':'plain').'text']);
+				$success = $this->send($_content);
+				if ($success==false)
+				{
+					$sendOK=false;
+					$message = $this->errorInfo;
+				}
 			}
 			catch (egw_exception_wrong_userinput $e)
 			{
 				$sendOK = false;
+				$message = $e->getMessage();
 			}
 			if ($sendOK)
 			{
 				egw_framework::refresh_opener(lang('Message send successfully.'),'mail');
 				egw_framework::window_close();
+			}
+			if ($sendOK == false)
+			{
+				egw_framework::refresh_opener(lang('Message send failed: %1',$message),'mail');
 			}
 		}
 		if ($_content['button']['saveAsDraft'])
@@ -1067,7 +1079,7 @@ $CAtFStart = array2string($_content);
 					if ($addressObject->host == '.SYNTAX-ERROR.') continue;
 					$address = imap_rfc822_write_address($addressObject->mailbox,$addressObject->host,$addressObject->personal);
 					//$address = mail_bo::htmlentities($address, $this->displayCharset);
-					$content[strtoupper($destination)][]=$address;
+					$content[strtolower($destination)][]=$address;
 					$destinationRows++;
 				}
 			}
@@ -1077,13 +1089,13 @@ $CAtFStart = array2string($_content);
 		{
 			$content = array_merge($content,$_content);
 
-			if (!empty($content['FOLDER'])) $sel_options['FOLDER']=$this->ajax_searchFolder(0,true);
-			$content['SENDER'] = (empty($content['SENDER'])?($selectedSender?(array)$selectedSender:''):$content['SENDER']);
+			if (!empty($content['folder'])) $sel_options['folder']=$this->ajax_searchFolder(0,true);
+			$content['sender'] = (empty($content['sender'])?($selectedSender?(array)$selectedSender:''):$content['sender']);
 		}
 		else
 		{
 			//error_log(__METHOD__.__LINE__.array2string(array($sel_options['SENDER'],$selectedSender)));
-			$content['SENDER'] = ($selectedSender?(array)$selectedSender:'');
+			$content['sender'] = ($selectedSender?(array)$selectedSender:'');
 			//error_log(__METHOD__.__LINE__.$content['body']);
 		}
 		$content['is_html'] = ($content['mimeType'] == 'html'?true:'');

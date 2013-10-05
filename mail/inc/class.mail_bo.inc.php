@@ -3038,7 +3038,7 @@ class mail_bo
 		if ($_charset===false) $_charset = self::$displayCharset;
 		$_stringORG = $_string;
 		$_string = @htmlspecialchars($_string,ENT_QUOTES,$_charset, false);
-		if (empty($_string) && !empty($_stringORG)) $_string = @htmlspecialchars(translation::convert($_stringORG,self::detect_encoding($_stringORG),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
+		if (empty($_string) && !empty($_stringORG)) $_string = @htmlspecialchars(translation::convert($_stringORG,translation::detect_encoding($_stringORG),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
 		return $_string;
 	}
 
@@ -4931,6 +4931,11 @@ class mail_bo
 			settype($bytes, 'integer');
 
 		return $bytes . ' ' . $type ;
+	}
+
+	static function detect_qp(&$sting) {
+		$needle = '/(=[0-9][A-F])|(=[A-F][0-9])|(=[A-F][A-F])|(=[0-9][0-9])/';
+		return preg_match("$needle",$string);
 	}
 
 	/**
