@@ -3883,7 +3883,7 @@ class mail_bo
 					if ($hasOther && $preserveHTML) $newBody = $matches[1]. $newBody. $matches[3];
 				}
 				//error_log(__METHOD__.__LINE__.' after purify:'.$newBody);
-				if ($preserveHTML==false) $newBody = $mailClass->convertHTMLToText($newBody,true);
+				if ($preserveHTML==false) $newBody = translation::convertHTMLToText($newBody,self::$displayCharset,true,$stripalltags=true);
 				//error_log(__METHOD__.__LINE__.' after convertHTMLToText:'.$newBody);
 				if ($preserveHTML==false) $newBody = nl2br($newBody); // we need this, as htmLawed removes \r\n
 				$mailClass->getCleanHTML($newBody,false,$preserveHTML); // remove stuff we regard as unwanted
@@ -5254,7 +5254,7 @@ class mail_bo
 						elseif (empty($AltBody) && $mailObject->BodyContentType=='text/html')
 						{
 							$mailObject->IsHTML(true);
-							$AltBody = self::convertHTMLToText($Body,false,$stripalltags=true);
+							$AltBody = translation::convertHTMLToText($Body,self::$displayCharset,false,$stripalltags=true);
 						}
 						else
 						{
@@ -5325,7 +5325,7 @@ class mail_bo
 						elseif (empty($AltBody) && $mailObject->BodyContentType=='text/html')
 						{
 							$mailObject->IsHTML(true);
-							$AltBody = self::convertHTMLToText($Body,false,$stripalltags=true);
+							$AltBody = translation::convertHTMLToText($Body,self::$displayCharset,false,$stripalltags=true);
 						}
 						else
 						{

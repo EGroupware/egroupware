@@ -1691,6 +1691,7 @@ unset($query['actions']);
 		$content['mail_displaybody'] = $mailBody;
 		//_debug_array($attachments);
 		$content['mail_displayattachments'] = $attachmentHTMLBlock;
+		$content['mail_id']=$rowID;
 //_debug_array($content);
 		$readonlys = $preserv = $content;
 		$etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);

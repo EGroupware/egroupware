@@ -148,6 +148,14 @@ app.mail = AppJS.extend(
 	 */
 	mail_open: function(_action, _senders, _mode) {
 		//console.log("mail_open",_action, _senders);
+		if (typeof _senders == 'undefined')
+		{
+			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
+			{
+				var _senders = [];
+				_senders.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
+			}
+		}
 		var _id = _senders[0].id;
 		// reinitialize the buffer-info on selected mails
 		if (!(_mode == 'tryastext' || _mode == 'tryashtml' || _mode == 'view')) _mode = 'view';
@@ -194,6 +202,19 @@ app.mail = AppJS.extend(
 	 */
 	mail_compose: function(_action, _elems)
 	{
+		if (typeof _elems == 'undefined')
+		{
+			//console.log(this.et2.getArrayMgr('content').data,this.et2.getArrayMgr("content").getEntry('mail_id'));
+			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
+			{
+				var _elems = [];
+				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
+			}
+		}
+		console.log(_action, _elems);
+		var idsToProcess = '';
+		var multipleIds = false;
+		var url = window.egw_webserverUrl+'/index.php?';
 		// Extra info passed to egw.open()
 		var settings = {
 			// 'Source' Mail UID
@@ -202,23 +223,15 @@ app.mail = AppJS.extend(
 			from: ''
 		};
 		
-		if (typeof _elems == 'undefined')
-		{
-			// No ids, try from content
-			settings.id = this.et2.getArrayMgr("content").getEntry('mail_id') || '';
-		}
-		else
-		{
-			// We only handle one for everything but forward
-			settings.id = _elems[0].id;
-		}
+		// We only handle one for everything but forward
+		settings.id = (typeof _elems == 'undefined'?'':_elems[0].id);
 		
 		switch(_action.id)
 		{
 			case 'compose':
 				if (_elems.length == 1)
 				{
-					mail_parentRefreshListRowStyle(settings.id,settings.id);
+					//mail_parentRefreshListRowStyle(settings.id,settings.id);
 				}
 				else
 				{
@@ -579,8 +592,17 @@ app.mail = AppJS.extend(
 	/**
 	 * mail_refreshMessageGrid, function to call to reread ofthe current folder
 	 */
-	mail_refreshMessageGrid: function() {
-		var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
+	mail_refreshMessageGrid: function(_isPopup) {
+		if (typeof _isPopup == 'undefined') _isPopup = false;
+		var nm;
+		if (_isPopup)
+		{
+			nm = window.opener.etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
+		}
+		else
+		{
+			nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
+		}
 		nm.applyFilters(); // this should refresh the active folder
 	},
 
@@ -815,18 +837,37 @@ app.mail = AppJS.extend(
 	 */
 	mail_flag: function(_action, _elems)
 	{
+		var do_nmactions = true;
+		var msg;
+		if (typeof _elems == 'undefined')
+		{
+			do_nmactions = false;//indicates that this action is probably a popup?
+			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
+			{
+				msg = {};
+				msg['msg'] = [this.et2.getArrayMgr('content').getEntry('mail_id') || ''];
+			}
+		}
+
 		//alert(_action.id+' - '+_elems[0].id);
 		//console.log(_action, _elems);
-		var msg = this.mail_getFormData(_elems);
-		if (_action.id.substring(0,2)=='un') {
-			this.mail_removeRowClass(_elems,_action.id.substring(2));
+		if (do_nmactions)
+		{
+			msg = this.mail_getFormData(_elems);
+			if (_action.id.substring(0,2)=='un') {
+				this.mail_removeRowClass(_elems,_action.id.substring(2));
+			}
+			else
+			{
+				this.mail_removeRowClass(_elems,'un'+_action.id);
+			}
+			this.mail_setRowClass(_elems,_action.id);
 		}
 		else
 		{
-			this.mail_removeRowClass(_elems,'un'+_action.id);
+			//mail_parentRefreshListRowStyle(msg,_action.id);
 		}
-		this.mail_setRowClass(_elems,_action.id);
-		this.mail_flagMessages(_action.id,msg);
+		this.mail_flagMessages(_action.id,msg,(do_nmactions?false:true));
 	},
 
 	/**
@@ -835,13 +876,13 @@ app.mail = AppJS.extend(
 	 * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
 	 * @param _elems
 	 */
-	mail_flagMessages: function(_flag, _elems)
+	mail_flagMessages: function(_flag, _elems,_isPopup)
 	{
-		//console.log(_flag, _elems);
+		console.log(_flag, _elems);
 		app.mail.app_refresh(egw.lang('flag messages'), 'mail');
 		egw.json('mail.mail_ui.ajax_flagMessages',[_flag, _elems])
 			.sendRequest();
-		this.mail_refreshMessageGrid();
+		this.mail_refreshMessageGrid(_isPopup);
 	},
 
 	/**
@@ -862,6 +903,14 @@ app.mail = AppJS.extend(
 	 */
 	mail_header: function(_action, _elems)
 	{
+		if (typeof _elems == 'undefined')
+		{
+			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
+			{
+				var _elems = [];
+				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
+			}
+		}
 		//alert('mail_header('+_elems[0].id+')');
 		var url = window.egw_webserverUrl+'/index.php?';
 		url += 'menuaction=mail.mail_ui.displayHeader';	// todo compose for Draft folder
@@ -877,6 +926,14 @@ app.mail = AppJS.extend(
 	 */
 	mail_mailsource: function(_action, _elems)
 	{
+		if (typeof _elems == 'undefined')
+		{
+			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
+			{
+				var _elems = [];
+				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
+			}
+		}
 		//alert('mail_mailsource('+_elems[0].id+')');
 		var url = window.egw_webserverUrl+'/index.php?';
 		url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
@@ -893,6 +950,14 @@ app.mail = AppJS.extend(
 	 */
 	mail_save: function(_action, _elems)
 	{
+		if (typeof _elems == 'undefined')
+		{
+			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
+			{
+				var _elems = [];
+				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
+			}
+		}
 		//alert('mail_save('+_elems[0].id+')');
 		var url = window.egw_webserverUrl+'/index.php?';
 		url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
@@ -917,6 +982,14 @@ app.mail = AppJS.extend(
 	 */
 	mail_save2fm: function(_action, _elems)
 	{
+		if (typeof _elems == 'undefined')
+		{
+			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
+			{
+				var _elems = [];
+				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
+			}
+		}
 		var _id = _elems[0].id;
 		var dataElem = egw.dataGetUIDdata(_id);
 		var url = window.egw_webserverUrl+'/index.php?';
@@ -942,6 +1015,14 @@ app.mail = AppJS.extend(
 	 */
 	mail_infolog: function(_action, _elems)
 	{
+		if (typeof _elems == 'undefined')
+		{
+			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
+			{
+				var _elems = [];
+				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
+			}
+		}
 		//alert('mail_infolog('+_elems[0].id+')');return;
 		var url = window.egw_webserverUrl+'/index.php?';
 		url += 'menuaction=infolog.infolog_ui.import_mail';	// todo compose for Draft folder
@@ -957,6 +1038,14 @@ app.mail = AppJS.extend(
 	 */
 	mail_tracker: function(_action, _elems)
 	{
+		if (typeof _elems == 'undefined')
+		{
+			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
+			{
+				var _elems = [];
+				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
+			}
+		}
 		//alert('mail_tracker('+_elems[0].id+')');
 		var url = window.egw_webserverUrl+'/index.php?';
 		url += 'menuaction=tracker.tracker_ui.import_mail';	// todo compose for Draft folder

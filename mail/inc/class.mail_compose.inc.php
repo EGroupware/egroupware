@@ -1145,7 +1145,7 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 	private function getComposeFrom($mail_id, $part_id, $from, &$_focusElement, &$suppressSigOnTop, &$isReply)
 	{
 		$content = array();
-		
+		error_log(__METHOD__.__LINE__.array2string($mail_id)."$part_id, $from, $_focusElement, $suppressSigOnTop, $isReply");
 		$hA = mail_ui::splitRowID($mail_id);
 		$msgUID = $hA['msgUID'];
 		$folder = $hA['folder'];
@@ -1164,7 +1164,7 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 					$suppressSigOnTop = true;
 					break;
 				case 'reply':
-				case 'replyAll':
+				case 'reply_all':
 					$content = $this->getReplyData($from == 'reply' ? 'single' : 'all', $icServer, $folder, $msgUID, $part_id);
 					
 					$_focusElement = 'body';
