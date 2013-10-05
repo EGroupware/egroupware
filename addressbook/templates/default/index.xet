@@ -16,7 +16,7 @@
 	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%">
 			<columns>
-				<column/>
+				<column width="20"/>
 				<column/>
 				<column disabled="@no_role"/>
 				<column/>
