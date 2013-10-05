@@ -2,9 +2,8 @@
 .countrySelect select { width: 150px; }
 .custom_country input {display: none; }
 .contactid:before { content:"#" }
-.emailCol div { width: 100%; overflow: hidden; }
-.redItalic { color: red; font-style: italic; }
-.fixedHeight,.telNumbers { height: 12px; }
+.emailCol div { width: 100%; }
+.fixedHeight,.telNumbers { height: 12px; overflow: hidden; text-overflow: ellipsis}
 .telNumbers { white-space: nowrap; }
 .leftPad5 { padding-left: 5px; }
 .bold { font-weight: bold; }

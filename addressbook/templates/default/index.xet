@@ -37,7 +37,7 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description font_style="1"/>
+					<nextmatch-header label="Type" id="type" options="1"/>
 					<grid spacing="0" padding="0">
 						<columns>
 							<column/>
@@ -161,7 +161,7 @@
 						<url-email id="${row}[email]" readonly="true" class="fixedHeight"/>
 						<url-email id="${row}[email_home]" readonly="true" class="fixedHeight"/>
 					</vbox>
-					<customfields-list cols="1" id="$row" rows="1" class="customfields"/>
+					<customfields-list id="$row" class="customfields"/>
 					<textbox multiline="true" id="${row}[note]" no_lang="1" readonly="true"/>
 					<description id="${row}[distrib_lists]"/>
 					<menulist>
@@ -199,7 +199,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.index" template="" lang="" group="0" version="1.9.001">
+	<template id="addressbook.index" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -229,7 +229,7 @@
 					<template align="right" id="addressbook.index.right_add"/>
 				</row>
 				<row>
-					<nextmatch id="nm" options="addressbook.index.rows" span="all"/>
+					<nextmatch id="nm" template="addressbook.index.rows" span="all"/>
 				</row>
 				<row class="noPrint" disabled="!@nm[selectcols]=/legacy_actions/">
 					<button statustext="Add a new contact" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>

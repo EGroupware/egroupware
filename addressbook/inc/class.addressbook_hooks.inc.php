@@ -253,7 +253,7 @@ class addressbook_hooks
 			);
 		}
 
-		if ($GLOBALS['egw_info']['user']['apps']['felamimail'])
+		if ($GLOBALS['egw_info']['user']['apps']['felamimail'] || $GLOBALS['egw_info']['user']['apps']['mail'])
 		{
 			$settings['force_mailto'] = array(
 				'type'   => 'check',
