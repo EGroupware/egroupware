@@ -201,10 +201,12 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			{
 				var w_h = _popup.split('x');
 				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = egw_getWindowOuterHeight();
-				var popup_window =  _wnd.egw_openWindowCentered2(url, _target, w_h[0], w_h[1], false, _target_app, true);
+				var popup_window = _wnd.egw_openWindowCentered2(url, _target, w_h[0], w_h[1], false, _target_app, true);
 				
 				// Remember which windows are open
 				_storeWindow.call(this, _target_app, popup_window);
+				
+				return popup_window;
 			}
 			else if (typeof _wnd.egw_link_handler == 'function' && (typeof _target == 'undefined' || _target =='_self' || typeof this.link_app_list()[_target] != "undefined"))
 			{
