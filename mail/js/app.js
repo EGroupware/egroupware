@@ -257,8 +257,7 @@ app.mail = AppJS.extend(
 				settings.from = _action.id;
 		}
 
-		var window_name = settings.from + '_' + settings.id;
-		
+		var window_name = 'compose_' + (settings.from || '') + '_' + settings.id;
 		egw().open('','mail','add',settings,window_name);
 		return true;
 	},
