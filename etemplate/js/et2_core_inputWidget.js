@@ -258,7 +258,7 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 		var ok = true;
 		
 		// Check for required
-		if(this.options.needed && !this.options.readonly && (this.getValue() == null || this.getValue().valueOf() == ''))
+		if(this.options && this.options.needed && !this.options.readonly && (this.getValue() == null || this.getValue().valueOf() == ''))
 		{
 			messages.push(this.egw().lang('input required'));
 			ok = false;
