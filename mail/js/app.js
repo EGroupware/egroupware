@@ -200,6 +200,8 @@ app.mail = AppJS.extend(
 	/**
 	 * Compose, reply or forward a message
 	 *
+	 * @function
+	 * @memberOf mail
 	 * @param _action _action.id is 'compose', 'composeasnew', 'reply', 'reply_all' or 'forward' (forward can be multiple messages)
 	 * @param _elems _elems[0].id is the row-id
 	 */
@@ -208,16 +210,13 @@ app.mail = AppJS.extend(
 		if (typeof _elems == 'undefined')
 		{
 			//console.log(this.et2.getArrayMgr('content').data,this.et2.getArrayMgr("content").getEntry('mail_id'));
-			if (this.et2.getArrayMgr("content").getEntry('mail_id'))
+			if (this.et2 && this.et2.getArrayMgr("content").getEntry('mail_id'))
 			{
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
 		}
 		console.log(_action, _elems);
-		var idsToProcess = '';
-		var multipleIds = false;
-		var url = window.egw_webserverUrl+'/index.php?';
 		// Extra info passed to egw.open()
 		var settings = {
 			// 'Source' Mail UID
@@ -246,7 +245,7 @@ app.mail = AppJS.extend(
 			case 'forwardasattach':
 				if (_elems.length||_action.id == 'forwardasattach')
 				{
-					url = 'menuaction=mail.mail_compose.compose';
+					var url = 'menuaction=mail.mail_compose.compose';
 					return this.mail_openComposeWindow(url,_action.id == 'forwardasattach', _elems);
 				}
 				else
@@ -261,10 +260,69 @@ app.mail = AppJS.extend(
 		}
 
 		var window_name = 'compose_' + (settings.from || '') + '_' + settings.id;
-		egw().open('','mail','add',settings,window_name);
-		return true;
+		return egw().open('','mail','add',settings,window_name,'mail');
 	},
 	
+	/**
+	 * Set content into a compose window
+	 * 
+	 * @function
+	 * @memberOf mail
+	 * 
+	 * @param {String} window_name The name of an open content window.
+	 * @param content Data to set into the window's fields
+	 * @param content.to Addresses to add to the to line
+	 * @param content.cc Addresses to add to the CC line
+	 * @param content.bcc Addresses to add to the BCC line
+	 * 
+	 * @return {boolean} Success
+	 */
+	setCompose: function(window_name, content)
+	{
+		// Get window
+		var compose = window.open('', window_name);
+		if(!compose || compose.closed) return false;
+		
+		// Get etemplate of popup
+		var compose_et2 = compose.etemplate2.getByApplication('mail');
+		if(!compose_et2 || compose_et2.length != 1 || !compose_et2[0].widgetContainer)
+		{
+			return false;
+		}
+		
+		// Set each field provided
+		var success = true;
+		for(var field in content)
+		{
+			try
+			{
+				var widget = compose_et2[0].widgetContainer.getWidgetById(field);
+				
+				// Merge array values, replace strings
+				var value = widget.getValue() || content[field];
+				if(jQuery.isArray(value))
+				{
+					if(jQuery.isArray(content[field]))
+					{
+						value.concat(content[field]);
+					}
+					else
+					{
+						value.push(content[field]);
+					}
+				}
+				widget.set_value(value);
+			}
+			catch(e)
+			{
+				egw.log("error", "Unable to set field %s to '%s' in window '%s'", field, content[field],window_name);
+				success = false;
+				continue;
+			}
+		}
+		return success;
+	},
+		 
 	/**
 	 * Compose, reply or forward a message
 	 *
