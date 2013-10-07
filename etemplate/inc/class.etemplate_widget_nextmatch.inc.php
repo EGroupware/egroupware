@@ -531,14 +531,16 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * - string 'iconUrl' full url of icon, better use 'icon'
 	 * - boolean|string 'allowOnMultiple' should action be shown if multiple lines are marked, or string 'only', default true!
 	 * - boolean|string 'enabled' is action available, or string with javascript function to call, default true!
-	 * - string 'disableClass' class name to use with enabled='javaScript:nm_not_disableClass'
+	 * - string 'disableClass' class name to check if action should be disabled (if presend, enabled if not)
 	 *   (add that css class in get_rows(), if row lacks rights for an action)
-	 * - boolena 'hideOnDisabled' hide disabled actions, default false
+	 * - string 'enableClass' class name to check if action should be enabled (if present, disabled if not)
+	 * - string 'enableId' regular expression row-id has to match to enable action
+	 * - boolean 'hideOnDisabled' hide disabled actions, default false
 	 * - string 'type' type of action, default 'popup' for contenxt menus, 'drag' or 'drop'
 	 * - boolean 'default' is that action the default action, default false
 	 * - array  'children' array with actions of submenu
 	 * - int    'group' to group items, default all actions are in one group
-	 * - string 'onExecute' javascript to run, default 'javaScript:nm_action',
+	 * - string 'onExecute' javascript to run, default 'javaScript:nm_action' or eg. 'javaScript:app.myapp.someMethod'
 	 *   which runs action specified in nm_action attribute:
 	 * - string 'nm_action'
 	 *   + 'alert'  debug action, shows alert with action caption, id and id's of selected rows
@@ -551,6 +553,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * - string 'height' for popup
 	 * - string 'confirm' confirmation message
 	 * - string 'confirm_multiple' confirmation message for multiple selected, defaults to 'confirm'
+	 * - boolean 'postSubmit' eg. downloads need a submit via POST request not our regular Ajax submit, only works with nm_action=submit!
 	 *
 	 * @param array $actions id indexed array of actions / array with valus for keys: 'iconUrl', 'caption', 'onExecute', ...
 	 * @param string $template_name='' name of the template, used as default for app name of images
