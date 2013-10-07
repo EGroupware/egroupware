@@ -78,8 +78,8 @@ class egw_session
 	/**
 	 * Used mcrypt algorithm and mode
 	 */
-	const MCRYPT_ALGO = MCRYPT_RIJNDAEL_128;
-	const MCRYPT_MODE = MCRYPT_MODE_CBC;
+	const MCRYPT_ALGO = MCRYPT_TRIPLEDES;
+	const MCRYPT_MODE = MCRYPT_MODE_ECB;
 
 	/**
 	* current user login (account_lid@domain)
