@@ -258,8 +258,8 @@ app.mail = AppJS.extend(
 				// No further client side processing needed for these
 				settings.from = _action.id;
 		}
-
-		var window_name = 'compose_' + (settings.from || '') + '_' + settings.id;
+		var compose_list = egw.getOpenWindows("mail", /^compose_/);
+		var window_name = 'compose_' + compose_list.length + '_'+ (settings.from || '') + '_' + settings.id;
 		return egw().open('','mail','add',settings,window_name,'mail');
 	},
 	
