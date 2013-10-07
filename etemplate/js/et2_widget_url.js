@@ -266,7 +266,7 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 				if(typeof link == 'function')
 				{
 					this.span.click(this, link);
-					this.span.attr("href", "javascript:void(0)");
+					this.span.removeAttr("href");
 				}
 				else
 				{
@@ -303,9 +303,9 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 			this.set_value(_values["value"]);
 		}
 		if (typeof _values["class"] != "undefined")
-                {
-                        _nodes[0].setAttribute("class", _values["class"]);
-                }
+		{
+				_nodes[0].setAttribute("class", _values["class"]);
+		}
 	}
 });
 et2_register_widget(et2_url_ro, ["url_ro", "url-email_ro", "url-phone_ro"]);
