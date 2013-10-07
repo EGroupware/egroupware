@@ -342,11 +342,18 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			return list;
 		},
 		
+		/**
+		 * Notify egw of closing a named window
+		 * 
+		 * @param {String} appname
+		 * @param {Window|String} closed Window that was closed, or its name
+		 * @returns {undefined}
+		 */
 		windowClosed: function(appname, closed) {
-			var closed_window = closed
-			var closed_name = closed.name;
+			var closed_name = typeof closed == "string" ? closed : closed.name;
+			var closed_window = typeof closed == "string" ? null : closed;
 			window.setTimeout(function() {
-				if(!closed_window.closed) return;
+				if(closed_window != null && !closed_window.closed) return;
 				var open_windows = egw.getOpenWindows(appname, closed_name)
 
 				var index = open_windows.indexOf(closed_name);
