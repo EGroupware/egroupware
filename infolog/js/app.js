@@ -149,7 +149,7 @@ app.infolog = AppJS.extend(
 
 						}
 					}
-		var confirmDeleteDialog = et2_dialog.show_dialog(callbackDeleteDialog, egw.lang("Do you really want to DELETE this Rule"),egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
+		var confirmDeleteDialog = et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
 
 	},
 

@@ -360,7 +360,7 @@ app.home = AppJS.extend(
 			}
 			if(target_action == null)
 			{
-				var link = et2_createWidget('link-entry', {label: egw.lang('Add')}, this.portlet_container);
+				var link = et2_createWidget('link-entry', {label: this.egw.lang('Add')}, this.portlet_container);
 				var dialog = et2_dialog.show_dialog(
 					function(button_id) {
 						if(button_id == et2_dialog.CANCEL_BUTTON) return;
@@ -380,7 +380,7 @@ app.home = AppJS.extend(
 						widget._process_edit(button_id,{list: new_list});
 					},
 					'Add',
-					egw.lang('Add'), {},
+					this.egw.lang('Add'), {},
 					et2_dialog.BUTTONS_OK_CANCEL
 				);
 				dialog.set_message(link.getDOMNode());

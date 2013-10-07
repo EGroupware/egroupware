@@ -18,10 +18,6 @@ app.filemanager = AppJS.extend(
 {
 	appname: 'filemanager',
 	/**
-	 * et2 widget container
-	 */
-	et2: null,
-	/**
 	 * path widget
 	 */
 	path_widget: null,
@@ -71,7 +67,6 @@ app.filemanager = AppJS.extend(
 		// call parent
 		this._super.apply(this, arguments);
 
-		this.et2 = et2.widgetContainer;
 		this.path_widget = this.et2.getWidgetById('path');
 		
 		// get clipboard from browser localstore and update button tooltips
@@ -80,6 +75,12 @@ app.filemanager = AppJS.extend(
 			this.clipboard_files = JSON.parse(window.localStorage[this.clipboard_localstore_key]);
 		}
 		this.clipboard_tooltips();
+		
+		if (typeof this.readonly != 'undefined')
+		{
+			this.set_readonly.apply(this, this.readonly);
+			delete this.readonly;
+		}
 	},
 	
 	/**
@@ -215,9 +216,9 @@ app.filemanager = AppJS.extend(
 			if (_data.uploaded[file].confirm && !_data.uploaded[file].confirmed)
 			{
 				var buttons = [
-					{text: egw.lang("Yes"), id: "overwrite", class: "ui-priority-primary", "default": true},
-					{text: egw.lang("Rename"), id:"rename"},
-					{text: egw.lang("Cancel"), id:"cancel"},
+					{text: this.egw.lang("Yes"), id: "overwrite", class: "ui-priority-primary", "default": true},
+					{text: this.egw.lang("Rename"), id:"rename"},
+					{text: this.egw.lang("Cancel"), id:"cancel"},
 				];
 				if (_data.uploaded[file].confirm === "is_dir")
 					buttons.shift();
@@ -240,9 +241,9 @@ app.filemanager = AppJS.extend(
 					}
 				},
 				_data.uploaded[file].confirm === "is_dir" ?
-					egw.lang("There's already a directory with that name!") :
-					egw.lang('Do you want to overwrite existing file <b>%1</b> in directory <b>%2</b>?', _data.uploaded[file].name, _data.path),
-				egw.lang('File <b>%1</b> already exists', _data.uploaded[file].name),
+					this.egw.lang("There's already a directory with that name!") :
+					this.egw.lang('Do you want to overwrite existing file %1 in directory %2?', _data.uploaded[file].name, _data.path),
+				this.egw.lang('File %1 already exists', _data.uploaded[file].name),
 				_data.uploaded[file].name, buttons, file);
 				// setting required data for callback in as my_data
 				dialog.my_data = {
@@ -302,7 +303,7 @@ app.filemanager = AppJS.extend(
 	{
 		if (this.clipboard_files.length == 0)
 		{
-			alert(egw.lang('Clipboard is empty!'));
+			alert(this.egw.lang('Clipboard is empty!'));
 			return;
 		}
 		switch(_type)
@@ -347,7 +348,7 @@ app.filemanager = AppJS.extend(
 				{
 					that._do_action(action_id, paths);	
 				}
-			}, _action.data.confirm, egw.lang('Confirmation required'), et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
+			}, _action.data.confirm, this.egw.lang('Confirmation required'), et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
 		}
 		else
 		{
@@ -360,7 +361,7 @@ app.filemanager = AppJS.extend(
 	 */
 	createdir: function()
 	{
-		var dir = prompt(egw.lang('New directory'));
+		var dir = prompt(this.egw.lang('New directory'));
 
 		if (dir)
 		{
@@ -375,7 +376,7 @@ app.filemanager = AppJS.extend(
 	 */
 	symlink: function()
 	{
-		var target = prompt(egw.lang('Link target'));
+		var target = prompt(this.egw.lang('Link target'));
 
 		if (target)
 		{
@@ -598,14 +599,14 @@ app.filemanager = AppJS.extend(
 		}
 		var text = $j(document.createElement('div')).css({left: '30px', position: 'absolute'});
 		// add filename or number of files for multiple files
-		text.text(_elems.length > 1 ? _elems.length+' '+egw.lang('files') : this.basename(_elems[0].id));
+		text.text(_elems.length > 1 ? _elems.length+' '+this.egw.lang('files') : this.basename(_elems[0].id));
 		div.append(text);
 
 		// Add notice of Ctrl key, if supported
 		if(window.FileReader && 'draggable' in document.createElement('span') && 
 			navigator && navigator.userAgent.indexOf('Chrome') >= 0)
 		{
-			text.append('<br />' + egw.lang('Hold Ctrl to drag files to your computer'));
+			text.append('<br />' + this.egw.lang('Hold Ctrl to drag files to your computer'));
 		}
 		return div;
 	},
@@ -621,8 +622,11 @@ app.filemanager = AppJS.extend(
 	set_readonly: function(_path, _ro)
 	{
 		//alert('set_readonly("'+_path+'", '+_ro+')');
-		if(!this.path_widget) return;
-		
+		if (!this.path_widget)	// widget not yet ready, try later
+		{
+			this.readonly = [_path, _ro];
+			return;
+		}
 		var path =  this.path_widget.getValue();
 		
 		if (_path == path)

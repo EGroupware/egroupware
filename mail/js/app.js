@@ -8,6 +8,11 @@
  * @version $Id$
  */
 
+/**
+ * UI for mail
+ * 
+ * @augments AppJS
+ */
 app.mail = AppJS.extend(
 {
 	appname: 'mail',
@@ -358,7 +363,7 @@ app.mail = AppJS.extend(
 		if (typeof prefAskForMultipleForward == 'undefined') prefAskForMultipleForward = egw.preference('prefaskformultipleforward','mail');
 		if (cbAllMessages == true || cbAllVisibleMessages == true)
 		{
-			Check = confirm(egw.lang('multiple forward of all mesages'));
+			Check = confirm(this.egw.lang('multiple forward of all mesages'));
 			alreadyAsked=true;
 		}
 
@@ -381,7 +386,7 @@ app.mail = AppJS.extend(
 		}
 		if (prefAskForMultipleForward == 1 && Check == true && alreadyAsked == false && sMessageList.length >0 && _messageList['msg'].length>1)
 		{
-			askme = egw.lang('multipleforward');
+			askme = this.egw.lang('multipleforward');
 			//if (cbAllMessages == true || cbAllVisibleMessages == true) askme = egw_appWindow('felamimail').lang_confirm_all_messages; // not supported
 			Check = confirm(askme);
 		}
@@ -593,7 +598,7 @@ app.mail = AppJS.extend(
 		for (var i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
-			if (typeof _status[i]['olddesc'] !== 'undefined' && _status[i]['olddesc'] !== '#skip-user-interaction-message#') app.mail.app_refresh(egw.lang("Renamed Folder %1 to %2",_status[i]['olddesc'],_status[i]['desc'], 'mail'));
+			if (typeof _status[i]['olddesc'] !== 'undefined' && _status[i]['olddesc'] !== '#skip-user-interaction-message#') app.mail.app_refresh(this.egw.lang("Renamed Folder %1 to %2",_status[i]['olddesc'],_status[i]['desc'], 'mail'));
 			ftree.renameItem(i,_status[i]['id'],_status[i]['desc']);
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
 			if (_status[i]['id']==selectedNode.id)
@@ -618,7 +623,7 @@ app.mail = AppJS.extend(
 		for (var i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
-			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') app.mail.app_refresh(egw.lang("Removed Folder %1 ",_status[i], 'mail'));
+			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') app.mail.app_refresh(this.egw.lang("Removed Folder %1 ",_status[i], 'mail'));
 			ftree.deleteItem(i,(selectedNode.id==i));
 			var selectedNodeAfter = ftree.getSelectedNode();
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
@@ -644,7 +649,7 @@ app.mail = AppJS.extend(
 		for (var i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
-			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') app.mail.app_refresh(egw.lang("Reloaded Folder %1 ",_status[i], 'mail'));
+			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') app.mail.app_refresh(this.egw.lang("Reloaded Folder %1 ",_status[i], 'mail'));
 			ftree.refreshItem(i);
 			var selectedNodeAfter = ftree.getSelectedNode();
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
@@ -758,7 +763,7 @@ app.mail = AppJS.extend(
 		}
 		var msg = this.mail_getFormData(_elems);
 		//alert(_action.id+','+ msg);
-		app.mail.app_refresh(egw.lang('delete messages'), 'mail');
+		app.mail.app_refresh(this.egw.lang('delete messages'), 'mail');
 		if (!calledFromPopup) this.mail_setRowClass(_elems,'deleted');
 		this.mail_deleteMessages(msg,'no',calledFromPopup);
 		if (calledFromPopup && this.mail_isMainWindow==false) window.close();
@@ -772,7 +777,7 @@ app.mail = AppJS.extend(
 	 */
 	mail_deleteMessages: function(_msg,_action,_calledFromPopup)
 	{
-		app.mail.app_refresh(egw.lang('delete messages'), 'mail');
+		app.mail.app_refresh(this.egw.lang('delete messages'), 'mail');
 		egw.json('mail.mail_ui.ajax_deleteMessages',[_msg,(typeof _action == 'undefined'?'no':_action)])
 			.sendRequest();
 		for (var i = 0; i < _msg['msg'].length; i++)  egw.dataDeleteUID(_msg['msg'][i]);
@@ -797,7 +802,7 @@ app.mail = AppJS.extend(
 		}
 		else
 		{
-			app.mail.app_refresh(egw.lang('canceled deletion due to userinteraction'), 'mail');
+			app.mail.app_refresh(this.egw.lang('canceled deletion due to userinteraction'), 'mail');
 			this.mail_removeRowClass(messageList,'deleted');
 		}
 		this.mail_refreshMessageGrid();
@@ -829,7 +834,7 @@ app.mail = AppJS.extend(
 	 * mail_emptyTrash
 	 */
 	mail_emptyTrash: function() {
-		app.mail.app_refresh(egw.lang('empty trash'), 'mail');
+		app.mail.app_refresh(this.egw.lang('empty trash'), 'mail');
 		egw.json('mail.mail_ui.ajax_emptyTrash')
 			.sendRequest(true);
 	},
@@ -838,7 +843,7 @@ app.mail = AppJS.extend(
 	 * mail_compressFolder
 	 */
 	mail_compressFolder: function() {
-		app.mail.app_refresh(egw.lang('compress folder'), 'mail');
+		app.mail.app_refresh(this.egw.lang('compress folder'), 'mail');
 		egw.json('mail.mail_ui.ajax_compressFolder')
 			.sendRequest(true);
 	},
@@ -864,7 +869,7 @@ app.mail = AppJS.extend(
 	 */
 	mail_changeFolder: function(folder,_widget) {
 		//alert('change Folder called:'+folder);
-		app.mail.app_refresh(egw.lang('change folder')+'...', 'mail');
+		app.mail.app_refresh(this.egw.lang('change folder')+'...', 'mail');
 		var img = _widget.getSelectedNode().images[0]; // fetch first image
 		if (!(img.search(eval('/'+'NoSelect'+'/'))<0) || !(img.search(eval('/'+'thunderbird'+'/'))<0))
 		{
@@ -905,7 +910,7 @@ app.mail = AppJS.extend(
 					displayname = displayname.replace(/<\/b>/,"");
 				}
 			}
-			myMsg = (displayname?displayname:folder)+' '+egw.lang('selected');
+			myMsg = (displayname?displayname:folder)+' '+this.egw.lang('selected');
 			app.mail.app_refresh(myMsg, 'mail');
 		}
 		//mail_refreshMessageGrid();// its done in refreshFolderStatus already
@@ -965,7 +970,7 @@ app.mail = AppJS.extend(
 	mail_flagMessages: function(_flag, _elems,_isPopup)
 	{
 		console.log(_flag, _elems);
-		app.mail.app_refresh(egw.lang('flag messages'), 'mail');
+		app.mail.app_refresh(this.egw.lang('flag messages'), 'mail');
 		egw.json('mail.mail_ui.ajax_flagMessages',[_flag, _elems])
 			.sendRequest();
 		this.mail_refreshMessageGrid(_isPopup);
@@ -1292,12 +1297,12 @@ app.mail = AppJS.extend(
 		OldFolderName = OldFolderName.trim();
 		OldFolderName = OldFolderName.replace(/\([0-9]*\)/g,'').trim();
 		//console.log(OldFolderName);
-		NewFolderName = prompt(egw.lang("Add a new Folder to %1:",OldFolderName));
+		NewFolderName = prompt(this.egw.lang("Add a new Folder to %1:",OldFolderName));
 		if (jQuery(NewFolderName).text().length>0) NewFolderName = jQuery(NewFolderName).text();
 		//alert(NewFolderName);
 		if (NewFolderName && NewFolderName.length>0)
 		{
-			app.mail.app_refresh(egw.lang("Adding Folder %1 to %2",NewFolderName, OldFolderName, 'mail'));
+			app.mail.app_refresh(this.egw.lang("Adding Folder %1 to %2",NewFolderName, OldFolderName, 'mail'));
 			egw.json('mail.mail_ui.ajax_addFolder',[_senders[0].iface.id, NewFolderName])
 				.sendRequest(true);
 		}
@@ -1319,12 +1324,12 @@ app.mail = AppJS.extend(
 		OldFolderName = OldFolderName.trim();
 		OldFolderName = OldFolderName.replace(/\([0-9]*\)/g,'').trim();
 		//console.log(OldFolderName);
-		NewFolderName = prompt(egw.lang("Rename Folder %1 to:",OldFolderName));
+		NewFolderName = prompt(this.egw.lang("Rename Folder %1 to:",OldFolderName));
 		if (jQuery(NewFolderName).text().length>0) NewFolderName = jQuery(NewFolderName).text();
 		//alert(NewFolderName);
 		if (NewFolderName && NewFolderName.length>0)
 		{
-			app.mail.app_refresh(egw.lang("Renaming Folder %1 to %2",OldFolderName,NewFolderName, 'mail'));
+			app.mail.app_refresh(this.egw.lang("Renaming Folder %1 to %2",OldFolderName,NewFolderName, 'mail'));
 			egw.json('mail.mail_ui.ajax_renameFolder',[_senders[0].iface.id, NewFolderName])
 				.sendRequest(true);
 		}
@@ -1346,10 +1351,10 @@ app.mail = AppJS.extend(
 		OldFolderName = OldFolderName.trim();
 		OldFolderName = OldFolderName.replace(/\([0-9]*\)/g,'').trim();
 		//console.log(OldFolderName);
-		reallyDelete = confirm(egw.lang("Do you really want to DELETE Folder %1 ? \r\nAll messages in the folder will be lost",OldFolderName));
+		reallyDelete = confirm(this.egw.lang("Do you really want to DELETE Folder %1 ? \r\nAll messages in the folder will be lost",OldFolderName));
 		if (reallyDelete)
 		{
-			app.mail.app_refresh(egw.lang("Deleting Folder %1",OldFolderName, 'mail'));
+			app.mail.app_refresh(this.egw.lang("Deleting Folder %1",OldFolderName, 'mail'));
 			egw.json('mail.mail_ui.ajax_deleteFolder',[_senders[0].iface.id])
 				.sendRequest(true);
 		}
@@ -1487,7 +1492,7 @@ app.mail = AppJS.extend(
 							that._do_action(typeId, actionData['data'],ruleID);
 						}
 					}
-					var confirmDeleteDialog = et2_dialog.show_dialog(callbackDeleteDialog, egw.lang("Do you really want to DELETE this Rule"),egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
+					var confirmDeleteDialog = et2_dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"),this.egw.lang("Delete"), {},et2_dialog.BUTTONS_YES_NO_CANCEL, et2_dialog.WARNING_MESSAGE);
 
 					break;
 				case 'add'	:

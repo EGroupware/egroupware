@@ -258,7 +258,7 @@ app.addressbook = AppJS.extend(
 
 	add_new_list: function(owner)
 	{
-		var name = window.prompt(egw.lang('Name for the distribution list'));
+		var name = window.prompt(this.egw.lang('Name for the distribution list'));
 		if (name)
 		{
 			egw.open('','addressbook', 'list', {

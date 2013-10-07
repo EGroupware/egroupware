@@ -58,6 +58,11 @@ var AppJS = Class.extend({
 	 * Internal reference to etemplate2 widget tree
 	 */
 	et2: null,
+	
+	/**
+	 * Internal reference to egw client-side api object for current app and window
+	 */
+	egw: null,
 
 	/**
 	 * Initialization and setup goes here, but the etemplate2 object
@@ -65,6 +70,8 @@ var AppJS = Class.extend({
 	 */
 	init: function() {
 		window.app[this.appname] = this;
+		
+		this.egw = egw(this.appname, window);
 	},
 
 	/**
