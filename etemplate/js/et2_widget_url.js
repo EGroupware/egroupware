@@ -165,13 +165,14 @@ var et2_url = et2_textbox.extend(
 				}
 				break;
 			case "url-email":
-				if(this.egw().link_registry && this.egw().link_registry.felamimail)
-				{
-					return function() {this.egw().open("","felamimail","add","send_to="+jQuery.base64Encode(value));};
-				}
-				else if(value.indexOf("mailto:") == -1)
+				if(value.indexOf("mailto:") == -1)
 				{
 					value = "mailto:"+value;
+				}
+				if((this.egw().user('apps').mail || this.egw().user('apps').felamimail) && 
+					this.egw().preference('force_mailto','addressbook') == '0' )
+				{
+					return function() {egw.open_link(value);};
 				}
 				break;
 		}
@@ -270,6 +271,10 @@ var et2_url_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 				else
 				{
 					this.span.attr("href", link);
+					if(!this.span.attr("target"))
+					{
+					    this.span.attr("target", "_blank");
+					}
 				}
 				break;
 		}
