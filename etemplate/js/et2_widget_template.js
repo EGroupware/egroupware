@@ -81,14 +81,6 @@ var et2_template = et2_DOMWidget.extend(
 		{
 			var template_name = this.options.template || this.id;
 
-			// Set the api instance to the first part of the name of the
-			// template, if it's in app.function.template format
-			var splitted = template_name.split('.');
-			if(splitted.length >= 3)
-			{
-				this.setApiInstance(egw(splitted[0], this._parent.egw().window));
-			}
-
 			// Check to see if XML is known
 			var xml = null;
 			var templates = this.getRoot().getInstanceManager().templates;
@@ -98,7 +90,7 @@ var et2_template = et2_DOMWidget.extend(
 				// eg: row instead of app.something.row
 				for(var key in templates)
 				{
-					splitted = key.split('.');
+					var splitted = key.split('.');
 					if(splitted[splitted.length-1] == template_name)
 					{
 						xml = templates[key];
@@ -108,7 +100,7 @@ var et2_template = et2_DOMWidget.extend(
 				if(!xml)
 				{
 					// Ask server
-					splitted = template_name.split('.');
+					var splitted = template_name.split('.');
 					var path = this.egw().webserverUrl + "/" + splitted.shift() + "/templates/default/" + splitted.join('.') + ".xet";
 
 					if(splitted.length)

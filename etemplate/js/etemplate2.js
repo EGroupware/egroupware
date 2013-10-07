@@ -189,8 +189,14 @@ etemplate2.prototype._createArrayManagers = function(_data)
  */
 etemplate2.prototype.load = function(_name, _url, _data, _callback)
 {
-
 	egw().debug("info", "Loaded data", _data);
+	var currentapp = _data.currentapp || window.egw_appName;
+	
+	// require necessary translations from server, if not already loaded
+	if ($j.isArray(_data.langRequire))
+	{
+		egw(currentapp, window).langRequire(window, _data.langRequire);
+	}
 
 	// Appname should be first part of the template name
 	var split = _name.split('.');
@@ -221,7 +227,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 
 	// Create the basic widget container and attach it to the DOM
 	this.widgetContainer = new et2_container(null);
-	this.widgetContainer.setApiInstance(egw(appname, egw.elemWindow(this.DOMContainer)));
+	this.widgetContainer.setApiInstance(egw(currentapp, egw.elemWindow(this.DOMContainer)));
 	this.widgetContainer.setInstanceManager(this);
 	this.widgetContainer.setParentDOMNode(this.DOMContainer);
 
@@ -264,7 +270,6 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 		$j(this.DOMContainer).trigger('load', this);
 	};
 	
-
 	
 	// Load & process
 	if(!this.templates[_name])
@@ -641,6 +646,12 @@ function etemplate2_handle_load(_type, _response)
 	if (data['window-focus'])
 	{
 		window.focus();
+	}
+
+	// handle framework.setSidebox calls
+	if (window.framework && jQuery.isArray(data['setSidebox']))
+	{
+		window.framework.setSidebox.apply(window, JSON.parse(data['setSidebox']));
 	}
 	
 	// regular et2 re-load

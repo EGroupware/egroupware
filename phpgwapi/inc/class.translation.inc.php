@@ -331,10 +331,13 @@ class translation
 					//error_log(__METHOD__."('$app', '$lang') caching now ".(is_array($loaded)?'Array('.count($loaded).')':array2string($loaded))." egw_cache::setCache() returned ".array2string($ok));
 				}
 			}
-			if ($loaded) self::$lang_arr = array_merge(self::$lang_arr, $loaded);
-			self::$loaded_apps[$app] = $l;
+			if ($loaded)
+			{
+				self::$lang_arr = array_merge(self::$lang_arr, $loaded);
+				self::$loaded_apps[$app] = $l;	// dont set something not existing to $loaded_apps, no need to load client-side
+			}
 		}
-		//error_log(__METHOD__.'('.array2string($apps).", '$lang') took ".(1000*(microtime(true)-$start))." ms, loaded ".count($loaded)." phrases -> total=".count(self::$lang_arr));//.": ".function_backtrace());
+		//error_log(__METHOD__.'('.array2string($apps).", '$lang') took ".(1000*(microtime(true)-$start))." ms, loaded_apps=".array2string(self::$loaded_apps).", loaded ".count($loaded)." phrases -> total=".count(self::$lang_arr));//.": ".function_backtrace());
 	}
 
 	/**

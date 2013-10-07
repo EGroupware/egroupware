@@ -18,6 +18,9 @@
 	egw_ready;
 */
 
+/**
+ * @augments Class
+ */
 egw.extend('lang', egw.MODULE_GLOBAL, function() {
 
 	/**
@@ -34,6 +37,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 		 * 
 		 * @param string _app
 		 * @param object _message message => translation pairs
+		 * @memberOf egw
 		 */
 		set_lang_arr: function(_app, _messages)
 		{
@@ -60,7 +64,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 			_msg = _msg.toLowerCase();
 			
 			// search apps in given order for a replacement
-			var apps = ['custom', this.getAppName(), 'etemplate', 'common'];
+			var apps = this.lang_order || ['custom', this.getAppName(), 'etemplate', 'common'];
 			for(var i = 0; i < apps.length; ++i)
 			{
 				if (typeof lang_arr[apps[i]] != "undefined" &&
@@ -105,6 +109,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 
 			// Build the file names which should be included
 			var jss = [];
+			var apps = [];
 			for (var i = 0; i < _apps.length; i++)
 			{
 				if (typeof lang_arr[_apps[i].app] === "undefined")
@@ -113,6 +118,11 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 						+ '/phpgwapi/lang.php?app='
 						+ _apps[i].app + '&lang=' + _apps[i].lang);
 				}
+				apps.push(_apps[i].app);
+			}
+			if (this !== egw)
+			{
+				this.lang_order = apps.reverse();
 			}
 
 			// Only continue if we need to include a language

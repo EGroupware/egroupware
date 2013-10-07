@@ -127,6 +127,25 @@ class etemplate_new extends etemplate_widget_template
 		// some apps (eg. InfoLog) set app_header only in get_rows depending on filter settings
 		self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'];
 
+		// compile required translations translations
+		translation::add_app('etemplate');
+		$currentapp = $GLOBALS['egw_info']['flags']['currentapp'];
+		$langRequire = array('common' => array(), 'etemplate' => array());	// keep that order
+		foreach(translation::$loaded_apps as $l_app => $lang)
+		{
+			if (!in_array($l_app, array($currentapp, 'custom')))
+			{
+				$langRequire[$l_app] = array('app' => $l_app, 'lang' => $lang);
+			}
+		}
+		foreach(array($currentapp, 'custom') as $l_app)
+		{
+			if (isset(translation::$loaded_apps[$l_app]))
+			{
+				$langRequire[$l_app] = array('app' => $l_app, 'lang' => translation::$loaded_apps[$l_app]);
+			}
+		}
+
 		$data = array(
 			'etemplate_exec_id' => self::$request->id(),
 			'app_header' => self::$request->app_header,
@@ -135,6 +154,8 @@ class etemplate_new extends etemplate_widget_template
 			'readonlys' => self::$request->readonlys,
 			'modifications' => self::$request->modifications,
 			'validation_errors' => self::$validation_errors,
+			'langRequire' => array_values($langRequire),
+			'currentapp' => $currentapp,
 		);
 
 		// Info required to load the etemplate client-side
@@ -143,7 +164,7 @@ class etemplate_new extends etemplate_widget_template
 			'name' => $this->name,
 			'url' => $GLOBALS['egw_info']['server']['webserver_url'].$this->rel_path,
 			'data' => $data,
-			'DOMNodeID' => $dom_id
+			'DOMNodeID' => $dom_id,
 		);
 		if (self::$response)	// call is within an ajax event / form submit
 		{
@@ -166,15 +187,6 @@ class etemplate_new extends etemplate_widget_template
 			if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/js/app.js'))
 			{
 				egw_framework::validate_file('.','app',$app,false);
-			}
-
-
-			// load translations
-			translation::add_app('etemplate');
-			$langRequire = array();
-			foreach(translation::$loaded_apps as $l_app => $lang)
-			{
-				$langRequire[] = array('app' => $l_app, 'lang' => $lang);
 			}
 
 			$header = $GLOBALS['egw']->framework->header(array(
