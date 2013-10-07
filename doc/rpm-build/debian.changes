@@ -1,3 +1,11 @@
+egroupware (1.8.005.20131007) hardy; urgency=low
+
+  * IMPORTANT UPDATE fixing various problems of 1.8.005 security release
+  * API: fixed not working session encryption, by switch back to previous MCrypt algorithm and mode
+  * Timesheet/PostgreSQL: fix SQL error when selecting a timerange
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 07 Oct 2013 09:34:39 +0200
+
 egroupware (1.8.005.20131001) hardy; urgency=low
 
   * THIS RELEASE CONTAINS IMPORTANT SECURITY FIXES, PLEASE UPDATE ASAP
