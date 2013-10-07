@@ -170,7 +170,7 @@ class emailadmin_bo extends so_sql
 	function save()
 	{
 		$content = $this->data;
-		$old = $this->read($content);
+		if ($content['ea_profile_id']) $old = $this->read(array('ea_profile_id' => $content['ea_profile_id']));
 		$this->data = $content;
 		if ((!isset($this->data['ea_appname']) || empty($this->data['ea_appname']) ) &&
 			(!isset($this->data['ea_group']) || empty($this->data['ea_group']) ) &&
