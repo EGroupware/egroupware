@@ -39,6 +39,10 @@
 (function(){
 	var debug = false;
 	var egw_script = document.getElementById('egw_script_id');
+	
+	// Flag for if this is opened in a popup
+	var popup = false;
+	
 	window.egw_webserverUrl = egw_script.getAttribute('data-url');
 	window.egw_appName = egw_script.getAttribute('data-app');
 
@@ -50,6 +54,7 @@
 		{
 			window.egw = window.opener.top.egw;
 			if (typeof window.opener.top.framework != 'undefined') window.framework = window.opener.top.framework;
+			popup = true;
 			if (debug) console.log('found egw object in opener');
 		}
 		else if (window.top && typeof window.top.egw != 'undefined')
@@ -128,7 +133,16 @@
 			break;
 		}
 	}
-	window.egw_LAB.script(include).wait(function(){
+	window.egw_LAB.script(include).wait(function(){			
+		// Make sure opener knows when we close
+		if(popup && window.name != '')
+		{
+			$j(window).on('unload beforeunload', function() {
+				var app = this.appName || egw_appName || 'common';
+				egw.windowClosed(app, this);
+			});
+		}
+		
 		var data = egw_script.getAttribute('data-etemplate');
 		if (data)
 		{

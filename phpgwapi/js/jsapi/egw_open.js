@@ -23,6 +23,12 @@
 egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 	
 	
+	/**
+	 * Store a window's name in egw.store so we can have a list of open windows
+	 * 
+	 * @param {string} appname
+	 * @param {Window} popup
+	 */
 	function _storeWindow(appname, popup)
 	{
 		// Don't store if it has no name
@@ -33,32 +39,107 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 		
 		var _target_app = appname || this.appName || egw_appName || 'common';
 		var open_windows = JSON.parse(this.getSessionItem(_target_app, 'windows')) || [];
-		if(open_windows.indexOf(popup.name) >= 0)
+		if(open_windows.indexOf(popup.name) < 0)
 		{
-			// Already in there - don't add it again
-			return;
+			open_windows.push(popup.name);
+			this.setSessionItem(_target_app, 'windows', JSON.stringify(open_windows));
 		}
-		open_windows.push(popup.name);
-		this.setSessionItem(_target_app, 'windows', JSON.stringify(open_windows));
 
 		// Forget window when it closes
+		// Window should notify, but we'll poll too since onunload is not fully supported
 		var _egw = this;
 		(function() {
 			var app = _target_app;
 			var window_name = popup.name;
-			var poll_timer = _wnd.setInterval(function() {
+			var poll_timer = popup.setInterval(function() {
 				if(popup.closed !== false) {
 					this.clearInterval(poll_timer);
-					var open_windows = JSON.parse(_egw.getSessionItem(app, 'windows')) || [];
-					var index = open_windows.indexOf(window_name);
-					if(index >= 0)
-					{
-						open_windows.splice(index,1);
-					}
-					_egw.setSessionItem(app, 'windows', JSON.stringify(open_windows));
+					egw.windowClosed(app, window_name);
 				}
 			},1000);
 		})();
+	}
+	
+	/**
+	 * Magic handling for mailto: uris using mail application.
+	 * 
+	 * We check for open compose windows and add the address in as specified in
+	 * the URL.  If there are no open compose windows, a new one is opened.  If
+	 * there are more than one open compose window, we prompt for which one to
+	 * use.
+	 * 
+	 * The user must have set the 'Open EMail addresses in external mail program' preference
+	 * to No, otherwise the browser will handle it.
+	 * 
+	 * @param {String} uri
+	 */
+	function mailto(uri)
+	{
+		// Parse uri into a map
+		var match = uri.match(/^mailto:([^?]+)\??(([^=]+)([^&]+))*$/);
+		var content = {
+			to: match[1]
+		}
+		for(var i = 2; i < match.length; i+=2)
+		{
+			if(match[i+1])
+			{
+				content[match[i]] = content[match[i+1]];
+			}
+		}
+		
+		// Get open compose windows
+		var compose = egw.getOpenWindows("mail", /^compose_/);
+		if(compose.length == 0)
+		{
+			// No compose windows, might be no mail app.js
+			// We really want to use mail_compose() here
+			egw.open('','mail','add',{'preset[mailto]': uri},'compose__','mail')
+		}
+		if(compose.length == 1)
+		{
+			try {
+				var popup = egw.open_link('',compose[0],'100x100','mail');
+				popup.app.mail.setCompose(compose[0], content);
+			} catch(e) {
+				// Looks like a leftover window that wasn't removed from the list
+				egw.debug("warn", e.message);
+				popup.close();
+				egw.windowClosed("mail",popup);
+				window.setTimeout(function() {
+					egw.open_link(uri);
+					console.debug("Trying again with ", uri);
+				}, 500);
+			}
+		}
+		else if(compose.length > 1)
+		{
+			// Need to prompt
+			var prompt = $j(document.createElement('ul'));
+			for(var i = 0; i < compose.length; i++)
+			{
+				var w = window.open('',compose[i],'100x100');
+				if(w.closed) continue;
+				var title = w.document.title || egw.lang("compose");
+				$j("<li data-window = '" + compose[i] + "'>"+ title + "</li>")
+					.click(function() {
+						var w = egw.open_link('',$j(this).attr("data-window"),'100x100','mail');
+						w.app.mail.setCompose(w.name, content);
+						prompt.dialog("close");
+					})
+					.appendTo(prompt);
+			}
+			_wnd.setTimeout(function() {
+				this.focus();
+			}, 200);
+			var _buttons = {};
+			_buttons[egw.lang("cancel")] = function() {
+				$j(this).dialog("close");
+			};
+			prompt.dialog({
+				buttons: _buttons
+			});
+		}
 	}
 	
 	return {
@@ -186,6 +267,10 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 				eval(url.substr(11));
 				return;
 			}
+			if (url.indexOf('mailto:') == 0)
+			{
+				return mailto(url);
+			}
 			// link is not necessary an url, it can also be a menuaction!
 			if (url.indexOf('/') == -1 && url.split('.').length >= 3 &&
 				!(url.indexOf('mailto:') == 0 || url.indexOf('/index.php') == 0 || url.indexOf('://') != -1))
@@ -255,7 +340,40 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 				}
 			}
 			return list;
+		},
+		
+		windowClosed: function(appname, closed) {
+			var closed_window = closed
+			var closed_name = closed.name;
+			window.setTimeout(function() {
+				if(!closed_window.closed) return;
+				var open_windows = egw.getOpenWindows(appname, closed_name)
+
+				var index = open_windows.indexOf(closed_name);
+				if(index >= 0)
+				{
+					open_windows.splice(index,1);
+				}
+				egw.setSessionItem(appname, 'windows', JSON.stringify(open_windows));
+			}, 100);
 		}
 	};
 });
 
+
+// Add protocol handler as an option if mail handling is not forced so mail can handle mailto:
+/* Not working consistantly yet
+$j(function() {
+try {
+	if(egw.user('apps').mail && (egw.preference('force_mailto','addressbook')||true) != '0')
+	{
+		var params = egw.link_get_registry('mail','add');
+		if(params)
+		{
+			params['preset[mailto]'] = ''; // %s, but egw.link will encode it
+			navigator.registerProtocolHandler("mailto",egw.link('/index.php', params)+'%s', egw.lang('mail'));
+		}
+	}
+} catch (e) {}
+});
+*/
