@@ -279,9 +279,9 @@ var et2_taglist = et2_selectbox.extend(
 	 */
 	set_value: function(value) 
 	{
+		var values = jQuery.isArray(value) ? value : [value];
 		if (value && this.options.allowFreeEntries)
 		{
-			var values = jQuery.isArray(value) ? value : [value];
 			var need_setdata = false;
 			for(var i=0; i < values.length; ++i)
 			{
@@ -292,11 +292,11 @@ var et2_taglist = et2_selectbox.extend(
 					need_setdata = true;
 				}
 			}
-			if (this.taglist && need_setdata) this.taglist.setData(this._options2data(this.select_options));
+			if (this.taglist && need_setdata) this.taglist.setData(this._options2data(this.options.select_options));
 		}
 		if(this.taglist == null) return;
 		this.taglist.clear(true);
-		this.taglist.setValue(value);
+		this.taglist.setValue(values);
 	},
 
 	getValue: function() 
