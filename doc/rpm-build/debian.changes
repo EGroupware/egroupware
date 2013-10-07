@@ -1,3 +1,9 @@
+egroupware-epl (11.1.20131007-1) hardy; urgency=low
+
+  * API: fixed not working session encryption, by switch back to previous MCrypt algorithm and mode
+
+ -- Ralf Becker <rb@stylite.de>  Mon, 07 Oct 2013 09:44:30 +0200
+
 egroupware-epl (11.1.20131001-1) hardy; urgency=low
 
   * THIS RELEASE CONTAINS IMPORTANT SECURITY FIXES, PLEASE UPDATE ASAP
