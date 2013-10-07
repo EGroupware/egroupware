@@ -9,6 +9,7 @@
 				<menulist>
 					<menupopup id="identity" onchange="app.mail.submitOnChange"/>
 				</menulist>
+				<textbox class="mail-index_quotaDisplayNone" readonly="true" id="composeID"/>
 			</hbox>
 			<hbox>
 				<button label="Send" id="button[send]"/> <buttononly value="saveAsDraft" id="button[saveAsDraft]" image="fileexport" onclick="app.mail.saveAsDraft"/>

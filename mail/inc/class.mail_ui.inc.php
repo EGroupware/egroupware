@@ -452,7 +452,7 @@ class mail_ui
 		if (empty($imapServer->host) && count($identities)==0 && $preferences->userDefinedAccounts)
 		{
 			// redirect to new personal account
-			egw::redirect_link('/index.php',array('menuaction'=>'mail.uipreferences.editAccountData',
+			egw::redirect_link('/index.php',array('menuaction'=>'felamimail.uipreferences.editAccountData',
 				'accountID'=>"new",
 				'msg'	=> lang("There is no IMAP Server configured.")." - ".lang("Please configure access to an existing individual IMAP account."),
 			));

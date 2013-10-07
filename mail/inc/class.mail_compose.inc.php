@@ -32,17 +32,29 @@ class mail_compose
 		'reply'			=> True,
 		'replyAll'		=> True,
 		'selectFolder'		=> True,
-		'attachFromVFS'	=> True,
 		'action'	=> True
 	);
 
-	var $destinations = array(
+	/**
+	 * class vars for destination, priorities, mimeTypes
+	 */
+	static $destinations = array(
 		'to' 		=> 'to',
 		'cc'		=> 'cc',
 		'bcc'		=> 'bcc',
 		'replyto'	=> 'replyto',
 		'folder'	=> 'folder'
 	);
+	static $priorities = array(
+		1=>"high",
+		3=>"normal",
+		5=>"low"
+	);
+	static $mimeTypes = array(
+		"plain"=>"plain",
+		"html"=>"html"
+	);
+
 	/**
 	 * Instance of mail_bo
 	 *
@@ -62,14 +74,8 @@ class mail_compose
 	var $bopreferences;
 	var $bosignatures;
 	var $displayCharset;
+	var $composeID;
 	var $sessionData;
-
-	/**
-	 * Instance of Template class
-	 *
-	 * @var Template
-	 */
-	var $t;
 
 	function mail_compose()
 	{
@@ -100,6 +106,7 @@ class mail_compose
 		}
 		if (is_null(mail_bo::$mailConfig)) mail_bo::$mailConfig = config::read('mail');
 
+/*
 		if (!isset($_POST['composeid']) && !isset($_GET['composeid']))
 		{
 			// create new compose session
@@ -115,7 +122,7 @@ class mail_compose
 				$this->composeID = $_GET['composeid'];
 
 		}
-
+*/
 		$this->mailPreferences  =& $this->mail_bo->mailPreferences;
 
 	}
@@ -125,12 +132,6 @@ class mail_compose
 		$trans_tbl = get_html_translation_table (HTML_ENTITIES);
 		$trans_tbl = array_flip ($trans_tbl);
 		return strtr ($string, $trans_tbl);
-	}
-
-	function attachFromVFS($target, $path=null)
-	{
-		error_log(__METHOD__.__LINE__.array2string($path));
-		return "var path=".json_encode($path)."; opener.app.mail.compose_closeVfsSelector(path);";
 	}
 
 	function action()
@@ -293,7 +294,15 @@ class mail_compose
 				$_focusElement, $suppressSigOnTop, $isReply
 			));
 		}
-		
+		if (!isset($_content['composeID'])||empty($_content['composeID']))
+		{
+			$this->composeID = $this->getComposeID();
+			$composeCache = egw_cache::getCache(egw_cache::SESSION,'mail','composeCache'.trim($GLOBALS['egw_info']['user']['account_id']).'_'.$this->composeID,$callback=null,$callback_params=array(),$expiration=60*60*2);
+		}
+		else
+		{
+			$this->composeID = $_content['composeID'];
+		}
 		// VFS Selector was used
 		if (is_array($_content['selectFromVFSForCompose']))
 		{
@@ -396,9 +405,19 @@ $CAtFStart = array2string($_content);
 				egw_framework::message(lang('Message saved successfully.'),'mail');
 			}
 		}
-		// all values are empty for a new compose window
-		if ($buttonClicked = false)
+		// form was submitted either by clicking a button or by changing one of the triggering selectboxes
+		// identity and signatureID; this might trigger that the signature in mail body may have to be altered
+		if (
+			(!empty($composeCache['identity']) && !empty($_content['identity']) && $_content['identity'] != $composeCache['identity']) ||
+			(!empty($composeCache['signatureID']) && !empty($_content['signatureID']) && $_content['signatureID'] != $composeCache['signatureID'])
+		)
 		{
+			$buttonClicked = true;
+		}
+		// all values are empty for a new compose window
+		if ($buttonClicked = true)
+		{
+			$suppressSigOnTop = true;
 		}
 		$insertSigOnTop = false;
 		$content = (is_array($_content)?$_content:array());
@@ -1066,7 +1085,7 @@ $CAtFStart = array2string($_content);
 		//$content['bcc'] = array('kl@stylite.de','kl@leithoff.net');
 		// address stuff like from, to, cc, replyto
 		$destinationRows = 0;
-		foreach(array('to','cc','bcc','replyto','folder') as $destination) {
+		foreach(self::$destinations as $destination) {
 			foreach((array)$content[$destination] as $key => $value) {
 				if ($value=="NIL@NIL") continue;
 				if ($destination=='replyto' && str_replace('"','',$value) == str_replace('"','',$identities[($presetId ? $presetId : $defaultIdentity)])) continue;
@@ -1108,13 +1127,23 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.'before merg
 		$preserv['attachments'] = $content['attachments'];
 
 if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachments:'.array2string($content['attachments']));
+		$preserv['composeID'] = $content['composeID'] = $this->composeID;
+		//error_log(__METHOD__.__LINE__.' ComposeID:'.$preserv['composeID']);
 		$preserv['is_html'] = $content['is_html'];
 		$preserv['is_plain'] = $content['is_plain'];
 		if (isset($content['mimeType'])) $preserv['mimeType'] = $content['mimeType'];
-		$sel_options['mimeType'] = array("plain"=>"plain","html"=>"html");
-		$sel_options['priority'] = array(1=>"high",2=>"normal",3=>"low");
-		if (!isset($content['priority']) || empty($content['priority'])) $content['priority']=2;
-		if ($content['mimeType']=='html'); $content['rtfEditorFeatures']='simple-withimage';//egw_ckeditor_config::get_ckeditor_config();
+		$sel_options['mimeType'] = self::$mimeTypes;
+		$sel_options['priority'] = self::$priorities;
+		if (!isset($content['priority']) || empty($content['priority'])) $content['priority']=3;
+		if ($content['mimeType']=='html') $content['rtfEditorFeatures']='simple-withimage';//egw_ckeditor_config::get_ckeditor_config();
+
+		if (isset($_content['composeID'])||!empty($_content['composeID']))
+		{
+			$composeCache = $content;
+			unset($composeCache['body']);unset($composeCache['mail_htmltext']);unset($composeCache['mail_plaintext']);
+			egw_cache::setCache(egw_cache::SESSION,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']).'_'.$this->composeID,$composeCache,$expiration=60*60*2);
+		}
+
 		$etpl = new etemplate_new('mail.compose');
 
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
