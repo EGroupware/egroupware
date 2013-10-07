@@ -1917,14 +1917,16 @@ unset($query['actions']);
 								$newSenderAddress,
 								$realName);
 
+/*
 					$linkData = array (
 						'menuaction'		=> 'addressbook.addressbook_ui.edit',
 						'presets[email]'	=> $addressData['EMAIL'],
 						'presets[org_name]'	=> $_organisation,
 						'referer'		=> $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']
 					);
-
+*/
 					$decodedPersonalName = $realName;
+/*						
 					if (!empty($decodedPersonalName)) {
 						if($spacePos = strrpos($decodedPersonalName, ' ')) {
 							$linkData['presets[n_family]']	= substr($decodedPersonalName, $spacePos+1);
@@ -1934,7 +1936,6 @@ unset($query['actions']);
 						}
 						$linkData['presets[n_fn]']	= $decodedPersonalName;
 					}
-
 					if ($showAddToAdrdessbookLink && $GLOBALS['egw_info']['user']['apps']['addressbook']) {
 						$urlAddToAddressbook = $GLOBALS['egw']->link('/index.php',$linkData);
 						$onClick = "window.open(this,this.target,'dependent=yes,width=850,height=440,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;";
@@ -1949,6 +1950,7 @@ unset($query['actions']);
 							lang('add to addressbook'),
 							lang('add to addressbook'));
 					}
+*/
 				} else {
 					$addrEMailORG = $addrEMail = $addressData['EMAIL'];
 					$addAction = egw_link::get_registry('mail','add');
@@ -1963,6 +1965,7 @@ unset($query['actions']);
 								$link,$senderEMail);
 					//TODO: This uses old addressbook code, which should be removed in Version 1.4
 					//Please use addressbook.addressbook_ui.edit with proper paramenters
+/*
 					$linkData = array
 					(
 						'menuaction'		=> 'addressbook.addressbook_ui.edit',
@@ -1970,7 +1973,6 @@ unset($query['actions']);
 						'presets[org_name]'	=> $_organisation,
 						'referer'		=> $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']
 					);
-
 					if ($showAddToAdrdessbookLink && $GLOBALS['egw_info']['user']['apps']['addressbook']) {
 						$urlAddToAddressbook = $GLOBALS['egw']->link('/index.php',$linkData);
 						$onClick = "window.open(this,this.target, 'dependent=yes, width=850, height=440, location=no, menubar=no, toolbar=no, scrollbars=yes, status=yes'); return false;";
@@ -1985,6 +1987,7 @@ unset($query['actions']);
 							lang('add to addressbook'),
 							lang('add to addressbook'));
 					}
+*/
 				}
 			}
 			return $senderAddress;

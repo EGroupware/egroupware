@@ -870,7 +870,6 @@ class mail_compose
 		foreach($allIdentities as $key => $singleIdentity) {
 			//$identities[$singleIdentity->id] = $singleIdentity->realName.' <'.$singleIdentity->emailAddress.'>';
 			$iS = mail_bo::generateIdentityString($singleIdentity);
-			$shortIDString = trim(mail_bo::generateIdentityString($singleIdentity,false));
 			if (mail_bo::$mailConfig['how2displayIdentities']=='' || count($allIdentities) ==1 || count($allIdentities) ==$globalIds)
 			{
 				$id_prepend ='';
@@ -883,7 +882,7 @@ class mail_compose
 			if (array_search($id_prepend.$iS,$identities)===false)
 			{
 				$identities[$singleIdentity->id] = $id_prepend.$iS;
-				$sel_options['identity'][$iS] = $id_prepend.$iS;
+				$sel_options['identity'][$singleIdentity->id] = $id_prepend.$iS;
 			}
 			if(in_array($singleIdentity->id,$defaultIds) && $defaultIdentity==0)
 			{
@@ -1059,10 +1058,14 @@ class mail_compose
 		// address stuff like from, to, cc, replyto
 		$destinationRows = 0;
 		foreach(self::$destinations as $destination) {
+			if (!is_array($content[$destination]))
+			{
+				if (!empty($content[$destination])) $content[$destination] = (array)$content[$destination];
+			}
 			foreach((array)$content[$destination] as $key => $value) {
 				if ($value=="NIL@NIL") continue;
 				if ($destination=='replyto' && str_replace('"','',$value) == str_replace('"','',$identities[($presetId ? $presetId : $defaultIdentity)])) continue;
-				//error_log(__METHOD__.__LINE__.array2string(array('key'=>$key,'value'=>$value)));
+				error_log(__METHOD__.__LINE__.array2string(array('key'=>$key,'value'=>$value)));
 				$value = htmlspecialchars_decode($value,ENT_COMPAT);
 				$value = str_replace("\"\"",'"',$value);
 				$address_array = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($value):$value), '');
@@ -2451,37 +2454,6 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 		} else {
 			return $_string;
 		}
-	}
-
-	function ajax_searchIdentities() {
-		$_searchString = trim($_REQUEST['query']);
-		$allIdentities = $this->preferences->getIdentity();
-		foreach($allIdentities as $key => $singleIdentity)
-		{
-			/*
-			if($singleIdentity->default === true)
-			{
-				$selectedAddresses[$singleIdentity->emailAddress] = $singleIdentity->emailAddress;
-			}
-			*/
-			$idString = mail_bo::generateIdentityString($singleIdentity);
-			$shortIDString = mail_bo::generateIdentityString($singleIdentity,false);
-			if (empty($_searchString) || ($_searchString && stripos($idString,$_searchString)!==false))
-			{
-				//error_log(__METHOD__.__LINE__.$idString.'<->'.$shortIDString);
-				$predefinedAddresses[$idString] = array(
-					'id'=>$idString,
-					'label' => $idString,
-					// Add just name for nice display, with title for hover
-					'name' => $shortIDString,
-					'title' => $idString
-				 );
-			}
-		}
-		if (is_array($predefinedAddresses)) asort($predefinedAddresses);
-		header('Content-Type: application/json; charset=utf-8');
-		echo json_encode($predefinedAddresses);
-		common::egw_exit();
 	}
 
 	function ajax_searchFolder($_searchStringLength=2, $_returnList=false) {
