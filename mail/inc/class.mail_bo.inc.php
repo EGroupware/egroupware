@@ -4919,6 +4919,16 @@ class mail_bo
 		{
 			$bytes /= 1024;
 			$type = 'M';
+
+			if ($bytes / 1024 > 1)
+			{
+				$bytes *= 10;
+				settype($bytes, 'integer');
+				$bytes /= 10;
+				$bytes /= 1024;
+				$type = 'G';
+			}
+
 		}
 
 		if ($bytes < 10)

@@ -2065,7 +2065,7 @@ unset($query['actions']);
 		}
 		$quota['class'] = $quotaBG;
 		$quota['text'] = $quotaText;
-		$quota['percent'] = (string)($_usage/$_limit*100);
+		$quota['percent'] = (string)round(($_usage*100)/$_limit);//($_usage/$_limit*100);
 		return $quota;
 	}
 
