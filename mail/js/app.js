@@ -1437,6 +1437,11 @@ app.mail = AppJS.extend(
 		this.et2_obj.submit();
 	},
 
+	saveAsDraftAndPrint: function(_egw, _widget, _window)
+	{
+		this.et2_obj.submit();
+	},
+
 	sieve_editRules_radiobtn: function()
 	{
 		console.log("hi i am radiobtn");

@@ -342,6 +342,7 @@ input[type=button] {
 #mail-index_button\[mailcreate\] {
 	width: 99%;
 	text-align: left;
+	font-weight: bold;
 	padding-left: 25px;
 	background-image: url(images/write_mail.png) !important;
 	background-position: left;
@@ -350,7 +351,10 @@ input[type=button] {
 
 #mail-compose_button\[send\] {
 	text-align: left;
-	padding-left: 25px;
+	font-weight: bold;
+	padding-left: 30px;
+	width: 80px;
+	margin: 0px !important;
 	background-image: url(images/mail_send.png) !important;
 	background-position: left;
 	background-repeat: no-repeat;
@@ -360,6 +364,25 @@ input[type=button] {
 	overflow: hidden;
 	position: relative;
 	margin-top: 3px;
+}
+#mail-compose_fileselector {
+	width: 245px !important;
+}
+#mail-compose_toolbar {
+	padding: 0px !important;
+}
+#mail-compose_toolbar > button {
+	padding: .2em .4em;
+}
+#mail-compose_toolbar > img {
+	width: 16px;
+	padding: 0px;
+	height: 16px !important;
+}
+#mail-compose_toolbar > button > span > img {
+	width: 16px;
+	padding: 0px;
+	height: 16px !important;
 }
 #mail-display_toolbar {
 	padding: 0px;

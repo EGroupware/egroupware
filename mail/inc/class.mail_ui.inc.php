@@ -1349,12 +1349,6 @@ unset($query['actions']);
 			}
 
 			//error_log(__METHOD__.array2string($css_styles));
-			//if (in_array("check", $cols))
-			// don't overwrite check with "false" as this forces the grid to
-			// deselect the row - sending "0" doesn't do that
-			//if (in_array("check", $cols)) $data["check"] = $previewMessage == $header['uid'] ? true : 0;// $row_selected; //TODO:checkbox true or false
-			//$data["check"] ='<input  style="width:12px; height:12px; border: none; margin: 1px;" class="{row_css_class}" type="checkbox" id="msgSelectInput" name="msg[]" value="'.$message_uid.'"
-			//	onclick="toggleFolderRadio(this, refreshTimeOut)">';
 
 			if (in_array("subject", $cols))
 			{
@@ -1374,7 +1368,6 @@ unset($query['actions']);
 					// make the subject shorter if it is to long
 					$fullSubject = $header['subject'];
 					$subject = $header['subject'];
-					#$this->t->set_var('attachments', $header['attachment']);
 				} else {
 					$subject = @htmlspecialchars('('. lang('no subject') .')', ENT_QUOTES, $this->charset);
 				}
@@ -1462,12 +1455,6 @@ unset($query['actions']);
 				} else {
 					$senderAddress  = $header['to_address'];
 				}
-				$linkData = array
-				(
-					'menuaction'    => 'mail.mail_compose.compose',
-					'send_to'	=> base64_encode($senderAddress)
-				);
-				$windowName = 'compose_'.$header['uid'];
 
 				// sent or drafts or template folder means foldertype > 0, use to address instead of from
 				$header2add = $header['to_address'];//mail_bo::htmlentities($header['to_address'],$this->charset);
@@ -1482,7 +1469,6 @@ unset($query['actions']);
 					$sender_name	= $header['to_address'];
 					$full_address	= $header['to_address'];
 				}
-				//$data["toaddress"] = "<nobr><a href=\"#\" onclick=\"fm_handleComposeClick(false,'".$GLOBALS['egw']->link('/index.php',$linkData)."', '".$windowName."', this); return false;\" title=\"".@htmlspecialchars($full_address, ENT_QUOTES | ENT_IGNORE, $this->charset,false)."\">".@htmlspecialchars($sender_name, ENT_QUOTES | ENT_IGNORE, $this->charset,false)."</a></nobr>";
 				$data["toaddress"] = $full_address;
 			}
 
@@ -1509,16 +1495,6 @@ unset($query['actions']);
 				} else {
 					$senderAddress  = $header['sender_address'];
 				}
-				/*
-				$linkData = array
-				(
-					'menuaction'    => 'mail.mail_compose.compose',
-					'send_to'	=> base64_encode($senderAddress)
-				);
-				$windowName = 'compose_'.$header['uid'];
-
-				$data["fromaddress"] = "<nobr><a href=\"#\" onclick=\"fm_handleComposeClick(false,'".$GLOBALS['egw']->link('/index.php',$linkData)."', '".$windowName."', this); return false;\" title=\"".@htmlspecialchars($full_address, ENT_QUOTES | ENT_IGNORE, $this->charset,false)."\">".@htmlspecialchars($sender_name, ENT_QUOTES | ENT_IGNORE, $this->charset,false)."</a></nobr>";
-				*/
 				$data["fromaddress"] = $full_address;
 			}
 			if (in_array("date", $cols))
@@ -1533,16 +1509,6 @@ unset($query['actions']);
 			if (in_array("size", $cols))
 				$data["size"] = $header['size']; /// size
 
-
-			/*
-			//TODO: url_add_to_addressbook isn't in any of the templates.
-			//If you want to use it, you need to adopt syntax to the new addressbook (popup)
-			$this->t->set_var('url_add_to_addressbook',$GLOBALS['egw']->link('/index.php',$linkData));
-			*/
-			//$this->t->set_var('msg_icon_sm',$msg_icon_sm);
-
-			//$this->t->set_var('phpgw_images',EGW_IMAGES);
-			//$result["data"] = $data;
 			$data["class"] = implode(' ', $css_styles);
 			$data['attachmentsPresent'] = $imageTag;
 			$data['attachmentsBlock'] = $imageHTMLBlock;

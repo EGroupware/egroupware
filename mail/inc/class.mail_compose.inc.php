@@ -357,7 +357,6 @@ class mail_compose
 				if (!$remove) $_content['attachments'][] = $att;
 			}
 		}
-$CAtFStart = array2string($_content);
 		// someone clicked something like send, or saveAsDraft
 		$buttonClicked = false;
 		if ($_content['button']['send'])
@@ -389,7 +388,7 @@ $CAtFStart = array2string($_content);
 				egw_framework::refresh_opener(lang('Message send failed: %1',$message),'mail');
 			}
 		}
-		if ($_content['button']['saveAsDraft'])
+		if ($_content['button']['saveAsDraft']||$_content['button']['saveAsDraftAndPrint'])
 		{
 			$buttonClicked = $suppressSigOnTop = true;
 			$savedOK = true;
@@ -404,20 +403,6 @@ $CAtFStart = array2string($_content);
 			{
 				egw_framework::message(lang('Message saved successfully.'),'mail');
 			}
-		}
-		// form was submitted either by clicking a button or by changing one of the triggering selectboxes
-		// identity and signatureID; this might trigger that the signature in mail body may have to be altered
-		if (
-			(!empty($composeCache['identity']) && !empty($_content['identity']) && $_content['identity'] != $composeCache['identity']) ||
-			(!empty($composeCache['signatureID']) && !empty($_content['signatureID']) && $_content['signatureID'] != $composeCache['signatureID'])
-		)
-		{
-			$buttonClicked = true;
-		}
-		// all values are empty for a new compose window
-		if ($buttonClicked = true)
-		{
-			$suppressSigOnTop = true;
 		}
 		$insertSigOnTop = false;
 		$content = (is_array($_content)?$_content:array());
@@ -455,6 +440,21 @@ $CAtFStart = array2string($_content);
 			$content['is_plain'] = false;
 		}
 		$content['body'] = ($content['body'] ? $content['body'] : $content['mail_'.($content['mimeType'] == 'html'?'html':'plain').'text']);
+		// form was submitted either by clicking a button or by changing one of the triggering selectboxes
+		// identity and signatureID; this might trigger that the signature in mail body may have to be altered
+		if ( !empty($content['body']) &&
+			(!empty($composeCache['identity']) && !empty($_content['identity']) && $_content['identity'] != $composeCache['identity']) ||
+			(!empty($composeCache['signatureID']) && !empty($_content['signatureID']) && $_content['signatureID'] != $composeCache['signatureID'])
+		)
+		{
+			$buttonClicked = true;
+		}
+		// all values are empty for a new compose window
+		if ($buttonClicked = true)
+		{
+			$suppressSigOnTop = true;
+		}
+
 		$alwaysAttachVCardAtCompose = false; // we use this to eliminate double attachments, if users VCard is already present/attached
 		if ( isset($GLOBALS['egw_info']['apps']['stylite']) && (isset($this->preferencesArray['attachVCardAtCompose']) &&
 			$this->preferencesArray['attachVCardAtCompose']))
@@ -766,13 +766,6 @@ $CAtFStart = array2string($_content);
 
 /*
 
-		if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
-			$this->t->set_var("link_addressbook",egw::link('/index.php',array(
-				'menuaction' => 'addressbook.addressbook_ui.emailpopup',
-			)));
-		} else {
-			$this->t->set_var("link_addressbook",'');
-		}
 		$this->t->set_var("focusElement",$_focusElement);
 
 		$linkData = array
@@ -786,26 +779,6 @@ $CAtFStart = array2string($_content);
 			'menuaction'	=> 'felamimail.uicompose.fileSelector',
 			'composeid'	=> $this->composeID
 		);
-		$this->t->set_var('file_selector_url',egw::link('/index.php',$linkData));
-
-		$this->t->set_var('vfs_selector_url',egw::link('/index.php',array(
-			'menuaction' => 'filemanager.filemanager_select.select',
-			'mode' => 'open-multiple',
-			'method' => 'felamimail.uicompose.vfsSelector',
-			'id' => $this->composeID,
-			'label' => lang('Attach'),
-		)));
-		if ($GLOBALS['egw_info']['user']['apps']['filemanager'])
-		{
-			$this->t->set_var('vfs_attach_button','
-			<button class="menuButton" type="button" onclick="fm_compose_displayVfsSelector();" title="'.htmlspecialchars(lang('filemanager')).'">
-				<img src="'.common::image('filemanager','navbar').'" height="18">
-			</button>');
-		}
-		else
-		{
-			$this->t->set_var('vfs_attach_button','');
-		}
 		$linkData = array
 		(
 			'menuaction'	=> 'felamimail.uicompose.action',
@@ -1127,6 +1100,26 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.'before merg
 		$preserv['attachments'] = $content['attachments'];
 
 if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachments:'.array2string($content['attachments']));
+		// if no filemanager -> no vfsFileSelector
+		if (!$GLOBALS['egw_info']['user']['apps']['filemanager'])
+		{
+			$content['vfsNotAvailable'] = "mail-index_quotaDisplayNone";
+		}
+		// if no infolog -> no save as infolog
+		if (!$GLOBALS['egw_info']['user']['apps']['infolog'])
+		{
+			$content['noInfologAvailable'] = "mail-index_quotaDisplayNone";
+		}
+		// if no tracker -> no save as tracker
+		if (!$GLOBALS['egw_info']['user']['apps']['tracker'])
+		{
+			$content['noTrackerAvailable'] = "mail-index_quotaDisplayNone";
+		}
+		if (!$GLOBALS['egw_info']['user']['apps']['infolog'] && !$GLOBALS['egw_info']['user']['apps']['tracker'])
+		{
+			$content['noSaveAsAvailable'] = "mail-index_quotaDisplayNone";
+		}
+		// composeID to detect if we have changes to certain content
 		$preserv['composeID'] = $content['composeID'] = $this->composeID;
 		//error_log(__METHOD__.__LINE__.' ComposeID:'.$preserv['composeID']);
 		$preserv['is_html'] = $content['is_html'];
