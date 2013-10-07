@@ -290,6 +290,8 @@ abstract class groupdav_handler
 				if ($this->http_if_match !== $etag)
 				{
 					if ($this->debug) error_log(__METHOD__."($method,path=$options[path],$id) HTTP_IF_MATCH='$_SERVER[HTTP_IF_MATCH]', etag='$etag': 412 Precondition failed".array2string($entry));
+					// honor Prefer: return=representation for 412 too (no need for client to explicitly reload)
+					$this->check_return_representation($options, $id);
 					return '412 Precondition Failed';
 				}
 			}
@@ -308,11 +310,51 @@ abstract class groupdav_handler
 				if ($method == 'PUT' && ($if_none_match == '*' || $if_none_match == $etag))
 				{
 					if ($this->debug) error_log(__METHOD__."($method,,$id) HTTP_IF_NONE_MATCH='$_SERVER[HTTP_IF_NONE_MATCH]', etag='$etag': 412 Precondition failed");
+					// honor Prefer: return=representation for 412 too (no need for client to explicitly reload)
+					$this->check_return_representation($options, $id);
 					return '412 Precondition Failed';
 				}
 			}
 		}
 		return $entry;
+	}
+
+	/**
+	 * Return representation, if requested by HTTP Prefer header
+	 *
+	 * @param array $options
+	 * @param int $id
+	 * @param int $user=null account_id
+	 * @return string|boolean http status of get or null if no representation was requested
+	 */
+	public function check_return_representation($options, $id, $user=null)
+	{
+		//error_log(__METHOD__."(, $id, $user) start ".function_backtrace());
+		if (isset($_SERVER['HTTP_PREFER']) && in_array('return=representation', preg_split('/, ?/', $_SERVER['HTTP_PREFER'])))
+		{
+			if ($_SERVER['REQUEST_METHOD'] == 'POST')
+			{
+				$location = $this->groupdav->base_uri.$options['path'];
+				if ($location[0] == '/')
+				{
+					$location = (@$_SERVER['HTTPS'] === 'on' ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'].$location;
+				}
+				header('Content-Location: '.$location);
+			}
+
+			// remove If-Match or If-None-Match headers, otherwise HTTP status 412 goes into endless loop!
+			unset($_SERVER['HTTP_IF_MATCH']);
+			unset($_SERVER['HTTP_IF_NONE_MATCH']);
+
+			if (($ret = $this->get($options, $id ? $id : $this->new_id, $user)) && !empty($options['data']))
+			{
+				header('Content-Length: '.$this->groupdav->bytes($options['data']));
+				header('Content-Type: '.$options['mimetype']);
+				echo $options['data'];
+			}
+		}
+		//error_log(__METHOD__."(, $id, $user) returning ".array2string($ret));
+		return $ret;
 	}
 
 	/**

@@ -664,6 +664,8 @@ class calendar_groupdav extends groupdav_handler
 				if ($schedule_tag_match !== $schedule_tag)
 				{
 					if ($this->debug) error_log(__METHOD__."(,,$user) schedule_tag missmatch: given '$schedule_tag_match' != '$schedule_tag'");
+					// honor Prefer: return=representation for 412 too (no need for client to explicitly reload)
+					$this->check_return_representation($options, $id, $user);
 					return '412 Precondition Failed';
 				}
 			}
@@ -780,6 +782,8 @@ class calendar_groupdav extends groupdav_handler
 			}
 			elseif ($cal_id === 0)	// etag failure
 			{
+				// honor Prefer: return=representation for 412 too (no need for client to explicitly reload)
+				$this->check_return_representation($options, $id, $user);
 				return '412 Precondition Failed';
 			}
 			else
