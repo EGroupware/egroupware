@@ -29,7 +29,7 @@
  * @param {type} param2
  * @param {type} param3
  */
-egw.extend('store', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
+egw.extend('store', egw.MODULE_GLOBAL, function(_app, _wnd) {
 
 	var egw = this;
 	
@@ -55,7 +55,7 @@ egw.extend('store', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		 */
 		getSessionItem: function(application, key) {
 			key = mapKey(application, key);
-			return window.sessionStorage.getItem(key);
+			return _wnd.sessionStorage.getItem(key);
 		},
 
 		/**
@@ -68,7 +68,7 @@ egw.extend('store', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		 */
 		setSessionItem: function(application, key, value) {
 			key = mapKey(application, key);
-			return window.sessionStorage.setItem(key, value);
+			return _wnd.sessionStorage.setItem(key, value);
 		},
 		
 		/**
@@ -79,7 +79,7 @@ egw.extend('store', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		 */
 		removeSessionItem: function(application, key) {
 			key = uniqueKey(application, key);
-			return window.sessionStorage.removeItem(key);
+			return _wnd.sessionStorage.removeItem(key);
 		},
 			
 			
