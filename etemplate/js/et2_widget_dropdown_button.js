@@ -104,13 +104,13 @@ var et2_dropdown_button = et2_inputWidget.extend(
 	 * Default menu, so there is something for the widget browser / editor to show
 	 */
 	default_menu: '<ul> \
-	<li data-id="opt_1.1"><a href="javascript:void(0);">Option-1.1</a></li>\
-	<li data-id="opt_1.2"><a href="javascript:void(0);">Option-1.2</a></li>\
-	<li data-id="opt_1.3"><a href="javascript:void(0);">Option-1.3</a></li>\
-	<li data-id="opt_1.4"><a href="javascript:void(0);">Option-1.4<br>\
+	<li data-id="opt_1.1"><a href="#">Option-1.1</a></li>\
+	<li data-id="opt_1.2"><a href="#">Option-1.2</a></li>\
+	<li data-id="opt_1.3"><a href="#">Option-1.3</a></li>\
+	<li data-id="opt_1.4"><a href="#">Option-1.4<br>\
 		<small>with second line</small>\
 	</a></li>\
-	<li data-id="opt_1.5"><a href="javascript:void(0);">Option-1.5</a></li>\
+	<li data-id="opt_1.5"><a href="#">Option-1.5</a></li>\
 </ul>',
 
 	/**
@@ -336,16 +336,16 @@ var et2_dropdown_button = et2_inputWidget.extend(
 					var item;
 					if(typeof options[key] == "string")
 					{
-						item = $j("<li data-id='"+key+"'><a href='javascript:void(0);'>"+options[key]+"</a></li>");
+						item = $j("<li data-id='"+key+"'><a href='#'>"+options[key]+"</a></li>");
 					}
 					else if (options[key]["label"])
 					{
-						item =$j("<li data-id='"+key+"'><a href='javascript:void(0);'>"+options[key]["label"]+"</a></li>");
+						item =$j("<li data-id='"+key+"'><a href='#'>"+options[key]["label"]+"</a></li>");
 					}
 					// Optgroup
 					else
 					{
-						item = $j("<li><a href='javascript:void(0);'>"+key+"</a></li>");
+						item = $j("<li><a href='#'>"+key+"</a></li>");
 						add_complex(node.append("<ul>"), options[key]);
 					}
 					node.append(item);
