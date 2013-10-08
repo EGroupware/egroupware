@@ -225,7 +225,7 @@ class addressbook_groupdav extends groupdav_handler
 			foreach($contacts as &$contact)
 			{
 				// remove contact from requested multiget ids, to be able to report not found urls
-				if ($requested_multiget_ids && ($k = array_search($contacts[self::$path_attr], $requested_multiget_ids)) !== false)
+				if ($requested_multiget_ids && ($k = array_search($contact[self::$path_attr], $requested_multiget_ids)) !== false)
 				{
 					unset($requested_multiget_ids[$k]);
 				}
