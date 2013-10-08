@@ -1,3 +1,9 @@
+egroupware-epl (11.1.20131008-1) hardy; urgency=low
+
+  * CardDAV/Addressbook: fixed all contacts were reported as NOT found and therefore not synchronised
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 08 Oct 2013 09:44:21 +0200
+
 egroupware-epl (11.1.20131007-1) hardy; urgency=low
 
   * API: fixed not working session encryption, by switch back to previous MCrypt algorithm and mode
