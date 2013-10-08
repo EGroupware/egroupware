@@ -18,6 +18,9 @@ class uiconfig
 
 	function index($params=null)
 	{
+		// allowing inline js
+		egw_framework::csp_script_src_attrs('unsafe-inline');
+
 		if (empty($_GET['appname']) && isset($params['appname']))
 		{
 			$_appname = $params['appname'];
