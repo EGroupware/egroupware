@@ -231,12 +231,8 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.setDOMNode(this.span[0]);
 	},
 
-	set_label: function(label) {
-		if(label == this.label)
-		{
-			return;
-		}
-		
+	set_label: function(label)
+	{
 		// Remove current label
 		this.span.contents()
 			.filter(function(){ return this.nodeType == 3; }).remove();
@@ -246,7 +242,8 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.span.append(parts[1]);
 		this.label = label;
 	},
-	set_value: function(_value) {
+	set_value: function(_value)
+	{
 		this.value = _value;
 
 		if(!_value)
