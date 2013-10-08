@@ -18,8 +18,11 @@
 	egw_debug;
 */
 
-egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
-
+/**
+ * @augments Class
+ */
+egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd) 
+{
 	var egw = this;
 
 	/**
@@ -44,6 +47,15 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 	}
 
 	return {
+		/**
+		 * Load and execute javascript file(s) in order
+		 * 
+		 * @memberOf egw
+		 * @param string|array _jsFiles (array of) urls to include
+		 * @param function _callback called after JS files are loaded and executed
+		 * @param object _context
+		 * @param string _prefix prefix for _jsFiles
+		 */
 		includeJS: function(_jsFiles, _callback, _context, _prefix) {
 			if (typeof _prefix === 'undefined')
 			{
@@ -72,6 +84,11 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			});
 		},
 
+		/**
+		 * Include a CSS file
+		 * 
+		 * @param _cssFile full url of file to include
+		 */
 		includeCSS: function(_cssFile) {
 			//Check whether the requested file has already been included
 			var file = removeTS(_cssFile);

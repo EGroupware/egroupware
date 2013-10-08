@@ -193,114 +193,111 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	var currentapp = _data.currentapp || window.egw_appName;
 	
 	// require necessary translations from server, if not already loaded
-	if ($j.isArray(_data.langRequire))
+	if (!$j.isArray(_data.langRequire)) _data.langRequire = [];
+	egw(currentapp, window).langRequire(window, _data.langRequire, function()
 	{
-		egw(currentapp, window).langRequire(window, _data.langRequire);
-	}
-
-	// Appname should be first part of the template name
-	var split = _name.split('.');
-	var appname = split[0];
-
-	// Initialize application js
-	var app_callback = null;
-	// Only initialize once
-	if(typeof app[appname] == "function")
-	{
-		(function() { new app[appname]();}).call();
-	}
-	else if (typeof app[appname] !== "object")
-	{
-		egw.debug("warn", "Did not load '%s' JS object",appname); 
-	}
-	if(typeof app[appname] == "object")
-	{
-		app_callback = function(et2) {app[appname].et2_ready(et2);};
-	}
+		// Appname should be first part of the template name
+		var split = _name.split('.');
+		var appname = split[0];
 	
-	// Create the document fragment into which the HTML will be injected
-	var frag = document.createDocumentFragment();
-
-
-	// Clear any existing instance
-	this.clear();
-
-	// Create the basic widget container and attach it to the DOM
-	this.widgetContainer = new et2_container(null);
-	this.widgetContainer.setApiInstance(egw(currentapp, egw.elemWindow(this.DOMContainer)));
-	this.widgetContainer.setInstanceManager(this);
-	this.widgetContainer.setParentDOMNode(this.DOMContainer);
-
-	// store the id to submit it back to server
-	if(_data) {
-		this.etemplate_exec_id = _data.etemplate_exec_id;
-		// set app_header
-		window.egw_app_header(_data.app_header);
-	}
-	
-	var _load = function() {
-		// Read the XML structure of the requested template
-		this.widgetContainer.loadFromXML(this.templates[_name || missing_name]);
-
-		// Inform the widget tree that it has been successfully loaded.
-		this.widgetContainer.loadingFinished();
-
-		// Insert the document fragment to the DOM Container
-		this.DOMContainer.appendChild(frag);
-
-		// Add into indexed list
-		if(typeof etemplate2._byTemplate[_name] == "undefined")
+		// Initialize application js
+		var app_callback = null;
+		// Only initialize once
+		if(typeof app[appname] == "function")
 		{
-			etemplate2._byTemplate[_name] = [];
+			(function() { new app[appname]();}).call();
 		}
-		etemplate2._byTemplate[_name].push(this);
-
-		// Trigger the "resize" event
-		this.resize();
-
-		if(typeof _callback == "function")
+		else if (typeof app[appname] !== "object")
 		{
-			_callback.call(window,this);
+			egw.debug("warn", "Did not load '%s' JS object",appname); 
 		}
-		if(_callback != app_callback)
+		if(typeof app[appname] == "object")
 		{
-			app_callback.call(window,this);
+			app_callback = function(et2) {app[appname].et2_ready(et2);};
 		}
-
-		$j(this.DOMContainer).trigger('load', this);
-	};
+		
+		// Create the document fragment into which the HTML will be injected
+		var frag = document.createDocumentFragment();
 	
 	
-	// Load & process
-	if(!this.templates[_name])
-	{
-		// Asynchronously load the XET file	
-		et2_loadXMLFromURL(_url, function(_xmldoc) {
-
-			// Scan for templates and store them
-			for(var i = 0; i < _xmldoc.childNodes.length; i++) {
-				var template = _xmldoc.childNodes[i];
-				if(template.nodeName.toLowerCase() != "template") continue;
-				this.templates[template.getAttribute("id")] = template;
-				if(!_name) missing_name = template.getAttribute("id");
+		// Clear any existing instance
+		this.clear();
+	
+		// Create the basic widget container and attach it to the DOM
+		this.widgetContainer = new et2_container(null);
+		this.widgetContainer.setApiInstance(egw(currentapp, egw.elemWindow(this.DOMContainer)));
+		this.widgetContainer.setInstanceManager(this);
+		this.widgetContainer.setParentDOMNode(this.DOMContainer);
+	
+		// store the id to submit it back to server
+		if(_data) {
+			this.etemplate_exec_id = _data.etemplate_exec_id;
+			// set app_header
+			window.egw_app_header(_data.app_header);
+		}
+		
+		var _load = function() {
+			// Read the XML structure of the requested template
+			this.widgetContainer.loadFromXML(this.templates[_name || missing_name]);
+	
+			// Inform the widget tree that it has been successfully loaded.
+			this.widgetContainer.loadingFinished();
+	
+			// Insert the document fragment to the DOM Container
+			this.DOMContainer.appendChild(frag);
+	
+			// Add into indexed list
+			if(typeof etemplate2._byTemplate[_name] == "undefined")
+			{
+				etemplate2._byTemplate[_name] = [];
 			}
-			_load.apply(this,[]);
-		}, this);
-		
-		// Split the given data into array manager objects and pass those to the
-		// widget container - do this here because file is loaded async
-		this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
-	}
-	else
-	{
-		// Set array managers first, or errors will happen
-		this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
-		
-		// Already have it
-		_load.apply(this,[]);
-	}
+			etemplate2._byTemplate[_name].push(this);
 	
-
+			// Trigger the "resize" event
+			this.resize();
+	
+			if(typeof _callback == "function")
+			{
+				_callback.call(window,this);
+			}
+			if(_callback != app_callback)
+			{
+				app_callback.call(window,this);
+			}
+	
+			$j(this.DOMContainer).trigger('load', this);
+		};
+		
+		
+		// Load & process
+		if(!this.templates[_name])
+		{
+			// Asynchronously load the XET file	
+			et2_loadXMLFromURL(_url, function(_xmldoc) {
+	
+				// Scan for templates and store them
+				for(var i = 0; i < _xmldoc.childNodes.length; i++) {
+					var template = _xmldoc.childNodes[i];
+					if(template.nodeName.toLowerCase() != "template") continue;
+					this.templates[template.getAttribute("id")] = template;
+					if(!_name) missing_name = template.getAttribute("id");
+				}
+				_load.apply(this,[]);
+			}, this);
+			
+			// Split the given data into array manager objects and pass those to the
+			// widget container - do this here because file is loaded async
+			this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
+		}
+		else
+		{
+			// Set array managers first, or errors will happen
+			this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
+			
+			// Already have it
+			_load.apply(this,[]);
+		}
+	}, this);
 };
 
 /**

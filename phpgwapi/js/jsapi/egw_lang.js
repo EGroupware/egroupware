@@ -101,8 +101,10 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 		 * 			app: <APPLICATION NAME>,
 		 * 			lang: <LANGUAGE CODE>
 		 * 		}
+		 * @param function _callback called after loading, if not given ready event will be postponed instead
+		 * @param object _context for callback
 		 */
-		langRequire: function(_window, _apps) {
+		langRequire: function(_window, _apps, _callback, _context) {
 			// Get the ready and the files module for the given window
 			var ready = this.module("ready", _window);
 			var files = this.module("files", this.window);
@@ -128,13 +130,24 @@ egw.extend('lang', egw.MODULE_GLOBAL, function() {
 			// Only continue if we need to include a language
 			if (jss.length > 0)
 			{
-				// Require a "ready postpone token"
-				var token = ready.readyWaitFor();
-
-				// Call "readyDone" once all js files have been included.
-				files.includeJS(jss, function () {
-					ready.readyDone(token);
-				}, this);
+				if (typeof _callback == 'function')
+				{
+					files.includeJS(jss, _callback, _context || null);
+				}
+				else
+				{
+					// Require a "ready postpone token"
+					var token = ready.readyWaitFor();
+	
+					// Call "readyDone" once all js files have been included.
+					files.includeJS(jss, function () {
+						ready.readyDone(token);
+					}, this);
+				}
+			}
+			else if (typeof _callback == 'function')
+			{
+				_callback.call(_context || null);
 			}
 		}
 	};

@@ -17,6 +17,9 @@
 	egw_debug;
 */
 
+/**
+ * @augments Class
+ */
 egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 
 	var egw = this;
@@ -135,7 +138,9 @@ egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		 * The readyWaitFor function can be used to register an event, that has
 		 * to be marked as "done" before the ready function will call its
 		 * registered callbacks. The function returns an id that has to be
-		 * passed to the "readDone" function once 
+		 * passed to the "readDone" function once
+		 * 
+		 * @memberOf egw
 		 */
 		readyWaitFor: function() {
 			return doReadyWaitFor();
