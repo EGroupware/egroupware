@@ -1030,15 +1030,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.link = jQuery(_nodes[1]);
 		if(typeof _values["id"] !== "undefined") this.set_id(_values['id']);
 		if(typeof _values["label"] !== "undefined") this.set_label(_values['label']);
-		if(typeof _values["value"] !== "undefined" && typeof _values["value"].title !== "undefined")
-		{
-			// Direct route
-			this.set_title(_nodes[1], _values["value"].title);
-		}
-		else
-		{
-			this.set_value(_values["value"]);
-		}
+		if(typeof _values["value"] !== "undefined") this.set_value(_values["value"]);
 	}
 
 });
