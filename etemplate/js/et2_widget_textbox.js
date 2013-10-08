@@ -222,12 +222,30 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		this._super.apply(this, arguments);
 
 		this.value = "";
-		this.span = $j(document.createElement("span"))
-			.addClass("et2_textbox_ro");
+		this.span = $j(document.createElement("label"))
+			.addClass("et2_label");
+		this.value_span = $j(document.createElement("span"))
+			.addClass("et2_textbox_ro")
+			.appendTo(this.span);
 
 		this.setDOMNode(this.span[0]);
 	},
 
+	set_label: function(label) {
+		if(label == this.label)
+		{
+			return;
+		}
+		
+		// Remove current label
+		this.span.contents()
+			.filter(function(){ return this.nodeType == 3; }).remove();
+		
+		var parts = et2_csvSplit(label, 2, "%s");
+		this.span.prepend(parts[0]);
+		this.span.append(parts[1]);
+		this.label = label;
+	},
 	set_value: function(_value) {
 		this.value = _value;
 
@@ -235,24 +253,29 @@ var et2_textbox_ro = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			_value = "";
 		}
-		this.span.text(_value);
+		this.value_span.text(_value);
 	},
 	/**
 	 * Code for implementing et2_IDetachedDOM
 	 */
 	getDetachedAttributes: function(_attrs)
 	{
-		_attrs.push("value");
+		_attrs.push("value", "label");
 	},
 
 	getDetachedNodes: function()
 	{
-		return [this.span[0]];
+		return [this.span[0], this.value_span[0]];
 	},
 
 	setDetachedAttributes: function(_nodes, _values)
 	{
 		this.span = jQuery(_nodes[0]);
+		this.value_span = jQuery(_nodes[1]);
+		if(typeof _values["label"] != 'undefined')
+		{
+			this.set_label(_values["label"]);
+		}
 		if(typeof _values["value"] != 'undefined')
 		{
 			this.set_value(_values["value"]);
