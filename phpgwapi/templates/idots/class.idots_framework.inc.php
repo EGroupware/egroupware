@@ -310,8 +310,6 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 				$var['sideboxcolend'] = '</div></td>';
 
 				$this->tplsav2->assign('sideboxwidth', $sideboxwidth);
-
-				$GLOBALS['egw_info']['flags']['need_footer'] .= $this->tplsav2->fetch('sidebox_dhtml.tpl.php');
 			}
 		}
 		else
