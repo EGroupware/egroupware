@@ -1373,17 +1373,14 @@ unset($query['actions']);
 				$replace = '';
 
 				$header['subject'] = preg_replace($search,$replace,$header['subject']);
-				$headerSubject = $header['subject'];//mail_bo::htmlentities($header['subject'],$this->charset);
-				$header['subject'] = $headerSubject;
 				// curly brackets get messed up by the template!
-				$header['subject'] = str_replace(array('{','}'),array('&#x7B;','&#x7D;'),$header['subject']);
 
 				if (!empty($header['subject'])) {
 					// make the subject shorter if it is to long
 					$fullSubject = $header['subject'];
 					$subject = $header['subject'];
 				} else {
-					$subject = @htmlspecialchars('('. lang('no subject') .')', ENT_QUOTES, $this->charset);
+					$subject = '('. lang('no subject') .')';
 				}
 
 				$data["subject"] = $subject; // the mailsubject
