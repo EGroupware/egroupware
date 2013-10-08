@@ -44,11 +44,6 @@ app.mail = AppJS.extend(
 	init: function() {
 		this._super.apply(this,arguments);
 		window.register_app_refresh("mail", this.app_refresh);
-
-		this.mail_startTimerFolderStatusUpdate(this.mail_refreshTimeOut);
-		//inital call of refresh folderstatus
-		var self = this;
-		window.setTimeout(function() {self.mail_refreshFolderStatus.apply(self);},1000);
 	},
 
 	/**
@@ -93,7 +88,14 @@ app.mail = AppJS.extend(
 			}
 		}
 		//alert('action about to go down');
-		if (isMainView) this.mail_disablePreviewArea(true);
+		if (isMainView)
+		{
+			this.mail_disablePreviewArea(true);
+			this.mail_startTimerFolderStatusUpdate(this.mail_refreshTimeOut);
+			//inital call of refresh folderstatus
+			var self = this;
+			window.setTimeout(function() {self.mail_refreshFolderStatus.apply(self);},1000);
+		}
 		if (isDisplay)
 		{
 			var subject = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mail_displaysubject');
@@ -248,7 +250,7 @@ app.mail = AppJS.extend(
 			case 'forward':
 			case 'forwardinline':
 			case 'forwardasattach':
-				if (_elems.length||_action.id == 'forwardasattach')
+				if (_elems.length>1||_action.id == 'forwardasattach')
 				{
 					var url = 'menuaction=mail.mail_compose.compose';
 					return this.mail_openComposeWindow(url,_action.id == 'forwardasattach', _elems);
@@ -327,19 +329,6 @@ app.mail = AppJS.extend(
 		}
 		return success;
 	},
-		 
-	/**
-	 * Compose, reply or forward a message
-	 *
-	 * @param _action _action.id is 'compose', 'composeasnew', 'reply', 'reply_all' or 'forward' (forward can be multiple messages)
-	 * @param _elems _elems[0].id is the row-id
-	 */
-	mail_testhtmlarea: function(_action, _elems)
-	{
-		var url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=mail.mail_compose.testhtmlarea';
-		egw_openWindowCentered(url);
-	},
 
 	/**
 	 * Compose, reply or forward a message
@@ -352,9 +341,9 @@ app.mail = AppJS.extend(
 		var alreadyAsked=false;
 		var _messageList;
 		var sMessageList='';
-		//var cbAllMessages = document.getElementById('selectAllMessagesCheckBox').checked;
 		// check if mailgrid exists, before accessing it
 		var cbAllVisibleMessages;
+		var cbAllMessages = false;
 		if (typeof forwardByCompose == 'undefined') forwardByCompose = true;
 		if (forwardByCompose == false)
 		{
@@ -395,7 +384,7 @@ app.mail = AppJS.extend(
 		if (Check == true || sMessageList=='')
 		{
 			if (sMessageList.length >0) {
-				sMessageList= 'AsForward&forwardmails=1&folder='+activeFolderB64+'&reply_id='+sMessageList.substring(0,sMessageList.length-1);
+				sMessageList= 'AsForward&from=forward&mode=asattach&reply_id='+sMessageList.substring(0,sMessageList.length-1);
 			}
 			//alert(sMessageList);
 			egw_openWindowCentered(window.egw_webserverUrl+'/index.php?'+_url+sMessageList,'compose',870,egw_getWindowOuterHeight());

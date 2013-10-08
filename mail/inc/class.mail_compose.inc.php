@@ -24,14 +24,12 @@ class mail_compose
 		'action'		=> True,
 		'compose'		=> True,
 		'composeFromDraft'	=> True,
-		'getAttachment'		=> True,
 		'fileSelector'		=> True,
 		'forward'		=> True,
 		'composeAsNew'         => True,
 		'composeAsForward'=> True,
 		'reply'			=> True,
 		'replyAll'		=> True,
-		'selectFolder'		=> True,
 		'action'	=> True
 	);
 
@@ -106,25 +104,30 @@ class mail_compose
 		}
 		if (is_null(mail_bo::$mailConfig)) mail_bo::$mailConfig = config::read('mail');
 
-/*
-		if (!isset($_POST['composeid']) && !isset($_GET['composeid']))
-		{
-			// create new compose session
-			$this->composeID = $this->getComposeID();
-			$this->setDefaults();
-		}
-		else
-		{
-			// reuse existing compose session
-			if (isset($_POST['composeid']))
-				$this->composeID = $_POST['composeid'];
-			else
-				$this->composeID = $_GET['composeid'];
-
-		}
-*/
 		$this->mailPreferences  =& $this->mail_bo->mailPreferences;
 
+	}
+
+	/**
+	 * changeProfile
+	 *
+	 * @param int $icServerID
+	 */
+	function changeProfile($_icServerID)
+	{
+		if ($this->mail_bo->profileID!=$_icServerID)
+		{
+			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.'->'.$this->mail_bo->profileID.'<->'.$_icServerID);
+			$this->mail_bo = mail_bo::getInstance(false,$_icServerID);
+			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.$this->mail_bo->profileID.':'.function_backtrace());
+			// no icServer Object: something failed big time
+			if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
+			/*if (!($this->mail_bo->icServer->_connected == 1))*/ $this->mail_bo->openConnection($this->mail_bo->profileID);
+			$this->bopreferences =& $this->mail_bo->bopreferences;
+			$this->preferences	=& $this->mail_bo->mailPreferences; // $this->bopreferences->getPreferences();
+			// we should get away from this $this->preferences->preferences should hold the same info
+			$this->mailPreferences  =& $this->mail_bo->mailPreferences;
+		}
 	}
 
 	function unhtmlentities ($string)
@@ -282,7 +285,7 @@ class mail_compose
 
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
 		if (!$replyID && isset($_GET['id'])) $replyID = $_GET['id'];
-		if (isset($_GET['part_id'])) $replyID = $_GET['part_id'];
+		if (isset($_GET['part_id'])) $partID = $_GET['part_id'];
 		
 		// Process different places we can use as a start for composing an email
 		if($_GET['from'] && $replyID)
@@ -293,6 +296,12 @@ class mail_compose
 				// Additionally may be changed
 				$_focusElement, $suppressSigOnTop, $isReply
 			));
+			unset($_GET['from']);
+			unset($_GET['reply_id']);
+			unset($_GET['part_id']);
+			unset($_GET['id']);
+			unset($_GET['mode']);
+			error_log(__METHOD__.__LINE__.array2string($_content));
 		}
 		if (!isset($_content['composeID'])||empty($_content['composeID']))
 		{
@@ -358,6 +367,15 @@ class mail_compose
 			}
 		}
 		// someone clicked something like send, or saveAsDraft
+		// make sure, we are connected to the correct server for sending and storing the send message
+		$activeProfile = $composeProfile = $this->mail_bo->profileID; // active profile may not be the profile uised in/for compose
+		if (!empty($_content['serverID']) && $_content['serverID'] != $this->mail_bo->profileID &&
+			($_content['button']['send'] || $_content['button']['saveAsDraft']||$_content['button']['saveAsDraftAndPrint'])
+		)
+		{
+			$this->changeProfile($_content['serverID']);
+			$composeProfile = $this->mail_bo->profileID;
+		}
 		$buttonClicked = false;
 		if ($_content['button']['send'])
 		{
@@ -377,6 +395,11 @@ class mail_compose
 			{
 				$sendOK = false;
 				$message = $e->getMessage();
+			}
+			if ($activeProfile != $composeProfile)
+			{
+				$this->changeProfile($activeProfile);
+				$activeProfile = $this->mail_bo->profileID;
 			}
 			if ($sendOK)
 			{
@@ -404,6 +427,7 @@ class mail_compose
 				egw_framework::message(lang('Message saved successfully.'),'mail');
 			}
 		}
+		if ($activeProfile != $composeProfile) $this->changeProfile($activeProfile);
 		$insertSigOnTop = false;
 		$content = (is_array($_content)?$_content:array());
 		// user might have switched desired mimetype, so we should convert
@@ -768,25 +792,6 @@ class mail_compose
 
 		$this->t->set_var("focusElement",$_focusElement);
 
-		$linkData = array
-		(
-			'menuaction'	=> 'felamimail.uicompose.selectFolder',
-		);
-		$this->t->set_var('folder_select_url',egw::link('/index.php',$linkData));
-
-		$linkData = array
-		(
-			'menuaction'	=> 'felamimail.uicompose.fileSelector',
-			'composeid'	=> $this->composeID
-		);
-		$linkData = array
-		(
-			'menuaction'	=> 'felamimail.uicompose.action',
-			'composeid'	=> $this->composeID
-		);
-		$this->t->set_var("link_action",egw::link('/index.php',$linkData));
-		$this->t->set_var('folder_name',$this->mail_bo->content['mailbox']);
-		$this->t->set_var('compose_id',$this->composeID);
 		// the editorobject is needed all the time (since we use CKEDITOR
 		//$editorObject = html::initCKEditor('400px','simple');
 		$this->t->set_var('ckeditorConfig', egw_ckeditor_config::get_ckeditor_config('simple-withimage'));//$editorObject->jsEncode($editorObject->config));
@@ -858,7 +863,7 @@ class mail_compose
 			if(!empty($singleIdentity->default) && $singleIdentity->default==1)
 			{
 				$defaultIds[$singleIdentity->id] = $singleIdentity->id;
-				$selectedSender = mail_bo::generateIdentityString($singleIdentity);
+				$selectedSender = $singleIdentity->id;
 			}
 		}
 		//error_log(__METHOD__.__LINE__.' Identities regarded/marked as default:'.array2string($defaultIds). ' MailProfileActive:'.$this->mail_bo->profileID);
@@ -1084,25 +1089,25 @@ class mail_compose
 			$content = array_merge($content,$_content);
 
 			if (!empty($content['folder'])) $sel_options['folder']=$this->ajax_searchFolder(0,true);
-			$content['identity'] = (empty($content['identity'])?($selectedSender?(array)$selectedSender:''):$content['identity']);
+			$content['identity'] = (empty($content['identity'])?($selectedSender?$selectedSender:$this->mail_bo->profileID):$content['identity']);
 		}
 		else
 		{
 			//error_log(__METHOD__.__LINE__.array2string(array($sel_options['identity'],$selectedSender)));
-			$content['identity'] = ($selectedSender?(array)$selectedSender:'');
+			$content['identity'] = ($selectedSender?$selectedSender:$this->mail_bo->profileID);
 			//error_log(__METHOD__.__LINE__.$content['body']);
 		}
 		$content['is_html'] = ($content['mimeType'] == 'html'?true:'');
 		$content['is_plain'] = ($content['mimeType'] == 'html'?'':true);
 		$content['mail_'.($content['mimeType'] == 'html'?'html':'plain').'text'] =$content['body'];
 		$content['showtempname']=0;
-if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.'before merging content with uploadforCompose:'.array2string($content['attachments']));
+		//if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.'before merging content with uploadforCompose:'.array2string($content['attachments']));
 		$content['attachments']=(is_array($content['attachments'])&&is_array($content['uploadForCompose'])?array_merge($content['attachments'],(!empty($content['uploadForCompose'])?$content['uploadForCompose']:array())):(is_array($content['uploadForCompose'])?$content['uploadForCompose']:(is_array($content['attachments'])?$content['attachments']:null)));
 		//if (is_array($content['attachments'])) foreach($content['attachments'] as $k => &$file) $file['delete['.$file['tmp_name'].']']=0;
 		$content['no_griddata'] = empty($content['attachments']);
 		$preserv['attachments'] = $content['attachments'];
 
-if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachments:'.array2string($content['attachments']));
+		//if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachments:'.array2string($content['attachments']));
 		// if no filemanager -> no vfsFileSelector
 		if (!$GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
@@ -1139,9 +1144,13 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 			unset($composeCache['body']);unset($composeCache['mail_htmltext']);unset($composeCache['mail_plaintext']);
 			egw_cache::setCache(egw_cache::SESSION,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']).'_'.$this->composeID,$composeCache,$expiration=60*60*2);
 		}
-
+		if (!isset($_content['serverID'])||empty($_content['serverID']))
+		{
+			$content['serverID'] = $this->mail_bo->profileID;
+		}
+		$preserv['serverID'] = $content['serverID'];
 		$etpl = new etemplate_new('mail.compose');
-
+error_log(__METHOD__.__LINE__);
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
 	}
 	
@@ -1161,12 +1170,23 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 	private function getComposeFrom($mail_id, $part_id, $from, &$_focusElement, &$suppressSigOnTop, &$isReply)
 	{
 		$content = array();
-		error_log(__METHOD__.__LINE__.array2string($mail_id)."$part_id, $from, $_focusElement, $suppressSigOnTop, $isReply");
+		//error_log(__METHOD__.__LINE__.array2string($mail_id).", $part_id, $from, $_focusElement, $suppressSigOnTop, $isReply");
+		// on forward we may have to support multiple ids
+		if ($from=='forward')
+		{
+			$replyIds = explode(',',$mail_id);
+			$mail_id = $replyIds[0];
+		}
 		$hA = mail_ui::splitRowID($mail_id);
 		$msgUID = $hA['msgUID'];
 		$folder = $hA['folder'];
-		$icServer = $hA['profileID'];
-
+		$icServerID = $hA['profileID'];
+		if ($icServerID != $this->mail_bo->profileID)
+		{
+			$this->changeProfile($_content['serverID']);
+			$composeProfile = $this->mail_bo->profileID;
+		}
+		$icServer = $this->mail_bo->icServer;
 		if (!empty($folder) && !empty($msgUID) )
 		{
 			// this fill the session data with the values from the original email
@@ -1188,9 +1208,16 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 					$isReply = true;
 					break;
 				case 'forward':
-					$mode  = ($_GET['mode']=='forwardinline'?'inline':'asattach');
-					$content = $this->getForwardData($icServer, $folder, $msgUID, $part_id, $mode);
-
+					$mode  = ($_GET['mode']=='forwardinline'?'inline':'asmail');
+					// this fill the session data with the values from the original email
+					foreach ($replyIds as $k => $mail_id)
+					{
+						//error_log(__METHOD__.__LINE__.' ID:'.$mail_id.' Mode:'.$mode);
+						$hA = mail_ui::splitRowID($mail_id);
+						$msgUID = $hA['msgUID'];
+						$folder = $hA['folder'];
+						$content = $this->getForwardData($icServer, $folder, $msgUID, $part_id, $mode);
+					}
 					$isReply = ($mode?$mode=='inline':$this->preferencesArray['message_forwarding'] == 'inline');
 					$_focusElement = 'to';
 					break;
@@ -1200,76 +1227,6 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 		}
 		return $content;
 	}
-
-	function getAttachment()
-	{
-		$bocompose  = CreateObject('felamimail.bocompose', $_GET['_composeID']);
-		$attachment =  $bocompose->sessionData['attachments'][$_GET['attID']] ;
-		if (!empty($attachment['folder']))
-		{
-			$is_winmail = $_GET['is_winmail'] ? $_GET['is_winmail'] : 0;
-			$this->mailbox  = $attachment['folder'];
-			$this->mail_bo->reopen($this->mailbox);
-			#$attachment 	= $this->mail_bo->getAttachment($this->uid,$part);
-			$attachmentData = $this->mail_bo->getAttachment($attachment['uid'],$attachment['partID'],$is_winmail);
-			$this->mail_bo->closeConnection();
-		}
-
-		if (parse_url($attachment['file'],PHP_URL_SCHEME) == 'vfs')
-		{
-			egw_vfs::load_wrapper('vfs');
-		}
-		//error_log(print_r($attachmentData,true));
-		header ("Content-Type: ".$attachment['type']."; name=\"". $this->mail_bo->decode_header($attachment['name']) ."\"");
-		header ("Content-Disposition: inline; filename=\"". $this->mail_bo->decode_header($attachment['name']) ."\"");
-		header("Expires: 0");
-		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-		header("Pragma: public");
-		if (!empty($attachment['file']))
-		{
-			$fp = fopen($attachment['file'], 'rb');
-			fpassthru($fp);
-			fclose($fp);
-		}
-		else
-		{
-			echo $attachmentData['attachment'];
-		}
-		common::egw_exit();
-		exit;
-
-	}
-
-
-	function selectFolder()
-	{
-		// this call loads js and css for the treeobject
-		html::tree(false,false,false,null,'foldertree','','',false,'/',null,false);
-
-		egw_framework::validate_file('jscode','composeMessage','felamimail');
-		common::egw_header();
-
-		$mail_bo		= $this->mail_bo;
-		$uiwidgets		= CreateObject('felamimail.uiwidgets');
-		$connectionStatus	= $mail_bo->openConnection($mail_bo->profileID);
-
-		$folderObjects = $mail_bo->getFolderObjects(true,false);
-		$folderTree = $uiwidgets->createHTMLFolder
-		(
-			$folderObjects,
-			'INBOX',
-			0,
-			lang('IMAP Server'),
-			$mailPreferences['username'].'@'.$mailPreferences['imapServerAddress'],
-			'divFolderTree',
-			false//,
-			//true
-		);
-		print '<div id="divFolderTree" style="overflow:auto; width:320px; height:450px; margin-bottom:0px; padding-left:0px; padding-top:0px; z-index:100; border:1px solid Silver;"></div>';
-		print $folderTree;
-	}
-
-
 
 	/**
 	 * previous bocompose stuff
@@ -1292,37 +1249,6 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 		// third param is stripalltags, we may not need that, if the source is already in ascii
 		if (!$sourceishtml) $stripalltags=false;
 		return translation::convertHTMLToText($_html,$this->displayCharset,$stripcrl,$stripalltags);
-	}
-
-	function convertHTMLToTextTiny($_html)
-	{
-		print "<pre>"; print htmlspecialchars($_html); print "</pre>";
-		// remove these tags and any spaces behind the tags
-		$search = array('/<p.*?> */', '/<.?strong>/', '/<.?em>/', '/<.?u>/', '/<.?ul> */', '/<.?ol> */', '/<.?font.*?> */', '/<.?blockquote> */');
-		$replace = '';
-		$text = preg_replace($search, $replace, $_html);
-
-		// convert these tags and any spaces behind the tags to line breaks
-		$search = array('/<\/li> */', '/<br \/> */');
-		$replace = "\r\n";
-		$text = preg_replace($search, $replace, $text);
-
-		// convert these tags and any spaces behind the tags to double line breaks
-		$search = array('/&nbsp;<\/p> */', '/<\/p> */');
-		$replace = "\r\n\r\n";
-		$text = preg_replace($search, $replace, $text);
-
-		// special replacements
-		$search = array('/<li>/');
-		$replace = array('  * ');
-
-		$text = preg_replace($search, $replace, $text);
-
-		$text = html_entity_decode($text, ENT_COMPAT, $this->displayCharset);
-
-		print "<pre>"; print htmlspecialchars($text); print "</pre>"; exit;
-
-		return $text;
 	}
 
 	function generateRFC822Address($_addressObject)
@@ -1531,7 +1457,7 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 
 		// get message headers for specified message
 		$headers	= $mail_bo->getMessageEnvelope($_uid, $_partID);
-
+		//error_log(__METHOD__.__LINE__.array2string($headers));
 		//_debug_array($headers); exit;
 		// check for Re: in subject header
 		$this->sessionData['subject'] 	= "[FWD] " . $mail_bo->decode_header($headers['SUBJECT']);
@@ -1569,6 +1495,20 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 		{
 			$this->preferencesArray['message_forwarding'] = $modebuff;
 		}
+		//error_log(__METHOD__.__LINE__.array2string($this->sessionData));
+		return $this->sessionData;
+	}
+
+	function addMessageAttachment($_uid, $_partID, $_folder, $_name, $_type, $_size)
+	{
+		$this->sessionData['attachments'][]=array (
+			'uid'		=> $_uid,
+			'partID'	=> $_partID,
+			'name'		=> $_name,
+			'type'		=> $_type,
+			'size'		=> $_size,
+			'folder'	=> $_folder
+		);
 	}
 
 	/**
@@ -1848,8 +1788,8 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 		$_mailObject->Priority = $_formData['priority'];
 		$_mailObject->Encoding = 'quoted-printable';
 		$_mailObject->AddCustomHeader('X-Mailer: FeLaMiMail');
-		if(isset($this->sessionData['in-reply-to'])) {
-			$_mailObject->AddCustomHeader('In-Reply-To: '. $this->sessionData['in-reply-to']);
+		if(isset($_formData['in-reply-to'])) {
+			$_mailObject->AddCustomHeader('In-Reply-To: '. $_formData['in-reply-to']);
 		}
 		if($_formData['disposition']) {
 			$_mailObject->AddCustomHeader('Disposition-Notification-To: '. $_identity->emailAddress);
@@ -1944,9 +1884,9 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 			$_mailObject->IsHTML(true);
 			if(!empty($signature)) {
 				#$_mailObject->Body    = array($_formData['body'], $_signature['signature']);
-				if($this->sessionData['stationeryID']) {
+				if($_formData['stationeryID']) {
 					$bostationery = new felamimail_bostationery();
-					$_mailObject->Body = $bostationery->render($this->sessionData['stationeryID'],$_formData['body'],$signature);
+					$_mailObject->Body = $bostationery->render($_formData['stationeryID'],$_formData['body'],$signature);
 				} else {
 					$_mailObject->Body = $_formData['body'] .
 						($disableRuler ?'<br>':'<hr style="border:1px dotted silver; width:90%;">').
@@ -1958,9 +1898,9 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 				#print "<pre>$_mailObject->AltBody</pre>";
 				#print htmlentities($_signature['signature']);
 			} else {
-				if($this->sessionData['stationeryID']) {
+				if($_formData['stationeryID']) {
 					$bostationery = new felamimail_bostationery();
-					$_mailObject->Body = $bostationery->render($this->sessionData['stationeryID'],$_formData['body']);
+					$_mailObject->Body = $bostationery->render($_formData['stationeryID'],$_formData['body']);
 				} else {
 					$_mailObject->Body	= $_formData['body'];
 				}
@@ -1984,10 +1924,10 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 
 		// add the attachments
 		$mail_bo->openConnection();
-		if (is_array($this->sessionData) && isset($this->sessionData['attachments']))
+		if (is_array($_formData) && isset($_formData['attachments']))
 		{
 			$tnfattachments = null;
-			foreach((array)$this->sessionData['attachments'] as $attachment) {
+			foreach((array)$_formData['attachments'] as $attachment) {
 				if(is_array($attachment))
 				{
 					if (!empty($attachment['uid']) && !empty($attachment['folder'])) {
@@ -2502,6 +2442,7 @@ if (is_array($content['attachments']))error_log(__METHOD__.__LINE__.' Attachment
 			return $rL;
 		}
 		header('Content-Type: application/json; charset=utf-8');
+		//error_log(__METHOD__.__LINE__);
 		echo json_encode($results);
 		common::egw_exit();
 	}

@@ -3966,11 +3966,13 @@ class mail_bo
 				return false;
 			}
 			//if ($decode) _debug_array($envelope[0]);
+			//error_log(__METHOD__.__LINE__.array2string($envelope));
 			return ($decode ? self::decode_header($envelope[0],true): $envelope[0]);
 		} else {
 			if( PEAR::isError($headers = $this->icServer->getParsedHeaders($_uid, true, $_partID, true)) ) {
 				return false;
 			}
+			error_log(__METHOD__.__LINE__.array2string($headers));
 			//_debug_array($headers);
 			$newData = array(
 				'DATE'		=> $headers['DATE'],

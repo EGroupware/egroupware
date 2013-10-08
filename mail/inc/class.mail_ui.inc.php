@@ -134,7 +134,14 @@ class mail_ui
 	 */
 	function changeProfile($_icServerID,$unsetCache=false)
 	{
-		//if (self::$icServerID != $_icServerID) $unsetCache = true;
+		if (self::$icServerID != $_icServerID)
+		{
+			//$unsetCache = true;
+			if (self::$icServerID>0)
+			{
+				$this->mail_bo->bopreferences->setProfileActive(false,self::$icServerID);
+			}
+		}
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.'->'.self::$icServerID.'<->'.$_icServerID);
 		self::$icServerID = $_icServerID;
 		if ($unsetCache) emailadmin_bo::unsetCachedObjects(self::$icServerID);
@@ -147,8 +154,15 @@ class mail_ui
 		$oldicServerID =& egw_cache::getSession('mail','activeProfileID');
 		$oldicServerID = self::$icServerID;
 		// save pref
-		$GLOBALS['egw']->preferences->add('mail','ActiveProfileID',self::$icServerID,'user');
-		$GLOBALS['egw']->preferences->save_repository(true);
+		if (self::$icServerID>0)
+		{
+			$this->mail_bo->bopreferences->setProfileActive(true,self::$icServerID);
+		}
+		else
+		{
+			$GLOBALS['egw']->preferences->add('mail','ActiveProfileID',self::$icServerID,'user');
+			$GLOBALS['egw']->preferences->save_repository(true);
+		}
 		$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = self::$icServerID;
 	}
 
@@ -1572,6 +1586,7 @@ unset($query['actions']);
 	{
 //error_log(__METHOD__.__LINE__.array2string($_requesteddata));
 //error_log(__METHOD__.__LINE__.array2string($_REQUEST));
+//error_log(__METHOD__.__LINE__);
 		if (!is_null($_requesteddata) && isset($_requesteddata['id']))
 		{
 			$rowID = $_requesteddata['id'];
