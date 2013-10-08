@@ -911,18 +911,30 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 	init: function() {
 		this._super.apply(this, arguments);
 
+		this.label_span = $j(document.createElement("label"))
+			.addClass("et2_label");
 		this.link = $j(document.createElement("span"))
-			.addClass("et2_link");
+			.addClass("et2_link")
+			.appendTo(this.label_span);
 
-		if(this.options['class']) this.link.addClass(this.options['class']);
-		this.setDOMNode(this.link[0]);
+		if(this.options['class']) this.label_span.addClass(this.options['class']);
+		this.setDOMNode(this.label_span[0]);
 	},
 	destroy: function() {
 		if(this.link) this.link.unbind();
 		this.link = null;
 		this._super.apply(this, arguments);
 	},
-
+	set_label: function(label) {		
+		// Remove current label
+		this.label_span.contents()
+			.filter(function(){ return this.nodeType == 3; }).remove();
+		
+		var parts = et2_csvSplit(label, 2, "%s");
+		this.label_span.prepend(parts[0]);
+		this.label_span.append(parts[1]);
+		this.label = label;
+	},
 	set_value: function(_value) {
 		if(typeof _value != 'object' && _value && !this.options.only_app)
 		{
@@ -999,7 +1011,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 	 * passed to the "setDetachedAttributes" function in the same order.
 	 */
 	getDetachedNodes: function() {
-		return [this.node, this._labelContainer ? this._labelContainer[0] : null];
+		return [this.node, this.link[0]];
 	},
 
 	/**
@@ -1014,14 +1026,14 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 	 */
 	setDetachedAttributes: function(_nodes, _values) {
 		this.node = _nodes[0];
-		this.link = jQuery(_nodes[0]);
-		this._labelContainer = _nodes[1] != null ? jQuery(_nodes[1]) : null;
+		this.label_span = jQuery(_nodes[0]);
+		this.link = jQuery(_nodes[1]);
 		if(typeof _values["id"] !== "undefined") this.set_id(_values['id']);
 		if(typeof _values["label"] !== "undefined") this.set_label(_values['label']);
 		if(typeof _values["value"] !== "undefined" && typeof _values["value"].title !== "undefined")
 		{
 			// Direct route
-			this.set_title(_nodes[0], _values["value"].title);
+			this.set_title(_nodes[1], _values["value"].title);
 		}
 		else
 		{
