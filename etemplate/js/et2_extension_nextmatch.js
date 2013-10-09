@@ -1203,7 +1203,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		{
 			// Keep the name of the template, as we'll free up the widget after parsing
 			this.template = _value;
-			
+			template.loadingFinished();
 			// Fetch the grid element and parse it
 			var definitionGrid = template.getChildren()[0];
 			if (definitionGrid && definitionGrid instanceof et2_grid)
@@ -1238,24 +1238,14 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			// Start auto-refresh
 			this._set_autorefresh(this._get_autorefresh());
 		};
-		if(template.getChildren().length == 0)
-		{
-			// Template might not be loaded yet, defer parsing
-			$j(template.getDOMNode()).on("load", 
-				jQuery.proxy(function() {
-					parse.call(this, template);
-					this.resize();
-				}, this)
-			);
-		}
-		else
-		{
-			if(this.isAttached())
-			{
-				template.loadingFinished();
-			}
-			parse.call(this, template)
-		}
+		
+		// Template might not be loaded yet, defer parsing
+		$j(template.getDOMNode()).on("load", 
+			jQuery.proxy(function() {
+				parse.call(this, template);
+				this.resize();
+			}, this)
+		);
 	},
 
 	// Some accessors to match conventions
@@ -1557,24 +1547,12 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		// Register the handler which will update the "totalCount" display
 		
 		// Left & Right headers
-		this.headers = [];
 		this.header_div = jQuery(document.createElement("div")).addClass("ui-helper-clearfix ui-helper-reset").prependTo(this.div);
-		if(this.nextmatch.options.header_left || this.nextmatch.options.header_right)
-		{
-			var headers = [this.nextmatch.options.header_left, this.nextmatch.options.header_right];
-			
-			for(var i = 0; i < headers.length; i++) {
-				if(headers[i])
-				{
-					this._build_left_right(i==0?'left':'right',headers[i]);
-				}
-			}
-		}
+		this.headers = [{id:this.nextmatch.options.header_left}, {id:this.nextmatch.options.header_right}];
 
 		this.filters = jQuery(document.createElement("div")).appendTo(this.div)
 			.addClass("filters");
 		
-
 		// Add category
 		if(!settings.no_cat) {
 			settings.cat_id_label = egw.lang("Category");
@@ -1668,6 +1646,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			// Set activeFilters to current value
 			this.nextmatch.activeFilters.searchletter = current_letter;
 		}
+		this.loadingFinished();
 	},
 
 
@@ -1685,7 +1664,10 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		var header = et2_createWidget("template", {"id": template_name}, this);
 		jQuery(header.getDOMNode()).addClass(left_or_right == "left" ? "et2_hbox_left":"et2_hbox_right").addClass("nm_header");
 		this.headers.push(header);
-		$j(header.getDOMNode()).on("load", jQuery.proxy(function() {this._bindHeaderInput(header);},this));
+		$j(header.getDOMNode()).on("load", jQuery.proxy(function() {
+			header.loadingFinished();
+			this._bindHeaderInput(header);
+		},this));
 	},
 
 	/**
