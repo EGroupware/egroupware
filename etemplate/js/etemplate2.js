@@ -729,7 +729,7 @@ function etemplate2_handle_assign(type, res, req)
 		{
 			try
 			{
-				widget['set_' + res.data.key](res.data.value);
+				widget['set_' + res.data.key].call(widget,res.data.value);
 				return true;
 			}
 			catch (e)
