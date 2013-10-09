@@ -1049,8 +1049,11 @@ app.mail = AppJS.extend(
 
 	/**
 	 * User clicked an address (FROM, TO, etc)
+	 * 
+	 * @param object tag_info with values for attributes id, label, title, ...
+	 * @param et2_taglist widget
 	 */
-	address_click: function(DOMNode, tag_info, widget)
+	address_click: function(tag_info, widget)
 	{
 		console.log(this, arguments);
 	},
@@ -1436,17 +1439,20 @@ app.mail = AppJS.extend(
 	{
 		this.et2_obj.submit();
 	},
-
-	sieve_editRules_radiobtn: function()
+	
+	/**
+	 * Focus handler for folder, address, reject textbox/taglist to automatic check associated radio button
+	 */
+	sieve_focus_radioBtn: function(_ev, _widget)
 	{
-		console.log("hi i am radiobtn");
+		_widget.getRoot().getWidgetById('action').set_value(_widget.id.replace(/^action_([^_]+)_text$/, '$1'));
 	},
+
 	/**
 	 *
 	 */
 	sieve_vac_all_aliases: function()
 	{
-
 		var addr = this.et2.getWidgetById('addresses');
 
 		console.log('say something');

@@ -178,20 +178,22 @@ var et2_taglist = et2_selectbox.extend(
 		}
 		
 		// onClick - pass more than baseWidget, so unbind it to avoid double callback
-		if(this.options.onclick)
+		if(typeof this.onclick == 'function')
 		{
 			this.div.unbind("click.et2_baseWidget")
 				.on("click.et2_baseWidget", '.ms-sel-item', jQuery.proxy(function(event) { 
-				var widget = this;
 				// Pass the target as expected, but also the data for that tag
-				this.click(event.target, $j(event.target).parent().data("json"));
+				this.click(/*event.target,*/ $j(event.target).parent().data("json"));
 			},this));
 		}
 		
 		// onFocus
-		if (this.options.onfocus)
+		if (typeof this.onfocus == 'function')
 		{
-			$j(this.taglist).on("focus", jQuery.proxy(this.focus,this));
+			var widget = this;
+			$j(this.taglist).focus(function(e) {
+				widget.onfocus.call(widget.taglist, e, widget);
+			});
 		}
 		return true;
 	},
