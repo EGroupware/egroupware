@@ -1244,7 +1244,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			$j(template.getDOMNode()).on("load", 
 				jQuery.proxy(function() {
 					parse.call(this, template);
-					//this.loadingFinished();
 					this.resize();
 				}, this)
 			);
@@ -1559,10 +1558,11 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		
 		// Left & Right headers
 		this.headers = [];
+		this.header_div = jQuery(document.createElement("div")).addClass("ui-helper-clearfix ui-helper-reset").prependTo(this.div);
 		if(this.nextmatch.options.header_left || this.nextmatch.options.header_right)
 		{
 			var headers = [this.nextmatch.options.header_left, this.nextmatch.options.header_right];
-			this.header_div = jQuery(document.createElement("div")).addClass("ui-helper-clearfix ui-helper-reset").prependTo(this.div);
+			
 			for(var i = 0; i < headers.length; i++) {
 				if(headers[i])
 				{
@@ -1685,6 +1685,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		var header = et2_createWidget("template", {"id": template_name}, this);
 		jQuery(header.getDOMNode()).addClass(left_or_right == "left" ? "et2_hbox_left":"et2_hbox_right").addClass("nm_header");
 		this.headers.push(header);
+		$j(header.getDOMNode()).on("load", jQuery.proxy(function() {this._bindHeaderInput(header);},this));
 	},
 
 	/**
@@ -1890,13 +1891,10 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		}
 		return null;
 	},
-	
-	doLoadingFinished: function() {
-		this._super.apply(this,arguments);
-		var header = this;
 		
-		// Add change handlers to input widgets in the header
-		this.iterateOver(function(_widget) {
+	_bindHeaderInput: function(_widget) {
+		var header = this;
+		_widget.iterateOver(function(_widget){
 			// Previously set change function
 			var widget_change = _widget.change;
 			_widget.change = function(_node) {
@@ -1905,7 +1903,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 
 				// Update filters
 				if(result && _widget.isDirty()) {
-					var value = this.getInstanceManager().getValues(header);
+					var value = this.getInstanceManager().getValues(this);
 					// Filter now
 					header.nextmatch.applyFilters(value[header.nextmatch.id]);
 				}
@@ -1914,7 +1912,6 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			// Set activeFilters to current value
 			//self.nextmatch.activeFilters[_widget.id] = _widget.getValue();
 		}, this, et2_inputWidget);
-		return true;
 	}
 });
 et2_register_widget(et2_nextmatch_header_bar, ["nextmatch_header_bar"]);
