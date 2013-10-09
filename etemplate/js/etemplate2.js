@@ -96,6 +96,9 @@ function etemplate2(_container, _menuaction)
 	
 	// Connect to the window resize event
 	$j(window).resize(this, function(e) {e.data.resize();});
+	
+	// Register a handler for AJAX responses
+	egw.registerJSONPlugin(etemplate2_handle_assign, this, 'assign');
 }
 
 /**
@@ -124,6 +127,8 @@ etemplate2.prototype.clear = function()
 		this.widgetContainer = null;
 	}
 	$j(this.DOMContainer).empty();
+	
+	egw.unregisterJSONPlugin(etemplate2_handle_assign, this, 'assign');
 	
 	// Remove self from the index
 	for(name in this.templates)
@@ -692,7 +697,50 @@ function etemplate2_handle_validation_error(_type, _response)
 	//$j(':input',this.DOMContainer).data("validator").invalidate(_response.data);
 	egw().debug("warn","Validation errors", _response.data);
 }
-
+/**
+ * Handle assign for attributes on etemplate2 widgets
+ * 
+ * @param {String} type "assign"
+ * @param res Response
+ * @param res.data.id {String} Widget ID
+ * @param res.data.key {String} Attribute name
+ * @param res.data.value New value for widget
+ * @param res.data.etemplate_exec_id
+ * @param {type} req
+ * @returns {Boolean} Handled by this plugin
+ * @throws Invalid parameters if the required res.data parameters are missing
+ */
+function etemplate2_handle_assign(type, res, req)
+{
+	//Check whether all needed parameters have been passed and call the alertHandler function
+	if ((typeof res.data.id != 'undefined') && 
+		(typeof res.data.key != 'undefined') &&
+		(typeof res.data.value != 'undefined')
+	)
+	{
+		if(typeof res.data.etemplate_exec_id == 'undefined' ||
+			res.data.etemplate_exec_id != this.etemplate_exec_id)
+		{
+			// Not for this etemplate, but not an error
+			return false;
+		}
+		var widget = this.widgetContainer.getWidgetById(res.data.id);
+		if (widget)
+		{
+			try
+			{
+				widget['set_' + res.data.key](res.data.value);
+				return true;
+			}
+			catch (e)
+			{
+				egw.debug("error", "When assigning %s on %s via AJAX, \n"+e.message,res.data.key,res.data.id,widget);
+			}
+		}
+		return false;
+	}
+	throw 'Invalid parameters';
+}
 // Calls etemplate2_handle_response in the context of the object which
 // requested the response from the server
 egw(window).registerJSONPlugin(etemplate2_handle_load, null, 'et2_load');
