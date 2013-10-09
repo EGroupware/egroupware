@@ -331,7 +331,10 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		foreach($value_in as $key => $original_value)
 		{
 			// These keys are ignored
-			if(in_array($key, array('col_filter','start','num_rows','order','sort'))) continue;
+			if(in_array($key, array('col_filter','start','num_rows','total','order','sort')))
+			{
+				continue;
+			}
 			if($original_value == $value[$key]) continue;
 			
 			// These keys we don't send row data back, as they cause a partial reload
