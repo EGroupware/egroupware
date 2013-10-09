@@ -4,8 +4,8 @@
 	<template id="addressbook.index.org_rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
-				<column/>
-				<column/>
+				<column width="20"/>
+				<column width="20"/>
 				<column/>
 				<column/>
 				<column/>
@@ -13,7 +13,7 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description/>
+					<nextmatch-header label="Type" id="type" options="1"/>
 					<nextmatch-header label="#" align="center" id="number" options="Number"/>
 					<nextmatch-sortheader id="org_name" label="Organisation"/>
 					<nextmatch-header label="Department" id="org_unit"/>
