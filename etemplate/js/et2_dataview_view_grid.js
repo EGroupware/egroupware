@@ -791,7 +791,11 @@ var et2_dataview_grid = et2_dataview_container.extend(et2_dataview_IViewRange,
 					{
 						var self = this;
 						window.setTimeout(function() {
-							self._callback.call(self._context, idxStart, idxEnd);
+							// If row template changes, self._callback might disappear
+							if(typeof self._callback != "undefined")
+							{
+								self._callback.call(self._context, idxStart, idxEnd);
+							}
 						}, 0);
 					}
 				}
