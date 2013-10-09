@@ -20,6 +20,10 @@
 /**
  * Class which implements the "radiobox" XET-Tag
  * 
+ * A radio button belongs to same group by giving all buttons of a group same id!
+ * 
+ * set_value iterates over all of them and (un)checks them depending on given value.
+ * 
  * @augments et2_inputWidget
  */ 
 var et2_radiobox = et2_inputWidget.extend(
@@ -59,7 +63,6 @@ var et2_radiobox = et2_inputWidget.extend(
 		this.id = "";
 
 		this.createInputWidget();
-
 	},
 
 	createInputWidget: function() {
@@ -71,13 +74,18 @@ var et2_radiobox = et2_inputWidget.extend(
 
 		this.setDOMNode(this.input[0]);
 	},
+	
+	/**
+	 * Overwritten to set different DOM level ids by appending set_value
+	 * 
+	 * @param _id
+	 */
+	set_id: function(_id)
+	{
+		this._super.apply(this, arguments);
 
-	set_name: function(_name) {
-		if(_name.substr(_name.length-2) != "[]")
-		{
-			_name += "[]";
-		}
-		this.input.attr("name", _name);
+		this.dom_id = this.dom_id.replace('[]', '')+'-'+this.options.set_value;
+		if (this.input) this.input.attr('id', this.dom_id);
 	},
 
 	/**
@@ -94,14 +102,17 @@ var et2_radiobox = et2_inputWidget.extend(
 	},
 
 	/**
-	 * Override default to match against set/unset value
+	 * Override default to match against set/unset value AND iterate over all siblings with same id
 	 */
-	set_value: function(_value) {
-		if(_value == this.options.set_value) {
-			this.input.prop("checked", true);
-		} else {
-			this.input.prop("checked", false);
-		}
+	set_value: function(_value) 
+	{
+		this.getRoot().iterateOver(function(radio)
+		{
+			if (radio.id == this.id)
+			{
+				radio.input.prop('checked', _value == radio.options.set_value);
+			}
+		}, this, et2_radiobox);
 	},
 
 	/**
