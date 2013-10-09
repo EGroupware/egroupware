@@ -156,6 +156,9 @@ var et2_dataview = Class.extend({
 	 * Resizes the grid
 	 */
 	resize: function(_w, _h) {
+		// Not fully initialized yet...
+		if (!this.columnMgr) return;
+		
 		if (this.width != _w)
 		{
 			this.width = _w;
