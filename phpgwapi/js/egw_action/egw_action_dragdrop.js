@@ -125,12 +125,12 @@ function egwDragActionImplementation()
 			
 			$j(node).off("mousedown")
 				.on("mousedown", function(event) {
-					$j(node).draggable("option","disabled",event.ctrlKey);
-					$j(this).attr("draggable", event.ctrlKey ? "true" : "")
+					$j(node).draggable("option","disabled",event.ctrlKey || event.metaKey);
+					$j(this).attr("draggable", event.ctrlKey || event.metaKey ? "true" : "")
 					
 					// Disabling draggable adds some UI classes, but we don't care so remove them
 					$j(node).removeClass("ui-draggable-disabled ui-state-disabled");
-					if(!event.ctrlKey || !this.addEventListener) return;
+					if(!(event.ctrlKey || event.metaKey) || !this.addEventListener) return;
 				})
 				.on("dragstart", function(event) {
 					if(event.dataTransfer == null) {
