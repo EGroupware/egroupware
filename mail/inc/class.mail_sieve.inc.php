@@ -357,8 +357,7 @@ class mail_sieve
 					$this->ajax_action($button, $ruleID, $msg);
 
 				case 'cancel':
-					$js = 'window.close();';
-					echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
+					egw_framework::window_close();
 					common::egw_exit();
 			}
 		}
