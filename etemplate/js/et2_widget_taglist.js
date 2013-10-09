@@ -187,6 +187,12 @@ var et2_taglist = et2_selectbox.extend(
 				this.click(event.target, $j(event.target).parent().data("json"));
 			},this));
 		}
+		
+		// onFocus
+		if (this.options.onfocus)
+		{
+			$j(this.taglist).on("focus", jQuery.proxy(this.focus,this));
+		}
 		return true;
 	},
 	
