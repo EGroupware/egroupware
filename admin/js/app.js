@@ -18,10 +18,6 @@ app.admin = AppJS.extend(
 {
 	appname: 'admin',
 	/**
-	 * et2 widget container
-	 */
-	et2: null,
-	/**
 	 * reference to splitter
 	 */
 	splitter: null,
@@ -47,7 +43,6 @@ app.admin = AppJS.extend(
 	 */
 	destroy: function()
 	{
-		delete this.et2;
 		// call parent
 		this._super.apply(this, arguments);
 	},
@@ -64,8 +59,6 @@ app.admin = AppJS.extend(
 		// call parent
 		this._super.apply(this, arguments);
 
-		this.et2 = _et2.widgetContainer;
-		
 		var iframe = this.iframe = this.et2.getWidgetById('iframe');
 		if (iframe) 
 		{

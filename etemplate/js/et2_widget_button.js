@@ -43,7 +43,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 		},
 		"onclick": {
 			"name": "onclick",
-			"type": "string",
+			"type": "js",
 			"description": "JS code which gets executed when the button is clicked"
 		},
 		"accesskey": {
@@ -177,18 +177,19 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 		return this.btn ? this.btn[0] : (this.image ? this.image[0] : null);
 	},
 
-	onclick: function(_node) {
+	/**
+	 * Overwritten to maintain an internal clicked attribute
+	 * 
+	 * @param _ev
+	 * @returns {Boolean}
+	 */
+	click: function(_ev) {
 		this.clicked = true;
 
-		// Execute the JS code connected to the event handler
-		if (this.options.onclick)
+		if (!this._super.apply(this, arguments))
 		{
-			// Exectute the legacy JS code
-			if (!(et2_compileLegacyJS(this.options.onclick, this, _node))())
-			{
-				this.clicked = false;
-				return false;
-			}
+			this.clicked = false;
+			return false;
 		}
 
 		// Submit the form
@@ -197,6 +198,7 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 			this.getInstanceManager().submit(this); //TODO: this only needs to be passed if it's in a datagrid
 		}
 		this.clicked = false;
+		return true;
 	},
 
 	set_label: function(_value) {

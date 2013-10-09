@@ -36,12 +36,12 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 		},
 		"onchange": {
 			"name": "onchange",
-			"type": "string",
+			"type": "js",
 			"description": "JS code which is executed when the value changes."
 		},
 		"onfocus": {
 			"name": "onfocus",
-			"type": "string",
+			"type": "js",
 			"description": "JS code which get executed when wiget receives focus."
 		},
 		"validation_error": {
@@ -150,20 +150,13 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 	
 	focus: function(_node) 
 	{
-		if (this.options.onfocus)
+		if(typeof this.options.onfocus == 'function')
 		{
-			if(typeof this.options.onfocus == 'function')
-			{
-				// Make sure function gets a reference to the widget
-				var args = Array.prototype.slice.call(arguments);
-				if(args.indexOf(this) == -1) args.push(this);
+			// Make sure function gets a reference to the widget
+			var args = Array.prototype.slice.call(arguments);
+			if(args.indexOf(this) == -1) args.push(this);
 				
-				return this.options.onfocus.apply(this, args);
-			} 
-			else 
-			{
-				return (et2_compileLegacyJS(this.options.onfocus, this, _node))();
-			}
+			return this.options.onfocus.apply(this, args);
 		}
 	},
 

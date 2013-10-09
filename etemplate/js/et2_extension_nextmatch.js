@@ -94,7 +94,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		},
 		"onselect": {
 			"name": "onselect",
-			"type": "string",
+			"type": "js",
 			"description": "JS code which gets executed when rows are selected.  Can also be a app.appname.func(selected) style method"
 		},
 		"onfiledrop": {
@@ -485,26 +485,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 */
 	onselect: function(action,senders) {
 		// Execute the JS code connected to the event handler
-		if (this.options.onselect)
+		if (typeof this.options.onselect == 'function')
 		{
-			if (typeof this.options.onselect == "string" &&
-				 this.options.onselect.substr(0,4) == "app." && window.app)
-			{
-				var parts = this.options.onselect.split(".");
-				if(parts.length == 3 && typeof window.app[parts[1]] == "object" &&
-					typeof window.app[parts[1]][parts[2]] == "function")
-				{
-					// Call as Action callback
-					//window.app[parts[1]][parts[2]].apply( window.app[parts[1]], arguments);
-					window.app[parts[1]][parts[2]].apply( window.app[parts[1]], [this,this.getSelection().ids]);
-				}
-			}
-
-			// Exectute the legacy JS code
-			else if (!(et2_compileLegacyJS(this.options.onselect, this, this.div))())
-			{
-				return false;
-			}
+			return this.options.onselect.call(this, this.getSelection().ids, this);
 		}
 	},
 
@@ -1949,11 +1932,6 @@ var et2_nextmatch_header = et2_baseWidget.extend(et2_INextmatchHeader,
 			"type": "string",
 			"description": "Caption for the nextmatch header",
 			"translate": true
-		},
-		"onchange": {
-			"name": "onchange",
-			"type": "string",
-			"description": "JS code which is executed when the value changes."
 		}
 	},
 

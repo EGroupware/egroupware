@@ -403,7 +403,7 @@
 				}
 
 				var val = et2_checkType(_value, this.attributes[_name].type,
-					_name);
+					_name, this);
 
 				if (typeof this["set_" + _name] == "function")
 				{
@@ -438,7 +438,7 @@
 				if (!this.attributes[key].ignore)
 				{
 					_attrs[key] = et2_checkType(_attrs[key], this.attributes[key].type,
-						key);
+						key, this);
 				}
 			}
 			else

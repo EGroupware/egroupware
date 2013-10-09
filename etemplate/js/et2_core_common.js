@@ -84,8 +84,13 @@ function et2_form_name(_cname,_name)
  * Checks whether the given value is of the given type. Strings are converted
  * into the corresponding type. The (converted) value is returned. All supported
  * types are listed in the et2_validTypes array.
+ * 
+ * @param mixed _val value
+ * @param string _type a valid type eg. "string" or "js"
+ * @param string _attr attribute name
+ * @param object _widget
  */
-function et2_checkType(_val, _type, _attr, _cname)
+function et2_checkType(_val, _type, _attr, _widget)
 {
 	if (typeof _attr == "undefined")
 	{
@@ -241,10 +246,15 @@ function et2_checkType(_val, _type, _attr, _cname)
 				}
 			}
 		}
+		
+		if (typeof _val == "string")
+		{
+			return _val;	// get compiled later in widgets own initAttributes, as widget is not yet initialised
+		}
 	}
 
 	// We should never come here
-	throw("Invalid type identifier '" + _attr + ": " + _type + "' supplied by '" + _cname + "'");
+	throw("Invalid type identifier '" + _attr + ": " + _type);
 }
 
 /**

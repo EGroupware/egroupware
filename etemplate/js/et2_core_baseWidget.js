@@ -42,7 +42,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 		},
 		"onclick": {
 			"name": "onclick",
-			"type": "string",
+			"type": "js",
 			"description": "JS code which is executed when the element is clicked."
 		}
 	},
@@ -233,19 +233,20 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 		return this.getDOMNode(this);
 	},
 
-	click: function(_node) {
-		if (this.onclick)
+	/**
+	 * Click handler calling custom handler set via onclick attribute to this.onclick
+	 * 
+	 * @param _ev
+	 * @returns
+	 */
+	click: function(_ev) {
+		if(typeof this.onclick == 'function')
 		{
-			if(typeof this.onclick == 'function')
-			{
-				// Make sure function gets a reference to the widget
-				var args = Array.prototype.slice.call(arguments);
-				if(args.indexOf(this) == -1) args.push(this);
-				
-				return this.onclick.apply(this, args);
-			} else {
-				return (et2_compileLegacyJS(this.options.onclick, this, _node))();
-			}
+			// Make sure function gets a reference to the widget, splice it in as 2. argument if not
+			var args = Array.prototype.slice.call(arguments);
+			if(args.indexOf(this) == -1) args.splice(1, 0, this);
+			
+			return this.onclick.apply(this, args);
 		}
 
 		return true;

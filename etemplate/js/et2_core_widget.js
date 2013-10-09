@@ -752,6 +752,32 @@ var et2_widget = Class.extend(
 			}
 		}
 	},
+	
+	/**
+	 * The initAttributes function sets the attributes to their default
+	 * values. The attributes are not overwritten, which means, that the
+	 * default is only set, if either a setter exists or this[propName] does
+	 * not exist yet.
+	 * 
+	 * Overwritten here to compile legacy JS code in attributes of type "js"
+	 */
+	initAttributes: function(_attrs) {
+		for (var key in _attrs)
+		{
+			if (typeof this.attributes[key] != "undefined" && !this.attributes[key].ignore && !(_attrs[key] == undefined))
+			{
+				var val = _attrs[key];
+				// compile string values of attribute type "js" to functions
+				if (this.attributes[key].type == 'js' && typeof _attrs[key] == 'string')
+				{
+					val = et2_compileLegacyJS(val, this, 
+							this.instanceOf(et2_inputWidget) ? this.getInputNode() : 
+								(this.implements(et2_IDOMNode) ? this.getDOMNode() : null));
+				}
+				this.setAttribute(key, val, false);
+			}
+		}
+	},
 
 	doLoadingFinished: function() {
 		return true;

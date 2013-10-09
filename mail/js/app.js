@@ -39,7 +39,7 @@ app.mail = AppJS.extend(
 	/**
 	 * Initialize javascript for this application
 	 *
-	 * @memberOf app.mail
+	 * @memberOf mail
 	 */
 	init: function() {
 		this._super.apply(this,arguments);
@@ -428,7 +428,7 @@ app.mail = AppJS.extend(
 	 * @param nextmatch et2_nextmatch The widget whose row was selected
 	 * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
 	 */
-	mail_preview: function(nextmatch, selected) {
+	mail_preview: function(selected, nextmatch) {
 		//console.log("mail_preview",nextmatch, selected);
 		// Empty values, just in case selected is empty (user cleared selection)
 		var dataElem = {data:{subject:"",fromaddress:"",toaddress:"",date:"",subject:""}};

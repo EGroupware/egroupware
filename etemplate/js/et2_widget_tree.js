@@ -48,20 +48,17 @@ var et2_tree = et2_inputWidget.extend(
 		},
 		"onclick": {
 			"name": "onClick",
-			"type": "string",
-			"default": "",
+			"type": "js",
 			"description": "JS code which gets executed when clicks on text of a node"
 		},
 		"onselect": {
 			"name": "onSelect",
-			"type": "string",
-			"default": "",
+			"type": "js",
 			"description": "Javascript executed when user selects a node"
 		},
 		"oncheck": {
 			"name": "onCheck",
-			"type": "string",
-			"default": "",
+			"type": "js",
 			"description": "Javascript executed when user checks a node"
 		},
 		// onChange event is mapped depending on multiple to onCheck or onSelect
@@ -167,7 +164,7 @@ var et2_tree = et2_inputWidget.extend(
 	},
 
 	// overwrite default onclick to do nothing, as we install onclick via dhtmlxtree
-	onclick: function(_node) {},
+	click: function(_node) {},
 
 	createTree: function(widget) {
 		widget.input = new dhtmlXTreeObject({
@@ -184,26 +181,6 @@ var et2_tree = et2_inputWidget.extend(
 		// Add in the callback so we can keep the two in sync
 		widget.input.AJAX_callback = function() { widget._dhtmlxtree_json_callback(JSON.parse(this.response), widget.input.lastLoadedXMLId);};
 
-		// attach all event handlers (attributs starting with "on"), if they are set
-		for(var name in widget.options)
-		{
-			if (name.substr(0,2) == 'on' && widget.options[name])
-			{
-				// automatic convert onChange event to oncheck or onSelect depending on multiple is used or not
-				if (name == 'onchange') name = widget.options.multiple ? 'oncheck' : 'onselect';
-				widget.input.attachEvent(widget.attributes[name].name, function(_args){
-					var _widget = widget;	// closure to pass in et2 widget (1. param of event handler)
-					// use widget attributes to pass arguments and name of event to handler
-					_widget.event_args = arguments;
-					_widget.event_name = this.callEvent.arguments[0].substr(3);
-					var _js = _widget.options[_widget.event_name] || _widget.options.onchange;
-					(et2_compileLegacyJS(_js, _widget, this))();
-					delete _widget.event_args;
-					delete _widget.event_name;
-				});
-				
-			}
-		}
 		if (widget.options.autoloading)
 		{
 			var url = widget.options.autoloading;
@@ -217,6 +194,34 @@ var et2_tree = et2_inputWidget.extend(
 			widget.input.setDataMode('JSON');
 		}
 	},
+	
+	/**
+	 * Install event handlers on tree
+	 * 
+	 * @param _name
+	 * @param _handler
+	 */
+	_install_handler: function(_name, _handler)
+	{
+		if (typeof _handler == 'function')
+		{
+			if(this.input == null) this.createTree(this);
+			// automatic convert onChange event to oncheck or onSelect depending on multiple is used or not
+			if (_name == 'onchange') _name = this.options.multiple ? 'oncheck' : 'onselect';
+			var handler = _handler;
+			var widget = this;
+			this.input.attachEvent(_name, function(_id){
+				var args = jQuery.makeArray(arguments);
+				// splice in widget as 2. parameter, 1. is new node-id, now 3. is old node id
+				args.splice(1, 0, widget);
+				handler.apply(this, args);	
+			});
+		}
+	},
+	
+	set_onchange: function(_handler) { this._install_handler('onchange', _handler); },
+	set_onclick:  function(_handler) { this._install_handler('onclick',  _handler); },
+	set_onselect: function(_handler) { this._install_handler('onselect', _handler); },
 
 	set_select_options: function(options) 
 	{

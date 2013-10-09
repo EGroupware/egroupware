@@ -129,9 +129,9 @@
 			// Code is app.appname.function, add the arguments so it can be executed
 			if (typeof _code == 'string' && _code.indexOf('app') == 0 && _code.split('.').length >= 3 && _code.indexOf('(') == -1)
 			{
-				_code += '(egw,widget,window,document)';
+				_code += '(ev,widget)';
 			}
-			var func = new Function('egw', 'widget', 'window', 'document', _code);
+			var func = new Function('ev', 'widget', _code);
 		} catch(e) {
 			_widget.egw().debug('error', 'Error while compiling JS code ', _code);
 			return (function() {return false;});
@@ -139,16 +139,12 @@
 
 		// Execute the code and return its results, pass the egw instance and
 		// the widget
-		return function() {
-			// Get the egw reference
-			var egw = _widget.egw();
-
+		return function(ev) {
 			// Dump the executed code for debugging
 			egw.debug('log', 'Executing legacy JS code: ', _code);
 
 			// Return the result of the called function
-			return func.call(context, egw, _widget, egw.window,
-				egw.window.document);
+			return func.call(context, ev, _widget);
 		};
 	};
 

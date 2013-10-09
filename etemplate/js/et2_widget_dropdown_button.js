@@ -60,7 +60,7 @@ var et2_dropdown_button = et2_inputWidget.extend(
 		},
 		"onclick": {
 			"name": "onclick",
-			"type": "string",
+			"type": "js",
 			"description": "JS code which gets executed when the button is clicked"
 		},
 		"select_options": {
@@ -272,21 +272,28 @@ var et2_dropdown_button = et2_inputWidget.extend(
 		}
 	},
 
-	onclick: function(_node) {
+	/**
+	 * Overwritten to maintain an internal clicked attribute
+	 * 
+	 * @param _ev
+	 * @returns {Boolean}
+	 */
+	click: function(_ev) {
 		this.clicked = true;
 
-		// Execute the JS code connected to the event handler
-		if (this.options.onclick)
+		if (!this._super.apply(this, arguments))
 		{
-			// Exectute the legacy JS code
-			if (!(et2_compileLegacyJS(this.options.onclick, this, _node))())
-			{
-				this.clicked = false;
-				return false;
-			}
+			this.clicked = false;
+			return false;
 		}
 
+		// Submit the form
+		if (this._type != "buttononly")
+		{
+			this.getInstanceManager().submit(this); //TODO: this only needs to be passed if it's in a datagrid
+		}
 		this.clicked = false;
+		return true;
 	},
 
 	onselect: function(event, selected_node) {
