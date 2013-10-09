@@ -111,7 +111,7 @@ var et2_template = et2_DOMWidget.extend(
 						// Still loading, don't fire loading finished
 						this.loading = true;
 						et2_loadXMLFromURL(path, function(_xmldoc) {
-							var templates = {};
+							var templates = this.getInstanceManager().templates || {};
 							// Scan for templates and store them
 							for(var i = 0; i < _xmldoc.childNodes.length; i++) {
 								var template = _xmldoc.childNodes[i];
@@ -125,13 +125,11 @@ var et2_template = et2_DOMWidget.extend(
 							// Update flag
 							this.loading = false;
 							
-							// If the parent is already attached, it has already
-							// finished loading.  This template and its children
-							// were left out, so they need processing
-							if(!this.isAttached() && this._parent.isAttached())
-							{
-								this.loadingFinished();
-							}
+							// Fire the load event (after)
+							var self = this;
+							window.setTimeout(function() {
+								$j(self.getDOMNode()).trigger('load');
+							},0);
 							
 						}, this);
 					}
@@ -144,6 +142,11 @@ var et2_template = et2_DOMWidget.extend(
 				this.loadFromXML(xml);
 				// Don't call this here - premature
 				//this.loadingFinished();
+				// Fire the load event (after)
+				var self = this;
+				window.setTimeout(function() {
+					$j(self.getDOMNode()).trigger('load');
+				},0);
 			}
 			else
 			{
@@ -178,10 +181,6 @@ var et2_template = et2_DOMWidget.extend(
 	doLoadingFinished: function() {
 		if(this.loading) return false;
 		this._super.apply(this, arguments);
-		var self = this;
-		window.setTimeout(function() {
-			$j(self.getDOMNode()).trigger('load');
-		},0);
 		return true;
 	}
 });
