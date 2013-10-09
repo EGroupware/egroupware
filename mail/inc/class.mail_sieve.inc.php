@@ -245,10 +245,6 @@ class mail_sieve
 
 				$rules = $this->rulesByID;
 				$content= $rules;
-				$content['action']= array(
-					0 => $rules['action'],
-				);
-				//$content['ruleID'] = $ruleID;
 				switch ($rules['action'])
 				{
 					case 'folder':
@@ -298,13 +294,10 @@ class mail_sieve
 						unset($content['button']);
 
 						$newRule = $content;
-						$newRule ['action'] = $content ['action'][0];
 						$newRule['priority']	= $this->rulesByID['priority'];
 						$newRule['status']	= $this->rulesByID['status'];
-						error_log(__METHOD__. 'folder=' . array2string($content));
-						//_debug_array($content);
-					//	switch ($content['action'])
-						switch ($content['action'][0])
+
+						switch ($content['action'])
 						{
 							case 'folder':
 								$newRule['action_arg'] = implode($content['action_folder_text']);
@@ -403,7 +396,6 @@ class mail_sieve
 		if(!(empty($preferences->preferences['prefpreventnotificationformailviaemail']) || $preferences->preferences['prefpreventnotificationformailviaemail'] == 0))
 			die('You should not be here!');
 
-		$boemailadmin = new emailadmin_bo();
 		if($this->bosieve->getScript($this->scriptName))
 		{
 			if(PEAR::isError($error = $this->bosieve->retrieveRules($this->scriptName)) )
@@ -441,8 +433,7 @@ class mail_sieve
 		{
 			die('You should not be here!');
 		}
-		//$uiwidgets	=& CreateObject('felamimail.uiwidgets',EGW_APP_TPL);
-		$boemailadmin	= new emailadmin_bo();
+
 		if ($this->timed_vacation)
 		{
 			include_once(EGW_API_INC.'/class.jscalendar.inc.php');
@@ -780,7 +771,7 @@ class mail_sieve
 		);
 		$response->generic('et2_load', array(
 			'name' => 'mail.sieve.index',
-			'url' => $GLOBALS['egw_info']['server']['webserver_url'].etemplate::relPath('mail.sieve.index'),
+			'url' => $GLOBALS['egw_info']['server']['webserver_url'].etemplate_widget_template::relPath('mail.sieve.index'),
 			'data' => $data,
 			'DOMNodeID' => 'mail-sieve-index'
 		));
