@@ -277,7 +277,8 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		{
 			$value = ($value) ? array($value) : array();
 		}
-		$value = array_merge($value, $filters);
+		$value = $value_in = array_merge($value, $filters);
+		
 		//error_log(__METHOD__."('".substr($exec_id,0,10)."...', range=".array2string($queriedRange).', filters='.array2string($filters).", '$form_name', knownUids=".array2string($knownUids).", lastModified=$lastModified) parent_id=$value[parent_id], is_parent=$value[is_parent]");
 
 		$result = array();
@@ -322,7 +323,31 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'];
 			egw_json_response::get()->apply('egw_app_header', array($GLOBALS['egw_info']['flags']['app_header']));
 		}
+		
+		// Check for anything changed in the query
+		// Tell the client about the changes
+		$request_value =& self::get_array(self::$request->content, $form_name,true);
+		$no_rows = false;
+		foreach($value_in as $key => $original_value)
+		{
+			// These keys are ignored
+			if(in_array($key, array('col_filter','start','num_rows','order','sort'))) continue;
+			if($original_value == $value[$key]) continue;
+			
+			// These keys we don't send row data back, as they cause a partial reload
+			if(in_array($key, array('template'))) $no_rows = true;
 
+			$request_value[$key] = $value[$key];
+			
+			egw_json_response::get()->generic('assign', array(
+				'etemplate_exec_id' => self::$request->id(),
+				'id' => $form_name,
+				'key' => $key,
+				'value' => $value[$key],
+			));
+		}
+		if($no_rows) $rows = Array();
+		
 		$row_id = isset($value['row_id']) ? $value['row_id'] : 'id';
 		$row_modified = $value['row_modified'];
 		$is_parent = $value['is_parent'];
@@ -406,6 +431,12 @@ class etemplate_widget_nextmatch extends etemplate_widget
 
 		//foreach($result as $name => $value) if ($name != 'readonlys') error_log(__METHOD__."() result['$name']=".array2string($name == 'data' ? array_keys($value) : $value));
 		egw_json_response::get()->data($result);
+		
+		// If etemplate_exec_id has changed, update the client side
+		if (($new_id = self::$request->id()) != $id)
+		{
+			egw_json_response::get()->assign('etemplate_exec_id','value',$new_id);
+		}
 	}
 
 	/**

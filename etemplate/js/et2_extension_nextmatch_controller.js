@@ -234,7 +234,12 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 	 */
 	_fetchCallback: function (_response) {
 		var nm = this.self._widget;
-
+		if(!nm)
+		{
+			// Nextmatch either not connected, or it tried to destroy this
+			// but the server returned something
+			return;
+		}
 		// Readonlys
 		// Other stuff
 		for(var i in _response.rows)
@@ -259,7 +264,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 				mgr.data[i] = _response.rows[i];
 			}
 		}
-
+		
 		// Call the inherited function
 		this._super.apply(this, arguments);
 	},

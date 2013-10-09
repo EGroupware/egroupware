@@ -344,6 +344,14 @@ var et2_widget = Class.extend(
 
 			_node._parent = this;
 			this._children.splice(_idx, 0, _node);
+			
+			if(_node.implements(et2_IDOMNode) && this.implements(et2_IDOMNode) && _node.parentNode)
+			{
+				_node.detachFromDOM();
+				_node.parentNode = this.getDOMNode(_node);
+				_node.attachToDOM();
+			}
+			
 		}
 		else
 		{

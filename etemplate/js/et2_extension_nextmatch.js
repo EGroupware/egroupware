@@ -147,8 +147,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			.addClass("et2_nextmatch");
 
 
-		this.header = new et2_nextmatch_header_bar(this, this.div);
-
+		this.header = et2_createWidget("nextmatch_header_bar", {}, this);
 		this.innerDiv = $j(document.createElement("div"))
 			.appendTo(this.div);
 
@@ -802,8 +801,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 				continue;
 			}
 
-			// Append the widget to this container
-			this.addChild(_row[x].widget);
 		}
 
 		// Remove action column
@@ -817,6 +814,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		// Create the column manager and update the grid container
 		this.dataview.setColumns(columnData);
 
+		for (var x = 0; x < _row.length; x++)
+		{
+			// Append the widget to this container
+			this.addChild(_row[x].widget);
+		}
+		
 		// Create the nextmatch row provider
 		this.rowProvider = new et2_nextmatch_rowProvider(
 			this.dataview.rowProvider, this._getSubgrid, this);
@@ -832,6 +835,11 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		};
 
 		// Register handler for column selection popup, or disable
+		if(this.selectPopup)
+		{
+			this.selectPopup.remove();
+			this.selectPopup = null;
+		}
 		if(this.options.settings.no_columnselection)
 		{
 			this.dataview.selectColumnsClick = function() {return false;};
@@ -921,6 +929,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 						_grid.colData);
 			}
 		}
+		this.resize();
 	},
 
 	_getSubgrid: function (_row, _data, _controller) {
@@ -1180,18 +1189,38 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	 * that template and to fetch the grid which is inside of it. It then calls
 	 */
 	set_template: function(_value) {
-		if (!this.template)
+		if(this.template)
 		{
-			// Load the template
-			var template = et2_createWidget("template", {"id": _value}, this);
-
-			if (!template)
+			// Free the grid components - they'll be re-created as the template is processed
+			this.dataview.free();
+			this.rowProvider.free();
+			this.controller.free();
+			
+			// Clear this setting if it's the same as the template, or 
+			// the columns will not be loaded
+			if(this.template == this.options.settings.columnselection_pref)
 			{
-				this.egw().debug("error", "Error while loading definition template for " + 
-					"nextmatch widget.",_value);
-				return;
+				this.options.settings.columnselection_pref = _value;
 			}
+			this.dataview = new et2_dataview(this.innerDiv, this.egw());
+		}
+		
+		// Create the template
+		var template = et2_createWidget("template", {"id": _value}, this);
 
+		if (!template)
+		{
+			this.egw().debug("error", "Error while loading definition template for " + 
+				"nextmatch widget.",_value);
+			return;
+		}
+
+		// Deferred parse function - template might not be fully loaded
+		var parse = function(template)
+		{
+			// Keep the name of the template, as we'll free up the widget after parsing
+			this.template = _value;
+			
 			// Fetch the grid element and parse it
 			var definitionGrid = template.getChildren()[0];
 			if (definitionGrid && definitionGrid instanceof et2_grid)
@@ -1206,7 +1235,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			}
 
 			// Free the template again, but don't remove it
-			template.free();
+			setTimeout(function() {
+				template.free();
+			},1);
 
 			// Call the "setNextmatch" function of all registered
 			// INextmatchHeader widgets.
@@ -1223,9 +1254,29 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 			// Start auto-refresh
 			this._set_autorefresh(this._get_autorefresh());
+		};
+		if(template.getChildren().length == 0)
+		{
+			// Template might not be loaded yet, defer parsing
+			$j(template.getDOMNode()).on("load", 
+				jQuery.proxy(function() {
+					parse.call(this, template);
+					//this.loadingFinished();
+					this.resize();
+				}, this)
+			);
+		}
+		else
+		{
+			if(this.isAttached())
+			{
+				template.loadingFinished();
+			}
+			parse.call(this, template)
 		}
 	},
 
+	// Some accessors to match conventions
 	set_hide_header: function(hide) {
 		(hide ? this.header.div.hide() : this.header.div.show());
 	},
@@ -1235,6 +1286,26 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	},
 	set_header_right: function(template) {
 		this.header._build_left_right("right",template);
+	},
+	set_no_filter: function(bool, filter_name) {
+		if(typeof filter_name == 'undefined')
+		{
+			filter_name = 'filter'
+		}
+		
+		var filter = this.header[filter_name];
+		if(filter)
+		{
+			filter.set_disabled(bool);
+		}
+		else if (bool)
+		{
+			filter = this.header._build_select(filter_name, 'select', 
+				this.settings[filter_name], this.settings[filter_name+'_no_lang']);
+		}
+	},
+	set_no_filter2: function(bool) {
+		this.set_no_filter(bool,'filter2');
 	},
 
 	/**
@@ -1344,10 +1415,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		{
 			return this.div[0];
 		}
-
+		if (_sender == this.header)
+		{
+			return this.header.div[0];
+		}
 		for (var i = 0; i < this.columns.length; i++)
 		{
-			if (_sender == this.columns[i].widget)
+			if (this.columns[i] && this.columns[i].widget && _sender == this.columns[i].widget)
 			{
 				return this.dataview.getHeaderContainerNode(i);
 			}
@@ -1447,7 +1521,6 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 	 */
 	init: function(nextmatch, nm_div) {
 		this._super.apply(this, [nextmatch,nextmatch.options.settings]);
-		this.nextmatch = nextmatch;
 		
 		this.div = jQuery(document.createElement("div"))
 			.addClass("nextmatch_header");
@@ -1461,9 +1534,17 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 	},
 
 	setNextmatch: function(nextmatch) {
-		if(this.div) this.div.remove();
+		var create_once = (this.nextmatch == null);
 		this.nextmatch = nextmatch;
-		this._createHeader();
+		if(create_once)
+		{
+			this._createHeader();
+		}
+		
+		// Bind row count
+		this.nextmatch.dataview.grid.setInvalidateCallback(function () {
+			this.count_total.text(this.nextmatch.dataview.grid.getTotalCount() + "");
+		}, this);
 	},
 
 	/**
@@ -1492,10 +1573,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 
 		// Set up so if row count changes, display is updated
 		// Register the handler which will update the "totalCount" display
-		this.nextmatch.dataview.grid.setInvalidateCallback(function () {
-			this.count_total.text(this.nextmatch.dataview.grid.getTotalCount() + "");
-		}, this);
-
+		
 		// Left & Right headers
 		this.headers = [];
 		if(this.nextmatch.options.header_left || this.nextmatch.options.header_right)
@@ -1624,32 +1702,6 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		var header = et2_createWidget("template", {"id": template_name}, this);
 		jQuery(header.getDOMNode()).addClass(left_or_right == "left" ? "et2_hbox_left":"et2_hbox_right").addClass("nm_header");
 		this.headers.push(header);
-
-		// Bind onChange to update filter, and refresh if needed.  
-		// We need to do on load because the template file might have to be 
-		// fetched from the server, which is async
-		var self = this;
-		$j(header.getDOMNode()).on("load", jQuery.proxy(function() {
-			var header = this;
-			header.iterateOver(function(_widget) {
-				// Previously set change function
-				var widget_change = _widget.change;
-				_widget.change = function(_node) {
-					// Call previously set change function
-					var result = widget_change.call(_widget,_node);
-
-					// Update filters
-					if(result && _widget.isDirty()) {
-						var value = this.getInstanceManager().getValues(header);
-						// Filter now
-						self.nextmatch.applyFilters(value[self.nextmatch.id]);
-					}
-				};
-
-				// Set activeFilters to current value
-				//self.nextmatch.activeFilters[_widget.id] = _widget.getValue();
-			}, this, et2_inputWidget);
-		}, header));
 	},
 
 	/**
@@ -1851,11 +1903,36 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		}
 		for(var i = 0; i < this.headers.length; i++)
 		{
-			if(_sender == this.headers[i]) return this.header_div[0];
+			if(_sender.id == this.headers[i].id && _sender._parent == this) return this.header_div[0];
 		}
 		return null;
-	}
+	},
+	
+	doLoadingFinished: function() {
+		this._super.apply(this,arguments);
+		var header = this;
+		
+		// Add change handlers to input widgets in the header
+		this.iterateOver(function(_widget) {
+			// Previously set change function
+			var widget_change = _widget.change;
+			_widget.change = function(_node) {
+				// Call previously set change function
+				var result = widget_change.call(_widget,_node);
 
+				// Update filters
+				if(result && _widget.isDirty()) {
+					var value = this.getInstanceManager().getValues(header);
+					// Filter now
+					header.nextmatch.applyFilters(value[header.nextmatch.id]);
+				}
+			};
+
+			// Set activeFilters to current value
+			//self.nextmatch.activeFilters[_widget.id] = _widget.getValue();
+		}, this, et2_inputWidget);
+		return true;
+	}
 });
 et2_register_widget(et2_nextmatch_header_bar, ["nextmatch_header_bar"]);
 
