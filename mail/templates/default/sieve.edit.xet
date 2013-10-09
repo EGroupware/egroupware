@@ -90,23 +90,23 @@
 							</columns>
 							<rows>
 								<row>
-									<radio label="File into:" id="action[]" options="folder"/>
+									<radio label="File into:" id="action" options="folder"/>
 									<hbox>
-										<taglist id="action_folder_text"  width="40%" autocomplete_url="mail.mail_compose.ajax_searchFolder" autocomplete_params="" allowFreeEntries="false" maxSelection="1" />
+										<taglist id="action_folder_text"  width="40%" autocomplete_url="mail.mail_compose.ajax_searchFolder" autocomplete_params="" allowFreeEntries="false" maxSelection="1" onfocus="app.mail.sieve_focus_radioBtn" />
 									</hbox>
 								</row>
 								<row>
-									<radio label="Forward to address:" id="action[]" options="address"/>
+									<radio label="Forward to address:" id="action" options="address"/>
 									<hbox>
-										<taglist-email allowFreeEntries="true" id="action_address_text" width="40%" maxSelection="1" />
+										<taglist-email allowFreeEntries="true" id="action_address_text" width="40%" maxSelection="1" onfocus="app.mail.sieve_focus_radioBtn" />
 									</hbox>
 								</row>
 								<row>
-									<radio label="Send a reject message:" id="action[]" options="reject"/>
-									<textbox multiline="true" id="action_reject_text"/>
+									<radio label="Send a reject message:" id="action" options="reject"/>
+									<textbox multiline="true" id="action_reject_text" onfocus="app.mail.sieve_focus_radioBtn" />
 								</row>
 								<row>
-									<radio label="Discard message" id="action[]" options="discard"/>
+									<radio label="Discard message" id="action" options="discard"/>
 									<description/>
 								</row>
 							</rows>

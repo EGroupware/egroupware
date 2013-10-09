@@ -10,7 +10,7 @@
 
 /**
  * UI for mail
- * 
+ *
  * @augments AppJS
  */
 app.mail = AppJS.extend(
@@ -52,6 +52,7 @@ app.mail = AppJS.extend(
 	destroy: function()
 	{
 		delete this.et2;
+		delete this.et2_obj;
 		// call parent
 		this._super.apply(this, arguments);
 	},
@@ -231,10 +232,10 @@ app.mail = AppJS.extend(
 			// How to pull data from the Mail IDs for the compose
 			from: ''
 		};
-		
+
 		// We only handle one for everything but forward
 		settings.id = (typeof _elems == 'undefined'?'':_elems[0].id);
-		
+
 		switch(_action.id)
 		{
 			case 'compose':
@@ -269,19 +270,19 @@ app.mail = AppJS.extend(
 		var window_name = 'compose_' + compose_list.length + '_'+ (settings.from || '') + '_' + settings.id;
 		return egw().open('','mail','add',settings,window_name,'mail');
 	},
-	
+
 	/**
 	 * Set content into a compose window
-	 * 
+	 *
 	 * @function
 	 * @memberOf mail
-	 * 
+	 *
 	 * @param {String} window_name The name of an open content window.
 	 * @param content Data to set into the window's fields
 	 * @param content.to Addresses to add to the to line
 	 * @param content.cc Addresses to add to the CC line
 	 * @param content.bcc Addresses to add to the BCC line
-	 * 
+	 *
 	 * @return {boolean} Success
 	 */
 	setCompose: function(window_name, content)
@@ -289,14 +290,14 @@ app.mail = AppJS.extend(
 		// Get window
 		var compose = window.open('', window_name);
 		if(!compose || compose.closed) return false;
-		
+
 		// Get etemplate of popup
 		var compose_et2 = compose.etemplate2.getByApplication('mail');
 		if(!compose_et2 || compose_et2.length != 1 || !compose_et2[0].widgetContainer)
 		{
 			return false;
 		}
-		
+
 		// Set each field provided
 		var success = true;
 		for(var field in content)
@@ -304,7 +305,7 @@ app.mail = AppJS.extend(
 			try
 			{
 				var widget = compose_et2[0].widgetContainer.getWidgetById(field);
-				
+
 				// Merge array values, replace strings
 				var value = widget.getValue() || content[field];
 				if(jQuery.isArray(value))
@@ -1351,7 +1352,7 @@ app.mail = AppJS.extend(
 
 	/**
 	 * Send names of uploaded files (again) to server, to process them: either copy to vfs or ask overwrite/rename
-	 * 
+	 *
 	 * @param _event
 	 * @param _file_count
 	 * @param {string} [_path=current directory] Where the file is uploaded to.
@@ -1377,7 +1378,7 @@ app.mail = AppJS.extend(
 
 	/**
 	 * Send names of uploaded files (again) to server, to process them: either copy to vfs or ask overwrite/rename
-	 * 
+	 *
 	 * @param _event
 	 * @param _file_count
 	 * @param {string} [_path=current directory] Where the file is uploaded to.
