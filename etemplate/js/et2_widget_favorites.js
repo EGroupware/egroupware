@@ -178,6 +178,11 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 	destroy: function() {
 		if(this.popup != null)
 		{
+			if(this.popup.group)
+			{
+				this.popup.group.free();
+				delete this.popup.group;
+			}
 			this.popup.dialog("destroy");
 			this.popup = null;
 		}
@@ -290,7 +295,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		{
 			options.add = "<img src='"+this.egw().image("new") +"'/>Add current";
 		}
-		widget.set_select_options(options);
+		widget.set_select_options.call(widget,options);
 
 		// Set radio to current value
 		$j("input[value='"+ this.preferred +"']:radio", this.menu).attr("checked",true);
@@ -452,6 +457,13 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 	{
 		var self = this;
 
+		// Clear old, if existing
+		if(this.popup && this.popup.group)
+		{
+			this.popup.group.free();
+			delete this.popup;
+		}
+		
 		// Create popup
 		this.popup = $j('<div id="'+this.dom_id + '_nm_favorites_popup" title="' + egw().lang("New favorite") + '">\
 			<form>\
