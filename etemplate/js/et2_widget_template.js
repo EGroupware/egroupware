@@ -76,6 +76,9 @@ var et2_template = et2_DOMWidget.extend(
 		this._super.apply(this, arguments);
 
 		this.div = document.createElement("div");
+		
+		// Flag to indicate that loading is finished
+		this.loading = false;
 
 		if (this.id != "" || this.options.template)
 		{
@@ -105,6 +108,8 @@ var et2_template = et2_DOMWidget.extend(
 
 					if(splitted.length)
 					{
+						// Still loading, don't fire loading finished
+						this.loading = true;
 						et2_loadXMLFromURL(path, function(_xmldoc) {
 							var templates = {};
 							// Scan for templates and store them
@@ -116,9 +121,18 @@ var et2_template = et2_DOMWidget.extend(
 
 							// Read the XML structure of the requested template
 							this.loadFromXML(templates[template_name]);
-
-							// Inform the widget tree that it has been successfully loaded.
-							this.loadingFinished();
+							
+							// Update flag
+							this.loading = false;
+							
+							// If the parent is already attached, it has already
+							// finished loading.  This template and its children
+							// were left out, so they need processing
+							if(!this.isAttached() && this._parent.isAttached())
+							{
+								this.loadingFinished();
+							}
+							
 						}, this);
 					}
 					return;
@@ -161,11 +175,15 @@ var et2_template = et2_DOMWidget.extend(
 	 * Override to trigger a load event, to facilitate processing when the xml file
 	 * is loaded asyncronously
 	 */
-	 doLoadingFinished: function() {
-		 this._super.apply(this, arguments);
-		 $j(this.getDOMNode()).trigger('load');
-		 return true;
-	 }
+	doLoadingFinished: function() {
+		if(this.loading) return false;
+		this._super.apply(this, arguments);
+		var self = this;
+		window.setTimeout(function() {
+			$j(self.getDOMNode()).trigger('load');
+		},0);
+		return true;
+	}
 });
 et2_register_widget(et2_template, ["template"]);
 
