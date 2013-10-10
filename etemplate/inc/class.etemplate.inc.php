@@ -246,8 +246,11 @@ class etemplate_new extends etemplate_widget_template
 		// Set current app for validation
 		list($app) = explode('.',self::$request->method);
 		if(!$app) list($app) = explode('::',self::$request->method);
-		if($app) $GLOBALS['egw_info']['flags']['currentapp'] = $app;
-
+		if($app)
+		{
+			translation::add_app($app);
+			$GLOBALS['egw_info']['flags']['currentapp'] = $app;
+		}
 		$validated = array();
 		$expand = array(
 			'cont' => &self::$request->content,
