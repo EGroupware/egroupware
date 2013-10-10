@@ -300,12 +300,10 @@ class mail_sieve
 						switch ($content['action'])
 						{
 							case 'folder':
-								$newRule['action_arg'] = implode($content['action_folder_text']);
-								//$sel_options['action_folder_text'] = $content['action_folder_text'];
+								$newRule['action_arg'] = translation::convert(implode($content['action_folder_text']), 'utf7-imap', 'utf-8');
 								break;
 							case 'address':
-								//preg_match('/(?<=\<)[^<]+(?=\>)/', implode(array_values($content['action_address_text'])),$tagmail);
-								$newRule['action_arg'] = implode($content['action_address_text']);//implode($tagmail);
+								$newRule['action_arg'] = implode($content['action_address_text']);
 								error_log(__METHOD__. '() newRules_address '. array2string($newRule['action_arg']));
 								break;
 							case 'reject':
