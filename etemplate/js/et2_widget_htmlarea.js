@@ -62,7 +62,8 @@ var et2_htmlarea = et2_inputWidget.extend(
 			'name': 'Internal configuration',
 			'type':'any',
 			'default': et2_no_init,
-			'description': 'Internal configuration - managed by preferences & framework, passed in here'
+			'description': 'Internal configuration - managed by preferences & framework, passed in here',
+			'translate': 'no_lang'
 		},
 	},
 
@@ -90,9 +91,9 @@ var et2_htmlarea = et2_inputWidget.extend(
 	transformAttributes: function(_attrs) {
 
 		// Check mode, some apps jammed everything in there
-		if(jQuery.inArray(_attrs['mode'], this.modes) < 0)
+		if(_attrs['mode'] && jQuery.inArray(_attrs['mode'], this.modes) < 0)
 		{
-			this.egw().debug("warn", "Invalid mode for '%s': %s Valid options:", _attrs['id'],_attrs['mode'], this.modes);
+			this.egw().debug("warn", "'%s' is an invalid mode for htmlarea '%s'. Valid options:", _attrs['mode'],_attrs['id'], this.modes);
 			var list = _attrs['mode'].split(',');
 			for(var i = 0; i < list.length && i < this.legacyOptions.length; i++)
 			{
@@ -140,9 +141,13 @@ var et2_htmlarea = et2_inputWidget.extend(
 		}
 		catch (e)
 		{
-			this.egw().debug("warn",e);
-			this.htmlNode = null;
+			this.egw().debug("warn","Removing CKEDITOR: " + e.message, this,e);
+			// Finish it
+			delete CKEDITOR.instances[this.dom_id];
 		}
+		this.htmlNode.remove();
+		this.htmlNode = null;
+		this._super.apply(this, arguments);
 	},
 	set_value: function(_value) {
 		this._oldValue = _value;
