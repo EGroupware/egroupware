@@ -134,13 +134,13 @@
 		}
 	}
 	window.egw_LAB.script(include).wait(function(){			
-		// Make sure opener knows when we close
-		if(popup && window.name != '')
+		// Make sure opener knows when we close - start a heartbeat
+		if((popup || window.opener) && window.name != '')
 		{
-			$j(window).on('unload beforeunload', function() {
-				var app = this.appName || egw_appName || 'common';
-				egw.windowClosed(app, this);
-			});
+			// Timeout is 5 seconds, but it iks only applied(egw_utils) when something asks for the window list
+			window.setInterval(function() {
+				egw().storeWindow(this.egw_appName, this);
+			}, 2000);
 		}
 		
 		var data = egw_script.getAttribute('data-etemplate');

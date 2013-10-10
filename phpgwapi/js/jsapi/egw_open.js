@@ -24,43 +24,6 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 	
 	
 	/**
-	 * Store a window's name in egw.store so we can have a list of open windows
-	 * 
-	 * @param {string} appname
-	 * @param {Window} popup
-	 */
-	function _storeWindow(appname, popup)
-	{
-		// Don't store if it has no name
-		if(!popup.name || ['_blank'].indexOf(popup.name) >= 0)
-		{
-			return;
-		}
-		
-		var _target_app = appname || this.appName || egw_appName || 'common';
-		var open_windows = JSON.parse(this.getSessionItem(_target_app, 'windows')) || [];
-		if(open_windows.indexOf(popup.name) < 0)
-		{
-			open_windows.push(popup.name);
-			this.setSessionItem(_target_app, 'windows', JSON.stringify(open_windows));
-		}
-
-		// Forget window when it closes
-		// Window should notify, but we'll poll too since onunload is not fully supported
-		var _egw = this;
-		(function() {
-			var app = _target_app;
-			var window_name = popup.name;
-			var poll_timer = popup.setInterval(function() {
-				if(popup.closed !== false) {
-					this.clearInterval(poll_timer);
-					egw.windowClosed(app, window_name);
-				}
-			},1000);
-		})();
-	}
-	
-	/**
 	 * Magic handling for mailto: uris using mail application.
 	 * 
 	 * We check for open compose windows and add the address in as specified in
@@ -120,6 +83,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			{
 				var w = window.open('',compose[i],'100x100');
 				if(w.closed) continue;
+				w.blur();
 				var title = w.document.title || egw.lang("compose");
 				$j("<li data-window = '" + compose[i] + "'>"+ title + "</li>")
 					.click(function() {
@@ -289,7 +253,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 				var popup_window = _wnd.egw_openWindowCentered2(url, _target, w_h[0], w_h[1], false, _target_app, true);
 				
 				// Remember which windows are open
-				_storeWindow.call(this, _target_app, popup_window);
+				egw().storeWindow(_target_app, popup_window);
 				
 				return popup_window;
 			}
@@ -311,58 +275,6 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd) {
 			{
 				return _wnd.open(url, _target);
 			}
-		},
-		
-		/**
-		 * Get a list of the names of open popups
-		 * 
-		 * Using the name, you can get a reference to the popup using:
-		 * window.open('', name);
-		 * Popups that were not given a name when they were opened are not tracked.
-		 * 
-		 * @param {string} appname Application that owns/opened the popup
-		 * @param {string} regex Optionally filter names by the given regular expression
-		 * 
-		 * @returns {string[]} List of window names
-		 */
-		getOpenWindows: function(appname, regex) {
-			var open_windows = JSON.parse(this.getSessionItem(appname, 'windows')) || [];
-			if(typeof regex == 'undefined')
-			{
-				return open_windows;
-			}
-			var list = []
-			for(var i = 0; i < open_windows.length; i++)
-			{
-				if(open_windows[i].match(regex))
-				{
-					list.push(open_windows[i]);
-				}
-			}
-			return list;
-		},
-		
-		/**
-		 * Notify egw of closing a named window
-		 * 
-		 * @param {String} appname
-		 * @param {Window|String} closed Window that was closed, or its name
-		 * @returns {undefined}
-		 */
-		windowClosed: function(appname, closed) {
-			var closed_name = typeof closed == "string" ? closed : closed.name;
-			var closed_window = typeof closed == "string" ? null : closed;
-			window.setTimeout(function() {
-				if(closed_window != null && !closed_window.closed) return;
-				var open_windows = egw.getOpenWindows(appname, closed_name)
-
-				var index = open_windows.indexOf(closed_name);
-				if(index >= 0)
-				{
-					open_windows.splice(index,1);
-				}
-				egw.setSessionItem(appname, 'windows', JSON.stringify(open_windows));
-			}, 100);
 		}
 	};
 });

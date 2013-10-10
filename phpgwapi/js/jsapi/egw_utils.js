@@ -247,6 +247,84 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 			});
 			//$.log(”w: ” + dim.w + ”, h:” + dim.h)
 			return dim;
+		},
+			
+			
+		/**
+		 * Store a window's name in egw.store so we can have a list of open windows
+		 * 
+		 * @param {string} appname
+		 * @param {Window} popup
+		 */
+		storeWindow: function(appname, popup)
+		{
+			// Don't store if it has no name
+			if(!popup.name || ['_blank'].indexOf(popup.name) >= 0)
+			{
+				return;
+			}
+
+			var _target_app = appname || this.appName || egw_appName || 'common';
+			var open_windows = JSON.parse(this.getSessionItem(_target_app, 'windows')) || {};
+			open_windows[popup.name] = Date.now();
+			this.setSessionItem(_target_app, 'windows', JSON.stringify(open_windows));
+			
+			// We don't want to start the timer on the popup here, because this is the function that updates the timeout, so it would set a timer each time.  Timer is started in egw.js
+		},
+			
+		/**
+		 * Get a list of the names of open popups
+		 * 
+		 * Using the name, you can get a reference to the popup using:
+		 * window.open('', name);
+		 * Popups that were not given a name when they were opened are not tracked.
+		 * 
+		 * @param {string} appname Application that owns/opened the popup
+		 * @param {string} regex Optionally filter names by the given regular expression
+		 * 
+		 * @returns {string[]} List of window names
+		 */
+		getOpenWindows: function(appname, regex) {
+			var open_windows = JSON.parse(this.getSessionItem(appname, 'windows')) || {};
+			if(typeof regex == 'undefined')
+			{
+				return open_windows;
+			}
+			var list = []
+			var now = Date.now();
+			for(var i in open_windows)
+			{
+				// Expire old windows (5 seconds since last update)
+				if(now - open_windows[i] > 5000)
+				{
+					egw.windowClosed(appname,i);
+					continue;
+				}
+				if(i.match(regex))
+				{
+					list.push(i);
+				}
+			}
+			return list;
+		},
+
+		/**
+		 * Notify egw of closing a named window, which removes it from the list
+		 * 
+		 * @param {String} appname
+		 * @param {Window|String} closed Window that was closed, or its name
+		 * @returns {undefined}
+		 */
+		windowClosed: function(appname, closed) {
+			var closed_name = typeof closed == "string" ? closed : closed.name;
+			var closed_window = typeof closed == "string" ? null : closed;
+			window.setTimeout(function() {
+				if(closed_window != null && !closed_window.closed) return;
+				
+				var open_windows = JSON.parse(egw().getSessionItem(appname, 'windows')) || {};
+				delete open_windows[closed_name];
+				egw.setSessionItem(appname, 'windows', JSON.stringify(open_windows));
+			}, 100);
 		}
 	};
 
@@ -265,4 +343,3 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() {
 	return utils;
 
 });
-
