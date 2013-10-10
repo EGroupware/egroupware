@@ -263,7 +263,7 @@ class mail_compose
 			unset($_GET['part_id']);
 			unset($_GET['id']);
 			unset($_GET['mode']);
-			error_log(__METHOD__.__LINE__.array2string($_content));
+			//error_log(__METHOD__.__LINE__.array2string($_content));
 		}
 		$composeCache = array();
 		if (isset($_content['composeID'])&&!empty($_content['composeID']))
@@ -437,6 +437,9 @@ class mail_compose
 		}
 
 		$content['body'] = ($content['body'] ? $content['body'] : $content['mail_'.($content['mimeType'] == 'html'?'html':'plain').'text']);
+		unset($_content['body']);
+		unset($_content['mail_htmltext']);
+		unset($_content['mail_plaintext']);
 
 		// form was submitted either by clicking a button or by changing one of the triggering selectboxes
 		// identity and signatureID; this might trigger that the signature in mail body may have to be altered
@@ -856,13 +859,6 @@ class mail_compose
 			$content['mimeType'] = 'plain';
 			$content['body'] = $this->convertHTMLToText($content['body']);
 		}
-		// removal of possible script elements in HTML; getCleanHTML is the choice here, if not only for consistence
-		// we use the preg of common_functions (slightly altered) to meet eGroupwares behavior on posted variables
-		if ($content['mimeType'] == 'html')
-		{
-			// this is now moved to egw_htmLawed (triggered by default config) which is called with ckeditor anyway
-			//mail_bo::getCleanHTML($content['body'],true);
-		}
 
 		// is a certain signature requested?
 		// only the following values are supported (and make sense)
@@ -883,27 +879,8 @@ class mail_compose
 		$this->t->set_var("focusElement",$_focusElement);
 
 		// the editorobject is needed all the time (since we use CKEDITOR
-		//$editorObject = html::initCKEditor('400px','simple');
-		$this->t->set_var('ckeditorConfig', egw_ckeditor_config::get_ckeditor_config('simple-withimage'));//$editorObject->jsEncode($editorObject->config));
 		$this->t->set_var('refreshTimeOut', 3*60*1000); // 3 minutes till a compose messages will be saved as draft;
 
-		// check for some error messages from last posting attempt
-		$errorInfo = $this->getErrorInfo();
-		if (isset($_REQUEST['preset']['msg'])) $errorInfo = html::purify($_REQUEST['preset']['msg']);
-		if($errorInfo)
-		{
-			$this->t->set_var('errorInfo',"<font color=\"red\"><b>$errorInfo</b></font>");
-		}
-		else
-		{
-			$this->t->set_var('errorInfo','&nbsp;');
-		}
-*/
-
-/*
-		$this->t->set_var('select_from', $selectFrom);
-		//error_log(__METHOD__.__LINE__.' DefaultIdentity:'.array2string($identities[($presetId ? $presetId : $defaultIdentity)]));
-		// navbar(, kind of)
 */
 
 /*
@@ -1071,20 +1048,8 @@ class mail_compose
 		}
 		//error_log(__METHOD__.__LINE__.$content['body']);
 		if($content['mimeType'] == 'html') {
-			$mode = 'simple-withimage';
-			//$mode ='advanced';// most helpful for debuging
-			#if (isset($GLOBALS['egw_info']['server']['enabled_spellcheck'])) $mode = 'egw_simple_spellcheck';
-			$style="border:0px; width:100%; height:500px;";
-			// dont run purify, as we already did that (getCleanHTML).
-/*
-			$this->t->set_var('tinymce', html::fckEditorQuick('body', $mode, $content['body'],'500px','100%',false,'0px',($_focusElement=='body'?true:false),($_focusElement!='body'?'parent.setToFocus("'.$_focusElement.'");':'')));
-			$this->t->set_var('mimeType', 'html');
-*/
 			$ishtml=1;
 		} else {
-			$border="1px solid gray; margin:1px";
-			// initalize the CKEditor Object to enable switching back and force
-			//$editor = html::fckEditorQuick('body', 'ascii', $content['body'],'500px','99%',false,$border);
 			$ishtml=0;
 		}
 
@@ -1121,7 +1086,7 @@ class mail_compose
 			foreach((array)$content[$destination] as $key => $value) {
 				if ($value=="NIL@NIL") continue;
 				if ($destination=='replyto' && str_replace('"','',$value) == str_replace('"','',$identities[($presetId ? $presetId : $defaultIdentity)])) continue;
-				error_log(__METHOD__.__LINE__.array2string(array('key'=>$key,'value'=>$value)));
+				//error_log(__METHOD__.__LINE__.array2string(array('key'=>$key,'value'=>$value)));
 				$value = htmlspecialchars_decode($value,ENT_COMPAT);
 				$value = str_replace("\"\"",'"',$value);
 				$address_array = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($value):$value), '');
@@ -1270,7 +1235,7 @@ class mail_compose
 					$content = $this->getReplyData($from == 'reply' ? 'single' : 'all', $icServer, $folder, $msgUID, $part_id);
 					
 					$_focusElement = 'body';
-					$supressSigOnTop = false;
+					$suppressSigOnTop = false;
 					$isReply = true;
 					break;
 				case 'forward':
@@ -1285,6 +1250,7 @@ class mail_compose
 						$content = $this->getForwardData($icServer, $folder, $msgUID, $part_id, $mode);
 					}
 					$isReply = ($mode?$mode=='inline':$this->preferencesArray['message_forwarding'] == 'inline');
+					$suppressSigOnTop = false;// ($mode && $mode=='inline'?true:false);// may be a better solution
 					$_focusElement = 'to';
 					break;
 				default:
@@ -2424,12 +2390,10 @@ class mail_compose
 	 * setDefaults, sets some defaults
 	 *
 	 * @param array $content
-	 * @param boolean $isReply
 	 * @return array - the input, enriched with some not set attributes
 	 */
-	function setDefaults($content=array(),$isReply=true)
+	function setDefaults($content=array())
 	{
-		if (!empty($content)) $isReply = true;
 		if (!isset($content['signatureID']) || empty($content['signatureID']))
 		{
 			if($signatureData = $this->bosignatures->getDefaultSignature()) {
@@ -2446,8 +2410,11 @@ class mail_compose
 		$accountData    = $this->bopreferences->getAccountData($this->preferences,'active');
 		if ((!isset($content['identity']) || empty($content['identity'])) && $accountData['identity']->signature) $content['signatureID'] = $accountData['identity']->signature;
 
-		if (!isset($content['mimeType']) || empty($content['mimeType'])) $content['mimeType'] = 'html';
-		if ((!isset($content['mimeType']) || empty($content['mimeType'])) && !empty($this->preferencesArray['composeOptions']) && $this->preferencesArray['composeOptions']=="text") $content['mimeType']  = 'plain';
+		if (!isset($content['mimeType']) || empty($content['mimeType']))
+		{
+			$content['mimeType'] = 'html';
+			if (!empty($this->preferencesArray['composeOptions']) && $this->preferencesArray['composeOptions']=="text") $content['mimeType']  = 'plain';
+		}
 		return $content;
 
 	}
