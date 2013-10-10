@@ -277,7 +277,7 @@ function egw_message(_msg, _type)
 		_type = _msg.match(/error/i) ? 'error' : 'success';
 	
 	var framework = egw_getFramework();
-	if (framework)
+	if (framework && (typeof framework.setMessage != 'undefined'))
 	{
 		framework.setMessage.call(window.framework, _msg, _type);
 		return;
