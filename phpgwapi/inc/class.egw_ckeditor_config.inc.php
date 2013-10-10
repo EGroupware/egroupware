@@ -286,62 +286,62 @@ class egw_ckeditor_config
 		switch ($mode)
 		{
 			case 'advanced':
-				$config['toolbar'][] = array('Source','DocProps','-','Preview','-','Templates');
-				$config['toolbar'][] = array('Cut','Copy','Paste','PasteText','PasteFromWord','-','Print');
+				$config['toolbar'][] = array('name' => 'document', 'items' => array('Source','DocProps','-','Preview','-','Templates'));
+				$config['toolbar'][] = array('name' => 'clipboard', 'items' => array('Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'));
 				if ($spellchecker_button)
 					$config['toolbar'][count($config['toolbar']) - 1][] = $spellchecker_button;
 				if ($scayt_button)
 					$config['toolbar'][count($config['toolbar']) - 1][] = $scayt_button;
-				$config['toolbar'][] = array('Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat');
+				$config['toolbar'][] = array('name' => 'edit', 'items' => array('Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'));
 
 				$config['toolbar'][] = '/';
 
-				$config['toolbar'][] = array('Bold','Italic','Underline','Strike','-','Subscript','Superscript');
-				$config['toolbar'][] = array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock');
-				$config['toolbar'][] = array('BulletedList','NumberedList','-','Outdent','Indent');
-				$config['toolbar'][] = array('Link','Unlink','Anchor');
-				$config['toolbar'][] = array('Maximize','Image','Table','HorizontalRule','SpecialChar'/*,'Smiley'*/);
+				$config['toolbar'][] = array('name' => 'basicstyles', 'items' => array('Bold','Italic','Underline','Strike','-','Subscript','Superscript'));
+				$config['toolbar'][] = array('name' => 'justify', 'items' => array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'));
+				$config['toolbar'][] = array('name' => 'paragraph', 'items' => array('BulletedList','NumberedList','-','Outdent','Indent'));
+				$config['toolbar'][] = array('name' => 'links', 'items' => array('Link','Unlink','Anchor'));
+				$config['toolbar'][] = array('name' => 'insert', 'items' => array('Maximize','Image','Table','HorizontalRule','SpecialChar'/*,'Smiley'*/));
 
 				$config['toolbar'][] = '/';
 
-				$config['toolbar'][] = array('Style','Format','Font','FontSize');
-				$config['toolbar'][] = array('TextColor','BGColor');
-				$config['toolbar'][] = array('ShowBlocks','-','About');
+				$config['toolbar'][] = array('name' => 'styles', 'items' => array('Style','Format','Font','FontSize'));
+				$config['toolbar'][] = array('name' => 'colors', 'items' => array('TextColor','BGColor'));
+				$config['toolbar'][] = array('name' => 'tools', 'items' => array('ShowBlocks','-','About'));
 				break;
 
 			case 'extended': default:
-				$config['toolbar'][] = array('Bold','Italic','Underline');
-				$config['toolbar'][] = array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock');
-				$config['toolbar'][] = array('BulletedList','NumberedList'/*,'Smiley'*/,'Outdent','Indent','Undo','Redo');
-				$config['toolbar'][] = array('Cut','Copy','Paste','PasteText','PasteFromWord','-','Print');
+				$config['toolbar'][] = array('name' => 'clipboard', 'items' => array('Bold','Italic','Underline'));
+				$config['toolbar'][] = array('name' => 'justify', 'items' => array('JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'));
+				$config['toolbar'][] = array('name' => 'paragraph', 'items' => array('BulletedList','NumberedList'/*,'Smiley'*/,'Outdent','Indent','Undo','Redo'));
+				$config['toolbar'][] = array('name' => 'clipboard', 'items' => array('Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'));
 
 				if ($mode == 'extended')
 				{
-					$config['toolbar'][] = array('Image','Link','Unlink','Anchor');
+					$config['toolbar'][] = array('name' => 'insert', 'items' => array('Image','Link','Unlink','Anchor'));
 					if ($spellchecker_button)
-						$config['toolbar'][] = array('Maximize', $spellchecker_button);//, 'Image', 'Table');
+						$config['toolbar'][] = array('name' => 'tools', 'items' => array('Maximize', $spellchecker_button));//, 'Image', 'Table');
 					else
-						$config['toolbar'][] = array('Maximize');//, 'Image', 'Table');
+						$config['toolbar'][] = array('name' => 'insert', 'items' => array('Maximize'));//, 'Image', 'Table');
 					if ($scayt_button)
-						$config['toolbar'][count($config['toolbar']) - 1][] = $scayt_button;
-					$config['toolbar'][count($config['toolbar']) - 1][] = array('Image', 'Table');
+						$config['toolbar'][count($config['toolbar']) - 1][] = array('name' => 'edit', 'items' => $scayt_button);
+					$config['toolbar'][count($config['toolbar']) - 1][] = array('name' => 'insert', 'items' => array('Image', 'Table'));
 				}
 				else
 				{
 					if ($spellchecker_button)
-						$config['toolbar'][] = array('Maximize', $spellchecker_button);
+						$config['toolbar'][] = array('name' => 'tools', 'items' => array('Maximize', $spellchecker_button));
 					else
-						$config['toolbar'][] = array('Maximize');
+						$config['toolbar'][] = array('name' => 'tools', 'items' => array('Maximize'));
 					if ($scayt_button)
-						$config['toolbar'][count($config['toolbar']) - 1][] = $scayt_button;
+						$config['toolbar'][count($config['toolbar']) - 1][] = array('name' => 'document', 'items' => $scayt_button);
 				}
 
 				$config['toolbar'][] = '/';
-				$config['toolbar'][] = array('Find','Replace','-','SelectAll','RemoveFormat');
-				if ($mode == 'simple-withimage') $config['toolbar'][] = array('Image','Link','Unlink');
-				$config['toolbar'][] = array('Format','Font','FontSize');
-				$config['toolbar'][] = array('TextColor','BGColor');
-				$config['toolbar'][] = array('ShowBlocks','-','About');
+				$config['toolbar'][] = array('name' => 'edit', 'items' => array('Find','Replace','-','SelectAll','RemoveFormat'));
+				if ($mode == 'simple-withimage') $config['toolbar'][] = array('name' => 'links', 'items' => array('Image','Link','Unlink'));
+				$config['toolbar'][] = array('name' => 'styles', 'items' => array('Format','Font','FontSize'));
+				$config['toolbar'][] = array('name' => 'colors', 'items' => array('TextColor','BGColor'));
+				$config['toolbar'][] = array('name' => 'tools', 'items' => array('ShowBlocks','-','About'));
 		}
 	}
 
