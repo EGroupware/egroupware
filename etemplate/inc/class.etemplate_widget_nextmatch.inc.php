@@ -39,7 +39,7 @@
  * 	'col_filter'     =>		// IO array of column-name value pairs (optional for the filterheaders)
  * 							// grid requires implementation of folowing filters in get_rows, even if not used as regular filters!
  * 							//  O col_filter[$row_id]   to query certain rows only
- * 							//  O col_filter[parent_id] row_id of parent to query children for hierachical display
+ * 							//  O col_filter[$parent_id] row_id of parent to query children for hierachical display
  * 	'filter'         =>		// IO filter, if not 'no_filter' => True
  * 	'filter_no_lang' => True// I  set no_lang for filter (=dont translate the options)
  *	'filter_onchange'=> 'this.form.submit();' // I onChange action for filter, default: this.form.submit();
@@ -59,7 +59,7 @@
  *		or name of import/export definition
  *  'row_id'         =>     // I  key into row content to set it's value as row-id, eg. 'id'
  *  'row_modified'   =>		// I  key into row content for modification date or state of a row, to not query it again
- *  'parent_id'      =>		// I  key into row content of children linking them to their parent
+ *  'parent_id'      =>		// I  key into row content of children linking them to their parent, also used as col_filter to query children
  *  'is_parent'      =>		// I  key into row content to mark a row to have children
  *  'is_parent_value'=>     // I  if set value of is_parent, otherwise is_parent is evaluated as boolean
  *  'dataStorePrefix'	=>	// I Optional prefix for client side cache to prevent collisions in applications that have more than one data set, such as ProjectManager / Project elements.  Defaults to appname if not set.
@@ -278,7 +278,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			$value = ($value) ? array($value) : array();
 		}
 		$value = $value_in = array_merge($value, $filters);
-		
+
 		//error_log(__METHOD__."('".substr($exec_id,0,10)."...', range=".array2string($queriedRange).', filters='.array2string($filters).", '$form_name', knownUids=".array2string($knownUids).", lastModified=$lastModified) parent_id=$value[parent_id], is_parent=$value[is_parent]");
 
 		$result = array();
@@ -297,7 +297,8 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		if (($parent_id = $value['parent_id']))
 		{
 			// Infolog at least wants 'parent_id' instead of $parent_id
-			$value['col_filter']['parent_id'] = $queriedRange['parent_id'];
+			$value['col_filter'][$parent_id] = $queriedRange['parent_id'];
+			if ($queriedRange['parent_id']) $value['csv_export'] = 'children';
 		}
 
 		// Set current app for get_rows
@@ -323,7 +324,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			self::$request->app_header = $GLOBALS['egw_info']['flags']['app_header'];
 			egw_json_response::get()->apply('egw_app_header', array($GLOBALS['egw_info']['flags']['app_header']));
 		}
-		
+
 		// Check for anything changed in the query
 		// Tell the client about the changes
 		$request_value =& self::get_array(self::$request->content, $form_name,true);
@@ -336,12 +337,12 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				continue;
 			}
 			if($original_value == $value[$key]) continue;
-			
+
 			// These keys we don't send row data back, as they cause a partial reload
 			if(in_array($key, array('template'))) $no_rows = true;
 
 			$request_value[$key] = $value[$key];
-			
+
 			egw_json_response::get()->generic('assign', array(
 				'etemplate_exec_id' => self::$request->id(),
 				'id' => $form_name,
@@ -350,7 +351,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			));
 		}
 		if($no_rows) $rows = Array();
-		
+
 		$row_id = isset($value['row_id']) ? $value['row_id'] : 'id';
 		$row_modified = $value['row_modified'];
 		$is_parent = $value['is_parent'];
@@ -434,7 +435,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 
 		//foreach($result as $name => $value) if ($name != 'readonlys') error_log(__METHOD__."() result['$name']=".array2string($name == 'data' ? array_keys($value) : $value));
 		egw_json_response::get()->data($result);
-		
+
 		// If etemplate_exec_id has changed, update the client side
 		if (($new_id = self::$request->id()) != $id)
 		{

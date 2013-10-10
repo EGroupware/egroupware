@@ -680,16 +680,20 @@ class infolog_so
 			'proj'        => 'projects',
 			'event'       => 'calendar'
 		);
-		$action = isset($action2app[$query['action']]) ? $action2app[$query['action']] : $query['action'];
-		if ($action != '')
+		// query children independent of action
+		if (empty($query['col_filter']['info_id_parent']))
 		{
-			$links = solink::get_links($action=='sp'?'infolog':$action,
-				is_array($query['action_id']) ? $query['action_id'] : explode(',',$query['action_id']),'infolog');
-
-			if (count($links))
+			$action = isset($action2app[$query['action']]) ? $action2app[$query['action']] : $query['action'];
+			if ($action)
 			{
-				$links = call_user_func_array('array_merge',$links);	// flatten the array
-				$link_extra = ($action == 'sp' ? 'OR' : 'AND')." main.info_id IN (".implode(',',$links).')';
+				$links = solink::get_links($action=='sp'?'infolog':$action,
+					is_array($query['action_id']) ? $query['action_id'] : explode(',',$query['action_id']),'infolog');
+
+				if (count($links))
+				{
+					$links = call_user_func_array('array_merge',$links);	// flatten the array
+					$link_extra = ($action == 'sp' ? 'OR' : 'AND')." main.info_id IN (".implode(',',$links).')';
+				}
 			}
 		}
 		$sortbycf='';

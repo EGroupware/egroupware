@@ -704,7 +704,7 @@ class filemanager_ui
 			$GLOBALS['egw_info']['flags']['currentapp'] = 'projectmanager';
 		}
 		// do NOT store query, if hierarchical data / children are requested
-		if (empty($query['col_filter']['parent_id']))
+		if (!$query['csv_export'])
 		{
 			egw_session::appsession('index','filemanager',$query);
 		}
@@ -740,7 +740,7 @@ class filemanager_ui
 		{
 			$namefilter = '/'.str_replace(array('\\?','\\*'),array('.{1}','.*'),preg_quote($query['search'])).'/i';
 		}
-		foreach(egw_vfs::find(!empty($query['col_filter']['parent_id']) ? $query['col_filter']['parent_id'] : $query['path'],array(
+		foreach(egw_vfs::find(!empty($query['col_filter']['dir']) ? $query['col_filter']['dir'] : $query['path'],array(
 			'mindepth' => 1,
 			'maxdepth' => $query['filter'] ? (int)(boolean)$query['filter'] : null,
 			'dirsontop' => $query['filter'] <= 1,

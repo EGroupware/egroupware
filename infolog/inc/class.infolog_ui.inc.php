@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -261,6 +261,7 @@ class infolog_ui
 		{
 			$info['info_number'] = $info['info_id'];
 		}
+		//error_log(__METHOD__."() returning ".array2string($info));
 		return $info;
 	}
 
@@ -274,6 +275,7 @@ class infolog_ui
 	 */
 	function get_rows(&$query,&$rows,&$readonlys)
 	{
+		//error_log(__METHOD__."() query[csv_export]=".array2string($query['csv_export']).", query[filter]=".array2string($query['filter']).", query[col_filter]=".array2string(array_diff($query['col_filter'],array('',0))).' '.function_backtrace());
 		if (!$query['csv_export'])
 		{
 			unset($query['no_actions']);
@@ -293,7 +295,7 @@ class infolog_ui
 		//echo "<p>infolog_ui.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).",sort=$query[sort],order=$query[order])</p>\n";
 		if (!isset($query['start'])) $query['start'] = 0;
 
-		if ($query['csv_export'] && $query['csv_export'] !== 'knownUids')
+		if ($query['csv_export'] && $query['csv_export'] === true)
 		{
 			$query['csv_fields'] = $this->csv_export_fields($query['col_filter']['info_type']);
 		}
@@ -369,27 +371,29 @@ class infolog_ui
 		$this->prefs['show_times'] = strpos($this->prefs['nextmatch-'.$query['columnselection_pref']],'info_used_time_info_planned_time') !== false;
 
 		// query all links and sub counts in one go
-		if ($infos && (!$query['csv_export'] || $query['csv_export'] === 'knownUids'))
+		if ($infos && (!$query['csv_export'] || !is_array($query['csv_export'])))
 		{
 			$links = egw_link::get_links_multiple('infolog',array_keys($infos),true);
 			$anzSubs = $this->bo->anzSubs(array_keys($infos));
 		}
 		$readonlys = $rows = array();
-		$parents = $query['action'] == 'sp' && $query['action_id'] ? (array)$query['action_id'] : array();
-		if (count($parents) == 1 && is_array($query['action_id']))
-		{
-			$query['action_id'] = array_shift($query['action_id']);	// display single parent as app_header
-		}
 
+		if (empty($query['col_filter']['info_id_parent']))
+		{
+			$parents = $query['action'] == 'sp' && $query['action_id'] ? (array)$query['action_id'] : array();
+			if (count($parents) == 1 && is_array($query['action_id']))
+			{
+				$query['action_id'] = array_shift($query['action_id']);	// display single parent as app_header
+			}
+		}
 		// Check to see if we need to remove description
-		$et = new ReflectionClass('etemplate');
-		$is_et2 = ($et->isSubclassOf(new ReflectionClass('etemplate_widget')));
+		$is_et2 = is_subclass_of($this->tmpl, 'etemplate_widget');
 		$parent_first = count($parents) == 1;
 		$parent_index = 0;
 		foreach($infos as $id => $info)
 		{
 			if (!(strpos($info['info_addr'],',')===false) && strpos($info['info_addr'],', ')===false) $info['info_addr'] = str_replace(',',', ',$info['info_addr']);
-			if (!$query['csv_export'] || $query['csv_export'] === 'knownUids')
+			if (!$query['csv_export'] || !is_array($query['csv_export']))
 			{
 				$info['links'] =& $links[$id];
 				$info['info_anz_subs'] = (int)$anzSubs[$id];
@@ -402,7 +406,7 @@ class infolog_ui
 				}
 			}
 			// for subs view ('sp') add parent(s) in front of subs once(!)
-			if ($parent_first &&  ($main = $this->bo->read($query['action_id'])) ||
+			if ($parent_first && ($main = $this->bo->read($query['action_id'])) ||
 				$parents && ($parent_index = array_search($info['info_id_parent'], $parents)) !== false &&
 				($main = $this->bo->read($info['info_id_parent'])))
 			{
@@ -702,7 +706,7 @@ class infolog_ui
 		if (!is_array($values))
 		{
 			$nm = egw_cache::getSession('infolog', $this->called_by.'session_data');
-			if ($values === 'reset_action_view')
+			if ($values === 'reset_action_view' || $_GET['ajax'] === 'true')
 			{
 				$nm['action'] = $action = '';
 				$nm['action_id'] = $action_id = 0;
