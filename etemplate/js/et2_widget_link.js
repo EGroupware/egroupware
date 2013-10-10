@@ -1321,7 +1321,7 @@ var et2_link_list = et2_link_string.extend(
 				.appendTo(row)
 				.addClass(columns[i])
 				.click( function(){self.egw().open(_link_data, "", "edit");})
-				.text(_link_data[columns[i]]);
+				.text(_link_data[columns[i]] ? _link_data[columns[i]]+"" : "");
 		}
 
 		// Date
@@ -1377,6 +1377,10 @@ et2_register_widget(et2_link_list, ["link-list"]);
 var et2_link_add = et2_inputWidget.extend(
 {
 	attributes: {
+		"value": {
+			"description": "Either an array of link information (see egw_link::link()) or array with keys to_app and to_id",
+			"type": "any"
+		},
 		"application": {
 			"name": "Application",
 			"type": "string",
