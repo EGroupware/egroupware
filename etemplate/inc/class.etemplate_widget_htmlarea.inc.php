@@ -60,8 +60,7 @@ class etemplate_widget_htmlarea extends etemplate_widget
 		{
 			$value = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
-
-			$valid = html::purify($value);
+			$valid = html::purify($value,($this->attrs['validation_rules']?$this->attrs['validation_rules']:null));
 		}
 	}
 }
