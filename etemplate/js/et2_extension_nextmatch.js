@@ -912,7 +912,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 						_grid.colData);
 			}
 		}
-		this.resize();
+		this.dataview.table.resize();
 	},
 
 	_getSubgrid: function (_row, _data, _controller) {
@@ -1243,6 +1243,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		$j(template.getDOMNode()).on("load", 
 			jQuery.proxy(function() {
 				parse.call(this, template);
+				this.dynheight.initialized = false;
 				this.resize();
 			}, this)
 		);
