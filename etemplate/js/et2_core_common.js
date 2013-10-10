@@ -102,9 +102,9 @@ function et2_checkType(_val, _type, _attr, _widget)
 
 		if(typeof _val != "undefined" && _val)
 		{
-			egw.debug("warn", "'" + _val + "' was not of specified _type '" + 
+			egw.debug("warn", "Widget %o: '" + _val + "' was not of specified _type '" + 
 				_type + (_attr != null ? "' for attribute '" + _attr + "' " : "") +
-				"and is now '" + res + "'");
+				"and is now '" + res + "'",_widget);
 		}
 		return res;
 	}
