@@ -1376,7 +1376,7 @@ egw_LAB.wait(function() {
 		if (empty($html)) return $html;	// no need to process further
 		if (!empty($config) && is_string($config))
 		{
-			error_log(__METHOD__.__LINE__.$config);
+			//error_log(__METHOD__.__LINE__.$config);
 			$config = json_decode($config,true);
 			if (is_null($config)) error_log(__METHOD__.__LINE__." decoding of config failed; standard will be applied");
 		}
