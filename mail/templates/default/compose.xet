@@ -21,11 +21,11 @@
 				<description class="$cont[noSaveAsAvailable]" value="Save:"/>
 				<hbox class="$cont[noInfologAvailable]">
 					<image class="et2_button ui-button et2_button_icon" label="Save as infolog on send" src="infolog/navbar" no_lang="1"/>
-					<checkbox statustext="check to save as infolog on send" id="to_infolog" options="$cont[to_infolog]"/>
+					<checkbox statustext="check to save as infolog on send" id="to_infolog" options="on,off"/>
 				</hbox>
 				<hbox class="$cont[noTrackerAvailable]">
 					<image class="et2_button ui-button et2_button_icon" label="Save as tracker on send" src="tracker/navbar" no_lang="1"/>
-					<checkbox statustext="check to save as trackerentry on send" id="to_tracker" options="$cont[to_tracker]"/>
+					<checkbox statustext="check to save as trackerentry on send" id="to_tracker" options="on,off"/>
 				</hbox>
 				<description value="Recieve notification"/>
 				<checkbox statustext="check to recieve a notification when the message is read (note: not all clients support this and/or the reciever may not authorize the notification)" id="disposition" options="$cont[disposition]"/>
@@ -64,7 +64,7 @@
 		</vbox>
 		<vbox class="mailComposeBodySection" width="99%">
 			<hbox disabled="@is_plain" class="mailComposeBody">
-				<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" mode="$cont[rtfEditorFeatures]" height="320px" width="100%" toolbar="true" base_href="$cont[upload_dir]"/>
+				<htmlarea span="all" name="mail_htmltext" id="mail_htmltext" expand_toolbar="true" height="320px" width="100%" />
 			</hbox>
 			<hbox disabled="@is_html" class="mailComposeBody">
 				<textbox multiline="true" rows="15" cols="120" width="99%" span="all" name="mail_plaintext" id="mail_plaintext"/>

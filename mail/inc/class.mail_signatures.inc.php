@@ -285,11 +285,24 @@ class mail_signatures
 			return $signature;
 
 		} else {
-			$signature = new mail_signatures($_signatureID);
-			if($_unparsed === false) {
-				$signature->fm_signature = ($_unparsed === true ? $this->profileData->ea_default_signature : $GLOBALS['egw']->preferences->parse_notify($signature->fm_signature));
+			$signatures = $this->getListOfSignatures();
+
+			foreach($signatures as $signature) {
+				if ($_signatureID == $signature['fm_signatureid'])
+				{
+					$matchedSig = new mail_signatures();
+					$matchedSig->fm_signatureid	= $signature['fm_signatureid'];
+					$matchedSig->fm_description	= $signature['fm_description'];
+					$matchedSig->fm_signature	= $signature['fm_signature'];
+					$matchedSig->fm_defaultsignature = $signature['fm_defaultsignature'];
+					break;
+				}
 			}
-			return $signature;
+
+			if($_unparsed === false) {
+				$matchedSig->fm_signature = ($_unparsed === true ? $this->profileData->ea_default_signature : $GLOBALS['egw']->preferences->parse_notify($matchedSig->fm_signature));
+			}
+			return $matchedSig;
 		}
 	}
 }

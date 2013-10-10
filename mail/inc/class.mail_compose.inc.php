@@ -21,16 +21,7 @@ class mail_compose
 
 	var $public_functions = array
 	(
-		'action'		=> True,
 		'compose'		=> True,
-		'composeFromDraft'	=> True,
-		'fileSelector'		=> True,
-		'forward'		=> True,
-		'composeAsNew'         => True,
-		'composeAsForward'=> True,
-		'reply'			=> True,
-		'replyAll'		=> True,
-		'action'	=> True
 	);
 
 	/**
@@ -86,7 +77,7 @@ class mail_compose
 		$profileID = 0;
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 				$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
-		$this->bosignatures	= new felamimail_bosignatures();
+		$this->bosignatures	= new mail_signatures();
 		$this->mail_bo	= mail_bo::getInstance(true,$profileID);
 
 		$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->mail_bo->profileID;
@@ -130,13 +121,7 @@ class mail_compose
 		}
 	}
 
-	function unhtmlentities ($string)
-	{
-		$trans_tbl = get_html_translation_table (HTML_ENTITIES);
-		$trans_tbl = array_flip ($trans_tbl);
-		return strtr ($string, $trans_tbl);
-	}
-
+/*
 	function action()
 	{
 		$formData['identity']	= (int)$_POST['identity'];
@@ -243,30 +228,7 @@ class mail_compose
 		#common::egw_exit();
 		print "<script type=\"text/javascript\">window.close();</script>";
 	}
-
-	function composeAsForward($_focusElement='to')
-	{
-		if (isset($_GET['forwardmails']))
-		{
-			unset($_GET['forwardmails']);
-			$replyID = $_GET['reply_id'];
-			$replyIds = explode(',',$replyID);
-			$icServer = $this->mail_bo->profileID;
-			$folder = (isset($_GET['folder'])?base64_decode($_GET['folder']):base64_decode($_GET['mailbox']));
-			//_debug_array(array('reply_id'=>$replyIds,'folder'=>$folder));
-			if (!empty($folder) && !empty($replyID) ) {
-				// this fill the session data with the values from the original email
-				$buff = $this->preferencesArray['message_forwarding'];
-				$this->preferencesArray['message_forwarding'] = 'asmail';
-				foreach($replyIds as $key => $id)
-				{
-					$content = $this->getForwardData($icServer, $folder, $id,NULL);
-				}
-				$this->preferencesArray['message_forwarding'] = $buff;
-			}
-		}
-		$this->compose($content,null,$_focusElement);
-	}
+*/
 
 	/**
 	 * function compose
@@ -281,7 +243,7 @@ class mail_compose
 	function compose(array $_content=null,$msg=null, $_focusElement='to',$suppressSigOnTop=false, $isReply=false)
 	{
 		//error_log(__METHOD__.__LINE__.array2string($_REQUEST));
-		error_log(__METHOD__.__LINE__.array2string($_content).function_backtrace());
+		//error_log(__METHOD__.__LINE__.array2string($_content).function_backtrace());
 
 		if (isset($_GET['reply_id'])) $replyID = $_GET['reply_id'];
 		if (!$replyID && isset($_GET['id'])) $replyID = $_GET['id'];
@@ -303,14 +265,24 @@ class mail_compose
 			unset($_GET['mode']);
 			error_log(__METHOD__.__LINE__.array2string($_content));
 		}
-		if (!isset($_content['composeID'])||empty($_content['composeID']))
+		$composeCache = array();
+		if (isset($_content['composeID'])&&!empty($_content['composeID']))
 		{
-			$this->composeID = $this->getComposeID();
-			$composeCache = egw_cache::getCache(egw_cache::SESSION,'mail','composeCache'.trim($GLOBALS['egw_info']['user']['account_id']).'_'.$this->composeID,$callback=null,$callback_params=array(),$expiration=60*60*2);
+			$composeCache = egw_cache::getCache(egw_cache::SESSION,'mail','composeCache'.trim($GLOBALS['egw_info']['user']['account_id']).'_'.$_content['composeID'],$callback=null,$callback_params=array(),$expiration=60*60*2);
+			$this->composeID = $_content['composeID'];
+			//error_log(__METHOD__.__LINE__.array2string($composeCache));
 		}
 		else
 		{
-			$this->composeID = $_content['composeID'];
+			$this->composeID = $_content['composeID'] = $this->getComposeID();
+			if (!is_array($_content))
+			{
+				$_content = $this->setDefaults();
+			}
+			else
+			{
+				$_content = $this->setDefaults($_content);
+			}
 		}
 		// VFS Selector was used
 		if (is_array($_content['selectFromVFSForCompose']))
@@ -463,7 +435,9 @@ class mail_compose
 			$content['is_html'] = true;
 			$content['is_plain'] = false;
 		}
+
 		$content['body'] = ($content['body'] ? $content['body'] : $content['mail_'.($content['mimeType'] == 'html'?'html':'plain').'text']);
+
 		// form was submitted either by clicking a button or by changing one of the triggering selectboxes
 		// identity and signatureID; this might trigger that the signature in mail body may have to be altered
 		if ( !empty($content['body']) &&
@@ -472,12 +446,127 @@ class mail_compose
 		)
 		{
 			$buttonClicked = true;
-		}
-		// all values are empty for a new compose window
-		if ($buttonClicked = true)
-		{
 			$suppressSigOnTop = true;
+
+			if (!empty($composeCache['identity']) && !empty($_content['identity']) && $_content['identity'] != $composeCache['identity'])
+			{
+				$Identities = $this->preferences->getIdentity($_content['identity']);
+				//error_log(__METHOD__.__LINE__.array2string($Identities->signature));
+				if ($Identities->signature)
+				{
+					$newSig = $Identities->signature;
+				}
+				else
+				{
+					$newSig = $this->bosignatures->getDefaultSignature();
+					if ($newSig === false) $newSig = -1;
+				}
+			}
+			$_oldSig = $composeCache['signatureID'];
+			$_signatureID = ($newSig?$newSig:$_content['signatureID']);
+			$_currentMode = $_content['mimeType'];
+			if ($_oldSig != $_signatureID)
+			{
+				if($this->_debug); error_log(__METHOD__.__LINE__.' old,new ->'.$_oldSig.','.$_signatureID.'#'.$content['body']);
+				// prepare signatures, the selected sig may be used on top of the body
+				$oldSignature = $this->bosignatures->getSignature($_oldSig);
+				//error_log(__METHOD__.__LINE__.'Old:'.array2string($oldSignature).'#');
+				$oldSigText = $oldSignature->fm_signature;
+				$signature = $this->bosignatures->getSignature($_signatureID);
+				//error_log(__METHOD__.__LINE__.'New:'.array2string($signature).'#');
+				$sigText = $signature->fm_signature;
+				error_log(__METHOD__.'Old:'.$oldSigText.'#');
+				error_log(__METHOD__.'New:'.$sigText.'#');
+				if ($_currentMode == 'plain')
+				{
+					$oldSigText = $this->convertHTMLToText($oldSigText,true,true);
+					$sigText = $this->convertHTMLToText($sigText,true,true);
+					if($this->_debug) error_log(__METHOD__." Old signature:".$oldSigText);
+				}
+
+				$oldSigText = mail_bo::merge($oldSigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+				//error_log(__METHOD__.'Old+:'.$oldSigText.'#');
+				$sigText = mail_bo::merge($sigText,array($GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')));
+				//error_log(__METHOD__.'new+:'.$sigText.'#');
+				$_htmlConfig = mail_bo::$htmLawed_config;
+				mail_bo::$htmLawed_config['comment'] = 2;
+				mail_bo::$htmLawed_config['transform_anchor'] = false;
+				$oldSigText = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($oldSigText,$htmlConfig,array(),true):$oldSigText));
+				//error_log(__METHOD__.'Old(clean):'.$oldSigText.'#');
+				if ($_currentMode == 'html')
+				{
+					$content['body'] = str_replace("\n",'\n',$content['body']);	// dont know why, but \n screws up preg_replace
+					$styles = mail_bo::getStyles(array(array('body'=>$content['body'])));
+					if (stripos($content['body'],'style')!==false) translation::replaceTagsCompletley($content['body'],'style',$endtag='',$addbracesforendtag=true); // clean out empty or pagewide style definitions / left over tags
+				}
+				$content['body'] = str_replace(array("\r","\t","<br />\n",": "),array("","","<br />",":"),($_currentMode == 'html'?html::purify($content['body'],mail_bo::$htmLawed_config,array(),true):$content['body']));
+				mail_bo::$htmLawed_config = $_htmlConfig;
+				if ($_currentMode == 'html')
+				{
+					$content['body'] = preg_replace($reg='|'.preg_quote('<!-- HTMLSIGBEGIN -->','|').'.*'.preg_quote('<!-- HTMLSIGEND -->','|').'|u',
+						$rep='<!-- HTMLSIGBEGIN -->'.$sigText.'<!-- HTMLSIGEND -->', $in=$content['body'], -1, $replaced);
+					$content['body'] = str_replace(array('\n',"\xe2\x80\x93","\xe2\x80\x94","\xe2\x82\xac"),array("\n",'&ndash;','&mdash;','&euro;'),$content['body']);
+					//error_log(__METHOD__."() preg_replace('$reg', '$rep', '$in', -1)='".$content['body']."', replaced=$replaced");
+					if ($replaced)
+					{
+						$content['signatureID'] = $_content['signatureID'] = $presetSig = $_signatureID;
+						$found = false; // this way we skip further replacement efforts
+					}
+					else
+					{
+						// try the old way
+						$found = strpos($content['body'],trim($oldSigText));
+					}
+				}
+				else
+				{
+					$found = strpos($content['body'],trim($oldSigText));
+				}
+
+				if ($found !== false && $_oldSig != -2 && !(empty($oldSigText) || trim($this->convertHTMLToText($oldSigText,true,true)) ==''))
+				{
+					//error_log(__METHOD__.'Old Content:'.$content['body'].'#');
+					$_oldSigText = preg_quote($oldSigText,'~');
+					//error_log(__METHOD__.'Old(masked):'.$_oldSigText.'#');
+					$content['body'] = preg_replace('~'.$_oldSigText.'~mi',$sigText,$content['body'],1);
+					//error_log(__METHOD__.'new Content:'.$content['body'].'#');
+				}
+
+				if ($_oldSig == -2 && (empty($oldSigText) || trim($this->convertHTMLToText($oldSigText,true,true)) ==''))
+				{
+					// if there is no sig selected, there is no way to replace a signature
+				}
+
+				if ($found === false)
+				{
+					if($this->_debug) error_log(__METHOD__." Old Signature failed to match:".$oldSigText);
+					if($this->_debug) error_log(__METHOD__." Compare content:".$content['body']);
+				}
+				else
+				{
+					$content['signatureID'] = $_content['signatureID'] = $presetSig = $_signatureID;
+				}
+				if ($styles)
+				{
+					//error_log($styles);
+					$content['body'] = $styles.$content['body'];
+				}
+	/*
+				if ($_currentMode == 'html')
+				{
+					$_content = utf8_decode($_content);
+				}
+
+				$escaped = utf8_encode(str_replace(array("'", "\r", "\n"), array("\\'", "\\r", "\\n"), $_content));
+				//error_log(__METHOD__.$escaped);
+				if ($_currentMode == 'html')
+				else
+	*/
+			}
 		}
+
+		// do not double insert a signature on a server roundtrip
+		if ($buttonClicked) $suppressSigOnTop = true;
 
 		$alwaysAttachVCardAtCompose = false; // we use this to eliminate double attachments, if users VCard is already present/attached
 		if ( isset($GLOBALS['egw_info']['apps']['stylite']) && (isset($this->preferencesArray['attachVCardAtCompose']) &&
@@ -761,6 +850,7 @@ class mail_compose
 				}
 			}
 		}
+
 		if ($content['mimeType'] == 'html' && html::htmlarea_availible()===false)
 		{
 			$content['mimeType'] = 'plain';
@@ -817,32 +907,6 @@ class mail_compose
 */
 
 /*
-
-		if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
-			$this->t->set_var('addressbookButton','<button class="menuButton" type="button" onclick="addybook();" title="'.lang('addressbook').'">
-                <img src="'.common::image('phpgwapi/templates/phpgw_website','users').'">
-            </button>');
-		} else {
-			$this->t->set_var('addressbookButton','');
-		}
-		if ($GLOBALS['egw_info']['user']['apps']['infolog']) {
-			$this->t->set_var('infologImage',html::image('felamimail','to_infolog',lang('Save as infolog'),'width="17px" height="17px" valign="middle"' ));
-			$this->t->set_var('lang_save_as_infolog',lang('Save as infolog'));
-			$this->t->set_var('infolog_checkbox','<input class="input_text" type="checkbox" id="to_infolog" name="to_infolog" />');
-		} else {
-			$this->t->set_var('infologImage','');
-			$this->t->set_var('lang_save_as_infolog','');
-			$this->t->set_var('infolog_checkbox','');
-		}
-		if ($GLOBALS['egw_info']['user']['apps']['tracker'])
-		{
-			$this->t->set_var('trackerImage',html::image('felamimail','to_tracker',lang('Save as tracker'),'width="17px" height="17px" valign="middle"' ));
-			$this->t->set_var('lang_save_as_infolog',($GLOBALS['egw_info']['user']['apps']['infolog']?lang('Save:'):lang('Save as tracker')));
-			$this->t->set_var('tracker_checkbox','<input class="input_text" type="checkbox" id="to_tracker" name="to_tracker" />');
-		} else {
-			$this->t->set_var('trackerImage','');
-			$this->t->set_var('tracker_checkbox','');
-		}
 		$this->t->set_var('lang_no_recipient',lang('No recipient address given!'));
 		$this->t->set_var('lang_no_subject',lang('No subject given!'));
 		$this->t->set_var('lang_infolog_tracker_not_both',lang("You can either choose to save as infolog OR tracker, not both."));
@@ -894,7 +958,7 @@ class mail_compose
 				//_debug_array($singleIdentity);
 				$defaultIdentity = $singleIdentity->id;
 				//$defaultIdentity = $key;
-				$content['signatureID'] = (!empty($singleIdentity->signature) ? $singleIdentity->signature : $content['signatureID']);
+				if (empty($content['signatureID'])) $content['signatureID'] = (!empty($singleIdentity->signature) ? $singleIdentity->signature : $content['signatureID']);
 			}
 		}
 
@@ -1024,19 +1088,6 @@ class mail_compose
 			$ishtml=0;
 		}
 
-
-/*
-		$this->t->set_var("lang_editormode",lang("Editor type"));
-		if (html::htmlarea_availible()===false)
-		{
-			$this->t->set_var("toggle_editormode",'');
-		}
-		else
-		{
-			// IE seems to need onclick to realize there is a change
-			$this->t->set_var("toggle_editormode", lang("Editor type").":&nbsp;<span><input name=\"_is_html\" value=\"".$ishtml."\" type=\"hidden\" /><input name=\"_editorselect\" onchange=\"fm_toggle_editor(this)\" onclick=\"fm_toggle_editor(this)\" ".($ishtml ? "checked=\"checked\"" : "")." id=\"_html\" value=\"html\" type=\"radio\"><label for=\"_html\">HTML</label><input name=\"_editorselect\" onchange=\"fm_toggle_editor(this)\" onclick=\"fm_toggle_editor(this)\" ".($ishtml ? "" : "checked=\"checked\"")." id=\"_plain\" value=\"plain\" type=\"radio\"><label for=\"_plain\">Plain text</label></span>");
-		}
-*/
 		// signature stuff set earlier
 		$sel_options['signatureID'] = $selectSignatures;
 		$content['signatureID'] = ($presetSig ? $presetSig : $content['signatureID']);
@@ -1136,21 +1187,36 @@ class mail_compose
 		$sel_options['mimeType'] = self::$mimeTypes;
 		$sel_options['priority'] = self::$priorities;
 		if (!isset($content['priority']) || empty($content['priority'])) $content['priority']=3;
-		if ($content['mimeType']=='html') $content['rtfEditorFeatures']='simple-withimage';//egw_ckeditor_config::get_ckeditor_config();
 
-		if (isset($_content['composeID'])||!empty($_content['composeID']))
+		$etpl = new etemplate_new('mail.compose');
+
+		if ($content['mimeType']=='html')
+		{
+			//mode="$cont[rtfEditorFeatures]" validation_rules="$cont[validation_rules]" base_href="$cont[upload_dir]"
+			$_htmlConfig = mail_bo::$htmLawed_config;
+			mail_bo::$htmLawed_config['comment'] = 2;
+			mail_bo::$htmLawed_config['transform_anchor'] = false;
+			$content['rtfEditorFeatures']='simple-withimage';//egw_ckeditor_config::get_ckeditor_config();
+			$content['validation_rules']= json_encode(mail_bo::$htmLawed_config);
+			$etpl->setElementAttribute('mail_htmltext','mode',$content['rtfEditorFeatures']);
+			$etpl->setElementAttribute('mail_htmltext','validation_rules',$content['validation_rules']);
+			mail_bo::$htmLawed_config = $_htmlConfig;
+		}
+
+		if (isset($content['composeID'])&&!empty($content['composeID']))
 		{
 			$composeCache = $content;
-			unset($composeCache['body']);unset($composeCache['mail_htmltext']);unset($composeCache['mail_plaintext']);
-			egw_cache::setCache(egw_cache::SESSION,'email','composeIdCache'.trim($GLOBALS['egw_info']['user']['account_id']).'_'.$this->composeID,$composeCache,$expiration=60*60*2);
+			unset($composeCache['body']);
+			unset($composeCache['mail_htmltext']);
+			unset($composeCache['mail_plaintext']);
+			egw_cache::setCache(egw_cache::SESSION,'mail','composeCache'.trim($GLOBALS['egw_info']['user']['account_id']).'_'.$this->composeID,$composeCache,$expiration=60*60*2);
 		}
 		if (!isset($_content['serverID'])||empty($_content['serverID']))
 		{
 			$content['serverID'] = $this->mail_bo->profileID;
 		}
 		$preserv['serverID'] = $content['serverID'];
-		$etpl = new etemplate_new('mail.compose');
-error_log(__METHOD__.__LINE__);
+
 		$etpl->exec('mail.mail_compose.compose',$content,$sel_options,$readonlys,$preserv,2);
 	}
 	
@@ -1204,7 +1270,7 @@ error_log(__METHOD__.__LINE__);
 					$content = $this->getReplyData($from == 'reply' ? 'single' : 'all', $icServer, $folder, $msgUID, $part_id);
 					
 					$_focusElement = 'body';
-					$supressSigOnTop = true;
+					$supressSigOnTop = false;
 					$isReply = true;
 					break;
 				case 'forward':
@@ -1267,8 +1333,6 @@ error_log(__METHOD__.__LINE__);
 	function getComposeID()
 	{
 		$this->composeID = $this->getRandomString();
-
-		$this->setDefaults();
 
 		return $this->composeID;
 	}
@@ -1428,7 +1492,7 @@ error_log(__METHOD__.__LINE__);
 			}
 		}
 		$mail_bo->closeConnection();
-
+		return $this->sessionData;
 	}
 
 	function getErrorInfo()
@@ -1768,10 +1832,6 @@ error_log(__METHOD__.__LINE__);
 		return $_body;
 	}
 
-	function removeAttachment($_attachmentID) {
-
-	}
-
 	function createMessage(&$_mailObject, $_formData, $_identity, $_signature = false, $_convertLinks=false)
 	{
 		$mail_bo	= $this->mail_bo;
@@ -1787,7 +1847,7 @@ error_log(__METHOD__.__LINE__);
 		$_mailObject->FromName = $_mailObject->EncodeHeader(mail_bo::generateIdentityString($_identity,false));
 		$_mailObject->Priority = $_formData['priority'];
 		$_mailObject->Encoding = 'quoted-printable';
-		$_mailObject->AddCustomHeader('X-Mailer: FeLaMiMail');
+		$_mailObject->AddCustomHeader('X-Mailer: EGroupware-Mail');
 		if(isset($_formData['in-reply-to'])) {
 			$_mailObject->AddCustomHeader('In-Reply-To: '. $_formData['in-reply-to']);
 		}
@@ -2360,29 +2420,34 @@ error_log(__METHOD__.__LINE__);
 		return true;
 	}
 
-	function setDefaults()
+	/**
+	 * setDefaults, sets some defaults
+	 *
+	 * @param array $content
+	 * @param boolean $isReply
+	 * @return array - the input, enriched with some not set attributes
+	 */
+	function setDefaults($content=array(),$isReply=true)
 	{
-		require_once(EGW_INCLUDE_ROOT.'/felamimail/inc/class.felamimail_bosignatures.inc.php');
-		$boSignatures = new felamimail_bosignatures();
-
-		if($signatureData = $boSignatures->getDefaultSignature()) {
-			if (is_array($signatureData)) {
-				$content['signatureID'] = $signatureData['signatureid'];
+		if (!empty($content)) $isReply = true;
+		if (!isset($content['signatureID']) || empty($content['signatureID']))
+		{
+			if($signatureData = $this->bosignatures->getDefaultSignature()) {
+				if (is_array($signatureData)) {
+					$content['signatureID'] = $signatureData['signatureid'];
+				} else {
+					$content['signatureID'] = $signatureData;
+				}
 			} else {
-				$content['signatureID'] = $signatureData;
+				$content['signatureID'] = -1;
 			}
-		} else {
-			$content['signatureID'] = -1;
 		}
 		// retrieve the signature accociated with the identity
 		$accountData    = $this->bopreferences->getAccountData($this->preferences,'active');
-		if ($accountData['identity']->signature) $content['signatureID'] = $accountData['identity']->signature;
-		// apply the current mailbox to the compose session data of the/a new email
-		$appsessionData = $GLOBALS['egw']->session->appsession('session_data');
-		$content['mailbox'] = $appsessionData['mailbox'];
+		if ((!isset($content['identity']) || empty($content['identity'])) && $accountData['identity']->signature) $content['signatureID'] = $accountData['identity']->signature;
 
-		$content['mimeType'] = 'html';
-		if (!empty($this->preferencesArray['composeOptions']) && $this->preferencesArray['composeOptions']=="text") $content['mimeType']  = 'plain';
+		if (!isset($content['mimeType']) || empty($content['mimeType'])) $content['mimeType'] = 'html';
+		if ((!isset($content['mimeType']) || empty($content['mimeType'])) && !empty($this->preferencesArray['composeOptions']) && $this->preferencesArray['composeOptions']=="text") $content['mimeType']  = 'plain';
 		return $content;
 
 	}

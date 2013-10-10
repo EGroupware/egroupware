@@ -439,7 +439,6 @@ class mail_ui
 		if (is_object($preferences)) $activeIdentity =& $preferences->getIdentity($icServerID, true);
 		//_debug_array($activeIdentity);
 		$maxMessages	=  50;
-		$userPreferences	=&  $GLOBALS['egw_info']['user']['preferences']['mail'];
 
 		// retrieve data for/from user defined accounts
 		$selectedID = 0;
@@ -769,6 +768,7 @@ class mail_ui
 		$actions =  array(
 			'open' => array(
 				'caption' => lang('Open'),
+				'icon' => 'view',
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.mail_open',
 				'allowOnMultiple' => false,
@@ -1684,11 +1684,17 @@ unset($query['actions']);
 			}
 		}
 		$actionsenabled = self::get_actions();
+		unset($actionsenabled['open']);
 		unset($actionsenabled['mark']['children']['setLabel']);
 		unset($actionsenabled['mark']['children']['unsetLabel']);
 		unset($actionsenabled['mark']['children']['read']);
 		unset($actionsenabled['mark']['children']['unread']);
 		unset($actionsenabled['mark']['children']['undelete']);
+		$cAN = $actionsenabled['composeasnew'];
+		unset($actionsenabled['composeasnew']);
+		$actionsenabled = array_reverse($actionsenabled,true);
+		$actionsenabled['composeasnew']=$cAN;
+		$actionsenabled = array_reverse($actionsenabled,true);
 		$etpl->setElementAttribute('toolbar','actions', $actionsenabled);
 		if (empty($subject)) $subject = lang('no subject');
 		$content['msg'] = (is_array($error_msg)?implode("<br>",$error_msg):$error_msg);

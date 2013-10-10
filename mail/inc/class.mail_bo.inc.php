@@ -3877,7 +3877,8 @@ class mail_bo
 						$newBody = $matches[2];
 					}
 					$htmLawed = new egw_htmLawed();
-					// the next line should not be needed
+					// the next line should not be needed, but produces better results on HTML 2 Text conversion,
+					// as we switched off HTMLaweds tidy functionality
 					$newBody = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>'),array('&amp;','<BR>','<BR>','<BR>'),$newBody);
 					$newBody = $htmLawed->egw_htmLawed($newBody);
 					if ($hasOther && $preserveHTML) $newBody = $matches[1]. $newBody. $matches[3];
@@ -4711,6 +4712,18 @@ class mail_bo
 			if (empty($headers)) return false;
 			// dont force retrieval of the textpart, let mailClass preferences decide
 			$bodyParts = $mailClass->getMessageBody($uid,($preserveHTML?'always_display':'only_if_no_text'),$partid);
+			// if we do not want HTML but there is no TextRepresentation with the message itself, try converting
+			if ( !$preserveHTML && $bodyParts[0]['mimeType']=='text/html')
+			{
+				foreach($bodyParts as $i => $part)
+				{
+					if ($bodyParts[$i]['mimeType']=='text/html')
+					{
+						$bodyParts[$i]['body'] = translation::convertHTMLToText($bodyParts[$i]['body'],$bodyParts[$i]['charSet'],true,$stripalltags=true);
+						$bodyParts[$i]['mimeType']='text/plain';
+					}
+				}
+			}
 			//error_log(array2string($bodyParts));
 			$attachments = $mailClass->getMessageAttachments($uid,$partid);
 
