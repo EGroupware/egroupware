@@ -389,6 +389,30 @@ class mail_compose
 			$savedOK = true;
 			try
 			{
+				$_content['isDraft'] = 1;
+				// save as draft
+				$folder = $this->mail_bo->getDraftFolder();
+				$this->mail_bo->reopen($folder);
+				$status = $this->mail_bo->getFolderStatus($folder);
+				//error_log(__METHOD__.__LINE__.array2string(array('Folder'=>$folder,'Status'=>$status)));
+				$uidNext = $status['uidnext']; // we may need that, if the server does not return messageUIDs of saved/appended messages
+				$_content['body'] = ($_content['body'] ? $_content['body'] : $_content['mail_'.($_content['mimeType'] == 'html'?'html':'plain').'text']);
+				$messageUid = $this->saveAsDraft($_content,$folder); // folder may change
+				if (!$messageUid) {
+					//try to reopen the mail from session data
+					throw new egw_exception_wrong_userinput(lang("Error: Could not save Message as Draft")." ".lang("Trying to recover from session data"));
+				}
+				// saving as draft, does not mean closing the message
+				$messageUid = ($messageUid===true ? $uidNext : $messageUid);
+				if (!$this->mail_bo->icServer->_connected) $this->mail_bo->openConnection($this->mail_bo->profileID);
+				if ($this->mail_bo->getMessageHeader($messageUid))
+				{
+					//error_log(__METHOD__.__LINE__.' (re)open drafted message with new UID: '.$messageUid.' in folder:'.$folder);
+					$draftContent = $this->bocompose->getDraftData($this->mail_bo->icServer, $folder, $messageUid);
+					//$this->compose($draftContent,null,'to',true);
+					//return true;
+				}
+
 			}
 			catch (egw_exception_wrong_userinput $e)
 			{
@@ -2024,7 +2048,7 @@ class mail_compose
 		$this->sessionData['signatureID'] = $_formData['signatureID'];
 		$this->sessionData['stationeryID'] = $_formData['stationeryID'];
 		$this->sessionData['identity']  = $_formData['identity'];
-
+		$this->sessionData['attachments']  = $_formData['attachments'];
 		$identity = $this->preferences->getIdentity((int)$this->sessionData['identity'],true);
 
 		$flags = '\\Seen \\Draft';
@@ -2083,7 +2107,7 @@ class mail_compose
 			}
 
 		} else {
-			error_log("mail_bo::saveAsDraft->".lang("folder")." ". $savingDestination." ".lang("does not exist on IMAP Server."));
+			error_log(__METHOD__.__LINE__."->".lang("folder")." ". $savingDestination." ".lang("does not exist on IMAP Server."));
 			return false;
 		}
 		$mail_bo->closeConnection();
