@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.sieve.index.rows" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" id="rg" sortable="mail.mail_sieve.ajax_moveRule"  >
+		<grid width="100%" id="rg" sortable="mail.mail_sieve.ajax_moveRule" class="egwGridView_grid">
 			<columns>
 				<column/>
 				<column/>
@@ -14,7 +14,7 @@
 					<description value="Status"/>
 					<description value="rules"/>
 				</row>
-				<row class="tr"  >
+				<row class="row"  >
 					<description id="${row}[ruleID]" />
 					<menulist>
 						<menupopup id="${row}[status]" readonly= "true"/>
