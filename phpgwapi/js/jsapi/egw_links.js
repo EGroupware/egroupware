@@ -82,7 +82,8 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 						break;
 					case 'icon':
 						var app_data = this.app(_app);
-						if (typeof app_data != 'undefined' && typeof app_data.icon != 'undefined')
+						if (typeof app_data != 'undefined' && 
+							typeof app_data.icon != 'undefined' && app_data.icon != null)
 						{
 							reg.icon = (typeof app_data.icon_app != 'undefined' ? app_data.icon_app : _app)+'/'+app_data.icon;
 						}
