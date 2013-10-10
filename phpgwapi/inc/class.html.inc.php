@@ -1363,13 +1363,23 @@ egw_LAB.wait(function() {
 	 * Runs HTMLPurifier over supplied html to remove malicious code
 	 *
 	 * @param string $html
-	 * @param HTMLPurifier_Config $config=null
+	 * @param array/string $config=null - config to influence the behavior of current purifying engine
+	 * @param array/string $spec=null - spec to influence the behavior of current purifying engine
+	 *		The $spec argument can be used to disallow an otherwise legal attribute for an element,
+	 *		or to restrict the attribute's values
+	 * @param boolean $_force=null - force the config passed to be used without merging to the default
 	 */
 	static function purify($html,$config=null,$spec=array(),$_force=false)
 	{
 		$defaultConfig = array('valid_xhtml'=>1,'safe'=>1);
 
 		if (empty($html)) return $html;	// no need to process further
+		if (!empty($config) && is_string($config))
+		{
+			error_log(__METHOD__.__LINE__.$config);
+			$config = json_decode($config,true);
+			if (is_null($config)) error_log(__METHOD__.__LINE__." decoding of config failed; standard will be applied");
+		}
 
 		// User preferences
 		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
