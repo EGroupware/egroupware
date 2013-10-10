@@ -8,9 +8,9 @@
 	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.9.001">
 		<hbox>
 			<description value="Add:" class="infolog_headertext"/>
-			<button statustext="Add a new ToDo" label="ToDo" id="add[task]" onclick="egw.open('','infolog','add',{type:'task',action: '$cont[action]',action_id:'$cont[action_id]',cat_id:widget.getRoot().getWidgetById('cat_id').getValue()})" image="task"/>
-			<button statustext="Add a new Phonecall" label="Phonecall" id="add[phone]" onclick="egw.open('','infolog','add',{type:'phone',action: '$cont[action]',action_id:'$cont[action_id]',cat_id:widget.getRoot().getWidgetById('cat_id').getValue()})" image="phone"/>
-			<button statustext="Add a new Note" label="Note" id="add[note]" onclick="egw.open('','infolog','add',{type:'note',action: '$cont[action]',action_id:'$cont[action_id]',cat_id:widget.getRoot().getWidgetById('cat_id').getValue()})" image="note"/>
+			<button statustext="Add a new ToDo" label="ToDo" id="add[task]" onclick="var options = {type: 'task',cat_id:widget.getRoot().getWidgetById('cat_id').getValue()}; if('$cont[action]' != 'null') options.action = '$cont[action]'; egw.open('','infolog','add',options)" image="task"/>
+			<button statustext="Add a new Phonecall" label="Phonecall" id="add[phone]" onclick="var options = {type: 'phone',cat_id:widget.getRoot().getWidgetById('cat_id').getValue()}; if('$cont[action]' != 'null') options.action = '$cont[action]'; egw.open('','infolog','add',options)" image="phone"/>
+			<button statustext="Add a new Note" label="Note" id="add[note]" onclick="var options = {type: 'note',cat_id:widget.getRoot().getWidgetById('cat_id').getValue()}; if('$cont[action]' != 'null') options.action = '$cont[action]'; egw.open('','infolog','add',options)" image="note"/>
 		</hbox>
 	</template>
 	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.005">
