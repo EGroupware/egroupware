@@ -53,15 +53,7 @@ class etemplate_et2_widgets
 
 		echo '
 <div id="widget_list"></div>
-<div id="widget_container"></div>
-                <script>
-                        egw_LAB.wait(function() {
-				var wb = new widget_browser(
-					document.getElementById("widget_list"),
-					document.getElementById("widget_container")
-				);
-                        });
-                </script>';
+<div id="widget_container"></div>';
 		common::egw_footer();
 	}
 }

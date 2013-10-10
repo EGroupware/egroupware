@@ -193,3 +193,10 @@ widget_browser.prototype.create_attribute = function(name, settings)
 
 	return row;
 };
+
+egw_LAB.wait(function() {
+	var wb = new widget_browser(
+	document.getElementById("widget_list"),
+	document.getElementById("widget_container")
+	);
+});
