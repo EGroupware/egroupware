@@ -1400,7 +1400,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		}
 
 		// Let header have a chance
-		if(_sender._parent && _sender._parent == this)
+		if(_sender && _sender._parent && _sender._parent == this)
 		{
 			return this.header.getDOMNode(_sender);
 		}
