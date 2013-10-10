@@ -345,4 +345,17 @@ class emailadmin_smtp_sql extends emailadmin_smtp
 		}
 		return true;
 	}
+
+	/**
+	 * Hook called on account deletion
+	 *
+	 * @param array $_hookValues values for keys 'account_lid', 'account_id'
+	 * @return boolean true on success, false on error
+	 */
+	function deleteAccount($_hookValues)
+	{
+		$this->db->delete(self::TABLE, array('account_id' => $_hookValues['account_id']), __LINE__, __FILE__);
+
+		return true;
+	}
 }
