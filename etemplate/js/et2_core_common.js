@@ -254,7 +254,7 @@ function et2_checkType(_val, _type, _attr, _widget)
 	}
 
 	// We should never come here
-	throw("Invalid type identifier '" + _attr + ": " + _type);
+	throw("Invalid type identifier '" + _attr + "': '" + _type+"'");
 }
 
 /**

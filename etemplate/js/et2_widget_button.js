@@ -42,8 +42,6 @@ var et2_button = et2_baseWidget.extend([et2_IInput, et2_IDetachedDOM],
 			"description": "Use this icon instead of hiding for read-only"
 		},
 		"onclick": {
-			"name": "onclick",
-			"type": "js",
 			"description": "JS code which gets executed when the button is clicked"
 		},
 		"accesskey": {

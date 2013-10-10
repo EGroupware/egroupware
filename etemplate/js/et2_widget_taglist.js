@@ -69,15 +69,9 @@ var et2_taglist = et2_selectbox.extend(
 		},
 		
 		"onchange": {
-			"name": "onChange",
-			"type": "js",
-			"default": et2_no_init,
 			"description": "Callback when tags are changed.  Argument is the new selection.",
 		},
 		"onclick": {
-			"name": "onClick",
-			"type": "js",
-			"default": et2_no_init,
 			"description": "Callback when a tag is clicked.  The clicked tag is passed."
 		},
 		"tagRenderer": {

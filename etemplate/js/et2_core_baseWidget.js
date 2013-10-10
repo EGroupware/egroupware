@@ -43,6 +43,7 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 		"onclick": {
 			"name": "onclick",
 			"type": "js",
+			"default": et2_no_init,
 			"description": "JS code which is executed when the element is clicked."
 		}
 	},

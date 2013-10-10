@@ -37,11 +37,13 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 		"onchange": {
 			"name": "onchange",
 			"type": "js",
+			"default": et2_no_init,
 			"description": "JS code which is executed when the value changes."
 		},
 		"onfocus": {
 			"name": "onfocus",
 			"type": "js",
+			"default": et2_no_init,
 			"description": "JS code which get executed when wiget receives focus."
 		},
 		"validation_error": {

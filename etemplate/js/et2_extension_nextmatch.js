@@ -95,11 +95,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		"onselect": {
 			"name": "onselect",
 			"type": "js",
+			"default": et2_no_init,
 			"description": "JS code which gets executed when rows are selected.  Can also be a app.appname.func(selected) style method"
 		},
 		"onfiledrop": {
 			"name": "onFileDrop",
 			"type": "js",
+			"default": et2_no_init,
 			"description": "JS code that gets executed when a _file_ is dropped on a row.  Other drop interactions are handled by the action system.  Return false to prevent the default link action."
 		},
 		"settings": {

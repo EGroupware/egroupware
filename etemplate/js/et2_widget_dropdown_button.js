@@ -59,8 +59,6 @@ var et2_dropdown_button = et2_inputWidget.extend(
 			"description": "Use this icon instead of hiding for read-only"
 		},
 		"onclick": {
-			"name": "onclick",
-			"type": "js",
 			"description": "JS code which gets executed when the button is clicked"
 		},
 		"select_options": {

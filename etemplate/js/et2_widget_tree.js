@@ -47,18 +47,18 @@ var et2_tree = et2_inputWidget.extend(
 			"description": "Used to set the tree options."
 		},
 		"onclick": {
-			"name": "onClick",
-			"type": "js",
 			"description": "JS code which gets executed when clicks on text of a node"
 		},
 		"onselect": {
 			"name": "onSelect",
 			"type": "js",
+			"default": et2_no_init,
 			"description": "Javascript executed when user selects a node"
 		},
 		"oncheck": {
 			"name": "onCheck",
 			"type": "js",
+			"default": et2_no_init,
 			"description": "Javascript executed when user checks a node"
 		},
 		// onChange event is mapped depending on multiple to onCheck or onSelect
