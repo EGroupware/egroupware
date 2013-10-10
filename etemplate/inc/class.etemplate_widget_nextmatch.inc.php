@@ -1077,12 +1077,6 @@ class etemplate_widget_nextmatch_customfilter extends etemplate_widget_transform
 		}
 		$form_name = self::form_name($cname, $this->id, $expand);
 
-		// Don't need simple onchanges, it's ajax
-		if($this->attrs['onchange'] == 1)
-		{
-			$this->setElementAttribute($form_name, 'onchange', false);
-		}
-
 		$this->setElementAttribute($form_name, 'options', trim($this->attrs['widget_options']) != '' ? $this->attrs['widget_options'] : '');
 
 		parent::beforeSendToClient($cname);
