@@ -503,6 +503,7 @@ var et2_nextmatch_rowProvider = Class.extend(
 				}
 				classes += " row_category";
 			}
+			classes += " row";
 			_tr.setAttribute("class", classes);
 		}
 		if(_data['valign'])
