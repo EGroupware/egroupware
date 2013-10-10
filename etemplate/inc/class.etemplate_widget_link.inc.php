@@ -157,7 +157,7 @@ class etemplate_widget_link extends etemplate_widget
 		$result = egw_link::link($app, $id, $links);
 
 		$response = egw_json_response::get();
-		$response->data($result !== false);
+		$response->data(is_array($id) ? $id : $result !== false);
 	}
 
 	public function ajax_link_list($value) {

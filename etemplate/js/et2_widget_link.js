@@ -315,16 +315,42 @@ var et2_link_to = et2_inputWidget.extend(
 			}
 			this.file_upload.progress.empty();
 
+			// Server says it's OK, but didn't store - we'll send this again on submit
+			if(typeof success == "object" && success["Array:"])
+			{
+				this.options.value = success["Array:"];
+				var i = 0;
+				var fake_data = {
+					// Icon should be in registry
+					icon: egw.link_get_registry('addressbook','icon'),
+					app: this.options.value.app[i].app,
+					id: this.options.value.app[i].id
+				};
+			}
+
 			// Look for a link-list with the same ID, refresh it
 			var self = this;
+			var list_widget = null;
 			this.getRoot().iterateOver(
 				function(widget) {
 					if(widget.id == self.id) {
-						widget._get_links();
+						list_widget = widget;
+						if(success === true)
+						{
+							widget._get_links();
+						}
 					}
 				},
 				this, et2_link_list
 			);
+				
+			if(list_widget && fake_data)
+			{
+				egw.link_title(fake_data.app, fake_data.id, function(title) {
+					fake_data.title = title;
+					list_widget._add_link(fake_data);
+				});
+			}
 		}
 		else
 		{
