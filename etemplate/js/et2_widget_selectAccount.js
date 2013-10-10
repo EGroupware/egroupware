@@ -83,11 +83,11 @@ var et2_selectAccount = et2_selectbox.extend(
 		// Reference to object with dialog
 		this.dialog = null;
 
-		this._super.apply(this, arguments);
+		this._super.call(this, _parent, _attrs);
 	},
 
 	destroy: function() {
-                this._super.apply(this, arguments);
+		this._super.apply(this, arguments);
 	},
 
 	/**
@@ -105,8 +105,8 @@ var et2_selectAccount = et2_selectbox.extend(
 	/**
 	 *  Single selection - override to add search button
 	 */
-	createInputWidget: function() {
-
+	createInputWidget: function() 
+	{
 		this._super.apply(this, arguments);
 
 		var type = this.egw().preference('account_selection', 'common');
@@ -616,11 +616,11 @@ var et2_selectAccount_ro = et2_link_string.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"empty_label": {
-                        "name": "Empty label",
-                        "type": "string",
-                        "default": "",
-                        "description": "Textual label for first row, eg: 'All' or 'None'.  ID will be ''"
-                },
+			"name": "Empty label",
+			"type": "string",
+			"default": "",
+			"description": "Textual label for first row, eg: 'All' or 'None'.  ID will be ''",
+		},
 	},
 
 	legacyOptions: ["empty_label"],

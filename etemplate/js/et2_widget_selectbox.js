@@ -110,7 +110,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			if(isNaN(this.options.rows)) 
 			{
-				this.options.empty_label = this.egw().lang(this.options.rows);
+				this.options.empty_label = this.options.rows;
 				this.options.rows = 1;
 			}
 			else
@@ -559,10 +559,10 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			this.multiOptions.empty();
 		}
-		// Re-add empty, it's usually not there
+		// Re-add empty, it's usually not there (empty_label get's allways translated, independent of no_lang!)
 		if(this.options.empty_label)
 		{
-			this._appendOptionElement('', this.options.no_lang ? this.options.empty_label : this.egw().lang(this.options.empty_label));
+			this._appendOptionElement('', this.egw().lang(this.options.empty_label));
 		}
 
 		// Add the select_options
