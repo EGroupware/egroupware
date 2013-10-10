@@ -376,12 +376,12 @@ egw.extend('links', egw.MODULE_GLOBAL, function() {
 			// add all current title-requests
 			for(var app in title_queue)
 			{
-				if (typeof _params[0][app] == 'undefined')
-				{
-					_params[0][app] = [];
-				}
 				for(var id in title_queue[app])
 				{
+					if (typeof _params[0][app] == 'undefined')
+					{
+						_params[0][app] = [];
+					}
 					_params[0][app].push(id);
 				}
 			}

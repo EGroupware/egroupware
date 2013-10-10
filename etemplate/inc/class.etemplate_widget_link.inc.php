@@ -129,7 +129,7 @@ class etemplate_widget_link extends etemplate_widget
 			}
 			else
 			{
-				error_log("Got invalid title request: $app:" . array2string($ids));
+				error_log(__METHOD__."(".array2string($app_ids).") got invalid title request: app=$app, ids=" . array2string($ids));
 			}
 		}
 		egw_json_response::get()->data($response);
