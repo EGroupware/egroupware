@@ -316,15 +316,31 @@ var et2_link_to = et2_inputWidget.extend(
 			this.file_upload.progress.empty();
 
 			// Server says it's OK, but didn't store - we'll send this again on submit
+			// This happens if you link to something before it's saved to the DB
 			if(typeof success == "object" && success["Array:"])
 			{
-				this.options.value = success["Array:"];
+				// Save as appropriate in value
 				var i = 0;
+				if(typeof this.options.value != "object")
+				{
+					this.options.value = {};
+				}
+				if(typeof this.options.value.to_id != "object")
+				{
+					this.options.value.to_id = [];
+				}
+				i = this.options.value.to_id.length;
+				this.options.value.to_id[i] = success["Array:"].app[0];
+				
+				// Fake it for the UI
 				var fake_data = {
 					// Icon should be in registry
-					icon: egw.link_get_registry('addressbook','icon'),
-					app: this.options.value.app[i].app,
-					id: this.options.value.app[i].id
+					icon: egw.link_get_registry(this.options.value.to_id[i].app,'icon'),
+					app: this.options.value.to_id[i].app,
+					id: this.options.value.to_id[i].id,
+					// Make it easy to refer back if user deletes before saving
+					widget: this,
+					value_index: i
 				};
 			}
 
@@ -343,7 +359,9 @@ var et2_link_to = et2_inputWidget.extend(
 				},
 				this, et2_link_list
 			);
-				
+			
+			// If there's fake data (entry is not yet saved), updating the list will
+			// not work, so add it in.
 			if(list_widget && fake_data)
 			{
 				egw.link_title(fake_data.app, fake_data.id, function(title) {
@@ -1369,7 +1387,7 @@ var et2_link_list = et2_link_string.extend(
 			.appendTo(delete_button)
 			// We don't use ui-icon because it assigns a bg image
 			.addClass("delete icon")
-			.bind( 'click', function() {self._delete_link(_link_data.link_id, row);});
+			.bind( 'click', function() {self._delete_link(_link_data.link_id||_link_data, row);});
 
 		// Context menu
 		row.bind("contextmenu", function(e) {
@@ -1384,11 +1402,23 @@ var et2_link_list = et2_link_string.extend(
 	_delete_link: function(link_id, row) {
 		var delete_button = jQuery('.delete',row);
 		delete_button.removeClass("delete").addClass("loading");
-		if(link_id)
+		if(typeof link_id != "object")
 		{
 			egw.json("etemplate.etemplate_widget_link.ajax_delete", [link_id],
 				function(data) { if(data) {row.slideUp(row.remove);}}
 			).sendRequest();
+		}
+		else if (row)
+		{
+			// No link ID means a link on an unsaved entry.
+			// Just remove the row, but need to adjust the link_to value also
+			row.slideUp(row.remove);
+			var value = link_id.widget.getValue();
+			if(value && value.to_id)
+				{
+				delete value.to_id[link_id.value_index];
+				link_id.widget.set_value(value);
+			}
 		}
 	}
 });
