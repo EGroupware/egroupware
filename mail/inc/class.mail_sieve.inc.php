@@ -768,12 +768,14 @@ class mail_sieve
 			'modifications' => $request->modifications,
 			'validation_errors' => $validation_errors,
 		);
+
 		$response->generic('et2_load', array(
 			'name' => 'mail.sieve.index',
 			'url' => $GLOBALS['egw_info']['server']['webserver_url'].etemplate_widget_template::relPath('mail.sieve.index'),
 			'data' => $data,
 			'DOMNodeID' => 'mail-sieve-index'
 		));
+		error_log(__METHOD__. "RESPONSE".array2string($response));
 	}
 
 	/**
@@ -842,6 +844,7 @@ class mail_sieve
 	 */
 	function buildRule($rule)
 	{
+		_debug_array($rule);
 		$andor = ' '. lang('and') .' ';
 		$started = 0;
 		if ($rule['anyof']) $andor = ' '. lang('or') .' ';
@@ -882,7 +885,7 @@ class mail_sieve
 			$complete .= "message " . $xthan . $rule['size'] . "KB'";
 			$started = 1;
 		}
-		if ($rule['field_bodytransform'])
+		if (!empty($rule['field_bodytransform']))
 		{
 			if ($started) $newruletext .= ", ";
 			$btransform	= " :raw ";
@@ -894,7 +897,7 @@ class mail_sieve
 			$started = 1;
 
 		}
-		if ($rule['ctype']!= '0')
+		if ($rule['ctype']!= '0' && !empty($rule['ctype']))
 		{
 			if ($started) $newruletext .= ", ";
 			$btransform_ctype = emailadmin_script::$btransform_ctype_array[$rule['ctype']];
@@ -1112,44 +1115,5 @@ class mail_sieve
 		return $actions;
 	}
 
-	/**
-	 * sieve_refresh()
-	 * Handling the refreshing form by updating the content on client side
-	 *
-	 * @param type $response, is egw_json_response
-	 * @param type $request, is etemplate_request
-	 * @param type $cnt, the new contents to be used for updating
-	 * @param type $msg, messages
-	 * @return type
-	 */
-	function sieve_refresh($response,$request,$cnt,$msg)
-	{
-
-		error_log(__METHOD__. '() read'. array2string($msg));
-		//$content = $request->content;
-		$content['rg'] = $cnt;
-		$content['msg'] = $msg;
-		$request->content = $content;
-		$data = array(
-			'etemplate_exec_id' => $request->id(),
-
-			'app_header' => $request->app_header,
-			'content' => $request->content,
-			'sel_options' => $request->sel_options,
-			'readonlys' => $request->readonlys,
-			'modifications' => $request->modifications,
-			'validation_errors' => $validation_errors,
-		);
-		$response->generic('et2_load', array(
-			'name' => 'mail.sieve.index',
-			'url' => $GLOBALS['egw_info']['server']['webserver_url'].etemplate::relPath('mail.sieve.index'),
-			'data' => $data,
-			'DOMNodeID' => 'mail-sieve-index'
-		));
-		return;
-	}
-
 }
-
-
 ?>
