@@ -724,6 +724,11 @@ function etemplate2_handle_assign(type, res, req)
 			// Not for this etemplate, but not an error
 			return false;
 		}
+		if (res.data.key == 'etemplate_exec_id')
+		{
+			this.etemplate_exec_id = res.data.value;
+			return true;
+		}
 		var widget = this.widgetContainer.getWidgetById(res.data.id);
 		if (widget)
 		{

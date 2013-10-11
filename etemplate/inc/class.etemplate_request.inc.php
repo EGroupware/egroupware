@@ -7,7 +7,7 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright (c) 2007-9 by Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright (c) 2007-13 by Ralf Becker <RalfBecker@outdoor-training.de>
  * @version $Id$
  */
 
@@ -44,9 +44,23 @@
  * Ajax requests can use this object to open the original request by using the id, they have to transmitt back,
  * and register further variables, modify the registered ones or delete them AND then update the id, if it changed:
  *
- *	if (($new_id = $request->id()) != $id)
+ * eTemplate2:
+ *
+ *	if (($new_id = $request->id()) != $exec_id)
  *	{
- *		$response->addAssign('etemplate_exec_id','value',$new_id);
+ *		egw_json_response::get()->generic('assign', array(
+ *			'etemplate_exec_id' => $id,
+ *			'id' => '',
+ *			'key' => 'etemplate_exec_id',
+ *			'value' => $new_id,
+ *		));
+ *	}
+ *
+ * old eTemplate:
+ *
+ *	if (($new_id = $request->id()) != $exec_id)
+ *	{
+ *		egw_json_response::get()->assign('etemplate_exec_id','value',$new_id);
  *	}
  *
  * For an example look in link_widget::ajax_search()

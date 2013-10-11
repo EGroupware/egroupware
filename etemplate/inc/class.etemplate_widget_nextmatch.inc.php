@@ -344,7 +344,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			$request_value[$key] = $value[$key];
 
 			egw_json_response::get()->generic('assign', array(
-				'etemplate_exec_id' => self::$request->id(),
+				'etemplate_exec_id' => $exec_id,
 				'id' => $form_name,
 				'key' => $key,
 				'value' => $value[$key],
@@ -437,9 +437,14 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		egw_json_response::get()->data($result);
 
 		// If etemplate_exec_id has changed, update the client side
-		if (($new_id = self::$request->id()) != $id)
+		if (($new_id = self::$request->id()) != $exec_id)
 		{
-			egw_json_response::get()->assign('etemplate_exec_id','value',$new_id);
+			egw_json_response::get()->generic('assign', array(
+				'etemplate_exec_id' => $exec_id,
+				'id' => '',
+				'key' => 'etemplate_exec_id',
+				'value' => $new_id,
+			));
 		}
 	}
 
