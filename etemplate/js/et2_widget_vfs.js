@@ -617,6 +617,7 @@ var et2_vfsSelect = et2_inputWidget.extend(
 
 		this.button = $j(document.createElement("img"))
 			.attr("src", this.egw().image("filemanager/navbar"))
+			.attr("title", this.egw().lang("Select file(s) from VFS"))
 			.addClass("et2_button et2_button_icon")
 		this.setDOMNode(egw.userData.apps.filemanager ? this.button[0]:document.createElement('span'));
 	},
