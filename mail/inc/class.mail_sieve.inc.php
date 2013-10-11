@@ -844,7 +844,6 @@ class mail_sieve
 	 */
 	function buildRule($rule)
 	{
-		_debug_array($rule);
 		$andor = ' '. lang('and') .' ';
 		$started = 0;
 		if ($rule['anyof']) $andor = ' '. lang('or') .' ';
