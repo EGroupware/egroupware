@@ -161,7 +161,7 @@ var et2_toolbar = et2_DOMWidget.extend(
 			.appendTo(this.div);
 		if(action.iconUrl)
 		{
-			button.prepend("<img src='"+action.iconUrl+"' class='et2_button_icon'/>");
+			button.prepend("<img src='"+action.iconUrl+"' title='"+action.caption+"' class='et2_button_icon'/>");
 		}
 		if(action.icon)
 		{
@@ -181,7 +181,8 @@ var et2_toolbar = et2_DOMWidget.extend(
 
 		button.click(action.id, jQuery.proxy(click, this));
 	},
-/**
+
+	/**
 	 * Link the actions to the DOM nodes / widget bits.
 	 *
 	 */
