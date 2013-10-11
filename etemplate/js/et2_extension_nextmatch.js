@@ -1821,7 +1821,8 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			if(typeof child.set_value != "undefined" && child.id)
 			{
 				value = mgr.getEntry(child.id);
-				child.set_value(value == null ? "" : value);
+				if (value == null) value = '';
+				child.set_value(value);
 			}
 			if(typeof child.get_value == "function" && child.id)
 			{
@@ -1832,17 +1833,19 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				// Split up indexes
 				var indexes = child.id.replace('&#x5B;','[').split('[');
 
-				if(indexes.length > 1)
+				for(var i = 0; i < indexes.length; i++) 
 				{
-					for(var i = 0; i < indexes.length; i++) {
-						indexes[i] = indexes[i].replace('&#x5D;','').replace(']','');
-						if(typeof target[indexes[i]] == "undefined") {
-							target[indexes[i]] = i == indexes.length-1 ? value : {};
-						}
+					indexes[i] = indexes[i].replace('&#x5D;','').replace(']','');
+					if (i < indexes.length-1)
+					{
+						if(typeof target[indexes[i]] == "undefined") target[indexes[i]] = {};
 						target = target[indexes[i]];
 					}
+					else
+					{
+						target[indexes[i]] = value;							
+					}
 				}
-				target = value;
 			}
 		}, filters);
 
