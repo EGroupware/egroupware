@@ -34,9 +34,9 @@
 				</row>
 				<row>
 					<hbox>
-						<button label="Save" id="button[save]"/>
-						<button label="Apply" id="button[apply]"/>
-						<button label="Cancel" id="button[cancel]"/>
+						<button class="$cont[hideIfSieveDisabled]" label="Save" id="button[save]"/>
+						<button class="$cont[hideIfSieveDisabled]" label="Apply" id="button[apply]"/>
+						<button class="$cont[hideIfSieveDisabled]" label="Cancel" id="button[cancel]"/>
 					</hbox>
 					<description/>
 				</row>

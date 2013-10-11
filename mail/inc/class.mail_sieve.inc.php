@@ -106,7 +106,8 @@ class mail_sieve
 		}
 		else
 		{
-			die(lang('Sieve not activated'));
+			// we intend to die in index, to be able to die graciously
+			//die(lang('Sieve not activated'));
 		}
 	}
 
@@ -123,22 +124,28 @@ class mail_sieve
 		$tmpl = new etemplate_new('mail.sieve.index');
 
 		if ($_GET['msg']) $msg = $_GET['msg'];
+		$content['msg'] = $msg;
+		if ($this->mailbo->icServer->enableSieve)
+		{
+			//Initializes the Grid contents
+			$content['rg']= $this->get_rows($rows,$readonlys);
 
-		//Initializes the Grid contents
-		$content['rg']= $this->get_rows($rows,$readonlys);
+			// Set content-menu actions
+			$tmpl->set_cell_attribute('rg', 'actions',$this->get_actions());
 
-		// Set content-menu actions
-		$tmpl->set_cell_attribute('rg', 'actions',$this->get_actions());
-
-		$sel_options = array(
-			'status' => array(
-				'ENABLED' => lang('Enabled'),
-				'DISABLED' => lang('Disabled'),
-			)
-		);
-
+			$sel_options = array(
+				'status' => array(
+					'ENABLED' => lang('Enabled'),
+					'DISABLED' => lang('Disabled'),
+				)
+			);
+		}
+		else
+		{
+			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',mail_bo::generateIdentityString($this->mailPreferences->identities[$this->mailbo->profileID],true),$this->mailbo->profileID);
+			$content['hideIfSieveDisabled']='mail_DisplayNone';
+		}
 		$tmpl->exec('mail.mail_sieve.index',$content,$sel_options,$readonlys);
-
 	}
 
 	/**
@@ -152,79 +159,87 @@ class mail_sieve
 		//Instantiate an etemplate_new object, representing sieve.emailNotification
 		$eNotitmpl = new etemplate_new('mail.sieve.emailNotification');
 
-		$eNotification = $this->getEmailNotification();
-
-		if (!is_array($content))
+		if ($this->mailbo->icServer->enableSieve)
 		{
-			$content = $eNotification;
+			$eNotification = $this->getEmailNotification();
 
-			if (!empty($eNotification['externalEmail']))
+			if (!is_array($content))
 			{
-				$content['externalEmail'] = explode(",",$eNotification['externalEmail']);
+				$content = $eNotification;
+
+				if (!empty($eNotification['externalEmail']))
+				{
+					$content['externalEmail'] = explode(",",$eNotification['externalEmail']);
+				}
 			}
-		}
-		else
-		{
-			$this->restoreSessionData();
-			list($button) = @each($content['button']);
-			unset ($content['button']);
-
-			switch($button)
+			else
 			{
-				case 'save':
-				case 'apply':
-					if (isset($content['status']))
-					{
-						//error_log(__METHOD__. 'content:' . array2string($content));
-						$newEmailNotification = $content;
-						if (empty($preferences->preferences['prefpreventforwarding']) ||
-							$preferences->preferences['prefpreventforwarding'] == 0 )
+				$this->restoreSessionData();
+				list($button) = @each($content['button']);
+				unset ($content['button']);
+
+				switch($button)
+				{
+					case 'save':
+					case 'apply':
+						if (isset($content['status']))
 						{
-							if (is_array($content['externalEmail']) && !empty($content['externalEmail']))
+							//error_log(__METHOD__. 'content:' . array2string($content));
+							$newEmailNotification = $content;
+							if (empty($preferences->preferences['prefpreventforwarding']) ||
+								$preferences->preferences['prefpreventforwarding'] == 0 )
 							{
-								$newEmailNotification['externalEmail'] = implode(",",$content['externalEmail']);
+								if (is_array($content['externalEmail']) && !empty($content['externalEmail']))
+								{
+									$newEmailNotification['externalEmail'] = implode(",",$content['externalEmail']);
+								}
 							}
 						}
-					}
-					if (isset($content['externalEmail']) && !empty($content['externalEmail']))
-					{
-						if (!$this->bosieve->setEmailNotification($this->scriptName, $newEmailNotification))
+						if (isset($content['externalEmail']) && !empty($content['externalEmail']))
 						{
-							$msg = lang("email notification update failed")."<br />";
-							$msg .= $script->errstr. "<br />";
-							break;
+							if (!$this->bosieve->setEmailNotification($this->scriptName, $newEmailNotification))
+							{
+								$msg = lang("email notification update failed")."<br />";
+								$msg .= $script->errstr. "<br />";
+								break;
+							}
+							else
+							{
+								$msg .= lang("email notification successfully updated!");
+							}
+							//error_log(__METHOD__. '() new email notification : ' . array2string($newEmailNotification));
 						}
 						else
 						{
-							$msg .= lang("email notification successfully updated!");
+							$msg .= lang('email notification update failed! You need to set an email address!');
+							break;
 						}
-						//error_log(__METHOD__. '() new email notification : ' . array2string($newEmailNotification));
-					}
-					else
-					{
-						$msg .= lang('email notification update failed! You need to set an email address!');
-						break;
-					}
-					if ($button === 'apply') break;
+						if ($button === 'apply') break;
 
-				case 'cancel':
-					egw::redirect_link('/mail/index.php');
+					case 'cancel':
+						egw::redirect_link('/mail/index.php');
+				}
+				$this->saveSessionData();
 			}
-			$this->saveSessionData();
-		}
 
-		$sel_options = array(
-			'status' => array(
-				'on' => lang('Active'),
-				'off' => lang('Deactive'),
-			),
-			'displaySubject' => array(
-				0 => lang('No'),
-				1 => lang('Yes'),
-			),
-		);
-		//error_log(__METHOD__. '() new email notification : ' . array2string($content));
-		$content['msg'] = $msg;
+			$sel_options = array(
+				'status' => array(
+					'on' => lang('Active'),
+					'off' => lang('Deactive'),
+				),
+				'displaySubject' => array(
+					0 => lang('No'),
+					1 => lang('Yes'),
+				),
+			);
+			//error_log(__METHOD__. '() new email notification : ' . array2string($content));
+			$content['msg'] = $msg;
+		}
+		else
+		{
+			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',mail_bo::generateIdentityString($this->mailPreferences->identities[$this->mailbo->profileID],true),$this->mailbo->profileID);
+			$content['hideIfSieveDisabled']='mail_DisplayNone';
+		}
 		$eNotitmpl->exec('mail.mail_sieve.editEmailNotification', $content,$sel_options);
 	}
 
@@ -514,120 +529,127 @@ class mail_sieve
 
 		//Instantiate an etemplate_new object, representing the sieve.vacation template
 		$vtmpl = new etemplate_new('mail.sieve.vacation');
-
-		$vacRules = $this->getVacation($vacation,$msg);
-
-		if (!is_array($content))
+		if ($this->mailbo->icServer->enableSieve)
 		{
-			$content = $vacation = $vacRules['vacation'];
-			//$content['addresses'] = array_merge($vacRules['allAlliances'],$content['addresses']);
-			//$vacRules['predefinedAddresses'] = array_merge($content['addresses'],$vacRules['predefinedAddresses']);
-			if (empty($vacation['addresses'])) $content['addresses']='';
-			if (!empty($vacation['forwards']))
+			$vacRules = $this->getVacation($vacation,$msg);
+
+			if (!is_array($content))
 			{
-				$content['forwards'] = explode(",",$vacation['forwards']);
+				$content = $vacation = $vacRules['vacation'];
+				//$content['addresses'] = array_merge($vacRules['allAlliances'],$content['addresses']);
+				//$vacRules['predefinedAddresses'] = array_merge($content['addresses'],$vacRules['predefinedAddresses']);
+				if (empty($vacation['addresses'])) $content['addresses']='';
+				if (!empty($vacation['forwards']))
+				{
+					$content['forwards'] = explode(",",$vacation['forwards']);
+				}
+				else
+				{
+					$content['forwards'] = '';
+				}
 			}
 			else
 			{
-				$content['forwards'] = '';
+				$this->restoreSessionData();
+				list($button) = @each($content['button']);
+				unset ($content['button']);
+
+				switch($button)
+				{
+
+					case 'save':
+
+					case 'apply':
+						if ($GLOBALS['egw_info']['user']['apps']['admin'])
+						{
+							// store text as default
+							if ($content['set_as_default'] == 1)
+							{
+								config::save_value('default_vacation_text', $content['text'], 'mail');
+							}
+						}
+						if (isset($content['status']))
+						{
+							//error_log(__METHOD__. 'content:' . array2string($content));
+							$newVacation = $content;
+							$newVacation ['status'] = $content ['status'];
+							if (empty($preferences->preferences['prefpreventforwarding']) ||
+								$preferences->preferences['prefpreventforwarding'] == 0 )
+							{
+								if (is_array($content['forwards']) && !empty($content['forwards']))
+								{
+
+									$newVacation['forwards'] = implode(",",$content['forwards']);
+								}
+								else
+								{
+									$newVacation ['forwards'] = '';
+								}
+							}
+							else
+							{
+								unset($newVacation ['forwards']);
+							}
+
+							if (!in_array($newVacation['status'],array('on','off','by_date'))) $newVacation['status'] = 'off';
+
+							$checkAddresses = (isset($content['check_mail_sent_to']) && ($content['check_mail_sent_to']) != 0) ? true: false;
+							if ($content['addresses'])
+							{
+								$newVacation ['addresses'] = $content['addresses'];
+								error_log(__METHOD__. '() Respond addresses :'. __LINE__. array2string($content['addresses']));
+							}
+							else
+							{
+
+							}
+							//_debug_array($newVacation);
+
+							if($this->checkRule($newVacation,$checkAddresses))
+							{
+								if (!$this->bosieve->setVacation($this->scriptName, $newVacation))
+								{
+									$msg = lang('vacation update failed') . "\n" . lang('Vacation notice update failed') . ":" . $this->bosieve->error;
+									break;
+								}
+								else
+								{
+									//error_log(__METHOD__.__LINE__.array2string($newVacation));
+									if (!isset($newVacation['scriptName']) || empty($newVacation['scriptName'])) $newVacation['scriptName'] = $this->scriptName;
+									$this->bosieve->setAsyncJob($newVacation);
+									$msg = lang('Vacation notice sucessfully updated.');
+								}
+							}
+							else
+							{
+								$msg .= implode("\n",$this->errorStack);
+							}
+							if ($button === 'apply') break;
+						}
+					case 'cancel':
+						egw::redirect_link('/mail/index.php');
+				}
+				$vacation = $newVacation;
+
+				$this->saveSessionData();
 			}
+
+			$sel_options = array(
+				'status' => array(
+					'on' => lang('Active'),
+					'off' => lang('Deactive'),
+				),
+				'addresses' => array_combine($vacRules['aliases'],$vacRules['aliases']),
+			);
+
+			$content['msg'] = $msg;
+			error_log(__METHOD__. '() sel_option ' . array2string($sel_options));
 		}
 		else
 		{
-			$this->restoreSessionData();
-			list($button) = @each($content['button']);
-			unset ($content['button']);
-
-			switch($button)
-			{
-
-				case 'save':
-
-				case 'apply':
-					if ($GLOBALS['egw_info']['user']['apps']['admin'])
-					{
-						// store text as default
-						if ($content['set_as_default'] == 1)
-						{
-							config::save_value('default_vacation_text', $content['text'], 'mail');
-						}
-					}
-					if (isset($content['status']))
-					{
-						//error_log(__METHOD__. 'content:' . array2string($content));
-						$newVacation = $content;
-						$newVacation ['status'] = $content ['status'];
-						if (empty($preferences->preferences['prefpreventforwarding']) ||
-							$preferences->preferences['prefpreventforwarding'] == 0 )
-						{
-							if (is_array($content['forwards']) && !empty($content['forwards']))
-							{
-
-								$newVacation['forwards'] = implode(",",$content['forwards']);
-							}
-							else
-							{
-								$newVacation ['forwards'] = '';
-							}
-						}
-						else
-						{
-							unset($newVacation ['forwards']);
-						}
-
-						if (!in_array($newVacation['status'],array('on','off','by_date'))) $newVacation['status'] = 'off';
-
-						$checkAddresses = (isset($content['check_mail_sent_to']) && ($content['check_mail_sent_to']) != 0) ? true: false;
-						if ($content['addresses'])
-						{
-							$newVacation ['addresses'] = $content['addresses'];
-							error_log(__METHOD__. '() Respond addresses :'. __LINE__. array2string($content['addresses']));
-						}
-						else
-						{
-
-						}
-						//_debug_array($newVacation);
-
-						if($this->checkRule($newVacation,$checkAddresses))
-						{
-							if (!$this->bosieve->setVacation($this->scriptName, $newVacation))
-							{
-								$msg = lang('vacation update failed') . "\n" . lang('Vacation notice update failed') . ":" . $this->bosieve->error;
-								break;
-							}
-							else
-							{
-								//error_log(__METHOD__.__LINE__.array2string($newVacation));
-								if (!isset($newVacation['scriptName']) || empty($newVacation['scriptName'])) $newVacation['scriptName'] = $this->scriptName;
-								$this->bosieve->setAsyncJob($newVacation);
-								$msg = lang('Vacation notice sucessfully updated.');
-							}
-						}
-						else
-						{
-							$msg .= implode("\n",$this->errorStack);
-						}
-						if ($button === 'apply') break;
-					}
-				case 'cancel':
-					egw::redirect_link('/mail/index.php');
-			}
-			$vacation = $newVacation;
-
-			$this->saveSessionData();
+			$content['msg'] = lang('error').':'.lang('Serverside Filterrules (Sieve) are not activated').'. '.lang('Please contact your Administrator to validate if your Server supports Serverside Filterrules, and how to enable them in EGroupware for your active Account (%1) with ID:%2.',mail_bo::generateIdentityString($this->mailPreferences->identities[$this->mailbo->profileID],true),$this->mailbo->profileID);
+			$content['hideIfSieveDisabled']='mail_DisplayNone';
 		}
-
-		$sel_options = array(
-			'status' => array(
-				'on' => lang('Active'),
-				'off' => lang('Deactive'),
-			),
-			'addresses' => array_combine($vacRules['aliases'],$vacRules['aliases']),
-		);
-
-		$content['msg'] = $msg;
-		error_log(__METHOD__. '() sel_option ' . array2string($sel_options));
 		$vtmpl->exec('mail.mail_sieve.editVacation',$content,$sel_options,$preserv);
 	}
 

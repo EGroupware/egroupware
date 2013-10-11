@@ -737,6 +737,17 @@ class mail_hooks
 		$mail_bo = mail_bo::getInstance(true,$profileID);
 		$profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $mail_bo->profileID;
 		$preferences =& $mail_bo->mailPreferences;
+		$serverCounter = $sieveEnabledServerCounter = 0;
+		if (count($preferences->ic_server)) {
+			foreach ($preferences->ic_server as $tmpkey => $accountData)
+			{
+				if ($tmpkey==0) continue;
+				$icServer =& $accountData;
+				if (empty($icServer->host)) continue;
+				if ($icServer->enableSieve && $icServer->sievePort) $sieveEnabledServerCounter++;
+				$serverCounter++;
+			}
+		}
 		$showMainScreenStuff = false;
 		if (!$showMainScreenStuff)
 		{
@@ -835,29 +846,37 @@ class mail_hooks
 
 			$menu_title = lang('Sieve');
 			if (is_object($preferences)) $icServer = $preferences->getIncomingServer($profileID);
-			if(($icServer instanceof defaultimap)) {
-				if($icServer->enableSieve)
-				{
-					$linkData = array
-					(
-						'menuaction'	=> 'mail.mail_sieve.index',
-					);
-					if(empty($preferences->preferences['prefpreventeditfilterrules']) || $preferences->preferences['prefpreventeditfilterrules'] == 0)
-						$file['filter rules']	= egw::link('/index.php',$linkData);
+			$linkData = array
+			(
+				'menuaction'	=> 'mail.mail_sieve.index',
+			);
+			if(empty($preferences->preferences['prefpreventeditfilterrules']) || $preferences->preferences['prefpreventeditfilterrules'] == 0)
+				$file['filter rules']	= egw::link('/index.php',$linkData);
 
-					$linkData = array
-					(
-						'menuaction'	=> 'mail.mail_sieve.editVacation',
-					);
-					if(empty($preferences->preferences['prefpreventabsentnotice']) || $preferences->preferences['prefpreventabsentnotice'] == 0)
+			$linkData = array
+			(
+				'menuaction'	=> 'mail.mail_sieve.editVacation',
+			);
+			if(empty($preferences->preferences['prefpreventabsentnotice']) || $preferences->preferences['prefpreventabsentnotice'] == 0)
+			{
+				$file['vacation notice']	= egw::link('/index.php',$linkData);
+			}
+			if((empty($preferences->preferences['prefpreventnotificationformailviaemail']) ||
+				$preferences->preferences['prefpreventnotificationformailviaemail'] == 0))
+			{
+				$file['email notification'] = egw::link('/index.php','menuaction=mail.mail_sieve.editEmailNotification'); //Added email notifications
+			}
+			if ($sieveEnabledServerCounter>=1)
+			{
+				if($sieveEnabledServerCounter==1 && ($icServer instanceof defaultimap)) {
+					if($icServer->enableSieve)
 					{
-						$file['vacation notice']	= egw::link('/index.php',$linkData);
+						if (count($file)) display_sidebox($appname,$menu_title,$file);
+						unset($file);
 					}
-					if((empty($preferences->preferences['prefpreventnotificationformailviaemail']) ||
-						$preferences->preferences['prefpreventnotificationformailviaemail'] == 0))
-					{
-						$file['email notification'] = egw::link('/index.php','menuaction=mail.mail_sieve.editEmailNotification'); //Added email notifications
-					}
+				}
+				else
+				{
 					if (count($file)) display_sidebox($appname,$menu_title,$file);
 					unset($file);
 				}
