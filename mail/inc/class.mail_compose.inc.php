@@ -1151,21 +1151,21 @@ class mail_compose
 		// if no filemanager -> no vfsFileSelector
 		if (!$GLOBALS['egw_info']['user']['apps']['filemanager'])
 		{
-			$content['vfsNotAvailable'] = "mail-index_quotaDisplayNone";
+			$content['vfsNotAvailable'] = "mail_DisplayNone";
 		}
 		// if no infolog -> no save as infolog
 		if (!$GLOBALS['egw_info']['user']['apps']['infolog'])
 		{
-			$content['noInfologAvailable'] = "mail-index_quotaDisplayNone";
+			$content['noInfologAvailable'] = "mail_DisplayNone";
 		}
 		// if no tracker -> no save as tracker
 		if (!$GLOBALS['egw_info']['user']['apps']['tracker'])
 		{
-			$content['noTrackerAvailable'] = "mail-index_quotaDisplayNone";
+			$content['noTrackerAvailable'] = "mail_DisplayNone";
 		}
 		if (!$GLOBALS['egw_info']['user']['apps']['infolog'] && !$GLOBALS['egw_info']['user']['apps']['tracker'])
 		{
-			$content['noSaveAsAvailable'] = "mail-index_quotaDisplayNone";
+			$content['noSaveAsAvailable'] = "mail_DisplayNone";
 		}
 		// composeID to detect if we have changes to certain content
 		$preserv['composeID'] = $content['composeID'] = $this->composeID;

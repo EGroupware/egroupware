@@ -251,8 +251,8 @@ class mail_ui
 			$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "";
 		} else {
 			$content[self::$nm_index]['quota'] = $sel_options[self::$nm_index]['quota'] = lang("Quota not provided by server");
-			$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = "mail-index_quotaDisplayNone";
-			$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail-index_quotaDisplayNone";
+			$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = "mail_DisplayNone";
+			$content[self::$nm_index]['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail_DisplayNone";
 		}
 
 		$sel_options[self::$nm_index]['foldertree'] = $this->getFolderTree(false);
@@ -1706,6 +1706,8 @@ unset($query['actions']);
 		//_debug_array($attachments);
 		$content['mail_displayattachments'] = $attachmentHTMLBlock;
 		$content['mail_id']=$rowID;
+		$content['mailDisplayContainerClass']=(count($attachments)?"mailDisplayContainer mailDisplayContainerFixedHeight":"mailDisplayContainer mailDisplayContainerFullHeight");
+		$content['mailDisplayAttachmentsClass']=(count($attachments)?"mailDisplayAttachments":"mail_DisplayNone");
 //_debug_array($content);
 		$readonlys = $preserv = $content;
 		$etpl->exec('mail.mail_ui.displayMessage',$content,$sel_options,$readonlys,$preserv,2);
@@ -2432,7 +2434,7 @@ blockquote[type=cite] {
 	color: blue;
 }
 </style>
-<div style="height:100%;width:100%; background-color:white; padding:0px; margin:0px;">
+<div class="mailDisplayBody">
  <table width="100%" style="table-layout:fixed"><tr><td class="td_display">';
 
 		$EndBody = '</td></tr></table></div>';

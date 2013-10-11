@@ -293,6 +293,9 @@ pre {
 	width:200px !important;
 	z-index:99;
 }
+.mail_DisplayNone {
+	display: none !important;
+}
 .mail-index_quotaDisplayNone {
 	display: none !important;
 }
@@ -384,8 +387,8 @@ input[type=button] {
 	padding: 0px;
 	height: 16px !important;
 }
-#mail-display_toolbar {
-	padding: 0px;
+#mail-compose_toolbar > button {
+	padding: .2em .4em;
 }
 #mail-display_toolbar > button > span {
 	padding: .2em .4em;
@@ -421,7 +424,7 @@ input[type=button] {
 }
 #mail-index_previewAttachmentArea {
 	background-color:#efefdf; 
-	max-height: 10%;
+	max-height: 3em;
 	max-width: 50%;
 	position: absolute;
 	overflow:scroll;
@@ -453,15 +456,26 @@ input[type=button] {
 	overflow-y: auto;
 	border: 1px solid silver;
 	top: 120px;
-	bottom: 100px;	
+}
+.mailDisplayContainerFixedHeight {
+	bottom: 123px;
+}
+.mailDisplayContainerFullHeight {
+	bottom: .1em;
+}
+.mailDisplayBody {
+	height:100%;
+	width:100%;
+	background-color:white;
+	padding:0px;
+	margin:0px;
 }
 .mailDisplayAttachments {
 	background-color:#efefdf; 
-	max-height: 10%;
+	height: 121px;
 	position: fixed;
-	bottom: 26px;
+	bottom: .1em;
 	border: 1px solid red;
-	border-bottom: 0px;
 	opacity: 1;
 	-moz-opacity:1:
 	filter: Alpha(opacity=100);

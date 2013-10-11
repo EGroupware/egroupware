@@ -33,15 +33,12 @@
 				<description value="Subject"/>
 				<description align="left" id="mail_displaysubject" readonly="true"/>
 			</hbox>
-			<hbox class="mail_displayicons">
-				<html id="mail_displayicons"/>
-			</hbox>
 		</vbox>
 		<vbox class="mailDisplay" width="100%">
-			<box class="mailDisplayContainer">
+			<box class="$cont[mailDisplayContainerClass]">
 				<html id="mail_displaybody"/>
 			</box>
-			<box class="mailDisplayAttachments">
+			<box class="$cont[mailDisplayAttachmentsClass]">
 				<html id="mail_displayattachments"/>
 			</box>
 		</vbox>
