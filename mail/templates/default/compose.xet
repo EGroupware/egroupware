@@ -14,8 +14,8 @@
 			</hbox>
 			<hbox class="et2_toolbar ui-widget-header ui-corner-all mail-compose_toolbar">
 				<button class="et2_button ui-button mail-compose_button" label="Send" id="button[send]"/> 
-				<buttononly class="et2_button ui-button" value="saveAsDraft" id="button[saveAsDraft]" image="fileexport" onclick="app.mail.saveAsDraft"/>
-				<buttononly class="et2_button ui-button" value="saveAsDraftAndPrint" id="button[saveAsDraftAndPrint]" image="print" onclick="app.mail.saveAsDraftAndPrint"/>
+				<buttononly class="et2_button ui-button" label="Save as Draft" value="saveAsDraft" id="button[saveAsDraft]" image="fileexport" onclick="app.mail.saveAsDraft"/>
+				<buttononly class="et2_button ui-button" label="Save as Draft and Print" value="saveAsDraftAndPrint" id="button[saveAsDraftAndPrint]" image="print" onclick="app.mail.saveAsDraftAndPrint"/>
 				<vfs-select class="$cont[vfsNotAvailable]" id="selectFromVFSForCompose" onchange="app.mail.vfsUploadForCompose"/>
 				<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple='true' progress='mailUploadProgress' onFinish="app.mail.uploadForCompose" id="uploadForCompose" drop_target ="mailUploadSection"/>
 				<description class="$cont[noSaveAsAvailable]" value="Save:"/>
