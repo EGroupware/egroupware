@@ -356,7 +356,8 @@ var et2_dropdown_button = et2_inputWidget.extend(
 					node.append(item);
 					if(item && options[key].icon)
 					{
-						$j('a',item).prepend('<img src="' + options[key].icon +'"/>');
+						// we supply a applicable class for item images
+						$j('a',item).prepend('<img class="et2_button_icon" src="' + options[key].icon +'"/>');
 					}
 				}
 			}
