@@ -237,14 +237,13 @@ var et2_selectbox = et2_inputWidget.extend(
 	 */
 	_appendOptionElement: function(_value, _label, _title, dom_element) {
 		if(_value == "" && (_label == null || _label == "")) {
-			_label = this.options.empty_label;
+			return;	// empty_label is added in set_select_options anyway, ignoring it here to not add it twice
 		}
 
 		if(this.input == null)
 		{
 			return this._appendMultiOption(_value, _label, _title, dom_element);
 		}
-
 		
 		var option = $j(document.createElement("option"))
 			.attr("value", _value)
@@ -568,7 +567,6 @@ var et2_selectbox = et2_inputWidget.extend(
 		// Add the select_options
 		for (var key in _options)
 		{
-
 			// Translate the options
 			if(!this.options.no_lang)
 			{
