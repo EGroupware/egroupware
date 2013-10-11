@@ -398,6 +398,10 @@ input[type=button] {
 	padding: 0px;
 	height: 16px !important;
 }
+#mail-display_toolbar .et2_button_icon {
+	width: 16px;
+	height: 16px;
+}
 #mail-index_mailPreviewIcons {
 	position: absolute;
 	right: 0;
