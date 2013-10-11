@@ -32,7 +32,7 @@ var et2_url = et2_textbox.extend(
 	},
 	
 	// PREG for client-side validation copied from etemplate_widget_url
-	EMAIL_PREG: new RegExp(/^[^\x00-\x20()<>@,;:\".\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}/),
+	EMAIL_PREG: new RegExp(/^(?:[ a-z0-9!#$%&'*+/=?^_`{|}\(\)~-]+<)?[^\x00-\x20()<>@,;:\"\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}/i),
 	/**
 	 * @memberOf et2_url
 	 */
@@ -74,7 +74,7 @@ var et2_url = et2_textbox.extend(
 			if(this._button == null)
 			{
 				this._button = $j(document.createElement("a")).addClass("et2_url");
-                                this.getSurroundings().insertDOMNode(this._button[0]);
+				this.getSurroundings().insertDOMNode(this._button[0]);
 				this.getSurroundings().update();
 			}
 			this._button.removeClass("url phone email").removeAttr("href");
@@ -198,7 +198,11 @@ var et2_url = et2_textbox.extend(
 				}
 				break;
 			case "url-email":
-				if(!e.data.EMAIL_PREG.test(value))
+				if(!e.data.EMAIL_PREG.test(value) || 
+					// If they use Text <email>, make sure the <> match
+					(value.indexOf("<") > 0 && value.indexOf(">") != value.length-1) ||
+					(value.indexOf(">") > 0 && value.indexOf("<") < 0)
+				)
 				{
 					e.data.showMessage("Invalid email","validation_error",true);
 				}
