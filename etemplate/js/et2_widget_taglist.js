@@ -14,7 +14,7 @@
 
 /*egw:uses
 	et2_core_inputWidget;
-	/phpgwapi/js/jquery/magicsuggest/src/magicsuggest-1.3.0.js;
+	/phpgwapi/js/jquery/magicsuggest/src/magicsuggest-1.3.1.js;
 */
 
 /**
@@ -142,7 +142,6 @@ var et2_taglist = et2_selectbox.extend(
 		var options = jQuery.extend( {
 			data: this.options.select_options && !jQuery.isEmptyObject(this.options.select_options) ? this._options2data(this.options.select_options) : this.options.autocomplete_url,
 			dataUrlParams: this.options.autocomplete_params,
-			value: this.options.value,
 			method: 'GET',
 			displayField: "label",
 			invalidCls: 'invalid ui-state-error',
@@ -159,6 +158,8 @@ var et2_taglist = et2_selectbox.extend(
 			highlight: false	// otherwise renderer have to return strings
 		}, this.lib_options);
 		this.taglist = this.taglist.magicSuggest(options);
+		
+		this.set_value(this.options.value);
 		
 		// Display / hide a loading icon while fetching
 		$j(this.taglist)
@@ -281,24 +282,27 @@ var et2_taglist = et2_selectbox.extend(
 	 */
 	set_value: function(value) 
 	{
+		this.options.value = value;
+		if(this.taglist == null) return;
+		
+		this.taglist.clear(true);
+		if(!value) return;
+		
 		var values = jQuery.isArray(value) ? value : [value];
-		if (value && this.options.allowFreeEntries)
-		{
-			var need_setdata = false;
 			for(var i=0; i < values.length; ++i)
 			{
 				var v = values[i];
 				if (typeof this.options.select_options[v] == 'undefined')
 				{
-					this.options.select_options[v] = v;
-					need_setdata = true;
+					values[i] = {
+						id: v,
+						label: v
+					}
 				}
 			}
-			if (this.taglist && need_setdata) this.taglist.setData(this._options2data(this.options.select_options));
-		}
-		if(this.taglist == null) return;
-		this.taglist.clear(true);
-		this.taglist.setValue(values);
+			
+		
+		this.taglist.addToSelection(values);
 	},
 
 	getValue: function() 
@@ -335,13 +339,13 @@ var et2_taglist_email = et2_taglist.extend(
 		minChars: 3
 	},
 	
-	// PREG for client-side validation copied from etemplate_widget_url
-	EMAIL_PREG: new RegExp(/^[^\x00-\x20()<>@,;:\".\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}/),
+	// PREG for validation comes from et2_url
+	//EMAIL_PREG: new RegExp(/^[^\x00-\x20()<>@,;:\".\[\]]+@([a-z0-9ÄÖÜäöüß](|[a-z0-9ÄÖÜäöüß_-]*[a-z0-9ÄÖÜäöüß])\.)+[a-z]{2,6}/),
 		
 	selectionRenderer: function(item)
 	{
 		// We check free entries for valid email, and render as invalid if it's not.  
-		var valid = item.id != item.label || this.EMAIL_PREG.test(item.id || '');
+		var valid = item.id != item.label || et2_url.prototype.EMAIL_PREG.test(item.id || '');
 		
 		var label = jQuery('<span>').text(item.label);
 		if (typeof item.title != 'undefined') label.attr('title', item.title);
@@ -354,4 +358,4 @@ et2_register_widget(et2_taglist_email, ["taglist-email"]);
 
 // Require css
 // TODO: merge into etemplate2.css with all other widgets when done
-if(typeof egw != 'undefined') egw(window).includeCSS(egw.webserverUrl + "/phpgwapi/js/jquery/magicsuggest/src/magicsuggest-1.3.0.css");
+if(typeof egw != 'undefined') egw(window).includeCSS(egw.webserverUrl + "/phpgwapi/js/jquery/magicsuggest/src/magicsuggest-1.3.1.css");

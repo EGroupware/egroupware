@@ -6,7 +6,7 @@
  *
  * Author: Nicolas Bize
  * Date: Feb. 8th 2013
- * Version: 1.3.0
+ * Version: 1.3.1
  * Licence: MagicSuggest is licenced under MIT licence (http://www.opensource.org/licenses/mit-license.php)
  */
 (function($)
@@ -299,6 +299,13 @@
             resultAsString: false,
 
             /**
+             * @cfg {String} resultsField
+             * <p>Name of JSON object property that represents the list of suggested objets</p>
+             * Defaults to <code>results</code>
+             */
+            resultsField: 'results',
+
+            /**
              * @cfg {String} selectionCls
              * <p>A custom CSS class to add to a selected item</p>
              * Defaults to <code>''</code>.
@@ -469,7 +476,7 @@
          */
         this.clear = function(isSilent)
         {
-            this.removeFromSelection(_selection.slice(0)); // clone array to avoid concurrency issues
+            this.removeFromSelection(_selection.slice(0), isSilent); // clone array to avoid concurrency issues
         };
 
         /**
@@ -500,7 +507,6 @@
         this.empty = function(){
             this.input.removeClass(cfg.emptyTextCls);
             this.input.val('');
-            ms.input.attr('disabled', false);
         };
 
         /**
@@ -510,6 +516,7 @@
         {
             this.container.removeClass('ms-ctn-disabled');
             cfg.disabled = false;
+            ms.input.attr('disabled', false);
         };
 
         /**
@@ -825,7 +832,7 @@
                             url: data,
                             data: params,
                             success: function(asyncData){
-                                json = typeof(asyncData)==='string'?JSON.parse(asyncData):asyncData;
+                                json = typeof(asyncData) === 'string' ? JSON.parse(asyncData) : asyncData;
                                 self._processSuggestions(json);
                                 $(ms).trigger('load', [ms, json]);
                             },
@@ -840,7 +847,7 @@
                         if(data.length > 0 && typeof(data[0]) === 'string') { // results from array of strings
                             _cbData = self._getEntriesFromStringArray(data);
                         } else { // regular json array or json object with results property
-                            _cbData = data.results || data;
+                            _cbData = data[cfg.resultsField] || data;
                         }
                     }
                     self._displaySuggestions(self._sortAndTrim(_cbData));
@@ -979,7 +986,7 @@
                     resultItemEl.mouseover($.proxy(handlers._onComboItemMouseOver, ref));
                     html += $('<div/>').append(resultItemEl).html();
                 });
-                ms.combobox.html(html);
+                ms.combobox.append(html);
                 _comboItemHeight = ms.combobox.find('.ms-res-item:first').outerHeight();
             },
 
@@ -1017,7 +1024,7 @@
                             // small cross img
                             delItemEl = $('<span/>', {
                                 'class': 'ms-close-btn'
-                            }).data('json', value).prependTo(selectedItemEl);
+                            }).data('json', value).appendTo(selectedItemEl);
 
                             delItemEl.click($.proxy(handlers._onTagTriggerClick, ref));
                         }
@@ -1037,7 +1044,7 @@
                 if(cfg.selectionPosition === 'inner') {
                     ms.input.width(0);
                     inputOffset = ms.input.offset().left - ms.selectionContainer.offset().left;
-                    w = ms.container.width() - inputOffset - (cfg.hideTrigger === true ? 16 : 42);
+                    w = ms.container.width() - inputOffset - 42;
                     ms.input.width(w);
                     ms.container.height(ms.selectionContainer.height());
                 }
@@ -1281,8 +1288,9 @@
                             e.preventDefault();
                         }
                         break;
+                    case 188: // comma
+						if(e.shiftKey) break; // Shift + , = < on some keyboards
                     case 9: // tab
-                    case 188: // esc
                     case 13: // enter
                         e.preventDefault();
                         break;
@@ -1337,7 +1345,8 @@
                     e.preventDefault();
                     break;
                     case 13:case 9:case 188:// enter, tab, comma
-                    if(e.keyCode !== 188 || cfg.useCommaKey === true) {
+								// Shift + comma = < on English keyboard
+                    if(e.keyCode !== 188 || (cfg.useCommaKey === true && !e.shiftKey)) {
                         e.preventDefault();
                         if(cfg.expanded === true){ // if a selection is performed, select it and reset field
                             selected = ms.combobox.find('.ms-res-item-active:first');
@@ -1471,4 +1480,6 @@
         }
         return obj;
     };
+
+//    $.fn.magicSuggest.defaults = {};
 })(jQuery);
