@@ -289,17 +289,27 @@ var et2_taglist = et2_selectbox.extend(
 		if(!value) return;
 		
 		var values = jQuery.isArray(value) ? value : [value];
-			for(var i=0; i < values.length; ++i)
+		for(var i=0; i < values.length; ++i)
+		{
+			var v = values[i];
+			if (typeof this.options.select_options[v] == 'undefined')
 			{
-				var v = values[i];
-				if (typeof this.options.select_options[v] == 'undefined')
+				values[i] = {
+					id: v,
+					label: v
+				}
+			}
+			else
+			{
+				if (typeof values[i].id == 'undefined')
 				{
 					values[i] = {
 						id: v,
-						label: v
+						label: this.options.select_options[v]
 					}
-				}
+				}					
 			}
+		}
 			
 		
 		this.taglist.addToSelection(values);
