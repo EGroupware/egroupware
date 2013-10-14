@@ -22,7 +22,7 @@ function submitRuleList(action)
 		});
 		$j( "#sortable tbody" ).disableSelection();
 		$j( "#sortable tbody a" ).on("click", function(e){
-			fm_sieve_displayRuleEditWindow('{url_edit_rule}&ruleID='+$j(this).parent().parent().index()); 
+			fm_sieve_displayRuleEditWindow('{url_edit_rule}&ruleID='+$j(this).parent().parent().index());
 			return false;
 		});
 	});
@@ -36,8 +36,8 @@ var refreshURL='{refreshURL}';
 <table border='0' width='100%'>
 <tr class="text_small">
 <td>
-{lang_rule}: <a href="javascript:submitRuleList('enable');">{lang_enable}</a> 
-<a href="javascript:submitRuleList('disable');">{lang_disable}</a> 
+{lang_rule}: <a href="javascript:submitRuleList('enable');">{lang_enable}</a>
+<a href="javascript:submitRuleList('disable');">{lang_disable}</a>
 <a href="javascript:submitRuleList('delete');">{lang_delete}</a>
 </td>
 <td style='text-align : right;'>

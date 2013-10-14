@@ -21,26 +21,26 @@ th.inactivetab
 }
 
 .defaultProfile { color:#000000; font-weight:bold !important; }
-	
-.td_left 
+
+.td_left
 {
-   border-left : 1px solid Gray; 
-   border-top : 1px solid Gray; 
+   border-left : 1px solid Gray;
+   border-top : 1px solid Gray;
 }
 
 .input_text {
 	border : 1px solid Silver;
 }
 
-.td_right 
-{ 
-  border-right : 1px solid Gray; 
-  border-top : 1px solid Gray; 
+.td_right
+{
+  border-right : 1px solid Gray;
+  border-top : 1px solid Gray;
 }
 
 .text_small { font-size: 10px; }
 .text_small_bold { font-size: 10px; font-weight : bold; }
-			
+
 div.activetab{ display:inline; }
 div.inactivetab{ display:none; }
 
@@ -155,7 +155,7 @@ tr.forwarded span.status_img {
 }
 
 /*
--- Why is felamimail changing the appereance of the whole egroupware page? - Commented that code out (andreas) 
+-- Why is felamimail changing the appereance of the whole egroupware page? - Commented that code out (andreas)
 body
 {
     background-image:url(images/body-background.png);;
@@ -168,6 +168,11 @@ body
 }
 */
 
+TR.NewSieveRule, A.NewSieveRule
+{
+	color: Silver;
+	font-style: italic;
+}
 TR.sieveRowActive, TR.sieveRowInActive
 {
 	FONT-SIZE: 11px;
@@ -230,14 +235,14 @@ tr.navbarBackground {
 	background-color:#dddddd;
 }
 
-div.parentDIV { 
+div.parentDIV {
 	background-color:#dddddd;
 	position: relative;
 	top: 0px;
 	left: 0px;
 }
 
-div.navButton { 
+div.navButton {
 	background-color:#dddddd;
 	float:left;
 	padding: 2px;
@@ -245,7 +250,7 @@ div.navButton {
 	border: solid #dddddd 1px;
 }
 
-div.navButton:hover, div.navButtonHover { 
+div.navButton:hover, div.navButtonHover {
 	background-color:#eeeeee;
 	float:left;
 	padding: 2px;
@@ -256,7 +261,7 @@ div.navButton:hover, div.navButtonHover {
 	position: relative;
 }
 
-div.navButton:active, div.navButtonActive { 
+div.navButton:active, div.navButtonActive {
 	background-color:#dddddd;
 	float:left;
 	padding: 2px;
@@ -267,7 +272,7 @@ div.navButton:active, div.navButtonActive {
 	position: relative;
 }
 
-div.navSeparator { 
+div.navSeparator {
 	background-color:#dddddd;
 	float:left;
 	padding: 0px;
@@ -288,16 +293,16 @@ div.activeResultRow {
 }
 
 div.resultBoxHidden {
-	width: 450px; 
-	position: absolute; 
-	display: none; 
+	width: 450px;
+	position: absolute;
+	display: none;
 }
 
 div.resultBoxVisible {
 	border: solid 1px black;
-	width: 450px; 
-	position: absolute; 
-	display: block; 
+	width: 450px;
+	position: absolute;
+	display: block;
 	background: white;
 	max-height: 25%;
 	overflow: auto;
@@ -327,7 +332,7 @@ button.menuButton:hover {
 	width: 26px;
 }
 
-button.menuButton:active { 
+button.menuButton:active {
 	background-color:#dddddd;
 	float:left;
 	padding: 2px;
@@ -369,44 +374,44 @@ DIV.divButton {
 }
 
 #subjectDIV {
-	position:fixed; 
-	background-color:#ffffff; 
-	top:32px; 
-	min-height:20px; 
-	width:100%; 
-	font-weight:bold; 
-	text-align:left; 
+	position:fixed;
+	background-color:#ffffff;
+	top:32px;
+	min-height:20px;
+	width:100%;
+	font-weight:bold;
+	text-align:left;
 	line-height:20px;
 }
 
 #headerDIV {
-	position:absolute; 
-	background-color:#efefdf; 
-	top:52px; 
-	height:80px; 
-	left:0px; 
-	right:0px; 
-	border-top: 1px solid silver; 
-	border-bottom: 1px solid silver; 
+	position:absolute;
+	background-color:#efefdf;
+	top:52px;
+	height:80px;
+	left:0px;
+	right:0px;
+	border-top: 1px solid silver;
+	border-bottom: 1px solid silver;
 	overflow:hidden;
 }
 
 .bodyDIV {
-	position:absolute; 
-	background-color:white; 
-	top:134px; 
-	bottom:0px; 
-	width:100%; 
+	position:absolute;
+	background-color:white;
+	top:134px;
+	bottom:0px;
+	width:100%;
 	border-top: 1px solid #efefdf;
 }
 
 .bodyDIVAttachment {
-	bottom:80px; 
+	bottom:80px;
 }
 
 #messageIFRAME {
 	width:100%;
-	border:0px solid black; 
+	border:0px solid black;
 	height:99%;
 }
 
@@ -417,24 +422,24 @@ DIV.divButton {
 }
 
 #attachmentDIV {
-	position:fixed; 
-	background-color:#efefdf; 
-	bottom:0px; 
+	position:fixed;
+	background-color:#efefdf;
+	bottom:0px;
 	min-height:80px;
-	max-height:239px; 
-	width:100%; 
-	border-top: 1px solid silver; 
+	max-height:239px;
+	width:100%;
+	border-top: 1px solid silver;
 	overflow:auto;
 }
 
 #popupattachmentDIV {
-	position:top; 
-	background-color:#efefdf; 
-	bottom:0px; 
+	position:top;
+	background-color:#efefdf;
+	bottom:0px;
 	min-height:80px;
-	max-height:239px; 
-	width:100%; 
-	border-top: 1px solid silver; 
+	max-height:239px;
+	width:100%;
+	border-top: 1px solid silver;
 	overflow:auto;
 }
 
@@ -442,7 +447,7 @@ pre {
  white-space: pre-wrap; /* Mozilla, since 1999 */
  white-space: -pre-wrap; /* Opera 4-6 */
  white-space: -o-pre-wrap; /* Opera 7 */
- width: 99%; 
+ width: 99%;
 }
 
 /*

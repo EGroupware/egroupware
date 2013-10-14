@@ -466,7 +466,7 @@
 						$newRule[action]	= 'discard';
 						break;
 				}
-				if($newRule['action']) {
+				if($newRule['action'] && !($_POST['cancel'])) {
 
 					$this->rules[$ruleID] = $newRule;
 
@@ -477,7 +477,7 @@
 					}
 
 					$this->saveSessionData();
-				} else {
+				} else if(!$newRule['action']) {
 					$msg .= "\n".lang("Error: Could not save rule").' '.lang("No action defined!");
 					$error++;
 				}
@@ -496,7 +496,18 @@
 				{
 					$ruleID = get_var('ruleID',Array('GET'));
 					$ruleData = $this->rules[$ruleID];
-					$this->displayRule($ruleID, $ruleData);
+					if (!empty($this->rules[$ruleID]['bodytransform']) ||
+						!empty($this->rules[$ruleID]['field_bodytransform']) ||
+						!empty($this->rules[$ruleID]['ctype']) ||
+						!empty($this->rules[$ruleID]['field_ctype_val']))
+					{
+						$msg = lang("Warrning:This rule that you are trying to modify, is created by trunk version mail/felamimail app, any modification with old felamimail may cause destroying the rule");
+					}
+					else
+					{
+						$msg='';
+					}
+					$this->displayRule($ruleID, $ruleData, $msg);
 				}
 				else
 				{
@@ -868,7 +879,14 @@
 					{
 						$this->t->set_var('ruleCSS','sieveRowInActive');
 					}
-
+					$this->t->set_var('msg','');
+					if (!empty($this->rules[$ruleID]['bodytransform']) ||
+						!empty($this->rules[$ruleID]['field_bodytransform']) ||
+						!empty($this->rules[$ruleID]['ctype']) ||
+						!empty($this->rules[$ruleID]['field_ctype_val']))
+					{
+						$this->t->set_var('ruleCSS','NewSieveRule');
+					}
 					$this->t->set_var('filter_text',htmlspecialchars($this->buildRule($rule),ENT_QUOTES,$GLOBALS['egw']->translation->charset()));
 					$this->t->set_var('ruleID',$ruleID);
 
