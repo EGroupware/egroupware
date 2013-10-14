@@ -3027,19 +3027,23 @@ class mail_bo
 
 	/**
 	 * htmlspecialchars
-	 * helperfunction to cope with wrong encoding in strings
+	 * helperfunction to cope with wrong encoding in strings;
+	 * seems to be outdated and not needed any more for et2
 	 * @param string $_string  input to be converted
 	 * @param mixed $charset false or string -> Target charset, if false mail displayCharset will be used
 	 * @return string
 	 */
 	static function htmlspecialchars($_string, $_charset=false)
 	{
+		return $_string;
+/*
 		//setting the charset (if not given)
 		if ($_charset===false) $_charset = self::$displayCharset;
 		$_stringORG = $_string;
 		$_string = @htmlspecialchars($_string,ENT_QUOTES,$_charset, false);
 		if (empty($_string) && !empty($_stringORG)) $_string = @htmlspecialchars(translation::convert($_stringORG,translation::detect_encoding($_stringORG),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
 		return $_string;
+*/
 	}
 
 	/**

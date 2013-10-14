@@ -72,6 +72,7 @@ app.mail = AppJS.extend(
 		this.et2 = et2.widgetContainer;
 		var isMainView = false;
 		var isDisplay = false;
+		var isCompose = false;
 		for (var t in et2.templates)
 		{
 			//alert(t); // as we iterate through this more than once, ... we separate trigger and action
@@ -85,7 +86,7 @@ app.mail = AppJS.extend(
 					break;
 				case 'mail.compose':
 					this.mail_isMainWindow = false;
-
+					isCompose = true;
 			}
 		}
 		//alert('action about to go down');
@@ -108,6 +109,19 @@ app.mail = AppJS.extend(
 			if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
 			{
 				var w_h =app_registry['view_popup'].split('x');
+				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
+			}
+			//alert('resizing to'+(w_h[0]?w_h[0]:870)+','+(w_h[1]?w_h[1]:egw_getWindowOuterHeight()));
+			window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
+		}
+		if (isCompose)
+		{
+			var app_registry = egw.link_get_registry('mail');//this.appname);
+			//console.log(app_registry);
+			w=870;
+			if (typeof app_registry['edit'] != 'undefined' && typeof app_registry['edit_popup'] != 'undefined' )
+			{
+				var w_h =app_registry['edit_popup'].split('x');
 				if (w_h[1] == 'egw_getWindowOuterHeight()') w_h[1] = (screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight());
 			}
 			//alert('resizing to'+(w_h[0]?w_h[0]:870)+','+(w_h[1]?w_h[1]:egw_getWindowOuterHeight()));
@@ -166,6 +180,14 @@ app.mail = AppJS.extend(
 				var _senders = [];
 				_senders.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
+			if (typeof _senders == 'undefined' && this.mail_isMainWindow)
+			{
+				if (this.mail_currentlyFocussed)
+				{
+					var _senders = [];
+					_senders.push({id:this.mail_currentlyFocussed});
+				}
+			}
 		}
 		var _id = _senders[0].id;
 		// reinitialize the buffer-info on selected mails
@@ -222,6 +244,14 @@ app.mail = AppJS.extend(
 			{
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
+			}
+			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			{
+				if (this.mail_currentlyFocussed)
+				{
+					var _elems = [];
+					_elems.push({id:this.mail_currentlyFocussed});
+				}
 			}
 		}
 		console.log(_action, _elems);
@@ -658,7 +688,7 @@ app.mail = AppJS.extend(
 	mail_refreshMessageGrid: function(_isPopup) {
 		if (typeof _isPopup == 'undefined') _isPopup = false;
 		var nm;
-		if (_isPopup)
+		if (_isPopup && !this.mail_isMainWindow)
 		{
 			nm = window.opener.etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
 		}
@@ -749,6 +779,14 @@ app.mail = AppJS.extend(
 			{
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
+			}
+			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			{
+				if (this.mail_currentlyFocussed)
+				{
+					var _elems = [];
+					_elems.push({id:this.mail_currentlyFocussed});
+				}
 			}
 		}
 		var msg = this.mail_getFormData(_elems);
@@ -928,6 +966,14 @@ app.mail = AppJS.extend(
 				msg = {};
 				msg['msg'] = [this.et2.getArrayMgr('content').getEntry('mail_id') || ''];
 			}
+			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			{
+				if (this.mail_currentlyFocussed)
+				{
+					msg = {};
+					msg['msg'] = [this.mail_currentlyFocussed];
+				}
+			}
 		}
 
 		//alert(_action.id+' - '+_elems[0].id);
@@ -991,6 +1037,14 @@ app.mail = AppJS.extend(
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
+			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			{
+				if (this.mail_currentlyFocussed)
+				{
+					var _elems = [];
+					_elems.push({id:this.mail_currentlyFocussed});
+				}
+			}
 		}
 		//alert('mail_header('+_elems[0].id+')');
 		var url = window.egw_webserverUrl+'/index.php?';
@@ -1013,6 +1067,14 @@ app.mail = AppJS.extend(
 			{
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
+			}
+			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			{
+				if (this.mail_currentlyFocussed)
+				{
+					var _elems = [];
+					_elems.push({id:this.mail_currentlyFocussed});
+				}
 			}
 		}
 		//alert('mail_mailsource('+_elems[0].id+')');
@@ -1037,6 +1099,14 @@ app.mail = AppJS.extend(
 			{
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
+			}
+			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			{
+				if (this.mail_currentlyFocussed)
+				{
+					var _elems = [];
+					_elems.push({id:this.mail_currentlyFocussed});
+				}
 			}
 		}
 		//alert('mail_save('+_elems[0].id+')');
@@ -1073,6 +1143,14 @@ app.mail = AppJS.extend(
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
+			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			{
+				if (this.mail_currentlyFocussed)
+				{
+					var _elems = [];
+					_elems.push({id:this.mail_currentlyFocussed});
+				}
+			}
 		}
 		var _id = _elems[0].id;
 		var dataElem = egw.dataGetUIDdata(_id);
@@ -1106,12 +1184,37 @@ app.mail = AppJS.extend(
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
+			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			{
+				if (this.mail_currentlyFocussed)
+				{
+					var _elems = [];
+					_elems.push({id:this.mail_currentlyFocussed});
+				}
+			}
+			if (typeof _action.data.width == 'undefined' && typeof _action.data.height == 'undefined' && !(typeof _action.data.event == 'undefined' &&typeof _action.data.event.popup == 'undefined'))
+			{
+				if (_action.data.event.popup)
+				{
+					var app_registry = _action.data.event.popup;
+				}
+				else
+				{
+					var app_registry = egw.link_get_registry('infolog');//this.appname);
+				}
+				//console.log(app_registry);
+				if (typeof app_registry['edit'] != 'undefined' && typeof app_registry['edit_popup'] != 'undefined' )
+				{
+					var w_h =app_registry['edit_popup'].split('x');
+				}
+			}
 		}
 		//alert('mail_infolog('+_elems[0].id+')');return;
+		console.log(_action, _elems);
 		var url = window.egw_webserverUrl+'/index.php?';
 		url += 'menuaction=infolog.infolog_ui.import_mail';	// todo compose for Draft folder
 		url += '&rowid='+_elems[0].id;
-		egw_openWindowCentered(url,'import_mail_'+_elems[0].id,_action.data.width,_action.data.height);
+		egw_openWindowCentered(url,'import_mail_'+_elems[0].id,(_action.data.width?_action.data.width:w_h[0]),(_action.data.height?_action.data.height:w_h[1]));
 	},
 
 	/**
@@ -1129,12 +1232,36 @@ app.mail = AppJS.extend(
 				var _elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
+			if (typeof _elems == 'undefined' && this.mail_isMainWindow)
+			{
+				if (this.mail_currentlyFocussed)
+				{
+					var _elems = [];
+					_elems.push({id:this.mail_currentlyFocussed});
+				}
+			}
+			if (typeof _action.data.width == 'undefined' && typeof _action.data.height == 'undefined' && !(typeof _action.data.event == 'undefined' &&typeof _action.data.event.popup == 'undefined'))
+			{
+				if (_action.data.event.popup)
+				{
+					var app_registry = _action.data.event.popup;
+				}
+				else
+				{
+					var app_registry = egw.link_get_registry('infolog');//this.appname);
+				}
+				//console.log(app_registry);
+				if (typeof app_registry['edit'] != 'undefined' && typeof app_registry['edit_popup'] != 'undefined' )
+				{
+					var w_h =app_registry['edit_popup'].split('x');
+				}
+			}
 		}
 		//alert('mail_tracker('+_elems[0].id+')');
 		var url = window.egw_webserverUrl+'/index.php?';
 		url += 'menuaction=tracker.tracker_ui.import_mail';	// todo compose for Draft folder
 		url += '&rowid='+_elems[0].id;
-		egw_openWindowCentered(url,'import_tracker_'+_elems[0].id,_action.data.width,_action.data.height);
+		egw_openWindowCentered(url,'import_tracker_'+_elems[0].id,(_action.data.width?_action.data.width:w_h[0]),(_action.data.height?_action.data.height:w_h[1]));
 	},
 
 
