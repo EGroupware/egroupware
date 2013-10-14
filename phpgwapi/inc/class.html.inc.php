@@ -531,9 +531,6 @@ class html
 			return self::textarea($_name,$_content,'style="width: '.$_width.'; height: '.$_height.';" id="'.htmlspecialchars($_name).'"');
 		}
 
-		// tell framework CK Editor needs eval and inline javascript :(
-		egw_framework::csp_script_src_attrs(array('unsafe-eval', 'unsafe-inline'));
-
 		//include the ckeditor js file
 		egw_framework::validate_file('ckeditor','ckeditor','phpgwapi');
 

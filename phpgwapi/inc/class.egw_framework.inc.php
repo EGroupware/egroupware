@@ -84,11 +84,13 @@ abstract class egw_framework
 	}
 
 	/**
-	 * Additional attributes for CSP script-src 'self'
+	 * Additional attributes or urls for CSP script-src 'self'
+	 *
+	 * 'unsafe-eval' is currently allways added, as it is used in a couple of places.
 	 *
 	 * @var array
 	 */
-	private static $csp_script_src_attrs = array('unsafe-eval');
+	private static $csp_script_src_attrs = array("'unsafe-eval'");
 
 	/**
 	 * Set/get Content-Security-Policy attributes for script-src: 'unsafe-eval' and/or 'unsafe-inline'
@@ -106,13 +108,18 @@ abstract class egw_framework
 	{
 		foreach((array)$set as $attr)
 		{
+			if (in_array($attr, array('none', 'self', 'unsafe-eval', 'unsafe-inline')))
+			{
+				$attr = "'$attr'";	// automatic add quotes
+			}
 			if (!in_array($attr, self::$csp_script_src_attrs))
 			{
 				self::$csp_script_src_attrs[] = $attr;
-				//error_log(__METHOD__."() swiching CSP OFF for script-src '$attr' ".function_backtrace());
+				//error_log(__METHOD__."() setting CSP script-src $attr ".function_backtrace());
 			}
 		}
-		return self::$csp_script_src_attrs ? "'".implode("' '", self::$csp_script_src_attrs)."'" : '';
+		//error_log(__METHOD__."(".array2string($set).") returned ".array2string(implode(' ', self::$csp_script_src_attrs)).' '.function_backtrace());
+		return implode(' ', self::$csp_script_src_attrs);
 	}
 
 	/**

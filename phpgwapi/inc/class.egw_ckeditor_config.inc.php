@@ -1,6 +1,6 @@
 <?php
 /**
- * eGroupWare - Class which generates JSON encoded configuration for the ckeditor
+ * EGroupware - Class which generates JSON encoded configuration for the ckeditor
  *
  * @link http://www.egroupware.org
  * @author RalfBecker-AT-outdoor-training.de
@@ -11,6 +11,9 @@
  * @version $Id$
  */
 
+/**
+ * CK-Editor configuration
+ */
 class egw_ckeditor_config
 {
 	private static $lang = null;
@@ -350,6 +353,9 @@ class egw_ckeditor_config
 	 */
 	public static function get_ckeditor_config_array($mode = '', $height = 400, $expanded_toolbar = true, $start_path = '')
 	{
+		// set for CK-Editor necessary CSP script-src attributes
+		self::set_csp_script_src_attrs();
+
 		// If not explicitly set, use preference for toolbar mode
 		if(!$mode || trim($mode) == '') $mode = $GLOBALS['egw_info']['user']['preferences']['common']['rte_features'];
 		$config = array();
@@ -373,5 +379,24 @@ class egw_ckeditor_config
 	public static function get_ckeditor_config($mode = '', $height = 400, $expanded_toolbar = true, $start_path = '')
 	{
 		return json_encode(self::get_ckeditor_config_array($mode, $height, $expanded_toolbar, $start_path));
+	}
+
+	/**
+	 * Set for CK-Editor necessary CSP script-src attributes
+	 *
+	 * Get's called automatic from get_ckeditor_config(_array)
+	 */
+	public static function set_csp_script_src_attrs()
+	{
+		$attrs = array('unsafe-eval', 'unsafe-inline');
+
+		// if webspellchecker is enabled in EGroupware config, allow access to it's url
+		if (in_array($GLOBALS['egw_info']['server']['enabled_spellcheck'], array('True', 'YesUseWebSpellCheck')))
+		{
+			$attrs[] = 'http://svc.webspellchecker.net';
+		}
+		//error_log(__METHOD__."() egw_info[server][enabled_spellcheck]='{$GLOBALS['egw_info']['server']['enabled_spellcheck']}' --> attrs=".array2string($attrs));
+		// tell framework CK Editor needs eval and inline javascript :(
+		egw_framework::csp_script_src_attrs($attrs);
 	}
 }
