@@ -29,6 +29,21 @@ class emailadmin_script {
 	var $pcount;       /* highest priority value in ruleset. */
 	var $errstr;       /* error text. */
 	/**
+	 * Body transform content types
+	 *
+	 * @static array
+	 */
+	static $btransform_ctype_array = array(
+		'0' => 'Non',
+		'1' => 'image',
+		'2' => 'multipart',
+		'3' => 'text',
+		'4' => 'media',
+		'5' => 'message',
+		'6' => 'application',
+		'7' => 'audio',
+	);
+	/**
 	 * Switch on some error_log debug messages
 	 *
 	 * @var boolean
@@ -97,8 +112,6 @@ class emailadmin_script {
 		$rules = array();
 		$vacation = array();
 		$emailNotification = array(); // Added email notifications
-		$regexps = array('^ *##PSEUDO','^ *#rule','^ *#vacation','^ *#mode');
-		$regexps[] = '^ *#notify'; // Added email notifications
 
 		/* first line should be the script size. eg: {123}. */
 		#$line = array_shift($lines);
@@ -123,10 +136,11 @@ class emailadmin_script {
 		$line = array_shift($lines);
 
 		while (isset($line)){
-			foreach ($regexps as $regexp){
-				if (preg_match("/$regexp/i",$line)){
-					$line = rtrim($line);
-					if (preg_match("/^ *#rule&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)$/i",$line,$bits)){
+			if (preg_match("/^ *#(#PSEUDO|rule|vacation|mode|notify)/i",$line,$matches)){
+				$line = rtrim($line);
+				switch ($matches[1]){
+					case "rule":
+						$bits = explode("&&",  $line);
 						$rule = array();
 						$rule['priority']	= $bits[1];
 						$rule['status']		= $bits[2];
@@ -147,6 +161,10 @@ class emailadmin_script {
 						$rule['anyof']		= ($bits[8] & $anyofbit);
 						$rule['keep']		= ($bits[8] & $keepbit);
 						$rule['regexp']		= ($bits[8] & $regexbit);
+						$rule['bodytransform'] = ($bits[12]);
+						$rule['field_bodytransform'] = ($bits[13]);
+						$rule['ctype'] = ($bits[14]);
+						$rule['field_ctype_val'] = ($bits[15]);
 						$rule['unconditional']	= 0;
 						if (!$rule['from'] && !$rule['to'] && !$rule['subject'] &&
 							!$rule['field'] && !$rule['size'] && $rule['action']) {
@@ -158,48 +176,50 @@ class emailadmin_script {
 						if ($rule['priority'] > $this->pcount) {
 							$this->pcount = $rule['priority'];
 						}
-					}
-
-					if (preg_match("/^ *#vacation&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)/i",$line,$bits) ||
-						preg_match("/^ *#vacation&&(.*)&&(.*)&&(.*)&&(.*)/i",$line,$bits)) {
-						$vacation['days'] = $bits[1];
-						$vaddresslist = $bits[2];
-						$vaddresslist = preg_replace("/\"|\s/","",$vaddresslist);
-						$vaddresses = array();
-						$vaddresses = preg_split("/,/",$vaddresslist);
-						$vacation['text'] = $bits[3];
+						break;
+					case "vacation" :
+						if (preg_match("/^ *#vacation&&(.*)&&(.*)&&(.*)&&(.*)&&(.*)/i",$line,$bits) ||
+							preg_match("/^ *#vacation&&(.*)&&(.*)&&(.*)&&(.*)/i",$line,$bits)) {
+							$vacation['days'] = $bits[1];
+							$vaddresslist = $bits[2];
+							$vaddresslist = preg_replace("/\"|\s/","",$vaddresslist);
+							$vaddresses = array();
+							$vaddresses = preg_split("/,/",$vaddresslist);
+							$vacation['text'] = $bits[3];
 
 						// <crnl>s will be encoded as \\n. undo this.
-						$vacation['text'] = preg_replace("/\\\\n/","\r\n",$vacation['text']);
+							$vacation['text'] = preg_replace("/\\\\n/","\r\n",$vacation['text']);
 
-						if (strpos($bits[4],'-')!== false)
-						{
-							$vacation['status'] = 'by_date';
-							list($vacation['start_date'],$vacation['end_date']) = explode('-',$bits[4]);
+							if (strpos($bits[4],'-')!== false)
+							{
+								$vacation['status'] = 'by_date';
+								list($vacation['start_date'],$vacation['end_date']) = explode('-',$bits[4]);
+							}
+							else
+							{
+								$vacation['status'] = $bits[4];
+							}
+							$vacation['addresses'] = &$vaddresses;
+
+							$vacation['forwards'] = $bits[5];
 						}
-						else
-						{
-							$vacation['status'] = $bits[4];
+						break;
+					case "notify":
+						if (preg_match("/^ *#notify&&(.*)&&(.*)&&(.*)/i",$line,$bits)) {
+							$emailNotification['status'] = $bits[1];
+							$emailNotification['externalEmail'] = $bits[2];
+							$emailNotification['displaySubject'] = $bits[3];
 						}
-						$vacation['addresses'] = &$vaddresses;
-
-						$vacation['forwards'] = $bits[5];
-					}
-
-					if (preg_match("/^ *#notify&&(.*)&&(.*)&&(.*)/i",$line,$bits)) {
-		 				$emailNotification['status'] = $bits[1];
-						$emailNotification['externalEmail'] = $bits[2];
-						$emailNotification['displaySubject'] = $bits[3];
-					}
-
-					if (preg_match("/^ *#mode&&(.*)/i",$line,$bits)){
-						if ($bits[1] == 'basic')
-							$this->mode = 'basic';
-						elseif ($bits[1] == 'advanced')
-							$this->mode = 'advanced';
-						else
-							$this->mode = 'unknown';
-					}
+						break;
+					case "mode" :
+						if (preg_match("/^ *#mode&&(.*)/i",$line,$bits)){
+							if ($bits[1] == 'basic')
+								$this->mode = 'basic';
+							elseif ($bits[1] == 'advanced')
+								$this->mode = 'advanced';
+							else
+								$this->mode = 'unknown';
+						}
 				}
 			}
 			$line = array_shift($lines);
@@ -246,6 +266,10 @@ class emailadmin_script {
 
 		// lets generate the main body of the script from our rules
 
+		$enotify = $variables= $supportsbody = false;
+		if (in_array('enotify',$connection->_capability['extensions'])|| in_array('ENOTIFY', $connection->_capability['extensions'])) $enotify = true;
+		if (in_array('variables',$connection->_capability['extensions'])|| in_array('VARIABLES', $connection->_capability['extensions'])) $variables = true;
+		if (in_array('body', $connection->_capability['extensions']) || in_array('BODY', $connection->_capability['extensions'])) $supportsbody = true;
 		$newscriptbody = "";
 		$continue = 1;
 
@@ -327,7 +351,28 @@ class emailadmin_script {
 								$newruletext .= "size " . $xthan . $rule['size'] . "K";
 								$started = 1;
 						}
+						if ($supportsbody){
+							if (!empty($rule['field_bodytransform'])){
+								if ($started) $newruletext .= ", ";
+								$btransform	= " :raw ";
+								$match = ' :contains';
+								if ($rule['bodytransform'])	$btransform = " :text ";
+								if (preg_match("/\*|\?/", $rule['field_bodytransform'])) $match = ':matches';
+								if ($rule['regexp']) $match = ':regex';
+								$newruletext .= "body " . $btransform . $match . " \"" . $rule['field_bodytransform'] . "\"";
+								$started = 1;
 
+							}
+							if ($rule['ctype']!= '0' && !empty($rule['ctype'])){
+								if ($started) $newruletext .= ", ";
+								$btransform_ctype = emailadmin_script::$btransform_ctype_array[$rule['ctype']];
+								$ctype_subtype = "";
+								if ($rule['field_ctype_val']) $ctype_subtype = "/";
+								$newruletext .= "body :content " . " \"" . $btransform_ctype . $ctype_subtype . $rule['field_ctype_val'] . "\"" . " :contains \"\"";
+								$started = 1;
+								//error_log(__CLASS__."::".__METHOD__.array2string(emailadmin_script::$btransform_ctype_array));
+							}
+						}
 				}
 
 				// actions
@@ -477,6 +522,7 @@ class emailadmin_script {
 			if ($this->vacation && $vacation_active) {
 				$newscripthead .= ",\"vacation\"";
 			}
+			if ($supportsbody) $newscripthead .= ",\"body\"";
 			if ($this->emailNotification && $this->emailNotification['status'] == 'on') $newscripthead .= ',"'.($enotify?'e':'').'notify"'.($variables?',"variables"':''); // Added email notifications
 			$newscripthead .= "];\n\n";
 		} else {
@@ -502,8 +548,11 @@ class emailadmin_script {
 				$rule['priority'] = $pcount;
 				$newscriptfoot .= "#rule&&" . $rule['priority'] . "&&" . $rule['status'] . "&&" .
 				addslashes($rule['from']) . "&&" . addslashes($rule['to']) . "&&" . addslashes($rule['subject']) . "&&" . $rule['action'] . "&&" .
-				addslashes($rule['action_arg']) . "&&" . $rule['flg'] . "&&" . addslashes($rule['field']) . "&&" . addslashes($rule['field_val']) . "&&" . $rule['size'] . "\n";
+				$rule['action_arg'] . "&&" . $rule['flg'] . "&&" . addslashes($rule['field']) . "&&" . addslashes($rule['field_val']) . "&&" . $rule['size'];
+				if ($supportsbody && (!empty($rule['field_bodytransform']) || ($rule['ctype']!= '0' && !empty($rule['ctype'])))) $newscriptfoot .= "&&" . $rule['bodytransform'] . "&&" . $rule['field_bodytransform']. "&&" . $rule['ctype'] . "&&" . $rule['field_ctype_val'];
+				$newscriptfoot .= "\n";
 				$pcount = $pcount+2;
+				error_log(__CLASS__."::".__METHOD__.__LINE__.array2string($newscriptfoot));
 			}
 		}
 
