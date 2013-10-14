@@ -1160,7 +1160,8 @@ class so_sql
 				if (preg_match('/^ *(-?[0-9]+|".*"|\'.*\'|NULL) *$/i', $col)) continue;
 				if (!in_array($col, $group_by_cols) && !in_array($alias, $group_by_cols))
 				{
-					$group_by_cols[] = $alias;
+					// instead of aliased primary key, we have to use original column incl. table-name as alias is ambigues
+					$group_by_cols[] = $col == $this->table_name.'.'.$this->autoinc_id ? $col : $alias;
 					//error_log(__METHOD__."() col=$col, alias=$alias --> group_by_cols=".array2string($group_by_cols));
 					++$changes;
 				}
