@@ -453,7 +453,8 @@ app.filemanager = AppJS.extend(
 	{
 		var data = egw.dataGetUIDdata(_senders[0].id);
 		var path = this.id2path(_senders[0].id);
-		if (data.data.mime == 'httpd/unix-directory')
+		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
+		if (data.data.mime == 'httpd/unix-directory' || data.data['class'] && data.data['class'].split(/ +/).indexOf('isDir') != -1)
 		{
 			this.change_dir(path);
 		}
