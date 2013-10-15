@@ -203,7 +203,7 @@ class accounts_sql
 			if (!isset($to_write['account_pwd'])) $to_write['account_pwd'] = '';	// is NOT NULL!
 			if (!isset($to_write['account_status'])) $to_write['account_status'] = '';	// is NOT NULL!
 
-			// postgres requires the auto-id field to be unset!	
+			// postgres requires the auto-id field to be unset!
 			if (isset($to_write['account_id']) && !$to_write['account_id']) unset($to_write['account_id']);
 
 			if (!in_array($to_write['account_type'],array('u','g')) ||
@@ -522,8 +522,11 @@ class accounts_sql
 				($table == $this->contacts_table ? " AND contact_tid != 'D'" : '');	// ignore deleted accounts contact-data
 
 		}
-		if (!($row = $this->db->select($table,$cols,$where,__LINE__,__FILE__)->fetch())) return false;
-
+		if (!($rs = $this->db->select($table,$cols,$where,__LINE__,__FILE__)) || !($row = $rs->fetch()))
+		{
+			error_log(__METHOD__."('$name', '$which', ".array2string($account_type).") db->select('$table', '$cols', ".array2string($where).") returned ".array2string($rs).' '.function_backtrace());
+			return false;
+		}
 		return ($row['account_type'] == 'g' ? -1 : 1) * $row['account_id'];
 	}
 
