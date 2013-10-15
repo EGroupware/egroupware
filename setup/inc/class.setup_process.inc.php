@@ -288,6 +288,7 @@ class setup_process
 		}
 
 		// so the default_records use the current data
+		$GLOBALS['egw_info']['server'] = array_merge((array)$GLOBALS['egw_info']['server'], $current_config);
 		$GLOBALS['egw_setup']->setup_account_object($current_config);
 	}
 
