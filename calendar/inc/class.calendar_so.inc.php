@@ -918,6 +918,11 @@ class calendar_so
 			{
 				$cols = self::get_columns($required_app,substr($cols,0,-2));
 			}
+			// remove CAST added for PostgreSQL from eg. "CAST(egw_cal.cal_id AS varchar)"
+			elseif (preg_match('/CAST\(([a-z0-9_.]+) AS [a-z0-9_]+\)/i', $cols, $matches))
+			{
+				$cols = $matches[1];
+			}
 			elseif (strpos($cols,' AS ') !== false)
 			{
 				list(,$cols) = explode(' AS ',$cols);
@@ -938,6 +943,7 @@ class calendar_so
 				}
 			}
 		}
+		//error_log(__METHOD__."(".array2string($app_cols).", ".array2string($required).", '$required_app') returning ".array2string(implode(',',$return_cols)));
 		return implode(',',$return_cols);
 	}
 
