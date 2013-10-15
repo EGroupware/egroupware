@@ -99,7 +99,7 @@ class mime_magic
 	 */
 	public static function filename2mine($filename)
 	{
-		return self::filename2mime($filename);
+		return $this->filename2mime($filename);
 	}
 
 	/**

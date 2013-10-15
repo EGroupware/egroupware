@@ -17,8 +17,6 @@
  * @link https://tools.ietf.org/html/draft-desruisseaux-ischedule-03 iSchedule draft from 2013-01-22
  */
 
-ini_set('zlib.output_compression',0);
-
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
 		'noheader'  => True,

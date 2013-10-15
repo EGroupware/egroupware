@@ -129,8 +129,7 @@ class links_stream_wrapper extends links_stream_wrapper_parent
 	 */
 	static function url_stat ( $url, $flags )
 	{
-		//$eacl_check=self::check_extended_acl($url,egw_vfs::READABLE);
-		$eacl_check=static::check_extended_acl($url,egw_vfs::READABLE);
+		$eacl_check=self::check_extended_acl($url,egw_vfs::READABLE);
 		if ( $eacl_check && substr($url,-7) == '/.entry' &&
 			(list($app) = array_slice(explode('/',$url),-3,1)) && $app === 'addressbook')
 		{

@@ -31,15 +31,6 @@ class ischedule_server extends groupdav
 	const VERSION = '1.0';
 
 	/**
-	 * Supported versions for capablities
-	 *
-	 * Might be more then current version above
-	 *
-	 * @var array
-	 */
-	static $supported_versions = array(self::VERSION);
-
-	/**
 	 * Required headers in DKIM signature (DKIM-Signature is always a required header!)
 	 */
 	const REQUIRED_DKIM_HEADERS = 'iSchedule-Version:Content-Type:Originator:Recipient';
@@ -89,52 +80,12 @@ class ischedule_server extends groupdav
 		if (self::$request_starttime) self::log_request();
 	}
 
-	/**
-	 * List of supported components and methods
-	 *
-	 * @var array
-	 */
-	static $supported_components = array(
-		'VFREEBUSY' => array('REQUEST'),
-		'VEVENT' => array('REQUEST', 'REPLY', 'CANCEL'),
-		//'VTODO' => array('REQUEST', 'REPLY', 'CANCEL'),
-	);
-
-	/**
-	 * List of supported calendar-data-types
-	 *
-	 * @var array
-	 */
-	static $supported_calendar_data_types = array(
-		array('content-type' => 'text/calendar', 'version' => '2.0'),
-	);
-
-	/**
-	 * Supported attachment types for capabilities
-	 *
-	 * @var array
-	 */
-	static $supported_attachments = array('external', 'inline');
-
-	/**
-	 * Other capablities
-	 *
-	 * @var array name => value pairs
-	 */
-	static $capablities = array(
-		'max-content-length' => 102400,
-		'min-date-time' => '19910101T000000Z',
-		'max-date-time' => '20381231T000000Z',
-		'max-instances' => 150,
-		'max-recipients' => 250,
-		// for server config: 'administrator' => 'mailto:ischedule-admin@example.com</administrator',
-	);
-
+	static $supported_components = array('VEVENT', 'VFREEBUSY', 'VTODO');
 	/**
 	 * Requiremnt for originator to match depending on method
 	 *
 	 * @var array method => array('ORGANIZER','ATTENDEE')
-	 * @link https://tools.ietf.org/html/draft-desruisseaux-ischedule-03#section-6.1
+	 * @link https://tools.ietf.org/html/draft-desruisseaux-ischedule-01#section-6.1
 	 */
 	static $supported_method2origin_requirement = array(
 		//'PUBLISH' => null,	// no requirement
@@ -196,9 +147,8 @@ class ischedule_server extends groupdav
 		}
 		// check if recipient is a user
 		// todo: multiple recipients, currently we use last recipient for EGroupware enviroment
-		// it is no error, to not specify a correct user, in that case we return just a request-status of "3.7;Invalid Calendar User"!
-		//foreach(preg_split('/, */', $headers['recipient']) as $recipient)
-		/*{
+		foreach(preg_split('/, */', $headers['recipient']) as $recipient)
+		{
 			if (!stripos($recipient, 'mailto:') === 0 ||
 				!($account_id = $GLOBALS['egw']->accounts->name2id(substr($recipient, 7), 'account_email')))
 			{
@@ -211,13 +161,11 @@ class ischedule_server extends groupdav
 		//$GLOBALS['egw']->session->account_domain = $domain;
 		$GLOBALS['egw_info']['user']  = $GLOBALS['egw']->session->read_repositories();
 		translation::init();
-		*/
 
 		// check originator is allowed to iSchedule with recipient
 		// ToDo: preference for user/admin to specify with whom to iSchedule: $allowed_origins
-		$allowed_origins = preg_split('/, ?/', $GLOBALS['egw_info']['user']['preferences']['groupdav']['ischedule_allowed_origins']);
+		$allowed_origins = preg_split('/, ?/', $GLOBALS['egw_info']['user']['groupdav']['ischedule_allowed_origins']);
 		/* disabled 'til UI is ready to specifiy
-		 * ToDo: this should be no error but a response-status of "3.8;No authority"
 		list(,$originator_domain) = explode('@', $headers['Originator']);
 		if (!in_array($headers['Originator'], $allowed_orgins) && !in_array($originator_domain, $allowed_origins))
 		{
@@ -225,8 +173,6 @@ class ischedule_server extends groupdav
 		}*/
 
 		// check method and component of Content-Type are valid
-		// ToDo: no component or method in Content-Type should give an "invalid-scheduling-message" error
-		// only unsupported (not in capablities) component should give "invalid-caledar-data-type"
 		if (!preg_match('/component=([^;]+)/i', $headers['content-type'], $matches) ||
 			(!in_array($component=strtoupper($matches[1]), self::$supported_components)))
 		{
@@ -244,7 +190,7 @@ class ischedule_server extends groupdav
 		$vcal = new Horde_iCalendar();
 		if (!$vcal->parsevCalendar($this->request, 'VCALENDAR', 'utf-8'))
 		{
-			throw new Exception('Bad Request: invalid-calendar-data: Failed parsing iCal', 400);
+			throw new Exception('Bad Request: Failed parsing iCal', 400);
 		}
 		$version = $vcal->getAttribute('VERSION');
 		$handler = new calendar_ical();
@@ -254,7 +200,7 @@ class ischedule_server extends groupdav
 			!($event = $handler->vevent2egw($vcal_comp, $version, $handler->supportedFields,
 				$principalURL='', $check_component='Horde_iCalendar_'.strtolower($component))))
 		{
-			throw new Exception('Bad Request: invalid-calendar-data: Failed converting iCal', 400);
+			throw new Exception('Bad Request: Failed converting iCal', 400);
 		}
 
 		// validate originator matches organizer or attendee
@@ -302,7 +248,7 @@ class ischedule_server extends groupdav
 				break;
 
 			default:
-				throw new Exception ('Bad Request: invalid-calendar-data-type: not implemented', 400);
+				throw new exception('Not yet implemented!');
 		}
 
 		$xml->endElement();	// schedule-response
@@ -400,8 +346,12 @@ class ischedule_server extends groupdav
 	/**
 	 * Validate DKIM signature
 	 *
-	 * For multivalued and multiple Recipient header(s): PHP engine agregates them ", " separated.
-	 * ischedule-relaxed canonisation takes care of that.
+	 * For multivalued Recipient header(s): as PHP engine agregates them ", " separated,
+	 * we can not tell these apart from ", " separated recipients in one header!
+	 *
+	 * Therefore we can only try to validate both situations.
+	 *
+	 * It will fail if multiple recipients in a single header are also ", " separated (just comma works fine).
 	 *
 	 * @param array $headers header-name in lowercase(!) as key
 	 * @param string $body
@@ -683,7 +633,7 @@ yXUKsIQVi3qPyPdB3QIDAQAB
 		return array_combine($matches[1], $matches[2]);
 	}
 
-	const SERIAL = '124';
+	const SERIAL = '123';
 
 	/**
 	 * Serve an iSchedule GET request, currently only action=capabilities
@@ -738,74 +688,68 @@ yXUKsIQVi3qPyPdB3QIDAQAB
 		{
 			error_log(__METHOD__."() invalid iSchedule request using GET without action=capabilities!");
 			header("HTTP/1.1 400 Bad Request");
-			echo "<h1>Invalid iSchedule request using GET without action=capabilities!</h1>\n";
 			return;
 		}
 
 		// generate capabilities
-		$xml = new XMLWriter;
+		/*$xml = new XMLWriter;
 		$xml->openMemory();
 		$xml->setIndent(true);
 		$xml->startDocument('1.0', 'UTF-8');
 		$xml->startElementNs(null, 'query-result', self::ISCHEDULE);
-		$xml->startElement('capabilities');
+		$xml->startElement('capability-set');
 
-		$xml->writeElement('serial-number', self::SERIAL);
-
-		$xml->startElement('versions');
-		foreach(self::$supported_versions as $version)
+		foreach(array(
+			'versions' => array('version' => array('1.0')),
+			'scheduling-messages' => array(
+				'component' => array('.name' => array(
+					'VEVENT' => array('method' => array('REQUEST', 'ADD', 'REPLY', 'CANCEL')),
+					'VTODO' => '',
+					'VFREEBUSY' => '',
+				)),
+			)
+		) as $name => $data)
 		{
-			$xml->writeElement('version', $version);
-		}
-		$xml->endElement();	// versions
-
-		$xml->startElement('scheduling-messages');
-		foreach(self::$supported_components as $component => $methods)
-		{
-			$xml->startElement('component');
-			$xml->writeAttribute('name', $component);
-			foreach($methods as $method)
-			{
-				$xml->startElement('method');
-				$xml->writeAttribute('name', $method);
-				$xml->endElement();	// method
-			}
-			$xml->endElement();	// component
-		}
-		$xml->endElement();	// scheduling-messages
-
-		$xml->startElement('calendar-data-types');
-		foreach(self::$supported_calendar_data_types as $data)
-		{
-			$xml->startElement('calendar-data-type');
-			foreach($data as $name => $value)
-			{
-				$xml->writeAttribute($name, $value);
-			}
-			$xml->endElement();	// calendar-data-type
-		}
-		$xml->endElement();	// calendar-data-types
-
-		$xml->startElement('attachments');
-		foreach(self::$supported_attachments as $type)
-		{
-			$xml->writeElement($type, '');
-		}
-		$xml->endElement();	// attachments
-
-		if (!empty($GLOBALS['egw_info']['server']['admin_mails']))
-		{
-			self::$capablities['administrator'] = 'mailto:'.$GLOBALS['egw_info']['server']['admin_mails'];
-		}
-		foreach(self::$capablities as $name => $value)
-		{
-			$xml->writeElement($name, $value);
+			$xml->writeElement($name, $data);
 		}
 
-		$xml->endElement();	// capabilities
+		$xml->endElement();	// capability-set
 		$xml->endElement();	// query-result
 		$xml->endDocument();
-		$capabilities = $xml->outputMemory();
+		$capabilities = $xml->outputMemory();*/
+
+		$capabilities = '<?xml version="1.0" encoding="utf-8" ?>
+  <query-result xmlns="urn:ietf:params:xml:ns:ischedule">
+    <capabilities>
+      <serial-number>'.self::SERIAL.'</serial-number>
+      <versions>
+        <version>1.0</version>
+      </versions>
+      <scheduling-messages>
+        <component name="VEVENT">
+          <method name="REQUEST"/>
+          <method name="ADD"/>
+          <method name="REPLY"/>
+          <method name="CANCEL"/>
+        </component>
+        <component name="VTODO"/>
+        <component name="VFREEBUSY"/>
+      </scheduling-messages>
+      <calendar-data-types>
+        <calendar-data-type content-type="text/calendar" version="2.0"/>
+      </calendar-data-types>
+      <attachments>
+        <inline/>
+        <external/>
+      </attachments>
+      <max-content-length>102400</max-content-length>
+      <min-date-time>19910101T000000Z</min-date-time>
+      <max-date-time>20381231T000000Z</max-date-time>
+      <max-instances>150</max-instances>
+      <max-recipients>250</max-recipients>
+      <administrator>mailto:ischedule-admin@example.com</administrator>
+    </capabilities>
+  </query-result>';
 
 		// returning capabilities
 		header('Content-Type: application/xml; charset=utf-8');

@@ -124,7 +124,6 @@ class ldap
 	 * @param $passwd='' ldap pw, default $GLOBALS['egw_info']['server']['ldap_root_pw']
 	 * @return resource|boolean resource from ldap_connect() or false on error
 	 * @throws egw_exception_assertion_failed 'LDAP support unavailable!' (no ldap extension)
-	 * @throws egw_exception_no_permission "Can't connect/bind to LDAP server '$host' and dn='$dn'!"
 	 */
 	function ldapConnect($host='', $dn='', $passwd='')
 	{

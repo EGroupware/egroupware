@@ -155,7 +155,7 @@ class accounts_ads
 				'use_ssl' => $config['ads_connection'] == 'ssl',
 				'charset' => translation::charset(),
 			);
-			$adldap[$config['ads_domain']] = new adLDAP($options);
+			$adldap[$config['ads_domain']] = new adLDAP_egw($options);
 			if (self::$debug) error_log(__METHOD__."() new adLDAP(".array2string($options).") returned ".array2string($adldap[$config['ads_domain']]).' '.function_backtrace());
 		}
 		//else error_log(__METHOD__."() returning cached adLDAP ".array2string($adldap[$config['ads_domain']]).' '.function_backtrace());
