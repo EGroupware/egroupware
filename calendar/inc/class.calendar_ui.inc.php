@@ -823,14 +823,13 @@ class calendar_ui
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
-			$menu_title = lang('Administration');
 			$file = Array(
 				'Configuration'=>egw::link('/index.php','menuaction=admin.uiconfig.index&appname=calendar'),
 				'Custom Fields'=>egw::link('/index.php','menuaction=admin.customfields.edit&appname=calendar'),
 				'Holiday Management'=>egw::link('/index.php','menuaction=calendar.uiholiday.admin'),
 				'Global Categories' =>egw::link('/index.php','menuaction=admin.admin_categories.index&appname=calendar'),
 			);
-			display_sidebox($appname,$menu_title,$file);
+			$GLOBALS['egw']->framework->sidebox($appname,lang('Admin'),$file,'admin');
 		}
 	}
 

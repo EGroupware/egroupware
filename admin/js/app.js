@@ -62,19 +62,13 @@ app.admin = AppJS.extend(
 		var iframe = this.iframe = this.et2.getWidgetById('iframe');
 		if (iframe) 
 		{
-			iframe.set_src(egw.webserverUrl+'/admin/index.php');
 			var self = this;
 			jQuery(iframe.getDOMNode()).bind('load', function(){
 				self._hide_navbar.call(self);
+				self.splitter.dock();
 			});
 		}
-		var splitter = this.splitter = this.et2.getWidgetById('splitter');
-		if (splitter) 
-		{
-			window.setTimeout(function(){
-				splitter.dock();
-			}, 1);
-		}
+		this.splitter = this.et2.getWidgetById('splitter');
 	},
 	
 	/**
@@ -85,6 +79,10 @@ app.admin = AppJS.extend(
 	_hide_navbar: function()
 	{
 		var document = this.iframe.getDOMNode().contentDocument;
+		
+		// set white background, as transparent one lets account-list show through
+		document.getElementsByTagName('body')[0].style.backgroundColor = 'white';
+		
 		// hide navbar elements
 		var ids2hide = ['divLogo', 'topmenu', 'divAppIconBar', 'divStatusBar', 'tdSidebox', 'divAppboxHeader'];
 		for(var i=0; i < ids2hide.length; ++i)
@@ -106,6 +104,29 @@ app.admin = AppJS.extend(
 		var url = _action.data.url.replace(/(%24|\$)id/, id[1]);
 
 		this.iframe.set_src(url);
+	},
+	
+	/**
+	 * Link hander for jDots template to just reload our iframe, instead of reloading whole admin app
+	 * 
+	 * @param _url
+	 * @return boolean true, if linkHandler took care of link, false otherwise
+	 */
+	linkHandler: function(_url)
+	{
+		var matches;
+		if (!_url.match('menuaction=admin.admin_ui.index') ||
+			(matches = _url.match(/menuaction=admin.admin_ui.index.*&load=([^&]+)/)))
+		{
+			if (matches)
+			{
+				_url = _url.replace(/menuaction=admin.admin_ui.index/, 'menuaction='+matches[1]).replace(/&(ajax=true|load=[^&]+)/g, '');
+			}
+			this.iframe.set_src(_url);
+			return true;
+		}
+		// can not load our own index page, has to be done by framework
+		return false;
 	},
 	
 	/**
@@ -131,7 +152,7 @@ app.admin = AppJS.extend(
 		else if (link[0] == '/' || link.substr(0,4) == 'http')
 		{
 			this.splitter.dock();
-			this.iframe.set_src(link+'&nonavbar=1');
+			this.iframe.set_src(link+(link.match(/\?/)?'&':'?')+'nonavbar=1');
 		}
 		else if (link.substr(0,11) == 'javascript:')
 		{

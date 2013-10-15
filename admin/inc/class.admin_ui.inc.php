@@ -40,6 +40,8 @@ class admin_ui
 	 */
 	public function index(array $content=null, $msg='')
 	{
+		admin_statistics::check();
+
 		$tpl = new etemplate_new('admin.index');
 
 		$content = array();
@@ -100,6 +102,19 @@ class admin_ui
 			),
 		);
 		$tpl->setElementAttribute('tree', 'actions', $actions);
+
+		if (!empty($_GET['load']))
+		{
+			$vars = $_GET;
+			$vars['menuaction'] = $vars['load'];
+			unset($vars['ajax']);
+			unset($vars['load']);
+		}
+		else
+		{
+			$vars = array('menuaction' => 'admin.uiconfig.index', 'appname' => 'admin');
+		}
+		$content['iframe'] = egw::link('/index.php', $vars);
 
 		$tpl->exec('admin.admin_ui.index', $content, $sel_options);
 	}
@@ -277,7 +292,14 @@ if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole
 					if (empty($data['id']))
 					{
 						$data['id'] = $root.($app == 'admin' ? 'admin' : 'apps/'.$app).'/';
-						$data['id'] .= preg_match('/menuaction=([^&]+)/', $data['link'], $matches) ? $matches[1] : md5($link);
+						if (preg_match_all('/(menuaction|load)=([^&]+)/', $data['link'], $matches))
+						{
+							$data['id'] .= $matches[2][(int)array_search('load', $matches[1])];
+						}
+						else
+						{
+							$data['id'] .= md5($data['link']);
+						}
 					}
 					if (!empty($data['icon']))
 					{

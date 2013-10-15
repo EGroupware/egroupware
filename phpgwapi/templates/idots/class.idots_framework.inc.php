@@ -772,11 +772,18 @@ egw.set_user('.$GLOBALS['egw']->accounts->json($GLOBALS['egw_info']['user']['acc
 	* @param string $appname
 	* @param string $menu_title
 	* @param array $file
+	* @param string $type=null 'admin', 'preferences', 'favorites', ...
 	*/
-	function sidebox($appname,$menu_title,$file)
+	function sidebox($appname,$menu_title,$file,$type=null)
 	{
 		if((!$appname || ($appname==$GLOBALS['egw_info']['flags']['currentapp'] && $file)) && is_object($this->tpl))
 		{
+			// fix app admin menus to use admin.admin_ui.index loader
+			if (($type == 'admin' || $menu_title == lang('Admin')) && $appname != 'admin')
+			{
+				$file = preg_replace("/^(.*)menuaction=([^&]+)(.*)$/",
+					'$1menuaction=admin.admin_ui.index&load=$2$3&ajax=true', $file);
+			}
 			$this->tpl->set_var('lang_title',$menu_title);
 			$this->sidebox_content .= $this->tpl->fp('out','extra_blocks_header');
 

@@ -337,8 +337,9 @@ abstract class egw_framework
 	 * @param string $appname
 	 * @param string $menu_title
 	 * @param array $file
+	 * @param string $type=null 'admin', 'preferences', 'favorites', ...
 	 */
-	abstract function sidebox($appname,$menu_title,$file);
+	abstract function sidebox($appname,$menu_title,$file,$type=null);
 
 	/**
 	 * Returns the html from the closing div of the main application area to the closing html-tag
