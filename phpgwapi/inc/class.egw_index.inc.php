@@ -14,46 +14,47 @@
  * eGW wide index over all applications (superindex)
  *
  * This index allows a fulltext search over all applications (or of cause also a single app).
- * Whenever an applications stores an entry it calls: 
- * 
+ * Whenever an applications stores an entry it calls:
+ *
  * 		boolean egw_index::save($app,$id,$owner,array $fields,array $cat_id=null),
- * 
- * which calls, as the application do when is deletes an entry (!), 
- * 
+ *
+ * which calls, as the application do when is deletes an entry (!),
+ *
  * 		boolean egw_index::delete($app,$id)
- * 
- * and then splits all fields into keywords and add these to the index by 
- * 
+ *
+ * and then splits all fields into keywords and add these to the index by
+ *
  * 		boolean private egw_index::add($app,$id,$keyword).
- * 
+ *
  * Applications can then use the index to search for a given keyword (and optional application):
- * 
+ *
  * 		array egw_index::search($keyword,$app=null) or
- * 
+ *
  * 		foreach(new egw_index($keyword,$app=null) as $app_id => $title)
- * 
+ *
  * To also allow to search by a category or keyword part of it, the index also tracks the categories
- * of the entries. Applications can choose to only use it for category storage, or cat do it redundant in 
- * there own table too. To retrieve the categories of one or multiple entries: 
- * 
+ * of the entries. Applications can choose to only use it for category storage, or cat do it redundant in
+ * there own table too. To retrieve the categories of one or multiple entries:
+ *
  * 		array egw_index::cats($app,$ids)
- * 
+ *
  * Applications can use a sql (sub-)query to get the id's of there app matching a certain keyword and
  * include that in there own queries:
- * 
+ *
  * 		string egw_index::sql_ids_by_keyword($app,$keyword)
- * 
+ *
  * Please note: the index knows nothing about ACL, so it's the task of the application to ensure ACL rights.
  */
 
-class egw_index implements IteratorAggregate 
+class egw_index implements IteratorAggregate
 {
 	const INDEX_TABLE = 'egw_index';
+	const KEYWORD_TABLE = 'egw_index_keywords';
 	const INDEX_CAT_TABLE = 'egw_cat2entry';
 	const CAT_TABLE = 'egw_categories';
-	const SEPERATORS = "[ ,;.:\"'!/?=()+*><|\n\r-]";
+	const SEPARATORS = "/[ ,;.:\"'!\/?=()+*><|\n\r-]+/";
 	const MIN_KEYWORD_LEN = 4;
-	
+
 	/**
 	 * Private reference to the global db object
 	 *
@@ -81,7 +82,7 @@ class egw_index implements IteratorAggregate
 	{
 		$this->search_params = func_get_args();
 	}
-	
+
 	/**
 	 * Return the result of egw_index::search() as ArrayIterator
 	 *
@@ -124,7 +125,7 @@ class egw_index implements IteratorAggregate
 					($app ? array('ce_app' => $app) : array()),
 			),
 		),__LINE__,__FILE__,$order.' '.$sort,$start,$num_rows);
-		
+
 		// agregate the ids by app
 		$app_ids = $titles = $rows = array();
 		foreach($rs as $row)
@@ -159,18 +160,19 @@ class egw_index implements IteratorAggregate
 		return $matches;
 		//return iterator_to_array(new egw_index($keyword,$app,$order,$sort,$start,$num_rows),true);
 	}
-	
+
 	/**
 	 * Stores the keywords for an entry in the index
 	 *
 	 * @param string $app
-	 * @param string/int $id
+	 * @param string|int $id
 	 * @param string $owner eGW account_id of the owner of the entry, used to create a "private entry of ..." title
 	 * @param array $fields
-	 * @param array/int/string $cat_ids=null optional cat_id(s) either comma-separated or as array
-	 * @return int/boolean false on error, othwerwise number off added keywords
+	 * @param array|int|string $cat_ids=null optional cat_id(s) either comma-separated or as array
+	 * @param array $ignore_fields=array() keys of fields NOT to index
+	 * @return int|boolean false on error, othwerwise number off added keywords
 	 */
-	static function save($app,$id,$owner,array $fields,$cat_ids=null)
+	static function save($app,$id,$owner,array $fields,$cat_ids=null,array $ignore_fields=array())
 	{
 		if (!$app || !$id)
 		{
@@ -180,20 +182,19 @@ class egw_index implements IteratorAggregate
 		$keywords = array();
 		foreach($fields as $field)
 		{
-			$tmpArray = @preg_split(self::SEPERATORS,$field);
-			if (is_array($tmpArray)) {
-				foreach($tmpArray as $keyword)
+			if ($ignore_fields && in_array($field, $ignore_fields)) continue;
+
+			foreach(preg_split(self::SEPARATORS, $field) as $keyword)
+			{
+				if (!in_array($keyword,$keywords) && strlen($keyword) >= self::MIN_KEYWORD_LEN && !is_numeric($keyword))
 				{
-					if (!in_array($keyword,$keywords) && strlen($keyword) >= self::MIN_KEYWORD_LEN && !is_numeric($keyword))
-					{
-						$keywords[] = $keyword;
-					}
+					$keywords[] = $keyword;
 				}
 			}
 		}
 		// delete evtl. existing current keywords
 		self::delete($app,$id);
-		
+
 		// add the keywords
 		foreach($keywords as $key => &$keyword)
 		{
@@ -202,7 +203,7 @@ class egw_index implements IteratorAggregate
 				unset($keywords[$key]);
 			}
 		}
-		
+
 		// delete the existing cats
 		self::delete_cats($app,$id);
 
@@ -213,12 +214,12 @@ class egw_index implements IteratorAggregate
 		}
 		return count($keywords);
 	}
-	
+
 	/**
 	 * Delete the keywords for an entry or an entire application
 	 *
 	 * @param string $app
-	 * @param string/int $id=null
+	 * @param string|int $id=null
 	 */
 	static function delete($app,$id=null)
 	{
@@ -233,12 +234,12 @@ class egw_index implements IteratorAggregate
 		}
 		return !!self::$db->delete(self::INDEX_TABLE,$where,__LINE__,__FILE__);
 	}
-	
+
 	/**
 	 * Returns the cats of an entry or multiple entries
 	 *
 	 * @param string $app
-	 * @param string/int/array $ids
+	 * @param string|int|array $ids
 	 * @return array with cats or single id or id => array with cats pairs
 	 */
 	static function cats($app,$ids)
@@ -257,7 +258,7 @@ class egw_index implements IteratorAggregate
 		}
 		return is_array($ids) ? $cats : $cats[(int)$ids];
 	}
-	
+
 	/**
 	 * Get the SQL to fetch (eg. as subquery) the id's of a given app matching a keyword
 	 *
@@ -273,13 +274,13 @@ class egw_index implements IteratorAggregate
 			' AND cat_id IN (SELECT cat_id FROM '.self::CAT_TABLE.' WHERE cat_title '.self::$db->capabilities['case_insensitive_like'].' '.
 			self::$db->quote('%'.$keyword.'%').'))';
 	}
-	
+
 	/**
 	 * Stores one keyword for an entry in the index
 	 *
 	 * @todo reject keywords which are common words ...
 	 * @param string $app
-	 * @param string/int $id
+	 * @param string|int $id
 	 * @param string $keyword
 	 * @param int $owner=null
 	 * @return boolean true if keyword added, false if it was rejected in future
@@ -287,25 +288,40 @@ class egw_index implements IteratorAggregate
 	static private function add($app,$id,$keyword,$owner=null)
 	{
 		// todo: reject keywords which are common words, not sure how to do that for all languages
-		// maybey we can come up with some own little statistic analysis:
+		// mayby we can come up with some own little statistic analysis:
 		// all keywords more common then N % of the entries get deleted and moved to a separate table ...
-		
+		if (!($si = self::$db->select(self::KEYWORD_TABLE, '*', array('si_keyword' => $keyword))->fetch()))
+		{
+			self::$db->insert(self::KEYWORD_TABLE, array(
+				'si_keyword' => $keyword,
+			), false, __LINE__, __FILE__);
+
+			$si_id = self::$db->get_last_insert_id(self::KEYWORD_TABLE, 'si_id');
+		}
+		elseif ($si['si_ignore'])
+		{
+			return false;
+		}
+		else
+		{
+			$si_id = $si['si_id'];
+		}
 		self::$db->insert(self::INDEX_TABLE,array(
-			'si_keyword' => $keyword,
 			'si_app' => $app,
 			'si_app_id' => $id,
+			'si_id' => $si_id,
 			'si_owner' => $owner,
 		),false,__LINE__,__FILE__);
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Stores the cat_id(s) for an entry
 	 *
 	 * @param string $app
-	 * @param string/int $id
-	 * @param array/int/string $cat_ids=null optional cat_id(s) either comma-separated or as array
+	 * @param string|int $id
+	 * @param array|int|string $cat_ids=null optional cat_id(s) either comma-separated or as array
 	 * @param int $owner=null
 	 * @return boolean true on success, false on error
 	 */
@@ -330,12 +346,12 @@ class egw_index implements IteratorAggregate
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Delete the cat for an entry or an entire application
 	 *
 	 * @param string $app
-	 * @param string/int $id=null
+	 * @param string|int $id=null
 	 */
 	static private function delete_cats($app,$id=null)
 	{
@@ -348,9 +364,9 @@ class egw_index implements IteratorAggregate
 		{
 			$where['ce_app_id'] = $id;
 		}
-		return !!self::$db->delete(self::INDEX_CAT_TABLE,$where,__LINE__,__FILE__);	
+		return !!self::$db->delete(self::INDEX_CAT_TABLE,$where,__LINE__,__FILE__);
 	}
-	
+
 	/**
 	 * Init our static vars
 	 */

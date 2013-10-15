@@ -268,7 +268,7 @@ class applications
 				'id'      => (int)$row['app_id'],
 				'order'   => (int)$row['app_order'],
 				'version' => $row['app_version'],
-				'index'   => $row['app_index'],
+				'index'   => $app_name == 'admin' ? 'admin.admin_ui.index&ajax=true' : $row['app_index'],
 				'icon'    => $row['app_icon'],
 				'icon_app'=> $row['app_icon_app'],
 			);

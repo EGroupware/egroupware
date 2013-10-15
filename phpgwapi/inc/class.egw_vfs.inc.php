@@ -7,7 +7,7 @@
  * @package api
  * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2008-10 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2008-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @version $Id$
  */
 
@@ -1302,7 +1302,6 @@ class egw_vfs extends vfs_stream_wrapper
 	 *
 	 * @param string $path
 	 * @param boolean $force_download=false add header('Content-disposition: filename="' . basename($path) . '"'), currently not supported!
-	 * @todo get $force_download working through webdav
 	 * @return string
 	 */
 	static function download_url($path,$force_download=false)

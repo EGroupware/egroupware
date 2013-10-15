@@ -994,6 +994,12 @@ class setup
 	}
 
 	/**
+	 * Used to store and share password of user "anonymous" between calls to add_account from different app installs
+	 * @var unknown
+	 */
+	protected $anonpw;
+
+	/**
 	 * add an user account or a user group
 	 *
 	 * if the $username already exists, only the id is returned, no new user / group gets created
@@ -1005,13 +1011,20 @@ class setup
 	 * @param string/boolean $primary_group Groupname for users primary group or False for a group, default 'Default'
 	 * @param boolean $changepw user has right to change pw, default False = Pw change NOT allowed
 	 * @param string $email
+	 * @param string &$anonpw=null on return password for anonymous user
 	 * @return int the numerical user-id
 	 */
-	function add_account($username,$first,$last,$passwd,$primary_group='Default',$changepw=False,$email='')
+	function add_account($username,$first,$last,$passwd,$primary_group='Default',$changepw=False,$email='',&$anonpw=null)
 	{
 		$this->setup_account_object();
 
 		$primary_group_id = $primary_group ? $this->accounts->name2id($primary_group) : False;
+
+		if ($username == 'anonymous')
+		{
+			if (!isset($this->anonpw)) $this->anonpw = auth::randomstring(16);
+			$passwd = $anonpw = $this->anonpw;
+		}
 
 		if(!($accountid = $this->accounts->name2id($username)))
 		{

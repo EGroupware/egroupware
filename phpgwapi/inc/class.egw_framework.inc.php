@@ -178,10 +178,18 @@ abstract class egw_framework
 	 *
 	 * @param string $url	The url the link is for
 	 * @param string/array	$extravars	Extra params to be passed to the url
+	 * @param string $link_app=null if appname or true, some templates generate a special link-handler url
 	 * @return string	The full url after processing
 	 */
-	static function link($url, $extravars = '')
+	static function link($url, $extravars = '', $link_app=null)
 	{
+		// run all admin urls through admin.admin_ui.index to get admin tree and frameset
+		if (is_array($extravars) && ($link_app == 'admin' || substr($extravars['menuaction'], 0, 6) == 'admin.'))
+		{
+			$extravars['load'] = $extravars['menuaction'];
+			$extravars['menuaction'] = 'admin.admin_ui.index';
+			$extravars['ajax'] = 'true';	// must be last one
+		}
 		return $GLOBALS['egw']->session->link($url, $extravars);
 	}
 

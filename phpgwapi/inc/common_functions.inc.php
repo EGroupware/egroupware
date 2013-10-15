@@ -1438,7 +1438,7 @@ if (ini_get('register_globals'))
 	unregister_globals();
 }
 
-if (!function_exists('lang'))	// setup declares an own version
+if (!function_exists('lang') || defined('NO_LANG'))	// setup declares an own version
 {
 	/**
 	 * function to handle multilanguage support
