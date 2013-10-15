@@ -2384,16 +2384,27 @@ class infolog_ui
 				$mailobject->openConnection();
 				foreach ($_attachments as $attachment)
 				{
-					if ($attachment['type'] == 'MESSAGE/RFC822')
+					//error_log(__METHOD__.__LINE__.array2string($attachment));
+					if (trim(strtoupper($attachment['type'])) == 'MESSAGE/RFC822' && !empty($attachment['uid']) && !empty($attachment['folder']))
 					{
 						$mailobject->reopen($attachment['folder']);
 
-						$mailcontent = $mailClass::get_mailcontent($mailobject,$attachment['uid'],$attachment['partID'],$attachment['folder']);
-						//_debug_array($mailcontent['attachments']);
-						foreach($mailcontent['attachments'] as $tmpattach => $tmpval)
-						{
-							$attachments[] = $tmpval;
-						}
+						// get the message itself, and attach it, as we are able to display it in egw
+						// instead of fetching only the attachments attached files (as we did previously)
+						$message = $mailobject->getMessageRawBody($attachment['uid'],$attachment['partID']);
+						$headers = $mailobject->getMessageHeader($attachment['uid'],$attachment['partID'],true);
+						$subject = str_replace('$$','__',($headers['SUBJECT']?$headers['SUBJECT']:lang('(no subject)')));
+						$attachment_file =tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+						$tmpfile = fopen($attachment_file,'w');
+						fwrite($tmpfile,$message);
+						fclose($tmpfile);
+						$size = filesize($attachment_file);
+						$attachments[] = array(
+								'name' => trim($subject).'.eml',
+								'mimeType' => 'message/rfc822',
+								'tmp_name' => $attachment_file,
+								'size' => $size,
+							);
 					}
 					else
 					{
