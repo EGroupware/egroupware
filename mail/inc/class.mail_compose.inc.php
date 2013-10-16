@@ -2262,7 +2262,7 @@ class mail_compose
 			#error_log("(re)opened Connection");
 		}
 		// if copying mail to folder, or saving mail to infolog, we need to gather the needed information
-		if (count($folder) > 0 || $_formData['to_infolog'] == 'on') {
+		if (count($folder) > 0 || $_formData['to_infolog'] == 'on' || $_formData['to_tracker'] == 'on') {
 			foreach((array)$this->sessionData['bcc'] as $address) {
 				$address_array  = imap_rfc822_parse_adrlist((get_magic_quotes_gpc()?stripslashes($address):$address),'');
 				foreach((array)$address_array as $addressObject) {

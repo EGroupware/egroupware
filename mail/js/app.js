@@ -1134,6 +1134,156 @@ app.mail = AppJS.extend(
 	},
 
 	/**
+	 * 
+	 */
+	displayAttachment: function(tag_info, widget)
+	{
+		//console.log(this, arguments, widget);
+		var mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
+		var attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[filename\]/,'')];
+		//console.log(mailid,attgrid.partID,attgrid.filename,attgrid.mimetype);
+		var url = window.egw_webserverUrl+'/index.php?';
+		var width;
+		var height;
+		var windowName ='mail';
+		switch(attgrid.type.toUpperCase())
+		{
+			case 'MESSAGE/RFC822':
+				url += 'menuaction=mail.mail_ui.displayMessage';	// todo compose for Draft folder
+				url += '&id='+mailid;
+				url += '&part='+attgrid.partID;
+				url += '&is_winmail='+attgrid.winmailFlag;
+				windowName = windowName+'displayMessage_'+mailid+'_'+attgrid.partID;
+				width = 870;
+				height = egw_getWindowOuterHeight();
+				break;
+			case 'IMAGE/JPEG':
+			case 'IMAGE/PNG':
+			case 'IMAGE/GIF':
+			case 'IMAGE/BMP':
+			case 'APPLICATION/PDF':
+			case 'TEXT/PLAIN':
+			case 'TEXT/HTML':
+			case 'TEXT/DIRECTORY':
+/*
+				$sfxMimeType = $value['mimeType'];
+				$buff = explode('.',$value['name']);
+				$suffix = '';
+				if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
+				if (!empty($suffix)) $sfxMimeType = mime_magic::ext2mime($suffix);
+				if (strtoupper($sfxMimeType) == 'TEXT/VCARD' || strtoupper($sfxMimeType) == 'TEXT/X-VCARD')
+				{
+					$attachments[$key]['mimeType'] = $sfxMimeType;
+					$value['mimeType'] = strtoupper($sfxMimeType);
+				}
+*/
+			case 'TEXT/X-VCARD':
+			case 'TEXT/VCARD':
+			case 'TEXT/CALENDAR':
+			case 'TEXT/X-VCALENDAR':
+				url += 'menuaction=mail.mail_ui.getAttachment';	// todo compose for Draft folder
+				url += '&id='+mailid;
+				url += '&part='+attgrid.partID;
+				url += '&is_winmail='+attgrid.winmailFlag;
+				windowName = windowName+'displayAttachment_'+mailid+'_'+attgrid.partID;
+				var reg = '800x600';
+				var reg2;
+				// handle calendar/vcard
+				if (attgrid.type.toUpperCase()=='TEXT/CALENDAR')
+				{
+					windowName = 'maildisplayEvent_'+mailid+'_'+attgrid.partID;
+					reg2 = egw.link_get_registry('calendar');
+					if (typeof app_registry['view'] != 'undefined' && typeof app_registry['view_popup'] != 'undefined' )
+					{
+						reg = app_registry['view_popup'];
+					}
+				}
+				if (attgrid.type.toUpperCase()=='TEXT/X-VCARD' || attgrid.type.toUpperCase()=='TEXT/VCARD')
+				{
+					windowName = 'maildisplayContact_'+mailid+'_'+attgrid.partID;
+					reg2 = egw.link_get_registry('addressbook');
+					if (typeof app_registry['add'] != 'undefined' && typeof app_registry['add_popup'] != 'undefined' )
+					{
+						reg = app_registry['add_popup'];
+					}
+				}
+				var w_h =reg.split('x');
+				width = w_h[0];
+				height = w_h[1];
+				break;
+			default:
+				url += 'menuaction=mail.mail_ui.getAttachment';	// todo compose for Draft folder
+				url += '&id='+mailid;
+				url += '&part='+attgrid.partID;
+				url += '&is_winmail='+attgrid.winmailFlag;
+				windowName = windowName+'displayAttachment_'+mailid+'_'+attgrid.partID;
+				width = 870;
+				height = 600;
+				//document.location = url;
+				//return;
+		}
+		egw_openWindowCentered(url,windowName,width,height);
+	},
+
+	saveAttachment: function(tag_info, widget)
+	{
+		//console.log(this, arguments);
+		var mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
+		var attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[save\]/,'')];
+		//console.log(mailid,attgrid.partID,attgrid.filename,attgrid.mimetype);
+		var url = window.egw_webserverUrl+'/index.php?';
+		var width;
+		var height;
+		var windowName ='mail';
+		url += 'menuaction=mail.mail_ui.getAttachment';	// todo compose for Draft folder
+		url += '&mode=save';
+		url += '&id='+mailid;
+		url += '&part='+attgrid.partID;
+		url += '&is_winmail='+attgrid.winmailFlag;
+		document.location = url;
+	},
+
+	saveAttachmentToVFS: function(tag_info, widget)
+	{
+		//console.log(this, arguments);
+		var mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
+		var attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[saveAsVFS\]/,'')];
+		//console.log(mailid,attgrid.partID,attgrid.filename,attgrid.mimetype);
+		var url = window.egw_webserverUrl+'/index.php?';
+		var width=640;
+		var height=570;
+		var windowName ='mail';
+		url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
+		url += '&mode=saveas';
+		url += '&id='+mailid+'::'+attgrid.partID+'::'+attgrid.winmailFlag;
+		url += '&name='+attgrid.filename;
+		url += '&type='+attgrid.type.toLowerCase();
+		url += '&method=mail.mail_ui.vfsSaveAttachment';
+		url += '&label='+egw.lang('Save');
+		egw_openWindowCentered(url,windowName,width,height);
+	},
+
+	saveAllAttachmentsToVFS: function(tag_info, widget)
+	{
+		var mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
+		var attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments');
+		console.log(mailid,attgrid);
+		var url = window.egw_webserverUrl+'/index.php?';
+		var width=640;
+		var height=570;
+		var windowName ='mail';
+		url += 'menuaction=filemanager.filemanager_select.select';	// todo compose for Draft folder
+		url += '&mode=select-dir';
+		url += '&method=mail.mail_ui.vfsSaveAttachment';
+		url += '&label='+egw.lang('Save all');
+		for (i=0;i<attgrid.length;i++)
+		{
+			if (attgrid[i] != null) url += '&id['+i+']='+mailid+'::'+attgrid[i].partID+'::'+attgrid[i].winmailFlag+'::'+attgrid[i].filename;
+		}
+		egw_openWindowCentered(url,windowName,width,height);
+	},
+
+	/**
 	 * Save a message to filemanager
 	 *
 	 * @param _action
@@ -1215,7 +1365,7 @@ app.mail = AppJS.extend(
 			}
 		}
 		//alert('mail_infolog('+_elems[0].id+')');return;
-		console.log(_action, _elems);
+		//console.log(_action, _elems);
 		var url = window.egw_webserverUrl+'/index.php?';
 		url += 'menuaction=infolog.infolog_ui.import_mail';	// todo compose for Draft folder
 		url += '&rowid='+_elems[0].id;

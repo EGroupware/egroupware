@@ -1422,14 +1422,14 @@ unset($query['actions']);
 						}
 						if (count($attachments)==1)
 						{
-							$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folder);
+							$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folder,true);
 							$imageTag = json_encode($attachments);
 							$image = html::image('mail','attach',$attachments[0]['name'].(!empty($attachments[0]['mimeType'])?' ('.$attachments[0]['mimeType'].')':''));
 						}
 					}
 					if (count($attachments)>1)
 					{
-						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folder);
+						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folder,true);
 						$imageTag = json_encode($attachments);
 						$image = html::image('mail','attach',lang('%1 attachments',count($attachments)));
 					}
@@ -1721,9 +1721,10 @@ unset($query['actions']);
 	 * @param string $rowID, rowid of the message
 	 * @param int $uid, uid of the message
 	 * @param string $mailbox, the mailbox identifier
-	 * @return string html or empty string
+	 * @param boolean $_returnFullHTML, flag wether to return HTML or data array
+	 * @return mixed array/string data array or html or empty string
 	 */
-	static function createAttachmentBlock($attachments, $rowID, $uid, $mailbox)
+	static function createAttachmentBlock($attachments, $rowID, $uid, $mailbox,$_returnFullHTML=false)
 	{
 		$attachmentHTMLBlock='';
 		if (is_array($attachments) && count($attachments) > 0) {
@@ -1739,11 +1740,14 @@ unset($query['actions']);
 				//if (mb_convert_variables("ISO-8859-1","UTF-8",$value['name'])){echo "Juhu utf8 2 ISO\n";};
 				//echo $value['name']."\n";
 				$filename=htmlentities($value['name'], ENT_QUOTES, $detectedCharSet);
-
 				$attachmentHTML[$key]['filename']= ($value['name'] ? ( $filename ? $filename : $value['name'] ) : lang('(no subject)'));
+				$attachmentHTML[$key]['type']=$value['mimeType'];
 				$attachmentHTML[$key]['mimetype']=mime_magic::mime2label($value['mimeType']);
 				$attachmentHTML[$key]['size']=egw_vfs::hsize($value['size']);
 				$attachmentHTML[$key]['attachment_number']=$key;
+				$attachmentHTML[$key]['partID']=$value['partID'];
+				$attachmentHTML[$key]['winmailFlag']=$value['is_winmail'];
+				$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "mail_DisplayNone";
 
 				switch(strtoupper($value['mimeType']))
 				{
@@ -1753,7 +1757,6 @@ unset($query['actions']);
 							'menuaction'	=> 'mail.mail_ui.displayMessage',
 							'id'		=> $rowID,
 							'part'		=> $value['partID'],
-							'mailbox'	=> base64_encode($mailbox),
 							'is_winmail'    => $value['is_winmail']
 						);
 						$windowName = 'displayMessage_'. $rowID.'_'.$value['partID'];
@@ -1849,6 +1852,7 @@ unset($query['actions']);
 					// add save-all icon for first attachment
 					if (!$key && count($attachments) > 1)
 					{
+						$attachmentHTML[$key]['classSaveAllPossiblyDisabled'] = "";
 						foreach ($attachments as $ikey => $value)
 						{
 							//$rowID
@@ -1876,7 +1880,7 @@ unset($query['actions']);
 			}
 			$attachmentHTMLBlock .= "</table>";
 		}
-		return $attachmentHTMLBlock;
+		return ($_returnFullHTML?$attachmentHTMLBlock:$attachmentHTML);
 	}
 
 	/**
@@ -2807,18 +2811,25 @@ blockquote[type=cite] {
 		if (!empty($content))
 		{
 			error_log(__METHOD__.__LINE__.array2string($content));
-			$content['divImportArea']['vfsfile'] = array(
-				'name' => egw_vfs::basename($content['divImportArea']['vfsfile']),
-				'type' => egw_vfs::mime_content_type($content['divImportArea']['vfsfile']),
-				'file' => egw_vfs::PREFIX.$content['divImportArea']['vfsfile'],
-				'size' => filesize(egw_vfs::PREFIX.$content['divImportArea']['vfsfile']),
-			);
+			if ($content['divImportArea']['vfsfile'])
+			{
+				$file = $content['divImportArea']['vfsfile'] = array(
+					'name' => egw_vfs::basename($content['divImportArea']['vfsfile']),
+					'type' => egw_vfs::mime_content_type($content['divImportArea']['vfsfile']),
+					'file' => egw_vfs::PREFIX.$content['divImportArea']['vfsfile'],
+					'size' => filesize(egw_vfs::PREFIX.$content['divImportArea']['vfsfile']),
+				);
+			}
+			else
+			{
+				$file = $content['divImportArea']['uploadForImport'];
+			}
 			$destination = $content['divImportArea']['FOLDER'][0];
 			$importID = mail_bo::getRandomString();
 			$importFailed = false;
 			try
 			{
-				$messageUid = $this->importMessageToFolder($content['divImportArea']['vfsfile'],$destination,$importID);
+				$messageUid = $this->importMessageToFolder($file,$destination,$importID);
 			    $linkData = array
 			    (
 					'id'		=> $this->createRowID($destination, $messageUid, true),
