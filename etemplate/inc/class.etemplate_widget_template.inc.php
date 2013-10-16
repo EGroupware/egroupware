@@ -62,6 +62,9 @@ class etemplate_widget_template extends etemplate_widget
 				{
 					list($c_app, $c_main, $c_sub) = explode('.',$c_name, 3);
 					if($name == $c_sub) return $c_template;
+					
+					$parts = explode('.',$c_name);
+					if($name == $parts[count($parts)-1]) return $c_template;
 				}
 			}
 			// Template not found, try again with content expansion

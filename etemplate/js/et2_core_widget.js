@@ -643,7 +643,15 @@ var et2_widget = Class.extend(
 				// Try again, but skip the fancy stuff
 				// TODO: Figure out why the getEntry() call doesn't always work
 				var entry = modifications.data[_node.getAttribute("id")];
-				if(entry) this.egw().debug("warn", "getEntry("+_node.getAttribute("id")+") failed, but the data is there.", modifications, entry);
+				if(entry)
+				{
+					this.egw().debug("warn", "getEntry("+_node.getAttribute("id")+") failed, but the data is there.", modifications, entry);
+				}
+				else
+				{
+					// Try the root, in case a namespace got missed
+					var entry = modifications.getRoot().getEntry(_node.getAttribute("id"));
+				}
 			}
 			if(entry && entry.type)
 			{
