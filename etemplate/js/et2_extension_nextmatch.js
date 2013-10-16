@@ -1205,7 +1205,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		{
 			// Keep the name of the template, as we'll free up the widget after parsing
 			this.template = _value;
-			template.loadingFinished();
+			
 			// Fetch the grid element and parse it
 			var definitionGrid = template.getChildren()[0];
 			if (definitionGrid && definitionGrid instanceof et2_grid)
@@ -1242,7 +1242,11 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		};
 		
 		// Template might not be loaded yet, defer parsing
-		$j(template.getDOMNode()).on("load", 
+		var promise = []
+		template.loadingFinished(promise);
+		
+		// Wait until template (& children) are done
+		jQuery.when.apply(null, promise).done(
 			jQuery.proxy(function() {
 				parse.call(this, template);
 				this.dynheight.initialized = false;
@@ -1656,7 +1660,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 	_build_left_right: function(left_or_right, template_name)
 	{
 		var existing = this.headers[left_or_right == "left" ? 0 : 1];
-		if(existing)
+		if(existing && existing._type)
 		{
 			if(existing.id == template_name) return;
 			existing.free();
@@ -1666,11 +1670,12 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 		// Load the template
 		var header = et2_createWidget("template", {"id": template_name}, this);
 		jQuery(header.getDOMNode()).addClass(left_or_right == "left" ? "et2_hbox_left":"et2_hbox_right").addClass("nm_header");
-		this.headers.push(header);
+		this.headers[left_or_right == "left" ? 0 : 1] = header;
 		$j(header.getDOMNode()).on("load", jQuery.proxy(function() {
-			header.loadingFinished();
+			//header.loadingFinished();
 			this._bindHeaderInput(header);
 		},this));
+		header.loadingFinished();
 	},
 
 	/**
@@ -1873,9 +1878,12 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				return this.filters[0];
 			}
 		}
-		for(var i = 0; i < this.headers.length; i++)
+		if(_sender && _sender._type == "template")
 		{
-			if(_sender.id == this.headers[i].id && _sender._parent == this) return this.header_div[0];
+			for(var i = 0; i < this.headers.length; i++)
+			{
+				if(_sender.id == this.headers[i].id && _sender._parent == this) return this.header_div[0];
+			}
 		}
 		return null;
 	},

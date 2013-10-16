@@ -730,26 +730,68 @@ var et2_widget = Class.extend(
 	 * function is called, the DOM-Tree is created. loadingFinished is
 	 * recursively called for all child elements. Do not directly override this
 	 * function but the doLoadingFinished function which is executed before
-	 * descending deeper into the DOM-Tree
+	 * descending deeper into the DOM-Tree.
+	 * 
+	 * Some widgets (template) do not load immediately because they request
+	 * additional resources via AJAX.  They will return a Deferred Promise object.
+	 * If you call loadingFinished(promises) after creating such a widget
+	 * programmatically, you might need to wait for it to fully complete its
+	 * loading before proceeding.  In that case use:
+	 * <code>
+	 * var promises = [];
+	 * widget.loadingFinished(promises);
+	 * jQuery.when.apply(null, promises).done( doneCallback );
+	 * </code>
+	 * @see {@link http://api.jquery.com/category/deferred-object/|jQuery Deferred}
+	 * 
+	 * @param {Promise[]} promises List of promises from widgets that are not done.  Pass an empty array, it will be filled if needed.
 	 */
-	loadingFinished: function() {
+	loadingFinished: function(promises) {
 		// Call all availble setters
 		this.initAttributes(this.options);
+		
+		// Make sure promises is defined to avoid errors.  
+		// We'll warn (below) if programmer should have passed it.
+		if(typeof promises == "undefined")
+		{
+			promises = [];
+			var warn_if_deferred = true;
+		}
 
-		if (this.doLoadingFinished())
+		var loadChildren = function()
 		{
 			// Descend recursively into the tree
 			for (var i = 0; i < this._children.length; i++)
 			{
 				try
 				{
-					this._children[i].loadingFinished();
+					this._children[i].loadingFinished(promises);
 				}
 				catch (e)
 				{
 					egw.debug("error", "There was an error with a widget:\nError:%o\nProblem widget:%o",e.valueOf(),this._children[i],e.stack);
 				}
 			}
+		};
+		
+		var result = this.doLoadingFinished();
+		if(typeof result == "boolean" && result)
+		{
+			// Simple widget finishes nicely
+			loadChildren.apply(this, arguments);
+		}
+		else if (typeof result == "object" && result.done)
+		{
+			// Warn if list was not provided
+			if(warn_if_deferred)
+			{
+				// Might not be a problem, but if you need the widget to be really loaded, it could be
+				egw.debug("warning", "Loading was deferred for widget %o, but creator is not checking.  Pass a list to loadingFinished().");
+			}
+			// Widget is waiting.  Add to the list
+			promises.push(result);
+			// Fihish loading when it's finished
+			result.done(jQuery.proxy(loadChildren, this));
 		}
 	},
 	
@@ -779,6 +821,15 @@ var et2_widget = Class.extend(
 		}
 	},
 
+	/**
+	 * Does specific post-processing after the widget is loaded.  Most widgets should not
+	 * need to do anything here, it should all be done before.
+	 * 
+	 * @return {boolean|Promise} True if the widget is fully loaded, false to avoid procesing children,
+	 * or a Promise if loading is not actually finished (eg. waiting for AJAX)
+	 * 
+	 * @see {@link http://api.jquery.com/deferred.promise/|jQuery Promise}
+	 */
 	doLoadingFinished: function() {
 		return true;
 	},

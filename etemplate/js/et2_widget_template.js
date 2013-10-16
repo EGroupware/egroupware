@@ -77,8 +77,8 @@ var et2_template = et2_DOMWidget.extend(
 
 		this.div = document.createElement("div");
 		
-		// Flag to indicate that loading is finished
-		this.loading = false;
+		// Deferred object so we can load via AJAX
+		this.loading = jQuery.Deferred();
 
 		if (this.id != "" || this.options.template)
 		{
@@ -108,8 +108,6 @@ var et2_template = et2_DOMWidget.extend(
 
 					if(splitted.length)
 					{
-						// Still loading, don't fire loading finished
-						this.loading = true;
 						et2_loadXMLFromURL(path, function(_xmldoc) {
 							var templates = this.getInstanceManager().templates || {};
 							// Scan for templates and store them
@@ -123,13 +121,7 @@ var et2_template = et2_DOMWidget.extend(
 							this.loadFromXML(templates[template_name]);
 							
 							// Update flag
-							this.loading = false;
-							
-							// Fire the load event (after)
-							var self = this;
-							window.setTimeout(function() {
-								$j(self.getDOMNode()).trigger('load');
-							},0);
+							this.loading.resolve();
 							
 						}, this);
 					}
@@ -140,17 +132,16 @@ var et2_template = et2_DOMWidget.extend(
 			{
 				this.egw().debug("log", "Loading template from XML: ", template_name);
 				this.loadFromXML(xml);
-				// Don't call this here - premature
+				// Don't call this here - done by caller, or on whole widget tree
 				//this.loadingFinished();
-				// Fire the load event (after)
-				var self = this;
-				window.setTimeout(function() {
-					$j(self.getDOMNode()).trigger('load');
-				},0);
+				
+				// But resolve the promise
+				this.loading.resolve();
 			}
 			else
 			{
 				this.egw().debug("warn", "Unable to find XML for ", template_name);
+				this.loading.reject();
 			}
 		}
 	},
@@ -175,13 +166,17 @@ var et2_template = et2_DOMWidget.extend(
 	},
 		
 	/**
-	 * Override to trigger a load event, to facilitate processing when the xml file
-	 * is loaded asyncronously
+	 * Override to return the promise for deferred loading
 	 */
 	doLoadingFinished: function() {
-		if(this.loading) return false;
+		// Apply parent now, which actually puts into the DOM
 		this._super.apply(this, arguments);
-		return true;
+		
+		// Fire load event when done loading
+		this.loading.done(jQuery.proxy(function() {$j(this).trigger("load");},this.div));
+		
+		// Not done yet, but widget will let you know
+		return this.loading.promise();
 	}
 });
 et2_register_widget(et2_template, ["template"]);

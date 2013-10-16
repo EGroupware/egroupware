@@ -245,8 +245,11 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			// Read the XML structure of the requested template
 			this.widgetContainer.loadFromXML(this.templates[_name || missing_name]);
 	
+			// List of Promises from widgets that are not quite fully loaded
+			var deferred = [];
+			
 			// Inform the widget tree that it has been successfully loaded.
-			this.widgetContainer.loadingFinished();
+			this.widgetContainer.loadingFinished(deferred);
 	
 			// Insert the document fragment to the DOM Container
 			this.DOMContainer.appendChild(frag);
@@ -257,20 +260,24 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 				etemplate2._byTemplate[_name] = [];
 			}
 			etemplate2._byTemplate[_name].push(this);
-	
-			// Trigger the "resize" event
-			this.resize();
-	
-			if(typeof _callback == "function")
-			{
-				_callback.call(window,this);
-			}
-			if(_callback != app_callback)
-			{
-				app_callback.call(window,this);
-			}
-	
-			$j(this.DOMContainer).trigger('load', this);
+
+			// Wait for everything to be loaded, then finish it up
+			jQuery.when.apply(null, deferred).done(jQuery.proxy(function() {
+				// Trigger the "resize" event
+				this.resize();
+
+				// Tell others about it
+				if(typeof _callback == "function")
+				{
+					_callback.call(window,this);
+				}
+				if(_callback != app_callback)
+				{
+					app_callback.call(window,this);
+				}
+
+				$j(this.DOMContainer).trigger('load', this);
+			},this));
 		};
 		
 		
