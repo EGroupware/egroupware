@@ -165,7 +165,12 @@ var et2_link_to = et2_inputWidget.extend(
 		this._super.apply(this, arguments);
 
 		var self = this;
-
+		if(this.link_entry && this.vfs_select && this.file_upload)
+		{
+			// Already done
+			return false;
+		}
+		
 		// Link-to
 		var link_entry_attrs = {
 			id: this.id + '_link_entry',
@@ -1457,6 +1462,11 @@ var et2_link_add = et2_inputWidget.extend(
 	},
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
+		if(this.app_select && this.button)
+		{
+			// Already done
+			return false;
+		}
 		this.app_select = et2_createWidget("link-apps", jQuery.extend({},this.options,{'id': this.options.id + 'app'}) ,this);
 		this.div.append(this.app_select.getDOMNode());
 		this.button = et2_createWidget("button", {label: this.egw().lang("add")}, this);
