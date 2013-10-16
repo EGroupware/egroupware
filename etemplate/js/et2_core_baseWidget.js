@@ -199,11 +199,11 @@ var et2_baseWidget = et2_DOMWidget.extend(et2_IAligned,
 		this._super.apply(this, arguments);
 
 		// Add the binding for the click handler
-		if (this.node)
+		if (this.node && typeof this.onclick == 'function')
 		{
 			$j(this.node).bind("click.et2_baseWidget", this, function(e) {
 				return e.data.click.call(e.data, this);
-			});
+			}).addClass('et2_clickable');
 		}
 
 		// Update the statustext
