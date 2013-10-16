@@ -20,26 +20,31 @@
 					<description value="Status:"/>
 					<hbox>
 						<menulist>
-							<menupopup id="status"/>
+							<menupopup id="status" onchange='app.mail.vacationFilterStatusChange'/>
 						</menulist>
+						<date id="start_date"/>
+						<date id="end_date" />
 					</hbox>
 				</row>
 				<row>
 					<description value="Respond to mail sent to:"/>
-					<hbox>
+					<vbox>
 						<taglist-email id="addresses" width="40%" allowFreeEntries="true" />
 						<button class="$cont[hideIfSieveDisabled]" label="Add all my aliases" id="AllAddresses" onclick='app.mail.sieve_vac_all_aliases()'/>
-					</hbox>
+					</vbox>
 				</row>
 				<row>
 					<description value="Every:"/>
 					<textbox type="integer" id="days" min="1" max="31"/>
 				</row>
 				<row>
-					<vbox>
+					<hbox>
 						<description value="With message:"/>
+					</hbox>
+					<vbox>
+						<textbox multiline="true" id="text" width="40%"/>
+						<description id="by_date_label" value="You can use $$start$$ for the above start date and $$end$$ for the end date."/>
 					</vbox>
-					<textbox multiline="true" id="text" width="40%"/>
 				</row>
 				<row>
 					<description value="Forward messages:"/>
@@ -59,9 +64,9 @@
 				</row>
 				<row>
 					<hbox>
-						<button class="$cont[hideIfSieveDisabled]" label="Save" id="button[save]"/>
-						<button class="$cont[hideIfSieveDisabled]" label="Apply" id="button[apply]"/>
-						<button class="$cont[hideIfSieveDisabled]" label="Cancel" id="button[cancel]"/>
+						<button label="Save" id="button[save]" class="$cont[hideIfSieveDisabled]"/>
+						<button label="Apply" id="button[apply]" class="$cont[hideIfSieveDisabled]"/>
+						<button label="Cancel" id="button[cancel]" class="$cont[hideIfSieveDisabled]"/>
 					</hbox>
 					<description/>
 				</row>

@@ -127,6 +127,11 @@ app.mail = AppJS.extend(
 			//alert('resizing to'+(w_h[0]?w_h[0]:870)+','+(w_h[1]?w_h[1]:egw_getWindowOuterHeight()));
 			window.resizeTo((w_h[0]?w_h[0]:870),(w_h[1]?w_h[1]:(screen.availHeight>egw_getWindowOuterHeight()?screen.availHeight:egw_getWindowOuterHeight())));
 		}
+		//Vacation By_date filter
+		if (typeof et2.templates['mail.sieve.vacation'] != 'undefined')
+		{
+			this.vacationFilterStatusChange();
+		}
 	},
 
 	/**
@@ -1119,7 +1124,7 @@ app.mail = AppJS.extend(
 
 	/**
 	 * User clicked an address (FROM, TO, etc)
-	 * 
+	 *
 	 * @param object tag_info with values for attributes id, label, title, ...
 	 * @param et2_taglist widget
 	 */
@@ -1566,7 +1571,7 @@ app.mail = AppJS.extend(
 	{
 		this.et2_obj.submit();
 	},
-	
+
 	/**
 	 * Focus handler for folder, address, reject textbox/taglist to automatic check associated radio button
 	 */
@@ -1585,6 +1590,25 @@ app.mail = AppJS.extend(
 		console.log('say something');
 		addr.select_all();
 		//addr.set_autocomplete_url('mail.mail_compose.ajax_searchAddress');
+	},
+
+	/**
+	 * Disable/Enable date widgets on vacation seive rules form when status is "by_date"
+	 *
+	 */
+	vacationFilterStatusChange: function()
+	{
+		var status = this.et2.getWidgetById('status');
+		var s_date = this.et2.getWidgetById('start_date');
+		var e_date = this.et2.getWidgetById('end_date');
+		var by_date_label = this.et2.getWidgetById('by_date_label');
+
+		if (status && s_date && e_date && by_date_label)
+		{
+			s_date.set_disabled(status.get_value() != "by_date");
+			e_date.set_disabled(status.get_value() != "by_date");
+			by_date_label.set_disabled(status.get_value() != "by_date");
+		}
 	},
 
 	/**

@@ -448,11 +448,6 @@ class mail_sieve
 			die('You should not be here!');
 		}
 
-		if ($this->timed_vacation)
-		{
-			include_once(EGW_API_INC.'/class.jscalendar.inc.php');
-			$jscal = new jscalendar();
-		}
 		if($this->bosieve->getScript($this->scriptName))
 		{
 			if(PEAR::isError($error = $this->bosieve->retrieveRules($this->scriptName)) )
@@ -532,12 +527,14 @@ class mail_sieve
 		if ($this->mailbo->icServer->enableSieve)
 		{
 			$vacRules = $this->getVacation($vacation,$msg);
-
+			if ($this->timed_vacation)
+			{
+				include_once(EGW_API_INC.'/class.jscalendar.inc.php');
+				$ByDate = array('by_date' => lang('By date'));
+			}
 			if (!is_array($content))
 			{
 				$content = $vacation = $vacRules['vacation'];
-				//$content['addresses'] = array_merge($vacRules['allAlliances'],$content['addresses']);
-				//$vacRules['predefinedAddresses'] = array_merge($content['addresses'],$vacRules['predefinedAddresses']);
 				if (empty($vacation['addresses'])) $content['addresses']='';
 				if (!empty($vacation['forwards']))
 				{
@@ -572,7 +569,6 @@ class mail_sieve
 						{
 							//error_log(__METHOD__. 'content:' . array2string($content));
 							$newVacation = $content;
-							$newVacation ['status'] = $content ['status'];
 							if (empty($preferences->preferences['prefpreventforwarding']) ||
 								$preferences->preferences['prefpreventforwarding'] == 0 )
 							{
@@ -597,13 +593,11 @@ class mail_sieve
 							if ($content['addresses'])
 							{
 								$newVacation ['addresses'] = $content['addresses'];
-								error_log(__METHOD__. '() Respond addresses :'. __LINE__. array2string($content['addresses']));
 							}
 							else
 							{
 
 							}
-							//_debug_array($newVacation);
 
 							if($this->checkRule($newVacation,$checkAddresses))
 							{
@@ -614,7 +608,6 @@ class mail_sieve
 								}
 								else
 								{
-									//error_log(__METHOD__.__LINE__.array2string($newVacation));
 									if (!isset($newVacation['scriptName']) || empty($newVacation['scriptName'])) $newVacation['scriptName'] = $this->scriptName;
 									$this->bosieve->setAsyncJob($newVacation);
 									$msg = lang('Vacation notice sucessfully updated.');
@@ -641,9 +634,11 @@ class mail_sieve
 				),
 				'addresses' => array_combine($vacRules['aliases'],$vacRules['aliases']),
 			);
-
+			if (!empty($ByDate))
+			{
+				$sel_options['status'] += $ByDate;
+			}
 			$content['msg'] = $msg;
-			error_log(__METHOD__. '() sel_option ' . array2string($sel_options));
 		}
 		else
 		{
@@ -797,7 +792,7 @@ class mail_sieve
 			'data' => $data,
 			'DOMNodeID' => 'mail-sieve-index'
 		));
-		error_log(__METHOD__. "RESPONSE".array2string($response));
+		//error_log(__METHOD__. "RESPONSE".array2string($response));
 	}
 
 	/**
