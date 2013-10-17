@@ -364,7 +364,7 @@ class felamimail_hooks
 				'label'  => 'allow images from external sources in html emails',
 				'name'   => 'allowExternalIMGs',
 				'xmlrpc' => True,
-				'admin'  => True,
+				'admin'  => False,
 				'forced' => true,
 			),
 			'trashFolder' => array(
