@@ -1613,6 +1613,8 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			if (!count($recurrences)) $recurrences[] = 0;   // insert the default recurrence
 
+			$delete_deleted = array();
+
 			// update participants
 			foreach($participants as $uid => $status)
 			{
@@ -1633,6 +1635,22 @@ ORDER BY cal_user_type, cal_usre_id
 						'cal_user_id' 	  => $id,
 					),__LINE__,__FILE__,'calendar');
 				}
+				// for new or changed group-invitations, remove previously deleted members, so they show up again
+				if ($uid < 0)
+				{
+					$delete_deleted = array_merge($delete_deleted, $GLOBALS['egw']->accounts->members($uid, true));
+				}
+			}
+			if ($delete_deleted)
+			{
+				$this->db->delete($this->user_table, $where=array(
+					'cal_id' => $cal_id,
+					'cal_recur_date' => $recurrences,
+					'cal_user_type' => 'u',
+					'cal_user_id' => array_unique($delete_deleted),
+					'cal_status' => 'X',
+				),__LINE__,__FILE__,'calendar');
+				//error_log(__METHOD__."($cal_id, ".array2string($participants).", since=$change_since, add_only=$add_only) db->delete('$this->user_table', ".array2string($where).") affected ".$this->db->affected_rows().' rows');
 			}
 		}
 		return true;
@@ -1665,9 +1683,11 @@ ORDER BY cal_user_type, cal_usre_id
 
 		if (is_numeric($status)) $status = $status_code_short[$status];
 
+		if (!$user_type) $user_type == 'u';
+
 		$where = array(
 			'cal_id'		=> $cal_id,
-			'cal_user_type'	=> $user_type ? $user_type : 'u',
+			'cal_user_type'	=> $user_type,
 			'cal_user_id'   => $user_id,
 		);
 		if ((int) $recur_date)
@@ -1682,15 +1702,24 @@ ORDER BY cal_user_type, cal_usre_id
 		if ($status == 'G')		// remove group invitations, as we dont store them in the db
 		{
 			$this->db->delete($this->user_table,$where,__LINE__,__FILE__,'calendar');
+			$ret = $this->db->affected_rows();
 		}
 		else
 		{
 			$set = array('cal_status' => $status);
 			if (!is_null($role) && $role != 'REQ-PARTICIPANT') $set['cal_role'] = $role;
 			$this->db->insert($this->user_table,$set,$where,__LINE__,__FILE__,'calendar');
+			// for new or changed group-invitations, remove previously deleted members, so they show up again
+			if (($ret = $this->db->affected_rows()) && $user_type == 'u' && $user_id < 0)
+			{
+				$where['cal_user_id'] = $GLOBALS['egw']->accounts->members($user_id, true);
+				$where['cal_status'] = 'X';
+				$this->db->delete($this->user_table, $where, __LINE__, __FILE__, 'calendar');
+				//error_log(__METHOD__."($cal_id,$user_type,$user_id,$status,$recur_date) = $ret, db->delete('$this->user_table', ".array2string($where).") affected ".$this->db->affected_rows().' rows');
+			}
 		}
 		// update modified and modifier in main table
-		if (($ret = $this->db->affected_rows()))
+		if ($ret)
 		{
 			$this->updateModified($cal_id, true);	// true = update series master too
 		}
