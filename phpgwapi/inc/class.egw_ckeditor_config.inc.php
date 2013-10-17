@@ -291,10 +291,13 @@ class egw_ckeditor_config
 			case 'advanced':
 				$config['toolbar'][] = array('name' => 'document', 'items' => array('Source','DocProps','-','Preview','-','Templates'));
 				$config['toolbar'][] = array('name' => 'clipboard', 'items' => array('Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'));
-				if ($spellchecker_button)
-					$config['toolbar'][count($config['toolbar']) - 1][] = $spellchecker_button;
-				if ($scayt_button)
-					$config['toolbar'][count($config['toolbar']) - 1][] = $scayt_button;
+				if ($spellchecker_button||$scayt_button)
+				{
+					$configArray = array();
+					if ($spellchecker_button) $configArray[] = $spellchecker_button;
+					if ($scayt_button) $configArray[] = $scayt_button;
+					$config['toolbar'][] = array('name' => 'tools', 'items' => $configArray);
+				}
 				$config['toolbar'][] = array('name' => 'edit', 'items' => array('Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'));
 
 				$config['toolbar'][] = '/';
@@ -321,22 +324,29 @@ class egw_ckeditor_config
 				if ($mode == 'extended')
 				{
 					$config['toolbar'][] = array('name' => 'insert', 'items' => array('Image','Link','Unlink','Anchor'));
-					if ($spellchecker_button)
-						$config['toolbar'][] = array('name' => 'tools', 'items' => array('Maximize', $spellchecker_button));//, 'Image', 'Table');
+					if ($spellchecker_button||$scayt_button)
+					{
+						$configArray = array('Maximize');
+						if ($spellchecker_button) $configArray[] = $spellchecker_button;
+						if ($scayt_button) $configArray[] = $scayt_button;
+						$config['toolbar'][] = array('name' => 'tools', 'items' => $configArray);
+					}
 					else
 						$config['toolbar'][] = array('name' => 'insert', 'items' => array('Maximize'));//, 'Image', 'Table');
-					if ($scayt_button)
-						$config['toolbar'][count($config['toolbar']) - 1][] = array('name' => 'edit', 'items' => $scayt_button);
+
 					$config['toolbar'][count($config['toolbar']) - 1][] = array('name' => 'insert', 'items' => array('Image', 'Table'));
 				}
 				else
 				{
-					if ($spellchecker_button)
-						$config['toolbar'][] = array('name' => 'tools', 'items' => array('Maximize', $spellchecker_button));
+					if ($spellchecker_button||$scayt_button)
+					{
+						$configArray = array('Maximize');
+						if ($spellchecker_button) $configArray[] = $spellchecker_button;
+						if ($scayt_button) $configArray[] = $scayt_button;
+						$config['toolbar'][] = array('name' => 'tools', 'items' => $configArray);
+					}
 					else
 						$config['toolbar'][] = array('name' => 'tools', 'items' => array('Maximize'));
-					if ($scayt_button)
-						$config['toolbar'][count($config['toolbar']) - 1][] = array('name' => 'document', 'items' => $scayt_button);
 				}
 
 				$config['toolbar'][] = '/';
