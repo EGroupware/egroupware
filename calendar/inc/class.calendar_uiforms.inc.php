@@ -1554,7 +1554,7 @@ function replace_eTemplate_onsubmit()
 		if ($view)
 		{
 			$readonlys['__ALL__'] = true;	// making everything readonly, but widgets set explicitly to false
-			$readonlys['alarm'] = $readonlys['button[cancel]'] = $readonlys['action'] =
+			$readonlys['print'] = $readonlys['alarm'] = $readonlys['button[cancel]'] = $readonlys['action'] =
 				$readonlys['before_after'] = $readonlys['button[add_alarm]'] = $readonlys['new_alarm[owner]'] =
 				$readonlys['new_alarm[days]'] = $readonlys['new_alarm[hours]'] = $readonlys['new_alarm[mins]'] = false;
 
