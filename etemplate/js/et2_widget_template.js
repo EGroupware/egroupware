@@ -144,6 +144,11 @@ var et2_template = et2_DOMWidget.extend(
 				this.loading.reject();
 			}
 		}
+		else
+		{
+			// No actual template
+			this.loading.resolve();
+		}
 	},
 
 	/**
