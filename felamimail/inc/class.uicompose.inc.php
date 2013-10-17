@@ -148,6 +148,8 @@
 					return;
 				}
 				$uidisplay   = CreateObject('felamimail.uidisplay');
+				// since we reuse the bofelamimail object, an open connection may not be reusable
+				if ($uidisplay->bofelamimail->icServer->_connected == 1) $uidisplay->bofelamimail->closeConnection();
 				$uidisplay->printMessage($messageUid, $formData['printit'],$destinationFolder);
 				//egw::link('/index.php',array('menuaction' => 'felamimail.uidisplay.printMessage','uid'=>$messageUid));
 				return;
@@ -350,7 +352,7 @@
 									$GLOBALS['egw_info']['server']['contact_repository'] == 'sql')
 								{
 									$accounts = $GLOBALS['egw']->contacts->search($_searchCond,array('n_fn','email','email_home'),'n_fn','','%',false,'OR',array(0,100),array('owner' => 0));
-			
+
 									if ($contacts && $accounts)
 									{
 										$contacts = array_merge($contacts,$accounts);
