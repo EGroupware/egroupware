@@ -993,7 +993,6 @@ class infolog_ui
 						'allowOnMultiple' => false,
 						'hint' => 'Add a new sub-task, -note, -call to this entry',
 						'icon' => 'new',
-						'disableClass' => 'rowNoSubs',
 					),
 					'copy' => array(
 						'caption' => 'Copy',
