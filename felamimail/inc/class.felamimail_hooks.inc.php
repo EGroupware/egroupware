@@ -463,7 +463,7 @@ class felamimail_hooks
 				'help'   => 'allow images from external sources in html emails',
 				'name'   => 'allowExternalIMGs',
 				'xmlrpc' => True,
-				'admin'  => True,
+				'admin'  => False,
 				'forced' => true,
 			),
 			'sortOrder' => array(
