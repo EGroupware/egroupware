@@ -377,9 +377,12 @@ class so_sql_cf extends so_sql
 				$id2keys[$row[$this->autoinc_id]] = $key;
 			}
 			// check if only certain cf's to show
-			foreach($selectcols as $col)
+			if (!in_array('customfields', $selectcols))
 			{
-				if ($this->is_cf($col)) $fields[] = $this->get_cf_name($col);
+				foreach($selectcols as $col)
+				{
+					if ($this->is_cf($col)) $fields[] = $this->get_cf_name($col);
+				}
 			}
 			if (($cfs = $this->read_customfields(array_keys($id2keys),$fields)))
 			{
