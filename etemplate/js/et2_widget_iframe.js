@@ -89,7 +89,7 @@ var et2_iframe = et2_valueWidget.extend(
 	set_value: function(_value) {
 		if(typeof _value == "undefined") _value = "";
 
-		if(_value.trim().indexOf("http") == 0)
+		if(_value.trim().indexOf("http") == 0 || _value.indexOf('about:') == 0 || _value[0] == '/')
 		{
 			// Value is a URL
 			this.set_src(_value);
