@@ -48,9 +48,10 @@ class etemplate_widget_projectmanager extends etemplate_widget_transformer
 			$pm_widget = new projectmanager_widget();
 			$cell = $this->attrs;
 			$cell['type']=$this->type;
+			$cell['readonly'] = false;	// Send not read-only to get full list
 			$pm_widget->pre_process($form_name, self::get_array(self::$request->content, $form_name),
 				$cell,
-				$this->attrs['readonly'],
+				$garbage,
 				$extension,
 				$template
 			);
