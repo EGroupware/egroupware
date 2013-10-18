@@ -325,7 +325,7 @@ class accounts_sql
 	 */
 	function members($account_id)
 	{
-		if (!is_numeric($account_id)) $account_id = $this-name2id($account_id);
+		if (!is_numeric($account_id)) $account_id = $this->name2id($account_id);
 
 		$members = array();
 		foreach($this->db->select($this->table, 'account_id,account_lid',
@@ -527,7 +527,7 @@ class accounts_sql
 		}
 		if (!($rs = $this->db->select($table,$cols,$where,__LINE__,__FILE__)) || !($row = $rs->fetch()))
 		{
-			error_log(__METHOD__."('$name', '$which', ".array2string($account_type).") db->select('$table', '$cols', ".array2string($where).") returned ".array2string($rs).' '.function_backtrace());
+			//error_log(__METHOD__."('$name', '$which', ".array2string($account_type).") db->select('$table', '$cols', ".array2string($where).") returned ".array2string($rs).' '.function_backtrace());
 			return false;
 		}
 		return ($row['account_type'] == 'g' ? -1 : 1) * $row['account_id'];
