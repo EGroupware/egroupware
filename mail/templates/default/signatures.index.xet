@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="mail.signatures.index.rows" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" id="sig" sortable="mail.mail_sieve.ajax_moveRule" class="egwGridView_grid">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<description value="ID"/>
+					<description value="Description"/>
+					<description align="center" value="Default"/>
+				</row>
+				<row class="row"  >
+					<description id="${row}[fm_signatureid]" readonly="true"/>
+					<description id="${row}[fm_description]" no_lang="1"/>
+					<description align="center" id="${row}[fm_defaultsignature]" no_lang="1" readonly="true"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="mail.signatures.index" template="" lang="" group="0" version="1.9.001">
+		<description id="msg" no_lang="1" class="message" span="all"/>
+		<grid width="100%">
+			<columns>
+				<column width="100%"/>
+			</columns>
+			<rows>
+				<row>
+					<buttononly class="$cont[hideIfSigDisabled]" align="right" label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=mail.mail_signatures.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
+				</row>
+				<row>
+					<template id="rows"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

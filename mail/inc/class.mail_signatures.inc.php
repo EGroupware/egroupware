@@ -9,9 +9,22 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
+include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php');
 
 class mail_signatures
 {
+	var $public_functions = array
+	(
+		'index' => True,
+	);
+
+	/**
+	 * nextMatch name for index
+	 *
+	 * @var string
+	 */
+	static $nm_index = 'sig';
+
 	var $tableName = 'egw_felamimail_signatures';
 
 	var $fm_signatureid = NULL;
@@ -25,7 +38,12 @@ class mail_signatures
 	var $boemailadmin;
 	var $profileData;
 
-	function mail_signatures($_signatureID = NULL) {
+	/**
+	 * Constructor
+	 *
+	 */
+	function __construct($_signatureID = NULL)
+	{
 		$this->accountID = $GLOBALS['egw_info']['user']['account_id'];
 
 		if($_signatureID !== NULL) {
@@ -33,6 +51,93 @@ class mail_signatures
 		}
 		$this->boemailadmin = new emailadmin_bo();
 		$this->profileData = $this->boemailadmin->getUserProfile('felamimail');
+	}
+
+	/**
+	 * Main signature list page
+	 *
+	 * @param array $content=null
+	 * @param string $msg=null
+	 */
+	function index(array $content=null,$msg=null)
+	{
+		//Instantiate an etemplate_new object
+		$tmpl = new etemplate_new('mail.signatures.index');
+		if (!is_array($content))
+		{
+			$content['sig']= $this->get_rows($rows,$readonlys);
+
+			// Set content-menu actions
+			$tmpl->set_cell_attribute('sig', 'actions',$this->get_actions());
+
+			$sel_options = array(
+				'status' => array(
+					'ENABLED' => lang('Enabled'),
+					'DISABLED' => lang('Disabled'),
+				)
+			);
+		}
+		if ($msg)
+		{
+			$content['msg'] = $msg;
+		}
+		else
+		{
+			unset($msg);
+			unset($content['msg']);
+		}
+		$tmpl->exec('mail.mail_signatures.index',$content,$sel_options,$readonlys);
+
+	}
+
+	/**
+	 * Get actions / context menu for index
+	 *
+	 * Changes here, require to log out, as $content[self::$nm_index] get stored in session!
+	 * @var &$action_links
+	 *
+	 * @return array see nextmatch_widget::egw_actions()
+	 */
+	private function get_actions(array &$action_links=array())
+	{
+		$actions =  array(
+			'open' => array(
+				'caption' => lang('Open'),
+				'icon' => 'view',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.mail.mail_open',
+				'allowOnMultiple' => false,
+				'default' => true,
+			),
+			'delete' => array(
+				'caption' => lang('delete'),
+				'icon' => 'delete',
+				'group' => ++$group,
+				'onExecute' => 'javaScript:app.mail.mail_open',
+				'allowOnMultiple' => false,
+			),
+		);
+		return $actions;
+	}
+
+	/**
+	 * Callback to fetch the rows for the nextmatch widget
+	 *
+	 * @param array $query
+	 * @param array &$rows
+	 * @param array &$readonlys
+	 */
+	function get_rows($query,&$rows)
+	{
+		$rows = $this->getListOfSignatures();
+		foreach ($rows as $i => &$row)
+		{
+			$row['row_id']='signature::'.($row['fm_accountid']?$row['fm_accountid']:$this->accountID).'::'.$row['fm_signatureid'];
+			$row['fm_defaultsignature'] = ($row['fm_defaultsignature']?'Default':'');
+		}
+		array_unshift($rows,array(''=> ''));
+//_debug_array($rows);
+		return $rows;
 	}
 
 	function getDefaultSignature() {

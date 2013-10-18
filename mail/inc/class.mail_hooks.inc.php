@@ -817,14 +817,14 @@ class mail_hooks
 			}
 */
 			if ($preferences->preferences['prefcontroltestconnection'] <> 'none') $file['Test Connection'] = egw::link('/index.php','menuaction=mail.mail_ui.TestConnection&appname=mail');
-/*
+
 			if($preferences->ea_user_defined_signatures) {
 				$linkData = array (
-					'menuaction' => 'mail.uipreferences.listSignatures',
+					'menuaction' => 'mail.mail_signatures.index',
 				);
 				$file['Manage Signatures'] = egw::link('/index.php',$linkData);
 			}
-
+/*
 			if(empty($preferences->preferences['prefpreventmanagefolders']) || $preferences->preferences['prefpreventmanagefolders'] == 0) {
 				$file['Manage Folders']	= egw::link('/index.php',array('menuaction'=>'mail.uipreferences.listFolder'));
 			}
