@@ -101,10 +101,15 @@ var et2_progress = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.node.title = _value;
 	},
 
-	// set's class of this.node
+	// set's class of this.node; preserve baseclasses et2_progress and if this.options.href is set et2_clickable
 	set_class: function(_value) 
 	{
-		this.node.setAttribute('class', _value);
+		var baseClass = "et2_progress"
+		if (this.options.href) 
+		{
+			baseClass += ' et2_clickable';
+		}
+		this.node.setAttribute('class', baseClass + ' ' + _value);
 	},
 
 	/**
