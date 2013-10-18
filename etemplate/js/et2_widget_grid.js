@@ -79,6 +79,9 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 		this.rowData = [];
 		this.colData = [];
 		this.managementArray = [];
+		
+		// Keep the template node for later regeneration
+		this.template_node = null;
 	},
 
 	destroy: function() {
@@ -313,7 +316,7 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 	_fillCells: function(cells, columns, rows) {
 		var h = cells.length;
 		var w = (h > 0) ? cells[0].length : 0;
-		var currentPerspective = this.getArrayMgr("content").perspectiveData;
+		var currentPerspective = jQuery.extend({},this.getArrayMgr("content").perspectiveData);
 
 		// Read the elements inside the columns
 		var x = 0;
@@ -573,6 +576,9 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 	 * in the first step the
 	 */
 	loadFromXML: function(_node) {
+		// Keep the node for later changing / reloading
+		this.template_node = _node;
+		
 		// Get the columns and rows tag
 		var rowsElems = et2_directChildrenByTagName(_node, "rows");
 		var columnsElems = et2_directChildrenByTagName(_node, "columns");
@@ -756,6 +762,45 @@ var et2_grid = et2_DOMWidget.extend([et2_IDetachedDOM, et2_IAligned],
 
 	get_align: function(_value) {
 		return this.align;
+	},
+	
+	/**
+	 * Change the content for the grid, and re-generate its contents.
+	 * 
+	 * Changing the content does not allow changing the structure of the grid,
+	 * as that is loaded from the template file.  The rows and widgets inside
+	 * will be re-created (including auto-repeat).  
+	 * 
+	 * @param {Object} _value New data for the grid
+	 * @param {Object} [_value.content] New content
+	 * @param {Object} [_value.sel_options] New select options
+	 * @param {Object} [_value.readonlys] New read-only values
+	 */	
+	set_value: function(_value) {
+		
+		// Destroy children, empty grid
+		for(var i = 0; i < this.managementArray.length; i++)
+		{
+			var cell = this.managementArray[i];
+			if(cell.widget)
+			{
+				cell.widget.destroy();
+			}
+		}
+		this.managementArray = [];
+		this.tbody.empty();
+		
+		// Update array managers
+		for(var key in _value)
+		{
+			this.getArrayMgr(key).data = _value[key];
+		}
+		
+		// Rebuild grid
+		this.loadFromXML(this.template_node);
+		
+		// New widgets need to finish
+		this.loadingFinished();
 	},
 
 	/**
