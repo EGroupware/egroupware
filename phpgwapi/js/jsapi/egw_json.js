@@ -87,7 +87,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 		};
 
 		// Send the request via AJAX using the jquery ajax function
-		$j.ajax({
+		// we need to use jQuery of window of egw object, as otherwise the one from main window is used!
+		// (causing eg. apply from server with app.$app.method to run in main window instead of popup) 
+		this.egw.window.$j.ajax({
 			url: this.url,
 			async: this.async,
 			context: this,
