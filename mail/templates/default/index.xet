@@ -28,7 +28,7 @@
 					<description id="${row}[uid]" readonly="true"/>
 					<description span="1" class="status_img"/>
 					<html id="${row}[attachments]"/>
-					<description id="${row}[subject]"/>
+					<description id="${row}[subject]" no_lang="1"/>
 					<date-time_today align="center" id="${row}[date]" readonly="true"/>
 					<url-email id="${row}[toaddress]" readonly="true"/>
 					<url-email id="${row}[fromaddress]" readonly="true"/>
@@ -63,7 +63,36 @@
 					<description align="left" id="previewSubject" readonly="true"/>
 				</hbox>
 				<hbox class="previewAttachmentArea">
-					<html id="previewAttachmentArea"/>
+					<!-- <html id="previewAttachmentArea"/> -->
+					<grid disabled="@no_griddata" id="previewAttachmentArea">
+					  <columns>
+					   <column disabled="!@showtempname"/>
+					   <column disabled="!@showtempname"/>
+					   <column disabled="!@showtempname"/>
+					   <column disabled="!@showtempname"/>
+					   <column width="50%" />
+					   <column width="20%" />
+					   <column width="11%" />
+					   <column width="3%"/>
+					   <column width="3%"/>
+					   <column width="3%"/>
+					   <column />
+					  </columns>
+					  <rows>
+					   <row >
+						<description id="${row}[attachment_number]" />
+						<description id="${row}[partID]" />
+						<description id="${row}[type]" />
+						<description id="${row}[winmailFlag]" />
+						<description class="useEllipsis et2_link" id="${row}[filename]" no_lang="1" onclick="app.mail.displayAttachment"/>
+						<description id="${row}[mimetype]" />
+						<description align="right" id="${row}[size]" />
+						<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachment"/>
+						<buttononly id="${row}[saveAsVFS]" value="save" image="filemanager/navbar" onclick="app.mail.saveAttachmentToVFS"/>
+						<buttononly class="$row_cont[classSaveAllPossiblyDisabled]" id="${row}[save_all]" value="save_all" image="mail/save_all" onclick="app.mail.saveAllAttachmentsToVFS"/>
+					   </row>
+					  </rows>
+					</grid>
 				</hbox>
 				<hbox id="mailPreviewIcons">
 					<toolbar id="toolbar"/>

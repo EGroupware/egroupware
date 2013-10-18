@@ -100,8 +100,8 @@ app.mail = AppJS.extend(
 		}
 		if (isDisplay)
 		{
-			var subject = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mail_displaysubject');
-			var body = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mail_displaybody');
+			var subject = this.et2.getWidgetById('mail_displaysubject');
+			var body = this.et2.getWidgetById('mail_displaybody');
 			body.node.parentNode.style.top=subject.node.offsetTop+40+'px';
 			var app_registry = egw.link_get_registry('mail');//this.appname);
 			//console.log(app_registry);
@@ -147,7 +147,7 @@ app.mail = AppJS.extend(
 		{
 			if (_reset == true)
 			{
-				//var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(nm_index);
+				//var nm = this.et2.getWidgetById(nm_index);
 				//if (this.mail_currentlyFocussed!='') nm.refresh([this.mail_currentlyFocussed],'delete');//egw.dataDeleteUID(this.mail_currentlyFocussed);
 				if (this.mail_currentlyFocussed!='') egw.dataDeleteUID(this.mail_currentlyFocussed);
 				for(var k = 0; k < this.mail_selectedMails.length; k++) egw.dataDeleteUID(this.mail_selectedMails[k]);
@@ -434,18 +434,18 @@ app.mail = AppJS.extend(
 	 * @param _value
 	 */
 	mail_disablePreviewArea: function(_value) {
-		var splitter = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailSplitter');
+		var splitter = this.et2.getWidgetById('mailSplitter');
 		if (typeof splitter == 'undefined' || splitter == null) return;
 		var splitterDN = splitter.getDOMNode();
 		// check if DOM Node has class that contains docked; then we assume the bar docked, whatever our class var states
 		for (var i=0; i < splitterDN.childNodes[1].classList.length;i++) if (splitterDN.childNodes[1].classList[i].search(/docked/)>=0) this.mail_previewAreaActive = false;
 		//if this.mail_previewAreaActive but clientHeight of childNode is 0, assume this.mail_previewAreaActive incorrect
 		if ( this.mail_previewAreaActive && splitterDN.childNodes.length > 2 && splitterDN.childNodes[2].clientHeight < 15) this.mail_previewAreaActive=false;
-		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersFrom').set_disabled(_value);
-		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersTo').set_disabled(_value);
-		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersDate').set_disabled(_value);
-		//etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreviewHeadersSubject').set_disabled(_value);
-		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('mailPreview').set_disabled(_value);
+		//this.et2.getWidgetById('mailPreviewHeadersFrom').set_disabled(_value);
+		//this.et2.getWidgetById('mailPreviewHeadersTo').set_disabled(_value);
+		//this.et2.getWidgetById('mailPreviewHeadersDate').set_disabled(_value);
+		//this.et2.getWidgetById('mailPreviewHeadersSubject').set_disabled(_value);
+		this.et2.getWidgetById('mailPreview').set_disabled(_value);
 		if (_value==true)
 		{
 			if (this.mail_previewAreaActive) splitter.dock();
@@ -474,11 +474,11 @@ app.mail = AppJS.extend(
 			dataElem = egw.dataGetUIDdata(_id);
 		}
 		//get_class does not exist yet
-		//var pAAClass = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').get_class();
+		//var pAAClass = this.et2.getWidgetById('previewAttachmentArea').get_class();
 		//console.log(pAAClass);
-		if (etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea'))
+		if (this.et2.getWidgetById('previewAttachmentArea'))
 		{
-			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea');
+			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea');
 		}
 		else
 		{
@@ -488,13 +488,13 @@ app.mail = AppJS.extend(
 		{
 			this.mail_fetchCurrentlyFocussed();
 			var subject ="";
-			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewFromAddress').set_value("");
-			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewToAddress').set_value("");
-			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewDate').set_value("");
-			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewSubject').set_value("");
-			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').set_value("");
-			etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent');
-			var IframeHandle = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('messageIFRAME');
+			this.et2.getWidgetById('previewFromAddress').set_value("");
+			this.et2.getWidgetById('previewToAddress').set_value("");
+			this.et2.getWidgetById('previewDate').set_value("");
+			this.et2.getWidgetById('previewSubject').set_value("");
+			//this.et2.getWidgetById('previewAttachmentArea').set_value("");
+			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent mail_DisplayNone');
+			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 			IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:""}));
 			this.mail_disablePreviewArea(true);
 			return;
@@ -503,14 +503,22 @@ app.mail = AppJS.extend(
 		this.mail_selectedMails.push(_id);
 		var subject =dataElem.data.subject;
 		this.mail_disablePreviewArea(false);
-		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewFromAddress').set_value(dataElem.data.fromaddress);
-		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewToAddress').set_value(dataElem.data.toaddress);
-		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewDate').set_value(dataElem.data.date);
-		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewSubject').set_value(subject);
-		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').set_value((dataElem.data.attachmentsBlock.length>1?dataElem.data.attachmentsBlock:''));
-		if (dataElem.data.attachmentsBlock.length<1) etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent');
-		etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('toolbar').set_actions(JSON.parse(dataElem.data.toolbaractions));
-		var IframeHandle = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('messageIFRAME');
+		this.et2.getWidgetById('previewFromAddress').set_value(dataElem.data.fromaddress);
+		this.et2.getWidgetById('previewToAddress').set_value(dataElem.data.toaddress);
+		this.et2.getWidgetById('previewDate').set_value(dataElem.data.date);
+		this.et2.getWidgetById('previewSubject').set_value(subject);
+		if (dataElem.data.attachmentsBlock.length<1)
+		{
+			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent mail_DisplayNone');
+		}
+		else
+		{
+			console.log(dataElem.data.attachmentsBlock);
+			var aA = this.et2.getWidgetById('previewAttachmentArea');
+			aA._mgrs.content.data= dataElem.data.attachmentsBlock;
+		}
+		this.et2.getWidgetById('toolbar').set_actions(JSON.parse(dataElem.data.toolbaractions));
+		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 		//console.log(IframeHandle);
 		IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:_id}));
 		var messages = {};
@@ -522,7 +530,7 @@ app.mail = AppJS.extend(
 
 	mail_setMailBody: function(content) {
 		//console.log('mail_setMailBody',content);
-		var IframeHandle = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('messageIFRAME');
+		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 		IframeHandle.set_value('');
 	},
 
@@ -564,11 +572,12 @@ app.mail = AppJS.extend(
 		}
 		try
 		{
-			var tree_wdg = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
+			var tree_wdg = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 
 			var activeFolders = tree_wdg.getTreeNodeOpenItems(nodeToRefresh,mode2use);
 			//alert(activeFolders.join('#,#'));
 			this.mail_queueRefreshFolderList(activeFolders);
+			this.mail_refreshQuotaDisplay();
 			// maybe to use the mode forced as trigger for grid reload and using the grids own autorefresh
 			// would solve the refresh issue more accurately
 			//if (mode == "forced") this.mail_refreshMessageGrid();
@@ -576,6 +585,30 @@ app.mail = AppJS.extend(
 		} catch(e) { } // ignore the error; maybe the template is not loaded yet
 	},
 
+	/**
+	 * mail_refreshQuotaDisplay, function to call to read the quota for the active server
+	 *
+	 */
+	mail_refreshQuotaDisplay: function(_server)
+	{
+		egw.json('mail.mail_ui.ajax_refreshQuotaDisplay',[_server])
+			.sendRequest(true);
+	},
+
+	/**
+	 * mail_setQuotaDisplay, function to call to read the quota for the active server
+	 *
+	 */
+	mail_setQuotaDisplay: function(_data)
+	{
+		//this.et2 should do the same as etemplate2.getByApplication('mail')[0].widgetContainer
+		var quotabox = this.et2.getWidgetById(this.nm_index+'[quotainpercent]');
+		//console.log(_data,quotabox);
+		//try to set it via set_value and set label
+		this.et2.getWidgetById(this.nm_index+'[quotainpercent]').set_class(_data.data.quotaclass);
+		this.et2.getWidgetById(this.nm_index+'[quotainpercent]').set_value(_data.data.quotainpercent);
+		this.et2.getWidgetById(this.nm_index+'[quotainpercent]').set_label(_data.data.quota);
+	},
 
 	/**
 	 * Queues a refreshFolderList request for 1ms. Actually this will just execute the
@@ -606,7 +639,7 @@ app.mail = AppJS.extend(
 	 * mail_setFolderStatus, function to set the status for the visible folders
 	 */
 	mail_setFolderStatus: function(_status) {
-		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		for (var i in _status) ftree.setLabel(i,_status[i]);//alert(i +'->'+_status[i]);
 	},
 
@@ -618,7 +651,7 @@ app.mail = AppJS.extend(
 	 */
 	mail_setLeaf: function(_status) {
 		//console.log('mail_setLeaf',_status);
-		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
 		{
@@ -628,7 +661,7 @@ app.mail = AppJS.extend(
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
 			if (_status[i]['id']==selectedNode.id)
 			{
-				var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
+				var nm = this.et2.getWidgetById(this.nm_index);
 				nm.activeFilters["selectedFolder"] = _status[i]['id'];
 				nm.applyFilters();
 			}
@@ -643,7 +676,7 @@ app.mail = AppJS.extend(
 	 */
 	mail_removeLeaf: function(_status) {
 		//console.log('mail_removeLeaf',_status);
-		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
 		{
@@ -654,7 +687,7 @@ app.mail = AppJS.extend(
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
 			if (selectedNodeAfter.id!=selectedNode.id && selectedNode.id==i)
 			{
-				var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
+				var nm = this.et2.getWidgetById(this.nm_index);
 				nm.activeFilters["selectedFolder"] = selectedNodeAfter.id;
 				nm.applyFilters();
 			}
@@ -669,7 +702,7 @@ app.mail = AppJS.extend(
 	 */
 	mail_reloadNode: function(_status) {
 		//console.log('mail_reloadNode',_status);
-		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
 		{
@@ -680,7 +713,7 @@ app.mail = AppJS.extend(
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
 			if (selectedNodeAfter.id!=selectedNode.id && selectedNode.id==i)
 			{
-				var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
+				var nm = this.et2.getWidgetById(this.nm_index);
 				nm.activeFilters["selectedFolder"] = selectedNodeAfter.id;
 				nm.applyFilters();
 			}
@@ -699,7 +732,7 @@ app.mail = AppJS.extend(
 		}
 		else
 		{
-			nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
+			nm = this.et2.getWidgetById(this.nm_index);
 		}
 		nm.applyFilters(); // this should refresh the active folder
 	},
@@ -746,7 +779,7 @@ app.mail = AppJS.extend(
 	 */
 	mail_getMsg: function()
 	{
-		var msg_wdg = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('msg');
+		var msg_wdg = this.et2.getWidgetById('msg');
 		if (msg_wdg)
 		{
 			return msg_wdg.valueOf().htmlNode[0].innerHTML;
@@ -760,7 +793,7 @@ app.mail = AppJS.extend(
 	 */
 	mail_setMsg: function(myMsg)
 	{
-		var msg_wdg = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('msg');
+		var msg_wdg = this.et2.getWidgetById('msg');
 		if (msg_wdg)
 		{
 			msg_wdg.set_value(myMsg);
@@ -902,6 +935,7 @@ app.mail = AppJS.extend(
 	 */
 	mail_changeFolder: function(folder,_widget) {
 		//alert('change Folder called:'+folder);
+		var server = folder.split('::');
 		app.mail.app_refresh(this.egw.lang('change folder')+'...', 'mail');
 		var img = _widget.getSelectedNode().images[0]; // fetch first image
 		if (!(img.search(eval('/'+'NoSelect'+'/'))<0) || !(img.search(eval('/'+'thunderbird'+'/'))<0))
@@ -948,6 +982,7 @@ app.mail = AppJS.extend(
 		}
 		//mail_refreshMessageGrid();// its done in refreshFolderStatus already
 		this.mail_refreshFolderStatus(folder,'forced');
+		this.mail_refreshQuotaDisplay(server[0]);
 		this.mail_startTimerFolderStatusUpdate(this.mail_refreshTimeOut);
 		this.mail_fetchCurrentlyFocussed(null,true);
 		this.mail_preview();
@@ -1486,7 +1521,7 @@ app.mail = AppJS.extend(
 		}
 		else
 		{
-			var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
+			var nm = this.et2.getWidgetById(this.nm_index);
 			var aO = nm.controller._objectManager.selectedChildren;
 			for (var i = 0; i < _actionObjects['msg'].length; i++)
 			{
@@ -1531,7 +1566,7 @@ app.mail = AppJS.extend(
 		// as the "onNodeSelect" function!
 		egw.json('mail.mail_ui.ajax_moveMessages',[target, messages])
 			.sendRequest();
-		var nm = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
+		var nm = this.et2.getWidgetById(this.nm_index);
 		this.mail_setRowClass(_senders,'deleted');
 		nm.refresh(messages['msg'],'delete')
 		//for (var i = 0; i < messages['msg'].length; i++) egw.dataDeleteUID(messages['msg'][i]);
@@ -1566,7 +1601,7 @@ app.mail = AppJS.extend(
 		//console.log(action,_senders);
 		//action.id == 'add'
 		//_senders.iface.id == target leaf / leaf to edit
-		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		OldFolderName = ftree.getLabel(_senders[0].iface.id);
 		if (jQuery(OldFolderName).text().length>0) OldFolderName = jQuery(OldFolderName).text();
 		OldFolderName = OldFolderName.trim();
@@ -1593,7 +1628,7 @@ app.mail = AppJS.extend(
 		//console.log(action,_senders);
 		//action.id == 'rename'
 		//_senders.iface.id == target leaf / leaf to edit
-		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		OldFolderName = ftree.getLabel(_senders[0].iface.id);
 		if (jQuery(OldFolderName).text().length>0) OldFolderName = jQuery(OldFolderName).text();
 		OldFolderName = OldFolderName.trim();
@@ -1620,7 +1655,7 @@ app.mail = AppJS.extend(
 		//console.log(action,_senders);
 		//action.id == 'delete'
 		//_senders.iface.id == target leaf / leaf to edit
-		var ftree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
+		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		OldFolderName = ftree.getLabel(_senders[0].iface.id);
 		if (jQuery(OldFolderName).text().length>0) OldFolderName = jQuery(OldFolderName).text();
 		OldFolderName = OldFolderName.trim();

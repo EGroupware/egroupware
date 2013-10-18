@@ -31,7 +31,7 @@
 			</hbox>
 			<hbox  class="mailDisplayHeaders" width="100%">
 				<description value="Subject"/>
-				<description align="left" id="mail_displaysubject" readonly="true"/>
+				<description align="left" id="mail_displaysubject" no_lang="1" readonly="true"/>
 			</hbox>
 		</vbox>
 		<vbox class="mailDisplay" width="100%">
@@ -60,7 +60,7 @@
 					<description id="${row}[partID]" />
 					<description id="${row}[type]" />
 					<description id="${row}[winmailFlag]" />
-					<description class="useEllipsis et2_link" id="${row}[filename]" onclick="app.mail.displayAttachment"/>
+					<description class="useEllipsis et2_link" id="${row}[filename]" no_lang="1" onclick="app.mail.displayAttachment"/>
 					<description id="${row}[mimetype]" />
 					<description align="right" id="${row}[size]" />
 					<buttononly id="${row}[save]" value="save" image="fileexport" onclick="app.mail.saveAttachment"/>

@@ -2503,10 +2503,10 @@ class mail_compose
 		common::egw_exit();
 	}
 
-	public static function ajax_searchAddress() {
+	public static function ajax_searchAddress($_searchStringLength=2) {
 		//error_log(__METHOD__. "request from seachAddress " . $_REQUEST['query']);
 		$_searchString = trim($_REQUEST['query']);
-		if ($GLOBALS['egw_info']['user']['apps']['addressbook']) {
+		if ($GLOBALS['egw_info']['user']['apps']['addressbook'] && strlen($_searchString)>=$_searchStringLength) {
 			//error_log(__METHOD__.__LINE__.array2string($_searchString));
 			if (method_exists($GLOBALS['egw']->contacts,'search')) {
 				// 1.3+

@@ -1422,14 +1422,14 @@ unset($query['actions']);
 						}
 						if (count($attachments)==1)
 						{
-							$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folder,true);
+							$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folder);
 							$imageTag = json_encode($attachments);
 							$image = html::image('mail','attach',$attachments[0]['name'].(!empty($attachments[0]['mimeType'])?' ('.$attachments[0]['mimeType'].')':''));
 						}
 					}
 					if (count($attachments)>1)
 					{
-						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folder,true);
+						$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'], $_folder);
 						$imageTag = json_encode($attachments);
 						$image = html::image('mail','attach',lang('%1 attachments',count($attachments)));
 					}
@@ -1879,6 +1879,14 @@ unset($query['actions']);
 				$attachmentHTMLBlock .= "<td>".$row['link_save'].'</td></tr>';
 			}
 			$attachmentHTMLBlock .= "</table>";
+		}
+		if (!$_returnFullHTML)
+		{
+			foreach ((array)$attachmentHTML as $ikey => $value)
+			{
+				unset($attachmentHTML[$ikey]['link_view']);
+				unset($attachmentHTML[$ikey]['link_save']);
+			}
 		}
 		return ($_returnFullHTML?$attachmentHTMLBlock:$attachmentHTML);
 	}
@@ -3324,10 +3332,48 @@ blockquote[type=cite] {
 	function ajax_changeProfile($icServerID)
 	{
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
-		//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
-		$this->changeProfile($icServerID);
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+			$this->changeProfile($icServerID);
+		}
 		$response = egw_json_response::get();
 		$response->call('egw_refresh',lang('changed profile'),'mail');
+	}
+
+	/**
+	 * ajax_refreshQuotaDisplay - its called via json, so the function must start with ajax (or the class-name must contain ajax)
+	 *
+	 * @return nothing
+	 */
+	function ajax_refreshQuotaDisplay($icServerID=null)
+	{
+		//error_log(__METHOD__.__LINE__.array2string($icServerID));
+		if (is_null($icServerID)) $icServerID = $this->mail_bo->profileID;
+		if ($icServerID && $icServerID != $this->mail_bo->profileID)
+		{
+			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
+			$this->changeProfile($icServerID);
+		}
+		if($this->mail_bo->connectionStatus !== false) {
+			$quota = $this->mail_bo->getQuotaRoot();
+		} else {
+			$quota['limit'] = 'NOT SET';
+		}
+
+		if($quota !== false && $quota['limit'] != 'NOT SET') {
+			$quotainfo = $this->quotaDisplay($quota['usage'], $quota['limit']);
+			$content['quota'] = $sel_options[self::$nm_index]['quota'] = $quotainfo['text'];
+			$content['quotainpercent'] = $sel_options[self::$nm_index]['quotainpercent'] =  (string)$quotainfo['percent'];
+			$content['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = $quotainfo['class'];
+			$content['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "";
+		} else {
+			$content['quota'] = $sel_options[self::$nm_index]['quota'] = lang("Quota not provided by server");
+			$content['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = "mail_DisplayNone";
+			$content['quotanotsupported'] = $sel_options[self::$nm_index]['quotanotsupported'] = "mail_DisplayNone";
+		}
+
+		$response = egw_json_response::get();
+		$response->call('app.mail.mail_setQuotaDisplay',array('data'=>$content),'mail');
 	}
 
 	/**
