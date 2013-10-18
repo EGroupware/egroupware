@@ -101,6 +101,12 @@ var et2_progress = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.node.title = _value;
 	},
 
+	// set's class of this.node
+	set_class: function(_value) 
+	{
+		this.node.setAttribute('class', _value);
+	},
+
 	/**
 	 * Implementation of "et2_IDetachedDOM" for fast viewing in gridview
 	 */
