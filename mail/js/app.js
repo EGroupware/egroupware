@@ -1757,6 +1757,20 @@ app.mail = AppJS.extend(
 		this.et2_obj.submit();
 	},
 
+	signature_open: function(_egw, _widget)
+	{
+		var id = _widget[0].id.replace(/row_/,'');
+		var siggrid = this.et2.getArrayMgr("content").getEntry('sig')[id];
+		console.log(_egw, _widget,siggrid,id);
+	},
+
+	signature_delete: function(_egw, _widget)
+	{
+		var id = _widget[0].id.replace(/row_/,'');
+		var siggrid = this.et2.getArrayMgr("content").getEntry('sig')[id];
+		console.log(_egw, _widget);
+	},
+
 	/**
 	 * Focus handler for folder, address, reject textbox/taglist to automatic check associated radio button
 	 */

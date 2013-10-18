@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="mail.signatures.index.rows" template="" lang="" group="0" version="1.9.001">
-		<grid width="100%" id="sig" sortable="mail.mail_sieve.ajax_moveRule" class="egwGridView_grid">
+		<grid width="100%" id="sig" class="egwGridView_grid">
 			<columns>
 				<column/>
 				<column/>

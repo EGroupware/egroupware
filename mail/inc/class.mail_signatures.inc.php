@@ -105,7 +105,7 @@ class mail_signatures
 				'caption' => lang('Open'),
 				'icon' => 'view',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.mail_open',
+				'onExecute' => 'javaScript:app.mail.signature_open',
 				'allowOnMultiple' => false,
 				'default' => true,
 			),
@@ -113,7 +113,7 @@ class mail_signatures
 				'caption' => lang('delete'),
 				'icon' => 'delete',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.mail_open',
+				'onExecute' => 'javaScript:app.mail.signature_delete',
 				'allowOnMultiple' => false,
 			),
 		);
