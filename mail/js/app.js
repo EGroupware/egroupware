@@ -513,9 +513,9 @@ app.mail = AppJS.extend(
 		}
 		else
 		{
-			console.log(dataElem.data.attachmentsBlock);
-			var aA = this.et2.getWidgetById('previewAttachmentArea');
-			aA._mgrs.content.data= dataElem.data.attachmentsBlock;
+			var pAttArea = this.et2.getWidgetById('previewAttachmentArea');
+			console.log(dataElem.data.attachmentsBlock,pAttArea);
+			//pAttArea.createTableFromCells(pAttArea.cells,pAttArea.colData,dataElem.data.attachmentsBlock);
 		}
 		this.et2.getWidgetById('toolbar').set_actions(JSON.parse(dataElem.data.toolbaractions));
 		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
