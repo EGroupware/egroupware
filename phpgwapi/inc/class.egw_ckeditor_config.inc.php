@@ -179,6 +179,9 @@ class egw_ckeditor_config
 				case 'moono':
 					$skin = "moono";
 					break;
+				case 'moonocolor':
+					$skin = "moonocolor";
+					break;
 				default:
 					$skin = "kama";
 			}
