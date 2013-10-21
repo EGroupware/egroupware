@@ -56,7 +56,7 @@ class mail_uipreferences
 	function index(array $content=null,$msg=null)
 	{
 		//Instantiate an etemplate_new object
-		$tmpl = new etemplate_new('mail.accounts.index');
+		$tmpl = new etemplate_new('mail.profiles.index');
 		if (!is_array($content))
 		{
 			$content['acc']= $this->get_rows($rows,$readonlys);
@@ -99,7 +99,7 @@ class mail_uipreferences
 				'caption' => lang('Open'),
 				'icon' => 'view',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.account_open',
+				'onExecute' => 'javaScript:app.mail.profile_open',
 				'allowOnMultiple' => false,
 				'default' => true,
 			),
@@ -107,7 +107,7 @@ class mail_uipreferences
 				'caption' => lang('delete'),
 				'icon' => 'delete',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.account_delete',
+				'onExecute' => 'javaScript:app.mail.profile_delete',
 				'allowOnMultiple' => false,
 			),
 		);
@@ -154,8 +154,28 @@ class mail_uipreferences
 			$row['default'] = ($row['default']?'Default':'');
 		}
 		array_unshift($rows,array(''=> ''));
-//_debug_array($rows);
 		return $rows;
+	}
+
+	/**
+	 * edit account/identity
+	 *
+	 * @param array $content=null
+	 * @param string $msg=null
+	 */
+	function edit(array $content=null,$msg=null)
+	{
+
+	}
+
+	/**
+	 * delete personalMailProfile
+	 *
+	 * @param array account/identity list of UID's
+	 * @return xajax response
+	 */
+	function ajax_deleteMailProfile($_profile)
+	{
 	}
 }
 ?>

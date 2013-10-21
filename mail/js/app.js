@@ -1813,7 +1813,21 @@ app.mail = AppJS.extend(
 	{
 		var id = _widget[0].id.replace(/row_/,'');
 		var siggrid = this.et2.getArrayMgr("content").getEntry('sig')[id];
-		console.log(_egw, _widget);
+		console.log(_egw, _widget,siggrid,id);
+	},
+
+	profile_open: function(_egw, _widget)
+	{
+		var id = _widget[0].id.replace(/row_/,'');
+		var accgrid = this.et2.getArrayMgr("content").getEntry('acc')[id];
+		console.log(_egw, _widget,accgrid,id);
+	},
+
+	profile_delete: function(_egw, _widget)
+	{
+		var id = _widget[0].id.replace(/row_/,'');
+		var accgrid = this.et2.getArrayMgr("content").getEntry('acc')[id];
+		console.log(_egw, _widget,accgrid,id);
 	},
 
 	/**

@@ -137,8 +137,28 @@ class mail_signatures
 			$row['fm_defaultsignature'] = ($row['fm_defaultsignature']?'Default':'');
 		}
 		array_unshift($rows,array(''=> ''));
-//_debug_array($rows);
 		return $rows;
+	}
+
+	/**
+	 * edit signature
+	 *
+	 * @param array $content=null
+	 * @param string $msg=null
+	 */
+	function edit(array $content=null,$msg=null)
+	{
+
+	}
+
+	/**
+	 * delete signature
+	 *
+	 * @param array _identityID
+	 * @return xajax response
+	 */
+	function ajax_deleteSignature($_identityID)
+	{
 	}
 
 	function getDefaultSignature() {

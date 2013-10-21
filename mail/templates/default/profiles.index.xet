@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="mail.accounts.index.rows" template="" lang="" group="0" version="1.9.001">
+	<template id="mail.profiles.index.rows" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" id="acc" class="egwGridView_grid">
 			<columns>
 				<column/>
@@ -22,7 +22,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="mail.accounts.index" template="" lang="" group="0" version="1.9.001">
+	<template id="mail.profiles.index" template="" lang="" group="0" version="1.9.001">
 		<description id="msg" no_lang="1" class="message" span="all"/>
 		<grid width="100%">
 			<columns>
