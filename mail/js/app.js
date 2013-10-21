@@ -1172,8 +1172,20 @@ app.mail = AppJS.extend(
 	displayAttachment: function(tag_info, widget)
 	{
 		//console.log(this, arguments, widget);
-		var mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-		var attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[filename\]/,'')];
+		var mailid;
+		var attgrid;
+		if (this.mail_isMainWindow)
+		{
+			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
+			var p = widget.getParent();
+			var cont = p.getArrayMgr("content").data;
+			attgrid = cont[widget.id.replace(/\[filename\]/,'')];
+		}
+		else
+		{
+			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
+			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[filename\]/,'')];
+		}
 		//console.log(mailid,attgrid.partID,attgrid.filename,attgrid.mimetype);
 		var url = window.egw_webserverUrl+'/index.php?';
 		var width;
@@ -1261,8 +1273,20 @@ app.mail = AppJS.extend(
 	saveAttachment: function(tag_info, widget)
 	{
 		//console.log(this, arguments);
-		var mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-		var attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[save\]/,'')];
+		var mailid;
+		var attgrid;
+		if (this.mail_isMainWindow)
+		{
+			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
+			var p = widget.getParent();
+			var cont = p.getArrayMgr("content").data;
+			attgrid = cont[widget.id.replace(/\[save\]/,'')];
+		}
+		else
+		{
+			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
+			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[save\]/,'')];
+		}
 		//console.log(mailid,attgrid.partID,attgrid.filename,attgrid.mimetype);
 		var url = window.egw_webserverUrl+'/index.php?';
 		var width;
@@ -1279,8 +1303,20 @@ app.mail = AppJS.extend(
 	saveAttachmentToVFS: function(tag_info, widget)
 	{
 		//console.log(this, arguments);
-		var mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-		var attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[saveAsVFS\]/,'')];
+		var mailid;
+		var attgrid;
+		if (this.mail_isMainWindow)
+		{
+			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
+			var p = widget.getParent();
+			var cont = p.getArrayMgr("content").data;
+			attgrid = cont[widget.id.replace(/\[saveAsVFS\]/,'')];
+		}
+		else
+		{
+			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
+			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[saveAsVFS\]/,'')];
+		}
 		//console.log(mailid,attgrid.partID,attgrid.filename,attgrid.mimetype);
 		var url = window.egw_webserverUrl+'/index.php?';
 		var width=640;
@@ -1298,8 +1334,19 @@ app.mail = AppJS.extend(
 
 	saveAllAttachmentsToVFS: function(tag_info, widget)
 	{
-		var mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-		var attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments');
+		var mailid;
+		var attgrid;
+		if (this.mail_isMainWindow)
+		{
+			mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
+			var p = widget.getParent();
+			attgrid = p.getArrayMgr("content").data;
+		}
+		else
+		{
+			mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
+			attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments');
+		}
 		console.log(mailid,attgrid);
 		var url = window.egw_webserverUrl+'/index.php?';
 		var width=640;
