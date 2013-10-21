@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware - Mail - interface class for compose mails in popup
+ * EGroupware - Mail - interface and bo class for signatures
  *
  * @link http://www.egroupware.org
  * @package mail
@@ -16,6 +16,7 @@ class mail_signatures
 	var $public_functions = array
 	(
 		'index' => True,
+		'edit' => True,
 	);
 
 	/**

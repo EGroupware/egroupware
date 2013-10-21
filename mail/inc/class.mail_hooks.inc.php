@@ -807,16 +807,14 @@ class mail_hooks
 			#$mailPreferences = ExecMethod('mail.bopreferences.getPreferences');
 			$menu_title = lang('Preferences');	// ToDo: remove Preferences sub-menu from sidebox
 			$file = array();
-/*
+
 			if($preferences->userDefinedAccounts || $preferences->userDefinedIdentities) {
 				$linkData = array (
-					'menuaction' => 'mail.uipreferences.listAccountData',
+					'menuaction' => 'mail.mail_uipreferences.index',
 				);
 				$file['Manage eMail Accounts and Identities'] = egw::link('/index.php',$linkData);
 
 			}
-*/
-			if ($preferences->preferences['prefcontroltestconnection'] <> 'none') $file['Test Connection'] = egw::link('/index.php','menuaction=mail.mail_ui.TestConnection&appname=mail');
 
 			if($preferences->ea_user_defined_signatures) {
 				$linkData = array (
@@ -824,6 +822,9 @@ class mail_hooks
 				);
 				$file['Manage Signatures'] = egw::link('/index.php',$linkData);
 			}
+
+			if ($preferences->preferences['prefcontroltestconnection'] <> 'none') $file['Test Connection'] = egw::link('/index.php','menuaction=mail.mail_ui.TestConnection&appname=mail');
+
 /*
 			if(empty($preferences->preferences['prefpreventmanagefolders']) || $preferences->preferences['prefpreventmanagefolders'] == 0) {
 				$file['Manage Folders']	= egw::link('/index.php',array('menuaction'=>'mail.uipreferences.listFolder'));
