@@ -1739,7 +1739,7 @@ unset($query['actions']);
 				if (function_exists('mb_convert_variables')) mb_convert_variables("UTF-8","ISO-8559-1",$value['name']); # iso 2 UTF8
 				//if (mb_convert_variables("ISO-8859-1","UTF-8",$value['name'])){echo "Juhu utf8 2 ISO\n";};
 				//echo $value['name']."\n";
-				$filename=htmlentities($value['name'], ENT_QUOTES, $detectedCharSet);
+				//$filename=htmlentities($value['name'], ENT_QUOTES, $detectedCharSet);
 				$attachmentHTML[$key]['filename']= ($value['name'] ? ( $filename ? $filename : $value['name'] ) : lang('(no subject)'));
 				$attachmentHTML[$key]['type']=$value['mimeType'];
 				$attachmentHTML[$key]['mimetype']=mime_magic::mime2label($value['mimeType']);

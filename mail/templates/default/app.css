@@ -282,6 +282,11 @@ pre {
 	width: 250px;
 	white-space: nowrap;
 	overflow: hidden;
+	word-wrap: break-word;
+	float: left;
+	&:after{
+		content: " ...";
+	}
 }
 #mail-index {
 	position: relative
@@ -439,9 +444,11 @@ input[type=button] {
 	opacity: 1;
 	-moz-opacity:1:
 	filter: Alpha(opacity=100);
+	display: inline-block !important;
 }
 #mail-index_previewAttachmentArea.noContent {
 	border:0px !important;
+	display: none !important;
 }
 
 .mailDisplayContainer, .mailDisplayAttachments {

@@ -492,7 +492,7 @@ app.mail = AppJS.extend(
 			this.et2.getWidgetById('previewToAddress').set_value("");
 			this.et2.getWidgetById('previewDate').set_value("");
 			this.et2.getWidgetById('previewSubject').set_value("");
-			//this.et2.getWidgetById('previewAttachmentArea').set_value("");
+			this.et2.getWidgetById('previewAttachmentArea').set_value({content:[]});
 			this.et2.getWidgetById('previewAttachmentArea').set_class('previewAttachmentArea noContent mail_DisplayNone');
 			var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 			IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:""}));
@@ -513,9 +513,7 @@ app.mail = AppJS.extend(
 		}
 		else
 		{
-			var pAttArea = this.et2.getWidgetById('previewAttachmentArea');
-			console.log(dataElem.data.attachmentsBlock,pAttArea);
-			//pAttArea.createTableFromCells(pAttArea.cells,pAttArea.colData,dataElem.data.attachmentsBlock);
+			this.et2.getWidgetById('previewAttachmentArea').set_value({content:dataElem.data.attachmentsBlock});
 		}
 		this.et2.getWidgetById('toolbar').set_actions(JSON.parse(dataElem.data.toolbaractions));
 		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
