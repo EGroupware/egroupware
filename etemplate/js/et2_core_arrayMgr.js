@@ -57,7 +57,7 @@ var et2_arrayMgr = Class.extend(
 			// For each index, we need a key: {..} sub array
 			for(var key in _data) {
 				// Split up indexes
-				var indexes = key.replace('&#x5B;','[').split('[');
+				var indexes = key.replace(/&#x5B;/g,"[").split('[');
 
 				// Put data in the proper place
 				if(indexes.length > 1)
@@ -65,7 +65,7 @@ var et2_arrayMgr = Class.extend(
 					var value = _data[key];
 					var target = _data;
 					for(var i = 0; i < indexes.length; i++) {
-						indexes[i] = indexes[i].replace('&#x5D;','').replace(']','');
+						indexes[i] = indexes[i].replace(/&#x5D;/g,'').replace(']','');
 						if(typeof target[indexes[i]] == "undefined") {
 							target[indexes[i]] = i == indexes.length-1 ? value : {};
 						}
