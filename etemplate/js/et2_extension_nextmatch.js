@@ -1836,11 +1836,11 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 				var value = child.get_value();
 				
 				// Split up indexes
-				var indexes = child.id.replace('&#x5B;','[').split('[');
+				var indexes = child.id.replace(/&#x5B;/g,'[').split('[');
 
 				for(var i = 0; i < indexes.length; i++) 
 				{
-					indexes[i] = indexes[i].replace('&#x5D;','').replace(']','');
+					indexes[i] = indexes[i].replace(/&#x5D;/g,'').replace(']','');
 					if (i < indexes.length-1)
 					{
 						if(typeof target[indexes[i]] == "undefined") target[indexes[i]] = {};
@@ -1906,7 +1906,11 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			};
 
 			// Set activeFilters to current value
-			//self.nextmatch.activeFilters[_widget.id] = _widget.getValue();
+			// Use an array mgr to hande non-simple IDs
+			var value = {};
+			value[_widget.id] = _widget.getValue();
+			var mgr = new et2_arrayMgr(value);
+			jQuery.extend(this.nextmatch.activeFilters,mgr.data);
 		}, this, et2_inputWidget);
 	}
 });
