@@ -1834,6 +1834,20 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			{
 				value = mgr.getEntry(child.id);
 				if (value == null) value = '';
+				/**
+				 * Sometimes a filter value is not in current options.  This can
+				 * happen in a saved favorite, for example, or if server changes
+				 * some filter options, and the order doesn't work out.  The normal behaviour 
+				 * is to warn & not set it, but for nextmatch we'll just add it
+				 * in, and let the server either set it properly, or ignore.
+				 */
+				if(value && child.instanceOf(et2_selectbox) && typeof child.options.select_options[value] == 'undefined')
+				{
+					var old_options = child.options.select_options;
+					// Actual label is not available, obviously, or it would be there
+					old_options[value] = child.egw().lang("Loading");
+					child.set_select_options(old_options);
+				}
 				child.set_value(value);
 			}
 			if(typeof child.get_value == "function" && child.id)

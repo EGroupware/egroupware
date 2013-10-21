@@ -296,7 +296,7 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 		// Pass the fetch call to the API, multiplex the data about the
 		// nextmatch instance into the call.
 		this.egw.dataFetch(
-				this._execId,
+				this._widget.getInstanceManager().etemplate_exec_id || this._execId,
 				_queriedRange,
 				this._filters,
 				this._widgetId,
@@ -305,8 +305,10 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 	},
 
 	dataRegisterUID: function (_uid, _callback, _context) {
-		this.egw.dataRegisterUID(_uid, _callback, _context, this._execId,
-				this._widgetId);
+		this.egw.dataRegisterUID(_uid, _callback, _context, 
+			this._widget.getInstanceManager().etemplate_exec_id || this._execId,
+			this._widgetId
+		);
 	},
 
 	dataUnregisterUID: function () {

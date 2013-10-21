@@ -125,8 +125,10 @@ var et2_dataview_controller = Class.extend({
 	 * The update function queries the server for changes in the currently
 	 * managed index range -- those changes are then merged into the current
 	 * view without a complete rebuild of every row.
+	 * 
+	 * @param {boolean} clear
 	 */
-	update: function () {
+	update: function (clear) {
 		// Clear the fetch queue
 		this._queue = {};
 		this._clearTimer();
@@ -136,6 +138,10 @@ var et2_dataview_controller = Class.extend({
 		// TODO: Actually stuff here should be done if the server responds that
 		// there at all were some changes (needs implementation of "refresh")
 
+		if(clear)
+		{
+			this._grid.clear();
+		}
 		// Remove all rows which are outside the view range
 		this._grid.cleanup();
 

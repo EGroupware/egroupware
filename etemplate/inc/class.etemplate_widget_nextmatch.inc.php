@@ -328,7 +328,8 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		// Check for anything changed in the query
 		// Tell the client about the changes
 		$request_value =& self::get_array(self::$request->content, $form_name,true);
-		$no_rows = false;
+		$changes = $no_rows = false;
+		
 		foreach($value_in as $key => $original_value)
 		{
 			// These keys are ignored
@@ -341,6 +342,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			// These keys we don't send row data back, as they cause a partial reload
 			if(in_array($key, array('template'))) $no_rows = true;
 
+			$changes = true;
 			$request_value[$key] = $value[$key];
 
 			egw_json_response::get()->generic('assign', array(
@@ -349,6 +351,13 @@ class etemplate_widget_nextmatch extends etemplate_widget
 				'key' => $key,
 				'value' => $value[$key],
 			));
+		}
+		// Request doesn't handle changing by reference, so force it
+		if($changes)
+		{
+			$content = self::$request->content;
+			self::$request->content = array();
+			self::$request->content = $content;
 		}
 		if($no_rows) $rows = Array();
 
