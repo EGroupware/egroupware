@@ -1034,7 +1034,7 @@ var et2_link = et2_valueWidget.extend([et2_IDetachedDOM],
 		this.set_title(this.link, _value.title);
 		var self = this;
 		this.link.unbind()
-			.click( function(){self.egw().open(_value, "", "edit");});
+			.click( function(){self.egw().open(_value, "", "view",null,_value.app,_value.app);});
 	},
 
 	/**
@@ -1198,7 +1198,7 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 		var link = $j(document.createElement("li"))
 			.appendTo(this.list)
 			.addClass("et2_link loading")
-			.click( function(){self.egw().open(_link_data, "", "edit");});
+			.click( function(){self.egw().open(_link_data, "", "view",null,_link_data.app,_link_data.app);});
 
 		if(_link_data.title) link.text(_link_data.title);
 
@@ -1369,7 +1369,7 @@ var et2_link_list = et2_link_string.extend(
 			$j(document.createElement("td"))
 				.appendTo(row)
 				.addClass(columns[i])
-				.click( function(){self.egw().open(_link_data, "", "edit");})
+				.click( function(){self.egw().open(_link_data, "", "view",null,_link_data.app,_link_data.app);})
 				.text(_link_data[columns[i]] ? _link_data[columns[i]]+"" : "");
 		}
 
