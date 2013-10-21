@@ -472,7 +472,7 @@ var et2_selectbox = et2_inputWidget.extend(
 					// Options not set yet? Do that now, which will try again.
 					return this.set_select_options(this.options.select_options);
 				}
-				this.egw().debug("warning", "Tried to set value that isn't an option", this, _value);
+				this.egw().debug("warn", "Tried to set value that isn't an option", this, _value);
 			}
 		}
 
