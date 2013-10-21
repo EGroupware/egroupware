@@ -443,11 +443,23 @@ var et2_link_apps = et2_selectbox.extend(
 				select_options = this.getArrayMgr('content')
 					.getEntry("options-" + this.id);
 			}
-
+			
 			// Default to an empty object
 			if (select_options == null)
 			{
 				select_options = {};
+			}
+			else
+			{
+				// Preset to last application
+				if(!this.options.value)
+				{
+					this.set_value(egw.preference('link_app','common'));
+				}
+				// Register to update preference
+				this.input.on("click", jQuery.proxy(function() {
+					egw.set_preference('common','link_app',this.getValue());
+				}),this);
 			}
 		}
 		this.set_select_options(select_options);
@@ -542,10 +554,14 @@ var et2_link_entry = et2_inputWidget.extend(
 		this.div = $j(document.createElement("div")).addClass("et2_link_entry");
 
 		// Application selection
-		
 		this.app_select = $j(document.createElement("select")).appendTo(this.div)
 			.change(function(e) {
-				self.cache = {}; // Clear cache when app changes
+				// Clear cache when app changes
+				self.cache = {};
+				
+				// Update preference with new value
+				egw.set_preference('common','link_app',self.app_select.val());
+				
 				if(typeof self.options.value != 'object') self.options.value = {};
 				self.options.value.app = self.app_select.val();
 			});
@@ -560,6 +576,10 @@ var et2_link_entry = et2_inputWidget.extend(
 		if(self.options.value && self.options.value.app)
 		{
 			this.app_select.val(self.options.value.app);
+		}
+		else if (egw.preference('link_app','common'))
+		{
+			this.app_select.val(egw.preference('link_app','common'));
 		}
 		else
 		{
