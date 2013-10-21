@@ -311,15 +311,7 @@ class addressbook_ui extends addressbook_bo
 
 		if (!isset($sel_options['org_view'][(string) $content['nm']['org_view']]))
 		{
-			$org_name = array();
-			if (strpos($content['nm']['org_view'],'*AND*')!== false) $content['nm']['org_view'] = str_replace('*AND*','&',$content['nm']['org_view']);
-			foreach(explode('|||',$content['nm']['org_view']) as $part)
-			{
-				list(,$name) = explode(':',$part,2);
-				if ($name) $org_name[] = $name;
-			}
-			$org_name = implode(': ',$org_name);
-			$sel_options['org_view'][(string) $content['nm']['org_view']] = $org_name;
+			$sel_options['org_view'] += $this->_get_org_name((string)$content['nm']['org_view']);
 		}
 		// unset the filters regarding organisations, when there is no organisation selected
 		if (empty($sel_options['org_view'][(string) $content['nm']['org_view']]) || stripos($org_view,":") === false )
@@ -654,7 +646,26 @@ class addressbook_ui extends addressbook_bo
 		*/
 		return $actions;
 	}
-
+	
+	/**
+	 * Get the name of an organization from an ID for the org_view filter
+	 *
+	 * @param string $org
+	 * @return Array ID => name
+	 */
+	private function _get_org_name($org)
+	{
+		$org_name = array();
+		if (strpos($org,'*AND*')!== false) $org = str_replace('*AND*','&',$org);
+		foreach(explode('|||',$org) as $part)
+		{
+			list(,$name) = explode(':',$part,2);
+			if ($name) $org_name[] = $name;
+		}
+		$org_name = implode(': ',$org_name);
+		return array($org => $org_name);
+	}
+	
 	/**
 	 * Email address-selection popup
 	 *
@@ -1212,7 +1223,7 @@ window.egw_LAB.wait(function() {
 			$query['no_filter2'] = true;			// switch the distribution list selection off
 
 			$query['template'] = 'addressbook.index.org_rows';
-
+			
 			if ($query['order'] != 'org_name')
 			{
 				$query['sort'] = 'ASC';
@@ -1248,7 +1259,7 @@ window.egw_LAB.wait(function() {
 				$query['template'] = $do_email ? 'addressbook.email.rows' : 'addressbook.index.rows';
 			}
 			if ($query['org_view'])	// view the contacts of one organisation only
-			{
+			{		
 				if (strpos($query['org_view'],'*AND*') !== false) $query['org_view'] = str_replace('*AND*','&',$query['org_view']);
 				foreach(explode('|||',$query['org_view']) as $part)
 				{
@@ -1506,6 +1517,12 @@ window.egw_LAB.wait(function() {
 		if ($query['org_view'])
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$query['org_view_label'];
+			// Make sure option is there
+			if(!array_key_exists($query['org_view'], $this->org_views))
+			{
+				$this->org_views += $this->_get_org_name($query['org_view']);
+				$rows['sel_options']['org_view'] = $this->org_views;
+			}
 		}
 		if($query['advanced_search'])
 		{
