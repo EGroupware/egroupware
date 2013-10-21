@@ -1176,6 +1176,13 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 	set_template: function(_value) {
 		if(this.template)
 		{
+			// Stop early to prevent unneeded processing, and prevent infinite
+			// loops if the server changes the template in get_rows
+			if(this.template == _value)
+			{
+				return;
+			}
+			
 			// Free the grid components - they'll be re-created as the template is processed
 			this.dataview.free();
 			this.rowProvider.free();
@@ -1500,9 +1507,10 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 	 */
 	init: function(nextmatch, nm_div) {
 		this._super.apply(this, [nextmatch,nextmatch.options.settings]);
-		
+		this.nextmatch = nextmatch;
 		this.div = jQuery(document.createElement("div"))
 			.addClass("nextmatch_header");
+		this._createHeader();
 	},
 
 	destroy: function() {
@@ -1653,7 +1661,6 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			// Set activeFilters to current value
 			this.nextmatch.activeFilters.searchletter = current_letter;
 		}
-		this.loadingFinished();
 	},
 
 
@@ -1899,7 +1906,10 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 
 				// Update filters
 				if(result && _widget.isDirty()) {
-					var value = this.getInstanceManager().getValues(this);
+					// Update dirty
+					_widget._oldValue = _widget.getValue();
+					
+					var value = this.getInstanceManager().getValues(header);
 					// Filter now
 					header.nextmatch.applyFilters(value[header.nextmatch.id]);
 				}
@@ -1908,7 +1918,7 @@ var et2_nextmatch_header_bar = et2_DOMWidget.extend(et2_INextmatchHeader,
 			// Set activeFilters to current value
 			// Use an array mgr to hande non-simple IDs
 			var value = {};
-			value[_widget.id] = _widget.getValue();
+			value[_widget.id] = _widget._oldValue = _widget.getValue();
 			var mgr = new et2_arrayMgr(value);
 			jQuery.extend(this.nextmatch.activeFilters,mgr.data);
 		}, this, et2_inputWidget);
