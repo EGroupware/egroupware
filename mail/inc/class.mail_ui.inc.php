@@ -125,6 +125,7 @@ class mail_ui
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
 		if (!($this->mail_bo->icServer->_connected == 1)) $this->mail_bo->openConnection(self::$icServerID);
+		$GLOBALS['egw']->session->commit_session();
 	}
 
 	/**
