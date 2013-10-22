@@ -110,7 +110,7 @@ class mail_bopreferences extends mail_sopreferences
 		$accountData = array_shift($accountData);
 		//_debug_array($accountData);
 
-		$icServer = CreateObject('emailadmin.defaultimap');
+		$icServer = new emailadmin_oldimap();
 		$icServer->ImapServerId	= $accountData['id'];
 		$icServer->encryption	= isset($accountData['ic_encryption']) ? $accountData['ic_encryption'] : 1;
 		$icServer->host		= $accountData['ic_hostname'];
@@ -166,7 +166,7 @@ class mail_bopreferences extends mail_sopreferences
 		#_debug_array($accountData);
 		foreach ($AllAccountData as $key => $accountData)
 		{
-			$icServer = CreateObject('emailadmin.defaultimap');
+			$icServer = new emailadmin_oldimap();
 			$icServer->ImapServerId	= $accountData['id'];
 			$icServer->encryption	= isset($accountData['ic_encryption']) ? $accountData['ic_encryption'] : 1;
 			$icServer->host		= $accountData['ic_hostname'];

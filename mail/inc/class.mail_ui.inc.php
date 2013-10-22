@@ -61,7 +61,7 @@ class mail_ui
 	/**
 	 * instance of mail_bo
 	 *
-	 * @var object
+	 * @var mail_bo
 	 */
 	var $mail_bo;
 
@@ -86,7 +86,7 @@ class mail_ui
 	 */
 	var $statusTypes = array(
 		'any'		=> 'any status',// lang('any status')
-		'flagged'	=> 'flagged',	// lang('flagged')	
+		'flagged'	=> 'flagged',	// lang('flagged')
 		'unseen'	=> 'unread',	// lang('unread')
 		'answered'	=> 'replied',	// lang('replied')
 		'seen'		=> 'read',		// lang('read')
@@ -1959,7 +1959,7 @@ unset($query['actions']);
 					);
 */
 					$decodedPersonalName = $realName;
-/*						
+/*
 					if (!empty($decodedPersonalName)) {
 						if($spacePos = strrpos($decodedPersonalName, ' ')) {
 							$linkData['presets[n_family]']	= substr($decodedPersonalName, $spacePos+1);

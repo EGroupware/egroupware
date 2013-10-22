@@ -759,7 +759,7 @@ class mail_bo
 		$foldersNameSpace = array();
 		$delimiter = $this->getHierarchyDelimiter();
 		// TODO: cache by $this->icServer->ImapServerId
-		if (is_null($nameSpace)) $nameSpace = $this->icServer->getNameSpaces();
+		if (is_null($nameSpace)) $nameSpace = $this->icServer->getNameSpaceArray();
 		if (is_array($nameSpace)) {
 			foreach($nameSpace as $type => $singleNameSpace) {
 				$prefix_present = false;
