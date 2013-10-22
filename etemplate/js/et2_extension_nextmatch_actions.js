@@ -284,6 +284,7 @@ function nm_open_popup(_action, _ids)
 			var action = _action;
 			jQuery('button',popup).each(function(index) {
 				var but = jQuery(this);
+				but.hide();
 				if(but.attr("id"))
 				{
 					// Find the associated widget
