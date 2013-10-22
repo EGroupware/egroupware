@@ -95,12 +95,6 @@ var et2_selectbox = et2_inputWidget.extend(
 
 		this.input = null;
 		this.value = '';
-
-		// Grab value if already available
-		if(typeof this.options.value != 'undefined')
-		{
-			this.value = this.options.value;
-		}
  
 		// Allow no other widgets inside this one
 		this.supportedWidgetClasses = [];
