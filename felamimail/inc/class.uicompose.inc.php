@@ -549,14 +549,40 @@
 			if(is_array($_FILES["addFileName"])) {
 				#phpinfo();
 				//_debug_array($_FILES);
-				if($_FILES['addFileName']['error'] == $UPLOAD_ERR_OK) {
-					$formData['name']	= $_FILES['addFileName']['name'];
-					$formData['type']	= $_FILES['addFileName']['type'];
-					$formData['file']	= $_FILES['addFileName']['tmp_name'];
-					$formData['size']	= $_FILES['addFileName']['size'];
-					$this->bocompose->addAttachment($formData);
+				$success=false;
+				if (is_array($_FILES["addFileName"]['name']))
+				{
+					// multiple uploads supported by newer firefox (>3.6) and chrome (>4) versions,
+					// upload array information is by key within the attribute (name, type, size, temp_name)
+					foreach($_FILES["addFileName"]['name'] as $key => $filename)
+					{
+						if($_FILES['addFileName']['error'][$key] == $UPLOAD_ERR_OK) {
+							$formData['name']	= $_FILES['addFileName']['name'][$key];
+							$formData['type']	= $_FILES['addFileName']['type'][$key];
+							$formData['file']	= $_FILES['addFileName']['tmp_name'][$key];
+							$formData['size']	= $_FILES['addFileName']['size'][$key];
+							$this->bocompose->addAttachment($formData);
+							$success = true;
+						}
+					}
+				}
+				else // should not happen as upload form name is defined as addFileName[]
+				{
+					if($_FILES['addFileName']['error'] == $UPLOAD_ERR_OK) {
+						$formData['name']   = $_FILES['addFileName']['name'];
+						$formData['type']   = $_FILES['addFileName']['type'];
+						$formData['file']   = $_FILES['addFileName']['tmp_name'];
+						$formData['size']   = $_FILES['addFileName']['size'];
+						$this->bocompose->addAttachment($formData);
+						$success = true;
+					}
+				}
+				if ($success == true)
+				{
 					print "<script type='text/javascript'>window.close();</script>";
-				} else {
+				}
+				else
+				{
 					print "<script type='text/javascript'>document.getElementById('fileSelectorDIV1').style.display = 'inline';document.getElementById('fileSelectorDIV2').style.display = 'none';</script>";
 				}
 			}
