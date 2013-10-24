@@ -2435,7 +2435,7 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader,
 		} else {
 			delete (this.nextmatch.activeFilters["col_filter"][this.id]);
 		}
-		this.nextmatch.applyFilters();
+		this.nextmatch.applyFilters.call(this.nextmatch);
 	},
 
 	/**

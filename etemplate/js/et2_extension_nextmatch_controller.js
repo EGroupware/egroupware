@@ -151,6 +151,15 @@ var et2_nextmatch_controller = et2_dataview_controller.extend(et2_IDataProvider,
 			// Call the nm_action function with the ids
 			nm_action(_action, _senders, _target, ids);
 		});
+		
+		// Set the 'Select All' handler
+		var select_all = this._actionManager.getActionById('select_all');
+		if(select_all)
+		{
+			select_all.set_onExecute(jQuery.proxy(function(action, selected) {
+				this._selectionMgr.selectAll();
+			}, this));
+		}
 
 		// Initialize the object manager
 		var gom = egw_getObjectManager(this.egw.appName);

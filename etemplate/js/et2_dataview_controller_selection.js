@@ -62,6 +62,7 @@ var et2_dataview_selectionManager = Class.extend(
 		this._registeredRows = {};
 		this._focusedEntry = null;
 		this._invertSelection = false;
+		this._selectAll = false;
 		this._inUpdate = false;
 		this._total = 0;
 		this._children = [];
@@ -160,6 +161,8 @@ var et2_dataview_selectionManager = Class.extend(
 
 	resetSelection: function () {
 		this._invertSelection = false;
+		this._selectAll = false;
+		this._actionObjectManager.setAllSelected(false);
 
 		for (var key in this._registeredRows)
 		{
@@ -168,6 +171,7 @@ var et2_dataview_selectionManager = Class.extend(
 	},
 
 	setSelected: function (_uid, _selected) {
+		this._selectAll = false;
 		var entry = this._getRegisteredRowsEntry(_uid);
 		this._updateEntryState(entry,
 				egwSetBit(entry.state, EGW_AO_STATE_SELECTED, _selected));
@@ -196,9 +200,11 @@ var et2_dataview_selectionManager = Class.extend(
 		// Reset the selection
 		this.resetSelection();
 
-		// Set the "invert selection" flag
-		this._invertSelection = true;
-
+		this._selectAll = true;
+		
+		// Tell action manager to do all
+		this._actionObjectManager.setAllSelected(true);
+		
 		// Update the selection
 		for (var key in this._registeredRows)
 		{
@@ -225,11 +231,10 @@ var et2_dataview_selectionManager = Class.extend(
 		}
 
 		// Return an array containing those ids
-		// RB: we are currently NOT using "inverted" (selectAll is not bound/called), 
-		// but an all attribute comming from objectManager, if Ctrl-A was pressed and nothing deselected later
+		// RB: we are currently NOT using "inverted"
 		return {
 			//"inverted": this._invertSelection,
-			"all": this._actionObjectManager.getAllSelected(),
+			"all": this._selectAll,
 			"ids": ids
 		};
 	},
@@ -363,8 +368,11 @@ var et2_dataview_selectionManager = Class.extend(
 
 	_updateEntryState: function (_entry, _state) {
 
-
-		if (this._invertSelection)
+		if (this._selectAll)
+		{
+			_state |= EGW_AO_STATE_SELECTED;
+		}
+		else if (this._invertSelection)
 		{
 			_state ^= EGW_AO_STATE_SELECTED;
 		}

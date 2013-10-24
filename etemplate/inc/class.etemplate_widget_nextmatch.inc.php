@@ -621,11 +621,33 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		//echo "actions="; _debug_array($actions);
 		$egw_actions = array();
 		$n = 1;
+		$group = false;
+		
 		foreach((array)$actions as $id => $action)
 		{
 			// in case it's only selectbox  id => label pairs
 			if (!is_array($action)) $action = array('caption' => $action);
 			if ($default_attrs) $action += $default_attrs;
+
+			// Add 'Select All' after first group
+			if ($first_level && $group !== false && $action['group'] != $group && !$egw_actions[$prefix.'select_all'])
+			{
+				
+				$egw_actions[$prefix.'select_all'] = array(
+					'caption' => 'Select all',
+					//'checkbox' => true,
+					'hint' => 'Select all entries',
+					'enabled' => true,
+					'shortcut' => array(
+						'keyCode'	=>	65, // A
+						'ctrl'		=>	true,
+						'caption'	=> 'Ctrl+A'
+					),
+					'group' => $action['group'],
+				);
+				$action_links[] = $prefix.'select_all';
+			}
+			$group = $action['group'];
 
 			if (!$first_level && $n == $max_length && count($actions) > $max_length)
 			{
@@ -680,7 +702,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			}
 
 			$egw_actions[$prefix.$id] = $action;
-
+			
 			if (!$first_level && $n++ == $max_length) break;
 		}
 		//echo "egw_actions="; _debug_array($egw_actions);
