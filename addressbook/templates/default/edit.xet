@@ -27,23 +27,23 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="prefix" for="n_prefix"/>
+					<description value="prefix" options=",,,n_prefix"/>
 					<textbox id="n_prefix" onchange="check_value(this,'$cont[id]');" size="35" maxlength="64"/>
 				</row>
 				<row>
-					<description value="first name" for="n_given"/>
+					<description value="first name" options=",,,n_given"/>
 					<textbox id="n_given" onchange="check_value(this,'$cont[id]');" size="35" maxlength="64"/>
 				</row>
 				<row>
-					<description value="middle name" for="n_middle"/>
+					<description value="middle name" options=",,,n_middle"/>
 					<textbox id="n_middle" onchange="check_value(this,'$cont[id]');" size="35" maxlength="64"/>
 				</row>
 				<row>
-					<description value="last name" for="n_family"/>
+					<description value="last name" options=",,,n_family"/>
 					<textbox id="n_family" onchange="check_value(this,'$cont[id]');" size="35" maxlength="64"/>
 				</row>
 				<row>
-					<description value="suffix" for="n_suffix"/>
+					<description value="suffix" options=",,,n_suffix"/>
 					<textbox id="n_suffix" onchange="check_value(this,'$cont[id]');" size="35" maxlength="64"/>
 				</row>
 				<row>
@@ -86,12 +86,12 @@
 								<description/>
 							</row>
 							<row>
-								<description value="Title" for="title"/>
+								<description value="Title" options=",,,title"/>
 								<textbox id="title" size="36" maxlength="64" span="2"/>
 								<description/>
 							</row>
 							<row>
-								<description value="Role" for="role"/>
+								<description value="Role" options=",,,role"/>
 								<textbox id="role" size="20" maxlength="64"/>
 								<textbox label="Room" id="room" size="5"/>
 								<description/>
@@ -106,12 +106,12 @@
 				</row>
 				<row>
 					<description/>
-					<description value="department" for="org_unit"/>
+					<description value="department" options=",,,org_unit"/>
 					<textbox id="org_unit" onchange="check_value(this,'$cont[id]');" size="45" maxlength="64"/>
 				</row>
 				<row>
 					<image src="gohome"/>
-					<description value="street" for="adr_one_street"/>
+					<description value="street" options=",,,adr_one_street"/>
 					<textbox id="adr_one_street" size="45" maxlength="64"/>
 				</row>
 				<row>
@@ -121,7 +121,7 @@
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
 					<description/>
-					<description value="city" for="adr_one_locality"/>
+					<description value="city" options=",,,adr_one_locality"/>
 					<hbox options="0,0">
 						<textbox statustext="ZIP Code" id="adr_one_postalcode" size="5" maxlength="64"/>
 						<textbox statustext="City" id="adr_one_locality" size="35" maxlength="64" class="leftPad5"/>
@@ -129,7 +129,7 @@
 				</row>
 				<row disabled="@addr_format=city_state_postcode">
 					<description/>
-					<description value="country" for="adr_one_countryname"/>
+					<description value="country" options=",,,adr_one_countryname"/>
 					<hbox options="0,0">
 						<menulist class="countrySelect">
 							<menupopup type="select-country" id="adr_one_countrycode" onchange="show_custom_country(this);" options="Select one,0,1"/>
@@ -149,7 +149,7 @@
 				</row>
 				<row disabled="!@addr_format=city_state_postcode">
 					<description/>
-					<description value="country" for="adr_one_countryname"/>
+					<description value="country" options=",,,adr_one_countryname"/>
 					<hbox options="0,0">
 						<menulist class="countrySelect">
 							<menupopup type="select-country" id="adr_one_countrycode" onchange="show_custom_country(this);" options="Select one,0,1"/>
@@ -195,17 +195,17 @@
 			<rows>
 				<row>
 					<image src="accounts"/>
-					<description value="street" for="adr_two_street"/>
+					<description value="street" options=",,,adr_two_street"/>
 					<textbox id="adr_two_street" size="45" maxlength="64"/>
 				</row>
 				<row>
 					<description/>
-					<description for="adr_two_street2"/>
+					<description options=",,,adr_two_street2"/>
 					<textbox statustext="address line 2" id="adr_two_street2" size="45" maxlength="64"/>
 				</row>
 				<row disabled="@addr_format2=city_state_postcode">
 					<description/>
-					<description value="city" for="adr_two_locality"/>
+					<description value="city" options=",,,adr_two_locality"/>
 					<hbox options="0,0">
 						<textbox statustext="ZIP Code" id="adr_two_postalcode" size="5" maxlength="64"/>
 						<textbox statustext="City" id="adr_two_locality" size="35" maxlength="64" class="leftPad5"/>
@@ -213,7 +213,7 @@
 				</row>
 				<row disabled="@addr_format2=city_state_postcode">
 					<description/>
-					<description value="country" for="adr_two_countryname"/>
+					<description value="country" options=",,,adr_two_countryname"/>
 					<hbox options="0,0">
 						<menulist class="countrySelect">
 							<menupopup type="select-country" id="adr_two_countrycode" onchange="show_custom_country(this);" options="Select one,0,1"/>
@@ -224,7 +224,7 @@
 				</row>
 				<row disabled="!@addr_format2=city_state_postcode">
 					<description/>
-					<description value="city" for="adr_two_locality"/>
+					<description value="city" options=",,,adr_two_locality"/>
 					<hbox options="0,0">
 						<textbox statustext="City" id="adr_two_locality" size="30" maxlength="64"/>
 						<textbox statustext="State" id="adr_two_region" size="3" maxlength="64" class="leftPad5"/>
@@ -243,7 +243,7 @@
 				</row>
 				<row height="30">
 					<image src="gear"/>
-					<description value="Birthday" for="bday"/>
+					<description value="Birthday" options=",,,bday"/>
 					<hbox options="0,0">
 						<date id="bday" options="Y-m-d"/>
 						<menulist>
@@ -253,7 +253,7 @@
 				</row>
 				<row valign="top">
 					<image src="private.png"/>
-					<description value="Public key" for="pubkey"/>
+					<description value="Public key" options=",,,pubkey"/>
 					<textbox multiline="true" id="pubkey" rows="4" cols="40"/>
 				</row>
 			</rows>
@@ -289,9 +289,7 @@
 				</row>
 				<row class="row_off" valign="top">
 					<image src="gear"/>
-					<menulist>
-						<menupopup type="select-account" label="Created" readonly="true"/>
-					</menulist>
+					<description value="Created" readonly="true"/>
 					<hbox readonly="true" options="0,0">
 						<menulist>
 							<menupopup type="select-account" id="creator" readonly="true"/>
@@ -418,27 +416,27 @@
 					<description value="pref"/>
 				</row>
 				<row>
-					<description value="business" for="tel_work2" class="bold"/>
+					<description value="business" options=",,,tel_work2" class="bold"/>
 					<url-phone id="tel_work2" options="30"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_work,&amp;hearts;"/>
 				</row>
 				<row>
-					<description value="mobile phone" for="tel_cell2"/>
+					<description value="mobile phone" options=",,,tel_cell2"/>
 					<url-phone id="tel_cell2" options="30"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_cell,&amp;hearts;"/>
 				</row>
 				<row>
-					<description value="fax" for="tel_fax"/>
+					<description value="fax" options=",,,tel_fax"/>
 					<url-phone id="tel_fax2" options="30"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax,&amp;hearts;"/>
 				</row>
 				<row>
-					<description value="car phone" for="tel_car"/>
+					<description value="car phone" options=",,,tel_car"/>
 					<url-phone id="tel_car" options="30"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_car,&amp;hearts;"/>
 				</row>
 				<row>
-					<description value="pager" for="tel_pager"/>
+					<description value="pager" options=",,,tel_pager"/>
 					<url-phone id="tel_pager" options="30"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_pager,&amp;hearts;"/>
 				</row>
@@ -446,11 +444,11 @@
 					<hrule span="all"/>
 				</row>
 				<row>
-					<description value="Assistent" for="assistent" class="bold"/>
+					<description value="Assistent" options=",,,assistent" class="bold"/>
 					<textbox id="assistent" size="35" span="2"/>
 				</row>
 				<row>
-					<description value="number" for="tel_assistent"/>
+					<description value="number" options=",,,tel_assistent"/>
 					<url-phone id="tel_assistent" options="30"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_assistent,&amp;hearts;"/>
 				</row>
@@ -458,17 +456,17 @@
 					<hrule span="all"/>
 				</row>
 				<row>
-					<description value="Private" for="tel_home2" class="bold"/>
+					<description value="Private" options=",,,tel_home2" class="bold"/>
 					<url-phone id="tel_home2" options="30"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_home,&amp;hearts;"/>
 				</row>
 				<row>
-					<description value="mobile phone" for="tel_cell_private"/>
+					<description value="mobile phone" options=",,,tel_cell_private"/>
 					<url-phone id="tel_cell_private" options="30"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_cell_private,&amp;hearts;"/>
 				</row>
 				<row>
-					<description value="fax" for="tel_fax_home"/>
+					<description value="fax" options=",,,tel_fax_home"/>
 					<url-phone id="tel_fax_home" options="30"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_fax_home,&amp;hearts;"/>
 				</row>
@@ -476,7 +474,7 @@
 					<hrule span="all"/>
 				</row>
 				<row>
-					<description value=" Other Phone" for="tel_other"/>
+					<description value=" Other Phone" options=",,,tel_other"/>
 					<url-phone id="tel_other" options="30"/>
 					<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_other,&amp;hearts;"/>
 				</row>
@@ -519,15 +517,15 @@
 				<row valign="top">
 					<tabbox id="tabs">
 						<tabs>
-							<tab id="general" label="General" statustext="Name, Address"/>
-							<tab id="cats" label="Categories" statustext="Categories"/>
-							<tab id="home" label="Private" statustext="Home address, Birthday, ..."/>
-							<tab id="details" label="Details" statustext="Categories, Notes, ..."/>
-							<tab id="links" label="Links" statustext="Links"/>
-							<tab id="distribution_list" label="Distribution lists" statustext="Distribution lists, ..."/>
-							<tab id="custom" label="Extra" statustext="Custom fields"/>
-							<tab id="custom_private" label="Extra private" statustext="Private custom fields"/>
-							<tab id="history" label="History"/>
+							<tab label="General" statustext="Name, Address"/>
+							<tab label="Categories" statustext="Categories"/>
+							<tab label="Private" statustext="Home address, Birthday, ..."/>
+							<tab label="Details" statustext="Categories, Notes, ..."/>
+							<tab label="Links" statustext="Links"/>
+							<tab label="Distribution lists" statustext="Distribution lists, ..."/>
+							<tab label="Extra" statustext="Custom fields"/>
+							<tab label="Extra private" statustext="Private custom fields"/>
+							<tab label="History" statustext=""/>
 						</tabs>
 						<tabpanels>
 							<template id="addressbook.edit.general"/>
@@ -555,19 +553,19 @@
 								<rows>
 									<row>
 										<image src="phone"/>
-										<description value="business" for="tel_work"/>
+										<description value="business" options=",,,tel_work"/>
 										<url-phone id="tel_work" options="24,40" class="telNumbers"/>
 										<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_work,&amp;hearts;"/>
 									</row>
 									<row>
 										<description/>
-										<description value="mobile phone" for="tel_cell"/>
+										<description value="mobile phone" options=",,,tel_cell"/>
 										<url-phone id="tel_cell" options="24,40" class="telNumbers"/>
 										<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_cell,&amp;hearts;"/>
 									</row>
 									<row>
 										<description/>
-										<description value="Private" for="tel_home"/>
+										<description value="Private" options=",,,tel_home"/>
 										<url-phone id="tel_home" options="24,40" class="telNumbers"/>
 										<radio statustext="select phone number as prefered way of contact" id="tel_prefer" options="tel_home,&amp;hearts;"/>
 									</row>
@@ -597,22 +595,22 @@
 								<rows>
 									<row>
 										<image src="internet"/>
-										<description value="url" for="url"/>
+										<description value="url" options=",,,url"/>
 										<url id="url" options="28,128"/>
 									</row>
 									<row>
 										<description/>
-										<description value="Private" for="url_home"/>
+										<description value="Private" options=",,,url_home"/>
 										<url id="url_home" options="28,128"/>
 									</row>
 									<row>
 										<image src="email.png"/>
-										<description value="email" for="email"/>
+										<description value="email" options=",,,email"/>
 										<url-email id="email" onchange="check_value(this,'$cont[id]');" options="28,128"/>
 									</row>
 									<row>
 										<description/>
-										<description value="Private" for="email_home"/>
+										<description value="Private" options=",,,email_home"/>
 										<url-email id="email_home" onchange="check_value(this,'$cont[id]');" options="28,128"/>
 									</row>
 								</rows>
