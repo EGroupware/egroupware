@@ -5,7 +5,7 @@
 * @link http://www.egroupware.org
 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 * @author Ralf Becker <RalfBecker@outdoor-training.de>
-* @copyright 2002-11 by RalfBecker@outdoor-training.de
+* @copyright 2002-13 by RalfBecker@outdoor-training.de
 * @package etemplate
 * @subpackage api
 * @version $Id$
@@ -365,7 +365,7 @@ class etemplate_old extends boetemplate
 	* @param string $cname=null name-prefix, which need to be ignored, default self::$name_vars
 	* @return boolean true if there are not ignored validation errors, false otherwise
 	*/
-	function validation_errors($ignore_validation='',$cname=null)
+	static function validation_errors($ignore_validation='',$cname=null)
 	{
 		if (is_null($cname)) $cname = self::$name_vars;
 		//echo "<p>uiself::validation_errors('$ignore_validation','$cname') validation_error="; _debug_array(self::$validation_errors);
@@ -1059,8 +1059,14 @@ class etemplate_old extends boetemplate
 		}
 		$form_name = self::form_name($cname,$name);
 
-		$value = $this->get_array($content,$name);
-
+		if (!empty($name))
+		{
+			$value = $this->get_array($content,$name);
+		}
+		else
+		{
+			$value =& $content;
+		}
 		$options = '';
 		if ($readonly = $cell['readonly'] && $readonlys[$name] !== false || 	// allow to overwrite readonly settings of a cell
 			@$readonlys[$name] && !is_array($readonlys[$name]) || $readonlys['__ALL__'] && (!is_string($name) || $readonlys[$name] !== false) ||
@@ -1279,8 +1285,6 @@ class etemplate_old extends boetemplate
 			case 'passwd':
 			case 'text':		// size: [length][,maxLength[,preg[,html5type]]]
 			case 'textbox':
-				$autocompletion_off='';
-				if ($type == 'passwd') $autocompletion_off='autocomplete="off"';
 				$cell_opts = $c = self::csv_split($cell_options);	// allows to enclose preg in quote to allow comma
 				// fix preg, in case it contains a comma (html5type is only letters and always last option!)
 				if (count($cell_opts) > 3 && ($cell_opts2 = explode(',',$cell_options)) && $cell_opts2[2][0] != '"')
@@ -1300,9 +1304,14 @@ class etemplate_old extends boetemplate
 				}
 				else
 				{
-					if ($cell_opts[0] < 0) $cell_opts[0] = abs($cell_opts[0]);
+					if ($cell_opts[0] < 0)
+					{
+						$cell_opts[0] = abs($cell_opts[0]);
+						$options .= ' readonly="readonly"';
+					}
 					$html .= html::input($form_name,$value,$type == 'passwd' ? 'password' : ($type == 'hidden' ? 'hidden' : $cell_opts[3]),
-						$options.html::formatOptions($cell_opts,'SIZE,MAXLENGTH').($cell['needed']?' required="required"':'').($autocompletion_off?' '.$autocompletion_off:''));
+						$options.html::formatOptions($cell_opts,'SIZE,MAXLENGTH').
+						($cell['needed']?' required="required"':'').($type == 'passwd'?' autocomplete="off"':''));
 
 					if (!$readonly)
 					{
