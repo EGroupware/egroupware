@@ -133,66 +133,7 @@ class importexport_admin_prefs_sidebox_hooks
 				$file['Export CSV']['link'] = '';
 			}
 		}
-		if(($file_list = bo_merge::get_documents($GLOBALS['egw_info']['user']['preferences'][$appname]['document_dir'], '', array(
-			'application/vnd.oasis.opendocument.spreadsheet',
-			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-		),$appname)))
-		{
-			$prefix = 'document_';
-
-			$options = 'style="max-width:175px;" onchange="var win= egw_appWindow(\''.$appname.'\');
-if(win.egw_getActionManager) {
-var actionMgrs = win.egw_getActionManager(\''.$appname.'\').getActionsByAttr(\'type\', \'actionManager\');
-var actionMgr = null;
-for(var i = 0; i < actionMgrs.length; i++) {
-	if(typeof actionMgrs[i].etemplate_var_prefix != \'undefined\') {
-		actionMgr = actionMgrs[i];
-		break;
-	}
-}
-var objectMgr = win.egw_getObjectManager(actionMgr.id);
-if(actionMgr && objectMgr && win.egwAction) {
-	var action = new win.egwAction(actionMgr,\''.$prefix.'\'+this.value);
-	var toggle_select = false;
-	if(objectMgr.selectedChildren.length == 0) {
-		// Be nice and select all, if they forgot to select any
-		if(actionMgr.getActionById(\'select_all\')) {
-			var total = parseInt($j(\'span#total\',actionMgr.etemplate_form).text());
-			if(total > 0) {
-				actionMgr.getActionById(\'select_all\').set_checked(true);
-				toggle_select = true;
-			} else {
-				alert(\''.lang('You need to select some entries first!').'\');
-				this.value = \'\';
-				return false;
-			}
-		}
-	}
-	win.nm_action(action, objectMgr.selectedChildren);
-	if(toggle_select) {
-		// Turn it back off again
-		actionMgr.getActionById(\'select_all\').set_checked(false);
-	}
-}
-} else {';
-			if($appname == 'calendar')
-			{
-				$options .= "
-var win=egw_appWindow('calendar'); win.location=win.location+(win.location.search.length ? '&' : '?')+'merge='+this.value;this.value='';";
-			}
-$options .= '
-}
-this.value = \'\'"';
-			if($GLOBALS['egw_info']['flags']['disable_importexport']['merge']) {
-				$options = 'disabled="disabled"';
-			}
-			$file[] = array(
-				'text'	=> html::select('merge',false,array('' =>  lang('Export Spreadsheet')) + $file_list, true,$options),
-				'noLang'	=> true,
-				'link'	=> false,
-			);
-		}
-
+		
 		$config = config::read('importexport');
 		if($appname != 'admin' && ($config['users_create_definitions'] || $GLOBALS['egw_info']['user']['apps']['admin']) &&
 			count(importexport_helper_functions::get_plugins($appname)) > 0
