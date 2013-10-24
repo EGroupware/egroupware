@@ -41,7 +41,7 @@
 						</columns>
 						<rows>
 							<row>
-								<nextmatch-customfilter id="linked" onchange="1" options="link-entry"/>
+								<nextmatch-customfilter id="linked" options="link-entry"/>
 								<nextmatch-sortheader align="right" label="Priority" id="info_priority" options="DESC" class="noPrint"/>
 							</row>
 							<row>
