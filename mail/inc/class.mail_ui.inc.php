@@ -1460,55 +1460,14 @@ unset($query['actions']);
 			// sent or draft or template folder -> to address
 			if (in_array("toaddress", $cols))
 			{
-				if(!empty($header['to_name'])) {
-					list($mailbox, $host) = explode('@',$header['to_address']);
-					$senderAddress  = imap_rfc822_write_address($mailbox,
-							$host,
-							$header['to_name']);
-				} else {
-					$senderAddress  = $header['to_address'];
-				}
-
 				// sent or drafts or template folder means foldertype > 0, use to address instead of from
-				$header2add = $header['to_address'];//mail_bo::htmlentities($header['to_address'],$this->charset);
-				$header['to_address'] = $header2add;
-				if (!empty($header['to_name'])) {
-					$header2name = $header['to_name'];//mail_bo::htmlentities($header['to_name'],$this->charset);
-					$header['to_name'] = $header2name;
-
-					$sender_name	= $header['to_name'];
-					$full_address	= $header['to_name'].' <'.$header['to_address'].'>';
-				} else {
-					$sender_name	= $header['to_address'];
-					$full_address	= $header['to_address'];
-				}
-				$data["toaddress"] = $full_address;
+				$data["toaddress"] = $header['to_address'];//mail_bo::htmlentities($header['to_address'],$this->charset);
 			}
 
 			//fromaddress
 			if (in_array("fromaddress", $cols))
 			{
-				$header2add = $header['sender_address'];//mail_bo::htmlentities($header['sender_address'],$this->charset);
-				$header['sender_address'] = $header2add;
-				if (!empty($header['sender_name'])) {
-					$header2name = $header['sender_name'];//mail_bo::htmlentities($header['sender_name'],$this->charset);
-					$header['sender_name'] = $header2name;
-
-					$sender_name	= $header['sender_name'];
-					$full_address	= $header['sender_name'].' <'.$header['sender_address'].'>';
-				} else {
-					$sender_name	= $header['sender_address'];
-					$full_address	= $header['sender_address'];
-				}
-				if(!empty($header['sender_name'])) {
-					list($mailbox, $host) = explode('@',$header['sender_address']);
-					$senderAddress  = imap_rfc822_write_address($mailbox,
-							$host,
-							$header['sender_name']);
-				} else {
-					$senderAddress  = $header['sender_address'];
-				}
-				$data["fromaddress"] = $full_address;
+				$data["fromaddress"] = $header['sender_address'];//mail_bo::htmlentities($header['sender_address'],$this->charset);
 			}
 			if (in_array("date", $cols))
 			{

@@ -1209,11 +1209,11 @@ class mail_bo
 				$headerObject['DATE'] = $_headerObject->getEnvelope()->__get('date');
 				$headerObject['INTERNALDATE'] = $_headerObject->getImapDate();
 				$headerObject['SUBJECT'] = $_headerObject->getEnvelope()->__get('subject');
-				$headerObject['FROM'] = $_headerObject->getEnvelope()->__get('from');
-				$headerObject['TO'] = $_headerObject->getEnvelope()->__get('to');
-				$headerObject['CC'] = $_headerObject->getEnvelope()->__get('cc');
+				$headerObject['FROM'] = $_headerObject->getEnvelope()->__get('from')->__get('addresses');
+				$headerObject['TO'] = $_headerObject->getEnvelope()->__get('to')->__get('addresses');
+				$headerObject['CC'] = $_headerObject->getEnvelope()->__get('cc')->__get('addresses');
 				$headerObject['FLAGS'] = $_headerObject->getFlags();
-error_log(__METHOD__.__LINE__.array2string($headerObject));
+				//error_log(__METHOD__.__LINE__.array2string($headerObject));
 
 				//if($count == 0) error_log(__METHOD__.array2string($headerObject));
 				if (empty($headerObject['UID'])) continue;
@@ -1238,27 +1238,12 @@ error_log(__METHOD__.__LINE__.array2string($headerObject));
 				if (is_array($headerObject['FLAGS'])) {
 					$retValue['header'][$sortOrder[$uid]] = array_merge($retValue['header'][$sortOrder[$uid]],self::prepareFlagsArray($headerObject));
 				}
-				if(is_array($headerObject['FROM']) && is_array($headerObject['FROM'][0])) {
-					if($headerObject['FROM'][0]['HOST_NAME'] != 'NIL') {
-						$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0]['EMAIL'],true);
-					} else {
-						$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0]['MAILBOX_NAME'],true);
-					}
-					if($headerObject['FROM'][0]['PERSONAL_NAME'] != 'NIL') {
-						$retValue['header'][$sortOrder[$uid]]['sender_name'] = self::decode_header($headerObject['FROM'][0]['PERSONAL_NAME']);
-					}
-
+				if(is_array($headerObject['FROM']) && $headerObject['FROM'][0]) {
+					$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0]);
 				}
 
-				if(is_array($headerObject['TO']) && is_array($headerObject['TO'][0])) {
-					if($headerObject['TO'][0]['HOST_NAME'] != 'NIL') {
-						$retValue['header'][$sortOrder[$uid]]['to_address'] = self::decode_header($headerObject['TO'][0]['EMAIL'],true);
-					} else {
-						$retValue['header'][$sortOrder[$uid]]['to_address'] = self::decode_header($headerObject['TO'][0]['MAILBOX_NAME'],true);
-					}
-					if($headerObject['TO'][0]['PERSONAL_NAME'] != 'NIL') {
-						$retValue['header'][$sortOrder[$uid]]['to_name'] = self::decode_header($headerObject['TO'][0]['PERSONAL_NAME']);
-					}
+				if(is_array($headerObject['TO']) && $headerObject['TO'][0]) {
+					$retValue['header'][$sortOrder[$uid]]['to_address'] = self::decode_header($headerObject['TO'][0]);
 					if (count($headerObject['TO'])>1)
 					{
 						$ki=0;
@@ -1266,23 +1251,13 @@ error_log(__METHOD__.__LINE__.array2string($headerObject));
 						{
 							if ($k==0) continue;
 							//error_log(__METHOD__.__LINE__."-> $k:".array2string($add));
-							if($add['HOST_NAME'] != 'NIL')
-							{
-								$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]['address'] = self::decode_header($add['EMAIL'],true);
-							}
-							else
-							{
-								$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]['address'] = self::decode_header($add['MAILBOX_NAME'],true);
-							}
-							if($headerObject['TO'][$k]['PERSONAL_NAME'] != 'NIL')
-							{
-								$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]['name'] = self::decode_header($add['PERSONAL_NAME']);
-							}
+							$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]['address'] = self::decode_header($add);
 							//error_log(__METHOD__.__LINE__.array2string($retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]));
 							$ki++;
 						}
 					}
 				}
+				//error_log(__METHOD__.__LINE__.array2string($retValue['header'][$sortOrder[$uid]]));
 
 				$count++;
 			}
