@@ -170,15 +170,15 @@ class egw_ckeditor_config
 			//Convert old fckeditor skin names to new ones
 			switch ($skin)
 			{
+				case 'moono':
+					$skin = "moono";
+					break;
 				case 'silver':
 				case 'office2003':
 				case 'kama':
 				case 'default':
 					$skin = "kama";
-					break;
-				case 'moono':
-					$skin = "moono";
-					break;
+					if (html::$user_agent != 'firefox') break;
 				case 'moonocolor':
 					$skin = "moonocolor";
 					break;
