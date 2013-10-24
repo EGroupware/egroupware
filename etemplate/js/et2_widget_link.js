@@ -454,11 +454,11 @@ var et2_link_apps = et2_selectbox.extend(
 				// Preset to last application
 				if(!this.options.value)
 				{
-					this.set_value(egw.preference('link_app',self.options.value.to_app || window.egw_appName));
+					this.set_value(egw.preference('link_app', window.egw_appName));
 				}
 				// Register to update preference
 				this.input.on("click", jQuery.proxy(function() {
-					egw.set_preference(self.options.value.to_app || window.egw_appName,'link_app',this.getValue());
+					egw.set_preference(this.options.value.to_app || window.egw_appName,'link_app',this.getValue());
 				}),this);
 			}
 		}
@@ -573,29 +573,12 @@ var et2_link_entry = et2_inputWidget.extend(
 				.text(this.options.select_options[key]);
 			option.appendTo(this.app_select);
 		}
-		if(self.options.value && self.options.value.app)
-		{
-			this.app_select.val(self.options.value.app);
-		}
-		else if (egw.preference('link_app',self.options.value.to_app || window.egw_appName))
-		{
-			this.app_select.val(egw.preference('link_app',self.options.value.to_app || window.egw_appName));
-		}
-		else
-		{
-			this.app_select.val(this.options.application_list[0]);
-		}
 		if(this.options.only_app) 
 		{
 			this.app_select.val(this.options.only_app);
 			this.app_select.hide();
 			this.div.addClass("no_app");
 		}
-		if(typeof self.options.value != "object")
-		{
-			self.options.value = {id: self.options.value};
-		}
-		self.options.value.app = this.app_select.val();
 
 		// Search input
 		this.search = $j(document.createElement("input")) 
@@ -733,6 +716,15 @@ var et2_link_entry = et2_inputWidget.extend(
 		}
 	},
 
+	doLoadingFinished: function() {
+		if(typeof this.options.value == 'object' && !this.options.value.app)
+		{
+			this.options.value.app = egw.preference('link_app',this.options.value.to_app || window.egw_appName);
+			this.app_select.val(this.options.value.app);
+		}
+		return this._super.apply(this,arguments);
+	},
+		
 	getValue: function() {
 		var value = this.options.only_app ? this.options.value.id : this.options.value;
 		if(!this.options.only_app)
@@ -773,7 +765,9 @@ var et2_link_entry = et2_inputWidget.extend(
 		if(!_value.app) _value.app = this.options.only_app;
 
 		if(_value.id) {
-			this.clear.show();
+			// Remove specific display and revert to CSS file
+			// show() would use inline, should be inline-block
+			this.clear.css('display','');
 		} else {
 			this.clear.hide();
 			return;
@@ -793,7 +787,9 @@ var et2_link_entry = et2_inputWidget.extend(
 				// Title will be fetched from server and then set
 				var title = this.egw().link_title(_value.app, _value.id, function(title) {
 					this.search.removeClass("loading").val(title+"");
-					this.clear.show();
+					// Remove specific display and revert to CSS file
+					// show() would use inline, should be inline-block
+					this.clear.css('display','');
 				}, this);
 				this.search.addClass("loading");
 			}
@@ -850,7 +846,9 @@ var et2_link_entry = et2_inputWidget.extend(
 		}
 
 		this.search.addClass("loading");
-		this.clear.show();
+		// Remove specific display and revert to CSS file
+		// show() would use inline, should be inline-block
+		this.clear.css('display','');
 		var request = egw.json("etemplate_widget_link::ajax_link_search::etemplate", 
 			[this.app_select.val(), '', request.term, request.options],
 			this._results,
@@ -874,7 +872,9 @@ var et2_link_entry = et2_inputWidget.extend(
 		}
 		event.data.options.value.id = selected.item.value;
 
-		this.clear.show();
+		// Remove specific display and revert to CSS file
+		// show() would use inline, should be inline-block
+		this.clear.css('display','');
 		event.data.search.val(selected.item.label);
 
 		// Fire change event
