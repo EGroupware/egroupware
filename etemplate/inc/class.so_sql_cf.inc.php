@@ -460,7 +460,7 @@ class so_sql_cf extends so_sql
 			// replace ambiguous column with (an exact match of) table_name.column
 			foreach($criteria as $name => $val)
 			{
-				$extra_columns = $this->db->get_table_definitions($app, $this->extra_table);
+				$extra_columns = $this->db->get_table_definitions($this->app, $this->extra_table);
 				if(is_string($name) && $extra_columns['fd'][array_search($name, $this->db_cols)])
 				{
 					$criteria[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
@@ -524,6 +524,16 @@ class so_sql_cf extends so_sql
 					$orderDir = array_pop($buff);
 					$key = trim(implode(' ',$buff));
 					$order_by = str_replace($v,'extra_order.'.$this->extra_value.' IS NULL,extra_order.'.$this->extra_value.' '.$orderDir,$order_by);
+					// postgres requires that expressions in order by appear in the columns of a distinct select
+					if ($this->db->Type != 'mysql')
+					{
+						if (!is_array($extra_cols))
+						{
+							$extra_cols = $extra_cols ? explode(',', $extra_cols) : array();
+						}
+						$extra_cols[] = 'extra_order.'.$this->extra_value;
+						$extra_cols[] = 'extra_order.'.$this->extra_value.' IS NULL';
+					}
 					$join .= $this->extra_join_order.' AND extra_order.'.$this->extra_key.'='.$this->db->quote(substr($key,1));
 				}
 			}
@@ -548,7 +558,7 @@ class so_sql_cf extends so_sql
 				// replace ambiguous column with (an exact match of) table_name.column
 				elseif (is_string($name) && $val!=null && in_array($name, $this->db_cols))
 				{
-					$extra_columns = $this->db->get_table_definitions($app, $this->extra_table);
+					$extra_columns = $this->db->get_table_definitions($this->app, $this->extra_table);
 					if ($extra_columns['fd'][array_search($name, $this->db_cols)])
 					{
 						$filter[] = $this->db->expression($this->table_name,$this->table_name.'.',array(
