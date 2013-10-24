@@ -1114,7 +1114,7 @@ class mail_bo
 			$total = $_sortResult['count'];
 			#_debug_array($sortResult);
 			#_debug_array(array_slice($sortResult, -5, -2));
-			//error_log("REVERSE: $reverse");
+			error_log("REVERSE: $reverse");
 			if($reverse === true) {
 				if  ($_startMessage<=$total)
 				{
@@ -1165,34 +1165,24 @@ class mail_bo
 		if (self::$debug) $starttime = microtime(true);
 		//$headersNew = $this->icServer->getSummary($queryString, $rByUid);
 		//$headersNew = $this->_getSummary($queryString, $rByUid,false,$_folderName);
-	$uidsToFetch = new Horde_Imap_Client_Ids();
-	$uidsToFetch->add($sortResult);
+		$uidsToFetch = new Horde_Imap_Client_Ids();
+		$uidsToFetch->add($sortResult);
 
-	$fquery = new Horde_Imap_Client_Fetch_Query();
-	$fquery->headers('headers', array('Subject', 'From', 'To', 'Cc', 'Date'), array('peek' => true,'cache' => true));
-	$fquery->structure();
-	$fquery->flags();
-	$fquery->imapDate();
-	$headersNew = $this->icServer->fetch($_folderName, $fquery, array(
-		'ids' => $uidsToFetch,
-	));
-_debug_array($headersNew);
+		$fquery = new Horde_Imap_Client_Fetch_Query();
+//		$fquery->headers('headers', array('Subject', 'From', 'To', 'Cc', 'Date'), array('peek' => true,'cache' => true));
+		$fquery->envelope();
+		$fquery->size();
+//		$fquery->structure();
+		$fquery->flags();
+//		$fquery->imapDate();
+		$headersNew = $this->icServer->fetch($_folderName, $fquery, array(
+			'ids' => $uidsToFetch,
+		));
+//error_log(__METHOD__.__LINE__.array2string($headersNew->ids()));
 		if (PEAR::isError($headersNew) && empty($queryString))
 		{
 			$headersNew = array();
 			$sortResult = array();
-		}
-		if ($headersNew == null && empty($_thisUIDOnly)) // -> if we request uids, do not try to look for messages with ids
-		{
-			if (self::$debug) error_log(__METHOD__.__LINE__."Uid->$queryString, ByUID? $rByUid");
-			// message retrieval via uid failed try one by one via message number
-			$rByUid = false;
-			foreach($sortResult as $k => $v)
-			{
-				if (self::$debug) error_log(__METHOD__.__LINE__.' Query:'.$v.':*');
-				$rv = $this->icServer->getSummary($v.':*', $rByUid);
-				$headersNew[] = $rv[0];
-			}
 		}
 		if (self::$debug)
 		{
@@ -1208,12 +1198,26 @@ _debug_array($headersNew);
 		}
 
 		$count = 0;
-		if (is_array($headersNew)) {
+		if (is_object($headersNew)) {
 			if (self::$debug) $starttime = microtime(true);
-			foreach((array)$headersNew as $headerObject) {
+			foreach($headersNew->ids() as $id) {
+				$_headerObject = $headersNew->get($id);
+				$uid = $headerObject['UID']= ($_headerObject->getUid()?$_headerObject->getUid():$id);
+				//error_log(__METHOD__.__LINE__.array2string($_headerObject));
+				$headerObject['MSG_NUM'] = $_headerObject->getSeq();
+				$headerObject['SIZE'] = $_headerObject->getSize();
+				$headerObject['DATE'] = $_headerObject->getEnvelope()->__get('date');
+				$headerObject['INTERNALDATE'] = $_headerObject->getImapDate();
+				$headerObject['SUBJECT'] = $_headerObject->getEnvelope()->__get('subject');
+				$headerObject['FROM'] = $_headerObject->getEnvelope()->__get('from');
+				$headerObject['TO'] = $_headerObject->getEnvelope()->__get('to');
+				$headerObject['CC'] = $_headerObject->getEnvelope()->__get('cc');
+				$headerObject['FLAGS'] = $_headerObject->getFlags();
+error_log(__METHOD__.__LINE__.array2string($headerObject));
+
 				//if($count == 0) error_log(__METHOD__.array2string($headerObject));
 				if (empty($headerObject['UID'])) continue;
-				$uid = ($rByUid ? $headerObject['UID'] : $headerObject['MSG_NUM']);
+				//$uid = ($rByUid ? $headerObject['UID'] : $headerObject['MSG_NUM']);
 				// make dates like "Mon, 23 Apr 2007 10:11:06 UT" working with strtotime
 				if(substr($headerObject['DATE'],-2) === 'UT') {
 					$headerObject['DATE'] .= 'C';
@@ -1323,25 +1327,23 @@ _debug_array($headersNew);
 	 */
 	static function prepareFlagsArray($headerObject)
 	{
-		$retValue = array();
-		$retValue['recent']		= in_array('\\Recent', $headerObject['FLAGS']);
-		$retValue['flagged']	= in_array('\\Flagged', $headerObject['FLAGS']);
-		$retValue['answered']	= in_array('\\Answered', $headerObject['FLAGS']);
-		$retValue['forwarded']   = in_array('$Forwarded', $headerObject['FLAGS']);
-		$retValue['deleted']	= in_array('\\Deleted', $headerObject['FLAGS']);
-		$retValue['seen']		= in_array('\\Seen', $headerObject['FLAGS']);
-		$retValue['draft']		= in_array('\\Draft', $headerObject['FLAGS']);
-		$retValue['mdnsent']	= in_array('MDNSent', $headerObject['FLAGS']);
-		$retValue['mdnnotsent']	= in_array('MDNnotSent', $headerObject['FLAGS']);
 		if (is_array($headerObject['FLAGS'])) $headerFlags = array_map('strtolower',$headerObject['FLAGS']);
-		if (!empty($headerFlags))
-		{
-			$retValue['label1']   = in_array('$label1', $headerFlags);
-			$retValue['label2']   = in_array('$label2', $headerFlags);
-			$retValue['label3']   = in_array('$label3', $headerFlags);
-			$retValue['label4']   = in_array('$label4', $headerFlags);
-			$retValue['label5']   = in_array('$label5', $headerFlags);
-		}
+		$retValue = array();
+		$retValue['recent']		= in_array('\\recent', $headerFlags);
+		$retValue['flagged']	= in_array('\\flagged', $headerFlags);
+		$retValue['answered']	= in_array('\\answered', $headerFlags);
+		$retValue['forwarded']   = in_array('$forwarded', $headerFlags);
+		$retValue['deleted']	= in_array('\\deleted', $headerFlags);
+		$retValue['seen']		= in_array('\\seen', $headerFlags);
+		$retValue['draft']		= in_array('\\draft', $headerFlags);
+		$retValue['mdnsent']	= in_array('mdnsent', $headerFlags);
+		$retValue['mdnnotsent']	= in_array('mdnnotsent', $headerFlags);
+		$retValue['label1']   = in_array('$label1', $headerFlags);
+		$retValue['label2']   = in_array('$label2', $headerFlags);
+		$retValue['label3']   = in_array('$label3', $headerFlags);
+		$retValue['label4']   = in_array('$label4', $headerFlags);
+		$retValue['label5']   = in_array('$label5', $headerFlags);
+		//error_log(__METHOD__.__LINE__.array2string($retValue));
 		return $retValue;
 	}
 
@@ -1429,7 +1431,7 @@ _debug_array($headersNew);
 			if($this->icServer->hasCapability('SORT')) {
 				if (self::$debug) error_log(__METHOD__." Mailserver has SORT Capability, SortBy: $_sort Reverse: $_reverse");
 				$sortOrder = $this->_getSortString($_sort, $_reverse);
-				if ($_reverse && in_array(Horde_Imap_Client::SORT_REVERSE,$sortOrder)!==false) $_reverse=false; // as we reversed the result already
+				if ($_reverse && in_array(Horde_Imap_Client::SORT_REVERSE,$sortOrder)) $_reverse=false; // as we reversed the result already
 				if (self::$debug) error_log(__METHOD__." Mailserver runs SORT: SortBy: $sortOrder Filter: $filter");
 				$sortResult = $this->icServer->search($_folderName, $filter, array(
 					'sort' => $sortOrder,));
@@ -1449,10 +1451,10 @@ _debug_array($headersNew);
 				if (self::$debug) error_log(__METHOD__.print_r($sortResult,true));
 			} else {
 				if (self::$debug) error_log(__METHOD__." Mailserver has NO SORT Capability");
-				$sortOrder = array(Horde_Imap_Client::SORT_SEQUENCE);
-				if ($_reverse) array_unshift($sortOrder,Horde_Imap_Client::SORT_REVERSE);
-				$sortResult = $this->icServer->search($_folderName, $filter, array(
-					'sort' => $sortOrder));
+				//$sortOrder = array(Horde_Imap_Client::SORT_SEQUENCE);
+				//if ($_reverse) array_unshift($sortOrder,Horde_Imap_Client::SORT_REVERSE);
+				$sortResult = $this->icServer->search($_folderName, $filter, array()/*array(
+					'sort' => $sortOrder)*/);
 				if(is_array($sortResult['match'])) {
 						sort($sortResult['match'], SORT_NUMERIC);
 				}
@@ -1531,8 +1533,10 @@ _debug_array($headersNew);
 				case 'SIZE':
 					$retValue = array(Horde_Imap_Client::SORT_SIZE);
 					break;
-				case 'UID': // should be equivalent to INTERNALDATE, which is ARRIVAL, which should be highest (latest) uid should be newest date
 				case 'ARRIVAL':
+					$retValue = array(Horde_Imap_Client::SORT_ARRIVAL);
+					break;
+				case 'UID': // should be equivalent to INTERNALDATE, which is ARRIVAL, which should be highest (latest) uid should be newest date
 				case 'INTERNALDATE':
 					$retValue = array(Horde_Imap_Client::SORT_SEQUENCE);
 					break;
