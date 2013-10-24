@@ -90,3 +90,14 @@ function admin_upgrade1_6()
 {
 	return $GLOBALS['setup_info']['admin']['currentver'] = '1.8';
 }
+
+
+/**
+ * Change index page via setup.inc.php
+ *
+ * @return string
+ */
+function admin_upgrade1_8()
+{
+	return $GLOBALS['setup_info']['admin']['currentver'] = '1.9.001';
+}

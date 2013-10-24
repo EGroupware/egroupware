@@ -10,10 +10,11 @@
  */
 
 $setup_info['admin']['name']      = 'admin';
-$setup_info['admin']['version']   = '1.8';
+$setup_info['admin']['version']   = '1.9.001';
 $setup_info['admin']['app_order'] = 1;
 $setup_info['admin']['tables']    = array('egw_admin_queue','egw_admin_remote');
 $setup_info['admin']['enable']    = 1;
+$setup_info['admin']['index']   = 'admin.admin_ui.index&ajax=true';
 
 $setup_info['admin']['author'][] = array(
 	'name'  => 'eGroupWare coreteam',
