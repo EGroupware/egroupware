@@ -259,8 +259,8 @@ class addressbook_sql extends so_sql_cf
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
-		if ((int) $this->debug >= 4) echo '<p>'.__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',$start,".array2string($filter,true).",'$join')</p>\n";
-		//error_log(__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',$start,".array2string($filter,true).",'$join')");
+		if ((int) $this->debug >= 4) echo '<p>'.__METHOD__.'('.array2string($criteria).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',$start,".array2string($filter).",'$join')</p>\n";
+		//error_log(__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by', ".array2string($extra_cols).",'$wildcard','$empty','$op',$start,".array2string($filter).",'$join')");
 
 		$owner = isset($filter['owner']) ? $filter['owner'] : (isset($criteria['owner']) ? $criteria['owner'] : null);
 
@@ -359,13 +359,14 @@ class addressbook_sql extends so_sql_cf
 					// fall through
 			}
 			// postgres requires that expressions in order by appear in the columns of a distinct select
-			if ($this->db->Type != 'mysql' && preg_match_all("/([a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL)? *(ASC|DESC)?(,|$)/ui",$order_by,$all_matches,PREG_SET_ORDER))
+			if ($this->db->Type != 'mysql' && preg_match_all("/(#?[a-zA-Z_.]+) *(<> *''|IS NULL|IS NOT NULL)? *(ASC|DESC)?(,|$)/ui",$order_by,$all_matches,PREG_SET_ORDER))
 			{
 				if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
 				foreach($all_matches as $matches)
 				{
 					$table = '';
 					$column = $matches[1];
+					if ($column[0] == '#') continue;	// order by custom field is handeled in so_sql_cf anyway
 					if (($key = array_search($column, $this->db_cols)) !== false) $column = $key;
 					if (strpos($column,'.') === false)
 					{
