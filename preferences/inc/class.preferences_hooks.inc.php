@@ -69,7 +69,8 @@ class preferences_hooks
 
 		$rich_text_editor_skins = array(
 			'kama'    => lang ('Default theme'),
-			'moono'	=> lang('Moono theme')
+			'moono'	=> lang('Moono theme'),
+			'moonocolor'	=> lang('Moono color theme'),
 		);
 
 		$account_sels = array(
