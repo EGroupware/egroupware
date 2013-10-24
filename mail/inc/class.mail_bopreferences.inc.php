@@ -4,8 +4,8 @@
  *
  * @link http://www.egroupware.org
  * @package mail
- * @author Klaus Leithoff [kl@stylite.de]
- * @copyright (c) 2013 by Klaus Leithoff <kl-AT-stylite.de>
+ * @author Stylite AG [info@stylite.de]
+ * @copyright (c) 2013 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -97,9 +97,10 @@ class mail_bopreferences extends mail_sopreferences
 	 * get the first active user defined account
 	 * @param array &$_profileData, reference, not altered; used to validate $_profileData
 	 * @param int $_identityID=NULL
+	 * @param bool $old_ic_server=false - wether to fetch old (net_IMAP) or new (horde) class
 	 * @return array of objects (icServer, ogServer, identities)
 	 */
-	function getAccountData(&$_profileData, $_identityID=NULL)
+	function getAccountData(&$_profileData, $_identityID=NULL, $old_ic_server=false)
 	{
 		#echo "<p>backtrace: ".function_backtrace()."</p>\n";
 		if(!($_profileData instanceof ea_preferences))
@@ -110,7 +111,8 @@ class mail_bopreferences extends mail_sopreferences
 		$accountData = array_shift($accountData);
 		//_debug_array($accountData);
 
-		$icServer = new emailadmin_oldimap();
+		$icClass = emailadmin_bo::getIcClass($data[''], $old_ic_server);
+		$icServer = new $icClass;
 		$icServer->ImapServerId	= $accountData['id'];
 		$icServer->encryption	= isset($accountData['ic_encryption']) ? $accountData['ic_encryption'] : 1;
 		$icServer->host		= $accountData['ic_hostname'];
@@ -156,9 +158,10 @@ class mail_bopreferences extends mail_sopreferences
 	 * getAllAccountData
 	 * get the first active user defined account
 	 * @param array &$_profileData, reference, not altered; used to validate $_profileData
+	 * @param bool $old_ic_server=false - wether to fetch old (net_IMAP) or new (horde) class
 	 * @return array of array of objects (icServer, ogServer, identities)
 	 */
-	function getAllAccountData(&$_profileData)
+	function getAllAccountData(&$_profileData,$old_ic_server=false)
 	{
 		if(!($_profileData instanceof ea_preferences))
 			die(__FILE__.': '.__LINE__);
@@ -166,7 +169,8 @@ class mail_bopreferences extends mail_sopreferences
 		#_debug_array($accountData);
 		foreach ($AllAccountData as $key => $accountData)
 		{
-			$icServer = new emailadmin_oldimap();
+			$icClass = emailadmin_bo::getIcClass($data[''], $old_ic_server);
+			$icServer = new $icClass;
 			$icServer->ImapServerId	= $accountData['id'];
 			$icServer->encryption	= isset($accountData['ic_encryption']) ? $accountData['ic_encryption'] : 1;
 			$icServer->host		= $accountData['ic_hostname'];

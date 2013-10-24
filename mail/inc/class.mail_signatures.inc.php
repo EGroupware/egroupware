@@ -4,8 +4,8 @@
  *
  * @link http://www.egroupware.org
  * @package mail
- * @author Klaus Leithoff [kl@stylite.de]
- * @copyright (c) 2013 by Klaus Leithoff <kl-AT-stylite.de>
+ * @author Stylite AG [info@stylite.de]
+ * @copyright (c) 2013 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -159,6 +159,10 @@ class mail_signatures
 	 */
 	function ajax_deleteSignature($_identityID)
 	{
+		error_log(__METHOD__.__LINE__.$_identityID);
+		$splitID = explode('::',$_identityID);
+
+		//$this->index(null,lang('deleted Signature %1',$_identityID));
 	}
 
 	function getDefaultSignature() {

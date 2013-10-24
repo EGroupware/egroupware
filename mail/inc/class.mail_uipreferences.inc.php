@@ -4,8 +4,8 @@
  *
  * @link http://www.egroupware.org
  * @package mail
- * @author Klaus Leithoff [kl@stylite.de]
- * @copyright (c) 2013 by Klaus Leithoff <kl-AT-stylite.de>
+ * @author Stylite AG [info@stylite.de]
+ * @copyright (c) 2013 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -176,6 +176,10 @@ class mail_uipreferences
 	 */
 	function ajax_deleteMailProfile($_profile)
 	{
+		error_log(__METHOD__.__LINE__.$_profile);
+		$splitID = explode('::',$_profile);
+	
+		//$this->index(null,lang('deleted profile %1',$_profile));
 	}
 }
 ?>

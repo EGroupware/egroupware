@@ -4,8 +4,8 @@
  *
  * @link http://www.egroupware.org
  * @package mail
- * @author Klaus Leithoff [kl@stylite.de]
- * @copyright (c) 2013 by Klaus Leithoff <kl-AT-stylite.de>
+ * @author Stylite AG [info@stylite.de]
+ * @copyright (c) 2013 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -820,7 +820,7 @@ class mail_bo
 		$HierarchyDelimiter[$this->icServer->ImapServerId] = '/';
 		if(($this->icServer instanceof defaultimap))
 		{
-			$HierarchyDelimiter[$this->icServer->ImapServerId] = $this->icServer->getHierarchyDelimiter();
+			$HierarchyDelimiter[$this->icServer->ImapServerId] = $this->icServer->getDelimiter();
 			if (PEAR::isError($HierarchyDelimiter[$this->icServer->ImapServerId])) $HierarchyDelimiter[$this->icServer->ImapServerId] = '/';
 		}
 		$this->icServer->mailboxDelimiter = $HierarchyDelimiter[$this->icServer->ImapServerId];
@@ -1038,7 +1038,7 @@ class mail_bo
 				//error_log(__METHOD__." returned folderStatus for Folder $_folderName:".print_r($prefix,true).' TS:'.$this->mailPreferences->preferences['trustServersUnseenInfo']);
 				// we filter for the combined status of unseen and undeleted, as this is what we show in list
 				$sortResult = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, $_filter=array('status'=>array('UNSEEN','UNDELETED')),$byUid=true,false);
-				$retValue['unseen'] = count($sortResult);
+				$retValue['unseen'] = $sortResult['count'];
 			}
 		}
 
@@ -1067,7 +1067,7 @@ class mail_bo
 		if (self::$debug) error_log(__METHOD__.__LINE__."$_folderName,$_startMessage, $_numberOfMessages, $_sort, $_reverse, ".array2string($_filter).", $_thisUIDOnly");
 		$reverse = (bool)$_reverse;
 		// get the list of messages to fetch
-		if (self::$debug) $starttime = microtime (true);
+		if (self::$debug); $starttime = microtime (true);
 		$this->reopen($_folderName);
 		if (self::$debug)
 		{
@@ -1092,7 +1092,8 @@ class mail_bo
 			}
 			if (self::$debug) error_log(__METHOD__.__LINE__."$_folderName, $_sort, $reverse, ".array2string($_filter).", $rByUid");
 			if (self::$debug) $starttime = microtime (true);
-			$sortResult = $this->getSortedList($_folderName, $_sort, $reverse, $_filter, $rByUid, $_cacheResult);
+			$_sortResult = $this->getSortedList($_folderName, $_sort, $reverse, $_filter, $rByUid, $_cacheResult);
+			$sortResult = $_sortResult['match']->ids;
 			if (self::$debug)
 			{
 				$endtime = microtime(true) - $starttime;
@@ -1110,7 +1111,7 @@ class mail_bo
 				return $retValue;
 			}
 
-			$total = count($sortResult);
+			$total = $_sortResult['count'];
 			#_debug_array($sortResult);
 			#_debug_array(array_slice($sortResult, -5, -2));
 			//error_log("REVERSE: $reverse");
@@ -1159,11 +1160,23 @@ class mail_bo
 			$sortResult = (is_array($_thisUIDOnly) ? $_thisUIDOnly:(array)$_thisUIDOnly);
 		}
 
-		$queryString = implode(',', $sortResult);
+		//$queryString = implode(',', $sortResult);
 		// fetch the data for the selected messages
 		if (self::$debug) $starttime = microtime(true);
 		//$headersNew = $this->icServer->getSummary($queryString, $rByUid);
-		$headersNew = $this->_getSummary($queryString, $rByUid,false,$_folderName);
+		//$headersNew = $this->_getSummary($queryString, $rByUid,false,$_folderName);
+	$uidsToFetch = new Horde_Imap_Client_Ids();
+	$uidsToFetch->add($sortResult);
+
+	$fquery = new Horde_Imap_Client_Fetch_Query();
+	$fquery->headers('headers', array('Subject', 'From', 'To', 'Cc', 'Date'), array('peek' => true,'cache' => true));
+	$fquery->structure();
+	$fquery->flags();
+	$fquery->imapDate();
+	$headersNew = $this->icServer->fetch($_folderName, $fquery, array(
+		'ids' => $uidsToFetch,
+	));
+_debug_array($headersNew);
 		if (PEAR::isError($headersNew) && empty($queryString))
 		{
 			$headersNew = array();
@@ -1269,10 +1282,10 @@ class mail_bo
 
 				$count++;
 			}
-			if (self::$debug)
+			if (self::$debug);
 			{
 				$endtime = microtime(true) - $starttime;
-				error_log(__METHOD__. " time used for the rest: ".$endtime.' for Folder:'.$_folderName);
+				error_log(__METHOD__.__LINE__. " time used: ".$endtime.' for Folder:'.$_folderName);
 			}
 			//self::$debug=false;
 			// sort the messages to the requested displayorder
@@ -1349,7 +1362,10 @@ class mail_bo
 	function getSortedList($_folderName, $_sort, &$_reverse, $_filter, &$resultByUid=true, $setSession=true)
 	{
 		//ToDo: FilterSpecific Cache
-		self::$folderStatusCache = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+		if (is_null(self::$folderStatusCache) || empty(self::$folderStatusCache[$this->profileID]) || empty(self::$folderStatusCache[$this->profileID][$_folderName]))
+		{
+			self::$folderStatusCache = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+		}
 
 		if(PEAR::isError($folderStatus = $this->icServer->examineMailbox($_folderName))) {
 			//if (stripos($folderStatus->message,'not connected') !== false); error_log(__METHOD__.__LINE__.$folderStatus->message);
@@ -1367,7 +1383,7 @@ class mail_bo
 			//$deletedMessages = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, $_filter=array('status'=>array('DELETED')),$byUid=true,false);
 			$deletedMessages = $this->getSortedList($_folderName, 0, $three=1, array('status'=>array('DELETED')),$five=true,false);
 			//error_log(__METHOD__.__LINE__.array2string($deletedMessages));
-			$eMailListContainsDeletedMessages[$this->profileID][$_folderName] = count($deletedMessages);
+			$eMailListContainsDeletedMessages[$this->profileID][$_folderName] =$deletedMessages['count'];
 			egw_cache::setCache(egw_cache::INSTANCE,'email','eMailListContainsDeletedMessages'.trim($GLOBALS['egw_info']['user']['account_id']),$eMailListContainsDeletedMessages, $expiration=60*60*1);
 			//$endtime = microtime(true);
 			//$r = ($endtime-$starttime);
@@ -1413,49 +1429,32 @@ class mail_bo
 			if($this->icServer->hasCapability('SORT')) {
 				if (self::$debug) error_log(__METHOD__." Mailserver has SORT Capability, SortBy: $_sort Reverse: $_reverse");
 				$sortOrder = $this->_getSortString($_sort, $_reverse);
-				if ($_reverse && strpos($sortOrder,'REVERSE')!==false) $_reverse=false; // as we reversed the result already
+				if ($_reverse && in_array(Horde_Imap_Client::SORT_REVERSE,$sortOrder)!==false) $_reverse=false; // as we reversed the result already
 				if (self::$debug) error_log(__METHOD__." Mailserver runs SORT: SortBy: $sortOrder Filter: $filter");
-				if (!empty(self::$displayCharset)) {
-					$sortResult = $this->icServer->sort($sortOrder, strtoupper( self::$displayCharset ), $filter, $resultByUid);
-				}
-				if (PEAR::isError($sortResult) || empty(self::$displayCharset)) {
-					$sortResult = $this->icServer->sort($sortOrder, 'US-ASCII', $filter, $resultByUid);
-					// if there is an PEAR Error, we assume that the server is not capable of sorting
-					if (PEAR::isError($sortResult)) {
-						$advFilter = 'CHARSET '. strtoupper(self::$displayCharset) .' '.$filter;
-						if (PEAR::isError($sortResult))
-						{
-							$resultByUid = false;
-							$sortResult = $this->icServer->search($filter, $resultByUid);
-							if (PEAR::isError($sortResult))
-							{
-								$sortResult = self::$folderStatusCache[$this->profileID][$_folderName]['sortResult'];
-							}
-						}
+				$sortResult = $this->icServer->search($_folderName, $filter, array(
+					'sort' => $sortOrder,));
+				// if there is an PEAR Error, we assume that the server is not capable of sorting
+				if (PEAR::isError($sortResult))
+				{
+					$resultByUid = false;
+					$sortOrder = array(Horde_Imap_Client::SORT_SEQUENCE);
+					if ($_reverse) array_unshift($sortOrder,Horde_Imap_Client::SORT_REVERSE);
+					$sortResult = $this->icServer->search($_folderName, $filter, array(
+						'sort' => $sortOrder));
+					if (PEAR::isError($sortResult))
+					{
+						$sortResult = self::$folderStatusCache[$this->profileID][$_folderName]['sortResult'];
 					}
 				}
 				if (self::$debug) error_log(__METHOD__.print_r($sortResult,true));
 			} else {
 				if (self::$debug) error_log(__METHOD__." Mailserver has NO SORT Capability");
-				$advFilter = 'CHARSET '. strtoupper(self::$displayCharset) .' '.$filter;
-				$sortResult = $this->icServer->search($advFilter, $resultByUid);
-				if (PEAR::isError($sortResult))
-				{
-					$sortResult = $this->icServer->search($filter, $resultByUid);
-					if (PEAR::isError($sortResult))
-					{
-						// some servers are not replying on a search for uids, so try this one
-						$resultByUid = false;
-						$sortResult = $this->icServer->search('*', $resultByUid);
-						if (PEAR::isError($sortResult))
-						{
-							error_log(__METHOD__.__LINE__.' PEAR_Error:'.array2string($sortResult->message));
-							$sortResult = null;
-						}
-					}
-				}
-				if(is_array($sortResult)) {
-						sort($sortResult, SORT_NUMERIC);
+				$sortOrder = array(Horde_Imap_Client::SORT_SEQUENCE);
+				if ($_reverse) array_unshift($sortOrder,Horde_Imap_Client::SORT_REVERSE);
+				$sortResult = $this->icServer->search($_folderName, $filter, array(
+					'sort' => $sortOrder));
+				if(is_array($sortResult['match'])) {
+						sort($sortResult['match'], SORT_NUMERIC);
 				}
 				if (self::$debug) error_log(__METHOD__." using Filter:".print_r($filter,true)." ->".print_r($sortResult,true));
 			}
@@ -1471,14 +1470,17 @@ class mail_bo
 		}
 		if ($setSession)
 		{
+/*
 			// this indicates, that there should be no UNDELETED Messages in the returned set/subset
 			if (((strpos(array2string($_filter), 'UNDELETED') === false && strpos(array2string($_filter), 'DELETED') === false)))
 			{
 				if ($try2useCache == false) self::$folderStatusCache[$this->profileID][$_folderName]['deleted'] = $eMailListContainsDeletedMessages[$this->profileID][$_folderName];
 			}
+*/
 			self::$folderStatusCache[$this->profileID][$_folderName]['reverse'] 	= $_reverse;
 			egw_cache::setCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),self::$folderStatusCache,$expiration=60*60*10);
 		}
+		//_debug_array($sortResult['match']->ids);
 		return $sortResult;
 	}
 
@@ -1487,7 +1489,7 @@ class mail_bo
 	 *
 	 * @param mixed _sort the integer sort order / or a valid and handeled SORTSTRING (right now: UID/ARRIVAL/INTERNALDATE (->ARRIVAL))
 	 * @param bool _reverse wether to add REVERSE to the Sort String or not
-	 * @return the ascii sort string
+	 * @return the sort sequence for horde search
 	 */
 	function _getSortString($_sort, $_reverse=false)
 	{
@@ -1496,20 +1498,20 @@ class mail_bo
 		{
 			switch($_sort) {
 				case 2:
-					$retValue = 'FROM';
+					$retValue = array(Horde_Imap_Client::SORT_FROM);
 					break;
 				case 4:
-					$retValue = 'TO';
+					$retValue = array(Horde_Imap_Client::SORT_TO);
 					break;
 				case 3:
-					$retValue = 'SUBJECT';
+					$retValue = array(Horde_Imap_Client::SORT_SUBJECT);
 					break;
 				case 6:
-					$retValue = 'SIZE';
+					$retValue = array(Horde_Imap_Client::SORT_SIZE);
 					break;
 				case 0:
 				default:
-					$retValue = 'DATE';
+					$retValue = array(Horde_Imap_Client::SORT_DATE);
 					//$retValue = 'ARRIVAL';
 					break;
 			}
@@ -1518,30 +1520,31 @@ class mail_bo
 		{
 			switch(strtoupper($_sort)) {
 				case 'FROMADDRESS':
-					$retValue = 'FROM';
+					$retValue = array(Horde_Imap_Client::SORT_FROM);
 					break;
 				case 'TOADDRESS':
-					$retValue = 'TO';
+					$retValue = array(Horde_Imap_Client::SORT_TO);
 					break;
 				case 'SUBJECT':
-					$retValue = 'SUBJECT';
+					$retValue = array(Horde_Imap_Client::SORT_SUBJECT);
 					break;
 				case 'SIZE':
-					$retValue = 'SIZE';
+					$retValue = array(Horde_Imap_Client::SORT_SIZE);
 					break;
 				case 'UID': // should be equivalent to INTERNALDATE, which is ARRIVAL, which should be highest (latest) uid should be newest date
 				case 'ARRIVAL':
 				case 'INTERNALDATE':
-					$retValue = 'ARRIVAL';
+					$retValue = array(Horde_Imap_Client::SORT_SEQUENCE);
 					break;
 				case 'DATE':
 				default:
-					$retValue = 'DATE';
+					$retValue = array(Horde_Imap_Client::SORT_DATE);
 					break;
 			}
 		}
+		if ($_reverse) array_unshift($retValue,Horde_Imap_Client::SORT_REVERSE);
 		//error_log(__METHOD__.__LINE__.' '.($_reverse?'REVERSE ':'').$_sort.'->'.$retValue);
-		return ($_reverse?'REVERSE ':'').$retValue;
+		return $retValue;
 	}
 
 	/**
@@ -1549,10 +1552,12 @@ class mail_bo
 	 *
 	 * @param string $_folder used to determine the search to TO or FROM on QUICK Search wether it is a send-folder or not
 	 * @param array $_criterias contains the search/filter criteria
-	 * @return string the IMAP filter
+	 * @return Horde_Imap_Client_Search_Query the IMAP filter
 	 */
 	function createIMAPFilter($_folder, $_criterias)
 	{
+		$imapFilter = new Horde_Imap_Client_Search_Query();
+		return $imapFilter;
 		$all = 'ALL UNDELETED'; //'ALL'
 		//_debug_array($_criterias);
 		if (self::$debug) error_log(__METHOD__.__LINE__.' Criterias:'.(!is_array($_criterias)?" none -> returning $all":array2string($_criterias)));
@@ -1922,15 +1927,6 @@ class mail_bo
 					if (empty($subscribedMailboxes) && $type == 'shared')
 					{
 						$subscribedMailboxes = $this->icServer->listsubscribedMailboxes('',0);
-					}
-					else
-					{
-						if ($prefix_present=='forced' && $type=='personal') // you cannot trust dovecots assumed prefix
-						{
-							$subscribedMailboxesAll = $this->icServer->listsubscribedMailboxes('',0);
-							if( PEAR::isError($subscribedMailboxesAll) ) continue;
-							foreach ($subscribedMailboxesAll as $ksMA => $sMA) if (!in_array($sMA,$subscribedMailboxes)) $subscribedMailboxes[] = $sMA;
-						}
 					}
 
 					//echo "subscribedMailboxes";_debug_array($subscribedMailboxes);
@@ -2801,7 +2797,10 @@ class mail_bo
 	function flagMessages($_flag, $_messageUID,$_folder=NULL)
 	{
 		//error_log(__METHOD__.__LINE__.'->' .$_flag." ".array2string($_messageUID).",$_folder /".$this->sessionData['mailbox']);
-		self::$folderStatusCache = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+		if (is_null(self::$folderStatusCache) || empty(self::$folderStatusCache[$this->profileID]) || empty(self::$folderStatusCache[$this->profileID][$_folderName]))
+		{
+			self::$folderStatusCache = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
+		}
 		if(!is_array($_messageUID)) {
 			#return false;
 			if ($_messageUID=='all')

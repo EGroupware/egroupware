@@ -2,7 +2,8 @@
  * mail - static javaScript functions
  *
  * @link http://www.egroupware.org
- * @author klaus leithoff <kl at stylite.de>
+ * @author Stylite AG [info@stylite.de]
+ * @copyright (c) 2013 by Stylite AG <info-AT-stylite.de>
  * @package mail
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
@@ -1814,6 +1815,8 @@ app.mail = AppJS.extend(
 		var id = _widget[0].id.replace(/row_/,'');
 		var siggrid = this.et2.getArrayMgr("content").getEntry('sig')[id];
 		console.log(_egw, _widget,siggrid,id);
+		egw.json('mail.mail_signatures.ajax_deleteSignature',[siggrid.row_id])
+			.sendRequest();
 	},
 
 	profile_open: function(_egw, _widget)
@@ -1828,6 +1831,9 @@ app.mail = AppJS.extend(
 		var id = _widget[0].id.replace(/row_/,'');
 		var accgrid = this.et2.getArrayMgr("content").getEntry('acc')[id];
 		console.log(_egw, _widget,accgrid,id);
+		egw.json('mail.mail_uipreferences.ajax_deleteMailProfile',[accgrid.row_id])
+			.sendRequest();
+
 	},
 
 	/**

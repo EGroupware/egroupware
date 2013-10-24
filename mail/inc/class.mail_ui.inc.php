@@ -4,8 +4,8 @@
  *
  * @link http://www.egroupware.org
  * @package mail
- * @author Klaus Leithoff [kl@stylite.de]
- * @copyright (c) 2013 by Klaus Leithoff <kl-AT-stylite.de>
+ * @author Stylite AG [info@stylite.de]
+ * @copyright (c) 2013 by Stylite AG <info-AT-stylite.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -1122,14 +1122,15 @@ unset($query['actions']);
 		//error_log(__METHOD__.__LINE__.' maxMessages:'.$maxMessages.' Offset:'.$offset.' Filter:'.array2string($this->sessionData['messageFilter']));
 		if ($maxMessages > 75)
 		{
-			$sR = $this->mail_bo->getSortedList(
+			$_sR = $this->mail_bo->getSortedList(
 				$_folderName,
 				$sort,
 				$reverse,
 				$filter,
 				$rByUid=true
 			);
-			$rowsFetched['messages'] = count($sR);
+			$rowsFetched['messages'] = $_sR['count'];
+			$sR = $_sR['match']->ids;
 			// if $sR is false, something failed fundamentally
 			if($reverse === true) $sR = ($sR===false?array():array_reverse((array)$sR));
 			$sR = array_slice((array)$sR,($offset==0?0:$offset-1),$maxMessages); // we need only $maxMessages of uids
