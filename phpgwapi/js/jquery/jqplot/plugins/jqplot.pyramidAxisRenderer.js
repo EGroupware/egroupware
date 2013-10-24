@@ -2,9 +2,10 @@
  * jqPlot
  * Pure JavaScript plotting plugin using jQuery
  *
- * Version: 1.0.0b2_r947
+ * Version: 1.0.8
+ * Revision: 1250
  *
- * Copyright (c) 2009-2011 Chris Leonello
+ * Copyright (c) 2009-2013 Chris Leonello
  * jqPlot is currently available for use in all personal or commercial projects 
  * under both the MIT (http://www.opensource.org/licenses/mit-license.php) and GPL 
  * version 2.0 (http://www.gnu.org/licenses/gpl-2.0.html) licenses. This means that you can 
@@ -57,6 +58,8 @@
         this._splitAxis = false;
         this._splitLength = null;
         this.category = false;
+        this._autoFormatString = '';
+        this._overrideFormatString = false;
         
         $.extend(true, this, options);
         this.renderer.options = options;
@@ -108,7 +111,7 @@
             // call it within the scope of the axis.
             this.renderer.createTicks.call(this, plot);
             // fill a div with axes labels in the right direction.
-            // Need to pregenerate each axis to get it's bounds and
+            // Need to pregenerate each axis to get its bounds and
             // position it and the labels correctly on the plot.
             var dim=0;
             var temp;
@@ -338,6 +341,10 @@
                 max = tempmax;
                 range = max - min;
 
+                if (this.tickOptions == null || !this.tickOptions.formatString) {
+                    this._overrideFormatString = true;
+                }
+
                 threshold = 30;
                 tdim = Math.max(dim, threshold+1);
                 scalefact =  (tdim-threshold)/300.0;
@@ -348,7 +355,7 @@
                 tumin = min + range*(this.padMin - 1);
                 tumax = max - range*(this.padMax - 1);
 
-                if (min <=tumin || max >= tumax) {
+                if (min < tumin || max > tumax) {
                     tumin = min - range*(this.padMin - 1);
                     tumax = max + range*(this.padMax - 1);
                     ret = $.jqplot.LinearTickGenerator(tumin, tumax, scalefact);
@@ -401,6 +408,11 @@
                     }
                 }
             }
+            
+            if (this._overrideFormatString && this._autoFormatString != '') {
+                this.tickOptions = this.tickOptions || {};
+                this.tickOptions.formatString = this._autoFormatString;
+            }
 
             var labelval;
             for (i=0; i<this.numberTicks; i++) {
@@ -409,9 +421,12 @@
                 if (this.name.charAt(0) === 'x') {
                     labelval = Math.abs(labelval);
                 }
-                this.tickOptions.label = String (labelval);
+                // this.tickOptions.label = String (labelval);
                 this.tickOptions.value = this.min + this.tickInterval * i;
                 t = new this.tickRenderer(this.tickOptions);
+
+                t.label = t.prefix + t.formatter(t.formatString, labelval);
+
                 this._ticks.push(t);
                 // for x axis, if y axis is in middle, add a symetrical 0 tick
                 if (this.name.charAt(0) === 'x' && plot.axes.yMidAxis.show && this.tickOptions.value === 0) {

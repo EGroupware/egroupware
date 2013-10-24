@@ -2,9 +2,10 @@
  * jqPlot
  * Pure JavaScript plotting plugin using jQuery
  *
- * Version: 1.0.0b2_r947
+ * Version: 1.0.8
+ * Revision: 1250
  *
- * Copyright (c) 2009-2011 Chris Leonello
+ * Copyright (c) 2009-2013 Chris Leonello
  * jqPlot is currently available for use in all personal or commercial projects 
  * under both the MIT (http://www.opensource.org/licenses/mit-license.php) and GPL 
  * version 2.0 (http://www.gnu.org/licenses/gpl-2.0.html) licenses. This means that you can 
@@ -41,7 +42,7 @@
         this.style = 'crosshair';
         this.previousCursor = 'auto';
         // prop: show
-        // wether to show the cursor or not.
+        // whether to show the cursor or not.
         this.show = $.jqplot.config.enablePlugins;
         // prop: showTooltip
         // show a cursor position tooltip.  Location of the tooltip
@@ -94,8 +95,8 @@
         this.zoomTarget = false;
         // prop: looseZoom
         // Will expand zoom range to provide more rounded tick values.
-        // Works only with linear axes and date axes.
-        this.looseZoom = false;
+        // Works only with linear, log and date axes.
+        this.looseZoom = true;
         // prop: clickReset
         // Will reset plot zoom if single click on plot without drag.
         this.clickReset = false;
@@ -352,7 +353,8 @@
         var zaxes = c._zoom.axes;
         var start = zaxes.start;
         var end = zaxes.end;
-        var min, max, dp, span;
+        var min, max, dp, span,
+            newmin, newmax, curax, _numberTicks, ret;
         var ctx = plot.plugins.cursor.zoomCanvas._ctx;
         // don't zoom if zoom area is too small (in pixels)
         if ((c.constrainZoomTo == 'none' && Math.abs(gridpos.x - c._zoom.start[0]) > 6 && Math.abs(gridpos.y - c._zoom.start[1]) > 6) || (c.constrainZoomTo == 'x' && Math.abs(gridpos.x - c._zoom.start[0]) > 6) ||  (c.constrainZoomTo == 'y' && Math.abs(gridpos.y - c._zoom.start[1]) > 6)) {
@@ -373,8 +375,7 @@
 
                     if ((c.constrainZoomTo == 'none') || (c.constrainZoomTo == 'x' && ax.charAt(0) == 'x') || (c.constrainZoomTo == 'y' && ax.charAt(0) == 'y')) {   
                         dp = datapos[ax];
-                        if (dp != null) {  
-                            var newmin, newmax;         
+                        if (dp != null) {           
                             if (dp > start[ax]) { 
                                 newmin = start[ax];
                                 newmax = dp;
@@ -385,9 +386,9 @@
                                 newmax = start[ax];
                             }
 
-                            var curax = axes[ax];
+                            curax = axes[ax];
 
-                            var _numberTicks = null;
+                            _numberTicks = null;
 
                             // if aligning this axis, use number of ticks from previous axis.
                             // Do I need to reset somehow if alignTicks is changed and then graph is replotted??
@@ -400,8 +401,9 @@
                                 }
                             }
                             
-                            if (this.looseZoom && (axes[ax].renderer.constructor === $.jqplot.LinearAxisRenderer || axes[ax].renderer.constructor === $.jqplot.DateAxisRenderer)) {
-                                var ret = $.jqplot.LinearTickGenerator(newmin, newmax, curax._scalefact, _numberTicks);
+                            if (this.looseZoom && (axes[ax].renderer.constructor === $.jqplot.LinearAxisRenderer || axes[ax].renderer.constructor === $.jqplot.LogAxisRenderer )) { //} || axes[ax].renderer.constructor === $.jqplot.DateAxisRenderer)) {
+
+                                ret = $.jqplot.LinearTickGenerator(newmin, newmax, curax._scalefact, _numberTicks);
 
                                 // if new minimum is less than "true" minimum of axis display, adjust it
                                 if (axes[ax].tickInset && ret[0] < axes[ax].min + axes[ax].tickInset * axes[ax].tickInterval) {
@@ -414,6 +416,14 @@
                                     ret[1] -= ret[4];
                                     ret[2] -= 1;
                                 }
+
+                                // for log axes, don't fall below current minimum, this will look bad and can't have 0 in range anyway.
+                                if (axes[ax].renderer.constructor === $.jqplot.LogAxisRenderer && ret[0] < axes[ax].min) {
+                                    // remove a tick and shift min up
+                                    ret[0] += ret[4];
+                                    ret[2] -= 1;
+                                }
+
                                 axes[ax].min = ret[0];
                                 axes[ax].max = ret[1];
                                 axes[ax]._autoFormatString = ret[3];
@@ -426,6 +436,7 @@
                                 axes[ax].min = newmin;
                                 axes[ax].max = newmax;
                                 axes[ax].tickInterval = null;
+                                axes[ax].numberTicks = null;
                                 // for date axes...
                                 axes[ax].daTickInterval = null;
                             }
@@ -470,11 +481,14 @@
                     s += '<br />';
                 }
                 if (c.useAxesFormatters) {
-                    var xf = plot.axes[g[0]]._ticks[0].formatter;
-                    var yf = plot.axes[g[1]]._ticks[0].formatter;
-                    var xfstr = plot.axes[g[0]]._ticks[0].formatString;
-                    var yfstr = plot.axes[g[1]]._ticks[0].formatString;
-                    s += xf(xfstr, datapos[g[0]]) + ', '+ yf(yfstr, datapos[g[1]]);
+                    for (var j=0; j<g.length; j++) {
+                        if (j) {
+                            s += ', ';
+                        }
+                        var af = plot.axes[g[j]]._ticks[0].formatter;
+                        var afstr = plot.axes[g[j]]._ticks[0].formatString;
+                        s += af(afstr, datapos[g[j]]);
+                    }
                 }
                 else {
                     s += $.jqplot.sprintf(c.tooltipFormatString, datapos[g[0]], datapos[g[1]]);
@@ -640,7 +654,7 @@
             
         elem.css('left', x);
         elem.css('top', y);
-	    elem = null;
+        elem = null;
     }
     
     function positionTooltip(plot) { 
@@ -742,6 +756,7 @@
         if (c.show) {
             $(ev.target).css('cursor', c.previousCursor);
             if (c.showTooltip && !(c._zoom.zooming && c.showTooltipOutsideZoom && !c.constrainOutsideZoom)) {
+                c._tooltipElem.empty();
                 c._tooltipElem.hide();
             }
             if (c.zoom) {
@@ -835,6 +850,7 @@
         var c = plot.plugins.cursor;
         // don't do anything if not on grid.
         if (c.show && c.zoom && c._zoom.started && !c.zoomTarget) {
+            ev.preventDefault();
             var ctx = c.zoomCanvas._ctx;
             var positions = getEventPosition(ev);
             var gridpos = positions.gridPos;
@@ -876,7 +892,11 @@
     
     function handleMouseDown(ev, gridpos, datapos, neighbor, plot) {
         var c = plot.plugins.cursor;
-        $(document).one('mouseup.jqplot_cursor', {plot:plot}, handleMouseUp);
+        if(plot.plugins.mobile){
+            $(document).one('vmouseup.jqplot_cursor', {plot:plot}, handleMouseUp);
+        } else {
+            $(document).one('mouseup.jqplot_cursor', {plot:plot}, handleMouseUp);
+        }
         var axes = plot.axes;
         if (document.onselectstart != undefined) {
             c._oldHandlers.onselectstart = document.onselectstart;
@@ -910,7 +930,12 @@
                 // get zoom starting position.
                 c._zoom.axes.start[ax] = datapos[ax];
             }  
-            $(document).bind('mousemove.jqplotCursor', {plot:plot}, handleZoomMove);              
+           if(plot.plugins.mobile){
+                $(document).bind('vmousemove.jqplotCursor', {plot:plot}, handleZoomMove);              
+            } else {
+                $(document).bind('mousemove.jqplotCursor', {plot:plot}, handleZoomMove);              
+            }
+
         }
     }
     
@@ -1023,7 +1048,7 @@
         if (this.show) {
             var series = this._series, s;
             // make a table.  one line label per row.
-            var elem = document.createElement('div');
+            var elem = document.createElement('table');
             this._elem = $(elem);
             elem = null;
             this._elem.addClass('jqplot-legend jqplot-cursor-legend');
