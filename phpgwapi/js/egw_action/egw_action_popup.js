@@ -76,8 +76,8 @@ function egwPopupAction(_id, _handler, _caption, _icon, _onExecute, _allowOnMult
 				"alt": false
 			}
 
-			if (typeof _value == "object" && _value.keyCode != "undefined" &&
-			    _value.caption != "undefined")
+			if (typeof _value == "object" && typeof _value.keyCode != "undefined" &&
+			    typeof _value.caption != "undefined")
 			{
 				sc.keyCode = _value.keyCode;
 				sc.caption = _value.caption;
