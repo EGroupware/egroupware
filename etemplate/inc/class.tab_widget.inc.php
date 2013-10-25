@@ -95,21 +95,17 @@
 				$names = explode('|',$tab_names);
 			}
 
+			$short_names = array();
+			foreach($names as $name)
+			{
+				$nparts = explode('.', $name);
+				$short_names[] = array_pop($nparts);
+			}
 			// disable tab mentioned in readonlys
 			foreach(is_array($readonlys) ? $readonlys : array($readonlys => true) as $name => $disable)
 			{
-				// check full name AND last component name
-				if (strpos($name, '.') === false)
-				{
-					$name2 = $tmpl->name.'.'.$name;
-				}
-				else
-				{
-					$nparts = explode('.', $name);
-					$name2 = array_pop($nparts);
-				}
 				if ($name && $disable && (($key = array_search($name, $names)) !== false ||
-					($key = array_search($name2, $names)) !== false))
+					($key = array_search($name, $short_names) !== false)))
 				{
 					unset($names[$key]);
 					$names = array_values($names);
