@@ -60,7 +60,7 @@
 		 * @param array &$cell array with the widget, can be modified for ui-independent widgets
 		 * @param array &$readonlys names of widgets as key, to be made readonly
 		 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
-		 * @param object &$tmpl reference to the template we belong too
+		 * @param etemplate &$tmpl reference to the template we belong too
 		 * @return boolean true if extra label is allowed, false otherwise
 		 */
 		function pre_process($form_name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
@@ -98,7 +98,18 @@
 			// disable tab mentioned in readonlys
 			foreach(is_array($readonlys) ? $readonlys : array($readonlys => true) as $name => $disable)
 			{
-				if($name && $disable && ($key = array_search($name,$names)) !== false)
+				// check full name AND last component name
+				if (strpos($name, '.') === false)
+				{
+					$name2 = $tmpl->name.'.'.$name;
+				}
+				else
+				{
+					$nparts = explode('.', $name);
+					$name2 = array_pop($nparts);
+				}
+				if ($name && $disable && (($key = array_search($name, $names)) !== false ||
+					($key = array_search($name2, $names)) !== false))
 				{
 					unset($names[$key]);
 					$names = array_values($names);
