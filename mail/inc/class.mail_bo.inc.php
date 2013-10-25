@@ -760,23 +760,24 @@ class mail_bo
 		$delimiter = $this->getHierarchyDelimiter();
 		// TODO: cache by $this->icServer->ImapServerId
 		if (is_null($nameSpace)) $nameSpace = $this->icServer->getNameSpaceArray();
+		//error_log(__METHOD__.__LINE__.array2string($nameSpace));
 		if (is_array($nameSpace)) {
 			foreach($nameSpace as $type => $singleNameSpace) {
 				$prefix_present = false;
-				if($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && ($this->folderExists('Mail')||$this->folderExists('INBOX')))
+				if($type == 'personal' && ($singleNameSpace['name'] == '#mh/' || count($nameSpace) == 1) && ($this->folderExists('Mail')||$this->folderExists('INBOX')))
 				{
 					$foldersNameSpace[$type]['prefix_present'] = 'forced';
 					// uw-imap server with mailbox prefix or dovecot maybe
-					$foldersNameSpace[$type]['prefix'] = ($this->folderExists('Mail')?'Mail':(!empty($singleNameSpace[0]['name'])?$singleNameSpace[0]['name']:''));
+					$foldersNameSpace[$type]['prefix'] = ($this->folderExists('Mail')?'Mail':(!empty($singleNameSpace['name'])?$singleNameSpace['name']:''));
 				}
-				elseif($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && $this->folderExists('mail'))
+				elseif($type == 'personal' && ($singleNameSpace['name'] == '#mh/' || count($nameSpace) == 1) && $this->folderExists('mail'))
 				{
 					$foldersNameSpace[$type]['prefix_present'] = 'forced';
 					// uw-imap server with mailbox prefix or dovecot maybe
 					$foldersNameSpace[$type]['prefix'] = 'mail';
 				} else {
 					$foldersNameSpace[$type]['prefix_present'] = true;
-					$foldersNameSpace[$type]['prefix'] = $singleNameSpace[0]['name'];
+					$foldersNameSpace[$type]['prefix'] = $singleNameSpace['name'];
 				}
 				$foldersNameSpace[$type]['delimiter'] = $delimiter;
 				//echo "############## $type->".print_r($foldersNameSpace[$type],true)." ###################<br>";
@@ -956,8 +957,8 @@ class mail_bo
 		static $folderBasicInfo;
 		if (is_null($folderBasicInfo))
 		{
-//			$folderBasicInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
-//			$folderInfoCache = $folderBasicInfo[$this->profileID];
+			$folderBasicInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
+			$folderInfoCache = $folderBasicInfo[$this->profileID];
 		}
 		if (isset($folderInfoCache[$_folderName]) && $ignoreStatusCache==false && $basicInfoOnly) return $folderInfoCache[$_folderName];
 		$retValue = array();
@@ -971,27 +972,26 @@ class mail_bo
 		if (is_null($folderInfoCache) || !isset($folderInfoCache[$_folderName])) $folderInfoCache[$_folderName] = $this->icServer->getMailboxes('', $_folderName, true);
 		$folderInfo = $folderInfoCache[$_folderName];
 		//error_log(__METHOD__.__LINE__.array2string($folderInfo).'->'.function_backtrace());
-		if(($folderInfo instanceof PEAR_Error) || !is_array($folderInfo)) {
+		if(($folderInfo instanceof PEAR_Error) || !is_array($folderInfo[0])) {
 			if (self::$debug||$folderInfo instanceof PEAR_Error) error_log(__METHOD__." returned Info for folder $_folderName:".print_r($folderInfo->message,true));
 			if ( ($folderInfo instanceof PEAR_Error) || PEAR::isError($r = $this->_getStatus($_folderName)) || $r == 0) return false;
-			if (!is_array($folderInfo))
+			if (!is_array($folderInfo[0]))
 			{
 				// no folder info, but there is a status returned for the folder: something is wrong, try to cope with it
-				$folderInfo = is_array($folderInfo)?$folderInfo:array('HIERACHY_DELIMITER'=>$this->getHierarchyDelimiter(),
+				$folderInfo[0] = is_array($folderInfo)?$folderInfo:array('HIERACHY_DELIMITER'=>$this->getHierarchyDelimiter(),
 					'ATTRIBUTES' => '');
-				if (empty($folderInfo['HIERACHY_DELIMITER']) || (isset($folderInfo['delimiter']) && empty($folderInfo['delimiter'])))
+				if (empty($folderInfo[0]['HIERACHY_DELIMITER']) || (isset($folderInfo[0]['delimiter']) && empty($folderInfo[0]['delimiter'])))
 				{
 					//error_log(__METHOD__.__LINE__.array2string($folderInfo));
-					$folderInfo['HIERACHY_DELIMITER'] = $this->getHierarchyDelimiter();
+					$folderInfo[0]['HIERACHY_DELIMITER'] = $this->getHierarchyDelimiter();
 				}
 			}
 		}
 		#if(!is_array($folderInfo[0])) {
 		#	return false;
 		#}
-error_log(__METHOD__.__LINE__.$folderInfo);
-		$retValue['delimiter']		= ($folderInfo['HIERACHY_DELIMITER']?$folderInfo['HIERACHY_DELIMITER']:$folderInfo['delimiter']);
-		$retValue['attributes']		= ($folderInfo['ATTRIBUTES']?$folderInfo['ATTRIBUTES']:$folderInfo['attributes']);
+		$retValue['delimiter']		= ($folderInfo[0]['HIERACHY_DELIMITER']?$folderInfo[0]['HIERACHY_DELIMITER']:$folderInfo[0]['delimiter']);
+		$retValue['attributes']		= ($folderInfo[0]['ATTRIBUTES']?$folderInfo[0]['ATTRIBUTES']:$folderInfo[0]['attributes']);
 		$shortNameParts			= explode($retValue['delimiter'], $_folderName);
 		$retValue['shortName']		= array_pop($shortNameParts);
 		$retValue['displayName']	= $this->encodeFolderName($_folderName);
@@ -1856,7 +1856,7 @@ error_log(__METHOD__.__LINE__.$folderInfo);
 			if ($_useCacheIfPossible && isset($folders2return[$this->icServer->ImapServerId]) && !empty($folders2return[$this->icServer->ImapServerId]))
 			{
 				//error_log(__METHOD__.__LINE__.' using Cached folderObjects');
-				return $folders2return[$this->icServer->ImapServerId];
+				//return $folders2return[$this->icServer->ImapServerId];
 			}
 		}
 		$isUWIMAP = false;
@@ -1913,7 +1913,7 @@ error_log(__METHOD__.__LINE__.$folderInfo);
 						continue;
 					}
 					$foldersNameSpace[$type]['subscribed'] = $subscribedMailboxes;
-					if (is_array($foldersNameSpace[$type]['subscribed'])) sort($foldersNameSpace[$type]['subscribed']);
+					//if (is_array($foldersNameSpace[$type]['subscribed'])) sort($foldersNameSpace[$type]['subscribed']);
 					//_debug_array($foldersNameSpace);
 					if ($_subscribedOnly == true) {
 						$foldersNameSpace[$type]['all'] = (is_array($foldersNameSpace[$type]['subscribed']) ? $foldersNameSpace[$type]['subscribed'] :array());
