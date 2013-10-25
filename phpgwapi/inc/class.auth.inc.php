@@ -230,13 +230,28 @@ class auth
 		{
 			throw new egw_exception_wrong_userinput($err);
 		}
-		if (($ret = $this->backend->change_password($old_passwd, $new_passwd, $account_id)) &&
-			($account_id == $GLOBALS['egw_info']['user']['account_id']))
+		if (($ret = $this->backend->change_password($old_passwd, $new_passwd, $account_id)))
 		{
-			// need to change current users password in session
-			egw_cache::setSession('phpgwapi', 'password', base64_encode($new_passwd));
-			// invalidate EGroupware session, as password is stored in egw_info in session
-			egw::invalidate_session_cache();
+			if ($account_id == $GLOBALS['egw_info']['user']['account_id'])
+			{
+				// need to change current users password in session
+				egw_cache::setSession('phpgwapi', 'password', base64_encode($new_passwd));
+				$GLOBALS['egw_info']['user']['passwd'] = $new_passwd;
+				$GLOBALS['egw_info']['user']['account_lastpwd_change'] = egw_time::to('now','ts');
+				// invalidate EGroupware session, as password is stored in egw_info in session
+				egw::invalidate_session_cache();
+			}
+			accounts::cache_invalidate($account_id);
+			// run changepwasswd hook
+			$GLOBALS['hook_values'] = array(
+				'account_id'  => $account_id,
+				'account_lid' => accounts::id2name($account_id),
+				'old_passwd'  => $old_passwd,
+				'new_passwd'  => $new_passwd,
+			);
+			$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+				'location' => 'changepassword'
+			),False,True);	// called for every app now, not only enabled ones)
 		}
 		return $ret;
 	}

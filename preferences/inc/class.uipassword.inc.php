@@ -15,12 +15,6 @@ class uipassword
 		'change' => True
 	);
 
-	function uipassword()
-	{
-		$this->bo =& CreateObject('preferences.bopassword');
-
-	}
-
 	function change()
 	{
 		//_debug_array($GLOBALS['egw_info']['user']);
@@ -97,7 +91,8 @@ class uipassword
 			if (!$errors)
 			{
 				try {
-					$passwd_changed = $this->bo->changepass($o_passwd, $n_passwd);
+					$passwd_changed = $GLOBALS['egw']->auth->change_password($o_passwd, $n_passwd,
+						$GLOBALS['egw_info']['user']['account_id']);
 				}
 				catch (Exception $e) {
 					$errors[] = $e->getMessage();
@@ -117,20 +112,6 @@ class uipassword
 			}
 			else
 			{
-				$GLOBALS['egw']->session->appsession('password','phpgwapi',base64_encode($n_passwd));
-				$GLOBALS['egw_info']['user']['passwd'] = $n_passwd;
-				$GLOBALS['egw_info']['user']['account_lastpwd_change'] = egw_time::to('now','ts');
-				accounts::cache_invalidate($GLOBALS['egw_info']['user']['account_id']);
-				egw::invalidate_session_cache();
-				//_debug_array( $GLOBALS['egw_info']['user']);
-				$GLOBALS['hook_values']['account_id'] = $GLOBALS['egw_info']['user']['account_id'];
-				$GLOBALS['hook_values']['old_passwd'] = $o_passwd;
-				$GLOBALS['hook_values']['new_passwd'] = $n_passwd;
-
-				// called for every app now, not only for the ones enabled for the user
-				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-					'location' => 'changepassword',
-				),False,True);
 				if ($GLOBALS['egw_info']['user']['apps']['preferences'])
 				{
 					egw::redirect_link('/preferences/index.php','cd=18');

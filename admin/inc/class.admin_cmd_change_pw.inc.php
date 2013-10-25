@@ -7,13 +7,13 @@
  * @package admin
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$ 
+ * @version $Id$
  */
 
 /**
  * admin command: change the password of a given user
  */
-class admin_cmd_change_pw extends admin_cmd 
+class admin_cmd_change_pw extends admin_cmd
 {
 	/**
 	 * Constructor
@@ -35,7 +35,7 @@ class admin_cmd_change_pw extends admin_cmd
 
 	/**
 	 * change the password of a given user
-	 * 
+	 *
 	 * @param boolean $check_only=false only run the checks (and throw the exceptions), but not the command itself
 	 * @return string success message
 	 * @throws egw_exception_no_admin
@@ -47,29 +47,16 @@ class admin_cmd_change_pw extends admin_cmd
 		$account_id = admin_cmd::parse_account($this->account,true);	// true = user, no group
 		// check creator is still admin and not explicitly forbidden to edit accounts
 		if ($this->creator) $this->_check_admin('account_access',16);
-		
+
 		if ($check_only) return true;
-		
+
 		$auth = new auth;
-		
+
 		if (!$auth->change_password(null, $this->password, $account_id))
 		{
 			// as long as the auth class is not throwing itself ...
 			throw new Exception(lang('Error changing the password for % !!!',$this->account),99);
 		}
-		$GLOBALS['hook_values']['account_id'] = $account_id;
-		$GLOBALS['hook_values']['account_lid'] = $this->account;
-		if (is_numeric($this->account))
-		{
-			admin_cmd::_instanciate_accounts();
-			$GLOBALS['hook_values']['account_lid'] = admin_cmd::$accounts->id2name($this->account);
-		}
-		$GLOBALS['hook_values']['old_passwd'] = null;
-		$GLOBALS['hook_values']['new_passwd'] = $this->password;
-		$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-			'location' => 'changepassword'
-		),False,True);  // called for every app now, not only enabled ones)
-		
 		return lang('Password updated');
 	}
 
