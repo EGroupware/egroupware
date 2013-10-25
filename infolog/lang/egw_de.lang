@@ -99,6 +99,7 @@ contact	infolog	de	Kontakt
 contact cf	infolog	de	Kontakt CF
 contact fields	infolog	de	Kontaktfelder
 contactfield	infolog	de	Kontaktfelder
+convert to a ticket	infolog	de	In ein Ticket umwandeln
 copy of:	infolog	de	Kopie von:
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	de	Kopieren Sie ihre Änderungen in die Zwischenablage, %1laden den Eintrag neu%2 und fügen diese wieder ein.
 create new links	infolog	de	Neue Verknüpfung erzeugen

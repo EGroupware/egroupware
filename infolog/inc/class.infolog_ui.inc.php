@@ -5,7 +5,7 @@
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package infolog
- * @copyright (c) 2003-12 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2003-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -1086,6 +1086,7 @@ class infolog_ui
 			$actions['tracker'] = array(
 				'icon' => 'tracker/navbar',
 				'caption' => 'Tracker',
+				'hint' => 'Convert to a ticket',
 				'group' => $group,
 				'url' => 'menuaction=tracker.tracker_ui.edit&'.
 					egw_link::get_registry('tracker', 'add_app') . '[]=infolog&'.egw_link::get_registry('tracker','add_id').'[]=$id',
@@ -1515,7 +1516,6 @@ class infolog_ui
 			$action_id = $content['action_id']; unset($content['action_id']);
 			$referer   = $content['referer'];   unset($content['referer']);
 			$no_popup  = $content['no_popup'];  unset($content['no_popup']);
-			$caller    = $content['caller'];    unset($content['caller']);
 			// convert custom from to 0 or 1, it's unset if not checked, which starts the detection
 			$content['info_custom_from'] = (int)$content['info_custom_from'];
 
@@ -1525,7 +1525,7 @@ class infolog_ui
 			if ($button)
 			{
 				// Copy or schedule Infolog
-				if (in_array($button,array('copy','schedule','ical')))
+				if (in_array($button,array('copy','schedule','ical','tracker')))
 				{
 					$action = $button;
 					if (!$info_id || $this->bo->check_access($info_id,EGW_ACL_EDIT))
@@ -1766,7 +1766,7 @@ class infolog_ui
 			);
 		}
 		// new call via GET or some actions handled here, as they can happen both ways ($_GET[action] or button/action in GUI)
-		if (!$submit || in_array($action,array('sp','copy','schedule','ical')))
+		if (!$submit || in_array($action,array('sp','copy','schedule','ical','tracker')))
 		{
 			switch ($action)
 			{
@@ -1780,7 +1780,7 @@ class infolog_ui
 				case 'ical':
 					$boical = new infolog_ical();
 					$result = $boical->exportVTODO($content,'2.0','PUBLISH',false);
-					ExecMethod2('phpgwapi.browser.content_header','todo.ics','text/calendar');
+					html::content_header('todo.ics', 'text/calendar');
 					echo $result;
 					common::egw_exit();
 				case 'sp':
@@ -1794,7 +1794,13 @@ class infolog_ui
 					}
 					unset($action);	// it get stored in $content and will cause an other copy after [apply]
 					break;
-
+				case 'tracker':
+					egw::redirect_link('/index.php',array(
+						'menuaction' => 'tracker.tracker_ui.edit',
+						egw_link::get_registry('tracker', 'add_app').'[]' => 'infolog',
+						egw_link::get_registry('tracker','add_id').'[]' => $info_id,
+					));
+					break;
 				case 'projectmanager':
 					$pm_links = array($action_id);
 				default:	// to allow other apps to participate
@@ -1989,6 +1995,7 @@ class infolog_ui
 				'sp'    => 'Sub-entry',
 				'print' => array('label' => 'Print', 'title' => 'Print this Infolog'),
 				'ical' => array('label' => 'Export iCal', 'title' => 'Export iCal'),
+				'tracker' => array('label' => 'Tracker', 'title' => 'Convert to a ticket'),
 			),
 		);
 		if ($GLOBALS['egw_info']['user']['apps']['calendar'])
