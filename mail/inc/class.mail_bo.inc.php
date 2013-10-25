@@ -956,8 +956,8 @@ class mail_bo
 		static $folderBasicInfo;
 		if (is_null($folderBasicInfo))
 		{
-			$folderBasicInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
-			$folderInfoCache = $folderBasicInfo[$this->profileID];
+//			$folderBasicInfo = egw_cache::getCache(egw_cache::INSTANCE,'email','folderBasicInfo'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
+//			$folderInfoCache = $folderBasicInfo[$this->profileID];
 		}
 		if (isset($folderInfoCache[$_folderName]) && $ignoreStatusCache==false && $basicInfoOnly) return $folderInfoCache[$_folderName];
 		$retValue = array();
@@ -971,27 +971,27 @@ class mail_bo
 		if (is_null($folderInfoCache) || !isset($folderInfoCache[$_folderName])) $folderInfoCache[$_folderName] = $this->icServer->getMailboxes('', $_folderName, true);
 		$folderInfo = $folderInfoCache[$_folderName];
 		//error_log(__METHOD__.__LINE__.array2string($folderInfo).'->'.function_backtrace());
-		if(($folderInfo instanceof PEAR_Error) || !is_array($folderInfo[0])) {
+		if(($folderInfo instanceof PEAR_Error) || !is_array($folderInfo)) {
 			if (self::$debug||$folderInfo instanceof PEAR_Error) error_log(__METHOD__." returned Info for folder $_folderName:".print_r($folderInfo->message,true));
 			if ( ($folderInfo instanceof PEAR_Error) || PEAR::isError($r = $this->_getStatus($_folderName)) || $r == 0) return false;
-			if (!is_array($folderInfo[0]))
+			if (!is_array($folderInfo))
 			{
 				// no folder info, but there is a status returned for the folder: something is wrong, try to cope with it
-				$folderInfo = array(0 => (is_array($folderInfo)?$folderInfo:array('HIERACHY_DELIMITER'=>$this->getHierarchyDelimiter(),
-					'ATTRIBUTES' => '')));
-				if (empty($folderInfo[0]['HIERACHY_DELIMITER']) || (isset($folderInfo[0]['delimiter']) && empty($folderInfo[0]['delimiter'])))
+				$folderInfo = is_array($folderInfo)?$folderInfo:array('HIERACHY_DELIMITER'=>$this->getHierarchyDelimiter(),
+					'ATTRIBUTES' => '');
+				if (empty($folderInfo['HIERACHY_DELIMITER']) || (isset($folderInfo['delimiter']) && empty($folderInfo['delimiter'])))
 				{
 					//error_log(__METHOD__.__LINE__.array2string($folderInfo));
-					$folderInfo[0]['HIERACHY_DELIMITER'] = $this->getHierarchyDelimiter();
+					$folderInfo['HIERACHY_DELIMITER'] = $this->getHierarchyDelimiter();
 				}
 			}
 		}
 		#if(!is_array($folderInfo[0])) {
 		#	return false;
 		#}
-
-		$retValue['delimiter']		= ($folderInfo[0]['HIERACHY_DELIMITER']?$folderInfo[0]['HIERACHY_DELIMITER']:$folderInfo[0]['delimiter']);
-		$retValue['attributes']		= ($folderInfo[0]['ATTRIBUTES']?$folderInfo[0]['ATTRIBUTES']:$folderInfo[0]['attributes']);
+error_log(__METHOD__.__LINE__.$folderInfo);
+		$retValue['delimiter']		= ($folderInfo['HIERACHY_DELIMITER']?$folderInfo['HIERACHY_DELIMITER']:$folderInfo['delimiter']);
+		$retValue['attributes']		= ($folderInfo['ATTRIBUTES']?$folderInfo['ATTRIBUTES']:$folderInfo['attributes']);
 		$shortNameParts			= explode($retValue['delimiter'], $_folderName);
 		$retValue['shortName']		= array_pop($shortNameParts);
 		$retValue['displayName']	= $this->encodeFolderName($_folderName);
@@ -1114,7 +1114,7 @@ class mail_bo
 			$total = $_sortResult['count'];
 			#_debug_array($sortResult);
 			#_debug_array(array_slice($sortResult, -5, -2));
-			error_log("REVERSE: $reverse");
+			//error_log("REVERSE: $reverse");
 			if($reverse === true) {
 				if  ($_startMessage<=$total)
 				{
