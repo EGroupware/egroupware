@@ -33,6 +33,12 @@
 		{
 			if (($ret = $GLOBALS['egw']->auth->change_password($old, $new, $GLOBALS['egw_info']['user']['account_id'])))
 			{
+				$GLOBALS['egw']->session->appsession('password','phpgwapi',base64_encode($new));
+				$GLOBALS['egw_info']['user']['passwd'] = $new;
+				$GLOBALS['egw_info']['user']['account_lastpwd_change'] = egw_time::to('now','ts');
+				accounts::cache_invalidate($GLOBALS['egw_info']['user']['account_id']);
+				egw::invalidate_session_cache();
+				//_debug_array( $GLOBALS['egw_info']['user']);
 				$GLOBALS['hook_values']['account_id'] = $GLOBALS['egw_info']['user']['account_id'];
 				$GLOBALS['hook_values']['old_passwd'] = $old;
 				$GLOBALS['hook_values']['new_passwd'] = $new;

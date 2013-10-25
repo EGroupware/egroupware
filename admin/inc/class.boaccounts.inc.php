@@ -398,14 +398,6 @@
 					$auth = new auth();
 					if ($auth->change_password('', $passwd, $_userData['account_id']))
 					{
-						$GLOBALS['hook_values']['account_id'] = $_userData['account_id'];
-						$GLOBALS['hook_values']['old_passwd'] = '';
-						$GLOBALS['hook_values']['new_passwd'] = $passwd;
-
-						$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-							'location' => 'changepassword'
-						),False,True);	// called for every app now, not only enabled ones)
-
 						if ($_userData['account_lastpwd_change']==0 ||	// AD requires to activate account AFTER setting pw
 							$new_account && $_userData['account_status'] == 'A' && $GLOBALS['egw']->accounts->require_password_for_enable())
 						{
