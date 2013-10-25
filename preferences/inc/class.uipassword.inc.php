@@ -15,12 +15,6 @@ class uipassword
 		'change' => True
 	);
 
-	function uipassword()
-	{
-		$this->bo =& CreateObject('preferences.bopassword');
-
-	}
-
 	function change()
 	{
 		//_debug_array($GLOBALS['egw_info']['user']);
