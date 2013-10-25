@@ -105,10 +105,12 @@
 			foreach(is_array($readonlys) ? $readonlys : array($readonlys => true) as $name => $disable)
 			{
 				if ($name && $disable && (($key = array_search($name, $names)) !== false ||
-					($key = array_search($name, $short_names) !== false)))
+					($key = array_search($name, $short_names)) !== false))
 				{
 					unset($names[$key]);
 					$names = array_values($names);
+					unset($short_names[$key]);
+					$short_names = array_values($short_names);
 					unset($helps[$key]);
 					$helps = array_values($helps);
 					unset($labels[$key]);
