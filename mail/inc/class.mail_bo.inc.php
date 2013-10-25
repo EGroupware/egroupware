@@ -1801,7 +1801,7 @@ class mail_bo
 	{
 		$folderName = $this->_encodeFolderName($_folderName);
 
-		$this->icServer->unsubscribeMailbox($folderName);
+		$this->icServer->subscribeMailbox($folderName,false);
 		$rv = $this->icServer->deleteMailbox($folderName);
 		if ( PEAR::isError($rv) ) {
 			if (self::$debug) error_log(__METHOD__." failed for $folderName with error: ".print_r($rv->message,true));
@@ -1821,7 +1821,7 @@ class mail_bo
 				return false;
 			}
 		} else {
-			$rv = $this->icServer->unsubscribeMailbox($_folderName);
+			$rv = $this->icServer->subscribeMailbox($_folderName,false);
 			if ( PEAR::isError($rv)) {
 				error_log(__METHOD__."::".($_status?"":"un")."subscribe:".$_folderName." failed:".$rv->message);
 				return false;
