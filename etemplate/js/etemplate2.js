@@ -96,9 +96,6 @@ function etemplate2(_container, _menuaction)
 	
 	// Connect to the window resize event
 	$j(window).resize(this, function(e) {e.data.resize();});
-	
-	// Register a handler for AJAX responses
-	egw.registerJSONPlugin(etemplate2_handle_assign, this, 'assign');
 }
 
 /**
@@ -123,12 +120,13 @@ etemplate2.prototype.clear = function()
 {
 	if (this.widgetContainer != null)
 	{
+		// Un-register handler
+		this.widgetContainer.egw().unregisterJSONPlugin(etemplate2_handle_assign, this, 'assign');
+	
 		this.widgetContainer.free();
 		this.widgetContainer = null;
 	}
 	$j(this.DOMContainer).empty();
-	
-	egw.unregisterJSONPlugin(etemplate2_handle_assign, this, 'assign');
 	
 	// Remove self from the index
 	for(name in this.templates)
@@ -197,6 +195,14 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 	egw().debug("info", "Loaded data", _data);
 	var currentapp = _data.currentapp || window.egw_appName;
 	
+	// Register a handler for AJAX responses
+	egw(currentapp, window).registerJSONPlugin(etemplate2_handle_assign, this, 'assign');
+	
+	if(console.groupCollapsed)
+	{
+		egw.window.console.groupCollapsed("Loading %s", _name);
+	}
+	
 	// require necessary translations from server, if not already loaded
 	if (!$j.isArray(_data.langRequire)) _data.langRequire = [];
 	egw(currentapp, window).langRequire(window, _data.langRequire, function()
@@ -242,6 +248,8 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 		}
 		
 		var _load = function() {
+			egw.debug("log", "Loading template...");
+			
 			// Read the XML structure of the requested template
 			this.widgetContainer.loadFromXML(this.templates[_name || missing_name]);
 	
@@ -261,8 +269,24 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 			}
 			etemplate2._byTemplate[_name].push(this);
 
+			if(console.groupEnd)
+			{
+				egw.window.console.groupEnd();
+			}
+			if(deferred.length > 0)
+			{
+				var still_deferred = 0;
+				$j(deferred).each(function() {if(this.state() == "pending") still_deferred++;});
+				if(still_deferred > 0)
+				{
+					egw.debug("log", "Template loaded, waiting for %d/%d deferred to finish...",still_deferred, deferred.length);
+				}
+			}
+			
 			// Wait for everything to be loaded, then finish it up
 			jQuery.when.apply(null, deferred).done(jQuery.proxy(function() {
+				egw.debug("log", "Finished loading %s, triggering load event", _name);
+				
 				// Trigger the "resize" event
 				this.resize();
 
@@ -278,7 +302,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 
 				$j(this.DOMContainer).trigger('load', this);
 			},this));
-		};
+			};
 		
 		
 		// Load & process
