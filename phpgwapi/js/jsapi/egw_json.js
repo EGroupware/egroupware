@@ -262,7 +262,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			(typeof res.data.key != 'undefined') &&
 			(typeof res.data.value != 'undefined'))
 		{
-			var obj = document.getElementById(res.data.id);
+			var obj = _wnd.document.getElementById(res.data.id);
 			if (obj)
 			{
 				obj[res.data.key] = res.data.value;
@@ -359,7 +359,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd) {
 			return true;
 		}
 		throw 'Invalid parameters';
-	}, null, 'jquery');
+	}, _wnd, 'jquery');
 
 	// Register the "redirect" plugin
 	json.registerJSONPlugin(function(type, res, req) {
