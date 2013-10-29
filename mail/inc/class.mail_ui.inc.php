@@ -122,9 +122,9 @@ class mail_ui
 
 		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
+error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
-		if (!($this->mail_bo->icServer->_connected == 1)) $this->mail_bo->openConnection(self::$icServerID);
 		$GLOBALS['egw']->session->commit_session();
 	}
 
@@ -265,7 +265,7 @@ class mail_ui
 			//$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities: but did that earlier
 		}
 		// since we are connected,(and selected the folder) we check for capabilities SUPPORTS_KEYWORDS to eventually add the keyword filters
-		if ($this->mail_bo->icServer->_connected == 1 && $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
+		if ( $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
 		{
 			$this->statusTypes = array_merge($this->statusTypes,array(
 				'keyword1'	=> 'urgent',//lang('urgent'),
@@ -1412,11 +1412,7 @@ unset($query['actions']);
 						$header['mimetype'] != 'multipart/signed'
 					)
 					{
-						if ($this->mail_bo->icServer->_connected != 1)
-						{
-							$this->mail_bo->openConnection($this->profileID); // connect to the current server
-							$this->mail_bo->reopen($_folderName);
-						}
+						$this->mail_bo->reopen($_folderName);
 						$attachments = $this->mail_bo->getMessageAttachments($header['uid'],$_partID='', $_structure='', $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=false);
 						if (count($attachments)<1)
 						{

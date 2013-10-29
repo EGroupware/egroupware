@@ -22,7 +22,7 @@ class mail_hooks
  */
 	static public function accountHooks($hookData)
 	{
-		if (($default_profile_id = emailadmin_bo::getDefaultProfileID()))
+		if (($default_profile_id = emailadmin_bo::getDefaultAccID()))
 		{
 			$mail_bo = mail_bo::forceEAProfileLoad($default_profile_id);
 
@@ -47,7 +47,7 @@ class mail_hooks
 	 */
 	static public function adminMenu()
 	{
-		if (($default_profile_id = emailadmin_bo::getDefaultProfileID()))
+		if (($default_profile_id = emailadmin_bo::getDefaultAccID()))
 		{
 			$mail_bo = mail_bo::forceEAProfileLoad($default_profile_id);
 

@@ -214,7 +214,9 @@ class mail_bopreferences extends mail_sopreferences
 
 	function getUserDefinedIdentities()
 	{
-		$profileID = emailadmin_bo::getUserDefaultProfileID();
+		$profileID = emailadmin_bo::getUserDefaultAccID();
+error_log(__METHOD__.__LINE__.' Not done jet');
+/*
 		$profileData        = $this->boemailadmin->getUserProfile('mail');
 		if(!($profileData instanceof ea_preferences) || !($profileData->ic_server[$profileID] instanceof defaultimap)) {
 			return false;
@@ -232,19 +234,18 @@ class mail_bopreferences extends mail_sopreferences
 				return $accountArray;
 			}
 		}
+*/
 		return array();
 	}
 
 	/**
 	 * getPreferences - fetches the active profile for a user
 	 *
-	 * @param boolean $getUserDefinedProfiles
 	 * @param int $_profileID - use this profile to be set its prefs as active profile (0)
-	 * @param string $_appName - the app the profile is fetched for
-	 * @param int $_singleProfileToFetch - single Profile to fetch no merging of profileData; emailadminprofiles only; for Administrative use only (by now)
+	 * @param int $_singleProfileToFetch - single Profile to fetch
 	 * @return object ea_preferences object with the active emailprofile set to ID = 0
 	 */
-	function getPreferences($getUserDefinedProfiles=true,$_profileID=0,$_appName='mail',$_singleProfileToFetch=0)
+	function getPreferences($_profileID=0,$_singleProfileToFetch=0)
 	{
 		if (isset($this->sessionData['profileData']) && ($this->sessionData['profileData'] instanceof ea_preferences))
 		{
@@ -257,110 +258,104 @@ class mail_bopreferences extends mail_sopreferences
 			$userPreferences = $GLOBALS['egw_info']['user']['preferences']['mail'];
 
 			$imapServerTypes	= $this->boemailadmin->getIMAPServerTypes();
-			$profileData = $this->boemailadmin->getUserProfile($_appName,'',($_singleProfileToFetch<0?-$_singleProfileToFetch:'')); // by now we assume only one profile to be returned
-			$icServerKeys = array_keys((array)$profileData->ic_server);
-			$icProfileID = array_shift($icServerKeys);
-			$ogServerKeys = array_keys((array)$profileData->og_server);
-			$ogProfileID = array_shift($ogServerKeys);
-			//error_log(__METHOD__.__LINE__.' ServerProfile(s)Fetched->'.array2string(count($profileData->ic_server)));
-			//may be needed later on, as it may hold users Identities connected to MailAlternateAdresses
-			$IdIsDefault = 0;
-			$rememberIdentities = $profileData->identities;
-			foreach ($rememberIdentities as $adkey => $ident)
+			try
 			{
-				if ($ident->default) $IdIsDefault = $ident->id;
-				$profileData->identities[$adkey]->default = false;
+				$profileData_ = emailadmin_account::search($only_current_user=true, $just_name=false, $order_by=null,$offset=0);
+				$_profileIDs = array_keys($profileData_);
+				$_profileID = $_profileIDs[0];
+				$profileData = $profileData_[$_profileID];
+_debug_array($profileData->imapServer());
+				$icProfileID = $profileData->__get('acc_id');
+				$ogProfileID = $profileData->__get('acc_id');
+				//error_log(__METHOD__.__LINE__.' ServerProfile(s)Fetched->'.array2string(count($profileData->ic_server)));
+			}
+			catch (egw_exception $e)
+			{	// not sure that this is needed to pass on exeptions
+				throw new egw_exception_assertion_failed($e->getMessage());
+				//return false
 			}
 
-			if(!($profileData instanceof ea_preferences) || !($profileData->ic_server[$icProfileID] instanceof defaultimap))
-			{
-				return false;
-			}
 			// set the emailadminprofile as profile 0; it will be assumed the active one (if no other profiles are active)
-			$profileData->setIncomingServer($profileData->ic_server[$icProfileID],0);
+			$profileData->setIncomingServer($profileData_[$icProfileID]->imapServer,$icProfileID);
 			$profileID = $icProfileID;
-			$profileData->setOutgoingServer($profileData->og_server[$ogProfileID],0);
+			$profileData->setOutgoingServer($profileData_[$icProfileID]->smtpServer,$ogProfileID);
 			$profileData->setIdentity($profileData->identities[$icProfileID],0);
 			$userPrefs = $this->mergeUserAndProfilePrefs($userPreferences,$profileData,$icProfileID);
 			$rememberID = array(); // there may be more ids to be rememered
 			$maxId = $icProfileID>0?$icProfileID:0;
 			$minId = $icProfileID<0?$icProfileID:0;
 			//$profileData->setPreferences($userPrefs,0);
-			if($profileData->userDefinedAccounts && $GLOBALS['egw_info']['user']['apps']['mail'] && $getUserDefinedProfiles)
+
+			// get user defined accounts (only fetch the active one(s), as we call it without second parameter)
+			// we assume only one account may be active at once
+			$allAccountData = $this->getAllAccountData($profileData);
+			foreach ((array)$allAccountData as $k => $accountData)
 			{
-				// get user defined accounts (only fetch the active one(s), as we call it without second parameter)
-				// we assume only one account may be active at once
-				$allAccountData = $this->getAllAccountData($profileData);
-				foreach ((array)$allAccountData as $k => $accountData)
+				// set defined IMAP server
+				if(($accountData['icServer'] instanceof defaultimap))
 				{
-					// set defined IMAP server
+					$profileData->setIncomingServer($accountData['icServer'],$k);
+					$userPrefs = $this->mergeUserAndProfilePrefs($userPreferences,$profileData,$k);
+					//$profileData->setPreferences($userPrefs,$k);
+				}
+				// set defined SMTP Server
+				if(($accountData['ogServer'] instanceof emailadmin_smtp))
+					$profileData->setOutgoingServer($accountData['ogServer'],$k);
+
+				if(($accountData['identity'] instanceof ea_identity))
+				{
+					$profileData->setIdentity($accountData['identity'],$k);
+					$rememberID[] = $k; // remember Identity as already added
+					if ($k>0 && $k>$maxId) $maxId = $k;
+					if ($k<0 && $k<$minId) $minId = $k;
+				}
+
+				if (empty($_profileID))
+				{
+					$setAsActive = $accountData['active'];
+					//if($setAsActive) error_log(__METHOD__.__LINE__." Setting Profile with ID=$k (using Active Info) for ActiveProfile");
+				}
+				else
+				{
+					$setAsActive = ($_profileID==$k);
+					//if($setAsActive) error_log(__METHOD__.__LINE__." Setting Profile with ID=$_profileID for ActiveProfile");
+				}
+				if($setAsActive)
+				{
+					// replace the global defined IMAP Server
 					if(($accountData['icServer'] instanceof defaultimap))
 					{
-						$profileData->setIncomingServer($accountData['icServer'],$k);
+						$profileID = $k;
+						$profileData->setIncomingServer($accountData['icServer'],0);
 						$userPrefs = $this->mergeUserAndProfilePrefs($userPreferences,$profileData,$k);
-						//$profileData->setPreferences($userPrefs,$k);
+						//$profileData->setPreferences($userPrefs,0);
 					}
-					// set defined SMTP Server
+
+					// replace the global defined SMTP Server
 					if(($accountData['ogServer'] instanceof emailadmin_smtp))
-						$profileData->setOutgoingServer($accountData['ogServer'],$k);
+						$profileData->setOutgoingServer($accountData['ogServer'],0);
 
-					if(($accountData['identity'] instanceof ea_identity))
-					{
-						$profileData->setIdentity($accountData['identity'],$k);
-						$rememberID[] = $k; // remember Identity as already added
-						if ($k>0 && $k>$maxId) $maxId = $k;
-						if ($k<0 && $k<$minId) $minId = $k;
-					}
-
-					if (empty($_profileID))
-					{
-						$setAsActive = $accountData['active'];
-						//if($setAsActive) error_log(__METHOD__.__LINE__." Setting Profile with ID=$k (using Active Info) for ActiveProfile");
-					}
-					else
-					{
-						$setAsActive = ($_profileID==$k);
-						//if($setAsActive) error_log(__METHOD__.__LINE__." Setting Profile with ID=$_profileID for ActiveProfile");
-					}
-					if($setAsActive)
-					{
-						// replace the global defined IMAP Server
-						if(($accountData['icServer'] instanceof defaultimap))
-						{
-							$profileID = $k;
-							$profileData->setIncomingServer($accountData['icServer'],0);
-							$userPrefs = $this->mergeUserAndProfilePrefs($userPreferences,$profileData,$k);
-							//$profileData->setPreferences($userPrefs,0);
-						}
-
-						// replace the global defined SMTP Server
-						if(($accountData['ogServer'] instanceof emailadmin_smtp))
-							$profileData->setOutgoingServer($accountData['ogServer'],0);
-
-						// replace the global defined identity
-						if(($accountData['identity'] instanceof ea_identity)) {
-							//_debug_array($profileData);
-							$profileData->setIdentity($accountData['identity'],0);
-							$profileData->identities[0]->default = true;
-							$rememberID[] = $IdIsDefault = $accountData['identity']->id;
-						}
+					// replace the global defined identity
+					if(($accountData['identity'] instanceof ea_identity)) {
+						//_debug_array($profileData);
+						$profileData->setIdentity($accountData['identity'],0);
+						$profileData->identities[0]->default = true;
+						$rememberID[] = $IdIsDefault = $accountData['identity']->id;
 					}
 				}
 			}
-			if($profileData->userDefinedIdentities && $GLOBALS['egw_info']['user']['apps']['mail'])
+
+			$allUserIdentities = $this->getUserDefinedIdentities();
+			if (is_array($allUserIdentities))
 			{
-				$allUserIdentities = $this->getUserDefinedIdentities();
-				if (is_array($allUserIdentities))
+				$i=$maxId+1;
+				$y=$minId-1;
+				foreach ($allUserIdentities as $tmpkey => $id)
 				{
-					$i=$maxId+1;
-					$y=$minId-1;
-					foreach ($allUserIdentities as $tmpkey => $id)
+					if (!in_array($id->id,$rememberID))
 					{
-						if (!in_array($id->id,$rememberID))
-						{
-							$profileData->setIdentity($id,$i);
-							$i++;
-						}
+						$profileData->setIdentity($id,$i);
+						$i++;
 					}
 				}
 			}

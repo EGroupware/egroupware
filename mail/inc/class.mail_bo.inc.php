@@ -32,13 +32,6 @@ class mail_bo
 	static $folderStatusCache;
 
 	/**
-	 * Instance of bopreference
-	 *
-	 * @var bopreferences object
-	 */
-	var $bopreferences;
-
-	/**
 	 * Active preferences
 	 *
 	 * @var array
@@ -175,6 +168,7 @@ class mail_bo
 	 */
 	public static function getInstance($_restoreSession=true, $_profileID=0, $_validate=true)
 	{
+$_restoreSession=false;
 		//error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.' called from:'.function_backtrace());
 		if ($_profileID == 0)
 		{
@@ -184,7 +178,7 @@ class mail_bo
 			}
 			else
 			{
-				$profileID = emailadmin_bo::getUserDefaultProfileID();
+				$profileID = emailadmin_bo::getUserDefaultAccID();
 			}
 			if ($profileID!=$_profileID) $_restoreSession==false;
 			$_profileID=$profileID;
@@ -192,7 +186,7 @@ class mail_bo
 		}
 		if ($_profileID != 0 && $_validate)
 		{
-			$profileID = self::validateProfileID($_restoreSession, $_profileID);
+			$profileID = self::validateProfileID($_profileID);
 			if ($profileID != $_profileID)
 			{
 				if (self::$debug)
@@ -214,43 +208,19 @@ class mail_bo
 		}
 		else
 		{
-			// make sure the prefs are up to date for the profile to load
-			$loadfailed = $alreadytriedreloading = false;
-			self::$instances[$_profileID]->mailPreferences	= self::$instances[$_profileID]->bopreferences->getPreferences(true,$_profileID);
-			//error_log(__METHOD__.__LINE__." ReRead the Prefs for ProfileID ".$_profileID.' called from:'.function_backtrace());
-			if (self::$instances[$_profileID]->mailPreferences)
+			//refresh objects
+			try
 			{
-				self::$instances[$_profileID]->icServer = self::$instances[$_profileID]->mailPreferences->getIncomingServer($_profileID);
-				// if we do not get an icServer object, session restore failed on bopreferences->getPreferences
-				if (!self::$instances[$_profileID]->icServer) $loadfailed=true;
-				if ($_profileID != 0) self::$instances[$_profileID]->mailPreferences->setIncomingServer(self::$instances[$_profileID]->icServer,0);
-				self::$instances[$_profileID]->ogServer = self::$instances[$_profileID]->mailPreferences->getOutgoingServer($_profileID);
-				if ($_profileID != 0) self::$instances[$_profileID]->mailPreferences->setOutgoingServer(self::$instances[$_profileID]->ogServer,0);
-				self::$instances[$_profileID]->htmlOptions  = self::$instances[$_profileID]->mailPreferences->preferences['htmlOptions'];
-			}
-			else
+				self::$instances[$this->profileID]->icServer = emailadmin_account::read($this->profileID)->imapServer();
+				self::$instances[$this->profileID]->ogServer = emailadmin_account::read($this->profileID)->smtpServer();
+				// TODO: merge mailprefs into userprefs, for easy treatment
+				self::$instances[$this->profileID]->mailPreferences = $GLOBALS['egw_info']['user']['preferences']['mail'];
+				self::$instances[$this->profileID]->htmlOptions  = self::$instances[$this->profileID]->mailPreferences['htmlOptions'];
+			} catch (egw_exception $e)
 			{
-				// first try reloading without restore
-				if ($_restoreSession==true) self::$instances[$_profileID] = new mail_bo('utf-8',false,$_profileID);
-				if (!self::$instances[$_profileID]->mailPreferences) {
-					if (self::$debug) error_log(__METHOD__.__LINE__.' something wrong:'.array2string($_restoreSession).' mailPreferences could not be loaded!');
-					$loadfailed=$alreadytriedreloading=true;
-				}
-			}
-			if ($_profileID>0 && empty(self::$instances[$_profileID]->icServer->host)&&$alreadytriedreloading==false)
-			{
-				if ($_restoreSession==true) self::$instances[$_profileID] = new mail_bo('utf-8',false,$_profileID);
-				if (empty(self::$instances[$_profileID]->icServer->host))
-				{
-					if (self::$debug) error_log(__METHOD__.__LINE__.' something critically wrong for '.$_profileID.' RestoreSession:'.array2string($_restoreSession).'->'.array2string(self::$instances[$_profileID]->icServer).' No Server host set!');
-					$loadfailed=$alreadytriedreloading=true;
-				}
-			}
-			if ($loadfailed)
-			{
-				$newprofileID = ($alreadytriedreloading ? emailadmin_bo::getUserDefaultProfileID():$_profileID);
-				if ($alreadytriedreloading) error_log(__METHOD__.__LINE__." Loading the Profile for ProfileID ".$_profileID.' failed for icServer; trigger new instance for Default-Profile '.$newprofileID.'. called from:'.function_backtrace());
+				$newprofileID = emailadmin_bo::getUserDefaultAccID();
 				// try loading the default profile for the user
+				error_log(__METHOD__.__LINE__." Loading the Profile for ProfileID ".$_profileID.' failed for icServer; '.$e->getMessage().' Trigger new instance for Default-Profile '.$newprofileID.'. called from:'.function_backtrace());
 				self::$instances[$newprofileID] = new mail_bo('utf-8',false,$newprofileID);
 				$_profileID = $newprofileID;
 			}
@@ -265,58 +235,43 @@ class mail_bo
 	/**
 	 * validate the given profileId to make sure it is valid for the active user
 	 *
-	 * @param boolean $_restoreSession=true - needed to pass on to getInstance
 	 * @param int $_profileID=0
 	 * @return int validated profileID -> either the profileID given, or a valid one
 	 */
-	public static function validateProfileID($_restoreSession=true, $_profileID=0)
+	public static function validateProfileID($_profileID=0)
 	{
-		$identities = array();
-		$mail = mail_bo::getInstance($_restoreSession, $_profileID, $validate=false); // we need an instance of mail_bo
-		$selectedID = $mail->getIdentitiesWithAccounts($identities);
-		if (is_object($mail->mailPreferences)) $activeIdentity =& $mail->mailPreferences->getIdentity($_profileID, true);
+		$availableServers = array();
 		// if you use user defined accounts you may want to access the profile defined with the emailadmin available to the user
 		// as we validate the profile in question and may need to return an emailadminprofile, we fetch this one all the time
-		$boemailadmin = new emailadmin_bo();
-		$defaultProfile = $boemailadmin->getUserProfile() ;
+		$icServers = emailadmin_account::search($only_current_user=true, $just_name=false, $order_by=null);
+		$_profileIDs = array_keys($icServers);
+		$defaultProfileID = $_profileIDs[0];
+		$defaultProfile = $icServers[$defaultProfileID];
 		//error_log(__METHOD__.__LINE__.array2string($defaultProfile));
-		$identitys =& $defaultProfile->identities;
-		$icServers =& $defaultProfile->ic_server;
-		foreach ($identitys as $tmpkey => $identity)
+		$profiles = emailadmin_account::search($only_current_user=true, $just_name=true, $order_by=null);
+		foreach ($profiles as $tmpkey => $prof)
 		{
-			if (empty($icServers[$tmpkey]->host)) continue;
-			$identities[$identity->id] = $identity->realName.' '.$identity->organization.' <'.$identity->emailAddress.'>';
+			//error_log(__METHOD__.__LINE__.' Key:'.$tmpkey.'->'.array2string($icServers[$tmpkey]->acc_imap_host));
+			$host = $icServers[$tmpkey]->acc_imap_host;
+			if (empty($host)) continue;
+			$availableServers[$icServers[$tmpkey]->acc_id] = $icServers[$tmpkey]->ident_realname.' '.$icServers[$tmpkey]->ident_org.' <'.$icServers[$tmpkey]->ident_email.'>';
 		}
 
 		//error_log(__METHOD__.__LINE__.array2string($identities));
-		if (array_key_exists($_profileID,$identities))
+		if (array_key_exists($_profileID,$availableServers))
 		{
 			// everything seems to be in order self::$profileID REMAINS UNCHANGED
 		}
 		else
 		{
-			if (array_key_exists($selectedID,$identities))
+			if (self::$debug) error_log(__METHOD__.__LINE__.' Profile Selected (after trying to fetch DefaultProfile):'.array2string($_profileID));
+			if (!array_key_exists($_profileID,$availableServers))
 			{
-				$_profileID = $selectedID;
-			}
-			else
-			{
-				foreach (array_keys((array)$identities) as $k => $ident)
-				{
-					//error_log(__METHOD__.__LINE__.' Testing Identity with ID:'.$ident.' for being provided by emailadmin.');
-					if ($ident <0) $_profileID = $ident;
-				}
-				if (self::$debug) error_log(__METHOD__.__LINE__.' Profile Selected (after trying to fetch DefaultProfile):'.array2string($_profileID));
-				if (!array_key_exists($_profileID,$identities))
-				{
-					// everything failed, try first profile found
-					$keys = array_keys((array)$identities);
-					if (count($keys)>0) $_profileID = array_shift($keys);
-					else $_profileID = 0;
-				}
+				// everything failed, try first profile found
+				$_profileID = $defaultProfileID;
 			}
 		}
-		if (self::$debug) error_log(__METHOD__.'::'.__LINE__.' ProfileSelected:'.$_profileID.' -> '.$identities[$_profileID]);
+		if (self::$debug) error_log(__METHOD__.'::'.__LINE__.' ProfileSelected:'.$_profileID.' -> '.$availableServers[$_profileID]);
 
 		return $_profileID;
 	}
@@ -346,23 +301,20 @@ class mail_bo
 			$this->sessionData = array();
 			$this->forcePrefReload();
 		}
-
+		$this->profileID = self::validateProfileID($_profileID);
 		$this->accountid	= $GLOBALS['egw_info']['user']['account_id'];
 
-		$this->bopreferences	= CreateObject('mail.mail_bopreferences',$_restoreSession);
-
-		$this->mailPreferences	= $this->bopreferences->getPreferences(true,$this->profileID);
 		//error_log(__METHOD__.__LINE__." ProfileID ".$this->profileID.' called from:'.function_backtrace());
-		if ($this->mailPreferences) {
-			$this->icServer = $this->mailPreferences->getIncomingServer($this->profileID);
-			if ($this->profileID != 0) $this->mailPreferences->setIncomingServer($this->icServer,0);
-			$this->ogServer = $this->mailPreferences->getOutgoingServer($this->profileID);
-			if ($this->profileID != 0) $this->mailPreferences->setOutgoingServer($this->ogServer,0);
-			$this->htmlOptions  = $this->mailPreferences->preferences['htmlOptions'];
-			if (isset($this->icServer->ImapServerId) && !empty($this->icServer->ImapServerId))
-			{
-				$_profileID = $this->profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->icServer->ImapServerId;
-			}
+		$acc = emailadmin_account::read($this->profileID);
+		error_log(__METHOD__.__LINE__.array2string($acc->imapServer()));
+		$this->icServer = $acc->imapServer();
+		$this->ogServer = $acc->smtpServer();
+		// TODO: merge mailprefs into userprefs, for easy treatment
+		$this->mailPreferences = $GLOBALS['egw_info']['user']['preferences']['mail'];
+		$this->htmlOptions  = $this->mailPreferences['htmlOptions'];
+		if (isset($this->icServer->ImapServerId) && !empty($this->icServer->ImapServerId))
+		{
+			$_profileID = $this->profileID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $this->icServer->ImapServerId;
 		}
 
 		if (is_null(self::$mailConfig)) self::$mailConfig = config::read('mail');
@@ -379,9 +331,9 @@ class mail_bo
 	{
 		$mail = mail_bo::getInstance(false, $_profile_id,false);
 		//_debug_array( $_profile_id);
-		$mail->mailPreferences = $mail->bopreferences->getPreferences(false,$_profile_id,'mail',$_profile_id);
-		$mail->icServer = $mail->mailPreferences->getIncomingServer($_profile_id);
-		$mail->ogServer = $mail->mailPreferences->getOutgoingServer($_profile_id);
+		//$mail->mailPreferences = $mail->bopreferences->getPreferences($_profile_id,1);
+		$this->icServer = emailadmin_account::read($_profile_id)->imapServer();
+		$this->ogServer = emailadmin_account::read($_profile_id)->smtpServer();
 		return $mail;
 	}
 
@@ -539,22 +491,21 @@ class mail_bo
 	{
 		// account select box
 		$selectedID = $this->profileID;
-		if($this->mailPreferences->userDefinedAccounts) $allAccountData = $this->bopreferences->getAllAccountData($this->mailPreferences);
-
+		$allAccountData = emailadmin_account::search($only_current_user=true, $just_name=false, $order_by=null);
 		if ($allAccountData) {
-			foreach ($allAccountData as $tmpkey => $accountData)
+			$rememberFirst=$selectedFound=null;
+			foreach ($allAccountData as $tmpkey => $prof)
 			{
-				$identity =& $accountData['identity'];
-				$icServer =& $accountData['icServer'];
-				//_debug_array($identity);
-				//_debug_array($icServer);
-				if (empty($icServer->host)) continue;
-				$identities[$identity->id]=$identity->realName.' '.$identity->organization.' <'.$identity->emailAddress.'>';
-				if (!empty($identity->default)) $selectedID = $identity->id;
+				if (is_null($rememberFirst)) $rememberFirst = $tmpkey;
+				if ($tmpkey == $selectedID) $selectedFound=true;
+				//error_log(__METHOD__.__LINE__.' Key:'.$tmpkey.'->'.array2string($icServers[$tmpkey]->acc_imap_host));
+				$host = $icServers[$tmpkey]->acc_imap_host;
+				if (empty($host)) continue;
+				$identities[$icServers[$tmpkey]->acc_id] = $icServers[$tmpkey]->ident_realname.' '.$icServers[$tmpkey]->ident_org.' <'.$icServers[$tmpkey]->ident_email.'>';
 			}
 		}
 
-		return $selectedID;
+		return ($selectedFound?$selectedID:$rememberFirst);
 	}
 
 	/**
@@ -594,7 +545,7 @@ class mail_bo
 	 */
 	function closeConnection() {
 		//if ($icServer->_connected) error_log(__METHOD__.__LINE__.' disconnect from Server');
-		if ($this->icServer->_connected) $this->icServer->disconnect();
+		$this->icServer->disconnect();
 	}
 
 	/**
@@ -612,11 +563,8 @@ class mail_bo
 		//{
 			//error_log( __METHOD__.__LINE__." $_foldername ".function_backtrace());
 			//error_log(__METHOD__.__LINE__.' Connected with icServer for Profile:'.$this->profileID.'?'.print_r($this->icServer->_connected,true));
-			if (!($this->icServer->_connected == 1)) {
-				$tretval = $this->openConnection($this->profileID,false);
-			}
-			if ($this->icServer->_connected == 1 && $this->folderIsSelectable($_foldername)) {
-				$tretval = $this->icServer->selectMailbox($_foldername);
+			if ($this->folderIsSelectable($_foldername)) {
+				$tretval = $this->icServer->openMailbox($_foldername);
 			}
 			$folderOpened = $_foldername;
 		//}
@@ -679,25 +627,11 @@ class mail_bo
 		}
 		//error_log( "-------------------------->open connection ".function_backtrace());
 		//error_log(__METHOD__.__LINE__.' ->'.array2string($this->icServer));
-		if ($this->icServer->_connected == 1) {
-			if (!empty($this->icServer->currentMailbox)) $tretval = $this->icServer->selectMailbox($this->icServer->currentMailbox);
-			if ( PEAR::isError($tretval) ) $isError[$_icServerID] = $tretval->message;
-			//error_log(__METHOD__." using existing Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true));
-		} else {
-			//error_log(__METHOD__.__LINE__."->open connection for Server with profileID:".$_icServerID.function_backtrace());
-			$timeout = mail_bo::getTimeOut();
-			$tretval = $this->icServer->openConnection($_adminConnection,$timeout);
-			if ( PEAR::isError($tretval) || $tretval===false)
-			{
-				$isError[$_icServerID] = ($tretval?$tretval->message:$this->icServer->_connectionErrorObject->message);
-				if (self::$debug)
-				{
-					error_log(__METHOD__.__LINE__." # failed to open new Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true).' Message:'.$isError[$_icServerID].' called from '.function_backtrace());
-					error_log(__METHOD__.__LINE__.' # Instance='.$GLOBALS['egw_info']['user']['domain'].', User='.$GLOBALS['egw_info']['user']['account_lid']);
-				}
-			}
-			if (!PEAR::isError($tretval) && isset($this->sessionData['mailbox']) && !empty($this->sessionData['mailbox'])) $smretval = $this->icServer->selectMailbox($this->sessionData['mailbox']);//may fail silently
-		}
+		$tretval = $this->icServer->openMailbox($this->icServer->currentMailbox);
+		//if ( PEAR::isError($tretval) ) $isError[$_icServerID] = $tretval->message;
+		//error_log(__METHOD__." using existing Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true));
+		//error_log(__METHOD__.__LINE__."->open connection for Server with profileID:".$_icServerID.function_backtrace());
+
 		if ( PEAR::isError($tretval) ) egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
 		//error_log(print_r($this->icServer->_connected,true));
 		//make sure we are working with the correct hierarchyDelimiter on the current connection, calling getHierarchyDelimiter with false to reset the cache
@@ -853,7 +787,7 @@ class mail_bo
 			self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId]; // make sure this one is set on function call
 			return $_specialUseFolders[$this->icServer->ImapServerId];
 		}
-		if(($this->icServer instanceof defaultimap) && $this->icServer->_connected)
+		if(($this->icServer instanceof defaultimap) )
 		{
 			//error_log(__METHOD__.__LINE__);
 			if(($this->hasCapability('SPECIAL-USE')))
@@ -963,7 +897,7 @@ class mail_bo
 		if (isset($folderInfoCache[$_folderName]) && $ignoreStatusCache==false && $basicInfoOnly) return $folderInfoCache[$_folderName];
 		$retValue = array();
 		$retValue['subscribed'] = false;
-		if(!$icServer = $this->mailPreferences->getIncomingServer($this->profileID)) {
+		if(!$icServer = emailadmin_account::read($this->profileID)) {
 			if (self::$debug) error_log(__METHOD__." no Server found for Folder:".$_folderName);
 			return false;
 		}
@@ -1075,7 +1009,7 @@ class mail_bo
 			error_log(__METHOD__. " time used for reopen: ".$endtime.' for Folder:'.$_folderName);
 		}
 		//$currentFolder = $this->icServer->getCurrentMailbox();
-		//if ($currentFolder != $_folderName); $this->icServer->selectMailbox($_folderName);
+		//if ($currentFolder != $_folderName); $this->icServer->openMailbox($_folderName);
 		$rByUid = true; // try searching by uid. this var will be passed by reference to getSortedList, and may be set to false, if UID retrieval fails
 		#print "<pre>";
 		#$this->icServer->setDebug(true);
@@ -1206,12 +1140,12 @@ class mail_bo
 				//error_log(__METHOD__.__LINE__.array2string($_headerObject));
 				$headerObject['MSG_NUM'] = $_headerObject->getSeq();
 				$headerObject['SIZE'] = $_headerObject->getSize();
-				$headerObject['DATE'] = $_headerObject->getEnvelope()->__get('date');
+				$headerObject['DATE'] = $_headerObject->getEnvelope()->date;
 				$headerObject['INTERNALDATE'] = $_headerObject->getImapDate();
-				$headerObject['SUBJECT'] = $_headerObject->getEnvelope()->__get('subject');
-				$headerObject['FROM'] = $_headerObject->getEnvelope()->__get('from')->__get('addresses');
-				$headerObject['TO'] = $_headerObject->getEnvelope()->__get('to')->__get('addresses');
-				$headerObject['CC'] = $_headerObject->getEnvelope()->__get('cc')->__get('addresses');
+				$headerObject['SUBJECT'] = $_headerObject->getEnvelope()->subject;
+				$headerObject['FROM'] = $_headerObject->getEnvelope()->from->addresses;
+				$headerObject['TO'] = $_headerObject->getEnvelope()->to->addresses;
+				$headerObject['CC'] = $_headerObject->getEnvelope()->cc->addresses;
 				$headerObject['FLAGS'] = $_headerObject->getFlags();
 				//error_log(__METHOD__.__LINE__.array2string($headerObject));
 
@@ -2529,11 +2463,10 @@ class mail_bo
 
 		// does the folder exist???
 		//error_log(__METHOD__."->Connected?".$this->icServer->_connected.", ".$_folder.", ".($forceCheck?' forceCheck activated':'dont check on server'));
-		if ((!($this->icServer->_connected == 1)) && $forceCheck || empty($folderInfo) || !isset($folderInfo[$this->profileID]) || !isset($folderInfo[$this->profileID][$_folder])) {
+		if ( $forceCheck || empty($folderInfo) || !isset($folderInfo[$this->profileID]) || !isset($folderInfo[$this->profileID][$_folder])) {
 			//error_log(__METHOD__."->NotConnected and forceCheck with profile:".$this->profileID);
 			//return false;
 			//try to connect
-			if (!$this->icServer->_connected) $this->openConnection($this->profileID,false);
 		}
 		if(($this->icServer instanceof defaultimap))
 		{
@@ -2583,7 +2516,7 @@ class mail_bo
 		$deleteOptions	= $GLOBALS['egw_info']['user']['preferences']['mail']['deleteOptions'];
 		$trashFolder	= $this->getTrashFolder();
 
-		$this->icServer->selectMailbox($folderName);
+		$this->icServer->openMailbox($folderName);
 
 		if($folderName == $trashFolder && $deleteOptions == "move_to_trash") {
 			$this->icServer->deleteMessages('1:*');
@@ -2632,7 +2565,7 @@ class mail_bo
 		}
 		if($this->icServer->getCurrentMailbox() != $_folder) {
 			$oldMailbox = $this->icServer->getCurrentMailbox();
-			$this->icServer->selectMailbox($_folder);
+			$this->icServer->openMailbox($_folder);
 		}
 		$updateCache = false;
 		switch($deleteOptions) {
@@ -2715,7 +2648,7 @@ class mail_bo
 			if ($cachemodified) egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
 		}
 		if($oldMailbox != '') {
-			$this->icServer->selectMailbox($oldMailbox);
+			$this->icServer->openMailbox($oldMailbox);
 		}
 
 		return true;
@@ -2792,7 +2725,7 @@ class mail_bo
 			}
 		}
 
-		$this->icServer->selectMailbox(($_folder?$_folder:$this->sessionData['mailbox']));
+		$this->icServer->openMailbox(($_folder?$_folder:$this->sessionData['mailbox']));
 
 		switch($_flag) {
 			case "undelete":
