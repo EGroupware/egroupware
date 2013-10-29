@@ -314,9 +314,10 @@ function php_version($name,$args)
 /**
  * quering the pear registry to find out which pear packages and versions are installed
  *
+ * @param $channel=null use default or given channel
  * @return array with package-name => version pairs, eg. array('Log' => '1.9.8','PEAR' => '1.4.11')
  */
-function get_installed_pear_packages()
+function get_installed_pear_packages($channel=null)
 {
 	$pear_config = '';	// use the system default
 	// fix for SuSE having the pear.conf only for cli, will fail with open_basedir - no idea what to do then
@@ -331,7 +332,7 @@ function get_installed_pear_packages()
 	$config = new PEAR_Config('',$pear_config);
 	//echo "<pre>config = ".print_r($config,true)."</pre>\n";
 
-	$channel = $config->get('default_channel');
+	if (empty($channel)) $channel = $config->get('default_channel');
 	//echo "<pre>channel = ".print_r($channel,true)."</pre>\n";
 
 	if (!method_exists($config,'getRegistry')) return false;	// PEAR version to old
@@ -354,7 +355,7 @@ function get_installed_pear_packages()
 		if (is_array($version)) $version = $version['release'];
 
 		$packages[$name] = $version;
-	//	echo "<p>$name: ".print_r($package['version'],true)."</p>\n";
+		//echo "<p>$name: ".print_r($package['version'],true)."</p>\n";
 	}
 	ksort($packages);
 
@@ -365,14 +366,19 @@ function pear_check($package,$args)
 {
 	global $passed_icon, $warning_icon;
 	static $pear_available = null;
-	static $pear_packages = null;
+	static $channel_packages = array();
 
+	if (strpos($package, '/') !== false)
+	{
+		list($channel, $package) = explode('/', $package);
+	}
 	$min_version = isset($args['version']) ? $args['version'] : null;
 
-	if (is_null($pear_packages))
+	if (!isset($channel_packages[(string)$channel]))
 	{
-		$pear_packages = get_installed_pear_packages();
+		$channel_packages[(string)$channel] = get_installed_pear_packages($channel);
 	}
+	$pear_packages = $channel_packages[(string)$channel];
 	$version_available = false;
 
 	// check if egw-pear is availible and packages is included
