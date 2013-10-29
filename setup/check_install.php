@@ -416,7 +416,7 @@ function pear_check($package,$args)
 	// is the right version availible
 	$available = (@$available || $pear_available && !$package) && (!$min_version || version_compare($min_version,$version_available) <= 0);
 	echo '<div>'.($available ? $passed_icon : $warning_icon).' <span'.($available ? '' : ' class="setup_warning"').'>'.
-		lang('Checking PEAR%1 is installed',($package?'::'.$package:'').($min_version?" ($min_version)":'')).': '.
+		lang('Checking PEAR%1 is installed',($package?($channel?' '.$channel.'/':'::').$package:'').($min_version?" ($min_version)":'')).': '.
 		($available ? ($version_available ? $version_available : lang('True')) : lang('False'))."</span></div>\n";
 
 	if (!$available)	// give further info only if not availible
@@ -440,7 +440,9 @@ function pear_check($package,$args)
 		}
 		elseif ($package)
 		{
-			echo ' '.lang('You can install it by running:').' pear install '.$package;
+			echo ' '.lang('You can install it by running:').
+				($channel ? ' pear channel-discover '.$channel.' ;' : '').
+				' pear install '.$package;
 		}
 		echo "</div>";
 	}
