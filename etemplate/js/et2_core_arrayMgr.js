@@ -220,6 +220,7 @@ var et2_arrayMgr = Class.extend(
 			var row = this.perspectiveData.row;
 			var row_cont = this.data[row];
 			var cont = this.getRoot().data;
+			var _cont = this.data;
 
 			// Check whether the expression has already been compiled - if not,
 			// try to compile it first. If an error occurs, the identifier
@@ -233,12 +234,12 @@ var et2_arrayMgr = Class.extend(
 					{
 						// No row, compile for only top level content
 						proto.compiledExpressions[_ident] = et2_compilePHPExpression(
-							_ident, ["cont"]);
+							_ident, ["cont","_cont"]);
 					}
 					else
 					{
 						proto.compiledExpressions[_ident] = et2_compilePHPExpression(
-							_ident, ["row", "cont", "row_cont"]);
+							_ident, ["row", "cont", "row_cont", "_cont"]);
 					}
 				}
 				catch(e)
@@ -258,11 +259,11 @@ var et2_arrayMgr = Class.extend(
 					if(this.perspectiveData.row == null)
 					{
 						// No row, exec with only top level content
-						_ident = proto.compiledExpressions[_ident](cont);
+						_ident = proto.compiledExpressions[_ident](cont,_cont);
 					}
 					else
 					{
-						_ident = proto.compiledExpressions[_ident](row, cont, row_cont);
+						_ident = proto.compiledExpressions[_ident](row, cont, row_cont,_cont);
 					}
 				}
 				catch(e)
