@@ -143,7 +143,7 @@ class mail_ui
 		self::$icServerID = $_icServerID;
 		if ($unsetCache) emailadmin_bo::unsetCachedObjects(self::$icServerID);
 		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
-		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
+		if (mail_bo::$debug); error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer) || $this->mail_bo->icServer->ImapServerId<>$_icServerID) exit; // ToDo: Exception or the dialog for setting up a server config
 		/*if (!($this->mail_bo->icServer->_connected == 1))*/ $this->mail_bo->reopen('INBOX');
@@ -475,7 +475,7 @@ class mail_ui
 		list($_profileID,$_folderName) = explode(self::$delimiter,$nodeID,2);
 		if (!empty($_folderName)) $fetchCounters = true;
 		$data = $this->getFolderTree($fetchCounters, $nodeID);
-		//error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($data));
+		error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($data));
 		if (!is_null($_nodeID)) return $data;
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($data);

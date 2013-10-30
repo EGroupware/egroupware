@@ -580,51 +580,6 @@ $_restoreSession=false;
 	 */
 	function openConnection($_icServerID=0, $_adminConnection=false)
 	{
-		static $isError;
-		if ($_icServerID==0 && !empty($this->profileID))$_icServerID = $this->profileID;
-		//error_log(__METHOD__.__LINE__.'->'.$_icServerID.' called from '.function_backtrace());
-		if (is_null($isError)) $isError = egw_cache::getCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*5);
-		if ( isset($isError[$_icServerID]) || (($this->icServer instanceof defaultimap) && PEAR::isError($this->icServer->_connectionErrorObject)))
-		{
-			if (trim($isError[$_icServerID])==',' || trim($this->icServer->_connectionErrorObject->message) == ',')
-			{
-				//error_log(__METHOD__.__LINE__.' Connection seemed to have failed in the past, no real reason given, try to recover on our own.');
-				emailadmin_bo::unsetCachedObjects($_icServerID);
-			}
-			else
-			{
-				//error_log(__METHOD__.__LINE__.' failed for Reason:'.$isError[$_icServerID]);
-				$this->errorMessage = ($isError[$_icServerID]?$isError[$_icServerID]:$this->icServer->_connectionErrorObject->message);
-				return false;
-			}
-		}
-		if (!is_object($this->mailPreferences))
-		{
-			if (self::$debug) error_log(__METHOD__." No Object for MailPreferences found.". function_backtrace());
-			$this->errorMessage .= lang('No valid data to create MailProfile!!');
-			$isError[$_icServerID] = (($this->icServer instanceof defaultimap)?new PEAR_Error($this->errorMessage):$this->errorMessage);
-			egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
-			return false;
-		}
-		if(!$this->icServer = $this->mailPreferences->getIncomingServer((int)$_icServerID)) {
-			$this->errorMessage .= lang('No active IMAP server found!!');
-			$isError[$_icServerID] = $this->errorMessage;
-			egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
-			return false;
-		}
-		//error_log(__METHOD__.__LINE__.'->'.array2string($this->icServer->ImapServerId));
-		if ($this->icServer && empty($this->icServer->host)) {
-			$errormessage = lang('No IMAP server host configured!!');
-			if ($GLOBALS['egw_info']['user']['apps']['emailadmin']) {
-				$errormessage .= "<br>".lang("Configure a valid IMAP Server in emailadmin for the profile you are using.");
-			} else {
-				$errormessage .= "<br>".lang('Please ask the administrator to correct the emailadmin IMAP Server Settings for you.');
-			}
-			$this->icServer->_connectionErrorObject->message .= $this->errorMessage .= $errormessage;
-			$isError[$_icServerID] = $this->errorMessage;
-			egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
-			return false;
-		}
 		//error_log( "-------------------------->open connection ".function_backtrace());
 		//error_log(__METHOD__.__LINE__.' ->'.array2string($this->icServer));
 		$tretval = $this->icServer->openMailbox($this->icServer->currentMailbox);
@@ -632,8 +587,6 @@ $_restoreSession=false;
 		//error_log(__METHOD__." using existing Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true));
 		//error_log(__METHOD__.__LINE__."->open connection for Server with profileID:".$_icServerID.function_backtrace());
 
-		if ( PEAR::isError($tretval) ) egw_cache::setCache(egw_cache::INSTANCE,'email','icServerIMAP_connectionError'.trim($GLOBALS['egw_info']['user']['account_id']),$isError,$expiration=60*15);
-		//error_log(print_r($this->icServer->_connected,true));
 		//make sure we are working with the correct hierarchyDelimiter on the current connection, calling getHierarchyDelimiter with false to reset the cache
 		$hD = $this->getHierarchyDelimiter(false);
 		self::$specialUseFolders = $this->getSpecialUseFolders();
