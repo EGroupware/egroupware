@@ -306,7 +306,7 @@ $_restoreSession=false;
 
 		//error_log(__METHOD__.__LINE__." ProfileID ".$this->profileID.' called from:'.function_backtrace());
 		$acc = emailadmin_account::read($this->profileID);
-		error_log(__METHOD__.__LINE__.array2string($acc->imapServer()));
+		//error_log(__METHOD__.__LINE__.array2string($acc->imapServer()));
 		$this->icServer = $acc->imapServer();
 		$this->ogServer = $acc->smtpServer();
 		// TODO: merge mailprefs into userprefs, for easy treatment

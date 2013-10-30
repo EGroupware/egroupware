@@ -122,7 +122,8 @@ class mail_ui
 
 		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
-error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
+		//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
+		//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer->ImapServerId));
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
 		$GLOBALS['egw']->session->commit_session();
@@ -137,11 +138,6 @@ error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
 	{
 		if (self::$icServerID != $_icServerID)
 		{
-			//$unsetCache = true;
-			if (self::$icServerID>0)
-			{
-				$this->mail_bo->bopreferences->setProfileActive(false,self::$icServerID);
-			}
 		}
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.'->'.self::$icServerID.'<->'.$_icServerID);
 		self::$icServerID = $_icServerID;
@@ -149,21 +145,13 @@ error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
 		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
 		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
-		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
-		/*if (!($this->mail_bo->icServer->_connected == 1))*/ $this->mail_bo->openConnection(self::$icServerID);
+		if (!isset($this->mail_bo->icServer) || $this->mail_bo->icServer->ImapServerId<>$_icServerID) exit; // ToDo: Exception or the dialog for setting up a server config
+		/*if (!($this->mail_bo->icServer->_connected == 1))*/ $this->mail_bo->reopen('INBOX');
 		// save session varchar
 		$oldicServerID =& egw_cache::getSession('mail','activeProfileID');
 		$oldicServerID = self::$icServerID;
-		// save pref
-		if (self::$icServerID>0)
-		{
-			$this->mail_bo->bopreferences->setProfileActive(true,self::$icServerID);
-		}
-		else
-		{
-			$GLOBALS['egw']->preferences->add('mail','ActiveProfileID',self::$icServerID,'user');
-			$GLOBALS['egw']->preferences->save_repository(true);
-		}
+		$GLOBALS['egw']->preferences->add('mail','ActiveProfileID',self::$icServerID,'user');
+		$GLOBALS['egw']->preferences->save_repository(true);
 		$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = self::$icServerID;
 	}
 
@@ -238,11 +226,7 @@ error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
 		$content[self::$nm_index]['foldertree'] = '/INBOX/sub';
 		*/
 
-		if($this->mail_bo->connectionStatus !== false) {
-			$quota = $this->mail_bo->getQuotaRoot();
-		} else {
-			$quota['limit'] = 'NOT SET';
-		}
+		$quota = $this->mail_bo->getQuotaRoot();
 
 		if($quota !== false && $quota['limit'] != 'NOT SET') {
 			$quotainfo = $this->quotaDisplay($quota['usage'], $quota['limit']);
@@ -536,21 +520,19 @@ error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
 		if (isset($draftFolder) && $draftFolder != 'none') $userDefinedFunctionFolders['Drafts'] = $draftFolder;
 		if (isset($templateFolder) && $templateFolder != 'none') $userDefinedFunctionFolders['Templates'] = $templateFolder;
 		$out = array('id' => 0);
-		//_debug_array($this->mail_bo->mailPreferences);
-		//if($this->mail_bo->mailPreferences->userDefinedAccounts) $allAccountData = $this->mail_bo->bopreferences->getAllAccountData($this->mail_bo->mailPreferences);
 		//$starttime = microtime(true);
-		if (count($this->mail_bo->mailPreferences->ic_server)) {
-			foreach ($this->mail_bo->mailPreferences->ic_server as $tmpkey => $accountData)
+		$availableProfiles = emailadmin_account::search($only_current_user=true, $just_name=false, $order_by=null,$offset=0);
+		if (count($availableProfiles)) {
+			$identities=array();
+			foreach ($availableProfiles as $tmpkey => $accountData)
 			{
 				if ($tmpkey==0) continue;
-				$identity =& $this->mail_bo->mailPreferences->identities[$tmpkey];
-				$icServer =& $accountData;
-				//_debug_array($identity);
-				//_debug_array($icServer);
+				$icServer = $accountData->imapServer();
+				//_debug_array($accountData->ImapServerId);
 				if ($_profileID && $icServer->ImapServerId<>$_profileID) continue;
 				//error_log(__METHOD__.__LINE__.' Userdefined Profiles ImapServerId:'.$icServer->ImapServerId);
-				if (empty($icServer->host)) continue;
-				$identities[$icServer->ImapServerId]=$identity->realName.' '.$identity->organization.' &lt;'.$identity->emailAddress.'&gt;';
+				//if (empty($icServer->acc_imap_host)) continue;
+				$identities[$icServer->ImapServerId]=(strlen(trim($accountData->ident_realname.$accountData->ident_org))?$accountData->ident_realname.' '.$accountData->ident_org:$accountData->acc_name).' &lt;'.($accountData->ident_email?$accountData->ident_email:$accountData->acc_imap_username).'&gt;';
 				$oA = array('id'=>$icServer->ImapServerId,
 					'text'=>$identities[$icServer->ImapServerId], //$this->mail_bo->profileID,
 					'tooltip'=>'('.$icServer->ImapServerId.') '.htmlspecialchars_decode($identities[$icServer->ImapServerId]),
