@@ -126,6 +126,8 @@ class mail_ui
 		//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer->ImapServerId));
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
+		//openConnection gathers SpecialUseFolderInformation and Delimiter Info
+		$this->mail_bo->openConnection(self::$icServerID);
 		$GLOBALS['egw']->session->commit_session();
 	}
 
@@ -143,12 +145,13 @@ class mail_ui
 		self::$icServerID = $_icServerID;
 		if ($unsetCache) emailadmin_bo::unsetCachedObjects(self::$icServerID);
 		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
-		if (mail_bo::$debug); error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
+		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
 		// no icServer Object: something failed big time
 		if (!isset($this->mail_bo->icServer) || $this->mail_bo->icServer->ImapServerId<>$_icServerID) exit; // ToDo: Exception or the dialog for setting up a server config
-		/*if (!($this->mail_bo->icServer->_connected == 1))*/ $this->mail_bo->reopen('INBOX');
+		/*if (!($this->mail_bo->icServer->_connected == 1))*/
 		// save session varchar
 		$oldicServerID =& egw_cache::getSession('mail','activeProfileID');
+		if ($oldicServerID <> self::$icServerID) $this->mail_bo->openConnection(self::$icServerID);
 		$oldicServerID = self::$icServerID;
 		$GLOBALS['egw']->preferences->add('mail','ActiveProfileID',self::$icServerID,'user');
 		$GLOBALS['egw']->preferences->save_repository(true);
@@ -330,7 +333,7 @@ class mail_ui
 		if (isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID']))
 			$icServerID = (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'];
 		//_debug_array($this->mail_bo->mailPreferences);
-		if (is_object($preferences)) $imapServer = $preferences->getIncomingServer($icServerID);
+		if (is_object($preferences)) $imapServer = $this->mail_bo->icServer;
 		if (isset($imapServer->ImapServerId) && !empty($imapServer->ImapServerId))
 		{
 			$icServerID = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] = $imapServer->ImapServerId;
@@ -351,16 +354,11 @@ class mail_ui
 		if ($preferences->preferences['prefcontroltestconnection'] == 'reset') exit;
 
 		echo "<hr /><h3 style='color:red'>".lang('IMAP Server')."</h3>";
-		if($imapServer->_connectionErrorObject)
-		{
-			$eO = $imapServer->_connectionErrorObject;
-		}
-		else
-		{
-			$this->mail_bo->reopen('INBOX');
-		}
+		$this->mail_bo->reopen('INBOX');
+/*
 		unset($imapServer->_connectionErrorObject);
 		$sieveServer = clone $imapServer;
+*/
 		if (!empty($imapServer->adminPassword)) $imapServer->adminPassword='**********************';
 		if ($preferences->preferences['prefcontroltestconnection'] == 'nopasswords' || $preferences->preferences['prefcontroltestconnection'] == 'nocredentials')
 		{
@@ -379,8 +377,8 @@ class mail_ui
 		else
 		{
 			_debug_array(array('ImapServerId' =>$imapServer->ImapServerId,
-				'host'=>$imapServer->host,
-				'port'=>$imapServer->port,
+				'host'=>$imapServer->acc_imap_host,
+				'port'=>$imapServer->acc_imap_port,
 				'validatecert'=>$imapServer->validatecert));
 		}
 
@@ -400,7 +398,7 @@ class mail_ui
 
 		$suF = $this->mail_bo->getSpecialUseFolders();
 		if (is_array($suF) && !empty($suF)) _debug_array(array(lang('Server supports Special-Use Folders')=>$suF));
-
+/*
 		if(($sieveServer instanceof defaultimap) && $sieveServer->enableSieve) {
 			$scriptName = (!empty($GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'])) ? $GLOBALS['egw_info']['user']['preferences']['mail']['sieveScriptName'] : 'mail';
 			$sieveServer->getScript($scriptName);
@@ -417,6 +415,7 @@ class mail_ui
 				_debug_array(array(lang('Successfully connected'),$rules));
 			}
 		}
+*/
 		echo "<hr /><h3 style='color:red'>".lang('Preferences')."</h3>";
 		_debug_array($preferences->preferences);
 		//error_log(__METHOD__.__LINE__.' ImapServerId:'.$imapServer->ImapServerId.' Prefs:'.array2string($preferences->preferences));
@@ -475,7 +474,7 @@ class mail_ui
 		list($_profileID,$_folderName) = explode(self::$delimiter,$nodeID,2);
 		if (!empty($_folderName)) $fetchCounters = true;
 		$data = $this->getFolderTree($fetchCounters, $nodeID);
-		error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($data));
+		//error_log(__METHOD__.__LINE__.':'.$nodeID.'->'.array2string($data));
 		if (!is_null($_nodeID)) return $data;
 		header('Content-Type: application/json; charset=utf-8');
 		echo json_encode($data);
@@ -524,9 +523,12 @@ class mail_ui
 		$availableProfiles = emailadmin_account::search($only_current_user=true, $just_name=false, $order_by=null,$offset=0);
 		if (count($availableProfiles)) {
 			$identities=array();
-			foreach ($availableProfiles as $tmpkey => $accountData)
+			$spK = array_keys($availableProfiles);
+			sort($spK);
+			foreach ($spK as $i =>$tmpkey)
 			{
 				if ($tmpkey==0) continue;
+				$accountData = $availableProfiles[$tmpkey];
 				$icServer = $accountData->imapServer();
 				//_debug_array($accountData->ImapServerId);
 				if ($_profileID && $icServer->ImapServerId<>$_profileID) continue;
@@ -736,7 +738,7 @@ class mail_ui
 		$lastFolderUsedForMoveCont = egw_cache::getCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
 		if (isset($lastFolderUsedForMoveCont[$this->mail_bo->profileID]))
 		{
-			$_folder = $this->mail_bo->icServer->getCurrentMailbox();
+			$_folder = $this->mail_bo->icServer->currentMailbox();
 			//error_log(__METHOD__.__LINE__.' '.$_folder."<->".$lastFolderUsedForMoveCont[$this->mail_bo->profileID].function_backtrace());
 			//if ($_folder!=$lastFolderUsedForMoveCont[$this->mail_bo->profileID]) $this->mail_bo->icServer->selectMailbox($lastFolderUsedForMoveCont[$this->mail_bo->profileID]);
 			if ($_folder!=$lastFolderUsedForMoveCont[$this->mail_bo->profileID])

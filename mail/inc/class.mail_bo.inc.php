@@ -168,7 +168,6 @@ class mail_bo
 	 */
 	public static function getInstance($_restoreSession=true, $_profileID=0, $_validate=true)
 	{
-$_restoreSession=false;
 		//error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.' called from:'.function_backtrace());
 		if ($_profileID == 0)
 		{
@@ -211,11 +210,11 @@ $_restoreSession=false;
 			//refresh objects
 			try
 			{
-				self::$instances[$this->profileID]->icServer = emailadmin_account::read($this->profileID)->imapServer();
-				self::$instances[$this->profileID]->ogServer = emailadmin_account::read($this->profileID)->smtpServer();
+				self::$instances[$_profileID]->icServer = emailadmin_account::read($_profileID)->imapServer();
+				self::$instances[$_profileID]->ogServer = emailadmin_account::read($_profileID)->smtpServer();
 				// TODO: merge mailprefs into userprefs, for easy treatment
-				self::$instances[$this->profileID]->mailPreferences = $GLOBALS['egw_info']['user']['preferences']['mail'];
-				self::$instances[$this->profileID]->htmlOptions  = self::$instances[$this->profileID]->mailPreferences['htmlOptions'];
+				self::$instances[$_profileID]->mailPreferences = $GLOBALS['egw_info']['user']['preferences']['mail'];
+				self::$instances[$_profileID]->htmlOptions  = self::$instances[$_profileID]->mailPreferences['htmlOptions'];
 			} catch (egw_exception $e)
 			{
 				$newprofileID = emailadmin_bo::getUserDefaultAccID();
@@ -582,15 +581,25 @@ $_restoreSession=false;
 	{
 		//error_log( "-------------------------->open connection ".function_backtrace());
 		//error_log(__METHOD__.__LINE__.' ->'.array2string($this->icServer));
-		$tretval = $this->icServer->openMailbox($this->icServer->currentMailbox);
-		//if ( PEAR::isError($tretval) ) $isError[$_icServerID] = $tretval->message;
+		$tretval=true;
+		try
+		{
+			$mailbox=null;
+			if($this->folderExists($this->sessionData['mailbox'])) $mailbox=$this->sessionData['mailbox'];
+			if (empty($mailbox))$mailbox = $this->icServer->currentMailbox();
+			$this->icServer->openMailbox(($mailbox?$mailbox:'INBOX'));
+		}
+		catch (egw_exception $e)
+		{
+			error_log(__METHOD__.__LINE__.$e->getMessage());
+			$tretval = false;
+		}
 		//error_log(__METHOD__." using existing Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true));
 		//error_log(__METHOD__.__LINE__."->open connection for Server with profileID:".$_icServerID.function_backtrace());
 
 		//make sure we are working with the correct hierarchyDelimiter on the current connection, calling getHierarchyDelimiter with false to reset the cache
 		$hD = $this->getHierarchyDelimiter(false);
 		self::$specialUseFolders = $this->getSpecialUseFolders();
-		//error_log(__METHOD__.__LINE__.array2string($sUF));
 
 		return $tretval;
 	}
@@ -881,8 +890,8 @@ $_restoreSession=false;
 		$retValue['attributes']		= ($folderInfo[0]['ATTRIBUTES']?$folderInfo[0]['ATTRIBUTES']:$folderInfo[0]['attributes']);
 		$shortNameParts			= explode($retValue['delimiter'], $_folderName);
 		$retValue['shortName']		= array_pop($shortNameParts);
-		$retValue['displayName']	= $this->encodeFolderName($_folderName);
-		$retValue['shortDisplayName']	= $this->encodeFolderName($retValue['shortName']);
+		$retValue['displayName']	= $_folderName;
+		$retValue['shortDisplayName']	= $retValue['shortName'];
 		if(strtoupper($retValue['shortName']) == 'INBOX') {
 			$retValue['displayName']	= lang('INBOX');
 			$retValue['shortDisplayName']	= lang('INBOX');
@@ -961,7 +970,7 @@ $_restoreSession=false;
 			$endtime = microtime(true) - $starttime;
 			error_log(__METHOD__. " time used for reopen: ".$endtime.' for Folder:'.$_folderName);
 		}
-		//$currentFolder = $this->icServer->getCurrentMailbox();
+		//$currentFolder = $this->icServer->currentMailbox();
 		//if ($currentFolder != $_folderName); $this->icServer->openMailbox($_folderName);
 		$rByUid = true; // try searching by uid. this var will be passed by reference to getSortedList, and may be set to false, if UID retrieval fails
 		#print "<pre>";
@@ -1743,7 +1752,7 @@ $_restoreSession=false;
 			if ($_useCacheIfPossible && isset($folders2return[$this->icServer->ImapServerId]) && !empty($folders2return[$this->icServer->ImapServerId]))
 			{
 				//error_log(__METHOD__.__LINE__.' using Cached folderObjects');
-				//return $folders2return[$this->icServer->ImapServerId];
+				return $folders2return[$this->icServer->ImapServerId];
 			}
 		}
 		$isUWIMAP = false;
@@ -2034,8 +2043,8 @@ $_restoreSession=false;
 						$folderObject->shortDisplayName = lang($shortName);
 						unset($tmpfolderparts);
 					} else {
-						$folderObject->displayName = $this->encodeFolderName($folderObject->folderName);
-						$folderObject->shortDisplayName = $this->encodeFolderName($shortName);
+						$folderObject->displayName = $folderObject->folderName;
+						$folderObject->shortDisplayName = $shortName;
 					}
 					//$folderName = $folderName;
 					if (in_array($shortName,self::$autoFolders)&&self::searchValueInFolderObjects($shortName,$autoFolderObjects)===false) {
@@ -2516,8 +2525,8 @@ $_restoreSession=false;
 		   ($_folder == $draftFolder)) {
 			$deleteOptions = "remove_immediately";
 		}
-		if($this->icServer->getCurrentMailbox() != $_folder) {
-			$oldMailbox = $this->icServer->getCurrentMailbox();
+		if($this->icServer->currentMailbox() != $_folder) {
+			$oldMailbox = $this->icServer->currentMailbox();
 			$this->icServer->openMailbox($_folder);
 		}
 		$updateCache = false;
@@ -3022,7 +3031,7 @@ $_restoreSession=false;
 	function _getStructure($_uid, $byUid=true, $_ignoreCache=false, $_folder = '')
 	{
 		static $structure;
-		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->currentMailbox());
 		//error_log(__METHOD__.__LINE__.'User:'.trim($GLOBALS['egw_info']['user']['account_id'])." UID: $_uid, ".$this->icServer->ImapServerId.','.$_folder);
 		if (is_null($structure)) $structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 		//error_log(__METHOD__.__LINE__." UID: $_uid, ".$this->icServer->ImapServerId.','.$_folder.'->'.array2string(array_keys($structure)));
@@ -3048,13 +3057,13 @@ $_restoreSession=false;
 	 * @param string/int $queryString the messageuid(s),
 	 * @param boolean $byUid=true, is the messageuid given by UID or ID
 	 * @param boolean $_ignoreCache=false, use or disregard cache, when fetching
-	 * @param string $_folder='', if given search within that folder for the given $queryString, else use sessionData['mailbox'], or servers getCurrentMailbox
+	 * @param string $_folder='', if given search within that folder for the given $queryString, else use sessionData['mailbox'], or servers getcurrentMailbox()
 	 * @return array  an array with the mail headers requested
 	 */
 	function _getSummary($queryString, $byUid=true, $_ignoreCache=false, $_folder = '')
 	{
 		static $summary;
-		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		if (empty($_folder)) $_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->currentMailbox());
 		//error_log(__METHOD__.__LINE__.'User:'.trim($GLOBALS['egw_info']['user']['account_id'])." UID: $_uid, ".$this->icServer->ImapServerId.','.$_folder);
 		if (is_null($summary)) $summary = egw_cache::getCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 		$_uids = explode(',', $queryString);
@@ -3927,7 +3936,7 @@ $_restoreSession=false;
 	function getMessageRawHeader($_uid, $_partID = '')
 	{
 		static $rawHeaders;
-		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->currentMailbox());
 		//error_log(__METHOD__.__LINE__." Try Using Cache for raw Header $_uid, $_partID in Folder $_folder");
 
 		if (is_null($rawHeaders)) $rawHeaders = egw_cache::getCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
@@ -4023,7 +4032,7 @@ $_restoreSession=false;
 	{
 		//TODO: caching einbauen static!
 		static $rawBody;
-		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->currentMailbox());
 		if (isset($rawBody[$_folder][$_uid][($_partID==''?'NIL':$_partID)]))
 		{
 			//error_log(__METHOD__.__LINE__." Using Cache for raw Body $_uid, $_partID in Folder $_folder");
