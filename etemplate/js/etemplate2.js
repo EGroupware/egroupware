@@ -84,16 +84,16 @@ function etemplate2(_container, _menuaction)
 	// Copy the given parameters
 	this.DOMContainer = _container;
 	this.menuaction = _menuaction;
-	
+
 	// Unique ID to prevent DOM collisions across multiple templates
 	this.uniqueId = _container.getAttribute("id") ? _container.getAttribute("id").replace('.','-') : '';
-	
+
 	// Preset the object variable
 	this.widgetContainer = null;
 
 	// List of templates (XML) that are known, but not used.  Indexed by id.
 	this.templates = {};
-	
+
 	// Connect to the window resize event
 	$j(window).resize(this, function(e) {e.data.resize();});
 }
@@ -122,12 +122,12 @@ etemplate2.prototype.clear = function()
 	{
 		// Un-register handler
 		this.widgetContainer.egw().unregisterJSONPlugin(etemplate2_handle_assign, this, 'assign');
-	
+
 		this.widgetContainer.free();
 		this.widgetContainer = null;
 	}
 	$j(this.DOMContainer).empty();
-	
+
 	// Remove self from the index
 	for(name in this.templates)
 	{
@@ -194,15 +194,15 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 {
 	egw().debug("info", "Loaded data", _data);
 	var currentapp = _data.currentapp || window.egw_appName;
-	
+
 	// Register a handler for AJAX responses
 	egw(currentapp, window).registerJSONPlugin(etemplate2_handle_assign, this, 'assign');
-	
+
 	if(console.groupCollapsed)
 	{
 		egw.window.console.groupCollapsed("Loading %s", _name);
 	}
-	
+
 	// require necessary translations from server, if not already loaded
 	if (!$j.isArray(_data.langRequire)) _data.langRequire = [];
 	egw(currentapp, window).langRequire(window, _data.langRequire, function()
@@ -210,7 +210,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 		// Appname should be first part of the template name
 		var split = _name.split('.');
 		var appname = split[0];
-	
+
 		// Initialize application js
 		var app_callback = null;
 		// Only initialize once
@@ -220,48 +220,48 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 		}
 		else if (typeof app[appname] !== "object")
 		{
-			egw.debug("warn", "Did not load '%s' JS object",appname); 
+			egw.debug("warn", "Did not load '%s' JS object",appname);
 		}
 		if(typeof app[appname] == "object")
 		{
 			app_callback = function(et2) {app[appname].et2_ready(et2);};
 		}
-		
+
 		// Create the document fragment into which the HTML will be injected
 		var frag = document.createDocumentFragment();
-	
-	
+
+
 		// Clear any existing instance
 		this.clear();
-	
+
 		// Create the basic widget container and attach it to the DOM
 		this.widgetContainer = new et2_container(null);
 		this.widgetContainer.setApiInstance(egw(currentapp, egw.elemWindow(this.DOMContainer)));
 		this.widgetContainer.setInstanceManager(this);
 		this.widgetContainer.setParentDOMNode(this.DOMContainer);
-	
+
 		// store the id to submit it back to server
 		if(_data) {
 			this.etemplate_exec_id = _data.etemplate_exec_id;
 			// set app_header
 			window.egw_app_header(_data.app_header);
 		}
-		
+
 		var _load = function() {
 			egw.debug("log", "Loading template...");
-			
+
 			// Read the XML structure of the requested template
 			this.widgetContainer.loadFromXML(this.templates[_name || missing_name]);
-	
+
 			// List of Promises from widgets that are not quite fully loaded
 			var deferred = [];
-			
+
 			// Inform the widget tree that it has been successfully loaded.
 			this.widgetContainer.loadingFinished(deferred);
-	
+
 			// Insert the document fragment to the DOM Container
 			this.DOMContainer.appendChild(frag);
-	
+
 			// Add into indexed list
 			if(typeof etemplate2._byTemplate[_name] == "undefined")
 			{
@@ -282,11 +282,11 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 					egw.debug("log", "Template loaded, waiting for %d/%d deferred to finish...",still_deferred, deferred.length);
 				}
 			}
-			
+
 			// Wait for everything to be loaded, then finish it up
 			jQuery.when.apply(null, deferred).done(jQuery.proxy(function() {
 				egw.debug("log", "Finished loading %s, triggering load event", _name);
-				
+
 				// Trigger the "resize" event
 				this.resize();
 
@@ -303,14 +303,14 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 				$j(this.DOMContainer).trigger('load', this);
 			},this));
 			};
-		
-		
+
+
 		// Load & process
 		if(!this.templates[_name])
 		{
-			// Asynchronously load the XET file	
+			// Asynchronously load the XET file
 			et2_loadXMLFromURL(_url, function(_xmldoc) {
-	
+
 				// Scan for templates and store them
 				for(var i = 0; i < _xmldoc.childNodes.length; i++) {
 					var template = _xmldoc.childNodes[i];
@@ -320,7 +320,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 				}
 				_load.apply(this,[]);
 			}, this);
-			
+
 			// Split the given data into array manager objects and pass those to the
 			// widget container - do this here because file is loaded async
 			this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
@@ -329,7 +329,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 		{
 			// Set array managers first, or errors will happen
 			this.widgetContainer.setArrayMgrs(this._createArrayManagers(_data));
-			
+
 			// Already have it
 			_load.apply(this,[]);
 		}
@@ -338,7 +338,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 
 /**
  * Check if template contains any dirty (unsaved) content
- * 
+ *
  * @returns {Boolean}
  */
 etemplate2.prototype.isDirty = function()
@@ -354,7 +354,14 @@ etemplate2.prototype.isDirty = function()
 	return dirty;
 };
 
-etemplate2.prototype.submit = function(button)
+/**
+ * Submit form via ajax
+ *
+ * @param et2_button|string button button widget or string with id
+ * @param boolean async true: do an asynchronious submit, default is synchronious
+ * @return boolean true if submit was send, false if eg. validation stoped submit
+ */
+etemplate2.prototype.submit = function(button, async)
 {
 	// Get the form values
 	var values = this.getValues(this.widgetContainer);
@@ -370,6 +377,10 @@ etemplate2.prototype.submit = function(button)
 
 	if (canSubmit)
 	{
+		if (typeof button == 'string')
+		{
+			button = this.widgetContainer.getWidgetById(button);
+		}
 		// Button parameter used for submit buttons in datagrid
 		// TODO: This should probably go in nextmatch's getValues(), along with selected rows somehow.
 		// I'm just not sure how.
@@ -383,7 +394,7 @@ etemplate2.prototype.submit = function(button)
 				if(!values[path[i]]) values[path[i]] = {};
 				target = values[path[i]];
 			}
-			if(target != values) 
+			if(target != values)
 			{
 				var indexes = button.id.split('[');
 				if (indexes.length > 1)
@@ -410,7 +421,7 @@ etemplate2.prototype.submit = function(button)
 		if (this.menuaction)
 		{
 			var api = this.widgetContainer.egw();
-			var request = api.json(this.menuaction, [this.etemplate_exec_id,values], null, this);
+			var request = api.json(this.menuaction, [this.etemplate_exec_id,values], null, this, async);
 			request.sendRequest();
 		}
 		else
@@ -418,6 +429,7 @@ etemplate2.prototype.submit = function(button)
 			this.widgetContainer.egw().debug("warn", "Missing menuaction for submit.  Values: ", values);
 		}
 	}
+	return canSubmit;
 };
 
 /**
@@ -440,7 +452,7 @@ etemplate2.prototype.postSubmit = function()
 
 	if (canSubmit)
 	{
-		var form = jQuery("<form id='form' action='"+egw().webserverUrl + 
+		var form = jQuery("<form id='form' action='"+egw().webserverUrl +
 			"/etemplate/process_exec.php?menuaction=" + this.widgetContainer.egw().getAppName()+ "&ajax=true' method='POST'>");
 
 		var etemplate_id = jQuery(document.createElement("input"))
@@ -478,7 +490,7 @@ etemplate2.prototype.getValues = function(_root)
 
 		// Get the path to the node we have to store the value at
 		var path = _widget.getPath();
-		
+
 		// check if id contains a hierachical name, eg. "button[save]"
 		var id = _widget.id;
 		var indexes = id.split('[');
@@ -513,7 +525,7 @@ etemplate2.prototype.getValues = function(_root)
 			}
 			else
 			{
-				egw.debug("error", "ID collision while writing at path " + 
+				egw.debug("error", "ID collision while writing at path " +
 					"node '" + path[i] + "'");
 			}
 		}
@@ -529,7 +541,7 @@ etemplate2.prototype.getValues = function(_root)
 		// Check whether the entry is really undefined
 		if (typeof _target[id] != "undefined" && (typeof _target[id] != 'object' || typeof value != 'object'))
 		{
-			egw.debug("error", _widget, "Overwriting value of '" + _widget.id + 
+			egw.debug("error", _widget, "Overwriting value of '" + _widget.id +
 				"', id exists twice!");
 		}
 
@@ -571,7 +583,7 @@ etemplate2.prototype.getValues = function(_root)
  * Rather than blindly re-load the entire template, we try to be a little smarter about it.
  * If there's a message provided, we try to find where it goes and set it directly.  Then
  * we look for a nextmatch widget, and tell it to refresh its data based on that ID.
- * 
+ *
  * @param msg String Message to try to display.  eg: "Entry added" (not used anymore, handeled by egw_refresh and egw_message)
  * @param id String|null Application specific entry ID to try to refresh
  * @param type String|null Type of change.  One of 'edit', 'delete', 'add' or null
@@ -618,7 +630,7 @@ etemplate2.getByTemplate = function(template)
 
 /**
  * Get a list of etemplate2 objects that are associated with the given application
- * 
+ *
  * "Associated" is determined by the first part of the template
  *
  * @param template String Name of the template that was loaded
@@ -640,7 +652,7 @@ etemplate2.getByApplication = function(app)
 
 /**
  * Plugin for egw.json type "et2_load"
- * 
+ *
  * @param _type
  * @param _response
  * @returns {Boolean}
@@ -649,7 +661,7 @@ function etemplate2_handle_load(_type, _response)
 {
 	// Check the parameters
 	var data = _response.data;
-	
+
 	// handle egw_framework::refresh_opener()
 	if (jQuery.isArray(data['refresh-opener']))
 	{
@@ -674,7 +686,7 @@ function etemplate2_handle_load(_type, _response)
 		}
 		window.close();
 	}
-	
+
 	// handle egw_framework::window_focus()
 	if (data['window-focus'])
 	{
@@ -686,7 +698,7 @@ function etemplate2_handle_load(_type, _response)
 	{
 		window.framework.setSidebox.apply(window, JSON.parse(data['setSidebox']));
 	}
-	
+
 	// regular et2 re-load
 	if (typeof data.url == "string" && typeof data.data === 'object')
 	{
@@ -718,7 +730,7 @@ function etemplate2_handle_load(_type, _response)
 
 /**
  * Plugin for egw.json type "et2_validation_error"
- * 
+ *
  * @param _type
  * @param _response
  */
@@ -730,7 +742,7 @@ function etemplate2_handle_validation_error(_type, _response)
 }
 /**
  * Handle assign for attributes on etemplate2 widgets
- * 
+ *
  * @param {String} type "assign"
  * @param res Response
  * @param res.data.id {String} Widget ID
@@ -744,7 +756,7 @@ function etemplate2_handle_validation_error(_type, _response)
 function etemplate2_handle_assign(type, res, req)
 {
 	//Check whether all needed parameters have been passed and call the alertHandler function
-	if ((typeof res.data.id != 'undefined') && 
+	if ((typeof res.data.id != 'undefined') &&
 		(typeof res.data.key != 'undefined') &&
 		(typeof res.data.value != 'undefined')
 	)
