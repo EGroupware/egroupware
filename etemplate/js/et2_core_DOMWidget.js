@@ -22,10 +22,10 @@
  * Abstract widget class which can be inserted into the DOM. All widget classes
  * deriving from this class have to care about implementing the "getDOMNode"
  * function which has to return the DOM-Node.
- * 
+ *
  * @augments et2_widget
  */
-var et2_DOMWidget = et2_widget.extend(et2_IDOMNode, 
+var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 {
 	attributes: {
 		"disabled": {
@@ -75,7 +75,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 	/**
 	 * When the DOMWidget is initialized, it grabs the DOM-Node of the parent
 	 * object (if available) and passes it to its own "createDOMNode" function
-	 * 
+	 *
 	 * @memberOf et2_DOMWidget
 	 */
 	init: function() {
@@ -282,7 +282,7 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 
 	/**
 	 * Sets the id of the DOM-Node.
-	 * 
+	 *
 	 * DOM id's have dots "." replaced with dashes "-"
 	 */
 	set_id: function(_value) {
@@ -421,12 +421,12 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 		// Link the actions to the DOM
 		this._link_actions(actions);
 	},
-	
+
 	/**
 	 * Get all action-links / id's of 1.-level actions from a given action object
-	 * 
+	 *
 	 * This can be overwritten to not allow all actions, by not returning them here.
-	 * 
+	 *
 	 * @param actions
 	 * @returns {Array}
 	 */
@@ -472,14 +472,14 @@ var et2_DOMWidget = et2_widget.extend(et2_IDOMNode,
 /**
  * The surroundings manager class allows to append or prepend elements around
  * an widget node.
- * 
+ *
  * @augments Class
  */
 var et2_surroundingsMgr = Class.extend(
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_surroundingsMgr
 	 * @param _widget
 	 */
@@ -536,7 +536,7 @@ var et2_surroundingsMgr = Class.extend(
 	},
 
 	removeDOMNode: function(_node) {
-		for (var i = 0; i < this._widgetSurroundings.length; i++)
+		for (var i = 0; this._widgetSurroundings && i < this._widgetSurroundings.length; i++)
 		{
 			if (this._widgetSurroundings[i] == _node)
 			{
@@ -562,7 +562,7 @@ var et2_surroundingsMgr = Class.extend(
 				this._widgetPlaceholder = null;
 				this._ownPlaceholder = false;
 			}
-			
+
 			this._ownPlaceholder = (_node == null);
 			this._widgetPlaceholder = _node;
 			this._surroundingsUpdated = true;
