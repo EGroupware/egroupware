@@ -126,7 +126,7 @@
 					<description align="center" id="msg" no_lang="1" class="redItalic"/>
 				</row>
 				<row>
-					<nextmatch id="nm" options="calendar.list.rows" span="all"/>
+					<nextmatch id="nm" template="calendar.list.rows" span="all"/>
 				</row>
 				<row class="noPrint" disabled="!@nm[selectcols]=/legacy_actions/">
 					<description/>

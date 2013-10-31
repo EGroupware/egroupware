@@ -219,8 +219,6 @@ class calendar_uiforms extends calendar_ui
 				{
 					$msg = lang('Alarm deleted');
 					unset($content['alarm'][$id]);
-					$js = "opener.location.search += (opener.location.search?'&msg=':'?msg=')+'".
-						addslashes($msg)."';";
 				}
 				else
 				{
@@ -427,8 +425,7 @@ class calendar_uiforms extends calendar_ui
 										}
 										if (!$content['no_popup'])
 										{
-											$js = "opener.location.search += (opener.location.search?'&msg=':'?msg=')+'".
-												addslashes($msg)."';";
+											//we are handling refreshing for status changes on client side
 										}
 										if ($status == 'R' && $event['alarm'])
 										{
@@ -557,19 +554,6 @@ class calendar_uiforms extends calendar_ui
 		case 'infolog':
 			if ($event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event))
 			{
-				switch ($button)
-				{
-					case 'sendrequest':
-					case 'mail':	// just mail without edit-rights is ok
-						$js = $this->custom_mail($event,false,($button=='sendrequest'));
-						break 2;
-					case 'print':	// just print without edit-rights is ok
-						$js = $this->custom_print($event,false);
-						break 2;
-					case 'infolog':	// create infolog without edit-rights is ok
-						$this->create_infolog($event['id']);
-						break 2;
-				}
 				$msg = lang('Permission denied');
 				$button = '';
 				break;
@@ -874,23 +858,6 @@ class calendar_uiforms extends calendar_ui
 				{
 					egw_link::link('calendar',$event['id'],$content['link_to']['to_id']);
 				}
-				$js = "opener.location.search += (opener.location.search?'&msg=':'?msg=')+'".
-					addslashes($msg)."';";
-
-				if ($button == 'print')
-				{
-					$js = $this->custom_print($event,!$content['id'])."\n".$js;	// first open the new window and then update the view
-				}
-
-				if ($button == 'mail' || $button == 'sendrequest')
-				{
-					$js = $this->custom_mail($event,!$content['id'],($button=='sendrequest'))."\n".$js;	// first open the new window and then update the view
-				}
-
-				if ($button == 'infolog')
-				{
-					$this->create_infolog($event['id']);
-				}
 			}
 			else
 			{
@@ -901,8 +868,7 @@ class calendar_uiforms extends calendar_ui
 		case 'cancel':
 			if($content['cancel_needs_refresh'])
 			{
-				$js = "opener.location.search += (opener.location.search?'&msg=':'?msg=')+'".
-					addslashes($msg)."';";
+				egw_framework::refresh_opener($msg, 'calendar');
 			}
 			break;
 
@@ -921,14 +887,13 @@ class calendar_uiforms extends calendar_ui
 				{
 					$msg = lang('Event deleted');
 				}
-				$js = "opener.location += (opener.location.search?'&msg=':'?msg=')+'".
-					addslashes($msg)."';";
+
 			}
 			break;
 
 		case 'freetime':
 			// the "click" has to be in onload, to make sure the button is already created
-			$GLOBALS['egw']->js->set_onload("document.getElementsByName('exec[freetime]')[0].click();");
+			$event['button_was'] = $button;
 			break;
 
 		case 'add_alarm':
@@ -961,8 +926,7 @@ class calendar_uiforms extends calendar_ui
 						$event['alarm'][$alarm_id] = $alarm;
 
 						$msg = lang('Alarm added');
-						$js = "opener.location.search += (opener.location.search?'&msg=':'?msg=')+'".
-							addslashes($msg)."';";
+						egw_framework::refresh_opener($msg,'calendar', $event['id'], 'update');
 					}
 					else
 					{
@@ -994,12 +958,12 @@ class calendar_uiforms extends calendar_ui
 					'msg'        => $msg,
 				));
 			}
-			$js .= 'window.close();';
-			echo "<html><body onload=\"$js\"></body></html>\n";
+
+			egw_framework::window_close();
 			common::egw_exit();
 		}
 		unset($event['no_notifications']);
-		return $this->edit($event,$preserv,$msg,$js,$event['id'] ? $event['id'] : $content['link_to']['to_id']);
+		return $this->edit($event,$preserv,$msg,$event['id'] ? $event['id'] : $content['link_to']['to_id']);
 	}
 
 	/**
@@ -1039,7 +1003,7 @@ class calendar_uiforms extends calendar_ui
 	 * @param boolean $added
 	 * @return string javascript window.open command
 	 */
-	function custom_mail($event,$added,$asrequest=false)
+	function ajax_custom_mail($event,$added,$asrequest=false)
 	{
 		$to = array();
 
@@ -1089,7 +1053,7 @@ class calendar_uiforms extends calendar_ui
 			fclose($f);
 		}
 		$vars = array(
-			'menuaction'      => 'felamimail.uicompose.compose',
+			'menuaction'      => 'mail.mail_compose.compose',
 			'mimeType'		  => 'plain', // force type to plain as thunderbird seems to try to be smart while parsing html messages with ics attachments
 			'preset[to]'      => $to,
 			'preset[subject]' => $subject,
@@ -1100,39 +1064,8 @@ class calendar_uiforms extends calendar_ui
 			'preset[size]'    => filesize($ics_file),
 		);
 		if ($asrequest) $vars['preset[msg]'] = lang('You attempt to mail a meetingrequest to the recipients above. Depending on the client this mail is opened with, the recipient may or may not see the mailbody below, but only see the meeting request attached.');
-		return "window.open('".egw::link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
-	}
-
-	/**
-	 * return javascript to open compose window to print the event
-	 *
-	 * @param array $event
-	 * @param boolean $added
-	 * @return string javascript window.open command
-	 */
-	function custom_print($event,$added)
-	{
-		$vars = array(
-			'menuaction'      => 'calendar.calendar_uiforms.edit',
-			'cal_id'      => $event['id'],
-			'print' => true,
-		);
-		return "window.open('".egw::link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
-	}
-
-	/**
-	 * Open new infolog window to convert event to an infolog
-	 *
-	 * @param array|int $event event or id
-	 */
-	function create_infolog($event,$added)
-	{
-		$vars = array(
-			'menuaction' => 'infolog.infolog_ui.edit',
-			'action'     => 'calendar',
-			'action_id'  => is_array($event) ? $event['id'] : $event,
-		);
-		egw::redirect_link('/index.php', $vars);
+		$response = egw_json_response::get();
+		$response->call('app.calendar.custom_mail', $vars);
 	}
 
 	/**
@@ -1176,10 +1109,9 @@ class calendar_uiforms extends calendar_ui
 	 *	no_popup boolean use a popup or not
 	 *	edit_single int timestamp of single event edited, unset/null otherwise
 	 * @param string $msg='' msg to display
-	 * @param string $js='window.focus();' javascript to include in the page
 	 * @param mixed $link_to_id='' $content from or for the link-widget
 	 */
-	function edit($event=null,$preserv=null,$msg='',$js = 'window.focus();',$link_to_id='')
+	function edit($event=null,$preserv=null,$msg='',$link_to_id='')
 	{
 		$sel_options = array(
 			'recur_type' => &$this->bo->recur_types,
@@ -1251,7 +1183,7 @@ class calendar_uiforms extends calendar_ui
 				{
 					if (!$preserv['no_popup'])
 					{
-						$js = "alert('".lang('Permission denied')."'); window.close();";
+						egw_framework::window_close(lang('Permission denied'));
 					}
 					else
 					{
@@ -1328,7 +1260,7 @@ class calendar_uiforms extends calendar_ui
 				}
 			}
 		}
-		$etpl = new etemplate();
+		$etpl = new etemplate_new();
 		if (!$etpl->read($preserv['template']))
 		{
 			$etpl->read($preserv['template'] = 'calendar.edit');
@@ -1357,40 +1289,13 @@ class calendar_uiforms extends calendar_ui
 			}
 			elseif(egw_vfs::lock($lock_path,$preserv['lock_token'],$locktime,$lock_owner,$scope='shared',$type='write',false,false))
 			{
-                // install ajax handler to unlock the entry again, if the window get's closed by the user (X of window or our [Close] button)
-                $GLOBALS['egw']->js->set_onunload("if (do_onunload) xajax_doXMLHTTPsync('calendar.calendar_uiforms.ajax_unlock',$event[id],'$preserv[lock_token]');");
-                $GLOBALS['egw']->js->set_onload("replace_eTemplate_onsubmit();");
-
-                // overwrite submit method of eTemplate form AND onSubmit event, to switch off onUnload handler for regular form submits
-                // selectboxes use onchange(this.form.submit()) which does not fire onSubmit event --> need to overwrite submit() method
-                // regular submit buttons dont call submit(), but trigger onSubmit event --> need to overwrite onSubmit event
-                $GLOBALS['egw_info']['flags']['java_script'] .= '
-<script>
-var do_onunload = true;
-function replace_eTemplate_onsubmit()
-{
-    document.eTemplate.old_submit = document.eTemplate.submit;
-    document.eTemplate.submit = function()
-    {
-        do_onunload = false;
-        this.old_submit();
-    }
-    document.eTemplate.old_onsubmit = document.eTemplate.onsubmit;
-    document.eTemplate.onsubmit = function()
-    {
-        do_onunload = false;
-        this.old_onsubmit();
-    }
-}
-</script>
-';
+				//We handle AJAX_REQUEST in client-side for unlocking the locked entry, in case of closing the entry by X button or close button
 			}
 			else
 			{
 				$msg .= ' '.lang("Can't aquire lock!");		// eg. an exclusive lock via CalDAV ...
 				$view = true;
 			}
-			//echo "<p>lock_path=$lock_path, lock_owner=$lock_owner, lock_token=$preserv[lock_token], msg=$msg</p>\n";
 		}
 		$content = array_merge($event,array(
 			'link_to' => array(
@@ -1573,22 +1478,13 @@ function replace_eTemplate_onsubmit()
 		}
 		else
 		{
-			//Add the check_recur_type function to onload, which disables recur_data function
-			//if recur_type is not repeat weekly.
-			$onload = "check_recur_type('recur_type',2);";
-			// We hide the enddate if one of our predefined durations fits
-			// the call to set_style_by_class has to be in onload, to make sure the function and the element is already created
-			$onload .= " \$j('table.end_hide').css('display','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'none' : 'block')."');";
-
-			$GLOBALS['egw']->js->set_onload($onload);
-
 			$readonlys['recur_exception'] = true;
 
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
 				$readonlys['recur_exception'] = !count($content['recur_exception']);	// otherwise we get a delete button
-				$onclick =& $etpl->get_cell_attribute('button[delete]','onclick');
-				$onclick = str_replace('Delete this event','Delete this series of recuring events',$onclick);
+				//$onclick =& $etpl->get_cell_attribute('button[delete]','onclick');
+				//$onclick = str_replace('Delete this event','Delete this series of recuring events',$onclick);
 			}
 			elseif ($event['reference'] != 0)
 			{
@@ -1663,15 +1559,9 @@ function replace_eTemplate_onsubmit()
 				: ($view ? ($content['edit_single'] ? lang('View exception') : ($content['recur_type'] ? lang('View series') : lang('View')))
 					: ($content['edit_single'] ? lang('Create exception') : ($content['recur_type'] ? lang('Edit series') : lang('Edit')))));
 
-		//Function for disabling the recur_data multiselect box
-		$js .=
-			"\nfunction check_recur_type(_id, _ind)\n{\nif(document.getElementById('exec['+_id+']')) {
-			egw_set_checkbox_multiselect_enabled('recur_data',".
-			"document.getElementById('exec['+_id+']').selectedIndex == _ind);\n\n}\n}\n";
-
-		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>\n$js\n</script>\n";
-
 		$content['cancel_needs_refresh'] = (bool)$_GET['cancel_needs_refresh'];
+
+		if (!empty($preserv['lock_token'])) $content['lock_token'] = $preserv['lock_token'];
 
 		// non_interactive==true from $_GET calls immediate save action without displaying the edit form
 		if(isset($_GET['non_interactive']) && (bool)$_GET['non_interactive'] === true)
@@ -1701,9 +1591,6 @@ function replace_eTemplate_onsubmit()
 		{
 			egw_vfs::unlock($lock_path,$token,false);
 		}
-		$response = new xajaxResponse();
-		$response->addScript('window.close();');
-		return $response->getXML();
 	}
 
 	/**
@@ -1879,12 +1766,12 @@ function replace_eTemplate_onsubmit()
 		$event['ics_method'] = $readonlys['ics_method'] = strtolower($ical_method);
 		$event['ics_method_label'] = strtolower($ical_method) == 'request' ?
 			lang('Meeting request') : lang('Reply to meeting request');
-		$tpl = new etemplate('calendar.meeting');
+		$tpl = new etemplate_new('calendar.meeting');
 		$tpl->exec('calendar.calendar_uiforms.meeting', $event, $sel_options, $readonlys, $event, 2);
 	}
 
 	/**
-	 * displays a sheduling conflict
+	 * displays a scheduling conflict
 	 *
 	 * @param array $event
 	 * @param array $conflicts array with conflicting events, the events are not garantied to be readable by the user!
@@ -1892,7 +1779,7 @@ function replace_eTemplate_onsubmit()
 	 */
 	function conflicts($event,$conflicts,$preserv)
 	{
-		$etpl = CreateObject('etemplate.etemplate','calendar.conflicts');
+		$etpl = CreateObject('etemplate.etemplate_new','calendar.conflicts');
 
 		foreach($conflicts as $k => $conflict)
 		{
@@ -1943,7 +1830,7 @@ function replace_eTemplate_onsubmit()
 	 */
 	function ajax_freetimesearch(array $edit_content)
 	{
-		$response = new xajaxResponse();
+		$response = egw_json_response::get();
 		//$response->addAlert(__METHOD__.'('.array2string($edit_content).')');
 
 		if ($edit_content['duration'])
@@ -1994,14 +1881,12 @@ function replace_eTemplate_onsubmit()
 		egw_cache::setSession('calendar','freetimesearch_args_'.(int)$edit_content['id'],$content);
 
 		//menuaction=calendar.calendar_uiforms.freetimesearch&values2url('start,end,duration,participants,recur_type,whole_day'),ft_search,700,500
-		$link = egw::link('/index.php',array(
-			'menuaction' => 'calendar.calendar_uiforms.freetimesearch',
-			'cal_id'     => $edit_content['id'],
-		));
+		$link = 'calendar.calendar_uiforms.freetimesearch&cal_id='. $edit_content['id'];
 
-		$response->addScriptCall('egw_openWindowCentered2',$link,'ft_search',700,500);
+		$response->call('app.calendar.freetime_search_popup',$link);
 
-		return $response->getXML();
+		//$response->addScriptCall('egw_openWindowCentered2',$link,'ft_search',700,500);
+
 	}
 
 	/**
@@ -2019,8 +1904,7 @@ function replace_eTemplate_onsubmit()
 	 */
 	function freetimesearch($content = null)
 	{
-		$etpl = new etemplate('calendar.freetimesearch');
-
+		$etpl = new etemplate_new('calendar.freetimesearch');
 		$sel_options['search_window'] = array(
 			7*DAY_s		=> lang('one week'),
 			14*DAY_s	=> lang('two weeks'),
@@ -2033,6 +1917,12 @@ function replace_eTemplate_onsubmit()
 			// get content from session (and delete it immediatly)
 			$content = egw_cache::getSession('calendar','freetimesearch_args_'.(int)$_GET['cal_id']);
 			egw_cache::unsetSession('calendar','freetimesearch_args_'.(int)$_GET['cal_id']);
+			//Since the start_time and end_time from calendar_user_preferences are numbers, not timestamp, in order to show them on date-timeonly
+			//widget we need to convert them from numbers to timestamps, only for the first time when we have template without content
+			$sTime = $content['start_time'];
+			$eTime = $content['end_time'];
+			$content['start_time'] = strtotime(((strlen($content['start_time'])<2)?("0".$content['start_time']):$content['start_time']).":00");
+			$content['end_time'] = strtotime(((strlen($content['end_time'])<2)?("0".$content['end_time']):$content['end_time']).":00");
 
 			// pick a searchwindow fitting the duration (search for a 10 day slot in a one week window never succeeds)
 			foreach($sel_options['search_window'] as $window => $label)
@@ -2047,83 +1937,30 @@ function replace_eTemplate_onsubmit()
 		else
 		{
 			if (!$content['duration']) $content['duration'] = $content['end'] - $content['start'];
-
-			if (is_array($content['freetime']['select']))
+			$weekds = 0;
+			foreach ($content['weekdays'] as $keys =>$wdays)
 			{
-				list($selected) = each($content['freetime']['select']);
-				//echo "$selected = ".date('D d.m.Y H:i',$content['freetime'][$selected]['start']);
-				$start = (int) $content['freetime'][$selected]['start'];
-				$end = $start + $content['duration'];
-				/**
-				 * ToDo: make this an eTemplate function to transmit content back to the opener
-				 */
-				$fields_to_set = array(
-					'exec[start][str]'	=> date($this->common_prefs['dateformat'],$start),
-					'exec[start][i]'	=> (int) date('i',$start),
-					'exec[end][str]'	=> date($this->common_prefs['dateformat'],$end),
-					'exec[end][i]'		=> (int) date('i',$end),
-					'exec[duration]'    => $content['duration'],
-				);
-				if ($this->common_prefs['timeformat'] == 12)
-				{
-					$fields_to_set += array(
-						'exec[start][H]'	=> date('h',$start),
-						'exec[start][a]'	=> date('a',$start),
-						'exec[end][H]'		=> date('h',$end),
-						'exec[end][a]'		=> date('a',$end),
-					);
-				}
-				else
-				{
-					$fields_to_set += array(
-						'exec[start][H]'	=> (int) date('H',$start),
-						'exec[end][H]'		=> (int) date('H',$end),
-					);
-				}
-				echo "<html>
-<script>
-	var fields = Array('".implode("','",array_keys($fields_to_set))."');
-	var values = Array('".implode("','",$fields_to_set)."');
-	for (i=0; i < fields.length; ++i) {
-		elements = opener.document.getElementsByName(fields[i]);
-		if (elements) {
-			if (elements.length == 1)
-				elements[0].value = values[i];
-			else
-				for (n=0; n < elements.length; ++n) {
-					if (elements[n].value == values[i]) elements[n].checked = true;
-				}
-		}
-	}
-	window.close();
-</script>
-</html>\n";
-				exit;
+				$weekds = $weekds + $wdays;
 			}
+			//split_freetime_daywise function expects to get start_time and end_time values as string numbers, only "hour", therefore, since the date-timeonly widget returns
+			//always timestamp, we need to convert them to only "hour" string numbers.
+			$sTime = date('H', $content['start_time']);
+			$eTime = date('H', $content['end_time']);
 		}
+
 		if ($content['recur_type'])
 		{
 			$content['msg'] .= lang('Only the initial date of that recuring event is checked!');
 		}
 		$content['freetime'] = $this->freetime($content['participants'],$content['start'],$content['start']+$content['search_window'],$content['duration'],$content['cal_id']);
-		$content['freetime'] = $this->split_freetime_daywise($content['freetime'],$content['duration'],$content['weekdays'],$content['start_time'],$content['end_time'],$sel_options);
+		$content['freetime'] = $this->split_freetime_daywise($content['freetime'],$content['duration'],(is_array($content['weekdays'])?$weekds:$content['weekdays']),$sTime,$eTime,$sel_options);
 
-		//echo "<pre>".print_r($content,true)."</pre>\n";
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('freetime search');
-		// let the window popup, if its already there
-		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>\nwindow.focus();\n</script>\n";
 
-		if (!is_object($GLOBALS['egw']->js))
-		{
-			$GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
-		}
 		$sel_options['duration'] = $this->durations;
 		if ($content['duration'] && isset($sel_options['duration'][$content['duration']])) $content['end'] = '';
-		// We hide the enddate if one of our predefined durations fits
-		// the call to set_style_by_class has to be in onload, to make sure the function and the element is already created
-		$GLOBALS['egw']->js->set_onload("\$j('table.end_hide').css('visibility','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'hidden' : 'visible')."');");
 
-		$etpl->exec('calendar.calendar_uiforms.freetimesearch',$content,$sel_options,'',array(
+		$etpl->exec('calendar.calendar_uiforms.freetimesearch',$content,$sel_options,NULL,array(
 				'participants'	=> $content['participants'],
 				'cal_id'		=> $content['cal_id'],
 				'recur_type'	=> $content['recur_type'],
@@ -2275,7 +2112,7 @@ function replace_eTemplate_onsubmit()
 					$end_date = $e-$daybegin > DAY_s ? lang(date('l',$e)).' '.date($this->common_prefs['dateformat'],$e).' ' : '';
 					$times[$s] = date($time_format,$s).' - '.$end_date.date($time_format,$e);
 				}
-				$sel_options[$n.'[start]'] = $times;
+				$sel_options[$n.'start'] = $times;
 			}
 		}
 		return $freetime_daywise;
@@ -2343,7 +2180,7 @@ function replace_eTemplate_onsubmit()
 		$content['msg'] = $msg;
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('iCal Export');
-		$etpl = new etemplate('calendar.export');
+		$etpl = new etemplate_new('calendar.export');
 		$etpl->exec('calendar.calendar_uiforms.export',$content);
 	}
 
@@ -2383,7 +2220,7 @@ function replace_eTemplate_onsubmit()
 			'msg' => $msg,
 		);
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('iCal Import');
-		$etpl = new etemplate('calendar.import');
+		$etpl = new etemplate_new('calendar.import');
 
 		$etpl->exec('calendar.calendar_uiforms.import',$content);
 	}
@@ -2449,7 +2286,7 @@ function replace_eTemplate_onsubmit()
 		$content['rows'][] = array('cat_id' => '');
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Calendar').' - '.lang('Category ACL');
-		$tmp = new etemplate('calendar.cat_acl');
+		$tmp = new etemplate_new('calendar.cat_acl');
 		$tmp->exec('calendar.calendar_uiforms.cat_acl',$content,null,$readonlys,$preserv);
 	}
 

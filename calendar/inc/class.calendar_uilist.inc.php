@@ -95,7 +95,7 @@ class calendar_uilist extends calendar_ui
 		if ($_GET['msg']) $msg .= $_GET['msg'];
 		if ($this->group_warning) $msg .= $this->group_warning;
 
-		$etpl = new etemplate('calendar.list');
+		$etpl = new etemplate_new('calendar.list');
 
 		// Handle merge from sidebox
 		if($_GET['merge'])
@@ -157,7 +157,7 @@ class calendar_uilist extends calendar_ui
 				'order'           => 'cal_start',// IO name of the column to sort after (optional for the sortheaders)
 				'sort'            => 'ASC',// IO direction of the sort: 'ASC' or 'DESC'
 				'default_cols'    => '!week,weekday,cal_title,cal_description,recure,cal_location,cal_owner,cat_id,pm_id,legacy_actions',
-				'filter_onchange' => "set_style_by_class('table','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
+				'filter_onchange' => "app.calendar.filter_change",
 				'header_left'     => 'calendar.list.dates',
 				'row_id'          => 'row_id',	// set in get rows "$event[id]:$event[recur_date]"
 				'actions'         => $this->get_actions(),
@@ -188,7 +188,7 @@ class calendar_uilist extends calendar_ui
 		$html = $etpl->exec('calendar.calendar_uilist.listview',$content,$sel_options,$readonlys,array(),$home ? -1 : 0);
 
 		// Not sure why this has to be echoed instead of appended, but that's what works.
-		echo calendar_uiviews::edit_series();
+		//echo calendar_uiviews::edit_series();
 
 		return $html;
 	}
@@ -290,7 +290,6 @@ class calendar_uilist extends calendar_ui
 				$label = lang('Before %1',$this->bo->long_date($this->date));
 				break;
 			case 'custom':
-				$GLOBALS['egw']->js->set_onload("set_style_by_class('table','custom_hide','visibility','visible');");
 				$this->first = $search_params['start'] = $params['startdate'];
 				$this->last  = $search_params['end'] = strtotime('+1 day', $params['enddate'])-1;
 				$label = $this->bo->long_date($this->first,$this->last);
@@ -456,10 +455,8 @@ class calendar_uilist extends calendar_ui
 			unset($app);
 			unset($app_id);
 		}
-		// set js_calendar_integration object, for app.js cal_open() function
-		$GLOBALS['egw_info']['flags']['java_script'] = '<script type="text/javascript">
-	var js_integration_data='.json_encode($js_integration_data).';
-</script>';
+		// set js_calendar_integration object, to use it in app.js cal_open() function
+		$params['js_integration_data'] = json_encode($js_integration_data);
 
 		$wv=0;
 		$dv=0;
@@ -801,7 +798,7 @@ class calendar_uilist extends calendar_ui
 				'url' => 'menuaction=calendar.calendar_uiforms.edit&cal_id=$id',
 				'popup' => egw_link::get_registry('calendar', 'view_popup'),
 				'group' => $group=1,
-				'onExecute' => 'javaScript:cal_open',
+				'onExecute' => 'javaScript:app.calendar.cal_open',
 				'disableClass' => 'rowNoView',
 			),
 			'copy' => array(
@@ -843,7 +840,7 @@ class calendar_uilist extends calendar_ui
 				'url' => 'menuaction=filemanager.filemanager_ui.index&path=/apps/$app/$id',
 				'group' => $group,
 				'allowOnMultiple' => false,
-				'onExecute' => 'javaScript:cal_fix_app_id',
+				'onExecute' => 'javaScript:app.calendar.cal_fix_app_id',
 				'disableClass' => 'rowNoView',
 			);
 		}
@@ -867,7 +864,7 @@ class calendar_uilist extends calendar_ui
 				'group' => $group,
 				'allowOnMultiple' => false,
 				'hideOnDisabled' => true,	// show only one timesheet action in context menu
-				'onExecute' => 'javaScript:cal_fix_app_id',
+				'onExecute' => 'javaScript:app.calendar.cal_fix_app_id',
 				'popup' => egw_link::get_registry('timesheet', 'add_popup'),
 			);
 			$actions['timesheet-add'] = array(	// automatic add for multiple events
@@ -893,9 +890,7 @@ class calendar_uilist extends calendar_ui
 		++$group;
 		$actions['delete'] = array(
 			'caption' => 'Delete',
-			'confirm' => 'Delete this event',
-			'confirm_multiple' => 'Delete these entries',
-			'onExecute' => 'javaScript:cal_delete',
+			'onExecute' => 'javaScript:app.calendar.cal_delete',
 			'group' => $group,
 			'disableClass' => 'rowNoDelete',
 		);
@@ -904,11 +899,10 @@ class calendar_uilist extends calendar_ui
 		{
 			$actions['undelete'] = array(
 				'caption' => 'Un-delete',
-				'onExecute' => 'javaScript:cal_delete',
+				'onExecute' => 'javaScript:app.calendar.cal_delete',
 				'icon' => 'revert',
 				'hint' => 'Recover this event',
 				'group' => $group,
-				'enabled' => 'javaScript:nm_enableClass',
 				'enableClass' => 'rowDeleted',
 				'hideOnDisabled' => true,
 			);

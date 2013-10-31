@@ -10,7 +10,7 @@
 
 /**
  * Sidebox navigation for calendar
- * 
+ *
  * @todo add code from jscalendar->flat(), or better replace it altogether ...
  */
 (function()
@@ -35,13 +35,13 @@
 			egw_appWindow('calendar').location=url+'&owner='+(no_reset?'':'0,')+owner;
 		}
 	}
-	
+
 	/**
 	 * Initialisation after DOM *and* jQuery is loaded
 	 */
 	egw_LAB.wait(function() {
 		$j(function(){
-			var calendar_window = egw_appWindow('calendar'); 
+			var calendar_window = egw_appWindow('calendar');
 			// change handlers setting a certain url, eg. view
 			$j('#calendar_view').change(function(){
 				calendar_window.location = egw_webserverUrl+'/index.php?'+this.value;
@@ -60,14 +60,14 @@
 				if ($j.isArray(val)) val = val.join(',');
 				calendar_window.location = current_view_url+
 					(current_view_url.search.length ? '&' : '?')+this.name+'='+val;
-				if (this.name == 'merge') this.value='';	
+				if (this.name == 'merge') this.value='';
 			});
 			// click handler to switch selectbox to multiple
 			$j('#calendar_cat_id_multiple').click(function(){
 				var selectBox = document.getElementById(this.id.replace('_multiple', ''));
-				if (selectBox && !selectBox.multiple) 
+				if (selectBox && !selectBox.multiple)
 				{
-					selectBox.size=4; 
+					selectBox.size=4;
 					selectBox.multiple=true;
 				}
 			});

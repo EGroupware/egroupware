@@ -9,8 +9,8 @@
 			<vbox class="prompt" id="dialog-content">
 				<description value="Do you want to edit this event as an exception or the whole series?"/>
 				<hbox align="center">
-					<buttononly label="Edit exception" onclick="open_edit(false);"/>
-					<buttononly label="Edit series" onclick="open_edit(true);"/>
+					<buttononly label="Edit exception" onclick="app.calendar.open_edit(false);"/>
+					<buttononly label="Edit series" onclick="app.calendar.open_edit(true);"/>
 					<buttononly label="Cancel" onclick="document.getElementById('edit_series').style.display = 'none';"/>
 				</hbox>
 			</vbox>

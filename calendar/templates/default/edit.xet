@@ -20,14 +20,14 @@
 						<description for="duration" value="Duration" width="0"/>
 						<hbox options="0,0">
 							<menulist>
-								<menupopup statustext="Duration of the meeting" id="duration" no_lang="1" onchange="set_style_by_class('table','end_hide','display',this.value == '' ? 'block' : 'none'); if (this.value == '') document.getElementById(form::name('end[str]')).value = document.getElementById(form::name('start[str]')).value;" options="Use end date,,,,,,,false"/>
+								<menupopup statustext="Duration of the meeting" id="duration" no_lang="1" onchange="app.calendar.set_enddate_visibility" options="Use end date,,,,,,,false"/>
 							</menulist>
-							<date-time id="end" class="end_hide"/>
+							<date-time id="end"/>
 						</hbox>
 					</row>
 					<row>
 						<description/>
-						<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="ajax_submit(this.form,'calendar.calendar_uiforms.ajax_freetimesearch'); return false;"/>
+						<buttononly statustext="Find free timeslots where the selected participants are availible for the given timespan" label="Freetime search" id="freetime" onclick="app.calendar.freetime_search"/>
 					</row>
 					<row class="row">
 						<description for="location" value="Location" width="0"/>
@@ -139,14 +139,11 @@
 					<description/>
 					<description/>
 					<description/>
-					<description/>
-					<description/>
-					<description/>
 				</row>
 				<row class="row" height="12">
 					<description for="recur_type" value="Repeat type"/>
 					<menulist>
-						<menupopup id="recur_type" onchange="check_recur_type('recur_type', 2);"/>
+						<menupopup id="recur_type" onchange="app.calendar.check_recur_type"/>
 					</menulist>
 					<description for="recur_interval" value="Interval"/>
 					<menulist>
@@ -166,7 +163,7 @@
 					<listbox type="select-dow" statustext="Days of the week for a weekly repeated event" id="recur_data" rows="6" options="1"/>
 					<vbox options="0,0">
 						<description value="Exceptions"/>
-						<button statustext="Create an exception for the given date" label="@exception_label" id="button[exception]" no_lang="1"/>
+						<button statustext="Create an exception for the given date" label="@exception_label" id="button[exception]" no_lang="1" />
 					</vbox>
 					<grid id="recur_exception">
 						<columns>
@@ -294,16 +291,16 @@
 		</grid>
 	</template>
 	<template id="calendar.delete_series" template="" lang="" group="0" version="1.7.003">
-		<vbox id="#delete_series">
-			<hbox id="#dialog-header" class="promptheader">
+		<vbox>
+			<hbox class="promptheader">
 				<description value="This event is part of a series"/>
 			</hbox>
-			<vbox id="dialog-content" class="prompt">
+			<vbox class="prompt">
 				<description value="Do you want to keep the series exceptions in your calendar?"/>
 				<hbox align="center">
 					<button statustext="All exceptions are converted into single events." label="Keep exceptions" id="button[delete_keep_exceptions]"/>
 					<button statustext="The exceptions are deleted together with the series." label="Delete exceptions" id="button[delete_exceptions]"/>
-					<buttononly label="Cancel" onclick="document.getElementById('delete_series').style.display = 'none';"/>
+					<buttononly label="Cancel" onclick="jQuery(document.getElementById('calendar-edit_calendar-delete_series')).hide();"/>
 				</hbox>
 			</vbox>
 		</vbox>
@@ -315,16 +312,10 @@
 				<column width="300"/>
 				<column/>
 				<column/>
-				<column/>
-				<column/>
-				<column/>
 			</columns>
 			<rows>
 				<row disabled="!@msg">
 					<html align="center" id="msg" no_lang="1" span="all" class="redItalic"/>
-					<description/>
-					<description/>
-					<description/>
 					<description/>
 					<description/>
 					<description/>
@@ -376,14 +367,14 @@
 						<button statustext="apply the changes" label="Apply" id="button[apply]"/>
 						<button statustext="Close the window" label="Cancel" id="button[cancel]" onclick="window.close();"/>
 						<menulist>
-							<menupopup statustext="Execute a further action for this entry" id="action" onchange="this.form.submit(); this.value='';" options="Actions..."/>
+							<menupopup statustext="Execute a further action for this entry" id="action" onchange="app.calendar.actions_change" options="Actions..."/>
 						</menulist>
 						<checkbox label="Do not notify of these changes" id="no_notifications" span="2"/>
 					</hbox>
-					<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="if ($cont[query_delete_exceptions]) { getElementById('delete_series').style.display='block'; return false; } else return confirm('Delete this event');"/>
+					<button align="right" statustext="Delete this event" label="Delete" id="button[delete]" onclick="return app.calendar.delete_btn($cont[query_delete_exceptions]);"/>
 				</row>
-				<row disabled="!@recur_type">
-					<template id="calendar.delete_series" span="all"/>
+				<row >
+					<template id="calendar.delete_series" span="all" />
 				</row>
 			</rows>
 		</grid>
