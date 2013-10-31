@@ -1475,6 +1475,11 @@ class groupdav extends HTTP_WebDAV_Server
 		{
 			$user_prefix = '/'.$user;
 			$user = $account_id;
+			// /<currentuser>/inbox/
+			if ($user == $GLOBALS['egw_info']['user']['account_id'] && $app == 'inbox')
+			{
+				$app = 'calendar';
+			}
 		}
 		else
 		{
