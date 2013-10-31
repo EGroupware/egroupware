@@ -190,7 +190,10 @@ function egw_fw_ui_sidemenu_entry(_parent, _baseDiv, _elemDiv, _name, _icon, _ca
 
 	//Make the base Div sortable. Set all elements with the style "egw_fw_ui_sidemenu_entry_header"
 	//as handle
-	$j(this.elemDiv).sortable("destroy");
+	if($j(this.elemDiv).data('uiSortable'))
+	{
+		$j(this.elemDiv).sortable("destroy");
+	}
 	$j(this.elemDiv).sortable({
 		handle: ".egw_fw_ui_sidemenu_entry_header",
 		distance: 15,
@@ -501,15 +504,8 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 			return true;
 		});
 
-	//Special treatment for IE	
-	if (typeof jQuery.browser['msie'] != 'undefined')
-	{
-		this.closeButton.style.styleFloat = 'none';
-	}
-	else
-	{
-		$j(this.headerDiv).append(this.closeButton);
-	}
+
+	$j(this.headerDiv).append(this.closeButton);
 
 	//Create the icon and append it to the header div
 	var icon = document.createElement("img");
@@ -523,10 +519,8 @@ function egw_fw_ui_tab(_parent, _contHeaderDiv, _contDiv, _icon, _callback,
 	this.setTitle('');
 	$j(this.headerDiv).append(this.headerH1);
 
-	if (typeof jQuery.browser['msie'] != 'undefined')
-	{
-		$j(this.headerDiv).append(this.closeButton);
-	}
+
+	$j(this.headerDiv).append(this.closeButton);
 
 	this.contentDiv = document.createElement("div");
 	$j(this.contentDiv).addClass("egw_fw_ui_tab_content");
