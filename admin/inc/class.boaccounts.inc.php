@@ -220,15 +220,7 @@
 
 			if(!$errors)
 			{
-				$new_user = !$userData['account_id'];
-				$passwd = $userData['account_passwd'];
 				$errors = $this->save_user($userData);
-				$GLOBALS['hook_values'] = $userData + ($new_user ? array(
-					'new_password' => $passwd,
-				) : array());
-				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-					'location' => $new_user ? 'addaccount' : 'editaccount',
-				),False,True);	// called for every app now, not only enabled ones)
 			}
 			//error_log(__METHOD__."(".array2string($userData).") returning ".array2string($errors ? $errors : true));
 			return $errors ? $errors : true;
@@ -391,6 +383,16 @@
 				return $errors;
 			}
 
+			// calling addaccount hook here, to make sure it get called prior to changepassword hook
+			if ($new_account)
+			{
+				$GLOBALS['hook_values'] = $_userData + array(
+					'new_password' => $passwd,
+				);
+				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+					'location' => 'addaccount',
+				),False,True);	// called for every app now, not only enabled ones)
+			}
 			if ($passwd)
 			{
 				$_userData['account_passwd'] = $passwd;
@@ -461,6 +463,15 @@
 				$GLOBALS['egw']->acl->delete_repository('preferences','nopasswordchange',$_userData['account_id']);
 			}
 			$GLOBALS['egw']->session->delete_cache((int)$_userData['account_id']);
+
+			// now calling editaccount hook for existing accounts
+			if (!$new_account)
+			{
+				$GLOBALS['hook_values'] = $_userData;
+				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+					'location' => 'editaccount',
+				),False,True);	// called for every app now, not only enabled ones)
+			}
 
 			//error_log(__METHOD__."(".array2string($_userData).") returning ".array2string($errors));
 			return $errors;
