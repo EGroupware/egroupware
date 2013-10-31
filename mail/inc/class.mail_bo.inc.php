@@ -2613,11 +2613,22 @@ class mail_bo
 	 * @return null/array flags
 	 */
 	function getFlags ($_messageUID) {
-		$flags =  $this->icServer->getFlags($_messageUID, true);
-		if (PEAR::isError($flags)) {
-			error_log(__METHOD__.__LINE__.'Failed to retrieve Flags for Messages with UID(s)'.array2string($_messageUID).' Server returned:'.$flags->message);
-			return null;
+
+		$uidsToFetch = new Horde_Imap_Client_Ids();
+		$uidsToFetch->add((array)$_messageUID);
+		$_folderName = $this->icServer->getCurrentMailbox();
+		$fquery = new Horde_Imap_Client_Fetch_Query();
+		$fquery->flags();
+		$headersNew = $this->icServer->fetch($_folderName, $fquery, array(
+			'ids' => $uidsToFetch,
+		));
+		if (is_object($headersNew)) {
+			foreach($headersNew->ids() as $id) {
+				$_headerObject = $headersNew->get($id);
+				$flags = $_headerObject->getFlags();
+			}
 		}
+
 		return $flags;
 	}
 
@@ -2631,7 +2642,7 @@ class mail_bo
 	 */
 	function getNotifyFlags ($_messageUID, $flags=null)
 	{
-		if($flags===null) $flags =  $this->icServer->getFlags($_messageUID, true);
+		if($flags===null) $flags =  $this->getFlags($_messageUID);
 		if (self::$debug) error_log(__METHOD__.$_messageUID.' Flags:'.array2string($flags));
 		if (PEAR::isError($flags))
 		{
@@ -2659,7 +2670,7 @@ class mail_bo
 	 */
 	function flagMessages($_flag, $_messageUID,$_folder=NULL)
 	{
-		error_log(__METHOD__.__LINE__.'->' .$_flag." ".array2string($_messageUID).",$_folder /".$this->sessionData['mailbox']);
+		//error_log(__METHOD__.__LINE__.'->' .$_flag." ".array2string($_messageUID).",$_folder /".$this->sessionData['mailbox']);
 		if (is_null(self::$folderStatusCache) || empty(self::$folderStatusCache[$this->profileID]) || empty(self::$folderStatusCache[$this->profileID][$_folderName]))
 		{
 			self::$folderStatusCache = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
