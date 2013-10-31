@@ -183,7 +183,7 @@ class ajaxfelamimail
 				$this->sessionData['sortReverse'] = false;
 			}
 
-			$this->saveSessionData();
+			$this->saveSessionData(true);
 
 			return $this->generateMessageList($this->sessionData['mailbox']);
 		}
@@ -229,8 +229,7 @@ class ajaxfelamimail
 				$this->sessionData['startMessage'] = 1;
 			}
 
-			$this->saveSessionData();
-			$GLOBALS['egw']->session->commit_session();
+			$this->saveSessionData(true);
 
 			return $this->generateMessageList($this->sessionData['mailbox']);
 		}
@@ -653,6 +652,7 @@ class ajaxfelamimail
 			if(!empty($trashFolder)) {
 				$this->bofelamimail->compressFolder($trashFolder);
 			}
+			$this->saveSessionData(true);
 
 			return $this->generateMessageList($this->sessionData['mailbox']);
 		}
@@ -664,8 +664,7 @@ class ajaxfelamimail
 			$this->sessionData['activeFilter']	= (int)$_filterID;
 			// unset the previewID, as the Message will not probably not be within the selection
 			unset($this->sessionData['previewMessage']);
-			$this->saveSessionData();
-			$GLOBALS['egw']->session->commit_session();
+			$this->saveSessionData(true);
 
 			// generate the new messageview
 			return $this->generateMessageList($this->sessionData['mailbox']);
@@ -695,7 +694,7 @@ class ajaxfelamimail
 			if ($_flag == 'unread' && in_array($this->sessionData['previewMessage'], $_messageList['msg']))
 			{
 				unset($this->sessionData['previewMessage']);
-				$this->saveSessionData();
+				$this->saveSessionData(true);
 			}
 
 			return $this->generateMessageList($this->sessionData['mailbox']);
@@ -968,7 +967,7 @@ class ajaxfelamimail
 		{
 			if($this->_debug) error_log("ajaxfelamimail::gotoStart");
 			$this->sessionData['startMessage']	= 1;
-			$this->saveSessionData();
+			$this->saveSessionData(true);
 
 			return $this->generateMessageList($this->sessionData['mailbox']);
 		}
@@ -994,7 +993,7 @@ class ajaxfelamimail
 
 			$this->sessionData['startMessage'] = $lastPage;
 
-			$this->saveSessionData();
+			$this->saveSessionData(true);
 
 			return $this->generateMessageList($this->sessionData['mailbox']);
 		}
@@ -1003,7 +1002,7 @@ class ajaxfelamimail
 		{
 			if($this->_debug) error_log("ajaxfelamimail::jumpStart");
 			$this->sessionData['startMessage']	= 1;
-			$this->saveSessionData();
+			$this->saveSessionData(true);
 
 			return $this->generateMessageList($this->sessionData['mailbox']);
 		}
@@ -1122,7 +1121,7 @@ class ajaxfelamimail
 			// unset the previewID, as the Message will not be available with the filtered view
 			unset($this->sessionData['previewMessage']);
 
-			$this->saveSessionData();
+			$this->saveSessionData(true);
 
 			// generate the new messageview
 			return $this->generateMessageList($this->sessionData['mailbox']);
@@ -1447,7 +1446,7 @@ class ajaxfelamimail
 			return $response->getXML();
 		}
 
-		function saveSessionData()
+		function saveSessionData($commitSession = false)
 		{
 			egw_cache::setCache(egw_cache::SESSION,'felamimail','ajax_session_data',$this->sessionDataAjax, $expiration=60*60*1);
 			if (isset($this->sessionData['folderStatus']) && is_array($this->sessionData['folderStatus']))
@@ -1456,6 +1455,7 @@ class ajaxfelamimail
 				unset($this->sessionData['folderStatus']);
 			}
 			egw_cache::setCache(egw_cache::SESSION,'felamimail','session_data',$this->sessionData, $expiration=60*60*1);
+			if ($commitSession) $GLOBALS['egw']->session->commit_session();
 		}
 
 		function saveSignature($_mode, $_id, $_description, $_signature, $_isDefaultSignature)
@@ -1682,7 +1682,7 @@ class ajaxfelamimail
 				$this->sessionData['startMessage'] = 1;
 			}
 
-			$this->saveSessionData();
+			$this->saveSessionData(true);
 
 			$response = $this->generateMessageList($this->sessionData['mailbox']);
 
@@ -1702,7 +1702,7 @@ class ajaxfelamimail
 			if($this->sessionData['startMessage'] < 1) {
 				$this->sessionData['startMessage'] = 1;
 			}
-			$this->saveSessionData();
+			$this->saveSessionData(true);
 
 			return $this->generateMessageList($this->sessionData['mailbox']);
 		}
@@ -1794,7 +1794,7 @@ class ajaxfelamimail
 
 			$this->sessionData['mailbox'] 	= $this->sessionDataAjax['folderName']	= $folderName;
 			$this->sessionData['startMessage']	= 1;
-			$this->saveSessionData();
+			$this->saveSessionData(true);
 
 			$messageList = $this->generateMessageList($folderName);
 

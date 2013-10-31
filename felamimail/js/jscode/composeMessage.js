@@ -824,7 +824,10 @@ function fm_compose_sendEMail() {
 		document.getElementById('saveAsDraft').value=0;
 		do_onunload=false;
 		document.doit.submit();
-		return true;
+		if (!(toinfolog.checked==true || totracker.checked==true))
+		{
+//			setTimeout("window.close()",1000);
+		}
 	} else {
 		justClickedSend = false; // since we did not send at all,....
 	}
