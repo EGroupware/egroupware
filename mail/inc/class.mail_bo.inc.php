@@ -168,6 +168,7 @@ class mail_bo
 	 */
 	public static function getInstance($_restoreSession=true, $_profileID=0, $_validate=true)
 	{
+$_restoreSession=false;
 		//error_log(__METHOD__.__LINE__.' RestoreSession:'.$_restoreSession.' ProfileId:'.$_profileID.' called from:'.function_backtrace());
 		if ($_profileID == 0)
 		{
@@ -740,10 +741,10 @@ class mail_bo
 			{
 				//error_log(__METHOD__.__LINE__.array2string($specialUseFolders[$this->icServer->ImapServerId]));
 				// array('Drafts', 'Templates', 'Sent', 'Trash', 'Junk', 'Outbox');
-				if (empty($this->icServer->trashfolder) && ($f = array_search('Trash',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->trashfolder = $f;
-				if (empty($this->icServer->draftfolder) && ($f = array_search('Drafts',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->draftfolder = $f;
-				if (empty($this->icServer->sentfolder) && ($f = array_search('Sent',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->sentfolder = $f;
-				if (empty($this->icServer->templatefolder) && ($f = array_search('Templates',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->templatefolder = $f;
+				if (empty($this->icServer->acc_folder_trash) && ($f = array_search('Trash',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_trash = $f;
+				if (empty($this->icServer->acc_folder_draft) && ($f = array_search('Drafts',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_draft = $f;
+				if (empty($this->icServer->acc_folder_sent) && ($f = array_search('Sent',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_sent = $f;
+				if (empty($this->icServer->acc_folder_template) && ($f = array_search('Templates',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_template = $f;
 			}
 			//error_log(__METHOD__.__LINE__.array2string($_specialUseFolders[$this->icServer->ImapServerId]));
 			self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId]; // make sure this one is set on function call
@@ -777,10 +778,10 @@ class mail_bo
 				egw_cache::setCache(egw_cache::INSTANCE,'email','specialUseFolders'.trim($GLOBALS['egw_info']['user']['account_id']),$_specialUseFolders, $expiration=60*60*24*5);
 			}
 			//error_log(__METHOD__.__LINE__.array2string($_specialUseFolders[$this->icServer->ImapServerId]));
-			if (empty($this->icServer->trashfolder) && ($f = array_search('Trash',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->trashfolder = $f;
-			if (empty($this->icServer->draftfolder) && ($f = array_search('Drafts',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->draftfolder = $f;
-			if (empty($this->icServer->sentfolder) && ($f = array_search('Sent',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->sentfolder = $f;
-			if (empty($this->icServer->templatefolder) && ($f = array_search('Templates',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->templatefolder = $f;
+			if (empty($this->icServer->acc_folder_trash) && ($f = array_search('Trash',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_trash = $f;
+			if (empty($this->icServer->acc_folder_draft) && ($f = array_search('Drafts',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_draft = $f;
+			if (empty($this->icServer->acc_folder_sent) && ($f = array_search('Sent',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_sent = $f;
+			if (empty($this->icServer->acc_folder_template) && ($f = array_search('Templates',(array)$_specialUseFolders[$this->icServer->ImapServerId]))) $this->icServer->acc_folder_template = $f;
 		}
 		self::$specialUseFolders = $_specialUseFolders[$this->icServer->ImapServerId]; // make sure this one is set on function call
 		//error_log(__METHOD__.__LINE__.array2string($_specialUseFolders[$this->icServer->ImapServerId]));
@@ -924,14 +925,14 @@ class mail_bo
 			$retValue['uidvalidity']	= $folderStatus['UIDVALIDITY'];
 			$retValue['unseen']		= $folderStatus['UNSEEN'];
 			if (//$retValue['unseen']==0 &&
-				(isset($this->mailPreferences->preferences['trustServersUnseenInfo']) && // some servers dont serve the UNSEEN information
-				$this->mailPreferences->preferences['trustServersUnseenInfo']==false) ||
-				(isset($this->mailPreferences->preferences['trustServersUnseenInfo']) &&
-				$this->mailPreferences->preferences['trustServersUnseenInfo']==2 &&
+				(isset($this->mailPreferences['trustServersUnseenInfo']) && // some servers dont serve the UNSEEN information
+				$this->mailPreferences['trustServersUnseenInfo']==false) ||
+				(isset($this->mailPreferences['trustServersUnseenInfo']) &&
+				$this->mailPreferences['trustServersUnseenInfo']==2 &&
 				$prefix != '' && stripos($_folderName,$prefix) !== false)
 			)
 			{
-				//error_log(__METHOD__." returned folderStatus for Folder $_folderName:".print_r($prefix,true).' TS:'.$this->mailPreferences->preferences['trustServersUnseenInfo']);
+				//error_log(__METHOD__." returned folderStatus for Folder $_folderName:".print_r($prefix,true).' TS:'.$this->mailPreferences['trustServersUnseenInfo']);
 				// we filter for the combined status of unseen and undeleted, as this is what we show in list
 				$sortResult = $this->getSortedList($_folderName, $_sort=0, $_reverse=1, $_filter=array('status'=>array('UNSEEN','UNDELETED')),$byUid=true,false);
 				$retValue['unseen'] = $sortResult['count'];
@@ -1772,8 +1773,8 @@ class mail_bo
 		}
 		// force unsubscribed by preference showAllFoldersInFolderPane
 		if ($_subscribedOnly == true &&
-			isset($this->mailPreferences->preferences['showAllFoldersInFolderPane']) &&
-			$this->mailPreferences->preferences['showAllFoldersInFolderPane']==1)
+			isset($this->mailPreferences['showAllFoldersInFolderPane']) &&
+			$this->mailPreferences['showAllFoldersInFolderPane']==1)
 		{
 			$_subscribedOnly = false;
 		}
@@ -1916,14 +1917,14 @@ class mail_bo
 						$folderPrefixAsInbox = 'INBOX';
 					}
 				}
-				if (!$_alwaysGetDefaultFolders && $this->mailPreferences->preferences['notavailableautofolders'] && !empty($this->mailPreferences->preferences['notavailableautofolders']))
+				if (!$_alwaysGetDefaultFolders && $this->mailPreferences['notavailableautofolders'] && !empty($this->mailPreferences['notavailableautofolders']))
 				{
-					$foldersToCheck = array_diff(self::$autoFolders,explode(',',$this->mailPreferences->preferences['notavailableautofolders']));
+					$foldersToCheck = array_diff(self::$autoFolders,explode(',',$this->mailPreferences['notavailableautofolders']));
 				} else {
 					$foldersToCheck = self::$autoFolders;
 				}
 				//error_log(__METHOD__.__LINE__." foldersToCheck:".array2string($foldersToCheck));
-				//error_log(__METHOD__.__LINE__." foldersToCheck:".array2string( $this->mailPreferences->preferences['sentFolder']));
+				//error_log(__METHOD__.__LINE__." foldersToCheck:".array2string( $this->mailPreferences['sentFolder']));
 				foreach($foldersToCheck as $personalFolderName) {
 					$folderName = (!empty($personalPrefix) ? $folderPrefix.$personalFolderName : $personalFolderName);
 					//error_log(__METHOD__.__LINE__." foldersToCheck: $personalFolderName / $folderName");
@@ -1937,7 +1938,7 @@ class mail_bo
 									$createfolder=false;
 								break;
 							case 'Junk': //] => Spammails
-								if ($this->mailPreferences->preferences['junkFolder'] && $this->mailPreferences->preferences['junkFolder']=='none')
+								if ($this->mailPreferences['junkFolder'] && $this->mailPreferences['junkFolder']=='none')
 									$createfolder=false;
 								break;
 							case 'Sent': //] => Gesendet
@@ -1957,7 +1958,7 @@ class mail_bo
 									$createfolder=false;
 								break;
 							case 'Outbox': // Nokia Outbox for activesync
-								//if ($this->mailPreferences->preferences['outboxFolder'] && $this->mailPreferences->preferences['outboxFolder']=='none')
+								//if ($this->mailPreferences['outboxFolder'] && $this->mailPreferences['outboxFolder']=='none')
 									$createfolder=false;
 								if ($GLOBALS['egw_info']['user']['apps']['activesync']) $createfolder = true;
 								break;
@@ -2202,10 +2203,10 @@ class mail_bo
 	function _getSpecialUseFolder($_type, $_checkexistance=TRUE)
 	{
 		static $types = array(
-			'Drafts'=>array('prefName'=>'draftFolder','profileKey'=>'draftfolder','autoFolderName'=>'Drafts'),
-			'Template'=>array('prefName'=>'templateFolder','profileKey'=>'templatefolder','autoFolderName'=>'Templates'),
-			'Trash'=>array('prefName'=>'trashFolder','profileKey'=>'trashfolder','autoFolderName'=>'Trash'),
-			'Sent'=>array('prefName'=>'sentFolder','profileKey'=>'sentfolder','autoFolderName'=>'Sent'),
+			'Drafts'=>array('prefName'=>'draftFolder','profileKey'=>'draftfolder','acc_folder_draft'=>'Drafts'),
+			'Template'=>array('prefName'=>'templateFolder','profileKey'=>'acc_folder_template','autoFolderName'=>'Templates'),
+			'Trash'=>array('prefName'=>'trashFolder','profileKey'=>'acc_folder_trash','autoFolderName'=>'Trash'),
+			'Sent'=>array('prefName'=>'sentFolder','profileKey'=>'acc_folder_sent','autoFolderName'=>'Sent'),
 		);
 		if (!isset($types[$_type]))
 		{
@@ -2215,9 +2216,9 @@ class mail_bo
 		if (is_null(self::$specialUseFolders) || empty(self::$specialUseFolders)) self::$specialUseFolders = $this->getSpecialUseFolders();
 
 		//highest precedence
-		$_folderName = $this->mailPreferences->ic_server[$this->profileID]->$types[$_type]['profileKey'];
+		$_folderName = $this->ic_server->$types[$_type]['profileKey'];
 		//check prefs next
-		if (empty($_folderName)) $_folderName = $this->mailPreferences->preferences[$types[$_type]['prefName']];
+		if (empty($_folderName)) $_folderName = $this->mailPreferences[$types[$_type]['prefName']];
 		// does the folder exist???
 		if ($_checkexistance && $_folderName !='none' && !self::folderExists($_folderName)) {
 			$_folderName = false;
@@ -2437,10 +2438,10 @@ class mail_bo
 			{
 				// some servers dont serve the LIST command in certain cases; this is a ServerBUG and
 				// we try to work around it here.
-				if ((isset($this->mailPreferences->preferences['trustServersUnseenInfo']) &&
-					$this->mailPreferences->preferences['trustServersUnseenInfo']==false) ||
-					(isset($this->mailPreferences->preferences['trustServersUnseenInfo']) &&
-					$this->mailPreferences->preferences['trustServersUnseenInfo']==2)
+				if ((isset($this->mailPreferences['trustServersUnseenInfo']) &&
+					$this->mailPreferences['trustServersUnseenInfo']==false) ||
+					(isset($this->mailPreferences['trustServersUnseenInfo']) &&
+					$this->mailPreferences['trustServersUnseenInfo']==2)
 				)
 				{
 					$nameSpace = $this->_getNameSpaces();
@@ -2481,7 +2482,7 @@ class mail_bo
 		$this->icServer->openMailbox($folderName);
 
 		if($folderName == $trashFolder && $deleteOptions == "move_to_trash") {
-			$this->icServer->deleteMessages('1:*');
+			$this->deleteMessages('all');
 			$this->icServer->expunge();
 		} else {
 			$this->icServer->expunge();
@@ -2515,8 +2516,13 @@ class mail_bo
 				return false;
 			}
 		}
+		else
+		{
+			$uidsToDelete = new Horde_Imap_Client_Ids();
+			$uidsToDelete->add($_messageUID);
+		}
 		$deleteOptions = $_forceDeleteMethod; // use forceDeleteMethod if not "no", or unknown method
-		if ($_forceDeleteMethod === 'no' || !in_array($_forceDeleteMethod,array('move_to_trash',"mark_as_deleted","remove_immediately"))) $deleteOptions  = ($this->mailPreferences->preferences['deleteOptions']?$this->mailPreferences->preferences['deleteOptions']:"mark_as_deleted");
+		if ($_forceDeleteMethod === 'no' || !in_array($_forceDeleteMethod,array('move_to_trash',"mark_as_deleted","remove_immediately"))) $deleteOptions  = ($this->mailPreferences['deleteOptions']?$this->mailPreferences['deleteOptions']:"mark_as_deleted");
 		//error_log(__METHOD__.__LINE__.'->'.array2string($_messageUID).','.$_folder.'/'.$this->sessionData['mailbox'].' Option:'.$deleteOptions);
 		$trashFolder    = $this->getTrashFolder();
 		$draftFolder	= $this->getDraftFolder(); //$GLOBALS['egw_info']['user']['preferences']['mail']['draftFolder'];
@@ -2538,7 +2544,7 @@ class mail_bo
 					if (self::$debug) error_log(__METHOD__.__LINE__.implode(' : ', $_messageUID));
 					if (self::$debug) error_log(__METHOD__.__LINE__."$trashFolder <= $_folder / ". $this->sessionData['mailbox']);
 					// copy messages
-					//$retValue = $this->icServer->copy($_folder, $trashFolder, array('ids'=>$_messageUID,'move'=>true));
+					$retValue = $this->icServer->copy($_folder, $trashFolder, array('ids'=>$uidsToDelete,'move'=>true));
 				}
 				break;
 
@@ -2558,11 +2564,6 @@ class mail_bo
 				{
 					$this->flagMessages('undelete', $uid, $_folder);
 				}
-				if ( PEAR::isError($retValue)) {
-					if (self::$debug) error_log(__METHOD__." failed to mark as deleted for Message(s) from $_folder: ".implode(',',$_messageUID));
-					throw new egw_exception("failed to mark as deleted for Message(s) from $_folder: ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
-					return false;
-				}
 				break;
 
 			case "remove_immediately":
@@ -2571,11 +2572,6 @@ class mail_bo
 				{
 					//flag messages, that are flagged for deletion as seen too
 					$this->flagMessages('delete', $uid, $_folder);
-				}
-				if ( PEAR::isError($retValue)) {
-					if (self::$debug) error_log(__METHOD__." failed to remove immediately Message(s) from $_folder: ".implode(',',$_messageUID));
-					throw new egw_exception("failed to remove immediately Message(s) from $_folder: ".implode(',',$_messageUID).' due to:'.array2string($retValue->message));
-					return false;
 				}
 				// delete the messages finaly
 				$this->icServer->expunge();

@@ -129,6 +129,7 @@ class mail_ui
 		//openConnection gathers SpecialUseFolderInformation and Delimiter Info
 		$this->mail_bo->openConnection(self::$icServerID);
 		$GLOBALS['egw']->session->commit_session();
+		//_debug_array($this->mail_bo->mailPreferences);
 	}
 
 	/**
@@ -1013,7 +1014,7 @@ class mail_ui
 			),
 			'delete' => array(
 				'caption' => 'Delete',
-				'hint' => $deleteOptions[$this->mail_bo->mailPreferences->preferences['deleteOptions']],
+				'hint' => $deleteOptions[$this->mail_bo->mailPreferences['deleteOptions']],
 				'group' => ++$group,
 				'onExecute' => 'javaScript:app.mail.mail_delete',
 			),
