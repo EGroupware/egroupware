@@ -738,7 +738,7 @@ class mail_ui
 		$lastFolderUsedForMoveCont = egw_cache::getCache(egw_cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
 		if (isset($lastFolderUsedForMoveCont[$this->mail_bo->profileID]))
 		{
-			$_folder = $this->mail_bo->icServer->currentMailbox();
+			$_folder = $this->mail_bo->icServer->getCurrentMailbox();
 			//error_log(__METHOD__.__LINE__.' '.$_folder."<->".$lastFolderUsedForMoveCont[$this->mail_bo->profileID].function_backtrace());
 			//if ($_folder!=$lastFolderUsedForMoveCont[$this->mail_bo->profileID]) $this->mail_bo->icServer->selectMailbox($lastFolderUsedForMoveCont[$this->mail_bo->profileID]);
 			if ($_folder!=$lastFolderUsedForMoveCont[$this->mail_bo->profileID])
@@ -3428,6 +3428,7 @@ blockquote[type=cite] {
 			}
 			try
 			{
+				//error_log(__METHOD__."->".print_r($messageList,true).' Method:'.$_forceDeleteMethod);
 				$this->mail_bo->deleteMessages(($_messageList=='all' ? 'all':$messageList),$folder,(empty($_forceDeleteMethod)?'no':$_forceDeleteMethod));
 			}
 			catch (egw_exception $e)
