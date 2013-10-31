@@ -1440,8 +1440,8 @@ class calendar_groupdav extends groupdav_handler
 				HTTP_WebDAV_Server::mkprop('report',array(
 					HTTP_WebDAV_Server::mkprop(groupdav::CALDAV,'free-busy-query',''))))),
 		);
-		// rfc 6578 sync-collection report, not for inbox, as we dont report accepted events as deleted, because we filter!
-		if (!preg_match('#/(inbox|outbox)/#', $path))
+		// rfc 6578 sync-collection report for everything but outbox
+		if (strpos($path, '/outbox/') === false)
 		{
 			$props['supported-report-set']['sync-collection'] = HTTP_WebDAV_Server::mkprop('supported-report',array(
 				HTTP_WebDAV_Server::mkprop('report',array(
