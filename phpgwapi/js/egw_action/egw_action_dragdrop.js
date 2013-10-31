@@ -139,7 +139,7 @@ function egwDragActionImplementation()
 	{
 		var node = _aoi.getDOMNode();
 
-		if (node) {
+		if (node && $j(node).data("uiDraggable")){
 			$j(node).draggable("destroy");
 		}
 	}
@@ -379,7 +379,7 @@ function egwDropActionImplementation()
 	{
 		var node = _aoi.getDOMNode();
 
-		if (node) {
+		if (node && $j(node).data("uiDroppable")) {
 			$j(node).droppable("destroy");
 		}
 	}
