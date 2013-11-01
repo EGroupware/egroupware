@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="importexport.schedule_edit" template="" lang="" group="0" version="1.9.003">
+	<template id="importexport.schedule_edit" template="" lang="" group="0" version="1.9.004">
 		<grid>
 			<columns>
 				<column/>
@@ -21,13 +21,13 @@
 				<row>
 					<description value="Application"/>
 					<menulist>
-						<menupopup id="appname" onchange="xajax_doXMLHTTP('importexport.importexport_schedule_ui.ajax_get_plugins', document.getElementById(form::name('type')).value, this.value);"/>
+						<menupopup id="appname" onchange="1"/>
 					</menulist>
 				</row>
 				<row>
 					<description value="Plugin"/>
 					<menulist>
-						<menupopup id="plugin" onchange="xajax_doXMLHTTP('importexport.importexport_schedule_ui.ajax_get_definitions', document.getElementById(form::name('appname')).value, this.value);" options="Select..."/>
+						<menupopup id="plugin" onchange="1" options="Select..."/>
 					</menulist>
 				</row>
 				<row>

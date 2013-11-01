@@ -59,9 +59,8 @@ class importexport_definitions_ui
 		error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 		$GLOBALS['egw']->translation->add_app(self::_appname);
 		$GLOBALS['egw_info']['flags']['currentapp'] = self::_appname;
-
-		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-		$this->etpl = new etemplate();
+		
+		$this->etpl = new etemplate_new();
 		$this->clock = html::image(self::_appname,'clock');
 		$this->steps = array(
 			'wizard_step10' => lang('Choose an application'),
@@ -163,7 +162,6 @@ class importexport_definitions_ui
 				'no_cat'	=> true,
 				'no_filter'	=> true,
 				'no_filter2'	=> true,
-				'header_right'	=> 'importexport.definition_index.add',
 				'csv_fields'	=> false,	// Disable CSV export, uses own export
 				'default_cols'  => '!actions',  // switch legacy actions column and row off by default
 				'row_id'	=> 'definition_id',
@@ -189,7 +187,7 @@ class importexport_definitions_ui
 		}
 		if($msg) $content['msg'] = $msg;
 
-		$etpl = new etemplate(self::_appname.'.definition_index');
+		$etpl = new etemplate_new(self::_appname.'.definition_index');
 		return $etpl->exec( self::_appname.'.importexport_definitions_ui.index', $content, $sel_options, $readonlys, $preserv );
 	}
 
@@ -489,32 +487,19 @@ class importexport_definitions_ui
 
 	function wizard($content = null, $msg='')
 	{
-		$GLOBALS['egw_info']['flags']['java_script'] .=
-			"<script type='text/javascript'>
-				function xajax_eT_wrapper_init() {
-					//window.resizeTo(document.documentElement.scrollWidth+20,document.documentElement.offsetHeight+40);
-					window.moveTo(screen.availWidth/2 - window.outerWidth/2,
-						screen.availHeight/2 - window.outerHeight/2);
-				}
-			</script>";
-
 		$this->etpl->read('importexport.wizardbox');
-		$this->wizard_content_template =& $this->etpl->children[0]['data'][1]['A'][2][1]['name'];
 
 		if(is_array($content) &&! $content['edit'])
 		{
 			if(self::_debug) error_log('importexport.wizard->$content '. print_r($content,true));
+			foreach($content as $key => $val) error_log(" $key : ".array2string($val));
 			// fetch plugin object
 			if($content['plugin'] && $content['application'])
 			{
 				$wizard_name = $content['application'] . '_wizard_' . str_replace($content['application'] . '_', '', $content['plugin']);
 
 				// we need to deal with the wizard object if exists
-				if (file_exists(EGW_SERVER_ROOT . '/'. $content['application'].'/importexport/class.wizard_'. $content['plugin'].'.inc.php'))
-				{
-					error_log('Deprecated location for importexport wizard.  Please move it to app/inc/ and rename it to follow new conventions');
-				}
-				elseif (file_exists(EGW_SERVER_ROOT . '/'. $content['application']."/inc/class.$wizard_name.inc.php"))
+				if (file_exists(EGW_SERVER_ROOT . '/'. $content['application']."/inc/class.$wizard_name.inc.php"))
 				{
 					$wizard_plugin = $wizard_name;
 				}
@@ -539,7 +524,8 @@ class importexport_definitions_ui
 			}
 
 			// post process submitted step
-			if($content['step']) {
+			if($content['step'])
+			{
 				if(!$this->can_edit($content))
 				{
 					// Each step changes definition, reload it
@@ -549,30 +535,28 @@ class importexport_definitions_ui
 				}
 				if(!key_exists($content['step'],$this->steps))
 				{
-					$next_step = $this->plugin->$content['step']($content);
+					$next_step = $this->plugin->$content['step']($content,$sel_options,$readonlys,$preserv);
 				}
 				else
 				{
-					$next_step = $this->$content['step']($content);
+					$next_step = $this->$content['step']($content,$sel_options,$readonlys,$preserv);
 				}
-			} else {
+			}
+			else
+			{
 				die('Cannot find next step');
 			}
 
 			// pre precess next step
 			$sel_options = $readonlys = $preserv = array();
 
-			// Override next button on step 30, to do a regular submit for the file upload
-			if($next_step == 'wizard_step30')
-			{
-				$this->etpl->set_cell_attribute('button[next]', 'onclick', '');
-			}
-
 			// Disable finish button if required fields are missing
-			if(!$content['name'] || !$content['type'] || !$content['plugin']) {
-				$GLOBALS['egw']->js->set_onload("disable_button('exec[button][finish]');");
+			if(!$content['name'] || !$content['type'] || !$content['plugin'])
+			{
+				$readonlys['button[finish]'] = true;
 			}
-			do {
+			do
+			{
 				if(!key_exists($next_step,$this->steps))
 				{
 					$this->wizard_content_template = $this->plugin->$next_step($content,$sel_options,$readonlys,$preserv);
@@ -593,25 +577,29 @@ class importexport_definitions_ui
 					}
 				}
 			} while($this->wizard_content_template == self::SKIP);
-
+			
 			if(!$this->can_edit($content))
 			{
 				$readonlys[$this->wizard_content_template] = true;
 				$preserve = $content;
-				$GLOBALS['egw']->js->set_onload("disable_button('exec[button][finish]');");
+				$readonlys['button[finish]'] = true;
 			}
 
-			$html = $this->etpl->exec(self::_appname.'.importexport_definitions_ui.wizard',$content,$sel_options,$readonlys,$preserv,1);
+			unset($content['button']);
+			$content['wizard_content'] = $this->wizard_content_template;
+			error_log('------- STARTING EXEC --------');
+			$this->etpl->exec(self::_appname.'.importexport_definitions_ui.wizard',$content,$sel_options,$readonlys,$preserv);
+			error_log('------- DONE EXEC --------');
 		}
 		else
 		{
 			// initial content
-			$GLOBALS['egw']->js->set_onload("xajax_eT_wrapper_init();");
-			$GLOBALS['egw']->js->set_onload("disable_button('exec[button][previous]');");
-
 			$sel_options = $readonlys = $preserv = array();
+			$readonlys['button[previous]'] = true;
 			if($content['edit'])
+			{
 				unset ($content['edit']);
+			}
 
 			$this->wizard_content_template = $this->wizard_step10($content, $sel_options, $readonlys, $preserv);
 
@@ -619,62 +607,11 @@ class importexport_definitions_ui
 			{
 				$readonlys[$this->wizard_content_template] = true;
 				$preserve = $content;
-				$GLOBALS['egw']->js->set_onload("disable_button('exec[button][finish]');");
+				$readonlys['button[finish]'] = true;
 			}
 
-			$html = $this->etpl->exec(self::_appname.'.importexport_definitions_ui.wizard',$content,$sel_options,$readonlys,$preserv,1);
-		}
-
-		if(class_exists('xajaxResponse'))
-		{
-			$this->response = new xajaxResponse();
-
-			egw_framework::include_css_js_response();
-			if ($content['closewindow'])
-			{
-				$this->response->addScript("opener.location.reload();");
-				$this->response->addScript("window.close();");
-				// If Browser can't close window we display a "close" buuton and
-				// need to disable normal buttons
-				$this->response->addAssign('exec[button][previous]','style.display', 'none');
-				$this->response->addAssign('exec[button][next]','style.display', 'none');
-				$this->response->addAssign('exec[button][finish]','style.display', 'none');
-				$this->response->addAssign('exec[button][cancel]','style.display', 'none');
-			}
-			$this->response->addAssign('contentbox', 'innerHTML', $html);
-			if (($onload = $GLOBALS['egw']->js->set_onload('')))
-			{
-				$this->response->addScript($onload);
-			}
-			$this->response->addAssign('picturebox', 'style.display', 'none');
-			$this->response->addScript("set_style_by_class('div','popupManual','display','inline');
-				popup_resize();
-			");
-
-			return $this->response->getXML();
-		}
-		else
-		{
-			$GLOBALS['egw']->js->set_onload("document.getElementById('picturebox').style.display = 'none';");
-			egw_framework::validate_file('.', 'etemplate', 'etemplate');
-			egw_framework::validate_file('.', 'etemplate', 'etemplate');
-			common::egw_header();
-			echo '<div id="divMain">'."\n";
-			echo '<div><h3>{Im|Ex}port Wizard</h3></div>';
-			// adding a manual icon to every popup
-			if ($GLOBALS['egw_info']['user']['apps']['manual'])
-			{
-				$manual = new etemplate('etemplate.popup.manual');
-				echo $manual->exec(self::_appname.'.importexport_definitions_ui.wizard',$content,$sel_options,$readonlys,$preserv,1);
-				unset($manual);
-			}
-
-			echo '<div id="contentbox">';
-			echo $html;
-			echo '</div></div>'."\n";
-			echo '<style type="text/css">#picturebox { position: absolute; right: 27px; top: 24px; }</style>'."\n";
-			echo '<div id="picturebox">'. $this->clock. '</div>';
-			return;
+			$content['wizard_content'] = $this->wizard_content_template;
+			$this->etpl->exec(self::_appname.'.importexport_definitions_ui.wizard',$content,$sel_options,$readonlys,$preserv);
 		}
 	}
 
@@ -735,7 +672,7 @@ class importexport_definitions_ui
 					$sel_options['application'][$appname] = lang($appname);
 				}
 			}
-			$GLOBALS['egw']->js->set_onload("disable_button('exec[button][previous]');");
+			$readonlys['button[previous]'] = true;
 			$content['step'] = 'wizard_step10';
 			$preserv = $content;
 			unset ($preserv['button']);
@@ -766,9 +703,7 @@ class importexport_definitions_ui
 					return $this->get_step($content['step'],1);
 				case 'previous' :
 					unset ($content['plugin']);
-					if(is_object($this->response)) {
-						$this->response->addScript("disable_button('exec[button][previous]');");
-					}
+					$readonlys['button[previous]'] = true;
 					return $this->get_step($content['step'],-1);
 				case 'finish':
 					return 'wizard_finish';
@@ -900,8 +835,9 @@ class importexport_definitions_ui
 
 			// Set owner for non-admins
 			$content['just_me'] = ((!$content['allowed_users'] || !$content['allowed_users'][0] && count($content['allowed_users']) ==1) && $content['owner']);
-			//if(!$GLOBALS['egw_info']['user']['apps']['admin'] && !$GLOBALS['egw']->acl->check('share_definition', EGW_ACL_READ, 'importexport')) {
-			if(!$GLOBALS['egw']->acl->check('share_definition', EGW_ACL_READ, 'importexport') && !$GLOBALS['egw_info']['user']['apps']['admin']) {
+			$content['all_users'] = is_array($content['allowed_users']) && array_key_exists('0',$content['allowed_users']) || $content['allowed_users'] == 'all';
+			if(!$GLOBALS['egw']->acl->check('share_definition', EGW_ACL_READ, 'importexport') && !$GLOBALS['egw_info']['user']['apps']['admin'])
+			{
 				$content['allowed_users'] = array();
 				$readonlys['allowed_users'] = true;
 				$readonlys['just_me'] = true;
@@ -919,10 +855,8 @@ class importexport_definitions_ui
 				$content['no_all_users'] = true;
 			}
 			unset ($preserv['button']);
-			$GLOBALS['egw']->js->set_onload("disable_button('exec[button][next]');");
-			if(is_object($this->response)) {
-				$this->response->addAssign('exec[button][next]','style.display', 'none');
-			}
+			
+			$readonlys['button[next]'] = true;
 			return 'importexport.wizard_chooseallowedusers';
 		}
 	}
@@ -939,7 +873,8 @@ class importexport_definitions_ui
 		$bodefinitions->save($content);
 		// This message is displayed if browser cant close window
 		$content['msg'] = lang('ImportExport wizard finished successfully!');
-		$content['closewindow'] = true;
+		egw_framework::refresh_opener('','importexport');
+		egw_framework::window_close();
 		return 'importexport.wizard_close';
 	}
 

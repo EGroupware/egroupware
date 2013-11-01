@@ -11,7 +11,7 @@
 					<description id="msg"/>
 				</row>
 				<row>
-					<filter id="set_filter" options="1"/>
+					<filter id="set_filter" relative_dates="true"/>
 				</row>
 			</rows>
 		</grid>

@@ -30,8 +30,8 @@
 					</menulist>
 				</row>
 				<row>
-					<box id="plugin_description" needed="1" span="all">
-						<description id="description" needed="1" no_lang="1" span="all"/>
+					<box id="plugin_description" span="all">
+						<description id="description" no_lang="1" span="all"/>
 					</box>
 				</row>
 			</rows>
@@ -74,7 +74,7 @@
 				</row>
 				<row valign="top" disabled="!@plugin_selectors_template">
 					<template id="@plugin_selectors_template"/>
-					<box onclick="\$j('input[value=\'filter\']').not(':checked').attr('checked',true).parent().effect('highlight',{},2000);" class="filters">
+					<box onclick="jQuery('input[value=\'filter\']').not(':checked').attr('checked',true).parent().effect('highlight',{},2000);" class="filters">
 						<filter id="filter"/>
 					</box>
 				</row>
@@ -159,26 +159,24 @@
 				<row>
 					<hbox span="all">
 						<hbox>
-							<button label="Export" id="export" onclick="xajax_eT_wrapper(this);return false;"/>
-							<button label="Preview" id="preview" onclick="xajax_eT_wrapper(this);return false;"/>
+							<button label="Export" id="export"/>
+							<button label="Preview" id="preview" onclick="app.importexport.export_preview"/>
 						</hbox>
 						<button align="right" label="Cancel" id="cancel" onclick="window.close(); return false;"/>
 					</hbox>
 				</row>
 				<row>
 					<box id="preview_box" span="all" class="preview_box">
-						<box id="preview-box" needed="1" class="content">
-							<description/>
-						</box>
+						<html id="preview-box" class="content"/>
 						<box align="center" id="preview-box-buttons" class="preview-box-buttons">
-							<button align="center" label="OK" onclick="document.getElementById(form::name('preview_box')).style.display='none'; return false;"/>
+							<button align="center" label="OK" onclick="jQuery(this).parents('div.preview_box').css('display','none'); return false;"/>
 						</box>
 					</box>
 				</row>
 			</rows>
 		</grid>
 		<styles>
-			.preview_box {
+			div.preview_box {
   position: absolute;
   top: 0px;
   left: 0px;

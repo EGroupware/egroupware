@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="importexport.wizardbox" template="" lang="" group="0" version="0.0.2">
+		<grid width="100%" height="400">
+			<columns>
+				<column width="100%"/>
+			</columns>
+			<rows>
+				<row valign="top">
+					<hbox no_lang="1">
+						<image src="importexport"/>
+						<vbox>
+							<description/>
+							<box class="wizard_content">
+								<template id="@wizard_content"/>
+							</box>
+						</vbox>
+					</hbox>
+				</row>
+				<row valign="bottom">
+					<hbox span="all">
+						<hbox>
+							<button label="previous" id="button[previous]"/>
+							<button label="next" id="button[next]"/>
+							<button label="finish" id="button[finish]"/>
+						</hbox>
+						<button align="right" label="cancel" id="button[cancel]" onclick="window.close(); return false;"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.wizard_content {
+   height: 365px;
+   width: 370px;
+   max-height:365px;
+   overflow:auto;
+}
+		</styles>
+	</template>
+</overlay>

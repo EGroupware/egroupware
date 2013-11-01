@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="importexport.schedule_index" template="" lang="" group="0" version="1.9.001">
-		<grid>
+	<template id="importexport.schedule_index" template="" lang="" group="0" version="1.9.002">
+		<grid width="100%">
 			<columns>
 				<column/>
 			</columns>
@@ -73,8 +73,8 @@
 												<description id="times" no_lang="1"/>
 											</vbox>
 											<hbox options="0,0">
-												<button id="edit[{$cont[id]}]" onclick="window.open(egw::link('/index.php','menuaction=importexport.importexport_schedule_ui.edit&amp;id={$cont[id]}'),'_blank','dependent=yes,width=600,height=450,scrollbars=yes,status=yes'); return false;" image="edit"/>
-												<button id="delete[{$cont[id]}]" image="delete"/>
+												<button id="edit[{$_cont[id]}]" onclick="window.open(egw::link('/index.php','menuaction=importexport.importexport_schedule_ui.edit&amp;id={$_cont[id]}'),'_blank','dependent=yes,width=600,height=450,scrollbars=yes,status=yes'); return false;" image="edit"/>
+												<button id="delete[{$_cont[id]}]" image="delete"/>
 											</hbox>
 										</row>
 										<row class="th" disabled="!@result">

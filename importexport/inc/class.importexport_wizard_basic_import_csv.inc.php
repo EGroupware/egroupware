@@ -79,9 +79,7 @@ class importexport_wizard_basic_import_csv
 				case 'next':
 					// Move sample file to temp
 					if($content['file']['tmp_name']) {
-						$csvfile = tempnam($GLOBALS['egw_info']['server']['temp_dir'],$content['plugin']."_");
-						move_uploaded_file($content['file']['tmp_name'], $csvfile);
-						$GLOBALS['egw']->session->appsession('csvfile',$content['application'],$csvfile);
+						$GLOBALS['egw']->session->appsession('csvfile',$content['application'],$content['file']['tmp_name']);
 					}
 					unset($content['file']);
 					return $GLOBALS['egw']->importexport_definitions_ui->get_step($content['step'],1);
@@ -126,6 +124,7 @@ class importexport_wizard_basic_import_csv
 					// Process sample file for fields
 					if (($handle = fopen($GLOBALS['egw']->session->appsession('csvfile',$content['application']), "rb")) !== FALSE) {
 						$data = fgetcsv($handle, 8000, $content['fieldsep']);
+						error_log($data);
 						fclose($handle);
 
 						// Remove & forget file
@@ -270,31 +269,24 @@ class importexport_wizard_basic_import_csv
 		// return from step50
 		if ($content['step'] == 'wizard_step50')
 		{
-			for($i = 0; $i <= count($content['csv_fields']); $i++) {
-				unset($content[$i]);
-			}
-			if(!$content['csv_fields'][0]) {
-				array_shift($content['csv_fields']);
-			}
-			// Need to move everything down 1 to remove header, but shift will re-key
-			if(!$content['field_mapping'][0] || $content['field_mapping'][0] == $content['field_mapping'][1]) {
-				unset($content['field_mapping'][0]);
-				if(is_array($content['field_conversion'])) unset($content['field_conversion'][0]);
-				foreach(array('field_mapping', 'field_conversion') as $field) {
-					ksort($content[$field]);
-					foreach($content[$field] as $key => $value)
+			unset($content['field_mapping']);
+			unset($content['field_conversion']);
+			foreach($content['mapping'] as $field)
+			{
+				$index = $field['index'];
+				foreach(array('conversion'=>'field_conversion', 'field' => 'field_mapping') as $id => $dest)
+				{
+					if(trim($field[$id]) != '')
 					{
-						if($value && $value != '--NONE--') {
-							$content[$field][$key-1] = $content[$field][$key];
-						}
-						unset($content[$field][$key]);
+						$content[$dest][$index] = trim($field[$id]);
 					}
-					ksort($content[$field]);
 				}
 			}
-			foreach($content['field_conversion'] as $field => $convert) {
-				if(!trim($convert)) unset($content['field_conversion'][$field]);
+			foreach($content['csv_fields'] as $index => $title)
+			{
+				error_log("$index: $title => {$content['field_mapping'][$index]}");
 			}
+			unset($content['mapping']);
 			switch (array_search('pressed', $content['button']))
 			{
 				case 'next':
@@ -312,41 +304,19 @@ class importexport_wizard_basic_import_csv
 		{
 			$content['msg'] = $this->steps['wizard_step50'];
 			$content['step'] = 'wizard_step50';
+
+			$content['mapping'] = array(false);
+			foreach($content['csv_fields'] as $index => $title)
+			{
+				$content['mapping'][] = array(
+					'index'	=>	$index,
+					'title' => $title,
+					'field'	=>	$content['field_mapping'][$index],
+					'conversion'	=>	$content['field_conversion'][$index]
+				);
+			}
 			$preserv = $content;
-
-			if(!$content['field_mapping'] && $content['plugin_options']) {
-				$content['field_mapping'] = $content['plugin_options']['field_mapping'];
-				$content['field_conversion'] = $content['plugin_options']['field_conversion'];
-			}
-
-			array_unshift($content['csv_fields'], array('row0'));
-			// Need to move everything down 1 to make room for header, but unshift will re-key
-			// which causes problems if you skip a field.
-			foreach(array('field_mapping', 'field_conversion') as $field) {
-				foreach(array_reverse($content[$field], true) as $key => $value)
-				{
-					if($value) {
-						$content[$field][$key+1] = $content[$field][$key];
-					}
-					unset($content[$field][$key]);
-				}
-				ksort($content[$field]);
-			}
-
-			$j = 1;
-			$i = 0;
-			foreach ($content['csv_fields'] as $field)
-			{
-				$content[++$i]['index'] = $i - 1;
-				if(strstr($field,'no_csv_')) $j++;
-			}
-			while ($j <= 3)
-			{
-				$content['csv_fields'][] = 'no_csv_'.$j;
-				$content['field_mapping'][] = $content['field_conversion'][] = '';
-				$j++;
-			}
-			$sel_options['field_mapping'] = array('--NONE--' => lang('none')) + $this->mapping_fields;
+			$sel_options['field'] = array('--NONE--' => lang('none')) + $this->mapping_fields;
 			$GLOBALS['egw']->js->set_onload('$j("option[value=\'--NONE--\']:selected").closest("tr").animate({backgroundColor: "#ffff99"}, 1000);');
 			unset ($preserv['button']);
 			return $this->step_templates[$content['step']];

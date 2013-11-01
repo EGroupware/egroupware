@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="importexport.wizard_basic_import_csv.fieldmapping" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description id="msg" no_lang="1" span="all"/>
+				</row>
+				<row>
+					<grid overflow="auto" id="mapping">
+						<columns>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description/>
+								<description/>
+								<description value="CSV Field"/>
+								<description value="Target Field"/>
+								<description value="Translation"/>
+							</row>
+							<row>
+								<description value="${row}[index]" no_lang="1"/>
+								<description value="${row_cont[index]}" no_lang="1"/>
+								<description value="{$row_cont[title]}" no_lang="1"/>
+								<menulist>
+									<menupopup id="{$row}[field]" no_lang="1"/>
+								</menulist>
+								<textbox id="{$row}[conversion]"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.et2_grid[id$='mapping'] td:first-child {
+display:none;
+}
+		</styles>
+	</template>
+</overlay>

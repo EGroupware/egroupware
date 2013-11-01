@@ -4,13 +4,13 @@
 	<template id="importexport.definition_index.row" template="" lang="" group="0" version="1.9.002">
 		<grid width="100%">
 			<columns>
+				<column width="20px"/>
 				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column/>
-				<column disabled="@no_actions"/>
+				<column width="150px"/>
+				<column width="150px"/>
+				<column width="150px"/>
+				<column width="10px"/>
+				<column width="10px" disabled="@no_actions"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -59,7 +59,7 @@
 					<description align="center" id="msg" no_lang="1" span="all" class="message"/>
 				</row>
 				<row>
-					<nextmatch cols="6" id="nm" rows="2" options="importexport.definition_index.row"/>
+					<nextmatch id="nm" template="importexport.definition_index.row"/>
 				</row>
 				<row disabled="!@nm[selectcols]=/actions/">
 					<hbox align="right">
@@ -68,13 +68,13 @@
 					</hbox>
 				</row>
 				<row>
-					<hbox>
-						<box class="action_popup prompt" id="owner_popup">
-							<vbox>
-								<description value="Change owner" class="promptheader"/>
+					<box>
+						<box id="owner_popup" class="action_popup prompt">
+							<description value="Change owner" class="promptheader"/>
+							<vbox class="action_popup-content">
 								<description value="Select owner"/>
-								<menulist class="action_popup-content">
-									<menupopup type="select-account" id="owner" options="None,accounts"/>
+								<menulist>
+									<menupopup type="select-account" class="action_popup-content" id="owner" options="None,accounts"/>
 								</menulist>
 								<hbox>
 									<button label="Save" onclick="nm_submit_popup(this); return false;"/>
@@ -82,7 +82,7 @@
 								</hbox>
 							</vbox>
 						</box>
-						<box class="action_popup prompt" id="allowed_popup">
+						<box id="allowed_popup" class="action_popup prompt">
 							<vbox>
 								<description value="Change allowed users" class="promptheader"/>
 								<description value="Select groups"/>
@@ -95,12 +95,12 @@
 								</hbox>
 							</vbox>
 						</box>
-					</hbox>
+					</box>
 				</row>
 			</rows>
 		</grid>
 		<styles>
-			.redItalic { color:red; font-style:italic;}			td.lr_padding { padding-left: 5px; padding-right: 5px; }
+			td.lr_padding { padding-left: 5px; padding-right: 5px; }
 
 .button {
   cursor: pointer;

@@ -26,7 +26,7 @@
 		protected static $template;
 
 		public function __construct() {
-			$this->template = new etemplate();
+			$this->template = new etemplate_new();
 		}
 
 		public function index($content = array()) {

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="importexport.wizard_basic_import_csv.sample_file" template="" lang="" group="0" version="0.0.1">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description id="msg" no_lang="1"/>
+				</row>
+				<row>
+					<file id="file"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

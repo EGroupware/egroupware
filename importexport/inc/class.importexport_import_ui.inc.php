@@ -43,6 +43,8 @@
 			$appname = $_GET['appname'] ? $_GET['appname'] : $content['appname'];
 			$definition = $_GET['definition'] ? $_GET['definition'] : $content['definition'];
 
+			$template = new etemplate_new('importexport.import_dialog');
+			
 			// Load application's translations
 			if($appname)
 			{
@@ -115,10 +117,15 @@
 							$this->message .= '<b>' . lang('Import aborted').":</b><br />\n";
 							$definition_obj->plugin_options = (array)$definition_obj->plugin_options + array('dry_run' => true);
 						}
-						$this->message .= implode($check_message, "<br />\n") . "<br />\n";
+						if(count($check_message))
+						{
+							$this->message .= implode($check_message, "<br />\n") . "<br />\n";
+						}
 						if($content['dry-run'])
 						{
-							echo $this->preview($plugin, $file, $definition_obj);
+							$preview = $this->preview($plugin, $file, $definition_obj);
+							$template->setElementAttribute('preview', 'value', $preview);
+							if(trim($this->message) == '') return;
 						}
 						else
 						{
@@ -138,7 +145,10 @@
 					$this->message .= lang('%1 records processed', $count);
 
 					// Refresh opening window
-					if(!$content['dry-run']) $GLOBALS['egw']->js->set_onload("window.opener.egw_refresh('".lang('%1 records processed',$count) . "','$appname',null,null,'$appname');");
+					if(!$content['dry-run'])
+					{
+						egw_framework::refresh_opener(lang('%1 records processed',$count), $appname, null,null,$appname);
+					}
 					$total_processed = 0;
 					foreach($plugin->get_results() as $action => $a_count) {
 						$this->message .= "<br />\n" . lang($action) . ": $a_count";
@@ -197,7 +207,6 @@
 
 			if($_GET['appname']) $readonlys['appname'] = true;
 
-			$template = new etemplate('importexport.import_dialog');
 			$template->exec('importexport.importexport_import_ui.import_dialog', $data, $sel_options, $readonlys, $preserve, 2);
 		}
 
@@ -317,7 +326,7 @@
 				if($count != $total_processed) $this->message .= "<br />\n".lang('Some records may not have been imported');
 				$this->message .= "<br />\n";
 			}
-			return '<h2>' . lang('Preview') . ' - ' . $plugin->get_name() . '</h2>' . $preview;
+			return '<div class="header">' . lang('Preview') . ' - ' . $plugin->get_name() . '</div>' . $preview;
 		}
 
 		/**

@@ -48,7 +48,7 @@ class importexport_export_ui {
 		$readonlys = array();
 		$preserv = array();
 
-		$et = new etemplate(self::_appname. '.export_dialog');
+		$et = new etemplate_new(self::_appname. '.export_dialog');
 		$_appname = $_content['appname'] ? $_content['appname'] : $_GET['appname'];
 		$_definition = $_content['definition'] ? $_content['definition'] : $_GET['definition'];
 		$_plugin = $_content['plugin'] ? $_content['plugin'] : $_GET['plugin'];
@@ -68,7 +68,7 @@ class importexport_export_ui {
 		$content['appname'] = $_appname;
 		$preserv['appname'] = $_appname;
 		if(empty($_appname)) {
-			$this->js->set_onload('$j("tr.select_definition").css("display","none");');
+			$et.setElementAttribute('select_definition','disabled',true);
 		}
 
 		// Check for preferred definition
@@ -148,7 +148,7 @@ class importexport_export_ui {
 		if(!$sel_options['delimiter'][$content['delimiter']]) $sel_options['delimiter'][$content['delimiter']] = $content['delimiter'];
 		$sel_options['delimiter'][$content['delimiter']] = lang('Use default') . ' "' . $sel_options['delimiter'][$content['delimiter']] . '"';
 
-		if(!$_content['delimiter']) $this->js->set_onload('jQuery(\'[other_delimiter]\').hide();');
+		if(!$_content['delimiter']) $et->setElementAttribute('other_delimiter','disabled',true);
 
 		// Other delimiter (options)
 		if($_content['other_delimiter']) $_content['delimiter'] = $_content['other_delimiter'];
@@ -223,11 +223,6 @@ class importexport_export_ui {
 					}
 				}
 			}
-		} elseif (!$_selection) {
-			$this->js->set_onload("
-				disable_button('exec[preview]');
-				disable_button('exec[export]');
-			");
 		}
 
 		$preserv['old_definition'] = $content['definition'];
@@ -257,20 +252,14 @@ class importexport_export_ui {
 		$sel_options['appname'] = array('' => lang('Select one')) + array_combine($apps,$apps);
 		if(!$_application && !$selected_plugin) {
 			$content['plugin_selectors_html'] = $content['plugin_options_html'] =
-					lang('You need to select an app and format first!');
-			$this->js->set_onload("document.getElementById('importexport.export_dialog.options_tab-tab').style.visibility='hidden';");
-			$this->js->set_onload("document.getElementById('importexport.export_dialog.selection_tab-tab').style.visibility='hidden';");
+			lang('You need to select an app and format first!');
+			$readonlys[$tabs] = array('selection_tab' => true, 'options_tab' => true);
 		}
 
-		// disable preview box
-		$this->js->set_onload('$j(\'tr.preview-box\').hide();');
-
-
-		//xajax_eT_wrapper submit
-		if(class_exists('xajaxResponse'))
+		if($_content['preview'] || $_content['export'])
 		{
 			//error_log(__LINE__.__FILE__.'$_content: '.print_r($_content,true));
-			$response = new xajaxResponse();
+			$response = egw_json_response::get();
 
 			if ($_content['definition'] == 'expert') {
 				$definition = new importexport_definition();
@@ -294,7 +283,7 @@ class importexport_export_ui {
 
 			// Set filter
 			// Note that because not all dates are DB dates, the plugin has to handle them
-			$filter = $definition->filter;
+			$filter = array();
 			if(is_array($_content['filter']))
 			{
 				foreach($_content['filter'] as $key => $value)
@@ -317,6 +306,8 @@ class importexport_export_ui {
 					}
 				}
 			}
+			error_log(array2string($filter));
+
 			unset($_content['filter']);
 			$definition->filter = $filter;
 
@@ -326,8 +317,8 @@ class importexport_export_ui {
 			);
 
 			if(!$definition->plugin_options['selection']) {
-				$response->addScript('alert("' . lang('No records selected') . '");');
-				return $response->getXML();
+				$response->alert( lang('No records selected'));
+				return;
 			}
 
 			$tmpfname = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'export');
@@ -352,11 +343,6 @@ class importexport_export_ui {
 			if(is_object($result) && method_exists($result, 'get_num_of_records'))
 			{
 				$record_count = $result->get_num_of_records();
-				if($record_count == 0)
-				{
-					$response->addScript('alert("' . lang('No matching records') . '");');
-					return $response->getXML();
-				}
 			}
 
 			// Store charset to use in header
@@ -365,7 +351,6 @@ class importexport_export_ui {
 			if($_content['export'] == 'pressed') {
 				fclose($file);
 				$filename = pathinfo($tmpfname, PATHINFO_FILENAME);
-				$response->addScript("xajax_eT_wrapper();");
 				$link_query = array(
 					'menuaction'	=> 'importexport.importexport_export_ui.download',
 					'_filename'	=> $filename,
@@ -379,9 +364,9 @@ class importexport_export_ui {
 				{
 					$link_query['filename'] = $plugin_filename;
 				}
-				$response->addScript("opener.location.href='". $GLOBALS['egw']->link('/index.php',$link_query)."'");
-				$response->addScript('window.setTimeout("window.close();", 100);');
-				return $response->getXML();
+				$response->redirect( $GLOBALS['egw']->link('/index.php',$link_query),true);
+				egw_framework::window_close();
+				return;
 			}
 			elseif($_content['preview'] == 'pressed') {
 				fseek($file, 0);
@@ -392,7 +377,7 @@ class importexport_export_ui {
 								'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
 				$replace = $preview = '';
 
-				while(!feof($file) && $item_count < 10) {
+				while(!feof($file) && $item_count < 30) {
 					$preview .= preg_replace($search,$replace,fgets($file,1024));
 					$item_count++;
 				}
@@ -406,15 +391,10 @@ class importexport_export_ui {
 					$GLOBALS['egw']->translation->charset()
 				);
 
-				if($record_count)
-				{
-					$preview = "<div class='header'>".lang('Preview') . "<span class='count'>$record_count</span></div>".$preview;
-				}
-				$response->addAssign('exec[preview-box]','innerHTML',nl2br($preview));
-				$response->jquery('.preview_box','show');
-
-				$response->addScript("xajax_eT_wrapper();");
-				return $response->getXML();
+				$preview = "<div class='header'>".lang('Preview') . "<span class='count'>".(int)$record_count."</span></div>".$preview;
+				
+				$et->setElementAttribute('preview-box', 'value', nl2br($preview));
+				return;
 			}
 			//nothing else expected!
 			throw new Exception('Error: unexpected submit in export_dialog!');
@@ -441,7 +421,6 @@ class importexport_export_ui {
 			'type' => 'export',
 			'application' => $_appname
 		));
-		$response->addScript("clear_options('exec[definition]');");
 		foreach ((array)$definitions->get_definitions() as $identifier) {
 			try {
 				$definition = new importexport_definition($identifier);
@@ -457,109 +436,33 @@ class importexport_export_ui {
 		}
 		unset($definitions);
 		$response->addScript("selectbox_add_option('exec[definition]','" . lang('Expert options') . "', 'expert',".($selected_plugin == $title ? 'true' : 'false').");");
-
-		if($selected_plugin == 'expert') {
-			$this->ajax_get_plugins($_appname, $response);
-		} else {
-			$response->jquery('tr.select_plugin','hide');
-		}
-		$response->addScript('export_dialog.change_definition(document.getElementById("exec[definition]"));');
-		$response->addScript('$j("tr.select_definition").css("display","table-row");');
-		return $no_return ? '' : $response->getXML();
 	}
 
-	public function ajax_get_plugins($_appname, xajaxResponse &$response = null) {
-		if(!is_null($response)) {
-			$no_return = true;
-		} else {
-			$response = new xajaxResponse();
-		}
-		if (!$_appname) {
-			$response->jquery('tr.select_plugin','hide');
-			return $no_return ? '' : $response->getXML();
-		}
+	public function ajax_get_definition_description($_definition) {
 
-		(array)$plugins = importexport_helper_functions::get_plugins($_appname,'export');
-		$sel_options['plugin'] = '';
-		$response->addScript("clear_options('exec[plugin]');");
-		foreach ($plugins[$_appname]['export'] as $plugin => $plugin_name) {
-			if (!$selected_plugin) $selected_plugin = $plugin;
-			$response->addScript("selectbox_add_option('exec[plugin]','$plugin_name', '$plugin',".($selected_plugin == $plugin ? 'true' : 'false').");");
+		$_response = egw_json_response::get();
+		$description = '';
+		if ($_definition)
+		{
+			$_object = new importexport_definition($_definition);
+			if (is_a($_object, 'importexport_definition')) {
+				$description = $_object->description;
+			}
+			unset ($_object);
 		}
-
-		$this->ajax_get_plugin_description($selected_plugin,$response);
-		$this->ajax_get_plugin_options($selected_plugin, $response, $_definition);
-		$this->ajax_get_plugin_selectors($selected_plugin, $response, $_definition);
-		$response->addScript('$j("tr.select_plugin").css("display","table-row");');
-		return $no_return ? '' : $response->getXML();
+		$_response->assign('importexport-export_dialog_plugin_description','innerHTML',$description);
 	}
 
-	public function ajax_get_definition_description($_definition, xajaxResponse &$response=null) {
-		$no_return = !is_null($response);
-		if(is_null($response)) {
-			$response = new xajaxResponse();
-		}
-		if (!$_definition) return $response->getXML();
-		$_object = new importexport_definition($_definition);
-		if (is_a($_object, 'importexport_definition')) {
-			$description = $_object->description;
-			$response->assign('exec[plugin_description]','innerHTML',$description);
-		}
-		unset ($_object);
-
-		return $no_return ? '' : $response->getXML();
-	}
-
-	public function ajax_get_plugin_description($_plugin,&$_response=false) {
-		$no_return = !is_null($_response);
-		if(is_null($_response)) {
-			$_response = new xajaxResponse();
-		}
-		if (!$_plugin) return $no_return ? '' : $response->getXML();
+	public function ajax_get_plugin_description($_plugin) {
+		$_respone = egw_json_response::get();
 
 		$plugin_object = new $_plugin;
 		if (is_a($plugin_object, 'importexport_iface_export_plugin')) {
 			$description = $plugin_object->get_description();
-			$_response->addAssign('exec[plugin_description]','innerHTML',$description);
-
-			if (isset($definition->plugin_options['selection'])) {
-				$_response->addScript("document.getElementById('importexport.export_dialog.selection_tab-tab').style.visibility='hidden';");
-			}
-			$this->ajax_get_plugin_options($_plugin, $_response);
 		}
+		$_response->addAssign('importexport-export_dialog_plugin_description','innerHTML',$description);
+		
 		unset ($plugin_object);
-
-		return $no_return ? '' : $response->getXML();
-	}
-
-	public function ajax_get_plugin_options($_plugin,&$response=false, $definition = '') {
-		$no_return = !is_null($response);
-		if(is_null($response)) {
-			$response = new xajaxResponse();
-		}
-		if (!$_plugin) return $no_return ? '' : $response->getXML();
-
-		$plugin_object = new $_plugin;
-		if (is_a($plugin_object, 'importexport_iface_export_plugin')) {
-			$options = $plugin_object->get_options_etpl();
-			ob_start();
-			$template = new etemplate($options);
-/*
-			$template->exec('importexport.importexport_export_ui.dialog', array(), array(), array(), array(), 2);
-			$html = ob_get_clean();
-			ob_end_clean();
-*/
-			$html = $template->exec('importexport.importexport_export_ui.dialog', array(), array(), array(), array(), 1);
-			$html = preg_replace('|<input.+id="etemplate_exec_id".*/>|',
-				'',
-				$html
-			);
-			$response->addAssign('importexport.export_dialog.options_tab', 'innerHTML', $html);
-		}
-
-		unset ($plugin_object);
-
-		return $no_return ? '' : $response->getXML();
 	}
 
 	/**
@@ -593,41 +496,5 @@ class importexport_export_ui {
 
 		// Try to avoid any extra finishing output
 		common::egw_exit();
-	}
-
-	public function ajax_get_plugin_selectors($_plugin,&$response=false, $definition = '') {
-		$no_return = !is_null($response);
-		if(is_null($response)) {
-			$response = new xajaxResponse();
-		}
-		if (!$_plugin) return $no_return ? '' : $response->getXML();
-
-		$plugin_object = new $_plugin;
-		if (is_a($plugin_object, 'importexport_iface_export_plugin')) {
-			$options = $plugin_object->get_selectors_etpl();
-			ob_start();
-			etemplate::$name_vars='exec';
-			$template = new etemplate($options);
-			$html = $template->exec('importexport.importexport_export_ui.dialog', array(), array(), array(), array(), 1);
-			//$html = ob_get_clean();
-			ob_end_clean();
-			$pattern = array(
-				'|<input.+id="etemplate_exec_id".*/>|',
-				'|<input(.+)name="exec[0-9]*\[|'
-			);
-			$html = preg_replace($pattern,
-				array('', '<input\\1name="exec['),
-				$html
-			);
-			$response->addAssign('importexport.export_dialog.selection_tab', 'innerHTML', $html);
-		}
-
-		unset ($plugin_object);
-
-		return $no_return ? '' : $response->getXML();
-	}
-
-	public function ajax_get_template($_name) {
-
 	}
 } // end class uiexport

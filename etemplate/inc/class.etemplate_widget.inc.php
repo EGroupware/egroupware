@@ -16,6 +16,7 @@ require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate_widget_textbox.inc
 require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate_widget_grid.inc.php';
 require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate_widget_checkbox.inc.php';
 require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.contact_widget.inc.php';
+include_once EGW_INCLUDE_ROOT.'/importexport/inc/class.importexport_widget_filter.inc.php';
 
 /**
  * eTemplate widget baseclass

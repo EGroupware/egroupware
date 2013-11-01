@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="importexport.wizard_basic_import_csv.choosesepncharset" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+				<column width="180px"/>
+			</columns>
+			<rows>
+				<row>
+					<description id="msg" no_lang="1" span="all"/>
+				</row>
+				<row>
+					<description value="Fieldseperator"/>
+					<textbox id="fieldsep" no_lang="1" size="1"/>
+				</row>
+				<row>
+					<description value="Charset of file"/>
+					<menulist class="width180">
+						<menupopup id="charset" no_lang="1"/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Header lines to skip"/>
+					<textbox type="integer" id="num_header_lines" min="0"/>
+				</row>
+				<row disabled="@no_cats">
+					<description value="Update categories"/>
+					<menulist>
+						<menupopup id="update_cats"/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Import data is"/>
+					<menulist>
+						<menupopup id="convert"/>
+					</menulist>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.width180 select { width:150px;}
+		</styles>
+	</template>
+</overlay>

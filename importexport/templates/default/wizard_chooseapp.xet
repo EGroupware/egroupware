@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="importexport.wizard_chooseapp" template="" lang="" group="0" version="0.0.1">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description id="msg" no_lang="1"/>
+				</row>
+				<row>
+					<menulist>
+						<menupopup id="application" no_lang="1"/>
+					</menulist>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

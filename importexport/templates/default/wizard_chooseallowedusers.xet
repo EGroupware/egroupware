@@ -17,7 +17,7 @@
 					<checkbox label="%s All users" id="all_users"/>
 				</row>
 				<row>
-					<listbox type="select-account" id="allowed_users" rows="5" options="groups"/>
+					<listbox type="select-account" id="allowed_users" rows="5" account_type="groups"/>
 				</row>
 			</rows>
 		</grid>

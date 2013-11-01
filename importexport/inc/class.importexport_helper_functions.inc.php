@@ -633,19 +633,19 @@ class importexport_helper_functions {
 					// This isn't quite right - there's only 2 options and you can select both
 					$settings['type'] = 'select-bool';
 					$settings['rows'] = 1;
-					$settings['enhance'] = true;
+					$settings['tags'] = true;
 					break;
 				case 'select-cat':
 					$settings['rows'] = "5,,,$app_name";
-					$settings['enhance'] = true;
+					$settings['tags'] = true;
 					break;
 				case 'select-account':
 					$settings['rows'] = '5,both';
-					$settings['enhance'] = true;
+					$settings['tags'] = true;
 					break;
 				case 'select':
 					$settings['rows'] = 5;
-					$settings['enhance'] = true;
+					$settings['tags'] = true;
 					break;
 			}
 		}
