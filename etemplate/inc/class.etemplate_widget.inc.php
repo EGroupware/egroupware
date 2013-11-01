@@ -307,7 +307,11 @@ class etemplate_widget
 				{
 					// Fall back to widget class, we can not ignore it, as the widget may contain other widgets
 					$class_name = 'etemplate_widget';
-					//trigger_error("Could not find a class for $type, using $class_name", E_USER_NOTICE);
+					// Don't warn about these known missing ones
+					if (!in_array($type, array('styles','menulist','tabs','tab','tabpanels','html')))
+					{
+						trigger_error("Could not find a class for $type, using $class_name", E_USER_NOTICE);
+					}
 				}
 			}
 		}
@@ -862,6 +866,16 @@ class etemplate_widget
 	public function &setElementAttribute($name,$attr,$val)
 	{
 		$ref =& self::$request->modifications[$name][$attr];
+		if(self::$request && self::$response && $val != $this->attrs[$attr])
+		{
+			// In an AJAX response - automatically add
+			self::$response->generic('assign',array(
+				'etemplate_exec_id' => self::$request->id(),
+				'id' => $name,
+				'key' => $attr,
+				'value' => $val
+			));
+		}
 		$this->attrs[$attr] = $val;
 		if (!is_null($val)) $ref = $val;
 
