@@ -66,6 +66,9 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 		this._super.apply(this, arguments);
 
+		// Allows server side to override prefix - not an attribute though
+		if(typeof this.options.prefix != 'undefined') this.prefix = this.options.prefix;
+		
 		// Create the table body and the table
 		this.tbody = $j(document.createElement("tbody"));
 		this.table = $j(document.createElement("table"))
@@ -151,7 +154,7 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 		// Check for global setting changes (visibility)
 		var global_data = this.getArrayMgr("modifications").getRoot().getEntry('~custom_fields~');
-		if(global_data.fields && !this.options.fields) this.options.fields = global_data.fields;
+		if(global_data && global_data.fields && !this.options.fields) this.options.fields = global_data.fields;
 
 		// For checking app entries
 		var apps = this.egw().link_app_list();
@@ -329,7 +332,6 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 		}
 	},
 
-
 	/**
 	 * et2_IInput so the custom field can be it's own widget.  
 	 */
@@ -401,6 +403,8 @@ var et2_customfields_list = et2_valueWidget.extend([et2_IDetachedDOM, et2_IInput
 
 		attrs.rows = field.rows;
 		attrs.select_options = field.values;
+		attrs.tags = field.tags;
+		
 		return true;
 	},
 	_setup_htmlarea: function(field_name, field, attrs) {

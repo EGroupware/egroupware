@@ -183,6 +183,17 @@ var et2_selectbox = et2_inputWidget.extend(
 			{
 				content_options = this.getArrayMgr("sel_options").getEntry(name_parts[name_parts.length-1]);
 			}
+			
+			// Try name like widget[$row]
+			if(!content_options || content_options.length == 0)
+			{
+				var pop_that = jQuery.extend([],name_parts);
+				while(pop_that.length > 0 && (!content_options || content_options.length == 0))
+				{
+					pop_that.pop();
+					content_options = this.getArrayMgr('sel_options').getEntry(pop_that.join('['));
+				}
+			}
 
 			// Maybe in a row, and options got stuck in ${row} instead of top level
 			var row_stuck = ['${row}','{$row}'];
@@ -427,10 +438,16 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			_value = _value.split(',');
 		}
+		if(this.input !== null && this.options.select_options && this.input.children().length == 0)
+		{
+			// No options set yet
+			this.set_select_options(this.options.select_options);
+		}
 		if(this.input !== null && (this.options.tags || this.options.search))
 		{
 			this.input.val(_value);
 			this.input.trigger("liszt:updated");
+			this.value = this.input.val();
 			return;
 		}
 		if(this.input == null)
@@ -459,14 +476,22 @@ var et2_selectbox = et2_inputWidget.extend(
 		}
 		else
 		{
-			if(jQuery("option[value='"+_value+"']", this.input).prop("selected", true).length == 0)
+			if(_value && jQuery("option[value='"+_value+"']", this.input).prop("selected", true).length == 0)
 			{
 				if(this.options.select_options[_value])
 				{
 					// Options not set yet? Do that now, which will try again.
 					return this.set_select_options(this.options.select_options);
 				}
-				this.egw().debug("warn", "Tried to set value that isn't an option", this, _value);
+				else if (jQuery.isEmptyObject(this.options.select_options))
+				{
+					this.egw().debug("warn", "Can't set value to '%s', widget has no options set",_value, this);
+				}
+				else
+				{
+					this.egw().debug("warn", "Tried to set value '%s' that isn't an option", _value, this);
+				}
+				return;
 			}
 		}
 
