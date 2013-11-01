@@ -61,7 +61,11 @@ class etemplate_widget_template extends etemplate_widget
 				foreach(self::$cache as $c_name => $c_template)
 				{
 					list($c_app, $c_main, $c_sub) = explode('.',$c_name, 3);
-					if($name == $c_sub) return $c_template;
+					if($name == $c_sub)
+					{
+						//error_log(__METHOD__ . "('$name' loaded from cache ($c_name)");
+						return $c_template;
+					}
 					
 					$parts = explode('.',$c_name);
 					if($name == $parts[count($parts)-1]) return $c_template;
@@ -71,7 +75,13 @@ class etemplate_widget_template extends etemplate_widget
 			if (is_array(self::$request->content))
 			{
 				$expand_name = self::expand_name($name, '','','','',self::$cont);
-				if($expand_name && $expand_name != $name) return self::instance($expand_name, $template_set, $version, $load_via);
+				if($expand_name && $expand_name != $name)
+				{
+					$template = self::instance($expand_name, $template_set, $version, $load_via);
+					// Remember original, un-expanded name in case content changes while still cached
+					$template->original_name = $name;
+					return $template;
+				}
 			}
 
 			error_log(__METHOD__."('$name', '$template_set', '$version', '$load_via') template NOT found!");
@@ -140,7 +150,23 @@ class etemplate_widget_template extends etemplate_widget
 		$cname =& $params[0];
 		$old_cname = $params[0];
 		if ($this->attrs['content']) $cname = self::form_name($cname, $this->attrs['content'], $params[1]);
-		parent::run($method_name, $params, $respect_disabled);
+		
+		// Check for template from content, and run over it
+		$expand_name = self::expand_name($this->id, '','','','',self::$request->content);
+		if($this->original_name)
+		{
+			$expand_name = self::expand_name($this->original_name, '','','','',self::$request->content);
+		}
+		//error_log("$this running $method_name() cname: {$this->id} -> expand_name: $expand_name");
+		if($expand_name && $expand_name != $this->id)
+		{
+			$row_template = etemplate_widget_template::instance($expand_name);
+			$row_template->run($method_name, $params, $respect_disabled);
+		}
+		else
+		{
+			parent::run($method_name, $params, $respect_disabled);
+		}
 		$params[0] = $old_cname;
 	}
 }
