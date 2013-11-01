@@ -122,7 +122,7 @@ class contact_widget extends etemplate_widget_transformer
 	 *
 	 * @param string $xml or 'html' for old etemplate
 	 */
-	function __construct($xml)
+	public function __construct($xml)
 	{
 		if (is_a($xml, 'XMLReader') || $xml != '' && $xml != 'html')
 		{

@@ -76,7 +76,7 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 	 * @param etemplate &$tmpl reference to the template we belong too
 	 * @return boolean true if extra label is allowed, false otherwise
 	 */
-	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
+	public function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
 		$cell['value'] =& $value;
 		$cell['options'] =& $cell['size'];	// old engine uses 'size' instead of 'options' for legacy options
@@ -147,7 +147,7 @@ abstract class etemplate_widget_transformer extends etemplate_widget
 	 * @param array &$attrs attributes
 	 * @throws egw_exception_wrong_parameter if $action is of wrong type
 	 */
-	function action($attr, $action, array &$attrs)
+	protected function action($attr, $action, array &$attrs)
 	{
 		if (self::DEBUG) error_log(__METHOD__."('$attr', ".array2string($action).')');
 		// action is an assignment
