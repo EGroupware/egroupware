@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="calendar.list.dates" template="" lang="" group="0" version="1.3.001">
+		<hbox>
+			<description value="Start"/>
+			<date id="startdate"/>
+			<description value="End"/>
+			<date id="enddate"/>
+		</hbox>
+	</template>
+</overlay>
