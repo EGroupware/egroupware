@@ -373,11 +373,7 @@ class etemplate_old extends boetemplate
 
 		foreach(self::$validation_errors as $name => $error)
 		{
-			if ($cname) $name = preg_replace('/^'.$cname.'\[([^\]]+)\](.*)$/','\\1\\2',$name);
-
-			// treat $ignoare_validation only as regular expression, if it starts with a slash
-			if ($ignore_validation[0] == '/' && !preg_match($ignore_validation,$name) ||
-				$ignore_validation[0] != '/' && $ignore_validation != $name)
+			if (!self::ignore_validation_match($name, $ignore_validation))
 			{
 				//echo "<p>uiself::validation_errors('$ignore_validation','$cname') name='$name' ($error) not ignored!!!</p>\n";
 				return true;
@@ -385,6 +381,24 @@ class etemplate_old extends boetemplate
 			//echo "<p>uiself::validation_errors('$ignore_validation','$cname') name='$name' ($error) ignored</p>\n";
 		}
 		return false;
+	}
+
+	/**
+	 * Check if given form-name matches ai ignore-validation rule
+	 *
+	 * @param string $ignore_validation='' if not empty regular expression for validation-errors to ignore
+	 * @param string $cname=null name-prefix, which need to be ignored, default self::$name_vars
+	 * @param string $cname
+	 * @return boolean
+	 */
+	static function ignore_validation_match($form_name, $ignore_validation, $cname=null)
+	{
+		if (is_null($cname)) $cname = self::$name_vars;
+		if ($cname) $form_name = preg_replace('/^'.$cname.'\[([^\]]+)\](.*)$/','\\1\\2', $form_name);
+
+		return empty($ignore_validation) ||
+			$ignore_validation[0] == '/' && preg_match($ignore_validation, $form_name) ||
+			$ignore_validation[0] != '/' && $ignore_validation == $form_name;
 	}
 
 	/**
@@ -1309,9 +1323,14 @@ class etemplate_old extends boetemplate
 						$cell_opts[0] = abs($cell_opts[0]);
 						$options .= ' readonly="readonly"';
 					}
+					// only add html5 required attribute, if validation is NOT ignored
+					if ($cell['needed'] && self::ignore_validation_match($form_name, self::$request->ignore_validation, $cname))
+					{
+						$required = ' required';
+					}
 					$html .= html::input($form_name,$value,$type == 'passwd' ? 'password' : ($type == 'hidden' ? 'hidden' : $cell_opts[3]),
 						$options.html::formatOptions($cell_opts,'SIZE,MAXLENGTH').
-						($cell['needed']?' required="required"':'').($type == 'passwd'?' autocomplete="off"':''));
+						$required.($type == 'passwd'?' autocomplete="off"':''));
 
 					if (!$readonly)
 					{
