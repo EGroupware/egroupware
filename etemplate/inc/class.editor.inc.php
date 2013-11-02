@@ -1599,7 +1599,8 @@ class editor
 		$dir = @opendir(EGW_SERVER_ROOT.'/'.$app.'/inc');
 		while ($dir && ($file = readdir($dir)))
 		{
-			if ($file == 'class.etemplate_widget.inc.php') continue;	// ignore et2 base-class, it's no widget for old etemplate
+			// ignore et2 widgets, causing problems with old editor
+			if (in_array($file, array('class.etemplate_widget.inc.php', 'class.contact_widget.inc.php'))) continue;
 
 			if (preg_match('/class\\.([a-zA-Z0-9_]*)_widget.inc.php/',$file,$regs) &&
 				($regs[1] != 'xslt' || $this->etemplate->xslt) &&
