@@ -18,9 +18,9 @@
 
 /**
  * Class which implements the "int" and textbox type=float XET-Tags
- * 
+ *
  * @augments et2_textbox
- */ 
+ */
 var et2_number = et2_textbox.extend(
 {
 	attributes: {
@@ -49,13 +49,13 @@ var et2_number = et2_textbox.extend(
 			"type": "integer",
 			"default": et2_no_init,
 			"description": "Allowed precision - # of decimal places",
-			"ignore": true 
+			"ignore": true
 		}
 	},
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_number
 	 */
 	init: function() {
@@ -98,9 +98,10 @@ et2_register_widget(et2_number, ["int", "integer", "float"]);
 var et2_number_ro = et2_textbox_ro.extend(
 {
 	attributes: {
-		"min": {"ignore": true},
-		"max": {"ignore": true},
-		"precision": {"ignore": true}
+		min: { ignore: true},
+		max: { ignore: true},
+		precision: { ignore: true},
+		value: { type: "float" }
 	}
 });
 et2_register_widget(et2_number_ro, ["int_ro", "integer_ro", "float_ro"]);
