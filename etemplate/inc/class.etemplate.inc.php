@@ -208,7 +208,17 @@ class etemplate_new extends etemplate_widget_template
 				{
 					parse_navbar();
 				}
+				else	// mark popups as such, by enclosing everything in div#popupMainDiv
+				{
+					echo '<div id="popupMainDiv">'."\n";
+				}
 				echo '<div id="'.$dom_id.'" class="et2_container"></div>';
+
+				if ($output_mode == 2)
+				{
+					echo "\n</div>\n";
+					echo $GLOBALS['egw']->framework->footer();
+				}
 			}
 			ob_flush();
 

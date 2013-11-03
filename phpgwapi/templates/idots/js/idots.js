@@ -28,12 +28,12 @@
 			for(var i=0; i < data_slide_out.length; ++i)
 			{
 				var args=data_slide_out[i];
-				
+
 				new ypSlideOutMenu(args.id, args.dir, args.left, args.top, args.width, args.height, args.pos);
 				for(var selector in args.bind)
 				{
 					var data = args.bind[selector];
-					jQuery(selector).on(data.event, {menu: args.id, method: data.method}, function(event){ 
+					jQuery(selector).on(data.event, {menu: args.id, method: data.method}, function(event){
 						window.ypSlideOutMenu[event.data.method].call(window, event.data.menu);
 						event.preventDefault();
 					});
@@ -41,7 +41,7 @@
 			}
 		}
 	}
-	
+
 	/**
 	 * Initialisation, when DOM is ready
 	 */
@@ -53,13 +53,13 @@
 				$j('#divStatusBar').height()-$j('#divAppboxHeader').height()-$j('#divPoweredBy').height()-20;
 			//console.log('setting height of '+appbox_height);
 			$j('#divAppbox').css('min-height', appbox_height+'px');
-			$j('.et2_container').height(appbox_height);
+			$j('.et2_container').height(appbox_height-7);
 		});
 		$j(window).resize();
 		$j(window).load(function(){	// fixes sometimes not called resize, probably due to timing issues
 			$j(window).resize();
 		});
-		
+
 		// allowing javascript urls in topmenu and sidebox only under CSP by binding click handlers to them
 		var href_regexp = /^javascript:([^\(]+)\((.*)?\);?$/;
 		jQuery('#topmenu_items,#thesideboxcolumn').on('click','a[href^="javascript:"]',function(){
@@ -76,7 +76,7 @@
 			// return false to not execute link itself, which would violate CSP
 			return false;
 		});
-		
+
 		// make sidebox resizable with jQueryUI resizable
 		jQuery('#thesideboxcolumn').resizable({handles: 'e', minWidth: 200, stop: function(event, ui){
 			egw.set_preference(egw_appName, 'idotssideboxwidth', ui.size.width);
