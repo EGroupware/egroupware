@@ -1168,7 +1168,7 @@ app.mail = AppJS.extend(
 	},
 
 	/**
-	 * 
+	 *
 	 */
 	displayAttachment: function(tag_info, widget)
 	{
@@ -1946,4 +1946,15 @@ app.mail = AppJS.extend(
 		request.sendRequest();
 	},
 
+	/**
+	 * Edit a mail account
+	 *
+	 * @param _action
+	 * @param _senders - the representation of the tree leaf to be manipulated
+	 */
+	edit_account: function(_action, _senders)
+	{
+		var acc_id = parseInt(_senders[0].id);
+		this.egw.open_link('mail.mail_wizard.edit&acc_id='+acc_id, '_blank', '640x480');
+	}
 });

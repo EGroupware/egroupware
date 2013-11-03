@@ -307,7 +307,13 @@ class mail_ui
 			'delete' => array(
 				'caption' => 'Delete Folder',
 				'onExecute' => 'javaScript:app.mail.mail_DeleteFolder'
-			)
+			),
+			'edit_account' => array(
+				'caption' => 'Edit account',
+				'icon' => 'configure',
+				'onExecute' => 'javaScript:app.mail.edit_account',
+				//'enableId' => '^\\d+$',	// only show action on account itself
+			),
 		));
 //error_log(__METHOD__.__LINE__.array2string($content));
 		if (empty($content[self::$nm_index]['filter2']) || empty($content[self::$nm_index]['search'])) $content[self::$nm_index]['filter2']='quick';

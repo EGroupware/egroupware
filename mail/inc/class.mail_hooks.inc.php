@@ -808,6 +808,12 @@ class mail_hooks
 			$menu_title = lang('Preferences');	// ToDo: remove Preferences sub-menu from sidebox
 			$file = array();
 
+			// create account wizard
+			$file += array(
+				'create new account' => "javascript:egw_openWindowCentered2('" .
+					egw::link('/index.php', array('menuaction' => 'mail.mail_wizard.add'), '').
+					"','_blank',640,480,'yes')",
+			);
 			if($preferences->userDefinedAccounts || $preferences->userDefinedIdentities) {
 				$linkData = array (
 					'menuaction' => 'mail.mail_uipreferences.index',
