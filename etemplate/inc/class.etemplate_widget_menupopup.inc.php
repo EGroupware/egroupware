@@ -83,18 +83,9 @@ class etemplate_widget_menupopup extends etemplate_widget
 		{
 			$value = $value_in = self::get_array($content, $form_name);
 
-			$allowed = $this->attrs['multiple'] ? array() : array('' => $this->attrs['options']);
-			/* if beforeSendToClient is used, we dont need to call it again here
-			if ($this->attrs['type'])
-			{
-				$allowed += self::typeOptions($form_name, $this->attrs['type'], $this->attrs['no_lang']);
-				// current eTemplate uses sel_options too, not sure if we want/need to keep that
-				//$allowed += self::selOptions($form_name, $this->attrs['no_lang']);
-			}
-			else*/
-			{
-				$allowed += self::selOptions($form_name);
-			}
+			$allowed = self::selOptions($form_name, true);	// true = return array of option-values
+			if (!$this->attrs['multiple']) $allowed[] = '';
+
 			foreach((array) $value as $val)
 			{
 				// array_key_exists() (used below) is inconsistent in how it handles empty/false
@@ -102,8 +93,8 @@ class etemplate_widget_menupopup extends etemplate_widget
 				if(!$val && $val !== 0) $val = '';
 
 				// Special for select-account - selOptions doesn't always load all accounts
-				if($this->attrs['type'] == 'select-account' && !$GLOBALS['egw']->accounts->visible($val) && !isset($allowed[$val]) ||
-					$this->attrs['type'] != 'select-account' && !array_key_exists($val,$allowed))
+				if($this->attrs['type'] == 'select-account' && !$GLOBALS['egw']->accounts->visible($val) && !in_array($val, $allowed) ||//!isset($allowed[$val]) ||
+					$this->attrs['type'] != 'select-account' && !in_array($val, $allowed))//!array_key_exists($val,$allowed))
 				{
 					self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($allowed))),'');
 					$value = '';
@@ -144,14 +135,12 @@ class etemplate_widget_menupopup extends etemplate_widget
 				($this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ? $this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options']),
 				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name));
 
-
 			// if no_lang was modified, forward modification to the client
 			if ($no_lang != $this->attr['no_lang'])
 			{
 				self::setElementAttribute($form_name, 'no_lang', $no_lang);
 			}
 		}
-
 
 		// Make sure &nbsp;s, etc.  are properly encoded when sent, and not double-encoded
 		$options = (self::$request->sel_options[$form_name] ? $form_name : $this->id);
@@ -172,19 +161,39 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 *
 	 * @param array $options
 	 */
-	public static function fix_encoded_options(array &$options)
+	public static function fix_encoded_options(array &$options, $use_array_of_objects=null)
 	{
-		foreach($options as &$label)
+		$backup_options = $options;
+
+		foreach($options as $value => &$label)
 		{
+			if (is_null($use_array_of_objects) && is_numeric($value))
+			{
+				$options = $backup_options;
+				return self::fix_encoded_options($options, true);
+			}
 			// optgroup or values for keys "label" and "title"
 			if(is_array($label))
 			{
-				self::fix_encoded_options($label);
+				self::fix_encoded_options($label, false);
+				if ($use_array_of_objects) $label['value'] = $value;
 			}
 			else
 			{
 				$label = html_entity_decode($label, ENT_NOQUOTES, 'utf-8');
+
+				if ($use_array_of_objects)
+				{
+					$label = array(
+						'value' => $value,
+						'label' => $label,
+					);
+				}
 			}
+		}
+		if ($use_array_of_objects)
+		{
+			$options = array_values($options);
 		}
 	}
 
@@ -192,17 +201,17 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 * Get options from $sel_options array for a given selectbox name
 	 *
 	 * @param string $name
-	 * @param boolean $no_lang=false value of no_lang attribute
+	 * @param boolean $return_values=false true: return array with option values, instead of value => label pairs
 	 * @return array
 	 */
-	public static function selOptions($name)
+	public static function selOptions($name, $return_values=false)
 	{
 		$options = array();
 
 		// Check for exact match on name
 		if (isset(self::$request->sel_options[$name]) && is_array(self::$request->sel_options[$name]))
 		{
-			$options += self::$request->sel_options[$name];
+			$options = array_merge($options, self::$request->sel_options[$name]);
 		}
 
 		// Check for base of name in root of sel_options
@@ -214,11 +223,11 @@ class etemplate_widget_menupopup extends etemplate_widget
 				$org_name = $name_parts[count($name_parts)-1];
 				if (isset(self::$request->sel_options[$org_name]) && is_array(self::$request->sel_options[$org_name]))
 				{
-					$options += self::$request->sel_options[$org_name];
+					$options = array_merge($options, self::$request->sel_options[$org_name]);
 				}
 				elseif (isset(self::$request->sel_options[$name_parts[0]]) && is_array(self::$request->sel_options[$name_parts[0]]))
 				{
-					$options += self::$request->sel_options[$name_parts[0]];
+					$options = array_merge($options, self::$request->sel_options[$name_parts[0]]);
 				}
 			}
 		}
@@ -226,7 +235,23 @@ class etemplate_widget_menupopup extends etemplate_widget
 		// Check for options-$name in content
 		if (is_array(self::$request->content['options-'.$name]))
 		{
-			$options += self::$request->content['options-'.$name];
+			$options = array_merge($options, self::$request->content['options-'.$name]);
+		}
+		if ($return_values)
+		{
+			$values = array();
+			foreach($options as $key => $val)
+			{
+				if (is_array($val) && isset($val['value']))
+				{
+					$values[] = $val['value'];
+				}
+				else
+				{
+					$values[] = $key;
+				}
+			}
+			$options = $values;
 		}
 		//error_log(__METHOD__."('$name') returning ".array2string($options));
 		return $options;

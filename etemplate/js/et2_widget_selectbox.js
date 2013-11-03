@@ -78,7 +78,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		},
 		// Type specific legacy options.  Avoid using.
 		"other": {
-			"ignore": true, 
+			"ignore": true,
 			"type": "any"
 		}
 	},
@@ -87,7 +87,7 @@ var et2_selectbox = et2_inputWidget.extend(
 
 	/**
 	 * Construtor
-	 * 
+	 *
 	 * @memberOf et2_selectbox
 	 */
 	init: function() {
@@ -95,14 +95,14 @@ var et2_selectbox = et2_inputWidget.extend(
 
 		this.input = null;
 		this.value = '';
- 
+
 		// Allow no other widgets inside this one
 		this.supportedWidgetClasses = [];
 
-		// Legacy options could have row count or empty label in first slot	 
+		// Legacy options could have row count or empty label in first slot
 		if(typeof this.options.rows == "string")
 		{
-			if(isNaN(this.options.rows)) 
+			if(isNaN(this.options.rows))
 			{
 				this.options.empty_label = this.options.rows;
 				this.options.rows = 1;
@@ -113,7 +113,7 @@ var et2_selectbox = et2_inputWidget.extend(
 			}
 		}
 
-		if(this.options.rows > 1) 
+		if(this.options.rows > 1)
 		{
 			this.options.multiple = true;
 			if(this.options.tags)
@@ -183,7 +183,7 @@ var et2_selectbox = et2_inputWidget.extend(
 			{
 				content_options = this.getArrayMgr("sel_options").getEntry(name_parts[name_parts.length-1]);
 			}
-			
+
 			// Try name like widget[$row]
 			if(!content_options || content_options.length == 0)
 			{
@@ -249,7 +249,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			return this._appendMultiOption(_value, _label, _title, dom_element);
 		}
-		
+
 		var option = $j(document.createElement("option"))
 			.attr("value", _value)
 			.text(_label+"");
@@ -263,14 +263,14 @@ var et2_selectbox = et2_inputWidget.extend(
 			// Make sure empty / all option is first
 			option.prependTo(this.input);
 		}
-		else 
+		else
 		{
 			option.appendTo(dom_element || this.input);
 		}
 	},
 
 	/**
-	 * Append a value to multi-select 
+	 * Append a value to multi-select
 	 */
 	_appendMultiOption: function(_value, _label, _title, dom_element) {
 		var option_data = null;
@@ -282,7 +282,7 @@ var et2_selectbox = et2_inputWidget.extend(
 
 		// Already in header
 		if(_label == this.options.empty_label) return;
-		
+
 		var opt_id = this.dom_id + "_opt_" + _value;
 		var label = jQuery(document.createElement("label"))
 			.attr("for", opt_id)
@@ -317,7 +317,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		}
 		label.append(jQuery("<span>"+_label+"</span>"));
 		var li = jQuery(document.createElement("li")).append(label);
-		
+
 		li.appendTo(dom_element || this.multiOptions);
 	},
 
@@ -366,14 +366,14 @@ var et2_selectbox = et2_inputWidget.extend(
 				.addClass("ui-multiselect-header")
 				.appendTo(header);
 		}
-		
+
 		// Set up for options to be added later
 		var options = this.multiOptions = jQuery(document.createElement("ul"));
 		this.multiOptions.addClass("ui-multiselect-checkboxes ui-helper-reset")
 			.css("height", 1.9*this.options.rows + "em")
 			.appendTo(node);
 
-		if(this.options.rows >= 5) 
+		if(this.options.rows >= 5)
 		{
 			// Check / uncheck all
 			var header_controls = {
@@ -397,7 +397,7 @@ var et2_selectbox = et2_inputWidget.extend(
 			}
 
 		}
-		
+
 		this.setDOMNode(node[0]);
 	},
 
@@ -534,14 +534,14 @@ var et2_selectbox = et2_inputWidget.extend(
 	 */
 	set_tags: function(tags) {
 		this.options.tags = tags;
-		
+
 		// Can't actually do chosen until attached, loadingFinished should call again
 		if(!this.isAttached()) return;
 
 		if(this.input != null && !this.options.tags && !this.options.search)
 		{
 			this.input.unchosen().css('width', '');
-			
+
 			return;
 		}
 
@@ -614,12 +614,12 @@ var et2_selectbox = et2_inputWidget.extend(
 							.append('<li class="ui-widget-header"><span>'+key+'</span></li>')
 							.appendTo(this.multiOptions);
 					}
-						
+
 					for(var sub in _options[key])
 					{
 						if (typeof _options[key][sub] === 'object')
 						{
-							this._appendOptionElement(sub, 
+							this._appendOptionElement(sub,
 								_options[key][sub]["label"] ? _options[key][sub]["label"] : "",
 								_options[key][sub]["title"] ? _options[key][sub]["title"] : "",
 								group
@@ -635,11 +635,12 @@ var et2_selectbox = et2_inputWidget.extend(
 				{
 					// Allow some special extras for objects by passing the whole thing
 					_options[key]["label"] = _options[key]["label"] ? _options[key]["label"] : "";
-					this._appendMultiOption(key, _options[key], _options[key]["title"]);
+					this._appendMultiOption(_options[key].value ? _options[key].value : key,
+						_options[key], _options[key]["title"]);
 				}
 				else
 				{
-					this._appendOptionElement(key,
+					this._appendOptionElement(_options[key].value ? _options[key].value : key,
 						_options[key]["label"] ? _options[key]["label"] : "",
 						_options[key]["title"] ? _options[key]["title"] : "");
 				}
@@ -667,7 +668,7 @@ var et2_selectbox = et2_inputWidget.extend(
 		}
 		return this.value;
 	},
-		
+
 	isDirty: function() {
 		if(this.input == null)
 		{
@@ -689,14 +690,14 @@ et2_register_widget(et2_selectbox, ["menupopup", "listbox", "select", "select-ca
 
 /**
  * et2_selectbox_ro is the readonly implementation of the selectbox.
- * 
+ *
  * @augments et2_selectbox
  */
-var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM], 
+var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 {
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_selectbox_ro
 	 */
 	init: function() {
@@ -917,14 +918,14 @@ et2_register_widget(et2_selectbox_ro, ["menupopup_ro", "listbox_ro", "select_ro"
 
 /**
  * Class which just implements the menulist container
- * 
+ *
  * @augments et2_DOMWidget
- */ 
+ */
 var et2_menulist = et2_DOMWidget.extend(
 {
 	/**
 	 * Construtor
-	 * 
+	 *
 	 * @memberOf et2_menulist
 	 */
 	init: function() {
