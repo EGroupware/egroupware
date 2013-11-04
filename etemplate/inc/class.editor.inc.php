@@ -4,7 +4,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-12 by RalfBecker@outdoor-training.de
+ * @copyright 2002-13 by RalfBecker@outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
  * @subpackage tools
@@ -1599,8 +1599,8 @@ class editor
 		$dir = @opendir(EGW_SERVER_ROOT.'/'.$app.'/inc');
 		while ($dir && ($file = readdir($dir)))
 		{
-			// ignore et2 widgets, causing problems with old editor
-			if (in_array($file, array('class.etemplate_widget.inc.php', 'class.contact_widget.inc.php'))) continue;
+			// ignore et2 base widget matching name-schema of old eTemplate
+			if ($file == 'class.etemplate_widget.inc.php') continue;
 
 			if (preg_match('/class\\.([a-zA-Z0-9_]*)_widget.inc.php/',$file,$regs) &&
 				($regs[1] != 'xslt' || $this->etemplate->xslt) &&

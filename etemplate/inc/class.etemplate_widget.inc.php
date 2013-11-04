@@ -7,16 +7,9 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-11 by RalfBecker@outdoor-training.de
+ * @copyright 2002-13 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
-
-// include only widgets which can't be autoloaded (or contain sub-widgets which cant)
-require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate_widget_textbox.inc.php';
-require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate_widget_grid.inc.php';
-require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate_widget_checkbox.inc.php';
-require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.contact_widget.inc.php';
-include_once EGW_INCLUDE_ROOT.'/importexport/inc/class.importexport_widget_filter.inc.php';
 
 /**
  * eTemplate widget baseclass
