@@ -813,7 +813,7 @@ function fm_compose_sendEMail() {
 	// check to infolog/ to tracker. Only one can be checked.
 	var toinfolog = document.getElementById('to_infolog');
 	var totracker = document.getElementById('to_tracker');
-	if (toinfolog.checked==true && totracker.checked==true)
+	if ((toinfolog != null && toinfolog.checked==true) && (totracker != null && totracker.checked==true))
 	{
 		doubleCheck = true;
 	}
@@ -824,10 +824,6 @@ function fm_compose_sendEMail() {
 		document.getElementById('saveAsDraft').value=0;
 		do_onunload=false;
 		document.doit.submit();
-		if (!(toinfolog.checked==true || totracker.checked==true))
-		{
-//			setTimeout("window.close()",1000);
-		}
 	} else {
 		justClickedSend = false; // since we did not send at all,....
 	}
