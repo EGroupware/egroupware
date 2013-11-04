@@ -316,7 +316,7 @@ app.calendar = AppJS.extend(
 	{
 		var app = 'calendar';
 		var id = _senders[0].id;
-		var matches = id.match(/^([0-9]+):([0-9]+)$/);
+		var matches = id.match(/^(?:calendar::)?([0-9]+)(:([0-9]+))?$/);
 		if (matches)
 		{
 			id = matches[1];
