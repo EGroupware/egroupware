@@ -852,7 +852,7 @@ class calendar_uiforms extends calendar_ui
 				}
 
 				$msg = $message . ($msg ? ', ' . $msg : '');
-
+				egw_framework::refresh_opener($msg, 'calendar');
 				// writing links for new entry, existing ones are handled by the widget itself
 				if (!$content['id'] && is_array($content['link_to']['to_id']))
 				{
@@ -958,7 +958,7 @@ class calendar_uiforms extends calendar_ui
 					'msg'        => $msg,
 				));
 			}
-
+			egw_framework::refresh_opener($msg, 'calendar', $content['id'], $button['save']?'update': 'delete');
 			egw_framework::window_close();
 			common::egw_exit();
 		}
