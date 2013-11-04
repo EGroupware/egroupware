@@ -60,7 +60,7 @@ class importexport_widget_filter extends etemplate_widget_transformer
 			);
 			return parent::beforeSendToClient($cname);
 		}
-error_log(array2string(array_keys($fields)));
+		
 		$n = 1;
 		foreach($fields as $lname => &$field)
 		{
@@ -142,8 +142,6 @@ error_log('Trying to filter with unsupported field type: ' . $field['type']);
 					}
 			}
 			
-			error_log($type);
-			
 			$widget = self::factory($type, '<'.$type.' type="'.$type.'" id="'.self::$prefix.$lname.'"/>', self::$prefix.$lname);
 			if(method_exists($widget, 'beforeSendToClient'))
 			{
@@ -159,7 +157,6 @@ error_log('Trying to filter with unsupported field type: ' . $field['type']);
 		}
 		$this->setElementAttribute($form_name, 'customfields', $fields);
 		$this->setElementAttribute($form_name, 'fields',array_fill_keys(array_keys($fields), true));
-		error_log($this);
 		
 		parent::beforeSendToClient($cname);
 
@@ -230,7 +227,6 @@ error_log('Trying to filter with unsupported field type: ' . $field['type']);
 	public function validate($cname, array $expand, array $content, &$validated=array())
 	{
 		$form_name = self::form_name($cname, $this->id, $expand);
-		error_log('Validating ' . $form_name);
 		if (!$this->is_readonly($cname, $form_name))
 		{
 			$value_in = self::get_array($content, $form_name);

@@ -267,7 +267,7 @@ class etemplate_widget
 	{
 		if (!is_subclass_of($class, __CLASS__))
 		{
-			throw new egw_exception_wrong_parameter(__METHOD__."('$class', ".array2string($widgets).") $class is no subclass or ".__CLASS__.'!');
+			throw new egw_exception_wrong_parameter(__METHOD__."('$class', ".array2string($widgets).") $class is no subclass of ".__CLASS__.'!');
 		}
 		foreach((array)$widgets as $widget)
 		{

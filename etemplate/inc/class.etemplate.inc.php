@@ -108,7 +108,7 @@ class etemplate_new extends etemplate_widget_template
 		if (!$this->rel_path) throw new egw_exception_assertion_failed("No (valid) template '$this->name' found!");
 
 		self::$request->output_mode = $output_mode;	// let extensions "know" they are run eg. in a popup
-		self::$request->content = $content;
+		self::$request->content = self::$cont = $content;
 		self::$request->changes = $changes;
 		self::$request->sel_options = $sel_options ? $sel_options : array();
 		self::$request->readonlys = $readonlys ? $readonlys : array();
@@ -284,7 +284,7 @@ class etemplate_new extends etemplate_widget_template
 			self::$response->script($GLOBALS['egw_info']['flags']['java_script']);
 			//error_log($app .' added javascript to $GLOBALS[egw_info][flags][java_script] - use egw_json_response->script() instead.');
 		}
-
+		
 		return $content;
 	}
 
@@ -579,6 +579,23 @@ foreach($files as $filename)
 		try
 		{
 			include_once($filename);
+		}
+		catch(Exception $e)
+		{
+			error_log($e->getMessage());
+		}
+	}
+}
+
+// Use hook to load custom widgets from other apps
+$widgets = $GLOBALS['egw']->hooks->process('etemplate2_register_widgets');
+foreach($widgets as $app => $list)
+{
+	foreach($list as $class)
+	{
+		try
+		{
+			__autoload($class);
 		}
 		catch(Exception $e)
 		{

@@ -146,4 +146,12 @@ class importexport_admin_prefs_sidebox_hooks
 		}
 		if($file) display_sidebox($appname,lang('importexport'),$file);
 	}
+	
+	/**
+	 * Returns a list of custom widgets classes for etemplate2
+	 */
+	public static function widgets()
+	{
+		return array('importexport_widget_filter');
+	}
 }

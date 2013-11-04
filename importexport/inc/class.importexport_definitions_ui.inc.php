@@ -587,9 +587,7 @@ class importexport_definitions_ui
 
 			unset($content['button']);
 			$content['wizard_content'] = $this->wizard_content_template;
-			error_log('------- STARTING EXEC --------');
 			$this->etpl->exec(self::_appname.'.importexport_definitions_ui.wizard',$content,$sel_options,$readonlys,$preserv);
-			error_log('------- DONE EXEC --------');
 		}
 		else
 		{

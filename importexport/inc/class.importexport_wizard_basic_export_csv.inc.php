@@ -269,8 +269,6 @@ class importexport_wizard_basic_export_csv
 			$preserv = $content;
 			unset ($preserv['button']);
 
-			error_log('-------');
-			error_log('Filter ' . array2string($content['filter']));
 			$content['set_filter']['fields'] = importexport_helper_functions::get_filter_fields(
 				$content['application'],$content['plugin'],$this
 			);
@@ -280,8 +278,6 @@ class importexport_wizard_basic_export_csv
 				$content['set_filter'][$field] = $content['filter'][$field];
 			}
 
-			error_log('SET FILTER ' . array2string($content['set_filter']));
-			error_log('----------');
 			if(!$content['set_filter']['fields'])
 			{
 				// No fields
