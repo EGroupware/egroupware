@@ -224,7 +224,8 @@ class egw_ckeditor_config
 		$config['removePlugins'] = 'elementspath';
 
 		$config['toolbarCanCollapse'] = true;
-		$config['toolbarStartupExpanded'] = $expanded_toolbar;
+		$config['toolbarStartupExpanded'] = is_bool($expanded_toolbar) ? $expanded_toolbar :
+			($expanded_toolbar === 'false' ? false : (boolean)$expanded_toolbar);
 
 		$config['filebrowserBrowseUrl'] = self::get_filebrowserBrowseUrl($start_path);
 		$config['filebrowserWindowHeight'] = 640;
@@ -377,7 +378,7 @@ class egw_ckeditor_config
 		self::add_default_options($config, $height, $expanded_toolbar, $start_path);
 		self::add_spellchecker_options($config, $spellchecker_button, $scayt_button);
 		self::add_toolbar_options($config, $mode, $spellchecker_button, $scayt_button);
-
+		//error_log(__METHOD__."('$mode', $height, ".array2string($expanded_toolbar).") returning ".array2string($config));
 		return $config;
 	}
 

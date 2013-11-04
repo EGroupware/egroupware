@@ -106,7 +106,7 @@ class xul_io
 			'size'  => 'image,ro_image'
 		),
 		'htmlarea' => array(
-			'size' => 'mode,height,width,toolbar,base_href',
+			'size' => 'mode,height,width,expand_toolbar,base_href',
 		),
 		'nextmatch' => array(
 			'size' => 'template,hide_header,header_left,header_right',

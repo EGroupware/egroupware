@@ -27,7 +27,7 @@
 var et2_htmlarea = et2_inputWidget.extend(
 {
 	modes: ['ascii','simple','extended','advanced'],
-	
+
 	attributes: {
 		'mode': {
 			'name': 'Mode',
@@ -48,7 +48,7 @@ var et2_htmlarea = et2_inputWidget.extend(
 		'expand_toolbar': {
 			'name': 'Expand Toolbar',
 			'default': true,
-			'type':'any',
+			'type':'boolean',
 			'description': 'Have the toolbar expanded (visible)'
 		},
 		'base_href': {
@@ -71,7 +71,7 @@ var et2_htmlarea = et2_inputWidget.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param _parent
 	 * @param _attrs
 	 * @memberOf et2_htmlarea
@@ -87,7 +87,7 @@ var et2_htmlarea = et2_inputWidget.extend(
 			.addClass('et2_textbox_ro');
 		this.setDOMNode(this.htmlNode[0]);
 	},
-		
+
 	transformAttributes: function(_attrs) {
 
 		// Check mode, some apps jammed everything in there
@@ -102,11 +102,11 @@ var et2_htmlarea = et2_inputWidget.extend(
 		}
 		this._super.apply(this, arguments);
 	},
-		
+
 	doLoadingFinished: function() {
 		this._super.apply(this, arguments);
 		if(this.mode == 'ascii') return;
-		
+
 		var self = this;
 		var ckeditor;
 		try
@@ -161,7 +161,7 @@ var et2_htmlarea = et2_inputWidget.extend(
 			}
 			else
 			{
-				this.htmlNode.val(_value);				
+				this.htmlNode.val(_value);
 				this.value = _value;
 			}
 		} catch (e) {
