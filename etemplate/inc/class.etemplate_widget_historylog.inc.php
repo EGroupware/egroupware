@@ -21,12 +21,12 @@ class etemplate_widget_historylog extends etemplate_widget
 {
 
 	/**
-         * Fill type options in self::$request->sel_options to be used on the client
-         *
-         * @param string $cname
-         */
-        public function beforeSendToClient($cname)
-        {
+	 * Fill type options in self::$request->sel_options to be used on the client
+	 *
+	 * @param string $cname
+	*/
+	public function beforeSendToClient($cname)
+	{
 		$form_name = self::form_name($cname, $this->id);
 
 		if(is_array(self::$request->content[$form_name]['status-widgets']))
@@ -43,7 +43,7 @@ class etemplate_widget_historylog extends etemplate_widget
 
 					if(method_exists($widget, 'beforeSendToClient'))
 					{
-						$widget->beforeSendToClient($cname);
+						$widget->beforeSendToClient($cname,array());
 					}
 				}
 				else
