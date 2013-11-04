@@ -93,10 +93,10 @@ class etemplate_widget_menupopup extends etemplate_widget
 				if(!$val && $val !== 0) $val = '';
 
 				// Special for select-account - selOptions doesn't always load all accounts
-				if($this->attrs['type'] == 'select-account' && !$GLOBALS['egw']->accounts->visible($val) && !in_array($val, $allowed) ||//!isset($allowed[$val]) ||
-					$this->attrs['type'] != 'select-account' && !in_array($val, $allowed))//!array_key_exists($val,$allowed))
+				if($this->attrs['type'] == 'select-account' && !$GLOBALS['egw']->accounts->visible($val) && !in_array($val, $allowed) ||
+					$this->attrs['type'] != 'select-account' && !in_array($val, $allowed))
 				{
-					self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",array_keys($allowed))),'');
+					self::set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!", $val, implode("','",$allowed)),'');
 					$value = '';
 					break;
 				}
@@ -211,7 +211,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 		// Check for exact match on name
 		if (isset(self::$request->sel_options[$name]) && is_array(self::$request->sel_options[$name]))
 		{
-			$options = array_merge($options, self::$request->sel_options[$name]);
+			$options += self::$request->sel_options[$name];
 		}
 
 		// Check for base of name in root of sel_options
@@ -223,11 +223,11 @@ class etemplate_widget_menupopup extends etemplate_widget
 				$org_name = $name_parts[count($name_parts)-1];
 				if (isset(self::$request->sel_options[$org_name]) && is_array(self::$request->sel_options[$org_name]))
 				{
-					$options = array_merge($options, self::$request->sel_options[$org_name]);
+					$options += self::$request->sel_options[$org_name];
 				}
 				elseif (isset(self::$request->sel_options[$name_parts[0]]) && is_array(self::$request->sel_options[$name_parts[0]]))
 				{
-					$options = array_merge($options, self::$request->sel_options[$name_parts[0]]);
+					$options += self::$request->sel_options[$name_parts[0]];
 				}
 			}
 		}
@@ -235,7 +235,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 		// Check for options-$name in content
 		if (is_array(self::$request->content['options-'.$name]))
 		{
-			$options = array_merge($options, self::$request->content['options-'.$name]);
+			$options += self::$request->content['options-'.$name];
 		}
 		if ($return_values)
 		{
