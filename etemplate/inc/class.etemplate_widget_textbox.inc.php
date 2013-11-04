@@ -7,7 +7,7 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @copyright 2002-11 by RalfBecker@outdoor-training.de
+ * @copyright 2002-13 by RalfBecker@outdoor-training.de
  * @version $Id$
  */
 
@@ -18,6 +18,7 @@
  * - float
  * - hidden
  * - colorpicker
+ * - passwd (passwords are never send back to client, instead a number of asterisks is send and replaced again!)
  * sub-types are either passed to constructor or set via 'type' attribute!
  */
 class etemplate_widget_textbox extends etemplate_widget
@@ -68,6 +69,28 @@ class etemplate_widget_textbox extends etemplate_widget
 	}
 
 	/**
+	 * Set up what we know on the server side.
+	 *
+	 * @param string $cname
+	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
+	 */
+	public function beforeSendToClient($cname, array $expand)
+	{
+		// to NOT transmit passwords back to client, we need to store (non-empty) value in preserv
+		if ($this->attrs['type'] == 'passwd' || $this->type == 'passwd')
+		{
+			$form_name = self::form_name($cname, $this->id, $expand);
+			$value =& self::get_array(self::$request->content, $form_name);
+			if (!empty($value))
+			{
+				$preserv =& self::get_array(self::$request->preserv, $form_name, true);
+				$preserv = (string)$value;
+				$value = str_repeat('*', strlen($preserv));
+			}
+		}
+	}
+
+	/**
 	 * Validate input
 	 *
 	 * Following attributes get checked:
@@ -107,6 +130,17 @@ class etemplate_widget_textbox extends etemplate_widget
 
 			$value = $value_in = self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $form_name, true);
+
+			// passwords are not transmitted back to client (just asterisks)
+			// therefore we need to replace it again with preserved value
+			if (($this->attrs['type'] == 'passwd' || $this->type == 'passwd'))
+			{
+				$preserv = self::get_array(self::$request->preserv, $form_name);
+				if ($value == str_repeat('*', strlen($preserv)))
+				{
+					$value = $preserv;
+				}
+			}
 
 			if ((string)$value === '' && $this->attrs['needed'])
 			{
