@@ -243,6 +243,13 @@ function egw_refresh(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_t
 		{
 			et2[i].refresh(_msg,_app,_id,_type);
 		}
+		
+		// Refresh target or current app too
+		var et2 = etemplate2.getByApplication(_targetapp || egw_appName);
+		for(var i = 0; i < et2.length; i++)
+		{
+			et2[i].refresh(_msg,_app,_id,_type);
+		}
 		return;
 	}
 
