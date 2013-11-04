@@ -261,10 +261,18 @@ class xul_io
 		case 'menulist':	// id,options belongs to the 'menupopup' child
 			if ($cell['span'])
 			{
-				$this->set_attributes($widget,'span,class',$cell['span']);
-				unset($cell['span']);
+				list($span, $class) = explode(',', $cell['span']);
+				if (!empty($span)) $this->set_attributes($widget, 'span', $span);
+				if (!empty($class))
+				{
+					$cell['span'] = ','.$class;
+				}
+				else
+				{
+					unset($cell['span']);
+				}
 			}
-			// fall-trought
+			// fall-through
 		case 'listbox':
 			if ($cell['type'] != 'select')	// one of the sub-types
 			{
