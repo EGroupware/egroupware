@@ -771,18 +771,18 @@ class mail_hooks
 			'icon' => false
 		);
 		// empty trash (if available -> move to trash )
-		if($preferences->preferences['deleteOptions'] == 'move_to_trash')
+		if($preferences['deleteOptions'] == 'move_to_trash')
 		{
 			$file += array(
 				'_NewLine_'	=> '', // give a newline
-				'empty trash'	=> "javascript:app.mail.mail_emptyTrash();",
+				'empty trash'	=> "javascript:mail_callEmptyTrash();",
 			);
 		}
-		if($preferences->preferences['deleteOptions'] == 'mark_as_deleted')
+		if($preferences['deleteOptions'] == 'mark_as_deleted')
 		{
 			$file += array(
 				'_NewLine_'		=> '', // give a newline
-				'compress folder'	=> "javascript:app.mail.mail_compressFolder();",
+				'compress folder'	=> "javascript:mail_callCompressFolder();",
 			);
 		}
 		// import Message link - only when the required library is available
@@ -829,10 +829,10 @@ class mail_hooks
 				$file['Manage Signatures'] = egw::link('/index.php',$linkData);
 			}
 
-			if ($preferences->preferences['prefcontroltestconnection'] <> 'none') $file['Test Connection'] = egw::link('/index.php','menuaction=mail.mail_ui.TestConnection&appname=mail');
+			if ($preferences['prefcontroltestconnection'] <> 'none') $file['Test Connection'] = egw::link('/index.php','menuaction=mail.mail_ui.TestConnection&appname=mail');
 
 /*
-			if(empty($preferences->preferences['prefpreventmanagefolders']) || $preferences->preferences['prefpreventmanagefolders'] == 0) {
+			if(empty($preferences['prefpreventmanagefolders']) || $preferences['prefpreventmanagefolders'] == 0) {
 				$file['Manage Folders']	= egw::link('/index.php',array('menuaction'=>'mail.uipreferences.listFolder'));
 			}
 			if (is_object($preferences)) $ogServer = $preferences->getOutgoingServer(0);
@@ -843,7 +843,7 @@ class mail_hooks
 						(
 							'menuaction'    => 'mail.uipreferences.editForwardingAddress',
 						);
-					//if(empty($preferences->preferences['prefpreventforwarding']) || $preferences->preferences['prefpreventforwarding'] == 0)
+					//if(empty($preferences['prefpreventforwarding']) || $preferences['prefpreventforwarding'] == 0)
 					$file['Forwarding']     = egw::link('/index.php',$linkData);
 				}
 			}
@@ -857,19 +857,19 @@ class mail_hooks
 			(
 				'menuaction'	=> 'mail.mail_sieve.index',
 			);
-			if(empty($preferences->preferences['prefpreventeditfilterrules']) || $preferences->preferences['prefpreventeditfilterrules'] == 0)
+			if(empty($preferences['prefpreventeditfilterrules']) || $preferences['prefpreventeditfilterrules'] == 0)
 				$file['filter rules']	= egw::link('/index.php',$linkData);
 
 			$linkData = array
 			(
 				'menuaction'	=> 'mail.mail_sieve.editVacation',
 			);
-			if(empty($preferences->preferences['prefpreventabsentnotice']) || $preferences->preferences['prefpreventabsentnotice'] == 0)
+			if(empty($preferences['prefpreventabsentnotice']) || $preferences['prefpreventabsentnotice'] == 0)
 			{
 				$file['vacation notice']	= egw::link('/index.php',$linkData);
 			}
-			if((empty($preferences->preferences['prefpreventnotificationformailviaemail']) ||
-				$preferences->preferences['prefpreventnotificationformailviaemail'] == 0))
+			if((empty($preferences['prefpreventnotificationformailviaemail']) ||
+				$preferences['prefpreventnotificationformailviaemail'] == 0))
 			{
 				$file['email notification'] = egw::link('/index.php','menuaction=mail.mail_sieve.editEmailNotification'); //Added email notifications
 			}

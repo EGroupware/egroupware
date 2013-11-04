@@ -3020,6 +3020,10 @@ blockquote[type=cite] {
 						if ($fS['unseen'])
 						{
 							$oA[$_folderName] = '<b>'.$fS['shortDisplayName'].' ('.$fS['unseen'].')</b>';
+						}
+						if ($fS['unseen']==0)
+						{
+							$oA[$_folderName] = $fS['shortDisplayName'];
 
 						}
 					}

@@ -264,7 +264,6 @@ error_log(__METHOD__.__LINE__.' Not done jet');
 				$_profileIDs = array_keys($profileData_);
 				$_profileID = $_profileIDs[0];
 				$profileData = $profileData_[$_profileID];
-_debug_array($profileData->imapServer());
 				$icProfileID = $profileData->__get('acc_id');
 				$ogProfileID = $profileData->__get('acc_id');
 				//error_log(__METHOD__.__LINE__.' ServerProfile(s)Fetched->'.array2string(count($profileData->ic_server)));

@@ -989,6 +989,8 @@ $_restoreSession=false;
 			}
 			if (self::$debug) error_log(__METHOD__.__LINE__."$_folderName, $_sort, $reverse, ".array2string($_filter).", $rByUid");
 			if (self::$debug) $starttime = microtime (true);
+			//see this example below for a 12 week datefilter (since)
+			//$_filter = array('status'=>array('UNDELETED'),'type'=>"SINCE",'string'=> date("d-M-Y", $starttime-(3600*24*7*12)));
 			$_sortResult = $this->getSortedList($_folderName, $_sort, $reverse, $_filter, $rByUid, $_cacheResult);
 			$sortResult = $_sortResult['match']->ids;
 			if (self::$debug)
@@ -1433,41 +1435,48 @@ $_restoreSession=false;
 	function createIMAPFilter($_folder, $_criterias)
 	{
 		$imapFilter = new Horde_Imap_Client_Search_Query();
-		return $imapFilter;
-		$all = 'ALL UNDELETED'; //'ALL'
+
 		//_debug_array($_criterias);
 		if (self::$debug) error_log(__METHOD__.__LINE__.' Criterias:'.(!is_array($_criterias)?" none -> returning $all":array2string($_criterias)));
 		if(!is_array($_criterias)) {
-			return $all;
+			return $imapFilter->flag('DELETED', $set=false);
 		}
 		#error_log(print_r($_criterias, true));
-		$imapFilter = '';
-
-		#foreach($_criterias as $criteria => $parameter) {
+		$queryValid = false;
 		if(!empty($_criterias['string'])) {
 			$criteria = strtoupper($_criterias['type']);
 			switch ($criteria) {
 				case 'QUICK':
+					$imapFilter->headerText('SUBJECT', $_criterias['string'], $not=false);
+					$imapFilter2 = new Horde_Imap_Client_Search_Query();
 					if($this->isSentFolder($_folder)) {
-						$imapFilter .= 'OR SUBJECT "'. $_criterias['string'] .'" TO "'. $_criterias['string'] .'" ';
+						$imapFilter2->headerText('TO', $_criterias['string'], $not=false);
 					} else {
-						$imapFilter .= 'OR SUBJECT "'. $_criterias['string'] .'" FROM "'. $_criterias['string'] .'" ';
+						$imapFilter2->headerText('FROM', $_criterias['string'], $not=false);
 					}
+					$imapFilter->orSearch($imapFilter2);
+					$queryValid = true;
 					break;
-				case 'BCC':
-				case 'BODY':
-				case 'CC':
 				case 'FROM':
-				case 'KEYWORD':
-				case 'SUBJECT':
-				case 'TEXT':
 				case 'TO':
-					$imapFilter .= $criteria .' "'. $_criterias['string'] .'" ';
+				case 'CC':
+				case 'BCC':
+				case 'SUBJECT':
+					$imapFilter->headerText($criteria, $_criterias['string'], $not=false);
+					$queryValid = true;
+					break;
+				case 'BODY':
+				case 'TEXT':
+					$imapFilter->text($_criterias['string'],($criteria=='BODY'?true:false), $not=false);
 					break;
 				case 'SINCE':
+					$imapFilter->dateSearch(new DateTime($_criterias['string']), Horde_Imap_Client_Search_Query::DATE_SINCE, $header=true, $not=false);
+					break;
 				case 'BEFORE':
+					$imapFilter->dateSearch(new DateTime($_criterias['string']), Horde_Imap_Client_Search_Query::DATE_BEFORE, $header=true, $not=false);
+					break;
 				case 'ON':
-					$imapFilter .= $criteria .' '. $_criterias['string'].' ';
+					$imapFilter->dateSearch(new DateTime($_criterias['string']), Horde_Imap_Client_Search_Query::DATE_ON, $header=true, $not=false);
 					break;
 			}
 		}
@@ -1478,36 +1487,46 @@ $_restoreSession=false;
 				case 'ANSWERED':
 				case 'DELETED':
 				case 'FLAGGED':
-				case 'NEW':
-				case 'OLD':
 				case 'RECENT':
 				case 'SEEN':
-				case 'UNANSWERED':
-				case 'UNDELETED':
-				case 'UNFLAGGED':
-				case 'UNSEEN':
-					$imapFilter .= $criteria .' ';
-					break;
 				case 'KEYWORD1':
 				case 'KEYWORD2':
 				case 'KEYWORD3':
 				case 'KEYWORD4':
 				case 'KEYWORD5':
-					$imapFilter .= "KEYWORD ".'$label'.substr(trim($criteria),strlen('KEYWORD')).' ';
+					$imapFilter->flag($criteria, $set=true);
+					$queryValid = true;
+					break;
+				case 'NEW':
+					$imapFilter->flag('RECENT', $set=true);
+					$imapFilter->flag('SEEN', $set=false);
+					$queryValid = true;
+					break;
+				case 'OLD':
+					$imapFilter->flag('RECENT', $set=false);
+					break;
+				case 'UNANSWERED':
+				case 'UNDELETED':
+				case 'UNFLAGGED':
+				case 'UNSEEN':
+					$imapFilter->flag($criteria, $set=false);
+					$queryValid = true;
 					break;
 			}
 		}
 		if (isset($_criterias['range']) && !empty($_criterias['range']))
 		{
-			$imapFilter .= $_criterias['range'].' ';
+			//$imapFilter .= $_criterias['range'].' ';
 		}
-		if (self::$debug) error_log(__METHOD__.__LINE__." Filter: ".($imapFilter?$imapFilter:$all));
-		if($imapFilter == '') {
-			return $all;
-
+		if (self::$debug)
+		{
+			$query_str = $imapFilter->build();
+			error_log(__METHOD__.__LINE__.' '.$query_str['query']);
+		}
+		if($queryValid==false) {
+			return $imapFilter->flag('DELETED', $set=false);
 		} else {
-			return trim($imapFilter);
-			#return 'CHARSET '. strtoupper(self::$displayCharset) .' '. trim($imapFilter);
+			return $imapFilter;
 		}
 	}
 
@@ -2126,7 +2145,7 @@ $_restoreSession=false;
 	function getMailBoxCounters($folderName)
 	{
 		$folderStatus = $this->_getStatus($folderName);
-		error_log(__METHOD__.__LINE__." FolderStatus:".array2string($folderStatus));
+		//error_log(__METHOD__.__LINE__." FolderStatus:".array2string($folderStatus));
 		if ( PEAR::isError($folderStatus)) {
 			if (self::$debug) error_log(__METHOD__." returned FolderStatus for Folder $folderName:".print_r($folderStatus->message,true));
 			return false;
@@ -2482,10 +2501,9 @@ $_restoreSession=false;
 		$this->icServer->openMailbox($folderName);
 
 		if($folderName == $trashFolder && $deleteOptions == "move_to_trash") {
-			$this->deleteMessages('all');
-			$this->icServer->expunge();
+			$this->deleteMessages('all',$folderName,'remove_immediately');
 		} else {
-			$this->icServer->expunge();
+			$this->icServer->expunge($folderName);
 		}
 	}
 
@@ -2500,7 +2518,7 @@ $_restoreSession=false;
 	 */
 	function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no')
 	{
-		//error_log(__METHOD__.__LINE__.'->'.array2string($_messageUID).','.array2string($_folder));
+		error_log(__METHOD__.__LINE__.'->'.array2string($_messageUID).','.array2string($_folder).', '.$_forceDeleteMethod);
 		$msglist = '';
 		$oldMailbox = '';
 		if (is_null($_folder) || empty($_folder)) $_folder = $this->sessionData['mailbox'];
@@ -2512,7 +2530,7 @@ $_restoreSession=false;
 			}
 			else
 			{
-				if (self::$debug); error_log(__METHOD__." no messages Message(s): ".implode(',',$_messageUID));
+				if (self::$debug) error_log(__METHOD__." no messages Message(s): ".implode(',',$_messageUID));
 				return false;
 			}
 		}
@@ -2550,6 +2568,7 @@ $_restoreSession=false;
 
 			case "mark_as_deleted":
 				// mark messages as deleted
+				if (is_null($_messageUID)) $_messageUID='all';
 				foreach((array)$_messageUID as $key =>$uid)
 				{
 					//flag messages, that are flagged for deletion as seen too
@@ -2568,19 +2587,21 @@ $_restoreSession=false;
 
 			case "remove_immediately":
 				$updateCache = true;
+				if (is_null($_messageUID)) $_messageUID='all';
 				foreach((array)$_messageUID as $key =>$uid)
 				{
 					//flag messages, that are flagged for deletion as seen too
 					$this->flagMessages('delete', $uid, $_folder);
 				}
 				// delete the messages finaly
-				$this->icServer->expunge();
+				$this->icServer->expunge($_folder);
 				break;
 		}
 		if ($updateCache)
 		{
 			$structure = egw_cache::getCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
 			$cachemodified = false;
+			if (is_null($_messageUID)) $_messageUID='all';
 			foreach ((array)$_messageUID as $k => $_uid)
 			{
 				if (isset($structure[$this->icServer->ImapServerId][$_folder][$_uid]) || $_uid=='all')
@@ -2833,9 +2854,6 @@ $_restoreSession=false;
 					}
 				}
 				if ($cachemodified) egw_cache::setCache(egw_cache::INSTANCE,'email','structureCache'.trim($GLOBALS['egw_info']['user']['account_id']),$structure,$expiration=60*60*1);
-
-				// delete the messages finaly
-				$this->icServer->expunge();
 			}
 		}
 		$summary = egw_cache::getCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);

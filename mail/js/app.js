@@ -902,6 +902,7 @@ app.mail = AppJS.extend(
 		app.mail.app_refresh(this.egw.lang('empty trash'), 'mail');
 		egw.json('mail.mail_ui.ajax_emptyTrash')
 			.sendRequest(true);
+		this.mail_refreshFolderStatus();
 	},
 
 	/**
@@ -911,6 +912,7 @@ app.mail = AppJS.extend(
 		app.mail.app_refresh(this.egw.lang('compress folder'), 'mail');
 		egw.json('mail.mail_ui.ajax_compressFolder')
 			.sendRequest(true);
+		this.mail_refreshFolderStatus();
 	},
 
 	/**
@@ -1034,6 +1036,7 @@ app.mail = AppJS.extend(
 			//mail_parentRefreshListRowStyle(msg,_action.id);
 		}
 		this.mail_flagMessages(_action.id,msg,(do_nmactions?false:true));
+		this.mail_refreshFolderStatus();
 	},
 
 	/**
@@ -1958,3 +1961,14 @@ app.mail = AppJS.extend(
 		this.egw.open_link('mail.mail_wizard.edit&acc_id='+acc_id, '_blank', '640x480');
 	}
 });
+// wrapper functions to call functions within app
+function mail_callEmptyTrash()
+{
+	app.mail.mail_emptyTrash();
+
+}
+function mail_callCompressFolder()
+{
+	app.mail.mail_compressFolder();
+}
+
