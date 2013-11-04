@@ -428,41 +428,34 @@ var et2_link_apps = et2_selectbox.extend(
 	init: function() {
 		this._super.apply(this, arguments);
 
+		if (this.options.select_options != null)
+		{
+			// Preset to last application
+			if(!this.options.value)
+			{
+				this.set_value(egw.preference('link_app', window.egw_appName));
+			}
+			// Register to update preference
+			this.input.on("click", jQuery.proxy(function() {
+				egw.set_preference(this.options.value.to_app || window.egw_appName,'link_app',this.getValue());
+			}),this);
+		}
+	},
+		
+	/**
+	 * We get some minor speedups by overriding parent searching and directly setting select options
+	 */
+	transformAttributes: function(_attrs) {
 		var select_options = {};
 
 		// Limit to one app
-		if(this.options.only_app) {
+		if(_attrs.only_app) {
 			select_options[_attrs.only_app] = this.egw().lang(_attrs.only_app);
 		} else {
-			select_options = this.options.application_list ? this.options.application_list : this.egw().link_app_list('query');
-
-			// Check whether the options entry was found, if not read it from the
-			// content array.
-			if (select_options == null)
-			{
-				select_options = this.getArrayMgr('content')
-					.getEntry("options-" + this.id);
-			}
-			
-			// Default to an empty object
-			if (select_options == null)
-			{
-				select_options = {};
-			}
-			else
-			{
-				// Preset to last application
-				if(!this.options.value)
-				{
-					this.set_value(egw.preference('link_app', window.egw_appName));
-				}
-				// Register to update preference
-				this.input.on("click", jQuery.proxy(function() {
-					egw.set_preference(this.options.value.to_app || window.egw_appName,'link_app',this.getValue());
-				}),this);
-			}
+			select_options = _attrs.application_list ? _attrs.application_list : egw.link_app_list('query');
 		}
-		this.set_select_options(select_options);
+		_attrs.select_options = select_options;
+		this._super.apply(this, arguments);
 	}
 });
 et2_register_widget(et2_link_apps, ["link-apps"]);
@@ -1487,7 +1480,10 @@ var et2_link_add = et2_inputWidget.extend(
 			// Already done
 			return false;
 		}
-		this.app_select = et2_createWidget("link-apps", jQuery.extend({},this.options,{'id': this.options.id + 'app'}) ,this);
+		this.app_select = et2_createWidget("link-apps", jQuery.extend({},this.options,{
+			'id': this.options.id + 'app',
+			value: this.options.application ? this.options.application : this.options.value && this.options.value.add_app ? this.options.value.add_app : null
+		}) ,this);
 		this.div.append(this.app_select.getDOMNode());
 		this.button = et2_createWidget("button", {label: this.egw().lang("add")}, this);
 		this.button.set_label(this.egw().lang("add"));
@@ -1496,6 +1492,8 @@ var et2_link_add = et2_inputWidget.extend(
 			self.egw().open(self.options.value.to_app + ":" + self.options.value.to_id, self.app_select.get_value(), 'add');
 		};
 		this.div.append(this.button.getDOMNode());
+		
+		return true;
 	},
 	/**
 	 * Should be handled client side.
