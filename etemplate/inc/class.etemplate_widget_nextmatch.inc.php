@@ -106,7 +106,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 	 * @param string $cname
 	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname, array $expand)
+	public function beforeSendToClient($cname, array $expand=null)
 	{
 		$attrs = $this->attrs;
 		$form_name = self::form_name($cname, $this->id, $expand);
@@ -329,7 +329,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		// Tell the client about the changes
 		$request_value =& self::get_array(self::$request->content, $form_name,true);
 		$changes = $no_rows = false;
-		
+
 		foreach($value_in as $key => $original_value)
 		{
 			// These keys are ignored
@@ -622,7 +622,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 		$egw_actions = array();
 		$n = 1;
 		$group = false;
-		
+
 		foreach((array)$actions as $id => $action)
 		{
 			// in case it's only selectbox  id => label pairs
@@ -632,7 +632,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			// Add 'Select All' after first group
 			if ($first_level && $group !== false && $action['group'] != $group && !$egw_actions[$prefix.'select_all'])
 			{
-				
+
 				$egw_actions[$prefix.'select_all'] = array(
 					'caption' => 'Select all',
 					//'checkbox' => true,
@@ -702,7 +702,7 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			}
 
 			$egw_actions[$prefix.$id] = $action;
-			
+
 			if (!$first_level && $n++ == $max_length) break;
 		}
 		//echo "egw_actions="; _debug_array($egw_actions);

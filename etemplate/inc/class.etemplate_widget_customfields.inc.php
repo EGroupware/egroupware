@@ -233,7 +233,7 @@ class etemplate_widget_customfields extends etemplate_widget_transformer
 				{
 					$widget->attrs['only_app'] = $field['type'];
 				}
-				$widget->beforeSendToClient($this->id == self::GLOBAL_ID ? '':$this->id, $fname);
+				$widget->beforeSendToClient($this->id == self::GLOBAL_ID ? '':$this->id);
 			}
 		}
 	}

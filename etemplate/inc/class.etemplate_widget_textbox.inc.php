@@ -74,7 +74,7 @@ class etemplate_widget_textbox extends etemplate_widget
 	 * @param string $cname
 	 * @param array $expand values for keys 'c', 'row', 'c_', 'row_', 'cont'
 	 */
-	public function beforeSendToClient($cname, array $expand)
+	public function beforeSendToClient($cname, array $expand=null)
 	{
 		// to NOT transmit passwords back to client, we need to store (non-empty) value in preserv
 		if ($this->attrs['type'] == 'passwd' || $this->type == 'passwd')
