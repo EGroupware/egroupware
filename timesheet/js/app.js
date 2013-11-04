@@ -14,7 +14,7 @@
  *
  * @augments AppJS
  */
-app.timesheet = AppJS.extend(
+app.classes.timesheet = AppJS.extend(
 {
 	appname: 'timesheet',
 	/**

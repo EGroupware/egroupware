@@ -214,7 +214,13 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 		// Initialize application js
 		var app_callback = null;
 		// Only initialize once
-		if(typeof app[appname] == "function")
+		// new app class with constructor function in app.classes[appname]
+		if (typeof app[appname] !== 'object' && typeof app.classes[appname] == 'function')
+		{
+			app[appname] = new app.classes[appname]();
+		}
+		// old app class with constructor function in app[appname] (deprecated)
+		else if(typeof app[appname] == "function")
 		{
 			(function() { new app[appname]();}).call();
 		}

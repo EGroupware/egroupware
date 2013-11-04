@@ -14,10 +14,10 @@
  *
  * @augments AppJS
  */
-app.importexport = AppJS.extend(
+app.classes.importexport = AppJS.extend(
 {
 	appname: 'importexport',
-	
+
 	/**
 	 * Constructor
 	 *
@@ -37,7 +37,7 @@ app.importexport = AppJS.extend(
 		// call parent
 		this._super.apply(this, arguments);
 	},
-		
+
 	/**
 	 * This function is called when the etemplate2 object is loaded
 	 * and ready.  If you must store a reference to the et2 object,
@@ -49,7 +49,7 @@ app.importexport = AppJS.extend(
 	{
 		// call parent
 		this._super.apply(this, arguments);
-		
+
 		if(this.et2.getWidgetById('export') && !this.et2.getArrayMgr("content").getEntry("definition"))
 		{
 			// et2 doesn't understand a disabled button in the normal sense
@@ -57,12 +57,12 @@ app.importexport = AppJS.extend(
 			$j(this.et2.getWidgetById('preview').getDOMNode()).attr('disabled','disabled');
 		}
 	},
-		
+
 	export_preview: function(event, widget)
 	{
 		var preview = $j(widget.getRoot().getWidgetById('preview_box').getDOMNode());
 		$j('.content',preview).empty();
-		
+
 		preview
 			.addClass('loading')
 			.show(100, jQuery.proxy(function() {
@@ -74,12 +74,12 @@ app.importexport = AppJS.extend(
 			},this));
 		return false;
 	},
-	
+
 	import_preview: function(event, widget)
 	{
 		var test = widget.getRoot().getWidgetById('dry-run');
 		if(!test.getValue()) return true;
-		
+
 		// Show preview
 		var preview = $j(widget.getRoot().getWidgetById('preview_box').getDOMNode());
 		$j('.content',preview).empty();

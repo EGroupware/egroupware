@@ -14,7 +14,7 @@
  *
  * @augments AppJS
  */
-app.calendar = AppJS.extend(
+app.classes.calendar = AppJS.extend(
 {
 	/**
 	 * application name

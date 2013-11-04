@@ -6,7 +6,7 @@
  * @author Hadi Nategh	<hn-AT-stylite.de>
  * @copyright (c) 2008-13 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version
+ * @version $Id$
  */
 
 /**
@@ -14,7 +14,7 @@
  *
  * @augments AppJS
  */
-app.infolog = AppJS.extend(
+app.classes.infolog = AppJS.extend(
 {
 	appname: 'infolog',
 	/**

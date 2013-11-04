@@ -19,15 +19,15 @@
 
 /**
  * JS for home application
- * 
+ *
  * Home is a collection of little bits of content (portlets) from the other applications.
  *
- * 
+ *
  * Uses Gridster for the grid layout
  * @see http://gridster.net
  * @augments AppJS
  */
-app.home = AppJS.extend(
+app.classes.home = AppJS.extend(
 {
 	/**
 	 * AppJS requires overwriting this with the actual application name
@@ -49,7 +49,7 @@ app.home = AppJS.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf app.home
 	 */
 	init: function()
@@ -84,7 +84,7 @@ app.home = AppJS.extend(
 		this._super.apply(this, arguments);
 
 		this.portlet_container = this.et2.getWidgetById("portlets");
-		
+
 		// Don't do twice
 		if(this.portlet_container._children.length > 0) return;
 
@@ -226,11 +226,11 @@ app.home = AppJS.extend(
 				 * @return Object - will be returned by gridster.serialize()
 				 */
 				serialize_params: function($w, grid) {
-					return { 
-						id: $w.attr("id"), 
-						row: grid.row, 
-						col: grid.col, 
-						width: grid.width, 
+					return {
+						id: $w.attr("id"),
+						row: grid.row,
+						col: grid.col,
+						width: grid.width,
 						height: grid.height
 					};
 				},
@@ -296,7 +296,7 @@ app.home = AppJS.extend(
 	List:
 	{
 		/**
-		 * List uses mostly JS to generate its content, so we just do it on the JS side by 
+		 * List uses mostly JS to generate its content, so we just do it on the JS side by
 		 * returning a call to this function as the HTML content.
 		 *
 		 * @param id String The ID of the portlet
@@ -318,7 +318,7 @@ app.home = AppJS.extend(
 					// List was just rudely pulled from DOM by the call to HTML, put it back
 					portlet.content.append(list.getDOMNode());
 				}
-				else 
+				else
 				{
 					// Create widget
 					list = et2_createWidget('link-list', {id: id+'-list'}, portlet);
@@ -375,7 +375,7 @@ app.home = AppJS.extend(
 								return;
 							}
 						}
-						
+
 						new_list.push(add);
 						widget._process_edit(button_id,{list: new_list});
 					},
@@ -394,7 +394,7 @@ app.home = AppJS.extend(
 					if(source[i].id) drop_data.push(source[i].id);
 				}
 				widget._process_edit(et2_dialog.BUTTONS_OK_CANCEL,{
-					list: widget.options.settings.list || {}, 
+					list: widget.options.settings.list || {},
 					dropped_data: drop_data
 				});
 			}

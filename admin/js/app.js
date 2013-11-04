@@ -11,10 +11,10 @@
 
 /**
  * UI for Admin
- * 
+ *
  * @augments AppJS
  */
-app.admin = AppJS.extend(
+app.classes.admin = AppJS.extend(
 {
 	appname: 'admin',
 	/**
@@ -29,15 +29,15 @@ app.admin = AppJS.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf app.filemanager
 	 */
-	init: function() 
+	init: function()
 	{
 		// call parent
 		this._super.apply(this, arguments);
 	},
-	
+
 	/**
 	 * Destructor
 	 */
@@ -46,7 +46,7 @@ app.admin = AppJS.extend(
 		// call parent
 		this._super.apply(this, arguments);
 	},
-	
+
 	/**
 	 * This function is called when the etemplate2 object is loaded
 	 * and ready.  If you must store a reference to the et2 object,
@@ -60,7 +60,7 @@ app.admin = AppJS.extend(
 		this._super.apply(this, arguments);
 
 		var iframe = this.iframe = this.et2.getWidgetById('iframe');
-		if (iframe) 
+		if (iframe)
 		{
 			var self = this;
 			jQuery(iframe.getDOMNode()).bind('load', function(){
@@ -70,19 +70,19 @@ app.admin = AppJS.extend(
 		}
 		this.splitter = this.et2.getWidgetById('splitter');
 	},
-	
+
 	/**
 	 * Hide navbar for idots template
-	 * 
+	 *
 	 * Just a hack for old idots, not neccesary for jdots
 	 */
 	_hide_navbar: function()
 	{
 		var document = this.iframe.getDOMNode().contentDocument;
-		
+
 		// set white background, as transparent one lets account-list show through
 		document.getElementsByTagName('body')[0].style.backgroundColor = 'white';
-		
+
 		// hide navbar elements
 		var ids2hide = ['divLogo', 'topmenu', 'divAppIconBar', 'divStatusBar', 'tdSidebox', 'divAppboxHeader'];
 		for(var i=0; i < ids2hide.length; ++i)
@@ -91,10 +91,10 @@ app.admin = AppJS.extend(
 			if (elem) elem.style.display = 'none';
 		}
 	},
-	
+
 	/**
 	 * Set location of iframe for given _action and _sender (row)
-	 * 
+	 *
 	 * @param _action
 	 * @param _senders
 	 */
@@ -105,10 +105,10 @@ app.admin = AppJS.extend(
 
 		this.iframe.set_src(url);
 	},
-	
+
 	/**
 	 * Link hander for jDots template to just reload our iframe, instead of reloading whole admin app
-	 * 
+	 *
 	 * @param _url
 	 * @return boolean true, if linkHandler took care of link, false otherwise
 	 */
@@ -128,17 +128,17 @@ app.admin = AppJS.extend(
 		// can not load our own index page, has to be done by framework
 		return false;
 	},
-	
+
 	/**
 	 * Run an admin module / onclick callback for tree
-	 * 
+	 *
 	 * @param string _id id of clicked node
 	 * @param et2_tree _widget reference to tree widget
 	 */
 	run: function(_id, _widget)
 	{
 		var link = _widget.getUserData(_id, 'link');
-		
+
 		if (_id == '/accounts' || _id.substr(0, 8) == '/groups/')
 		{
 			this.splitter.undock();
@@ -147,7 +147,7 @@ app.admin = AppJS.extend(
 		}
 		else if (typeof link == 'undefined')
 		{
-			_widget.openItem(_id, 'toggle');	
+			_widget.openItem(_id, 'toggle');
 		}
 		else if (link[0] == '/' || link.substr(0,4) == 'http')
 		{
@@ -159,10 +159,10 @@ app.admin = AppJS.extend(
 			eval(link.substr(11));
 		}
 	},
-	
+
 	/**
 	 * View, edit or delete a group callback for tree
-	 * 
+	 *
 	 * @param Object _action egwAction
 	 * @param Object _senders egwActionObject _senders[0].id holds id
 	 */
@@ -173,29 +173,29 @@ app.admin = AppJS.extend(
 			case 'view':
 				this.run(_senders[0].id, this.et2.getWidgetById('tree'));
 				break;
-				
+
 			case 'edit':
 			case 'delete':
 				this.splitter.dock();
-				this.iframe.set_src(egw.link('/index.php', { 
-					menuaction: _action.id == 'edit' ? 'admin.uiaccounts.edit_group' : 'admin.uiaccounts.delete_group', 
+				this.iframe.set_src(egw.link('/index.php', {
+					menuaction: _action.id == 'edit' ? 'admin.uiaccounts.edit_group' : 'admin.uiaccounts.delete_group',
 					account_id: _senders[0].id.split('/')[2]
 				}));
 				break;
 
 			case 'acl':
 				this.splitter.dock();
-				this.iframe.set_src(egw.link('/index.php', { 
-					menuaction: 'admin.admin_acl.index', 
+				this.iframe.set_src(egw.link('/index.php', {
+					menuaction: 'admin.admin_acl.index',
 					account_id: _senders[0].id.split('/')[2]
 				}));
 				break;
 		}
 	},
-	
+
 	/**
 	 * Modify an ACL entry
-	 * 
+	 *
 	 * @param Object _action egwAction
 	 * @param Object _senders egwActionObject _senders[0].id holds the id "admin::app:account:location"
 	 */
@@ -213,7 +213,7 @@ app.admin = AppJS.extend(
 				var request = egw.json('admin_acl::ajax_change_acl', [ids], this._acl_callback,this,false,this)
 					.sendRequest();
 				break;
-				
+
 			case 'edit':
 				// need to specify window to get correct opener, as admin has multiple windows open!
 				egw('admin', window).open_link(egw.link('/index.php', {
@@ -232,10 +232,10 @@ app.admin = AppJS.extend(
 				break;
 		}
 	},
-	
+
 	/**
 	 * Callback called on successfull call of serverside ACL handling
-	 * 
+	 *
 	 * @param string _data returned from server
 	 */
 	_acl_callback: function(_data)

@@ -14,7 +14,7 @@
  *
  * @augments AppJS
  */
-app.mail = AppJS.extend(
+app.classes.mail = AppJS.extend(
 {
 	appname: 'mail',
 

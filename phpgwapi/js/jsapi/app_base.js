@@ -15,14 +15,26 @@
         egw_inheritance;
 */
 
-window.app = {};
+/**
+ * Object to collect instanciated appliction objects
+ *
+ * Attributes classes collects loaded application classes,
+ * which can get instanciated:
+ *
+ *	app[appname] = new app.classes[appname]();
+ *
+ * On destruction only app[appname] gets deleted, app.classes[appname] need to be used again!
+ *
+ * @type object
+ */
+window.app = {classes: {}};
 
 /**
  * Common base class for application javascript
  * Each app should extend as needed.
  *
  * All application javascript should be inside.  Intitialization goes in init(),
- * clean-up code goes in destroy().  Initialization is done once all js is loaded. 
+ * clean-up code goes in destroy().  Initialization is done once all js is loaded.
  *
  * var app.appname = AppJS.extend({
  *	// Actually set this one, the rest is example
@@ -34,9 +46,9 @@ window.app = {};
  *	{
  *		// Call the super
  *		this._super.apply(this, arguments);
- *     
+ *
  *		// Init the stuff
- *		if ( egw.preference('dateformat', 'common') ) 
+ *		if ( egw.preference('dateformat', 'common') )
  *		{
  *			// etc
  *		}
@@ -47,18 +59,18 @@ window.app = {};
  *	}
  * });
  */
-var AppJS = Class.extend({
-
+var AppJS = Class.extend(
+{
 	/**
 	 * Internal application name - override this
 	 */
 	appname: '',
-	
+
 	/**
 	 * Internal reference to etemplate2 widget tree
 	 */
 	et2: null,
-	
+
 	/**
 	 * Internal reference to egw client-side api object for current app and window
 	 */
@@ -70,7 +82,7 @@ var AppJS = Class.extend({
 	 */
 	init: function() {
 		window.app[this.appname] = this;
-		
+
 		this.egw = egw(this.appname, window);
 	},
 
@@ -97,13 +109,13 @@ var AppJS = Class.extend({
 		}
 		this.et2 = et2.widgetContainer;
 	},
-		
+
 	/**
-	 * Open an entry.  
-	 * 
+	 * Open an entry.
+	 *
 	 * Designed to be used with the action system as a callback
 	 * eg: onExecute => app.<appname>.open
-	 * 
+	 *
 	 * @param _action
 	 * @param _senders
 	 */
@@ -111,26 +123,26 @@ var AppJS = Class.extend({
 		var id_app = _senders[0].id.split('::')
 		egw.open(id_app[1], this.appname);
 	 },
-		 
+
 	/**
 	 * A generic method to action to server asynchronously
-	 * 
+	 *
 	 * Designed to be used with the action system as a callback.
 	 * In the PHP side, set the action
-	 * 'onExecute' => 'javaScript:app.<appname>.action', and 
+	 * 'onExecute' => 'javaScript:app.<appname>.action', and
 	 * implement _do_action(action_id, selected)
-	 * 
-	 * @param {egwAction} _action 
+	 *
+	 * @param {egwAction} _action
 	 * @param {egwActionObject[]} _elems
 	 */
 	action: function(_action, _elems)
 	{
 		// let user confirm select-all
 		var select_all = _action.getManager().getActionById("select_all");
-		var confirm_msg = (_elems.length > 1 || select_all && select_all.checked) && 
+		var confirm_msg = (_elems.length > 1 || select_all && select_all.checked) &&
 			typeof _action.data.confirm_multiple != 'undefined' ?
 				_action.data.confirm_multiple : _action.data.confirm;
-				
+
 		if (typeof confirm_msg != 'undefined')
 		{
 			var that = this;
@@ -139,13 +151,13 @@ var AppJS = Class.extend({
 			{
 				if (button_id != et2_dialog.NO_BUTTON)
 				{
-					that._do_action(action_id, _elems);	
+					that._do_action(action_id, _elems);
 				}
 			}, confirm_msg, egw.lang('Confirmation required'), et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
 		}
 		else if (typeof this._do_action == 'function')
 		{
-			this._do_action(_action.id, _elems);			
+			this._do_action(_action.id, _elems);
 		}
 		else
 		{
@@ -166,5 +178,5 @@ var AppJS = Class.extend({
 			}
 		}
 	}
-		
+
 });

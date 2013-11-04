@@ -11,10 +11,10 @@
 
 /**
  * UI for filemanager
- * 
+ *
  * @augments AppJS
  */
-app.filemanager = AppJS.extend(
+app.classes.filemanager = AppJS.extend(
 {
 	appname: 'filemanager',
 	/**
@@ -36,15 +36,15 @@ app.filemanager = AppJS.extend(
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf app.filemanager
 	 */
-	init: function() 
+	init: function()
 	{
 		// call parent
 		this._super.apply(this, arguments);
 	},
-	
+
 	/**
 	 * Destructor
 	 */
@@ -54,7 +54,7 @@ app.filemanager = AppJS.extend(
 		// call parent
 		this._super.apply(this, arguments);
 	},
-	
+
 	/**
 	 * This function is called when the etemplate2 object is loaded
 	 * and ready.  If you must store a reference to the et2 object,
@@ -68,28 +68,28 @@ app.filemanager = AppJS.extend(
 		this._super.apply(this, arguments);
 
 		this.path_widget = this.et2.getWidgetById('path');
-		
+
 		// get clipboard from browser localstore and update button tooltips
 		if (typeof window.localStorage != 'undefined' && typeof window.localStorage[this.clipboard_localstore_key] != 'undefined')
 		{
 			this.clipboard_files = JSON.parse(window.localStorage[this.clipboard_localstore_key]);
 		}
 		this.clipboard_tooltips();
-		
+
 		if (typeof this.readonly != 'undefined')
 		{
 			this.set_readonly.apply(this, this.readonly);
 			delete this.readonly;
 		}
 	},
-	
+
 	/**
 	 * Regexp to convert id to a path, use this.id2path(_id)
 	 */
 	remove_prefix: /^filemanager::/,
 	/**
 	 * Convert id to path (remove "filemanager::" prefix)
-	 * 
+	 *
 	 * @param string _id
 	 * @returns string
 	 */
@@ -100,7 +100,7 @@ app.filemanager = AppJS.extend(
 
 	/**
 	 * Convert array of elems to array of paths
-	 * 
+	 *
 	 * @param array _elems selected items from actions
 	 * @return array
 	 */
@@ -113,10 +113,10 @@ app.filemanager = AppJS.extend(
 		}
 		return paths;
 	},
-	
+
 	/**
 	 * Get directory of a path
-	 * 
+	 *
 	 * @param string _path
 	 * @returns string
 	 */
@@ -126,10 +126,10 @@ app.filemanager = AppJS.extend(
 		parts.pop();
 		return parts.join('/') || '/';
 	},
-	
+
 	/**
 	 * Get name of a path
-	 * 
+	 *
 	 * @param string _path
 	 * @returns string
 	 */
@@ -137,20 +137,20 @@ app.filemanager = AppJS.extend(
 	{
 		return _path.split('/').pop();
 	},
-	
+
 	/**
 	 * Get current working directory
-	 * 
+	 *
 	 * @return string
 	 */
 	get_path: function()
 	{
 		return this.path_widget ? this.path_widget.get_value() : null;
 	},
-	
+
 	/**
 	 * Open compose with already attached files
-	 * 
+	 *
 	 * @param string|array attachment path(s)
 	 */
 	open_mail: function(attachments)
@@ -164,10 +164,10 @@ app.filemanager = AppJS.extend(
 		}
 		egw.open('', 'felamimail', 'add', params);
 	},
-	
+
 	/**
 	 * Mail files action: open compose with already attached files
-	 * 
+	 *
 	 * @param _action
 	 * @param _elems
 	 */
@@ -178,7 +178,7 @@ app.filemanager = AppJS.extend(
 
 	/**
 	 * Send names of uploaded files (again) to server, to process them: either copy to vfs or ask overwrite/rename
-	 * 
+	 *
 	 * @param _event
 	 * @param _file_count
 	 * @param {string} [_path=current directory] Where the file is uploaded to.
@@ -192,18 +192,18 @@ app.filemanager = AppJS.extend(
 		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
 		{
 			var widget = _event.data;
-			var request = egw.json('filemanager_ui::ajax_action', ['upload', widget.getValue(), _path], 
+			var request = egw.json('filemanager_ui::ajax_action', ['upload', widget.getValue(), _path],
 				this._upload_callback, this, true, this
 			).sendRequest();
 			widget.set_value('');
 		}
 	},
-	
+
 	/**
 	 * Callback for server response to upload request:
 	 * - display message and refresh list
 	 * - ask use to confirm overwritting existing files or rename upload
-	 * 
+	 *
 	 * @param object _data values for attributes msg, files, ...
 	 */
 	_upload_callback: function(_data)
@@ -254,7 +254,7 @@ app.filemanager = AppJS.extend(
 			}
 		}
 	},
-	
+
 	/**
 	 * Update clickboard tooltips in buttons
 	 */
@@ -267,10 +267,10 @@ app.filemanager = AppJS.extend(
 			if (button) button.set_statustext(this.clipboard_files.join(",\n"));
 		}
 	},
-	
+
 	/**
 	 * Clip files into clipboard
-	 * 
+	 *
 	 * @param _action
 	 * @param _elems
 	 */
@@ -278,25 +278,25 @@ app.filemanager = AppJS.extend(
 	{
 		this.clipboard_is_cut = _action.id == "cut";
 		if (_action.id != "add") this.clipboard_files = [];
-	
+
 		this.clipboard_files = this.clipboard_files.concat(this._elems2paths(_elems));
-		
+
 		if (_action.id == "add" && this.clipboard_files.length > 1)
 		{
 			// ToDo: make sure files are unique
 		}
 		this.clipboard_tooltips();
-		
+
 		// update localstore with files
 		if (typeof window.localStorage != 'undefined')
 		{
 			window.localStorage[this.clipboard_localstore_key] = JSON.stringify(this.clipboard_files);
 		}
 	},
-	
+
 	/**
 	 * Paste files into current directory or mail them
-	 * 
+	 *
 	 * @param _type 'paste', 'linkpaste', 'mailpaste'
 	 */
 	paste: function(_type)
@@ -311,7 +311,7 @@ app.filemanager = AppJS.extend(
 			case 'mailpaste':
 				this.open_mail(this.clipboard_files);
 				break;
-				
+
 			case 'paste':
 				this._do_action(this.clipboard_is_cut ? 'move' : 'copy', this.clipboard_files);
 
@@ -322,7 +322,7 @@ app.filemanager = AppJS.extend(
 					this.clipboard_tooltips();
 				}
 				break;
-				
+
 			case 'linkpaste':
 				this._do_action('symlink', this.clipboard_files);
 				break;
@@ -331,7 +331,7 @@ app.filemanager = AppJS.extend(
 
 	/**
 	 * Pass action to server
-	 * 
+	 *
 	 * @param _action
 	 * @param _elems
 	 */
@@ -346,16 +346,16 @@ app.filemanager = AppJS.extend(
 			{
 				if (button_id != et2_dialog.NO_BUTTON)
 				{
-					that._do_action(action_id, paths);	
+					that._do_action(action_id, paths);
 				}
 			}, _action.data.confirm, this.egw.lang('Confirmation required'), et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
 		}
 		else
 		{
-			this._do_action(_action.id, paths);			
+			this._do_action(_action.id, paths);
 		}
 	},
-	
+
 	/**
 	 * Prompt user for directory to create
 	 */
@@ -370,7 +370,7 @@ app.filemanager = AppJS.extend(
 			this.change_dir(path+'/'+dir);
 		}
 	},
-	
+
 	/**
 	 * Prompt user for directory to create
 	 */
@@ -383,10 +383,10 @@ app.filemanager = AppJS.extend(
 			this._do_action('symlink', target);
 		}
 	},
-	
+
 	/**
 	 * Run a serverside action via an ajax call
-	 * 
+	 *
 	 * @param _type 'move_file', 'copy_file', ...
 	 * @param _selected selected paths
 	 * @param _sync send a synchronous ajax request
@@ -399,20 +399,20 @@ app.filemanager = AppJS.extend(
 			this._do_action_callback, this, !_sync, this
 		).sendRequest();
 	},
-	
+
 	/**
 	 * Callback for _do_action ajax call
-	 * 
+	 *
 	 * @param _data
 	 */
 	_do_action_callback: function(_data)
 	{
 		window.egw_refresh(_data.msg, this.appname);
 	},
-	
+
 	/**
 	 * Force download of a file by appending '?download' to it's download url
-	 * 
+	 *
 	 * @param _action
 	 * @param _senders
 	 */
@@ -423,10 +423,10 @@ app.filemanager = AppJS.extend(
 		if (url[0] == '/') url = egw.link(url);
 		window.location = url+"?download";
 	},
-	
+
 	/**
 	 * Change directory
-	 * 
+	 *
 	 * @param _dir directory to change to incl. '..' for one up
 	 */
 	change_dir: function(_dir)
@@ -442,10 +442,10 @@ app.filemanager = AppJS.extend(
 		}
 		this.path_widget.set_value(_dir);
 	},
-	
+
 	/**
 	 * Open/active an item
-	 * 
+	 *
 	 * @param _action
 	 * @param _senders
 	 */
@@ -463,10 +463,10 @@ app.filemanager = AppJS.extend(
 			egw.open({path: path, type: data.data.mime}, 'file');
 		}
 	},
-	
+
 	/**
 	 * Edit prefs of current directory
-	 * 
+	 *
 	 * @param _action
 	 * @param _senders
 	 */
@@ -479,10 +479,10 @@ app.filemanager = AppJS.extend(
 			path: path,
 		}), 'fileprefs', '495x425');
 	},
-	
+
 	/**
 	 * File(s) droped
-	 * 
+	 *
 	 * @param _action
 	 * @param _elems
 	 * @param _target
@@ -493,7 +493,7 @@ app.filemanager = AppJS.extend(
 		var src = this._elems2paths(_elems);
 		var dst = this.id2path(_target.id);
 		//alert(_action.id+': '+src.join(', ')+' --> '+dst);
-		
+
 		// check if target is a file --> use it's directory instead
 		var data = egw.dataGetUIDdata(_target.id);
 		if (data.data.mime != 'httpd/unix-directory')
@@ -503,12 +503,12 @@ app.filemanager = AppJS.extend(
 
 		this._do_action(_action.id == "file_drop_move" ? 'move' : 'copy', src, false, dst);
 	},
-	
+
 	/**
 	 * Handle a native / HTML5 file drop from system
-	 * 
+	 *
 	 * This is a callback from nextmatch to prevent the default link action, and just upload instead.
-	 * 
+	 *
 	 * @param {string} row_uid UID of the row the files were dropped on
 	 * @param {File[]} Array of Files
 	 */
@@ -516,27 +516,27 @@ app.filemanager = AppJS.extend(
 	{
 		var self = this;
 		var data = egw.dataGetUIDdata(row_uid);
-		
+
 		var path = data.data.mime == "httpd/unix-directory" ? data.data.path : this.get_path();
 		var widget = this.et2.getWidgetById('upload');
-		
+
 		// Override finish to specify a potentially different path
 		var old_onfinish = widget.options.onFinish;
-		
+
 		widget.options.onFinish = function(_event, _file_count) {
 			widget.options.onFinish = old_onfinish;
 			self.upload(_event, _file_count, path);
 		}
 		// This triggers the upload
 		widget.set_value(files);
-		
+
 		// Return false to prevent the link
 		return false;
 	},
-		
+
 	/**
 	 * Get drag helper, called on drag start
-	 * 
+	 *
 	 * @param _action
 	 * @param _elems
 	 * @return some dome objects
@@ -582,10 +582,10 @@ app.filemanager = AppJS.extend(
 				// Create a stack of images
 				var img = $j(document.createElement('img'));
 				img.css({
-					position: 'absolute', 
-					'z-index': 10000-i, 
-					top: idx*5, 
-					left: idx*5, 
+					position: 'absolute',
+					'z-index': 10000-i,
+					top: idx*5,
+					left: idx*5,
 					opacity: (maxCnt - idx) / maxCnt
 				});
 				img.attr('src', icons[i]);
@@ -604,19 +604,19 @@ app.filemanager = AppJS.extend(
 		div.append(text);
 
 		// Add notice of Ctrl key, if supported
-		if(window.FileReader && 'draggable' in document.createElement('span') && 
+		if(window.FileReader && 'draggable' in document.createElement('span') &&
 			navigator && navigator.userAgent.indexOf('Chrome') >= 0)
 		{
 			text.append('<br />' + this.egw.lang('Hold Ctrl to drag files to your computer'));
 		}
 		return div;
 	},
-	
+
 	/**
 	 * Change readonly state for given directory
-	 * 
+	 *
 	 * I get call/transported with each get_rows call, but should only by applied to UI if matching curent dir
-	 * 
+	 *
 	 * @param _path
 	 * @param _ro
 	 */
@@ -629,14 +629,14 @@ app.filemanager = AppJS.extend(
 			return;
 		}
 		var path =  this.path_widget.getValue();
-		
+
 		if (_path == path)
 		{
 			var ids = ['button[linkpaste]', 'button[paste]', 'button[createdir]', 'button[symlink]', 'upload'];
 			for(var i=0; i < ids.length; ++i)
 			{
 				var widget = this.et2.getWidgetById(ids[i]);
-				if (widget) 
+				if (widget)
 				{
 					if (widget._type == 'button' || widget._type == 'buttononly')
 					{
@@ -650,7 +650,7 @@ app.filemanager = AppJS.extend(
 			}
 		}
 	},
-		
+
 	/**
 	 * Functions for the select dialog
 	 */
@@ -672,7 +672,7 @@ app.filemanager = AppJS.extend(
 		}
 		return false;
 	},
-		
+
 	select_show: function(file)
 	{
 		var editfield = this.et2.getWidgetById('name');
