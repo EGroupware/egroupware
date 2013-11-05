@@ -84,8 +84,9 @@ function initAll()
 			}
 		}
 	}
-	if ($j.browser.webkit) browserSupportsOnUnloadConfirm = false; // chrome blocks alert/confirm boxes, but displays (custom) messages on demand before leaving/closing a page
-	if ($j.browser.opera) browserSupportsOnUnloadConfirm = false; // opera does not support unload or onbeforeunload for security reasons
+	// chrome blocking alert/confirm boxes, but displays (custom) messages on demand before leaving/closing a page
+	// opera does not support unload or onbeforeunload for security reasons
+	if (navigator.userAgent.match(/(Opera|WebKit)/i)) browserSupportsOnUnloadConfirm = false; 
 }
 
 function checkunload(checkBrowser)
