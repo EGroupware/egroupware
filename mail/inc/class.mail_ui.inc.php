@@ -1382,6 +1382,7 @@ unset($query['actions']);
 			//_debug_array($header);
 			$imageTag = '';
 			$imageHTMLBlock = '';
+			//error_log(__METHOD__.__LINE__.array2string($header));
 			if (in_array("attachments", $cols))
 			{
 				if($header['mimetype'] == 'multipart/mixed' ||
@@ -1403,8 +1404,7 @@ unset($query['actions']);
 						$header['mimetype'] != 'multipart/signed'
 					)
 					{
-						$this->mail_bo->reopen($_folderName);
-						$attachments = $this->mail_bo->getMessageAttachments($header['uid'],$_partID='', $_structure='', $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=false);
+						$attachments = $header['attachments'];
 						if (count($attachments)<1)
 						{
 							$image = '&nbsp;';

@@ -1071,7 +1071,7 @@ $_restoreSession=false;
 //		$fquery->headers('headers', array('Subject', 'From', 'To', 'Cc', 'Date'), array('peek' => true,'cache' => true));
 		$fquery->envelope();
 		$fquery->size();
-//		$fquery->structure();
+		$fquery->structure();
 		$fquery->flags();
 //		$fquery->imapDate();
 		$headersNew = $this->icServer->fetch($_folderName, $fquery, array(
@@ -1112,8 +1112,29 @@ $_restoreSession=false;
 				$headerObject['TO'] = $_headerObject->getEnvelope()->to->addresses;
 				$headerObject['CC'] = $_headerObject->getEnvelope()->cc->addresses;
 				$headerObject['FLAGS'] = $_headerObject->getFlags();
+				$mailStructureObject = $_headerObject->getStructure();
 				//error_log(__METHOD__.__LINE__.array2string($headerObject));
-
+				//error_log(__METHOD__.__LINE__.' MimeMap:'.array2string($mailStructureObject->contentTypeMap()));
+				//foreach ($_headerObject->getStructure()->getParts() as $p => $part)
+				$headerObject['ATTACHMENTS']=null;
+				foreach ($mailStructureObject->contentTypeMap() as $mime_id => $mime_type)
+				{
+					if ($mime_id==0) $messageMimeType = $mime_type;
+					$part = $mailStructureObject->getPart($mime_id);
+					if ($part->getDisposition()=='attachment')
+					{
+						$headerObject['ATTACHMENTS'][$mime_id]=$part->getAllDispositionParameters();
+						$headerObject['ATTACHMENTS'][$mime_id]['mimeType']=$mime_type;
+						$headerObject['ATTACHMENTS'][$mime_id]['uid']=$id;
+						$headerObject['ATTACHMENTS'][$mime_id]['partID']=$mime_id;
+						if (!isset($headerObject['ATTACHMENTS'][$mime_id]['name']))$headerObject['ATTACHMENTS'][$mime_id]['name']=$part->getName();
+						//error_log(__METHOD__.__LINE__.' PartDisposition:'.$mime_id.'->'.array2string($part->getName()));
+						//error_log(__METHOD__.__LINE__.' PartDisposition:'.$mime_id.'->'.array2string($part->getAllDispositionParameters()));
+						//error_log(__METHOD__.__LINE__.' Attachment:'.$mime_id.'->'.array2string($headerObject['ATTACHMENTS'][$mime_id]));
+					}
+				}
+				//error_log(__METHOD__.__LINE__.' FindBody (plain):'.array2string($mailStructureObject->findBody('plain')));
+				//error_log(__METHOD__.__LINE__.' FindBody (html):'.array2string($mailStructureObject->findBody('html')));
 				//if($count == 0) error_log(__METHOD__.array2string($headerObject));
 				if (empty($headerObject['UID'])) continue;
 				//$uid = ($rByUid ? $headerObject['UID'] : $headerObject['MSG_NUM']);
@@ -1126,17 +1147,19 @@ $_restoreSession=false;
 				}
 				//error_log(__METHOD__.__LINE__.' '.$headerObject['SUBJECT'].'->'.$headerObject['DATE']);
 				//error_log(__METHOD__.__LINE__.' '.$this->decode_subject($headerObject['SUBJECT']).'->'.$headerObject['DATE']);
+				if (isset($headerObject['ATTACHMENTS']) && count($headerObject['ATTACHMENTS'])) foreach ($headerObject['ATTACHMENTS'] as $pID =>$a) $retValue['header'][$sortOrder[$uid]]['attachments'][]=$a;
 				$retValue['header'][$sortOrder[$uid]]['subject']	= $this->decode_subject($headerObject['SUBJECT']);
 				$retValue['header'][$sortOrder[$uid]]['size'] 		= $headerObject['SIZE'];
 				$retValue['header'][$sortOrder[$uid]]['date']		= self::_strtotime(($headerObject['DATE']&&!($headerObject['DATE']=='NIL')?$headerObject['DATE']:$headerObject['INTERNALDATE']),'ts',true);
 				$retValue['header'][$sortOrder[$uid]]['internaldate']= self::_strtotime($headerObject['INTERNALDATE'],'ts',true);
-				$retValue['header'][$sortOrder[$uid]]['mimetype']	= $headerObject['MIMETYPE'];
+				$retValue['header'][$sortOrder[$uid]]['mimetype']	= $messageMimeType;
 				$retValue['header'][$sortOrder[$uid]]['id']		= $headerObject['MSG_NUM'];
 				$retValue['header'][$sortOrder[$uid]]['uid']		= $headerObject['UID'];
 				$retValue['header'][$sortOrder[$uid]]['priority']		= ($headerObject['PRIORITY']?$headerObject['PRIORITY']:3);
 				if (is_array($headerObject['FLAGS'])) {
 					$retValue['header'][$sortOrder[$uid]] = array_merge($retValue['header'][$sortOrder[$uid]],self::prepareFlagsArray($headerObject));
 				}
+//error_log(__METHOD__.__LINE__.$headerObject['SUBJECT'].'->'.array2string($_headerObject->getEnvelope()->__get('from')));
 				if(is_array($headerObject['FROM']) && $headerObject['FROM'][0]) {
 					$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0]);
 				}
@@ -3545,7 +3568,6 @@ $_restoreSession=false;
 		if(is_object($_structure)) {
 			$structure = $_structure;
 		} else {
-			$this->icServer->_cmd_counter = rand($this->icServer->_cmd_counter+1,$this->icServer->_cmd_counter+100);
 			$structure = $this->_getStructure($_uid, true, false, $_folder);
 			if($_partID != '') {
 				$structure = $this->_getSubStructure($structure, $_partID);
