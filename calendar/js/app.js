@@ -328,11 +328,11 @@ app.classes.calendar = AppJS.extend(
 		}
 		var backup_url = _action.data.url;
 
-	_action.data.url = _action.data.url.replace(/(\$|%24)id/,id);
-	_action.data.url = _action.data.url.replace(/(\$|%24)app/,app);
+		_action.data.url = _action.data.url.replace(/(\$|%24)id/,id);
+		_action.data.url = _action.data.url.replace(/(\$|%24)app/,app);
 
 		nm_action(_action, _senders);
-		//egw.open_link( _action.data.url,'timesheet','edit');
+
 		_action.data.url = backup_url;	// restore url
 	},
 
