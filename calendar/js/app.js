@@ -76,6 +76,7 @@ app.classes.calendar = AppJS.extend(
 			{
 				this.set_enddate_visibility();
 				this.check_recur_type();
+				this.et2.getWidgetById('recur_exception').set_disabled(typeof content.data['recur_exception'][0] == 'undefined');
 			}
 			else
 			{
