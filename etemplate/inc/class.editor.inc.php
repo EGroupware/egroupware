@@ -1375,7 +1375,7 @@ class editor
 		Not a known type, use a generic attribute thing to at least allow working
 		with the attributes provided
 		*/
-		if(!boetemplate::$types[$widget['type']] && !$this->extensions[$widget['type']])
+		if ($widget['type'] && !boetemplate::$types[$widget['type']] && !$this->extensions[$widget['type']])
 		{
 			$grid =& $editor->get_widget_by_name('etemplate.editor.widget.generic');
 			$grid['type'] = 'grid';
