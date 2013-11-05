@@ -439,7 +439,7 @@ app.classes.calendar = AppJS.extend(
 		}
 
 		console.log(_action);
-		nm_action(_action, _senders, null, {ids: []});
+		nm_action(_action, _senders);
 
 		_action.data = backup;	// restore url, width, height, nm_action
 	},
