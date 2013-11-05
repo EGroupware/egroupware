@@ -39,10 +39,10 @@
 (function(){
 	var debug = false;
 	var egw_script = document.getElementById('egw_script_id');
-	
+
 	// Flag for if this is opened in a popup
 	var popup = false;
-	
+
 	window.egw_webserverUrl = egw_script.getAttribute('data-url');
 	window.egw_appName = egw_script.getAttribute('data-app');
 
@@ -73,7 +73,7 @@
 		}
 	}
 	else if (debug) console.log('found injected egw object');
-	
+
 	// check for a framework object
 	if (typeof window.framework == 'undefined')
 	{
@@ -94,7 +94,7 @@
 			window.location.search += window.location.search ? "&cd=yes" : "?cd=yes";
 		}
 	}
-	
+
 	// call egw_refresh on opener, if attr specified
 	var refresh_opener = egw_script.getAttribute('data-refresh-opener');
 	if (refresh_opener && window.opener)
@@ -102,7 +102,7 @@
 		refresh_opener = JSON.parse(refresh_opener) || {};
 		window.opener.egw_refresh.apply(window.opener, refresh_opener);
 	}
-	
+
 	// close window / call window.close(), if data-window-close is specified
 	var window_close = egw_script.getAttribute('data-window-close');
 	if (window_close)
@@ -110,7 +110,7 @@
 		if (typeof window_close == 'string' && window_close !== '1')
 		{
 			alert(window_close);
-		}		
+		}
 		window.close();
 	}
 
@@ -123,7 +123,7 @@
 
 	window.egw_LAB = $LAB.setOptions({AlwaysPreserveOrder:true,BasePath:window.egw_webserverUrl+'/'});
 	var include = JSON.parse(egw_script.getAttribute('data-include'));
-	
+
 	// remove this script from include, until server-side no longer requires it
 	for(var i=0; i < include.length; ++i)
 	{
@@ -133,7 +133,8 @@
 			break;
 		}
 	}
-	window.egw_LAB.script(include).wait(function(){			
+	window.egw_LAB.script(include).wait(function()
+	{
 		// Make sure opener knows when we close - start a heartbeat
 		if((popup || window.opener) && window.name != '')
 		{
@@ -142,7 +143,15 @@
 				egw().storeWindow(this.egw_appName, this);
 			}, 2000);
 		}
-		
+
+		// instanciate app object
+		var appname = window.egw_appName;
+		if (window.app && window.app[appname] != 'object' && typeof window.app.classes[appname] == 'function')
+		{
+			window.app[appname] = new window.app.classes[appname]();
+		}
+
+		// load et2
 		var data = egw_script.getAttribute('data-etemplate');
 		if (data)
 		{
@@ -156,7 +165,7 @@
 			}
 			else
 			{
-				egw.debug("warn", "Did not load '%s' JS object",window.egw_appName); 
+				egw.debug("warn", "Did not load '%s' JS object",window.egw_appName);
 			}
 			if(typeof app[window.egw_appName] == "object")
 			{
@@ -184,9 +193,9 @@
 			window.egw_message.apply(window, data);
 		}
 	});
-	
+
 	/**
-	 * 
+	 *
 	 */
 	window.callManual = function()
 	{

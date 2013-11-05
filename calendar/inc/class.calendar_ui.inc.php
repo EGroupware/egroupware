@@ -225,6 +225,18 @@ class calendar_ui
 	 */
 	function do_header()
 	{
+		// Include the jQuery-UI CSS - many more complex widgets use it
+		$theme = 'redmond';
+		egw_framework::includeCSS("/phpgwapi/js/jquery/jquery-ui/$theme/jquery-ui-1.10.3.custom.css");
+		// Load our CSS after jQuery-UI, so we can override it
+		egw_framework::includeCSS('/etemplate/templates/default/etemplate2.css');
+
+		// load etemplate2
+		egw_framework::validate_file('/etemplate/js/etemplate2.js');
+
+		// load our app.js file
+		egw_framework::validate_file('/calendar/js/app.js');
+
 		// tell egw_framework to include wz_tooltip
 		$GLOBALS['egw_info']['flags']['include_wz_tooltip'] = true;
 		common::egw_header();

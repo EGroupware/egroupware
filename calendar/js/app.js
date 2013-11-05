@@ -9,6 +9,10 @@
  * @version $Id$
  */
 
+/*egw:uses
+	/etemplate/js/etemplate2.js
+*/
+
 /**
  * UI for calendar
  *
@@ -20,15 +24,7 @@ app.classes.calendar = AppJS.extend(
 	 * application name
 	 */
 	appname: 'calendar',
-	/**
-	 * et2 widget container
-	 */
-	et2: null,
-	/**
-	 * edit_series vars
-	 */
-	calendar_edit_id: null,
-	calendar_edit_date: null,
+
 	/**
 	 * Constructor
 	 *
@@ -45,10 +41,8 @@ app.classes.calendar = AppJS.extend(
 	 */
 	destroy: function()
 	{
-		delete this.et2;
 		// call parent
 		this._super.apply(this, arguments);
-
 	},
 
 	/**
@@ -99,11 +93,12 @@ app.classes.calendar = AppJS.extend(
 	/**
 	 * open the freetime search popup
 	 *
+	 * @param {string} _link
 	 */
-	 freetime_search_popup: function(_link)
-	 {
+	freetime_search_popup: function(_link)
+	{
 		this.egw.open_link(_link,'ft_search','700x500') ;
-	 },
+	},
 
 	/**
 	 * send an ajax request to server to set the freetimesearch window content
@@ -153,10 +148,11 @@ app.classes.calendar = AppJS.extend(
 	/**
 	 * handles actions selectbox in calendar edit popup
 	 *
-	 * @param {widget object} widget, widget "actions selectBox" in edit popup window
+	 * @param {mixed} _event
+	 * @param {et2_base_widget} widget, widget "actions selectBox" in edit popup window
 	 */
-	 actions_change: function(egw,widget)
-	 {
+	actions_change: function(_event, widget)
+	{
 		var event = this.et2.getArrayMgr('content').data;
 		if (widget)
 		{
@@ -183,51 +179,53 @@ app.classes.calendar = AppJS.extend(
 					this.et2._inst.submit();
 			}
 		}
-	 },
+	},
+
 	/**
 	 * open mail compose popup window
 	 *
-	 * @param {Array} vars,
+	 * @param {Array} vars
 	 * @todo need to provide right mail compose from server to custom_mail function
 	 */
-	 custom_mail: function (vars)
-	 {
+	custom_mail: function (vars)
+	{
 		this.egw.open_link('mail.mail_compose.compose&','_blank','700x700');
-	 },
+	},
+
 	/**
 	 * control delete_series popup visibility
 	 *
-	 * @param {Array} exceptions, an array contains number of exception entries
+	 * @param {Array} exceptions an array contains number of exception entries
 	 *
 	 */
-	 delete_btn: function(exceptions)
-	 {
-		 var content = this.et2.getArrayMgr('content').data;
+	delete_btn: function(exceptions)
+	{
+		var content = this.et2.getArrayMgr('content').data;
 
-		 if (exceptions)
-		 {
-
+		if (exceptions)
+		{
 			$j(document.getElementById('calendar-edit_calendar-delete_series')).show();
-		 }
-		 else if (content['recur_type'] !== 0)
-		 {
-			 return confirm('Delete this series of recuring events');
-		 }
-		 else
-		 {
-			 return confirm('Delete this event');
-		 }
-	 },
+		}
+		else if (content['recur_type'] !== 0)
+		{
+			return confirm('Delete this series of recuring events');
+		}
+		else
+		{
+			return confirm('Delete this event');
+		}
+	},
 
 	/**
 	 * print_participants_status(egw,widget)
 	 * Handle to apply changes from status in print popup
 	 *
-	 * @param {widget object} widget, widget "status" in print popup window
+	 * @param {mixed} _event
+	 * @param {et2_base_widget} widget widget "status" in print popup window
 	 *
 	 */
-	 print_participants_status: function(egw,widget)
-	 {
+	print_participants_status: function(_event, widget)
+	{
 		if (widget && window.opener)
 		{
 			//Parent popup window
@@ -246,17 +244,18 @@ app.classes.calendar = AppJS.extend(
 		{
 			window.egw_refresh(this.egw.lang('The original popup edit window is closed! You need to close the print window and reopen the entry again.'),'calendar');
 		}
-	 },
+	},
 
 	/**
 	 * Handles to select freetime, and replace the selected one on Start,
 	 * and End date&time in edit calendar entry popup.
 	 *
-	 * @param {widget object} _widget, widget "select button" in freetime search popup window
+	 * @param {mixed} _event
+	 * @param {et2_base_widget} _widget widget "select button" in freetime search popup window
 	 *
 	 */
-	 freetime_select: function(_egw,_widget)
-	 {
+	freetime_select: function(_event, _widget)
+	{
 		if (_widget)
 		{
 			var content = this.et2._inst.widgetContainer.getArrayMgr('content').data;
@@ -292,7 +291,7 @@ app.classes.calendar = AppJS.extend(
 			}
 		}
 		window.close();
-	 },
+	},
 
 	/**
 	 * show/hide the filter of nm list in calendar listview
@@ -312,6 +311,8 @@ app.classes.calendar = AppJS.extend(
 	/**
 	 * this function try to fix ids which are from integrated apps
 	 *
+	 * @param {egw_action} _action
+	 * @param {Array} _senders
 	 */
 	cal_fix_app_id: function(_action, _senders)
 	{
@@ -322,7 +323,7 @@ app.classes.calendar = AppJS.extend(
 		{
 			id = matches[1];
 		}
-		else if (matches = id.match(/^([a-z_-]+)([0-9]+)/i))
+		else if ((matches = id.match(/^([a-z_-]+)([0-9]+)/i)))
 		{
 			app = matches[1];
 			id = matches[2];
@@ -357,7 +358,7 @@ app.classes.calendar = AppJS.extend(
 			this.edit_series(matches[1],matches[2]);
 			return;
 		}
-		else if (matches = id.match(/^([a-z_-]+)([0-9]+)/i))
+		else if ((matches = id.match(/^([a-z_-]+)([0-9]+)/i)))
 		{
 			var app = matches[1];
 			_action.data.url = window.egw_webserverUrl+'/index.php?';
@@ -367,7 +368,7 @@ app.classes.calendar = AppJS.extend(
 				_action.data.url += name+"="+encodeURIComponent(get_params[name])+"&";
 
 			if (js_integration_data[app].edit_popup &&
-				(matches = js_integration_data[app].edit_popup.match(/^(.*)x(.*)$/)))
+				((matches = js_integration_data[app].edit_popup.match(/^(.*)x(.*)$/))))
 			{
 				_action.data.width = matches[1];
 				_action.data.height = matches[2];
@@ -420,7 +421,8 @@ app.classes.calendar = AppJS.extend(
 			{
 				return;
 			}
-			if (row = jQuery("#"+id+"\\:"+date)) {
+			if ((row = jQuery("#"+id+"\\:"+date)))
+			{
 				// Open at row
 				popup.css({
 					position: "absolute",
@@ -447,13 +449,12 @@ app.classes.calendar = AppJS.extend(
 	/**
 	 * Create edit exception dialog for recurrence entries
 	 *
-	 * @param {timestamp} date
-	 * @param {string} id, cal_id
-	 * @param {type} name description
+	 * @param {object} event
+	 * @param {string} id cal_id
+	 * @param {integer} date timestamp
 	 */
 	edit_series: function(event,id,date)
 	{
-
 		// Coming from list, there is no event
 		if(arguments.length == 2)
 		{
@@ -461,40 +462,31 @@ app.classes.calendar = AppJS.extend(
 			id = event;
 			event = null;
 		}
-		calendar_edit_id = id;
-		calendar_edit_date = date;
+		var edit_id = id;
+		var edit_date = date;
 		var that = this;
 		var buttons = [
 			{text: this.egw.lang("Edit exception"), id: "exception", class: "ui-priority-primary", "default": true},
 			{text: this.egw.lang("Edit series"), id:"series"},
-			{text: this.egw.lang("Cancel"), id:"cancel"},
+			{text: this.egw.lang("Cancel"), id:"cancel"}
 		];
-		var callbackExceptionDialog = function (button_id)
+		et2_dialog.show_dialog(function(_button_id)
 		{
-			switch(button_id)
+			switch(_button_id)
 			{
 				case 'exception':
-					that.open_edit(false);
+					that.egw.open(edit_id, 'calendar', 'edit', '&date='+edit_date);
+					that.open_edit.call(that, false);
 					break;
 				case 'series':
-					that.open_edit(true);
+					that.egw.open(edit_id, 'calendar', 'edit', '&date='+edit_date+'&exception=1');
 					break;
 				case 'cancel':
 
 				default:
 					break;
 			}
-		}
-		var confirmExcDialog = et2_dialog.show_dialog(callbackExceptionDialog, this.egw.lang("Do you want to edit this event as an exception or the whole series?"),this.egw.lang("This event is part of a series"), {},buttons, et2_dialog.WARNING_MESSAGE);
-	},
-
-	/**
-	 * open calendar entry with the proper url either as series modifiction or exception modification
-	 *
-	 */
-	open_edit: function(series)
-	{
-		this.egw.open(calendar_edit_id,'calendar','edit','&date='+calendar_edit_date
-				+(!series?'&exception=1':''));
-	},
+		},this.egw.lang("Do you want to edit this event as an exception or the whole series?"),
+		this.egw.lang("This event is part of a series"), {}, buttons, et2_dialog.WARNING_MESSAGE);
+	}
 });
