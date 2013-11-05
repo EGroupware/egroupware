@@ -1,3 +1,27 @@
+egroupware-epl (11.1.20131105-1) hardy; urgency=low
+
+  * jQuery: update to version 1.10.2 to improve IE10 experience
+  * CKEditor: update to version 4.2.2; add additional skins
+  * Admin/SambaAdmin/LDAP: fixed for new accounts not created Samba password hashes
+  * CalDAV: fixed wrong http-status for delete in inbox and announce sync-report on inbox, so clients using it get events only once
+  * Admin/Preferences: changepassword hook was called twice
+  * PostgreSQL/ProjectManager: fixed SQL error "pm_id is ambigues" when accessing /apps/projectmanager via filemanager
+  * PostgreSQL/Calendar: clicking on InfoLog entries opened new calendar entry instead of existing InfoLog
+  * PostgreSQL/Addressbook: fixed SQL error when sorting by a custom field
+  * eMail: preference to show external image was only shown to admins
+  * eMail: fix problem with lost connection on drafted message when using printPreview on messages with attachments
+  * eMail/Infolog/Tracker: upon converting mails on send, if we attach messages get the message itself, and attach it, as we are able to display it in egw instead of fetching only the attachments attached files (as we did previously)
+  * ProjectManager: anonymous access (implicit read rights for everyone) was not cached correctly and therefore sometimes failed
+  * Tracker/SiteMgr: block to add new tickets
+  * Tracker/Mailhandling: on connection failure while in operation, now we notify egroupware admins, and double the interval time for the queue in question (instead of disabling the queue in question)
+  * Tracker: give description and replys full width for non-html editing too
+  * InfoLog: add converting into a Tracker ticket to actions selectbox of edit popup
+  * SiteMgr: fixed not working anonymous user and using now a random password
+  * SiteMgr: allow to store or overwrite instance-specific modules in a sitemgr subdir of files directory
+  * All apps: new custom-field type IP-Address getting initially set with remote IP address, and allowing to set negativ length for text fields to make them readonly
+
+ -- Ralf Becker <rb@stylite.de>  Tue, 05 Nov 2013 14:23:10 +0100
+
 egroupware-epl (11.1.20131008-1) hardy; urgency=low
 
   * CardDAV/Addressbook: fixed all contacts were reported as NOT found and therefore not synchronised
