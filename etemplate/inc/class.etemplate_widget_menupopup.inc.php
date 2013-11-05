@@ -523,7 +523,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 				}
 				if (!$readonly)
 				{
-					etemplate::$request->set_to_process($name,'ext-select-dow');
+					self::$request->set_to_process($name,'ext-select-dow');
 				}
 				$cell['size'] = $rows.($type2 ? ','.$type2 : '');
 				break;
