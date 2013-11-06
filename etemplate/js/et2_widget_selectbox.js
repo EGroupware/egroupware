@@ -749,13 +749,23 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 				{
 					if(_options[key]["label"]) _options[key]["label"] = this.egw().lang(_options[key]["label"]);
 					if(_options[key]["title"]) _options[key]["title"] = this.egw().lang(_options[key]["title"]);
+					
 				}
 				else
 				{
 					_options[key] = this.egw().lang(_options[key]);
 				}
 			}
-			this.optionValues[key] = _options[key];
+			// Allow some special extras for objects by passing the whole thing - value might not be key
+			if(typeof _options[key] == 'object' && typeof _options[key].value != 'undefined' && _options[key].value != key)
+			{
+				// Use value, not key, so it goes into the right place
+				this.optionValues[_options[key].value] = _options[key];
+			}
+			else
+			{
+				this.optionValues[key] = _options[key];
+			}
 		}
 	},
 
