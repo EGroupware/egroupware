@@ -14,10 +14,10 @@
 /**
  * eTemplate select widget
  *
+ * @todo unavailable cats (eg. private cats of an other user) need to be preserved!
  */
 class etemplate_widget_menupopup extends etemplate_widget
 {
-
 	/**
 	 * If the selectbox has this many rows, give it a search box automatically
 	 */
@@ -104,6 +104,32 @@ class etemplate_widget_menupopup extends etemplate_widget
 			if ($ok && $value === '' && $this->attrs['needed'])
 			{
 				self::set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
+			}
+			// some widgets sub-types need some post-processing
+			// ToDo: move it together with preprocessing to clientside
+			switch ($this->type['attr'])
+			{
+				case 'select-dow':
+					$dow = 0;
+					foreach((array)$value as $val)
+					{
+						$dow |= $val;
+					}
+					$value = $dow;
+					break;
+
+				case 'select-country':
+					$legacy_options = $this->attrs['rows'] && strpos($this->attrs['options'], $this->attrs['rows']) !== 0 ?
+						$this->attrs['rows'].','.$this->attrs['options'] : $this->attrs['options'];
+					list(,$country_use_name) = explode(',', $legacy_options);
+					if ($country_use_name && $value)
+					{
+						$value = $GLOBALS['egw']->country->get_full_name($value);
+					}
+					break;
+
+				case 'select-cat':
+					// ToDo: unavailable cats need to be merged in again
 			}
 			$valid =& self::get_array($validated, $form_name, true);
 			$valid = $value;
@@ -315,7 +341,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 				{
 					$options = $GLOBALS['egw']->country->countries();
 				}
-				if (($extension_data['country_use_name'] = $type) && $value)
+				if ($type && $value)
 				{
 					$value = $GLOBALS['egw']->country->country_code($value);
 					if (!isset($options[$value]))
