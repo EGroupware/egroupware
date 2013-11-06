@@ -859,10 +859,9 @@ class etemplate_widget_nextmatch extends etemplate_widget
 			}
 
 			// Set columns + refresh as default for all users
-
-			// Columns already saved to current user's preferences, use from there
+			// Columns included in submit, preference might not be updated yet
+			$cols = $value['selectcols'];
 			$prefs = $GLOBALS['egw']->preferences->read();
-			$cols = $prefs[$app][$pref_name];
 			$GLOBALS['egw']->preferences->add($app,$pref_name,is_array($cols) ? implode(',',$cols) : $cols, $pref_level);
 
 			// Autorefresh
