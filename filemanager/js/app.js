@@ -607,7 +607,8 @@ app.classes.filemanager = AppJS.extend(
 		if(window.FileReader && 'draggable' in document.createElement('span') &&
 			navigator && navigator.userAgent.indexOf('Chrome') >= 0)
 		{
-			text.append('<br />' + this.egw.lang('Hold Ctrl to drag files to your computer'));
+			var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
+			text.append('<br />' + this.egw.lang('Hold %1 to drag files to your computer',key));
 		}
 		return div;
 	},
