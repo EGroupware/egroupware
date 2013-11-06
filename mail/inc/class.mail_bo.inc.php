@@ -55,14 +55,14 @@ class mail_bo
 	/**
 	 * Active incomming (IMAP) Server Object
 	 *
-	 * @var object
+	 * @var emailadmin_imap
 	 */
 	var $icServer;
 
 	/**
 	 * Active outgoing (smtp) Server Object
 	 *
-	 * @var object
+	 * @var emailadmin_smtp
 	 */
 	var $ogServer;
 
@@ -98,19 +98,19 @@ class mail_bo
 	 * @array
 	 */
 	static $htmLawed_config = array('comment'=>1, //remove comments
-				'make_tag_strict' => 3, // 3 is a new own config value, to indicate that transformation is to be performed, but don't transform font as size transformation of numeric sizes to keywords alters the intended result too much
-				'keep_bad'=>2, //remove tags but keep element content (4 and 6 keep element content only if text (pcdata) is valid in parent element as per specs, this may lead to textloss if balance is switched on)
-				'balance'=>1,//turn off tag-balancing (config['balance']=>0). That will not introduce any security risk; only standards-compliant tag nesting check/filtering will be turned off (basic tag-balance will remain; i.e., there won't be any unclosed tag, etc., after filtering)
-				'direct_list_nest' => 1,
-				'allow_for_inline' => array('table','div','li','p'),//block elements allowed for nesting when only inline is allowed; Example span does not allow block elements as table; table is the only element tested so far
-				// tidy eats away even some wanted whitespace, so we switch it off;
-				// we used it for its compacting and beautifying capabilities, which resulted in better html for further processing
-				'tidy'=>0,
-				'elements' => "* -script",
-				'deny_attribute' => 'on*',
-				'schemes'=>'href: file, ftp, http, https, mailto; src: cid, data, file, ftp, http, https; *:file, http, https, cid, src',
-				'hook_tag' =>"hl_email_tag_transform",
-			);
+		'make_tag_strict' => 3, // 3 is a new own config value, to indicate that transformation is to be performed, but don't transform font as size transformation of numeric sizes to keywords alters the intended result too much
+		'keep_bad'=>2, //remove tags but keep element content (4 and 6 keep element content only if text (pcdata) is valid in parent element as per specs, this may lead to textloss if balance is switched on)
+		'balance'=>1,//turn off tag-balancing (config['balance']=>0). That will not introduce any security risk; only standards-compliant tag nesting check/filtering will be turned off (basic tag-balance will remain; i.e., there won't be any unclosed tag, etc., after filtering)
+		'direct_list_nest' => 1,
+		'allow_for_inline' => array('table','div','li','p'),//block elements allowed for nesting when only inline is allowed; Example span does not allow block elements as table; table is the only element tested so far
+		// tidy eats away even some wanted whitespace, so we switch it off;
+		// we used it for its compacting and beautifying capabilities, which resulted in better html for further processing
+		'tidy'=>0,
+		'elements' => "* -script",
+		'deny_attribute' => 'on*',
+		'schemes'=>'href: file, ftp, http, https, mailto; src: cid, data, file, ftp, http, https; *:file, http, https, cid, src',
+		'hook_tag' =>"hl_email_tag_transform",
+	);
 
 	/**
 	 * static used define abbrevations for common access rights
@@ -118,13 +118,13 @@ class mail_bo
 	 * @array
 	 */
 	static $aclShortCuts = array('' => array('label'=>'none','title'=>'The user has no rights whatsoever.'),
-						'lrs'		=> array('label'=>'readable','title'=>'Allows a user to read the contents of the mailbox.'),
-						'lprs'		=> array('label'=>'post','title'=>'Allows a user to read the mailbox and post to it through the delivery system by sending mail to the submission address of the mailbox.'),
-						'ilprs'		=> array('label'=>'append','title'=>'Allows a user to read the mailbox and append messages to it, either via IMAP or through the delivery system.'),
-						'cdilprsw'	=> array('label'=>'write','title'=>'Allows a user to read the maibox, post to it, append messages to it, and delete messages or the mailbox itself. The only right not given is the right to change the ACL of the mailbox.'),
-						'acdilprsw'	=> array('label'=>'all','title'=>'The user has all possible rights on the mailbox. This is usually granted to users only on the mailboxes they own.'),
-						'custom'	=> array('label'=>'custom','title'=>'User defined combination of rights for the ACL'),
-			);
+		'lrs'		=> array('label'=>'readable','title'=>'Allows a user to read the contents of the mailbox.'),
+		'lprs'		=> array('label'=>'post','title'=>'Allows a user to read the mailbox and post to it through the delivery system by sending mail to the submission address of the mailbox.'),
+		'ilprs'		=> array('label'=>'append','title'=>'Allows a user to read the mailbox and append messages to it, either via IMAP or through the delivery system.'),
+		'cdilprsw'	=> array('label'=>'write','title'=>'Allows a user to read the maibox, post to it, append messages to it, and delete messages or the mailbox itself. The only right not given is the right to change the ACL of the mailbox.'),
+		'acdilprsw'	=> array('label'=>'all','title'=>'The user has all possible rights on the mailbox. This is usually granted to users only on the mailboxes they own.'),
+		'custom'	=> array('label'=>'custom','title'=>'User defined combination of rights for the ACL'),
+	);
 
 	/**
 	 * Folders that get automatic created AND get translated to the users language
@@ -145,8 +145,9 @@ class mail_bo
 	static $specialUseFolders;
 
 	/**
-	 * var to hold IDNA2 object
-	 * @var class object
+	 * IDNA2 instance
+	 *
+	 * @var egw_idna
 	 */
 	static $idna2;
 
@@ -164,7 +165,7 @@ class mail_bo
 	 * @param int $_profileID=0
 	 * @param boolean $_validate=true - flag wether the profileid should be validated or not, if validation is true, you may receive a profile
 	 *                                  not matching the input profileID, if we can not find a profile matching the given ID
-	 * @return object instance of mail_bo
+	 * @return mail_bo
 	 */
 	public static function getInstance($_restoreSession=true, $_profileID=0, $_validate=true)
 	{
@@ -576,31 +577,23 @@ $_restoreSession=false;
 	 *
 	 * @param int $_icServerID
 	 * @param boolean $_adminConnection
-	 * @return boolean true/false or PEAR_Error Object ((if available) on Failure)
+	 * @throws Horde_Imap_Client_Exception on connection error or authentication failure
+	 * @throws InvalidArgumentException on missing credentials
 	 */
 	function openConnection($_icServerID=0, $_adminConnection=false)
 	{
 		//error_log( "-------------------------->open connection ".function_backtrace());
 		//error_log(__METHOD__.__LINE__.' ->'.array2string($this->icServer));
-		$tretval=true;
-		try
+		$mailbox=null;
+		if($this->folderExists($this->sessionData['mailbox'])) $mailbox = $this->sessionData['mailbox'];
+		if (empty($mailbox)) $mailbox = $this->icServer->getCurrentMailbox();
+		if (isset(emailadmin_imap::$supports_keywords[$_icServerID]))
 		{
-			$mailbox=null;
-			if($this->folderExists($this->sessionData['mailbox'])) $mailbox=$this->sessionData['mailbox'];
-			if (empty($mailbox))$mailbox = $this->icServer->getCurrentMailbox();
-			if (isset(emailadmin_imap::$supports_keywords[$_icServerID]))
-			{
-				$this->icServer->openMailbox($mailbox);
-			}
-			else
-			{
-				$this->icServer->examineMailbox($mailbox);
-			}
+			$this->icServer->openMailbox($mailbox);
 		}
-		catch (egw_exception $e)
+		else
 		{
-			error_log(__METHOD__.__LINE__.$e->getMessage());
-			$tretval = false;
+			$this->icServer->examineMailbox($mailbox);
 		}
 		//error_log(__METHOD__." using existing Connection ProfileID:".$_icServerID.' Status:'.print_r($this->icServer->_connected,true));
 		//error_log(__METHOD__.__LINE__."->open connection for Server with profileID:".$_icServerID.function_backtrace());
@@ -608,8 +601,6 @@ $_restoreSession=false;
 		//make sure we are working with the correct hierarchyDelimiter on the current connection, calling getHierarchyDelimiter with false to reset the cache
 		$hD = $this->getHierarchyDelimiter(false);
 		self::$specialUseFolders = $this->getSpecialUseFolders();
-
-		return $tretval;
 	}
 
 	/**
@@ -5711,7 +5702,7 @@ error_log(__METHOD__.__LINE__.array2string($headerObject['ATTACHMENTS'][$mime_id
 							}
 							$rp = mail_bo::getRandomString();
 							file_put_contents( "$dir/$rp$filename", $part->body);
-							
+
 							$path = "$dir/$rp$filename";
 							$mailObject->AddEmbeddedImage($path, $part->headers['content-id'], $filename, ($part->headers['content-transfer-encoding']?$part->headers['content-transfer-encoding']:'base64'), $part->ctype_primary.'/'.$part->ctype_secondary);
 						}

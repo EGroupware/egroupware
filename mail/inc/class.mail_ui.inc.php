@@ -120,14 +120,27 @@ class mail_ui
 			emailadmin_bo::unsetCachedObjects(self::$icServerID);
 		}
 
-		$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
-		if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
-		//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
-		//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer->ImapServerId));
-		// no icServer Object: something failed big time
-		if (!isset($this->mail_bo->icServer)) exit; // ToDo: Exception or the dialog for setting up a server config
-		//openConnection gathers SpecialUseFolderInformation and Delimiter Info
-		$this->mail_bo->openConnection(self::$icServerID);
+		try {
+			$this->mail_bo = mail_bo::getInstance(false,self::$icServerID);
+			if (mail_bo::$debug) error_log(__METHOD__.__LINE__.' Fetched IC Server:'.self::$icServerID.'/'.$this->mail_bo->profileID.':'.function_backtrace());
+			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer));
+			//error_log(__METHOD__.__LINE__.array2string($this->mail_bo->icServer->ImapServerId));
+			//openConnection gathers SpecialUseFolderInformation and Delimiter Info
+			$this->mail_bo->openConnection(self::$icServerID);
+		}
+		catch (Exception $e)
+		{
+			// redirect to mail wizard to handle it (redirect works for ajax too)
+			egw_framework::redirect_link('/index.php',
+				(self::$icServerID ? array(
+					'menuaction' => 'mail.mail_wizard.edit',
+					'acc_id' => self::$icServerID,
+				) : array(
+					'menuaction' => 'mail.mail_wizard.add',
+				)) + array(
+					'msg' => $e->getMessage()//.' ('.get_class($e).': '.$e->getCode().')',
+				));
+		}
 		$GLOBALS['egw']->session->commit_session();
 		//_debug_array($this->mail_bo->mailPreferences);
 	}
