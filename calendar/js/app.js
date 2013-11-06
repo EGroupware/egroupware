@@ -475,11 +475,10 @@ app.classes.calendar = AppJS.extend(
 			switch(_button_id)
 			{
 				case 'exception':
-					that.egw.open(edit_id, 'calendar', 'edit', '&date='+edit_date);
-					that.open_edit.call(that, false);
+					that.egw.open(edit_id, 'calendar', 'edit', '&date='+edit_date+'&exception=1');
 					break;
 				case 'series':
-					that.egw.open(edit_id, 'calendar', 'edit', '&date='+edit_date+'&exception=1');
+					that.egw.open(edit_id, 'calendar', 'edit', '&date='+edit_date);
 					break;
 				case 'cancel':
 
