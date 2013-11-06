@@ -378,7 +378,7 @@ class infolog_ui
 		}
 		$readonlys = $rows = array();
 
-		if (empty($query['col_filter']['info_id_parent']))
+		if ($query['action_id'])
 		{
 			$parents = $query['action'] == 'sp' && $query['action_id'] ? (array)$query['action_id'] : array();
 			if (count($parents) == 1 && is_array($query['action_id']))
@@ -386,10 +386,13 @@ class infolog_ui
 				$query['action_id'] = array_shift($query['action_id']);	// display single parent as app_header
 			}
 		}
-		// Check to see if we need to remove description
-		$is_et2 = is_subclass_of($this->tmpl, 'etemplate_widget');
+		
 		$parent_first = count($parents) == 1;
 		$parent_index = 0;
+		// et2 nextmatch listens to total, and only displays that many rows, so add parent in or we'll lose the last row
+		if($parent_first) $query['total']++;
+		
+		// Check to see if we need to remove description
 		foreach($infos as $id => $info)
 		{
 			if (!(strpos($info['info_addr'],',')===false) && strpos($info['info_addr'],', ')===false) $info['info_addr'] = str_replace(',',', ',$info['info_addr']);
@@ -398,12 +401,6 @@ class infolog_ui
 				$info['links'] =& $links[$id];
 				$info['info_anz_subs'] = (int)$anzSubs[$id];
 				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id'],$query['filter2'],$details);
-
-				if (!$query['filter2'] && $this->prefs['show_links'] == 'no_describtion' ||
-					$query['filter2'] == 'no_describtion' && !$is_et2)
-				{
-					unset($info['info_des']);
-				}
 			}
 			// for subs view ('sp') add parent(s) in front of subs once(!)
 			if ($parent_first && ($main = $this->bo->read($query['action_id'])) ||
@@ -429,10 +426,11 @@ class infolog_ui
 					}
 				}
 				$parent_first = false;
-				array_splice($rows, $id, 0, array($main));
-				unset($parents[$parent_index]);
-				// et2 nextmatch listens to total, and only displays that many rows
-				if($is_et2) $query['total']++;
+				if($query['start'] == 0)
+				{
+					array_splice($rows, $id, 0, array($main));
+					unset($parents[$parent_index]);
+				}
 			}
 			$rows[] = $info;
 		}
@@ -795,6 +793,10 @@ class infolog_ui
 					$action = '';
 					$action_id = 0;
 					break;
+				}
+				else
+				{
+					$values['nm']['col_filter']['info_id_parent'] = $action_id;
 				}
 				break;
 		}
