@@ -637,12 +637,12 @@ var et2_selectbox = et2_inputWidget.extend(
 				{
 					// Allow some special extras for objects by passing the whole thing
 					_options[key]["label"] = _options[key]["label"] ? _options[key]["label"] : "";
-					this._appendMultiOption(_options[key].value ? _options[key].value : key,
+					this._appendMultiOption(typeof _options[key].value != 'undefined' ? _options[key].value : key,
 						_options[key], _options[key]["title"]);
 				}
 				else
 				{
-					this._appendOptionElement(_options[key].value ? _options[key].value : key,
+					this._appendOptionElement(typeof _options[key].value != 'undefined'  ? _options[key].value : key,
 						_options[key]["label"] ? _options[key]["label"] : "",
 						_options[key]["title"] ? _options[key]["title"] : "");
 				}
