@@ -33,5 +33,7 @@ class mail_wizard extends emailadmin_wizard
 
 		// and translations
 		translation::add_app('emailadmin');
+
+		egw_framework::validate_file('/emailadmin/js/app.js');
 	}
 }
