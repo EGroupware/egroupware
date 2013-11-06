@@ -588,7 +588,14 @@ $_restoreSession=false;
 			$mailbox=null;
 			if($this->folderExists($this->sessionData['mailbox'])) $mailbox=$this->sessionData['mailbox'];
 			if (empty($mailbox))$mailbox = $this->icServer->getCurrentMailbox();
-			$this->icServer->openMailbox($mailbox);
+			if (isset(emailadmin_imap::$supports_keywords[$_icServerID]))
+			{
+				$this->icServer->openMailbox($mailbox);
+			}
+			else
+			{
+				$this->icServer->examineMailbox($mailbox);
+			}
 		}
 		catch (egw_exception $e)
 		{
@@ -1266,11 +1273,11 @@ $_restoreSession=false;
 			self::$folderStatusCache = egw_cache::getCache(egw_cache::INSTANCE,'email','folderStatus'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*10);
 		}
 
-		if(PEAR::isError($folderStatus = $this->icServer->examineMailbox($_folderName))) {
+		if($folderStatus = $this->icServer->examineMailbox($_folderName)) {
 			//if (stripos($folderStatus->message,'not connected') !== false); error_log(__METHOD__.__LINE__.$folderStatus->message);
-			return false;
+			//return false;
 		}
-		//error_log(__METHOD__.__LINE__.array2string($folderStatus));
+		//error_log(__METHOD__.__LINE__.' F:'.$_folderName.' S:'.array2string($folderStatus));
 		//error_log(__METHOD__.__LINE__.' Filter:'.array2string($_filter));
 		$try2useCache = true;
 		static $eMailListContainsDeletedMessages;
@@ -3565,15 +3572,42 @@ $_restoreSession=false;
 		{
 			$_folder = $this->sessionData['mailbox'];
 		}
-		if(is_object($_structure)) {
-			$structure = $_structure;
-		} else {
-			$structure = $this->_getStructure($_uid, true, false, $_folder);
-			if($_partID != '') {
-				$structure = $this->_getSubStructure($structure, $_partID);
+		$uidsToFetch = new Horde_Imap_Client_Ids();
+		$uidsToFetch->add((array)$_uid);
+
+		$fquery = new Horde_Imap_Client_Fetch_Query();
+		$fquery->fullText(array('peek'=>$_preserveSeen));
+		if ($_partID != '')
+		{
+			$fquery->structure();
+			$fquery->bodyPart($_partID,array('peek'=>$_preserveSeen));
+		}
+		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
+			'ids' => $uidsToFetch,
+		));
+		if (is_object($headersNew)) {
+			foreach($headersNew as $id=>$_headerObject) {
+				//$body = $_headerObject->getFullMsg();
+				if ($_partID != '')
+				{
+					$mailStructureObject = $_headerObject->getStructure();
+					//_debug_array($mailStructureObject->contentTypeMap());
+					foreach ($mailStructureObject->contentTypeMap() as $mime_id => $mime_type)
+					{
+						if ($mime_id==$_partID)
+						{
+							//$body = $_headerObject->getBodyPart($mime_id);
+						}
+					}
+				}
 			}
 		}
-		if (self::$debug) _debug_array($structure);
+return 	array(
+	'body'		=> lang('The mimeparser can not parse this message.'),
+	'mimeType'	=> 'text/plain',
+	'charSet'	=> 'utf-8',
+);
+
 		if ($_preserveSeen==false)
 		{
 			$summary = egw_cache::getCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
@@ -3589,35 +3623,6 @@ $_restoreSession=false;
 			}
 		}
 		switch($structure->type) {
-			case 'APPLICATION':
-				return array(
-					array(
-						'body'		=> '',
-						'mimeType'	=> 'text/plain',
-						'charSet'	=> 'iso-8859-1',
-					)
-				);
-				break;
-			case 'MULTIPART':
-				switch($structure->subType) {
-					case 'ALTERNATIVE':
-						$bodyParts = array($this->getMultipartAlternative($_uid, $structure->subParts, $this->htmlOptions, $_preserveSeen));
-
-						break;
-
-					case 'NIL': // multipart with no Alternative
-					case 'MIXED':
-					case 'REPORT':
-					case 'SIGNED':
-						$bodyParts = $this->getMultipartMixed($_uid, $structure->subParts, $this->htmlOptions, $_preserveSeen);
-						break;
-
-					case 'RELATED':
-						$bodyParts = $this->getMultipartRelated($_uid, $structure->subParts, $this->htmlOptions, $_preserveSeen);
-						break;
-				}
-				return self::normalizeBodyParts($bodyParts);
-				break;
 			case 'VIDEO':
 			case 'AUDIO': // some servers send audiofiles and imagesfiles directly, without any stuff surround it
 			case 'IMAGE': // they are displayed as Attachment NOT INLINE
@@ -3882,17 +3887,47 @@ $_restoreSession=false;
 	function getMessageEnvelope($_uid, $_partID = '',$decode=false)
 	{
 		if($_partID == '') {
-			if( PEAR::isError($envelope = $this->icServer->getEnvelope('', $_uid, true)) ) {
-				return false;
+			$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+			$uidsToFetch = new Horde_Imap_Client_Ids();
+			$uidsToFetch->add((array)$_uid);
+
+			$fquery = new Horde_Imap_Client_Fetch_Query();
+			$envFields = new Horde_Mime_Headers();
+			$fquery->envelope();
+			$headersNew = $this->icServer->fetch($_folder, $fquery, array(
+				'ids' => $uidsToFetch,
+			));
+			if (is_object($headersNew)) {
+				foreach($headersNew as $id=>$_headerObject) {
+					$env = $_headerObject->getEnvelope();
+					//_debug_array($envFields->singleFields());
+					foreach ($envFields->singleFields() as $e => $v)
+					{
+						switch ($v)
+						{
+							case 'to':
+							case 'from':
+							case 'cc':
+							case 'bcc':
+							case 'sender':
+								$envelope[$v]=$env->$v->addresses;
+								break;
+							case 'date':
+								$envelope[$v]=$env->$v->date;
+								break;
+							default:
+								$envelope[$v]=$env->$v;
+						}
+					}
+				}
 			}
-			//if ($decode) _debug_array($envelope[0]);
+			$envelope = array_change_key_case($envelope,CASE_UPPER);
+			//if ($decode) _debug_array($envelope);
 			//error_log(__METHOD__.__LINE__.array2string($envelope));
-			return ($decode ? self::decode_header($envelope[0],true): $envelope[0]);
+			return ($decode ? self::decode_header($envelope,true): $envelope);
 		} else {
-			if( PEAR::isError($headers = $this->icServer->getParsedHeaders($_uid, true, $_partID, true)) ) {
-				return false;
-			}
-			error_log(__METHOD__.__LINE__.array2string($headers));
+			$headers = $this->getMessageHeader($_uid, $_partID, true,true);
+			//error_log(__METHOD__.__LINE__.array2string($headers));
 			//_debug_array($headers);
 			$newData = array(
 				'DATE'		=> $headers['DATE'],
@@ -3939,16 +3974,38 @@ $_restoreSession=false;
 	 * @param string/int $_uid the messageuid,
 	 * @param string/int $_partID='' , the partID, may be omitted
 	 * @param boolean $decode flag to do the decoding on the fly
+	 * @param boolean $preserveUnSeen flag to preserve the seen flag where applicable
 	 * @return array the message header
 	 */
-	function getMessageHeader($_uid, $_partID = '',$decode=false)
+	function getMessageHeader($_uid, $_partID = '',$decode=false, $preserveUnSeen=false)
 	{
-		$retValue = $this->icServer->getParsedHeaders($_uid, true, $_partID, true);
-		if (PEAR::isError($retValue))
-		{
-			error_log(__METHOD__.__LINE__.array2string($retValue->message));
-			$retValue = null;
+		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		$uidsToFetch = new Horde_Imap_Client_Ids();
+		$uidsToFetch->add((array)$_uid);
+
+		$fquery = new Horde_Imap_Client_Fetch_Query();
+		$fquery->headerText(array('peek'=>$preserveUnSeen));
+		if ($_partID != '') $fquery->structure();
+		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
+			'ids' => $uidsToFetch,
+		));
+		if (is_object($headersNew)) {
+			foreach($headersNew as $id=>$_headerObject) {
+				$retValue = $_headerObject->getHeaderText(0,Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray();
+				if ($_partID != '')
+				{
+					$mailStructureObject = $_headerObject->getStructure();
+					foreach ($mailStructureObject->contentTypeMap() as $mime_id => $mime_type)
+					{
+						if ($mime_id==$_partID)
+						{
+							$retValue = $_headerObject->getHeaderText($mime_id,Horde_Imap_Client_Data_Fetch::HEADER_PARSE)->toArray();
+						}
+					}
+				}
+			}
 		}
+		$retValue = array_change_key_case($retValue,CASE_UPPER);
 		// if SUBJECT is an array, use thelast one, as we assume something with the unfolding for the subject did not work
 		if (is_array($retValue['SUBJECT']))
 		{
@@ -3976,12 +4033,30 @@ $_restoreSession=false;
 			//error_log(__METHOD__.__LINE__." Using Cache for raw Header $_uid, $_partID in Folder $_folder");
 			return $rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)];
 		}
+		$uidsToFetch = new Horde_Imap_Client_Ids();
+		$uidsToFetch->add((array)$_uid);
 
-		$retValue = $this->icServer->getRawHeaders($_uid, $_partID, true);
-		if (PEAR::isError($retValue))
-		{
-			error_log(__METHOD__.__LINE__.array2string($retValue->message));
-			$retValue = "Could not retrieve RawHeaders in ".__METHOD__.__LINE__." PEAR::Error:".array2string($retValue->message);
+		$fquery = new Horde_Imap_Client_Fetch_Query();
+		$fquery->headerText();
+		if ($_partID != '') $fquery->structure();
+		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
+			'ids' => $uidsToFetch,
+		));
+		if (is_object($headersNew)) {
+			foreach($headersNew as $id=>$_headerObject) {
+				$retValue = $_headerObject->getHeaderText();
+				if ($_partID != '')
+				{
+					$mailStructureObject = $_headerObject->getStructure();
+					foreach ($mailStructureObject->contentTypeMap() as $mime_id => $mime_type)
+					{
+						if ($mime_id==$_partID)
+						{
+							$retValue = $_headerObject->getHeaderText($mime_id);
+						}
+					}
+				}
+			}
 		}
 		$rawHeaders[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)]=$retValue;
 		egw_cache::setCache(egw_cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$rawHeaders,$expiration=60*60*1);
@@ -4063,22 +4138,45 @@ $_restoreSession=false;
 	{
 		//TODO: caching einbauen static!
 		static $rawBody;
+
 		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 		if (isset($rawBody[$_folder][$_uid][($_partID==''?'NIL':$_partID)]))
 		{
 			//error_log(__METHOD__.__LINE__." Using Cache for raw Body $_uid, $_partID in Folder $_folder");
 			return $rawBody[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)];
 		}
-		if($_partID != '') {
-			$body = $this->icServer->getBody($_uid, true);
-		} else {
-			$body = $this->icServer->getBodyPart($_uid, $_partID, true);
-		}
-		if (PEAR::isError($body))
+
+		$uidsToFetch = new Horde_Imap_Client_Ids();
+		$uidsToFetch->add((array)$_uid);
+
+		$fquery = new Horde_Imap_Client_Fetch_Query();
+		$fquery->fullText();
+		if ($_partID != '')
 		{
-			error_log(__METHOD__.__LINE__.' failed:'.$body->message);
-			return false;
+			$fquery->structure();
+			$fquery->bodyPart($_partID);
 		}
+		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
+			'ids' => $uidsToFetch,
+		));
+		if (is_object($headersNew)) {
+			foreach($headersNew as $id=>$_headerObject) {
+				$body = $_headerObject->getFullMsg();
+				if ($_partID != '')
+				{
+					$mailStructureObject = $_headerObject->getStructure();
+					//_debug_array($mailStructureObject->contentTypeMap());
+					foreach ($mailStructureObject->contentTypeMap() as $mime_id => $mime_type)
+					{
+						if ($mime_id==$_partID)
+						{
+							$body = $_headerObject->getBodyPart($mime_id);
+						}
+					}
+				}
+			}
+		}
+
 		$rawBody[$this->icServer->ImapServerId][$_folder][$_uid][($_partID==''?'NIL':$_partID)] = $body;
 		return $body;
 	}
@@ -4097,156 +4195,42 @@ $_restoreSession=false;
 	function getMessageAttachments($_uid, $_partID='', $_structure='', $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true)
 	{
 		if (self::$debug) error_log( __METHOD__.":$_uid, $_partID");
+		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		$uidsToFetch = new Horde_Imap_Client_Ids();
+		$uidsToFetch->add((array)$_uid);
 
-		if(is_object($_structure)) {
-			$structure = $_structure;
-		} else {
-			$structure = $this->_getStructure($_uid, true);
-
-			if($_partID != '' && $_partID !=0) {
-				$structure = $this->_getSubStructure($structure, $_partID);
-			}
-		}
-		if (self::$debug) error_log(__METHOD__.__LINE__.array2string($structure));
-		$attachments = array();
-		// this kind of messages contain only the attachment and no body
-		if($structure->type == 'APPLICATION' || $structure->type == 'AUDIO' || $structure->type == 'VIDEO' || $structure->type == 'IMAGE' || ($structure->type == 'TEXT' && $structure->disposition == 'ATTACHMENT') )
-		{
-			$newAttachment = array();
-			$newAttachment['name']		= $this->getFileNameFromStructure($structure,$_uid,$structure->partID);
-			$newAttachment['size']		= $structure->bytes;
-			$newAttachment['mimeType']	= $structure->type .'/'. $structure->subType;
-			$newAttachment['partID']	= $structure->partID;
-			$newAttachment['encoding']      = $structure->encoding;
-			// try guessing the mimetype, if we get the application/octet-stream
-			if (strtolower($newAttachment['mimeType']) == 'application/octet-stream') $newAttachment['mimeType'] = mime_magic::filename2mime($newAttachment['name']);
-
-			if(isset($structure->cid)) {
-				$newAttachment['cid']	= $structure->cid;
-			}
-			# if the new attachment is a winmail.dat, we have to decode that first
-			if ( $resolveTNEF && $newAttachment['name'] == 'winmail.dat' &&
-				( $wmattachments = $this->decode_winmail( $_uid, $newAttachment['partID'] ) ) )
-			{
-				$attachments = array_merge( $attachments, $wmattachments );
-			}
-			elseif ( $resolveTNEF===false && $newAttachment['name'] == 'winmail.dat' )
-			{
-				$attachments[] = $newAttachment;
-			} else {
-				$fetchit = $fetchEmbeddedImages;
-				if ($fetchEmbeddedImages === false && (!in_array(strtoupper($structure->subtype),array('JPG','JPEG','GIF','PNG')))) $fetchit = true;
-				if ( ($fetchit && isset($newAttachment['cid']) && strlen($newAttachment['cid'])>0) ||
-					!isset($newAttachment['cid']) ||
-					empty($newAttachment['cid'])) $attachments[] = $newAttachment;
-			}
-			//$attachments[] = $newAttachment;
-
-			#return $attachments;
-		}
-		// outlook sometimes sends a TEXT/CALENDAR;REQUEST as plain ics, nothing more.
-		if ($structure->type == 'TEXT' && $structure->subType == 'CALENDAR' &&
-			isset($structure->parameters['METHOD'] ) && strtoupper($structure->parameters['METHOD']) == 'REQUEST')
-		{
-			$newAttachment = array();
-			$newAttachment['name']      = 'event.ics';
-			$newAttachment['size']      = $structure->bytes;
-			$newAttachment['mimeType']  = $structure->type .'/'. $structure->subType;//.';'.$structure->parameters['METHOD'];
-			$newAttachment['partID']    = $structure->partID;
-			$newAttachment['encoding']  = $structure->encoding;
-			$newAttachment['method']    = $structure->parameters['METHOD'];
-			$newAttachment['charset']   = $structure->parameters['CHARSET'];
-			$attachments[] = $newAttachment;
-		}
-		// this kind of message can have no attachments
-		if(($structure->type == 'TEXT' && !($structure->disposition == 'INLINE' && $structure->dparameters['FILENAME'])) ||
-		   ($structure->type == 'MULTIPART' && $structure->subType == 'ALTERNATIVE' && !is_array($structure->subParts)) ||
-		   !is_array($structure->subParts))
-		{
-			if (count($attachments) == 0) return array();
-		}
-
-		#$attachments = array();
-
-		foreach((array)$structure->subParts as $subPart) {
-			// skip all non attachment parts
-			if(($subPart->type == 'TEXT' && ($subPart->subType == 'PLAIN' || $subPart->subType == 'HTML') && ($subPart->disposition != 'ATTACHMENT' &&
-				!($subPart->disposition == 'INLINE' && $subPart->dparameters['FILENAME']))) ||
-				($subPart->type == 'MULTIPART' && $subPart->subType == 'ALTERNATIVE') ||
-				($subPart->type == 'MULTIPART' && $subPart->subType == 'APPLEFILE') ||
-				($subPart->type == 'MESSAGE' && $subPart->subType == 'delivery-status'))
-			{
-				if ($subPart->type == 'MULTIPART' && $subPart->subType == 'ALTERNATIVE')
+		$fquery = new Horde_Imap_Client_Fetch_Query();
+		$fquery->envelope();
+		$fquery->size();
+		$fquery->structure();
+		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
+			'ids' => $uidsToFetch,
+		));
+		$count = 0;
+		if (is_object($headersNew)) {
+			if (self::$debug) $starttime = microtime(true);
+			foreach($headersNew->ids() as $id) {
+				$_headerObject = $headersNew->get($id);
+				$uid = $headerObject['UID']= ($_headerObject->getUid()?$_headerObject->getUid():$id);
+				//error_log(__METHOD__.__LINE__.array2string($_headerObject));
+				$headerObject['SIZE'] = $_headerObject->getSize();
+				$mailStructureObject = $_headerObject->getStructure();
+				$headerObject['ATTACHMENTS']=null;
+				foreach ($mailStructureObject->contentTypeMap() as $mime_id => $mime_type)
 				{
-					$attachments = array_merge($this->getMessageAttachments($_uid, '', $subPart, $fetchEmbeddedImages, $fetchTextCalendar, $resolveTNEF), $attachments);
-				}
-				if (!($subPart->type=='TEXT' && $subPart->disposition =='INLINE' && $subPart->filename)) continue;
-			}
-
-		   	// fetch the subparts for this part
-			if($subPart->type == 'MULTIPART' &&
-			   ($subPart->subType == 'RELATED' ||
-				$subPart->subType == 'MIXED' ||
-				$subPart->subType == 'SIGNED' ||
-				$subPart->subType == 'APPLEDOUBLE'))
-			{
-			   	$attachments = array_merge($this->getMessageAttachments($_uid, '', $subPart, $fetchEmbeddedImages,$fetchTextCalendar, $resolveTNEF), $attachments);
-			} else {
-				if (!$fetchTextCalendar && $subPart->type == 'TEXT' &&
-					$subPart->subType == 'CALENDAR' &&
-					$subPart->parameters['METHOD'] &&
-					$subPart->disposition !='ATTACHMENT') continue;
-				$newAttachment = array();
-				$newAttachment['name']		= $this->getFileNameFromStructure($subPart,$_uid,$subPart->partID);
-				$newAttachment['size']		= $subPart->bytes;
-				$newAttachment['mimeType']	= $subPart->type .'/'. $subPart->subType;
-				$newAttachment['partID']	= $subPart->partID;
-				$newAttachment['encoding']	= $subPart->encoding;
-				$newAttachment['method']    = $this->getMethodFromStructure($subPart,$_uid,$subPart->partID);
-				$newAttachment['charset']   = $subPart->parameters['CHARSET'];
-				if (isset($subPart->disposition) && !empty($subPart->disposition)) $newAttachment['disposition'] = $subPart->disposition;
-				// try guessing the mimetype, if we get the application/octet-stream
-				if (strtolower($newAttachment['mimeType']) == 'application/octet-stream') $newAttachment['mimeType'] = mime_magic::filename2mime($newAttachment['name']);
-
-				if(isset($subPart->cid)) {
-					$newAttachment['cid']	= $subPart->cid;
-				}
-
-				# if the new attachment is a winmail.dat, we have to decode that first
-				if ( $resolveTNEF && $newAttachment['name'] == 'winmail.dat' &&
-					( $wmattachments = $this->decode_winmail( $_uid, $newAttachment['partID'] ) ) )
-				{
-					$attachments = array_merge( $attachments, $wmattachments );
-				}
-				elseif ( $resolveTNEF===false && $newAttachment['name'] == 'winmail.dat' )
-				{
-					$attachments[] = $newAttachment;
-				} else {
-					$fetchit = $fetchEmbeddedImages;
-					if ($fetchEmbeddedImages === false && (!in_array(strtoupper($structure->subtype),array('JPG','JPEG','GIF','PNG')))) $fetchit = true;
-					if ( ($fetchit && isset($newAttachment['cid']) && strlen($newAttachment['cid'])>0) ||
-						!isset($newAttachment['cid']) ||
-						empty($newAttachment['cid']) || $newAttachment['cid'] == 'NIL')
+					$part = $mailStructureObject->getPart($mime_id);
+					if ($part->getDisposition()=='attachment')
 					{
-						$attachments[] = $newAttachment;
-					}
-					else
-					{
-						// embedded images should be INLINE, so we check this too, 'cause we want to show/list non embedded images
-						if ($fetchEmbeddedImages==false &&
-							isset($newAttachment['mimeType']) &&
-							!empty($newAttachment['mimeType']) &&
-							stripos($newAttachment['mimeType'],'IMAGE') !== false &&
-							isset($newAttachment['disposition']) &&
-							!empty($newAttachment['disposition']) &&
-							trim(strtoupper($newAttachment['disposition']))!='INLINE') $attachments[] = $newAttachment;
+						$headerObject['ATTACHMENTS'][$mime_id]=$part->getAllDispositionParameters();
+						$headerObject['ATTACHMENTS'][$mime_id]['mimeType']=$mime_type;
+						$headerObject['ATTACHMENTS'][$mime_id]['uid']=$id;
+						$headerObject['ATTACHMENTS'][$mime_id]['partID']=$mime_id;
+						if (!isset($headerObject['ATTACHMENTS'][$mime_id]['name']))$headerObject['ATTACHMENTS'][$mime_id]['name']=$part->getName();
 					}
 				}
-				//$attachments[] = $newAttachment;
+				if (isset($headerObject['ATTACHMENTS']) && count($headerObject['ATTACHMENTS'])) foreach ($headerObject['ATTACHMENTS'] as $pID =>$a) $attachments[]=$a;
 			}
 		}
-
-	   	//_debug_array($attachments); exit;
 		return $attachments;
 
 	}
@@ -4264,7 +4248,7 @@ $_restoreSession=false;
 		static $namecounter;
 		if (is_null($namecounter)) $namecounter = 0;
 
-		//if ( $_uid && $partID) error_log(__METHOD__.__LINE__.array2string($structure).' Uid:'.$_uid.' PartID:'.$partID.' -> '.array2string($this->icServer->getParsedHeaders($_uid, true, $partID, true)));
+		//if ( $_uid && $partID) error_log(__METHOD__.__LINE__.array2string($structure).' Uid:'.$_uid.' PartID:'.$partID.' -> '.array2string($this->getMessageHeader($_uid, $partID, true)));
 		if(isset($structure->parameters['NAME'])) {
 			//error_log(__METHOD__.__LINE__.array2string(substr($structure->parameters['NAME'],0,strlen('data:'))));
 			if (!is_array($structure->parameters['NAME']) && substr($structure->parameters['NAME'],0,strlen('data:'))==='data:') {
@@ -4283,7 +4267,7 @@ $_restoreSession=false;
 		} else {
 			if ( $_uid && $partID)
 			{
-				$headers = $this->icServer->getParsedHeaders($_uid, true, $partID, true);
+				$headers = $this->getMessageHeader($_uid, $partID, true, true);
 				if ($headers)
 				{
 					if (!PEAR::isError($headers))
@@ -4379,31 +4363,39 @@ $_restoreSession=false;
 	 */
 	function getAttachment($_uid, $_partID, $_winmail_nr=0)
 	{
-		// parse message structure
-		$structure = $this->_getStructure($_uid, true);
-		if($_partID != '') {
-			$structure = $this->_getSubStructure($structure, $_partID);
-		}
-		$filename = $this->getFileNameFromStructure($structure, $_uid, $structure->partID);
-		$attachment = $this->icServer->getBodyPart($_uid, $_partID, true, true);
-		if (PEAR::isError($attachment))
-		{
-			error_log(__METHOD__.__LINE__.' failed:'.$attachment->message);
-			return array('type' => 'text/plain',
-						 'filename' => 'error.txt',
-						 'attachment' =>__METHOD__.' failed:'.$attachment->message
-					);
-		}
+		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
 
-		if (PEAR::isError($attachment))
-		{
-			error_log(__METHOD__.__LINE__.' failed:'.$attachment->message);
-			return array('type' => 'text/plain',
-						 'filename' => 'error.txt',
-						 'attachment' =>__METHOD__.' failed:'.$attachment->message
-					);
+		$uidsToFetch = new Horde_Imap_Client_Ids();
+		$uidsToFetch->add((array)$_uid);
+
+		$fquery = new Horde_Imap_Client_Fetch_Query();
+		$fquery->structure();
+		$fquery->bodyPart($_partID);
+		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
+			'ids' => $uidsToFetch,
+		));
+		if (is_object($headersNew)) {
+			foreach($headersNew as $id=>$_headerObject) {
+				$body = $_headerObject->getFullMsg();
+				if ($_partID != '')
+				{
+					$mailStructureObject = $_headerObject->getStructure();
+					$part = $mailStructureObject->getPart($_partID);
+					if ($part->getDisposition()=='attachment')
+					{
+						$headerObject['ATTACHMENTS'][$mime_id]=$part->getAllDispositionParameters();
+error_log(__METHOD__.__LINE__.array2string($headerObject['ATTACHMENTS'][$mime_id]));
+						$structure_encoding = $headerObject['ATTACHMENTS'][$mime_id]['encoding'];
+						$structure_bytes = $part->getBytes();
+						$structure_mime=$mime_type;
+						$structure_partID=$mime_id;
+						$structure_name=$part->getName();
+						$attachment = $_headerObject->getBodyPart($mime_id);
+					}
+				}
+			}
 		}
-		switch ($structure->encoding) {
+		switch ($structure_encoding) {
 			case 'BASE64':
 				// use imap_base64 to decode
 				$attachment = imap_base64($attachment);
@@ -4416,7 +4408,7 @@ $_restoreSession=false;
 			default:
 				// it is either not encoded or we don't know about it
 		}
-		if ($structure->type === 'TEXT' && isset($structure->parameters['CHARSET']) && stripos('UTF-16',$structure->parameters['CHARSET'])!==false)
+		if ($structure_type === 'TEXT' && isset($structure->parameters['CHARSET']) && stripos('UTF-16',$structure->parameters['CHARSET'])!==false)
 		{
 			$attachment = translation::convert($attachment,$structure->parameters['CHARSET'],self::$displayCharset);
 		}

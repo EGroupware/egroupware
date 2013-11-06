@@ -2240,7 +2240,7 @@ unset($query['actions']);
 			if ($succeeded)
 			{
 				translation::add_app('mail');
-				$headers = $this->bmail_bo->getMessageHeader($uid,$partID,true);
+				$headers = $this->mail_bo->getMessageHeader($uid,$partID,true);
 				unset($headers['SUBJECT']);//already in filename
 				$infoSection = mail_bo::createHeaderInfoSection($headers, 'SUPPRESS', false);
 				$props = array(array('name' => 'comment','val' => $infoSection));
