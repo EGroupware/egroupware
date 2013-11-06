@@ -400,6 +400,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 			}
 		}, this.activeFilters.col_filter, et2_INextmatchHeader);
 
+		// Explicitly the total count to zero, we're going to get some new info
+		this.controller._grid.setTotalCount(0);
+		
 		// Trigger an update
 		this.controller.update(true);
 	},
@@ -864,10 +867,6 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 
 		this.rowProvider.setDataRowTemplate(columnWidgets, _rowData, this);
 
-		// Set the initial row count
-		var total = typeof this.options.settings.total != "undefined" ?
-			this.options.settings.total : 0;
-		this.dataview.grid.setTotalCount(total);
 
 		// Create the grid controller
 		this.controller = new et2_nextmatch_controller(
@@ -897,6 +896,12 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		));*/
 
 		this.controller.setFilters(this.activeFilters);
+		
+		// Set the initial row count
+		var total = typeof this.options.settings.total != "undefined" ?
+			this.options.settings.total : 0;
+		// This triggers an invalidate, which updates the grid
+		this.dataview.grid.setTotalCount(total);
 	},
 
 	_parseGrid: function(_grid) {

@@ -129,9 +129,6 @@ var et2_dataview_controller = Class.extend({
 	 * @param {boolean} clear
 	 */
 	update: function (clear) {
-		// Clear the fetch queue
-		this._queue = {};
-		this._clearTimer();
 
 		// ---------
 
@@ -140,20 +137,11 @@ var et2_dataview_controller = Class.extend({
 
 		if(clear)
 		{
-			this._grid.clear();
+			this._grid.clear.apply(this._grid,[]);
 		}
 		// Remove all rows which are outside the view range
 		this._grid.cleanup();
-
-		// Remove all index entries which are currently not displayed
-		for (var key in this._indexMap)
-		{
-			if (!this._indexMap[key].row)
-			{
-				delete this._indexMap[key];
-			}
-		}
-
+		
 		// ---------
 
 		// Get the currently visible range from the grid
@@ -772,11 +760,11 @@ var et2_dataview_controller = Class.extend({
 		}
 
 		// Make sure _response.order.length is not longer than the requested
-		// count
-		var order = _response.order.splice(0, this.count);
+		// count, if a specific count was requested
+		var order = this.count != 0 ? _response.order.splice(0, this.count) : _response.order;
 
 		// Get the current index map for the updated region
-		var idxMap = this.self._getIndexMapping(this.start, this.count);
+		var idxMap = this.self._getIndexMapping(this.start, order.length);
 
 		// Update the grid using the new order. The _updateOrder function does
 		// not update the internal mapping while inserting and deleting rows, as
