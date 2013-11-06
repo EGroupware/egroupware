@@ -107,7 +107,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 			}
 			// some widgets sub-types need some post-processing
 			// ToDo: move it together with preprocessing to clientside
-			switch ($this->type['attr'])
+			switch ($this->attrs['type'])
 			{
 				case 'select-dow':
 					$dow = 0;
@@ -293,7 +293,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 	 * @param mixed $value=null value for readonly
 	 * @return array with value => label pairs
 	 */
-	public static function typeOptions($widget_type, $legacy_options, &$no_lang=false, $readonly=false, $value=null)
+	public static function typeOptions($widget_type, $legacy_options, &$no_lang=false, $readonly=false, &$value=null)
 	{
 		list($rows,$type,$type2,$type3,$type4,$type5,$type6) = explode(',',$legacy_options);
 
