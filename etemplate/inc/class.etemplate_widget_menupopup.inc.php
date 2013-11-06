@@ -402,9 +402,7 @@ class etemplate_widget_menupopup extends etemplate_widget
 				$no_lang = True;
 				break;
 
-
 			case 'select-account':	// options: #rows,{accounts(default)|both|groups|owngroups},{0(=lid)|1(default=name)|2(=lid+name),expand-multiselect-rows,not-to-show-accounts,...)}
-
 				// Get preference for selection display
 				$select_pref = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
 
@@ -455,13 +453,16 @@ class etemplate_widget_menupopup extends etemplate_widget
 				// Make sure all values are present, even if not normally sent (according to preferences)
 				if(is_array($value))
 				{
-					$remaining = array_diff_key($value, $options);
+					$remaining = array_diff($value, array_keys($options));
 				}
 				if(is_array($remaining))
 				{
 					foreach($remaining as $id)
 					{
-						$options[$id] = !$id && !is_numeric($rows) ? lang($rows) : self::accountInfo($id,null,$type2,$type=='both');
+						if ($id)	// default label will be added on clientside, it doubles, if added here too
+						{
+							$options[$id] = self::accountInfo($id,null,$type2,$type=='both');
+						}
 					}
 				}
 				break;
