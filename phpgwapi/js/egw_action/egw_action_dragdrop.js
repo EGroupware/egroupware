@@ -187,7 +187,10 @@ function egwDragActionImplementation()
 				.on("drag", function(e) {
 					// Remove the helper, it has been copied into the dataTransfer object now
 					// Hopefully user didn't notice it...
-					ai.helper.remove();
+					if(e.dataTransfer != null)
+					{
+						ai.helper.remove();
+					}
 				});
 			}
 			$j(node).draggable(
