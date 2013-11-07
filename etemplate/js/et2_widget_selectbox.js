@@ -240,6 +240,45 @@ var et2_selectbox = et2_inputWidget.extend(
 	},
 
 	/**
+	 * Switch instanciated widget to multi-selection and back, optionally enabeling tags too
+	 *
+	 * If you want to switch tags on too, you need to do so after switching to multiple!
+	 *
+	 * @param {boolean} _multiple
+	 * @param {integer} _size default=3
+	 */
+	set_multiple: function(_multiple, _size)
+	{
+		this.options.multiple = _multiple;
+
+		if (this.input)
+		{
+			if (_multiple)
+			{
+				this.input.attr('size', _size || 3);
+				this.input.attr('multiple', true);
+				this.input.attr('name', this.id + '[]');
+
+				if (this.input[0].options[0].value === '')
+				{
+					this.input[0].options[0] = null;
+				}
+			}
+			else
+			{
+				this.input.attr('multiple', false);
+				this.input.removeAttr('size');
+				this.input.attr('name', this.id);
+
+				if (this.options.empty_label && this.input[0].options[0].value !== '')
+				{
+					this._appendOptionElement('', this.options.empty_label);
+				}
+			}
+		}
+	},
+
+	/**
 	 * Add an option to regular drop-down select
 	 */
 	_appendOptionElement: function(_value, _label, _title, dom_element) {
@@ -533,9 +572,15 @@ var et2_selectbox = et2_inputWidget.extend(
 
 	/**
 	 * Turn tag style on and off
+	 *
+	 * If you want to switch multiple on too, you need to do so before switching tags on!
+	 *
+	 * @param {boolean} _tags
+	 * @param {string} _width width to use, default width of selectbox
 	 */
-	set_tags: function(tags) {
-		this.options.tags = tags;
+	set_tags: function(_tags, _width)
+	{
+		this.options.tags = _tags;
 
 		// Can't actually do chosen until attached, loadingFinished should call again
 		if(!this.isAttached()) return;
@@ -552,16 +597,16 @@ var et2_selectbox = et2_inputWidget.extend(
 		{
 			if(this.options.empty_label)
 			{
-				this.input.attr("data-placeholder", this.options.empty_label);
+				this.input.attr("data-placeholder", this.egw().lang(this.options.empty_label));
 			}
 			// Properly size chosen, even if on a hidden tab
 			var size = egw.getHiddenDimensions(this.input);
 			this.input.chosen({
-					inherit_select_classes: true,
-					search_contains: true,
-					width: size.w + "px"
-				})
-				.change(this.onchange);
+				inherit_select_classes: true,
+				search_contains: true,
+				width: _width || size.w + "px"
+			})
+			.change(this.onchange);
 		}
 	},
 
@@ -749,7 +794,7 @@ var et2_selectbox_ro = et2_selectbox.extend([et2_IDetachedDOM],
 				{
 					if(_options[key]["label"]) _options[key]["label"] = this.egw().lang(_options[key]["label"]);
 					if(_options[key]["title"]) _options[key]["title"] = this.egw().lang(_options[key]["title"]);
-					
+
 				}
 				else
 				{
