@@ -539,37 +539,26 @@ class mail_ui
 		if (isset($draftFolder) && $draftFolder != 'none') $userDefinedFunctionFolders['Drafts'] = $draftFolder;
 		if (isset($templateFolder) && $templateFolder != 'none') $userDefinedFunctionFolders['Templates'] = $templateFolder;
 		$out = array('id' => 0);
+
 		//$starttime = microtime(true);
-		$availableProfiles = emailadmin_account::search($only_current_user=true, $just_name=false, $order_by=null,$offset=0);
-		if (count($availableProfiles)) {
-			$identities=array();
-			$spK = array_keys($availableProfiles);
-			sort($spK);
-			foreach ($spK as $i =>$tmpkey)
-			{
-				if ($tmpkey==0) continue;
-				$accountData = $availableProfiles[$tmpkey];
-				$icServer = $accountData->imapServer();
-				//_debug_array($accountData->ImapServerId);
-				if ($_profileID && $icServer->ImapServerId<>$_profileID) continue;
-				//error_log(__METHOD__.__LINE__.' Userdefined Profiles ImapServerId:'.$icServer->ImapServerId);
-				//if (empty($icServer->acc_imap_host)) continue;
-				$identities[$icServer->ImapServerId]=(strlen(trim($accountData->ident_realname.$accountData->ident_org))?$accountData->ident_realname.' '.$accountData->ident_org:$accountData->acc_name).' &lt;'.($accountData->ident_email?$accountData->ident_email:$accountData->acc_imap_username).'&gt;';
-				$oA = array('id'=>$icServer->ImapServerId,
-					'text'=>$identities[$icServer->ImapServerId], //$this->mail_bo->profileID,
-					'tooltip'=>'('.$icServer->ImapServerId.') '.htmlspecialchars_decode($identities[$icServer->ImapServerId]),
-					'im0' => 'thunderbird.png',
-					'im1' => 'thunderbird.png',
-					'im2' => 'thunderbird.png',
-					'path'=> array($icServer->ImapServerId),
-					'child'=> 1, // dynamic loading on unfold
-					'parent' => ''
-				);
-				$this->setOutStructure($oA,$out,self::$delimiter);
-			}
+		foreach(emailadmin_account::search($only_current_user=true, $just_name=true) as $acc_id => $identity_name)
+		{
+			if ($_profileID && $acc_id != $_profileID) continue;
+
+			$oA = array('id' => $acc_id,
+				'text' => $identity_name,
+				'tooltip' => '('.$acc_id.') '.htmlspecialchars_decode($identity_name),
+				'im0' => 'thunderbird.png',
+				'im1' => 'thunderbird.png',
+				'im2' => 'thunderbird.png',
+				'path'=> array($acc_id),
+				'child'=> 1, // dynamic loading on unfold
+				'parent' => ''
+			);
+			$this->setOutStructure($oA, $out, self::$delimiter);
 		}
 		//$endtime = microtime(true) - $starttime;
-		//error_log(__METHOD__.__LINE__.' Fetching identities Took:'.$endtime);
+		//error_log(__METHOD__.__LINE__.' Fetching accounts took: '.$endtime);
 
 		//error_log(__METHOD__.__LINE__.array2string($folderObjects));
 		$c = 0;
