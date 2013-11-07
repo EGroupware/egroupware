@@ -378,7 +378,8 @@ class infolog_ui
 		}
 		$readonlys = $rows = array();
 
-		if ($query['action_id'])
+		// Don't add parent in if info_id_parent (expanding to show subs)
+		if ($query['action_id'] && !$query['col_filter']['info_id_parent'])
 		{
 			$parents = $query['action'] == 'sp' && $query['action_id'] ? (array)$query['action_id'] : array();
 			if (count($parents) == 1 && is_array($query['action_id']))
@@ -403,7 +404,7 @@ class infolog_ui
 				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id'],$query['filter2'],$details);
 			}
 			// for subs view ('sp') add parent(s) in front of subs once(!)
-			if ($parent_first && ($main = $this->bo->read($query['action_id'])) ||
+			if ( $parent_first && ($main = $this->bo->read($query['action_id'])) ||
 				$parents && ($parent_index = array_search($info['info_id_parent'], $parents)) !== false &&
 				($main = $this->bo->read($info['info_id_parent'])))
 			{
