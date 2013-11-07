@@ -486,7 +486,7 @@ function randomstring($len=16)
 		'w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L',
 		'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
 		'@','!','$','%','&','/','(',')','=','?',';',':','#','_','-','<',
-		'>','|','{','[',']','}',	// dont add \,'" as we have problems dealing with them
+		'>','|','[',']','}',	// dont add \,'"{ as we have problems dealing with them
 	);
 
 	$str = '';
@@ -583,7 +583,7 @@ function check_install_pear_packages()
 	$need_upgrade = array();
 	foreach($packages as $package => $version)
 	{
-		if ($version !== true && isset($packages_installed[$package]) &&
+		if ($version !== true && $version !== '999.egw-pear' && isset($packages_installed[$package]) &&
 			version_compare($version, $packages_installed[$package], '>'))
 		{
 			$need_upgrade[] = $package;
