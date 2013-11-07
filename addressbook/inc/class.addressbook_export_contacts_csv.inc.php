@@ -399,16 +399,16 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
         {
 		unset($filters['last_event']);
 		unset($filters['next_event']);
-                foreach($filters as $field_name => &$settings)
-                {
-                        if($this->selects[$field_name]) $settings['values'] = $this->selects[$field_name];
-                }
+		foreach($filters as $field_name => &$settings)
+		{
+				if($this->selects[$field_name]) $settings['values'] = $this->selects[$field_name];
+		}
 		$filters['owner'] = array(
 			'name'		=> 'owner',
 			'label'		=> 'addressbook',
 			'type'		=> 'select',
 			'rows'		=> 5,
-			'enhance'	=> true,
+			'tags'		=> true,
 			'values'	=> $this->ui->get_addressbooks(EGW_ACL_READ)
 		);
 	}

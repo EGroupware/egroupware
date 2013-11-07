@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="addressbook.export_explode_fields" template="" lang="" group="0" version="1.9.001">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="List as seperate columns"/>
+				</row>
+				<row disabled="!@explode_multiselects">
+					<grid width="100%" id="explode_multiselects">
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description value="Field"/>
+								<description value="Style"/>
+							</row>
+							<row>
+								<description id="${row}[name]"/>
+								<menulist>
+									<menupopup id="${row}[explode]"/>
+								</menulist>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row disabled="@explode_multiselects">
+					<description value="No multi-select columns selected for export"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

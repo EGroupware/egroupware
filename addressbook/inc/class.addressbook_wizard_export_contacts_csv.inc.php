@@ -107,9 +107,9 @@ class addressbook_wizard_export_contacts_csv extends importexport_wizard_basic_e
 					'explode'=>	$settings[$field]
 				);
 				if($field == 'cat_id') {
-					$sel_options[$row] = $cat_options;
+					$sel_options['explode_multiselects'][$row] = $cat_options;
 				} else {
-					$sel_options[$row] = $multi_options;
+					$sel_options['explode_multiselects'][$row] = $multi_options;
 				}
 				$row++;
 			}
