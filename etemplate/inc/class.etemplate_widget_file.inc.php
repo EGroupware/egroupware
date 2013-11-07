@@ -174,6 +174,7 @@ class etemplate_widget_file extends etemplate_widget
 
 			foreach($value as $tmp => $file)
 			{
+				if(!$file) continue;
 				if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
 				{
 					$path = $GLOBALS['egw_info']['server']['temp_dir'].'/'.$tmp;
