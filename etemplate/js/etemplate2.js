@@ -301,7 +301,7 @@ etemplate2.prototype.load = function(_name, _url, _data, _callback)
 				{
 					_callback.call(window,this);
 				}
-				if(_callback != app_callback)
+				if(app_callback && _callback != app_callback)
 				{
 					app_callback.call(window,this);
 				}
