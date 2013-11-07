@@ -1227,7 +1227,7 @@ class filemanager_ui
 	 * @param string $dir=null current directory
 	 * @see self::action()
 	 */
-	public static function ajax_action($action, $selected, $dir=null)
+	public static function ajax_action($action, $selected, $dir=null, $props=null)
 	{
 		$response = egw_json_response::get();
 
@@ -1277,7 +1277,7 @@ class filemanager_ui
 							$tmp_path = ini_get('upload_tmp_dir').'/'.basename($tmp_name);
 						}
 
-						if (egw_vfs::copy_uploaded($tmp_path, $path, null, false))
+						if (egw_vfs::copy_uploaded($tmp_path, $path, $props, false))
 						{
 							++$arr['files'];
 							$uploaded[] = $data['name'];
@@ -1298,6 +1298,7 @@ class filemanager_ui
 				}
 				$arr['uploaded'] = $selected;
 				$arr['path'] = $dir;
+				$arr['props'] = $props;
 				break;
 
 			default:

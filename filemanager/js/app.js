@@ -198,6 +198,29 @@ app.classes.filemanager = AppJS.extend(
 			widget.set_value('');
 		}
 	},
+		
+	/**
+	 * Finish callback for file a file dialog, to get the overwrite / rename prompt
+	 */
+	file_a_file_upload: function(_event, _file_count)
+	{
+		var widget = _event.data;
+		var value = widget.getValue();
+		var path = widget.getRoot().getWidgetById("path").getValue();
+		var action = widget.getRoot().getWidgetById("action").getValue();
+		var link = widget.getRoot().getWidgetById("entry").getValue();
+		if(action == 'save_as' && link.app && link.id)
+		{
+			path = "/apps/"+link.app+"/"+link.id;
+		}
+		
+		var props = widget.getInstanceManager().getValues(widget.getRoot());
+		egw.json('filemanager_ui::ajax_action', ['upload', widget.getValue(), path, props],
+				app.filemanager._upload_callback, app.filemanager, true, this
+			).sendRequest(true);
+		return true;
+	},
+		
 
 	/**
 	 * Callback for server response to upload request:
@@ -234,10 +257,15 @@ app.classes.filemanager = AppJS.extend(
 							uploaded[this.my_data.file].name = _value;
 							delete uploaded[this.my_data.file].confirm;
 							// send overwrite-confirmation and/or rename request to server
-							egw.json('filemanager_ui::ajax_action', ['upload', uploaded, this.my_data.path],
+							egw.json('filemanager_ui::ajax_action', ['upload', uploaded, this.my_data.path, this.my_data.props],
 								that._upload_callback, that, true, that
 							).sendRequest();
 							return;
+						case "cancel":
+							// Remove that file from every file widget...
+							that.et2.iterateOver(function(_widget) {
+								_widget.remove_file(this.my_data.data.name);
+							}, this, et2_file);
 					}
 				},
 				_data.uploaded[file].confirm === "is_dir" ?
@@ -249,7 +277,8 @@ app.classes.filemanager = AppJS.extend(
 				dialog.my_data = {
 					file: file,
 					path: _data.path,
-					data: _data.uploaded[file]
+					data: _data.uploaded[file],
+					props: _data.props
 				};
 			}
 		}
