@@ -94,6 +94,11 @@ class admin_ui
 				'enableId' => '^/groups/-\\d+',
 				'icon' => 'lock',
 			),
+			'add' => array(
+				'caption' => 'Add user',
+				'url' => egw::link('/index.php?menuaction=admin.uiaccounts.edit_user'),
+				'onExecute' => 'javaScript:app.admin.iframe_location',
+			),
 			'delete' => array(
 				'onExecute' => 'javaScript:app.admin.group',
 				'confirm' => 'Delete this group',
@@ -139,6 +144,12 @@ class admin_ui
 				'caption' => 'View',
 				'allowOnMultiple' => false,
 				'url' => 'menuaction=admin.uiaccounts.view_user&account_id=$id',
+				'group' => $group,
+				'onExecute' => 'javaScript:app.admin.iframe_location',
+			),
+			'add' => array(
+				'caption' => 'Add user',
+				'url' => 'menuaction=admin.uiaccounts.edit_user',
 				'group' => $group,
 				'onExecute' => 'javaScript:app.admin.iframe_location',
 			),
