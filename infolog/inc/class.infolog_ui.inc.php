@@ -391,7 +391,7 @@ class infolog_ui
 		$parent_first = count($parents) == 1;
 		$parent_index = 0;
 		// et2 nextmatch listens to total, and only displays that many rows, so add parent in or we'll lose the last row
-		if($parent_first) $query['total']++;
+		if($parent_first || $query['action'] = 'sp' && is_array($query['action_id'])) $query['total']++;
 		
 		// Check to see if we need to remove description
 		foreach($infos as $id => $info)
