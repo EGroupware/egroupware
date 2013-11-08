@@ -1180,7 +1180,7 @@ class egw_db
 	 * @param string $expr column-name or expression optional prefixed with "DISTINCT"
 	 * @param string $order_by='' optional order
 	 * @param string $separator=',' optional separator, default is comma
-	 * @return string
+	 * @return string|boolean false if not supported by dbms
 	 */
 	function group_concat($expr, $order_by='', $separator=',')
 	{
@@ -1194,13 +1194,17 @@ class egw_db
 				break;
 
 			case 'pgsql':	// requires for Postgresql < 8.4 to have a custom ARRAY_AGG method installed!
+				if ($this->Type == 'pgsql' && $this->ServerInfo['version'] < 8.4)
+				{
+					return false;
+				}
 				$sql = 'ARRAY_TO_STRING(ARRAY_AGG('.$expr;
 				if ($order_by) $sql .= ' ORDER BY '.$order_by;
 				$sql .= '), '.$this->quote($separator).')';
 				break;
 
 			default:	// probably gives an sql error anyway
-				$sql = $expr;
+				return false;
 		}
 		return $sql;
 	}
@@ -2076,5 +2080,176 @@ class egw_db
 
 		return array_walk($keys,create_function('&$v,$k,$strip','$v = str_replace($strip,\'\',$v);'),$strip) ?
 			array_combine($keys,$arr) : $arr;
+	}
+}
+
+/**
+ * Iterator applying a given callback on each element retrived, eg. from a select query
+ *
+ * Example usage:
+ *
+ *	function rows(array $where)
+ *	{
+ *		global $db, $table, $columns, $prefix;
+ *
+ *		return new egw_db_callback_iterator($db->select($table, $columns, $where), function($row) use ($prefix)
+ *		{
+ *			return egw_db::strip_array_keys($row, $prefix);
+ *		});
+ *  }
+ *
+ *  foreach(row(array('attr' => 'value')) as $row)
+ *  {
+ *		// $row keys have prefix removed, or whatever you implement in callback
+ *	}
+ *
+ * Example with a key-callback:
+ *
+ *	function rows(array $where)
+ *	{
+ *		global $db, $table, $columns, $prefix;
+ *
+ *		return new egw_db_callback_iterator($db->select($table, $columns, $where), function($row) use ($prefix)
+ *		{
+ *			return egw_db::strip_array_keys($row, $prefix);
+ *		}, array(), function($row)
+ *		{
+ *			return $row['id'];
+ *		});
+ *  }
+ *
+ *  foreach(rows(array('attr' => 'value')) as $key => $row)
+ *  {
+ *		// $key is now value of column 'id', $row as above
+ *	}
+ *
+ */
+class egw_db_callback_iterator implements Iterator
+{
+	/**
+	 * Reference of so_sql class to use it's db2data method
+	 *
+	 * @var callback
+	 */
+	private $callback;
+
+	/**
+	 * Further parameter for callback
+	 *
+	 * @var array
+	 */
+	private $params = array();
+
+	/**
+	 * Optional callback, if you want different keys
+	 *
+	 * @var callback
+	 */
+	private $key_callback;
+
+	/**
+	 * Instance of ADOdb record set to iterate
+	 *
+	 * @var Iterator
+	 */
+	private $rs;
+
+	/**
+	 * Total count of entries
+	 *
+	 * @var int
+	 */
+	public $total;
+
+	/**
+	 * Constructor
+	 *
+	 * @param Traversable $rs
+	 * @param callback $callback
+	 * @param array $parms=array() additional parameters, row is always first parameter
+	 * @param $key_callback=null optional callback, if you want different keys
+	 */
+	public function __construct(Traversable $rs, $callback, $params=array(), $key_callback=null)
+	{
+		$this->callback = $callback;
+		$this->params = $params;
+		$this->key_callback = $key_callback;
+
+		if (is_a($rs,'IteratorAggregate'))
+		{
+			$this->rs = $rs->getIterator();
+		}
+		else
+		{
+			$this->rs = $rs;
+		}
+	}
+
+	/**
+	 * Return the current element
+	 *
+	 * @return array
+	 */
+	public function current()
+	{
+		if (is_a($this->rs,'iterator'))
+		{
+			$params = $this->params;
+			array_unshift($params, $this->rs->current());
+			return call_user_func_array($this->callback, $params);
+		}
+		return null;
+	}
+
+	/**
+	 * Return the key of the current element
+	 *
+	 * @return int
+	 */
+	public function key()
+	{
+		if (is_a($this->rs,'iterator'))
+		{
+			return $this->key_callback ?
+				call_user_func($this->key_callback, $this->rs->current()) :
+				$this->rs->key();
+		}
+		return 0;
+	}
+
+	/**
+	 * Move forward to next element (called after each foreach loop)
+	 */
+	public function next()
+	{
+		if (is_a($this->rs,'iterator'))
+		{
+			return $this->rs->next();
+		}
+	}
+
+	/**
+	 * Rewind the Iterator to the first element (called at beginning of foreach loop)
+	 */
+	public function rewind()
+	{
+		if (is_a($this->rs,'iterator'))
+		{
+			return $this->rs->rewind();
+		}
+	}
+
+	/**
+	 * Checks if current position is valid
+	 *
+	 * @return boolean
+	 */
+	public function valid ()
+	{
+		if (is_a($this->rs,'iterator'))
+		{
+			return $this->rs->valid();
+		}
+		return false;
 	}
 }
