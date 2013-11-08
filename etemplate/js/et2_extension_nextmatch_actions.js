@@ -120,10 +120,10 @@ function nm_action(_action, _senders, _target, _ids)
 			// fall through, if popup is open --> submit form
 		case 'submit':
 			var checkboxes = mgr.getActionsByAttr("checkbox", true);
-			var checkboxes_elem = document.getElementById(mgr.etemplate_var_prefix+'[nm][checkboxes]');
-			if (checkboxes && checkboxes_elem)
+			var checkbox_values = {};
+			if (checkboxes)
 				for (var i in checkboxes)
-					checkboxes_elem.value += checkboxes[i].id + ":" + (checkboxes[i].checked ? "1" : "0") + ";";
+					checkbox_values[checkboxes[i].id] = checkboxes[i].checked;
 
 			var nextmatch = _action.data.nextmatch;
 			if(!nextmatch && _senders.length)
@@ -139,7 +139,7 @@ function nm_action(_action, _senders, _target, _ids)
 				jQuery.extend(value, this.activeFilters, {
 					"selected": idsArr,
 					"select_all": _ids.all,
-					"checkboxes": checkboxes_elem ? checkboxes_elem.value : null
+					"checkboxes": checkbox_values,
 				});
 				value[nextmatch.options.settings.action_var]= _action.id;
 
@@ -152,7 +152,7 @@ function nm_action(_action, _senders, _target, _ids)
 					// Force nextmatch to re-load affected rows
 					nextmatch.refresh(idsArr);
 				}
-				
+
 				// downloads need a regular submit via POST (no Ajax)
 				if (_action.data.postSubmit)
 				{
@@ -160,7 +160,7 @@ function nm_action(_action, _senders, _target, _ids)
 				}
 				else
 				{
-					nextmatch.getInstanceManager().submit();					
+					nextmatch.getInstanceManager().submit();
 				}
 
 				if(_action.data.nm_action == 'open_popup')
