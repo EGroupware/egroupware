@@ -241,39 +241,31 @@ $_restoreSession=false;
 	 */
 	public static function validateProfileID($_profileID=0)
 	{
-		$availableServers = array();
-		// if you use user defined accounts you may want to access the profile defined with the emailadmin available to the user
-		// as we validate the profile in question and may need to return an emailadminprofile, we fetch this one all the time
-		$icServers = emailadmin_account::search($only_current_user=true, $just_name=false, $order_by=null);
-		$_profileIDs = array_keys($icServers);
-		$defaultProfileID = $_profileIDs[0];
-		$defaultProfile = $icServers[$defaultProfileID];
-		//error_log(__METHOD__.__LINE__.array2string($defaultProfile));
-		$profiles = emailadmin_account::search($only_current_user=true, $just_name=true, $order_by=null);
-		foreach ($profiles as $tmpkey => $prof)
+		if ($_profileID)
 		{
-			//error_log(__METHOD__.__LINE__.' Key:'.$tmpkey.'->'.array2string($icServers[$tmpkey]->acc_imap_host));
-			$host = $icServers[$tmpkey]->acc_imap_host;
-			if (empty($host)) continue;
-			$availableServers[$icServers[$tmpkey]->acc_id] = $icServers[$tmpkey]->ident_realname.' '.$icServers[$tmpkey]->ident_org.' <'.$icServers[$tmpkey]->ident_email.'>';
-		}
-
-		//error_log(__METHOD__.__LINE__.array2string($identities));
-		if (array_key_exists($_profileID,$availableServers))
-		{
-			// everything seems to be in order self::$profileID REMAINS UNCHANGED
-		}
-		else
-		{
-			if (self::$debug) error_log(__METHOD__.__LINE__.' Profile Selected (after trying to fetch DefaultProfile):'.array2string($_profileID));
-			if (!array_key_exists($_profileID,$availableServers))
-			{
-				// everything failed, try first profile found
-				$_profileID = $defaultProfileID;
+			try {
+				$account = emailadmin_account::read($_profileID);
+				if (!empty($account->acc_imap_host))
+				{
+					return $_profileID;
+				}
+				if (self::$debug) error_log(__METHOD__."($_profileID) account NOT valid, no imap-host!");
+			}
+			catch (egw_exception_not_found $e) {
+				if (self::$debug) error_log(__METHOD__."($_profileID) account NOT found!");
 			}
 		}
-		if (self::$debug) error_log(__METHOD__.'::'.__LINE__.' ProfileSelected:'.$_profileID.' -> '.$availableServers[$_profileID]);
-
+		// no account specified or specified account not found or not valid
+		// --> search existing account for first valid one and return that
+		foreach(emailadmin_account::search($only_current_user=true, $just_name=false) as $account)
+		{
+			if (!empty($account->acc_imap_host))
+			{
+				if (self::$debug && $_profileID) error_log(__METHOD__."($_profileID) using $account->acc_id instead");
+				return $account->acc_id;
+			}
+		}
+		if (self::$debug) error_log(__METHOD__."($_profileID) NO valid account found!");
 		return $_profileID;
 	}
 
