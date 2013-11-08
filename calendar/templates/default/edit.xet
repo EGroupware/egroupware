@@ -328,16 +328,16 @@
 					</hbox>
 				</row>
 				<row>
-					<tabbox id="calendar.edit.general|calendar.edit.description|calendar.edit.participants|calendar.edit.recurrence|calendar.edit.custom|calendar.edit.links|calendar.edit.alarms|calendar.edit.history" span="all">
+					<tabbox id="tabs" span="all">
 						<tabs>
-							<tab id="calendar.edit.general" label="General" statustext="Location, Start- and Endtimes, ..."/>
-							<tab id="calendar.edit.description" label="Description" statustext="Full description"/>
-							<tab id="calendar.edit.participants" label="Participants" statustext="Participants, Resources, ..."/>
-							<tab id="calendar.edit.recurrence" label="Recurrence" statustext="Repeating Event Information"/>
-							<tab id="calendar.edit.custom" label="Custom" statustext="Custom fields"/>
-							<tab id="calendar.edit.links" label="Links" statustext="Links, Attachments"/>
-							<tab id="calendar.edit.alarms" label="Alarms" statustext="Alarm management"/>
-							<tab id="calendar.edit.history" label="History" statustext="Change history"/>
+							<tab id="general" label="General" statustext="Location, Start- and Endtimes, ..."/>
+							<tab id="description" label="Description" statustext="Full description"/>
+							<tab id="participants" label="Participants" statustext="Participants, Resources, ..."/>
+							<tab id="recurrence" label="Recurrence" statustext="Repeating Event Information"/>
+							<tab id="custom" label="Custom" statustext="Custom fields"/>
+							<tab id="links" label="Links" statustext="Links, Attachments"/>
+							<tab id="alarms" label="Alarms" statustext="Alarm management"/>
+							<tab id="history" label="History" statustext="Change history"/>
 						</tabs>
 						<tabpanels>
 							<template id="calendar.edit.general"/>
