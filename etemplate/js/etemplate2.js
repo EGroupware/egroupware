@@ -547,8 +547,12 @@ etemplate2.prototype.getValues = function(_root)
 		// Check whether the entry is really undefined
 		if (typeof _target[id] != "undefined" && (typeof _target[id] != 'object' || typeof value != 'object'))
 		{
-			egw.debug("error", _widget, "Overwriting value of '" + _widget.id +
-				"', id exists twice!");
+			// Don't warn about children of nextmatch header - they're part of nm value
+			if(!_widget.getParent().instanceOf(et2_nextmatch_header_bar))
+			{
+				egw.debug("warn", _widget, "Overwriting value of '" + _widget.id +
+					"', id exists twice!");
+			}
 		}
 
 		// Store the value of the widget and reset its dirty flag
