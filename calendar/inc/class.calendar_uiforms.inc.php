@@ -958,7 +958,7 @@ class calendar_uiforms extends calendar_ui
 					'msg'        => $msg,
 				));
 			}
-			egw_framework::refresh_opener($msg, 'calendar', $content['id'], $button['save']?'update': 'delete');
+			egw_framework::refresh_opener($msg, 'calendar', $content['id'], $button == 'save'?'update': 'delete');
 			egw_framework::window_close();
 			common::egw_exit();
 		}
