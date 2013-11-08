@@ -41,7 +41,7 @@
 					</row>
 					<row class="row">
 						<description value="Options" width="0"/>
-						<checkbox statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" options=",, ,disable"/>
+						<checkbox statustext="A non blocking event will not conflict with other events" label="non blocking" id="non_blocking" options="1,0, ,disable"/>
 					</row>
 					<row class="row">
 						<description/>
