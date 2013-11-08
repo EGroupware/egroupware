@@ -141,7 +141,7 @@ class addressbook_ui extends addressbook_bo
 				else
 				{
 					if ($this->action($content['nm']['action'],$content['nm']['selected'],$content['nm']['select_all'],
-						$success,$failed,$action_msg,$content['do_email'] ? 'email' : 'index',$msg))
+						$success,$failed,$action_msg,$content['do_email'] ? 'email' : 'index',$msg,$content['nm']['checkboxes']))
 					{
 						$msg .= lang('%1 contact(s) %2',$success,$action_msg);
 					}
@@ -501,6 +501,13 @@ class addressbook_ui extends addressbook_bo
 					'caption' => $label,
 				);
 			}
+			// copy checkbox
+			$move2addressbooks= array(
+				'copy' =>array(
+					'id' => 'move_to_copy',
+					'caption' => 'Copy instead of move',
+					'checkbox' => true,
+				)) + $move2addressbooks;
 			$actions['move_to'] = array(
 				'caption' => 'Move to addressbook',
 				'children' => $move2addressbooks,
@@ -646,7 +653,7 @@ class addressbook_ui extends addressbook_bo
 		*/
 		return $actions;
 	}
-	
+
 	/**
 	 * Get the name of an organization from an ID for the org_view filter
 	 *
@@ -665,7 +672,7 @@ class addressbook_ui extends addressbook_bo
 		$org_name = implode(': ',$org_name);
 		return array($org => $org_name);
 	}
-	
+
 	/**
 	 * Email address-selection popup
 	 *
@@ -787,7 +794,7 @@ window.egw_LAB.wait(function() {
 	 * @param string/array $session_name 'index' or 'email', or array with session-data depending if we are in the main list or the popup
 	 * @return boolean true if all actions succeded, false otherwise
 	 */
-	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
+	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg, $checkboxes = NULL)
 	{
 		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
@@ -1056,18 +1063,41 @@ window.egw_LAB.wait(function() {
 					{
 						return false;
 					}
-					$action_msg = lang('moved');
-					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_DELETE,$contact)))
+					if (!$checkboxes['move_to_copy'])
 					{
-						if (!$contact['owner'])		// no mass-change of accounts
+						$action_msg = lang('moved');
+						if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_DELETE,$contact)))
 						{
-							$Ok = false;
+							if (!$contact['owner'])		// no mass-change of accounts
+							{
+								$Ok = false;
+							}
+							elseif ($contact['owner'] != (int)$action || $contact['private'] != (int)(substr($action,-1) == 'p'))
+							{
+								$contact['owner'] = (int) $action;
+								$contact['private'] = (int)(substr($action,-1) == 'p');
+								$Ok = $this->save($contact);
+							}
 						}
-						elseif ($contact['owner'] != (int)$action || $contact['private'] != (int)(substr($action,-1) == 'p'))
+					}
+					else
+					{
+						$action_msg = lang('copied');
+						if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_DELETE,$contact)))
 						{
-							$contact['owner'] = (int) $action;
-							$contact['private'] = (int)(substr($action,-1) == 'p');
-							$Ok = $this->save($contact);
+							if (!$contact['owner'])		// no mass-change of accounts
+							{
+								$Ok = false;
+							}
+							elseif ($contact['owner'] != (int)$action || $contact['private'] != (int)(substr($action,-1) == 'p'))
+							{
+								unset($contact['id']);
+								unset($contact['uid']);
+								unset($contact['etag']);
+								$contact['owner'] = (int) $action;
+								$contact['private'] = (int)(substr($action,-1) == 'p');
+								$Ok = $this->save($contact);
+							}
 						}
 					}
 					break;
@@ -1223,7 +1253,7 @@ window.egw_LAB.wait(function() {
 			$query['no_filter2'] = true;			// switch the distribution list selection off
 
 			$query['template'] = 'addressbook.index.org_rows';
-			
+
 			if ($query['order'] != 'org_name')
 			{
 				$query['sort'] = 'ASC';
@@ -1259,7 +1289,7 @@ window.egw_LAB.wait(function() {
 				$query['template'] = $do_email ? 'addressbook.email.rows' : 'addressbook.index.rows';
 			}
 			if ($query['org_view'])	// view the contacts of one organisation only
-			{		
+			{
 				if (strpos($query['org_view'],'*AND*') !== false) $query['org_view'] = str_replace('*AND*','&',$query['org_view']);
 				foreach(explode('|||',$query['org_view']) as $part)
 				{
