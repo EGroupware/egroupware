@@ -14,6 +14,8 @@
  * Mail worker class
  *  -provides backend functionality for all classes in Mail
  *  -provides classes that may be used by other apps too
+ *
+ * @link https://github.com/horde/horde/blob/master/imp/lib/Contents.php
  */
 class mail_bo
 {
@@ -245,7 +247,7 @@ $_restoreSession=false;
 		{
 			try {
 				$account = emailadmin_account::read($_profileID);
-				if (!empty($account->acc_imap_host))
+				if ($account->acc_imap_host)
 				{
 					return $_profileID;
 				}
@@ -538,6 +540,7 @@ $_restoreSession=false;
 	 */
 	function closeConnection() {
 		//if ($icServer->_connected) error_log(__METHOD__.__LINE__.' disconnect from Server');
+error_log(__METHOD__."() ".function_backtrace());
 		$this->icServer->disconnect();
 	}
 
@@ -549,6 +552,7 @@ $_restoreSession=false;
 	 */
 	function reopen($_foldername)
 	{
+error_log(__METHOD__."('$_foldername') ".function_backtrace());
 		// TODO: trying to reduce traffic to the IMAP Server here, introduces problems with fetching the bodies of
 		// eMails when not in "current-Folder" (folder that is selected by UI)
 		static $folderOpened;
@@ -835,6 +839,7 @@ $_restoreSession=false;
 	 */
 	function getFolderStatus($_folderName,$ignoreStatusCache=false,$basicInfoOnly=false)
 	{
+error_log(__METHOD__."('$_foldername') ".function_backtrace());
 		if (self::$debug) error_log(__METHOD__." called with:$_folderName,$ignoreStatusCache,$basicInfoOnly");
 		if (!is_string($_folderName) || empty($_folderName)) // something is wrong. Do not proceed
 		{
@@ -3259,123 +3264,175 @@ $_restoreSession=false;
 	 * get part of the message, if its stucture is indicating its of multipart alternative style
 	 * a wrapper for multipartmixed
 	 * @param string/int $_uid the messageuid,
-	 * @param array $_structure='', if given use structure for parsing
+	 * @param Horde_Mime_Part $_structure structure for parsing
 	 * @param string $_htmlMode, how to display a message, html, plain text, ...
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
 	 * @return array containing the desired part
 	 */
-	function getMultipartAlternative($_uid, $_structure, $_htmlMode, $_preserveSeen = false)
+	function getMultipartAlternative($_uid, Horde_Mime_Part $_structure, $_htmlMode, $_preserveSeen = false)
 	{
 		// a multipart/alternative has exactly 2 parts (text and html  OR  text and something else)
 		// sometimes there are 3 parts, when there is an ics/ical attached/included-> we want to show that
 		// as attachment AND as abstracted ical information (we use our notification style here).
-		$partText = false;
-		$partHTML = false;
+		$partText = $partHTML = null;
 		if (self::$debug) _debug_array(array("METHOD"=>__METHOD__,"LINE"=>__LINE__,"STRUCTURE"=>$_structure));
-		foreach($_structure as $mimePart) {
-			if($mimePart->type == 'TEXT' && ($mimePart->subType == 'PLAIN' || $mimePart->subType == 'CALENDAR') && $mimePart->bytes > 0) {
-				if ($mimePart->subType == 'CALENDAR' && $partText === false) $partText = $mimePart; // only if there is no partText set already
-				if ($mimePart->subType == 'PLAIN') $partText = $mimePart;
-			} elseif($mimePart->type == 'TEXT' && $mimePart->subType == 'HTML' && $mimePart->bytes > 0) {
-				$partHTML = $mimePart;
-			} elseif ($mimePart->type == 'MULTIPART' && ($mimePart->subType == 'RELATED' || $mimePart->subType == 'MIXED') && is_array($mimePart->subParts)) {
-				// in a multipart alternative we treat the multipart/related as html part
-				#$partHTML = array($mimePart);
-				if (self::$debug) error_log(__METHOD__." process MULTIPART/RELATED with array as subparts");
-				$partHTML = $mimePart;
-			} elseif ($mimePart->type == 'MULTIPART' && $mimePart->subType == 'ALTERNATIVE' && is_array($mimePart->subParts)) {
-				//cascading multipartAlternative structure, assuming only the first one is to be used
-				return $this->getMultipartAlternative($_uid,$mimePart->subParts,$_htmlMode, $_preserveSeen);
-			}
-		}
-		//error_log(__METHOD__.__LINE__.$_htmlMode);
-		switch($_htmlMode) {
-			case 'html_only':
-			case 'always_display':
-				if(is_object($partHTML)) {
-					if($partHTML->subType == 'RELATED') {
-						return $this->getMultipartRelated($_uid, $partHTML, $_htmlMode, $_preserveSeen);
-					} elseif($partHTML->subType == 'MIXED') {
-						return $this->getMultipartMixed($_uid, $partHTML, $_htmlMode, $_preserveSeen);
-					} else {
-						return $this->getTextPart($_uid, $partHTML, $_htmlMode, $_preserveSeen);
-					}
-				} elseif(is_object($partText) && $_htmlMode=='always_display') {
-					return $this->getTextPart($_uid, $partText, $_htmlMode, $_preserveSeen);
-				}
 
-				break;
-			case 'only_if_no_text':
-				if(is_object($partText)) {
-					return $this->getTextPart($_uid, $partText, $_htmlMode, $_preserveSeen);
-				} elseif(is_object($partHTML)) {
-					if($partHTML->type) {
-						return $this->getMultipartRelated($_uid, $partHTML, $_htmlMode, $_preserveSeen);
-					} else {
-						return $this->getTextPart($_uid, $partHTML, 'always_display', $_preserveSeen);
-					}
-				}
+		foreach($_structure->contentTypeMap() as $mime_id => $mime_type)
+		{
+			//error_log(__METHOD__."($_uid, ".$_structure->getMimeId().") $mime_id: $mime_type");
+			if (self::$debug) echo __METHOD__."($_uid, partID=".$_structure->getMimeId().") $mime_id: $mime_type<br>";
 
-				break;
+			if (!$mime_id) continue;	// ignore multipart/alternative itself
 
-			default:
-				if(is_object($partText)) {
-					return $this->getTextPart($_uid, $partText, $_htmlMode, $_preserveSeen);
-				} else {
-					$bodyPart = array(
-						'body'		=> lang("no plain text part found"),
-						'mimeType'	=> 'text/plain',
-						'charSet'	=> self::$displayCharset,
-					);
-				}
+			$mimePart = $_structure->getPart($mime_id);
 
-				break;
-		}
-
-		return $bodyPart;
-	}
-
-	/**
-	 * getMultipartMixed
-	 * get part of the message, if its stucture is indicating its of multipart mixed style
-	 * @param string/int $_uid the messageuid,
-	 * @param array $_structure='', if given use structure for parsing
-	 * @param string $_htmlMode, how to display a message, html, plain text, ...
-	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
-	 * @return array containing the desired part
-	 */
-	function getMultipartMixed($_uid, $_structure, $_htmlMode, $_preserveSeen = false)
-	{
-		if (self::$debug) echo __METHOD__."$_uid, $_htmlMode<br>";
-		$bodyPart = array();
-		if (self::$debug) _debug_array($_structure);
-		if (!is_array($_structure)) $_structure = array($_structure);
-		foreach($_structure as $part) {
-			if (self::$debug) echo $part->type."/".$part->subType."<br>";
-			switch($part->type) {
-				case 'MULTIPART':
-					switch($part->subType) {
-						case 'ALTERNATIVE':
-							$bodyPart[] = $this->getMultipartAlternative($_uid, $part->subParts, $_htmlMode, $_preserveSeen);
+			switch($mimePart->getPrimaryType())
+			{
+				case 'text':
+					switch($mimePart->getSubType())
+					{
+						case 'calendar':	// only if there is no partText set already
+							if ($partText) break;
+							// fall throught
+						case 'plain':
+							if ($mimePart->getBytes() > 0) $partText = $mimePart;
 							break;
 
-						case 'MIXED':
-						case 'SIGNED':
-							$bodyPart = array_merge($bodyPart, $this->getMultipartMixed($_uid, $part->subParts, $_htmlMode, $_preserveSeen));
-							break;
-
-						case 'RELATED':
-							$bodyPart = array_merge($bodyPart, $this->getMultipartRelated($_uid, $part->subParts, $_htmlMode, $_preserveSeen));
+						case 'html':
+							if ($mimePart->getBytes() > 0)  $partHTML = $mimePart;
 							break;
 					}
 					break;
 
-				case 'TEXT':
-					switch($part->subType) {
-						case 'PLAIN':
-						case 'HTML':
-						case 'CALENDAR': // inline ics/ical files
-							if($part->disposition != 'ATTACHMENT') {
+				case 'multipart':
+					switch($mimePart->getSubType())
+					{
+						case 'related':
+						case 'mixed':
+							if (count($mimePart->getParts()) > 1)
+							{
+								// in a multipart alternative we treat the multipart/related as html part
+								if (self::$debug) error_log(__METHOD__." process MULTIPART/RELATED with array as subparts");
+								$partHTML = $mimePart;
+							}
+							break;
+
+						case 'alternative':
+							if (count($mimePart->getParts()) > 1)
+							{
+								//cascading multipartAlternative structure, assuming only the first one is to be used
+//								return $this->getMultipartAlternative($_uid, $mimePart, $_htmlMode, $_preserveSeen);
+							}
+					}
+			}
+		}
+
+		switch($_htmlMode)
+		{
+			case 'html_only':
+			case 'always_display':
+				if ($partHTML)
+				{
+					switch($partHTML->getSubType())
+					{
+						case 'related':
+							return $this->getMultipartRelated($_uid, $partHTML, $_htmlMode, $_preserveSeen);
+
+						case 'mixed':
+							return $this->getMultipartMixed($_uid, $partHTML, $_htmlMode, $_preserveSeen);
+
+						default:
+							return $this->getTextPart($_uid, $partHTML, $_htmlMode, $_preserveSeen);
+					}
+				}
+				elseif ($partText && $_htmlMode=='always_display')
+				{
+					return $this->getTextPart($_uid, $partText, $_htmlMode, $_preserveSeen);
+				}
+				break;
+
+			case 'only_if_no_text':
+				if ($partText)
+				{
+					return $this->getTextPart($_uid, $partText, $_htmlMode, $_preserveSeen);
+				}
+				if ($partHTML)
+				{
+					if ($partHTML->getPrimaryType())
+					{
+						return $this->getMultipartRelated($_uid, $partHTML, $_htmlMode, $_preserveSeen);
+					}
+					return $this->getTextPart($_uid, $partHTML, 'always_display', $_preserveSeen);
+				}
+				break;
+
+			default:
+				if ($partText)
+				{
+					return $this->getTextPart($_uid, $partText, $_htmlMode, $_preserveSeen);
+				}
+				$bodyPart = array(
+					'body'		=> lang("no plain text part found"),
+					'mimeType'	=> 'text/plain',
+					'charSet'	=> self::$displayCharset,
+				);
+				break;
+		}
+		return $bodyPart;
+	}
+
+	/**
+	 * Get part of the message, if its stucture is indicating its of multipart mixed style
+	 *
+	 * @param int $_uid the messageuid,
+	 * @param Horde_Mime_Part $_structure='', if given use structure for parsing
+	 * @param string $_htmlMode, how to display a message, html, plain text, ...
+	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
+	 * @return array containing the desired part
+	 */
+	function getMultipartMixed($_uid, Horde_Mime_Part $_structure, $_htmlMode, $_preserveSeen = false)
+	{
+		if (self::$debug) echo __METHOD__."$_uid, $_htmlMode<br>";
+		$bodyPart = array();
+		if (self::$debug) _debug_array($_structure);
+
+		foreach($_structure->contentTypeMap() as $mime_id => $mime_type)
+		{
+			//error_log(__METHOD__."($_uid, ".$_structure->getMimeId().") $mime_id: $mime_type");
+			if (self::$debug) echo __METHOD__."($_uid, partID=".$_structure->getMimeId().") $mime_id: $mime_type<br>";
+
+			if (!$mime_id) continue;	// ignore multipart/mixed itself
+
+			$part = $_structure->getPart($mime_id);
+
+			switch($part->getPrimaryType())
+			{
+				case 'multipart':
+					switch($part->getSubType())
+					{
+						case 'alternative':
+							$bodyPart[] = $this->getMultipartAlternative($_uid, $part, $_htmlMode, $_preserveSeen);
+							break;
+
+						case 'mixed':
+						case 'signed':
+							$bodyPart = array_merge($bodyPart, $this->getMultipartMixed($_uid, $part, $_htmlMode, $_preserveSeen));
+							break;
+
+						case 'related':
+							$bodyPart = array_merge($bodyPart, $this->getMultipartRelated($_uid, $part, $_htmlMode, $_preserveSeen));
+							break;
+					}
+					break;
+
+				case 'text':
+					switch($part->getSubType())
+					{
+						case 'plain':
+						case 'html':
+						case 'calendar': // inline ics/ical files
+							if($part->getDisposition() != 'attachment')
+							{
 								$bodyPart[] = $this->getTextPart($_uid, $part, $_htmlMode, $_preserveSeen);
 							}
 							//error_log(__METHOD__.__LINE__.' ->'.$part->type."/".$part->subType.' -> BodyPart:'.array2string($bodyPart[count($bodyPart)-1]));
@@ -3383,8 +3440,9 @@ $_restoreSession=false;
 					}
 					break;
 
-				case 'MESSAGE':
-					if($part->subType == 'delivery-status') {
+				case 'message':
+					if($part->getSubType() == 'delivery-status')
+					{
 						$bodyPart[] = $this->getTextPart($_uid, $part, $_htmlMode, $_preserveSeen);
 					}
 					break;
@@ -3392,10 +3450,6 @@ $_restoreSession=false;
 				default:
 					// do nothing
 					// the part is a attachment
-					#$bodyPart[] = $this->getMessageBody($_uid, $_htmlMode, $part->partID, $part);
-					#if (!($part->type == 'TEXT' && ($part->subType == 'PLAIN' || $part->subType == 'HTML'))) {
-					#	$bodyPart[] = $this->getMessageAttachments($_uid, $part->partID, $part);
-					#}
 			}
 		}
 
@@ -3407,66 +3461,107 @@ $_restoreSession=false;
 	 * get part of the message, if its stucture is indicating its of multipart related style
 	 * a wrapper for multipartmixed
 	 * @param string/int $_uid the messageuid,
-	 * @param array $_structure='', if given use structure for parsing
+	 * @param Horde_Mime_Part $_structure, if given use structure for parsing
 	 * @param string $_htmlMode, how to display a message, html, plain text, ...
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
 	 * @return array containing the desired part
 	 */
-	function getMultipartRelated($_uid, $_structure, $_htmlMode, $_preserveSeen = false)
+	function getMultipartRelated($_uid, Horde_Mime_Part $_structure, $_htmlMode, $_preserveSeen = false)
 	{
 		return $this->getMultipartMixed($_uid, $_structure, $_htmlMode, $_preserveSeen);
 	}
 
 	/**
-	 * getTextPart
-	 * get Body from message
-	 * @param string/int $_uid the messageuid,
-	 * @param array $_structure='', if given use structure for parsing
-	 * @param string $_htmlMode, how to display a message, html, plain text, ...
+	 * Fetch a body part
+	 *
+	 * @param int $_uid
+	 * @param string $_partID=null
+	 * @param string $_folder=null
+	 * @param boolean $_preserveSeen=false
+	 * @param boolean $_stream=false true return a stream, false return string
+	 * @param string &$_encoding=null on return: transfer encoding of returned part
+	 * @return string|resource
+	 */
+	function getBodyPart($_uid, $_partID=null, $_folder=null, $_preserveSeen=false, $_stream=false, &$_encoding=null)
+	{
+		if (self::$debug) error_log( __METHOD__."($_uid, $_partID, $_folder, $_preserveSeen)");
+
+		if (empty($_folder))
+		{
+			$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		}
+
+		// querying contents of body part
+		$uidsToFetch = new Horde_Imap_Client_Ids();
+		$uidsToFetch->add((array)$_uid);
+
+		$fquery = new Horde_Imap_Client_Fetch_Query();
+		$fquery->bodyPart($_partID, array(
+			'peek' => $_preserveSeen,
+			'decode' => true,	// try decode on server, does NOT neccessary work
+		));
+
+		$part = $this->icServer->fetch($_folder, $fquery, array(
+			'ids' => $uidsToFetch,
+		))->first();
+
+		if (!$part) return null;
+
+		$_encoding = $part->getBodyPartDecode($_partID);
+
+		return $part->getBodyPart($_partID, $_stream);
+	}
+
+	/**
+	 * Get Body from message
+	 *
+	 * @param int $_uid the messageuid
+	 * @param Horde_Mime_Part $_structure=null, if given use structure for parsing
+	 * @param string $_htmlMode how to display a message: 'html_only', 'always_display', 'only_if_no_text' or ''
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
+	 * @param boolean $_stream=false true return a stream, false return string
 	 * @return array containing the desired text part, mimeType and charset
 	 */
-	function getTextPart($_uid, $_structure, $_htmlMode = '', $_preserveSeen = false)
+	function getTextPart($_uid, Horde_Mime_Part $_structure, $_htmlMode='', $_preserveSeen=false, $_stream=false)
 	{
 		//error_log(__METHOD__.__LINE__.'->'.$_uid.':'.array2string($_structure).' '.function_backtrace());
 		$bodyPart = array();
 		if (self::$debug) _debug_array(array($_structure,function_backtrace()));
-		$partID = $_structure->partID;
-		$mimePartBody = $this->icServer->getBodyPart($_uid, $partID, true, $_preserveSeen);
-		if (PEAR::isError($mimePartBody))
+
+		$partID = $_structure->getMimeId();
+
+		if($_structure->getSubType() == 'html' && !in_array($_htmlMode, array('html_only', 'always_display', 'only_if_no_text')))
 		{
-			error_log(__METHOD__.__LINE__.' failed:'.$mimePartBody->message);
-			return false;
-		}
-		//_debug_array($mimePartBody);
-		//error_log(__METHOD__.__LINE__.' UID:'.$_uid.' PartID:'.$partID.' HTMLMode:'.$_htmlMode.' ->'.array2string($_structure).' body:'.array2string($mimePartBody));
-		if (empty($mimePartBody)) return array(
-				'body'		=> '',
-				'mimeType'  => ($_structure->type == 'TEXT' && $_structure->subType == 'HTML') ? 'text/html' : 'text/plain',
-				'charSet'   => self::$displayCharset,
-			);
-		//_debug_array(preg_replace('/PropertyFile___$/','',$this->decodeMimePart($mimePartBody, $_structure->encoding)));
-		if($_structure->subType == 'HTML' && $_htmlMode!= 'html_only' && $_htmlMode != 'always_display'  && $_htmlMode != 'only_if_no_text') {
 			$bodyPart = array(
 				'error'		=> 1,
 				'body'		=> lang("displaying html messages is disabled"),
 				'mimeType'	=> 'text/html',
 				'charSet'	=> self::$displayCharset,
 			);
-		} elseif ($_structure->subType == 'PLAIN' && $_htmlMode == 'html_only') {
+		}
+		elseif ($_structure->getSubType() == 'plain' && $_htmlMode == 'html_only')
+		{
 			$bodyPart = array(
 				'error'		=> 1,
 				'body'      => lang("displaying plain messages is disabled"),
 				'mimeType'  => 'text/plain', // make sure we do not return mimeType text/html
 				'charSet'   => self::$displayCharset,
 			);
-		} else {
+		}
+		else
+		{
 			// some Servers append PropertyFile___ ; strip that here for display
+			// RB: not sure what this is: preg_replace('/PropertyFile___$/','',$this->decodeMimePart($mimePartBody, $_structure->encoding, $this->getMimePartCharset($_structure))),
+			$this->fetchPartContents($_uid, $_structure, $_stream, $_preserveSeen);
+
 			$bodyPart = array(
-				'body'		=> preg_replace('/PropertyFile___$/','',$this->decodeMimePart($mimePartBody, $_structure->encoding, $this->getMimePartCharset($_structure))),
-				'mimeType'	=> ($_structure->type == 'TEXT' && $_structure->subType == 'HTML') ? 'text/html' : 'text/plain',
-				'charSet'	=> $this->getMimePartCharset($_structure),
+				'body'		=> $_structure->getContents(array(
+					'stream' => $_stream,
+				)),
+				'mimeType'  => $_structure->getType() == 'text/html' ? 'text/html' : 'text/plain',
+				'charSet'	=> $_structure->getCharset(),
 			);
+/* RB: not sure this is still necessary
 			if ($_structure->type == 'TEXT' && $_structure->subType == 'PLAIN' &&
 				is_array($_structure->parameters) && isset($_structure->parameters['FORMAT']) &&
 				trim(strtolower($_structure->parameters['FORMAT']))=='flowed'
@@ -3475,122 +3570,106 @@ $_restoreSession=false;
 				if (self::$debug) error_log(__METHOD__.__LINE__." detected TEXT/PLAIN Format:flowed -> removing leading blank ('\r\n ') per line");
 				$bodyPart['body'] = str_replace("\r\n ","\r\n", $bodyPart['body']);
 			}
-			if ($_structure->subType == 'CALENDAR')
+*/
+			if ($_structure->getSubType() == 'calendar')
 			{
-				// we get an inline CALENDAR ical/ics, we display it using the calendar notification style
-				$calobj = new calendar_ical;
-				$calboupdate = new calendar_boupdate;
-				// timezone stuff
-				$tz_diff = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'] - $this->common_prefs['tz_offset'];
-				// form an event out of ical
-				$event = $calobj->icaltoegw($bodyPart['body']);
-				$event= $event[0];
-				// preset the olddate
-				$olddate = $calboupdate->format_date($event['start']+$tz_diff);
-				// search egw, if we can find it
-				$eventid = $calobj->find_event(array('uid'=>$event['uid']));
-				if ((int)$eventid[0]>0)
-				{
-					// we found an event, we use the first one
-					$oldevent = $calobj->read($eventid);
-					// we set the olddate, to comply with the possible merge params for the notification message
-					if($oldevent != False && $oldevent[$eventid[0]]['start']!=$event[$eventid[0]]['start']) {
-						$olddate = $calboupdate->format_date($oldevent[$eventid[0]]['start']+$tz_diff);
-					}
-					// we merge the changes and the original event
-					$event = array_merge($oldevent[$eventid[0]],$event);
-					// for some strange reason, the title of the old event is not replaced with the new title
-					// if you klick on the ics and import it into egw, so we dont show the title here.
-					// so if it is a mere reply, we dont use the new title (more detailed info/work needed here)
-					if ($_structure->parameters['METHOD']=='REPLY') $event['title'] = $oldevent[$eventid[0]]['title'];
-				}
-				// we prepare the message
-				$details = $calboupdate->_get_event_details($event,$action,$event_arr);
-				$details['olddate']=$olddate;
-				//_debug_array($_structure);
-				list($subject,$info) = $calboupdate->get_update_message($event,($_structure->parameters['METHOD']=='REPLY'?false:true));
-				$info = $GLOBALS['egw']->preferences->parse_notify($info,$details);
-				// we set the bodyPart, we only show the event, we dont actually do anything, as we expect the user to
-				// click on the attached ics to update his own eventstore
-				$bodyPart['body'] = $subject;
-				$bodyPart['body'] .= "\n".$info;
-				$bodyPart['body'] .= "\n\n".lang('Event Details follow').":\n";
-				foreach($event_arr as $key => $val)
-				{
-					if(strlen($details[$key])) {
-						switch($key){
-					 		case 'access':
-							case 'priority':
-							case 'link':
-								break;
-							default:
-								$bodyPart['body'] .= sprintf("%-20s %s\n",$val['field'].':',$details[$key]);
-								break;
-					 	}
-					}
-				}
+				$bodyPart['body'] = $this->getEvent($_structure->getContents(), $_structure->getContentTypeParameter('METHOD'));
 			}
 		}
-		//_debug_array($bodyPart);
 		return $bodyPart;
 	}
 
 	/**
-	 * getMessageBody
-	 * get Body from message
-	 * @param string/int $_uid the messageuid,
+	 * Return inline ical as html
+	 *
+	 * @param string $ical iCal data
+	 * @param string $method iTip method eg. 'REPLY'
+	 * @return string text to display instead
+	 */
+	function getEvent($ical, $method=null)
+	{
+		// we get an inline CALENDAR ical/ics, we display it using the calendar notification style
+		$calobj = new calendar_ical;
+		$calboupdate = new calendar_boupdate;
+		// timezone stuff
+		$tz_diff = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'] - $this->common_prefs['tz_offset'];
+		// form an event out of ical
+		$events = $calobj->icaltoegw($ical);
+		$event =& $events[0];
+		// preset the olddate
+		$olddate = $calboupdate->format_date($event['start']+$tz_diff);
+		// search egw, if we can find it
+		$eventid = $calobj->find_event(array('uid'=>$event['uid']));
+		if ((int)$eventid[0]>0)
+		{
+			// we found an event, we use the first one
+			$oldevent = $calobj->read($eventid);
+			// we set the olddate, to comply with the possible merge params for the notification message
+			if($oldevent != False && $oldevent[$eventid[0]]['start']!=$event[$eventid[0]]['start']) {
+				$olddate = $calboupdate->format_date($oldevent[$eventid[0]]['start']+$tz_diff);
+			}
+			// we merge the changes and the original event
+			$event = array_merge($oldevent[$eventid[0]],$event);
+			// for some strange reason, the title of the old event is not replaced with the new title
+			// if you klick on the ics and import it into egw, so we dont show the title here.
+			// so if it is a mere reply, we dont use the new title (more detailed info/work needed here)
+			if ($method == 'REPLY') $event['title'] = $oldevent[$eventid[0]]['title'];
+		}
+		// we prepare the message
+		$details = $calboupdate->_get_event_details($event,$action,$event_arr);
+		$details['olddate']=$olddate;
+		//_debug_array($_structure);
+		list($subject,$info) = $calboupdate->get_update_message($event, $method !='REPLY');
+		$info = $GLOBALS['egw']->preferences->parse_notify($info,$details);
+
+		// we set the bodyPart, we only show the event, we dont actually do anything, as we expect the user to
+		// click on the attached ics to update his own eventstore
+		$text = $subject;
+		$text .= "\n".$info;
+		$text .= "\n\n".lang('Event Details follow').":\n";
+		foreach($event_arr as $key => $val)
+		{
+			if(strlen($details[$key])) {
+				switch($key){
+					case 'access':
+					case 'priority':
+					case 'link':
+						break;
+					default:
+						$text .= sprintf("%-20s %s\n",$val['field'].':',$details[$key]);
+						break;
+				}
+			}
+		}
+		return $text;
+	}
+
+	/**
+	 * Get Body of message
+	 *
+	 * @param int $_uid the messageuid,
 	 * @param string $_htmlOptions, how to display a message, html, plain text, ...
-	 * @param string/int $_partID='' , the partID, may be omitted
-	 * @param array $_structure='', if given use structure for parsing
+	 * @param string $_partID=null , the partID, may be omitted
+	 * @param Horde_Mime_Part $_structure=null if given use structure for parsing
 	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
 	 * @return array containing the message body, mimeType and charset
 	 */
-	function getMessageBody($_uid, $_htmlOptions='', $_partID='', $_structure = '', $_preserveSeen = false, $_folder = '')
+	function getMessageBody($_uid, $_htmlOptions='', $_partID=null, Horde_Mime_Part $_structure=null, $_preserveSeen = false, $_folder = '')
 	{
 		if (self::$debug) echo __METHOD__."$_uid, $_htmlOptions, $_partID<br>";
 		if($_htmlOptions != '') {
 			$this->htmlOptions = $_htmlOptions;
 		}
-		if ($_folder=='')
+		if (empty($_folder))
 		{
 			$_folder = $this->sessionData['mailbox'];
 		}
-		$uidsToFetch = new Horde_Imap_Client_Ids();
-		$uidsToFetch->add((array)$_uid);
-
-		$fquery = new Horde_Imap_Client_Fetch_Query();
-		$fquery->fullText(array('peek'=>$_preserveSeen));
-		if ($_partID != '')
+		if (!isset($_structure))
 		{
-			$fquery->structure();
-			$fquery->bodyPart($_partID,array('peek'=>$_preserveSeen));
+			$_structure = $this->getStructure($_uid, $_partID, $_folder, $_preserveSeen);
 		}
-		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
-			'ids' => $uidsToFetch,
-		));
-		if (is_object($headersNew)) {
-			foreach($headersNew as $id=>$_headerObject) {
-				//$body = $_headerObject->getFullMsg();
-				if ($_partID != '')
-				{
-					$mailStructureObject = $_headerObject->getStructure();
-					//_debug_array($mailStructureObject->contentTypeMap());
-					foreach ($mailStructureObject->contentTypeMap() as $mime_id => $mime_type)
-					{
-						if ($mime_id==$_partID)
-						{
-							//$body = $_headerObject->getBodyPart($mime_id);
-						}
-					}
-				}
-			}
-		}
-return 	array(
-	'body'		=> lang('The mimeparser can not parse this message.'),
-	'mimeType'	=> 'text/plain',
-	'charSet'	=> 'utf-8',
-);
 
+/*
 		if ($_preserveSeen==false)
 		{
 			$summary = egw_cache::getCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$callback=null,$callback_params=array(),$expiration=60*60*1);
@@ -3605,53 +3684,86 @@ return 	array(
 				egw_cache::setCache(egw_cache::INSTANCE,'email','summaryCache'.trim($GLOBALS['egw_info']['user']['account_id']),$summary,$expiration=60*60*1);
 			}
 		}
-		switch($structure->type) {
-			case 'VIDEO':
-			case 'AUDIO': // some servers send audiofiles and imagesfiles directly, without any stuff surround it
-			case 'IMAGE': // they are displayed as Attachment NOT INLINE
+ */
+		switch($_structure->getPrimaryType())
+		{
+			case 'application':
+				return array(
+					array(
+						'body'		=> '',
+						'mimeType'	=> 'text/plain',
+						'charSet'	=> 'iso-8859-1',
+					)
+				);
+
+			case 'multipart':
+				switch($_structure->getSubType())
+				{
+					case 'alternative':
+						$bodyParts = array($this->getMultipartAlternative($_uid, $_structure, $this->htmlOptions, $_preserveSeen));
+						break;
+
+					case 'nil': // multipart with no Alternative
+					case 'mixed':
+					case 'report':
+					case 'signed':
+						$bodyParts = $this->getMultipartMixed($_uid, $_structure, $this->htmlOptions, $_preserveSeen);
+						break;
+
+					case 'related':
+						$bodyParts = $this->getMultipartRelated($_uid, $_structure, $this->htmlOptions, $_preserveSeen);
+						break;
+				}
+				return self::normalizeBodyParts($bodyParts);
+
+			case 'video':
+			case 'audio': // some servers send audiofiles and imagesfiles directly, without any stuff surround it
+			case 'image': // they are displayed as Attachment NOT INLINE
 				return array(
 					array(
 						'body'      => '',
-						'mimeType'  => $structure->subType,
+						'mimeType'  => $_structure->subType,
 					),
 				);
-				break;
-			case 'TEXT':
+
+			case 'text':
 				$bodyPart = array();
-				if ( $structure->disposition != 'ATTACHMENT') {
-					switch($structure->subType) {
-						case 'CALENDAR':
+				if ($_structure->getDisposition() != 'attachment')
+				{
+					switch($_structure->getSubType())
+					{
+						case 'calendar':
 							// this is handeled in getTextPart
-						case 'HTML':
-						case 'PLAIN':
+						case 'html':
+						case 'plain':
 						default:
-							$bodyPart = array($this->getTextPart($_uid, $structure, $this->htmlOptions, $_preserveSeen));
+							$bodyPart = array($this->getTextPart($_uid, $_structure, $this->htmlOptions, $_preserveSeen));
 					}
 				} else {
 					// what if the structure->disposition is attachment ,...
 				}
 				return self::normalizeBodyParts($bodyPart);
-				break;
-			case 'ATTACHMENT':
-			case 'MESSAGE':
-				switch($structure->subType) {
-					case 'RFC822':
-						$newStructure = array_shift($structure->subParts);
+
+			case 'attachment':
+			case 'message':
+				switch($_structure->getSubType())
+				{
+					case 'rfc822':
+						$newStructure = $_structure->getParts();
 						if (self::$debug) {echo __METHOD__." Message -> RFC -> NewStructure:"; _debug_array($newStructure);}
-						return self::normalizeBodyParts($this->getMessageBody($_uid, $_htmlOptions, $newStructure->partID, $newStructure, $_preserveSeen, $_folder));
-						break;
+						return self::normalizeBodyParts($this->getMessageBody($_uid, $_htmlOptions, $newStructure->getMimeId(), $newStructure, $_preserveSeen, $_folder));
 				}
 				break;
+
 			default:
-				if (self::$debug) _debug_array($structure);
+				if (self::$debug) _debug_array($_structure);
 				return array(
 					array(
-						'body'		=> lang('The mimeparser can not parse this message.'),
+						'body'		=> lang('The mimeparser can not parse this message.').$_structure->getType(),
 						'mimeType'	=> 'text/plain',
-						'charSet'	=> 'iso-8859-1',
+						'charSet'	=> self::$displayCharset,
 					)
 				);
-				break;
 		}
 	}
 
@@ -3662,6 +3774,9 @@ return 	array(
 	 */
 	static function normalizeBodyParts($_bodyParts)
 	{
+		// RB: dont think this is still necessary
+		return $_bodyParts;
+
 		if (is_array($_bodyParts))
 		{
 			foreach($_bodyParts as $singleBodyPart)
@@ -4165,57 +4280,82 @@ return 	array(
 	}
 
 	/**
-	 * getMessageAttachments
-	 * parse the structure for attachments, it returns not the attachments itself, but an array of information about the attachment
-	 * @param string/int $_uid the messageuid,
-	 * @param string/int $_partID='' , the partID, may be omitted
-	 * @param array $_structure='', if given use structure for parsing
+	 * Get structure of a mail or part of a mail
+	 *
+	 * @param int $_uid
+	 * @param string $_partID=null
+	 * @param string $_folder=null
+	 * @param boolean $_preserveSeen=false flag to preserve the seenflag by using body.peek
+	 * @param Horde_Imap_Client_Fetch_Query $fquery=null default query just structure
+	 * @return Horde_Mime_Part
+	 */
+	function getStructure($_uid, $_partID=null, $_folder=null, $_preserveSeen=false)
+	{
+		if (self::$debug) error_log( __METHOD__.":$_uid, $_partID");
+
+		if (empty($_folder))
+		{
+			$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
+		}
+		$uidsToFetch = new Horde_Imap_Client_Ids();
+		$uidsToFetch->add((array)$_uid);
+
+		$_fquery = new Horde_Imap_Client_Fetch_Query();
+// not sure why Klaus add these, seem not necessary
+//		$fquery->envelope();
+//		$fquery->size();
+		$_fquery->structure();
+		if ($_partID) $_fquery->bodyPart($_partID, array('peek' => $_preserveSeen));
+
+		$mail = $this->icServer->fetch($_folder, $_fquery, array(
+			'ids' => $uidsToFetch,
+		))->first();
+
+		return $mail->getStructure();
+	}
+
+	/**
+	 * Parse the structure for attachments
+	 *
+	 * Returns not the attachments itself, but an array of information about the attachment
+	 *
+	 * @param int $_uid the messageuid,
+	 * @param string $_partID=null , the partID, may be omitted
+	 * @param Horde_Mime_Part $_structure=null if given use structure for parsing
 	 * @param boolean $fetchEmbeddedImages=true,
 	 * @param boolean $fetchTextCalendar=false,
 	 * @param boolean $resolveTNEF=true
 	 * @return array  an array of information about the attachment: array of array(name, size, mimeType, partID, encoding)
 	 */
-	function getMessageAttachments($_uid, $_partID='', $_structure='', $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true)
+	function getMessageAttachments($_uid, $_partID=null, Horde_Mime_Part $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true)
 	{
 		if (self::$debug) error_log( __METHOD__.":$_uid, $_partID");
-		$_folder = ($this->sessionData['mailbox']? $this->sessionData['mailbox'] : $this->icServer->getCurrentMailbox());
-		$uidsToFetch = new Horde_Imap_Client_Ids();
-		$uidsToFetch->add((array)$_uid);
 
-		$fquery = new Horde_Imap_Client_Fetch_Query();
-		$fquery->envelope();
-		$fquery->size();
-		$fquery->structure();
-		$headersNew = $this->icServer->fetch($_folder, $fquery, array(
-			'ids' => $uidsToFetch,
-		));
-		$count = 0;
-		if (is_object($headersNew)) {
-			if (self::$debug) $starttime = microtime(true);
-			foreach($headersNew->ids() as $id) {
-				$_headerObject = $headersNew->get($id);
-				$uid = $headerObject['UID']= ($_headerObject->getUid()?$_headerObject->getUid():$id);
-				//error_log(__METHOD__.__LINE__.array2string($_headerObject));
-				$headerObject['SIZE'] = $_headerObject->getSize();
-				$mailStructureObject = $_headerObject->getStructure();
-				$headerObject['ATTACHMENTS']=null;
-				foreach ($mailStructureObject->contentTypeMap() as $mime_id => $mime_type)
-				{
-					$part = $mailStructureObject->getPart($mime_id);
-					if ($part->getDisposition()=='attachment')
-					{
-						$headerObject['ATTACHMENTS'][$mime_id]=$part->getAllDispositionParameters();
-						$headerObject['ATTACHMENTS'][$mime_id]['mimeType']=$mime_type;
-						$headerObject['ATTACHMENTS'][$mime_id]['uid']=$id;
-						$headerObject['ATTACHMENTS'][$mime_id]['partID']=$mime_id;
-						if (!isset($headerObject['ATTACHMENTS'][$mime_id]['name']))$headerObject['ATTACHMENTS'][$mime_id]['name']=$part->getName();
-					}
-				}
-				if (isset($headerObject['ATTACHMENTS']) && count($headerObject['ATTACHMENTS'])) foreach ($headerObject['ATTACHMENTS'] as $pID =>$a) $attachments[]=$a;
+		if (!isset($_structure))
+		{
+			$_structure = $this->getStructure($_uid, $_partID);
+		}
+
+		foreach($_structure->contentTypeMap() as $mime_id => $mime_type)
+		{
+			$part = $_structure->getPart($mime_id);
+
+			if ($part->getDisposition() == 'attachment' ||
+				$fetchEmbeddedImages && $part->getDisposition() == 'inline' &&
+					$part->getPrimaryType() == 'image')
+			{
+				$attachment = $part->getAllDispositionParameters();
+				$attachment['mimeType'] = $mime_type;
+				$attachment['uid'] = $_uid;
+				$attachment['partID'] = $mime_id;
+				if (!isset($attachment['name'])) $attachment['name'] = $part->getName();
+				$attachment['size'] = $part->getBytes();
+				if (($cid = $part->getContentId())) $attachment['cid'] = $cid;
+
+				$attachments[] = $attachment;
 			}
 		}
 		return $attachments;
-
 	}
 
 	/**
@@ -4428,110 +4568,83 @@ error_log(__METHOD__.__LINE__.array2string($headerObject['ATTACHMENTS'][$mime_id
 	 * @param string|int $_uid
 	 * @param string $_cid
 	 * @param string $_part
-	 * @return array with values for keys 'type', 'filename' and 'attachment'
+	 * @param boolean $_stream=null null do NOT fetch content, use fetchPartContents later
+	 *	true:
+	 * @return Horde_Mime_Part
 	 */
-	function getAttachmentByCID($_uid, $_cid, $_part)
+	function getAttachmentByCID($_uid, $_cid, $_part, $_stream=null)
 	{
 		// some static variables to avoid fetching the same mail multiple times
-		static $uid,$part,$attachments,$structure;
+		static $uid=null, $part=null, $structure=null;
 		//error_log(__METHOD__.__LINE__.":$_uid, $_cid, $_part");
 
 		if(empty($_cid)) return false;
 
 		if ($_uid != $uid || $_part != $part)
 		{
-			$attachments = $this->getMessageAttachments($uid=$_uid, $part=$_part);
-			$structure = null;
+			$structure = $this->getStructure($uid=$_uid, $part=$_part);
 		}
-		$partID = false;
-		foreach($attachments as $attachment)
+		/** @var Horde_Mime_Part */
+		$attachment = null;
+		foreach($structure->contentTypeMap() as $mime_id => $mime_type)
 		{
-			//error_log(print_r($attachment,true));
-			if(isset($attachment['cid']) && (strpos($attachment['cid'], $_cid) !== false || strpos($_cid, $attachment['cid']) !== false))
+			$part = $structure->getPart($mime_id);
+
+			if ($part->getPrimaryType() == 'image' &&
+				(($cid = $part->getContentId()) &&
+				// RB: seem a bit fague to search for inclusion in both ways
+				(strpos($cid, $_cid) !== false || strpos($_cid, $cid) !== false)) ||
+				(($name = $part->getName()) &&
+				(strpos($name, $_cid) !== false || strpos($_cid, $name) !== false)))
 			{
-				$partID = $attachment['partID'];
-				break;
-			}
-		}
-		if ($partID == false)
-		{
-			foreach($attachments as $attachment)
-			{
-				// if the former did not match try matching the cid to the name of the attachment
-				if(isset($attachment['cid']) && isset($attachment['name']) && (strpos($attachment['name'], $_cid) !== false || strpos($_cid, $attachment['name']) !== false))
+				// if we have a direct match, dont search any further
+				if ($cid == $_cid)
 				{
-					$partID = $attachment['partID'];
+					$attachment = $part;
 					break;
 				}
+				// everything else we only consider after we checked all
+				if (!isset($attachment)) $attachment = $part;
 			}
 		}
-		if ($partID == false)
+		// do we want content fetched, can be done later, if not needed
+		if (isset($_stream))
 		{
-			foreach($attachments as $attachment)
-			{
-				// if the former did not match try matching the cid to the name of the attachment, AND there is no mathing attachment with cid
-				if(isset($attachment['name']) && (strpos($attachment['name'], $_cid) !== false || strpos($_cid, $attachment['name']) !== false))
-				{
-					$partID = $attachment['partID'];
-					break;
-				}
-			}
+			$this->fetchPartContents($_uid, $attachment, $_stream);
 		}
-		//error_log( "Cid:$_cid PARTID:$partID<bR>"); #exit;
-
-		if($partID == false) {
-			return false;
-		}
-
-		// parse message structure
-		if (is_null($structure))
+		// set name as filename, if not set
+		if (!$attachment->getDispositionParameter('filename'))
 		{
-			$structure = $this->_getStructure($_uid, true);
+			$attachment->setDispositionParameter('filename', $attachment->getName());
 		}
-		$part_structure = $this->_getSubStructure($structure, $partID);
-		$filename = $this->getFileNameFromStructure($part_structure, $_uid, $_uid, $part_structure->partID);
-		$attachment = $this->icServer->getBodyPart($_uid, $partID, true);
-		if (PEAR::isError($attachment))
+		// guess type, if not set
+		if ($attachment->getType() == 'application/octet-stream')
 		{
-			error_log(__METHOD__.__LINE__.' failed:'.$attachment->message);
-			return array('type' => 'text/plain',
-						 'filename' => 'error.txt',
-						 'attachment' =>__METHOD__.' failed:'.$attachment->message
-					);
+			$attachment->setType(mime_magic::filename2mime($attachment->getDispositionParameter('filename')));
 		}
+		//error_log(__METHOD__."($_uid, '$_cid', '$_part') returning ".array2string($attachment));
+		return $attachment;
+	}
 
-		if (PEAR::isError($attachment))
-		{
-			error_log(__METHOD__.__LINE__.' failed:'.$attachment->message);
-			return array('type' => 'text/plain',
-						 'filename' => 'error.txt',
-						 'attachment' =>__METHOD__.' failed:'.$attachment->message
-					);
-		}
+	/**
+	 * Fetch and add contents to a part
+	 *
+	 * To get contents you use $part->getContents();
+	 *
+	 * @param int $_uid
+	 * @param Horde_Mime_Part $part
+	 * @param boolean $_stream=false true return a stream, false a string
+	 * @param boolean $_preserveSeen flag to preserve the seenflag by using body.peek
+	 * @return Horde_Mime_Part
+	 */
+	public function fetchPartContents($_uid, Horde_Mime_Part $part, $_stream=false, $_preserveSeen=false)
+	{
+		// we need to set content on structure to decode transfer encoding
+		$part->setContents(
+			$this->getBodyPart($_uid, $part->getMimeId(), null, $_preserveSeen, $_stream, $encoding=null),
+			array('encoding' => $encoding));
 
-		switch ($part_structure->encoding) {
-			case 'BASE64':
-				// use imap_base64 to decode
-				$attachment = imap_base64($attachment);
-				break;
-			case 'QUOTED-PRINTABLE':
-				// use imap_qprint to decode
-				#$attachment = imap_qprint($attachment);
-				$attachment = quoted_printable_decode($attachment);
-				break;
-			default:
-				// it is either not encoded or we don't know about it
-		}
-
-		$attachmentData = array(
-			'type'		=> $part_structure->type .'/'. $part_structure->subType,
-			'filename'	=> $filename,
-			'attachment'	=> $attachment
-		);
-		// try guessing the mimetype, if we get the application/octet-stream
-		if (strtolower($attachmentData['type']) == 'application/octet-stream') $attachmentData['type'] = mime_magic::filename2mime($attachmentData['filename']);
-
-		return $attachmentData;
+		return $part;
 	}
 
 	/**

@@ -1560,11 +1560,11 @@ unset($query['actions']);
 		}
 		if (!empty($uid)) $flags = $this->mail_bo->getFlags($uid);
 		$envelope	= $this->mail_bo->getMessageEnvelope($uid, $partID,true);
-//_debug_array($headers);
+
 		$rawheaders	= $this->mail_bo->getMessageRawHeader($uid, $partID);
 		$fetchEmbeddedImages = false;
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
-		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, '',$fetchEmbeddedImages);
+		$attachments	= $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages);
 		//_debug_array($headers);
 		$attachmentHTMLBlock = self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
 		$webserverURL	= $GLOBALS['egw_info']['server']['webserver_url'];
@@ -1620,17 +1620,17 @@ unset($query['actions']);
 			foreach($envelope[$field] as $field_data)
 			{
 				//error_log(__METHOD__.__LINE__.array2string($field_data));
-				$content[$field][] = $field_data['EMAIL'];
+				$content[$field][] = $field_data;//['EMAIL'];
 				$sel_options[$field][] = array(
 					// taglist requires these
-					'id' => $field_data['EMAIL'],
-					'label' => ($field_data['PERSONAL_NAME'] && $field_data['PERSONAL_NAME']!='NIL') ? $field_data['PERSONAL_NAME']:$field_data['EMAIL'],
+					'id' => $field_data,//['EMAIL'],
+//					'label' => ($field_data['PERSONAL_NAME'] && $field_data['PERSONAL_NAME']!='NIL') ? $field_data['PERSONAL_NAME']:$field_data['EMAIL'],
 					// Optional
 					'title' => str_replace('"',"'",$field_data['RFC822_EMAIL']),
-				)
+				);
 				// Add all other data, will be preserved & passed to js onclick
 				// Also available in widget.options.select_options
-				+ $field_data;
+				//+ $field_data;
 			}
 		}
 		$actionsenabled = self::get_actions();
@@ -1846,7 +1846,10 @@ unset($query['actions']);
 	 *
 	 *
 	 */
-	static function emailAddressToHTML($_emailAddress, $_organisation='', $allwaysShowMailAddress=false, $showAddToAdrdessbookLink=true, $decode=true) {
+	static function emailAddressToHTML($_emailAddress, $_organisation='', $allwaysShowMailAddress=false, $showAddToAdrdessbookLink=true, $decode=true)
+	{
+		// maybe envelop structure was different before, Horde returns either string with mail-address or array of mail-addresses
+		return is_array($_emailAddress) ? implode(', ', $_emailAddress) : $_emailAddress;
 		//_debug_array($_emailAddress);
 		// create some nice formated HTML for senderaddress
 
@@ -2031,36 +2034,37 @@ unset($query['actions']);
 		$cid	= base64_decode($_GET['cid']);
 		$partID = urldecode($_GET['partID']);
 		if (!empty($_GET['mailbox'])) $mailbox  = base64_decode($_GET['mailbox']);
+
 		//error_log(__METHOD__.__LINE__.":$uid, $cid, $partID");
 		$this->mail_bo->reopen($mailbox);
 
-		$attachment 	= $this->mail_bo->getAttachmentByCID($uid, $cid, $partID);
+		$attachment = $this->mail_bo->getAttachmentByCID($uid, $cid, $partID, true);	// true get contents as stream
 
 		$this->mail_bo->closeConnection();
 
 		$GLOBALS['egw']->session->commit_session();
 
-		if(is_array($attachment)) {
-			//error_log("Content-Type: ".$attachment['type']."; name=\"". $attachment['filename'] ."\"");
-			header ("Content-Type: ". strtolower($attachment['type']) ."; name=\"". $attachment['filename'] ."\"");
-			header ('Content-Disposition: inline; filename="'. $attachment['filename'] .'"');
+		if ($attachment)
+		{
+			header("Content-Type: ". $attachment->getType());// ."; name=\"". $attachment['filename'] ."\"");
+			header('Content-Disposition: inline; filename="'. $attachment->getDispositionParameter('filename') .'"');
 			header("Expires: 0");
 			// the next headers are for IE and SSL
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 			header("Pragma: public");
 
-			echo trim($attachment['attachment']);
-			exit;
+			echo $attachment->getContents();
 		}
-
-		$GLOBALS['egw']->common->egw_exit();
-
-		exit;
+		else
+		{
+			// send a 404 Not found
+			header("HTTP/1.1 404 Not found");
+		}
+		common::egw_exit();
 	}
 
 	function getAttachment()
 	{
-
 		if(isset($_GET['id'])) $rowID	= $_GET['id'];
 		if(isset($_GET['part'])) $partID = $_GET['part'];
 
@@ -2303,12 +2307,13 @@ $this->uid = $uid;
 $this->partID = $partID;
 		$bufferHtmlOptions = $this->mail_bo->htmlOptions;
 		if (empty($htmlOptions)) $htmlOptions = $this->mail_bo->htmlOptions;
-		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, '', false, $mailbox);
+		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, null, false, $mailbox);
+
 		//error_log(__METHOD__.__LINE__.array2string($bodyParts));
 		$meetingRequest = false;
 		$fetchEmbeddedImages = false;
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
-		$attachments    = $this->mail_bo->getMessageAttachments($uid, $partID, '',$fetchEmbeddedImages,true);
+		$attachments    = $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages, true);
 		foreach ((array)$attachments as $key => $attach)
 		{
 			if (strtolower($attach['mimeType']) == 'text/calendar' &&
@@ -2329,7 +2334,7 @@ $this->partID = $partID;
 				);
 			}
 		}
-
+//_debug_array($bodyParts); die(__METHOD__.__LINE__);
 		// Compose the content of the frame
 		$frameHtml =
 			$this->get_email_header($this->mail_bo->getStyles($bodyParts),$fullHeader).
@@ -2633,9 +2638,10 @@ blockquote[type=cite] {
 				$attachment = $this->mail_bo->getAttachmentByCID($this->uid, $matches[2], $this->partID);
 
 				// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
-				if (bytes($attachment['attachment']) < 8192)	// msie=8 allows max 32k data uris
+				if ($attachment->getBytes() < 8192)	// msie=8 allows max 32k data uris
 				{
-					$cache[$imageURL] = 'data:'.$attachment['type'].';base64,'.base64_encode($attachment['attachment']);
+					$this->mail_bo->fetchPartContents($this->uid, $attachment);
+					$cache[$imageURL] = 'data:'.$attachment->getType().';base64,'.base64_encode($attachment->getContents());
 				}
 				else
 				{
@@ -2674,9 +2680,10 @@ blockquote[type=cite] {
 				$attachment = $this->mail_bo->getAttachmentByCID($this->uid, $matches[1], $this->partID);
 
 				// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
-				if (bytes($attachment['attachment']) < 8192)	// msie=8 allows max 32k data uris
+				if (bytes($attachment->getBytes()) < 8192)	// msie=8 allows max 32k data uris
 				{
-					$cache[$imageURL] = 'data:'.$attachment['type'].';base64,'.base64_encode($attachment['attachment']);
+					$this->mail_bo->fetchPartContents($this->uid, $attachment);
+					$cache[$imageURL] = 'data:'.$attachment->getType().';base64,'.base64_encode($attachment->getContents());
 				}
 				else
 				{
@@ -2715,9 +2722,10 @@ blockquote[type=cite] {
 				$attachment = $this->mail_bo->getAttachmentByCID($this->uid, $matches[1], $this->partID);
 
 				// only use data uri for "smaller" images, as otherwise the first display of the mail takes to long
-				if (bytes($attachment['attachment']) < 8192)	// msie=8 allows max 32k data uris
+				if ($attachment->getBytes() < 8192)	// msie=8 allows max 32k data uris
 				{
-					$cache[$imageURL] = 'data:'.$attachment['type'].';base64,'.base64_encode($attachment['attachment']);
+					$this->mail_bo->fetchPartContents($this->uid, $attachment);
+					$cache[$imageURL] = 'data:'.$attachment->getType().';base64,'.base64_encode($attachment->getContents());
 				}
 				else
 				{
