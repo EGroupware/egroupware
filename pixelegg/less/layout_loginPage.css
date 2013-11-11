@@ -1,0 +1,147 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * Definitions for login page
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+/* ##################################################################################
+ *       login page
+ *
+ * ##################################################################################
+ *
+ *
+ */
+#login-bg {
+  background-image: url("images-login/jp-mountain-blue-sun.jpg") !important;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  height: 120%;
+  position: fixed;
+  width: 120%;
+  z-index: -1;
+}
+#login-bg img {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  min-height: 50%;
+  min-width: 50%;
+  right: 0;
+  top: 0;
+}
+#loginMainDiv {
+  padding: 0px;
+  min-height: 720px;
+  height: 100%;
+  width: auto;
+  border-bottom: 0px solid #7E7E7E;
+}
+#loginMainDiv #divAppIconBar {
+  margin-left: auto;
+  margin-right: auto;
+  background: transparent;
+}
+#loginMainDiv #divAppIconBar #divLogo {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  top: 1px;
+}
+#loginMainDiv div#centerBox {
+  z-index: 100;
+  padding-left: 40%;
+}
+#loginMainDiv div#centerBox #loginScreenMessage {
+  position: relative;
+  top: 400px;
+}
+#loginMainDiv div#centerBox #loginCdMessage {
+  margin-bottom: 1em;
+  margin-left: 40%;
+}
+#loginMainDiv div#centerBox #loginCdMessage span {
+  padding: 0.5em;
+  font-size: 1.2em;
+  color: #ffc200;
+  text-shadow: -1px -1px 0px #101010, 1px 1px 0px #505050;
+  width: 100%;
+}
+#loginMainDiv div#centerBox form table.divLoginbox {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+}
+#loginMainDiv div#centerBox form table.divLoginbox td {
+  padding: 0.5em;
+}
+#loginMainDiv div#centerBox form table.divLoginbox select {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  width: auto;
+  margin: 0.5em 0em 0.5em 0.5em;
+  padding: 3px;
+  outline: none;
+  display: inline-block;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+#loginMainDiv div#centerBox form table.divLoginbox select:hover {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+#loginMainDiv div#centerBox form table.divLoginbox input {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-color: #bfbfbf;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  width: auto;
+  margin: 0.5em 0em 0.5em 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+#loginMainDiv div#centerBox form table.divLoginbox input:hover {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+#loginMainDiv div#centerBox form table.divLoginbox input:focus {
+  outline: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #bfbfbf;
+  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+}
+#loginMainDiv div#centerBox form table.divLoginbox input[type="submit"] {
+  background-color: #ffc200 !important;
+  color: #000000;
+}
+#loginMainDiv div#centerBox form table.divLoginbox input[type="submit"]:focus {
+  outline: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #bfbfbf;
+  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+}

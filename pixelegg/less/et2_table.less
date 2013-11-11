@@ -1,0 +1,251 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * et2 table
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+
+@import (reference) "../../phpgwapi/templates/default/def_buttons.less";
+
+/** #####################################################################################
+ * et2
+ * Tabellen
+ * ######################################################################################
+ */
+
+ /* TABLE STYLE */
+
+// Header der APP Tabellen
+
+table.et2_grid {
+	border-top: 3px solid;
+	 .border-color-10-gray;
+	border-collapse: collapse;
+//	.background-color-0-gray;
+	width: 100% !important;
+//	display: block;
+}
+
+
+
+
+// Table Head in Listen
+
+.egwGridView_grid tr.th > td, /*legacy*/
+.nextmatch_header {
+	.background-color-15-gray;
+	font-weight: normal;
+	padding: 2px;
+	border-width: 0;
+	border-style: solid;
+	.border-color-15-gray;
+	border-left: 0px solid transparent;
+	border-top: 0px solid transparent;
+	border-right: 0px solid transparent;
+	border-bottom: 0px solid transparent;
+//	background-image: url(../../default/images/egw_action/header_overlay.png);
+	background-image: none;
+	background-position: center;
+	background-repeat: repeat-x;
+	vertical-align: top;
+}
+
+
+
+.egwResizeOverlay{}
+
+
+// Tabellenkopf
+// Spalten mit Border
+
+table.egwGridView_outer{
+	.background-color-5-gray;
+	max-width: 100%;
+
+	thead {
+			.background-color-5-gray;
+
+		tr {
+//			.background-color-5-gray;
+
+			th {
+					.background-color-15-gray;
+					font-weight: normal;
+					padding: 2px;
+					border-width: 1px;
+					border-style: solid;
+					.border-color-25-gray;
+					border-left: 0px solid transparent;
+					border-top: 0px solid transparent;
+					border-right: 0px solid transparent;
+					border-bottom: 0px solid transparent;
+
+					background-image: none;
+					background-position: center;
+					background-repeat: repeat-x;
+					vertical-align: top;
+
+
+					&:hover {
+						.background-color-25-gray;
+						.color-0-gray;
+//						border-right: 5px solid white;
+						background-image: url(images/hint-arrow-right.png);
+						background-position: right bottom;
+						background-repeat: no-repeat;
+						background-size: 15px 15px;
+
+					}
+
+					&:active {
+							.background-color-15-gray;
+							.box_shadow_standard_light_inset;
+//							border-left: 1px solid gray;
+//							border-top: 1px solid gray;
+//							border-right: 1px solid silver;
+//							border-bottom: 1px solid silver;
+							}
+
+
+
+
+			}
+
+			th.optcol {
+								padding: 0;
+								text-align: center;
+								background-image: none;
+//								width: 32px;
+
+								&:hover{
+									background-color: #d9d9d9;
+								}
+
+								.selectcols {
+											position: fixed;
+//											.Complete_Button_normal;
+											.Complete_Button_Icon_normal;
+											right: 15px;
+											border: 1px solid;
+//											background-color: yellow;
+											background-image: url(images/slidedown.png);
+												background-position: center center;
+												background-repeat: no-repeat;
+											background-size: 16px 16px;
+											display: inline-block;
+											width: 20px;
+											height: 20px;
+											margin: 0;
+											padding: 0;
+											vertical-align: middle;
+
+											&:hover{
+												.Complete_Button_Icon_hover;
+												background-image: url(images/slidedown.png);
+												background-position: center center;
+												background-repeat: no-repeat;
+												background-size:  17px 17px;
+												}
+
+											}
+							}
+		}
+	}
+}
+
+// Tabelle der APP Ausgabe
+
+table.egwGridView_grid{
+	border-collapse:collapse;
+	font-size: 1.3em;
+	.background-color-0-gray;
+	width: 100%;
+
+
+	img{ width: 16px;}
+
+	tbody {
+
+			border-bottom: 1px solid @lightgray;
+			padding: 2px 3px 2px 4px;
+			margin: 0;
+			vertical-align: top;
+
+		// Listendarstellung
+	// Reihen ohne Border left und right
+//		tr {border-bottom: 1px solid !important; }
+
+		tr.selected{
+			.background_linear_gradient; .background-color-25-gray;
+		}
+		tr.focused{
+			.background_linear_gradient;
+			.background-color-25-gray;
+			background: @active_row !important;
+		}
+	}
+
+	tr {
+
+		border-bottom: 1px solid;
+		.border-color-10-gray;
+
+			&:hover {.background-color-10-gray;}
+			&:active {.background-color-15-gray;}
+
+
+		td {
+			border-left: 0px;
+			border-right: 0px;
+
+			padding: 0.3em 0 1em 0.3em;
+
+			&:hover {background-color: @egw_color_2_e;} /*legacy*/
+
+			&:active {
+					background-color: @egw_color_2_a;
+					.box_shadow_standard_light_inset;
+					.color-0-gray;
+					}
+
+
+			}
+	}
+
+
+
+
+} // table
+
+
+
+
+
+
+.nextmatch_header .selectcols {
+	background: none;
+	height: auto;
+}
+
+
+//Reihen
+
+.nextmatch_header tr {
+	background: none;
+}
+.nextmatch_header {
+	padding: 0px;
+}
+
+
+
+//Tabelle - Scrollarea
+
+div.egwGridView_scrollarea {overflow: auto;}

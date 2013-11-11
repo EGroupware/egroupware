@@ -1,0 +1,49 @@
+
+/**
+ * Less-file for egroupware
+ * Definitionen Layout
+ * Raster
+ *
+ * Version 08.2013
+ * Author Stefan Reinhardt
+ * 
+ */
+ 
+
+
+/* #################################################
+* FOOTER
+* ##################################################
+*/
+#egw_fw_footer {
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	text-align: center;
+	padding: 3px;
+//	background-image:url(images/gradient22.png);
+//	background-position: bottom;
+//	background-repeat: repeat-x;
+	.background-color-25-gray;
+	clear: both;
+	opacity: 1;
+	
+	z-index: 100;
+	
+	.color-10-gray;
+	
+	a {.color-10-gray;}
+	
+	a:last-child:after {content: "Und wir waren auch dabei....pixelegg";}
+}
+
+	
+#egw_fw_footer:hover {
+	opacity: 0.1;
+    transition: opacity .5s ease-out;
+    -moz-transition: opacity .5s ease-out;
+    -webkit-transition: opacity .5s ease-out;
+    -o-transition: opacity .5s ease-out;	
+	}
+
+

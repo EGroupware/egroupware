@@ -1,0 +1,208 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * Definitions for login page
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+
+@import (reference) "../../phpgwapi/templates/default/def_buttons.less";
+@import (reference) "../../phpgwapi/templates/default/def_content_elements.less";
+@import (reference) "../../phpgwapi/templates/default/def_design_pattern_color_font_shadow.less";
+@import (reference) "../../phpgwapi/templates/default/def_messages.less";
+
+
+/* ##################################################################################
+ *       login page
+ *
+ * ##################################################################################
+ *
+ *
+ */
+
+
+// body { }
+
+
+#login-bg {
+
+	background-image: url("images-login/jp-mountain-blue-sun.jpg") !important;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+//  	 background: none repeat scroll 0 0 #000000;
+    height: 120%;
+//    left: -50%;
+    position: fixed;
+    width: 120%;
+    z-index: -1;
+
+    img {
+
+
+		//	background-color: black !important;
+
+			 bottom: 0;
+		    left: 0;
+		    margin: auto;
+		    min-height: 50%;
+		    min-width: 50%;
+		    right: 0;
+		    top: 0;
+
+
+		    }
+
+}
+
+ #loginMainDiv {
+	padding: 0px;
+
+
+
+
+
+//	background-position: center 64px;
+
+//	.background_verlauf_diagonal_gray;
+//	.bw_gradient; // grau Verlauf
+//	.gradient; // grau Verlauf
+
+
+
+
+
+	min-height: 720px;
+	height: 100%;
+	width: auto;
+
+//	.background-color-10-gray;
+    border-bottom: 0px solid #7E7E7E;
+
+
+
+
+	// Logo Leiste
+	#divAppIconBar{
+					margin-left:auto;
+					margin-right:auto;
+					background: transparent;
+//					.background-color-egw-100;
+
+					#divLogo {
+								margin-left:auto;
+								margin-right:auto;
+								position: relative;
+//								left: 18px;
+   								top: 1px;
+							}
+				}
+
+
+
+
+
+// Anmeldefenster
+	div#centerBox{
+//	.background_linear_gradient; // orange
+	z-index: 100;
+//	padding: 3em;
+	padding-left: 40%;
+//	.background-color-10-gray;
+//	background: transparent;
+
+
+				// Meldung
+				#loginScreenMessage{
+										position: relative;
+										top: 400px;
+									}
+
+
+				// Message
+				#loginCdMessage{
+//								    padding: 2em;
+//								    position: relative;
+//								    text-align: right;
+//								    width: 520px;
+//								    margin:  auto;
+								    margin-bottom: 1em;
+								    margin-left: 40%;
+//								    .border_radius_button_lefttop;
+
+
+										// Text der Meldung
+										span {
+											padding: 0.5em;
+											font-size: 1.2em;
+//											.background-color-hint;
+											color: @color-hint;
+											text-shadow: -1px -1px 0px #101010, 1px 1px 0px #505050;
+											width: 100%;
+										}
+							}
+
+
+
+				// Formular
+				form{
+
+
+
+					table.divLoginbox {
+
+			//			background-color: red;
+						.box_shadow_standard_light;
+						.border_radius_button_lefttop;
+
+
+						tr.divLoginboxHeader{}
+
+						td { padding: 0.5em;}
+
+						select {
+							.Complete_Button_select;
+						}
+
+						select:hover {
+							.Complete_Button_select_hover;
+						}
+
+						input {
+							.Complete_Button_input;
+						}
+						input:hover{
+							.Complete_Button_input_hover;
+						}
+
+						input:focus{
+							.Complete_Button_input_focus;
+						}
+
+						input[type="submit"] {
+							.background-color-egw-normal; // Orange
+							// Hintergrund in EGW Farbe
+							.color-100-gray;
+
+
+						}
+
+						input[type="submit"]:focus {
+							.Complete_Button_input_focus;
+						}
+
+
+					}
+
+				} // Formular
+
+	} //center box
+
+} //  #loginMainDiv
+
+ // Ende Login / Start #################################################
