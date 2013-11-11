@@ -130,8 +130,10 @@ contacts and account contact-data to sql	admin	en	Contacts and account contact d
 contacts to ldap	admin	en	Contacts to LDAP
 contacts to ldap, account contact-data to sql	admin	en	Contacts to LDAP, account contact data to SQL
 contains	addressbook	en	Contains
+copied	addressbook	en	copied
 copied by %1, from record #%2.	addressbook	en	Copied by %1, from record #%2.
 copy a contact and edit the copy	addressbook	en	Copy a contact and edit the copy
+copy instead of move	addressbook	en	Copy instead of move
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	en	Copy your changes to the clipboard, %1reload the entry%2 and merge them.
 country	common	en	Country
 country (private)	addressbook	en	Country (private)
@@ -313,7 +315,7 @@ mobile phone	addressbook	en	Mobile phone
 modem phone	addressbook	en	Modem phone
 more ...	addressbook	en	More ...
 move to addressbook	addressbook	en	Move to address book
-moved	addressbook	en	Moved
+moved	addressbook	en	moved
 multiple vcard	addressbook	en	Multiple vCard
 name for the distribution list	addressbook	en	Name for the distribution list
 name of current user, all other contact fields are valid too	addressbook	en	Name of current user, all other contact fields are valid too.
