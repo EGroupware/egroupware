@@ -1,51 +1,123 @@
 /**
- * EGroupware - CSS Styles used by preferences app
+ * EGroupware: CSS with less preprocessor
  *
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package preferences
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ *
  * @link http://www.egroupware.org
- * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package preferences
  * @version $Id$
  */
-
-table.prefTable {
-	width: 100%;
+#prefIndex {
+  background: red;
 }
-tr.prefRow {
-	position: relative;
+#divGenTime {
+  clear: left;
 }
-td.prefName {
-	width: 50%;
+.prefAppBox {
+  float: left;
+  margin: 5px;
+  min-height: 12em;
+  padding-left: 5px;
+  width: 225px;
+  border-top: solid 1px #e4e7ea;
+  border-left: solid 1px #e4e7ea;
+  border-right: solid 1px #e4e7ea;
+  border-bottom: solid 1px #e4e7ea;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
 }
-tr.prefRow > td {
-	vertical-align: bottom;	/* otherwise help will cover bigger prefValue */
+.prefAppBox h3 {
+  height: 32px;
+  padding-left: 50px;
+  padding-top: 10px;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: 32px;
+  opacity: 0.5;
+  margin: 0;
+  color: #000000;
 }
-.prefHelp {
-	position: absolute;
-	display: none;
-	width: 98%;
-	background-color: lightyellow;
-	border: 1px solid black;
-	border-radius: 10px;
-	padding: 5px;
-	margin-top: 5px;
+.prefAppBox h3:hover {
+  background-color: #d9d9d9;
 }
-tr.prefRow:hover .prefHelp {
-	display: block;
-	z-index: 10;	/* FF: displays it under next prefName without */
+.prefAppBox ul {
+  margin: 0;
+  padding-left: 20px;
+  padding-top: 0;
+  list-style-type: none;
 }
-.prefDefault, .prefValue {
-	float: left;
+.prefAppBox ul li {
+  padding: 0.5em 0 0.5em 0;
+  margin-left: -1em;
 }
-.prefValue {
-	margin-right: 5px;
+.prefAppBox ul li:hover {
+  background-color: #d9d9d9;
 }
-.prefValue textarea, textarea.prefValue {
-	width: 99%;
-	height: 5em;
+.prefAppBox ul li a {
+  text-decoration: none;
+  margin-left: 0.5em;
 }
-.prefType, .prefApp {
-	font-size: 150%;
-	display: inline-block;
-	padding-bottom: 5px;
+#preferences-settings {
+  font-size: 0.9em;
+}
+#preferences-settings .nextmatch_header #timesheet-index_timesheet-index-add button[id*="timesheet-index_add"] {
+  background-color: #0b5fa4;
+  color: #FFF;
+  text-shadow: none;
+  height: 35px;
+  background-image: none !important;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+}
+#preferences-settings .nextmatch_header #timesheet-index_timesheet-index-add button[id*="timesheet-index_add"]:before {
+  content: "+";
+  font-size: 2em;
+  color: #ffc200;
+}
+#preferences-settings .nextmatch_header #timesheet-index_timesheet-index-add button[id*="timesheet-index_add"]:before {
+  content: "+";
+  font-size: 2em;
+  color: #ffc200;
+}
+#preferences-settings .nextmatch_header #timesheet-index_timesheet-index-add button[id*="timesheet-index_add"]:hover {
+  background-color: #66a1d2 !important;
+  color: #ffc200;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+}
+#preferences-settings .nextmatch_header #timesheet-index_timesheet-index-add button[id*="timesheet-index_add"]:hover {
+  background-color: #66a1d2 !important;
+  color: #ffc200;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+}
+#preferences-settings .nextmatch_header div.filters {
+  padding: 0 0 0 1em;
+  background-color: #f0f0f0;
+  margin-bottom: 3px;
+  margin: 0em;
+  border-width: 0 0 1px 0;
+  border-color: #d9d9d9;
+  background-image: none;
 }

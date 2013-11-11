@@ -1,0 +1,573 @@
+/**
+ * EGroupware: CSS with less preprocessor
+ *
+ * Definitions for buttons
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package phpgwapi
+ * @version $Id$
+ */
+
+@import (reference) "def_design_pattern_color_font_shadow.less";
+//########################################################################################################
+// Buttons
+//
+//########################################################################################################
+
+//Buttons et2
+
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+button, .egwbutton {
+    background-color: #B9D5E3;
+    border: 1px outset #B9D5E3;
+    color: #004E7D;
+}
+
+.et2_button_text,
+input[type="button"] {
+    .background-color-10-gray;
+
+    .color-30-gray;
+
+    margin: 5px;
+    padding: 3px;
+    border-radius: 20px 3px 3px 3px;
+    -webkit-border-radius: 20px 3px 3px 3px;
+	-moz-border-radius: 20px 3px 3px 3px;
+
+    :before {content: "►"; color: red; font-size: 50px; }
+}
+
+//#####################
+//# Complete Button   #
+//#####################
+
+.Complete_Button_normal{
+	.border_normal;
+	.box_shadow_standard_light;
+	.color-100-gray;
+}
+
+.Complete_Button_hover{
+//	.border_hover;
+	.box_shadow_standard_light_hover;
+	background-color: inherit !important;
+}
+
+.Complete_Button_active{
+//	.border_hover;
+	.box_shadow_standard_light_inset;
+}
+
+.Complete_Button_focus{
+//	.border_hover;
+	.box_shadow_standard_light_inset;
+}
+
+// komplette Schaltflächen
+
+.Complete_Button_add {
+	background-color: @egw_color_blue_lighter;
+	color: #FFF;
+	text-shadow: none;
+	height: 35px;
+	background-image: none !important;
+	.border_radius_button_lefttop;
+
+	&:before {content: "+";font-size: 2em;color: @egw_color_1;}
+}
+
+.Complete_Button_add_hover {
+			background-color: @egw_color_blue_lightest !important;
+			color: @egw_color_1;
+//			text-shadow: none;
+//			height: 35px;
+//			background-image: none !important;
+//			.border_radius_button_lefttop;
+			.box_shadow_standard_light_hover;
+			.border_radius_button_lefttop;
+}
+
+//.Complete_Button_add_before {content: "+";font-size: 2em;}
+
+
+.Complete_Button_hinweis{
+	.Button_size_square_32;
+	.border_normal;
+	padding: 0 0.2em;
+	border-left: 3px solid;
+	border-left-color: @lightgray;
+}
+
+
+// select
+
+.Complete_Button_select{
+//	.border_normal;
+//	.border-color-25-gray;
+	.box_shadow_standard_light;
+	width: auto;
+	margin: 0.5em 0em 0.5em 0.5em;
+//	.border_radius_button_normal;
+
+	 padding:3px;
+
+//    border:none;
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+	}
+.Complete_Button_select_hover {
+	.box_shadow_standard_light_hover;
+}
+
+.Complete_Button_select_focus {
+				 outline:0;
+				 border-width:1px;
+	    		 border-style: solid;
+				 .border-color-25-gray;
+				 -webkit-box-shadow: 0 0 2px 1px rgba(0,0,0, 0.10);
+				 -moz-box-shadow: 0 0 2px 1px rgba(0,0,0, 0.10);
+				 box-shadow: 0 0 2px 1px rgba(0,0,0, 0.10);
+			}
+
+
+
+
+// Input
+
+.Complete_Button_input{
+	.border_normal;
+	.border-color-25-gray;
+	.box_shadow_standard_light;
+	width: auto;
+	margin: 0.5em 0em 0.5em 0;
+	.border_radius_button_normal;
+
+//		.gradient(#000, #333, #FFF);
+//	.gradient(#F5F5F5, #EEE, #FFF);
+
+}
+
+.Complete_Button_input_hover{
+	.box_shadow_standard_light_hover;
+}
+
+.Complete_Button_input_focus {
+				 outline:0;
+				 border-width:1px;
+	    		 border-style: solid;
+				 .border-color-25-gray;
+				 -webkit-box-shadow: 0 0 2px 1px rgba(0,0,0, 0.10);
+				 -moz-box-shadow: 0 0 2px 1px rgba(0,0,0, 0.10);
+				 box-shadow: 0 0 2px 1px rgba(0,0,0, 0.10);
+}
+
+
+
+// Suchen button
+
+.Complete_Button_search_action{
+	.border_normal;
+	.border-color-25-gray;
+	.box_shadow_standard_light;
+	width: 3em;
+//	height: 2.5em;
+//	margin: 0.5em 1em 0.5em 1;
+	.border_radius_button_lefttop;
+
+	.background-color-search;
+
+ 	 color: #FFFFFF;
+    text-decoration: none;
+
+    cursor: pointer;
+	padding: 3px;
+	margin-left: 5px;
+}
+
+
+.Complete_Button_search_action_hover{
+	.box_shadow_standard_light_hover;
+	background-color: @yellow !important;
+	.border_radius_button_lefttop;
+
+
+}
+
+.Complete_Button_search_action_active{
+	.box_shadow_standard_light_hover;
+	.background-color-search;
+	.border_radius_button_lefttop;
+
+}
+
+
+.Complete_Button_search_action_reset{
+	.Complete_Button_search_action;
+    .background_verlauf_diagonal_gray;
+}
+
+
+// Buchstaben
+
+.Complete_Button_lettersearch{
+	.border_radius_button_normal;
+	.box_shadow_standard_light;
+	.border_normal;
+//	border: 1px solid #D3DCE3;
+	text-align: center;
+	cursor: pointer;
+}
+
+
+// Text
+
+.Complete_Button_text{
+	.border_radius_button_normal;
+	.background-color-10-gray;
+	.border-color-50-gray;
+	cursor: pointer;
+
+}
+
+.Complete_Button_text_hover {
+	.border_radius_button_normal;
+	.border_hover;
+	text-align: center;
+	cursor: pointer;
+	.background-color-30-gray;
+}
+.Complete_Button_text_active{
+	color: @gray;
+}
+
+
+.Complete_Button_text_icon_before{
+	.Complete_Button_normal;
+	padding-left: 30px !important;
+	background-position: 6px center;
+	background-repeat: no-repeat;
+	background-size: 20px auto;
+	.Button_size_h32_auto;
+}
+
+.Complete_Button_text_icon_before_hover{
+	.Complete_Button_text_icon_before;
+	.box_shadow_standard_light_hover;
+}
+
+.Complete_Button_text_icon_before_active{
+	.Complete_Button_text_icon_before;
+	.box_shadow_standard_light_hover;
+
+}
+
+// Buttons nur Icon
+
+.Complete_Button_Icon_normal {
+	.background-color-10-gray;
+	.box_shadow_standard_light;
+	.border_normal;
+	.border_radius_button_normal;
+}
+
+.Complete_Button_Icon_hover  {
+	.background-color-30-gray;
+	.box_shadow_standard_light_hover;
+	.border_hover;
+	.border_radius_button_normal;
+}
+
+.Complete_Button_Icon_active {
+	.background-color-50-gray;
+	.box_shadow_standard_light_hover;
+	.border_active;
+	.border_radius_button_normal;
+}
+
+// #############################
+// Button Sub Menupunkte
+
+.Complete_Button_Module_Menu_Links{
+		.background-color-10-gray;
+}
+
+.Complete_Button_Module_Menu_Links_Hover{
+		.background-color-30-gray;
+		.color-5-gray;
+}
+
+.Complete_Button_Module_Menu_Links_active{
+		.background-color-10-gray;
+}
+
+
+// Button Sub Sub Menupunkte
+
+.Complete_Button_Module_Menu_Links_Sub
+{
+	margin-left: 3px;
+	padding-top: 0px;
+	padding-bottom: 5px;
+	.border_normal;
+	border-top-width: 0px;
+		.background-color-10-gray;
+
+	margin-top: -7px;
+	padding-left: 14px;
+
+	width: 93%;
+}
+
+.Complete_Button_Module_Menu_Links_Sub_Hover
+{
+	margin-left: 2px;
+	padding-top: 0px;
+	padding-bottom: 5px;
+		.border_normal;
+		.background-color-15-gray;
+
+}
+
+/**##################################################################################################
+ * Button widget - text only, and icon
+ *
+ * ##################################################################################################
+ */
+//.et2_button {
+//	cursor: pointer;
+//	text-align: center;
+//	font-size: 9pt;
+//	text-shadow: 1px 1px #E0E0E0;
+//}
+
+// Button mit Text
+
+.et2_button_text,
+input[type=button] {
+		.Complete_Button_text;
+	 	.box_shadow_standard_light;
+
+	 &:hover {.Complete_Button_text_hover;}
+	 &:active {.Complete_Button_text_active;}
+	 &:focus {.Complete_Button_text_active;}
+}
+
+
+// Button mit Bild
+
+.et2_button_icon {
+	border: none;
+	background: transparent;
+	padding: 2px;
+}
+
+
+
+
+// #####################################################
+/* Button Hinzufügen */
+#add.et2_button, .Complete_Button_add {
+	.Complete_Button_add;
+
+
+//	&:before {.Complete_Button_add_before;}
+	}
+
+
+
+// #####################################################
+// Button bearbeiten
+
+input[type="submit"][id*="edit"],
+input[type="button"][id*="edit"],
+button[id*="edit"],
+input[type="submit"][id*="edit"]:hover,
+input[type="button"][id*="edit"]:hover,
+button[id*="edit"]:hover {
+	background-image:url('../images/bearbeiten.png');
+	.Complete_Button_text_icon_before;
+}
+
+// #####################################################
+// Button Kopieren
+
+input[type="submit"][id*="copy"],
+input[type="button"][id*="copy"],
+button[id*="copy"],
+input[type="submit"][id*="copy"]:hover,
+input[type="button"][id*="copy"]:hover,
+button[id*="copy"]:hover{
+	.Complete_Button_text_icon_before;
+	background-image:url('../images/kopieren.png');
+}
+// #####################################################
+// Button Abbruch
+
+input[type="submit"][id*="cancel"],
+input[type="button"][id*="cancel"],
+button[id*="cancel"],
+input[type="submit"][id*="cancel"]:hover,
+input[type="button"][id*="cancel"]:hover,
+button[id*="cancel"]:hover{
+	.Complete_Button_text_icon_before;
+	background-image:url('../images/abbruch.png');
+}
+
+// #####################################################
+// Button löschen
+
+input[type="submit"][id*="delete"],
+input[type="button"][id*="delete"],
+button[id*="delete"]  {
+	.Complete_Button_text_icon_before;
+	background-image:url('../images/loeschen.png');
+	margin-left: 3em;
+
+}
+input[type="submit"][id*="delete"]:hover,
+input[type="button"][id*="delete"]:hover,
+button[id*="delete"]:hover {
+	.Complete_Button_text_icon_before;
+	background-image:url('../images/loeschen.png');
+	background-color: red !important;
+}
+// #####################################################
+// Button übernehmen
+
+input[type="submit"][id*="apply"],
+input[type="button"][id*="apply"],
+button[id*="apply"],
+input[type="submit"][id*="apply"]:hover,
+input[type="button"][id*="apply"]:hover,
+button[id*="apply"]:hover {
+	.Complete_Button_text_icon_before;
+	background-image:url('../images/uebernehmen.png');
+}
+
+// #####################################################
+// Button speichern
+
+input[type="submit"][id*="save"],
+input[type="button"][id*="save"],
+button[id*="save"],
+input[type="submit"][id*="save"]:hover,
+input[type="button"][id*="save"]:hover,
+button[id*="save"]:hover
+
+ {
+	.Complete_Button_text_icon_before;
+	background-image:url('../images/speichern.png');
+}
+// #####################################################
+// Button Suchen
+
+input[type="submit"][id*="search"],
+input[type="button"][id*="search"],
+button[id*="search"]{
+	.Complete_Button_text_icon_before;
+
+	background-image:url('../images/erweiterte-suche.png');
+
+
+	&:hover {.box_shadow_standard_light_hover; background-image:url('../images/erweiterte-suche.png');}
+
+	&:focus {.box_shadow_standard_light_inset;}
+}
+
+// #####################################################
+// Button ok = speichern
+
+button.button_ok {
+	.Complete_Button_text_icon_before;
+	background-image:url('../images/speichern.png');
+}
+button.button_ok:hover {
+	.Complete_Button_text_icon_before;
+	background-image:url('../images/speichern.png');
+}
+
+// #####################################################
+// Button Befehl auswählen (infolog)
+
+button#infolog-index_legacy_actions{
+
+	.Complete_Button_text_icon_before;
+	background-image:url('../images/bearbeiten.png');
+
+	&:hover {.box_shadow_standard_light_hover; background-image:url('../images/bearbeiten.png');}
+
+	&:focus {.box_shadow_standard_light_inset;}
+
+}
+// #####################################################
+// Button hinzufügen (infolog)
+
+button[id*="note"]{
+	.Complete_Button_text_icon_before;
+
+//	&:before {content: "+"; font-size: 2em;}
+
+//	background-image:url('../images/bearbeiten.png');
+
+	&:hover {
+		.box_shadow_standard_light_hover;
+//		background-image:url('../images/bearbeiten.png');
+	}
+
+	&:focus {.box_shadow_standard_light_inset;}
+
+}
+
+
+// #####################################################
+// Create Button (mail)
+
+button#mail-index_button[mailcreate],
+button[id*="mailcreate"]{
+		.Complete_Button_add;
+		background-image: url("images/write_mail.png") !important;
+	    background-position: right center !important;
+	    background-repeat: no-repeat;
+	    padding-left: 25px;
+	    text-align: left;
+	    width: 99%;
+
+	&:hover {
+		.box_shadow_standard_light_hover;
+		.border_radius_button_lefttop ;
+//		background-image:url('../images/bearbeiten.png');
+					}
+
+	&:focus {.border_radius_button_lefttop ;.box_shadow_standard_light_inset;}
+}
+
+
+// #####################################################
+// Senden Button (mail Dialog)
+
+button#mail-compose_button[send],
+button#mail-compose_button[id*="send"],
+.mail-compose_button {
+				.Complete_Button_text_icon_before;
+				background-image: url(../../mail/templates/default/images/mail_send.png) !important;
+				height: 26px;
+				padding: 0 3px 0 0;
+				.background-color-15-gray;
+				&:hover {.box_shadow_standard_light_hover; }
+
+				&:focus {.box_shadow_standard_light_inset;}
+
+			}
+
+

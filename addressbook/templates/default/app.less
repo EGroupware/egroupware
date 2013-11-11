@@ -1,0 +1,535 @@
+/**
+ * EGroupware: CSS with less preprocessor
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package addressbook
+ * @version $Id$
+ */
+
+@import (reference) "../../../phpgwapi/templates/default/def_buttons.less";
+@import (reference) "../../../phpgwapi/templates/default/def_design_pattern_color_font_shadow.less";
+
+//**********************************
+// iframe
+
+div#addressbook-index{
+			min-height: 700px;
+			height: auto !important;
+
+		// ###########################
+		// linke Box
+		// ##########################
+		div.et2_hbox_left{
+
+				padding: 1em;
+					// Org View
+				select#addressbook-index_org_view{
+												.Complete_Button_select;
+												height: 35px;
+												margin-top: 0;
+
+												&:hover{
+													.Complete_Button_select_hover;
+														}
+												}
+
+
+		}	// linke Box
+
+
+
+		// ###########################
+		// rechte Box
+		// ###########################
+		div.et2_hbox_right {
+							width: 360px;
+							margin-right: 1em;
+
+
+					// Typ
+					select.et2_selectbox{
+					.Complete_Button_select;
+					height: 35px;
+					margin-left: 5px;
+
+									&:hover{.Complete_Button_select_hover;}
+									&:focus{.Complete_Button_select_focus;}
+					}
+
+					// erweiterte Suche
+					button#addressbook-index_search{
+
+
+												.background-color-10-gray;
+												.color-100-gray;
+
+												.Complete_Button_text_icon_before;
+												background-image:url('../images/erweiterte-suche.png') !important;
+
+												&:hover{ background-image:url('../images/erweiterte-suche.png'); .Complete_Button_text_icon_before_hover;}
+												&:focus{ background-image:url('../images/erweiterte-suche.png'); .Complete_Button_text_icon_before_active;}
+
+											}
+
+					// hinzufügen
+					button#addressbook-index_add{
+											.Complete_Button_add;
+
+											&:hover {.Complete_Button_add_hover;}
+
+											}
+
+		} // rechte Box
+
+		// ###########################
+		// Favoriten
+
+		#addressbook-index_favorite_wrapper{
+
+													img{width: 16px;}
+
+													.et2_dropdown {
+
+													.Complete_Button_Icon_normal;
+//													.background-color-25-gray;
+
+																			button#addressbook-index_favorite	{
+																												img{width: 16px; .Complete_Button_Icon_normal;}
+																												}
+
+																			button{}
+
+																			.ui-state-default,
+																			.ui-widget-content .ui-state-default,
+																			.ui-widget-header .ui-state-default {
+
+																												.background-color-25-gray;
+																												color: #000;
+																												background-image: none !important;
+
+																												}
+
+
+
+																	}
+
+		} // Favoriten
+
+
+		// Filter
+		.filters{
+								#addressbook-index_cat_id{width: 7%;}
+								#addressbook-index_filter{width:7%;}
+								#addressbook-index_filter2{width: 10%;}
+
+
+				}// Filter
+
+		table.egwGridView_outer{
+//			border-collapse: inherit;
+			width: 99%;
+		}
+
+
+		// Einstellungen Listenausgabe
+
+
+
+} // iframe
+
+
+
+
+//******************************************************************
+// sidebar
+
+#egw_fw_sidemenu{
+
+			//Tabelle mit Ansichten des Kalenders
+
+			.egw_fw_ui_category_content{
+
+				table {margin-left: -14px;}
+			}
+
+			// Bilder für Favoriten
+
+			img.sideboxstar {
+			//	   background-image: url("../../../phpgwapi/templates/idots/images/orange-ball.png");
+//				background-repeat: no-repeat;
+//			    display: inline-block;
+//			    margin: 0 1px;
+//			    padding: 1px;
+
+			}
+
+			select {margin-top: -5px;}
+
+}
+
+
+
+// Dialog Addressbuch bearbeiten und alle weiteren
+// #####################################################
+
+
+div#addressbook-edit,
+div#addressbook-search{
+
+//	.box_shadow_dialog;
+//	.border_radius_button_normal;
+	margin: 0;
+	padding: 0.5em;
+
+	// Choosen Adresse
+	.chzn-container { width: 60% !important;}
+
+
+	.et2_tabheader {margin-top: 0px;background-color:transparent;}
+	// Tabelle
+	table.editphones{
+		width: auto !important;
+		top: 5%;
+		.box_shadow_standard_light;
+	}
+	table.addressbook_edit_general{
+//		background: red;
+
+				border-top: 0px;
+
+				tr td:first-child {width: 100px;}
+				tr td {width: 200px;}
+
+				table tr td:first-child {width: 60px;}
+				table tr td {width: 200px;}
+
+
+				//Name
+				input#addressbook-edit_n_fn {width: 200px;}
+
+				// Name bearbeiten
+				table.editname {
+								.background-color-10-gray;
+			//					position: relative;
+			//					top: -20px;
+								z-index: 10;
+								font-size: 1.5em;
+
+								tr td:first-child {width: 100px !important;}
+							}
+
+
+				//Titel
+				input#addressbook-edit_title {width: 200px;}
+				//Role
+				input#addressbook-edit_role {width: 200px;}
+
+				//Organisation
+				input#addressbook-edit_org_name  {width: 286px;}
+				//unit
+				input#addressbook-edit_org_unit {width: 286px;}
+				// Street
+				input#addressbook-edit_adr_one_street,
+				input#addressbook-edit_adr_one_street2 {width: 286px;}
+
+				// PLZ + Ort
+				input#addressbook-edit_adr_one_postalcode {width: 50px;}
+				input#addressbook-edit_adr_one_locality {width: 225px;}
+
+					// Choosen Adresse
+				.chzn-container { width: 300px !important;}
+
+				//region
+				input#addressbook-edit_adr_one_region {width: 286px;}
+
+
+				//Owner
+				select.owner {width: 300px;}
+	} // generell
+
+
+	// Telefonnummer:
+		fieldset.phoneGroup {
+								border: none;
+							    margin-bottom: 0;
+							    margin-top: 12px;
+							    height: auto;
+							    .background-color-15-gray;
+							    .border_radius_button_normal;
+							    legend { text-transform: uppercase;}
+
+
+
+
+							}
+
+		fieldset.phoneGroup * img {display: none !important; width: 20px;} // Bilder ausblenden
+
+		.phoneGroup table {
+//						    height: 122px;
+						}
+
+
+
+		// Email
+		fieldset.emailGroup {
+							border: none;
+						    margin-bottom: 0;
+						    margin-top: 10px;
+						    height: auto;
+						    .background-color-15-gray;
+						    .border_radius_button_normal;
+						    legend { text-transform: uppercase;}
+
+						    a.et2_url:after {
+						    	content: "\221E";
+						    	font-size: 1.5em;
+
+						    }
+						    a.et2_url {margin-left: -40px;}
+						    a.et2_url.url {background-size: 15px 15px; background-image: none;}
+
+
+						}
+
+		fieldset.emailGroup * img {display: none !important; width: 20px;} // Bilder ausblenden
+
+
+
+} // edit
+
+#addressbook-edit_addressbook-edit-general{
+	// Länderauswahl
+	#addressbook_edit_adr_one_countrycode_chzn{
+		width: 200px !important;
+//		background-color: red !important;
+		padding-top: 1em;
+	}
+}
+
+// ################### Tab 2 / Kategorien ########################
+//
+// addressbook-edit_addressbook.edit.cats
+// in Adressbuch css ausgelagert
+
+//div#addressbook-edit_addressbook~\.edit~\.cats {background-color: red;}
+
+// ################## Tab 3 / Privat #############################
+
+#addressbook-edit_addressbook-edit-home{
+
+//	content: "hello I´m there";
+
+
+	// Länderauswahl
+
+	#addressbook_edit_adr_two_countrycode_chzn{
+		width: 200px !important;
+//		background-color: red !important;
+		padding-top: 1em;
+	}
+
+	// Timezone
+	#addressbook_edit_tz_chzn{
+		width: 15% !important;
+		padding-top: 1em;
+	}
+
+}
+// Verknüpfungen
+
+#addressbook-edit_addressbook-edit-links,
+#addressbook-search_addressbook-edit-links{
+	.th{ height: 20px;}
+	tbody{
+		display: table-header-group;
+		vertical-align: top;
+	}
+}
+
+// Verteilerliste
+
+#addressbook-edit_addressbook-edit-distribution_list,
+#addressbook-search_addressbook-edit-distribution_list{
+	.th{ height: 20px;}
+	tbody{
+		display: table-header-group;
+		vertical-align: top;
+	}
+}
+
+// Extra
+
+#addressbook-edit_addressbook-edit-custom,
+#addressbook-search_addressbook-edit-custom{
+	.th{ height: 20px;}
+	tbody{
+		display: table-header-group;
+		vertical-align: top;
+	}
+}
+
+// Privat
+
+#addressbook-edit_addressbook-edit-custom_private,
+#addressbook-search_addressbook-edit-custom_private{
+	.th{ height: 20px;}
+	tbody{
+		display: table-header-group;
+		vertical-align: top;
+	}
+}
+
+// History
+
+#addressbook-edit_addressbook-edit-history{
+	.th{ height: 20px;}
+	tbody{
+		display: table-header-group;
+		vertical-align: top;
+	}
+}
+
+
+// ################## Tab 4 Details ###############################
+// mehr...Phonebuch
+
+button.button_more {
+	.Complete_Button_text_icon_before;
+	background-image:url('../images/bearbeiten.png');
+}
+// #####################################################
+// Adresse editieren
+
+div.addressbook.edit.general{
+
+	table {
+		border-top: 0px;
+			tr td img {display: none;}
+			// Adressbuchbild unsichtbar
+			img:nth-child(1) {display:none;}
+			// Bild hochladen
+			img:nth-child(2)  {cursor:pointer;}
+
+
+		}
+
+}
+
+
+
+.cursorHand {
+}
+.countrySelect select {
+    width: 150px;
+}
+.custom_country input {
+    display: none;
+}
+.contactid:before {
+    content: "#";
+}
+.emailCol div {
+    overflow: hidden;
+    width: 100%;
+}
+.redItalic {
+    color: red;
+    font-style: italic;
+}
+.fixedHeight, .telNumbers {
+    height: 30px;
+
+}
+.telNumbers {
+    white-space: nowrap;
+}
+.leftPad5 {
+    padding-left: 5px;
+}
+.bold {
+    font-weight: bold;
+}
+.fileas select, .fileas, .owner select, .owner {
+    font-weight: bold;
+    width: 100%;
+}
+.photo img, .iphoto img {
+    width: 60px;
+}
+.photo img {
+}
+.uploadphoto {
+    background-color: #FFFFFF;
+    border: 2px solid black;
+    display: none;
+    left: 48px;
+    padding: 4px;
+    position: absolute;
+    top: 168px;
+}
+.checkAllArrow {
+    padding-right: 5px;
+}
+.typeIcon {
+    height: 16px;
+    width: 16px;
+}
+.editphones, .editname {
+    background-color: #FFFFFF;
+    border: 2px solid black;
+    display: none;
+    left: 30%;
+    padding: 4px;
+    position: absolute;
+    top: 10%;
+}
+.editname {
+    left: 137px;
+    top: 160px;
+}
+.windowheader {
+    background-image: url("../../../phpgwapi/templates/idots/images/appbox-header-background.png");
+    background-repeat: repeat-x;
+    border-bottom: 1px solid #9C9C9C;
+    border-collapse: collapse;
+    border-spacing: 0;
+    height: 20px;
+}
+
+
+
+
+.emailGroup table {
+    height: 87px;
+}
+.space {
+    width: 80px;
+}
+.noWrap {
+    white-space: nowrap;
+}
+.customfields {
+}
+.customfields td {
+    line-height: 12px;
+    white-space: nowrap;
+}
+.image16 img {
+    height: 16px;
+}
+
+
+
+
+
+
+
+
+
+
+// Ende Addressbuch

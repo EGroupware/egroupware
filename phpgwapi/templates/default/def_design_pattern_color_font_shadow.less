@@ -1,0 +1,577 @@
+/**
+ * EGroupware: CSS with less preprocessor
+ *
+ * Definitions for colors, fonts, borders and box shadow
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package phpgwapi
+ * @version $Id$
+ */
+
+ // Farben
+// CI EGW
+
+// Orange
+@egw_color_1 : rgb(255, 194, 0); // #ffc200
+@egw_color_1_a : #ffc200;
+@egw_color_1_b : #BF9D30;
+@egw_color_1_c : #A67E00;
+@egw_color_1_d : #FFD140;
+@egw_color_1_e : #FFDD73;
+
+// BLUE
+@egw_color_2_a : #0C5DA5;
+@egw_color_2_b : #26537C;
+@egw_color_2_c : #043A6B;
+@egw_color_2_d : #408DD2;
+@egw_color_2_e : #679FD2;
+
+
+// Lila
+@egw_color_3_a : #560EAD;
+@egw_color_3_b : #512882;
+@egw_color_3_c : #360570;
+@egw_color_3_d : #8643D6;
+@egw_color_3_e : #9B6AD6;
+
+
+
+
+@egw_color_blue : #1D1AB2;
+
+@egw_color_blue_lighter : #0B5FA4 ;
+
+@egw_color_blue_lightest :#66A1D2;
+
+//Berechnung der EGW Farben
+
+.background-color-egw-normal  {background-color : @egw_color_1_a !important;}
+.background-color-egw-light   {background-color : @egw_color_1_d;}
+.background-color-egw-lighter {background-color : @egw_color_1_e;}
+.background-color-egw-dark    {background-color : @egw_color_2_a;}
+.background-color-egw-darker  {background-color : @egw_color_2_b;}
+
+
+
+
+@blue : blue;
+
+@gray : #000000;
+
+@red: #FF0000;
+
+@yellow : #FFD40F;
+
+@lightgray : #E4E7EA;
+
+@link-color : #000000;
+
+@link-color-active: @link-color*010101;
+
+@active_button_border_bottom : @egw_color_2_d; // soll EGROUPWARE FARBE GEBEN
+
+@color-hint : @egw_color_1_a;
+
+// aktiverte Zeilen in allen APP mit Listenausgabe
+@active_row : #679FD2;
+
+// Grauwerte
+
+.color-0-gray 	{	color : lighten(@gray, 100%);}
+.color-5-gray 	{	color : lighten(@gray, 95%);}
+.color-10-gray 	{	color : lighten(@gray, 90%);}
+.color-15-gray  {   color : lighten(@gray, 85%);}
+.color-25-gray 	{	color : lighten(@gray, 75%);}
+.color-30-gray 	{	color : lighten(@gray, 70%);}
+.color-40-gray 	{	color : lighten(@gray, 60%);}
+.color-50-gray 	{	color : lighten(@gray, 50%);}
+.color-100-gray {	color : @gray;	}
+
+// Hintergrundfarben
+
+// Warnung
+
+.background-color-warning {background-color : @red;}
+
+.background-color-hint {background-color : darken(@red, 5%);}
+
+
+//Grautöne
+
+.background-color-0-gray {	background-color : lighten(@gray, 100%);}
+.background-color-5-gray {	background-color : lighten(@gray, 98%);	}
+.background-color-10-gray {	background-color : lighten(@gray, 94%);	}
+.background-color-15-gray {	background-color : lighten(@gray, 85%);	}
+.background-color-25-gray { background-color : lighten(@gray, 75%);	}
+.background-color-30-gray { background-color : lighten(@gray, 70%) !important;	}
+.background-color-40-gray { background-color : lighten(@gray, 60%);	}
+.background-color-50-gray {	background-color : lighten(@gray, 50%);	}
+
+//Contexthilfe
+
+.background-color-Context-Help{ background-color: @egw_color_1;}
+
+
+
+.background-color-required-field {
+	background-color : #FFF;
+	color: #000;
+	border: 1px solid red;}
+
+.background-color-dialog-container {background-color : lighten(@gray, 100%);	}
+
+.background-color-search {background-color : lighten(@egw_color_1, 15%);	}
+
+// cal Heute
+
+.background-table-cal-head { background-color : @egw_color_1_a;}
+
+// Bordercolor
+
+.border-color-10-gray {	border-color : lighten(@gray, 94%);	}
+.border-color-15-gray {	border-color : lighten(@gray, 85%);	}
+.border-color-25-gray {	border-color : lighten(@gray, 75%);	}
+.border-color-50-gray {	border-color : lighten(@gray, 50%);	}
+
+//Bilder
+
+// Schriften
+
+.basefontfamily{
+	 //font-family: Verdana, Helvetica, Sans-Serif;
+	 font-family: "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;
+//	 font-size: 16px;
+	 	font-size: 87.5%;
+}
+
+// #############################
+// Schriftformate
+
+p { font-size: 12px;}
+
+li {}
+
+
+h1 {
+    font-size: 200%;
+    line-height: 1.2em;
+    margin: 0.4em 0 0;
+}
+h2 {
+    font-size: 170%;
+    line-height: 1.2em;
+    margin: 0.6em 0 0;
+}
+h3 {
+    font-size: 150%;
+    line-height: 0.8571em;
+    margin: 0.8571em 0 0;
+}
+h3 a {
+    color: #999999;
+}
+h4 {
+    font-size: 110%;
+    line-height: 1.125em;
+    margin: 1.125em 0 0;
+}
+h5 {
+    font-size: 100%;
+    line-height: 1.2857em;
+    margin: 1.2857em 0 0;
+}
+h6 {
+    font-size: 100%;
+    font-weight: bold;
+    line-height: 1.5em;
+    margin: 1.5em 0 0;
+}
+
+
+
+
+
+// Radius
+
+.border_radius_button_lefttop {
+					-webkit-border-radius: 3px;
+					-webkit-border-top-left-radius: 20px;
+					-moz-border-radius: 3px;
+					-moz-border-radius-topleft: 20px;
+					border-radius: 3px;
+					border-top-left-radius: 20px;
+}
+
+.border_radius_button_righttop {
+					-webkit-border-radius: 3px;
+					-webkit-border-top-right-radius: 20px;
+					-moz-border-radius: 3px;
+					-moz-border-radius-topright: 20px;
+					border-radius: 3px;
+					border-top-right-radius: 20px;
+}
+
+.border_radius_button_normal {
+					-webkit-border-radius: 3px;
+					-moz-border-radius: 3px;
+					border-radius: 3px;
+}
+
+
+// Box Shadow
+// auf hellem Hintergrund
+
+.box_shadow_standard_light {
+								-webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+								-moz-box-shadow:  1px 2px 1px rgba(0, 0, 0, 0.5);
+								box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+								}
+
+
+// wird dunkler
+
+.box_shadow_standard_light_hover {
+				-webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+				-moz-box-shadow:  1px 2px 1px rgba(0, 0, 0, 0.9);
+				box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+//				-webkit-box-shadow: none;
+//				-moz-box-shadow:  none;
+//				box-shadow:none;
+
+		}
+
+// für focus und active
+
+.box_shadow_standard_light_inset {
+								-webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+								-moz-box-shadow:  inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+								box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+								}
+
+
+
+// Rahmen um Hauptinhalt
+
+.box_shadow_dialog {
+//				-webkit-box-shadow: -3px 20px 29px @egw_color_1;
+//				-moz-box-shadow:    -3px 20px 29px @egw_color_1;
+//				box-shadow:         -3px 20px 29px @egw_color_1;
+				}
+
+
+// Rahmen für Dialoge
+
+.box_shadow_edit_dialog {
+//				-webkit-box-shadow: 1px 2px 3px rgba(50, 50, 50, 0.75);
+//				-moz-box-shadow:    1px 2px 3px rgba(50, 50, 50, 0.75);
+//				box-shadow:         2px 2px 3px rgba(50, 50, 50, 0.75);
+
+				-moz-box-shadow: inset 0 0 5px 5px #888;
+				-webkit-box-shadow: inset 0 0 5px 5px #888;
+				box-shadow: inset 0 0 5px 5px #888;
+
+				margin: 5px ;
+			    padding: 0%;
+			    width: 100%;
+				}
+
+
+// #############################
+// Verlauf
+
+.background_verlauf_diagonal_gray (@i: #d8d8d8, @j: #a3a3a3) {
+    background: -webkit-gradient(linear, 0 0, 0 bottom, @i, @j),
+    			 -moz-linear-gradient(@i, @j),
+    			 -o-linear-gradient(@i, @j),
+    			 linear-gradient(@i, @j);
+    -pie-background: linear-gradient(@i, @j);
+    behavior: url(/PIE.htc);
+    }
+
+.background_linear_gradient(@i: #ffb76b, @j: #ff7f04) {
+    background: -webkit-gradient(linear, 0 0, 0 bottom, @i, @j),
+    			-moz-linear-gradient(@i, @j),
+    			-o-linear-gradient(@i, @j),
+    			linear-gradient(@i, @j);
+    -pie-background: linear-gradient(@i, @j);
+    behavior: url(/PIE.htc);
+    }
+
+.gradient(@color: #F5F5F5, @start: #EEE, @stop: #FFF) {
+  background: @color,
+  -webkit-gradient(linear,
+                               left bottom,
+                               left top,
+                               color-stop(0, @start),
+                               color-stop(1, @stop)),
+   -ms-linear-gradient(bottom, @start, @stop),
+  -moz-linear-gradient(center bottom, @start 0%, @stop 100%),
+  -o-linear-gradient(@stop, @start);
+  filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@stop,@start));
+}
+
+
+.bw_gradient(@color: #F5F5F5, @start: 0, @stop: 255) {
+  background: @color,
+  -webkit-gradient(linear,
+                               left bottom,
+                               left top,
+                               color-stop(0, rgb(@start,@start,@start)),
+                               color-stop(1, rgb(@stop,@stop,@stop))),
+  -ms-linear-gradient(bottom,
+                                  rgb(@start,@start,@start) 0%,
+                                  rgb(@stop,@stop,@stop) 100%),
+  -moz-linear-gradient(center bottom,
+                                   rgb(@start,@start,@start) 0%,
+                                   rgb(@stop,@stop,@stop) 100%),
+  -o-linear-gradient(rgb(@stop,@stop,@stop),
+                                 rgb(@start,@start,@start));
+  filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",rgb(@stop,@stop,@stop),rgb(@start,@start,@start)));
+}
+
+// #############################
+// Transparenz
+
+.transparent_50  {
+	/* Required for IE 5, 6, 7 */
+	/* ...or something to trigger hasLayout, like zoom: 1; */
+	width: 100%;
+
+	/* Theoretically for IE 8 & 9 (more valid) */
+	/* ...but not required as filter works too */
+	/* should come BEFORE filter */
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+
+	/* This works in IE 8 & 9 too */
+	/* ... but also 5, 6, 7 */
+	filter: alpha(opacity=50);
+
+	/* Older than Firefox 0.9 */
+	-moz-opacity:0.5;
+
+	/* Safari 1.x (pre WebKit!) */
+	-khtml-opacity: 0.5;
+
+	/* Modern!
+	/* Firefox 0.9+, Safari 2?, Chrome any?
+	/* Opera 9+, IE 9+ */
+	opacity: 0.5;
+}
+// #############################
+//  Button Größen
+
+.Button_size_square_32{
+	width: 32px;
+	height: 32px;
+
+}
+
+.Button_size_square_16{
+	width: 16px;
+	height: 16px;
+}
+
+.Button_size_square_8{
+	width: 8px;
+	height: 8px;
+}
+
+.Button_size_h32_auto{
+		width: auto;
+		height: 32px;
+}
+
+// Rahmen für Schaltflächen
+
+.border_normal{
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.border_hover{
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+.border_active{
+    border: 1px solid rgba(0, 0, 0, 0.9);
+}
+
+
+
+// Flächen
+
+// Hintergrund für Filter
+// Filterfläche
+
+.Rectangle_filters {
+
+				padding: 0 0 0 1em;
+
+				.background-color-10-gray;
+				margin-bottom: 3px;
+				margin: 0em;
+//				vertical-align: top;
+				border-width: 0 0 1px 0;
+				.border-color-15-gray;
+   				background-image: none;
+
+}
+
+/*---------------------------------------------------
+    LESS Elements 0.9
+  ---------------------------------------------------
+    A set of useful LESS mixins
+    More info at: http://lesselements.com
+  ---------------------------------------------------*/
+
+.gradient(@color: #F5F5F5, @start: #EEE, @stop: #FFF) {
+  background: @color,
+   -webkit-gradient(linear,
+                               left bottom,
+                               left top,
+                               color-stop(0, @start),
+                               color-stop(1, @stop)),
+   -ms-linear-gradient(bottom,
+                                  @start,
+                                  @stop),
+   -moz-linear-gradient(center bottom,
+                                   @start 0%,
+                                   @stop 100%),
+   -o-linear-gradient(@stop,
+                                 @start);
+  filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@stop,@start));
+}
+.bw-gradient(@color: #F5F5F5, @start: 0, @stop: 255) {
+  background: @color,
+   -webkit-gradient(linear,
+                               left bottom,
+                               left top,
+                               color-stop(0, rgb(@start,@start,@start)),
+                               color-stop(1, rgb(@stop,@stop,@stop))),
+   -ms-linear-gradient(bottom,
+                                  rgb(@start,@start,@start) 0%,
+                                 rgb(@stop,@stop,@stop) 100%),
+   -moz-linear-gradient(center bottom,
+                                   rgb(@start,@start,@start) 0%,
+                                   rgb(@stop,@stop,@stop) 100%),
+   -o-linear-gradient(rgb(@stop,@stop,@stop),
+                                 rgb(@start,@start,@start));
+  filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",rgb(@stop,@stop,@stop),rgb(@start,@start,@start)));
+}
+.bordered(@top-color: #EEE, @right-color: #EEE, @bottom-color: #EEE, @left-color: #EEE) {
+  border-top: solid 1px @top-color;
+  border-left: solid 1px @left-color;
+  border-right: solid 1px @right-color;
+  border-bottom: solid 1px @bottom-color;
+}
+.drop-shadow(@x-axis: 0, @y-axis: 1px, @blur: 2px, @r:0,  @g:0, @b:0, @alpha: 0.1, @inset:inset) {
+  -webkit-box-shadow: @x-axis @y-axis @blur rgba(@r, @g, @b, @alpha) @inset;
+  -moz-box-shadow: @x-axis @y-axis @blur rgba(@r, @g, @b, @alpha) @inset;
+  box-shadow: @x-axis @y-axis @blur rgba(@r, @g, @b, @alpha) @inset;
+}
+.rounded(@radius: 2px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+.border-radius(@topright: 0, @bottomright: 0, @bottomleft: 0, @topleft: 0) {
+  -webkit-border-top-right-radius: @topright;
+  -webkit-border-bottom-right-radius: @bottomright;
+  -webkit-border-bottom-left-radius: @bottomleft;
+  -webkit-border-top-left-radius: @topleft;
+  -moz-border-radius-topright: @topright;
+  -moz-border-radius-bottomright: @bottomright;
+  -moz-border-radius-bottomleft: @bottomleft;
+  -moz-border-radius-topleft: @topleft;
+  border-top-right-radius: @topright;
+  border-bottom-right-radius: @bottomright;
+  border-bottom-left-radius: @bottomleft;
+  border-top-left-radius: @topleft;
+  .background-clip(padding-box);
+}
+.opacity(@opacity: 0.5) {
+  -moz-opacity: @opacity;
+  -khtml-opacity: @opacity;
+  -webkit-opacity: @opacity;
+  opacity: @opacity;
+  @opperc: @opacity * 100;
+  -ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(opacity=@{opperc})";
+  filter: ~"alpha(opacity=@{opperc})";
+}
+.transition-duration(@duration: 0.2s) {
+  -moz-transition-duration: @duration;
+  -webkit-transition-duration: @duration;
+  -o-transition-duration: @duration;
+  transition-duration: @duration;
+}
+.transform(...) {
+  -webkit-transform: @arguments;
+  -moz-transform: @arguments;
+  -o-transform: @arguments;
+  -ms-transform: @arguments;
+  transform: @arguments;
+}
+.rotation(@deg:5deg){
+  .transform(rotate(@deg));
+}
+.scale(@ratio:1.5){
+  .transform(scale(@ratio));
+}
+.transition(@duration:0.2s, @ease:ease-out) {
+  -webkit-transition: all @duration @ease;
+  -moz-transition: all @duration @ease;
+  -o-transition: all @duration @ease;
+  transition: all @duration @ease;
+}
+.inner-shadow(@horizontal:0, @vertical:1px, @blur:2px, @alpha: 0.4) {
+  -webkit-box-shadow: inset @horizontal @vertical @blur rgba(0, 0, 0, @alpha);
+  -moz-box-shadow: inset @horizontal @vertical @blur rgba(0, 0, 0, @alpha);
+  box-shadow: inset @horizontal @vertical @blur rgba(0, 0, 0, @alpha);
+}
+.box-shadow(@arguments) {
+  -webkit-box-shadow: @arguments;
+  -moz-box-shadow: @arguments;
+  box-shadow: @arguments;
+}
+.box-sizing(@sizing: border-box) {
+  -ms-box-sizing: @sizing;
+  -moz-box-sizing: @sizing;
+  -webkit-box-sizing: @sizing;
+  box-sizing: @sizing;
+}
+.user-select(@argument: none) {
+  -webkit-user-select: @argument;
+  -moz-user-select: @argument;
+  -ms-user-select: @argument;
+  user-select: @argument;
+}
+.columns(@colwidth: 250px, @colcount: 0, @colgap: 50px, @columnRuleColor: #EEE, @columnRuleStyle: solid, @columnRuleWidth: 1px) {
+  -moz-column-width: @colwidth;
+  -moz-column-count: @colcount;
+  -moz-column-gap: @colgap;
+  -moz-column-rule-color: @columnRuleColor;
+  -moz-column-rule-style: @columnRuleStyle;
+  -moz-column-rule-width: @columnRuleWidth;
+  -webkit-column-width: @colwidth;
+  -webkit-column-count: @colcount;
+  -webkit-column-gap: @colgap;
+  -webkit-column-rule-color: @columnRuleColor;
+  -webkit-column-rule-style: @columnRuleStyle;
+  -webkit-column-rule-width: @columnRuleWidth;
+  column-width: @colwidth;
+  column-count: @colcount;
+  column-gap: @colgap;
+  column-rule-color: @columnRuleColor;
+  column-rule-style: @columnRuleStyle;
+  column-rule-width: @columnRuleWidth;
+}
+.translate(@x:0, @y:0) {
+  .transform(translate(@x, @y));
+}
+.background-clip(@argument: padding-box) {
+  -moz-background-clip: @argument;
+  -webkit-background-clip: @argument;
+  background-clip: @argument;
+}

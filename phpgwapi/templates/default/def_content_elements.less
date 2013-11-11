@@ -1,0 +1,743 @@
+/**
+ * EGroupware: CSS with less preprocessor
+ *
+ * Definitions for content-elements
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package phpgwapi
+ * @version $Id$
+ */
+
+@import (reference) "def_design_pattern_color_font_shadow.less";
+@import (reference) "def_buttons.less";
+
+/* #######################################################################################
+*
+*
+* Inhaltselemente
+*
+*
+* ########################################################################################
+*/
+
+//Reset
+
+html * {
+    font-size: 100%;
+}
+
+
+//###############################################
+
+body{
+	background-image:none;
+
+	.background-color-10-gray;
+	.color-100-gray; // Schriftfarbe schwarz
+
+	margin: 0px !important;
+	padding: 0px !important;
+	width: 100% !important;
+	height: 100% !important;
+}
+
+body, td, textarea {.basefontfamily;}
+
+#egw_fw_basecontainer {
+						position: fixed;
+						width: 100%;
+						height: 100%;
+						padding: 0px;
+						margin: 0px;
+
+						.basefontfamily;
+//						font-size: 8pt;
+
+						.background-color-5-gray ;
+}
+
+//##########################
+
+input {
+
+	.Complete_Button_input;
+
+	&:hover{.Complete_Button_input_hover;}
+	&:focus{.Complete_Button_input_focus;}
+
+}
+
+select {
+
+	.Complete_Button_select;
+    padding:3px;
+    margin: 0;
+    .rounded (4px);
+//	.drop-shadow( 0, 3px, 0, 191, 191, 191, 0.1, inset);
+    -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    background: #f8f8f8;
+    color:#888;
+    border:none;
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+
+	&:hover{.Complete_Button_select_hover;}
+	&:focus{.Complete_Button_select_focus;}
+
+}
+
+
+//select {
+
+//}
+//
+/////* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    select {padding-right:18px}
+}
+
+select {position:relative}
+select:after {
+    content:'<>';
+    font:11px "Consolas", monospace;
+    color:#aaa;
+    -webkit-transform:rotate(90deg);
+    -moz-transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    transform:rotate(90deg);
+    right:8px; top:2px;
+    padding:0 0 2px;
+    border-bottom:1px solid #ddd;
+    position:absolute;
+    pointer-events:none;
+}
+select:before {
+    content:'';
+    right:6px; top:0px;
+    width:20px; height:20px;
+    background:#f8f8f8;
+    position:absolute;
+    pointer-events:none;
+    display:block;
+}
+
+div.selectbox-wrapper {
+
+						ul {
+					  list-style-type:none;
+					  margin:0px;
+					  padding:0px;
+
+					  li.selected {
+								  background-color: #EAF2FB;
+								}
+					  li.current {
+								  background-color: #CDD8E4;
+								}
+
+					li {
+						  list-style-type:none;
+						  display:block;
+						  margin:0;
+						  padding:2px;
+						  cursor:pointer;
+						}
+					}
+
+
+
+
+}
+
+
+.sbHolder{
+	.Complete_Button_select;
+//	background-color: #2d2d2d;
+//	border: solid 1px #515151;
+//	font-family: Arial, sans-serif;
+	.basefontfamily;
+	font-size: 1.2em;
+	font-weight: normal;
+	height: 30px;
+	position: relative;
+	width: 10em;
+
+	&:hover{.Complete_Button_select_hover;}
+	&:focus{.Complete_Button_select_focus;}
+
+}
+.sbHolder:focus .sbSelector{}
+
+.sbSelector{
+	display: block;
+	height: 30px;
+	left: 0;
+	line-height: 30px;
+	outline: none;
+	overflow: hidden;
+	position: absolute;
+	text-indent: 10px;
+	top: 0;
+	width: 170px;
+}
+.sbSelector:link, .sbSelector:visited, .sbSelector:hover{
+//	color: #EBB52D;
+	.color-50-gray;
+	outline: none;
+	text-decoration: none;
+}
+.sbToggle{
+	background: url(../img/select-icons.png) 0 -116px no-repeat;
+	display: block;
+	height: 30px;
+	outline: none;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 30px;
+}
+.sbToggle:hover{
+	background: url(../images/select-icons.png) 0 -167px no-repeat;
+}
+.sbToggleOpen{
+	background: url(../images/select-icons.png) 0 -16px no-repeat;
+}
+.sbToggleOpen:hover{
+	background: url(../images/select-icons.png) 0 -66px no-repeat;
+}
+.sbHolderDisabled{
+	background-color: #3C3C3C;
+	border: solid 1px #515151;
+}
+.sbHolderDisabled .sbHolder{
+
+}
+.sbHolderDisabled .sbToggle{
+
+}
+
+// Ausklappliste
+
+.sbOptions{
+//	background-color: #212121;
+	.background-color-0-gray;
+	border: solid 1px #515151;
+	list-style: none;
+	left: -1px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 30px;
+	width: 200px;
+	z-index: 1;
+	overflow-y: auto;
+
+	li{
+		padding: 0 7px;
+	}
+
+	a{
+		border-bottom: dotted 1px #515151;
+		display: block;
+		outline: none;
+		padding: 7px 0 7px 3px;
+	}
+
+	a:link,
+	a:visited{
+				.color-100-gray;
+				text-decoration: none;
+			}
+	a:hover,
+	a:focus,
+	a.sbFocus{
+				color: #EBB52D;
+			}
+	li.last a{
+				border-bottom: none;
+			}
+
+
+	.sbDisabled{
+			border-bottom: dotted 1px #515151;
+			color: #999;
+			display: block;
+			padding: 7px 0 7px 3px;
+		}
+	.sbGroup{
+			border-bottom: dotted 1px #515151;
+			color: #EBB52D;
+			display: block;
+			font-weight: bold;
+			padding: 7px 0 7px 3px;
+		}
+	.sbSub{
+			padding-left: 17px;
+		}
+}
+
+// Tabellen
+
+.th {
+	background-color: #e0e0e0;
+}
+
+// Links
+
+a:link, a:visited, select, input, textarea {
+	color : @link-color;
+}
+
+select,input,button
+{
+	.color-100-gray;
+	font-size:99%;
+	padding: 0.2em 0;
+	border-width: 1px;
+	border-style: solid;
+	.border-color-15-gray;
+}
+
+select
+{
+	font-size:100%;
+}
+
+a:link,a:visited
+{
+	cursor:pointer;
+	color: @link-color;
+	text-decoration: none;
+}
+
+a:hover,a:active
+{
+	cursor:pointer;
+	color:@link-color-active;
+	text-decoration: underline;
+}
+
+.divLoginboxHeader,
+.divSideboxHeader,
+a.appTitles,
+.appTitles,
+a.textSidebox,
+.textSidebox,#fmStatusBar
+{
+	font-size:90%;
+}
+
+.prefSection
+{
+	font-weight:bold;
+	font-size:145%;
+	line-height:40px;
+}
+
+#divAppboxHeader
+{
+	line-height:28px;
+	font-size:125%;
+	font-weight:bold;
+	color:#666666;
+}
+
+#divGenTime,#divPoweredBy
+{
+	font-size: 80%;
+	color: #ff0000;
+}
+
+#divPoweredBy
+{
+	color: #000000;
+}
+
+#sideboxdragarea {
+	z-index:100;
+	position:absolute;
+	left:0px;
+	top:105px;
+}
+
+#menu2handle {
+	padding-top: 10px;
+}
+
+#menu1close {
+	position: absolute;
+	right: 7px;
+	top: 7px;
+}
+
+
+//##############################################################################################################
+
+// Lettersearch
+
+.lettersearch {
+	.Complete_Button_lettersearch;
+}
+
+.lettersearch:hover {
+			.background-color-30-gray;
+			.color-0-gray;
+			}
+
+
+.lettersearch_active{
+		.Complete_Button_lettersearch;
+		.background-color-30-gray;
+//		background-color: #808080 !important;
+		font-weight: bold;
+		}
+
+td.lettersearch {
+//	border-color: #E0E0E0;
+	background-image: none;
+}
+
+
+.nextmatch_header table {
+	border: none !important;
+	width: 99% !important;
+}
+
+
+.egw_fw_ui_sidemenu_marker {
+	display: block;
+	height: 20px;
+	padding: 2px 5px 2px 34px;
+	margin: 0;
+	border-width: 0px 1px 0px 1px;
+	border-style: solid;
+	border-color: #c6ced6;
+	cursor: pointer;
+	color: gray;
+	background-color: RGB(250, 250, 250);
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+
+		h1{
+			display: inline;
+			font-size: 10pt;
+			font-weight: bold;
+			}
+}
+
+
+
+.egw_fw_ui_ajaxloader {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background-image:url(images/ajax-loader.gif);
+	background-repeat: no-repeat;
+	background-position: center;
+	float: right;
+}
+
+
+
+
+
+
+/* traditional */
+
+
+
+form
+{
+	margin:0px;
+	padding:0px;
+}
+
+img
+{
+	border:0;
+}
+
+
+input,button,select
+{
+	border: solid 1px #bbbbbb;
+	padding: 0.2em;
+	font-size: 1.1em;
+}
+
+input[type=submit],input[type=button],input[type=reset],button,.egwbutton
+{
+	.background-color-10-gray;
+	background-image: none;
+	border:  outset 1px #b9d5e3;
+	margin:  1px;
+	padding: 1px;
+	cursor:  pointer;
+	color:  #004e7d;
+}
+
+input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button:hover,.egwbutton:hover
+{
+	.background-color-15-gray;
+	background-image: none;
+	border:  outset 1px #b9d5e3;
+	color:  #004e7d;
+}
+
+input[type=submit]:active,input[type=button]:active,input[type=reset]:active,button:active,.egwbutton:active
+{
+	border:  inset 1px #bbbbbb;
+}
+
+input[type=submit]:disabled,input[type=button]:disabled,input[type=reset]:disabled,button:disabled,.egwbutton:disabled
+{
+	background-color: transparent;
+	color: gray;
+}
+
+input.egwbutton
+{
+	background-color:#b9d5e3;
+	border:  outset 1px #b9d5e3;
+	margin:  1px;
+	padding: 1px;
+	cursor:  pointer;
+	color:  #004e7d;
+}
+
+input.egwbutton:hover
+{
+   background-color:#94bfd4;
+   border:  outset 1px #b9d5e3;
+   color:  #004e7d;
+}
+input.egwbutton:active
+{
+   border:  inset 1px #bbbbbb;
+}
+
+input[type=image]
+{
+	cursor: pointer;
+	border: 0;
+}
+
+#thesideboxcolumn
+{
+	width: 177px;
+	position:relative;
+}
+
+#sideresize
+{
+	background-image:url(../images/resize.png);
+	width:13px;
+	height:13px;
+	right:1px;
+	top:1px;
+	position:absolute;
+	z-index:9999;
+}
+
+
+
+
+
+.divSidebox
+{
+	position:relative;
+  	border: #9c9c9c 1px solid;
+	overflow:auto;
+}
+
+.divSideboxHeader
+{
+	text-align:center;
+	.background-color-15-gray;
+	padding-top:2px;
+	.color-50-gray;
+}
+
+
+a.divSideboxEntry, .divSideboxEntry
+{
+	text-align:left;
+	background-color:#FDFDFD;
+}
+
+a.appTitles,.appTitles
+{
+	height:18px;
+	padding-top:2px;
+	padding-bottom:2px;
+}
+
+a.textSidebox
+{
+	padding: 0;
+	border-top: 0;
+}
+
+.textSidebox
+{
+	padding-top:3px;
+	padding-bottom:3px;
+	padding-left: 1px;
+	border-top: solid #aaaaaa 1px;
+	overflow: auto;
+}
+
+.sideboxSpace
+{
+	height:9px;
+}
+
+.greyLine
+{
+	margin:1px;
+	border-top:solid 1px #7e7e7e;
+	height:1px;
+}
+
+#extraIcons
+{
+	background-color:#eeeeee;
+	border:solid 1px #7e7e7e;
+}
+
+.extraIconsRow
+{
+	border:solid 1px #dddddd;
+	padding:2px;
+}
+
+#topmenu
+{
+	background-color: #0081c1;
+	background-image: url(../images/bgtopmenu2.png);
+	color:#006699;
+	/*border-top: solid 1px #7e7e7e;*/
+	border-bottom: solid #5793ff 1px;
+	height:20px;
+	padding-top:4px ;
+	line-height:16px;
+}
+#topmenu a
+{
+	color:#006699;
+}
+
+#topmenu_items
+{
+	float:left;
+}
+#topmenu_info
+{
+	float:right;
+}
+
+#divUpperTabs
+{
+	text-align:right;
+	height: 15px;
+	margin-right: 10px;
+}
+
+#divUpperTabs ul
+{
+	display:inline;
+	margin:0;
+	padding:10px 10px 0 1px;
+	list-style:none;
+}
+
+#divUpperTabs li
+{
+	float:right;
+	margin:0 5px 0 0;
+	padding:0 5px 0 5px;
+	border:solid 1px #9c9c9c;
+	border-bottom: 0px;
+}
+
+//#divAppIconBar
+//{
+//	background-color:silver;
+//	border:solid 1px #9c9c9c;
+//	background-image: url(../images/background-icon-bar.png);
+//	background-repeat: repeat-x;
+//	overflow:visible;
+//	height: 45px; /* prevents text line to show in IE7+8(Compatibilitymode) */
+//}
+
+/* Star-Plus-HTML Hack fix for the above */
+*:first-child+html #divAppIconBar
+{
+	height: 60px;
+}
+
+#divAppTextBar
+{
+	background-color:white;
+}
+
+#divStatusBar
+{
+	background-color:white;
+	height:18px;
+	padding-left:3px;
+}
+
+#tdSidebox
+{
+	width:170px;
+	background-color:white;
+	overflow:visible;
+}
+
+#tdAppbox
+{
+	background-color:white;
+	padding-left:5px;
+	width: 100%;
+}
+
+#divAppboxHeader
+{
+	background-image:url(../images/appbox-header-background.png);
+	background-repeat: repeat-x;
+	height: 25px;
+	border-bottom:solid 1px #c0c0c0;
+	text-align:center;
+	padding-bottom:0px;
+	border-top:solid 1px #9c9c9c;
+	border-left:solid 1px #9c9c9c;
+	border-right:solid 1px #9c9c9c;
+}
+
+#divAppbox
+{
+	background-color:#ffffff;
+	padding:5px;
+	border-bottom:solid 1px #9c9c9c;
+	border-left:solid 1px #9c9c9c;
+	border-right:solid 1px #9c9c9c;
+}
+
+#divGenTime,#divPoweredBy
+{
+	bottom:4px;
+	text-align:center;
+	width:99%;
+}

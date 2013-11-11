@@ -1,0 +1,154 @@
+/**
+ * EGroupware: CSS with less preprocessor
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package timesheet
+ * @version $Id$
+ */
+
+@import (reference) "../../../phpgwapi/templates/default/def_buttons.less";
+@import (reference) "../../../phpgwapi/templates/default/def_design_pattern_color_font_shadow.less";
+
+
+// iframe
+
+
+
+#timesheet-index {
+
+				// Rahmen + padding
+//				.box_shadow_dialog;
+
+
+	.nextmatch_header{
+
+		div.ui-helper-clearfix,
+		div.ui-helper-reset{
+
+							// linke Box
+							#timesheet-index_timesheet-index-dates{
+
+																	// Startdate
+																	#timesheet-index_startdate{}
+																	}
+
+																	// Enddate
+																	#timesheet-index_enddate{}
+
+							}
+
+
+							// rechte Box
+							#timesheet-index_timesheet-index-add{
+
+																//ADD
+																	button[id*="timesheet-index_add"]{
+																								.Complete_Button_add;
+
+																								.border_radius_button_lefttop;
+
+																								&:hover {.Complete_Button_add_hover;}
+
+//																								&:before {.Complete_Button_add_before; }
+
+
+
+																						}
+																	button[id*="timesheet-index_add"]:hover {.Complete_Button_add_hover;}
+
+																}
+		// Anzahl
+		span.header_count ui-corner-all{}
+
+		// Filter
+		div.filters{
+
+			.Rectangle_filters;
+
+			// 1. Filter
+			#timesheet-index_filter{}
+
+			// 2. Filter
+			#timesheet-index_filter2{}
+
+			// Suchfeld
+			#timesheet-index_search{}
+
+			// Suchen Button
+			button{}
+
+
+		}	// Ende Filter
+
+		table{}
+
+
+		button[id*="timesheet-index_favorite"]{
+				img {
+					height: 16px;
+					width: 16px;
+				}
+
+		}
+	} //nextmatch_header
+
+} // iframe
+
+
+
+
+
+
+// #############################################################################################
+//
+//
+// Dialog
+
+// Rahmen um alles
+#timesheet-edit {
+
+	width: 910px;
+	height: 580px;
+
+	.border-radius (0,0,0,25px);
+	.background-color-5-gray;
+//	background-color: @egw_color_2_e;
+	border-color: @egw_color_2_a;
+	border: 5px solid @egw_color_2_e;
+	padding:  1em;
+	margin: 5px 0 0 5px;
+
+	div:not([class]) {width: 840px; height: auto !important; }
+
+
+//	select {.Complete_Button_select;}
+//	input{.Complete_Button_input;}
+
+
+	// Owner
+	#timesheet-edit_ts_owner {font-size: 1em;}
+
+	// Projektliste
+	select#timesheet-edit_pm_id {
+		.Complete_Button_select;
+		width: 80%;
+	}
+	// Projekt
+	input#timesheet-edit_ts_project{
+		.Complete_Button_input;
+		width: 80%;
+	}
+
+	// Preisliste
+	select#timesheet-edit_pl_id {.Complete_Button_select;}
+
+	input#timesheet-edit_ts_unitprice {.Complete_Button_input;}
+
+
+
+
+} // div#timesheet-edit
