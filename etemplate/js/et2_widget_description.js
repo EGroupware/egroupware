@@ -19,10 +19,10 @@
 
 /**
  * Class which implements the "description" XET-Tag
- * 
+ *
  * @augments et2_baseWidget
- */ 
-var et2_description = et2_baseWidget.extend([et2_IDetachedDOM], 
+ */
+var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 {
 	attributes: {
 		"value": {
@@ -51,7 +51,7 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 			"name": "Replace URLs",
 			"type": "boolean",
 			"default": false,
-			"description": "If set, URLs in the text are automatically replaced " + 
+			"description": "If set, URLs in the text are automatically replaced " +
 				"by links"
 		},
 		"for": {
@@ -78,12 +78,12 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 		}
 	},
 
-	legacyOptions: ["font_style", "href", "activate_links", "for", 
+	legacyOptions: ["font_style", "href", "activate_links", "for",
 		"extra_link_target", "extra_link_popup", "extra_link_title"],
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_description
 	 */
 	init: function() {
@@ -114,14 +114,20 @@ var et2_description = et2_baseWidget.extend([et2_IDetachedDOM],
 
 			if (val)
 			{
-				_attrs["value"] = val;
+					_attrs["value"] = val;
 			}
 		}
 	},
 
 	set_value: function(_value) {
 		if(!_value) _value = "";
-		else 
+		else
+			if (this.span.text() != _value)
+			{
+				var spliter = this.span.text().replace(/%s/g,_value);
+				if (spliter !="")
+					_value = spliter;
+			}
 			if (!this.options.no_lang) _value = this.egw().lang(_value);
 		et2_insertLinkText(this._parseText(_value),
 			this.span[0],
