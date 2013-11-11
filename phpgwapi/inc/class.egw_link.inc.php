@@ -1440,7 +1440,7 @@ class egw_link extends solink
 		{
 			if(($method = self::get_registry($app,'file_access')))
 			{
-				$cache |= ExecMethod2($method,$id,$required,$rel_path) ? $required : 0;
+				$cache |= ExecMethod2($method,$id,$required,$rel_path) ? $required|EGW_ACL_READ : 0;
 			}
 			else
 			{
