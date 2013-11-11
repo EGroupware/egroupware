@@ -49,9 +49,10 @@
 class egw_index implements IteratorAggregate
 {
 	const INDEX_TABLE = 'egw_index';
+	const KEYWORD_TABLE = 'egw_index_keywords';
 	const INDEX_CAT_TABLE = 'egw_cat2entry';
 	const CAT_TABLE = 'egw_categories';
-	const SEPERATORS = "[ ,;.:\"'!/?=()+*><|\n\r-]";
+	const SEPARATORS = "/[ ,;.:\"'!\/?=()+*><|\n\r-]+/";
 	const MIN_KEYWORD_LEN = 4;
 
 	/**
@@ -164,13 +165,14 @@ class egw_index implements IteratorAggregate
 	 * Stores the keywords for an entry in the index
 	 *
 	 * @param string $app
-	 * @param string/int $id
+	 * @param string|int $id
 	 * @param string $owner eGW account_id of the owner of the entry, used to create a "private entry of ..." title
 	 * @param array $fields
-	 * @param array/int/string $cat_ids=null optional cat_id(s) either comma-separated or as array
-	 * @return int/boolean false on error, othwerwise number off added keywords
+	 * @param array|int|string $cat_ids=null optional cat_id(s) either comma-separated or as array
+	 * @param array $ignore_fields=array() keys of fields NOT to index
+	 * @return int|boolean false on error, othwerwise number off added keywords
 	 */
-	static function save($app,$id,$owner,array $fields,$cat_ids=null)
+	static function save($app,$id,$owner,array $fields,$cat_ids=null,array $ignore_fields=array())
 	{
 		if (!$app || !$id)
 		{
@@ -180,14 +182,13 @@ class egw_index implements IteratorAggregate
 		$keywords = array();
 		foreach($fields as $field)
 		{
-			$tmpArray = @preg_split(self::SEPERATORS,$field);
-			if (is_array($tmpArray)) {
-				foreach($tmpArray as $keyword)
+			if ($ignore_fields && in_array($field, $ignore_fields)) continue;
+
+			foreach(preg_split(self::SEPARATORS, $field) as $keyword)
+			{
+				if (!in_array($keyword,$keywords) && strlen($keyword) >= self::MIN_KEYWORD_LEN && !is_numeric($keyword))
 				{
-					if (!in_array($keyword,$keywords) && strlen($keyword) >= self::MIN_KEYWORD_LEN && !is_numeric($keyword))
-					{
-						$keywords[] = $keyword;
-					}
+					$keywords[] = $keyword;
 				}
 			}
 		}
@@ -218,7 +219,7 @@ class egw_index implements IteratorAggregate
 	 * Delete the keywords for an entry or an entire application
 	 *
 	 * @param string $app
-	 * @param string/int $id=null
+	 * @param string|int $id=null
 	 */
 	static function delete($app,$id=null)
 	{
@@ -238,7 +239,7 @@ class egw_index implements IteratorAggregate
 	 * Returns the cats of an entry or multiple entries
 	 *
 	 * @param string $app
-	 * @param string/int/array $ids
+	 * @param string|int|array $ids
 	 * @return array with cats or single id or id => array with cats pairs
 	 */
 	static function cats($app,$ids)
@@ -279,7 +280,7 @@ class egw_index implements IteratorAggregate
 	 *
 	 * @todo reject keywords which are common words ...
 	 * @param string $app
-	 * @param string/int $id
+	 * @param string|int $id
 	 * @param string $keyword
 	 * @param int $owner=null
 	 * @return boolean true if keyword added, false if it was rejected in future
@@ -287,13 +288,28 @@ class egw_index implements IteratorAggregate
 	static private function add($app,$id,$keyword,$owner=null)
 	{
 		// todo: reject keywords which are common words, not sure how to do that for all languages
-		// maybey we can come up with some own little statistic analysis:
+		// mayby we can come up with some own little statistic analysis:
 		// all keywords more common then N % of the entries get deleted and moved to a separate table ...
+		if (!($si = self::$db->select(self::KEYWORD_TABLE, '*', array('si_keyword' => $keyword))->fetch()))
+		{
+			self::$db->insert(self::KEYWORD_TABLE, array(
+				'si_keyword' => $keyword,
+			), false, __LINE__, __FILE__);
 
+			$si_id = self::$db->get_last_insert_id(self::KEYWORD_TABLE, 'si_id');
+		}
+		elseif ($si['si_ignore'])
+		{
+			return false;
+		}
+		else
+		{
+			$si_id = $si['si_id'];
+		}
 		self::$db->insert(self::INDEX_TABLE,array(
-			'si_keyword' => $keyword,
 			'si_app' => $app,
 			'si_app_id' => $id,
+			'si_id' => $si_id,
 			'si_owner' => $owner,
 		),false,__LINE__,__FILE__);
 
@@ -304,8 +320,8 @@ class egw_index implements IteratorAggregate
 	 * Stores the cat_id(s) for an entry
 	 *
 	 * @param string $app
-	 * @param string/int $id
-	 * @param array/int/string $cat_ids=null optional cat_id(s) either comma-separated or as array
+	 * @param string|int $id
+	 * @param array|int|string $cat_ids=null optional cat_id(s) either comma-separated or as array
 	 * @param int $owner=null
 	 * @return boolean true on success, false on error
 	 */
@@ -335,7 +351,7 @@ class egw_index implements IteratorAggregate
 	 * Delete the cat for an entry or an entire application
 	 *
 	 * @param string $app
-	 * @param string/int $id=null
+	 * @param string|int $id=null
 	 */
 	static private function delete_cats($app,$id=null)
 	{
