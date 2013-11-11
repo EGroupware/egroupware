@@ -9,7 +9,7 @@
 			</columns>
 			<rows>
 				<row>
-					<description span="all" class="redItalic" id="msg" no_lang="1" align="center"/>
+					<description span="all" class="message" id="msg" no_lang="1" align="center"/>
 					<description/>
 				</row>
 				<row>

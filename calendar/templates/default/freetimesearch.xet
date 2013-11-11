@@ -35,8 +35,8 @@
 			</columns>
 			<rows>
 				<row>
-					<description class="size120b" value="Freetime Search"/>
-					<description class="redItalic" no_lang="1" id="msg"/>
+					<description class="calendar_size120b" value="Freetime Search"/>
+					<description class="message" no_lang="1" id="msg"/>
 				</row>
 				<row>
 					<description value="Startdate / -time"/>
@@ -76,9 +76,8 @@
 			</rows>
 		</grid>
 		<styles>
-			.size120b { text-size: 120%; font-weight: bold; }
-.redItalic { color: red; font-style: italic; }
-.end_hide { visibility: hidden; }
+			.calendar_size120b { text-size: 120%; font-weight: bold; }
+			.end_hide { visibility: hidden; }
 		</styles>
 	</template>
 </overlay>

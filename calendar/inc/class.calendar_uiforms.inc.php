@@ -1187,7 +1187,7 @@ class calendar_uiforms extends calendar_ui
 					}
 					else
 					{
-						$GLOBALS['egw']->framework->render('<p class="redItalic" align="center">'.lang('Permission denied')."</p>\n",null,true);
+						$GLOBALS['egw']->framework->render('<p class="message" align="center">'.lang('Permission denied')."</p>\n",null,true);
 						common::egw_exit();
 					}
 				}

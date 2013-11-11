@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="calendar.meeting" template="" lang="" group="0" version="1.9.002">
-		<description id="msg" class="redItalic leftPad5"/>
+		<description id="msg" class="message leftPad5"/>
 		<grid border="0">
 			<columns>
 				<column/>

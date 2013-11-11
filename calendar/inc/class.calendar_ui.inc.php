@@ -199,7 +199,7 @@ class calendar_ui
 		}
 		if (count($no_access))
 		{
-			$msg = '<p class="redItalic" align="center">'.lang('Access denied to the calendar of %1 !!!',implode(', ',$no_access))."</p>\n";
+			$msg = '<p class="message" align="center">'.lang('Access denied to the calendar of %1 !!!',implode(', ',$no_access))."</p>\n";
 
 			if ($GLOBALS['egw_info']['flags']['currentapp'] == 'home')
 			{
@@ -241,9 +241,9 @@ class calendar_ui
 		$GLOBALS['egw_info']['flags']['include_wz_tooltip'] = true;
 		common::egw_header();
 
-		if ($_GET['msg']) echo '<p class="redItalic" align="center">'.html::htmlspecialchars($_GET['msg'])."</p>\n";
+		if ($_GET['msg']) echo '<p class="message" align="center">'.html::htmlspecialchars($_GET['msg'])."</p>\n";
 
-		if ($this->bo->warnings) echo '<p class="redItalic" align="center">'.implode('<br />',$this->bo->warnings)."</p>\n";
+		if ($this->bo->warnings) echo '<p class="message" align="center">'.implode('<br />',$this->bo->warnings)."</p>\n";
 	}
 
 	/**

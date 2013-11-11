@@ -256,7 +256,7 @@ class calendar_uiviews extends calendar_ui
 		}
 		if ($this->group_warning)
 		{
-			$group_warning = '<p class="redItalic" align="center">'.$this->group_warning."</p>\n";
+			$group_warning = '<p class="message" align="center">'.$this->group_warning."</p>\n";
 		}
 		switch($this->cal_prefs['mainscreen_showevents'])
 		{
@@ -419,7 +419,7 @@ class calendar_uiviews extends calendar_ui
 			// The first date entry in the view may be in the last month.
 			if (($month - 1) % self::YEARVIEW_COLS == 0)
 			{
-				$content .= '<div class="calTimeGrid" style="height: 162px;">'."\n";
+				$content .= '<div class="calendar_calTimeGrid" style="height: 162px;">'."\n";
 				$content .= "\t".'<div class="calDayColsNoGrip">'."\n";
 			}
 
@@ -432,12 +432,12 @@ class calendar_uiviews extends calendar_ui
 			// End of the last week in month
 			$month_end = strtotime("+6 days",$month_end);
 
-			$content .= "\t\t".'<div class="calDayCol" style="left: '.
+			$content .= "\t\t".'<div class="calendar_calDayCol" style="left: '.
 				((($month - 1) % self::YEARVIEW_COLS) * (100 / self::YEARVIEW_COLS)).'%; width: '.
 				((100 / self::YEARVIEW_COLS) - 0).'%;";>'."\n";
 
 			// Year Header
-			$content .= "\t\t\t".'<div class="calDayColHeader '.($month % 2 == 0 ? "th" : "row_on").'"'.
+			$content .= "\t\t\t".'<div class="calendar_calDayColHeader '.($month % 2 == 0 ? "th" : "row_on").'"'.
 				' style="height: 20px; line-height: 20px; z-index: 0;" title="'.lang(adodb_date('F',strtotime("+1 week",$month_start))).' '.adodb_date('Y',strtotime("+1 week",$month_start)).'">'."\n";
 			if (($month) == 1)
 			{
@@ -466,7 +466,7 @@ class calendar_uiviews extends calendar_ui
 			$content .= "\t\t\t".'<div'.
 					' style="position: absolute; width: 100%; height: 16px;'.
 					' top: 24px;">'."\n";
-			$content .= "\t\t\t\t".'<div class="cal_year_legend"'.
+			$content .= "\t\t\t\t".'<div class="calendar_cal_year_legend"'.
 				' style="text-align: center; position: absolute; width: 11.5%; height: 16px; left: 0.5%;">'.lang('Wk').'</div>'."\n";
 			// Day Columns, Legend
 			for ($i = 0; $i <= 6; $i++)
@@ -474,11 +474,11 @@ class calendar_uiviews extends calendar_ui
 				$day_date = ($i ? strtotime("+$i days",$month_start) : $month_start);
 				if (adodb_date('w',$day_date) % 6 == 0)
 				{
-					$style = 'cal_year_legend_weekend';
+					$style = 'calendar_cal_year_legend_weekend';
 				}
 				else
 				{
-					$style = 'cal_year_legend';
+					$style = 'calendar_cal_year_legend';
 				}
 
 				$content .= "\t\t\t\t".'<div class="'.$style.'"'.
@@ -495,7 +495,7 @@ class calendar_uiviews extends calendar_ui
 						' style="position: absolute; width: 100%; height: 16px;'.
 						' top: '.((($week_in_month + 1) * 20) + 2).'px;">'."\n";
 
-				$content .= "\t\t\t\t".'<div class="cal_year_legend"'.
+				$content .= "\t\t\t\t".'<div class="calendar_cal_year_legend"'.
 					' style="text-align: center;position: absolute; width: 11.5%; height: 16px; left: 0.5%;" '.
 					'title="'.lang('Wk').' '.$this->week_number($week_start).'/'.adodb_date('Y',$week_start).'">'."\n";
 				$content .= "\t\t\t\t\t".
@@ -515,31 +515,31 @@ class calendar_uiviews extends calendar_ui
 					$this->_day_class_holiday($day_ymd,$class,$holidays,false,false);
 					if (adodb_date('n',$day_date) != $month)
 					{
-						$css_class .= 'cal_year_legend';
+						$css_class .= 'calendar_cal_year_legend';
 						$in_month = false;
 					}
 					else
 					{
-						$css_class .= 'calEvent calEventAllAccepted';
+						$css_class .= 'calendar_calEvent calendar_calEventAllAccepted';
 						if (adodb_date('w',$day_date) % 6 == 0)
 						{
-							$css_class .= ' cal_year_weekend';
+							$css_class .= ' calendar_cal_year_weekend';
 						}
 						else
 						{
 							if ($holidays)
 							{
-								$css_class .= ' calHoliday';
+								$css_class .= ' calendar_calHoliday';
 							}
 							else
 							{
-								$css_class .= ' cal_year_free';
+								$css_class .= ' calendar_cal_year_legend';
 							}
 						}
 
 						if ($day_ymd == $this->bo->date2string($this->bo->now_su))
 						{
-							$css_class .= ' cal_year_today';
+							$css_class .= ' calendar_cal_year_today';
 						}
 					}
 					$content .= "\t\t\t\t".'<!-- Day cell -->'."\n";
@@ -583,7 +583,7 @@ class calendar_uiviews extends calendar_ui
 								$width = $this->time2pos($event['end_m'] - $event['start_m']);
 								$color = $data['color'] ? $data['color'] : 'gray';
 
-								$content .= $indent.'<div class="plannerEvent'.($data['private'] ? 'Private' : '').
+								$content .= $indent.'<div class="calendar_plannerEvent'.($data['private'] ? 'Private' : '').
 									'" style="position: absolute; left: '.$left.'%; width: '.$width.'%; height: '.
 									$row_height.'%; top: '.($n * $row_height).'%;'.
 									'background-color: '.$color.';" '.$data['popup'].' '.
@@ -981,13 +981,13 @@ class calendar_uiviews extends calendar_ui
 					}
 				}
 				$cols[1] = html::div(
-					html::div($todo_label,'','calDayTodosHeader th')."\n".
-					html::div($todos,'','calDayTodosTable'),'','calDayTodos');
+					html::div($todo_label,'','calendar_calDayTodosHeader th')."\n".
+					html::div($todos,'','calendar_calDayTodosTable'),'','calendar_calDayTodos');
 				$cols['.1'] = 'width=30%';
 				echo html::table(array(
 					0 => $cols,
 					'.0' => 'valign="top"'
-				),'class="calDayView"');
+				),'class="calendar_calDayView"');
 			}
 			else
 			{
@@ -1188,9 +1188,9 @@ class calendar_uiviews extends calendar_ui
 		{
 			$height = ($this->rowsToDisplay+1) * 12;
 		}
-		$html = $indent.'<div class="calTimeGrid" style="height: '.$height.'px;'.$overflow.'">'."\n";
+		$html = $indent.'<div class="calendar_calTimeGrid" style="height: '.$height.'px;'.$overflow.'">'."\n";
 
-		$html .= $indent."\t".'<div class="calGridHeader" style="height: '.
+		$html .= $indent."\t".'<div class="calendar_calGridHeader" style="height: '.
 			$this->rowHeight.'%;">'.$title."</div>\n";
 
 		if ($this->use_time_grid)
@@ -1213,7 +1213,7 @@ class calendar_uiviews extends calendar_ui
 						$set_id = ' id="'.$id.'"';
 					}
 				}
-				$html .= $indent."\t".'<div'.$set_id.' class="calTimeRow'.($off ? 'Off row_off' : ' row_on').
+				$html .= $indent."\t".'<div'.$set_id.' class="calendar_calTimeRow'.($off ? 'Off row_off' : ' row_on').
 					'" style="height: '.$this->rowHeight.'%; top:'. $i*$this->rowHeight .'%;">'."\n";
 				// show time for full hours, allways for 45min interval and at least on every 3 row
 				$time = '';
@@ -1228,8 +1228,8 @@ class calendar_uiviews extends calendar_ui
 					$time = $GLOBALS['egw']->common->formattime(sprintf('%02d',$t/60),sprintf('%02d',$t%60));
 				}
 				if ($add_links) $time = $this->add_link($time,$this->date,(int) ($t/60),$t%60);
-				$html .= $indent."\t\t".'<div class="calTimeRowTime">'.$time."</div>\n";
-				$html .= $indent."\t</div>\n";	// calTimeRow
+				$html .= $indent."\t\t".'<div class="calendar_calTimeRowTime">'.$time."</div>\n";
+				$html .= $indent."\t</div>\n";	// calendar_calTimeRow
 				$off = !$off;
 			}
 		}
@@ -1240,7 +1240,7 @@ class calendar_uiviews extends calendar_ui
 
 			$dayCols_width = $width - $this->timeRow_width - 1;
 
-			$html .= $indent."\t".'<div id="calDayCols" class="calDayCols'.
+			$html .= $indent."\t".'<div id="calendar_calDayCols" class="calendar_calDayCols'.
 				($this->use_time_grid ? ($this->bo->common_prefs['timeformat'] == 12 ? '12h' : '') : 'NoTime').'">'."\n";
 
 			if (html::$user_agent == 'msie')	// necessary IE hack - stupid thing ...
@@ -1275,9 +1275,9 @@ class calendar_uiviews extends calendar_ui
 			}
 			if (html::$user_agent == 'msie') $html .= "</div>\n";
 
-			$html .= $indent."\t</div>\n";	// calDayCols
+			$html .= $indent."\t</div>\n";	// calendar_calDayCols
 		}
-		$html .= $indent."</div>\n";	// calTimeGrid
+		$html .= $indent."</div>\n";	// calendar_calTimeGrid
 
 		if ($this->scroll_to_wdstart)
 		{
@@ -1358,7 +1358,7 @@ class calendar_uiviews extends calendar_ui
 	{
 		if ($this->debug > 1 || $this->debug==='dayColWidget') $this->bo->debug_message('uiviews::dayColWidget(%1,%2,left=%3,width=%4,)',False,$day_ymd,$events,$pleft,$pwidth);
 
-		$html = $indent.'<div id="calColumn'.$this->calColumnCounter++.'" class="calDayCol" style="left: '.$pleft.
+		$html = $indent.'<div id="calColumn'.$this->calColumnCounter++.'" class="calendar_calDayCol" style="left: '.$pleft.
 			'%; width: '.$pwidth.'%;">'."\n";
 
 		// Creation of the header-column with date, evtl. holiday-names and a matching background-color
@@ -1405,7 +1405,7 @@ class calendar_uiviews extends calendar_ui
 			}
 		}
 		if (is_bool($short_title) || ($short_title != "")) {
-			$html .= $indent."\t".'<div style="height: '. $this->rowHeight .'%;" class="calDayColHeader '.$class.'"'.
+			$html .= $indent."\t".'<div style="height: '. $this->rowHeight .'%;" class="calendar_calDayColHeader '.$class.'"'.
 				($holidays ? ' title="'.html::htmlspecialchars($holidays).'"':'').'>'.$title."</div>\n";
 		}
 
@@ -1440,7 +1440,7 @@ class calendar_uiviews extends calendar_ui
 				$droppableID='drop_'.$droppableDateTime.'_O'.($owner<0?str_replace('-','group',$owner):$owner);
 
 				$html .= $indent."\t".'<div id="' . $droppableID . '" style="height:'. $this->rowHeight .'%; top: '. $i*$this->rowHeight .
-					'%;" class="calAddEvent"';
+					'%;" class="calendar_calAddEvent"';
 				if ($this->allowEdit)
 				{
 					$html .= ' onclick="'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;"';
@@ -1482,7 +1482,7 @@ class calendar_uiviews extends calendar_ui
 			$html .= $this->eventColWidget($eventCol,$left,$width,$indent."\t",
 				$owner ? $owner : $this->user, 20+10*$n);
 		}
-		$html .= $indent."</div>\n";	// calDayCol
+		$html .= $indent."</div>\n";	// calendar_calDayCol
 
 		return $html;
 	}
@@ -1524,7 +1524,7 @@ class calendar_uiviews extends calendar_ui
 				}
 				else
 				{
-					$class = 'calHoliday';
+					$class = 'calendar_calHoliday';
 
 					//If the birthdays are already displayed as event, don't
 					//show them in the caption
@@ -1540,7 +1540,7 @@ class calendar_uiviews extends calendar_ui
 		{
 			if ($day_ymd == $this->bo->date2string($this->bo->now_su))
 			{
-				$class = 'calToday';
+				$class = 'calendar_calToday';
 			}
 			else
 			{
@@ -1556,7 +1556,7 @@ class calendar_uiviews extends calendar_ui
 				}
 			}
 		}
-		if ($bday) $class .= ' calBirthday';
+		if ($bday) $class .= ' calendar_calBirthday';
 	}
 
 	/**
@@ -1574,8 +1574,8 @@ class calendar_uiviews extends calendar_ui
 	{
 		if ($this->debug > 1 || $this->debug==='eventColWidget') $this->bo->debug_message('uiviews::eventColWidget(%1,left=%2,width=%3,)',False,$events,$left,$width);
 
-		$html = $indent.'<div class="calEventCol" style="left: '.$left.'%; width:'.$width.'%;'.
-			// the "calEventCol" spans across a whole column (as the name suggests) - setting the
+		$html = $indent.'<div class="calendar_calEventCol" style="left: '.$left.'%; width:'.$width.'%;'.
+			// the "calendar_calEventCol" spans across a whole column (as the name suggests) - setting the
 			// z-index here would give the whole invisible column a z-index and thus the underlying
 			// regions are not clickable anymore. The z_index has now moved the the eventWidget
 			// function.
@@ -1684,8 +1684,8 @@ class calendar_uiviews extends calendar_ui
 			$bodybgcolor1 = $bodybgcolor2 = 'white';
 		}
 
-		// get status class of event: calEventAllAccepted, calEventAllAnswered or calEventSomeUnknown
-		$status_class = 'calEventAllAccepted';
+		// get status class of event: calendar_calEventAllAccepted, calendar_calEventAllAnswered or calendar_calEventSomeUnknown
+		$status_class = 'calendar_calEventAllAccepted';
 		foreach($event['participants'] as $id => $status)
 		{
 			if ($id < 0) continue;	// as we cant accept/reject groups, we dont care about them here
@@ -1698,10 +1698,10 @@ class calendar_uiviews extends calendar_ui
 				case '':	// app without status
 					break;
 				case 'U':
-					$status_class = 'calEventSomeUnknown';
+					$status_class = 'calendar_calEventSomeUnknown';
 					break 2;	// break foreach
 				default:
-					$status_class = 'calEventAllAnswered';
+					$status_class = 'calendar_calEventAllAnswered';
 					break;
 			}
 		}
@@ -1899,7 +1899,7 @@ class calendar_uiviews extends calendar_ui
 			}
 		}
 
-		$html = $indent.'<div id="'.$draggableID.'" class="calEvent'.($is_private ? 'Private' : '').' '.$status_class.
+		$html = $indent.'<div id="'.$draggableID.'" class="calendar_calEvent'.($is_private ? 'Private' : '').' '.$status_class.
 			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: '.$z_index.';"'.
 			$popup.' '.html::tooltip($tooltip,False,$ttip_options).
 			$dd_emulation.'>'.$prefix_icon."\n".$ie_fix.$html."\n".
@@ -2005,7 +2005,7 @@ class calendar_uiviews extends calendar_ui
 		}
 		if (!empty($content))
 		{
-			return '<span class="calEventLabel">'.$label.'</span>:'.
+			return '<span class="calendar_calEventLabel">'.$label.'</span>:'.
 				($one_per_line ? '<br>' : ' ').
 				nl2br(html::htmlspecialchars($content)).'<br>';
 		}
@@ -2075,10 +2075,10 @@ class calendar_uiviews extends calendar_ui
 	 */
 	function &plannerWidget(&$events,$start,$end,$by_cat=0,$indent='')
 	{
-		$content = $indent.'<div class="plannerWidget">'."\n";
+		$content = $indent.'<div class="calendar_plannerWidget">'."\n";
 
 		// display the header, containing a headerTitle and multiple headerRows with the scales
-		$content .= $indent."\t".'<div class="plannerHeader">'."\n";
+		$content .= $indent."\t".'<div class="calendar_plannerHeader">'."\n";
 
 		// display the headerTitle, and get sort2labels
 		switch($by_cat)
@@ -2102,10 +2102,10 @@ class calendar_uiviews extends calendar_ui
 				$sort2label = array();
 				break;
 		}
-		$content .= $indent."\t\t".'<div class="plannerHeaderTitle th">'.$title."</div>\n";
+		$content .= $indent."\t\t".'<div class="calendar_plannerHeaderTitle th">'.$title."</div>\n";
 
 		// display the headerRows with the scales
-		$content .= $indent."\t\t".'<div class="plannerHeaderRows">'."\n";
+		$content .= $indent."\t\t".'<div class="calendar_plannerHeaderRows">'."\n";
 		// set start & end to timestamp and first & last to timestamp of 12h midday, to avoid trouble with daylight saving
 		foreach(array('start' => 'first','end' => 'last') as $t => $v)
 		{
@@ -2335,7 +2335,7 @@ class calendar_uiviews extends calendar_ui
 	{
 		$day_width = round(100 / $days,2);
 
-		$content .= $indent.'<div class="plannerScale">'."\n";
+		$content .= $indent.'<div class="calendar_plannerScale">'."\n";
 		for($t = $start,$left = 0,$i = 0; $i < $days; $t += $days_in_month*DAY_s,$left += $days_in_month*$day_width,$i += $days_in_month)
 		{
 			$t_arr = $this->bo->date2array($t);
@@ -2405,7 +2405,7 @@ class calendar_uiviews extends calendar_ui
 				$title = '&nbsp;';
 			}
 			$class = $class == 'row_on' ? 'th' : 'row_on';
-			$content .= $indent."\t".'<div class="plannerMonthScale '.$class.'" style="left: '.$left.'%; width: '.($day_width*$days_in_month).'%;">'.
+			$content .= $indent."\t".'<div class="calendar_plannerMonthScale '.$class.'" style="left: '.$left.'%; width: '.($day_width*$days_in_month).'%;">'.
 				$title."</div>\n";
 		}
 		$content .= $indent."</div>\n";		// end of plannerScale
@@ -2425,7 +2425,7 @@ class calendar_uiviews extends calendar_ui
 	{
 		$week_width = round(100 / $days * ($days <= 7 ? $days : 7),2);
 
-		$content .= $indent.'<div class="plannerScale">'."\n";
+		$content .= $indent.'<div class="calendar_plannerScale">'."\n";
 		for($t = $start,$left = 0,$i = 0; $i < $days; $t += 7*DAY_s,$left += $week_width,$i += 7)
 		{
 			$title = lang('Week').' '.$this->week_number($t);
@@ -2451,7 +2451,7 @@ class calendar_uiviews extends calendar_ui
 				));
 			}
 			$class = $class == 'row_on' ? 'th' : 'row_on';
-			$content .= $indent."\t".'<div class="plannerWeekScale '.$class.'" style="left: '.$left.'%; width: '.$week_width.'%;">'.$title."</div>\n";
+			$content .= $indent."\t".'<div class="calendar_plannerWeekScale '.$class.'" style="left: '.$left.'%; width: '.$week_width.'%;">'.$title."</div>\n";
 		}
 		$content .= $indent."</div>\n";		// end of plannerScale
 
@@ -2470,7 +2470,7 @@ class calendar_uiviews extends calendar_ui
 	{
 		$day_width = round(100 / $days,2);
 
-		$content .= $indent.'<div class="plannerScale'.($days > 3 ? 'Day' : '').'">'."\n";
+		$content .= $indent.'<div class="calendar_plannerScale'.($days > 3 ? 'Day' : '').'">'."\n";
 		for($t = $start,$left = 0,$i = 0; $i < $days; $t += DAY_s,$left += $day_width,++$i)
 		{
 			$this->_day_class_holiday($this->bo->date2string($t),$class,$holidays,$days > 7);
@@ -2493,7 +2493,7 @@ class calendar_uiviews extends calendar_ui
 					'menuaction'   => 'calendar.calendar_uiviews.planner',
 					'planner_days' => 1,
 					'date'         => date('Ymd',$t),
-				),false,strpos($class,'calHoliday') !== false || strpos($class,'calBirthday') !== false ? '' : ' title="'.html::htmlspecialchars(lang('Dayview')).'"');
+				),false,strpos($class,'calendar_calHoliday') !== false || strpos($class,'calendar_calBirthday') !== false ? '' : ' title="'.html::htmlspecialchars(lang('Dayview')).'"');
 			}
 			if ($days < 5)
 			{
@@ -2512,7 +2512,7 @@ class calendar_uiviews extends calendar_ui
 					));
 				}
 			}
-			$content .= $indent."\t".'<div class="plannerDayScale '.$class.'" style="left: '.$left.'%; width: '.$day_width.'%;"'.
+			$content .= $indent."\t".'<div class="calendar_plannerDayScale '.$class.'" style="left: '.$left.'%; width: '.$day_width.'%;"'.
 				($holidays ? ' title="'.html::htmlspecialchars($holidays).'"' : '').'>'.$title."</div>\n";
 		}
 		$content .= $indent."</div>\n";		// end of plannerScale
@@ -2531,7 +2531,7 @@ class calendar_uiviews extends calendar_ui
 		$day_width = round(100 / 31,2);
 
 		// month scale with navigation
-		$content .= $indent.'<div class="plannerScale">'."\n";
+		$content .= $indent.'<div class="calendar_plannerScale">'."\n";
 
 		$title = lang(egw_time::to($this->first,'F')).' '.egw_time::to($this->first,'Y').' - '.
 			lang(egw_time::to($this->last,'F')).' '.egw_time::to($this->last,'Y');
@@ -2564,17 +2564,17 @@ class calendar_uiviews extends calendar_ui
 					'date'       => $next_year,
 				));
 
-		$content .= $indent."\t".'<div class="plannerMonthScale th" style="left: 0; width: 100%;">'.
+		$content .= $indent."\t".'<div class="calendar_plannerMonthScale th" style="left: 0; width: 100%;">'.
 				$title."</div>\n";
 		$content .= $indent."</div>\n";		// end of plannerScale
 
 		// day of month scale
-		$content .= $indent.'<div class="plannerScale">'."\n";
+		$content .= $indent.'<div class="calendar_plannerScale">'."\n";
 		$today = egw_time::to('now','d');
 		for($left = 0,$i = 0; $i < 31; $left += $day_width,++$i)
 		{
 			$class = $i & 1 ? 'row_on' : 'row_off';
-			$content .= $indent."\t".'<div class="plannerDayOfMonthScale '.$class.'" style="left: '.$left.'%; width: '.$day_width.'%;">'.
+			$content .= $indent."\t".'<div class="calendar_plannerDayOfMonthScale '.$class.'" style="left: '.$left.'%; width: '.$day_width.'%;">'.
 				(1+$i)."</div>\n";
 		}
 		$content .= $indent."</div>\n";		// end of plannerScale
@@ -2609,13 +2609,13 @@ class calendar_uiviews extends calendar_ui
 		}
 		$cell_width = round(100 / $hours * $decr,2);
 
-		$content .= $indent.'<div class="plannerScale">'."\n";
+		$content .= $indent.'<div class="calendar_plannerScale">'."\n";
 		for($t = $start,$left = 0,$i = 0; $i < $hours; $t += $decr*HOUR_s,$left += $cell_width,$i += $decr)
 		{
 			$title = date($this->cal_prefs['timeformat'] == 12 ? 'ha' : 'H',$t);
 
 			$class = $class == 'row_on' ? 'th' : 'row_on';
-			$content .= $indent."\t".'<div class="plannerHourScale '.$class.'" style="left: '.$left.'%; width: '.($cell_width).'%;">'.$title."</div>\n";
+			$content .= $indent."\t".'<div class="calendar_plannerHourScale '.$class.'" style="left: '.$left.'%; width: '.($cell_width).'%;">'.$title."</div>\n";
 		}
 		$content .= $indent."</div>\n";		// end of plannerScale
 
@@ -2625,7 +2625,7 @@ class calendar_uiviews extends calendar_ui
 	/**
 	 * Creates a row for one user or category, with a header (user or category name) and (multiple) rows with non-overlapping events
 	 *
-	 * Uses the eventRowWidget to display a row of non-overlapping events
+	 * Uses the calendar_eventRowWidget to display a row of non-overlapping events
 	 *
 	 * @param array $events to show
 	 * @param int $start start-time of the row
@@ -2637,10 +2637,10 @@ class calendar_uiviews extends calendar_ui
 	 */
 	function plannerRowWidget($events,$start,$end,$header,$class,$indent='')
 	{
-		$content = $indent.'<div class="plannerRowWidget '.$class.'">'."\n";
+		$content = $indent.'<div class="calendar_plannerRowWidget '.$class.'">'."\n";
 
 		// display the row-header
-		$content .= $indent."\t".'<div class="plannerRowHeader">'.$header."</div>\n";
+		$content .= $indent."\t".'<div class="calendar_plannerRowHeader">'.$header."</div>\n";
 
 		// sorting the events in non-overlapping rows
 		$rows = array(array());
@@ -2653,7 +2653,7 @@ class calendar_uiviews extends calendar_ui
 		}
 		//echo $header; _debug_array($rows);
 		// display the rows
-		$content .= $indent."\t".'<div class="eventRows"';
+		$content .= $indent."\t".'<div class="calendar_eventRows"';
 
 		if ($this->sortby == 'month' && ($days = date('j',$end)) < 31)
 		{
@@ -2676,7 +2676,7 @@ class calendar_uiviews extends calendar_ui
 		if ($this->sortby == 'month' && $days < 31)
 		{
 			// add a filler for non existing days in that month
-			$content .= $indent."\t".'<div class="eventRowsFiller"'.
+			$content .= $indent."\t".'<div class="calendar_eventRowsFiller"'.
 				' style="left:'.(15+$width).'%; width:'.(85-$width).'%;" ></div>'."\n";
 		}
 		$content .= $indent."</div>\n";		// end of the plannerRowWidget
@@ -2702,7 +2702,7 @@ class calendar_uiviews extends calendar_ui
 			$class = trim(str_replace(array('row_on','row_off'),'',$class));
 			if ($class)	// no regular weekday
 			{
-				$content .= $indent.'<div class="eventRowsMarkedDay '.$class.
+				$content .= $indent.'<div class="calendar_eventRowsMarkedDay '.$class.
 					'" style="left: '.$left.'%; width:'.$day_width.'%;"'.
 					($holidays ? ' title="'.html::htmlspecialchars($holidays).'"' : '').
 					' ></div>'."\n";
@@ -2724,7 +2724,7 @@ class calendar_uiviews extends calendar_ui
 	 */
 	function eventRowWidget($events,$start,$end,$indent='')
 	{
-		$content = $indent.'<div class="eventRowWidget">'."\n";
+		$content = $indent.'<div class="calendar_eventRowWidget">'."\n";
 
 		foreach($events as $event)
 		{
@@ -2807,7 +2807,7 @@ class calendar_uiviews extends calendar_ui
 		$width = $this->_planner_pos($event['end'],$start,$end) - $left;
 		$color = $data['color'] ? $data['color'] : 'gray';
 
-		return $indent.'<div class="plannerEvent'.($data['private'] ? 'Private' : '').'" style="left: '.$left.
+		return $indent.'<div class="calendar_plannerEvent'.($data['private'] ? 'Private' : '').'" style="left: '.$left.
 			'%; width: '.$width.'%; background-color: '.$color.';"'.$data['popup'].' '.
 			html::tooltip($data['tooltip'],False,array('BorderWidth'=>0,'Padding'=>0)).'>'."\n".$data['html'].$indent."</div>\n";
 	}

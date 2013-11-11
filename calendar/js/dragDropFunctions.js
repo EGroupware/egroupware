@@ -66,7 +66,7 @@ function dropEvent()
 			dd.obj.div.innerHTML = dd.obj.oldInnerHTML;
 		}
 
-		// restore old width (calEvent width = 100%)
+		// restore old width (calendar_calEvent width = 100%)
 		dd.obj.div.style.width = "100%";
 
 		dd.obj.moveTo(dd.obj.defx,dd.obj.defy);

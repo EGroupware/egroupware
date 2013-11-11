@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
+	<template id="calendar.list.dates" template="" lang="" group="0" version="1.3.001">
+		<hbox>
+			<description value="Start"/>
+			<date id="startdate"/>
+			<description value="End"/>
+			<date id="enddate"/>
+		</hbox>
+	</template>
 	<template id="calendar.list.rows" template="" lang="" group="0" version="1.9.004">
 		<grid width="100%">
 			<columns>
@@ -122,8 +130,8 @@
 					<html id="css" span="all"/>
 				</row>
 				<row disabled="!@msg">
-					<description align="center" id="msg" no_lang="1" span="all" class="redItalic"/>
-					<description align="center" id="msg" no_lang="1" class="redItalic"/>
+					<description align="center" id="msg" no_lang="1" span="all" class="message"/>
+					<description align="center" id="msg" no_lang="1" class="message"/>
 				</row>
 				<row>
 					<nextmatch id="nm" template="calendar.list.rows" span="all"/>

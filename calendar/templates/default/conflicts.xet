@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="calendar.conflicts" template="" lang="" group="0" version="1.0.1.001">
-		<description value=" Scheduling conflict" class="size120b"/>
+		<description value=" Scheduling conflict" class="calendar_size120b"/>
 		<grid>
 			<columns>
 				<column/>

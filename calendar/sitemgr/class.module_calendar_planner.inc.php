@@ -241,7 +241,7 @@ class module_calendar_planner extends Module
 		}
 		else
 		{
-			$html .= '<div class="redItalic" align="center">'.lang('No owner selected').'</div>';
+			$html .= '<div class="message" align="center">'.lang('No owner selected').'</div>';
 		}
 
 		return $html;
