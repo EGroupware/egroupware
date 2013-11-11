@@ -130,8 +130,10 @@ contacts and account contact-data to sql	admin	de	Kontakte und Kontaktdaten der 
 contacts to ldap	admin	de	Kontakte nach LDAP
 contacts to ldap, account contact-data to sql	admin	de	Kontakte nach LDAP, Kontaktdaten der Benutzer nach SQL
 contains	addressbook	de	beinhaltet
+copied	addressbook	de	kopiert
 copied by %1, from record #%2.	addressbook	de	Kopiert von %1, vom Datensatz Nr. %2.
 copy a contact and edit the copy	addressbook	de	Kopiert einen Kontakt und bearbeitet dann die Kopie
+copy instead of move	addressbook	de	Kopieren statt verschieben
 copy your changes to the clipboard, %1reload the entry%2 and merge them.	addressbook	de	Kopieren Sie Ihre Änderungen in die Zwischenablage, %1laden Sie den Eintrag neu%2 und fügen diese wieder ein.
 country	common	de	Land
 country (private)	addressbook	de	Land (Privat)
