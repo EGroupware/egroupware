@@ -279,7 +279,8 @@ class egw_include_mgr
 	private function translate_params($package, $file, $app)
 	{
 		if ($package[0] == '/' && (is_readable(EGW_SERVER_ROOT.(parse_url($path = $package, PHP_URL_PATH))) ||
-				is_readable(EGW_SERVER_ROOT.($path = $package))) ||
+			is_readable(EGW_SERVER_ROOT.($path = $package))) ||
+			$package == '.' && is_readable(EGW_SERVER_ROOT.($path="/$app/js/$file.js")) ||
 			is_readable(EGW_SERVER_ROOT.($path="/$app/js/$package/$file.js")) ||
 			$app != 'phpgwapi' && is_readable(EGW_SERVER_ROOT.($path="/phpgwapi/js/$package/$file.js")))
 		{
