@@ -100,8 +100,8 @@ class addressbook_export_contacts_csv implements importexport_iface_export_plugi
 					}
 					continue;
 				}
-
-				if(strpos($field, '#') !== 0)
+				// Custom fields & listed are not filtered with contact_ prefix
+				if(strpos($field, '#') !== 0 && !in_array($field, array('tid')))
 				{
 					$field = 'contact_'.$field;
 				}
