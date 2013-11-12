@@ -821,6 +821,9 @@ class infolog_ui
 		//apply infolog_filter2_change javascript method (show/hide details each rows) over onchange filter2
 		$values['nm']['filter2_onchange'] = "app.infolog.filter2_change();";
 
+		// Allow saving parent ID into favorites
+		$values['nm']['favorites'] = array('action','action_id');
+		
 		// Allow add actions even when there's no rows
 		$values['nm']['placeholder_actions'] = array('new');
 
@@ -855,7 +858,6 @@ class infolog_ui
 		$persist['called_as'] = $called_as;
 		$persist['own_referer'] = $own_referer;
 		$values['nm']['csv_fields'] = true;		// get set in get_rows to not include all custom fields
-		$values['nm']['favorites'] = true;
 
 		// store whole $values[nm] in etemplate request
 		unset($values['nm']['rows']);
