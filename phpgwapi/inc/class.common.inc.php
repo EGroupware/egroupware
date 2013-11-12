@@ -913,7 +913,7 @@ class common
 	 */
 	public static function delete_image_map()
 	{
-		$templates = array('idots', 'jerryr', 'jdots');
+		$templates = array('idots', 'jerryr', 'jdots', 'pixelegg');
 		if (($template_set = $GLOBALS['egw_info']['user']['preferences']['common']['template_set']) && !in_array($template_set, $templates))
 		{
 			$templates[] = $template_set;
