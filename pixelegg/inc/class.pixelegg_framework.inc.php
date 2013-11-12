@@ -24,15 +24,14 @@ class pixelegg_framework extends jdots_framework
 	const APP = 'pixelegg';
 
 	/**
-	* Constructor
-	*
-	* @param string $template='pixelegg' name of the template
-	* @return idots_framework
-	*/
-	function __construct($template='pixelegg')
+	 * Constructor
+	 *
+	 * Overwritten to set own app/template name (parent can NOT use static::APP!)
+	 *
+	 * @param string $template='pixelegg' name of the template
+	 */
+	function __construct($template=self::APP)
 	{
 		parent::__construct($template);		// call the constructor of the extended class
-
-		$this->template_dir = '/pixelegg';		// we are packaged as an application
 	}
 }
