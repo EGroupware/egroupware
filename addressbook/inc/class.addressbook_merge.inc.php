@@ -149,7 +149,7 @@ class addressbook_merge extends bo_merge
 	public function show_replacements()
 	{
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Replacements for inserting contacts into documents');
-		$GLOBALS['egw_info']['flags']['nonavbar'] = false;
+		$GLOBALS['egw_info']['flags']['nonavbar'] = (bool)$_GET['nonavbar'];
 		common::egw_header();
 
 		echo "<table width='90%' align='center'>\n";
