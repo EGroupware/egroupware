@@ -539,12 +539,13 @@ app.classes.filemanager = AppJS.extend(
 	 * This is a callback from nextmatch to prevent the default link action, and just upload instead.
 	 *
 	 * @param {string} row_uid UID of the row the files were dropped on
-	 * @param {File[]} Array of Files
+	 * @param {et2_nextmatch} widget widget that got the drop
 	 */
-	filedrop: function(row_uid, files)
+	filedrop: function(row_uid, widget ,files)
 	{
 		var self = this;
 		var data = egw.dataGetUIDdata(row_uid);
+		files = files || window.event.dataTransfer.files;
 
 		var path = data.data.mime == "httpd/unix-directory" ? data.data.path : this.get_path();
 		var widget = this.et2.getWidgetById('upload');
