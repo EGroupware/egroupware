@@ -2493,7 +2493,6 @@ a.textSidebox {
  * @package phpgwapi
  * @version $Id$
  */
-@charset "UTF-8";
 @font-face {
   font-family: 'entypo-icon-font';
   src: url("../fonts/entypo-icon-font/entypo-icon-font.eot");
@@ -7325,7 +7324,7 @@ div.et2_container div table.et2_grid tbody tr.footer-toolbar select.et2_selectbo
  *
  * Version 08.2013
  * Author Stefan Reinhardt
- * 
+ *
  */
 /* #################################################
 * FOOTER

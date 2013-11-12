@@ -2,10 +2,6 @@
 /**
  * EGroupware: Stylite Pixelegg template
  *
- * et2 Messages
- *
- * Please do NOT change css-files directly, instead change less-files and compile them!
- *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
@@ -29,5 +25,12 @@ $GLOBALS['egw_info']['template']['pixelegg']['icon'] = "pixelegg/images/logo.png
 $GLOBALS['egw_info']['template']['pixelegg']['maintainer'] = array(
    array('name' => 'Stylite AG', 'url' => 'http://www.stylite.de/')
 );
-$GLOBALS['egw_info']['template']['pixelegg']['description'] = "Stylite is a new jQuery based template set for EGroupware EPL.";
+$GLOBALS['egw_info']['template']['pixelegg']['description'] = "Pixelegg EGroupware template based on Stylite template using jQuery.";
 $GLOBALS['egw_info']['template']['pixelegg']['windowed'] = true;
+
+/* Dependencies for this template to work */
+$GLOBALS['egw_info']['template']['pixelegg']['depends'][] = array(
+	'appname' => 'jdots',
+	'versions' => Array('1.0')
+);
+
