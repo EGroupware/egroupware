@@ -78,7 +78,7 @@ Images lower down in above hierarchy are NOT to be copied to more specific direc
 Automatic loading of CSS styles:
 -------------------------------
 a) theme from template, eg. phpgapi/templates/idots/css/idots.css
-b) etemplate/templates/default/etemplate(2).css (only for eTemplate applications)
+b) etemplate/templates/default/(app|etemplate2).css (only for eTemplate applications)
 c) either:
    - apps template specific app.css eg. $appname/templates/$template/app.css or
    - apps default $appname/templates/default/app.css
