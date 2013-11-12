@@ -115,11 +115,11 @@
 				</row>
 				<row class="row">
 					<description value="planned time" for="info_planned_time"/>
-					<date-duration id="info_planned_time" options=",$cont[duration_format]"/>
+					<date-duration id="info_planned_time" display_format="$cont[duration_format]" hours_per_day="$cont[hours_per_workday]"/>
 				</row>
 				<row class="row">
 					<description value="Re-planned time" for="info_replanned_time"/>
-					<date-duration id="info_replanned_time" options=",$cont[duration_format]"/>
+					<date-duration id="info_replanned_time" display_format="$cont[duration_format]" hours_per_day="$cont[hours_per_workday]"/>
 				</row>
 				<row class="row" valign="top" height="60%">
 					<description statustext="Leave blank to get the used time calculated by timesheet entries" value="used time" for="info_used_time"/>

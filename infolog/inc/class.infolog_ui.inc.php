@@ -110,7 +110,8 @@ class infolog_ui
 		if ($GLOBALS['egw_info']['apps']['projectmanager'])
 		{
 			$pm_config = config::read('projectmanager');
-			$this->duration_format = str_replace(',','',$pm_config['duration_units']).','.$pm_config['hours_per_workday'];
+			$this->duration_format = str_replace(',','',implode('',$pm_config['duration_units']));
+			$this->hours_per_workday = $pm_config['hours_per_workday'];
 			unset($pm_config);
 		}
 		$this->filters =& $this->bo->filters;
@@ -1983,6 +1984,7 @@ class infolog_ui
 			!isset($GLOBALS['egw_info']['user']['apps']['admin']);
 
 		$content['duration_format'] = $this->duration_format;
+		$content['hours_per_workday'] = $this->hours_per_workday;
 		if ($this->prefs['show_id']) $content['info_number'] = $info_id;
 
 		$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $content['old_pm_id'];
