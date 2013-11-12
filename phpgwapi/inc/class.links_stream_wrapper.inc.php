@@ -18,7 +18,7 @@
  */
 if (!class_exists('links_stream_wrapper_parent',false))
 {
-	class links_stream_wrapper_parent extends sqlfs_stream_wrapper {}
+	class links_stream_wrapper_parent extends stylite_versioning_stream_wrapper {}
 }
 
 /**

@@ -2,7 +2,7 @@ Title: jqPlot Readme
 
 Pure JavaScript plotting plugin for jQuery.
 
-To learn how to use jqPlot, start with the Basic Unsage Instructions below.  Then read the
+To learn how to use jqPlot, start with the Basic Usage Instructions below.  Then read the
 usage.txt and jqPlotOptions.txt files included with the distribution.
 
 The jqPlot home page is at <http://www.jqplot.com/>.
@@ -21,7 +21,7 @@ Bugs, issues, feature requests: <http://www.bitbucket.org/cleonello/jqplot/issue
 
 Basic Usage Instructions:
 
-jqPlot requires jQuery (1.4+ required for certain features). jQuery 1.4.4 is included in 
+jqPlot requires jQuery (1.4+ required for certain features). jQuery 1.9.1 is included in 
 the distribution.  To use jqPlot include jQuery, the jqPlot jQuery plugin, the jqPlot css file and 
 optionally the excanvas script to support IE version prior to IE 9 in your web page:
 
@@ -46,7 +46,7 @@ to get a description of the various build targets.
 
 Legal Notices:
 
-Copyright (c) 2009-2010 Chris Leonello
+Copyright (c) 2009-2013 Chris Leonello
 jqPlot is currently available for use in all personal or commercial projects 
 under both the MIT and GPL version 2.0 licenses. This means that you can 
 choose the license that best suits your project and use it accordingly. 
