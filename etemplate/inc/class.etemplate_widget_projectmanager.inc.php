@@ -46,21 +46,22 @@ class etemplate_widget_projectmanager extends etemplate_widget_transformer
 		if ($this->type)
 		{
 			$pm_widget = new projectmanager_widget();
-			if($this->is_readonly($cname, $form_name))
-			{
-				// Go direct to get full erole list
-				$eroles = new projectmanager_eroles_bo();
-				foreach((array)$eroles->search(array(),false,'role_title ASC','','',false,'AND',false,array('pm_id'=>array(0,$eroles->pm_id))) as $erole)
-				{
-					self::$request->sel_options[$form_name][$erole['role_id']] = array(
-						'label' => $erole['role_description'],
-						'title' => lang('Element role title').': '.$erole['role_title'].$eroles->get_info($erole['role_id']),
-					);
-				}
-			}
+					if($this->is_readonly($cname, $form_name))
+					{
+						// Go direct to get full erole list
+						$eroles = new projectmanager_eroles_bo();
+						foreach((array)$eroles->search(array(),false,'role_title ASC','','',false,'AND',false,array('pm_id'=>array(0,$eroles->pm_id))) as $erole)
+						{
+							self::$request->sel_options[$form_name][$erole['role_id']] = array(
+								'label' => $erole['role_description'],
+								'title' => lang('Element role title').': '.$erole['role_title'].$eroles->get_info($erole['role_id']),
+							);
+						}
+					}
 			$cell = $this->attrs;
 			$cell['type']=$this->type;
 			$cell['readonly'] = false;
+			$template = self::$request;
 			$pm_widget->pre_process($form_name, self::get_array(self::$request->content, $form_name),
 				$cell,
 				$garbage,
