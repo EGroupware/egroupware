@@ -20,7 +20,7 @@
 /**
  * Favorites widget, designed for use with a nextmatch widget
  *
- * The primary control is a split/dropdown button.  Clicking on the left side of the button filters the 
+ * The primary control is a split/dropdown button.  Clicking on the left side of the button filters the
  * nextmatch list by the user's default filter.  The right side of the button gives a list of
  * saved filters, pulled from preferences.  Clicking a filter from the dropdown list sets the
  * filters as saved.
@@ -28,7 +28,7 @@
  * Favorites can also automatically be shown in the sidebox, using the special ID favorite_sidebox.
  * Use the following code to generate the sidebox section:
  *  display_sidebox($appname,lang('Favorites'),array(
- *	array(  
+ *	array(
  *		'no_lang' => true,
  *		'text'=>'<span id="favorite_sidebox"/>',
  *		'link'=>false,
@@ -41,7 +41,7 @@
  * Favorites are implemented by saving the values for [column] filters.  Filters are stored
  * in preferences, with the name favorite_<name>.  The favorite favorite used for clicking on
  * the filter button is stored in nextmatch-<columnselection_pref>-favorite.
- * 
+ *
  * @augments et2_dropdown_button
  */
 var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
@@ -88,7 +88,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @memberOf et2_favorites
 	 */
 	init: function() {
@@ -113,7 +113,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 
 		// It helps to have the ID properly set before we get too far
 		this.set_id(this.id);
-		
+
 		this.init_filters(this);
 
 		this.menu.addClass("favorites");
@@ -126,7 +126,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		{
 			this.set_value(this.options.value);
 		}
-			
+
 		var self = this;
 
 		// Initialize sidebox
@@ -136,7 +136,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		$j(this.menu).on("click","input:radio", function(event){
 			// Don't do the menu
 			event.stopImmediatePropagation();
-			
+
 			// Save as default favorite - used when you click the button
 			self.egw().set_preference(self.options.app,self.options.default_pref,$j(this).val());
 			self.preferred = $j(this).val();
@@ -148,7 +148,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 					.replaceWith("<img class='sideboxstar'/>");
 				$j("li[data-id='"+self.preferred+"'] img",self.sidebox_target)
 					.replaceWith("<div class='ui-icon ui-icon-heart'/>");
-				
+
 			}
 
 			// Close the menu
@@ -282,9 +282,9 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		var options = {};
 		for(var name in filters)
 		{
-			options[name] = "<input type='radio' name='"+this.internal_ids.menu+"[button][favorite]' value='"+name+"' title='" + 
+			options[name] = "<input type='radio' name='"+this.internal_ids.menu+"[button][favorite]' value='"+name+"' title='" +
 				this.egw().lang('Set as default') + "'/>"+
-				(filters[name].name != undefined ? filters[name].name : name) + 
+				(filters[name].name != undefined ? filters[name].name : name) +
 				(filters[name].group != false ? " ♦" :"") +
 				(filters[name].group != false && !this.is_admin || name == 'blank' ? "" :
 				"<div class='ui-icon ui-icon-trash' title='" + this.egw().lang('Delete') + "'/>");
@@ -317,14 +317,14 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 
 		}
 	},
-	
+
 	/**
 	 * Find sidebox, if not found yet, and register handlers
 	 */
 	_init_sidebox: function()
 	{
 		// Sometimes the sidebox is not loaded when the template is created (jdots)
-		if(!this.sidebox_target || this.sidebox_target.length == 0)
+		if(this.options && (!this.sidebox_target || this.sidebox_target.length == 0))
 		{
 			this.sidebox_target = $j("#"+this.options.sidebox_target);
 			if(this.sidebox_target.length == 0 && egw_getFramework() != null)
@@ -335,7 +335,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			if(this.sidebox_target.length == 0)
 			{
 				// Still no sidebox - might be loaded via ajax later, so we'll do this on first mouse over
-				$j('body').on('mouseover','#'+this.options.sidebox_target, 
+				$j('body').on('mouseover','#'+this.options.sidebox_target,
 					jQuery.proxy(function(e) {
 						// Set up handlers & such
 						this._init_sidebox();
@@ -361,7 +361,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			});
 		}
 	},
-		
+
 	set_nm_filters: function(filters)
 	{
 		if(this.nextmatch)
@@ -387,7 +387,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 		}
 	},
 
-	
+
 	// Apply the favorite when you pick from the list
 	change: function(selected_node) {
 		this.value = $j(selected_node).attr("data-id");
@@ -407,7 +407,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 					this.popup.current_filters[this.options.filters[i]] = this.nextmatch.options.settings[this.options.filters[i]];
 				}
 			}
-		
+
 			// Remove some internal values
 			delete this.popup.current_filters[this.id];
 			if(this.popup.group != undefined)
@@ -423,7 +423,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			var add_to_popup = function(arr) {
 				filter_list.push("<ul>");
 				jQuery.each(arr, function(index, filter) {
-					filter_list.push("<li id='index'><span class='filter_id'>"+index+"</span>" + 
+					filter_list.push("<li id='index'><span class='filter_id'>"+index+"</span>" +
 						(typeof filter != "object" ? "<span class='filter_value'>"+filter+"</span>": "")
 					);
 					if(typeof filter == "object" && filter != null) add_to_popup(filter);
@@ -440,7 +440,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 				.hide()
 				.siblings(".ui-icon-circle-plus")
 				.removeClass("ui-icon-circle-minus");
-			
+
 			// Popup
 			this.popup.dialog("open");
 
@@ -463,13 +463,13 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			this.popup.group.free();
 			delete this.popup;
 		}
-		
+
 		// Create popup
 		this.popup = $j('<div id="'+this.dom_id + '_nm_favorites_popup" title="' + egw().lang("New favorite") + '">\
 			<form>\
-			<label for="name">'+ 
+			<label for="name">'+
 				this.egw().lang("name") +
-			'</label>' + 
+			'</label>' +
 
 			'<input type="text" name="name" id="name"/>\
 			<div id="'+this.dom_id+'nm_favorites_popup_admin"/>\
@@ -511,7 +511,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 				var safe_name = name.val().replace(/[^A-Za-z0-9-_]/g,"_");
 				self.stored_filters[safe_name] = {
 					name: name.val(),
-					group: (typeof self.popup.group != "undefined" && 
+					group: (typeof self.popup.group != "undefined" &&
 						self.popup.group.get_value() ? self.popup.group.get_value() : false),
 					filter: self.popup.current_filters
 				};
@@ -556,7 +556,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			self.popup.group.set_value(null);
 			$j(this).dialog("close");
 		};
-			
+
 		this.popup.dialog({
 			autoOpen: false,
 			modal: true,
