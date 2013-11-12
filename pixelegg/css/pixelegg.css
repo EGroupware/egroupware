@@ -793,7 +793,7 @@ td.lettersearch {
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package phpgwapi
  * @version $Id$
  */
@@ -1534,7 +1534,7 @@ button#mail-compose_button[id*="send"]:focus,
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package phpgwapi
  * @version $Id$
  */
@@ -1837,7 +1837,7 @@ h6 {
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package phpgwapi
  * @version $Id$
  */
@@ -2493,6 +2493,7 @@ a.textSidebox {
  * @package phpgwapi
  * @version $Id$
  */
+@charset "UTF-8";
 @font-face {
   font-family: 'entypo-icon-font';
   src: url("../fonts/entypo-icon-font/entypo-icon-font.eot");
@@ -6388,7 +6389,7 @@ div.egwGridView_scrollarea {
   left: 196px;
 }
 #egw_fw_topmenu_slide .slidedown {
-  background-image: url("images/slidedown.png");
+  background-image: url("../images/slidedown.png");
   background-position: center center;
   height: 15px;
   width: 15px;
@@ -6397,7 +6398,7 @@ div.egwGridView_scrollarea {
   margin-top: 0px;
 }
 #egw_fw_topmenu_slide .slideup {
-  background-image: url("images/slideup.png");
+  background-image: url("../images/slideup.png");
   background-position: center center;
   height: 15px;
   width: 15px;
@@ -6415,7 +6416,7 @@ div.egwGridView_scrollarea {
 		 * */
 }
 #egw_fw_topmenu_addons #egw_fw_logout {
-  background-image: url(../../phpgwapi/templates/pxe/images/logout.png);
+  background-image: url(../images/logout.png);
   background-size: 16px 16px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -6442,7 +6443,7 @@ div.egwGridView_scrollarea {
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
 }
 #egw_fw_topmenu_addons #egw_fw_print {
-  background-image: url(../../phpgwapi/templates/pxe/images/print.png);
+  background-image: url(../images/print.png);
   background-size: 16px 16px;
   background-position: center center;
   background-repeat: no-repeat;
@@ -6761,6 +6762,10 @@ div.egwGridView_scrollarea {
   padding-top: 14px;
   margin-right: 5px;
   min-height: 50px;
+}
+.egw_fw_ui_category_content img {
+  height: 16px;
+  width: 16px;
 }
 .egw_fw_ui_category_content:hover {
   background-color: #ffffff;
@@ -7324,7 +7329,7 @@ div.et2_container div table.et2_grid tbody tr.footer-toolbar select.et2_selectbo
  *
  * Version 08.2013
  * Author Stefan Reinhardt
- *
+ * 
  */
 /* #################################################
 * FOOTER
