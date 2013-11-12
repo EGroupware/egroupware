@@ -89,8 +89,8 @@ More information about syntax can be found under http://lesscss.org/
 EGroupware requires at least version 1.4 as we use @include (require) syntax to fetch just definitions
 from phpgwapi/templates/default/def_*.less.
 
-Currently commiter is responsible to generate all CSS files depending on a change .less file
-and also to made changes in .less file not .css file, if a .less file exits.
+Currently commiter is responsible to generate all CSS files depending on a changed .less file
+and also to modify .less files not .css files, if a .less file exits.
 
 One way to do so is automatic with NetBeans 7.4:
 -----------------------------------------------
@@ -98,15 +98,20 @@ One way to do so is automatic with NetBeans 7.4:
 
       https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager
 
-   a) for Mac OS X eg. use: port install node npm
+   a) for Mac OS X using port: port install node npm
       You need to symlink node to default location: ln -s /opt/local/bin/node /usr/bin/
-   b) Ubuntu 13.10 still includes too old node version (at least for less v. 1.5.0),
+
+   b) for Mac OS X using installer from http://nodejs.org/download/
+      You need to symlink node as follows: ln -s /usr/local/bin/node /usr/bin/
+
+   c) Ubuntu 13.10 still includes too old node version (at least for less v. 1.5.0),
       so follow above tutorial using Chris Lea's node repository
 
 2. install lessc via npm: npm install -g less
 
 3. Got to: NetBeans preferences >> Miscellanceous >> CSS Preprocessor and set:
-   Less path: /usr/bin/lessc or /opt/local/bin/lessc depending on your way of installing lessc
+   Less path: /usr/bin/lessc, /opt/local/bin/lessc or /usr/local/bin/lessc depending
+   on your way of installing lessc
    Uncheck "Generate extra information (debug)"
 
 4. Open EGroupware project configuration in NetBeans (right click on project >> properties)
