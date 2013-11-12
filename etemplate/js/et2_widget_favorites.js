@@ -396,6 +396,16 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			// Get current filters
 			this.popup.current_filters = $j.extend({},this.nextmatch.activeFilters);
 
+			// Add in extras
+			for(var extra in this.options.filters)
+			{
+				// Don't overwrite what nm has, chances are nm has more up-to-date value
+				if(typeof this.popup.current_filters == 'undefined')
+				{
+					this.popup.current_filters[extra] = this.nextmatch.options.settings[extra];
+				}
+			}
+
 			// Skip columns for now
 			delete this.popup.current_filters.selcolumns;
 
