@@ -1,8 +1,16 @@
 /**
- * Styles for etemplate2 widgets
+ * EGroupware - CSS Styles used by eTemplate2 widgets
  *
- * @version: $Id: etemplate2.css 43620 2013-08-27 20:24:55Z nathangray $
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package etemplate
+ * @version $Id$
  */
+
+@import (reference) "../../../phpgwapi/templates/default/def_buttons.less";
+@import (reference) "../../../phpgwapi/templates/default/def_design_pattern_color_font_shadow.less";
 
 /**
  * Top level
@@ -11,7 +19,7 @@
 	/*margin: 10px;
 	border: 1px solid gray;*/
 	padding: 0px;
-	background-color: white;
+	background-color: transparent;
 	height: 100%;
 }
 .et2_container > div:not([class]) {
@@ -43,6 +51,7 @@ div.et2_hbox div.et2_hbox {
 }
 div.et2_hbox {
 	white-space: nowrap;
+
 }
 div.et2_hbox>* {
 	text-align: left;
@@ -169,18 +178,23 @@ a.et2_url.url {
 
 	text-shadow: 1px 1px #E0E0E0;
 }
-.et2_button_text, input[type=button] {
-	background-color: #E0E0E0;
-	background-image: url(images/gradient01.png);
-	background-position: center;
-	background-repeat: repeat-x;
 
-	margin: 5px;
-	padding: 3px;
+// in Nextmatch definiert
+//.et2_button_text, input[type=button] {
+//	background-color: #E0E0E0;
+//	background-image: url(images/gradient01.png);
+//	background-position: center;
+//	background-repeat: repeat-x;
+//
+//	margin: 5px;
+//	padding: 3px;
+//
+//	border: 1px solid silver;
+//	color: #101010;
+//}
 
-	border: 1px solid silver;
-	color: #101010;
-}
+
+
 .et2_button_icon {
 	border: none;
 	background: transparent;
@@ -254,7 +268,7 @@ button.et2_button_text:focus, input[type=button]:focus {
  * Multi-select widget
  */
 .et2_selectbox .ui-widget-header {
-	padding: 0px 6px 0px 6px;
+	padding: 0px 6px 0px 10px;
 	text-align: center;
 }
 .et2_selectbox .ui-widget-header ul {
@@ -287,12 +301,15 @@ button.et2_button_text:focus, input[type=button]:focus {
 .et2_selectbox .ui-multiselect-checkboxes li {
 	margin: 0px;
 	clear: both;
-	padding-left: 26px;
-	padding-right: 3px;
+//	padding-left: 26px;
+//	padding-right: 3px;
 	text-decoration: none;
 	list-style-image: none;
 	list-style-type: none;
-	text-indent: -26px;
+//	text-indent: -26px;
+//	max-width: 85%;
+
+//	&:hover {background-color: @egw_color_2_e;}
 }
 .et2_selectbox .ui-multiselect-checkboxes ul {
 	margin: 0px auto;
@@ -308,7 +325,10 @@ button.et2_button_text:focus, input[type=button]:focus {
 
 .et2_selectbox .ui-multiselect-checkboxes label {
 	display: block;
-	border: 1px solid transparent;
+	border: 0px solid transparent;
+	padding: 0.1em 0.2em;
+
+//	&:hover {background-color: @egw_color_2_e;}
 }
 .et2_selectbox input[type="checkbox"] {
 	margin: 3px;
@@ -348,7 +368,7 @@ span.et2_date {
 	min-width: 130px;
 }
 span.et2_date input.et2_date {
-	min-width: 16.5ex;
+	min-width: 21.5ex;
 	background-repeat: no-repeat;
 	background-position: top right;
 	background-size: contain;
@@ -393,7 +413,7 @@ action buttons, left aligned for "extra" controls
 }
 */
 
-/** 
+/**
  * Diff widget
  */
 .diff thead,.author {
@@ -526,7 +546,7 @@ div.et2_link_entry input.ui-autocomplete-input {
 /* Link to */
 .et2_link_to {
 	width: 350px;
-	overflow-x: show;
+	overflow-x: visible;
 }
 .et2_link_to button {
 	display: inline;
@@ -634,50 +654,84 @@ ul.et2_link_string {
 
 .et2_tabflag {
 	display: inline-block;
-	margin-right: 5px;
-	padding: 5px;
+	margin: 1em 3px -1px 0;
+	padding: 4px;
 	cursor: pointer;
-	border: 1px solid silver;
+	.border-radius(3px,0,0,3px);
+//	.bordered (@egw_color_2_c, @egw_color_2_c, #bfbfbf, @egw_color_2_c);
 
-	background-color: #E0E0E0;
-	background-image: url(images/gradient01.png);
-	background-position: center;
-	background-repeat: repeat-x;
+	.background-color-25-gray;
+//	.border_radius_button_normal;
+//	.border_normal;
+	-webkit-box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow:  1px 0px 0px rgba(0, 0, 0, 0.5);
+	box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
+
 
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	user-select: none;
+
+	&:hover {
+			.color-5-gray;
+//			border: 1px solid gray;
+			.background-color-25-gray;
+			}
+
+	&:active{
+			.background-color-0-gray;
+//			border-width: 3px 1px 0px 0;
+//			border-style: solid;
+//			border-spacing: 0px;
+//			border-color: @active_button_border_bottom;
+			.color-0-gray;
+		}
+
 }
 
-.et2_tabflag:hover {
-	color: #050505;
-	border: 1px solid gray;
-	background-color: #D0D0EE;
-}
 
-.et2_tabflag:active {
-	background-image: url(images/gradient02.png);
-	background-color: #D0D0E0;
+.et2_tabflag.active {
+//	.background-color-50-gray !important;
+//	border-width: 8px 7px 0px 6px;
+//	border-style: solid;
+	border-spacing: 0px;
+//	border-color: @active_button_border_bottom;
+//	.color-0-gray;
+	background-color: white;
+	.color-100-gray;
+	border-width: 1px 1px 0px 1px;
+	border-style: solid;
+	.border-color-25-gray;
+	&:hover {
+			.color-100-gray;
+//			border: 1px solid gray;
+			background-color: white;
+			}
 }
 
 .et2_tabs {
 	border-width: 0px 1px 1px 1px;
 	border-style: solid;
-	border-color: silver;
+	.border-color-25-gray;
 	padding: 5px;
 	overflow-y: auto;
+	.background-color-dialog-container;
+	.border_radius_button_normal;
 }
 
-.et2_tabflag.active {
-	border-bottom: 1px solid white;
-	background-color: white;
-	background-image: none;
-}
 
 .et2_tabheader {
-	background-image: url(images/tab_header_bg.png);
+	.background-color-25-gray;
 	background-position: bottom;
 	background-repeat: repeat-x;
+	padding-left: 0em;
+	border-bottom: 1px solid #bfbfbf;
+	margin: 0 2px;
+	:first-child {
+		margin-left: 0.3em;
+	}
+
+
 }
 
 /**
@@ -698,7 +752,10 @@ ul.et2_vfs {
 * Validation
 */
 [required] {
-	background-color: #ffffd0;
+	background-color: @egw_color_1_a;
+	input{
+//		border-color: #FFFFD0;
+	}
 }
 .invalid {
 	border: 1px solid #a6261d;
@@ -834,7 +891,7 @@ div.message.floating {
 }
 .nextmatch_header > .filters {
 	padding-left: 5px;
-} 
+}
 .nextmatch_header > .filters select {
 	margin-right: 2ex;
 }
@@ -847,8 +904,9 @@ div.message.floating {
 .et2_nextmatch .nextmatch_header {
 	border: none;
 	background-image: none;
-	background-color: transparent;
+//	background-color: transparent;
 	margin-bottom: 3px;
+//	margin-right: 3px;
 }
 .et2_nextmatch .nextmatch_header > .filters {
 	border: 1px solid silver;
@@ -877,52 +935,173 @@ div.message.floating {
 .nextmatch_header .favorites.ui-menu li.ui-menu-item a.ui-state-hover {
 	margin-left: 20px;
 }
-.favorites li span.ui-state-active {
-	border: none;
-}
-.favorites input, .favorites img {
-	margin-right: 1ex;
-}
-.favorites div.ui-icon-trash {
-	position: relative;
-	float:right;
-	display:none;
-}
-.favorites li:hover div.ui-icon {
-	display:inline-block;
-}
-.favorites .sideboxstar {
-	height: 9px;
-	display: inline-block;
-	padding: 0px 4px;
-	margin: 0px 5px;
 
-	/* TODO: This is template specific */
-	background-image: url(../../../phpgwapi/templates/idots/images/orange-ball.png);
-}
-.sidebox-favorites ul.favorites {
-	width: 99%;
-	padding: 0px;
-	border: none;
-	background: white;
-}
-.sidebox-favorites .ui-menu .ui-menu-item a {
-	line-height: inherit;
-	padding: 2px 0px;
-}
-.sidebox-favorites .ui-menu .ui-menu-item a:hover {
-	text-decoration: underline;
-}
-.sidebox-favorites .favorites div.ui-icon-heart{
-	position: relative;
-	float: left;
-	display:inline-block;
-	margin: -3px 1px 0px 1px;
-}
-.sidebox-favorites .favorites div.ui-icon-trash{
-	margin-top: -5px;
-	margin-right: 2px;
-}
+
+// Favoriten
+
+.favorites {
+
+			li {
+
+				&:hover {
+					div.ui-icon {
+									display:inline-block;
+								}
+						}
+
+				span.ui-state-active {
+										border: none;
+									}
+
+				}
+
+			input {margin-right: 1ex;}
+
+			img {
+					margin-right: 1ex; height: 16px; width: 16px;
+				}
+
+			div.ui-icon-trash {
+								position: relative;
+								float:right;
+								display:none;
+							}
+//			.sideboxstar {
+//							height: 9px;
+//							display: inline-block;
+//							padding: 0px 4px;
+//							margin: 0px 5px;
+//
+//							/* TODO: This is template specific */
+//							background-image: url(../../../phpgwapi/templates/idots/images/orange-ball.png);
+//						}
+
+} // Favoriten
+
+
+// sidebox-favorites
+
+.sidebox-favorites {
+				ul.favorites {
+								width: 99%;
+								padding: 0px;
+								border: none;
+								background: white;
+
+								li {
+
+									padding-left: 0 !important;
+									margin-left: -10px;
+									line-height: 1.5em;
+
+
+										img {
+											margin-right: 1ex;
+											height: 13px;
+											padding: 3px;
+											.Complete_Button_Icon_normal;
+
+
+											&:hover {height: 16px; .Complete_Button_Icon_hover ;}
+											}
+
+										img.sideboxstar {
+												margin-right: 1ex;
+												height: 16px;
+												.Complete_Button_Icon_normal;
+
+												&:hover {height: 16px; .Complete_Button_Icon_hover ;}
+
+										}
+
+
+
+									}
+
+							}
+
+				.ui-state-hover,
+				.ui-widget-content .ui-state-hover,
+				.ui-widget-header .ui-state-hover,
+				.ui-state-focus,
+				.ui-widget-content .ui-state-focus,
+				.ui-widget-header .ui-state-focus {
+					.bordered(1px, 1px, 1px,1px);
+					.border-color-10-gray;
+					background: transparent !important;
+					font-weight: bold;
+					.color-100-gray;
+				}
+
+				.ui-menu-icons {
+								.ui-menu-item {
+
+												a {
+												position: relative;
+												padding-left: 1em;
+												padding: 0.5em 1em 0.5em 0;
+
+												&:hover {.Complete_Button_Icon_hover ;}
+
+												}
+											}
+								}
+
+				ui-menu {
+
+						.ui-menu-item {
+
+											a {
+												line-height: inherit;
+												padding: 2px 0px;
+												padding-left: 0 !important;
+
+												&:hover {text-decoration: underline; .Complete_Button_Icon_hover ;}
+
+												img { height: 16px; width: 16px;}
+												}
+
+										}
+						}
+				div.ui-icon-heart{
+								position: relative;
+								float: left;
+								display:inline-block;
+								margin: -3px 1px 0px 1px;
+							}
+				div.ui-icon-trash{
+								margin-top: -5px;
+//					 			margin-right: 2px;
+
+
+//								background: transparent;
+
+								background-image:url(images/delete.png);
+								background-size: 16px 16px;
+								background-position: 0 0;
+
+								background-color: #e6e6e6;
+								-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+								-moz-box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+								box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+								border: 1px solid rgba(0,0,0,0.15);
+								-webkit-border-radius: 3px;
+								-moz-border-radius: 3px;
+								border-radius: 3px;
+								margin-right: 0.5em;
+								padding: 0px 2px 0 2px;
+								width: 10px;
+
+
+							}
+
+} // sidebox-favorites
+
+
+
+
+
+
 .nextmatch_sortheader {
 	color: #003075;
 	cursor: pointer;
@@ -954,7 +1133,7 @@ div.message.floating {
 }
 
 /**
- * Grid / nextmatch Hierarchy 
+ * Grid / nextmatch Hierarchy
  */
 /* Make sure arrow & cell content don't overlap */
 .egwGridView_grid span.arrow {
@@ -970,7 +1149,7 @@ div.message.floating {
 	margin-left: 10px;
 	border-left: 1px solid silver;
 }
-/** 
+/**
  * This class' margin-right is used to line up columns at each indent level
  * Classes level_# are created programmatically with margin-right * depth
  * Margin-right = -(indent + border)
@@ -1005,11 +1184,11 @@ div.et2_portlet {
 }
 .et2_portlet .ui-widget-header span.ui-icon {
 	display: inline-block;
-	float: right; 
+	float: right;
 }
 .et2_portlet .ui-widget-header span.ui-icon.ui-icon-gear {
 	display: inline-block;
-	float: left; 
+	float: left;
 }
 
 /**
@@ -1020,7 +1199,7 @@ div.et2_progress {
 	border: 1px solid black;
 	background-color: white;
 	width: 30px;
-	padding: 1px; 
+	padding: 1px;
 	margin: 2px;
 	text-align: left;
 }

@@ -1,7 +1,12 @@
 /**
- * Styles for etemplate2 widgets
+ * EGroupware - CSS Styles used by eTemplate2 widgets
  *
- * @version: $Id$
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package etemplate
+ * @version $Id$
  */
 /**
  * Top level
@@ -10,7 +15,7 @@
   /*margin: 10px;
 	border: 1px solid gray;*/
   padding: 0px;
-  background-color: white;
+  background-color: transparent;
   height: 100%;
 }
 .et2_container > div:not([class]) {
@@ -160,17 +165,6 @@ a.et2_url.url {
   font-size: 9pt;
   text-shadow: 1px 1px #E0E0E0;
 }
-.et2_button_text,
-input[type=button] {
-  background-color: #E0E0E0;
-  background-image: url(images/gradient01.png);
-  background-position: center;
-  background-repeat: repeat-x;
-  margin: 5px;
-  padding: 3px;
-  border: 1px solid silver;
-  color: #101010;
-}
 .et2_button_icon {
   border: none;
   background: transparent;
@@ -241,7 +235,7 @@ input[type=button]:focus {
  * Multi-select widget
  */
 .et2_selectbox .ui-widget-header {
-  padding: 0px 6px 0px 6px;
+  padding: 0px 6px 0px 10px;
   text-align: center;
 }
 .et2_selectbox .ui-widget-header ul {
@@ -274,12 +268,9 @@ input[type=button]:focus {
 .et2_selectbox .ui-multiselect-checkboxes li {
   margin: 0px;
   clear: both;
-  padding-left: 26px;
-  padding-right: 3px;
   text-decoration: none;
   list-style-image: none;
   list-style-type: none;
-  text-indent: -26px;
 }
 .et2_selectbox .ui-multiselect-checkboxes ul {
   margin: 0px auto;
@@ -294,7 +285,8 @@ input[type=button]:focus {
 }
 .et2_selectbox .ui-multiselect-checkboxes label {
   display: block;
-  border: 1px solid transparent;
+  border: 0px solid transparent;
+  padding: 0.1em 0.2em;
 }
 .et2_selectbox input[type="checkbox"] {
   margin: 3px;
@@ -330,7 +322,7 @@ span.et2_date {
   min-width: 130px;
 }
 span.et2_date input.et2_date {
-  min-width: 16.5ex;
+  min-width: 21.5ex;
   background-repeat: no-repeat;
   background-position: top right;
   background-size: contain;
@@ -371,7 +363,7 @@ action buttons, left aligned for "extra" controls
 	float: none;
 }
 */
-/** 
+/**
  * Diff widget
  */
 .diff thead,
@@ -490,7 +482,7 @@ div.et2_link_entry input.ui-autocomplete-input {
 /* Link to */
 .et2_link_to {
   width: 350px;
-  overflow-x: show;
+  overflow-x: visible;
 }
 .et2_link_to button {
   display: inline;
@@ -595,43 +587,73 @@ ul.et2_link_string {
  */
 .et2_tabflag {
   display: inline-block;
-  margin-right: 5px;
-  padding: 5px;
+  margin: 1em 3px -1px 0;
+  padding: 4px;
   cursor: pointer;
-  border: 1px solid silver;
-  background-color: #E0E0E0;
-  background-image: url(images/gradient01.png);
-  background-position: center;
-  background-repeat: repeat-x;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-topleft: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 3px;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  background-color: #bfbfbf;
+  -webkit-box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.5);
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
 }
 .et2_tabflag:hover {
-  color: #050505;
-  border: 1px solid gray;
-  background-color: #D0D0EE;
+  color: #f2f2f2;
+  background-color: #bfbfbf;
 }
 .et2_tabflag:active {
-  background-image: url(images/gradient02.png);
-  background-color: #D0D0E0;
+  background-color: #ffffff;
+  color: #ffffff;
+}
+.et2_tabflag.active {
+  border-spacing: 0px;
+  background-color: white;
+  color: #000000;
+  border-width: 1px 1px 0px 1px;
+  border-style: solid;
+  border-color: #bfbfbf;
+}
+.et2_tabflag.active:hover {
+  color: #000000;
+  background-color: white;
 }
 .et2_tabs {
   border-width: 0px 1px 1px 1px;
   border-style: solid;
-  border-color: silver;
+  border-color: #bfbfbf;
   padding: 5px;
   overflow-y: auto;
-}
-.et2_tabflag.active {
-  border-bottom: 1px solid white;
-  background-color: white;
-  background-image: none;
+  background-color: #ffffff;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 .et2_tabheader {
-  background-image: url(images/tab_header_bg.png);
+  background-color: #bfbfbf;
   background-position: bottom;
   background-repeat: repeat-x;
+  padding-left: 0em;
+  border-bottom: 1px solid #bfbfbf;
+  margin: 0 2px;
+}
+.et2_tabheader :first-child {
+  margin-left: 0.3em;
 }
 /**
  * VFS widget(s)
@@ -650,7 +672,7 @@ ul.et2_vfs {
 * Validation
 */
 [required] {
-  background-color: #ffffd0;
+  background-color: #ffc200;
 }
 .invalid {
   border: 1px solid #a6261d;
@@ -787,7 +809,6 @@ div.message.floating {
 .et2_nextmatch .nextmatch_header {
   border: none;
   background-image: none;
-  background-color: transparent;
   margin-bottom: 3px;
 }
 .et2_nextmatch .nextmatch_header > .filters {
@@ -818,28 +839,24 @@ div.message.floating {
 .nextmatch_header .favorites.ui-menu li.ui-menu-item a.ui-state-hover {
   margin-left: 20px;
 }
+.favorites li:hover div.ui-icon {
+  display: inline-block;
+}
 .favorites li span.ui-state-active {
   border: none;
 }
-.favorites input,
+.favorites input {
+  margin-right: 1ex;
+}
 .favorites img {
   margin-right: 1ex;
+  height: 16px;
+  width: 16px;
 }
 .favorites div.ui-icon-trash {
   position: relative;
   float: right;
   display: none;
-}
-.favorites li:hover div.ui-icon {
-  display: inline-block;
-}
-.favorites .sideboxstar {
-  height: 9px;
-  display: inline-block;
-  padding: 0px 4px;
-  margin: 0px 5px;
-  /* TODO: This is template specific */
-  background-image: url(../../../phpgwapi/templates/idots/images/orange-ball.png);
 }
 .sidebox-favorites ul.favorites {
   width: 99%;
@@ -847,22 +864,130 @@ div.message.floating {
   border: none;
   background: white;
 }
-.sidebox-favorites .ui-menu .ui-menu-item a {
+.sidebox-favorites ul.favorites li {
+  padding-left: 0 !important;
+  margin-left: -10px;
+  line-height: 1.5em;
+}
+.sidebox-favorites ul.favorites li img {
+  margin-right: 1ex;
+  height: 13px;
+  padding: 3px;
+  background-color: #f0f0f0;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.sidebox-favorites ul.favorites li img:hover {
+  height: 16px;
+  background-color: #b3b3b3 !important;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.sidebox-favorites ul.favorites li img.sideboxstar {
+  margin-right: 1ex;
+  height: 16px;
+  background-color: #f0f0f0;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.sidebox-favorites ul.favorites li img.sideboxstar:hover {
+  height: 16px;
+  background-color: #b3b3b3 !important;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.sidebox-favorites .ui-state-hover,
+.sidebox-favorites .ui-widget-content .ui-state-hover,
+.sidebox-favorites .ui-widget-header .ui-state-hover,
+.sidebox-favorites .ui-state-focus,
+.sidebox-favorites .ui-widget-content .ui-state-focus,
+.sidebox-favorites .ui-widget-header .ui-state-focus {
+  border-top: solid 1px 1px;
+  border-left: solid 1px 1px;
+  border-right: solid 1px 1px;
+  border-bottom: solid 1px 1px;
+  border-color: #f0f0f0;
+  background: transparent !important;
+  font-weight: bold;
+  color: #000000;
+}
+.sidebox-favorites .ui-menu-icons .ui-menu-item a {
+  position: relative;
+  padding-left: 1em;
+  padding: 0.5em 1em 0.5em 0;
+}
+.sidebox-favorites .ui-menu-icons .ui-menu-item a:hover {
+  background-color: #b3b3b3 !important;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.sidebox-favorites ui-menu .ui-menu-item a {
   line-height: inherit;
   padding: 2px 0px;
+  padding-left: 0 !important;
 }
-.sidebox-favorites .ui-menu .ui-menu-item a:hover {
+.sidebox-favorites ui-menu .ui-menu-item a:hover {
   text-decoration: underline;
+  background-color: #b3b3b3 !important;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
-.sidebox-favorites .favorites div.ui-icon-heart {
+.sidebox-favorites ui-menu .ui-menu-item a img {
+  height: 16px;
+  width: 16px;
+}
+.sidebox-favorites div.ui-icon-heart {
   position: relative;
   float: left;
   display: inline-block;
   margin: -3px 1px 0px 1px;
 }
-.sidebox-favorites .favorites div.ui-icon-trash {
+.sidebox-favorites div.ui-icon-trash {
   margin-top: -5px;
-  margin-right: 2px;
+  background-image: url(images/delete.png);
+  background-size: 16px 16px;
+  background-position: 0 0;
+  background-color: #e6e6e6;
+  -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  margin-right: 0.5em;
+  padding: 0px 2px 0 2px;
+  width: 10px;
 }
 .nextmatch_sortheader {
   color: #003075;
@@ -890,7 +1015,7 @@ div.message.floating {
   opacity: 0.5;
 }
 /**
- * Grid / nextmatch Hierarchy 
+ * Grid / nextmatch Hierarchy
  */
 /* Make sure arrow & cell content don't overlap */
 .egwGridView_grid span.arrow {
@@ -906,7 +1031,7 @@ div.message.floating {
   margin-left: 10px;
   border-left: 1px solid silver;
 }
-/** 
+/**
  * This class' margin-right is used to line up columns at each indent level
  * Classes level_# are created programmatically with margin-right * depth
  * Margin-right = -(indent + border)
