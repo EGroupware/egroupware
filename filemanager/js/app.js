@@ -367,22 +367,7 @@ app.classes.filemanager = AppJS.extend(
 	action: function(_action, _elems)
 	{
 		var paths = this._elems2paths(_elems);
-		if (typeof _action.data.confirm != 'undefined')
-		{
-			var that = this;
-			var action_id = _action.id;
-			et2_dialog.show_dialog(function(button_id,value)
-			{
-				if (button_id != et2_dialog.NO_BUTTON)
-				{
-					that._do_action(action_id, paths);
-				}
-			}, _action.data.confirm, this.egw.lang('Confirmation required'), et2_dialog.BUTTONS_YES_NO, et2_dialog.QUESTION_MESSAGE);
-		}
-		else
-		{
-			this._do_action(_action.id, paths);
-		}
+		this._do_action(_action.id, paths);
 	},
 
 	/**
