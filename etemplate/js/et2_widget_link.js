@@ -293,6 +293,10 @@ var et2_link_to = et2_inputWidget.extend(
 				});
 			}
 		}
+		if(links.length == 0)
+		{
+			return;
+		}
 		
 		var request = egw.json("etemplate_widget_link::ajax_link::etemplate", 
 			[values.to_app, values.to_id, links],
@@ -548,6 +552,7 @@ var et2_link_entry = et2_inputWidget.extend(
 
 		// Application selection
 		this.app_select = $j(document.createElement("select")).appendTo(this.div)
+			.val(this.options.value.app||'')
 			.change(function(e) {
 				// Clear cache when app changes
 				self.cache = {};
