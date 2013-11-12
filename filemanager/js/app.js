@@ -706,5 +706,10 @@ app.classes.filemanager = AppJS.extend(
 					widget.set_value(widget.get_value() == file ? widget.options.unselected_value : file);
 				}
 		}, null, et2_checkbox);
+
+		// Stop event or it will toggle back off
+		event.preventDefault();
+		event.stopPropagation();
+		return false;
 	}
 });
