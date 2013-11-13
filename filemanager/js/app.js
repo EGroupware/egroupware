@@ -532,7 +532,7 @@ app.classes.filemanager = AppJS.extend(
 		var data = egw.dataGetUIDdata(row_uid);
 		files = files || window.event.dataTransfer.files;
 
-		var path = data.data.mime == "httpd/unix-directory" ? data.data.path : this.get_path();
+		var path = typeof data != 'undefined' && data.data.mime == "httpd/unix-directory" ? data.data.path : this.get_path();
 		var widget = this.et2.getWidgetById('upload');
 
 		// Override finish to specify a potentially different path
