@@ -2469,6 +2469,11 @@ var et2_nextmatch_entryheader = et2_link_entry.extend(et2_INextmatchHeader,
 		{
 			this.set_value(this.nextmatch.options.settings.col_filter[this.id]);
 
+			if(this.getValue() != this.nextmatch.activeFilters.col_filter[this.id])
+			{
+				this.nextmatch.activeFilters.col_filter[this.id] = this.getValue();
+			}
+
 			// Tell framework to ignore, or it will reset it to ''/empty when it does loadingFinished()
 			this.attributes.value.ignore = true;
 			//this.attributes.select_options.ignore = true;
