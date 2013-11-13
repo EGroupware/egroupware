@@ -1329,8 +1329,7 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		// Check to see if we can handle the link
 		// First, find the UID
 		var row = this.controller.getRowByNode(target);
-		if(!row || !row.uid) return false;
-		var uid = row.uid;
+		var uid = row.uid || null;
 		
 		// Get the file information
 		var files = [];
@@ -1351,7 +1350,9 @@ var et2_nextmatch = et2_DOMWidget.extend([et2_IResizeable, et2_IInput],
 		}
 		event.stopPropagation();
 		event.preventDefault(); 
-		
+
+		if(!row || !row.uid) return false;
+
 		// Link the file to the row
 		// just use a link widget, it's all already done
 		var split = uid.split('::');
