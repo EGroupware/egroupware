@@ -106,12 +106,14 @@ var et2_inputWidget = et2_valueWidget.extend([et2_IInput,et2_ISubmitListener],
 		var node = this.getInputNode();
 		if (node)
 		{
-			$j(node).bind("change.et2_inputWidget", this, function(e) {
-				e.data.change.call(e.data, this);
-			});
-			$j(node).bind("focus", this, function(e) {
-				e.data.focus.call(e.data, this);
-			});
+			$j(node)
+				.off('.et2_inputWidget')
+				.bind("change.et2_inputWidget", this, function(e) {
+					e.data.change.call(e.data, this);
+				})
+				.bind("focus.et2_inputWidget", this, function(e) {
+					e.data.focus.call(e.data, this);
+				});
 		}
 
 		this._super.apply(this,arguments);
