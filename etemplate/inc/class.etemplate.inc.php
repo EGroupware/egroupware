@@ -200,6 +200,19 @@ class etemplate_new extends etemplate_widget_template
 				$GLOBALS['egw']->framework->response->generic('et2_load',$load_array);
 				return;
 			}
+			else if (!$header)
+			{
+				// Headers already sent, another etemplate
+				echo '<div id="'.$dom_id.'" class="et2_container"></div>';
+				echo '<script type="text/javascript">window.egw_LAB.wait(function() {
+
+					var data = ' . json_encode($load_array) . ';
+					$j(".et2_container").not("#'.$dom_id.'").on("load", function() {
+						var et2 = new etemplate2(document.getElementById("'.$dom_id.'"), "etemplate_new::ajax_process_content");
+						et2.load(data.name,data.url,data.data);
+					});
+				})</script>';
+			}
 			else
 			{
 				//error_log("NON-Ajax " . __LINE__);
@@ -233,6 +246,7 @@ class etemplate_new extends etemplate_widget_template
 				echo ')});</script>';
 			}
 		}
+		self::$request = null;
 	}
 
 	/**
