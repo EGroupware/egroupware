@@ -706,6 +706,7 @@ class infolog_ui
 		if (!is_array($values))
 		{
 			$nm = egw_cache::getSession('infolog', $this->called_by.'session_data');
+			unset($nm['rows']);
 			if ($values === 'reset_action_view' || $_GET['ajax'] === 'true')
 			{
 				$nm['action'] = $action = '';
@@ -765,8 +766,7 @@ class infolog_ui
 			{
 				list($do,$do_id) = isset($values['main']) ? each($values['main']) : @each($values['nm']['rows']);
 				list($do_id) = @each($do_id);
-				//echo "<p>infolog::index: do='$do/$do_id', referer="; _debug_array($called_as);
-				switch($do)
+				switch((string)$do)
 				{
 					case 'close':
 						$closesingle=true;
@@ -801,6 +801,11 @@ class infolog_ui
 					$values['nm']['col_filter']['info_id_parent'] = $action_id;
 				}
 				break;
+			default:
+				if(in_array($action, array_keys(egw_link::app_list())))
+				{
+					$values['nm']['col_filter']['linked'] = "$action:$action_id";
+				}
 		}
 		$readonlys['cancel'] = $action != 'sp';
 
@@ -2581,15 +2586,13 @@ class infolog_ui
 			return False;
 		}
 		$this->called_by = $app;	// for read/save_sessiondata, to have different sessions for the hooks
-
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'infolog';
 		translation::add_app('infolog');
 
-		etemplate::$hooked = true;
-		$this->index(0,$app,$args[$view_id],array(
+		$this->index(null,$app,$args[$view_id],array(
 			'menuaction' => $view,
 			isset($view_id2) ? $view_id2 : $view_id => $args[$view_id]
 		),True);
-		etemplate::$hooked = false;
 	}
 
 	/**
