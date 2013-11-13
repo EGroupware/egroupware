@@ -188,7 +188,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd) {
 			}
 
 			var request = egw.json(
-				"etemplate_widget_nextmatch::ajax_get_rows::etemplate",
+				_app+".etemplate_widget_nextmatch.ajax_get_rows.etemplate",
 				[
 					_execId,
 					_queriedRange,
