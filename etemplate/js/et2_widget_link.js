@@ -298,7 +298,7 @@ var et2_link_to = et2_inputWidget.extend(
 			return;
 		}
 		
-		var request = egw.json("etemplate_widget_link::ajax_link::etemplate", 
+		var request = egw.json(self.egw().getAppName()+".etemplate_widget_link.ajax_link.etemplate",
 			[values.to_app, values.to_id, links],
 			self._link_result,
 			self,
@@ -847,7 +847,7 @@ var et2_link_entry = et2_inputWidget.extend(
 		// Remove specific display and revert to CSS file
 		// show() would use inline, should be inline-block
 		this.clear.css('display','');
-		var request = egw.json("etemplate_widget_link::ajax_link_search::etemplate", 
+		var request = egw.json(this.egw().getAppName() + ".etemplate_widget_link.ajax_link_search.etemplate",
 			[this.app_select.val(), '', request.term, request.options],
 			this._results,
 			this,true,this
@@ -922,7 +922,7 @@ var et2_link_entry = et2_inputWidget.extend(
 		// If a link array was passed in, don't make the ajax call
 		if(typeof _links == 'undefined')
 		{
-			var request = egw.json("etemplate_widget_link::ajax_link::etemplate", 
+			var request = egw.json(self.egw().getAppName()+".etemplate_widget_link.ajax_link.etemplate",
 				[values.to_app, values.to_id, links],
 				self._link_result,
 				this,
@@ -1207,7 +1207,7 @@ var et2_link_string = et2_valueWidget.extend([et2_IDetachedDOM],
 		{
 			_value.only_app = this.options.only_app;
 		}
-		this.egw().jsonq('etemplate.etemplate_widget_link.ajax_link_list', [_value], this.set_value, this);
+		this.egw().jsonq(this.egw().getAppName()+'.etemplate_widget_link.ajax_link_list', [_value], this.set_value, this);
 		return;
 	},
 
@@ -1302,7 +1302,7 @@ var et2_link_list = et2_link_string.extend(
 					if(button != et2_dialog.OK_BUTTON) return;
 					var remark = jQuery('#link_'+link_id, self.list).children('.remark');
 					remark.addClass("loading");
-					var request = egw.json("etemplate_widget_link::ajax_link_comment::etemplate", 
+					var request = egw.json(self.egw().getAppName() + ".etemplate_widget_link.ajax_link_comment.etemplate",
 						[link_id, comment],
 						function() {
 							if(remark)
@@ -1427,7 +1427,7 @@ var et2_link_list = et2_link_string.extend(
 		delete_button.removeClass("delete").addClass("loading");
 		if(typeof link_id != "object")
 		{
-			egw.json("etemplate.etemplate_widget_link.ajax_delete", [link_id],
+			egw.json(this.egw().getAppName()+".etemplate_widget_link.ajax_delete.etemplate", [link_id],
 				function(data) { if(data) {row.slideUp(row.remove);}}
 			).sendRequest();
 		}

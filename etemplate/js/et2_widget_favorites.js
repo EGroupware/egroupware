@@ -250,7 +250,7 @@ var et2_favorites = et2_dropdown_button.extend([et2_INextmatchHeader],
 			$j(trash).hide();
 
 			// Delete preference server side
-			var request = egw.json("etemplate_widget_nextmatch::ajax_set_favorite::etemplate",
+			var request = egw.json(header.egw().getAppName() + ".etemplate_widget_nextmatch.ajax_set_favorite.etemplate",
 				[header.app, name, "delete", header.stored_filters[name].group ? header.stored_filters[name].group : '', ''],
 				function(result) {
 					if(result)
