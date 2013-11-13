@@ -489,7 +489,7 @@ class calendar_ui
 	*/
 	function _select_box($title,$name,$options,$baseurl='')
 	{
-		$select = ' <select style="width: 100%;" name="'.$name.'" id="calendar_'.$name.'" title="'.
+		$select = ' <select style="width: 99%;" name="'.$name.'" id="calendar_'.$name.'" title="'.
 			lang('Select a %1',lang($title)).'">'.
 			$options."</select>\n";
 
@@ -780,7 +780,7 @@ class calendar_ui
 <script type=\"text/javascript\" src=\"{$GLOBALS['egw_info']['server']['webserver_url']}/calendar/js/navigation.js\" id=\"calendar-navigation-script\" data-current-view-url=\"".htmlspecialchars($current_view_url)."\"/></script>\n".
 
 				$this->accountsel->selection('owner','uical_select_owner',$accounts,'calendar+',count($accounts) > 1 ? 4 : 1,False,
-					' style="width: '.(count($accounts) > 1 && in_array($this->common_prefs['account_selection'],array('selectbox','groupmembers')) ? '100%' : '87%').';"'.
+					' style="width: '.(count($accounts) > 1 && in_array($this->common_prefs['account_selection'],array('selectbox','groupmembers')) ? '99%' : '86%').';"'.
 					' title="'.lang('select a %1',lang('user')).'"','',$grants,false,array($this->bo,'participant_name')),
 				'no_lang' => True,
 				'link' => False
@@ -805,7 +805,7 @@ class calendar_ui
 			}
 			if($options != '') {
 				$options = '<option value="">'.lang('Insert in document')."</option>\n" . $options;
-				$select = ' <select style="width: 100%;" name="merge" id="calendar_merge" title="'.
+				$select = ' <select style="width: 99%;" name="merge" id="calendar_merge" title="'.
 					html::htmlspecialchars(lang('Select a %1',lang('merge document...'))).'">'.
 					$options."</select>\n";
 
