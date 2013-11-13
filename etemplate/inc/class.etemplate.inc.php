@@ -208,7 +208,7 @@ class etemplate_new extends etemplate_widget_template
 
 					var data = ' . json_encode($load_array) . ';
 					$j(".et2_container").not("#'.$dom_id.'").on("load", function() {
-						var et2 = new etemplate2(document.getElementById("'.$dom_id.'"), "etemplate_new::ajax_process_content");
+						var et2 = new etemplate2(document.getElementById("'.$dom_id.'"), "'.$currentapp.'.etemplate_new.ajax_process_content.etemplate");
 						et2.load(data.name,data.url,data.data);
 					});
 				})</script>';

@@ -178,7 +178,7 @@
 			}
 			else
 			{
-				var et2 = new etemplate2(node, "etemplate_new::ajax_process_content");
+				var et2 = new etemplate2(node, window.egw_appName+".etemplate_new.ajax_process_content.etemplate");
 				et2.load(data.name,data.url,data.data,callback);
 			}
 		}
