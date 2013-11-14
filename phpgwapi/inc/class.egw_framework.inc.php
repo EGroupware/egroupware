@@ -988,8 +988,6 @@ abstract class egw_framework
 		{
 			$print_css = '/phpgwapi/templates/idots/print.css';
 		}
-		self::includeCSS($print_css, null, false);	// false = prepend (add as first) file
-		self::includeCSS($theme_css, null, false);
 
 		// Enhanced selectboxes (et1)
 		self::includeCSS('/phpgwapi/js/jquery/chosen/chosen.css');
@@ -999,6 +997,10 @@ abstract class egw_framework
 
 		// search for app specific css file
 		self::includeCSS($GLOBALS['egw_info']['flags']['currentapp'], 'app');
+
+		// sending template/theme and print css last, so they can overwrite anything
+		self::includeCSS($theme_css);
+		self::includeCSS($print_css);
 
 		// add all css files from self::includeCSS
 		$max_modified = 0;
