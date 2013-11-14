@@ -1,0 +1,172 @@
+/**
+ * EGroupware: Stylite Pixelegg template
+ *
+ * et2 Messages
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @package pixelegg
+ * @version $Id$
+ */
+
+@import (reference) "def_design_pattern_color_font_shadow.less";
+
+// calender
+
+#uical_select_resource {background-color: @egw_color_1_e;}
+.uiaccountselection .primary_group {background-color: @egw_color_1_e;}
+
+option:checked {background-color: @egw_color_1_e;}
+
+.ui-tooltip {
+	padding: 8px;
+	position: absolute;
+	z-index: 9999;
+	max-width: 300px;
+
+	.box-shadow (0 0 5px #aaa);
+}
+
+/* Component containers
+----------------------------------*/
+.ui-widget {
+	.basefontfamily;
+//	font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
+	font-size: 1.1em;
+}
+.ui-widget .ui-widget {
+	font-size: 1em;
+}
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button {
+	.basefontfamily;
+//	font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
+	font-size: 1em;
+}
+.ui-widget-content {
+	.bordered (@color-hint,@color-hint,@color-hint,@color-hint);
+
+//	border: 1px solid #a6c9e2;
+//	background: #fcfdfd url(images/ui-bg_inset-hard_100_fcfdfd_1x100.png) 50% bottom repeat-x;
+//	color: #222222;
+	background-image: none;
+	.color-50-gray !important;
+	background: white;
+}
+.ui-widget-content a {
+//	color: #222222;
+	.color-40-gray;
+}
+.ui-widget-header {
+//	border: 1px solid #4297d7;
+	.bordered(1px, 1px, 1px,1px);
+	.border-color-10-gray;
+//	background: #5c9ccc url(images/ui-bg_gloss-wave_55_5c9ccc_500x100.png) 50% 50% repeat-x;
+//	color: #ffffff;
+	.color-0-gray;
+	font-weight: bold;
+	background-image: none;
+	background-color: @egw_color_2_e;
+}
+.ui-widget-header a {
+//	color: #ffffff;
+	.color-0-gray;
+}
+
+/* Interaction states
+----------------------------------*/
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default {
+	.bordered(1px, 1px, 1px,1px);
+	.border-color-10-gray;
+//	background: #dfeffc url(images/ui-bg_glass_85_dfeffc_1x400.png) 50% 50% repeat-x;
+	background: transparent;
+	font-weight: bold;
+	.color-40-gray;
+//	float: left;
+//	position: relative;
+}
+.ui-state-default a,
+.ui-state-default a:link,
+.ui-state-default a:visited {
+	.color-40-gray;
+	text-decoration: none;
+}
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+	.bordered(1px, 1px, 1px,1px);
+	.border-color-10-gray;
+//	background: #d0e5f5 url(images/ui-bg_glass_75_d0e5f5_1x400.png) 50% 50% repeat-x;
+	background: @color-hint;
+//	font-size: 105%;
+	.color-100-gray;
+}
+.ui-state-hover a,
+.ui-state-hover a:hover,
+.ui-state-hover a:link,
+.ui-state-hover a:visited {
+	.color-50-gray;
+	text-decoration: none;
+}
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active {
+	.bordered(1px, 1px, 1px,1px);
+	.border-color-25-gray;
+	background: @color-hint;
+//	background: #f5f8f9 url(images/ui-bg_inset-hard_100_f5f8f9_1x100.png) 50% 50% repeat-x;
+	font-weight: bold;
+	.color-50-gray;
+}
+.ui-state-active a,
+.ui-state-active a:link,
+.ui-state-active a:visited {
+	color: #e17009;
+	text-decoration: none;
+}
+
+/* Interaction Cues
+----------------------------------*/
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight {
+	.bordered(1px, 1px, 1px,1px);
+	.border-color-10-gray;
+	background: #fbec88 url(images/ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x;
+	.color-50-gray;
+}
+.ui-state-highlight a,
+.ui-widget-content .ui-state-highlight a,
+.ui-widget-header .ui-state-highlight a {
+	.color-10-gray;
+}
+.ui-state-error,
+.ui-widget-content .ui-state-error,
+.ui-widget-header .ui-state-error {
+	.bordered(1px, 1px, 1px,1px);
+	.border-color-10-gray;
+//	background: #fef1ec url(images/ui-bg_glass_95_fef1ec_1x400.png) 50% 50% repeat-x;
+	.color-30-gray;
+}
+.ui-state-error a,
+.ui-widget-content .ui-state-error a,
+.ui-widget-header .ui-state-error a {
+	.color-30-gray;
+}
+.ui-state-error-text,
+.ui-widget-content .ui-state-error-text,
+.ui-widget-header .ui-state-error-text {
+	.color-30-gray;
+}
+
+//

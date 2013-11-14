@@ -12,8 +12,338 @@
  * @version $Id$
  */
 /**
- * Nextmatch widget
+ * EGroupware: CSS with less preprocessor
+ *
+ * Definitions for buttons
+ *
+ * Please do NOT change css-files directly, instead change less-files and compile them!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package phpgwapi
+ * @version $Id$
  */
+.Complete_Button_normal {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  color: #000000;
+}
+.Complete_Button_hover {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  background-color: inherit !important;
+}
+.Complete_Button_active {
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+}
+.Complete_Button_focus {
+  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
+}
+.Complete_Button_add {
+  background-color: #0b5fa4;
+  color: #FFF;
+  text-shadow: none;
+  height: 35px;
+  background-image: none !important;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+}
+.Complete_Button_add:before {
+  content: "+";
+  font-size: 2em;
+  color: #ffc200;
+}
+.Complete_Button_add_hover {
+  background-color: #66a1d2 !important;
+  color: #ffc200;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+}
+.Complete_Button_hinweis {
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 0 0.2em;
+  border-left: 3px solid;
+  border-left-color: #e4e7ea;
+}
+.Complete_Button_select {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  width: auto;
+  margin: 0.5em 0em 0.5em 0.5em;
+  padding: 3px;
+  outline: none;
+  display: inline-block;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+.Complete_Button_select_hover {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+.Complete_Button_select_focus {
+  outline: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #bfbfbf;
+  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+}
+.Complete_Button_input {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-color: #bfbfbf;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  width: auto;
+  margin: 0.5em 0em 0.5em 0;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.Complete_Button_input_hover {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+.Complete_Button_input_focus {
+  outline: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #bfbfbf;
+  -webkit-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.1);
+}
+.Complete_Button_search_action {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-color: #bfbfbf;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  width: 3em;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+  background-color: #ffd44d;
+  color: #FFFFFF;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 3px;
+  margin-left: 5px;
+}
+.Complete_Button_search_action_hover {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  background-color: #ffd40f !important;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+}
+.Complete_Button_search_action_active {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  background-color: #ffd44d;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+}
+.Complete_Button_search_action_reset {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-color: #bfbfbf;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  width: 3em;
+  -webkit-border-radius: 3px;
+  -webkit-border-top-left-radius: 20px;
+  -moz-border-radius: 3px;
+  -moz-border-radius-topleft: 20px;
+  border-radius: 3px;
+  border-top-left-radius: 20px;
+  background-color: #ffd44d;
+  color: #FFFFFF;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 3px;
+  margin-left: 5px;
+  background: -webkit-gradient(linear, 0 0, 0 bottom, #d8d8d8, #a3a3a3), -moz-linear-gradient(#d8d8d8, #a3a3a3), -o-linear-gradient(#d8d8d8, #a3a3a3), linear-gradient(#d8d8d8, #a3a3a3);
+  -pie-background: linear-gradient(#d8d8d8, #a3a3a3);
+  behavior: url(/PIE.htc);
+}
+.Complete_Button_lettersearch {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  text-align: center;
+  cursor: pointer;
+}
+.Complete_Button_text {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #f0f0f0;
+  border-color: #808080;
+  cursor: pointer;
+}
+.Complete_Button_text_hover {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  text-align: center;
+  cursor: pointer;
+  background-color: #b3b3b3 !important;
+}
+.Complete_Button_text_active {
+  color: #000000;
+}
+.Complete_Button_text_icon_before {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  color: #000000;
+  padding-left: 30px !important;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
+  width: auto;
+  height: 32px;
+}
+.Complete_Button_text_icon_before_hover {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  color: #000000;
+  padding-left: 30px !important;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
+  width: auto;
+  height: 32px;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+.Complete_Button_text_icon_before_active {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  color: #000000;
+  padding-left: 30px !important;
+  background-position: 6px center;
+  background-repeat: no-repeat;
+  background-size: 20px auto;
+  width: auto;
+  height: 32px;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+}
+.Complete_Button_Icon_normal {
+  background-color: #f0f0f0;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.Complete_Button_Icon_hover {
+  background-color: #b3b3b3 !important;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.Complete_Button_Icon_active {
+  background-color: #808080;
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.9);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.Complete_Button_Module_Menu_Links {
+  background-color: #f0f0f0;
+}
+.Complete_Button_Module_Menu_Links_Hover {
+  background-color: #b3b3b3 !important;
+  color: #f2f2f2;
+}
+.Complete_Button_Module_Menu_Links_active {
+  background-color: #f0f0f0;
+}
+.Complete_Button_Module_Menu_Links_Sub_Hover {
+  margin-left: 2px;
+  padding-top: 0px;
+  padding-bottom: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background-color: #d9d9d9;
+}
+.Complete_Button_Module_Menu_Links_Sub {
+  margin-left: 3px;
+  padding-top: 0px;
+  padding-bottom: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-top-width: 0px;
+  background-color: #f0f0f0;
+  margin-top: -7px;
+  padding-left: 14px;
+  width: 93%;
+}
+/**
+* Nextmatch widget
+*/
 .et2_nextmatch .nextmatch_header > .filters {
   padding: 0 0 0 1em;
   background-color: #f0f0f0;
@@ -62,6 +392,7 @@
   margin-right: 1em;
   height: 16px;
   width: 16px;
+  padding: 2px;
 }
 .et2_nextmatch .nextmatch_header .et2_button_icon:hover {
   background-color: #b3b3b3 !important;
@@ -95,8 +426,8 @@
   position: relative;
   top: 5px;
   /**
-								* Drop down button
-								*/
+            * Drop down button
+            */
 }
 .et2_nextmatch .nextmatch_header div#infolog-index_favorite_wrapper .et2_dropdown,
 .et2_nextmatch .nextmatch_header div.addressbook-index_favorite .et2_dropdown {
@@ -175,10 +506,10 @@
   background-image: none;
   width: 80%;
 }
-.filters img.et2_button {
+.filters img.et2_button_icon {
   float: right;
   position: relative;
-  top: 15px;
+  top: 0px;
 }
 .filters select {
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);

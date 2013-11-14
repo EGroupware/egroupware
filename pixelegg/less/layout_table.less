@@ -12,7 +12,7 @@
  * @version $Id$
  */
 
-@import (reference) "../../phpgwapi/templates/default/def_buttons.less";
+@import "def_buttons.less";
 
 /** #####################################################################################
  * et2
@@ -27,9 +27,9 @@
 table.et2_grid {
 	border-top: 3px solid;
 	 .border-color-10-gray;
-	border-collapse: collapse;
+//	border-collapse: collapse;
 //	.background-color-0-gray;
-	width: 100% !important;
+//	width: 100% !important;
 //	display: block;
 }
 
@@ -67,7 +67,8 @@ table.et2_grid {
 
 table.egwGridView_outer{
 	.background-color-5-gray;
-	max-width: 100%;
+//	max-width: 100%;
+	border-spacing: 0px;
 
 	thead {
 			.background-color-5-gray;
@@ -97,7 +98,7 @@ table.egwGridView_outer{
 						.background-color-25-gray;
 						.color-0-gray;
 //						border-right: 5px solid white;
-						background-image: url(images/hint-arrow-right.png);
+						background-image: url(../images/hint-arrow-right.png);
 						background-position: right bottom;
 						background-repeat: no-repeat;
 						background-size: 15px 15px;
@@ -129,13 +130,14 @@ table.egwGridView_outer{
 								}
 
 								.selectcols {
+											
 											position: fixed;
 //											.Complete_Button_normal;
 											.Complete_Button_Icon_normal;
 											right: 15px;
 											border: 1px solid;
 //											background-color: yellow;
-											background-image: url(images/slidedown.png);
+											background-image: url(../images/selectcols.png);
 												background-position: center center;
 												background-repeat: no-repeat;
 											background-size: 16px 16px;
@@ -144,14 +146,14 @@ table.egwGridView_outer{
 											height: 20px;
 											margin: 0;
 											padding: 0;
-											vertical-align: middle;
+//											vertical-align: middle;
 
-											&:hover{
+											&:active{
 												.Complete_Button_Icon_hover;
-												background-image: url(images/slidedown.png);
+												background-image: url(../images/slideup.png);
 												background-position: center center;
 												background-repeat: no-repeat;
-												background-size:  17px 17px;
+//												background-size:  17px 17px;
 												}
 
 											}
@@ -163,10 +165,12 @@ table.egwGridView_outer{
 // Tabelle der APP Ausgabe
 
 table.egwGridView_grid{
-	border-collapse:collapse;
+//	border-collapse:collapse;
 	font-size: 1.3em;
 	.background-color-0-gray;
-	width: 100%;
+	border-spacing: 0px;
+	
+//	width: 100%;
 
 
 	img{ width: 16px;}
@@ -231,7 +235,7 @@ table.egwGridView_grid{
 
 .nextmatch_header .selectcols {
 	background: none;
-	height: auto;
+//	height: auto;
 }
 
 
@@ -243,9 +247,4 @@ table.egwGridView_grid{
 .nextmatch_header {
 	padding: 0px;
 }
-
-
-
-//Tabelle - Scrollarea
-
-div.egwGridView_scrollarea {overflow: auto;}
+//

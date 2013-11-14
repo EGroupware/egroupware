@@ -12,235 +12,238 @@
  * @version $Id$
  */
 
-@import (reference) "../../phpgwapi/templates/default/def_buttons.less";
+@import "def_buttons.less";
 
- /**
- * Nextmatch widget
- */
- // Fläche einfärben
- .et2_nextmatch .nextmatch_header > .filters { .Rectangle_filters;}
+/**
+* Nextmatch widget
+*/
+// Fläche einfärben
+.et2_nextmatch .nextmatch_header > .filters { .Rectangle_filters;}
 
 .et2_nextmatch {
 
-//			border-left: 9px solid #BFBFBF;
-//			.border-color-25-gray;
+    //			border-left: 9px solid #BFBFBF;
+    //			.border-color-25-gray;
 
-					/* Left & right headers*/
-					div > .header {
-									margin-top: -20px;
-									border: none;
-									}
-
-					// Listen Felder
-					input, select {height: auto;}
+    /* Left & right headers*/
+    div > .header {
+        margin-top: -20px;
+        border: none;
+    }
 
 
-				.nextmatch_header {
-					border: none;
-					background-image: none;
-					.background-color-10-gray;
-					background-size: 80% 10;
-					margin-bottom: 3px;
+    // Listen Felder
+    input, select {height: auto;}
 
 
-
+    .nextmatch_header {
+        border: none;
+        background-image: none;
+        .background-color-10-gray;
+        background-size: 80% 10;
+        margin-bottom: 3px;
 
 
 
-							// rechte Box
-							div.et2_hbox_right{
-//										position: relative;
-//										right: 5em;
-//										top: 0.4em;
-//										margin-right: 23px;
-//										float: right;
-
-										background: transparent;
-
-										table.et2_grid  {background: transparent;}
-									}
-
-
-									// z.b. Dateimanager
-									.et2_button_icon {
-														vertical-align: middle;
-														.Complete_Button_Icon_normal;
-														margin-top: -5px;
-														margin-right: 1em;
-														height: 16px;
-														width: 16px;
-														}
-									.et2_button_icon:hover{.Complete_Button_Icon_hover ;}
 
 
 
-									// Anzahl Treffer
-								 	.header_count {
-								 					position: relative;
-													top: 7px;
-													.Complete_Button_text;
-													}
+        // rechte Box
+        div.et2_hbox_right{
+            //										position: relative;
+            //										right: 5em;
+            //										top: 0.4em;
+            //										margin-right: 23px;
+            //										float: right;
 
-									// Favoriten
-									div#infolog-index_favorite_wrapper,
-									div.addressbook-index_favorite {
-																.box_shadow_standard_light;
-																.border_radius_button_normal;
-																.background-color-25-gray;
+            background: transparent;
 
-																position: relative;
-																top: 5px;
-
-								/**
-								* Drop down button
-								*/
-								 .et2_dropdown{
-
-										 		height: 2em;
-//										 		background: yellow;
-
-												img {height: 16px; width: 16px;}
-
-												 button {
-														height: 3.0ex;
-														display: inline-block;
-														vertical-align: middle;
-														margin-right: -2px;
-														padding: 0px 1ex;
-														.background-color-0-gray;
-														background-image: none;
-
-														}
-												 button > div {
-																vertical-align: middle;
-																}
-												button:last-child {
-																	padding: 0px
-																}
-												+ ul.ui-menu {
-															position: absolute;
-															z-index: 2;
-															}
+            table.et2_grid  {background: transparent;}
+        }
 
 
-												} // dropdown
-
-											// Liste
-											ul{
-
-												.border-color-25-gray;
-												.background-color-0-gray;
-												.color-100-gray;
-												li{
-													.background-color-0-gray;
-
-													&:hover {.background-color-10-gray;}
-														a {
-
-																height: 40px;
-																border: none;
-
-																img {height: 16px; width: 16px;}
-															}
-
-														a:hover {
-																background: none;
-																text-indent: -22px;
-																margin-left: 21px;
-																height: 40px;
-
-																}
-													}
-												li#blank {}
-												li#add { }
-
-											}
-								} // Favoriten
+        // z.b. Dateimanager
+        .et2_button_icon {
+            vertical-align: middle;
+            .Complete_Button_Icon_normal;
+            margin-top: -5px;
+            margin-right: 1em;
+            height: 16px;
+            width: 16px;
+            padding: 2px;
+        }
+        .et2_button_icon:hover{.Complete_Button_Icon_hover ;}
 
 
 
-									}
-							/* Favorites */
-							div#favorite_wrapper {
-													margin-top: 8px;
-													vertical-align: middle;
-												}
-// Ende .et2_nextmatch
+        // Anzahl Treffer
+        .header_count {
+            position: relative;
+            top: 7px;
+            .Complete_Button_text;
+        }
+
+        // Favoriten
+        div#infolog-index_favorite_wrapper,
+        div.addressbook-index_favorite {
+            .box_shadow_standard_light;
+            .border_radius_button_normal;
+            .background-color-25-gray;
+
+            position: relative;
+            top: 5px;
+
+            /**
+            * Drop down button
+            */
+            .et2_dropdown{
+
+                height: 2em;
+                //										 		background: yellow;
+
+                img {height: 16px; width: 16px;}
+
+                button {
+                    height: 3.0ex;
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-right: -2px;
+                    padding: 0px 1ex;
+                    .background-color-0-gray;
+                    background-image: none;
+
+                }
+                button > div {
+                    vertical-align: middle;
+                }
+                button:last-child {
+                    padding: 0px
+                }
+                + ul.ui-menu {
+                    position: absolute;
+                    z-index: 2;
+                }
+
+
+            } // dropdown
+
+            // Liste
+            ul{
+
+                .border-color-25-gray;
+                .background-color-0-gray;
+                .color-100-gray;
+                li{
+                    .background-color-0-gray;
+
+                    &:hover {.background-color-10-gray;}
+                    a {
+
+                        height: 40px;
+                        border: none;
+
+                        img {height: 16px; width: 16px;}
+                    }
+
+                    a:hover {
+                        background: none;
+                        text-indent: -22px;
+                        margin-left: 21px;
+                        height: 40px;
+
+                    }
+                }
+                li#blank {}
+                li#add { }
+
+            }
+        } // Favoriten
+
+
+
+    }
+    /* Favorites */
+    div#favorite_wrapper {
+        margin-top: 8px;
+        vertical-align: middle;
+    }
+    // Ende .et2_nextmatch
 }
 
 // Filterleiste
- .filters {
+.filters {
 
-		.Rectangle_filters;
-		width: 80%;
+    .Rectangle_filters;
+    width: 80%;
 
-		// Export Bild
-		img.et2_button {
-			float: right;
-			position: relative;
-			top: 15px;
-		}
+    // Export Bild
+    img.et2_button_icon {
+        float: right;
+        position: relative;
+        top: 0px;
+    }
 
-		select {
-									.Complete_Button_select;
-									margin-right: 2ex;
-									padding: 5px;
-//									border: 2px;
-									&:hover{
-											.Complete_Button_select_hover;
-										}
-
-
-								}
-
-		select#cat_id {margin-left: 1em;}
+    select {
+        .Complete_Button_select;
+        margin-right: 2ex;
+        padding: 5px;
+        //									border: 2px;
+        &:hover{
+            .Complete_Button_select_hover;
+        }
 
 
-		input {
-														.Complete_Button_input;
-//														margin-left: 2ex;
-//														margin-top: 2px;
-//														padding: 0px;
-//														position: relative;
-//														top: 4px;
+    }
 
-														&:hover{
-																.Complete_Button_input_hover;
-																}
-
-							}
+    select#cat_id {margin-left: 1em;}
 
 
+    input {
+        .Complete_Button_input;
+        //														margin-left: 2ex;
+        //														margin-top: 2px;
+        //														padding: 0px;
+        //														position: relative;
+        //														top: 4px;
 
-		label {	}
+        &:hover{
+            .Complete_Button_input_hover;
+        }
+
+    }
 
 
 
-
-					// Suchen Button
-		button {
-														.Complete_Button_search_action;
-//														position: relative;
-//														top: 4px;
-
-														&:hover{
-																.Complete_Button_search_action_hover;
-																background-color: @yellow;
-																}
-
-														&:active {
-																.Complete_Button_search_action_active;
-															}
-
-														&:focus {
-																.Complete_Button_input_focus;
-																}
-
-
-						}
+    label {	}
 
 
 
 
+    // Suchen Button
+    button {
+        .Complete_Button_search_action;
+        //														position: relative;
+        //														top: 4px;
 
-	} // Ende filter
+        &:hover{
+            .Complete_Button_search_action_hover;
+            background-color: @yellow;
+        }
+
+        &:active {
+            .Complete_Button_search_action_active;
+        }
+
+        &:focus {
+            .Complete_Button_input_focus;
+        }
+
+
+    }
+
+
+
+
+
+} 
+//

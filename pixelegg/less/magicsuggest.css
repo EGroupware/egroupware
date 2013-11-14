@@ -166,6 +166,7 @@
 .ms-sel-ctn {
   overflow: auto;
   line-height: 22px;
+  padding-right: 0px;
 }
 .ms-sel-ctn .ms-sel-item {
   background: #ffdd73;
