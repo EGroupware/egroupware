@@ -1233,6 +1233,7 @@ class filemanager_ui
 
 		$arr = array(
 			'msg' => '',
+			'action' => $action,
 			'errs' => 0,
 			'dirs' => 0,
 			'files' => 0,
@@ -1301,11 +1302,31 @@ class filemanager_ui
 				$arr['props'] = $props;
 				break;
 
+			// Upload, then link
+			case 'link':
+				// First upload
+				$arr = self::ajax_action('upload', $selected, $dir, $props);
+				$app_dir = egw_link::vfs_path($props['entry']['app'],$props['entry']['id'],'',true);
+
+				foreach($arr['uploaded'] as $file)
+				{
+					$target=egw_vfs::concat($dir,egw_vfs::encodePathComponent($file['name']));
+					if (egw_vfs::file_exists($target) && $app_dir)
+					{
+						if (!egw_vfs::file_exists($app_dir)) egw_vfs::mkdir($app_dir);
+						error_log("Symlinking $target to $app_dir");
+						egw_vfs::symlink($target, egw_vfs::concat($app_dir,egw_vfs::encodePathComponent($file['name'])));
+					}
+				}
+				// Must return to avoid adding to $response again
+				return;
+
 			default:
 				$arr['msg'] = self::action($action, $selected, $dir, $arr['errs'], $arr['dirs'], $arr['files']);
 		}
 		$response->data($arr);
 		//error_log(__METHOD__."('$action',".array2string($selected).') returning '.array2string($arr));
+		return $arr;
 	}
 
 	/**
