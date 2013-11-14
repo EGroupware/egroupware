@@ -27,11 +27,6 @@
   font-size: 2em;
   color: #ffc200;
 }
-#timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button[id*="timesheet-index_add"]:before {
-  content: "+";
-  font-size: 2em;
-  color: #ffc200;
-}
 #timesheet-index .nextmatch_header #timesheet-index_timesheet-index-add button[id*="timesheet-index_add"]:hover {
   background-color: #66a1d2 !important;
   color: #ffc200;

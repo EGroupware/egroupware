@@ -1,0 +1,1119 @@
+/**
+ * EGroupware: CSS with less preprocessor
+ *
+ * Please do NOT change app.css directly, instead change app.less and compile it!
+ *
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
+ * @package calendar
+ * @version $Id$
+ */
+
+@import (reference) "../../../pixelegg/less/def_buttons.less";
+@import (reference) "../../../pixelegg/less/def_design_pattern_color_font_shadow.less";
+
+
+// ************************************************
+// Seitenleiste
+//  Ansichten
+
+.egw_fw_ui_category_content{
+    padding-left: 0px !important;
+}
+
+
+img.sideboxstar {
+    width: 14px;
+    height: 14px;
+    .Complete_Button_Icon_normal;
+    padding: 3px;
+    margin: 1px;
+
+    &:hover { 
+        .Complete_Button_Icon_hover;
+    }
+
+
+}
+
+.chzn-container {
+    max-width: 85% !important; 
+    margin-top: 0em
+}
+
+// ************************************************
+// ************************************************
+// iframe
+
+.egw_fw_content_browser_iframe {
+
+    margin-top: 0em;
+    border: none;
+
+
+
+
+
+} // Ende Iframe
+
+
+// Images
+.calendar_calDayColHeader  img {height: 16px; width: 16px;}
+
+
+
+
+/* calender view*/ 
+
+/*defind in layout_raster.less , because frame*/
+
+
+
+
+
+
+
+// Dialog: Neu erstellen
+
+span#start {margin-right: 1em;}
+
+//########################################################################################################
+// phpgwapi/js/jscalendar/calendar-blue.css
+//########################################################################################################
+/* The main calendar widget.  DIV containing a table. */
+
+div.calendar { position: relative; }
+
+
+
+/* Header part -- contains navigation buttons and day names. */
+
+.calendar{
+
+   
+    
+    .button { /* "<<", "<", ">", ">>" buttons have this class */
+        text-align: center;    /* They are the navigation buttons */
+        padding: 2px;          /* Make the buttons seem like they're pressing */
+    }
+    .nav {
+        background: url(menuarrow.gif) no-repeat 100% 100%;
+        .background-table-cal-head;
+    }
+
+
+
+    thead {
+        .title { /* This holds the current "month, year" */
+            font-weight: bold;      /* Pressing it will take you to the current date */
+            text-align: center;
+            background: @egw_color_2_e;
+            color: #000;
+            padding: 2px;
+        }
+        .headrow { /* Row <TR> containing navigation buttons */
+            .background-table-cal-head;
+            color: #fff;
+        }
+        .daynames { /* Row <TR> containing the day names */
+            //  background: #bdf;
+            .background-color-30-gray;
+        }
+
+        .name { /* Cells <TD> containing the day names */
+            border-bottom: 1px solid #556;
+            padding: 2px;
+            text-align: center;
+            color: #000;
+        }
+
+        .weekend { /* How a weekend day name shows in header */
+            color: #a66;
+        }
+
+
+        .hilite { /* How do the buttons in header appear when hover */
+            .background-color-0-gray;
+            color: #000;
+            border: 1px solid;
+            .border-color-50-gray;
+            padding: 1px;
+        }
+
+        .active { /* Active (pressed) buttons in header */
+            background-color: @egw_color_2_d;
+            padding: 2px 0px 0px 2px;
+        }
+    } // thead
+
+
+    /* The body part -- contains all the days in month. */
+
+    tbody {
+        .day { /* Cells <TD> containing month days dates */
+            width: 2em;
+            color: #456;
+            text-align: right;
+            padding: 2px 4px 2px 2px;
+        }
+
+        .day.othermonth {
+            font-size: 80%;
+            color: #bbb;
+        }
+        .day.othermonth.oweekend {
+            color: #fbb;
+        }
+
+        .rowhilite td {
+            //  background: #def;
+            .background-color-25-gray;
+        }
+
+        .rowhilite td.wn {
+            background: #eef;
+        }
+
+        td.hilite { /* Hovered cells <TD> */
+            background: #def;
+            padding: 1px 3px 1px 1px;
+            border: 1px solid #bbb;
+        }
+
+        td.active { /* Active (pressed) cells <TD> */
+            background: #cde;
+            padding: 2px 2px 0px 2px;
+        }
+
+        td.selected { /* Cell showing today date */
+            font-weight: bold;
+            border: 1px solid #000;
+            padding: 1px 3px 1px 1px;
+            background: #fff;
+            color: #000;
+        }
+
+        td.weekend { /* Cells showing weekend days */
+            color: #a66;
+        }
+
+        td.today { /* Cell showing selected date */
+            font-weight: bold;
+            color: #00f;
+        }
+
+        .disabled { color: #999; }
+
+        .emptycell { /* Empty cells (the best is to hide them) */
+            visibility: hidden;
+        }
+
+        .emptyrow { /* Empty row (some months need less than 6 rows) */
+            display: none;
+        }
+
+
+    } // tbody
+
+    table .wn {
+        padding: 2px 3px 2px 2px;
+        border-right: 1px solid #000;
+        //  background: #bdf;
+        .background-color-30-gray;
+    }
+
+
+
+
+    /* The footer part -- status bar and "Close" button */
+
+    tfoot {
+        .footrow { /* The <TR> in footer (only one right now) */
+            text-align: center;
+            background: #556;
+            color: #fff;
+        }
+
+        .ttip { /* Tooltip (status bar) cell <TD> */
+            background: #fff;
+            color: #445;
+            border-top: 1px solid #556;
+            padding: 1px;
+        }
+
+        .hilite { /* Hover style for buttons in footer */
+            background: #aaf;
+            border: 1px solid #04f;
+            color: #000;
+            padding: 1px;
+        }
+
+        .active { /* Active (pressed) style for buttons in footer */
+            background: #77c;
+            padding: 2px 0px 0px 2px;
+        }
+
+    } // tfoot
+
+    /* Combo boxes (menus that display months/years for direct selection) */
+
+    .combo {
+        position: absolute;
+        display: none;
+        top: 0px;
+        left: 0px;
+        width: 4em;
+        cursor: default;
+        border: 1px solid #655;
+        background: #def;
+        color: #000;
+        font-size: 90%;
+
+        .label,
+        .label-IEfix {
+            text-align: center;
+            padding: 1px;
+        }
+
+        .label-IEfix {
+            width: 4em;
+        }
+
+        .hilite {
+            background: #acf;
+        }
+
+        .active {
+            border-top: 1px solid #46a;
+            border-bottom: 1px solid #46a;
+            background: #eef;
+            font-weight: bold;
+        }
+
+    } // combo
+
+
+    td.time {
+        border-top: 1px solid #000;
+        padding: 1px 0px;
+        text-align: center;
+        background-color: #f4f0e8;
+
+
+        .hour,
+        .minute,
+        .ampm {
+            padding: 0px 3px 0px 4px;
+            border: 1px solid #889;
+            font-weight: bold;
+            background-color: #fff;
+        }
+
+        .ampm {
+            text-align: center;
+        }
+
+        .colon {
+            padding: 0px 2px 0px 3px;
+            font-weight: bold;
+        }
+
+        span.hilite {
+            border-color: #000;
+            //  background-color: #667;
+            .background-color-30-gray;
+            color: #fff;
+        }
+
+        span.active {
+            border-color: #f00;
+            background-color: #000;
+            color: #0f0;
+        }
+    } // td.time
+
+
+
+
+
+
+
+
+
+} // calendar
+
+
+
+//###################################################################
+//# Bearbeiten Formular
+//###################################################################
+
+
+div#calendar-edit{
+    width: 870px;
+    padding: 5px;
+    label.et2_label{
+        padding: 0 2px;
+    }
+    .chzn-container {
+        padding-top: 1em;
+    }
+
+    .et2_tabheader{
+        background-color: transparent;
+    }
+
+    // Tab General
+    #calendar-edit_calendar-edit-general{
+        display: block;
+        float: left;
+        width: 100%;
+        table.et2_grid{
+
+            width: auto !important;
+            td {
+                padding: 4px;
+            }
+
+            #calendar-edit_duration{
+                float: left;
+            }
+
+            // Terminsuche
+
+            button#calendar-edit_freetime {background-image: url('../images/search.png') !important;}
+
+            .et2_date{
+                float: left;
+            }
+
+        }
+        #calendar-edit_category{
+            border: 1px solid;
+            .border-color-25-gray;
+            .border_radius_button_normal;
+        }
+
+    }
+    // Teilnehmer
+
+    #calendar-edit_calendar-edit-participants{
+        tbody{
+            display: table;
+            width: 100%;
+
+            td {vertical-align: top; padding-top: 3px;}
+
+
+            // Suchen Bild
+
+            span.ui-icon-search {background-size: 16px 16px;}
+
+            // Ressourcen
+
+            div#calendar-edit_resource {
+                margin: 5px 0 10px 0;
+
+                select {margin-right: 3px;}
+            }
+
+
+            // Rolle
+
+            select#calendar-edit_role {margin-top: 6px;}
+
+            // hinzufügen button
+
+            //			#calendar-edit_add {
+            //
+            //					.Complete_Button_add;
+            //					height: 28px;
+            //					padding: 0px !important;
+            //					margin: 0px;
+            //					&:hover {.Complete_Button_add_hover;}
+            //
+            //			}
+
+        }
+    }
+    // Wiederholung
+
+    #calendar-edit_calendar-edit-recurrence{
+        tbody{
+            display: table;
+            width: 100%;
+
+        }
+    }
+
+    // Benutzerdefiniert
+
+    #calendar-edit_calendar-edit-custom{
+        tbody{
+            display: table;
+            width: 100%;
+
+        }
+    }
+
+    // Verknüpfungen
+
+    #calendar-edit_calendar-edit-links{
+        tbody{
+            display: table;
+            width: 100%;
+
+        }
+    }
+
+    // Alarme
+
+    #calendar-edit_calendar-edit-alarms{
+        tbody{
+            display: table;
+            width: 100%;
+
+            // hinzufügen
+
+            //			button {
+            //
+            //					.Complete_Button_add;
+            //					height: 28px;
+            //					padding: 0px !important;
+            //					margin: 0px;
+            //					&:hover {.Complete_Button_add_hover;}
+            //
+            //					}
+        }
+    }
+
+    // Historie
+
+    #calendar-edit_calendar-edit-history{
+        max-width: 800px;
+        tbody{
+            display: table-row-group;
+            width: 100%;
+
+        }
+    }
+}
+//###################################################################
+//# generell
+//###################################################################
+
+.calendar_inputFullWidth input { width: 60%; }
+
+/******************************************************************
+ * CSS settings for the day, week and month view (timeGridWidget) *
+ ******************************************************************/
+
+/*
+Names used in the "graphic" are the css classes from this file.
+The function names in class uiviews have the leading cal removed and a trailing Widget added:
+e.g. the div with class calendar_calTimeGrid is generated by the timeGridWidget method of uiviews.
+
++++ calendar_calTimeGrid +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++                #### calendar_calDayCols[12h|NoGrip] ###########################################################
++                #... calendar_calDayCol ............................. ... calendar_calDayCol ..........................
++                #.+- calendar_calDayColHeader ---------------------+. .+- calendar_calDayColHeader ------------------+.
++                #.|                                       |. .|                                    |.
++                #.+---------------------------------------+. .+------------------------------------+.
++.calendar_calTimeRowTime.#.** calendar_calEventCol ***** ** calendar_calEventCol *****. .** calendar_calEventCol ***********************.
++.              .#.*                  * *                  *. .*                                    *.
++.              .#.*                  * *                  *. .*                                    *.
++................#.*+- calendar_calEvent -----+* *                  *. .*                                    *.
++.calendar_calTimeRowTime.#.*|                |* *                  *. .*+- calendar_calEvent[Private] --------------+*.
++.              .#.*|                |* *+- calendar_calEvent -----+*. .*|                                  |*.
++.              .#.*+----------------+* *|                |*. .*|                                  |*.
++................#.*                  * *|                |*. .*|                                  |*.
++.calendar_calTimeRowTime.#.*                  * *+----------------+*. .*|                                  |*.
++.              .#.*                  * *                  *. .*+----------------------------------+*.
+
+*/
+
+.calendar_size120b { font-size: 120%; font-weight: bold; }
+
+/* marks a day in the colum-header as today
+*/
+.calendar_calToday{
+    //	background: #ffffcc;
+    .background-table-cal-head;
+}
+/* marks a day in the colum-header as holiday
+*/
+.calendar_calHoliday{
+    background-color: @egw_color_3_e;
+    a {
+        .color-0-gray; 
+        font-size: 0.9em;
+    } 
+}
+/* marks a day in the column-header additionaly as birthday of some contact,
+ * it should work together with the backgrounds of calendar_calToday, calendar_calHoliday, th, row_on and row_off
+ */
+.calendar_calBirthday,.calendar_calBirthday a{
+    color: black;
+    font-weight: bold;
+    font-style: italic;
+}
+
+/* timeGridWidget, contains timeRow's and dayCol's
+ */
+.calendar_calTimeGrid{
+    position: relative;
+    top: 0px;
+    left: 0px;
+    border:1px solid silver;
+    width: 99%;
+    .background-color-10-gray;
+    /* set via inline style on runtime:
+     *  height:
+     */
+}
+
+/* single row in the time-line, always used in conjunction with row_{on|off}, you dont need to set a bgcolor, but you can
+ */
+.calendar_calTimeRow,.calendar_calTimeRowOff{
+    position: absolute;
+    width: 100%;
+    /* set via inline style on runtime:
+     *  height:
+     *  top:
+     */
+}
+.calendar_calTimeRow{
+    /*	background-color: silver; */
+    .background-color-5-gray;
+}
+
+/* time in a timeRow
+ */
+.calendar_calTimeRowTime{
+    padding-left: 5px;
+    height: 100%;
+    line-height: 14px;
+    font-size:8pt;
+    text-align: left;
+}
+
+/* contains (multiple) dayCol's
+ */
+.calendar_calDayCols,.calendar_calDayCols12h,.calendar_calDayColsNoGrid{
+    position: absolute;
+    top: 0px;
+    /*	bottom: 0px; does NOT work in IE, IE needs height: 100%! */
+    height: 100%;
+    left: 45px;
+    right: 0px;
+}
+/* 12h timeformat with am/pm
+ */
+.calendar_calDayCols12h{
+    left: 65px;
+}
+/* no time grid --> no time column
+ */
+.calendar_calDayColsNoTime{
+    left: 0px;
+}
+
+/* contains (multiple) eventCol's
+ */
+.calendar_calDayCol{
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    /* set via inline style on runtime:
+     *  left:
+     *  width:
+     */
+    border-left: 1px solid silver;
+}
+/* Calendar Id #
+*/
+.calendar_calId:before { content:"#" }
+
+/* header for the dayCol
+ */
+.calendar_calDayColHeader,.calendar_calGridHeader{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    right: 0px;	/* does not work in IE, but looks better in other browsers then width:100% */
+    text-align: center;
+    font-size: 100%;
+    white-space: nowrap;
+    border-bottom: 1px solid silver;
+    border-right: 1px solid silver;
+    height: 16px;
+    line-height: 12px;
+    z-index: 30;
+}
+.calendar_calDayColHeader img {
+    vertical-align: middle;
+}
+
+.calendar_calViewUserNameBox {
+    position: absolute;
+    top: -1px;
+    width: 95%;
+    text-align: left;
+    font-size: 120%;
+    white-space: nowrap;
+    border: 1px solid gray;
+    height: 17px;
+    left: -1px;
+    padding-top: 0px;
+    padding-left: 10px;
+    background: #dac0c0;
+}
+.calendar_calViewUserName {
+    font-weight: normal;
+}
+.calendar_calViewUserName:first-letter {
+    text-transform:uppercase;
+}
+.calendar_calViewUserNameFirst {
+}
+.calendar_calViewUserNameFirst:after {
+    content: ", ";
+}
+
+/* header of the time-grid, eg. for the weeks in the month-view (leftmost of the day-col-headers)
+ */
+.calendar_calGridHeader{
+    text-align: left;
+    padding-left: 3px;
+}
+
+/* contains (multiple) events's
+ */
+.calendar_calEventCol{
+    position: absolute;
+    top: 0px;
+    /*	bottom: 0px; does NOT work in IE, IE needs height: 100%! */
+    height: 100%;
+    /* set via inline style on runtime:
+     *  left:
+     *  width:
+     */
+}
+
+/* contains one event: header-row & -body
+ */
+.calendar_calEvent,.calendar_calEventPrivate{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    overflow: hidden;
+    z-index: 20;
+    border-width: 1px;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    /* set via inline style on runtime:
+     *  top: depending on startime
+     *  height: depending on length
+     *  border-color: depending on category
+     *  background: depending on category (shade)
+     */
+}
+.calendar_calEvent:hover{
+    cursor: pointer;
+}
+
+/**
+ * All participants accepted the invitation
+ */
+.calendar_calEventAllAccepted {
+    border-style: solid;
+    border-width: 1px;
+}
+
+/**
+ * All participants answered the invitation, but not all accepted
+ */
+.calendar_calEventAllAnswered {
+    border-style: dotted;
+    border-width: 2px;
+}
+
+/**
+ * Some participants did NOT answer the invitation
+ */
+.calendar_calEventSomeUnknown {
+    border-style: dashed;
+    border-width: 1px;
+}
+
+.calendar_calEventTooltip{
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    max-height: 400px;
+    overflow: auto;
+}
+
+.calendar_calAddEvent{
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+}
+
+.calendar_calAddEvent:hover{
+    //	.background-color-50-gray;
+    background-color: @egw_color_1_e;
+    cursor: pointer;
+    .color-0-gray;
+}
+
+/* header-row of the event
+ */
+.calendar_calEventHeader,.calendar_calEventHeaderSmall{
+    position: relative;	/* as the calendar_calEventIcons use postion: absolute! */
+    font-weight: bold;
+    font-size: 9pt;
+    text-align: left;
+    left: 0px;
+    right: 0px;
+    padding-left: 2px;
+    /* set via inline style on runtime
+     *  background-color: depending on category
+     *	color: white || black depending on cat;
+     */
+}
+.calendar_calEventHeaderSmall{
+    font-size: 8pt;
+    line-height: 10pt;
+}
+.calendar_calEventIcons{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+.calendar_calEventIcons img{
+    height: 16px;
+}
+.calendar_calEventHeaderSmall .calendar_calEventIcons img{
+    height: 13px;
+}
+
+/* body of the event
+ */
+.calendar_calEventBody,.calendar_calEventBodySmall{
+    padding: 0px 3px 0px;
+    left: 2px;
+    right: 2px;
+    height: 99%;
+}
+
+.calendar_calEventBodySmall{
+    font-size: 95%;
+}
+
+.calendar_calEventLabel{
+    font-weight: bold;
+    font-size: 90%;
+}
+
+.calendar_calEventTitle{
+    font-weight: bold;
+    font-size: 110%;
+}
+
+/* table of the dayView containing 2 cols: 1) day-view, 2) todos
+*/
+.calendar_calDayView{
+    width: 100%;
+}
+/* calDayTods is the day-view's todo column, containing the calDayTodoHeader and the calDayTodoTable
+ */
+.calendar_calDayTodos .calendar_calDayTodosHeader {
+    margin: 0px;
+    padding: 2px;
+    font-weight: bold;
+
+    a {
+        img {
+            .Complete_Button_normal;
+            height: 16px;
+            width: 16px;
+
+            &:hover{.Complete_Button_hover;}
+        }
+    }
+}
+.calendar_calDayTodos .calendar_calDayTodosTable {
+    overflow: auto;
+    max-height: 400px;
+}
+.calendar_calDayTodos {
+    width: 250px;
+    margin-left: 10px;
+    border: 1px solid silver;
+}
+.calendar_calDayTodosHeader {
+    text-align: center;
+}
+
+/******************************************************
+ * CSS settings for the planner views (calendar_plannerWidget) *
+ ******************************************************/
+
+/* calendar_plannerWidget represents the whole planner, consiting of the calendar_plannerHeader and multiple plannerRowWidgets
+ */
+.calendar_plannerWidget {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 99.5%;
+    border: 1px solid gray;
+    padding-right: 3px;
+}
+
+/* calendar_plannerHeader contains a calendar_plannerHeaderTitle and multiple calendar_plannerHeaderRows
+ */
+.calendar_plannerHeader {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+}
+
+/* calendar_plannerRowWidget contains a calendar_plannerRowHeader and multiple eventRowWidgets in an calendar_eventRows
+ */
+.calendar_plannerRowWidget {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+}
+
+/* calendar_plannerScale represents a scale-row of the calendar_plannerHeader, containing multiple planner{Day|Week|Month}Scales
+ */
+.calendar_plannerScale,.calendar_plannerScaleDay {
+    position: relative;
+    top: 0px;
+    left: 0%;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+}
+.calendar_plannerScaleDay {
+    height: 28px;
+    line-height: 14px;
+}
+.calendar_plannerDayScale,.calendar_plannerMonthScale,.calendar_plannerWeekScale,.calendar_plannerHourScale,.calendar_plannerDayOfMonthScale {
+    position: absolute;
+    top: 0px;
+    /* left+width: is set by the code on runtime */
+    text-align: center;
+    height: 100%;
+    border: 1px solid white;
+    /* set via inline style on runtime:
+     *  left:
+     *  width:
+     */
+}
+.calendar_plannerHourScale {
+    font-size: 90%;
+}
+.calendar_plannerDayScale {
+    font-size: 90%;
+}
+.calendar_plannerWeekScale {
+    line-height: 20px;
+}
+.calendar_plannerMonthScale {
+    font-weight: bold;
+}
+.calendar_plannerDayScale img,.calendar_plannerWeekScale img,.calendar_plannerMonthScale img,.calendar_plannerDayOfMonthScale img {
+    vertical-align: middle;
+}
+
+/* calendar_plannerRowHeader contains the user or category name of the calendar_plannerRowWidget
+ */
+.calendar_plannerRowHeader, .calendar_plannerHeaderTitle {
+    position: absolute;
+    top: 0px;
+    left: 0%;
+    width: auto;		/* need to be identical for calendar_plannerRowHeader and calendar_plannerHeaderTitle and match left of calendar_eventRows/calendar_plannerHeaderRows */
+    height: 100%;
+    line-height: 20px;
+    border: 1px solid white;
+}
+
+/* calendar_eventRows contain multiple eventRowWidgets
+ */
+.calendar_eventRows, .calendar_plannerHeaderRows {
+    position: relative;
+    top: 0px;
+    left: 15%;	/* need to be identical for calendar_eventRows and calendar_plannerHeaderRows and match width of calendar_plannerRowHeader/calendar_plannerHeaderTitle */
+    width: 85%;
+}
+
+/**
+ * Filler for month with less then 31 days in yearly planner
+ */
+.calendar_eventRowsFiller {
+    position: absolute;
+    top: 0px;
+    height: 93%;
+    background-color: white;
+    border: 1px dashed gray;
+    border-right: none;
+}
+
+/**
+ * Weekend or other special days in yearly planner
+ */
+.calendar_eventRowsMarkedDay {
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    z-index: 10;
+}
+
+/* calendar_eventRowWidget contains non-overlapping events
+ */
+.calendar_eventRowWidget {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 20px;
+    border: 1px solid white;
+}
+
+.calendar_plannerEvent,.calendar_plannerEventPrivate{
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    overflow: hidden;
+    z-index: 20;
+    border: 1px solid black;
+    min-width: 5%;
+    /* set via inline style on runtime:
+     *  left: depending on startime
+     *  width: depending on length
+     *  background-color: depending on category
+     */
+}
+.calendar_plannerEvent img,.calendar_plannerEventPrivate img {
+    padding-top: 2px;
+    width: 16px;
+    height: 16px;
+}
+.calendar_plannerEvent:hover{
+    cursor: pointer;
+}
+
+/* Special colors for the year view */
+.calendar_cal_year_legend_weekend {
+    background-color: #CCCCCC;
+}
+.calendar_cal_year_legend {
+    background-color: #EFEFEF;
+}
+.calendar_cal_year_legend {
+    background-color: #FFFFCC;
+    z-index: 0;
+}
+.calendar_cal_year_weekend {
+    background-color: #F9F9CC;
+    z-index: 0;
+}
+.calendar_cal_year_today {
+    border-color: #EE0000;
+    border-width: 2px;
+}
+
+/**
+ * edit series or exception popup used in eventWidget and
+ * delete series and exceptions popup used in edit event
+ */
+#calendar-edit_calendar-delete_series {
+    position: fixed;
+    top: 200px;
+    left: 500px;
+    z-index: 20000;
+    display: none;
+    border-collapse:collapse;
+    border-spacing:0px;
+    background-color: #fff;
+    .Complete_Button_normal;
+}
+#delete_series {
+    top: 100px;
+    left: 200px;
+}
+#delete_series input,#edit_series input {
+    margin: 8px;
+}
+#dialog-content {
+    display:block;
+    height:100px;
+    padding:6px;
+    color:#666666;
+    font-size:13px;
+    margin: -2px -1px 0px -2px;
+    width:410px;
+}
+
+/** #####################################################################################
+ * @package preferences
+ * ######################################################################################
+ */
+
+table.prefTable {
+    width: 100%;
+}
+tr.prefRow {
+    position: relative;
+}
+td.prefName {
+    width: 50%;
+}
+tr.prefRow > td {
+    vertical-align: bottom;	/* otherwise help will cover bigger prefValue */
+}
+.prefHelp {
+    position: absolute;
+    right: 55%;
+    display: none;
+    width: 33%;
+    //	background-color: lightyellow;
+
+    .Complete_Button_text;
+    //	border: 1px solid black;
+    //	border-radius: 10px;
+    //	padding: 5px;
+    //	margin-top: 5px;
+    .background-color-Context-Help;
+
+}
+tr.prefRow:hover .prefHelp {
+    display: block;
+    z-index: 10;	/* FF: displays it under next prefName without */
+}
+.prefDefault, .prefValue {
+    float: left;
+}
+.prefValue {
+    margin-right: 5px;
+}
+.prefValue textarea, textarea.prefValue {
+    width: 99%;
+    height: 5em;
+}
+
+.prefType, .prefApp {
+    font-size: 150%;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+//

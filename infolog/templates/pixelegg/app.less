@@ -21,20 +21,25 @@
 
 span#favorite_sidebox_infolog{
 
-	.sidebox-favorites {
+	
 
-						favorites{
+						.favorites{
 
 										li {
 											 a div.ui-icon-heart{
 																background-image: none;
 
 																}
+											img.sideboxstar{
+												.box-shadow(none);
+												border: 0px;
+												background-size: contain;
+												}
 											}
 
 									}
 
-						}
+						
 
 }
 
@@ -46,6 +51,7 @@ span#favorite_sidebox_infolog{
 .egw_fw_content_browser_div{
 //	.box_shadow_dialog;
 }
+
 
 #infolog-index {
 
@@ -72,18 +78,18 @@ span#favorite_sidebox_infolog{
 										padding: 0 0em;
 										margin-right: 0em;
 
-//										div.et2_box_widget{
-//													.Complete_Button_add;
-////													.Complete_Button_text;
-//													.border_radius_button_lefttop;
-//													.box_shadow_standard_light;
-//													height: 35px;
-//													.infolog_headertext{color: #FFF !important;}
-//
-//													&:hover {.box_shadow_standard_light_hover;}
-//
-//
-//															}
+										div.et2_box_widget{
+													.Complete_Button_add;
+//													.Complete_Button_text;
+													.border_radius_button_lefttop;
+													.box_shadow_standard_light;
+													height: 35px;
+													.infolog_headertext{color: #FFF !important;}
+
+													&:hover {.box_shadow_standard_light_hover;}
+
+
+															}
 											}
 
 									}
@@ -106,8 +112,9 @@ span#favorite_sidebox_infolog{
 							li{
 									a {
 
-											height: 40px;
+											height: 25px;
 											border: none;
+											padding-top: 5px 0 0 5px;
 
 											img {height: 16px; width: 16px;}
 										}
@@ -116,7 +123,7 @@ span#favorite_sidebox_infolog{
 											background: none;
 											text-indent: -22px;
 											margin-left: 21px;
-											height: 40px;
+											height: 25px;
 
 											}
 								}
@@ -142,7 +149,16 @@ span#favorite_sidebox_infolog{
 					select#infolog-index_filter2 {}
 
 					// Suchfeld
-					input#infolog-index_search {}
+					input#infolog-index_search {
+						height: 20px;
+						.Complete_Button_input;
+						&:hover{
+							.Complete_Button_input_hover;
+						}
+						&:focus{
+							.Complete_Button_input_focus;
+							}
+					}
 
 
 					// Suchen Button
@@ -157,7 +173,9 @@ span#favorite_sidebox_infolog{
 			// ##################################
 			// Listendarstellung
 			.egwGridView_outer {}
-
+			table.egwGridView_outer thead tr th.optcol .selectcols{
+				margin-top: 1.5%;
+			}
 
 			.frame {min-height: 500px; height: 500px;}
 
@@ -167,7 +185,7 @@ span#favorite_sidebox_infolog{
 
 				table.egwGridView_grid {
 
-					img[src]{height: 16px; width: 16px;}
+					img{height: 16px; width: 16px;}
 
 				}
 
@@ -233,7 +251,5 @@ input.infolog-edit_info_custom_from {}
 // Phone + Email
 
 td.inputFullWidth{
-
 	input#infolog-edit_info_addr{}
-
-}
+	}

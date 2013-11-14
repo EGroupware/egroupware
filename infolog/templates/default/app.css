@@ -2,7 +2,7 @@
  * EGroupware: CSS with less preprocessor
  *
  * Please do NOT change app.css directly, instead change app.less and compile it!
- *
+ * Pixleegg Template app.css
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
@@ -25,45 +25,6 @@ span#favorite_sidebox_infolog .sidebox-favorites favorites li a div.ui-icon-hear
 #infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right {
   padding: 0 0em;
   margin-right: 0em;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget {
-  background-color: #0b5fa4;
-  color: #FFF;
-  text-shadow: none;
-  background-image: none !important;
-  -webkit-border-radius: 3px;
-  -webkit-border-top-left-radius: 20px;
-  -moz-border-radius: 3px;
-  -moz-border-radius-topleft: 20px;
-  border-radius: 3px;
-  border-top-left-radius: 20px;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  height: 35px;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget:before,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget:before {
-  content: "+";
-  font-size: 2em;
-  color: #ffc200;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget:before,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget:before {
-  content: "+";
-  font-size: 2em;
-  color: #ffc200;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget .infolog_headertext,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget .infolog_headertext {
-  color: #FFF !important;
-}
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-clearfix div.et2_hbox_right div.et2_box_widget:hover,
-#infolog-index #infolog-index_nm .nextmatch_header div.ui-helper-reset div.et2_hbox_right div.et2_box_widget:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
 }
 #infolog-index #infolog-index_nm .nextmatch_header div#infolog-index_favorite_wrapper ul#infolog-index_favorite_menu {
   border-color: #bfbfbf;
@@ -103,7 +64,7 @@ span#favorite_sidebox_infolog .sidebox-favorites favorites li a div.ui-icon-hear
 #infolog-index #infolog-index_nm .egwGridView_scrollarea {
   height: auto;
 }
-#infolog-index #infolog-index_nm .egwGridView_scrollarea table.egwGridView_grid img {
+#infolog-index #infolog-index_nm .egwGridView_scrollarea table.egwGridView_grid img[src] {
   height: 16px;
   width: 16px;
 }

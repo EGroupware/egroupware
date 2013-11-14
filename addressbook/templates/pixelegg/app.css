@@ -5,7 +5,7 @@
  *
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
+ * @author Stefan Reinhardt <stefan.reinhardt@pixelegg.de>
  * @package addressbook
  * @version $Id$
  */
@@ -84,10 +84,11 @@ div#addressbook-index div.et2_hbox_right button#addressbook-index_search {
   background-size: 20px auto;
   width: auto;
   height: 32px;
-  background-image: url('../images/erweiterte-suche.png') !important;
+  background-image: url('../../pixelegg/images/erweiterte-suche.png') !important;
+  padding-left: 0px;
 }
 div#addressbook-index div.et2_hbox_right button#addressbook-index_search:hover {
-  background-image: url('../images/erweiterte-suche.png');
+  background-image: url('../../pixelegg/images/erweiterte-suche.png');
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
@@ -104,7 +105,7 @@ div#addressbook-index div.et2_hbox_right button#addressbook-index_search:hover {
   box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
 }
 div#addressbook-index div.et2_hbox_right button#addressbook-index_search:focus {
-  background-image: url('../images/erweiterte-suche.png');
+  background-image: url('../../pixelegg/images/erweiterte-suche.png');
   border: 1px solid rgba(0, 0, 0, 0.15);
   -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);

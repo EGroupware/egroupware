@@ -1,418 +1,3 @@
-/**
- * EGroupware: CSS with less preprocessor
- *
- * Please do NOT change app.css directly, instead change app.less and compile it!
- *
- * @link http://www.egroupware.org
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @author Stefan Reinhard <stefan.reinhard@pixelegg.de>
- * @package mail
- * @version $Id$
- */
-div#mail-index table.egwGridView_grid {
-  width: 99%;
-}
-div#mail-index div#mail-index_mailSplitter {
-  margin: 0 1% 0 0 !important;
-}
-div#mail-index div#mail-index_mailSplitter div#mail-index_nm div.nextmatch_header div.filters {
-  padding: 0 0 0 1em;
-  background-color: #f0f0f0;
-  margin-bottom: 3px;
-  margin: 0em;
-  border-width: 0 0 1px 0;
-  border-color: #d9d9d9;
-  background-image: none;
-}
-div#mail-index div#mail-index_mailSplitter div#mail-index_nm tr.mail td img {
-  height: 16px;
-}
-div#mail-index div#mail-index_mailSplitter div#mail-index_mailPreview {
-  padding: 3px;
-  margin: 5px 0;
-  background-color: #bfbfbf;
-}
-div#mail-index div#mail-index_mailSplitter div#mail-index_mailPreview div#mail-index_mailPreviewHeadersFrom {
-  width: 50%;
-}
-div#mail-index div#mail-index_mailSplitter div#mail-index_mailPreview div#mail-index_mailPreviewHeadersTo {
-  width: 50%;
-}
-div#mail-index div#mail-index_mailSplitter div#mail-index_mailPreview div#mail-index_mailPreviewHeadersDate {
-  width: 50%;
-}
-div#mail-index div#mail-index_mailSplitter div#mail-index_mailPreview div#mail-index_mailPreviewHeadersSubject {
-  width: 100%;
-}
-.egw_fw_ui_category_content #mail-index_buttonmailcreate {
-  margin-left: -14px;
-}
-.egw_fw_ui_category_content span#mail-tree_target {
-  max-height: 50%;
-}
-.egw_fw_ui_category_content .dtree {
-  font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
-  font-size: 87.5%;
-}
-/* ##################################################################################
- *       E-Mail Dialog "Compose"
- *
- * ##################################################################################
- */
-#mail-compose {
-  width: 870px;
-  padding: 5px;
-}
-#mail-compose .mail-compose_toolbar img {
-  width: 22px;
-}
-#mail-compose .mail-compose_toolbar .mail-compose_button {
-  margin-right: 15px;
-  padding: 0 3px 0 0;
-}
-#mail-compose .mail-compose_toolbar img#mail-compose_button[saveAsDraft],
-#mail-compose .mail-compose_toolbar .et2_button_icon {
-  vertical-align: middle;
-  padding: 2px;
-  background-color: #f0f0f0;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-#mail-compose .mail-compose_toolbar img#mail-compose_button[saveAsDraft]:hover,
-#mail-compose .mail-compose_toolbar .et2_button_icon:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  background-color: #d9d9d9;
-}
-#mail-compose .mail-compose_toolbar img#mail-compose_button[saveAsDraft]:focus,
-#mail-compose .mail-compose_toolbar .et2_button_icon:focus {
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  background-color: #d9d9d9;
-}
-#mail-compose .mail-compose_toolbar .et2_file,
-#mail-compose .mail-compose_toolbar .mail-compose_fileselector {
-  vertical-align: middle;
-}
-#mail-compose .mail-compose_toolbar .et2_file #mail-compose_uploadForCompose,
-#mail-compose .mail-compose_toolbar .mail-compose_fileselector #mail-compose_uploadForCompose {
-  font-size: 0.7em;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  color: #000000;
-  padding-left: 30px !important;
-  background-position: 6px center;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  width: auto;
-  height: 32px;
-  background-image: url(images/attach.png) !important;
-  background-color: #fafafa;
-  height: 20px;
-  margin-left: 5px;
-}
-#mail-compose .mail-compose_toolbar .et2_file #mail-compose_uploadForCompose:hover,
-#mail-compose .mail-compose_toolbar .mail-compose_fileselector #mail-compose_uploadForCompose:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  background-color: #d9d9d9;
-}
-#mail-compose .mail-compose_toolbar .et2_file #mail-compose_uploadForCompose:focus,
-#mail-compose .mail-compose_toolbar .mail-compose_fileselector #mail-compose_uploadForCompose:focus {
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  background-color: #d9d9d9;
-}
-#mail-compose .mail-compose_toolbar .et2_file div.progress,
-#mail-compose .mail-compose_toolbar .mail-compose_fileselector div.progress {
-  width: 247px;
-}
-#mail-compose .mail-compose_toolbar span.et2_label {
-  font-size: 0.7em;
-}
-#mail-compose .mail-compose_toolbar .mail-compose_infolog {
-  vertical-align: middle;
-  height: 20px;
-  padding: 3px 2px;
-  background-color: #f0f0f0;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  margin-right: 3px;
-}
-#mail-compose .mail-compose_toolbar .mail-compose_infolog .et2_button_icon {
-  border: none;
-  box-shadow: none;
-  border-radius: 0px;
-  background-color: transparent;
-}
-#mail-compose .mail-compose_toolbar .mail-compose_tracker {
-  vertical-align: middle;
-  height: 20px;
-  padding: 3px 2px;
-  background-color: #f0f0f0;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  margin-right: 3px;
-}
-#mail-compose .mail-compose_toolbar .mail-compose_tracker span.et2_label {
-  font-size: 0.7em;
-  height: 20px;
-}
-#mail-compose .mail-compose_toolbar .mail-compose_tracker .et2_button_icon {
-  border: none;
-  box-shadow: none;
-  border-radius: 0px;
-  background-color: transparent;
-}
-#mail-compose .mail-compose_toolbar .mail-compose_notification {
-  vertical-align: middle;
-  height: 20px;
-  padding: 3px 2px;
-  background-color: #f0f0f0;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  margin-right: 3px;
-}
-#mail-compose .mail-compose_toolbar .mail-compose_priority {
-  vertical-align: middle;
-  height: 20px;
-  padding: 3px 2px;
-  background-color: #f0f0f0;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  margin-right: 3px;
-}
-#mail-compose .mail-compose_toolbar .mail-compose_priority span.et2_label {
-  margin-right: 3px;
-}
-#mail-compose .mail-compose_toolbar .mail-compose_priority select#mail-compose_priority {
-  box-shadow: none;
-  font-size: 0.8em;
-  border: none;
-}
-#mail-compose .mailComposeHeaders,
-#mail-compose .mailComposeHeadersSection {
-  margin: 2px 0;
-  width: 98%;
-}
-#mail-compose .mailComposeHeaders span,
-#mail-compose .mailComposeHeadersSection span {
-  width: 8em;
-  font-size: 0.8em;
-}
-#mail-compose .mailComposeHeaders div,
-#mail-compose .mailComposeHeadersSection div {
-  max-width: 770px;
-}
-#mail-compose .mailComposeHeaders span.ui-state-error,
-#mail-compose .mailComposeHeadersSection span.ui-state-error {
-  color: #043a6b;
-}
-#mail-compose .mailComposeHeaders div.ms-res-item-active,
-#mail-compose .mailComposeHeadersSection div.ms-res-item-active {
-  background: #0c5da5;
-}
-#mail-compose .mailComposeHeaders div.ms-res-item-active span,
-#mail-compose .mailComposeHeadersSection div.ms-res-item-active span {
-  color: #FFFFFF;
-}
-#mail-compose .mailComposeHeaders input#mail-compose_subject,
-#mail-compose .mailComposeHeadersSection input#mail-compose_subject {
-  max-width: 750px;
-}
-#mail-compose fieldset.mailSignature {
-  font-size: 0.8em;
-}
-#mail-compose fieldset.mailSignature span {
-  margin-left: 8px;
-}
-/* ##################################################################################
- *       E-Mail Dialog "Ansehen"
- *
- * ##################################################################################
- */
-#mail-display {
-  width: 870px;
-  padding: 5px;
-}
-#mail-display .mailDisplayHeaderSection {
-  top: 0;
-  position: relative;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar {
-  background-color: #679fd2;
-  padding: 5px 3px;
-  height: 25px;
-  display: -webkit-box;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar button {
-  background-color: #f0f0f0;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  height: 20px;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar button:hover {
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  background-color: #d9d9d9;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar button:focus {
-  -webkit-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 1px 2px 1px rgba(0, 0, 0, 0.5);
-  background-color: #d9d9d9;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar #mail-display_forward_wrapper li a img {
-  width: 16px;
-  margin-right: 3px;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar #mail-display_save_wrapper button#mail-display_save {
-  background-image: url('../images/speichern.png');
-  background-position: left center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  box-shadow: none;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar #mail-display_save_wrapper button#mail-display_save:hover img {
-  display: none;
-  background-image: none;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar #mail-display_save_wrapper button#mail-display_save:focus {
-  box-shadow: none;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar #mail-display_save_wrapper li a img {
-  width: 16px;
-  margin-right: 3px;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar #mail-display_view_wrapper button#mail-display_view {
-  box-shadow: none;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar #mail-display_view_wrapper button#mail-display_view:hover img {
-  display: none;
-  background-image: none;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar #mail-display_view_wrapper button#mail-display_view:focus {
-  box-shadow: none;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar #mail-display_view_wrapper li a img {
-  width: 16px;
-  margin-right: 3px;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar #mail-display_mark_wrapper button#mail-display_mark {
-  box-shadow: none;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar #mail-display_mark_wrapper button#mail-display_mark:hover img {
-  display: none;
-  background-image: none;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar #mail-display_mark_wrapper button#mail-display_mark:focus {
-  box-shadow: none;
-}
-#mail-display .mailDisplayHeaderSection #mail-display_toolbar #mail-display_mark_wrapper li a img {
-  width: 16px;
-  margin-right: 3px;
-}
-#mail-display .mailDisplayAttachments {
-  background-color: #f0f0f0;
-  max-height: 10%;
-  position: fixed;
-  bottom: 26px;
-  border: 0px solid #560ead;
-  border-bottom: 0px;
-  opacity: 1;
-  -moz-opacity: 1;
-}
-#mail-display .mailDisplayAttachments img {
-  width: 16px;
-}
-/* ##################################################################################
- *       E-Mail
- *
- * ##################################################################################
- */
-/* felamimail uses the styledefinitions below to format navButton/navSeparator */
-tr.navbarBackground {
-  background-color: #dddddd;
-}
-div.navButton {
-  background-color: #dddddd;
-  float: left;
-  padding: 2px;
-  margin: 2px;
-  border: solid #dddddd 1px;
-}
-div.navButton:hover,
-div.navButtonHover {
-  background-color: #eeeeee;
-  float: left;
-  padding: 2px;
-  margin: 2px;
-  border: solid white 1px;
-  border-right: solid black 1px;
-  border-bottom: solid black 1px;
-  position: relative;
-}
-div.navButton:active,
-div.navButtonActive {
-  background-color: #dddddd;
-  float: left;
-  padding: 2px;
-  margin: 2px;
-  border: solid white 1px;
-  border-left: solid black 1px;
-  border-top: solid black 1px;
-  position: relative;
-}
-div.navSeparator {
-  background-color: #dddddd;
-  float: left;
-  padding: 0px;
-  margin: 2px;
-  border: solid silver 1px;
-  height: 24px;
-  position: relative;
-}
-/* Fixes z-index problem with the calendar year selection (displays behind selectboxes)*/
-.calendar .combo {
-  z-index: 1 !important;
-}
 textarea {
   font-family: monospace, sans-serif;
   font-size: 110%;
@@ -438,17 +23,11 @@ textarea {
 }
 tr.mail div {
   cursor: default;
-  white-space: normal;
-  text-overflow: ellipsis;
-}
-tr.mail div span {
-  text-overflow: ellipsis;
-  white-space: normal;
+  white-space: nowrap;
 }
 tr.mail a {
   cursor: pointer;
   white-space: nowrap;
-  text-overflow: ellipsis;
 }
 tr.recent div,
 tr.recent span,
@@ -539,34 +118,34 @@ tr.forwarded span.status_img {
   background-image: url(images/kmmsgforwarded.png) !important;
 }
 .subjectBold {
-  font-size: 12px;
+  FONT-SIZE: 12px;
   font-weight: bold;
   font-family: Arial;
 }
 .subject {
-  font-size: 12px;
+  FONT-SIZE: 12px;
   font-family: Arial;
 }
 TR.sieveRowActive {
-  font-size: 11px;
+  FONT-SIZE: 11px;
   height: 20px;
   padding: 0;
   background: White;
 }
 A.sieveRowActive {
-  font-size: 11px;
+  FONT-SIZE: 11px;
   height: 14px;
   padding: 0;
 }
 TR.sieveRowInActive {
-  font-size: 11px;
+  FONT-SIZE: 11px;
   height: 20px;
   padding: 0;
   background: White;
   color: Silver;
 }
 A.sieveRowInActive {
-  font-size: 11px;
+  FONT-SIZE: 11px;
   height: 14px;
   padding: 0;
   color: Silver;
@@ -745,7 +324,7 @@ input[type=button] {
   height: 100%;
   border: 0;
 }
-#mail-index_button[id*="mailcreate"] {
+#mail-index_button\[mailcreate\] {
   width: 99%;
   text-align: left;
   font-weight: bold;
@@ -754,11 +333,21 @@ input[type=button] {
   background-position: left;
   background-repeat: no-repeat;
 }
+#mail-compose_button\[send\] {
+  text-align: left;
+  font-weight: bold;
+  padding-left: 30px;
+  width: 80px;
+  margin: 0px !important;
+  background-image: url(images/mail_send.png) !important;
+  background-position: left;
+  background-repeat: no-repeat;
+}
 .mailDisplay,
 #mail-index_mailPreview {
   overflow: hidden;
   position: relative;
-  margin-top: 5px;
+  margin-top: 3px;
 }
 #mail-compose_fileselector {
   width: 245px !important;
@@ -795,80 +384,38 @@ input[type=button] {
   right: 0;
   top: 0;
 }
-#mail-index_mailPreviewContainer {
-  position: absolute;
-  border: 1px solid silver;
-  top: 75px;
-  bottom: 0;
-  left: 3px;
-  right: 0;
-}
 #mail-index_toolbar {
   padding: 0px;
-  background: none;
-  margin: 5px 5px 0 0;
-  border: none;
 }
-#mail-index_toolbar button {
-  background: none;
-  background-image: none;
-  background-color: #f0f0f0;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
+#mail-index_toolbar > button > span {
+  padding: .2em .4em;
 }
-#mail-index_toolbar button:hover {
-  background-color: #b3b3b3 !important;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-#mail-index_toolbar button:active {
-  background-color: #808080;
-  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.9);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-#mail-index_toolbar button:focus {
-  border: none;
-}
-#mail-index_toolbar button span {
-  padding: .2em .6em;
-}
-#mail-index_toolbar button span img {
+#mail-index_toolbar > button > span > img {
   width: 16px;
   padding: 0px;
   height: 16px !important;
 }
+#mail-index_mailPreviewContainer {
+  position: absolute;
+  border: 1px solid silver;
+  top: 60px;
+  bottom: 0;
+  left: 3px;
+  right: 0;
+}
 #mail-index_previewAttachmentArea {
-  background-color: #f0f0f0;
-  max-height: 5%;
+  background-color: #efefdf;
+  max-height: 10%;
   max-width: 50%;
   position: absolute;
   overflow: scroll;
   overflow-x: hidden;
-  right: 7px;
-  top: 37px;
-  border-color: #f0f0f0;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  right: 0;
+  top: 25px;
+  border: 1px solid red;
   opacity: 1;
   -moz-opacity: 1;
-}
-#mail-index_previewAttachmentArea img {
-  width: 16px;
-  height: 16px;
+  filter: alpha(opacity=100);
 }
 #mail-index_previewAttachmentArea.noContent {
   border: 0px !important;
@@ -892,9 +439,20 @@ input[type=button] {
   top: 120px;
   bottom: 100px;
 }
+.mailDisplayAttachments {
+  background-color: #efefdf;
+  max-height: 10%;
+  position: fixed;
+  bottom: 26px;
+  border: 1px solid red;
+  border-bottom: 0px;
+  opacity: 1;
+  -moz-opacity: 1;
+  filter: alpha(opacity=100);
+}
 /*
 #divGenTime {
-	background-color:#efefdf;
+	background-color:#efefdf; 
 	max-height: 10%;
 	position: fixed;
 	bottom: 1px;
