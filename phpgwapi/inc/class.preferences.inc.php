@@ -115,19 +115,29 @@ class preferences
 	 *
 	 * Takes care of offset for groups.
 	 *
-	 * @param int $account_id
+	 * @param int|string $account_id numeric account_id, "default", "forced" to load default or forced preferences
+	 *	or account_lid (only if !== "default" or "forced"!)
 	 */
 	function set_account_id($account_id)
 	{
+		if ($account_id === 'default')
+		{
+			$this->account_id = self::DEFAULT_ID;
+		}
+		elseif ($account_id === 'forced')
+		{
+			$this->account_id = self::FORCED_ID;
+		}
 		// if we got instancated for a group, need to set offset of DEFAULT_ID!
-		if ($account_id < 0 && $GLOBALS['egw']->accounts->exists($account_id) == 2)
+		elseif ($account_id < 0 || !is_numeric($account_id) && ($account_id = get_account_id($account_id)) < 0)
 		{
 			$this->account_id = $account_id + self::DEFAULT_ID;
 		}
 		else
 		{
-			$this->account_id = get_account_id($account_id);
+			$this->account_id = $account_id;
 		}
+		//error_log(__METHOD__."($account_id) setting this->account_id to $this->account_id");
 	}
 
 	/**
