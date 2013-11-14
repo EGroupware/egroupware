@@ -69,6 +69,10 @@
 				if (matches.length > 1 && matches[2] !== undefined) args = JSON.parse('['+matches[2].replace(/'/g,'"')+']');
 				window[matches[1]].apply(window.framework, args);
 			}
+			else if (matches && matches[1].indexOf('app.') == 0)
+			{
+				return et2_call(matches[1],matches[2]);
+			}
 			else
 			{
 				alert('Do NOT know how to execute '+this.href);
