@@ -24,6 +24,11 @@ class pixelegg_framework extends jdots_framework
 	const APP = 'pixelegg';
 
 	/**
+	 * Enable to use this template sets login.tpl for login page
+	 */
+	const LOGIN_TEMPLATE_SET = true;
+
+	/**
 	 * Constructor
 	 *
 	 * Overwritten to set own app/template name (parent can NOT use static::APP!)
