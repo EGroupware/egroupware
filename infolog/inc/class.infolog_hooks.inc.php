@@ -137,6 +137,7 @@ class infolog_hooks
 		$info = new infolog_bo();	// need some labels from
 		$filters = $show_home = array();
 		$show_home[] = lang("DON'T show InfoLog");
+		$filters['none'] = $info->filters[''];
 		foreach($info->filters as $key => $label)
 		{
 			$show_home[$key] = $filters[$key] = lang($label);
