@@ -100,7 +100,24 @@ if($GLOBALS['egw_info']['server']['auth_type'] == 'cas')
 }
 else
 {
-	$GLOBALS['egw_info']['server']['template_dir'] = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['login_template_set'];
+	// allow template to overide login-template (without modifying header.inc.php) by setting default or forced pref
+	$prefs = new preferences();
+	$prefs->account_id = preferences::DEFAULT_ID;
+	$prefs->read_repository();
+
+	$class = $prefs->data['common']['template_set'].'_framework';
+	if (class_exists($class) && constant($class.'::LOGIN_TEMPLATE_SET'))
+	{
+		$GLOBALS['egw_info']['server']['template_set'] =
+			$GLOBALS['egw_info']['login_template_set'] = $prefs->data['common']['template_set'];
+		$GLOBALS['egw_info']['server']['template_dir'] =
+			EGW_SERVER_ROOT . '/' . $GLOBALS['egw_info']['login_template_set'].'/templates/'.$GLOBALS['egw_info']['login_template_set'];
+	}
+	else
+	{
+		$GLOBALS['egw_info']['server']['template_dir'] = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['login_template_set'];
+	}
+	unset($prefs);
 
 	// read the images from the login-template-set, not the (maybe not even set) users template-set
 	$GLOBALS['egw_info']['user']['preferences']['common']['template_set'] = $GLOBALS['egw_info']['login_template_set'];
