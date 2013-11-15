@@ -10,8 +10,6 @@
  * @version $Id$
  */
 
-require_once EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php';
-
 /**
  * UI for admin
  */
@@ -36,9 +34,8 @@ class admin_ui
 	 * New index page
 	 *
 	 * @param array $content
-	 * @param string $msg
 	 */
-	public function index(array $content=null, $msg='')
+	public function index(array $content=null)
 	{
 		admin_statistics::check();
 
@@ -66,7 +63,7 @@ class admin_ui
 			'start' => false,
 			'order' => 'account_lid',
 			'sort' => 'ASC',
-		)) as $account_id => $data)
+		)) as $data)
 		{
 			$sel_options['filter'][$data['account_id']] = empty($data['account_description']) ? $data['account_lid'] : array(
 				'label' => $data['account_lid'],
@@ -165,7 +162,7 @@ class admin_ui
 		++$group;
 		// supporting both old way using $GLOBALS['menuData'] and new just returning data in hook
 		$apps = array_unique(array_merge(array('admin'), $GLOBALS['egw']->hooks->hook_implemented('edit_user')));
-		foreach($apps as $n => $app)
+		foreach($apps as $app)
 		{
 if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole admin, dono why
 			$GLOBALS['menuData'] = $data = array();
@@ -177,13 +174,14 @@ if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole
 				if (empty($item['caption']))
 				{
 					$item['caption'] = $item['description'];
-					unset($item[$description]);
+					unset($item['description']);
 				}
 				if (isset($item['url']) && isset($item['extradata']))
 				{
 					$item['url'] = $item['extradata'].'&account_id=$id';
 					$item['id'] = substr($item['extradata'], 11);
 					unset($item['extradata']);
+					$matches = null;
 					if ($item['options'] && preg_match('/(egw_openWindowCentered2?|window.open)\([^)]+,(\d+),(\d+).*(title="([^"]+)")?/', $item['options'], $matches))
 					{
 						$item['popup'] = $matches[2].'x'.$matches[3];
@@ -303,6 +301,7 @@ if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole
 					if (empty($data['id']))
 					{
 						$data['id'] = $root.($app == 'admin' ? 'admin' : 'apps/'.$app).'/';
+						$matches = null;
 						if (preg_match_all('/(menuaction|load)=([^&]+)/', $data['link'], $matches))
 						{
 							$data['id'] .= $matches[2][(int)array_search('load', $matches[1])];
@@ -314,9 +313,7 @@ if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole
 					}
 					if (!empty($data['icon']))
 					{
-						$icon = $data['icon'];
-						list(,$icon) = explode($GLOBALS['egw_info']['server']['webserver_url'], $icon);
-						$icon = '../../../../..'.$icon;
+						$icon = etemplate_widget_tree::imagePath($data['icon']);
 						if ($data['child'] || $data['item'])
 						{
 							$data['im1'] = $data['im2'] = $icon;
@@ -330,16 +327,14 @@ if ($app == 'felamimail') continue;	// disabled fmail for now, as it break whole
 					$parent =& $tree['item'];
 					$parts = explode('/', $data['id']);
 					if ($data['id'][0] == '/') array_shift($parts);	// remove root
-					$last_part = array_pop($parts);
+					array_pop($parts);
 					$path = '';
 					foreach($parts as $part)
 					{
 						$path .= ($path == '/' ? '' : '/').$part;
 						if (!isset($parent[$path]))
 						{
-							$icon = $part == 'apps' ? common::image('phpgwapi', 'home') : common::image($part, 'navbar');
-							list(,$icon) = explode($GLOBALS['egw_info']['server']['webserver_url'], $icon);
-							$icon = '../../../../..'.$icon;
+							$icon = etemplate_widget_tree::imagePath($part == 'apps' ? common::image('phpgwapi', 'home') : common::image($part, 'navbar'));
 							$parent[$path] = array(
 								'id' => $path,
 								'text' => $part == 'apps' ? lang('Applications') : lang($part),

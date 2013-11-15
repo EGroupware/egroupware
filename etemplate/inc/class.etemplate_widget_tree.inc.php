@@ -110,25 +110,9 @@ class etemplate_widget_tree extends etemplate_widget
 	{
 		$form_name = self::form_name($cname, $this->id);
 
-		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
-		if (empty($this->attrs['image_path']))
+		if (($templated_path = self::templateImagePath($this->attrs['image_path'])) != $this->attrs['image_path'])
 		{
-			$this->attrs['image_path'] = $webserver_url.'/phpgwapi/templates/default/images/dhtmlxtree/';
-		}
-		// check if we have template-set specific image path
-		$image_path = $this->attrs['image_path'];
-		if ($webserver_url && $webserver_url != '/')
-		{
-			list(,$image_path) = explode($webserver_url, $image_path, 2);
-		}
-		$templated_path = strtr($image_path, array(
-			'/phpgwapi/templates/default' => $GLOBALS['egw']->framework->template_dir,
-			'/default/' => '/'.$GLOBALS['egw']->framework->template.'/',
-		));
-		if (file_exists(EGW_SERVER_ROOT.$templated_path))
-		{
-			$this->attrs['image_path'] = ($webserver_url != '/' ? $webserver_url : '').$templated_path;
-			self::setElementAttribute($form_name, 'image_path', $this->attrs['image_path']);
+			self::setElementAttribute($form_name, 'image_path', $this->attrs['image_path'] = $templated_path);
 			//error_log(__METHOD__."() setting templated image-path for $form_name: $templated_path");
 		}
 
@@ -137,7 +121,7 @@ class etemplate_widget_tree extends etemplate_widget
 		{
 			// += to keep further options set by app code
 			self::$request->sel_options[$form_name] += self::typeOptions($this->attrs['type'], $this->attrs['options'],
-				$no_lang, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name));
+				$no_lang=null, $this->attrs['readonly'], self::get_array(self::$request->content, $form_name));
 
 			// if no_lang was modified, forward modification to the client
 			if ($no_lang != $this->attr['no_lang'])
@@ -159,6 +143,63 @@ class etemplate_widget_tree extends etemplate_widget
 			}
 		}
 
+	}
+
+	/**
+	 * Get template specific image path
+	 *
+	 * @param string $image_path=null default path to use, or empty to use default of /phpgwapi/templates/default/images/dhtmlxtree
+	 * @return string templated url if available, otherwise default path
+	 */
+	public static function templateImagePath($image_path=null)
+	{
+		$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
+		if (empty($image_path))
+		{
+			$image_path = $webserver_url.'/phpgwapi/templates/default/images/dhtmlxtree/';
+		}
+		// check if we have template-set specific image path
+		if ($webserver_url && $webserver_url != '/')
+		{
+			list(,$image_path) = explode($webserver_url, $image_path, 2);
+		}
+		$templated_path = strtr($image_path, array(
+			'/phpgwapi/templates/default' => $GLOBALS['egw']->framework->template_dir,
+			'/default/' => '/'.$GLOBALS['egw']->framework->template.'/',
+		));
+		if (file_exists(EGW_SERVER_ROOT.$templated_path))
+		{
+			return ($webserver_url != '/' ? $webserver_url : '').$templated_path;
+			//error_log(__METHOD__."() setting templated image-path for $form_name: $templated_path");
+		}
+		return ($webserver_url != '/' ? $webserver_url : '').$image_path;
+	}
+
+	/**
+	 * Return image relative to trees image-path
+	 *
+	 * @param string $image url of image, eg. from common::image($image, $app)
+	 * @return string path relative to image-path, to use when returning tree data eg. via json
+	 */
+	public static function imagePath($image)
+	{
+		static $image_path=null;
+		if (!isset($image_path)) $image_path = self::templateImagePath ();
+
+		$parts = explode('/', $image_path);
+		$image_parts   = explode('/', $image);
+
+		// remove common parts
+		while(isset($parts[0]) && $parts[0] === $image_parts[0])
+		{
+			array_shift($parts);
+			array_shift($image_parts);
+		}
+		// add .. for different parts, except last image part
+		$url = implode('/', array_merge(array_fill(0, count($parts)-1, '..'), $image_parts));
+
+		//error_log(__METHOD__."('$image') image_path=$image_path returning $url");
+		return $url;
 	}
 
 	/**
