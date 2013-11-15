@@ -273,7 +273,8 @@ abstract class egw_framework
 		//error_log(__METHOD__."()");
 		self::$extra['window-close'] = $alert_msg ? $alert_msg : true;
 
-		if ($_GET['menuaction'] === 'etemplate_new::ajax_process_content')
+		// are we in ajax_process_content -> just return extra data, with close instructions
+		if (preg_match('/etemplate(_new)?(::|\.)ajax_process_content/', $_GET['menuaction']))
 		{
 			$response = egw_json_response::get();
 			$response->generic('et2_load', egw_framework::get_extra());
